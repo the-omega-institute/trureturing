@@ -16,7 +16,6 @@ import D5.S3.Weil.ZetaLinear.PosIndex
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 4000000
 set_option maxRecDepth 32768
 
 noncomputable section
@@ -27,8 +26,8 @@ open scoped Kronecker ComplexOrder
 namespace D5.S3.Quantum.Entanglement.QutritWeylBlochNormSeparableBound
 
 open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
-
-def omega : ℂ := Complex.exp (2 * Real.pi * Complex.I / 3)
+open D5.S3.QuantumContext.HesseSicCertificate (omega)
+open private omega_pow_four from D5.S3.QuantumContext.HesseSicCertificate
 
 def W (k l : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
   fun j c => if c = j + l then omega ^ (j.val * k.val) else 0
@@ -103,15 +102,10 @@ private lemma parseval_three (d : Fin 3 → ℂ) :
     calc
       Real.sqrt 3 ^ 4 = (Real.sqrt 3 ^ 2) ^ 2 := by ring
       _ = 9 := by rw [hs]; norm_num
-  have h3 : omega ^ 3 = 1 := D5.S3.QuantumContext.HesseSicCertificate.omega_cubed
-  have h4 : omega ^ 4 = omega := by
-    calc
-      omega ^ 4 = omega ^ 3 * omega := by ring
-      _ = omega := by rw [h3]; ring
   simp only [Fin.sum_univ_succ]
   norm_num only [Fin.val_zero, Fin.val_succ, Nat.zero_mul, Nat.mul_zero, Nat.one_mul,
     Nat.mul_one, pow_zero, pow_one, star_one, mul_one]
-  rw [h4]
+  rw [omega_pow_four]
   simp_rw [← Complex.normSq_eq_norm_sq]
   simp only [Complex.normSq_apply, pow_two,
     Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
@@ -354,7 +348,7 @@ private lemma violation_matrix : vecMulVec violationVector (star violationVector
     violationMatrix := by
   have hs : Real.sqrt 7 ^ 2 = 7 := Real.sq_sqrt (by norm_num)
   have hc : ((Real.sqrt 7 / 7 : ℝ) : ℂ) * ((Real.sqrt 7 / 7 : ℝ) : ℂ) = 1 / 7 := by
-    apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im] <;> nlinarith
+    apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im]; nlinarith
   ext q r
   simp only [Matrix.vecMulVec_apply, violationVector, Pi.star_apply, violationMatrix,
     Matrix.smul_apply, smul_eq_mul, star_mul, Complex.star_def, Complex.conj_ofReal]
@@ -394,11 +388,13 @@ private lemma phase_norm_sq (x y : ℝ) :
   rw [omega_value, ← Complex.normSq_eq_norm_sq]
   simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im,
     Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
-    zero_mul, mul_zero, add_zero, sub_zero]
+    zero_mul, add_zero, sub_zero]
   ring_nf
   rw [hs]
   ring
 
+set_option maxHeartbeats 1113682 in
+-- The 81 coefficient identities expand finite sums and complex powers.
 private lemma violation_coefficients (i j k l : Fin 3) :
     bloch violationMatrix i j k l =
       ((violationPhase i j k l).1 + (violationPhase i j k l).2 * omega) / 7 := by

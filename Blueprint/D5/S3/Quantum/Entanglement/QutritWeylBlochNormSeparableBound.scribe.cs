@@ -14,15 +14,11 @@ internal sealed class QutritWeylBlochNormSeparableBoundDocument : IScribeDocumen
         "The two-qutrit Weyl--Bloch entrywise one-norm is bounded by 25 on separable states.",
         H("The qutrit Weyl--Bloch one-norm"),
         Blocks(
-            Node("omega", "The cubic phase", Disp(Equal(Call("omega"),
-                Call("exp", Div(Mul(Mul(D(2), Call("pi")), Call("I")), D(3))))),
-                "The phase omega is the complex exponential of two pi times the imaginary unit divided by three.",
-                Prefix + "omega"),
             Node("weyl", "The qutrit Weyl operators", Disp(
                 All("k", FinThree, All("l", FinThree, All("j", FinThree, All("c", FinThree,
                     Equal(Call("W", K, L, J, C), Call("if", Equal(C, Add(J, L)),
                         Pow(Call("omega"), Mul(Val(J), Val(K))), D(0)))))))),
-                "For row j and column c, W(k,l) has the cubic phase omega to j times k when c equals j+l modulo three, and is zero otherwise.", Prefix + "W"),
+                "For row j and column c, W(k,l) has the cubic phase omega to j times k when c equals j+l modulo three, and is zero otherwise. omega denotes D5.S3.QuantumContext.HesseSicCertificate.omega: the complex exponential of two pi times the imaginary unit divided by three.", Prefix + "W"),
             Node("bloch", "The Weyl--Bloch coefficient", Disp(
                 All("rho", JointMatrix, All("i", FinThree, All("j", FinThree,
                     All("k", FinThree, All("l", FinThree, Equal(Call("bloch", Rho, I, J, K, L),
@@ -115,7 +111,6 @@ internal sealed class QutritWeylBlochNormSeparableBoundDocument : IScribeDocumen
         new Formula.Binary(left, FormulaBinaryOperator.Add, right);
     private static Formula Mul(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
-    private static Formula Div(Formula left, Formula right) => new Formula.Fraction(left, right);
     private static Formula Pow(Formula left, Formula right) => new Formula.Power(left, right);
     private static Formula Sum(Formula index, Formula type, Formula body) =>
         Seq(F.Sum, Underscore, Grp(index, Colon, Sp, type), Sp, Parenthesized(body));
