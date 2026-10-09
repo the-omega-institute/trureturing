@@ -1093,15 +1093,36 @@ C_3=\operatorname{Tr}\!\left(\rho\,Z_1Z_2Z_3\right)
 
 ### 11.2.6. 可形式化的下一步
 
-建议新增 PrimeTripletWheel.lean，先做五个不依赖素数无穷性猜想的有限定理：
+形式化要先固定观察商，再把通用反射定理与具体有限 witness 分开。当前提交的
+PrimeTripletWheel.lean 采用第一阶段的通用接口：在任意非零模数 (W) 的
+(ZMod,W) 上定义两个有向轮的可容许谓词，证明仿射反射
+[
+ho_W(a)=-a-6
+]
+是 involution，并证明
+[
+A_+(a)Longleftrightarrow A_-(ho_W(a)).
+]
+由此得到两个候选子类型的等势和相同基数。这个定理是任意非零模数上的内容
+定理，不依赖有限枚举，也不使用实际素数三胞胎的无穷性。
 
-- 定义 tripletPattern、有序间隙和 \(\chi\)，证明反射翻转 \(\chi\)；
-- 证明 \(H_+\)、\(H_-\) 的无序二点距离多重集相同；
-- 定义 wheelCandidates W H，证明有限性及模数提升的兼容性；
-- 定义二点投影和三点读出，证明“二点同而三点分离”推出一个非平凡的纤维方向；
-- 将轮候选层与 LayeredCapture 接口，定义首个三点捕获层 \(K_3\)。
+W=30 的原点前缀数值和 W=210 的三点跨度数值是 Foundational Formulas
+第十六节、第二十七节中的有限审计证书。它们在本阶段作为理论层 witness，
+不被误写成 Lean 的无穷性结论或 CI 结果。后续若要把具体 witness 也升格到
+Lean，应把有限读出定义、观察商和相应 Scribe 声明一起提交。
 
-实际的 \(T_H(x)\) 只作为外部算术输入，不放进第一阶段定理。这样形式化对象仍是有限、可计算、可审计的离散动力学；当以后加入经验素数数据时，只是给这条有限轨迹附加观测，而不是把数值样本误充成普遍定理。
+下一阶段的接口仍然是：
+
+- 定义有序间隙和归一化手性 (chi)，证明反射翻转 (chi)；
+- 定义有限轮候选、二点相关和三点相关，并显式标注 origin-fixed 或
+  translation-invariant 观察商；
+- 证明具体的 W=30、W=210 witness 与 LayeredCapture 的首捕获层相容；
+- 将三点方向坐标接入 AURIC 的 (kappa)-fiber，而不把候选密度当成实际
+  prime-triplet count。
+
+实际的 (T_H(x)) 只作为外部算术输入，不放进第一阶段定理。这样形式化对象
+仍是有限、可计算、可审计的离散动力学；当以后加入经验素数数据时，只是给这
+条有限轨迹附加观测，而不是把数值样本误充成普遍定理。
 
 
 ### 11.2.7. 已有轮筛定理给出的两种三点捕获层
@@ -1169,6 +1190,50 @@ K_3^{\mathrm{origin}}=3.
 \]
 
 这两个层号同时成立并不冲突。它们使用不同的观察商：固定原点保留了绝对位置，平移不变读出把绝对位置压掉，只保留循环结构。
+
+#### 11.2.7.1. 二维观测晶格：素数层与读出阶数
+
+把“第几层”和“看几阶关联”分成两个坐标。令 (j) 表示素数轮层，
+(kin{1,2,3,ldots}) 表示读出阶数，定义观察等价关系
+[
+xsim_{j,k}y
+quadLongleftrightarrowquad
+O_{j,k}(x)=O_{j,k}(y).
+]
+于是每个状态不再只带一个层号，而带一个二维索引
+[
+Gamma_{j,k}=[x]_{sim_{j,k}},
+qquad
+(j,k)inmathbb N	imesmathbb N_{ge1}.
+]
+沿 (j) 方向新增素数约束，沿 (k) 方向增加联合观测阶数；两种推进
+都可能减少 kernel，但减少的对象不同。
+
+对本节的三胞胎模板：
+
+- (k=2) 的 pair-correlation 和全部 pair-Gram 谱矩在反射取向之间保持
+  相同，因此沿 (j) 增长也不会自动恢复三点方向；
+- (k=3) 的有序三点读出在 (W_3=30) 的 origin-fixed chart 已有分离，
+  在 translation-invariant chart 要等到 (W_4=210)；
+- (k=1) 的候选密度在所有轮层保持相同，因而只记录 arithmetic cost，
+  不记录手性。
+
+因此三维金字塔 ((X,Y,Z)) 与二维观测晶格并不是两个互斥空间。完整层状态
+应写成
+[
+Gamma_{j,k}
+=
+igl(
+K_{j,k},,X_{j,k},Y_{j,k},Z_{j,k},kappa_{j,k},
+chi_{j,k},arepsilon_{j,k}
+igr),
+]
+其中前三个量给出金字塔商空间位置，(kappa) 是隐藏 fiber，(chi) 是
+三点方向，(arepsilon) 是轮排斥账本。沿 (j) 的跳跃是离散算术更新，沿
+(k) 的跳跃是观测分辨率更新；若再加入质量作用流，才得到每个格点内部的
+连续时间轨迹。这样“逃逸轨迹”具有几何、观测和热力学三重索引，而不是把
+素数序列直接当成唯一的三维空间曲线。
+
 
 在平移不变三点读出中，\(W=210\) 还有一个最小正跨度 witness：
 
@@ -1295,25 +1360,42 @@ G=2I_7+2J_7,
 
 ### 11.2.10. 形式化接口与已知真源
 
-首批 Lean 目标直接镜像这些已证明接口：
+当前提交的 Lean/Scribe 真源是：
 
-\[
-\begin{aligned}
-&\texttt{Hplus,Hminus : Finset\ \mathbb Z},\\
-&\texttt{wheel},\quad \texttt{pairCorr},\quad \texttt{tripleCorr},\\
-&\texttt{reflectionEq}:a_{H_-,W}(r)=a_{H_+,W}(-r-6),\\
-&\texttt{pairCorrEq}:O_2(H_+,W)=O_2(H_-,W),\\
-&\texttt{originWitness}:P_{H_+,30}(10)=0\land P_{H_-,30}(10)=1,\\
-&\texttt{tripleWitness}:C^{(3)}_{H_+,210}(6,30)=1
-\land C^{(3)}_{H_-,210}(6,30)=0.
-\end{aligned}
-\]
+[
+egin{aligned}
+&	exttt{plusAdmissible},quad 	exttt{minusAdmissible}
+  : ZMod,W	o Prop,\\
+&	exttt{reflect}(a)=-a-6,\\
+&	exttt{reflect\_involutive}:
+  	exttt{reflect (reflect a)=a},\\
+&	exttt{plus\_reflect\_iff}:
+  A_+(a)Longleftrightarrow A_-(ho_W(a)),\\
+&	exttt{reflectEquiv}:
+  {a:A_+(a)}simeq{a:A_-(a)},\\
+&	exttt{candidate\_space\_card\_eq}:
+  #A_+=#A_-quad(W
+e0).
+end{aligned}
+]
 
-第一批形式化只处理有限轮集合、反射、相关量和有限 witness。实际 \(T_H(x)\) 的无穷性不纳入本文件。对应真源为：
+这组声明把“候选密度相同”提升为任意非零模数上的一般等势定理，同时保留
+三点方向作为观察商依赖的坐标。Lean 中的 chirality 采用未归一化 gap
+difference，数值为 (pm2)；理论正文的 (chi=(g_2-g_1)/2) 数值为
+(pm1)，二者关系是 (chi_L=2chi)。
+
+W=30 的 origin witness、W=210 的 translation-invariant triple witness、
+以及 (K_3^{mathrm{origin}}=3)、(K_3^{mathrm{TI}}=4) 是 Foundational
+Formulas §15、§16、§27 的有限理论证书。它们尚未被本次 Lean 文件声称为
+machine-checked declarations；下一阶段需连同 finite readout、观察商和
+Scribe 证据一起升格。实际 (T_H(x)) 的无穷性仍不在形式化范围内。
+
+对应真源为：
 
 - Foundational Formulas §15、§16、§27；
-- [LayeredCapture](https://github.com/the-omega-institute/trureturing/blob/lane/theory/pyramid-escape-thermodynamics-20261009/Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.md) 的首捕获接口；
-- [triplet-wheel audit](https://github.com/the-omega-institute/trureturing/blob/1494f168dddd4e92445742bf139c9ae0c8b7d5dd/Library/Weil/wang2026proportions.md)。
+- LayeredCapture 的首捕获接口；
+- triplet-wheel audit 的有限相关计算；
+- D5/S3/Arith/PrimeTripletWheel.lean 与同名 Scribe/Blueprint 条目。
 
 ## 12. 可逐步形式化的定理包
 
@@ -1562,7 +1644,7 @@ v_{\mathrm{ext}}^2+v_{\mathrm{int}}^2=c^2
 - 黄金层到金字塔高度 \(r_k,Z_k\) 的显式 embedding。
 - Euclid 素数轨迹、Fibonacci projective rank 与 κ 耗散之间的类型化接口。
 
-这些是理论层的新推导，尚未作为 Lean 定理提交。文中没有修改 judge、CI 或既有定义，也没有把理论模型标成物理实验定律。
+这些是理论层的新推导；本次提交另外加入了 PrimeTripletWheel 的通用 ZMod 反射与等势 Lean/Scribe 证据层。W=30、W=210 的具体有限 witness 仍按理论审计记录，未冒称为本次 Lean 声明。文中没有修改 judge、CI 或既有定义，也没有把理论模型标成物理实验定律。
 
 ### 建议的下一批 Lean 目标
 
