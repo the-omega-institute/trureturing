@@ -29,7 +29,8 @@ private theorem term_nonneg (x : ℝ) (d : ℕ) : 0 ≤ term x d := by
 private theorem prefix_le {m : ℕ} (p : Fin m → ℝ) (hs : ∑ i, p i = 1) (n : ℕ) :
     ∑ i, ∑ d ∈ Finset.range n, term (p i) d ≤ cost p := by
   have eq (d : ℕ) : ∑ i, term (p i) d = DyadicSupportLines.residual p d / (2 : ℝ) ^ d := by
-    simp only [Finset.sum_sub_distrib, ← Finset.sum_div, hs, DyadicSupportLines.residual, Int.cast_sum]
+    simp only [Finset.sum_sub_distrib, ← Finset.sum_div, hs,
+      DyadicSupportLines.residual, Int.cast_sum]
     field_simp
   rw [Finset.sum_comm]
   simp_rw [eq]
@@ -437,6 +438,5 @@ theorem result (a : ℕ) (ha : 3 ≤ a) (p : Fin (2 ^ a + 1) → ℝ)
   exact low_side_lower a ha p hp hs _
     (fun i => Finset.inf'_le _ (Finset.mem_univ i)) hlow
 
-#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.Dyadic.ComplementaryDyadicSecondSupport
