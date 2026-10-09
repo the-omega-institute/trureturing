@@ -239,8 +239,6 @@ jobs:
             tools/scripts/agent/lane_brief.sh
             tools/scripts/agent/lane_free.sh
             tools/scripts/agent/merge-gate.sh
-            tools/scripts/agent/nyx-selftest.sh
-            tools/scripts/agent/nyx.sh
             tools/scripts/agent/oeis-prior-art.py
             tools/scripts/agent/oom-guard.sh
             tools/scripts/agent/openproblem/fetch-journal.sh
