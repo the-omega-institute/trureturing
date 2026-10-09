@@ -326,45 +326,61 @@ S\longrightarrow S\cup\{q\},
 
 ### 6.3 有限整数载体产生真正的 prime seam
 
-连续概率流可以精确到达 (kappa_*=XY/r)，但有限计数载体通常只能取整数格点。把底面条件分布单独归一化：底面总量为整数 (R>0)，边际计数为 (A,B)，四格计数为
+连续概率流可以精确到达 \(\kappa_*=XY/r\)，但有限计数载体通常只能取整数格点。把底面条件分布单独归一化：底面总量为整数 \(R>0\)，边际计数为 \(A,B\)，四格计数为
 
-[
+\[
 (n_{00},n_{10},n_{01},n_{11})
-=(R-A-B+k, A-k, B-k, k),
-]
+=
+(R-A-B+k,\ A-k,\ B-k,\ k),
+\]
 
-其中 (k) 是整数。连续独立目标是
+其中 \(k\) 是整数。连续独立目标是
 
-[
-k_*=rac{AB}{R}.
-]
+\[
+k_*=\frac{AB}{R}.
+\]
 
-若 (R) 不整除 (AB)，则任何整数表都无法满足 (Delta_R=Rk-AB=0)。令
+若 \(R\) 不整除 \(AB\)，则任何整数表都无法满足
 
-[
-d=operatorname{dist}(AB,Rmathbb Z)>0.
-]
+\[
+\Delta_R=Rk-AB=0.
+\]
 
-取合法整数格点中最接近 (k_*) 的 (k_Z)，则条件底面分布 (q_k=n/R) 至少保留
+令
 
-[
-operatorname{TV}(q_{k_Z},q_*)=rac{2d}{R^2},
-qquad
-D_{ln}(q_{k_Z}Vert q_*)gerac{8d^2}{R^4}
-]
+\[
+d=\operatorname{dist}(AB,R\mathbb Z)>0.
+\]
 
-的残差，第二个不等式使用自然对数版本的 Pinsker 下界。若五态总样本量为 (N)，且 (R=Nr)，则完整五态 law 的这部分 KL 乘以 (r=R/N)，完整 law 的 TV 乘以 (r)。因此这里的归一化必须先声明，不能把条件底面和五态 law 的距离混用。
+取合法整数格点中最接近 \(k_*\) 的 \(k_Z\)，则条件底面分布 \(q_k=n/R\) 至少保留
 
-写 (R=prod_p p^{e_p}) 时，独立目标的最简分母是
+\[
+\operatorname{TV}(q_{k_Z},q_*)
+=
+\frac{2d}{R^2},
+\qquad
+D_{\ln}(q_{k_Z}\Vert q_*)
+\ge
+\frac{8d^2}{R^4}
+\]
 
-[
-rac{R}{gcd(R,AB)}.
-]
+的残差，第二个不等式使用自然对数版本的 Pinsker 下界。若五态总样本量为 \(N\)，且 \(R=Nr\)，则完整五态 law 的这部分 KL 乘以 \(r=R/N\)，完整 law 的 TV 乘以 \(r\)。因此这里的归一化必须先声明，不能把条件底面和五态 law 的距离混用。
 
-如果 (p) 是 Fibonacci 的 primitive divisor，满足 (pmid R)、(p
-mid AB)，那么这个 prime seam 在该层首次出现。取 (R=F_n) 时，若 (z(p)=n)，则 (p) 在第 (n) 层进入目标分母。这给出素数几何的严格版本：连续 κ 流趋向零关联，有限整数载体却在 primitive rank 处出现有限分辨率的 lattice 残差。
+写
 
-这里仍需保留两个边界。第一，primitive p 只证明该层的独立目标不可达，不保证最近格点距离或自由能地板随层单调增加。第二，若边际 (A,B) 随层变化，p-adic 余量也会变化，必须把它们写进层间 map 后才能讨论全局单调性。
+\[
+R=\prod_p p^{e_p}
+\]
+
+时，独立目标的最简分母是
+
+\[
+\frac{R}{\gcd(R,AB)}.
+\]
+
+如果 \(p\) 是 Fibonacci 的 primitive divisor，满足 \(p\mid R\)、\(p\nmid AB\)，那么这个 prime seam 在该层首次出现。取 \(R=F_n\) 时，若 \(z(p)=n\)，则 \(p\) 在第 \(n\) 层进入目标分母。这给出素数几何的严格版本：连续 κ 流趋向零关联，有限整数载体却在 primitive rank 处出现有限分辨率的 lattice 残差。
+
+这里仍需保留两个边界。第一，primitive p 只证明该层的独立目标不可达，不保证最近格点距离或自由能地板随层单调增加。第二，若边际 \(A,B\) 随层变化，p-adic 余量也会变化，必须把它们写进层间 map 后才能讨论全局单调性。
 
 ### 6.2 Fibonacci 的素数周期是 projective seam
 
