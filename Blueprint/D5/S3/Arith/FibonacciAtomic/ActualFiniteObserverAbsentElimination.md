@@ -184,7 +184,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentEliminati
 
 N is at least one. On every allowed source the observer is legal and has a finite run returning true exactly for the original third-substitution Positive target. Its action factors through the existing coarse history map on all finite histories. Nominal states are retained in full; no source port or canonical controller is installed.
 
-**Theorem 1.16 (Actual prefixes realize folds and exact raw caches).**
+**Theorem 1.16 (Truthful raw cache replies equal source readout).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.queryReply_eq_readout`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.queryReply_eq_readout` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every truthful raw cache on U and every literal address q, queryReply cache q U equals readout q U. A miss uses source readout by definition; an exact hit has that same raw value by CacheTruth. No coarse quotient replaces the cached reply.
+
+**Theorem 1.17 (Actual prefixes realize folds and exact raw caches).**
 
 $$\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall M: \operatorname{Observer}\left(E\right), (\forall U: Source, (\forall e: E, (\forall h: RawHistory, (((\operatorname{Legal}\left(M, U\right)) \land (\operatorname{ActualPrefix}\left(M, U, e, h\right))) \implies ((\operatorname{historyState}\left(M, h\right) = e) \land ((\operatorname{decoder}\left(M, e\right) = \operatorname{foldl}\left((cache: RawHistory \mapsto (a: \operatorname{Sigma}\left(\operatorname{const}\left(Address, Reply\right)\right) \mapsto \operatorname{cacheUpdate}\left(cache, \operatorname{fst}\left(a\right), \operatorname{snd}\left(a\right)\right))), [], h\right)) \land (\operatorname{CacheTruth}\left(h, U\right)))))))))$$
 
@@ -196,7 +208,7 @@ $$\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall M: \operator
 
 For a legal observer on a fixed original source, every actual prefix ends at the row obtained by folding its raw replies with absorbing barStep. The decoded cache equals the chronological fold of cacheUpdate from the empty list, so repeated addresses retain their first entry and new addresses append in order. Every report in the external trace is true of that same source. Induction over chronological prefix extension uses the exact decoded-cache update law; an exact hit is true by cache truth and a miss is the original source readout.
 
-**Theorem 1.17 (Head and tail runs extend chronological prefixes).**
+**Theorem 1.18 (Head and tail runs extend chronological prefixes).**
 
 $$\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall M: \operatorname{Observer}\left(E\right), (\forall U: Source, (\forall e, f: E, (\forall t, h: RawHistory, (\forall b: Bool, (((\operatorname{Run}\left(M, U, e, t, f, b\right)) \land (\operatorname{ActualPrefix}\left(M, U, e, h\right))) \implies ((\operatorname{ActualPrefix}\left(M, U, f, \operatorname{append}\left(h, t\right)\right)) \land (\operatorname{action}\left(M, f\right) = \operatorname{inr}\left(b\right)))))))))$$
 
@@ -208,7 +220,7 @@ $$\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall M: \operator
 
 A run from the row of any existing actual prefix extends that prefix by its entire ordered trace and ends at a halt row with its stated output bit. Induction on the run appends each current report to the prefix before extending through the tail; list append associativity aligns this chronological construction with head and tail execution. No legality or termination bound is needed for this correspondence.
 
-**Theorem 1.18 (Unique finite trace, final row and output).**
+**Theorem 1.19 (Unique finite trace, final row and output).**
 
 $$\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall M: \operatorname{Observer}\left(E\right), (\forall U: Source, (\forall e, f, g: E, (\forall t, s: RawHistory, (\forall b, c: Bool, (((\operatorname{Run}\left(M, U, e, t, f, b\right)) \land (\operatorname{Run}\left(M, U, e, s, g, c\right))) \implies ((t = s) \land ((f = g) \land (b = c)))))))))$$
 
@@ -220,7 +232,7 @@ $$\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall M: \operator
 
 Any two finite runs from the same nominal row on the same immutable original source have equal traces, final rows and output bits. Induction on one run compares the other run's first constructor. Query and halt actions cannot coincide; two query actions have the same literal address and therefore the same decoded-cache reply and successor. The tail induction then gives equality of the complete ordered traces and outputs.
 
-**Theorem 1.19 (Every admissible actual run has the original semantics).**
+**Theorem 1.20 (Every admissible actual run has the original semantics).**
 
 $$\forall N: Nat, (\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall M: \operatorname{Observer}\left(E\right), (\forall U: Source, (\forall t: RawHistory, (\forall f: E, (\forall b: Bool, (((\operatorname{Admissible}\left(N, M\right)) \land ((\operatorname{Allowed}\left(N, U\right)) \land (\operatorname{Run}\left(M, U, \operatorname{e0}\left(M\right), t, f, b\right)))) \implies ((\operatorname{ActualPrefix}\left(M, U, f, t\right)) \land ((\operatorname{historyState}\left(M, t\right) = f) \land ((\operatorname{action}\left(M, f\right) = \operatorname{inr}\left(b\right)) \land ((\operatorname{historyAction}\left(M, t\right) = \operatorname{inr}\left(b\right)) \land ((\operatorname{decoder}\left(M, f\right) = \operatorname{foldl}\left((cache: RawHistory \mapsto (a: \operatorname{Sigma}\left(\operatorname{const}\left(Address, Reply\right)\right) \mapsto \operatorname{cacheUpdate}\left(cache, \operatorname{fst}\left(a\right), \operatorname{snd}\left(a\right)\right))), [], t\right)) \land ((\operatorname{CacheTruth}\left(\operatorname{decoder}\left(M, f\right), U\right)) \land ((\operatorname{CacheTruth}\left(t, U\right)) \land ((b = true) \iff (\operatorname{Positive}\left(U\right)))))))))))))))))$$
 
@@ -232,7 +244,7 @@ $$\forall N: Nat, (\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \fo
 
 For every original allowed source and every run from e0 of an admissible observer, the final row is an actual prefix row and is exactly historyState of the run trace. Its action and historyAction both halt with the run's bit. Its decoded cache is exactly the first-occurrence cacheUpdate fold from the empty list, and both this cache and every external trace report are true of the same original source. The output is true exactly for Positive of that source. Run extension and actual-prefix semantics establish the trace and cache conclusions. Admissible supplies existence of a correct run; finite-run uniqueness transfers its correct bit to the arbitrary run under consideration. No correspondence or correctness premise for that particular run is assumed.
 
-**Theorem 1.20 (Native subtree leaf-count geometry).**
+**Theorem 1.21 (Native subtree leaf-count geometry).**
 
 $$\forall U, T: Source, (\forall q: Address, ((\operatorname{subtree}\left(q, U\right) = \operatorname{some}\left(T\right)) \implies (\operatorname{length}\left(q\right)+\operatorname{length}\left(T\right) \le \operatorname{length}\left(U\right))))$$
 
@@ -244,7 +256,7 @@ $$\forall U, T: Source, (\forall q: Address, ((\operatorname{subtree}\left(q, U\
 
 Every edge on a native subtree path leaves a nonempty sibling subtree. Induction on the original FreeMagma tree bounds address length plus retained subtree leaf count by the original leaf count.
 
-**Theorem 1.21 (Raw absence beyond the budget, including cache hits).**
+**Theorem 1.22 (Raw absence beyond the budget, including cache hits).**
 
 $$\forall N: Nat, (\forall U: Source, (\forall q: Address, (((\operatorname{Allowed}\left(N, U\right)) \land (\neg \operatorname{member}\left(q, Q_{N}\right))) \implies ((\operatorname{readout}\left(q, U\right) = absent) \land (\forall cache: RawHistory, ((\operatorname{CacheTruth}\left(cache, U\right)) \implies ((\operatorname{queryReply}\left(cache, q, U\right) = absent) \land (\forall a: \operatorname{Sigma}\left(\operatorname{const}\left(Address, Reply\right)\right), (((\operatorname{member}\left(a, cache\right)) \land (\operatorname{fst}\left(a\right) = q)) \implies (\operatorname{snd}\left(a\right) = absent))))))))))$$
 
@@ -275,6 +287,7 @@ For every allowed original source and every word outside Q_N, the subtree is mis
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.historyState`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.outside_Q_N_absent`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.queryReply`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.queryReply_eq_readout`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.responseState`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.run_deterministic`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.run_from_actualPrefix`
