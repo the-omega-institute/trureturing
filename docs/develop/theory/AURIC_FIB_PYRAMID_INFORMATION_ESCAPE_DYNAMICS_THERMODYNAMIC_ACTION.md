@@ -1343,26 +1343,24 @@ G=2I_7+2J_7,
 
 当前提交的 Lean/Scribe 真源是：
 
-\[
-\begin{aligned}
-&\texttt{plusAdmissible},\quad \texttt{minusAdmissible}
-  : ZMod\,W\to Prop,\\
-&\texttt{reflect}(a)=-a-6,\\
-&\texttt{reflect\_involutive}:
-  \texttt{reflect (reflect a)=a},\\
-&\texttt{plus\_reflect\_iff}:
-  A_+(a)\Longleftrightarrow A_-(\rho_W(a)),\\
-&\texttt{reflectEquiv}:
-  \{a:A_+(a)\}\simeq\{a:A_-(a)\},\\
-&\texttt{candidate\_space\_card\_eq}:
-  \#A_+=\#A_-\quad(W\ne0).
-\end{aligned}
-\]
+- plusAdmissible / minusAdmissible：
+  \((W:\mathbb N)\to[\mathrm{NeZero}\ W]\to ZMod\,W\to Prop\)；
+- reflect：
+  \(\mathrm{reflect}\ W\ a=-a-6\)；
+- reflect_involutive：
+  \(\mathrm{reflect}\ W(\mathrm{reflect}\ W\ a)=a\)；
+- plus_reflect_iff：
+  \(\mathrm{plusAdmissible}\ W\ a\Longleftrightarrow
+  \mathrm{minusAdmissible}\ W(\mathrm{reflect}\ W\ a)\)；
+- reflectEquiv：
+  \(\mathrm{PlusResidue}\ W\simeq\mathrm{MinusResidue}\ W\)；
+- candidate_space_card_eq：
+  两个候选子类型在每个 \(W\ne0\) 时具有相同的有限基数。
 
 这组声明把“候选密度相同”提升为任意非零模数上的一般等势定理，同时保留
-三点方向作为观察商依赖的坐标。Lean 中的 chirality 采用未归一化 gap
-difference，数值为 \(\pm2\)；理论正文的 \(\chi=(g_2-g_1)/2\) 数值为
-\(\pm1\)，二者关系是 \(\chi_L=2\chi\)。
+三点方向作为观察商依赖的坐标。Lean 中的 gapDifference 是整数间隙差，且
+反转两个有序间隙会使方向取负；理论正文的归一化手性
+\(\chi=(g_2-g_1)/2\) 只是该方向在直径六模板上的缩放记号。
 
 W=30 的 origin witness、W=210 的 translation-invariant triple witness、
 以及 \(K_3^{\mathrm{origin}}=3\)、\(K_3^{\mathrm{TI}}=4\) 是 Foundational
