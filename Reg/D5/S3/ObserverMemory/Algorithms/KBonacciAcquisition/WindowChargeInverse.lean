@@ -3,6 +3,7 @@ import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse
 import Reg.Support.DependentFamily
 
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse
+open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.LiteralModel
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse
@@ -97,6 +98,88 @@ noncomputable def archiveRegistration : LeanInformationAudit.Contract.Registrati
 
 #print axioms archiveEvidence
 #print axioms archiveRegistration
+
+/-- Word length and inherited tail are coordinates; the literal word is the state. -/
+@[reducible] def tailSignature : Signature where
+  Params := Σ _n : ℕ, ℕ
+  State p := Fin (p.1 + 1) → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def tailActual : Realization tailSignature :=
+  realize tailSignature (fun _ p w => tailAfter p.2 w) (fun e => nomatch e)
+
+def tailRejected : Realization tailSignature :=
+  realize tailSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+/-- The last-bit hypothesis and original universal implication remain intact. -/
+@[reducible] def tailArena : Arena where
+  signature := tailSignature
+  Law R := ∀ (n : ℕ) (w : Fin (n + 1) → Bool) (s : ℕ),
+    w (Fin.last n) = false → R.readout () ⟨n, s⟩ w = 0
+
+private theorem tailPositive : tailArena.Law tailActual := by
+  exact last_false_tail
+
+private theorem tailNegative : ¬ tailArena.Law tailRejected := by
+  intro law
+  have impossible := law 0 (fun _ => false) 0 rfl
+  cases impossible
+
+def tailEvidence : Registration tailArena
+    (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse.last_false_tail)) where
+  actual := tailActual
+  bridge := Iff.rfl
+  variation := ⟨tailPositive, tailRejected, tailNegative⟩
+  sensitivity := ⟨fun i => ⟨tailRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, tailNegative⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨⟨0, 0⟩, (fun _ => false), (fun _ => true), ?_⟩
+    simp [tailActual, realize, tailAfter]
+
+noncomputable def tailRegistration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse.last_false_tail)
+    (type_of% (realize tailSignature tailActual.readout tailActual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str
+    `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse.last_false_tail
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse/\
+    Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse.tailArena/[anonymous]")
+    "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse.tailEvidence,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨tailArena⟩,
+  objectArena := .source ⟨tailArena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source tailArena ⟨tailEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize tailSignature tailActual.readout tailActual.anchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse,
+    definition := none,
+    coordinates := #[0, 2],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"],
+      stateBinder := 0, functionOperand := false, stateOperand := some #["arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+#print axioms tailEvidence
+#print axioms tailRegistration
 
 end
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse
