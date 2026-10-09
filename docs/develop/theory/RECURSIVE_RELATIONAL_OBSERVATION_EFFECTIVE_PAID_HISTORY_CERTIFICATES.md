@@ -1193,7 +1193,7 @@ $$
 D_A(t)=d\,\frac{g_0(t)+t}{1-g_0(t)}-t.
 $$
 
-Because $g_0'(t)<0$, $d<1-C$, and $g_0(t)<C$, $D_A$ is strictly decreasing on $[0,4/15]$. The exact margin is
+On $[0,4/15]$, $g_0(t)\le C$, with equality at $t=0$ and strict inequality for $t>0$. Because $g_0'(t)<0$ and $d<1-C\le1-g_0(t)$, $D_A$ is strictly decreasing on this entire interval. The exact margin is
 
 $$
 D_A(t_0)-\frac1{900}
@@ -1363,7 +1363,7 @@ $$
 
 The supremum is over the union of reachable configurations across all positive finite histories on this one held-record fibre. It is not a claim that all those configurations coexist after one history.
 
-**Lemma 14.1 (common row and held-record reachability).** On the fibre (14.1), every finite observer $M$ has actual kernels $B:X\to Y$, $A:Y\to X$ and probability rows $\pi,\tau$ satisfying $\pi B=\tau$, $\tau A=\pi$. For every supported depth $k$ the same two rows satisfy
+**Lemma 14.1 (common row and held-record reachability).** All source parameters lie in the compact range $I=[1/3,2/5]$. On the fibre (14.1), every finite observer $M$ has actual kernels $B:X\to Y$, $A:Y\to X$ and probability rows $\pi,\tau$ satisfying $\pi B=\tau$, $\tau A=\pi$. For every supported depth $k$ the same two rows satisfy
 
 $$
 \sum_x\pi_x\operatorname{TV}(Q_x,P_{p,r_k})\le R_{\rm conf,p}(M),\qquad
@@ -1373,7 +1373,7 @@ $$
 
 Every positive-row label is an actual reachable configuration on this held-record fibre, and its $Q_x$ or $W_y$ is exactly its original pulled-back complete decoder. The emissions may lie anywhere in $[0,1]$, and the copied decoders may have positive noncompletion mass. A single support-closed stationary table can use these rows and kernels without changing any copied complete law.
 
-**Proof.** This is the paid-history/common-row construction of [FLOW, §3], with the fixed-fibre reachability statement also made explicit in [UNIF, Lemma 2.1]. The all-four risk-order bounds are the two configuration and two law comparisons in [FLOW, §3]. At the original seed-pair boundary let $R_\alpha,R_\beta$ be the stochastic updates for the two equal rejected pairs. Finite-chain decomposition gives positive integers $d_\alpha,d_\beta$ such that $R_\alpha^{d_\alpha n}\to E_\alpha$ and $R_\beta^{d_\beta n}\to E_\beta$. For each supported $r=r_k$, the paid positive histories
+**Proof.** This is the paid-history/common-row construction of [FLOW, §3], with the fixed-fibre reachability statement also made explicit in [UNIF, Lemma 2.1]. The all-four risk-order bounds are the two configuration and two law comparisons in [FLOW, §3]. Let $\eta_0$ be the source-independent initial configuration row at the original seed-pair boundary, after initialization and before the first paid seed Read. At that boundary let $R_\alpha,R_\beta$ be the stochastic updates for the two equal rejected pairs, and let $P_S$ be the acquired suffix-update product along the six Read letters of $S$, including their original control, record-write and latch updates. Finite-chain decomposition gives positive integers $d_\alpha,d_\beta$ such that $R_\alpha^{d_\alpha n}\to E_\alpha$ and $R_\beta^{d_\beta n}\to E_\beta$. For each supported $r=r_k$, the paid positive histories
 
 $$
 (\alpha\alpha)^{m_n}(\beta\beta)^{t_n}S,\qquad
@@ -1381,8 +1381,38 @@ m_n=d_\alpha\left\lfloor\frac{nr}{d_\alpha}\right\rfloor,\qquad
  t_n=d_\beta\left\lfloor\frac{n(1-r)}{d_\beta}\right\rfloor
 $$
 
-have configuration rows tending to the same $\lambda=\eta_0E_\alpha E_\beta P_S$, independently of $r$. Relative to this chosen depth, another depth has likelihood ratio
-$\exp[-2n\operatorname{KL}(\operatorname{Ber}(r)\Vert\operatorname{Ber}(r_i))+O(1)]$, with the rounding error uniformly bounded on $[1/3,2/5]$. The source parameters are distinct. Multiplying by the summable prior and the fixed suffix's positive likelihood, dominated convergence proves posterior concentration at $k$, including for countable priors. Every approximant is a finite positive history of this one installed source, with the same seed, marker records and permissions.
+have configuration rows tending to the same $\lambda=\eta_0E_\alpha E_\beta P_S$, independently of $r$. Write these histories as $h_n(r)$ and set $\ell_S(t)=t^3(1-t)^3$, the fixed suffix's positive likelihood. Relative to the chosen supported depth $k$, the full paid-history likelihood ratios satisfy
+
+$$
+L_{n,i}:=\frac{\Pr(h_n(r)\mid K=i)}{\Pr(h_n(r)\mid K=k)}
+=\frac{\ell_S(r_i)}{\ell_S(r)}
+\exp\!\left[-2n\operatorname{KL}(\operatorname{Ber}(r)\Vert\operatorname{Ber}(r_i))+\varepsilon_{n,i}\right],
+$$
+
+$$
+|\varepsilon_{n,i}|\le C_{\rm round}
+:=2d_\alpha\log(6/5)+2d_\beta\log(10/9).
+$$
+
+Since $t(1-t)\in[2/9,6/25]$ on $I$ and KL is nonnegative, the bound
+
+$$
+0\le L_{n,i}\le C_*:=e^{C_{\rm round}}(27/25)^3,
+\qquad
+0\le\frac{\mu(i)}{\mu(k)}L_{n,i}
+\le\frac{C_*}{\mu(k)}\mu(i)
+$$
+
+holds uniformly in $n$ and competing depths $i$. The dominating sequence is summable because $\mu$ is a probability prior and $\mu(k)>0$. The source parameters are distinct, so $L_{n,i}\to0$ for each $i\ne k$. Dominated convergence therefore gives
+
+$$
+\sum_{i\ne k}\frac{\mu(i)}{\mu(k)}L_{n,i}\to0,
+\qquad
+\nu_{h_n(r)}(k)
+=\left(1+\sum_{i\ne k}\frac{\mu(i)}{\mu(k)}L_{n,i}\right)^{-1}\to1,
+$$
+
+including for countable priors. Every approximant is a finite positive history of this one installed source, with the same seed, marker records and permissions. Each fixed fourth-segment prefix also has positive likelihood throughout $I$ and bounded likelihood ratios there, so appending it preserves this summable domination and posterior concentration.
 
 Appending any fixed number $j$ of returns, with or without one further $\beta$, gives limiting rows $\lambda(BA)^j$ and $\lambda(BA)^jB$ and the corresponding pure targets. Configuration loss is linear in the row and 1-Lipschitz in the target; law loss is continuous in the finite row and target. Hence both risk orders on each of these limiting rows are bounded by the original phase suprema, simultaneously for every supported $k$.
 
@@ -1452,9 +1482,10 @@ $$
 \tag{14.7}
 $$
 
-so $\bar u,\bar v\in[1/3,2/5]$. The first interval's exact endpoints are
-$127931891/364500000$ and $139368109/364500000$; the second's are
+Under $e(M)\le\eta$, the intervals in (14.7) are contained, respectively, in the enclosing intervals with bounds
+$127931891/364500000$ and $139368109/364500000$, and
 $984373/2700000$ and $995627/2700000$.
+These bounds are obtained by substituting $\eta=1/100000$ for $e(M)$; they imply $\bar u,\bar v\in[1/3,2/5]$ without asserting attainable extrema for arbitrary $e(M)$.
 
 Construct an auxiliary singleton table with emissions $\bar u,\bar v$ and identity acquired kernels. Its complete laws $Q^0,W^0$ obey
 
