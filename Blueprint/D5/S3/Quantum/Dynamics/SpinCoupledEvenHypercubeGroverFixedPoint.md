@@ -78,6 +78,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/SpinCoupledEvenHypercubeGroverFixedPoint.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wang-2026-hypercube-disorder-free-localization` (proved) by `D5/S3/Quantum/Dynamics/SpinCoupledEvenHypercubeGroverFixedPoint.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wang-2026-hypercube-disorder-free-localization","declaration_gid":"D5/S3/Quantum/Dynamics/SpinCoupledEvenHypercubeGroverFixedPoint.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ce Wang (2026). *Spectral Criterion for Disorder-Free Localization of Quantum Walks on Hypercube: QBN Approach*. URL: <https://arxiv.org/abs/2609.07267v1>.

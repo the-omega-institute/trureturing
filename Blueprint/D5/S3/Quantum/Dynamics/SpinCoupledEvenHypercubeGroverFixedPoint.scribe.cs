@@ -40,7 +40,9 @@ internal sealed class SpinCoupledEvenHypercubeGroverFixedPointDocument : IScribe
         DescribeId.Create("wang-" + id), DeclarationHandle.Create(Prefix + declaration),
         H(title), StatementSource.FromAuthor(formula), provenance,
         declaration == "claim" ? Blocks(SourceQuotation(), Paragraph(Text(prose))) : Blocks(Paragraph(Text(prose))), role,
-        null);
+        declaration == "result" ? new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("wang-2026-hypercube-disorder-free-localization"),
+            ResolutionKind.Proved) : null);
 
     private static DocumentBlock SourceQuotation() => Paragraph(
         Text("Page 13, Conjecture 4.1: \"For every even "),
