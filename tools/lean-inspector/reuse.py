@@ -273,18 +273,22 @@ def recover_and_reuse(repository, report, output):
             checked = seed_format(report)
             if not checked['compatible']:
                 if linked:
-                    raise CacheIncompatible(local['report_format'], checked['report_format'],
-                                            'linked-worktree', remediation)
-                recovery_environment = os.environ.copy()
-                recovery_environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
-                fetched = subprocess.run(['/bin/bash', str(repository / 'tools/scripts/worktree/lean-cache-publish.sh'),
-                    'fetch', '--mode', 'production', '--refresh-stale', '--writer-owned'],
-                    cwd=repository, env=recovery_environment)
-                report = repository / '.lake/build/stratalint/raw-lean-report.json'
-                checked = seed_format(report)
-                if not checked['compatible']:
-                    raise CacheIncompatible(local['report_format'], checked['report_format'],
-                                            'fetch-unavailable' if fetched.returncode else 'seed-incompatible')
+                    report = repository / '.lake/build/stratalint/raw-lean-report.json'
+                    checked = seed_format(report)
+                    if not checked['compatible']:
+                        raise CacheIncompatible(local['report_format'], checked['report_format'],
+                                                'linked-worktree', remediation)
+                else:
+                    recovery_environment = os.environ.copy()
+                    recovery_environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
+                    fetched = subprocess.run(['/bin/bash', str(repository / 'tools/scripts/worktree/lean-cache-publish.sh'),
+                        'fetch', '--mode', 'production', '--refresh-stale', '--writer-owned'],
+                        cwd=repository, env=recovery_environment)
+                    report = repository / '.lake/build/stratalint/raw-lean-report.json'
+                    checked = seed_format(report)
+                    if not checked['compatible']:
+                        raise CacheIncompatible(local['report_format'], checked['report_format'],
+                                                'fetch-unavailable' if fetched.returncode else 'seed-incompatible')
             # Input differences select Lake's incremental path, not a new cache key.
             return reuse(repository, report, output)
     except BlockingIOError as error:

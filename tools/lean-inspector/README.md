@@ -16,14 +16,16 @@ make lean-report REBUILD_REPORT_CACHE=1
 相符种子时，以 `LEAN_REPORT_CACHE_INCOMPATIBLE` 和非零状态退出，不进入 Lake 报告提取。
 production Release 恢复（`make lean-cache-from-github-without-mathlib`）和
 `fetch-or-fail` 报告恢复只在主 checkout 运行；显式选择的 verification-mode fetch 不变。
-linked worktree 的 `fetch-or-fail` 对缺失、不完整或格式不符的种子以
-`reason=linked-worktree` 和退出码 4 拒绝。先在 dev 主 checkout 同步、预热并成功生成
+linked worktree 的 `fetch-or-fail` 在所选种子缺失、不完整、损坏或格式不符时，先检查
+工作树内的 canonical 种子 `.lake/build/stratalint/raw-lean-report.json`；相符时从它复用，
+发布到 `LEAN_REPORT` 指定的输出，不取回 Release。canonical 种子也不可用时，以
+`reason=linked-worktree` 和退出码 4 拒绝。
+补救前提是主 checkout 为干净的 `dev` 检出；否则 `warm-donor` 以退出码 0 和
+`skipped` 收据返回，这不代表 donor 已预热。先在该主 checkout 同步、预热并成功生成
 相符的封口报告，再移除 worktree 的 `.lake` 并由 ensure 从热主 checkout 重新播种：
 
 ```sh
-make -C '<main checkout>' warm-donor && make -C '<main checkout>' lean-report
-# 上述两步成功后重新播种：
-rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure
+make -C '<main checkout>' warm-donor && make -C '<main checkout>' lean-report && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure
 ```
 
 ensure 不会用 donor 替换已有且 stamp 相符的 `.lake`，所以重新播种须先移除它。

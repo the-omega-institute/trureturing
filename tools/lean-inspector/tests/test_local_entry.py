@@ -163,6 +163,56 @@ class LocalEntryTests(unittest.TestCase):
         self.assertIn('complete-entry-reused', result.stdout)
         self.assertEqual(self.calls, [])
 
+    def assert_canonical_seed_published(self, destination, result):
+        self.assertEqual(result.returncode, 0,
+                         '[FAIL] linked_canonical_seed_publishes_custom_output: '
+                         + result.stdout + result.stderr)
+        self.assertEqual(self.calls, [], '[FAIL] linked_canonical_reuse_never_fetches_or_builds')
+        self.assertIn('complete-entry-reused', result.stdout)
+        self.assertEqual(destination.read_bytes(), self.output.read_bytes())
+        publication.validate_bundle(destination, publication.coordinates(self.root), self.root)
+        self.assertFalse(self.api.probe(self.root, destination)['needs_lake'],
+                         '[FAIL] custom_publication_has_current_reuse_receipt')
+        self.assertEqual(json.loads(publication.member(destination, '.provenance.json').read_text())['mode'],
+                         'cached')
+
+    def test_linked_custom_output_reuses_canonical_seed_without_fetch_or_lake(self):
+        self.linked_checkout()
+        shutil.copytree(self.seed.parent, self.output.parent)
+        self.environment.pop('STRATALINT_LEAN_REPORT_REUSE')
+        destination = self.root / 'custom output/report.json'
+        self.assertFalse(destination.exists())
+        result = self.run_entry('LEAN_REPORT=' + str(destination))
+        self.assert_canonical_seed_published(destination, result)
+
+    def test_linked_unusable_selected_seed_reuses_canonical_without_fetch_or_lake(self):
+        for kind in ('missing', 'incomplete', 'bundle-bytes-changed', 'format'):
+            with self.subTest(kind=kind):
+                self.setUp()
+                self.linked_checkout()
+                shutil.copytree(self.seed.parent, self.output.parent)
+                self.damage(kind)
+                destination = self.root / 'custom output/report.json'
+                result = self.run_entry('LEAN_REPORT=' + str(destination))
+                self.assert_canonical_seed_published(destination, result)
+
+    def test_linked_custom_output_refuses_unusable_canonical_without_fetch_or_lake(self):
+        for kind in ('missing', 'incomplete', 'bundle-bytes-changed', 'format'):
+            with self.subTest(kind=kind):
+                self.setUp()
+                self.linked_checkout()
+                shutil.copytree(self.seed.parent, self.output.parent)
+                self.seed = self.output
+                self.damage(kind)
+                self.environment.pop('STRATALINT_LEAN_REPORT_REUSE')
+                destination = self.root / 'custom output/report.json'
+                result = self.run_entry('LEAN_REPORT=' + str(destination))
+                self.assertNotEqual(result.returncode, 0,
+                                    '[FAIL] unusable_canonical_must_refuse_custom_output')
+                self.assertIn('reason=linked-worktree', result.stdout + result.stderr)
+                self.assertEqual(self.calls, [], '[FAIL] unusable_canonical_never_fetches_or_builds')
+                self.assertFalse(destination.exists())
+
     def test_undetermined_checkout_refuses_without_fetch_or_lake(self):
         self.damage('missing')
         self.script('bin/git', 'echo "topology unavailable" >&2\nexit 17\n')
