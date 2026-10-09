@@ -9,8 +9,11 @@
 import D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Analysis.Polynomial.Basic
+import Mathlib.Analysis.Normed.Group.Tannery
+import Mathlib.Analysis.PSeries
 
 set_option maxRecDepth 4096
+set_option maxHeartbeats 800000
 
 namespace D5.S3.Quantum.Algebra.ZeitlinSixJ.RicciLimit
 
@@ -208,5 +211,217 @@ theorem fixed_labels_odd_tendsto_zero (a b c : ℕ) (ho : Odd (a + b + c)) :
       simpa [oddMoment, show a-1+1=a by omega, ho] using h
     apply (le_div_iff₀ hweight).mpr
     nlinarith [mul_le_mul_of_nonneg_left hterm (Nat.cast_nonneg N : (0 : ℝ) ≤ N)]
+
+private lemma W_first (N a b c : ℕ) : W N a b c = W N b a c := by
+  rw [D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.W_swap]
+  unfold W
+  exact D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.sixJ_cycle_columns _ _ _ _ _ _
+
+private lemma W_support (N a b c : ℕ) (h : a+b < c ∨ b+c < a ∨ c+a < b) :
+    W N a b c = 0 := by
+  have hn : ¬ admissible (2*a) (2*b) (2*c) (N-1) (N-1) (N-1) := by
+    intro ha
+    have ht := ha.1
+    unfold triangle at ht
+    omega
+  simp [W, sixJ, hn]
+
+private noncomputable def positiveRow (l N k : ℕ) : ℝ :=
+  if k < N-1 then
+    (N : ℝ) * ∑ j ∈ range (N-1),
+      if Odd (k+1+(j+1)+l) then
+        casimir l * (2*((k+1 : ℕ) : ℝ)+1) * (2*((j+1 : ℕ) : ℝ)+1) /
+          (casimir (k+1) * casimir (j+1)) * W N l (k+1) (j+1)^2
+      else 0
+  else 0
+
+private lemma positiveRow_nonneg (l N k : ℕ) : 0 ≤ positiveRow l N k := by
+  unfold positiveRow
+  split_ifs
+  · apply mul_nonneg (Nat.cast_nonneg _)
+    apply sum_nonneg
+    intro j _
+    split_ifs
+    · unfold casimir
+      positivity
+    · exact le_rfl
+  · exact le_rfl
+
+private lemma positiveRow_tendsto_zero (l k : ℕ) :
+    Tendsto (fun N => positiveRow l N k) atTop (nhds 0) := by
+  let f : ℕ → ℕ → ℝ := fun N j =>
+    if Odd (k+1+(j+1)+l) then
+      (casimir l * (2*((k+1 : ℕ) : ℝ)+1) * (2*((j+1 : ℕ) : ℝ)+1) /
+        (casimir (k+1) * casimir (j+1))) * ((N : ℝ)*W N l (k+1) (j+1)^2)
+    else 0
+  have hf (j : ℕ) : Tendsto (fun N => f N j) atTop (nhds 0) := by
+    dsimp [f]
+    by_cases ho : Odd (k+1+(j+1)+l)
+    · simp only [if_pos ho]
+      have h := fixed_labels_odd_tendsto_zero l (k+1) (j+1)
+        (by convert ho using 1; omega)
+      simpa using h.const_mul
+        (casimir l * (2*((k+1 : ℕ) : ℝ)+1) * (2*((j+1 : ℕ) : ℝ)+1) /
+          (casimir (k+1) * casimir (j+1)))
+    · simp only [if_neg ho]
+      exact tendsto_const_nhds
+  have ht := tendsto_finsetSum (range (k+l+1)) (fun j _ => hf j)
+  have he : ∀ᶠ N : ℕ in atTop,
+      positiveRow l N k = ∑ j ∈ range (k+l+1), f N j := by
+    filter_upwards [eventually_gt_atTop (k+l+2)] with N hN
+    rw [positiveRow, if_pos (by omega), mul_sum]
+    have hterm (j : ℕ) :
+        (N : ℝ) * (if Odd (k+1+(j+1)+l) then
+          casimir l * (2*((k+1 : ℕ) : ℝ)+1) * (2*((j+1 : ℕ) : ℝ)+1) /
+            (casimir (k+1) * casimir (j+1)) * W N l (k+1) (j+1)^2 else 0) =
+          f N j := by
+      dsimp [f]
+      split_ifs <;> ring
+    simp_rw [hterm]
+    symm
+    apply sum_subset (range_mono (by omega))
+    intro j _ hj
+    have hgt : k+l+1 ≤ j := by simpa using hj
+    have hw := W_support N l (k+1) (j+1) (Or.inl (by omega))
+    simp [f, hw]
+  simpa using ht.congr' (Filter.EventuallyEq.symm he)
+
+private noncomputable def rowBound (l k : ℕ) : ℝ :=
+  if k+1=l then 1 else
+    casimir l * (2*((k+1 : ℕ) : ℝ)+1) /
+      (casimir (k+1) * |((k+1 : ℕ) : ℝ)-l| * (((k+1 : ℕ) : ℝ)+l+1))
+
+private lemma rowBound_nonneg (l k : ℕ) : 0 ≤ rowBound l k := by
+  unfold rowBound
+  split_ifs
+  · norm_num
+  · unfold casimir
+    positivity
+
+private lemma positiveRow_le (l N k : ℕ) (hl : 2 ≤ l) (hlN : l < N)
+    (hkl : k+1 ≠ l) : positiveRow l N k ≤ rowBound l k := by
+  by_cases hk : k < N-1
+  · have hN : 2 ≤ N := by omega
+    have hkN : k+1 < N := by omega
+    let C := casimir l * (2*((k+1 : ℕ) : ℝ)+1) / casimir (k+1)
+    have hC : 0 ≤ C := by dsimp [C]; unfold casimir; positivity
+    have he : W N l (k+1) = fun j => W N j (k+1) l := by
+      funext j
+      rw [D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.W_swap N l (k+1) j,
+        W_first N l j (k+1), D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.W_swap N j l (k+1)]
+    have hinv := (D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.result N hN).1
+      (k+1) l ⟨by omega, hkN⟩ ⟨by omega, hlN⟩ hkl
+    have hb : positiveRow l N k ≤ (N : ℝ)*C*
+        ∑ j ∈ range (N-1), (2*((j+1 : ℕ) : ℝ)+1)/casimir (j+1)*
+          W N (j+1) (k+1) l^2 := by
+      rw [positiveRow, if_pos hk, mul_assoc]
+      simp only [mul_sum]
+      apply sum_le_sum
+      intro j _
+      rw [he]
+      split_ifs
+      · dsimp [C]
+        apply le_of_eq
+        simp only [div_eq_mul_inv, mul_inv_rev]
+        ring
+      · have hj : 0 ≤ (2*((j+1 : ℕ) : ℝ)+1)/casimir (j+1)*
+            W N (j+1) (k+1) l^2 := by unfold casimir; positivity
+        simpa using mul_nonneg (Nat.cast_nonneg N) (mul_nonneg hC hj)
+    rw [hinv] at hb
+    have hn0 : (N : ℝ) ≠ 0 := by exact_mod_cast (by omega : N ≠ 0)
+    have heq : (N : ℝ)*C*(1/((N : ℝ)*|((k+1 : ℕ) : ℝ)-l| *
+        (((k+1 : ℕ) : ℝ)+l+1))) = rowBound l k := by
+      rw [rowBound, if_neg hkl]
+      dsimp [C]
+      field_simp [hn0]
+    rwa [heq] at hb
+  · rw [positiveRow, if_neg hk]
+    exact rowBound_nonneg l k
+
+private lemma rowBound_summable (l : ℕ) : Summable (rowBound l) := by
+  have hs : Summable (fun k : ℕ => 8*casimir l / ((k+1 : ℕ) : ℝ)^2) := by
+    have h := (summable_nat_add_iff 1).mpr
+      (Real.summable_one_div_nat_pow.mpr (by omega : 1 < 2))
+    simpa only [mul_one_div] using h.mul_left (8*casimir l)
+  apply hs.of_norm_bounded_eventually
+  rw [Nat.cofinite_eq_atTop]
+  filter_upwards [eventually_ge_atTop (2*l+1)] with k hk
+  have hne : k+1 ≠ l := by omega
+  have hkpos : (0 : ℝ) < ((k+1 : ℕ) : ℝ) := by positivity
+  have hlr : (0 : ℝ) ≤ l := Nat.cast_nonneg _
+  have hkr : 2*(l : ℝ)+1 ≤ k := by exact_mod_cast hk
+  rw [Real.norm_eq_abs, abs_of_nonneg (rowBound_nonneg l k), rowBound, if_neg hne,
+    abs_of_nonneg (by push_cast; linarith : (0 : ℝ) ≤ ((k+1 : ℕ) : ℝ)-l)]
+  have hc : 0 ≤ casimir l := by unfold casimir; positivity
+  have hd : 0 < casimir (k+1) * (((k+1 : ℕ) : ℝ)-l) *
+      (((k+1 : ℕ) : ℝ)+l+1) := by
+    have : (0 : ℝ) < ((k+1 : ℕ) : ℝ)-l := by push_cast; linarith
+    unfold casimir
+    positivity
+  apply (div_le_div_iff₀ hd (sq_pos_of_pos hkpos)).mpr
+  let x : ℝ := ((k+1 : ℕ) : ℝ)
+  have hx : 1 ≤ x := by dsimp [x]; exact_mod_cast (by omega : 1 ≤ k+1)
+  have h1 : x ≤ 2*(x-l) := by dsimp [x]; push_cast; linarith
+  have h2 : x ≤ x+l+1 := by linarith
+  have h3 : 2*x+1 ≤ 3*x := by linarith
+  have h4 : x ≤ casimir (k+1) := by unfold casimir; change x ≤ x*(x+1); nlinarith
+  have ha : 0 ≤ x-l := by linarith
+  have hb : 0 ≤ x+l+1 := by linarith
+  have h5 := mul_le_mul h4 h1 (le_of_lt hkpos)
+    (by unfold casimir; positivity : 0 ≤ casimir (k+1))
+  have h6 := mul_le_mul h5 h2 (le_of_lt hkpos)
+    (mul_nonneg (by unfold casimir; positivity) (mul_nonneg (by norm_num) ha))
+  have h7 := mul_le_mul_of_nonneg_right h3 (sq_nonneg x)
+  have h8 := mul_le_mul_of_nonneg_left h6 hc
+  have h9 := mul_le_mul_of_nonneg_left h7 hc
+  change casimir l * (2*x+1)*x^2 ≤
+    8*casimir l*(casimir (k+1)*(x-l)*(x+l+1))
+  nlinarith [mul_nonneg hc (mul_nonneg (by unfold casimir; positivity : 0 ≤ casimir (k+1))
+    (mul_nonneg ha hb))]
+
+private lemma normalized_positive_eq (l N : ℕ) (hN : 2 ≤ N) :
+    rPlus l N / ((N : ℝ)^2-1) = (∑' k, positiveRow l N k)/4 := by
+  have ht : (∑' k, positiveRow l N k) =
+      ∑ k ∈ range (N-1), positiveRow l N k := by
+    apply tsum_eq_sum
+    intro k hk
+    have : ¬k < N-1 := by simpa using hk
+    simp [positiveRow, this]
+  rw [ht]
+  have hs : (∑ k ∈ range (N-1), positiveRow l N k) =
+      (N : ℝ) * ∑ k ∈ range (N-1), ∑ j ∈ range (N-1),
+        if Odd (k+1+(j+1)+l) then
+          casimir l * (2*((k+1 : ℕ) : ℝ)+1) * (2*((j+1 : ℕ) : ℝ)+1) /
+            (casimir (k+1) * casimir (j+1)) * W N l (k+1) (j+1)^2
+        else 0 := by
+    rw [mul_sum]
+    apply sum_congr rfl
+    intro k hk
+    simp only [positiveRow, if_pos (mem_range.mp hk)]
+  rw [hs, rPlus]
+  have hNr : (2 : ℝ) ≤ N := by exact_mod_cast hN
+  have hd : (N : ℝ)^2-1 ≠ 0 := by nlinarith
+  field_simp [hd]
+
+/-- The normalized positive contribution vanishes for each fixed label at least two. -/
+theorem rPlus_tendsto_zero (l : ℕ) (hl : 2 ≤ l) :
+    Tendsto (fun N => rPlus l N / ((N : ℝ)^2-1)) atTop (nhds 0) := by
+  have hb : ∀ᶠ N : ℕ in atTop, ∀ k, ‖positiveRow l N k‖ ≤ rowBound l k := by
+    have hdiag := (positiveRow_tendsto_zero l (l-1)).eventually_lt_const
+      (by norm_num : (0 : ℝ) < 1)
+    filter_upwards [eventually_gt_atTop l, hdiag] with N hlN hdiag k
+    rw [Real.norm_eq_abs, abs_of_nonneg (positiveRow_nonneg l N k)]
+    by_cases he : k+1=l
+    · have hk : k=l-1 := by omega
+      rw [rowBound, if_pos he, hk]
+      exact le_of_lt hdiag
+    · exact positiveRow_le l N k hl hlN he
+  have h := tendsto_tsum_of_dominated_convergence (rowBound_summable l)
+    (fun k => positiveRow_tendsto_zero l k) hb
+  have he : ∀ᶠ N : ℕ in atTop,
+      rPlus l N / ((N : ℝ)^2-1) = (∑' k, positiveRow l N k)/4 := by
+    filter_upwards [eventually_ge_atTop 2] with N hN
+    exact normalized_positive_eq l N hN
+  simpa using (h.div_const 4).congr' (Filter.EventuallyEq.symm he)
 
 end D5.S3.Quantum.Algebra.ZeitlinSixJ.RicciLimit
