@@ -1,12 +1,16 @@
 /- GID: D5/S3/Arith/PrimeTripletWheel
-   generality: G
-   mirror-B: D5/B/S3/Arith/PrimeTripletWheel
+   generality: I
+   mirror-B: none(waiver:finite-witness-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Finite wheel certificates separate pairwise projection from ordered triplet escape. -/
+   digest: Finite wheel witnesses separate the two prime-triplet orientations.
 
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Nat.Prime.Basic
+   This proposal deliberately formalizes wheel candidates rather than actual
+   prime-triplet counts.  The latter would require an additional arithmetic
+   theorem and is outside the finite witness layer.
+-/
+
+import Mathlib.Data.Finset.Interval
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -14,84 +18,85 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.PrimeTripletWheel
 
-/-- The two diameter-six prime-triplet templates. -/
+/-! ### The two minimal diameter-six templates -/
+
 def tripletPlus : Finset ℕ := {0, 2, 6}
 
-/-- The reflected diameter-six prime-triplet template. -/
 def tripletMinus : Finset ℕ := {0, 4, 6}
 
-/-- Signed ordered-gap chirality, with the common factor two retained. -/
+/-- Signed difference of the two consecutive gaps. -/
 def chirality (a b c : ℕ) : ℤ :=
   ((c - b : ℕ) : ℤ) - ((b - a : ℕ) : ℤ)
 
-/-- The unordered pair-distance multiset represented as a finite set. -/
-def pairDistances (a b c : ℕ) : Finset ℕ :=
-  {b - a, c - b, c - a}
+/-- The unordered pair-distance support of an ordered three-point template. -/
+def pairDistances (a b c : ℕ) : Finset ℕ := {b - a, c - b, c - a}
 
-/-- A finite wheel residue survives a template when every shifted value is
-coprime to the wheel modulus. This is a candidate predicate, not a primality
-predicate. -/
+theorem tripletPlus_chirality : chirality 0 2 6 = 2 := by
+  norm_num [chirality]
+
+theorem tripletMinus_chirality : chirality 0 4 6 = -2 := by
+  norm_num [chirality]
+
+theorem triplet_pairDistances_equal :
+    pairDistances 0 2 6 = pairDistances 0 4 6 := by
+  native_decide
+
+/-! ### Finite wheel candidates -/
+
+/-- A residue is a wheel candidate for every offset in `H`. -/
 def wheelAdmissible (W : ℕ) (H : Finset ℕ) (r : ℕ) : Prop :=
   ∀ h ∈ H, Nat.Coprime (r + h) W
 
-/-- All surviving residue representatives in the canonical range. -/
+/-- Candidate residues in the canonical range `0, ..., W - 1`. -/
 def wheelResidues (W : ℕ) (H : Finset ℕ) : Finset ℕ :=
   (Finset.range W).filter (wheelAdmissible W H)
 
-/-- The fixed-origin prefix readout. -/
+/-- Prefix count with the fixed origin convention used by the foundational theory. -/
 def wheelPrefixCount (W b : ℕ) (H : Finset ℕ) : ℕ :=
   ((Finset.Icc 1 b).filter (wheelAdmissible W H)).card
 
-/-- Translation-invariant two-point candidate correlation. -/
+/-- Two-point wheel correlation at a labelled positive shift. -/
 def wheelPairCount (W s : ℕ) (H : Finset ℕ) : ℕ :=
   ((Finset.range W).filter fun r =>
     wheelAdmissible W H r ∧
       wheelAdmissible W H ((r + s) % W)).card
 
-/-- Ordered three-point candidate correlation. -/
+/-- Three-point wheel correlation at labelled shifts `s,t`. -/
 def wheelTripleCount (W s t : ℕ) (H : Finset ℕ) : ℕ :=
   ((Finset.range W).filter fun r =>
     wheelAdmissible W H r ∧
       wheelAdmissible W H ((r + s) % W) ∧
       wheelAdmissible W H ((r + t) % W)).card
 
-theorem plus_chirality : chirality 0 2 6 = 2 := by
-  norm_num [chirality]
+/-! ### Machine-checked finite escape witnesses -/
 
-theorem minus_chirality : chirality 0 4 6 = -2 := by
-  norm_num [chirality]
-
-theorem plus_minus_pair_distances :
-    pairDistances 0 2 6 = pairDistances 0 4 6 := by
-  norm_num [pairDistances]
-
-/-- At modulus thirty the two templates have the same candidate density,
-but distinct fixed-origin residue representatives. -/
-theorem residues_30_plus :
+theorem wheelResidues_30_plus :
     wheelResidues 30 tripletPlus = {11, 17} := by
   native_decide
 
-theorem residues_30_minus :
+theorem wheelResidues_30_minus :
     wheelResidues 30 tripletMinus = {7, 13} := by
   native_decide
 
-/-- The origin-sensitive prefix readout already separates the templates at W = 30. -/
-theorem prefix_30_separation :
+/-- The first positive labelled prefix separates the two orientations. -/
+theorem wheelPrefix_30_separates :
     wheelPrefixCount 30 10 tripletPlus = 0 ∧
       wheelPrefixCount 30 10 tripletMinus = 1 := by
   native_decide
 
-/-- The first translation-invariant three-point witness in the prescribed
-positive-span window occurs at W = 210 and span pair (6,30). -/
-theorem triple_210_separation :
+/-- At modulus 210, the labelled three-point correlation `(6,30)` separates. -/
+theorem wheelTriple_210_separates :
     wheelTripleCount 210 6 30 tripletPlus = 1 ∧
       wheelTripleCount 210 6 30 tripletMinus = 0 := by
   native_decide
 
-/-- The two-point candidate count cannot see the fixed-span three-point split. -/
-theorem pair_210_same_at_6 :
-    wheelPairCount 210 6 tripletPlus =
-      wheelPairCount 210 6 tripletMinus := by
+/-- No positive pair of labelled spans below 30 has a nonzero three-point
+correlation for either orientation. -/
+theorem wheelTriple_no_smaller_positive_span :
+    ∀ s t : Fin 30,
+      0 < s.val → s.val < t.val →
+        wheelTripleCount 210 s.val t.val tripletPlus = 0 ∧
+          wheelTripleCount 210 s.val t.val tripletMinus = 0 := by
   native_decide
 
 end D5.S3.Arith.PrimeTripletWheel
