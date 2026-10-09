@@ -136,6 +136,29 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual(7, len(selected))
         self.assertFalse(any(name in str(selected) for name in ("auth.json", "config.toml", "state.sqlite", "skill.md")))
 
+    def test_codex_inventory_selects_only_superseded_package_releases(self):
+        codex = self.root / "codex"
+        packages = codex / "packages"
+        for package in ("standalone", "app-server-daemon", "dangling", "outside", "plain"):
+            for version in ("0.1", "0.2", "0.3"):
+                self.old_file(packages / package / "releases" / version / "bin" / "codex")
+            self.old_file(packages / package / "auto-update-version")
+        os.symlink("releases/0.3", packages / "standalone" / "current")
+        (packages / "app-server-daemon" / "current").symlink_to(packages / "app-server-daemon" / "releases" / "0.2")
+        os.symlink("releases/9.9", packages / "dangling" / "current")
+        (packages / "outside" / "current").symlink_to(self.root)
+        target = self.root / "linked target"
+        for version in ("0.1", "0.2"):
+            self.old_file(target / "releases" / version / "bin" / "codex")
+        os.symlink("releases/0.2", target / "current")
+        (packages / "linked").symlink_to(target, target_is_directory=True)
+        inventory = {path for category, path in cleanup.candidates(codex, self.root / "sshx", [])
+                     if category == "codex"}
+        expected = {packages / "standalone" / "releases" / "0.1", packages / "standalone" / "releases" / "0.2",
+                    packages / "app-server-daemon" / "releases" / "0.1",
+                    packages / "app-server-daemon" / "releases" / "0.3"}
+        self.assertEqual(expected, inventory, "[FAIL] codex_superseded_releases_selected")
+
     def test_clean_lanes_failure_is_propagated(self):
         with patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 2)) as run:
             self.assertEqual(2, cleanup.clean_worktrees(self.root, "base", True))

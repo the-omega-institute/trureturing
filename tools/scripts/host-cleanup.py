@@ -160,6 +160,21 @@ def children(root):
         yield from root.iterdir()
 
 
+def superseded_releases(package):
+    """Yield a Codex package's releases other than the one its current link selects."""
+    current = package / "current"
+    if package.is_symlink():
+        return
+    releases = package / "releases"
+    selected = current.resolve()
+    # Without a resolvable current release in this package, no release can be called superseded.
+    if selected.parent != releases.resolve() or not selected.is_dir():
+        return
+    for release in children(releases):
+        if release.name != selected.name:
+            yield release
+
+
 def candidates(codex, sshx, tmp_roots):
     for name in ("sessions", "archived_sessions"):
         root = codex / name
@@ -176,6 +191,9 @@ def candidates(codex, sshx, tmp_roots):
                 yield "codex", run
         else:
             yield "codex", path
+    for package in children(codex / "packages"):
+        for release in superseded_releases(package):
+            yield "codex", release
     for path in children(sshx):
         if re.fullmatch(r"[0-9a-f]{24}", path.name):
             yield "sshx", path
