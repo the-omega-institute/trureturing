@@ -1,0 +1,26 @@
+### theorem 1.2: 后验必须保持同一来源的重心
+
+**Claim status: open.** 对任意有限条件读口，
+
+$$
+\boxed{\sum_oq_op^o=p.}
+$$
+
+反过来，若 $q_o>0$、$\sum_oq_o=1$，并且候选后验满足 $\sum_oq_op^o=p$，则可取
+
+$$
+\boxed{L(o\mid s)=\frac{q_op_s^o}{p_s}}
+$$
+
+实现这份后验分解。
+
+**证明。** 第一式直接由 Bayes 公式消去分母。反向式非负，并由重心条件保证每个模式上的似然和为一，代回即可。证毕。
+
+这只是经典有限 Bayes plausibility；它不自动授予原生 FIB 读者任意查询权限。只检查 $\sum_oq_o(X_o,Y_o,Z_o)=(X,Y,Z)$ 仍然不够，还必须有
+
+$$
+\boxed{\sum_oq_o\kappa_o=\kappa}
+$$
+
+才能保证候选后验来自同一个五模式来源。
+

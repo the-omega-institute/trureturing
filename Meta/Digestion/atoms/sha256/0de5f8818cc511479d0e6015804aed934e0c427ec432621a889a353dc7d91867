@@ -1,0 +1,20 @@
+## 10. 量子四面体测量是另一种明确实现
+
+另行供应一个两能级接口，态写成
+
+$$
+\varrho=\frac12(I+r_xX+r_yY+r_zZ),\qquad \|\mathbf r\|\le1.
+$$
+
+取四个单位向量
+
+$$
+n_a\in\frac1{\sqrt3}\{(1,1,1),(1,-1,-1),(-1,1,-1),(-1,-1,1)\},
+$$
+
+满足 $\sum_an_a=0$、$\sum_an_an_a^{\mathsf T}=4I/3$，定义
+
+$$
+E_a=\frac14(I+n_a\cdot\sigma).
+$$
+

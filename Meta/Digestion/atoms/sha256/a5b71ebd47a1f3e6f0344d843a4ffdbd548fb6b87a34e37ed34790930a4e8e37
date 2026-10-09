@@ -1,0 +1,16 @@
+## 6. 记录不足时的条件关联预算
+
+仍取观察前独立的 $b_i$，但不再要求后验独立。令
+
+$$
+B_{ij}=\operatorname{Cov}_O(u_i(O),u_j(O)),\qquad \nu_i=B_{ii}>0,
+$$
+
+以及平均条件协方差
+
+$$
+S_{ij}=\mathbb E_O[\operatorname{Cov}(b_i,b_j\mid O)].
+$$
+
+总协方差给出 $S_{ij}=-B_{ij}$（$i\ne j$）。
+
