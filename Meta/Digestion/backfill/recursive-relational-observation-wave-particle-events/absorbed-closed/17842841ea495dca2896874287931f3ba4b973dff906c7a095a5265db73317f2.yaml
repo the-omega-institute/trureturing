@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:17842841ea495dca2896874287931f3ba4b973dff906c7a095a5265db73317f2
   normalized_sha256: sha256:17842841ea495dca2896874287931f3ba4b973dff906c7a095a5265db73317f2
 cas_ref: sha256:17842841ea495dca2896874287931f3ba4b973dff906c7a095a5265db73317f2
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/FiniteDetectionDarkSpace.dark_space_eq_survival_defect_kernel
+    target_statement_id: sha256:0f6ad98c1b1a196e5c4de629a9d6bf1963b077ac0ab337ae717a48e2d234da2e
 receipts:
   unresolved_subitems: []
