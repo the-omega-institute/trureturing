@@ -61,10 +61,10 @@ stabilizer states.
 The canonical source is `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.lean`, with
 public `claim` and `result : ¬ claim`. The axiom closure of `result` is exactly `propext`,
 `Classical.choice` and `Quot.sound`; there is no `sorry`, `native_decide` or new axiom. The module
-statement is `sha256:860785e1a83ba53a725d38336b97d4b3c71e924137a54382ecd9819116432228`, the `result`
+statement is `sha256:87fa0d914d3520854d77069904b2c94a0b4e436b95cded2724dd4aede32fca66`, the `result`
 statement `sha256:ab48ed35cda00d5b5ba176f1008985182fada677985722d41f50b46958fef103` and the `claim`
 statement `sha256:ab9e4fef8616bd26d3d8aadc3b24de1f1b45f45c9af27f30edc00c309fdcb1e5`. The Freeze event is
-`sha256:0f139a6c5518e50ed738189e37f33449e6c8e06f99f77a42a1e46e428926c846`; its one project-level
+`sha256:0630d507568cef406b80d8acc31aaccdd8f6709e5874320aff894907aa780a56`; its one project-level
 prerequisite is the frozen node `sha256:6f1e7f1909bb5bd57dcbacf1b57dd272d84520dc0cf284c3de6f6235b4209edd` of
 `D5/S3/Quantum/Magic/CliffordThirdMomentNegativity`, whose `R`, `stateCube` and `kappa` the module
 reuses.
@@ -93,12 +93,12 @@ digestion atom.
 **Proved by `result`:** the aggregate lower bound $\kappa(\Psi,\mathscr T_{\rm iso})\ge6$ of
 Conjecture 2 fails for a normalized two-qudit state at $d=5$.
 
+**Proved by `D5/S3/Quantum/Magic/CliffordThirdMomentSigmaRefutation.result`:** the same state violates
+the lower bounds $6\le\kappa(\Psi,\Sigma(d))$ and $0\le\kappa(\Psi,\mathscr T_{\rm ns})$, through
+$\Sigma(5)=\mathscr T_{\rm iso}$ ([dossier](zhu-2024-clifford-third-moment-sigma-lower-bounds.md)).
+
 **Argued, not formalized.**
-- *The other aggregate lower bounds.* For $d\equiv2\pmod3$ every stochastic Lagrangian subspace is
-  a graph (the paper; an exhaustive enumeration gives $|\Sigma(5)|=12$), so
-  $\kappa(\Psi,\Sigma(5))=\kappa(\Psi,\mathscr T_{\rm iso})<6$. Since $\kappa=1$ on
-  $\mathscr T_{\rm sym}$, also $\kappa(\Psi,\mathscr T_{\rm ns})=-3866145/24017978<0$. The pointwise
-  clause fails at $d=5$ as well: each non-permutation value is negative.
+- *The pointwise clause at $d=5$.* Each non-permutation value is negative.
 - *Every $n\ge2$.* Graph expectations are multiplicative under tensor products and equal $1$ for a
   stabilizer state, so $\Psi\otimes|0\rangle^{\otimes(n-2)}$ has the same values.
 - *Mechanism.* The proven bound $4(D+d)/(D+1)$ is at least $6$ only for one qudit. Entanglement is
