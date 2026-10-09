@@ -558,7 +558,7 @@ private theorem composition_total (T : Source) :
     cases b <;> rfl)
   exact congrArg Multiplicative.toAdd (DFunLike.congr_fun equal T)
 
-private theorem allowedSources_exact (N : Nat) (U : Source) :
+theorem allowedSources_exact (N : Nat) (U : Source) :
     U ∈ allowedSources N ↔ Allowed N U := by
   classical
   refine ⟨fun h => (Finset.mem_filter.mp h).2, fun allowed => ?_⟩
@@ -577,7 +577,7 @@ private theorem allowedSources_exact (N : Nat) (U : Source) :
   refine Finset.mem_biUnion.mpr ⟨b, Finset.mem_range.mpr (by omega), ?_⟩
   exact Finset.mem_image.mpr ⟨⟨U, rfl⟩, Finset.mem_univ _, rfl⟩
 
-private theorem allowedSources_nonempty (N : Nat) (positive : 1 ≤ N) :
+theorem allowedSources_nonempty (N : Nat) (positive : 1 ≤ N) :
     (allowedSources N).Nonempty :=
   ⟨.of true, (allowedSources_exact N _).mpr positive⟩
 
@@ -590,7 +590,7 @@ noncomputable def maxFee (N : Nat) (M : Observer E) (tau : Address → ℝ) : �
 noncomputable def J_N (N : Nat) (M : Observer E) (tau : Address → ℝ) (kappa : ℝ) : ℝ :=
   kappa * (Fintype.card E : ℝ) + maxFee N M tau
 
-private theorem fee_run (M : Observer E) (tau : Address → ℝ) (U : Source)
+theorem fee_run (M : Observer E) (tau : Address → ℝ) (U : Source)
     {t : RawHistory} {f : E} {b : Bool} (run : Run M U M.e0 t f b) :
     Fee M tau U = charge tau t := by
   have total : ∃ s g c, Run M U M.e0 s g c := ⟨t, f, b, run⟩
@@ -618,7 +618,7 @@ private theorem charge_projection (N : Nat) (tau : Address → ℝ)
   exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
     (fun q _ _ => nonneg q)
 
-private theorem maximum_exact (N : Nat) (positive : 1 ≤ N) (M : Observer E)
+theorem maximum_exact (N : Nat) (positive : 1 ≤ N) (M : Observer E)
     (tau : Address → ℝ) :
     (∀ U, Allowed N U → Fee M tau U ≤ maxFee N M tau) ∧
     ∃ U, Allowed N U ∧ maxFee N M tau = Fee M tau U := by

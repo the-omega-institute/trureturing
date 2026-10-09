@@ -114,7 +114,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.
 
 RepresentationContract records initial label zero; exact action, transition and decoded-cache correspondence at every nominal row; equivalence of actual prefixes and finite runs at every original source, arbitrary starting row and literal raw trace; equality of counterfactual actions and transported folded states on every raw history; exact sourcewise Fee and J_N for arbitrary real prices; and transport of Admissible. Histories include impossible, unreachable, inconsistent and wrong-address reports, as well as reports after halt. The finite-run equivalence gives equality of the complete terminating-trace predicates, so Fee equality follows even when a source has no terminating run. The price identity preserves the full carrier cardinality and the maximum over the same original allowed-source domain.
 
-**Theorem 1.10 (Actual coverage of every original admissible competitor).**
+**Theorem 1.10 (A faithful complete table satisfies the representation contract).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.representation_contract`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.representation_contract` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Given an equivalence r between the complete carrier and Fin(card E), a native table T with initial label zero, and equality of tableObserver with relabel M r, every field of RepresentationContract holds. The supplier preserves exact actions, four-reply successors, ordered caches, actual prefixes and runs, all raw-history semantics, arbitrary real Fee and J_N, and admissibility. It is consumed both by competitor coverage and by the lawful pure-acquisition baseline table.
+
+**Theorem 1.11 (Actual coverage of every original admissible competitor).**
 
 $$\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall N: Nat, (\forall M: \operatorname{Observer}\left(E\right), ((\operatorname{Admissible}\left(N, M\right)) \implies (\exists H: \operatorname{Observer}\left(E\right), (\exists p: 0 < \operatorname{card}\left(E\right), (\exists r: \operatorname{Equiv}\left(E, \operatorname{Fin}\left(\operatorname{card}\left(E\right)\right)\right), (\exists T: \operatorname{NativeTable}\left(N, \operatorname{card}\left(E\right)\right), ((\operatorname{NormalizationContract}\left(N, M, H\right)) \land ((\operatorname{RepresentationContract}\left(N, H, p, r, T\right)) \land ((\operatorname{Member}\left(T, \operatorname{lawfulTables}\left(N, \operatorname{card}\left(E\right), p\right)\right)) \land (\forall tau: Address \Rightarrow Real, ((\forall q: Address, (0 \leq \operatorname{tau}\left(q\right))) \implies ((\forall U: Source, ((\operatorname{Allowed}\left(N, U\right)) \implies (\operatorname{Fee}\left(\operatorname{tableObserver}\left(p, T\right), tau, U\right) \leq \operatorname{Fee}\left(M, tau, U\right)))) \land (\forall k: Real, ((0 < k) \implies (\operatorname{Joint}\left(N, \operatorname{tableObserver}\left(p, T\right), tau, k\right) \leq \operatorname{Joint}\left(N, M, tau, k\right)))))))))))))))))$$
 
@@ -141,5 +153,6 @@ The table family is finite for each fixed nominal cardinality and covers every n
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.decodeCache`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.lawfulTables`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.relabel`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.representation_contract`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.tableObserver`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization](ActualObserverAbsorbingNormalization.md)
