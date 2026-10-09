@@ -391,7 +391,10 @@ public sealed partial class CleanLanesCommandTests
 
         internal CommandResult RunWithActivePath(string activePath, params string[] arguments)
         {
-            var allArguments = new List<string> { "--base", "dev", "--active-path", activePath };
+            using var activity = new TemporaryDirectory(TestScratchRoot.Current);
+            var activityFile = Path.Combine(activity.Path, "activity.json");
+            File.WriteAllText(activityFile, System.Text.Json.JsonSerializer.Serialize(new[] { activePath }));
+            var allArguments = new List<string> { "--base", "dev", "--active-paths-file", activityFile };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(
                 repository.Path,
