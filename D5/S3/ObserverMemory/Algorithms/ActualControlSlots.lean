@@ -660,7 +660,7 @@ private theorem tail_unique {q : Q} {d e : Nat}
     cases clash
 
 omit [Fintype Q] [DecidableEq Q] in
-private theorem edge_target_unique {u v w : RC × Fin p}
+theorem edge_target_unique {u v w : RC × Fin p}
     (hv : C.Edge I u v) (hw : C.Edge I u w) : v.1 = w.1 := by
   obtain ⟨x, i, d, _, _, _, _, waits, endpoint, _⟩ := C.edge_tail I hv
   obtain ⟨y, j, e, _, _, _, _, waits', endpoint', _⟩ := C.edge_tail I hw

@@ -439,4 +439,247 @@ private theorem saturated_children (h : Nat)
     exact ⟨d,hd,by rw [← eq]; exact s.1,
       by rw [← eq]; exact s.2.2.1,by rw [← eq]; exact s.2.2.2.1⟩
 
+
+private theorem index_edge {x : Source} {i j : Nat} {u v : Slot}
+    (hu : C.Occurs I x i u) (hv : C.Occurs I x j v) (before : i < j)
+    (waits : ∀ t, i < t → t < j → C.action (C.run hp hP x t).2 = .wait) :
+    readIndex hp hP C I (x,j) = readIndex hp hP C I (x,i) + 1 := by
+  have a := index_split hp hP C I (x,i)
+  have b := index_split hp hP C I (x,j)
+  have step := later_read_step hp hP C I hu hv before waits
+  dsimp only at a b
+  omega
+
+private theorem predecessor_unique {u v w : Slot} {x : Source} {i j k : Nat}
+    (hu : C.Occurs I x i u) (hv : C.Occurs I x j v)
+    (hw : C.Occurs I x k w) (ik : i < k) (jk : j < k)
+    (iw : ∀ t, i < t → t < k → C.action (C.run hp hP x t).2 = .wait)
+    (jw : ∀ t, j < t → t < k → C.action (C.run hp hP x t).2 = .wait) : u = v := by
+  have ij : i = j := by
+    obtain ⟨_,_,_,_,_,ur,_⟩ := u.1.property
+    obtain ⟨_,_,_,_,_,vr,_⟩ := v.1.property
+    rcases lt_trichotomy i j with lt | eq | gt
+    · have clash := iw j lt jk
+      rw [hv.2.1,vr] at clash
+      cases clash
+    · exact eq
+    · have clash := jw i gt ik
+      rw [hu.2.1,ur] at clash
+      cases clash
+  exact event_slot_unique hp hP C I (ij ▸ hu) hv
+
+/-- Minimum original read index among the complete initialized events of a slot. -/
+private noncomputable def rank (u : Slot) : Nat :=
+  if hn : ((events hp hP C I u).image (readIndex hp hP C I)).Nonempty then
+    ((events hp hP C I u).image (readIndex hp hP C I)).min' hn else 0
+
+private theorem rank_spec {u : Slot} (ne : (events hp hP C I u).Nonempty) :
+    (∃ e ∈ events hp hP C I u, readIndex hp hP C I e = rank hp hP C I u) ∧
+      ∀ e ∈ events hp hP C I u, rank hp hP C I u ≤ readIndex hp hP C I e := by
+  classical
+  have hn := ne.image (readIndex hp hP C I)
+  simp only [rank,dif_pos hn]
+  refine ⟨?_,?_⟩
+  · exact Finset.mem_image.mp (Finset.min'_mem _ hn)
+  · intro e he
+    exact Finset.min'_le _ _ (Finset.mem_image.mpr ⟨e,he,rfl⟩)
+
+private theorem mass_nonempty (h : Nat) {u : Slot} (full : mass hp hP C I h u = 1) :
+    (events hp hP C I u).Nonempty := by
+  by_contra empty
+  simp [mass,Finset.not_nonempty_iff_eq_empty.mp empty] at full
+
+private theorem full_edge (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u v : Slot}
+    (full : mass hp hP C I h u = 1) (edge : C.Edge I u v) :
+    mass hp hP C I h v = 1 ∧ rank hp hP C I u < rank hp hP C I v ∧
+      ∀ z, C.Edge I z v → z = u := by
+  have active : C.action (C.readNext u.1.val u.2) ≠ .halt := by
+    intro halt
+    exact terminal_no_edge hp hP C I halt edge
+  obtain ⟨l,r,ne,el,er,lf,rf,exhaustive,complete⟩ :=
+    saturated_children hp hP C I h budget u active full
+  have choice := (exhaustive v).mp edge
+  have vf : mass hp hP C I h v = 1 := by rcases choice with rfl | rfl <;> assumption
+  have cover (e : Source × Nat) (he : e ∈ events hp hP C I v) :
+      ∃ d ∈ events hp hP C I u, e.1 = d.1 ∧ d.2 < e.2 ∧
+        ∀ t, d.2 < t → t < e.2 → C.action (C.run hp hP d.1 t).2 = .wait := by
+    apply complete e
+    rcases choice with rfl | rfl
+    · exact Finset.mem_union_left _ he
+    · exact Finset.mem_union_right _ he
+  refine ⟨vf,?_,?_⟩
+  · obtain ⟨e,he,min⟩ := (rank_spec hp hP C I (mass_nonempty hp hP C I h vf)).1
+    obtain ⟨d,hd,xy,before,waits⟩ := cover e he
+    have step := index_edge hp hP C I ((mem_events hp hP C I).mp hd)
+      (xy ▸ (mem_events hp hP C I).mp he) before waits
+    have bound := (rank_spec hp hP C I (mass_nonempty hp hP C I h full)).2 d hd
+    have same : readIndex hp hP C I (d.1,e.2) = readIndex hp hP C I e := by
+      cases e; cases d; simp_all
+    change readIndex hp hP C I (d.1,e.2) = readIndex hp hP C I d + 1 at step
+    rw [same,min] at step
+    omega
+  · intro z hz
+    obtain ⟨x,i,j,hi,hj,before,waits⟩ := hz
+    obtain ⟨d,hd,xy,before',waits'⟩ := cover (x,j) ((mem_events hp hP C I).mpr hj)
+    have dx : d.1 = x := xy.symm
+    apply predecessor_unique hp hP C I hi (dx ▸ (mem_events hp hP C I).mp hd)
+      hj before before'
+      waits
+    simpa only [dx] using waits'
+
+private theorem reachable_full (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u v : Slot}
+    (full : mass hp hP C I h u = 1) (path : Relation.ReflTransGen (C.Edge I) u v) :
+    mass hp hP C I h v = 1 := by
+  induction path with
+  | refl => exact full
+  | tail before edge ih => exact (full_edge hp hP C I h budget ih edge).1
+
+private theorem path_rank (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u v : Slot}
+    (path : Relation.TransGen (C.Edge I) u v) (full : mass hp hP C I h u = 1) :
+    rank hp hP C I u < rank hp hP C I v := by
+  induction path with
+  | single edge => exact (full_edge hp hP C I h budget full edge).2.1
+  | @tail v w path edge ih =>
+    have vf := reachable_full hp hP C I h budget full path.to_reflTransGen
+    exact ih.trans ((full_edge hp hP C I h budget vf edge).2.1)
+
+
+private theorem same_target (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) (small : p ≤ 3)
+    {u z v w : Slot} (uf : mass hp hP C I h u = 1) (zf : mass hp hP C I h z = 1)
+    (uv : C.Edge I u v) (zw : C.Edge I z w) (target : v.1 = w.1) : u = z := by
+  classical
+  have ua : C.action (C.readNext u.1.val u.2) ≠ .halt :=
+    fun halt => terminal_no_edge hp hP C I halt uv
+  have za : C.action (C.readNext z.1.val z.2) ≠ .halt :=
+    fun halt => terminal_no_edge hp hP C I halt zw
+  obtain ⟨a,b,ab,ua',ub,af,bf,ex,comp⟩ := saturated_children hp hP C I h budget u ua uf
+  obtain ⟨c,d,cd,zc,zd,cf,df,ex',comp'⟩ := saturated_children hp hP C I h budget z za zf
+  have ac : a.1 = c.1 := (C.edge_target_unique I ua' uv).trans
+    (target.trans (C.edge_target_unique I zw zc))
+  have abq := C.edge_target_unique I ua' ub
+  have cdq := C.edge_target_unique I zc zd
+  have abdigit : a.2 ≠ b.2 := fun eq => ab (Prod.ext abq eq)
+  have cddigit : c.2 ≠ d.2 := fun eq => cd (Prod.ext cdq eq)
+  have common : (({a.2,b.2} : Finset (Fin p)) ∩ {c.2,d.2}).Nonempty := by
+    apply Finset.inter_nonempty_of_card_lt_card_add_card
+      (s := Finset.univ) (Finset.subset_univ _) (Finset.subset_univ _)
+    simp only [Finset.card_univ,Fintype.card_fin,Finset.card_pair abdigit,
+      Finset.card_pair cddigit]
+    omega
+  obtain ⟨digit,mem⟩ := common
+  obtain ⟨ld,rd⟩ := Finset.mem_inter.mp mem
+  let child : Slot := (a.1,digit)
+  have left : child = a ∨ child = b := by
+    rcases Finset.mem_insert.mp ld with eq | eq
+    · exact Or.inl (Prod.ext rfl eq)
+    · exact Or.inr (Prod.ext abq (Finset.mem_singleton.mp eq))
+  have right : child = c ∨ child = d := by
+    rcases Finset.mem_insert.mp rd with eq | eq
+    · exact Or.inl (Prod.ext ac eq)
+    · exact Or.inr (Prod.ext (ac.trans cdq) (Finset.mem_singleton.mp eq))
+  have uc := (ex child).mpr left
+  have zchild := (ex' child).mpr right
+  exact ((full_edge hp hP C I h budget uf uc).2.2 z zchild).symm
+
+private theorem saturated_card (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u : Slot}
+    (active : C.action (C.readNext u.1.val u.2) ≠ .halt)
+    (full : mass hp hP C I h u = 1) : 2 ≤ (events hp hP C I u).card := by
+  classical
+  have bound (e : Source × Nat) (he : e ∈ events hp hP C I u) :
+      (1 / 2 : Real) ^ (h - readIndex hp hP C I e) ≤ 1 / 2 := by
+    have a := advance_spec hp hP C I active he
+    have b := index_split hp hP C I e
+    have c := budget e.1
+    exact pow_le_of_le_one (by norm_num) (by norm_num) (by omega)
+  have upper : mass hp hP C I h u ≤ ((events hp hP C I u).card : Real) * (1 / 2) := by
+    calc
+      _ ≤ ∑ _e ∈ events hp hP C I u, (1 / 2 : Real) := Finset.sum_le_sum bound
+      _ = _ := by simp
+  rw [full] at upper
+  have lower : (2 : Real) ≤ (events hp hP C I u).card := by linarith
+  exact_mod_cast lower
+
+
+private theorem terminal_deadline (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u : Slot}
+    (full : mass hp hP C I h u = 1)
+    (halt : C.action (C.readNext u.1.val u.2) = .halt) :
+    ∃ e : Source × Nat, events hp hP C I u = {e} ∧
+      readIndex hp hP C I e = h ∧ e.2 + 1 = I.length e.1 := by
+  classical
+  obtain ⟨e,he⟩ := mass_nonempty hp hP C I h full
+  have end' := terminal_end hp hP C I ((mem_events hp hP C I).mp he) halt
+  have singleton : events hp hP C I u = {e} := by
+    apply Finset.eq_singleton_iff_unique_mem.mpr
+    refine ⟨he,?_⟩
+    intro d hd
+    have other := terminal_end hp hP C I ((mem_events hp hP C I).mp hd) halt
+    have xy : d.1 = e.1 := other.1.symm.trans end'.1
+    apply Prod.ext xy
+    rw [xy] at other
+    omega
+  have mass' : (1 / 2 : Real) ^ (h - readIndex hp hP C I e) = 1 := by
+    simpa only [mass,singleton,Finset.sum_singleton] using full
+  have zero : h - readIndex hp hP C I e = 0 := by
+    by_contra nonzero
+    have strict : (1 / 2 : Real) ^ (h - readIndex hp hP C I e) < 1 :=
+      pow_lt_one₀ (by norm_num) (by norm_num) nonzero
+    linarith
+  have split := index_split hp hP C I e
+  have bound := budget e.1
+  exact ⟨e,singleton,by omega,end'.2⟩
+
+private theorem target_nonroot {u v : Slot} (edge : C.Edge I u v) : v.1.val ≠ C.initial := by
+  classical
+  obtain ⟨G,root,used,edges,rest⟩ := C.result I
+  intro same
+  have eq : v.1 = G.root := Subtype.ext (same.trans root.symm)
+  have entry := (edges u v).mpr edge
+  have forbidden := G.root_no_incoming u v.2
+  exact forbidden (by simpa only [← eq,Prod.eta] using entry)
+
+/-- A saturated actual cone has complete child fibers, unique incoming edges,
+no slot cycle, and distinct next-reading controls when p is two or three. -/
+theorem result (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) (small : p ≤ 3)
+    (u : Slot) (active : C.action (C.readNext u.1.val u.2) ≠ .halt)
+    (full : mass hp hP C I h u = 1) :
+    2 ≤ (events hp hP C I u).card ∧
+    (∀ v, Relation.ReflTransGen (C.Edge I) u v →
+      mass hp hP C I h v = 1 ∧ ¬ Relation.TransGen (C.Edge I) v v ∧
+      (C.action (C.readNext v.1.val v.2) = .halt →
+        ∃ e : Source × Nat, events hp hP C I v = {e} ∧
+          readIndex hp hP C I e = h ∧ e.2 + 1 = I.length e.1) ∧
+      (C.action (C.readNext v.1.val v.2) ≠ .halt →
+        ∃ l r : Slot, l ≠ r ∧ C.Edge I v l ∧ C.Edge I v r ∧
+          mass hp hP C I h l = 1 ∧ mass hp hP C I h r = 1 ∧
+          (∀ z, C.Edge I v z ↔ z = l ∨ z = r) ∧
+          (∀ e ∈ events hp hP C I l ∪ events hp hP C I r,
+            ∃ d ∈ events hp hP C I v, e.1 = d.1 ∧ d.2 < e.2 ∧
+              ∀ t, d.2 < t → t < e.2 → C.action (C.run hp hP d.1 t).2 = .wait)) ∧
+      (∀ w, C.Edge I v w → (∀ z, C.Edge I z w → z = v) ∧ w.1.val ≠ C.initial)) ∧
+    (∀ v w a b, Relation.ReflTransGen (C.Edge I) u v →
+      Relation.ReflTransGen (C.Edge I) u w → C.Edge I v a → C.Edge I w b →
+      a.1 = b.1 → v = w) := by
+  refine ⟨saturated_card hp hP C I h budget active full,?_,?_⟩
+  · intro v path
+    have vf := reachable_full hp hP C I h budget full path
+    refine ⟨vf,?_,terminal_deadline hp hP C I h budget vf,
+      (fun va => saturated_children hp hP C I h budget v va vf),?_⟩
+    · intro loop
+      have strict := path_rank hp hP C I h budget loop vf
+      exact Nat.lt_irrefl _ strict
+    · intro w edge
+      exact ⟨(full_edge hp hP C I h budget vf edge).2.2,
+        target_nonroot hp hP C I edge⟩
+  · intro v w a b vp wp va wb eq
+    exact same_target hp hP C I h budget small
+      (reachable_full hp hP C I h budget full vp)
+      (reachable_full hp hP C I h budget full wp) va wb eq
+
 end D5.S3.ObserverMemory.Algorithms.SaturatedActualCone

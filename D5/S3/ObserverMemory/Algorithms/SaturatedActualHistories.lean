@@ -445,7 +445,7 @@ private theorem saturated_support [Finite Q] {n : Nat} {u : Slot} {S : Finset So
   obtain ⟨tree⟩ := tree_exists hp hP C I realized budget
   exact saturated_tree hp hP C I tree full
 
-private theorem later_read_step {x : Source} {t k : Nat} {u v : Slot}
+theorem later_read_step {x : Source} {t k : Nat} {u v : Slot}
     (_ht : C.Occurs I x t u) (hk : C.Occurs I x k v) (tk : t < k)
     (waits : ∀ i, t < i → i < k → C.action (C.run hp hP x i).2 = .wait) :
     (laterReads hp hP C I x t).card = (laterReads hp hP C I x k).card + 1 := by
