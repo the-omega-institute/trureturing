@@ -1335,14 +1335,14 @@ v_{\mathrm{ext}}^2+v_{\mathrm{int}}^2=c^2
 
 - docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md
 - docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md
-- docs/develop/Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.md
-- docs/develop/Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.md
-- docs/develop/Blueprint/D5/S3/Midline/HeatLayers/GoldenHeatLayers.md
-- docs/develop/Blueprint/D5/S3/Axis/PrimeAxisEscape.md
-- docs/develop/Blueprint/D5/S3/Observer/HilbertGeometry/HilbertSubspaceAction.md
-- docs/develop/Blueprint/D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.md
-- docs/develop/Blueprint/D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity.md
-- docs/develop/Blueprint/D5/S3/Entropy/Thermodynamics/JarzynskiSecondLaw.md
+- Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.md
+- Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.md
+- Blueprint/D5/S3/Midline/HeatLayers/GoldenHeatLayers.md
+- Blueprint/D5/S3/Axis/PrimeAxisEscape.md
+- Blueprint/D5/S3/Observer/HilbertGeometry/HilbertSubspaceAction.md
+- Blueprint/D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.md
+- Blueprint/D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity.md
+- Blueprint/D5/S3/Entropy/Thermodynamics/JarzynskiSecondLaw.md
 - 与 AURIC FIB escape audit typed spec 相邻的 PR #14815
 
 本文只建立理论接口和可验证的下一步，不宣称已经完成 AURIC 到 Information Escape 的 Lean bridge，也不宣称素数轨迹是唯一的物理几何轨迹。
