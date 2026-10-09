@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b4b21d867e7173ff6c00ad899ba57c0e378a25f47ab63555edf099d2f062ed78
+  normalized_sha256: sha256:b4b21d867e7173ff6c00ad899ba57c0e378a25f47ab63555edf099d2f062ed78
+cas_ref: sha256:b4b21d867e7173ff6c00ad899ba57c0e378a25f47ab63555edf099d2f062ed78
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenChronology/GoldenMagnusParityRecovery.center_recovers_fixed_length_iff_even
+    target_statement_id: sha256:b22cc6478619746b65aa23c618151ed4f5d6433f8ba2a2ac6eedb4bfd585bfaf
+receipts:
+  unresolved_subitems: []
