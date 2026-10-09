@@ -25,7 +25,10 @@ internal sealed class PathDoubleBlowUpPGSTRefutationDocument : IScribeDocumentDe
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Refutation by source vertex 4 of P_11", Disp(new Formula.Not(F.Id("claim"))),
                 "Take t = 2, r = 3 and u = 3 in Fin(11), representing source vertex 4. At that vertex the diagonal amplitude is one quarter of the sum of the four cosines with positive frequencies (sqrt(6)+sqrt(2))/2, sqrt(3), 1 and (sqrt(6)-sqrt(2))/2. Each pair of opposite eigenvalues carries weight one eighth on each eigenvalue. Biquadratic independence and the finite-torus character criterion give times pi/2 + pi*m(k) along which all four cosines tend to minus one. The general twin-amplitude identity then gives modulus tending to one. The source's relation theta_5 - theta_9 + theta_11 = 0 uses theta_9 = -sqrt(2); this eigenvalue has zero weight at source vertex 4, since sin(3*pi) = 0, and therefore does not obstruct transfer there.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bhattacharjya-monterde-pal-2024-double-blow-up-pgst"),
+                    ResolutionKind.Refuted)))));
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) =>

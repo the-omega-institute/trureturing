@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PathDoubleBlowUpPGSTRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bhattacharjya-monterde-pal-2024-double-blow-up-pgst` (refuted) by `D5/S3/Quantum/Dynamics/PathDoubleBlowUpPGSTRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bhattacharjya-monterde-pal-2024-double-blow-up-pgst","declaration_gid":"D5/S3/Quantum/Dynamics/PathDoubleBlowUpPGSTRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bikash Bhattacharjya, Hermie Monterde, Hiranmoy Pal (2024). *Quantum walks on blow-up graphs*. DOI: [10.1088/1751-8121/ad6653](https://doi.org/10.1088/1751-8121/ad6653). URL: <https://arxiv.org/abs/2308.13887v2>.
