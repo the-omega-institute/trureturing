@@ -1,0 +1,14 @@
+**Claim status: open.** 对严格正的五模式概率和似然，令 $q_o=\sum_sp_s\ell_o(s)$。则
+
+$$
+\boxed{
+\Delta^{,o}=\frac{p_0p_{13}\ell_0\ell_{13}-p_1p_3\ell_1\ell_3}{q_o^2}.
+}
+$$
+
+若原来源满足 $\Delta=0$，后验仍满足 $\Delta^{,o}=0$ 当且仅当
+
+$$
+\boxed{\ell_0\ell_{13}=\ell_1\ell_3.}
+$$
+
