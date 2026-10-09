@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import shlex
 import subprocess
 import sys
 import unittest
@@ -55,6 +56,172 @@ class LocalEntryTests(unittest.TestCase):
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.seed), STRATALINT_LEAN_BUILD_TARGETS='[]',
             STRATALINT_LEAN_REPORT_LOG_DIR=str(self.root / 'logs'))
+        subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), 'add', 'Makefile', 'tools', 'D5',
+                        'Audit.lean', 'Inspector.lean', 'producer.py', 'lean-toolchain',
+                        'lakefile.toml', 'lean-report-inputs.json'], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '-qm', 'local report fixture'], check=True, capture_output=True)
+
+    def linked_checkout(self):
+        self.main_checkout = self.root.resolve()
+        linked = self.root / 'linked checkout'
+        subprocess.run(['git', '-C', str(self.root), 'worktree', 'add', '--detach',
+                        str(linked), 'HEAD'], check=True, capture_output=True)
+        shutil.copytree(self.seed.parent, linked / 'seed')
+        self.root = linked.resolve()
+        self.seed = self.root / 'seed' / publication.RAW
+        self.output = self.root / '.lake/build/stratalint' / publication.RAW
+        self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.seed)
+
+    def separate_git_directory(self):
+        store = self.root / 'repository store' / 'git directory'
+        store.parent.mkdir()
+        subprocess.run(['git', 'init', '-q', '--separate-git-dir', str(store), str(self.root)],
+                       check=True, capture_output=True)
+        self.git_store = store.resolve()
+
+    def assert_linked_guarded(self, kind, unknown_main=False):
+        self.linked_checkout()
+        self.damage(kind)
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 4, '[FAIL] linked_miss_returns_status_4: '
+                         + result.stdout + result.stderr)
+        diagnostic = result.stdout + result.stderr
+        self.assertIn('reason=linked-worktree', diagnostic, '[FAIL] linked_miss_names_policy')
+        remediation = ('sync dev and warm the dev cache in this repository\'s dev main checkout: '
+                       'make warm-donor && make lean-report there '
+                       '(its location cannot be determined from this worktree); then reseed: rm -rf -- '
+                       + shlex.quote(str(self.root / '.lake')) + ' && make -C '
+                       + shlex.quote(str(self.root)) + ' lean-cache-ensure'
+                       if unknown_main else 'sync dev and warm the dev cache: make -C '
+                      + shlex.quote(str(self.main_checkout)) + ' warm-donor && make -C '
+                      + shlex.quote(str(self.main_checkout)) + ' lean-report'
+                      + '; then reseed from the warm main checkout: rm -rf -- '
+                      + shlex.quote(str(self.root / '.lake')) + ' && make -C '
+                      + shlex.quote(str(self.root)) + ' lean-cache-ensure')
+        self.assertIn(remediation, diagnostic,
+                      '[FAIL] linked_remediation_builds_main_report_before_reseed')
+        if unknown_main:
+            self.assertNotIn(str(self.git_store), diagnostic,
+                             '[FAIL] linked_remediation_never_names_git_store')
+        self.assertIn('rm -rf -- ' + shlex.quote(str(self.root / '.lake'))
+                      + ' && make -C ' + shlex.quote(str(self.root)) + ' lean-cache-ensure', diagnostic)
+        self.assertNotIn('lean-cache-from-github-without-mathlib', diagnostic)
+        self.assertEqual(self.calls, [], '[FAIL] linked_miss_never_fetches_or_builds')
+        self.assertFalse((self.root / '.lake').exists())
+
+    def test_linked_missing_seed_refuses_without_fetch_or_lake(self):
+        self.assert_linked_guarded('missing')
+
+    def test_linked_format_mismatch_refuses_without_fetch_or_lake(self):
+        self.assert_linked_guarded('format')
+
+    def test_linked_damaged_seed_refuses_without_fetch_or_lake(self):
+        self.assert_linked_guarded('bundle-bytes-changed')
+
+    def test_linked_incomplete_seed_refuses_without_fetch_or_lake(self):
+        self.assert_linked_guarded('incomplete')
+
+    def test_separate_git_dir_linked_report_refusal_omits_unvalidated_main_checkout(self):
+        self.separate_git_directory()
+        self.assert_linked_guarded('missing', unknown_main=True)
+
+    def test_separate_git_dir_main_report_recovery_still_fetches(self):
+        self.separate_git_directory()
+        self.damage('missing')
+        self.restore_seed()
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len(self.calls), 1, '[FAIL] separate_git_dir_main_fetches_report')
+        self.assertTrue(self.calls[0].startswith('fetch fetch --mode production'))
+        self.assertIn('complete-entry-reused', result.stdout)
+
+    def test_linked_explicit_rebuild_never_fetches(self):
+        self.linked_checkout()
+        self.damage('format')
+        result = self.run_entry('REBUILD_REPORT_CACHE=1')
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr)
+        self.assertEqual(len(self.calls), 2)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertIn('build :report', self.calls[1])
+
+    def test_linked_reuse_or_build_never_fetches(self):
+        self.linked_checkout()
+        self.damage('format')
+        result = self.run_entry('--cache-miss-policy', 'reuse-or-build', direct=True)
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr)
+        self.assertEqual(len(self.calls), 2)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertIn('build :report', self.calls[1])
+
+    def test_linked_matching_seed_reuses_without_fetch_or_lake(self):
+        self.linked_checkout()
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('complete-entry-reused', result.stdout)
+        self.assertEqual(self.calls, [])
+
+    def assert_canonical_seed_published(self, destination, result):
+        self.assertEqual(result.returncode, 0,
+                         '[FAIL] linked_canonical_seed_publishes_custom_output: '
+                         + result.stdout + result.stderr)
+        self.assertEqual(self.calls, [], '[FAIL] linked_canonical_reuse_never_fetches_or_builds')
+        self.assertIn('complete-entry-reused', result.stdout)
+        self.assertEqual(destination.read_bytes(), self.output.read_bytes())
+        publication.validate_bundle(destination, publication.coordinates(self.root), self.root)
+        self.assertFalse(self.api.probe(self.root, destination)['needs_lake'],
+                         '[FAIL] custom_publication_has_current_reuse_receipt')
+        self.assertEqual(json.loads(publication.member(destination, '.provenance.json').read_text())['mode'],
+                         'cached')
+
+    def test_linked_custom_output_reuses_canonical_seed_without_fetch_or_lake(self):
+        self.linked_checkout()
+        shutil.copytree(self.seed.parent, self.output.parent)
+        self.environment.pop('STRATALINT_LEAN_REPORT_REUSE')
+        destination = self.root / 'custom output/report.json'
+        self.assertFalse(destination.exists())
+        result = self.run_entry('LEAN_REPORT=' + str(destination))
+        self.assert_canonical_seed_published(destination, result)
+
+    def test_linked_unusable_selected_seed_reuses_canonical_without_fetch_or_lake(self):
+        for kind in ('missing', 'incomplete', 'bundle-bytes-changed', 'format'):
+            with self.subTest(kind=kind):
+                self.setUp()
+                self.linked_checkout()
+                shutil.copytree(self.seed.parent, self.output.parent)
+                self.damage(kind)
+                destination = self.root / 'custom output/report.json'
+                result = self.run_entry('LEAN_REPORT=' + str(destination))
+                self.assert_canonical_seed_published(destination, result)
+
+    def test_linked_custom_output_refuses_unusable_canonical_without_fetch_or_lake(self):
+        for kind in ('missing', 'incomplete', 'bundle-bytes-changed', 'format'):
+            with self.subTest(kind=kind):
+                self.setUp()
+                self.linked_checkout()
+                shutil.copytree(self.seed.parent, self.output.parent)
+                self.seed = self.output
+                self.damage(kind)
+                self.environment.pop('STRATALINT_LEAN_REPORT_REUSE')
+                destination = self.root / 'custom output/report.json'
+                result = self.run_entry('LEAN_REPORT=' + str(destination))
+                self.assertNotEqual(result.returncode, 0,
+                                    '[FAIL] unusable_canonical_must_refuse_custom_output')
+                self.assertIn('reason=linked-worktree', result.stdout + result.stderr)
+                self.assertEqual(self.calls, [], '[FAIL] unusable_canonical_never_fetches_or_builds')
+                self.assertFalse(destination.exists())
+
+    def test_undetermined_checkout_refuses_without_fetch_or_lake(self):
+        self.damage('missing')
+        self.script('bin/git', 'echo "topology unavailable" >&2\nexit 17\n')
+        self.environment['PATH'] = str(self.root / 'bin') + os.pathsep + self.environment['PATH']
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 4, result.stdout + result.stderr)
+        self.assertIn('reason=checkout-undetermined', result.stdout + result.stderr)
+        self.assertIn('topology unavailable', result.stdout + result.stderr)
+        self.assertEqual(self.calls, [], '[FAIL] unknown_checkout_never_fetches_or_builds')
 
     def script(self, name, body):
         target = self.root / name
