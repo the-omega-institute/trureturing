@@ -428,3 +428,21 @@ $$
 本卷是普通数学参考输入，未执行 Lean 验证，也未重复验证仓库整卷的风险定理。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 原生风险背景与文献来源
+
+本卷供应文本报告：#14802 在原共享深度、停止协议和有限 COMPLETE 观察者合同下给出
+
+$$
+240e(M)+30\mathcal A(M)>\delta_*>0.
+$$
+
+其中 $e$ 是两项完整未来配置风险的超额，$\mathcal A$ 是同一次实际 suspended-$\alpha$ 更新前后，下一次 $\alpha$ 发射概率的平均绝对变化。这里的 $\delta_*$ 不同于五模式共同参数 $\kappa$。该背景结论不声称共同最优者存在，也不把一般误差下界与禁止更新子类的下界混为一谈；本卷没有重新验证其整卷风险证明，也没有把它的资源下界转移到新增随机读口。
+
+有限后验重心条件的经典来源是 [Kamenica–Gentzkow, Bayesian Persuasion](https://web.stanford.edu/~gentzkow/research/BayesianPersuasion.pdf)。两能级四面体效果属于既有对称信息完备测量，见 [Renes–Blume-Kohout–Scott–Caves, Symmetric Informationally Complete Quantum Measurements](https://arxiv.org/abs/quant-ph/0310075)。本卷不重新宣称这些结果为原创。
+
+## 13. 供应文本的实验声明
+
+供应文本报告以精确有理数和符号代数检查 84 份有限读口和 323 个正概率分支，其中有 28 份一般乘积先验的最小结果构造、7 个单纯形体积与成本公式、40 组记录不足的关联下界，以及完整金字塔四结果构造、三阶不相容反例和四面体量子测量；另报告 21 组共享深度的 $\alpha$ 条件更新。原报告的脚本名为 `fib_record_simplex_checks.py`，结果名为 `fib_record_simplex_checks.json`。对应 sandbox 链接没有供应本次工作树可读取的文件字节，因此本次摄入没有复跑这些实验，不把作者报告的计数当成新的程序验证。一般结论由本卷普通数学论证承担，未执行 Lean 验证。
+
+## 追加锚 2（本行以下为增补区）
