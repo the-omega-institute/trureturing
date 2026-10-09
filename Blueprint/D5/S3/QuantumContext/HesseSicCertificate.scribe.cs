@@ -10,9 +10,6 @@ internal sealed class HesseSicCertificateDocument : IScribeDocumentDefinition
         "Nine explicit qutrit vectors form the dimension-three Hesse SIC configuration.",
         H("The Dimension-Three Hesse SIC Certificate"),
         Blocks(
-            RootFact("omega-cubed", "omega_cubed", "The cubic phase has order three",
-                Seq(F.Id("omega"), Caret, Grp(D(3)), Sp, Eq, Sp, D(1)),
-                "The third power of the cubic phase is one."),
             Describe.Lean(
                 DescribeId.Create("hesse-sic-certificate"),
                 DeclarationHandle.Create(
@@ -47,13 +44,6 @@ internal sealed class HesseSicCertificateDocument : IScribeDocumentDefinition
                             + "D5 theorem, unchecked evaluator, private axiom, or restatement of "
                             + "the dimension-twenty-four Zauner modular certificate."))),
                 DescribeRole.Theorem))));
-
-    private static DocumentBlock RootFact(string id, string declaration, string title,
-        Formula statement, string prose) => Describe.Lean(
-        DescribeId.Create("hesse-" + id),
-        DeclarationHandle.Create("D5/S3/QuantumContext/HesseSicCertificate." + declaration),
-        H(title), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
-        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static Formula CertificateFormula()
     {

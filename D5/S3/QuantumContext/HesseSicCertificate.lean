@@ -28,7 +28,7 @@ def omega : ℂ := Complex.exp (2 * Real.pi * Complex.I / 3)
 /-- The real normalization `1 / sqrt 2`, written as `sqrt 2 / 2`. -/
 private def invSqrtTwo : ℂ := (Real.sqrt 2 / 2 : ℝ)
 
-lemma omega_cubed : omega ^ 3 = 1 := by
+private lemma omega_cubed : omega ^ 3 = 1 := by
   rw [omega]
   calc
     Complex.exp (2 * Real.pi * Complex.I / 3) ^ 3 =
