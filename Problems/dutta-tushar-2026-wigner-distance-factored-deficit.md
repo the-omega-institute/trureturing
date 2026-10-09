@@ -96,8 +96,11 @@ give the ratios $7/18$ and $17/36$.
 
 **Argued, not formalized (bounded numerics).**
 
-- *Not a boundary effect.* Linear programming over the sixty stabilizer vertices, for $40$ random
-  $\sigma$ with $r_x,r_y,r_z>0$ against four equatorial $\rho$, finds the ratio
+- *Not a boundary effect.* Linear programming (SciPy 1.13.1 `linprog`, HiGHS, default tolerances) over
+  the six one-qubit and sixty two-qubit stabilizer Wigner vertices, for $40$ pure $\sigma$ drawn with
+  NumPy `default_rng(2)` (polar angle uniform on $[0.15,\pi/2-0.05]$, azimuth uniform on
+  $[0.05,\pi/2-0.05]$, so $r_x,r_y,r_z>0$) against the pure equatorial $\rho$ at azimuths $0.3$, $0.6$,
+  $0.9$ and $1.2$, finds the ratio
   $\mathrm{deficit}/C(\rho)$ constant for some $\sigma$ and varying by up to $0.16$ for others, at
   latitudes $z=0.09$, $0.78$ and $0.96$. Where it is constant, the paper's meridian-slice linearity is
   consistent with these readings; the conjecture fails as a universal statement.
