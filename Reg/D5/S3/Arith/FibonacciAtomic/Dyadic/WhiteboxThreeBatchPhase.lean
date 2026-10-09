@@ -53,8 +53,19 @@ def changed (r : Fin 4) : Realization signature := realize signature
 private theorem rejected (r : Fin 4) : ¬ arena.Law (changed r) := by
   intro h
   have data := h 1 (by decide) 1 (by norm_num)
-  fin_cases r <;>
-    norm_num [changed, realize, Phase.sharp, Fin.ext_iff] at data
+  fin_cases r
+  · have bad := data.1
+    norm_num [changed, realize, Phase.sharp] at bad
+  · have bad := data.2.1
+    norm_num [changed, realize, Phase.sharp] at bad
+  · have bad := data.2.2.2.2.2.2.1
+    have same : (2 : Fin 4) = ⟨2, by decide⟩ := by decide
+    simp only [changed, realize, if_pos same] at bad
+    norm_num at bad
+  · have bad := data.2.2.2.2.2.2.2.1
+    have same : (3 : Fin 4) = ⟨3, by decide⟩ := by decide
+    simp only [changed, realize, if_pos same] at bad
+    norm_num at bad
 
 private theorem nonconstant (r : Fin 4) :
     actual.readout r 10 1 ≠ actual.readout r 10 2 := by

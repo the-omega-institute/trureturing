@@ -131,7 +131,7 @@ abbrev signature : Signature.{0, 0, 0, 0, 0} where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output m _ := Fin m → ℝ
+  Output _ m := Fin m → ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
