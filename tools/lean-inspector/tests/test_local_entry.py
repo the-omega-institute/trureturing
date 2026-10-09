@@ -65,14 +65,14 @@ class LocalEntryTests(unittest.TestCase):
                         'commit', '-qm', 'local report fixture'], check=True, capture_output=True)
 
     def linked_checkout(self):
-        self.main_checkout = self.root
+        self.main_checkout = self.root.resolve()
         linked = self.root / 'linked checkout'
         subprocess.run(['git', '-C', str(self.root), 'worktree', 'add', '--detach',
                         str(linked), 'HEAD'], check=True, capture_output=True)
         shutil.copytree(self.seed.parent, linked / 'seed')
-        self.root = linked
-        self.seed = linked / 'seed' / publication.RAW
-        self.output = linked / '.lake/build/stratalint' / publication.RAW
+        self.root = linked.resolve()
+        self.seed = self.root / 'seed' / publication.RAW
+        self.output = self.root / '.lake/build/stratalint' / publication.RAW
         self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.seed)
 
     def assert_linked_guarded(self, kind):

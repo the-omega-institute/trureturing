@@ -77,7 +77,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
                               text=True, capture_output=True, env=self.transport_environment(run, **{"GITHUB_ACTIONS": "false" if verb == "fetch" else "true", **extra}))
 
     def linked_checkout(self):
-        self.main_checkout = self.root
+        self.main_checkout = self.root.resolve()
         linked = self.root / "linked checkout"
         subprocess.run(["git", "-C", str(self.root), "worktree", "add", "--detach",
                         str(linked), "HEAD"], check=True, capture_output=True)
