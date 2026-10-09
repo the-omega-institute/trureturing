@@ -167,13 +167,20 @@ def read_seed_base(repository):
     path = repository / BASE_RECORD
     try:
         record = publication.read_json(path.read_bytes())
-        commit = record.get('producer_commit_sha') if isinstance(record, dict) else None
+        if not isinstance(record, dict):
+            return None
+        commit = record.get('producer_commit_sha')
         if (record.get('schema') != BASE_SCHEMA or not isinstance(commit, str)
                 or re.fullmatch(r'[0-9a-f]{40}', commit) is None):
             return None
         return commit
     except (OSError, UnicodeError, ValueError, TypeError, KeyError):
         return None
+
+
+def invalidate_seed_base(repository):
+    """A different seed cannot inherit the previous seed's provenance."""
+    (repository / BASE_RECORD).unlink(missing_ok=True)
 
 
 def record_seed_base(repository, commit=None):
@@ -189,6 +196,7 @@ def record_seed_base(repository, commit=None):
         source = head if commit is None else commit
         if (branch != 'dev' or status or git_dir != common_dir
                 or re.fullmatch(r'[0-9a-f]{40}', source) is None):
+            invalidate_seed_base(repository)
             return False
         path = repository / BASE_RECORD
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -202,21 +210,27 @@ def record_seed_base(repository, commit=None):
             Path(temporary).unlink(missing_ok=True)
         return True
     except (OSError, subprocess.SubprocessError, ValueError):
+        invalidate_seed_base(repository)
         return False
 
 
 def seal(repository, report, captured):
-    current = capture(repository)
-    if current != captured:
-        publication.member(report, SUFFIX).unlink(missing_ok=True)
-        raise ValueError('registered inputs changed during report entry')
-    if not captured['eligible']:
-        publication.member(report, SUFFIX).unlink(missing_ok=True)
-        return
-    # The caller reaches this only after Lake's default+report facet and normal
-    # private publication have succeeded. Bind the exact published five pieces.
-    write_receipt(report, captured)
-    record_seed_base(repository)
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
+    from lean_cache_release import cache_guard
+    with cache_guard(repository):
+        invalidate_seed_base(repository)
+        current = capture(repository)
+        if current != captured:
+            publication.member(report, SUFFIX).unlink(missing_ok=True)
+            raise ValueError('registered inputs changed during report entry')
+        if not captured['eligible']:
+            publication.member(report, SUFFIX).unlink(missing_ok=True)
+            return
+        # A complete receipt becomes visible only with current or unknown provenance.
+        recorded = record_seed_base(repository)
+        if not recorded:
+            invalidate_seed_base(repository)
+        write_receipt(report, captured)
 
 
 def reuse(repository, report, output):
@@ -324,8 +338,20 @@ def _refresh_stale_seed(repository, report):
     mismatch = _seed_mismatch(repository, report)
     if mismatch is None:
         return report
+    if os.environ.get('GITHUB_ACTIONS') == 'true':
+        _seed_decision('keep', 'ci-release-seeds-disabled')
+        return report
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
-    from lean_cache_release import latest_snapshot, operation_deadline, partition_path
+    from lean_cache_release import checkout_topology, latest_snapshot, operation_deadline, partition_path
+    try:
+        linked, _ = checkout_topology(repository)
+        branch = _git(repository, 'symbolic-ref', '--quiet', '--short', 'HEAD')
+    except (OSError, subprocess.SubprocessError, ValueError) as error:
+        _seed_decision('keep', 'dev-main-unavailable', detail=str(error))
+        return report
+    if linked or branch != 'dev':
+        _seed_decision('keep', 'not-dev-main-checkout')
+        return report
     base = read_seed_base(repository)
     try:
         candidate = latest_snapshot(repository, partition_path(repository), operation_deadline())
@@ -355,23 +381,28 @@ def _refresh_stale_seed(repository, report):
     environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
     try:
         fetched = subprocess.run(['/bin/bash', str(repository / 'tools/scripts/worktree/lean-cache-publish.sh'),
-            'fetch', '--mode', 'production', '--refresh-stale', '--writer-owned'],
-            cwd=repository, env=environment)
+            'fetch', '--mode', 'production', '--refresh-stale', '--writer-owned',
+            '--approved-tag', tag, '--approved-producer', release],
+            cwd=repository, env=environment, capture_output=True, text=True)
     except (OSError, subprocess.SubprocessError) as error:
         _seed_decision('keep', 'release-download-failed', release=release, detail=str(error))
         return report
-    if fetched.returncode:
+    print(fetched.stdout, end='', flush=True)
+    print(fetched.stderr, end='', file=sys.stderr, flush=True)
+    outcomes = [publication.read_json(line.partition(' ')[2].encode())
+                for line in fetched.stdout.splitlines() if line.startswith('LEAN_CACHE_FETCH ')]
+    installed = any(isinstance(outcome, dict) and outcome.get('status') == 'unpacked'
+        and outcome.get('resolved') == tag and outcome.get('producer_commit_sha') == release
+        and outcome.get('installed') == ['build'] for outcome in outcomes)
+    if not installed and fetched.returncode:
         _seed_decision('keep', 'release-download-failed', release=release,
                        exit=fetched.returncode)
         return report
-    restored = repository / '.lake/build/stratalint/raw-lean-report.json'
-    checked = seed_format(restored)
-    if not checked['compatible']:
-        _seed_decision('keep', 'restored-seed-incompatible', release=release,
-                       format=checked['report_format'])
+    if not installed:
+        _seed_decision('keep', 'release-installation-skipped', release=release, tag=tag)
         return report
     _seed_decision('fetch', 'newer-release', local=base, release=release, tag=tag)
-    return restored
+    return repository / '.lake/build/stratalint/raw-lean-report.json'
 
 
 def refresh_stale_seed(repository):
@@ -464,7 +495,12 @@ def main():
     if args.command == 'refresh-stale-seed':
         return refresh_stale_seed(args.repository)
     if args.command == 'capture':
-        args.snapshot.write_bytes(materials.canonical_json(capture(args.repository)))
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
+        from lean_cache_release import cache_guard
+        with cache_guard(args.repository):
+            captured = capture(args.repository)
+            invalidate_seed_base(args.repository)
+            args.snapshot.write_bytes(materials.canonical_json(captured))
     elif args.command == 'seal':
         seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()))
     elif args.command == 'probe':

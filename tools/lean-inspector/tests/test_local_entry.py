@@ -361,7 +361,14 @@ esac
                     'if [ -n "${FAKE_FETCH_FAILURE:-}" ]; then exit "$FAKE_FETCH_FAILURE"; fi\n'
                     'printf "fetch %s\\n" "$*" >> calls\n'
                     'mkdir -p .lake/build/stratalint\n'
-                    'cp dev-seed/* .lake/build/stratalint/\n')
+                    'cp dev-seed/* .lake/build/stratalint/\n'
+                    'python3 -B - "$@" <<\'PY\'\n'
+                    'import json, sys\n'
+                    'args = sys.argv[1:]\n'
+                    'print("LEAN_CACHE_FETCH " + json.dumps(dict(status="unpacked", installed=["build"],\n'
+                    '    resolved=args[args.index("--approved-tag") + 1],\n'
+                    '    producer_commit_sha=args[args.index("--approved-producer") + 1])))\n'
+                    'PY\n')
         return initial, producer
 
     def assert_guarded(self, result):
@@ -532,7 +539,7 @@ esac
         initial, release = self.stale_release_fixture()
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(self.calls[0].split()[0], 'fetch')
+        self.assertEqual(self.calls[0].split()[0], 'fetch', '[FAIL] newer_release_fetches_before_incremental_build')
         self.assertIn('ensure', self.calls)
         self.assertTrue(any(call.startswith('lake ') for call in self.calls))
         self.assertIn('"action":"fetch"', result.stdout)
@@ -548,7 +555,7 @@ esac
         self.release_stub(older)
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(self.calls[0], 'ensure')
+        self.assertEqual(self.calls[0], 'ensure', '[FAIL] older_release_keeps_local_seed')
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"reason":"release-not-newer"', result.stdout)
 
@@ -556,7 +563,7 @@ esac
         self.stale_release_fixture(producer='f' * 40)
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(self.calls[0], 'ensure')
+        self.assertEqual(self.calls[0], 'ensure', '[FAIL] foreign_release_keeps_local_seed')
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"reason":"release-not-head-ancestor"', result.stdout)
 
@@ -565,7 +572,7 @@ esac
         (self.root / '.lake/lean-report-seed-base.json').unlink()
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(self.calls[0], 'ensure')
+        self.assertEqual(self.calls[0], 'ensure', '[FAIL] unknown_base_keeps_local_seed')
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"action":"keep"', result.stdout)
         self.assertIn('"reason":"local-base-unknown"', result.stdout)
@@ -575,6 +582,7 @@ esac
         self.stale_release_fixture(failure='listing failed')
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
+        self.assertTrue(self.calls, '[FAIL] listing_failure_continues_incrementally')
         self.assertEqual(self.calls[0], 'ensure')
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"action":"keep"', result.stdout)
