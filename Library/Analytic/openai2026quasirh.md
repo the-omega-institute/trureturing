@@ -330,3 +330,175 @@ $$
 时留下极点，阶数为 $m-k-j_Z$；若槽乘积恒为零，该比值为零，不是极点探测器。源文非零的 $c_S,A_T(Z)$ 不改变这些重数。$\Re\rho>3/5$ 时，充分大的 $Z$ 使 $j_Z=0$；更低处不能仅由槽的全纯性删去 $j_Z$。
 
 这给出需要控制的实际联合条件，不断言共同零点存在或不存在。残余因子非零、角向因子全纯、有限槽非零和低高端严格节省是不同义务。这里没有支付无限类型延拓输入、辅助 RH、统一至 $1/2$ 的主信号非零性、无限行比较或更强低端消去；没有得到新的无零定理或严格 Robin/RH 证明。
+
+## 平方自由立方索引：一个保留目标分母的新探针
+
+这一接口定义一个实际修改后的探针，依赖源文原始系数与完整局部表；不把上一节的角向因子从原探针中形式除去，也不转移原探针的低端估计。
+
+在源文的 $A=cn^3$ 完成行中插入理想指标 $\mu(n)^2$，即同时要求 $c,n$ 平方自由，但允许它们共享素因子。保留其余字符、零掩码、相位、尺度、Gaussian 与外层权重。记新行及新物理探针为 $T^{\mathrm{sf}},I^{\mathrm{sf}}$。过滤独立于 Poisson 所作用的 $m$ 变量，且模不超过 $1$；因此原绝对起始线上逐系数的有限 Fourier/Poisson 恒等式及其绝对主控仍适用。新高端系数是原 $K_\eta(c,n,s,a;u)$ 乘以 $\mu(n)^2$，不是改变目标零点的取样。
+
+### 原始局部族的合法限制
+
+令 $l=v_p(n)$。原完整局部表的四族为
+$$
+(e_0,l)=(0,2r+2),(1,2r),(0,2r+1),(1,2r+1),\qquad r\ge0.
+$$
+新指标要求 $l\in\{0,1\}$，故删除第一族，并在后三族只保留 $r=0$。尤其原 $j=5$ 的 $-a_p^2Q^{3-6x}$ 属于 $l=2$，必须一起删除；来自 $c$ 及 $m$ 尾部的 $j=5$ 项仍在。
+
+沿用 $j=v_p(u)\in\{0,\ldots,5\}$、$\rho=\chi_p(u/p^j)$、$V=Q^{-6z}$ 与 $W_{\rm loc}=\rho Q^{-w}$。由源表直接得到
+$$
+P_p^{\mathrm{sf},*}=
+-\frac{\eta(p)(Q-1)Q^{-x-w}V^{\mathbf1_{j\le1}}}{1-V}
++J_j^{\mathrm{sf}},
+$$
+$$
+\begin{array}{c|l}
+j&J_j^{\mathrm{sf}}\\\hline
+0&-\eta(p)\rho^{-1}Q^{-x}\\
+1&\eta(p)Q^{-x-w}\\
+2&a_p\rho^{-3}Q^{3/2-3x}\\
+3&-\eta(p)b_p\rho^{-2}Q^{2-3x-w}+b_p^2\rho^{-4}Q^{2-4x}\\
+4&-\eta(p)a_p\rho^{-3}Q^{5/2-4x-w}\\
+5&0.
+\end{array}
+$$
+并有
+$$
+P_p^{\mathrm{sf}}=\frac1{1-V}
++\mathbf1_{j=0}\frac{W_{\rm loc}}{1-W_{\rm loc}}
++P_p^{\mathrm{sf},*}.
+$$
+这里保留了全部合法 $e_0,k,m,j$ 与共享素因子；结论来自实际过滤，不是裸写 $R=0$。
+
+保留原来的 $D=\eta(p)\overline{\chi_p(u)}Q^{-x}$、$W=\chi_p(u)Q^{-w}$，其中 $p\mid u$ 时仍有 $D=W=0$。定义
+$$
+H_p^{\mathrm{sf}}=
+P_p^{\mathrm{sf}}\frac{(1-V)(1-W)}{1-D}.
+$$
+乘法指标 $\mu(n)^2$ 与原逐素数系数相容，故实际新高端级数在绝对起始域满足
+$$
+\mathcal F_{\eta,u}^{\mathrm{sf}}(x,w,z)=
+\frac{\zeta_F^S(6z)L_F^S(w,\chi_\bullet(u))}
+{L_F^S(x,\eta\overline{\chi_\bullet(u)})}
+\mathcal H_{\eta,u}^{\mathrm{sf}}(x,w,z).
+$$
+目标分母与两个原分子极点保持；变化发生在新探针的修正乘积。
+
+### 完整固定行的收敛域
+
+对 $p\nmid u$，设 $E_p^{\mathrm{sf}}=P_p^{\mathrm{sf},*}+D$，则
+$$
+E_p^{\mathrm{sf}}=-\frac{D(Q-1)WV}{1-V},
+$$
+$$
+H_p^{\mathrm{sf}}-1=
+\frac{D(V+W-VW)-VW-D(Q-1)WV(1-W)}{1-D}.
+$$
+因此在 $a,b,c>0$、
+$$
+a+6c>1,\quad a+b>1,\quad b+6c>1,\quad a+b+6c>2
+$$
+的紧实部子域上，所有高度一致地有
+$$
+|H_p^{\mathrm{sf}}-1|\ll
+Q^{-a-6c}+Q^{-a-b}+Q^{-b-6c}+Q^{1-a-b-6c}.
+$$
+四项均可求和，不再需要原 $R$ 所带来的 $6a+6c>5$ 条件。
+
+对 $p\mid u$，完整式是
+$$
+H_p^{\mathrm{sf}}=
+1-\eta(p)(Q-1)Q^{-x-w}V^{\mathbf1_{j\le1}}
++(1-V)J_j^{\mathrm{sf}}.
+$$
+若 $a>1/2,a+b>1$，其额外指数 $1-a-b,3/2-3a,2-3a-b,2-4a,5/2-4a-b$ 均为负，有限分歧乘积为 $O_\varepsilon(q_u^\varepsilon)$。
+
+特别地，对任意固定 $\sigma_0>1/2$，在
+$$
+\Re x\ge\sigma_0,\quad\Re w\ge19/20,\quad\Re z\ge33/200
+$$
+上，未分歧缺陷为 $O(Q^{-36/25})$，整个固定行修正在每点的开邻域内全纯，且为 $O_\varepsilon(q_u^\varepsilon)$。这些是固定行与全部高度的界，尚不是无限物理行之和的估计。
+
+### 不含角向 $L$ 的实际主修正
+
+在 $u=1,w=1,z=1/6$，写 $v=Q^{-1}$、$D=\eta(p)Q^{-s}$。此时
+$$
+P_p^{\mathrm{sf},*}=-(1+v)D,
+\qquad
+H_p^{\mathrm{sf}}=(1-v^2)
+\frac{1-(1-v)D}{1-D}.
+$$
+对 $\Re s>0$，两个分母及分子均非零。缺陷为 $O(Q^{-2}+Q^{-1-\Re s})$，所以
+$$
+H_\eta^{\mathrm{sf}}(s)=
+\zeta_F^S(2)^{-1}
+\prod_{p\notin S}\left(1+\frac{vD}{1-D}\right)
+$$
+在整个 $\Re s>0$ 全纯且非零；它及其倒数在每个固定 $\Re s\ge\sigma_0>0$ 上都有统一高度界。角向 $L$ 没有被除去：产生它的局部族已在实际输入中被过滤。
+
+还有 $H_\eta^{\mathrm{sf}}=1+O_{\sigma_0}(P_0^{-\min(1,\sigma_0)})$。足够大的固定截断可满足源文接近 $1$ 的合同；扩大时须同步校准 $S,b_*,\xi,\tau,\Xi,c_S$。这里未认证一个显式足够的有限截断，也不自动继承旧截断。
+
+### 有限素数操作与原目标零点
+
+对新物理行同时插入 $\mu(n)^2$ 与原标记 $p\mid cn^3$，再执行原两项操作及其尺度变化。两个指标都是实际索引约束；高端精确替换仍为
+$$
+\overline{\eta(p)}Q^{x+z-1}P_p^{\mathrm{sf},*}
+-Q^{z-w-1}P_p^{\mathrm{sf}}.
+$$
+完整替换使用不含 $P_p^{\mathrm{sf}}$ 或 $H_p^{\mathrm{sf}}$ 分母的公式
+$$
+G_p^{\mathrm{sf}}=
+\frac{(\overline{\eta(p)}Q^x-Q^{-w})(1-V)(1-W)P_p^{\mathrm{sf},*}
+-Q^{-w}(1-VW)}{1-D},
+$$
+$$
+\mathfrak H_{\eta,u,Z}^{\mathrm{sf}}=
+\sum_{(p_i)\in\prod_i\mathcal P_i(Z)}
+\prod_i\left[W_i(q_{p_i}/P_i)q_{p_i}^{z-1}G_{p_i}^{\mathrm{sf}}\right]
+\prod_{\substack{p\notin S\\p\notin\{p_i\}}}H_p^{\mathrm{sf}}.
+$$
+一般分歧 $H_p^{\mathrm{sf}}$ 未证明非零，故不能以其商定义完整修正。只有已证明非零的主留数位置才使用槽比值。这是新标记／缩放物理探针的恒等式，不声明新旧低端范数相同。
+
+在主留数上实际槽比值为
+$$
+\mathcal B_p^{\mathrm{sf}}=
+-\frac{1-v}{1-(1-v)D}-v,
+\qquad
+\mathcal B_p^{\mathrm{sf}}+1=
+-\frac{(1-v)^2D}{1-(1-v)D}.
+$$
+故任意固定 $\sigma_0>0$ 上均有 $-1+O_{\sigma_0}(Q^{-\sigma_0})$。原探针的 $3/5$ 局部边界仍然成立；这个新探针有不同的误差。
+
+复用原互不相交的正权素数槽及其实际 $A_T(Z)$，充分大的 $Z$ 上有
+$$
+\mathfrak H_{\eta,1,Z}^{\mathrm{sf}}(s,1,1/6)
+=H_\eta^{\mathrm{sf}}(s)Z^{\ell/6}A_T(Z)
+(1+\mathcal R_{\eta,Z}^{\mathrm{sf}}(s)),
+$$
+$$
+\mathcal R_{\eta,Z}^{\mathrm{sf}}\ll Z^{-\mu},
+\qquad0<\mu<\sigma_0\min_i\ell_i
+\quad(\Re s\ge\sigma_0>0).
+$$
+槽乘积在该固定条带上非零；无槽时余项为零。取固定 $\sigma_0=1/2$，便有依赖固定数据的同一充分大 $Z$ 阈值，覆盖所有高度及所有 $\Re\rho>1/2$ 的实际目标零点；它们以原重数成为新归一化主商的极点，不需要上一节的无限类型延拓前提。这里未给整个 $\Re s>0$ 开半平面的共同阈值。
+
+完整有限修正也有高度界。在上述 $\sigma_0>1/2$ 矩形上，未分歧选择项为 $O(1)$；分歧选择项的增长至多 $Q^g$，其中
+$$
+g=\max(1/20,3/2-2\sigma_0).
+$$
+这来自全部剩余指数 $1-b,3/2-2a,2-2a-b,2-3a,5/2-3a-b$。故原元组计数给出
+$$
+|\mathfrak H_{\eta,1,Z}^{\mathrm{sf}}|\ll Z^{\ell\Re z},
+\qquad
+|\mathfrak H_{\eta,u,Z}^{\mathrm{sf}}|
+\ll_\varepsilon q_u^\varepsilon Z^{\ell(\Re z+g)}.
+$$
+主行较小的界不能用于一般分歧行。
+
+### 原 theta 低端界尚未迁移
+
+源文完成反射与行矩界针对完整立方索引及其规范测试。插入 $\mu(n)^2$ 改变该行，不能仅由指标的模不超过 $1$ 推断复相位行的范数减少，也不能把这个乘法指标当成一个固定平滑范数轮廓。
+
+经典恒等式 $\mu(n)^2=\sum_{d^2\mid n}\mu(d)$ 可以复用，但它引入随 $d$ 变化的完成尺度与算术零掩码。需要实际统一行界，才能连接到源文 theta/低端机制。这里既未迁移原 $Z^{3/16+\varepsilon}$ 界，也未改进低端指数。
+
+这项构造支付了一个新同目标探针的局部高端恒等式、完整固定行和有限修正、以及非零主信号。它尚未支付同一新探针的无限行高端比较及目标无关的低端严格节省，也没有控制原 Robin 的完整有符号主响应。完整源证明及 Lean 未独立认证；严格 Robin 与 RH 均未证明。
