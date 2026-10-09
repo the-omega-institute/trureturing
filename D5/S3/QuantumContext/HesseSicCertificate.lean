@@ -28,7 +28,7 @@ def omega : ℂ := Complex.exp (2 * Real.pi * Complex.I / 3)
 /-- The real normalization `1 / sqrt 2`, written as `sqrt 2 / 2`. -/
 private def invSqrtTwo : ℂ := (Real.sqrt 2 / 2 : ℝ)
 
-private lemma omega_cubed : omega ^ 3 = 1 := by
+lemma omega_cubed : omega ^ 3 = 1 := by
   rw [omega]
   calc
     Complex.exp (2 * Real.pi * Complex.I / 3) ^ 3 =
@@ -48,7 +48,7 @@ private lemma omega_ne_one : omega ≠ 1 := by
 
 private lemma omega_ne_zero : omega ≠ 0 := Complex.exp_ne_zero _
 
-private lemma omega_sum : 1 + omega + omega ^ 2 = 0 := by
+lemma omega_sum : 1 + omega + omega ^ 2 = 0 := by
   have hfac : (omega - 1) * (omega ^ 2 + omega + 1) = 0 := by
     rw [show (omega - 1) * (omega ^ 2 + omega + 1) = omega ^ 3 - 1 by ring,
       omega_cubed]
@@ -57,7 +57,7 @@ private lemma omega_sum : 1 + omega + omega ^ 2 = 0 := by
   · exact (omega_ne_one (sub_eq_zero.mp h)).elim
   · linear_combination h
 
-private lemma omega_norm : ‖omega‖ = 1 := by
+lemma omega_norm : ‖omega‖ = 1 := by
   rw [omega, show 2 * (Real.pi : ℂ) * Complex.I / 3 =
       ((2 * Real.pi / 3 : ℝ) : ℂ) * Complex.I by push_cast; ring,
     Complex.norm_exp_ofReal_mul_I]
@@ -66,7 +66,7 @@ private lemma omega_normSq : Complex.normSq omega = 1 := by
   rw [Complex.normSq_eq_norm_sq, omega_norm]
   norm_num
 
-@[simp] private lemma star_omega : star omega = omega ^ 2 := by
+@[simp] lemma star_omega : star omega = omega ^ 2 := by
   apply mul_left_cancel₀ omega_ne_zero
   calc
     omega * star omega = (Complex.normSq omega : ℂ) := by
