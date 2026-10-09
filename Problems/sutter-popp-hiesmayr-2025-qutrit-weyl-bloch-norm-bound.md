@@ -61,13 +61,12 @@ source's $25.9735$.
 `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.lean` defines `W` (eq. (7), with the frozen `HesseSicCertificate.omega` as $\omega$), `bloch`
 (eq. (16)), `l1`, `IsSeparable` (the source's finite convex combination of products of density
 matrices, with the frozen `GHZMeasureBiseparableBound.IsDensity`) and `claim`, and proves `result : claim`, the conjunction of the separable bound, its attainment
-and a normalized pure state exceeding it. It reuses the frozen `HesseSicCertificate.omega_cubed` and `HesseSicCertificate.omega_pow_four`, which this
-delivery makes public, and the frozen `RHLinalg.frobSq_hermitian_eq_sum_sq_eigenvalues`. The axiom closure
+and a normalized pure state exceeding it. It reuses the frozen `HesseSicCertificate.omega_pow_four`, which this delivery makes public, and the frozen `RHLinalg.frobSq_hermitian_eq_sum_sq_eigenvalues`. The axiom closure
 of `result` is exactly `propext`, `Classical.choice` and `Quot.sound`; there is no `sorry` or `native_decide`.
 The module statement is `sha256:c28ddfd8ebb95da443d703d68cdfdcf21139bf3268962406f55fe60c1a1968f5`; `result` is
 `sha256:f16841e49be3cb6ba08c2cef14402d257ec0befa5040a022aaddd1f6bd3957f9` and `claim` is
 `sha256:ad3ad8a012ae2bf4364b72126235796c70144e551e3d255cc70bf2f4759198cd`. The Freeze event is
-`sha256:2b5ba96c30557ceca9ca1a69e9e86232560e05cf537a423968c306ea272d3b56`.
+`sha256:7a10de18ca0e5114737352a2b43c7cd0f79609d92a0acb20dfa3695c1a252020`.
 
 ## Triage
 
@@ -76,7 +75,7 @@ version, preregistered in #14780 before any Lean. `theorem`; resolution `proved`
 bind-only by CLAUDE.md §3.2 (orthogonality and Parseval by normalization, instantiation of the frozen
 eigenvalue identity, Cauchy–Schwarz, and explicit coefficient tables); admission basis
 `open-problem-resolution`. Utility `none`: the fixed matrices of steps 3–4 are private ingredients of the
-universal statement. There is no digestion atom. Escape audit: the registration attempts for `result`, `omega_cubed` and `omega_pow_four` are
+universal statement. There is no digestion atom. Escape audit: the registration attempts for `result` and `omega_pow_four` are
 unresolved (#14821).
 
 ### What the proof shows
