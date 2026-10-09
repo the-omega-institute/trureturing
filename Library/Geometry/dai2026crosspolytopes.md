@@ -16,7 +16,7 @@ triage: anchor
 
 ## Verified locator
 
-The versioned primary source is [arXiv:2608.16037v2](https://arxiv.org/html/2608.16037v2).
+The versioned primary source is [arXiv:2608.16037v2](https://arxiv.org/abs/2608.16037v2), with its [HTML text](https://arxiv.org/html/2608.16037v2).
 Equation (3) in the introduction defines
 $Q_G(k_1,\ldots,k_m)=\sum_i k_i\diamondsuit_{I_i}$, where
 $\diamondsuit_I=\operatorname{conv}\{e_j,-e_j:j\in I\}$ and the nonempty
