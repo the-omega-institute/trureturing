@@ -1,5 +1,7 @@
 """Behavior tests for the temporary observer; no workflow assertions."""
 import importlib.util
+import base64
+import hashlib
 import io
 import json
 import os
@@ -9,6 +11,7 @@ import signal
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import unittest
 from unittest.mock import Mock, patch
@@ -154,7 +157,7 @@ class SignalDiagnosticContractTests(unittest.TestCase):
         self.assertNotIn("target", event)
         self.assertIn("corroborating", event["victim_identity_limit"])
 
-    def test_reader_reports_loss_schema_errors_and_never_echoes_private_text(self):
+    def test_reader_retains_loss_and_malformed_bytes_without_plaintext_console(self):
         import io
         trace = cost.SignalTrace(self.output)
         console = io.StringIO()
@@ -166,6 +169,162 @@ class SignalDiagnosticContractTests(unittest.TestCase):
         self.assertNotIn("signed-secret", console.getvalue())
         self.assertIn("compiler-or-attach", console.getvalue())
         trace.sink.finish(trace.health)
+        records = [json.loads(line) for line in (self.output / "wire.jsonl").read_text().splitlines()]
+        retained = [base64.b64decode(row["raw_bytes_base64"]) for row in records
+                    if row["kind"] == "collector-diagnostic"]
+        self.assertEqual(retained, [b"Lost 7 events", b"ERROR private-token=signed-secret-url"])
+
+    def collect_failure(self, trace, body, console=None, limit=cost.TRACE_LIMIT):
+        """Feed actual collector pipes to the report's reader/sink consumer."""
+        trace.sink = cost.SignalSink(trace.output / "signal-trace.jsonl",
+                                     console=io.StringIO() if console is None else console, limit=limit)
+        child = subprocess.Popen([
+            sys.executable, "-c",
+            "import os,sys,resource; resource.setrlimit(resource.RLIMIT_CORE,(0,0)); " + body,
+        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=trace.output)
+        trace.process = child
+        self.addCleanup(child.stdout.close)
+        self.addCleanup(child.stderr.close)
+        self.addCleanup(trace.stop)
+        trace.deadline = time.monotonic() + 5
+        trace.thread = threading.Thread(target=trace._read)
+        trace.thread.start()
+        trace.thread.join(timeout=5)
+        self.assertFalse(trace.thread.is_alive())
+        child.wait(timeout=2)
+        health = trace.stop()
+        self.assertTrue(trace.sink.closed)
+        self.assertIsNotNone(child.poll())
+        with self.assertRaises(ValueError):
+            cost.require_trace_health(health)
+        records = [json.loads(line) for line in (trace.output / "signal-trace.jsonl").read_text().splitlines()]
+        diagnostics = [row for row in records if row.get("kind") == "collector-diagnostic"]
+        self.assertTrue(diagnostics)
+        for row in diagnostics:
+            raw = base64.b64decode(row["raw_bytes_base64"], validate=True)
+            self.assertEqual(row["raw_byte_length"], len(raw))
+            self.assertEqual(row["raw_line_sha256"], hashlib.sha256(raw).hexdigest())
+            self.assertLessEqual(len(raw), 65536)
+        self.assertEqual(records[-1]["kind"], "trace-terminal")
+        self.assertEqual(records[-1]["collector_returncode"], child.returncode)
+        return health, records, diagnostics
+
+    def test_collector_failure_retains_stdout_stderr_and_eof_bytes_with_raw_status(self):
+        # GoalArtifact report/integration evidence: both streams, byte identity,
+        # EOF, wire-like stderr, raw abort status and cleanup use actual pipes.
+        trace = cost.SignalTrace(self.output)
+        health, records, diagnostics = self.collect_failure(trace,
+            "os.write(1,b'collector\\xff\\nstdout-tail\\x80'); "
+            "os.write(2,b'D\\tready\\nattach\\xfe\\nstderr-tail\\x00'); os.abort()")
+        self.assertEqual(health["collector_returncode"], -signal.SIGABRT)
+        self.assertFalse(health["ready"])
+        self.assertFalse(any(row["kind"] == "trace-ready" for row in records))
+        expected = {"stdout": b"collector\xff\nstdout-tail\x80",
+                    "stderr": b"D\tready\nattach\xfe\nstderr-tail\x00"}
+        for stream, original in expected.items():
+            recovered = b"".join(base64.b64decode(row["raw_bytes_base64"]) +
+                                  (b"\n" if row["terminated"] else b"")
+                                  for row in diagnostics if row["stream"] == stream)
+            self.assertEqual(recovered, original)
+        self.assertTrue(all(not row["truncated"] for row in diagnostics))
+
+    def test_actual_startup_failure_keeps_source_inventory_and_forbids_workload(self):
+        # run's current publication consumer must bind recoverable failure
+        # evidence while refusing GoalArtifact canonical work in either mode.
+        inputs = {"private_fixture_program_sha256": cost.sha(PROGRAM)}
+        binding = {"inputs": inputs, "head": "d36a2901ec0c24cc055c6f03bc7dcf55183340d7",
+                   "fixture_scope": "local collector pipes; no native capability"}
+        for mode in ("preflight", "workload"):
+            with self.subTest(mode=mode):
+                output = self.output / mode
+                trace = cost.SignalTrace(output)
+                def start():
+                    self.collect_failure(trace, "os.write(2,b'attachment-failure\\xff'); os.abort()")
+                    trace.check()
+                trace.start = start
+                with patch.object(cost, "native_binding", return_value=binding), \
+                        patch.object(cost, "input_binding", return_value=inputs), \
+                        patch.object(cost, "SignalTrace", return_value=trace), \
+                        patch.object(cost, "capability_preflight") as preflight, \
+                        patch.object(cost, "observe_command") as command, \
+                        patch.object(cost, "observe_output") as query:
+                    with self.assertRaises(cost.TraceHealthError):
+                        cost.run(self.output, output, mode)
+                preflight.assert_not_called()
+                command.assert_not_called()
+                query.assert_not_called()
+                self.assertEqual(json.loads((output / "source.json").read_text()), binding)
+                result = json.loads((output / "result.json").read_text())
+                self.assertFalse(result["canonical_chain_complete"])
+                self.assertEqual(result["canonical_stages"], [])
+                self.assertIsNone(result["canonical_returncode"])
+                self.assertTrue(result["inputs_unchanged"])
+                self.assertEqual(result["observer_failure"]["retention"], "censored")
+                self.assertEqual(result["observer_failure"]["trace_health"]["collector_returncode"], -signal.SIGABRT)
+                inventory = json.loads((output / "inventory.json").read_text())
+                self.assertTrue({"source.json", "result.json", "signal-trace.jsonl"} <= {r["path"] for r in inventory})
+                for row in inventory:
+                    artifact = output / row["path"]
+                    self.assertEqual(row["sha256"], cost.sha(artifact))
+                    self.assertEqual(row["bytes"], artifact.stat().st_size)
+
+    def test_oversized_collector_output_is_censored_and_continuation_is_not_wire(self):
+        # The reader's bounded fragment buffer serves require_trace_health;
+        # truncation must be visible and cannot turn a suffix into readiness.
+        for suffix in (b"\n", b"x" * 131072 + b"D\tready\n"):
+            with self.subTest(suffix_bytes=len(suffix)):
+                output = self.output / str(len(suffix))
+                output.mkdir()
+                trace = cost.SignalTrace(output)
+                tail = "b'\\n'" if suffix == b"\n" else "b'x'*131072+b'D\\tready\\n'"
+                health, records, diagnostics = self.collect_failure(
+                    trace, "sys.stdout.buffer.write(b'collector-long-'+b'x'*65536+" + tail +
+                           "); sys.stdout.buffer.flush(); sys.exit(23)",
+                    limit=512 * 1024)
+                self.assertEqual(health["collector_returncode"], 23)
+                self.assertFalse(health["ready"])
+                self.assertTrue(any(row["truncated"] for row in diagnostics))
+                self.assertTrue(any(base64.b64decode(row["raw_bytes_base64"]).startswith(b"collector-long-")
+                                    for row in diagnostics))
+                self.assertEqual(records[-1]["retention"], "censored")
+
+    def test_failure_diagnostics_obey_trace_live_byte_guard(self):
+        # SignalSink's existing trace/live cap includes encoded diagnostics.
+        trace = cost.SignalTrace(self.output)
+        console = io.StringIO()
+        health, records, diagnostics = self.collect_failure(
+            trace, "sys.stdout.buffer.write(b'attach-failure-\\xff\\n'*100); sys.exit(19)",
+            console=console, limit=2048)
+        self.assertGreater(health["dropped_events"], 0)
+        self.assertLessEqual(len(console.getvalue().encode()), 2048)
+        self.assertLessEqual((self.output / "signal-trace.jsonl").stat().st_size, 2048)
+        self.assertEqual(base64.b64decode(diagnostics[0]["raw_bytes_base64"]), b"attach-failure-\xff")
+        self.assertEqual(records[-1]["retention"], "censored")
+
+    def test_failure_diagnostics_under_live_backpressure_keep_bytes_and_cleanup(self):
+        # The existing bounded live-delivery consumer must not trap the reader
+        # or stop/finish when retaining the actual startup failure family.
+        read_fd, write_fd = os.pipe()
+        self.addCleanup(os.close, read_fd)
+        console = os.fdopen(write_fd, "w", buffering=1)
+        self.addCleanup(console.close)
+        os.set_blocking(write_fd, False)
+        try:
+            while True:
+                os.write(write_fd, b"x" * 4096)
+        except BlockingIOError:
+            pass
+        os.set_blocking(write_fd, True)
+        begin = time.monotonic()
+        trace = cost.SignalTrace(self.output)
+        health, records, diagnostics = self.collect_failure(
+            trace, "os.write(2,b'loader-failure\\xfd\\n'); sys.exit(17)", console=console)
+        self.assertLess(time.monotonic() - begin, 3)
+        self.assertEqual(health["collector_returncode"], 17)
+        self.assertEqual(health["console_error"], "TimeoutError")
+        self.assertTrue(os.get_blocking(write_fd))
+        self.assertEqual(base64.b64decode(diagnostics[0]["raw_bytes_base64"]), b"loader-failure\xfd")
+        self.assertEqual(records[-1]["retention"], "censored")
 
     def test_native_preflight_failure_executes_no_canonical_program(self):
         trace = Mock(sink=Mock(), stop=Mock(return_value={"ready": True, "lost_events": 0, "dropped_events": 0, "parse_errors": 0, "reader_error": None, "collector_returncode": 0}))

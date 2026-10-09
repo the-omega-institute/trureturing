@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Temporary native cold-report experiment; observations never decide admission."""
 import argparse
+import base64
 from contextlib import contextmanager
 import ctypes
 import functools
@@ -50,6 +51,10 @@ def append(path, value):
 
 
 TRACE_LIMIT = 64 * 1024 * 1024
+# Collector diagnostics use the same bounded SignalSink as trace/live delivery.
+# This per-record cap keeps an unterminated startup write inspectable without
+# allowing one malformed record to consume the trace budget.
+COLLECTOR_DIAGNOSTIC_LIMIT = 64 * 1024
 PREFLIGHT_SECONDS = 90
 TRACE_SECONDS = 180 * 60
 IDENTITY_FIELDS = ("pid", "tgid", "ppid", "pgid", "sid", "start_ns", "comm")
@@ -335,7 +340,8 @@ class SignalTrace:
 
     Process start identities come from the event's task_struct, avoiding /proc
     races for short-lived senders/targets. System-wide collection is needed for
-    external actors; task basenames and numeric fields are the entire payload.
+    external actors. Event wire contains task basenames and numeric fields;
+    collector failure diagnostics retain bounded original bytes separately.
     """
     def __init__(self, output, seconds=TRACE_SECONDS):
         self.output, self.seconds = output, seconds
@@ -391,10 +397,11 @@ class SignalTrace:
     def _read(self):
         sel = selectors.DefaultSelector()
         buffers = {}
-        for pipe in (self.process.stdout, self.process.stderr):
+        streams = ((self.process.stdout, "stdout"), (self.process.stderr, "stderr"))
+        for pipe, stream in streams:
             os.set_blocking(pipe.fileno(), False)
             sel.register(pipe, selectors.EVENT_READ)
-            buffers[pipe] = b""
+            buffers[pipe] = (stream, b"", False)
         try:
             while sel.get_map():
                 if time.monotonic() > self.deadline + 5:
@@ -402,35 +409,88 @@ class SignalTrace:
                     self.process.kill()
                 for key, _ in sel.select(timeout=1):
                     block = os.read(key.fileobj.fileno(), 65536)
+                    stream, buffered, continuation = buffers[key.fileobj]
                     if not block:
-                        if buffers[key.fileobj]:
+                        if buffered:
                             self.health["parse_errors"] += 1
+                            self._record_collector_diagnostic(stream, buffered,
+                                                              reason="eof-partial-output",
+                                                              terminated=False)
                         sel.unregister(key.fileobj)
                         continue
-                    buffers[key.fileobj] += block
-                    while b"\n" in buffers[key.fileobj]:
-                        line, buffers[key.fileobj] = buffers[key.fileobj].split(b"\n", 1)
-                        self._line(line.decode(errors="replace"))
-                    if len(buffers[key.fileobj]) > 65536:
-                        buffers[key.fileobj] = b""
+                    buffered += block
+                    while b"\n" in buffered:
+                        line, buffered = buffered.split(b"\n", 1)
+                        if continuation:
+                            self._record_collector_diagnostic(
+                                stream, line, reason="oversized-output-continuation")
+                        else:
+                            self._line(line.decode(errors="replace"), stream=stream,
+                                       raw=line, terminated=True)
+                        continuation = False
+                    if len(buffered) > COLLECTOR_DIAGNOSTIC_LIMIT:
                         self.health["parse_errors"] += 1
+                        self._record_collector_diagnostic(
+                            stream, buffered,
+                            reason="oversized-unterminated-output", terminated=False,
+                            truncated=True)
+                        buffered = b""
+                        continuation = True
+                    buffers[key.fileobj] = (stream, buffered, continuation)
         except BaseException as error:
             self.health["reader_error"] = type(error).__name__
         finally:
             sel.close()
 
-    def _line(self, line):
-        if not line.strip():
+    def _record_collector_diagnostic(self, stream, raw, reason, terminated=True, truncated=False):
+        """Retain bounded startup/attachment bytes for the report consumer.
+
+        The canonical-report/integration GoalArtifact consumes this event only
+        as diagnostic evidence. It is a distinct kind from signal wire records,
+        so it cannot satisfy capability health. Bytes exclude the framing LF;
+        terminated records retain that delimiter through the termination flag.
+        Truncation is also a retention drop for the existing health consumer.
+        """
+        if self.sink is None:
             return
+        observed_byte_length = len(raw)
+        truncated = truncated or observed_byte_length > COLLECTOR_DIAGNOSTIC_LIMIT
+        raw = bytes(raw[:COLLECTOR_DIAGNOSTIC_LIMIT])
+        if truncated:
+            with self.sink.lock:
+                self.sink.dropped_events += 1
+        self.sink.emit({
+            "kind": "collector-diagnostic",
+            "stream": stream,
+            "reason": reason,
+            "terminated": bool(terminated),
+            "truncated": bool(truncated),
+            "raw_line_sha256": hashlib.sha256(raw).hexdigest(),
+            "raw_byte_length": len(raw),
+            "observed_byte_length": observed_byte_length,
+            "raw_bytes_base64": base64.b64encode(raw).decode("ascii"),
+            "encoding": "base64",
+            "collector_returncode": self.process.poll() if self.process else None,
+        })
+
+    def _line(self, line, stream="stdout", raw=None, terminated=True):
+        if stream == "stdout" and not line.strip():
+            return
+        if raw is None:
+            raw = line.encode(errors="replace")
         lost = re.search(r"[Ll]ost\s+(\d+)\s+events", line)
         if lost:
             self.health["lost_events"] += int(lost[1])
             self.sink.emit({"kind": "event-loss", "lost_events": self.health["lost_events"]})
+            self._record_collector_diagnostic(stream, raw, reason="collector-event-loss", terminated=terminated)
             return
+        # bpftrace wire is stdout. Stderr is collector-owned diagnostic output,
+        # even when its bytes happen to resemble a wire record.
         try:
+            if stream != "stdout":
+                raise ValueError("collector stderr is not signal wire")
             event = parse_signal_wire(line)
         except (ValueError, OverflowError):
-            # Never echo raw diagnostic stderr: tools can include command text.
             self.health["parse_errors"] += 1
             if self.health["parse_errors"] == 1:
                 categories = [name for token, name in
@@ -438,7 +498,10 @@ class SignalTrace:
                      ("not found", "missing-probe-or-type"), ("unknown", "missing-probe-or-type"),
                      ("memlock", "memlock"), ("ERROR", "compiler-or-attach")) if token in line]
                 self.sink.emit({"kind": "schema-or-capability-error", "categories": sorted(set(categories)),
-                                "raw_line_sha256": hashlib.sha256(line.encode()).hexdigest()})
+                                "raw_line_sha256": hashlib.sha256(raw).hexdigest()})
+            self._record_collector_diagnostic(
+                stream, raw, reason="collector-stderr" if stream != "stdout" else "malformed-output",
+                terminated=terminated)
             return
         if event["kind"] == "trace-ready":
             self.health["ready"] = True
