@@ -353,6 +353,73 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
                           "--merge", feature, "--message", "mirror: offline", expect=73)
         self.assertEqual("feature\n", (failed / "owned").read_text())
 
+    def consumer_mirror_uses_real_git_with_stubbed_github(self):
+        self.g(self.main, "push", "origin", self.base + ":refs/heads/integration-tests")
+        self.g(self.main, "switch", "-c", "feature")
+        (self.main / "feature").write_text("feature\n")
+        self.g(self.main, "add", "feature")
+        self.g(self.main, "commit", "-m", "feature")
+        self.g(self.main, "switch", "dev")
+        self.g(self.main, "merge", "--no-ff", "-m", "Merge pull request #11 from fixture/feature", "feature")
+        self.g(self.main, "push", "origin", "dev")
+        binary = self.root / "github-stub"
+        binary.mkdir()
+        gh = binary / "gh"
+        gh.write_text(f'''#!{sys.executable}
+import json,subprocess,sys
+a=sys.argv[1:]
+if a[:2]==["auth","status"]: pass
+elif a[:2]==["repo","view"]: print("fixture/repo")
+elif a[0]=="api": print(json.dumps(dict(protected=True,protection=dict(required_status_checks=dict(contexts=["required"])))))
+elif a[:2]==["pr","list"]: print("[]")
+elif a[:2]==["pr","create"]: print("https://example.invalid/fixture/repo/pull/17")
+elif a[:2]==["pr","checks"]:
+    if "--json" in a: print(json.dumps([dict(name="required",bucket="pass")]))
+elif a[:2]==["pr","merge"]:
+    subprocess.run(["git","push","origin","refs/heads/mirror/integration-tests/11:refs/heads/integration-tests"],check=True)
+elif a[:3]==["pr","view","11"]: print(json.dumps(dict(title="feature",url="https://example.invalid/fixture/repo/pull/11")))
+elif a[:3]==["pr","view","17"]: print(json.dumps(dict(state="MERGED",mergedAt="2030-01-01T00:00:00Z")))
+else: raise SystemExit("unexpected GitHub fixture call: "+repr(a))
+''')
+        gh.chmod(0o755)
+        temporary = self.root / "scratch"
+        temporary.mkdir()
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"], TMPDIR=str(temporary))
+        script = ROOT / "tools/scripts/agent/integration-mirror.sh"
+        result = subprocess.run(["/bin/bash", str(script), "--integration", "integration-tests", "--since", self.base],
+            cwd=self.tree, env=environment, capture_output=True, text=True, timeout=60)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn("MIRROR_RESULT mirrored=1 pending=0 exit=0", result.stdout)
+        self.assertFalse(list(temporary.iterdir()))
+        self.assertEqual("feature\n", self.g(self.main, "show", "refs/remotes/origin/dev:feature"))
+
+    def consumer_land_attributes_paths_with_external_checks_stubbed(self):
+        (self.tree / "owned").write_text("authorized\n")
+        (self.tree / "other").write_text("unrelated staged\n")
+        self.g(self.tree, "add", "other")
+        paths = self.root / "authorized.paths"
+        paths.write_bytes(b"owned\0")
+        message = self.root / "unit.msg"
+        message.write_text("authorized unit\n")
+        binary = self.root / "land-stub"
+        binary.mkdir()
+        for name, body in dict(dotnet='exit 0', gh='echo true',
+                make='case "$1" in lean-report|cover|gate) exit 0;; pr-open) echo pr=17;; *) exit 99;; esac').items():
+            file = binary / name
+            file.write_text("#!/bin/sh\n" + body + "\n")
+            file.chmod(0o755)
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"],
+                           LAND_LOG_DIR=str(self.root / "land-logs"))
+        result = subprocess.run(["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"), str(self.tree),
+            self.branch, str(message), "--paths-from", str(paths)], cwd=self.main, env=environment,
+            capture_output=True, text=True, timeout=60)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual("authorized\n", self.g(self.tree, "show", "HEAD:owned"))
+        self.assertEqual("original\n", self.g(self.tree, "show", "HEAD:other"))
+        self.assertEqual("other\n", self.g(self.tree, "diff", "--cached", "--name-only"))
+        self.assertEqual(self.g(self.tree, "rev-parse", "HEAD").strip(),
+                         self.g(self.main, "ls-remote", "origin", "refs/heads/" + self.branch).split()[0])
+
     def paused_job(self, operation, *arguments):
         bin_path = self.root / "bin"
         bin_path.mkdir(exist_ok=True)
