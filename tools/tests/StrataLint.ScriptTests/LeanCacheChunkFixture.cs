@@ -49,6 +49,8 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         // this fixture isolates multipart transport from those dependencies.
         WriteStub("git", """
             case "$*" in
+              *--absolute-git-dir*|*--git-common-dir*) printf '%s/.git\n' "$PWD" ;;
+              *"worktree list --porcelain -z") printf 'worktree %s\000HEAD 0123456789abcdef0123456789abcdef01234567\000branch refs/heads/dev\000\000' "$PWD" ;;
               *rev-parse*) printf '%s\n' '0123456789abcdef0123456789abcdef01234567' ;;
               *status*|*check-ref-format*) exit 0 ;;
               *) exit 89 ;;

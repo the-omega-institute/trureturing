@@ -1,0 +1,14 @@
+**Claim status: open.** 对任意有限条件读口，
+
+$$
+\boxed{\sum_oq_op^o=p.}
+$$
+
+反过来，若 $q_o>0$、$\sum_oq_o=1$，并且候选后验满足 $\sum_oq_op^o=p$，则可取
+
+$$
+\boxed{L(o\mid s)=\frac{q_op_s^o}{p_s}}
+$$
+
+实现这份后验分解。
+
