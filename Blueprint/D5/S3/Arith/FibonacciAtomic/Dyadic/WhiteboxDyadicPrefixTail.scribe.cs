@@ -24,7 +24,10 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
     private static DocumentBlock Thm(string n, string title, Formula f, string prose) =>
         Describe.Lean(DescribeId.Create(n.Replace('.', '-').Replace('_', '-')),
             DeclarationHandle.Create(Prefix + n), H(title), StatementSource.FromAuthor(Disp(f)),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            n is "cylinder_tail_lower" or "ddg_lower"
+                ? AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg"))
+                : AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     public DocumentDefinition Create()
     {

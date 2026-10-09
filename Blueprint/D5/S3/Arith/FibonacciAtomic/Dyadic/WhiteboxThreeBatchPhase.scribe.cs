@@ -69,7 +69,8 @@ internal sealed class WhiteboxThreeBatchPhaseDocument : IScribeDocumentDefinitio
                     Equal(sharp, Call("min", first, Call("min", middle, last))))))),
                 Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                     H("Exact values, thresholds, and attained infima"),
-                    StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+                    StatementSource.FromAuthor(Disp(statement)),
+                    AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
                     Blocks(Paragraph(Text("For every N at least one and positive lambda, both interfaces "
                         + "have the displayed sharp value. The deterministic, biased, and uniform laws "
                         + "give its three lines, switching at N=6 lambda and N=14 lambda. The boundary "
