@@ -1358,9 +1358,9 @@ G=2I_7+2J_7,
   两个候选子类型在每个 \(W\ne0\) 时具有相同的有限基数。
 
 这组声明把“候选密度相同”提升为任意非零模数上的一般等势定理，同时保留
-三点方向作为观察商依赖的坐标。Lean 中的 gapDifference 是整数间隙差，且
-反转两个有序间隙会使方向取负；理论正文的归一化手性
-\(\chi=(g_2-g_1)/2\) 只是该方向在直径六模板上的缩放记号。
+三点方向作为观察商依赖的坐标。理论正文用归一化手性
+\(\chi=(g_2-g_1)/2\) 标记两个直径六模板的方向；当前 Lean 核心只冻结被
+反射等价链实际消费的 wheel-admissibility 与候选空间基数结论。
 
 W=30 的 origin witness、W=210 的 translation-invariant triple witness、
 以及 \(K_3^{\mathrm{origin}}=3\)、\(K_3^{\mathrm{TI}}=4\) 是 Foundational
