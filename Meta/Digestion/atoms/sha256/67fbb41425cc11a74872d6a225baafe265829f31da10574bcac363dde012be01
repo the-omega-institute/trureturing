@@ -1,0 +1,32 @@
+**因此，知道“选了哪个窗口位置”与确认“内部实际来源确实是规范的 $T_n$”是两项不同任务。** 后者需要来源承诺，或者实际证据；不能仅凭数量相同便自动确认。
+
+---
+
+## 2. 最小的祖先缺陷，只改变三片叶的括号
+
+Claim status: open.
+
+取：
+
+$$
+\boxed{B=\langle\langle\beta,\alpha\rangle,\beta\rangle=T_3,}
+$$
+
+$$
+\boxed{D=\langle\beta,\langle\alpha,\beta\rangle\rangle.}
+$$
+
+它们具有完全相同的叶词 $w(B)=w(D)=\beta\alpha\beta$。
+
+但：
+
+$$
+\boxed{\nu(B)=3,\qquad\nu(D)=0.}
+$$
+
+### lemma 1. 一个左孩子为 $\alpha$ 的节点，是“不属于一次 FIB 像”的证据
+
+Claim status: open.
+
+任何属于 $\rho[\mathbb T]$ 的实际树，都不会出现“某个配对节点的左孩子恰好是单叶 $\alpha$”的情况。
+

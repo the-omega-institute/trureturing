@@ -1,0 +1,44 @@
+### theorem 7: 反演面积与来源 Gram 面积之间，有统一的双边界
+
+Claim status: open（参考候选，未经本稿的 Lean kernel 核验）。
+
+```math
+\boxed{
+\frac{625}{72}\det H_2
+\le
+-\det\mathsf J
+\le
+\frac{81}{8}\det H_2.
+}
+```
+
+#### 证明
+
+在定理5的积分中：
+
+```math
+\frac{625}{36}
+\le
+\frac1{s(1-s)t(1-t)}
+\le
+\frac{81}{4}.
+```
+
+而：
+
+```math
+\int_a^b\int_b^c(t-s)\,dt\,ds
+=
+\frac12(b-a)(c-a)(c-b).
+```
+
+所以：
+
+```math
+\frac{625}{72}\Delta
+\le\Lambda
+\le\frac{81}{8}\Delta.
+```
+
+乘上各组三来源的非负概率权重，再使用定理4、6求和。证毕。
+
