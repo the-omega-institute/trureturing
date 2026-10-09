@@ -23,9 +23,40 @@ internal sealed class WhiteboxThreeBatchPhaseDocument : IScribeDocumentDefinitio
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
 
+    private static Formula Word(string bits) =>
+        Call("word", D(bits.Select(c => (byte)(c - '0')).ToArray()));
+    private static Formula Words(params (string Bits, int Label)[] words) =>
+        Call("list", words.Select(w => Call("emit", Word(w.Bits), Digits(w.Label))).ToArray());
+    private static Formula CodesFormula()
+    {
+        var b = V("biasedThree"); var u = V("uniformThree"); var d = V("d"); var i = V("i");
+        var w = V("w"); var t = V("t"); var point = V("point");
+        Formula Stops(Formula path, int depth) => Call("stopping", D(3), path, Digits(depth));
+        Formula Continue(Formula path) => Call("continuing", D(3), path, D(2));
+        var bs = Call("relabel", V("rotate"), Call("fromPath", D(3), b));
+        var us = Call("fromPath", D(3), u);
+        return And(
+            All(d, Nat, All(w, Seq(Call("Fin", d), Sp, To, Sp, V("Bool")),
+                Equal(Call("observe", point, d, w), Call("some", D(0))))),
+            Equal(Call("bill", point), Par(Seq(t, Colon, Sp, V("Tape"), Sp, Mapsto, Sp, D(0)))),
+            Equal(Call("rotateLabels", Stops(b, 0), V("rotate")), Words(("0", 0))),
+            Equal(Call("rotateLabels", Stops(b, 1), V("rotate")), Words(("10", 1), ("11", 2))),
+            Equal(Continue(b), Seq(OpenBracket, CloseBracket)),
+            Equal(Stops(u, 1), Words(("00", 0), ("01", 1), ("10", 2))),
+            Equal(Continue(u), Call("list", Word("11"))),
+            All(d, Nat, And(
+                Equal(Call("state", u, Seq(d, Sp, Plus, Sp, D(2))), Call("state", u, d)),
+                Equal(Call("action", u, Seq(d, Sp, Plus, Sp, D(2))), Call("action", u, d)))),
+            All(i, Call("Fin", D(3)), Equal(Call("law", bs, i),
+                Call("if", Equal(i, D(0)), Frac(D(1), 2), Frac(D(1), 4)))),
+            All(i, Call("Fin", D(3)), Equal(Call("law", us, i), Frac(D(1), 3))),
+            Equal(Call("E", Call("bill", bs)), Call("ofReal", Frac(D(3), 2))),
+            Equal(Call("E", Call("bill", us)), Call("ofReal", Frac(D(8), 3))));
+    }
+
     private static DocumentBlock Helper(string name, string title, Formula statement, string text) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.FromAuthor(Disp(And(Call("CodeClaim"), statement))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     private static Formula RecipeRestriction()
     {
@@ -108,9 +139,19 @@ internal sealed class WhiteboxThreeBatchPhaseDocument : IScribeDocumentDefinitio
                     "Restricting to two zero-excess trees would contradict the root excess bound for a nonconflicting family."),
                 Helper("selected_emitted", "The selected controller is the emitted controller", SelectedEmission(),
                     "Persistence makes distinct controller emission events disjoint, so selection agrees with every emitted controller."),
+                Describe.Lean(DescribeId.Create("code-claim"), DeclarationHandle.Create(Prefix + "CodeClaim"),
+                    H("Literal attaining codes"),
+                    StatementSource.FromAuthor(Disp(Equal(Call("CodeClaim"), CodesFormula()))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("Stopping at depth d returns words of length d+1. "
+                        + "The biased sampler rotates carry labels by one modulo three: its words "
+                        + "0, 10, and 11 emit endpoint labels 0, 1, and 2. The point sampler "
+                        + "emits label zero at the empty prefix and pays no bits. The uniform "
+                        + "path repeats its state and action every two depths, continuing on 11. "
+                        + "Expectations use the common fair-tape measure."))), DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                     H("Exact values, thresholds, and attained infima"),
-                    StatementSource.FromAuthor(Disp(statement)),
+                    StatementSource.FromAuthor(Disp(And(Call("CodeClaim"), statement))),
                     AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
                     Blocks(Paragraph(Text("For every N at least one and positive lambda, both interfaces "
                         + "have the displayed sharp value. The deterministic, biased, and uniform laws "
@@ -127,7 +168,7 @@ internal sealed class WhiteboxThreeBatchPhaseDocument : IScribeDocumentDefinitio
                         + "The universal prefix-cylinder bound connects the actual bill to L(p); "
                         + "the existing Mersenne supporting lines give L(p)>=6t and L(p)>=14t-2.")),
                         Paragraph(Text("The point law emits a coarse endpoint at the empty word and "
-                        + "pays zero bits. A finite three-leaf code has probabilities 1/2,1/4,1/4 "
+                        + "pays zero bits. The words 0, 10, and 11 emit labels 0, 1, and 2, giving probabilities 1/2,1/4,1/4 "
                         + "and expected length 3/2. A finite-state two-level repeating code gives "
                         + "equal probabilities 1/3 and expected length 8/3. Their stopping words "
                         + "are realized through the public fixed-label carry-tree contract. "

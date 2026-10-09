@@ -30,7 +30,7 @@ def actual : Realization signature := realize signature
 
 abbrev arena : Arena.{0, 0, 0, 0, 0} where
   signature := signature
-  Law R := ∀ N : ℕ, 1 ≤ N → ∀ l : ℝ, 0 < l →
+  Law R := CodeClaim ∧ ∀ N : ℕ, 1 ≤ N → ∀ l : ℝ, 0 < l →
     R.readout 0 l N = ENNReal.ofReal (Phase.sharp N l) ∧
     R.readout 1 l N = ENNReal.ofReal (Phase.sharp N l) ∧
     (∃ s : PrefixSampler Strategy, Coarse s ∧ G s N l = ENNReal.ofReal (Phase.sharp N l)) ∧
@@ -52,7 +52,7 @@ def changed (r : Fin 4) : Realization signature := realize signature
 
 private theorem rejected (r : Fin 4) : ¬ arena.Law (changed r) := by
   intro h
-  have data := h 1 (by decide) 1 (by norm_num)
+  have data := h.2 1 (by decide) 1 (by norm_num)
   fin_cases r
   · have bad := data.1
     norm_num [changed, realize, Phase.sharp] at bad
@@ -69,8 +69,8 @@ private theorem rejected (r : Fin 4) : ¬ arena.Law (changed r) := by
 
 private theorem nonconstant (r : Fin 4) :
     actual.readout r 10 1 ≠ actual.readout r 10 2 := by
-  have one := actual_law 1 (by decide) 10 (by norm_num)
-  have two := actual_law 2 (by decide) 10 (by norm_num)
+  have one := actual_law.2 1 (by decide) 10 (by norm_num)
+  have two := actual_law.2 2 (by decide) 10 (by norm_num)
   fin_cases r <;> simp [actual, realize] at one two ⊢ <;>
     first | rw [one.1, two.1] | rw [one.2.1, two.2.1]
           | rw [one.2.2.2.2.2.2.1, two.2.2.2.2.2.2.1]
@@ -116,22 +116,22 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
       path := #[] }
     coordinates := #[2]
     readouts := #[
-      { path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+      { path := #["arg", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
         stateBinder := 0
         functionOperand := false
         stateOperand := some #["fn", "arg"]
         booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
+      { path := #["arg", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
         stateBinder := 0
         functionOperand := false
         stateOperand := some #["fn", "arg"]
         booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      { path := #["arg", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
         stateBinder := 0
         functionOperand := false
         stateOperand := some #["fn", "arg"]
         booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      { path := #["arg", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
         stateBinder := 0
         functionOperand := false
         stateOperand := some #["fn", "arg"]

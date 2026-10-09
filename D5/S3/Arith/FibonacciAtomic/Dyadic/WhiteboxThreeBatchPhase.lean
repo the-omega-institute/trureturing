@@ -218,17 +218,6 @@ def rawH (N : ℕ) (l : ℝ) : ℝ≥0∞ := ⨅ s : PrefixSampler Strategy, H s
 
 def coarseH (N : ℕ) (l : ℝ) : ℝ≥0∞ := ⨅ s : {s : PrefixSampler Strategy // Coarse s}, H s.val N l
 
-/-- Exact all-sampler/controller target. No conclusion is included among its assumptions. -/
-def Claim : Prop := ∀ N : ℕ, 1 ≤ N → ∀ l : ℝ, 0 < l →
-  rawGamma N l = ENNReal.ofReal (Phase.sharp N l) ∧
-  coarseGamma N l = ENNReal.ofReal (Phase.sharp N l) ∧
-  (∃ s : PrefixSampler Strategy, Coarse s ∧ G s N l = ENNReal.ofReal (Phase.sharp N l)) ∧
-  (N ≤ 6*l → rawGamma N l = ENNReal.ofReal (17*N)) ∧
-  (6*l ≤ N → N ≤ 14*l → rawGamma N l = ENNReal.ofReal (67*N/4+3*l/2)) ∧
-  (14*l ≤ N → rawGamma N l = ENNReal.ofReal (50*N/3+8*l/3)) ∧
-  rawH N l = ENNReal.ofReal (17*N) ∧
-  coarseH N l = ENNReal.ofReal (17*N) ∧
-  (∃ s : PrefixSampler Strategy, Coarse s ∧ H s N l = ENNReal.ofReal (17*N))
 
 
 set_option autoImplicit false
@@ -586,12 +575,15 @@ private theorem point_law (i : Fin 3) : law point i = if i=0 then 1 else 0 := by
   rw [evt]
   split_ifs <;> simp
 
-local notation "biased" => Paths.fromPath 3 Codes.biasedThree (by omega) Codes.biased_legal
+local notation "biasedBase" => Paths.fromPath 3 Codes.biasedThree (by omega) Codes.biased_legal
+local notation "rotate" => finRotate 3
+local notation "biased" => relabel rotate biasedBase
 
 local notation "uniform" => Paths.fromPath 3 Codes.uniformThree (by omega) Codes.uniform_legal
 
-private theorem biased_law (i : Fin 3) : law biased i = if i=2 then (1/2 : ℝ) else 1/4 := by
-  rw [Paths.path_law,Codes.biased_law]
+private theorem biased_law (i : Fin 3) : law biased i = if i=0 then (1/2 : ℝ) else 1/4 := by
+  rw [relabel_law_equiv,Paths.path_law,Codes.biased_law]
+  fin_cases i <;> norm_num [finRotate_symm_apply,Fin.ext_iff,Fin.sub_def]
 
 private theorem uniform_law (i : Fin 3) : law uniform i = (1/3 : ℝ) := by
   rw [Paths.path_law,Codes.uniform_law]
@@ -600,7 +592,7 @@ private theorem code_bills :
     (∫⁻ t, bill biased t ∂fairTape) = ENNReal.ofReal (3/2) ∧
     (∫⁻ t, bill uniform t ∂fairTape) = ENNReal.ofReal (8/3) := by
   constructor
-  · rw [Paths.path_expectation, Codes.biased_cost]
+  · rw [relabel_bill, Paths.path_expectation, Codes.biased_cost]
   · rw [Paths.path_expectation, Codes.uniform_cost]
 
 private theorem minMass_eq (p : Fin 3 → ℝ) (t : ℝ) (lower : ∀ i, t ≤ p i)
@@ -616,7 +608,7 @@ private theorem code_minMass :
   refine ⟨minMass_eq _ _ (fun i => (law_simplex point).1 i) ⟨1,by simp [point_law]⟩,?_,?_⟩
   · apply minMass_eq
     · intro i; rw [biased_law]; split_ifs <;> norm_num
-    · exact ⟨0,by norm_num [biased_law,Fin.ext_iff]⟩
+    · exact ⟨1,by norm_num [biased_law,Fin.ext_iff]⟩
   · exact minMass_eq _ _ (fun i => by rw [uniform_law]) ⟨0,uniform_law 0⟩
 
 private theorem three_lines (N : ℕ) (l : ℝ) (hl : 0 ≤ l) :
@@ -663,13 +655,17 @@ private theorem gamma_exact (N : ℕ) (l : ℝ) (hl : 0 ≤ l) :
     · exact le_iInf (fun s => all_controller_lower s.val N l hl)
 
 private theorem some_cost_17 (pi : Strategy) : ∃ i : Fin 3, 17 ≤ cost pi (prototypes i) := by
-  obtain ⟨a,ha⟩ := profile_domination pi
-  have distinct : ∃ i : Fin 3, a ≠ i := by
-    by_cases h : a=0
-    · exact ⟨1,by rw [h]; decide⟩
-    · exact ⟨0,h⟩
-  obtain ⟨i,hi⟩ := distinct
-  exact ⟨i,by simpa [hi] using ha i⟩
+  have core := ActualJointResponseCostCore.result 3 (by omega) prototypes
+    (fun i => (prototype_facts.2.1 i).1) prototype_facts.1
+  obtain ⟨v,hv,dom⟩ := core.2.2.2.1 pi
+  obtain ⟨r,hr⟩ := hv
+  obtain ⟨i,_,hgain⟩ := Scale38NestedCompensation.root_excess prototypes
+    prototype_facts.2.2 Finset.univ r (by simp)
+  refine ⟨i,?_⟩
+  have bound := dom i
+  rw [hr i,(prototype_facts.2.1 i).2] at bound
+  dsimp only at bound ⊢
+  omega
 
 private theorem all_H_lower (s : PrefixSampler Strategy) (N : ℕ) (l : ℝ) :
     ENNReal.ofReal (17*N) ≤ H s N l := by
@@ -722,8 +718,71 @@ private theorem H_exact (N : ℕ) (l : ℝ) :
         ⟨endpointSampler point,endpointSampler_coarse _⟩).trans_eq (H_attainment N l)
     · exact le_iInf (fun s => all_H_lower s.val N l)
 
-/-- Sharp raw/coarse batch infima, phase thresholds, and coarse attainment. -/
+open D5.S3.Arith.FibonacciAtomic.CarryGraphRealization
+
+/-- Fixed endpoint labels for the finite biased code and the repeating uniform code. -/
+def CodeClaim : Prop :=
+    (∀ d w, point.observe d w = some 0) ∧
+    bill point = (fun _ => 0) ∧
+    (stopping 3 Codes.biasedThree 0).map (fun v => (v.1,rotate v.2)) =
+      [([false],(0:Fin 3))] ∧
+    (stopping 3 Codes.biasedThree 1).map (fun v => (v.1,rotate v.2)) =
+      [([true,false],(1:Fin 3)),([true,true],2)] ∧
+    continuing 3 Codes.biasedThree 2 = [] ∧
+    stopping 3 Codes.uniformThree 1 =
+      [([false,false],(0:Fin 3)),([false,true],1),([true,false],2)] ∧
+    continuing 3 Codes.uniformThree 2 = [[true,true]] ∧
+    (∀ d, Codes.uniformThree.state (d+2) = Codes.uniformThree.state d ∧
+      Codes.uniformThree.action (d+2) = Codes.uniformThree.action d) ∧
+    (∀ i, law biased i = if i=0 then (1/2 : ℝ) else 1/4) ∧
+    (∀ i, law uniform i = (1/3 : ℝ)) ∧
+    (∫⁻ t, bill biased t ∂fairTape) = ENNReal.ofReal (3/2) ∧
+    (∫⁻ t, bill uniform t ∂fairTape) = ENNReal.ofReal (8/3)
+
+private theorem codes_exact : CodeClaim := by
+  have b0 : labelSet 3 Codes.biasedThree 0 = {2} := by
+    ext i; fin_cases i <;> norm_num [labelSet,Codes.biasedThree,Fin.ext_iff]
+  have b1 : labelSet 3 Codes.biasedThree 1 = {0,1} := by
+    ext i; fin_cases i <;> norm_num [labelSet,Codes.biasedThree,Fin.ext_iff]
+  have u0 : labelSet 3 Codes.uniformThree 0 = ∅ := by
+    ext i; fin_cases i <;> norm_num [labelSet,Codes.uniformThree]
+  have u1 : labelSet 3 Codes.uniformThree 1 = Finset.univ := by
+    ext i; fin_cases i <;> norm_num [labelSet,Codes.uniformThree]
+  have sorted : ({0,1} : Finset (Fin 3)).sort (fun i j => i≤j) = [0,1] := by
+    rw [Finset.sort_insert (s := ({1}:Finset (Fin 3))) (a := 0)
+      (fun i j => i≤j) (by decide) (by decide)]
+    simp
+  refine ⟨fun _ _ => rfl, point_bill, ?_, ?_, ?_, ?_, ?_, ?_,
+    biased_law, uniform_law, code_bills.1, code_bills.2⟩
+  · norm_num [stopping, continuing, children, b0, b1, sorted,
+      Fin.sort_univ, finRotate_apply, List.finRange, Fin.add_def, Fin.ext_iff]
+  · norm_num [stopping, continuing, children, b0, b1, sorted,
+      Fin.sort_univ, finRotate_apply, List.finRange, Fin.add_def, Fin.ext_iff]
+  · norm_num [continuing, children, b0, b1, sorted,
+      Fin.sort_univ, List.finRange, Fin.ext_iff]
+  · norm_num [stopping, continuing, children, u0, u1,
+      Fin.sort_univ, List.finRange, Fin.ext_iff]
+  · norm_num [continuing, children, u0, u1,
+      Fin.sort_univ, List.finRange, Fin.ext_iff]
+  · intro d
+    simp [Codes.uniformThree,Nat.add_mod]
+
+/-- Exact all-sampler/controller target. No conclusion is included among its assumptions. -/
+def Claim : Prop := CodeClaim ∧ ∀ N : ℕ, 1 ≤ N → ∀ l : ℝ, 0 < l →
+  rawGamma N l = ENNReal.ofReal (Phase.sharp N l) ∧
+  coarseGamma N l = ENNReal.ofReal (Phase.sharp N l) ∧
+  (∃ s : PrefixSampler Strategy, Coarse s ∧ G s N l = ENNReal.ofReal (Phase.sharp N l)) ∧
+  (N ≤ 6*l → rawGamma N l = ENNReal.ofReal (17*N)) ∧
+  (6*l ≤ N → N ≤ 14*l → rawGamma N l = ENNReal.ofReal (67*N/4+3*l/2)) ∧
+  (14*l ≤ N → rawGamma N l = ENNReal.ofReal (50*N/3+8*l/3)) ∧
+  rawH N l = ENNReal.ofReal (17*N) ∧
+  coarseH N l = ENNReal.ofReal (17*N) ∧
+  (∃ s : PrefixSampler Strategy, Coarse s ∧ H s N l = ENNReal.ofReal (17*N))
+
+
+/-- Sharp raw/coarse batch infima, literal codes, phase thresholds, and coarse attainment. -/
 theorem result : Claim := by
+  refine ⟨codes_exact, ?_⟩
   intro N hN l hl
   have gamma := gamma_exact N l hl.le
   have phases := Phase.phase_switches N l hl.le
