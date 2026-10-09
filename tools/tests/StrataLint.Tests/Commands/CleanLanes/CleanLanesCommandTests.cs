@@ -179,7 +179,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(locked));
         Assert.False(Directory.Exists(unlocked));
-        Assert.Equal("locked", ReasonFor(result.Output, locked));
+        Assert.Equal("locked_intentional", ReasonFor(result.Output, locked));
         Assert.Equal("stale_behind", ReasonFor(result.Output, unlocked));
     }
 
@@ -390,7 +390,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(snapshot));
         Assert.True(Directory.Exists(child));
         Assert.True(fixture.WorktreeRegistered(child));
-        Assert.Equal("locked", ReasonFor(result.Output, child));
+        Assert.Equal("locked_intentional", ReasonFor(result.Output, child));
     }
 
     private sealed partial class CleanLanesFixture : IDisposable
@@ -452,7 +452,7 @@ public sealed partial class CleanLanesCommandTests
         private void AddWorktree(string branch, string path) =>
             Git(repository.Path, "worktree", "add", "-b", branch, path, "dev");
 
-        private static string Git(string root, params string[] arguments) =>
+        internal static string Git(string root, params string[] arguments) =>
             TestGit.Run(root, arguments);
     }
 
