@@ -62,9 +62,7 @@ by Lean's kernel in `result` and its live helper proofs.
 `(A + A).card ≤ 22`, while the golden sumset has cardinality at least 24.
 The axiom closure is `propext`, `Classical.choice`, and `Quot.sound`.
 
-## Literature
-
-The latest source for the question is arXiv:2411.08139v2. arXiv:2601.21828v3
+Literature: the latest source for the question is arXiv:2411.08139v2. arXiv:2601.21828v3
 concerns integer sets and does not settle this positive-real minimizer question;
 arXiv:2605.28781 concerns asymptotic sum-product behavior and does not settle
 the finite claim. `formal-conjectures/ErdosProblems/52.lean` states the main
