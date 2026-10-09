@@ -54,7 +54,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have ht := h (d := 1) (α := Unit) (ι := Unit)
     (fun _ => 0) (fun _ => 1) (complete 1) 0 hF
   have hp : (0 : Matrix (Fin 1) (Fin 1) ℂ).PosDef :=
-    (ht.out 0 2).mp (dark_layer_one 1)
+    (ht.out 1 3).mp (dark_layer_one 1)
   have hq := hp.dotProduct_mulVec_pos (show (1 : Fin 1 → ℂ) ≠ 0 from one_ne_zero)
   simpa using hq
 

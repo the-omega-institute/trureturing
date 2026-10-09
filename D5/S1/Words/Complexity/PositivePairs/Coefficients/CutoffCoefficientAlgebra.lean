@@ -186,7 +186,7 @@ theorem cutoffPow_eq_restriction_pow [Finite A] (r : ℕ)
   have hrestrict : cutoffRestriction r (cutoffLift r p) = p := by
     funext w
     simp [cutoffRestriction, cutoffLift,
-      Finsupp.mapDomain_apply Subtype.val_injective]
+      Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
   induction n with
   | zero => rfl
   | succ n ih =>
@@ -246,7 +246,7 @@ theorem cutoffMul_geometricInverse [Finite A] (r : ℕ)
       cutoffRestriction r (1 - cutoffLift r (-c)) := by
     funext w
     simp [cutoffOne, cutoffRestriction, cutoffLift,
-      Finsupp.mapDomain_apply Subtype.val_injective]
+      Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
   rw [hfactor, cutoffGeometricInverse, ← cutoffRestriction_mul,
     mul_neg_geom_sum]
   funext w
@@ -271,7 +271,7 @@ theorem geometricInverse_cutoffMul [Finite A] (r : ℕ)
       cutoffRestriction r (1 - cutoffLift r (-c)) := by
     funext w
     simp [cutoffOne, cutoffRestriction, cutoffLift,
-      Finsupp.mapDomain_apply Subtype.val_injective]
+      Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
   rw [hfactor, cutoffGeometricInverse, ← cutoffRestriction_mul,
     geom_sum_mul_neg]
   funext w

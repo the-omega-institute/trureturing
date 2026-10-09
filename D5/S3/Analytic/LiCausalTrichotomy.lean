@@ -91,9 +91,7 @@ theorem cayley_tendsto_zero : Tendsto cayley (𝓝 0) (𝓝 (-1 : ℂ)) := by
   have h := hnum.div hden (by norm_num : (0 : ℂ) - Complex.I / 2 ≠ 0)
   change Tendsto (fun gamma : ℝ => ((gamma : ℂ) + Complex.I / 2) / (gamma - Complex.I / 2))
     (𝓝 0) (𝓝 (-1 : ℂ))
-  convert h.tendsto using 1
-  · ext gamma; rfl
-  · norm_num
+  convert h.tendsto using 1 <;> norm_num
 @[simp] theorem norm_liSymbol_le (kappa gamma : ℝ) : ‖liSymbol kappa gamma‖ ≤ 2 := by
   rw [liSymbol]; refine (norm_sub_le _ _).trans ?_
   rw [Complex.norm_cpow_real, norm_cayley, Real.one_rpow, norm_one]; norm_num

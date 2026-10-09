@@ -195,9 +195,7 @@ theorem maximum_asymptotic (a : ℝ) (ha : 0 < a) (l : ℕ) (hl : 0 < l) :
   have hu : Tendsto (fun m : ℕ => E m * (max 1 (X m)) ^ l /
       (S (r m) / Z ((m : ℝ) * q))) atTop (𝓝 L) := by
     convert (hE.mul (hcap.pow l)).div hdr one_ne_zero using 1
-    · ext m
-      rfl
-    · simp
+    simp
   have hbound : ∀ᶠ m : ℕ in atTop, maximumValue a l m * K m ≤
       E m * (max 1 (X m)) ^ l / (S (r m) / Z ((m : ℝ) * q)) := by
     filter_upwards [eventually_gt_atTop 0] with m hm0

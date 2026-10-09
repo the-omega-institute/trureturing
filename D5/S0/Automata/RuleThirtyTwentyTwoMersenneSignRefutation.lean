@@ -171,10 +171,8 @@ theorem result : ¬ claim := by
     have hpow := Nat.pow_le_pow_right (by omega : 0 < (2 : ℕ)) (show k ≤ 9 by omega)
     rw [hp] at hpow
     norm_num at hpow
-    omega
   have hpow := Nat.pow_le_pow_right (by omega : 0 < (2 : ℕ)) (show 10 ≤ k by omega)
   rw [hp] at hpow
   norm_num at hpow
-  omega
 
 end D5.S0.Automata.RuleThirtyTwentyTwoMersenneSignRefutation

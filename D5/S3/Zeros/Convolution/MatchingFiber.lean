@@ -169,8 +169,7 @@ private theorem mem_elementaryFiber {n i j : ℕ} {d : Fin n →₀ ℕ}
 
 /-- The squarefree monomial formula identifies coefficients with subset-pair fibers. -/
 theorem coeff_esymm_mul_eq_card (n i j : ℕ) (d : Fin n →₀ ℕ) :
-    MvPolynomial.coeff d
-      (MvPolynomial.esymm (Fin n) ℚ i * MvPolynomial.esymm (Fin n) ℚ j) =
+    AddMonoidAlgebra.coeff (MvPolynomial.esymm (Fin n) ℚ i * MvPolynomial.esymm (Fin n) ℚ j) d =
         ((elementaryFiber n i j d).card : ℚ) := by
   classical
   rw [MvPolynomial.esymm_eq_sum_monomial, MvPolynomial.esymm_eq_sum_monomial,
@@ -210,8 +209,7 @@ theorem card_elementaryFiber (n : ℕ) (S T : Finset (Fin n)) (hST : Disjoint S 
 /-- Complete coefficient formula, including impossible degree and index cases. -/
 theorem coeff_esymm_mul_fiber (n i j : ℕ) (S T : Finset (Fin n))
     (hST : Disjoint S T) :
-    MvPolynomial.coeff (fiberExponent S T)
-      (MvPolynomial.esymm (Fin n) ℚ i * MvPolynomial.esymm (Fin n) ℚ j) =
+    AddMonoidAlgebra.coeff (MvPolynomial.esymm (Fin n) ℚ i * MvPolynomial.esymm (Fin n) ℚ j) (fiberExponent S T) =
       if S.card ≤ i ∧ S.card ≤ j ∧ i + j = 2 * S.card + T.card
       then (T.card.choose (i - S.card) : ℚ) else 0 := by
   classical
@@ -309,8 +307,7 @@ theorem matching_product_eq_decoration_sum {n k : ℕ} (M : Matching n k) :
 
 /-- The matching coefficient is the exact weighted sum over its monomial fiber. -/
 theorem coeff_matchingSum_eq_decoration_fiber (n k : ℕ) (d : Fin n →₀ ℕ) :
-    MvPolynomial.coeff d
-      (matchingSum (MvPolynomial.X : Fin n → MvPolynomial (Fin n) ℚ) k) =
+    AddMonoidAlgebra.coeff (matchingSum (MvPolynomial.X : Fin n → MvPolynomial (Fin n) ℚ) k) d =
       ∑ M : Matching n k, ∑ c : MatchingDecoration M,
         if decorationExponent M c = d then decorationWeight M c else 0 := by
   classical
@@ -456,8 +453,7 @@ abbrev MatchingMonomialFiber {n : ℕ} (k : ℕ) (S T : Finset (Fin n)) :=
 /-- The remaining counting problem is an unweighted fiber cardinality. -/
 theorem coeff_matchingSum_eq_card_fiber (n k : ℕ) (S T : Finset (Fin n))
     (hST : Disjoint S T) :
-    MvPolynomial.coeff (fiberExponent S T)
-      (matchingSum (MvPolynomial.X : Fin n → MvPolynomial (Fin n) ℚ) k) =
+    AddMonoidAlgebra.coeff (matchingSum (MvPolynomial.X : Fin n → MvPolynomial (Fin n) ℚ) k) (fiberExponent S T) =
       (-2 : ℚ) ^ (k - S.card) * Fintype.card (MatchingMonomialFiber k S T) := by
   classical
   have hcard : (Fintype.card (MatchingMonomialFiber k S T) : ℚ) =

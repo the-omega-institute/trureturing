@@ -44,7 +44,8 @@ theorem recurrent_cocycle_not_continuous_coboundary
       (fun n => h (flow (times n) x) - h x) by
     funext n
     exact hcoboundary (times n) x]
-  simpa using horbit.sub_const (h x)
+  simpa using horbit.sub
+    (tendsto_const_nhds : Tendsto (fun _ : Nat => h x) atTop (𝓝 (h x)))
 
 example :
     Tendsto (fun n : ℕ => (n : ℝ)) atTop atTop ∧

@@ -398,7 +398,7 @@ theorem compressed_resolvent_remainder
     simp only [comp_assoc]
   have hpositive : 0 ≤ F.comp (R_u.comp G) - A_u_inv := by
     rw [hremainderX]
-    exact (ContinuousLinearMap.nonneg_iff_isPositive _).2
+    exact (ContinuousLinearMap.nonneg_iff_isPositive (f := _)).2
       (hRpos.adjoint_conj X)
   have hHiddenNorm : ‖H‖ = ‖B‖ := by
     dsimp only [H]

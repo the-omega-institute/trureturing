@@ -253,7 +253,7 @@ theorem terminal_sampling_execution_cylinders
     have region_measurable : ∀ j, MeasurableSet (regions j) :=
       fun _ => (Set.toFinite _).measurableSet
     have family_measurable : Measurable (fun tape j => readBlock width (cursor + j * width) tape) := by
-      apply measurable_pi_lambda
+      apply Measurable.of_eval
       intro j
       exact (measurable_of_finite (blockEquiv width)).comp
         (by fun_prop)
@@ -279,7 +279,7 @@ theorem terminal_sampling_execution_cylinders
         simp only [Set.mem_ofPred_eq, Set.mem_compl_iff, acceptSet]
         omega
       calc
-        _ = Fintype.card (↥(acceptSetᶜ)) := Fintype.card_congr (Equiv.setCongr he)
+        _ = Fintype.card (↥(acceptSetᶜ)) := Fintype.card_congr (Set.equivOfEq he)
         _ = _ := by rw [Fintype.card_compl_set, Fintype.card_fin, cardAccept]
     have rejection_mass : ν {y | bound ≤ y.val} = ((Q - bound : ℕ) : ℝ≥0∞) / Q := by
       unfold ν

@@ -44,11 +44,11 @@ theorem constant_observer_closure_can_be_coarse
     rfl
   have closure : EffectiveDescent (fun _ : X => ()) dynamics :=
     ((deterministic_interface_sixfold_equivalence
-      (fun _ : X => ()) dynamics).out 1 0).mp congruence
+      (fun _ : X => ()) dynamics).out 2 1).mp congruence
   have noCarry : ∀ left right : X,
       ¬IsCarryWitness (fun _ : X => ()) dynamics (fun _ : X => ()) left right :=
     ((deterministic_interface_sixfold_equivalence
-      (fun _ : X => ()) dynamics).out 1 2).mp congruence
+      (fun _ : X => ()) dynamics).out 2 3).mp congruence
   have notFaithful : ¬Function.Injective (fun _ : X => ()) := by
     obtain ⟨left, right, different⟩ := exists_pair_ne X
     intro injective

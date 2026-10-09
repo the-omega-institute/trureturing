@@ -45,7 +45,7 @@ theorem small_prime_product_le (n : ℕ) (y : ℝ) :
       simpa only [one_div] using inv_lt_one_of_one_lt₀ hp1
     exact (one_le_inv₀ (sub_pos.mpr hrecip)).2
       (sub_le_self 1 (div_nonneg zero_le_one (Nat.cast_nonneg p)))
-  exact Finset.prod_le_prod_of_subset_of_one_le
+  exact Finset.prod_le_prod_of_subset_of_one_le₀
     (fun p hp =>
       Finset.mem_filter.mpr
         ⟨Finset.mem_Ioc.mpr
@@ -165,7 +165,7 @@ theorem sigma_split {n : ℕ} (hn : 0 < n) {y : ℝ} (hy : 2 ≤ y) :
           (ArithmeticFunction.sigma_eq_prod_primeFactors_sum_range_factorization_pow_mul
             (k := 1) hn.ne')
     rw [hsigmaprod, hnprod, ← Finset.prod_div_distrib]
-    exact Finset.prod_le_prod
+    exact Finset.prod_le_prod₀
       (fun p _ => div_nonneg
         (Finset.sum_nonneg (fun i _ => pow_nonneg (Nat.cast_nonneg p) i))
         (pow_nonneg (Nat.cast_nonneg p) _))

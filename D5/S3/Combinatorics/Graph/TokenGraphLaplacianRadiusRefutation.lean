@@ -15,6 +15,7 @@ Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Combinatorics.SimpleGraph.Star
 import Mathlib.Data.Set.PowersetCard
 

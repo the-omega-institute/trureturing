@@ -7,6 +7,174 @@ public sealed partial class LeanCacheEnsureCommandTests
 {
     private const string LinkedArchiveDisabled = "linked worktree: release archive disabled";
 
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void LinkedPinMigrationWithColdConsentProducesItsOwnCurrentCache(
+        bool existingCache,
+        bool omitMathlibOleans)
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "unchanged main cache\n", projectWarm: true);
+        var mainStamp = File.ReadAllBytes(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake")));
+        var target = AddWorktree(repository.Path, "pin-migration");
+        if (existingCache) WriteCache(target, "obsolete lane cache\n", projectWarm: true);
+        ChangeMathlibPartition(target);
+        var pins = ReadPins(target);
+        bool? concurrentWriterAcquired = null;
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            OmitMathlibOleans = omitMathlibOleans,
+            DuringWrappedLake = root =>
+            {
+                Assert.Equal(LeanCacheStampState.Match,
+                    LeanCacheStamp.Inspect(Path.Combine(root, ".lake"), pins).State);
+                Assert.False(File.Exists(Path.Combine(root, ".lake", "build", "cache.bin")));
+                Assert.False(File.Exists(Path.Combine(root, ".lake", "build", "lib", "lean", "FixtureWarm.olean")));
+                using var concurrent = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"));
+                concurrentWriterAcquired = concurrent is not null;
+            },
+        };
+        var cloner = new RecordingDirectoryCloner();
+
+        var result = LeanCacheEnsureCommand.RunWithWriter(
+            repository.Path,
+            ["--path", target, "--", "lake", "build"],
+            runner,
+            cloner,
+            FileSystemLeanCacheStateProbe.Instance,
+            variable => variable == "STRATALINT_ACCEPT_COLD_BUILD" ? "1" : null);
+
+        Assert.True(result.Success, result.Error);
+        Assert.False(concurrentWriterAcquired);
+        Assert.Empty(cloner.Invocations);
+        Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.False(runner.CacheGetSawExistingProjection);
+        Assert.Equal(new[] { "exe cache get", "build" }, runner.Invocations
+            .Where(static call => Path.GetFileName(call.FileName) == "lake")
+            .Select(static call => string.Join(" ", call.Arguments)).ToArray());
+        Assert.Equal(mainStamp,
+            File.ReadAllBytes(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake"))));
+        Assert.Equal("unchanged main cache\n", LeanCacheFixtureFile.ReadCacheText(repository.Path));
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal("fetched", receipt.RootElement.GetProperty("status").GetString());
+        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("donor").ValueKind);
+        Assert.Equal("cache-get", receipt.RootElement.GetProperty("method").GetString());
+        Assert.Equal(pins.Sha256, receipt.RootElement.GetProperty("pin_sha256").GetString());
+        Assert.True(receipt.RootElement.GetProperty("cold_build_consent").GetBoolean());
+        Assert.Equal("cold", receipt.RootElement.GetProperty("project_olean_state").GetString());
+        Assert.Equal(LinkedArchiveDisabled, receipt.RootElement.GetProperty("archive_skip_reason").GetString());
+
+        // A produced identity with an empty project layer must permit the first
+        // compilation, including subsequent package phases in the same build.
+        var repeated = LeanCacheEnsureCommand.RunWithWriter(
+            repository.Path,
+            ["--path", target, "--", "lake", "build"],
+            runner,
+            cloner,
+            FileSystemLeanCacheStateProbe.Instance,
+            _ => "1");
+        Assert.True(repeated.Success, repeated.Error);
+        Assert.Single(runner.Invocations, static call => call.Arguments.SequenceEqual(["exe", "cache", "get"]));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("true")]
+    public void LinkedPinMigrationWithoutExactConsentKeepsItsOldCache(string? consent)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "main cache\n", projectWarm: true);
+        var target = AddWorktree(repository.Path, "migration-without-consent");
+        WriteCache(target, "retained old cache\n", projectWarm: true);
+        ChangeMathlibPartition(target);
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = LeanCacheEnsureCommand.RunWithWriter(repository.Path,
+            ["--path", target, "--", "lake", "build"], runner, new RecordingDirectoryCloner(),
+            FileSystemLeanCacheStateProbe.Instance, _ => consent);
+
+        Assert.False(result.Success);
+        AssertNoCacheGet(runner);
+        Assert.DoesNotContain(runner.Invocations, static call => call.Arguments.SequenceEqual(["build"]));
+        Assert.Equal("retained old cache\n", LeanCacheFixtureFile.ReadCacheText(target));
+        Assert.Equal(LeanCacheStampState.Mismatch,
+            LeanCacheStamp.Inspect(Path.Combine(target, ".lake"), ReadPins(target)).State);
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("corrupt")]
+    [InlineData("same-partition")]
+    [InlineData("invalid-pins")]
+    public void ColdConsentDoesNotAuthorizeUnknownIdentityOrNonMigration(string scenario)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "main cache\n", projectWarm: true);
+        var target = AddWorktree(repository.Path, "invalid-migration-" + scenario);
+        WriteCache(target, "preserved cache\n", projectWarm: true);
+        if (scenario != "same-partition") ChangeMathlibPartition(target);
+        var stamp = LeanCacheStamp.PathFor(Path.Combine(target, ".lake"));
+        if (scenario == "missing") File.Delete(stamp);
+        if (scenario == "corrupt") File.WriteAllText(stamp, "invalid stamp\n");
+        if (scenario == "same-partition")
+        {
+            WriteMismatchedStamp(target);
+            File.Delete(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake")));
+        }
+        if (scenario == "invalid-pins")
+            File.WriteAllText(Path.Combine(target, "lake-manifest.json"), LeanCacheFixtureFile.Manifest('c'));
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = LeanCacheEnsureCommand.RunWithWriter(repository.Path,
+            ["--path", target, "--", "lake", "build"], runner, new RecordingDirectoryCloner(),
+            FileSystemLeanCacheStateProbe.Instance, _ => "1");
+
+        Assert.False(result.Success);
+        AssertNoCacheGet(runner);
+        Assert.DoesNotContain(runner.Invocations, static call => call.Arguments.SequenceEqual(["build"]));
+        Assert.Equal("preserved cache\n", LeanCacheFixtureFile.ReadCacheText(target));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void LinkedPinMigrationProducerFailurePublishesNoIdentityOrBuild(bool stampFailure)
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var target = AddWorktree(repository.Path, "migration-producer-failure");
+        WriteCache(target, "obsolete cache\n", projectWarm: true);
+        ChangeMathlibPartition(target);
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            FailLake = !stampFailure,
+            BlockStampAfterCacheGet = stampFailure,
+        };
+
+        var result = LeanCacheEnsureCommand.RunWithWriter(repository.Path,
+            ["--path", target, "--", "lake", "build"], runner, new RecordingDirectoryCloner(),
+            FileSystemLeanCacheStateProbe.Instance, _ => "1");
+
+        Assert.False(result.Success);
+        Assert.Single(runner.Invocations, static call => call.Arguments.SequenceEqual(["exe", "cache", "get"]));
+        Assert.DoesNotContain(runner.Invocations, static call => call.Arguments.SequenceEqual(["build"]));
+        Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
+    }
+
+    private static void ChangeMathlibPartition(string target)
+    {
+        File.WriteAllText(Path.Combine(target, "lean-toolchain"), "leanprover/lean4:v4.34.1\n");
+        File.WriteAllText(Path.Combine(target, "lake-manifest.json"), LeanCacheFixtureFile.Manifest('b'));
+        StrataLint.TestSupport.RegPackageFixture.Write(target);
+    }
+
     [Fact]
     public void LinkedLaneWithAbsentLakeClonesOnlyTheWarmMainCheckout()
     {
