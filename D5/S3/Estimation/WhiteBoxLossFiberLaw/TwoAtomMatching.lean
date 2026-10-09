@@ -359,4 +359,178 @@ theorem whitebox_quantitative_matching
     linarith
   · simpa [jointCost, baseline, matchingGap, hsum, mul_comm] using hcost
 
+private theorem code_cost_bounds
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam : ℝ) (x : E) (D : UnitDictionary E) (hlam : 0 ≤ lam) :
+    0 ≤ codeCost lam x D ∧ codeCost lam x D ≤ ‖x‖ ^ 2 / 2 := by
+  have hnonneg : ∀ c, FeasibleCode c → 0 ≤ codeEnergy lam x D c := by
+    intro c hc
+    unfold codeEnergy
+    exact add_nonneg (by positivity)
+      (mul_nonneg hlam (Finset.sum_nonneg (fun i _ => hc i)))
+  have hne : ({z : ℝ | ∃ c, FeasibleCode c ∧ codeEnergy lam x D c = z}).Nonempty :=
+    ⟨codeEnergy lam x D (fun _ => 0), (fun _ => 0), (fun _ => le_rfl), rfl⟩
+  have hfloor : 0 ≤ codeCost lam x D := by
+    apply le_csInf hne
+    rintro z ⟨c, hc, rfl⟩
+    exact hnonneg c hc
+  refine ⟨hfloor, ?_⟩
+  have hbdd : BddBelow {z : ℝ | ∃ c, FeasibleCode c ∧ codeEnergy lam x D c = z} := by
+    refine ⟨0, ?_⟩
+    rintro z ⟨c, hc, rfl⟩
+    exact hnonneg c hc
+  apply csInf_le hbdd
+  refine ⟨(fun _ => 0), (fun _ => le_rfl), ?_⟩
+  simp [codeEnergy, atomCombination]
+
+/-- The objective changes by at most t/2 when a unit sample is assigned weight t. -/
+theorem perturbation_bounds
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam a b t : ℝ) (u v : E) (D : UnitDictionary E)
+    (hlam : 0 ≤ lam) (hv : ‖v‖ = 1) (ht : 0 ≤ t) :
+    jointCost lam a b 0 u v D ≤ jointCost lam a b t u v D ∧
+      jointCost lam a b t u v D ≤ jointCost lam a b 0 u v D + t / 2 := by
+  obtain ⟨hlow, hhigh⟩ := code_cost_bounds lam v D hlam
+  rw [hv] at hhigh
+  have hlow' := mul_nonneg ht hlow
+  have hhigh' := mul_le_mul_of_nonneg_left hhigh ht
+  simp only [jointCost, zero_mul, add_zero]
+  constructor <;> nlinarith
+
+/-- The ordered baseline dictionary. -/
+def canonicalDictionary
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (u w : E) (hu : ‖u‖ = 1) (hw : ‖w‖ = 1) : UnitDictionary E :=
+  ⟨![u, w], by intro i; fin_cases i <;> assumption⟩
+
+private theorem bisector_ne_left
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (u v : E) (hv : ‖v‖ = 1) (horth : inner ℝ u v = 0) :
+    bisector u v ≠ u := by
+  intro heq
+  have hinner := congrArg (fun x => inner ℝ v x) heq
+  have hreverse : inner ℝ v u = 0 := by rw [real_inner_comm]; exact horth
+  simp [bisector, inner_smul_right, inner_add_right, hreverse,
+    real_inner_self_eq_norm_sq, hv] at hinner
+
+private theorem whitebox_parameter_bounds (lam : ℝ)
+    (hsmall : lam < 1 / Real.sqrt 2) : lam < 1 ∧ lam < Real.sqrt 2 := by
+  have hsqrt : 1 < Real.sqrt 2 := by
+    have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+    have hp := Real.sqrt_nonneg 2
+    nlinarith
+  have hinv : 1 / Real.sqrt 2 < 1 := (div_lt_one (by linarith)).mpr hsqrt
+  exact ⟨hsmall.trans hinv, (hsmall.trans hinv).trans hsqrt⟩
+
+/-- The unperturbed objective reaches its baseline precisely at the two ordered
+canonical dictionaries. -/
+theorem zero_global_minima
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam a b : ℝ) (u v : E) (D : UnitDictionary E)
+    (hu : ‖u‖ = 1) (hv : ‖v‖ = 1) (horth : inner ℝ u v = 0)
+    (hlam : 0 < lam) (hsmall : lam < 1 / Real.sqrt 2)
+    (ha : 0 < a) (hb : 0 < b) :
+    baseline lam a b ≤ jointCost lam a b 0 u v D ∧
+      (jointCost lam a b 0 u v D = baseline lam a b ↔
+        (D.1 0 = u ∧ D.1 1 = bisector u v) ∨
+          (D.1 0 = bisector u v ∧ D.1 1 = u)) := by
+  obtain ⟨hw, hsum⟩ := bisector_geometry u v hu hv horth
+  obtain ⟨hn, hm⟩ := whitebox_parameter_bounds lam hsmall
+  have hlowu : lam - lam ^ 2 / 2 ≤ codeCost lam u D := by
+    simpa using code_cost_radial_lower_bound lam 1 u D hu hlam.le
+  have hloww : Real.sqrt 2 * lam - lam ^ 2 / 2 ≤ codeCost lam (u + v) D := by
+    simpa [hsum, mul_comm] using
+      code_cost_radial_lower_bound lam (Real.sqrt 2) (bisector u v) D hw hlam.le
+  have hweightu := mul_le_mul_of_nonneg_left hlowu ha.le
+  have hweightw := mul_le_mul_of_nonneg_left hloww hb.le
+  refine ⟨by dsimp [jointCost, baseline]; nlinarith, ?_⟩
+  constructor
+  · intro heq
+    have hequ : codeCost lam u D = lam - lam ^ 2 / 2 := by
+      dsimp [jointCost, baseline] at heq
+      nlinarith
+    have heqw : codeCost lam (u + v) D = Real.sqrt 2 * lam - lam ^ 2 / 2 := by
+      dsimp [jointCost, baseline] at heq
+      nlinarith
+    have huatom : ∃ i, D.1 i = u :=
+      (code_cost_eq_radial_iff lam 1 u D hu hlam hn).mp (by simpa using hequ)
+    have hwatom : ∃ i, D.1 i = bisector u v :=
+      (code_cost_eq_radial_iff lam (Real.sqrt 2) (bisector u v) D hw hlam hm).mp
+        (by simpa [hsum, mul_comm] using heqw)
+    obtain ⟨i, hi⟩ := huatom
+    obtain ⟨j, hj⟩ := hwatom
+    have hne := bisector_ne_left u v hv horth
+    fin_cases i <;> fin_cases j
+    · exact (hne (hj.symm.trans hi)).elim
+    · exact Or.inl ⟨hi, hj⟩
+    · exact Or.inr ⟨hj, hi⟩
+    · exact (hne (hj.symm.trans hi)).elim
+  · intro hmatch
+    have huatom : ∃ i, D.1 i = u := by
+      rcases hmatch with h | h
+      · exact ⟨0, h.1⟩
+      · exact ⟨1, h.2⟩
+    have hwatom : ∃ i, D.1 i = bisector u v := by
+      rcases hmatch with h | h
+      · exact ⟨1, h.2⟩
+      · exact ⟨0, h.1⟩
+    have hequ := (code_cost_eq_radial_iff lam 1 u D hu hlam hn).mpr huatom
+    have heqw :=
+      (code_cost_eq_radial_iff lam (Real.sqrt 2) (bisector u v) D hw hlam hm).mpr hwatom
+    simp only [one_smul, mul_one] at hequ
+    rw [hsum] at heqw
+    simp [jointCost, baseline, hequ, heqw, mul_comm]
+
+/-- Every global minimizer of a sufficiently small positive perturbation lies
+near one of the two canonical ordered dictionaries. No compactness assumption
+or minimizer-existence hypothesis is used. -/
+theorem small_positive_minimizers_localize
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam a b : ℝ) (u v : E)
+    (hu : ‖u‖ = 1) (hv : ‖v‖ = 1) (horth : inner ℝ u v = 0)
+    (hlam : 0 < lam) (hsmall : lam < 1 / Real.sqrt 2)
+    (ha : 0 < a) (hb : 0 < b) (hab : a + b < 1) :
+    ∀ δ > 0, ∃ η > 0, ∀ t, 0 < t → t < η →
+      ∀ D : UnitDictionary E,
+      (∀ D' : UnitDictionary E,
+        jointCost lam a b t u v D ≤ jointCost lam a b t u v D') →
+      (dist (D.1 0) u < δ ∧ dist (D.1 1) (bisector u v) < δ) ∨
+        (dist (D.1 0) (bisector u v) < δ ∧ dist (D.1 1) u < δ) := by
+  intro δ hδ
+  obtain ⟨hw, hsum⟩ := bisector_geometry u v hu hv horth
+  let D0 := canonicalDictionary u (bisector u v) hu hw
+  have hbase : jointCost lam a b 0 u v D0 = baseline lam a b :=
+    (zero_global_minima lam a b u v D0 hu hv horth hlam hsmall ha hb).2.mpr
+      (Or.inl ⟨rfl, rfl⟩)
+  have hdist : 0 < ‖u - bisector u v‖ := by
+    apply norm_pos_iff.mpr
+    exact sub_ne_zero.mpr (bisector_ne_left u v hv horth).symm
+  let ε := min δ (‖u - bisector u v‖ / 4)
+  have hε : 0 < ε := lt_min hδ (by positivity)
+  have hεsep : ε < ‖u - bisector u v‖ / 2 := by
+    have hh := min_le_right δ (‖u - bisector u v‖ / 4)
+    dsimp [ε]
+    linarith
+  have hk : 0 < matchingGap lam a b ε :=
+    (whitebox_quantitative_matching lam a b ε u v D0 hu hv horth
+      hlam hsmall ha hb hε hεsep).1
+  let η := min (matchingGap lam a b ε) (1 - a - b)
+  have hη : 0 < η := lt_min hk (by linarith)
+  refine ⟨η, hη, ?_⟩
+  intro t ht htin D hmin
+  have hpertD := (perturbation_bounds lam a b t u v D hlam.le hv ht.le).1
+  have hpert0 := (perturbation_bounds lam a b t u v D0 hlam.le hv ht.le).2
+  have hcomparison := hmin D0
+  have htgap : t < matchingGap lam a b ε :=
+    htin.trans_le (min_le_left _ _)
+  have hclose : jointCost lam a b 0 u v D < baseline lam a b + matchingGap lam a b ε := by
+    rw [hbase] at hpert0
+    linarith
+  have hmatch := (whitebox_quantitative_matching lam a b ε u v D hu hv horth
+    hlam hsmall ha hb hε hεsep).2 hclose
+  have heδ : ε ≤ δ := min_le_left _ _
+  rcases hmatch with h | h
+  · exact Or.inl ⟨h.1.trans_le heδ, h.2.trans_le heδ⟩
+  · exact Or.inr ⟨h.1.trans_le heδ, h.2.trans_le heδ⟩
+
 end D5.S3.Estimation.WhiteBoxLossFiberLaw.TwoAtomMatching
