@@ -1946,3 +1946,216 @@ $$
 原完整 Gaussian/Fourier 分离仍支付实际外频率、未保留 annuli 与全部标签。新增反射的 annular、有限删除、整条几何恢复与尺度 supremum 均使用前述统一有限 seminorm 和高度阶数；小的齐次 profile 系数保留一次。先定矩、反射及舍入损失，选足够细固定槽系，固定全部内部阶数，再选小的共同高度/collar 参数，最后选外部尾阶数及 $Z$ 阈值。后续外部尾阶数只提高外部输入 seminorm，不扩大已经分配的内部高度阶数。所有负长度尾部用衰减支付，不送入有界长度矩。有限子集、全部重叠、对数个 norm dyads 与整条 $a^6$ 和给出本节完整界。
 
 相较 $19/64$，allowance 改善 $1/128$；没有改变主信号 $C(s)=s-11/16$。名义门槛是 $125/128$，仍高于所用 $11/12$ 半平面；在该阶段最大主信号 $11/48$ 与新上界仍差 $23/384$。这是估计强度不足，不是真实响应的下界。没有产生新无零区域、低于 $7/8$ 的高端合同、完整有符号 Robin 上界或 RH 证明；实际零点数据、正 $r_A$ 与严格核心仍为原目标。
+
+## 原完成探针的改尺度消费与条件半平面
+
+本节使用原始未过滤的 $cn^3$ 完成探针，复用所引主稿的 reflected energy、additive Gram、buffered detector、plain／inverse moments、局部恒等式及 continuation criterion。以下是这些输入成立时的完整消费推导；没有独立核验整篇主稿或源 Lean 项目。前节平方自由探针的低端、高端和混合留数不用于此处。
+
+固定
+$$
+p=\frac1{100000},\qquad b=\frac18,\qquad
+\ell=\frac16+p=\frac{50003}{300000},\qquad M=1-\ell,
+$$
+$$
+l_x=\frac{M-b}{2}=\frac{212497}{600000},\qquad
+l_y=\frac{M+b}{2}=\frac{287497}{600000},\qquad
+h=1+\ell-l_x=\frac{162503}{200000}.
+$$
+仍取原有限 mark／rescale 定义：标记 $p_i\mid cn^3$，系数为 $\overline{\eta(p_i)}$；rescale 系数为 $-q_{p_i}^{-3/2}$。所有槽窗口在操作中保持原 $P_i=Z^{\ell_i}$，没有过滤原完成指数。取足够细的偶数个固定槽，$\ell_i=\ell/K$，各自具有非负、非零的光滑权重和互不相交的原 annulus；槽系在目标及 $Z$ 前固定。原有限物理恒等式和 quotient-free selected-local-operation 对任意这些正尺度成立，故仍得到原完整标量商、Gaussian、全部六次幂自由 $u$ 行与完整修正，而非另定义一个高端积分。
+
+实际尺度满足
+$$
+C(s)=s+\frac{l_x}{2}-1+\frac h6=s-\frac{11}{16},
+$$
+$$
+B=\frac{l_x}{2}+\frac b{12}
+=\frac{74999}{400000}=\frac3{16}-\frac p4,
+\qquad
+\theta=\frac78-\frac p4=\frac{349999}{400000},
+\qquad B=C(\theta).
+$$
+
+### 新能量代价与完整低端
+
+对实际 rescaled 子集 $J$，令 $d=\sum_{i\in J}\ell_i\in[0,\ell]$。其原低分离具有
+$$
+M'=M-2d,\quad \ell'=\ell-d,\quad
+Q=q_{b_*}X'Y'\asymp Z^{M'},\quad
+\frac{Y'^2}{Q}=q_{b_*}^{-1}Z^b.
+$$
+不能套用主稿固定几何的 `probe-row-norm`。使用其一般 `reflected-energy`，保持原 Gaussian annuli、一个共同的齐次 Fourier 密度、实际 residual-row 长度 $H$、powerful 长度 $O$ 和全部合法 dual 支持。记 $\Delta_H=M'-O-H\ge-\varepsilon_Z$。源输入仍有
+$$
+2A_0\le O+\varepsilon_Z,\qquad N_0\le A_0,\qquad z_a\le\ell',
+$$
+$$
+T_d=2H+2A_0+2z_a-1-\ell'-\vartheta_N-N_0-3B_0.
+$$
+由 $M'+\ell'-1=-3d$，得到 $T_d\le H-3d+2\varepsilon_Z+|\vartheta_N|$，故 retained dual 长度仍使 $\max(H,v+\ell_b)=H+$ 已支付小损失。原 dual ideals 可共享素数并保留源文允许的 $S$ 支持；不追加互素限制。源能量两支在此实际参数下为
+$$
+M'-\Delta_H,\qquad
+M'+\frac{1+3\ell'-2M'-2\Delta_H}{4}
+=M'+\frac{d+5\ell-1-2\Delta_H}{4},
+$$
+另加可任意指定的小损失。它们随 $\Delta_H$ 递减，因而整份完成行满足
+$$
+\boxed{\sum_m|B_m^J|^2\ll
+Z^{M'+((d+5\ell-1)/4)_++\varepsilon}.}
+$$
+这保留了新增的能量代价；在 $d=\ell$，所示额外 allowance 为 $3p/2$。kernel 的 $H$ 在正 sieve 扩大前固定；powerful／supported 部分的计数已含在源能量中，不再重复计数。所有 Gaussian、reflection、Fourier 和 dyadic 尾项按源共同密度与固定 seminorm 阶支付。
+
+实际正裕度为
+$$
+M'_{\min}=\frac{49997}{100000},\quad
+l_x-\ell=\frac{37497}{200000},\quad
+l_y-\ell=\frac{62497}{200000},\quad
+l_y-\ell-\frac{11b}{6}=\frac{49991}{600000}.
+$$
+在足够大 $Z$ 上，它们满足一般 additive Gram 的 $Q,Y'\ge1$、$P_a=Y'^2/Q\ge1$ 及 $P_a^2/Y'\ll P_a^{1/6}$。使用原 $Q^{-1/2}$ 归一化、Cauchy–Schwarz、完整 height 积分和原元组权重后，整个 $J$ 子集的指数为
+$$
+B-d+\frac{(d+5\ell-1)_+}{8}.
+$$
+因为 $\ell<1/5$，$(d+5\ell-1)_+\le d$，所示指数至多为 $B-7d/8\le B$。求和全部有限子集，得到每个请求的 $\varepsilon>0$ 下的完整低端
+$$
+\boxed{|I_{\eta,\mathrm{modified}}(Z)|\ll Z^{B+\varepsilon}.}
+$$
+这里计算的是同一实际探针，包含所有 rescaled 元组及其 $-3d/2$ 权重。
+
+### 正容量参数与真实主信号差额
+
+反设 $\beta_*>\theta$，复用主稿 Part I 的 $\beta_*\le11/12$。定义
+$$
+D=\beta_*-\frac78\in(-p/4,1/24],\qquad
+\Gamma=\max(D,p),\qquad \kappa=\frac34+2\Gamma.
+$$
+于是 $\kappa\in[3/4,5/6]$，$\beta_*\le(1+\kappa)/2$，每个实际 buffered bin 的 $\delta=2a-1\le2\beta_*-1\le\kappa$。这里 $D$ 可以为负；不能把 $\Gamma$ 当成真实主信号差额。
+
+源 plain moment 的正槽前提是 $\beta_*\le(1+\kappa)/2$，不要求等号。因此可在原联合见证计数的证明中使用实际容量
+$$
+z_P(m)=\frac{1-2m}{6\kappa}
+=\frac{1-2m}{9/2+12\Gamma}.
+$$
+原 inverse capacity、amplification、实际饱和 witnesses、$t\in[1,3/2]$ 和两条比较线保持。计数证明唯一需要替换的容量价格为
+$$
+2q(1-2m)\left(\frac29-\frac1{9/2+12\Gamma}\right)
+\le\frac\Gamma4+\text{已分配小损失}.
+$$
+这使用同一实际 $m\ge1/3-$ 小损失、$2q\le1$ 和正分母下界。其余推导只需 $\delta\le\alpha=5/6$ 和上述正槽前提，不需 $D>0$ 或 $\Gamma=D$。因此对同一物理 amplitude／witness 集合，复用原 $D_x,P_x,\mathcal J,t,R_*$ 可得
+$$
+R\le R_*+\Gamma/4+\varepsilon,\qquad 0\le q\le\delta/2.
+$$
+不越界套用原固定阶段的 proposition。保留同一字符、whole-product 共轭、共同掩码、固定 ray 系数及全部自然零。小／零容量采用源 no-slot 分支；$\delta=5/6$ 用零容量 amplified 界；floor bin 用直接计数。$d\le1/2$ 使用不选槽的 $R=76/75-2\delta/3$。
+
+取 $\zeta=1/1000000$。原实际槽的供给满足
+$$
+\frac\ell h-\frac7{37}=\frac{287659}{18037833}>0,\qquad
+\frac\ell{h+\zeta}-\frac15=\frac{31301}{6093870}>0.
+$$
+在目标及 $Z$ 前选足够细的固定 $K$，使 $\ell_i/d\le2\ell/K$ 同时满足 plain mesh、平方 spike rounding、inverse strict widths 和内部 amplifier-pool 分离。容量先作固定递减，接近零时不用 marked 界。每个冻结标签类中只选真实整槽；error 槽的 $g_i=0$ 不提供正 spike，正 main 槽用尽时沿用源 greedy 规则。annular offsets 在足够大的阈值吸收。
+
+### 全部轮廓、主行及外围行
+
+主稿 shared high lemmas 的印出前提是 $\sigma_0\ge7/8$，这里需逐项核对其证明，而非直接代入 $\theta$。
+
+对非主 fixed bin，原第一 Euler 域不变。先 $z:2\to17/50$、$w=3$、$s:3\to\beta_*+20e$，再 $w\to1-a-6e$，全程 $s+w\ge1+(\beta_*-a)+14e$。限制原三份 Mellin heights 后，才移动 $s\to a+16e$；此时 $s+w\ge1+10e$，完整原 reciprocal 在实际 buffered rectangle 内无零。每行 numerator 非主；scalar $6z>1$；没有新增 $\zeta(s+w)$，亦无 sf mixed diagonal。原 proof 的其余步骤不使用 $\sigma_0\ge7/8$；bin-accounting 仅以 $C(\sigma_0)$ 为减去的尺度。原 integrated／trace tails 保持：$s$ 进入 buffered 区后不向整个虚轴延长，joins 只延长有 global bounds 的 $w,z$。continuation 始终使用完整 quotient-free correction。
+
+主行使用本条已证明的扩大域 $\Re s\ge7/10$、$\Re w\ge19/20$、$\Re z\ge33/200$。原 principal proof 的所有路径和 joins，包括 $(\beta_*+e,1+e,1/6+e)$、$w\to19/20$、其 residue 中 $z\to33/200$，均在域内。完整 tuple 在全部 heights 上为 $O(Z^{\ell\Re z})$。只跨 $w=1,z=1/6$ 两个 scalar poles，保留 Jacobian $1/6$、global reciprocal 和全部 integrated／trace tails。residue error 留在原 global line；只将 main $s$ 积分右移到 $2$。
+
+在物理校准前扩大固定 cutoff，使已保留的 $H_\eta=1+O(P_0^{-1/5})$ 在 $\Re s>\theta$ 满足 $|H_\eta-1|\le1/2$。同步固定 $S,b_*,\xi,\tau,\Xi,c_S$ 及探针；后添目标的有限 exclusions 保留此 bound，$T$ 与槽系不变。使用同一实际移动 normalizer
+$$
+A_T(Z)=(-1)^KZ^{-\ell/6}\prod_i S_i(Z),\qquad
+|A_T|\asymp(\log Z)^{-K}.
+$$
+扩大域上的 residue ratio $-1+O(Q^{-1/2})$ 给出任意 $0<\mu<\tfrac12\min_i\ell_i$；可取 $\mu=\ell/(4K)$。主行三份裕度为
+$$
+m_w=\frac{l_y}{20}=\frac{287497}{12000000},\qquad
+m_z=\frac h{600}=\frac{162503}{120000000},\qquad \mu.
+$$
+原角向因子、标量 pole 和非零主信号全部保留。
+
+小行 global lines $(\beta_*+e,1/2,17/50)$ 可用第一 Euler 域的 $\varepsilon_0=1/4$，替代旧证明的 $3/8$，因为 $\beta_*>\theta>4/5$。在 $s_r\ge4/5$，raw $G_p$ 的未分歧误差指数
+$$
+-s_r,\quad-51/25,\quad4-5s_r-51/25,\quad1/2-51/25
+$$
+全部为负。分歧处乘 $Q^s$ 后全部 $j=1,\ldots,5$ boundary exponents 为
+$$
+-1/2,\quad3/2-2s_r,\quad(3/2-2s_r,2-3s_r),\quad
+2-3s_r,\quad3-5s_r,
+$$
+均为负；strict 项至多 $Q^{1/2}$，common $R$ 项指数至多 $-51/25$。故 $G_p=O(1)$ off $u$、$G_p\ll Q^{1/2}$ on $u$。原 unselected 正乘积、divisor-many 分歧选择及完整 disjoint tuple 给出 $|\mathfrak H|\ll U^\varepsilon Z^{17\ell/50+\varepsilon}$ 于全部 heights，也在 $H_p,P_p$ 的零点成立。所有 $u\ne1$ 及 finite unit／exceptional rows 的 numerator 非主；可能的主 denominator 仍在 global line 上受控。原 outer proof 因而保留 row 指数 $63/50$。
+
+大行在 $(2,2,z_\infty)$、固定 $z_\infty>2$ 上使用原 absolute local bound，完整 tuple 为 $O(U^\varepsilon Z^{\ell z_\infty+\varepsilon})$。令 $B_0=l_x/2+1+l_y$，整个 $U>Z^{h+\zeta}$ 尾部为
+$$
+O\!\left(Z^{B_0+(h+\zeta)(1+\varepsilon)-\zeta z_\infty+\varepsilon}\right).
+$$
+$z_\infty$ 在 $\zeta$ 后、目标前固定得足够大。起始行级数和最终尾部都绝对收敛，允许求和全部 dyadic contour identities。
+
+### 原 endpoint certificate 支付几何扰动
+
+原 dynamic-local-errors、prime bound、functional equation 和 simultaneous conductor-deficit allocation 不含旧 $l_x,l_y,\ell$。它们在同一实际行及所有 main／error 子集上给出相对 $C(7/8)$ 的高指数
+$$
+E_p(d)=a-\frac78+h(c-1/6)-a l_y-(1-a)\ell
+-(\delta/2-q)\ell+d(R+\delta/2-c),\qquad c=17/50.
+$$
+bin 在 continuation 前固定；amplitude／witness 集合只在移动后用于 pointwise envelope，没有给各集合单独移动轮廓。
+
+复用原 $h_0=13/16$ 的 endpoint certificate
+$$
+-E_{\mathrm{old},*}(h_0)\ge m_0=\frac{49}{440640}.
+$$
+源 $D_x-P_x>0$ 和 $R_*=1-\delta+\delta P_x(3/2-t)/D_x$ 给出 $R_*\le1$。实际扰动满足
+$$
+E_p(h;R_*)-E_{\mathrm{old}}(h_0;R_*)
+=p[1+\delta+q-\tfrac32(1-R_*)]\le\frac{9p}{4}.
+$$
+加入 $h\Gamma/4$ 后必须减去真实 $D$。$D\ge p$ 时 $h\Gamma/4-D\le0$；$-p/4<D<p$ 时该价格 $<p/2$。因此 endpoint 仍节省
+$$
+m_h=m_0-\frac{11p}{4}=\frac{46103}{550800000}>0.
+$$
+完整 floor、intermediate 和 small-row 裕度分别为
+$$
+m_f=\frac7{1200}-\frac{32p}{25}=\frac{21827}{3750000},
+\qquad
+m_i=\frac{49}{14400}-\frac{177p}{200}
+=\frac{610907}{180000000},
+$$
+$$
+m_s=\frac{63}{800}-\frac{51p}{100}
+=\frac{787449}{10000000}.
+$$
+其中 intermediate 在 $d=1/2$ 的几何成本为 $p(1/100+\delta/4+q)\le127p/200$，另计负 $D$ 的最大 $p/4$；floor 成本为 $103p/100+p/4$。小行直接相对 $C(\beta_*)$ 比较，不再减 $D$。取 $d_{\min}=1/100$。
+
+selected range 的理想 slope 为正，因为 $R\ge1-\delta$；原紧实参数界使 slope 小于 $2$。$d\le h$ 由 endpoint 控制，延长至 $h+\zeta$ 成本至多 $2\zeta$，留下
+$$
+m_c=m_h-2\zeta=\frac{225007}{2754000000}>0.
+$$
+$\delta=5/6$ 保留 amplified 的 endpoint，floor／intermediate 裕度均大于 $m_c$。所有 adjustable real、count、normalizer 和 logarithmic multiplicity 成本另置于这些实际正裕度内。
+
+### 同一物理 low／high 的完成与范围
+
+在反设下，令 $\Delta_\theta=\beta_*-\theta>0$，取共同 low loss $\omega=\Delta_\theta/2$。先按 $m_c$ 等裕度选 moment／capacity／rounding losses，再选实际足够细的偶数 $K$，固定 $\mu=\ell/(4K)$；随后 principal 的 $e$ 与其损失适配 $\mu$。已选 central moment losses 无需重新变成小于 $\mu$，没有 mesh 循环。low 的 Gaussian／reflection 损失适配 $\omega$；结构及实参数在目标／$Z$ 前固定，目标的最终排除集及物理校准共同确定。
+
+只列一次全部 buffered arguments 的物理及辅助 height 坐标，包括 $\Im z$，使用源累计 allowance。所有辅助 discarded pieces、global／absolute tails 与 horizontal joins 在 pointwise bound 前支付。固定目标的内部 moment、profile 和 seminorm 阶后，以 $A_\eta$ 控制全部 retained height costs，$A_{\mathrm{ht},\eta}$ 控制 detector 阶，$\varepsilon_{\mathrm{ht}}>0$ 为其最小 allowance，要求
+$$
+0<\tau\le\min\left\{\frac{d_{\min}}{100},
+\frac{d_{\min}\varepsilon_{\mathrm{ht}}}
+{20(1+A_{\mathrm{ht},\eta})}\right\}.
+$$
+这保证全部 moderate $U\ge Z^{d_{\min}}$ 上源 detector 的字面 height 条件。外部衰减阶 $N$ 随后选取，只改变外部 test 常数和阈值，不改变内部 $A_\eta$ 或固定 scale degree $B_\eta$。
+
+以同一 $c_SA_T(Z)$ 归一化，取一个共同的 $0<m<\tfrac14\min(m_c,m_s,m_w,m_z,\mu)$，所有损失在其预留范围后有
+$$
+|J_\eta(Z)|\ll_\eta Z^{C(\theta)+\omega},
+$$
+$$
+|J_\eta(Z)-f_\eta(Z)|\ll_{\eta,N}
+Z^{C(\beta_*)-m}(1+T_1)^{A_\eta}+Z^{B_\eta}T_1^{-N}.
+$$
+$J_\eta$ 为上述有限原物理表达式除以 $c_SA_T$，$f_\eta$ 为原 $\Re s=2$ 主信号；两者均不依赖 analysis height $T_1$。复用已允许 $\sigma_0\in(1/2,1)$ 的 late-height-closure，先按目标选 $\tau$，再 $N$ 和阈值，得到共同 high saving $m/2$。同样范围的一般 continuation criterion 因而反驳 $\beta_*>\theta$。
+
+所以，在上述完整源输入成立时，得到条件结论
+$$
+\boxed{\beta_*\le\frac78-\frac1{400000}.}
+$$
+同一所引 Hecke-to-Dirichlet transfer 给出对应全部有限阶 Hecke／Dirichlet targets 及 $\zeta$ 在严格半平面 $\Re s>\theta$ 的条件无零结论，覆盖全部模数和高度；不包含边界。这里的新增内容是完整改尺度消费，源 theta、Gram、moments、detector、certificate 和 continuation 均为复用输入，不主张历史原创性。
+
+隐常数、最终校准和足够大的起始阈值可依赖目标特征；没有认证显式数值阈值或共同起始阈值、整篇源证明或新增 Lean 核验。该条件半平面仍远于 $1/2$，不证明 RH；原选定 Robin 极值整数的完整有符号响应、实际零点及完整系数、正 $r_A$ 和严格核心仍未证明。
