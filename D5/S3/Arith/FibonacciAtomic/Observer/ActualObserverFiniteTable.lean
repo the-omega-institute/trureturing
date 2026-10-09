@@ -236,7 +236,7 @@ structure RepresentationContract (N : Nat) (M : Observer E)
   prices : ∀ tau kappa, J_N N (tableObserver positive T) tau kappa = J_N N M tau kappa
   admissible : Admissible N M → Admissible N (tableObserver positive T)
 
-private theorem representation_contract (N : Nat) (M : Observer E)
+theorem representation_contract (N : Nat) (M : Observer E)
     (positive : 0 < Fintype.card E) (r : E ≃ Fin (Fintype.card E))
     (T : NativeTable N (Fintype.card E)) (initial : r M.e0 = ⟨0, positive⟩)
     (table : tableObserver positive T = relabel M r) :
