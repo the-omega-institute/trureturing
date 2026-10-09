@@ -2596,3 +2596,225 @@ The [coprime phase-target cost volume, Sections 3–6](KBONACCI_COPRIME_PHASE_TA
 The [future-response sufficiency volume, Sections 34–37](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md) concerns its original depth prior, scalar future law, active counts and legal Read permissions. It supplies no source/action/endpoint/fee-preserving map to this original complete-block reader. Its semantic recovery and effective-inverse conclusions are not premises of (27.6).
 
 ## 追加锚（本行以下为增补区）
+
+## 28. Exact complete-controller memory at the seven-phase three-block fee
+
+Section 26 prices emitted blocks for its dyadic INITIAL target family $(k,m)=(2^{r+1}-2,2^r)$, $r\ge3$. The present section returns to the seven-phase experiment $(k,m)=(6,4)$ of Section 24 and minimizes the complete controller state count at adaptive worst fee at most three blocks, including internal control and persistent outputs. The GLOBAL fee objective in Section 26 retains its own contract; the complete-controller objective below allows adaptive branches.
+
+Section 27's full INITIAL internal even-support zero/one/three fee classification retains its own $m\ge5$ parameters, INITIAL targets and GLOBAL fee contract. It does not alter the original $(6,4)$ result or supply its complete-controller memory optimum.
+
+**定义 28.1（Original experiment and complete finite controller）。** Fix the original order $k=6$ and block width $m=4$ of Definition 24.1. Its weights and matched binary coefficients are
+
+$$
+G_i=2^i\quad(0\le i<6),\qquad
+G_i=\sum_{h=1}^{6}G_{i-h}\quad(i\ge6),\qquad
+\gamma_i=G_i\bmod2=\mathbf1_{\{0,6\}}(i\bmod7).
+\tag{28.1}
+$$
+
+The coefficient equality is supplied by (15.1), equivalently (24.2), and the [minimal modular observer, Section 13, (30)–(31), and Theorem 14.1](https://github.com/the-omega-institute/trureturing/blob/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md). Bits are read in increasing original weight order. A live history $w=w_0\cdots w_{N-1}$ has length divisible by four, avoids six consecutive ones, and has record $(x,\theta,s)$ with $x=\sum_{i<N}w_iG_i\bmod2$, $\theta=N\bmod7$, and terminal run $s$. Rejected histories have the distinct absorbing record $\bot$. The source is the full actual joint image
+
+$$
+Q=(\mathbb F_2\times\mathbb Z/7\mathbb Z\times\{0,1,2,3,4,5\})\sqcup\{\bot\}.
+\tag{28.2}
+$$
+
+All $84$ live INITIAL triples and bottom are included, with unknown history and length. Joint realization is supplied by Lemma 15.1: choose $N\ge s+2$, $N\equiv0\pmod4$, $N\equiv\theta\pmod7$, set $e=\bigoplus_{i=N-s}^{N-1}\gamma_i$, and take
+
+$$
+w=(x\oplus e)0^{N-s-1}1^s.
+\tag{28.3}
+$$
+
+Coprimality permits arbitrarily large such $N$. The first bit has coefficient one, the zero interval separates it from the terminal run, and this same legal word attains all three coordinates. The complete-block history $11111100$ attains $\bot$. These unobserved witnesses are not controller inputs or continuation fees.
+
+Both original action alphabets are retained separately and here coincide:
+
+$$
+\mathcal A_{\rm all}=\{0,1\}^4,
+\qquad
+\mathcal A_{\rm loc}=\{B\in\{0,1\}^4:B\text{ internally avoids }1^6\}
+=\{0,1\}^4.
+\tag{28.4}
+$$
+
+Each action executes all four bit updates in its displayed order. On current live record $(y,\phi,t)$, zero gives $(y,\phi+1,0)$; one gives $(y\oplus\gamma_\phi,\phi+1,t+1)$ if $t<5$, and gives $\bot$ if $t=5$. Both bits preserve $\bot$. Phase arithmetic is modulo seven. Let $T_B$ be this fourfold composition and $o(y,\phi,t)=y$, $o(\bot)=\bot$, with response alphabet $O=\{0,1,\bot\}$. Only $o(T_B(q))$ is read after an action; interior values are unavailable. The original word $1111$ remains an available action and succeeds whenever its inherited tail permits it.
+
+There is one free INITIAL observation $o(q_{\rm INITIAL})$. The immutable targets and bottom labels are
+
+$$
+\begin{aligned}
+f_{\rm ph}(x,\theta,s)&=\theta,& f_{\rm ph}(\bot)&=0,\\
+f_{\rm vp}(x,\theta,s)&=(x,\theta),& f_{\rm vp}(\bot)&=(0,0).
+\end{aligned}
+\tag{28.5}
+$$
+
+Neither target is evaluated on a later record. These are the conventions of Definitions 18.1 and 24.1 and the [irreversible target-acquisition volume, Definitions 1.2 and 2.1, Convention 1.3, and Open Problem 11.2](https://github.com/the-omega-institute/trureturing/blob/3d77b305316f29834675427be4c971ad06e73b57/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md).
+
+A complete deterministic finite controller for a target with codomain $Y$ is $(K,c,u,v)$, with finite state set $K$ and total maps
+
+$$
+\begin{aligned}
+c&:O\longrightarrow K,\\
+u&:K\longrightarrow
+ \{\operatorname{Emit}(B):B\in\{0,1\}^4\}
+ \sqcup\{\operatorname{Halt}(a):a\in Y\},\\
+v&:K\times O\longrightarrow K.
+\end{aligned}
+\tag{28.6}
+$$
+
+Initialize once to $c(o(q_{\rm INITIAL}))$. At state $z$, Halt returns its literal label and persists: $v(z,o)=z$ for every $o$. Emit executes its word, reads its endpoint, and moves to $v(z,o(T_B(q)))$. All usable stages, branch selectors, saved INITIAL values, input/output archives, stopping decisions and persistent output states belong to $K$. No external counter, archive, clock, source promise, reset, copy, interior read or further free device read is supplied. The physical device record remains part of the experiment but is not a separately accessible controller register. Cycles and sharing across branches or execution depths are allowed.
+
+Each actually emitted block costs one, or four emitted bits. Clearing, waiting, padding and remaining bits after internal rejection execute and are charged. Halt costs no block. Success means finite stopping with $f(q_{\rm INITIAL})$ for every source. Define
+
+$$
+M_3(f)=\min\{|K|:(K,c,u,v)\text{ is complete and successful with worst emitted fee }\le3\}.
+\tag{28.7}
+$$
+
+Running and Halt states both count. Theorem 24.2 already supplies adaptive worst-fee minimum three and the separate one-GLOBAL-stream minimum four. The additional question here is complete memory at that adaptive fee; GLOBAL common-word constraints are not imposed.
+
+**定理 28.2（Exact complete-controller minima）。** Under Definition 28.1, separately for either original alphabet,
+
+$$
+\boxed{M_3(f_{\rm ph})=18=11+7,\qquad
+M_3(f_{\rm vp})=26=12+14.}
+\tag{28.8}
+$$
+
+Every successful complete controller at worst fee at most three needs at least eleven, respectively twelve, running states and seven, respectively fourteen, persistent literal Halt states. Both bounds are simultaneously attained. Bottom reuses a live output label.
+
+Proof. Put $j=-\theta_{\rm INITIAL}\pmod7$, represented in $0,\ldots,6$. After $h$ blocks current phase is $-j+4h$; $h$ is only a proof index. Reuse the literal charge law (24.7)–(24.8), for any nonrejecting $B=abcd$:
+
+$$
+\begin{aligned}
+(R_0(B),\ldots,R_6(B))&=(a,a\oplus b,b\oplus c,c\oplus d,d,0,0),\\
+y_{h+1}\oplus y_h&=R_{j-4h}(B),\qquad
+\bigoplus_{i=0}^{6}R_i(B)=0.
+\end{aligned}
+\tag{28.9}
+$$
+
+Here $d$ is the fourth bit. The controller receives absolute endpoint values, not increments or phase indices.
+
+### 28.1 Unrestricted lower bound
+
+The common-tail capacity argument of Corollary 19.3 applies in this form. Candidates at one controller state, with one common current tail and at most $h$ further blocks each, may have different current values, phases, origins and earlier histories. The selected word rejects all or none, since legality depends only on tail and bits. Common rejection gives identical absorbing responses and identical future controller evolution, so only one required label can succeed. Otherwise there are at most two endpoint children, each again with common tail. Early Halt also yields one label. Induction from $h=0$ permits at most $2^h$ distinct labels in such a successful support. Bottom is not a third useful distinguishing response.
+
+Fix free INITIAL value $x$. Its root must run because seven labels occur. A first bit one rejects the actual sources $(x,\theta,5)$ for every $\theta$, irreversibly merging unequal labels. Every root therefore starts zero, is safe on all old tails and gives a common endpoint tail. For root $0bcd$, (28.9) gives an even-sized positive set contained in $\{1,2,3,4\}$; its zero set contains $0,5,6$. Each child has two blocks left and capacity four. Positive-set sizes zero and two leave seven and five labels in the zero child. Thus its size is four, forcing $b=b\oplus c=c\oplus d=d=1$. This recovers the root of (24.11):
+
+$$
+B_{\rm root}=0101,\qquad A=\{1,2,3,4\},\qquad Z=\{0,5,6\}.
+\tag{28.10}
+$$
+
+It ends in tail one and both children must run. Roots $c(0),c(1)$ are distinct: if equal, response zero puts $x=0,j\in Z$ and $x=1,j\in A$ in one successor, with common tail one, seven different labels for either target, and only two blocks left.
+
+Name the four first-block occurrences $A_0,A_1,Z_0,Z_1$, retaining INITIAL $x$; these are not yet assumed distinct states. All sixteen second words are safe from tail one. At $A_x$, second word $abcd$ has increments $(d,0,0,a)$ at $j=1,2,3,4$, by (24.12). Each child has one block left and capacity two. Thus $a=d=1$, allowing independently any of $1001,1011,1101,1111$. The mandatory pairs are
+
+$$
+P=\{2,3\},\qquad Q=\{1,4\},\qquad
+y_P=x\oplus1,\quad y_Q=x
+\quad\text{after two blocks}.
+\tag{28.11}
+$$
+
+Their inherited tails may depend on the middle bits and are retained.
+
+At $Z_x$, second-word increments at $j=0,5,6$ are $(c\oplus d,a\oplus b,b\oplus c)$. A constant response leaves three labels for one block and is impossible; hence a singleton and a pair remain. At final depth every word $efg\ell$ has row
+
+$$
+(r_0,r_1,r_2,r_3,r_4,r_5,r_6)
+=(0,e,e\oplus f,f\oplus g,g\oplus\ell,\ell,0).
+\tag{28.12}
+$$
+
+Pair $\{0,6\}$ already has common current value and tail and has identically zero final increments. No last word splits it, whether safe or uniformly rejecting. The mandatory $Z_x$ pair $T_x$ must be $\{0,5\}$ or $\{5,6\}$. Its singleton may Halt or continue for another block.
+
+The four first-block states are distinct. For value-phase any two supports have at least six distinct INITIAL labels, common tail one and two blocks left, exceeding capacity four. For phase any $A/Z$ union has seven labels and fails likewise. If $A_0=A_1$, their common second word acts on complementary current values for each $j$. Either absolute next response then puts all four $A$ phase labels in one successor with common tail and one block left, exceeding capacity two. The same argument for $Z_0=Z_1$ gives three labels in either successor and fails. No common-second-word constraint is imposed on different states.
+
+There are six mandatory final-pair occurrences $P_x,Q_x,T_x$, $x=0,1$. Each pair has common tail and two unequal labels, so its last word must be safe and give both absolute responses zero and one. Both fixed successors must immediately Halt because the actual executions have spent three blocks. Pairs sharing one final running state must use a word safe for each, even with different tails, and fit all labels into its same two Halt successors. A union of more than two pair labels cannot share.
+
+For value-phase all six pair target sets are disjoint: within $x$ their phase sets differ, and across $x$ their immutable first coordinates differ. Six final running states are necessary.
+
+For phase, different sets from $P,Q,T$ cannot share since their label union has more than two elements. The two $P$ occurrences across $x$ cannot share either, despite equal phase-label sets. Their corresponding $j$ have complementary current values by (28.11) and equal current phase $-j+8$. A common safe word adds the same increment, so their absolute responses remain complementary. One occurrence needs two different Halt labels on zero and one; the other needs the assignments reversed. A single $v$ cannot do both. Rejection of either occurrence instead destroys its distinction. This argument permits different tails. The same obstruction holds for the two $Q$ occurrences. These four $A$-derived final states need at least one additional $T$ state, giving five. The two $T$ occurrences may share when actual current values align.
+
+These depth counts cannot collapse. Every root uses $0101$. At a first-block $A$ occurrence that word gives increments $(1,0,0,0)$, leaving three labels together; at $Z$ it gives $(1,1,1)$, also leaving three. Neither can finish in one further block, so roots cannot equal first-block states. Every mandatory final-pair state has both binary successors Halt. Roots have both successors running, and every first-block state has at least one running successor because a pair remains. Final-pair states cannot equal either earlier type. These are conflicts of fixed instructions and successors, not a tree-node count or an acyclicity assumption. Cycles, cross-depth and cross-branch reuse, and singleton continuation cannot remove them.
+
+Thus running-state lower bounds are $2+4+5=11$ and $2+4+6=12$. Seven, respectively fourteen, live labels occur on actual sources and require distinct literal Halt states because $u$ is a function. Halt states are disjoint from running states. Bottom's label is already live. The total lower bounds hold over every complete controller (28.6).
+
+### 28.2 Complete eighteen-state phase attainment
+
+Let $K$ contain the eleven running states below and seven states $H_0,\ldots,H_6$. Define $u(H_\theta)=\operatorname{Halt}(\theta)$ and $v(H_\theta,o)=H_\theta$ for every $o$. Initialization is $c(0)=R_0$, $c(1)=R_1$, $c(\bot)=H_0$. The table supplies every running instruction and response. Rank is a mathematical function on $K$, zero at every Halt.
+
+| Phase state | Emitted word | Response $0$ | Response $1$ | Response $\bot$ | Rank |
+| --- | --- | --- | --- | --- | --- |
+| $R_0$ | $0101$ | $Z_0$ | $A_0$ | $H_0$ | $3$ |
+| $R_1$ | $0101$ | $A_1$ | $Z_1$ | $H_0$ | $3$ |
+| $A_0$ | $1111$ | $Q_0$ | $P_0$ | $H_0$ | $2$ |
+| $A_1$ | $1111$ | $P_1$ | $Q_1$ | $H_0$ | $2$ |
+| $Z_0$ | $0100$ | $H_0$ | $S$ | $H_0$ | $2$ |
+| $Z_1$ | $0001$ | $H_0$ | $S$ | $H_0$ | $2$ |
+| $P_0$ | $0110$ | $H_5$ | $H_4$ | $H_0$ | $1$ |
+| $P_1$ | $0110$ | $H_4$ | $H_5$ | $H_0$ | $1$ |
+| $Q_0$ | $0110$ | $H_6$ | $H_3$ | $H_0$ | $1$ |
+| $Q_1$ | $0110$ | $H_3$ | $H_6$ | $H_0$ | $1$ |
+| $S$ | $0001$ | $H_2$ | $H_1$ | $H_0$ | $1$ |
+
+Actual live supports follow. Every listed $(x,j)$ includes all six INITIAL old tails. Current phase at depth $d$ is $-j+4d$.
+
+| State | Depth $d$ | INITIAL $x$ | INITIAL $j$ support | Current value | Current tail |
+| --- | --- | --- | --- | --- | --- |
+| $R_x$ | $0$ | $x$ | $0,1,2,3,4,5,6$ | $x$ | $0,1,2,3,4,5$ |
+| $A_x$ | $1$ | $x$ | $1,2,3,4$ | $x\oplus1$ | $1$ |
+| $Z_x$ | $1$ | $x$ | $0,5,6$ | $x$ | $1$ |
+| $P_x$ | $2$ | $x$ | $2,3$ | $x\oplus1$ | $5$ |
+| $Q_x$ | $2$ | $x$ | $1,4$ | $x$ | $5$ |
+| $S$ | $2$ | $0$ | $5,6$ | $1$ | $0$ |
+| $S$ | $2$ | $1$ | $5,6$ | $1$ | $1$ |
+
+The root's first zero safely clears every old tail inside its paid block and ends in tail one. Second word $1111$ safely reaches tail five, and $0110$ then starts zero. Other second words start zero and are safe; final $0001$ is safe from both tails at $S$. No live source rejects.
+
+By (28.9), $0100$ on $Z$ at depth one has increments $(0,1,1)$ at $j=0,5,6$; $0001$ has $(1,0,0)$. Thus $Z_0$ uses $0100$ and $Z_1$ uses $0001$, sending their singletons to $H_0$ and their pairs to $S$ with current value one. The two tails at $S$ differ, but its zero-first word is safe for both. At final depth $0001$ adds one at $j=5$ and zero at $j=6$, giving absolute values zero and one and labels $H_2,H_1$. This merger uses actual correlated supports without identifying their entire device records.
+
+For $0110$, final row (28.12) is $(0,0,1,0,1,0,0)$; the support values give exactly the listed $P/Q$ labels $-j\pmod7$. All running transitions strictly lower rank, including bottom transitions. Rank is determined by the state and supplies no external countdown. Termination takes at most three emissions. Each of the eleven running states and seven persistent Halts is reached by an actual source.
+
+### 28.3 Complete twenty-six-state value-phase attainment
+
+Use twelve running states below and fourteen states $H_{x,\theta}$, $x\in\mathbb F_2$, $\theta\in\mathbb Z/7\mathbb Z$. Set $u(H_{x,\theta})=\operatorname{Halt}((x,\theta))$ and $v(H_{x,\theta},o)=H_{x,\theta}$ for all $o$. Initialization is $c(0)=R_0$, $c(1)=R_1$, $c(\bot)=H_{0,0}$. Every Halt has rank zero.
+
+| Value-phase state | Emitted word | Response $0$ | Response $1$ | Response $\bot$ | Rank |
+| --- | --- | --- | --- | --- | --- |
+| $R_0$ | $0101$ | $Z_0$ | $A_0$ | $H_{0,0}$ | $3$ |
+| $R_1$ | $0101$ | $A_1$ | $Z_1$ | $H_{0,0}$ | $3$ |
+| $A_0$ | $1111$ | $Q_0$ | $P_0$ | $H_{0,0}$ | $2$ |
+| $A_1$ | $1111$ | $P_1$ | $Q_1$ | $H_{0,0}$ | $2$ |
+| $Z_0$ | $0100$ | $H_{0,0}$ | $S_0$ | $H_{0,0}$ | $2$ |
+| $Z_1$ | $0100$ | $S_1$ | $H_{1,0}$ | $H_{0,0}$ | $2$ |
+| $P_0$ | $0110$ | $H_{0,5}$ | $H_{0,4}$ | $H_{0,0}$ | $1$ |
+| $P_1$ | $0110$ | $H_{1,4}$ | $H_{1,5}$ | $H_{0,0}$ | $1$ |
+| $Q_0$ | $0110$ | $H_{0,6}$ | $H_{0,3}$ | $H_{0,0}$ | $1$ |
+| $Q_1$ | $0110$ | $H_{1,3}$ | $H_{1,6}$ | $H_{0,0}$ | $1$ |
+| $S_0$ | $0001$ | $H_{0,2}$ | $H_{0,1}$ | $H_{0,0}$ | $1$ |
+| $S_1$ | $0001$ | $H_{1,1}$ | $H_{1,2}$ | $H_{0,0}$ | $1$ |
+
+The $R,A,Z,P,Q$ supports are those above. Both $Z_x$ states now use $0100$: the $j=0$ singleton reaches $H_{x,0}$ and $S_x$ has $j=5,6$, current value $x\oplus1$ and tail zero. Word $0001$ gives the listed final responses. Legality and rank decrease follow as above. The first output component is remembered INITIAL $x$, never current or final device value. Every running state and all fourteen Halts are reached.
+
+In either construction, twelve live records with $j=0$ emit two blocks, the other seventy-two emit three, and INITIAL bottom emits none. The worst fee is exactly three blocks or twelve emitted bits, including all zero and one bits. The tables, initialization, Halt loops and bottom conventions specify complete $(K,c,u,v)$ without separate output latches or program stages. They attain both running and output lower bounds, proving (28.8). $\square$
+
+The identification method has mature primary precedents. E. F. Moore, [*Gedanken-Experiments on Sequential Machines* (1956), printed pp. 129–131](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf), treats adaptive identification of one machine's beginning state, distinguishes multiple-copy experiments, and includes absorbing destructive failure. Petra van den Bos and Frits Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2, Section 4, Definition 11 and Figure 3](https://arxiv.org/html/1907.11034v2), supply adaptive distinguishing graphs and irreversible-merger context. One input here is one complete block, one observation its actual endpoint, and only unequal immutable INITIAL labels need separation. A. Larrauri and R. Bloem, [arXiv:2105.10292v2, Section 5, Theorem 4](https://arxiv.org/html/2105.10292v2), supply minimization by closed compatible covers of a given observation machine, with initial coverage and successor closure. Total tables above supply closure; the forced-state incompatibilities separately range over all permitted policies. Minimizing one preselected tree alone would not prove that bound. These suppliers provide methods, not equality (28.8). The coefficient, source, charge, root and optimal-fee results of §§15, 18 and 24 retain their credited roles. Equality (28.8) is a source-specific ordinary mathematical deduction without a global novelty or priority claim.
+
+**数学边界 28.3（Conditional static names and the missing operational correspondence）。** Suppose state names are freely chosen fixed-length binary words avoiding $11$, each with a preceding zero seam. Abstract names do not restrict actions. The elementary Fibonacci count is $F_{\ell+2}$ at length $\ell$, with $F_1=F_2=1$: partition by final zero or final $01$ to obtain the recurrence, starting with counts one at length zero and two at length one. Hence (28.8) gives conditional static naming requirements
+
+$$
+F_7=13<18\le F_8=21\quad\Longrightarrow\quad\ell_{\rm ph}=6,
+\qquad
+F_8=21<26\le F_9=34\quad\Longrightarrow\quad\ell_{\rm vp}=7.
+\tag{28.13}
+$$
+
+Unrestricted binary names require five bits for either count. These capacities neither recode original action $1111$ nor impose a no-$11$ action alphabet, and assign no installation, update, readout, gate, time, energy or physical-memory costs. The missing operational FIB/KB correspondence must relate actual sources, observations, literal actions, updates, stopping and immutable INITIAL targets, preserving every original legal word, absorbing failure and every emitted fee. Accessible state-name storage and maintained access costs also need that correspondence. Static naming does not supply it. Other parameters, INITIAL targets and native fee transport retain their separate mathematical obligations.
+
+## 追加锚（本行以下为增补区）
