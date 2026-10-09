@@ -1,0 +1,13 @@
+**证明。** 第一式是条件期望的塔式性质。若 $i<j$，则 $\delta_i$ 已包含在 $\mathcal H_j$ 中，故 $\mathbb E[\delta_i\delta_j^{\mathsf T}]=\mathbb E[\delta_i\mathbb E[\delta_j^{\mathsf T}\mid\mathcal H_j]]=0$。展开总变化的外积即可。证毕。
+
+单个二结果节点的条件分离矩阵秩至多一，多步二元读取却可逐步积累多个方向。若实际读口的反向作用读取了当前没有保存的函数，就必须扩充边界；五模式中读取 $x$ 后继续预测 $y$ 正是需要补上 $xy$ 的情形。
+
+在 #14802 的共享深度来源中，$r_k=F_{k+1}/F_{k+3}$。若当前后验为 $\nu_h$，$m_h=\mathbb E_{\nu_h}[r]$，实际取得 $\alpha$ 后
+
+$$
+\nu_{h\alpha}(k)=\frac{\nu_h(k)r_k}{m_h},\qquad
+\boxed{m_{h\alpha}-m_h=\frac{\operatorname{Var}_{\nu_h}(r)}{m_h}>0}
+$$
+
+只要当前支撑含有不同的 $r_k$。这是来源后验计算，不是把后验向量当成设备免费持有的寄存器；有限 COMPLETE 观察者的风险移动要求仍需单独使用 #14802 的合同和定理。
+
