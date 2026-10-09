@@ -314,25 +314,25 @@ def signal_program(seconds):
     probes = [f'BEGIN {{ @deadline = nsecs + {int(seconds)} * 1000000000; printf("D\\tready\\n"); }}',
               'interval:s:1 { if (nsecs > @deadline) { exit(); } }',
               'END { clear(@deadline); }']
-    probes.append('rawtracepoint:signal_generate { $s = (struct task_struct *)curtask; '
+    probes.append('rawtracepoint:signal_generate { $s = curtask; '
                   '$t = (struct task_struct *)arg2; $i = (struct kernel_siginfo *)arg1; '
                   f'printf("D\\tsignal\\t%llu\\t%d\\t%d\\t%d\\t%d\\t%d\\t{fmt}\\t{fmt}\\n", '
                   f'nsecs, arg0, (arg1 > 1 ? $i->si_errno : 0), (arg1 == 1 ? 128 : (arg1 == 0 ? 0 : $i->si_code)), arg3, arg4, {ident("$s")}, {ident("$t")}); }}')
     probes.append('rawtracepoint:sched_process_fork { $s = (struct task_struct *)arg0; '
                   '$t = (struct task_struct *)arg1; '
                   f'printf("D\\tfork\\t%llu\\t{fmt}\\t{fmt}\\n", nsecs, {ident("$s")}, {ident("$t")}); }}')
-    probes.append('rawtracepoint:signal_deliver { $t = (struct task_struct *)curtask; '
+    probes.append('rawtracepoint:signal_deliver { $t = curtask; '
                   '$i = (struct kernel_siginfo *)arg1; '
                   f'printf("D\\tdelivery\\t%llu\\t%d\\t%d\\t%d\\t{fmt}\\n", '
                   f'nsecs, arg0, $i->si_errno, $i->si_code, {ident("$t")}); }}')
     probes.append('rawtracepoint:sched_process_exit { $t = (struct task_struct *)arg0; '
                   f'printf("D\\texit\\t%llu\\t{fmt}\\t%d\\n", nsecs, {ident("$t")}, $t->exit_code); }}')
-    probes.append('tracepoint:oom:mark_victim { $s = (struct task_struct *)curtask; '
+    probes.append('tracepoint:oom:mark_victim { $s = curtask; '
                   f'printf("D\\toom-victim\\t%llu\\t%d\\t{fmt}\\n", nsecs, args->pid, {ident("$s")}); }}')
     for kind, target, tgid, flags in (("kill", "args->pid", "0", "0"),
             ("tkill", "args->pid", "0", "0"), ("tgkill", "args->pid", "args->tgid", "0"),
             ("pidfd_send_signal", "args->pidfd", "0", "args->flags")):
-        probes.append(f'tracepoint:syscalls:sys_enter_{kind} {{ $s = (struct task_struct *)curtask; '
+        probes.append(f'tracepoint:syscalls:sys_enter_{kind} {{ $s = curtask; '
                       f'printf("D\\t{kind}\\t%llu\\t%d\\t%d\\t%d\\t%d\\t{fmt}\\n", '
                       f'nsecs, args->sig, {target}, {tgid}, {flags}, {ident("$s")}); }}')
     return "\n".join(probes)
