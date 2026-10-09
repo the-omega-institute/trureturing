@@ -6,8 +6,12 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.OptimalLaw;
 
 internal sealed class OptimalEmbeddingDocument : IScribeDocumentDefinition
 {
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Sp, InMacro, Sp, type, Comma, Sp, body);
+
     public DocumentDefinition Create()
     {
+        var real = Seq(Mathbb, Grp(F.Id("R"))); var nat = Seq(Mathbb, Grp(F.Id("N")));
         var m=F.Id("m"); var p=F.Id("p"); var k=F.Id("k"); var i=F.Id("i");
         var sigma=F.Id("sigma"); var gamma=F.Id("gamma");
         var args=Seq(m,Comma,p,Comma,k);
@@ -22,11 +26,11 @@ internal sealed class OptimalEmbeddingDocument : IScribeDocumentDefinition
         return DocumentDefinition.Create(ScribeNode.Create(
             "One fixed permutation represents every attaining real law by a legal triangular path with exact mass and cost.",
             H("Optimal Laws Embed in the Triangular Graph"), Blocks(
-                Paragraph(Text("The natural label count m is at least two. A law p is a strictly positive real vector on Fin m with total mass one. Optimizer(m,p,k) additionally requires p(k)<=p(i) for every i and L(p)/p(k)=alpha(m), where L is the convergent dyadic floor-residual cost and alpha is the full-real infimum. A triangular state (r,e) has 0<e, r<e, and e<=m. A one action requires e<=2r and has successor (2r-e,e). A zero action with h departures requires 2r<e and h<=2r, and has successor (2r-h,e-h). RootPath(m) starts at (1,m) and satisfies these bounds and successor conditions at every natural depth.")),
+                Paragraph(Text("RealVector(m) denotes the real functions on Fin m. The natural label count m is at least two. A law p is a strictly positive real vector on Fin m with total mass one. Optimizer(m,p,k) additionally requires p(k)<=p(i) for every i and L(p)/p(k)=alpha(m), where L is the convergent dyadic floor-residual cost and alpha is the full-real infimum. A triangular state (r,e) has 0<e, r<e, and e<=m. A one action requires e<=2r and has successor (2r-e,e). A zero action with h departures requires 2r<e and h<=2r, and has successor (2r-h,e-h). RootPath(m) starts at (1,m) and satisfies these bounds and successor conditions at every natural depth.")),
                 Describe.Lean(DescribeId.Create("has-optimal-embedding"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/OptimalEmbedding.HasOptimalEmbedding"),
                     H("Joint probability, anchor and cost preservation"), StatementSource.FromAuthor(Disp(
-                        Seq(Call("HasOptimalEmbedding",args),Sp,Iff,Sp,embedding))),
+                        All("m", nat, All("p", Call("RealVector", m), All("k", Call("Fin", m), Seq(Call("HasOptimalEmbedding",args),Sp,Iff,Sp,embedding)))))),
                     AssessedProvenance.FromRepo(), Blocks(
                         Paragraph(Text("The permutation is fixed for all depths. The path's label digits define probability by the sum of digit(i,d)/2^(d+1). Its anchor mass uses the permanent anchor digit in the same series. Its path cost is the sum of r(d)/2^d. All three equalities refer to this single path."))), DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("result"),

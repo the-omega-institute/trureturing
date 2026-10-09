@@ -6,8 +6,12 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.OptimalLaw;
 
 internal sealed class RationalPriceDocument : IScribeDocumentDefinition
 {
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Sp, InMacro, Sp, type, Comma, Sp, body);
+
     public DocumentDefinition Create()
     {
+        var nat = Seq(Mathbb, Grp(F.Id("N")));
         var m=F.Id("m"); var p=F.Id("p"); var a=F.Id("A"); var x=F.Id("x"); var v=F.Id("v");
         var rational=Seq(Mathbb,Grp(F.Id("Q"))); var real=Seq(Mathbb,Grp(F.Id("R")));
         var alpha=Call("alpha",m); var value=Call("W",Seq(x,Comma,m,Comma,D(1)));

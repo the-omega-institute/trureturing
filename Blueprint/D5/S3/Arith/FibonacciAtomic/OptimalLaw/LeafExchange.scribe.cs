@@ -6,8 +6,12 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.OptimalLaw;
 
 internal sealed class LeafExchangeDocument : IScribeDocumentDefinition
 {
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Sp, InMacro, Sp, type, Comma, Sp, body);
+
     public DocumentDefinition Create()
     {
+        var real = Seq(Mathbb, Grp(F.Id("R"))); var nat = Seq(Mathbb, Grp(F.Id("N")));
         var x = F.Id("x"); var d = F.Id("d"); var depth = F.Id("D");
         var m = F.Id("m"); var p = F.Id("p"); var q = F.Id("q");
         var j = F.Id("j"); var s = F.Id("S"); var t = F.Id("t"); var u = F.Id("u");

@@ -6,15 +6,19 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.OptimalLaw;
 
 internal sealed class StrictRoundingDocument : IScribeDocumentDefinition
 {
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Sp, InMacro, Sp, type, Comma, Sp, body);
+
     public DocumentDefinition Create()
     {
+        var real = Seq(Mathbb, Grp(F.Id("R"))); var nat = Seq(Mathbb, Grp(F.Id("N")));
         var x=F.Id("x"); var t=F.Id("t"); var d=F.Id("d"); var depth=F.Id("D"); var e=F.Id("E");
         var m=F.Id("m"); var p=F.Id("p"); var k=F.Id("k"); var i=F.Id("i");
         var grid=Call("OnGrid", Seq(x,Comma,depth));
         var floor=Call("F", Seq(t,Comma,depth));
         var rounded=new Formula.Fraction(Seq(floor,Sp,Plus,Sp,D(1)),new Formula.Power(D(2),depth));
         var strict=Seq(Exists,Sp,depth,Comma,Sp,D(1),Sp,Le,Sp,depth,Sp,Land,Sp,grid,Sp,Land,Sp,
-            Open,Forall,Sp,d,Sp,Lt,Sp,depth,Comma,Sp,Neg,Call("OnGrid",Seq(x,Comma,d)),Close,
+            Open,Forall,Sp,d,Sp,Lt,Sp,depth,Comma,Sp,Neg,Sp,Call("OnGrid",Seq(x,Comma,d)),Close,
             Sp,Land,Sp,Equal(x,rounded));
         var gridUp=Seq(Forall,Sp,x,Comma,Sp,depth,Comma,Sp,e,Comma,Sp,
             Open,depth,Sp,Le,Sp,e,Sp,Land,Sp,grid,Close,Sp,To,Sp,Call("OnGrid",Seq(x,Comma,e)));
@@ -26,29 +30,30 @@ internal sealed class StrictRoundingDocument : IScribeDocumentDefinition
         return DocumentDefinition.Create(ScribeNode.Create(
             "Every atom above the minimum of an attaining real law has a least dyadic depth and strict rounding.",
             H("Strict Dyadic Rounding of Optimal Laws"), Blocks(
-                Paragraph(Text("The parameter m is natural; p is a real vector on Fin m and k is an index of its least mass. Optimizer(m,p,k) means m>=2, every coordinate is positive, their sum is one, p(k)<=p(i) for every i, and L(p)/p(k)=alpha(m). The optimization domain includes every such real law. F(x,d) is floor(2^d x), L is its dyadic residual cost, and b(x,D)=F(x,D)-2F(x,D-1).")),
+                Paragraph(Text("RealVector(m) denotes the real functions on Fin m. The parameter m is natural; p is a real vector on Fin m and k is an index of its least mass. Optimizer(m,p,k) means m>=2, every coordinate is positive, their sum is one, p(k)<=p(i) for every i, and L(p)/p(k)=alpha(m). The optimization domain includes every such real law. F(x,d) is floor(2^d x), L is its dyadic residual cost, and b(x,D)=F(x,D)-2F(x,D-1).")),
                 Describe.Lean(DescribeId.Create("dyadic-strict-round"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/StrictRounding.DyadicStrictRound"),
                     H("The least terminating strict round"), StatementSource.FromAuthor(Disp(
-                        Seq(Call("DyadicStrictRound",Seq(x,Comma,t)),Sp,Iff,Sp,strict))),
+                        All("x", real, All("t", real, Seq(Call("DyadicStrictRound",Seq(x,Comma,t)),Sp,Iff,Sp,strict))))),
                     AssessedProvenance.FromRepo(), Blocks(
                         Paragraph(Text("OnGrid(x,D) means that 2^D x is an integer. The displayed depth is positive, is the least depth with this property, and rounds t strictly upward by one integer unit at that depth."))), DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("strictly-rounded-law"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/StrictRounding.StrictlyRoundedLaw"),
                     H("Every larger coordinate has this form"), StatementSource.FromAuthor(Disp(
-                        Seq(Call("StrictlyRoundedLaw",Seq(m,Comma,p,Comma,k)),Sp,Iff,Sp,Forall,Sp,i,Comma,Sp,
-                            Call("p",k),Sp,Lt,Sp,Call("p",i),Sp,To,Sp,
-                            Call("DyadicStrictRound",Seq(Call("p",i),Comma,Call("p",k)))))),
+                        All("m", nat, All("p", Call("RealVector", m), All("k", Call("Fin", m),
+                        Seq(Call("StrictlyRoundedLaw",Seq(m,Comma,p,Comma,k)),Sp,Iff,Sp,
+                            All("i", Call("Fin", m), Seq(Call("p",k),Sp,Lt,Sp,Call("p",i),Sp,To,Sp,
+                            Call("DyadicStrictRound",Seq(Call("p",i),Comma,Call("p",k))))))))))),
                     AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The requirement applies to every coordinate strictly above the least mass."))), DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("round"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/StrictRounding.round"),
-                    H("Strict upper dyadic round"), StatementSource.FromAuthor(Disp(Equal(Call("round",Seq(t,Comma,depth)),rounded))),
+                    H("Strict upper dyadic round"), StatementSource.FromAuthor(Disp(All("t", real, All("D", nat, Equal(Call("round",Seq(t,Comma,depth)),rounded))))),
                     AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("One is added even when the scaled argument is already integral."))), DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("on-grid"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/StrictRounding.OnGrid"),
                     H("Dyadic grid membership"), StatementSource.FromAuthor(Disp(
-                        Seq(grid,Sp,Iff,Sp,Exists,Sp,F.Id("z"),Sp,InMacro,Sp,Mathbb,Grp(F.Id("Z")),Comma,Sp,
-                            Equal(Seq(new Formula.Power(D(2),depth),Sp,x),F.Id("z"))))),
+                        All("x", real, All("D", nat, Seq(grid,Sp,Iff,Sp,Exists,Sp,F.Id("z"),Sp,InMacro,Sp,Mathbb,Grp(F.Id("Z")),Comma,Sp,
+                            Equal(Seq(new Formula.Power(D(2),depth),Sp,x),F.Id("z"))))))),
                     AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("This predicate allows any real x and natural depth, including depth zero."))), DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("grid-up"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/StrictRounding.grid_up"),
