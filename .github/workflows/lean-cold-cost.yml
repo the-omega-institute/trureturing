@@ -36,7 +36,8 @@ jobs:
       - name: Provide the kernel tracing tool
         timeout-minutes: 5
         run: |
-          provider_dir="$RUNNER_TEMP/bpftrace-0.27.0/bin"
+          provider_root="$RUNNER_TEMP/bpftrace-0.27.0"
+          provider_dir="$provider_root/bin"
           mkdir -p "$provider_dir"
           curl --fail --location --silent --show-error --max-time 120 \
             https://github.com/bpftrace/bpftrace/releases/download/v0.27.0/bpftrace-aarch64 \
@@ -44,6 +45,11 @@ jobs:
           printf '%s  %s\n' 13879e0b6c6b3fa6384ad24859157b6ce352aac9d84f55eabadc68c2c6084274 \
             "$provider_dir/bpftrace" | sha256sum --check --strict
           chmod 0755 "$provider_dir/bpftrace"
+          # Keep the bundled Nix closure and launcher; extraction needs no FUSE.
+          (cd "$provider_root" && "$provider_dir/bpftrace" --appimage-extract)
+          test -x "$provider_root/squashfs-root/AppRun"
+          mv "$provider_dir/bpftrace" "$provider_root/bpftrace-aarch64.AppImage"
+          ln -s ../squashfs-root/AppRun "$provider_dir/bpftrace"
           echo "$provider_dir" >> "$GITHUB_PATH"
       - name: Hosted ARM capability only (no report or compiler workload)
         if: env.DIAGNOSTIC_MODE == 'preflight'

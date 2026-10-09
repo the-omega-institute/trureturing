@@ -376,7 +376,8 @@ class SignalTrace:
                        "clock_ticks_per_second": os.sysconf("SC_CLK_TCK")})
         try:
             self.deadline = time.monotonic() + self.seconds
-            version = subprocess.run([tool, "--version"], capture_output=True, timeout=5, check=True).stdout.decode(errors="replace")
+            # The bundled AppRun needs mount privileges in both launch scopes.
+            version = self._provider_version(prefix + [tool, "--version"])
             self.sink.emit({"kind": "kernel-capability-binding", "kernel_release": platform.release(),
                            "bpftrace_version": re.sub(r"[^A-Za-z0-9_. -]", "_", version.strip())[:80],
                            "program_sha256": hashlib.sha256(signal_program(self.seconds).encode()).hexdigest(),
@@ -396,6 +397,36 @@ class SignalTrace:
             self.stop()
             raise
         return self
+
+    def _provider_version(self, command):
+        try:
+            result = subprocess.run(command, capture_output=True, timeout=5, check=False)
+        except subprocess.TimeoutExpired as error:
+            self._record_provider_version(command, None, error.stdout, error.stderr, "timeout")
+            raise
+        except OSError as error:
+            self._record_provider_version(command, None, None, None, "launch-error",
+                                          error=type(error).__name__, errno=error.errno)
+            raise
+        self._record_provider_version(command, result.returncode, result.stdout, result.stderr, "completed")
+        result.check_returncode()
+        return result.stdout.decode(errors="replace")
+
+    def _record_provider_version(self, command, returncode, stdout, stderr, outcome, **failure):
+        streams = {}
+        for name, raw in (("stdout", stdout), ("stderr", stderr)):
+            raw = raw or b""
+            retained = raw[:COLLECTOR_DIAGNOSTIC_LIMIT]
+            truncated = len(raw) > len(retained)
+            if truncated:
+                with self.sink.lock:
+                    self.sink.dropped_events += 1
+            streams[name] = {"raw_bytes_base64": base64.b64encode(retained).decode("ascii"),
+                             "raw_sha256": hashlib.sha256(retained).hexdigest(),
+                             "raw_byte_length": len(retained), "observed_byte_length": len(raw),
+                             "truncated": truncated, "encoding": "base64"}
+        self.sink.emit({"kind": "provider-version", "command": command,
+                        "returncode": returncode, "outcome": outcome, **streams, **failure})
 
     def _read(self):
         sel = selectors.DefaultSelector()

@@ -72,6 +72,140 @@ def portable_control_flow(test):
         test.addCleanup(patcher.stop)
 
 
+class ProviderStartupTests(unittest.TestCase):
+    """Portable launch/stdio fixtures; no hosted ARM or privilege evidence."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix="provider startup ")
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self.calls = self.root / "calls.jsonl"
+        provider = self.root / "provider"
+        (provider / "bin").mkdir(parents=True)
+        (provider / "squashfs-root").mkdir()
+        self.driver = self.root / "provider.py"
+        self.driver.write_text(f'''import json,os,signal,sys,time
+with open({str(self.calls)!r}, "a") as stream:
+    stream.write(json.dumps({{"args":sys.argv[1:],"env":dict(os.environ)}})+"\\n")
+if sys.argv[1:] == ["--version"]:
+    os.write(1,b"bpftrace v0.27.0\\n")
+    sys.exit(0)
+signal.signal(signal.SIGINT,lambda *_: sys.exit(0))
+os.write(1,b"D\\tready\\n")
+time.sleep(30)
+''')
+        import shlex
+        apprun = provider / "squashfs-root" / "AppRun"
+        apprun.write_text(f"#!/bin/sh\nexec {shlex.quote(sys.executable)} -B {shlex.quote(str(self.driver))} \"$@\"\n")
+        apprun.chmod(0o755)
+        self.tool = provider / "bin" / "bpftrace"
+        self.tool.symlink_to("../squashfs-root/AppRun")
+        sudo = provider / "bin" / "sudo"
+        sudo.write_text('#!/bin/sh\n[ "$1" = -n ] || exit 23\nshift\nexec "$@"\n')
+        sudo.chmod(0o755)
+        self.env = dict(os.environ, PATH=str(provider / "bin") + os.pathsep + os.environ["PATH"])
+
+    def records(self, output):
+        return [json.loads(line) for line in (output / "signal-trace.jsonl").read_text().splitlines()]
+
+    def test_both_consumers_use_same_privileged_launcher_and_keep_arguments_and_environment(self):
+        real_popen = subprocess.Popen
+        for uid in (0, 1001):
+            with self.subTest(uid=uid):
+                output = self.root / str(uid)
+                output.mkdir()
+                trace = cost.SignalTrace(output, seconds=90)
+                launches = []
+                def launch(command, **kwargs):
+                    launches.append((command, kwargs))
+                    return real_popen(command, **kwargs)
+                with patch.dict(os.environ, self.env, clear=True), \
+                        patch.object(cost.platform, "system", return_value="Linux"), \
+                        patch.object(cost.Path, "is_file", return_value=True), \
+                        patch.object(cost.os, "geteuid", return_value=uid), \
+                        patch.object(cost.sys, "stdout", io.StringIO()), \
+                        patch.object(cost.subprocess, "Popen", side_effect=launch):
+                    try:
+                        trace.start()
+                        self.assertTrue(trace.health["ready"])
+                    finally:
+                        trace.stop()
+                        if trace.process:
+                            trace.process.stdout.close()
+                            trace.process.stderr.close()
+                prefix = [] if uid == 0 else ["sudo", "-n"]
+                self.assertEqual([row[0] for row in launches], [
+                    prefix + [str(self.tool), "--version"],
+                    prefix + [str(self.tool), "-q", "-B", "line", "-e", cost.signal_program(90)]])
+                self.assertEqual(launches[1][1]["env"],
+                                 {"PATH": self.env["PATH"], "BPFTRACE_PERF_RB_PAGES": "64"})
+                records = self.records(output)
+                version = next(row for row in records if row["kind"] == "provider-version")
+                self.assertEqual(version["returncode"], 0)
+                self.assertEqual(base64.b64decode(version["stdout"]["raw_bytes_base64"]), b"bpftrace v0.27.0\n")
+                self.assertEqual(version["stderr"]["raw_byte_length"], 0)
+                self.assertEqual(records[-1]["collector_returncode"], 0)
+                self.assertEqual(records[-1]["parse_errors"], 0)
+        calls = [json.loads(line) for line in self.calls.read_text().splitlines()]
+        self.assertEqual(len(calls), 4)
+        for call in calls[1::2]:
+            self.assertEqual(call["args"], ["-q", "-B", "line", "-e", cost.signal_program(90)])
+            self.assertEqual(call["env"]["BPFTRACE_PERF_RB_PAGES"], "64")
+
+    def test_version_127_retains_original_binary_stdio_and_stops_before_collector(self):
+        self.driver.write_text("import os,sys\nos.write(1,b'version-out\\xff')\nos.write(2,b'launcher-error\\xfe\\n')\nsys.exit(127)\n")
+        trace = cost.SignalTrace(self.root)
+        with patch.dict(os.environ, self.env, clear=True), \
+                patch.object(cost.platform, "system", return_value="Linux"), \
+                patch.object(cost.Path, "is_file", return_value=True), \
+                patch.object(cost.os, "geteuid", return_value=1001), \
+                patch.object(cost.sys, "stdout", io.StringIO()):
+            with self.assertRaises(subprocess.CalledProcessError) as caught:
+                trace.start()
+        self.assertEqual(caught.exception.returncode, 127)
+        self.assertIsNone(trace.process)
+        rows = self.records(self.root)
+        version = next(row for row in rows if row["kind"] == "provider-version")
+        self.assertEqual(version["command"], ["sudo", "-n", str(self.tool), "--version"])
+        self.assertEqual(version["returncode"], 127)
+        for name, raw in (("stdout", b"version-out\xff"), ("stderr", b"launcher-error\xfe\n")):
+            self.assertEqual(base64.b64decode(version[name]["raw_bytes_base64"]), raw)
+            self.assertEqual(version[name]["raw_sha256"], hashlib.sha256(raw).hexdigest())
+        self.assertFalse(rows[-1]["ready"])
+
+    def test_version_timeout_and_launch_error_keep_unknown_status_and_partial_bytes(self):
+        for error in (subprocess.TimeoutExpired(["provider", "--version"], 5,
+                                               output=b"partial\xff", stderr=b"failure\xfe"),
+                      FileNotFoundError(2, "private fixture missing")):
+            with self.subTest(error=type(error).__name__):
+                trace = cost.SignalTrace(self.root)
+                trace.sink = cost.SignalSink(self.root / "signal-trace.jsonl", console=io.StringIO())
+                with patch.object(cost.subprocess, "run", side_effect=error):
+                    with self.assertRaises(type(error)):
+                        trace._provider_version(["provider", "--version"])
+                trace.stop()
+                version = self.records(self.root)[0]
+                self.assertIsNone(version["returncode"])
+                self.assertEqual(version["outcome"], "timeout" if isinstance(error, subprocess.TimeoutExpired) else "launch-error")
+                if isinstance(error, subprocess.TimeoutExpired):
+                    self.assertEqual(base64.b64decode(version["stderr"]["raw_bytes_base64"]), b"failure\xfe")
+                else:
+                    self.assertEqual(version["errno"], 2)
+
+    def test_version_truncation_is_bounded_and_charged_as_evidence_loss(self):
+        trace = cost.SignalTrace(self.root)
+        trace.sink = cost.SignalSink(self.root / "signal-trace.jsonl", console=io.StringIO())
+        raw = b"x" * (cost.COLLECTOR_DIAGNOSTIC_LIMIT + 1)
+        trace._record_provider_version(["provider", "--version"], 127, raw, raw, "completed")
+        trace.stop()
+        rows = self.records(self.root)
+        self.assertEqual(rows[-1]["dropped_events"], 2)
+        self.assertEqual(rows[-1]["retention"], "censored")
+        for name in ("stdout", "stderr"):
+            self.assertTrue(rows[0][name]["truncated"])
+            self.assertEqual(rows[0][name]["observed_byte_length"], len(raw))
+            self.assertEqual(base64.b64decode(rows[0][name]["raw_bytes_base64"]), raw[:-1])
+
+
 class SignalDiagnosticContractTests(unittest.TestCase):
     def setUp(self):
         portable_control_flow(self)
