@@ -38,7 +38,7 @@ private def otherInstanceArgumentsRemainSignificant (context : Context) : IO Uni
 unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
   RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
   let store ← reader.get
-  let context := CompiledRegistration.expressionContext (store.constants[·]?)
+  let context := CompiledRegistration.expressionContext (store.constants.find?)
     (← IO.getNumHeartbeats) {}
   decideSamePropositionDifferentInstances context
   decideDifferentPropositions context
@@ -148,7 +148,7 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
       restoredType == naturalType && restoredWork == 1 do
     throw <| IO.userError "compiled.session:lexical_scope_identity"
   unless !enrollment.pins.isEmpty && enrollment.pins.all (fun pin =>
-      (store.owners[pin.identity.name]?) == some pin.identity.owner) do
+      (store.owners.find? pin.identity.name) == some pin.identity.owner) do
     throw <| IO.userError "compiled.dictionary:owner_identity"
   IO.println s!"[PASS] compiled calculations: closed context work={work}; \
     complete identities, binder annotations, depth and dictionary owners"

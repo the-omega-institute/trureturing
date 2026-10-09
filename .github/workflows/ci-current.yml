@@ -428,6 +428,13 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-cache-release]
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_*.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_*.py
+            # Release contracts execute the report receipt and input readers.
+            tools/lean-inspector/reuse.py
+            tools/lean-inspector/publication.py
+            tools/lean-inspector/materials.py
+            tools/scripts/report/lean-report-selection.py
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             Meta/ci-cache-paths.json
@@ -1563,6 +1570,10 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-script]
+            # Release contracts execute the report receipt and input readers.
+            tools/lean-inspector/reuse.py
+            tools/lean-inspector/publication.py
+            tools/scripts/report/lean-report-selection.py
             tools/tests/StrataLint.ScriptTests/*
             tools/TestSupport/StrataLint.AdmissionTestSupport/*
             tools/TestSupport/StrataLint.LeanTestSupport/*
@@ -1874,7 +1885,7 @@ jobs:
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
           make compiled-judge-test
-          make lean-report
+          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
       - name: Verify production source binding artifacts
         env:
           FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules

@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-pyramid-boundary-calculus"
+path = "docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,16 @@
+**推论 17.4（局部 $\kappa$ 模型的稳健实际消费者）。** 若实际三阶主块 $B$ 满足
+$$
+\left(\sum_{i<j}|B_{ij}-(U_c)_{ij}|^2\right)^{1/2}\le\varepsilon,
+$$
+则 $e(B)\ge(c-\varepsilon)_+^2$。保留指定相关对还给更强的
+$$
+D_\Psi(B)\ge2|B_{12}|^2\ge2(c-\varepsilon)_+^2.
+\tag{17.5}
+$$
+对于同一个 $G$ 内多组这样的指定相关对 $E_\alpha$，只要 $w_\alpha\ge0$ 且
+$\sum_{\alpha:i\in E_\alpha}w_\alpha\le1$，便有
+$$
+D_\Psi(G)\ge2\sum_\alpha w_\alpha(c_\alpha-\varepsilon_\alpha)_+^2.
+\tag{17.6}
+$$
+

@@ -1,0 +1,30 @@
+**定理 11.3（有限均匀整数来源的固定前缀极限）。** 8.4 的均匀有限律对每个固定合法长度 $`k`$ 前缀 $`w`$，末位 $`e`$，有
+
+```math
+\lim_{m\to\infty}\mu_m([w])=\varphi^{-k-e},\qquad
+\varphi=\frac{1+\sqrt5}{2}.
+```
+
+这些极限柱概率定义一个共同无限律 $`\mu`$。它等于从初始接缝零出发的 Markov 律
+
+```math
+P=\begin{pmatrix}\varphi^{-1}&\varphi^{-2}\\1&0\end{pmatrix},
+\qquad\mu([w])=\varphi^{-k-e}\le\varphi^{-k}.
+```
+
+这是指定初始状态的单向律，不称为平稳律，也不称为每个有限均匀律的精确边缘。
+
+证明。Fibonacci 递归特征根为 $`\varphi`$ 与 $`-\varphi^{-1}`$，初值确定
+
+```math
+F_n=\frac{\varphi^n-(-\varphi^{-1})^n}{\sqrt5}.
+```
+
+将 8.4 的两个 Fibonacci 数比值代入，固定 $`k,e`$ 时次根项趋零，得极限。由于 $`\varphi^{-1}+\varphi^{-2}=1`$，$`P`$ 的各行归一化且不许 $`11`$，它直接构造一个无限 Markov 律。写 $`r_0=\varphi,r_1=1`$，在允许边上
+
+```math
+P(i,j)=\frac{r_j}{\varphi r_i}.
+```
+
+沿前缀的转移乘积望远镜相消为 $`r_e/(\varphi^k r_0)=\varphi^{-k-e}`$，证明该律正好实现所有极限；空柱质量一。也可逐柱检查相容：末位零的两个子柱质量和为 $`\varphi^{-k-1}+\varphi^{-k-2}=\varphi^{-k}`$，末位一只有零子柱，其质量为 $`\varphi^{-k-1}`$。因此这里共同实现的来源是已给出的一个 Markov 构造，而非将互不相容的有限均匀律强拼。证毕。
+

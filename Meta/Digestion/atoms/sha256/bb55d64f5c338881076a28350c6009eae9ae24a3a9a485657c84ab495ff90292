@@ -1,0 +1,26 @@
+### 23.1. 同一矩阵的主块与谱对角预算
+
+沿用第二十一节的实际 Montgomery–Taylor 核与有限点列，记全 Gram 为 $G$，连续 $m$ 点主块为 $B_i$。截断函数为
+$$
+\Psi(t)=\begin{cases}(t-1)^2,&t\le2,\\2t-3,&t>2.\end{cases}
+$$
+它在整个实轴非负且凸。对任一坐标主块的等距嵌入 $E_i$，有 $B_i=E_i^*GE_i$。取该块的单位特征向量 $v_j$；$E_iv_j$ 是全空间的单位向量。将它在 $G$ 的特征向量基中展开，系数模平方之和为一，标量 Jensen 给出
+$$
+\Psi(\langle E_iv_j,GE_iv_j\rangle)
+\le\langle E_iv_j,\Psi(G)E_iv_j\rangle.
+$$
+对全部块特征向量求和，再利用块内特征向量变换的酉性，得到同矩阵的对角预算
+$$
+\operatorname{tr}\Psi(B_i)
+\le\sum_{j=i}^{i+m-1}\Psi(G)_{jj}.
+\tag{23.1}
+$$
+这是经典凸迹压缩在当前实际矩阵上的实现。它既没有把另一矩阵的下界移入 $G$，也不把重复点删去：每个坐标及其原始维度都保留。
+
+因为 $\Psi(G)\succeq0$，其各个对角项非负。每个坐标最多属于 $m$ 个连续窗口，故
+$$
+\sum_i\operatorname{tr}\Psi(B_i)\le m\operatorname{tr}\Psi(G).
+\tag{23.2}
+$$
+这里的 $m$ 精确支付了窗口的重复使用；无需假定窗口彼此独立。
+

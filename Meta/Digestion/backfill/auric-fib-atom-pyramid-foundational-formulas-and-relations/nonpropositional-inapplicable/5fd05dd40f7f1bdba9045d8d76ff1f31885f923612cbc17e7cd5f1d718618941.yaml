@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:5fd05dd40f7f1bdba9045d8d76ff1f31885f923612cbc17e7cd5f1d718618941
+  normalized_sha256: sha256:5fd05dd40f7f1bdba9045d8d76ff1f31885f923612cbc17e7cd5f1d718618941
+cas_ref: sha256:5fd05dd40f7f1bdba9045d8d76ff1f31885f923612cbc17e7cd5f1d718618941
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "For every W>0,d>1,d|L,L<=W (including L=0), actual z=exp(2*pi*i/d), f(r)=z^r.val, and zwin on the same ZMod W, Complex.isPrimitiveRoot_exp, IsPrimitiveRoot.pow_eq_one_iff_dvd/norm'_eq_one/ne_one, geom_sum_eq, norm_sum_le, Finset.sum_range_add_sum_Ico, Finset.card_le_card/card_image_of_injective, ZMod.val_injective, Nat.card_Ico, and EuclideanSpace.norm_sq_eq supply norm(f)^2=W, the noncrossing window zero relation, the original-coordinate pointwise bound L, support inclusion in representatives [W-L,W), support cardinal <=L, and norm(zwin f)^2<=L^3. Full targets: exact_zmod_24_1, exact_l2_24_1, complete_seam_support. Shared original signal and labels are preserved. All propositional clauses are bind-only under CLAUDE.md 3.2; no complete usable frozen repository GID was found. Current certificate: LEAN_SKIP_LOCK=1 /bin/bash tools/scripts/worktree/lean-cache-run.sh lake env lean /tmp/f741_settle_fib_seam_24_probe.lean; exit_code=0; checked declarations use only propext, Classical.choice, Quot.sound. No repository Lean declaration is added."
+    previous_atom_id: 2559fe196b49666f5eb791e363ba9c321c190dcd99c6f0d365088e4dd1da0cf7
+    next_atom_id: 3f88d67b3d85995ed43067d58cfc3abf51a319ee88f862aa734146f01a0237b0
+  chain_atoms:
+    - 5b66395e08e735798603c2386bf5be974d956d4ee450e27d5dc7959494869877
+    - b2ba7d8aff53fc55edbb9e4fae69ec33c005e582f1ad47033b8334953d40e04d
