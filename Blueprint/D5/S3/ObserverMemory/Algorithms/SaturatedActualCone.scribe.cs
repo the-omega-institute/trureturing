@@ -31,9 +31,8 @@ internal sealed class SaturatedActualConeDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Statement())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Encode each actual future by one binary symbol per subsequent read. The "
-                    + "actual successor set has at most two elements. A common future prefix "
-                    + "determines the same terminal label; uniqueness of consecutive reads also "
-                    + "identifies the physical event. Thus these binary words are distinct and "
+                    + "actual successor set has at most two elements. If one complete future answer word is a prefix of another, their terminal labels and initial events agree. "
+                    + "Thus these binary words are distinct and "
                     + "prefix-free. Kraft's inequality gives the complete slot mass bound. "
                     + "Advancing every event of a saturated active slot doubles its mass and "
                     + "injects it into at most two complete child fibers, each of mass at most one. "
