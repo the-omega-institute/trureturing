@@ -1,7 +1,8 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
-HERE := $(shell cd "$$(dirname "$(MAKEFILE_LIST)")" && pwd -P)
+# Remove Make's leading list separator without collapsing spaces in the source path.
+HERE := $(shell tools_makefile="$(MAKEFILE_LIST)"; cd "$$(dirname "$${tools_makefile\# }")" && pwd -P)
 BASE ?= origin/dev
 REPOSITORY ?= $(HERE)/..
 CLEAN_MIN_AGE_HOURS ?= 24
@@ -115,7 +116,7 @@ update-renderer-contract:
 	@/bin/bash $(HERE)/scripts/update-renderer-contract.sh
 
 clean-lanes:
-	@/bin/bash $(HERE)/scripts/clean-lanes.sh --base "$(BASE)" $(if $(filter 1,$(FORCE)),--force,)
+	@/bin/bash "$(HERE)/scripts/clean-lanes.sh" --base "$(BASE)" $(if $(filter 1,$(FORCE)),--force,)
 
 clean-all:
 	@args=(clean --repository "$$HOST_CLEAN_REPOSITORY" --base "$$HOST_CLEAN_BASE" --min-age-hours "$$HOST_CLEAN_MIN_AGE_HOURS" --codex-home "$$HOST_CLEAN_CODEX_HOME" --sshx-home "$$HOST_CLEAN_SSHX_HOME"); case "$$HOST_CLEAN_FORCE" in 0) ;; 1) args+=(--delete);; *) echo 'FORCE must be 0 or 1' >&2; exit 64;; esac; case "$$HOST_CLEAN_VERBOSE" in 0) ;; 1) args+=(--verbose);; *) echo 'VERBOSE must be 0 or 1' >&2; exit 64;; esac; if test -n "$$HOST_CLEAN_TMP_ROOT"; then args+=(--tmp-root "$$HOST_CLEAN_TMP_ROOT"); fi; exec python3 -B "$(HERE)/scripts/host-cleanup.py" "$${args[@]}"
