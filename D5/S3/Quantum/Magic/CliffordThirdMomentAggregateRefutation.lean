@@ -123,7 +123,7 @@ private theorem kappa_graph {d n : ℕ} [NeZero d]
   simp only [indicator, stateCube, ite_mul, one_mul, zero_mul,
     Finset.sum_ite_eq', Finset.mem_univ, if_true]
 
-private theorem kappa_rows {d n : ℕ} [NeZero d]
+theorem kappa_rows {d n : ℕ} [NeZero d]
     (O : Matrix (Fin 3) (Fin 3) (ZMod d)) (Psi : (Fin n → ZMod d) → ℂ)
     (e : Equiv.Perm (Fin 3)) :
     kappa d n Psi (graphSubspace (O.submatrix e id)) =
@@ -184,7 +184,7 @@ private theorem group_five : stochasticOrthogonal 5 = orbit 1 ∪ orbit base := 
     · obtain ⟨e, _, rfl⟩ := Finset.mem_image.mp hO
       exact (valid e).2
 
-private theorem kappa_identity {d n : ℕ} [NeZero d]
+theorem kappa_identity {d n : ℕ} [NeZero d]
     (Psi : (Fin n → ZMod d) → ℂ) (hn : ∑ x, ‖Psi x‖ ^ 2 = 1) :
     kappa d n Psi (graphSubspace 1) = 1 := by
   classical
@@ -201,14 +201,14 @@ private theorem kappa_identity {d n : ℕ} [NeZero d]
     rfl
   simp only [hs, Finset.prod_const_one]
 
-private def v (a b : ZMod 5) : ℤ :=
+def v (a b : ZMod 5) : ℤ :=
   !![8,-5,0,4,5;0,3,6,4,-4;-2,-5,-3,0,3;-3,0,5,-8,-6;5,-4,2,-5,0]
     ⟨a.val, ZMod.val_lt a⟩ ⟨b.val, ZMod.val_lt b⟩
 
-private noncomputable def psi (x : Fin 2 → ZMod 5) : ℂ :=
+noncomputable def psi (x : Fin 2 → ZMod 5) : ℂ :=
   (v (x 0) (x 1) : ℂ) / (Real.sqrt 458 : ℂ)
 
-private theorem normalized_psi : ∑ x, ‖psi x‖ ^ 2 = 1 := by
+theorem normalized_psi : ∑ x, ‖psi x‖ ^ 2 = 1 := by
   classical
   have norm_v : (∑ x : Fin 2 → ZMod 5, v (x 0) (x 1) ^ 2) = 458 := by decide +kernel
   simp_rw [psi, norm_div, div_pow, Complex.norm_real, Real.norm_eq_abs, sq_abs,
@@ -542,7 +542,7 @@ private theorem kappa_base : kappa 5 2 psi (graphSubspace base) = -2577430 / 458
   rw [compute]
   norm_num
 
-private theorem kappa_iso : kappaIso 5 2 psi = 140241723 / 24017978 := by
+theorem kappa_iso : kappaIso 5 2 psi = 140241723 / 24017978 := by
   classical
   have disjoint : Disjoint (orbit 1) (orbit base) := by decide +kernel
   have orbit_value (O : Matrix (Fin 3) (Fin 3) (ZMod 5)) (hi : Function.Injective O) :
