@@ -1,0 +1,14 @@
+## 来源、记号与参考边界
+
+**参考输入与 open 边界。** 本卷完整收录用户提供的数学论述。新增候选数学均为 open；正文的“证明”“推得”“本篇证明”等是供稿者的普通数学论证用语，不构成仓库形式化认证。只有经 Lean kernel 验证的声明、证明项及其 axiom 闭包承载本库的数学真值，理论散文与消化状态不承载该真值。本卷不新增 Lean，也不重现实验。
+
+**来源与版本。** 作者类型为 mixed（用户供稿交付），原作者及原模型未知；接收时点为 2026-10-10。来源标识为 `moment-triangle-source`；原始供稿字节的 SHA-256 为 `c8756f7eaa5b16013f0ba1fa64692d6123092408a133fcee001b63b76a0c7c8b`。供稿的项目快照 `05725d4` 固定为完整修订 `05725d4098ad0009f95b36924b32ea6d34479617`；正文的“本次”“本轮”“最新”及原始核验自述均归属于该供稿。
+
+**空模式与位置字典。** 本卷使用获准记号 $\mathsf F[\mathrm{null}]$（`F[null]`），它与供稿中的 $\mathsf F[\varnothing]$ 表示同一个空选择。五模式仍是 `F[null]`、`F[1]`、`F[2]`、`F[3]`、`F[1,3]`；$x$ 为位置 1（左端），$y$ 为位置 3（右端），$z$ 为位置 2（中间）。这是空模式别名与指标字典，不作物理识别，也不推断接缝方向。
+
+**项目引用范围。** 正文的“项目§22”“项目§23”“项目§24”均指同一快照的 [RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY](https://github.com/the-omega-institute/trureturing/blob/05725d4098ad0009f95b36924b32ea6d34479617/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md)，分别为固定先验实际后验像上的两项律窗口、窗口表示与原合法续接交换、一个固定全支持先验下的实际反演不稳定性。`#14860` 的 `complete_original_recovery` 可在 [FourthSegmentLawRecovery.lean:901](https://github.com/the-omega-institute/trureturing/blob/05725d4098ad0009f95b36924b32ea6d34479617/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentLawRecovery.lean#L901) 作源码检查；此处只给出来源定位，没有重新编译或核验其当前公理闭包，也不以它认证本卷定理 1 的两矩恢复。`#14880` 的十五相位费用属于另一个来源合同 [KBONACCI_SELF_CALIBRATING_BOUNDARIES，定理 25.3](https://github.com/the-omega-institute/trureturing/blob/05725d4098ad0009f95b36924b32ea6d34479617/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md)；其六块、四十八位结论不得转移为 FIB 恢复费用。
+
+**文献范围。** [arXiv:2008.12698，Ten Lectures on the Moment Problem](https://arxiv.org/abs/2008.12698) 是矩问题与正性背景；[Berkeley 技术报告 649，Graphical models, exponential families, and variational inference](https://statistics.berkeley.edu/tech-reports/649) 是指数族、协方差与参数导数的背景。两项背景引用为 `literature-attested`，只承担对应背景，不认证本卷的 FIB 面积、雅可比双边界或原生长度律常数。供稿中的自行推导表述保留为来源论证，不作为本稿的原创性或新颖性认证。
+
+**不可取得的附件与核验自述。** 供稿所称“量子续篇”“附件”和“粘贴的文本 (1)”未随本来源取得，其措辞作为来源引用原样保留，未据此验证物理记录实现。原始 `sandbox:/mnt/data/fib_moment_triangle_inverse_checks.py` 与 `sandbox:/mnt/data/fib_moment_triangle_inverse_checks.json` 定位也不可取得；文末所称 40、60、60、50、80、40 组检查及 100 位精度只是供稿者报告，未独立复现，不作为本卷的核验结果。固定先验与任意混合、实际整数历史与连续参数分析、概率律恢复与本次隐藏深度、来源合同的取得费用与坐标维数、局部行列式与各方向稳定性均按原文的范围区分。
+
