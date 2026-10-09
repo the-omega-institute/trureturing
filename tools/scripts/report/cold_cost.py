@@ -13,7 +13,7 @@ import sys
 import threading
 import time
 
-SEALED_INPUTS_SHA256 = "27d299e46bbe137b56c01aa376f55bd5a774b33d64e0d4bd6f8783bda63ab544"
+SEALED_INPUTS_SHA256 = "33670a34039512fb4d04edfb6873768adda7a04c115d6d4e88a0af6cecc9e1b6"
 
 
 def write_json(path, value):
