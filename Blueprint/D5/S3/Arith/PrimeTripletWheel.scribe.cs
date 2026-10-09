@@ -9,18 +9,6 @@ internal sealed class PrimeTripletWheelDocument : IScribeDocumentDefinition
         H("Prime Triplet Wheel Reflection"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("reflected-gap-difference"),
-                DeclarationHandle.Create(
-                    "D5/S3/Arith/PrimeTripletWheel.reflected_gapDifference"),
-                H("Reversing ordered gaps negates the direction"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For arbitrary integer gaps, swapping the ordered gaps negates their "
-                    + "difference. The concrete diameter-six templates are theory instances "
-                    + "of this general direction reversal.")),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("wheel-reflect-involutive"),
                 DeclarationHandle.Create(
                     "D5/S3/Arith/PrimeTripletWheel.reflect_involutive"),
