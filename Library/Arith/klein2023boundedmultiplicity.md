@@ -36,9 +36,9 @@ form uses the displayed unsimplified proof; the printed conclusion of
 Lemma 3.3(b) is its weaker asymptotic simplification. This is an application
 of the published proof, not a new moment theorem or a Lean result.
 
-[Report381](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/350-399/381-repeated-prime-exposure-in-missing-fibres.md)
+[Report381](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/350-399/381-repeated-prime-exposure-in-missing-fibres.md)
 already applies Theorem 3's minimum-modulus bound for bounded multiplicity.
-[Report348](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#two-multiplicity-two-covers-share-a-small-prime)
+[Report348](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#two-multiplicity-two-covers-share-a-small-prime)
 uses the explicit second moment with the independently stated numerical
 continuation criterion of BBMST. Its two-cover support-intersection
 conclusion is a deduction combining those tools, not a theorem attributed

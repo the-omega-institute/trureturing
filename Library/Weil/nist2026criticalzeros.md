@@ -30,6 +30,6 @@ Every prime power is included, not just the primary primes.
 
 The inspected DLMF release is 1.2.8, released 15 September 2026.
 These are source statements, without independent proof reproduction or
-Lean certification. Their [full-prime source-range application](../../docs/reports/theta-mixed-matrix/critical-prime-source-range.md)
+Lean certification. Their [full-prime source-range application](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/critical-prime-source-range.md)
 concerns a precise stronger factorization requirement, not RH or the
 sign of the original arithmetic form.

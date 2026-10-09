@@ -40,7 +40,7 @@ graph joins overlapping coordinate supports. The strict-region condition
 must still be proved for the particular bounds; a positive value of the
 full polynomial alone is insufficient. This ratio concerns conditional
 avoidance in the same original probability space, not a resampling output
-law. The [coupled first-root result](../../docs/reports/erdos7-odd-covering/problem-details/21-coupled-first-root-profiles-and-an-exceptional-five-prime-block.md)
+law. The [coupled first-root result](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/21-coupled-first-root-profiles-and-an-exceptional-five-prime-block.md)
 uses it after checking the complete support-polynomial region for one
 specified block and its descendant-domain bounds.
 
@@ -56,7 +56,7 @@ Thus the residue-conflict graph satisfies (4.1), even when the digits
 inside a coordinate are dependent. An independent rare query coordinate
 and (4.3) then give a query ratio for the actual law conditioned on
 avoiding the original events. The complete argument and its strict-region
-premise appear in [the laminar-prefix application](../../docs/reports/erdos7-odd-covering/problem-details/24-laminar-prefix-conflicts-under-actual-conditioning.md).
+premise appear in [the laminar-prefix application](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/24-laminar-prefix-conflicts-under-actual-conditioning.md).
 This is an application of the cited theorem; it neither identifies the
 conditional law with a resampling terminal law nor supplies universal
 strict feasibility for AP families. The v2 primary theorem and Remark 1
