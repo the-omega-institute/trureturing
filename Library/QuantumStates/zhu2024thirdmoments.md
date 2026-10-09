@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2410.13575v1
 claim: "Conjecture 2: for an odd prime d and |Ψ⟩ ∈ H_d^{⊗n}, 0 ≤ κ(Ψ,𝒯) ≤ 1 for every stochastic Lagrangian subspace 𝒯 ∈ Σ(d), together with three aggregate inequalities that follow from it; κ(Ψ,𝒯) = tr[R(𝒯)(|Ψ⟩⟨Ψ|)^{⊗3}], R(𝒯) = r(𝒯)^{⊗n}, r(𝒯) = Σ_{(x;y)∈𝒯} |x⟩⟨y|."
 strata_touched:
   - D5/S3/Quantum/Magic/CliffordThirdMomentNegativity
+  - D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation
 license: citation-only
 triage: anchor
 ---
@@ -24,8 +25,9 @@ DOI: 10.48550/arXiv.2410.13575.
 Primary version: https://arxiv.org/abs/2410.13575v1 (the only arXiv version).
 The TeX source `3rdMoment.tex` of v1 supplies the stochastic Lagrangian subspaces
 (`sec:SLSspanningSet`), the operators $r(\mathcal T)$ and $R(\mathcal T)$ (`eq:rRT`), the
-definition of $\kappa(\Psi,\mathcal T)$ (`eq:kappapsiT`) and Conjecture 2 (`con:kappaTLUB`,
-Eq. (147)).
+definition of $\kappa(\Psi,\mathcal T)$ (`eq:kappapsiT`), the stochastic orthogonal group
+(`sec:Otd`, `eq:TOdef`), the subsets of $\Sigma(d)$ (`eq:scrTSIEO`), the sums over subsets (lines
+1945–1948) and Conjecture 2 (`con:kappaTLUB`, Eq. (147)).
 
 ## Source statements
 
@@ -36,7 +38,11 @@ $\Sigma(d):=\Sigma_{3,3}(d)$.
 
 Operators: "$r(\caT):= \sum_{(\bfx;\bfy) \in \caT} |\bfx\> \<\bfy|, \quad R(\caT):= r(\caT)^{\otimes n}$".
 
-Moments: "$\kappa(\Psi,\caT):=\tr[R(\caT)(|\Psi\>\<\Psi|)^{\otimes 3}]$".
+Moments: "$\kappa(\Psi,\caT):=\tr[R(\caT)(|\Psi\>\<\Psi|)^{\otimes 3}]$"; for a subset, "$\kappa(\Psi,\scrT,j):=\sum_{\caT\in \scrT}\kappa^j(\Psi,\caT)$ … abbreviated as $\kappa(\Psi,\scrT)$ … when $j=1$".
+
+Stochastic orthogonal group: "A $t \times t$ matrix $O$ over $\bbF_d$ is a stochastic isometry if it satisfies the following two conditions: $O\bfx\cdot O\bfx=\bfx\cdot \bfx $ for any $\bfx \in \bbF_d^t$. $O \cdot \mathbf{1}_t = \mathbf{1}_t$ … The two conditions imply that $O^\top O=OO^\top=\mathds{1}$ … The stochastic orthogonal group $O_t(d)$ is the group of all stochastic isometries on $\bbF_d^t$", with "$\caT_O:=\left\{ (O\bfx;\bfx)\, | \, \bfx \in \bbF_d^t \right\}$".
+
+Subsets of $\Sigma(d)$: "$\scrT_\sym:=\{\caT_O\ |\ O\in S_3\}$, $\scrT_\ns:=\Sigma(d)\setminus\scrT_\sym$, $\scrT_\iso:= \{T_O \; | \; O \in O_3(d)\}$".
 
 Conjecture 2: "Suppose $d$ is an odd prime and $|\Psi\>\in\caH_d^{\otimes n}$. Then
 $0\leq \kappa(\Psi,\caT)\leq 1 \quad \forall \caT\in \Sigma(d), \quad 6\leq \kappa(\Psi,\Sigma(d))\leq 2d+2, \quad 0\leq \kappa(\Psi,\scrT_\ns)\leq 2d-4, \quad \kappa(\Psi, \scrT_\iso)\geq 6.$"

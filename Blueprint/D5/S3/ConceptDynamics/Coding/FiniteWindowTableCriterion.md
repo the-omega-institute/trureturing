@@ -6,7 +6,7 @@ Four concrete word tests characterize the same arbitrary pair of finite-window t
 
 **Theorem 1.1 (Exactly the supplied tables on all histories).**
 
-$$\forall V \in Type, E \in Type, W \in Type, D \in Type, G \in \operatorname{DirectedMultigraph}\left(V, E\right), F \in \operatorname{DirectedMultigraph}\left(W, D\right), finiteV \in \operatorname{Fintype}\left(V\right), finiteE \in \operatorname{Fintype}\left(E\right), equalityV \in \operatorname{DecidableEq}\left(V\right), finiteW \in \operatorname{Fintype}\left(W\right), finiteD \in \operatorname{Fintype}\left(D\right), equalityW \in \operatorname{DecidableEq}\left(W\right), topologyE \in \operatorname{TopologicalSpace}\left(E\right), discreteE \in \operatorname{DiscreteTopology}\left(E\right), topologyD \in \operatorname{TopologicalSpace}\left(D\right), discreteD \in \operatorname{DiscreteTopology}\left(D\right), nonemptyV \in \operatorname{Nonempty}\left(V\right), nonemptyW \in \operatorname{Nonempty}\left(W\right), p \in Nat, q \in Nat, r \in Nat, s \in Nat, essentialG \in \operatorname{Essential}\left(G\right), essentialF \in \operatorname{Essential}\left(F\right), pair \in \operatorname{TablePair}\left(G, F, p, q, r, s\right),\; \operatorname{LocalCriterion}\left(pair\right) \Leftrightarrow \operatorname{Nonempty}\left(\operatorname{SameTableConjugacy}\left(pair\right)\right)$$
+$$\forall V \in Type, E \in Type, W \in Type, D \in Type,\; [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(E\right)], [\operatorname{DecidableEq}\left(V\right)], [\operatorname{Fintype}\left(W\right)], [\operatorname{Fintype}\left(D\right)], [\operatorname{DecidableEq}\left(W\right)], [\operatorname{TopologicalSpace}\left(E\right)], [\operatorname{DiscreteTopology}\left(E\right)], [\operatorname{TopologicalSpace}\left(D\right)], [\operatorname{DiscreteTopology}\left(D\right)], [\operatorname{Nonempty}\left(V\right)], [\operatorname{Nonempty}\left(W\right)], \forall G \in \operatorname{DirectedMultigraph}\left(V, E\right), F \in \operatorname{DirectedMultigraph}\left(W, D\right), p \in Nat, q \in Nat, r \in Nat, s \in Nat, pair \in \operatorname{TablePair}\left(G, F, p, q, r, s\right),\; \left(\operatorname{Essential}\left(G\right) \land \operatorname{Essential}\left(F\right)\right) \Rightarrow \left(\operatorname{LocalCriterion}\left(pair\right) \Leftrightarrow \operatorname{Nonempty}\left(\operatorname{SameTableConjugacy}\left(pair\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.original23_1` (`✓ std3`). ∎
 
@@ -18,11 +18,11 @@ The independent natural radii p,q,r,s may all be zero. Write m=p+q+1, n=r+s+1 an
 
 For every G word of length N, mapBlock applies f to the n windows starting at j=0 through n minus 1. Its legality is proved from seamG before g is applied. The equation then says g(mapBlock(f,word))=word[p+r]. The F test applies g to the m windows starting at j=0 through m minus 1, proves legality from seamF, and says f(mapBlock(g,word))=word[p+r]. Both input intervals are exactly [-p-r,q+s]. Proof irrelevance makes the equations independent of the seam-proof choice.
 
-SameTableConjugacy carries two legal-history maps with pointwise bindings Phi(x)[i]=f(historyWindow(G,x,i-p,m)) and Psi(y)[i]=g(historyWindow(F,y,i-r,n)). It also carries both inverse equations, continuity in the product subspace topology of discrete actual edges, and both commutation laws with the shift x[i] to x[i+1]. Necessity uses the retained two-tail realizer on each prescribed word. Its actual occurrences force both seam equations and both center recoveries. The same f and g occur in all these statements.
+SameTableConjugacy carries two legal-history maps with pointwise bindings Phi(x)[i]=f(historyWindow(G,x,i-p,m)) and Psi(y)[i]=g(historyWindow(F,y,i-r,n)). It also carries both inverse equations, continuity in the product subspace topology of discrete actual edges, and both commutation laws with the shift x[i] to x[i+1]. Necessity extends each prescribed word by its incoming and outgoing tails. Its actual occurrences force both seam equations and both center recoveries. The same f and g occur in all these statements.
 
 **Theorem 1.2 (Local and global equivariance for the same maps).**
 
-$$\forall V \in Type, E \in Type, W \in Type, D \in Type, G \in \operatorname{DirectedMultigraph}\left(V, E\right), F \in \operatorname{DirectedMultigraph}\left(W, D\right), finiteV \in \operatorname{Fintype}\left(V\right), finiteE \in \operatorname{Fintype}\left(E\right), equalityV \in \operatorname{DecidableEq}\left(V\right), finiteW \in \operatorname{Fintype}\left(W\right), finiteD \in \operatorname{Fintype}\left(D\right), equalityW \in \operatorname{DecidableEq}\left(W\right), Gamma \in Type, group \in \operatorname{Group}\left(Gamma\right), actionV \in \operatorname{MulAction}\left(Gamma, V\right), actionE \in \operatorname{MulAction}\left(Gamma, E\right), actionW \in \operatorname{MulAction}\left(Gamma, W\right), actionD \in \operatorname{MulAction}\left(Gamma, D\right), AG \in \operatorname{GraphAction}\left(Gamma, G\right), AF \in \operatorname{GraphAction}\left(Gamma, F\right), topologyE \in \operatorname{TopologicalSpace}\left(E\right), discreteE \in \operatorname{DiscreteTopology}\left(E\right), topologyD \in \operatorname{TopologicalSpace}\left(D\right), discreteD \in \operatorname{DiscreteTopology}\left(D\right), nonemptyV \in \operatorname{Nonempty}\left(V\right), nonemptyW \in \operatorname{Nonempty}\left(W\right), p \in Nat, q \in Nat, r \in Nat, s \in Nat, essentialG \in \operatorname{Essential}\left(G\right), essentialF \in \operatorname{Essential}\left(F\right), pair \in \operatorname{TablePair}\left(G, F, p, q, r, s\right),\; \left(\operatorname{LocalCriterion}\left(pair\right) \land \left(\operatorname{LocalEquivariant}\left(AG, \operatorname{f}\left(pair\right)\right) \land \operatorname{LocalEquivariant}\left(AF, \operatorname{g}\left(pair\right)\right)\right)\right) \Leftrightarrow \left(\exists c \in \operatorname{SameTableConjugacy}\left(pair\right),\; \operatorname{GlobalEquivariant}\left(AG, AF, \operatorname{forward}\left(c\right)\right) \land \operatorname{GlobalEquivariant}\left(AF, AG, \operatorname{backward}\left(c\right)\right)\right)$$
+$$\forall V \in Type, E \in Type, W \in Type, D \in Type, Gamma \in Type,\; [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(E\right)], [\operatorname{DecidableEq}\left(V\right)], [\operatorname{Fintype}\left(W\right)], [\operatorname{Fintype}\left(D\right)], [\operatorname{DecidableEq}\left(W\right)], [\operatorname{TopologicalSpace}\left(E\right)], [\operatorname{DiscreteTopology}\left(E\right)], [\operatorname{TopologicalSpace}\left(D\right)], [\operatorname{DiscreteTopology}\left(D\right)], [\operatorname{Nonempty}\left(V\right)], [\operatorname{Nonempty}\left(W\right)], [\operatorname{Group}\left(Gamma\right)], [\operatorname{MulAction}\left(Gamma, V\right)], [\operatorname{MulAction}\left(Gamma, E\right)], [\operatorname{MulAction}\left(Gamma, W\right)], [\operatorname{MulAction}\left(Gamma, D\right)], \forall G \in \operatorname{DirectedMultigraph}\left(V, E\right), F \in \operatorname{DirectedMultigraph}\left(W, D\right), AG \in \operatorname{GraphAction}\left(Gamma, G\right), AF \in \operatorname{GraphAction}\left(Gamma, F\right), p \in Nat, q \in Nat, r \in Nat, s \in Nat, pair \in \operatorname{TablePair}\left(G, F, p, q, r, s\right),\; \left(\operatorname{Essential}\left(G\right) \land \operatorname{Essential}\left(F\right)\right) \Rightarrow \left(\left(\operatorname{LocalCriterion}\left(pair\right) \land \left(\operatorname{LocalEquivariant}\left(AG, \operatorname{f}\left(pair\right)\right) \land \operatorname{LocalEquivariant}\left(AF, \operatorname{g}\left(pair\right)\right)\right)\right) \Leftrightarrow \left(\exists c \in \operatorname{SameTableConjugacy}\left(pair\right),\; \operatorname{GlobalEquivariant}\left(AG, AF, \operatorname{forward}\left(c\right)\right) \land \operatorname{GlobalEquivariant}\left(AF, AG, \operatorname{backward}\left(c\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.original23_1_equivariant` (`✓ std3`). ∎
 
@@ -34,7 +34,7 @@ GraphAction states source and target preservation for the supplied vertex and ed
 
 **Theorem 1.3 (Terminating finite checks with actual failure facts).**
 
-$$\forall V \in Type, E \in Type, W \in Type, D \in Type, G \in \operatorname{DirectedMultigraph}\left(V, E\right), F \in \operatorname{DirectedMultigraph}\left(W, D\right), finiteV \in \operatorname{Fintype}\left(V\right), finiteE \in \operatorname{Fintype}\left(E\right), equalityV \in \operatorname{DecidableEq}\left(V\right), finiteW \in \operatorname{Fintype}\left(W\right), finiteD \in \operatorname{Fintype}\left(D\right), equalityW \in \operatorname{DecidableEq}\left(W\right), equalityE \in \operatorname{DecidableEq}\left(E\right), equalityD \in \operatorname{DecidableEq}\left(D\right), p \in Nat, q \in Nat, r \in Nat, s \in Nat, pair \in \operatorname{TablePair}\left(G, F, p, q, r, s\right), edgesG \in \operatorname{List}\left(E\right), edgesF \in \operatorname{List}\left(D\right), completeG \in \left(\forall e \in E,\; e \in edgesG\right), completeF \in \left(\forall d \in D,\; d \in edgesF\right), essentialG \in \operatorname{Essential}\left(G\right), essentialF \in \operatorname{Essential}\left(F\right),\; \left(\neg \operatorname{LocalCriterion}\left(pair\right)\right) \Leftrightarrow \left(\exists bad \in \operatorname{FailureWitness}\left(pair\right),\; \operatorname{FailureExposure}\left(bad\right)\right)$$
+$$\forall V \in Type, E \in Type, W \in Type, D \in Type,\; [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(E\right)], [\operatorname{DecidableEq}\left(V\right)], [\operatorname{Fintype}\left(W\right)], [\operatorname{Fintype}\left(D\right)], [\operatorname{DecidableEq}\left(W\right)], [\operatorname{DecidableEq}\left(E\right)], [\operatorname{DecidableEq}\left(D\right)], \forall G \in \operatorname{DirectedMultigraph}\left(V, E\right), F \in \operatorname{DirectedMultigraph}\left(W, D\right), p \in Nat, q \in Nat, r \in Nat, s \in Nat, pair \in \operatorname{TablePair}\left(G, F, p, q, r, s\right), edgesG \in \operatorname{List}\left(E\right), edgesF \in \operatorname{List}\left(D\right),\; \left(\left(\left(\forall e \in E,\; e \in edgesG\right) \land \left(\forall d \in D,\; d \in edgesF\right)\right) \land \left(\operatorname{Essential}\left(G\right) \land \operatorname{Essential}\left(F\right)\right)\right) \Rightarrow \left(\left(\neg \operatorname{LocalCriterion}\left(pair\right)\right) \Leftrightarrow \left(\exists bad \in \operatorname{FailureWitness}\left(pair\right),\; \operatorname{FailureExposure}\left(bad\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.rejected_candidate_has_finite_witness` (`✓ std3`). ∎
 
@@ -46,11 +46,11 @@ With decidable vertex and edge equality, legalWordFintype enumerates exactly the
 
 For certificate extraction the caller supplies complete finite edge lists and a complete group list. tupleWords recursively enumerates tuples; enumerateWords keeps exactly legal words, with a proved completeness theorem. List.choose scans these explicit lists for a failing fact. Every FailureWitness contains a word and the actual failed seam or recovery equality, including the seam proofs needed to type a recovery. EquivariantFailure adds the actual group element, window and failed action equality. The inspector returns either all test proofs or the failed finite test. The rejection theorem equates rejection with existence of such a concrete failure exposed in an actual history; the corresponding finite-group theorem includes group/window failures and their history occurrences. No arbitrary classical Decidable, sampling criterion or graph-only uniform bound on radii is asserted.
 
-Loops, parallel edges, disconnected essential components and asymmetric windows stay in scope. All checked word lengths are positive; no statement identifies a zero-edge path with a vertex-free empty edge tuple. The parameter specialization 23.2 introduces no retained wrapper. The unsupported 21.3 claim and the existing matrix-chain construction are outside this module. Authored formulas summarize the exact declarations using the defined record names; SDK admission, script execution and rendering alone do not establish semantic equivalence or canonical admission.
+Loops, parallel edges, disconnected essential components and asymmetric windows are allowed. Every tested word has positive length; a vertex-free empty edge tuple does not specify a zero-edge path.
 
 **Definition 1.4 (Actual free expansion).**
 
-$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), n \in Nat, A \in \operatorname{GroupMat}\left(H, n, n\right),\; \operatorname{DirectedMultigraph}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(n\right), H\right), \operatorname{Prod}\left(\operatorname{Edge}\left(A\right), H\right)\right)$$
+$$\forall H \in Type,\; [\operatorname{Group}\left(H\right)], \forall n \in Nat, A \in \operatorname{GroupMat}\left(H, n, n\right),\; \operatorname{DirectedMultigraph}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(n\right), H\right), \operatorname{Prod}\left(\operatorname{Edge}\left(A\right), H\right)\right)$$
 
 *Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.countedExpansion` (`✓ std3`).
 
@@ -62,7 +62,7 @@ For any square natural group-ring matrix A, the vertex of an expanded edge (e,h)
 
 **Definition 1.5 (orderedForward).**
 
-$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{LegalWord}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(U, V\right)\right), 2\right) \to \operatorname{Prod}\left(\operatorname{Edge}\left(\operatorname{product}\left(V, U\right)\right), H\right)$$
+$$\forall H \in Type,\; [\operatorname{Group}\left(H\right)], [\operatorname{Fintype}\left(H\right)], [\operatorname{LinearOrder}\left(H\right)], \forall n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{LegalWord}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(U, V\right)\right), 2\right) \to \operatorname{Prod}\left(\operatorname{Edge}\left(\operatorname{product}\left(V, U\right)\right), H\right)$$
 
 *Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedForward` (`✓ std3`).
 
@@ -74,7 +74,7 @@ For the legal two-edge word ((a0,h0),(a1,h1)), split both edges in the prescribe
 
 **Definition 1.6 (orderedBackward).**
 
-$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{LegalWord}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(V, U\right)\right), 2\right) \to \operatorname{Prod}\left(\operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right), H\right)$$
+$$\forall H \in Type,\; [\operatorname{Group}\left(H\right)], [\operatorname{Fintype}\left(H\right)], [\operatorname{LinearOrder}\left(H\right)], \forall n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{LegalWord}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(V, U\right)\right), 2\right) \to \operatorname{Prod}\left(\operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right), H\right)$$
 
 *Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedBackward` (`✓ std3`).
 
@@ -86,7 +86,7 @@ The two input edges are preceding and central output. Split them in VU order as 
 
 **Definition 1.7 (orderedOverlapInput).**
 
-$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{TablePair}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(U, V\right)\right), \operatorname{countedExpansion}\left(\operatorname{product}\left(V, U\right)\right), 0, 1, 1, 0\right)$$
+$$\forall H \in Type,\; [\operatorname{Group}\left(H\right)], [\operatorname{Fintype}\left(H\right)], [\operatorname{LinearOrder}\left(H\right)], \forall n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right),\; \operatorname{TablePair}\left(\operatorname{countedExpansion}\left(\operatorname{product}\left(U, V\right)\right), \operatorname{countedExpansion}\left(\operatorname{product}\left(V, U\right)\right), 0, 1, 1, 0\right)$$
 
 *Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedOverlapInput` (`✓ std3`).
 
@@ -94,7 +94,7 @@ $$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \
 
 *Commentary.*
 
-This raw TablePair uses orderedForward and orderedBackward on the actual free expansions of UV and VU, at forward radii (0,1) and inverse radii (1,0). No successful criterion is embedded. The transient structural check tests the same maps on three-edge words and recovers center index one.
+This TablePair uses orderedForward and orderedBackward on the actual free expansions of UV and VU, at forward radii (0,1) and inverse radii (1,0). The associated recovery words have three edges and center index one.
 
 **Definition 1.8 (d8Rank).**
 
@@ -106,7 +106,7 @@ $$\operatorname{DihedralGroup}\left(4\right) \to Nat$$
 
 *Commentary.*
 
-d8Rank(r i)=i.val and d8Rank(sr i)=4+(-i).val. Since sr i denotes s times r to i, this is exactly e,r,r squared,r cubed,s,rs,r squared s,r cubed s. d8Rank_injective is the consumed private proof used by d8Order, which lifts the natural order through this rank.
+d8Rank(r i)=i.val and d8Rank(sr i)=4+(-i).val. Since sr i denotes s times r to i, this is exactly e,r,r squared,r cubed,s,rs,r squared s,r cubed s. This rank is injective, so d8Order lifts the natural order through it.
 
 **Definition 1.9 (d8Order).**
 
@@ -154,7 +154,7 @@ $$\operatorname{TablePair}\left(\operatorname{countedExpansion}\left(\operatorna
 
 *Commentary.*
 
-The independently existing original20.1/20.3/22.2/23.2 problem uses these literal factors, their actual products, prescribed split ranks and asymmetric orderedOverlapInput tables. This declaration is raw input only. Acceptance, coefficient specialization, radii specialization and the same-table soundness application remain transient exact evidence; no positive instance theorem is retained.
+The tables use these literal factors, their actual products and prescribed split ranks. They have forward radii (0,1) and inverse radii (1,0), as in orderedOverlapInput.
 
 **Definition 1.13 (d8Groups).**
 
@@ -166,11 +166,11 @@ $$\operatorname{List}\left(\operatorname{DihedralGroup}\left(4\right)\right)$$
 
 *Commentary.*
 
-The complete dictionary is [r0,r1,r2,r3,sr0,sr3,sr2,sr1], exactly the prescribed source order. Completeness is checked transiently.
+The complete dictionary is [r0,r1,r2,r3,sr0,sr3,sr2,sr1], exactly the prescribed order.
 
 **Definition 1.14 (orderedEdges).**
 
-$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), order \in \operatorname{LinearOrder}\left(H\right), n \in Nat, A \in \operatorname{GroupMat}\left(H, n, n\right),\; \operatorname{List}\left(\operatorname{Prod}\left(\operatorname{Edge}\left(A\right), H\right)\right)$$
+$$\forall H \in Type,\; [\operatorname{Group}\left(H\right)], [\operatorname{Fintype}\left(H\right)], [\operatorname{LinearOrder}\left(H\right)], \forall n \in Nat, A \in \operatorname{GroupMat}\left(H, n, n\right),\; \operatorname{List}\left(\operatorname{Prod}\left(\operatorname{Edge}\left(A\right), H\right)\right)$$
 
 *Formalization.* `D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.orderedEdges` (`✓ std3`).
 
@@ -178,7 +178,7 @@ $$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \
 
 *Commentary.*
 
-For a square matrix A, enumerate group coordinate h, source i, target j, label g in their supplied finite orders, then every c in Fin(coeff(A[i,j],g)). The list contains every actual expanded numbered edge, including every nonzero fiber and no element of an empty fiber. Its completeness is checked before the inspector call.
+For a square matrix A, enumerate group coordinate h, source i, target j, label g in their supplied finite orders, then every c in Fin(coeff(A[i,j],g)). The list contains every actual expanded numbered edge, including every nonzero fiber and no element of an empty fiber. The complete list supplies the edge alphabets for finite inspection.
 
 ## References
 

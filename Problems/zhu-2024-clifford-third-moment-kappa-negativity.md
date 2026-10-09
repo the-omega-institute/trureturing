@@ -102,11 +102,14 @@ integers).
   $\kappa(\Psi,\mathscr T_{iso})=28299/3200\ge6$: the three aggregate inequalities of Conjecture 2
   hold here, so the pointwise clause is not necessary for them.
 
-**Open.** Whether the aggregate inequalities hold for every state, and whether the pointwise clause
-holds for $d=5$ and $d=7$, are not determined here.
+**Open.** Whether the pointwise clause holds for one qudit at $d=5$ and $d=7$ is not determined here.
+The aggregate lower bounds fail for two qudits at $d=5$
+([dossier](zhu-2024-clifford-third-moment-aggregate-lower-bound.md)), where the pointwise clause fails
+as well.
 
 **Effect on the paper.** The derivation of the aggregate inequalities "thanks to Lemma 20" from the
-pointwise clause no longer applies; the aggregate inequalities need a separate argument.
+pointwise clause no longer applies. The aggregate upper bounds are proved by Lemma 20; the aggregate
+lower bounds fail for two qudits at $d=5$.
 
 ## ASSUMED-UNVERIFIED
 
