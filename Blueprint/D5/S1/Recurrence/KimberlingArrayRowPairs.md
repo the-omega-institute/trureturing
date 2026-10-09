@@ -6,7 +6,7 @@ Golden integer units have signed integral powers and an oriented small-unit desc
 
 **Definition 1.1 (Golden power rows).**
 
-$$\forall i \in \mathrm{Nat},\; \forall N \in \mathrm{Nat},\; N \in \operatorname{row}\left(i\right) \Leftrightarrow \left(\exists k \in \mathrm{Nat},\; 1 \le k \land N = \left\lfloork \cdot \mathrm{goldenRatio}^{i}\right\rfloor\right)$$
+$$\forall i \in \mathrm{Nat},\; \forall N \in \mathrm{Nat},\; N \in \operatorname{row}\left(i\right) \Leftrightarrow \left(\exists k \in \mathrm{Nat},\; 1 \le k \land N = \left\lfloor\mathrm{goldenRatio}^{i} \cdot k\right\rfloor\right)$$
 
 *Formalization.* `D5/S1/Recurrence/KimberlingArrayRowPairs.row` (`✓ std3`).
 

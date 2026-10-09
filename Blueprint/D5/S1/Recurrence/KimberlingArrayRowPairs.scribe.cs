@@ -19,7 +19,7 @@ internal sealed class KimberlingArrayRowPairsDocument : IScribeDocumentDefinitio
             H("Golden units for Kimberling row intersections"),
             Blocks(
             Node("row", "Golden power rows", "row",
-                Disp(All("i", T("Nat"), All("N", T("Nat"), Iff(Mem(N, C("row", i)), Ex("k", T("Nat"), And(Le(D(1), F.Id("k")), Eq(N, new Formula.Floor(Mul(F.Id("k"), Pow(phi, i)))))))))),
+                Disp(All("i", T("Nat"), All("N", T("Nat"), Iff(Mem(N, C("row", i)), Ex("k", T("Nat"), And(Le(D(1), F.Id("k")), Eq(N, new Formula.Floor(Mul(Pow(phi, i), F.Id("k")))))))))),
                 "Row i consists of the natural floors of positive integral multiples of the ith golden power.", DescribeRole.Definition),
             Node("lucas", "Lucas trace", "lucas",
                 Disp(All("n", T("Nat"), Eq(C("lucas", n), C("toNat", C("goldenLucas", n))))),
