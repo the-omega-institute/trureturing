@@ -3,6 +3,7 @@
    mirror-B: none
    mirror-E: none(waiver:general-reflection-theorem)
    anchors: [docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md#十六-轮筛三点相关绝对原点与-fibonacci-窗口]
+   utility: none
    digest: Reflection identifies the two diameter-six wheel candidate spaces at every nonzero modulus.
 
    The arithmetic statement is about wheel-admissible residues in ZMod W.
