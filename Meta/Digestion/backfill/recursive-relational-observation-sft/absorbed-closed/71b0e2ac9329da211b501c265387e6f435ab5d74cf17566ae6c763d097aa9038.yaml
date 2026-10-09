@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:71b0e2ac9329da211b501c265387e6f435ab5d74cf17566ae6c763d097aa9038
   normalized_sha256: sha256:71b0e2ac9329da211b501c265387e6f435ab5d74cf17566ae6c763d097aa9038
 cas_ref: sha256:71b0e2ac9329da211b501c265387e6f435ab5d74cf17566ae6c763d097aa9038
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/OrderedSubgroupFactorization.ordered_subgroup_factorization_correct
+    target_statement_id: sha256:f215dce460e4e13643b115012e19a397a9962367ea47344143f2c063527b42f6
 receipts:
   unresolved_subitems: []
