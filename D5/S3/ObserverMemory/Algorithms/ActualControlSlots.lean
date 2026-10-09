@@ -419,7 +419,7 @@ private theorem positive_length (x : ZMod (p * P)) : 0 < I.length x := by
   rw [I.first_read] at h
   cases h
 
-private theorem read_advance {x : ZMod (p * P)} {t : Nat}
+theorem read_advance {x : ZMod (p * P)} {t : Nat}
     (hr : C.action (C.run hp hP x t).2 = .read) :
     C.run hp hP x (t + 1) =
       ((C.run hp hP x t).1, C.readNext (C.run hp hP x t).2
@@ -427,7 +427,7 @@ private theorem read_advance {x : ZMod (p * P)} {t : Nat}
   rw [C.run_shift]
   simp [step, hr]
 
-private theorem terminal_label {q : Q} {b : Fin p} (h : C.Terminal I q b)
+theorem terminal_label {q : Q} {b : Fin p} (h : C.Terminal I q b)
     {x : ZMod (p * P)} {t : Nat} (ht : t < I.length x)
     (hq : (C.run hp hP x t).2 = q)
     (hb : digit hp hP (C.run hp hP x t).1 = b) :
