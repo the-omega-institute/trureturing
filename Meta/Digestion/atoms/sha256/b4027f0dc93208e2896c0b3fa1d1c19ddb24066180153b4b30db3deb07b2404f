@@ -1,0 +1,1 @@
+| [N. Devanur、U. Feige，*An $O(n\log n)$ algorithm for a load balancing problem on paths*][DF]；[动态定向的平方和度量][DynOri] | `literature-attested`（类比背景，不供应任何命题）：把边负载分给端点的平方型目标，其目标是全体顶点负载的平方和，与本卷「每个顶点的份额平方和的最大值」不同；不供应 $\kappa$、对偶式或增长常数。 

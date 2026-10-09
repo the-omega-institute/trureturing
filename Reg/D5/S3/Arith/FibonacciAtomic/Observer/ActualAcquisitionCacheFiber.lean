@@ -224,6 +224,38 @@ def injectivityProof : Registration injectivityArena
     exact (show branchCache.1.val ≠ absentCache.1.val by decide)
       (congrArg (fun a => a.2) heads.1)
 
+theorem surjectivity_rejected_law : ¬ surjectivityArena.Law decoderRejected := by
+  intro h
+  let g : CoarseHistory := [⟨[], none⟩]
+  let raw : D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination.RawHistory :=
+    [⟨[], .absent⟩]
+  have projection :
+      D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory.kappa_hist raw = g := by
+    rfl
+  obtain ⟨c, decoded⟩ := h g raw projection
+  change ([] : D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination.RawHistory) = raw at decoded
+  simp [raw] at decoded
+
+def surjectivityProof : Registration surjectivityArena
+    (∀ g h, D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory.kappa_hist h = g →
+      ∃ c, decoderActual.readout () g c = h) where
+  actual := decoderActual
+  bridge := Iff.rfl
+  variation := ⟨surjectivity_actual_law, decoderRejected, surjectivity_rejected_law⟩
+  sensitivity := ⟨fun i => ⟨decoderRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, surjectivity_rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    let g : CoarseHistory := [⟨[], none⟩]
+    let branchCache : CompatCache g := (⟨.branch, rfl⟩, PUnit.unit)
+    let absentCache : CompatCache g := (⟨.absent, rfl⟩, PUnit.unit)
+    refine ⟨g, branchCache, absentCache, ?_⟩
+    intro equality
+    have heads := List.cons.inj equality
+    exact (show branchCache.1.val ≠ absentCache.1.val by decide)
+      (congrArg (fun a => a.2) heads.1)
+
 noncomputable def decode_injective_registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
     (@D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.decode_injective)
     (Realization decoderSignature) (Type) (Unit) where
@@ -249,6 +281,31 @@ noncomputable def decode_injective_registration : LeanInformationAudit.Contract.
   familyRecord := none
   options := #[]
 
+noncomputable def decode_surjective_registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.decode_surjective)
+    (Realization decoderSignature) (Type) (Unit) where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.decode_surjective
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.surjectivityProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨surjectivityArena⟩
+  objectArena := .source ⟨surjectivityArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source surjectivityArena ⟨surjectivityProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize decoderSignature
+    (fun _ g c => decode g c) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "arg", "body", "fn", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 #print axioms injectivity_bridge
 #print axioms surjectivity_bridge
 #print axioms packing_bridge
@@ -260,5 +317,7 @@ noncomputable def decode_injective_registration : LeanInformationAudit.Contract.
 #print axioms compatible_cache_card_registration
 #print axioms injectivityProof
 #print axioms decode_injective_registration
+#print axioms surjectivityProof
+#print axioms decode_surjective_registration
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber
