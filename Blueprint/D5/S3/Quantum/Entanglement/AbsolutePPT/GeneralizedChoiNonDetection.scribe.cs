@@ -49,7 +49,7 @@ internal sealed class GeneralizedChoiNonDetectionDocument : IScribeDocumentDefin
     private static Formula X => Id("X");
     private static Formula Phi => Id("Phi");
     private static Formula rho => Id("rho");
-    private static readonly LibraryNoteRef Source=LibraryNoteRef.Create("D5/L/QuantumStates/arunachalam2015absolute");
+    private static readonly LibraryNoteRef Source=LibraryNoteRef.Create("D5/L/QuantumChannels/arunachalam2015absolute");
     private static Formula Entry(int i,int j) => Call("X",Int(i),Int(j));
     private static Formula Negative(Formula x) => Parenthesized(new Formula.Negate(x));
     private static Formula ChoiDefinition()
