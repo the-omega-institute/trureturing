@@ -3141,4 +3141,46 @@ $$
 
 **范围。** 这里的最小性只针对受控移位与完整多坐标特征湮灭条件，不是对任意 LOSR 或一般乘积信道分支数的下界。结论保持 §39 的平坦逐扇区目标与有限维模型，不引入 CFT、引力或通信辅助解释。
 
+## 42. 控制器商的精确分支资源
+
+**定理 42.1（去重控制与商群资源）。** 设 $H$ 为有限阿贝尔控制器，$A=\prod_{s\in S}\mathbb Z/d_s\mathbb Z$，且 $\Pi:H\to A$ 为各扇区循环移位参数的联合同态。记 $K=\operatorname{im}\Pi$、$N=\ker\Pi$。令 $\{\Lambda_h\}_{h\in H}$ 为由 $h$ 控制的乘积 CPTP 映射，其中 $\Lambda_h$ 只通过 $\Pi(h)$ 作用。则：
+
+1. 控制器标签按 $\Pi(h)$ 去重后恰有 $|K|$ 个不同的受控移位标签；若记由标签诱导的 CPTP 表示为 $\rho:K\to\operatorname{CPTP}$，则实际不同通道数为 $|\rho(K)|\le|K|$。在标准全输出循环移位且各 $d_s\ge2$ 的忠实表示下，$|\rho(K)|=|K|$。
+在下式中记 $\Lambda_k:=\rho(k)$。
+2. $h\mapsto\Pi(h)$ 将 $H$ 的均匀分布推前为 $K$ 上的均匀分布，故
+   $$|H|^{-1}\sum_{h\in H}\Lambda_h=|K|^{-1}\sum_{k\in K}\Lambda_k.$$
+3. 由 $H/N\cong K$，用商控制器 $H/N$ 实现同一混合且恰有 $|K|$ 个控制标签；实际通道分支数为 $|\rho(K)|$。于是原始控制器大小 $|H|$ 不是该受控移位表示的资源成本：标签成本是 $|K|$，通道成本是 $|\rho(K)|$。
+
+若每个坐标投影 $\pi_s$ 满射且要求湮灭全部支撑至少两个坐标的角色，则 $K=A$，从而精确成本为 $|K|=\prod_s d_s$。这与 §41 的最小支撑结论一致，同时允许 $|H|>|K|$ 的冗余控制器。
+
+**证明。** 同态的纤维均为 $N$ 的陪集，故每个 $k\in K$ 有恰好 $|N|$ 个原像；这给出均匀推前公式。控制作用只依赖 $\Pi(h)$，故标签去重和逐项合并成立。第一同构定理给出 $H/N\cong K$，把每个陪集标记为其像即得商控制器。最后，在满射坐标投影与全多坐标角色湮灭条件下，§41.1 的 (1)⇔(2) 应用于 $K\hookrightarrow A$，得到 $K=A$；因此 $|K|=\prod_s d_s$。本定理只计算受控移位表示的分支资源，不给任意 LOSR 分支数下界。
+
+**范围。** 结论针对有限共享经典控制与受控循环移位的表示成本；不扩展 §39 的钻石范数最优性，不涉及一般 LOSR、通信或共享纠缠，也不引入 CFT/引力解释。
+
+## 43. 未湮灭特征的可审计误差下界
+
+**定理 43.1（受控移位残余特征的钻石下界）。** 令 $A$ 为有限阿贝尔群，$K\le A$，$\widehat A$ 为其角色群，且在 $\mathcal H=\ell^2(\widehat A)$ 上定义
+$$
+U_u|\chi\rangle=\chi(u)|\chi\rangle,\qquad
+\mathcal D_K(X)=|K|^{-1}\sum_{u\in K}U_uXU_u^* .
+$$
+记 $m_K(\eta)=|K|^{-1}\sum_{u\in K}\eta(u)$。则
+$$
+\mathcal D_K(|\chi\rangle\langle\psi|)
+ =m_K(\chi\psi^{-1})|\chi\rangle\langle\psi|.
+$$
+若 $\eta=\chi\psi^{-1}\in K^\perp\setminus\{1\}$，则对理想全群平均 $\mathcal D_A$，
+$$
+\|\mathcal D_K-\mathcal D_A\|_\diamond\ge1 .
+$$
+更一般地，若在某个编码子空间上实际通道与 $\mathcal D_K$ 的该矩阵单位系数为 $h$（理想通道系数为零），则相同二维测试给出钻石距离下界 $|h|$。
+
+**证明。** 角色正交性给出 $m_K(\eta)=1$ 当且仅当 $\eta\in K^\perp$，否则为零；对 $A$ 则 $m_A(\eta)=0$ 对每个非平凡 $\eta$。取归一化输入
+$$
+|v\rangle=(|\chi\rangle+|\psi\rangle)/\sqrt2,qquad \rho_v=|v\rangle\langle v|.
+$$
+当 $\eta\in K^\perp\setminus\{1\}$ 时，$(\mathcal D_K-\mathcal D_A)(\rho_v)=\tfrac12(|\chi\rangle\langle\psi|+|\psi\rangle\langle\chi|)$。其在 $\operatorname{span}\{|\chi\rangle,|\psi\rangle\}$ 上本征值为 $+1/2,-1/2$，故迹范数为 $1$；输入归一化，遂钻石范数至少为 $1$。若该 surviving coefficient 为 $h$，同一计算的两个本征值为 $\pm|h|/2$，得到下界 $|h|$。被动参考系统不改变下界，因钻石范数取所有参考输入的上确界。证毕。
+
+**与 §39--§42 的接口。** 共同受控移位混合在 Fourier 矩阵单位上恰以 $m_K(\eta)$ 乘法。故 $K^\perp$ 中任一支撑至少两个扇区的角色给出一个可直接测试的残余相干；固定源谱时 $h$ 是相应实际编码系数，不能无条件替换为 $1$。普适任意源谱的失败需另取一个允许谱使 $h\ne0$；定理 40.1 的 universal 量词正是这一额外步骤。结论只给受控移位表示的误差证书，不给任意 LOSR 下界。
+
 ## 追加锚（本行以下为增补区）
