@@ -1,0 +1,26 @@
+## 1. 要保持的简单来源结构
+
+继续使用五模式：
+
+$$
+\Sigma=\{\mathsf F[\varnothing],\mathsf F[1],\mathsf F[2],\mathsf F[3],\mathsf F[1,3]\}.
+$$
+
+低端、高端、中间占位分别为
+
+$$
+x=\mathbf1_{\{1\text{ 被选}\}},\qquad
+y=\mathbf1_{\{3\text{ 被选}\}},\qquad
+z=\mathbf1_{\{2\text{ 被选}\}},\qquad xz=yz=0.
+$$
+
+概率次序为 $p=(p_{\varnothing},p_1,p_2,p_3,p_{13})$。一般五模式律有四个独立参数。三个均值 $X=\mathbb E[x]$、$Y=\mathbb E[y]$、$Z=\mathbb E[z]$ 之外，还需要 $\kappa=\mathbb E[xy]$。
+
+另外声明乘积活动权模型
+
+$$
+\mathfrak M=\left\{p=\frac{(1,a,b,c,ac)}{1+a+b+c+ac}:a,b,c>0\right\}.
+$$
+
+后者只有三个参数，但它不是由合法性自动推出的。
+
