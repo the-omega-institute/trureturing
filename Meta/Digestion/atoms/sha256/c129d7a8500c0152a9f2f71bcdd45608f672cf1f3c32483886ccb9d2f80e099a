@@ -1,0 +1,18 @@
+**证明。**
+
+$$
+\dim\mathcal N(\mathcal R)=N-\dim\mathcal R.
+$$
+
+两式相减，所得正是 $\dim\mathcal R'-\dim\mathcal R$。这等于新增函数在商空间中的维数。证毕。
+
+因此：
+
+$$
+\boxed{\text{新增公式数量}\ne\text{新增独立关系数量}.}
+$$
+
+重复计算旧函数、把旧函数可逆地换坐标、加入旧函数的线性组合，都不会减少这类隐藏自由度。这也正是校验矩阵中重复行不改变码的原因。[GUAVA 3.6 文档，第 5 章](https://web.mit.edu/sage/export/guava-3.6/doc/chap5.html)
+
+---
+

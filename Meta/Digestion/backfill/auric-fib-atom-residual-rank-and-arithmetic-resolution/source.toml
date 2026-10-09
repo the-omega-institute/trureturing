@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-residual-rank-and-arithmetic-resolution"
+path = "docs/develop/theory/AURIC_FIB_ATOM_RESIDUAL_RANK_AND_ARITHMETIC_RESOLUTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
