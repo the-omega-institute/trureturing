@@ -97,18 +97,18 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.SuperCatalanActionGraphRecurrence
     definition := some {
       owner := `D5.S3.Combinatorics.Graph.SuperCatalanActionGraphRecurrence
       name := `D5.S3.Combinatorics.Graph.SuperCatalanActionGraphRecurrence.claim
       path := #[] }
-    coordinates := #[0]
-    readouts := #[{ path := #["body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false },
-      { path := #["body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    coordinates := #[]
+    readouts := #[{ path := #["body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false },
+      { path := #["body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
-  familyRecord := some ⟨arena, ⟨familyRegistration⟩⟩
+  familyRecord := none
   options := #[{ name := `autoImplicit, value := .bool false },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
