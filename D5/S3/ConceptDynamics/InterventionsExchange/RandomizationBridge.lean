@@ -230,7 +230,12 @@ theorem finite_measure_is_necessary :
     intro hLaw
     have hAtUniv := congrArg (fun law : Measure Unit => law Set.univ) hLaw
     simp [conditionalOutcomeLaw, potentialOutcomeLaw, treatmentEvent,
-      potentialOutcome] at hAtUniv
+      factualOutcome, potentialOutcome, ProbabilityTheory.cond,
+      Measure.map_apply measurable_const] at hAtUniv
+    change 0 = (Measure.map (fun _ : Unit => ())
+      ((⊤ : ENNReal) • Measure.dirac ())) Set.univ at hAtUniv
+    rw [Measure.map_apply measurable_const MeasurableSet.univ] at hAtUniv
+    simpa using hAtUniv
   exact ⟨by simp, hRandom, hPositive, hLawNe⟩
 
 #print axioms finite_measure_is_necessary

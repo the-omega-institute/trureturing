@@ -85,7 +85,7 @@ theorem exists_ne_zero_le_index_logHeight_le_of_pow_le
     have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
     have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
     rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-    refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod fun v _ ↦ ?_)
+    refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod₀ fun v _ ↦ ?_)
       (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
     have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 := le_trans (le_of_eq (by simp [hi']))
         (Finset.single_le_sum (f := fun j ↦ v (((x i)⁻¹ • x) j) ^ 2) (fun j _ ↦ by positivity) (mem_univ i))
@@ -336,7 +336,7 @@ theorem exists_ne_zero_le_index_logHeight_le_of_pow_le
     calc ∏ v : NumberField.InfinitePlace K, (∑ i, v (x i) ^ 2) ^ (v.mult / 2 : ℝ)
         ≤ ∏ v : NumberField.InfinitePlace K,
             ((Fintype.card ι : ℝ) ^ ((1 : ℝ) / 2)) ^ v.mult * (⨆ i, v (x i)) ^ v.mult :=
-          Finset.prod_le_prod (fun v _ ↦ by positivity) fun v _ ↦ nativeSource103 v x
+          Finset.prod_le_prod₀ (fun v _ ↦ by positivity) fun v _ ↦ nativeSource103 v x
       _ = (∏ v : NumberField.InfinitePlace K, ((Fintype.card ι : ℝ) ^ ((1 : ℝ) / 2)) ^ v.mult) *
             ∏ v : NumberField.InfinitePlace K, (⨆ i, v (x i)) ^ v.mult := Finset.prod_mul_distrib
       _ = (Fintype.card ι : ℝ) ^ ((Height.totalWeight K : ℝ) / 2) *
@@ -392,7 +392,7 @@ theorem exists_ne_zero_le_index_logHeight_le_of_pow_le
     simp
   have hProdM : ∏ j, (d j : ℝ) ≤ (MM : ℝ) := by
     rw [hMprod]
-    exact Finset.prod_le_prod (fun j _ ↦ Nat.cast_nonneg _)
+    exact Finset.prod_le_prod₀ (fun j _ ↦ Nat.cast_nonneg _)
       fun j _ ↦ le_add_of_nonneg_right zero_le_one
   obtain ⟨n, e⟩ : Σ' n : ℕ, Fin n ≃ (Σ k : Fin N, {I : ∀ j, Fin (d j + 1) //
       ∑ j, ((I j : ℕ) : ℝ) / (d j : ℝ) < t k}) := ⟨_, (Fintype.equivFin _).symm⟩
@@ -542,7 +542,7 @@ theorem exists_ne_zero_le_index_logHeight_le_of_pow_le
   let Pheight : ℝ := ∏ i, (NumberField.arakelovMulHeight (A i) ^ (finrank ℚ F : ℝ)⁻¹) ^ finrank K F
   let Dk : ℝ := |(NumberField.discr K : ℝ)|
   have hDk0 : 0 ≤ Dk := abs_nonneg _
-  have hP1 : 1 ≤ Pheight := Finset.one_le_prod fun i _ ↦ one_le_pow₀
+  have hP1 : 1 ≤ Pheight := Finset.one_le_prod₀ fun i _ ↦ one_le_pow₀
       (Real.one_le_rpow (nativeSource13 _) (by positivity))
   let Qheight : ℝ := Dk ^ ((k : ℝ) / (2 * finrank ℚ K)) * Pheight
   have hQ0 : 0 ≤ Qheight := by positivity
@@ -582,7 +582,7 @@ theorem exists_ne_zero_le_index_logHeight_le_of_pow_le
     refine le_trans ?_ hTfinal
     calc H ^ k' = ∏ _l : Fin k', H := by
           rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-      _ ≤ T := Finset.prod_le_prod (fun l _ ↦ by positivity) fun l _ ↦ hl₀ l
+      _ ≤ T := Finset.prod_le_prod₀ (fun l _ ↦ by positivity) fun l _ ↦ hl₀ l
   have hfinal : H ≤ Dk ^ (2 * finrank ℚ K : ℝ)⁻¹ * Pheight ^ ((k' : ℝ))⁻¹ := by
     have h := Real.rpow_le_rpow (by positivity) hpow
       (by positivity : (0 : ℝ) ≤ (k' : ℝ)⁻¹)
@@ -759,7 +759,8 @@ theorem exists_ne_zero_le_index_logHeight_le_of_pow_le
         · exact Real.iSup_le
             (fun i ↦ (v.apply_nat_le_self (n i)).trans (by exact_mod_cast hn i)) (by positivity)
         · exact Real.iSup_le
-            (fun i ↦ IsNonarchimedean.apply_natCast_le_one (isNonarchimedean v hv)) zero_le_one
+            (fun i ↦ (isNonarchimedean v hv).apply_natCast_le_one (by simp) (map_one v))
+            zero_le_one
       have hPower (α : F) (d : ℕ) : Height.mulHeight (fun k : Fin (d + 1) ↦ α ^ (k : ℕ)) = Height.mulHeight₁ α ^ d := by
         have hx : (fun k : Fin (d + 1) ↦ α ^ (k : ℕ)) ≠ 0 := Function.ne_iff.mpr ⟨0, by simp⟩
         have hy : (![α ^ d, 1] : Fin 2 → F) ≠ 0 := Function.ne_iff.mpr ⟨1, by simp⟩
@@ -831,7 +832,7 @@ theorem exists_ne_zero_le_index_logHeight_le_of_pow_le
         calc ∏ j, Height.mulHeight (fun k : Fin (d j + 1) ↦
                 (((k : ℕ).choose (μ j) : ℕ) : F) * α j ^ ((k : ℕ) - μ j))
             ≤ ∏ j, (((2 : ℝ) ^ d j) ^ Height.totalWeight F * Height.mulHeight₁ (α j) ^ d j) :=
-              Finset.prod_le_prod (fun j _ ↦ (Height.mulHeight_pos _).le) fun j _ ↦ hfac j
+              Finset.prod_le_prod₀ (fun j _ ↦ (Height.mulHeight_pos _).le) fun j _ ↦ hfac j
           _ = ((2 : ℝ) ^ (∑ j, d j)) ^ Height.totalWeight F * ∏ j, Height.mulHeight₁ (α j) ^ d j := by
               rw [Finset.prod_mul_distrib, Finset.prod_pow, Finset.prod_pow_eq_pow_sum]
       have hdF : (0 : ℝ) < (finrank ℚ F : ℝ) := by

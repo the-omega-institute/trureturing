@@ -53,7 +53,7 @@ theorem coeff_sumElim_rename_mul_rename (f : MvPolynomial σ R) (g : MvPolynomia
     have hp' : (u, w) = (m, n) := Finsupp.sumFinsuppEquivProdFinsupp.symm.injective hp
     obtain ⟨rfl, rfl⟩ := Prod.mk.inj hp' 
     exact hne (Prod.ext hu.symm hw.symm)
-  change MvPolynomial.coeff (Finsupp.sumElim m n) (rename Sum.inl f * rename Sum.inr g) = f.coeff m * g.coeff n
+  change AddMonoidAlgebra.coeff (rename Sum.inl f * rename Sum.inr g) (Finsupp.sumElim m n) = f.coeff m * g.coeff n
   rw [coeff_mul, Finset.sum_eq_single_of_mem
       (f := fun p : (σ ⊕ τ →₀ ℕ) × (σ ⊕ τ →₀ ℕ) ↦
         (rename Sum.inl f).coeff p.1 * (rename Sum.inr g).coeff p.2)

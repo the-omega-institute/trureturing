@@ -228,12 +228,12 @@ theorem actual_creation_coefficient_transport (D : LatticeData) (α β : Charge 
     let C := creationExponential D β
     have hA : PowerSeries.constantCoeff A = 0 := by
       simp [A, creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
-    have hd : PowerSeries.derivative (Oscillator D) C =
-        C * PowerSeries.derivative (Oscillator D) A := by
+    have hd : PowerSeries.derivative (R := (Oscillator D)) C =
+        C * PowerSeries.derivative (R := (Oscillator D)) A := by
       dsimp [C, creationExponential]
       rw [PowerSeries.derivative_subst (PowerSeries.HasSubst.of_constantCoeff_zero' hA),
         PowerSeries.derivative_exp]
-    have hAn (n : ℕ) : PowerSeries.coeff n (PowerSeries.derivative (Oscillator D) A) =
+    have hAn (n : ℕ) : PowerSeries.coeff n (PowerSeries.derivative (R := (Oscillator D)) A) =
         ∑ i : Fin D.rank, (β i : ℂ) • (X (i,n) : Oscillator D) := by
       rw [PowerSeries.coeff_derivative]
       simp only [A, creationSeries, PowerSeries.coeff_mk, Nat.succ_ne_zero, ↓reduceDIte,
@@ -263,13 +263,13 @@ theorem actual_creation_coefficient_transport (D : LatticeData) (α β : Charge 
         have hsum : MvPolynomial.IsWeightedHomogeneous (oscillatorWeight D)
             (∑ ab ∈ Finset.HasAntidiagonal.antidiagonal n,
               PowerSeries.coeff ab.1 C *
-                PowerSeries.coeff ab.2 (PowerSeries.derivative (Oscillator D) A)) (n+1) := by
+                PowerSeries.coeff ab.2 (PowerSeries.derivative (R := (Oscillator D)) A)) (n+1) := by
           apply MvPolynomial.IsWeightedHomogeneous.sum
           intro ab hab
           have hab' := Finset.HasAntidiagonal.mem_antidiagonal.mp hab
           have hfirst := ih ab.1 (by omega)
           have hsecond : MvPolynomial.IsWeightedHomogeneous (oscillatorWeight D)
-              (PowerSeries.coeff ab.2 (PowerSeries.derivative (Oscillator D) A)) (ab.2+1) := by
+              (PowerSeries.coeff ab.2 (PowerSeries.derivative (R := (Oscillator D)) A)) (ab.2+1) := by
             rw [hAn]
             apply MvPolynomial.IsWeightedHomogeneous.sum
             intro i hi
@@ -299,15 +299,15 @@ theorem actual_creation_coefficient_transport (D : LatticeData) (α β : Charge 
   have hS : PowerSeries.constantCoeff (creationSeries D β) = 0 := by
     simp [creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
   have hMapD (h : Oscillator D →+* Polynomial (Oscillator D)) (s : PowerSeries (Oscillator D)) :
-      PowerSeries.derivative (Polynomial (Oscillator D)) (s.map h) =
-        (PowerSeries.derivative (Oscillator D) s).map h := by
+      PowerSeries.derivative (R := (Polynomial (Oscillator D))) (s.map h) =
+        (PowerSeries.derivative (R := (Oscillator D)) s).map h := by
     apply PowerSeries.ext
     intro n
     rw [PowerSeries.coeff_derivative, PowerSeries.coeff_map, PowerSeries.coeff_map,
       PowerSeries.coeff_derivative, map_mul]
     simp only [map_add, map_natCast, map_one]
   have hAn (n : ℕ) :
-      PowerSeries.coeff n (PowerSeries.derivative (Oscillator D) (creationSeries D β)) =
+      PowerSeries.coeff n (PowerSeries.derivative (R := (Oscillator D)) (creationSeries D β)) =
         ∑ i : Fin D.rank, (β i : ℂ) • (X (i,n) : Oscillator D) := by
     rw [PowerSeries.coeff_derivative]
     simp only [creationSeries, PowerSeries.coeff_mk, Nat.succ_ne_zero, ↓reduceDIte,
@@ -332,8 +332,8 @@ theorem actual_creation_coefficient_transport (D : LatticeData) (α β : Charge 
       Polynomial.C (z • p) = z • (Polynomial.C p : Polynomial (Oscillator D)) :=
     map_smul (Polynomial.CAlgHom : Oscillator D →ₐ[ℂ] Polynomial (Oscillator D)) z p
   have hDiff (n : ℕ) :
-      PowerSeries.coeff n (PowerSeries.derivative (Polynomial (Oscillator D)) a -
-        PowerSeries.derivative (Polynomial (Oscillator D)) a₀) =
+      PowerSeries.coeff n (PowerSeries.derivative (R := (Polynomial (Oscillator D))) a -
+        PowerSeries.derivative (R := (Polynomial (Oscillator D))) a₀) =
         -((b : ℂ) • (1 : Oscillator D) |> Polynomial.C) * U^(n+1) := by
     rw [map_sub]
     dsimp only [a, a₀]
@@ -346,15 +346,15 @@ theorem actual_creation_coefficient_transport (D : LatticeData) (α β : Charge 
     rw [sub_sub_cancel_left, ← Finset.sum_smul, hB]
     simp only [map_one, smul_mul_assoc, neg_mul, U]
   have hDiffSeries :
-      PowerSeries.derivative (Polynomial (Oscillator D)) a -
-        PowerSeries.derivative (Polynomial (Oscillator D)) a₀ =
+      PowerSeries.derivative (R := (Polynomial (Oscillator D))) a -
+        PowerSeries.derivative (R := (Polynomial (Oscillator D))) a₀ =
       PowerSeries.mk (fun n : ℕ => -Polynomial.C ((b : ℂ) • (1 : Oscillator D)) * U^(n+1)) := by
     apply PowerSeries.ext
     intro n
     rw [PowerSeries.coeff_mk]
     exact hDiff n
-  have hDiffE : (PowerSeries.derivative (Polynomial (Oscillator D)) a -
-    PowerSeries.derivative (Polynomial (Oscillator D)) a₀) * E =
+  have hDiffE : (PowerSeries.derivative (R := (Polynomial (Oscillator D))) a -
+    PowerSeries.derivative (R := (Polynomial (Oscillator D))) a₀) * E =
       -PowerSeries.C (Polynomial.C ((b : ℂ) • (1 : Oscillator D)) * U) := by
     rw [hDiffSeries]
     apply PowerSeries.ext
@@ -391,7 +391,7 @@ theorem actual_creation_coefficient_transport (D : LatticeData) (α β : Charge 
     rw [zsmul_eq_mul, mul_one]
   have hb : Polynomial.C ((b : ℂ) • (1 : Oscillator D)) = (b : Polynomial (Oscillator D)) := by
     simp [Algebra.smul_def]
-  have hHE : PowerSeries.derivative (Polynomial (Oscillator D)) H * E =
+  have hHE : PowerSeries.derivative (R := (Polynomial (Oscillator D))) H * E =
       -PowerSeries.C (Polynomial.C ((b : ℂ) • (1 : Oscillator D)) * U) * H := by
     rw [hb]
     apply PowerSeries.ext
@@ -423,33 +423,33 @@ theorem actual_creation_coefficient_transport (D : LatticeData) (α β : Charge 
       simp only [pow_succ, Nat.cast_add, Nat.cast_one]
       linear_combination (-U)^(n+1) * (-U) * hr
   have hu : IsUnit E := PowerSeries.isUnit_iff_constantCoeff.mpr (by simp [E])
-  have hDH : PowerSeries.derivative (Polynomial (Oscillator D)) H =
-      H * (PowerSeries.derivative (Polynomial (Oscillator D)) a -
-        PowerSeries.derivative (Polynomial (Oscillator D)) a₀) := by
+  have hDH : PowerSeries.derivative (R := (Polynomial (Oscillator D))) H =
+      H * (PowerSeries.derivative (R := (Polynomial (Oscillator D))) a -
+        PowerSeries.derivative (R := (Polynomial (Oscillator D))) a₀) := by
     apply hu.mul_right_cancel
     rw [hHE, mul_assoc, hDiffE]
     ring
-  have hSourceD : PowerSeries.derivative (Oscillator D) (creationExponential D β) =
-      creationExponential D β * PowerSeries.derivative (Oscillator D) (creationSeries D β) := by
+  have hSourceD : PowerSeries.derivative (R := (Oscillator D)) (creationExponential D β) =
+      creationExponential D β * PowerSeries.derivative (R := (Oscillator D)) (creationSeries D β) := by
     rw [creationExponential, PowerSeries.derivative_subst
       (PowerSeries.HasSubst.of_constantCoeff_zero' hS), PowerSeries.derivative_exp]
   have hDa :
-      PowerSeries.derivative (Polynomial (Oscillator D)) f =
-        f * PowerSeries.derivative (Polynomial (Oscillator D)) a := by
+      PowerSeries.derivative (R := (Polynomial (Oscillator D))) f =
+        f * PowerSeries.derivative (R := (Polynomial (Oscillator D))) a := by
     dsimp only [f, a]
     rw [hMapD, hSourceD, map_mul, hMapD]
   have hDa₀ :
-      PowerSeries.derivative (Polynomial (Oscillator D)) f₀ =
-        f₀ * PowerSeries.derivative (Polynomial (Oscillator D)) a₀ := by
+      PowerSeries.derivative (R := (Polynomial (Oscillator D))) f₀ =
+        f₀ * PowerSeries.derivative (R := (Polynomial (Oscillator D))) a₀ := by
     dsimp only [f₀, a₀]
     rw [hMapD, hSourceD, map_mul, hMapD]
   have hDG :
-      PowerSeries.derivative (Polynomial (Oscillator D)) (f₀ * H) =
-        (f₀ * H) * PowerSeries.derivative (Polynomial (Oscillator D)) a := by
-    have h := (PowerSeries.derivative (Polynomial (Oscillator D))).leibniz f₀ H
-    change PowerSeries.derivative (Polynomial (Oscillator D)) (f₀ * H) =
-      f₀ * PowerSeries.derivative (Polynomial (Oscillator D)) H +
-        H * PowerSeries.derivative (Polynomial (Oscillator D)) f₀ at h
+      PowerSeries.derivative (R := (Polynomial (Oscillator D))) (f₀ * H) =
+        (f₀ * H) * PowerSeries.derivative (R := (Polynomial (Oscillator D))) a := by
+    have h := (PowerSeries.derivative (R := (Polynomial (Oscillator D)))).leibniz f₀ H
+    change PowerSeries.derivative (R := (Polynomial (Oscillator D))) (f₀ * H) =
+      f₀ * PowerSeries.derivative (R := (Polynomial (Oscillator D))) H +
+        H * PowerSeries.derivative (R := (Polynomial (Oscillator D))) f₀ at h
     rw [h, hDa₀, hDH]
     ring
   have hC : PowerSeries.coeff 0 f = PowerSeries.coeff 0 (f₀ * H) := by
@@ -483,11 +483,11 @@ theorem actual_creation_coefficient_transport (D : LatticeData) (α β : Charge 
         conv at h' => rhs; rw [PowerSeries.coeff_mul]
         have hs : (∑ ab ∈ Finset.HasAntidiagonal.antidiagonal n,
             PowerSeries.coeff ab.1 f *
-              PowerSeries.coeff ab.2 (PowerSeries.derivative (Polynomial (Oscillator D)) a)) =
+              PowerSeries.coeff ab.2 (PowerSeries.derivative (R := (Polynomial (Oscillator D))) a)) =
             ∑ ab ∈ Finset.HasAntidiagonal.antidiagonal n,
             PowerSeries.coeff ab.1 (f₀ *
               H) *
-                PowerSeries.coeff ab.2 (PowerSeries.derivative (Polynomial (Oscillator D)) a) := by
+                PowerSeries.coeff ab.2 (PowerSeries.derivative (R := (Polynomial (Oscillator D))) a) := by
           apply Finset.sum_congr rfl
           intro ab hab
           rw [ih ab.1 (by have := Finset.HasAntidiagonal.mem_antidiagonal.mp hab; omega)]
@@ -585,7 +585,7 @@ theorem actual_creation_coefficient_transport (D : LatticeData) (α β : Charge 
         apply congrArg (fun q : Oscillator D => epsilon D (α+β) δ • Finsupp.single (α+β+δ) q)
         apply Finset.sum_congr rfl
         intro e he
-        change MvPolynomial.coeff e (translatedPairPolynomial D α β q) *
+        change AddMonoidAlgebra.coeff (translatedPairPolynomial D α β q) e *
           (creationCoeff D α (u - bilinear D α δ + e 0) *
             creationCoeff D β (v - bilinear D β δ + e 1)) = _
         ring

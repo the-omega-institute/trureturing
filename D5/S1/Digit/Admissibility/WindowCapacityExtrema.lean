@@ -253,11 +253,11 @@ theorem state_product_le_capacity_and_eq_iff {k B : ℕ} (hk : 1 ≤ k)
     Nat.fib_add_two_strictMono.monotone (hLM j)
   have hpositive (j : Fin k) : 0 < wValue (L j) := Nat.fib_pos.mpr (by omega)
   have hWM : windowProduct L ≤ windowProduct M :=
-    Finset.prod_le_prod (fun j _ => Nat.zero_le _) (fun j _ => hfactor j)
+    Finset.prod_le_prod₀ (fun j _ => Nat.zero_le _) (fun j _ => hfactor j)
   have hMC : windowProduct M ≤ capacity k B :=
     (capacity_isGreatest_and_eq_iff hk).1.2 ⟨M, hM, rfl⟩
   have hAC : (∏ j, (A j + 1)) ≤ windowProduct L :=
-    Finset.prod_le_prod (fun j _ => Nat.zero_le _) (fun j _ => hA j)
+    Finset.prod_le_prod₀ (fun j _ => Nat.zero_le _) (fun j _ => hA j)
   have hWC : windowProduct L ≤ capacity k B := hWM.trans hMC
   refine ⟨hAC.trans hWC, ?_⟩
   constructor
@@ -265,7 +265,7 @@ theorem state_product_le_capacity_and_eq_iff {k B : ℕ} (hk : 1 ≤ k)
     have hfull : (∑ j, L j) = B := by
       by_contra hne
       have hstrict : windowProduct L < windowProduct M := by
-        apply Finset.prod_lt_prod (fun j _ => hpositive j) (fun j _ => hfactor j)
+        apply Finset.prod_lt_prod₀ (fun j _ => hpositive j) (fun j _ => hfactor j)
         refine ⟨i, Finset.mem_univ i, ?_⟩
         apply Nat.fib_add_two_strictMono
         rw [hMi]
@@ -278,7 +278,7 @@ theorem state_product_le_capacity_and_eq_iff {k B : ℕ} (hk : 1 ≤ k)
     have heqfactor : A j + 1 = wValue (L j) := by
       by_contra hne
       have hstrict : (∏ x, (A x + 1)) < windowProduct L := by
-        apply Finset.prod_lt_prod (fun x _ => Nat.succ_pos _) (fun x _ => hA x)
+        apply Finset.prod_lt_prod₀ (fun x _ => Nat.succ_pos _) (fun x _ => hA x)
         exact ⟨j, Finset.mem_univ j, by have := hA j; omega⟩
       omega
     omega

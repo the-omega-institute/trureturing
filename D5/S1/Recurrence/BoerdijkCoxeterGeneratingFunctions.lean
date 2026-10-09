@@ -480,9 +480,6 @@ theorem result :
   have z_factor_numerator :
       numerator 2 = (3 * PowerSeries.X - 1) * zNumerator := by
     norm_num [numerator, zNumerator, coeff_cast]
-    have h20 : (2 : Fin 3) ≠ 0 := by decide
-    have h21 : (2 : Fin 3) ≠ 1 := by decide
-    simp only [if_neg h20, if_neg h21]
     have h3 : PowerSeries.C (3 : ℚ) = (3 : PowerSeries ℚ) := coeff_cast 3
     have h5 : PowerSeries.C (5 : ℚ) = (5 : PowerSeries ℚ) := coeff_cast 5
     have h9 : PowerSeries.C (9 : ℚ) = (9 : PowerSeries ℚ) := coeff_cast 9
