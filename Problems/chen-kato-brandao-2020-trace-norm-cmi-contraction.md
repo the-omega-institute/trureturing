@@ -94,20 +94,21 @@ atom.
 - **Proved by `result`:** a qubit channel can contract every trace distance by the factor $1/\sqrt2$ and
   leave the trace-norm CMI of a state with entangled side information undiminished ($I_1=1$ before and $I_1\ge1$ after). A strict local
   contraction ratio does not control conditional correlations through a uniform global factor.
-- **Mechanism (proved within the derivation):** conditioned on the classical flag $A$, the pair $BC$ is in
+- **Mechanism:** the Lean derivation checks the four-outcome channel and the centred-output identities;
+  the rest of this item is explanatory. Conditioned on the classical flag $A$, the pair $BC$ is in
   the Bell state $\Phi^+$ (for $A=0$) or $\Psi^-$ (for $A=1$); the $BC$ marginal $(\Phi^++\Psi^-)/2=(I\otimes I-Y\otimes Y)/4
   =\tfrac12(P_+\otimes P_-+P_-\otimes P_+)$, $P_\pm=(I\pm Y)/2$, is separable. For each of the four real measurement
   vectors of $\mathcal M$ the conditional $B$ states of the two branches are orthogonal, so $A$ stays perfectly
-  correlated with $BC'$ although the channel forgets part of $C$; the Lean derivation checks these four vectors.
-  The identity $v^{T}Jv=0$ for every real $v$, $J=\begin{pmatrix}0&1\\-1&0\end{pmatrix}$, explains this for any real
+  correlated with $BC'$ although the channel forgets part of $C$. The identity $v^{T}Jv=0$ for every real $v$, $J=\begin{pmatrix}0&1\\-1&0\end{pmatrix}$, explains this for any real
   measurement and is not formalized.
 - **Computed, not formalized (#14728):** for $\mathcal M_p$ measuring $Z$ with probability $p$ the local
   ratio is $\sqrt{p^2+(1-p)^2}<1$ for every $0<p<1$ and $I_1$ is still preserved; for the full-rank
-  states $(1-\varepsilon)\rho+\varepsilon I/8$ the trace-norm ratio after/before is exactly $1$ at
-  $\varepsilon=10^{-1},\dots,10^{-4}$, so a restriction to faithful states does not rescue the
-  conjecture. The same state and channel keep the entropic CMI at one bit while the channel has
-  trivial correctable algebra; for the faithful perturbations the entropic CMI strictly decreases
-  with ratios $0.911$, $0.984$, $0.9976$, $0.99968$ tending to $1$.
+  states $(1-\varepsilon)\rho+\varepsilon I/8$ the trace-norm ratio after/before is numerically $1$ at
+  $\varepsilon=10^{-1},\dots,10^{-4}$ (NumPy); analytically, both centred matrices scale by $1-\varepsilon$ because
+  $\mathcal M$ maps $I/2$ to $I/4$, so the ratio is exactly $1$ and a restriction to faithful states does not rescue
+  the conjecture. The same state and channel keep the entropic CMI at one bit while the channel has
+  trivial correctable algebra; for the faithful perturbations the entropic CMI strictly decreases,
+  with numerical ratios $0.911$, $0.984$, $0.9976$, $0.99968$ at the same $\varepsilon$.
 - **Refuted together with the conjecture:** a strict contraction with $\eta<1$ depending on the dimensions or on
   the channel. The witness fixes $\dim A=\dim B=\dim C=2$, $\dim C'=4$ and one channel, and has $I_1=1$ before and
   $I_1\ge1$ after, so no $\eta<1$ works for it.
