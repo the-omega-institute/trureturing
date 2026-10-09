@@ -82,7 +82,10 @@ internal sealed class TokenDampedSweepContractionDocument : IScribeDocumentDefin
                     + "Thus every spectral modulus is strictly below one. "
                     + "The finite-dimensional power-decay theorem gives "
                     + "convergence of every real centered trajectory."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wallner-krupke-schmidt-fekete-2026-token-spectral-contraction"),
+                    ResolutionKind.Proved))),
         [
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics")),

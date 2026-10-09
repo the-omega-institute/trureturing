@@ -70,6 +70,10 @@ $$\operatorname{claim}\left(\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction` (proved) by `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wallner-krupke-schmidt-fekete-2026-token-spectral-contraction","declaration_gid":"D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. Wallner, D. Krupke, A. Schmidt, and S. P. Fekete (2026). *Pass the Bucket: Efficient, Robust, Local Load Balancing for Teams of Heterogeneous Robots*. DOI: [10.48550/arXiv.2608.27085](https://doi.org/10.48550/arXiv.2608.27085). URL: <https://arxiv.org/abs/2608.27085v1>.
