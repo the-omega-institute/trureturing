@@ -21,8 +21,8 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
         Seq(new Formula.Subscript(F.Sum, Seq(x, Sp, InMacro, Sp, t)), b);
     private static Formula E(Formula f) => Call("E", f);
     private static DocumentBlock Thm(string n, string title, Formula f, string prose) =>
-        Describe.Lean(DescribeId.Create(n.Replace('.', '-').Replace('_', '-')),
-            DeclarationHandle.Create(Prefix + n), H(title), StatementSource.FromAuthor(Disp(f)),
+        Describe.Lean(DescribeId.Create(n.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + n.Replace("Paths.", "")), H(title), StatementSource.FromAuthor(Disp(f)),
             n is "cylinder_tail_lower" or "ddg_lower"
                 ? AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg"))
                 : AssessedProvenance.FromRepo(),
