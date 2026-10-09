@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-readout-closure-and-record-triangle"
+path = "docs/develop/theory/AURIC_FIB_ATOM_READOUT_CLOSURE_AND_RECORD_TRIANGLE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
