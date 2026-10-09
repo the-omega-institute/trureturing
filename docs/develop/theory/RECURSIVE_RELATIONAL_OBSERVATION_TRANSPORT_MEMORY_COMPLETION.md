@@ -1914,7 +1914,7 @@ $$
 
 改变一个证明的切分顺序，不等于改变一个随机过程的合法执行顺序。本节在有限坐标、确定条件容量的模型中，把这一区别写成两个不同的可行域：静态柱集容量只限制末端法的一组边缘质量；逐步归一化、完整档案条件化和合法调度则组成一个有限历史流多面体。后者投影恰好给出可实现的末端联合律，前者一般严格更大。
 
-以下为普通数学定义与纸面推导，不是新增 Lean 声明或形式核验结论。全局柱集界及静态证书与采样顺序的区分，复用不可变版本 `e25dea7a9919fcae53bb797f7740b0f5c99668ac` 的 [Erdős 7 第59篇 B.1—B.3](https://github.com/the-omega-institute/trureturing/blob/e25dea7a9919fcae53bb797f7740b0f5c99668ac/docs/reports/erdos7-odd-covering/problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md)。有限状态动态规划、占用流和保行为商均为成熟结构；这里明确给出它们接入当前条件容量模型所需的映射、两方向证明及档案边界，不主张这些一般原理的新颖性。
+以下为普通数学定义与纸面推导，不是新增 Lean 声明或形式核验结论。全局柱集界及静态证书与采样顺序的区分，复用不可变版本 `e25dea7a9919fcae53bb797f7740b0f5c99668ac` 的 [Erdős 7 第59篇 B.1—B.3](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md)。有限状态动态规划、占用流和保行为商均为成熟结构；这里明确给出它们接入当前条件容量模型所需的映射、两方向证明及档案边界，不主张这些一般原理的新颖性。
 
 #### 4.6.1 有限坐标、完整可访问档案与可拼接行
 
@@ -2477,9 +2477,9 @@ $$
 
 #### 4.6.13 与既有行为商、联合核和资源接口的连接
 
-[第64篇“Adaptive core policy and continuous stoploss optima”](https://github.com/the-omega-institute/trureturing/blob/19a8543ea50538700a993a51989d9cbc7b5bf4fd/docs/reports/erdos7-odd-covering/problem-details/64-adaptive-core-policy-and-continuous-stoploss-optima.md)第12—60行、第176—181行已经给出本节接口的具体任务使用：在先读完 core、再处理 terminal 的策略域中，剩余 core 名集合与仍匹配的原始标签 ID 组成缓存摘要 $q(h)=(U,A)$。该节在其给定 profile 满足叶容量蕴含祖先容量的条件下，优化真实归一化叶行；同后继 mask 的实际叶按准确重数分组，选定行再展开回实际叶，各后继策略自由拼接，有限归纳得到达到最优值的实际策略。完整采样值与实际历史始终保留给后续 tail 查询，缓存共用不替代它们。因此它已经承担 core-first 的任务摘要与真实 Bellman 最优策略，不是只有静态覆盖价格；但其 $(U,A)$ 只对所声明的 head 目标充分，不能被引用为任意未来任务或完整联合档案的通用充分摘要。
+[第64篇“Adaptive core policy and continuous stoploss optima”](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/64-adaptive-core-policy-and-continuous-stoploss-optima.md)第12—60行、第176—181行已经给出本节接口的具体任务使用：在先读完 core、再处理 terminal 的策略域中，剩余 core 名集合与仍匹配的原始标签 ID 组成缓存摘要 $q(h)=(U,A)$。该节在其给定 profile 满足叶容量蕴含祖先容量的条件下，优化真实归一化叶行；同后继 mask 的实际叶按准确重数分组，选定行再展开回实际叶，各后继策略自由拼接，有限归纳得到达到最优值的实际策略。完整采样值与实际历史始终保留给后续 tail 查询，缓存共用不替代它们。因此它已经承担 core-first 的任务摘要与真实 Bellman 最优策略，不是只有静态覆盖价格；但其 $(U,A)$ 只对所声明的 head 目标充分，不能被引用为任意未来任务或完整联合档案的通用充分摘要。
 
-[第55篇“Adaptive read-once head orders with unrestricted tail comparison”](https://github.com/the-omega-institute/trureturing/blob/19a8543ea50538700a993a51989d9cbc7b5bf4fd/docs/reports/erdos7-odd-covering/problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md)第20—87行、第178—199行已经在原始标签、事件和确定条件容量固定的前提下，构造剩余坐标集合上的势 $Z(h)=B_{U(h)}(b(h))$，并证明每个合法所选行后的条件期望不增。其输入允许每个标签的坐标事件容量，较本节单个原子容量更一般；非负权重与递增凸终端函数共同进入比较。辅助 $U_p$ 对不同坐标独立，但同一坐标的辅助量在全部标签间共享，不能逐标签另抽，也不把辅助独立性赋给实际联合律。调度随机化须进入完整档案并在其后检查行容量，实际值与原始标签不能随分支重写。这是式(TM.250)所体现的逐步因果上界证书的一项既有具体使用。两篇正文均提供本库已交付的普通纸面数学；本节另补完整历史流与部分赋值 DAG 的精确投影及两方向实现，不将既有上界势、任务摘要或它们的计算实例计作新增 Lean 结果。
+[第55篇“Adaptive read-once head orders with unrestricted tail comparison”](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md)第20—87行、第178—199行已经在原始标签、事件和确定条件容量固定的前提下，构造剩余坐标集合上的势 $Z(h)=B_{U(h)}(b(h))$，并证明每个合法所选行后的条件期望不增。其输入允许每个标签的坐标事件容量，较本节单个原子容量更一般；非负权重与递增凸终端函数共同进入比较。辅助 $U_p$ 对不同坐标独立，但同一坐标的辅助量在全部标签间共享，不能逐标签另抽，也不把辅助独立性赋给实际联合律。调度随机化须进入完整档案并在其后检查行容量，实际值与原始标签不能随分支重写。这是式(TM.250)所体现的逐步因果上界证书的一项既有具体使用。两篇正文均提供本库已交付的普通纸面数学；本节另补完整历史流与部分赋值 DAG 的精确投影及两方向实现，不将既有上界势、任务摘要或它们的计算实例计作新增 Lean 结果。
 
 [ML 卷定理2.2与3.2](https://github.com/the-omega-institute/trureturing/blob/e25dea7a9919fcae53bb797f7740b0f5c99668ac/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)已经要求任务摘要保持读数、动作定义域、更新及费用，并以全部未来严格响应确定最粗自治表示。[Context Geometry 第3节](https://github.com/the-omega-institute/trureturing/blob/e25dea7a9919fcae53bb797f7740b0f5c99668ac/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)已经组织了行为像、操作下降和保真运输。本节不重新把这些一般商原理计为新内容；A卷命题4.10是在有限随机行与占用流中加入凸聚合、末端输出量词和可拼接条件的具体使用。
 

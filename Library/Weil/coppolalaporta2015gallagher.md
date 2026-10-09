@@ -37,7 +37,7 @@ $\operatorname{sinc}z=\sin z/z$ and value one at zero.
 The coefficients remain inside the same square. Replacing them by
 their absolute values is a different majorant and can lose cancellation.
 
-The [finite signed-head application](../../docs/reports/theta-mixed-matrix/signed-discrepancy-window.md)
+The [finite signed-head application](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/signed-discrepancy-window.md)
 uses the same Plancherel mechanism for a finite measure containing
 both prime-power atoms and a continuous main term. In the angular
 frequency convention its tent floor is

@@ -15443,7 +15443,7 @@ $$
 
 FIB 结构在这里提供的是规范窗口、来源路径与观察切面；式 (152.1)--(152.7) 的实际上界来自约数和增量、对数预算和单调性。把五窗收缩固定点或四相运输直接当作 Robin 的统一上界，仍缺少独立的算术观测器与 growing-prime 误差估计。
 
-独立脚本 `docs/reports/fib-robin-boundary/new_prime_tail.py` 只做有理数证书与代数归纳核验，不使用浮点数，也不替代无界命题的纸面证明。本节是仓内研究推导，没有新增 Lean 声明、冻结或消化覆盖。
+独立脚本 `https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/new_prime_tail.py` 只做有理数证书与代数归纳核验，不使用浮点数，也不替代无界命题的纸面证明。本节是仓内研究推导，没有新增 Lean 声明、冻结或消化覆盖。
 
 ## 追加锚（本行以下为增补区）
 
@@ -15736,7 +15736,7 @@ $$
 
 所以任意至多九个不同的新素数、任意正指数的这类整数都安全。这个推论仍固定 $v_2=21$ 和奇数种子 $3^2\cdot5\cdot7$；它没有处理 $p=11,13,17$，也没有覆盖任意高二赋值整数。由于 $v_3=2$ 不随这些新素数变化，这一整族仍由 §86.1 的 $3$-方向条件覆盖。
 
-脚本 `docs/reports/fib-robin-boundary/multi_prime_tail.py` 核验这些有理常数、最坏九素数乘积、一个混合指数实例和十素数边界；一般乘法恒等式与预算推导仍由本节证明承担。该边界失效只表示当前证书不够强，不表示对应整数违反 Robin 不等式。
+脚本 `https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/multi_prime_tail.py` 核验这些有理常数、最坏九素数乘积、一个混合指数实例和十素数边界；一般乘法恒等式与预算推导仍由本节证明承担。该边界失效只表示当前证书不够强，不表示对应整数违反 Robin 不等式。
 
 ## 追加锚（本行以下为增补区）
 
@@ -15860,7 +15860,7 @@ $$
 
 所以十三素数只表示这份粗预算不再足够，不表示出现 Robin 反例。
 
-本节确实作用在 §86.2 的五方向必要核上，但核内成员仍可能满足额外素数方向的已发表停止条件；本节没有覆盖所有五方向核，也没有证明 Robin 全称不等式或 RH。脚本 `docs/reports/fib-robin-boundary/kernel_tail.py` 核验式 (155.1)--(155.9) 中的整数、有理乘积和对数方向；通用乘法与预算推导仍由本节证明承担。
+本节确实作用在 §86.2 的五方向必要核上，但核内成员仍可能满足额外素数方向的已发表停止条件；本节没有覆盖所有五方向核，也没有证明 Robin 全称不等式或 RH。脚本 `https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/kernel_tail.py` 核验式 (155.1)--(155.9) 中的整数、有理乘积和对数方向；通用乘法与预算推导仍由本节证明承担。
 
 ### 命题 155.3（把新增素数的对数增长计入预算）
 
@@ -16075,7 +16075,7 @@ $$
 
 本节的规范化与前沿递推只给出固定共同核心上的有限搜索压缩。它没有估计前沿随 $y$ 或核心变化的统一尾部，也没有证明 Robin 全称不等式或黎曼猜想。
 
-独立脚本 `docs/reports/fib-robin-boundary/robin_frontier.py` 生成式 (156.5) 的精确有理前沿；`robin_frontier_check.py` 不调用生成器而重算所有状态、分支、支配删除与根前沿。它们只核验有限规范递推，不把有限结果提升为无限尺度结论。
+独立脚本 `https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/robin_frontier.py` 生成式 (156.5) 的精确有理前沿；`robin_frontier_check.py` 不调用生成器而重算所有状态、分支、支配删除与根前沿。它们只核验有限规范递推，不把有限结果提升为无限尺度结论。
 
 ## 追加锚（本行以下为增补区）
 
