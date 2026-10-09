@@ -327,20 +327,22 @@ class ReuseTests(unittest.TestCase):
             api.seal(self.root, self.report, captured)
 
     def test_checkout_permission_differences_keep_reuse(self):
-        # Two checkouts of one commit may differ in non-executable permission
-        # bits; Git records only the executable bit and the report is unchanged.
+        # Two checkouts of one commit may differ in permission bits other than
+        # the owner executable bit Git records; the report is unchanged.
+        paths = ('D5/A.lean', 'lean-toolchain', 'lakefile.toml')
+        for path in paths:
+            (self.root / path).chmod(0o644)
         api = self.receipt()
-        for path in ('D5/A.lean', 'lean-toolchain', 'lakefile.toml'):
+        for path, changed in ((path, mode) for path in paths for mode in (0o600, 0o654)):
             source = self.root / path
-            with self.subTest(path=path):
-                mode = source.stat().st_mode
-                source.chmod(0o600)
+            with self.subTest(path=path, mode=oct(changed)):
+                source.chmod(changed)
                 try:
                     self.assertEqual(api.probe(self.root, self.report),
                                      dict(needs_lake=False, reason='receipt-matched'),
                                      '[FAIL] checkout_permission_difference_keeps_reuse')
                 finally:
-                    source.chmod(mode)
+                    source.chmod(0o644)
 
     def test_producer_program_bytes_never_gate_reuse(self):
         api = self.receipt()

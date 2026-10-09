@@ -88,9 +88,9 @@ def capture(repository):
     files = {}
     for path in paths:
         source = inputs.safe_file(path)
-        # Git records only the executable bit; other permission bits differ
-        # between checkouts of one commit and do not change report bytes.
-        mode = 0o755 if source.stat().st_mode & 0o111 else 0o644
+        # Git records only the owner executable bit; other permission bits
+        # differ between checkouts of one commit and do not change report bytes.
+        mode = 0o755 if source.stat().st_mode & 0o100 else 0o644
         files[path] = dict(sha256=publication.digest(source), mode=mode)
     return dict(eligible=True, report_format=publication.selection.REPORT_FORMAT,
         files=files,
