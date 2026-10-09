@@ -1,0 +1,17 @@
+### 定义 1：二结果条件读口
+
+假设本次操作不改变真实模式，只返回记录 $O\in\{0,1\}$。记
+
+$$
+\lambda_s=\Pr(O=1\mid s),\qquad 0<\lambda_s<1.
+$$
+
+另一结果的似然必须为 $1-\lambda_s$。结果后验为
+
+$$
+p_s^{\,1}=\frac{p_s\lambda_s}{\sum_t p_t\lambda_t},\qquad
+p_s^{\,0}=\frac{p_s(1-\lambda_s)}{\sum_t p_t(1-\lambda_t)}.
+$$
+
+称读口保持模型族，如果对每份 $p\in\mathfrak M$，两个后验都仍属于 $\mathfrak M$。严格正条件排除了零概率与支持改变的特殊情形；确定性极限须单独处理，不能直接套用含除法的证明。
+

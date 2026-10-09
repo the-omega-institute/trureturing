@@ -1,0 +1,19 @@
+### theorem 6: 粗化后的关联等于细记录均值的协方差
+
+**Claim status: open.**
+
+$$
+\operatorname{Cov}(x,y\mid C,z=0)=\operatorname{Cov}(u_T,v_T\mid C,z=0).
+$$
+
+证明。条件总协方差公式中，$\mathbb E[\operatorname{Cov}(x,y\mid T,z=0)\mid C,z=0]$ 因每个细后验独立而为零，余项正是右侧。证毕。
+
+上例合并结果 $0$ 与 $2$ 后仍独立，因为 $v_0=v_2=2/3$；代价是丢掉二者低端差异的信息。合并结果 $0$ 与 $1$，二者等权，产生
+
+$$
+\operatorname{Cov}(x,y\mid C=\{0,1\},z=0)
+=\frac14\left(\frac12-\frac14\right)\left(\frac16-\frac23\right)=-\frac1{32}.
+$$
+
+每个细记录是简单乘积来源，合并后却必须保留联合参数。少记一点可能把记录区别转成来源关联；它不意味着遗忘对实际来源施加了新作用力。
+
