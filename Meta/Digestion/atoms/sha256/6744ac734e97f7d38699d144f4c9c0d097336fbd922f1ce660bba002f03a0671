@@ -1,0 +1,8 @@
+**证明。**
+
+原来的 $\alpha$ 被替换为 $\beta$；原来的 $\beta$ 被替换为 $\langle\beta,\alpha\rangle$，其中 $\alpha$ 只作为右孩子出现。
+
+原配对节点的左孩子则变成某棵树的完整 $\rho$ 像，不可能是单叶 $\alpha$。对来源结构归纳即可。证毕。
+
+而 $D$ 的右子树 $\langle\alpha,\beta\rangle$ 恰好违反该条件，因此 $D\notin\rho[\mathbb T]$。
+
