@@ -16,7 +16,7 @@ internal sealed class BudgetMarginNoncomputabilityDocument : IScribeDocumentDefi
                 + "the empty word and has at most b(n) words of each length n. Its deleted mass "
                 + "is the nonnegative sum of the iid word masses. The real quantity optimalMass(d,b) "
                 + "is the real part of the supremum of these masses over the same legal codes; "
-                + "the frozen greedy optimum attains this supremum. The surviving margin is "
+                + "the greedy optimum attains this supremum. The surviving margin is "
                 + "margin(d,b)=1-optimalMass(d,b).")),
             Paragraph(Text(
                 "The input e is a partial-recursive program code. Presents(e,b) means that "
