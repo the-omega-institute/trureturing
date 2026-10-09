@@ -86,12 +86,14 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
     private static Formula DensityPositivityFormula()
     {
         Formula n = F.Id("n"), rho = F.Id("rho");
-        Formula body = Call("Matrix.PosSemidef",
-            Call("CStarMatrix.ofMatrix.symm", Call("val", rho)));
+        Formula body = new Formula.Apply(
+            Seq(Operatorname, Grp(F.Id("Matrix"), Dot, F.Id("PosSemidef"))),
+            [new Formula.Apply(Seq(Operatorname, Grp(F.Id("CStarMatrix"), Dot,
+                F.Id("ofMatrix"), Dot, F.Id("symm"))), [Call("val", rho)])]);
         body = new Formula.Bind(FormulaQuantifier.ForAll,
             FormulaIdentifier.Create("rho"), Call("DensityState", n), body);
         return Disp(new Formula.Bind(FormulaQuantifier.ForAll,
-            FormulaIdentifier.Create("n"), Call("Type"),
+            FormulaIdentifier.Create("n"), Seq(Operatorname, Grp(F.Id("Type"))),
             Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
                 OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, body)));
     }
