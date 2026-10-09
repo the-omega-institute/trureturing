@@ -3145,8 +3145,7 @@ $$
 
 **定理 42.1（去重控制与商群资源）。** 设 $H$ 为有限阿贝尔控制器，$A=\prod_{s\in S}\mathbb Z/d_s\mathbb Z$，且 $\Pi:H\to A$ 为各扇区循环移位参数的联合同态。记 $K=\operatorname{im}\Pi$、$N=\ker\Pi$。令 $\{\Lambda_h\}_{h\in H}$ 为由 $h$ 控制的乘积 CPTP 映射，其中 $\Lambda_h$ 只通过 $\Pi(h)$ 作用。则：
 
-1. $\Lambda_h=\Lambda_{h'}$ 当且仅当 $\Pi(h)=\Pi(h')$；因此恰有 $|K|$ 个不同分支。
-2. $h\mapsto\Pi(h)$ 将 $H$ 的均匀分布推前为 $K$ 上的均匀分布，故
+1. 控制器标签按 $\\Pi(h)$ 去重后恰有 $|K|$ 个不同的受控移位标签；若记由标签诱导的 CPTP 表示为 $\\rho:K\\to\\operatorname{CPTP}$，则实际不同通道数为 $|\\rho(K)|\\le|K|$。在标准全输出循环移位且各 $d_s\\ge2$ 的忠实表示下，$|\\rho(K)|=|K|$。\n2. $h\mapsto\Pi(h)$ 将 $H$ 的均匀分布推前为 $K$ 上的均匀分布，故
    $$|H|^{-1}\sum_{h\in H}\Lambda_h=|K|^{-1}\sum_{k\in K}\Lambda_k.$$
 3. 由 $H/N\cong K$，用商控制器 $H/N$ 实现同一混合且恰有 $|K|$ 个分支。于是原始控制器大小 $|H|$ 不是该受控移位表示的资源成本；精确成本是 $|K|$。
 
