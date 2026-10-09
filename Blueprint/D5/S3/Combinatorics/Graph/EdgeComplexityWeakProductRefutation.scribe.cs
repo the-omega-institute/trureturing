@@ -33,7 +33,7 @@ internal sealed class EdgeComplexityWeakProductRefutationDocument : IScribeDocum
                 "Both factors are the complete graph on Fin 3. Their Fourier ratio minimum is 4/sqrt(6), their energy is four and their size is three. The product has size eighteen and energy sixteen. For every labeling its Fourier ratio is strictly greater than 8/3. Equality would make its squared adjacency circulant; the identity A squared equals 2J plus 2I minus A would then make A circulant. No zero-one circulant matrix of order nine satisfies that identity. The sign matrix (6A+3I-2J)/9 supplies the norm bound and its equality conditions.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("gupta-iosevich-2026-edge-complexity-weak-product"),
-                    ResolutionKind.Proved)))));
+                    ResolutionKind.Refuted)))));
 
     private static readonly Formula v = F.Id("V"), w = F.Id("W"), g = F.Id("G"), h = F.Id("H"), n = F.Id("N"), a = F.Id("a");
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));

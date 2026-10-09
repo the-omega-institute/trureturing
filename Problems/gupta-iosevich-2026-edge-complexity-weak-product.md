@@ -40,7 +40,7 @@ A labeling of $K_3\times K_3$ attaining $8/3$, a discrepancy between the source 
 
 ## Evidence
 
-`result : ¬ claim` is the kernel-checked public settlement. The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9). Its private helpers are consumed on the proof path. The admission basis is `open-problem-resolution` (#14729; Refuted), independently of the bind-only judgement form. The Scribe resolution node records Proved for the statement `¬ claim`; the source closure assertion is Refuted.
+`result : ¬ claim` is the kernel-checked public settlement. The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9). Its private helpers are consumed on the proof path. The admission basis is `open-problem-resolution` (#14729; Refuted), independently of the bind-only judgement form. The resolution node records the source closure assertion as Refuted.
 
 ## Triage
 

@@ -106,9 +106,9 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/EdgeComplexityWeakProductRefutation.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/gupta-iosevich-2026-edge-complexity-weak-product` (proved) by `D5/S3/Combinatorics/Graph/EdgeComplexityWeakProductRefutation.result`.
+*Resolves.* `Problems/gupta-iosevich-2026-edge-complexity-weak-product` (refuted) by `D5/S3/Combinatorics/Graph/EdgeComplexityWeakProductRefutation.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gupta-iosevich-2026-edge-complexity-weak-product","declaration_gid":"D5/S3/Combinatorics/Graph/EdgeComplexityWeakProductRefutation.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gupta-iosevich-2026-edge-complexity-weak-product","declaration_gid":"D5/S3/Combinatorics/Graph/EdgeComplexityWeakProductRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
