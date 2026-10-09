@@ -77,7 +77,7 @@ private theorem raw_tail_add (ω : Stream) (a b : ℕ) :
   funext i
   simp [rawTail, Nat.add_comm, Nat.add_left_comm]
 
-private theorem drive_append (c : AcquiredNativeState) (ω : Stream) (n m : ℕ) :
+theorem drive_append (c : AcquiredNativeState) (ω : Stream) (n m : ℕ) :
     nativeDrive c ω (n + m) = (nativeDrive c ω n).bind fun r =>
       (nativeDrive r.2.1 (rawTail ω r.2.2) m).map fun s =>
         (r.1 ++ s.1, s.2.1, r.2.2 + s.2.2) := by
@@ -93,7 +93,7 @@ private theorem drive_append (c : AcquiredNativeState) (ω : Stream) (n m : ℕ)
       rw [raw_tail_add]
       simp [Nat.add_assoc]
 
-private theorem drive_spec (n : ℕ) (c d : AcquiredNativeState)
+theorem drive_spec (n : ℕ) (c d : AcquiredNativeState)
     (ω : Stream) (h : List Operation) (k : ℕ) :
     nativeDrive c ω n = some (h, d, k) ↔
       h.length = n ∧ execute c h = some d ∧

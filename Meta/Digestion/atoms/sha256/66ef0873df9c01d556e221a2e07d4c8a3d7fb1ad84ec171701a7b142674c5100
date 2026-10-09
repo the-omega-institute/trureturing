@@ -1,0 +1,16 @@
+### theorem 9（同一方向组合的平方可以完全看不见态，次序关系却能显露第三个量）
+
+Claim status: open
+
+对实数 $s,t$：
+
+$$
+\boxed{(sX+tY)^2=(s^2+t^2)I.}
+$$
+
+但：
+
+$$
+\boxed{\frac{XY-YX}{2i}=Z.}
+$$
+
