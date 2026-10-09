@@ -78,7 +78,9 @@ $$C ( n e , D ) = ( \lambda n - \frac {\lambda ^ {2}} {2} ) \iff \exists i , d _
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.code_cost_eq_radial_iff` (`✓ std3`). ∎
 
-*Citation.* Neal Parikh; Stephen Boyd (2014). *Proximal Algorithms*. DOI: [10.1561/2400000003](https://doi.org/10.1561/2400000003).
+*Source.* Repository-derived.
+
+*Acknowledgement.* Neal Parikh; Stephen Boyd (2014). *Proximal Algorithms*. DOI: [10.1561/2400000003](https://doi.org/10.1561/2400000003).
 
 *Commentary.*
 

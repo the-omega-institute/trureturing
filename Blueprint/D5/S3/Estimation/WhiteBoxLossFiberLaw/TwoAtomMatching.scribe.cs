@@ -84,7 +84,7 @@ internal sealed class TwoAtomMatchingDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.code_cost_eq_radial_iff"),
                 H("Equality detects an aligned atom"),
                 StatementSource.FromAuthor(Disp(Flow(Cost(Flow(n,e)),Eq,Radial(),Iff,Exists,i,Comma,Sub(d,i),Eq,e))),
-                AssessedProvenance.FromLiterature(RadialSource),
+                AssessedProvenance.FromRepo(RadialSource),
                 Blocks(Paragraph(Text("For every unit direction e, ordered unit dictionary D, positive lambda and n greater than lambda, equality in the actual infimal radial cost holds exactly when one dictionary atom equals e. The radial value and aligned soft-threshold coefficient are the known proximal core of Parikh and Boyd, Section 6.5.1; the dictionary-level iff corresponds to the alignment criterion of the fiber-law volume's Lemma 4.1, here in an arbitrary real inner-product space. Necessity uses the positive minimum of the two atom distances and the single-direction near-radial estimate; sufficiency uses the single active coefficient n-lambda. This argument does not use simultaneous two-slot matching. It gives the radial equality criterion for every nonzero x with lambda less than its norm."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("whitebox-quantitative-matching"),
