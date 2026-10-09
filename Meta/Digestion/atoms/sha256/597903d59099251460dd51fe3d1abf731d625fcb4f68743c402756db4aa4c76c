@@ -1,0 +1,44 @@
+### theorem 2: 结合乘法读出合并同叶词括号
+
+**Claim status: open.** 设 $E(\alpha)=A$、$E(\beta)=B$，且
+
+$$
+E(\langle s,t\rangle)=E(s)\star E(t),
+$$
+
+其中 $\star$ 满足结合律。那么
+
+$$
+w(s)=w(t)\Longrightarrow E(s)=E(t).
+$$
+
+证明。对树作结构归纳，$E(t)$ 等于其叶词对应的有序乘积。结合律使全部括号给出相同结果。证毕。
+
+这包括原子数量与线性组成、由完整叶词路径计算的面积与各阶矩、固定原子矩阵的有序乘积，以及在同叶词之后再同步施加任意次 $\rho$ 的这些读数。最后一点来自
+
+$$
+w(\rho t)=\sigma(w(t)),
+\qquad \sigma(\alpha)=\beta,\quad\sigma(\beta)=\beta\alpha.
+$$
+
+项目五量几何 $G=(u,v,D,E,F_m)$ 由叶词路径定义，所以属于这一类。
+
+比较四叶来源
+
+$$
+t_{\mathrm L}=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,\alpha\rangle,
+\qquad
+t_{\mathrm B}=\langle\langle\beta,\alpha\rangle,\langle\beta,\alpha\rangle\rangle.
+$$
+
+二者叶词都是 $\beta\alpha\beta\alpha$，所以数量、整条平面折线和五量 $G$ 全部相同。按项目坐标，
+
+$$
+G=(2,2,-2,2,-2),
+\qquad Q(t_{\mathrm L})=(0,0),\quad Q(t_{\mathrm B})=(2,0).
+$$
+
+在明确供应的 Pauli 表示 $U_\alpha=-iX$、$U_\beta=-iY$ 中，两者也都给出 $U=-I$。
+
+量子相位可以区分某些原子次序，却不会因为用了非交换矩阵，就自动区分同一个词的不同括号。结合性与交换性是两个不同问题。
+
