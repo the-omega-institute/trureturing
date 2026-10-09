@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import shlex
 import subprocess
 import sys
 import unittest
@@ -55,6 +56,87 @@ class LocalEntryTests(unittest.TestCase):
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.seed), STRATALINT_LEAN_BUILD_TARGETS='[]',
             STRATALINT_LEAN_REPORT_LOG_DIR=str(self.root / 'logs'))
+        subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), 'add', 'Makefile', 'tools', 'D5',
+                        'Audit.lean', 'Inspector.lean', 'producer.py', 'lean-toolchain',
+                        'lakefile.toml', 'lean-report-inputs.json'], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '-qm', 'local report fixture'], check=True, capture_output=True)
+
+    def linked_checkout(self):
+        self.main_checkout = self.root
+        linked = self.root / 'linked checkout'
+        subprocess.run(['git', '-C', str(self.root), 'worktree', 'add', '--detach',
+                        str(linked), 'HEAD'], check=True, capture_output=True)
+        shutil.copytree(self.seed.parent, linked / 'seed')
+        self.root = linked
+        self.seed = linked / 'seed' / publication.RAW
+        self.output = linked / '.lake/build/stratalint' / publication.RAW
+        self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.seed)
+
+    def assert_linked_guarded(self, kind):
+        self.linked_checkout()
+        self.damage(kind)
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 4, '[FAIL] linked_miss_returns_status_4: '
+                         + result.stdout + result.stderr)
+        diagnostic = result.stdout + result.stderr
+        self.assertIn('reason=linked-worktree', diagnostic, '[FAIL] linked_miss_names_policy')
+        self.assertIn('sync dev and warm the dev cache: make -C '
+                      + shlex.quote(str(self.main_checkout)) + ' warm-donor', diagnostic)
+        self.assertIn('rm -rf -- ' + shlex.quote(str(self.root / '.lake'))
+                      + ' && make -C ' + shlex.quote(str(self.root)) + ' lean-cache-ensure', diagnostic)
+        self.assertNotIn('lean-cache-from-github-without-mathlib', diagnostic)
+        self.assertEqual(self.calls, [], '[FAIL] linked_miss_never_fetches_or_builds')
+        self.assertFalse((self.root / '.lake').exists())
+
+    def test_linked_missing_seed_refuses_without_fetch_or_lake(self):
+        self.assert_linked_guarded('missing')
+
+    def test_linked_format_mismatch_refuses_without_fetch_or_lake(self):
+        self.assert_linked_guarded('format')
+
+    def test_linked_damaged_seed_refuses_without_fetch_or_lake(self):
+        self.assert_linked_guarded('bundle-bytes-changed')
+
+    def test_linked_incomplete_seed_refuses_without_fetch_or_lake(self):
+        self.assert_linked_guarded('incomplete')
+
+    def test_linked_explicit_rebuild_never_fetches(self):
+        self.linked_checkout()
+        self.damage('format')
+        result = self.run_entry('REBUILD_REPORT_CACHE=1')
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr)
+        self.assertEqual(len(self.calls), 2)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertIn('build :report', self.calls[1])
+
+    def test_linked_reuse_or_build_never_fetches(self):
+        self.linked_checkout()
+        self.damage('format')
+        result = self.run_entry('--cache-miss-policy', 'reuse-or-build', direct=True)
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr)
+        self.assertEqual(len(self.calls), 2)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertIn('build :report', self.calls[1])
+
+    def test_linked_matching_seed_reuses_without_fetch_or_lake(self):
+        self.linked_checkout()
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('complete-entry-reused', result.stdout)
+        self.assertEqual(self.calls, [])
+
+    def test_undetermined_checkout_refuses_without_fetch_or_lake(self):
+        self.damage('missing')
+        self.script('bin/git', 'echo "topology unavailable" >&2\nexit 17\n')
+        self.environment['PATH'] = str(self.root / 'bin') + os.pathsep + self.environment['PATH']
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 4, result.stdout + result.stderr)
+        self.assertIn('reason=checkout-undetermined', result.stdout + result.stderr)
+        self.assertIn('topology unavailable', result.stdout + result.stderr)
+        self.assertEqual(self.calls, [], '[FAIL] unknown_checkout_never_fetches_or_builds')
 
     def script(self, name, body):
         target = self.root / name

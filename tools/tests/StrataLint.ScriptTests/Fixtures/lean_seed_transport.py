@@ -6,6 +6,7 @@ import os
 import pathlib
 import random
 import shutil
+import shlex
 import subprocess
 import tarfile
 
@@ -74,6 +75,80 @@ exit "${FAKE_BUILD_EXIT:-0}"
     def transport(self, verb, run="123", arguments=(), **extra):
         return subprocess.run(["bash", str(self.publisher), verb, "--repository", str(self.root), *arguments],
                               text=True, capture_output=True, env=self.transport_environment(run, **{"GITHUB_ACTIONS": "false" if verb == "fetch" else "true", **extra}))
+
+    def linked_checkout(self):
+        self.main_checkout = self.root
+        linked = self.root / "linked checkout"
+        subprocess.run(["git", "-C", str(self.root), "worktree", "add", "--detach",
+                        str(linked), "HEAD"], check=True, capture_output=True)
+        self.root = linked
+
+    def test_linked_production_fetch_refuses_before_gh_or_lake_writes(self):
+        self.linked_checkout()
+        log = self.main_checkout / "linked-gh-calls"
+        lake = self.root / ".lake"
+        for occupied in (False, True):
+            if occupied:
+                write(lake / "build/keep.txt", "private cache")
+            before = {str(path.relative_to(lake)): (path.read_bytes(), path.stat())
+                      for path in lake.rglob("*") if path.is_file()}
+            for arguments in ((), ("--refresh-stale",), ("--refresh-stale", "--writer-owned")):
+                with self.subTest(occupied=occupied, arguments=arguments):
+                    result = self.transport("fetch", arguments=arguments, FAKE_GH_LOG=str(log))
+                    self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                    line = next(line for line in result.stdout.splitlines() if line.startswith("LEAN_CACHE_FETCH "))
+                    receipt = json.loads(line.partition(" ")[2])
+                    self.assertEqual("refused", receipt["status"], '[FAIL] linked_fetch_must_refuse')
+                    self.assertEqual("linked worktree: release archive disabled", receipt["reason"])
+                    self.assertEqual("sync dev and warm the dev cache: make -C "
+                                     + shlex.quote(str(self.main_checkout)) + " warm-donor", receipt["remediation"])
+                    self.assertFalse(log.exists(), '[FAIL] linked_fetch_never_calls_gh')
+                    self.assertEqual(occupied, lake.exists(), '[FAIL] linked_fetch_never_creates_lake')
+                    after = {str(path.relative_to(lake)): (path.read_bytes(), path.stat())
+                             for path in lake.rglob("*") if path.is_file()}
+                    self.assertEqual(before, after, '[FAIL] linked_fetch_preserves_lake')
+
+    def test_main_production_fetch_reaches_release_listing(self):
+        log = self.root / "main-gh-calls"
+        result = self.transport("fetch", FAKE_GH_LOG=str(log))
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        calls = [json.loads(line) for line in log.read_text().splitlines()]
+        self.assertTrue(any(call[:2] == ["release", "list"] for call in calls),
+                        '[FAIL] main_fetch_keeps_release_listing')
+
+    def test_undetermined_production_checkout_refuses_before_gh_or_lake_writes(self):
+        self.failing_git("rev-parse", 17, "topology unavailable")
+        log = self.root / "unknown-gh-calls"
+        lake = self.root / ".lake"
+        before = {str(path.relative_to(lake)): path.read_bytes()
+                  for path in lake.rglob("*") if path.is_file()}
+        result = self.transport("fetch", FAKE_GH_LOG=str(log))
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"refused"', result.stdout, '[FAIL] unknown_checkout_must_refuse')
+        self.assertIn("topology unavailable", result.stdout)
+        self.assertFalse(log.exists(), '[FAIL] unknown_checkout_never_calls_gh')
+        self.assertEqual(before, {str(path.relative_to(lake)): path.read_bytes()
+                                 for path in lake.rglob("*") if path.is_file()})
+
+    def test_linked_ci_production_fetch_keeps_skip(self):
+        self.linked_checkout()
+        log = self.main_checkout / "ci-linked-gh-calls"
+        result = self.transport("fetch", GITHUB_ACTIONS="true", FAKE_GH_LOG=str(log))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"skipped"', result.stdout)
+        self.assertFalse(log.exists())
+        self.assertFalse((self.root / ".lake").exists())
+
+    def test_linked_verification_fetch_keeps_explicit_ci_source(self):
+        self.verification_fixture()
+        published = self.verification("publish")
+        self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+        self.linked_checkout()
+        result = self.verification("fetch")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"mode":"verification"', result.stdout)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
 
     def fetch_then_build(self, **extra):
         # Exercise the optional-fetch caller protocol under errexit. Workflow
