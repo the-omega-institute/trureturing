@@ -162,6 +162,20 @@ def _git(repository, *arguments):
                           capture_output=True, text=True).stdout.strip()
 
 
+def canonical_seed(repository):
+    return repository / '.lake/build/stratalint/raw-lean-report.json'
+
+
+def seed_identity(report):
+    """Read the report identity from its validated publication sidecar."""
+    path = publication.member(report, '.sha256')
+    if path.is_symlink() or not path.is_file() or not report.is_file():
+        return None
+    match = re.fullmatch(r'([0-9a-f]{64})  ' + re.escape(report.name) + r'\n',
+                         path.read_text(encoding='ascii'))
+    return match[1] if match else None
+
+
 def read_seed_base(repository):
     """Read the optional production/restore provenance record."""
     path = repository / BASE_RECORD
@@ -171,7 +185,9 @@ def read_seed_base(repository):
             return None
         commit = record.get('producer_commit_sha')
         if (record.get('schema') != BASE_SCHEMA or not isinstance(commit, str)
-                or re.fullmatch(r'[0-9a-f]{40}', commit) is None):
+                or re.fullmatch(r'[0-9a-f]{40}', commit) is None
+                or record.get('report_sha256') is None
+                or record['report_sha256'] != seed_identity(canonical_seed(repository))):
             return None
         return commit
     except (OSError, UnicodeError, ValueError, TypeError, KeyError):
@@ -188,14 +204,15 @@ def record_seed_base(repository, commit=None):
     try:
         branch = _git(repository, 'symbolic-ref', '--quiet', '--short', 'HEAD')
         head = _git(repository, 'rev-parse', '--verify', 'HEAD')
-        status = _git(repository, 'status', '--porcelain', '--untracked-files=no')
+        status = _git(repository, 'status', '--porcelain', '--untracked-files=normal')
         git_dir = Path(_git(repository, 'rev-parse', '--git-dir'))
         common_dir = Path(_git(repository, 'rev-parse', '--git-common-dir'))
         git_dir = (repository / git_dir if not git_dir.is_absolute() else git_dir).resolve()
         common_dir = (repository / common_dir if not common_dir.is_absolute() else common_dir).resolve()
         source = head if commit is None else commit
+        identity = seed_identity(canonical_seed(repository))
         if (branch != 'dev' or status or git_dir != common_dir
-                or re.fullmatch(r'[0-9a-f]{40}', source) is None):
+                or re.fullmatch(r'[0-9a-f]{40}', source) is None or identity is None):
             invalidate_seed_base(repository)
             return False
         path = repository / BASE_RECORD
@@ -204,21 +221,26 @@ def record_seed_base(repository, commit=None):
         try:
             with os.fdopen(fd, 'wb') as target:
                 target.write(materials.canonical_json({
-                    'schema': BASE_SCHEMA, 'producer_commit_sha': source}))
+                    'schema': BASE_SCHEMA, 'producer_commit_sha': source,
+                    'report_sha256': identity}))
             os.replace(temporary, path)
         finally:
             Path(temporary).unlink(missing_ok=True)
         return True
-    except (OSError, subprocess.SubprocessError, ValueError):
+    except (OSError, subprocess.SubprocessError, ValueError, UnicodeError):
         invalidate_seed_base(repository)
         return False
 
 
-def seal(repository, report, captured):
+def seal(repository, report, captured, produced_sha256):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
     from lean_cache_release import cache_guard
     with cache_guard(repository):
-        invalidate_seed_base(repository)
+        if seed_identity(report) != produced_sha256 or produced_sha256 is None:
+            raise ValueError('published report generation changed before seal')
+        canonical = report.resolve() == canonical_seed(repository).resolve()
+        if canonical:
+            invalidate_seed_base(repository)
         current = capture(repository)
         if current != captured:
             publication.member(report, SUFFIX).unlink(missing_ok=True)
@@ -227,8 +249,7 @@ def seal(repository, report, captured):
             publication.member(report, SUFFIX).unlink(missing_ok=True)
             return
         # A complete receipt becomes visible only with current or unknown provenance.
-        recorded = record_seed_base(repository)
-        if not recorded:
+        if canonical and not record_seed_base(repository):
             invalidate_seed_base(repository)
         write_receipt(report, captured)
 
@@ -337,6 +358,7 @@ def _refresh_stale_seed(repository, report):
     """Optionally replace a stale compatible seed with a strictly newer Release base."""
     mismatch = _seed_mismatch(repository, report)
     if mismatch is None:
+        _seed_decision('keep', 'seed-current')
         return report
     if os.environ.get('GITHUB_ACTIONS') == 'true':
         _seed_decision('keep', 'ci-release-seeds-disabled')
@@ -345,14 +367,33 @@ def _refresh_stale_seed(repository, report):
     from lean_cache_release import checkout_topology, latest_snapshot, operation_deadline, partition_path
     try:
         linked, _ = checkout_topology(repository)
-        branch = _git(repository, 'symbolic-ref', '--quiet', '--short', 'HEAD')
     except (OSError, subprocess.SubprocessError, ValueError) as error:
         _seed_decision('keep', 'dev-main-unavailable', detail=str(error))
         return report
-    if linked or branch != 'dev':
+    if linked:
         _seed_decision('keep', 'not-dev-main-checkout')
         return report
+    try:
+        branch = _git(repository, 'symbolic-ref', '--quiet', '--short', 'HEAD')
+    except subprocess.CalledProcessError as error:
+        _seed_decision('keep', 'detached-checkout' if error.returncode == 1
+                       else 'dev-main-unavailable')
+        return report
+    if branch != 'dev':
+        _seed_decision('keep', 'not-dev-main-checkout')
+        return report
+    try:
+        status = _git(repository, 'status', '--porcelain', '--untracked-files=normal')
+    except (OSError, subprocess.SubprocessError, ValueError) as error:
+        _seed_decision('keep', 'dev-main-unavailable', detail=str(error))
+        return report
+    if status:
+        _seed_decision('keep', 'unclean-checkout')
+        return report
     base = read_seed_base(repository)
+    if base is None:
+        _seed_decision('keep', 'local-base-unknown')
+        return report
     try:
         candidate = latest_snapshot(repository, partition_path(repository), operation_deadline())
     except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError, AttributeError, IndexError,
@@ -367,9 +408,6 @@ def _refresh_stale_seed(repository, report):
         head = _git(repository, 'rev-parse', '--verify', 'HEAD')
     except (OSError, subprocess.SubprocessError, ValueError) as error:
         _seed_decision('keep', 'head-unavailable', detail=str(error), release=release)
-        return report
-    if base is None:
-        _seed_decision('keep', 'local-base-unknown', release=release, head=head)
         return report
     if not _is_ancestor(repository, release, head):
         _seed_decision('keep', 'release-not-head-ancestor', release=release, head=head)
@@ -481,17 +519,21 @@ def main():
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
+    parser.add_argument('--report-sha256', help='identity returned by this production publication')
     parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
                         default='reuse-or-build')
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
     args = parser.parse_args()
-    if args.command in ('probe', 'reuse', 'seal') and args.report is None:
+    if args.command in ('probe', 'reuse', 'capture', 'seal') and args.report is None:
         parser.error('--report is required')
     if args.command == 'reuse' and args.output is None:
         parser.error('--output is required')
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
+    if args.command == 'seal' and (args.report_sha256 is None
+            or re.fullmatch(r'[0-9a-f]{64}', args.report_sha256) is None):
+        parser.error('--report-sha256 must be the produced report identity')
     if args.command == 'refresh-stale-seed':
         return refresh_stale_seed(args.repository)
     if args.command == 'capture':
@@ -499,10 +541,12 @@ def main():
         from lean_cache_release import cache_guard
         with cache_guard(args.repository):
             captured = capture(args.repository)
-            invalidate_seed_base(args.repository)
+            if args.report.resolve() == canonical_seed(args.repository).resolve():
+                invalidate_seed_base(args.repository)
             args.snapshot.write_bytes(materials.canonical_json(captured))
     elif args.command == 'seal':
-        seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()))
+        seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()),
+             args.report_sha256)
     elif args.command == 'probe':
         result = probe(args.repository, args.report)
         print(json.dumps(result, separators=(',', ':')))

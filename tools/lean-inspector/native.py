@@ -501,8 +501,8 @@ def publish(root, destination):
             mode = 'produced' if records else 'cached'
             print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
         # Lake traced this aggregate of production-validated rows.
-        public.publish(report, Path(destination), inputs, root, mode=mode, validate=False)
-    print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(destination)}')
+        identity = public.publish(report, Path(destination), inputs, root, mode=mode, validate=False)
+    print(f'RAW_LEAN_REPORT path={destination} sha256={identity}')
 
 
 def main():

@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tarfile
 import unittest
+import zipfile
 
 import test_reuse
 
@@ -36,6 +37,7 @@ class LocalEntryTests(unittest.TestCase):
         for name in ('Makefile', 'tools/scripts/report/lean-report.sh',
                      'tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
                      'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                     'tools/lean-inspector/native.py',
                      'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh',
                      'tools/scripts/worktree/lean_cache_release.py',
                      'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py'):
@@ -751,7 +753,7 @@ else:
         self.canonical_release_fixture()
         self.fixture.bundle()
         publication.publish(self.seed, self.output, publication.coordinates(self.root), self.root)
-        self.api.seal(self.root, self.output, self.api.capture(self.root))
+        self.api.seal(self.root, self.output, self.api.capture(self.root), publication.digest(self.output))
         result = self.refresh_canonical()
         self.assertIn('"action":"keep"', result.stdout, '[FAIL] current_seed_prints_decision')
         self.assertIn('"reason":"seed-current"', result.stdout)
@@ -764,7 +766,7 @@ else:
         captured = self.api.capture(self.root)
         self.fixture.bundle()
         publication.publish(self.seed, custom, publication.coordinates(self.root), self.root)
-        self.api.seal(self.root, custom, captured)
+        self.api.seal(self.root, custom, captured, publication.digest(custom))
         self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
                          '[FAIL] custom_output_preserves_canonical_base')
         self.assertEqual(before, self.seed_bytes())
@@ -786,7 +788,7 @@ else:
         _, producer, _ = self.canonical_release_fixture()
         captured = self.api.capture(self.root)
         self.fixture.bundle()
-        publication.publish(self.seed, self.output, publication.coordinates(self.root), self.root)
+        produced_sha256 = publication.publish(self.seed, self.output, publication.coordinates(self.root), self.root)
         result = subprocess.run(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
             'fetch', '--repository', str(self.root), '--refresh-stale'], env=self.environment,
             capture_output=True, text=True, check=True)
@@ -794,7 +796,7 @@ else:
         self.assertEqual(producer, self.api.read_seed_base(self.root))
         before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
         try:
-            self.api.seal(self.root, self.output, captured)
+            self.api.seal(self.root, self.output, captured, produced_sha256)
         except ValueError:
             pass
         self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
@@ -810,6 +812,69 @@ else:
         self.assertIn('"status":"unpacked"', result.stdout)
         self.assertIsNone(self.api.read_seed_base(self.root), '[FAIL] untracked_restore_has_unknown_base')
         self.assertFalse((self.root / self.api.BASE_RECORD).exists())
+
+    def prepare_production_entry(self, *, restore_before_seal=False):
+        self.fixture.bundle()
+        produced_sha256 = publication.digest(self.seed)
+        archive = self.root / '.lake/build/lean-inspector/report.zip'
+        archive.parent.mkdir(parents=True, exist_ok=True)
+        with zipfile.ZipFile(archive, 'w') as bundle:
+            for suffix in publication.SUFFIXES:
+                source = publication.member(self.seed, suffix)
+                bundle.write(source, source.name)
+        self.script('tools/scripts/worktree/lean-cache-run.sh', 'printf "lake %s\\n" "$*" >> calls\n')
+        native = self.root / 'tools/lean-inspector/native.py'
+        if restore_before_seal:
+            text = native.read_text()
+            marker = "    print(f'RAW_LEAN_REPORT path={destination} sha256={identity}')"
+            self.assertIn(marker, text)
+            restore = ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+                       'fetch', '--repository', str(self.root), '--refresh-stale']
+            native.write_text(text.replace(marker, '    subprocess.run(' + repr(restore)
+                                          + ', check=True)\n' + marker))
+        subprocess.run(['git', '-C', str(self.root), 'add', 'tools/lean-inspector/native.py',
+                        'tools/scripts/worktree/lean-cache-run.sh'], check=True)
+        self.git_commit('clean production fixture', empty=True)
+        return produced_sha256
+
+    def test_entry_production_binds_canonical_identity(self):
+        self.canonical_release_fixture()
+        identity = self.prepare_production_entry()
+        result = self.run_entry('--cache-miss-policy', 'build', direct=True)
+        self.assertEqual(0, result.returncode, '[FAIL] canonical_production_entry_succeeds: ' + result.stderr)
+        self.assertIn('sha256=' + identity, result.stdout)
+        record = json.loads((self.root / self.api.BASE_RECORD).read_text())
+        self.assertEqual(identity, record['report_sha256'])
+        head = subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'], text=True).strip()
+        self.assertEqual(head, self.api.read_seed_base(self.root))
+        self.assertTrue(self.api.seed_format(self.output)['compatible'])
+
+    def test_entry_custom_production_preserves_canonical_base(self):
+        self.canonical_release_fixture()
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        identity = self.prepare_production_entry()
+        canonical = self.output
+        self.output = self.root / 'custom-output' / publication.RAW
+        result = self.run_entry('--cache-miss-policy', 'build', direct=True)
+        self.assertEqual(0, result.returncode, '[FAIL] custom_production_entry_succeeds: ' + result.stderr)
+        self.assertIn('sha256=' + identity, result.stdout)
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+        for path, contents in before.items():
+            self.assertEqual(contents, (self.root / '.lake/build' / path).read_bytes())
+        self.assertTrue(self.api.seed_format(canonical)['compatible'])
+        self.assertTrue(self.api.seed_format(self.output)['compatible'])
+
+    def test_entry_restore_before_seal_preserves_installed_receipt(self):
+        _, producer, _ = self.canonical_release_fixture()
+        identity = self.prepare_production_entry(restore_before_seal=True)
+        result = self.run_entry('--cache-miss-policy', 'build', '--log-dir', str(self.root / 'logs'), direct=True)
+        self.assertNotEqual(0, result.returncode, '[FAIL] replaced_entry_generation_rejects_seal')
+        self.assertIn('published report generation changed before seal', result.stderr)
+        self.assertIn('sha256=' + identity, (self.root / 'logs/publish.stdout.log').read_text(),
+                      '[FAIL] publication_receipt_retains_produced_identity')
+        self.assertEqual(producer, self.api.read_seed_base(self.root))
+        self.assertTrue(self.api.seed_format(self.output)['compatible'],
+                        '[FAIL] replaced_entry_generation_keeps_installed_receipt')
 
     def test_approved_archive_failure_never_falls_back_to_older_seed(self):
         local, _, tag = self.canonical_release_fixture()
@@ -894,7 +959,7 @@ else:
         self.assertFalse(any('lean-build.tgz' in call for call in calls), '[FAIL] equal_producer_never_downloads_archive')
 
     def inject_restore_error(self, operation):
-        site = self.root / 'injection'
+        site = self.root / '.lake/injection'
         site.mkdir(exist_ok=True)
         (site / 'sitecustomize.py').write_text('''import os, pathlib, shutil
 replace, rmtree = os.replace, shutil.rmtree
@@ -926,6 +991,7 @@ shutil.rmtree = failed_cleanup
         self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
                          '[FAIL] late_base_failure_rolls_back_base')
         self.assertIn('"action":"keep"', result.stdout)
+        self.assertIn('approved snapshot base could not be recorded', result.stdout)
 
     def test_staging_cleanup_failure_rolls_back_seed_and_base(self):
         self.canonical_release_fixture()
@@ -935,6 +1001,7 @@ shutil.rmtree = failed_cleanup
         self.assertEqual(before, self.seed_bytes(), '[FAIL] staging_cleanup_failure_rolls_back_seed')
         self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
         self.assertIn('"action":"keep"', result.stdout)
+        self.assertIn('injected cleanup failure', result.stdout)
 
     def test_backup_cleanup_failure_reports_committed_installation(self):
         _, producer, _ = self.canonical_release_fixture()

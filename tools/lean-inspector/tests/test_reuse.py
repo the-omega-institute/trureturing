@@ -90,7 +90,7 @@ class ReuseTests(unittest.TestCase):
         import reuse
         self.bundle()
         captured = reuse.capture(self.root)
-        reuse.seal(self.root, self.report, captured)
+        reuse.seal(self.root, self.report, captured, publication.digest(self.report))
         return reuse
 
     def test_execution_registration_is_explicit_and_strict(self):
@@ -316,7 +316,7 @@ class ReuseTests(unittest.TestCase):
         receipt = publication.member(self.report, api.SUFFIX).read_bytes()
         with cache_guard(self.root):
             with self.assertRaises(BlockingIOError, msg='[FAIL] seal_requires_exclusive_cache_ownership'):
-                api.seal(self.root, self.report, api.capture(self.root))
+                api.seal(self.root, self.report, api.capture(self.root), publication.digest(self.report))
         self.assertEqual(base, (self.root / api.BASE_RECORD).read_bytes())
         self.assertEqual(receipt, publication.member(self.report, api.SUFFIX).read_bytes())
 
@@ -447,7 +447,7 @@ class ReuseTests(unittest.TestCase):
         self.assertTrue(api.probe(self.root, self.report)['needs_lake'],
                         '[FAIL] report_module_mode_change_invalidates_reuse')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
-            api.seal(self.root, self.report, captured)
+            api.seal(self.root, self.report, captured, publication.digest(self.report))
 
     def test_checkout_permission_differences_keep_reuse(self):
         # Two checkouts of one commit may differ in permission bits other than
@@ -583,7 +583,7 @@ class ReuseTests(unittest.TestCase):
         captured = api.capture(self.root)
         self.write('D5/A.lean', 'def a := 2\n')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
-            api.seal(self.root, self.report, captured)
+            api.seal(self.root, self.report, captured, publication.digest(self.report))
         self.write('D5/A.lean', 'def a := 1\n')
         api = self.receipt()
         publish = publication.publish
@@ -600,7 +600,7 @@ class ReuseTests(unittest.TestCase):
         self.write_policy()
         captured = api.capture(self.root)
         self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
-        api.seal(self.root, self.report, captured)
+        api.seal(self.root, self.report, captured, publication.digest(self.report))
         self.assertFalse(publication.member(self.report, '.reuse.json').exists())
         self.policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])
         self.write_policy()

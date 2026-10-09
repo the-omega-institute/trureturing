@@ -563,6 +563,7 @@ def publish(report, destination, expected, repository=None, *, mode=None, expect
                 else:
                     member(destination, suffix).unlink()
             raise
+    return accepted['']
 
 
 def main():
