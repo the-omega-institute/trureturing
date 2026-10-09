@@ -138,19 +138,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.embed`
 
 embed(n,b) applies bitWindow at each original position. Every resulting source is legal, the map is injective, and its complete seam vector is the all-false vector of length n+1.
 
-**Definition 1.12 (Finite probability tables on an output carrier).**
-
-Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.push`
-
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.push` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-push(f,p)(y) is the sum of p(x) over all source points with f(x)=y. The input is finite; the output need not be finite. The same definition applies to signed real tables.
-
-**Definition 1.13 (The existing real parity laws).**
+**Definition 1.12 (The existing real parity laws).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.cubeLaw`
 
@@ -162,7 +150,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.cubeLaw
 
 cubeLaw(n,e) is the real cast of the existing rational fair parityLaw(n,e). A zero coordinate has sign minus one and a one coordinate sign plus one. For positive n and e equal to minus one or one, the mass is one and all proper coordinate restrictions have equal complete tables under the two signs.
 
-**Definition 1.14 (A common positive background on the entire source).**
+**Definition 1.13 (A common positive background on the entire source).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.law`
 
@@ -172,9 +160,9 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.law`
 
 *Commentary.*
 
-law(n,t,e)(w)=(1-t)/card(Source(n))+t*push(embed(n),cubeLaw(n,e))(w). Thus both laws use the uniform background on the entire legal five-mode source, not merely the embedded cube. The parameter t is real.
+law(n,t,e)(w)=(1-t)/card(Source(n))+t*pushforward(embed(n),cubeLaw(n,e))(w). Here pushforward is the existing CapacityMonotone finite-source real pushforward: pushforward(f,p)(y) sums p(x) over the source points with f(x)=y. Its output carrier need not be finite, and signed real tables are allowed. Thus both laws use the uniform background on the entire legal five-mode source, not merely the embedded cube. The parameter t is real.
 
-**Definition 1.15 (The full seam history).**
+**Definition 1.14 (The full seam history).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.seams`
 
@@ -186,7 +174,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.seams`
 
 seams(w) is false followed by the low bit of every source window, in its original order. It includes the initial and final seams.
 
-**Definition 1.16 (The mass of a finite source event).**
+**Definition 1.15 (The mass of a finite source event).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.mass`
 
@@ -198,7 +186,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.mass`
 
 mass(p,E) sums p(w) over all finite source points satisfying the predicate E. The same mass definition underlies the joint, seam and conditional tables.
 
-**Definition 1.17 (Separate full joint reports for proper coordinate sets).**
+**Definition 1.16 (Separate full joint reports for proper coordinate sets).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.jointMass`
 
@@ -210,7 +198,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.jointMa
 
 jointMass(p,A,s,y) sums p(w) over sources with seams(w)=s and w(i)=y(i) for every i in A. The sets A retain the original positions. Empty, noncontiguous and n-1 element sets are included. Although y is written as a full tuple, only its restriction to A is tested. These are separate probability tables, not a paired archive combining all reports from the same sample.
 
-**Definition 1.18 (Events of the complete seam history).**
+**Definition 1.17 (Events of the complete seam history).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.seamEventMass`
 
@@ -222,7 +210,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.seamEve
 
 seamEventMass(p,E) is the total p-mass of sources whose full seam vector lies in E.
 
-**Definition 1.19 (Positive-event conditional coordinate tables).**
+**Definition 1.18 (Positive-event conditional coordinate tables).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.conditionalMass`
 
@@ -234,7 +222,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.conditi
 
 conditionalMass(p,E,A,y) divides the mass of E together with the coordinate restriction by seamEventMass(p,E). Conditional-law assertions concern positive denominators; no conditional law is asserted at a zero-mass event.
 
-**Definition 1.20 (Fixed linear readouts of actual prefix compositions).**
+**Definition 1.19 (Fixed linear readouts of actual prefix compositions).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.linearReadout`
 
@@ -246,7 +234,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.linearR
 
 linearReadout(j,a,b,w)=a*C(take(j,List.ofFn(w))).first+b*C(take(j,List.ofFn(w))).second, with the natural coordinates cast to the reals. The coefficients are fixed; they do not depend on the source or its replies.
 
-**Definition 1.21 (Total variation of finite source laws).**
+**Definition 1.20 (Total variation of finite source laws).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.sourceTV`
 
@@ -258,7 +246,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.sourceT
 
 sourceTV(p,q) is half the sum over the entire Source(n) of the absolute value of p(w)-q(w).
 
-**Definition 1.22 (Total variation of the complete actual reply laws).**
+**Definition 1.21 (Total variation of the complete actual reply laws).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.replyTV`
 
@@ -268,11 +256,11 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.replyTV
 
 *Commentary.*
 
-replyTV(p,q) is half the sum of the absolute reply-mass difference over the actual finite image of reply on Source(n). The masses are push(reply,p) and push(reply,q). Values outside this image have zero mass under both laws.
+replyTV(p,q) is half the sum of the absolute reply-mass difference over the actual finite image of reply on Source(n). The masses are pushforward(reply,p) and pushforward(reply,q). Values outside this image have zero mass under both laws.
 
-**Theorem 1.23 (All proper joint reports and actual continuation separation).**
+**Theorem 1.22 (All proper joint reports and actual continuation separation).**
 
-$$\forall n: \mathbb{N}, ((3 \le n) \implies (\forall t: \mathbb{R}, (((0 < t) \land (t < 1)) \implies ((\forall e: \mathbb{Z}, ((e \in \{-1,1\}) \implies ((\forall w: \operatorname{Source}\left(n\right), (0 < \operatorname{law}\left(n, t, e, w\right))) \land (\operatorname{Total}\left(\operatorname{law}\left(n, t, e\right)\right) = 1)))) \land (\forall A: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right), ((A \neq univ) \implies (\forall s: \operatorname{List}\left(Bool\right), (\forall y: \operatorname{Fin}\left(n\right) \to Window, (\operatorname{J}\left(\operatorname{law}\left(n, t, 1\right), A, s, y\right) = \operatorname{J}\left(\operatorname{law}\left(n, t, -1\right), A, s, y\right)))))) \land (\forall E: \operatorname{List}\left(Bool\right) \to Prop, ((\operatorname{M}\left(\operatorname{law}\left(n, t, 1\right), E\right) = \operatorname{M}\left(\operatorname{law}\left(n, t, -1\right), E\right)) \land ((0 < \operatorname{M}\left(\operatorname{law}\left(n, t, 1\right), E\right)) \implies (\forall A: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right), ((A \neq univ) \implies (\forall y: \operatorname{Fin}\left(n\right) \to Window, (\operatorname{K}\left(\operatorname{law}\left(n, t, 1\right), E, A, y\right) = \operatorname{K}\left(\operatorname{law}\left(n, t, -1\right), E, A, y\right)))))))) \land (\forall w: \operatorname{Source}\left(n\right), (\operatorname{task}\left(0, \operatorname{appendNull}\left(\operatorname{ofFn}\left(w\right)\right)\right) = \operatorname{some}\left(\operatorname{reply}\left(w\right)\right))) \land ((\operatorname{push}\left(reply, \operatorname{law}\left(n, t, 1\right), 0\right) - \operatorname{push}\left(reply, \operatorname{law}\left(n, t, -1\right), 0\right) = (-1)^{n} t / 2^{(n-1)}) \land ((-1)^{n} t / 2^{(n-1)} \neq 0)) \land (\forall j: \mathbb{N}, ((j \le n) \implies (\forall a: \mathbb{R}, (\forall b: \mathbb{R}, (\operatorname{Expected}\left(\operatorname{law}\left(n, t, 1\right), \operatorname{linearReadout}\left(j, a, b\right)\right) = \operatorname{Expected}\left(\operatorname{law}\left(n, t, -1\right), \operatorname{linearReadout}\left(j, a, b\right)\right)))))) \land (\operatorname{Expected}\left(\operatorname{law}\left(n, t, 1\right), reply\right) = \operatorname{Expected}\left(\operatorname{law}\left(n, t, -1\right), reply\right)) \land (\operatorname{sourceTV}\left(\operatorname{law}\left(n, t, 1\right), \operatorname{law}\left(n, t, -1\right)\right) = t) \land (\operatorname{replyTV}\left(\operatorname{law}\left(n, t, 1\right), \operatorname{law}\left(n, t, -1\right)\right) = t)))))$$
+$$\forall n: \mathbb{N}, ((3 \le n) \implies (\forall t: \mathbb{R}, (((0 < t) \land (t < 1)) \implies ((\forall e: \mathbb{Z}, ((e \in \{-1,1\}) \implies ((\forall w: \operatorname{Source}\left(n\right), (0 < \operatorname{law}\left(n, t, e, w\right))) \land (\operatorname{Total}\left(\operatorname{law}\left(n, t, e\right)\right) = 1)))) \land (\forall A: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right), ((A \neq univ) \implies (\forall s: \operatorname{List}\left(Bool\right), (\forall y: \operatorname{Fin}\left(n\right) \to Window, (\operatorname{J}\left(\operatorname{law}\left(n, t, 1\right), A, s, y\right) = \operatorname{J}\left(\operatorname{law}\left(n, t, -1\right), A, s, y\right)))))) \land (\forall E: \operatorname{List}\left(Bool\right) \to Prop, ((\operatorname{M}\left(\operatorname{law}\left(n, t, 1\right), E\right) = \operatorname{M}\left(\operatorname{law}\left(n, t, -1\right), E\right)) \land ((0 < \operatorname{M}\left(\operatorname{law}\left(n, t, 1\right), E\right)) \implies (\forall A: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right), ((A \neq univ) \implies (\forall y: \operatorname{Fin}\left(n\right) \to Window, (\operatorname{K}\left(\operatorname{law}\left(n, t, 1\right), E, A, y\right) = \operatorname{K}\left(\operatorname{law}\left(n, t, -1\right), E, A, y\right)))))))) \land (\forall w: \operatorname{Source}\left(n\right), (\operatorname{task}\left(0, \operatorname{appendNull}\left(\operatorname{ofFn}\left(w\right)\right)\right) = \operatorname{some}\left(\operatorname{reply}\left(w\right)\right))) \land ((\operatorname{pushforward}\left(reply, \operatorname{law}\left(n, t, 1\right), 0\right) - \operatorname{pushforward}\left(reply, \operatorname{law}\left(n, t, -1\right), 0\right) = (-1)^{n} t / 2^{(n-1)}) \land ((-1)^{n} t / 2^{(n-1)} \neq 0)) \land (\forall j: \mathbb{N}, ((j \le n) \implies (\forall a: \mathbb{R}, (\forall b: \mathbb{R}, (\operatorname{Expected}\left(\operatorname{law}\left(n, t, 1\right), \operatorname{linearReadout}\left(j, a, b\right)\right) = \operatorname{Expected}\left(\operatorname{law}\left(n, t, -1\right), \operatorname{linearReadout}\left(j, a, b\right)\right)))))) \land (\operatorname{Expected}\left(\operatorname{law}\left(n, t, 1\right), reply\right) = \operatorname{Expected}\left(\operatorname{law}\left(n, t, -1\right), reply\right)) \land (\operatorname{sourceTV}\left(\operatorname{law}\left(n, t, 1\right), \operatorname{law}\left(n, t, -1\right)\right) = t) \land (\operatorname{replyTV}\left(\operatorname{law}\left(n, t, 1\right), \operatorname{law}\left(n, t, -1\right)\right) = t)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.native_probability_separation` (`✓ std3`). ∎
 
@@ -309,7 +297,6 @@ These assertions establish the finite probability and actual null-continuation r
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.mass`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.native_probability_separation`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.native_reply_injective`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.push`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.reply`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.replyTV`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.seamEventMass`
@@ -318,3 +305,4 @@ These assertions establish the finite probability and actual null-continuation r
 - Dependency: [D5/S1/Words/Palindromes/FridPrefix/NumeralSemantics](../../../../S1/Words/Palindromes/FridPrefix/NumeralSemantics.md)
 - Dependency: [D5/S3/Analytic/ReflectedSpectrum/ParityConditionedMoments](../../../Analytic/ReflectedSpectrum/ParityConditionedMoments.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber](NullReplyFiber.md)
+- Dependency: [D5/S3/Entropy/Forgetting/CapacityMonotone](../../../Entropy/Forgetting/CapacityMonotone.md)

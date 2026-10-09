@@ -9,6 +9,7 @@
 import D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber
 import D5.S1.Words.Palindromes.FridPrefix.NumeralSemantics
 import D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments
+import D5.S3.Entropy.Forgetting.CapacityMonotone
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -25,6 +26,7 @@ open D5.S1.Digit.GoldenBase4IntervalMachine (fibPair fibPair_append_digit)
 open D5.S1.Words.FridPrefix (canonical_lex_value)
 open D5.S0.Automata.BinaryZeckendorfLanguage (NoAdjacentOnes)
 open D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments
+open D5.S3.Entropy.Forgetting.CapacityMonotone (pushforward)
 
 /-- The original natural composition, in chronological window order. -/
 def composition (w : List Window) : ℕ × ℕ :=
@@ -218,36 +220,32 @@ private theorem embed_injective (n : ℕ) : Function.Injective (embed n) := by
   funext i
   exact bitWindow_injective (congrFun (congrArg Subtype.val h) i)
 
-/-- Finite pushforward probability mass, also defined for an infinite output carrier. -/
-def push {X Y : Type*} [Fintype X] (f : X → Y) (p : X → ℝ) (y : Y) : ℝ :=
-  ∑ x, if f x = y then p x else 0
-
 private theorem push_injective {X Y : Type*} [Fintype X]
     (f : X → Y) (hf : Function.Injective f) (p : X → ℝ) (x : X) :
-    push f p (f x) = p x := by
+    pushforward f p (f x) = p x := by
   classical
-  simp only [push, hf.eq_iff]
+  simp only [pushforward, hf.eq_iff]
   simp
 
 private theorem push_outside {X Y : Type*} [Fintype X]
-    (f : X → Y) (p : X → ℝ) (y : Y) (hy : y ∉ Set.range f) : push f p y = 0 := by
+    (f : X → Y) (p : X → ℝ) (y : Y) (hy : y ∉ Set.range f) : pushforward f p y = 0 := by
   classical
   apply Finset.sum_eq_zero
   intro x _
   simp only [if_neg (fun h => hy ⟨x, h⟩)]
 
 private theorem push_sum {X Y : Type*} [Fintype X] [Fintype Y]
-    (f : X → Y) (p : X → ℝ) : (∑ y, push f p y) = ∑ x, p x := by
+    (f : X → Y) (p : X → ℝ) : (∑ y, pushforward f p y) = ∑ x, p x := by
   classical
-  simp only [push]
+  simp only [pushforward]
   rw [Finset.sum_comm]
   simp
 
 private theorem push_test {X Y : Type*} [Fintype X] [Fintype Y]
     (f : X → Y) (p : X → ℝ) (H : Y → ℝ) :
-    (∑ y, push f p y * H y) = ∑ x, p x * H (f x) := by
+    (∑ y, pushforward f p y * H y) = ∑ x, p x * H (f x) := by
   classical
-  simp only [push, Finset.sum_mul]
+  simp only [pushforward, Finset.sum_mul]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro x _
@@ -272,7 +270,7 @@ private theorem cube_sum (n : ℕ) (hn : 0 < n) (ε : ℤ) (hε : ε = -1 ∨ ε
 
 /-- Both laws use the uniform background on the entire legal source domain. -/
 def law (n : ℕ) (mix : ℝ) (ε : ℤ) (w : Source n) : ℝ :=
-  (1 - mix) / Fintype.card (Source n) + mix * push (embed n) (cubeLaw n ε) w
+  (1 - mix) / Fintype.card (Source n) + mix * pushforward (embed n) (cubeLaw n ε) w
 
 private theorem source_nonempty (n : ℕ) : Nonempty (Source n) := ⟨embed n (fun _ => 0)⟩
 
@@ -285,7 +283,7 @@ private theorem law_probability (n : ℕ) (hn : 0 < n) (mix : ℝ)
     exact_mod_cast Fintype.card_pos
   constructor
   · intro w
-    have hm : 0 ≤ push (embed n) (cubeLaw n ε) w :=
+    have hm : 0 ≤ pushforward (embed n) (cubeLaw n ε) w :=
       Finset.sum_nonneg (fun b _ => by split <;> simp [cube_nonneg])
     exact add_pos_of_pos_of_nonneg (div_pos (by linarith) hc) (mul_nonneg hl.le hm)
   · simp only [law, Finset.sum_add_distrib, ← Finset.mul_sum,
@@ -303,7 +301,7 @@ def mass {X : Type*} [Fintype X] (p : X → ℝ) (E : X → Prop) : ℝ :=
 
 private theorem mass_push {X Y : Type*} [Fintype X] [Fintype Y]
     (f : X → Y) (p : X → ℝ) (E : Y → Prop) :
-    mass (push f p) E = mass p (fun x => E (f x)) := by
+    mass (pushforward f p) E = mass p (fun x => E (f x)) := by
   have h := push_test f p (fun y => if E y then 1 else 0)
   simpa only [mass, mul_ite, mul_one, mul_zero] using h
 
@@ -378,7 +376,7 @@ private theorem proper_event (n : ℕ) (hn : 0 < n) (mix : ℝ)
       mix * mass (cubeLaw n ε) (fun b => E (List.replicate (n + 1) false) ∧
         ∀ i ∈ A, bitWindow (b i) = y i) := by
     change mass (fun w => (1 - mix) / Fintype.card (Source n) +
-      mix * push (embed n) (cubeLaw n ε) w) test = _
+      mix * pushforward (embed n) (cubeLaw n ε) w) test = _
     rw [mass_mix, mass_push]
     have predicate : (fun b => test (embed n b)) =
         (fun b => E (List.replicate (n + 1) false) ∧ ∀ i ∈ A, bitWindow (b i) = y i) := by
@@ -489,14 +487,14 @@ private theorem zero_reply_source (n : ℕ) (w : Source n) :
     simp [embed, bitWindow]
 
 private theorem zero_reply_mass (n : ℕ) (mix : ℝ) (ε : ℤ) :
-    push (@reply n) (law n mix ε) 0 = law n mix ε (embed n (fun _ => 0)) := by
+    pushforward (@reply n) (law n mix ε) 0 = law n mix ε (embed n (fun _ => 0)) := by
   classical
-  unfold push
+  unfold pushforward
   simp_rw [zero_reply_source]
   simp
 
 private theorem zero_difference (n : ℕ) (mix : ℝ) :
-    push (@reply n) (law n mix 1) 0 - push (@reply n) (law n mix (-1)) 0 =
+    pushforward (@reply n) (law n mix 1) 0 - pushforward (@reply n) (law n mix (-1)) 0 =
       (-1 : ℝ) ^ n * mix / 2 ^ (n - 1) := by
   rw [zero_reply_mass, zero_reply_mass]
   simp only [law, push_injective (embed n) (embed_injective n)]
@@ -514,7 +512,7 @@ def sourceTV {n : ℕ} (p q : Source n → ℝ) : ℝ := (1 / 2) * ∑ w, |p w -
 
 /-- Total variation of complete natural reply laws, over their actual finite image. -/
 def replyTV {n : ℕ} (p q : Source n → ℝ) : ℝ :=
-  (1 / 2) * ∑ r ∈ Finset.univ.image (@reply n), |push reply p r - push reply q r|
+  (1 / 2) * ∑ r ∈ Finset.univ.image (@reply n), |pushforward reply p r - pushforward reply q r|
 
 private theorem cube_abs (n : ℕ) (b : Fin n → Fin 2) :
     |cubeLaw n 1 b - cubeLaw n (-1) b| = cubeLaw n 1 b + cubeLaw n (-1) b := by
@@ -531,7 +529,7 @@ private theorem source_tv (n : ℕ) (hn : 0 < n) (mix : ℝ) (hm : 0 ≤ mix) :
     sourceTV (law n mix 1) (law n mix (-1)) = mix := by
   classical
   have reduce :
-      (∑ w, |push (embed n) (cubeLaw n 1) w - push (embed n) (cubeLaw n (-1)) w|) =
+      (∑ w, |pushforward (embed n) (cubeLaw n 1) w - pushforward (embed n) (cubeLaw n (-1)) w|) =
         ∑ b, |cubeLaw n 1 b - cubeLaw n (-1) b| := by
     symm
     apply Fintype.sum_of_injective (embed n) (embed_injective n)
@@ -540,7 +538,7 @@ private theorem source_tv (n : ℕ) (hn : 0 < n) (mix : ℝ) (hm : 0 ≤ mix) :
     · intro b
       rw [push_injective _ (embed_injective n), push_injective _ (embed_injective n)]
   have diff (w : Source n) : law n mix 1 w - law n mix (-1) w =
-      mix * (push (embed n) (cubeLaw n 1) w - push (embed n) (cubeLaw n (-1)) w) := by
+      mix * (pushforward (embed n) (cubeLaw n 1) w - pushforward (embed n) (cubeLaw n (-1)) w) := by
     unfold law; ring
   simp only [sourceTV, diff, abs_mul, abs_of_nonneg hm, ← Finset.mul_sum, reduce,
     cube_abs, Finset.sum_add_distrib, cube_sum n hn 1 (Or.inr rfl),
@@ -571,7 +569,7 @@ theorem native_probability_separation (n : ℕ) (hn : 3 ≤ n) (mix : ℝ)
           conditionalMass (law n mix 1) E A y = conditionalMass (law n mix (-1)) E A y)) ∧
     (∀ w : Source n,
       task 0 (List.ofFn w.val ++ [.zero]) = some ((reply w : ℕ) : ZMod 0)) ∧
-    (push (@reply n) (law n mix 1) 0 - push (@reply n) (law n mix (-1)) 0 =
+    (pushforward (@reply n) (law n mix 1) 0 - pushforward (@reply n) (law n mix (-1)) 0 =
       (-1 : ℝ) ^ n * mix / 2 ^ (n - 1) ∧ (-1 : ℝ) ^ n * mix / 2 ^ (n - 1) ≠ 0) ∧
     (∀ j : ℕ, j ≤ n → ∀ a b : ℝ,
       (∑ w, law n mix 1 w * linearReadout j a b w) =

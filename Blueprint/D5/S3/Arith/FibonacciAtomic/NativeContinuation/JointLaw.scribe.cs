@@ -83,12 +83,10 @@ internal sealed class JointLawDocument : IScribeDocumentDefinition
                 "bitWindow sends zero to null and one to middle. Both letters have false high and low bits."),
             Definition("embed", "The actual zero-seam cube",
                 "embed(n,b) applies bitWindow at each original position. Every resulting source is legal, the map is injective, and its complete seam vector is the all-false vector of length n+1."),
-            Definition("push", "Finite probability tables on an output carrier",
-                "push(f,p)(y) is the sum of p(x) over all source points with f(x)=y. The input is finite; the output need not be finite. The same definition applies to signed real tables."),
             Definition("cubeLaw", "The existing real parity laws",
                 "cubeLaw(n,e) is the real cast of the existing rational fair parityLaw(n,e). A zero coordinate has sign minus one and a one coordinate sign plus one. For positive n and e equal to minus one or one, the mass is one and all proper coordinate restrictions have equal complete tables under the two signs."),
             Definition("law", "A common positive background on the entire source",
-                "law(n,t,e)(w)=(1-t)/card(Source(n))+t*push(embed(n),cubeLaw(n,e))(w). Thus both laws use the uniform background on the entire legal five-mode source, not merely the embedded cube. The parameter t is real."),
+                "law(n,t,e)(w)=(1-t)/card(Source(n))+t*pushforward(embed(n),cubeLaw(n,e))(w). Here pushforward is the existing CapacityMonotone finite-source real pushforward: pushforward(f,p)(y) sums p(x) over the source points with f(x)=y. Its output carrier need not be finite, and signed real tables are allowed. Thus both laws use the uniform background on the entire legal five-mode source, not merely the embedded cube. The parameter t is real."),
             Definition("seams", "The full seam history",
                 "seams(w) is false followed by the low bit of every source window, in its original order. It includes the initial and final seams."),
             Definition("mass", "The mass of a finite source event",
@@ -104,7 +102,7 @@ internal sealed class JointLawDocument : IScribeDocumentDefinition
             Definition("sourceTV", "Total variation of finite source laws",
                 "sourceTV(p,q) is half the sum over the entire Source(n) of the absolute value of p(w)-q(w)."),
             Definition("replyTV", "Total variation of the complete actual reply laws",
-                "replyTV(p,q) is half the sum of the absolute reply-mass difference over the actual finite image of reply on Source(n). The masses are push(reply,p) and push(reply,q). Values outside this image have zero mass under both laws."),
+                "replyTV(p,q) is half the sum of the absolute reply-mass difference over the actual finite image of reply on Source(n). The masses are pushforward(reply,p) and pushforward(reply,q). Values outside this image have zero mass under both laws."),
             Theorem("native_probability_separation", "All proper joint reports and actual continuation separation",
                 ProbabilityFormula(),
                 "The two laws in the formula are law(n,t,1) and law(n,t,-1). Total(p) denotes the finite sum of all source masses. J abbreviates jointMass, M abbreviates seamEventMass, and K abbreviates conditionalMass. Expected(p,H) is the finite sum of p(w)*H(w). The sign set contains minus one and one; A ranges over Finset(Fin n), s over finite Bool lists, y over full Window tuples, and E over all predicates on the complete seam history.",
@@ -137,8 +135,8 @@ internal sealed class JointLawDocument : IScribeDocumentDefinition
         var actual = All("w", Source(n), EqOf(
             Call("task", D(0), Call("appendNull", Call("ofFn", w))),
             Call("some", Call("reply", w))));
-        var zero = And(EqOf(Seq(Call("push", V("reply"), plus, D(0)), Sp, Minus, Sp,
-            Call("push", V("reply"), minus, D(0))), SignedZero), Seq(SignedZero, Sp, Neq, Sp, D(0)));
+        var zero = And(EqOf(Seq(Call("pushforward", V("reply"), plus, D(0)), Sp, Minus, Sp,
+            Call("pushforward", V("reply"), minus, D(0))), SignedZero), Seq(SignedZero, Sp, Neq, Sp, D(0)));
         var linear = All("j", Natural, Imp(LeOf(V("j"), n), All("a", Real, All("b", Real,
             EqOf(Call("Expected", plus, Call("linearReadout", V("j"), V("a"), V("b"))),
                 Call("Expected", minus, Call("linearReadout", V("j"), V("a"), V("b"))))))));
