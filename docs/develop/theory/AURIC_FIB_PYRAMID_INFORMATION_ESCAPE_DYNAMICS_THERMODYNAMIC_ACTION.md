@@ -918,7 +918,218 @@ u_\beta H_\beta f
 
 第一阶段最稳的可编译范围是 ProjectionFiber、RelaxationMap 和 LayeredEscapeProduct 的有限组合部分。熵导数、对数平均和 PGL scalar period 应作为后续文件，避免第一版形式化被边界和实分析拖住。
 
-## 8. 已证实、本文推导与下一步 formalization
+## 13. Quantum lift：与四大力学统一框架的接口
+
+### 13.1 量子状态的最小提升
+
+定义一个分层 Hilbert 空间
+
+\[
+\mathcal H
+=
+\mathbb C\lvert 3\rangle
+\oplus
+(\mathbb C^2\otimes\mathbb C^2).
+\]
+
+第一项是 apex sector，第二项是底部两个 binary 变量的量子 sector。取块对角密度矩阵
+
+\[
+\rho
+=
+(1-r)\lvert3\rangle\langle3\rvert
+\oplus
+r\sigma,
+\]
+
+其中 \(\sigma\) 是两个量子比特上的密度矩阵。对 \(\sigma\) 在计算基下测量或退相干，得到
+
+\[
+q=(q_{00},q_{10},q_{01},q_{11}).
+\]
+
+然后
+
+\[
+\alpha=q_{10}+q_{11},\qquad
+\beta=q_{01}+q_{11},\qquad
+\eta=q_{11}.
+\]
+
+于是经典金字塔状态是量子状态经过以下复合读出后的结果：
+
+\[
+\rho
+\longmapsto
+\text{dephase}(\sigma)
+\longmapsto
+q
+\longmapsto
+(\alpha,\beta,\eta)
+\longmapsto
+(X,Y,Z).
+\]
+
+这给出了一个严格的解释：
+
+- \(\eta\) 是量子 sector 在选定测量基下的经典 joint-correlation 坐标；
+- \(\kappa=r\eta\) 是加上 apex 权重后的完整概率坐标；
+- \((X,Y,Z)\) 是进一步忘掉 joint correlation 后的 marginal readout；
+- \(\sigma\) 中的 off-diagonal coherence 和 entanglement 是更高层的隐藏信息，不能被 \(\eta\) 代替。
+
+因此，当前金字塔是量子状态空间经过两次 quotient 后得到的 classical observable sector。
+
+### 13.2 四大力学的共同生成元结构
+
+把用户之前的四个方向写成同一个状态变量 \(x\) 的四类生成元：
+
+\[
+\dot x
+=
+\underbrace{J(x)\nabla E(x)}_{\text{Hamiltonian / reversible}}
++
+\underbrace{M(x)\nabla S(x)}_{\text{thermodynamic / dissipative}}
++
+\underbrace{\mathcal L_{\mathrm{readout}}(x)}_{\text{quantum measurement / coarse-graining}}
++
+\underbrace{\mathcal L_{\mathrm{field}}(x)}_{\text{electromagnetic or gauge boundary}}.
+\]
+
+其中：
+
+- \(J^\mathsf T=-J\) 是辛或 Hamiltonian 结构；
+- \(M\succeq0\) 是 Onsager mobility；
+- \(\mathcal L_{\mathrm{readout}}\) 必须是完全正、保持迹的量子通道或其离散版本；
+- \(\mathcal L_{\mathrm{field}}\) 负责局部连接、端口和 gauge phase；
+- 离散 prime/Fibonacci seam 可作为 \(\mathcal L_{\mathrm{field}}\) 的算术 phase sector，但当前仍是模型接口。
+
+对于量子态，标准可逆部分是
+
+\[
+\dot\rho=-i[H,\rho].
+\]
+
+耗散部分应写成 Lindblad/GKSL 形式：
+
+\[
+\mathcal D(\rho)
+=
+\sum_\ell
+\left(
+L_\ell\rho L_\ell^\dagger
+-\frac12\{L_\ell^\dagger L_\ell,\rho\}
+\right).
+\]
+
+因此量子版本的候选方程是
+
+\[
+\dot\rho
+=
+-i[H,\rho]
++
+\mathcal D(\rho)
++
+\mathcal L_{\mathrm{capture}}(\rho).
+\]
+
+### 13.3 当前金字塔对应哪一部分
+
+当前 \(\kappa\) 质量作用流是对角概率 sector 上的确定性 mean-field dissipative closure：
+
+\[
+\dot\kappa
+=
+-\gamma L(a,b)\,\partial_\kappa D.
+\]
+
+它不是
+
+\[
+\dot\rho=-i[H,\rho]
+\]
+
+的直接结果，也不是一个线性 CPTP 通道的完整表达。要把它升级为量子动力学，需要构造一个量子 detailed-balance channel，使其在指定测量基下诱导出相应的 classical transition law，或明确声明它是测量后的 mean-field limit。
+
+量子系统的相对熵满足 Gibbs/free-energy 关系：
+
+\[
+D(\rho\Vert\rho_\beta)
+=
+\beta\bigl(F(\rho)-F(\rho_\beta)\bigr).
+\]
+
+在 \(\rho\) 和 \(\rho_\beta\) 都是块对角、且能量只依赖五个 classical sectors 时，当前的
+
+\[
+D_{\mathrm h}=rI(q)
+\]
+
+可以视为量子相对熵在选定观测代数上的 classical restriction。若 \(\sigma\) 含有 coherence 或 entanglement，则完整量子相对熵还包含：
+
+\[
+D(\rho\Vert\rho_\beta)
+=
+D_{\mathrm{classical}}
++
+D_{\mathrm{coherence/correlation}}
+\]
+
+的额外部分。这个分解需要指定 pinching map 和参考 Gibbs state 后才具有定理意义。
+
+### 13.4 与此前 QCA/Dirac 统一线的连接
+
+此前 QCA/Dirac 方案中的局部有限维 Hilbert 空间、酉局部更新、Lieb–Robinson 型有限传播和 SU(2)/Bloch 内部结构，可以提供本框架的 reversible/quantum carrier：
+
+\[
+U_{\mathrm{QCA}}^t
+=
+e^{-itH_{\mathrm{QCA}}}.
+\]
+
+Fibonacci 或黄金 transfer 可以作为离散的 SL\(_2\) sector，量子 phase 则由 Hilbert space 中的 unitary representation 携带。金字塔的 \(\eta\) 流和 radial capture 属于对这个可逆 carrier 做 coarse-graining 后得到的不可逆 effective dynamics。
+
+这提供了一个分层统一结构：
+
+\[
+\text{QCA/Dirac unitary carrier}
+\longrightarrow
+\text{measurement and marginal quotient}
+\longrightarrow
+\text{pyramid }(r,\alpha,\beta,\eta)
+\longrightarrow
+\text{KL/Onsager dissipation}.
+\]
+
+此前的关系
+
+\[
+v_{\mathrm{ext}}^2+v_{\mathrm{int}}^2=c^2
+\]
+
+可以继续作为 QCA 内部几何的模型级约束，但不能直接把 \(r\) 识别成 proper time，也不能把 Fisher metric 识别成 Minkowski metric。当前 \(r\) 是概率层级或底部质量坐标，proper time 需要额外定义的时钟和因果结构。
+
+### 13.5 电磁/规范接口与限制
+
+若把第四个方向理解为电磁或 gauge structure，最自然的接口是：
+
+- \(H_\alpha,H_\beta\) 提供宏观层运动的水平连接；
+- Fibonacci scalar phase 提供离散 holonomy-like phase；
+- prime seam 提供离散 arithmetic chart transition；
+- boundary/readout map 提供端口和观测接口。
+
+这还没有产生 Maxwell 方程、U(1) curvature 或真实电磁场。要完成电磁连接，需要在层状态上定义 gauge group action、link variable、field strength 和 gauge-invariant cost，并证明其与 kernel refinement 及 radial transport 的兼容性。
+
+因此当前的四大力学对应关系是：
+
+| 方向 | 当前框架中的对象 | 当前状态 |
+|---|---|---|
+| 动力学 | QCA/SL\(_2\) reversible transfer、候选 Hamiltonian flow | 有模型锚点，尚未与全部 seam 合并 |
+| 量子力学 | \(\rho\)、unitary、pinching、CPTP/GKSL | 有严格接口，金字塔是 classical readout sector |
+| 热力学 | \(D_{\mathrm h}\)、Onsager mobility、free-energy decrease | κ-flow 已给出理论模型 |
+| 电磁/规范 | horizontal connection、phase、boundary port | 仍是待构造的 field extension |
+
+## 14. 证据账本：已有结果、本文推导与下一步 formalization
 
 ### 已有仓库结果
 
