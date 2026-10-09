@@ -64,7 +64,7 @@ $$\forall (a b c d : \mathbb{N}) , \exists (M : Fin 3 \to Matrix (Fin a) (Fin b)
 
 *Commentary.*
 
-QMaxFlow_attained is used on the live proof path of the width-three bridge construction.
+QMaxFlow_attained shows that two triples of complex matrices attain the quantum max-flow; CastlingDeficit.concise_maximizer applies this to obtain maximizing assignments whose stacked maps are injective.
 
 **Theorem 1.6 (rank_le_QMaxFlow).**
 
@@ -76,7 +76,7 @@ $$\forall \{a b c d : \mathbb{N}\} (M : Fin 3 \to Matrix (Fin a) (Fin b) \mathbb
 
 *Commentary.*
 
-rank_le_QMaxFlow is used on the live proof path of the width-three bridge construction.
+The rank of every complex flow matrix is at most QMaxFlow; rational_witness_lower_bound applies this after extending rational coefficients to ℂ without changing rank.
 
 **Theorem 1.7 (QMaxFlow_le_QMinCut).**
 
@@ -88,7 +88,7 @@ $$\forall (a b c d : \mathbb{N}) , \operatorname{QuantumMaxFlowBound.QMaxFlow} a
 
 *Commentary.*
 
-QMaxFlow_le_QMinCut is used on the live proof path of the width-three bridge construction.
+Quantum max-flow is bounded by each of the three cut dimensions, hence by QMinCut; QuantumMaxFlowMinCut.result combines this upper bound with the constructed full-rank assignments.
 
 **Theorem 1.8 (cone_bounds).**
 
@@ -100,7 +100,7 @@ $$\forall \{a b : \mathbb{N}\} , 0 < a \to a \cdot a + b \cdot b \leq 3 \cdot a 
 
 *Commentary.*
 
-cone_bounds is used on the live proof path of the width-three bridge construction.
+For a positive a, the cone inequality implies b < 3*a; cone_QMinCut uses this bound to compare the inner and outer cuts, and QuantumMaxFlowMinCut.cone_descent uses it to keep the descended dimension positive.
 
 **Theorem 1.9 (cone_QMinCut).**
 
@@ -112,7 +112,7 @@ $$\forall \{a b c d : \mathbb{N}\} , 0 < a \to 0 < c \to a \cdot a + b \cdot b \
 
 *Commentary.*
 
-cone_QMinCut is used on the live proof path of the width-three bridge construction.
+For two positive dimension pairs satisfying the cone inequalities, QMinCut equals min(a*d,b*c); QuantumMaxFlowMinCut.result uses this identity to identify the attained outer cut with the quantum min-cut.
 
 **Definition 1.10 (RationalWitness).**
 
@@ -124,7 +124,7 @@ $$\forall (a b c d : \mathbb{N}) , \operatorname{QuantumMaxFlowBound.RationalWit
 
 *Commentary.*
 
-The defining expression fixes RationalWitness for the consumed QuantumMaxFlowBound construction.
+RationalWitness asserts the existence of two triples of rational matrices whose flow rank equals min(a*d,b*c); rationalWitness_full_rank transfers that rank to complex matrices.
 
 **Theorem 1.11 (rationalWitness_full_rank).**
 
@@ -136,7 +136,7 @@ $$\forall \{a b c d : \mathbb{N}\} , \operatorname{QuantumMaxFlowBound.RationalW
 
 *Commentary.*
 
-rationalWitness_full_rank is used on the live proof path of the width-three bridge construction.
+A rational flow attaining the smaller outer cut implies QMaxFlow = min(a*d,b*c); QuantumMaxFlowMinCut.claim_of_hypotheses applies this to the base and width-two constructions.
 
 **Definition 1.12 (BaseWitness).**
 
@@ -148,7 +148,7 @@ $$\operatorname{QuantumMaxFlowBound.BaseWitness} \iff (\forall (a b c d : \mathb
 
 *Commentary.*
 
-The defining expression fixes BaseWitness for the consumed QuantumMaxFlowBound construction.
+BaseWitness asserts the existence of rational full-rank flows when both positive dimension pairs lie strictly between equal dimensions and ratio two; QuantumMaxFlowMinCut.claim_of_hypotheses uses this as the base case of its induction.
 
 **Definition 1.13 (Castling).**
 
@@ -160,7 +160,7 @@ $$\operatorname{QuantumMaxFlowBound.Castling} \iff (\forall (a b c d : \mathbb{N
 
 *Commentary.*
 
-The defining expression fixes Castling for the consumed QuantumMaxFlowBound construction.
+Castling asserts preservation of the displayed outer-cut deficit under the simultaneous width-three castling transformation; QuantumMaxFlowMinCut.full_rank_of_descent uses this identity to transfer full rank from smaller dimension pairs.
 
 **Definition 1.14 (WidthTwo).**
 
@@ -172,7 +172,7 @@ $$\operatorname{QuantumMaxFlowBound.WidthTwo} \iff (\forall (a b c d : \mathbb{N
 
 *Commentary.*
 
-The defining expression fixes WidthTwo for the consumed QuantumMaxFlowBound construction.
+WidthTwo asserts the existence of rational full-rank flows for ordered positive pairs when either pair is square or the two ratios lie on opposite sides of two; QuantumMaxFlowMinCut.claim_of_hypotheses uses these cases alongside the strict base construction.
 
 **Definition 1.15 (threeSlices).**
 
@@ -184,7 +184,7 @@ $$\forall (m : Type) (n : Type) (A B C : Matrix m n \mathbb{Q}) (r : Fin 3) , \o
 
 *Commentary.*
 
-The defining expression fixes threeSlices for the consumed QuantumMaxFlowBound construction.
+threeSlices assigns A, B and C to the three bond coordinates; typed_three_slice_flow expands the resulting contraction into three Kronecker products.
 
 **Theorem 1.16 (typed_three_slice_flow).**
 
@@ -196,7 +196,7 @@ $$\forall \{I : Type\} \{J : Type\} \{K : Type\} \{L : Type\} (A B C : Matrix I 
 
 *Commentary.*
 
-typed_three_slice_flow is used on the live proof path of the width-three bridge construction.
+The contraction of the two threeSlices families is the sum of the three corresponding Kronecker products; ShiftPencilBlocks.typed_two_slice_flow sets the third slices to zero to recover the width-two pencil.
 
 **Definition 1.17 (rectId).**
 
@@ -208,7 +208,7 @@ $$\forall (m n : \mathbb{N}) , \operatorname{QuantumMaxFlowBound.rectId} m n = (
 
 *Commentary.*
 
-The defining expression fixes rectId for the consumed QuantumMaxFlowBound construction.
+rectId is the rectangular identity matrix, with entry one at equal indices and zero elsewhere; square_left and square_right use it to construct identity submatrices, and ShiftPencilBlocks.pencil uses it for the unshifted term.
 
 **Theorem 1.18 (witness_swap).**
 
@@ -220,7 +220,7 @@ $$\forall \{a b c d : \mathbb{N}\} , \operatorname{QuantumMaxFlowBound.RationalW
 
 *Commentary.*
 
-witness_swap is used on the live proof path of the width-three bridge construction.
+Transposing both matrix triples and exchanging the tensor factors preserves full rank while swapping the two dimension pairs; ShiftPencilBlocks.different_depth_witness uses this symmetry for the reversed depth ordering.
 
 **Theorem 1.19 (widthTwo_proved).**
 
@@ -232,7 +232,7 @@ $$\operatorname{QuantumMaxFlowBound.WidthTwo}$$
 
 *Commentary.*
 
-widthTwo_proved is used on the live proof path of the width-three bridge construction.
+Ordered positive dimension pairs in the cases specified by WidthTwo admit rational matrices attaining the outer cut, using square identities or two complementary identity submatrices; QuantumMaxFlowMinCut.claim_of_hypotheses applies these constructions in its square and mixed-ratio cases.
 
 ## References
 

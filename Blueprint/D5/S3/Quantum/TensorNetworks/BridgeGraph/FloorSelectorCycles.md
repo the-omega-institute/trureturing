@@ -16,7 +16,7 @@ $$\forall (\rho : \mathbb{Q}) (n : \mathbb{Z}) , \operatorname{FloorSelectorCycl
 
 *Commentary.*
 
-The defining expression fixes jump for the consumed FloorSelectorCycles construction.
+jump is the difference between consecutive ceilings of n*ρ; jump_zero_or_one bounds its values for slopes between zero and one, allowing it to represent selector events.
 
 **Theorem 1.2 (jump_zero_or_one).**
 
@@ -28,7 +28,7 @@ $$\forall \{\rho : \mathbb{Q}\} , 0 \leq \rho \to \rho \leq 1 \to \forall (n : \
 
 *Commentary.*
 
-jump_zero_or_one is used on the live proof path of the width-three bridge construction.
+For 0 ≤ ρ ≤ 1, every ceiling increment is zero or one; CyclicResolvent.forward_supported_zero applies this to the input and output slopes in the balanced-cycle recurrence.
 
 **Theorem 1.3 (opposite_direction_excess).**
 
@@ -40,7 +40,7 @@ $$\forall \{\rho_{I} \rho_{O} : \mathbb{Q}\} , \rho_{I} \leq \rho_{O} \to \foral
 
 *Commentary.*
 
-opposite_direction_excess is used on the live proof path of the width-three bridge construction.
+When ρI ≤ ρO, the input ceiling increments along a forward interval exceed the output increments along a backward interval by at most one; CyclicResolvent.forward_supported_zero uses this as the interval balance inequality.
 
 **Theorem 1.4 (jump_one_iff_fin_selector).**
 
@@ -52,7 +52,7 @@ $$\forall (A B : \mathbb{N}) , 0 < B \to B \leq A \to \forall (n : Fin A) , \ope
 
 *Commentary.*
 
-jump_one_iff_fin_selector is used on the live proof path of the width-three bridge construction.
+For 0 < B ≤ A, a ceiling increment at n in Fin A equals one exactly when n is one of the positions floor(k*A/B) with k in Fin B; CyclicResolvent.forward_supported_zero uses this equivalence to express coordinate support as selector events.
 
 **Theorem 1.5 (monodromy_forces_zero).**
 
@@ -64,7 +64,7 @@ $$\forall (\mu z : \mathbb{Q}) , \mu < 1 \to z = \mu \cdot z \to z = 0$$
 
 *Commentary.*
 
-monodromy_forces_zero is used on the live proof path of the width-three bridge construction.
+A rational value fixed by multiplication by μ < 1 must vanish; balanced_cycle_zero applies this after propagating a coordinate around a full period.
 
 **Theorem 1.6 (half_pow_lt_one).**
 
@@ -76,7 +76,7 @@ $$\forall \{n : \mathbb{N}\} , 0 < n \to (1 \operatorname{HDiv.hDiv} 2)^{n} < 1$
 
 *Commentary.*
 
-half_pow_lt_one is used on the live proof path of the width-three bridge construction.
+Every positive power of the rational number 1/2 is strictly below one; tensor_edge_product_lt_one uses this to bound the product of weights around the tensor cycle.
 
 **Theorem 1.7 (recurrence_product_bounded).**
 
@@ -88,7 +88,7 @@ $$\forall (z f : \mathbb{N} \to \mathbb{Q}) (L : \mathbb{N}) , (\forall n < L , 
 
 *Commentary.*
 
-recurrence_product_bounded is used on the live proof path of the width-three bridge construction.
+Iterating a multiplicative recurrence over L steps multiplies the initial value by the product of its L factors; balanced_cycle_zero uses this identity to compare a coordinate with its value one period later.
 
 **Theorem 1.8 (balanced_cycle_zero).**
 
@@ -100,7 +100,7 @@ $$\forall (i o : \mathbb{Z} \to \mathbb{Z}) (z c : \mathbb{Z} \to \mathbb{Q}) , 
 
 *Commentary.*
 
-A balanced interval count excludes two unmatched input events. Propagation around a positive-period cycle then yields a multiplicative monodromy strictly below one, forcing every coordinate to vanish.
+Under the displayed recurrence and zero conditions, binary input and output sequences with interval excess at most one and nonpositive full-period excess force every periodic coordinate to vanish when each period product is below one. CyclicResolvent.shifted_recurrence_zero applies this to the supported reservoir equations.
 
 **Theorem 1.9 (common_node_product_bound).**
 
@@ -112,7 +112,7 @@ $$\forall (\kappa : \mathbb{Q}) , 0 < \kappa \to \forall (o : \mathbb{Z} \to \ma
 
 *Commentary.*
 
-common_node_product_bound is used on the live proof path of the width-three bridge construction.
+For κ > 0 and positive weights, inserting a factor κ/(κ+1) at output events cannot increase the product of weights; CyclicResolvent.shifted_recurrence_zero uses this to preserve the strict period-product bound.
 
 **Definition 1.10 (backward).**
 
@@ -124,7 +124,7 @@ $$\forall (A : \mathbb{N}) , \operatorname{FloorSelectorCycles.backward} A = (\o
 
 *Commentary.*
 
-The defining expression fixes backward for the consumed FloorSelectorCycles construction.
+backward is the unweighted cyclic shift obtained by rotating the rows of the identity matrix; tensor_mulVec_orbit uses it to decrease the first orbit coordinate by one.
 
 **Theorem 1.11 (backward_apply).**
 
@@ -136,7 +136,7 @@ $$\forall (A : \mathbb{N}) (i j : Fin A) , \operatorname{FloorSelectorCycles.bac
 
 *Commentary.*
 
-backward_apply is used on the live proof path of the width-three bridge construction.
+The entry of backward at (i,j) is one exactly when j is the cyclic successor of i and is zero otherwise; tensor_mulVec_orbit uses this entry formula to isolate the preceding orbit position.
 
 **Definition 1.12 (forwardHalf).**
 
@@ -148,7 +148,7 @@ $$\forall (G : \mathbb{N}) , \operatorname{FloorSelectorCycles.forwardHalf} G = 
 
 *Commentary.*
 
-The defining expression fixes forwardHalf for the consumed FloorSelectorCycles construction.
+forwardHalf is the opposite cyclic shift with weight 1/2 at row zero and weight one elsewhere; tensor_mulVec_orbit uses this weight to describe propagation in the second coordinate.
 
 **Theorem 1.13 (forwardHalf_apply).**
 
@@ -160,7 +160,7 @@ $$\forall (G : \mathbb{N}) (i j : Fin G) , \operatorname{FloorSelectorCycles.for
 
 *Commentary.*
 
-forwardHalf_apply is used on the live proof path of the width-three bridge construction.
+The entry of forwardHalf at (i,j) is nonzero only when j is the cyclic predecessor of i, with weight 1/2 at i=0 and one elsewhere; tensor_mulVec_orbit uses this formula to obtain the factor edge.
 
 **Definition 1.14 (rowSelector).**
 
@@ -172,7 +172,7 @@ $$\forall (A B : \mathbb{N}) , \operatorname{FloorSelectorCycles.rowSelector} A 
 
 *Commentary.*
 
-The defining expression fixes rowSelector for the consumed FloorSelectorCycles construction.
+rowSelector samples positions floor(k*A/B) from an A-coordinate vector into B coordinates; CyclicResolvent.input_matrix and output_matrix express the tensor input and output maps using these selectors.
 
 **Definition 1.15 (reservoir).**
 
@@ -184,7 +184,7 @@ $$\forall (A G : \mathbb{N}) , \operatorname{FloorSelectorCycles.reservoir} A G 
 
 *Commentary.*
 
-The defining expression fixes reservoir for the consumed FloorSelectorCycles construction.
+reservoir is the identity minus the Kronecker product of the two oppositely directed cyclic shifts; CyclicResolvent.reservoir_isUnit proves its invertibility by propagating its homogeneous equation around each orbit.
 
 **Definition 1.16 (schurMap).**
 
@@ -196,7 +196,7 @@ $$\forall (A B G D : \mathbb{N}) (\kappa : \mathbb{Q}) , \operatorname{FloorSele
 
 *Commentary.*
 
-The defining expression fixes schurMap for the consumed FloorSelectorCycles construction.
+schurMap restricts κ times the identity plus the inverse reservoir to the selected input and output coordinates; CyclicResolvent.schur_eq_restricted expresses this restriction through coordinate-insertion matrices.
 
 **Definition 1.17 (CyclicResolventLemma).**
 
@@ -208,7 +208,7 @@ $$\operatorname{FloorSelectorCycles.CyclicResolventLemma} \iff (\forall (A B G D
 
 *Commentary.*
 
-The defining expression fixes CyclicResolventLemma for the consumed FloorSelectorCycles construction.
+CyclicResolventLemma states invertibility of the reservoir and injectivity or surjectivity of schurMap according to the ordering of A*D and B*G, for positive ordered selector dimensions and κ > 0; CyclicResolvent.cyclic_resolvent_lemma proves these assertions.
 
 **Definition 1.18 (index).**
 
@@ -220,7 +220,7 @@ $$\forall (N : \mathbb{N}) (hN : 0 < N) (s : \mathbb{Z}) , \operatorname{FloorSe
 
 *Commentary.*
 
-The defining expression fixes index for the consumed FloorSelectorCycles construction.
+For a positive modulus N, index maps an integer to its remainder in Fin N; orbit uses it to follow both cyclic coordinates for arbitrary integer steps.
 
 **Theorem 1.19 (index_val_int).**
 
@@ -232,7 +232,7 @@ $$\forall (N : \mathbb{N}) (hN : 0 < N) (s : \mathbb{Z}) , (((\operatorname{val}
 
 *Commentary.*
 
-index_val_int is used on the live proof path of the width-three bridge construction.
+The integer value of index is the integer remainder modulo N; index_nat uses this equality to recover an index already in Fin N.
 
 **Theorem 1.20 (index_nat).**
 
@@ -244,7 +244,7 @@ $$\forall (N : \mathbb{N}) (hN : 0 < N) (i : Fin N) , \operatorname{FloorSelecto
 
 *Commentary.*
 
-index_nat is used on the live proof path of the width-three bridge construction.
+Reducing the value of an element of Fin N modulo N returns that element; CyclicResolvent.succ_pred_relation uses this to translate cyclic successor and predecessor equations into integer shifts.
 
 **Theorem 1.21 (index_add_multiple).**
 
@@ -256,7 +256,7 @@ $$\forall (N : \mathbb{N}) (hN : 0 < N) (s k : \mathbb{Z}) , \operatorname{Floor
 
 *Commentary.*
 
-index_add_multiple is used on the live proof path of the width-three bridge construction.
+Adding any integer multiple of N leaves index unchanged; orbit_period applies this in both coordinates to obtain a period of A*G.
 
 **Theorem 1.22 (index_add_one).**
 
@@ -268,7 +268,7 @@ $$\forall (N : \mathbb{N}) (hN : 0 < N) (s : \mathbb{Z}) , (\operatorname{val}\l
 
 *Commentary.*
 
-index_add_one is used on the live proof path of the width-three bridge construction.
+Increasing the integer argument of index by one advances its value by one modulo N; tensor_mulVec_orbit uses this to identify the first-coordinate shift.
 
 **Theorem 1.23 (index_sub_one).**
 
@@ -280,7 +280,7 @@ $$\forall (N : \mathbb{N}) (hN : 0 < N) (s : \mathbb{Z}) , (\operatorname{val}\l
 
 *Commentary.*
 
-index_sub_one is used on the live proof path of the width-three bridge construction.
+Decreasing the integer argument of index by one gives its cyclic predecessor; tensor_mulVec_orbit uses this to identify the second-coordinate shift.
 
 **Definition 1.24 (orbit).**
 
@@ -292,7 +292,7 @@ $$\forall (A G : \mathbb{N}) (hA : 0 < A) (hG : 0 < G) (a b s : \mathbb{Z}) , \o
 
 *Commentary.*
 
-The defining expression fixes orbit for the consumed FloorSelectorCycles construction.
+orbit follows the positions (a-s modulo A,b+s modulo G), with the two coordinates moving in opposite directions; CyclicResolvent.reservoir_mulVec_orbit expresses the reservoir equation along this orbit.
 
 **Definition 1.25 (edge).**
 
@@ -304,7 +304,7 @@ $$\forall (G : \mathbb{N}) (hG : 0 < G) (s : \mathbb{Z}) , \operatorname{FloorSe
 
 *Commentary.*
 
-The defining expression fixes edge for the consumed FloorSelectorCycles construction.
+edge assigns weight 1/2 at positions divisible by G and one at all other positions; tensor_mulVec_orbit identifies it as the coefficient relating successive orbit coordinates.
 
 **Theorem 1.26 (orbit_period).**
 
@@ -316,7 +316,7 @@ $$\forall (A G : \mathbb{N}) (hA : 0 < A) (hG : 0 < G) (a b s : \mathbb{Z}) , \o
 
 *Commentary.*
 
-orbit_period is used on the live proof path of the width-three bridge construction.
+For positive A and G, shifting the orbit parameter by A*G returns the same pair of coordinates; CyclicResolvent.reservoir_isUnit uses this periodicity to close the homogeneous recurrence.
 
 **Theorem 1.27 (edge_pos).**
 
@@ -328,7 +328,7 @@ $$\forall (G : \mathbb{N}) (hG : 0 < G) (s : \mathbb{Z}) , 0 < \operatorname{Flo
 
 *Commentary.*
 
-edge_pos is used on the live proof path of the width-three bridge construction.
+Every edge weight is strictly positive; CyclicResolvent.forward_supported_zero uses this to satisfy the nonzero propagation condition in the balanced-cycle argument.
 
 **Theorem 1.28 (tensor_mulVec_orbit).**
 
@@ -340,7 +340,7 @@ $$\forall (A G : \mathbb{N}) (hA : 0 < A) (hG : 0 < G) (z : Fin A \times Fin G \
 
 *Commentary.*
 
-tensor_mulVec_orbit is used on the live proof path of the width-three bridge construction.
+The Kronecker shift sends the value at an orbit position to edge times the value at the preceding position; CyclicResolvent.reservoir_mulVec_orbit subtracts this contribution from the identity term.
 
 **Theorem 1.29 (whole_tensor_excess).**
 
@@ -352,7 +352,7 @@ $$\forall (A B G D : \mathbb{N}) , 0 < A \to 0 < G \to \forall (phaseI phaseO : 
 
 *Commentary.*
 
-whole_tensor_excess is used on the live proof path of the width-three bridge construction.
+Over A*G steps with A,G > 0, the difference between the input and output event counts is exactly A*D-G*B; CyclicResolvent.forward_supported_zero uses the dimension ordering to make this full-period excess nonpositive.
 
 **Theorem 1.30 (jump_index).**
 
@@ -364,7 +364,7 @@ $$\forall (A B : \mathbb{N}) (hA : 0 < A) (s : \mathbb{Z}) , \operatorname{Floor
 
 *Commentary.*
 
-jump_index is used on the live proof path of the width-three bridge construction.
+For positive A, reducing an integer modulo A does not change the ceiling increment of slope B/A; CyclicResolvent.forward_supported_zero uses this to identify selector events along integer orbit parameters.
 
 **Theorem 1.31 (edge_product).**
 
@@ -376,7 +376,7 @@ $$\forall (G M : \mathbb{N}) (hG : 0 < G) (phase : \mathbb{Z}) , \prod_{t \in \o
 
 *Commentary.*
 
-edge_product is used on the live proof path of the width-three bridge construction.
+Over M*G consecutive positions with G > 0, the product of edge weights is (1/2)^M, independently of the starting phase; tensor_edge_product_lt_one uses this formula over a tensor period.
 
 **Theorem 1.32 (tensor_edge_product_lt_one).**
 
@@ -388,7 +388,7 @@ $$\forall (A G : \mathbb{N}) , 0 < A \to \forall (hG : 0 < G) (phase : \mathbb{Z
 
 *Commentary.*
 
-tensor_edge_product_lt_one is used on the live proof path of the width-three bridge construction.
+For positive A and G, the product of edge weights over A*G consecutive orbit steps is strictly below one; CyclicResolvent.reservoir_isUnit uses this contraction to force its homogeneous kernel to vanish.
 
 ## References
 

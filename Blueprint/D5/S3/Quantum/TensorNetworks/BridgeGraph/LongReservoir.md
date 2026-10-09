@@ -16,7 +16,7 @@ $$\operatorname{QuantumMaxFlowBound.BaseWitness}$$
 
 *Commentary.*
 
-Every strict base pair admits rational three-slice matrices attaining the outer cut. A shift pencil with κ=p couples short and long blocks to a cyclic reservoir.
+Every pair of positive dimension pairs with a < b < 2*a and c < d < 2*c admits rational three-slice matrices attaining the outer cut. A shift pencil with κ=p couples short and long blocks to a cyclic reservoir, and QuantumMaxFlowMinCut.claim_of_hypotheses applies the resulting construction in its strict base case.
 
 ## References
 

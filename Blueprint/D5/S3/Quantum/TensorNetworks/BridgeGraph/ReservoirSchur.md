@@ -16,7 +16,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (w : Fin alpha \times Fin delt
 
 *Commentary.*
 
-The defining expression fixes kernelEmbedding for the consumed ReservoirSchur construction.
+kernelEmbedding places one alternating anti-diagonal vector in each short-long block and is zero on the other blocks; kernel_coordinates shows that these vectors parametrize the entire same-depth width-two kernel.
 
 **Theorem 1.2 (kernelEmbedding_injective).**
 
@@ -28,7 +28,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) , \operatorname{Function.Injec
 
 *Commentary.*
 
-kernelEmbedding_injective is used on the live proof path of the width-three bridge construction.
+The anti-diagonal kernel coordinates determine their embedded vector uniquely; kernelEmbedding_range combines this injectivity with the kernel dimension to identify the entire kernel.
 
 **Theorem 1.3 (kernel_coordinates).**
 
@@ -40,7 +40,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (u : ((\Sigma_{t : Sum (Fin al
 
 *Commentary.*
 
-kernel_coordinates is used on the live proof path of the width-three bridge construction.
+Every vector annihilated by the same-depth widthTwoMatrix is an image of kernelEmbedding; LongReservoir.single_update_injective uses this parametrization to reduce the added-slice equation to the kernel coordinates.
 
 **Definition 1.4 (cokernelEmbedding).**
 
@@ -52,7 +52,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (w : Fin beta \times Fin gamma
 
 *Commentary.*
 
-The defining expression fixes cokernelEmbedding for the consumed ReservoirSchur construction.
+cokernelEmbedding places transposed alternating anti-diagonal vectors in the long-short output blocks; cokernelMatrix_mul_widthTwo shows that the associated coordinate projection annihilates the width-two matrix.
 
 **Theorem 1.5 (kernelMatrix_mulVec).**
 
@@ -64,7 +64,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (w : Fin alpha \times Fin delt
 
 *Commentary.*
 
-kernelMatrix_mulVec is used on the live proof path of the width-three bridge construction.
+Multiplying by the matrix of kernelEmbedding gives the embedded kernel vector; LongReservoir.single_update_injective uses this to apply the kernel sampling identity to its parametrized input.
 
 **Theorem 1.6 (cokernelMatrix_mul_widthTwo).**
 
@@ -76,7 +76,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) , (\operatorname{LinearMap.toM
 
 *Commentary.*
 
-cokernelMatrix_mul_widthTwo is used on the live proof path of the width-three bridge construction.
+The transpose of the matrix of cokernelEmbedding annihilates widthTwoMatrix; short_reservoir_injective uses this projection to remove the original width-two term from the augmented flow equation.
 
 **Definition 1.7 (kernelSample).**
 
@@ -88,7 +88,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (t : Fin alpha \times Fin delt
 
 *Commentary.*
 
-The defining expression fixes kernelSample for the consumed ReservoirSchur construction.
+kernelSample chooses coordinates zero and p in each short-long input block; kernel_sample_identity shows that sampling at these positions recovers the kernel coefficients.
 
 **Definition 1.8 (cokernelSample).**
 
@@ -100,7 +100,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (t : Fin beta \times Fin gamma
 
 *Commentary.*
 
-The defining expression fixes cokernelSample for the consumed ReservoirSchur construction.
+cokernelSample chooses coordinates p and zero in each long-short output block; cokernel_sample_identity shows that insertion at these positions is a right inverse of the cokernel projection.
 
 **Theorem 1.9 (kernel_sample_identity).**
 
@@ -112,7 +112,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) , (\operatorname{CyclicResolve
 
 *Commentary.*
 
-kernel_sample_identity is used on the live proof path of the width-three bridge construction.
+Sampling an embedded anti-diagonal kernel vector returns its coefficient vector; LongReservoir.single_update_injective uses this identity to reduce the added slice to a map on the kernel coefficients.
 
 **Theorem 1.10 (cokernel_sample_identity).**
 
@@ -124,7 +124,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) , (\operatorname{LinearMap.toM
 
 *Commentary.*
 
-cokernel_sample_identity is used on the live proof path of the width-three bridge construction.
+Inserting a vector at the cokernel sample positions and then applying the cokernel projection returns that vector; LongReservoir.single_update_injective uses this to read the added slice in cokernel coordinates.
 
 **Definition 1.11 (singleCross).**
 
@@ -136,7 +136,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (BM : Matrix (Fin beta) (Fin a
 
 *Commentary.*
 
-The defining expression fixes singleCross for the consumed ReservoirSchur construction.
+singleCross inserts the Kronecker map BM⊗DM between the kernel sample positions and the cokernel sample positions; LongReservoir.single_update_injective uses this map to remove the width-two kernel.
 
 **Theorem 1.12 (inclusion_prod).**
 
@@ -148,7 +148,7 @@ $$\forall \{m : Type\} \{n : Type\} \{r : Type\} \{s : Type\} [DecidableEq m] [D
 
 *Commentary.*
 
-inclusion_prod is used on the live proof path of the width-three bridge construction.
+Coordinate insertion along a product of two maps is the Kronecker product of their insertion matrices; singleCross_kronecker uses this factorization to express the added matrix as one tensor slice.
 
 **Definition 1.13 (shortZeroCol).**
 
@@ -160,7 +160,7 @@ $$\forall (p alpha beta : \mathbb{N}) (i : Fin alpha) , \operatorname{ReservoirS
 
 *Commentary.*
 
-The defining expression fixes shortZeroCol for the consumed ReservoirSchur construction.
+shortZeroCol selects column zero in each short block; singleThirdLeft uses these columns to read the kernel sample coordinates.
 
 **Definition 1.14 (longLastRow).**
 
@@ -172,7 +172,7 @@ $$\forall (p alpha beta : \mathbb{N}) (k : Fin beta) , \operatorname{ReservoirSc
 
 *Commentary.*
 
-The defining expression fixes longLastRow for the consumed ReservoirSchur construction.
+longLastRow selects row p in each long block; singleThirdLeft uses these rows to insert the transformed coefficients into the cokernel sample positions.
 
 **Definition 1.15 (singleThirdLeft).**
 
@@ -184,7 +184,7 @@ $$\forall (p alpha beta : \mathbb{N}) (BM : Matrix (Fin beta) (Fin alpha) \mathb
 
 *Commentary.*
 
-The defining expression fixes singleThirdLeft for the consumed ReservoirSchur construction.
+singleThirdLeft applies BM from the zero columns of the short blocks to the final rows of the long blocks; singleCross_kronecker uses it as the left factor of the third tensor slice.
 
 **Definition 1.16 (singleThirdRight).**
 
@@ -196,7 +196,7 @@ $$\forall (p gamma delta : \mathbb{N}) (DM : Matrix (Fin gamma) (Fin delta) \mat
 
 *Commentary.*
 
-The defining expression fixes singleThirdRight for the consumed ReservoirSchur construction.
+singleThirdRight applies DM from the final rows of the long blocks to the zero columns of the short blocks in the second factor; singleCross_kronecker uses it as the right factor of the third tensor slice.
 
 **Theorem 1.17 (singleCross_kronecker).**
 
@@ -208,7 +208,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (BM : Matrix (Fin beta) (Fin a
 
 *Commentary.*
 
-singleCross_kronecker is used on the live proof path of the width-three bridge construction.
+The update singleCross is the Kronecker product of singleThirdLeft and singleThirdRight; LongReservoir.single_reversal_injective_witness uses this equality to realize the kernel-removing update as a third bond slice.
 
 **Definition 1.18 (localSource).**
 
@@ -220,7 +220,7 @@ $$\forall (p q alpha beta gamma delta : \mathbb{N}) (u : ((\Sigma_{t : Sum (Fin 
 
 *Commentary.*
 
-The defining expression fixes localSource for the consumed ReservoirSchur construction.
+localSource restricts the input vector to one pair of shift blocks; widthTwo_mulVec_block uses this restriction to express each block equation as a rectangular pencil equation.
 
 **Theorem 1.19 (widthTwo_mulVec_block).**
 
@@ -232,7 +232,7 @@ $$\forall (p q alpha beta gamma delta : \mathbb{N}) (u : ((\Sigma_{t : Sum (Fin 
 
 *Commentary.*
 
-widthTwo_mulVec_block is used on the live proof path of the width-three bridge construction.
+On any pair of blocks, multiplication by widthTwoMatrix equals pencil multiplication on localSource; sourceSL_kernel_of_updated_zero uses this to isolate the short-long kernel equations.
 
 **Definition 1.20 (sourceSL).**
 
@@ -244,7 +244,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (u : ((\Sigma_{t : Sum (Fin al
 
 *Commentary.*
 
-The defining expression fixes sourceSL for the consumed ReservoirSchur construction.
+sourceSL keeps the short-long input blocks and sets all other blocks to zero; sourceSL_kernelEmbedding shows that this projection fixes every vector in the parametrized kernel.
 
 **Definition 1.21 (slLine).**
 
@@ -256,7 +256,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (u : ((\Sigma_{t : Sum (Fin al
 
 *Commentary.*
 
-The defining expression fixes slLine for the consumed ReservoirSchur construction.
+slLine reads the short-long input blocks at the coordinate pair (p-r,p-t); slLine_kernelEmbedding computes this array for an embedded anti-diagonal vector.
 
 **Theorem 1.22 (cokernel_mulVec_formula).**
 
@@ -268,7 +268,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (z : ((\Sigma_{t : Sum (Fin al
 
 *Commentary.*
 
-cokernel_mulVec_formula is used on the live proof path of the width-three bridge construction.
+The cokernel projection is the displayed alternating sum along each long-short anti-diagonal; cokernel_reservoir_kernel uses this formula to compute the reservoir contribution in cokernel coordinates.
 
 **Theorem 1.23 (slLine_kernelEmbedding).**
 
@@ -280,7 +280,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (w : Fin alpha \times Fin delt
 
 *Commentary.*
 
-slLine_kernelEmbedding is used on the live proof path of the width-three bridge construction.
+For an embedded kernel vector, slLine vanishes unless r+t=p and otherwise equals the coefficient vector multiplied by the displayed sign; cokernel_reservoir_kernel uses this to compute the projected added slice.
 
 **Theorem 1.24 (sourceSL_kernelEmbedding).**
 
@@ -292,7 +292,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) (w : Fin alpha \times Fin delt
 
 *Commentary.*
 
-sourceSL_kernelEmbedding is used on the live proof path of the width-three bridge construction.
+The short-long block projection fixes every image of kernelEmbedding; short_reservoir_injective uses this identity to recover the full kernel vector from the vanishing short-long component.
 
 **Theorem 1.25 (short_short_witness).**
 
@@ -304,7 +304,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) , 0 < p \to 0 < beta \to beta 
 
 *Commentary.*
 
-The short reservoir construction resolves the strict same-depth case with alpha*delta ≤ beta*gamma, using its higher-order Schur complement.
+For p > 0, 0 < beta ≤ alpha and 0 < delta ≤ gamma, the short reservoir construction yields rational three-slice matrices attaining the outer cut by eliminating the kernel through its Schur complement. LongReservoir.parameterized_base_witness applies this in the equal-depth case with these multiplicity orderings.
 
 ## References
 

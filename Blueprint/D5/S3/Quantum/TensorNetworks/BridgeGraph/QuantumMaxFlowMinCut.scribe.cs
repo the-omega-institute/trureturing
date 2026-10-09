@@ -19,13 +19,13 @@ internal sealed class QuantumMaxFlowMinCutDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + ".claim"),
                 H("claim"), StatementSource.FromAuthor(Disp(Statement0())),
                 AssessedProvenance.FromLiterature(Paper),
-                Blocks(Paragraph(Text("Conjecture 1.4, page 6: “Let (a, b), (a′, b′) ∈ U_w ∪ V_w ∪ W_w. Then” followed by “QMaxFlow = QMinCut = min{a·b′, a′·b}” with the bridge-diagram arguments. Conjecture 3.14 repeats this on page 19. Conjecture 3.15, page 19: “Let (a, b), (a′, b′) ∈ U_3 ∪ V_3 ∪ W_3. Then” followed by “QMinCut = QMaxFlow = min{a′b, ab′}” at width three. The parameters are positive natural dimensions, and (a,b,c,d)=(a,b,a′,b′). The source region is exactly a ≤ b and a*a+b*b ≤ 3*a*b: its larger ratio endpoint is (3+√5)/2, as derived in the cited note. Both equalities are retained."))),
+                Blocks(Paragraph(Text("Conjecture 1.4, page 6: “Let (a, b), (a′, b′) ∈ U_w ∪ V_w ∪ W_w. Then” followed by “QMaxFlow = QMinCut = min{a·b′, a′·b}” with the bridge-diagram arguments. Conjecture 3.14 repeats this on page 19. Conjecture 3.15, page 19: “Let (a, b), (a′, b′) ∈ U_3 ∪ V_3 ∪ W_3. Then” followed by “QMinCut = QMaxFlow = min{a′b, ab′}” at width three. The parameters are positive natural dimensions, and (a,b,c,d)=(a,b,a′,b′). The source region is exactly a ≤ b and a*a+b*b ≤ 3*a*b: its larger ratio endpoint is (3+√5)/2, as derived in the cited note. The claim asserts both equalities."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("gls-quantummaxflowmincut-result"),
                 DeclarationHandle.Create(Owner + ".result"),
                 H("result"), StatementSource.FromAuthor(Disp(Statement1())),
                 AssessedProvenance.FromRepo(Paper),
-                Blocks(Paragraph(Text("The unconditional width-three settlement combines a rational cyclic shift construction, short and long reservoir Schur complements, scalar extension to complex matrices, and castling deficit preservation followed by strong induction on b+d. Proposition 3.18 of the source derives Conjecture 1.4 at every w≥3 from this case; that general-width implication is a literature reading, not a theorem formalized here."))),
+                Blocks(Paragraph(Text("The width-three quantum max-flow equals the quantum min-cut and the smaller outer cut for the positive ordered dimension pairs in the displayed cone. The proof combines a rational cyclic shift construction, short and long reservoir Schur complements, scalar extension to complex matrices, and castling deficit preservation followed by strong induction on b+d. Proposition 3.18 of the source derives Conjecture 1.4 at every w≥3 from this case; the implication to general width is supplied by the source."))),
                 DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("gesmundo-lysikov-steffan-2022-bridge-graph-max-flow"), ResolutionKind.Proved)))));
 
     private static Formula Statement0() =>

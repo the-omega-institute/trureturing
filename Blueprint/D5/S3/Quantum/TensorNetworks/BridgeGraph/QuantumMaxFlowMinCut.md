@@ -16,7 +16,7 @@ $$\operatorname{QuantumMaxFlowMinCut.claim} \iff (\forall (a b c d : \mathbb{N})
 
 *Commentary.*
 
-Conjecture 1.4, page 6: “Let (a, b), (a′, b′) ∈ U_w ∪ V_w ∪ W_w. Then” followed by “QMaxFlow = QMinCut = min{a·b′, a′·b}” with the bridge-diagram arguments. Conjecture 3.14 repeats this on page 19. Conjecture 3.15, page 19: “Let (a, b), (a′, b′) ∈ U_3 ∪ V_3 ∪ W_3. Then” followed by “QMinCut = QMaxFlow = min{a′b, ab′}” at width three. The parameters are positive natural dimensions, and (a,b,c,d)=(a,b,a′,b′). The source region is exactly a ≤ b and a*a+b*b ≤ 3*a*b: its larger ratio endpoint is (3+√5)/2, as derived in the cited note. Both equalities are retained.
+Conjecture 1.4, page 6: “Let (a, b), (a′, b′) ∈ U_w ∪ V_w ∪ W_w. Then” followed by “QMaxFlow = QMinCut = min{a·b′, a′·b}” with the bridge-diagram arguments. Conjecture 3.14 repeats this on page 19. Conjecture 3.15, page 19: “Let (a, b), (a′, b′) ∈ U_3 ∪ V_3 ∪ W_3. Then” followed by “QMinCut = QMaxFlow = min{a′b, ab′}” at width three. The parameters are positive natural dimensions, and (a,b,c,d)=(a,b,a′,b′). The source region is exactly a ≤ b and a*a+b*b ≤ 3*a*b: its larger ratio endpoint is (3+√5)/2, as derived in the cited note. The claim asserts both equalities.
 
 **Theorem 1.2 (result).**
 
@@ -34,7 +34,7 @@ $$\operatorname{QuantumMaxFlowMinCut.claim}$$
 
 *Commentary.*
 
-The unconditional width-three settlement combines a rational cyclic shift construction, short and long reservoir Schur complements, scalar extension to complex matrices, and castling deficit preservation followed by strong induction on b+d. Proposition 3.18 of the source derives Conjecture 1.4 at every w≥3 from this case; that general-width implication is a literature reading, not a theorem formalized here.
+The width-three quantum max-flow equals the quantum min-cut and the smaller outer cut for the positive ordered dimension pairs in the displayed cone. The proof combines a rational cyclic shift construction, short and long reservoir Schur complements, scalar extension to complex matrices, and castling deficit preservation followed by strong induction on b+d. Proposition 3.18 of the source derives Conjecture 1.4 at every w≥3 from this case; the implication to general width is supplied by the source.
 
 ## References
 

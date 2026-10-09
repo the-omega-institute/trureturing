@@ -18,7 +18,7 @@ internal sealed class CastlingDeficitDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + ".castling_proved"),
                 H("castling_proved"), StatementSource.FromAuthor(Disp(Statement0())),
                 AssessedProvenance.FromLiterature(Paper),
-                Blocks(Paragraph(Text("The width-three castling deficit identity is proved by common kernels and annihilator complements over a field, then applied to complex maximizing assignments. The proof does not assume the source Theorem 3.1."))),
+                Blocks(Paragraph(Text("The width-three castling transformation preserves the displayed quantum max-flow deficit by passing to common kernels and annihilator complements over a field, then applying the construction to complex maximizing assignments. QuantumMaxFlowMinCut.full_rank_of_descent uses this identity to transfer full rank from the descended dimensions; the identity does not assume the source Theorem 3.1."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement0() =>

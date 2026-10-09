@@ -16,7 +16,7 @@ $$\operatorname{ShiftPencilBlocks.ParameterizedBaseWitness} \iff (\forall (p q a
 
 *Commentary.*
 
-The defining expression fixes ParameterizedBaseWitness for the consumed ShiftPencilBlocks construction.
+ParameterizedBaseWitness asserts rational full-rank flows for pairs whose dimensions are sums of short and long shift-block dimensions, with positive depths and positive long-block multiplicities; base_of_parameterized uses the decomposition of strict base pairs to recover BaseWitness.
 
 **Theorem 1.2 (base_of_parameterized).**
 
@@ -28,7 +28,7 @@ $$\operatorname{ShiftPencilBlocks.ParameterizedBaseWitness} \to \operatorname{Qu
 
 *Commentary.*
 
-base_of_parameterized is used on the live proof path of the width-three bridge construction.
+Every strict base dimension pair can be decomposed into short and long shift blocks, so full rank for the parameterized family implies BaseWitness; LongReservoir.base_witness applies this implication to its constructions.
 
 **Definition 1.3 (rectExtend).**
 
@@ -40,7 +40,7 @@ $$\forall (x y : \mathbb{N}) (z : Fin x \times Fin y \to \mathbb{Q}) (i k : \mat
 
 *Commentary.*
 
-The defining expression fixes rectExtend for the consumed ShiftPencilBlocks construction.
+rectExtend extends a finite rectangular array by zero to natural-number coordinates; pencil_mulVec uses it to express the pencil recurrence uniformly at the boundary.
 
 **Definition 1.4 (shift1).**
 
@@ -52,7 +52,7 @@ $$\forall (x : \mathbb{N}) , \operatorname{ShiftPencilBlocks.shift1} x = (\opera
 
 *Commentary.*
 
-The defining expression fixes shift1 for the consumed ShiftPencilBlocks construction.
+shift1 has entry one when the column index is one greater than the row index and zero elsewhere; pencil combines it with the rectangular identity to couple adjacent coordinates.
 
 **Definition 1.5 (pencil).**
 
@@ -64,7 +64,7 @@ $$\forall (x y : \mathbb{N}) , \operatorname{ShiftPencilBlocks.pencil} x y = ((\
 
 *Commentary.*
 
-The defining expression fixes pencil for the consumed ShiftPencilBlocks construction.
+pencil is the sum of the unshifted and shifted Kronecker terms, mapping (x+1)*y input coordinates to x*(y+1) output coordinates; pencil_rank_of_le proves full row rank when x ≤ y.
 
 **Theorem 1.6 (pencil_rank_of_le).**
 
@@ -76,7 +76,7 @@ $$\forall (x y : \mathbb{N}) , x \leq y \to (\operatorname{ShiftPencilBlocks.pen
 
 *Commentary.*
 
-The transpose kernel propagates to the boundary of the rectangular pencil and vanishes when the block lengths are ordered. Rank-nullity gives full row rank.
+When x ≤ y, pencil has full row rank x*(y+1), because its transpose recurrence propagates to a zero boundary. widthTwo_rank_of_lt applies this blockwise to dimension pairs with increasing depths.
 
 **Theorem 1.7 (block_mulVec).**
 
@@ -88,7 +88,7 @@ $$\forall \{\iota : Type\} [Fintype \iota] [DecidableEq \iota] \{m : \iota \to T
 
 *Commentary.*
 
-block_mulVec is used on the live proof path of the width-three bridge construction.
+Multiplication by a block-diagonal matrix acts on each block using only the corresponding input coordinates; blockKernelEquiv uses this identity to identify its kernel with the product of the individual kernels.
 
 **Definition 1.8 (tensorBlockEquiv).**
 
@@ -100,7 +100,7 @@ $$\forall (\iota : Type) (\kappa : Type) (m : \iota \to Type) (n : \kappa \to Ty
 
 *Commentary.*
 
-The defining expression fixes tensorBlockEquiv for the consumed ShiftPencilBlocks construction.
+tensorBlockEquiv groups a pair of dependent block indices into a single index for the pair of blocks; widthTwo_block_decomposition uses this reindexing to express the tensor matrix as a block-diagonal family of pencils.
 
 **Theorem 1.9 (pencil_mulVec).**
 
@@ -112,7 +112,7 @@ $$\forall (x y : \mathbb{N}) (u : Fin (x + 1) \times Fin y \to \mathbb{Q}) (r : 
 
 *Commentary.*
 
-pencil_mulVec is used on the live proof path of the width-three bridge construction.
+At each output position, pencil multiplication adds the current input coordinate and the adjacent shifted coordinate, with zero extension at the boundary; antiDiagonal_kernel uses this recurrence to cancel successive alternating signs.
 
 **Definition 1.10 (antiDiagonal).**
 
@@ -124,7 +124,7 @@ $$\forall (p : \mathbb{N}) (k : Fin (p + 1) \times Fin (p + 1)) , \operatorname{
 
 *Commentary.*
 
-The defining expression fixes antiDiagonal for the consumed ShiftPencilBlocks construction.
+antiDiagonal is supported where the two coordinate indices sum to p and has alternating signs there; antiDiagonal_kernel shows that it lies in the kernel of the short-long pencil.
 
 **Theorem 1.11 (antiDiagonal_kernel).**
 
@@ -136,7 +136,7 @@ $$\forall (p : \mathbb{N}) , (\operatorname{ShiftPencilBlocks.pencil} p (p + 1))
 
 *Commentary.*
 
-antiDiagonal_kernel is used on the live proof path of the width-three bridge construction.
+The alternating anti-diagonal vector is annihilated by pencil p (p+1); ReservoirSchur.widthTwo_kernelEmbedding applies this in every short-long block to construct kernel vectors.
 
 **Definition 1.12 (blockLength).**
 
@@ -148,7 +148,7 @@ $$\forall (p alpha beta : \mathbb{N}) , \operatorname{ShiftPencilBlocks.blockLen
 
 *Commentary.*
 
-The defining expression fixes blockLength for the consumed ShiftPencilBlocks construction.
+blockLength assigns length p to each of the alpha short blocks and p+1 to each of the beta long blocks; arrow0 and arrow1 use these lengths to form their block-diagonal matrices.
 
 **Definition 1.13 (leftDim).**
 
@@ -160,7 +160,7 @@ $$\forall (p alpha beta : \mathbb{N}) , \operatorname{ShiftPencilBlocks.leftDim}
 
 *Commentary.*
 
-The defining expression fixes leftDim for the consumed ShiftPencilBlocks construction.
+leftDim is the total row dimension p*alpha+(p+1)*beta of the shift blocks; rows_card identifies it with the cardinality of the dependent row-index type.
 
 **Definition 1.14 (rightDim).**
 
@@ -172,7 +172,7 @@ $$\forall (p alpha beta : \mathbb{N}) , \operatorname{ShiftPencilBlocks.rightDim
 
 *Commentary.*
 
-The defining expression fixes rightDim for the consumed ShiftPencilBlocks construction.
+rightDim is the total column dimension (p+1)*alpha+(p+2)*beta of the shift blocks; cols_card identifies it with the cardinality of the dependent column-index type.
 
 **Theorem 1.15 (rows_card).**
 
@@ -184,7 +184,7 @@ $$\forall (p alpha beta : \mathbb{N}) , \operatorname{Fintype.card} ((\Sigma_{t 
 
 *Commentary.*
 
-rows_card is used on the live proof path of the width-three bridge construction.
+The dependent row-index type has cardinality leftDim; same_depth_kernel_dimension uses this count with the rank calculation to compute the kernel dimension.
 
 **Theorem 1.16 (cols_card).**
 
@@ -196,7 +196,7 @@ $$\forall (p alpha beta : \mathbb{N}) , \operatorname{Fintype.card} ((\Sigma_{t 
 
 *Commentary.*
 
-cols_card is used on the live proof path of the width-three bridge construction.
+The dependent column-index type has cardinality rightDim; same_depth_kernel_dimension uses this count as the domain dimension in rank-nullity.
 
 **Definition 1.17 (arrow0).**
 
@@ -208,7 +208,7 @@ $$\forall (p alpha beta : \mathbb{N}) , \operatorname{ShiftPencilBlocks.arrow0} 
 
 *Commentary.*
 
-The defining expression fixes arrow0 for the consumed ShiftPencilBlocks construction.
+arrow0 is the block-diagonal sum of the rectangular identity maps for the short and long blocks; widthTwoMatrix pairs it with the transpose of the second dimension pair’s unshifted map.
 
 **Definition 1.18 (arrow1).**
 
@@ -220,7 +220,7 @@ $$\forall (p alpha beta : \mathbb{N}) , \operatorname{ShiftPencilBlocks.arrow1} 
 
 *Commentary.*
 
-The defining expression fixes arrow1 for the consumed ShiftPencilBlocks construction.
+arrow1 is the block-diagonal sum of the one-step shift maps for the short and long blocks; widthTwoMatrix pairs it with the transpose of the second dimension pair’s shifted map.
 
 **Definition 1.19 (widthTwoMatrix).**
 
@@ -232,7 +232,7 @@ $$\forall (p q alpha beta gamma delta : \mathbb{N}) , \operatorname{ShiftPencilB
 
 *Commentary.*
 
-The defining expression fixes widthTwoMatrix for the consumed ShiftPencilBlocks construction.
+widthTwoMatrix is the sum of the two Kronecker products formed from arrow0 and arrow1; widthTwo_block_decomposition splits it into rectangular pencils indexed by pairs of blocks.
 
 **Theorem 1.20 (widthTwo_block_decomposition).**
 
@@ -244,7 +244,7 @@ $$\forall (p q alpha beta gamma delta : \mathbb{N}) , \operatorname{ShiftPencilB
 
 *Commentary.*
 
-widthTwo_block_decomposition is used on the live proof path of the width-three bridge construction.
+Reindexing the rows and columns identifies widthTwoMatrix with a block-diagonal family of rectangular pencils; widthTwo_rank_sum uses this decomposition to add their ranks.
 
 **Theorem 1.21 (witness_of_typed_slices).**
 
@@ -256,7 +256,7 @@ $$\forall \{I : Type\} \{J : Type\} \{K : Type\} \{L : Type\} [Fintype I] [Finty
 
 *Commentary.*
 
-witness_of_typed_slices is used on the live proof path of the width-three bridge construction.
+A rational three-slice contraction attaining the smaller outer cut on arbitrary finite index types can be reindexed to Fin a, Fin b, Fin c and Fin d without changing rank; witness_of_widthTwo_rank applies this to the block-indexed construction.
 
 **Theorem 1.22 (different_depth_witness).**
 
@@ -268,7 +268,7 @@ $$\forall (p q alpha beta gamma delta : \mathbb{N}) , p \neq q \to \operatorname
 
 *Commentary.*
 
-different_depth_witness is used on the live proof path of the width-three bridge construction.
+When the two depths differ, the width-two pencil already gives rational matrices attaining min(a*d,b*c) for the parameterized dimensions; LongReservoir.parameterized_base_witness uses this for the unequal-depth case.
 
 **Theorem 1.23 (same_depth_kernel_dimension).**
 
@@ -280,7 +280,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) , \operatorname{Module.finrank
 
 *Commentary.*
 
-same_depth_kernel_dimension is used on the live proof path of the width-three bridge construction.
+At equal depths, the kernel of widthTwoMatrix has dimension alpha*delta; ReservoirSchur.kernelEmbedding_range combines this count with its injective kernel parametrization to show that every kernel vector has those coordinates.
 
 **Theorem 1.24 (zero_defect_witness).**
 
@@ -292,7 +292,7 @@ $$\forall (p alpha beta gamma delta : \mathbb{N}) , (alpha \cdot delta = 0 \lor 
 
 *Commentary.*
 
-zero_defect_witness is used on the live proof path of the width-three bridge construction.
+At equal depths, if alpha*delta or beta*gamma vanishes, the width-two matrix attains the smaller outer cut; LongReservoir.parameterized_base_witness uses this for the zero-defect cases.
 
 **Theorem 1.25 (double_fin_pick).**
 
@@ -304,7 +304,7 @@ $$\forall (n m r s : \mathbb{N}) (a b : \mathbb{Q}) (u : Fin n \times Fin m \to 
 
 *Commentary.*
 
-double_fin_pick is used on the live proof path of the width-three bridge construction.
+A double finite sum supported at a single pair of indices equals the product of the two coefficients times the zero-extended array value; ReservoirSchur.reservoirCross_SL_short_row uses this to compute the added slice at a short-row position.
 
 **Theorem 1.26 (neg_one_pow_square).**
 
@@ -316,7 +316,7 @@ $$\forall (n : \mathbb{N}) , (- 1)^{n} \cdot (- 1)^{n} = 1$$
 
 *Commentary.*
 
-neg_one_pow_square is used on the live proof path of the width-three bridge construction.
+The square of every integer power of -1 is one; ReservoirSchur.cokernel_reservoir_kernel uses this identity to cancel the two anti-diagonal signs in the projected reservoir equation.
 
 **Theorem 1.27 (short_short_cyclic_schur_rank).**
 
@@ -328,7 +328,7 @@ $$\forall (A B G D p : \mathbb{N}) , 0 < B \to B \leq A \to 0 < D \to D \leq G \
 
 *Commentary.*
 
-short_short_cyclic_schur_rank is used on the live proof path of the width-three bridge construction.
+For 0 < B ≤ A, 0 < D ≤ G and p > 0, the short reservoir Schur complement has rank min(A*D,B*G); ReservoirSchur.short_short_injective_witness combines this with the relevant dimension ordering to obtain an injective Schur map.
 
 **Theorem 1.28 (long_long_cyclic_schur_rank).**
 
@@ -340,7 +340,7 @@ $$\forall (A B G D p : \mathbb{N}) , 0 < A \to A \leq B \to 0 < G \to G \leq D \
 
 *Commentary.*
 
-long_long_cyclic_schur_rank is used on the live proof path of the width-three bridge construction.
+For 0 < A ≤ B, 0 < G ≤ D and p > 0, the long reservoir Schur complement has rank min(A*D,B*G); LongReservoir.long_long_injective_witness uses this rank to eliminate the remaining kernel coordinates.
 
 **Theorem 1.29 (matrix_injective_of_rank).**
 
@@ -352,7 +352,7 @@ $$\forall \{m : Type\} \{n : Type\} [Fintype m] [Fintype n] [DecidableEq n] (A :
 
 *Commentary.*
 
-matrix_injective_of_rank is used on the live proof path of the width-three bridge construction.
+A rational matrix whose rank equals its number of columns defines an injective linear map; LongReservoir.long_long_injective_witness applies this to its full-column-rank Schur complement.
 
 **Theorem 1.30 (schur_two_equations).**
 
@@ -364,7 +364,7 @@ $$\forall \{m : Type\} \{n : Type\} \{k : Type\} [Fintype m] [Fintype n] [Fintyp
 
 *Commentary.*
 
-schur_two_equations is used on the live proof path of the width-three bridge construction.
+If R is invertible and H-L*R⁻¹*T is injective, the two displayed coupled homogeneous equations imply v=w=0; ReservoirSchur.short_reservoir_injective and LongReservoir.long_reservoir_injective use this to prove injectivity of the augmented flow matrices.
 
 ## References
 

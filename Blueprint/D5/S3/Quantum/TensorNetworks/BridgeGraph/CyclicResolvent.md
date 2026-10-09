@@ -16,7 +16,7 @@ $$\forall (m : Type) (n : Type) [DecidableEq m] (e : n \to m) , \operatorname{Cy
 
 *Commentary.*
 
-The defining expression fixes inclusion for the consumed CyclicResolvent construction.
+inclusion is the matrix that inserts coordinates along a map e, with entry one when the row index equals e of the column index; inclusion_injective recovers the original vector at these rows when e is injective.
 
 **Theorem 1.2 (inclusion_injective).**
 
@@ -28,7 +28,7 @@ $$\forall \{m : Type\} \{n : Type\} [Fintype n] [DecidableEq m] (e : n \to m) , 
 
 *Commentary.*
 
-inclusion_injective is used on the live proof path of the width-three bridge construction.
+An injective index map induces an injective coordinate-insertion map; schur_injective uses this to recover the input vector after its inserted image vanishes.
 
 **Theorem 1.3 (cyclic_resolvent_lemma).**
 
@@ -40,7 +40,7 @@ $$\operatorname{FloorSelectorCycles.CyclicResolventLemma}$$
 
 *Commentary.*
 
-cyclic_resolvent_lemma is used on the live proof path of the width-three bridge construction.
+For 0 < B ≤ A, 0 < D ≤ G and κ > 0, the reservoir is invertible and schurMap is injective when A*D ≤ B*G and surjective when B*G ≤ A*D; ReservoirSchur.short_short_injective_witness uses the invertibility to eliminate the reservoir variables.
 
 **Theorem 1.4 (schur_rank).**
 
@@ -52,7 +52,7 @@ $$\forall (A B G D : \mathbb{N}) , 0 < B \to B \leq A \to 0 < D \to D \leq G \to
 
 *Commentary.*
 
-The cyclic resolvent is injective or surjective in the respective dimension ordering and has rank min(A*D,B*G). backward is the unweighted cyclic shift; forwardHalf carries the closing weight 1/2.
+For 0 < B ≤ A, 0 < D ≤ G and κ > 0, schurMap has rank min(A*D,B*G); ShiftPencilBlocks.short_short_cyclic_schur_rank applies this at κ=p to compute the short reservoir Schur complement.
 
 ## References
 

@@ -16,7 +16,7 @@ $$\operatorname{QuantumMaxFlowBound.Castling}$$
 
 *Commentary.*
 
-The width-three castling deficit identity is proved by common kernels and annihilator complements over a field, then applied to complex maximizing assignments. The proof does not assume the source Theorem 3.1.
+The width-three castling transformation preserves the displayed quantum max-flow deficit by passing to common kernels and annihilator complements over a field, then applying the construction to complex maximizing assignments. QuantumMaxFlowMinCut.full_rank_of_descent uses this identity to transfer full rank from the descended dimensions; the identity does not assume the source Theorem 3.1.
 
 ## References
 

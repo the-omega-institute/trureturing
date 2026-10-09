@@ -17,7 +17,7 @@ internal sealed class LongReservoirDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + ".base_witness"),
                 H("base_witness"), StatementSource.FromAuthor(Disp(Statement0())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Every strict base pair admits rational three-slice matrices attaining the outer cut. A shift pencil with κ=p couples short and long blocks to a cyclic reservoir."))),
+                Blocks(Paragraph(Text("Every pair of positive dimension pairs with a < b < 2*a and c < d < 2*c admits rational three-slice matrices attaining the outer cut. A shift pencil with κ=p couples short and long blocks to a cyclic reservoir, and QuantumMaxFlowMinCut.claim_of_hypotheses applies the resulting construction in its strict base case."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement0() =>
