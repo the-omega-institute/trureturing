@@ -181,7 +181,6 @@ private theorem H_area (e f : Bool) :
     norm_num [H, P0_eq, P1_eq, Q0_eq, Q1_eq,
       scatteredTrueFalseCount]
 
-set_option maxHeartbeats 3000000 in
 -- The four direct fan computations expand both moments of the twenty-letter blocks.
 private theorem H_G (e f : Bool) :
     G (H e f) =
@@ -201,7 +200,6 @@ private theorem min_succ_threshold (m d : ℕ) :
     min (m + 1) d = min m d + if m + 1 ≤ d then 1 else 0 := by
   split <;> omega
 
-set_option maxHeartbeats 3000000 in
 -- All five coordinates of the symbolic threshold concatenation are expanded together.
 private theorem G_thresholdWord (n d e m : ℕ) :
     G (thresholdWord n d e m) =
@@ -223,7 +221,6 @@ private def levels (n : ℕ) : List ℕ → List ℕ → List Bool
   | d :: ds, e :: es => thresholdWord n d e 7 ++ levels (2 * n) ds es
   | _, _ => []
 
-set_option maxHeartbeats 3000000 in
 -- The degree-three coordinate expansions include both radix-eight digit recursions.
 private theorem G_levels (n : ℕ) (ds es : List ℕ)
     (hlen : ds.length = es.length)
