@@ -1671,3 +1671,137 @@ $$
 这里使用原几何 $X=Z^{17/48},Y=Z^{23/48},P=Z^{1/6}$；实际移动 normalizer $c_SA_T(Z)$ 仍保留，其倒数的 subpower 损失计入 $\varepsilon$。原主信号指数 $C(\beta_*)=\beta_*-11/16$ 与混合项的 leading 差为 $\beta_*-5/6$，在 $7/8$ 处为 $1/24$。当前阶段内须把 prescribed losses 放入该正裕度；这个数值比较不扩大原 stage 的范围。
 
 左侧 $L_U^{\mathrm{buf}}$ 仍包含完整原 $L$ 商，尚无所需联合估计，不能用只控制根数的 Gauss 供给替代。主信号、其他 Laurent／轮廓交会项、小／大行范围、完整无限高端比较及原有符号 Robin 余量仍需分别支付；后续完整 $h$ 级数可能的极点贡献也没有由此删除。实际零点实部、双符号、全部高度与重数、完整系数、正 $r_A$ 和严格核心仍是原目标。严格 Robin 与 RH 尚未证明。
+
+## 完整左侧商与原联合见证计数的高端消费
+
+本节研究同一平方自由立方索引探针的完整高端比较，复用原稿的 `detector-counts`、动态容量比较、端点证书、外围行和主留数接口，以及前节实际混合跨越。所引计数与 moment 定理不在这里重证。结论依赖这些来源输入、实际探针的精确高端恒等式和下面的原阶段条件；未执行 Lean 核验，未独立认证整篇源证明，不主张历史原创性。
+
+### 实际素槽系统与相容阶段
+
+固定目标 $\eta=1$，保留原 $\xi$、unit sectors、共同掩码、零延拓和全部六次方自由物理行 $u$。平方自由条件施加于完成索引 $A=cn^3$ 中的 $n$，不把高端 $u$ 改成平方自由行。
+
+使用原稿 Part II 的实际细槽系统：固定偶数 $K$、$\ell_i=1/(6K)$、$P_i=Z^{\ell_i}$ 和原互不相交的非负光滑素数窗口。$K$ 满足原 plain moment mesh、整槽 rounding 与 inverse supply 的严格条件，并在目标和 $Z$ 前固定。虽然 $\prod_iP_i=Z^{1/6}$，一个长度为 $1/6$ 的长槽不能替代这份细槽系统。现有平方自由构造和完整混合估计允许这份固定有限原槽系统。
+
+具体保留原网格条件
+$$
+\frac{2\ell}{K}<\min\{\eta_{\mathrm{mesh}},b_{\mathrm{round}},1/185\},
+$$
+其中 moment／容量损失先确定，再选 $K$；幅度 bin 宽和 $e$ 随后选定。另要求 $0<e<\min\{1/4000,e_0\}$，其中 $e_0$ 是原 detector 的 admissible 上限，并同时满足 principal 和误差裕度约束。
+
+保留原 Part I 供给和 Part II 反证阶段：
+$$
+\beta_*=\frac78+\Delta,\qquad0<\Delta\le\frac1{24},\qquad
+\kappa=2\beta_*-1=\frac34+2\Delta\le\frac56.
+$$
+每个实际 bin 满足 $\delta=2a-1\le\kappa$。原正槽 moment 的条件 $\beta_*\le(1+\kappa)/2$ 在这个动态参数处恰好满足；没有在此阶段插入不相容的 $\beta_*\le7/8$ 前提。
+
+原几何为
+$$
+l_x=17/48,\quad l_y=23/48,\quad\ell=1/6,\quad h=13/16,
+\qquad C(s)=s-11/16.
+$$
+令 $J_{\mathrm{sf}}=I_{\mathrm{modified}}^{\mathrm{sf}}/(c_SA_T(Z))$，令 $f_{\mathrm{sf}}$ 是原主双留数在 $\Re x=2$ 上的积分，使用现有的 $H_{\mathrm{main}}^{\mathrm{sf}}$。物理量、主积分和同一 moving normalizer 都不依赖分析高度。
+
+### 左侧完整修正的实际代价
+
+在前节已支付的左线上
+$$
+x_r=a+16e,\qquad w_r=1-a-26e,\qquad c_0=17/50,
+\qquad x_r+w_r=1-10e,
+$$
+保留完整修正 $\zeta_F^S(x+w)\mathfrak H_u^\circ$，包括每个分歧素数上的 $1-Q^{-x-w}$。前节七项未分歧缺陷幂的正常收敛给出任意未选中子乘积的共同界。
+
+分歧 $H_p^{\mathrm{sf}}$ 的严格项幂为 $10e$，其余完整 $J_j$ 幂为
+$$
+\begin{gathered}
+-1+10e,\quad3/2-3a-48e,\\
+1-2a-22e,\quad2-4a-64e,\quad3/2-3a-38e.
+\end{gathered}
+$$
+后三种重数的这些幂均为负，且 $|1-Q^{-x-w}|\le2$。因此包括分歧素数的任意未选中子乘积都满足
+$$
+\prod|F_p^\circ|\ll_\varepsilon U^{10e+\varepsilon}.
+$$
+这里使用 $\operatorname{rad}(u)\le q_u$ 和约数幂界；不声称固定 $e$ 下的任意 subpower 界，也没有取修正因子倒数。
+
+在原 quotient-free 主／误差分解中取
+$$
+\mathcal R_p^\circ=(1-Q^{-x-w})\mathcal R_p^{\mathrm{sf}},
+\qquad
+G_p^\circ=-\overline{\chi_p(u)}F_p^\circ+\mathcal R_p^\circ.
+$$
+完整局部式在新左线给出：未分歧误差 $O(Q^{-a+O(e)})$、$j=1$ 误差 $O(Q^{a-1+O(e)})$、$j\ge2$ 误差 $O(Q^{a+O(e)})$。同时实际分子反射到 $a+26e$，仍在同一个无零 buffer 内；conductor、gamma 与删除因子成本为 $U^{\delta/2+O(e)+\varepsilon}(1+T_1)^A$。
+
+对全部互异选中分歧素数共同分配实际 conductor 缺口
+$$
+\prod_iQ_i^{-(j_i-1)\delta/2}.
+$$
+分子价格只支付一次。误差槽相对于 $P_i^{c_0-1/2}$ 的 leading 幂为 $a-3/2$（$j=1$）或 $-(j-2)\delta/2$（$j\ge2$），均非正；$j=2$ 没有 leading 节省。分歧元组逐行由约数界支付，未分歧误差也不超过原槽 baseline。
+
+于是对每个完整误差子集 $I$，用原 main amplitudes $g_i$，并在误差槽赋 $g_i=0$，有
+$$
+\begin{aligned}
+|L^S(w,\chi_u)\mathfrak H_u^{\circ,(I)}|
+\ll{}&U^{\delta/2+O(e)+\varepsilon}(1+T_1)^A\\
+&\cdot Z^{\ell(c_0-1/2)+q\ell+O(e+\vartheta+\varepsilon)},
+\qquad q=\frac{\sum_i\ell_i g_i}{\ell}\in[0,\delta/2].
+\end{aligned}
+$$
+未选中乘积的 $10e$ 已计入这里。左侧 mixed scalar 与极点有固定实部距离 $10e$，其固定高度幂并入 $A$；原分母 reciprocal 仍在同一个 buffered $x$ segment 上。此界控制实际完整商，没有对变化的 $L$ 值相位调用 root-only Gauss 估计。
+
+### 消费同一批行上的联合计数
+
+原稿的物理 $Q_i$、固定 ray 系数、whole-product conjugation、自然零和 witness profiles 与这里相同，且不依赖平方自由局部修正。对固定完整 bin 移动之后才使用 pointwise amplitude／witness 子集，不给它们单独移动轮廓。仅选择真正的正 main slots；若正槽不足，原 greedy 规则保留全部正槽，仍给出 $q\ell/d\ge qz$。误差槽的零标签不提供虚假的正幅度下界。
+
+保留动态容量 $2m+6\kappa z\le1$、inverse 容量和实际细槽 mesh，直接应用原联合 witness 计数。完整商的 leading 指数恰为原稿同一几何中的
+$$
+E(d)=-\frac1{48}+\frac23\delta+\frac q6-h(1-R)
++(d-h)(R+\delta/2-c_0).
+$$
+左线位移只增加显式 $O(e)$ 成本。原动态计数与端点证书直接给出
+$$
+E_{\mathrm{actual}}(h)-\Delta
+\le-\frac{49}{440640}-\frac{51}{64}\Delta
++\text{可调损失}.
+$$
+floor、$d\le1/2$ 和 $\delta=5/6$ 端点分别使用原 $7/1200$、$49/14400$ 和 $1/48+\delta/16$ 节省。将中央范围延长到 $h+\zeta$ 的成本至多 $2\zeta$；保留 $0<\zeta<1/48$ 及原 supply 裕度。这里复用原证书，不把它们重算为新成果。
+
+原左积分盒缩到这一联合计数的共同高度盒。一次列出全部原／辅助坐标及其固定线性参数矩阵，取 $c=1/(8m(1+A_{max}))$：原 $x,z$ 高度为 $cT_1$，$w$ 高度为 $2cT_1$，其余辅助高度为 $cT_1$。它满足原累计 allocation，且保留 $c_w>c_x$。被删除的原盒 shell 由完整紧实部盒 polynomial majorant 和原三个独立 Mellin／Gaussian 衰减支付；$x$ 始终留在原 buffer 中，没有延长它的轴。辅助 tails 已在原联合供给中计入，不另申请高度。
+
+先按中央裕度选择原 moment／容量损失，再按其 mesh 选择实际细槽 $K$；$K$ 固定后才选 $e,\vartheta,\zeta$ 和局部解析损失。主项的 $\mu$ 此时已经确定，后续主项损失须小于它；仅用于中央估计的既定 moment 损失无须重新选成小于 $\mu$，因此不产生 mesh 与主项价格的循环。所有实部和槽系统在目标及 $Z$ 前确定；目标的有限高度阶确定后取足够小的 $\tau>0$，最后选外部衰减阶 $N$。完整中央左积分因而保留统一正节省，例如在相应损失预留后取 $(49/440640)/4$。
+
+还须显式满足原 detector 高度门：令 $\varepsilon_{\mathrm{ht}}>0$ 为既定有限 detector allowances 的最小值，$A_{\mathrm{ht},\eta}$ 为目标内部 profile 阶确定后的共同 detector 高度阶，要求
+$$
+0<\tau\le\min\left\{\frac{d_{\min}}{100},
+\frac{d_{\min}\varepsilon_{\mathrm{ht}}}{20(1+A_{\mathrm{ht},\eta})}\right\}.
+$$
+于是所有中央 $U\ge Z^{d_{\min}}$ 上有 $(1+T_1)^{A_{\mathrm{ht},\eta}}\le U^{\varepsilon_{\mathrm{ht}}/10}$。同时保留中央指数的高度裕度；此门在 $N,Z$ 前确定，增加外部衰减阶不能补救不合法的 retained detector。
+
+### 全部外围行与主项
+
+取 $d_{\min}=1/100$。在小行全局线上 $(x_r,w_r,z_r)=(\beta_*+e,1/2,c_0)$，完整平方自由 $H_p$ 的未分歧缺陷可求和、分歧幂为负；完整 raw $G_p$ 对未分歧素数为 $O(1)$，对分歧素数为 $O(Q^{1/2})$。后者在每行只有约数多种选法，故完整元组满足
+$$
+|\mathfrak H_u^{\mathrm{sf}}|\ll_\varepsilon U^\varepsilon
+Z^{\ell c_0+\varepsilon}.
+$$
+在 $(2,2,v)$、固定 $v>2$ 上，同一完整 raw 式给出 $U^\varepsilon Z^{\ell v+\varepsilon}$。这些是一般行的全部高度界，没有借用 principal-only 的界。
+
+原 `outer-row-tails` 因而对同一份字符、unit／例外行分类和完整系数合法。小行的相对指数为 $-79/800+(63/50)d_{\min}$，低于 $-63/800$；大行绝对指数为
+$$
+B_0+(h+\zeta)(1+\varepsilon)-\zeta v+\varepsilon,
+\qquad B_0=l_x/2+1+l_y,
+$$
+在固定足够大 $v$ 下任意负。初始级数与最终 tail 的绝对收敛允许求和全部大行 dyads。
+
+主行使用现有 $H_{\mathrm{main}}^{\mathrm{sf}}$、完整 principal rectangle 界 $Z^{\ell\Re z}$、同一非零 $A_T$ 和实际槽比值 $-1+O(Q^{-7/8})$。复用已有 $H_{\mathrm{main}}^{\mathrm{sf}}=1+O_{\sigma_0}(P_0^{-\min(1,\sigma_0)})$ 界，在构造物理探针前选择足够大固定 $P_0$，使 $\Re s>7/8$ 上的 closeness 满足原合同；这不提供一个已核验的显式数值 cutoff，也不继承未过滤主修正的 cutoff。相应排除集 $S$、$b_*,\xi,\tau,\Xi,c_S,A_T$、物理探针和全部计数数据同时校准，所有接口使用同一份最终固定数据。直接应用原主留数接口，保留 Jacobian、global-line error 与右移主积分；三份节省为 $23/960$、$13/9600$ 及任意 $0<\mu<(7/8)\min_i\ell_i$。
+
+最后接上前节先完成／运输／重合全部 bins 后的混合预算。它的指数 $7/48$ 与主信号相差 $\beta_*-5/6\ge1/24$。中央完整商、混合项、两端全部行和 principal remainders 都使用同一个 $c_SA_T(Z)$；把所有有限损失放入上述正裕度后，得到
+$$
+\boxed{|J_{\mathrm{sf}}(Z)-f_{\mathrm{sf}}(Z)|
+\ll Z^{C(\beta_*)-\sigma},\qquad\sigma>0.}
+$$
+这里按已支付的物理 annular identities 和外围 tail 求和，没有删除后续 $h$ 级数的任何极点。
+
+最终 $\sigma$ 取各实际剩余裕度的共同正下界，须包含 principal 槽余量 $\mu$、另两份 principal 裕度、normalizer、累计高度和 dyadic multiplicity 成本；中央例子 $(49/440640)/4$ 不是自动适用的全局节省。
+
+这只支付上述相容阶段、实际细槽系统和所引供给下的新平方自由探针高端比较。没有把阶段扩展到 $7/8$ 下方，也没有补齐更低比较层所需的同一探针低端节省；现有 $19/64$ 低端界的 $\beta_*\le7/8$ 前提不在本阶段使用。原完整有符号 Robin 响应、实际零点数据、正 $r_A$ 和严格核心仍未证明，RH 未证明。
