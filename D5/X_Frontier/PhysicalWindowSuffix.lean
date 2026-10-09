@@ -3,6 +3,7 @@
    mirror-B: none(waiver:open-task-only)
    mirror-E: none(waiver:no-numeric-artifact)
    anchors: []
+   utility: none
    digest: Complete the prescribed physical suffix and final INITIAL decoder on one full-positive archive. -/
 
 /- TASK D5-T0020
