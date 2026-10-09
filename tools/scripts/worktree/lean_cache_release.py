@@ -603,7 +603,8 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
             producer_commit_sha=commit, publication_id=manifest["publication_id"], partition=partition,
             **{key: manifest[key] for key in ("workflow_run_id", "workflow_run_attempt") if key in manifest},
             release_target=metadata.get("target_commitish"))
-    report_reuse.record_seed_base(root, commit)
+    if installed:
+        report_reuse.record_seed_base(root, commit)
 
 
 def fetch_verification(root, partition, identity):
