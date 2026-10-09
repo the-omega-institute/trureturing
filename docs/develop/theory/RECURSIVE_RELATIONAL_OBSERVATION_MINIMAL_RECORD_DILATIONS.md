@@ -647,3 +647,162 @@ for all legal fixed-root paths in $\mathcal D$. This is the published bound and 
 Physical realization and acquisition of the stipulated $P,U$, fresh pure records, frame transformations, phase-compatible inverse controls and measurement pointers are not derived from the native alphabet. No claim is made about physical spatial dimension or distance, a global thermodynamic entropy balance, heat dissipation, unlimited record erasure/reset, an external free clock, or finite executable cost for arbitrary exact real parameters. A parameter-dependent mathematical vector family does not establish the precision with which an apparatus can prepare it. The finite-$N$ results require the explicitly supplied finite carrier and framing; they do not supply indefinitely continued recovery at a fixed total resource budget.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 8. Balanced terminal channels and homogeneous Kraus-word rank
+
+**定义 8.1（Balanced terminal iteration）。** Restrict the fixed source (1.2)–(1.3) to
+
+$$
+p=q>0,\qquad r>0,\qquad 2p+r<1.
+\tag{8.1}
+$$
+
+Retain the entire $H=\mathbb C^5\otimes\mathbb C^2$, the published $V_2$, its exact operators $L_0,L_1$ in (2.6), and all untouched reference extensions. Write $\Phi=\Phi_2$ for its unread reduced channel. For $N\in\mathbb N$ let
+
+$$
+\begin{aligned}
+\mathcal W_N&=\{L_{\mu_N}\cdots L_{\mu_1}:\mu_s\in\{0,1\}\},\\
+W_N&=\operatorname{span}_{\mathbb C}\mathcal W_N,\qquad
+\mathcal W_0=\{I_H\}.
+\end{aligned}
+\tag{8.2}
+$$
+
+The terminal map $\Phi^N$ composes the same reduced channel $N$ times. Its iterated dilation uses an independently supplied fresh pure environment at each step, with every outgoing environment traced or subsequently retained without further coupling to $H$. No intermediate successor measurement is inserted. Repeated application of (2.10) to one retained environment defines a different map.
+
+**定理 8.2（Uniform balanced terminal rank）。** For every parameter pair in (8.1) and every $N\ge0$,
+
+$$
+\boxed{\operatorname{rank}J(\Phi^N)=\dim_{\mathbb C}W_N=\min\{N+1,4\}.}
+\tag{8.3}
+$$
+
+Consequently the minimum dimension of a pure environment implementing the fixed terminal channel $\Phi^N$ on all $H$ is $1,2,3,4$ for $N=0,1,2,3$, respectively, and is four for every $N\ge3$. Equality of the terminal maps also holds on all untouched reference extensions.
+
+**证明。** Here $t=2p$, $B=1-2p$ and $A=B-r$. Define the real scalars
+
+$$
+\eta=\frac{\sqrt A}{\sqrt B},\qquad
+\zeta=\frac{\sqrt r}{\sqrt B},\qquad
+\kappa=\frac1{\sqrt2}.
+\tag{8.4}
+$$
+
+The full strict domain gives $0<\eta<1$, $\zeta>0$, $\kappa>0$, $\eta^2+\zeta^2=1$ and $2\kappa^2=1$. These statements do not require a positive lower cutoff on $p$, $r$ or $A$.
+
+Apply exactly the frames $D$ of (3.1)–(3.2) to both the input and output. In those frames the normalized (2.8) become
+
+$$
+DT_0D^\dagger=U\otimes I_K,\qquad
+DT_1D^\dagger=V\otimes I_K,
+\tag{8.5}
+$$
+
+where, in the original configuration order $0,1,2,3,4$,
+
+$$
+U=\begin{pmatrix}
+\eta&0&0&0&\zeta\\
+0&1&0&0&0\\
+0&0&1&0&0\\
+0&0&0&1&0\\
+\zeta&0&0&0&-\eta
+\end{pmatrix},\qquad
+V=\begin{pmatrix}
+0&\kappa&0&-\kappa&0\\
+\kappa&0&\kappa&0&0\\
+0&\kappa&0&\kappa&0\\
+-\kappa&0&\kappa&0&0\\
+0&0&0&0&1
+\end{pmatrix}.
+\tag{8.6}
+$$
+
+The two leaf coefficients are positive in these frames because $G_4=b$ and the supplied leaf transports are $b,b^\dagger$. The minus signs on the $0,3$ and $3,0$ entries are exactly the published square sign, not a replacement transport. Equations (2.4), or direct multiplication of (8.6), give
+
+$$
+U^\dagger=U,\quad V^\dagger=V,\quad U^2=V^2=I_5.
+\tag{8.7}
+$$
+
+Let $R=UV$. Its inverse is $VU$. Direct multiplication, using only the two scalar equations following (8.4), gives
+
+$$
+R^4+(1+\eta)R^3-(1+\eta)R-I_5=0.
+\tag{8.8}
+$$
+
+To prove that this quartic cannot be replaced by a polynomial of smaller degree, evaluate $I_5,R,R^2,R^3$ at the four entries $(0,0),(0,4),(4,0),(1,2)$. Their column matrix is
+
+$$
+M=\begin{pmatrix}
+1&0&\eta&1-\eta^2\\
+0&\zeta&-\eta\zeta&\eta(\eta+1)\zeta\\
+0&0&\zeta&-\eta\zeta\\
+0&\kappa&0&\kappa
+\end{pmatrix},\qquad
+\det M=\kappa(1-\eta)^2(1+\eta)>0.
+\tag{8.9}
+$$
+
+Thus the four powers are linearly independent over $\mathbb C$ at every allowed parameter pair. The minimal polynomial of $R$ is exactly
+
+$$
+f(X)=X^4+(1+\eta)X^3-(1+\eta)X-1
+=(X-1)(X+1)\bigl(X^2+(1+\eta)X+1\bigr).
+\tag{8.10}
+$$
+
+The quartic identity bounds the span of all nonnegative powers by four, while (8.9) supplies the uniform lower bound. In particular, for every $\ell\ge0$,
+
+$$
+\dim\operatorname{span}\{I_5,R,\ldots,R^\ell\}
+=\min\{\ell+1,4\}.
+\tag{8.11}
+$$
+
+For completeness the quadratic in (8.10) has two nonreal conjugate roots: its discriminant $(1+\eta)^2-4$ is negative for $0<\eta<1$. It shares neither $1$ nor $-1$ with the other factors. This spectral observation is consistent with the four independent powers, but is not needed to replace the explicit lower bound.
+
+Let $\mathcal P_N$ be the set of length-$N$ products of $U,V$. The normal form for two involutions is the standard infinite-dihedral normal form; see Iain Raeburn and Allan M. Sinclair, *The $C^*$-algebra generated by two projections*, Mathematica Scandinavica 65 (1989), 278–290, Proposition 1.1 and the proof of Theorem 1.3 on p. 280, [original article](https://journals.msp.org/mscand/article/download/1364/1363), [DOI](https://doi.org/10.7146/math.scand.a-12283). The exact length restrictions are verified here. Adjacent equal letters cancel by (8.7). Every surviving word alternates, and its length has the same parity as $N$. Conversely any alternating word of that parity and length at most $N$ can be padded to length $N$ by inserting $UU$. With $m\ge0$, this proves the exact set identities
+
+$$
+\mathcal P_{2m}=\{R^k:-m\le k\le m\},\qquad
+\mathcal P_{2m+1}=\{UR^k:-m\le k\le m+1\}.
+\tag{8.12}
+$$
+
+For positive $k$, $UR^k=V(UV)^{k-1}$ has length $2k-1$; for $k\le0$, $UR^k=U(VU)^{-k}$ has length $1-2k$. This verifies both endpoints of the odd interval. The even interval includes the empty product when $m=0$.
+
+Multiplication by the invertible $R^m$ maps the span in the even case to the span of $I_5,R,\ldots,R^{2m}$. In the odd case, first multiply by $U$ and then by $R^m$; this maps the span to that of $I_5,R,\ldots,R^{2m+1}$. These are invertible linear transformations, so (8.11) gives both the upper and lower ranks in (8.3) for the normalized configuration words, including $N=0,1,2$.
+
+The substitution back to $H$ loses no dimension. The map $X\mapsto D^\dagger(X\otimes I_K)D$ is complex linear and injective; evaluating at any fixed diagonal internal coordinate recovers $X$ after undoing $D$. Moreover $L_0=\sqrt B\,T_0$ and $L_1=\sqrt t\,T_1$. Each length-$N$ Kraus word is therefore a positive nonzero scalar times the corresponding normalized word. Individual nonzero rescalings preserve a span, even when distinct words coincide. This proves the asserted $\dim W_N$ on all ten dimensions of $H$, rather than on a single internal vector or a restricted preparation.
+
+Expanding the channel composition yields a Kraus family consisting of all the exact words in (8.2). This exact-length word-span/Choi-rank correspondence is explicitly stated in Mikel Sanz, David Pérez-García, Michael M. Wolf and Juan I. Cirac, *A quantum version of Wielandt’s inequality*, §II, following equation (1), [arXiv:0909.5347](https://arxiv.org/abs/0909.5347); its generic correspondence is reused, without assuming quantum primitivity. The standard vectorization identity gives
+
+$$
+J(\Phi^N)=\sum_{w\in\{0,1\}^N}
+|\operatorname{vec}L_w\rangle\langle\operatorname{vec}L_w|.
+\tag{8.13}
+$$
+
+The range of a finite sum of positive rank-one operators is the span of their vectors: its kernel is their common orthogonal complement, since its quadratic form is the sum of the squared inner products. Vectorization is injective, so the rank in (8.13) is exactly $\dim W_N$. The Choi/Kraus correspondence and attainment of the pure-environment minimum are the mature finite-dimensional suppliers of Watrous, *The Theory of Quantum Information*, Chapter 2, Theorem 2.22 and Corollary 2.27, [author-hosted Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). A pure environment of dimension $d$ supplies at most $d$ Kraus components, giving the lower bound; the positive spectral decomposition of (8.13) supplies exactly its rank many Kraus components, giving attainment. The $N=0$ case is the identity channel with the single nonzero Kraus operator $I_H$. Complete equality on $H$ tensor-extends to any untouched reference. $\square$
+
+**命题 8.3（One retained environment has different balanced repetitions）。** For the interaction $\mathsf U$ in (2.10), throughout (8.1),
+
+$$
+\mathsf U^2=I_{H\otimes E_2}.
+\tag{8.14}
+$$
+
+With the same initially prepared $|\mathrm{ready}\rangle$ and the same retained $E_2$, applying $\mathsf U$ $N$ times and tracing only at the end gives the identity channel for even $N$ and $\Phi$ for odd $N$. Its terminal Choi rank is one for even $N$ and two for odd $N$. It is not the fresh-environment channel power in Theorem 8.2 when $N\ge2$.
+
+**证明。** Equations (8.5)–(8.7) imply $T_0^2=T_1^2=I_H$. Squaring (2.10) eliminates cross terms through the orthogonality of its two control projections and gives (8.14). Even powers restore the complete joint input $x\otimes|\mathrm{ready}\rangle$; odd powers give the one-step dilation (2.5). The same operator identities hold after tensoring with every untouched reference. The identity channel has rank one, and the published one-step rank is two by Theorem 2.1. Fresh independent environments instead produce (8.13), whose rank is three at $N=2$ and four at every $N\ge3$. $\square$
+
+**假设 8.4（Terminal realization and archive boundaries）。** Theorem 8.2 concerns only the fixed unread terminal channel and its full input/reference action. It permits an abstract pure terminal dilation with at most four environment dimensions for each specified finite $N$. A coherent change of environment coordinates in the occupied Kraus span can relate that dilation to the original fresh-register dilation. It does not preserve all independent flag-history basis states, supply an acquired edge or path output, or optimize a decoder subject to those readout contracts.
+
+The measured continuation in Theorem 5.4 inserts successor measurements and retains their results; its path law is a separate instrument. The arbitrary coherent history domain of Proposition 7.4 has independent input dimensions and a retained summary; it remains subject to (7.2). Neither domain is the image generated by iterating a ten-dimensional $H$ input and then forgetting the history boundary. Hence the terminal rank plateau is compatible with the existing coherent-history archive lower bound. It does not bound an unlimited retained archive or charge away fresh preparations, measurements, communication, framing, controls or physical erasure.
+
+Native $\alpha/\beta$ acquisition, realization of (1.2)–(1.3), actual result carriers, calibration and executable precision remain separately supplied conditions of Assumptions 1.4 and 7.5. The classical transition matrix retains its positive loops and legal paths. These do not imply quantum primitivity: (8.5) acts trivially on the entire framed logical factor $K$, in agreement with Theorem 3.1. The Choi/Kraus and pure-environment principles used in the proof are existing suppliers; the new source-specific conclusion is the homogeneous terminal rank (8.3), established by (8.8)–(8.12) on the exact balanced source.
+
+## 追加锚（本行以下为增补区）
