@@ -32,9 +32,9 @@ def redirect (hd : 0 < d) : Old → New
   | .inl e => .inl e
   | .inr _ => .inr (entry hd)
 
-/-- A successor digit is cyclic, including the last source block. -/
-private def nextDigit (hp : 2 ≤ p) (b : Fin p) : Fin p :=
-  ⟨(b.val + 1) % p, Nat.mod_lt _ (by omega)⟩
+set_option quotPrecheck false in
+local notation "nextDigit(" hp "," b ")" =>
+  Fin.mk ((Fin.val b + 1) % p) (Nat.mod_lt _ (Nat.lt_of_lt_of_le (by decide : 0 < 2) hp))
 
 /-- The old internal carrier is p disjoint countdowns. Zero is the final
 read, and every positive index is one charged unit wait. -/
@@ -45,7 +45,7 @@ structure Dedicated (hp : 2 ≤ p) (C : Controller p P Old)
     C.waitNext (.inr (b, i)) = .inr (b, ⟨i.val - 1, by omega⟩)
   reading : ∀ b, C.action (.inr (b, 0)) = .read
   lower : ∀ b, C.readNext (.inr (b, 0)) b = .inl (labels (b, 0))
-  upper : ∀ b, C.readNext (.inr (b, 0)) (nextDigit hp b) = .inl (labels (b, 1))
+  upper : ∀ b, C.readNext (.inr (b, 0)) (nextDigit(hp, b)) = .inl (labels (b, 1))
   terminal : ∀ b e, C.action (.inl (labels (b, e))) = .halt
 
 /-- Exterior rows and their outputs are retained. The shared chain stores
@@ -66,7 +66,7 @@ def table (hp : 2 ≤ p) (hd : 0 < d) (C : Controller p P Old)
     | .inl e, b => redirect hd (C.readNext (.inl e) b)
     | .inr (.inl _), b => .inr (.inr (b, 0))
     | .inr (.inr (b, _)), a =>
-        .inl (labels (b, if a = b then 0 else if a = nextDigit hp b then 1 else 0))
+        .inl (labels (b, if a = b then 0 else if a = nextDigit(hp, b) then 1 else 0))
   output
     | .inl e => C.output (.inl e)
     | .inr _ => C.output (.inl (labels (⟨0, by omega⟩, 0)))
@@ -76,7 +76,7 @@ private theorem pair_digits (hp : 2 ≤ p) (hP : 3 ≤ P) (L : Nat)
     digit hp (by omega) (((b.val * P + L + e.val + (P - L - 1 - 1) : Nat) :
       ZMod (p * P))) = b ∧
     digit hp (by omega) (((b.val * P + L + e.val + (P - L - 1) : Nat) :
-      ZMod (p * P))) = if e = 0 then b else nextDigit hp b := by
+      ZMod (p * P))) = if e = 0 then b else nextDigit(hp, b) := by
   have hpos : 0 < P := by omega
   have early : P - L - 1 - 1 < P := by omega
   have last : P - L - 1 < P := by omega
@@ -109,7 +109,7 @@ private theorem pair_digits (hp : 2 ≤ p) (hP : 3 ≤ P) (L : Nat)
       ZMod (p * P))).val / P = _
     rw [ZMod.val_natCast]
     rw [show b.val * P + L + e.val = b.val * P + (L + e.val) by omega, final]
-    fin_cases e <;> simp [nextDigit, Nat.mod_eq_of_lt b.isLt]
+    fin_cases e <;> simp [Nat.mod_eq_of_lt b.isLt]
 
 private theorem common_chain (hp : 2 ≤ p) (hP : 0 < P) (hd : 0 < d)
     (C : Controller p P Old) (labels : Fin p × Fin 2 → E)
@@ -128,15 +128,12 @@ private theorem common_chain (hp : 2 ≤ p) (hP : 0 < P) (hd : 0 < d)
     apply ih (by omega) (s + 1)
     simpa [Nat.cast_add, add_assoc, add_comm, add_left_comm] using ht
 
-private theorem nextDigit_ne (hp : 2 ≤ p) (b : Fin p) : nextDigit hp b ≠ b := by
-  intro he
-  have hv := congrArg Fin.val he
-  change (b.val + 1) % p = b.val at hv
-  by_cases h : b.val + 1 < p
-  · rw [Nat.mod_eq_of_lt h] at hv
-    omega
-  · rw [show b.val + 1 = p by omega, Nat.mod_self] at hv
-    omega
+private theorem nextDigit_ne (hp : 2 ≤ p) (b : Fin p) : nextDigit(hp, b) ≠ b := by
+  let : NeZero p := ⟨by omega⟩
+  have one : (1 : Fin p) ≠ 0 := by
+    simp [Fin.ext_iff, Fin.val_one, Nat.mod_eq_of_lt (by omega : 1 < p)]
+  simpa [Fin.add_def, Fin.val_one, Nat.mod_eq_of_lt (by omega : 1 < p)] using
+    (add_ne_left.mpr one : b + 1 ≠ b)
 
 private theorem shared_suffix (hp : 2 ≤ p) (hP : 3 ≤ P) (L : Nat)
     (hL : L ≤ P - 3) (C : Controller p P (E ⊕ (Fin p × Fin (P - L - 1 + 1))))
@@ -157,7 +154,7 @@ private theorem shared_suffix (hp : 2 ≤ p) (hP : 3 ≤ P) (L : Nat)
   have first : digit hp (by omega) (s + ((d - 1 : Nat) : ZMod (p * P))) = b := by
     simpa [s, d, Nat.cast_add] using digits.1
   have final : digit hp (by omega) (s + (d : ZMod (p * P))) =
-      if e = 0 then b else nextDigit hp b := by
+      if e = 0 then b else nextDigit(hp, b) := by
     simpa [s, d, Nat.cast_add] using digits.2
   have phase : s + ((d - 1 : Nat) : ZMod (p * P)) + 1 = s + (d : ZMod (p * P)) := by
     calc
@@ -203,7 +200,7 @@ private theorem old_suffix (hp : 2 ≤ p) (hP : 3 ≤ P) (L : Nat)
   let d := P - L - 1
   let s : ZMod (p * P) := (b.val * P + L + e.val : Nat)
   have final : digit hp (by omega) (s + (d : ZMod (p * P))) =
-      if e = 0 then b else nextDigit hp b := by
+      if e = 0 then b else nextDigit(hp, b) := by
     simpa [s, d, Nat.cast_add] using (pair_digits hp hP L hL b e).2
   apply dedicated_chain hp (by omega) C labels H b d le_rfl s
   rw [Follows, H.reading]
@@ -220,6 +217,20 @@ private theorem follows_endpoint {Q : Type} (C : Controller p P Q)
   | cons a word ih =>
     rw [List.length_cons, Function.iterate_succ_apply]
     exact ih _ H.2
+
+private theorem follows_live {Q : Type} (C : Controller p P Q)
+    (hp : 2 ≤ p) (hP : 0 < P) (word : List Action)
+    (c z : ZMod (p * P) × Q) (H : Follows C hp hP c word z)
+    (live : ∀ a ∈ word, a ≠ Action.halt) (i : Nat) (hi : i < word.length) :
+    C.action (((C.step hp hP)^[i] c).2) ≠ .halt := by
+  induction word generalizing c i with
+  | nil => simp at hi
+  | cons a word ih =>
+    cases i with
+    | zero => simpa only [Function.iterate_zero, id_eq, H.1] using live a (by simp)
+    | succ i =>
+      rw [Function.iterate_succ_apply]
+      exact ih _ H.2 (fun a ha => live a (by simp [ha])) i (by simpa using hi)
 
 private theorem exterior_step (hp : 2 ≤ p) (hP : 0 < P) (hd : 0 < d)
     (C : Controller p P Old) (labels : Fin p × Fin 2 → E)
@@ -244,5 +255,141 @@ private theorem exterior_prefix (hp : 2 ≤ p) (hP : 0 < P) (hd : 0 < d)
       Prod.ext rfl he
     rw [hc]
     exact exterior_step hp hP hd C labels _ e
+
+/-- The two-read shared table, its charged carrier, and its exterior path
+bridge all use the same controller and arbitrary preassigned terminal labels. -/
+theorem result (p P L : Nat) (hp : 2 ≤ p) (hP : 3 ≤ P) (hL : L ≤ P - 3)
+    (E : Type) [Finite E] (labels : Fin p × Fin 2 → E)
+    (C : Controller p P (E ⊕ (Fin p × Fin (P - L - 1 + 1))))
+    (H : Dedicated hp C labels) :
+    let d := P - L - 1
+    let hd : 0 < d := by omega
+    let q : E ⊕ (Fin d ⊕ (Fin p × Fin 2)) := .inr (.inl ⟨0, hd⟩)
+    let word := List.replicate (d - 1) Action.wait ++ [Action.read, Action.wait, Action.read]
+    ∃ T : Controller p P (E ⊕ (Fin d ⊕ (Fin p × Fin 2))),
+      T.initial = redirect hd C.initial ∧
+      (∀ e, T.action (.inl e) = C.action (.inl e) ∧
+        T.output (.inl e) = C.output (.inl e) ∧
+        T.waitNext (.inl e) = redirect hd (C.waitNext (.inl e)) ∧
+        ∀ a, T.readNext (.inl e) a = redirect hd (C.readNext (.inl e) a)) ∧
+      Nat.card (Fin p × Fin (d + 1)) = p * (d + 1) ∧
+      Nat.card (Fin d ⊕ (Fin p × Fin 2)) = d + 2 * p ∧
+      Nat.card (E ⊕ (Fin p × Fin (d + 1))) = Nat.card E + p * (d + 1) ∧
+      Nat.card (E ⊕ (Fin d ⊕ (Fin p × Fin 2))) = Nat.card E + (d + 2 * p) ∧
+      ((p * (d + 1) : Nat) : Int) - ((d + 2 * p : Nat) : Int) =
+        ((p - 1 : Nat) : Int) * (d : Int) - (p : Int) ∧
+      (d + 2 * p < p * (d + 1) ↔ 0 < ((p - 1 : Nat) : Int) * (d : Int) - (p : Int)) ∧
+      word.countP (fun a => match a with | .wait => true | _ => false) = d ∧
+      word.countP (fun a => match a with | .read => true | _ => false) = 2 ∧
+      (∀ b e,
+        let s : ZMod (p * P) := (b.val * P + L + e.val : Nat)
+        Follows T hp (by omega) (s, .inr (entry hd))
+          (List.replicate (d - 1) Action.wait) (s + ((d - 1 : Nat) : ZMod (p * P)), q) ∧
+        digit hp (by omega) (s + ((d - 1 : Nat) : ZMod (p * P))) = b ∧
+        T.action q = .read ∧
+        T.readNext q b = .inr (.inr (b, 0)) ∧
+        T.action (.inr (.inr (b, 0))) = .wait ∧
+        T.waitNext (.inr (.inr (b, 0))) = .inr (.inr (b, 1)) ∧
+        T.action (.inr (.inr (b, 1))) = .read ∧
+        Follows T hp (by omega) (s, .inr (entry hd)) word
+          (s + (d : ZMod (p * P)), .inl (labels (b, e))) ∧
+        (T.step hp (by omega))^[d + 2] (s, .inr (entry hd)) =
+          (s + (d : ZMod (p * P)), .inl (labels (b, e))) ∧
+        (∀ i, i < d + 2 → T.action (((T.step hp (by omega))^[i]
+          (s, .inr (entry hd))).2) ≠ .halt) ∧
+        T.action (.inl (labels (b, e))) = .halt ∧
+        T.output (.inl (labels (b, e))) = C.output (.inl (labels (b, e)))) ∧
+      (∀ (c : ZMod (p * P) × (E ⊕ (Fin p × Fin (d + 1)))) n,
+        (∀ i, i < n → ∃ e : E, ((C.step hp (by omega))^[i] c).2 = .inl e) →
+        (T.step hp (by omega))^[n] (Prod.map id (redirect hd) c) =
+          Prod.map id (redirect hd) ((C.step hp (by omega))^[n] c) ∧
+        ∀ i, i < n → T.action (((T.step hp (by omega))^[i]
+          (Prod.map id (redirect hd) c)).2) = C.action (((C.step hp (by omega))^[i] c).2)) ∧
+      (∀ (c : ZMod (p * P) × (E ⊕ (Fin p × Fin (d + 1)))) n (b : Fin p) (e : Fin 2),
+        (∀ i, i < n → ∃ f : E, ((C.step hp (by omega))^[i] c).2 = .inl f) →
+        (C.step hp (by omega))^[n] c =
+          (((b.val * P + L + e.val : Nat) : ZMod (p * P)), .inr (b, ⟨d, by omega⟩)) →
+        (C.step hp (by omega))^[n + (d + 1)] c =
+          (((b.val * P + L + e.val : Nat) : ZMod (p * P)) + (d : ZMod (p * P)),
+            .inl (labels (b, e))) ∧
+        (T.step hp (by omega))^[n + (d + 2)] (Prod.map id (redirect hd) c) =
+          (((b.val * P + L + e.val : Nat) : ZMod (p * P)) + (d : ZMod (p * P)),
+            .inl (labels (b, e))) ∧
+        C.output (((C.step hp (by omega))^[n + (d + 1)] c).2) =
+          T.output (((T.step hp (by omega))^[n + (d + 2)]
+            (Prod.map id (redirect hd) c)).2)) := by
+  classical
+  let : Fintype E := Fintype.ofFinite E
+  dsimp only
+  let d := P - L - 1
+  have hd : 0 < d := by dsimp [d]; omega
+  have hpos : 0 < P := by omega
+  let T := table hp hd C labels
+  let q : E ⊕ (Fin d ⊕ (Fin p × Fin 2)) := .inr (.inl ⟨0, hd⟩)
+  let word := List.replicate (d - 1) Action.wait ++ [Action.read, Action.wait, Action.read]
+  have length : word.length = d + 2 := by simp [word]; omega
+  have fee : ((p * (d + 1) : Nat) : Int) - ((d + 2 * p : Nat) : Int) =
+      ((p - 1 : Nat) : Int) * (d : Int) - (p : Int) := by
+    rw [Nat.cast_sub (by omega : 1 ≤ p)]
+    push_cast
+    ring
+  refine ⟨T, rfl, ?_, ?_, ?_, ?_, ?_, fee, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro e
+    exact ⟨rfl, rfl, rfl, fun _ => rfl⟩
+  · simp [Nat.card_eq_fintype_card]
+  · simp [Nat.card_eq_fintype_card, mul_comm]
+  · simp [Nat.card_eq_fintype_card]
+  · simp [Nat.card_eq_fintype_card, mul_comm]
+  · rw [← fee]
+    rw [sub_pos]
+    norm_cast
+  · simp [List.countP_replicate]; omega
+  · simp [List.countP_replicate]
+  · intro b e
+    let s : ZMod (p * P) := (b.val * P + L + e.val : Nat)
+    have run := shared_suffix hp hP L hL C labels b e
+    change Follows T hp hpos (s, .inr (entry hd)) word
+      (s + (d : ZMod (p * P)), .inl (labels (b, e))) at run
+    have first : digit hp hpos (s + ((d - 1 : Nat) : ZMod (p * P))) = b := by
+      simpa [s, d, Nat.cast_add] using (pair_digits hp hP L hL b e).1
+    have front := common_chain hp hpos hd C labels (d - 1) (by omega) s []
+      (s + ((d - 1 : Nat) : ZMod (p * P)), q) rfl
+    simp only [List.append_nil] at front
+    refine ⟨front, first, rfl, rfl, rfl, rfl, by simp [T, table], run, ?_, ?_,
+      H.terminal b e, rfl⟩
+    · simpa only [length] using follows_endpoint T hp hpos word _ _ run
+    · intro i hi
+      apply follows_live T hp hpos word _ _ run
+      · intro a ha
+        cases a <;> simp_all [word]
+      · omega
+  · intro c n hc
+    refine ⟨exterior_prefix hp hpos hd C labels c n hc, ?_⟩
+    intro i hi
+    rw [exterior_prefix hp hpos hd C labels c i (fun j hj => hc j (by omega))]
+    obtain ⟨e, he⟩ := hc i hi
+    simp only [Prod.map, id_eq, he, redirect]
+    rfl
+  · intro c n b e hc he
+    have old := old_suffix hp hP L hL C labels H b e
+    have new := shared_suffix hp hP L hL C labels b e
+    have oldend := follows_endpoint C hp hpos _ _ _ old
+    have newend := follows_endpoint T hp hpos _ _ _ new
+    have oldlen : (List.replicate d Action.wait ++ [Action.read]).length = d + 1 := by simp
+    rw [oldlen] at oldend
+    rw [length] at newend
+    have lifted := exterior_prefix hp hpos hd C labels c n hc
+    rw [he] at lifted
+    have oldwhole : (C.step hp hpos)^[n + (d + 1)] c =
+        (((b.val * P + L + e.val : Nat) : ZMod (p * P)) + (d : ZMod (p * P)),
+          .inl (labels (b, e))) := by
+      rw [Nat.add_comm n (d + 1), Function.iterate_add_apply, he]
+      exact oldend
+    have newwhole : (T.step hp hpos)^[n + (d + 2)] (Prod.map id (redirect hd) c) =
+        (((b.val * P + L + e.val : Nat) : ZMod (p * P)) + (d : ZMod (p * P)),
+          .inl (labels (b, e))) := by
+      rw [Nat.add_comm n (d + 2), Function.iterate_add_apply, lifted]
+      exact newend
+    exact ⟨oldwhole, newwhole, by rw [oldwhole, newwhole]; rfl⟩
 
 end D5.S3.ObserverMemory.Algorithms.DedicatedPairReplacement
