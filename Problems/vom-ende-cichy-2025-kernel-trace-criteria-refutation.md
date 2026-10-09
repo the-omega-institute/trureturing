@@ -73,10 +73,10 @@ the coefficient matrix), `kernelCriterion`, `maximallyEntangled` (an equal-coeff
 orthonormal families of size $\min\{m,n\}$), `traceCriterion` and `claim`, and proves
 `result : ¬ claim`. `IsWitness` states ${\rm tr}(W\sigma)<0$ in the complex order, literally as in the source. The axiom closure of `result` is exactly `propext`,
 `Classical.choice` and `Quot.sound`; there is no `sorry` or `native_decide`.
-The module statement is `sha256:a02253bbe1d6c137e8c71d17acd561023501aeb5a85f4f06d7f707f0e268ef1e`; `result` is
+The module statement is `sha256:21e7e69d5fb3b0823b89be6d5b2e6e9581a42a77d933e7864a0833cbe22fe2e1`; `result` is
 `sha256:01e9450248d36bfbcb9028325842962e0e2af3d48208a203adf28173fee94911` and `claim` is
 `sha256:7240a2d88de7184ca142279ac4a6119a08de03475d76f0286cb91c55acb53644`. The Freeze event is
-`sha256:08a98917498314f77e93000ea3227bc52f1e06928b9071ac522ae1bc4600ddaf`.
+`sha256:119b1c06df26ac2ebd73265a208ed6218be64e15bcfe75d96728a13c743b33fd`.
 
 ## Triage
 
