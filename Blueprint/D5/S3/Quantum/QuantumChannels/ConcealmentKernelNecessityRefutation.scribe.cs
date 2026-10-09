@@ -16,6 +16,13 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
         Blocks(
             Node("povm", "Finite POVMs", PovmFormula(), "IsPOVM",
                 "For a finite outcome type Omega, a POVM consists of positive semidefinite complex d by d matrices whose sum is the identity. Zero effects are allowed. Positivity includes Hermitian symmetry."),
+            Describe.Lean(DescribeId.Create("concealment-kernel-diagonal-povm"),
+                DeclarationHandle.Create(Prefix + "diagonal_povm"),
+                H("Nonnegative normalized diagonal entries define a POVM"),
+                StatementSource.FromAuthor(Disp(DiagonalPovmFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let d be any natural dimension and Omega a finite outcome type. Suppose the real weights p(a,i) are nonnegative for every outcome a and coordinate i in Fin d, and sum to one over a at each coordinate. The matrices M(a)=diagonal(i maps to the complex embedding of p(a,i)) form a POVM: each effect is positive semidefinite and their sum is the identity. Empty index types and zero effects are included whenever the hypotheses hold."))),
+                DescribeRole.Lemma),
             Node("compatible", "Joint measurements", CompatibleFormula(), "Compatible",
                 "Two POVMs with outcome types Omega and Lambda are compatible if a positive normalized family on Omega times Lambda has the two given marginal sums."),
             Node("concealed", "Operational concealment", ConcealedFormula(), "Concealed",
@@ -99,6 +106,22 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
         return All("d", Field("N"), Finite("Omega", All("M", Fun(omega, Mat(d)),
             Iff(Call("IsPOVM", m), And(All("a", omega, Call("PosSemidef", At(m, V("a")))),
                 Eq(SumOver("a", omega, At(m, V("a"))), D(1)))))));
+    }
+
+    private static Formula DiagonalPovmFormula()
+    {
+        Formula d = V("d"), omega = V("Omega"), p = V("p");
+        Formula nonnegative = All("a", omega, All("i", Fin(d),
+            new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual,
+                At(p, V("a"), V("i")))));
+        Formula normalized = All("i", Fin(d),
+            Eq(SumOver("a", omega, At(p, V("a"), V("i"))), D(1)));
+        Formula effects = Seq(V("a"), Sp, Mapsto, Sp,
+            Call("diagonal", Seq(V("i"), Sp, Mapsto, Sp,
+                Call("ofReal", At(p, V("a"), V("i"))))));
+        return All("d", Field("N"), Finite("Omega",
+            All("p", Fun(omega, Fun(Fin(d), Field("R"))),
+                Imp(And(nonnegative, normalized), Call("IsPOVM", effects)))));
     }
 
     private static Formula CompatibleFormula()
