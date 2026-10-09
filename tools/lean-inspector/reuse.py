@@ -14,7 +14,6 @@ import json
 import os
 from pathlib import Path
 import platform
-import stat
 import subprocess
 import sys
 import tempfile
@@ -89,7 +88,10 @@ def capture(repository):
     files = {}
     for path in paths:
         source = inputs.safe_file(path)
-        files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
+        # Git records only the executable bit; other permission bits differ
+        # between checkouts of one commit and do not change report bytes.
+        mode = 0o755 if source.stat().st_mode & 0o111 else 0o644
+        files[path] = dict(sha256=publication.digest(source), mode=mode)
     return dict(eligible=True, report_format=publication.selection.REPORT_FORMAT,
         files=files,
         execution=dict(toolchain=execution['toolchain'], tools=execution['tools'],
