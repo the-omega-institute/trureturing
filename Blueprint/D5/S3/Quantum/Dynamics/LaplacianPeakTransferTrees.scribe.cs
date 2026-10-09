@@ -58,7 +58,10 @@ internal sealed class LaplacianPeakTransferTreesDocument : IScribeDocumentDefini
                 + "the sum of the absolute spectral entries. This is the phase-alignment mechanism of Lemma 5.2. "
                 + "Each graph is connected and has n-1 edges. The root and a hub both have degree at least two, which excludes all stars. "
                 + "Taking s=2N+1 yields a graph whose order is at least N. The resulting transfer is across one edge.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("coutinho-guo-schmeits-2025-laplacian-peak-transfer-trees"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula, string prose,

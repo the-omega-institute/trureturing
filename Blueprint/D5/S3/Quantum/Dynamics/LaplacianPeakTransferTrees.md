@@ -70,6 +70,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/coutinho-guo-schmeits-2025-laplacian-peak-transfer-trees` (proved) by `D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"coutinho-guo-schmeits-2025-laplacian-peak-transfer-trees","declaration_gid":"D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gabriel Coutinho, Krystal Guo, Vincent Schmeits (2025). *Peak state transfer in continuous quantum walks*. DOI: [10.48550/arXiv.2505.11986](https://doi.org/10.48550/arXiv.2505.11986). URL: <https://arxiv.org/abs/2505.11986v4>.
