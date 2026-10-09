@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:34bb1d7f6a5b21fdeb42a68c6a3478ccae9f37fbbb753db926eea302934dd07d
   normalized_sha256: sha256:34bb1d7f6a5b21fdeb42a68c6a3478ccae9f37fbbb753db926eea302934dd07d
 cas_ref: sha256:34bb1d7f6a5b21fdeb42a68c6a3478ccae9f37fbbb753db926eea302934dd07d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/PartitionTopologyKernel.partitionTopology_eq_of_kernel_iff
+    target_statement_id: sha256:04cb2ecf1d3015c50675a900cb69b17555bb5ace9fc267587d0329cc158998bd
 receipts:
   unresolved_subitems: []

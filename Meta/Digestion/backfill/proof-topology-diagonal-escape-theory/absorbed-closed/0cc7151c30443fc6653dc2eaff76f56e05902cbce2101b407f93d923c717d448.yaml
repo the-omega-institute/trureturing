@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:0cc7151c30443fc6653dc2eaff76f56e05902cbce2101b407f93d923c717d448
   normalized_sha256: sha256:0cc7151c30443fc6653dc2eaff76f56e05902cbce2101b407f93d923c717d448
 cas_ref: sha256:0cc7151c30443fc6653dc2eaff76f56e05902cbce2101b407f93d923c717d448
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.jointKernel_definitionClosure
+    target_statement_id: sha256:ccc85bc143f6c531bfece20f718c509f5358d1c8796853e52bcaf49edb31ecac
 receipts:
   unresolved_subitems: []

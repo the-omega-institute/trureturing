@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:faac210a42f55b69438e2c1364b94593823161fe10119600bc08df3be100b13c
   normalized_sha256: sha256:faac210a42f55b69438e2c1364b94593823161fe10119600bc08df3be100b13c
 cas_ref: sha256:faac210a42f55b69438e2c1364b94593823161fe10119600bc08df3be100b13c
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/ResidualSeparationTopology.separationDeficit_join_law
+    target_statement_id: sha256:d2d58371fbc5802aa1e76632b1360f74a66ccaf2e89adf01003cc59c7652ad91
 receipts:
   unresolved_subitems: []
