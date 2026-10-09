@@ -58,6 +58,10 @@ $$\neg\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/RicoZyczkowskiMonotoneRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rico-zyczkowski-2024-nonlinear-majorization-monotone` (refuted) by `D5/S3/Quantum/Measurements/RicoZyczkowskiMonotoneRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rico-zyczkowski-2024-nonlinear-majorization-monotone","declaration_gid":"D5/S3/Quantum/Measurements/RicoZyczkowskiMonotoneRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Albert Rico; Karol Życzkowski (2024). *Discrete dynamics in the set of quantum measurements*. DOI: [10.1088/1751-8121/ad7dc2](https://doi.org/10.1088/1751-8121/ad7dc2). URL: <https://arxiv.org/abs/2308.05835v2>.

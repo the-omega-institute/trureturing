@@ -34,7 +34,10 @@ internal sealed class RicoZyczkowskiMonotoneRefutationDocument : IScribeDocument
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("rz-result", "Refutation at n = 3, d = 2", Disp(Seq(Neg, Call("claim"))),
                 "Take P₀ = diag(5/12, 1/6), P₁ = diag(1/6, 5/12), and P₂ = diag(5/12, 5/12). On the first diagonal coordinate, interchange outcomes 0 and 1; on the second, keep them fixed. Mix each of these permutations with the uniform three-outcome matrix using weights 9/10 and 1/10. All blocks are diagonal and positive semidefinite, and every block row and column sums to the identity. The principal positive semidefinite square roots give Q₀ = diag(11/60, 11/60) and Q₁ = Q₂ = diag(49/120, 49/120). The squared 2-norm values satisfy hs(P_j − (1/3) • 1)² ≤ 5/144 for every j and hs(Q₀ − (1/3) • 1)² = 9/200 > 5/144. Monotonicity of the square root makes k = 1 fail for every input ordering when the output ordering is the identity.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rico-zyczkowski-2024-nonlinear-majorization-monotone"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
