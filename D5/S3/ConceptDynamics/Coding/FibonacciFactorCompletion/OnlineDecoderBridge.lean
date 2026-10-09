@@ -1,5 +1,5 @@
 /- GID: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/OnlineDecoderBridge
-   generality: G
+   generality: I
    mirror-B: none
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
