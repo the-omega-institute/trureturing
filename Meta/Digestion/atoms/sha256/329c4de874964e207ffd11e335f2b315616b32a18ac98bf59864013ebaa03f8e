@@ -1,0 +1,16 @@
+### corollary 2.1 归一化后的整个隐藏立方体直径趋于零
+
+Claim status: open.
+
+$$
+\boxed{\operatorname{diam}\{\widehat{\mathcal A}(V_A)\}=\frac{\sqrt{2K_n}}{S_n}.}
+$$
+
+因为 $K_n$ 与 $M_n$ 同阶：
+
+$$
+\boxed{\operatorname{diam}=O(M_n^{-3/2}).}
+$$
+
+但其中仍有 $2^{K_n}$ 个不同实际来源，且包含深度分别为 $n$ 与零的来源。
+

@@ -1,0 +1,67 @@
+**同一个具有89片叶子的 FIB 叶词，包含一个由2,097,152棵不同原树组成的明确子族。它们的叶词、叶词路径面积与各阶叶词矩全部相同；其中一棵的内在递归深度为10，其余全部为0。**
+>
+> **在项目的逐地址读口下，从空缓存开始，要在无缺陷来源上准确确认这个区别，至少需要命中21个互不重叠的地址支持。**
+
+这里的关键不是“数据很大所以困难”，而是：
+
+$$
+\boxed{\text{每一个尚未核实的局部位置，都保留一个与已有记录完全相容的反例。}}
+$$
+
+直接参考 [《联合矩纤维》固定源 §§52–55](https://github.com/the-omega-institute/trureturing/blob/1609ebb0100696981666e4548a39ebb295380db8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md)：同叶词的独立局部缺陷族、静态证书、实际前缀已经取得的证据与此后仍需支付的地址读取。本卷先复核该构造，再讨论关系立方体的几何、统计阶数与查询代价。
+
+
+---
+
+## 1. 先分清：五模式规定选择，原树规定被选择的来源
+
+Claim status: open.
+
+项目原始来源是非空有序二叉树：
+
+$$
+\mathbb T::=\alpha\mid\beta\mid\langle\mathbb T,\mathbb T\rangle,
+$$
+
+替换为：
+
+$$
+\rho(\alpha)=\beta,\qquad\rho(\beta)=\langle\beta,\alpha\rangle,
+$$
+
+$$
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+
+令 $T_n=\rho^n\alpha$。则：
+
+$$
+\boxed{T_0=\alpha,\qquad T_1=\beta,\qquad T_{n+2}=\langle T_{n+1},T_n\rangle.}
+$$
+
+五模式：
+
+$$
+\mathsf F[\varnothing],\quad\mathsf F[1],\quad\mathsf F[2],\quad\mathsf F[3],\quad\mathsf F[1,3]
+$$
+
+规定三位置窗口中哪些来源可以共同选择；它没有授权将原树中不同括号全部认作相同。空模式也是空的窗口贡献，不是新增一棵原始空树。
+
+### definition 1. 叶词与内在深度
+
+Claim status: open.
+
+令 $w(t)$ 为从左到右读取全部叶标签得到的词。
+
+定义：
+
+$$
+\boxed{\nu(t)=\max\{k:t\in\rho^k[\mathbb T]\}.}
+$$
+
+它表示整个实际树可以逆解多少层 FIB 替换，不是某条地址的长度，也不是物理年龄。
+
+在标准射线上 $\nu(T_n)=n$。
+
+但同一个叶词可以具有不同括号，进而具有不同的 $\nu$。
+
