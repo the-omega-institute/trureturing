@@ -3084,3 +3084,41 @@ $$
 **来源与范围。** 单态分块保真度、Stinespring 表示、Ky Fan 与 von Neumann 奇异值界、有限 Fourier 正交性均复用已有结果。新增的承重内容是一个共同相干多扇区实现、正交泄漏的迹补偿及包含任意被动参考的精确混合最优值。目标仍须逐扇区平坦；任意非平坦目标、混合源、一般 LOCC 或额外纠缠辅助的优化不在结论内。单扇区 trace-distance 值也可由已有保真度及保持目标的相关酉平均得到，不作为独立文献原创性主张。本节不建立连续 CFT 或引力 RT 字典。
 
 ## 追加锚（本行以下为增补区）
+
+## 40. 有限共享随机性的分支压缩与精确障碍
+
+**定理 40.1（受控循环移位的精确判据）。** 沿用定理 39.2 的共同块拆分。令每个扇区 $s$ 的目标维数为 $d_s$，并考虑一个单循环共享随机变量 $h\in\mathbb Z/L\mathbb Z$，其中 $d_s\mid L$，两侧在扇区 $s$ 上同时施加坐标循环移位 $h\bmod d_s$。该有限混合在所有编码矩阵单位上产生定理 39.2 的目标信道 $\mathcal F_G$（包括消除不同扇区之间全部非零 Fourier 模）当且仅当
+
+$$
+\gcd(d_s,d_t)=1\qquad\text{for every }s\ne t.
+$$
+
+在这一情形，取 $L=\operatorname{lcm}_s d_s=\prod_s d_s$ 即可；所以原来的随机支撑可由一个循环表述而不增加分支数。若某一对 $d_s,d_t$ 有公因子 $g>1$，任意这样的单循环平均都保留一项跨扇区 Fourier 模，因而不能实现一般定理 39.2 的 $\mathcal F_G$。
+
+**证明。** 扇区 $s$ 的 Fourier 模 $k\in\mathbb Z/d_s\mathbb Z$ 在移位下获得特征值 $\exp(2\pi i kh/d_s)$。平均跨扇区 $(s,t)$ 的模 $(k,l)$ 时，所得系数为
+
+$$
+\frac1L\sum_{h=0}^{L-1}
+\exp\!\left(2\pi i h\left(\frac{k}{d_s}-\frac{l}{d_t}\right)\right),
+$$
+
+等于 $1$ 当且仅当 $k/d_s-l/d_t\in\mathbb Z$，否则为零。因为 $0\le k/d_s,l/d_t<1$，这里只可能相等。若 $\gcd(d_s,d_t)=1$，两个分数的最小分母互质，故相等只在 $k=l=0$。这保留正是 $b_{sj}b_{tj}|T_s\rangle\langle T_t|$ 的目标项。
+
+反之，若 $g>1$，令 $k=d_s/g$、$l=d_t/g$。二者均为合法非零模且 $k/d_s=l/d_t=1/g$，所以该跨扇区项平均后系数为 $1$。取一个源谱与该 Fourier 模均具有非零振幅的两扇区实例（例如在各自首个目标块内取两个不等幅坐标），该项不为零，故单循环不能普遍给出 $\mathcal F_G$。证毕。
+
+**推论 40.2（乘积群是受控移位族的最小支撑）。** 令 $H$ 为有限群，并令每个扇区的控制移位由满射同态 $\pi_s:H\twoheadrightarrow\mathbb Z/d_s\mathbb Z$ 给出。若对每一对 $s\ne t$，不同扇区的非零 Fourier 模在 $H$ 平均下都必须消失，则联合同态
+
+$$
+\Pi:H\longrightarrow\prod_s\mathbb Z/d_s\mathbb Z,
+\qquad h\longmapsto(\pi_s(h))_s
+$$
+
+必须满射。因此 $|H|\ge\prod_s d_s$。定理 39.2 的独立乘积群 $H=\prod_s\mathbb Z/d_s\mathbb Z$ 达到该下界. In particular, within this controlled-shift construction class, the branch count is exact; no smaller finite shared-randomness support can preserve all cross-sector coherences for arbitrary source spectra.
+
+**证明.** The Fourier characters of the product group are indexed by tuples $(k_s)_s$. Vanishing of every nontrivial cross-sector mode means that the pullback along $\Pi$ of each product character depending on at least two coordinates is nontrivial. If $\Pi(H)$ were a proper subgroup, its annihilator would contain a nonzero product character; choosing a character with support on at least two coordinates after removing any one-coordinate factors gives a surviving cross-sector mode. Hence the annihilator is trivial and $\Pi(H)$ is surjective. Cardinality then gives the inequality. The product group has identity $Pi$, so it reaches the bound. This argument is only about the controlled-shift family, not all conceivable LOSR decompositions.
+
+For pairwise coprime target dimensions, the Chinese remainder theorem identifies the product group with one cyclic group of order $\prod_s d_s$, proving the compressed representation in Theorem 40.1. When a common factor occurs, Theorem 40.1 gives the exact single-cycle obstruction; the product group remains the minimal controlled-shift realization.
+
+**范围。** This is a finite-character implementation theorem for the arbitrary-source coherent channel of §39. It does not claim a lower bound on the number of branches of arbitrary product channels, nor does it alter the exact diamond optimum. No CFT, gravitational, communication-assisted, or shared-entanglement interpretation is added.
+
+## 追加锚（本行以下为增补区）
