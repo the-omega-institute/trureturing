@@ -5,7 +5,5 @@ cas_ref: sha256:918e7bd42e048f0293d095cc3c13eac5e0a452f738cf775f9bfea367730e658f
 coverage_gids:
   - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorClassSurjectivity.every_reachable_behavior_class_is_reachable
     target_statement_id: sha256:a24083a26e870c592a4faf02c5e9ed1056e5f8994095cde9d0b3a9f586f94c7b
-  - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorCore.reachable_behavior_core
-    target_statement_id: sha256:ffe94b9c9944d7b4cff05302f44b3c0404fa85b3fe068b3b66e356546d2e9d82
 receipts:
   unresolved_subitems: []
