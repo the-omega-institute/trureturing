@@ -72,7 +72,7 @@ private theorem mem_level (F : Set (List A)) (n : ℕ) (w : List A) :
 private theorem mem_available (s : ℕ → ℕ) (G : Set (List A)) (j : ℕ) (w : List A) :
     w ∈ available s G j ↔ Band s j w ∧ Bundle G (s (j + 1)) w := by
   classical
-  simp only [available, Finset.mem_filter, Finset.mem_biUnion, Finset.mem_range, mem_words]
+  simp only [available.eq_1, Finset.mem_filter, Finset.mem_biUnion, Finset.mem_range, mem_words]
   exact ⟨fun h => h.2, fun h => ⟨⟨w.length, by have := h.1.2; omega, rfl⟩, h⟩⟩
 
 omit [Fintype A] [DecidableEq A] in
@@ -137,8 +137,7 @@ private theorem cross_no_prefix (s : ℕ → ℕ) (hs : StrictMono s)
   have hrr : s (j + 1) < s (k + 1) := hs (by omega)
   omega
 
-/-- The union uses one fixed cut at every segment. -/
-private def glue (C : ℕ → Finset (List A)) : Set (List A) := {w | ∃ j, w ∈ C j}
+local notation "glue" C => (⋃ j, (C j : Set (List A)))
 
 private theorem cut_cover (s : ℕ → ℕ) (G : Set (List A)) (b : ℕ → ℕ) (j : ℕ)
     (C : Finset (List A)) (hC : Cut s G b j C) (a : A)
@@ -187,6 +186,7 @@ private theorem glue_prefix_free (s : ℕ → ℕ) (hs : StrictMono s)
     (G : Set (List A)) (hG : IsPrefixFree G) (a : A) (b : ℕ → ℕ)
     (C : ℕ → Finset (List A)) (hC : ∀ j, Cut s G b j (C j)) :
     IsPrefixFree (glue C) := by
+  simp only [IsPrefixFree, Set.mem_iUnion, Finset.mem_coe]
   rintro w ⟨j, hw⟩ v ⟨k, hv⟩ hwv
   obtain ⟨wb, bw⟩ := (hC j).1 w hw
   obtain ⟨vb, bv⟩ := (hC k).1 v hv
@@ -211,7 +211,7 @@ private theorem glue_level_eq (s : ℕ → ℕ) (hs : StrictMono s)
     level (glue C) n = level (C j : Set (List A)) n := by
   classical
   ext w
-  simp only [mem_level]
+  simp only [mem_level, Set.mem_iUnion, Finset.mem_coe]
   constructor
   · rintro ⟨hlen, k, hw⟩
     have hj : Band s j w := ⟨by omega, by omega⟩
@@ -227,6 +227,7 @@ private theorem glue_correct (s : ℕ → ℕ) (h : Retained s)
     (C : ℕ → Finset (List A)) (hC : ∀ j, Cut s G b j (C j)) :
     Legal b (glue C) ∧ expansion s h (glue C) = G := by
   have hroot : [] ∉ glue C := by
+    simp only [Set.mem_iUnion, Finset.mem_coe]
     rintro ⟨j, hw⟩
     have := ((hC j).1 [] hw).1.1
     simp at this
@@ -244,14 +245,16 @@ private theorem glue_correct (s : ℕ → ℕ) (h : Retained s)
       exact (hC j).2.2 n hl hr
   · ext g
     constructor
-    · rintro ⟨w, ⟨j, hw⟩, hp, hglen⟩
+    · rintro ⟨w, hwF, hp, hglen⟩
+      obtain ⟨j, hw⟩ := Set.mem_iUnion.mp hwF
       obtain ⟨wb, bw⟩ := (hC j).1 w hw
       exact bw g (hglen.trans (firstDepth_eq s h wb.1 wb.2)) hp
     · intro hg
       obtain ⟨j, hglen⟩ := hlevels g hg
       obtain ⟨w, hw, hp⟩ := cut_cover s G b j (C j) (hC j) a hg hglen
       have wb := ((hC j).1 w hw).1
-      exact ⟨w, ⟨j, hw⟩, hp, hglen.trans (firstDepth_eq s h wb.1 wb.2).symm⟩
+      exact ⟨w, Set.mem_iUnion.mpr ⟨j, hw⟩, hp,
+        hglen.trans (firstDepth_eq s h wb.1 wb.2).symm⟩
 
 private theorem forward_cut (s : ℕ → ℕ) (h : Retained s)
     (G F : Set (List A)) (b : ℕ → ℕ) (hF : Legal b F)
@@ -304,24 +307,20 @@ private theorem level_card (C : Finset (List A)) (n : ℕ) :
   simp only [mem_level, Finset.mem_filter, Finset.mem_coe]
   exact and_comm
 
-private noncomputable def chosen (s : ℕ → ℕ) (G : Set (List A)) (j : ℕ)
-    (x : List A → Bool) : Finset (List A) := by
-  classical
-  exact (available s G j).filter (fun w => x w = true)
-
 private theorem cut_iff_equations (s : ℕ → ℕ) (G : Set (List A))
     (b : ℕ → ℕ) (j : ℕ) : (∃ C, Cut s G b j C) ↔ ∃ x, Equations s G b j x := by
   classical
+  let chosen (x : List A → Bool) := (available s G j).filter (fun w => x w = true)
   have hc (x : List A → Bool) (g : List A) :
       ∑ w ∈ (available s G j).filter (fun w => w <+: g), (if x w then 1 else 0 : ℕ) =
-      ((chosen s G j x).filter (fun w => w <+: g)).card := by
+      ((chosen x).filter (fun w => w <+: g)).card := by
     simp only [Finset.sum_boole, Nat.cast_id, chosen, Finset.filter_filter]
     congr 1
     ext w
     simp [and_comm]
   have hn (x : List A → Bool) (n : ℕ) :
       ∑ w ∈ (available s G j).filter (fun w => w.length = n), (if x w then 1 else 0 : ℕ) =
-      (level (chosen s G j x : Set (List A)) n).card := by
+      (level (chosen x : Set (List A)) n).card := by
     rw [level_card]
     simp only [Finset.sum_boole, Nat.cast_id, chosen, Finset.filter_filter]
     congr 1
@@ -330,7 +329,7 @@ private theorem cut_iff_equations (s : ℕ → ℕ) (G : Set (List A))
   constructor
   · rintro ⟨C, hC⟩
     let x : List A → Bool := fun w => decide (w ∈ C)
-    have heq : chosen s G j x = C := by
+    have heq : chosen x = C := by
       ext w
       simp only [chosen, Finset.mem_filter, x, decide_eq_true_eq]
       exact ⟨fun h => h.2, fun h => ⟨(mem_available _ _ _ _).mpr (hC.1 w h), h⟩⟩
@@ -342,7 +341,7 @@ private theorem cut_iff_equations (s : ℕ → ℕ) (G : Set (List A))
       rw [hn, heq]
       exact hC.2.2 n hl hr
   · rintro ⟨x, hx⟩
-    refine ⟨chosen s G j x, ?_, ?_, ?_⟩
+    refine ⟨chosen x, ?_, ?_, ?_⟩
     · intro w hw
       exact (mem_available _ _ _ _).mp (Finset.mem_filter.mp hw).1
     · intro g hg hglen
