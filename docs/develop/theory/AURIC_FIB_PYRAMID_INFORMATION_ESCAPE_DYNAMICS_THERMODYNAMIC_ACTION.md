@@ -362,7 +362,7 @@ D_{ln}(q_{k_Z}Vert q_*)gerac{8d^2}{R^4}
 ]
 
 如果 (p) 是 Fibonacci 的 primitive divisor，满足 (pmid R)、(p
-mid AB)，那么这个 prime seam 在该层首次出现。取 (R=F_n) 时，若 (z(p)=n)，则 (p) 在第 (n) 层进入目标分母。这给出素数几何的严格版本：连续 κ 流趋向零关联，有限整数载体却在 primitive rank 处出现不可消除的自由能地板。
+mid AB)，那么这个 prime seam 在该层首次出现。取 (R=F_n) 时，若 (z(p)=n)，则 (p) 在第 (n) 层进入目标分母。这给出素数几何的严格版本：连续 κ 流趋向零关联，有限整数载体却在 primitive rank 处出现有限分辨率的 lattice 残差。
 
 这里仍需保留两个边界。第一，primitive p 只证明该层的独立目标不可达，不保证最近格点距离或自由能地板随层单调增加。第二，若边际 (A,B) 随层变化，p-adic 余量也会变化，必须把它们写进层间 map 后才能讨论全局单调性。
 
@@ -448,6 +448,318 @@ D(p\Vert p_*),\
 \]
 
 只有选定温度、浴、时间约束和控制变量后，才可以把其中一部分合成一个具体的优化问题。
+
+
+## 8. 统一锥坐标：把三维底座和隐藏纤维放到同一个状态空间
+
+令 \(r=1-Z\)。在 \(r>0\) 时再归一化底部四态：
+
+\[
+\alpha=\frac{X}{r},\qquad
+\beta=\frac{Y}{r},\qquad
+\eta=\frac{\kappa}{r}.
+\]
+
+于是
+
+\[
+p=
+\bigl(
+r(1-\alpha-\beta+\eta),\
+r(\alpha-\eta),\
+1-r,\
+r(\beta-\eta),\
+r\eta
+\bigr),
+\]
+
+并且
+
+\[
+\max(0,\alpha+\beta-1)
+\le\eta\le
+\min(\alpha,\beta).
+\]
+
+这说明完整概率空间可以看成底部四态单纯形沿 \(r\in[0,1]\) 的锥化。\(r=0\) 时所有 \((\alpha,\beta,\eta)\) 都塌缩到同一个 apex \(p=\delta_3\)，所以它不是普通的全局积空间，而是边界退化的区间纤维化：
+
+\[
+\mathcal E=
+\{(r,\alpha,\beta,\eta):0<r\le1,\ \eta\in I(\alpha,\beta)\}
+\cup\{\delta_3\}.
+\]
+
+三维金字塔是忘掉 \(\eta\) 后的商：
+
+\[
+(X,Y,Z)=(r\alpha,r\beta,1-r).
+\]
+
+在这个坐标中，
+
+\[
+\kappa=r\eta,\qquad
+\kappa_*=r\alpha\beta,\qquad
+\Delta=r^2(\eta-\alpha\beta),
+\]
+
+\[
+w_\kappa
+=
+r\min\{\alpha,\beta,1-\alpha,1-\beta\}.
+\]
+
+因此隐藏纤维的绝对长度按 \(r\) 缩放，关联 determinant 按 \(r^2\) 缩放，而条件分布中的关联 \(\eta-\alpha\beta\) 可以保持 \(O(1)\)。
+
+概率 Fisher 度量在这个分解下满足
+
+\[
+ds_F^2
+=
+\frac{dr^2}{r(1-r)}
++
+r\,ds^2_{F,\Delta^3}(q),
+\]
+
+其中 \(q\) 是底部四态条件分布。沿隐藏方向的度量为
+
+\[
+g_{\eta\eta}
+=
+r\left(
+\frac1{q_0}+\frac1{q_2}+\frac1{q_5}+\frac1{q_{25}}
+\right).
+\]
+
+这给出一个很重要的区分：Fisher 几何告诉我们哪些方向在统计上可辨识，Onsager mobility 则决定动力学实际沿哪个方向耗散。二者可以一起使用，但不能直接视为同一个 metric。
+
+## 9. 层间径向捕获与层内关联耗散
+
+要让轨迹真正从金字塔底部走向顶点，定义一个额外的径向捕获生成元。令 \(\mu(t)\ge0\)，底部四态统一向 apex 3 泄漏：
+
+\[
+\dot p_i=J\nu_i-\mu p_i
+\quad (i\in\{0,2,5,25\}),
+\]
+
+\[
+\dot p_3=\mu r,
+\]
+
+其中
+
+\[
+J=\gamma(p_2p_5-p_0p_{25}).
+\]
+
+这个生成元保持归一化，并给出
+
+\[
+\dot r=-\mu r,
+\qquad
+\dot X=-\mu X,
+\qquad
+\dot Y=-\mu Y,
+\qquad
+\dot Z=\mu r.
+\]
+
+所以
+
+\[
+\dot\alpha=0,\qquad
+\dot\beta=0.
+\]
+
+宏观轨迹是一条固定 ray：
+
+\[
+X(t)=r(t)\alpha_0,\qquad
+Y(t)=r(t)\beta_0,\qquad
+Z(t)=1-r(t).
+\]
+
+同时，隐藏坐标满足
+
+\[
+\dot\eta=-\gamma r(\eta-\alpha_0\beta_0).
+\]
+
+因此两个过程在归一化坐标中分离：
+
+\[
+r(t)
+=
+r_0\exp\left(-\int_0^t\mu(s)\,ds\right),
+\]
+
+\[
+\eta(t)-\alpha_0\beta_0
+=
+(\eta_0-\alpha_0\beta_0)
+\exp\left(-\int_0^t\gamma(s)r(s)\,ds\right).
+\]
+
+定义有效热化 exposure
+
+\[
+G(t)=\int_0^t\gamma(s)r(s)\,ds.
+\]
+
+则有一个非平凡的两时间尺度判据：
+
+\[
+G(\infty)=\infty
+\quad\Longrightarrow\quad
+\eta(t)\to\alpha_0\beta_0,
+\]
+
+而
+
+\[
+G(\infty)<\infty
+\quad\Longrightarrow\quad
+\text{归一化条件关联可能残留}.
+\]
+
+特别地，当 \(\mu,\gamma\) 为常数时，
+
+\[
+r(t)=r_0e^{-\mu t},
+\qquad
+G(\infty)=\frac{\gamma r_0}{\mu}<\infty.
+\]
+
+这意味着如果层间逃逸太快，系统会先到达 apex，而每一层内部的归一化关联还没有完全热化。这是动力学和热力学之间的实际 tradeoff，不是单纯的几何类比。
+
+定义隐藏残差
+
+\[
+D_{\mathrm h}(t)=r(t)I(q_t).
+\]
+
+在内部点并使用对数平均 mobility \(\Lambda\) 时，有
+
+\[
+\dot D_{\mathrm h}
+=
+-\mu D_{\mathrm h}
+-\gamma r^2\Lambda A^2
+\le0,
+\]
+
+其中
+
+\[
+A=\ln\frac{q_0q_{25}}{q_2q_5}.
+\]
+
+第一项来自底部质量被径向捕获，第二项来自同一层内部的关联耗散。Shannon 熵本身在径向开放流下不必单调，因此这里应使用 \(D_{\mathrm h}\) 或指定的 excess free energy 作为 Lyapunov 量。
+
+## 10. Fisher 几何中的“最优路径”与动力学路径
+
+平方根嵌入
+
+\[
+p\longmapsto 2(\sqrt{p_0},\sqrt{p_2},\sqrt{p_3},\sqrt{p_5},\sqrt{p_{25}})
+\]
+
+把 Fisher 度量变成正象限球面上的欧氏度量。对于径向坐标，
+
+\[
+\theta=2\arcsin\sqrt r,
+\]
+
+有
+
+\[
+ds_{\mathrm{radial}}^2=d\theta^2.
+\]
+
+所以固定端点、固定时间的纯 Fisher 几何最短路径是在 \(\theta\) 中做仿射插值，即
+
+\[
+r(t)=\sin^2\frac{\theta(t)}2.
+\]
+
+它一般不是指数径向捕获
+
+\[
+r(t)=r_0e^{-\mu t}.
+\]
+
+指数捕获是开放系统的生成元轨迹，质量作用流是 Onsager 自由能梯度流，Fisher geodesic 是统计几何的最短路径。三者回答不同的优化问题，必须分别标记。
+
+## 11. 同一 Fibonacci 层上的双重 prime seam
+
+令 \(R_n=F_n\) 为有限整数载体，底部边际计数取 \(A_n=F_a\)、\(B_n=F_b\)，其中 \(0<a,b<n\)。若素数 \(p\) 是 \(F_n\) 的 primitive divisor，则
+
+\[
+p\mid R_n,\qquad
+p\nmid A_nB_n.
+\]
+
+因此连续独立目标
+
+\[
+k_*=\frac{A_nB_n}{R_n}
+\]
+
+在整数格上不可达，至少出现一个 lattice seam。另一方面，令
+
+\[
+z(p)=\min\{m>0:p\mid F_m\}.
+\]
+
+则 \(z(p)=n\)，并且
+
+\[
+M^n\equiv a_p I\pmod p.
+\]
+
+所以同一层同时出现两种不同的 quotient loss：
+
+1. 概率整数载体忘记连续独立点，产生 finite-resolution lattice seam；
+2. \(PGL_2\) 观察者忘记 scalar phase，产生 projective seam。
+
+若 \(p\notin\{2,5\}\) 且 \(n\) 为奇数，则
+
+\[
+a_p^2\equiv-1\pmod p,
+\]
+
+所以 \(\operatorname{ord}(a_p)=4\)，完整线性周期比 projective rank 多出四倍相位。若 \(n\) 为偶数，则 scalar order 为 1 或 2。
+
+可以把第 \(n\) 层的算术缺陷记为
+
+\[
+\mathcal C_n=(Q_n,\sigma_n),
+\]
+
+其中
+
+\[
+Q_n=\frac{F_n}{\gcd(F_n,F_aF_b)}
+\]
+
+是独立目标的最简分母，\(\sigma_n\) 是 Fibonacci 矩阵在 projective closure 后剩余的 scalar phase。这个双缺陷比把素数当成几何坐标更准确，因为它同时记录有限计数可达性和观察商丢失的周期信息。
+
+这里必须保留尺度限制。对于最近整数格点，lattice seam 通常是有限分辨率障碍，随着 \(R\) 增大，KL 残差密度可能趋于零。要得到宏观的非零自由能密度，需要额外的同余约束或使允许纤维距离保持 \(O(R)\)。因此 primitive prime 证明的是 exact independence 不可达，不自动证明物理相变或宏观能垒。
+
+## 12. 可逐步形式化的定理包
+
+建议在 D5/S3/Arith/FibonacciAtomic/AuricPyramid/ 下建立以下文件，先做静态线性代数，再做解析流：
+
+1. ProjectionFiber.lean：定义 Law、PyramidPoint、投影 \(\pi\)、重构式、fiber interval、核方向和 \(\Delta\)。
+2. ConditionalBottom.lean：定义底面条件分布，证明 \(\Delta=0\) 与条件独立的关系，并调用 MutualInformation。
+3. RelaxationMap.lean：先用凸组合形式证明 \(\kappa\) 合法、同点和 \(\Delta\) 收缩，暂时避开 Real.exp 和微分。
+4. MassActionFlow.lean：再形式化指数解、导数和 \(\Delta(t)\) 收缩。
+5. RadialCapture.lean：证明 \(r\) 的指数衰减、固定 ray、不变的 \(\alpha,\beta\) 和 exposure 公式。
+6. LayeredEscapeProduct.lean：把已有 LayerChain、capture partition 和 \(r_j,\alpha_j,\beta_j,\eta_j\) 组成 typed product。只声明 kernel refinement 与高度更新的兼容条件，不从 capture 自动推出物理热层。
+7. PrimeSeam.lean：先形式化整数四格的 \(R\mid AB\) 判据、TV 下界、分母障碍，再连接 PrimeAxisEscape。
+8. FibonacciProjectiveSeam.lean：先证明 Fibonacci 矩阵幂公式，再单独证明 projective rank 与 scalar period 的关系。
+
+第一阶段最稳的可编译范围是 ProjectionFiber、RelaxationMap 和 LayeredEscapeProduct 的有限组合部分。熵导数、对数平均和 PGL scalar period 应作为后续文件，避免第一版形式化被边界和实分析拖住。
 
 ## 8. 已证实、本文推导与下一步 formalization
 
