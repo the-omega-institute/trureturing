@@ -4,7 +4,19 @@
 
 Nine explicit qutrit vectors form the dimension-three Hesse SIC configuration.
 
-**Theorem 1.1 (Nine Hesse vectors have constant overlap and resolve the identity).**
+**Theorem 1.1 (The cubic phase has order three).**
+
+$$omega^{3} = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumContext/HesseSicCertificate.omega_cubed` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The third power of the cubic phase is one.
+
+**Theorem 1.2 (Nine Hesse vectors have constant overlap and resolve the identity).**
 
 $$\forall r: Fin(9),\ \left\lVert v_{r} \right\rVert^{2} = 1,\\\land (\forall r, s: Fin(9),\ r \neq s \Rightarrow \lvert \langle v_{r}, v_{s} \rangle \rvert^{2} = \frac{1}{4}),\\\land \sum_{r: Fin(9)} v_{r} v_{r}^{*} = 3 I_{3}.$$
 
@@ -25,3 +37,4 @@ The Lean proof evaluates the full finite tables from the displayed coordinates a
 ## References
 
 - Truth anchor: `D5/S3/QuantumContext/HesseSicCertificate.hesse_sic_certificate`
+- Truth anchor: `D5/S3/QuantumContext/HesseSicCertificate.omega_cubed`
