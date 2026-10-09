@@ -781,3 +781,266 @@ Finally $N_p(t),N_\beta(t)$ are tolerance-dependent bounds. The quantifier prove
 The exact quotient in [CF, Proposition 7.2] assumes identical complete decoded measures and strong lumpability to preserve arbitrary acquired rows. Theorem 9.2 uses stationary-weighted actual edge flows, allows unequal laws and nonlumpable rows, and explicitly bounds the covariance in the new generated laws. It proves the comparison for the installed stationary rows on every original positive history; it is not a pathwise quotient for arbitrary private initial rows. [FLOW] rationalizes a supplied finite shape and [CLIP, Proposition 6.3] certifies one fixed shape. The additional bridge here bounds the replacement shape solely by positive accuracy before those certificates are transferred to the unbounded union. [CK, Theorem 7 and Corollary 8] supplies approximation for a fixed pair of represented labeled Markov chains, not this label cap or an all-shape lower bound. The actual-history-average consumer likewise does not replace the phase suprema in (10.1)–(10.3). These correspondences establish the scope of the derivation, not a claim of global literature priority.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. One rational common table with uniformly small positive excess
+
+**Definition 11.1 (the common two-label table).** On the original source, control and complete future of Definitions 1.1–1.3, use a period-one table with $X=Y=\{0,1\}$ and
+
+$$
+\begin{gathered}
+D=300000000,\qquad b=\frac{22306}{D},\qquad
+\pi=\tau=(1/2,1/2),\\
+B=\begin{pmatrix}1-b&b\\b&1-b\end{pmatrix},\qquad
+A=\begin{pmatrix}1&0\\0&1\end{pmatrix},\\
+u=\frac1D\begin{pmatrix}100003966\\119995354\end{pmatrix},\qquad
+v=\frac1D\begin{pmatrix}100005451\\119995552\end{pmatrix}.
+\end{gathered}
+\tag{11.1}
+$$
+
+Before the third latch retain the full original $C_0$ and use fair synthetic letters. The original third-completion update first writes the whole record and latches it, then independently samples the fair private label. After an acquired p-$\beta$ apply $B$; after an acquired suspended-$\alpha$ apply $A$. Synthetic generation uses the same two update kernels with the emissions $u,v$. Completing letters clear the private label and retain the original pendingStop and all held records. Only the original matching Stop and delivery follow. The table is fixed independently of the prior, source depth, acquired word, seed and record fiber.
+
+Put $U=\operatorname{diag}(1-u)$, $V=\operatorname{diag}(v)$,
+
+$$
+H=UBV,\qquad g=UB(\mathbf1-v).
+\tag{11.2}
+$$
+
+For $j\ge0$ the raw complete decoded laws are
+
+$$
+\begin{aligned}
+Q_i(w_{j,0})&=(H^ju)_i,& Q_i(w_{j,1})&=(H^jg)_i,\\
+W_i(\beta)&=1-v_i,& W_i(\alpha w_{j,c})&=v_iQ_i(w_{j,c}).
+\end{aligned}
+\tag{11.3}
+$$
+
+Both carriers retain their legal infinite noncompletion outcome. Each full configuration uses its own current-record map $I_c$ to insert the complete original event blocks. No acquired suspended letter is inserted a second time into its future.
+
+**Theorem 11.2 (uniform conf/conf certificate and witness nonattainment).** For every finite or countable installed prior with $\mu(1),\mu(2)>0$, Definition 11.1 gives one finite rational same-update observer $M_\mu$ such that, on all the original positive acquired histories in both fourth phases,
+
+$$
+R_{{\rm conf},s}(M_\mu)-\rho_s
+<\frac{109986166}{10^{15}}<\frac{11}{100000000},
+\qquad s=p,\beta.
+\tag{11.4}
+$$
+
+The law-order risks of this same observer obey the corresponding upper bounds. In the notation of Corollary 2.3,
+
+$$
+0\le J(\mathfrak M_\mu)\le J(\mathfrak S_\mu)
+\le \max_s\{R_{{\rm conf},s}(M_\mu)-\rho_s\}
+<\frac{11}{100000000}.
+\tag{11.5}
+$$
+
+This particular witness does not attain the two minima:
+
+$$
+R_{{\rm conf},p}(M_\mu)-\rho_p
+>\frac{109467}{10^{12}}>\frac1{10000000}.
+\tag{11.6}
+$$
+
+Its individual same-update generation is exact, while its marginalized suspended-$\alpha$ defect is strictly greater than $3/1000$. No hard defect bound or fixed COMPLETE resource budget is a premise of (11.4).
+
+Proof. All four emissions lie in $[1/3,2/5]$. The matrix $B$ is doubly stochastic and $A$ is the identity, so
+
+$$
+\pi B=\tau,\qquad \tau A=\pi.
+\tag{11.7}
+$$
+
+The independent latch row and induction over the actual noncompleting letters keep the acquired private row exactly fair at every original p and suspended history. Actual acquired letters come from the same installed $K$, independently of the private random choices. Thus this induction uses the unweighted actual kernels $B,A$, without reweighting by the synthetic emissions. It holds on every seed and complete-record fiber and after every finite number of returns.
+
+For synthetic generation, the two phase equations are instead
+
+$$
+\begin{aligned}
+Q_i&=u_i\delta_\alpha+(1-u_i)\,\beta\sum_tB_{it}W_t,\\
+W_i&=(1-v_i)\delta_\beta+v_i\,\alpha Q_i.
+\end{aligned}
+\tag{11.8}
+$$
+
+Here prefixing denotes prefixing the raw word, with its original events subsequently supplied by $I_c$. Expanding (11.8) gives precisely (11.2)–(11.3). In particular both laws are produced by this same installed table, rather than assigned separately to the phases. The identity
+
+$$
+u+g+H\mathbf1=\mathbf1,
+\qquad H\mathbf1\le\frac4{15}\mathbf1
+\tag{11.9}
+$$
+
+shows that the total p mass completed before $L$ returns is $\mathbf1-H^L\mathbf1$. The residual tends to zero geometrically, so every $Q_i$ is normalized. Equation (11.8) then normalizes $W_i$. Infinite noncompletion remains an outcome of mass zero; neither law is conditioned on completion. Before the latch, fair seed-pair rejection and payload-return survival also decay geometrically, as in Lemma 2.1.1. Pending and delivered configurations have the original deterministic Stop/delivery and empty future. This establishes individual generation on the entire original retained carrier.
+
+It remains to bound the two pure-target configuration errors, using the actual fair rows. Set $L=16$. On the complete-word partitions of Definition 5.1 let
+
+$$
+\begin{aligned}
+q_i&=\bigl((H^ju)_i,(H^jg)_i\ (0\le j<16);\ (H^{16}\mathbf1)_i\bigr),\\
+w_i&=\bigl(1-v_i;\ v_iq_i\bigr),\\
+t_p(r)&=\bigl(ra_r^j,(1-r)^2a_r^j\ (0\le j<16);\ a_r^{16}\bigr),\\
+t_\beta(r)&=\bigl(1-r;\ rt_p(r)\bigr).
+\end{aligned}
+\tag{11.10}
+$$
+
+Each vector is normalized, including its single residual cell. Denote their finite configuration errors by
+
+$$
+F_{p,16}(r)=\frac14\sum_{i=0}^1\|q_i-t_p(r)\|_1,
+\qquad
+F_{\beta,16}(r)=\frac14\sum_{i=0}^1\|w_i-t_\beta(r)\|_1.
+\tag{11.11}
+$$
+
+The factors retain configuration averaging outside TV.
+
+The following integer expressions specify the finite rational certificate. Write $\widehat u=D u$, $\widehat v=D v$, $\widehat B=DB$, and define the integer matrix $\mathsf H$ and column $\mathsf g$ by
+
+$$
+\mathsf H_{it}=(D-\widehat u_i)\widehat B_{it}\widehat v_t,\qquad
+\mathsf g_i=(D-\widehat u_i)\sum_t\widehat B_{it}(D-\widehat v_t).
+\tag{11.12}
+$$
+
+Thus $H=\mathsf H/D^3$, $g=\mathsf g/D^3$, and the decoder coordinates in (11.10) are exactly
+
+$$
+q_i(w_{j,0})=\frac{(\mathsf H^j\widehat u)_i}{D^{3j+1}},\qquad
+q_i(w_{j,1})=\frac{(\mathsf H^j\mathsf g)_i}{D^{3j+3}},\qquad
+q_i(*)=\frac{(\mathsf H^{16}\mathbf1)_i}{D^{48}}.
+\tag{11.13}
+$$
+
+Here $*$ is the residual cell. The integer numerators in (11.12) are
+
+$$
+\mathsf H=\begin{pmatrix}
+5999761938043440825963796&535313541104374971008\\
+401540250133587167876&6479445253623873282590848
+\end{pmatrix},\qquad
+\mathsf g=\begin{pmatrix}
+11999345808415454799065196\\9720571346125993130241276
+\end{pmatrix}.
+\tag{11.14}
+$$
+
+Powers can equivalently be expressed by $\mathsf H^0=I$ and $\mathsf H^{j+1}=\mathsf H^j\mathsf H$. For $r=e/f$, the two target p coordinates are the integers $e^{j+1}(f-e)^j$ and $e^j(f-e)^{j+2}$ divided by $f^{2j+1}$ and $f^{2j+2}$ respectively; the residual is $[e(f-e)]^{16}/f^{32}$. The suspended coordinates follow by multiplying by $e/f$ and adjoining $1-e/f$. All denominators are positive.
+
+Put $I_0=[3/8,5/13]$, $E_p=\{w_{0,1},w_{1,1},w_{2,1}\}$ and $E_\beta=\{\beta,\alpha w_{0,1}\}$. Substitution in (11.13) at each of the two rational boundaries of $I_0$ gives the following strict chains; every adjacent gap in these chains exceeds $11/10^{12}$:
+
+| Phase and cell | Chain at $r=3/8$ and at $r=5/13$ |
+| --- | --- |
+| p, $z\in E_p$ | $q_0(z)>t_p(r)(z)>q_1(z)$ |
+| p, $z=w_{3,1}$ | $t_p(r)(z)>q_1(z)>q_0(z)$ |
+| p, every other distinguished cell and $*$ | $q_0(z)<t_p(r)(z)<q_1(z)$ |
+| suspended, $z\in E_\beta$ | $w_0(z)>t_\beta(r)(z)>w_1(z)$ |
+| suspended, every other distinguished cell and $*$ | $w_0(z)<t_\beta(r)(z)<w_1(z)$ |
+
+These are 134 finite cell chains with explicit integer expressions (11.12)–(11.14), comprising 268 positive differences. Each inequality is a positive-denominator integer comparison, including the residual cells.
+
+To pass from the two rational boundaries to every $r\in I_0$, a target coordinate of the form $r^a(1-r)^c$ has derivative with sign $a-(a+c)r$. For the p branch 0, $(a,c)=(j+1,j)$ and the derivative is positive throughout $I_0$. For the p branch 1, $(a,c)=(j,j+2)$; it is nonpositive for $j\le3$ and positive for $j\ge4$. Its only boundary turning point is $3/8$ at $j=3$; the next turning point is $2/5>5/13$. At suspension the initial $1-r$ decreases, branch 0 has $(a,c)=(j+2,j)$ and increases, and branch 1 has $(a,c)=(j+1,j+2)$, decreasing at $j=0$ and increasing for $j\ge1$. Both residuals, $a_r^{16}$ and $r a_r^{16}$, increase. Consequently every target coordinate lies between its two boundary values, and all the displayed chains hold throughout $I_0$.
+
+For any normalized finite vectors $a,b,t$, the coordinate absolute-value identity gives
+
+$$
+\frac{\operatorname{TV}(a,t)+\operatorname{TV}(b,t)}2
+=\frac{\operatorname{TV}(a,b)}2
++\frac12\sum_z\operatorname{dist}
+\bigl(t_z,[\min(a_z,b_z),\max(a_z,b_z)]\bigr).
+\tag{11.15}
+$$
+
+Indeed $|a_z-t_z|+|b_z-t_z|=|a_z-b_z|+2\operatorname{dist}(t_z,[\min(a_z,b_z),\max(a_z,b_z)])$ for each coordinate; summing and dividing by four proves (11.15). Applying the chains yields, throughout $I_0$,
+
+$$
+\begin{aligned}
+F_{p,16}(r)&=\frac12\operatorname{TV}(q_0,q_1)
++\frac12\left[r^3(1-r)^5-q_1(w_{3,1})\right],\\
+F_{\beta,16}(r)&=\frac12\operatorname{TV}(w_0,w_1).
+\end{aligned}
+\tag{11.16}
+$$
+
+The derivative of the variable term is $r^2(1-r)^4(3-8r)\le0$ on $I_0$. Hence the p expression is maximized at $3/8$, and the suspended expression is constant. This bounds every original depth $k\ge3$, without replacing countable support by a finite diagnostic support.
+
+For the two original endpoints and this interval maximum, (11.10)–(11.14) give the following strict rational enclosures. Each displayed pair $(l,h)$ means $l/10^{12}<F_{s,16}(r)-\rho_s<h/10^{12}$.
+
+| $r$ | p enclosure $(l,h)$ | suspended enclosure $(l,h)$ |
+| --- | --- | --- |
+| $1/3$ | $(109467,109468)$ | $(109092,109093)$ |
+| $2/5$ | $(108109,108110)$ | $(108551,108552)$ |
+| $3/8$ | $(109864,109865)$ | $(-18062232,-18062231)$ |
+
+Together with (11.16), these positive-denominator comparisons prove
+
+$$
+\sup_{k\ge1}\{F_{s,16}(r_k)-\rho_s\}
+<\frac{109865}{10^{12}},\qquad s=p,\beta.
+\tag{11.17}
+$$
+
+The full-tail correction does not require extending these finite signs to unbounded $j$. Refining a residual cell with decoder and target masses $a,c$ increases TV by at most $[(a+c)-|a-c|]/2=\min(a,c)$. The target residual is $a_r^{16}\le(6/25)^{16}$ at p and $r a_r^{16}\le(2/5)(6/25)^{16}$ at suspension. Apply the inequality to each configuration and average. This is the residual argument of Theorem 5.2 and [CLIP, Theorem 5.2], with the infinite outcome included. Exactly,
+
+$$
+\left(\frac6{25}\right)^{16}<\frac{121166}{10^{15}},\qquad
+\frac{109865}{10^{12}}+\frac{121166}{10^{15}}
+=\frac{109986166}{10^{15}}<\frac{11}{10^8}.
+\tag{11.18}
+$$
+
+For example the first comparison follows by cross multiplication of $6^{16}/25^{16}$ with its displayed rational upper bound. Equations (11.17)–(11.18) now bound both full pure-target configuration losses uniformly over all original supported depths.
+
+At an arbitrary original positive acquired history the target is the posterior mixture (1.3), while the acquired row is still fair by (11.7). Countable target convexity gives
+
+$$
+\frac12\sum_{i=0}^1
+\operatorname{TV}\left(Q_i,\sum_k\nu_h(k)P_{p,r_k}\right)
+\le\sum_k\nu_h(k)\frac12\sum_{i=0}^1
+\operatorname{TV}(Q_i,P_{p,r_k}),
+\tag{11.19}
+$$
+
+and the suspended inequality uses $W_i$. The original current-record map $I_c$ preserves these TV comparisons and the complete next-operation event blocks. The common strict upper margin in (11.17)–(11.18) therefore bounds the suprema on all $\mathcal H_p,\mathcal H_\beta$, proving (11.4). Convexity in the decoder gives law $\le$ conf for this same model. Its membership in $\mathfrak S_\mu$, inclusion and the separate phase lower bounds prove (11.5).
+
+For nonattainment, partitioning never increases TV, and the first p enclosure gives $F_p(1/3)-\rho_p>109467/10^{12}$. This endpoint is supported. The pure-target exposure equality (2.3), supplied by [CLIP, Proposition 2.3], thus proves (11.6). In particular its limiting endpoint error is approached by positive finite paid rejection histories of the same installed prior; it is not an error on an inaccessible reset source. No model-independent positive lower bound follows from this one-model calculation.
+
+Finally, at a suspended cut the actual successor row after $\alpha$ is fair, but conditioning the synthetic report on $\alpha$ gives the row
+
+$$
+\eta=\frac{(v_0,v_1)}{v_0+v_1}.
+$$
+
+The two successor laws are $Q_0,Q_1$. Homogeneity of TV for their signed difference, followed by the event consisting of the immediate p completion $\alpha$, gives
+
+$$
+\begin{aligned}
+\delta(h,\alpha)
+&=\frac{v_1-v_0}{2(v_0+v_1)}\operatorname{TV}(Q_0,Q_1)\\
+&\ge\frac{(v_1-v_0)(u_1-u_0)}{2(v_0+v_1)}
+=\frac{33302488770849}{11000050150000000}>\frac3{1000}.
+\end{aligned}
+\tag{11.20}
+$$
+
+Thus exact individual generation has not been confused with zero marginalized defect. Also $BA=B$ is irreducible, every $v_i$ is positive, and $Q_0(\alpha)=u_0\ne u_1=Q_1(\alpha)$. The supplied native-mixture rigidity [NATIVE11, Theorem 5.1] implies that the two p laws cannot both be mixtures of the original native depth laws. That result is consumed only to locate this particular witness relative to its native-mixture subclass. ∎
+
+**Proposition 11.3 (finite represented resources and the remaining alternatives).** The same table admits finite exact rational sampling with all original records and controls retained and all service microstates charged under COMPLETE. Its two private labels per phase are not its total COMPLETE state count. The bound (11.5) is an upper bound for the unrestricted common-model infimum, while (11.6) is a lower bound only for this witness. These conclusions select none of the finite-endpoint, unattained-zero-infimum or strictly-positive-infimum alternatives in Open question 8.2.
+
+Proof. Every primitive probability in (11.1), including the fair latch and pre-latch emissions, has denominator $D$; deterministic updates need no random selection. Since $D<2^{29}$, a rational sampler may draw a 29-bit candidate, reject values at least $D$, and compare an accepted candidate to its finite integer thresholds. Its candidate, bit cursor, current row and label, program counter, addresses, table data, event and output cursors, and original record/control fields form finite charged storage. Repeated attempts reuse this storage and retain no unbounded retry counter. Fresh independent bits give the exact row probabilities and almost-sure return. Acquired and synthetic execution use this same represented update sampler; synthetic emission sampling makes no actual source call.
+
+The original $C_0$ remains present before and after the latch. Both accepted seeds, every paid rejection word, the complete marker tree, every record write before its latch, held records, permissions and delivery are preserved by the product update of Lemma 2.1.1. All original positive payload-return histories and legal noncompletion futures remain. The observer keeps no additional acquired-history register, Read count, posterior, readable analysis row, external clock, source-reset service or continuous register, and pending/delivered states have no Read. Installation description and workspace, actual Reads, fresh bits, internal work, synthesis and output length, offline certificate arithmetic and the source provider's single common-depth resources are separate accounts. Random rejection and arbitrarily long legal return words preclude a finite worst-case total-bit, time or output bound. No total-resource optimum or preservation of a previously prescribed budget is inferred from the private label count.
+
+There is one fixed positive upper witness, with a strictly positive own excess. A vanishing-excess family would require another quantified construction, a finite exact endpoint another table or proof, and a positive unrestricted gap an inequality valid over all finite shapes. None follows from an upper witness and its own lower bound. The result supplies no exact posterior or chronology recovery, physical-spacetime consequence or global completion. ∎
+
+The table and the uniform source-specific certificate in Theorem 11.2 are repo-derived. The stopped-word laws, actual-history interpretation, stationary row condition, full record rendering, phase minima and residual-cell estimate are reused from Definitions 1.1–2.1, (2.3), Theorem 5.2 and [CLIP, §§2 and 5]. The coordinate triangle identity is the elementary intermediate step (11.15), not a separate new theorem. [CK, Theorem 7 and Corollary 8] approximates TV for a supplied pair of labeled Markov chains; it supplies neither (11.1) nor simultaneous unweighted acquired circulation and configuration-before-TV bounds on this source. The conf/law construction [SWITCH11, §3] uses suspended emissions $0,1/2$, and [MIXED11, Theorem 3.1] supplies different risk orders. Their stated attainments do not supply the regular-emission conf/conf certificate (11.4). These are bounded mathematical correspondences, without a global literature-priority or optimality claim.
+
+[NATIVE11]: https://github.com/the-omega-institute/trureturing/blob/54dc9a9bd356fe584703022a3a4c0b0978f557de/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXTURE_RECURRENCE_OBSTRUCTION.md
+[SWITCH11]: https://github.com/the-omega-institute/trureturing/blob/54dc9a9bd356fe584703022a3a4c0b0978f557de/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONFIGURATION_LAW_SWITCH_ATTAINMENT.md
+[MIXED11]: https://github.com/the-omega-institute/trureturing/blob/54dc9a9bd356fe584703022a3a4c0b0978f557de/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MIXED_PHASE_DEFECT_ATTAINMENT.md
+
+## 追加锚（本行以下为增补区）

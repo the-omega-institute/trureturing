@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:2fd6791771821a6643c51e6bd21f6cab5c3f7064bdeaa2fc01a08b5352af6df5
   normalized_sha256: sha256:2fd6791771821a6643c51e6bd21f6cab5c3f7064bdeaa2fc01a08b5352af6df5
 cas_ref: sha256:2fd6791771821a6643c51e6bd21f6cab5c3f7064bdeaa2fc01a08b5352af6df5
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Postprocessing/RecoverablePostprocessingKernelEquality.recoverable_postprocessing_preserves_kernel
+    target_statement_id: sha256:53ebafc59ae25d0c4abd12419eeecda3a90079744b06db16cf54a060562e2aeb
 receipts:
   unresolved_subitems: []
