@@ -9,6 +9,7 @@ claim: "Conjecture 2: for an odd prime d and |Ψ⟩ ∈ H_d^{⊗n}, 0 ≤ κ(Ψ,
 strata_touched:
   - D5/S3/Quantum/Magic/CliffordThirdMomentNegativity
   - D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation
+  - D5/S3/Quantum/Magic/CliffordThirdMomentSigmaRefutation
 license: citation-only
 triage: anchor
 ---
@@ -43,6 +44,8 @@ Moments: "$\kappa(\Psi,\caT):=\tr[R(\caT)(|\Psi\>\<\Psi|)^{\otimes 3}]$"; for a 
 Stochastic orthogonal group: "A $t \times t$ matrix $O$ over $\bbF_d$ is a stochastic isometry if it satisfies the following two conditions: $O\bfx\cdot O\bfx=\bfx\cdot \bfx $ for any $\bfx \in \bbF_d^t$. $O \cdot \mathbf{1}_t = \mathbf{1}_t$ … The two conditions imply that $O^\top O=OO^\top=\mathds{1}$ … The stochastic orthogonal group $O_t(d)$ is the group of all stochastic isometries on $\bbF_d^t$", with "$\caT_O:=\left\{ (O\bfx;\bfx)\, | \, \bfx \in \bbF_d^t \right\}$".
 
 Subsets of $\Sigma(d)$: "$\scrT_\sym:=\{\caT_O\ |\ O\in S_3\}$, $\scrT_\ns:=\Sigma(d)\setminus\scrT_\sym$, $\scrT_\iso:= \{T_O \; | \; O \in O_3(d)\}$".
+
+Cardinality (`eq:Sigma33DefectNum`): "$|\Sigma(d)|=2d+2, \quad |\scrT_\defe|=|\Sigma(d)|-|O_3(d)|= \begin{cases} 2 & d=3,\\ 4 & d = 1\mmod 3,\\ 0 & d=2\mmod 3. \end{cases}$" followed by "When $d = 2\mmod 3$, $\scrT_\defe$ is empty and $\Sigma(d)=\scrT_\iso$ contains only one double coset."
 
 Conjecture 2: "Suppose $d$ is an odd prime and $|\Psi\>\in\caH_d^{\otimes n}$. Then
 $0\leq \kappa(\Psi,\caT)\leq 1 \quad \forall \caT\in \Sigma(d), \quad 6\leq \kappa(\Psi,\Sigma(d))\leq 2d+2, \quad 0\leq \kappa(\Psi,\scrT_\ns)\leq 2d-4, \quad \kappa(\Psi, \scrT_\iso)\geq 6.$"
