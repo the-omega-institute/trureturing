@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:481f5038895c35df01240bf84a91eb17d4520058f5418f1111714f27e1fefc31
   normalized_sha256: sha256:481f5038895c35df01240bf84a91eb17d4520058f5418f1111714f27e1fefc31
 cas_ref: sha256:481f5038895c35df01240bf84a91eb17d4520058f5418f1111714f27e1fefc31
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockJacobi.borcherds
+    target_statement_id: sha256:8037f74b87ed9311101f6885d96eab1fc7223b226e00d567092a455b1f62328a
 receipts:
   unresolved_subitems: []
