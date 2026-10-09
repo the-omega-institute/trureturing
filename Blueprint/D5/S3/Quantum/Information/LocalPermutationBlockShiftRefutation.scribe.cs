@@ -49,13 +49,17 @@ internal sealed class LocalPermutationBlockShiftRefutationDocument : IScribeDocu
                 AssessedProvenance.FromLiterature(Source)),
             Node("result", "Conjecture 3.6 is false", Disp(new Formula.Not(F.Id("claim"))),
                 "For n = 3 let A = Σ j |bar(ej)⟩⟨ej|, with ej = Pi.single(j,1), and let D = i Σ k Zk. Then D A - A D = -2 i A, so A is in E(3). Every extended local permutation has support action x ↦ pi(x) ⊕ a. A contiguous block-shift matrix is strictly lower triangular. Among the three supported columns pi(ej) ⊕ a, the first bit takes both values; therefore some supported row lies above its column. Nonzero entries survive signed monomial conjugation, excluding block-shift form for every P in PiEx(3). Corollaries 2.18 and 2.19 retain their stated scopes, including the allowance of unrestricted unitaries in Corollary 2.19. This theorem settles the universal conjecture by one dimension; it does not state the uniform family extension.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)),
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dirr-helmke-kleinsteuber-schulte-herbrueggen-2008-block-shift"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("dhks-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Named(string name) => Seq(Operatorname, Grp(name.Split('.').SelectMany((part, index) =>

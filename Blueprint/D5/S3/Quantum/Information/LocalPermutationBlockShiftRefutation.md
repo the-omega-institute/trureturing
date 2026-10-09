@@ -144,6 +144,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/LocalPermutationBlockShiftRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/dirr-helmke-kleinsteuber-schulte-herbrueggen-2008-block-shift` (refuted) by `D5/S3/Quantum/Information/LocalPermutationBlockShiftRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dirr-helmke-kleinsteuber-schulte-herbrueggen-2008-block-shift","declaration_gid":"D5/S3/Quantum/Information/LocalPermutationBlockShiftRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gunther Dirr; Uwe Helmke; Martin Kleinsteuber; Thomas Schulte-Herbrüggen (2008). *Relative C-numerical ranges for applications in quantum control and quantum information*. DOI: [10.1080/03081080701535898](https://doi.org/10.1080/03081080701535898). URL: <https://arxiv.org/abs/math-ph/0702005v1>.
