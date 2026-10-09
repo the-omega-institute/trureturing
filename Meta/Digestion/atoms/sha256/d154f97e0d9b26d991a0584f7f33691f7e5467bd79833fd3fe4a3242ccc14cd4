@@ -1,0 +1,9 @@
+**数学引文 0.1（固定版本与复用范围）。** 固定项目快照为 [`14ef6ca31dac20465804d044ab021e5775ea1a9a`](https://github.com/the-omega-institute/trureturing/tree/14ef6ca31dac20465804d044ab021e5775ea1a9a)。以下简称均指该不可变版本，而不是可变分支。
+
+| 标记 | 固定来源与数学使用范围 |
+| --- | --- |
+| R0 | [PR #14846](https://github.com/the-omega-institute/trureturing/pull/14846) 的 [SumFreeCodeDimensionRefutation 源码](https://github.com/the-omega-institute/trureturing/blob/14ef6ca31dac20465804d044ab021e5775ea1a9a/D5/S3/Arith/SumFreeCodeDimensionRefutation.lean)：第一节的具体函数、直线非零条件及两个核维数；不扩张到所引论文的其他问题。 |
+| R1 | [FIB_RELATIONAL_CONTINUATION_GEOMETRY §7.1、§7.3、§7.5](https://github.com/the-omega-institute/trureturing/blob/14ef6ca31dac20465804d044ab021e5775ea1a9a/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)：高到低原生窗口、独立错误标签、行为核及另行供应的原子动作。 |
+| R2 | [FIB-ATOM 观察者与算术关系 §§2–5](https://github.com/the-omega-institute/trureturing/blob/14ef6ca31dac20465804d044ab021e5775ea1a9a/docs/develop/theory/AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md)：五函数展开、整数与模数、有限 $p$ 进精度及动作类型；这些机制作为既有项目推导复用。 |
+| R3 | [金字塔续篇命题 10.5](https://github.com/the-omega-institute/trureturing/blob/14ef6ca31dac20465804d044ab021e5775ea1a9a/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md)：当前奇偶与同源后续守卫的联合关系。 |
+

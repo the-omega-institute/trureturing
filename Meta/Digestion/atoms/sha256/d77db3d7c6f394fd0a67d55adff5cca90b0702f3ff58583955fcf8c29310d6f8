@@ -1,0 +1,48 @@
+**这个区别既不在叶数里，也不在叶子的先后顺序里，而在“哪两个部分先成为同一个子结构”里。**
+
+项目新卷使用的正是这个实际语法障碍，而不是把一幅重画后的几何图当作真实旋转操作。
+
+---
+
+## 3. 一棵 FIB 树中，有多少个能够独立改变的这种位置？
+
+Claim status: open.
+
+### definition 2. 独立三叶位置与缺陷来源族
+
+Claim status: open.
+
+令：
+
+$$
+P_n=\{p:T_n\text{ 在地址 }p\text{ 的子树恰为 }B\}.
+$$
+
+地址用 $L,R$ 表示左右孩子。
+
+对任意 $A\subseteq P_n$，定义 $V_A$：在 $T_n$ 中，把 $A$ 指定位置的 $B$ 改为 $D$，其他地方不变。
+
+这是构造不同的不可变输入作比较，**不是假定观察者能够修改未知来源**。
+
+### theorem 1. 这些位置构成真正独立的二元选择族
+
+Claim status: open.
+
+对 $n\ge3$：
+
+$$
+\boxed{|P_n|=F_{n-2}.}
+$$
+
+记 $K_n=F_{n-2}$。则 $A\longmapsto V_A$ 是从 $2^{P_n}$ 到实际原树的单射，并且：
+
+$$
+\boxed{w(V_A)=w(T_n)\qquad\forall A.}
+$$
+
+内在深度则满足：
+
+$$
+\boxed{\nu(V_A)=\begin{cases}n,&A=\varnothing,\\0,&A\ne\varnothing.\end{cases}}
+$$
+

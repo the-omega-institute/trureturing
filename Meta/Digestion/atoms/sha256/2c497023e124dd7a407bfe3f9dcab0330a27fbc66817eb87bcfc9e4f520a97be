@@ -1,0 +1,15 @@
+### theorem 4 在明确的缺陷子族内，记录后的相容来源恰好是一张立方体面
+
+Claim status: open.
+
+如果实际来源已知属于 $\mathcal C_n=\{V_A:A\subseteq P_n\}$，则记录 $h$：
+
+- 唯一确定 $H(h)$ 内每个缺陷位；
+- 不限制其余缺陷位。
+
+所以：
+
+$$
+\boxed{|\mathcal F(h)|=2^{K_n-|H(h)|}.}
+$$
+

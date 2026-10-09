@@ -19,6 +19,9 @@ import tempfile
 import time
 
 REPOSITORY = Path(__file__).resolve().parents[2]
+# BSD file flags by which the owner or the system marks an entry as not to be removed or changed.
+PROTECTED_FLAGS = (stat.UF_IMMUTABLE | stat.UF_APPEND | stat.UF_NOUNLINK |
+                   stat.SF_IMMUTABLE | stat.SF_APPEND | stat.SF_NOUNLINK)
 
 
 class LowDiskSpace(RuntimeError):
@@ -85,6 +88,8 @@ def inspect_candidate(path, cutoff, protected):
             return dict(reason="not_owned")
         if info.st_dev != root_stat.st_dev:
             return dict(reason="mount")
+        if getattr(info, "st_flags", 0) & PROTECTED_FLAGS:
+            return dict(reason="protected_flag")
         if "\n" in str(entry) or "\r" in str(entry):
             return dict(reason="unrepresentable_path")
         if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)):
@@ -105,6 +110,16 @@ def inspect_candidate(path, cutoff, protected):
     return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes)
 
 
+def remove_tree(path):
+    """Remove an inspected owned tree, first granting its owner access to read-only directories."""
+    # os.walk does not descend into directory links, so only directories inside the tree change mode.
+    for directory, _, _ in os.walk(path):
+        mode = stat.S_IMODE(os.lstat(directory).st_mode)
+        if mode & stat.S_IRWXU != stat.S_IRWXU:
+            os.chmod(directory, mode | stat.S_IRWXU)
+    shutil.rmtree(path)
+
+
 def clean_candidate(path, cutoff, protected, delete=False):
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
@@ -122,7 +137,7 @@ def clean_candidate(path, cutoff, protected, delete=False):
             return result
         removal_started = True
         if path.is_dir():
-            shutil.rmtree(path)
+            remove_tree(path)
         else:
             path.unlink()
         result["action"] = "removed"

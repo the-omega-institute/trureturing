@@ -73,7 +73,7 @@ theorem reconstruct_append_form (nf : PrefixForm) (op : Operation) :
         reconstruct_append_payload p op 0 (acquiredRegisters rho) 0
           ⟨(retryCounts u).alpha + 1, (retryCounts u).beta + 1⟩ (by omega)
 
-private theorem execute_payload {n : ℕ} {last : Letter} (p : PayloadForm n last)
+theorem execute_payload {n : ℕ} {last : Letter} (p : PayloadForm n last)
     (t : ℕ) (r : Registers) (s : ℕ) (c : Counts) (ht : t + n = 4) :
     execute (reconstructPayload t r s c (freshPayload n last)) (renderPayload p) =
       some (reconstructPayload t r s c p) := by
