@@ -1235,3 +1235,255 @@ $$
 原外部坐标的累计高度分配、辅助积分和完整尾部仍需按所引合同支付。作为中央 integrand／保留积分的供给，上述关系不改变 $\sigma_0$；只有已经验证原 stage 假设的范围才能应用原 bin-contour accounting。本节不把其 $\sigma_0\ge7/8$ 范围延伸到下方，也不把低端使用的 $\beta_*\le7/8$ 与原高端反证框架的 $\beta_*>\sigma_0$ 当作同一组相容前提。
 
 全主字符项 $I=\varnothing$ 的 $\Lambda_I=0$，仍需要真实的联合行消去或更强共同计数；本节没有将它遗漏。完整无限行高端比较、原 Robin 有符号余量、正 $r_A$ 与严格核心仍未证明，RH 仍未证明。
+
+## 完整根数、共同掩码与全部素标记的混合留数估计
+
+本节处理 $\eta=1$ 的平方自由立方索引探针。复用主稿的本原函数方程、导子与互反律、既有过滤局部系数，以及 Gao–Zhao [《Moments and one level density of sextic Hecke L-functions》arXiv v2](https://arxiv.org/abs/2201.01885) 的 Lemma 4.1；不重证该 Gauss 和估计。下述综合估计以这些输入及经典本原有限字符 Gauss 根数规范为前提，不是整篇主稿的独立证明或 Lean 核验。
+
+### 同一份完整留数与两项行界
+
+固定紧实实部范围 $1/2<a=\Re x<1$、$c=\Re z\ge17/50$，保留两变量的全部高度。$W_U(q_u/U)$ 是固定光滑物理范数 annulus，$U\ge1$，$P_i=Z^{\ell_i}$ 为原有互不相交素槽，$\ell=\sum_i\ell_i$。令 $\psi_u$ 为原行诱导的本原字符，$f_u$ 为其导子范数，$E_u,E_{\bar u}$ 为原删除 Euler 因子。精确对角函数方程给出
+$$
+K_u(x)=\varepsilon(\psi_u)(3f_u)^{x-1/2}(2\pi)^{1-2x}
+\frac{\Gamma(x)}{\Gamma(1-x)}
+\frac{E_u(1-x)}{E_{\bar u}(x)}.
+$$
+本原 $L$ 值的消去是 $w=1-x$ 上的亚纯恒等式；根数、导子、gamma 商与删除因子仍在。一般函数方程复用主稿所引 [Gao–Zhao, Equation (1.1)](https://arxiv.org/abs/1707.00091)，混合根数识别还使用独立列明的经典有限 Gauss 规范。
+
+在混合面上，完整素元组为
+$$
+\widetilde{\mathfrak H}^{\rm sf}_u
+=\sum_{(p_i)}\prod_i
+\left[W_i(q_{p_i}/P_i)q_{p_i}^{z-1}(1-q_{p_i}^{-1})G_{p_i}^{\rm sf}\right]
+\prod_{\substack{p\notin S\\p\notin\{p_i\}}}F_p,
+\qquad F_p=(1-q_p^{-1})H_p^{\rm sf}.
+$$
+所有因子取在 $(x,1-x,z)$，$G_p$ 已含原补偿操作。该式由
+$\mathfrak H_u^{\rm sf}=\zeta_F^S(x+w)\widetilde{\mathfrak H}^{\rm sf}_u$
+的精确混合因子提取得到，不除以可能为零的 $H_p$。定义
+$$
+R_U(x,z)=\sum_{\substack{u\ {\rm sixth\ power\ free},\ (u,S)=1\\u\ {\rm nonprincipal}}}
+W_U(q_u/U)q_u^{-z}\overline{\xi(u)}K_u(x)
+\widetilde{\mathfrak H}^{\rm sf}_u(x,1-x,z).
+$$
+对每个指定 $\varepsilon>0$，同一完整行与元组满足
+$$
+\begin{aligned}
+|R_U(x,z)|\ll{}&(1+|\Im x|+|\Im z|)^C U^\varepsilon Z^\varepsilon\\
+&\times\left[
+U^{a+1/6-c}\prod_iP_i^{c+1/6}
++U^{a+5/14-c}\prod_iP_i^{c+1/14}\right].
+\end{aligned}
+$$
+常数依赖固定算术数据、实部范围、光滑 seminorm、合法槽系统和指定损失。全部根数、五种行重数、素标记碰撞、共同零掩码与完整高度均包括在界内。非主单位扇区保留；$u=1$ 的主行另行处理。这不是对零点自适应选择的任意子族的估计。
+
+### 文献估计与实际根数运输
+
+Gao–Zhao Lemma 4.1 允许任意 $d\in\mathcal O$，对 $(b,6)=1$ 给出
+$$
+\sum_{\substack{n\ E\text{-primary}\\Nn\le M,\ b\mid n}}
+\overline{(d/n)_6}\frac{g_6(n)}{\sqrt{Nn}}
+\ll N(d)^{1/6+\varepsilon}N(b)^\varepsilon M^{2/3+\varepsilon}
++N(d)^{1/14}N(b)^{-4/7}M^{6/7+\varepsilon}.
+$$
+在同一平方自由 puncture $f$ 上约数容斥，再以实际光滑 profile 部分求和，得到
+$$
+\sum_{\substack{n\ E\text{-primary}\\(n,f)=1}}
+\gamma_1(n)\overline{\chi_n(d)}V_0(Nn/M)
+\ll p_J(V_0)N(f)^\varepsilon
+\left[M^{2/3+\varepsilon}N(d)^{1/6+\varepsilon}
++M^{6/7+\varepsilon}N(d)^{1/14+\varepsilon}\right].
+$$
+$g_6(n)$ 的自然零支持去掉非平方自由项。降为零指数的字符仍保留互素掩码；舍去 $N(b)^{-4/7}$ 是合法放宽，不与另一独立最优值拼接。
+
+写原行
+$$
+u=\epsilon_u n b_2^2b_3^3b_4^4b_5^5,\qquad B=b_2b_3b_4b_5,
+$$
+五个理想因子平方自由、两两互素且避开 $S$。原导子论证给每个 good prime 精确重数 $1$，所以导子是 $f_0nB$，其中 $f_0\mid(36)$ 为实际固定扇区的本原部分。保留 primary/E-primary 生成元的变换相位。令 $a_P=v(a)a$ 为 primary 生成元，互反律给出
+$$
+\psi_u((a))=\theta_u(a)\prod_{p\mid nB}\chi_p(a)^{j_p},
+\qquad
+\theta_u(a)=\epsilon_u^{(Na-1)/6}\mathcal R(u_0,a_P)v(a)^{(Nu_0-1)/6},
+$$
+其中 $u_0=nb_2^2\cdots b_5^5$，$\theta_u$ 通过模 $36$ 分解。令 $\kappa_B=\prod_{p\mid B}\chi_p^{j_p}$。在所选生成元与经典本原有限 Gauss 规范下，CRT 给实际前向根数
+$$
+\begin{aligned}
+\varepsilon(\psi_u)={}&\gamma(\theta_u^*,f_0)\theta_u^*(nB)
+\chi_n(f_0)\kappa_B(f_0)\gamma(\kappa_B,B)\\
+&\times\gamma_1(n)\chi_n(B)\kappa_B(n).
+\end{aligned}
+$$
+先运输根数，再取上界。$p\mid b_j$ 的交叉项为正向 $\chi_n(p)^{j+1}$；在 $\overline{\chi_n(d)}$ 中 numerator 指数是 $5-j\bmod6$，局部 $\rho^{-v}$ 再加 $v$。零指数仍留下 puncture。
+
+模 $36$ 的 E-primary 单位类群由
+$\chi_n(-\omega),\chi_n(\lambda),\chi_n(4)$
+识别为 $C_6\times C_6\times C_3$。写 $n=a+b\omega$，$\sigma=1$ 若 $a\equiv1\bmod3$，否则为 $-1$；以 $-\omega$ 为六次单位根，前两坐标指数为
+$$
+m\equiv(Nn-1)/6\pmod6,\qquad
+t\equiv\sigma b/3\pmod3,\quad t\equiv(1-\sigma)/2\pmod2.
+$$
+第三坐标对 $(a,b)\bmod2=(1,0),(0,1),(1,1)$ 的指数分别为 $0,4,2$。这些坐标在全部 $108$ 个类上给出完整有限字符基。单位、$f_0$、互反与生成元相位先合并，再作一次有限 Fourier 展开，不为每个变化素数另乘群成本。
+
+原 $\xi$ 与固定 $S$ 删除因子同样保留。$\chi_n(2)$ 是额外固定 numerator 变量，不由模 $36$ 类决定。所读 arXiv v2 第 3.1 节的统一简化不能在这里使用：$n=1+36\omega$ 平方自由且 $n\equiv1\bmod36$，$Nn=1261=13\cdot97$，两处六次剩余指数分别为 $1,2$，所以 $\chi_n(2)=-1$。这里只限制该版本这一步的复用范围，不判断未读取的出版版本或整个 moment 定理。Lemma 4.1 的任意 $d$ 范围容纳 $2,3$ 上的实际 numerator。删除分母在固定 $a$ 条带上无零，合并的有限密度对全部高度一致有界。
+
+### 无限局部展开、全部标记与共同剩余长度
+
+未分歧素数上令 $t=Q^{-1},A=Q^x,V=Q^{-6z},h=\chi_p(u),D=h^{-1}/A,W=hAt$。精确公式为
+$$
+F_p=C_p+(1-t)t\frac{D-VW}{1-D},\qquad C_p=(1-t)(1+t-V).
+$$
+重数 $1$ 的未标记因子也是 $C_p$。直接展开安全分母 $1-D$，非恒定部分为
+$$
+(1-t)t\left[\sum_{k\ge1}D^k-VW\sum_{k\ge0}D^k\right].
+$$
+每一项保留 $p\nmid u$。以 $N(d)^\tau N(f)^\varepsilon$ 加权，$\tau=1/6,1/14$，primewise coefficient mass 至多为
+$$
+O(Q^{-1-a+\tau+O(\varepsilon)})
++O(Q^{-2-6c+a+5\tau+O(\varepsilon)})
++O(Q^{-2-6c+O(\varepsilon)}).
+$$
+三个指数均严格小于 $-1$，$|C_p|\le1+2Q^{-2}$。无限系数质量与共同掩码成本绝对可和，对高度和遗漏素数一致；不需要 $H_p$ 或 $F_p$ 的倒数。
+
+未分歧标记的精确因子是
+$$
+G_p=\frac{-(1-t)(1-V)h^{-1}-At^2-A(1-t)V
++hA^2Vt(1-t+t^2)}{1-h^{-1}/A}.
+$$
+加权展开质量为 $O(Q^\tau)$，实际槽价格为 $P_i^{c+\tau+\varepsilon}$。若标记整除 $n$，正确公式为
+$$
+H_1=1+t-V,\qquad G_1=-A[t^2+(1-t)V].
+$$
+同时保留两支。把这些标记的积记为 $P_n$，写 $n=P_n n'$，Gauss CRT 给剩余 $n'$ 的 numerator 指数 $4$。文献估计使用同一实际长度
+$$
+M=\frac{U}{N(P_n)\prod_{j=2}^5N(b_j)^j}
+$$
+及包含 $B$ 与全部固定标记的同一 puncture。$(m,\tau)=(2/3,1/6),(6/7,1/14)$ 时，这两支计数指数分别为
+$a+c-2-m+4\tau$ 与 $a+c-6c-m+4\tau$，均不超过 $c+\tau$。
+
+$j\ge2$ 时保留
+$$
+H_j=t+(1-V)J_j,\qquad G_j=A[-(1-t+t^2)+(1-t)(1-V)J_j],
+$$
+其中
+$$
+\begin{aligned}
+J_2&=a_p\rho^{-3}Q^{3/2-3x},&
+J_3&=-b_p\rho^{-2}Q^{1-2x}+b_p^2\rho^{-4}Q^{2-4x},\\
+J_4&=-a_p\rho^{-3}Q^{3/2-3x},&J_5&=0.
+\end{aligned}
+$$
+先支付共同剩余长度，未标记 higher-valuation prime 的完整指数如下。恒定支对应 $t$；$J_3$ 两支分别列出。
+
+| 重数与局部支 | $m=2/3,\tau=1/6$ | $m=6/7,\tau=1/14$ |
+|---|---|---|
+| $2$ 恒定 | $-a-4/3$ | $-a-2$ |
+| $2,\rho^{-3}$ | $2/3-4a$ | $2/7-4a$ |
+| $3$ 恒定 | $-2a-5/3$ | $-2a-17/7$ |
+| $3,\rho^{-2}$ | $2/3-4a$ | $-2/7-4a$ |
+| $3,\rho^{-4}$ | $1-6a$ | $3/7-6a$ |
+| $4$ 恒定 | $-3a-2$ | $-3a-20/7$ |
+| $4,\rho^{-3}$ | $1-6a$ | $-1/7-6a$ |
+| $5$ 恒定 | $-4a-7/3$ | $-4a-23/7$ |
+
+所有指数严格小于 $-1$。标记该 prime 后，恒定支增加 $a+c$，$J$ 支增加 $a+c-1$，prime 计数再加 $1$；相对于 $c+\tau$ 的超额分别为 $e_j+a+1-\tau$ 与 $e_j+a-\tau$，全部非正。所有重数、所有标记碰撞由同一 $P_i^{c+\tau+\varepsilon}$ 支付。空支持贡献零；单位长度和有界非主单位扇区使用同一固定常数。
+
+无限未分歧质量、全部 higher-valuation 正 majorant 和实际 $n'$ Gauss 和因此给出两项行界。对同一完整表达式用 $m=1,\tau=0$ 计数，三角 allowance 为
+$$
+U^{a+1/2-c+\varepsilon}\prod_iP_i^{c+\varepsilon}.
+$$
+$U=Z^d$ 时两项 leading 节省分别为 $(2d-\ell)/6$ 与 $(2d-\ell)/14$。只有 $2d>\ell$ 且指定损失小于相应正裕度时得到严格节省；这比较的是上界，不是实际留数的下界或非零性。
+
+### 完整高度与轮廓边界
+
+原 mixed-residue 权重保留为
+$$
+\operatorname*{Res}_{v=1}\zeta_F^S(v)\,
+X^{1/2-z}Z^{x+z-1}Y^{-x}
+\Phi(x+z-1)M(z)\widehat W_1(1-x)\zeta_F^S(6z).
+$$
+gamma 商和 norm-twist seminorm 增加固定高度幂；原 $M,\widehat W_1$ 的任意有限阶衰减与 Gaussian 支付两个完整高度轴。先选有限阶，再选尺度，annulus 积分界为
+$$
+X^{1/2-c}Z^{a+c-1}Y^{-a}Z^\varepsilon
+\left[U^{a+1/6-c+\varepsilon}\prod_iP_i^{c+1/6}
++U^{a+5/14-c+\varepsilon}\prod_iP_i^{c+1/14}\right].
+$$
+此界本身不许可原三变量轮廓的新移动。在 $a=51/100,c=17/50$ 上两项 $U$ 指数为 $101/300,369/700$，不能直接作为绝对无限尾部相加；使用完整 $h$ 级数的亚纯轮廓时仍须保留可能的 $z=x+1/6$ 极点贡献。完整严格 Robin 差额与 RH 未由本节解决。
+
+
+### 先运输有限 annulus，再支付全部尺度
+
+上述完整行界还可与原 Mellin 权重联合，支付整个非主混合留数的无限范数尾部。固定一份物理 dyadic partition，尺度 $U=2^k$，包含低端单位块，所有 profile 的有限 seminorm 一致，且不依赖零点或行值。令
+$$
+\begin{aligned}
+J_U(a,c)=\frac{\operatorname*{Res}_{v=1}\zeta_F^S(v)}{(2\pi i)^2}
+\int_{(a)}\int_{(c)}
+&X^{1/2-z}Z^{x+z-1}Y^{-x}\\
+&\times\Phi(x+z-1)M(z)\widehat W_1(1-x)\zeta_F^S(6z)R_U(x,z)\,dz\,dx .
+\end{aligned}
+$$
+这是先在两个完整高度轴上积分的 annular contribution。下文证明这些积分贡献绝对可和，不声称在 $c_0=17/50$ 上逐个物理行绝对可和。
+
+复用源文原 Fourier Mellin 结论：$M(z)$ 在整个 $\Re z>0$ 全纯，在任意紧实正实部条带上有任意阶竖向多项式衰减；$\widehat W_1$ 在固定实部条带上同样成立。源文 $0<\sigma<1$ 的限制属于其 positivity 推导，不限制 $M$ 的全纯域。
+
+选统一右线 $c_R=2$。对每个有限 annulus，物理行数有限，$K_u$ 无 $z$ 依赖；$F/G$ 在 $c_0\le\Re z\le2$ 正常收敛，固定 $a$ 范围内安全分母 $1-h^{-1}Q^{-x}$ 无零。$\zeta_F^S(6z)$ 的极点 $z=1/6$ 不在此条带，$M$ 也没有被跨过的极点。因此每个 $J_U$ 可单独作 $z$ 运输。
+
+完整高度控制使用
+$$
+|\Phi(x+z-1)|=\exp((a+c-1)^2-(\Im x+\Im z)^2)
+$$
+和 $M,\widehat W_1$ 的两个独立衰减；不能只用 Gaussian，因为 $\Im x+\Im z=0$ 时它不衰减。先选有限阶支付 Gauss 行界与 gamma 商的高度幂，两个高度轴和水平 joins 全部可积，得到
+$$
+J_U(a,c_0)=J_U(a,2).
+$$
+这是无限 annulus 求和之前的逐块等式，不是移动尚未证明可交换的完整行级数。
+
+记
+$$
+P=\prod_iP_i,\qquad Q_0=\frac{ZP}{X},\qquad
+(\alpha_1,\tau_1)=(a+1/6,1/6),\quad
+(\alpha_2,\tau_2)=(a+5/14,1/14).
+$$
+完整 profile 积分给出
+$$
+|J_U(a,c)|\ll X^{1/2}Z^{a-1}Y^{-a}(UZ)^\delta
+\sum_{j=1}^2P^{\tau_j}Q_0^cU^{\alpha_j-c}.
+$$
+固定 $X,Y,P,Q_0$ 的多项式尺度范围；$\delta$ 是在最终指定 $\varepsilon$ 之后、$Z$ 之前选定的文献及 profile 损失。若 $Q_0\ge1$，$U\le Q_0$ 的同一 $J_U$ 用 $c_0$，$U>Q_0$ 用右线 $2$。两侧幂满足 $\alpha_j-c_0>0$ 与 $\alpha_j-2+\delta<0$。两份实际 dyadic 几何和遂给出
+$$
+\sum_{k\ge0}|J_{2^k}(a,c_0)|
+\ll_\varepsilon X^{1/2}Z^{a-1}Y^{-a}Z^\varepsilon
+\left[Q_0^{a+1/6}P^{1/6}
++Q_0^{a+5/14}P^{1/14}\right].
+$$
+这里的分割只依赖共同物理尺度，不选择零点子族；共同剩余长度、全部素元组和原 root phases 均已由前面的完整行界支付。$Q_0<1$ 时全部 annuli 用右线，同一安全界把右边的 $Q_0$ 换为 $\max(1,Q_0)$。固定尺度范围使 $Q_0^\delta$ 可吸入最终 $Z^\varepsilon$，选损失时仍保留右线的严格负幂裕度。
+
+在右线 $2$ 上，前节同一完整三角 majorant 的行幂为 $U^{a+1/2-2+\delta}$，对固定 $a<1$ 为严格负幂。它也支付逐个物理行的绝对和及完整高度 majorant，故 Fubini 在这条右线上合法，partition 求和恢复未分块的完整右线积分。左线的结论仍是积分后 annular contributions 的绝对可和，不能由此删除完整 $h$ 级数延拓中可能的 $z=x+1/6$ 极点。
+
+### 混合留数的统一 $x$ 运输与原几何预算
+
+在固定紧实 $1/2<\Re x<1$ 条带上，右线 $2$ 的 annular summability 与高度 majorant 一致。留数系数已没有本原 $L$ 分母：$\Gamma(x)$ 无极点，$1/\Gamma(1-x)$ 为整函数，删除 Euler 分母在 $\Re x>0$ 无零；全部 $F/G$ 修正也全纯。原两个独立 Mellin 衰减支付水平 $x$ joins。因此先逐 annulus 运输 $x$，再由一致可和性运输整个积分和，不跨过新极点。该等式保持每个已积分 $J_U$ 的数值及绝对值，不把不同高度的逐点行级数相认。
+
+代入原带槽几何
+$$
+X=Z^{17/48},\qquad Y=Z^{23/48},\qquad
+P=Z^{1/6},\qquad Q_0=Z^{13/16},
+$$
+上界成为
+$$
+\sum_U|J_U|
+\ll_\varepsilon
+Z^{4a/3-95/144+\varepsilon}
++Z^{4a/3-25/48+\varepsilon}.
+$$
+统一运输到 $a=51/100$ 时，两项精确指数为 $73/3600$ 和 $191/1200$，故完整积分混合留数满足
+$$
+\boxed{\sum_U|J_U|\ll_\varepsilon Z^{191/1200+\varepsilon}.}
+$$
+更一般地，先选足够靠近 $1/2$ 的固定 $a>1/2$，再分配其他损失，可得到
+$$
+\sum_U|J_U|\ll_\varepsilon Z^{7/48+\varepsilon}.
+$$
+这是对固定右侧线的选择，不是 $a=1/2$ 端点定理。
+
+本节在所引 primitive-root 与 Gauss41 等前提下，支付完整非主混合留数的无限尺度积分预算。主信号仍须分别保留；把这个留数嵌回原三变量 probe 的轮廓移动、分母零点交会、其他 Laurent 项、joins 与剩余轮廓尚未由此支付。原 $19/64$ 低端估计使用的整族 $\beta_*\le7/8$ 前提也没有被移除，不能与相反的高端阶段前提拼接。严格有符号 Robin 预算及 RH 仍未证成。
