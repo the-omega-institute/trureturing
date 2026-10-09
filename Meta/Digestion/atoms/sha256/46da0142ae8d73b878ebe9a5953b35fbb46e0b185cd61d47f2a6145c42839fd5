@@ -1,0 +1,6 @@
+## 5. 整个关系立方体可以在归一化几何中缩小，来源区别却没有减少
+
+Claim status: open.
+
+令 $S_n=\binom{M_n}{2}$、$\widehat{\mathcal A}(t)=\mathcal A(t)/S_n$。
+
