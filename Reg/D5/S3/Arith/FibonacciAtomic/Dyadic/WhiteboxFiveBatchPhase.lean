@@ -13,6 +13,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped ENNReal
 noncomputable section
+local notation "Coarse" => _root_.D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Coarse
 
 abbrev signature : Signature.{0, 0, 0, 0, 0} where
   Params := ℝ
