@@ -70,6 +70,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/FourQubitCompatibilityDegree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bluhm-2025-four-qubit-compatibility-degree` (proved) by `D5/S3/Quantum/Measurement/FourQubitCompatibilityDegree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bluhm-2025-four-qubit-compatibility-degree","declaration_gid":"D5/S3/Quantum/Measurement/FourQubitCompatibilityDegree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
