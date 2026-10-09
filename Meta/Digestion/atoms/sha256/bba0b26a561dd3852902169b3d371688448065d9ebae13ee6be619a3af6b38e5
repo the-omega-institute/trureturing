@@ -1,0 +1,8 @@
+**证明。** 由转移表，
+
+$$
+\mathbb E[R_{i+1}\mid b_1,\ldots,b_i]=\mathbb E[R_{i+1}\mid b_i]=\alpha_iR_i.
+$$
+
+故 $E_{i+1}$ 对全部过去函数正交。展开方差并使用 $\operatorname{Cov}(b_i,b_{i+1})=-u_iu_{i+1}$，得到所列对角量。证毕。
+

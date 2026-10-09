@@ -1,0 +1,17 @@
+### 定义 3.1：单位置活动权模型
+
+给定 $w_i>0$，定义
+
+$$
+P_w(b)=\frac1{\mathcal Z_N(w)}\prod_{i=1}^Nw_i^{b_i},
+\qquad b\in\Sigma_N,
+$$
+
+其中
+
+$$
+\mathcal Z_N(w)=\sum_{b\in\Sigma_N}\prod_iw_i^{b_i}.
+$$
+
+这是一个额外的来源模型假设，不是相邻排斥合法性的同义词。
+
