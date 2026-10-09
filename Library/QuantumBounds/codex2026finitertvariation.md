@@ -82,7 +82,7 @@ the full channel optimization of theory §36.1 for arbitrary matrices.
 ## Actual selected residue phases
 
 Use the recurrence in the existing
-[Fibonacci certificate](../../docs/reports/fib-canonical-budget/certificate.py),
+[Fibonacci certificate](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-canonical-budget/certificate.py),
 function `weight_orbit`. For each modulus $m>0$, define
 
 $$

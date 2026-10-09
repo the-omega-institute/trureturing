@@ -218,7 +218,7 @@ later regular return. A joint multiplier need not itself be a CA prefix or
 end at a prescribed return. Endpoint isolation and a fixed packet length
 are optional stronger conditions for a particular construction.
 
-The [source-local multiplier experiment](../../docs/reports/fib-source-local-multipliers/README.md)
+The [source-local multiplier experiment](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-source-local-multipliers/README.md)
 reuses catalog factorizations and the author's original rational log
 enclosure implementation for 109 additional comparisons. At
 $N=2021649740510400$, all single-prime insertions and deletions decrease
