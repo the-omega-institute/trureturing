@@ -1193,63 +1193,44 @@ K_3^{\mathrm{origin}}=3.
 
 #### 11.2.7.1. 二维观测晶格：素数层与读出阶数
 
-把“第几层”和“看几阶关联”分成两个坐标。令 (j) 表示素数轮层，
-(kin{1,2,3,ldots}) 表示读出阶数，定义观察等价关系
-[
-xsim_{j,k}y
-quadLongleftrightarrowquad
+把“第几层”和“看几阶关联”分成两个坐标。令 \(j\) 表示素数轮层，
+\(k\in\{1,2,3,\ldots\}\) 表示读出阶数，定义观察等价关系
+\[
+x\sim_{j,k}y
+\quad\Longleftrightarrow\quad
 O_{j,k}(x)=O_{j,k}(y).
-]
+\]
 于是每个状态不再只带一个层号，而带一个二维索引
-[
-Gamma_{j,k}=[x]_{sim_{j,k}},
-qquad
-(j,k)inmathbb N	imesmathbb N_{ge1}.
-]
-沿 (j) 方向新增素数约束，沿 (k) 方向增加联合观测阶数；两种推进
+\[
+\Gamma_{j,k}=[x]_{\sim_{j,k}},
+\qquad
+(j,k)\in\mathbb N\times\mathbb N_{\ge1}.
+\]
+沿 \(j\) 方向新增素数约束，沿 \(k\) 方向增加联合观测阶数；两种推进
 都可能减少 kernel，但减少的对象不同。
 
 对本节的三胞胎模板：
 
-- (k=2) 的 pair-correlation 和全部 pair-Gram 谱矩在反射取向之间保持
-  相同，因此沿 (j) 增长也不会自动恢复三点方向；
-- (k=3) 的有序三点读出在 (W_3=30) 的 origin-fixed chart 已有分离，
-  在 translation-invariant chart 要等到 (W_4=210)；
-- (k=1) 的候选密度在所有轮层保持相同，因而只记录 arithmetic cost，
+- \(k=2\) 的 pair-correlation 和全部 pair-Gram 谱矩在反射取向之间保持
+  相同，因此沿 \(j\) 增长也不会自动恢复三点方向；
+- \(k=3\) 的有序三点读出在 \(W_3=30\) 的 origin-fixed chart 已有分离，
+  在 translation-invariant chart 要等到 \(W_4=210\)；
+- \(k=1\) 的候选密度在所有轮层保持相同，因而只记录 arithmetic cost，
   不记录手性。
 
-因此三维金字塔 ((X,Y,Z)) 与二维观测晶格并不是两个互斥空间。完整层状态
+因此三维金字塔 \((X,Y,Z)\) 与二维观测晶格并不是两个互斥空间。完整层状态
 应写成
-[
-Gamma_{j,k}
+\[
+\Gamma_{j,k}
 =
-igl(
-K_{j,k},,X_{j,k},Y_{j,k},Z_{j,k},kappa_{j,k},
-chi_{j,k},arepsilon_{j,k}
-igr),
-]
-其中前三个量给出金字塔商空间位置，(kappa) 是隐藏 fiber，(chi) 是
-三点方向，(arepsilon) 是轮排斥账本。沿 (j) 的跳跃是离散算术更新，沿
-(k) 的跳跃是观测分辨率更新；若再加入质量作用流，才得到每个格点内部的
+(K_{j,k},X_{j,k},Y_{j,k},Z_{j,k},
+\kappa_{j,k},\chi_{j,k},\varepsilon_{j,k}).
+\]
+其中前三个量给出金字塔商空间位置，\(\kappa\) 是隐藏 fiber，\(\chi\) 是
+三点方向，\(\varepsilon\) 是轮排斥账本。沿 \(j\) 的跳跃是离散算术更新，沿
+\(k\) 的跳跃是观测分辨率更新；若再加入质量作用流，才得到每个格点内部的
 连续时间轨迹。这样“逃逸轨迹”具有几何、观测和热力学三重索引，而不是把
 素数序列直接当成唯一的三维空间曲线。
-
-
-在平移不变三点读出中，\(W=210\) 还有一个最小正跨度 witness：
-
-\[
-C^{(3)}_{H_+,210}(6,30)=1,
-\qquad
-C^{(3)}_{H_-,210}(6,30)=0.
-\]
-
-而所有 \(0<s<t<30\) 的正跨度三点相关在更早的层都不能给出这个分离。因此 \((6,30)\) 是第一条可审计的三点方向证书。素数 \(7\) 在这里具有明确的层间意义：
-
-\[
-W_3=30
-\longrightarrow
-W_4=210=30\cdot7.
-\]
 
 ### 11.2.8. 三胞胎逃逸的 \(\kappa\)-fiber 数值证书
 
@@ -1362,33 +1343,32 @@ G=2I_7+2J_7,
 
 当前提交的 Lean/Scribe 真源是：
 
-[
-egin{aligned}
-&	exttt{plusAdmissible},quad 	exttt{minusAdmissible}
-  : ZMod,W	o Prop,\\
-&	exttt{reflect}(a)=-a-6,\\
-&	exttt{reflect\_involutive}:
-  	exttt{reflect (reflect a)=a},\\
-&	exttt{plus\_reflect\_iff}:
-  A_+(a)Longleftrightarrow A_-(ho_W(a)),\\
-&	exttt{reflectEquiv}:
-  {a:A_+(a)}simeq{a:A_-(a)},\\
-&	exttt{candidate\_space\_card\_eq}:
-  #A_+=#A_-quad(W
-e0).
-end{aligned}
-]
+\[
+\begin{aligned}
+&\texttt{plusAdmissible},\quad \texttt{minusAdmissible}
+  : ZMod\,W\to Prop,\\
+&\texttt{reflect}(a)=-a-6,\\
+&\texttt{reflect\_involutive}:
+  \texttt{reflect (reflect a)=a},\\
+&\texttt{plus\_reflect\_iff}:
+  A_+(a)\Longleftrightarrow A_-(\rho_W(a)),\\
+&\texttt{reflectEquiv}:
+  \{a:A_+(a)\}\simeq\{a:A_-(a)\},\\
+&\texttt{candidate\_space\_card\_eq}:
+  \#A_+=\#A_-\quad(W\ne0).
+\end{aligned}
+\]
 
 这组声明把“候选密度相同”提升为任意非零模数上的一般等势定理，同时保留
 三点方向作为观察商依赖的坐标。Lean 中的 chirality 采用未归一化 gap
-difference，数值为 (pm2)；理论正文的 (chi=(g_2-g_1)/2) 数值为
-(pm1)，二者关系是 (chi_L=2chi)。
+difference，数值为 \(\pm2\)；理论正文的 \(\chi=(g_2-g_1)/2\) 数值为
+\(\pm1\)，二者关系是 \(\chi_L=2\chi\)。
 
 W=30 的 origin witness、W=210 的 translation-invariant triple witness、
-以及 (K_3^{mathrm{origin}}=3)、(K_3^{mathrm{TI}}=4) 是 Foundational
+以及 \(K_3^{\mathrm{origin}}=3\)、\(K_3^{\mathrm{TI}}=4\) 是 Foundational
 Formulas §15、§16、§27 的有限理论证书。它们尚未被本次 Lean 文件声称为
 machine-checked declarations；下一阶段需连同 finite readout、观察商和
-Scribe 证据一起升格。实际 (T_H(x)) 的无穷性仍不在形式化范围内。
+Scribe 证据一起升格。实际 \(T_H(x)\) 的无穷性仍不在形式化范围内。
 
 对应真源为：
 
