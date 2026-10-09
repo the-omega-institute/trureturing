@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b1b481cf7793e716a0953b1c8b6902dae5db22d18967176f88a015857d4ae1ec
+  normalized_sha256: sha256:b1b481cf7793e716a0953b1c8b6902dae5db22d18967176f88a015857d4ae1ec
+cas_ref: sha256:b1b481cf7793e716a0953b1c8b6902dae5db22d18967176f88a015857d4ae1ec
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/FractionalBranchGeometry.fractional_residual_support
+    target_statement_id: sha256:7c585714ac4d3c10f5bdb20bc555464a42d876630940739351eb2df6fb06cfc5
+  - gid: D5/S3/Analytic/Interpolation/FractionalBranchGeometry.logValue_strictConcaveOn
+    target_statement_id: sha256:1efbd0ce779ae1cb896014fc9d384cf81da865fa45a44c1fa97698120310be9c
+receipts:
+  unresolved_subitems: []
