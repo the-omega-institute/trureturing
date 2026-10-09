@@ -55,7 +55,7 @@ $$
 $$
 
 and $\epsilon(31032091744463/10^{12})^3-a_0>0$.
-The [cutoff program](../../docs/reports/fib-robin-boundary/axler_cutoff.py)
+The [cutoff program](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/axler_cutoff.py)
 certifies these arithmetic comparisons. It treats the published analytic
 bounds and finite verification as inputs; it does not rerun or formally
 verify them. The author version's reference to Lemma 2.2 for the small
@@ -83,7 +83,7 @@ This is a direct application of the published proof, stronger than the
 
 Keep $P=(2,3,5,7,11)$ and lower exponents $b=(21,13,9,7,6)$, forced for a
 possible Robin counterexample by the previously cited individual stops.
-The [exact report](../../docs/reports/fib-robin-boundary/valuation_slices_axler.json)
+The [exact report](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/valuation_slices_axler.json)
 uses caps
 
 $$

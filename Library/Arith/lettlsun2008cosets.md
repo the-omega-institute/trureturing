@@ -209,9 +209,9 @@ and the aggregate demand inequality has slack 1/6.
 
 A single supplier shell may service several private regions, sharing its measured capacity; those points do not receive independent copies of that capacity. Dropping the nonnegative V term leaves a valid weaker aggregate inequality, while the complete column identity requires it.
 
-The [standard-library replay](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_shell_transport.py)
-uses the [complete finite inputs](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_shell_transport.input.json)
-and retains the [full result](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_shell_transport.json).
+The [standard-library replay](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_shell_transport.py)
+uses the [complete finite inputs](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_shell_transport.input.json)
+and retains the [full result](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_shell_transport.json).
 Run `--base <report-base> --check` under `python3 -B -I -S -O`.
 All 1,688 checks remain active, including the original directional
 predicate at every private point, full columns, cross-prime disjointness,
@@ -346,10 +346,10 @@ The family therefore disproves strip exclusion from the listed structural hypoth
 
 ### A strict consumer and exact controls
 
-The [standard-library verifier](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-divisor-shell-reserves/original_divisor_shell_reserves.py) constructs CRT residues and actual residue bitmasks from the formulas. The [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-divisor-shell-reserves/original_divisor_shell_reserves.json) are reproduced by
+The [standard-library verifier](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-divisor-shell-reserves/original_divisor_shell_reserves.py) constructs CRT residues and actual residue bitmasks from the formulas. The [exact data](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-divisor-shell-reserves/original_divisor_shell_reserves.json) are reproduced by
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-divisor-shell-reserves/original_divisor_shell_reserves.py
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-divisor-shell-reserves/original_divisor_shell_reserves.py
 ```
 
 Checks remain active under Python-O. Twelve parameter triples were checked, with periods
@@ -397,7 +397,7 @@ All tend to zero. Thus no uniform positive relative saving follows from these pa
 
 The exact effective gain in(D) separates forced occupancy from occupancy large enough to change the supplier minimum. An all-odd contradiction still requires a row set whose same-cover effective gains exceed the old cut slack, or further restrictions that provide an equally sufficient bound. Whole-class containment cannot recover the missing partial private intersections with zero-demand rows.
 
-The fixed1225-head results in[Report449](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/449-equality-sources-have-a-private-law-below-nine.md) and these original-label global cuts preserve different parts of the problem. The head law has not been lifted through every original outside-cofactor constraint; the global cut has not been shown to be violated for every distinct odd inventory. No unrestricted noncoverage conclusion, polyhedral independence from every earlier subset cut, or literature-originality claim follows from this increment.
+The fixed1225-head results in[Report449](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/449-equality-sources-have-a-private-law-below-nine.md) and these original-label global cuts preserve different parts of the problem. The head law has not been lifted through every original outside-cofactor constraint; the global cut has not been shown to be violated for every distinct odd inventory. No unrestricted noncoverage conclusion, polyhedral independence from every earlier subset cut, or literature-originality claim follows from this increment.
 
 ## Global top shadows and original top-shell pair capacities
 
@@ -580,14 +580,14 @@ Its private witnesses, in that order, are3,18,4,20,36,12,48,0,24. This is the p=
 
 ### Exact reproduction and evidence boundary
 
-The [standard-library verifier](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-shadow-shell-pairs/original_top_shadow_shell_pairs.py), with [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-shadow-shell-pairs/original_top_shadow_shell_pairs.json), retains literal original labels and one uniform residue source per control. It checks the18-class inventory, every listed private witness, complete coverage counts, all class/lower/top slice identities, original-pair CRT capacities, private-region saving bounds, and top-shell intersection identities. The data include all2415 uncovered residues of the noncover, its six uncovered top7-neighbors, every displayed singleton ratio, and the period60 even-control comparisons. The odd top-shadow assertions are guarded by the oddness premise; the even control only records their actual truth values. All whole-cover controls still check the actual suppliers and shell-pair inequality.
+The [standard-library verifier](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-shadow-shell-pairs/original_top_shadow_shell_pairs.py), with [exact data](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-shadow-shell-pairs/original_top_shadow_shell_pairs.json), retains literal original labels and one uniform residue source per control. It checks the18-class inventory, every listed private witness, complete coverage counts, all class/lower/top slice identities, original-pair CRT capacities, private-region saving bounds, and top-shell intersection identities. The data include all2415 uncovered residues of the noncover, its six uncovered top7-neighbors, every displayed singleton ratio, and the period60 even-control comparisons. The odd top-shadow assertions are guarded by the oddness premise; the even control only records their actual truth values. All whole-cover controls still check the actual suppliers and shell-pair inequality.
 
 Positive whole-cover controls are the complete residue partitions modulo3,25 and225. Their numerical moduli are REPEATED; they are not candidates for Erdős #7. They check the conditional collision and phase-excess conclusions, p-1 distinct actual suppliers, same-support pair counts and(TS8). For the full selected private union the top-shell pair inequalities are exact:1=1 for p=3 and6=6 for p=5 in the relevant controls. The ordinary proofs use numerical distinctness only to record distinct lower indices at fixed support, so these repeated-label controls legitimately exercise the stronger common-source identities without pretending to witness a distinct odd cover.
 
 Reproduce the controls with:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-shadow-shell-pairs/original_top_shadow_shell_pairs.py
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-shadow-shell-pairs/original_top_shadow_shell_pairs.py
 ```
  These are exact finite controls and ordinary proofs; none is Lean verification or a proof that every unrestricted distinct-odd inventory violates a necessary inequality.
 
@@ -705,10 +705,10 @@ Use the actual classes0 mod15015,6 mod15,7 mod35,33 mod55,39 mod65. Their common
 
 This is a NONCOVER with exactly13080 uncovered residues. For example, modifying0 only in a nonzero top3 phase keeps its top5 phase zero; it leaves the full-period target and belongs to none of the four suppliers, all of which require a nonzero top5 phase. Therefore this control supplies no odd whole cover. It shows that numerical distinctness and complete supply along one selected prime do not themselves force positive-mass Hall cost. The required further input must use full coverage or compatible information from other directions.
 
-The [standard-library program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-phase-assignment/original_top_phase_assignment.py), with [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-phase-assignment/original_top_phase_assignment.json), checks these statements. Reproduce them with:
+The [standard-library program](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-phase-assignment/original_top_phase_assignment.py), with [exact data](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-phase-assignment/original_top_phase_assignment.json), checks these statements. Reproduce them with:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-phase-assignment/original_top_phase_assignment.py
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-phase-assignment/original_top_phase_assignment.py
 ```
 
 The program also checks the actual distinct even L60 whole cover and a complete residue partition modulo25 (repeated moduli), keeping their scopes explicit. These are ordinary proofs and exact finite controls, not Lean verification.
@@ -815,7 +815,7 @@ This cap uses disjoint original ownership, not separately minimized pair capacit
 
 In the Q0,Q1 family, the unique private target chooses just the first original supplier in each phase. Its restricted owner-pair service is1/L, exactly phi demand, instead of |Q0||Q1|/L. In the small period444675 instance, the FULL owner pair budget is74/5775, strictly below the raw16/1155=80/5775. The selected private budget is1/444675 instead of2/444675.
 
-For the reused actual even period60 whole cover, the selected p=5 target1 mod5 has one private point. Ascending-original-modulus ownership reduces the full pair capacity from2/5 to1/10, while its private demand remains1/60. This is an exact capacity improvement in an actual whole cover, not a contradiction and not evidence of an odd cover. The complete repeated-modulus25 partition retains capacity6=binom(4,2), as expected. The [owner-budget program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-joint-owner-budget/original_top_joint_owner_budget.py) and [exact owner data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-joint-owner-budget/original_top_joint_owner_budget.json) check these owner inequalities and literal counts.
+For the reused actual even period60 whole cover, the selected p=5 target1 mod5 has one private point. Ascending-original-modulus ownership reduces the full pair capacity from2/5 to1/10, while its private demand remains1/60. This is an exact capacity improvement in an actual whole cover, not a contradiction and not evidence of an odd cover. The complete repeated-modulus25 partition retains capacity6=binom(4,2), as expected. The [owner-budget program](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-joint-owner-budget/original_top_joint_owner_budget.py) and [exact owner data](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-joint-owner-budget/original_top_joint_owner_budget.json) check these owner inequalities and literal counts.
 
 ### Two-prime directions require one joint supplier rectangle
 
@@ -852,13 +852,13 @@ are disjoint as the ordered direction pair varies (keep s,t in the fixed label o
 
 ### Exact mixed-direction controls
 
-The [mixed-direction program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-mixed-shell-pairs/original_top_mixed_shell_pairs.py), with [exact mixed data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-mixed-shell-pairs/original_top_mixed_shell_pairs.json), checks(OB3) by literal residue enumeration, checks disjoint direction regions for each original unordered label pair, and counts actual joint supplier rectangles using one original owner partition. Under python3 -I -S -B -O it verifies21 formula instances for the six-label odd noncover,38 for the actual even period60 whole cover, and225 for the complete repeated-modulus15 partition. The respective nonzero intersection counts are14,31,120. Noncover private points missing any demanded phase are explicitly counted outside the feasible-region integral; they are never assigned zero demand. These controls do not supply an odd distinct whole cover.
+The [mixed-direction program](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-mixed-shell-pairs/original_top_mixed_shell_pairs.py), with [exact mixed data](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-mixed-shell-pairs/original_top_mixed_shell_pairs.json), checks(OB3) by literal residue enumeration, checks disjoint direction regions for each original unordered label pair, and counts actual joint supplier rectangles using one original owner partition. Under python3 -I -S -B -O it verifies21 formula instances for the six-label odd noncover,38 for the actual even period60 whole cover, and225 for the complete repeated-modulus15 partition. The respective nonzero intersection counts are14,31,120. Noncover private points missing any demanded phase are explicitly counted outside the feasible-region integral; they are never assigned zero demand. These controls do not supply an odd distinct whole cover.
 
 Reproduce the two control sets with:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-joint-owner-budget/original_top_joint_owner_budget.py
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-mixed-shell-pairs/original_top_mixed_shell_pairs.py
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-joint-owner-budget/original_top_joint_owner_budget.py
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-top-mixed-shell-pairs/original_top_mixed_shell_pairs.py
 ```
 
 ## Actual owner-positive top shadows
@@ -928,12 +928,12 @@ without any new covering argument. A strict improvement of this numerical ceilin
 
 These are ordinary conditional deductions, not Lean verification. They do not establish the unrestricted joint demand/capacity gap.
 
-The [exact producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-owned-top-shadows/original_owned_top_shadows.py) and [data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-owned-top-shadows/original_owned_top_shadows.json) use the seven-label odd distinct noncover above and the complete repeated-modulus15 cover. On the former, the raw same-support{3} shadow pair sum16/385 drops to the owned sum3/77. With ascending-modulus ownership, the labels0 mod15,0 mod33,7 mod21 have Z33=D33 minus D15, removing exactly1/385 from that sum. OS1 is NOT applied to this noncover. Its owner-shell capacity remains74/5775, from the same actual partition. On the repeated15 cover, OS2 gives105 and OS3 gives1 for p=3 and6 for p=5, equal to their bounds. This whole-cover control deliberately repeats numerical moduli and is not an Erdős #7 candidate.
+The [exact producer](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-owned-top-shadows/original_owned_top_shadows.py) and [data](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-owned-top-shadows/original_owned_top_shadows.json) use the seven-label odd distinct noncover above and the complete repeated-modulus15 cover. On the former, the raw same-support{3} shadow pair sum16/385 drops to the owned sum3/77. With ascending-modulus ownership, the labels0 mod15,0 mod33,7 mod21 have Z33=D33 minus D15, removing exactly1/385 from that sum. OS1 is NOT applied to this noncover. Its owner-shell capacity remains74/5775, from the same actual partition. On the repeated15 cover, OS2 gives105 and OS3 gives1 for p=3 and6 for p=5, equal to their bounds. This whole-cover control deliberately repeats numerical moduli and is not an Erdős #7 candidate.
 
 Reproduce with:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-owned-top-shadows/original_owned_top_shadows.py
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/original-owned-top-shadows/original_owned_top_shadows.py
 ```
 
 ## Private shell saturation leaves an overlap-separator obligation
@@ -1033,15 +1033,15 @@ At primes (3,5,7,11,13), L=15015. The expansion has 12292 actual APs on nine dis
 
 Literal AP progression enumeration gives exactly one uncovered residue, 14692 private residues, and 322 overlap residues. Every expanded AP has a private point. The control verifies all 15015 pointwise multiplicities against PS4 and 572988 actual private-prime-line membership assertions. Its output keeps the nineteen pattern rows and compact counts, not a 12292-row class table.
 
-The [compact producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/private_shell_saturation_odd_lift.py) and [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/private_shell_saturation_odd_lift.json) are reproduced by:
+The [compact producer](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/private_shell_saturation_odd_lift.py) and [exact data](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/private_shell_saturation_odd_lift.json) are reproduced by:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/private_shell_saturation_odd_lift.py
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/private_shell_saturation_odd_lift.py
 ```
 
 The program uses only the standard library; its checks remain active under -O. These are ordinary finite calculations and a general CRT proof, not Lean verification.
 
-The preceding original shell and owner budgets impose necessary demands under whole coverage. The odd-distinct noncover controls above have missing private phase neighbors, as does the outside-prime construction in [Report450](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md). Thus neither supplies the all-private, all-prime property proved for this repeated-modulus family. The five-coordinate construction is not claimed minimal.
+The preceding original shell and owner budgets impose necessary demands under whole coverage. The odd-distinct noncover controls above have missing private phase neighbors, as does the outside-prime construction in [Report450](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md). Thus neither supplies the all-private, all-prime property proved for this repeated-modulus family. The five-coordinate construction is not claimed minimal.
 
 Thus the remaining precise alternatives are still unresolved: either find an actual odd-DISTINCT PS1 noncover, or prove that numerical distinctness prevents an overlap separator between nonempty private and uncovered regions. The latter would make PS1 sufficient for whole coverage in that class, hence equivalent to whole coverage there; it would not by itself exclude odd distinct whole covers. A separate proof that no nonempty irredundant odd-distinct family can satisfy PS1 would imply the desired noncoverage theorem. These are different obligations and must not be conflated.
 
@@ -1290,10 +1290,10 @@ the identities' implementation; the general arguments are QC1--QC5
 and the arbitrary-height construction above. No Lean result or
 unrestricted odd-covering conclusion is claimed.
 
-The [self-contained producer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.py) and [exact output](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.json) retain the fixed controls. Reproduce with:
+The [self-contained producer](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.py) and [exact output](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.json) retain the fixed controls. Reproduce with:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.py --output /tmp/e7_quotient_private_shells.json
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/quotient-private-shells/quotient_private_shells.py --output /tmp/e7_quotient_private_shells.json
 ```
 
 ## Prime normalization and all-private scalar cuts do not force line coverage
@@ -1405,7 +1405,7 @@ phases. No fibre-dependent optimization is used.
 Nevertheless PS1 fails at each of the five x_i: changing its p_i-coordinate
 from0 to1 reaches the actual hole h. There are exactly five private-to-hole
 prime-line incidences. This is consistent with
-[Report450(PR3)](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md): PS1 would
+[Report450(PR3)](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md): PS1 would
 imply whole coverage in a family containing an original prime, but the
 scalar inequalities do not supply PS1.
 
@@ -1421,8 +1421,8 @@ modulus are
     105:9, 165:3, 273:5, 715:9, 1001:20,
     1365:11, 2145:1, 5005:55, 15015:4080.
 
-The [standard-library consumer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/all_private_scalar_prime_lift.py),
-with its [exact result](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/all_private_scalar_prime_lift.json),
+The [standard-library consumer](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/all_private_scalar_prime_lift.py),
+with its [exact result](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/all_private_scalar_prime_lift.json),
 reconstructs the literal classes and their
 complete multiplicity function. It checks the Boolean identity at all
 5760 all-nonzero coordinate points and all56535 private-point/support-prime
@@ -1444,7 +1444,7 @@ The standalone consumer requires an explicit output path and optionally
 accepts any five distinct odd primes:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/all_private_scalar_prime_lift.py --output /tmp/e7_all_private_scalar_prime_lift.json
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/all_private_scalar_prime_lift.py --output /tmp/e7_all_private_scalar_prime_lift.json
 ```
 
 Normal and optimized runs have identical default output bytes. An
@@ -1488,7 +1488,7 @@ The example does not settle that stronger question.
 The following is an ordinary finite Fourier and arithmetic argument, not
 Lean verification or a literature-priority claim. It uses the
 primitive-character isolation mechanism of
-[Report336](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/336-maximal-label-fourier-overlap-and-uncovered-density.md)
+[Report336](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/336-maximal-label-fourier-overlap-and-uncovered-density.md)
 and adds reduction in characteristic p and exact height-by-height
 subtraction. Its conclusion concerns complete, exactly valued marginal
 functions of one fixed original family. It does not turn scalar
@@ -1694,8 +1694,8 @@ particular it is not a counterexample to Erdős #7.
 
 ### Exact finite checks and hypothesis boundaries
 
-The [standard-library program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_reconstruction.py),
-with its [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_reconstruction.json),
+The [standard-library program](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_reconstruction.py),
+with its [exact data](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_reconstruction.json),
 enumerates every optional residue choice at every nonunit divisor of
 three fixed periods. Marginals use integer scaling by p^H throughout.
 
@@ -1732,12 +1732,12 @@ following exact boundary controls:
 Reproduce the deterministic JSON with an explicit output path:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_reconstruction.py --output /tmp/e7_exact_prime_marginal_reconstruction.json
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_reconstruction.py --output /tmp/e7_exact_prime_marginal_reconstruction.json
 ```
 
 Normal and optimized runs give identical output bytes. All validation
 uses explicit checked conditions, not optimization-removable assertions.
-An [independent C++ enumeration](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_direct.cpp) instead constructs each literal integer
+An [independent C++ enumeration](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_direct.cpp) instead constructs each literal integer
 multiplicity table and sums its residue fibres directly. It agrees on
 all182484 families, all six single-prime counts, and all three paired
 counts. It also checks MR5 on all2882304 pairs of individually realizable
@@ -1755,7 +1755,7 @@ Neither checker implements the finite-field recognition procedure
 described above; its general correctness follows from the ordinary proof.
 
 ```sh
-c++ -std=c++17 -O2 docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_direct.cpp -o /tmp/e7_exact_prime_marginal_direct
+c++ -std=c++17 -O2 https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/exact_prime_marginal_direct.cpp -o /tmp/e7_exact_prime_marginal_direct
 /tmp/e7_exact_prime_marginal_direct
 ```
 
@@ -1948,8 +1948,8 @@ phase per label throughout.
 
 ### Exact finite control and the unrestricted boundary
 
-The [tight-row program](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.py)
-and [exact data](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.json)
+The [tight-row program](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.py)
+and [exact data](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.json)
 use p=3,H=1, nonedge primes5,7,11,13,17 and tags19,23,29,31,37,41.
 The actual cofactors and phases are
 
@@ -1979,11 +1979,11 @@ runs have identical result bytes, and all checks remain active with
 Python optimization enabled:
 
 ```sh
-python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.py --output /tmp/e7_tight_row_phase_obstruction.json
+python3 -I -S -B -O https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/private-shell-saturation-odd-lift/tight_row_phase_obstruction.py --output /tmp/e7_tight_row_phase_obstruction.json
 ```
 
 The generalized-CRT clique criterion is already used in
-[Report433](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/433-chordal-overlap-certificates-and-their-exact-finite-limits.md).
+[Report433](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/400-449/433-chordal-overlap-certificates-and-their-exact-finite-limits.md).
 Coloring and Kraft bounds here are applications of existing
 mathematics, not new general graph theorems. The quantitative result
 concerns joint phase choices on the specified actual tight region.
@@ -2369,7 +2369,7 @@ witnesses above, not by this enumeration.
 
 To realize the family with original labels, take P=p^H and Q=q^G
 for distinct odd primes p,q and arbitrary H,G>=1. Reuse the
-[two-coordinate exponent-antichain construction, Report345 section5](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/345-fixed-prime-fourier-obstruction-and-digit-relation-masks.md).
+[two-coordinate exponent-antichain construction, Report345 section5](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/345-fixed-prime-fourier-obstruction-and-digit-relation-masks.md).
 Choose just TWO further distinct odd primes r,s, neither equal to p,q,
 and enumerate the F_ij+1 multiplicity copies by t=1,...,N, where
 
@@ -2447,7 +2447,7 @@ With normalized Haar on that coordinate, put
 
 Use the product of the uniform laws on these actual U_p, but keep the
 ENTIRE r-coordinate Haar. This is the same pure-power survivor
-construction used in [FC1, FC4 and PH1](../../docs/reports/erdos7-odd-covering/problem-details/02-current-bounds-and-comparisons.md),
+construction used in [FC1, FC4 and PH1](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/02-current-bounds-and-comparisons.md),
 with precisely one coordinate left unconditioned. On its cofactor
 product law nu, Fubini gives
 
@@ -2495,7 +2495,7 @@ has mass 1. Therefore on this SAME law
 
     min_y M_r(y)<=E_mu M_r<=u_r(1+R_mu).              (MF3)
 
-[The four-prime profile, P3--P5](../../docs/reports/erdos7-odd-covering/problem-details/10-a-four-prime-head-and-a-restricted-noncoverage-theorem.md)
+[The four-prime profile, P3--P5](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/10-a-four-prime-head-and-a-restricted-noncoverage-theorem.md)
 already constructs the uniform law on the complete survivors of any
 family supported on {3,5,7,11}, and proves R_mu<=1514/145, uniformly
 in all phases and heights. The profile transfers coordinatewise to
@@ -2580,7 +2580,7 @@ For a=11, avoiding the third row gives c=19 or 23; for a=13, avoiding
 the fourth gives c=19. These are MF5b--MF5c. No further ordered prime
 cases remain.
 
-The [existing exact profile verifier](../../docs/reports/erdos7-odd-covering/elementary-checks/verify_uniform_head_profile.py)
+The [existing exact profile verifier](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/elementary-checks/verify_uniform_head_profile.py)
 now checks these five parameters in addition to its original four-prime
 ones. It evaluates the full infinite envelope sums by finite cutoff
 cells and exact geometric tails. The all-residue, all-finite-height
@@ -2621,9 +2621,9 @@ no unproved existence of a covering or noncovering family on MF5.
 MF3 only requires one probability supported on the actual r-free
 survivors; it does not require that probability to be uniform. The
 common-law query bounds already proved in
-[Report461](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md)
+[Report461](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md)
 and
-[Report462, LS1](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/462-the-final-stage-ledger-gives-a-seven-core-common-law.md)
+[Report462, LS1](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/462-the-final-stage-ledger-gives-a-seven-core-common-law.md)
 therefore give the following stronger conclusion, under their attributed
 source construction and comparison premises:
 
@@ -2693,13 +2693,13 @@ support size is claimed.
 ### The same query extension restricts the two largest primes at support size nine
 
 The one-prime query extension in
-[Report463, PE6](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md)
+[Report463, PE6](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md)
 also applies to MF3. Use the stronger seven-core input
 
     A=70871/3375,
 
 from the relative-ledger deduction in
-[Report466](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/466-randomized-completion-retains-full-original-survivor-support.md).
+[Report466](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/466-randomized-completion-retains-full-original-survivor-support.md).
 This step retains that deduction's attributed source comparison and
 compatible-screening premises. Full survivor support and the all-depth
 compactness consequence of that report are not needed here.
@@ -2762,7 +2762,7 @@ Here the p_i are eight distinct increasing odd primes, and R sums the
 maximal cylinder mass over ALL nonunit numerical labels supported on
 these primes, at every depth. The one law is fixed before the query
 phases. This ordinary deduction uses the product-source query comparison
-in [Report528, FC10--FC11](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md),
+in [Report528, FC10--FC11](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md),
 which attributes the ordered-increment comparison to the pinned
 Schroeder1.0.1 Lemma4.1. It uses no source geometry enumeration, new Lean
 result or assertion of literature originality. No ternary-height-one
@@ -2833,7 +2833,7 @@ the all-marginals search; it is not an enlarged bare noncoverage range.
 It does not provide the missing arbitrary eight-core query bound when
 both3 and5 are present. Nor does it settle the transport, root orientation
 or attachment obligations of
-[Chapter73](../../docs/reports/erdos7-odd-covering/problem-details/73-missing-anchor-eight-core-source-audit.md),
+[Chapter73](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/73-missing-anchor-eight-core-source-audit.md),
 whose candidate source rows serve a different block-gluing interface.
 
 ### Nine-support marginal feasibility also requires seven
@@ -2931,7 +2931,7 @@ actual r-free family, including every required query depth. MF3 gives
 Together with MF9 this proves necessity of3,5,7. No feasible family on
 the remaining supports is supplied. The arbitrary eight-core query
 bound when all three primes are present remains unresolved here.
-[Chapter69](../../docs/reports/erdos7-odd-covering/problem-details/69-eight-prime-cores-omitting-seven.md)
+[Chapter69](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/69-eight-prime-cores-omitting-seven.md)
 uses two exact omitted-seven cores in a different attachment interface;
 MF10 does not assert its gluing or transport obligations. This is an
 ordinary deduction and exact arithmetic verification, not a new Lean
@@ -2948,7 +2948,7 @@ passing every complete support-prime marginal must contain
 
 This deduction uses the same attributed ordinary source-construction,
 arbitrary-label convex-comparison and finite transport premises as
-[Report461](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md).
+[Report461](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md).
 Those premises are not re-proved by the exact arithmetic consumer.
 The original residues and all finite heights remain arbitrary.
 
@@ -3058,7 +3058,7 @@ The basic comparison alone leaves this last support unresolved and
 supplies no actual family passing all marginals. The charged refinement
 below excludes it; the four coarse bounds above remain valid.
 
-The existing [query-hinge consumer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/query_stoploss_completion.py)
+The existing [query-hinge consumer](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/query_stoploss_completion.py)
 with `--eight-core-marginals` reproduces the four rows using exact
 rationals, the pinned source geometry and explicit geometric tails.
 This is an ordinary deduction and numerical verification, not new
@@ -3080,7 +3080,7 @@ is supported on their complete actual survivors and is chosen before
 the queried residue phases on K. This uses the attributed completed
 source, capped-kernel, arbitrary-label and finite-transport hypotheses
 of MF15--MF19, with the matched positive charged continuation detailed
-in [Report462](../../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/462-the-final-stage-ledger-gives-a-seven-core-common-law.md#an-eight-core-law-closes-the-missing-19-parent31-comparison).
+in [Report462](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/arithmetic/450-499/462-the-final-stage-ledger-gives-a-seven-core-common-law.md#an-eight-core-law-closes-the-missing-19-parent31-comparison).
 The original phases and heights remain arbitrary. No compatibility
 between laws for different K is claimed.
 
@@ -3121,10 +3121,10 @@ passing every complete support-prime marginal must contain
 
 This leaves the other nine-prime supports and the unrestricted problem
 unsettled; it makes no assertion about families with ten or more
-support primes. The [portable exact consumer](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing19_joint_prefix.py)
+support primes. The [portable exact consumer](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing19_joint_prefix.py)
 uses the pinned basic72 geometry batches plus102 required additional
 batches, with source identity and MIT license retained. Its
-[exact output](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing19_joint_prefix.json)
+[exact output](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/finite-prefix-sources/missing19_joint_prefix.json)
 records the positive mass, slack and complete domain counts. These
 are ordinary mathematical deductions and finite arithmetic, not new
 Lean verification or a literature-priority claim.

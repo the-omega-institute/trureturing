@@ -92,7 +92,7 @@ $$
 
 This failure is a limit of the sufficient condition, not a counterexample.
 
-The accompanying [exact program](../../docs/reports/fib-robin-boundary/valuation_slices.py)
+The accompanying [exact program](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/valuation_slices.py)
 classifies the entire exponent orthant above $(21,13,9,7,6)$, in prime order
 $(2,3,5,7,11)$. Its caps $(25,15,11,9,7)$ have a precise meaning: the last
 bin in coordinate $p$ contains every exponent $a_p$ at least its cap $c_p$.
@@ -165,6 +165,6 @@ remaining regions, where this particular local-factor criterion fails.
 
 This note records an application of existing literature and an exact rational
 classification, not a new RH criterion or a new Lean proof. The retained
-[result](../../docs/reports/fib-robin-boundary/valuation_slices.json) identifies
+[result](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/valuation_slices.json) identifies
 the program bytes and the explicit parameters; `outside` never means that
 Robin's inequality itself fails.

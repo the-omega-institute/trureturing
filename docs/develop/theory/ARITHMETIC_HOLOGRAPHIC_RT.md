@@ -2592,7 +2592,7 @@ $$
 
 ### 36.6 实际有限相位、取向覆盖胶合与隐藏层边界
 
-`docs/reports/fib-canonical-budget/certificate.py` 的 `weight_orbit`
+`https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-canonical-budget/certificate.py` 的 `weight_orbit`
 使用初值 $(2,3)$ 及以下模 $m>0$ 递推：
 
 $$
@@ -2947,7 +2947,8 @@ $$
 
 $$
 \boxed{\inf_{\Phi\in\operatorname{conv}_{\rm fin}
-\{\Lambda_X\otimes\Lambda_Y:\Lambda_X,\Lambda_Y\ {m CPTP}\}}
+\{\Lambda_X\otimes\Lambda_Y:\Lambda_X,\Lambda_Y\ {
+m CPTP}\}}
 \|\Phi\circ\mathcal J-\mathcal T\|_\diamond=2(1-q).}
 $$
 
@@ -2981,7 +2982,8 @@ $$
 下面构造共同达到操作。每侧在实际源基上定义
 
 $$
-E|s,i\rangle=|s,i\bmod d_s\rangle_{m out}
+E|s,i\rangle=|s,i\bmod d_s\rangle_{
+m out}
 |\lfloor i/d_s\rfloor\rangle_E.
 $$
 
