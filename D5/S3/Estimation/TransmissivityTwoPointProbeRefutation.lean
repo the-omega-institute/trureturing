@@ -16,7 +16,17 @@ Direct frozen dependencies:
   statement_id: sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3;
   D5/S3/Weil/ZetaLinear/RankTrace.trace_mul_nonneg_of_posSemidef,
   statement_id: sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3.
-Information-escape registration is paused under CLAUDE.md section 3.9.
+sqrt_power: proof_shape: bind-only; escape_witness: none; consumers: source_coefficient.
+Direct frozen dependencies: none.
+source_coefficient: proof_shape: bind-only; escape_witness: none;
+  consumers: result, D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation.result.
+Direct frozen dependencies: none.
+sourceKraus: proof_shape: bind-only; escape_witness: none;
+  consumers: result, D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation.result.
+Direct frozen dependencies:
+  D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.amplitudeKraus,
+  statement_id: sha256:df905a936771b44cd43f36036fe86b519c1e74230454ea6b19e70d563f2788fb.
+Escape audit (CLAUDE.md §3.9): registrations of sqrt_power, source_coefficient and sourceKraus were attempted and are not validated; see issue #14788.
 -/
 
 import D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation

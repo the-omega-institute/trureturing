@@ -6,6 +6,31 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation.claim; result=D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation.result; claim=D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation.claim
    digest: Refute phased in-between-state optimality for beta-prior transmissivity sensing. -/
 
+/-
+result: proof_shape: bind-only; escape_witness: none;
+admission_basis: open-problem-resolution (#14698; Refuted)
+Direct frozen dependencies:
+  D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.sourceKraus,
+  statement_id: sha256:af1a28efefd85c78948f4b009875f526f4879d9d1362fa291ca47011016d560b;
+  D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.source_coefficient,
+  statement_id: sha256:f07c29ee2fd792f9efaaed79be6df1b61cd72e6ab157bbafc0b48e857998bc3b;
+  D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.meanPhoton,
+  statement_id: sha256:1a4d42efe5ea944e58fdc57ee63636c7c51010e2fa5f8b9d7c7b2545bbc9f26a;
+  D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.outputState,
+  statement_id: sha256:eed92bad29597ffb10505a1cb43c7ff7bdef803ca8b686720b66ed4baa19d8a3;
+  D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.inBetween,
+  statement_id: sha256:911d1b018747a5bd0df200e488af68edc142231db2561bddc1d04e4d918eb0c7;
+  D5/S3/Weil/ZetaLinear/RankTrace.trace_mul_nonneg_of_posSemidef,
+  statement_id: sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3;
+  D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity,
+  statement_id: sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3;
+  D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.amplitudeKraus,
+  statement_id: sha256:df905a936771b44cd43f36036fe86b519c1e74230454ea6b19e70d563f2788fb.
+compression_le: proof_shape: bind-only; escape_witness: none; consumers: result.
+deltaBMatrix_eq_moments: proof_shape: bind-only; escape_witness: none; consumers: result.
+Escape audit (CLAUDE.md §3.9): registrations of compression_le and deltaBMatrix_eq_moments were attempted and are not validated; see issue #14788.
+-/
+
 import D5.S3.Estimation.TransmissivityTwoPointProbeRefutation
 import Mathlib.Analysis.InnerProductSpace.l2Space
 import Mathlib.Analysis.InnerProductSpace.Adjoint
