@@ -1116,3 +1116,122 @@ $$
 \frac{19}{64}+\frac{11}{16}=\frac{63}{64}.
 $$
 正槽前置本身已经使用更强的所引 $7/8$ 无零半平面，因此此门槛不提供新的无零区域。原高端合同未扩大，完整有符号 Robin 余量、实际零点数据、正 $r_A$ 与严格核心仍未证明；本节不证明 RH。
+
+## 高端误差素项与同一行支持的联合估计
+
+本节复用平方自由立方索引的实际高端恒等式、全部局部因子、所引 primitive 分子反射界和原动态行分区。新增接口把完整误差素元组的幅度与同一行上的平方整除条件共同估计；不改变主字符项、目标分母或原物理探针。所有结论以这些文献输入为前提，未执行 Lean 核验，未独立认证整篇源证明，不主张历史原创性。
+
+令 $U=Z^d$，固定动态中央实部
+$$
+x_r=a+16e,\quad w_r=1-a-6e,\quad z_r=c=17/50,
+\quad51/100\le a\le1,\quad0<e<10^{-3},
+$$
+并记 $\delta=2a-1$。固定原窗口系统、误差槽子集 $I$ 及其总长 $z_I$。在实际 buffered 非主行区间内，先按活动主素因子和 witness 数据确定行集合 $\mathcal C$，再选择误差素元组。假设原共同计数给出
+$$
+\#\mathcal C\ll U^{R+\varepsilon}(1+T_1)^A,\qquad0\le R\le1.
+$$
+这个集合和共同指数 $R$ 必须独立于误差素元组。令 $g=\sum_{i\notin I}\ell_i g_i$ 为实际主素因子幅度的总贡献。
+
+完整误差子族相对原中央 allowance 的额外节省为
+$$
+\boxed{\Lambda_I=\frac\delta2\,[z_I-d(1-R)]_+.}
+$$
+它控制原完整修正的误差部分，不控制 $I=\varnothing$ 的全主字符项，也不声称已把整个物理高端移到新的轮廓。
+
+### 在修正因子零点处仍成立的分解
+
+令
+$$
+\mathcal R_p=G_p^{\mathrm{sf}}+
+\overline{\chi_p(u)}H_p^{\mathrm{sf}}.
+$$
+精确局部替换是
+$$
+G_p^{\mathrm{sf}}=-\overline{\chi_p(u)}H_p^{\mathrm{sf}}+\mathcal R_p.
+$$
+定义原主素和
+$$
+\mathcal Q_i(u;z)=-\sum_{p\in\mathcal P_i(Z)}
+W_i(q_p/P_i)q_p^{z-1}\overline{\chi_p(u)}.
+$$
+其相对系数为 $1$；原补偿项的 $\overline{\eta(p)}$ 已在 $G_p^{\mathrm{sf}}$ 中保留，不能额外插入 $\eta(p)$。原 $1_T$、排除集和非单位零延拓不变。
+
+将所有选中素数逐项分为主项和误差项。每个主项把其 $H_p^{\mathrm{sf}}$ 恢复到乘积中，互不相交的窗口允许主素和独立提出，得到
+$$
+\mathfrak H_{\eta,u,Z}^{\mathrm{sf}}
+=\sum_I\left(\prod_{i\notin I}\mathcal Q_i\right)
+\sum_{(p_i)_{i\in I}}
+\left[\prod_{i\in I}W_i(q_{p_i}/P_i)q_{p_i}^{z-1}\mathcal R_{p_i}\right]
+\prod_{\substack{p\notin S\\p\notin\{p_i:i\in I\}}}H_p^{\mathrm{sf}}.
+$$
+这个等式不含 $G_p/H_p$，因此也在 $H_p^{\mathrm{sf}}$ 的零点处成立。乘积估计必须保留实际 buffered 实部：
+$$
+x_r+w_r=1+10e,\qquad -x_r-w_r=-1-10e.
+$$
+既有未分歧缺陷幂为 $-x_r-6c,-x_r-w_r,-w_r-6c,1-x_r-w_r-6c$，需要时加上至多 $6e$ 的 $(-w_r)_+$，仍全部严格小于 $-1$。分歧幂为 $1-x_r-w_r,3/2-3x_r,2-3x_r-w_r,2-4x_r,5/2-4x_r-w_r$；第一项等于 $-10e$，其余也在上述范围严格为负。这些 buffer 不能在乘积收敛步骤中丢掉。每个未选择子乘积都直接上界为 $O_\varepsilon(U^\varepsilon)$，无需先证明倒数有界。
+
+### 幅度不能与支持条件拆开
+
+对 $p\nmid u$，复用实际 $j=0$ 式得到
+$$
+\mathcal R_p=
+\frac{\overline{\chi_p(u)}(1-W)}{1-D}
+\left[V(1-QW)-D(1-V)(1-W)-D(Q-1)WV(1-W)\right].
+$$
+由于 $(-w_r)_+\le6e$、$a\le1$ 及 $6c=51/25$，其完整高度一致界是 $O(Q^{-a+O(e)})$。按原窗口求和，得到相对中央素规范化的 $P_i^{-\delta/2+O(e)}$ 节省。
+
+对 $p\mid u$，$\mathcal R_p=G_p^{\mathrm{sf}}$。重数 $j=1$ 的严格项仍带 $V$，有 $G_p^{\mathrm{sf}}=O(Q^{a-1+O(e)})$；$2\le j\le5$ 时，实际共同严格项为 $Q^{1-w_r}=Q^{a+6e}$，边界项不大于此量。不能把这些分歧因子单独称为衰减误差。
+
+原 primitive 分子反射界使用同一行的真实 conductor。每个选中分歧素数在 conductor 中至多出现一次，在 $q_u$ 中则出现 $j$ 次；不同槽素数互异。因此同时分配这些实际缺口后，分子界包含
+$$
+U^{\delta/2+O(e)+\varepsilon}(1+T_1)^A
+\prod_{p_i\mid u}q_{p_i}^{-(j_i-1)\delta/2+O(e)}.
+$$
+分子成本只支付一次，原 redundant 零支持及固定素数仍保留。与 $q_p^{z-1}G_p^{\mathrm{sf}}$ 合并，相对 $P_i^{c-1/2}$ 的幂为
+$$
+a-3/2\le-\delta/2\quad(j=1),\qquad
+-(j-2)\delta/2\quad(j\ge2).
+$$
+因此只有 $j=2$ 没有 leading 节省；其余分歧分支和未分歧误差都至少节省 $\delta/2$ 乘相应槽长。
+
+### 用同一批实际行取得联合界
+
+把误差槽分为 $v_p(u)=2$ 与其补集。设重数恰为 $2$ 的槽总长为 $z_2$。每一份实际元组都满足 $p_i^2\mid u$。计数同一批配对 $(u,(p_i))$：逐行只有约数多种分配，故原行集合界给出 $Z^{dR+\varepsilon}$；另一方面有 $O(Z^{z_2+\varepsilon})$ 份素元组，每份要求其平方积整除 $u$，所以完整配对数至多为 $Z^{d-z_2+\varepsilon}$。
+
+只计非空 annulus，单位窗口的固定比例由原支持约定支付。这两个界适用于同一批配对，故组合为
+$$
+\min\{Z^{dR},Z^{d-z_2}\}Z^\varepsilon,
+$$
+不能把两种收益相乘。未选择子乘积的共同上界不依赖误差元组，剩余分歧分配由约数界支付，未分歧误差素和由上述完整窗口界支付。对每个实际误差分支，得到
+$$
+\begin{aligned}
+\sum_{u\in\mathcal C}
+\left|L^S(w,\chi_\bullet(u))
+\mathfrak H_{\eta,u,Z}^{\mathrm{sf},(I,z_2)}\right|
+\ll{}&U^{\delta/2+O(e)+\varepsilon}(1+T_1)^A\\
+&\cdot Z^{\ell(c-1/2)+g-\frac\delta2(z_I-z_2)
++O(e+\vartheta+\varepsilon)}
+\min\{Z^{dR},Z^{d-z_2}\}.
+\end{aligned}
+$$
+有限分支全部求和，原零掩码、物理素幂、完整系数和共同高度参数均保留。
+
+相对原中央上界，实际分支的节省是
+$$
+\Lambda_{I,z_2}=
+\frac\delta2(z_I-z_2)+[z_2-d(1-R)]_+.
+$$
+对 $0\le z_2\le z_I$ 的两个线性区间取界，使用 $0<\delta\le1$，便有 $\Lambda_{I,z_2}\ge\Lambda_I$。当 $R=1$ 时，每个非空误差槽子集节省 $\delta z_I/2$；当 $z_I\le d(1-R)$ 时，不声称额外统一节省。
+
+### 原轮廓合同与剩余主族
+
+保留原实际 Mellin 权重，中央 leading 指数为
+$$
+B=l_x(1/2-c)+(a+c-1)-a l_y+
+\ell(c-1/2)+g+d(R+\delta/2-c).
+$$
+上述完整误差子族的指数是 $B-\Lambda_I$，并保留原 $(16-6l_y)e$ buffer、分子与乘积的 $O(e+\vartheta+\varepsilon)$ 成本、全部有限 seminorm 和高度成本。实际严格节省还须让这些可调成本小于正的 leading 裕度。只在整个固定动态 bin 已确定后估计其保留 integrand；不能给自适应行集合另外移动轮廓。
+
+原外部坐标的累计高度分配、辅助积分和完整尾部仍需按所引合同支付。作为中央 integrand／保留积分的供给，上述关系不改变 $\sigma_0$；只有已经验证原 stage 假设的范围才能应用原 bin-contour accounting。本节不把其 $\sigma_0\ge7/8$ 范围延伸到下方，也不把低端使用的 $\beta_*\le7/8$ 与原高端反证框架的 $\beta_*>\sigma_0$ 当作同一组相容前提。
+
+全主字符项 $I=\varnothing$ 的 $\Lambda_I=0$，仍需要真实的联合行消去或更强共同计数；本节没有将它遗漏。完整无限行高端比较、原 Robin 有符号余量、正 $r_A$ 与严格核心仍未证明，RH 仍未证明。
