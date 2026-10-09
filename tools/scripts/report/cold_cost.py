@@ -211,15 +211,19 @@ class SignalSink:
             if self.bytes + size > self.limit - (0 if terminal else self.reserve):
                 self.dropped_events += 1
                 return
+            # Charge admitted live bytes before either output can fail. Partial
+            # console delivery and local write/flush loss cannot reuse budget.
+            self.bytes += size
             self._deliver(text)
             if terminal:
                 event = dict(event, dropped_events=self.dropped_events,
                              retention="censored" if self.dropped_events else "local-terminal-collected")
                 record = json.dumps(event, sort_keys=True) + "\n"
-                size = len(("SIGNAL_DIAGNOSTIC " + record).encode())
-                if self.bytes + size > self.limit:
+                extra = max(0, len(("SIGNAL_DIAGNOSTIC " + record).encode()) - size)
+                if self.bytes + extra > self.limit:
                     self.dropped_events += 1
                     return
+                self.bytes += extra
             try:
                 self.stream.write(record)
                 self.stream.flush()
@@ -227,7 +231,6 @@ class SignalSink:
                 self.dropped_events += 1
                 self.retention_error = type(error).__name__
                 return
-            self.bytes += size
 
     def finish(self, health):
         self.emit({"kind": "trace-terminal", **health,

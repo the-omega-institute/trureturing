@@ -326,6 +326,194 @@ class SignalDiagnosticContractTests(unittest.TestCase):
         self.assertEqual(base64.b64decode(diagnostics[0]["raw_bytes_base64"]), b"loader-failure\xfd")
         self.assertEqual(records[-1]["retention"], "censored")
 
+    def read_budget_failure(self, trace, console, failure, stream="stdout", limit=24576):
+        """Actual collector reader, descriptor delivery and failing retention."""
+        trace.sink = cost.SignalSink(trace.output / "signal-trace.jsonl", console=console, limit=limit)
+        retained = trace.sink.stream
+        trace.sink.stream = Mock(wraps=retained)
+        if failure:
+            getattr(trace.sink.stream, failure).side_effect = OSError("fixture retention failure")
+        child = subprocess.Popen([sys.executable, "-c", r'''
+import os,signal,sys,time
+signal.signal(signal.SIGINT, lambda *_: sys.exit(19))
+os.write(1,b'D\tready\n')
+fd=int(sys.argv[1])
+for i in range(24):
+    raw=b'collector-budget-'+str(i).encode()+b'-\xff'+b'x'*5000+b'\n'
+    while raw:
+        raw=raw[os.write(fd,raw):]
+os.write(fd,b'collector-eof-\xfe')
+os.close(1); os.close(2)
+time.sleep(30)
+''', "1" if stream == "stdout" else "2"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        trace.process = child
+        self.addCleanup(child.stdout.close)
+        self.addCleanup(child.stderr.close)
+        self.addCleanup(trace.stop)
+        trace.deadline = time.monotonic() + 5
+        trace.thread = threading.Thread(target=trace._read)
+        trace.thread.start()
+        trace.thread.join(timeout=3)
+        self.assertFalse(trace.thread.is_alive())
+        self.assertIsNone(child.poll())
+        self.assertTrue(trace.health["ready"])
+        self.assertEqual(trace.health["parse_errors"], 25)
+
+    def test_reader_live_budget_survives_repeated_write_and_flush_failure(self):
+        # GoalArtifact fixed trace/live guard and workload refusal share the
+        # actual reader/sink; a healthy fd exposes bytes despite local loss.
+        inputs = {"private_fixture_program_sha256": cost.sha(PROGRAM)}
+        binding = {"inputs": inputs, "fixture_scope": "portable collector pipes; no native capability"}
+        for failure in ("write", "flush"):
+            for stream in ("stdout", "stderr"):
+                for mode in ("preflight", "workload"):
+                    with self.subTest(failure=failure, stream=stream, mode=mode):
+                        name = f"{failure}-{stream}-{mode}"
+                        output = self.output / name
+                        trace = cost.SignalTrace(output)
+                        with (self.output / (name + ".live")).open("w+b", buffering=0) as console:
+                            def start():
+                                self.read_budget_failure(trace, console, failure, stream)
+                                try:
+                                    trace.check()
+                                finally:
+                                    trace.stop()
+                            trace.start = start
+                            with patch.object(cost, "native_binding", return_value=binding), \
+                                    patch.object(cost, "input_binding", return_value=inputs), \
+                                    patch.object(cost, "SignalTrace", return_value=trace), \
+                                    patch.object(cost, "capability_preflight") as preflight, \
+                                    patch.object(cost, "observe_command") as command, \
+                                    patch.object(cost, "observe_output") as query:
+                                with self.assertRaises(ValueError):
+                                    cost.run(self.output, output, mode)
+                            preflight.assert_not_called()
+                            command.assert_not_called()
+                            query.assert_not_called()
+                            console.seek(0)
+                            delivered = console.read()
+                            print("FIXTURE_RESULT " + json.dumps({"consumer": "collector-reader/shared-sink",
+                                  "failure": failure, "stream": stream, "mode": mode,
+                                  "live_bytes": len(delivered), "limit": trace.sink.limit}), flush=True)
+                            self.assertLessEqual(len(delivered), trace.sink.limit)
+                            self.assertTrue(os.get_blocking(console.fileno()))
+                        rows = [json.loads(line.removeprefix(b"SIGNAL_DIAGNOSTIC "))
+                                for line in delivered.splitlines()]
+                        diagnostics = [r for r in rows if r["kind"] == "collector-diagnostic"]
+                        self.assertGreaterEqual(sum(r["terminated"] for r in diagnostics), 2)
+                        for row in diagnostics:
+                            raw = base64.b64decode(row["raw_bytes_base64"], validate=True)
+                            if row["terminated"]:
+                                self.assertTrue(raw.startswith(b"collector-budget-"))
+                                self.assertGreater(len(raw), 4096)
+                            else:
+                                self.assertEqual(raw, b"collector-eof-\xfe")
+                            self.assertEqual(row["stream"], stream)
+                            self.assertEqual(row["raw_byte_length"], len(raw))
+                            self.assertEqual(row["raw_line_sha256"], hashlib.sha256(raw).hexdigest())
+                            self.assertFalse(row["truncated"])
+                        self.assertEqual(rows[-1]["kind"], "trace-terminal")
+                        self.assertEqual(rows[-1]["retention"], "censored")
+                        self.assertEqual(rows[-1]["collector_returncode"], 19)
+                        health = trace.snapshot()
+                        self.assertEqual(health["retention_error"], "OSError")
+                        self.assertIsNone(health["console_error"])
+                        self.assertGreater(health["dropped_events"], 0)
+                        with self.assertRaises(ValueError):
+                            cost.require_trace_health(health)
+                        self.assertTrue(trace.sink.closed)
+                        with self.assertRaises(ProcessLookupError):
+                            os.kill(trace.process.pid, 0)
+                        self.assertLessEqual((output / "signal-trace.jsonl").stat().st_size, trace.sink.limit)
+                        self.assertEqual(json.loads((output / "source.json").read_text()), binding)
+                        result = json.loads((output / "result.json").read_text())
+                        self.assertFalse(result["canonical_chain_complete"])
+                        self.assertEqual(result["canonical_stages"], [])
+                        self.assertIsNone(result["canonical_returncode"])
+                        self.assertTrue(result["inputs_unchanged"])
+                        self.assertEqual(result["observer_failure"]["retention"], "censored")
+                        for row in json.loads((output / "inventory.json").read_text()):
+                            artifact = output / row["path"]
+                            self.assertEqual(row["sha256"], cost.sha(artifact))
+                            self.assertEqual(row["bytes"], artifact.stat().st_size)
+
+    def test_reader_retention_failure_terminal_exact_cap_and_one_byte_over(self):
+        # Measure the actual terminal encoding, then exercise finish's boundary
+        # with the same reader and persistent local failure, never a mirror.
+        for failure in ("write", "flush"):
+            terminal_size = None
+            for delta in (None, 0, -1):
+                with self.subTest(failure=failure, delta=delta):
+                    output = self.output / f"terminal-{failure}-{delta}"
+                    output.mkdir()
+                    trace = cost.SignalTrace(output)
+                    with (output / "live").open("w+b", buffering=0) as console:
+                        self.read_budget_failure(trace, console, failure)
+                        before = console.tell()
+                        if delta is not None:
+                            trace.sink.limit = before + terminal_size + delta
+                        trace.stop()
+                        console.seek(0)
+                        delivered = console.read()
+                    if delta is None:
+                        terminal_size = len(delivered) - before
+                    print("FIXTURE_RESULT " + json.dumps({"consumer": "collector-reader/trace-terminal",
+                          "failure": failure, "boundary_delta": delta, "before_terminal": before,
+                          "live_bytes": len(delivered), "limit": trace.sink.limit}), flush=True)
+                    self.assertLessEqual(len(delivered), trace.sink.limit)
+                    self.assertEqual(trace.process.returncode, 19)
+                    self.assertTrue(trace.sink.closed)
+                    if delta == -1:
+                        self.assertEqual(len(delivered), before)
+                    else:
+                        terminal = delivered[before:]
+                        row = json.loads(terminal.removeprefix(b"SIGNAL_DIAGNOSTIC "))
+                        self.assertEqual(row["kind"], "trace-terminal")
+                        self.assertEqual(row["retention"], "censored")
+                        if delta is not None:
+                            self.assertEqual(len(delivered), trace.sink.limit)
+
+    def test_reader_partial_and_zero_live_delivery_with_retention_failure(self):
+        # Partial delivery is measured at the descriptor, and a latched console
+        # failure must remain bounded while the reader drains further records.
+        real_write = os.write
+        for failure in ("write", "flush"):
+            for delivery in ("partial", "zero"):
+                with self.subTest(failure=failure, delivery=delivery):
+                    output = self.output / f"{failure}-{delivery}"
+                    output.mkdir()
+                    trace = cost.SignalTrace(output)
+                    with (output / "live").open("w+b", buffering=0) as console:
+                        calls = []
+                        def write(fd, data):
+                            if fd != console.fileno():
+                                return real_write(fd, data)
+                            calls.append(len(data))
+                            if delivery == "zero":
+                                return 0
+                            if len(calls) == 1:
+                                return real_write(fd, data[:31])
+                            raise BrokenPipeError("fixture partial console failure")
+                        with patch.object(cost.os, "write", side_effect=write):
+                            self.read_budget_failure(trace, console, failure)
+                            health = trace.stop()
+                        console.seek(0)
+                        delivered = console.read()
+                        self.assertTrue(os.get_blocking(console.fileno()))
+                    print("FIXTURE_RESULT " + json.dumps({"consumer": "collector-reader/shared-delivery",
+                          "failure": failure, "delivery": delivery, "live_bytes": len(delivered),
+                          "limit": trace.sink.limit}), flush=True)
+                    self.assertEqual(len(delivered), 31 if delivery == "partial" else 0)
+                    self.assertEqual(len(calls), 2 if delivery == "partial" else 1)
+                    self.assertLessEqual(len(delivered), trace.sink.limit)
+                    self.assertEqual(health["console_error"], "BrokenPipeError" if delivery == "partial" else "OSError")
+                    self.assertEqual(health["retention_error"], "OSError")
+                    self.assertEqual(health["collector_returncode"], 19)
+                    self.assertTrue(trace.sink.closed)
+                    self.assertLessEqual((output / "signal-trace.jsonl").stat().st_size, trace.sink.limit)
+                    with self.assertRaises(ValueError):
+                        cost.require_trace_health(health)
+
     def test_native_preflight_failure_executes_no_canonical_program(self):
         trace = Mock(sink=Mock(), stop=Mock(return_value={"ready": True, "lost_events": 0, "dropped_events": 0, "parse_errors": 0, "reader_error": None, "collector_returncode": 0}))
         trace.start.return_value = trace
