@@ -186,6 +186,37 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual("failed", summary["status"])
         self.assertEqual(2, summary["worktree_exit"])
 
+    def test_aggregate_temporary_sweep_qualifies_bytes_and_retains_unknown(self):
+        repository = self.root / "repository"
+        repository.mkdir()
+        remote = self.root / "remote.git"
+        def git(*args):
+            return subprocess.run(["git", "-C", str(repository), *map(str, args)],
+                                  capture_output=True, text=True, check=True).stdout.strip()
+        git("init", "--initial-branch=dev")
+        git("config", "user.name", "Cleanup Tests")
+        git("config", "user.email", "cleanup@example.invalid")
+        (repository / "owned").write_text("retained\n")
+        git("add", ".")
+        git("commit", "-m", "baseline")
+        git("init", "--bare", remote)
+        git("remote", "add", "origin", remote)
+        git("push", "origin", "dev")
+        temporary = self.root / "tmp"
+        safe, unknown = temporary / "safe", temporary / "unknown"
+        safe.mkdir(parents=True)
+        unknown.mkdir()
+        (safe / "owned").write_text("retained\n")
+        (unknown / "private").write_text("recovery\n")
+        options = cleanup.argparse.Namespace(repository=repository, base="dev",
+            codex_home=self.root / "codex", sshx_home=self.root / "sshx", tmp_root=[temporary],
+            min_age_hours=0, delete=True, verbose=False)
+        with patch.object(cleanup, "active_paths", return_value=set()), \
+             patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, cleanup.run_clean(options))
+        self.assertFalse(safe.exists())
+        self.assertEqual("recovery\n", (unknown / "private").read_text())
+
     def test_missing_active_file_inspection_refuses_cleanup(self):
         options = cleanup.argparse.Namespace(
             repository=self.root, base="base", codex_home=self.root / "codex",

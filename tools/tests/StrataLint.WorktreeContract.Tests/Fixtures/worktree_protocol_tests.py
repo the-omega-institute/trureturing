@@ -1,0 +1,521 @@
+"""Real Git/OS correspondence probes; no production test modes or timing gates."""
+
+import argparse
+from contextlib import ExitStack
+import importlib.util
+import json
+import os
+from pathlib import Path
+import select
+import signal
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+
+ROOT = Path(sys.argv.pop(1)).resolve()
+SCRIPT = ROOT / "tools/scripts/worktree/worktree_protocol.py"
+sys.path.insert(0, str(SCRIPT.parent))
+import worktree_protocol as protocol
+import worktree_preservation as preservation
+
+
+class ProtocolTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="worktree-contract-")
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name).resolve()
+        self.main = self.root / "main"
+        self.main.mkdir()
+        self.remote = self.root / "remote.git"
+        self.g(self.root, "init", "--bare", self.remote)
+        self.g(self.main, "init", "--initial-branch=dev")
+        self.g(self.main, "config", "user.name", "Protocol Tests")
+        self.g(self.main, "config", "user.email", "protocol@example.invalid")
+        for name in ("owned", "other", "dir/child"):
+            file = self.main / name
+            file.parent.mkdir(exist_ok=True)
+            file.write_text("original\n")
+        (self.main / "lean-toolchain").write_text("leanprover/lean4:v4.34.1\n")
+        (self.main / "lake-manifest.json").write_text('{"packages":[]}\n')
+        self.g(self.main, "add", ".")
+        self.g(self.main, "commit", "-m", "baseline")
+        self.base = self.g(self.main, "rev-parse", "HEAD").strip()
+        self.g(self.main, "remote", "add", "origin", self.remote)
+        self.g(self.main, "push", "origin", "dev")
+        self.tree = self.root / "tree"
+        self.branch = "lane/governance/fixture"
+        self.g(self.main, "worktree", "add", "-b", self.branch, self.tree, "HEAD")
+        self.jobs = []
+        self.addCleanup(self.stop_jobs)
+
+    def stop_jobs(self):
+        for job in self.jobs:
+            if job.poll() is None:
+                job.kill()
+            job.communicate(timeout=10)
+
+    def g(self, root, *args):
+        result = protocol.git(root, *args)
+        return os.fsdecode(result.stdout)
+
+    def run_protocol(self, *args, expect=0, env=None):
+        result = subprocess.run([sys.executable, "-B", str(SCRIPT), "--source", str(self.main), *map(str, args)],
+                                capture_output=True, text=True, timeout=30, env=env)
+        self.assertEqual(expect, result.returncode, result.stdout + result.stderr)
+        return result
+
+    def hold(self, *scopes, code=None):
+        code = code or 'import sys; print("ready",flush=True); sys.stdin.readline()'
+        job = subprocess.Popen([sys.executable, "-B", str(SCRIPT), "--source", str(self.main),
+            "with", "--path", str(self.tree), *scopes, "--", sys.executable, "-c", code],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        self.jobs.append(job)
+        self.assertTrue(select.select([job.stdout], [], [], 10)[0], "job readiness timeout")
+        self.assertEqual("ready\n", job.stdout.readline(), job.stderr.read() if job.poll() is not None else "")
+        return job
+
+    def remove(self, expect=0, *args):
+        return self.run_protocol("remove", "--names", "tree", *args, expect=expect)
+
+    def checkpoint(self, *args, expect=0):
+        message = self.root / "message"
+        message.write_text("authorized unit\n")
+        return self.run_protocol("checkpoint", "--path", self.tree, "--write", "owned",
+                                 "--message-file", message, *args, expect=expect)
+
+    def test_cross_session_dirty_reuse_preserves_bytes(self):
+        (self.tree / "owned").write_text("dirty\n")
+        self.run_protocol("reuse", "--path", self.tree, "--branch", self.branch, "--base", self.base)
+        self.assertEqual("dirty\n", (self.tree / "owned").read_text())
+
+    def test_incompatible_reuse_and_pin_preserve_tree(self):
+        self.run_protocol("reuse", "--path", self.tree, "--branch", "other", "--base", self.base, expect=73)
+        (self.tree / "lean-toolchain").write_text("changed\n")
+        self.run_protocol("reuse", "--path", self.tree, "--branch", self.branch, "--base", self.base, expect=73)
+        self.assertEqual("changed\n", (self.tree / "lean-toolchain").read_text())
+
+    def test_shared_participants_and_disjoint_writers(self):
+        self.hold("--write", "owned")
+        self.hold("--write", "other")
+        self.run_protocol("with", "--path", self.tree, "--write", "owned", "--", "true", expect=73)
+        self.run_protocol("with", "--path", self.tree, "--exclusive", "--", "true", expect=73)
+
+    def test_semantic_read_blocks_descendant_write(self):
+        self.hold("--read", "dir")
+        self.run_protocol("with", "--path", self.tree, "--write", "dir/child", "--", "true", expect=73)
+        self.run_protocol("with", "--path", self.tree, "--write", "owned", "--", "true")
+
+    def test_normal_and_abrupt_exit_release(self):
+        job = self.hold("--write", "owned")
+        job.communicate("exit\n", timeout=10)
+        self.run_protocol("with", "--path", self.tree, "--write", "owned", "--", "true")
+        job = self.hold("--write", "owned")
+        job.kill()
+        job.communicate(timeout=10)
+        self.run_protocol("with", "--path", self.tree, "--write", "owned", "--", "true")
+
+    def test_surviving_descendant_retains_scope(self):
+        pidfile = self.root / "child.pid"
+        code = ('import os,sys,time; child=os.fork(); '
+                f'open({str(pidfile)!r},"w").write(str(child)) if child else None; '
+                'print("ready",flush=True) if child else None; time.sleep(30)')
+        job = self.hold("--write", "owned", code=code)
+        child = int(pidfile.read_text())
+        try:
+            job.kill()
+            job.wait(timeout=10)
+            self.run_protocol("with", "--path", self.tree, "--exclusive", "--", "true", expect=73)
+        finally:
+            os.kill(child, signal.SIGKILL)
+
+    def test_attributed_checkpoint_excludes_staged_and_allows_other_editor(self):
+        self.hold("--write", "other")
+        (self.tree / "other").write_text("unrelated staged\n")
+        self.g(self.tree, "add", "other")
+        (self.tree / "owned").write_text("authorized\n")
+        self.checkpoint()
+        self.assertEqual("authorized\n", self.g(self.tree, "show", "HEAD:owned"))
+        self.assertEqual("original\n", self.g(self.tree, "show", "HEAD:other"))
+        self.assertEqual("other\n", self.g(self.tree, "diff", "--cached", "--name-only"))
+
+    def test_publication_equality_ancestry_and_failure(self):
+        (self.tree / "owned").write_text("authorized\n")
+        self.checkpoint()
+        old = self.g(self.tree, "rev-parse", "HEAD").strip()
+        args = ["publish", "--path", self.tree, "--branch", self.branch]
+        result = json.loads(self.run_protocol(*args).stdout)
+        self.assertEqual("equal", result["relation"])
+        (self.tree / "owned").write_text("next\n")
+        self.checkpoint()
+        self.run_protocol(*args)
+        result = json.loads(self.run_protocol(*args, "--commit", old).stdout)
+        self.assertEqual("ancestor", result["relation"])
+        self.g(self.main, "remote", "set-url", "origin", self.root / "missing.git")
+        self.run_protocol(*args, expect=73)
+        self.assertTrue(self.tree.exists())
+        self.assertEqual("next\n", (self.tree / "owned").read_text())
+
+    def test_checkpoint_failure_retains_private_index_and_source(self):
+        (self.tree / "owned").write_text("authorized\n")
+        message = self.root / "message"
+        message.write_text("authorized unit\n")
+        binary = self.root / "failure-shim"
+        binary.mkdir()
+        real_git = shutil.which("git")
+        shim = binary / "git"
+        shim.write_text(f'''#!{sys.executable}
+import os,sys
+if "commit-tree" in sys.argv: raise SystemExit(1)
+os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
+''')
+        shim.chmod(0o755)
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"])
+        self.run_protocol("checkpoint", "--path", self.tree, "--write", "owned", "--message-file", message,
+                          expect=73, env=environment)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        self.assertEqual(1, len(list(metadata.glob("checkpoint-index-*"))))
+        self.assertEqual("authorized\n", (self.tree / "owned").read_text())
+        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+
+    def test_clean_remote_preserved_removal_and_main_protection(self):
+        self.remove()
+        self.assertFalse(self.tree.exists())
+        self.run_protocol("remove", "--names", "main", expect=73)
+
+    def test_busy_and_new_entry_exclusion(self):
+        self.hold()
+        self.remove(73)
+        self.assertTrue(self.tree.exists())
+
+    def test_dirty_untracked_ignored_and_staged_preserved(self):
+        for name in ("owned", "untracked", ".private"):
+            file = self.tree / name
+            before = file.read_bytes() if file.exists() else None
+            file.write_text("recovery\n")
+            self.remove(73)
+            self.assertEqual("recovery\n", file.read_text())
+            if before is None:
+                file.unlink()
+            else:
+                file.write_bytes(before)
+        (self.tree / "owned").write_text("staged\n")
+        self.g(self.tree, "add", "owned")
+        self.remove(73)
+
+    def test_local_only_and_private_history_preserved(self):
+        (self.tree / "owned").write_text("local\n")
+        self.checkpoint()
+        self.remove(73)
+        local = self.g(self.tree, "rev-parse", "HEAD").strip()
+        self.g(self.tree, "reset", "--hard", self.base)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        (metadata / "ORIG_HEAD").write_text(local + "\n")
+        self.remove(73)
+
+    def test_unknown_operation_and_cache_guard_preserved(self):
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        (metadata / "MERGE_HEAD").write_text(self.base + "\n")
+        self.remove(73)
+        (metadata / "MERGE_HEAD").unlink()
+        with ExitStack() as stack:
+            preservation.cache_exclusion(stack, self.tree)
+            self.remove(73)
+
+    def test_whole_batch_preflight_preserves_eligible_member(self):
+        other = self.root / "second"
+        self.g(self.main, "worktree", "add", "--detach", other, "HEAD")
+        (other / "private").write_text("unknown\n")
+        self.run_protocol("remove", "--names", "tree second", expect=73)
+        self.assertTrue(self.tree.exists())
+
+    def test_native_partial_removal_reports_actual_effects_and_continues(self):
+        second = self.root / "second"
+        self.g(self.main, "worktree", "add", "--detach", second, "HEAD")
+        binary = self.root / "failure-shim"
+        binary.mkdir()
+        real_git = shutil.which("git")
+        shim = binary / "git"
+        shim.write_text(f'''#!{sys.executable}
+import os,subprocess,sys
+if "remove" in sys.argv and {str(self.tree)!r} in sys.argv:
+    result=subprocess.run([{real_git!r}]+sys.argv[1:],close_fds=False)
+    if result.returncode==0:
+        print("failure after native side effects",file=sys.stderr)
+        raise SystemExit(1)
+os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
+''')
+        shim.chmod(0o755)
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"])
+        result = self.run_protocol("remove", "--names", "tree second", expect=74, env=environment)
+        outcomes = json.loads(result.stdout)["items"]
+        self.assertEqual(["partial_or_indeterminate", "removed"], [item["outcome"] for item in outcomes])
+        self.assertFalse(self.tree.exists())
+        self.assertFalse(second.exists())
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", "refs/heads/" + self.branch).strip())
+
+    def test_true_ignored_and_unmerged_material(self):
+        exclude = self.main / ".git/info/exclude"
+        exclude.write_text("private-output\n")
+        (self.tree / "private-output").write_text("private bytes\n")
+        self.assertEqual("", self.g(self.tree, "status", "--porcelain"))
+        self.remove(73)
+        (self.tree / "private-output").unlink()
+        oid = self.g(self.tree, "rev-parse", "HEAD:owned").strip()
+        protocol.git(self.tree, "update-index", "--index-info",
+                     input=f"100644 {oid} 1\towned\n100644 {oid} 2\towned\n".encode())
+        self.remove(73)
+        self.assertTrue(self.g(self.tree, "ls-files", "--unmerged"))
+
+    def test_external_cwd_user_is_preserved(self):
+        job = subprocess.Popen([sys.executable, "-c", 'import sys;print("ready",flush=True);sys.stdin.readline()'],
+            cwd=self.tree, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        self.jobs.append(job)
+        self.assertEqual("ready\n", job.stdout.readline())
+        result = self.remove(73)
+        self.assertIn("host_activity", result.stderr)
+
+    def test_ref_retirement_requires_remote_and_no_attachment(self):
+        self.run_protocol("retire-branch", "--branch", self.branch, "--commit", self.base, expect=73)
+        self.remove()
+        self.run_protocol("retire-branch", "--branch", self.branch, "--commit", self.base)
+        self.assertNotEqual(0, protocol.git(self.main, "show-ref", "--verify",
+                                          "refs/heads/" + self.branch, check=False).returncode)
+
+    def test_snapshot_matches_remote_bytes_and_preserves_unknown(self):
+        snapshot = self.root / "snapshot"
+        snapshot.mkdir()
+        (snapshot / "owned").write_text("original\n")
+        (snapshot / "extra").write_text("unpublished\n")
+        args = ["remove-snapshot", "--path", snapshot, "--base", self.base]
+        self.run_protocol(*args, expect=73)
+        (snapshot / "extra").unlink()
+        self.run_protocol(*args)
+        self.assertFalse(snapshot.exists())
+
+    def test_ambient_git_redirects_cannot_hide_real_index(self):
+        alternate = self.root / "alternate-index"
+        protocol.git(self.tree, "read-tree", "HEAD", env={"GIT_INDEX_FILE": str(alternate)})
+        (self.tree / "owned").write_text("staged recovery\n")
+        self.g(self.tree, "add", "owned")
+        (self.tree / "owned").write_text("original\n")
+        environment = dict(os.environ, GIT_INDEX_FILE=str(alternate), GIT_DIR=str(self.remote),
+                           GIT_WORK_TREE=str(self.main), GIT_NAMESPACE="other")
+        self.run_protocol("remove", "--names", "tree", env=environment, expect=73)
+        self.assertIn("owned", self.g(self.tree, "diff", "--cached", "--name-only"))
+        self.run_protocol("reuse", "--path", self.tree, "--branch", self.branch, "--base", self.base,
+                          env=environment)
+
+    def test_snapshot_root_alias_and_observed_identity_drift_preserved(self):
+        snapshot = self.root / "snapshot"
+        snapshot.mkdir()
+        (snapshot / "owned").write_text("original\n")
+        alias = self.root / "alias"
+        alias.symlink_to(snapshot, target_is_directory=True)
+        self.run_protocol("remove-snapshot", "--path", alias, "--base", self.base, expect=73)
+        self.assertTrue(snapshot.exists())
+        expected = json.dumps(dict(path=str(self.tree), head="0" * 40, branch="refs/heads/" + self.branch))
+        self.remove(73, "--expected", expected)
+        self.assertTrue(self.tree.exists())
+
+    def test_mirror_operation_publishes_then_qualifies_removal(self):
+        self.g(self.main, "switch", "-c", "feature")
+        (self.main / "feature").write_text("feature\n")
+        self.g(self.main, "add", "feature")
+        self.g(self.main, "commit", "-m", "feature")
+        feature = self.g(self.main, "rev-parse", "HEAD").strip()
+        mirror = self.root / "mirror-tree"
+        branch = "mirror/integration/11"
+        self.run_protocol("prepare-mirror", "--path", mirror, "--branch", branch, "--base", self.base,
+                          "--merge", feature, "--message", "mirror: feature")
+        self.assertEqual("feature\n", self.g(mirror, "show", "HEAD:feature"))
+        self.run_protocol("remove", "--names", mirror.name)
+        self.assertFalse(mirror.exists())
+
+    def test_mirror_failure_retains_conflict_and_failed_publication(self):
+        self.g(self.main, "switch", "-c", "feature")
+        (self.main / "owned").write_text("feature\n")
+        self.g(self.main, "commit", "-am", "feature")
+        feature = self.g(self.main, "rev-parse", "HEAD").strip()
+        self.g(self.main, "switch", "dev")
+        (self.main / "owned").write_text("integration\n")
+        self.g(self.main, "commit", "-am", "integration")
+        base = self.g(self.main, "rev-parse", "HEAD").strip()
+        mirror = self.root / "mirror-conflict"
+        self.run_protocol("prepare-mirror", "--path", mirror, "--branch", "mirror/conflict/11", "--base", base,
+                          "--merge", feature, "--message", "mirror: conflict", expect=73)
+        self.assertTrue(self.g(mirror, "ls-files", "--unmerged"))
+        self.run_protocol("remove", "--names", mirror.name, expect=73)
+        failed = self.root / "mirror-offline"
+        self.g(self.main, "remote", "set-url", "origin", self.root / "missing.git")
+        self.run_protocol("prepare-mirror", "--path", failed, "--branch", "mirror/offline/11", "--base", self.base,
+                          "--merge", feature, "--message", "mirror: offline", expect=73)
+        self.assertEqual("feature\n", (failed / "owned").read_text())
+
+    def paused_job(self, operation, *arguments):
+        bin_path = self.root / "bin"
+        bin_path.mkdir(exist_ok=True)
+        ready = self.root / "ready.fifo"
+        release = self.root / "release.fifo"
+        os.mkfifo(ready)
+        os.mkfifo(release)
+        real_git = shutil.which("git")
+        shim = bin_path / "git"
+        shim.write_text(f'''#!{sys.executable}
+import os,sys
+if {operation!r} in sys.argv:
+    open({str(self.root / 'native.pid')!r},"w").write(str(os.getpid()))
+    with open({str(ready)!r},"w") as output: output.write("ready\\n")
+    with open({str(release)!r}) as input: input.readline()
+    error=os.open({str(self.root / 'native.stderr')!r},os.O_CREAT|os.O_WRONLY,0o600); os.dup2(error,2)
+os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
+''')
+        shim.chmod(0o755)
+        reader = os.open(ready, os.O_RDONLY | os.O_NONBLOCK)
+        self.addCleanup(os.close, reader)
+        env = dict(os.environ, PATH=str(bin_path) + os.pathsep + os.environ["PATH"])
+        job = subprocess.Popen([sys.executable, "-B", str(SCRIPT), "--source", str(self.main), *map(str, arguments)],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, text=True)
+        self.jobs.append(job)
+        self.assertTrue(select.select([reader], [], [], 20)[0], "paused command readiness timeout")
+        self.assertEqual(b"ready\n", os.read(reader, 100))
+        return job, release
+
+    def test_concurrent_native_staging_cannot_enter_checkpoint(self):
+        (self.tree / "owned").write_text("authorized\n")
+        message = self.root / "message"
+        message.write_text("authorized unit\n")
+        job, release = self.paused_job("commit-tree", "checkpoint", "--path", self.tree,
+            "--write", "owned", "--message-file", message)
+        (self.tree / "other").write_text("concurrently staged\n")
+        self.g(self.tree, "add", "other")
+        with release.open("w") as output:
+            output.write("continue\n")
+        stdout, stderr = job.communicate(timeout=20)
+        self.assertEqual(0, job.returncode, stdout + stderr)
+        self.assertEqual("original\n", self.g(self.tree, "show", "HEAD:other"))
+        self.assertEqual("other\n", self.g(self.tree, "diff", "--cached", "--name-only"))
+
+    def test_entry_is_excluded_through_native_destruction(self):
+        job, release = self.paused_job("remove", "remove", "--names", "tree")
+        self.run_protocol("with", "--path", self.tree, "--", "true", expect=73)
+        self.run_protocol("with", "--path", self.tree / "nested", "--", "true", expect=73)
+        with release.open("w") as output:
+            output.write("continue\n")
+        stdout, stderr = job.communicate(timeout=20)
+        self.assertEqual(0, job.returncode, stdout + stderr)
+        self.assertFalse(self.tree.exists())
+
+    def test_killed_remover_keeps_surviving_native_child_exclusion(self):
+        job, release = self.paused_job("remove", "remove", "--names", "tree")
+        native_pid = int((self.root / "native.pid").read_text())
+        if hasattr(os, "pidfd_open"):
+            handle = os.pidfd_open(native_pid)
+            self.addCleanup(os.close, handle)
+            wait_native = lambda: select.select([handle], [], [], 20)[0]
+        else:
+            handle = select.kqueue()
+            self.addCleanup(handle.close)
+            handle.control([select.kevent(native_pid, filter=select.KQ_FILTER_PROC,
+                flags=select.KQ_EV_ADD | select.KQ_EV_ONESHOT, fflags=select.KQ_NOTE_EXIT)], 0, 0)
+            wait_native = lambda: handle.control([], 1, 20)
+        try:
+            job.kill()
+            job.wait(timeout=10)
+            self.run_protocol("with", "--path", self.tree, "--", "true", expect=73)
+            with release.open("w") as output:
+                output.write("continue\n")
+            self.assertTrue(wait_native(), "native process completion timeout")
+            job.communicate(timeout=20)
+            self.assertFalse(self.tree.exists(), (self.root / "native.stderr").read_text())
+        finally:
+            try:
+                os.kill(native_pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+
+    def test_host_join_finalization_and_other_participant(self):
+        writer = self.hold("--write", "owned")
+        other = self.hold("--write", "other")
+        args = ["finalize", "--path", self.tree, "--branch", self.branch]
+        self.run_protocol(*args, expect=73)
+        writer.communicate("joined\n", timeout=10)
+        self.run_protocol(*args, "--writers-joined")
+        self.assertIsNone(other.poll())
+        self.remove(73)
+
+    def initializer_lifetime(self, cli):
+        # Exercise the production .NET launcher, not just Python fork/exec.
+        (self.main / "lake-manifest.json").write_bytes((ROOT / "lake-manifest.json").read_bytes())
+        self.g(self.main, "add", "lake-manifest.json")
+        self.g(self.main, "commit", "-m", "initializer pins")
+        target = self.root / "initializing"
+        binary = self.root / "bin"
+        binary.mkdir()
+        ready, release = self.root / "ready.fifo", self.root / "release.fifo"
+        os.mkfifo(ready)
+        os.mkfifo(release)
+        real_git = shutil.which("git")
+        shim = binary / "git"
+        shim.write_text(f'''#!{sys.executable}
+import os,sys
+if "worktree" in sys.argv and "add" in sys.argv:
+    open({str(self.root / 'native.pid')!r},"w").write(str(os.getpid()))
+    with open({str(ready)!r},"w") as output: output.write("ready\\n")
+    with open({str(release)!r}) as input: input.readline()
+    output=os.open({str(self.root / 'native.output')!r},os.O_CREAT|os.O_WRONLY,0o600)
+    os.dup2(output,1); os.dup2(output,2)
+os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
+''')
+        shim.chmod(0o755)
+        reader = os.open(ready, os.O_RDONLY | os.O_NONBLOCK)
+        self.addCleanup(os.close, reader)
+        job = subprocess.Popen(["dotnet", cli, "worktree", "--kind", "governance", "--name", "initializer-lifetime",
+            "--path", str(target), "--source", str(self.main), "--base", "HEAD", "--skip-restore"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+            env=dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"]))
+        self.jobs.append(job)
+        self.assertTrue(select.select([reader], [], [], 20)[0], "native initializer readiness timeout")
+        self.assertEqual(b"ready\n", os.read(reader, 100))
+        native_pid = int((self.root / "native.pid").read_text())
+        if hasattr(os, "pidfd_open"):
+            handle = os.pidfd_open(native_pid)
+            self.addCleanup(os.close, handle)
+            wait_native = lambda: select.select([handle], [], [], 20)[0]
+        else:
+            handle = select.kqueue()
+            self.addCleanup(handle.close)
+            handle.control([select.kevent(native_pid, filter=select.KQ_FILTER_PROC,
+                flags=select.KQ_EV_ADD | select.KQ_EV_ONESHOT, fflags=select.KQ_NOTE_EXIT)], 0, 0)
+            wait_native = lambda: handle.control([], 1, 20)
+        try:
+            job.kill()
+            job.wait(timeout=10)
+            result = self.run_protocol("with", "--path", target, "--", "true", expect=73)
+            self.assertIn("busy_scope", result.stderr)
+            with release.open("w") as output:
+                output.write("continue\n")
+            self.assertTrue(wait_native(), "native initializer completion timeout")
+            stdout, stderr = job.communicate(timeout=20)
+            self.assertTrue(target.is_dir(), stdout + stderr + (self.root / "native.output").read_text())
+            metadata = Path(self.g(target, "rev-parse", "--absolute-git-dir").strip())
+            self.assertTrue((metadata / "locked").read_text().startswith("worktree-init:"))
+            self.run_protocol("with", "--path", target, "--", "true")
+        finally:
+            try:
+                os.kill(native_pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 3 and sys.argv[1] == "--initializer":
+        fixture = ProtocolTests("test_cross_session_dirty_reuse_preserves_bytes")
+        fixture.setUp()
+        try:
+            fixture.initializer_lifetime(sys.argv[2])
+        finally:
+            fixture.doCleanups()
+    else:
+        unittest.main(verbosity=2)
