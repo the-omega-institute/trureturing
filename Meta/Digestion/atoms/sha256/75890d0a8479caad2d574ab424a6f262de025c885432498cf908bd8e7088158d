@@ -1,0 +1,24 @@
+### theorem 10.1: 四结果概率反演两能级态的三个参数
+
+**Claim status: open.** 每个 $E_a\ge0$ 且 $\sum_aE_a=I$，结果概率为
+
+$$
+\boxed{q_a=\operatorname{tr}(\varrho E_a)=\frac{1+n_a\cdot\mathbf r}{4},}
+$$
+
+并且
+
+$$
+\boxed{\mathbf r=3\sum_aq_an_a.}
+$$
+
+**证明。** $n_a\cdot\sigma$ 的特征值为 $\pm1$，所以 $E_a$ 的特征值为 $0,1/2$；归一化与反演分别使用两个向量恒等式。证毕。
+
+不是任意四个概率都对应允许态，还需
+
+$$
+\boxed{\sum_aq_a^2=\frac14+\frac{\|\mathbf r\|^2}{12}\le\frac13.}
+$$
+
+这是标准对称信息完备测量的应用，不是本卷声称的新量子发现。经典乘积后验的正四面体与该量子测量的四面体对象不同，前者仍受共同来源三阶条件约束。
+

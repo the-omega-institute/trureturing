@@ -1,0 +1,9 @@
+**Claim status: open.** 若 $2\le m\le d$，则
+
+$$
+\boxed{
+\sum_{i\ne j}\frac{S_{ij}^2}{\nu_i\nu_j}
+\ge\frac{d(d-m+1)}{m-1}.
+}
+$$
+

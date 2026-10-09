@@ -66,5 +66,5 @@ No lower bound g>=2 or root first-zero condition is required. The case g=1 is in
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalNarrowCost.OriginalFiberFeasible`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalNarrowCost.OriginalRecord`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalNarrowCost.original_cost_lower`
-- Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/NarrowWindowCost](NarrowWindowCost.md)
+- Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalExecutionBridge](OriginalExecutionBridge.md)
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciIrreversibleAcquisition](../KBonacciIrreversibleAcquisition.md)
