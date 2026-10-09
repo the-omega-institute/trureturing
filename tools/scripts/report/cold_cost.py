@@ -317,7 +317,7 @@ def signal_program(seconds):
     probes.append('rawtracepoint:signal_generate { $s = (struct task_struct *)curtask; '
                   '$t = (struct task_struct *)arg2; $i = (struct kernel_siginfo *)arg1; '
                   f'printf("D\\tsignal\\t%llu\\t%d\\t%d\\t%d\\t%d\\t%d\\t{fmt}\\t{fmt}\\n", '
-                  f'nsecs, arg0, ((uint64)arg1 > 1 ? $i->si_errno : 0), ((uint64)arg1 == 1 ? 128 : ((uint64)arg1 == 0 ? 0 : $i->si_code)), arg3, arg4, {ident("$s")}, {ident("$t")}); }}')
+                  f'nsecs, arg0, (arg1 > 1 ? $i->si_errno : 0), (arg1 == 1 ? 128 : (arg1 == 0 ? 0 : $i->si_code)), arg3, arg4, {ident("$s")}, {ident("$t")}); }}')
     probes.append('rawtracepoint:sched_process_fork { $s = (struct task_struct *)arg0; '
                   '$t = (struct task_struct *)arg1; '
                   f'printf("D\\tfork\\t%llu\\t{fmt}\\t{fmt}\\n", nsecs, {ident("$s")}, {ident("$t")}); }}')
