@@ -101,7 +101,7 @@ theorem apply_eval_le (v : AbsoluteValue K ℝ) {d : σ → ℕ} {P : MvPolynomi
     have hcoeff : v (P.coeff ν) ≤ ⨆ μ, v (P.coeff μ) :=
       le_ciSup ((by have hFiniteRange := ((AddMonoidAlgebra.coeff P)).finite_range.image (v); rw [← Set.range_comp] at hFiniteRange; exact hFiniteRange.bddAbove)) ν
     have hprod : (∏ j, v (x j) ^ ν j) ≤ ∏ j, max (v (x j)) 1 ^ d j := by
-      refine Finset.prod_le_prod (fun j _ ↦ pow_nonneg (v.nonneg _) _) fun j _ ↦ ?_
+      refine Finset.prod_le_prod₀ (fun j _ ↦ pow_nonneg (v.nonneg _) _) fun j _ ↦ ?_
       calc v (x j) ^ ν j ≤ max (v (x j)) 1 ^ ν j :=
             pow_le_pow_left₀ (v.nonneg _) (le_max_left _ _) _
         _ ≤ max (v (x j)) 1 ^ d j := pow_le_pow_right₀ (le_max_right _ _) (hle j)
@@ -149,7 +149,7 @@ theorem apply_eval_le_of_isNonarchimedean {v : AbsoluteValue K ℝ} (hv : IsNona
     have hcoeff : v (P.coeff ν) ≤ ⨆ μ, v (P.coeff μ) :=
       le_ciSup ((by have hFiniteRange := ((AddMonoidAlgebra.coeff P)).finite_range.image (v); rw [← Set.range_comp] at hFiniteRange; exact hFiniteRange.bddAbove)) ν
     have hprod : (∏ j, v (x j) ^ ν j) ≤ ∏ j, max (v (x j)) 1 ^ d j := by
-      refine Finset.prod_le_prod (fun j _ ↦ pow_nonneg (v.nonneg _) _) fun j _ ↦ ?_
+      refine Finset.prod_le_prod₀ (fun j _ ↦ pow_nonneg (v.nonneg _) _) fun j _ ↦ ?_
       calc v (x j) ^ ν j ≤ max (v (x j)) 1 ^ ν j :=
             pow_le_pow_left₀ (v.nonneg _) (le_max_left _ _) _
         _ ≤ max (v (x j)) 1 ^ d j := pow_le_pow_right₀ (le_max_right _ _) (hle j)
@@ -471,7 +471,7 @@ theorem apply_eval_hasseDeriv_le (W : AbsoluteValue F ℝ) {d : σ → ℕ} {Q :
     (μ.prod fun j k ↦ (m j).choose k) ≤ 2 ^ (m.sum fun _ k ↦ k) := by
     classical
     calc (μ.prod fun j k ↦ (m j).choose k) ≤ ∏ j ∈ μ.support, 2 ^ m j :=
-          Finset.prod_le_prod (fun _ _ ↦ Nat.zero_le _)
+          Finset.prod_le_prod₀ (fun _ _ ↦ Nat.zero_le _)
             (fun j _ ↦ Nat.choose_le_two_pow (m j) (μ j))
       _ = 2 ^ ∑ j ∈ μ.support, m j := Finset.prod_pow_eq_pow_sum _ _ _
       _ ≤ 2 ^ ∑ j ∈ μ.support ∪ m.support, m j :=
@@ -638,7 +638,7 @@ theorem prod_apply_sub_le (W : AbsoluteValue F ℝ) {d : σ → ℕ} {ν : σ �
   calc (∏ j, W (b j - a j) ^ ν j)
       ≤ ∏ j, (2 ^ d j * max (W (a j)) 1 ^ d j * max (W (b j)) 1 ^ d j
           * min 1 (W (b j - a j)) ^ ν j) :=
-        Finset.prod_le_prod (fun j _ ↦ pow_nonneg (W.nonneg _) _) fun j _ ↦ key j
+        Finset.prod_le_prod₀ (fun j _ ↦ pow_nonneg (W.nonneg _) _) fun j _ ↦ key j
     _ = 2 ^ (∑ j, d j) * (∏ j, max (W (a j)) 1 ^ d j) * (∏ j, max (W (b j)) 1 ^ d j)
           * ∏ j, min 1 (W (b j - a j)) ^ ν j := by
         rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_mul_distrib,

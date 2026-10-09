@@ -662,13 +662,19 @@ public sealed class InformationTemplateEvidenceTests
     [InlineData(true, "metadata-wrapper")]
     [InlineData(true, "missing-material")]
     [InlineData(true, "wrong-polarity")]
+    [InlineData(false, "legacy-identity")]
+    [InlineData(true, "legacy-identity")]
     public void named_reference_uses_raw_rigid_universes_and_structural_names(bool negated, string mutation)
     {
         // Synthetic statement-v1 materials exercise the bounded grammar beyond
         // the native clients' zero universes: UTF-8, quoted dots and a num node.
         const string nameKey = "ns(nn(ns(ns(ns(n0,2:D5),5:Probe),4:x.λ),7),5:claim)";
-        const string referenceHash = "65960cfc15c52484d5f0825d7c9279debbdd37c841d4c3eddb3f9461b8cf9df9";
-        const string negativeHash = "707564a4041c1bf2627e069ead2754a3de3c4bfc60642f419a2e2ec671a61f91";
+        var referenceHash = mutation == "legacy-identity"
+            ? "65960cfc15c52484d5f0825d7c9279debbdd37c841d4c3eddb3f9461b8cf9df9"
+            : "c2a7b544a37d5ebffb374626811f1f05e53ee417c7c877f4eddb4d56c7342b32";
+        var negativeHash = mutation == "legacy-identity"
+            ? "707564a4041c1bf2627e069ead2754a3de3c4bfc60642f419a2e2ec671a61f91"
+            : "55a8a220458148df16faf815f13d4ca0c7e2637159d82d836c2b8bd4b9262f10";
         const string parameters = "ns(n0,1:u),ns(n0,1:v)";
         var levels = mutation switch {
             "permuted-universes" => "lp(ns(n0,1:v)),lp(ns(n0,1:u))",

@@ -6,6 +6,7 @@
    utility: none
    digest: Unbounded solid derived construction with exact protected objects and all quasi-isomorphisms. -/
 
+import Mathlib.Algebra.Homology.DerivedCategory.ExactFunctor
 import D5.S3.HomologicalAlgebra.Solid.ExactMates
 import D5.S3.HomologicalAlgebra.Solid.FreeFlat
 import D5.S3.HomologicalAlgebra.Solid.CellLocality

@@ -1,0 +1,74 @@
+name: Diagnostic cold Lean signal attribution
+
+# Root selects an independently reviewed native merge SHA. Capability-only and
+# workload labels are distinct; neither label grants integration qualification.
+on:
+  pull_request:
+    branches: ['integration-**']
+    types: [labeled]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnostic:
+    if: github.event.label.name == format('cold-cap-{0}', github.sha) || github.event.label.name == format('cold-cost-{0}', github.sha)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 180
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+      DIAGNOSTIC_MODE: ${{ github.event.label.name == format('cold-cap-{0}', github.sha) && 'preflight' || 'workload' }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Verify native candidate
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Provide the kernel tracing tool
+        timeout-minutes: 5
+        run: |
+          provider_dir="$RUNNER_TEMP/bpftrace-0.27.0/bin"
+          mkdir -p "$provider_dir"
+          curl --fail --location --silent --show-error --max-time 120 \
+            https://github.com/bpftrace/bpftrace/releases/download/v0.27.0/bpftrace-aarch64 \
+            --output "$provider_dir/bpftrace"
+          printf '%s  %s\n' 13879e0b6c6b3fa6384ad24859157b6ce352aac9d84f55eabadc68c2c6084274 \
+            "$provider_dir/bpftrace" | sha256sum --check --strict
+          chmod 0755 "$provider_dir/bpftrace"
+          echo "$provider_dir" >> "$GITHUB_PATH"
+      - name: Hosted ARM capability only (no report or compiler workload)
+        if: env.DIAGNOSTIC_MODE == 'preflight'
+        timeout-minutes: 3
+        run: python3.12 tools/scripts/report/cold_cost.py --mode preflight --repository "$GITHUB_WORKSPACE" --output "$RUNNER_TEMP/cold-cost"
+      - uses: actions/setup-dotnet@v5
+        if: env.DIAGNOSTIC_MODE == 'workload'
+        with:
+          global-json-file: global.json
+      - name: Install the pinned compiler
+        if: env.DIAGNOSTIC_MODE == 'workload'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Observe canonical report after same-kernel capability and sender preflight
+        if: env.DIAGNOSTIC_MODE == 'workload'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3.12 tools/scripts/report/cold_cost.py --mode workload --repository "$GITHUB_WORKSPACE" --output "$RUNNER_TEMP/cold-cost"
+      # Live line-flushed console events are the survival surface on shutdown;
+      # upload complements them only when the runner can execute after-steps.
+      - name: Retain raw diagnostic evidence on failure or success
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cold-cost-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/cold-cost
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14

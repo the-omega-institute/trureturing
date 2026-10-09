@@ -128,7 +128,7 @@ theorem binary_character_profile_rank_cardinality
     calc
       Fintype.card profileHom.range =
           Fintype.card profileLinear.range :=
-        Fintype.card_congr (Equiv.setCongr rangeSetEquality)
+        Fintype.card_congr (Set.equivOfEq rangeSetEquality)
       _ = 2 ^ r := linearRangeCard
   refine ⟨kernelClause, imageClause, ?_⟩
   intro b

@@ -589,7 +589,6 @@ theorem golden_periodic_orbit_codes_close_and_are_nodup :
     goldenStepTarget,
     goldenOrbitStates, goldenTraceCode, goldenCodeAdd, goldenCodeMul,
     goldenCodePhi, goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 theorem golden_periodic_orbit_low_states_mem :
     goldenPeriodicOrbitRepresentativesSeven.Forall fun orbit =>
@@ -628,7 +627,6 @@ theorem golden_periodic_orbit_state_codes_nodup :
     goldenOrbitStates, goldenTraceCode, goldenApplyStepCode, goldenStepAffine,
     goldenIdentityAffine, goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
     goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-  decide
 
 set_option maxHeartbeats 1000000 in
 /-- The symbolic fixed-point generator and the twelve explicit cycles give the same set. -/

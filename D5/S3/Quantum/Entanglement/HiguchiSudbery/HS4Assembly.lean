@@ -321,7 +321,6 @@ private lemma spectral_newton /- proof_shape: bind-only; consumer: HS4Assembly.s
   change v 0 + (v 1 + (v 2 + v 3)) = 1 at hv
   have h3 : v 3 = 1-v 0-v 1-v 2 := by linarith
   norm_num [Fin.sum_univ_succ, dotProduct, Multiset.esymm, Multiset.powersetCard, Multiset.powersetCardAux, List.sublistsLenAux]
-  simp only [show (Fin.succ (2 : Fin 3) : Fin 4) = 3 from rfl]
   rw [h3]
   ring
 

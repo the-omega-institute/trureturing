@@ -68,9 +68,7 @@ public sealed class GaussianSourceEvidenceTests
         var readout = Assert.Single(binding["readouts"]!.AsArray());
         Assert.Equal(14, readout!["state_binder"]!.GetValue<int>());
         Assert.Equal(15, readout["scope_size"]!.GetValue<int>());
-        var compiled = JsonNode.Parse(File.ReadAllBytes(Path.Combine(root,
-            ".lake/build/gaussian-source-evidence.json")))![0]!;
-        Assert.True(JsonNode.DeepEquals(compiled, wire));
+        SourceFamilyEvidenceTests.AssertFrozenOriginal(root, sourcePath, files[sourcePath]);
 
         // Actual current imports and materials, not a synthetic positive certificate.
         files.Remove(sourcePath);
