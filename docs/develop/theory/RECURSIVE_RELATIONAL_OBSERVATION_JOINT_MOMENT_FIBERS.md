@@ -4047,7 +4047,8 @@ E(V,T)=\{u:\kappa(r(u,V))\ne\kappa(r(u,T))\}.
 \tag{JM.176}
 $$
 
-完整标记叶前沿之外两棵树都给 `absent`，所以该集合正是有限叶前沿的标记对称差。
+对任意不在两树叶地址集并集中的地址，两棵树的粗回复都为 `none`：原始回复可以是
+`branch` 或 `absent`。因此该集合正是有限叶前沿的标记差异集，同地址的不同叶标签也计入。
 先给两个种子。$T_4=C_0$、$J_4=\{LL\}$，$V_4=\{C_1\}$，并且
 
 $$
@@ -4089,7 +4090,10 @@ $$
 \tag{JM.179}
 $$
 
-若 $V$ 不在 $I_1$，则把它和任意树配对仍不在 $I_1$，因为一阶像语法对子树封闭。
+一阶像语法对内部子树封闭：像树的分支或为特异终端 $(\beta,\alpha)$，或其两个
+子树都在 $I_1$；特异终端的两个子树都是叶。这里每个竞争者 $V\in\mathcal V_m$
+（$m\ge4$）至少有五个叶，因而是非叶。若这样的 $V\notin I_1$，则对任意树 $S$，
+$(V,S)$ 和 $(S,V)$ 都不在 $I_1$：它们不是特异终端，而普通像分支要求 $V\in I_1$。
 递推的叶词给 $\mathcal V_n\subseteq W_n$，而
 $J_n=LJ_{n-1}\mathbin{\dot\cup}RJ_{n-2}$，所以所有成员在 $J_n$ 上都和 $T_n$
 有相同粗历史。其支持是左侧的 $LE(V,T_{n-1})$ 或右侧的
@@ -4119,13 +4123,58 @@ $$
 \tag{JM.181}
 $$
 
-原始粗动作类并非空类：在有限的 $|q|\le N-1$ 地址载体上取所有粗历史、所有
-raw-cache lifts 和一个 absorbing false sink，动作只由粗历史决定；每个查询保留四个 raw 回复分支，包括
-不一致和不可能的历史，actual rows 上用原 `queryReply_eq_readout`，终端用完整叶前沿
-的标签重建与 `finiteDecision`。这正是 `ActualPureAcquisitionCompiler` 的
-`pure_all_history_factorization` 载体在本有限词域的直接限制；它保留每个 raw lift，
-并在任意有限历史上都因同一粗前缀而取同一动作。该构造只说明原接口有满足者，不声称
-（JM.181）的上界或粗费用最优。
+原始粗动作类有沿同一实际 $h_n$ 运行的有限满足者。固定 $n\ge4$ 和
+$N=F_{n+1}$，令 $s_n=(q_1,\ldots,q_\ell)$ 先按原 shortlex 顺序列出 $J_n$，
+再按 shortlex 列出全部 $|q|\le N-1$ 地址；第二段保留和第一段重复的请求。
+这里有限的是固定请求表及其长度 $\ell$；有限地址字母表本身允许任意长历史。
+取有限配置集
+
+$$
+E_n=\mathbin{\dot\bigcup}_{i=0}^{\ell}\mathsf{Reply}^{i}.
+$$
+
+每个长 $i$ 的四值回复词 $y=(y_1,\ldots,y_i)$ 都是一行，包含不一致、重复请求
+上的冲突回复及不可实现的名义行。回复词是配置的有限标签，控制器不接收外部历史。
+初始行为 $i=0$ 的唯一空词；decoder 从空缓存起，对 $(q_1,y_1),\ldots,(q_i,y_i)$
+依次作原 `cacheUpdate`。因此每个名义 decoder 都是地址 `Nodup` 的首次出现原始缓存，
+命中不覆盖、不删除，也不推断条目。$i<\ell$ 时 action 查询 $q_{i+1}$，收到任意
+原始回复 $z$ 后 transition 到 $y z$；$i=\ell$ 时停机且 transition 自环。
+这给出原 `Observer` 的完整有限行与四回复转移。
+
+终端位只依赖 $(\kappa y_1,\ldots,\kappa y_\ell)$。令其相容集为
+
+$$
+\{U\in W_n:\forall 1\le t\le\ell,\ \kappa(r(q_t,U))=\kappa y_t\}.
+$$
+
+若该集恰为单点 $\{U\}$，返回 `finiteDecision U`；否则返回 `false`。这是每个
+终端名义行上的总 Boolean 函数，包括粗回复冲突的行。对任意实际 $U\in W_n$，
+原 `queryReply_eq_readout` 与缓存更新逐步给出缓存 truth 和精确更新律，故 `Legal`
+成立，并在恰 $\ell$ 次请求后停机。$U$ 的全部叶地址长至多 $N-1$，所以第二段
+粗读数给出完整标记叶前沿。满二叉树的内部地址正是叶地址的严格前缀；前沿的地址和
+标签因而唯一决定 $U$，实际终端相容集恰为 $\{U\}$。由 `acquisition_foundation`
+所得的原 Boolean 位满足 `true ↔ Positive U`。该终端的 raw cache 同时包含第二段
+每个地址的真实原始值，故原独立总消费者 $\Delta_n$ 也准确返回 $Q(U)$。
+在 $T_n$ 上，第一段所有回复均为 `branch`，所以从共同空缓存实际发出的前缀正是
+（JM.166）的 $h_n$；该见证没有更换词域、初始 decoder 或前缀。
+
+ALL-HISTORY 性质另外在所有名义历史上证明。按原 `historyState` 的定义，外部历史
+的地址标记不参与回复折叠；前 $\min(\ell,|h|)$ 个原始回复确定上述有限行，超过
+$\ell$ 的回复被 halt 吸收。若 $\kappa_{\rm hist}(h)=\kappa_{\rm hist}(h')$，则
+两历史等长且对应回复的粗值相同。未到终端时两行发出同一固定地址；到终端时相容集
+及 Boolean 位相同；后续任意回复仍保持该停机动作。因此 `historyAction` 在所有有限
+历史上通过原 `kappa_hist` 因子化，包括错误地址标记、不一致、重复及 post-halt 历史。
+这一证明允许不同 raw 行和缓存，不以 sourcewise 正确性替代 ALL-HISTORY 条件。
+
+`ActualPureAcquisitionCompiler` 的原生 `coarsePrefixes N` 是所有
+`Allowed N` 来源的 `acquisitionTrace [] U` 粗历史的全部前缀；`PureRow N` 是这些
+前缀的全部 `CompatCache` 原始提升，`PureState N` 另含 absorbing false sink。
+`trace_addresses` 给出原节点 preorder，`pure_actual_prefix_cache` 保证实际历史是
+该 acquisition trace 的前缀，`pure_all_history_factorization` 则覆盖其 observer 的
+所有有限反事实历史。它的有限载体并非全部粗历史的集合。这些原生事实适用于该
+acquisition observer；本节同 $h_n$ 的满足者由上述有限行、前沿重建及全历史折叠
+证明承担，不把请求重排归入该定理。该见证只说明原接口有满足者，不声称
+（JM.181）的上界、粗费用最优或全局发现最优。
 
 ### 56.4 归属、边界与形式状态
 
@@ -4135,7 +4184,8 @@ raw-cache lifts 和一个 absorbing false sink，动作只由粗历史决定；�
 `historyState`、`historyAction`、`actualPrefix_semantics`、`run_from_actualPrefix`、
 `run_deterministic` 和 `subtree_leaf_count` 复用
 `ActualFiniteObserverAbsentElimination`；粗投影复用 `ActualCoarseReadoutHistory`，
-全历史载体复用 `ActualPureAcquisitionCompiler`。确定性支持命中使用经典证书必须击中
+原生 acquisition 载体的定义与适用范围来自 `ActualPureAcquisitionCompiler`，同一
+$h_n$ 的全历史满足者由本节的有限行构造给出。确定性支持命中使用经典证书必须击中
 每个不交敏感块的原则（Buhrman--de Wolf, *Complexity Measures and Decision Tree
 Complexity: A Survey*, §4.2, Definition 2 and Proposition 1）；该文献的 Boolean
 坐标不替代这里的原树可实现性、缓存或动作合同。以上六地址、饱和、递归支持和两个
