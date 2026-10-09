@@ -272,6 +272,21 @@ theorem relabel_bill {α β : Type*} (f : α → β) (s : PrefixSampler α) :
   funext d
   simp [active,relabel]
 
+/-- A permutation of output labels transports their common probability law. -/
+theorem relabel_law_equiv {m : ℕ} (s : PrefixSampler (Fin m))
+    (e : Equiv.Perm (Fin m)) (i : Fin m) : law (relabel e s) i = law s (e.symm i) := by
+  have event : emitted (relabel e s) i = emitted s (e.symm i) := by
+    ext t
+    rw [relabel_emitted]
+    constructor
+    · rintro ⟨a,ha,hi⟩
+      have eqn : a = e.symm i := e.injective (hi.trans (e.apply_symm_apply i).symm)
+      simpa [eqn] using ha
+    · intro h
+      exact ⟨e.symm i,h,e.apply_symm_apply i⟩
+  unfold law
+  rw [event]
+
 /-- The nonnegative extended bit charge is measurable. -/
 theorem bill_measurable {α : Type*} (s : PrefixSampler α) : Measurable (bill s) :=
   Measurable.ennreal_tsum fun d => measurable_const.indicator

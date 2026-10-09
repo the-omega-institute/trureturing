@@ -250,7 +250,7 @@ private theorem prototype_facts : Function.Injective prototypes ∧
 
 
 /-- Restricting the evaluated family admits a recipe with no greater excess. -/
-private theorem restrict_recipe {m : ℕ} {F : Fin m → Source} {S : Finset (Fin m)}
+theorem restrict_recipe {m : ℕ} {F : Fin m → Source} {S : Finset (Fin m)}
     (r : Recipe F S) : ∀ (T : Finset (Fin m)), T ⊆ S → T.Nonempty →
       ∃ q : Recipe F T, ∀ i ∈ T, gain q i ≤ gain r i := by
   classical
@@ -306,6 +306,24 @@ private theorem restrict_recipe {m : ℕ} {F : Fin m → Source} {S : Finset (Fi
       exact lower.trans (by simp only [gain,dif_pos (hT hi)]; omega)
 
 
+/-- In a nonconflicting family, a recipe has at most one zero-excess member. -/
+theorem zero_gain_unique {m : ℕ} (F : Fin m → Source)
+    (nc : ∀ i j, Nonconflict (F i) (F j)) {S : Finset (Fin m)}
+    (r : Recipe F S) (i j : Fin m) (hi : i ∈ S) (hj : j ∈ S)
+    (hgi : gain r i = 0) (hgj : gain r j = 0) : i = j := by
+  by_contra different
+  have card : 2 ≤ ({i,j} : Finset (Fin m)).card := by simp [different]
+  obtain ⟨q,hq⟩ := restrict_recipe r {i,j} (by
+    intro x hx
+    rcases Finset.mem_insert.mp hx with hx | hx
+    · simpa [hx] using hi
+    · simpa [Finset.mem_singleton.mp hx] using hj) (by simp)
+  obtain ⟨x,hx,hgain⟩ := Scale38NestedCompensation.root_excess F nc {i,j} q card
+  have bound := hq x hx
+  rcases Finset.mem_insert.mp hx with hx | hx
+  · subst x; omega
+  · have hx' := Finset.mem_singleton.mp hx; subst x; omega
+
 private theorem profile_domination (pi : Strategy) :
     ∃ a : Fin 3, ∀ i, 17-(if a=i then 1 else 0) ≤ cost pi (prototypes i) := by
   have core := ActualJointResponseCostCore.result 3 (by omega) prototypes
@@ -322,14 +340,8 @@ private theorem profile_domination (pi : Strategy) :
     · have hpos : 1 ≤ gain r i := by
         have hn : gain r i ≠ 0 := by
           intro h
-          have hncard : 2 ≤ ({a,i} : Finset (Fin 3)).card := by simp [same]
-          obtain ⟨q,hq⟩ := restrict_recipe r {a,i} (by simp) (by simp)
-          obtain ⟨j,hj,hgain⟩ := Scale38NestedCompensation.root_excess prototypes
-            prototype_facts.2.2 {a,i} q hncard
-          have bound := hq j hj
-          rcases Finset.mem_insert.mp hj with he | he
-          · subst j; omega
-          · have he' := Finset.mem_singleton.mp he; subst j; omega
+          exact same (zero_gain_unique prototypes prototype_facts.2.2 r a i
+            (Finset.mem_univ _) (Finset.mem_univ _) ha h)
         omega
       simp [same]; omega
   · refine ⟨0,fun i => ?_⟩
@@ -358,7 +370,7 @@ private theorem endpointIndex_bound (pi : Strategy) (i : Fin 3) :
     17-(if endpointIndex pi=i then 1 else 0) ≤ cost pi (prototypes i) :=
   Classical.choose_spec (profile_domination pi) i
 
-private theorem selected_emitted (s : PrefixSampler Strategy) (t : Tape) (pi : Strategy)
+theorem selected_emitted (s : PrefixSampler Strategy) (t : Tape) (pi : Strategy)
     (hpi : t ∈ emitted s pi) : selected s t = pi := by
   have hs : ∃ pi, t ∈ emitted s pi := ⟨pi,hpi⟩
   simp only [selected,dif_pos hs]

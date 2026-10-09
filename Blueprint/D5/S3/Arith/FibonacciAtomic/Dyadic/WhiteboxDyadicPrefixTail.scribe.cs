@@ -9,7 +9,6 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Dyadic/WhiteboxDyadicPrefixTail.";
     private static Formula V(string n) => F.Id(n);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
-    private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula All(Formula x, Formula t, Formula b) =>
         Par(Seq(Forall, Sp, x, Colon, Sp, t, Comma, Sp, b));
@@ -88,6 +87,11 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
                 Thm("relabel_bill", "Relabelling preserves every charged bit",
                     Relabel(Equal(Call("bill", Call("relabel", f, s)), Call("bill", s))),
                     "Mapping an emitted label preserves exactly the active prefixes, including every exceptional infinite path."),
+                Thm("relabel_law_equiv", "A label permutation transports the law",
+                    Finite(All(V("e"), Call("Perm", fin), All(i, fin,
+                        Equal(Call("law", Call("relabel", V("e"), s), i),
+                            Call("law", s, Call("inverse", V("e"), i)))))),
+                    "The emission event for a permuted label equals the original event for its inverse image."),
                 Thm("bill_measurable", "The extended bit bill is measurable",
                     General(Call("Measurable", Call("bill", s))),
                     "The bill is a countable nonnegative sum of measurable active indicators."),
@@ -100,6 +104,6 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
                     Paths(All(i, fin, Equal(Call("law", Call("fromPath", m, path), i),
                         Call("ofDigits", Call("labelDigit", path, i))))),
                     "The observer emits i exactly on the public carry-tree event of a finite return with label i. "
-                    + "Its probability is the fixed-label binary digit series.")))));
+                    + "Its probability is the fixed-label binary digit series."))));
     }
 }
