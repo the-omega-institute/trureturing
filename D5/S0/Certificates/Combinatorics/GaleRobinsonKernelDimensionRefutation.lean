@@ -331,7 +331,7 @@ theorem result : ¬ claim := by
 
   let diagonal : Fin 6 → K := ![1,b,b ^ 2,c,b * c ^ 2,b * c]
 
-  have hcoeff : ∀ i j : Fin 6, coeff (position i) (H j) =
+  have hcoeff : ∀ i j : Fin 6, AddMonoidAlgebra.coeff (H j) (position i) =
       if i = j then diagonal i else 0 := by
     classical
     intro i j
@@ -961,8 +961,8 @@ theorem result : ¬ claim := by
   have hind : LinearIndependent K H := by
     rw [Fintype.linearIndependent_iff]
     intro l hl j
-    have he := congrArg (coeff (position j)) hl
-    simp only [coeff_sum, coeff_smul, coeff_zero, hcoeff, smul_eq_mul] at he
+    have he := congrArg ((fun p => AddMonoidAlgebra.coeff p (position j))) hl
+    simp only [coeff_sum, coeff_smul, MvPolynomial.coeff_zero, hcoeff, smul_eq_mul] at he
     have he' : l j * diagonal j = 0 := by
       simpa using he
     exact (mul_eq_zero.mp he').resolve_right (hdiag j)

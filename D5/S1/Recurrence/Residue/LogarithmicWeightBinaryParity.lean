@@ -39,7 +39,7 @@ private theorem A_quadratic : A = X + A ^ 2 := by
       coeff n C = (n : ZMod 2) * (s n : ZMod 2) := by
     intro n hn
     simp [C, b, show n ≠ 0 by omega, show ¬n ≤ 1 by omega, CharTwo.ofNat_eq_mod]
-  have deriv_A : derivative (ZMod 2) A = 1 := by
+  have deriv_A : PowerSeries.derivative (R := (ZMod 2)) A = 1 := by
     ext n
     rw [coeff_derivative, coeff_one]
     by_cases hn : n = 0
@@ -85,7 +85,7 @@ private theorem A_quadratic : A = X + A ^ 2 := by
     rw [coeff_A n hn1, coeff_C n (by omega)]
     simp only [S, coeff_mk]
     ring
-  have C_eq_X_deriv : C = X * (1 + derivative (ZMod 2) S) := by
+  have C_eq_X_deriv : C = X * (1 + PowerSeries.derivative (R := (ZMod 2)) S) := by
     ext n
     cases n with
     | zero => simp [C]
@@ -101,22 +101,22 @@ private theorem A_quadratic : A = X + A ^ 2 := by
       congrArg (PowerSeries.C (R := ZMod 2))
         (show (2 : ZMod 2) = 0 from CharTwo.two_eq_zero)
   have he := A_eq_add_mul
-  have hd := congrArg (derivative (ZMod 2)) he
+  have hd := congrArg (PowerSeries.derivative (R := (ZMod 2))) he
   simp only [map_add, Derivation.leibniz, smul_eq_mul, deriv_A, mul_one] at hd
-  have hdc : derivative (ZMod 2) C * (1 + A) = 1 + C := by
+  have hdc : PowerSeries.derivative (R := (ZMod 2)) C * (1 + A) = 1 + C := by
     linear_combination -hd - C * hz
-  have hds := congrArg (derivative (ZMod 2)) S_eq_mul
+  have hds := congrArg (PowerSeries.derivative (R := (ZMod 2))) S_eq_mul
   simp only [Derivation.leibniz, smul_eq_mul, deriv_A, mul_one] at hds
-  have hbracket : 1 + (A * derivative (ZMod 2) C + C) = derivative (ZMod 2) C := by
-    linear_combination hd + (A * derivative (ZMod 2) C + C) * hz
-  have hc : C = X * derivative (ZMod 2) C := calc
-    C = X * (1 + derivative (ZMod 2) S) := C_eq_X_deriv
-    _ = X * derivative (ZMod 2) C := by rw [hds, hbracket]
+  have hbracket : 1 + (A * PowerSeries.derivative (R := (ZMod 2)) C + C) = PowerSeries.derivative (R := (ZMod 2)) C := by
+    linear_combination hd + (A * PowerSeries.derivative (R := (ZMod 2)) C + C) * hz
+  have hc : C = X * PowerSeries.derivative (R := (ZMod 2)) C := calc
+    C = X * (1 + PowerSeries.derivative (R := (ZMod 2)) S) := C_eq_X_deriv
+    _ = X * PowerSeries.derivative (R := (ZMod 2)) C := by rw [hds, hbracket]
   have hu : (1 + C) * (1 + A) = 1 := by
     linear_combination he + (C + A * C) * hz
   have hprod : A * (1 + A) = X := calc
     A * (1 + A) = C * (1 + A) ^ 2 := by linear_combination (1 + A) * he
-    _ = X * (derivative (ZMod 2) C * (1 + A)) * (1 + A) := by
+    _ = X * (PowerSeries.derivative (R := (ZMod 2)) C * (1 + A)) * (1 + A) := by
       conv_lhs => rw [hc]
       ring
     _ = X := by rw [hdc, mul_assoc, hu, mul_one]
