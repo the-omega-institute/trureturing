@@ -50,7 +50,7 @@ def TerminatesIn : Nat → Slot → Source → Prop
       C.output (C.readNext u.1.val u.2) = x
   | n + 1, u, x => ∃ v, C.Edge I u v ∧ TerminatesIn n v x
 
-private theorem terminal_no_edge {u v : Slot}
+theorem terminal_no_edge {u v : Slot}
     (halt : C.action (C.readNext u.1.val u.2) = .halt) : ¬ C.Edge I u v := by
   rintro ⟨x, i, j, hi, hj, hij, waits⟩
   obtain ⟨_, _, _, _, _, read, _⟩ := u.1.property
