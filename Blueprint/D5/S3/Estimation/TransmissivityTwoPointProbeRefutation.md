@@ -102,7 +102,43 @@ $$claim \Leftrightarrow (\forall q : \mathbb{R}, \forall tau0 : \mathbb{R}, \for
 
 Section V, arXiv v1 PDF p. 4: "For the two-point prior PDF (15), we verify that for integer n̄ the optimal state is the Fock state with the same photon number. For real n̄, our numerical results support the conjecture that the optimal state has the form of the state (27), up to a phase, i.e., |Φ′ₙ̄⟩ = e^{iφn̂}|Φₙ̄⟩." The prior parameters range over [0,1]; nbar is positive; N is any finite Fock cutoff. The psi input has Euclidean norm one and meanPhoton(psi)=nbar. The encoding says that some phased in-between state has finite-POVM MMSE no greater than each competing input. Each state's MMSE is computed on its own finite output span. Identification with the source's arbitrary-measurement optimum requires the compression argument stated above and a reduction from arbitrary outcomes to finite outcomes; that bridge is ASSUMED-UNVERIFIED and not kernel-checked here.
 
-**Theorem 1.9 (Strict error advantage of a nonadjacent Fock superposition).**
+**Theorem 1.9 (Square roots of nonnegative natural powers).**
+
+$$\forall t : \mathbb{R}, (0 \le t) \Rightarrow (\forall k : \mathbb{N}, \operatorname{sqrt}\left((t)^{k}\right) = (\operatorname{sqrt}\left(t\right))^{k})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.sqrt_power` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For t nonnegative and natural k, sqrt(t^k)=sqrt(t)^k. The power factorization follows by induction using multiplicativity of the square root on nonnegative inputs.
+
+**Theorem 1.10 (Factored pure-loss Kraus coefficient).**
+
+$$\forall n : \mathbb{N}, \forall l : \mathbb{N}, \forall tau : \mathbb{R}, (\operatorname{mem}\left(tau, \operatorname{Icc}\left(0, 1\right)\right)) \Rightarrow (\operatorname{sqrt}\left(((\operatorname{toReal}\left(\operatorname{choose}\left(n, l\right)\right)) \cdot ((tau)^{\operatorname{NatSub}\left(n, l\right)})) \cdot ((1 - tau)^{l})\right) = ((\operatorname{sqrt}\left(\operatorname{toReal}\left(\operatorname{choose}\left(n, l\right)\right)\right)) \cdot ((\operatorname{sqrt}\left(tau\right))^{\operatorname{NatSub}\left(n, l\right)})) \cdot ((\operatorname{sqrt}\left(1 - tau\right))^{l}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.source_coefficient` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For tau in [0,1], the source coefficient sqrt(choose(n,l) tau^(n-l) (1-tau)^l) equals sqrt(choose(n,l)) sqrt(tau)^(n-l) sqrt(1-tau)^l. Natural subtraction is truncated.
+
+**Theorem 1.11 (Source form of the pure-loss Kraus matrix).**
+
+$$\forall N : \mathbb{N}, \forall l : \operatorname{Fin}\left(N + 1\right), \forall tau : \mathbb{R}, (\operatorname{mem}\left(tau, \operatorname{Icc}\left(0, 1\right)\right)) \Rightarrow (\operatorname{amplitudeKraus}\left(N, l, 1 - tau\right) = \operatorname{MatrixOf}\left(fun r c : \operatorname{Fin}\left(N + 1\right) \mapsto \operatorname{ite}\left(\operatorname{val}\left(r\right) + \operatorname{val}\left(l\right) = \operatorname{val}\left(c\right), \operatorname{ite}\left(\operatorname{val}\left(l\right) \le \operatorname{val}\left(c\right), \operatorname{ofReal}\left(\operatorname{sqrt}\left(((\operatorname{toReal}\left(\operatorname{choose}\left(\operatorname{val}\left(c\right), \operatorname{val}\left(l\right)\right)\right)) \cdot ((tau)^{\operatorname{NatSub}\left(\operatorname{val}\left(c\right), \operatorname{val}\left(l\right)\right)})) \cdot ((1 - tau)^{\operatorname{val}\left(l\right)})\right)\right), 0\right), 0\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.sourceKraus` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite cutoff N, Kraus index l and tau in [0,1], amplitudeKraus(l,1-tau) has the source coefficient at row r and column c when r.val+l.val=c.val and l.val<=c.val, and zero otherwise. Matrix.of turns the displayed entry function into a matrix.
+
+**Theorem 1.12 (Strict error advantage of a nonadjacent Fock superposition).**
 
 $$\neg claim$$
 
@@ -131,4 +167,7 @@ Take q=1/2, tau0=4/9, tau1=1 and nbar=1/2. Every in-between phase has MMSE 1625/
 - Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.momentState`
 - Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.outputState`
 - Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.result`
+- Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.sourceKraus`
+- Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.source_coefficient`
+- Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.sqrt_power`
 - Dependency: [D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation](../Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.md)
