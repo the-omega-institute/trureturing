@@ -47,7 +47,7 @@ theorem local_global_residual_empty_iff_joint_injective
         pair.property.1
           (separates pair.1.1 pair.1.2 pair.property.2)
   exact residual_isEmpty_iff_separates.trans
-    ((joint_faithfulness_tfae readout).out 1 0)
+    ((joint_faithfulness_tfae readout).out 2 1)
 
 #print axioms local_global_residual_empty_iff_joint_injective
 

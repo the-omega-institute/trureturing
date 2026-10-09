@@ -168,13 +168,14 @@ internal static class DagLedgerAlignWriter
         _ = LoadEvents(acceptedFiles, "accepted frozen ledger");
         var baseView = ReadView(acceptedFiles);
         var state = ReadStateCatalog(repositoryRoot);
-        var retirements = options.Retirements.ToImmutableHashSet();
+        var retirements = options.Retirements.Concat(options.UpstreamPorts).ToImmutableHashSet();
+        ValidateUpstreamPorts(repository, options, truth, baseView);
         ValidateRetirements(retirements, truth, state, baseView);
         var retirementClosure = retirements.IsEmpty
             ? ImmutableHashSet<RepoPath>.Empty
             : DescendantClosure(
-                FrozenLedgerReplacementClosure.DescendantsFrom(baseView, retirements),
-                baseView.ActiveByPath.Keys,
+                retirements,
+                baseView,
                 adjacency).Except(retirements);
 
         var addPaths = appendAlias
@@ -203,23 +204,9 @@ internal static class DagLedgerAlignWriter
             .ToImmutableArray();
         ValidateClosed(considered, truth.Snapshot, states);
 
-        var consistencyConflicts = considered
-            .Where(path => state.Records.TryGetValue(path, out var record)
-                && (!baseView.ActiveByPath.TryGetValue(path, out var active)
-                    || active.Material.StatementId != record.StatementId))
-            .ToImmutableArray();
-        if (!consistencyConflicts.IsEmpty)
-        {
-            return ConflictResult(considered.Length, consistencyConflicts);
-        }
-
         var addedPaths = addPaths
             .Where(path => !state.Records.ContainsKey(path))
             .Distinct()
-            .ToImmutableHashSet();
-        var changedPaths = considered
-            .Where(path => state.Records.TryGetValue(path, out var record)
-                && record.StatementId != catalog.ByPath[path].StatementId)
             .ToImmutableHashSet();
         // Resolve edges from the current report: dangling recorded identities cannot
         // identify their former dependency paths or seed a ledger reverse traversal.
@@ -232,7 +219,7 @@ internal static class DagLedgerAlignWriter
             .ToImmutableHashSet();
         var repairClosure = DescendantClosure(
             prerequisiteRepairs,
-            baseView.ActiveByPath.Keys,
+            baseView,
             adjacency);
         ValidateClosed(repairClosure, truth.Snapshot, states);
         foreach (var path in repairClosure.OrderBy(static path => path.Value, StringComparer.Ordinal))
@@ -260,9 +247,25 @@ internal static class DagLedgerAlignWriter
             .Union(retirementClosure);
         var regeneration = DescendantClosure(
             initialRegeneration,
-            baseView.ActiveByPath.Keys,
+            baseView,
             adjacency);
         ValidateClosed(regeneration, truth.Snapshot, states);
+        considered = considered.Union(regeneration)
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+        var consistencyConflicts = considered
+            .Where(path => state.Records.TryGetValue(path, out var record)
+                && (!baseView.ActiveByPath.TryGetValue(path, out var active)
+                    || active.Material.StatementId != record.StatementId))
+            .ToImmutableArray();
+        if (!consistencyConflicts.IsEmpty)
+        {
+            return ConflictResult(considered.Length, consistencyConflicts);
+        }
+        var changedPaths = considered
+            .Where(path => state.Records.TryGetValue(path, out var record)
+                && record.StatementId != catalog.ByPath[path].StatementId)
+            .ToImmutableHashSet();
         var newEventFiles = BuildAlignedEventFiles(
             regeneration,
             catalog,
@@ -277,7 +280,7 @@ internal static class DagLedgerAlignWriter
             replacementFiles,
             "aligned frozen ledger");
         _ = ReadView(replacementFiles);
-        if ((!prerequisiteRepairs.IsEmpty || !retirements.IsEmpty)
+        if ((!regeneration.IsEmpty || !retirements.IsEmpty)
             && !DagLedgerLoader.TryOrderClosedDag(replacementEvents, [], out _))
         {
             throw new InvalidOperationException(
@@ -309,8 +312,13 @@ internal static class DagLedgerAlignWriter
         {
             result = result with
             {
-                Output = result.Output + $"LEDGER_RETIRE registrations={retirements.Count} "
-                    + $"retained_descendants={retirementClosure.Count}\n",
+                Output = result.Output
+                    + (options.Retirements.IsEmpty ? string.Empty
+                        : $"LEDGER_RETIRE registrations={options.Retirements.Length} "
+                            + $"retained_descendants={retirementClosure.Count}\n")
+                    + (options.UpstreamPorts.IsEmpty ? string.Empty
+                        : $"LEDGER_RETIRE upstream_ports={options.UpstreamPorts.Length} "
+                            + $"retained_descendants={retirementClosure.Count}\n"),
             };
         }
         if (newEventFiles.IsEmpty && stateEvents.IsEmpty && retirements.IsEmpty)
@@ -327,6 +335,43 @@ internal static class DagLedgerAlignWriter
             retirements,
             "ledger-align");
         return result;
+    }
+
+    // A17.2 correspondence is a content-delivery obligation, not a classification
+    // inferred from a missing source or a hash. This selector asserts that obligation;
+    // the writer checks upgrade ownership and uses the ordinary atomic publication.
+    private static void ValidateUpstreamPorts(
+        IRepositoryGateway repository,
+        AlignOptions options,
+        TruthContext truth,
+        FrozenLedgerBaseView currentView)
+    {
+        if (options.UpstreamPorts.IsEmpty) return;
+        var rawBase = DagLedgerCommandPreparation.Ask(() => repository.ReadRevisionProjection(
+            options.ProtectedBase!, TruthExportCommand.IsTruthInput));
+        var protectedBase = SnapshotDecoder.Decode(rawBase) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
+        if (!EffectiveLeanPins.TryRead(protectedBase, out var basePins)
+            || !EffectiveLeanPins.TryRead(truth.Snapshot, out var candidatePins)
+            || basePins!.MathlibRevision == candidatePins!.MathlibRevision)
+            throw new InvalidOperationException(
+                "upstream-port retirement requires a changed adopted mathlib pin against --base");
+        var protectedView = FrozenLedgerBaseViewReader.Read(protectedBase);
+        foreach (var path in options.UpstreamPorts)
+        {
+            if (!protectedBase.Files.ContainsKey(path)
+                || !protectedView.ActiveByPath.TryGetValue(path, out var original)
+                || !currentView.ActiveByPath.TryGetValue(path, out var current)
+                || original.Material.StatementId != current.Material.StatementId
+                || !original.Material.DeclarationStatementIds.SequenceEqual(
+                    current.Material.DeclarationStatementIds))
+                throw new InvalidOperationException(
+                    $"upstream port is not the protected-base frozen owner: {path.Value}");
+        }
     }
 
     private static void ValidateRetirements(
@@ -403,15 +448,19 @@ internal static class DagLedgerAlignWriter
 
     private static ImmutableHashSet<RepoPath> DescendantClosure(
         ImmutableHashSet<RepoPath> initial,
-        IEnumerable<RepoPath> activePaths,
+        FrozenLedgerBaseView baseView,
         IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency)
     {
         var closure = initial.ToHashSet();
         var changed = true;
         while (changed)
         {
-            changed = false;
-            foreach (var path in activePaths)
+            // Every replaced identity can have consumers in either relation;
+            // alternating recorded/current edges require a joint fixed point.
+            var before = closure.Count;
+            closure.UnionWith(FrozenLedgerReplacementClosure.DescendantsFrom(baseView, closure));
+            changed = closure.Count != before;
+            foreach (var path in baseView.ActiveByPath.Keys)
             {
                 if (!closure.Contains(path)
                     && adjacency.TryGetValue(path, out var dependencies)
@@ -601,9 +650,11 @@ internal static class DagLedgerAlignWriter
         bool appendAlias)
     {
         string? report = null;
+        string? protectedBase = null;
         var selectors = ImmutableArray.CreateBuilder<RepoPath>();
         var adds = ImmutableArray.CreateBuilder<RepoPath>();
         var retirements = ImmutableArray.CreateBuilder<RepoPath>();
+        var upstreamPorts = ImmutableArray.CreateBuilder<RepoPath>();
         var fromAccepted = false;
         var listClosed = false;
         for (var index = 0; index < arguments.Count; index++)
@@ -622,6 +673,12 @@ internal static class DagLedgerAlignWriter
                 case "--retire-registration" when !appendAlias && ++index < arguments.Count:
                     retirements.Add(ParseModulePath(arguments[index]));
                     break;
+                case "--retire-upstream-port" when !appendAlias && ++index < arguments.Count:
+                    upstreamPorts.Add(ParseModulePath(arguments[index]));
+                    break;
+                case "--base" when !appendAlias && ++index < arguments.Count && protectedBase is null:
+                    protectedBase = arguments[index];
+                    break;
                 case "--from-accepted" when !appendAlias && !fromAccepted:
                     fromAccepted = true;
                     break;
@@ -635,7 +692,7 @@ internal static class DagLedgerAlignWriter
 
         if (fromAccepted)
         {
-            if (report is not null || selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0 || listClosed)
+            if (report is not null || selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0 || upstreamPorts.Count != 0 || protectedBase is not null || listClosed)
             {
                 throw Usage(appendAlias);
             }
@@ -644,10 +701,13 @@ internal static class DagLedgerAlignWriter
         {
             throw Usage(appendAlias);
         }
-        if (listClosed && (selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0))
+        if (listClosed && (selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0 || upstreamPorts.Count != 0 || protectedBase is not null))
             throw Usage(appendAlias);
 
-        foreach (var group in selectors.Concat(adds).Concat(retirements).GroupBy(static path => path))
+        if (upstreamPorts.Count == 0 ? protectedBase is not null : string.IsNullOrWhiteSpace(protectedBase))
+            throw Usage(appendAlias);
+
+        foreach (var group in selectors.Concat(adds).Concat(retirements).Concat(upstreamPorts).GroupBy(static path => path))
         {
             if (group.Count() != 1)
                 throw new InvalidOperationException($"duplicate or conflicting module selector: {group.Key.Value}");
@@ -658,6 +718,8 @@ internal static class DagLedgerAlignWriter
             selectors.ToImmutable(),
             adds.ToImmutable(),
             retirements.ToImmutable(),
+            upstreamPorts.ToImmutable(),
+            protectedBase,
             fromAccepted,
             listClosed);
     }
@@ -679,6 +741,7 @@ internal static class DagLedgerAlignWriter
             : "USAGE: StrataLint ledger-align --candidate-lean-report FILE "
                 + "[--selector D5/.../X.lean]... [--add D5/.../X.lean]... "
                 + "[--retire-registration D5/.../Missing.lean]... "
+                + "[--base REV --retire-upstream-port D5/.../Missing.lean]... "
                 + "| ledger-align --from-accepted "
                 + "| ledger-align --list-closed --candidate-lean-report FILE");
 
@@ -719,6 +782,8 @@ internal static class DagLedgerAlignWriter
         ImmutableArray<RepoPath> Selectors,
         ImmutableArray<RepoPath> Adds,
         ImmutableArray<RepoPath> Retirements,
+        ImmutableArray<RepoPath> UpstreamPorts,
+        string? ProtectedBase,
         bool FromAccepted,
         bool ListClosed);
 }

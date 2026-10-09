@@ -75,7 +75,7 @@ private theorem palette_prime_ge_five {p : ℕ}
 private theorem gain_nonneg (κ : ℚ) (A : Finset ℕ)
     (hκ : 0 ≤ κ) (hA : A ⊆ smallPalette ∪ tailPalette) : 0 ≤ gain κ A := by
   have hP : 1 ≤ ordinaryProduct A := by
-    apply Finset.one_le_prod
+    apply Finset.one_le_prod₀
     intro p hp
     have hpQ : (5 : ℚ) ≤ p := by exact_mod_cast palette_prime_ge_five (hA hp)
     have hw : 0 ≤ ordinaryWeight p := div_nonneg (by norm_num) (by linarith)

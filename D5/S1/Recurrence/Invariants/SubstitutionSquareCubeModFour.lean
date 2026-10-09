@@ -74,9 +74,6 @@ theorem generating_equation : constantCoeff generatingSeries = 0 ∧
         simp [generatingSeries, a]
       · rw [coeff_subst_cut _ 2 2 (by omega)]
         simp [Fin.sum_univ_two, generatingSeries, a, q, coeff_X_pow]
-        rw [show (2 : PowerSeries ℤ) = C 2 from (map_ofNat C 2).symm,
-          coeff_C_mul]
-        simp
 
 theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 0)
     (h1 : coeff 1 B = 1)

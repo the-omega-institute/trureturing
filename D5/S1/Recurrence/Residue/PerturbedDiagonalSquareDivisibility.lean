@@ -123,7 +123,7 @@ private theorem degree_power_dvd (F : PowerSeries ℤ) (m : ℕ) :
     have hcast : (↑(r + 2) : PowerSeries ℤ) = C ((r : ℤ) + 2) := by simp
     rw [hcast, coeff_C_mul] at hd
     refine ⟨coeff (r + 1) (F ^ (r + 2)) -
-      coeff r (F ^ (r + 1) * derivative ℤ F), ?_⟩
+      coeff r (F ^ (r + 1) * PowerSeries.derivative (R := ℤ) F), ?_⟩
     push_cast at *
     linear_combination -hd
 

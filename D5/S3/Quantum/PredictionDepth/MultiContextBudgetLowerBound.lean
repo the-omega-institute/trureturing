@@ -61,7 +61,7 @@ theorem multi_context_budget_lower_bound
     exact congrFun hreadout ⟨x, j⟩
   have hfullSpan :
       Submodule.span ℝ (Set.range fullEffects) = ⊤ :=
-    ((informational_completeness_four_way d fullEffects).out 0 3).mp
+    ((informational_completeness_four_way d fullEffects).out 1 4).mp
       hfullComplete
   let reducedEffects : (Σ x, Fin (independentCount x)) ->
       traceZeroHermitian d :=

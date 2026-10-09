@@ -33,13 +33,8 @@ theorem neg_mul_log_integral :
     have hx0 : x ≠ 0 := ne_of_gt hx.1
     dsimp [F]
     have hquarter : HasDerivAt (fun y : ℝ => y ^ 2 / 4) (x / 2) x := by
-      convert ((hasDerivAt_id x).pow 2).div_const 4 using 1
-      · rfl
-      · rfl
-      · funext y
-        simp [Pi.pow_apply, id_eq]
-      · simp [id_eq]
-        ring
+      convert ((hasDerivAt_id x).pow 2).div_const 4 using 1 <;>
+        simp [Pi.pow_apply, id_eq] <;> ring
     convert ((Real.hasDerivAt_mul_log hx0).mul (hasDerivAt_id x)).div_const 2 |>.sub
       hquarter |>.neg using 1
     · funext y

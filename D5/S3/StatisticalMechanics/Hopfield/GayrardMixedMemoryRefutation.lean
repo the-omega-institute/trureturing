@@ -254,7 +254,7 @@ theorem result : ¬ claim := by
     have hm : Measurable f := Measurable.of_discrete
     change (∫ x, f (fun j : Fin 5 => x j.val) ∂q) = _
     rw [← integral_map (μ := q) (φ := fun x (j : Fin 5) => x j.val)
-      (measurable_pi_lambda _ (fun j => measurable_pi_apply j.val)).aemeasurable
+      (Measurable.of_eval (fun j => measurable_pi_apply j.val)).aemeasurable
       hm.aestronglyMeasurable, hlaw, integral_fintype Integrable.of_finite]
     simp only [measureReal_def, Measure.pi_singleton, hb, Finset.prod_const, Finset.card_univ,
       Fintype.card_fin]
@@ -268,7 +268,7 @@ theorem result : ¬ claim := by
     let X : ℕ → (ℕ → ℕ → Bool) → ℝ := fun i ω => g (ω i)
     have hfm : Measurable f := Measurable.of_discrete
     have hgm : Measurable g := hfm.comp (show Measurable (fun x : ℕ → Bool => fun k : Fin 5 => x k.val) from
-      measurable_pi_lambda _ (fun k => measurable_pi_apply k.val))
+      Measurable.of_eval (fun k => measurable_pi_apply k.val))
     have hrows : iIndepFun (fun i : ℕ => fun ω : ℕ → ℕ → Bool => ω i) P :=
       iIndepFun_infinitePi (P := fun _ => q) (X := fun _ => id) (fun _ => measurable_id)
     have hX : iIndepFun X P := hrows.comp (fun _ => g) (fun _ => hgm)
@@ -279,7 +279,7 @@ theorem result : ¬ claim := by
         (P := fun _ => b) (fun _ => measurable_id)).precomp Fin.val_injective
     have hproj : HasLaw (fun x : ℕ → Bool => fun k : Fin 5 => x k.val)
         (Measure.pi (fun _ : Fin 5 => b)) q := by
-      refine ⟨(measurable_pi_lambda _ (fun k => measurable_pi_apply k.val)).aemeasurable, ?_⟩
+      refine ⟨(Measurable.of_eval (fun k => measurable_pi_apply k.val)).aemeasurable, ?_⟩
       rw [hib.map_fun_eq_pi_map (fun k => (measurable_pi_apply k.val).aemeasurable)]
       simp [q, Measure.infinitePi_map_eval]
     have htotal := hproj.comp (hrow 0)
