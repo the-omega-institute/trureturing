@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:ca6730faa8f44b4fec7f87b0dafe1f619c45c285f74295d7b2736d16b3144c6d
   normalized_sha256: sha256:ca6730faa8f44b4fec7f87b0dafe1f619c45c285f74295d7b2736d16b3144c6d
 cas_ref: sha256:ca6730faa8f44b4fec7f87b0dafe1f619c45c285f74295d7b2736d16b3144c6d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometryLaws/HiddenTranslationComponentCharge.hidden_translation_component_charge
+    target_statement_id: sha256:ff90f3c7e7417ae7043247986878fcbed28fceb2baa2aeceb4949bda2c8596a2
 receipts:
   unresolved_subitems: []
   chain_atoms:

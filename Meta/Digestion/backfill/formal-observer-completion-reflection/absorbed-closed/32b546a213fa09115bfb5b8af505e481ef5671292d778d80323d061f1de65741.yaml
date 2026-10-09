@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:32b546a213fa09115bfb5b8af505e481ef5671292d778d80323d061f1de65741
   normalized_sha256: sha256:32b546a213fa09115bfb5b8af505e481ef5671292d778d80323d061f1de65741
 cas_ref: sha256:32b546a213fa09115bfb5b8af505e481ef5671292d778d80323d061f1de65741
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Decision/SamePredictionOppositeOptima.same_prediction_opposite_unique_optima
+    target_statement_id: sha256:61f16b9bca962807b209d87f9ee9132136af3d5586fa649df0421aa3d2bcf2b7
 receipts:
   unresolved_subitems: []
   chain_atoms:

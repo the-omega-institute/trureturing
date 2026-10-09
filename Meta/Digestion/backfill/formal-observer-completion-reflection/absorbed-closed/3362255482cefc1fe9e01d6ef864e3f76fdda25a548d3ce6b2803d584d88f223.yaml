@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:3362255482cefc1fe9e01d6ef864e3f76fdda25a548d3ce6b2803d584d88f223
   normalized_sha256: sha256:3362255482cefc1fe9e01d6ef864e3f76fdda25a548d3ce6b2803d584d88f223
 cas_ref: sha256:3362255482cefc1fe9e01d6ef864e3f76fdda25a548d3ce6b2803d584d88f223
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Attribution/StabilizerSelectorObstruction.no_equivariant_selector_of_stabilizer_without_fixed_action
+    target_statement_id: sha256:a097fe57b668b604c4ed22ed29726ce6ff6b0e438c6dda349f9f9bc47efe27ae
 receipts:
   unresolved_subitems: []
   chain_atoms:
