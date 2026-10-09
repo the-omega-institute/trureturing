@@ -27,6 +27,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tempfile
 
 USAGE = "usage: nyx.py ask <brief> <out> | nyx.py pools"
 POOLS_ROUTE = ("proxy", "request", "oracle", "api/v1/oracle/pools", "--output", "json")
@@ -93,7 +94,8 @@ def resolve_cli() -> str:
     resolved = shutil.which(cli)
     if resolved is None:
         raise Failure("BROKER_UNAVAILABLE", f"nyxid executable not found: {cli}")
-    return resolved
+    # Broker calls run in the output directory, so a relative executable is anchored here first.
+    return os.path.abspath(resolved)
 
 
 # ---- response stream ------------------------------------------------------------------
@@ -202,9 +204,14 @@ def check_ask_paths(brief: Path, out: Path) -> dict[str, Path]:
 
 
 def write_atomically(path: Path, data: bytes) -> None:
-    temporary = path.with_name(path.name + ".tmp")
-    temporary.write_bytes(data)
-    os.replace(temporary, path)
+    descriptor, temporary = tempfile.mkstemp(dir=path.parent, prefix=path.name + ".", suffix=".tmp")
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(data)
+        os.replace(temporary, path)
+    except BaseException:
+        Path(temporary).unlink(missing_ok=True)
+        raise
 
 
 def ask(brief: Path, out: Path) -> int:

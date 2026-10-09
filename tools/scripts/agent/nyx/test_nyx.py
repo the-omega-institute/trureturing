@@ -261,5 +261,90 @@ class NyxContracts(unittest.TestCase):
                                             "answer.txt.stderr", "answer.txt.request.json"]))
 
 
+    # ---- terminal decision: reference conditions and reason precedence --------------------
+    def assert_reason(self, stream, reason, rc=0):
+        self.set_stream(stream, rc)
+        completed = self.run_nyx("ask", self.brief, self.out)
+        self.assertEqual(completed.returncode, 0 if reason == "COMPLETE" else 1, completed.stdout)
+        self.assertEqual(self.status()["reason_code"], reason)
+        self.assertEqual(self.out.exists(), reason == "COMPLETE")
+
+    def test_the_last_reported_finish_reason_decides(self):
+        cases = {
+            "STREAM_NOT_TERMINAL": sse(chunk("x", finish="stop"), chunk(finish="length", oracle=ORACLE), "[DONE]"),
+            "COMPLETE": sse(chunk("x", finish="length"), chunk(finish="stop", oracle=ORACLE), "[DONE]"),
+        }
+        for reason, stream in cases.items():
+            with self.subTest(reason=reason):
+                self.assert_reason(stream, reason)
+
+    def test_only_the_final_chunk_oracle_carries_the_task_id(self):
+        for final in (chunk(finish="stop"), chunk(finish="stop", oracle={"task_id": 123}),
+                      chunk(finish="stop", oracle={"task_id": None})):
+            with self.subTest(final=final):
+                self.assert_reason(sse(chunk("x", oracle=ORACLE), final, "[DONE]"), "TASK_ID_MISSING")
+
+    def test_an_error_key_fails_even_when_its_value_is_null(self):
+        for value in (None, "", {}, False):
+            with self.subTest(value=value):
+                self.assert_reason(sse(chunk("x"), chunk(finish="stop", oracle=ORACLE, error=value), "[DONE]"),
+                                   "BROKER_ERROR")
+
+    def test_non_object_and_mistyped_chunks_are_malformed(self):
+        bad_values = ["[1, 2]", '"text"', "7", "null",
+                      json.dumps({"choices": {"delta": {}}}),
+                      json.dumps({"choices": ["x"]}),
+                      json.dumps({"choices": [{"delta": "x"}]}),
+                      json.dumps({"choices": [{"delta": {"content": 5}}]}),
+                      json.dumps({"choices": [{"delta": {}, "finish_reason": 1}]}),
+                      json.dumps({"choices": [], "oracle": "task"})]
+        for value in bad_values:
+            with self.subTest(value=value):
+                self.assert_reason(sse(chunk("x"), value, chunk(finish="stop", oracle=ORACLE), "[DONE]"),
+                                   "STREAM_MALFORMED")
+
+    def test_reason_precedence_follows_the_condition_order(self):
+        malformed, error = "{not json", {"error": {"code": "model_unavailable"}}
+        no_task = chunk(finish="stop")
+        cases = [
+            ("CARRIER_EXIT_NONZERO", sse(malformed, error), 1),
+            ("STREAM_MALFORMED", sse(malformed, error, no_task), 0),
+            ("BROKER_ERROR", sse(error, no_task), 0),
+            ("STREAM_NOT_TERMINAL", sse(chunk("x"), no_task), 0),
+            ("TASK_ID_MISSING", sse(chunk("x"), no_task, "[DONE]"), 0),
+        ]
+        for reason, stream, rc in cases:
+            with self.subTest(reason=reason):
+                self.assert_reason(stream, reason, rc)
+
+    # ---- artifacts and inputs ------------------------------------------------------------
+    def test_a_pre_dispatch_failure_removes_every_earlier_artifact(self):
+        failures = {"BRIEF_INVALID": ({}, lambda: self.brief.write_bytes(b"\xff")),
+                    "BROKER_UNAVAILABLE": ({"NYX_CLI": str(self.root / "absent-nyxid")}, lambda: None)}
+        for reason, (env, prepare) in failures.items():
+            with self.subTest(reason=reason):
+                self.brief.write_text("Prove the lemma.\n", encoding="utf-8")
+                self.assertEqual(self.run_nyx("ask", self.brief, self.out).returncode, 0)
+                prepare()
+                completed = self.run_nyx("ask", self.brief, self.out, env=env)
+                self.assertEqual(completed.returncode, 1)
+                self.assertEqual(self.status()["reason_code"], reason)
+                self.assertEqual(sorted(p.name for p in self.work.iterdir()), ["answer.txt.status.json", "brief.md"])
+
+    def test_relative_cli_path_is_anchored_at_the_invocation_directory(self):
+        completed = self.run_nyx("ask", self.brief, self.out, cwd=self.root, env={"NYX_CLI": "fake dir/nyxid"})
+        self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+        self.assertEqual(self.out.read_text(encoding="utf-8"), "Hello, world.")
+
+    def test_brief_named_like_a_temporary_file_survives(self):
+        for name in ("answer.txt.tmp", "answer.txt.status.json.tmp"):
+            with self.subTest(name=name):
+                brief = self.work / name
+                brief.write_text("Prove the lemma.\n", encoding="utf-8")
+                self.assertEqual(self.run_nyx("ask", brief, self.out).returncode, 0)
+                self.assertEqual(brief.read_text(encoding="utf-8"), "Prove the lemma.\n")
+                brief.unlink()
+
+
 if __name__ == "__main__":
     unittest.main()
