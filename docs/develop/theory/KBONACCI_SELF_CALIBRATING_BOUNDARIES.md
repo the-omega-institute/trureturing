@@ -2818,3 +2818,322 @@ $$
 Unrestricted binary names require five bits for either count. These capacities neither recode original action $1111$ nor impose a no-$11$ action alphabet, and assign no installation, update, readout, gate, time, energy or physical-memory costs. The missing operational FIB/KB correspondence must relate actual sources, observations, literal actions, updates, stopping and immutable INITIAL targets, preserving every original legal word, absorbing failure and every emitted fee. Accessible state-name storage and maintained access costs also need that correspondence. Static naming does not supply it. Other parameters, INITIAL targets and native fee transport retain their separate mathematical obligations.
 
 ## 追加锚（本行以下为增补区）
+## 29. Exact complete-controller memory at fee at most one for full INITIAL even supports
+
+Section 27 supplies the full INITIAL internal even-support family and its emitted-block fee classification. Here the resource is the number of states of a complete finite controller at worst emitted-block fee at most one. The complete-controller convention of Definition 28.1 is used with length-$m$ literal actions. Its seven-phase fee-three minima $18$ and $26$ retain their separate parameters and targets. The result below concerns the Section 27 family, permits adaptive selection using the single free INITIAL reading, and counts every running and persistent output state.
+
+**定义 29.1（Original joint source, INITIAL target and complete memory）。** Fix
+
+$$
+m\ge5,\qquad k=2m-2,\qquad T=k+1=2m-1,
+\qquad U=\{2,\ldots,m-1\},\qquad P=\mathbb Z/T\mathbb Z.
+\tag{29.1}
+$$
+
+Retain the original weights $G_i=2^i$ for $0\le i<k$ and $G_i=\sum_{h=1}^kG_{i-h}$ thereafter, with bits read in increasing original weight position. The supplied matched coefficient cycle is
+
+$$
+c_i=G_i\bmod2=\mathbf1_{\{0,T-1\}}(i\bmod T),
+\tag{29.2}
+$$
+
+extended periodically to integer indices. At complete-block endpoints the live record is $(v,\theta,s)$, where $v\in\mathbb F_2$, $\theta\in P$, and $0\le s<k$ is the inherited terminal run of ones. The independent rejection record is $\bot$. On a live record the literal bit operations are
+
+$$
+\begin{aligned}
+d_0(v,\theta,s)&=(v,\theta+1,0),\\
+d_1(v,\theta,s)&=
+\begin{cases}
+(v\oplus c_\theta,\theta+1,s+1),&s+1<k,\\
+\bot,&s+1=k,
+\end{cases}\\
+d_b(\bot)&=\bot\qquad(b\in\{0,1\}).
+\end{aligned}
+\tag{29.3}
+$$
+
+Phases are modulo $T$. The source is the image of all actual finite original complete-block histories, including empty and rejected histories. Since $\gcd(m,T)=1$, it is exactly
+
+$$
+Q=(\mathbb F_2\times P\times\{0,\ldots,k-1\})\sqcup\{\bot\}.
+\tag{29.4}
+$$
+
+The simultaneous history witnesses establishing this equality are given below. Thus (29.4) is an actual joint source, rather than a product of separately reachable marginals. INITIAL history and length are unknown and unavailable to the controller.
+
+Choose even subsets $H_0,H_1\subseteq U$, allowing either to be empty. Choose labels $A_v,B_v\in Y$ with $A_v\ne B_v$ separately for $v=0,1$, and an arbitrary $y_\bot\in Y$. There is no restriction on cross-value or bottom-label coincidences. With $j=-\theta_{\rm INITIAL}\pmod T$, represented by $0,\ldots,T-1$, the target is
+
+$$
+f(v,-j,s)=
+\begin{cases}
+B_v,&j\in H_v,\\
+A_v,&j\notin H_v,
+\end{cases}
+\qquad 0\le s<k,\qquad f(\bot)=y_\bot.
+\tag{29.5}
+$$
+
+Every target value refers to the immutable INITIAL record. In particular, later scalar changes never change the required $v$ in (29.5). Every phase outside $U$, every inherited legal tail, and initial bottom remain in the source.
+
+Both original action alphabets separately equal $\{0,1\}^m$ here: a word of length $m<k$ cannot internally contain $1^k$. This equality of literal action sets does not remove rejection across the seam with the inherited tail. For $X=X_0\cdots X_{m-1}$, let $T_X=d_{X_{m-1}}\circ\cdots\circ d_{X_0}$. Execute every one of these $m$ updates. The response alphabet is $O=\{0,1,\bot\}$, with $o(v,\theta,s)=v$ and $o(\bot)=\bot$. Only the absolute endpoint response $o(T_X(q))$ is supplied; the device supplies neither its scalar increment nor any interior observation.
+
+A complete deterministic finite controller is $(K,c,u,\Delta)$, with finite $K$ and total maps
+
+$$
+\begin{aligned}
+c&:O\longrightarrow K,\\
+u&:K\longrightarrow
+\{\operatorname{Emit}(X):X\in\{0,1\}^m\}
+\sqcup\{\operatorname{Halt}(a):a\in Y\},\\
+\Delta&:K\times O\longrightarrow K.
+\end{aligned}
+\tag{29.6}
+$$
+
+It initializes once to $c(o(q_{\rm INITIAL}))$, using its one free initial value/bottom reading. A state with instruction $\operatorname{Emit}(X)$ executes its fixed literal word, reads the full-block endpoint, and moves to $\Delta(z,o(T_X(q)))$. A state with instruction $\operatorname{Halt}(a)$ returns its fixed literal label and is persistently absorbing: $\Delta(z,r)=z$ for every $r\in O$. There is no uncharged internal state transition between these instructions. In particular, a running state cannot freely change to a Halt state without executing its block.
+
+All runtime phase, program, branch, saved INITIAL-value, archive, stopping and output memory belongs to $K$. There is no external initial-value register, output register, counter, clock, archive, reset, copy, interior reading, further free device reading or observation from an unexecuted branch. The actual device record is part of the experiment, not a separately accessible controller register. Arbitrary finite cycles and sharing, including sharing across INITIAL fibres or execution depths, are permitted. A constant fibre or initial bottom may continue rather than stop freely if correctness and the fee bound permit it.
+
+Every actual Emit costs one complete block: all $m$ emitted bits count, including zeros, waits, padding and the remainder after any interior rejection. Halt costs no block. Success requires finite stopping with $f(q_{\rm INITIAL})$ for every $q_{\rm INITIAL}\in Q$. Define
+
+$$
+M_{\mathrm{fee}\le1}(f)=
+\min\{|K|:(K,c,u,\Delta)\text{ is complete and successful, with worst emitted-block fee }\le1\}.
+\tag{29.7}
+$$
+
+This resource counts the entire controller, including persistent literal outputs. Define the actual output set, active-fibre count and sharing indicator by
+
+$$
+\begin{aligned}
+Y_{\rm act}&=\{A_0,A_1,y_\bot\}\cup\{B_v:H_v\ne\varnothing\},
+&L&=|Y_{\rm act}|,\\
+n&=\mathbf1_{H_0\ne\varnothing}+\mathbf1_{H_1\ne\varnothing},\\
+\epsilon&=
+\begin{cases}
+1,&H_0=H_1\ne\varnothing,
+\quad A_0=B_1\text{ and }B_0=A_1,\\
+0,&\text{otherwise}.
+\end{cases}
+\end{aligned}
+\tag{29.8}
+$$
+
+A stipulated $B_v$ on an empty support need not be an actual output and is omitted unless it coincides with an actual label. All equalities here are mathematical equalities of labels.
+
+**定理 29.2（Universal exact complete-controller minimum）。** Under Definition 29.1, separately for either original alphabet,
+
+$$
+\boxed{M_{\mathrm{fee}\le1}(f)=L+n-\epsilon.}
+\tag{29.9}
+$$
+
+Every successful complete controller with this fee bound needs at least $L$ persistent literal Halt states and at least $n-\epsilon$ running states. One total controller simultaneously attains both bounds. Equivalently:
+
+| Support case | Necessary running states | Exact total states |
+| --- | --- | --- |
+| $H_0=H_1=\varnothing$ | $0$ | $L$ |
+| Exactly one support is nonempty | $1$ | $L+1$ |
+| Both supports are nonempty and unequal | $2$ | $L+2$ |
+| Equal nonempty supports and $A_0=B_1$, $B_0=A_1$ | $1$ | $L+1$ |
+| Equal nonempty supports without both crossed equalities | $2$ | $L+2$ |
+
+Proof. The lower bound ranges over every controller (29.6), not just one chosen identification tree. The source and literal identities in the next subsection are the supplied Section 27 and INITIAL target-cost interfaces specialized to (29.1). Their explicit forms fix the actual-source and absolute-response premises of the argument.
+
+### 29.1 Actual source witnesses and the unique literal inverse
+
+For any $v\in\mathbb F_2$, $j\in P$ and $0\le s<k$, coprimality gives arbitrarily large $N$ satisfying
+
+$$
+N\equiv0\pmod m,\qquad N\equiv-j\pmod T,\qquad N\ge s+2.
+$$
+
+Put $a=\bigoplus_{i=N-s}^{N-1}c_i$, with empty XOR zero, and use the one history
+
+$$
+w=(v\oplus a)\,0^{N-s-1}1^s.
+\tag{29.10}
+$$
+
+Its first factor is one bit and has coefficient $c_0=1$. The intervening zeros separate it from the terminal run $s<k$. Its first bit contributes $v\oplus a$, its terminal run contributes $a$, its phase is $-j$, and its tail is exactly $s$. Its length is divisible by $m$, and each length-$m$ block is available under either original alphabet. This single legal history therefore realizes the entire INITIAL record $(v,-j,s)$. The two-block all-one history $1^{2m}$ realizes bottom: its individual blocks are available because $m<k$, while their accumulated run reaches $k$. The unobserved witness lengths are not controller inputs or added continuation fees. These are the joint witnesses credited to Lemma 15.1 and (25.3), in the present parameters.
+
+For a first word $X$ that succeeds from an INITIAL source, its scalar increment is
+
+$$
+q_X(j)=\bigoplus_{i=0}^{m-1}X_i c_{-j+i}.
+\tag{29.11}
+$$
+
+The ordered first path is $W_0=\{0,1,\ldots,m\}$. Substitution of the two coefficient residues in (29.2), using $T=2m-1>m$, gives the supplied path identity
+
+$$
+\begin{aligned}
+q_X(0)&=X_0,\\
+q_X(j)&=X_{j-1}\oplus X_j\qquad(1\le j<m),\\
+q_X(m)&=X_{m-1},\\
+q_X(j)&=0\qquad(m<j<T).
+\end{aligned}
+\tag{29.12}
+$$
+
+Every bit occurs twice in the XOR over $W_0$, so its total charge is even. Conversely the first $m$ equations recursively force
+
+$$
+X_i=\bigoplus_{h=0}^i q_X(h)\qquad(0\le i<m).
+\tag{29.13}
+$$
+
+The final endpoint equation holds exactly when the total charge is even. Thus an even charge assignment on the whole path has one unique literal inverse, with zero charge outside it. In particular, for an even $H\subseteq U$ the supplied inverse is
+
+$$
+\mathcal B_0(H)_i=\bigoplus_{h=0}^i\mathbf1_H(h),
+\qquad 0\le i<m.
+\tag{29.14}
+$$
+
+It starts zero because $0\notin H$, and ends zero because $|H|$ is even and $m\notin H$. These identities are Interface 1.4, equations (1.4)–(1.5), of the [INITIAL target-cost volume](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee), also used in (27.4)–(27.5). The inverse is a literal action, not an arbitrary parity oracle; its old-tail safety must still be checked.
+
+### 29.2 Universal Halt and active-root lower bounds
+
+For every $a\in Y_{\rm act}$ an actual source has INITIAL target $a$. Successful finite stopping must visit a state whose fixed instruction is $\operatorname{Halt}(a)$. Distinct labels require distinct such states, since $u$ assigns one instruction to a state. Hence at least $L$ persistent literal Halts are necessary, irrespective of how those states are reached or shared. Every $A_v$ is realized outside $U$, every active $B_v$ is realized on $H_v$, and $y_\bot$ is realized at initial bottom by (29.10) and (29.4).
+
+Every controller state actually reached immediately after an emission must have a Halt instruction. An Emit instruction there would execute a second full block and violate the fee bound on that source; no uncharged internal transition is available. This excludes reachable running cycles or a further running-state reuse on such executions by the contract itself. Unreachable cycles are allowed. It also allows constant-fibre and bottom continuations, but forces their reached first-emission successors to Halt.
+
+Fix an active fibre $v$, so $H_v\ne\varnothing$. All of its live sources initialize to $R_v=c(v)$. Actual phases in $H_v$ and outside $U$ require the unequal labels $B_v$ and $A_v$. A literal Halt at $R_v$ cannot serve both, so $u(R_v)=\operatorname{Emit}(X)$ for some fixed word $X$.
+
+First, $X_0=0$ is forced. If $X_0=1$, every actual record $(v,-j,k-1)$ rejects at the first bit. Choose $j\in H_v$ and $j_*=m+1$. The latter is an actual phase outside $W_0$ and outside $U$, since $m+1<T$ for $m\ge5$. These sources require $B_v$ and $A_v$ respectively. They start at the same controller state and, after the entire paid word including its post-rejection remainder, give the same absolute endpoint $\bot$. Their common successor cannot return both unequal labels. Absorption would preserve their indistinguishability even at a larger horizon. Thus every active root starts zero.
+
+This first zero clears every inherited tail inside the paid word. Its remaining $m-1<k$ bits cannot form a forbidden run. Therefore $X$ succeeds on every live source in this fibre, including all old tails, and gives absolute endpoint $v\oplus q_X(j)$.
+
+At the actual phase $j_*=m+1$, (29.12) gives $q_X(j_*)=0$. Correctness and the fee bound force
+
+$$
+u(\Delta(R_v,v))=\operatorname{Halt}(A_v).
+\tag{29.15}
+$$
+
+Now take any phase in $H_v$. It must return $B_v\ne A_v$, so it cannot give endpoint $v$. It gives endpoint $1-v$ and forces the second absolute-response constraint
+
+$$
+u(\Delta(R_v,1-v))=\operatorname{Halt}(B_v).
+\tag{29.16}
+$$
+
+Both binary response rows are reached on actual sources. They now force the entire charge assignment: if $j\in H_v$ had charge zero, (29.15) would return $A_v$ incorrectly; if $j\notin H_v$ had charge one, (29.16) would return $B_v$ incorrectly. Consequently
+
+$$
+q_X(j)=\mathbf1_{H_v}(j)\quad(j\in P),
+\qquad X=\mathcal B_0(H_v)
+\tag{29.17}
+$$
+
+by the unique inverse (29.13). There is no choice of a different root word that avoids either fixed successor requirement. This argument uses absolute responses throughout: it has not supplied an external remembered INITIAL value or an increment register.
+
+If both fibres are active and their roots share one state, its fixed emitted word is the same. Equation (29.17) forces $H_0=H_1$. The common absolute response zero must satisfy (29.15) for INITIAL value zero and (29.16) for INITIAL value one. Its single literal Halt instruction therefore forces $A_0=B_1$. Similarly its absolute response one forces $B_0=A_1$. These necessary conditions are precisely
+
+$$
+R_0=R_1\quad\Longrightarrow\quad
+H_0=H_1\ne\varnothing,
+\quad A_0=B_1,\quad B_0=A_1.
+\tag{29.18}
+$$
+
+If the supports differ, the emitted words conflict; if they agree but the crossed equalities fail, at least one absolute-response output instruction conflicts. Equality of output sets alone does not suffice. Conversely, under both crossed equalities and equal supports, the two root words and both binary successor requirements agree, as the construction below shows.
+
+Thus the mandatory active roots require at least $n-\epsilon$ distinct running states. These are disjoint from the $L$ Halt states because one state has one fixed instruction. This proves $|K|\ge L+n-\epsilon$ for every complete successful controller.
+
+No free-stop assumption on inactive fibres or bottom entered the lower bound. In fact they can be normalized to free stopping without adding states: success already provides a Halt for each $A_v$ and $y_\bot$, so change only their once-used initialization entries to those states. Leave $u$ and every $\Delta$ entry unchanged. The targets on these initial fibres are constant, and the modification cannot increase fee. This optional normalization also does not restrict arbitrary sharing or cycles in the original controller.
+
+### 29.3 Matching total controller on every original source
+
+Create one state $h_a$ for each distinct $a\in Y_{\rm act}$. Its instruction is $\operatorname{Halt}(a)$ and all three response updates are self-loops. Create a root $R_v$ for each active fibre. Identify the two roots exactly when $\epsilon=1$, and otherwise keep them distinct. The complete instruction and update tables are
+
+| State | Fixed instruction | Response $0$ | Response $1$ | Response $\bot$ |
+| --- | --- | --- | --- | --- |
+| $h_a$, each $a\in Y_{\rm act}$ | $\operatorname{Halt}(a)$ | $h_a$ | $h_a$ | $h_a$ |
+| $R_0$, if $H_0\ne\varnothing$ | $\operatorname{Emit}(\mathcal B_0(H_0))$ | $h_{A_0}$ | $h_{B_0}$ | $h_{y_\bot}$ |
+| $R_1$, if $H_1\ne\varnothing$ | $\operatorname{Emit}(\mathcal B_0(H_1))$ | $h_{B_1}$ | $h_{A_1}$ | $h_{y_\bot}$ |
+
+When the roots are identified, every table entry agrees: the words agree by equality of supports; the response-zero labels agree by $A_0=B_1$; the response-one labels agree by $B_0=A_1$; and both bottom rows use $h_{y_\bot}$. Shared output labels always refer to the same $h_a$. Initialization is total:
+
+$$
+c(v)=
+\begin{cases}
+R_v,&H_v\ne\varnothing,\\
+h_{A_v},&H_v=\varnothing,
+\end{cases}
+\qquad c(\bot)=h_{y_\bot}.
+\tag{29.19}
+$$
+
+Each active word starts and ends zero by (29.14). Its first zero clears every old tail, including $k-1$, and the remainder has length $m-1<k$, so every live source succeeds. Its actual full-block endpoint is
+
+$$
+o(T_{\mathcal B_0(H_v)}(v,-j,s))
+=v\oplus\mathbf1_{H_v}(j).
+\tag{29.20}
+$$
+
+For INITIAL value zero, the root's zero and one responses return $A_0$ and $B_0$. For INITIAL value one they return $B_1$ and $A_1$ respectively. In either case this is exactly (29.5) for every $j$ and every original inherited tail. An inactive fibre returns $A_v$ at its initialization Halt, and initial bottom returns $y_\bot$ there. Bottom response rows from roots are defined even though the constructed active words cannot reject on live sources; they also provide a literal total update on absorbing device bottom.
+
+Every running state moves directly to a persistent Halt after its one emission, including on bottom. Termination is finite, with zero blocks on constant fibres and initial bottom, and one block on active fibres. Every emitted bit belongs to that paid complete block. All control, stopping and persistent-output storage lies in
+
+$$
+|K|=L+n-\epsilon.
+\tag{29.21}
+$$
+
+Every Halt is reached by an actual source because its label belongs to $Y_{\rm act}$, and every root is reached by an active actual fibre. If $n=0$, the same construction has only the $L$ Halts and worst fee zero. If $n>0$, an active fibre actually emits a block, so worst fee is one. This attains the unrestricted lower bound and proves (29.9). $\square$
+
+### 29.4 Equal supports with different complete memory
+
+**命题 29.3（Crossed versus aligned absolute-response consumer）。** Fix $m=5$, $k=8$, $T=9$ and
+
+$$
+H_0=H_1=\{2,3\},\qquad
+\mathcal B_0(H_0)=\mathcal B_0(H_1)=00100.
+\tag{29.22}
+$$
+
+Let $a\ne b$ and choose $y_\bot=a$. The following two targets have the same supports, the same two actual output labels, and the same adaptive and GLOBAL minimum emitted-block fee one, supplied by Theorem 27.2. Their complete-controller minima at fee at most one differ:
+
+| Label assignment | $(A_0,B_0,A_1,B_1,y_\bot)$ | $(L,n,\epsilon)$ | Exact minimum |
+| --- | --- | --- | --- |
+| Crossed | $(a,b,b,a,a)$ | $(2,2,1)$ | $3$ |
+| Aligned | $(a,b,a,b,a)$ | $(2,2,0)$ | $4$ |
+
+Proof. Equation (29.14) gives the displayed literal word. Its only nonzero charges in (29.12) are at $j=2,3$. It starts zero and succeeds on all $2Tk=144$ live INITIAL records, including tail seven, under both original alphabets. With initial bottom the full source has $145$ records. Formula (29.9) gives the two exact counts, and the following tables expose the absolute-response difference without an external saved INITIAL value:
+
+| Target and running state | Emit | Response $0$ | Response $1$ | Response $\bot$ |
+| --- | --- | --- | --- | --- |
+| Crossed $R$ | $00100$ | $h_a$ | $h_b$ | $h_a$ |
+| Aligned $R_0$ | $00100$ | $h_a$ | $h_b$ | $h_a$ |
+| Aligned $R_1$ | $00100$ | $h_b$ | $h_a$ | $h_a$ |
+
+Both controllers also contain precisely $h_a,h_b$, with the literal Halt instructions and all three self-loops of Section 29.3. Crossed initialization is $c(0)=c(1)=R$, $c(\bot)=h_a$. Aligned initialization is $c(0)=R_0$, $c(1)=R_1$, $c(\bot)=h_a$. The tables and initialization give all states, instructions and response rows.
+
+In the crossed target the absolute endpoint already selects its literal output regardless of INITIAL value. In the aligned target, the same absolute endpoint requires opposite labels for the two INITIAL values. For example response zero arises outside $H_0$ at INITIAL value zero, requiring $a$, but inside $H_1$ at INITIAL value one, requiring $b$. These are actual full-source executions. The unique common root word cannot alter this conflict. Two running states retain the required distinction inside $K$. Equal support, fee and output count therefore do not determine complete action-memory compatibility. The lower bound excludes another word, rejection, a running cycle or a hidden free transition as a three-state aligned alternative. $\square$
+
+### 29.5 Evidence scope, falsifiers and source credit
+
+**数学边界 29.4（Finite corroboration and unresolved extensions）。** Finite full-source corroboration of the same literal words, source updates and total constructions covers every even support pair and all $27$ equality-partition representatives of $(A_0,B_0,A_1,B_1,y_\bot)$ satisfying $A_v\ne B_v$ separately, at $m=5,6,7$:
+
+| $m$ | $(k,T)$ | Full INITIAL source size $2Tk+1$ | Even supports per fibre | Equality partitions | Constructed controllers | Full INITIAL executions |
+| --- | --- | --- | --- | --- | --- | --- |
+| $5$ | $(8,9)$ | $145$ | $4$ | $27$ | $432$ | $62\,640$ |
+| $6$ | $(10,11)$ | $221$ | $8$ | $27$ | $1\,728$ | $381\,888$ |
+| $7$ | $(12,13)$ | $313$ | $16$ | $27$ | $6\,912$ | $2\,163\,456$ |
+
+These totals are $9\,072$ constructed controllers and $2\,607\,984$ full INITIAL executions, including initial bottom. Corroboration includes actual histories for every live triple, full original bit execution with inherited tails, finite stopping, persistent Halts, actual worst fee, both consumer tables, and combined-fibre absolute-endpoint compatibility. There are $7\,641$ nonempty support-pair/equality-partition compatibility cases across these three widths. Exhaustive literal-word checks at these widths separately corroborate the unique root words. These bounded checks corroborate the constructions and rigidity; they are neither enumeration of every finite controller nor a proof for arbitrary $m$. The universal ordinary proof is Sections 29.1–29.3.
+
+The equality depends on the exact source and memory contract. A successful original controller with fewer than $L$ literal output states, or fewer than $n-\epsilon$ running states, would contradict the corresponding lower argument. Such a controller must retain every actual oldtail-$k-1$ source and outside-window phase, charge every emitted block, use only absolute endpoint observations, and include all runtime and persistent-output memory in $K$. Removing those sources, exporting INITIAL value or output storage, reading an interior point, or supplying an uncharged control transition changes the problem. A failure of one constructed word to clear an actual legal tail, an endpoint different from (29.20), or a conflicting shared response row would instead invalidate the displayed attainment; it would not by itself exclude another attainment.
+
+The label counts and crossed equalities are mathematical finite-set statements. For arbitrary labels they assert no uniform decidable equality procedure, executable installation algorithm or installation cost. A computational implementation would require an effective presentation of the finite equality partition. The result is ordinary reference mathematics and preserves the volume's unverified status; it makes no kernel-certification or project-admission claim. No complete-memory optimum at fee two, general parameter optimum, physical-memory/bit/time bridge, global novelty or priority is inferred. The static naming discussion in Boundary 28.3 retains its missing operational correspondence. Targets outside (29.5), other widths or orders, odd supports, tail-sensitive targets, and the general immutable INITIAL fee objective retain their separate unresolved obligations.
+
+**数学引文 29.5（Suppliers and mature methods）。** Definition 27.1 supplies the original full-source even-support family, matched coefficients, immutable targets, complete-block actions and fee contract. Theorem 27.2 supplies its already established adaptive/GLOBAL zero/one/three classification, including the consumer's fee-one statement. It is credited reuse, not a new fee classification here. Lemma 15.1 and (25.3) supply the joint history construction; Definitions 18.1 and 25.1 supply original INITIAL acquisition semantics. The source-specific formulas (29.10)–(29.14) expose these interfaces without claiming a new general observer or inverse theorem. [INITIAL target-cost theory, Interface 1.4](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee) supplies the ordered full-path charges and inverse.
+
+Definition 28.1 supplies the complete finite-controller convention, total initialization and response maps, fixed instructions and persistent literal outputs. Its Theorem 28.2 has separate $(k,m)=(6,4)$, fee-three phase and value-phase contracts and retains the minima $18$ and $26$; neither number prices (29.5). The additional deduction here is the universal fee-one root rigidity (29.15)–(29.17), its exact two-absolute-response sharing obstruction (29.18), and simultaneous attainment (29.19)–(29.21). Proposition 29.3 consumes that obstruction while keeping support, emitted fee and actual output count fixed.
+
+The mature identification and compatibility methods are those cited in Section 28. E. F. Moore, [*Gedanken-Experiments on Sequential Machines*, printed pp. 129–131](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf), treats identification of an unknown beginning state and destructive failure. Petra van den Bos and Frits Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, Section 4, Definition 11 and Figure 3](https://arxiv.org/html/1907.11034v2), provide adaptive completed-trace and irreversible-merger semantics. A. Larrauri and R. Bloem, [arXiv:2105.10292v2, Section 5, Theorem 4](https://arxiv.org/html/2105.10292v2), supply closed compatible covers with initial coverage and successor closure for a given observation machine. Here compatibility requires both the fixed literal action and its absolute-response-to-Halt rows to agree. The lower proof first forces these requirements for every permitted controller, so it is stronger than minimizing a preselected tree. These named sources supply background methods, not formula (29.9). The complete-memory equality and its label consumer are source-specific ordinary mathematical deductions without a global literature-priority assertion.
+
+## 追加锚（本行以下为增补区）
