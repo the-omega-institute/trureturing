@@ -53,7 +53,7 @@ internal sealed class SaturatedActualConeDocument : IScribeDocumentDefinition
                     + "when the entrance has m events."))), DescribeRole.Theorem),
             Paragraph(Text(
                 "This statement covers two and three physical digits, and retains the "
-                + "original positive waiting durations. It treats an initial read, so a positive "
+                + "original positive waiting durations. It treats an initial read (ell = 0), so a positive "
                 + "common initial waiting prefix is outside its model. An ordering of leaves by original low phase and its leaf-depth "
                 + "correspondence and the gap-cost inequalities are additional assertions.")))));
 
