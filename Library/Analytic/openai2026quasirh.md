@@ -1544,3 +1544,130 @@ $$
 这里核对的是这一素数掩码的运输；它不认证任意一般化后的亚纯公式，也不解除源文 $(rf\alpha,6)=1$ 的条件。对实际有符号列继续取极点留数时，必须保留修正后的 numerator、完整掩码和字符扭转。
 
 前节完整混合留数估计以 Lemma 4.1 为明确解析前提，其掩码处理使用该引理中的直接约数容斥和部分求和，不调用式 (2.11) 第一式。本反例限定该运输等式的使用，没有证明或否定 Lemma 4.1、整篇 moment 定理或未读取的出版正文。完整有符号 Möbius／零点—根数联合估计、严格 Robin 预算与 RH 仍未由此得到。
+
+## 实际 buffered 分箱轮廓中的混合留数消费
+
+本节把前节完整混合留数供给接回同一平方自由立方索引探针的三变量轮廓。复用所引主稿 `fixed-bin-contour`、`external-contour-tails`、primitive 函数方程和前节完整 annular 估计；新增步骤是在实际有限高度箱内跨过混合极点，并先重合全部分箱留数，再使用完整行的 Gauss 估计。结论以同一探针的精确高端恒等式及原右侧分箱变换为前提，保留其 $\sigma_0\ge7/8,\ \beta_*>\sigma_0$ 阶段范围。未执行 Lean 核验，未独立认证整篇源证明，不主张历史原创性。
+
+### 同一物理行与同一份高度预算
+
+取目标 $\eta=1$，保留原 $\xi$、所有素槽、共同掩码、零延拓和 Mellin 测试。只对原合同保留的完整非主中央行族执行下述移动；主行及其标量留数、原合同单列的有界例外行另行保留。固定共同光滑 profile $W_U(q_u/U)$，支撑于固定倍数的 $U$，并取有限个 dyadic annuli
+$$
+Z^{d_{\min}}\le U\le Z^{d_{\max}},\qquad
+0<d_{\min}\le d_{\max}<\infty.
+$$
+每个 annulus 的 buffered 分区先固定，再移动 Mellin 变量；使用精确分区或和为 $1$ 的分区权重，覆盖该物理 annulus 的完整保留行族，不随积分点重新选择。
+
+令 $c_0=17/50$、$0<e<1/4000$，取原分箱右线
+$$
+x_r=a+16e,\qquad w_+=1-a-6e,\qquad z_r=c_0,
+\qquad51/100\le a\le1.
+$$
+原分箱变换提供该 $x$ 线在保留高度上的无零 buffer 和 reciprocal 界。使用同一份原高度
+$$
+|t_x|\le T_1/4,\quad |t_w|\le T_1/2,\quad
+|t_z|\le T_1/4,\qquad
+T_1=Z^\tau,\quad0<\tau\le d_{\min}/100.
+$$
+$e,\tau$、profiles 和参数范围均在 $Z$ 前固定。任意指定的 $Z^{-1}$ 幂节省，须按这个固定 $\tau>0$ 选取足够大的 $N$。不为后续变量重新申请高度 allowance。原 integrand 保留为
+$$
+\mathcal W(X,Y,Z;x,w,z)
+\sum_u W_U(q_u/U)q_u^{-z}\overline{\xi(u)}
+\zeta_F^S(6z)
+\frac{L^S(w,\chi_u)}{L^S(x,\overline{\chi_u})}
+\mathfrak H_u^{\mathrm{sf}}(x,w,z),
+$$
+其中
+$$
+\mathcal W=X^{1/2-z}Z^{x+z-1}Y^{w-1}
+\Phi(x+z-1)M(z)\widehat W_1(w).
+$$
+$\chi_u$ 保留实际诱导／本原表示、unit sector 和删除因子约定，不替换为独立的任意特征。
+
+### 跨对角线的完整全纯修正
+
+在每个 $p\notin S$，包括 $p\mid u$，设
+$$
+T_p=Q^{-x-w},\qquad
+F_p^\circ=(1-T_p)H_p^{\mathrm{sf}},\qquad
+G_p^\circ=(1-T_p)G_p^{\mathrm{sf}}.
+$$
+按原完整素元组和构造 $\mathfrak H_u^\circ$：选中槽使用 $Q^{z-1}G_p^\circ$，其余素数使用 $F_p^\circ$。于是
+$$
+\boxed{\mathfrak H_u^{\mathrm{sf}}
+=\zeta_F^S(x+w)\mathfrak H_u^\circ.}
+$$
+这是绝对域上的恒等式及其亚纯延拓，不含任何 $H_p$ 或 $G_p$ 的倒数。分歧处虽然 $D=W=0$，仍须保留 $1-Q^{-x-w}$，不能把它设成 $1$。
+
+对未分歧素数，$\eta=1$ 给出 $T_p=DW$。复用完整局部式，记
+$$
+R_p=DV(1-W)-VW-D(Q-1)WV(1-W),
+$$
+则精确缺陷为
+$$
+F_p^\circ-1=
+\frac{D^2W(1-W)+(1-DW)R_p}{1-D}.
+$$
+全部缺陷幂由
+$$
+\begin{gathered}
+-2x_r-w_r,\ -2x_r-2w_r,\ -x_r-6c,\\
+-x_r-w_r-6c,\ -w_r-6c,\\
+1-x_r-w_r-6c,\ 1-x_r-2w_r-6c
+\end{gathered}
+$$
+控制。在 $x_r=a+16e$、$w_r\in[1-a-26e,1-a-6e]$、$c\ge c_0$ 的整个移动管内，七项均严格小于 $-1$，具有统一正裕度；$1-D$ 和 $1-V$ 一致远离零。因此未分歧乘积在该管的开邻域正常收敛，适用于全部高度。
+
+分歧处使用原 $j=1,\ldots,5$ 完整表及全部标记，不取修正因子倒数。在预先固定、包含移动管的紧实部盒上，每行只有有限个分歧素数，故完整修正、行数和素元组质量具有同一个
+$$
+Z^B(1+|t_x|+|t_w|+|t_z|)^J
+$$
+majorant，其中 $B,J$ 在选择外部衰减阶 $N$ 前固定。这里需要的是 polynomial majorant，不声称已取得左侧的 subpower 修正界；分歧严格项的幂可逼近 $1/400>0$。$c\ge c_0$ 的局部正常收敛不提供无限实部范围上的统一 $Z^B$ 界，因为槽权重还含 $P_i^c$。
+
+### 有限高度箱内的实际跨越
+
+固定 $x,z$ 的原保留 segments，将 $w$ 移到
+$$
+w_-=1-a-26e.
+$$
+每个保留 $x=x_r+it_x$ 的唯一混合极点 $w=1-x$ 严格位于 $w$ rectangle 内，因为
+$$
+w_-<1-x_r<w_+,\qquad |t_x|\le T_1/4<T_1/2.
+$$
+水平 $w$ joins 上 $|\Im(x+w)|\ge T_1/4$。分母仍在同一 buffered $x$ segment 上；只延长允许的 $z$ 轴，不延长仅有有限高度无零保证的 $x$ 轴。三个原 Mellin／Gaussian 因子的独立衰减与上述完整 majorant 支付 joins，代价为 $O_N(Z^BT_1^{-N})$。单独 Gaussian 不能承担这个结论。
+
+分子非主、$6c_0>1$，故没有额外分子或 $\zeta_F^S(6z)$ 极点。方向给出“右积分＝左积分＋混合留数＋tails”。在 $w=1-x$ 上应用实际 primitive 函数方程，保留原根数、导子、gamma 商和删除因子，得到前节同一份 $K_u(x)$；本原 $L$ 分母消去。留数 integrand 恰为
+$$
+\begin{aligned}
+&R_S X^{1/2-z}Z^{x+z-1}Y^{-x}
+\Phi(x+z-1)M(z)\widehat W_1(1-x)\zeta_F^S(6z)\\
+&\qquad\cdot W_U(q_u/U)q_u^{-z}\overline{\xi(u)}
+K_u(x)\mathfrak H_u^\circ(x,1-x,z),
+\end{aligned}
+$$
+其中 $R_S=\operatorname{Res}_{v=1}\zeta_F^S(v)$，且对角线上的 $\mathfrak H_u^\circ$ 就是前节的完整 $\widetilde{\mathfrak H}_u$。
+
+### 先完成每行留数，再重合全部分箱
+
+留数已无 $L$ reciprocal。对中央有限行，$K_u$、完整对角修正和删除因子在全部高度上具有固定 polynomial majorant；原两个独立 Mellin 衰减与 Gaussian 因而把有限 $x,z$ segments 完成为完整轴，仍只花 $O_N(Z^BT_1^{-N})$。
+
+随后把每个完整行积分运输到同一个固定 $\alpha\in(1/2,1)$。移动管包含原 $x_r$，即使 $x_r$ 略大于 $1$ 也无新增极点：$\Gamma(x)$ 在正实部无极点，$1/\Gamma(1-x)$ 是整函数，删除因子安全，对角修正在该紧条带正常收敛；原衰减支付水平 joins。运输的是完整行积分，不是零点处的值或截短轮廓。
+
+全部行运输后再重合原固定 exhaustive 分箱，恢复完整物理 annulus 的 $J_U(\alpha,c_0)$。没有对零点自适应子集调用 Gauss 估计。若 $I_U^{\mathrm{abs}}$ 是原绝对起线上的完整非主 annular contribution，而 $L_U^{\mathrm{buf}}$ 是各实际左线 retained integrals 的和，则
+$$
+\boxed{I_U^{\mathrm{abs}}
+=L_U^{\mathrm{buf}}+J_U(\alpha,c_0)
++O_N(Z^BT_1^{-N}).}
+$$
+对上述有限中央 annular 集合 $\mathcal K$ 求和，并直接复用前节已支付的 $z$ 运输、完整 Gauss 行界和全部尺度预算，得到
+$$
+\sum_{U\in\mathcal K}I_U^{\mathrm{abs}}
+=\sum_{U\in\mathcal K}L_U^{\mathrm{buf}}
++E_{\mathrm{mix}}+O_N(Z^BT_1^{-N}),
+\qquad
+|E_{\mathrm{mix}}|\le\sum_{U\in\mathcal K}|J_U|
+\ll_\varepsilon Z^{7/48+\varepsilon}.
+$$
+这里使用原几何 $X=Z^{17/48},Y=Z^{23/48},P=Z^{1/6}$；实际移动 normalizer $c_SA_T(Z)$ 仍保留，其倒数的 subpower 损失计入 $\varepsilon$。原主信号指数 $C(\beta_*)=\beta_*-11/16$ 与混合项的 leading 差为 $\beta_*-5/6$，在 $7/8$ 处为 $1/24$。当前阶段内须把 prescribed losses 放入该正裕度；这个数值比较不扩大原 stage 的范围。
+
+左侧 $L_U^{\mathrm{buf}}$ 仍包含完整原 $L$ 商，尚无所需联合估计，不能用只控制根数的 Gauss 供给替代。主信号、其他 Laurent／轮廓交会项、小／大行范围、完整无限高端比较及原有符号 Robin 余量仍需分别支付；后续完整 $h$ 级数可能的极点贡献也没有由此删除。实际零点实部、双符号、全部高度与重数、完整系数、正 $r_A$ 和严格核心仍是原目标。严格 Robin 与 RH 尚未证明。
