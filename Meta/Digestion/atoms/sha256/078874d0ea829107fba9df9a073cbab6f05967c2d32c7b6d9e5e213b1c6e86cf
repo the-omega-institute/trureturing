@@ -1,0 +1,44 @@
+### 定义4　用于灵敏度分析的连续参数化
+
+固定安装先验 $\mu$，将计数公式数学上延拓到实参数 $A,B$：
+
+```math
+\nu_{A,B}(k)
+=
+\frac{\mu(k)r_k^A(1-r_k)^B}{Z(A,B)}.
+```
+
+这是分析局部变化的辅助模型。真实读取仍然只产生原合同允许的整数计数与实际历史，**不是增加了分数次读取权限**。
+
+定义：
+
+```math
+\Phi(A,B)=(m_1,m_2),
+```
+
+其局部变化矩阵为：
+
+```math
+\mathsf J=
+\frac{\partial(m_1,m_2)}{\partial(A,B)}.
+```
+
+对归一化权重求导，得到：
+
+```math
+\boxed{
+\mathsf J=
+\begin{pmatrix}
+\operatorname{Cov}(r,\log r)
+&
+\operatorname{Cov}(r,\log(1-r))
+\\
+\operatorname{Cov}(r^2,\log r)
+&
+\operatorname{Cov}(r^2,\log(1-r))
+\end{pmatrix}.
+}
+```
+
+这使用指数族中“参数导数等于协方差”的标准机制；以下面积公式是它在当前 FIB 响应率上的具体展开。[加州大学伯克利分校统计学系](https://statistics.berkeley.edu/tech-reports/649)
+

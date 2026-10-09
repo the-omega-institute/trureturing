@@ -1,0 +1,51 @@
+### theorem 6: 局部反演面积是这两类三角形的乘积和
+
+Claim status: open（参考候选，未经本稿的 Lean kernel 核验）。
+
+把每组三个响应率按大小排序，记：
+
+```math
+\Lambda_{ijk}=-L(r_i,r_j,r_k)>0.
+```
+
+则：
+
+```math
+\boxed{
+-\det\mathsf J
+=
+\sum_{i<j<k}
+\nu_i\nu_j\nu_k\,
+\Delta_{ijk}\Lambda_{ijk}.
+}
+```
+
+#### 证明
+
+考虑交叉关系矩阵：
+
+```math
+M=
+\mathbb E_\nu
+\left[
+\begin{pmatrix}1\\r\\r^2\end{pmatrix}
+\begin{pmatrix}1&\log r&\log(1-r)\end{pmatrix}
+\right].
+```
+
+作均值消元：
+
+```math
+\det M=\det\mathsf J.
+```
+
+再按 Cauchy–Binet 展开，每一组三个来源贡献：
+
+```math
+\nu_i\nu_j\nu_k
+\det(1,r,r^2)_{ijk}
+\det(1,\log r,\log(1-r))_{ijk}.
+```
+
+第一项按递增率排序为正，第二项为负，得到结论。证毕。
+
