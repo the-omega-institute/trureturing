@@ -132,6 +132,34 @@ theorem cache_run (raw : Policy) (U : Source) :
         · rw [cost']
           simp [paid,List.map_append,Finset.union_assoc,Finset.union_left_comm]
 
+/-- Quotient representatives fix actual acquisition traces and their prefixes. -/
+theorem acquisition_prefix_representative (U : Source) (h : RH)
+    (hp : h.IsPrefix (acquisitionTrace [] U)) :
+    encodeHistory (kappa_hist h) = h := by
+  let norm : RH → RH := fun h => encodeHistory (kappa_hist h)
+  let repr : Reply → Reply := fun y => match kappa y with
+    | some true => .alpha
+    | some false => .beta
+    | none => .branch
+  have norm_map (h : RH) : norm h = h.map (fun a => ⟨a.1,repr a.2⟩) := by
+    simp only [norm, encodeHistory, kappa_hist, List.map_map, Function.comp_def, repr]
+  have norm_trace (u : Address) (T : Source) : norm (acquisitionTrace u T) =
+      acquisitionTrace u T := by
+    induction T generalizing u with
+    | of b => cases b <;> rfl
+    | mul a b ha hb =>
+      simp only [acquisitionTrace, norm_map, List.map_cons, List.map_append]
+      rw [← norm_map, ← norm_map, ha, hb]
+      rfl
+  have fixed := norm_trace [] U
+  rw [norm_map] at fixed
+  change norm h = h
+  rw [norm_map]
+  calc
+    _ = h.map id := List.map_congr_left (fun a ha =>
+      List.map_eq_map_iff.mp (fixed.trans (List.map_id _).symm) a (hp.subset ha))
+    _ = h := List.map_id h
+
 /-- Every finite coarse route admits the same all-source completion. Cache reports
 come only from actual requests, and none becomes a branch only on an existing node. -/
 theorem completion_contract (m : Nat) (F : Fin m → Source)
@@ -186,22 +214,8 @@ theorem completion_contract (m : Nat) (F : Fin m → Source)
   have repr_coarse (y : Reply) : κ (repr y) = κ y := by cases y <;> rfl
   have label (q : Address) (U : Source) : κ (readout q U) = leafLabel U q := by
     rfl
-  have norm_trace (u : Address) (T : Source) : norm (acquisitionTrace u T) =
-      acquisitionTrace u T := by
-    induction T generalizing u with
-    | of b => cases b <;> rfl
-    | mul a b ha hb =>
-      simp only [acquisitionTrace, norm_map, List.map_cons, List.map_append]
-      rw [← norm_map, ← norm_map, ha, hb]
-      rfl
   have norm_prefix (U : Source) (h : RH) (hp : h.IsPrefix (acquisitionTrace [] U)) :
-      norm h = h := by
-    have fixed := norm_trace [] U
-    rw [norm_map] at fixed ⊢
-    calc
-      _ = h.map id := List.map_congr_left (fun a ha =>
-        List.map_eq_map_iff.mp (fixed.trans (List.map_id _).symm) a (hp.subset ha))
-      _ = h := List.map_id h
+      norm h = h := acquisition_prefix_representative U h hp
   have leaf_reply (V : Source) (q : Address) (hq : q ∈ leaves V) :
       readout q V = .alpha ∨ readout q V = .beta := by
     have existsLabel := ((seven_leaf_separation.1 V).2 q).mp
