@@ -82,7 +82,7 @@ $$\operatorname{sigmaSubspaces}\left(5\right) = \operatorname{isoSubspaces}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/CliffordThirdMomentSigmaRefutation.sigmaSubspaces_five` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* H. Zhu, C. Mao, C. Yi (2024). *Third moments of qudit Clifford orbits and 3-designs based on magic orbits*. DOI: [10.48550/arXiv.2410.13575](https://doi.org/10.48550/arXiv.2410.13575). URL: <https://arxiv.org/abs/2410.13575v1>.
 
 *Commentary.*
 
