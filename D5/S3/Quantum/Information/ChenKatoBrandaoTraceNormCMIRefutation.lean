@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.claim; result=D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.result; claim=D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.claim
-   digest: A strictly contracting qubit measurement preserves trace-norm conditional information. -/
+   digest: Local trace-norm contraction and conditional information for finite Kraus channels. -/
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
