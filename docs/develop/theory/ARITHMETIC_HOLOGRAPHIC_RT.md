@@ -3120,6 +3120,6 @@ $$
 
 For three or more sectors, the analogous statement requires an explicit hypothesis that the joint map is surjective onto the full product (or an equivalent annihilator condition for every nonempty multi-coordinate support). Pair-supported character cancellation alone is insufficient: for example $H=\{(x,y,z)\in(\mathbb Z/2)^3:x+y+z=0\}$ has order $4<8$.
 
-**范围。** This is a finite-character implementation theorem for the arbitrary-source coherent channel of §39. It does not claim a lower bound on the number of branches of arbitrary product channels, nor does it alter the exact diamond optimum. No CFT, gravitational, communication-assisted, or shared-entanglement interpretation is added.
+**范围。** 这是 §39 任意源谱相干信道的有限特征实现定理。它不对任意乘积信道的分支数给出下界，也不改变精确钻石范数最优值；不增加 CFT、引力、通信辅助或共享纠缠的解释。
 
 ## 追加锚（本行以下为增补区）
