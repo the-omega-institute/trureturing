@@ -22,6 +22,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/NegativeIndexFibonacciFactorization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mane-2026-negative-index-fibonacci-factorization` (proved) by `D5/S3/Zeros/NegativeIndexFibonacciFactorization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mane-2026-negative-index-fibonacci-factorization","declaration_gid":"D5/S3/Zeros/NegativeIndexFibonacciFactorization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* S. R. Mane (2026). *Identically vanishing k-generalized Fibonacci polynomials*. URL: <https://arxiv.org/abs/2507.11596v4>.

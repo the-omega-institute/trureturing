@@ -49,7 +49,10 @@ internal sealed class NegativeIndexFibonacciFactorizationDocument : IScribeDocum
                     + "only r=s−1 contributes to degree (s−1)k+1. Subtracting X^k times "
                     + "the second coefficient from the first gives the displayed "
                     + "factorization for every permitted k and s."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mane-2026-negative-index-fibonacci-factorization"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
