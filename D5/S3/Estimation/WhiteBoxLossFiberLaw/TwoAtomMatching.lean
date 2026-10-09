@@ -54,20 +54,17 @@ theorem code_energy_excess_eq
         lam * ∑ i, c i * (1 - inner ℝ e (D.1 i)) := by
   unfold codeEnergy atomCombination
   rw [norm_sub_sq_real, norm_sub_sq_real]
-  have hn_norm : ‖n‖ ^ 2 = n ^ 2 := by
-    rw [Real.norm_eq_abs, sq_abs]
-  simp [norm_smul, he, hn_norm, real_inner_smul_left, real_inner_smul_right,
-    inner_add_right, inner_smul_right, inner_sum, sum_inner, Finset.mul_sum,
-    Finset.sum_mul, Fin.sum_univ_two]
+  simp [norm_smul, he, real_inner_smul_left, inner_add_right, inner_smul_right,
+    sum_inner, Fin.sum_univ_two]
   ring
 
-/- Every feasible code pays at least the radial amount when the signal is longer
-than the regularization parameter. This is the pointwise inequality from which
-the value-function lower bound is obtained by taking an infimum. -/
+/- Every feasible code pays at least the radial amount for a unit signal direction.
+This is the pointwise inequality from which the value-function lower bound is
+obtained by taking an infimum. -/
 theorem feasible_code_energy_lower_bound
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     (lam n : ℝ) (e : E) (D : UnitDictionary E) (c : AtomIndex → ℝ)
-    (he : ‖e‖ = 1) (hlam : 0 ≤ lam) (hn : lam ≤ n) (hc : FeasibleCode c) :
+    (he : ‖e‖ = 1) (hlam : 0 ≤ lam) (hc : FeasibleCode c) :
     lam * n - lam ^ 2 / 2 ≤ codeEnergy lam (n • e) D c := by
   have hres : 0 ≤ ‖(n - lam) • e - atomCombination D c‖ ^ 2 / 2 := by positivity
   have hcorr : 0 ≤ lam * ∑ i, c i * (1 - inner ℝ e (D.1 i)) := by
@@ -88,7 +85,7 @@ the nonempty side condition; no attainment or uniqueness is asserted here. -/
 theorem code_cost_radial_lower_bound
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     (lam n : ℝ) (e : E) (D : UnitDictionary E)
-    (he : ‖e‖ = 1) (hlam : 0 ≤ lam) (hn : lam ≤ n) :
+    (he : ‖e‖ = 1) (hlam : 0 ≤ lam) :
     lam * n - lam ^ 2 / 2 ≤ codeCost lam (n • e) D := by
   unfold codeCost
   apply le_csInf
@@ -96,7 +93,7 @@ theorem code_cost_radial_lower_bound
       let z0 : AtomIndex → ℝ := fun _ => 0
       ⟨codeEnergy lam (n • e) D z0, ⟨z0, (fun _ => le_rfl), rfl⟩⟩)
   rintro z ⟨c, hc, rfl⟩
-  exact feasible_code_energy_lower_bound lam n e D c he hlam hn hc
+  exact feasible_code_energy_lower_bound lam n e D c he hlam hc
 
 /- Once the two target directions are separated, witnesses for both directions
 must occupy different slots. This is the finite matching step used after the
