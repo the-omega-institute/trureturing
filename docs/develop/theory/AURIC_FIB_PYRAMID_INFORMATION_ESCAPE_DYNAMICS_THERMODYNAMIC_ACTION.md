@@ -117,7 +117,7 @@ K_0\supseteq K_1\supseteq\cdots\supseteq K_m,
 
 ## 3. κ 纤维上的质量作用动力学
 
-把五个状态标签看作复合状态，定义一条可逆通道
+在本节中，p_i 是归一化概率，p_0p_{25} 与 p_2p_5 是确定性 mean-field 质量作用项。因此这里得到的是确定性 detailed-balanced mass-action ODE，不是有限状态 Markov 链；有限粒子主方程需要另行处理跃迁计数和随机熵产。把五个状态标签看作复合状态，定义一条可逆通道
 
 \[
 2+5\rightleftharpoons 0+25.
@@ -323,6 +323,48 @@ S\longrightarrow S\cup\{q\},
 \]
 
 这是一条严格的离散支撑逃逸边。PrimeCashflow 还提供了 \(\sum_p|u(p)|\ln p\) 型长度/成本。它和 κ 纤维耗散是两种不同的坐标，前者改变算术支撑，后者保持宏观均值而消除隐藏关联。
+
+### 6.3 有限整数载体产生真正的 prime seam
+
+连续概率流可以精确到达 (kappa_*=XY/r)，但有限计数载体通常只能取整数格点。把底面条件分布单独归一化：底面总量为整数 (R>0)，边际计数为 (A,B)，四格计数为
+
+[
+(n_{00},n_{10},n_{01},n_{11})
+=(R-A-B+k, A-k, B-k, k),
+]
+
+其中 (k) 是整数。连续独立目标是
+
+[
+k_*=rac{AB}{R}.
+]
+
+若 (R) 不整除 (AB)，则任何整数表都无法满足 (Delta_R=Rk-AB=0)。令
+
+[
+d=operatorname{dist}(AB,Rmathbb Z)>0.
+]
+
+取合法整数格点中最接近 (k_*) 的 (k_Z)，则条件底面分布 (q_k=n/R) 至少保留
+
+[
+operatorname{TV}(q_{k_Z},q_*)=rac{2d}{R^2},
+qquad
+D_{ln}(q_{k_Z}Vert q_*)gerac{8d^2}{R^4}
+]
+
+的残差，第二个不等式使用自然对数版本的 Pinsker 下界。若五态总样本量为 (N)，且 (R=Nr)，则完整五态 law 的这部分 KL 乘以 (r=R/N)，完整 law 的 TV 乘以 (r)。因此这里的归一化必须先声明，不能把条件底面和五态 law 的距离混用。
+
+写 (R=prod_p p^{e_p}) 时，独立目标的最简分母是
+
+[
+rac{R}{gcd(R,AB)}.
+]
+
+如果 (p) 是 Fibonacci 的 primitive divisor，满足 (pmid R)、(p
+mid AB)，那么这个 prime seam 在该层首次出现。取 (R=F_n) 时，若 (z(p)=n)，则 (p) 在第 (n) 层进入目标分母。这给出素数几何的严格版本：连续 κ 流趋向零关联，有限整数载体却在 primitive rank 处出现不可消除的自由能地板。
+
+这里仍需保留两个边界。第一，primitive p 只证明该层的独立目标不可达，不保证最近格点距离或自由能地板随层单调增加。第二，若边际 (A,B) 随层变化，p-adic 余量也会变化，必须把它们写进层间 map 后才能讨论全局单调性。
 
 ### 6.2 Fibonacci 的素数周期是 projective seam
 
