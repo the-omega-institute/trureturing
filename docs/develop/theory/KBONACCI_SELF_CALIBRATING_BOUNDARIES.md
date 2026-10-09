@@ -1419,3 +1419,192 @@ $$
 **来源与结论范围 21.2。** 第 16–17 章复用固定来源的普通数学内容；原读者语义、联合实际历史、首零损失、共同切口及旧扫描复用本卷第 15 章和上述目标费用卷。两窗口分离、离线联合界及其付费消费见第 18–19 章。自校准表没有把条件恢复升级为 INITIAL 认证，也没有把一个费用上界升级为原目标的精确解。
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Dyadic-width exact INITIAL phase fees
+
+Retain the matched original reader (15.1)–(15.4), the full jointly attainable INITIAL records of Lemma 15.1, and every observation, action, stopping and fee condition of Definition 18.1. Fix integers
+
+$$
+r\ge4,\qquad m=2^r,\qquad k=2m-2,\qquad T=2m-1.
+\tag{22.1}
+$$
+
+Here $\gcd(m,T)=1$, so $P=\mathbb Z/T\mathbb Z$ and every phase, both values and every tail $0\le s<k$ occur jointly in actual complete-block histories. The history length is unknown. Since $m<k$, both original action alphabets equal $\{0,1\}^m$; crossing a seam can still cause absorbing rejection. Initial value or bottom is free, subsequent observations are only complete-block endpoints, and every emitted block is paid, including its bits after any rejection. There is no external clock, reset, copy, interior observation or observation of an unexecuted branch. The controller may retain its own emitted inputs and observed endpoints. GLOBAL means one preset literal stream at each emitted block number across all live archives and both free-value fibres; archive-dependent stopping is allowed.
+
+**定理 22.1（Exact complete INITIAL phase price）。** On this entire original source, let
+
+$$
+f_{\rm phase}(v,\theta,s)=\theta,\qquad
+f_{\rm phase}(\bot)=y_\bot,
+\tag{22.2}
+$$
+
+where $y_\bot$ is any fixed label, possibly equal to a phase label. For each original alphabet,
+
+$$
+C_{\rm ad}(f_{\rm phase})=C_{\rm pre}(f_{\rm phase})=2r.
+\tag{22.3}
+$$
+
+The upper witness is the single literal stream below, safe for every legal inherited tail. The lower bound applies to every original adaptive literal action, including later nonzero-leading words, rejection and early stopping.
+
+Proof. All sums of bits below are in $\mathbb F_2$. For $0\le h<r$, write
+
+$$
+\beta_h(n)=\left\lfloor n/2^h\right\rfloor\bmod2,
+\qquad
+b_{h,0}=0,\qquad
+b_{h,i}=\bigoplus_{\ell=1}^{i}\beta_h(h+\ell)
+\quad(1\le i<m).
+\tag{22.4}
+$$
+
+Each $\beta_h$ is periodic with a period dividing $m$. In $m$ successive integers it has $m/2$ ones, an even number. The integers $h+1,\ldots,h+m-1$ omit just the residue $h$ from one full period of length $m$. Since $h<2^h$, $\beta_h(h)=0$, including $h=0$. Consequently $b_{h,m-1}=0$. Define the complete literal block
+
+$$
+D_h=b_{h,0}b_{h,1}\cdots b_{h,m-1},
+\qquad
+\mathcal D=D_0\mid D_0\mid D_1\mid D_1\mid\cdots
+\mid D_{r-1}\mid D_{r-1}.
+\tag{22.5}
+$$
+
+Every $D_h$ starts and ends with zero. Its interior has only $m-2<k$ positions, so it is legal from every inherited legal tail; all subsequent seams are legal. The first zero clears the tail during an actual paid block, without changing the INITIAL target. No separate clearing block is inserted.
+
+Represent $j=-\theta_{\rm INITIAL}\pmod T$ by $0\le j<T$. Let $y_t$ be the value after $t$ blocks of (22.5), with $y_0$ the free initial value, and put $d_t=y_{t+1}\oplus y_t$. The source cycle has its two ones at residues $0,-1$. Thus, in a block starting at displacement $tm$, the two potentially charged local offsets are $j-tm-1,j-tm\pmod T$. For $D_h$ the charge at local phase representative $\ell$ is
+
+$$
+\begin{cases}
+b_{h,\ell-1}\oplus b_{h,\ell}=\beta_h(h+\ell),
+&1\le\ell\le m-1,\\
+0,&\ell\in\{0,m,m+1,\ldots,T-1\}.
+\end{cases}
+\tag{22.6}
+$$
+
+In particular the endpoint offsets $0,m$ have zero charge because the block's first and last bits are zero. This is an identity for the actually emitted word, not an extra sensor.
+
+Since $2m\equiv1\pmod T$, the start displacements of the two $D_h$ blocks are $h$ and $h+m$. Their charge windows in INITIAL $j$ coordinates are respectively
+
+$$
+E_h=\{h+1,\ldots,m+h-1\},\qquad
+O_h=\{m+h+1,\ldots,T-1\}\cup\{0,\ldots,h\}.
+\tag{22.7}
+$$
+
+There is no wrap in $E_h$ because $h\le r-1<m-1$. Define the two integer code coordinates
+
+$$
+x(j)=\begin{cases}j,&1\le j\le m-1,\\0,&\text{otherwise},\end{cases}
+\qquad
+z(j)=\begin{cases}
+j-m,&m+1\le j\le T-1,\\
+m-1,&j=0,\\
+0,&1\le j\le m.
+\end{cases}
+\tag{22.8}
+$$
+
+We claim that the actual increment archive is
+
+$$
+d_{2h}=\beta_h(x(j)),\qquad
+d_{2h+1}=\beta_h(z(j))\quad(0\le h<r).
+\tag{22.9}
+$$
+
+For the even block, (22.6) gives $\beta_h(j)$ on $E_h$. Compared with $\{1,\ldots,m-1\}$, that window omits $1,\ldots,h$, whose $h$th bits are zero, and gains $m,\ldots,m+h-1$, whose bits are those of $0,\ldots,h-1$ and are also zero. This proves the even identity, including $j=m$ and $j=0$.
+
+For the odd block, a phase $j=m+q$ with $1\le q\le m-2$ belongs to $O_h$ exactly when $q>h$, and then (22.6) gives $\beta_h(q)$. Omitted $q\le h$ again have zero bit. At $j=0$ the local representative is $m-1-h$, so the charge is $\beta_h(m-1)$. The gained phases $1\le j\le h$ have local representative $m-1+j-h$, hence charge $\beta_h(m-1+j)=\beta_h(j-1)=0$. All other phases outside the original odd window have zero charge. This proves the odd identity.
+
+The even and odd subarchives therefore recover the ordinary binary integers $x(j)$ and $z(j)$. For $1\le j<m$ the pair is $(j,0)$; for $m<j<T$ it is $(0,j-m)$; for $j=0$ it is $(0,m-1)$; and for $j=m$ it is $(0,0)$. These $T$ pairs are distinct. Decode $j$ and return $-j\pmod T$, the INITIAL phase. The increments use only adjacent actual endpoints, so both choices of $y_0$ give the same code. All legal tails use the identical stream; initial bottom stops free. Executing its $2r$ complete blocks proves $C_{\rm pre}\le2r$, and a preset protocol is an adaptive protocol.
+
+For the lower bound, suppose an arbitrary successful adaptive protocol has worst fee at most $2r-1$. Fix either free value $v$ and restrict its actual INITIAL sources to
+
+$$
+\mathcal J=\{m+r,m+r+1,\ldots,T-1\},\qquad
+(v,-j,0)\quad(j\in\mathcal J).
+\tag{22.10}
+$$
+
+Lemma 15.1 supplies each such joint record by one actual legal history. At any common reached archive these sources have traversed the same literal words. Their current tails are identical, because tail updates and legality depend only on the tail and input bits, not on phase or value. Hence any next word either rejects every candidate in this archive or rejects none. Uniform rejection produces one absorbing output; later actions cannot split it. A correct stopping leaf cannot contain two different $j$ labels.
+
+For an arbitrary block $B=(B_0,\ldots,B_{m-1})$ at block number $t$, a successful charge can depend on $j$ only in the full literal window
+
+$$
+W_t=tm+\{0,1,\ldots,m\}\pmod T,
+\tag{22.11}
+$$
+
+since a charged bit requires $j\equiv tm+i$ or $tm+i+1$ for some $0\le i<m$. This includes both endpoint positions and does not require $B_0=0$. For $t=2h\le2r-2$ the window is $\{h,\ldots,h+m\}$, and all these even windows lie in $\{0,\ldots,m+r-1\}$, disjoint from $\mathcal J$. Thus at every even block number all candidates of a reached archive have zero increment if successful, or one common bottom if rejected: there is at most one child. At an odd block number there are at most two successful value children, or a single uniform rejection child. There is never a third rejection branch on this common-tail subset.
+
+A decision tree of depth at most $2r-1$ with unary even levels and at most binary odd levels has at most $2^{r-1}$ leaves. This follows by induction on the remaining levels; an early stopping leaf contributes one instead of increasing the bound. There are only $r-1$ odd action numbers below that depth. Yet
+
+$$
+|\mathcal J|=m-r-1=2^r-r-1>2^{r-1}\quad(r\ge4).
+\tag{22.12}
+$$
+
+Indeed $2^{r-1}>r+1$ holds at $r=4$ and remains strict when $r$ increases. Every $j$ needs a distinct phase leaf, a contradiction. This lower argument permitted every adaptive literal word at every level, paid rejection in full, and allowed early stops; it made no normalization to safe actions. Therefore $C_{\rm ad}\ge2r$, proving (22.3). $\square$
+
+**推论 22.2（Paid qualified-common-cut consumer）。** Under (22.1) and the entire original contract, let $f:Q\to Y$ have one common qualified integer cut $0\le a=qm+\rho<k$, $q\ge0$, $0\le\rho<m$, satisfying every condition (19.2)–(19.4) for both values and all archives. Then
+
+$$
+C_{\rm ad}(f)\le C_{\rm pre}(f)\le q+1+2r\le2r+2.
+\tag{22.13}
+$$
+
+For a history target $F$, the additional condition $F(w)=f(q_{\rm INITIAL}(w))$ is required. The cut is chosen before the value and archive quantifiers; $f(\bot)$ is one fixed free-stop label. This is an upper bound, without asserting optimality or equality of the two prices.
+
+Proof. This consumes the common-cut construction of the [INITIAL target-cost volume, Theorem 24.2 and Corollary 24.3](KBONACCI_INITIAL_TARGET_COST_THEORY.md), as restated in Definition 19.1 and Theorem 19.2. Issue the one literal prefix
+
+$$
+(1^m)^q\mid1^\rho0^{m-\rho},
+\tag{22.14}
+$$
+
+and then the one stream (22.5), with its newly observed endpoint value as baseline. For each fixed $v$, (19.2) makes every earlier all-one rejection band constant on its actual $S_t(\alpha)$ archive; (19.3) makes the parent rejection band constant on $S_q(\alpha)$; and (19.4) makes the surviving INITIAL tails constant separately at each phase. Thus rejected archives return their unique original labels, and surviving archives lose no target distinction when their tails become zero. These conditions include empty bands and all phase fibres, not just the reached representatives. They hold for the same $a$ across both values.
+
+The suffix recovers its own start phase by Theorem 22.1. Subtract the known displacement $(q+1)m$ to recover INITIAL phase, then use the stored free INITIAL value and (19.4) to return $f$'s surviving label. All live archives follow the same prefix and suffix. The prefix's internal runs are shorter than $k$ and its survivor ends in zero; the suffix is safe. Every emitted prefix, padding and suffix block, including any rejection block, is paid. The total is at most $q+1+2r$, and $a<k=2m-2$ gives $q\le1$. Initial bottom and already constant archives may stop earlier. This proves the bound with every inherited source, observation and stopping condition retained. $\square$
+
+**例 22.3（Eight paid blocks at $(m,k)=(16,30)$）。** Here $r=4$, $T=31$. Formula (22.4), with bits printed in read order $i=0,\ldots,15$, gives the following one literal stream. In the increment column, $x=x(j)$ and $z=z(j)$ are (22.8); every row costs one complete block.
+
+| Block number $t$ | Literal word | Start displacement mod $31$ | Actual increment $d_t$ |
+| --- | --- | --- | --- |
+| $0$ | `0110011001100110` | $0$ | $\beta_0(x)$ |
+| $1$ | `0110011001100110` | $16$ | $\beta_0(z)$ |
+| $2$ | `0100010001000100` | $1$ | $\beta_1(x)$ |
+| $3$ | `0100010001000100` | $17$ | $\beta_1(z)$ |
+| $4$ | `0010100000101000` | $2$ | $\beta_2(x)$ |
+| $5$ | `0010100000101000` | $18$ | $\beta_2(z)$ |
+| $6$ | `0000010101010000` | $3$ | $\beta_3(x)$ |
+| $7$ | `0000010101010000` | $19$ | $\beta_3(z)$ |
+
+For direct reproduction, adjacent bits of each displayed word have XOR $\beta_h(h+\ell)$ at $1\le\ell\le15$, with zero bits at offsets $0,15$. Hence the entire 31-phase certificate is
+
+$$
+(x,z)=
+\begin{cases}
+(j,0),&1\le j\le15,\\
+(0,0),&j=16,\\
+(0,j-16),&17\le j\le30,\\
+(0,15),&j=0.
+\end{cases}
+\tag{22.15}
+$$
+
+Recover $x=d_0+2d_2+4d_4+8d_6$ and $z=d_1+2d_3+4d_5+8d_7$ as integers. If $x>0$, $j=x$; if $x=z=0$, $j=16$; if $1\le z\le14$, $j=16+z$; if $z=15$, $j=0$. These alternatives certify every phase, both initial values and all legal inherited tails, with the same eight words. For instance $(v,\theta,s)=(1,26,29)$ is realized by the legal history $w=10^{306}1^{29}$ of 21 complete blocks: its terminal run charges exactly indices $309,310$, giving value one and phase $336\bmod31=26$. Its history length is not supplied to the decoder. It has $j=5$ and
+
+$$
+(d_0,\ldots,d_7)=(1,0,0,0,1,0,0,0),\qquad
+(y_0,\ldots,y_8)=(1,0,0,0,0,1,1,1,1).
+\tag{22.16}
+$$
+
+The decoder returns $x=5,z=0$, hence INITIAL phase $26$; the first paid zero safely clears even tail $29$. Eight blocks are 128 actually emitted bits. Conversely, at depth seven the eleven actual phases $j=20,\ldots,30$ in (22.10) have only three potentially branching odd actions, permitting at most eight leaves. Thus eight is the exact worst fee, rather than just a certificate length.
+
+Source and scope. The matched coefficient cycle is credited to the [minimal modular observer, Section 13 and Theorem 14.1](KBONACCI_MINIMAL_MODULAR_OBSERVER.md); the common-word joint sources and original updates are Lemma 15.1 and (15.1)–(15.4). The [irreversible target-acquisition volume, Definitions 1.2 and 2.1, Convention 1.3 and Lemmas 4.2–4.3](KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md) supplies the original INITIAL/endpoint/absorption and first-zero interfaces. The cut conditions and prefix consumer retain the credited target-cost Theorem 24.2 and Corollary 24.3. The explicit bit-prefix stream and the full-window all-action lower argument above are repo-derived ordinary proofs; these sources and proofs are not fresh Lean/kernel, axiom, coverage or freeze certification and carry no exhaustive novelty or priority claim.
+
+The exact phase family (22.1) sharpens the phase interval (19.8) on its stated domain. The original goal remains active: exact separate adaptive and one-GLOBAL-stream prices for all other $k\ge2,m\ge1$ and every arbitrary attainable immutable INITIAL target, including targets outside this phase family. Corollary 22.2 supplies only a qualified-cut upper bound. Other phase parameters, arbitrary targets even within (22.1), and general sibling-stream compatibility retain their unresolved exact-price obligations except where an existing restricted result already supplies them. No adaptive-to-GLOBAL flattening, hidden chronology interface, cost transport, optimal memory or offline-computation bound follows here.
+
+## 追加锚（本行以下为增补区）
