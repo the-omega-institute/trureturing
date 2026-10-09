@@ -24,6 +24,10 @@ $$\operatorname{QuantumMaxFlowMinCut.claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowMinCut.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gesmundo-lysikov-steffan-2022-bridge-graph-max-flow` (proved) by `D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowMinCut.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gesmundo-lysikov-steffan-2022-bridge-graph-max-flow","declaration_gid":"D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowMinCut.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Fulvio Gesmundo; Vladimir Lysikov; Vincent Steffan (2025). *Quantum max-flow in the bridge graph*. DOI: [10.1007/s00031-024-09863-2](https://doi.org/10.1007/s00031-024-09863-2). URL: <https://arxiv.org/abs/2212.09794v2>.

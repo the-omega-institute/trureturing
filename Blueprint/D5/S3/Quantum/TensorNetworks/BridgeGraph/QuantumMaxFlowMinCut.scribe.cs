@@ -26,7 +26,7 @@ internal sealed class QuantumMaxFlowMinCutDocument : IScribeDocumentDefinition
                 H("result"), StatementSource.FromAuthor(Disp(Statement1())),
                 AssessedProvenance.FromRepo(Paper),
                 Blocks(Paragraph(Text("The unconditional width-three settlement combines a rational cyclic shift construction, short and long reservoir Schur complements, scalar extension to complex matrices, and castling deficit preservation followed by strong induction on b+d. Proposition 3.18 of the source derives Conjecture 1.4 at every w≥3 from this case; that general-width implication is a literature reading, not a theorem formalized here."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("gesmundo-lysikov-steffan-2022-bridge-graph-max-flow"), ResolutionKind.Proved)))));
 
     private static Formula Statement0() =>
         Seq(Qualified(F.Id("QuantumMaxFlowMinCut"), Dot, F.Id("claim")), Sp, Iff, Sp, Parenthesized(Seq(Forall, Sp,
