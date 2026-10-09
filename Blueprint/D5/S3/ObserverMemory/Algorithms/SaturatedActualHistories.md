@@ -1,0 +1,31 @@
+# Saturated histories of the original stationary controller
+
+## Abstract
+
+A saturated worst-case read bound forces complete physical history trees and distinct reading slots.
+
+Use the original Controller and Correct model on ZMod(pP), with p at least two, P positive, and an initial read. The action table has fixed read successors, fixed wait successors and fixed terminal outputs. The physical source stays in the joint run. readEvents(x) is the finite set of actual read times before the correct halt. firstFiber(b) is the set of original inputs whose initial physical digit is b, and has P elements.
+
+A SaturatedHistory certificate records a complete binary expansion, its remaining height, its current slot, its original-input support, and its physical read-time function. Every parent-to-child transition is realized on that same original input with only actual waits between the two reads. The zero time function supplies the first read. Thus the certificate describes the existing run and adds no control register or clock.
+
+Write Entry for the dependent sum of remaining height, reading slot, finite original-input support, time function and SaturatedHistory certificate. entrySlot, entrySupport and entryTime denote its projections. historyEntries lists all nodes of one complete actual tree, including the first read and terminal reads. allHistories concatenates these trees over all first digits, in depth-first order. Its slot list is obtained by mapping entrySlot; get indexes this list.
+
+readingPositions lists the pairs of child answer slots at every internal history. Each pair is one subsequent reading occurrence. Its two controls are equal and its digits are distinct. allReadingPositions concatenates these lists over first digits, excluding the initial reads. occurrenceCount counts, with multiplicity, the positions assigned to the specified control. TerminatesIn counts subsequent reads in the global actual-slot relation and retains the fixed terminal label.
+
+**Theorem 1.1 (Complete histories, slot injection and row packing).**
+
+$$\forall p:\mathbb {N},{\forall P:\mathbb {N},{\forall Q:Type,{\forall hp:{2}\le {p},{\forall hP:0<P,{\forall C:\operatorname {Controller}(p,P,Q),{\forall I:\operatorname {Correct}(C,hp,hP),{[\operatorname {Finite}(Q)]{\forall D:\mathbb {N},{{{P}={2^{D}}}\implies {{\forall x:\operatorname {ZMod}(p\times P),{{\operatorname {card}(\operatorname {readEvents}(hp,hP,C,I,x))}\le {{D}+{1}}}}\implies {\exists root:\{q:Q\mid \exists b:\operatorname {Fin}(p),{\operatorname {Used}(C,I,q,b)}\},{{{\operatorname {val}(root)}={\operatorname {initial}(C)}}\land{\exists H:\forall b:\operatorname {Fin}(p),{\operatorname {SaturatedHistory}(hp,hP,C,I,D,(root,b),\operatorname {firstFiber}(hp,hP,b),(x\mapsto 0))},{{\forall x:\operatorname {ZMod}(p\times P),{{\operatorname {card}(\operatorname {readEvents}(hp,hP,C,I,x))}={{D}+{1}}}}\land{\forall b:\operatorname {Fin}(p),{\forall k:\mathbb {N},{\forall x:\operatorname {ZMod}(p\times P),{{\operatorname {TerminatesIn}(hp,hP,C,I,k,(root,b),x)}\iff{{{k}={D}}\land{{\operatorname {digit}(hp,hP,x)}={b}}}}}}}\land{\forall i:\operatorname {Fin}(\operatorname {length}(\operatorname {map}(\operatorname {entrySlot},\operatorname {allHistories}(hp,hP,C,I,H)))),{\forall j:\operatorname {Fin}(\operatorname {length}(\operatorname {map}(\operatorname {entrySlot},\operatorname {allHistories}(hp,hP,C,I,H)))),{{{\operatorname {get}(\operatorname {map}(\operatorname {entrySlot},\operatorname {allHistories}(hp,hP,C,I,H)),i)}={\operatorname {get}(\operatorname {map}(\operatorname {entrySlot},\operatorname {allHistories}(hp,hP,C,I,H)),j)}}\implies {{i}={j}}}}}\land{\forall x:\operatorname {ZMod}(p\times P),{\forall t:\mathbb {N},{{t\in \operatorname {readEvents}(hp,hP,C,I,x)}\iff{\exists e:\operatorname {Entry}(hp,hP,C,I),{{e\in \operatorname {allHistories}(hp,hP,C,I,H)}\land{x\in \operatorname {entrySupport}(e)}\land{{\operatorname {entryTime}(e,x)}={t}}}}}}}\land{\forall z:{\{q:Q\mid \exists b:\operatorname {Fin}(p),{\operatorname {Used}(C,I,q,b)}\}\times \operatorname {Fin}(p)}\times {\{q:Q\mid \exists b:\operatorname {Fin}(p),{\operatorname {Used}(C,I,q,b)}\}\times \operatorname {Fin}(p)},{{z\in \operatorname {allReadingPositions}(hp,hP,C,I,H)}\implies {{{\operatorname {fst}(\operatorname {fst}(z))}={\operatorname {fst}(\operatorname {snd}(z))}}\land{{\operatorname {fst}(z)}\neq {\operatorname {snd}(z)}}}}}\land{\forall q:Q,{{\operatorname {occurrenceCount}(hp,hP,C,I,H,q)}\le {\operatorname {div}(p,2)}}}\land{{{P}={1}}\implies {{\operatorname {allReadingPositions}(hp,hP,C,I,H)}={[]}}}}}}}}}}}}}}}}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/SaturatedActualHistories.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite set of later read times has a least next event whenever the current slot does not halt. Its removal decreases the remaining read count by one. The actual adjacent-slot contract partitions the original support into at most two children. This constructs an actual tree within the read budget, allowing empty branches and early terminal leaves. Erasing physical annotations gives a binary adaptive protocol, so the general leaf bound controls support size. Equality at two to the remaining depth excludes empty children and early leaves, producing the complete actual histories. The global slot expansion then fixes each node's remaining height and original support. Ancestors have greater remaining height, sibling subtrees have disjoint supports, and different first digits have disjoint supports. Consequently their slots are distinct across the whole forest. Every physical read event belongs to one of these histories. Each subsequent occurrence occupies two distinct slots of one control; the whole forest has no repeated slot, giving at most floor(p/2) occurrences per control. At P=1 the complete trees have height zero and no such subsequent positions.
+
+## References
+
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/SaturatedActualHistories.result`
+- Dependency: [D5/S3/Observer/Budget/WorstCaseDepthInformationLowerBound](../../Observer/Budget/WorstCaseDepthInformationLowerBound.md)
+- Dependency: [D5/S3/ObserverMemory/Algorithms/ActualControlSlots](ActualControlSlots.md)
