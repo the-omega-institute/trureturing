@@ -1,0 +1,9 @@
+For a binary word w define
+
+```text
+r(w) = number of long/true letters
+z(w) = number of short/false letters
+P(w) = number of scattered long-before-short pairs
+m(w) = 2 P(w) - r(w) z(w).
+```
+
