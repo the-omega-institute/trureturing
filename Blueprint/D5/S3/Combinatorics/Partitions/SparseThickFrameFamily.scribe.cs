@@ -149,7 +149,7 @@ internal sealed class SparseThickFrameFamilyDocument : IScribeDocumentDefinition
             Def("original-integer-index", "OriginalIndex", "Indices in the original integer parameters",
                 "OriginalIndex(u,v,K) is FrameIndex at normalizedArea and at the two minimum natural dimensions. Under the integer guards these dimensions equal U=min(u,k) and V=min(v,k)."),
             Def("original-integer-word", "originalWord", "The explicit word at the original area",
-                "Construct sourceWord at the original natural dimensions and normalized area. If K equals that area, keep this word; otherwise reverse its letters. Under the full integer hypotheses, outer_reverse_contract proves that the latter word has area uv−k=K and preserves its joint signed moments."),
+                "Construct sourceWord at the original natural dimensions and normalized area. If K equals that area, keep this word; otherwise reverse its letters. Under the full integer hypotheses and k≥4096, outer_reverse_contract proves that the latter word has area uv−k=K and preserves its joint signed moments."),
             Def("original-family-size", "originalFamilySize", "The exact original family size",
                 "At k=normalizedArea(u,v,K), originalFamilySize is gridCount(min(toNat(u),k),side(k)) times gridCount(min(toNat(v),k),side(k)) times q(level(k))^6. Each factor comes from the full computed index domain."),
             Describe.Lean(DescribeId.Create("full-sparse-capacity"),

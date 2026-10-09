@@ -188,7 +188,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/SparseThickFrameFamily.originalW
 
 *Commentary.*
 
-Construct sourceWord at the original natural dimensions and normalized area. If K equals that area, keep this word; otherwise reverse its letters. Under the full integer hypotheses, outer_reverse_contract proves that the latter word has area uv−k=K and preserves its joint signed moments.
+Construct sourceWord at the original natural dimensions and normalized area. If K equals that area, keep this word; otherwise reverse its letters. Under the full integer hypotheses and k≥4096, outer_reverse_contract proves that the latter word has area uv−k=K and preserves its joint signed moments.
 
 **Definition 1.16 (The exact original family size).**
 
