@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3fc6400886044c3343c5c497befcf4967781d97bc3ea774040e57558c8245116
+  normalized_sha256: sha256:3fc6400886044c3343c5c497befcf4967781d97bc3ea774040e57558c8245116
+cas_ref: sha256:3fc6400886044c3343c5c497befcf4967781d97bc3ea774040e57558c8245116
+coverage_gids:
+  - gid: D5/S3/Observer/Naturality/ObserverMorphismComposition.observer_morphism_composition
+    target_statement_id: sha256:f15614af670bb9950de7558ca42b2ce669d013cd1eba02c80eacbfef7f10460f
+receipts:
+  unresolved_subitems: []

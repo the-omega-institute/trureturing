@@ -40,7 +40,139 @@ $$(claimSelfTensor) \Leftrightarrow (\forall rho \in QubitMatrix,\; (\operatorna
 
 Page 8, Conjecture 5.7 (Self-tensor superadditivity, s ≤ 0 branch): "For any qubit state ρ with s(ρ)≤ 0: C(ρ ⊗ ρ) ≥ 2C(ρ)." Every density matrix is included, with the sign condition encoded by bloch(rho,X) bloch(rho,Y) bloch(rho,Z) ≤ 0. This includes zero coordinates and the stabilizer boundary.
 
-**Theorem 1.4 (Equatorial multiplicativity holds).**
+**Definition 1.4 (Two-qubit Pauli labels).**
+
+$$Word = \operatorname{Fin}\left(4\right) \times \operatorname{Fin}\left(4\right)$$
+
+*Formalization.* `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.Word` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A word records two Pauli labels, with 0,1,2,3 denoting I,X,Y,Z.
+
+**Definition 1.5 (Independent commuting words).**
+
+$$\forall u \in Word,\; \forall v \in Word,\; (\operatorname{commutingIndependent}\left(u, v\right)) \Leftrightarrow ((u \ne (0,0)) \land ((v \ne (0,0)) \land ((u \ne v) \land (\operatorname{mod}\left(\operatorname{phaseProduct}\left(\operatorname{fst}\left(u\right), \operatorname{fst}\left(v\right)\right) + \operatorname{phaseProduct}\left(\operatorname{snd}\left(u\right), \operatorname{snd}\left(v\right)\right), 2\right) = 0))))$$
+
+*Formalization.* `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.commutingIndependent` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Both words are nonidentity and distinct. The sum of their local multiplication phases is even, which is exactly commutation.
+
+**Definition 1.6 (Rational stabilizer Wigner coordinates).**
+
+$$\forall u \in Word,\; \forall v \in Word,\; \forall epsilon \in \operatorname{Fin}\left(2\right),\; \forall delta \in \operatorname{Fin}\left(2\right),\; \forall a \in PhasePoint \times PhasePoint,\; \operatorname{candidate}\left(u, v, epsilon, delta, a\right) = \frac{(1 + (0 - 1)^{\operatorname{val}\left(epsilon\right)} \cdot \operatorname{character}\left(\operatorname{fst}\left(u\right), \operatorname{fst}\left(a\right)\right) \cdot \operatorname{character}\left(\operatorname{snd}\left(u\right), \operatorname{snd}\left(a\right)\right) + (0 - 1)^{\operatorname{val}\left(delta\right)} \cdot \operatorname{character}\left(\operatorname{fst}\left(v\right), \operatorname{fst}\left(a\right)\right) \cdot \operatorname{character}\left(\operatorname{snd}\left(v\right), \operatorname{snd}\left(a\right)\right) + (0 - 1)^{\operatorname{val}\left(epsilon\right) + \operatorname{val}\left(delta\right)} \cdot \operatorname{ite}\left(\operatorname{mod}\left(\operatorname{phaseProduct}\left(\operatorname{fst}\left(u\right), \operatorname{fst}\left(v\right)\right) + \operatorname{phaseProduct}\left(\operatorname{snd}\left(u\right), \operatorname{snd}\left(v\right)\right), 4\right) = 0, 1, 0 - 1\right) \cdot \operatorname{character}\left(\operatorname{labelProduct}\left(\operatorname{fst}\left(u\right), \operatorname{fst}\left(v\right)\right), \operatorname{fst}\left(a\right)\right) \cdot \operatorname{character}\left(\operatorname{labelProduct}\left(\operatorname{snd}\left(u\right), \operatorname{snd}\left(v\right)\right), \operatorname{snd}\left(a\right)\right))}{16}$$
+
+*Formalization.* `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.candidate` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The signs select the two generator eigenvalues. character gives the phase-point Pauli character; phaseProduct and labelProduct give the phase and label of Pauli multiplication.
+
+**Definition 1.7 (The finite stabilizer Wigner set).**
+
+$$candidates = \operatorname{Finsetimage}\left(\Lambda (k:(Word \times Word) \times (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right))) \mapsto \operatorname{candidate}\left(\operatorname{fst}\left(\operatorname{fst}\left(k\right)\right), \operatorname{snd}\left(\operatorname{fst}\left(k\right)\right), \operatorname{fst}\left(\operatorname{snd}\left(k\right)\right), \operatorname{snd}\left(\operatorname{snd}\left(k\right)\right)\right), \operatorname{Finsetfilter}\left(\Lambda (k:(Word \times Word) \times (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right))) \mapsto \operatorname{commutingIndependent}\left(\operatorname{fst}\left(\operatorname{fst}\left(k\right)\right), \operatorname{snd}\left(\operatorname{fst}\left(k\right)\right)\right), \operatorname{Finsetuniv}\left((Word \times Word) \times (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right))\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.candidates` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The image contains the rational Wigner vectors of all independent commuting words with both binary eigenvalue signs. Finset enumeration removes repetitions.
+
+**Definition 1.8 (Two-generator spectral projector).**
+
+$$\forall u \in Word,\; \forall v \in Word,\; \forall epsilon \in \operatorname{Fin}\left(2\right),\; \forall delta \in \operatorname{Fin}\left(2\right),\; \operatorname{projector}\left(u, v, epsilon, delta\right) = \operatorname{smul}\left(\frac{1}{4}, (1 + \operatorname{smul}\left((0 - 1)^{\operatorname{val}\left(epsilon\right)}, \operatorname{word}\left(u\right)\right) + \operatorname{smul}\left((0 - 1)^{\operatorname{val}\left(delta\right)}, \operatorname{word}\left(v\right)\right) + \operatorname{smul}\left((0 - 1)^{\operatorname{val}\left(epsilon\right)}, \operatorname{word}\left(u\right)\right) \cdot \operatorname{smul}\left((0 - 1)^{\operatorname{val}\left(delta\right)}, \operatorname{word}\left(v\right)\right))\right)$$
+
+*Formalization.* `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.projector` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+word(u) is the tensor product of the Pauli matrices labelled by u. The projector averages the identity, the two signed generators, and their product.
+
+**Theorem 1.9 (Two-qubit stabilizer generators).**
+
+$$\forall rho \in TwoQubitMatrix,\; (rho \in \operatorname{Stab}\left(pauliTwo\right)) \Rightarrow (\exists u \in Word,\; \exists v \in Word,\; \exists epsilon \in \operatorname{Fin}\left(2\right),\; \exists delta \in \operatorname{Fin}\left(2\right),\; (\operatorname{commutingIndependent}\left(u, v\right)) \land (rho = \operatorname{projector}\left(u, v, epsilon, delta\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.stabilizer_two_generators` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every subgroup-defined two-qubit stabilizer projector has two independent commuting Pauli generators and binary signs.
+
+**Theorem 1.10 (Projector coordinates in the finite set).**
+
+$$\forall u \in Word,\; \forall v \in Word,\; \forall epsilon \in \operatorname{Fin}\left(2\right),\; \forall delta \in \operatorname{Fin}\left(2\right),\; (\operatorname{commutingIndependent}\left(u, v\right)) \Rightarrow (\operatorname{WignerTwo}\left(\operatorname{projector}\left(u, v, epsilon, delta\right)\right) = \Lambda (a:PhasePoint \times PhasePoint) \mapsto \operatorname{realCast}\left(\operatorname{candidate}\left(u, v, epsilon, delta, a\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.projector_wigner` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For independent commuting words, the complex projector has exactly the real casts of the rational candidate coordinates.
+
+**Theorem 1.11 (Candidate membership).**
+
+$$\forall u \in Word,\; \forall v \in Word,\; \forall epsilon \in \operatorname{Fin}\left(2\right),\; \forall delta \in \operatorname{Fin}\left(2\right),\; (\operatorname{commutingIndependent}\left(u, v\right)) \Rightarrow (\operatorname{candidate}\left(u, v, epsilon, delta\right) \in candidates)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.candidate_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every independent commuting pair and binary sign choice gives an element of the finite candidate set.
+
+**Theorem 1.12 (Weak duality for finite L1 distance).**
+
+$$\forall alpha \in Type,\; [\operatorname{Fintype}\left(alpha\right)] \forall F \in \operatorname{Set}\left(alpha \to \mathbb{R}\right),\; (\operatorname{Nonempty}\left(F\right)) \Rightarrow (\forall w \in alpha \to \mathbb{R},\; \forall f \in alpha \to \mathbb{R},\; \forall m \in \mathbb{R},\; (\forall a \in alpha,\; \operatorname{abs}\left(\operatorname{f}\left(a\right)\right) \le 1) \Rightarrow ((\forall v \in alpha \to \mathbb{R},\; (v \in F) \Rightarrow (\operatorname{sum}\left(\Lambda (a:alpha) \mapsto \operatorname{f}\left(a\right) \cdot \operatorname{apply}\left(v, a\right)\right) \le m)) \Rightarrow (\operatorname{sum}\left(\Lambda (a:alpha) \mapsto \operatorname{f}\left(a\right) \cdot \operatorname{apply}\left(w, a\right)\right) - m \le \operatorname{infDist}\left(\operatorname{toLp}\left(1, w\right), \operatorname{image}\left(\Lambda (v:alpha \to \mathbb{R}) \mapsto \operatorname{toLp}\left(1, v\right), F\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.distance_dual_lower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonempty set of real vectors on a finite coordinate type, a linear functional with coefficients of absolute value at most one gives a lower bound on L1 distance. If its value on every vector in the set is at most m, its value at w minus m is at most the infimum distance from w to that set.
+
+**Theorem 1.13 (One-qubit stabilizer classification).**
+
+$$\forall rho \in QubitMatrix,\; (rho \in \operatorname{Stab}\left(pauliSet\right)) \Rightarrow (\exists p \in Pauli,\; \exists epsilon \in \operatorname{Fin}\left(2\right),\; (p \ne I) \land (rho = \operatorname{smul}\left(\frac{1}{2}, (1 + \operatorname{smul}\left((0 - 1)^{\operatorname{val}\left(epsilon\right)}, \operatorname{pauliMatrix}\left(p\right)\right))\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.stabilizer_one_classification` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A one-qubit stabilizer projector is a spectral projector of X, Y, or Z with either eigenvalue sign.
+
+**Theorem 1.14 (Attaining distance on the nonpositive branch).**
+
+$$\forall rho \in QubitMatrix,\; (\operatorname{IsDensity}\left(rho\right)) \Rightarrow ((\operatorname{bloch}\left(rho, X\right) \cdot \operatorname{bloch}\left(rho, Y\right) \cdot \operatorname{bloch}\left(rho, Z\right) \le 0) \Rightarrow (\exists f \in PhasePoint \to \mathbb{R},\; (f \in \operatorname{Wfree}\left(phasePoint, pauliSet\right)) \land ((\operatorname{norm}\left(\operatorname{toLp}\left(1, f\right)\right) = 1) \land ((\operatorname{norm}\left(\operatorname{toLp}\left(1, \operatorname{WignerOne}\left(rho\right) - f\right)\right) = \operatorname{norm}\left(\operatorname{toLp}\left(1, \operatorname{WignerOne}\left(rho\right)\right)\right) - 1) \land (\operatorname{COne}\left(rho\right) = \operatorname{norm}\left(\operatorname{toLp}\left(1, \operatorname{WignerOne}\left(rho\right)\right)\right) - 1)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.distance_one_nonpositive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a density matrix with nonpositive Bloch product, a free Wigner vector of L1 norm one attains the error equal to the state Wigner L1 norm minus one.
+
+**Theorem 1.15 (Equatorial multiplicativity holds).**
 
 $$claimEquatorial$$
 
@@ -58,7 +190,7 @@ $$claimEquatorial$$
 
 Every qubit Wigner vector has at most one negative coordinate. On the nonpositive Bloch-product branch an explicit stabilizer-edge mixture has error ‖W‖₁−1. A product sign functional is bounded by one on every actual two-qubit stabilizer, using subgroup generators and an exact rational certificate on sixty candidate vectors. Convex weak duality gives the lower bound ‖W_rho‖₁ ‖W_sigma‖₁−1. The product of the two nearest mixtures gives the matching upper bound. Equatorial states lie on the zero Bloch-product branch.
 
-**Theorem 1.5 (Self-tensor superadditivity holds).**
+**Theorem 1.16 (Self-tensor superadditivity holds).**
 
 $$claimSelfTensor$$
 
@@ -78,11 +210,22 @@ On the nonpositive branch COne(rho) = ‖W_rho‖₁−1. Applying the same prod
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.Word`
 - Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.bloch`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.candidate`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.candidate_mem`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.candidates`
 - Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.claimEquatorial`
 - Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.claimSelfTensor`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.commutingIndependent`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.distance_dual_lower`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.distance_one_nonpositive`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.projector`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.projector_wigner`
 - Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.resultEquatorial`
 - Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.resultSelfTensor`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.stabilizer_one_classification`
+- Truth anchor: `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.stabilizer_two_generators`
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence](../Information/BinaryStabilizerLocalInequivalence.md)
 - Dependency: [D5/S3/Quantum/Magic/WignerDistanceMinimum](WignerDistanceMinimum.md)
 - Dependency: [D5/S3/Quantum/Magic/WignerSimplexNearestEdge](WignerSimplexNearestEdge.md)
