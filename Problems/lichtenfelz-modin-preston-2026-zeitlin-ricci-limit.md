@@ -79,11 +79,11 @@ exposes seven of its local proofs, unchanged, as public lemmas used here (`sixJ_
 Tier 1 named conjecture of a 2025 paper (published 2026), preregistered in issue #14664 before any Lean.
 `theorem`; resolution `proved`.
 
-Proof shape: `result` and `rPlus_tendsto_zero` are content. Their non-binding fact is the summable row
-majorant (`rowBound_summable`: $\lVert\mathrm{rowBound}_\ell(k)\rVert\le8\lambda_\ell/(k+1)^2$ for $k\ge2\ell+1$,
-compared with the $p$-series), which carries the dominated-convergence step. `fixed_labels_odd_tendsto_zero`
-and `rMinus_eq` are bind-only declarations on the live proof path of `result`. Admission basis
-`open-problem-resolution` (issue #14664).
+Proof shape: every theorem of the module is bind-only. The negative part and the odd-parity decay are
+instantiations of the frozen sum rules and the Racah expansion with limit rules; the summable row majorant
+($\mathrm{rowBound}_\ell(k)\le8\lambda_\ell/(k+1)^2$ for $k\ge2\ell+1$) is a comparison with the $p$-series
+discharged by inequality normalization, and the positive part follows by Tannery's theorem. Admission basis
+`open-problem-resolution` (issue #14664): the settlement of the named conjecture is the new content.
 
 Utility is `none`. There is no digestion atom.
 
@@ -99,9 +99,9 @@ Brussaard–Tolhoek asymptotics fail when $i+j+\ell$ is odd and that "numericall
 this parity assumption somehow". The parity enters through the sign of the signed sum rule (2.11); the
 sharper bound is $o(1/N)$ for each fixed triple, not a uniform rate.
 
-**Argued, not formalized (bounded numerics).** At $\ell=2,3$ the positive part decreases roughly like
-$1/N$ ($\tilde r_2^+=0.178,\,0.066,\,0.022,\,0.012$ at $N=8,16,32,48$); the first sizes $N=\ell+1$ have
-positive curvature, so negativity is eventual, as stated.
+**Computed, not formalized (bounded numerics).** At $\ell=2,3$ the positive part decreases along the
+sampled sizes ($\tilde r_2^+=0.178,\,0.066,\,0.022,\,0.012$ at $N=8,16,32,48$); no rate is inferred from
+these samples. The first sizes $N=\ell+1$ have positive curvature, so negativity is eventual, as stated.
 
 **Open.** The rate of convergence of $\tilde r_\ell(N)^+$ and the threshold $N_0(\ell)$ beyond which
 $\tilde r_\ell(N)<0$ (the source reports a sign transition near $\ell/N\approx1/3$).
