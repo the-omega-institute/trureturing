@@ -1,0 +1,8 @@
+**推论 3.3（对称的最优解）。** 设 $\mathcal G$ 是 $G$ 的一个自同构群。则存在 $\mathcal G$ 不变的最大点 $\mu^\star$（$\mu^\star_{\sigma b}=\mu^\star_b$），也存在 $\mathcal G$ 不变的最小点 $a^\star$（$a^\star_{\sigma c\leftarrow\sigma b}=a^\star_{c\leftarrow b}$），$\sigma\in\mathcal G$。特别地，对每个 $n\ge1$，词反转 $\rho(b)_i=b_{n+1-i}$ 是 $\Gamma_n$ 的自同构，故 $\Gamma_n$ 有反转不变的最大测度与反转不变的最优分配。
+
+**证明。** 有限图的自同构群有限，故 $\mathcal G$ 有限。对 $\sigma\in\mathcal G$ 置 $(\sigma\mu)_b=\mu_{\sigma^{-1}b}$。$\sigma$ 置换边集，故 $\Phi_G(\sigma\mu)=\Phi_G(\mu)$。若 $\mu^\star$ 是最大点，平均 $\bar\mu=|\mathcal G|^{-1}\sum_{\sigma}\sigma\mu^\star$ 属于 $\mathcal P(V)$ 且 $\mathcal G$ 不变；由 $\Phi_G$ 的凹性，$\Phi_G(\bar\mu)\ge|\mathcal G|^{-1}\sum_\sigma\Phi_G(\sigma\mu^\star)=\kappa(G)$，所以 $\bar\mu$ 也是最大点。
+
+对分配置 $(\sigma a)_{c\leftarrow b}=a_{\sigma^{-1}c\leftarrow\sigma^{-1}b}$，它仍属于 $\mathcal A(G)$，且 $L_b^G(\sigma a)=L_{\sigma^{-1}b}^G(a)$。若 $a^\star$ 是最小点，$\bar a=|\mathcal G|^{-1}\sum_\sigma\sigma a^\star$ 是可行分配的凸组合，可行且 $\mathcal G$ 不变；由 $L_b^G$ 的凸性，$L_b^G(\bar a)\le|\mathcal G|^{-1}\sum_\sigma L_{\sigma^{-1}b}^G(a^\star)\le\kappa(G)$，故 $\bar a$ 是最小点。
+
+最后，「无两个相邻 $1$」在反转下不变，两词的 Hamming 距离也在反转下不变，故 $\rho$ 是 $B_n$ 上保持邻接与非邻接的双射。
+
