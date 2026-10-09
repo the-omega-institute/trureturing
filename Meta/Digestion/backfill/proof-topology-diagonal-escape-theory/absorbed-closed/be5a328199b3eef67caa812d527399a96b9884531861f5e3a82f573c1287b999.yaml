@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:be5a328199b3eef67caa812d527399a96b9884531861f5e3a82f573c1287b999
+  normalized_sha256: sha256:be5a328199b3eef67caa812d527399a96b9884531861f5e3a82f573c1287b999
+cas_ref: sha256:be5a328199b3eef67caa812d527399a96b9884531861f5e3a82f573c1287b999
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/InvolutionLogic/AtomicNegationRigidity.compl_singleton_eq_singleton
+    target_statement_id: sha256:b9f98e04eab7e5c98565f97f5ef044f54429adb4a6e2abac3d32216dbdbf644c
+  - gid: D5/S3/ConceptDynamics/InvolutionLogic/AtomicNegationRigidity.involutive
+    target_statement_id: sha256:08967ca570c4011e1eb82afd6c5e004170aafb33ba62fda2b378dd7e92aec9bc
+  - gid: D5/S3/ConceptDynamics/InvolutionLogic/AtomicNegationRigidity.neg_ne
+    target_statement_id: sha256:5b88a61451629f005401c39cdecc517b10d3ffae953cde908bdff39dfc422cfc
+  - gid: D5/S3/ConceptDynamics/InvolutionLogic/AtomicNegationRigidity.nonempty_iff_equiv_bool
+    target_statement_id: sha256:837245be0cee3f5893f61d40bdc7b99bc670ea493a4a0b4fc7af4c7607fd53a4
+receipts:
+  unresolved_subitems: []

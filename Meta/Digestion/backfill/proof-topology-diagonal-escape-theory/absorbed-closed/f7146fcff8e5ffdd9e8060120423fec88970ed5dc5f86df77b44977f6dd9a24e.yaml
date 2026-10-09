@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f7146fcff8e5ffdd9e8060120423fec88970ed5dc5f86df77b44977f6dd9a24e
+  normalized_sha256: sha256:f7146fcff8e5ffdd9e8060120423fec88970ed5dc5f86df77b44977f6dd9a24e
+cas_ref: sha256:f7146fcff8e5ffdd9e8060120423fec88970ed5dc5f86df77b44977f6dd9a24e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DependencyTopology/DominatorCut.unreachable_after_delete_of_dominates
+    target_statement_id: sha256:9f41a644ea2855db65a5f3030cdc3a32626a2b3c91cba9a9d092299a66289df4
+receipts:
+  unresolved_subitems: []
