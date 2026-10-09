@@ -32,6 +32,24 @@ internal sealed class CliffordThirdMomentAggregateRefutationDocument : IScribeDo
             Node("aggregate", "The aggregate isotropic expectation", AggregateFormula(),
                 "The collection of isotropic subspaces is the set of graphs of stochastic orthogonal matrices. Its aggregate is the sum of kappa over exactly those graphs. The expectation kappa, the tensor operator R and the density tensor stateCube use the source trace convention.",
                 "kappaIso", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("amplitudes", "Integer amplitudes", AmplitudesFormula(),
+                "The integer amplitudes are indexed by the canonical representatives of the two coordinates in ZMod 5.",
+                "v", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("state", "The normalized two-qudit state", StateFormula(),
+                "Divide the integer amplitudes by the complex image of the positive real square root of 458.",
+                "psi", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("normalization", "Unit squared norm", NormalizationFormula(),
+                "The sum of the squared integer amplitudes is 458, so the scaled state has unit squared norm.",
+                "normalized_psi", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("isovalue", "The exact isotropic aggregate", IsoValueFormula(),
+                "The aggregate of this state over the isotropic graph subspaces is 140241723/24017978.",
+                "kappa_iso", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("identityvalue", "The identity graph expectation", IdentityValueFormula(),
+                "For every normalized state, the identity graph has third-moment expectation one.",
+                "kappa_identity", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("rowvalue", "Row permutation invariance", RowValueFormula(),
+                "Permuting the three output rows leaves the product of three state amplitudes unchanged, and therefore preserves the graph expectation.",
+                "kappa_rows", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("claim", "The aggregate lower bound in Conjecture 2", ClaimFormula(),
                 "The assertion quantifies over every prime dimension other than two, every number of qudits and every normalized complex state. The complex order requires that the aggregate have zero imaginary part and real part at least six.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -154,4 +172,65 @@ internal sealed class CliffordThirdMomentAggregateRefutationDocument : IScribeDo
                 All(n, Nat(), All(psi, Vectors(d, n), Imp(normalized,
                     Le(Parenthesized(Seq(D(6), Sp, Colon, Sp, Complex())), Call("kappaIso", d, n, psi)))))))));
     }
+    private static Formula Signed(int n) => n < 0 ? Seq(Minus, Number(-n)) : Number(n);
+    private static Formula Number(int n) => D([.. n.ToString(System.Globalization.CultureInfo.InvariantCulture)
+        .Select(c => (byte)(c - '0'))]);
+    private static Formula AmplitudeMatrix()
+    {
+        int[][] rows = [[8,-5,0,4,5], [0,3,6,4,-4], [-2,-5,-3,0,3],
+            [-3,0,5,-8,-6], [5,-4,2,-5,0]];
+        var entries = new List<Formula> { Bang, Bang, OpenBracket };
+        for (int i = 0; i < rows.Length; i++)
+        {
+            if (i > 0) entries.Add(Semi);
+            for (int j = 0; j < rows[i].Length; j++)
+            {
+                if (j > 0) entries.Add(Comma);
+                entries.Add(Signed(rows[i][j]));
+            }
+        }
+        entries.Add(CloseBracket);
+        return Seq([.. entries]);
+    }
+    private static Formula FinIndex(Formula a) => Seq(Langle, Sp, Call("val", a), Comma, Sp,
+        Of(Seq(Operatorname, Grp(F.Id("ZMod"), Dot, F.Id("val"), Underscore, Grp(F.Id("lt")))), a),
+        Sp, Rangle);
+    private static Formula AmplitudesFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b");
+        return All(a, Field(D(5)), All(b, Field(D(5)),
+            Eq(Call("v", a, b), Of(AmplitudeMatrix(), FinIndex(a), FinIndex(b)))));
+    }
+    private static Formula StateFormula()
+    {
+        Formula x = F.Id("x");
+        Formula numerator = Parenthesized(Seq(Call("v", Of(x, D(0)), Of(x, D(1))),
+            Sp, Colon, Sp, Complex()));
+        Formula denominator = Parenthesized(Seq(Call("sqrt", Number(458)), Sp, Colon, Sp, Complex()));
+        return All(x, Config(D(5), D(2)), Eq(Call("psi", x), new Formula.Fraction(numerator, denominator)));
+    }
+    private static Formula Normalized(Formula d, Formula n, Formula psi)
+    {
+        Formula x = F.Id("x");
+        return Eq(Sum(x, Config(d, n), Square(new Formula.Norm(Of(psi, x)))), D(1));
+    }
+    private static Formula NormalizationFormula() => Normalized(D(5), D(2), F.Id("psi"));
+    private static Formula IsoValueFormula() => Eq(Call("kappaIso", D(5), D(2), F.Id("psi")),
+        new Formula.Fraction(Number(140241723), Number(24017978)));
+    private static Formula IdentityValueFormula()
+    {
+        Formula d = F.Id("d"), n = F.Id("n"), psi = F.Id("Psi");
+        return All(d, Nat(), All(n, Nat(), Seq(Instance("NeZero", d),
+            All(psi, Vectors(d, n), Imp(Seq(F.Id("hn"), Sp, Colon, Sp, Normalized(d, n, psi)),
+                Eq(Call("kappa", d, n, psi, Call("graphSubspace", D(1))), D(1)))))));
+    }
+    private static Formula RowValueFormula()
+    {
+        Formula d = F.Id("d"), n = F.Id("n"), o = F.Id("O"), psi = F.Id("Psi"), e = F.Id("e");
+        return All(d, Nat(), All(n, Nat(), Seq(Instance("NeZero", d),
+            All(o, Mat(d), All(psi, Vectors(d, n), All(e, Call("Perm", Fin(D(3))),
+                Eq(Call("kappa", d, n, psi, Call("graphSubspace", Call("submatrix", o, e, Named("id")))),
+                    Call("kappa", d, n, psi, Call("graphSubspace", o)))))))));
+    }
+
 }
