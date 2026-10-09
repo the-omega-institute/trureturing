@@ -9,27 +9,16 @@ internal sealed class PrimeTripletWheelDocument : IScribeDocumentDefinition
         H("Prime Triplet Wheel Reflection"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("triplet-plus-chirality"),
+                DescribeId.Create("reflected-gap-difference"),
                 DeclarationHandle.Create(
-                    "D5/S3/Arith/PrimeTripletWheel.tripletPlus_chirality"),
-                H("The H-plus template has positive ordered gap difference"),
+                    "D5/S3/Arith/PrimeTripletWheel.reflected_gapDifference"),
+                H("Reversing ordered gaps negates the direction"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The ordered gap difference is evaluated on the diameter-six template "
-                    + "{0,2,6}. The declaration records the positive orientation used by "
-                    + "the wheel layer; it does not assert a prime-tuple counting theorem.")),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("triplet-minus-chirality"),
-                DeclarationHandle.Create(
-                    "D5/S3/Arith/PrimeTripletWheel.tripletMinus_chirality"),
-                H("The H-minus template has negative ordered gap difference"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The reflected template {0,4,6} has the opposite ordered gap difference. "
-                    + "The sign is a direction label for the ordered three-point readout.")),
+                    "For arbitrary integer gaps, swapping the ordered gaps negates their "
+                    + "difference. The concrete diameter-six templates are theory instances "
+                    + "of this general direction reversal.")),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("wheel-reflect-involutive"),
