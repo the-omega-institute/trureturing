@@ -1,0 +1,27 @@
+**定理 5.2（近可加性与增长常数）。** 对一切整数 $n,m\ge0$，
+
+$$
+\kappa_{n+m}\le\kappa_n+\kappa_m\le\kappa_{n+m+1}.
+\tag{5.1}
+$$
+
+极限 $c_\star=\lim_{n\to\infty}\kappa_n/n$ 存在，且
+
+$$
+c_\star=\inf_{n\ge1}\frac{\kappa_n}{n}=\sup_{n\ge0}\frac{\kappa_n}{n+1}.
+\tag{5.2}
+$$
+
+因此对每个 $n\ge0$，
+
+$$
+c_\star\,n\le\kappa_n\le c_\star\,(n+1).
+\tag{5.3}
+$$
+
+**证明。** 由引理 5.1(i)、定理 4.1(i) 与定理 4.2，$\kappa_{n+m}\le\kappa(\Gamma_n\mathbin{\square}\Gamma_m)=\kappa_n+\kappa_m$；由引理 5.1(ii) 与同样两条定理，$\kappa_n+\kappa_m=\kappa(\Gamma_n\mathbin{\square}\Gamma_m)\le\kappa_{n+m+1}$。$n$ 或 $m$ 为零时，$\Gamma_0$ 是单点、$\Gamma_0\mathbin{\square}\Gamma_m\cong\Gamma_m$，上述论证照样成立。这证明 (5.1)。
+
+数列 $(\kappa_n)_{n\ge1}$ 非负且次可加。Fekete 引理（文献步骤，见第 10 章）给出 $\lim_n\kappa_n/n$ 存在并等于 $\inf_{n\ge1}\kappa_n/n$；该下确界在 $[0,\kappa_1]=[0,1/4]$ 中，故有限，记为 $c_\star$。
+
+再令 $\beta_j=\kappa_{j-1}$（$j\ge1$）。由 (5.1) 右半，$\beta_{j+l}=\kappa_{(j-1)+(l-1)+1}\ge\kappa_{j-1}+\kappa_{l-1}=\beta_j+\beta_l$，即 $(\beta_j)$ 超可加。对 $(-\beta_j)$ 用 Fekete 引理，$\lim_j\beta_j/j=\sup_j\beta_j/j$。又 $\beta_j/j=\kappa_{j-1}/j=\bigl(\kappa_{j-1}/(j-1)\bigr)\cdot\bigl((j-1)/j\bigr)\to c_\star$（$j\ge2$）。于是 $\sup_{n\ge0}\kappa_n/(n+1)=c_\star$，得 (5.2)。(5.3) 是 (5.2) 中下确界与上确界的直接改写；$n=0$ 时两边为 $0\le0\le c_\star$。
+
