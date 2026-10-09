@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3bc77e68731d3f305b67c6b14698b8d0f5887c3eb6e859e44330387ca6934b7b
+  normalized_sha256: sha256:3bc77e68731d3f305b67c6b14698b8d0f5887c3eb6e859e44330387ca6934b7b
+cas_ref: sha256:3bc77e68731d3f305b67c6b14698b8d0f5887c3eb6e859e44330387ca6934b7b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This isolated proof pointer refers to the definition of the behavior kernel and supplies no standalone mathematical proposition. The four asserted properties are supplied separately by reachable_behavior_core, including separation, lawful prefix updates and the unique surjective factor.
+    previous_atom_id: 918e7bd42e048f0293d095cc3c13eac5e0a452f738cf775f9bfea367730e658f
+    next_atom_id: deec74fd1e62d2069051b7ffd2d3266c1e17f7e4caf616be2b796ee4ff0bcabc

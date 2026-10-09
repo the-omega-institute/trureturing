@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:10e2171f63f188bc8bda50a95b883924246eb74eeb541df71627b8246b5440ac
   normalized_sha256: sha256:10e2171f63f188bc8bda50a95b883924246eb74eeb541df71627b8246b5440ac
 cas_ref: sha256:10e2171f63f188bc8bda50a95b883924246eb74eeb541df71627b8246b5440ac
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Prediction/CompactSignatureRealization.finite_compatibility_global_realization
+    target_statement_id: sha256:ec9d3e54c279127c5741d9ba340e418271108ac49c10cc70c91fe7df747e71bc
 receipts:
   unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f9952e8b149315843a10f8e6cc3152214f4eab9877a62bbc153e0ae2a2c9a81e
+  normalized_sha256: sha256:f9952e8b149315843a10f8e6cc3152214f4eab9877a62bbc153e0ae2a2c9a81e
+cas_ref: sha256:f9952e8b149315843a10f8e6cc3152214f4eab9877a62bbc153e0ae2a2c9a81e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This is an application-domain label under the preceding compact continuous realization principle. It introduces no new dynamics, readout map, or independent quantitative conclusion; compactness and continuous readouts remain explicit assumptions of that principle.
+    previous_atom_id: bf3908f1351a89d3dbc2add66f7dfbfee5a9683704ebfdf1b7593221c44e445b
+    next_atom_id: 328a1dc9a918786fe5d12bef3b74933f58de9d50bff88a6e96a7de9c0826ae4f
