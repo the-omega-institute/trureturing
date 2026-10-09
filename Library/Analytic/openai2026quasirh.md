@@ -649,3 +649,18 @@ $$
 \frac{1+5a}{6}>0.
 $$
 这是当前上界不足，不是真实探针范数的下界，也不排除另一种联合消去能改善它。原带槽补偿行的低端、改变几何后所有物理行与高度的高端比较、以及原完整有符号 Robin 响应仍未支付。完整源证明及 Lean 未独立认证；严格 Robin 与 RH 未证明。
+
+## 固定源码入口、版本与 Robin 接口
+
+固定源码版本为 [`fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb`](https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb)。真正的公开定理入口是 [OAI/NumberTheory/DirichletL/Nonvanishing.lean](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/OAI/NumberTheory/DirichletL/Nonvanishing.lean)：
+
+- `OAI.DirichletCharacter.LFunction_ne_zero_of_seven_eighths_lt_re` 对每个正模数、每个 Dirichlet 特征及满足 $7/8<\Re s$ 的复数，排除零点；另有准确的极点例外条件 $\neg(\chi=1\land s=1)$。
+- `OAI.riemannZeta_ne_zero_of_seven_eighths_lt_re` 对 Mathlib 的 `riemannZeta` 声明 $7/8<\Re s\Rightarrow\zeta(s)\ne0$。解析表述仍须保留 $s=1$ 的极点约定。
+
+两条入口直接调用 [Detector/FinalAssemblyUnconditional.lean](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/OAI/NumberTheory/DirichletL/Detector/FinalAssemblyUnconditional.lean)。该组装文件将固定参数与已认证 detector bands 接到 Dirichlet 和 zeta 无零结论。相同版本的 [ComparatorChallenges/QuasiRiemannHypothesis.lean](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/ComparatorChallenges/QuasiRiemannHypothesis.lean) 含 `sorry`，属于待完成的挑战陈述，不能用作证明供应者。
+
+该版本的 [Lean toolchain](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/lean-toolchain) 为 `4.34.1`，[Mathlib 修订](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/lake-manifest.json) 为 `d13f23b723b8a846827a245b89c10fc7d3f11612`。本仓这条 Robin 形式化线使用 Lean `4.33.0`、Mathlib `db584cd6d46c92f209a44c0f1c829460d327499d`。两者的编译缓存不兼容；源码入口和参数关系已核对，本条没有外部依赖闭包的本地 Lean/kernel 验收证据。正式接入须在相容版本分区编译实际依赖闭包，或对迁移后的实际源码重新核验，不能把未编译的引用当作本仓已接受定理。
+
+与 Robin 路线有关的 [Moments/MobiusHarmonicMass.lean](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/OAI/NumberTheory/DirichletL/Moments/MobiusHarmonicMass.lean) 处理 Eisenstein 整环理想上的 Möbius 绝对值加权质量。`full_mass_subpower` 的准确量词是：每个 $B\ge0$、$\delta>0$ 对应某个 $C>0$，使充分大的 $Z>1$ 及每个有限理想集合 $\mathcal D$，在所有 $\mu(D)\ne0$ 的成员满足 $N(D)\le Z^B$ 时，有 $\sum_{D\in\mathcal D}|\mu(D)|/N(D)\le CZ^\delta$。其指标集、截断条件、权重与绝对值都须保留；该界本身没有给出普通整数 Robin 余量所需的有符号消去估计。
+
+因此可复用的来源分为明确的两类接口：无零入口提供严格半平面 $\Re s>7/8$ 的解析排除；detector 与加权理想质量提供各自原指标集上的估计。要进入 Robin 全域目标，还须构造这些量到同一个普通整数余量的准确关系，并证明相应有符号估计。上述半平面没有把剩余的非平凡零点定位到临界线，也没有完成 Robin 无限尾项。
