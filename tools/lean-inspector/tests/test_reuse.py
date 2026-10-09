@@ -199,14 +199,7 @@ class ReuseTests(unittest.TestCase):
             self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
 
     def test_seed_base_record_is_written_after_successful_dev_seal(self):
-        subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
-        subprocess.run(['git', '-C', str(self.root), 'add', '-A'], check=True, capture_output=True)
-        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
-                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
-                        'commit', '-qm', 'seed base fixture'], check=True, capture_output=True)
-        subprocess.run(['git', '-C', str(self.root), 'branch', '-M', 'dev'],
-                       check=True, capture_output=True)
-        api = self.receipt()
+        api = self.dev_repository()
         record = json.loads((self.root / '.lake/lean-report-seed-base.json').read_text())
         self.assertEqual(record['schema'], 'stratalint-lean-report-seed-base-v1')
         self.assertEqual(record['producer_commit_sha'],
@@ -225,13 +218,46 @@ class ReuseTests(unittest.TestCase):
                          {'report_format': publication.selection.REPORT_FORMAT, 'compatible': True})
 
     def dev_repository(self):
+        self.write('.gitignore', '.lake/\nseed/\noutput/\n')
+        self.report = self.root / '.lake/build/stratalint' / publication.RAW
+        self.report.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(['git', 'init', '-q', '-b', 'dev', str(self.root)], check=True, capture_output=True)
-        subprocess.run(['git', '-C', str(self.root), 'add', 'D5', 'lean-toolchain', 'lakefile.toml'],
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5', 'lean-toolchain', 'lakefile.toml',
+                        '.gitignore', 'Audit.lean', 'Inspector.lean', 'producer.py', 'tools',
+                        'bin', 'lean-report-inputs.json', 'lake-manifest.json'],
                        check=True, capture_output=True)
         subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
                         '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
                         'commit', '-qm', 'base fixture'], check=True, capture_output=True)
         return self.receipt()
+
+    def test_untracked_file_prevents_trusted_seed_base(self):
+        api = self.dev_repository()
+        self.assertIsNotNone(api.read_seed_base(self.root))
+        self.write('untracked.txt', 'extra input\n')
+        self.receipt()
+        self.assertIsNone(api.read_seed_base(self.root), '[FAIL] untracked_file_has_unknown_base')
+        self.assertFalse((self.root / api.BASE_RECORD).exists())
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_untracked_registered_lean_source_prevents_trusted_seed_base(self):
+        api = self.dev_repository()
+        self.write('D5/Untracked.lean', 'def extra := 2\n')
+        self.assertIn('D5/Untracked.lean', api.capture(self.root)['files'])
+        self.receipt()
+        self.assertIsNone(api.read_seed_base(self.root), '[FAIL] untracked_lean_has_unknown_base')
+        self.assertFalse((self.root / api.BASE_RECORD).exists())
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_seed_identity_mismatch_is_unknown(self):
+        api = self.dev_repository()
+        record = self.root / api.BASE_RECORD
+        contents = json.loads(record.read_text())
+        contents['report_sha256'] = 'f' * 64
+        record.write_text(json.dumps(contents))
+        self.assertIsNone(api.read_seed_base(self.root), '[FAIL] different_seed_identity_is_unknown')
+        self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
+        self.assertTrue(api.seed_format(self.report)['compatible'])
 
     def test_dirty_production_invalidates_previous_base(self):
         api = self.dev_repository()

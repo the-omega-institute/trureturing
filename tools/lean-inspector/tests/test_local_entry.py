@@ -59,9 +59,11 @@ class LocalEntryTests(unittest.TestCase):
             STRATALINT_LEAN_REPORT_REUSE=str(self.seed), STRATALINT_LEAN_BUILD_TARGETS='[]',
             STRATALINT_LEAN_REPORT_LOG_DIR=str(self.root / 'logs'))
         subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
+        self.fixture.write('.gitignore', '.lake/\nbin/\nseed/\ndev-seed/\nlogs/\ncalls\n'
+                           'producer.dll\nrelease-manifest.json\nreleases/\nlake-manifest.json\ncustom-output/\n')
         subprocess.run(['git', '-C', str(self.root), 'add', 'Makefile', 'tools', 'D5',
                         'Audit.lean', 'Inspector.lean', 'producer.py', 'lean-toolchain',
-                        'lakefile.toml', 'lean-report-inputs.json'], check=True, capture_output=True)
+                        'lakefile.toml', 'lean-report-inputs.json', '.gitignore'], check=True, capture_output=True)
         subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
                         '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
                         'commit', '-qm', 'local report fixture'], check=True, capture_output=True)
@@ -286,11 +288,14 @@ class LocalEntryTests(unittest.TestCase):
                     'cp dev-seed/* .lake/build/stratalint/\n')
 
     def write_base(self, commit):
+        if not self.output.exists():
+            shutil.copytree(self.seed.parent, self.output.parent, dirs_exist_ok=True)
         path = self.root / '.lake/lean-report-seed-base.json'
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps({
             'schema': 'stratalint-lean-report-seed-base-v1',
             'producer_commit_sha': commit,
+            'report_sha256': publication.digest(self.output),
         }) + '\n')
 
     def git_commit(self, message, *, empty=False):
@@ -369,6 +374,9 @@ esac
                     '    resolved=args[args.index("--approved-tag") + 1],\n'
                     '    producer_commit_sha=args[args.index("--approved-producer") + 1])))\n'
                     'PY\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean',
+                        'tools/scripts/worktree/lean-cache-publish.sh'], check=True)
+        self.git_commit('clean current checkout', empty=True)
         return initial, producer
 
     def assert_guarded(self, result):
@@ -553,6 +561,8 @@ esac
         self.fixture.write('D5/A.lean', 'def a := 2\n')
         self.write_base(newer)
         self.release_stub(older)
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True)
+        self.git_commit('clean changed inputs', empty=True)
         result = self.run_entry()
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(self.calls[0], 'ensure', '[FAIL] older_release_keeps_local_seed')
@@ -576,7 +586,7 @@ esac
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"action":"keep"', result.stdout)
         self.assertIn('"reason":"local-base-unknown"', result.stdout)
-        self.assertIn(release, result.stdout)
+        self.assertNotIn(release, result.stdout, '[FAIL] unknown_base_needs_no_release_information')
 
     def test_stale_seed_release_listing_failure_keeps_local_and_continues(self):
         self.stale_release_fixture(failure='listing failed')
@@ -705,6 +715,101 @@ else:
         self.assertEqual(0, result.returncode, '[FAIL] optional_refresh_continues: ' + result.stderr)
         print('CASE ' + self._testMethodName + '\n' + result.stdout, flush=True)
         return result
+
+    def test_unknown_base_never_lists_or_downloads(self):
+        self.canonical_release_fixture()
+        (self.root / self.api.BASE_RECORD).unlink()
+        before = self.seed_bytes()
+        result = self.refresh_canonical()
+        self.assertIn('"reason":"local-base-unknown"', result.stdout)
+        self.assertFalse((self.root / 'releases/calls.jsonl').exists(),
+                         '[FAIL] unknown_base_never_contacts_releases')
+        self.assertEqual(before, self.seed_bytes())
+
+    def test_unclean_checkout_never_lists_or_downloads(self):
+        self.canonical_release_fixture()
+        before = self.seed_bytes()
+        base = (self.root / self.api.BASE_RECORD).read_bytes()
+        for path in ('D5/A.lean', 'untracked.txt', 'D5/Untracked.lean'):
+            with self.subTest(path=path):
+                target = self.root / path
+                previous = target.read_bytes() if target.exists() else None
+                target.write_text('def dirty := 3\n')
+                result = self.refresh_canonical()
+                self.assertIn('"reason":"unclean-checkout"', result.stdout,
+                              '[FAIL] unclean_checkout_names_keep_reason')
+                self.assertFalse((self.root / 'releases/calls.jsonl').exists(),
+                                 '[FAIL] unclean_checkout_never_contacts_releases')
+                self.assertEqual(before, self.seed_bytes())
+                self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+                if previous is None:
+                    target.unlink()
+                else:
+                    target.write_bytes(previous)
+
+    def test_current_seed_prints_keep_receipt(self):
+        self.canonical_release_fixture()
+        self.fixture.bundle()
+        publication.publish(self.seed, self.output, publication.coordinates(self.root), self.root)
+        self.api.seal(self.root, self.output, self.api.capture(self.root))
+        result = self.refresh_canonical()
+        self.assertIn('"action":"keep"', result.stdout, '[FAIL] current_seed_prints_decision')
+        self.assertIn('"reason":"seed-current"', result.stdout)
+        self.assertFalse((self.root / 'releases/calls.jsonl').exists())
+
+    def test_custom_output_production_preserves_canonical_base(self):
+        self.canonical_release_fixture()
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        custom = self.root / 'custom-output' / publication.RAW
+        captured = self.api.capture(self.root)
+        self.fixture.bundle()
+        publication.publish(self.seed, custom, publication.coordinates(self.root), self.root)
+        self.api.seal(self.root, custom, captured)
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
+                         '[FAIL] custom_output_preserves_canonical_base')
+        self.assertEqual(before, self.seed_bytes())
+        self.assertTrue(self.api.seed_format(custom)['compatible'])
+
+    def test_custom_output_capture_preserves_canonical_base(self):
+        self.canonical_release_fixture()
+        base = (self.root / self.api.BASE_RECORD).read_bytes()
+        result = subprocess.run([sys.executable, '-B', str(self.root / 'tools/lean-inspector/reuse.py'),
+            'capture', '--repository', str(self.root), '--report', str(self.root / 'custom-output' / publication.RAW),
+            '--snapshot', str(self.root / '.lake/custom-inputs.json')], env=self.environment,
+            capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertTrue((self.root / self.api.BASE_RECORD).exists(),
+                        '[FAIL] custom_capture_keeps_canonical_base')
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+
+    def test_restore_between_publication_and_seal_preserves_installed_base(self):
+        _, producer, _ = self.canonical_release_fixture()
+        captured = self.api.capture(self.root)
+        self.fixture.bundle()
+        publication.publish(self.seed, self.output, publication.coordinates(self.root), self.root)
+        result = subprocess.run(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+            'fetch', '--repository', str(self.root), '--refresh-stale'], env=self.environment,
+            capture_output=True, text=True, check=True)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        self.assertEqual(producer, self.api.read_seed_base(self.root))
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        try:
+            self.api.seal(self.root, self.output, captured)
+        except ValueError:
+            pass
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
+                         '[FAIL] replaced_generation_is_not_relabelled')
+        self.assertEqual(before, self.seed_bytes(), '[FAIL] replaced_generation_is_not_resealed')
+
+    def test_untracked_recovery_install_has_unknown_base(self):
+        self.canonical_release_fixture()
+        self.fixture.write('D5/Untracked.lean', 'def untracked := 3\n')
+        result = subprocess.run(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+            'fetch', '--repository', str(self.root), '--refresh-stale'], env=self.environment,
+            capture_output=True, text=True, check=True)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        self.assertIsNone(self.api.read_seed_base(self.root), '[FAIL] untracked_restore_has_unknown_base')
+        self.assertFalse((self.root / self.api.BASE_RECORD).exists())
 
     def test_approved_archive_failure_never_falls_back_to_older_seed(self):
         local, _, tag = self.canonical_release_fixture()
