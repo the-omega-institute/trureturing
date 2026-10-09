@@ -44,8 +44,8 @@ checks before any Lean: no later work proves or refutes the aggregate lower boun
 
 ## Route
 
-Let $\mathcal T\in\Sigma(5)$ and $(\mathbf 0;\mathbf y)\in\mathcal T$. The quadratic condition gives
-$\mathbf y\cdot\mathbf y=0$, and applied to $(\mathbf 1;\mathbf 1+\mathbf y)$ it gives $\sum_ky_k=0$. Then
+Let $\mathcal T\in\Sigma(5)$ and $(\mathbf y;\mathbf 0)\in\mathcal T$. The quadratic condition gives
+$\mathbf y\cdot\mathbf y=0$, and applied to $(\mathbf 1+\mathbf y;\mathbf 1)$ it gives $\sum_ky_k=0$. Then
 $\mathbf y\cdot\mathbf y=2(y_1^2+y_1y_2+y_2^2)$ with $-3$ a non-square mod $5$, so $\mathbf y=\mathbf 0$. The
 second projection is injective on the three-dimensional $\mathcal T$, so $\mathcal T=\mathcal T_O$, and
 the conditions make $O$ a stochastic isometry. Hence $\Sigma(5)=\mathscr T_{\rm iso}$. For the
