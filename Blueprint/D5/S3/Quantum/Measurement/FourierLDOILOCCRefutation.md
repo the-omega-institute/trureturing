@@ -156,6 +156,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/FourierLDOILOCCRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/johnston-russo-2026-fourier-ldoi-locc-tightness` (refuted) by `D5/S3/Quantum/Measurement/FourierLDOILOCCRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"johnston-russo-2026-fourier-ldoi-locc-tightness","declaration_gid":"D5/S3/Quantum/Measurement/FourierLDOILOCCRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nathaniel Johnston, Vincent Russo (2026). *Distinguishability of locally diagonal orthogonally invariant quantum states*. URL: <https://arxiv.org/abs/2604.12808v1>.

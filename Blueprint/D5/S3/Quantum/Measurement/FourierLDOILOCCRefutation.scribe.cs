@@ -51,7 +51,10 @@ internal sealed class FourierLDOILOCCRefutationDocument : IScribeDocumentDefinit
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Tightness fails", Disp(new Formula.Not(F.Id("claim"))),
                 "At n = 3 Alice first selects an unordered pair with its diagonal projector divided by √2. Bob tests membership in that pair. Inside it a shared fair choice of X or Y measurements resolves the symmetric and antisymmetric labels; outside it computational outcomes and a fair sign guess are used. The X and Y instruments include the complementary level as a third outcome and reset measured factors using |0⟩⟨x|. A zero-probability branch receives the fixed label (0,1). All local instruments are complete. Each of the six off-diagonal states has correct-leaf mass 3/4, and all three diagonal states have correct-leaf mass zero. The uniform success is therefore (6 · 3/4)/9 = 1/2, while lower(3) = 4/9. Local completeness and induction on the tree bound every success probability by one, so the supremum is bounded and optLOCC(3) ≥ 1/2 > lower(3). Only this dimension-three refutation is asserted; an all-dimension family and the exact optimization value are separate statements.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("johnston-russo-2026-fourier-ldoi-locc-tightness"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
