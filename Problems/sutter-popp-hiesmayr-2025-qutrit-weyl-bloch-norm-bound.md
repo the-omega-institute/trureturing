@@ -59,15 +59,15 @@ source's $25.9735$.
 ## Evidence
 
 `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.lean` defines `omega`, `W` (eq. (7)), `bloch`
-(eq. (16)), `l1`, `IsDensity`, `IsSeparable` (the source's finite convex combination of products of density
-matrices) and `claim`, and proves `result : claim`, the conjunction of the separable bound, its attainment
+(eq. (16)), `l1`, `IsSeparable` (the source's finite convex combination of products of density
+matrices, with the frozen `GHZMeasureBiseparableBound.IsDensity`) and `claim`, and proves `result : claim`, the conjunction of the separable bound, its attainment
 and a normalized pure state exceeding it. It reuses the frozen `HesseSicCertificate.omega_cubed`, which this
 delivery makes public, and the frozen `RHLinalg.frobSq_hermitian_eq_sum_sq_eigenvalues`. The axiom closure
 of `result` is exactly `propext`, `Classical.choice` and `Quot.sound`; there is no `sorry` or `native_decide`.
-The module statement is `sha256:7094b68420bd143c7792b1b65930f27fd8fcd9bcee8b4ecb5778ab61ee98c9fc`; `result` is
+The module statement is `sha256:170c8f0aefa2f62dfe725896ee4e9c14d12e6873a424b9997d87ab1d04c70c46`; `result` is
 `sha256:f16841e49be3cb6ba08c2cef14402d257ec0befa5040a022aaddd1f6bd3957f9` and `claim` is
 `sha256:ad3ad8a012ae2bf4364b72126235796c70144e551e3d255cc70bf2f4759198cd`. The Freeze event is
-`sha256:f3bc93e521e9deb3e3902db415aa85e5f419ed2891f0ad00625c1f698b4d16d6`.
+`sha256:f8df9428c7b4dc915de755fd083e109ebd1ad7cfc76f074ee80a1d36b59eea52`.
 
 ## Triage
 
