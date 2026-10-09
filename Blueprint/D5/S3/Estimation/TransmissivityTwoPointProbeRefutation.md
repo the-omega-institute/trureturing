@@ -102,7 +102,79 @@ $$claim \Leftrightarrow (\forall q : \mathbb{R}, \forall tau0 : \mathbb{R}, \for
 
 Section V, arXiv v1 PDF p. 4: "For the two-point prior PDF (15), we verify that for integer n̄ the optimal state is the Fock state with the same photon number. For real n̄, our numerical results support the conjecture that the optimal state has the form of the state (27), up to a phase, i.e., |Φ′ₙ̄⟩ = e^{iφn̂}|Φₙ̄⟩." The prior parameters range over [0,1]; nbar is positive; N is any finite Fock cutoff. The psi input has Euclidean norm one and meanPhoton(psi)=nbar. The encoding says that some phased in-between state has finite-POVM MMSE no greater than each competing input. Each state's MMSE is computed on its own finite output span. Identification with the source's arbitrary-measurement optimum requires the compression argument stated above and a reduction from arbitrary outcomes to finite outcomes; that bridge is ASSUMED-UNVERIFIED and not kernel-checked here.
 
-**Theorem 1.9 (Strict error advantage of a nonadjacent Fock superposition).**
+**Theorem 1.9 (Square roots of nonnegative natural powers).**
+
+$$\forall t : \mathbb{R}, (0 \le t) \Rightarrow (\forall k : \mathbb{N}, \operatorname{sqrt}\left((t)^{k}\right) = (\operatorname{sqrt}\left(t\right))^{k})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.sqrt_power` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For t nonnegative and natural k, sqrt(t^k)=sqrt(t)^k. The power factorization follows by induction using multiplicativity of the square root on nonnegative inputs.
+
+**Theorem 1.10 (Factored pure-loss Kraus coefficient).**
+
+$$\forall n : \mathbb{N}, \forall l : \mathbb{N}, \forall tau : \mathbb{R}, (\operatorname{mem}\left(tau, \operatorname{Icc}\left(0, 1\right)\right)) \Rightarrow (\operatorname{sqrt}\left(((\operatorname{toReal}\left(\operatorname{choose}\left(n, l\right)\right)) \cdot ((tau)^{\operatorname{NatSub}\left(n, l\right)})) \cdot ((1 - tau)^{l})\right) = ((\operatorname{sqrt}\left(\operatorname{toReal}\left(\operatorname{choose}\left(n, l\right)\right)\right)) \cdot ((\operatorname{sqrt}\left(tau\right))^{\operatorname{NatSub}\left(n, l\right)})) \cdot ((\operatorname{sqrt}\left(1 - tau\right))^{l}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.source_coefficient` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For tau in [0,1], the source coefficient sqrt(choose(n,l) tau^(n-l) (1-tau)^l) equals sqrt(choose(n,l)) sqrt(tau)^(n-l) sqrt(1-tau)^l. Natural subtraction is truncated.
+
+**Theorem 1.11 (Source form of the pure-loss Kraus matrix).**
+
+$$\forall N : \mathbb{N}, \forall l : \operatorname{Fin}\left(N + 1\right), \forall tau : \mathbb{R}, (\operatorname{mem}\left(tau, \operatorname{Icc}\left(0, 1\right)\right)) \Rightarrow (\operatorname{amplitudeKraus}\left(N, l, 1 - tau\right) = \operatorname{MatrixOf}\left(fun r c : \operatorname{Fin}\left(N + 1\right) \mapsto \operatorname{ite}\left(\operatorname{val}\left(r\right) + \operatorname{val}\left(l\right) = \operatorname{val}\left(c\right), \operatorname{ite}\left(\operatorname{val}\left(l\right) \le \operatorname{val}\left(c\right), \operatorname{ofReal}\left(\operatorname{sqrt}\left(((\operatorname{toReal}\left(\operatorname{choose}\left(\operatorname{val}\left(c\right), \operatorname{val}\left(l\right)\right)\right)) \cdot ((tau)^{\operatorname{NatSub}\left(\operatorname{val}\left(c\right), \operatorname{val}\left(l\right)\right)})) \cdot ((1 - tau)^{\operatorname{val}\left(l\right)})\right)\right), 0\right), 0\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.sourceKraus` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite cutoff N, Kraus index l and tau in [0,1], amplitudeKraus(l,1-tau) has the source coefficient at row r and column c when r.val+l.val=c.val and l.val<=c.val, and zero otherwise. Matrix.of turns the displayed entry function into a matrix.
+
+**Theorem 1.12 (Positive measurement moment variance).**
+
+$$\forall d : \mathbb{N}, \forall m : \mathbb{N}, \forall E : \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \forall x : \operatorname{Fin}\left(m\right) \to \mathbb{R}, ((\forall k : \operatorname{Fin}\left(m\right), \operatorname{PosSemidef}\left(E\left(k\right)\right)) \land (\sum_{k : \operatorname{Fin}\left(m\right)} (E\left(k\right)) = 1)) \Rightarrow (\operatorname{PosSemidef}\left(\sum_{k : \operatorname{Fin}\left(m\right)} (\operatorname{smul}\left(\operatorname{ofReal}\left((x\left(k\right))^{2}\right), E\left(k\right)\right)) - (\sum_{k : \operatorname{Fin}\left(m\right)} (\operatorname{smul}\left(\operatorname{ofReal}\left(x\left(k\right)\right), E\left(k\right)\right))) \cdot (\sum_{k : \operatorname{Fin}\left(m\right)} (\operatorname{smul}\left(\operatorname{ofReal}\left(x\left(k\right)\right), E\left(k\right)\right)))\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.moment_variance` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive semidefinite effects summing to the identity and real estimates x, M2-M1 M1 is positive semidefinite, where M1=sum_k ofReal(x_k) E_k and M2=sum_k ofReal(x_k^2) E_k. The formula expands those two sums. The difference is the sum of the positive sandwiches (x_k I-M1)^H E_k (x_k I-M1).
+
+**Theorem 1.13 (Square-completion bound for every finite measurement).**
+
+$$\forall d : \mathbb{N}, \forall m : \mathbb{N}, \forall A : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \forall C : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \forall D : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \forall B : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), (\operatorname{PosSemidef}\left(A\right)) \Rightarrow ((\operatorname{IsHermitian}\left(B\right)) \Rightarrow (((A) \cdot (B) + (B) \cdot (A) = \operatorname{smul}\left(\operatorname{ofReal}\left(2\right), C\right)) \Rightarrow (\forall E : \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \forall x : \operatorname{Fin}\left(m\right) \to \mathbb{R}, ((\forall k : \operatorname{Fin}\left(m\right), \operatorname{PosSemidef}\left(E\left(k\right)\right)) \land (\sum_{k : \operatorname{Fin}\left(m\right)} (E\left(k\right)) = 1)) \Rightarrow (\operatorname{Re}\left(\operatorname{trace}\left(D\right) - \operatorname{trace}\left((B) \cdot (C)\right)\right) \le \sum_{k : \operatorname{Fin}\left(m\right)} (\operatorname{Re}\left(\operatorname{trace}\left((E\left(k\right)) \cdot (\operatorname{smul}\left(\operatorname{ofReal}\left((x\left(k\right))^{2}\right), A\right) - \operatorname{smul}\left(\operatorname{ofReal}\left((2) \cdot (x\left(k\right))\right), C\right) + D)\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.risk_lower_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let A,C,D,B be arbitrary complex square matrices of dimension d. If A is positive semidefinite, B Hermitian and A B+B A=2 C, every finite POVM with real estimates has quadratic risk at least Re(trace(D)-trace(B C)). The positive measurement variance and the positive square (M1-B)^2 yield the bound after trace square completion.
+
+**Theorem 1.14 (Spectral measurement attains the trace certificate).**
+
+$$\forall d : \mathbb{N}, \forall A : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \forall C : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \forall D : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \forall B : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), (\operatorname{IsHermitian}\left(B\right)) \Rightarrow (((A) \cdot (B) + (B) \cdot (A) = \operatorname{smul}\left(\operatorname{ofReal}\left(2\right), C\right)) \Rightarrow (\exists E : \operatorname{Fin}\left(d\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \exists x : \operatorname{Fin}\left(d\right) \to \mathbb{R}, ((\forall k : \operatorname{Fin}\left(d\right), \operatorname{PosSemidef}\left(E\left(k\right)\right)) \land (\sum_{k : \operatorname{Fin}\left(d\right)} (E\left(k\right)) = 1)) \land (\sum_{k : \operatorname{Fin}\left(d\right)} (\operatorname{Re}\left(\operatorname{trace}\left((E\left(k\right)) \cdot (\operatorname{smul}\left(\operatorname{ofReal}\left((x\left(k\right))^{2}\right), A\right) - \operatorname{smul}\left(\operatorname{ofReal}\left((2) \cdot (x\left(k\right))\right), C\right) + D)\right)\right)) = \operatorname{Re}\left(\operatorname{trace}\left(D\right) - \operatorname{trace}\left((B) \cdot (C)\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.spectral_attainment` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let A,C,D,B be arbitrary complex square matrices of dimension d. If B is Hermitian and A B+B A=2 C, its spectral projections form a d-outcome POVM. Taking its real eigenvalues as estimates gives quadratic risk exactly Re(trace(D)-trace(B C)). No positivity hypothesis on A is required for this attainment identity.
+
+**Theorem 1.15 (Strict error advantage of a nonadjacent Fock superposition).**
 
 $$\neg claim$$
 
@@ -129,6 +201,12 @@ Take q=1/2, tau0=4/9, tau1=1 and nbar=1/2. Every in-between phase has MMSE 1625/
 - Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.inBetween`
 - Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.meanPhoton`
 - Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.momentState`
+- Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.moment_variance`
 - Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.outputState`
 - Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.result`
+- Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.risk_lower_bound`
+- Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.sourceKraus`
+- Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.source_coefficient`
+- Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.spectral_attainment`
+- Truth anchor: `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.sqrt_power`
 - Dependency: [D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation](../Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.md)

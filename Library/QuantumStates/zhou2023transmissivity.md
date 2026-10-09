@@ -5,9 +5,10 @@ year: 2023
 title: "Bayesian minimum mean square error for transmissivity sensing"
 doi: 10.1103/PhysRevResearch.5.043033
 url: https://arxiv.org/abs/2304.05539v1
-claim: "Section V conjecture: in-between states, up to phase, minimize the two-point-prior MMSE at real mean photon number."
+claim: "Section V conjecture: in-between states, up to phase, minimize the two-point-prior MMSE at real mean photon number. Sections VI-VII conjecture: for the beta prior PDF the in-between states (Fock states at integer mean photon number) are optimal."
 strata_touched:
   - D5/S3/Estimation/TransmissivityTwoPointProbeRefutation
+  - D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation
 license: citation-only
 triage: anchor
 ---
@@ -81,8 +82,25 @@ The refutation does not assert global optimality of the competitor and does not
 settle the beta-prior conjecture in Section VI. The integer-energy result and the
 phase-invariance argument are separate from the refuted non-integer-energy claim.
 
+## Beta prior (Sections VI and VII)
+
+The beta prior, eq. (16) (`eq:betaPrior`, arXiv v1 p. 3):
+
+> $P(\tau)=\frac{\tau^{\alpha-1}(1-\tau)^{\beta-1}}{\mathcal{B}(\alpha,\beta)}$, where $\mathcal{B}(\alpha,\beta)=\Gamma(\alpha)\Gamma(\beta)/\Gamma(\alpha+\beta)$, $\Gamma(.)$ is the gamma function, and the values of $\alpha>0$, $\beta>0$ cover a great variety of PDF's behavior.
+
+Section VI ("beta distribution as prior PDF", p. 6), eq. (39) and the following paragraph:
+
+> $\delta=\frac{\alpha \beta}{(\alpha+\beta) (\alpha+\beta+1) (\alpha+\beta+\bar{n})}$. For non-integer mean photon number and non-Fock states, we compute the MSE numerically using the same methods as in Section V. The numerical results indicate that the optimal input states with non-integer mean photon number, have the form of Eq. (27), which means that for $\bar{n} \in \mathbb{N}$ the optimal states are Fock states.
+
+The figure of Section VI (`fig_beta_MMSE`, p. 6) uses $\alpha=\beta=1$ and $\alpha=2,\beta=4$, with 200 random superpositions of the first five Fock states for each $\bar n$. Section VII (p. 7):
+
+> We note that for the beta prior PDF, we were not able to prove analytically that the Fock states or the in-between states of Eq. (27) states are optimal, even though our numerical computations support such conjecture.
+
+The moments are $\Gamma_k=\int_0^1P(\tau)\tau^k\rho(\tau)\,d\tau$ with the same $\rho(\tau)$ and finite-POVM risk as above.
+
 ## Verified locator
 
 - DOI: https://doi.org/10.1103/PhysRevResearch.5.043033
 - URL: https://arxiv.org/abs/2304.05539v1
 - PDF: https://arxiv.org/pdf/2304.05539v1 (moment operators p. 3; conjecture p. 4).
+- Source: `main.tex`, `eq:betaPrior` (lines 223–227), Section `sec:beta` (lines 371–386) and the discussion paragraph (line 430).
