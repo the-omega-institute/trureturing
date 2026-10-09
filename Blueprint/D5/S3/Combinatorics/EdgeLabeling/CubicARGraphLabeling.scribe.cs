@@ -19,7 +19,7 @@ internal sealed class CubicARGraphLabelingDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("A bijection from the actual edge set to a finite initial segment supplies positive successor labels on actual edges and zero elsewhere."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("cubicargraphlabeling-argraph_of_edge_equiv"),
+                DescribeId.Create("cubicargraphlabeling-argraph-of-edge-equiv"),
                 DeclarationHandle.Create(Prefix + "arGraph_of_edge_equiv"),
                 H("From an edge equivalence to additive rigidity"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

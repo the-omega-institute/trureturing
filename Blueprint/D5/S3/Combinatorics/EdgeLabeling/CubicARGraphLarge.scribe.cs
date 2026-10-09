@@ -13,7 +13,7 @@ internal sealed class CubicARGraphLargeDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Combinatorics/EdgeLabeling/CubicARGraphLarge.ar_graph_large"),
             H("An AR-labeling with the exact interval of labels"),
             StatementSource.FromAuthor(Disp(Seq(
-                Call("Cubic", F.Id("G")), Sp, Land, Sp, D(12), Sp, Le, Sp,
+                Call("Cubic", F.Id("G")), Sp, Land, Sp, D(1, 2), Sp, Le, Sp,
                 Call("EdgeCount", F.Id("G")), Sp, Implies, Sp,
                 Call("IsARGraph", F.Id("G"))))),
             AssessedProvenance.FromRepo(),

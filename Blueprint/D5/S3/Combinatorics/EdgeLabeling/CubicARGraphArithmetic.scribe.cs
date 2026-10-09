@@ -29,7 +29,7 @@ internal sealed class CubicARGraphArithmeticDocument : IScribeDocumentDefinition
         []));
 
     private static DocumentBlock Node(string name, string title, DescribeRole role, string prose) =>
-        Describe.Lean(DescribeId.Create("cubic-ar-arithmetic-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("cubic-ar-arithmetic-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }

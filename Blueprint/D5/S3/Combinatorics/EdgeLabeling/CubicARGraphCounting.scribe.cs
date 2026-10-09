@@ -20,7 +20,7 @@ internal sealed class CubicARGraphCountingDocument : IScribeDocumentDefinition
         []));
 
     private static DocumentBlock Node(string name, string title, string prose) =>
-        Describe.Lean(DescribeId.Create("cubic-ar-counting-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("cubic-ar-counting-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }

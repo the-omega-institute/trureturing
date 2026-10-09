@@ -12,14 +12,14 @@ internal sealed class CubicARGraphUnionDocument : IScribeDocumentDefinition
         H("Avoiding all local collisions"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("cubicargraphunion-argraph_of_bad_sum_lt"),
+                DescribeId.Create("cubicargraphunion-argraph-of-bad-sum-lt"),
                 DeclarationHandle.Create(Prefix + "arGraph_of_bad_sum_lt"),
                 H("A finite union bound"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("If the total cardinality of the bad vertex events is smaller than the marked sample space, one labeling avoids them all."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("cubicargraphunion-sum_bad_card_lt"),
+                DescribeId.Create("cubicargraphunion-sum-bad-card-lt"),
                 DeclarationHandle.Create(Prefix + "sum_bad_card_lt"),
                 H("Strict factorial margin"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

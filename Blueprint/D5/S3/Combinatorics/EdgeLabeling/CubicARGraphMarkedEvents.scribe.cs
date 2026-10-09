@@ -34,7 +34,7 @@ internal sealed class CubicARGraphMarkedEventsDocument : IScribeDocumentDefiniti
             GidRef.Create("D5/S3/Combinatorics/EdgeLabeling/CubicARGraphCounting"))]));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("cubic-ar-marked-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("cubic-ar-marked-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }
