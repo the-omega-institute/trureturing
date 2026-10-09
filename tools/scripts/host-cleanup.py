@@ -258,13 +258,17 @@ def registered_worktrees(repository):
 
 
 def clean_worktrees(repository, base, delete, active_paths=()):
-    arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
-                 "--base", base, "--lanes-only"]
-    if delete:
-        arguments.append("--force")
-    for path in sorted({Path(path).resolve() for path in active_paths}):
-        arguments.extend(["--active-path", str(path)])
-    return subprocess.run(arguments, cwd=repository, check=False).returncode
+    # Host activity can exceed the platform argument limit, so it travels in one private file.
+    paths = sorted({str(Path(path).resolve()) for path in active_paths})
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", prefix="trureturing-clean-activity-",
+                                     suffix=".json") as activity:
+        json.dump(paths, activity)
+        activity.flush()
+        arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
+                     "--base", base, "--lanes-only", "--active-paths-file", activity.name]
+        if delete:
+            arguments.append("--force")
+        return subprocess.run(arguments, cwd=repository, check=False).returncode
 
 
 def nonnegative_hours(value):
