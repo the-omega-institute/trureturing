@@ -3122,4 +3122,65 @@ For three or more sectors, the analogous statement requires an explicit hypothes
 
 **范围。** 这是 §39 任意源谱相干信道的有限特征实现定理。它不对任意乘积信道的分支数给出下界，也不改变精确钻石范数最优值；不增加 CFT、引力、通信辅助或共享纠缠的解释。
 
+## 41. 全多坐标特征湮灭下的多扇区最小支撑
+
+**定理 41.1（完整多坐标正交性的充要条件）。** 设 $S$ 为有限扇区集，$d_s\ge2$，$H$ 为有限阿贝尔群。每个扇区的受控循环移位由满射同态
+$$
+\pi_s:H\twoheadrightarrow\mathbb Z/d_s\mathbb Z
+$$
+给出，并令联合同态为 $\Pi=(\pi_s)_s:H\to A:=\prod_{s\in S}\mathbb Z/d_s\mathbb Z$。令 $h$ 在 $H$ 上均匀分布。对 $A$ 的角色 $\chi=(\chi_s)_s\in\widehat A=\prod_s\widehat{\mathbb Z/d_s\mathbb Z}$，定义 $\operatorname{supp}\chi=\{s:\chi_s\ne1\}$。则对给定的 $(H,\Pi)$，下列两条件等价：
+1. 对每个 $\chi\in\widehat A$ 满足 $|\operatorname{supp}\chi|\ge2$，有 $|H|^{-1}\sum_{h\in H}\chi(\Pi(h))=0$；
+2. $\Pi$ 满射。
+此外，任一满足这些条件的实现都有 $|H|\ge|A|=\prod_s d_s$，且下界由 $H=A$、$\Pi=\mathrm{id}_A$ 达到。
+
+因此，对于 §39 的任意源谱，若要求一个有限受控移位混合消灭全部非零多坐标 Fourier 模，而不仅是两坐标模，则乘积群既是充分实现，也是该实现类中的最小支撑。若各 $d_s$ 两两互质，Chinese remainder theorem 将这个乘积群识别为单个循环群 $\mathbb Z/\prod_s d_s\mathbb Z$；若存在公因子，单循环方案仍受定理 40.1 的碰撞障碍约束。
+
+**证明。** $1\Rightarrow2$：若 $\Pi(H)$ 是直积 $A$ 的真子群，则有限阿贝尔群的角色分离性给出一个非平凡角色 $\chi\in\widehat A$，在 $\Pi(H)$ 上恒等于 $1$。由于每个 $\pi_s$ 满射，$\chi$ 不可能只在一个坐标上非平凡：若其唯一非平凡坐标为 $s$，则 $\chi_s\circ\pi_s$ 仍是 $\mathbb Z/d_s\mathbb Z$ 上的非平凡角色，不能在 $H$ 上恒为 $1$。所以 $|\operatorname{supp}\chi|\ge2$，与条件 1 矛盾。$2\Rightarrow1$：满射时 $\Pi(h)$ 在 $A$ 上均匀，非平凡角色的均匀 Haar 平均为零。满射还给出 $|H|\ge|A|$；取 $H=A$ 与恒等联合同态达到下界。证毕。
+
+**推论 41.2（§39 的多扇区充分条件）。** 若 $d_s$ 两两互质，则对任意有限源谱族，取 $H=\mathbb Z/L\mathbb Z$、$L=\prod_sd_s$，并令扇区 $s$ 的移位参数为 $h\bmod d_s$。均匀循环混合消灭全部非零多坐标 Fourier 模，故严格复现 §39 的共同信道 $\mathcal F_G$。其共享随机分支数为 $L$，并且在完整多坐标正交条件下达到定理 41.1 的支撑下界。
+
+**范围。** 这里的最小性只针对受控移位与完整多坐标特征湮灭条件，不是对任意 LOSR 或一般乘积信道分支数的下界。结论保持 §39 的平坦逐扇区目标与有限维模型，不引入 CFT、引力或通信辅助解释。
+
+## 42. 控制器商的精确分支资源
+
+**定理 42.1（去重控制与商群资源）。** 设 $H$ 为有限阿贝尔控制器，$A=\prod_{s\in S}\mathbb Z/d_s\mathbb Z$，且 $\Pi:H\to A$ 为各扇区循环移位参数的联合同态。记 $K=\operatorname{im}\Pi$、$N=\ker\Pi$。令 $\{\Lambda_h\}_{h\in H}$ 为由 $h$ 控制的乘积 CPTP 映射，其中 $\Lambda_h$ 只通过 $\Pi(h)$ 作用。则：
+
+1. 控制器标签按 $\Pi(h)$ 去重后恰有 $|K|$ 个不同的受控移位标签；若记由标签诱导的 CPTP 表示为 $\rho:K\to\operatorname{CPTP}$，则实际不同通道数为 $|\rho(K)|\le|K|$。在标准全输出循环移位且各 $d_s\ge2$ 的忠实表示下，$|\rho(K)|=|K|$。
+在下式中记 $\Lambda_k:=\rho(k)$。
+2. $h\mapsto\Pi(h)$ 将 $H$ 的均匀分布推前为 $K$ 上的均匀分布，故
+   $$|H|^{-1}\sum_{h\in H}\Lambda_h=|K|^{-1}\sum_{k\in K}\Lambda_k.$$
+3. 由 $H/N\cong K$，用商控制器 $H/N$ 实现同一混合且恰有 $|K|$ 个控制标签；实际通道分支数为 $|\rho(K)|$。于是原始控制器大小 $|H|$ 不是该受控移位表示的资源成本：标签成本是 $|K|$，通道成本是 $|\rho(K)|$。
+
+若每个坐标投影 $\pi_s$ 满射且要求湮灭全部支撑至少两个坐标的角色，则 $K=A$，从而精确成本为 $|K|=\prod_s d_s$。这与 §41 的最小支撑结论一致，同时允许 $|H|>|K|$ 的冗余控制器。
+
+**证明。** 同态的纤维均为 $N$ 的陪集，故每个 $k\in K$ 有恰好 $|N|$ 个原像；这给出均匀推前公式。控制作用只依赖 $\Pi(h)$，故标签去重和逐项合并成立。第一同构定理给出 $H/N\cong K$，把每个陪集标记为其像即得商控制器。最后，在满射坐标投影与全多坐标角色湮灭条件下，§41.1 的 (1)⇔(2) 应用于 $K\hookrightarrow A$，得到 $K=A$；因此 $|K|=\prod_s d_s$。本定理只计算受控移位表示的分支资源，不给任意 LOSR 分支数下界。
+
+**范围。** 结论针对有限共享经典控制与受控循环移位的表示成本；不扩展 §39 的钻石范数最优性，不涉及一般 LOSR、通信或共享纠缠，也不引入 CFT/引力解释。
+
+## 43. 未湮灭特征的可审计误差下界
+
+**定理 43.1（受控移位残余特征的钻石下界）。** 令 $A$ 为有限阿贝尔群，$K\le A$，$\widehat A$ 为其角色群，且在 $\mathcal H=\ell^2(\widehat A)$ 上定义
+$$
+U_u|\chi\rangle=\chi(u)|\chi\rangle,\qquad
+\mathcal D_K(X)=|K|^{-1}\sum_{u\in K}U_uXU_u^* .
+$$
+记 $m_K(\eta)=|K|^{-1}\sum_{u\in K}\eta(u)$。则
+$$
+\mathcal D_K(|\chi\rangle\langle\psi|)
+ =m_K(\chi\psi^{-1})|\chi\rangle\langle\psi|.
+$$
+若 $\eta=\chi\psi^{-1}\in K^\perp\setminus\{1\}$，则对理想全群平均 $\mathcal D_A$，
+$$
+\|\mathcal D_K-\mathcal D_A\|_\diamond\ge1 .
+$$
+更一般地，若在某个编码子空间上实际通道与 $\mathcal D_K$ 的该矩阵单位系数为 $h$（理想通道系数为零），则相同二维测试给出钻石距离下界 $|h|$。
+
+**证明。** 角色正交性给出 $m_K(\eta)=1$ 当且仅当 $\eta\in K^\perp$，否则为零；对 $A$ 则 $m_A(\eta)=0$ 对每个非平凡 $\eta$。取归一化输入
+$$
+|v\rangle=(|\chi\rangle+|\psi\rangle)/\sqrt2,qquad \rho_v=|v\rangle\langle v|.
+$$
+当 $\eta\in K^\perp\setminus\{1\}$ 时，$(\mathcal D_K-\mathcal D_A)(\rho_v)=\tfrac12(|\chi\rangle\langle\psi|+|\psi\rangle\langle\chi|)$。其在 $\operatorname{span}\{|\chi\rangle,|\psi\rangle\}$ 上本征值为 $+1/2,-1/2$，故迹范数为 $1$；输入归一化，遂钻石范数至少为 $1$。若该 surviving coefficient 为 $h$，同一计算的两个本征值为 $\pm|h|/2$，得到下界 $|h|$。被动参考系统不改变下界，因钻石范数取所有参考输入的上确界。证毕。
+
+**与 §39--§42 的接口。** 共同受控移位混合在 Fourier 矩阵单位上恰以 $m_K(\eta)$ 乘法。故 $K^\perp$ 中任一支撑至少两个扇区的角色给出一个可直接测试的残余相干；固定源谱时 $h$ 是相应实际编码系数，不能无条件替换为 $1$。普适任意源谱的失败需另取一个允许谱使 $h\ne0$；定理 40.1 的 universal 量词正是这一额外步骤。结论只给受控移位表示的误差证书，不给任意 LOSR 下界。
+
 ## 追加锚（本行以下为增补区）
