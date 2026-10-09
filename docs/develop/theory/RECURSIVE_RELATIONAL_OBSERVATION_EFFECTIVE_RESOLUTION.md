@@ -243,7 +243,7 @@ $|H_0|=1$ 归纳得相同结论。
 
 此构造为可数无限覆盖，不是有限互异奇数模数覆盖。它不解决有限 Erdős 第 7 问，也不把“每步严格增加 LCM”有限归纳成“存在一个普通整数永远幸存”。
 
-已发布的 https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md 的外部章节9（提交 0b499abf718df8517cc05b8554d20467389014a4）给出了以全部奇素数为模数、覆盖全部整数而 profinite 幸存集合非空且 Haar 测度为零的版本；本节以单个素数的幂增加精度，保留至少一半的幸存质量，二者共同区分相容实现、普通整数实现与极限质量。
+已发布的 docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md 的外部章节9（提交 0b499abf718df8517cc05b8554d20467389014a4）给出了以全部奇素数为模数、覆盖全部整数而 profinite 幸存集合非空且 Haar 测度为零的版本；本节以单个素数的幂增加精度，保留至少一半的幸存质量，二者共同区分相容实现、普通整数实现与极限质量。
 
 #### 1.1.8 有限抽样能发现幸存者，不能替代空集证书
 
@@ -2052,7 +2052,7 @@ $$
 
 对 $p\ge3$，下一层这个下界大于本层环境大小 $p^n$，故候选总数同样逐步严格增加。将 $p=2$ 代入式(TM.500)的粗界只给零测度下界；这个粗界本身不判定二进版本的实际测度。
 
-本节三幂对角排除的核心已有仓内公开结果：[profile343 第 10 节](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)给出同一有效柱集构造、至少 $1/2$ 的 Haar 测度下界、无可计算点以及有界模拟的有限候选塔。该结果固定定位于仓库快照 `82c3fcbcce00e4e504dc68583c356d9ec41bd942`。profile343 第 11 节另讨论有限消亡索引问题的条件分类，不将其与这里的无限幸存构造混为一个结论。本节按候选层、精确投影和事件顺序的实际 LCM 呈现保留完整证明及适用边界，不主张这些核心结果的原创性。
+本节三幂对角排除的核心已有仓内公开结果：[profile343 第 10 节](https://github.com/the-omega-institute/trureturing/blob/82c3fcbcce00e4e504dc68583c356d9ec41bd942/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)给出同一有效柱集构造、至少 $1/2$ 的 Haar 测度下界、无可计算点以及有界模拟的有限候选塔。该结果固定定位于仓库快照 `82c3fcbcce00e4e504dc68583c356d9ec41bd942`。profile343 第 11 节另讨论有限消亡索引问题的条件分类，不将其与这里的无限幸存构造混为一个结论。本节按候选层、精确投影和事件顺序的实际 LCM 呈现保留完整证明及适用边界，不主张这些核心结果的原创性。
 
 不可计算分支的经典背景是 Kleene 树。可核对的直接来源为 Andrej Bauer，[*König’s Lemma and Kleene Tree*](https://math.andrej.com/wp-content/uploads/2006/05/kleene-tree.pdf)，2006 年 5 月 3 日，第 3.3 节、定理 3.5，第 7 页。该定理给出一棵无限递归二叉树却没有可计算无限路径；其证明采用部分可计算函数的对角化与有界时间近似。这里采用相同的经典结构，并用互异素数幂柱集及可求和的测度预算组织排除；正测度下界、实际 LCM 平台结论和有限编码推论的证明均在上文给出，不把这些具体陈述逐字归于该文，也不主张原创性。
 
@@ -2496,7 +2496,7 @@ $$
 
 对角集合、有效有限层以及无可计算线程的构造，见C卷第2.2节。本文固定其同一个 $K$ 和同一个 Haar 律；没有改变禁用同余族来适配不同结论。该构造的经典可计算性背景是 Andrej Bauer，[*König’s Lemma and Kleene Tree*](https://math.andrej.com/wp-content/uploads/2006/05/kleene-tree.pdf)，2006 年 5 月 3 日，定理 3.5；本文不主张构造或一般有限观察判据的原创性。
 
-仓内对应普通数学成果为不可变快照 82c3fcbcce00e4e504dc68583c356d9ec41bd942 中的 [profile 343](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)：
+仓内对应普通数学成果为不可变快照 82c3fcbcce00e4e504dc68583c356d9ec41bd942 中的 [profile 343](https://github.com/the-omega-institute/trureturing/blob/82c3fcbcce00e4e504dc68583c356d9ec41bd942/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)：
 
 - profile343 第 8 节给出有限正见证的精确条件 $\varnothing\ne q_n^{-1}(h)\subseteq F$，并将其等同于前缀拓扑中内部非空；C卷第2.4.2节、C卷第2.4.3节是在 $F=K$ 上的应用，包含自适应查询的具体运行证明。
 - profile343 第 10 节已经给出相同三幂对角构造、正测度、无可计算点、可判定有限层、严格候选数量增长，以及有效满射提升与延迟低层约束的区别。本文将这些既有性质连接到正负认证和随机流接口。
@@ -2611,7 +2611,7 @@ $$
 
 本节固定实际的前缀塔，研究“每个深度至多使用一个柱集”究竟约束了什么。以下给出普通数学推导、有效性反例及运输条件；不宣称已经完成 Lean 核验、文献穷尽或原创性鉴定。其用途是补齐完成化表示与实际离散接口之间的条件，不能由此结算有限互异奇模数覆盖问题。
 
-可复用的协作基础是 [profile343 的第 13 节，固定提交 c2258c72a04890a997f2c5796a64be5a7247c0f9](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md#13-exact-cylinder-extendibility-with-one-forbidden-class-per-prime-power-height)：它已经给出奇素数、每高度至多一个最终禁类时的柱集可延伸判据、条件正测度界，以及最终高度表与可枚举事件流之间的有效性区别。本节不把这些已有结论重新计为成果；补充的对象是规范最小柱基、二进制边界、可枚举性失配和接口运输。
+可复用的协作基础是 [profile343 的第 13 节，固定提交 c2258c72a04890a997f2c5796a64be5a7247c0f9](https://github.com/the-omega-institute/trureturing/blob/c2258c72a04890a997f2c5796a64be5a7247c0f9/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md#13-exact-cylinder-extendibility-with-one-forbidden-class-per-prime-power-height)：它已经给出奇素数、每高度至多一个最终禁类时的柱集可延伸判据、条件正测度界，以及最终高度表与可枚举事件流之间的有效性区别。本节不把这些已有结论重新计为成果；补充的对象是规范最小柱基、二进制边界、可枚举性失配和接口运输。
 
 #### 2.6.1 固定前缀塔与深度零约定
 
@@ -2996,7 +2996,7 @@ $$
 $$
 Positive mass implies nonemptiness, proving the equivalence. At depth zero there is no permitted forbidden ancestor, giving $M\ge c_p$. $\square$
 
-This criterion and gap are the ordinary mathematical result of [profile 343, §13, snapshot c2258c72](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md). The derivation uses countable subadditivity and does not require forbidden cylinders to be disjoint or nonredundant.
+This criterion and gap are the ordinary mathematical result of [profile 343, §13, snapshot c2258c72](https://github.com/the-omega-institute/trureturing/blob/c2258c72a04890a997f2c5796a64be5a7247c0f9/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md). The derivation uses countable subadditivity and does not require forbidden cylinders to be disjoint or nonredundant.
 
 #### 2.7.2 Computing cylinder masses from the total mass
 
@@ -3158,7 +3158,7 @@ The converse from one computable point to computable total mass or decidable ext
 
 #### 2.7.5 The diagonal survivor set
 
-**定义 2.30。** Use exactly the effective enumeration $(\varphi_e)_{e\ge0}$ fixed in C卷第2.2.1节, with the same Haar law and events, as in [profile 343, §10](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md). Whenever $\varphi_e(e+1)$ halts with output $a_e$, forbid
+**定义 2.30。** Use exactly the effective enumeration $(\varphi_e)_{e\ge0}$ fixed in C卷第2.2.1节, with the same Haar law and events, as in [profile 343, §10](https://github.com/the-omega-institute/trureturing/blob/c2258c72a04890a997f2c5796a64be5a7247c0f9/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md). Whenever $\varphi_e(e+1)$ halts with output $a_e$, forbid
 $$
 [a_e\bmod3^{e+1}]_{e+1}.
 \tag{TM.586}
@@ -4058,7 +4058,7 @@ $$
 M:=\mu(K)\ge\frac12,\qquad K\text{ 闭且没有可计算点}.
 $$
 
-这些构造及有效呈示的区别见 [profile343，第 10、13 节，固定提交 c2258c72a04890a997f2c5796a64be5a7247c0f9](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)。
+这些构造及有效呈示的区别见 [profile343，第 10、13 节，固定提交 c2258c72a04890a997f2c5796a64be5a7247c0f9](https://github.com/the-omega-institute/trureturing/blob/c2258c72a04890a997f2c5796a64be5a7247c0f9/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)。
 
 记
 
