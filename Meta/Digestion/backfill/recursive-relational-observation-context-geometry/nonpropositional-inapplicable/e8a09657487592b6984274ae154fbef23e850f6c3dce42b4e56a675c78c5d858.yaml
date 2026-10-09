@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:e8a09657487592b6984274ae154fbef23e850f6c3dce42b4e56a675c78c5d858
+  normalized_sha256: sha256:e8a09657487592b6984274ae154fbef23e850f6c3dce42b4e56a675c78c5d858
+cas_ref: sha256:e8a09657487592b6984274ae154fbef23e850f6c3dce42b4e56a675c78c5d858
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d: discrete_gronwall_prod_general (R=Real, u=E, c=L, b=delta, n0=0) supplies the complete product recurrence bound from the stated recurrence and nonnegative gains. Nonnegative E and L(k)<=C, delta(k)<=b supply the constant recurrence by mul_le_mul_of_nonneg_right and add_le_add. The same contract with c=constant C and b=constant b, Finset.prod_const, Finset.sum_range_reflect, geom_sum_eq and geom_sum_Ico' give all three displayed finite geometric-sum bounds including C=1 and n=0 by normalization. No usable frozen project GID supplies this full product-and-three-branch relation. Both existing claim and proof descendants are settled. Statements about local certificate domains and legal multi-input substitution remain explicitly identified applicability boundaries; this recurrence assertion does not certify them."
+    previous_atom_id: 8a29e315112db9b403ce26d980c54b7723811ca81b802d6999d98f36061be5c5
+    next_atom_id: 41f4ab966413c96273e92274b5472804af8b40b667691b890fb8f9b8df6b5d42
+  chain_atoms:
+    - d40dde722696ed30c9f8f0cf379579c3c165b1bb49c2ee38ef6f3abc21456c44
+    - fc0cffa8835a00eeeaba94286ca3235479146bfad5156214549abb3fbed383f2
