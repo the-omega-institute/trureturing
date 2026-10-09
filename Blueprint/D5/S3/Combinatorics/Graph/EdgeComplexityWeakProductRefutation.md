@@ -106,6 +106,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/EdgeComplexityWeakProductRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gupta-iosevich-2026-edge-complexity-weak-product` (proved) by `D5/S3/Combinatorics/Graph/EdgeComplexityWeakProductRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gupta-iosevich-2026-edge-complexity-weak-product","declaration_gid":"D5/S3/Combinatorics/Graph/EdgeComplexityWeakProductRefutation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* V. Gupta, A. Iosevich, J. Iosevich, B. Song, H. Tian (2026). *Edge complexity of graphs*. DOI: [10.48550/arXiv.2607.15598](https://doi.org/10.48550/arXiv.2607.15598). URL: <https://arxiv.org/abs/2607.15598v1>.
