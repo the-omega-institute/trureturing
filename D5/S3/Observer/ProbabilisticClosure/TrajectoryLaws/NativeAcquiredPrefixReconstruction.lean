@@ -190,12 +190,11 @@ private theorem bits_bound {n : ℕ} {last : Letter} (p : PayloadForm n last) :
   induction p <;> simp_all [completedBits]
 
 private theorem weight_bound (bs : List Letter) : markerWeight bs ≤ bs.length := by
-  induction bs with
-  | nil => rfl
-  | cons b bs ih =>
-      have hb := b.isLt
-      simp [markerWeight] at ih ⊢
-      omega
+  simpa [markerWeight] using
+    List.sum_le_card_nsmul (bs.map Fin.val) 1 (by
+      intro x hx
+      obtain ⟨b, hb, rfl⟩ := List.mem_map.mp hx
+      simpa using b.isLt)
 
 private theorem payload_values {n : ℕ} {last : Letter} (p : PayloadForm n last)
     (t : ℕ) (r : Registers) (s : ℕ) (c : Counts) :
@@ -279,14 +278,24 @@ theorem reconstruction_invariants (nf : PrefixForm) : PrefixFacts nf (reconstruc
         ⟨(retryCounts u).alpha + 1, (retryCounts u).beta + 1⟩ (by omega)
       have hbound := bits_bound p
       have hw := weight_bound (completedBits p)
-      have he := marker_fields_recover rho (completedBits p) hbound
-      have hfields := marker_fields_exact rho (completedBits p) hbound
+      have he := marker_fields_recover rho (completedBits p)
+      have hfields := marker_fields_exact rho (completedBits p)
       dsimp only [retryCounts] at hs ha hb hr hc
       dsimp only [PrefixFacts, reconstruct, retryCounts]
       refine ⟨by simpa using hs, ?_, ?_, by simpa using hc, hr, ?_, ?_, segment_refinements p⟩
       · omega
       · omega
-      · simpa only [hr, markerRegisters] using hfields
+      · obtain ⟨hseed, hweight, hsyn, hz, hqone, hqtwo, hsnapshot⟩ := hfields
+        have hlt : markerWeight (completedBits p) < 5 := by omega
+        refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+        all_goals rw [hr]
+        · exact hseed
+        · simpa only [markerRegisters, Nat.mod_eq_of_lt hlt] using hweight
+        · exact hsyn
+        · exact hz
+        · exact hqone
+        · exact hqtwo
+        · exact hsnapshot
       · have hh : recoverMarkers (reconstructPayload 0 (acquiredRegisters rho) 0
             ⟨2 * u.count 0 + 1, 2 * u.count 1 + 1⟩ p).source.finiteFields =
             recoverMarkers ⟨if (completedBits p).length < 4 then

@@ -370,37 +370,130 @@ theorem finite_projection_commutes (c : AcquiredNativeState) (op : Operation) :
   cases op <;>
     simp [nativeStep, nativeRead, nativeStop, finiteStep, Option.map_map, Function.comp_def]
 
-/-- All eight third addresses, both seeds, and the fourth hold retain the selected prefix. -/
-theorem marker_fields_recover (rho : Letter) (bs : List Letter) (h : bs.length ≤ 4) :
+private theorem fold_markers_live (t : ℕ) (r : Registers) (rho sigma : Letter)
+    (hseed : r.seed = some rho) (hsyn : r.syndrome = some sigma) (bs : List Letter) :
+    (foldMarkers t r bs).seed = some rho ∧
+    (foldMarkers t r bs).weight.val = (r.weight.val + markerWeight bs) % 5 ∧
+    (foldMarkers t r bs).syndrome = some
+      (sigma + ((bs.zipIdx t).map
+        (fun be => (if be.2 % 2 = 0 then 1 else rho) * be.1)).sum) := by
+  induction bs generalizing t r sigma with
+  | nil => simp [foldMarkers, markerWeight, hseed, hsyn, Nat.mod_eq_of_lt r.weight.isLt]
+  | cons b bs ih =>
+    let next := writeMarker r t b
+    have hnseed : next.seed = some rho := hseed
+    have hnsyn : next.syndrome = some (sigma + (if t % 2 = 0 then 1 else rho) * b) := by
+      simp [next, writeMarker, hseed, hsyn]
+    obtain ⟨h1, h2, h3⟩ := ih (t + 1) next _ hnseed hnsyn
+    refine ⟨h1, ?_, ?_⟩
+    · simpa only [foldMarkers, next, writeMarker, Fin.val_add, markerWeight,
+        List.map_cons, List.sum_cons, Nat.mod_add_mod, Nat.add_assoc] using h2
+    · simpa [foldMarkers, List.zipIdx_cons, List.map_cons, List.sum_cons,
+        add_assoc] using h3
+
+private theorem fold_markers_hold (t : ℕ) (ht : 3 ≤ t) (r : Registers) (bs : List Letter) :
+    (foldMarkers t r bs).qone = r.qone ∧
+    (foldMarkers t r bs).qtwo = r.qtwo ∧
+    (foldMarkers t r bs).z = r.z ∧
+    (foldMarkers t r bs).snapshot = r.snapshot := by
+  induction bs generalizing t r with
+  | nil => exact ⟨rfl, rfl, rfl, rfl⟩
+  | cons b bs ih =>
+    have h0 : t ≠ 0 := by omega
+    have h2 : t ≠ 2 := by omega
+    have hlt : ¬ t < 3 := by omega
+    simpa [foldMarkers, writeMarker, writeRecords, h0, h2, hlt]
+      using ih (t + 1) (by omega) (writeMarker r t b)
+
+/-- Unrestricted writer fields; live weight wraps while the first-three records hold. -/
+def FoldWrittenFields (rho : Letter) (bs : List Letter) (r : Registers) : Prop :=
+  r.seed = some rho ∧ r.weight.val = markerWeight bs % 5 ∧
+  r.syndrome = some (markerSyndrome rho bs) ∧ r.z = bs.headD 0 ∧
+  r.qone = (markerRegisters rho (bs.take 3)).qone ∧
+  r.qtwo = (markerRegisters rho (bs.take 3)).qtwo ∧
+  r.snapshot = if bs.length < 3 then none else
+    some ⟨rho, ⟨markerWeight (bs.take 3) % 5, Nat.mod_lt _ (by decide)⟩,
+      markerSyndrome rho (bs.take 3)⟩
+
+/-- The total writer recovers the same selected prefix after arbitrarily many markers. -/
+theorem marker_fields_recover (rho : Letter) (bs : List Letter) :
     recoverMarkers ⟨if bs.length < 4 then payloadControl bs.length .p
       else .fourth (.pending (bs.getLastD 0)), markerRegisters rho bs⟩ = bs.take 3 := by
   rcases bs with _ | ⟨a, bs⟩
   · rfl
   rcases bs with _ | ⟨b, bs⟩
-  · fin_cases rho <;> fin_cases a <;> decide
+  · fin_cases a <;> simp [recoverMarkers, recoverFromRegisters, completedCount,
+      payloadControl, markerRegisters, foldMarkers, acquiredRegisters, emptyRegisters,
+      writeMarker, writeRecords]
   rcases bs with _ | ⟨c, bs⟩
-  · fin_cases rho <;> fin_cases a <;> fin_cases b <;> decide
-  rcases bs with _ | ⟨d, bs⟩
-  · fin_cases rho <;> fin_cases a <;> fin_cases b <;> fin_cases c <;> decide
-  have hb : bs = [] := List.length_eq_zero_iff.mp (by simp at h; omega)
-  subst bs
-  fin_cases rho <;> fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> decide
+  · fin_cases a <;> fin_cases b <;> simp [recoverMarkers, recoverFromRegisters,
+      completedCount, payloadControl, markerRegisters, foldMarkers, acquiredRegisters,
+      emptyRegisters, writeMarker, writeRecords]
+  have hq := fold_markers_hold 3 (by omega)
+    (markerRegisters rho [a, b, c]) bs
+  have hf : markerRegisters rho (a :: b :: c :: bs) =
+      foldMarkers 3 (markerRegisters rho [a, b, c]) bs := rfl
+  have hc : min (completedCount
+      (if (a :: b :: c :: bs).length < 4 then payloadControl (a :: b :: c :: bs).length .p
+        else .fourth (.pending ((a :: b :: c :: bs).getLastD 0)))) 3 = 3 := by
+    split
+    · rename_i hlt
+      have hlen : (a :: b :: c :: bs).length = 3 := by
+        simp only [List.length_cons] at hlt ⊢
+        omega
+      simp [hlen, payloadControl, completedCount]
+    · rfl
+  unfold recoverMarkers recoverFromRegisters
+  rw [hc, hf, hq.1, hq.2.1, hq.2.2.1]
+  fin_cases a <;> fin_cases b <;> fin_cases c <;>
+    simp [markerRegisters, foldMarkers, acquiredRegisters, emptyRegisters,
+      writeMarker, writeRecords]
 
-/-- Every reachable marker word, with either seed, satisfies the concrete field formulas. -/
-theorem marker_fields_exact (rho : Letter) (bs : List Letter) (h : bs.length ≤ 4) :
-    WrittenFields rho bs (markerRegisters rho bs) := by
+/-- Exact live arithmetic and held records for every word of the total marker writer. -/
+theorem marker_fields_exact (rho : Letter) (bs : List Letter) :
+    FoldWrittenFields rho bs (markerRegisters rho bs) := by
+  obtain ⟨hs, hw, hy⟩ := fold_markers_live 0 (acquiredRegisters rho) rho (1 + rho)
+    rfl rfl bs
+  change (markerRegisters rho bs).seed = some rho at hs
+  have hw' : (markerRegisters rho bs).weight.val = markerWeight bs % 5 := by
+    simpa [markerRegisters, acquiredRegisters, emptyRegisters] using hw
+  have hy' : (markerRegisters rho bs).syndrome = some (markerSyndrome rho bs) := by
+    simpa [markerRegisters, markerSyndrome] using hy
+  refine ⟨hs, hw', hy', ?_⟩
   rcases bs with _ | ⟨a, bs⟩
-  · fin_cases rho <;> unfold WrittenFields <;> decide
+  · simp [markerRegisters, foldMarkers, acquiredRegisters, emptyRegisters]
   rcases bs with _ | ⟨b, bs⟩
-  · fin_cases rho <;> fin_cases a <;> unfold WrittenFields <;> decide
+  · simp [markerRegisters, foldMarkers, acquiredRegisters, emptyRegisters,
+      writeMarker, writeRecords]
   rcases bs with _ | ⟨c, bs⟩
-  · fin_cases rho <;> fin_cases a <;> fin_cases b <;> unfold WrittenFields <;> decide
-  rcases bs with _ | ⟨d, bs⟩
-  · fin_cases rho <;> fin_cases a <;> fin_cases b <;> fin_cases c <;>
-      unfold WrittenFields <;> decide
-  have hb : bs = [] := List.length_eq_zero_iff.mp (by simp at h; omega)
-  subst bs
-  fin_cases rho <;> fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    unfold WrittenFields <;> decide
+  · simp [markerRegisters, foldMarkers, acquiredRegisters, emptyRegisters,
+      writeMarker, writeRecords]
+  have hq := fold_markers_hold 3 (by omega)
+    (markerRegisters rho [a, b, c]) bs
+  have hf : markerRegisters rho (a :: b :: c :: bs) =
+      foldMarkers 3 (markerRegisters rho [a, b, c]) bs := rfl
+  rw [hf]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [hq.2.2.1]
+    simp [markerRegisters, foldMarkers, acquiredRegisters, emptyRegisters, writeMarker]
+  · simpa using hq.1
+  · simpa using hq.2.1
+  · rw [hq.2.2.2]
+    have hlast : (markerRegisters rho [a, b, c]).snapshot =
+        some ⟨rho, (markerRegisters rho [a, b, c]).weight,
+          markerSyndrome rho [a, b, c]⟩ := by
+      simp [markerRegisters, foldMarkers, acquiredRegisters, emptyRegisters,
+        writeMarker, markerSyndrome, List.zipIdx_cons, add_assoc]
+    have hval := (fold_markers_live 0 (acquiredRegisters rho) rho (1 + rho)
+      rfl rfl [a, b, c]).2.1
+    have heq : (markerRegisters rho [a, b, c]).weight =
+        (⟨markerWeight [a, b, c] % 5, Nat.mod_lt _ (by decide)⟩ : Fin 5) := by
+      apply Fin.ext
+      simpa [markerRegisters, acquiredRegisters, emptyRegisters] using hval
+    have hlen : ¬ (a :: b :: c :: bs).length < 3 := by
+      simp only [List.length_cons]
+      omega
+    simp only [hlen, if_false, List.take_succ_cons, List.take_zero]
+    rw [hlast, heq]
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeAcquiredPrefixState

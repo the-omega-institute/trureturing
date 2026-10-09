@@ -32,7 +32,7 @@ Induction executes the rejected pairs in their specified order, then the actual 
 
 PrefixFacts specifies the exact earned state. At seed-ready the finite fields are seed none and emptyRegisters, S=0 and counts=(2p,2q), where p and q count rejected alpha-alpha and beta-beta pairs. A pending first seed letter changes only its control and its corresponding count. In an acquired payload form, let bs=completedBits, t=length(bs), w=markerWeight(bs), J=returns and e=pendingExponent. Then S=J, A=1+t-w+2p+J and B=1+2w+2q+J+e; subtraction in A is natural subtraction, with w at most t. The original completedCount is t.
 
-The same predicate also states that Registers equals the original marker writer fold; WrittenFields gives the live seed, weight and syndrome, first-marker Z, QOne and QTwo held at bs.take(3), and the post-third bare snapshot held thereafter. recoverMarkers of the actual finite fields equals bs.take(3), including both active phases and the pending or delivered terminal cut. SegmentRefinements states, for every completed segment, the existing first-completion Parses predicate on pWord(j,b), recursively for its remaining segments.
+The same predicate also states that Registers equals the original marker writer fold; WrittenFields gives the live seed, exact natural weight and syndrome, first-marker Z, QOne and QTwo held at bs.take(3), and the post-third bare snapshot held thereafter. The arbitrary-length total-writer invariant supplies these fields; the original four-slot bound makes the weight modulo five equal its natural sum. recoverMarkers of the actual finite fields equals bs.take(3), including both active phases and the pending or delivered terminal cut. SegmentRefinements states, for every completed segment, the existing first-completion Parses predicate on pWord(j,b), recursively for its remaining segments.
 
 **Theorem 1.3 (Exact S, counts and written fields).**
 
@@ -44,7 +44,7 @@ $$\forall nf:PrefixForm, (\operatorname{PrefixFacts}(nf,\operatorname{reconstruc
 
 *Commentary.*
 
-Induction over the independent payload form gives accumulated returns, the two paid-count equations, the original completed count and the actual writer fold. The bounded marker calculation supplies every seed and all eight selected triples, including all-equal triples, post-write latch and fourth holding. Each local segment invokes the exact first-completion language theorem. At the third latch e=0 and t=3, so A=4-w+2p+J and B=1+2w+2q+J. No selected count bank or receiver delivery is assumed.
+Induction over the independent payload form gives accumulated returns, the two paid-count equations, the original completed count and the actual writer fold. The arbitrary-length marker invariant supplies every seed and selected triple, including all-equal triples, the post-write latch and held records; the four-slot bound restores exact natural weight. Each local segment invokes the exact first-completion language theorem. At the third latch e=0 and t=3, so A=4-w+2p+J and B=1+2w+2q+J. No selected count bank or receiver delivery is assumed.
 
 **Theorem 1.4 (The full native prefix theorem).**
 

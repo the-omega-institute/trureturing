@@ -27,11 +27,9 @@ internal sealed class NativeAcquiredPrefixStateDocument : IScribeDocumentDefinit
             Equal(Call("map", F.Id("pi"), Call("nativeStep", c, op)),
                 Call("finiteStep", Call("pi", c), op))));
         Formula recovery = All("rho", F.Id("Letter"), All("bs", markers,
-            Imp(Seq(Call("length", bs), Le, D(4)),
-                Equal(Call("recoverMarkers", Call("markerCut", rho, bs)), Call("take", D(3), bs)))));
+            Equal(Call("recoverMarkers", Call("markerCut", rho, bs)), Call("take", D(3), bs))));
         Formula written = All("rho", F.Id("Letter"), All("bs", markers,
-            Imp(Seq(Call("length", bs), Le, D(4)),
-                Call("WrittenFields", rho, bs, Call("markerRegisters", rho, bs)))));
+            Call("FoldWrittenFields", rho, bs, Call("markerRegisters", rho, bs))));
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "Literal acquired seed and payload state with all live numeric banks.",
@@ -45,9 +43,9 @@ internal sealed class NativeAcquiredPrefixStateDocument : IScribeDocumentDefinit
                 Node("finite-projection-commutes", "finite_projection_commutes", "Operations commute with finite projection", projection,
                     "The projection pi(c)=c.source.finiteFields erases S and counts. Map denotes Option.map. Both legal successors and failures agree with the independently defined finiteStep, so the projection preserves permissions. This is a projection of the full source, rather than reconstruction of its numeric banks."),
                 Node("marker-fields-recover", "marker_fields_recover", "Written records recover the selected marker prefix", recovery,
-                    "For bs of length at most four, markerCut(rho,bs) pairs markerRegisters(rho,bs) with payloadControl(length(bs),p) when length(bs)<4, and with pending(getLastD(bs,0)) otherwise. recoverMarkers reads completedCount and Registers only. It returns bs.take(3): at length zero the empty word, at length one Z, at length two Z and weight, and at three or four the eight distinct QOne,QTwo,Z addresses. Both seeds and every triple are included."),
+                    "For every finite marker word bs, markerCut(rho,bs) pairs the total writer fold markerRegisters(rho,bs) with payloadControl(length(bs),p) when length(bs)<4, and with pending(getLastD(bs,0)) otherwise. recoverMarkers reads completedCount and Registers only. It returns bs.take(3): at length zero the empty word, at length one Z, at length two Z and weight, and at every larger length the first-three QOne,QTwo,Z address. Induction through any remaining writer suffix proves that these selected fields hold. The total writer comparison at lengths greater than four does not make those lengths legal native executions."),
                 Node("marker-fields-exact", "marker_fields_exact", "Exact bare fields and third latch", written,
-                    "WrittenFields states that seed is some rho, live weight is the integer sum of bs, syndrome is some (1+rho plus the indexed coefficient sum), and Z is headD(bs,0). QOne and QTwo equal their writers on bs.take(3). Snapshot is none before three completions and otherwise the post-third seed, weight and syndrome. The modulo-five constructor is exact because at most four bits have been written. These finite formulas include fourth-marker holding."),
+                    "FoldWrittenFields states that seed is some rho, live weight is markerWeight(bs) modulo five, syndrome is some (1+rho plus the full indexed coefficient sum), and Z is headD(bs,0). Here markerWeight is the sum of the natural bit values; the coefficient at zero-based index k is one for even k and rho for odd k. QOne and QTwo equal their writers on bs.take(3). Snapshot is none before three writes and otherwise retains rho, markerWeight(bs.take(3)) modulo five and markerSyndrome(rho,bs.take(3)). Arbitrary-length write-update induction establishes the live weight and syndrome formulas. After the third write, another arbitrary-length induction preserves records, Z and latch. For legal four-slot prefixes the existing weight bound removes the modulus and gives the original exact WrittenFields predicate."),
                 Paragraph(Text("PrefixForm is separate proof data: an ordered list of rejected-pair kinds followed by seed-ready, one first seed letter, or an acquired seed with PayloadForm. PayloadForm uses independent concatenations of loopWord and pWord, optional pending beta, exactly four completion slots, matching pending Stop and delivered. render concatenates these words. reconstruct calculates banks and marker writes from this data without executing Read. No form or rejected-pair list occurs in native state.")))));
     }
 
