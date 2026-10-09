@@ -1,0 +1,35 @@
+## 1. 金字塔读出与来源纤维
+
+令
+
+$$
+\Sigma=\{\mathsf F[\varnothing],\mathsf F[1],\mathsf F[2],\mathsf F[3],\mathsf F[1,3]\},
+$$
+
+其中 $x,y,z$ 分别是低端、高端和中间占位，满足
+
+$$
+xz=yz=0.
+$$
+
+对概率律 $p=(p_0,p_1,p_2,p_3,p_{13})$，记
+
+$$
+X=\mathbb E[x],\qquad Y=\mathbb E[y],\qquad Z=\mathbb E[z],\qquad \kappa=\mathbb E[xy].
+$$
+
+则
+
+$$
+\mathcal P=\{X,Y,Z\ge0:X+Z\le1,\ Y+Z\le1\},
+$$
+
+且
+
+$$
+\begin{aligned}
+p_0&=1-X-Y-Z+\kappa,&p_1&=X-\kappa,\\
+p_2&=Z,&p_3&=Y-\kappa,&p_{13}&=\kappa.
+\end{aligned}
+$$
+
