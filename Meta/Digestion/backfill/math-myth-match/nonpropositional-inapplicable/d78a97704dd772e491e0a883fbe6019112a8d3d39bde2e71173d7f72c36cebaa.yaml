@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d78a97704dd772e491e0a883fbe6019112a8d3d39bde2e71173d7f72c36cebaa
+  normalized_sha256: sha256:d78a97704dd772e491e0a883fbe6019112a8d3d39bde2e71173d7f72c36cebaa
+cas_ref: sha256:d78a97704dd772e491e0a883fbe6019112a8d3d39bde2e71173d7f72c36cebaa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: All propositional clauses are supplied by List.foldl_hom in pinned Lean v4.33.0 (Init/Data/List/Lemmas.lean, imported by pinned mathlib), product projections and Nonempty witnesses. There is no available frozen project GID for the complete relation. Assumption 25.2 retains arbitrary nonempty E_B and E_P and separate updates u_B and u_P. Definition 25.3 supplies the common source Bool^2 x E_B x E_P. Each projection commutes with v (flip context) and r (set action to context and update the separate reasons) by coordinate unfolding. Instantiate List.foldl_hom with the two local projections and the context/action projection to supply commutation for every same operation word and equality of the shared answers and loss. A Nonempty witness of the other reason type completes any local state, giving both surjections. C is equality of the shared context/action coordinates; all words preserve this equality and the empty word gives the converse inclusion, hence C_infty=C. No E_B=E_P or cross-type equality of reasons is assumed; this conditional model does not identify complete philosophies or theologies. No new Lean.
+    previous_atom_id: 62abd6d7fbca9226640e32ecbaa2b0e9a505a5967a23d30ba1412ef121f1dd86
+    next_atom_id: 001adb293281bf4c11668a929cca812f1092d60bbf09459a68da19ed58ec2f37
