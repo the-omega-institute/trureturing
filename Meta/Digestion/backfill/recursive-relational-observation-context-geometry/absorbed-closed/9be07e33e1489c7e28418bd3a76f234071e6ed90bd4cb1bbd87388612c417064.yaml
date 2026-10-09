@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:9be07e33e1489c7e28418bd3a76f234071e6ed90bd4cb1bbd87388612c417064
   normalized_sha256: sha256:9be07e33e1489c7e28418bd3a76f234071e6ed90bd4cb1bbd87388612c417064
 cas_ref: sha256:9be07e33e1489c7e28418bd3a76f234071e6ed90bd4cb1bbd87388612c417064
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometry/SemiconjugacyComposition.semiconjugacy_defect_composition
+    target_statement_id: sha256:7757a802dea3f2f2db2419405392d33b14ee1cb8f897e6b477eb54b7ff745855
 receipts:
   unresolved_subitems: []
   chain_atoms:
