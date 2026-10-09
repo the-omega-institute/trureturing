@@ -810,3 +810,191 @@ $$
 无槽时，同一直接合同在固定 $0\le M<N_{\rm comp}$ 下给出能量 $O(Z^{N_{\rm comp}+\varepsilon})$。与前节 $O(Z^{(5M-N_{\rm comp})/3+\varepsilon})$ 的已支付界组合，仅在 $4N_{\rm comp}/5<M<N_{\rm comp}$ 改善该 allowance。若 $X=Y=Z^a$、$2/5<a<1/2$，则低端为 $O(Z^{(1-a)/2+\varepsilon})$，主信号预算门槛为 $4/3-5a/6$，落在 $11/12$ 与 $1$ 之间。改变几何后的完整无限行高端比较仍未支付。
 
 本节补齐的是实际平方自由立方索引的共同标记族转移。原完整有符号 Robin 响应、所有实际零点数据与严格核心仍是原目标；严格 Robin 与 RH 尚未证明。
+
+## 完整相位运输后的有符号联合低端
+
+本节的完整估计是仓内综合推导，前置是主稿已有的完整物理 Poisson 系数、逐系数相位运输、零槽 plain 矩与 sixth-power amplification。上述局部和矩定理直接复用；这里补的是实际带标记平方自由立方索引族的共同指标、零掩码和归一化关系。源文输入作为前提，整篇源证明及 Lean 未独立认证，不主张历史原创性。
+
+在原固定算术数据、固定槽数及有界参数范围内，对每个指定 $\varepsilon>0$，实际过滤后的补偿探针满足
+$$
+\boxed{
+|I_{\eta,\mathrm{modified}}^{\mathrm{sf}}(Z)|
+\ll_\varepsilon Z^{21/64+\varepsilon}.
+}
+$$
+常数和充分大阈值可以依赖原算术数据、槽系统及有限光滑 seminorm；全部参数高度按源文的有限阶传播支付。原零延拓、共享素因子、所有素幂行和 Gaussian 尾部均保留。
+
+### 原物理变换与剩余列
+
+使用主稿的物理系数 $F_{\mathrm{phys}}(s,C,H)$，其中 $C=cb^3$；它与两份同参数 Gauss 和的有限相关式不同。原 $G_{\mathrm{ray}}$、$\Xi$、辅助字符和 reciprocity 的完整运输给出 Poisson 外因子
+$$
+\frac{\sqrt{X'}}{\sqrt{q_{b_*}}q_C},
+$$
+并将 $Y'^{-1}$ 留在外面。原 Fourier 参数是 $X'q_H/q_C$；固定原始字符使 $H=0$ 和与 $S$ 相交的行为零。
+
+对固定重缩放子集 $J$ 及实际元组，记
+$$
+q=\sum_{i\in J}\ell_i,\quad
+\ell'=\frac16-q,\quad
+X'=\frac{Z^{17/48-q}}{r_J},\quad
+Y'=\frac{Z^{23/48-q}}{r_J},\quad
+N_0=1+\ell'=\frac76-q.
+$$
+原 $r_J$ 在固定紧正区间内。保留一个共同 Gaussian profile；在其 annulus 上写 $N=N_0+\theta_N$。源文 Schwartz 衰减及绝对计数允许使用独立于 $c,b$ 和槽元组的外层频率截断
+$$
+q_H\le Z^{13/16+\kappa_{\mathrm G}+\tau}.
+$$
+固定所需节省与参数范围后，先选择有限 Schwartz、seminorm 和高度权阶数，再选择小的 $\kappa_{\mathrm G},\tau$ 及内部损失，最后令 $Z$ 充分大。完整 Gaussian annuli 使用源文的所有有限阶 summability，而不让某一个既定阶数承担任意节省。
+
+对每个非零项定义
+$$
+g=(c,b),\qquad B_s=(b,s),\qquad E=(c/g,s),\qquad
+c_0=c/(gE),\qquad s_0=s/(B_sE).
+$$
+源文完整素幂表在 $c,b$ 平方自由时限制 $v_p(C)\in\{0,1,3,4\}$，但不限制 $v_p(s)$。它给出 $b,g,B_s,E\mid\operatorname{rad}H$，$E$ 与 $b$ 互素；$c_0,s_0$ 均与 $H$ 互素且 $(c_0,s_0)=1$。$s_0$ 中不与 $C$ 相交的 powerful 部分仍在原求和中。每行这些标签及分支的选择有固定次约数函数界。
+
+在原全部相位已运输以后，$H$ 外的 $c_0,s_0$ 系数恰为
+$$
+\mu(c_0)\eta(c_0)\overline{\chi_{c_0}(H)}\chi_{s_0}(H).
+$$
+这使用主稿的 complete local family monomials；没有分别替换原低端两因子的系数。剩余局部角相位、Gauss 相位、符号、unit 及 finite-ray 修正仍作为有界行标量保留。
+
+连同原 $q_c^{-1/2}q_b^{-1}$，物理绝对幅度是
+$$
+\frac{\sqrt{X'}}{Y'}\,
+q_b^{-3/2}q_g^{-1/2}q_{B_s}^{1/2}L_E
+$$
+乘上带 $q_{c_0}^{-1}$ 权重的逆列与未规范化的 $s_0$ 列。这里每个 $p\mid E$ 保留其实际两项 Ramanujan 值及相位，并有
+$$
+|L_p|=
+\begin{cases}
+q_p^{-1},&v_p(H)=1,\\
+1-q_p^{-1},&v_p(H)\ge2.
+\end{cases}
+$$
+因而 $|L_E|\le1$。对 $p\mid b$、$p\nmid g$，$s$ 不含或含 $p$ 时幅度分别为 $q_p^{-3/2},q_p^{-1}$；对 $p\mid g$，分别为 $q_p^{-2},q_p^{-3/2}$。这些是原局部单项式与物理倒根的合并结果。
+
+### 全部标记与精确互素展开
+
+自动满足的槽恰是所选素数落在 $bE$ 中的槽。它们的实际元组来自同一个 $H$ 的约数，以约数界计重；其原权重、相位及归一化比例留在共同 profile。记其名义总长为 $z_A$。其余槽的总长 $z_K=\ell'-z_A$，实际素数积为 $P\mid c_0$，且 $(P,H)=1$。令 $c_0=Pn$，平方自由性给出
+$$
+\mu(c_0)\psi_H(c_0)
+=\mu(P)\psi_H(P)\mu(n)\psi_H(n)
+ \mathbf1_{(n,P)=1},
+\qquad
+\psi_H(n)=\eta(n)\overline{\chi_n(H)}.
+$$
+原 $q_{c_0}^{-1}$ 权重提供 $q_P^{-1}$，这些未分配槽的加权元组质量是小幂，不能再乘其完整计数。原 Gaussian 参数继续包含全部槽，包括自动槽。
+
+保留 $\mathbf1_{(s_0,P)=1}$，并展开剩余互素关系：
+$$
+\mathbf1_{(n,s_0)=1}=\sum_{d\mid(n,s_0)}\mu(d),
+\qquad n=dn_1,\quad s_0=ds_1.
+$$
+展开的 $\mu(d)$ 与逆列中既有的 $\mu(d)$ 相乘。字符的两份 $d$ 因子在自然单位支持上抵消，所以精确行标量是
+$$
+\boxed{\mu(d)^2\eta(d)\mathbf1_{(d,H)=1},}
+$$
+并保留原 $P,S$ 限制。逆列的额外零掩码是 $Pd$，plain 列的是 $P$；两列分别调用各自的矩定理，不要求这两个额外掩码相同。中心规范化后仍有 $q_d^{-1}$；对有界多项式范数范围，其整条质量由理想计数支付为小幂。
+
+写实际标签长度为
+$$
+u=\log_Zq_b,\quad v=\log_Zq_g,\quad e=\log_Zq_E,\quad
+d_b=\log_Zq_{B_s},\quad w=\log_Zq_d.
+$$
+剩余逆列和 plain 列的中心分别为
+$$
+r=N-3u-v-e-z_K-w,\qquad
+n=\frac{23}{48}-q-d_b-e-w,
+$$
+带固定 annular 偏移。自动槽的实际素数积整除 $bE$，故
+$$
+z_A\le u+e+O_{\rm fixed}(1/\log Z),\qquad
+r\le1+\theta_N-2u-v-w+O_{\rm fixed}(1/\log Z).
+$$
+特别地 $r\le1+O(\kappa_{\mathrm G})$。这是同一标签实现上的约束。非空单位窗口以下的中心只在固定常数范围内裁到零；不在无界负长度上使用矩定理。
+
+将两个中心平方根与所有原 $b,g,E,B_s$ 根因子合并，得到共同外幂
+$$
+Z^{-9/16-(z_A+\theta_N)/2}.
+$$
+$q_P^{-1},q_d^{-1}$ 单独支付各自标签质量；实倒根进入同一个 profile 一次。固定 $a,P,d$ 和 unit 扇区后，共同 logarithmic Fourier 分离、源文的 scale supremum 与参数 Sobolev 先支付标签引起的尺度和 profile 选择，再取正矩。只有在完成这层对应以后，剩余有界行标量及行约数重数才按小幂移出；约数重数本身不承担 profile 对应。
+
+### 额外掩码的逆矩接口
+
+源文 amplified inverse 定理没有任意额外 puncture 的直接接口。这里在完整估计内使用理想 Euler 系数等式：若逆列再乘 $\mathbf1_{(n,Q)=1}$，则
+$$
+M_{\psi,Q}(D;W)
+=\sum_{\operatorname{rad}\lambda\mid Q}
+\psi(\lambda)q_\lambda^{-1/2}
+M_\psi(D/q_\lambda;W).
+$$
+所有素幂和 $\psi$ 的原零支持都保留。其系数质量不超过
+$$
+\prod_{p\mid Q}(1-q_p^{-1/2})^{-1}\ll_\varepsilon Z^\varepsilon
+\qquad(q_{\operatorname{rad}Q}\le Z^B,\ B\text{ 有界}),
+$$
+直接使用源文 deleted Euler-factor mass。Annular 测试只留下有限个非空尺度。Minkowski 与源文适用于全部 $U,D\ge1$ 的一般 amplification 界，在每个尺度调用原定理；其指数随逆列长度不减。小尺度在固定单位窗口裁切，有限 seminorm 和高度因素仍保留。此处没有将增长掩码加入固定 $S$，也没有扩大原定理的列系数类。
+
+### 全部频率素幂与两份分别的第二矩
+
+按原约定写 $H=\zeta u_0a^6$，其中 $u_0$ 的各素数重数不超过五。固定 unit 扇区及 $a$ 的长度块 $t$，有
+$$
+m_t=\frac{13}{16}-6t,\qquad
+0\le t\le\frac{13}{96},
+$$
+加上预留小偏移；$a$ 的数量成本为 $Z^{t+\varepsilon}$。自然 $H$ 零支持是 $u_0$ 零支持与 $\operatorname{rad}a$ 的并。逆列的额外掩码是 $\operatorname{rad}(aPd)$，plain 列的是 $\operatorname{rad}(aP)$，在当前行和中均已冻结且处在有界多项式范数范围；unit 字符运输到固定有限 twist 族。
+
+零槽 plain 引理的第二因子可取长度零、只选单位理想的测试。该因子等于 $1$，它与第一 plain 因子使用同一字符和掩码，因而原定理直接给出非主诱导行上的第二矩
+$$
+\sum_{u_0}|S_{u_0}(n)|^2\ll Z^{m_t+\varepsilon}
+$$
+且不限制有界非负 $n$。逆列通过上述 puncture 接口及源文一般 amplification 给出
+$$
+\sum_{u_0}|M_{u_0}(r)|^2\ll Z^{E(m_t,r)+\varepsilon},
+\qquad
+E(m,r)=\max\{m,(m+5r)/6\}.
+$$
+使用一般全部 $U,D$ 公式，不使用在 $m\to0$ 时比值无界的固定比值推论。逆列与 plain 列的固定 twist 可不同：$\eta$ 留在逆列；这里是两份分别的第二矩，在同一实际 $u_0$ 行上 Cauchy，没有向 plain 定理塞入 Möbius 系数。
+
+使用 $r\le1$ 的 leading 界，合并 $a$ 数量与外幂，非主行的指数为
+$$
+-\frac9{16}+t+\frac{m_t+E(m_t,1)}2
+=\frac{21}{64}-\frac52t.
+$$
+固定范围内的频率、标签和互素变量 dyads 为对数个，由输出损失支付。所有因子使用共同分离密度；有限参数阶数先于外部高度选择，完整 Gaussian/Fourier 尾部仍由其全部有限阶 summability 支付。因此该界覆盖整个非主族。
+
+### 主诱导行与完整补偿求和
+
+由于 $(H,S)=1$，一个主 plain 诱导字符不能在 $u_0$ 中有 good prime：该处重数 $1,\ldots,5$ 都给出非主 tame 局部字符。因此这里只剩有限 unit 扇区。非主的有限 unit 字符已在前面的第二矩内。主扇区的逆字符保持其原 $\eta$/unit twist，不设其响应为零。
+
+对这份固定有限字符族，复用所引 $7/8$ 半平面及 reciprocal strip 控制；在 $\sigma=7/8+\varepsilon<1$ 上 Mellin 估计给出
+$$
+|M_{\rm fixed,Q}(Z^r)|\ll Z^{(\sigma-1/2)r+\varepsilon},
+$$
+额外掩码由同一 Euler 等式统一支付。Plain 因子使用 $Z^{n/2+\varepsilon}$ 体积界。保留实际尺度后，主扇区的指数为
+$$
+\begin{aligned}
+&\frac{17/48-q}{2}+\sigma-1+t
+ +(\sigma-1)(z_A+\theta_N)\\
+&\quad-3(\sigma-1/2)u-(\sigma-1/2)v
+ -d_b/2-\sigma e-\sigma w.
+\end{aligned}
+$$
+除 collar 偏移外，后面的标签项均非正，$t\le13/96$，故其上界为 $3/16-q/2+\varepsilon$。主行与全部 $a^6$ 部分均已计入。
+
+于是固定未缩放元组的完整 allowance 为 $21/64+\varepsilon$。原重缩放元组数 $Z^{q+\varepsilon}$ 与物理系数 $Z^{-3q/2}$ 给出整个 $J$ 的
+$$
+\frac{21}{64}-\frac q2+\varepsilon.
+$$
+对固定有限子集族求和即得本节整族界。与前节的 $17/48$ 界同时成立，当前更小 allowance 的改善为
+$$
+\frac{17}{48}-\frac{21}{64}=\frac5{192}.
+$$
+这比较的是已证明上界，不主张真实响应取到任一个指数。
+
+同一探针的主信号仍为 $C_{\mathrm{II}}(s)=s-11/16$，名义比较门槛为
+$$
+\boxed{\frac{21}{64}+\frac{11}{16}=\frac{65}{64}>1.}
+$$
+所以本节没有产生新的无零区域，未扩大高端轮廓合同，也未证明原完整有符号 Robin 余量。实际零点实部、双符号、全部高度与重数、完整系数、正 $r_A$ 和严格核心仍是原目标；严格 Robin 与 RH 尚未证明。
