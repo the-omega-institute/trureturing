@@ -1,0 +1,53 @@
+name: Diagnostic cold Lean cost
+
+# Publishing/opening this payload never starts its diagnostic. Root labels the
+# independently reviewed PR merge SHA explicitly; ordinary required CI is separate.
+on:
+  pull_request:
+    branches: ['integration-**']
+    types: [labeled]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnostic:
+    if: github.event.label.name == format('cold-cost-{0}', github.sha)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 180
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Verify native candidate
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Install the pinned compiler
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Exercise the diagnostic collector
+        run: |
+          export COLD_COST_TEST_LEAN="$(elan which lean)"
+          python3 -m unittest discover -s tools/scripts/report/tests -p test_cold_cost.py -v
+      - name: Observe canonical cold compilation and report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/report/cold_cost.py --repository "$GITHUB_WORKSPACE" --output "$RUNNER_TEMP/cold-cost"
+      - name: Retain raw diagnostic evidence on failure or success
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cold-cost-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/cold-cost
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14

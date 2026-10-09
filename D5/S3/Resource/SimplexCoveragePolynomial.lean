@@ -79,7 +79,7 @@ def spanningHessian (columns : Index → V) (U : Submodule K V) (m : ℕ)
 
 theorem spanningPolynomial_coeff (columns : Index → V) (U : Submodule K V)
     (m : ℕ) (alpha : Index →₀ ℕ) :
-    MvPolynomial.coeff alpha (spanningPolynomial columns U m) =
+    AddMonoidAlgebra.coeff (spanningPolynomial columns U m) alpha =
       if (∑ i, alpha i) = m ∧ representedSpan columns U alpha = ⊤ then
         reciprocalFactorial alpha else 0 := by
   classical

@@ -119,7 +119,7 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
         have h0 := (Complex.nonneg_iff.mp (hFpsd.dotProduct_mulVec_nonneg v)).1
         refine lt_of_le_of_ne h0 fun h => hv ?_
         have : q F v = 0 := by rw [hq_real v, ← h]; simp
-        exact (hFpsd.dotProduct_mulVec_zero_iff v).mp this
+        exact (hFpsd.dotProduct_mulVec_zero_iff (x := v)).mp this
       have := hbound v
       have hnv := hn_pos v hv0
       nlinarith
@@ -231,7 +231,7 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
         exact dotProduct_star_self_eq_zero.mp this
       · have := (Finset.sum_eq_zero_iff_of_nonneg fun a _ =>
           hPpsd.dotProduct_mulVec_nonneg (Q a *ᵥ w)).mp h2 a (Finset.mem_univ a)
-        exact (hPpsd.dotProduct_mulVec_zero_iff _).mp this
+        exact (hPpsd.dotProduct_mulVec_zero_iff (x := _)).mp this
     have hMle : M ≤ darkLayer Q L d :=
       hmaxV M (fun i w hw => (hM w hw).1 i) (fun a w hw => (hM w hw).2 a)
     have : v₀ ∈ darkLayer Q L d := hMle hv₀P
@@ -254,7 +254,7 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
     intro hD
     refine PosDef.of_dotProduct_mulVec_pos hdefect.1 fun x hx => ?_
     refine lt_of_le_of_ne (hdefect.dotProduct_mulVec_nonneg x) fun h => hx ?_
-    have hk : (1 - survival Q d) *ᵥ x = 0 := (hdefect.dotProduct_mulVec_zero_iff x).mp h.symm
+    have hk : (1 - survival Q d) *ᵥ x = 0 := (hdefect.dotProduct_mulVec_zero_iff (x := x)).mp h.symm
     have hmem := (hkerd x).mpr hk
     rw [hD] at hmem
     exact (Submodule.mem_bot ℂ).mp hmem
@@ -295,7 +295,7 @@ theorem no_dark_direction_tfae (Q : α → Matrix (Fin d) (Fin d) ℂ)
         rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec,
           dotProduct_comm w (star w ᵥ* F), ← dotProduct_mulVec] at h
         have hc0 : c ≠ 0 := Complex.ofReal_ne_zero.mpr (inv_ne_zero hnw.ne')
-        exact (hFpsd.dotProduct_mulVec_zero_iff w).mp ((mul_eq_zero.mp h).resolve_left hc0)
+        exact (hFpsd.dotProduct_mulVec_zero_iff (x := w)).mp ((mul_eq_zero.mp h).resolve_left hc0)
     exact Matrix.ext fun i j => by
       simpa [Matrix.mulVec_single] using congrFun (hFw (Pi.single j 1)) i
   tfae_finish

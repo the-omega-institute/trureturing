@@ -54,7 +54,6 @@ theorem complete_dominance_not_transitive :
   let phenotype : Concept (Sym2 (Fin 3)) Real := fun genotype => label genotype
   refine ⟨0, 1, 2, phenotype, by decide, by decide, by decide, ?_⟩
   norm_num [phenotype, label, Setoid.ker]
-  constructor <;> decide
 
 #print axioms complete_dominance_not_transitive
 

@@ -97,7 +97,7 @@ theorem hellingerSq_windowLaw_le_sum
         have hprod_nonneg : 0 ≤ ∏ i ∈ s, (1 - x i) :=
           Finset.prod_nonneg fun i _ => sub_nonneg.mpr (hx_le_one i)
         have hprod_le_one : ∏ i ∈ s, (1 - x i) ≤ 1 :=
-          Finset.prod_le_one
+          Finset.prod_le_one₀
             (fun i _ => sub_nonneg.mpr (hx_le_one i))
             (fun i _ => by linarith [hx_nonneg i])
         have hmul : x a * (∏ i ∈ s, (1 - x i)) ≤ x a := by
