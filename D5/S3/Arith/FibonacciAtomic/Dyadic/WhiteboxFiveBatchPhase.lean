@@ -11,6 +11,7 @@ import D5.S3.Arith.FibonacciAtomic.MersenneDyadicSupportLines
 import D5.S3.Arith.FibonacciAtomic.Scale36ActualEndpointAcquisition
 import D5.S3.Arith.FibonacciAtomic.Scale38NestedCompensation
 import D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase
+import Mathlib.Logic.Equiv.Fin.Rotate
 local notation "Source" => D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport.Source
 local notation "Nonconflict" => D5.S3.Arith.FibonacciAtomic.ActualImageSevenLeafSeparation.Nonconflict
 local notation "kappa_hist" => D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory.kappa_hist
@@ -538,11 +539,7 @@ open D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail
 
 local notation "biasedBase" => D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail.Paths.fromPath 5 D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxFiveBatchPhase.Codes.biasedFive (by omega) D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxFiveBatchPhase.Codes.biased_legal
 
-def rotate : Equiv.Perm (Fin 5) where
-  toFun i := i+1
-  invFun i := i-1
-  left_inv i := by fin_cases i <;> decide
-  right_inv i := by fin_cases i <;> decide
+local notation "rotate" => finRotate 5
 
 local notation "biased" => relabel rotate biasedBase
 
@@ -550,7 +547,7 @@ local notation "uniform" => D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPre
 
 private theorem biased_law (i : Fin 5) : law biased i = if i=0 then (1/4 : ℝ) else 3/16 := by
   rw [relabel_law_equiv,D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail.Paths.path_law,D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxFiveBatchPhase.Codes.biased_law]
-  fin_cases i <;> norm_num [rotate,Fin.ext_iff,Fin.sub_def]
+  fin_cases i <;> norm_num [finRotate_symm_apply,Fin.ext_iff,Fin.sub_def]
 
 private theorem uniform_law (i : Fin 5) : law uniform i = (1/5 : ℝ) := by
   rw [D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail.Paths.path_law,D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxFiveBatchPhase.Codes.uniform_law]
@@ -715,7 +712,7 @@ private theorem literal_quarter_code :
     (stopping 5 Codes.biasedFive 3).map (fun v => (v.1,rotate v.2)) =
       [([true,true,false,false],(1:Fin 5)),([true,true,false,true],2),
        ([true,true,true,false],3),([true,true,true,true],4)] ∧
-    continuing 5 Codes.biasedFive 4 = [] := by norm_num [stopping,continuing,children,b0,b1,b2,b3,u0,u1,u2,u3,sorted4,Fin.sort_univ,rotate,List.finRange,Fin.add_def,Fin.ext_iff]
+    continuing 5 Codes.biasedFive 4 = [] := by norm_num [stopping,continuing,children,b0,b1,b2,b3,u0,u1,u2,u3,sorted4,Fin.sort_univ,finRotate_apply,List.finRange,Fin.add_def,Fin.ext_iff]
 
 private theorem literal_uniform_code :
     stopping 5 Codes.uniformFive 2 =
@@ -725,7 +722,7 @@ private theorem literal_uniform_code :
       [([true,false,true,false],(0:Fin 5)),([true,false,true,true],1),
        ([true,true,false,false],2),([true,true,false,true],3),
        ([true,true,true,false],4)] ∧
-    continuing 5 Codes.uniformFive 4 = [[true,true,true,true]] := by norm_num [stopping,continuing,children,b0,b1,b2,b3,u0,u1,u2,u3,sorted4,Fin.sort_univ,rotate,List.finRange,Fin.add_def,Fin.ext_iff]
+    continuing 5 Codes.uniformFive 4 = [[true,true,true,true]] := by norm_num [stopping,continuing,children,b0,b1,b2,b3,u0,u1,u2,u3,sorted4,Fin.sort_univ,finRotate_apply,List.finRange,Fin.add_def,Fin.ext_iff]
 
 private theorem uniform_period (d : ℕ) :
     Codes.uniformFive.state (d+4) = Codes.uniformFive.state d ∧
