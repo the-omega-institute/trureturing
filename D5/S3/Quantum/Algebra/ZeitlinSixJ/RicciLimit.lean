@@ -19,6 +19,12 @@ namespace D5.S3.Quantum.Algebra.ZeitlinSixJ.RicciLimit
 
 open Finset Filter Polynomial
 open D5.S3.Quantum.Algebra.ZeitlinSixJ.Racah
+open D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules
+open D5.S3.Quantum.Algebra.ZeitlinSixJ.Endpoint
+open D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence
+open D5.S3.Quantum.Algebra.ZeitlinSixJ.Orthogonality
+open D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse
+open D5.S3.Quantum.Algebra.ZeitlinSixJ.Parity
 
 noncomputable def rPlus (l N : ℕ) : ℝ :=
   (N : ℝ) / (4 / ((N : ℝ)^2 - 1)) *
@@ -212,11 +218,6 @@ theorem fixed_labels_odd_tendsto_zero (a b c : ℕ) (ho : Odd (a + b + c)) :
     apply (le_div_iff₀ hweight).mpr
     nlinarith [mul_le_mul_of_nonneg_left hterm (Nat.cast_nonneg N : (0 : ℝ) ≤ N)]
 
-private lemma W_first (N a b c : ℕ) : W N a b c = W N b a c := by
-  rw [D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.W_swap]
-  unfold W
-  exact D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.sixJ_cycle_columns _ _ _ _ _ _
-
 private lemma W_support (N a b c : ℕ) (h : a+b < c ∨ b+c < a ∨ c+a < b) :
     W N a b c = 0 := by
   have hn : ¬ admissible (2*a) (2*b) (2*c) (N-1) (N-1) (N-1) := by
@@ -307,8 +308,9 @@ private lemma positiveRow_le (l N k : ℕ) (hl : 2 ≤ l) (hlN : l < N)
     have hC : 0 ≤ C := by dsimp [C]; unfold casimir; positivity
     have he : W N l (k+1) = fun j => W N j (k+1) l := by
       funext j
-      rw [D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.W_swap N l (k+1) j,
-        W_first N l j (k+1), D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.W_swap N j l (k+1)]
+      unfold W
+      rw [D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.sixJ_swap_columns,
+        D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.sixJ_cycle_columns]
     have hinv := (D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.result N hN).1
       (k+1) l ⟨by omega, hkN⟩ ⟨by omega, hlN⟩ hkl
     have hb : positiveRow l N k ≤ (N : ℝ)*C*
@@ -423,5 +425,266 @@ theorem rPlus_tendsto_zero (l : ℕ) (hl : 2 ≤ l) :
     filter_upwards [eventually_ge_atTop 2] with N hN
     exact normalized_positive_eq l N hN
   simpa using (h.div_const 4).congr' (Filter.EventuallyEq.symm he)
+
+private lemma odd_mass_ordered (N b c : ℕ) (hN : 2 ≤ N)
+    (hb : b < N) (hc : c < N) (hbc : b ≤ c) :
+    (∑ i ∈ range N, if Odd (i+b+c) then
+      (2*(i : ℝ)+1)*W N i b c^2 else 0) =
+        (1/(N : ℝ)+(-1 : ℝ)^(b+c+N)*Wij N c b)/2 := by
+  let n := N-1
+  have hn : n+1=N := by dsimp [n]; omega
+  have hbn : b ≤ n := by dsimp [n]; omega
+  have hcn : c ≤ n := by dsimp [n]; omega
+  obtain ⟨t, ht, hlabel⟩ := channel_center_label n b c hbn hcn hbc
+  let k : Fin (channelWidth n b c+1) := ⟨t, by omega⟩
+  have hk : channelLabel n b c k.val = n := hlabel
+  let f : ℕ → ℝ := fun i => if Odd (i+b+c) then
+    (2*(i : ℝ)+1)*W N i b c^2 else 0
+  have hsum : (∑ i : Fin (channelWidth n b c+1), f (c-b+i.val)) =
+      ∑ i ∈ range N, f i := by
+    unfold channelWidth
+    rw [Fin.sum_univ_eq_sum_range (fun i : ℕ => f (c-b+i))]
+    rw [← hn]
+    apply sum_shifted_support f n (min n (b+c)) (c-b) (by omega) (by omega)
+    intro i hi
+    have had : ¬ admissible (2*i) (2*b) (2*c) (N-1) (N-1) (N-1) := by
+      intro ha
+      have h1 := ha.1
+      have h2 := ha.2.1
+      unfold triangle at h1 h2
+      dsimp [n] at hi
+      omega
+    simp [f, W, sixJ, had]
+  have hsquare (i : Fin (channelWidth n b c+1)) :
+      physicalU n b c k i^2 = (N : ℝ)*(2*((c-b+i.val : ℕ) : ℝ)+1)*
+        W N (c-b+i.val) b c^2 := by
+    unfold physicalU
+    rw [hk, mul_pow, Real.sq_sqrt (by positivity)]
+    have hw := central_symbol_is_W N (c-b+i.val) b c
+    rw [← hn, Nat.add_sub_cancel_right] at hw
+    rw [hw, hn]
+    push_cast
+    ring
+  have hu := congrArg (fun A => A k k) (physicalU_orthogonality n b c hbn hcn hbc)
+  have hx := congrArg (fun A => A k k) (physical_signed_addition n b c hbn hcn hbc)
+  have hz : physicalZ n b c k k = (-1 : ℝ)^n*(N : ℝ)*Wij N c b := by
+    unfold physicalZ indexParity
+    simp only [Matrix.smul_apply, smul_eq_mul, Matrix.diagonal_mul,
+      Matrix.mul_diagonal, Nat.zero_add]
+    change (-1 : ℝ)^channelBase n b c *
+      ((-1 : ℝ)^k.val * normalizedSixJ n (2*c) (channelLabel n b c k.val)
+        n (2*b) (channelLabel n b c k.val) * (-1 : ℝ)^k.val) = _
+    rw [hk, normalizedSixJ]
+    have hw : sixJ n (2*c) n n (2*b) n = Wij N c b := by
+      unfold Wij
+      rw [← hn, Nat.add_sub_cancel_right]
+      exact sixJ_swap_columns _ _ _ _ _ _
+    rw [hw, show (((n+1 : ℕ) : ℝ)*((n+1 : ℕ) : ℝ)) =
+      ((n+1 : ℕ) : ℝ)^2 by ring, Real.sqrt_sq (by positivity), hn]
+    rw [show (-1 : ℝ)^channelBase n b c *
+      ((-1 : ℝ)^k.val * ((N : ℝ)*Wij N c b) * (-1 : ℝ)^k.val) =
+      (-1 : ℝ)^(channelBase n b c+k.val+k.val)*(N : ℝ)*Wij N c b by
+        rw [pow_add, pow_add]; ring]
+    have he : channelBase n b c+k.val+k.val=n := by
+      unfold channelLabel at hk
+      omega
+    rw [he]
+  rw [hz] at hx
+  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.one_apply_eq] at hu
+  unfold physicalX at hx
+  rw [Matrix.mul_apply] at hx
+  simp only [indexParity, Matrix.mul_diagonal, Matrix.transpose_apply] at hx
+  have hterm (i : Fin (channelWidth n b c+1)) :
+      physicalU n b c k i * physicalU n b c k i -
+      (-1 : ℝ)^(b+c)*((physicalU n b c k i * (-1 : ℝ)^(c-b+i.val))*
+        physicalU n b c k i) = 2*(N : ℝ)*f (c-b+i.val) := by
+    rw [show physicalU n b c k i * physicalU n b c k i -
+      (-1 : ℝ)^(b+c)*((physicalU n b c k i * (-1 : ℝ)^(c-b+i.val))*
+        physicalU n b c k i) =
+      (1-(-1 : ℝ)^(b+c+(c-b+i.val)))*physicalU n b c k i^2 by
+        rw [pow_add]; ring, hsquare]
+    dsimp [f]
+    by_cases ho : Odd (c-b+i.val+b+c)
+    · rw [if_pos ho, show b+c+(c-b+i.val) = c-b+i.val+b+c by omega,
+        ho.neg_one_pow]
+      ring
+    · rw [if_neg ho, show b+c+(c-b+i.val) = c-b+i.val+b+c by omega,
+        (Nat.not_odd_iff_even.mp ho).neg_one_pow]
+      ring
+  have hm : 1-(-1 : ℝ)^(b+c)*((-1 : ℝ)^n*(N : ℝ)*Wij N c b) =
+      2*(N : ℝ)*(∑ i ∈ range N, f i) := by
+    calc
+      _ = (∑ i, physicalU n b c k i * physicalU n b c k i) -
+          (-1 : ℝ)^(b+c)*(∑ i, (physicalU n b c k i * (-1 : ℝ)^(c-b+i.val))*
+            physicalU n b c k i) := by rw [hu, hx]
+      _ = _ := by
+        rw [mul_sum, ← sum_sub_distrib]
+        simp_rw [hterm]
+        rw [← mul_sum, hsum]
+  have hsign : -((-1 : ℝ)^(b+c)*(-1 : ℝ)^n) = (-1 : ℝ)^(b+c+N) := by
+    rw [← pow_add, ← hn, show b+c+(n+1)=(b+c+n)+1 by omega, pow_succ]
+    ring
+  have hn0 : (N : ℝ) ≠ 0 := by exact_mod_cast (by omega : N ≠ 0)
+  change (∑ i ∈ range N, f i) = _
+  rw [← hsign]
+  field_simp [hn0]
+  linear_combination -hm
+
+private lemma odd_mass (N b c : ℕ) (hN : 2 ≤ N) (hb : b < N) (hc : c < N) :
+    (∑ i ∈ range (N-1), if Odd (i+1+b+c) then
+      (2*((i+1 : ℕ) : ℝ)+1)*W N (i+1) b c^2 else 0) =
+        (1/(N : ℝ)+(-1 : ℝ)^(b+c+N)*Wij N b c)/2 := by
+  have hw : Wij N c b = Wij N b c := by
+    unfold Wij
+    exact sixJ_flip_pair _ _ _ _ _ _
+  have hz : (if Odd (0+b+c) then (2*((0 : ℕ) : ℝ)+1)*W N 0 b c^2 else 0)=0 := by
+    by_cases ho : Odd (0+b+c)
+    · have had : ¬ admissible 0 (2*b) (2*c) (N-1) (N-1) (N-1) := by
+        intro ha
+        have ht := ha.1
+        have hp := Nat.odd_iff.mp ho
+        unfold triangle at ht
+        omega
+      simp [ho, W, sixJ, had]
+    · simp only [if_neg ho]
+  have hfull : (∑ i ∈ range N, if Odd (i+b+c) then
+      (2*(i : ℝ)+1)*W N i b c^2 else 0) =
+        (1/(N : ℝ)+(-1 : ℝ)^(b+c+N)*Wij N b c)/2 := by
+    by_cases hbc : b ≤ c
+    · simpa only [hw] using odd_mass_ordered N b c hN hb hc hbc
+    · have h := odd_mass_ordered N c b hN hc hb (by omega)
+      convert h using 1
+      · apply sum_congr rfl
+        intro i _
+        rw [W_swap N i b c, show i+b+c=i+c+b by omega]
+      · rw [show c+b+N=b+c+N by omega]
+  have hshift := sum_range_succ' (fun i => if Odd (i+b+c) then
+    (2*(i : ℝ)+1)*W N i b c^2 else 0) (N-1)
+  rw [show N-1+1=N by omega] at hshift
+  rw [hshift, hz, add_zero] at hfull
+  exact hfull
+
+/-- The normalized negative contribution is independent of dimension above the fixed label. -/
+theorem rMinus_eq (l N : ℕ) (hl : 2 ≤ l) (hlN : l < N) :
+    rMinus l N / ((N : ℝ)^2-1) = ((harmonic l : ℝ)-1)/2 := by
+  have hN : 2 ≤ N := by omega
+  have hn0 : (N : ℝ) ≠ 0 := by exact_mod_cast (by omega : N ≠ 0)
+  have hNr : (2 : ℝ) ≤ N := by exact_mod_cast hN
+  have hd0 : (N : ℝ)^2-1 ≠ 0 := by nlinarith
+  have hl0 : casimir l ≠ 0 := by
+    have hp : (0 : ℝ) < l := by exact_mod_cast (by omega : 0 < l)
+    unfold casimir
+    positivity
+  let f : ℕ → ℕ → ℝ := fun i j => if Odd (i+1+(j+1)+l) then
+    (casimir (j+1)-casimir (i+1)) *
+      (2*((i+1 : ℕ) : ℝ)+1)*(2*((j+1 : ℕ) : ℝ)+1) /
+        (casimir (i+1)*casimir l) * W N l (i+1) (j+1)^2 else 0
+  have hsplit : rMinus l N / ((N : ℝ)^2-1) =
+      (N : ℝ)/(2*casimir l) * ∑ i ∈ range (N-1),
+        (2*((i+1 : ℕ) : ℝ)+1)/casimir (i+1) *
+          (oddMoment (i+1) l N - casimir (i+1) *
+            (∑ j ∈ range (N-1), if Odd (j+1+(i+1)+l) then
+              (2*((j+1 : ℕ) : ℝ)+1)*W N (j+1) (i+1) l^2 else 0)) := by
+    have ht : (∑ i ∈ range (N-1), ∑ j ∈ range (N-1),
+        if Odd (i+1+(j+1)+l) then
+          (casimir (i+1)-casimir (j+1))^2 *
+            (2*((i+1 : ℕ) : ℝ)+1)*(2*((j+1 : ℕ) : ℝ)+1) /
+              (casimir (i+1)*casimir (j+1)*casimir l)*W N l (i+1) (j+1)^2
+        else 0) = 2*(∑ i ∈ range (N-1), ∑ j ∈ range (N-1), f i j) := by
+      have he : (∑ i ∈ range (N-1), ∑ j ∈ range (N-1),
+          if Odd (i+1+(j+1)+l) then
+            (casimir (i+1)-casimir (j+1))^2 *
+              (2*((i+1 : ℕ) : ℝ)+1)*(2*((j+1 : ℕ) : ℝ)+1) /
+                (casimir (i+1)*casimir (j+1)*casimir l)*W N l (i+1) (j+1)^2
+          else 0) = ∑ i ∈ range (N-1), ∑ j ∈ range (N-1), (f i j+f j i) := by
+        apply sum_congr rfl
+        intro i _
+        apply sum_congr rfl
+        intro j _
+        dsimp [f]
+        rw [show j+1+(i+1)+l=i+1+(j+1)+l by omega, W_swap N l (j+1) (i+1)]
+        split_ifs
+        · have hi0 : casimir (i+1) ≠ 0 := by unfold casimir; positivity
+          have hj0 : casimir (j+1) ≠ 0 := by unfold casimir; positivity
+          field_simp [hi0, hj0, hl0]
+          ring
+        · ring
+      rw [he]
+      simp only [sum_add_distrib]
+      rw [sum_comm (f := fun i j => f j i)]
+      ring
+    have hrow (i : ℕ) : (∑ j ∈ range (N-1), f i j) =
+        (2*((i+1 : ℕ) : ℝ)+1)/(casimir (i+1)*casimir l) *
+          (oddMoment (i+1) l N - casimir (i+1)*
+            (∑ j ∈ range (N-1), if Odd (j+1+(i+1)+l) then
+              (2*((j+1 : ℕ) : ℝ)+1)*W N (j+1) (i+1) l^2 else 0)) := by
+      rw [oddMoment, mul_sum, ← sum_sub_distrib, mul_sum]
+      apply sum_congr rfl
+      intro j _
+      dsimp [f]
+      have hw : W N l (i+1) (j+1) = W N (j+1) (i+1) l := by
+        unfold W
+        rw [sixJ_swap_columns, sixJ_cycle_columns]
+      rw [hw, show i+1+(j+1)+l=j+1+(i+1)+l by omega]
+      split_ifs <;> ring
+    rw [rMinus, ht]
+    simp_rw [hrow]
+    rw [mul_sum]
+    simp only [sum_div, mul_sum]
+    apply sum_congr rfl
+    intro i _
+    field_simp [hd0, hl0]
+    ring
+  rw [hsplit]
+  have hrow (i : ℕ) (hi : i ∈ range (N-1)) :
+      oddMoment (i+1) l N - casimir (i+1)*
+        (∑ j ∈ range (N-1), if Odd (j+1+(i+1)+l) then
+          (2*((j+1 : ℕ) : ℝ)+1)*W N (j+1) (i+1) l^2 else 0) =
+      casimir l/2 * (1/(N : ℝ)+(-1 : ℝ)^(i+1+l+N)*Wij N (i+1) l) -
+        casimir (i+1)*casimir l/((N : ℝ)*((N : ℝ)^2-1)) := by
+    have hiN : i+1 < N := by have := mem_range.mp hi; omega
+    have hm := odd_moment_eq (i+1) l N ⟨by omega, hiN⟩ ⟨by omega, hlN⟩ hN
+    have hp := D5.S3.Quantum.Algebra.ZeitlinSixJ.Expansion.racah_expansion_open
+      N l (i+1) hN hlN hiN
+    have hw : Wij N l (i+1) = Wij N (i+1) l := by
+      unfold Wij
+      exact sixJ_flip_pair _ _ _ _ _ _
+    rw [hw, show N-1+l+(i+1)=N-1+(i+1)+l by omega] at hp
+    rw [← hp] at hm
+    have hs : (-1 : ℝ)^(i+1+l+N) = -((-1 : ℝ)^(N-1+(i+1)+l)) := by
+      rw [show i+1+l+N=(N-1+(i+1)+l)+1 by omega, pow_succ]
+      ring
+    rw [odd_mass N (i+1) l hN hiN hlN, hs]
+    field_simp [hn0, hd0] at hm ⊢
+    linear_combination hm
+  have hrows := sum_congr rfl (fun i hi => congrArg
+    (fun x : ℝ => (2*((i+1 : ℕ) : ℝ)+1)/casimir (i+1)*x) (hrow i hi))
+  rw [hrows]
+  have he : (∑ i ∈ range (N-1),
+      (2*((i+1 : ℕ) : ℝ)+1)/casimir (i+1) *
+        (casimir l/2*(1/(N : ℝ)+(-1 : ℝ)^(i+1+l+N)*Wij N (i+1) l) -
+          casimir (i+1)*casimir l/((N : ℝ)*((N : ℝ)^2-1)))) =
+      casimir l/2*(∑ i ∈ range (N-1),
+        (2*((i+1 : ℕ) : ℝ)+1)/casimir (i+1) *
+          (1/(N : ℝ)+(-1 : ℝ)^(i+1+l+N)*Wij N (i+1) l)) -
+        casimir l/((N : ℝ)*((N : ℝ)^2-1)) *
+          ∑ i ∈ range (N-1), (2*((i+1 : ℕ) : ℝ)+1) := by
+    rw [mul_sum, mul_sum, ← sum_sub_distrib]
+    apply sum_congr rfl
+    intro i _
+    have hi0 : casimir (i+1) ≠ 0 := by unfold casimir; positivity
+    field_simp [hi0]
+  rw [he, (D5.S3.Quantum.Algebra.ZeitlinSixJ.SumRules.result N hN).2.2.2 l ⟨by omega, hlN⟩]
+  have hdim : (∑ i ∈ range (N-1), (2*((i+1 : ℕ) : ℝ)+1)) = (N : ℝ)^2-1 := by
+    have hc := congrArg (fun x : ℕ => (x : ℝ)) (sum_range_id_mul_two (N-1))
+    simp only [Nat.cast_mul, Nat.cast_sum, Nat.cast_ofNat,
+      Nat.cast_sub (by omega : 1 ≤ N-1), Nat.cast_sub (by omega : 1 ≤ N),
+      Nat.cast_one] at hc
+    simp only [Nat.cast_add, Nat.cast_one, mul_add, sum_add_distrib, ← mul_sum,
+      sum_const, card_range, nsmul_eq_mul]
+    rw [Nat.cast_sub (by omega : 1 ≤ N), Nat.cast_one]
+    nlinarith [hc]
+  rw [hdim]
+  field_simp [hn0, hd0, hl0]
 
 end D5.S3.Quantum.Algebra.ZeitlinSixJ.RicciLimit
