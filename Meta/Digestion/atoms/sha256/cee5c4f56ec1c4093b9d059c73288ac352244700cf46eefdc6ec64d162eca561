@@ -1,0 +1,26 @@
+### theorem 1（两份函数具有相同的直线非零性质，却增加不同数量的独立读数）
+
+Claim status: open
+
+设已有读数空间为：
+
+$$
+\mathcal R=\operatorname{span}_{\mathbb F_3}\{1,u,v\}.
+$$
+
+则：
+
+$$
+\boxed{\dim\bigl(\mathcal R+\operatorname{span}\{f_1,f_2\}\bigr)=4,}
+$$
+
+$$
+\boxed{\dim\bigl(\mathcal R+\operatorname{span}\{g_1,g_2\}\bigr)=5.}
+$$
+
+因此，相应九坐标校验核的维数分别为：
+
+$$
+\boxed{9-4=5,\qquad9-5=4.}
+$$
+
