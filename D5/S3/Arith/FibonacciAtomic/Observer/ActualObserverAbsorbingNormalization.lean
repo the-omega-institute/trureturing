@@ -533,7 +533,7 @@ noncomputable def allowedSources (N : Nat) : Finset Source := by
   classical
   exact (ActualTreeReadoutAcquisition.boundedSources N).filter (Allowed N)
 
-private theorem composition_total (T : Source) :
+theorem composition_total (T : Source) :
     (GenealogicalFiberTransport.composition T).1 +
       (GenealogicalFiberTransport.composition T).2 = T.length := by
   let total : Source →ₙ* Multiplicative Nat :=
@@ -663,12 +663,12 @@ private theorem joint_domination (N : Nat) (M : Observer E) (admissible : Admiss
       (max_old U allowed)
   exact add_le_add le_rfl fees
 
-private def sourceStep (M : Observer E) (U : Source) (e : E) : E :=
+def sourceStep (M : Observer E) (U : Source) (e : E) : E :=
   match M.action e with
   | .inl q => M.transition e (queryReply (M.decoder e) q U)
   | .inr _ => e
 
-private theorem run_orbit (M : Observer E) (U : Source)
+theorem run_orbit (M : Observer E) (U : Source)
     {e f : E} {t : RawHistory} {b : Bool} (run : Run M U e t f b) :
     (sourceStep M U)^[t.length] e = f ∧ M.action f = .inr b ∧
     ∀ i < t.length, ∃ q, M.action ((sourceStep M U)^[i] e) = .inl q := by
@@ -683,7 +683,7 @@ private theorem run_orbit (M : Observer E) (U : Source)
       | succ i =>
         simpa only [Function.iterate_succ_apply, sourceStep, row] using ih.2.2 i (by simpa using hi)
 
-private theorem run_length_bound (M : Observer E) (U : Source)
+theorem run_length_bound (M : Observer E) (U : Source)
     {e f : E} {t : RawHistory} {b : Bool} (run : Run M U e t f b) :
     t.length < Fintype.card E := by
   obtain ⟨terminal, halt, before⟩ := run_orbit M U run
