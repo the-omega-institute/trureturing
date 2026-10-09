@@ -41,6 +41,14 @@ theorem triplet_pairDistances_equal :
     pairDistances 0 2 6 = pairDistances 0 4 6 := by
   native_decide
 
+/-- Reflect an offset set about the midpoint 3. -/
+def reflectedOffsets (H : Finset ℕ) : Finset ℕ :=
+  H.image (fun h => 6 - h)
+
+theorem reflected_tripletPlus :
+    reflectedOffsets tripletPlus = tripletMinus := by
+  native_decide
+
 /-! ### Finite wheel candidates -/
 
 /-- A residue is a wheel candidate for every offset in `H`. -/
