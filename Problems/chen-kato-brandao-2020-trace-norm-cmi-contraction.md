@@ -76,7 +76,10 @@ at most $0.6406$.
 `PartialTraceMutualInformation`, whose `density_posSemidef` this delivery makes public, and the
 trace-norm lemmas `traceNorm_eq_max_re_tr_U` and `traceNorm_add_le`. The axiom closure of `result`
 is exactly `propext`, `Classical.choice` and `Quot.sound`; there is no `sorry` or `native_decide`.
-MODULE_STATEMENT_PLACEHOLDER
+The module statement is `sha256:59c0c2ef1556cef08c3d28b2e9a0d2132ea16db116307491c77525f16db3bfca`; `result` is
+`sha256:3e1ffcaec7645dee9cd57abe3f1ee71b15962ee7a0f8203526c77dfb12a8d185` and `claim` is
+`sha256:65766632e3a552683ceeba34ba75bcb76a28891dafd6e5e8ca3b035f9d137dc0`. The Freeze event is
+`sha256:a44281242aa538a7d14e9a3f945880d1e54bde9f8049bb7442d1a42203b37866`.
 
 ## Triage
 
