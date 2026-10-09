@@ -2145,29 +2145,237 @@ The exact family (25.9)–(25.10) leaves other tail-independent target images, t
 
 ## 追加锚（本行以下为增补区）
 
-## 26. Exact complete-controller memory at the seven-phase three-block fee
+## 26. Even-budget target images and a dyadic free-value GLOBAL surcharge
 
-**定义 26.1（Original experiment and complete finite controller）。** Fix the original order $k=6$ and block width $m=4$ of Definition 24.1. Its weights and matched binary coefficients are
+**定义 26.1（Even-budget witness set on the full INITIAL source）。** Retain Definition 25.1, including every actually jointly attainable $(v,-j,s)$, unknown history, inherited tail $0\le s<k$, independently observed absorbing bottom, and arbitrary bottom label. Thus $m\ge3$, $k=2m-2$, $T=2m-1$ and $P=\mathbb Z/T\mathbb Z$. The immutable target is the arbitrary full table $f(v,-j,s)=\lambda_v(j)$ of (25.2). For an integer $1\le q\le m-2$ put
+
+$$
+E_q=\{0\}\cup\{m+q,m+q+1,\ldots,2m-2\},
+\qquad A_{v,q}=\lambda_v[E_q].
+\tag{26.1}
+$$
+
+The set $E_q$ has $m-q$ phases; its target image can be smaller. Both original alphabets separately are $\{0,1\}^m$ because $m<k$. Their common internal legality does not remove cross-block rejection. Fees count every actually emitted complete block, including waits and the remainder of a block after rejection. Only its endpoint is observed. GLOBAL requires the same preset literal word at the same emitted block number on all live archives and both free-value fibres, with actual archive-dependent stopping. The controller knows its own emitted-block count, but no INITIAL length or phase clock; it has no reset, source copy, interior reading or unexecuted-branch observation.
+
+**定理 26.2（Even-budget root-conditioned capacity lower relation）。** On this full source, for either original alphabet, if
+
+$$
+|A_{v,q}|>2^q\quad\text{for some }v,
+\tag{26.2}
+$$
+
+then
+
+$$
+\boxed{C_{\rm ad}(f)\ge2q+1,\qquad C_{\rm pre}(f)\ge2q+1.}
+\tag{26.3}
+$$
+
+Proof. First fix such a value $v$ on the entire INITIAL prior. Its target is nonconstant, so this free reading cannot stop. The actual histories (25.3), supplied by Lemma 15.1, realize every phase with INITIAL tail $k-1$ in this same value fibre. If the root starts one, all these sources reject immediately and have the same completed endpoint $\bot$ and every subsequent observation, although some of their required labels differ. Thus every correct root on this fibre starts zero. That zero clears every inherited legal tail; the remaining $m-1<k$ bits cannot reject, so the entire root succeeds on every live INITIAL record of the fibre. This establishes full root legality before any restriction to witness phases or tails.
+
+Now retain the actual sources $(v,-j,0)$ with $j\in E_q$, each realized by (25.3). On any common reached archive their current tails coincide: tail update depends only on the literal inputs. Every next action therefore succeeds on all its candidates or rejects them all. A common rejection yields one absorbing child, and a correct early stop yields one label. Neither can split unequal labels.
+
+For an arbitrary literal action at actual block index $t$, its successful charge is supported on the full physical path $W_t$ of (25.7), including both endpoints. At the even indices in a budget of $2q$ blocks,
+
+$$
+W_{2h}=\{h,h+1,\ldots,h+m\},\qquad
+0\le h\le q-1,\qquad h+m\le m+q-1<T.
+\tag{26.4}
+$$
+
+Every high phase of $E_q$ misses these paths. Phase zero misses them for $h>0$; at $h=0$ its charge is the root's first bit, already forced to be zero. Hence every successful even-index action is unary on the retained archive. A rejecting even-index action is likewise unary. Only the $q$ odd indices $1,3,\ldots,2q-1$ can give two successful scalar endpoints. The binary-leaf induction used in Corollary 19.3 and Theorem 25.2 therefore gives at most $2^q$ nonempty stopping leaves by paid depth $2q$, with earlier stops and common rejection included. Every leaf must be homogeneous for $\lambda_v$. This contradicts (26.2), proving the adaptive lower bound. Restricting the action choices to GLOBAL proves the other bound. No later window can be inserted by an unpaid wait. $\square$
+
+**定理 26.3（Exact differing-free-value dyadic family）。** In Definition 26.1 let
+
+$$
+r\ge3,\qquad m=2^r,\qquad M=m/2=2^{r-1},\qquad H=M/2=2^{r-2}.
+\tag{26.5}
+$$
+
+Use $z(j)$ of (25.14), and, for $0\le n<m$, define
+
+$$
+\rho(n)=n\bmod M,\qquad
+e(n)=\mathbf1_{\{r-2,r-1\}}(n),\qquad
+\pi(n)=(n\bmod H)+H\left\lfloor\frac nM\right\rfloor.
+\tag{26.6}
+$$
+
+On every INITIAL tail in the two complete free-value fibres, set
+
+$$
+\lambda_0(j)=(\rho(z(j)),e(z(j))),\qquad
+\lambda_1(j)=(\pi(z(j)),0),\qquad f(\bot)=y_\bot,
+\tag{26.7}
+$$
+
+with arbitrary fixed $y_\bot$, possibly a live label. Then, for each original alphabet,
+
+$$
+\boxed{C_{\rm ad}(f)=2r-1,\qquad C_{\rm pre}(f)=2r.}
+\tag{26.8}
+$$
+
+The exact worst emitted-bit fees are $(2r-1)m$ and $2rm$. In particular $(m,k)=(8,14)$ gives five adaptive blocks and six GLOBAL blocks, or $40$ and $48$ bits. The target retains the entire INITIAL prior; the common label at $1\le j\le m$ is not a promise deleting those phases.
+
+Proof (target images and lower bounds). The inequalities $r<M$, $r-1<M-1$ and $r-1\le m-2$ hold for $r\ge3$. At $q=r-1$ the actual integer images are
+
+$$
+z[E_{r-1}]=\{r-1,r,\ldots,m-1\},\qquad
+z[J_{r-1}^{\star}]=\{r,r+1,\ldots,m-1\}.
+\tag{26.9}
+$$
+
+The last value $m-1$ in each set comes from phase zero. On the first interval $\rho$ takes all $M$ values. Precisely $n=r-1$ has $e(n)=1$, while $n=M+r-1\le m-1$ has the same residue and $e(n)=0$. Every other residue occurs with $e=0$. Consequently
+
+$$
+|\lambda_0[E_{r-1}]|=M+1>2^{r-1}.
+\tag{26.10}
+$$
+
+Theorem 26.2 gives $C_{\rm ad}(f)\ge2r-1$.
+
+For the GLOBAL lower bound use the existing exact value-join law, [INITIAL target-cost theory, Theorem 29.2](KBONACCI_INITIAL_TARGET_COST_THEORY.md#29-one-literal-stream-across-the-two-free-value-fibres), including its different-stopping-time and absorbing-rejection cases. Its joined table here is
+
+$$
+\Lambda(j)=(\lambda_0(j),\lambda_1(j)).
+\tag{26.11}
+$$
+
+This is a decoder correspondence on the same actual preset stream; it supplies no second experiment. The pair $(\rho(n),\pi(n))$ determines $n$, since
+
+$$
+n=\rho(n)+M\left\lfloor\frac{\pi(n)}H\right\rfloor
+\qquad(0\le n<m).
+\tag{26.12}
+$$
+
+Thus (26.9) gives $|\Lambda[J_{r-1}^{\star}]|=m-r>M$. Apply Theorem 25.2 to this joined tail-independent full target to get $C_{\rm pre}(\Lambda)\ge2r$, and Theorem 29.2 gives $C_{\rm pre}(f)\ge2r$. In contrast, each individual table misses the strict hypothesis (25.10):
+
+$$
+|\lambda_0[J_{r-1}^{\star}]|=M,\qquad
+|\lambda_1[J_{r-1}^{\star}]|=
+\begin{cases}3,&r=3,\\ M,&r\ge4.\end{cases}
+\tag{26.13}
+$$
+
+Indeed $e=0$ on $[r,m-1]$ and that interval contains every residue modulo $M$. For $\pi$, when $r\ge4$ one has $r\le H$, so $[H,M-1]\subseteq[r,m-1]$ supplies its lower $H$ values and $[M,m-1]$ supplies its upper $H$ values. At $r=3$ direct substitution on $n=3,4,5,6,7$ gives $1,2,3,2,3$. Failure of either individual strict threshold is not used as evidence of a smaller fee; the following actual streams supply the upper bounds.
+
+Proof (legal adaptive attainment). Reuse the words $D_h$ of (25.13) and their successful increments (25.14), valid for $r\ge3$. In free-value fibre zero issue the common prefix
+
+$$
+\mathcal P_0=D_0\mid D_0\mid\cdots\mid D_{r-2}\mid D_{r-2}.
+\tag{26.14}
+$$
+
+From its own observed endpoints compute $a=\sum_{h=0}^{r-2}2^h d_{2h+1}=\rho(z(j))$. If $a\notin\{r-2,r-1\}$, return $(a,0)$ at depth $2r-2$. Otherwise issue the complete word
+
+$$
+L=0^{m-1}1
+\tag{26.15}
+$$
+
+at index $2r-2$, and return $(a,d_{2r-2})$. Its start displacement is $r-1$, so its sole one at local offset $m-1$ charges exactly the two INITIAL phases
+
+$$
+\{m+r-2,m+r-1\}.
+\tag{26.16}
+$$
+
+These are exactly the phases with $z(j)\in\{r-2,r-1\}$; neither phase zero nor $1\le j\le m$ is included. Thus the last observed increment is exactly $e(z(j))$. Each exceptional residue has the two possible high phases $j=m+a$ and $j=m+M+a$ after (26.14); the last word distinguishes their different labels. All are actual full-source phases, so some live sources really pay the extra block. Every prefix word starts and ends zero, and $L$ begins zero and ends in a single one. They safely clear all inherited tails during the paid root, have internal runs shorter than $k$, and have safe actual seams. No cleanup block is required at a stopping leaf.
+
+For free-value fibre one put $b=r-2$ and define one complete word $F=F_0\cdots F_{m-1}$ by the same prefix-parity construction as (25.13), with its bit index and physical calendar index distinguished:
+
+$$
+F_0=0,\qquad
+F_i=\bigoplus_{\ell=1}^{i}\beta_{r-1}(b+\ell)
+\quad(1\le i<m).
+\tag{26.17}
+$$
+
+In a full period of length $m$, $\beta_{r-1}$ has $M$ ones, an even number. The omitted residue $b$ has bit zero because $b<2^{r-1}$, so $F_{m-1}=0$. Issue
+
+$$
+\mathcal P_1=D_0\mid D_0\mid\cdots\mid D_{r-3}\mid D_{r-3}
+\mid0^m\mid F.
+\tag{26.18}
+$$
+
+The displayed pairs occupy $2r-4$ blocks, including just the $D_0$ pair when $r=3$; the all-zero wait at index $2r-4$ is paid. The last word is at index $2r-3=2b+1$, with start displacement $m+b$. Its interior local charge at $1\le\ell<m$ is $\beta_{r-1}(b+\ell)$ and both endpoint charges vanish, by the same literal adjacent-bit calculation as (22.6). For $j=m+n$ with $n>b$ it gives $\beta_{r-1}(n)$. Omitted $1\le n\le b$ have this bit zero. Phase zero gives $\beta_{r-1}(m-1)=1$; the wrapped low phases $1\le j\le b$ give $\beta_{r-1}(m-1+j)=\beta_{r-1}(j-1)=0$. Every other phase is outside the charged interior window and has $z(j)=0$. Consequently its actual final increment is $\beta_{r-1}(z(j))$ on every phase. The earlier odd increments supply the bits $0,\ldots,r-3$ of $z(j)$, so return
+
+$$
+\left(\sum_{h=0}^{r-3}2^h d_{2h+1}+H d_{2r-3},\ 0\right)
+=(\pi(z(j)),0)
+\tag{26.19}
+$$
+
+at paid depth $2r-2$. All words in this stream start and end zero; every inherited tail and every seam is safe. Using the remembered free value to select (26.14) or (26.18) is a legal adaptive rule. It is not asserted to be a GLOBAL rule. Initial bottom returns $y_\bot$ at fee zero, and every decoder returns its immutable INITIAL label. This proves $C_{\rm ad}(f)\le2r-1$.
+
+Proof (one GLOBAL attaining stream). Use exactly the existing literal stream
+
+$$
+\mathcal D=D_0\mid D_0\mid\cdots\mid D_{r-1}\mid D_{r-1}
+\tag{26.20}
+$$
+
+from (25.13)–(25.17), with any fixed all-zero extension. This one sequence is common to all live archives, both free values and all inherited tails at every block number. Its safe-root and seam proof is already supplied there. Its own actual increments give $z=\sum_{h=0}^{r-1}2^h d_{2h+1}=z(j)$. At depth $2r$ return $(\rho(z),e(z))$ if the remembered free value is zero, and $(\pi(z),0)$ if it is one. No phase reconstruction or sibling observation is needed. Every live source may execute these $2r$ blocks, all paid; initial bottom stops free. This proves $C_{\rm pre}(f)\le2r$ and finishes (26.8).
+
+At $r=3$ the preceding witnesses are explicitly
+
+$$
+\begin{aligned}
+\mathcal P_0&=01100110\mid01100110\mid01000100\mid01000100,\\
+L&=00000001,\\
+\mathcal P_1&=01100110\mid01100110\mid00000000\mid00010100,\\
+\mathcal D&=01100110\mid01100110\mid01000100\mid01000100
+\mid00101000\mid00101000.
+\end{aligned}
+\tag{26.21}
+$$
+
+On value zero, the four actual phases $j=9,10,13,14$ have $a\in\{1,2\}$ and pay the fifth block; the other eleven stop after four. All fifteen phases in value one stop after four. Every statement holds at all fourteen inherited legal tails, not only tail zero. At this parameter $E_2=\{0,10,11,12,13,14\}$ has five value-zero labels; $J_2^{\star}=\{0,11,12,13,14\}$ has respectively four and three single-fibre labels but five ordered joined labels. These actual image computations give the lower bounds five and six, independently of the displayed upper witnesses. $\square$
+
+**数学边界 26.4（Falsifiers, calibration and remaining quantifiers）。** A correct original full-source controller of fee at most $2q$ satisfying (26.2) falsifies Theorem 26.2. Its proof would also fail if identical current tails under one literal action could produce phase-dependent rejection, or if a root-zero even action in (26.4) could have nonzero charge on $E_q$. For (26.8), an adaptive fee at most $2r-2$ or a single GLOBAL stream of fee at most $2r-1$ on the stated full target would contradict the respective lower relation. A GLOBAL counterexample must use one literal word at every reached block number across both free values, including archives with different stopping times. Two separately optimal value-fibre streams do not supply that counterexample.
+
+An upper witness fails if any legal inherited tail rejects, an actual endpoint increment differs from (26.15)–(26.19) or the supplied dyadic code, or a stopping decoder returns a different INITIAL label. An unpaid wait, interior sensor, hidden INITIAL clock, copied source or borrowed unexecuted archive changes the stated contract. Failure of an upper witness alone does not exclude another witness at the same price. Failure of (26.2), just like failure of (25.5), does not imply a lower attainable fee.
+
+The calibrated relation is the difference between target-image capacity at a paid even horizon and compatibility of the two free-value tables on one stream. The individual images in (26.13) do not pass the odd-horizon strict test; the extra physical boundary phase in (26.9) proves the adaptive lower bound, while the ordered joint image proves the GLOBAL surcharge. The two columns of (26.7) concern the same actual phase and inherited tail; their joint image is computed from that common implementation, not from a Cartesian product of separate optimum codes. The whole live target factors through $(v,z(j))$ with the free INITIAL value retained; each fixed-value table $\lambda_v$ and their ordered join $\Lambda$ factor through $z(j)$. The target has repeated phase labels, so it is different from the full phase family of Theorem 25.3.
+
+Theorem 26.2 gives only a lower relation at general $m\ge3$. The exact prices (26.8) settle precisely the tables (26.7), all $r\ge3$, both alphabets and arbitrary bottom label. Arbitrary other target images, tail-sensitive INITIAL targets, nondyadic parameters, other $(k,m)$ and general simultaneous optimality across unrelated live archives remain outside this exact family. In particular no conclusion for $r=2$ is inferred. The remaining objective is exact adaptive and one-GLOBAL-stream worst complete-block fees for every attainable immutable INITIAL target, all $k\ge2,m\ge1$ and both original alphabets. No memory, search-time, physical-resource or cross-reader cost transport is asserted.
+
+**数学引文 26.5（Supplied results and source-specific deductions）。** Lemma 15.1 and (25.3) supply actual joint histories; (15.1)–(15.4), Definition 18.1 and Definition 25.1 supply the matched reader, endpoints, absorption and full-block fee. Corollary 19.3 supplies binary-leaf counting. The physical charge paths and root-conditioned silent phase are the supplied interfaces (25.7)–(25.8); the even-budget relation (26.3) and its consumption in (26.10) are the source-specific deductions here. The bit-prefix words and one GLOBAL dyadic code are credited to (22.4)–(22.9) and their $r=3$ extension in Theorem 25.3. Theorem 29.2 of the INITIAL target-cost volume is reused for exact preset value joining, not redelivered. The calendar-adjusted high-bit word (26.17), the paid endpoint pulse (26.15), and the joined-image computation connect these suppliers to the different tables (26.7).
+
+For mature identification semantics, van den Bos–Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2, Definitions 8–11 and Figure 3](https://arxiv.org/html/1907.11034v2), supplies completed observations, legal test inputs, separation by observed traces and destructive first-action mergers. Here an input is an entire literal block, its reply is the completed endpoint, and only different INITIAL labels require separation. Those definitions do not give the physical calendar (26.4), target images (26.9)–(26.13), or fees (26.8). These conclusions are repo-derived ordinary mathematical deductions, without an assertion of literature priority.
+
+The root-zero three/four-label companions price an already acquired successful child of root $1^m$, with its stated tail and source restrictions. Here every nonconstant free-value table on the full terminal-tail prior forces the first bit zero, so those acquired-child prices are not being reissued. The initial-calendar capacity volume assumes $k=Qm$, $Q\ge2$, whereas here $k=2m-2$. The response-code volume's independent-row realization assumes $g\ge2$, whereas here $g=1$. The affine fixed-tariff results in [effective-resolution continuation, Section 14](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION_CONTINUATION.md#14-原完整双因子来源的固定费三事件支配与记忆约束价格) have a full modular-phase source, named affine edges and Read commands with their own tariffs. No source/action/observation/fee-preserving map from that contract to this block reader is supplied; its fixed-fee law is not a premise of (26.8).
+
+## 追加锚（本行以下为增补区）
+
+## 27. Exact complete-controller memory at the seven-phase three-block fee
+
+Section 26 prices emitted blocks for its dyadic INITIAL target family $(k,m)=(2^{r+1}-2,2^r)$, $r\ge3$. The present section returns to the seven-phase experiment $(k,m)=(6,4)$ of Section 24 and minimizes the complete controller state count at adaptive worst fee at most three blocks, including internal control and persistent outputs. The GLOBAL fee objective in Section 26 retains its own contract; the complete-controller objective below allows adaptive branches.
+
+**定义 27.1（Original experiment and complete finite controller）。** Fix the original order $k=6$ and block width $m=4$ of Definition 24.1. Its weights and matched binary coefficients are
 
 $$
 G_i=2^i\quad(0\le i<6),\qquad
 G_i=\sum_{h=1}^{6}G_{i-h}\quad(i\ge6),\qquad
 \gamma_i=G_i\bmod2=\mathbf1_{\{0,6\}}(i\bmod7).
-\tag{26.1}
+\tag{27.1}
 $$
 
 The coefficient equality is supplied by (15.1), equivalently (24.2), and the [minimal modular observer, Section 13, (30)–(31), and Theorem 14.1](https://github.com/the-omega-institute/trureturing/blob/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md). Bits are read in increasing original weight order. A live history $w=w_0\cdots w_{N-1}$ has length divisible by four, avoids six consecutive ones, and has record $(x,\theta,s)$ with $x=\sum_{i<N}w_iG_i\bmod2$, $\theta=N\bmod7$, and terminal run $s$. Rejected histories have the distinct absorbing record $\bot$. The source is the full actual joint image
 
 $$
 Q=(\mathbb F_2\times\mathbb Z/7\mathbb Z\times\{0,1,2,3,4,5\})\sqcup\{\bot\}.
-\tag{26.2}
+\tag{27.2}
 $$
 
 All $84$ live INITIAL triples and bottom are included, with unknown history and length. Joint realization is supplied by Lemma 15.1: choose $N\ge s+2$, $N\equiv0\pmod4$, $N\equiv\theta\pmod7$, set $e=\bigoplus_{i=N-s}^{N-1}\gamma_i$, and take
 
 $$
 w=(x\oplus e)0^{N-s-1}1^s.
-\tag{26.3}
+\tag{27.3}
 $$
 
 Coprimality permits arbitrarily large such $N$. The first bit has coefficient one, the zero interval separates it from the terminal run, and this same legal word attains all three coordinates. The complete-block history $11111100$ attains $\bot$. These unobserved witnesses are not controller inputs or continuation fees.
@@ -2179,7 +2387,7 @@ $$
 \qquad
 \mathcal A_{\rm loc}=\{B\in\{0,1\}^4:B\text{ internally avoids }1^6\}
 =\{0,1\}^4.
-\tag{26.4}
+\tag{27.4}
 $$
 
 Each action executes all four bit updates in its displayed order. On current live record $(y,\phi,t)$, zero gives $(y,\phi+1,0)$; one gives $(y\oplus\gamma_\phi,\phi+1,t+1)$ if $t<5$, and gives $\bot$ if $t=5$. Both bits preserve $\bot$. Phase arithmetic is modulo seven. Let $T_B$ be this fourfold composition and $o(y,\phi,t)=y$, $o(\bot)=\bot$, with response alphabet $O=\{0,1,\bot\}$. Only $o(T_B(q))$ is read after an action; interior values are unavailable. The original word $1111$ remains an available action and succeeds whenever its inherited tail permits it.
@@ -2191,7 +2399,7 @@ $$
 f_{\rm ph}(x,\theta,s)&=\theta,& f_{\rm ph}(\bot)&=0,\\
 f_{\rm vp}(x,\theta,s)&=(x,\theta),& f_{\rm vp}(\bot)&=(0,0).
 \end{aligned}
-\tag{26.5}
+\tag{27.5}
 $$
 
 Neither target is evaluated on a later record. These are the conventions of Definitions 18.1 and 24.1 and the [irreversible target-acquisition volume, Definitions 1.2 and 2.1, Convention 1.3, and Open Problem 11.2](https://github.com/the-omega-institute/trureturing/blob/3d77b305316f29834675427be4c971ad06e73b57/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md).
@@ -2206,7 +2414,7 @@ u&:K\longrightarrow
  \sqcup\{\operatorname{Halt}(a):a\in Y\},\\
 v&:K\times O\longrightarrow K.
 \end{aligned}
-\tag{26.6}
+\tag{27.6}
 $$
 
 Initialize once to $c(o(q_{\rm INITIAL}))$. At state $z$, Halt returns its literal label and persists: $v(z,o)=z$ for every $o$. Emit executes its word, reads its endpoint, and moves to $v(z,o(T_B(q)))$. All usable stages, branch selectors, saved INITIAL values, input/output archives, stopping decisions and persistent output states belong to $K$. No external counter, archive, clock, source promise, reset, copy, interior read or further free device read is supplied. The physical device record remains part of the experiment but is not a separately accessible controller register. Cycles and sharing across branches or execution depths are allowed.
@@ -2215,17 +2423,17 @@ Each actually emitted block costs one, or four emitted bits. Clearing, waiting, 
 
 $$
 M_3(f)=\min\{|K|:(K,c,u,v)\text{ is complete and successful with worst emitted fee }\le3\}.
-\tag{26.7}
+\tag{27.7}
 $$
 
 Running and Halt states both count. Theorem 24.2 already supplies adaptive worst-fee minimum three and the separate one-GLOBAL-stream minimum four. The additional question here is complete memory at that adaptive fee; GLOBAL common-word constraints are not imposed.
 
-**定理 26.2（Exact complete-controller minima）。** Under Definition 26.1, separately for either original alphabet,
+**定理 27.2（Exact complete-controller minima）。** Under Definition 27.1, separately for either original alphabet,
 
 $$
 \boxed{M_3(f_{\rm ph})=18=11+7,\qquad
 M_3(f_{\rm vp})=26=12+14.}
-\tag{26.8}
+\tag{27.8}
 $$
 
 Every successful complete controller at worst fee at most three needs at least eleven, respectively twelve, running states and seven, respectively fourteen, persistent literal Halt states. Both bounds are simultaneously attained. Bottom reuses a live output label.
@@ -2238,20 +2446,20 @@ $$
 y_{h+1}\oplus y_h&=R_{j-4h}(B),\qquad
 \bigoplus_{i=0}^{6}R_i(B)=0.
 \end{aligned}
-\tag{26.9}
+\tag{27.9}
 $$
 
 Here $d$ is the fourth bit. The controller receives absolute endpoint values, not increments or phase indices.
 
-### 26.1 Unrestricted lower bound
+### 27.1 Unrestricted lower bound
 
 The common-tail capacity argument of Corollary 19.3 applies in this form. Candidates at one controller state, with one common current tail and at most $h$ further blocks each, may have different current values, phases, origins and earlier histories. The selected word rejects all or none, since legality depends only on tail and bits. Common rejection gives identical absorbing responses and identical future controller evolution, so only one required label can succeed. Otherwise there are at most two endpoint children, each again with common tail. Early Halt also yields one label. Induction from $h=0$ permits at most $2^h$ distinct labels in such a successful support. Bottom is not a third useful distinguishing response.
 
-Fix free INITIAL value $x$. Its root must run because seven labels occur. A first bit one rejects the actual sources $(x,\theta,5)$ for every $\theta$, irreversibly merging unequal labels. Every root therefore starts zero, is safe on all old tails and gives a common endpoint tail. For root $0bcd$, (26.9) gives an even-sized positive set contained in $\{1,2,3,4\}$; its zero set contains $0,5,6$. Each child has two blocks left and capacity four. Positive-set sizes zero and two leave seven and five labels in the zero child. Thus its size is four, forcing $b=b\oplus c=c\oplus d=d=1$. This recovers the root of (24.11):
+Fix free INITIAL value $x$. Its root must run because seven labels occur. A first bit one rejects the actual sources $(x,\theta,5)$ for every $\theta$, irreversibly merging unequal labels. Every root therefore starts zero, is safe on all old tails and gives a common endpoint tail. For root $0bcd$, (27.9) gives an even-sized positive set contained in $\{1,2,3,4\}$; its zero set contains $0,5,6$. Each child has two blocks left and capacity four. Positive-set sizes zero and two leave seven and five labels in the zero child. Thus its size is four, forcing $b=b\oplus c=c\oplus d=d=1$. This recovers the root of (24.11):
 
 $$
 B_{\rm root}=0101,\qquad A=\{1,2,3,4\},\qquad Z=\{0,5,6\}.
-\tag{26.10}
+\tag{27.10}
 $$
 
 It ends in tail one and both children must run. Roots $c(0),c(1)$ are distinct: if equal, response zero puts $x=0,j\in Z$ and $x=1,j\in A$ in one successor, with common tail one, seven different labels for either target, and only two blocks left.
@@ -2262,7 +2470,7 @@ $$
 P=\{2,3\},\qquad Q=\{1,4\},\qquad
 y_P=x\oplus1,\quad y_Q=x
 \quad\text{after two blocks}.
-\tag{26.11}
+\tag{27.11}
 $$
 
 Their inherited tails may depend on the middle bits and are retained.
@@ -2272,7 +2480,7 @@ At $Z_x$, second-word increments at $j=0,5,6$ are $(c\oplus d,a\oplus b,b\oplus 
 $$
 (r_0,r_1,r_2,r_3,r_4,r_5,r_6)
 =(0,e,e\oplus f,f\oplus g,g\oplus\ell,\ell,0).
-\tag{26.12}
+\tag{27.12}
 $$
 
 Pair $\{0,6\}$ already has common current value and tail and has identically zero final increments. No last word splits it, whether safe or uniformly rejecting. The mandatory $Z_x$ pair $T_x$ must be $\{0,5\}$ or $\{5,6\}$. Its singleton may Halt or continue for another block.
@@ -2283,13 +2491,13 @@ There are six mandatory final-pair occurrences $P_x,Q_x,T_x$, $x=0,1$. Each pair
 
 For value-phase all six pair target sets are disjoint: within $x$ their phase sets differ, and across $x$ their immutable first coordinates differ. Six final running states are necessary.
 
-For phase, different sets from $P,Q,T$ cannot share since their label union has more than two elements. The two $P$ occurrences across $x$ cannot share either, despite equal phase-label sets. Their corresponding $j$ have complementary current values by (26.11) and equal current phase $-j+8$. A common safe word adds the same increment, so their absolute responses remain complementary. One occurrence needs two different Halt labels on zero and one; the other needs the assignments reversed. A single $v$ cannot do both. Rejection of either occurrence instead destroys its distinction. This argument permits different tails. The same obstruction holds for the two $Q$ occurrences. These four $A$-derived final states need at least one additional $T$ state, giving five. The two $T$ occurrences may share when actual current values align.
+For phase, different sets from $P,Q,T$ cannot share since their label union has more than two elements. The two $P$ occurrences across $x$ cannot share either, despite equal phase-label sets. Their corresponding $j$ have complementary current values by (27.11) and equal current phase $-j+8$. A common safe word adds the same increment, so their absolute responses remain complementary. One occurrence needs two different Halt labels on zero and one; the other needs the assignments reversed. A single $v$ cannot do both. Rejection of either occurrence instead destroys its distinction. This argument permits different tails. The same obstruction holds for the two $Q$ occurrences. These four $A$-derived final states need at least one additional $T$ state, giving five. The two $T$ occurrences may share when actual current values align.
 
 These depth counts cannot collapse. Every root uses $0101$. At a first-block $A$ occurrence that word gives increments $(1,0,0,0)$, leaving three labels together; at $Z$ it gives $(1,1,1)$, also leaving three. Neither can finish in one further block, so roots cannot equal first-block states. Every mandatory final-pair state has both binary successors Halt. Roots have both successors running, and every first-block state has at least one running successor because a pair remains. Final-pair states cannot equal either earlier type. These are conflicts of fixed instructions and successors, not a tree-node count or an acyclicity assumption. Cycles, cross-depth and cross-branch reuse, and singleton continuation cannot remove them.
 
-Thus running-state lower bounds are $2+4+5=11$ and $2+4+6=12$. Seven, respectively fourteen, live labels occur on actual sources and require distinct literal Halt states because $u$ is a function. Halt states are disjoint from running states. Bottom's label is already live. The total lower bounds hold over every complete controller (26.6).
+Thus running-state lower bounds are $2+4+5=11$ and $2+4+6=12$. Seven, respectively fourteen, live labels occur on actual sources and require distinct literal Halt states because $u$ is a function. Halt states are disjoint from running states. Bottom's label is already live. The total lower bounds hold over every complete controller (27.6).
 
-### 26.2 Complete eighteen-state phase attainment
+### 27.2 Complete eighteen-state phase attainment
 
 Let $K$ contain the eleven running states below and seven states $H_0,\ldots,H_6$. Define $u(H_\theta)=\operatorname{Halt}(\theta)$ and $v(H_\theta,o)=H_\theta$ for every $o$. Initialization is $c(0)=R_0$, $c(1)=R_1$, $c(\bot)=H_0$. The table supplies every running instruction and response. Rank is a mathematical function on $K$, zero at every Halt.
 
@@ -2321,11 +2529,11 @@ Actual live supports follow. Every listed $(x,j)$ includes all six INITIAL old t
 
 The root's first zero safely clears every old tail inside its paid block and ends in tail one. Second word $1111$ safely reaches tail five, and $0110$ then starts zero. Other second words start zero and are safe; final $0001$ is safe from both tails at $S$. No live source rejects.
 
-By (26.9), $0100$ on $Z$ at depth one has increments $(0,1,1)$ at $j=0,5,6$; $0001$ has $(1,0,0)$. Thus $Z_0$ uses $0100$ and $Z_1$ uses $0001$, sending their singletons to $H_0$ and their pairs to $S$ with current value one. The two tails at $S$ differ, but its zero-first word is safe for both. At final depth $0001$ adds one at $j=5$ and zero at $j=6$, giving absolute values zero and one and labels $H_2,H_1$. This merger uses actual correlated supports without identifying their entire device records.
+By (27.9), $0100$ on $Z$ at depth one has increments $(0,1,1)$ at $j=0,5,6$; $0001$ has $(1,0,0)$. Thus $Z_0$ uses $0100$ and $Z_1$ uses $0001$, sending their singletons to $H_0$ and their pairs to $S$ with current value one. The two tails at $S$ differ, but its zero-first word is safe for both. At final depth $0001$ adds one at $j=5$ and zero at $j=6$, giving absolute values zero and one and labels $H_2,H_1$. This merger uses actual correlated supports without identifying their entire device records.
 
-For $0110$, final row (26.12) is $(0,0,1,0,1,0,0)$; the support values give exactly the listed $P/Q$ labels $-j\pmod7$. All running transitions strictly lower rank, including bottom transitions. Rank is determined by the state and supplies no external countdown. Termination takes at most three emissions. Each of the eleven running states and seven persistent Halts is reached by an actual source.
+For $0110$, final row (27.12) is $(0,0,1,0,1,0,0)$; the support values give exactly the listed $P/Q$ labels $-j\pmod7$. All running transitions strictly lower rank, including bottom transitions. Rank is determined by the state and supplies no external countdown. Termination takes at most three emissions. Each of the eleven running states and seven persistent Halts is reached by an actual source.
 
-### 26.3 Complete twenty-six-state value-phase attainment
+### 27.3 Complete twenty-six-state value-phase attainment
 
 Use twelve running states below and fourteen states $H_{x,\theta}$, $x\in\mathbb F_2$, $\theta\in\mathbb Z/7\mathbb Z$. Set $u(H_{x,\theta})=\operatorname{Halt}((x,\theta))$ and $v(H_{x,\theta},o)=H_{x,\theta}$ for all $o$. Initialization is $c(0)=R_0$, $c(1)=R_1$, $c(\bot)=H_{0,0}$. Every Halt has rank zero.
 
@@ -2346,17 +2554,17 @@ Use twelve running states below and fourteen states $H_{x,\theta}$, $x\in\mathbb
 
 The $R,A,Z,P,Q$ supports are those above. Both $Z_x$ states now use $0100$: the $j=0$ singleton reaches $H_{x,0}$ and $S_x$ has $j=5,6$, current value $x\oplus1$ and tail zero. Word $0001$ gives the listed final responses. Legality and rank decrease follow as above. The first output component is remembered INITIAL $x$, never current or final device value. Every running state and all fourteen Halts are reached.
 
-In either construction, twelve live records with $j=0$ emit two blocks, the other seventy-two emit three, and INITIAL bottom emits none. The worst fee is exactly three blocks or twelve emitted bits, including all zero and one bits. The tables, initialization, Halt loops and bottom conventions specify complete $(K,c,u,v)$ without separate output latches or program stages. They attain both running and output lower bounds, proving (26.8). $\square$
+In either construction, twelve live records with $j=0$ emit two blocks, the other seventy-two emit three, and INITIAL bottom emits none. The worst fee is exactly three blocks or twelve emitted bits, including all zero and one bits. The tables, initialization, Halt loops and bottom conventions specify complete $(K,c,u,v)$ without separate output latches or program stages. They attain both running and output lower bounds, proving (27.8). $\square$
 
-The identification method has mature primary precedents. E. F. Moore, [*Gedanken-Experiments on Sequential Machines* (1956), printed pp. 129–131](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf), treats adaptive identification of one machine's beginning state, distinguishes multiple-copy experiments, and includes absorbing destructive failure. Petra van den Bos and Frits Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2, Section 4, Definition 11 and Figure 3](https://arxiv.org/html/1907.11034v2), supply adaptive distinguishing graphs and irreversible-merger context. One input here is one complete block, one observation its actual endpoint, and only unequal immutable INITIAL labels need separation. A. Larrauri and R. Bloem, [arXiv:2105.10292v2, Section 5, Theorem 4](https://arxiv.org/html/2105.10292v2), supply minimization by closed compatible covers of a given observation machine, with initial coverage and successor closure. Total tables above supply closure; the forced-state incompatibilities separately range over all permitted policies. Minimizing one preselected tree alone would not prove that bound. These suppliers provide methods, not equality (26.8). The coefficient, source, charge, root and optimal-fee results of §§15, 18 and 24 retain their credited roles. Equality (26.8) is a source-specific ordinary mathematical deduction without a global novelty or priority claim.
+The identification method has mature primary precedents. E. F. Moore, [*Gedanken-Experiments on Sequential Machines* (1956), printed pp. 129–131](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf), treats adaptive identification of one machine's beginning state, distinguishes multiple-copy experiments, and includes absorbing destructive failure. Petra van den Bos and Frits Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2, Section 4, Definition 11 and Figure 3](https://arxiv.org/html/1907.11034v2), supply adaptive distinguishing graphs and irreversible-merger context. One input here is one complete block, one observation its actual endpoint, and only unequal immutable INITIAL labels need separation. A. Larrauri and R. Bloem, [arXiv:2105.10292v2, Section 5, Theorem 4](https://arxiv.org/html/2105.10292v2), supply minimization by closed compatible covers of a given observation machine, with initial coverage and successor closure. Total tables above supply closure; the forced-state incompatibilities separately range over all permitted policies. Minimizing one preselected tree alone would not prove that bound. These suppliers provide methods, not equality (27.8). The coefficient, source, charge, root and optimal-fee results of §§15, 18 and 24 retain their credited roles. Equality (27.8) is a source-specific ordinary mathematical deduction without a global novelty or priority claim.
 
-**数学边界 26.3（Conditional static names and the missing operational correspondence）。** Suppose state names are freely chosen fixed-length binary words avoiding $11$, each with a preceding zero seam. Abstract names do not restrict actions. The elementary Fibonacci count is $F_{\ell+2}$ at length $\ell$, with $F_1=F_2=1$: partition by final zero or final $01$ to obtain the recurrence, starting with counts one at length zero and two at length one. Hence (26.8) gives conditional static naming requirements
+**数学边界 27.3（Conditional static names and the missing operational correspondence）。** Suppose state names are freely chosen fixed-length binary words avoiding $11$, each with a preceding zero seam. Abstract names do not restrict actions. The elementary Fibonacci count is $F_{\ell+2}$ at length $\ell$, with $F_1=F_2=1$: partition by final zero or final $01$ to obtain the recurrence, starting with counts one at length zero and two at length one. Hence (27.8) gives conditional static naming requirements
 
 $$
 F_7=13<18\le F_8=21\quad\Longrightarrow\quad\ell_{\rm ph}=6,
 \qquad
 F_8=21<26\le F_9=34\quad\Longrightarrow\quad\ell_{\rm vp}=7.
-\tag{26.13}
+\tag{27.13}
 $$
 
 Unrestricted binary names require five bits for either count. These capacities neither recode original action $1111$ nor impose a no-$11$ action alphabet, and assign no installation, update, readout, gate, time, energy or physical-memory costs. The missing operational FIB/KB correspondence must relate actual sources, observations, literal actions, updates, stopping and immutable INITIAL targets, preserving every original legal word, absorbing failure and every emitted fee. Accessible state-name storage and maintained access costs also need that correspondence. Static naming does not supply it. Other parameters, INITIAL targets and native fee transport retain their separate mathematical obligations.
