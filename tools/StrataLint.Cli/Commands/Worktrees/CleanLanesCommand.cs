@@ -16,7 +16,7 @@ internal static partial class CleanLanesCommand
 {
     internal const string Usage =
         "USAGE: StrataLint clean-lanes [--base REV] [--force] [--lanes-only] "
-        + "[--active-path PATH ...]";
+        + "[--active-paths-file FILE]";
 
     private const long MinimumReclaimableLaneAgeSeconds = 24L * 60 * 60;
     private const long MinimumBehindCommits = 300;
@@ -163,6 +163,7 @@ internal static partial class CleanLanesCommand
         var force = false;
         var lanesOnly = false;
         var activePaths = new HashSet<string>(StringComparer.Ordinal);
+        var activePathsSeen = false;
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
@@ -173,14 +174,14 @@ internal static partial class CleanLanesCommand
                 case "--lanes-only" when !lanesOnly:
                     lanesOnly = true;
                     break;
-                case "--active-path":
+                case "--active-paths-file" when !activePathsSeen:
                     if (++index >= arguments.Count || arguments[index].Length == 0)
                     {
                         throw new InvalidOperationException(Usage);
                     }
 
-                    activePaths.Add(Path.TrimEndingDirectorySeparator(
-                        Path.GetFullPath(arguments[index])));
+                    activePaths.UnionWith(ReadActivePaths(arguments[index]));
+                    activePathsSeen = true;
                     break;
                 case "--base" when !baseSeen:
                     if (++index >= arguments.Count || arguments[index].Length == 0)
@@ -197,6 +198,28 @@ internal static partial class CleanLanesCommand
         }
 
         return new CleanLanesOptions(baseRevision, force, lanesOnly, activePaths);
+    }
+
+    // The file holds a JSON array of absolute paths, the same shape the host activity sampler prints.
+    private static IEnumerable<string> ReadActivePaths(string file)
+    {
+        string[]? paths;
+        try
+        {
+            paths = JsonSerializer.Deserialize<string[]>(File.ReadAllText(file, StrictUtf8));
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+            or JsonException or DecoderFallbackException or NotSupportedException)
+        {
+            throw new InvalidOperationException(Usage, exception);
+        }
+
+        if (paths is null || paths.Any(path => string.IsNullOrEmpty(path) || !Path.IsPathFullyQualified(path)))
+        {
+            throw new InvalidOperationException(Usage);
+        }
+
+        return paths.Select(path => Path.TrimEndingDirectorySeparator(Path.GetFullPath(path)));
     }
 
     private static bool InspectRegisteredLanes(
