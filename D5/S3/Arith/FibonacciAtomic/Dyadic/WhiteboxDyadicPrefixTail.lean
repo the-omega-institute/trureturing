@@ -307,8 +307,8 @@ open D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail
 
 /-- A labelled stopping word already contained in a finite observed prefix. -/
 def FiniteReturn (m : ℕ) (g : Path) (d : ℕ) (w : Fin d → Bool) (i : Fin m) : Prop :=
-  ∃ n, ∃ hn : n < d,
-    (List.ofFn (fun j : Fin (n+1) => w ⟨j.val, by omega⟩), i) ∈ stopping m g n
+  ∃ n : Fin d,
+    (List.ofFn (fun j : Fin (n.val+1) => w ⟨j.val, by omega⟩), i) ∈ stopping m g n.val
 
 private theorem finite_return_iff (m : ℕ) (g : Path) (hm : 2 ≤ m)
     (hg : IsRootPath m g) (d : ℕ) (t : Tape) (i : Fin m) :
@@ -317,10 +317,10 @@ private theorem finite_return_iff (m : ℕ) (g : Path) (hm : 2 ≤ m)
   have H := D5.S3.Arith.FibonacciAtomic.CarryGraphRealization.result m hm g hg
   obtain ⟨_,_,_,_,_,_,_,first,_⟩ := H
   constructor
-  · rintro ⟨n,hn,hw⟩
-    exact ⟨n,hn,(first t i n).mpr hw⟩
+  · rintro ⟨n,hw⟩
+    exact ⟨n.val,n.isLt,(first t i n.val).mpr hw⟩
   · rintro ⟨n,hn,hs⟩
-    exact ⟨n,hn,(first t i n).mp hs⟩
+    exact ⟨⟨n,hn⟩,(first t i n).mp hs⟩
 
 private theorem prefix_return_unique (m : ℕ) (g : Path) (hm : 2 ≤ m)
     (hg : IsRootPath m g) (d : ℕ) (w : Fin d → Bool) (i j : Fin m)
@@ -335,14 +335,49 @@ private theorem finite_return_extend (m : ℕ) (g : Path) (d e : ℕ) (hde : d �
     (w : Fin e → Bool) (i : Fin m)
     (h : FiniteReturn m g d (fun j => w ⟨j.val,by omega⟩) i) :
     FiniteReturn m g e w i := by
-  obtain ⟨n,hn,hw⟩ := h
-  exact ⟨n,lt_of_lt_of_le hn hde,hw⟩
+  obtain ⟨n,hw⟩ := h
+  exact ⟨⟨n.val,lt_of_lt_of_le n.isLt hde⟩,hw⟩
+
+/-- Finite labelled-leaf search in the observed prefix. -/
+def seesLabel (m : ℕ) (g : Path) (d : ℕ) (w : Fin d → Bool) (i : Fin m) : Bool :=
+  (List.finRange d).any fun n => decide
+    ((List.ofFn (fun j : Fin (n.val+1) => w ⟨j.val, by omega⟩), i) ∈ stopping m g n.val)
+
+private theorem sees_label_iff (m : ℕ) (g : Path) (d : ℕ) (w : Fin d → Bool) (i : Fin m) :
+    seesLabel m g d w i = true ↔ FiniteReturn m g d w i := by
+  simp [seesLabel, FiniteReturn, List.any_eq_true]
+
+/-- The first output label whose stopping word is present; both searches are finite. -/
+def scanPrefix (m : ℕ) (g : Path) (d : ℕ) (w : Fin d → Bool) : Option (Fin m) :=
+  (List.finRange m).find? (seesLabel m g d w)
+
+private theorem scan_prefix_eq (m : ℕ) (g : Path) (hm : 2 ≤ m) (hg : IsRootPath m g)
+    (d : ℕ) (w : Fin d → Bool) :
+    scanPrefix m g d w = if h : ∃ i, FiniteReturn m g d w i then
+      some (Classical.choose h) else none := by
+  classical
+  by_cases h : ∃ i, FiniteReturn m g d w i
+  · rw [dif_pos h]
+    cases hs : scanPrefix m g d w with
+    | none =>
+      obtain ⟨i,hi⟩ := h
+      have no := List.find?_eq_none.mp hs i (by simp)
+      exact (no ((sees_label_iff m g d w i).mpr hi)).elim
+    | some i =>
+      have hi := (sees_label_iff m g d w i).mp (List.find?_some hs)
+      exact congrArg some (prefix_return_unique m g hm hg d w i _ hi (Classical.choose_spec h))
+  · rw [dif_neg h]
+    apply List.find?_eq_none.mpr
+    intro i _ hi
+    exact h ⟨i,(sees_label_iff m g d w i).mp hi⟩
 
 /-- Stop at the unique labelled leaf visible in the current finite prefix. -/
 def fromPath (m : ℕ) (g : Path) (hm : 2 ≤ m) (hg : IsRootPath m g) :
     PrefixSampler (Fin m) where
-  observe d w := if h : ∃ i, FiniteReturn m g d w i then some (Classical.choose h) else none
+  observe d w := scanPrefix m g d w
   persistent d e hde w i h := by
+    rw [scan_prefix_eq m g hm hg d _] at h
+    rw [scan_prefix_eq m g hm hg e _]
     split at h
     next hx =>
       have hi : Classical.choose hx = i := Option.some.inj h
@@ -369,7 +404,7 @@ def fromPath (m : ℕ) (g : Path) (hm : 2 ≤ m) (hg : IsRootPath m g) :
     obtain ⟨a,rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
     have hr := (finite_return_iff m g hm hg (a+1) t i).mpr ⟨a,by omega,hs⟩
     refine ⟨a+1,i,?_⟩
-    rw [dif_pos ⟨i,hr⟩]
+    rw [scan_prefix_eq m g hm hg, dif_pos ⟨i,hr⟩]
     congr 1
     exact prefix_return_unique m g hm hg _ _ _ i (Classical.choose_spec _) hr
 
@@ -378,8 +413,8 @@ private theorem observation (m : ℕ) (g : Path) (hm : 2 ≤ m) (hg : IsRootPath
     (fromPath m g hm hg).observe d (readPrefix d t) = some i ↔
       ∃ n, n < d ∧ sample m g t = some (i,n+1) := by
   rw [← finite_return_iff m g hm hg d t i]
-  change (if h : ∃ j, FiniteReturn m g d (readPrefix d t) j then
-    some (Classical.choose h) else none) = some i ↔ _
+  change scanPrefix m g d (readPrefix d t) = some i ↔ _
+  rw [scan_prefix_eq m g hm hg]
   constructor
   · intro h
     split at h

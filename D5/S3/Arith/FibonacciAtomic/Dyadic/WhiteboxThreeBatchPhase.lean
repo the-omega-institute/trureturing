@@ -12,9 +12,9 @@ import D5.S3.Arith.FibonacciAtomic.Scale38NestedCompensation
 
 set_option autoImplicit false
 set_option maxHeartbeats 500000
-noncomputable section
 local notation "minimumMass" => (fun p : Fin 3 → ℝ => Finset.univ.inf' (by simp) p)
 
+noncomputable section
 namespace D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Codes
 open scoped BigOperators ENNReal Classical
 open MeasureTheory
@@ -121,7 +121,6 @@ end D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Codes
 
 set_option autoImplicit false
 set_option maxHeartbeats 500000
-noncomputable section
 namespace D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase
 open scoped BigOperators
 open D5.S3.Arith.FibonacciAtomic
@@ -182,12 +181,12 @@ private theorem phase_switches (N l : ℝ) (hl : 0 ≤ l) :
 end D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase
 
 set_option autoImplicit false
-noncomputable section
 namespace D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase
 open scoped BigOperators ENNReal Classical
 open MeasureTheory
 open D5.S0.Tower.DBonacci.TerminalSampling (Tape fairTape)
 open D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition
+open D5.S3.Arith.FibonacciAtomic.ActualImageSevenLeafSeparation (Nonconflict)
 open D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source)
 open D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory (kappa_hist)
 open D5.S3.Arith.FibonacciAtomic
@@ -238,7 +237,6 @@ def Claim : Prop := ∀ N : ℕ, 1 ≤ N → ∀ l : ℝ, 0 < l →
 
 set_option autoImplicit false
 set_option maxHeartbeats 1000000
-noncomputable section
 open scoped BigOperators Classical
 open ActualTreeReadoutAcquisition
 open ActualJointResponseCostCore
@@ -287,6 +285,7 @@ private theorem restrict_recipe {m : ℕ} {F : Fin m → Source} {S : Finset (Fi
       simpa only [gain, dif_pos hi, dif_pos (hT hi),children] using
         Nat.add_le_add_left hbound (chi (a.val i))
     · obtain ⟨i0,hi0⟩ := hn
+      have hn : T.Nonempty := ⟨i0,hi0⟩
       have card : (T.image a.val).card ≤ 1 := by omega
       have same (i : Fin m) (hi : i ∈ T) : a.val i = a.val i0 :=
         Finset.card_le_one.mp card _ (Finset.mem_image.mpr ⟨i,hi,rfl⟩)
@@ -303,10 +302,14 @@ private theorem restrict_recipe {m : ℕ} {F : Fin m → Source} {S : Finset (Fi
       refine ⟨q,?_⟩
       intro i hi
       have lower := hq i hi
+      have transport (u v : Reply) (hu : (survivors S a.val u).Nonempty)
+          (hv : (survivors S a.val v).Nonempty) (he : u = v) :
+          gain (next u hu) i = gain (next v hv) i := by
+        subst v
+        rfl
       have child_same : gain (next (a.val i0) (hn.mono hchild)) i =
           gain (next (a.val i) ⟨i,by simp [survivors,hT hi]⟩) i := by
-        cases same i hi
-        rfl
+        exact transport _ _ _ _ (same i hi).symm
       rw [child_same] at lower
       exact lower.trans (by simp only [gain,dif_pos (hT hi)]; omega)
 
@@ -343,6 +346,7 @@ private theorem profile_domination (pi : Strategy) :
       omega
     have bound := dom i
     rw [hr i,(prototype_facts.2.1 i).2] at bound
+    dsimp only at bound ⊢
     split_ifs <;> omega
 
 private theorem actual_endpoints (a : Fin 3) : ∃ pi : Strategy,
@@ -358,7 +362,7 @@ private theorem actual_endpoints (a : Fin 3) : ∃ pi : Strategy,
 
 def endpointIndex (pi : Strategy) : Fin 3 := Classical.choose (profile_domination pi)
 
-def labelSampler (s : PrefixSampler Strategy) : PrefixSampler (Fin 3) := relabel endpointIndex s
+local notation "labelSampler" => (fun s : PrefixSampler Strategy => relabel endpointIndex s)
 
 private theorem endpointIndex_bound (pi : Strategy) (i : Fin 3) :
     17-(if endpointIndex pi=i then 1 else 0) ≤ cost pi (prototypes i) :=
@@ -461,14 +465,14 @@ private theorem all_controller_lower (s : PrefixSampler Strategy) (N : ℕ) (l :
   have ht : t = p i := he
   have H := MersenneDyadicSupportLines.mersenne_support_lines 2 (by omega) p hp.1 hp.2
   norm_num only [Nat.reducePow,Nat.reduceSub,Nat.cast_ofNat] at H
-  have costpos : 0 ≤ DyadicSupportLines.cost p := by
-    exact tsum_nonneg fun d => div_nonneg (residual_nonnegative (labelSampler s) d) (by positivity)
+  have costpos : 0 ≤ DyadicSupportLines.cost p :=
+    (MersenneDyadicSupportLines.simplex_data 2 p hp.2).2.2
   have ht17 : 0 ≤ 17-t := by have hh := (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).2.1; dsimp [t]; linarith
   have real_lower := D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.affine_lower N l t (DyadicSupportLines.cost p) hl
     (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).1 (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).2.1
     (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).2.2.1 (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).2.2.2
   have paid := ddg_lower (labelSampler s) H.1
-  simp only [labelSampler,relabel_bill] at paid
+  simp only [relabel_bill] at paid
   calc
     ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.sharp N l) ≤
         ENNReal.ofReal ((N : ℝ)*(17-t)+l*DyadicSupportLines.cost p) := by
@@ -482,8 +486,7 @@ private theorem all_controller_lower (s : PrefixSampler Strategy) (N : ℕ) (l :
     _ ≤ ENNReal.ofReal l*(∫⁻ x, bill s x ∂fairTape)+(N : ℝ≥0∞)*ENNReal.ofReal (17-t) := by
       have mult : ENNReal.ofReal l*ENNReal.ofReal (DyadicSupportLines.cost p) ≤
           ENNReal.ofReal l*(∫⁻ x, bill s x ∂fairTape) := by
-        gcongr
-        exact paid
+        exact mul_le_mul_left' paid (ENNReal.ofReal l)
       exact add_le_add mult le_rfl
     _ ≤ G s N l := by simpa only [ht,p] using fixed_tuple_lower s N l i
 
@@ -497,7 +500,7 @@ private theorem endpoint_coarse (a : Fin 3) : Function.FactorsThrough (endpoint 
 private theorem endpoint_cost (a i : Fin 3) : cost (endpoint a) (prototypes i) =
     17-(if a=i then 1 else 0) := (Classical.choose_spec (actual_endpoints a)).2 i
 
-def endpointSampler (s : PrefixSampler (Fin 3)) : PrefixSampler Strategy := relabel endpoint s
+local notation "endpointSampler" => (fun s : PrefixSampler (Fin 3) => relabel endpoint s)
 
 private theorem endpointSampler_coarse (s : PrefixSampler (Fin 3)) : Coarse (endpointSampler s) := by
   intro d w pi hpi
@@ -529,7 +532,7 @@ private theorem endpointTuple_expectation (s : PrefixSampler (Fin 3)) (N : ℕ) 
       (relabel_emitted endpoint s _ t).mpr ⟨a,emitted_a,rfl⟩
     unfold paidTuple
     rw [selected_emitted _ t (endpoint a) hem]
-    simp only [endpointSampler,relabel_bill]
+    simp only [relabel_bill]
     congr 1
     apply Finset.sum_congr rfl
     intro r hr
@@ -702,7 +705,7 @@ private theorem H_attainment (N : ℕ) (l : ℝ) : H (endpointSampler point) N l
       intro q hq
       unfold paidTuple
       rw [point_selected]
-      simp only [endpointSampler,relabel_bill,point_bill,mul_zero,zero_add]
+      simp only [relabel_bill,point_bill,mul_zero,zero_add]
       have sums := Finset.sum_le_sum (s := (Finset.univ : Finset (Fin N)))
         (fun r _ => show (cost (endpoint 0) (prototypes (q r)) : ℝ≥0∞) ≤ 17 by
           rw [endpoint_cost]; split_ifs <;> norm_num)

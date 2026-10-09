@@ -17,7 +17,9 @@ internal sealed class WhiteboxThreeBatchPhaseDocument : IScribeDocumentDefinitio
     private static Formula Ex(Formula x, Formula t, Formula b) =>
         Par(Seq(Exists, Sp, x, Colon, Sp, t, Comma, Sp, b));
     private static Formula Frac(Formula a, int b) => new Formula.Fraction(a, D(b));
-    private static Formula Times(int a, Formula b) => Seq(D(a), Sp, b);
+    private static Formula Times(int a, Formula b) =>
+        Seq(D(a.ToString(System.Globalization.CultureInfo.InvariantCulture)
+            .Select(c => c - '0').ToArray()), Sp, b);
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
 
