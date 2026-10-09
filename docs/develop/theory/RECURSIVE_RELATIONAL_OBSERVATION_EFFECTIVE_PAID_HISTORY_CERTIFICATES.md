@@ -1044,3 +1044,516 @@ The table and the uniform source-specific certificate in Theorem 11.2 are repo-d
 [MIXED11]: https://github.com/the-omega-institute/trureturing/blob/54dc9a9bd356fe584703022a3a4c0b0978f557de/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MIXED_PHASE_DEFECT_ATTAINMENT.md
 
 ## 追加锚（本行以下为增补区）
+## 12. Either-interface complete-redraw obstruction
+
+The next result isolates the relation that is lost when a private successor law is redrawn from a row independent of the current phase label. It uses the same complete stopped carriers and the same actual-flow table as Definitions 1.1–2.1. A redraw below is a change to the observer's finite private update kernel; it is not a reset of the source draw, the original control, a held record, or a paid history.
+
+For a period-one table write
+
+$$
+\bar Q=\sum_x\pi_xQ_x,\qquad \bar W=\sum_y\tau_yW_y,
+$$
+
+and put
+
+$$
+L_x=\sum_yB_{xy}W_y,\qquad J_y=\sum_xA_{yx}Q_x.
+$$
+
+The complete-word events used below are
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+$$
+
+Direct substitution in the stopped laws gives
+
+$$
+\begin{aligned}
+P_{p,1}(E_p)&=\frac{412}{729},&
+P_{p,2}(E_p)&=\frac{7299}{15625},&
+C&:=\frac{P_{p,1}(E_p)+P_{p,2}(E_p)}2=\frac{11758471}{22781250},\\
+P_{\beta,1}(E_\beta)&=\frac{22}{27},&
+P_{\beta,2}(E_\beta)&=\frac{93}{125},&
+H&:=\frac{P_{\beta,1}(E_\beta)+P_{\beta,2}(E_\beta)}2=\frac{5261}{6750}.
+\end{aligned}
+$$
+
+The half-distances of the two endpoint laws are the supplied
+$\rho_p=1116529/22781250$ and $\rho_\beta=239/6750$. Also set
+
+$$
+U:=P_{p,2}(w_{3,1})=\frac{1944}{390625},\qquad
+S(t):=1+t+t^2,\qquad \eta:=\frac1{100000}.
+$$
+
+**Theorem 12.1 (either-interface complete-redraw obstruction).** Let a finite period-one regular table have positive stationary rows, $\pi B=\tau$, $\tau A=\pi$, and all emissions in $[1/3,2/5]$. If either
+
+$$
+A_{yx}=\pi_x\quad\text{for every retained }y
+\tag{12.1}
+$$
+
+or
+
+$$
+B_{xy}=\tau_y\quad\text{for every retained }x,
+\tag{12.2}
+$$
+
+then
+
+$$
+\max\{R_{\rm law,p}-\rho_p,
+       R_{\rm law,\beta}-\rho_\beta\}>\eta.
+\tag{12.3}
+$$
+
+Consequently the same strict bound holds with the two configuration risks in place of the law risks. The assertion is uniform in the finite numbers of labels, in the installed finite or countable prior with $\mu(1),\mu(2)>0$, and in all positive paid histories. All complete noncompletion outcomes remain in the carrier.
+
+**Proof.** Suppose both law excesses are at most $\eta$. The endpoint histories are included in the stationary risk formulas, so
+
+$$
+|\bar Q(E_p)-C|\le\eta,\qquad
+|\bar W(E_\beta)-H|\le\eta.
+\tag{12.4}
+$$
+
+For any complete law $D$ and endpoint laws $P_1,P_2$ whose distance is $2\rho$, the coordinate identity
+
+$$
+\operatorname{TV}(D,P_1)+\operatorname{TV}(D,P_2)-2\rho
+ =\sum_z\operatorname{dist}\!\left(D(z),[P_1(z)\wedge P_2(z),P_1(z)\vee P_2(z)]\right)
+\tag{12.5}
+$$
+
+holds, including the infinite noncompletion atom. Applying it to $\bar Q$ and the p endpoints shows
+
+$$
+\bar Q(w_{3,1})\le U+2\eta.
+\tag{12.6}
+$$
+
+Assume first (12.1). Put
+
+$$
+q=\sum_x\pi_xu_x,\qquad \bar v=\sum_y\tau_yv_y,
+$$
+
+$$
+t=\sum_{x,y}\pi_x(1-u_x)B_{xy}v_y,\qquad g=1-q-t.
+$$
+
+The individual same-update equations and the row-independent $A$ give the complete-law identities
+
+$$
+\bar Q=q\,\delta_\alpha+g\,\delta_{\beta\beta}
+       +t\,\beta\alpha\,\bar Q,
+\qquad
+\bar W=(1-\bar v)\,\delta_\beta+\bar v\,\alpha\bar Q.
+\tag{12.7}
+$$
+
+Thus $\bar Q(E_p)=gS(t)$ and
+
+$$
+\bar W(E_\beta)=1-\bar v+\bar vg=1-\widetilde d,
+\qquad \widetilde d:=\bar v(1-g).
+\tag{12.8}
+$$
+
+The actual edge law $\pi_xB_{xy}$ has marginals $\pi$ and $\tau$. Hence
+
+$$
+t=(1-q)\bar v-\operatorname{Cov}(u(X),v(Y)),
+\tag{12.9}
+$$
+
+where the covariance is under that unweighted edge law. Since $1-q=g+t$,
+
+$$
+\operatorname{Cov}(u(X),v(Y))
+ =\frac{(g+t)\widetilde d}{1-g}-t.
+\tag{12.10}
+$$
+
+Now define $g_0(t)=C/S(t)$ and $f(t)=Ct^3/S(t)$. Equations (12.4), (12.7) and (12.8) give
+$|g-g_0(t)|\le\eta$ and $\widetilde d$ differs from $d:=1-H$ by at most $\eta$. Since $0\le t\le(2/3)(2/5)=4/15$, (12.6) gives $f(t)\le U+3\eta$. The function $f$ is strictly increasing, and the exact comparison at $t_0=23191/100000$ is
+
+$$
+f(t_0)-U
+ =\frac{895013545004856241}{29289676527028125000000}>3\eta.
+\tag{12.11}
+$$
+
+Therefore $t<t_0$. Set
+
+$$
+D_A(t)=d\,\frac{g_0(t)+t}{1-g_0(t)}-t.
+$$
+
+On $[0,4/15]$, $g_0(t)\le C$, with equality at $t=0$ and strict inequality for $t>0$. Because $g_0'(t)<0$ and $d<1-C\le1-g_0(t)$, $D_A$ is strictly decreasing on this entire interval. The exact margin is
+
+$$
+D_A(t_0)-\frac1{900}
+ =\frac{1529494301962866701}{3786740393838075000000}>3\eta.
+\tag{12.12}
+$$
+
+On the interval forced by (12.4), all of $g,g_0$ are below $521/1000$ and all of $\widetilde d,d$ are below $221/1000$. Direct differentiation of the right side of (12.10) bounds the sum of the absolute partial derivatives in $g$ and $\widetilde d$ by
+$1971677/688323<3$. Thus its value differs from $D_A(t)$ by less than $3\eta$, and (12.12) gives
+$|\operatorname{Cov}(u(X),v(Y))|>1/900$.
+
+For a random variable $Z\in[a,b]$, $\mathbb E[(Z-a)(b-Z)]\ge0$ gives
+$\operatorname{Var}(Z)\le(b-a)^2/4$. Cauchy–Schwarz therefore gives
+
+$$
+|\operatorname{Cov}(u(X),v(Y))|\le\frac1{900},
+\tag{12.13}
+$$
+
+because both emission intervals have width $1/15$. This contradiction rules out (12.1).
+
+For (12.2), put
+
+$$
+t=\sum_{y,x}\tau_yv_yA_{yx}(1-u_x),\qquad
+g=(1-q)(1-\bar v).
+$$
+
+The averaged equations are now
+
+$$
+\bar Q=q\,\delta_\alpha+(1-q)\,\beta\bar W,
+\qquad
+\bar W=(1-\bar v)\,\delta_\beta+(\bar v-t)\,\alpha\alpha
+       +t\,\alpha\beta\,\bar W.
+\tag{12.14}
+$$
+
+Consequently $\bar Q(E_p)=gS(t)$ and
+$\bar W(E_\beta)=(1-\bar v)(1+t)$. Writing the latter probability as $h$, the unweighted edge law $\tau_yA_{yx}$ gives
+
+$$
+\operatorname{Cov}(v(Y),u(X))
+ =g\,\frac{1+t-h}{h}-t.
+\tag{12.15}
+$$
+
+The same event bounds imply $|h-H|\le\eta$ and again $t<t_0$. Define
+
+$$
+D_B(t)=g_0(t)\frac{1+t-H}{H}-t.
+$$
+
+It is strictly decreasing because $g_0'<0$ and $C/H<1$, while exact arithmetic gives
+
+$$
+D_B(t_0)-\frac1{900}
+ =\frac{258121825473795701}{4930975622678238900000}>2\eta.
+\tag{12.16}
+$$
+
+Here $h,H>779/1000$, and the sum of the absolute partial derivatives in $g$ and $h$ is at most $164183/95817<2$. The true expression in (12.15) therefore differs from $D_B(t)$ by less than $2\eta$. This again contradicts (12.13), and proves (12.3). The endpoint bounds used only complete events and the full coordinate identity; no tail truncation, completion conditioning, or finite prior-support reduction entered the argument. ∎
+
+The three exact margins in (12.11), (12.12), and (12.16) are the rational certificate. They are strict after cross multiplication; no floating-point inequality is used. The endpoint cells and their midpoint coordinates agree with the full-tail separation calculation in [UNIF, §§3–5]. That source separates a larger constant-parameter mixture family from the endpoint minima. The present theorem concerns a different failure mode: a complete redraw can collapse the continuation relation even when the decoded laws are arbitrary, so it does not republish the mixture-family exclusion.
+
+## 13. Full successor-law continuation dispersion
+
+For a finite period-one regular stationary table (the stationary class used after the existing period reduction), define the actual-flow successor dispersions
+
+$$
+b_p:=\sum_x\pi_x\operatorname{TV}(L_x,\bar W),\qquad
+b_\beta:=\sum_y\tau_y\operatorname{TV}(J_y,\bar Q).
+\tag{13.1}
+$$
+
+These are TV distances between complete successor laws, including the infinite noncompletion outcome. They are weighted by the unweighted acquired flow. They are neither marginalized conditioning defects nor distances between label distributions. Splitting a label into copies with the same decoded law and proportionally split flow leaves them unchanged.
+
+**Theorem 13.1 (quantitative continuation dispersion).** For every finite period-one regular stationary table, put
+
+$$
+e=\max\{R_{\rm conf,p}-\rho_p,
+         R_{\rm conf,\beta}-\rho_\beta\}.
+$$
+
+Then
+
+$$
+e+\frac{10}{11}b_p>\eta,
+\qquad
+e+\frac{6}{11}b_\beta>\eta.
+\tag{13.2}
+$$
+
+Consequently, for any sequence of such tables with $e_n\to0$,
+
+$$
+\liminf_n b_{p,n}\ge\frac{11}{1000000},\qquad
+\liminf_n b_{\beta,n}\ge\frac{11}{600000}.
+\tag{13.3}
+$$
+
+Thus a zero-excess sequence cannot erase complete-law continuation dependence at either phase interface. The conclusion permits positive marginalized defect and imposes no defect budget.
+
+**Proof.** Replace $A$ by the row-independent kernel $A^0_{yx}=\pi_x$, keeping $B,\pi,\tau,u,v$ fixed. This preserves $\pi B=\tau$ and $\tau A^0=\pi$. Let $Q_x^0,W_y^0$ be the complete laws generated by the replacement and set
+
+$$
+d_p=\sum_x\pi_x\operatorname{TV}(Q_x,Q_x^0),\qquad
+d_\beta=\sum_y\tau_y\operatorname{TV}(W_y,W_y^0).
+$$
+
+Prefixing and deleting deterministic original event blocks are TV isometries. The p equations and convexity give
+
+$$
+d_p\le\frac23d_\beta.
+$$
+
+For the suspended laws, insert the old $\bar Q$ between $J_y$ and the new $\bar Q^0$:
+
+$$
+d_\beta\le\frac25(b_\beta+d_p).
+$$
+
+Solving yields
+
+$$
+d_p\le\frac4{11}b_\beta,\qquad d_\beta\le\frac6{11}b_\beta.
+\tag{13.4}
+$$
+
+At every original history the replacement has the same acquired stationary rows and the same source target. Therefore its p and suspended law risks are bounded by the old configuration risks plus $d_p$ and $d_\beta$, respectively. The maximum replacement law excess is at most $e+6b_\beta/11$. Theorem 12.1 applies to the replacement, so (13.2)'s second inequality follows.
+
+Now replace $B$ by $B^0_{xy}=\tau_y$ and keep $A$ fixed. The same argument gives
+
+$$
+d_\beta\le\frac25d_p,\qquad
+d_p\le\frac23(b_p+d_\beta),
+$$
+
+and hence
+
+$$
+d_p\le\frac{10}{11}b_p,\qquad d_\beta\le\frac4{11}b_p.
+\tag{13.5}
+$$
+
+Theorem 12.1 applied to this replacement gives the first inequality in (13.2). All comparisons are between complete laws of one table and its one-kernel replacement; no two histories, phases, or independently optimized tables are combined. ∎
+
+The replacement argument is a continuation certificate, not a claim that the original table itself has a positive risk gap. A table may have small $e$ while retaining the lower bounds in (13.3) through dispersed successor laws. Conversely, a bound on a next-letter cylinder alone would not imply (13.1), because (13.1) is a full-tail law distance.
+
+## 14. Full-observer law-diameter noncollapse on a held-record fibre
+
+Fix the positive paid suffix
+
+$$
+S=\beta\alpha\mid\beta\beta\alpha\alpha.
+\tag{14.1}
+$$
+
+It accepts seed 1, writes the marker triple $100$, and reaches the third write-before-latch with one fixed held-record fibre. For an arbitrary finite observer $M$, let $\mathcal Z_p^*(M)$ and $\mathcal Z_\beta^*(M)$ be the unions of configurations having positive probability after some positive finite original history on this fibre, at the p and suspended cuts respectively. Pull every complete decoder back through its own current $I_c$ to the common raw carrier, so that the current deterministic record, permission, completion, Stop and delivery block is removed from the comparison. Define
+
+$$
+D_s(M)=\sup\{\operatorname{TV}(D,D'):
+ D,D'\text{ are pulled-back laws from }\mathcal Z_s^*(M)\},
+\qquad s\in\{p,\beta\}.
+\tag{14.2}
+$$
+
+The supremum is over the union of reachable configurations across all positive finite histories on this one held-record fibre. It is not a claim that all those configurations coexist after one history.
+
+**Lemma 14.1 (common row and held-record reachability).** All source parameters lie in the compact range $I=[1/3,2/5]$. On the fibre (14.1), every finite observer $M$ has actual kernels $B:X\to Y$, $A:Y\to X$ and probability rows $\pi,\tau$ satisfying $\pi B=\tau$, $\tau A=\pi$. For every supported depth $k$ the same two rows satisfy
+
+$$
+\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,r_k})\le R_{\rm conf,p}(M),\qquad
+\sum_y\tau_y\operatorname{TV}(W_y,P_{\beta,r_k})\le R_{\rm conf,\beta}(M).
+\tag{14.3}
+$$
+
+Every positive-row label is an actual reachable configuration on this held-record fibre, and its $Q_x$ or $W_y$ is exactly its original pulled-back complete decoder. The emissions may lie anywhere in $[0,1]$, and the copied decoders may have positive noncompletion mass. A single support-closed stationary table can use these rows and kernels without changing any copied complete law.
+
+**Proof.** This is the paid-history/common-row construction of [FLOW, §3], with the fixed-fibre reachability statement also made explicit in [UNIF, Lemma 2.1]. The all-four risk-order bounds are the two configuration and two law comparisons in [FLOW, §3]. Let $\eta_0$ be the source-independent initial configuration row at the original seed-pair boundary, after initialization and before the first paid seed Read. At that boundary let $R_\alpha,R_\beta$ be the stochastic updates for the two equal rejected pairs, and let $P_S$ be the acquired suffix-update product along the six Read letters of $S$, including their original control, record-write and latch updates. Finite-chain decomposition gives positive integers $d_\alpha,d_\beta$ such that $R_\alpha^{d_\alpha n}\to E_\alpha$ and $R_\beta^{d_\beta n}\to E_\beta$. For each supported $r=r_k$, the paid positive histories
+
+$$
+(\alpha\alpha)^{m_n}(\beta\beta)^{t_n}S,\qquad
+m_n=d_\alpha\left\lfloor\frac{nr}{d_\alpha}\right\rfloor,\qquad
+ t_n=d_\beta\left\lfloor\frac{n(1-r)}{d_\beta}\right\rfloor
+$$
+
+have configuration rows tending to the same $\lambda=\eta_0E_\alpha E_\beta P_S$, independently of $r$. Write these histories as $h_n(r)$ and set $\ell_S(t)=t^3(1-t)^3$, the fixed suffix's positive likelihood. Relative to the chosen supported depth $k$, the full paid-history likelihood ratios satisfy
+
+$$
+L_{n,i}:=\frac{\Pr(h_n(r)\mid K=i)}{\Pr(h_n(r)\mid K=k)}
+=\frac{\ell_S(r_i)}{\ell_S(r)}
+\exp\!\left[-2n\operatorname{KL}(\operatorname{Ber}(r)\Vert\operatorname{Ber}(r_i))+\varepsilon_{n,i}\right],
+$$
+
+$$
+|\varepsilon_{n,i}|\le C_{\rm round}
+:=2d_\alpha\log(6/5)+2d_\beta\log(10/9).
+$$
+
+Since $t(1-t)\in[2/9,6/25]$ on $I$ and KL is nonnegative, the bound
+
+$$
+0\le L_{n,i}\le C_*:=e^{C_{\rm round}}(27/25)^3,
+\qquad
+0\le\frac{\mu(i)}{\mu(k)}L_{n,i}
+\le\frac{C_*}{\mu(k)}\mu(i)
+$$
+
+holds uniformly in $n$ and competing depths $i$. The dominating sequence is summable because $\mu$ is a probability prior and $\mu(k)>0$. The source parameters are distinct, so $L_{n,i}\to0$ for each $i\ne k$. Dominated convergence therefore gives
+
+$$
+\sum_{i\ne k}\frac{\mu(i)}{\mu(k)}L_{n,i}\to0,
+\qquad
+\nu_{h_n(r)}(k)
+=\left(1+\sum_{i\ne k}\frac{\mu(i)}{\mu(k)}L_{n,i}\right)^{-1}\to1,
+$$
+
+including for countable priors. Every approximant is a finite positive history of this one installed source, with the same seed, marker records and permissions. Each fixed fourth-segment prefix also has positive likelihood throughout $I$ and bounded likelihood ratios there, so appending it preserves this summable domination and posterior concentration.
+
+Appending any fixed number $j$ of returns, with or without one further $\beta$, gives limiting rows $\lambda(BA)^j$ and $\lambda(BA)^jB$ and the corresponding pure targets. Configuration loss is linear in the row and 1-Lipschitz in the target; law loss is continuous in the finite row and target. Hence both risk orders on each of these limiting rows are bounded by the original phase suprema, simultaneously for every supported $k$.
+
+Take a convergent subsequence of the Cesàro rows
+$\pi_N=N^{-1}\sum_{j<N}\lambda(BA)^j$. The identity
+$\pi_NBA-\pi_N=[\lambda(BA)^N-\lambda]/N$ gives $\pi BA=\pi$. Put $\tau=\pi B$. Averaging preserves the configuration bounds by linearity and the law bounds by convexity, and taking the finite-row limit proves (14.3) and its law counterparts.
+
+If $\pi_x>0$, then $(\lambda(BA)^j)_x>0$ for some finite $j$; otherwise all Cesàro coordinates would vanish. A sufficiently late finite paid-history approximant also has positive $x$ coordinate. The same argument applied to $\tau=\pi B$ proves suspended reachability. Thus positive stationary coordinates are original reachable configurations, with their own complete original decoders. Conversely, the lemma asserts no coverage of every reachable original configuration by the stationary support; transient labels can disappear. Only this inclusion is required in (14.2).
+
+Delete zero-row labels. The flow equations show that retained labels cannot move under $B$ or $A$ to deleted labels, because all flows are nonnegative. On this support, keep the original emissions and transitions. Its synthetic program is the original program from each such configuration up to completion, with the same original event blocks, and so keeps its complete law, including any noncompletion mass. If a comparison observer is desired on other record fibres, the product update and source-independent latch construction of Lemma 2.1.1 applies with these arbitrary emissions; normalization now follows from the copied complete laws rather than a regular survival bound. Original targets are the same posterior mixtures, so countable TV convexity gives risk domination on all original fibres. The construction supplies no defect or resource preservation. ∎
+
+**Theorem 14.2 (full finite-observer law-diameter noncollapse).** For every finite observer $M$ of the original source and every allowed installed prior,
+
+$$
+e(M)+\frac{18}{11}D_p(M)>\eta,
+\qquad
+e(M)+\frac{20}{11}D_\beta(M)>\eta,
+\tag{14.4}
+$$
+
+where
+
+$$
+e(M)=\max\{R_{\rm conf,p}(M)-\rho_p,
+            R_{\rm conf,\beta}(M)-\rho_\beta\}.
+$$
+
+In particular, if $e(M_n)\to0$ along finite observers, then
+
+$$
+\liminf_nD_p(M_n)\ge\frac{11}{1800000},\qquad
+\liminf_nD_\beta(M_n)\ge\frac{11}{2000000}.
+\tag{14.5}
+$$
+
+If either held-fibre diameter is zero, then $e(M)>\eta$. This conclusion uses no zero-defect assumption and makes no claim about a fixed COMPLETE budget.
+
+**Proof.** Use Lemma 14.1 and write the common stationary rows and copied laws as $\pi,\tau,Q_x,W_y$, with means
+
+$$
+\bar u=\sum_x\pi_xu_x,\qquad \bar v=\sum_y\tau_yv_y,
+\qquad \bar Q=\sum_x\pi_xQ_x,\qquad \bar W=\sum_y\tau_yW_y.
+$$
+
+Let
+
+$$
+d_p=\sum_x\pi_x\operatorname{TV}(Q_x,\bar Q),\qquad
+d_\beta=\sum_y\tau_y\operatorname{TV}(W_y,\bar W).
+$$
+
+Because every positive table label is reachable on the held fibre, convexity gives
+
+$$
+d_p\le D_p(M),\qquad d_\beta\le D_\beta(M).
+\tag{14.6}
+$$
+
+If $e(M)>\eta$, both inequalities are immediate. Assume $e(M)\le\eta$. The endpoint cylinders give
+
+$$
+\frac25-\rho_p-e(M)\le\bar u\le\frac13+\rho_p+e(M),
+$$
+
+$$
+\frac25-\rho_\beta-e(M)\le\bar v\le\frac13+\rho_\beta+e(M),
+\tag{14.7}
+$$
+
+Under $e(M)\le\eta$, the intervals in (14.7) are contained, respectively, in the enclosing intervals with bounds
+$127931891/364500000$ and $139368109/364500000$, and
+$984373/2700000$ and $995627/2700000$.
+These bounds are obtained by substituting $\eta=1/100000$ for $e(M)$; they imply $\bar u,\bar v\in[1/3,2/5]$ without asserting attainable extrema for arbitrary $e(M)$.
+
+Construct an auxiliary singleton table with emissions $\bar u,\bar v$ and identity acquired kernels. Its complete laws $Q^0,W^0$ obey
+
+$$
+Q^0=\bar u\,\delta_\alpha+(1-\bar u)\,\beta W^0,\qquad
+W^0=(1-\bar v)\,\delta_\beta+\bar v\,\alpha Q^0.
+\tag{14.8}
+$$
+
+The return mass is at most $(2/3)(2/5)=4/15$, so these complete laws are normalized on the unbounded legal carrier and retain its infinite noncompletion outcome with mass zero. No real-valued row is supplied to the running observer; this singleton is an analysis comparison.
+
+Define the pooled residuals
+
+$$
+c_p=\operatorname{TV}\bigl(\bar Q,\bar u\delta_\alpha+(1-\bar u)\beta\bar W\bigr),
+$$
+
+$$
+c_\beta=\operatorname{TV}\bigl(\bar W,(1-\bar v)\delta_\beta+\bar v\alpha\bar Q\bigr).
+$$
+
+The individual equations, $\pi B=\tau$, $\tau A=\pi$, and the facts
+$u_x=Q_x(\{\alpha\})$ and $1-v_y=W_y(\{\beta\})$ give the four estimates
+
+$$
+c_p\le\frac12d_p,\qquad c_\beta\le d_p,
+\qquad c_p\le d_\beta,\qquad c_\beta\le\frac12d_\beta.
+\tag{14.9}
+$$
+
+For example, the first residual is the zero-mass signed mixture
+$\sum_x\pi_x(\bar u-u_x)L_x$, whose positive and negative masses are at most
+$\frac12\sum_x\pi_x|u_x-\bar u|\le d_p/2$. For the second estimate in the first pair, convexity gives
+$\operatorname{TV}(J_y,\bar Q)\le\sum_xA_{yx}\operatorname{TV}(Q_x,\bar Q)$ and then $\tau A=\pi$; the other pair is dual.
+
+Let $a=\operatorname{TV}(\bar Q,Q^0)$ and $b=\operatorname{TV}(\bar W,W^0)$. From (14.8),
+
+$$
+a\le c_p+\frac23b,\qquad b\le c_\beta+\frac25a,
+$$
+
+so
+
+$$
+a\le\frac{15c_p+10c_\beta}{11},\qquad
+b\le\frac{6c_p+15c_\beta}{11}.
+\tag{14.10}
+$$
+
+Using the first pair in (14.9) gives $\max\{a,b\}\le18d_p/11$; using the second gives $\max\{a,b\}\le20d_\beta/11$. For every supported depth, the singleton's two law distances are at most the corresponding common-row distances plus $a$ or $b$. Those distances are at most the original configuration risks by Lemma 14.1 and convexity. The singleton's full actual-history risks are the suprema of these pure-depth distances by (2.3). Thus its maximal law excess is at most
+
+$$
+e(M)+\frac{18}{11}d_p
+\quad\text{and also at most}\quad
+e(M)+\frac{20}{11}d_\beta.
+$$
+
+The singleton is regular and both of its acquired kernels are complete redraws. Theorem 12.1 therefore makes each displayed quantity strictly larger than $\eta$. Finally use (14.6). Taking liminf proves (14.5). ∎
+
+## 15. Correspondence, exact scope and the remaining alternatives
+
+The common event cells, midpoint values and complete-tail endpoint geometry are supplied by [ST], [CLIP] and the published mixture separation [UNIF]. [UNIF] permits arbitrary complete decoder laws and compares them with a larger constant-parameter mixture family. The present Sections 12–14 instead track the actual unweighted successor kernels and show that collapsing either interface to one complete future law is impossible below the same rational tolerance. The law-diameter theorem then transfers that obstruction to the entire finite-observer class through the support inclusion and exact decoder correspondence on the held-record fibre in Lemma 14.1. No representation-family exclusion is counted twice.
+
+The source correspondence is literal. The common depth is drawn once before all Reads; paid seed rejections, both seeds, all marker records, write-before-latch, held fields, permissions, matching Stop and delivery remain in the original control. The same acquired-letter kernels are used by each decoder. All finite fourth returns and the legal infinite noncompletion words remain in the complete carriers. The rows $\pi,\tau$, the successor laws, the diameters, and the auxiliary singleton are analysis objects, not posterior input, a continuous register, a free clock, a source reset, or an added Read. Rational entries can use the existing charged finite exact sampling convention; arbitrary real entries specify mathematical stochastic rules only.
+
+The result is a source-specific obstruction and a necessary continuation-dispersion condition. It does not prove a finite exact common endpoint, a family with configuration excess tending to zero, a strictly positive unrestricted conf/conf infimum, or any fixed-budget optimum. Positive successor-law diameter is compatible with very small configuration excess, and the inequalities do not determine whether such a noncollapsed family exists. Marginalized defect may be nonzero and is not bounded here. Exact posterior or chronology recovery, physical-spacetime interpretation, global completion, total-resource optimality, remain outside these mathematical conclusions.
+
+[UNIF]: https://github.com/the-omega-institute/trureturing/blob/37453819032a4873639381066b0f43946b7deed0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_MIXTURE_SEPARATION.md
+
+
+## 追加锚（本行以下为增补区）
