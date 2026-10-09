@@ -1,0 +1,13 @@
+**约定 2.2（调和项与对偶函数）。** 对 $s,t\ge0$ 置
+
+$$
+h(s,t)=\begin{cases}\dfrac{st}{s+t},&s+t>0,\\ 0,&s=t=0.\end{cases}
+$$
+
+$\mathcal P(V)$ 为 $V$ 上全体概率向量 $\mu=(\mu_b)_{b\in V}$（$\mu_b\ge0$，$\sum_b\mu_b=1$）。对偶函数为
+
+$$
+\Phi_G(\mu)=\sum_{\{b,c\}\in E}h(\mu_b,\mu_c),\qquad \mu\in[0,\infty)^V.
+\tag{2.2}
+$$
+

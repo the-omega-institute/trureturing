@@ -1,0 +1,2 @@
+**推论 3.3（对称的最优解）。** 设 $\mathcal G$ 是 $G$ 的一个自同构群。则存在 $\mathcal G$ 不变的最大点 $\mu^\star$（$\mu^\star_{\sigma b}=\mu^\star_b$），也存在 $\mathcal G$ 不变的最小点 $a^\star$（$a^\star_{\sigma c\leftarrow\sigma b}=a^\star_{c\leftarrow b}$），$\sigma\in\mathcal G$。特别地，对每个 $n\ge1$，词反转 $\rho(b)_i=b_{n+1-i}$ 是 $\Gamma_n$ 的自同构，故 $\Gamma_n$ 有反转不变的最大测度与反转不变的最优分配。
+
