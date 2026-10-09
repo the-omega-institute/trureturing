@@ -51,7 +51,7 @@ structure Dedicated (hp : 2 ≤ p) (C : Controller p P Old)
 /-- Exterior rows and their outputs are retained. The shared chain stores
 no branch; its physical read chooses a charged branch wait and branch read.
 Unused digit rows go to a pre-existing terminal label. -/
-def table (hp : 2 ≤ p) (hd : 0 < d) (C : Controller p P Old)
+private def table (hp : 2 ≤ p) (hd : 0 < d) (C : Controller p P Old)
     (labels : Fin p × Fin 2 → E) : Controller p P New where
   initial := redirect hd C.initial
   action
