@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Words/Compositions/LateGrowingRatioLimit
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [D5/S1/Words/Compositions/PhiTailEncoding]
+   anchors: []
    utility: none
    digest: Zero-sum subset sparsity controls the excess of nonnegative word counts. -/
 
