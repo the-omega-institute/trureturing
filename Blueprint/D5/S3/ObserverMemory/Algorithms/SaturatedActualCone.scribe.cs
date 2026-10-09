@@ -41,7 +41,8 @@ internal sealed class SaturatedActualConeDocument : IScribeDocumentDefinition
                     + "event. Literal waiting tails give a common positive delay. This complete "
                     + "transport raises the minimum read index and identifies the sole predecessor "
                     + "of each child. Consequently the whole successor cone has no cycle or "
-                    + "reconvergence. At a terminal slot the complete event fiber is a singleton; "
+                    + "reconvergence. An initialized input cannot return to a saturated slot, so the "
+                    + "original-input projection is injective on every complete cone fiber. At a terminal slot the complete event fiber is a singleton; "
                     + "mass one forces its read index to equal h. Equality in the mass bound "
                     + "also forces every represented original run to use exactly h reads. "
                     + "When p is at most three, two "
@@ -89,11 +90,14 @@ internal sealed class SaturatedActualConeDocument : IScribeDocumentDefinition
         var incoming = All("w", Slot, Imp(Edge(v, w), And(
             All("z", Slot, Imp(Edge(V("z"), w), EqF(V("z"), v))),
             NE(Call("val", Fst(w)), Call("initial", V("C"))))));
+        var originals = All("e", Event, Imp(Member(e, Events(v)),
+            All("d", Event, Imp(Member(d, Events(v)),
+                Imp(EqF(Fst(e), Fst(d)), EqF(e, d))))));
         var cone = All("v", Slot, Imp(Reach(u, v), And(
             EqF(Mass(v), D(1)),
             All("e", Event, Imp(Member(e, Events(v)), EqF(
                 Call("card", Call("readEvents", V("hp"), V("hP"), V("C"), V("I"), Fst(e))), V("h")))),
-            Seq(Neg, Sp, Grp(Loop(v))),
+            originals, Seq(Neg, Sp, Grp(Loop(v))),
             Imp(Halt(v), leaf), Imp(Seq(Neg, Sp, Grp(Halt(v))), children), incoming)));
         var targets = Bind(Imp(Reach(u, v), Imp(Reach(u, w), Imp(Edge(v, a), Imp(Edge(w, b),
             Imp(EqF(Fst(a), Fst(b)), EqF(v, w)))))),

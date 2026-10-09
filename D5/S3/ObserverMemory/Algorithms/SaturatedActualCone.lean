@@ -8,6 +8,7 @@
 
 import D5.S3.ObserverMemory.Algorithms.SaturatedActualHistories
 import D5.S0.Computability.Coding.PrefixFreeCode
+import Mathlib.Data.Tree.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -553,6 +554,49 @@ private theorem path_rank (h : Nat)
     exact ih.trans ((full_edge hp hP C I h budget vf edge).2.1)
 
 
+private theorem future_reaches (G : SlotGraph p {q : Q // ∃ b, C.Used I q b})
+    {u v : Slot} {x : Source} {t j : Nat} {word : List (Fin 2)}
+    (path : FutureWord hp hP C I G u x t word) (later : C.Occurs I x j v)
+    (before : t < j) : Relation.TransGen (C.Edge I) u v := by
+  induction path generalizing v j with
+  | stop occurs halt =>
+    have last := (terminal_end hp hP C I occurs halt).2
+    have bound := later.1
+    omega
+  | @next u w x t k word occurs child tk waits edge tail ih =>
+    have kj : k ≤ j := by
+      by_contra bad
+      have clash := waits j before (by omega)
+      obtain ⟨_,_,_,_,_,vr,_⟩ := v.1.property
+      rw [later.2.1,vr] at clash
+      cases clash
+    have actual : C.Edge I u w := ⟨x,t,k,occurs,child,tk,waits⟩
+    by_cases eq : k = j
+    · have same := event_slot_unique hp hP C I (eq ▸ child) later
+      exact same ▸ Relation.TransGen.single actual
+    · exact Relation.TransGen.head actual (ih later (by omega))
+
+private theorem saturated_originals (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u : Slot}
+    (full : mass hp hP C I h u = 1) :
+    Set.InjOn Prod.fst (events hp hP C I u : Set (Source × Nat)) := by
+  intro e he d hd same
+  have hu := (mem_events hp hP C I).mp he
+  have hv := (mem_events hp hP C I).mp hd
+  have source : e.1 = d.1 := same
+  obtain ⟨G,root,used,edges,rest⟩ := C.result I
+  have no_return (x : Source) (i j : Nat) (hi : C.Occurs I x i u)
+      (hj : C.Occurs I x j u) (before : i < j) : False := by
+    obtain ⟨word,path,length⟩ := future_exists hp hP C I G edges
+      (laterReads hp hP C I x i).card u x i hi le_rfl
+    have loop := future_reaches hp hP C I G path hj before
+    exact Nat.lt_irrefl _ (path_rank hp hP C I h budget loop full)
+  apply Prod.ext source
+  rcases lt_trichotomy e.2 d.2 with lt | eq | gt
+  · exact False.elim (no_return d.1 e.2 d.2 (source ▸ hu) hv lt)
+  · exact eq
+  · exact False.elim (no_return e.1 d.2 e.2 (source.symm ▸ hv) hu gt)
+
 private theorem same_target (h : Nat)
     (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) (small : p ≤ 3)
     {u z v w : Slot} (uf : mass hp hP C I h u = 1) (zf : mass hp hP C I h z = 1)
@@ -807,14 +851,29 @@ private theorem cone_tree_exists (h : Nat)
         exact ⟨.fork ne vl vr ex balance L R⟩
   exact construct _ u full rfl
 
+private def treeShape {u : Slot} : ConeTree hp hP C I u → BinaryTree Unit
+  | .leaf _ _ _ => .nil
+  | .fork _ _ _ _ _ left right => .node () (treeShape left) (treeShape right)
+
 private theorem tree_counts {u : Slot} (T : ConeTree hp hP C I u) :
     leafCount hp hP C I T = (events hp hP C I u).card ∧
       internalCount hp hP C I T + 1 = leafCount hp hP C I T := by
-  induction T with
-  | leaf e singleton halt => simp [leafCount,internalCount,singleton]
-  | fork ne left_edge right_edge exhaustive balance left right ihl ihr =>
-    simp only [leafCount,internalCount]
-    exact ⟨by rw [ihl.1,ihr.1,← balance],by omega⟩
+  have counts : leafCount hp hP C I T = (treeShape hp hP C I T).numLeaves ∧
+      internalCount hp hP C I T = (treeShape hp hP C I T).numNodes := by
+    induction T with
+    | leaf e singleton halt => simp [leafCount,internalCount,treeShape]
+    | fork ne left_edge right_edge exhaustive balance left right ihl ihr =>
+      simp only [leafCount,internalCount,treeShape,BinaryTree.numLeaves,BinaryTree.numNodes]
+      exact ⟨by rw [ihl.1,ihr.1],by rw [ihl.2,ihr.2]; omega⟩
+  refine ⟨?_,?_⟩
+  · clear counts
+    induction T with
+    | leaf e singleton halt => simp [leafCount,singleton]
+    | fork ne left_edge right_edge exhaustive balance left right ihl ihr =>
+      simp only [leafCount]
+      rw [ihl,ihr,← balance]
+  · rw [counts.1,counts.2]
+    exact (BinaryTree.numLeaves_eq_numNodes_succ (treeShape hp hP C I T)).symm
 
 /-- A saturated actual cone has complete child fibers, unique incoming edges,
 no slot cycle, and distinct next-reading controls when p is two or three. -/
@@ -826,6 +885,7 @@ theorem result (h : Nat)
     (∀ v, Relation.ReflTransGen (C.Edge I) u v →
       mass hp hP C I h v = 1 ∧
       (∀ e ∈ events hp hP C I v, (readEvents hp hP C I e.1).card = h) ∧
+      Set.InjOn Prod.fst (events hp hP C I v : Set (Source × Nat)) ∧
       ¬ Relation.TransGen (C.Edge I) v v ∧
       (C.action (C.readNext v.1.val v.2) = .halt →
         ∃ e : Source × Nat, events hp hP C I v = {e} ∧
@@ -846,7 +906,8 @@ theorem result (h : Nat)
   refine ⟨saturated_card hp hP C I h budget active full,?_,?_,?_⟩
   · intro v path
     have vf := reachable_full hp hP C I h budget full path
-    refine ⟨vf,saturated_budget hp hP C I h budget vf,?_,terminal_deadline hp hP C I h budget vf,
+    refine ⟨vf,saturated_budget hp hP C I h budget vf,
+      saturated_originals hp hP C I h budget vf,?_,terminal_deadline hp hP C I h budget vf,
       (fun va => literal_transport hp hP C I h budget v va vf),?_⟩
     · intro loop
       have strict := path_rank hp hP C I h budget loop vf
@@ -858,7 +919,6 @@ theorem result (h : Nat)
     exact same_target hp hP C I h budget small
       (reachable_full hp hP C I h budget full vp)
       (reachable_full hp hP C I h budget full wp) va wb eq
-
   · obtain ⟨T⟩ := cone_tree_exists hp hP C I h budget full
     exact ⟨T,tree_counts hp hP C I T⟩
 
