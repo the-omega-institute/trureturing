@@ -45,8 +45,8 @@ internal sealed class RicciLimitDocument : IScribeDocumentDefinition
                     Implies(Lt(N("l"), N("N")), Eq(
                         Div(Call("rMinus", N("l"), N("N")), Denominator()),
                         Div(Sub(Real(Call("harmonic", N("l"))), D(1)), D(2)))))))),
-                "For dimensions greater than the fixed label, the normalized negative contribution is one half of the harmonic number minus one. Expanding the squared Casimir difference and interchanging the two summation labels reduces the double sum to odd moments. Orthogonality, signed parity addition and the weighted sum rules leave the harmonic sum rule. The values at labels two and three are one quarter and five twelfths.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+                "For dimensions greater than the fixed label, the normalized negative contribution is one half of the harmonic number minus one. The source's Theorem 3 states this value under its Conjecture 1, which SumRules proves. Expanding the squared Casimir difference and interchanging the two summation labels reduces the double sum to odd moments. Orthogonality, signed parity addition and the weighted sum rules leave the harmonic sum rule. The values at labels two and three are one quarter and five twelfths.",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Harmonic limit and eventual negativity", Disp(ClaimBody()),
                 "For every fixed label at least two, the averaged curvature tends to minus one half of the harmonic number minus one. The positive contribution vanishes and the negative contribution is exact. Since the harmonic number exceeds one, the limit is strictly negative, and convergence gives a dimension threshold beyond which the curvature is negative.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(),
