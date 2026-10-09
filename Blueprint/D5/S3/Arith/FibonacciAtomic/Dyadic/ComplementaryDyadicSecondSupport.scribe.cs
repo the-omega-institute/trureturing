@@ -137,7 +137,7 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
         var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("p", i));
         Formula assumptions = Equal(sum, D(1));
         if (nonnegative)
-            assumptions = And(All(i, indices, Seq(D(0), Sp, Le, Sp, Call("p", i))), assumptions);
+            assumptions = And(Par(All(i, indices, Seq(D(0), Sp, Le, Sp, Call("p", i)))), assumptions);
         return All(a, Nat, Imp(Seq(D(3), Sp, Le, Sp, a), All(p, law, Imp(assumptions, body))));
     }
 
@@ -146,7 +146,7 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
         var a = V("a"); var p = V("p"); var i = V("i");
         var b = Pow(D(2), a); var q = Call("q", p);
         var indices = Call("Fin", Par(Seq(b, Sp, Plus, Sp, D(1))));
-        var positive = All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("q", p, i)));
+        var positive = Par(All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("q", p, i))));
         var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("q", p, i));
         return Disp(Context(Imp(Seq(V("t0"), Sp, Lt, Sp, Call("min", p)),
             And(positive, And(Equal(sum, D(1)), And(
@@ -163,9 +163,9 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
         var b = Pow(D(2), a);
         var indices = Call("Fin", Par(Seq(b, Sp, Plus, Sp, D(1))));
         var rn = Call("r", p, n); var rk = Call("r", p, k);
-        var before = All(k, Nat, Imp(Seq(k, Sp, Lt, Sp, n),
-            Seq(V("t0"), Sp, Lt, Sp, Call("min", rk))));
-        var positive = All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("r", p, n, i)));
+        var before = Par(All(k, Nat, Imp(Seq(k, Sp, Lt, Sp, n),
+            Seq(V("t0"), Sp, Lt, Sp, Call("min", rk)))));
+        var positive = Par(All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("r", p, n, i))));
         var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("r", p, n, i));
         var exit = And(Seq(D(0), Sp, Lt, Sp, Call("min", rn)),
             Seq(Call("min", rn), Sp, Le, Sp, V("t0")));

@@ -32,7 +32,7 @@ The low-side statement includes its upper endpoint. The global statement below d
 
 **Theorem 1.2 (Strict high-side scaling).**
 
-$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \forall p: \operatorname{Fin}\left((2^{a} + 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow (t0 < \operatorname{min}\left(p\right) \Rightarrow (\forall i: \operatorname{Fin}\left((2^{a} + 1)\right), 0 < \operatorname{q}\left(p, i\right) \land (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{q}\left(p, i\right) = 1 \land (\operatorname{L}\left(p\right) = H0 + \frac{\operatorname{L}\left(\operatorname{q}\left(p\right)\right)}{\left(2^{a}\right)^{2}} \land \operatorname{D}\left(p\right) = \frac{\operatorname{D}\left(\operatorname{q}\left(p\right)\right)}{\left(2^{a}\right)^{2}}))))))$$
+$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \forall p: \operatorname{Fin}\left((2^{a} + 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow (t0 < \operatorname{min}\left(p\right) \Rightarrow ((\forall i: \operatorname{Fin}\left((2^{a} + 1)\right), 0 < \operatorname{q}\left(p, i\right)) \land (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{q}\left(p, i\right) = 1 \land (\operatorname{L}\left(p\right) = H0 + \frac{\operatorname{L}\left(\operatorname{q}\left(p\right)\right)}{\left(2^{a}\right)^{2}} \land \operatorname{D}\left(p\right) = \frac{\operatorname{D}\left(\operatorname{q}\left(p\right)\right)}{\left(2^{a}\right)^{2}}))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.high_scaling` (`✓ std3`). ∎
 
@@ -62,7 +62,7 @@ The uniform law u(i)=1/(B+1) is strictly high and is fixed by q. Its gap satisfi
 
 **Theorem 1.4 (Finite positive exit).**
 
-$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \forall p: \operatorname{Fin}\left((2^{a} + 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow ((t0 < \operatorname{min}\left(p\right) \land p \neq u) \Rightarrow \exists n: \mathbb{N}, (0 < n \land (\forall k: \mathbb{N}, (k < n \Rightarrow t0 < \operatorname{min}\left(\operatorname{r}\left(p, k\right)\right)) \land (\forall i: \operatorname{Fin}\left((2^{a} + 1)\right), 0 < \operatorname{r}\left(p, n, i\right) \land (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{r}\left(p, n, i\right) = 1 \land ((0 < \operatorname{min}\left(\operatorname{r}\left(p, n\right)\right) \land \operatorname{min}\left(\operatorname{r}\left(p, n\right)\right) \le t0) \land \operatorname{D}\left(p\right) = \frac{\operatorname{D}\left(\operatorname{r}\left(p, n\right)\right)}{\left(\left(2^{a}\right)^{2}\right)^{n}}))))))))$$
+$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \forall p: \operatorname{Fin}\left((2^{a} + 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow ((t0 < \operatorname{min}\left(p\right) \land p \neq u) \Rightarrow \exists n: \mathbb{N}, (0 < n \land ((\forall k: \mathbb{N}, (k < n \Rightarrow t0 < \operatorname{min}\left(\operatorname{r}\left(p, k\right)\right))) \land ((\forall i: \operatorname{Fin}\left((2^{a} + 1)\right), 0 < \operatorname{r}\left(p, n, i\right)) \land (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{r}\left(p, n, i\right) = 1 \land ((0 < \operatorname{min}\left(\operatorname{r}\left(p, n\right)\right) \land \operatorname{min}\left(\operatorname{r}\left(p, n\right)\right) \le t0) \land \operatorname{D}\left(p\right) = \frac{\operatorname{D}\left(\operatorname{r}\left(p, n\right)\right)}{\left(\left(2^{a}\right)^{2}\right)^{n}}))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.finite_exit` (`✓ std3`). ∎
 
@@ -76,7 +76,7 @@ Let r_k(i)=1/(B+1)+(B^2)^k[p(i)-1/(B+1)]. Then r_0=p, r_(k+1)=q(r_k), and every 
 
 **Theorem 1.5 (Global second supporting inequality).**
 
-$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \forall p: \operatorname{Fin}\left((2^{a} + 1)\right) \to \mathbb{R}, ((\forall i: \operatorname{Fin}\left((2^{a} + 1)\right), 0 \le \operatorname{p}\left(i\right) \land \sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{p}\left(i\right) = 1) \Rightarrow (2^{a} (a + 2) + 2 \left(2^{a}\right)^{2}) \operatorname{min}\left(p\right) - 2 (2^{a} - 1) \le \operatorname{L}\left(p\right)))$$
+$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \forall p: \operatorname{Fin}\left((2^{a} + 1)\right) \to \mathbb{R}, (((\forall i: \operatorname{Fin}\left((2^{a} + 1)\right), 0 \le \operatorname{p}\left(i\right)) \land \sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{p}\left(i\right) = 1) \Rightarrow (2^{a} (a + 2) + 2 \left(2^{a}\right)^{2}) \operatorname{min}\left(p\right) - 2 (2^{a} - 1) \le \operatorname{L}\left(p\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.global_support` (`✓ std3`). ∎
 
