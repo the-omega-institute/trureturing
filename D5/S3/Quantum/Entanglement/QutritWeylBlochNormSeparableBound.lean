@@ -70,6 +70,9 @@ private lemma omega_parts : ω.re = -1 / 2 ∧ ω.im = Real.sqrt 3 / 2 := by
       Real.sin_pi_div_three, Real.cos_pi_div_three]
     ring
 
+private lemma omega_value : ω = ⟨-1 / 2, Real.sqrt 3 / 2⟩ :=
+  Complex.ext omega_parts.1 omega_parts.2
+
 private abbrev a (σ : Matrix (Fin 3) (Fin 3) ℂ) (k l : Fin 3) : ℂ :=
   (σ * (W k l)ᴴ).trace
 
@@ -269,7 +272,7 @@ private lemma sharp_density : IsDensity sharpMatrix := by
   constructor
   · rw [hu]
     exact Matrix.posSemidef_vecMulVec_self_star u
-  · norm_num [sharpMatrix, Matrix.trace, Matrix.diag_apply, Fin.sum_univ_succ]
+  · norm_num [sharpMatrix, Matrix.trace, Matrix.diag, Fin.sum_univ_succ]
 
 private lemma sharp_coefficients (k l : Fin 3) :
     ‖a sharpMatrix k l‖ = if k = 0 ∧ l = 0 then 1 else 1 / 2 := by
@@ -277,21 +280,23 @@ private lemma sharp_coefficients (k l : Fin 3) :
   have hs4 : Real.sqrt 3 ^ 4 = 9 := by
     rw [show Real.sqrt 3 ^ 4 = (Real.sqrt 3 ^ 2) ^ 2 by ring, hs]
     norm_num
-  have h3 : ω ^ 3 = 1 := D5.S3.QuantumContext.HesseSicCertificate.omega_cubed
-  have h4 : ω ^ 4 = ω := by rw [show ω ^ 4 = ω ^ 3 * ω by ring, h3, one_mul]
+  have hs6 : Real.sqrt 3 ^ 6 = 27 := by
+    rw [show Real.sqrt 3 ^ 6 = (Real.sqrt 3 ^ 2) ^ 3 by ring, hs]
+    norm_num
+  have hs8 : Real.sqrt 3 ^ 8 = 81 := by
+    rw [show Real.sqrt 3 ^ 8 = (Real.sqrt 3 ^ 2) ^ 4 by ring, hs]
+    norm_num
   have hsq : ‖a sharpMatrix k l‖ ^ 2 =
       (if k = 0 ∧ l = 0 then 1 else 1 / 2 : ℝ) ^ 2 := by
     rw [coefficient_formula]
+    simp_rw [← Complex.normSq_eq_norm_sq]
+    rw [omega_value]
+    simp only [Complex.normSq_apply]
     fin_cases k <;> fin_cases l <;>
-      norm_num [sharpMatrix, Fin.sum_univ_succ, Fin.add_def, h4] <;>
-      simp_rw [← Complex.normSq_eq_norm_sq] <;>
-      simp only [Complex.normSq_apply, pow_two, Complex.add_re, Complex.add_im,
-        Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im,
-        Complex.div_re, Complex.div_im, Complex.star_def, Complex.conj_re, Complex.conj_im,
-        Complex.neg_re, Complex.neg_im, Complex.ofNat_re, Complex.ofNat_im,
-        Complex.one_re, Complex.one_im, Complex.zero_re, Complex.zero_im,
-        omega_parts.1, omega_parts.2] <;>
-      norm_num <;> ring_nf <;> simp only [hs, hs4] <;> ring
+      norm_num [sharpMatrix, Fin.sum_univ_succ, Fin.add_def, pow_succ,
+        Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
+        Complex.div_re, Complex.div_im, Complex.star_def, Complex.conj_re, Complex.conj_im] <;>
+      ring_nf <;> norm_num [hs, hs4, hs6, hs8]
   have hr : 0 ≤ (if k = 0 ∧ l = 0 then 1 else 1 / 2 : ℝ) := by split_ifs <;> norm_num
   nlinarith [norm_nonneg (a sharpMatrix k l)]
 

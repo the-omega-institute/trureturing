@@ -13,17 +13,6 @@ internal sealed class HesseSicCertificateDocument : IScribeDocumentDefinition
             RootFact("omega-cubed", "omega_cubed", "The cubic phase has order three",
                 Seq(F.Id("omega"), Caret, Grp(D(3)), Sp, Eq, Sp, D(1)),
                 "The third power of the cubic phase is one."),
-            RootFact("omega-sum", "omega_sum", "The three cubic phases sum to zero",
-                Seq(D(1), Sp, Plus, Sp, F.Id("omega"), Sp, Plus, Sp,
-                    F.Id("omega"), Caret, Grp(D(2)), Sp, Eq, Sp, D(0)),
-                "The sum of one, omega, and omega squared vanishes."),
-            RootFact("omega-norm", "omega_norm", "The cubic phase has unit modulus",
-                Seq(new Formula.Norm(F.Id("omega")), Sp, Eq, Sp, D(1)),
-                "The cubic phase lies on the complex unit circle."),
-            RootFact("star-omega", "star_omega", "Conjugation interchanges the nontrivial phases",
-                Seq(Call(F.Id("star"), F.Id("omega")), Sp, Eq, Sp,
-                    F.Id("omega"), Caret, Grp(D(2))),
-                "The complex conjugate of omega equals omega squared."),
             Describe.Lean(
                 DescribeId.Create("hesse-sic-certificate"),
                 DeclarationHandle.Create(
