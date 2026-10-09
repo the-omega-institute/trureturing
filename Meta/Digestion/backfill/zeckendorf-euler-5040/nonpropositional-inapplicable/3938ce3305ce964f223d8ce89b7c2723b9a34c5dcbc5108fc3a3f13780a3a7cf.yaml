@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3938ce3305ce964f223d8ce89b7c2723b9a34c5dcbc5108fc3a3f13780a3a7cf
+  normalized_sha256: sha256:3938ce3305ce964f223d8ce89b7c2723b9a34c5dcbc5108fc3a3f13780a3a7cf
+cas_ref: sha256:3938ce3305ce964f223d8ce89b7c2723b9a34c5dcbc5108fc3a3f13780a3a7cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 产地记账说明候选与证书的来源和独立复算流程；列出的数字是对本节此前数学子项的回指，不在此段新立数学命题。此收据仅结算来源说明，不供应赋值表、评分或反驳证明。
+    previous_atom_id: c3abdd1e270f81efac73cb00c74cf3e837b98167a244b6df6aba60f06bf00426
+    next_atom_id: 63e9c9e49f33308d803676c225f6c15d62b56c19b4365662fd8051ff1a0f42c5

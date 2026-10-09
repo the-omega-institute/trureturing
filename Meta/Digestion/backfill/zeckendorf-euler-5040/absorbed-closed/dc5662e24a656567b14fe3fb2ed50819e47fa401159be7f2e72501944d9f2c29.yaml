@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dc5662e24a656567b14fe3fb2ed50819e47fa401159be7f2e72501944d9f2c29
+  normalized_sha256: sha256:dc5662e24a656567b14fe3fb2ed50819e47fa401159be7f2e72501944d9f2c29
+cas_ref: sha256:dc5662e24a656567b14fe3fb2ed50819e47fa401159be7f2e72501944d9f2c29
+coverage_gids:
+  - gid: D5/S3/Factorization/PrefixLcmNotFactorialPrimorial.not_forall_prime_pow_lcmUpto_factorial_mul_distinctPrimorial
+    target_statement_id: sha256:1a5011a867a3505f80366538129b94fc72420a5ca9e8f9c90db8b2e6eaba3d57
+receipts:
+  unresolved_subitems: []
