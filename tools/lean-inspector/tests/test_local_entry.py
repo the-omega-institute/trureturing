@@ -1,11 +1,13 @@
 """Local make entry guards and explicit build policies at real process boundaries."""
 import json
+import hashlib
 import os
 from pathlib import Path
 import shutil
 import shlex
 import subprocess
 import sys
+import tarfile
 import unittest
 
 import test_reuse
@@ -586,6 +588,286 @@ esac
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"action":"keep"', result.stdout)
         self.assertIn('"reason":"release-download-failed"', result.stdout)
+
+    def canonical_release_fixture(self, *, damage=None):
+        """History A < B < C < HEAD, with real archives and the production fetch."""
+        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
+        import lean_cache_release as transport
+        subprocess.run(['git', '-C', str(self.root), 'branch', '-M', 'dev'],
+                       check=True, capture_output=True)
+        shutil.copy2(ROOT / 'tools/scripts/worktree/lean-cache-publish.sh',
+                     self.root / 'tools/scripts/worktree/lean-cache-publish.sh')
+        subprocess.run(['git', '-C', str(self.root), 'add',
+                        'tools/scripts/worktree/lean-cache-publish.sh'], check=True, capture_output=True)
+        older = self.git_commit('archive A', empty=True)
+        local = self.git_commit('local B', empty=True)
+        producer = self.git_commit('archive C', empty=True)
+        shutil.copytree(self.restore, self.output.parent, dirs_exist_ok=True)
+        (self.output.parent.parent / 'producer.txt').write_text('local B')
+        self.write_base(local)
+        self.fixture.write('D5/A.lean', 'def a := 2\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True, capture_output=True)
+        self.git_commit('current inputs', empty=True)
+        self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.output)
+        partition = transport.partition_path(self.root)
+        key = transport.release_key(self.root)
+        remote = self.root / 'releases'
+        remote.mkdir()
+        tags = []
+        for index, commit in ((11, older), (12, producer)):
+            tag = transport.prefix(partition, key) + f'ci-{index}-1'
+            tags.append(tag)
+            assets = remote / tag
+            assets.mkdir()
+            build = assets / 'build'
+            shutil.copytree(self.restore, build / 'stratalint')
+            (build / 'producer.txt').write_text(commit)
+            if index == 12 and damage:
+                report = build / 'stratalint' / publication.RAW
+                if damage == 'format':
+                    receipt = publication.member(report, '.reuse.json')
+                    record = json.loads(receipt.read_text())
+                    record['inputs']['report_format'] = 'incompatible-fixture-format'
+                    receipt.write_text(json.dumps(record))
+                else:
+                    publication.member(report, '.materials.zip').unlink()
+            with tarfile.open(assets / transport.ASSET, 'w:gz') as archive:
+                archive.add(build, arcname='build')
+            archive_bytes = (assets / transport.ASSET).read_bytes()
+            digest = hashlib.sha256(archive_bytes).hexdigest()
+            manifest = dict(schema='lean-release-seed-v4', partition=partition, cache_key=key,
+                producer_commit_sha=commit, publication_id=f'ci-{index}-1',
+                workflow_run_id=str(index), workflow_run_attempt='1',
+                archive_sha256=digest, archive_bytes=len(archive_bytes),
+                parts=[dict(name=transport.ASSET, sha256=digest, bytes=len(archive_bytes))])
+            (assets / transport.MANIFEST).write_text(json.dumps(manifest))
+            metadata = dict(draft=False, tag_name=tag, target_commitish='a' * 40,
+                assets=[dict(name=name, digest='sha256:' + hashlib.sha256((assets / name).read_bytes()).hexdigest(),
+                             size=(assets / name).stat().st_size)
+                        for name in (transport.MANIFEST, transport.ASSET)])
+            (assets / 'metadata.json').write_text(json.dumps(metadata))
+        (remote / 'list.json').write_text(json.dumps([
+            dict(tagName=tag, isDraft=False, createdAt=str(i)) for i, tag in enumerate(tags)]))
+        self.script('bin/gh', 'exec ' + shlex.quote(sys.executable) + ' "$0.py" "$@"\n')
+        (self.root / 'bin/gh.py').write_text('''import json, os, pathlib, shutil, sys
+args = sys.argv[1:]
+root = pathlib.Path(os.environ['FAKE_RELEASE_ROOT'])
+with (root / 'calls.jsonl').open('a') as log:
+    log.write(json.dumps(args) + '\\n')
+if args[:2] == ['release', 'list']:
+    print((root / 'list.json').read_text())
+elif args[0] == 'api':
+    assets = root / args[1].rsplit('/', 1)[1]
+    if os.environ.get('FAKE_CHANGED_PRODUCER') and sum(
+            json.loads(line)[0] == 'api' for line in (root / 'calls.jsonl').read_text().splitlines()) > 1:
+        import hashlib
+        manifest = json.loads((assets / 'manifest.json').read_text())
+        manifest['producer_commit_sha'] = os.environ['FAKE_CHANGED_PRODUCER']
+        (assets / 'manifest.json').write_text(json.dumps(manifest))
+        metadata = json.loads((assets / 'metadata.json').read_text())
+        metadata['assets'][0]['digest'] = 'sha256:' + hashlib.sha256((assets / 'manifest.json').read_bytes()).hexdigest()
+        (assets / 'metadata.json').write_text(json.dumps(metadata))
+    print((assets / 'metadata.json').read_text())
+elif args[:2] == ['release', 'download']:
+    tag = args[2]
+    destination = pathlib.Path(args[args.index('--dir') + 1])
+    for i, value in enumerate(args):
+        if value == '--pattern':
+            name = args[i + 1]
+            if tag == os.environ.get('FAKE_ARCHIVE_FAILURE') and name != 'manifest.json':
+                print('injected approved archive failure', file=sys.stderr)
+                sys.exit(56)
+            shutil.copyfile(root / tag / name, destination / name)
+else:
+    raise AssertionError(args)
+''')
+        self.environment.update(FAKE_RELEASE_ROOT=str(remote), GITHUB_ACTIONS='false',
+            PATH=str(self.root / 'bin') + os.pathsep + self.environment['PATH'])
+        return local, producer, tags[-1]
+
+    def seed_bytes(self):
+        build = self.root / '.lake/build'
+        return {str(path.relative_to(build)): path.read_bytes()
+                for path in build.rglob('*') if path.is_file()}
+
+    def refresh_canonical(self):
+        result = subprocess.run([sys.executable, '-B', str(self.root / 'tools/lean-inspector/reuse.py'),
+            'refresh-stale-seed', '--repository', str(self.root)], env=self.environment,
+            text=True, capture_output=True, timeout=30)
+        self.assertEqual(0, result.returncode, '[FAIL] optional_refresh_continues: ' + result.stderr)
+        print('CASE ' + self._testMethodName + '\n' + result.stdout, flush=True)
+        return result
+
+    def test_approved_archive_failure_never_falls_back_to_older_seed(self):
+        local, _, tag = self.canonical_release_fixture()
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        self.environment['FAKE_ARCHIVE_FAILURE'] = tag
+        result = self.refresh_canonical()
+        self.assertEqual(before, self.seed_bytes(), '[FAIL] approved_failure_preserves_seed')
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
+                         '[FAIL] approved_failure_preserves_base')
+        self.assertEqual(local, self.api.read_seed_base(self.root))
+        self.assertIn('"action":"keep"', result.stdout, '[FAIL] failed_fetch_reports_keep')
+        calls = [json.loads(line) for line in (self.root / 'releases/calls.jsonl').read_text().splitlines()]
+        downloads = [call[2] for call in calls if call[:2] == ['release', 'download']]
+        self.assertEqual({tag}, set(downloads), '[FAIL] restore_uses_only_approved_tag')
+
+    def test_approved_restore_installs_decision_producer_instead_of_head(self):
+        local, producer, tag = self.canonical_release_fixture()
+        result = self.refresh_canonical()
+        self.assertEqual(producer, self.api.read_seed_base(self.root), '[FAIL] restored_base_is_manifest_producer')
+        self.assertEqual(producer, (self.root / '.lake/build/producer.txt').read_text(),
+                         '[FAIL] installed_producer_equals_decision')
+        self.assertIn('"action":"fetch"', result.stdout)
+        decision = json.loads(next(line.partition(' ')[2] for line in result.stdout.splitlines()
+                                   if line.startswith('LEAN_REPORT_SEED_DECISION ')))
+        self.assertEqual((local, producer, tag), (decision['local'], decision['release'], decision['tag']))
+        calls = [json.loads(line) for line in (self.root / 'releases/calls.jsonl').read_text().splitlines()]
+        self.assertEqual(1, sum(call[:2] == ['release', 'list'] for call in calls),
+                         '[FAIL] approved_fetch_does_not_reselect')
+
+    def test_changed_manifest_producer_is_rejected_before_installation(self):
+        self.canonical_release_fixture()
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        self.environment['FAKE_CHANGED_PRODUCER'] = subprocess.check_output(
+            ['git', '-C', str(self.root), 'rev-parse', 'HEAD'], text=True).strip()
+        result = self.refresh_canonical()
+        self.assertEqual(before, self.seed_bytes(), '[FAIL] changed_manifest_identity_preserves_seed')
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+        self.assertIn('"action":"keep"', result.stdout)
+
+    def test_zero_exit_without_installation_reports_keep(self):
+        self.canonical_release_fixture()
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        self.script('tools/scripts/worktree/lean-cache-publish.sh',
+                    'printf \'LEAN_CACHE_FETCH {"status":"skipped","reason":"fixture skip"}\\n\'\n')
+        result = self.refresh_canonical()
+        self.assertEqual(before, self.seed_bytes())
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+        self.assertIn('"action":"keep"', result.stdout, '[FAIL] zero_exit_is_not_installation')
+
+    def test_dirty_recovery_install_invalidates_previous_base(self):
+        self.canonical_release_fixture()
+        self.fixture.write('D5/A.lean', 'def a := 3\n')
+        result = subprocess.run(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+            'fetch', '--repository', str(self.root), '--refresh-stale'], env=self.environment,
+            text=True, capture_output=True, timeout=30)
+        print('CASE ' + self._testMethodName + '\n' + result.stdout, flush=True)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertFalse((self.root / self.api.BASE_RECORD).exists(), '[FAIL] dirty_restore_removes_old_base')
+
+    def test_rejected_staged_report_preserves_canonical_seed_and_base(self):
+        for damage in ('format', 'incomplete'):
+            with self.subTest(damage=damage):
+                if damage == 'incomplete':
+                    self.doCleanups()
+                    self.setUp()
+                self.canonical_release_fixture(damage=damage)
+                before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+                result = self.refresh_canonical()
+                self.assertEqual(before, self.seed_bytes(), '[FAIL] staged_rejection_preserves_seed')
+                self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
+                                 '[FAIL] staged_rejection_preserves_base')
+                self.assertIn('"action":"keep"', result.stdout)
+
+    def test_equal_release_producer_does_not_fetch(self):
+        _, producer, _ = self.canonical_release_fixture()
+        self.write_base(producer)
+        before = self.seed_bytes()
+        result = self.refresh_canonical()
+        self.assertEqual(before, self.seed_bytes(), '[FAIL] equal_producer_preserves_seed')
+        self.assertIn('"reason":"release-not-newer"', result.stdout, '[FAIL] equality_is_not_newer')
+        calls = [json.loads(line) for line in (self.root / 'releases/calls.jsonl').read_text().splitlines()]
+        self.assertFalse(any('lean-build.tgz' in call for call in calls), '[FAIL] equal_producer_never_downloads_archive')
+
+    def inject_restore_error(self, operation):
+        site = self.root / 'injection'
+        site.mkdir(exist_ok=True)
+        (site / 'sitecustomize.py').write_text('''import os, pathlib, shutil
+replace, rmtree = os.replace, shutil.rmtree
+def failed_replace(source, target):
+    if pathlib.Path(target).name == 'lean-report-seed-base.json':
+        raise OSError('injected base write failure')
+    return replace(source, target)
+def failed_cleanup(path, *args, **kwargs):
+    name = pathlib.Path(path).name
+    if name.startswith(os.environ.get('FAKE_CLEANUP_PREFIX', 'no-match')):
+        raise OSError('injected cleanup failure')
+    return rmtree(path, *args, **kwargs)
+if os.environ.get('FAKE_BASE_WRITE_FAILURE') == '1':
+    os.replace = failed_replace
+shutil.rmtree = failed_cleanup
+''')
+        self.environment['PYTHONPATH'] = str(site)
+        if operation == 'base':
+            self.environment['FAKE_BASE_WRITE_FAILURE'] = '1'
+        else:
+            self.environment['FAKE_CLEANUP_PREFIX'] = operation
+
+    def test_optional_base_write_failure_rolls_back_seed_and_base(self):
+        self.canonical_release_fixture()
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        self.inject_restore_error('base')
+        result = self.refresh_canonical()
+        self.assertEqual(before, self.seed_bytes(), '[FAIL] late_base_failure_rolls_back_seed')
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
+                         '[FAIL] late_base_failure_rolls_back_base')
+        self.assertIn('"action":"keep"', result.stdout)
+
+    def test_staging_cleanup_failure_rolls_back_seed_and_base(self):
+        self.canonical_release_fixture()
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        self.inject_restore_error('.release-')
+        result = self.refresh_canonical()
+        self.assertEqual(before, self.seed_bytes(), '[FAIL] staging_cleanup_failure_rolls_back_seed')
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+        self.assertIn('"action":"keep"', result.stdout)
+
+    def test_backup_cleanup_failure_reports_committed_installation(self):
+        _, producer, _ = self.canonical_release_fixture()
+        self.inject_restore_error('.release-backup-')
+        result = self.refresh_canonical()
+        self.assertEqual(producer, self.api.read_seed_base(self.root), '[FAIL] committed_cleanup_failure_has_new_base')
+        self.assertEqual(producer, (self.root / '.lake/build/producer.txt').read_text())
+        self.assertIn('"action":"fetch"', result.stdout, '[FAIL] committed_cleanup_failure_reports_fetch')
+
+    def test_skipped_restore_does_not_write_snapshot_base(self):
+        local, _, tag = self.canonical_release_fixture()
+        build, private = self.root / '.lake/build', self.root / 'private-build'
+        build.rename(private)
+        build.symlink_to(private, target_is_directory=True)
+        before = (self.root / self.api.BASE_RECORD).read_bytes()
+        result = subprocess.run(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+            'fetch', '--repository', str(self.root), '--refresh-stale'], env=self.environment,
+            text=True, capture_output=True, timeout=30)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual(before, (self.root / self.api.BASE_RECORD).read_bytes(), '[FAIL] skipped_install_keeps_base')
+        self.assertEqual(local, self.api.read_seed_base(self.root))
+        self.assertIn('"status":"skipped"', result.stdout)
+
+    def test_production_capture_invalidates_base_before_report_build(self):
+        self.canonical_release_fixture()
+        self.fixture.write('D5/A.lean', 'def a := 3\n')
+        result = self.run_entry('REBUILD_REPORT_CACHE=1')
+        self.assertNotEqual(0, result.returncode)
+        self.assertTrue(any(call.startswith('lake ') for call in self.calls))
+        self.assertFalse((self.root / self.api.BASE_RECORD).exists(), '[FAIL] production_clears_base_before_new_seed')
+
+    def test_optional_refresh_in_ci_or_non_dev_or_detached_keeps_seed(self):
+        self.canonical_release_fixture()
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        for scope in ('ci', 'non-dev', 'detached'):
+            with self.subTest(scope=scope):
+                self.environment['GITHUB_ACTIONS'] = 'true' if scope == 'ci' else 'false'
+                if scope == 'non-dev':
+                    subprocess.run(['git', '-C', str(self.root), 'branch', '-M', 'topic'], check=True)
+                elif scope == 'detached':
+                    subprocess.run(['git', '-C', str(self.root), 'checkout', '-q', '--detach'], check=True)
+                result = self.refresh_canonical()
+                self.assertEqual(before, self.seed_bytes(), '[FAIL] excluded_scope_preserves_seed')
+                self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+                self.assertIn('"action":"keep"', result.stdout)
+                self.assertFalse((self.root / 'releases/calls.jsonl').exists(), '[FAIL] excluded_scope_never_lists')
 
     def test_refresh_option_reaches_canonical_release_reader(self):
         result = subprocess.run(['make', '--no-print-directory',

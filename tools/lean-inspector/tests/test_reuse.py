@@ -224,6 +224,76 @@ class ReuseTests(unittest.TestCase):
         self.assertEqual(api.seed_format(self.report),
                          {'report_format': publication.selection.REPORT_FORMAT, 'compatible': True})
 
+    def dev_repository(self):
+        subprocess.run(['git', 'init', '-q', '-b', 'dev', str(self.root)], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5', 'lean-toolchain', 'lakefile.toml'],
+                       check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '-qm', 'base fixture'], check=True, capture_output=True)
+        return self.receipt()
+
+    def test_dirty_production_invalidates_previous_base(self):
+        api = self.dev_repository()
+        self.assertIsNotNone(api.read_seed_base(self.root))
+        self.write('D5/A.lean', 'def a := 2\n')
+        self.receipt()
+        self.assertFalse((self.root / api.BASE_RECORD).exists(), '[FAIL] dirty_production_removes_old_base')
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_failed_base_write_invalidates_previous_base(self):
+        api = self.dev_repository()
+        with patch.object(api.os, 'replace', side_effect=OSError('injected base write failure')):
+            recorded = api.record_seed_base(self.root)
+        self.assertFalse(recorded)
+        self.assertFalse((self.root / api.BASE_RECORD).exists(), '[FAIL] failed_base_write_removes_old_base')
+
+    def test_non_dev_detached_and_linked_seed_records_are_invalidated(self):
+        api = self.dev_repository()
+        path = self.root / api.BASE_RECORD
+        record = path.read_bytes()
+        for scope in ('non-dev', 'detached', 'linked'):
+            with self.subTest(scope=scope):
+                repository = self.root
+                if scope == 'non-dev':
+                    subprocess.run(['git', '-C', str(self.root), 'branch', '-M', 'topic'], check=True)
+                elif scope == 'detached':
+                    subprocess.run(['git', '-C', str(self.root), 'checkout', '-q', '--detach'], check=True)
+                else:
+                    repository = self.root / 'linked'
+                    subprocess.run(['git', '-C', str(self.root), 'worktree', 'add', '-q', '-b', 'dev',
+                                    str(repository), 'HEAD'], check=True)
+                target = repository / api.BASE_RECORD
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(record)
+                self.assertFalse(api.record_seed_base(repository))
+                self.assertFalse(target.exists(), '[FAIL] untrusted_production_removes_old_base')
+
+    def test_non_object_base_record_is_unknown(self):
+        api = self.receipt()
+        path = self.root / api.BASE_RECORD
+        path.parent.mkdir(parents=True, exist_ok=True)
+        for value in ([], None, 42, 'commit'):
+            with self.subTest(value=value):
+                path.write_text(json.dumps(value))
+                try:
+                    base = api.read_seed_base(self.root)
+                except AttributeError as error:
+                    self.fail('[FAIL] non_object_base_is_unknown: ' + str(error))
+                self.assertIsNone(base)
+
+    def test_seal_and_base_write_share_cache_guard(self):
+        api = self.dev_repository()
+        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
+        from lean_cache_release import cache_guard
+        base = (self.root / api.BASE_RECORD).read_bytes()
+        receipt = publication.member(self.report, api.SUFFIX).read_bytes()
+        with cache_guard(self.root):
+            with self.assertRaises(BlockingIOError, msg='[FAIL] seal_requires_exclusive_cache_ownership'):
+                api.seal(self.root, self.report, api.capture(self.root))
+        self.assertEqual(base, (self.root / api.BASE_RECORD).read_bytes())
+        self.assertEqual(receipt, publication.member(self.report, api.SUFFIX).read_bytes())
+
     def test_standalone_program_entry_builds_the_producer_once_before_ensure(self):
         process, calls = self.entry_with_program_build(['leanInspector/LeanInformationAudit'], prebuilt=False)
         self.assertNotIn('bad-producer-build-args', calls, '[FAIL] producer_build_uses_target_path_contract')
