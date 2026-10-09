@@ -7,10 +7,12 @@ import json
 import os
 from pathlib import Path
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
 import time
+import types
 import unittest
 from unittest.mock import patch
 
@@ -440,6 +442,56 @@ class HostCleanupTests(unittest.TestCase):
             result = cleanup.clean_candidate(artifact, self.cutoff, [], delete=True)
         self.assertEqual("failed", result["action"])
         self.assertTrue(artifact.exists())
+
+    def test_protected_flag_anywhere_keeps_entire_candidate(self):
+        artifact = self.old_file(self.root / "service" / "nested" / "state")
+        for directory in (artifact.parent, artifact.parent.parent):
+            os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+        lstat = Path.lstat
+        for flag in (stat.UF_IMMUTABLE, stat.UF_APPEND, stat.UF_NOUNLINK,
+                     stat.SF_IMMUTABLE, stat.SF_APPEND, stat.SF_NOUNLINK):
+            def flagged(path):
+                info = lstat(path)
+                if path != artifact.parent:
+                    return info
+                fields = {name: getattr(info, name) for name in dir(info) if name.startswith("st_")}
+                return types.SimpleNamespace(**dict(fields, st_flags=flag))
+            with self.subTest(flag=hex(flag)), patch.object(Path, "lstat", flagged), \
+                 patch.object(cleanup.shutil, "rmtree") as rmtree:
+                result = cleanup.clean_candidate(artifact.parent.parent, self.cutoff, [], delete=True)
+                self.assertEqual(("kept", "protected_flag"), (result["action"], result["reason"]),
+                                 "[FAIL] protected_flag_candidate_kept")
+                rmtree.assert_not_called()
+        self.assertTrue(artifact.exists())
+
+    @unittest.skipUnless(sys.platform == "darwin" and hasattr(os, "chflags"), "BSD file flags")
+    def test_real_immutable_flag_is_retained_without_failure(self):
+        artifact = self.old_file(self.root / "service" / "state")
+        os.utime(artifact.parent, (self.cutoff - 10, self.cutoff - 10))
+        os.chflags(artifact, stat.UF_IMMUTABLE)
+        self.addCleanup(os.chflags, artifact, 0)
+        result = cleanup.clean_candidate(artifact.parent, self.cutoff, [], delete=True)
+        self.assertEqual(("kept", "protected_flag"), (result["action"], result["reason"]),
+                         "[FAIL] real_immutable_candidate_kept")
+        self.assertTrue(artifact.exists())
+
+    def test_owned_read_only_tree_is_removed_without_following_links(self):
+        outside = self.root / "outside"
+        outside.mkdir()
+        packet = self.root / "packet"
+        sealed = packet / "sealed"
+        self.old_file(sealed / "ENTRY.md")
+        link = sealed / "external"
+        link.symlink_to(outside, target_is_directory=True)
+        os.utime(link, (self.cutoff - 10, self.cutoff - 10), follow_symlinks=False)
+        for directory in (sealed, packet, outside):
+            os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+            directory.chmod(0o555)
+            self.addCleanup(lambda directory=directory: directory.exists() and directory.chmod(0o755))
+        result = cleanup.clean_candidate(packet, self.cutoff, [], delete=True)
+        self.assertEqual("removed", result["action"], "[FAIL] read_only_owned_tree_removed")
+        self.assertFalse(packet.exists(), "[FAIL] read_only_owned_tree_absent")
+        self.assertEqual(0o555, stat.S_IMODE(outside.lstat().st_mode), "[FAIL] read_only_removal_stays_inside_tree")
 
 
 if __name__ == "__main__":
