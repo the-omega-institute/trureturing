@@ -50,20 +50,15 @@ def TerminatesIn : Nat → Slot → Source → Prop
       C.output (C.readNext u.1.val u.2) = x
   | n + 1, u, x => ∃ v, C.Edge I u v ∧ TerminatesIn n v x
 
-private theorem occurrence_advance {x : Source} {t : Nat} {u : Slot}
-    (h : C.Occurs I x t u) :
-    (C.run hp hP x (t + 1)).2 = C.readNext u.1.val u.2 := by
-  obtain ⟨d, y, k, hk, hq, hr, hd⟩ := u.1.property
-  have read : C.action (C.run hp hP x t).2 = .read := h.2.1 ▸ hr
-  simp only [Controller.run, Function.iterate_succ_apply']
-  change (C.step hp hP (C.run hp hP x t)).2 = _
-  simp only [Controller.step, read]
-  rw [h.2.1, h.2.2]
-
 private theorem terminal_no_edge {u v : Slot}
     (halt : C.action (C.readNext u.1.val u.2) = .halt) : ¬ C.Edge I u v := by
   rintro ⟨x, i, j, hi, hj, hij, waits⟩
-  have advance := occurrence_advance hp hP C I hi
+  obtain ⟨_, _, _, _, _, read, _⟩ := u.1.property
+  have advance : (C.run hp hP x (i + 1)).2 = C.readNext u.1.val u.2 := by
+    have control := congrArg Prod.snd (C.read_advance (hi.2.1 ▸ read))
+    dsimp only at control
+    rw [hi.2.1, hi.2.2] at control
+    exact control
   have jlen := hj.1
   have live := I.live x (i + 1) (by omega)
   exact live (advance ▸ halt)
@@ -104,8 +99,13 @@ private theorem unfolding_support [Finite Q] {j : Nat} {u : Slot} {S : Finset So
     {a : Source → Nat} (H : SaturatedHistory hp hP C I j u S a) :
     ∀ n x, TerminatesIn hp hP C I n u x ↔ n = j ∧ x ∈ S := by
   induction H with
-  | leaf u x occurs last =>
-    have advance := occurrence_advance hp hP C I occurs
+  | @leaf a u x occurs last =>
+    obtain ⟨_, _, _, _, _, read, _⟩ := u.1.property
+    have advance : (C.run hp hP x (a x + 1)).2 = C.readNext u.1.val u.2 := by
+      have control := congrArg Prod.snd (C.read_advance (occurs.2.1 ▸ read))
+      dsimp only at control
+      rw [occurs.2.1, occurs.2.2] at control
+      exact control
     have halt : C.action (C.readNext u.1.val u.2) = .halt := by
       rw [← advance, last]
       exact I.halt x
@@ -247,19 +247,6 @@ private theorem saturated_tree {n : Nat} {u : Slot} {S : Finset Source}
     obtain ⟨R⟩ := ihr rs
     exact ⟨.fork (different sn tn) separate L R parent ln rn⟩
 
-private theorem terminal {x : Source} {t : Nat} {u : Slot}
-    (h : C.Occurs I x t u) (halt : C.action (C.readNext u.1.val u.2) = .halt) :
-    t + 1 = I.length x ∧ C.output (C.readNext u.1.val u.2) = x := by
-  have st := occurrence_advance hp hP C I h
-  have live := I.live x
-  have last : t + 1 = I.length x := by
-    have before := h.1
-    by_contra ne
-    exact live (t + 1) (by omega) (st ▸ halt)
-  refine ⟨last, ?_⟩
-  rw [← st, last]
-  exact I.output x
-
 private theorem next_event {x : Source} {t : Nat} {u : Slot}
     (h : C.Occurs I x t u) (active : C.action (C.readNext u.1.val u.2) ≠ .halt) :
     ∃ k v, C.Occurs I x k v ∧ t < k ∧
@@ -267,7 +254,12 @@ private theorem next_event {x : Source} {t : Nat} {u : Slot}
       (laterReads hp hP C I x k).card + 1 = (laterReads hp hP C I x t).card := by
   classical
   have before := h.1
-  have st := occurrence_advance hp hP C I h
+  obtain ⟨_, _, _, _, _, read, _⟩ := u.1.property
+  have st : (C.run hp hP x (t + 1)).2 = C.readNext u.1.val u.2 := by
+    have control := congrArg Prod.snd (C.read_advance (h.2.1 ▸ read))
+    dsimp only at control
+    rw [h.2.1, h.2.2] at control
+    exact control
   have notlast : t + 1 < I.length x := by
     by_contra bad
     have eq : t + 1 = I.length x := by omega
@@ -332,12 +324,24 @@ private theorem terminal_tree {n : Nat} {u : Slot} {S : Finset Source}
     simp only [Finset.mem_singleton]
     constructor
     · intro hy
-      exact (terminal hp hP C I (realized y hy) halt).2.symm.trans
-        (terminal hp hP C I (realized x hx) halt).2
+      obtain ⟨_, _, _, _, _, read, _⟩ := u.1.property
+      have hy' := realized y hy
+      have hx' := realized x hx
+      have ty := C.terminal_label I
+        ⟨⟨y, a y, hy'.1, hy'.2.1, read, hy'.2.2⟩, halt⟩
+        hy'.1 hy'.2.1 hy'.2.2
+      have tx := C.terminal_label I
+        ⟨⟨x, a x, hx'.1, hx'.2.1, read, hx'.2.2⟩, halt⟩
+        hx'.1 hx'.2.1 hx'.2.2
+      exact ty.1.symm.trans tx.1
     · intro eq
       exact eq ▸ hx
   rw [singleton]
-  exact ⟨.leaf u x (realized x hx) (terminal hp hP C I (realized x hx) halt).1⟩
+  obtain ⟨_, _, _, _, _, read, _⟩ := u.1.property
+  have occurs := realized x hx
+  exact ⟨.leaf u x occurs (C.terminal_label I
+    ⟨⟨x, a x, occurs.1, occurs.2.1, read, occurs.2.2⟩, halt⟩
+    occurs.1 occurs.2.1 occurs.2.2).2⟩
 
 private theorem tree_exists [Finite Q] {n : Nat} {u : Slot} {S : Finset Source}
     {a : Source → Nat} (realized : ∀ x ∈ S, C.Occurs I x (a x) u)
