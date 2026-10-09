@@ -1,0 +1,38 @@
+### theorem 1: 二结果读口保持五模式乘积族的完整分类
+
+**Claim status: open.** 该读口保持 $\mathfrak M$，当且仅当属于以下两类之一：
+
+$$
+\lambda_s=\lambda_{\varnothing}+(\lambda_1-\lambda_{\varnothing})x(s)+(\lambda_2-\lambda_{\varnothing})z(s),
+$$
+
+或者
+
+$$
+\lambda_s=\lambda_{\varnothing}+(\lambda_3-\lambda_{\varnothing})y(s)+(\lambda_2-\lambda_{\varnothing})z(s).
+$$
+
+换句话说，读口只能直接依赖低端加中间，或高端加中间，不能同时对底面上两个可独立占用的端点作非平凡读取。
+
+证明。结果一保持独立要求
+
+$$
+\lambda_{\varnothing}\lambda_{13}=\lambda_1\lambda_3.\tag{1}
+$$
+
+结果零保持独立要求
+
+$$
+(1-\lambda_{\varnothing})(1-\lambda_{13})=(1-\lambda_1)(1-\lambda_3).\tag{2}
+$$
+
+两式相减得到 $\lambda_{\varnothing}+\lambda_{13}=\lambda_1+\lambda_3$，代回 (1) 得
+
+$$
+(\lambda_1-\lambda_{\varnothing})(\lambda_3-\lambda_{\varnothing})=0.
+$$
+
+所以至少有一端的似然变化为零。若 $\lambda_3=\lambda_{\varnothing}$，则 $\lambda_{13}=\lambda_1$，得到第一类；若 $\lambda_1=\lambda_{\varnothing}$，则 $\lambda_{13}=\lambda_3$，得到第二类。中间模式似然 $\lambda_2$ 不参与底面四角关系，可以独立指定。反向逐项代入即可。证毕。
+
+低端与中间的合法联合状态只有 $(0,0),(1,0),(0,1)$，形成三角形；高端与中间同样如此。二结果读口若要求任何结果都不引入端点关联，就必须退回其中一张三角关系结构。该结论依赖静态来源只读、两个结果、每个结果保持指定乘积族，不是普遍的观察二选一定律。
+

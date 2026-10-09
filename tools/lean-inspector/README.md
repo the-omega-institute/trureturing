@@ -9,16 +9,37 @@
 make lean-report
 make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 make lean-report REBUILD_REPORT_CACHE=1
-make lean-cache-from-github-without-mathlib REFRESH_STALE=1
 ```
 
 本地默认 `fetch-or-fail`：报告种子缺失、不完整或成功收据的 `inputs.report_format`
-不符时，先在私有写锁内恢复 dev 同分区、缓存 key 一致的 Release 快照。恢复后仍无
+不符时，主 checkout 先在私有写锁内恢复 dev 同分区、缓存 key 一致的 Release 快照。恢复后仍无
 相符种子时，以 `LEAN_REPORT_CACHE_INCOMPATIBLE` 和非零状态退出，不进入 Lake 报告提取。
+production Release 恢复（`make lean-cache-from-github-without-mathlib`）和
+`fetch-or-fail` 报告恢复只在主 checkout 运行；显式选择的 verification-mode fetch 不变。
+linked worktree 的 `fetch-or-fail` 在所选种子缺失、不完整、损坏或格式不符时，先检查
+工作树内的 canonical 种子 `.lake/build/stratalint/raw-lean-report.json`；相符时从它复用，
+发布到 `LEAN_REPORT` 指定的输出，不取回 Release。canonical 种子也不可用时，以
+`reason=linked-worktree` 和退出码 4 拒绝。
+补救前提是主 checkout 为干净的 `dev` 检出；否则 `warm-donor` 以退出码 0 和
+`skipped` 收据返回，这不代表 donor 已预热。先在该主 checkout 同步、预热并成功生成
+相符的封口报告，再移除 worktree 的 `.lake` 并由 ensure 从热主 checkout 重新播种：
+
+```sh
+make -C '<main checkout>' warm-donor && make -C '<main checkout>' lean-report && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure
+```
+
+ensure 不会用 donor 替换已有且 stamp 相符的 `.lake`，所以重新播种须先移除它。
+主 checkout 可用 `make lean-cache-from-github-without-mathlib REFRESH_STALE=1`
+显式取回并替换 Release 快照；无法判定 Git checkout 类型时拒绝取回。
+linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及共同 Git 目录均通过
+核验时给出主 checkout 路径；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，
+补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor && make lean-report` 后重新播种，
+并说明无法从当前 worktree 确定其位置，不将 Git store 目录当作主 checkout。
 格式相符而输入有差量时，由 Lake 原生机制增量更新；相符的整份收据仍可直接复用。
-`REBUILD_REPORT_CACHE=1` 跳过整份收据复用，显式允许报告构建路径。
+`REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；
+主 checkout 的 ensure 仍可按现有主检出专用路径由归档补齐冷的项目层。
 CI 与 Release publisher 显式传入 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，
-不读 Release；环境变量不选择本地或 CI 策略。直接 `inspect.sh` 默认 `reuse-or-build`，
+跳过报告恢复；环境变量不选择本地或 CI 策略。直接 `inspect.sh` 默认 `reuse-or-build`，
 也可显式传入 `--cache-miss-policy fetch-or-fail`。兼容性只由报告格式标识表达，
 没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
 

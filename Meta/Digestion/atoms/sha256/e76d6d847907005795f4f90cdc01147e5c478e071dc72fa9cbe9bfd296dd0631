@@ -1,0 +1,16 @@
+## 2. 记录容量与均值变化方向
+
+取目标函数 $F=(f_1,\ldots,f_d)^{\mathsf T}$，令
+
+$$
+m=\mathbb E[F],\qquad m_o=\mathbb E[F\mid O=o].
+$$
+
+记录分离矩阵定义为
+
+$$
+B=\sum_oq_o(m_o-m)(m_o-m)^{\mathsf T}.
+$$
+
+它记录不同结果使目标均值发生的方向。
+

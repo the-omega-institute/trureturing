@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-record-simplex-and-higher-order-compatibility"
+path = "docs/develop/theory/AURIC_FIB_ATOM_RECORD_SIMPLEX_AND_HIGHER_ORDER_COMPATIBILITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

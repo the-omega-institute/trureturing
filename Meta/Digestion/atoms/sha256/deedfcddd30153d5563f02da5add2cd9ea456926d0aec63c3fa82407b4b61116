@@ -1,0 +1,21 @@
+## 1. 同一组原子的三种不同关系
+
+原始来源为有限有序二元树：
+
+$$
+\mathbb T::=\alpha\mid\beta\mid\langle\mathbb T,\mathbb T\rangle,
+$$
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+$$
+
+$$
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+
+原始对象保留左右次序与括号。组成、叶词、几何量与矩阵乘积，都是它的不同读出。矩阵乘法的结合性会合并部分不同括号，因而不是完整原树的单射编码。
+
+| 关系 | 例子 | 保留的内容 |
+|---|---|---|

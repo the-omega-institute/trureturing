@@ -1,0 +1,11 @@
+### 定义 4：局部括号旋转
+
+比较
+
+$$
+\langle\langle s,t\rangle,u\rangle
+\longrightarrow\langle s,\langle t,u\rangle\rangle.
+$$
+
+记三个子树的叶数为 $a=\ell(s)$、$b=\ell(t)$、$c=\ell(u)$。两个相关的全局叶间隙 $i,j$ 分别位于 $s\mid t$ 与 $t\mid u$。
+
