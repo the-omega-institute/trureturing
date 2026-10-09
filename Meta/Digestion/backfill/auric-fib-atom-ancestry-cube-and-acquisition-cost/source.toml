@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-ancestry-cube-and-acquisition-cost"
+path = "docs/develop/theory/AURIC_FIB_ATOM_ANCESTRY_CUBE_AND_ACQUISITION_COST.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

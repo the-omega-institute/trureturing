@@ -1,0 +1,16 @@
+## 10. 最小目标摘要可以很短，但取得它仍然昂贵
+
+Claim status: open.
+
+祖先面积坐标还给出一个简单的聚合量：
+
+$$
+\boxed{D(t)=\sum_{p\in P_n}\bigl(\mathcal A_{i_p}(t)-\mathcal A_{i_p}(T_n)\bigr).}
+$$
+
+在缺陷子族中 $D(V_A)=|A|$。所以：
+
+$$
+\boxed{\nu(V_A)=n\,\mathbf1_{\{D(V_A)=0\}}.}
+$$
+

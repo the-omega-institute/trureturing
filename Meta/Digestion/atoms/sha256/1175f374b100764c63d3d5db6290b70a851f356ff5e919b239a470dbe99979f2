@@ -1,0 +1,8 @@
+### theorem 6 最多检查 $q$ 个不同支持时，最佳平均成功率为
+
+Claim status: open.
+
+$$
+\boxed{P_{\mathrm{succ}}^{*}(q)=\frac12+\frac{q}{2K_n},\qquad0\le q\le K_n.}
+$$
+
