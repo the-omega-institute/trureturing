@@ -3,6 +3,42 @@ from test_native_support import *
 from test_reuse import EXECUTION
 
 
+class NativeLocalReportConsumerTests:
+    def test_local_restored_format_keeps_native_incremental_extraction(self):
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = EXECUTION
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        for name in ('lean_cache_release.py', 'cache_material.py'):
+            self.copy('tools/scripts/worktree/' + name)
+        # Make owns the real native report build; only Release transport is replaced.
+        first = self.guarded_command(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'], env=self.env)
+        self.assertEqual(first.returncode, 0, first.stdout + first.stderr)
+        output = self.root / '.lake/build/stratalint/raw-lean-report.json'
+        saved = self.root / 'saved-seed'
+        saved.mkdir()
+        for suffix in (*publication.SUFFIXES, '.reuse.json'):
+            shutil.copy2(publication.member(output, suffix), publication.member(saved / output.name, suffix))
+        before = self.stamps()
+        receipt = publication.member(output, '.reuse.json')
+        value = json.loads(receipt.read_text())
+        value['inputs']['report_format'] = 'incompatible-report-format'
+        receipt.write_text(json.dumps(value))
+        self.write('tools/scripts/worktree/lean-cache-publish.sh', '#!/bin/bash\nset -euo pipefail\n'
+            'printf "%s\\n" "$*" > fetch-call\ncp saved-seed/* .lake/build/stratalint/\n')
+        self.write('D5/Alone.lean', 'def alone : Nat := 9\n')
+        restored = self.guarded_command(['make', 'lean-report'], env=self.env)
+        self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
+        self.assertIn('--refresh-stale --writer-owned', (self.root / 'fetch-call').read_text())
+        changed = sorted(name for name, stamp in self.stamps().items() if stamp != before[name])
+        self.assertEqual(changed, ['D5.Alone'], '[FAIL] restored_format_extracts_only_changed_module')
+        self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=1 aggregates=1', restored.stdout)
+        self.record_result('local-format-restored-incremental', dict(exit_code=restored.returncode,
+            modules=len(before), extracted_modules=1, changed=changed))
+        warm = self.guarded_command(['make', 'lean-report'], env=self.env)
+        self.assertEqual(warm.returncode, 0, warm.stdout + warm.stderr)
+        self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', warm.stdout)
+
+
 class NativeReportConsumerTests:
     def test_reg_dependency_closure_reassessment(self):
         # Typed Reg leaf and interface inputs select their compiler dependency closure.
@@ -31,7 +67,7 @@ class NativeReportConsumerTests:
             before = self.stamps()
             oleans = {path: (path.stat().st_mtime_ns, publication.digest(path))
                       for path in (self.root / '.lake/build/reg').rglob('*.olean')}
-            result = self.guarded_command(['make', 'lean-report'], env=self.env)
+            result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], env=self.env)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             records = [json.loads(line) for line in work.read_text().splitlines()]
             data = dict(exit_code=result.returncode, modules=len(self.stamps()),
@@ -119,7 +155,7 @@ class NativeReportConsumerTests:
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
 
         def entry(phase):
-            result = self.guarded_command(['make', 'lean-report'], env=self.env)
+            result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], env=self.env)
             logs = Path(str(output) + '.logs')
             paths = [path for path in logs.iterdir() if path.is_file()]
             self.record_result(phase, dict(exit_code=result.returncode,

@@ -5,7 +5,9 @@ The report format, the report-module and configuration inputs, the explicitly
 registered execution environment and the complete five-piece report are sealed
 only after defaults/report/publication succeed. Producer program bytes are not
 part of the seal; implementation changes retain historical reports. A receipt selects no rules and grants no check success. A miss returns
-to the normal Lake entry; malformed authored registration remains an error.
+to the normal Lake entry under reuse-or-build. Local fetch-or-fail requires a
+complete seed with the current report format before allowing that entry;
+malformed authored registration remains an error.
 """
 import argparse
 import json
@@ -188,6 +190,83 @@ def reuse(repository, report, output):
     return dict(needs_lake=False, reason='complete-entry-reused')
 
 
+class CacheIncompatible(ValueError):
+    def __init__(self, local, restored, reason):
+        super().__init__(f'LEAN_REPORT_CACHE_INCOMPATIBLE local_format={local} '
+                         f'current_format={publication.selection.REPORT_FORMAT} '
+                         f'restored_format={restored} reason={reason}\n'
+                         'Restore with make lean-cache-from-github-without-mathlib REFRESH_STALE=1 '
+                         'or rebuild explicitly with make lean-report REBUILD_REPORT_CACHE=1')
+
+
+def seed_format(report):
+    """Check the sealed seed without comparing current source or program bytes."""
+    try:
+        publication._require_bundle_files(report)
+        path = publication.member(report, SUFFIX)
+        if path.is_symlink() or not path.is_file():
+            raise ValueError('missing reuse receipt')
+        receipt = publication.read_json(path.read_bytes())
+        materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
+        if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
+            raise ValueError('reuse receipt lacks complete entry success')
+        inputs = materials.require_keys(receipt['inputs'],
+            {'eligible', 'report_format', 'files', 'execution'}, 'reuse inputs')
+        if (inputs['eligible'] is not True or not isinstance(inputs['files'], dict)
+                or 'lean-toolchain' not in inputs['files']):
+            raise ValueError('incomplete reuse inputs')
+        for file in inputs['files'].values():
+            materials.require_keys(file, {'sha256', 'mode'}, 'reuse input file')
+            if (not publication.HEX.fullmatch(file['sha256']) or type(file['mode']) is not int
+                    or not 0 <= file['mode'] <= 0o7777):
+                raise ValueError('invalid reuse input file')
+        execution = materials.require_keys(inputs['execution'],
+            {'toolchain', 'tools', 'platform', 'environment'}, 'reuse execution')
+        if (execution['toolchain'] != 'lean-toolchain' or not isinstance(execution['tools'], list)
+                or sorted(execution['tools']) != sorted(publication.selection.REPORT_EXECUTION['tools'])):
+            raise ValueError('incomplete reuse execution')
+        for field in ('platform', 'environment'):
+            values = materials.require_keys(execution[field],
+                set(publication.selection.REPORT_EXECUTION[field]), 'reuse execution ' + field)
+            if any(not isinstance(value, str) for value in values.values()):
+                raise ValueError('invalid reuse execution ' + field)
+        if receipt['bundle'] != bundle_hashes(report):
+            raise ValueError('reuse receipt bundle mismatch')
+        value = inputs['report_format']
+        if not isinstance(value, str) or not value:
+            raise ValueError('missing report format')
+        return dict(report_format=value, compatible=value == publication.selection.REPORT_FORMAT)
+    except INVALID_SEED:
+        return dict(report_format='unavailable', compatible=False)
+
+
+def recover_and_reuse(repository, report, output):
+    """Restore and consume a checked seed under the existing private-cache lock."""
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
+    from lean_cache_release import cache_guard
+    # Authored registration failures must precede optional network recovery.
+    capture(repository)
+    local = seed_format(report)
+    try:
+        with cache_guard(repository):
+            checked = seed_format(report)
+            if not checked['compatible']:
+                recovery_environment = os.environ.copy()
+                recovery_environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
+                fetched = subprocess.run(['/bin/bash', str(repository / 'tools/scripts/worktree/lean-cache-publish.sh'),
+                    'fetch', '--mode', 'production', '--refresh-stale', '--writer-owned'],
+                    cwd=repository, env=recovery_environment)
+                report = repository / '.lake/build/stratalint/raw-lean-report.json'
+                checked = seed_format(report)
+                if not checked['compatible']:
+                    raise CacheIncompatible(local['report_format'], checked['report_format'],
+                                            'fetch-unavailable' if fetched.returncode else 'seed-incompatible')
+            # Input differences select Lake's incremental path, not a new cache key.
+            return reuse(repository, report, output)
+    except BlockingIOError as error:
+        raise CacheIncompatible(local['report_format'], 'unavailable', 'cache-busy') from error
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal'))
@@ -195,6 +274,8 @@ def main():
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
+    parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
+                        default='reuse-or-build')
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
     args = parser.parse_args()
@@ -214,7 +295,9 @@ def main():
         if args.diagnostics:
             warn_mismatch(result, sys.stderr)
     else:
-        result = reuse(args.repository, args.report, args.output)
+        result = (recover_and_reuse(args.repository, args.report, args.output)
+                  if args.cache_miss_policy == 'fetch-or-fail'
+                  else reuse(args.repository, args.report, args.output))
         print('LEAN_INSPECTOR_REUSE ' + json.dumps(result, separators=(',', ':')))
         warn_mismatch(result, sys.stdout)
         if result['needs_lake']:
@@ -227,6 +310,9 @@ def main():
 if __name__ == '__main__':
     try:
         raise SystemExit(main())
+    except CacheIncompatible as error:
+        print(str(error), file=sys.stderr)
+        raise SystemExit(4)
     except INVALID_SEED as error:
         print(f'lean-inspector-reuse: {error}', file=sys.stderr)
         raise SystemExit(1)
