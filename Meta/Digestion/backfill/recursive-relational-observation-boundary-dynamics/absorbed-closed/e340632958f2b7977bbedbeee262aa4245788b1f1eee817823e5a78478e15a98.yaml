@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:e340632958f2b7977bbedbeee262aa4245788b1f1eee817823e5a78478e15a98
   normalized_sha256: sha256:e340632958f2b7977bbedbeee262aa4245788b1f1eee817823e5a78478e15a98
 cas_ref: sha256:e340632958f2b7977bbedbeee262aa4245788b1f1eee817823e5a78478e15a98
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Refinement/DoubleExtensionalEvaluationDescent.double_extensional_evaluation_descent
+    target_statement_id: sha256:bae5486602649880e1f8a8ca6d2f2deb936205bcf049c6a821233f7f24d9145d
 receipts:
   unresolved_subitems: []
   chain_atoms:

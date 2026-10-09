@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:abb5d19812bb1507ca81c83072836345971512bb434438bfef8311e83485137b
   normalized_sha256: sha256:abb5d19812bb1507ca81c83072836345971512bb434438bfef8311e83485137b
 cas_ref: sha256:abb5d19812bb1507ca81c83072836345971512bb434438bfef8311e83485137b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/InitializedControllerCapacity.initialized_controller_capacity
+    target_statement_id: sha256:6a149c8708cf2cd4429ee062e653aa241ea86f7d8d9cf24f89fc4a0943afd51d
 receipts:
   unresolved_subitems: []
