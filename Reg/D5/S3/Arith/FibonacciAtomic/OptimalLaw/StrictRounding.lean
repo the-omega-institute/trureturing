@@ -105,7 +105,7 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, 
 
 namespace Grid
 abbrev signature : Signature where
-  Params := ℕ × ℕ
+  Params := Σ _ : ℕ, ℕ
   State := fun _ => ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -114,13 +114,13 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def observation : ∀ (_ : Unit) (_ : ℕ × ℕ), ℝ → Bool :=
+def observation : ∀ (_ : Unit) (_ : Σ _ : ℕ, ℕ), ℝ → Bool :=
   fun _ a x => decide (OnGrid x a.2)
 def actual : Realization signature := realize signature observation (fun e => nomatch e)
 def rejected : Realization signature := realize signature (fun _ _ _ => false) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (x : ℝ) (D E : ℕ), D ≤ E → OnGrid x D → R.readout () (D, E) x = true
+  Law R := ∀ (x : ℝ) (D E : ℕ), D ≤ E → OnGrid x D → R.readout () ⟨D, E⟩ x = true
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -146,7 +146,7 @@ def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAt
       norm_num at F
       subst z
       norm_num at hz
-    refine ⟨(0, 0), 0, 1 / 2, ?_⟩
+    refine ⟨⟨0, 0⟩, 0, 1 / 2, ?_⟩
     change decide (OnGrid 0 0) ≠ decide (OnGrid (1 / 2) 0)
     simp only [good, bad, decide_true, decide_false, ne_eq, Bool.true_eq_false, not_false_eq_true]
 

@@ -12,7 +12,7 @@ noncomputable section
 
 namespace Donor
 abbrev signature : Signature where
-  Params := ℕ × ℕ
+  Params := Σ _ : ℕ, ℕ
   State := fun _ => ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -21,7 +21,7 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def observation : ∀ (_ : Unit) (_ : ℕ × ℕ), ℝ → ℤ :=
+def observation : ∀ (_ : Unit) (_ : Σ _ : ℕ, ℕ), ℝ → ℤ :=
   fun _ a x => ⌊(2 : ℝ) ^ a.2 * (x - 1 / (2 : ℝ) ^ a.1)⌋
 def actual : Realization signature := realize signature observation (fun e => nomatch e)
 def rejected : Realization signature := realize signature (fun _ _ _ => 1) (fun e => nomatch e)
@@ -29,7 +29,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (x : ℝ) (D : ℕ), 1 ≤ D →
     ⌊(2 : ℝ) ^ D * x⌋ = 2 * ⌊(2 : ℝ) ^ (D - 1) * x⌋ + 1 →
-    ∀ d : ℕ, d < D → R.readout () (D, d) x = ⌊(2 : ℝ) ^ d * x⌋
+    ∀ d : ℕ, d < D → R.readout () ⟨D, d⟩ x = ⌊(2 : ℝ) ^ d * x⌋
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have H := h (1 / 2) 1 (by decide) (by norm_num) 0 (by decide)
@@ -43,7 +43,7 @@ def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAt
     rfl, rejected_law⟩, fun i => nomatch i⟩
   dependence := by
     intro i
-    refine ⟨(1, 0), 1 / 2, 3 / 2, ?_⟩
+    refine ⟨⟨1, 0⟩, 1 / 2, 3 / 2, ?_⟩
     norm_num [actual, observation, realize, Realization.readout]
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
