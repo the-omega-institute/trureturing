@@ -33,8 +33,8 @@
 |---|---|
 | 查指定修订的工具文件 / 目录容量余量 | `bash tools/scripts/agent/headroom.sh HEAD` |
 | 提取定理前的节级假设 | `bash tools/scripts/agent/section-context.sh <源文件.md> <定理号>` |
-| Nyx 提问 / 续取已提交任务 | `bash tools/scripts/agent/nyx.sh ask <brief文件> <输出文件>` / `bash tools/scripts/agent/nyx.sh fetch <task-id> <输出文件>` |
-| 查看 Nyx 任务状态 | `bash tools/scripts/agent/nyx.sh status` |
+| Nyx 提问(oracle broker 单次流式调用) | `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>` |
+| 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
 
 ## 1. 权威、本体与不可逆真值 DAG
 
@@ -481,7 +481,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **tests 席只能 codex-cli**:须在 `work_target` 真跑验证;nyxid-oracle 无工作树执行能力,其“跑过什么”一律 `ASSUMED-UNVERIFIED`。
 - **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/设计/研究等推理任务均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
 - **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要交它推理的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。
-- **池名先实测**:`nyxid oracle pool list` 决定 slug,不凭想象。既有读数为 `chatgpt-pro-pool`/`company-chatgpt-pro`;`chatgpt-pro` 不存在、返回 HTTP 403 private,不是可用名保证。
+- **oracle 只走 broker 路线**:`tools/scripts/agent/nyx/nyx.py` 与 sshx 的 oracle runner 同用 NyxID oracle broker——先读池列表,再发一次流式 `chat/completions` 并据流的终态判完成;不调用旧 `nyxid oracle` CLI。池按列表现选在线 worker 最多的 active 池,`nyx.py pools` 查看,`NYX_POOL` 可显式指定;不凭记忆写死 slug。
 - **codex prompt 以文件 stdin 喂入**:`codex exec [flags] < promptfile`,不作位置参数,避免 shell 破坏美元号/反引号/尖括号/引号/换行后造成空 prompt 与无输入挂起。
 - **flight 在飞时 caller 对该 work_target 的读数不作数**:测试可能置树于瞬时变异态。要读须取 sha256 并交回后复读比对,或只读派发前 diff 快照;读数冲突先核自己的采集条件,再判对方。临时快照不按过程档案留存(第 2.10 条)。
 
@@ -691,7 +691,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 **长任务走宿主后台作业机制,不 shell 甩后台**:Claude Code 用 Bash `run_in_background:true`,其他宿主用等价作业/会话句柄。预期超前台预算或时长未知的 本地检查/gate/lean-report/worktree/全量 dotnet test/codex/sshx/CI 等待均适用;Bash 前台 timeout 上限 600s,更大值截断并在 10m 以 143 杀任务。
 一条宿主调用承载真实长任务,内部 wait 全子进程,真实退出码落哨兵,判绿只认它。禁 `nohup … &`、`(…) &`、`setsid … &` 让 launcher 先返回:其 exit 0 不代表任务完成,宿主可能清整进程组;脱离生命周期/通知后 pgrep 也不能判完成。并行开多个宿主作业。
 **例外**:脚本内部并发 `&` 后 wait 收拢合法,但 **& 与 wait 必须在同一条命令**,启动器返回前等完全部子进程,不能事后补 wait。写命令时核“返回时真实任务结束了吗”;对象是程序实际行为,非对 detach 的印象。`seat.sh dispatch` 等席位全生命周期才返回。无宿主完成信号易衍生 sleep 轮询,第 8.7、8.8 条仍适用。
-〔守护:**软+硬投影**·shell 文本可搜,意图不可 lint;完成须给真实哨兵退出码。转录自审须同时判①尾随 & 且同命令无 wait;②已知长任务在前台且无后台选项。已知类含 `seat.sh dispatch`、`nyx.sh ask`、`make {lean,lean-report,本地检查,gate,worktree,pr-open,cover,cover-batch,deposit,emit,ingest,test}`、`dotnet test`。只查①会漏②,运行输出/判词绿也不能证明未违规。匹配限定命令位置(行首、`;`、`&&`、`|`、`$(` 后),先剥 heredoc 体,不整命令豁免,避免散文/源码假阳与体外漏检。`tools/scripts/agent/selfaudit.sh` 可数违规/合法形及按用户指令行号分窗的挂钟,并查第 8.3 条裸 lake;每次反思必跑,只留有用结果不存转录副本(第 2.10 条)〕
+〔守护:**软+硬投影**·shell 文本可搜,意图不可 lint;完成须给真实哨兵退出码。转录自审须同时判①尾随 & 且同命令无 wait;②已知长任务在前台且无后台选项。已知类含 `seat.sh dispatch`、`nyx.py ask`、`make {lean,lean-report,本地检查,gate,worktree,pr-open,cover,cover-batch,deposit,emit,ingest,test}`、`dotnet test`。只查①会漏②,运行输出/判词绿也不能证明未违规。匹配限定命令位置(行首、`;`、`&&`、`|`、`$(` 后),先剥 heredoc 体,不整命令豁免,避免散文/源码假阳与体外漏检。`tools/scripts/agent/selfaudit.sh` 可数违规/合法形及按用户指令行号分窗的挂钟,并查第 8.3 条裸 lake;每次反思必跑,只留有用结果不存转录副本(第 2.10 条)〕
 
 ### 8.7 原生同步等待与外部轮询边界
 
@@ -701,7 +701,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 ### 8.8 完成通知与唯一等待通道
 
 **宿主会主动通知完成时,该通知就是唯一等待通道**:不得再用 `TaskOutput` 或等价阻塞任务读取等同一作业。收到通知后按输出路径读一次是消费产物,允许。判据是完成时本来是否会被叫醒;不会通知的外部事件仍用第 8.7 条 `gh … --watch`、wait、make 等原语。
-*成熟锚*:事件驱动、单等待通道、回调/epoll、收到事件后消费、弃用 API 不因可调而沿用。〔守护:**软+硬投影**·转录可枚举 block=true/timeout 违规;现役自审器 `judge()` 三元组的 (iii-a) 枚举 TaskOutput block=true,(iii-b) 判 Bash 同时含 sleep 与宿主 `.../tasks/*.output` 路径。`--selftest` 13 例含通知后单读/只 sleep 无任务路径/创建后台作业三阴性对照,防过度收紧。器不在任何门,CI 无会话转录,每次反思自审才生效,不称硬门。反例两维为非 sleep 延时、变量间接路径、非 Bash、宿主目录布局变化,以及无人运行;尚未 lint 不豁免第二等待通道〕
+*成熟锚*:事件驱动、单等待通道、回调/epoll、收到事件后消费、弃用 API 不因可调而沿用。〔守护:**软+硬投影**·转录可枚举 block=true/timeout 违规;现役自审器 `judge()` 三元组的 (iii-a) 枚举 TaskOutput block=true,(iii-b) 判 Bash 同时含 sleep 与宿主 `.../tasks/*.output` 路径。`--selftest` 15 例含通知后单读/只 sleep 无任务路径/创建后台作业三阴性对照,防过度收紧。器不在任何门,CI 无会话转录,每次反思自审才生效,不称硬门。反例两维为非 sleep 延时、变量间接路径、非 Bash、宿主目录布局变化,以及无人运行;尚未 lint 不豁免第二等待通道〕
 
 ### 8.9 所有脚本的通用性与可复用工具的仓库居所
 
