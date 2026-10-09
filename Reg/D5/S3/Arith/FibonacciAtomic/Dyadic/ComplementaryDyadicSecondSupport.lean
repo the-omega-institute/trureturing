@@ -82,7 +82,9 @@ def proof_record : Registration arena
 def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Dyadic.ComplementaryDyadicSecondSupport.result)
     (Realization signature) Unit Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Dyadic.ComplementaryDyadicSecondSupport.result
+  unitName := Lean.Name.str
+    `Reg.D5.S3.Arith.FibonacciAtomic.Dyadic.ComplementaryDyadicSecondSupport.result
+    "__information_unit"
   realizationName :=
     `Reg.D5.S3.Arith.FibonacciAtomic.Dyadic.ComplementaryDyadicSecondSupport.proof_record
   realizationSource := none
