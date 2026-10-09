@@ -1752,3 +1752,198 @@ The matched coefficient cycle and canonical $\Phi_k$ reader are supplied by (15.
 The exact conclusions concern only $m=3\gamma$, $k=4\gamma-1$, $\gamma\ge2$, and the full-source phase, value-phase and injective tail-independent targets stated in Theorem 23.2. They sharpen (19.8) on this noncoprime four-phase family. They make no claim for other phase orbit sizes $p$, tail-sensitive targets, other $(k,m)$, arbitrary target prices even in this family, or general GLOBAL compatibility of separately chosen branch strategies. No memory, offline-computation, chronology or cross-reader cost-transport bound follows. The original all-parameter, arbitrary-immutable-INITIAL-target exact-fee goal retains its other obligations; this section makes no full-goal completion claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Seven-phase exact INITIAL prices and a one-block GLOBAL surcharge
+
+**定义 24.1（Seven-phase source, original operations and actual fee）。** Retain the matched original reader of (15.1)–(15.4), the actual joint histories of Lemma 15.1, and the entire immutable INITIAL, endpoint, stopping and fee contract of Definition 18.1. Fix
+
+$$
+m=4,\qquad k=6,\qquad T=k+1=7,\qquad
+g=\gcd(4,7)=1,\qquad p=7,\qquad P=\mathbb Z/7\mathbb Z.
+\tag{24.1}
+$$
+
+The order $k=6$ stays fixed. Bits are read in increasing original weight order, with $G_i=2^i$ for $0\le i<6$ and $G_i=\sum_{h=1}^6G_{i-h}$ for $i\ge6$. The matched value of a legal history $w$ is $V_6(w)\bmod2$, and the supplied coefficient law is
+
+$$
+c_i=G_i\bmod2=\mathbf1_{\{0,-1\}}(i\bmod7).
+\tag{24.2}
+$$
+
+The two original alphabets are separately retained:
+
+$$
+\mathcal A_{\rm all}=\{0,1\}^4,\qquad
+\mathcal A_{\rm loc}=\{B\in\{0,1\}^4:B\text{ internally avoids }1^6\}
+=\{0,1\}^4.
+\tag{24.3}
+$$
+
+Their equality does not remove cross-block rejection. The source consists of every actual finite complete-block history in the chosen alphabet, including already rejected histories, with unknown history and length. Its immutable INITIAL record lies in
+
+$$
+Q=(\mathbb F_2\times\mathbb Z/7\mathbb Z\times\{0,1,2,3,4,5\})\sqcup\{\bot\},
+\qquad \theta=|w|\bmod7.
+\tag{24.4}
+$$
+
+Every live triple and $\bot$ are jointly attainable by Lemma 15.1. A zero sends $(v,\theta,s)$ to $(v,\theta+1,0)$; a one sends it to $(v+c_\theta,\theta+1,s+1)$ when $s<5$, and to $\bot$ when $s=5$. Rejection is independent of phase and value and is absorbing for both bits. A complete action executes all four bit updates.
+
+The INITIAL value $v$ or distinct rejection symbol $\bot$ is free. Later observations are only actual complete-block endpoints. Each emitted four-bit block costs one, including clearing, waiting, padding and every remaining bit after a rejection within that block. There is no reset, copy, interior observation, hidden INITIAL clock or observation of an unexecuted branch. A controller may remember its own inputs, endpoint observations and emitted block count; neither unknown INITIAL length nor other archives are supplied. Offline computation and this memory are outside the block fee.
+
+For an immutable target $f:Q\to Y$, $C_{\rm ad}(f)$ minimizes the worst number of actually emitted complete blocks among successful adaptive protocols, each actual execution stopping finitely with $f(q_{\rm INITIAL})$. The fee is $+\infty$ if no successful protocol has a uniform finite worst bound. $C_{\rm pre}(f)$ additionally requires one preset literal stream: at the same emitted block number, all live archives and both free-value fibres use the same word. Stopping depends only on the source's own actual archive. Initial bottom stops freely with its fixed target label.
+
+**定理 24.2（Exact three/four-block phase and value-phase prices）。** Under the entire contract of Definition 24.1, separately for either original alphabet, let
+
+$$
+f_{\rm phase}(v,\theta,s)=\theta,\qquad
+f_{\rm pair}(v,\theta,s)=(v,\theta),
+\tag{24.5}
+$$
+
+with an arbitrary fixed bottom label for each target, allowed to coincide with a live label. For either target,
+
+$$
+\boxed{C_{\rm ad}=3,\qquad C_{\rm pre}=4.}
+\tag{24.6}
+$$
+
+Thus the exact worst actually emitted bit fees are respectively $12$ and $16$. The same conclusions hold for an injective relabeling of either live target: $f(v,\theta,s)=H(\theta)$ with $H:\mathbb Z/7\mathbb Z\to Y$ injective, or $f(v,\theta,s)=F(v,\theta)$ with $F:\mathbb F_2\times\mathbb Z/7\mathbb Z\to Y$ injective, again with any fixed bottom label.
+
+Proof. All words below are written in actual read order. For a live execution, let $y_t$ be its observed value after $t$ blocks, with $y_0=v$, and use the endpoint increments $d_t=y_{t+1}\oplus y_t$. Put $j=-\theta_{\rm INITIAL}\bmod7$ with representative $0\le j\le6$. For an arbitrary literal word $B=abcd$, define its charge row at a local negative phase $\ell$ by
+
+$$
+\begin{array}{c|ccccccc}
+\ell&0&1&2&3&4&5&6\\ \hline
+R_\ell(B)&a&a\oplus b&b\oplus c&c\oplus d&d&0&0.
+\end{array}
+\tag{24.7}
+$$
+
+Indeed the only possibly charged offsets are $\ell-1,\ell\pmod7$, and only offsets $0,1,2,3$ belong to this complete block. At actual block index $t$, starting from zero, the local coordinate is $\ell=j-4t\pmod7$. On a successful action,
+
+$$
+d_t=R_{j-4t}(B),\qquad
+\bigoplus_{\ell=0}^6R_\ell(B)=0.
+\tag{24.8}
+$$
+
+The parity identity holds for every four-bit word, with no restriction to a chosen safe subalphabet. It is a coefficient identity; it is not an extra observation available to a controller.
+
+For adaptive attainment, issue root $0101$. On $d_0=1$, issue $1111$, then $0110$. On $d_0=0$, issue $0100$; stop if $d_1=0$, and otherwise issue $0001$. The full endpoint decoder is
+
+| INITIAL coordinate $j$ | Actually emitted adaptive words | Increment code | Stop after blocks |
+| --- | --- | --- | --- |
+| $0$ | $0101\mid0100$ | $00$ | $2$ |
+| $1$ | $0101\mid1111\mid0110$ | $110$ | $3$ |
+| $2$ | $0101\mid1111\mid0110$ | $101$ | $3$ |
+| $3$ | $0101\mid1111\mid0110$ | $100$ | $3$ |
+| $4$ | $0101\mid1111\mid0110$ | $111$ | $3$ |
+| $5$ | $0101\mid0100\mid0001$ | $011$ | $3$ |
+| $6$ | $0101\mid0100\mid0001$ | $010$ | $3$ |
+
+These rows follow by applying (24.7) at the actual displacements $0,4,8\equiv1\pmod7$. The root has positive set $\{1,2,3,4\}$ and zero set $\{0,5,6\}$. On the latter set $0100$ singles out $j=0$ by zero response; $0001$ then has response one at $j=5$ and zero at $j=6$. On the former set the two further increments are respectively $10,01,00,11$. Thus every stopping code determines $j$.
+
+The first actual root zero safely clears every inherited legal tail during a paid block, losing no distinction for these tail-independent targets. Root $0101$ ends in tail one. The only consecutive all-one action is the second word $1111$, so that seam gives a run of exactly five, below $k=6$. The following $0110$ begins zero and ends zero. The other second word $0100$ begins and ends zero, and its possible successor $0001$ is also safe. No legal INITIAL source rejects. Return $-j\bmod7$ for phase, $(y_0,-j\bmod7)$ for pair, or the specified injective relabeling; $y_0$ is the remembered INITIAL value. Initial bottom returns its own label freely. Both free-value fibres use this same rule on their own increments. Every bit of each emitted word is paid, and actual sources with $j\ne0$ pay three blocks. Hence $C_{\rm ad}\le3$.
+
+For GLOBAL attainment, preselect the one literal stream
+
+$$
+0101\mid1001\mid0110\mid1000,
+\tag{24.9}
+$$
+
+with any fixed all-zero extension after it. The archive decoder and actual stops are
+
+| INITIAL coordinate $j$ | Increment code acquired before stopping | Stop after blocks |
+| --- | --- | --- |
+| $0$ | $0100$ | $4$ |
+| $1$ | $110$ | $3$ |
+| $2$ | $101$ | $3$ |
+| $3$ | $100$ | $3$ |
+| $4$ | $111$ | $3$ |
+| $5$ | $0101$ | $4$ |
+| $6$ | $00$ | $2$ |
+
+The second word's increments on $j=0,\ldots,6$ are $(1,1,0,0,1,1,0)$; the third word separates the positive-root pairs and has zero increment on $j=0,5$. The fourth word, at displacement $12\equiv5\pmod7$, has increments zero and one respectively on this last pair. Formula (24.7) proves every listed code. The codes are distinct and prefix-free at their stopping endpoints, so the same INITIAL decoding as above is valid without reading any stopped archive's later outputs.
+
+The first root zero is safe for all inherited tails. The root/second-word seam has only two consecutive ones; $1001$ then ends in tail one, $0110$ starts zero and ends zero, and $1000$ is safe after it. Thus every live execution is legal. At each emitted block number every still-running archive and both free-value fibres receive the identical word in (24.9). A source stopping after two or three blocks emits and observes no later word. Sources $j=0,5$ actually emit all four words, proving the worst fee is at most four, including all padding bits. Hence $C_{\rm pre}\le4$.
+
+For the adaptive lower bound, fix either free value $v$. Seven explicit actual tail-zero histories are
+
+$$
+w_j=v\,0^{N_j-1},\qquad
+(N_0,N_1,N_2,N_3,N_4,N_5,N_6)=(28,20,12,4,24,16,8).
+\tag{24.10}
+$$
+
+Each length is a positive multiple of four, each word is legal in both original alphabets, and $N_j\equiv-j\pmod7$. Since $c_0=1$, its INITIAL record is $(v,-j,0)$. These lengths are source witnesses, not observations or charged continuation supplied to the controller. Every stated target has seven distinct labels on this fixed-value subset.
+
+Within any common actual archive of this subset, the literal inputs and current tails are identical. A next complete word either rejects all candidates in that archive or rejects none, because rejection depends only on the tail and literal input. Uniform rejection cannot distinguish two phase labels and remains absorbing; it gives no third useful branch. A successful nonterminal action has only two endpoint values. Early stopping cannot split a common archive. Therefore a depth-two successful adaptive tree has at most $2^2=4$ distinct phase leaves, less than seven. This is the fixed-value, common-tail argument of Corollary 19.3, applied to all literal adaptive actions. It proves $C_{\rm ad}\ge3$.
+
+It remains to exclude every GLOBAL protocol of worst fee at most three. Work in the same fixed-value fibre, retaining the full actual source for the root condition. No phase can stop freely in this fibre. A root starting with one would immediately reject the actual sources $(v,\theta,5)$ for all seven phases. They would have the same endpoint archive forever and different required labels. Thus every successful root starts zero, not merely the proposed upper streams.
+
+Write that root $0bcd$. Its positive response set is contained in $\{1,2,3,4\}$, and (24.8) makes its size even. After one block at most two binary endpoints remain, so each root child may contain at most four of the tail-zero representatives (24.10). The zero child already contains $j=0,5,6$. If the positive set had size zero or two, the zero child would contain seven or five representatives and could not finish by depth three. It must have size four. The four equations $b=b\oplus c=c\oplus d=d=1$ force
+
+$$
+B_0=0101,\qquad A=\{1,2,3,4\},\qquad Z=\{0,5,6\}.
+\tag{24.11}
+$$
+
+Both children are nonconstant, so both execute the same second word $B_1=abcd$. After the root every live source has tail one; even $1111$ raises it only to five, so every second word is safe. At displacement four, the second response on $A$ is
+
+$$
+\begin{array}{c|cccc}
+j&1&2&3&4\\ \hline
+d_1&d&0&0&a.
+\end{array}
+\tag{24.12}
+$$
+
+Only one endpoint remains. Each second child of $A$ must therefore have at most two labels; since $j=2,3$ already share zero, necessarily $a=d=1$. Its two surviving pairs are exactly $\{2,3\}$ and $\{1,4\}$. On $Z$, the same word $1bc1$ gives
+
+$$
+(d_1(0),d_1(5),d_1(6))=(c\oplus1,1\oplus b,b\oplus c).
+\tag{24.13}
+$$
+
+These three responses have XOR zero. They cannot be all zero, since a three-label child cannot finish in one binary endpoint. The only remaining second words and live pairs are
+
+| $(b,c)$ | Common second word | Two-label child of $Z$ | Singleton child of $Z$ |
+| --- | --- | --- | --- |
+| $(0,0)$ | $1001$ | $\{0,5\}$ | $\{6\}$ |
+| $(0,1)$ | $1011$ | $\{5,6\}$ | $\{0\}$ |
+| $(1,0)$ | $1101$ | $\{0,6\}$ | $\{5\}$ |
+
+The choice $(1,1)$ gives $1111$ and leaves all three members of $Z$ together, already impossible. Singleton children may stop, but the two pairs of $A$ and the remaining pair of $Z$ must all execute the same third word. Their common tail is determined by the root and second word. Any rejecting third action is uniform on these candidates and cannot distinguish a pair, so a successful final word must supply different scalar endpoints within every pair.
+
+Write the arbitrary common third word $B_2=efh\ell$. Its displacement is $8\equiv1\pmod7$, so its charge coefficients in INITIAL coordinates are
+
+$$
+\begin{array}{c|ccccccc}
+j&0&1&2&3&4&5&6\\ \hline
+r_j&0&e&e\oplus f&f\oplus h&h\oplus\ell&\ell&0.
+\end{array}
+\qquad \bigoplus_{j=0}^6r_j=0.
+\tag{24.14}
+$$
+
+For second word $1101$, the pair $\{0,6\}$ has identical zero final coefficients and cannot split. For $1001$ or $1011$, the three live pairs partition six coordinates, and the remaining singleton coordinate is respectively six or zero, whose coefficient in (24.14) is identically zero. Splitting each pair requires the XOR within each pair to be one. Their total XOR is consequently $1\oplus1\oplus1=1$, contradicting the even parity in (24.14). This identity uses no observation of a stopped singleton: its coefficient is identically zero, and the contradiction constrains the six still-live coordinates of one literal word.
+
+Thus no common third word works. This lower bound allows all four-bit words, every actual stopping decision, both endpoint values and absorption; it imposes no gratuitous start-zero or end-zero restriction after the forced root. Other INITIAL tails in the full prior cannot remove the seven representatives or their distinct labels. Other free-value fibres cannot repair the failure in this fixed fibre, and GLOBAL may not assign different final words to its live archives. Hence $C_{\rm pre}\ge4$. Together with the two attainments and the adaptive lower bound, this proves (24.6), its bit-fee conversion and both injective relabeling classes. $\square$
+
+### 24.3 Falsifiers under the unchanged source and operation contract
+
+A legal inherited tail that rejects on an actually selected upper path, a seam reaching six ones, a mismatch with (24.7) or either decoder table, or two different required INITIAL labels with the same stopping archive falsifies the corresponding upper witness. So does a need for an interior observation, hidden INITIAL length, borrowed archive, different words at the same GLOBAL block number or an unpaid emitted block. Failure of a displayed witness alone does not exclude another witness at that fee.
+
+A successful original adaptive protocol on all of (24.4) with worst fee at most two falsifies the adaptive lower bound; it must distinguish the seven actual histories (24.10) with the stated free observation and at most two paid endpoints. A successful original GLOBAL stream on all of (24.4) with worst fee at most three falsifies the preset lower bound; it must satisfy the root condition, the second-word cases and simultaneous pair splitting by one actual final word. A pair of different phases selectively rejecting from one common tail and literal word would falsify the rejection premise used in both lower bounds. An earlier exact theorem with these same sources, targets, original actions, observations and fees would refute treating (24.6) as an uncovered repository increment, rather than refuting its numerical values.
+
+### 24.4 Sources, exact covered interval and residual scope
+
+The matched coefficient law and original $\Phi_6$ reader are credited to Section 15.1 and the [minimal modular observer, Section 13 and Theorem 14.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md). Lemma 15.1 and (15.4) supply the whole-history joint records and original updates. Definition 18.1 supplies the immutable INITIAL, endpoint, absorption, GLOBAL and fee contract; the [irreversible target-acquisition volume, Definitions 1.2 and 2.1, Convention 1.3 and Lemmas 4.2–4.3](KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md) supplies the corresponding original experiment and first-zero interface. The adaptive binary-leaf method is credited reuse of Corollary 19.3, not a new general information bound. The literal adaptive and GLOBAL decoders and the forced-root three-pair compatibility contradiction are `repo-derived` ordinary mathematical proofs. They make no Lean/kernel, axiom, freeze, coverage or exhaustive novelty and priority claim.
+
+For $p=7$, (18.7) gives $L=5$ and $H=6$, so the existing phase interval (19.8) is $3\le C_{\rm ad}\le C_{\rm pre}\le6$. Theorem 24.2 fixes its separate minima at three and four on the original full phase target, and also prices the value-phase target. Theorem 22.1 requires $m=2^r$ with $r\ge4$; it does not supply $m=4$ or authorize substituting $r=2$. Theorem 23.2 has $p=4$ and likewise does not supply (24.1). The [coprime phase-target volume, Theorems 3.1–6.1](KBONACCI_COPRIME_PHASE_TARGET_COST.md) gives unit-width, binary width-two, first-window binary and nonzero singleton laws at their stated hypotheses; those credited laws do not price this full seven-label phase target with one GLOBAL stream.
+
+The fee difference here comes from one common last-word obligation across three actual sibling pairs in a single fixed-value fibre; it does not require different free-value target tables. The GLOBAL upper stream is common to both free-value fibres, and the adaptive decoder retains the free INITIAL value. This establishes only the full-source $(m,k)=(4,6)$ phase, value-phase and stated injective tail-independent classes. Other orbit sizes, other parameters, arbitrary tail-sensitive targets, arbitrary target prices even at $(4,6)$, and general compatibility of optimal sibling streams retain their exact-fee obligations except where existing restricted results supply them. In particular, no $r=3$ extension, memory or offline-computation optimum, chronology interface or cost transport follows. The original objective remains exact separate adaptive and one-GLOBAL-stream fees for all $k\ge2,m\ge1$, both original alphabets and every attainable immutable INITIAL target; this section does not complete that objective.
+
+## 追加锚（本行以下为增补区）
