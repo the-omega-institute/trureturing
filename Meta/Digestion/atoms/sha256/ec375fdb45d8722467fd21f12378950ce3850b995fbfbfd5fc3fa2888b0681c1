@@ -1,0 +1,34 @@
+**证明。** (i) $B_1=\{0,1\}$，$u(0)=1$，$u(1)=0$，$Z_1=1+\lambda$，故所求为 $\lambda/(1+\lambda)^2\le\tfrac14$（因 $(1+\lambda)^2\ge4\lambda$），等号仅在 $\lambda=1$。
+
+(ii) $B_2=\{00,10,01\}$，只有 $u(00)=2$ 非零，$Z_2=1+2\lambda$，所求为 $2\lambda/\bigl((1+\lambda)(1+2\lambda)\bigr)$。由 $1+2\lambda^2\ge2\sqrt2\,\lambda$（等号仅在 $\lambda=1/\sqrt2$），$(1+\lambda)(1+2\lambda)=1+3\lambda+2\lambda^2\ge(3+2\sqrt2)\lambda$，故所求至多 $2/(3+2\sqrt2)=2(3-2\sqrt2)=\kappa_2$，并在 $\lambda=1/\sqrt2$ 取等。
+
+(iii) $B_3=\{000,100,010,001,101\}$ 的 $u$ 值依次为 $3,1,0,1,0$，$k$ 值依次为 $0,1,1,1,2$，故 $Z_3=1+3\lambda+\lambda^2$，所求为 $\psi(\lambda)=\lambda(3+2\lambda)/\bigl((1+\lambda)(1+3\lambda+\lambda^2)\bigr)$。令 $\eta=\tfrac{507}{1000}$，
+
+$$
+P(\lambda)=\eta(1+\lambda)(1+3\lambda+\lambda^2)-\lambda(3+2\lambda)=\eta\lambda^3+(4\eta-2)\lambda^2+(4\eta-3)\lambda+\eta.
+$$
+
+取 $\xi=\tfrac{39}{50}$，由三项算术–几何平均，$\lambda^3+2\xi^3\ge3\xi^2\lambda$（$\lambda\ge0$），于是 $P(\lambda)\ge q_2\lambda^2+q_1\lambda+q_0$，其中
+
+$$
+q_2=4\eta-2=\frac7{250},\qquad q_1=3\eta\xi^2+4\eta-3=-\frac{116559}{2500000},\qquad q_0=\eta-2\eta\xi^3=\frac{1612767}{62500000},
+$$
+
+且 $q_1^2-4q_2q_0=-\frac{4476989919}{6250000000000}<0$、$q_2>0$，故 $P(\lambda)>0$，即 $\psi(\lambda)<\eta$ 对一切 $\lambda>0$ 成立，$H_3\le\eta$。为得到严格不等号，再由 $\psi(\lambda)\to0$（$\lambda\to0$ 或 $\lambda\to\infty$）与连续性，$\psi$ 在 $(0,\infty)$ 上取到最大值，故 $H_3<\eta$。另一方面，取 $\Gamma_3$ 上的测度
+
+$$
+\mu(000)=\frac{249}{1000},\quad \mu(100)=\mu(001)=\frac{221}{1000},\quad \mu(101)=\frac{213}{1000},\quad \mu(010)=\frac{96}{1000}.
+$$
+
+$\Gamma_3$ 的边为 $000\text{–}100$、$000\text{–}001$、$000\text{–}010$、$100\text{–}101$、$001\text{–}101$，所以
+
+$$
+\Phi_{\Gamma_3}(\mu)=\frac1{1000}\Bigl(\frac{55029}{235}+\frac{7968}{115}+\frac{47073}{217}\Bigr)=\frac{76293117}{146610625}=0.52037\ldots\ge\frac{13}{25},
+$$
+
+由定理 3.2(iii) 得 $\kappa_3\ge\tfrac{13}{25}$。若某个硬核测度是最大点，则 $H_3\ge\kappa_3\ge\tfrac{13}{25}$，矛盾。
+
+(iv) 由定理 6.2，$n=1$ 时最大负载为 $2t^2=2(3-2\sqrt2)>\tfrac14=\kappa_1$；$n=2$ 时最大负载为 $2t^2=\kappa_2$；$n=3$ 时词 $101$ 的负载为 $4t^2=4(3-2\sqrt2)$，而母卷式（2.7）给出 $\kappa_3<\tfrac9{16}$，且 $4(3-2\sqrt2)>\tfrac9{16}$ 等价于 $\tfrac{183}{16}>8\sqrt2$，即 $183^2=33489>32768=64\cdot512$。
+
+命题 9.3(iii) 是有限 $n$ 的边界现象，它不判定 $c_\star$ 是否等于 $g(r_\star)$。
+

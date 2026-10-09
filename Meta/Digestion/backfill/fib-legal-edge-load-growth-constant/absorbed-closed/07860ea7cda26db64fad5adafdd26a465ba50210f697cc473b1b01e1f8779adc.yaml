@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07860ea7cda26db64fad5adafdd26a465ba50210f697cc473b1b01e1f8779adc
+  normalized_sha256: sha256:07860ea7cda26db64fad5adafdd26a465ba50210f697cc473b1b01e1f8779adc
+cas_ref: sha256:07860ea7cda26db64fad5adafdd26a465ba50210f697cc473b1b01e1f8779adc
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/LegalWordDegree.degree_eq_flippable_add_occupation
+    target_statement_id: sha256:88c9cf92c6e4ae5440e30aee7fd18ec38084c5fce1d2fdeade6898beba782a46
+  - gid: D5/S3/Combinatorics/Graph/LegalWordDegree.flippable_bound_and_equality
+    target_statement_id: sha256:48666b1660fc4cf55af9055d15b6bb9c4530825b592662ee1968a437bd7a958a
+receipts:
+  unresolved_subitems: []
