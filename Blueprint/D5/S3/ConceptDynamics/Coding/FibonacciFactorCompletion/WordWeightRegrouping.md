@@ -78,7 +78,31 @@ $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real, z \in Real,\; \
 
 The original factor power series converges exactly when the original weighted adjacency has spectral radius below one. The result follows through the complete actual path regrouping and the existing spectral path-series supplier, without a supplied growth identity.
 
-**Theorem 1.7 (factor rate nonneg).**
+**Definition 1.7 (factorLogRate).**
+
+$$\forall X \in \operatorname{Set}\left(Int \to CuLetter\right), T \in Nat,\; \operatorname{factorLogRate}\left(X, T\right) = \operatorname{divide}\left(\operatorname{logb}\left(2, \operatorname{toReal}\left(\operatorname{max}\left(1, \operatorname{factorCount}\left(X, T\right)\right)\right)\right), \operatorname{toReal}\left(T\right)\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.factorLogRate` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The logarithmic quotient uses the max-one count at the original total weight. Its real value at weight zero is zero.
+
+**Theorem 1.8 (factor log rate bounds).**
+
+$$\forall X \in \operatorname{Set}\left(Int \to CuLetter\right),\; \left(\forall T \in Nat,\; \operatorname{le}\left(0, \operatorname{factorLogRate}\left(X, T\right)\right)\right) \land \operatorname{IsBoundedUnder}\left(le, atTop, \left(\operatorname{factorLogRate}\left(X, T\right)\right)_{T \in Nat}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.factor_log_rate_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every quotient is nonnegative. The finite dictionary bound by three to T plus one bounds the quotients eventually by twice log base two of three, including sparse weights and empty languages.
+
+**Theorem 1.9 (factor rate nonneg).**
 
 $$\forall X \in \operatorname{Set}\left(Int \to CuLetter\right),\; \operatorname{le}\left(0, \operatorname{weightedFactorRate}\left(X\right)\right)$$
 
@@ -90,7 +114,7 @@ $$\forall X \in \operatorname{Set}\left(Int \to CuLetter\right),\; \operatorname
 
 For every bilateral factor language, the max-one logarithmic rates are nonnegative and bounded above. Their real upper limit is therefore nonnegative, including empty languages and unsupported weights. This bound ensures that rate comparison uses positive convergence exponents.
 
-**Theorem 1.8 (factor rate convergence).**
+**Theorem 1.10 (factor rate convergence).**
 
 $$\forall X \in \operatorname{Set}\left(Int \to CuLetter\right), s \in Real,\; \operatorname{lt}\left(0, s\right) \Rightarrow \left(\left(\operatorname{lt}\left(\operatorname{weightedFactorRate}\left(X\right), s\right) \Rightarrow \operatorname{Summable}\left(\left(\operatorname{multiply}\left(\operatorname{toReal}\left(\operatorname{factorCount}\left(X, T\right)\right), \operatorname{power}\left(\operatorname{power}\left(2, \operatorname{negate}\left(s\right)\right), T\right)\right)\right)_{T \in Nat}\right)\right) \land \left(\operatorname{Summable}\left(\left(\operatorname{multiply}\left(\operatorname{toReal}\left(\operatorname{factorCount}\left(X, T\right)\right), \operatorname{power}\left(\operatorname{power}\left(2, \operatorname{negate}\left(s\right)\right), T\right)\right)\right)_{T \in Nat}\right) \Rightarrow \operatorname{le}\left(\operatorname{weightedFactorRate}\left(X\right), s\right)\right)\right)$$
 
@@ -102,7 +126,7 @@ $$\forall X \in \operatorname{Set}\left(Int \to CuLetter\right), s \in Real,\; \
 
 For every bilateral factor language and every positive real s, the original max-one limsup rate below s implies convergence at z equal to two to minus s, and convergence implies that the rate is at most s. The forward proof uses an eventual geometric majorant strictly between the rate and s. The reverse proof uses terms tending to zero and keeps the max-one convention, so unsupported sparse weights cause no logarithm of zero. No claim about convergence exactly at a generic rate is made.
 
-**Theorem 1.9 (original weighted rate abscissa).**
+**Theorem 1.11 (original weighted rate abscissa).**
 
 $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \left(\operatorname{lt}\left(0, K\right) \land \operatorname{le}\left(K, n\right)\right) \Rightarrow \operatorname{weightedFactorRate}\left(\operatorname{MemoryLanguage}\left(side, n, K, d\right)\right) = \operatorname{sInf}\left(\operatorname{setOf}\left(\left(\operatorname{lt}\left(0, s\right) \land \operatorname{lt}\left(\operatorname{weightedRadius}\left(side, n, K, d, \operatorname{power}\left(2, \operatorname{negate}\left(s\right)\right)\right), 1\right)\right)_{s \in Real}\right)\right)$$
 
@@ -123,6 +147,8 @@ InteriorRoot identifies this abscissa with the unique interior spectral root for
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.actual_weight_regrouping`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.core_path_witness_dictionary_card`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.core_path_witness_dictionary_equiv`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.factorLogRate`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.factor_log_rate_bounds`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.factor_rate_convergence`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.factor_rate_nonneg`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.original_factor_series_boundary`

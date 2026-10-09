@@ -23,7 +23,6 @@ internal sealed class ActualCountRateBridgeDocument : IScribeDocumentDefinition
     private static Formula Lists => List(Ret);
     private static Formula Word => List(I("CuLetter"));
     private static Formula Fn(Formula a, Formula b) => new Formula.TypeArrow(a,b);
-    private static Formula Config => Fn(I("Int"),I("CuLetter"));
     private static Formula Add(Formula a, Formula b) => Call("add",a,b);
     private static Formula Sub(Formula a, Formula b) => Call("subtract",a,b);
     private static Formula Mul(Formula a, Formula b) => Call("multiply",a,b);
@@ -35,7 +34,7 @@ internal sealed class ActualCountRateBridgeDocument : IScribeDocumentDefinition
     private static Formula Val(Formula a) => Call("val",a);
     private static Formula Field(string f, Formula a) => Call(f,a);
     private static Formula R(Formula a) => Call("toReal",a);
-    private static Formula Lam(string n, Formula t, Formula p) => new Formula.Sequence(p,I(n),t);
+    private static Formula Lam(string n, Formula t, Formula p) => F.Seq(Open, I(n), Sp, Colon, Sp, t, Sp, Mapsto, Sp, p, Close);
     private static Formula If(Formula p, Formula a, Formula b) => Call("ifThenElse",p,a,b);
     private static Formula Append(Formula a, Formula b) => Call("append",a,b);
     private static Formula Cons(Formula a, Formula b) => Call("cons",a,b);
@@ -69,7 +68,9 @@ internal sealed class ActualCountRateBridgeDocument : IScribeDocumentDefinition
     private static Formula Budget => And(Le(F.D(2),I("K")),
         Lt(Sub(I("lam"),Mul(Mul(Pow(I("g"),F.D(2)),Pow(I("chi"),I("K"))),HS)),I("b")),
         Lt(I("b"),Sub(I("lam"),Mul(Mul(Pow(I("g"),F.D(2)),Pow(I("chi"),I("K"))),Div(AS,Sub(F.D(1),Mul(I("rho"),Pow(I("chi"),I("K")))))))));
-    private static Formula Base(Formula p) => All(Imp(Budget,p),B("o",I("Ownership")),B("b",Real),B("K",Nat));
+    private static Formula Base(Formula p, bool namedOwnership=true) => namedOwnership
+        ? All(Imp(Budget,p),B("o",I("Ownership")),B("b",Real),B("K",Nat))
+        : Fn(I("Ownership"),All(Imp(Budget,p),B("b",Real),B("K",Nat)));
     private static Formula Mathematical(Formula p, params Formula.BoundVariable[] extra) =>
         All(p,[B("model",Model),B("K",Nat),B("d",Real),B("strict",Bool),..extra]);
     private static Formula OneCap(Formula p, params Formula.BoundVariable[] extra) => Mathematical(Imp(Le(F.D(1),I("K")),p),extra);
@@ -145,10 +146,10 @@ internal sealed class ActualCountRateBridgeDocument : IScribeDocumentDefinition
         Node("actual_fixed_shift_rate",OneCap(And(Bounded(Lam("N",Nat,Shifted(I("N")))),
             Equal(Limsup(Lam("N",Nat,Shifted(I("N")))),Rate(I("model"),I("d"),I("strict")))),B("C",Nat)),
             "Translation by a fixed natural weight preserves the upper limit. The changed denominator multiplies a bounded nonnegative sequence by (N plus C) divided by N, which tends to one. No positivity of the rate or support at every weight is required."),
-        Node("actual_rates_equal",Base(All(Equal(Rate(I("src"),D,I("false")),Rate(I("dst"),D,I("true"))),B("src",Model),B("dst",Model))),
-            "Both directions of reset insertion, together with strict inclusion in weak and the proved fixed-shift formula, identify both starts and flags."),
-        Node("actual_auxiliary_rate_bridge",Base(All(Equal(Rate(I("model"),D,I("strict")),FRate(D)),B("model",Model),B("strict",Bool))),
-            "The lower comparison is the actual-to-factor injection. For the upper comparison, the two shifted strict counts and one are bounded by three times their max-one maximum. The normalized extra logarithm tends to zero, and both shifted upper limits equal the strict actual rate."),
+        Node("actual_rates_equal",Base(All(Equal(Rate(I("src"),D,I("false")),Rate(I("dst"),D,I("true"))),B("src",Model),B("dst",Model)),false),
+            "Both directions of reset insertion, together with strict inclusion in weak and the proved fixed-shift formula, identify both starts and flags. Ownership is arbitrary and does not enter these rates or the budget inequalities."),
+        Node("actual_auxiliary_rate_bridge",Base(All(Equal(Rate(I("model"),D,I("strict")),FRate(D)),B("model",Model),B("strict",Bool)),false),
+            "The lower comparison is the actual-to-factor injection. For the upper comparison, the two shifted strict counts and one are bounded by three times their max-one maximum. The normalized extra logarithm tends to zero, and both shifted upper limits equal the strict actual rate. Ownership is arbitrary and does not enter either rate or the budget inequalities."),
         Node("eta_b",All(Equal(Eta,Rate(I("original"),D,I("false"))),B("K",Nat),B("b",Real)),
             "The canonical value selects the weak original-start expression of definition 62.8. The rate bridge proves independence of this selection.",DescribeRole.Definition),
         Node("contractStrict",All(Equal(Flag,If(Equal(I("contract"),I("closed")),Call("boolNot",Call("apply",I("o"),F.D(0))),I("true"))),B("o",I("Ownership")),B("contract",I("Contract"))),

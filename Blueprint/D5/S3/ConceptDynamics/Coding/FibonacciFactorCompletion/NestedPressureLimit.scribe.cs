@@ -109,7 +109,7 @@ internal sealed class NestedPressureLimitDocument : IScribeDocumentDefinition
             Call("Antitone", Lam("n", Nat, Rate(Upper(I("n"))))),
             Limit(Lam("n", Nat, Rate(Upper(I("n")))), Rate(Auxiliary)))), B("K", Nat), B("d", Real)),
             "Apply the nested result to Y j equal to MemoryLanguage upper (K+j) K d. The original upper-memory intersection is exactly AuxiliaryLanguage K d. Removing the finite initial segment gives the upper rate limit along every n at least K."),
-        Node("original_upper_root_limit", All(Imp(Budget, Ex(And(RootProperties,
+        Node("original_upper_root_limit", Fn(I("Ownership"), All(Imp(Budget, Ex(And(RootProperties,
             All(Imp(LeqOf(I("K"), I("n")), And(LeqOf(GammaOf(I("lower"), I("n")), Eta),
                 LeqOf(Eta, GammaOf(I("upper"), I("n"))))), B("n", Nat)),
             Call("MonotoneOn", Lam("n", Nat, GammaOf(I("lower"), I("n"))), Call("Ici", I("K"))),
@@ -117,6 +117,6 @@ internal sealed class NestedPressureLimitDocument : IScribeDocumentDefinition
             Limit(Lam("n", Nat, GammaOf(I("upper"), I("n"))), Eta),
             All(Equal(Call("actualRate", I("model"), I("K"), BudgetD, I("strict")), Eta),
                 B("model", I("Model")), B("strict", I("Bool")))), B("roots", Fn(I("MemorySide"), Fn(Nat, Real))))),
-            B("o", I("Ownership")), B("b", Real), B("K", Nat)),
+            B("b", Real), B("K", Nat))),
             "Under both original source-budget inequalities and K at least two, the exact spectral root families retain their radius-one equations, rate identities, sandwich and monotonicity on n at least K. Their upper logarithmic rates converge downward to the same eta_b supplied by the actual count bridge. This eta_b is also the actual rate for each source model and each strict or weak guard flag. The conclusion holds for every ownership assignment."))));
 }

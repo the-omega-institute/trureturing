@@ -615,7 +615,8 @@ private theorem full_even_normalized_limits (o : Ownership) (b : ℝ) (K : ℕ) 
       Tendsto (fun v : ℕ => actualLogRate model K ((lam - b) / g ^ 2 / chi ^ K) strict (2 * v))
         atTop (𝓝 (eta_b K b)) := by
   let d := (lam - b) / g ^ 2 / chi ^ K
-  obtain ⟨R, hr, floor, complete⟩ := same_reset_all_even_counts o b K hK hqb hbp
+  obtain ⟨R, hr, floor, complete⟩ :=
+    (original_finite_even_bridge o b K hK hqb hbp).2.2
   obtain ⟨RE, _, _, approximations⟩ :=
     LowerRateLimit.original_count_codebook_approximation o b K hK hqb hbp
   obtain ⟨N, unbounded, nonempty, rawRate, _, _, _⟩ := approximations .original
@@ -640,11 +641,7 @@ private theorem full_even_normalized_limits (o : Ownership) (b : ℝ) (K : ℕ) 
   have codebook (j : ℕ) :
       Real.logb 2 (actualCount .original K d false (N j) : ℝ) /
         ((N j + 20 + 6 * R.m : ℕ) : ℝ) ≤ liminf u atTop := by
-    obtain ⟨_, evenL, lp, _, _, _, counts⟩ := complete .original (N j)
-      (nonempty j).1 (nonempty j).2
-    exact fixed_codebook_liminf model K d strict (by omega) _ _
-      (nonempty j).2 lp evenL (fun T large even =>
-        (counts model T large even).2.2.2.2.2.2.1 strict)
+    exact (complete .original (N j) (nonempty j).1 (nonempty j).2).2.2.2.2 model strict
   have infBound : eta_b K b ≤ liminf u atTop := le_of_tendsto' slope codebook
   have mappedLower : IsBoundedUnder (· ≥ ·) (map (fun v : ℕ => 2 * v) atTop)
       (actualLogRate model K d strict) :=

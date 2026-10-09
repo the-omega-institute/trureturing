@@ -174,7 +174,19 @@ $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \forall z \in
 
 RadiusValue is the real value of the original complex spectral radius. The actual all-u vertex makes the retained carrier nonempty, and the norm bound proves that the spectral radius is finite.
 
-**Theorem 1.15 (original radius scaling).**
+**Theorem 1.15 (word weight bounds).**
+
+$$\forall w \in \operatorname{List}\left(CuLetter\right),\; \operatorname{le}\left(\operatorname{multiply}\left(6, \operatorname{length}\left(w\right)\right), \operatorname{wordWeight}\left(w\right)\right) \land \operatorname{le}\left(\operatorname{wordWeight}\left(w\right), \operatorname{multiply}\left(20, \operatorname{length}\left(w\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/InteriorRoot.word_weight_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every original letter list has total weight between six and twenty times its letter length. The same bounds control both the original spectral scaling and actual word pressure.
+
+**Theorem 1.16 (original radius scaling).**
 
 $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \forall x \in Real, y \in Real,\; \left(\operatorname{lt}\left(0, x\right) \land \operatorname{le}\left(x, y\right)\right) \Rightarrow \left(\operatorname{le}\left(\operatorname{multiply}\left(\operatorname{power}\left(\operatorname{divide}\left(y, x\right), 6\right), \operatorname{radiusValue}\left(side, n, K, d, x\right)\right), \operatorname{radiusValue}\left(side, n, K, d, y\right)\right) \land \operatorname{le}\left(\operatorname{radiusValue}\left(side, n, K, d, y\right), \operatorname{multiply}\left(\operatorname{power}\left(\operatorname{divide}\left(y, x\right), 20\right), \operatorname{radiusValue}\left(side, n, K, d, x\right)\right)\right)\right)$$
 
@@ -186,7 +198,7 @@ $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \forall x \in
 
 Each genuine k-letter monomial has weight between 6k and 20k. Comparing their sums bounds the actual power masses. The norm sandwich and geometric power estimates pass these bounds to spectral radii through Gelfand's formula, without any irreducibility condition.
 
-**Theorem 1.16 (original radius strict increase).**
+**Theorem 1.17 (original radius strict increase).**
 
 $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \operatorname{StrictMonoOn}\left(\left(\operatorname{radiusValue}\left(side, n, K, d, z\right)\right)_{z \in Real}, \operatorname{Ioi}\left(0\right)\right)$$
 
@@ -198,7 +210,7 @@ $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \operatorname
 
 For y greater than x greater than zero, the factor (y/x) to six exceeds one. The lower scaling bound and actual spectral positivity make the original real spectral radius strictly increase.
 
-**Theorem 1.17 (original adjacency zero continuous).**
+**Theorem 1.18 (original adjacency zero continuous).**
 
 $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \operatorname{complexAdjacency}\left(side, n, K, d, 0\right) = 0 \land \operatorname{Continuous}\left(\left(\operatorname{complexAdjacency}\left(side, n, K, d, z\right)\right)_{z \in Real}\right)$$
 
@@ -210,7 +222,7 @@ $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \operatorname
 
 All actual edge exponents are positive, so the matrix at zero is zero. Each entry is a fixed finite sum of the two real monomials, carried into the complex numbers, and is continuous.
 
-**Theorem 1.18 (original radius continuous).**
+**Theorem 1.19 (original radius continuous).**
 
 $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \operatorname{ContinuousOn}\left(\left(\operatorname{radiusValue}\left(side, n, K, d, z\right)\right)_{z \in Real}, \operatorname{Ici}\left(0\right)\right)$$
 
@@ -222,7 +234,7 @@ $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \operatorname
 
 At a positive parameter, the scaling bounds squeeze the radius between the minimum and maximum of the sixth and twentieth powers of the parameter ratio. Both envelopes meet the same radius. At zero, the continuous matrix norm tends to zero and dominates the nonnegative radius. These two arguments give continuity on the full nonnegative half-line.
 
-**Theorem 1.19 (original spectral at one).**
+**Theorem 1.20 (original spectral at one).**
 
 $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \left(\operatorname{le}\left(2, K\right) \land \operatorname{le}\left(K, n\right)\right) \Rightarrow \operatorname{lt}\left(1, \operatorname{radiusValue}\left(side, n, K, d, 1\right)\right)$$
 
@@ -234,7 +246,7 @@ $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \left(\operat
 
 The literal weighted rate bound forces divergence at a positive binary parameter strictly below one. The exact original factor-series boundary makes its spectral radius at least one; strict increase then makes the radius at one exceed one.
 
-**Theorem 1.20 (original interior root).**
+**Theorem 1.21 (original interior root).**
 
 $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \left(\operatorname{le}\left(2, K\right) \land \operatorname{le}\left(K, n\right)\right) \Rightarrow \operatorname{existsUnique}\left(\left(\operatorname{lt}\left(0, z\right) \land \left(\operatorname{lt}\left(z, 1\right) \land \operatorname{weightedRadius}\left(side, n, K, d, z\right) = 1\right)\right)_{z \in Real}\right)$$
 
@@ -246,7 +258,7 @@ $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \left(\operat
 
 The actual spectral radius is zero at zero and exceeds one at one. Continuity supplies an interior radius-one parameter, and strict increase makes it unique. The construction applies to both full retained graphs and every real d whenever n is at least K and K is at least two.
 
-**Theorem 1.21 (original weighted interior root).**
+**Theorem 1.22 (original weighted interior root).**
 
 $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \left(\operatorname{le}\left(2, K\right) \land \operatorname{le}\left(K, n\right)\right) \Rightarrow \operatorname{existsUnique}\left(\left(\operatorname{lt}\left(0, z\right) \land \left(\operatorname{lt}\left(z, 1\right) \land \left(\operatorname{weightedRadius}\left(side, n, K, d, z\right) = 1 \land \operatorname{weightedFactorRate}\left(\operatorname{MemoryLanguage}\left(side, n, K, d\right)\right) = \operatorname{negate}\left(\operatorname{logb}\left(2, z\right)\right)\right)\right)\right)_{z \in Real}\right)$$
 
@@ -258,7 +270,7 @@ $$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real,\; \left(\operat
 
 Let gamma be minus log base two of the constructed root. Positivity and the root's upper bound make gamma positive. Strict increase identifies the actual convergence exponents with the open interval above gamma. The already established weighted factor-rate infimum therefore equals gamma, including sparse unsupported weights and the max-one convention.
 
-**Theorem 1.22 (original root rate families).**
+**Theorem 1.23 (original root rate families).**
 
 $$\forall K \in Nat, d \in Real,\; \operatorname{le}\left(2, K\right) \Rightarrow \left(\exists roots \in MemorySide \to \left(Nat \to Real\right),\; \left(\forall side \in MemorySide, n \in Nat,\; \operatorname{le}\left(K, n\right) \Rightarrow \left(\operatorname{lt}\left(0, \operatorname{roots}\left(side, n\right)\right) \land \left(\operatorname{lt}\left(\operatorname{roots}\left(side, n\right), 1\right) \land \left(\operatorname{weightedRadius}\left(side, n, K, d, \operatorname{roots}\left(side, n\right)\right) = 1 \land \operatorname{weightedFactorRate}\left(\operatorname{MemoryLanguage}\left(side, n, K, d\right)\right) = \operatorname{negate}\left(\operatorname{logb}\left(2, \operatorname{roots}\left(side, n\right)\right)\right)\right)\right)\right)\right) \land \left(\left(\forall n \in Nat,\; \operatorname{le}\left(K, n\right) \Rightarrow \left(\operatorname{le}\left(\operatorname{negate}\left(\operatorname{logb}\left(2, \operatorname{roots}\left(lower, n\right)\right)\right), \operatorname{weightedFactorRate}\left(\operatorname{AuxiliaryLanguage}\left(K, d\right)\right)\right) \land \operatorname{le}\left(\operatorname{weightedFactorRate}\left(\operatorname{AuxiliaryLanguage}\left(K, d\right)\right), \operatorname{negate}\left(\operatorname{logb}\left(2, \operatorname{roots}\left(upper, n\right)\right)\right)\right)\right)\right) \land \left(\operatorname{MonotoneOn}\left(\left(\operatorname{negate}\left(\operatorname{logb}\left(2, \operatorname{roots}\left(lower, n\right)\right)\right)\right)_{n \in Nat}, \operatorname{Ici}\left(K\right)\right) \land \operatorname{AntitoneOn}\left(\left(\operatorname{negate}\left(\operatorname{logb}\left(2, \operatorname{roots}\left(upper, n\right)\right)\right)\right)_{n \in Nat}, \operatorname{Ici}\left(K\right)\right)\right)\right)\right)$$
 
@@ -296,4 +308,5 @@ The auxiliary rate is the original actual-list rate under the fixed transition-b
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/InteriorRoot.original_upper_memory_intersection`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/InteriorRoot.original_weighted_interior_root`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/InteriorRoot.radiusValue`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/InteriorRoot.word_weight_bounds`
 - Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping](WordWeightRegrouping.md)

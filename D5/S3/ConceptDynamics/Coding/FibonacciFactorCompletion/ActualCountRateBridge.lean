@@ -85,10 +85,8 @@ private theorem strict_count_le_weak (model : Model) (K : ℕ) (d : ℝ)
   exact Subtype.ext (congrArg (fun x : ActualDictionary model K d false N => x.val) h)
 
 private theorem golden_contraction : 0 < g ∧ g < 1 := by
-  have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
-  have h0 := Real.sqrt_nonneg (5 : ℝ)
-  dsimp [g, t]
-  constructor <;> nlinarith
+  exact ⟨TailGeometry.tail_arithmetic.2.2.2.1,
+    TailGeometry.tail_arithmetic.2.2.2.2.1⟩
 
 private theorem guard_seed_mono (K : ℕ) (d : ℝ) (strict : Bool)
     (xs : List Return) (D E : ℝ) (hDE : D ≤ E)

@@ -70,7 +70,7 @@ $$\forall Configuration \in Type, action \in \operatorname{Function}\left(Config
 
 *Commentary.*
 
-WeakListRate(K,d,sourceModel) is limsup atTop of logb 2 (max 1 (NatCard(WeakCodebook(K,d,sourceModel,n))))/n, with the casts and zero-denominator convention of Lean Real. Every fixed codebook coefficient is bounded by the same full-storage liminf. If that liminf is infinite the result holds directly. Otherwise its finite real value bounds all shifted coefficients. The factor n/(n+C_R) tends to one, and the limsup product inequality recovers the weak-list rate without assuming exact-weight count monotonicity. The preserved anonymous37 equality identifies this rate with the independent factor and original actual contract rates; no rate proof is replaced here.
+WeakListRate(K,d,sourceModel) is limsup atTop of logb 2 (max 1 (NatCard(WeakCodebook(K,d,sourceModel,n))))/n, with the casts and zero-denominator convention of Lean Real. Every fixed codebook coefficient is bounded by the same full-storage liminf. If that liminf is infinite the result holds directly. Otherwise its finite real value bounds all shifted coefficients. The factor n/(n+C_R) tends to one, and the limsup product inequality recovers the weak-list rate without assuming exact-weight count monotonicity. The anonymous37 equality identifies this rate with the independent factor and original actual contract rates.
 
 The statement concerns the explicit primitive operation presentation and the supplied original complete encoding. Every readable quantity belongs to Configuration; Frame acquisition and output fields are external bookkeeping. An implementation must represent every actual instruction and charged intermediate state at that granularity. Universal correspondence to every prose decoder and independent authored-formula fidelity are separate from this conditional operational mathematics. No single additive constant at the limiting rate and no attaining decoder are asserted.
 
@@ -130,7 +130,7 @@ Write G=actualFamilyHighGaps(model,b,K,family), Delta=actualFamilyDelta(model,b,
 
 The same positive epsilon is fixed before all lists and both source sides. In the nonempty case every high gap is at least Delta.toReal. Taking half the displayed minimum leaves strict budget room both above C_auto and above every high active cost. With no high returns the latter condition is vacuous, so the separate original formula applies even if the new budget is below q_K. All slots satisfy strict error bound b-epsilon, which also gives the requested closed bound with that exact epsilon, and the original literal futures have zero error.
 
-The family remains an arbitrary set of finite return lists, with unbounded exponents m, histories, list depths and weights. Both actual models and every ownership assignment remain parameters. The earlier full-family iff and exact necessary epsilon lower bound are retained. The ownership-sensitive closed high-guard law is unchanged. No original13, original39.4, original39.5 or original39.7 goal is changed or declared settled.
+The family remains an arbitrary set of finite return lists, with unbounded exponents m, histories, list depths and weights. Both actual models and every ownership assignment remain parameters. The full-family equivalence uses the exact necessary epsilon lower bound and the ownership-sensitive closed high-guard law.
 
 **Theorem 1.10 (The supplied epsilon bounds every actual high-return gap).**
 
@@ -162,9 +162,9 @@ ActualUniformFamilyMargin means there exists one real eps>0 such that every exec
 
 The reverse implication directly consumes actual_exact_uniform_family_margin. It chooses the original C_auto-based epsilon for the nonempty or empty actual high-gap set, then uses those same whole-source witnesses with the closed b-eps bound. The exact sufficient-margin supplier remains valid even when that new budget is below q_K. This works for either original or anchored model and every ownership assignment. Individual-record margins and ownership-sensitive equality at the original closed budget remain the separate existing statements.
 
-The forward implication consumes the exact necessary bound for the original supplied epsilon; the reverse implication consumes the precise two-branch C_auto margin. Together they retain the whole-family infimum criterion. The original13, original39.4, original39.5 and original39.7 targets retain their existing scope.
+The forward implication consumes the exact necessary bound for the original supplied epsilon; the reverse implication consumes the precise two-branch C_auto margin. Together they give the whole-family infimum criterion.
 
-The classwise deletion and finite exact-weight cardinality applications are separate from the retained run and actual-membership declarations. The finite configuration lower bound uses full actual supply, safety and positionwise liveness. A lower or upper occurrence map alone does not supply a common positive margin for an infinite family.
+The finite configuration lower bound uses full actual supply, safety and positionwise liveness. A lower or upper occurrence map alone does not supply a common positive margin for an infinite family.
 
 ## References
 

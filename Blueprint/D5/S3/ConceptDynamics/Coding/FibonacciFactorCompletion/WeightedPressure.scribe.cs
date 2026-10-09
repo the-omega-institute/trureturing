@@ -20,7 +20,7 @@ internal sealed class WeightedPressureDocument : IScribeDocumentDefinition
     private static Formula Config => Fn(I("Int"),I("CuLetter"));
     private static Formula Language => Call("Set",Config);
     private static Formula Word => Call("List",I("CuLetter"));
-    private static Formula Lam(string n, Formula t, Formula p) => new Formula.Sequence(p,I(n),t);
+    private static Formula Lam(string n, Formula t, Formula p) => F.Seq(Open, I(n), Sp, Colon, Sp, t, Sp, Mapsto, Sp, p, Close);
     private static Formula Sum(string n, Formula t, Formula p) => Call("sum",Lam(n,t,p));
     private static Formula Tsum(string n, Formula t, Formula p) => Call("tsum",Lam(n,t,p));
     private static Formula Summable(string n, Formula t, Formula p) => Call("Summable",Lam(n,t,p));

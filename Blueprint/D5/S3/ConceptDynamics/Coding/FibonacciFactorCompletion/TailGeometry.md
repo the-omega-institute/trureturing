@@ -102,7 +102,7 @@ setOfOwnedColor(o,theta,c) is the set of real z satisfying OwnedColor(o,theta,c,
 
 **Theorem 1.9 (The actual competing-tail intersection is an interval).**
 
-$$\forall o \in Ownership, theta \in Real, s \in Guard, Q \in \operatorname{List}\left(Label\right), V \in \operatorname{List}\left(Label\right), h \in \operatorname{List}\left(Color\right), W \in \operatorname{Function}\left(Bool, \operatorname{List}\left(Color\right)\right), z \in Real,\; \operatorname{le}\left(0, theta\right) \Rightarrow \operatorname{OrdConnected}\left(\operatorname{CompetingT}\left(o, theta, s, Q, V, h, W\right)\right)$$
+$$\forall o \in Ownership, theta \in Real, s \in Guard, Q \in \operatorname{List}\left(Label\right), V \in \operatorname{List}\left(Label\right), h \in \operatorname{List}\left(Color\right), W \in \operatorname{Function}\left(Bool, \operatorname{List}\left(Color\right)\right),\; \operatorname{le}\left(0, theta\right) \Rightarrow \operatorname{OrdConnected}\left(\operatorname{CompetingT}\left(o, theta, s, Q, V, h, W\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry.competingT_ordConnected` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ CompetingT is the intersection of the terminal guard support, every actual Q-suf
 
 **Theorem 1.10 (Concrete tail membership and actual slot errors).**
 
-$$\forall o \in Ownership, theta \in Real, s \in Guard, Q \in \operatorname{List}\left(Label\right), V \in \operatorname{List}\left(Label\right), h \in \operatorname{List}\left(Color\right), W \in \operatorname{Function}\left(Bool, \operatorname{List}\left(Color\right)\right), z \in Real,\; \left(\operatorname{LegalWord}\left(G0, s, Q\right) \land \operatorname{LegalWord}\left(s, s, V\right)\right) \Rightarrow \left(\operatorname{member}\left(z, \operatorname{CompetingT}\left(o, theta, s, Q, V, h, W\right)\right) \Leftrightarrow \left(\operatorname{InSupport}\left(s, z\right) \land \left(\operatorname{BlockSupply}\left(o, theta, false, Q, h, z\right) \land \left(\forall i \in Bool,\; \operatorname{BlockSupply}\left(o, theta, false, V, \operatorname{apply}\left(W, i\right), z\right)\right)\right)\right)\right)$$
+$$\forall o \in Ownership, theta \in Real, s \in Guard, Q \in \operatorname{List}\left(Label\right), V \in \operatorname{List}\left(Label\right), h \in \operatorname{List}\left(Color\right), W \in \operatorname{Function}\left(Bool, \operatorname{List}\left(Color\right)\right),\; \forall z \in Real,\; \left(\operatorname{LegalWord}\left(G0, s, Q\right) \land \operatorname{LegalWord}\left(s, s, V\right)\right) \Rightarrow \left(\operatorname{member}\left(z, \operatorname{CompetingT}\left(o, theta, s, Q, V, h, W\right)\right) \Leftrightarrow \left(\operatorname{InSupport}\left(s, z\right) \land \left(\operatorname{BlockSupply}\left(o, theta, false, Q, h, z\right) \land \left(\forall i \in Bool,\; \operatorname{BlockSupply}\left(o, theta, false, V, \operatorname{apply}\left(W, i\right), z\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry.competingT_mem_actual` (`✓ std3`). ∎
 

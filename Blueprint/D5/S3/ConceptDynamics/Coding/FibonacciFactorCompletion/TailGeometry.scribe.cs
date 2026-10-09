@@ -103,9 +103,10 @@ internal sealed class TailGeometryDocument : IScribeDocumentDefinition
                 new Formula.Logic(Call("member",I("z"),TailT),FormulaLogicOperator.Iff,
                     And(Call("InSupport",I("s"),I("z")),Call("BlockSupply",I("o"),I("theta"),I("false"),I("Q"),I("h"),I("z")),
                         All(Call("BlockSupply",I("o"),I("theta"),I("false"),I("V"),Call("apply",I("W"),I("i")),I("z")),B("i",I("Bool"))))));
+        if(kind!="interval") result=All(result,B("z",I("Real")));
         return Disp(All(result,B("o",I("Ownership")),B("theta",I("Real")),B("s",I("Guard")),
             B("Q",Call("List",I("Label"))),B("V",Call("List",I("Label"))),B("h",Call("List",I("Color"))),
-            B("W",Fn(I("Bool"),Call("List",I("Color")))),B("z",I("Real"))));
+            B("W",Fn(I("Bool"),Call("List",I("Color"))))));
     }
     private static Formula TailCertificate() => Disp(All(Imp(And(Call("le",D(0),I("theta")),
         Call("EndpointCertificate",I("theta"),I("lo"),I("hi"),I("w"),I("cs")),

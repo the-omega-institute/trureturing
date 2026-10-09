@@ -23,7 +23,7 @@ internal sealed class LowerRateLimitDocument : IScribeDocumentDefinition
     private static Formula Letters => Call("List",I("CuLetter"));
     private static Formula Fn(Formula a,Formula b) => new Formula.TypeArrow(a,b);
     private static Formula Seq => Fn(Int,I("CuLetter"));
-    private static Formula Lambda(string n,Formula t,Formula p) => new Formula.Sequence(p,I(n),t);
+    private static Formula Lambda(string n,Formula t,Formula p) => F.Seq(Open, I(n), Sp, Colon, Sp, t, Sp, Mapsto, Sp, p, Close);
     private static Formula Ap(Formula f,Formula x) => Call("apply",f,x);
     private static Formula Add(Formula a,Formula b) => Call("add",a,b);
     private static Formula Sub(Formula a,Formula b) => Call("subtract",a,b);
@@ -59,7 +59,9 @@ internal sealed class LowerRateLimitDocument : IScribeDocumentDefinition
     private static Formula Tendsto(Formula f,Formula y, bool infinity=false) => Call("Tendsto",f,I("atTop"),infinity?I("atTop"):Call("nhds",y));
     private static Formula Budget => And(Le(D(2),I("K")),Lt(Sub(I("lam"),Mul(Scale,Hh)),I("b")),
         Lt(I("b"),Sub(I("lam"),Mul(Scale,Div(A,Sub(D(1),Mul(I("rho"),Pow(I("chi"),I("K")))))))));
-    private static Formula UnderBudget(Formula p) => All(Imp(Budget,p),B("o",I("Ownership")),B("b",Real),B("K",Nat));
+    private static Formula UnderBudget(Formula p, bool namedOwnership=true) => namedOwnership
+        ? All(Imp(Budget,p),B("o",I("Ownership")),B("b",Real),B("K",Nat))
+        : Fn(I("Ownership"),All(Imp(Budget,p),B("b",Real),B("K",Nat)));
     private static Formula LowZ => Call("lowChoices",I("z"));
     private static Formula BinaryChoices => Fn(Fin(I("q")),I("Bool"));
     private static Formula LowMap => Lambda("z",BinaryChoices,LowZ);
@@ -74,7 +76,7 @@ internal sealed class LowerRateLimitDocument : IScribeDocumentDefinition
         All(Le(Pow(D(2),I("q")),Count(Mul(I("q"),D(5,8)),I("strictFlag"))),B("strictFlag",I("Bool")))),
         B("model",I("Model")),B("q",Nat))));
     private static Formula PositiveStatement() => Disp(UnderBudget(All(Le(Div(D(1),D(5,8)),
-        Call("actualRate",I("model"),I("K"),Threshold,I("strictFlag"))),B("model",I("Model")),B("strictFlag",I("Bool")))));
+        Call("actualRate",I("model"),I("K"),Threshold,I("strictFlag"))),B("model",I("Model")),B("strictFlag",I("Bool"))),false));
     private static Formula Occurrence(Formula w) => Ex(And(Mem(I("omega"),Lower(I("n"))),Call("Occurs",I("omega"),w)),B("omega",Seq));
     private static Formula Bilateral()
     {
@@ -148,7 +150,7 @@ internal sealed class LowerRateLimitDocument : IScribeDocumentDefinition
                 B("model",I("Model")),B("strictFlag",I("Bool")))),B("roots",Fn(I("MemorySide"),Fn(Nat,Real))));
         var uniform=All(Imp(Lt(D(0),I("epsilon")),Ex(And(Le(I("K"),I("n0")),
             All(Imp(Le(I("n0"),I("n")),And(Lt(Sub(Eta,I("epsilon")),LowerRate(I("n"))),Le(LowerRate(I("n")),Eta))),B("n",Nat))),B("n0",Nat))),B("epsilon",Real));
-        return Disp(UnderBudget(And(Le(Div(D(1),D(5,8)),Eta),Call("Monotone",lower),uniform,Tendsto(lower,Eta),roots)));
+        return Disp(UnderBudget(And(Le(Div(D(1),D(5,8)),Eta),Call("Monotone",lower),uniform,Tendsto(lower,Eta),roots),false));
     }
     private static DocumentBlock Node(string name,Formula formula,string prose,bool definition=false) => Describe.Lean(
         DescribeId.Create("fib-lower-rate-"+name.Replace('_','-').ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name.Replace('_',' ')),
@@ -159,8 +161,8 @@ internal sealed class LowerRateLimitDocument : IScribeDocumentDefinition
         Node("lowReturns",LowDefinition(),"The false choice is the complete return list (1,1),(2,1), and the true choice is (2,1),(1,1). Both m and r are positive. Their execution words are exactly c u c u u and c u u c u, and each has weight 58. Execution goes from the original tail toward the outside; the literal source uses the reversed list and retains each original block's label order.",true),
         Node("lowChoices",ChoicesDefinition(),"Flatten the chosen complete lists in their finite execution order. The empty choice has the empty list and weight zero. Both actual initial models retain their original high and low tails, with observation offsets 26 and 52.",true),
         Node("actual_low_choice_count",LowCountStatement(),"Every return has r=1<K, so every finite choice is strictly legal from either actual start. The actual paired-source supply includes the common prescribed history, all departure slots, and each original tail with zero future error. Positive weighted cuts and the complete execution parser recover every binary choice; the original history parser also distinguishes them. There are at least 2 to q strict lists and at least as many weak lists at weight 58q, including q=0 and q=1."),
-        Node("actual_rate_positive",PositiveStatement(),"Actual counts at unbounded multiples of 58 give a frequent normalized logarithmic lower bound of 1/58. This is the original actual rate for both starts and both guard flags, rather than a rate per letter."),
+        Node("actual_rate_positive",PositiveStatement(),"Actual counts at unbounded multiples of 58 give a frequent normalized logarithmic lower bound of 1/58. This is the original actual rate for both starts and both guard flags, rather than a rate per letter. Ownership is arbitrary and does not enter this rate or the budget inequalities."),
         Node("FixedCodebook",FixedStatement(),"The dictionary contains every original weak list of exact weight N. Its reset floor B, delta=B-D0, gain=delta times g to N, and positive half-minimum error are kept together. All finite actual choices share the strengthened guard and the strict budget b-error, with original zero-error futures. One memory n is selected after that entire fixed dictionary and satisfies n>=K and h rho to n<chi to K-1 times gain. Every bilateral choice has one sequence for its auxiliary membership, lower-memory membership, tiling at every integer cut, and all block guards. These auxiliary infinite sequences are distinct from the finite actual sources. For every q, positive cumulative-weight cuts give an injective choice map, its exact-weight image, cardinality a to q and bilateral occurrence in that same lower language. These conditions characterize the displayed proposition.",true),
         Node("original_count_codebook_approximation",ApproximationStatement(),"One reset is selected before either source model or any weight. The bounded original weak logarithmic sequence has a limsup sequence tending to infinity. Actual positivity makes its weights and counts positive after discarding only a finite prefix. Thus max(1,count) equals count throughout the retained sequence. The ratio N/(N+20+6m(R)) tends to one, so both the raw normalized logarithm and the fixed-overhead codebook slope tend to eta_b. Each codebook retains its complete finite actual and bilateral package; its common margin is obtained before its memory is selected."),
-        Node("original_lower_rate_limit",LimitStatement(),"For any positive epsilon, fix one codebook whose slope exceeds eta_b-epsilon, then select its memory n_j. Lower-memory monotonicity preserves that bound for every n>=max(K,n_j). The actual-to-auxiliary rate equality gives the common upper bound eta_b, so the lower rates increase to eta_b. The nested-language theorem supplies the same actual eta_b for the upper rates, which decrease to eta_b. One original root family records both exact MemoryLanguage sides on n>=K, their radius-one equations and rate identities, the lower and upper root monotonicities, and the natural lower n+K shift. It also retains the actual model and strict/weak contract rate equalities. Codebook margins may shrink as N grows; the statement selects memory separately for each fixed codebook."))));
+        Node("original_lower_rate_limit",LimitStatement(),"For any positive epsilon, fix one codebook whose slope exceeds eta_b-epsilon, then select its memory n_j. Lower-memory monotonicity preserves that bound for every n>=max(K,n_j). The actual-to-auxiliary rate equality gives the common upper bound eta_b, so the lower rates increase to eta_b. The nested-language theorem supplies the same actual eta_b for the upper rates, which decrease to eta_b. One original root family records both exact MemoryLanguage sides on n>=K, their radius-one equations and rate identities, the lower and upper root monotonicities, and the natural lower n+K shift. It also retains the actual rate equality for both models and both strictness flags. Codebook margins may shrink as N grows; the statement selects memory separately for each fixed codebook. Ownership is arbitrary and does not enter these rates, roots or budget inequalities."))));
 }
