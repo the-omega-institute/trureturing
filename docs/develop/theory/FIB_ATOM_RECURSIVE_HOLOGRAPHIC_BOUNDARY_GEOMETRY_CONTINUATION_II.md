@@ -1492,3 +1492,332 @@ validation. The entire sustained why-three/source/native/field/acquisition/
 resource objective remains beyond this fixed-source free-kinetic result.
 
 ## 72.99 追加锚（本行以下为增补区）
+
+## 73. The entire free symmetric two-particle limit and literal hard-core separation
+
+**Definition 73.1 (fixed product data).** Fix exactly Definition72.1's source,
+parameters, geometry and grounding. Write $\mathcal H=\mathcal H_\delta$,
+$\mathcal Q=\mathcal Q_\delta$, and $L=A_{\delta,D,1}$ as in (72.2)–(72.3).
+The free comparison space is
+$\mathcal H_2^{\rm fr}=L^2_{\rm sym}(X_D^2,\mu_\delta^{\otimes2})$.
+Ordered coordinates before exchange restriction give $n^2$ atomic pairs,
+$4n^2$ atom/cable slices and $4n^2$ cable/cable cells. In particular each
+$(p,p)$ has mass one; ground endpoints have no atomic coordinate.
+Every same-cable square is retained. Its diagonal has
+zero two-dimensional measure; this does not impose a zero collision trace.
+For $F=(F_{pq},F_{pe},F_{ep},F_{ef})$, the norm is
+
+$$
+\|F\|^2=\sum_{p,q}|F_{pq}|^2
+ +\delta\sum_{p,e}(\|F_{pe}\|_2^2+\|F_{ep}\|_2^2)
+ +\delta^2\sum_{e,f}\|F_{ef}\|_2^2.                 \tag{73.1}
+$$
+
+There is no additional normalization on the symmetric subspace. Symmetry means
+$F_{pq}=F_{qp}$, $F_{pe}(y)=F_{ep}(y)$ and
+$F_{ef}(x,y)=F_{fe}(y,x)$.
+Define $\mathcal Q_2^{\rm fr}$ by $H^1$ slices and $H^1$ full rectangles,
+with these trace conditions: a cell boundary at a source port equals the
+corresponding atom/cable slice in $L^2$; a slice endpoint at a source port
+equals its atomic pair value; grounded ends give zero in either coordinate.
+Explicitly, if $e$ meets $p$ and $f$ meets $q$,
+
+$$
+\operatorname{Tr}_xF_{ef}(p,y)=F_{pf}(y),\qquad
+\operatorname{Tr}_yF_{ef}(x,q)=F_{eq}(x),\qquad
+F_{eq}(p)=F_{pq}=F_{pf}(q).
+$$
+
+All incident boundaries use the same slice, including at shared ports.
+Thus incident slices approaching $(p,p)$ end at $F_{pp}$, which is allowed
+to be nonzero. On a dissected same-cable square the two diagonal traces
+agree, with no requirement that they vanish. This is equivalent to $H^1$
+on its full square. No point trace of an arbitrary rectangle at a corner
+is used. Put
+
+$$
+q_2^{\rm fr}[F]=a\left[
+ \sum_{e,q}\|\partial_xF_{eq}\|_2^2
+ +\sum_{p,f}\|\partial_yF_{pf}\|_2^2
+ +\delta\sum_{e,f}\int_{(0,1)^2}
+       (|\partial_xF_{ef}|^2+|\partial_yF_{ef}|^2)\right].
+                                                               \tag{73.2}
+$$
+
+**Theorem 73.2 (complete free product limit).** The form (73.2) on
+$\mathcal Q_2^{\rm fr}$ is densely defined, closed and nonnegative. Its
+operator is
+$B=(L\otimes I+I\otimes L)|_{\rm sym}$ on the entire
+$\mathcal H_2^{\rm fr}=\operatorname{Sym}(\mathcal H\otimes\mathcal H)$.
+On $\mathcal P_{\varepsilon,2}=L^2_{\rm sym}((\Omega_\varepsilon^+)^2)$ let
+$B_\varepsilon=(H_\varepsilon\otimes I+I\otimes H_\varepsilon)|_{\rm sym}$,
+where $H_\varepsilon$ and $J_\varepsilon$ are precisely (72.26), and set
+$J_{\varepsilon,2}=(J_\varepsilon\otimes J_\varepsilon)|_{\rm sym}$.
+Exact coincidence exclusion by the mixed-ground symmetric smooth-core
+$H^1$ closure gives this same physical operator. For every fixed compact
+$K\subset\mathbb C\setminus\mathbb R$,
+
+$$
+J_{\varepsilon,2}^*J_{\varepsilon,2}=I,\qquad
+\eta_\varepsilon(K):=\sup_{z\in K}
+ \|(B_\varepsilon-z)^{-1}
+   -J_{\varepsilon,2}(B-z)^{-1}J_{\varepsilon,2}^*\|
+ \longrightarrow0.                                             \tag{73.3}
+$$
+
+The norm is on the full physical symmetric space. No rate is asserted.
+
+**Proof: domain in both directions.** The finite interval $H^1$ embeddings
+and finite atomic space make $\mathcal Q\hookrightarrow\mathcal H$ compact.
+The nonnegative self-adjoint $L$ consequently has an orthonormal eigenbasis
+$\psi_j$, with eigenvalues $\lambda_j\ge0$.
+For $F=\sum c_{jk}\psi_j\otimes\psi_k$, the tensor sum has form domain
+and operator domain respectively
+
+$$
+\sum_{j,k}(1+\lambda_j+\lambda_k)|c_{jk}|^2<\infty,
+\qquad
+\sum_{j,k}(1+(\lambda_j+\lambda_k)^2)|c_{jk}|^2<\infty. \tag{73.4}
+$$
+
+On the symmetric space $c_{jk}=c_{kj}$. Finite symmetric truncations are
+a form core. The first condition is exactly membership in the two
+Bochner spaces $L^2(X_D,\mu_\delta;\mathcal Q)$, taking sections in each
+variable, with their integrated form norms.
+Such sections give $H^1$ atom/cable slices and both weak derivatives in
+$L^2$ on every cell. The section endpoint identities give exactly the
+cell-boundary/slice and slice-endpoint/atom identities in Definition73.1.
+For an $H^1$ rectangle, the boundary trace agrees almost everywhere with
+the one-dimensional section endpoints: approximate by smooth functions
+and use the continuous $H^1\to L^2$ boundary trace. This also handles
+each grounded boundary.
+Conversely, the stipulated cell $H^1$ regularity, boundary traces and slice
+$H^1$ endpoints imply these same section identities almost everywhere;
+Fubini then puts the sections in $\mathcal Q$ in each direction with
+finite integrated form norms. There is no further corner condition.
+Integrating the one-coordinate energy against the other coordinate's
+atomic and cable measures gives exactly (73.2), with weights $1$ on
+slice derivatives and $\delta$ on cell derivatives. This proves the
+domain equality, both directions of the tensor identification, and the
+represented operator assertion. Spectral truncation proves density and
+closedness without assuming multidimensional $H^2$ regularity.
+
+**Proof: physical domain and the two Hilbert-space maps.** The same
+section argument for (72.24) identifies the physical tensor form with
+
+$$
+\frac a\delta\int_{(\Omega_\varepsilon^+)^2}
+ (|\nabla_xU|^2+|\nabla_yU|^2),                         \tag{73.5}
+$$
+
+on symmetric $H^1$ functions with zero traces on
+$\Sigma_\varepsilon\times\Omega_\varepsilon^+$ and
+$\Omega_\varepsilon^+\times\Sigma_\varepsilon$; exterior Neumann walls
+give no essential form condition.
+Here the trace domain equals the mixed-ground smooth-core closure.
+Indeed extend oddly across each flat cut as in72.9, extend from the
+bounded Lipschitz doubled product to ambient $H^1$, and project the
+extension to be odd in each cut coordinate. Cut it off for
+$|x_3|<h$ and $|y_3|<h$. The one-dimensional Hardy bound
+$\int |v(r)|^2/r^2\,dr\le4\int |v'(r)|^2\,dr$ for zero-trace sections
+follows on each half-line by integration by parts and Cauchy–Schwarz:
+$\int |v|^2/r^2=2\operatorname{Re}\int v'\overline v/r
+\le2\|v'\|_2\|v/r\|_2$, followed by odd smooth approximation.
+It makes each derivative-cutoff error tend to zero by absolute continuity
+of the integral on the shrinking layer. Smooth approximation away from
+the cuts and exchange averaging finish the core approximation.
+The converse follows from continuity of the grounded trace.
+The fixed-positive-thickness capacity input now applies: for $s\ge2$
+the physical coincidence diagonal has zero $H^1$ capacity, and its
+specified closure leaves this mixed-ground symmetric form unchanged.
+Our fixed $s\ge3$ and positive constant $a/\delta$ meet those hypotheses.
+The diagonal is also Lebesgue-null, so the physical Hilbert space is
+unchanged. This reuses that capacity fact, not a thin-limit conclusion
+or a classification of contact extensions.
+
+For explicit forward and adjoint maps put
+$c_\varepsilon=\sqrt\delta\,\varepsilon^{-(s-1)/2}$.
+Let $Z_p=Q_{p_+}^\varepsilon$ be a source chamber and
+$Z_e(x)=Q_{e_+}^{\rm c,\varepsilon}$ a cable cross-section at $x$.
+On every ordered chamber/chamber, chamber/cylinder, cylinder/chamber
+and cylinder/cylinder product, respectively, the lift is
+$c_\varepsilon^2F_{pq}$, $c_\varepsilon^2F_{pe}(y)$,
+$c_\varepsilon^2F_{ep}(x)$ and $c_\varepsilon^2F_{ef}(x,y)$.
+It is zero when either coordinate lies in a ground half-chamber.
+For $\alpha,\beta$ each a port or cable, its adjoint is
+
+$$
+(J_{\varepsilon,2}^*U)_{\alpha\beta}
+ =b_\alpha b_\beta
+     \int_{Z_\alpha\times Z_\beta}U,\qquad
+b_p=c_\varepsilon,\quad b_e=c_\varepsilon/\delta.       \tag{73.6}
+$$
+
+Cable longitudinal variables remain unevaluated in this integral.
+The volumes $|Z_p|=\varepsilon^{s-1}/\delta$ and
+$|Z_e|=\varepsilon^{s-1}$ give exactly (73.1) and
+$J_{\varepsilon,2}^*J_{\varepsilon,2}=I$.
+These formulas act on all Hilbert data, including independent atomic
+coordinates, and commute with exchange. They give a proper range:
+nonconstant transverse/chamber modes and ground half-chamber functions
+remain in the physical carrier.
+
+**Proof: full resolvent convergence.** For $f\in C_0([0,\infty))$ put
+$\Phi_\varepsilon(f)=J_\varepsilon f(L)J_\varepsilon^*$.
+The isometry makes this a multiplicative, adjoint-preserving map, even
+though it is not unital on physical $L^2$.
+Theorem72.10 at $i$ and $-i$ implies
+$\|f(H_\varepsilon)-\Phi_\varepsilon(f)\|\to0$ for every such $f$.
+To see this, first take polynomials without constant term in
+$(t-i)^{-1}$ and $(t+i)^{-1}$, telescope their products, and then use
+uniform approximation. Their self-adjoint algebra separates points,
+vanishes nowhere on $[0,\infty)$ and is dense in $C_0$ by
+Stone–Weierstrass; both functional calculi are contractions.
+For each $t>0$ this applies to $f_t(\lambda)=e^{-t\lambda}$.
+Tensoring the two semigroups gives the full unsymmetrized estimate
+
+$$
+\|e^{-t(H_\varepsilon\otimes I+I\otimes H_\varepsilon)}
+ -(J_\varepsilon\otimes J_\varepsilon)
+ e^{-t(L\otimes I+I\otimes L)}
+ (J_\varepsilon^*\otimes J_\varepsilon^*)\|
+ \le2\|e^{-tH_\varepsilon}-\Phi_\varepsilon(f_t)\|\to0. \tag{73.7}
+$$
+
+All operators commute with exchange, so compression gives the same
+conclusion on the full symmetric space. Integrating against $e^{-t}dt$
+and using the contraction bound proves (73.3) first at $z=-1$.
+There is no assertion of convergence at $t=0$; that single endpoint
+does not affect dominated convergence of the integral.
+For nonreal $z$ use
+$h_z(r)=r/[1-(z+1)r]$ on $[0,1]$. It is continuous and $h_z(0)=0$.
+Polynomial approximation on $[0,1]$ shows that applying it to the two
+converging negative resolvents gives (73.3),
+since its value on the proper-range complement is zero. Uniformity
+on compact $K$ follows from a finite net and the resolvent identity,
+whose Lipschitz bound is $|z-w|/(|\operatorname{Im}z|
+|\operatorname{Im}w|)$ for either resolvent family.
+
+Finally put $P_\varepsilon=J_{\varepsilon,2}J_{\varepsilon,2}^*$ and
+$Q_\varepsilon=I-P_\varepsilon$. The comparison resolvent has only a
+$P_\varepsilon$–$P_\varepsilon$ block. Consequently each of
+$Q_\varepsilon(B_\varepsilon-z)^{-1}Q_\varepsilon$,
+$P_\varepsilon(B_\varepsilon-z)^{-1}Q_\varepsilon$ and
+$Q_\varepsilon(B_\varepsilon-z)^{-1}P_\varepsilon$ has norm at most
+$\eta_\varepsilon(K)$, as does the difference of the two
+$P_\varepsilon$–$P_\varepsilon$ blocks. This retains the entire
+complement and both cross blocks. $\square$
+
+**Theorem 73.3 (explicit separation from the unchanged comparator).**
+Let $E:\mathcal K_{D,2}^{\rm hc}\to\mathcal H_2^{\rm fr}$ be the isometry
+identifying all slice/cell $L^2$ coordinates and inserting zero at every
+$(p,p)$. Its range is precisely $\{F:F_{pp}=0\text{ for all }p\}$.
+Under $E$, Definition64.5's form domain is exactly
+
+$$
+\{F\in\mathcal Q_2^{\rm fr}:F_{pp}=0\ (p\in D),\quad
+           \operatorname{Tr}_{x=y}F_{ee}=0\ (e\in\mathcal E_D)\}.
+                                                               \tag{73.8}
+$$
+
+Indeed zero diagonal traces glue the two triangles into an $H^1$ square;
+the converse is restriction to those triangles. Slice endpoints at the
+missing atoms are zero, including shared-port collisions. Other rectangles,
+both slice orders, all grounded traces and every kinetic coefficient remain
+exactly (64.7). No rectangle-corner trace is introduced.
+Keep the original operators $A_{\delta,D,2}$ and
+$\mathcal T^\diamond_{\delta,D,2}=A_{\delta,D,2}+U^\diamond_{D,2}$,
+separately for $\diamond\in\{\mathrm c,\mathrm k\}$, with precisely
+
+$$
+U^\diamond_{D,2}(x,y)=-g(\phi_A(x)+\phi_A(y))
+ -\nu\mathbf1_{x=p,y=q\in D,\ p\ne q}G_D^\diamond(p,q). \tag{73.9}
+$$
+
+Here $\phi_A$ is zero on open cables. Both complete pair prescriptions,
+all ten coefficients of Definition64.1, including
+$G^{\rm c}(LL,LR)=3/16$, and every original parameter are unchanged.
+For any port $p$, let $k=d_p$ be its actual incidence and define
+
+$$
+N_p=1+\frac{13}{35}\delta k,\qquad
+c_p=\left(N_p^2+\frac{24a^2kN_p}{\delta}
+                    +\frac{72a^2k^2}{25}\right)^{-1/2}>0. \tag{73.10}
+$$
+
+For each $C\in\{A_{\delta,D,2},\mathcal T^{\rm c}_{\delta,D,2},
+\mathcal T^{\rm k}_{\delta,D,2}\}$, at the specified nonreal parameter $i$,
+
+$$
+\begin{aligned}
+\|(B-i)^{-1}-E(C-i)^{-1}E^*\|&\ge c_p,\\
+\liminf_{\varepsilon\downarrow0}
+ \|(B_\varepsilon-i)^{-1}
+  -J_{\varepsilon,2}E(C-i)^{-1}E^*J_{\varepsilon,2}^*\|&\ge c_p.
+\end{aligned}                                                    \tag{73.11}
+$$
+
+**Proof.** Let $e_{pp}$ be the normalized mass-one atomic basis vector.
+Then $E^*e_{pp}=0$ for every comparator above. Construct
+$f\in\operatorname{Dom}L$ with atomic value one at $p$ and zero at other
+ports. On each cable incident at $p$, in distance $x$ from $p$, take
+$b(x)=1-3x^2+2x^3$; all other cables are zero. The authentic tree has no
+loops. The conditions $b(0)=1$, $b(1)=0$ and $b'(0)=b'(1)=0$ meet every
+port/ground condition and give zero atomic output of $Lf$. Direct integration
+and (72.3) give
+
+$$
+\|f\|^2=N_p,\qquad
+\langle Lf,f\rangle=\frac65ak,\qquad
+\|Lf\|^2=\frac{12a^2k}{\delta}.                         \tag{73.12}
+$$
+
+The symmetric $v=f\otimes f$ belongs to $\operatorname{Dom}B$ and
+$\langle e_{pp},v\rangle=1$. Self-adjointness gives
+
+$$
+\begin{aligned}
+1&=|\langle(B-i)^{-1}e_{pp},(B+i)v\rangle|
+ \le\|(B-i)^{-1}e_{pp}\|\,\|(B+i)v\|,\\
+\|(B+i)v\|^2
+ &=N_p^2+2\|Lf\|^2N_p+2|\langle Lf,f\rangle|^2=c_p^{-2}.
+\end{aligned}                                                    \tag{73.13}
+$$
+
+Thus the first discrepancy, tested on $e_{pp}$, is at least $c_p$.
+No hypothesis on the comparator's potential beyond its declared
+self-adjointness is needed; its resolvent annihilates this input after
+embedding. Isometric conjugation preserves operator norms, so the second
+bound follows from (73.3) and the reverse triangle inequality.
+The witness supplies the positive gap after the full-space convergence
+proof; it does not substitute a test subclass for that theorem. $\square$
+
+**Scope and references.** The one-particle premise is precisely72.10,
+with its fixed-source applicability checks for Cherednichenko–Ershova–Kiselev,
+arXiv:2205.04397v4, Theorem4.5. The fixed-thickness capacity premise is the
+mixed-ground symmetric smooth-core conclusion supported by Evans–Gariepy,
+*Measure Theory and Fine Properties of Functions* (1992), §4.7.2, Theorem3,
+pp.154–156; it is used only within its stated scope. The product inference
+and constant (73.10) are proved above. No N1 rate is transferred, no
+finite-radius/contact model is analyzed, and no source-growth uniformity
+or uniquely three-dimensional conclusion follows.
+
+The free comparison includes atomic double occupation and all continuum
+strata; it leaves Definition64.5 as the literal hard-core target.
+Equation (73.11) obstructs the compatible free-kinetic/exact-coincidence
+route to that target, including its declared bounded operators. It
+constructs no physical potential, field mediator or switching mechanism.
+Every obligation of72.13,66.10,67.11 and68.7 remains: the complete literal
+source, INITIAL/cap, original actor parameters and initialization, whole
+contexts/candidates/guards, native acceptance/refusal/Read/absorbing Stop
+and acquired records; every field mode, spectator and unknown correlation,
+full norm, common reference and clock; ingress/recovery and actual
+operation/domain/dynamic correspondence; all distinct acquisition promises,
+fees, protected records and actual service rights; packing, leakage,
+preparation, control, precision and total lifetime resources. A different
+interaction, occupation penalty, identification or native carrier would
+require its own proofs of all these bridges. This ordinary fixed-source
+composition supplies neither physical validation nor completion of the
+sustained programme.
+
+## 73.99 追加锚（本行以下为增补区）
