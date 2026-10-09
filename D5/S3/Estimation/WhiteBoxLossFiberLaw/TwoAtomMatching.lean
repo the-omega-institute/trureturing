@@ -17,7 +17,8 @@ Library-search audit trail:
   theorem; the infimum-to-dictionary matching argument remains open.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.SpecialFunctions.Sqrt
 
 set_option autoImplicit false
 noncomputable section
@@ -26,7 +27,7 @@ namespace D5.S3.Estimation.WhiteBoxLossFiberLaw.TwoAtomMatching
 
 open scoped BigOperators RealInnerProductSpace
 
-abbrev AtomIndex := Fin 2
+local notation "AtomIndex" => Fin 2
 
 def UnitDictionary (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] :=
   {D : AtomIndex → E // ∀ i, ‖D i‖ = 1}
@@ -55,7 +56,7 @@ theorem code_energy_excess_eq
   unfold codeEnergy atomCombination
   rw [norm_sub_sq_real, norm_sub_sq_real]
   simp [norm_smul, he, real_inner_smul_left, inner_add_right, inner_smul_right,
-    sum_inner, Fin.sum_univ_two]
+    Fin.sum_univ_two]
   ring
 
 /- Every feasible code pays at least the radial amount for a unit signal direction.
@@ -122,5 +123,240 @@ theorem two_slot_matching_from_separate_witnesses
     have hi' : dist (D 1) u < δ := by simpa using hi
     have hj' : dist (D 1) w < δ := by simpa using hj
     linarith
+
+/-- The explicit energy gap for detecting a nearby atom. -/
+def alignmentGap (lam n δ : ℝ) : ℝ :=
+  min ((n - lam) ^ 2 / 8) (lam * (n - lam) * δ ^ 2 / 4)
+
+private theorem alignment_gap_pos (lam n δ : ℝ)
+    (hlam : 0 < lam) (hn : lam < n) (hδ : 0 < δ) :
+    0 < alignmentGap lam n δ := by
+  unfold alignmentGap
+  apply lt_min <;> positivity
+
+/-- A code whose excess is below both explicit thresholds has a nearby atom. -/
+private theorem energy_near_radial_has_atom
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam n δ : ℝ) (e : E) (D : UnitDictionary E) (c : AtomIndex → ℝ)
+    (he : ‖e‖ = 1) (hlam : 0 < lam) (hn : lam < n) (hδ : 0 < δ)
+    (hc : FeasibleCode c)
+    (henergy : codeEnergy lam (n • e) D c <
+      lam * n - lam ^ 2 / 2 + alignmentGap lam n δ) :
+    ∃ i, dist (D.1 i) e < δ := by
+  have hcomplete := code_energy_excess_eq lam n e D c he
+  have hmass : ‖atomCombination D c‖ ≤ ∑ i, c i := by
+    calc
+      ‖atomCombination D c‖ ≤ ∑ i, ‖c i • D.1 i‖ := norm_sum_le _ _
+      _ = ∑ i, c i := by
+        apply Finset.sum_congr rfl
+        intro i _
+        rw [norm_smul, D.2 i, mul_one, Real.norm_eq_abs, abs_of_nonneg (hc i)]
+  have hdef : 0 ≤ ∑ i, c i * (1 - inner ℝ e (D.1 i)) := by
+    apply Finset.sum_nonneg
+    intro i _
+    apply mul_nonneg (hc i)
+    have h := real_inner_le_norm e (D.1 i)
+    rw [he, D.2 i, mul_one] at h
+    linarith
+  have hpen := mul_nonneg hlam.le hdef
+  have hs : (n - lam) / 2 < ∑ i, c i := by
+    by_contra hs
+    have hs' := le_of_not_gt hs
+    have hrnorm : ‖(n - lam) • e‖ = n - lam := by
+      rw [norm_smul, he, mul_one, Real.norm_eq_abs, abs_of_pos (sub_pos.mpr hn)]
+    have hrev := norm_sub_norm_le ((n - lam) • e) (atomCombination D c)
+    rw [hrnorm] at hrev
+    have hres : (n - lam) / 2 ≤ ‖(n - lam) • e - atomCombination D c‖ := by
+      linarith
+    have hgap := min_le_left ((n - lam) ^ 2 / 8) (lam * (n - lam) * δ ^ 2 / 4)
+    change alignmentGap lam n δ ≤ (n - lam) ^ 2 / 8 at hgap
+    have hnonneg := norm_nonneg ((n - lam) • e - atomCombination D c)
+    nlinarith [sq_nonneg (‖(n - lam) • e - atomCombination D c‖ - (n - lam) / 2)]
+  by_contra hnear
+  push Not at hnear
+  have hcorr : ∀ i, δ ^ 2 / 2 ≤ 1 - inner ℝ e (D.1 i) := by
+    intro i
+    have hd := hnear i
+    rw [dist_eq_norm] at hd
+    have hid := norm_sub_sq_real (D.1 i) e
+    rw [D.2 i, he, real_inner_comm] at hid
+    have hnn := norm_nonneg (D.1 i - e)
+    nlinarith
+  have hsum : (∑ i, c i) * (δ ^ 2 / 2) ≤
+      ∑ i, c i * (1 - inner ℝ e (D.1 i)) := by
+    rw [Finset.sum_mul]
+    exact Finset.sum_le_sum (fun i _ => mul_le_mul_of_nonneg_left (hcorr i) (hc i))
+  have hsum' := mul_le_mul_of_nonneg_left hsum hlam.le
+  have hstrict : lam * ((n - lam) / 2 * (δ ^ 2 / 2)) <
+      lam * ((∑ i, c i) * (δ ^ 2 / 2)) := by
+    apply mul_lt_mul_of_pos_left _ hlam
+    exact mul_lt_mul_of_pos_right hs (by positivity)
+  have hgap := min_le_right ((n - lam) ^ 2 / 8) (lam * (n - lam) * δ ^ 2 / 4)
+  change alignmentGap lam n δ ≤ lam * (n - lam) * δ ^ 2 / 4 at hgap
+  have hres := sq_nonneg ‖(n - lam) • e - atomCombination D c‖
+  nlinarith
+
+/-- A strict near-equality bound for the infimal cost forces one atom into the
+specified direction ball, without any attainment hypothesis. -/
+private theorem cost_near_radial_has_atom
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam n δ : ℝ) (e : E) (D : UnitDictionary E)
+    (he : ‖e‖ = 1) (hlam : 0 < lam) (hn : lam < n) (hδ : 0 < δ)
+    (hcost : codeCost lam (n • e) D <
+      lam * n - lam ^ 2 / 2 + alignmentGap lam n δ) :
+    ∃ i, dist (D.1 i) e < δ := by
+  have hne : ({z : ℝ | ∃ c, FeasibleCode c ∧ codeEnergy lam (n • e) D c = z}).Nonempty :=
+    ⟨codeEnergy lam (n • e) D (fun _ => 0), (fun _ => 0), (fun _ => le_rfl), rfl⟩
+  obtain ⟨z, ⟨c, hc, rfl⟩, hz⟩ := exists_lt_of_csInf_lt hne hcost
+  exact energy_near_radial_has_atom lam n δ e D c he hlam hn hδ hc hz
+
+/-- Two near-radial samples force simultaneous matching by the two slots of one
+actual dictionary. The gap is explicit and independent of the dictionary. -/
+theorem quantitative_two_slot_matching
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam n m a b δ : ℝ) (u w : E) (D : UnitDictionary E)
+    (hu : ‖u‖ = 1) (hw : ‖w‖ = 1) (hlam : 0 < lam)
+    (hn : lam < n) (hm : lam < m) (ha : 0 < a) (hb : 0 < b)
+    (hδ : 0 < δ) (hsep : 2 * δ ≤ dist u w)
+    (hcost : a * codeCost lam (n • u) D + b * codeCost lam (m • w) D <
+      a * (lam * n - lam ^ 2 / 2) + b * (lam * m - lam ^ 2 / 2) +
+        min (a * alignmentGap lam n δ) (b * alignmentGap lam m δ)) :
+    (dist (D.1 0) u < δ ∧ dist (D.1 1) w < δ) ∨
+      (dist (D.1 0) w < δ ∧ dist (D.1 1) u < δ) := by
+  have hlowu := code_cost_radial_lower_bound lam n u D hu hlam.le
+  have hloww := code_cost_radial_lower_bound lam m w D hw hlam.le
+  have hupperu : codeCost lam (n • u) D <
+      lam * n - lam ^ 2 / 2 + alignmentGap lam n δ := by
+    have hgap := min_le_left (a * alignmentGap lam n δ) (b * alignmentGap lam m δ)
+    have hweight := mul_le_mul_of_nonneg_left hloww hb.le
+    nlinarith
+  have hupperw : codeCost lam (m • w) D <
+      lam * m - lam ^ 2 / 2 + alignmentGap lam m δ := by
+    have hgap := min_le_right (a * alignmentGap lam n δ) (b * alignmentGap lam m δ)
+    have hweight := mul_le_mul_of_nonneg_left hlowu ha.le
+    nlinarith
+  exact two_slot_matching_from_separate_witnesses D.1 u w δ hsep
+    (cost_near_radial_has_atom lam n δ u D hu hlam hn hδ hupperu)
+    (cost_near_radial_has_atom lam m δ w D hw hlam hm hδ hupperw)
+
+/-- Positive gap attached to the simultaneous matching bound. -/
+private theorem matching_gap_pos (lam n m a b δ : ℝ)
+    (hlam : 0 < lam) (hn : lam < n) (hm : lam < m)
+    (ha : 0 < a) (hb : 0 < b) (hδ : 0 < δ) :
+    0 < min (a * alignmentGap lam n δ) (b * alignmentGap lam m δ) :=
+  lt_min (mul_pos ha (alignment_gap_pos lam n δ hlam hn hδ))
+    (mul_pos hb (alignment_gap_pos lam m δ hlam hm hδ))
+
+/-- Equality in the actual infimal radial bound holds precisely when an atom
+is aligned with the signal direction. -/
+theorem code_cost_eq_radial_iff
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam n : ℝ) (e : E) (D : UnitDictionary E)
+    (he : ‖e‖ = 1) (hlam : 0 < lam) (hn : lam < n) :
+    codeCost lam (n • e) D = lam * n - lam ^ 2 / 2 ↔ ∃ i, D.1 i = e := by
+  constructor
+  · intro heq
+    by_contra hnone
+    push Not at hnone
+    have h0 : 0 < dist (D.1 0) e := dist_pos.mpr (hnone 0)
+    have h1 : 0 < dist (D.1 1) e := dist_pos.mpr (hnone 1)
+    let δ := min (dist (D.1 0) e) (dist (D.1 1) e)
+    have hd : 0 < δ := lt_min h0 h1
+    have hcost : codeCost lam (n • e) D <
+        lam * n - lam ^ 2 / 2 + alignmentGap lam n δ := by
+      rw [heq]
+      linarith [alignment_gap_pos lam n δ hlam hn hd]
+    obtain ⟨i, hi⟩ := cost_near_radial_has_atom lam n δ e D he hlam hn hd hcost
+    fin_cases i
+    · have hh : dist (D.1 0) e < δ := by simpa using hi
+      exact (not_lt_of_ge (min_le_left (dist (D.1 0) e) (dist (D.1 1) e))) hh
+    · have hh : dist (D.1 1) e < δ := by simpa using hi
+      exact (not_lt_of_ge (min_le_right (dist (D.1 0) e) (dist (D.1 1) e))) hh
+  · rintro ⟨i, hi⟩
+    have lower := code_cost_radial_lower_bound lam n e D he hlam.le
+    apply le_antisymm _ lower
+    unfold codeCost
+    have hbdd : BddBelow {z : ℝ | ∃ c, FeasibleCode c ∧ codeEnergy lam (n • e) D c = z} := by
+      refine ⟨lam * n - lam ^ 2 / 2, ?_⟩
+      rintro z ⟨c, hc, rfl⟩
+      exact feasible_code_energy_lower_bound lam n e D c he hlam.le hc
+    let c : AtomIndex → ℝ := fun j => if j = i then n - lam else 0
+    have hc : FeasibleCode c := by
+      intro j
+      dsimp [c]
+      split_ifs <;> linarith
+    have hcomb : atomCombination D c = (n - lam) • e := by
+      fin_cases i <;> simp [atomCombination, c, Fin.sum_univ_two]
+      all_goals exact congrArg (fun z => (n - lam) • z) hi
+    have hsum : (∑ j, c j) = n - lam := by
+      fin_cases i <;> simp [c, Fin.sum_univ_two]
+    have henergy : codeEnergy lam (n • e) D c = lam * n - lam ^ 2 / 2 := by
+      unfold codeEnergy
+      rw [hcomb, hsum]
+      have hsub : n • e - (n - lam) • e = lam • e := by module
+      rw [hsub, norm_smul, he, mul_one, Real.norm_eq_abs, abs_of_pos hlam]
+      ring
+    exact csInf_le hbdd ⟨c, hc, henergy⟩
+
+/-- The normalized sum of two orthogonal unit directions. -/
+def bisector {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (u v : E) : E := (Real.sqrt 2)⁻¹ • (u + v)
+
+private theorem bisector_geometry
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (u v : E) (hu : ‖u‖ = 1) (hv : ‖v‖ = 1) (horth : inner ℝ u v = 0) :
+    ‖bisector u v‖ = 1 ∧ (Real.sqrt 2) • bisector u v = u + v := by
+  have hsqrt : 0 < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  have hsq : (Real.sqrt 2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hsum : ‖u + v‖ = Real.sqrt 2 := by
+    apply (sq_eq_sq₀ (norm_nonneg _) hsqrt.le).mp
+    rw [norm_add_sq_real, hu, hv, horth, hsq]
+    norm_num
+  constructor
+  · rw [bisector, norm_smul, hsum, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hsqrt)]
+    exact inv_mul_cancel₀ hsqrt.ne'
+  · rw [bisector, smul_smul, mul_inv_cancel₀ hsqrt.ne', one_smul]
+
+/-- The weighted objective at perturbation weight t. -/
+def jointCost {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam a b t : ℝ) (u v : E) (D : UnitDictionary E) : ℝ :=
+  a * codeCost lam u D + b * codeCost lam (u + v) D + t * codeCost lam v D
+
+/-- The radial baseline for the two positive-weight samples. -/
+def baseline (lam a b : ℝ) : ℝ :=
+  a * (lam - lam ^ 2 / 2) + b * (Real.sqrt 2 * lam - lam ^ 2 / 2)
+
+/-- An explicit dictionary-independent near-equality threshold. -/
+def matchingGap (lam a b δ : ℝ) : ℝ :=
+  min (a * alignmentGap lam 1 δ) (b * alignmentGap lam (Real.sqrt 2) δ)
+
+/-- Quantitative two-slot matching for orthogonal unit samples. This statement
+includes all ordered unit dictionaries, including repeated and antipodal atoms. -/
+theorem whitebox_quantitative_matching
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (lam a b δ : ℝ) (u v : E) (D : UnitDictionary E)
+    (hu : ‖u‖ = 1) (hv : ‖v‖ = 1) (horth : inner ℝ u v = 0)
+    (hlam : 0 < lam) (hsmall : lam < 1 / Real.sqrt 2)
+    (ha : 0 < a) (hb : 0 < b) (hδ : 0 < δ)
+    (hsep : δ < ‖u - bisector u v‖ / 2) :
+    0 < matchingGap lam a b δ ∧
+    (jointCost lam a b 0 u v D < baseline lam a b + matchingGap lam a b δ →
+      (dist (D.1 0) u < δ ∧ dist (D.1 1) (bisector u v) < δ) ∨
+        (dist (D.1 0) (bisector u v) < δ ∧ dist (D.1 1) u < δ)) := by
+  have hsqrt : 1 < Real.sqrt 2 := by
+    have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+    have hp := Real.sqrt_nonneg 2
+    nlinarith
+  have hinv : 1 / Real.sqrt 2 < 1 := (div_lt_one (by linarith)).mpr hsqrt
+  have hn : lam < 1 := hsmall.trans hinv
+  have hm : lam < Real.sqrt 2 := hn.trans hsqrt
+  obtain ⟨hw, hsum⟩ := bisector_geometry u v hu hv horth
+  refine ⟨matching_gap_pos lam 1 (Real.sqrt 2) a b δ hlam hn hm ha hb hδ, ?_⟩
+  intro hcost
+  apply quantitative_two_slot_matching lam 1 (Real.sqrt 2) a b δ u (bisector u v) D
+    hu hw hlam hn hm ha hb hδ
+  · rw [dist_eq_norm]
+    linarith
+  · simpa [jointCost, baseline, matchingGap, hsum, mul_comm] using hcost
 
 end D5.S3.Estimation.WhiteBoxLossFiberLaw.TwoAtomMatching
