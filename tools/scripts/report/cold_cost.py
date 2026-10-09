@@ -20,6 +20,7 @@ import subprocess
 import sys
 import threading
 import time
+import zlib
 
 SEALED_INPUTS_SHA256 = "188f08d676df9d59b9f232be65fd74576a48b744a3f089d9057ca61028b7afa0"
 
@@ -147,6 +148,81 @@ def cancellable(function):
     return wrapped
 
 
+def _unique_json_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("ambiguous trace JSON key")
+        result[key] = value
+    return result
+
+
+def iter_signal_records(lines, live=False, require_terminal=True):
+    """Decode the ordered, checksummed deflate frames into exact retained JSON.
+
+    Each admitted record has one immediate local/live frame. Sequence, length,
+    CRC and deflate completion reject missing, reordered or corrupt frames.
+    An explicitly requested prefix is evidence of that prefix only.
+    """
+    decoder = zlib.decompressobj()
+    terminal = False
+    charged = 0
+    for index, line in enumerate(lines):
+        if isinstance(line, bytes):
+            line = line.decode("ascii")
+        charged += len(line.encode("ascii")) + (0 if live else len("SIGNAL_DIAGNOSTIC "))
+        if charged > TRACE_LIMIT:
+            raise ValueError("trace physical live byte limit exceeded")
+        if terminal or not line.endswith("\n"):
+            raise ValueError("trailing or truncated trace frame")
+        if live:
+            if not line.startswith("SIGNAL_DIAGNOSTIC "):
+                raise ValueError("unrecognized live trace frame")
+            line = line[len("SIGNAL_DIAGNOSTIC "):]
+        frame = json.loads(line, object_pairs_hook=_unique_json_object)
+        if (not isinstance(frame, dict) or set(frame) != {"z", "n", "l", "c"}
+                or type(frame["n"]) is not int or frame["n"] != index
+                or type(frame["l"]) is not int or not 0 < frame["l"] <= TRACE_LIMIT
+                or not isinstance(frame["z"], str) or not isinstance(frame["c"], str)
+                or re.fullmatch(r"[0-9a-f]{8}", frame["c"]) is None):
+            raise ValueError("ambiguous trace frame schema or sequence")
+        try:
+            compressed = base64.b64decode(frame["z"], validate=True)
+            if base64.b64encode(compressed).decode("ascii") != frame["z"]:
+                raise ValueError("noncanonical trace base64")
+            raw = decoder.decompress(compressed, frame["l"] + 1)
+        except (ValueError, zlib.error) as error:
+            raise ValueError("invalid trace deflate frame") from error
+        if (len(raw) != frame["l"] or decoder.unconsumed_tail or decoder.unused_data
+                or f"{zlib.crc32(raw):08x}" != frame["c"]):
+            raise ValueError("trace frame length or checksum mismatch")
+        record = json.loads(raw, object_pairs_hook=_unique_json_object)
+        if not isinstance(record, dict) or not isinstance(record.get("kind"), str):
+            raise ValueError("trace payload is not a record")
+        terminal = record["kind"] == "trace-terminal"
+        if terminal != decoder.eof:
+            raise ValueError("trace terminal and deflate completion mismatch")
+        if not terminal and not compressed.endswith(b"\x00\x00\xff\xff"):
+            raise ValueError("truncated trace deflate flush boundary")
+        # Kernel-record validation is shared with fixture attribution; metadata
+        # remains exactly the original JSON value, without a selected domain.
+        decode_signal_record(record)
+        yield record
+    if require_terminal and not terminal:
+        raise ValueError("trace terminal absent; retention is censored")
+
+
+def validate_retained_trace(path, require_healthy=True):
+    """The artifact/health consumer checks the actual retained encoding."""
+    with path.open("rb") as stream:
+        terminal = None
+        for terminal in iter_signal_records(stream):
+            pass
+    if require_healthy:
+        require_trace_health(terminal)
+    return terminal
+
+
 class SignalSink:
     """One bounded evidence stream, mirrored live with bounded delivery.
 
@@ -154,6 +230,7 @@ class SignalSink:
     Console delivery beyond the runner's last retained line is never certified.
     """
     def __init__(self, path, console=None, limit=TRACE_LIMIT):
+        self.path = path
         self.stream = path.open("w", buffering=1)
         self.console = sys.stdout if console is None else console
         self.limit = limit
@@ -164,6 +241,22 @@ class SignalSink:
         self.console_error = None
         self.lock = threading.Lock()
         self.closed = False
+        self.encoder = zlib.compressobj()
+        self.sequence = 0
+
+    def _encode(self, event, terminal):
+        raw = json.dumps(event, sort_keys=True).encode()
+        encoder = self.encoder.copy()
+        compressed = encoder.compress(raw) + encoder.flush(zlib.Z_FINISH if terminal else zlib.Z_SYNC_FLUSH)
+        frame = {"z": base64.b64encode(compressed).decode("ascii"), "n": self.sequence,
+                 "l": len(raw), "c": f"{zlib.crc32(raw):08x}"}
+        return json.dumps(frame, separators=(",", ":")) + "\n", encoder
+
+    def _terminal_event(self, event):
+        drops = max(event.get("dropped_events", 0), self.dropped_events)
+        return dict(event, dropped_events=drops,
+                    retention="censored" if drops or event.get("retention") == "censored"
+                    else "local-terminal-collected")
 
     def _deliver(self, text):
         # emit/finish serve the required trace-health consumer (GoalArtifact
@@ -205,7 +298,9 @@ class SignalSink:
         with self.lock:
             if self.closed:
                 return
-            record = json.dumps(event, sort_keys=True) + "\n"
+            if terminal:
+                event = self._terminal_event(event)
+            record, encoder = self._encode(event, terminal)
             text = "SIGNAL_DIAGNOSTIC " + record
             size = len(text.encode())
             if self.bytes + size > self.limit - (0 if terminal else self.reserve):
@@ -216,14 +311,15 @@ class SignalSink:
             self.bytes += size
             self._deliver(text)
             if terminal:
-                event = dict(event, dropped_events=self.dropped_events,
-                             retention="censored" if self.dropped_events else "local-terminal-collected")
-                record = json.dumps(event, sort_keys=True) + "\n"
+                event = self._terminal_event(event)
+                record, encoder = self._encode(event, terminal)
                 extra = max(0, len(("SIGNAL_DIAGNOSTIC " + record).encode()) - size)
                 if self.bytes + extra > self.limit:
                     self.dropped_events += 1
                     return
                 self.bytes += extra
+            self.encoder = encoder
+            self.sequence += 1
             try:
                 self.stream.write(record)
                 self.stream.flush()
@@ -234,8 +330,6 @@ class SignalSink:
 
     def finish(self, health):
         self.emit({"kind": "trace-terminal", **health,
-                   "dropped_events": self.dropped_events,
-                   "retention": "censored" if self.dropped_events else "local-terminal-collected",
                    "console_retention": "only actually retained live lines are evidence"}, terminal=True)
         with self.lock:
             self.closed = True
@@ -244,6 +338,11 @@ class SignalSink:
             except OSError as error:
                 self.dropped_events += 1
                 self.retention_error = type(error).__name__
+        try:
+            validate_retained_trace(self.path, require_healthy=False)
+        except (OSError, ValueError) as error:
+            self.dropped_events += 1
+            self.retention_error = self.retention_error or type(error).__name__
 
 
 def _wire_identity(fields):
@@ -309,6 +408,8 @@ def require_trace_health(health):
     required = {"ready", "lost_events", "dropped_events", "parse_errors", "reader_error", "collector_returncode"}
     if (not required <= health.keys() or not health.get("ready") or any(health.get(k, 0) for k in
             ("lost_events", "dropped_events", "parse_errors")) or health.get("reader_error")
+            or health.get("retention_error") or health.get("console_error")
+            or health.get("retention") == "censored"
             or health.get("collector_returncode") not in (None, 0)):
         raise ValueError("signal capability absent, ambiguous, lost or censored; workload is forbidden")
 

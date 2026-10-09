@@ -14,6 +14,7 @@ import tempfile
 import threading
 import time
 import unittest
+import zlib
 from unittest.mock import Mock, patch
 
 PROGRAM = Path(__file__).resolve().parents[1] / "cold_cost.py"
@@ -23,6 +24,115 @@ SPEC.loader.exec_module(cost)
 
 HEALTHY = {"ready": True, "lost_events": 0, "dropped_events": 0, "parse_errors": 0,
            "reader_error": None, "collector_returncode": None}
+
+
+class RetentionCodecTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.path = Path(self.tmp.name) / "trace.jsonl"
+        self.console = io.StringIO()
+        self.sink = cost.SignalSink(self.path, console=self.console)
+        self.addCleanup(lambda: self.sink.finish(HEALTHY) if not self.sink.closed else None)
+
+    def frames(self):
+        return self.path.read_text().splitlines(keepends=True)
+
+    def test_exact_ordered_record_and_live_roundtrip_without_domain_selection(self):
+        records = [{"kind": "arbitrary-metadata", "raw": "\x00\xff\n雪", "number": -2**100,
+                    "fields": [None, True, 3.125, {"n": "same key at another depth"}]}]
+        for index in range(2048):
+            wire = f"D\tkill\t{index}\t15\t-40\t0\t0\t21\t20\t1\t40\t1\t{2**64-1-index}\tLost 7 events"
+            records.append({"kind": "kill", "wire": wire})
+        for record in records:
+            self.sink.emit(record)
+        self.sink.finish(HEALTHY)
+        retained = list(cost.iter_signal_records(self.frames()))
+        live = list(cost.iter_signal_records(self.console.getvalue().splitlines(keepends=True), live=True))
+        self.assertEqual(retained[:-1], records)
+        self.assertEqual(live, retained)
+        self.assertEqual([cost.decode_signal_record(row) for row in retained[:-1]],
+                         [cost.decode_signal_record(row) for row in records])
+        self.assertEqual(self.sink.bytes, len(self.console.getvalue().encode()))
+        self.assertLess(self.sink.bytes, sum(len(json.dumps(row)) for row in records) * .8)
+        cost.validate_retained_trace(self.path)
+
+    def test_consumer_refuses_corruption_truncation_reordering_and_ambiguity(self):
+        for i in range(3):
+            self.sink.emit({"kind": "metadata", "payload": "unchanged " * 30, "order": i})
+        self.sink.finish(HEALTHY)
+        lines = self.frames()
+        frame = json.loads(lines[1])
+        corruptions = {
+            "missing": lines[:1] + lines[2:],
+            "duplicate": lines[:2] + lines[1:],
+            "reordered": [lines[1], lines[0], *lines[2:]],
+            "no-terminal": lines[:-1],
+            "partial-line": [*lines[:-1], lines[-1][:-1]],
+            "trailing-record": [*lines, lines[0]],
+            "checksum": [lines[0], json.dumps(dict(frame, c="00000000")) + "\n", *lines[2:]],
+            "length": [lines[0], json.dumps(dict(frame, l=1)) + "\n", *lines[2:]],
+            "extra-field": [lines[0], json.dumps(dict(frame, kind="metadata")) + "\n", *lines[2:]],
+            "base64": [lines[0], json.dumps(dict(frame, z="!invalid")) + "\n", *lines[2:]],
+            "deflate": [lines[0], json.dumps(dict(frame, z=base64.b64encode(b"not deflate").decode())) + "\n", *lines[2:]],
+            "duplicate-key": [lines[0], lines[1].replace('"n":', '"n":0,"n":'), *lines[2:]],
+        }
+        for name, changed in corruptions.items():
+            with self.subTest(corruption=name):
+                self.path.write_text("".join(changed))
+                with self.assertRaises(ValueError):
+                    cost.validate_retained_trace(self.path)
+
+    def test_decoder_bounds_expansion_and_refuses_non_record_payloads(self):
+        for raw, declared in ((b"x" * 1024, 5), (b"[]", 2), (b'{"kind":"a","kind":"b"}', 23)):
+            frame = {"z": base64.b64encode(zlib.compress(raw)).decode(), "n": 0,
+                     "l": declared, "c": f"{zlib.crc32(raw):08x}"}
+            with self.subTest(raw=raw[:32]), self.assertRaises(ValueError):
+                list(cost.iter_signal_records([json.dumps(frame) + "\n"]))
+        frame = {"z": "", "n": 0, "l": cost.TRACE_LIMIT + 1, "c": "00000000"}
+        with self.assertRaises(ValueError):
+            list(cost.iter_signal_records([json.dumps(frame) + "\n"]))
+
+    def test_prefix_decoder_refuses_truncated_deflate_flush_boundary(self):
+        self.sink.emit({"kind": "metadata", "payload": "preserved"})
+        frame = json.loads(self.frames()[0])
+        compressed = base64.b64decode(frame["z"])
+        self.assertTrue(compressed.endswith(b"\x00\x00\xff\xff"))
+        frame["z"] = base64.b64encode(compressed[:-4]).decode()
+        with self.assertRaises(ValueError):
+            list(cost.iter_signal_records([json.dumps(frame) + "\n"], require_terminal=False))
+
+    def test_actual_consumer_enforces_physical_live_budget(self):
+        self.sink.emit({"kind": "metadata", "payload": "preserved"})
+        self.sink.finish(HEALTHY)
+        with patch.object(cost, "TRACE_LIMIT", self.sink.bytes - 1):
+            with self.assertRaises(ValueError):
+                cost.validate_retained_trace(self.path)
+        cost.validate_retained_trace(self.path)
+
+    def test_actual_finish_consumer_censors_corrupt_local_retention(self):
+        self.sink.emit({"kind": "trace-ready"})
+        lines = self.frames()
+        frame = json.loads(lines[0])
+        self.path.write_text(json.dumps(dict(frame, c="00000000")) + "\n")
+        self.sink.finish(HEALTHY)
+        self.assertGreater(self.sink.dropped_events, 0)
+        self.assertIsNotNone(self.sink.retention_error)
+        with self.assertRaises(ValueError):
+            cost.require_trace_health(dict(HEALTHY, dropped_events=self.sink.dropped_events,
+                                           retention_error=self.sink.retention_error))
+
+    def test_original_censorship_and_loss_remain_refused_after_encoding(self):
+        for health in (dict(HEALTHY, dropped_events=5659, retention="censored"),
+                       dict(HEALTHY, lost_events=1), dict(HEALTHY, parse_errors=1),
+                       dict(HEALTHY, retention_error="OSError"), dict(HEALTHY, console_error="OSError")):
+            with self.subTest(health=health):
+                path = self.path.with_name(str(len(list(self.path.parent.iterdir()))) + ".jsonl")
+                sink = cost.SignalSink(path, console=io.StringIO())
+                sink.emit({"kind": "trace-ready"})
+                sink.finish(health)
+                with self.assertRaises(ValueError):
+                    cost.validate_retained_trace(path)
 
 
 class PortableOwnedCommand:
@@ -85,7 +195,7 @@ class TraceRepresentationTests(unittest.TestCase):
         self.addCleanup(self.trace.stop)
 
     def records(self):
-        return [json.loads(line) for line in (self.output / "trace.jsonl").read_text().splitlines()]
+        return list(cost.iter_signal_records((self.output / "trace.jsonl").read_text().splitlines(keepends=True)))
 
     def test_valid_stdout_loss_text_recovers_exact_parser_event_through_reader(self):
         line = "D\tkill\t2000000000\t15\t-40\t0\t0\t20\t20\t1\t40\t1\t1000000000\tLost 7 events"
@@ -310,7 +420,7 @@ time.sleep(30)
         self.env = dict(os.environ, PATH=str(provider / "bin") + os.pathsep + os.environ["PATH"])
 
     def records(self, output):
-        return [json.loads(line) for line in (output / "signal-trace.jsonl").read_text().splitlines()]
+        return list(cost.iter_signal_records((output / "signal-trace.jsonl").read_text().splitlines(keepends=True)))
 
     def test_both_consumers_use_same_privileged_launcher_and_keep_arguments_and_environment(self):
         real_popen = subprocess.Popen
@@ -499,8 +609,9 @@ class SignalDiagnosticContractTests(unittest.TestCase):
         sink.finish({"lost_events": 3})
         self.assertLessEqual((self.output / "trace.jsonl").stat().st_size, 2048)
         self.assertGreater(sink.dropped_events, 0)
-        self.assertIn('"lost_events": 3', console.getvalue())
-        self.assertIn('"retention": "censored"', console.getvalue())
+        terminal = list(cost.iter_signal_records(console.getvalue().splitlines(keepends=True), live=True))[-1]
+        self.assertEqual(terminal["lost_events"], 3)
+        self.assertEqual(terminal["retention"], "censored")
 
     def test_absent_linux_bpf_capability_has_no_workload_side_effect(self):
         with patch.object(cost.platform, "system", return_value="Darwin"), \
@@ -575,9 +686,12 @@ class SignalDiagnosticContractTests(unittest.TestCase):
         self.assertEqual(trace.health["lost_events"], 7)
         self.assertEqual(trace.health["parse_errors"], 1)
         self.assertNotIn("signed-secret", console.getvalue())
-        self.assertIn("compiler-or-attach", console.getvalue())
+        live = list(cost.iter_signal_records(console.getvalue().splitlines(keepends=True),
+                                            live=True, require_terminal=False))
+        self.assertIn("compiler-or-attach", next(row["categories"] for row in live
+                                                if row["kind"] == "schema-or-capability-error"))
         trace.sink.finish(trace.health)
-        records = [json.loads(line) for line in (self.output / "wire.jsonl").read_text().splitlines()]
+        records = list(cost.iter_signal_records((self.output / "wire.jsonl").read_text().splitlines(keepends=True)))
         retained = [base64.b64decode(row["raw_bytes_base64"]) for row in records
                     if row["kind"] == "collector-diagnostic"]
         self.assertEqual(retained, [b"Lost 7 events", b"ERROR private-token=signed-secret-url"])
@@ -605,7 +719,7 @@ class SignalDiagnosticContractTests(unittest.TestCase):
         self.assertIsNotNone(child.poll())
         with self.assertRaises(ValueError):
             cost.require_trace_health(health)
-        records = [json.loads(line) for line in (trace.output / "signal-trace.jsonl").read_text().splitlines()]
+        records = list(cost.iter_signal_records((trace.output / "signal-trace.jsonl").read_text().splitlines(keepends=True)))
         diagnostics = [row for row in records if row.get("kind") == "collector-diagnostic"]
         self.assertTrue(diagnostics)
         for row in diagnostics:
@@ -825,8 +939,7 @@ time.sleep(30)
                                   "live_bytes": len(delivered), "limit": trace.sink.limit}), flush=True)
                             self.assertLessEqual(len(delivered), trace.sink.limit)
                             self.assertTrue(os.get_blocking(console.fileno()))
-                        rows = [json.loads(line.removeprefix(b"SIGNAL_DIAGNOSTIC "))
-                                for line in delivered.splitlines()]
+                        rows = list(cost.iter_signal_records(delivered.splitlines(keepends=True), live=True))
                         diagnostics = [r for r in rows if r["kind"] == "collector-diagnostic"]
                         self.assertGreaterEqual(sum(r["terminated"] for r in diagnostics), 2)
                         for row in diagnostics:
@@ -895,7 +1008,7 @@ time.sleep(30)
                         self.assertEqual(len(delivered), before)
                     else:
                         terminal = delivered[before:]
-                        row = json.loads(terminal.removeprefix(b"SIGNAL_DIAGNOSTIC "))
+                        row = list(cost.iter_signal_records(delivered.splitlines(keepends=True), live=True))[-1]
                         self.assertEqual(row["kind"], "trace-terminal")
                         self.assertEqual(row["retention"], "censored")
                         if delta is not None:
@@ -1742,7 +1855,7 @@ else: raise AssertionError("owned command survives")
 end=json.loads((root/"stages.jsonl").read_text().splitlines()[-1])
 assert end["cleanup"]["workload_reaped"] and end["returncode"] is not None
 assert end["observer_failure"]["retention"]=="censored"
-terminal=json.loads((root/"trace.jsonl").read_text().splitlines()[-1])
+terminal=list(cost.iter_signal_records((root/"trace.jsonl").read_text().splitlines(keepends=True)))[-1]
 assert terminal["retention"]=="censored" and terminal["dropped_events"]>0
 try: cost.require_trace_health(health)
 except ValueError: pass
@@ -1765,7 +1878,7 @@ os.set_blocking(w,True)
 trace=cost.SignalTrace(root); trace.health.update(ready=True)
 trace.sink=cost.SignalSink(root/"trace.jsonl",console=console)
 begin=time.monotonic(); health=trace.stop(); elapsed=time.monotonic()-begin
-terminal=json.loads((root/"trace.jsonl").read_text().splitlines()[-1])
+terminal=list(cost.iter_signal_records((root/"trace.jsonl").read_text().splitlines(keepends=True)))[-1]
 assert elapsed<2 and trace.sink.closed and os.get_blocking(w)
 assert health["dropped_events"]>0 and terminal["dropped_events"]>0
 assert terminal["retention"]=="censored"
