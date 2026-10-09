@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95fcdf4ca58a3105c39762b0e70abf2d6b6fe0108e4e7b45f00515fd6912b92e
+  normalized_sha256: sha256:95fcdf4ca58a3105c39762b0e70abf2d6b6fe0108e4e7b45f00515fd6912b92e
+cas_ref: sha256:95fcdf4ca58a3105c39762b0e70abf2d6b6fe0108e4e7b45f00515fd6912b92e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The partial writer unit and associativity claim is closed by pinned Mathlib Part.bind_assoc, Part.bind_map, Part.map_bind, Part.map_map, Part.bind_some, and List.append_assoc; no repository frozen GID supplies this exact statement.
+    previous_atom_id: 3625e26953572572541304732b171d3ee5b3f4493edc99cfc98ae0e6201265fc
+    next_atom_id: dee4ccfbec6e9196224615c98bb57c0e491e696f9961524cf381485728de0185

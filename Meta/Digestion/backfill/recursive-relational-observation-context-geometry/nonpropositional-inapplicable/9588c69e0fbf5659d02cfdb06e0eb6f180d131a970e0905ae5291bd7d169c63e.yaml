@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9588c69e0fbf5659d02cfdb06e0eb6f180d131a970e0905ae5291bd7d169c63e
+  normalized_sha256: sha256:9588c69e0fbf5659d02cfdb06e0eb6f180d131a970e0905ae5291bd7d169c63e
+cas_ref: sha256:9588c69e0fbf5659d02cfdb06e0eb6f180d131a970e0905ae5291bd7d169c63e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The explicit reference bridge and equivariance calculation are closed by pinned Mathlib SemigroupAction.mul_smul, Equiv.apply_symm_apply, and Equiv.symm_apply_apply; no repository frozen GID supplies this exact statement.
+    previous_atom_id: f876313ff34fa981bc9655e9d8ac9b7c98434d4f0852cc063a285e530675d766
+    next_atom_id: 48e61b784c6a30ffd984d348e3fa098db854b102e190ce2f37e81e9311448e7d
