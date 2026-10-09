@@ -111,3 +111,10 @@ the paper's theorems.
 **Open.** Whether the lower bounds over $\Sigma(d)$ hold for two qudits at $d\equiv1\pmod3$, where
 $\Sigma(d)$ contains four defect subspaces besides $\mathscr T_{\rm iso}$; the exact minimum of
 $\kappa(\Psi,\Sigma(d))$ for $n\ge2$.
+
+## ASSUMED-UNVERIFIED
+
+The main text of the published Communications in Mathematical Physics version is subscription-gated
+and was not read; that it prints Conjecture 2 and the statement $\Sigma(d)=\mathscr T_{\rm iso}$ for
+$d\equiv2\pmod3$ unchanged is not verified firsthand. The bounded literature check does not establish
+exhaustive worldwide novelty, priority, or the absence of an independent refutation.
