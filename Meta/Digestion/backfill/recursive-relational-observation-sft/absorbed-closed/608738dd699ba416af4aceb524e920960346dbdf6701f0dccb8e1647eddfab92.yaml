@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:608738dd699ba416af4aceb524e920960346dbdf6701f0dccb8e1647eddfab92
+  normalized_sha256: sha256:608738dd699ba416af4aceb524e920960346dbdf6701f0dccb8e1647eddfab92
+cas_ref: sha256:608738dd699ba416af4aceb524e920960346dbdf6701f0dccb8e1647eddfab92
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FirstResponseDiamond.first_response_diamond
+    target_statement_id: sha256:14aa9e99f3f8f85824843d41fdfd8123722e2676c4feb196552b324bf5c87837
+receipts:
+  unresolved_subitems: []

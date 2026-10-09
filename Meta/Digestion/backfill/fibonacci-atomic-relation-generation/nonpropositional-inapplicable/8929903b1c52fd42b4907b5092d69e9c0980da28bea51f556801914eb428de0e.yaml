@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8929903b1c52fd42b4907b5092d69e9c0980da28bea51f556801914eb428de0e
+  normalized_sha256: sha256:8929903b1c52fd42b4907b5092d69e9c0980da28bea51f556801914eb428de0e
+cas_ref: sha256:8929903b1c52fd42b4907b5092d69e9c0980da28bea51f556801914eb428de0e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic scope and originality disclaimer. This paragraph identifies the cited Clifford-algebra literature, distinguishes a different object from the present leaf-product classification, and leaves global originality unestablished. It contains no mathematical proposition requiring a Lean coverage declaration. The classification and proof obligations are separate child atoms.
+    previous_atom_id: e6d119524b90a81e8d331b0c18d2845c86056c16e3e45e623f0bd6d1ca881854
+    next_atom_id: 105c13d68f68415fa193b33216495f3a9d19a154b6bdf6459cc7e7a2468e332b

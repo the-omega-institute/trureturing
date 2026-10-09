@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:47224ba3399dd8a348c3ebb69f99b3d236ad00e0a60da6abaa8a01b5e03e8837
+  normalized_sha256: sha256:47224ba3399dd8a348c3ebb69f99b3d236ad00e0a60da6abaa8a01b5e03e8837
+cas_ref: sha256:47224ba3399dd8a348c3ebb69f99b3d236ad00e0a60da6abaa8a01b5e03e8837
+coverage_gids:
+  - gid: D5/S0/Automata/DistinguishingFamilyCardinalityBound.card_le_card_output_of_rigid_continuations
+    target_statement_id: sha256:56d3f598e272b6e61b411a7d2dc8ccb4b32201da4d2f0dfda8c5170c410a04b0
+receipts:
+  unresolved_subitems: []
