@@ -5,6 +5,7 @@ from contextlib import contextmanager
 import ctypes
 import functools
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
@@ -73,8 +74,9 @@ def cancellation_scope():
     global _cancellation
     if _cancellation is not None:
         yield _cancellation
+        check_cancellation()
         return
-    state = {"signal": None}
+    state = {"signal": None, "terminal_cancel": None}
     def latch(signum, _frame):
         if state["signal"] is None:
             state["signal"] = signum
@@ -85,9 +87,30 @@ def cancellation_scope():
             signal.signal(sig, latch)
         yield state
     finally:
-        for sig, handler in previous.items():
-            signal.signal(sig, handler)
-        _cancellation = None
+        # This blocked transition is the terminal ownership point. A signal
+        # latched (or pending) at entry cannot be lost on normal return. run's
+        # publication consumer invalidates its receipt before ownership leaves.
+        mask = signal.pthread_sigmask(signal.SIG_BLOCK, previous)
+        try:
+            if state["signal"] is None:
+                pending = signal.sigpending().intersection(previous)
+                if pending:
+                    state["signal"] = min(pending)
+            if sys.exc_info()[0] is None and state["signal"] is not None:
+                error = CommandCancelled(state["signal"])
+                if state["terminal_cancel"] is not None:
+                    state["terminal_cancel"](error)
+                raise error
+        finally:
+            if state["signal"] is not None:
+                # Discard blocked repeats before restoring the caller's handlers;
+                # they cannot replace the first cancellation's owned exit status.
+                for sig in previous:
+                    signal.signal(sig, signal.SIG_IGN)
+            for sig, handler in previous.items():
+                signal.signal(sig, handler)
+            _cancellation = None
+            signal.pthread_sigmask(signal.SIG_SETMASK, mask)
 
 
 def check_cancellation():
@@ -98,19 +121,29 @@ def check_cancellation():
 def cancellable(function):
     @functools.wraps(function)
     def wrapped(*args, **kwargs):
-        with cancellation_scope():
-            check_cancellation()
-            try:
-                return function(*args, **kwargs)
-            except BaseException as error:
-                if not isinstance(error, CommandCancelled):
-                    check_cancellation()
-                raise
+        completed = False
+        try:
+            with cancellation_scope():
+                check_cancellation()
+                try:
+                    value = function(*args, **kwargs)
+                    completed = True
+                    return value
+                except BaseException as error:
+                    if not isinstance(error, CommandCancelled):
+                        check_cancellation()
+                    raise
+        except CommandCancelled as error:
+            if completed:
+                # run's canonical_stages consumer retains the operation's raw
+                # status even when cancellation wins its normal-return handoff.
+                error.command_returncode = value
+            raise
     return wrapped
 
 
 class SignalSink:
-    """One bounded evidence stream, mirrored live with line flushes.
+    """One bounded evidence stream, mirrored live with bounded delivery.
 
     Missing terminal record means retention is censored; after-steps are optional.
     Console delivery beyond the runner's last retained line is never certified.
@@ -123,8 +156,45 @@ class SignalSink:
         self.bytes = 0
         self.dropped_events = 0
         self.retention_error = None
+        self.console_error = None
         self.lock = threading.Lock()
         self.closed = False
+
+    def _deliver(self, text):
+        # emit/finish serve the required trace-health consumer (GoalArtifact
+        # canonical-report/integration evidence). Never hold its lifecycle lock
+        # across a blocking live-console write or buffered flush. Memory-only
+        # fixture consoles have no external reader; other streams need an fd.
+        if self.console_error is not None:
+            self.dropped_events += 1
+            return
+        try:
+            if isinstance(self.console, io.StringIO):
+                self.console.write(text)
+                return
+            fd = self.console.fileno()
+            blocking = os.get_blocking(fd)
+            try:
+                os.set_blocking(fd, False)
+                data = memoryview(text.encode())
+                deadline = time.monotonic() + .25
+                while data:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        raise TimeoutError("live-console-backpressure")
+                    try:
+                        written = os.write(fd, data)
+                        if written == 0:
+                            raise OSError("live-console-zero-write")
+                        data = data[written:]
+                    except BlockingIOError:
+                        # select also supports redirected regular-file stdout.
+                        __import__("select").select([], [fd], [], remaining)
+            finally:
+                os.set_blocking(fd, blocking)
+        except (OSError, ValueError, TypeError, AttributeError) as error:
+            self.console_error = type(error).__name__
+            self.dropped_events += 1
 
     def emit(self, event, terminal=False):
         with self.lock:
@@ -136,6 +206,15 @@ class SignalSink:
             if self.bytes + size > self.limit - (0 if terminal else self.reserve):
                 self.dropped_events += 1
                 return
+            self._deliver(text)
+            if terminal:
+                event = dict(event, dropped_events=self.dropped_events,
+                             retention="censored" if self.dropped_events else "local-terminal-collected")
+                record = json.dumps(event, sort_keys=True) + "\n"
+                size = len(("SIGNAL_DIAGNOSTIC " + record).encode())
+                if self.bytes + size > self.limit:
+                    self.dropped_events += 1
+                    return
             try:
                 self.stream.write(record)
                 self.stream.flush()
@@ -144,12 +223,6 @@ class SignalSink:
                 self.retention_error = type(error).__name__
                 return
             self.bytes += size
-            try:
-                self.console.write(text)
-                self.console.flush()
-            except (BrokenPipeError, OSError):
-                # The file survives locally; remote console coverage is censored.
-                self.dropped_events += 1
 
     def finish(self, health):
         self.emit({"kind": "trace-terminal", **health,
@@ -380,6 +453,7 @@ class SignalTrace:
     def snapshot(self):
         health = dict(self.health, dropped_events=self.sink.dropped_events if self.sink else 0,
                       retention_error=self.sink.retention_error if self.sink else None,
+                      console_error=self.sink.console_error if self.sink else None,
                       collector_returncode=self.process.poll() if self.process else None)
         return health
 
@@ -1249,6 +1323,24 @@ def run(root, output, mode="workload"):
                                 "retention": "censored", "prior_observer_failure": observer_failure}
             if _cancellation is not None and _cancellation["signal"] is not None:
                 observer_failure["signal"] = _cancellation["signal"]
+        def publish_result():
+            write_json(output / "result.json", result())
+            inventory = [{"path": str(p.relative_to(output)), "sha256": sha(p), "bytes": p.stat().st_size}
+                         for p in sorted(output.rglob("*")) if p.is_file()]
+            write_json(output / "inventory.json", inventory)
+        def terminal_cancel(error):
+            # cancellation_scope owns normal-return handoff, including the tail
+            # after this finally block. Keep raw stage outcomes, censor success,
+            # and bind the corrected result in a fresh inventory when writable.
+            collection_failed(error)
+            try:
+                (output / "inventory.json").unlink(missing_ok=True)
+                publish_result()
+            except OSError:
+                try:
+                    (output / "result.json").unlink(missing_ok=True)
+                except OSError:
+                    pass
         stage = "artifact-collection"
         try:
             if trace is not None:
@@ -1282,11 +1374,9 @@ def run(root, output, mode="workload"):
             collection_failed(error)
         try:
             check_cancellation()
-            write_json(output / "result.json", result())
-            inventory = [{"path": str(p.relative_to(output)), "sha256": sha(p), "bytes": p.stat().st_size}
-                         for p in sorted(output.rglob("*")) if p.is_file()]
-            write_json(output / "inventory.json", inventory)
+            publish_result()
             check_cancellation()
+            _cancellation["terminal_cancel"] = terminal_cancel
         except BaseException as error:
             collection_failed(error)
             # An earlier successful result is no longer admissible. Correction

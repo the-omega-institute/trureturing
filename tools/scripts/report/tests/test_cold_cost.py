@@ -887,6 +887,191 @@ int main(int argc, char **argv) {
         self.assertEqual(len(list((self.output / "compilers").iterdir())), 1)
 
 
+class RequiredLifecycleTests(unittest.TestCase):
+    """GoalArtifact report/integration evidence: actual shared lifecycle consumers.
+
+    These bounded private pipes exercise Python observer ownership, not native
+    kernel attachment or a complete resource/no-OOM diagnosis.
+    """
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix="required lifecycle ")
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+
+    def execute(self, body, *args, expected_returncode=0):
+        driver = self.root / "driver.py"
+        driver.write_text('''import io,json,os,pathlib,runpy,select,signal,subprocess,sys,threading,time
+from unittest.mock import Mock,patch
+ns=runpy.run_path(sys.argv[1],run_name="fixture_import")
+cost=ns["cost"]
+if sys.platform != "linux": cost.OwnedCommand=ns["PortableOwnedCommand"]
+root=pathlib.Path(sys.argv[2])
+''' + body)
+        completed = subprocess.run([sys.executable, "-B", str(driver), str(Path(__file__).resolve()),
+                                    str(self.root), *args], capture_output=True, timeout=12)
+        self.assertEqual(completed.returncode, expected_returncode, completed.stderr.decode(errors="replace"))
+        print("LIFECYCLE_FIXTURE " + completed.stdout.decode().strip(), flush=True)
+        return json.loads(completed.stdout)
+
+    def test_backpressure_reader_main_and_finish_release_owned_operation(self):
+        # The reader and stage-process main consumer contend on an actually full
+        # open pipe. A real TERM while contended must still permit owned cleanup.
+        body = '''
+r,w=os.pipe(); console=os.fdopen(w,"w",buffering=1)
+os.set_blocking(w,False); filled=0
+try:
+    while True: filled+=os.write(w,b"x"*4096)
+except BlockingIOError: pass
+os.set_blocking(w,True)
+assert filled>0 and not select.select([],[w],[],0)[1]
+trace=cost.SignalTrace(root); trace.deadline=time.monotonic()+30
+trace.sink=cost.SignalSink(root/"trace.jsonl",console=io.StringIO())
+trace.process=subprocess.Popen([sys.executable,"-c",'import signal,sys,time; signal.signal(signal.SIGINT,lambda *_: sys.exit(0)); print("D\\tready",flush=True); sys.stdin.readline(); print("D\\tkill\\t100\\t15\\t2\\t0\\t0\\t20\\t20\\t1\\t20\\t20\\t90\\tpython",flush=True); time.sleep(30)'],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,process_group=0)
+trace.thread=threading.Thread(target=trace._read); trace.thread.start()
+assert trace.ready.wait(3)
+trace.check()
+command=[sys.executable,"-c",'import os,pathlib,time; pathlib.Path('+repr(str(root/"command.pid"))+').write_text(str(os.getpid())); time.sleep(30)']
+timer=None
+def sample(*_args,**_kwargs):
+    global timer
+    deadline=time.monotonic()+3
+    while not (root/"command.pid").exists():
+        assert time.monotonic()<deadline
+        time.sleep(.005)
+    trace.sink.console=console
+    trace.process.stdin.write(b"emit\\n"); trace.process.stdin.flush()
+    deadline=time.monotonic()+2
+    while not trace.sink.lock.locked():
+        assert time.monotonic()<deadline
+        time.sleep(.001)
+    timer=threading.Timer(.03,lambda: os.kill(os.getpid(),signal.SIGTERM)); timer.start()
+    return {"processes":[{"pid":int((root/"command.pid").read_text())}]}
+begin=time.monotonic()
+try:
+    with patch.object(cost,"sample",side_effect=sample):
+        cost.observe_command(command,root,root,"backpressure",dict(os.environ),signal_trace=trace)
+    raise AssertionError("cancelled observer returned")
+except cost.CommandCancelled as error:
+    assert error.signum==signal.SIGTERM
+finally:
+    health=trace.stop()
+    if timer: timer.join(timeout=1)
+    trace.process.stdin.close(); trace.process.stdout.close(); trace.process.stderr.close()
+elapsed=time.monotonic()-begin
+assert elapsed<5 and not trace.thread.is_alive() and trace.sink.closed
+assert health["dropped_events"]>0 and health["collector_returncode"]==0
+assert os.get_blocking(w)
+try: os.kill(int((root/"command.pid").read_text()),0)
+except ProcessLookupError: pass
+else: raise AssertionError("owned command survives")
+end=json.loads((root/"stages.jsonl").read_text().splitlines()[-1])
+assert end["cleanup"]["workload_reaped"] and end["returncode"] is not None
+assert end["observer_failure"]["retention"]=="censored"
+terminal=json.loads((root/"trace.jsonl").read_text().splitlines()[-1])
+assert terminal["retention"]=="censored" and terminal["dropped_events"]>0
+try: cost.require_trace_health(health)
+except ValueError: pass
+else: raise AssertionError("backpressure accepted")
+console.close(); os.close(r)
+print(json.dumps({"filled":filled,"elapsed":elapsed,"returncode":end["returncode"]}))
+'''
+        result = self.execute(body)
+        self.assertGreater(result["filled"], 0)
+        self.assertLess(result["elapsed"], 5)
+
+    def test_terminal_first_backpressure_censors_local_terminal_without_blocking(self):
+        result = self.execute('''
+r,w=os.pipe(); console=os.fdopen(w,"w",buffering=1)
+os.set_blocking(w,False)
+try:
+    while True: os.write(w,b"x"*4096)
+except BlockingIOError: pass
+os.set_blocking(w,True)
+trace=cost.SignalTrace(root); trace.health.update(ready=True)
+trace.sink=cost.SignalSink(root/"trace.jsonl",console=console)
+begin=time.monotonic(); health=trace.stop(); elapsed=time.monotonic()-begin
+terminal=json.loads((root/"trace.jsonl").read_text().splitlines()[-1])
+assert elapsed<2 and trace.sink.closed and os.get_blocking(w)
+assert health["dropped_events"]>0 and terminal["dropped_events"]>0
+assert terminal["retention"]=="censored"
+console.close(); os.close(r)
+print(json.dumps({"elapsed":elapsed}))
+''')
+        self.assertLess(result["elapsed"], 2)
+
+    def test_healthy_descriptor_console_and_binary_query_keep_exact_bytes_and_status(self):
+        result = self.execute('''
+r,w=os.pipe(); console=os.fdopen(w,"w",buffering=1); retained=bytearray()
+def drain():
+    while True:
+        block=os.read(r,4096)
+        if not block: break
+        retained.extend(block)
+reader=threading.Thread(target=drain,daemon=True); reader.start()
+trace=Mock(sink=cost.SignalSink(root/"trace.jsonl",console=console),snapshot=Mock(return_value=ns["HEALTHY"]))
+command=[sys.executable,"-c",'import os; os.write(1,bytes([0,255])+b"binary"+bytes([10]))']
+with patch.object(cost,"sample",return_value={"processes":[]}):
+    data=cost.observe_output(command,root,root,"query",dict(os.environ),trace)
+    status=cost.observe_command([sys.executable,"-c",'import os,sys; os.write(1,bytes([255])+b"raw"); sys.exit(7)'],root,root,"failed",dict(os.environ),signal_sink=trace.sink)
+trace.sink.finish({}); console.close(); reader.join(timeout=2); os.close(r)
+assert not reader.is_alive() and data==b"\\x00\\xffbinary\\n" and status==7
+assert (root/"failed.stdout.log").read_bytes()==b"\\xffraw"
+expected=b"".join(b"SIGNAL_DIAGNOSTIC "+line for line in (root/"trace.jsonl").read_bytes().splitlines(keepends=True))
+assert retained==expected and trace.sink.dropped_events==0
+print(json.dumps({"returncode":status,"bytes":len(retained)}))
+''')
+        self.assertEqual(result["returncode"], 7)
+
+    def test_actual_late_signals_at_normal_return_shared_handoff(self):
+        # One handoff invariant, applied to the existing run/operation/query
+        # consumers; actual OS delivery follows the underlying function return.
+        body = '''
+consumer=sys.argv[3]; signum=int(sys.argv[4]); fired=False
+target=(cost.run if consumer=="run" else cost.observe_command).__wrapped__.__code__
+def late(frame,event,arg):
+    global fired
+    if frame.f_code is target and event=="return" and arg is not None and not fired:
+        fired=True
+        os.kill(os.getpid(),signum)
+    return late
+sys.settrace(late)
+try:
+    if consumer=="run":
+        fixture=ns["ColdCostTests"](); fixture.setUp()
+        try: fixture.run_fixture([0,0,0])
+        finally:
+            output=fixture.root/"run-observations"
+            result=json.loads((output/"result.json").read_text())
+            assert not result["canonical_chain_complete"] and result["canonical_returncode"] is None
+            assert result["observer_failure"]["signal"]==signum
+            assert [s["returncode"] for s in result["canonical_stages"]]==[0,0,0,0]
+            inventory=json.loads((output/"inventory.json").read_text())
+            row=next(row for row in inventory if row["path"]=="result.json")
+            assert row["sha256"]==cost.sha(output/"result.json")
+            fixture.doCleanups()
+    else:
+        command=[sys.executable,"-c",'import os; os.write(1,bytes([0,255])+b"query")']
+        with patch.object(cost,"sample",return_value={"processes":[]}):
+            if consumer=="query": cost.observe_output(command,root,root,"tail",dict(os.environ),Mock(snapshot=Mock(return_value=ns["HEALTHY"])))
+            else: cost.observe_command(command,root,root,"tail",dict(os.environ))
+    raise AssertionError("latched cancellation discarded")
+except cost.CommandCancelled as error:
+    assert fired and error.signum==signum
+    assert error.command_returncode==0
+    if consumer!="run":
+        end=json.loads((root/"stages.jsonl").read_text().splitlines()[-1])
+        assert end["returncode"]==0 and end["cleanup"]["workload_reaped"]
+        assert (root/"tail.stdout.log").read_bytes()==bytes([0,255])+b"query"
+finally: sys.settrace(None)
+print(json.dumps({"signal":signum,"consumer":consumer}))
+sys.exit(128+signum)
+'''
+        for consumer, signum in (("run", signal.SIGTERM), ("operation", signal.SIGINT), ("query", signal.SIGHUP)):
+            with self.subTest(consumer=consumer):
+                self.assertEqual(self.execute(body, consumer, str(int(signum)),
+                                              expected_returncode=128+int(signum))["signal"], signum)
+
+
 class PublicationFailureTests(unittest.TestCase):
     setUp = ColdCostTests.setUp
     run_fixture = ColdCostTests.run_fixture
