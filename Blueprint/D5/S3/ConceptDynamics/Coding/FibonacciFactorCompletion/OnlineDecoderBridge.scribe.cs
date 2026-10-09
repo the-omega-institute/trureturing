@@ -40,18 +40,19 @@ internal sealed class OnlineDecoderBridgeDocument : IScribeDocumentDefinition
             Call("guardBool", Ap(path, p))), B("p", nat));
         var support = All(Member(Ap(x, p), Call("stateInterval", Call("guardBool", Ap(path, p)))), B("p", nat));
         var affine = All(Equal(Ap(x, p), Call("branch", Call("labelWindow", Ap(a, p)), Ap(x, Add(p, D(1))))), B("p", nat));
-        var body = Ex(And(Call("LegalDigits", d), Equal(Ap(path, D(0)), I("G0")),
+        var body = Ex(And(Equal(Ap(path, D(0)), I("G0")),
             All(Equal(Call("nextGuard", Ap(path, p), Ap(a, p)), Call("some", Ap(path, Add(p, D(1))))), B("p", nat)),
-            windows, guards, support, affine), B("d", Call("LegalDigits")), B("path", Fn(nat, guard)));
+            windows, guards, support, affine), B("d", I("LegalDigits")), B("path", Fn(nat, guard)));
         return Disp(All(Imp(op, body), B("a", Fn(nat, label)), B("x", Fn(nat, real))));
     }
 
     private static Formula FiniteTail()
     {
-        var nat = I("Nat"); var label = I("Label"); var real = I("Real");
-        var a = I("a"); var x = I("x"); var d = I("d"); var p = I("p");
-        return Disp(All(Imp(Call("OperationOmega", a, x), Ex(Iff(Call("OperationFiniteSource", a),
-            Call("finiteTail", d)), B("d", Call("LegalDigits")))), B("a", Fn(nat, label)), B("x", Fn(nat, real))));
+        var nat = I("Nat"); var label = I("Label");
+        var a = I("a"); var d = I("d"); var p = I("p");
+        var windows = All(Equal(Call("window", d, p), Call("labelWindow", Ap(a, p))), B("p", nat));
+        return Disp(All(Imp(windows, Iff(Call("OperationFiniteSource", a), Call("finiteTail", d))),
+            B("a", Fn(nat, label)), B("d", I("LegalDigits"))));
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -68,6 +69,6 @@ internal sealed class OnlineDecoderBridgeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "operation_finite_source_iff_of_bridge"),
                 H("Finite Coding tails are finite S1 tails"), StatementSource.FromAuthor(FiniteTail()),
                 AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("The canonical grouped stream is eventually zero exactly when the original label stream is eventually the empty-window label. Both directions use the exact three-to-one block index arithmetic. This result is conditional on OperationOmega so that the canonical grouped stream is legal.")),
+                    Paragraph(Text("Any legal digit stream whose grouped windows match the given label stream is eventually zero exactly when the label stream is eventually the empty-window label. The explicit window hypothesis identifies that same digit stream. Both directions use the exact three-to-one block index arithmetic; no separate coordinate or OperationOmega premise is required.")),
                     Paragraph(Text("The finite-tail statement does not assert finiteTail for arbitrary OperationOmega paths, and it does not transport OperationRecord, observe, ErrorBound or closed candidate ownership.")))))));
 }

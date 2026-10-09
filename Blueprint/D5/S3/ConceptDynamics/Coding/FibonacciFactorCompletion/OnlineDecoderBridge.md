@@ -6,7 +6,7 @@ An OperationOmega path is encoded by grouped legal S1 digits.
 
 **Theorem 1.1 (Grouped legal digits and guard path).**
 
-$$\forall a \in Nat \to Label, x \in Nat \to Real,\; \operatorname{OperationOmega}\left(a, x\right) \Rightarrow \left(\exists d \in \operatorname{LegalDigits}\left(\right), path \in Nat \to Guard,\; \operatorname{LegalDigits}\left(d\right) \land \left(\operatorname{apply}\left(path, 0\right) = G0 \land \left(\left(\forall p \in Nat,\; \operatorname{nextGuard}\left(\operatorname{apply}\left(path, p\right), \operatorname{apply}\left(a, p\right)\right) = \operatorname{some}\left(\operatorname{apply}\left(path, \operatorname{add}\left(p, 1\right)\right)\right)\right) \land \left(\left(\forall p \in Nat,\; \operatorname{window}\left(d, p\right) = \operatorname{labelWindow}\left(\operatorname{apply}\left(a, p\right)\right)\right) \land \left(\left(\forall p \in Nat,\; \operatorname{actualGuard}\left(\operatorname{false}\left(\right), d, p\right) = \operatorname{guardBool}\left(\operatorname{apply}\left(path, p\right)\right)\right) \land \left(\left(\forall p \in Nat,\; \operatorname{apply}\left(x, p\right) \in \operatorname{stateInterval}\left(\operatorname{guardBool}\left(\operatorname{apply}\left(path, p\right)\right)\right)\right) \land \left(\forall p \in Nat,\; \operatorname{apply}\left(x, p\right) = \operatorname{branch}\left(\operatorname{labelWindow}\left(\operatorname{apply}\left(a, p\right)\right), \operatorname{apply}\left(x, \operatorname{add}\left(p, 1\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+$$\forall a \in Nat \to Label, x \in Nat \to Real,\; \operatorname{OperationOmega}\left(a, x\right) \Rightarrow \left(\exists d \in LegalDigits, path \in Nat \to Guard,\; \operatorname{apply}\left(path, 0\right) = G0 \land \left(\left(\forall p \in Nat,\; \operatorname{nextGuard}\left(\operatorname{apply}\left(path, p\right), \operatorname{apply}\left(a, p\right)\right) = \operatorname{some}\left(\operatorname{apply}\left(path, \operatorname{add}\left(p, 1\right)\right)\right)\right) \land \left(\left(\forall p \in Nat,\; \operatorname{window}\left(d, p\right) = \operatorname{labelWindow}\left(\operatorname{apply}\left(a, p\right)\right)\right) \land \left(\left(\forall p \in Nat,\; \operatorname{actualGuard}\left(\operatorname{false}\left(\right), d, p\right) = \operatorname{guardBool}\left(\operatorname{apply}\left(path, p\right)\right)\right) \land \left(\left(\forall p \in Nat,\; \operatorname{apply}\left(x, p\right) \in \operatorname{stateInterval}\left(\operatorname{guardBool}\left(\operatorname{apply}\left(path, p\right)\right)\right)\right) \land \left(\forall p \in Nat,\; \operatorname{apply}\left(x, p\right) = \operatorname{branch}\left(\operatorname{labelWindow}\left(\operatorname{apply}\left(a, p\right)\right), \operatorname{apply}\left(x, \operatorname{add}\left(p, 1\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/OnlineDecoderBridge.operation_digit_bridge` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ The declaration supplies a source correspondence and a scalar recurrence in the 
 
 **Theorem 1.2 (Finite Coding tails are finite S1 tails).**
 
-$$\forall a \in Nat \to Label, x \in Nat \to Real,\; \operatorname{OperationOmega}\left(a, x\right) \Rightarrow \left(\exists d \in \operatorname{LegalDigits}\left(\right),\; \operatorname{OperationFiniteSource}\left(a\right) \Leftrightarrow \operatorname{finiteTail}\left(d\right)\right)$$
+$$\forall a \in Nat \to Label, d \in LegalDigits,\; \left(\forall p \in Nat,\; \operatorname{window}\left(d, p\right) = \operatorname{labelWindow}\left(\operatorname{apply}\left(a, p\right)\right)\right) \Rightarrow \left(\operatorname{OperationFiniteSource}\left(a\right) \Leftrightarrow \operatorname{finiteTail}\left(d\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/OnlineDecoderBridge.operation_finite_source_iff_of_bridge` (`✓ std3`). ∎
 
@@ -28,7 +28,7 @@ $$\forall a \in Nat \to Label, x \in Nat \to Real,\; \operatorname{OperationOmeg
 
 *Commentary.*
 
-The canonical grouped stream is eventually zero exactly when the original label stream is eventually the empty-window label. Both directions use the exact three-to-one block index arithmetic. This result is conditional on OperationOmega so that the canonical grouped stream is legal.
+Any legal digit stream whose grouped windows match the given label stream is eventually zero exactly when the label stream is eventually the empty-window label. The explicit window hypothesis identifies that same digit stream. Both directions use the exact three-to-one block index arithmetic; no separate coordinate or OperationOmega premise is required.
 
 The finite-tail statement does not assert finiteTail for arbitrary OperationOmega paths, and it does not transport OperationRecord, observe, ErrorBound or closed candidate ownership.
 

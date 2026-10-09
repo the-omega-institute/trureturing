@@ -64,7 +64,6 @@ theorem g1_edge_has_zero_first (l : CLabel) (s' : CGuard)
   cases l <;> cases s' <;> simp [nextGuard, labelBit] at h ⊢
 
 theorem rawDigits_legal_of_operation_edges (a : ℕ → CLabel) (path : ℕ → CGuard)
-    (_hzero : path 0 = .G0)
     (hedges : ∀ p, nextGuard (path p) (a p) = some (path (p + 1))) :
     ∀ j, ¬ (rawDigits a j = true ∧ rawDigits a (j + 1) = true) := by
   intro j
@@ -115,9 +114,8 @@ theorem coding_t_eq_s1_t :
   ring
 
 theorem rawDigits_window (a : ℕ → CLabel) (path : ℕ → CGuard)
-    (hzero : path 0 = .G0)
     (hedges : ∀ p, nextGuard (path p) (a p) = some (path (p + 1))) :
-    let d : LegalDigits := ⟨rawDigits a, rawDigits_legal_of_operation_edges a path hzero hedges⟩
+    let d : LegalDigits := ⟨rawDigits a, rawDigits_legal_of_operation_edges a path hedges⟩
     ∀ p, window d p = labelWindow (a p) := by
   dsimp
   intro p
@@ -169,8 +167,8 @@ theorem operation_digit_bridge (a : ℕ → CLabel) (x : ℕ → ℝ)
       (∀ p, x p = D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel.branch
         (labelWindow (a p)) (x (p + 1))) := by
   obtain ⟨path,hzero,hedges,hsupport,haffine⟩ := h
-  let d : LegalDigits := ⟨rawDigits a, rawDigits_legal_of_operation_edges a path hzero hedges⟩
-  refine ⟨d,path,hzero,hedges,rawDigits_window a path hzero hedges,?_,?_,?_⟩
+  let d : LegalDigits := ⟨rawDigits a, rawDigits_legal_of_operation_edges a path hedges⟩
+  refine ⟨d,path,hzero,hedges,rawDigits_window a path hedges,?_,?_,?_⟩
   · intro p
     simp only [actualGuard]
     by_cases hp : p = 0
@@ -196,12 +194,16 @@ theorem operation_digit_bridge (a : ℕ → CLabel) (x : ℕ → ℝ)
   · intro p
     simpa [branch_transport] using haffine p
 
-theorem operation_finite_source_iff_of_bridge (a : ℕ → CLabel) (x : ℕ → ℝ)
-    (h : OperationOmega a x) :
-    ∃ d : LegalDigits, OperationFiniteSource a ↔ finiteTail d := by
-  obtain ⟨path,hzero,hedges,hsupport,haffine⟩ := h
-  let d : LegalDigits := ⟨rawDigits a, rawDigits_legal_of_operation_edges a path hzero hedges⟩
-  refine ⟨d,?_⟩
+theorem operation_finite_source_iff_of_bridge (a : ℕ → CLabel) (d : LegalDigits)
+    (hw : ∀ p, window d p = labelWindow (a p)) :
+    OperationFiniteSource a ↔ finiteTail d := by
+  have hd : d.val = rawDigits a := by
+    funext j
+    let i : Fin 3 := ⟨j % 3, Nat.mod_lt j (by decide)⟩
+    have hh := congrArg (fun l : SLabel => l.val i) (hw (j / 3))
+    rw [← labelBit_window (a (j / 3)) i] at hh
+    simpa [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift, rawDigits, i,
+      show j % 3 + 3 * (j / 3) = j by omega] using hh
   constructor
   · rintro ⟨M,hM⟩
     refine ⟨3 * M,?_⟩
@@ -213,7 +215,8 @@ theorem operation_finite_source_iff_of_bridge (a : ℕ → CLabel) (x : ℕ → 
     have hl : a p = .L0 := hM p hp
     have hq : (3 * p + i) / 3 = p := by omega
     have hr : (3 * p + i) % 3 = i := by omega
-    change rawDigits a j = false
+    change d.val j = false
+    rw [hd]
     simp [rawDigits, labelBit, hj', hq, hr, hl]
   · rintro ⟨N,hN⟩
     refine ⟨(N + 2) / 3,?_⟩
@@ -223,13 +226,13 @@ theorem operation_finite_source_iff_of_bridge (a : ℕ → CLabel) (x : ℕ → 
     have hz1 : d.val (3 * p + 1) = false := hN (3 * p + 1) (by omega)
     have hz2 : d.val (3 * p + 2) = false := hN (3 * p + 2) (by omega)
     have hb0 : labelBit (a p) 0 = false := by
-      simpa [d, rawDigits, show (3 * p) / 3 = p by omega,
+      simpa [hd, rawDigits, show (3 * p) / 3 = p by omega,
         show (3 * p) % 3 = 0 by omega] using hz0
     have hb1 : labelBit (a p) 1 = false := by
-      simpa [d, rawDigits, show (3 * p + 1) / 3 = p by omega,
+      simpa [hd, rawDigits, show (3 * p + 1) / 3 = p by omega,
         show (3 * p + 1) % 3 = 1 by omega] using hz1
     have hb2 : labelBit (a p) 2 = false := by
-      simpa [d, rawDigits, show (3 * p + 2) / 3 = p by omega,
+      simpa [hd, rawDigits, show (3 * p + 2) / 3 = p by omega,
         show (3 * p + 2) % 3 = 2 by omega] using hz2
     cases hl : a p <;> simp [labelBit, hl] at hb0 hb1 hb2 ⊢
 

@@ -34,7 +34,8 @@ abbrev coordinateArena : Arena where
   Law R := ∀ (a : ℕ → CLabel) (x : ℕ → ℝ), OperationOmega a x →
     ∃ d : LegalDigits,
       (∀ p, window d p = labelWindow (a p)) ∧
-      (∀ p, R.readout () ⟨a, x⟩ p = kappa (bitShift d (3 * p)))
+      (∀ p, R.readout () ⟨a, x⟩ p = kappa (bitShift d (3 * p))) ∧
+      (OperationFiniteSource a ↔ finiteTail d)
 
 theorem coordinate_rejected_law : ¬ coordinateArena.Law coordinateRejected := by
   intro h
@@ -43,7 +44,7 @@ theorem coordinate_rejected_law : ¬ coordinateArena.Law coordinateRejected := b
       (_root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.coordinate []) :=
     _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_address_path
       .G0 .G0 [] rfl
-  obtain ⟨d, hw, hc⟩ := h _ _ hzero
+  obtain ⟨d, hw, hc, _⟩ := h _ _ hzero
   have hwindow : ∀ p, window d p = nullLabel := by
     intro p
     simpa [_root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.address,
@@ -58,7 +59,8 @@ theorem coordinate_rejected_law : ¬ coordinateArena.Law coordinateRejected := b
 def coordinateRegistration : Registration coordinateArena
     (∀ (a : ℕ → CLabel) (x : ℕ → ℝ), OperationOmega a x →
       ∃ d : LegalDigits, (∀ p, window d p = labelWindow (a p)) ∧
-        (∀ p, x p = kappa (bitShift d (3 * p)))) where
+        (∀ p, x p = kappa (bitShift d (3 * p))) ∧
+        (OperationFiniteSource a ↔ finiteTail d)) where
   actual := coordinateActual
   bridge := Iff.rfl
   variation := ⟨operation_coordinate_bridge, coordinateRejected, coordinate_rejected_law⟩
@@ -108,7 +110,7 @@ def operation_coordinate_bridge_registration :
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "arg", "body", "fn", "arg"]
+      path := #["body", "body", "body", "arg", "body", "arg", "fn", "arg", "body", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none

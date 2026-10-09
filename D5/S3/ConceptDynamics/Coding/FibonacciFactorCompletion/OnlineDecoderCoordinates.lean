@@ -27,7 +27,8 @@ theorem operation_coordinate_bridge (a : ℕ → CLabel) (x : ℕ → ℝ)
     (h : OperationOmega a x) :
     ∃ d : LegalDigits,
       (∀ p, window d p = labelWindow (a p)) ∧
-      (∀ p, x p = kappa (bitShift d (3 * p))) := by
+      (∀ p, x p = kappa (bitShift d (3 * p))) ∧
+      (OperationFiniteSource a ↔ finiteTail d) := by
   obtain ⟨d, path, hzero, hedges, hw, hguard, hs, hr⟩ := operation_digit_bridge a x h
   have ht : 0 < t := inv_pos.mpr Real.goldenRatio_pos
   have ht1 : t < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
@@ -69,7 +70,8 @@ theorem operation_coordinate_bridge (a : ℕ → CLabel) (x : ℕ → ℝ)
           simp only [pow_succ]
           rw [show p + 1 + n = p + (n + 1) by omega]
           ring
-  refine ⟨d, hw, fun p => ?_⟩
+  refine ⟨d, hw, ?_, operation_finite_source_iff_of_bridge a d hw⟩
+  intro p
   have hz : Tendsto (fun _ : ℕ => x p - kappa (bitShift d (3 * p))) atTop (𝓝 0) := by
     apply squeeze_zero_norm (fun n => ?_)
       (by simpa using (tendsto_pow_atTop_nhds_zero_of_lt_one hg.le hg1).mul_const 4)
