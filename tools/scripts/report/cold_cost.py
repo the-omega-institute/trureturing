@@ -529,12 +529,6 @@ class SignalTrace:
             return
         if raw is None:
             raw = line.encode(errors="replace")
-        lost = re.search(r"[Ll]ost\s+(\d+)\s+events", line)
-        if lost:
-            self.health["lost_events"] += int(lost[1])
-            self.sink.emit({"kind": "event-loss", "lost_events": self.health["lost_events"]})
-            self._record_collector_diagnostic(stream, raw, reason="collector-event-loss", terminated=terminated)
-            return
         # bpftrace wire is stdout. Stderr is collector-owned diagnostic output,
         # even when its bytes happen to resemble a wire record.
         try:
@@ -542,6 +536,12 @@ class SignalTrace:
                 raise ValueError("collector stderr is not signal wire")
             event = parse_signal_wire(line)
         except (ValueError, OverflowError):
+            lost = re.search(r"[Ll]ost\s+(\d+)\s+events", line)
+            if lost:
+                self.health["lost_events"] += int(lost[1])
+                self.sink.emit({"kind": "event-loss", "lost_events": self.health["lost_events"]})
+                self._record_collector_diagnostic(stream, raw, reason="collector-event-loss", terminated=terminated)
+                return
             self.health["parse_errors"] += 1
             if self.health["parse_errors"] == 1:
                 categories = [name for token, name in

@@ -87,6 +87,93 @@ class TraceRepresentationTests(unittest.TestCase):
     def records(self):
         return [json.loads(line) for line in (self.output / "trace.jsonl").read_text().splitlines()]
 
+    def test_valid_stdout_loss_text_recovers_exact_parser_event_through_reader(self):
+        line = "D\tkill\t2000000000\t15\t-40\t0\t0\t20\t20\t1\t40\t1\t1000000000\tLost 7 events"
+        expected = cost.parse_signal_wire(line)
+        self.assertEqual(expected["sender"]["comm"], "Lost_7_events")
+        self.trace.fixture = True
+        child = subprocess.Popen([
+            sys.executable, "-B", "-c", "import os,sys; os.write(1,sys.argv[1].encode())",
+            "D\tready\n" + line + "\n",
+        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        self.addCleanup(child.stdout.close)
+        self.addCleanup(child.stderr.close)
+        self.trace.process = child
+        self.trace.deadline = time.monotonic() + 5
+        self.trace._read()
+        self.assertEqual(child.wait(timeout=2), 0)
+        health = self.trace.stop()
+        records = self.records()
+        self.assertEqual([cost.decode_signal_record(row) for row in records[:-1]],
+                         [{"kind": "trace-ready"}, expected])
+        self.assertEqual(self.trace.events, [expected])
+        self.assertEqual(records[1], {"kind": "kill", "wire": line})
+        cost.require_trace_health(health)
+        cost.require_trace_health(records[-1])
+        self.assertEqual(self.console.getvalue(), "".join(
+            "SIGNAL_DIAGNOSTIC " + raw for raw in
+            (self.output / "trace.jsonl").read_text().splitlines(keepends=True)))
+
+    def test_loss_text_in_all_probe_identities_reaches_existing_consumers(self):
+        expected = []
+        self.trace.fixture = True
+        self.trace._line("D\tready")
+        for comm in ("Lost 7 events", "lost 12 events", "preLost 3 events", "Lost 0 events"):
+            sender = f"21\t20\t1\t20\t1\t18446744073709551614\t{comm}"
+            target = f"41\t40\t30\t40\t1\t18446744073709551615\t{comm}"
+            lines = [f"D\tsignal\t100\t15\t7\t-6\t1\t2\t{sender}\t{target}",
+                     f"D\tdelivery\t99\t9\t8\t128\t{target}",
+                     f"D\tfork\t98\t{sender}\t{target}",
+                     f"D\texit\t97\t{target}\t15",
+                     f"D\toom-victim\t96\t40\t{sender}"]
+            lines.extend(f"D\t{kind}\t95\t0\t-40\t40\t4294967295\t{sender}"
+                         for kind in ("kill", "tkill", "tgkill", "pidfd_send_signal"))
+            for line in lines:
+                expected.append(cost.parse_signal_wire(line))
+                self.trace._line(line)
+        cost.require_trace_health(self.trace.stop())
+        self.assertEqual([cost.decode_signal_record(row) for row in self.records()[1:-1]], expected)
+        self.assertEqual(self.trace.events, [row for row in expected
+                         if row["kind"] in ("signal", "delivery", "kill", "fork", "exit")])
+
+    def test_loss_text_wire_reaches_retained_fixture_attribution(self):
+        sender = "20\t20\t1\t40\t1\t1000000000\tLost 7 events"
+        target = "21\t21\t1\t40\t1\t2000000000\tlost 9 events"
+        lines = [f"D\tkill\t1\t15\t-40\t0\t0\t{sender}",
+                 f"D\tsignal\t2\t15\t0\t0\t1\t0\t{sender}\t{target}",
+                 f"D\tdelivery\t3\t15\t0\t0\t{target}",
+                 f"D\texit\t4\t{target}\t15"]
+        self.trace._line("D\tready")
+        for line in lines:
+            self.trace._line(line)
+        cost.require_trace_health(self.trace.stop())
+        rows = self.records()[1:-1]
+        self.assertEqual([cost.decode_signal_record(row) for row in rows],
+                         [cost.parse_signal_wire(line) for line in lines])
+        cost.validate_fixture_attribution(rows, [{"mode": "group", "pgid": 40,
+            "sender": cost.parse_signal_wire(lines[0])["sender"],
+            "targets": [cost.parse_signal_wire(lines[1])["target"]]}])
+
+    def test_non_wire_loss_on_both_streams_keeps_raw_evidence_and_refuses_health(self):
+        self.trace._line("D\tready")
+        for index, stream in enumerate(("stdout", "stderr"), 1):
+            self.trace._line("Lost 7 events", stream=stream)
+            self.assertEqual(self.trace.health["lost_events"], 7 * index)
+            self.assertEqual(self.trace.health["parse_errors"], 0)
+            with self.assertRaises(ValueError):
+                cost.require_trace_health(self.trace.snapshot())
+        with self.assertRaises(ValueError):
+            cost.require_trace_health(self.trace.stop())
+        records = self.records()
+        losses = [row for row in records if row["kind"] == "event-loss"]
+        self.assertEqual([row["lost_events"] for row in losses], [7, 14])
+        diagnostics = [row for row in records if row["kind"] == "collector-diagnostic"]
+        self.assertEqual([row["stream"] for row in diagnostics], ["stdout", "stderr"])
+        for row in diagnostics:
+            self.assertEqual(row["reason"], "collector-event-loss")
+            self.assertEqual(base64.b64decode(row["raw_bytes_base64"]), b"Lost 7 events")
+            self.assertEqual(row["raw_line_sha256"], hashlib.sha256(b"Lost 7 events").hexdigest())
+
     def test_full_task_domain_fits_without_sampling_or_loss(self):
         expected = []
         for index in range(4096):
@@ -548,6 +635,26 @@ class SignalDiagnosticContractTests(unittest.TestCase):
                                   for row in diagnostics if row["stream"] == stream)
             self.assertEqual(recovered, original)
         self.assertTrue(all(not row["truncated"] for row in diagnostics))
+
+    def test_valid_wire_on_stderr_remains_collector_diagnostics(self):
+        trace = cost.SignalTrace(self.output)
+        trace.fixture = True
+        prefix = "D\tkill\t2000000000\t15\t-40\t0\t0\t20\t20\t1\t40\t1\t1000000000\t"
+        lines = [prefix + "python", prefix + "Lost 7 events"]
+        self.assertTrue(all(cost.parse_signal_wire(line)["kind"] == "kill" for line in lines))
+        raw = ("\n".join(lines) + "\n").encode()
+        health, records, diagnostics = self.collect_failure(
+            trace, f"os.write(1,b'D\\tready\\n'); os.write(2,{raw!r})")
+        self.assertTrue(health["ready"])
+        self.assertEqual(health["collector_returncode"], 0)
+        self.assertEqual(health["parse_errors"], 1)
+        self.assertEqual(health["lost_events"], 7)
+        self.assertEqual(trace.events, [])
+        self.assertFalse(any(cost.decode_signal_record(row)["kind"] == "kill" for row in records))
+        self.assertEqual([row["stream"] for row in diagnostics], ["stderr", "stderr"])
+        self.assertEqual([row["reason"] for row in diagnostics],
+                         ["collector-stderr", "collector-event-loss"])
+        self.assertEqual([base64.b64decode(row["raw_bytes_base64"]).decode() for row in diagnostics], lines)
 
     def test_actual_startup_failure_keeps_source_inventory_and_forbids_workload(self):
         # run's current publication consumer must bind recoverable failure
