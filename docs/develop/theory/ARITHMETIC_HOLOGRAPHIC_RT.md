@@ -3087,7 +3087,7 @@ $$
 
 ## 40. 有限共享随机性的分支压缩与精确障碍
 
-**定理 40.1（受控循环移位的精确判据）。** 沿用定理 39.2 的共同块拆分。令每个扇区 $s$ 的目标维数为 $d_s$，并考虑一个均匀分布的单循环共享随机变量 $h\in\mathbb Z/L\mathbb Z$，其中 $d_s\mid L$，两侧在扇区 $s$ 上同时施加坐标循环移位 $h\bmod d_s$。若要求该有限混合对**每一种允许的源谱**都在所有编码矩阵单位上产生定理 39.2 的目标信道 $\mathcal F_G$（包括消除不同扇区之间全部非零 Fourier 模），则当且仅当
+**定理 40.1（受控循环移位的精确判据）。** 沿用定理 39.2 的共同块拆分。令每个扇区 $s$ 的目标维数为 $d_s$，并考虑一个单循环共享随机变量 $h\in\mathbb Z/L\mathbb Z$，其中 $d_s\mid L$，两侧在扇区 $s$ 上同时施加坐标循环移位 $h\bmod d_s$。若要求该有限混合对**每一种允许的源谱**都在所有编码矩阵单位上产生定理 39.2 的目标信道 $\mathcal F_G$（包括消除不同扇区之间全部非零 Fourier 模），则当且仅当
 
 $$
 \gcd(d_s,d_t)=1\qquad\text{for every }s\ne t.
@@ -3118,6 +3118,6 @@ $$
 
 For three or more sectors, the analogous statement requires an explicit hypothesis that the joint map is surjective onto the full product (or an equivalent annihilator condition for every nonempty multi-coordinate support). Pair-supported character cancellation alone is insufficient: for example $H=\{(x,y,z)\in(\mathbb Z/2)^3:x+y+z=0\}$ has order $4<8$.
 
-**范围。** This is a finite-character implementation theorem for the arbitrary-source coherent channel of §39. It does not claim a lower bound on the number of branches of arbitrary product channels, nor does it alter the exact diamond optimum. No CFT, gravitational, communication-assisted, or shared-entanglement interpretation is added.
+**范围。** 这是 §39 任意源谱相干信道的有限特征实现定理。它不对任意乘积信道的分支数给出下界，也不改变精确钻石范数最优值；不增加 CFT、引力、通信辅助或共享纠缠的解释。
 
 ## 追加锚（本行以下为增补区）
