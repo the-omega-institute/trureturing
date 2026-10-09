@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Temporary native cold-report experiment; observations never decide admission."""
 import argparse
+from contextlib import contextmanager
+import ctypes
+import functools
 import hashlib
 import json
 import os
@@ -10,6 +13,7 @@ import re
 import selectors
 import shutil
 import signal
+import socket
 import subprocess
 import sys
 import threading
@@ -48,6 +52,61 @@ TRACE_LIMIT = 64 * 1024 * 1024
 PREFLIGHT_SECONDS = 90
 TRACE_SECONDS = 180 * 60
 IDENTITY_FIELDS = ("pid", "tgid", "ppid", "pgid", "sid", "start_ns", "comm")
+
+
+class CommandCancelled(BaseException):
+    def __init__(self, signum):
+        self.signum = signum
+        super().__init__(f"catchable cancellation {signum}")
+
+
+_cancellation = None
+
+
+@contextmanager
+def cancellation_scope():
+    """Latch signals without throwing across Popen's successful-spawn interval.
+
+    The first catchable signal owns the exit status; later signals cannot
+    interrupt bounded cleanup or publication. SIGKILL remains censored.
+    """
+    global _cancellation
+    if _cancellation is not None:
+        yield _cancellation
+        return
+    state = {"signal": None}
+    def latch(signum, _frame):
+        if state["signal"] is None:
+            state["signal"] = signum
+    previous = {sig: signal.getsignal(sig) for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP)}
+    _cancellation = state
+    try:
+        for sig in previous:
+            signal.signal(sig, latch)
+        yield state
+    finally:
+        for sig, handler in previous.items():
+            signal.signal(sig, handler)
+        _cancellation = None
+
+
+def check_cancellation():
+    if _cancellation is not None and _cancellation["signal"] is not None:
+        raise CommandCancelled(_cancellation["signal"])
+
+
+def cancellable(function):
+    @functools.wraps(function)
+    def wrapped(*args, **kwargs):
+        with cancellation_scope():
+            check_cancellation()
+            try:
+                return function(*args, **kwargs)
+            except BaseException as error:
+                if not isinstance(error, CommandCancelled):
+                    check_cancellation()
+                raise
+    return wrapped
 
 
 class SignalSink:
@@ -479,8 +538,19 @@ def capability_preflight(output, trace):
     trace.fixture = False
     trace.events.clear()
     trace.check()
+    # Genuine same-kernel ownership/cancellation tests are a capability consumer,
+    # not a canonical workload. No compiler, report or interposition is invoked.
+    fixture_program = Path(__file__).with_name("tests") / "test_cold_cost.py"
+    fixture_rc = observe_command([sys.executable, str(fixture_program), "LinuxOwnershipTests"],
+                                 Path(__file__).resolve().parents[3], output,
+                                 "ownership-capability-fixtures", dict(os.environ), signal_trace=trace,
+                                 deadline_seconds=45)
+    if fixture_rc != 0:
+        raise ValueError("native operation ownership/cancellation capability failed")
+    trace.check()
     result = {"kind": "capability-preflight", "status": "passed", **stamp(),
               "schema": "BTF task identity with exact start time; actual individual/group sender fixtures",
+              "ownership": "dedicated Linux operation subreaper; six genuine ownership/cancellation fixtures passed",
               "scope": "this actual kernel/collector interval only; no integration qualification"}
     write_json(output / "preflight.json", result)
     trace.sink.emit(result)
@@ -615,7 +685,8 @@ def proc_row(path):
     return row
 
 
-def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup"), real_lean=None):
+def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup"), real_lean=None,
+           command_pid=None):
     started_ns = time.monotonic_ns()
     rows = {}
     for path in proc.iterdir():
@@ -645,6 +716,8 @@ def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup"), rea
         elif real_lean and row["argv"][:1] == [real_lean] and row["ppid"] in wrappers:
             role = "real-compiler"
         elif pid == root_pid:
+            role = "operation-ownership-supervisor" if command_pid is not None else "command-root"
+        elif pid == command_pid:
             role = "command-root"
         elif any(Path(arg).name == "report-supervisor.sh" for arg in row["argv"]):
             role = "report-supervisor"
@@ -676,7 +749,7 @@ def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup"), rea
     except (OSError, StopIteration):
         cg = None
     return {"kind": "sample", **stamp(),
-            "scope": "sampled command root and descendants; includes compiler observer wrappers and canonical shell sampler activity",
+            "scope": "sampled operation boundary and descendants; includes compiler observer wrappers and canonical shell sampler activity",
             "python_sampler": {"pid": sampler_pid, "role": "python-stage-sampler",
                                "in_processes": sampler_pid in members and sampler_pid in rows},
             "role_basis": "current argv and parent; other descendants, including unidentified shell samplers, remain unclassified",
@@ -687,81 +760,256 @@ def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup"), rea
             "cgroup_scope": "command cgroup (may include Python observer and other job processes)", "cgroup": cg}
 
 
-def stop_owned_command(child, processes):
-    """Bounded cleanup of the private command group and identified descendants.
+def enable_subreaper():
+    # Linux PR_SET_CHILD_SUBREAPER / PR_GET_CHILD_SUBREAPER. The attribute is
+    # installed in a dedicated process before its only workload is spawned.
+    # https://man7.org/linux/man-pages/man2/PR_SET_CHILD_SUBREAPER.2const.html
+    if sys.platform != "linux":
+        raise ValueError("Linux operation subreaper unavailable; workload forbidden")
+    libc = ctypes.CDLL(None, use_errno=True)
+    libc.prctl.argtypes = [ctypes.c_int] + [ctypes.c_ulong] * 4
+    libc.prctl.restype = ctypes.c_int
+    value = ctypes.c_int()
+    if (libc.prctl(36, 1, 0, 0, 0) != 0
+            or libc.prctl(37, ctypes.addressof(value), 0, 0, 0) != 0 or value.value != 1):
+        raise OSError(ctypes.get_errno(), "operation subreaper unavailable")
 
-    Canonical supervisors may create nested groups. Signal their sampled PIDs
-    only while the Linux start identity still matches; never a host-wide group.
-    The direct child is waited here; descendant parents retain their own waits.
+
+def owned_rows(supervisor_pid):
+    """Current subtree of the stable subreaper, independent of sampled ancestry.
+
+    Orphans remain under this boundary even after root exit, setsid or setpgid.
+    Only stat identity is needed; optional observer fields have no authority.
+    Numeric identity-check/signal races remain a limitation.
     """
-    owned = {row["pid"]: row for row in processes if row.get("start_ticks") is not None
-             and row["pid"] not in (os.getpid(), child.pid)}
-    def matching(row):
+    rows = {}
+    pending = [supervisor_pid]
+    visited = set()
+    while pending:
+        pid = pending.pop()
+        if pid in visited:
+            continue
+        visited.add(pid)
         try:
-            current = proc_row(Path("/proc") / str(row["pid"]))
-            return current if current["start_ticks"] == row["start_ticks"] else None
-        except (OSError, ValueError, IndexError):
-            return None
+            tasks = list((Path("/proc") / str(pid) / "task").iterdir())
+        except (FileNotFoundError, ProcessLookupError):
+            continue
+        for task in tasks:
+            try:
+                children = (task / "children").read_text().split()
+            except (FileNotFoundError, ProcessLookupError):
+                continue
+            for child in map(int, children):
+                try:
+                    text = (Path("/proc") / str(child) / "stat").read_text()
+                except (FileNotFoundError, ProcessLookupError):
+                    continue
+                fields = text[text.rfind(")") + 2:].split()
+                rows[child] = {"pid": child, "start_ticks": int(fields[19])}
+                pending.append(child)
+    return [rows[pid] for pid in sorted(rows)]
 
+
+def owned_supervisor(fd, command):
+    """The only child-owning process for one finite passive operation.
+
+    This process creates no tracer or unrelated children. It stays alive until
+    waitpid reports ECHILD, which verifies the whole adopted workload is reaped.
+    Unkillable tasks, malicious workloads and supervisor destruction are outside
+    the supported cleanup guarantee; incomplete cleanup is never success.
+    """
+    channel = socket.socket(fileno=fd)
+    root = None
+    root_rc = None
+    stopping = None
     targeted = set()
-    def send(sig):
-        live = [current for row in owned.values() if (current := matching(row))]
-        for row in live:
-            try:
-                os.kill(row["pid"], sig)
-                targeted.add(row["pid"])
-            except ProcessLookupError:
-                pass
-        if child.poll() is None or any(row["pgid"] == child.pid for row in live):
-            try:
-                os.killpg(child.pid, sig)
-            except ProcessLookupError:
-                pass
-
-    send(signal.SIGTERM)
+    term_sent = set()
+    error = None
+    def send(value):
+        channel.sendall((json.dumps(value) + "\n").encode())
     try:
-        child.wait(timeout=2)
-    except subprocess.TimeoutExpired:
-        pass
-    send(signal.SIGKILL)
-    child.wait(timeout=2)
-    return {"command_pgid": child.pid, "root_reaped": True,
-            "identity_checked_descendants": sorted(targeted), "returncode": child.returncode}
+        enable_subreaper()
+        # The observer signals via the private channel, never this supervisor's
+        # group. The command retains its own original private process group.
+        root = subprocess.Popen(command, process_group=0)
+        send({"kind": "root-start", "pid": root.pid})
+        while True:
+            no_children = False
+            while True:
+                try:
+                    pid, status = os.waitpid(-1, os.WNOHANG)
+                except ChildProcessError:
+                    no_children = True
+                    break
+                if pid == 0:
+                    break
+                if pid == root.pid:
+                    root_rc = os.waitstatus_to_exitcode(status)
+                    root.returncode = root_rc
+                    send({"kind": "root-exit", "returncode": root_rc})
+                    if stopping is None:
+                        stopping = time.monotonic()
+            if no_children:
+                send({"kind": "complete", "returncode": root_rc,
+                      "cleanup": {"command_pgid": root.pid, "root_reaped": root_rc is not None,
+                                  "workload_reaped": True, "supervisor_pid": os.getpid(),
+                                  "identity_checked_descendants": sorted(targeted)}})
+                return 0
+            readable, _, _ = __import__("select").select([channel], [], [], .02)
+            if readable:
+                message = channel.recv(4096)
+                if (not message or b"stop" in message) and stopping is None:
+                    stopping = time.monotonic()
+            if stopping is not None:
+                elapsed = time.monotonic() - stopping
+                sig = signal.SIGTERM if elapsed < 2 else signal.SIGKILL
+                for row in owned_rows(os.getpid()):
+                    identity = (row["pid"], row["start_ticks"])
+                    if sig == signal.SIGTERM and identity in term_sent:
+                        continue
+                    # Recheck the minimal start identity before numeric signaling.
+                    try:
+                        text = (Path("/proc") / str(row["pid"]) / "stat").read_text()
+                        if int(text[text.rfind(")") + 2:].split()[19]) != row["start_ticks"]:
+                            continue
+                        os.kill(row["pid"], sig)
+                        targeted.add(row["pid"])
+                        term_sent.add(identity)
+                    except (FileNotFoundError, ProcessLookupError):
+                        pass
+                if elapsed >= 4:
+                    raise TimeoutError("owned workload did not become fully waitable")
+    except BaseException as caught:
+        error = type(caught).__name__
+        # Capability errors precede spawn. Runtime failure is explicitly censored.
+        try:
+            send({"kind": "supervisor-error", "error": error, "returncode": root_rc,
+                  "cleanup": {"root_reaped": root_rc is not None, "workload_reaped": False}})
+        except OSError:
+            pass
+        return 2
+    finally:
+        channel.close()
 
 
+class OwnedCommand:
+    def __init__(self, command, **kwargs):
+        self.channel, peer = socket.socketpair()
+        self.process = None
+        self.pid = None
+        self.returncode = None
+        self.cleanup = None
+        self.error = None
+        self.buffer = b""
+        try:
+            self.process = subprocess.Popen([sys.executable, str(Path(__file__).resolve()),
+                "owned-supervisor", str(peer.fileno()), *command], pass_fds=(peer.fileno(),),
+                process_group=0, **kwargs)
+        except BaseException:
+            self.channel.close()
+            raise
+        finally:
+            peer.close()
+        self.channel.setblocking(False)
+
+    def poll(self):
+        supervisor_rc = self.process.poll()
+        while True:
+            try:
+                block = self.channel.recv(65536)
+            except BlockingIOError:
+                break
+            if not block:
+                break
+            self.buffer += block
+            while b"\n" in self.buffer:
+                line, self.buffer = self.buffer.split(b"\n", 1)
+                row = json.loads(line)
+                if row["kind"] == "root-start":
+                    self.pid = row["pid"]
+                elif row["kind"] == "root-exit":
+                    self.returncode = row["returncode"]
+                elif row["kind"] in ("complete", "supervisor-error"):
+                    self.returncode = row.get("returncode")
+                    self.cleanup = row["cleanup"]
+                    self.error = row.get("error")
+        if supervisor_rc is not None:
+            if self.cleanup is None or not self.cleanup.get("workload_reaped") or self.error:
+                raise ValueError("owned workload cleanup unavailable: " + str(self.error))
+            return self.returncode
+        return None
+
+    def stop(self):
+        try:
+            self.channel.sendall(b"stop\n")
+        except (BrokenPipeError, ConnectionResetError):
+            pass
+        deadline = time.monotonic() + 5
+        while self.process.poll() is None and time.monotonic() < deadline:
+            self.poll()
+            threading.Event().wait(.02)
+        self.process.wait(timeout=.5)
+        self.poll()
+        return self.cleanup
+
+    def close(self):
+        self.channel.close()
+
+
+def stop_owned_command(child, processes=()):
+    # Ownership comes from the operation subreaper, never observer snapshots.
+    return child.stop()
+
+
+@cancellable
 def observe_command(command, cwd, output, name, env, interval=2.0, canonical_resources=False,
-                    signal_sink=None, signal_trace=None):
+                    signal_sink=None, signal_trace=None, deadline_seconds=None):
     if signal_trace is not None:
         signal_trace.check()
         signal_sink = signal_trace.sink
     events = output / "stages.jsonl"
     begin = stamp()
+    deadline = None if deadline_seconds is None else time.monotonic() + deadline_seconds
     with (output / f"{name}.stdout.log").open("wb") as stdout, (output / f"{name}.stderr.log").open("wb") as stderr:
         actual = command
         if canonical_resources:
             actual = ["bash", "-c", 'source tools/scripts/lib/resource-observation-lib.sh; resource_observe_run_periodic "$@"',
                       "cold-cost"] + command
-        # This group contains only this operation, never the runner or tracer.
-        child = subprocess.Popen(actual, cwd=cwd, env=env, stdout=stdout, stderr=stderr, process_group=0)
-        stage_event = {"kind": "stage-start", "name": name, "program_basename": Path(command[0]).name,
-                       "canonical_resources": canonical_resources, "pid": child.pid, **begin}
-        processes = {}
+        child = None
         failure = None
         cleanup = None
         try:
+            check_cancellation()
+            child = OwnedCommand(actual, cwd=cwd, env=env, stdout=stdout, stderr=stderr)
+            # Signal handlers latch across constructor/Popen, including a signal
+            # after successful spawn but before this assignment and try body.
+            check_cancellation()
+            startup_deadline = time.monotonic() + 5
+            while child.pid is None:
+                check_cancellation()
+                child.poll()
+                if time.monotonic() >= startup_deadline:
+                    raise TimeoutError("operation supervisor startup")
+                threading.Event().wait(.01)
+            stage_event = {"kind": "stage-start", "name": name, "program_basename": Path(command[0]).name,
+                           "canonical_resources": canonical_resources, "pid": child.pid,
+                           "ownership_supervisor_pid": child.process.pid, **begin}
             append(events, stage_event)
             if signal_sink:
                 signal_sink.emit(stage_event)
             next_sample = time.monotonic()
             while True:
+                check_cancellation()
+                if deadline is not None and time.monotonic() >= deadline:
+                    raise TimeoutError("diagnostic capability fixture deadline")
                 if signal_trace is not None:
                     signal_trace.check()
                 if child.poll() is not None:
                     break
                 if time.monotonic() >= next_sample:
                     try:
-                        sample_event = {"stage": name, **sample(child.pid, real_lean=env.get("COLD_COST_REAL_LEAN"))}
-                        processes.update((row["pid"], row) for row in sample_event["processes"])
+                        sample_event = {"stage": name, **sample(child.process.pid, real_lean=env.get("COLD_COST_REAL_LEAN"),
+                                                              command_pid=child.pid)}
                         append(output / "samples.jsonl", sample_event)
                         if signal_sink:
                             for row in sample_event["processes"]:
@@ -769,26 +1017,36 @@ def observe_command(command, cwd, output, name, env, interval=2.0, canonical_res
                                     **{k: row.get(k) for k in ("pid", "ppid", "pgid", "sid", "start_ticks", "comm", "exe_basename", "role")}})
                     except Exception as error:
                         append(output / "observer-errors.jsonl", {"stage": name, **stamp(), "error": type(error).__name__})
+                        raise
                     next_sample = time.monotonic() + interval
                 if signal_trace is not None:
                     signal_trace.check()
-                try:
-                    child.wait(timeout=min(.1, max(.001, next_sample - time.monotonic())))
-                except subprocess.TimeoutExpired:
-                    pass
+                threading.Event().wait(min(.1, max(.001, next_sample - time.monotonic())))
+            check_cancellation()
+            if signal_trace is not None:
+                signal_trace.check()
+            cleanup = child.cleanup
         except BaseException as error:
             failure = {"error": type(error).__name__, "retention": "censored",
+                       "signal": error.signum if isinstance(error, CommandCancelled) else None,
                        "reason": error.reason if isinstance(error, TraceHealthError) else None,
                        "trace_health": signal_trace.snapshot() if signal_trace is not None else None}
-            try:
-                processes.update((row["pid"], row) for row in sample(child.pid)["processes"])
-            except Exception:
-                pass
-            cleanup = stop_owned_command(child, processes.values())
+            if child is not None:
+                try:
+                    cleanup = stop_owned_command(child)
+                except BaseException as cleanup_error:
+                    cleanup = {**(child.cleanup or {}), "workload_reaped": False,
+                               "error": type(cleanup_error).__name__}
+                error.command_returncode = child.returncode
             raise
         finally:
-            append(events, {"kind": "stage-end", "name": name, **stamp(), "returncode": child.returncode,
-                            "observer_failure": failure, "cleanup": cleanup})
+            try:
+                append(events, {"kind": "stage-end", "name": name, **stamp(),
+                                "returncode": child.returncode if child else None,
+                                "observer_failure": failure, "cleanup": cleanup})
+            finally:
+                if child is not None:
+                    child.close()
     return child.returncode
 
 
@@ -887,6 +1145,7 @@ def native_binding(root, env, mode="workload"):
             "inputs": inputs, "project_initial_state": "absent .lake", "report_guard_seconds": 7200}
 
 
+@cancellable
 def run(root, output, mode="workload"):
     if sys.version_info[:2] != (3, 12):
         raise ValueError("requires Python 3.12")
@@ -914,9 +1173,12 @@ def run(root, output, mode="workload"):
 
     try:
         write_json(output / "source.json", binding)
+        check_cancellation()
         trace = SignalTrace(output, PREFLIGHT_SECONDS if mode == "preflight" else TRACE_SECONDS).start()
+        check_cancellation()
         emit_process_catalog(trace.sink, os.getpid())
         preflight = capability_preflight(output, trace)
+        check_cancellation()
         if mode == "preflight":
             rc = 0
             return 0
@@ -967,9 +1229,14 @@ def run(root, output, mode="workload"):
         if rc != 0:
             canonical_failure = {"stage": stage, "returncode": rc}
     except BaseException as error:
+        if hasattr(error, "command_returncode") and stage in (
+                "judge-build", "judge-lean-producer", "compiled-judge-test", "full-lean-report"):
+            stages.append({"stage": stage, "returncode": error.command_returncode})
         if canonical_failure is None:
             rc = None
-            observer_failure = {"stage": stage, "error": type(error).__name__}
+            observer_failure = {"stage": stage, "error": type(error).__name__, "retention": "censored"}
+            if isinstance(error, CommandCancelled):
+                observer_failure["signal"] = error.signum
             if isinstance(error, TraceHealthError):
                 observer_failure.update(reason=error.reason, trace_health=error.health, retention="censored")
         raise
@@ -979,7 +1246,9 @@ def run(root, output, mode="workload"):
             nonlocal observer_failure, collection_error
             collection_error = error
             observer_failure = {"stage": "artifact-collection", "error": type(error).__name__,
-                                "prior_observer_failure": observer_failure}
+                                "retention": "censored", "prior_observer_failure": observer_failure}
+            if _cancellation is not None and _cancellation["signal"] is not None:
+                observer_failure["signal"] = _cancellation["signal"]
         stage = "artifact-collection"
         try:
             if trace is not None:
@@ -1011,16 +1280,32 @@ def run(root, output, mode="workload"):
                 require_trace_health(trace_health)
         except BaseException as error:
             collection_failed(error)
-        write_json(output / "result.json", result())
-        inventory = [{"path": str(p.relative_to(output)), "sha256": sha(p), "bytes": p.stat().st_size}
-                     for p in sorted(output.rglob("*")) if p.is_file()]
-        write_json(output / "inventory.json", inventory)
+        try:
+            check_cancellation()
+            write_json(output / "result.json", result())
+            inventory = [{"path": str(p.relative_to(output)), "sha256": sha(p), "bytes": p.stat().st_size}
+                         for p in sorted(output.rglob("*")) if p.is_file()]
+            write_json(output / "inventory.json", inventory)
+            check_cancellation()
+        except BaseException as error:
+            collection_failed(error)
+            # An earlier successful result is no longer admissible. Correction
+            # is best effort if the result sink itself has become unwritable.
+            try:
+                write_json(output / "result.json", result())
+            except OSError:
+                try:
+                    (output / "result.json").unlink(missing_ok=True)
+                except OSError:
+                    pass
         if collection_error is not None:
             raise collection_error
     return rc if rc >= 0 else 128 - rc
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "owned-supervisor":
+        return owned_supervisor(int(sys.argv[2]), sys.argv[3:])
     if len(sys.argv) > 1 and sys.argv[1] == "fixture-target":
         print(json.dumps(fixture_identity()), flush=True)
         time.sleep(30)
@@ -1045,6 +1330,8 @@ def main():
 if __name__ == "__main__":
     try:
         sys.exit(main())
+    except CommandCancelled as error:
+        sys.exit(128 + error.signum)
     except (ValueError, KeyError) as error:
         print(f"COLD_COST_ERROR {type(error).__name__}", file=sys.stderr)
         sys.exit(2)

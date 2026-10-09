@@ -22,8 +22,56 @@ HEALTHY = {"ready": True, "lost_events": 0, "dropped_events": 0, "parse_errors":
            "reader_error": None, "collector_returncode": None}
 
 
+class PortableOwnedCommand:
+    """Test double for control flow on Darwin, NOT Linux ownership evidence.
+
+    Existing portable fixtures use cooperative parents that wait their leaves.
+    Orphan adoption is exercised only by LinuxOwnershipTests without this double.
+    """
+    def __init__(self, command, **kwargs):
+        self.process = subprocess.Popen(command, process_group=0, **kwargs)
+        self.pid = self.process.pid
+        self.returncode = None
+        self.cleanup = None
+
+    def poll(self):
+        self.returncode = self.process.poll()
+        if self.returncode is not None:
+            self.cleanup = {"root_reaped": True, "workload_reaped": True,
+                            "fixture_scope": "portable cooperative direct group only"}
+        return self.returncode
+
+    def stop(self):
+        try:
+            os.killpg(self.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+        try:
+            self.process.wait(timeout=2)
+        except subprocess.TimeoutExpired:
+            pass
+        try:
+            os.killpg(self.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        self.process.wait(timeout=2)
+        self.poll()
+        return self.cleanup
+
+    def close(self):
+        pass
+
+
+def portable_control_flow(test):
+    if sys.platform != "linux":
+        patcher = patch.object(cost, "OwnedCommand", PortableOwnedCommand)
+        patcher.start()
+        test.addCleanup(patcher.stop)
+
+
 class SignalDiagnosticContractTests(unittest.TestCase):
     def setUp(self):
+        portable_control_flow(self)
         self.tmp = tempfile.TemporaryDirectory(prefix="signal contract ")
         self.addCleanup(self.tmp.cleanup)
         self.output = Path(self.tmp.name)
@@ -176,6 +224,7 @@ class LiveHealthEnforcementTests(unittest.TestCase):
     failures = ("loss", "parse", "reader", "collector-error", "collector-exit", "console", "file")
 
     def setUp(self):
+        portable_control_flow(self)
         self.fresh_case()
 
     def fresh_case(self):
@@ -241,9 +290,9 @@ def finish(*_):
     pathlib.Path({str(self.root / (name + ".reaped"))!r}).write_text(str(rc))
     sys.exit(0)
 signal.signal(signal.SIGTERM, finish)
-pathlib.Path({str(self.root / (name + ".started"))!r}).write_text("started")
 print("raw active stdout",flush=True)
 print("raw active stderr",file=sys.stderr,flush=True)
+pathlib.Path({str(self.root / (name + ".started"))!r}).write_text("started")
 time.sleep(30)
 '''
         return [sys.executable, "-c", body]
@@ -381,47 +430,19 @@ time.sleep(30)
         self.assertEqual(end["returncode"], -signal.SIGKILL)
         self.assertTrue(end["cleanup"]["root_reaped"])
 
-    def test_nested_owned_group_is_stopped_and_reaped_but_reused_identity_is_not_signaled(self):
-        self.output.mkdir()
-        name = "nested"
-        child = subprocess.Popen(self.command(name, active=True, nested_group=True), process_group=0,
-                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        unrelated = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"], process_group=0)
-        try:
-            self.assertTrue(select.select([child.stdout], [], [], 3)[0])
-            self.assertEqual(child.stdout.readline(), b"raw active stdout\n")
-            leaf = int((self.root / (name + ".leaf")).read_text())
-            self.assertEqual(os.getpgid(leaf), leaf)
-            self.assertEqual(os.getpgid(child.pid), child.pid)
-            self.assertNotEqual(leaf, child.pid)
-            rows = [{"pid": leaf, "start_ticks": 10, "pgid": leaf},
-                    {"pid": unrelated.pid, "start_ticks": 20, "pgid": unrelated.pid}]
-            # Inject only the Linux identity-read interface on this portable
-            # test host; both process groups, signals and parent waits are real.
-            def identity(path):
-                pid = int(path.name)
-                if pid == leaf:
-                    os.kill(pid, 0)
-                    return dict(rows[0])
-                return dict(rows[1], start_ticks=21)
-            with patch.object(cost, "proc_row", side_effect=identity):
-                cleanup = cost.stop_owned_command(child, rows)
-            self.assertTrue(cleanup["root_reaped"])
-            self.assertEqual(cleanup["identity_checked_descendants"], [leaf])
-            self.assertEqual((self.root / (name + ".reaped")).read_text(), str(-signal.SIGTERM))
-            with self.assertRaises(ProcessLookupError):
-                os.kill(leaf, 0)
-            self.assertIsNone(unrelated.poll())
-        finally:
-            if child.poll() is None:
-                child.kill()
-            child.communicate(timeout=3)
-            unrelated.terminate()
-            unrelated.wait(timeout=2)
+    def test_sampled_unrelated_identities_cannot_authorize_signals(self):
+        owned = Mock(stop=Mock(return_value={"workload_reaped": True}))
+        with patch.object(cost.os, "kill") as kill, patch.object(cost.os, "killpg") as killpg:
+            cleanup = cost.stop_owned_command(owned, [{"pid": os.getpid(), "start_ticks": 1}])
+        self.assertTrue(cleanup["workload_reaped"])
+        owned.stop.assert_called_once_with()
+        kill.assert_not_called()
+        killpg.assert_not_called()
 
 
 class ColdCostTests(unittest.TestCase):
     def setUp(self):
+        portable_control_flow(self)
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
@@ -543,15 +564,21 @@ class ColdCostTests(unittest.TestCase):
         self.assertEqual(result.stdout, b"['--version']\n")
         self.assertFalse((self.output / "compilers").exists())
 
-    def test_stage_failure_keeps_raw_logs_even_when_sampler_unavailable(self):
-        with patch.object(cost, "sample", side_effect=OSError("sample unavailable")):
-            rc = cost.observe_command([sys.executable, "-c", 'import sys,time; print("raw"); print("err",file=sys.stderr); time.sleep(.05); sys.exit(9)'],
-                                      self.root, self.output, "fixture", dict(os.environ), interval=.01)
-        self.assertEqual(rc, 9)
-        self.assertEqual((self.output / "fixture.stdout.log").read_text(), "raw\n")
-        self.assertEqual((self.output / "fixture.stderr.log").read_text(), "err\n")
+    def test_fatal_sampling_stops_command_and_keeps_writable_error_log(self):
+        command = [sys.executable, "-c", 'import sys,time; print("raw",flush=True); print("err",file=sys.stderr,flush=True); time.sleep(30)']
+        def fail_sample(*_args, **_kwargs):
+            deadline = time.monotonic() + 3
+            while not (self.output / "fixture.stdout.log").read_bytes():
+                self.assertLess(time.monotonic(), deadline)
+                time.sleep(.01)
+            raise OSError("sample unavailable")
+        with patch.object(cost, "sample", side_effect=fail_sample), self.assertRaises(OSError):
+            cost.observe_command(command, self.root, self.output, "fixture", dict(os.environ), interval=.01)
+        self.assertEqual((self.output / "fixture.stdout.log").read_bytes(), b"raw\n")
+        self.assertEqual((self.output / "fixture.stderr.log").read_bytes(), b"err\n")
         end = json.loads((self.output / "stages.jsonl").read_text().splitlines()[-1])
-        self.assertEqual(end["returncode"], 9)
+        self.assertEqual(end["returncode"], -signal.SIGTERM)
+        self.assertTrue(end["cleanup"]["workload_reaped"])
         self.assertTrue((self.output / "observer-errors.jsonl").is_file())
 
     def test_linux_sample_types_scopes_and_descendant_selection(self):
@@ -693,7 +720,7 @@ class ColdCostTests(unittest.TestCase):
         self.assertIsNone(result["inputs_unchanged"])
         self.assertEqual(result["observer_failure"]["stage"], "artifact-collection")
 
-    def test_recorded_sampler_failure_fails_diagnostic_after_successful_commands(self):
+    def test_recorded_sampler_failure_forbids_next_canonical_operation(self):
         observe_command = cost.observe_command
 
         def observe(_command, cwd, output, name, _env, **_kwargs):
@@ -703,12 +730,14 @@ class ColdCostTests(unittest.TestCase):
                 return observe_command([sys.executable, "-c", "import time; time.sleep(.05)"],
                                        cwd, output, name, dict(os.environ), interval=.01)
 
-        rc, error, result, _ = self.run_fixture(observe)
+        rc, error, result, observed = self.run_fixture(observe)
         self.assertIsNone(rc)
         self.assertIsInstance(error, ValueError)
         self.assertIsNone(result["canonical_returncode"])
         self.assertFalse(result["canonical_chain_complete"])
-        self.assertTrue(all(row["returncode"] == 0 for row in result["canonical_stages"]))
+        self.assertEqual(len(result["canonical_stages"]), 1)
+        self.assertIsNotNone(result["canonical_stages"][0]["returncode"])
+        self.assertEqual(observed.call_count, 1)
         self.assertIsNone(result["canonical_failure"])
         self.assertEqual(result["observer_failure"]["error"], "ValueError")
 
@@ -856,6 +885,275 @@ int main(int argc, char **argv) {
         self.assertEqual(result.returncode, 4)
         self.assertIn(b"--profile", result.stdout)
         self.assertEqual(len(list((self.output / "compilers").iterdir())), 1)
+
+
+class PublicationFailureTests(unittest.TestCase):
+    setUp = ColdCostTests.setUp
+    run_fixture = ColdCostTests.run_fixture
+
+    def test_final_inventory_failures_censor_result_and_keep_real_stage_codes(self):
+        original_sha, original_stat, original_write = cost.sha, Path.stat, cost.write_json
+        for kind in ("hash", "stat", "write"):
+            with self.subTest(kind=kind):
+                self.setUp()
+                hashing_result = False
+                def hash_file(path):
+                    nonlocal hashing_result
+                    if path.name == "result.json":
+                        hashing_result = True
+                        if kind == "hash":
+                            raise OSError("inventory hash unavailable")
+                    return original_sha(path)
+                def stat_file(path, *args, **kwargs):
+                    if kind == "stat" and hashing_result and path.name == "result.json":
+                        raise OSError("inventory stat unavailable")
+                    return original_stat(path, *args, **kwargs)
+                def write_file(path, value):
+                    if kind == "write" and path.name == "inventory.json":
+                        raise OSError("inventory write unavailable")
+                    return original_write(path, value)
+                with patch.object(cost, "sha", side_effect=hash_file), \
+                        patch.object(Path, "stat", stat_file), \
+                        patch.object(cost, "write_json", side_effect=write_file):
+                    rc, error, result, observe = self.run_fixture([0, 0, 0])
+                self.assertIsNone(rc)
+                self.assertIsInstance(error, OSError)
+                self.assertIsNone(result["canonical_returncode"])
+                self.assertFalse(result["canonical_chain_complete"])
+                self.assertEqual(result["observer_failure"]["stage"], "artifact-collection")
+                self.assertEqual(result["observer_failure"]["retention"], "censored")
+                self.assertEqual([s["returncode"] for s in result["canonical_stages"]], [0, 0, 0, 0])
+                self.assertEqual(observe.call_count, 3)
+
+    def test_samples_sink_failure_stops_chain_with_error_sink_still_writable(self):
+        observe_command, original_append = cost.observe_command, cost.append
+        def append_file(path, value):
+            if path.name == "samples.jsonl":
+                raise OSError("samples sink unavailable")
+            return original_append(path, value)
+        def observe(_command, cwd, output, name, env, **_kwargs):
+            return observe_command([sys.executable, "-c", "import time; time.sleep(30)"],
+                                   cwd, output, name, env, interval=.01)
+        with patch.object(cost, "append", side_effect=append_file), \
+                patch.object(cost, "sample", return_value={"processes": []}):
+            _, error, result, observe_mock = self.run_fixture(observe)
+        self.assertIsNotNone(error)
+        self.assertEqual(observe_mock.call_count, 1)
+        self.assertFalse(result["canonical_chain_complete"])
+        self.assertIsNone(result["canonical_returncode"])
+        self.assertEqual(len(result["canonical_stages"]), 1)
+        self.assertEqual(result["canonical_stages"][0]["returncode"], -signal.SIGTERM)
+        rows = [json.loads(line) for line in (self.root / "run-observations" / "observer-errors.jsonl").read_text().splitlines()]
+        self.assertEqual(rows[0]["error"], "OSError")
+
+
+class CancellationBehaviorTests(unittest.TestCase):
+    """Actual signal delivery; Darwin uses the explicit portable ownership double."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix="cancellation ")
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+
+    def cancellation_driver(self, mode):
+        # Private fixtures replace canonical queries/commands, never execute them.
+        # Trace teardown uses the real SignalTrace.stop and a real private child.
+        driver = self.root / "driver.py"
+        driver.write_text('''import io,json,os,pathlib,runpy,select,signal,subprocess,sys,time
+from unittest.mock import patch
+ns=runpy.run_path(sys.argv[1],run_name="fixture_import")
+cost=ns["cost"]
+if sys.platform != "linux": cost.OwnedCommand=ns["PortableOwnedCommand"]
+root=pathlib.Path(sys.argv[2]); mode=sys.argv[3]; output=root/"output"
+real=root/"lean"; real.write_bytes(b"private compiler fixture")
+trace=cost.SignalTrace(output)
+def start():
+    trace.health.update(ready=True,lost_events=0,parse_errors=0,reader_error=None)
+    trace.sink=cost.SignalSink(output/"signal-trace.jsonl",console=io.StringIO())
+    trace.process=subprocess.Popen([sys.executable,"-c",'import signal,sys,time; signal.signal(signal.SIGINT,lambda *_: sys.exit(0)); print("ready",flush=True); time.sleep(30)'],stdout=subprocess.PIPE,stderr=subprocess.PIPE,process_group=0)
+    if not select.select([trace.process.stdout],[],[],3)[0]: raise TimeoutError("tracer")
+    trace.process.stdout.readline()
+    (root/"tracer.pid").write_text(str(trace.process.pid))
+    return trace
+trace.start=start
+cost.SignalTrace=lambda *_args: trace
+cost.native_binding=lambda *_args: {"inputs":{}}
+cost.input_binding=lambda *_args: {}
+cost.emit_process_catalog=lambda *_args: None
+cost.capability_preflight=lambda *_args: {"status":"passed"}
+cost.sample=lambda *_args,**_kwargs: {"processes":[]}
+def query(command,*_args):
+    if command[0]=="elan": return str(real).encode()
+    if "--version" in command: return b"Lean (version 4.34.1)"
+    if "--githash" in command: return b"fixture"
+    raise AssertionError("next producer must never launch")
+cost.observe_output=query
+observe=cost.observe_command
+original_popen=cost.subprocess.Popen
+def post_spawn(*args,**kwargs):
+    child=original_popen(*args,**kwargs)
+    (root/"spawn.pid").write_text(str(child.pid))
+    os.kill(os.getpid(),signal.SIGINT)
+    return child
+def command(_command,cwd,output,name,env,**kwargs):
+    body='import os,pathlib,time; pathlib.Path('+repr(str(root/"command.pid"))+').write_text(str(os.getpid())); pathlib.Path('+repr(str(root/"ready"))+').touch(); time.sleep(30)'
+    if mode=="post-spawn":
+        with patch.object(cost.subprocess,"Popen",side_effect=post_spawn):
+            return observe([sys.executable,"-c",body],cwd,output,name,env,signal_trace=kwargs["signal_trace"])
+    return observe([sys.executable,"-c",body],cwd,output,name,env,signal_trace=kwargs["signal_trace"])
+cost.observe_command=command
+try:
+    cost.run(root,output)
+except cost.CommandCancelled as error:
+    sys.exit(128+error.signum)
+finally:
+    if trace.process:
+        trace.process.stdout.close(); trace.process.stderr.close()
+''')
+        return subprocess.Popen([sys.executable, str(driver), str(Path(__file__).resolve()), str(self.root), mode],
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, process_group=0)
+
+    def check_signal(self, signum, mode="external"):
+        witness = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"], process_group=0)
+        driver = self.cancellation_driver(mode)
+        try:
+            if mode == "external":
+                deadline = time.monotonic() + 5
+                while not (self.root / "ready").exists():
+                    self.assertIsNone(driver.poll())
+                    self.assertLess(time.monotonic(), deadline)
+                    time.sleep(.01)
+                os.kill(driver.pid, signum)
+            stdout, stderr = driver.communicate(timeout=8)
+            self.assertEqual(driver.returncode, 128 + signum, stderr.decode())
+            result = json.loads((self.root / "output/result.json").read_text())
+            self.assertIsNone(result["canonical_returncode"])
+            self.assertFalse(result["canonical_chain_complete"])
+            self.assertEqual(result["observer_failure"]["signal"], signum)
+            self.assertEqual(result["trace_health"]["collector_returncode"], 0)
+            self.assertEqual(len(result["canonical_stages"]), 1)
+            self.assertIsNotNone(result["canonical_stages"][0]["returncode"])
+            ends = [json.loads(line) for line in (self.root / "output/stages.jsonl").read_text().splitlines()
+                    if json.loads(line)["kind"] == "stage-end"]
+            self.assertEqual(len(ends), 1)
+            self.assertTrue(ends[0]["cleanup"]["workload_reaped"])
+            for name in ("command.pid", "spawn.pid", "tracer.pid"):
+                path = self.root / name
+                if path.exists():
+                    with self.assertRaises(ProcessLookupError):
+                        os.kill(int(path.read_text()), 0)
+            self.assertIsNone(witness.poll())
+        finally:
+            if driver.poll() is None:
+                driver.terminate()
+                try:
+                    driver.wait(timeout=6)
+                except subprocess.TimeoutExpired:
+                    driver.kill()
+            driver.communicate(timeout=2)
+            witness.terminate()
+            witness.wait(timeout=2)
+
+    def test_actual_term(self):
+        self.check_signal(signal.SIGTERM)
+
+    def test_actual_hup(self):
+        self.check_signal(signal.SIGHUP)
+
+    def test_post_popen_sigint(self):
+        self.check_signal(signal.SIGINT, "post-spawn")
+
+
+@unittest.skipUnless(sys.platform == "linux", "genuine Linux subreaper ownership pending; portable fixtures are not Linux proof")
+class LinuxOwnershipTests(CancellationBehaviorTests):
+    """Native capability fixtures: no sampler, compiler or report execution."""
+    def orphan_case(self, nested, root_waits):
+        pidfile = self.root / "leaf.pid"
+        ready = self.root / "root.ready"
+        leaf_body = 'import os,signal,sys,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); print(os.getpid(),flush=True); time.sleep(30)'
+        body = f'''import os,pathlib,subprocess,sys,time
+assert sys.argv[1] == "literal $argument"
+assert os.environ["OWNERSHIP_TEST_ARGUMENT"] == "literal environment"
+os.write(1,b"owned\\x00stdout\\n")
+os.write(2,b"owned stderr\\n")
+leaf=subprocess.Popen([sys.executable,"-c",{leaf_body!r}],stdout=subprocess.PIPE,process_group={0 if nested else 'None'})
+pathlib.Path({str(pidfile)!r}).write_text(leaf.stdout.readline().decode().strip())
+pathlib.Path({str(ready)!r}).touch()
+{'time.sleep(30)' if root_waits else 'sys.exit(0)'}
+'''
+        witness = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"], process_group=0)
+        with (self.root / "stdout").open("wb") as stdout, (self.root / "stderr").open("wb") as stderr:
+            child = cost.OwnedCommand([sys.executable, "-c", body, "literal $argument"], cwd=self.root,
+                                      env=dict(os.environ, OWNERSHIP_TEST_ARGUMENT="literal environment"),
+                                      stdout=stdout, stderr=stderr)
+            try:
+                deadline = time.monotonic() + 5
+                while not ready.exists():
+                    child.poll()
+                    self.assertLess(time.monotonic(), deadline)
+                    time.sleep(.01)
+                leaf = int(pidfile.read_text())
+                child.poll()
+                self.assertEqual(os.getpgid(leaf), leaf if nested else child.pid)
+                # No observer ancestry snapshot has ever occurred. Kernel
+                # adoption, not remembered PPID/group, must retain ownership.
+                if root_waits:
+                    cleanup = cost.stop_owned_command(child)
+                else:
+                    while child.returncode is None:
+                        child.poll()
+                        self.assertLess(time.monotonic(), deadline)
+                        time.sleep(.01)
+                    self.assertEqual(cost.proc_row(Path("/proc") / str(leaf))["ppid"], child.process.pid)
+                    deadline = time.monotonic() + 6
+                    while child.poll() is None:
+                        self.assertLess(time.monotonic(), deadline)
+                        time.sleep(.01)
+                    cleanup = child.cleanup
+                self.assertTrue(cleanup["root_reaped"])
+                self.assertTrue(cleanup["workload_reaped"])
+                self.assertIn(leaf, cleanup["identity_checked_descendants"])
+                self.assertEqual(child.returncode, -signal.SIGTERM if root_waits else 0)
+                for pid in (leaf, child.pid, child.process.pid):
+                    with self.assertRaises(ProcessLookupError):
+                        os.kill(pid, 0)
+                self.assertIsNone(witness.poll())
+                self.assertEqual((self.root / "stdout").read_bytes(), b"owned\x00stdout\n")
+                self.assertEqual((self.root / "stderr").read_bytes(), b"owned stderr\n")
+            finally:
+                if child.process.poll() is None:
+                    child.stop()
+                child.close()
+                witness.terminate()
+                witness.wait(timeout=2)
+
+    def test_early_leader_exit_before_first_snapshot(self):
+        self.orphan_case(nested=False, root_waits=False)
+
+    def test_term_ignoring_original_group_after_root_term(self):
+        self.orphan_case(nested=False, root_waits=True)
+
+    def test_nested_group_reparent_before_first_snapshot(self):
+        self.orphan_case(nested=True, root_waits=False)
+
+
+class OwnershipUnavailableTests(unittest.TestCase):
+    def test_non_linux_fails_closed_before_command_spawn(self):
+        with patch.object(cost.sys, "platform", "darwin"), patch.object(cost.subprocess, "Popen") as spawn:
+            with self.assertRaisesRegex(ValueError, "subreaper unavailable"):
+                cost.enable_subreaper()
+        spawn.assert_not_called()
+
+    @unittest.skipIf(sys.platform == "linux", "uses the actual non-Linux host rejection")
+    def test_actual_non_linux_supervisor_never_launches_workload(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            marker = output / "must-not-launch"
+            with self.assertRaisesRegex(ValueError, "owned workload cleanup unavailable"):
+                cost.observe_command([sys.executable, "-c", f'from pathlib import Path; Path({str(marker)!r}).touch()'],
+                                     output, output, "unsupported", dict(os.environ))
+            self.assertFalse(marker.exists())
+            end = json.loads((output / "stages.jsonl").read_text().splitlines()[-1])
+            self.assertEqual(end["observer_failure"]["retention"], "censored")
 
 
 if __name__ == "__main__":
