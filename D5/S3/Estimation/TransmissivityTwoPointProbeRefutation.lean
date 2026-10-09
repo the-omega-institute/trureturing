@@ -69,29 +69,220 @@ def claim : Prop :=
       ∀ (N : ℕ) (ψ : Fin (N + 1) → ℂ), ‖WithLp.toLp 2 ψ‖ = 1 → meanPhoton ψ = nbar →
         ∃ φ : ℝ, MMSE q τ₀ τ₁ (inBetween nbar φ) ≤ MMSE q τ₀ τ₁ ψ
 
-theorem result : ¬ claim := by
-  have sqrt_power (t : ℝ) (ht : 0 ≤ t) (k : ℕ) :
-      Real.sqrt (t ^ k) = Real.sqrt t ^ k := by
-    induction k with
-    | zero => simp
-    | succ k ih => rw [pow_succ, Real.sqrt_mul (pow_nonneg ht k), ih, pow_succ]
-  have source_coefficient (n l : ℕ) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
-      Real.sqrt ((Nat.choose n l : ℝ) * τ ^ (n - l) * (1 - τ) ^ l) =
-        Real.sqrt (Nat.choose n l) * Real.sqrt τ ^ (n - l) * Real.sqrt (1 - τ) ^ l := by
-    rw [Real.sqrt_mul (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hτ.1 _)),
-      Real.sqrt_mul (Nat.cast_nonneg _), sqrt_power τ hτ.1,
-      sqrt_power (1 - τ) (sub_nonneg.mpr hτ.2)]
-  have sourceKraus {N : ℕ} (l : Fin (N + 1)) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
-      amplitudeKraus l (1 - τ) = Matrix.of (fun r c : Fin (N + 1) =>
-        if r.val + l.val = c.val then
-          if l.val ≤ c.val then
-            (Real.sqrt ((Nat.choose c.val l.val : ℝ) *
-              τ ^ (c.val - l.val) * (1 - τ) ^ l.val) : ℂ)
-          else 0
-        else 0) := by
-    ext r c
-    simp only [amplitudeKraus, Matrix.of_apply, sub_sub_cancel, source_coefficient _ _ τ hτ]
+lemma sqrt_power (t : ℝ) (ht : 0 ≤ t) (k : ℕ) :
+    Real.sqrt (t ^ k) = Real.sqrt t ^ k := by
+  induction k with
+  | zero => simp
+  | succ k ih => rw [pow_succ, Real.sqrt_mul (pow_nonneg ht k), ih, pow_succ]
 
+lemma source_coefficient (n l : ℕ) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
+    Real.sqrt ((Nat.choose n l : ℝ) * τ ^ (n - l) * (1 - τ) ^ l) =
+      Real.sqrt (Nat.choose n l) * Real.sqrt τ ^ (n - l) * Real.sqrt (1 - τ) ^ l := by
+  rw [Real.sqrt_mul (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hτ.1 _)),
+    Real.sqrt_mul (Nat.cast_nonneg _), sqrt_power τ hτ.1,
+    sqrt_power (1 - τ) (sub_nonneg.mpr hτ.2)]
+
+lemma sourceKraus {N : ℕ} (l : Fin (N + 1)) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
+    amplitudeKraus l (1 - τ) = Matrix.of (fun r c : Fin (N + 1) =>
+      if r.val + l.val = c.val then
+        if l.val ≤ c.val then
+          (Real.sqrt ((Nat.choose c.val l.val : ℝ) *
+            τ ^ (c.val - l.val) * (1 - τ) ^ l.val) : ℂ)
+        else 0
+      else 0) := by
+  ext r c
+  simp only [amplitudeKraus, Matrix.of_apply, sub_sub_cancel, source_coefficient _ _ τ hτ]
+
+lemma moment_variance {d m : ℕ} (E : Fin m → Matrix (Fin d) (Fin d) ℂ)
+    (x : Fin m → ℝ) (hE : (∀ k, (E k).PosSemidef) ∧ ∑ k, E k = 1) :
+    let M₁ := ∑ k, (x k : ℂ) • E k
+    let M₂ := ∑ k, ((x k ^ 2 : ℝ) : ℂ) • E k
+    (M₂ - M₁ * M₁).PosSemidef := by
+  classical
+  dsimp only
+  let M₁ := ∑ k, (x k : ℂ) • E k
+  have hM₁ : M₁.IsHermitian := by
+    change M₁ᴴ = M₁
+    simp only [M₁, conjTranspose_sum]
+    apply Finset.sum_congr rfl
+    intro k hk
+    simp only [conjTranspose_smul, RCLike.star_def,
+      Complex.conj_ofReal, (hE.1 k).isHermitian.eq]
+  have identity :
+      (∑ k, (((x k : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) - M₁)ᴴ * E k *
+        ((x k : ℂ) • 1 - M₁))) =
+        (∑ k, ((x k ^ 2 : ℝ) : ℂ) • E k) - M₁ * M₁ := by
+    simp only [conjTranspose_sub, conjTranspose_smul, conjTranspose_one,
+      RCLike.star_def, Complex.conj_ofReal, hM₁.eq, sub_mul, mul_sub, Matrix.smul_mul,
+      Matrix.mul_smul, one_mul, mul_one, smul_smul]
+    have sum_right : (∑ k, (x k : ℂ) • (E k * M₁)) = M₁ * M₁ := by
+      simp only [← Matrix.smul_mul, ← Matrix.sum_mul]
+      rfl
+    have sum_left : (∑ k, (x k : ℂ) • (M₁ * E k)) = M₁ * M₁ := by
+      simp only [← Matrix.mul_smul, ← Matrix.mul_sum]
+      rfl
+    have sum_sandwich : (∑ k, M₁ * E k * M₁) = M₁ * M₁ := by
+      rw [← Matrix.sum_mul, ← Matrix.mul_sum, hE.2, mul_one]
+    simp only [Finset.sum_sub_distrib, sum_right, sum_left, sum_sandwich,
+      Complex.ofReal_pow, Complex.ofReal_mul, pow_two]
+    abel
+  rw [← identity]
+  exact posSemidef_sum _ fun k _ => (hE.1 k).conjTranspose_mul_mul_same _
+
+lemma risk_lower_bound {d m : ℕ}
+    (A C D B : Matrix (Fin d) (Fin d) ℂ)
+    (hA : A.PosSemidef) (hB : B.IsHermitian)
+    (hsol : A * B + B * A = (2 : ℂ) • C)
+    (E : Fin m → Matrix (Fin d) (Fin d) ℂ) (x : Fin m → ℝ)
+    (hE : (∀ k, (E k).PosSemidef) ∧ ∑ k, E k = 1) :
+    (D.trace - (B * C).trace).re ≤
+      ∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
+        (((2 * x k : ℝ) : ℂ) • C) + D)).trace.re := by
+  classical
+  let M₁ := ∑ k, (x k : ℂ) • E k
+  let M₂ := ∑ k, ((x k ^ 2 : ℝ) : ℂ) • E k
+  let V := M₂ - M₁ * M₁
+  have hV : V.PosSemidef := moment_variance E x hE
+  have hM₁ : M₁.IsHermitian := by
+    change M₁ᴴ = M₁
+    simp only [M₁, conjTranspose_sum]
+    apply Finset.sum_congr rfl
+    intro k hk
+    simp only [conjTranspose_smul, RCLike.star_def,
+      Complex.conj_ofReal, (hE.1 k).isHermitian.eq]
+  have hS : ((M₁ - B) * (M₁ - B)).PosSemidef := by
+    have hHerm := hM₁.sub hB
+    simpa only [hHerm.eq] using posSemidef_conjTranspose_mul_self (M₁ - B)
+  have total :
+      (∑ k, E k * (((x k ^ 2 : ℝ) : ℂ) • A -
+        (((2 * x k : ℝ) : ℂ) • C) + D)) =
+      M₂ * A - (2 : ℂ) • (M₁ * C) + D := by
+    simp only [mul_add, mul_sub, Matrix.mul_smul, Finset.sum_add_distrib,
+      Finset.sum_sub_distrib, Complex.ofReal_mul, Complex.ofReal_ofNat]
+    have second : (∑ k, ((2 : ℂ) * (x k : ℂ)) • (E k * C)) =
+        (2 : ℂ) • (M₁ * C) := by
+      simp only [← smul_smul, ← Finset.smul_sum, ← Matrix.smul_mul,
+        ← Matrix.sum_mul]
+      rfl
+    have first : (∑ k, ((x k ^ 2 : ℝ) : ℂ) • (E k * A)) = M₂ * A := by
+      simp only [← Matrix.smul_mul, ← Matrix.sum_mul]
+      rfl
+    have third : (∑ k, E k * D) = D := by
+      rw [← Matrix.sum_mul, hE.2, one_mul]
+    rw [first, second, third]
+  have hcross : (A * M₁ * B).trace + (A * B * M₁).trace =
+      (2 : ℂ) * (M₁ * C).trace := by
+    have h := congrArg (fun Z => (M₁ * Z).trace) hsol
+    simp only [mul_add, trace_add, Matrix.mul_smul, trace_smul, smul_eq_mul] at h
+    rw [← mul_assoc, ← mul_assoc, trace_mul_cycle M₁ A B,
+      trace_mul_cycle B M₁ A, trace_mul_cycle M₁ B A] at h
+    simpa only [add_comm] using h
+  have hbb : (A * B * B).trace = (B * C).trace := by
+    have h := congrArg (fun Z => (B * Z).trace) hsol
+    simp only [mul_add, trace_add, Matrix.mul_smul, trace_smul, smul_eq_mul,
+      ← mul_assoc] at h
+    rw [trace_mul_cycle B A B, trace_mul_cycle B B A] at h
+    linear_combination h / 2
+  have hcomplete :
+      (∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
+        (((2 * x k : ℝ) : ℂ) • C) + D)).trace) -
+        (D.trace - (B * C).trace) =
+      (A * V).trace + (A * ((M₁ - B) * (M₁ - B))).trace := by
+    rw [← trace_sum, total]
+    simp only [V, mul_sub, sub_mul, trace_add, trace_sub, trace_smul, ← mul_assoc]
+    rw [trace_mul_comm M₂ A]
+    linear_combination hcross - hbb
+  have hnV := RHLinalg.trace_mul_nonneg_of_posSemidef hA hV
+  have hnS := RHLinalg.trace_mul_nonneg_of_posSemidef hA hS
+  have h := congrArg Complex.re hcomplete
+  simp only [Complex.sub_re, Complex.add_re] at h ⊢
+  have hreSum : (∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
+      (((2 * x k : ℝ) : ℂ) • C) + D)).trace).re =
+      ∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
+      (((2 * x k : ℝ) : ℂ) • C) + D)).trace.re :=
+    map_sum Complex.reAddGroupHom _ _
+  rw [hreSum] at h
+  change 0 ≤ (A * V).trace.re at hnV
+  change 0 ≤ (A * ((M₁ - B) * (M₁ - B))).trace.re at hnS
+  linarith
+
+lemma spectral_attainment {d : ℕ}
+    (A C D B : Matrix (Fin d) (Fin d) ℂ) (hB : B.IsHermitian)
+    (hsol : A * B + B * A = (2 : ℂ) • C) :
+    ∃ (E : Fin d → Matrix (Fin d) (Fin d) ℂ) (x : Fin d → ℝ),
+      ((∀ k, (E k).PosSemidef) ∧ ∑ k, E k = 1) ∧
+      (∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
+        (((2 * x k : ℝ) : ℂ) • C) + D)).trace.re) =
+          (D.trace - (B * C).trace).re := by
+  classical
+  let U : Matrix (Fin d) (Fin d) ℂ := hB.eigenvectorUnitary
+  let P (k : Fin d) : Matrix (Fin d) (Fin d) ℂ := diagonal (Pi.single k 1)
+  let E (k : Fin d) := U * P k * Uᴴ
+  let x := hB.eigenvalues
+  have hUU : U * Uᴴ = 1 := Unitary.coe_mul_star_self hB.eigenvectorUnitary
+  have hUstarU : Uᴴ * U = 1 := Unitary.coe_star_mul_self hB.eigenvectorUnitary
+  have hP : ∀ k, (P k).PosSemidef := by
+    intro k
+    change (diagonal (Pi.single k (1 : ℂ))).PosSemidef
+    rw [posSemidef_diagonal_iff]
+    intro i
+    simp only [Pi.single_apply]
+    split_ifs <;> simp
+  have hPsum : ∑ k, P k = 1 := by
+    ext i j
+    simp [P, Matrix.sum_apply, diagonal_apply, Matrix.one_apply, Pi.single_apply]
+  have hEsum : ∑ k, E k = 1 := by
+    simp only [E, ← Matrix.sum_mul, ← Matrix.mul_sum, hPsum, mul_one, hUU]
+  have hE : (∀ k, (E k).PosSemidef) ∧ ∑ k, E k = 1 :=
+    ⟨fun k => (hP k).mul_mul_conjTranspose_same U, hEsum⟩
+  have hdiag (r : Fin d → ℂ) : ∑ k, r k • P k = diagonal r := by
+    ext i j
+    simp [P, diagonal_apply, Matrix.sum_apply, Matrix.smul_apply, Pi.single_apply]
+  have hBdiag : B = U * diagonal (fun k => (x k : ℂ)) * Uᴴ := by
+    convert hB.spectral_theorem using 1 <;>
+      simp [U, x, Unitary.conjStarAlgAut_apply, RCLike.ofReal, star_eq_conjTranspose, Function.comp_def]
+  have sum_conj (r : Fin d → ℂ) :
+      ∑ k, r k • E k = U * (∑ k, r k • P k) * Uᴴ := by
+    rw [Matrix.mul_sum, Matrix.sum_mul]
+    apply Finset.sum_congr rfl
+    intro k hk
+    simp only [E, Matrix.mul_smul, Matrix.smul_mul]
+  have hM₁ : ∑ k, (x k : ℂ) • E k = B := by
+    rw [sum_conj, hdiag, ← hBdiag]
+  have hM₂ : ∑ k, ((x k ^ 2 : ℝ) : ℂ) • E k = B * B := by
+    rw [sum_conj, hdiag, hBdiag]
+    simp only [mul_assoc, ← mul_assoc Uᴴ U, hUstarU, one_mul,
+      Complex.ofReal_pow, pow_two]
+    rw [← mul_assoc (diagonal _) (diagonal _), diagonal_mul_diagonal]
+    simp only [Complex.ofReal_mul]
+  have total :
+      (∑ k, E k * (((x k ^ 2 : ℝ) : ℂ) • A -
+        (((2 * x k : ℝ) : ℂ) • C) + D)) =
+        (B * B) * A - (2 : ℂ) • (B * C) + D := by
+    simp only [mul_add, mul_sub, Matrix.mul_smul, Finset.sum_add_distrib,
+      Finset.sum_sub_distrib, Complex.ofReal_mul, Complex.ofReal_ofNat]
+    have first : (∑ k, ((x k ^ 2 : ℝ) : ℂ) • (E k * A)) = (B * B) * A := by
+      simp only [← Matrix.smul_mul, ← Matrix.sum_mul, hM₂]
+    have second : (∑ k, ((2 : ℂ) * (x k : ℂ)) • (E k * C)) =
+        (2 : ℂ) • (B * C) := by
+      simp only [← smul_smul, ← Finset.smul_sum, ← Matrix.smul_mul,
+        ← Matrix.sum_mul, hM₁]
+    have third : (∑ k, E k * D) = D := by
+      rw [← Matrix.sum_mul, hEsum, one_mul]
+    rw [first, second, third]
+  have hbb : (B * B * A).trace = (B * C).trace := by
+    have h := congrArg (fun Z => (B * Z).trace) hsol
+    simp only [mul_add, trace_add, Matrix.mul_smul, trace_smul, smul_eq_mul,
+      ← mul_assoc] at h
+    rw [trace_mul_cycle B A B] at h
+    linear_combination h / 2
+  refine ⟨E, x, hE, ?_⟩
+  rw [← Complex.re_sum, ← trace_sum, total]
+  simp only [trace_add, trace_sub, trace_smul, smul_eq_mul, hbb]
+  congr 1
+  ring
+
+theorem result : ¬ claim := by
   have phase_MMSE (φ : ℝ) :
       MMSE (1/2) (4/9) 1 (inBetween (1/2) φ) =
         MMSE (N:=1) (1/2) (4/9) 1 ![(Real.sqrt (1/2) : ℂ),
@@ -105,195 +296,6 @@ theorem result : ¬ claim := by
     apply congrArg (MMSE (N:=1) (1/2) (4/9) 1)
     ext n
     fin_cases n <;> norm_num <;> ring
-
-  have moment_variance {d m : ℕ} (E : Fin m → Matrix (Fin d) (Fin d) ℂ)
-      (x : Fin m → ℝ) (hE : (∀ k, (E k).PosSemidef) ∧ ∑ k, E k = 1) :
-      let M₁ := ∑ k, (x k : ℂ) • E k
-      let M₂ := ∑ k, ((x k ^ 2 : ℝ) : ℂ) • E k
-      (M₂ - M₁ * M₁).PosSemidef := by
-    classical
-    dsimp only
-    let M₁ := ∑ k, (x k : ℂ) • E k
-    have hM₁ : M₁.IsHermitian := by
-      change M₁ᴴ = M₁
-      simp only [M₁, conjTranspose_sum]
-      apply Finset.sum_congr rfl
-      intro k hk
-      simp only [conjTranspose_smul, RCLike.star_def,
-        Complex.conj_ofReal, (hE.1 k).isHermitian.eq]
-    have identity :
-        (∑ k, (((x k : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) - M₁)ᴴ * E k *
-          ((x k : ℂ) • 1 - M₁))) =
-          (∑ k, ((x k ^ 2 : ℝ) : ℂ) • E k) - M₁ * M₁ := by
-      simp only [conjTranspose_sub, conjTranspose_smul, conjTranspose_one,
-        RCLike.star_def, Complex.conj_ofReal, hM₁.eq, sub_mul, mul_sub, Matrix.smul_mul,
-        Matrix.mul_smul, one_mul, mul_one, smul_smul]
-      have sum_right : (∑ k, (x k : ℂ) • (E k * M₁)) = M₁ * M₁ := by
-        simp only [← Matrix.smul_mul, ← Matrix.sum_mul]
-        rfl
-      have sum_left : (∑ k, (x k : ℂ) • (M₁ * E k)) = M₁ * M₁ := by
-        simp only [← Matrix.mul_smul, ← Matrix.mul_sum]
-        rfl
-      have sum_sandwich : (∑ k, M₁ * E k * M₁) = M₁ * M₁ := by
-        rw [← Matrix.sum_mul, ← Matrix.mul_sum, hE.2, mul_one]
-      simp only [Finset.sum_sub_distrib, sum_right, sum_left, sum_sandwich,
-        Complex.ofReal_pow, Complex.ofReal_mul, pow_two]
-      abel
-    rw [← identity]
-    exact posSemidef_sum _ fun k _ => (hE.1 k).conjTranspose_mul_mul_same _
-
-  have risk_lower_bound {d m : ℕ}
-      (A C D B : Matrix (Fin d) (Fin d) ℂ)
-      (hA : A.PosSemidef) (hB : B.IsHermitian)
-      (hsol : A * B + B * A = (2 : ℂ) • C)
-      (E : Fin m → Matrix (Fin d) (Fin d) ℂ) (x : Fin m → ℝ)
-      (hE : (∀ k, (E k).PosSemidef) ∧ ∑ k, E k = 1) :
-      (D.trace - (B * C).trace).re ≤
-        ∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
-          (((2 * x k : ℝ) : ℂ) • C) + D)).trace.re := by
-    classical
-    let M₁ := ∑ k, (x k : ℂ) • E k
-    let M₂ := ∑ k, ((x k ^ 2 : ℝ) : ℂ) • E k
-    let V := M₂ - M₁ * M₁
-    have hV : V.PosSemidef := moment_variance E x hE
-    have hM₁ : M₁.IsHermitian := by
-      change M₁ᴴ = M₁
-      simp only [M₁, conjTranspose_sum]
-      apply Finset.sum_congr rfl
-      intro k hk
-      simp only [conjTranspose_smul, RCLike.star_def,
-        Complex.conj_ofReal, (hE.1 k).isHermitian.eq]
-    have hS : ((M₁ - B) * (M₁ - B)).PosSemidef := by
-      have hHerm := hM₁.sub hB
-      simpa only [hHerm.eq] using posSemidef_conjTranspose_mul_self (M₁ - B)
-    have total :
-        (∑ k, E k * (((x k ^ 2 : ℝ) : ℂ) • A -
-          (((2 * x k : ℝ) : ℂ) • C) + D)) =
-        M₂ * A - (2 : ℂ) • (M₁ * C) + D := by
-      simp only [mul_add, mul_sub, Matrix.mul_smul, Finset.sum_add_distrib,
-        Finset.sum_sub_distrib, Complex.ofReal_mul, Complex.ofReal_ofNat]
-      have second : (∑ k, ((2 : ℂ) * (x k : ℂ)) • (E k * C)) =
-          (2 : ℂ) • (M₁ * C) := by
-        simp only [← smul_smul, ← Finset.smul_sum, ← Matrix.smul_mul,
-          ← Matrix.sum_mul]
-        rfl
-      have first : (∑ k, ((x k ^ 2 : ℝ) : ℂ) • (E k * A)) = M₂ * A := by
-        simp only [← Matrix.smul_mul, ← Matrix.sum_mul]
-        rfl
-      have third : (∑ k, E k * D) = D := by
-        rw [← Matrix.sum_mul, hE.2, one_mul]
-      rw [first, second, third]
-    have hcross : (A * M₁ * B).trace + (A * B * M₁).trace =
-        (2 : ℂ) * (M₁ * C).trace := by
-      have h := congrArg (fun Z => (M₁ * Z).trace) hsol
-      simp only [mul_add, trace_add, Matrix.mul_smul, trace_smul, smul_eq_mul] at h
-      rw [← mul_assoc, ← mul_assoc, trace_mul_cycle M₁ A B,
-        trace_mul_cycle B M₁ A, trace_mul_cycle M₁ B A] at h
-      simpa only [add_comm] using h
-    have hbb : (A * B * B).trace = (B * C).trace := by
-      have h := congrArg (fun Z => (B * Z).trace) hsol
-      simp only [mul_add, trace_add, Matrix.mul_smul, trace_smul, smul_eq_mul,
-        ← mul_assoc] at h
-      rw [trace_mul_cycle B A B, trace_mul_cycle B B A] at h
-      linear_combination h / 2
-    have hcomplete :
-        (∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
-          (((2 * x k : ℝ) : ℂ) • C) + D)).trace) -
-          (D.trace - (B * C).trace) =
-        (A * V).trace + (A * ((M₁ - B) * (M₁ - B))).trace := by
-      rw [← trace_sum, total]
-      simp only [V, mul_sub, sub_mul, trace_add, trace_sub, trace_smul, ← mul_assoc]
-      rw [trace_mul_comm M₂ A]
-      linear_combination hcross - hbb
-    have hnV := RHLinalg.trace_mul_nonneg_of_posSemidef hA hV
-    have hnS := RHLinalg.trace_mul_nonneg_of_posSemidef hA hS
-    have h := congrArg Complex.re hcomplete
-    simp only [Complex.sub_re, Complex.add_re] at h ⊢
-    have hreSum : (∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
-        (((2 * x k : ℝ) : ℂ) • C) + D)).trace).re =
-        ∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
-        (((2 * x k : ℝ) : ℂ) • C) + D)).trace.re :=
-      map_sum Complex.reAddGroupHom _ _
-    rw [hreSum] at h
-    change 0 ≤ (A * V).trace.re at hnV
-    change 0 ≤ (A * ((M₁ - B) * (M₁ - B))).trace.re at hnS
-    linarith
-
-  have spectral_attainment {d : ℕ}
-      (A C D B : Matrix (Fin d) (Fin d) ℂ) (hB : B.IsHermitian)
-      (hsol : A * B + B * A = (2 : ℂ) • C) :
-      ∃ (E : Fin d → Matrix (Fin d) (Fin d) ℂ) (x : Fin d → ℝ),
-        ((∀ k, (E k).PosSemidef) ∧ ∑ k, E k = 1) ∧
-        (∑ k, (E k * (((x k ^ 2 : ℝ) : ℂ) • A -
-          (((2 * x k : ℝ) : ℂ) • C) + D)).trace.re) =
-            (D.trace - (B * C).trace).re := by
-    classical
-    let U : Matrix (Fin d) (Fin d) ℂ := hB.eigenvectorUnitary
-    let P (k : Fin d) : Matrix (Fin d) (Fin d) ℂ := diagonal (Pi.single k 1)
-    let E (k : Fin d) := U * P k * Uᴴ
-    let x := hB.eigenvalues
-    have hUU : U * Uᴴ = 1 := Unitary.coe_mul_star_self hB.eigenvectorUnitary
-    have hUstarU : Uᴴ * U = 1 := Unitary.coe_star_mul_self hB.eigenvectorUnitary
-    have hP : ∀ k, (P k).PosSemidef := by
-      intro k
-      change (diagonal (Pi.single k (1 : ℂ))).PosSemidef
-      rw [posSemidef_diagonal_iff]
-      intro i
-      simp only [Pi.single_apply]
-      split_ifs <;> simp
-    have hPsum : ∑ k, P k = 1 := by
-      ext i j
-      simp [P, Matrix.sum_apply, diagonal_apply, Matrix.one_apply, Pi.single_apply]
-    have hEsum : ∑ k, E k = 1 := by
-      simp only [E, ← Matrix.sum_mul, ← Matrix.mul_sum, hPsum, mul_one, hUU]
-    have hE : (∀ k, (E k).PosSemidef) ∧ ∑ k, E k = 1 :=
-      ⟨fun k => (hP k).mul_mul_conjTranspose_same U, hEsum⟩
-    have hdiag (r : Fin d → ℂ) : ∑ k, r k • P k = diagonal r := by
-      ext i j
-      simp [P, diagonal_apply, Matrix.sum_apply, Matrix.smul_apply, Pi.single_apply]
-    have hBdiag : B = U * diagonal (fun k => (x k : ℂ)) * Uᴴ := by
-      convert hB.spectral_theorem using 1 <;>
-        simp [U, x, Unitary.conjStarAlgAut_apply, RCLike.ofReal, star_eq_conjTranspose, Function.comp_def]
-    have sum_conj (r : Fin d → ℂ) :
-        ∑ k, r k • E k = U * (∑ k, r k • P k) * Uᴴ := by
-      rw [Matrix.mul_sum, Matrix.sum_mul]
-      apply Finset.sum_congr rfl
-      intro k hk
-      simp only [E, Matrix.mul_smul, Matrix.smul_mul]
-    have hM₁ : ∑ k, (x k : ℂ) • E k = B := by
-      rw [sum_conj, hdiag, ← hBdiag]
-    have hM₂ : ∑ k, ((x k ^ 2 : ℝ) : ℂ) • E k = B * B := by
-      rw [sum_conj, hdiag, hBdiag]
-      simp only [mul_assoc, ← mul_assoc Uᴴ U, hUstarU, one_mul,
-        Complex.ofReal_pow, pow_two]
-      rw [← mul_assoc (diagonal _) (diagonal _), diagonal_mul_diagonal]
-      simp only [Complex.ofReal_mul]
-    have total :
-        (∑ k, E k * (((x k ^ 2 : ℝ) : ℂ) • A -
-          (((2 * x k : ℝ) : ℂ) • C) + D)) =
-          (B * B) * A - (2 : ℂ) • (B * C) + D := by
-      simp only [mul_add, mul_sub, Matrix.mul_smul, Finset.sum_add_distrib,
-        Finset.sum_sub_distrib, Complex.ofReal_mul, Complex.ofReal_ofNat]
-      have first : (∑ k, ((x k ^ 2 : ℝ) : ℂ) • (E k * A)) = (B * B) * A := by
-        simp only [← Matrix.smul_mul, ← Matrix.sum_mul, hM₂]
-      have second : (∑ k, ((2 : ℂ) * (x k : ℂ)) • (E k * C)) =
-          (2 : ℂ) • (B * C) := by
-        simp only [← smul_smul, ← Finset.smul_sum, ← Matrix.smul_mul,
-          ← Matrix.sum_mul, hM₁]
-      have third : (∑ k, E k * D) = D := by
-        rw [← Matrix.sum_mul, hEsum, one_mul]
-      rw [first, second, third]
-    have hbb : (B * B * A).trace = (B * C).trace := by
-      have h := congrArg (fun Z => (B * Z).trace) hsol
-      simp only [mul_add, trace_add, Matrix.mul_smul, trace_smul, smul_eq_mul,
-        ← mul_assoc] at h
-      rw [trace_mul_cycle B A B] at h
-      linear_combination h / 2
-    refine ⟨E, x, hE, ?_⟩
-    rw [← Complex.re_sum, ← trace_sum, total]
-    simp only [trace_add, trace_sub, trace_smul, smul_eq_mul, hbb]
-    congr 1
-    ring
 
   have chi_certificate (z : ℂ) (hz : z * star z = 1) :
       let s : ℝ := Real.sqrt (1 / 2)
