@@ -34,13 +34,32 @@ internal sealed class RicciLimitDocument : IScribeDocumentDefinition
                     Call("Odd", Add(Add(N("a"), N("b")), N("c"))),
                     Limit(Mul(Real(N("N")), Square(Call("W", N("N"), N("a"), N("b"), N("c")))), D(0))))))),
                 "For a fixed odd-parity triple, N times the squared six-j symbol tends to zero. The odd weighted Casimir moment tends to zero by the terminating Racah expansion. Its nonnegative summands bound each fixed positive label; a zero label has inadmissible odd parity and contributes zero.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("rPlus_tendsto_zero", "Vanishing positive contribution",
+                Disp(All("l", N("Nat"), Implies(Le(D(2), N("l")),
+                    Limit(Div(Call("rPlus", N("l"), N("N")), Denominator()), D(0))))),
+                "For a fixed label at least two, the normalized positive contribution tends to zero. Each fixed row vanishes because triangle support leaves only finitely many odd-parity terms. Away from the diagonal row, the inverse-Casimir identity gives a summable bound independent of N; the diagonal row also vanishes. Dominated convergence therefore applies to the sum of rows.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("rMinus_eq", "Exact negative contribution",
+                Disp(All("l", N("Nat"), All("N", N("Nat"), Implies(Le(D(2), N("l")),
+                    Implies(Lt(N("l"), N("N")), Eq(
+                        Div(Call("rMinus", N("l"), N("N")), Denominator()),
+                        Div(Sub(Real(Call("harmonic", N("l"))), D(1)), D(2)))))))),
+                "For dimensions greater than the fixed label, the normalized negative contribution is one half of the harmonic number minus one. Expanding the squared Casimir difference and interchanging the two summation labels reduces the double sum to odd moments. Orthogonality, signed parity addition and the weighted sum rules leave the harmonic sum rule. The values at labels two and three are one quarter and five twelfths.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("result", "Harmonic limit and eventual negativity", Disp(ClaimBody()),
+                "For every fixed label at least two, the averaged curvature tends to minus one half of the harmonic number minus one. The positive contribution vanishes and the negative contribution is exact. Since the harmonic number exceeds one, the limit is strictly negative, and convergence gives a dimension threshold beyond which the curvature is negative.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lichtenfelz-modin-preston-2026-zeitlin-ricci-limit"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("zeitlin-riccilimit-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula N(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
     private static Formula Call(string name, params Formula[] arguments) =>
