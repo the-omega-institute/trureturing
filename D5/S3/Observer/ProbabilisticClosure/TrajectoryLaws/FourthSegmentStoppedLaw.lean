@@ -87,7 +87,7 @@ def WordFamily : ActivePhase → Letter → List Letter → Prop
   | .p, b, w => ∃ j, w = pWord j b
   | .beta, b, w => (b = 1 ∧ w = [1]) ∨ ∃ j, w = 0 :: pWord j b
 
-private theorem prefix_length (ω : Stream) (n : ℕ) : (readPrefix ω n).length = n := by
+theorem prefix_length (ω : Stream) (n : ℕ) : (readPrefix ω n).length = n := by
   simp [readPrefix]
 
 private theorem prefix_succ (ω : Stream) (n : ℕ) :
@@ -255,7 +255,7 @@ private theorem measurable_prefix (n : ℕ) : Measurable (fun ω : Stream => rea
   exact (measurable_of_countable (fun v : Fin n → Letter => List.ofFn v)).comp
     (measurable_pi_lambda _ (fun i => measurable_pi_apply i.val))
 
-private theorem measurable_cylinder (w : List Letter) : MeasurableSet (prefixCylinder w) :=
+theorem measurable_cylinder (w : List Letter) : MeasurableSet (prefixCylinder w) :=
   (measurable_prefix w.length) (measurableSet_singleton w)
 
 /-- Measurability uses countably many measurable fibers, not a countable stream domain. -/
@@ -315,7 +315,7 @@ def explicitStoppedWordLaw (s : ActivePhase) (r : unitInterval) : Measure RawTai
       (R ^ 2 * A ^ j) • Measure.dirac (some (0 :: pWord j 0)) +
       (R * S ^ 2 * A ^ j) • Measure.dirac (some (0 :: pWord j 1)))
 
-private theorem cylinder_mass (r : unitInterval) (w : List Letter) :
+theorem cylinder_mass (r : unitInterval) (w : List Letter) :
     rawReadLaw r (prefixCylinder w) = wordMass r w := by
   classical
   cases w with
@@ -431,7 +431,7 @@ def infiniteTail (s : ActivePhase) (n : ℕ) : Letter :=
   | .p => if n % 2 = 0 then 1 else 0
   | .beta => if n % 2 = 0 then 0 else 1
 
-private theorem loop_as_prefix (j : ℕ) :
+theorem loop_as_prefix (j : ℕ) :
     loopWord j = readPrefix (infiniteTail .p) (2 * j) := by
   let a : Fin 2 → Letter := fun i => if i.val = 0 then 1 else 0
   have ha : List.ofFn a = [1, 0] := rfl
@@ -554,7 +554,7 @@ theorem actual_noncompletion_mass_zero (r : unitInterval) (s : ActivePhase) :
             (show (unitInterval.toNNReal r : ℝ≥0∞) ≤ 1 from by
               exact_mod_cast r.property.2))
 
-private theorem p_word_length (j : ℕ) (b : Letter) :
+theorem p_word_length (j : ℕ) (b : Letter) :
     (pWord j b).length = 2 * j + if b = 0 then 1 else 2 := by
   have hl : (loopWord j).length = 2 * j := by
     rw [loop_as_prefix, prefix_length]

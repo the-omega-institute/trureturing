@@ -1,0 +1,13 @@
+**数学引文 0.2（历史反驳断言的精确范围）。** R0 取 $V(n)=\operatorname{Fin}(n)\to\mathbb Z/3\mathbb Z$；`SumFree s f` 指对每个线性独立方向族参数化的仿射 $s$ 平面，函数值之和非零。`parityMatrix n s f` 使用总次数不超过 $2s-1$ 的约化单项式行，再加 $f$ 的坐标行；`codeDim n s f` 是该校验线性映射核的有限维数。源码的 `claim` 逐量词为
+
+$$
+\begin{aligned}
+\forall n,s\in\mathbb N,\quad &(2\le n)\Rightarrow(1\le s)\Rightarrow(s\le n-1)\Rightarrow\\
+&\forall f,g:V(n)\to V(n),\\
+&\operatorname{SumFree}(s,f)\Rightarrow\operatorname{SumFree}(s,g)\Rightarrow\\
+&\operatorname{codeDim}(n,s,f)=\operatorname{codeDim}(n,s,g).
+\end{aligned}
+$$
+
+固定源码含 `D5.S3.Arith.SumFreeCodeDimensionRefutation.result : ¬ claim`；私有见证为 $f(u,v)=(u^2+v^2,0)$ 和 $g(u,v)=(u^2,v^2)$，`witness_dimensions` 分别给 `codeDim 2 1 f = 5` 与 `codeDim 2 1 g = 4`。这些是历史来源中的精确声明，不是本卷新增的形式化结论。
+
