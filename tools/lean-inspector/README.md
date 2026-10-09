@@ -8,7 +8,19 @@
 ```sh
 make lean-report
 make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
+make lean-report REBUILD_REPORT_CACHE=1
+make lean-cache-from-github-without-mathlib REFRESH_STALE=1
 ```
+
+本地默认 `fetch-or-fail`：报告种子缺失、不完整或成功收据的 `inputs.report_format`
+不符时，先在私有写锁内恢复 dev 同分区、缓存 key 一致的 Release 快照。恢复后仍无
+相符种子时，以 `LEAN_REPORT_CACHE_INCOMPATIBLE` 和非零状态退出，不进入 Lake 报告提取。
+格式相符而输入有差量时，由 Lake 原生机制增量更新；相符的整份收据仍可直接复用。
+`REBUILD_REPORT_CACHE=1` 跳过整份收据复用，显式允许报告构建路径。
+CI 与 Release publisher 显式传入 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，
+不读 Release；环境变量不选择本地或 CI 策略。直接 `inspect.sh` 默认 `reuse-or-build`，
+也可显式传入 `--cache-miss-policy fetch-or-fail`。兼容性只由报告格式标识表达，
+没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
 
 `LEAN_REPORT` 可省略；默认输出为
 `.lake/build/stratalint/raw-lean-report.json`。相对目的路径按仓库根目录解析，

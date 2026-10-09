@@ -257,13 +257,13 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             manifest = (clone / 'lean-report-inputs.json').read_text()
             self.write('lean-report-inputs.json', manifest.replace('"schema_version": 1',
                                                                  '"schema_version": 0'))
-            rejected = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
+            rejected = subprocess.run(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
             self.assertNotEqual(rejected.returncode, 0, rejected.stdout + rejected.stderr)
             self.assertIn('schema_version', rejected.stderr)
             self.assertFalse((clone / '.lake').exists(), 'rejected inputs must preserve donor eligibility')
             self.write('lean-report-inputs.json', manifest)
-            result = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
+            result = subprocess.run(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
             if sys.platform != 'darwin':
                 self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
