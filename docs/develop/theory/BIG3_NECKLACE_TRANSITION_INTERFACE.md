@@ -240,3 +240,108 @@ $$
 **范围与归属。** 本节给出了辅助端口集上的显式递归、完整交替圈及两个完整乘积轨道，补充了第 6 节所区分的端口代数义务。通用的两无固定点对合、交替圈和轨道分裂属于经典机制；本节字面种子与三对拼接的任意阶正确性属于本仓推导，不作全球新颖性声明。把这些端口用于原始排列仍须另外证明端口运输、切后实际路径以及全原域覆盖，不能直接由 $|P_k|$ 或轨道分裂替代这些义务。
 
 ## 追加锚（本行以下为增补区）
+
+## 8. 原始 native 域的统一归纳窗口（2026-10-09）
+
+本节是已核验统一 native 构造结果的研究说明，解释其对象、量词与归纳组织。相关 Lean 源码已通过本地内核检查，尚未交付到 dev。
+本节引用下述实际路径构造与父图桥的已核验结果，不在此重述它们的完整构造证明；原始全 Cayley 图的对应与范围验证另由相关构造结果承担。
+
+### 8.1 域的定义先于所构造的圈
+
+`Frame d k` 保存选中标签的字、基底字、选中字的长度与标签不重复、标签完整性。
+其 `domain` 由选中标签的删除和基底圆排列确定，图、路径和覆盖结论均不是 Frame 字段。
+`recursiveFactor k F` 则从原始基例与实际子 Frame 出发，按固定删除边、加入边的递归构造图。
+证明中不能把 `F.domain` 改成已找到的圈的支持，再把全域覆盖当作定义展开。
+
+这个参数约定中，`Frame d k` 的选中字长是 $k+2$，ambient 排列有 $d+2$ 个位置。
+名称中的 rank 与选中字长需要按此换算。
+下述全称量词保留任意 admissible ambient 维数，不能只在某个最小维数证明后省略其余情形。
+
+### 8.2 完整路径信息与父图 Hamilton 性互相推进
+
+写 $J(r)$ 表示 `NativeJoint r`：对每个 `Frame d (r+2)`、$r+5\le d$，
+实际继承切口删除图中，每个有界端口都有通往字面 `partner r` 的简单路径；
+该路径支持恰为起端点的整个连通分量；所有这些路径的支持并集恰为原零子域。
+同一分量的两种定向可以重复出现，结论的覆盖范围不依赖代表路径列表。
+
+写 $HC(k)$ 表示：对每个 `Frame d k`、$k+3\le d$，
+原递归图诱导到独立 `F.domain` 后满足内部使用的 Hamilton 性。
+实际后继路径构造与父图桥分别给出以下两条推进关系；本节将它们作为已核验的外部构造结果使用：
+
+$$
+J(r),HC(r+1),HC(r+2)\Longrightarrow J(r+1),\qquad r\ge2,
+$$
+
+以及
+
+$$
+J(r),HC(r+1)\Longrightarrow HC(r+2),\qquad r\ge2.
+$$
+
+第一条使用实际 H/P 路径、字面奇偶拼接和端点覆盖，完成新的匹配路径与原零子域覆盖。
+第二条把已经得到的全部端口连接、原零子域覆盖、普通子域的切后连通性以及外部闭合链组合，
+证明整个原父域在一个连通分量内，再从其二因子结构提取完整圈。
+内部构造器的匹配、覆盖、低阶 Hamilton 参数在这里通过实际结果提供，不能成为最终定理的新前提。
+
+因此稳定的同步窗口是
+
+$$
+J(q+2)\ \wedge\ HC(q+3)\ \wedge\ HC(q+4).
+$$
+
+先用窗口得到 $J(q+3)$，再用它与已有 $HC(q+4)$ 得到 $HC(q+5)$，
+下一窗口恰为 $J(q+3)\wedge HC(q+4)\wedge HC(q+5)$。
+初始 $J(2)$ 与 $HC(3)$ 来自原始具体基例，$HC(4)$ 由父图桥在 $r=2$ 处推得。
+各步骤使用的低阶结论都量化于其原 ambient 维数范围；这使子 Frame 的调用具有所需界。
+
+### 8.3 覆盖证明在提取圈之前完成
+
+父图桥先证明
+
+$$
+\operatorname{supp}\bigl(\operatorname{component}_{\texttt{recursiveFactor}}(F.\texttt{outerR}\,0)\bigr)
+=F.\texttt{domain}.
+$$
+
+从左到右使用递归图边不能离开原始域；从右到左使用原域的实际子域划分。
+原零子域由 `JointData.cover` 与 `JointData.full` 处理，
+每个普通子域由低阶 Hamilton 圈删去真正切口后的连通性与实际外部链处理。
+主端口和普通子域之间也需真正的连接路径。
+当这个集合相等已证明之后，二因子的圈分量定理才提供圈，并把它诱导到 `F.domain`。
+这排除了“连接端口但遗漏另一个原域圈”的证明缺口。
+
+### 8.4 最终结论保留的条件
+
+`actual_uniform_native_joint q` 对所有 $q\in\mathbb N$ 提供 $J(q+2)$。
+`actual_uniform_native_hamiltonian_cycle` 对任意 `Frame d (q+3)` 与 $q+6\le d$，直接给出
+
+$$
+\exists v\in F.\texttt{domain},\ \exists p:v\leadsto v
+\text{ in }(\texttt{recursiveFactor}(q+3,F))|_{F.\texttt{domain}},
+\quad p\text{ is a Hamiltonian cycle}.
+$$
+
+这是实际闭 Walk 的存在性与完整 Hamilton 圈性质。
+没有导出匹配、路径、覆盖、连通性或 Hamilton 供应者参数，也没有导出单点基数排除条件。
+内部 Mathlib `IsHamiltonian` 的单点约定通过已有实际圈处理；最终输出直接给出实际圈。
+源码使用非计算的路径选择，没有额外承诺可执行的规范枚举算法。
+
+与本卷最初的 necklace 状态目标连接，使用原始全 Cayley 图与相应 Frame 域的准确关系，
+并核对所需的全部阶数和维数界。这些是本节之外的构造结果；本节自身不证明整个原 Cayley 图的闭合。
+本节说明的结论对象与量词就是上面明确列出的原始 Frame 域。
+
+构造结果与代码标识：
+
+- `UniformNativeJointData`：`JointData`、`NativeJoint`。
+- `UniformNativeSuccessorMatching`：`actual_uniform_native_joint_successor`。
+- `UniformNativeHamiltonianBridge`：`actual_uniform_parent_hamiltonian_cycle`。
+- `UniformNativeJointBaseTwo`：`actual_native_joint_two`。
+- `UniformNativeInductionClosure`：`native_induction_from_original_bases`、
+  `actual_uniform_native_joint`、`actual_uniform_native_hamiltonian_cycle`。
+
+良基归纳、低阶 Hamilton 圈删边、二因子分量提取与群作用的轨道机制继续归属于既有结果。
+相关构造结果中的原始字面递归、完整原域覆盖及其统一组合标记为 `repo-derived`；
+本节对这些结果作研究说明，不将归纳窗口的组织另称为新增数学定理。
+本节不把本地验收、dev 交付或官方验收互相替代，也不作全球 unique 声明。
+
+## 追加锚（本行以下为增补区）
