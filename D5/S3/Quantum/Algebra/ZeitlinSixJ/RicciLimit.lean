@@ -11,7 +11,6 @@ import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Analysis.Polynomial.Basic
 
 set_option maxRecDepth 4096
-set_option maxHeartbeats 800000
 
 namespace D5.S3.Quantum.Algebra.ZeitlinSixJ.RicciLimit
 
@@ -49,7 +48,8 @@ private lemma racah_coefficient_tendsto_zero (j k : ℕ) (hk : 1 ≤ k) :
   have hdeg : q.natDegree = 2*k+1 := by
     dsimp [q]
     rw [Polynomial.natDegree_prod_of_monic (range (2*k+1))
-      (fun r : ℕ => Polynomial.X + Polynomial.C ((r : ℝ)-k)) (fun r _ => Polynomial.monic_X_add_C ((r : ℝ)-k))]
+      (fun r : ℕ => Polynomial.X + Polynomial.C ((r : ℝ)-k))
+      (fun r _ => Polynomial.monic_X_add_C ((r : ℝ)-k))]
     simp only [Polynomial.natDegree_X_add_C, sum_const, card_range,
       smul_eq_mul, mul_one]
   have hlim : Tendsto (fun N : ℕ => (N : ℝ) / q.eval (N : ℝ)) atTop (nhds 0) := by
@@ -168,7 +168,7 @@ private lemma odd_moment_tendsto_zero (b c : ℕ) (hb : 1 ≤ b) (hc : 1 ≤ c) 
   simpa [div_eq_mul_inv] using (hlim.div_const 2).congr' (Filter.EventuallyEq.symm heq)
 
 /-- A fixed odd-parity triple has vanishing squared six-j mass after multiplication by N. -/
-theorem fixed_labels_odd_tendsto_zero (a b c : ℕ) (ho : Odd (a+b+c)) :
+theorem fixed_labels_odd_tendsto_zero (a b c : ℕ) (ho : Odd (a + b + c)) :
     Tendsto (fun N : ℕ => (N : ℝ)*W N a b c^2) atTop (nhds 0) := by
   by_cases hz : a=0 ∨ b=0 ∨ c=0
   · have hw : ∀ N, W N a b c=0 := by
@@ -180,7 +180,7 @@ theorem fixed_labels_odd_tendsto_zero (a b c : ℕ) (ho : Odd (a+b+c)) :
         unfold triangle at ht
         rcases hz with h | h | h <;> omega
       simp [W, sixJ, had]
-    simpa [hw] using (tendsto_const_nhds (x := (0 : ℝ)))
+    simp [hw]
   have ha : 1 ≤ a := by omega
   have hb : 1 ≤ b := by omega
   have hc : 1 ≤ c := by omega
