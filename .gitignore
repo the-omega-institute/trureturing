@@ -30,3 +30,13 @@ __pycache__/
 /tools/lean-inspector-reg/.lake/
 
 /Reg/.lake/
+
+/experiments/
+/docs/reports/**/*.json
+/docs/reports/**/*.b64
+/docs/reports/**/*.py
+/docs/reports/**/*.cpp
+/docs/reports/**/*.c
+/docs/reports/**/*.h
+/docs/reports/**/*.mjs
+/docs/reports/**/*.lean
