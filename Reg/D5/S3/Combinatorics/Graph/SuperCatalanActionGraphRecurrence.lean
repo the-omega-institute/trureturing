@@ -1,6 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Graph.SuperCatalanActionGraphRecurrence
-import Reg.Support.PointwiseEqualityRegistrations
 import Reg.Support.DependentFamily
 
 namespace Reg.D5.S3.Combinatorics.Graph.SuperCatalanActionGraphRecurrence
