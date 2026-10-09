@@ -4,18 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Square completion and radial lower bounds for nonnegative two-atom codes. -/
-
-/-
-Library-search audit trail:
-* The pinned Mathlib inner-product search found `norm_sub_sq`,
-  `real_inner_self_eq_norm_sq`, `real_inner_le_norm`, and finite-sum inner-product
-  distribution, but no nonnegative two-atom coding or white-box loss declaration.
-* A repository search over D5 found no declaration of the two-atom code energy,
-  its radial lower bound, or its square-completion identity. The present identities
-  therefore establish the reusable algebraic core needed by the quantitative matching
-  theorem; the infimum-to-dictionary matching argument remains open.
--/
+   digest: Near-radial costs force two-slot matching and localize perturbed minima. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.SpecialFunctions.Sqrt
@@ -45,7 +34,7 @@ def codeCost {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     (lam : ℝ) (x : E) (D : UnitDictionary E) : ℝ :=
   sInf {z : ℝ | ∃ c, FeasibleCode c ∧ codeEnergy lam x D c = z}
 
-/- The square-completion identity is the active algebraic relation used below. -/
+/- Square completion separates residual error from directional correlation defects. -/
 theorem code_energy_excess_eq
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     (lam n : ℝ) (e : E) (D : UnitDictionary E) (c : AtomIndex → ℝ)
