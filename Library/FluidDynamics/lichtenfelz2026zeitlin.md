@@ -5,10 +5,11 @@ year: 2026
 title: "Ricci curvature for hydrodynamics on the sphere"
 doi: 10.1007/s00220-025-05533-w
 url: https://arxiv.org/abs/2508.09833v1
-claim: "Conjecture 1 states the four spin-weighted Wigner six-j identities (2.10)-(2.13); their validity supplies the hypothesis of Theorem 3."
+claim: "Conjecture 1 states the four spin-weighted Wigner six-j identities (2.10)-(2.13); their validity supplies the hypothesis of Theorem 3. Conjecture 2 states that for each fixed l > 1 the averaged Ricci curvature of the Zeitlin metric on SU(N) becomes negative for large N and tends to -(H_l - 1)/2."
 strata_touched:
   - D5/S3/Quantum/Algebra/ZeitlinSixJ/Racah
   - D5/S3/Quantum/Algebra/ZeitlinSixJ/SumRules
+  - D5/S3/Quantum/Algebra/ZeitlinSixJ/RicciLimit
 license: citation-only
 triage: anchor
 ---
@@ -61,10 +62,25 @@ identities remove that hypothesis from the paper's Ricci-curvature
 argument. The asymptotic Conjecture 2 additionally requires a sharper
 upper bound for the positive Ricci contribution; it is a separate question.
 
+The Ricci curvature components (eq. (2.4), `eq_ricci_intro`):
+
+> $r_{\ell}(N)^+ := \frac{N}{\hbar_N^2} \sum\limits_{\substack{k, k' = 1 \\ k+k'+\ell\;\mathrm{odd}}}^{N-1} \frac{\lambda_{\ell}}{\lambda_{k}\lambda_{k'} } \, (2k+1)(2k'+1) \left\{\begin{matrix} \ell & k & k' \\ \frac{N-1}{2} & \frac{N-1}{2} & \frac{N-1}{2} \end{matrix} \right\}^2$, $r_{\ell}(N)^- := \frac{N}{\hbar_N^2} \sum\limits_{\substack{k, k' = 1 \\ k+k'+\ell \;\mathrm{odd}}}^{N-1} \frac{ (\lambda_{k}-\lambda_{k'})^2}{\lambda_{k}\lambda_{k'}\lambda_{\ell}} \, (2k+1)(2k'+1) \left\{\begin{matrix} \ell & k & k' \\ \frac{N-1}{2} & \frac{N-1}{2} & \frac{N-1}{2} \end{matrix} \right\}^2.$ Here, $\lambda_i = i(i+1)$, $\hbar_N = 2/\sqrt{N^2-1}$ and $\{:::\}$ denotes the Wigner $6j$ symbol.
+
+Theorem 3 (`theorem_3`): "Assuming the identities in Conjecture 1, the positive and negative parts of the Ricci curvature in the $V_{\ell}$ subspace satisfy: $r_{\ell}(N)^- = \frac{2(H_{\ell}-1)}{\hbar_N^2} = 2(H_{\ell}-1)\left(\frac{N^2-1}{4}\right)$, $r_{\ell}(N)^+ \leq (4H_{\ell} + 2\ell+1) \left(\frac{N^2-1}{4}\right)$."
+
+Averaged curvature (eq. (2.15)): "$\widetilde{r}_{\ell}(N) = \frac{r_{\ell}(N)}{N^2-1}, \qquad \widetilde{r}_{\ell}(N)^{\pm} = \frac{r_{\ell}(N)^{\pm}}{N^2-1}$."
+
+Conjecture 2 (`conjecture_ricci`, eq. (2.16)): "For each fixed $\ell > 1$, the averaged Ricci curvature $\widetilde{r}_{\ell}(N)$ of the Zeitlin metric on $SU(N)$ becomes negative for sufficiently large $N$, and in the limit $\widetilde{r}_{\ell}(N) \rightarrow -\frac{H_{\ell}-1}{2}$, as $N \rightarrow \infty$, where $H_{\ell}$ is the $\ell^{\text{th}}$ harmonic number."
+
+The source continues: "Once these identities are proved, the asymptotic behavior in Conjecture 2 would follow by deriving a sharper upper bound for $r_{\ell}(N)^+$ in order to prove that $\lim_{N\to\infty} \tilde{r}_{\ell}(N)^+=0$ for each $\ell$."
+
+Remark after the upper bound (`eq_6j_upper_bound`): "On the other hand, if $i+j+\ell$ is \emph{odd}, then the coefficients $C^{\ell 0}_{i0j0}$ vanish and the proof of (`eq_clebschgordan`) given in [Brussaard–Tolhoek] is no longer valid. Indeed, numerically it seems that a sharper bound than (`eq_6j_upper_bound`) is possible in the case of $i+j+\ell$ odd, which would help with Conjecture 2, but this requires exploiting this parity assumption somehow."
+
 ## Verified locator
 
 - arXiv version: https://arxiv.org/abs/2508.09833v1
 - Source: `Ricci_Block.tex`, `conj_new_formulas`, equations (2.10)-(2.13).
+- Source: `Ricci_Block.tex`, `eq_ricci_intro` (2.4), `theorem_3`, (2.15) and `conjecture_ricci` (2.16).
 - Journal: Communications in Mathematical Physics 407 (2026), article 37,
   https://doi.org/10.1007/s00220-025-05533-w.
 - Racah definition: https://dlmf.nist.gov/34.4.E2.
