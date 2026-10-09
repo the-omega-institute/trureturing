@@ -22,16 +22,14 @@ def tripletPlus : Finset ℕ := {0, 2, 6}
 
 def tripletMinus : Finset ℕ := {0, 4, 6}
 
-/-- Ordered gap difference for a template whose entries are read left-to-right. -/
-def chirality (a b c : ℕ) : ℤ :=
-  ((c - b : ℕ) : ℤ) - ((b - a : ℕ) : ℤ)
+/-- Ordered gap difference for a three-point template. -/
+def gapDifference (g₁ g₂ : ℤ) : ℤ := g₂ - g₁
 
-/-- The two templates carry opposite ordered gap differences. -/
-theorem tripletPlus_chirality : chirality 0 2 6 = 2 := by
-  norm_num [chirality]
-
-theorem tripletMinus_chirality : chirality 0 4 6 = -2 := by
-  norm_num [chirality]
+/-- Reversing the ordered gaps negates the three-point direction. -/
+theorem reflected_gapDifference (g₁ g₂ : ℤ) :
+    gapDifference g₂ g₁ = -gapDifference g₁ g₂ := by
+  dsimp [gapDifference]
+  ring
 
 /-- Wheel admissibility for the three-point orientation H-plus. -/
 def plusAdmissible (W : ℕ) [NeZero W] (a : ZMod W) : Prop :=
