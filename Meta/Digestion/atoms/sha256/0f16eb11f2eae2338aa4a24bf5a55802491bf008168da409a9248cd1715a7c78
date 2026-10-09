@@ -1,0 +1,6 @@
+若 C_L 为 L 的列合并矩阵、C_J 为 J 的行合并矩阵，则
+
+$$
+C=I_JDI_L,\qquad C_L=PD,\qquad C_J=DP.
+$$
+
