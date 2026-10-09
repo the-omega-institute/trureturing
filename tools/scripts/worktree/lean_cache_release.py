@@ -603,6 +603,7 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
             producer_commit_sha=commit, publication_id=manifest["publication_id"], partition=partition,
             **{key: manifest[key] for key in ("workflow_run_id", "workflow_run_attempt") if key in manifest},
             release_target=metadata.get("target_commitish"))
+    report_reuse.record_seed_base(root, commit)
 
 
 def fetch_verification(root, partition, identity):
@@ -671,6 +672,26 @@ def fetch_locked(root, partition, deadline, refresh_stale=False):
         reason = str(error)
     receipt("fetch", "miss", reason=reason, partition=partition)
     return 1
+
+
+def latest_snapshot(root, partition, deadline):
+    """Read the newest compatible published manifest without downloading its archive."""
+    compatible = [partition] + [other for other in seed_partitions(root) if other != partition]
+    cache_key = release_key(root)
+    releases = json.loads(gh(deadline, "release", "list", "--repo", REPO, "--limit", "100",
+        "--json", "tagName,createdAt,isDraft"))
+    for release in sorted(releases, key=lambda item: item["createdAt"], reverse=True):
+        tag = release.get("tagName", "")
+        source = next((candidate for candidate in compatible
+            if tag.startswith(prefix(candidate, cache_key))
+            and valid_publication_id(tag[len(prefix(candidate, cache_key)):])), None)
+        if release.get("isDraft") is not False or source is None:
+            continue
+        with tempfile.TemporaryDirectory(prefix="lean-fetch-manifest-") as temporary:
+            _, manifest, _ = snapshot_manifest(source, tag, pathlib.Path(temporary), deadline,
+                                               cache_key=cache_key)
+        return tag, manifest["producer_commit_sha"]
+    return None
 
 
 def main():

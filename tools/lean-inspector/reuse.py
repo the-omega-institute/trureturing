@@ -14,6 +14,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
 import shlex
 import subprocess
 import sys
@@ -25,6 +26,8 @@ import materials
 import publication
 
 SCHEMA = 'stratalint-lean-report-reuse-v4'
+BASE_SCHEMA = 'stratalint-lean-report-seed-base-v1'
+BASE_RECORD = '.lake/lean-report-seed-base.json'
 SUFFIX = '.reuse.json'
 COMPLETED = ['defaults', 'report', 'publication']
 INVALID_SEED = (OSError, UnicodeError, ValueError, KeyError, TypeError,
@@ -154,6 +157,54 @@ def write_receipt(report, captured):
         Path(temporary).unlink(missing_ok=True)
 
 
+def _git(repository, *arguments):
+    return subprocess.run(['git', '-C', str(repository), *arguments], check=True,
+                          capture_output=True, text=True).stdout.strip()
+
+
+def read_seed_base(repository):
+    """Read the optional production/restore provenance record."""
+    path = repository / BASE_RECORD
+    try:
+        record = publication.read_json(path.read_bytes())
+        commit = record.get('producer_commit_sha') if isinstance(record, dict) else None
+        if (record.get('schema') != BASE_SCHEMA or not isinstance(commit, str)
+                or re.fullmatch(r'[0-9a-f]{40}', commit) is None):
+            return None
+        return commit
+    except (OSError, UnicodeError, ValueError, TypeError, KeyError):
+        return None
+
+
+def record_seed_base(repository, commit=None):
+    """Record a validated seed base only for a clean dev main checkout."""
+    try:
+        branch = _git(repository, 'symbolic-ref', '--quiet', '--short', 'HEAD')
+        head = _git(repository, 'rev-parse', '--verify', 'HEAD')
+        status = _git(repository, 'status', '--porcelain', '--untracked-files=no')
+        git_dir = Path(_git(repository, 'rev-parse', '--git-dir'))
+        common_dir = Path(_git(repository, 'rev-parse', '--git-common-dir'))
+        git_dir = (repository / git_dir if not git_dir.is_absolute() else git_dir).resolve()
+        common_dir = (repository / common_dir if not common_dir.is_absolute() else common_dir).resolve()
+        source = head if commit is None else commit
+        if (branch != 'dev' or status or git_dir != common_dir
+                or re.fullmatch(r'[0-9a-f]{40}', source) is None):
+            return False
+        path = repository / BASE_RECORD
+        path.parent.mkdir(parents=True, exist_ok=True)
+        fd, temporary = tempfile.mkstemp(prefix='.seed-base.', dir=path.parent)
+        try:
+            with os.fdopen(fd, 'wb') as target:
+                target.write(materials.canonical_json({
+                    'schema': BASE_SCHEMA, 'producer_commit_sha': source}))
+            os.replace(temporary, path)
+        finally:
+            Path(temporary).unlink(missing_ok=True)
+        return True
+    except (OSError, subprocess.SubprocessError, ValueError):
+        return False
+
+
 def seal(repository, report, captured):
     current = capture(repository)
     if current != captured:
@@ -165,6 +216,7 @@ def seal(repository, report, captured):
     # The caller reaches this only after Lake's default+report facet and normal
     # private publication have succeeded. Bind the exact published five pieces.
     write_receipt(report, captured)
+    record_seed_base(repository)
 
 
 def reuse(repository, report, output):
@@ -245,6 +297,100 @@ def seed_format(report):
         return dict(report_format='unavailable', compatible=False)
 
 
+def _is_ancestor(repository, ancestor, descendant):
+    if ancestor == descendant:
+        return True
+    return subprocess.run(['git', '-C', str(repository), 'merge-base', '--is-ancestor',
+                          ancestor, descendant], check=False).returncode == 0
+
+
+def _seed_mismatch(repository, report):
+    captured = capture(repository)
+    try:
+        read_receipt(report, captured)
+    except InputMismatch as error:
+        return error
+    return None
+
+
+def _seed_decision(action, reason, **fields):
+    payload = {'action': action, 'reason': reason, **fields}
+    print('LEAN_REPORT_SEED_DECISION ' + json.dumps(payload, sort_keys=True,
+                                                   separators=(',', ':')), flush=True)
+
+
+def _refresh_stale_seed(repository, report):
+    """Optionally replace a stale compatible seed with a strictly newer Release base."""
+    mismatch = _seed_mismatch(repository, report)
+    if mismatch is None:
+        return report
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
+    from lean_cache_release import latest_snapshot, operation_deadline, partition_path
+    base = read_seed_base(repository)
+    try:
+        candidate = latest_snapshot(repository, partition_path(repository), operation_deadline())
+    except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError, AttributeError, IndexError,
+            subprocess.SubprocessError) as error:
+        _seed_decision('keep', 'release-manifest-unavailable', detail=str(error))
+        return report
+    if candidate is None:
+        _seed_decision('keep', 'no-published-snapshot')
+        return report
+    tag, release = candidate
+    try:
+        head = _git(repository, 'rev-parse', '--verify', 'HEAD')
+    except (OSError, subprocess.SubprocessError, ValueError) as error:
+        _seed_decision('keep', 'head-unavailable', detail=str(error), release=release)
+        return report
+    if base is None:
+        _seed_decision('keep', 'local-base-unknown', release=release, head=head)
+        return report
+    if not _is_ancestor(repository, release, head):
+        _seed_decision('keep', 'release-not-head-ancestor', release=release, head=head)
+        return report
+    if base == release or not _is_ancestor(repository, base, release):
+        _seed_decision('keep', 'release-not-newer', local=base, release=release)
+        return report
+    environment = os.environ.copy()
+    environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
+    try:
+        fetched = subprocess.run(['/bin/bash', str(repository / 'tools/scripts/worktree/lean-cache-publish.sh'),
+            'fetch', '--mode', 'production', '--refresh-stale', '--writer-owned'],
+            cwd=repository, env=environment)
+    except (OSError, subprocess.SubprocessError) as error:
+        _seed_decision('keep', 'release-download-failed', release=release, detail=str(error))
+        return report
+    if fetched.returncode:
+        _seed_decision('keep', 'release-download-failed', release=release,
+                       exit=fetched.returncode)
+        return report
+    restored = repository / '.lake/build/stratalint/raw-lean-report.json'
+    checked = seed_format(restored)
+    if not checked['compatible']:
+        _seed_decision('keep', 'restored-seed-incompatible', release=release,
+                       format=checked['report_format'])
+        return report
+    _seed_decision('fetch', 'newer-release', local=base, release=release, tag=tag)
+    return restored
+
+
+def refresh_stale_seed(repository):
+    """Warm-donor hook: optional stale-seed optimization never blocks the build."""
+    report = repository / '.lake/build/stratalint/raw-lean-report.json'
+    try:
+        if seed_format(report)['compatible']:
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
+            from lean_cache_release import cache_guard
+            with cache_guard(repository):
+                _refresh_stale_seed(repository, report)
+        else:
+            _seed_decision('keep', 'seed-unavailable')
+    except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError, AttributeError, IndexError,
+            subprocess.SubprocessError) as error:
+        _seed_decision('keep', 'stale-seed-refresh-unavailable', detail=str(error))
+    return 0
+
+
 def recover_and_reuse(repository, report, output):
     """Restore and consume a checked seed under the existing private-cache lock."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
@@ -289,6 +435,8 @@ def recover_and_reuse(repository, report, output):
                     if not checked['compatible']:
                         raise CacheIncompatible(local['report_format'], checked['report_format'],
                                                 'fetch-unavailable' if fetched.returncode else 'seed-incompatible')
+            elif not linked:
+                report = _refresh_stale_seed(repository, report)
             # Input differences select Lake's incremental path, not a new cache key.
             return reuse(repository, report, output)
     except BlockingIOError as error:
@@ -297,7 +445,7 @@ def recover_and_reuse(repository, report, output):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal'))
+    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal', 'refresh-stale-seed'))
     parser.add_argument('--repository', required=True, type=Path)
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
@@ -313,6 +461,8 @@ def main():
         parser.error('--output is required')
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
+    if args.command == 'refresh-stale-seed':
+        return refresh_stale_seed(args.repository)
     if args.command == 'capture':
         args.snapshot.write_bytes(materials.canonical_json(capture(args.repository)))
     elif args.command == 'seal':

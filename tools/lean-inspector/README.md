@@ -35,7 +35,12 @@ linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及�
 核验时给出主 checkout 路径；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，
 补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor && make lean-report` 后重新播种，
 并说明无法从当前 worktree 确定其位置，不将 Git store 目录当作主 checkout。
-格式相符而输入有差量时，由 Lake 原生机制增量更新；相符的整份收据仍可直接复用。
+格式相符而输入有差量时，主 checkout 记录 `.lake/lean-report-seed-base.json` 中的生产提交，
+并列举兼容 Release 分区的最新快照。只有快照清单的 `producer_commit_sha` 是当前 `HEAD` 的祖先、
+且本地记录是它的严格祖先时才在现有缓存锁内用 `--refresh-stale` 取回；本地记录未知、快照较旧
+或不在当前历史上时保留本地种子。清单、清单读取或取回失败均打印决定收据并继续 Lake 增量路径；
+相符的整份收据仍可直接复用。成功的主 checkout 生产和验证后的恢复都会更新该记录，记录不参与
+格式、输入、收据或缓存 key 的兼容性判断。
 `REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；
 主 checkout 的 ensure 仍可按现有主检出专用路径由归档补齐冷的项目层。
 CI 与 Release publisher 显式传入 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，
