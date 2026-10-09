@@ -103,9 +103,15 @@ B_M3: proof_shape: content; consumers: moments_equal
 B_M4: proof_shape: content; consumers: moments_equal
 moments_equal: proof_shape: content; consumers: result
 result: proof_shape: content
-escape_witness: none (settling result)
+escape_witness: SupportAndEdgeWordReflection.evalMoment_sound; SupportAndEdgeWordReflection.twoPoints_card
+Live content path: result -> moments_equal -> A_M2/A_M3/A_M4 and B_M2/B_M3/B_M4
+  -> evalA_sound/evalB_sound -> SupportAndEdgeWordReflection.evalMoment_sound
+  -> natChi_sound -> chi_eq_fastChi -> SupportAndEdgeWordReflection.twoPoints_card.
+result is content through this same-delivery chain.
 admission_basis: open-problem-resolution (#14353; Refuted)
-Direct frozen dependencies: none at Stage A; SupportAndEdgeWordReflection is unfrozen.
+Direct frozen dependencies: none on the protected baseline.
+Same-delivery content: SupportAndEdgeWordReflection is first frozen in this delivery;
+  Freeze event sha256:25f0f2c46edf46c447e7bdad66166bf1979b0e5b10128fb9366bc8e6fcc6ceff.
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
