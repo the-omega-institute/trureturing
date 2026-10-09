@@ -132,8 +132,13 @@ internal sealed class WhiteboxFiveBatchPhaseDocument : IScribeDocumentDefinition
                         + "Each round assigns mass 3/16 to each result and repeats with mass 1/16. "
                         + "The resulting law is uniform and its expected length is 18/5. "
                         + "Its stopping words use the public fixed-label carry-tree contract. "
-                        + "On every tape some prototype costs at least 22, while a point endpoint "
-                        + "costs at most 22 on each prototype, which proves the value for H.")),
+                        + "ActualJointResponseCostCore.result supplies a recipe and cost domination "
+                        + "for the selected controller. Scale38NestedCompensation.root_excess on the "
+                        + "whole prototype family gives a coordinate costing at least 22 on every tape. "
+                        + "Repeating that coordinate in all N slots and dropping the nonnegative bit "
+                        + "charge gives the H lower bound. Scale36ActualEndpointAcquisition.result "
+                        + "supplies a coarse endpoint costing at most 22 on each prototype; its "
+                        + "point sampler pays zero bits and attains the H value.")),
                         Paragraph(Text("The dyadic random-bit cost is classical Knuth-Yao theory, "
                         + "as recalled in Lumbroso, Section 2.1. The complete tree-controller "
                         + "optimization and its raw and coarse batch comparison are repository results."))),
