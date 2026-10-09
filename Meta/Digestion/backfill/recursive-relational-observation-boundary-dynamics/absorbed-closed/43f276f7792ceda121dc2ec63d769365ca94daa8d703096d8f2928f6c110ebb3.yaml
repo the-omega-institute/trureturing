@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:43f276f7792ceda121dc2ec63d769365ca94daa8d703096d8f2928f6c110ebb3
   normalized_sha256: sha256:43f276f7792ceda121dc2ec63d769365ca94daa8d703096d8f2928f6c110ebb3
 cas_ref: sha256:43f276f7792ceda121dc2ec63d769365ca94daa8d703096d8f2928f6c110ebb3
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Naturality/ObserverMorphismComposition.observer_morphism_composition
+    target_statement_id: sha256:f15614af670bb9950de7558ca42b2ce669d013cd1eba02c80eacbfef7f10460f
 receipts:
   unresolved_subitems: []
   chain_atoms:
