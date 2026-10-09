@@ -85,9 +85,10 @@ answer to the question is yes.
   $x\triangleleft y$ and $x\triangleright y$ yields a reduced $T_1$-groupoid" is false as stated; the same
   sentence appears in the journal version.
 - *Mechanism.* The first $T_1$ identity constrains $\circ$ only through $\triangleleft$; when
-  $\triangleleft$ is a projection it imposes nothing, while the first reduced identity is the same
-  identity with $\triangleleft$ replaced by $\circ$. Any $\circ$ that is not "right self-distributive"
-  in this sense gives a witness, as long as $*$ and $\triangleright$ satisfy the remaining identities.
+  $\triangleleft$ is a projection it imposes nothing, while the first reduced identity
+  $x\circ y=(x\circ z)\circ(y\circ z)$ is the same identity with $\triangleleft$ replaced by $\circ$. Any
+  $\circ$ that violates the first reduced identity gives a witness, as long as $*$ and $\triangleright$
+  satisfy the remaining identities.
 - *Size.* A one-element set satisfies every identity, so two elements is the smallest size.
 
 **Open.** Which additional identities between $\triangleleft$, $\triangleright$ and $\circ$ make the reduct of
