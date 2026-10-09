@@ -1,0 +1,14 @@
+**Claim status: open.** 读取 $x$ 后，若结果为一，则
+
+$$
+\boxed{(X_1,Y_1,Z_1)=\left(1,\frac\kappa X,0\right).}
+$$
+
+若结果为零，则
+
+$$
+\boxed{(X_0,Y_0,Z_0)=\left(0,\frac{Y-\kappa}{1-X},\frac Z{1-X}\right).}
+$$
+
+相应结果概率为 $X$ 与 $1-X$；零分母的情形只在相应结果概率为零时出现，不作除法。
+
