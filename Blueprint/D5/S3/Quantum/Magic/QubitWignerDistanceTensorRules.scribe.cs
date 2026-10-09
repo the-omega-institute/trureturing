@@ -91,7 +91,8 @@ internal sealed class QubitWignerDistanceTensorRulesDocument : IScribeDocumentDe
         Seq(Lambda, Sp, Open, V(name), Colon, type, Close, Sp, Mapsto, Sp, body);
     private static Formula CandidatesFormula()
     {
-        var k = V("k"); var type = Pair(Pair(V("Word"), V("Word")), Pair(Fin(2), Fin(2)));
+        var k = V("k"); var type = Pair(Parenthesized(Pair(V("Word"), V("Word"))),
+            Parenthesized(Pair(Fin(2), Fin(2))));
         var pred = LambdaOf("k", type, Call("commutingIndependent", Fst(Fst(k)), Snd(Fst(k))));
         var value = LambdaOf("k", type, Call("candidate", Fst(Fst(k)), Snd(Fst(k)), Fst(Snd(k)), Snd(Snd(k))));
         return Equal(V("candidates"), Call("Finsetimage", value, Call("Finsetfilter", pred, Call("Finsetuniv", type))));
