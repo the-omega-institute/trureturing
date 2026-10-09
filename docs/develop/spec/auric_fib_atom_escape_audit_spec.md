@@ -316,28 +316,57 @@ $$
 K_0\supseteq K_1\supseteq\cdots\supseteq K_m,
 $$
 
-第 \(j\) 层首次消除的有序状态对集合为
+初核 \(K_0\) 可以是合同允许的任意 kernel，不要求为全关系。令
 
 $$
-L_j=K_{j-1}\setminus K_j.
+D_{H_L}=(H_L\times H_L)\setminus\Delta_{H_L}.
 $$
 
-分层捕获谱为
+初层及后继第 \(j\) 层首次消除的有序非对角状态对集合分别为
 
 $$
-\operatorname{Cap}(j)=|L_j|,\qquad
+L_0=D_{H_L}\setminus K_0,\qquad
+L_j=D_{H_L}\cap(K_{j-1}\setminus K_j)
+\quad(1\le j\le m).
+$$
+
+有限 arena 的分层捕获数谱包含初层与全部后继层：
+
+$$
+\operatorname{Cap}(j)=|L_j|\quad(0\le j\le m).
+$$
+
+在有限非退化 arena 中，相应精确率谱为
+
+$$
 \operatorname{CapRate}(j)=
-\frac{|L_j|}{|H_L|(|H_L|-1)}.
+\frac{|L_j|}{|H_L|(|H_L|-1)}
+\quad(0\le j\le m).
 $$
 
-相邻核相等时，该层作为 collapsed layer 保留在链和谱中，\(L_j=\varnothing\)、\(\operatorname{Cap}(j)=0\)，且在有限非退化 arena 中 \(\operatorname{CapRate}(j)=0\)。原生 guard 读出由此前读出决定时也属此情形；只有相邻核严格包含时，该层捕获数才为正。
+若 \(K_0=H_L\times H_L\)，则 \(L_0=\varnothing\)、\(\operatorname{Cap}(0)=0\)，且在有限非退化 arena 中 \(\operatorname{CapRate}(0)=0\)。相邻核相等时，该后继层作为 collapsed layer 保留在链和谱中，\(L_j=\varnothing\)、\(\operatorname{Cap}(j)=0\)，且在有限非退化 arena 中 \(\operatorname{CapRate}(j)=0\)。原生 guard 读出由此前读出决定时也属此情形；只有相邻核严格包含时，该后继层捕获数才为正。
 
-最终未解析率为
+最终未解析对集合为
 
 $$
-\operatorname{UnresolvedRate}=
-\frac{|K_m\setminus\Delta_{H_L}|}{|H_L|(|H_L|-1)}.
+R_m=D_{H_L}\cap K_m=K_m\setminus\Delta_{H_L}.
 $$
+
+\(L_0,\ldots,L_m\) 与 \(R_m\) 两两不交并分割整个 \(D_{H_L}\)。因此有限 arena 中，令 \(N=|H_L|\)，有
+
+$$
+\sum_{j=0}^{m}\operatorname{Cap}(j)+|R_m|=N(N-1).
+$$
+
+在有限非退化 arena 中，最终未解析率及精确率守恒为
+
+$$
+\operatorname{UnresolvedRate}=\frac{|R_m|}{N(N-1)},\qquad
+\sum_{j=0}^{m}\operatorname{CapRate}(j)
++\operatorname{UnresolvedRate}=1.
+$$
+
+最终未解析对数及其适用时的率单列，不混入捕获谱。退化或无界 arena 的上述精确率不适用，遵守 §8.1 的有限性边界。
 
 对每个状态对，可以记录其首次被分开的层号；这就是变长分层码的地址。若一个状态纤维大小为 \(q\)，且另有均匀编码合同，则 \(\log_2 q\) 可以作为剩余地址预算；该预算是派生分析量，不是本规范的准入分数。
 
@@ -450,7 +479,7 @@ $$
 | escape_pairs | 残余有序非对角状态对 |
 | escape_rate | 有限 arena 上的精确率 |
 | unique_capture | 留一独有捕获对和增益 |
-| layered_spectrum | 各层首次捕获数与未解析率 |
+| layered_spectrum | 初层 \(L_0\) 与全部后继层 \(L_j\)（\(1\le j\le m\)）的首次捕获数及适用时的精确率，单列最终未解析对数与适用时的未解析率（§5.3） |
 | residuals | \(w\)、\(J_f\)、\(R_f\)、\(R_{\mathrm{guard}}\) 等条件量 |
 | disposition | proved、refuted、open、deferred 或其他现有合法状态 |
 
