@@ -1,0 +1,26 @@
+## 核心关系与实质收束
+
+Claim status: open.
+
+这次最值得保留的，是下面四个等式：
+
+$$
+\boxed{K_n=F_{n-2},\qquad|\mathcal C_n|=2^{K_n};}
+$$
+
+$$
+\boxed{\mathcal A(V_A)-\mathcal A(V_{A'})=\sum_p(\mathbf1_A(p)-\mathbf1_{A'}(p))(e_{i_p}-e_{i_p+1});}
+$$
+
+$$
+\boxed{\nu(V_A)=n\prod_p(1-\epsilon_p);}
+$$
+
+$$
+\boxed{|\mathcal F(h)|=2^{K_n-|H(h)|}.}
+$$
+
+它们分别描述：
+
+| 层次 | 隐藏关系的具体形式 |
+|---|---|
