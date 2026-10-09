@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:02357ab673a2bff0d1778a2813d4b95e6855d1716eb3878d8e65d82e4afcf7b7
   normalized_sha256: sha256:02357ab673a2bff0d1778a2813d4b95e6855d1716eb3878d8e65d82e4afcf7b7
 cas_ref: sha256:02357ab673a2bff0d1778a2813d4b95e6855d1716eb3878d8e65d82e4afcf7b7
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/SaturatedActualHistories.result
+    target_statement_id: sha256:a7bdb305cc20c7590cdebf6e2cb7bb9187e4f8dd49880a1503c0c05df55fa495
 receipts:
   unresolved_subitems: []
