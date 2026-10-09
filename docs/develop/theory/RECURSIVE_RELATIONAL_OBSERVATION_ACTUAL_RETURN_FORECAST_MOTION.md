@@ -480,3 +480,556 @@ Primary literature separates the nearby questions. [CK] (Theorem 7 and Corollary
 [A]: https://arxiv.org/html/2609.14623v1
 
 ## 追加锚（本行以下为增补区）
+
+## 9. A quantitative bound for the complete comparison class
+
+**Definition 9.1 (carriers, conventions and unchanged functional).** Use the original words $w_{j,0}=(\beta\alpha)^j\alpha$, $w_{j,1}=(\beta\alpha)^j\beta\beta$, $j\ge0$. The p carrier contains all these finite completed words and $(\beta\alpha)^\infty$; the suspended carrier contains $\beta$, all $\alpha w_{j,c}$, and $\alpha(\beta\alpha)^\infty$. Completion and the unique original Stop are rendered by $I_c$ as in §1; all future Reads, finite fields and permissions are retained. TV is the event supremum, equal to half the countable $\ell^1$ distance on these carriers.
+
+Write $t_1=1/3,t_2=2/5$, $S=[t_1,t_2]^2$ and $I_0=[3/8,5/13]$. For $t\in[t_1,t_2]$, put $a_t=t(1-t)$ and retain the complete source laws
+
+$$
+P_{p,t}(w_{j,0})=t a_t^j,\qquad
+P_{p,t}(w_{j,1})=(1-t)^2a_t^j,
+$$
+
+$$
+P_{\beta,t}(\beta)=1-t,\qquad
+P_{\beta,t}(\alpha w_{j,c})=tP_{p,t}(w_{j,c}).
+\tag{9.1}
+$$
+
+For every $(u,v)\in S$, without imposing $u=v$, put $a=(1-u)v,b=(1-u)(1-v)$ and retain
+
+$$
+G_p^{u,v}(w_{j,0})=ua^j,\qquad
+G_p^{u,v}(w_{j,1})=ba^j,
+$$
+
+$$
+G_\beta^{u,v}(\beta)=1-v,\qquad
+G_\beta^{u,v}(\alpha w_{j,c})=vG_p^{u,v}(w_{j,c}).
+\tag{9.2}
+$$
+
+All infinite-word masses in (9.1)–(9.2) are zero. Indeed $u+b=1-a$, so the completed p masses sum to 1, with mass $a^L\le(4/15)^L$ surviving $L$ returns; the suspended surviving mass is $va^L\le(2/5)(4/15)^L$. The source bounds are $a_t^L\le(6/25)^L$ and $ta_t^L\le(2/5)(6/25)^L$. The same normalized complete laws and both infinite outcomes remain in every distance below.
+
+Set
+
+$$
+\rho_p=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750},\qquad d_s=2\rho_s.
+$$
+
+For every Borel probability $\omega$ on the entire rectangle and every $r\in I_0$, retain exactly (2.3):
+
+$$
+\Psi(\omega,r)=
+\max_{s\in\{p,\beta\},\ t\in\{t_1,t_2,r\}}
+\left(\int_S\operatorname{TV}(G_s^{u,v},P_{s,t})\,d\omega-\rho_s\right),
+\qquad
+\gamma=\min_{\omega\in\mathcal P(S),\ r\in I_0}\Psi(\omega,r).
+\tag{9.3}
+$$
+
+The integral takes TV of each individual law before averaging; it is not the TV of a marginalized mixture. $\omega$ is an analysis comparison measure, with no finite-support restriction, and supplies no observer register or sampler.
+
+**Theorem 9.2 (explicit full-class comparison lower bound).** For every pair permitted in Definition 9.1,
+
+$$
+\Psi(\omega,r)\ge c_*:=
+\frac{3554869594}{1857643496310087890625}
+>\frac1{10^{12}}.
+\tag{9.4}
+$$
+
+Consequently the unchanged minimum satisfies $\gamma\ge c_*$. The proof consists of the pointwise stability and Borel integration below; it does not identify the numerical optimum of $\gamma$.
+
+**Proof, endpoint and complete-coordinate ingredients.** Consume the exact endpoint signs and distances of [ST, §2.2], used also by [PH, §2] and (3.1). At p the endpoint-2/endpoint-1 ratios on marker 0 words are $(6/5)(27/25)^j>1$, and on marker 1 words are $(81/100)(27/25)^j$, below 1 exactly at $j=0,1,2$. In suspension the ratios on prefixed marker 0 words are $(36/25)(27/25)^j>1$, those on prefixed marker 1 words are $(243/250)(27/25)^j$, below 1 only at $j=0$, and the direct $\beta$ mass is larger at endpoint 1. These comparisons cover every completed word; both infinite masses vanish. Thus the endpoint 1 positive events are
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+$$
+
+Their probabilities, differences and midpoints are
+
+$$
+\begin{aligned}
+P_{p,t_1}(E_p)&=412/729,&P_{p,t_2}(E_p)&=7299/15625,\\
+P_{\beta,t_1}(E_\beta)&=22/27,&P_{\beta,t_2}(E_\beta)&=93/125,\\
+d_p&=1116529/11390625,&d_\beta&=239/3375,\\
+C_p&=11758471/22781250,&C_\beta&=5261/6750.
+\end{aligned}
+\tag{9.5}
+$$
+
+Here $C_s$ is the midpoint event probability and $\operatorname{TV}(P_{s,t_1},P_{s,t_2})=d_s$. These are credited intermediate values, rather than a new endpoint minimax assertion.
+
+The complete-coordinate triangle identity of [NATIVE, (6.4)] and [CLIP, (3.6)] states, for normalized countable laws,
+
+$$
+\begin{aligned}
+&\operatorname{TV}(D,P_1)+\operatorname{TV}(D,P_2)-\operatorname{TV}(P_1,P_2)\\
+&\hspace{7mm}=\sum_w\operatorname{dist}
+\bigl(D(w),[\min(P_1(w),P_2(w)),\max(P_1(w),P_2(w))]\bigr).
+\end{aligned}
+\tag{9.6}
+$$
+
+It follows by summing the scalar absolute-value identity, including the infinite coordinate. All terms on the right are nonnegative and the sum converges by normalization. This full slack, rather than an objective on selected words alone, will control two selected violations.
+
+## 10. Stability on the entire phase-asymmetric rectangle
+
+**Proof of Theorem 9.2, transformed coordinates.** Write $a_i=t_i(1-t_i)$, $b_i=(1-t_i)^2$, so $(a_1,b_1)=(2/9,4/9)$ and $(a_2,b_2)=(6/25,9/25)$. Define
+
+$$
+D(a,b)=\frac{412/729-b(1+a+a^2)}{d_p}
+-\frac{22/27-b(1+a)/(a+b)}{d_\beta},
+$$
+
+$$
+h_2=(ba^2-16/729)_+,\qquad
+h_3=(ba^3-1944/390625)_+,\qquad H=h_2+h_3,
+$$
+
+$$
+F=D+13000H,\qquad
+d(u,v)=\min_{i=1,2}(|u-t_i|+|v-t_i|).
+\tag{10.1}
+$$
+
+The event expressions are $G_p(E_p)=b(1+a+a^2)$ and $G_\beta(E_\beta)=b(1+a)/(a+b)$, since $u=1-a-b,v=a/(a+b)$. We prove on all of $S$ that
+
+$$
+F\ge0,\qquad d(u,v)\le112F.
+\tag{10.2}
+$$
+
+The image of $S$ satisfies
+
+$$
+1/5\le a\le4/15,\quad9/25\le b\le4/9,\quad
+3/5\le a+b\le2/3,\quad3a/2\le b\le2a.
+\tag{10.3}
+$$
+
+The derivatives are
+
+$$
+\partial_bD=-\frac{1+a+a^2}{d_p}
++\frac{a(1+a)}{d_\beta(a+b)^2},\qquad
+\partial_aD=-\frac{b(1+2a)}{d_p}
++\frac{b(b-1)}{d_\beta(a+b)^2}.
+\tag{10.4}
+$$
+
+On the larger box given by the first two bounds in (10.3) and $a+b\ge3/5$, both absolute derivatives are bounded by
+
+$$
+\frac2{d_p}+\frac{25}{9d_\beta}<100,
+\qquad d_p>9/100,
+\quad d_\beta>7/100.
+\tag{10.5}
+$$
+
+For example $1+a+a^2<2$, $b(1+2a)<2$, $a(1+a)<1$ and $b(1-b)<1$ give this bound. All comparison segments below stay in this box. For $\delta_i=|a-a_i|+|b-b_i|$ the inverse coordinates also give
+
+$$
+|u-t_i|\le\delta_i,\qquad
+|v-t_i|\le\tfrac53|a-a_i|+\tfrac23\delta_i,
+\qquad |u-t_i|+|v-t_i|\le4\delta_i.
+\tag{10.6}
+$$
+
+Indeed the second inequality follows by putting the two fractions $a/(a+b)$ and $a_i/(a_i+b_i)$ over their denominators, using $a+b\ge3/5$ and $t_i\le2/5$.
+
+## 11. Three-region rational coercivity
+
+**Proof of Theorem 9.2, lower region $a\le a_1$.** Compare $b$ with $2a$. Both endpoints of this vertical segment satisfy the derivative box and the sum bound. On it,
+
+$$
+\partial_bD\le-\frac{31/25}{d_p}
++\frac{22/81}{(9/25)d_\beta}
+=-\frac{14383223125}{7204961637}<-1.
+\tag{11.1}
+$$
+
+The function $f(a)=D(a,2a)$ satisfies $f(a_1)=0$ and
+
+$$
+f'(a)=-\frac{2(1+2a+3a^2)}{d_p}+\frac2{3d_\beta}
+\le-\frac{2(38/25)}{d_p}+\frac2{3d_\beta}
+=-\frac{5763782250}{266850431}<-1.
+\tag{11.2}
+$$
+
+Integration in $a,b$ yields $D\ge(a_1-a)+(2a-b)\ge0$. Moreover $\delta_1=3(a_1-a)+(2a-b)\le3D$. Thus (10.6) gives $d\le12D\le112F$.
+
+**Proof of Theorem 9.2, middle region $a_1\le a\le a_2$.** Put
+
+$$
+q=\frac{177147}{781250},\qquad
+B(a)=\min\left\{\frac{16}{729a^2},\frac{1944}{390625a^3}\right\}.
+\tag{11.3}
+$$
+
+The first branch applies on $[a_1,q]$, the second on $[q,a_2]$, and the branches agree at $q$. $B$ decreases from $b_1$ to $b_2$ and is 6-Lipschitz: the branch derivatives have magnitudes $2B/a$ and $3B/a$, each at most $3b_1/a_1=6$. On each branch $a+B(a)$ has derivative $1-mB/a<0$, $m=2$ or 3, since $B\ge b_2,a\le a_2$. Thus $3/5\le a+B(a)\le2/3$, and the segment from actual $b$ to $B(a)$ stays in the derivative box. There,
+
+$$
+\partial_bD\le-\frac{103/81}{d_p}
++\frac{(6/25)(31/25)}{(9/25)d_\beta}
+=-\frac{346649715}{266850431}<-1.
+\tag{11.4}
+$$
+
+The exact identities (3.5)–(3.6) supply the sign polynomials. Retaining their coefficients, the quantitative estimate needed here is
+
+$$
+D(a,B(a))\ge\tfrac14\min(a-a_1,a_2-a).
+\tag{11.5}
+$$
+
+Indeed the first branch has
+
+$$
+D(a,16/(729a^2))=
+\frac{-250(9a-2)P(a)}{266850431a^2(729a^3+16)},
+$$
+
+$$
+P(a)=515692089a^4+133957242a^3+22330580a^2-10516000a-1912000.
+\tag{11.6}
+$$
+
+Using $q<227/1000$ in positive terms and $a\ge2/9$ in the negative linear term gives, throughout $[a_1,q]$,
+
+$$
+P(a)\le515692089(227/1000)^4+133957242(227/1000)^3
++22330580(227/1000)^2-10516000(2/9)-1912000
+=-\frac{1458200744339967359}{9000000000000}<-150000.
+\tag{11.7}
+$$
+
+The second branch has
+
+$$
+D(a,1944/(390625a^3))=
+\frac{-162(25a-6)Q(a)}{6671260775a^3(390625a^4+1944)},
+$$
+
+$$
+\begin{aligned}
+Q(a)={}&3693798828125a^6+919180031250a^5+253271520000a^4\\
+&+48234052800a^3-15260544828a^2-3499952328a-677410128.
+\end{aligned}
+\tag{11.8}
+$$
+
+For $L=2267/10000<q$ and $U=6/25$, exact substitution gives
+
+$$
+Q(L)=\frac{2821236205035871506801869}{102400000000000000}>25000000,
+$$
+
+and throughout $[L,U]$,
+
+$$
+\begin{aligned}
+Q'(a)\ge{}&6(3693798828125)L^5+5(919180031250)L^4
++4(253271520000)L^3\\
+&+3(48234052800)L^2-2(15260544828)U-3499952328\\
+&=\frac{6927164613779257879197}{204800000000}>30000000000.
+\end{aligned}
+\tag{11.9}
+$$
+
+Hence $Q(a)>25000000$ on the entire second branch. These are rational enclosures with explicit endpoints, not assertions based on samples. The denominators in (11.6),(11.8) are positive and increasing. Consequently the two branches respectively give
+
+$$
+D(a,B(a))\ge k_1(a-a_1),\qquad
+k_1=\frac{2250(150000)}{266850431a_2^2(729a_2^3+16)}
+=\frac{11444091796875}{13591493002123}>1/4,
+$$
+
+$$
+D(a,B(a))\ge k_2(a_2-a),\qquad
+k_2=\frac{4050(25000000)}{6671260775a_2^3(390625a_2^4+1944)}
+=\frac{2441406250}{7204961637}>1/4.
+\tag{11.10}
+$$
+
+This proves (11.5). For an explicit coefficient verification of the rational identities, let $A_0=412/729,B_0=22/27$ and $c=16/729,m=2$ or $c=1944/390625,m=3$. Clearing the denominator $a^m(a^{m+1}+c)$ in $D(a,c/a^m)$ gives the polynomial
+
+$$
+(A_0/d_p-B_0/d_\beta)a^m(a^{m+1}+c)
+-\frac c{d_p}(1+a+a^2)(a^{m+1}+c)
++\frac c{d_\beta}(1+a)a^m.
+\tag{11.11}
+$$
+
+Multiplying (11.11) by $266850431\cdot729$ in the first case gives $-250(9a-2)P(a)$, and by $6671260775\cdot390625$ in the second gives $-162(25a-6)Q(a)$. Thus all coefficients and signs in the comparison can be reproduced by rational polynomial arithmetic.
+
+Set $t=\min(a-a_1,a_2-a)$, $y=(B(a)-b)_+$ and $z=(b-B(a))_+$. Equations (10.5),(11.4),(11.5) give
+
+$$
+D\ge\tfrac14t+y-100z,\qquad
+D+101z\ge\tfrac14t+y+z\ge0.
+\tag{11.12}
+$$
+
+Choose $i$ with $|a-a_i|=t$. The cap's Lipschitz bound gives
+
+$$
+\delta_i\le7t+y+z\le28(D+101z).
+$$
+
+On the first branch $z=h_2/a^2$, and on the second $z=h_3/a^3$, including $z=0$ in both formulas. As $a\ge a_1$, $z\le125H$. Since $101\cdot125=12625<13000$, $F\ge D+101z\ge0$. Equation (10.6) then gives $d\le112F$ throughout this closed region.
+
+**Proof of Theorem 9.2, upper region $a>a_2$.** Here $b\ge3a/2>b_2$, so $h_3>0$. Monotone products give
+
+$$
+h_3\ge\tfrac32(a^4-a_2^4)\ge6a_2^3(a-a_2),\qquad
+6a_2^3>1/13,
+$$
+
+$$
+h_3\ge a_2^3(b-b_2),\qquad a_2^{-3}<73.
+\tag{11.13}
+$$
+
+Thus $\delta_2\le(13+73)h_3=86h_3$. The straight segment to $(a_2,b_2)$ lies in the derivative box. Since $D(a_2,b_2)=0$, (10.5) yields $D\ge-100\delta_2\ge-8600h_3$. Therefore
+
+$$
+F\ge4400H\ge0,\qquad
+d\le344h_3\le344H\le F\le112F.
+\tag{11.14}
+$$
+
+Together the three regions prove (10.2) on the whole rectangle, including all its boundary points.
+
+## 12. Integration without a support or phase restriction
+
+**Proof of Theorem 9.2, arbitrary Borel measures.** Fix any $\omega\in\mathcal P(S)$ and $r\in I_0$, and write $e=\Psi(\omega,r)$. The two endpoint triangle inequalities in either phase imply $e\ge0$; all six expected distances in (9.3) are at most the corresponding $\rho_s+e$.
+
+The endpoint event inequalities give
+
+$$
+\left|\int G_p(E_p)\,d\omega-C_p\right|\le e,\qquad
+\left|\int G_\beta(E_\beta)\,d\omega-C_\beta\right|\le e.
+\tag{12.1}
+$$
+
+For example the endpoint 1 distance is at least $P_{s,t_1}(E_s)-G_s(E_s)$ and the endpoint 2 distance at least $G_s(E_s)-P_{s,t_2}(E_s)$; integrate both and use (9.5). Since $(P_{s,t_1}(E_s)-C_s)/d_s=1/2$, the constant terms cancel in $D$, and
+
+$$
+\int D\,d\omega\le(1/d_p+1/d_\beta)e\le26e.
+\tag{12.2}
+$$
+
+In the full p triangle slack (9.6), $h_2$ and $h_3$ are upper-box violations at the distinct complete words $w_{2,1}$ and $w_{3,1}$. Their endpoint upper masses are, respectively,
+
+$$
+\max_iP_{p,t_i}(w_{2,1})=16/729,
+\qquad
+\max_iP_{p,t_i}(w_{3,1})=1944/390625.
+$$
+
+Thus $H$ is bounded by that complete nonnegative slack. Tonelli's theorem for its countable sum and the two endpoint expected distances yield $\int H\,d\omega\le2e$. Integrating (10.2), without restricting the support of $\omega$, gives
+
+$$
+m:=\int d(u,v)\,d\omega
+\le112(26+2\cdot13000)e=2914912e.
+\tag{12.3}
+$$
+
+The functions $D,H,d$ are bounded continuous functions on the compact rectangle; all denominator bounds were retained. TV as a countable sum of continuous coordinate terms is Borel, and the uniform geometric tails make it continuous jointly in $(u,v,t)$. Hence all displayed integrals are well defined for every Borel probability, not just for discrete mixtures.
+
+**Proof of Theorem 9.2, endpoint selector and complete-law recurrence.** Assign each $(u,v)$ to the nearest endpoint pair $(t_i,t_i)$ in $\ell^1$ distance, with ties assigned to endpoint 1. The two distance functions are continuous, so this is a Borel selector. Let $\lambda$ be the probability assigned to endpoint 1.
+
+For the entire p law, including the infinite outcome,
+
+$$
+\operatorname{TV}(G_p^{u,v},P_{p,t_i})
+\le2(|u-t_i|+|v-t_i|).
+\tag{12.4}
+$$
+
+To verify this without truncating a tail, put $x=|u-t_i|,y=|v-t_i|$ and let $q_p,q_\beta$ be the distances of the two complete phase laws to their endpoint laws. Split each complete law by its first emission. Inserting a law with matched first-emission weights, then using triangle inequalities and the injective prefix maps, gives
+
+$$
+q_p\le x+(1-u)q_\beta,\qquad
+q_\beta\le y+vq_p.
+$$
+
+These are normalized residual laws; the infinite word is in the residual carrier too. Rearrangement and $a=(1-u)v\le4/15$ give
+
+$$
+q_p\le\frac{x+(1-u)y}{1-a}
+\le\frac{15}{11}(x+y)\le2(x+y).
+\tag{12.5}
+$$
+
+Thus the expected p distance to the selected endpoint law is at most $2m$. Applied to $E_p$, this and (12.1) give
+
+$$
+d_p|\lambda-1/2|\le e+2m.
+\tag{12.6}
+$$
+
+Indeed the selected endpoint event average is $\lambda P_{p,t_1}(E_p)+(1-\lambda)P_{p,t_2}(E_p)$, whose difference from $C_p$ is exactly $d_p(\lambda-1/2)$.
+
+## 13. Uniform interior excess and the rational constant
+
+**Proof of Theorem 9.2, the unchanged closed interior interval.** Consume the full-word interior excess of [NATIVE, (6.1)–(6.2)]. Its word is $w_{3,1}$, with source mass
+
+$$
+J(r)=r^3(1-r)^5,\qquad
+J'(r)=r^2(1-r)^4(3-8r).
+$$
+
+Thus $J$ is nonincreasing on the entire closed $I_0=[3/8,5/13]$, including its zero derivative at the left boundary. The larger endpoint mass is $J(t_2)>J(t_1)$, and
+
+$$
+\begin{aligned}
+J(r)&\ge J(5/13)=J(t_2)+\eta,\\
+\eta&=(5/13)^3(8/13)^5-(2/5)^3(3/5)^5\\
+&=\frac{14219478376}{318644812890625}>0.
+\end{aligned}
+\tag{13.1}
+$$
+
+Apply (9.6) with $D=P_{p,r}$. This one full coordinate is outside the endpoint box by at least $\eta$, so
+
+$$
+\tfrac12\operatorname{TV}(P_{p,t_1},P_{p,r})
++\tfrac12\operatorname{TV}(P_{p,t_2},P_{p,r})
+\ge\rho_p+\eta/2.
+\tag{13.2}
+$$
+
+Let $f_i=\operatorname{TV}(P_{p,t_i},P_{p,r})$. Reverse triangle inequalities imply $|f_1-f_2|\le d_p$. The selected endpoint comparison (12.4) and (12.6) now give
+
+$$
+\begin{aligned}
+\rho_p+e
+&\ge\int\operatorname{TV}(G_p^{u,v},P_{p,r})\,d\omega\\
+&\ge\lambda f_1+(1-\lambda)f_2-2m\\
+&\ge\rho_p+\eta/2-d_p|\lambda-1/2|-2m\\
+&\ge\rho_p+\eta/2-e-4m.
+\end{aligned}
+\tag{13.3}
+$$
+
+Consequently $4e+8m\ge\eta$. Using (12.3) proves the exact identities and strict rational comparison
+
+$$
+e\ge\frac{\eta}{4+8(2914912)}
+=\frac{\eta}{23319300}
+=\frac{3554869594}{1857643496310087890625}=c_*>
+\frac1{10^{12}},
+$$
+
+$$
+3554869594\cdot10^{12}-1857643496310087890625
+=1697226097689912109375>0.
+\tag{13.4}
+$$
+
+The suspended interior constraint remains in (9.3), although this lower estimate only needs the p interior constraint and both phases' endpoint constraints. Every bound applies before minimization, on the entire phase-asymmetric rectangle and the entire Borel class; neither $u=v$, a finite preset support nor a modified risk order is imposed.
+
+For completeness, the minimum in (9.3) is the original minimum rather than an infimum over a replacement class. Finite-coordinate probabilities are continuous, and the bounds $(4/15)^L,(6/25)^L$ make finite-partition TV distances converge uniformly to complete TV. Joint continuity on $S\times[t_1,t_2]$ follows. Probability measures on compact $S$ are weakly compact; uniform continuity in $r$ and weak continuity of integration make all six expected distances, and their maximum, continuous on $\mathcal P(S)\times I_0$. This is the compactness step already used in Lemma 4.1. The minimum therefore exists and inherits (13.4). Its attainment inside this enlarged comparison class does not construct a common optimal finite observer. This completes the proof of Theorem 9.2. $\square$
+
+The complete-law viewpoint also occurs in Taolue Chen and Stefan Kiefer, *On the Total Variation Distance of Labelled Markov Chains*, CSL-LICS, DOI [10.1145/2603088.2603099](https://doi.org/10.1145/2603088.2603099), [author preprint](https://arxiv.org/html/1405.2852v1), Theorem 7 and Corollary 8. Their two converging bounds and rational approximation concern a supplied pair of labelled-chain laws. They do not optimize (9.3) or transfer configuration risk along an acquired return. Here the complete-coordinate identity, tails and rational enclosures provide the elementary intermediate arguments; the additional quantitative content is (10.2), (12.3) and (13.4).
+
+## 14. Exact original-source necessary acquired motion
+
+**Definition 14.1 (source and individual same-update contract).** Retain precisely the source and observer class of Theorem 2.1. Fix $m=2,d=1,\ell=2,n=4$, and draw one $K$ before all Reads from a finite or countable prior with
+
+$$
+\mu(1)>0,\qquad\mu(2)>0,\qquad\mu(\{k\ge3\})>0,
+\qquad r_k=F_{k+1}/F_{k+3}.
+$$
+
+Conditional on that same $K$, every paid seed and payload Read is independent with alpha probability $r_k$. Retain both seeds, all paid equal-pair rejections, every marker record, all positive finite returns and partial parses, the write-before-third-latch rule, and the full original $C_0$ with records, permissions, completion, unique pending and delivered Stop. There is no reset, depth redraw, conditioning on future completion, extra observation or controller port.
+
+An observer has a fixed finite COMPLETE carrier, source-independent initialization and fixed time-homogeneous source-independent acquired-letter kernels. COMPLETE includes the original control and records, private labels, selectors, tables, workspace, addresses, output indices and persistent randomness. Its decoder reads one actual configuration. Each decoded full legal law is generated by that configuration's own synthetic emissions and those very same acquired updates. There is no free archive, clock, advice, tape, exact posterior, continuous register, correlated source seed or runtime configuration-distribution vector. Zero and unit original emissions, arbitrary real kernel entries in the abstract stochastic-rule model, and original noncompletion mass remain permitted. No new exact-real sampling oracle or preservation of a fixed resource budget is assumed.
+
+For each original positive fourth history $h$, let $\rho_h$ be its conditional configuration row and $D_z$ its full decoded law. Retain configuration-before-TV risk and its original all-positive-history phase suprema:
+
+$$
+e_{\mathrm{conf}}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu),\quad
+R_{\mathrm{conf},s}=\sup_{h\in\mathcal H_s}e_{\mathrm{conf}}(h),\quad
+\varepsilon_s=R_{\mathrm{conf},s}-\rho_s\ge0,
+$$
+
+$$
+e_M=\max(\varepsilon_p,\varepsilon_\beta).
+\tag{14.1}
+$$
+
+The $\rho_s$ on the right are the separate full-tail radii in Definition 9.1. They are not terminal-output radii or actual-history-average losses.
+
+For a fourth p history let $C_h$ be the actual acquired update for the two paid Reads $\beta\alpha$. The return preserves the original control and held records, so both configurations' laws are rendered on the same complete carrier. Retain the source statistic
+
+$$
+\mathcal V(M)=\sup_{h\in\mathcal H_p}
+\sum_{x,z}\rho_h(x)C_h(x,z)\operatorname{TV}(D_x,D_z).
+\tag{14.2}
+$$
+
+**Corollary 14.2 (explicit necessary motion with all original hypotheses).** Every observer in Definition 14.1 satisfies
+
+$$
+\boxed{\mathcal V(M)\ge\frac{11}{6}
+\left(c_*-\frac{1183}{121}e_M\right)_+.}
+\tag{14.3}
+$$
+
+If common exact conf/conf attainment exists in this class, it requires
+
+$$
+\mathcal V(M)\ge\frac{11c_*}{6}
+=\frac{19551782767}{5572930488930263671875}
+>\frac{11}{6\cdot10^{12}}.
+\tag{14.4}
+$$
+
+Every sequence of allowed observers on allowed priors with $e_M\to0$ satisfies $\liminf\mathcal V(M)\ge11c_*/6$. Finite shapes and priors may vary while each retains every condition of Definition 14.1. Neither such a sequence nor a common exact optimizer is asserted to exist.
+
+**Proof.** The conditioning in (14.2) is the original actual-return conditioning, not synthetic sampling. Given an acquired $h$, source-independent initialization and updates factor observer randomness from the source likelihood; $K$ and the actual configuration are conditionally independent. The joint probability is precisely (2.1a):
+
+$$
+\Pr(K=k,Z_h=x,\text{next actual word}=\beta\alpha,
+Z_{h\beta\alpha}=z\mid h)
+=\nu_h(k)\rho_h(x)a_{r_k}C_h(x,z).
+\tag{14.5}
+$$
+
+Summing in $k$ and dividing by the positive actual word probability $\sum_k\nu_h(k)a_{r_k}$ leaves $\rho_h(x)C_h(x,z)$. There is no tilt by the decoder's synthetic emissions. The original source posterior can change on this return, but $\mathcal V$ measures the actual joint configurations' decoded-law motion.
+
+Apply Theorem 2.1, under its exact extraction, realization and clipping suppliers [MIXSEP], [PAID], [CLIP], to this observer and the same source. It gives
+
+$$
+\gamma\le\frac{1183}{121}e_M+\frac6{11}\mathcal V(M).
+\tag{14.6}
+$$
+
+The coefficient is the source's simultaneous propagation, not a law-risk substitution: with $T_p=(30\varepsilon_p+20\varepsilon_\beta)/11$ and $T_\beta=(12\varepsilon_p+30\varepsilon_\beta)/11$, its two bounds are
+
+$$
+\varepsilon_p+T_p+\tfrac4{11}(V+2T_p)
+=\frac{691\varepsilon_p+380\varepsilon_\beta}{121}+\frac4{11}V,
+$$
+
+$$
+\varepsilon_\beta+T_\beta+\tfrac6{11}(V+2T_p)
+=\frac{492\varepsilon_p+691\varepsilon_\beta}{121}+\frac6{11}V,
+\qquad V\le\mathcal V(M).
+\tag{14.7}
+$$
+
+This preserves the placement of configuration TV; $492+691=1183$ is the larger excess coefficient sum. The arbitrary original observer is not narrowed to $S$: the supplied extraction and clipping comparison in §6, including zero/unit emissions and original infinite mass, is what links it to (9.3). Combining (14.6) with Theorem 9.2 and $\mathcal V(M)\ge0$ gives (14.3); exact attainment and liminf give (14.4) and the sequence consequence.
+
+No positive unrestricted common risk gap follows from (14.3) while acquired motion is unrestricted. It also does not restore zero marginalized defect, preserve a defect or fee budget, replace either conf coordinate by law risk, prove a minimum COMPLETE resource, or transfer to a static no11 label, immutable-address cache, FIB window archive, KBonacci process or physical time/energy model. Such consequences require additional joint source, operation, update, full-law and cost hypotheses. In particular the deterministic fixed-law all-cut result of [future-response sufficiency](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md) §§39–40 has neither the arbitrary stochastic configuration contract nor individual same-update generation; it cannot replace Theorem 2.1 in this proof. The qualitative comparison, sign polynomials, endpoint fractions, triangle slack, interior excess and source motion relation remain the credited suppliers of this quantitative extension. $\square$
+
+## 追加锚（本行以下为增补区）
