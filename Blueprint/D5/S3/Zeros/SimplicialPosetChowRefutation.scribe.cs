@@ -76,7 +76,9 @@ internal sealed class SimplicialPosetChowRefutationDocument : IScribeDocumentDef
             theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(DefinitionDsl.Text(prose))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition,
-            null);
+            theorem ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("hoster-stump-2025-chow-polynomials-simplicial-posets"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula Id(string value) => F.Id(value);
     private static Formula Call(string name, params Formula[] args) =>

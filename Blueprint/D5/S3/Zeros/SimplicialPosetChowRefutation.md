@@ -94,6 +94,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/SimplicialPosetChowRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hoster-stump-2025-chow-polynomials-simplicial-posets` (refuted) by `D5/S3/Zeros/SimplicialPosetChowRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hoster-stump-2025-chow-polynomials-simplicial-posets","declaration_gid":"D5/S3/Zeros/SimplicialPosetChowRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Elena Hoster and Christian Stump (2025). *Chow polynomials of simplicial posets with positive h-vector are real-rooted*. URL: <https://arxiv.org/abs/2508.15538v1>.
