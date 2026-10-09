@@ -69,29 +69,31 @@ def claim : Prop :=
       ∀ (N : ℕ) (ψ : Fin (N + 1) → ℂ), ‖WithLp.toLp 2 ψ‖ = 1 → meanPhoton ψ = nbar →
         ∃ φ : ℝ, MMSE q τ₀ τ₁ (inBetween nbar φ) ≤ MMSE q τ₀ τ₁ ψ
 
-theorem result : ¬ claim := by
-  have sqrt_power (t : ℝ) (ht : 0 ≤ t) (k : ℕ) :
-      Real.sqrt (t ^ k) = Real.sqrt t ^ k := by
-    induction k with
-    | zero => simp
-    | succ k ih => rw [pow_succ, Real.sqrt_mul (pow_nonneg ht k), ih, pow_succ]
-  have source_coefficient (n l : ℕ) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
-      Real.sqrt ((Nat.choose n l : ℝ) * τ ^ (n - l) * (1 - τ) ^ l) =
-        Real.sqrt (Nat.choose n l) * Real.sqrt τ ^ (n - l) * Real.sqrt (1 - τ) ^ l := by
-    rw [Real.sqrt_mul (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hτ.1 _)),
-      Real.sqrt_mul (Nat.cast_nonneg _), sqrt_power τ hτ.1,
-      sqrt_power (1 - τ) (sub_nonneg.mpr hτ.2)]
-  have sourceKraus {N : ℕ} (l : Fin (N + 1)) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
-      amplitudeKraus l (1 - τ) = Matrix.of (fun r c : Fin (N + 1) =>
-        if r.val + l.val = c.val then
-          if l.val ≤ c.val then
-            (Real.sqrt ((Nat.choose c.val l.val : ℝ) *
-              τ ^ (c.val - l.val) * (1 - τ) ^ l.val) : ℂ)
-          else 0
-        else 0) := by
-    ext r c
-    simp only [amplitudeKraus, Matrix.of_apply, sub_sub_cancel, source_coefficient _ _ τ hτ]
+lemma sqrt_power (t : ℝ) (ht : 0 ≤ t) (k : ℕ) :
+    Real.sqrt (t ^ k) = Real.sqrt t ^ k := by
+  induction k with
+  | zero => simp
+  | succ k ih => rw [pow_succ, Real.sqrt_mul (pow_nonneg ht k), ih, pow_succ]
 
+lemma source_coefficient (n l : ℕ) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
+    Real.sqrt ((Nat.choose n l : ℝ) * τ ^ (n - l) * (1 - τ) ^ l) =
+      Real.sqrt (Nat.choose n l) * Real.sqrt τ ^ (n - l) * Real.sqrt (1 - τ) ^ l := by
+  rw [Real.sqrt_mul (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hτ.1 _)),
+    Real.sqrt_mul (Nat.cast_nonneg _), sqrt_power τ hτ.1,
+    sqrt_power (1 - τ) (sub_nonneg.mpr hτ.2)]
+
+lemma sourceKraus {N : ℕ} (l : Fin (N + 1)) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
+    amplitudeKraus l (1 - τ) = Matrix.of (fun r c : Fin (N + 1) =>
+      if r.val + l.val = c.val then
+        if l.val ≤ c.val then
+          (Real.sqrt ((Nat.choose c.val l.val : ℝ) *
+            τ ^ (c.val - l.val) * (1 - τ) ^ l.val) : ℂ)
+        else 0
+      else 0) := by
+  ext r c
+  simp only [amplitudeKraus, Matrix.of_apply, sub_sub_cancel, source_coefficient _ _ τ hτ]
+
+theorem result : ¬ claim := by
   have phase_MMSE (φ : ℝ) :
       MMSE (1/2) (4/9) 1 (inBetween (1/2) φ) =
         MMSE (N:=1) (1/2) (4/9) 1 ![(Real.sqrt (1/2) : ℂ),
