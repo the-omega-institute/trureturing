@@ -33,7 +33,8 @@ def sha(path):
 
 
 def stamp():
-    return {"monotonic_ns": time.monotonic_ns(), "realtime_ns": time.time_ns()}
+    return {"monotonic_ns": time.monotonic_ns(), "realtime_ns": time.time_ns(),
+            "monotonic_clock": "CLOCK_MONOTONIC", "realtime_clock": "CLOCK_REALTIME"}
 
 
 def append(path, value):
@@ -62,6 +63,7 @@ class SignalSink:
         self.reserve = min(4096, limit // 2)
         self.bytes = 0
         self.dropped_events = 0
+        self.retention_error = None
         self.lock = threading.Lock()
         self.closed = False
 
@@ -75,8 +77,13 @@ class SignalSink:
             if self.bytes + size > self.limit - (0 if terminal else self.reserve):
                 self.dropped_events += 1
                 return
-            self.stream.write(record)
-            self.stream.flush()
+            try:
+                self.stream.write(record)
+                self.stream.flush()
+            except OSError as error:
+                self.dropped_events += 1
+                self.retention_error = type(error).__name__
+                return
             self.bytes += size
             try:
                 self.console.write(text)
@@ -92,7 +99,11 @@ class SignalSink:
                    "console_retention": "only actually retained live lines are evidence"}, terminal=True)
         with self.lock:
             self.closed = True
-            self.stream.close()
+            try:
+                self.stream.close()
+            except OSError as error:
+                self.dropped_events += 1
+                self.retention_error = type(error).__name__
 
 
 def _wire_identity(fields):
@@ -112,7 +123,8 @@ def parse_signal_wire(line):
     if len(f) < 3 or f[0] != "D":
         raise ValueError("unrecognized event schema")
     kind, now = f[1], int(f[2])
-    row = {"kind": kind, "monotonic_ns": now, "identity_start_clock": "boot-nanoseconds"}
+    row = {"kind": kind, "boottime_ns": now, "event_clock": "CLOCK_BOOTTIME",
+           "identity_start_clock": "boot-nanoseconds"}
     if kind == "signal" and len(f) == 22:
         row.update(zip(("signal", "errno", "code", "group", "result"), map(int, f[3:8])))
         row.update(sender=_wire_identity(f[8:15]), target=_wire_identity(f[15:22]))
@@ -143,6 +155,12 @@ def require_trace_health(health):
             ("lost_events", "dropped_events", "parse_errors")) or health.get("reader_error")
             or health.get("collector_returncode") not in (None, 0)):
         raise ValueError("signal capability absent, ambiguous, lost or censored; workload is forbidden")
+
+
+class TraceHealthError(ValueError):
+    def __init__(self, reason, health):
+        super().__init__(reason)
+        self.reason, self.health = reason, health
 
 
 def signal_program(seconds):
@@ -207,6 +225,11 @@ class SignalTrace:
         prefix = [] if os.geteuid() == 0 else ["sudo", "-n"]
         self.sink = SignalSink(self.output / "signal-trace.jsonl")
         self.sink.emit({"kind": "trace-contract", "seconds": self.seconds, "limit_bytes": TRACE_LIMIT,
+                       "limit_scope": "trace file/live stream; not aggregate artifacts",
+                       "kernel_event_clock": "bpftrace 0.20.2 default nsecs: CLOCK_BOOTTIME",
+                       "python_stamp_clock": "CLOCK_MONOTONIC; realtime separately CLOCK_REALTIME",
+                       "identity_start_clock": "task_struct.start_boottime; boot-nanoseconds",
+                       "ordering": "collector arrival; no global cross-CPU causal order",
                        "event_scope": "system-wide signal generation/delivery, fork, exit, signal syscalls and OOM victim",
                        "limitations": "no IPC contents, actor motive, provider identity or historical events; absent terminal is censored",
                        "clock_ticks_per_second": os.sysconf("SC_CLK_TCK")})
@@ -297,14 +320,18 @@ class SignalTrace:
 
     def snapshot(self):
         health = dict(self.health, dropped_events=self.sink.dropped_events if self.sink else 0,
+                      retention_error=self.sink.retention_error if self.sink else None,
                       collector_returncode=self.process.poll() if self.process else None)
         return health
 
     def check(self):
         health = self.snapshot()
         if self.process is None or self.process.poll() is not None:
-            raise ValueError("trace collector not alive")
-        require_trace_health(health)
+            raise TraceHealthError("collector-not-alive", health)
+        try:
+            require_trace_health(health)
+        except ValueError as error:
+            raise TraceHealthError("invalid-trace-health", health) from error
 
     def stop(self):
         if self.process is not None and self.process.poll() is None:
@@ -660,7 +687,53 @@ def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup"), rea
             "cgroup_scope": "command cgroup (may include Python observer and other job processes)", "cgroup": cg}
 
 
-def observe_command(command, cwd, output, name, env, interval=2.0, canonical_resources=False, signal_sink=None):
+def stop_owned_command(child, processes):
+    """Bounded cleanup of the private command group and identified descendants.
+
+    Canonical supervisors may create nested groups. Signal their sampled PIDs
+    only while the Linux start identity still matches; never a host-wide group.
+    The direct child is waited here; descendant parents retain their own waits.
+    """
+    owned = {row["pid"]: row for row in processes if row.get("start_ticks") is not None
+             and row["pid"] not in (os.getpid(), child.pid)}
+    def matching(row):
+        try:
+            current = proc_row(Path("/proc") / str(row["pid"]))
+            return current if current["start_ticks"] == row["start_ticks"] else None
+        except (OSError, ValueError, IndexError):
+            return None
+
+    targeted = set()
+    def send(sig):
+        live = [current for row in owned.values() if (current := matching(row))]
+        for row in live:
+            try:
+                os.kill(row["pid"], sig)
+                targeted.add(row["pid"])
+            except ProcessLookupError:
+                pass
+        if child.poll() is None or any(row["pgid"] == child.pid for row in live):
+            try:
+                os.killpg(child.pid, sig)
+            except ProcessLookupError:
+                pass
+
+    send(signal.SIGTERM)
+    try:
+        child.wait(timeout=2)
+    except subprocess.TimeoutExpired:
+        pass
+    send(signal.SIGKILL)
+    child.wait(timeout=2)
+    return {"command_pgid": child.pid, "root_reaped": True,
+            "identity_checked_descendants": sorted(targeted), "returncode": child.returncode}
+
+
+def observe_command(command, cwd, output, name, env, interval=2.0, canonical_resources=False,
+                    signal_sink=None, signal_trace=None):
+    if signal_trace is not None:
+        signal_trace.check()
+        signal_sink = signal_trace.sink
     events = output / "stages.jsonl"
     begin = stamp()
     with (output / f"{name}.stdout.log").open("wb") as stdout, (output / f"{name}.stderr.log").open("wb") as stderr:
@@ -668,28 +741,63 @@ def observe_command(command, cwd, output, name, env, interval=2.0, canonical_res
         if canonical_resources:
             actual = ["bash", "-c", 'source tools/scripts/lib/resource-observation-lib.sh; resource_observe_run_periodic "$@"',
                       "cold-cost"] + command
-        child = subprocess.Popen(actual, cwd=cwd, env=env, stdout=stdout, stderr=stderr)
+        # This group contains only this operation, never the runner or tracer.
+        child = subprocess.Popen(actual, cwd=cwd, env=env, stdout=stdout, stderr=stderr, process_group=0)
         stage_event = {"kind": "stage-start", "name": name, "program_basename": Path(command[0]).name,
                        "canonical_resources": canonical_resources, "pid": child.pid, **begin}
-        append(events, stage_event)
-        if signal_sink:
-            signal_sink.emit(stage_event)
-        while child.poll() is None:
+        processes = {}
+        failure = None
+        cleanup = None
+        try:
+            append(events, stage_event)
+            if signal_sink:
+                signal_sink.emit(stage_event)
+            next_sample = time.monotonic()
+            while True:
+                if signal_trace is not None:
+                    signal_trace.check()
+                if child.poll() is not None:
+                    break
+                if time.monotonic() >= next_sample:
+                    try:
+                        sample_event = {"stage": name, **sample(child.pid, real_lean=env.get("COLD_COST_REAL_LEAN"))}
+                        processes.update((row["pid"], row) for row in sample_event["processes"])
+                        append(output / "samples.jsonl", sample_event)
+                        if signal_sink:
+                            for row in sample_event["processes"]:
+                                signal_sink.emit({"kind": "stage-process", "stage": name, **stamp(),
+                                    **{k: row.get(k) for k in ("pid", "ppid", "pgid", "sid", "start_ticks", "comm", "exe_basename", "role")}})
+                    except Exception as error:
+                        append(output / "observer-errors.jsonl", {"stage": name, **stamp(), "error": type(error).__name__})
+                    next_sample = time.monotonic() + interval
+                if signal_trace is not None:
+                    signal_trace.check()
+                try:
+                    child.wait(timeout=min(.1, max(.001, next_sample - time.monotonic())))
+                except subprocess.TimeoutExpired:
+                    pass
+        except BaseException as error:
+            failure = {"error": type(error).__name__, "retention": "censored",
+                       "reason": error.reason if isinstance(error, TraceHealthError) else None,
+                       "trace_health": signal_trace.snapshot() if signal_trace is not None else None}
             try:
-                sample_event = {"stage": name, **sample(child.pid, real_lean=env.get("COLD_COST_REAL_LEAN"))}
-                append(output / "samples.jsonl", sample_event)
-                if signal_sink:
-                    for row in sample_event["processes"]:
-                        signal_sink.emit({"kind": "stage-process", "stage": name, **stamp(),
-                            **{k: row.get(k) for k in ("pid", "ppid", "pgid", "sid", "start_ticks", "comm", "exe_basename", "role")}})
-            except Exception as error:
-                append(output / "observer-errors.jsonl", {"stage": name, **stamp(), "error": type(error).__name__})
-            try:
-                child.wait(timeout=interval)
-            except subprocess.TimeoutExpired:
+                processes.update((row["pid"], row) for row in sample(child.pid)["processes"])
+            except Exception:
                 pass
-        append(events, {"kind": "stage-end", "name": name, **stamp(), "returncode": child.returncode})
+            cleanup = stop_owned_command(child, processes.values())
+            raise
+        finally:
+            append(events, {"kind": "stage-end", "name": name, **stamp(), "returncode": child.returncode,
+                            "observer_failure": failure, "cleanup": cleanup})
     return child.returncode
+
+
+def observe_output(command, cwd, output, name, env, trace):
+    rc = observe_command(command, cwd, output, name, env, signal_trace=trace)
+    stdout = (output / f"{name}.stdout.log").read_bytes()
+    if rc:
+        raise subprocess.CalledProcessError(rc, command, output=stdout)
+    return stdout
 
 
 def git(root, *args):
@@ -798,7 +906,7 @@ def run(root, output, mode="workload"):
 
     def result():
         return {**stamp(), "canonical_returncode": rc if observer_failure is None else None,
-                "canonical_chain_complete": complete, "canonical_stages": stages,
+                "canonical_chain_complete": complete and observer_failure is None, "canonical_stages": stages,
                 "canonical_failure": canonical_failure, "observer_failure": observer_failure,
                 "diagnostic_only": True, "native_acceptance_or_integration_units": False,
                 "inputs_unchanged": inputs_unchanged, "mode": mode,
@@ -813,25 +921,29 @@ def run(root, output, mode="workload"):
             rc = 0
             return 0
         trace.check()
-        real = Path(subprocess.check_output(["elan", "which", "lean"], cwd=root).decode().strip()).resolve()
-        version = subprocess.check_output([str(real), "--version"]).decode().strip()
+        real = Path(observe_output(["elan", "which", "lean"], root, output,
+                                  "compiler-selection", env, trace).decode().strip()).resolve()
+        version = observe_output([str(real), "--version"], root, output,
+                                 "compiler-version", env, trace).decode().strip()
         if "version 4.34.1" not in version:
             raise ValueError(f"wrong actual compiler: {version}")
         write_json(output / "compiler.json", {"real_binary": str(real), "sha256": sha(real), "version": version,
-                   "githash": subprocess.check_output([str(real), "--githash"]).decode().strip(),
-                   "observation_delta": ["passive kernel trace and existing process/resource sampling; no compiler launch/profile changes"],
-                   "admission": "all canonical checks and budgets unchanged; observations are not control inputs"})
+                   "githash": observe_output([str(real), "--githash"], root, output,
+                                             "compiler-githash", env, trace).decode().strip(),
+                   "observation_delta": ["passive kernel trace and existing sampling; invalid trace stops owned diagnostic commands; no compiler profiling changes"],
+                   "admission": "canonical checks and budgets unchanged; trace health gates diagnostic execution only"})
         env.update(STRATALINT_ACCEPT_COLD_BUILD="1", STRATALINT_CACHE_WRITES="false")
         env["STRATALINT_LEAN_REPORT_LOG_DIR"] = str(output / "report-phases")
         # Same producer/compiled-judge/full-report chain as the current native job.
         stage = "judge-build"
-        rc = observe_command(["make", "-C", "tools", "dotnet", "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], root, output, stage, env, canonical_resources=True, signal_sink=trace.sink)
+        rc = observe_command(["make", "-C", "tools", "dotnet", "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], root, output, stage, env, canonical_resources=True, signal_trace=trace)
         stages.append({"stage": stage, "returncode": rc})
         if rc == 0:
             stage, rc = "judge-lean-producer", None
             try:
-                producer = subprocess.check_output(["bash", "tools/scripts/workflow/judge-lean-producer.sh",
-                            str(root / "tools/StrataLint.Cli/bin/Release/net10.0")], cwd=root, env=env).decode().strip()
+                producer = observe_output(["bash", "tools/scripts/workflow/judge-lean-producer.sh",
+                            str(root / "tools/StrataLint.Cli/bin/Release/net10.0")], root, output,
+                            stage, env, trace).decode().strip()
             except subprocess.CalledProcessError as error:
                 rc = error.returncode
                 stages.append({"stage": stage, "returncode": rc})
@@ -843,13 +955,14 @@ def run(root, output, mode="workload"):
             else:
                 env.pop("STRATALINT_LEAN_PRODUCER_DLL", None)
             stage, rc = "compiled-judge-test", None
-            rc = observe_command(["make", "compiled-judge-test"], root, output, stage, env, canonical_resources=True, signal_sink=trace.sink)
+            rc = observe_command(["make", "compiled-judge-test"], root, output, stage, env, canonical_resources=True, signal_trace=trace)
             stages.append({"stage": stage, "returncode": rc})
         if rc == 0:
             trace.check()
             stage, rc = "full-lean-report", None
-            rc = observe_command(["make", "lean-report", "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"], root, output, stage, env, canonical_resources=True, signal_sink=trace.sink)
+            rc = observe_command(["make", "lean-report", "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"], root, output, stage, env, canonical_resources=True, signal_trace=trace)
             stages.append({"stage": stage, "returncode": rc})
+            trace.check()
             complete = True
         if rc != 0:
             canonical_failure = {"stage": stage, "returncode": rc}
@@ -857,13 +970,24 @@ def run(root, output, mode="workload"):
         if canonical_failure is None:
             rc = None
             observer_failure = {"stage": stage, "error": type(error).__name__}
+            if isinstance(error, TraceHealthError):
+                observer_failure.update(reason=error.reason, trace_health=error.health, retention="censored")
         raise
     finally:
+        collection_error = None
+        def collection_failed(error):
+            nonlocal observer_failure, collection_error
+            collection_error = error
+            observer_failure = {"stage": "artifact-collection", "error": type(error).__name__,
+                                "prior_observer_failure": observer_failure}
+        stage = "artifact-collection"
         try:
-            stage = "artifact-collection"
             if trace is not None:
                 trace_health = trace.stop()
-
+        except BaseException as error:
+            collection_failed(error)
+            trace_health = trace.snapshot()
+        try:
             # Preserve genuine producer origins and receipts; copy bytes, never synthesize.
             report = ".lake/build/stratalint/raw-lean-report.json"
             for relative in tuple(report + suffix for suffix in ("", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip", ".reuse.json")) + (
@@ -876,20 +1000,23 @@ def run(root, output, mode="workload"):
             inputs_unchanged = input_binding(root) == binding["inputs"]
             if not inputs_unchanged:
                 raise ValueError("canonical invocation changed preserved source inputs")
+        except BaseException as error:
+            collection_failed(error)
+        try:
             observer_logs = [p for p in [output / "observer-errors.jsonl", *output.glob("compilers/*/observer-errors.json")]
                              if p.is_file()]
             if observer_logs:
                 raise ValueError("observer errors recorded: " + ", ".join(str(p.relative_to(output)) for p in observer_logs))
             if trace_health is not None:
                 require_trace_health(trace_health)
-            write_json(output / "result.json", result())
-            inventory = [{"path": str(p.relative_to(output)), "sha256": sha(p), "bytes": p.stat().st_size}
-                         for p in sorted(output.rglob("*")) if p.is_file()]
-            write_json(output / "inventory.json", inventory)
         except BaseException as error:
-            observer_failure = {"stage": stage, "error": type(error).__name__, "prior_observer_failure": observer_failure}
-            write_json(output / "result.json", result())
-            raise
+            collection_failed(error)
+        write_json(output / "result.json", result())
+        inventory = [{"path": str(p.relative_to(output)), "sha256": sha(p), "bytes": p.stat().st_size}
+                     for p in sorted(output.rglob("*")) if p.is_file()]
+        write_json(output / "inventory.json", inventory)
+        if collection_error is not None:
+            raise collection_error
     return rc if rc >= 0 else 128 - rc
 
 

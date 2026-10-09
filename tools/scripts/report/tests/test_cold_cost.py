@@ -1,5 +1,6 @@
 """Behavior tests for the temporary observer; no workflow assertions."""
 import importlib.util
+import io
 import json
 import os
 from pathlib import Path
@@ -16,6 +17,9 @@ PROGRAM = Path(__file__).resolve().parents[1] / "cold_cost.py"
 SPEC = importlib.util.spec_from_file_location("cold_cost", PROGRAM)
 cost = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(cost)
+
+HEALTHY = {"ready": True, "lost_events": 0, "dropped_events": 0, "parse_errors": 0,
+           "reader_error": None, "collector_returncode": None}
 
 
 class SignalDiagnosticContractTests(unittest.TestCase):
@@ -37,6 +41,11 @@ class SignalDiagnosticContractTests(unittest.TestCase):
     def test_wire_event_identifies_sender_target_and_signed_group_request(self):
         line = "D\tsignal\t100\t15\t0\t0\t1\t0\t20\t20\t1\t20\t20\t90\tbash\t21\t21\t20\t21\t21\t91\tpython\n"
         event = cost.parse_signal_wire(line)
+        self.assertEqual(event["boottime_ns"], 100)
+        self.assertEqual(event["event_clock"], "CLOCK_BOOTTIME")
+        self.assertNotIn("monotonic_ns", event)
+        self.assertEqual(event["identity_start_clock"], "boot-nanoseconds")
+        self.assertEqual(cost.stamp()["monotonic_clock"], "CLOCK_MONOTONIC")
         self.assertEqual(event["sender"]["tgid"], 20)
         self.assertEqual(event["target"]["start_ns"], 91)
         self.assertEqual(event["group"], 1)
@@ -44,14 +53,12 @@ class SignalDiagnosticContractTests(unittest.TestCase):
         self.assertEqual(call["requested_target"], -21)
 
     def test_ambiguous_sender_loss_and_missing_capability_prevent_report(self):
-        for health in ({"ready": False}, {"ready": True, "lost_events": 1},
-                       {"ready": True, "dropped_events": 2},
-                       {"ready": True, "parse_errors": 1}):
+        for key, value in (("ready", False), ("lost_events", 1), ("dropped_events", 2),
+                           ("parse_errors", 1), ("reader_error", "OSError"), ("collector_returncode", 7)):
+            health = dict(HEALTHY, **{key: value})
             with self.subTest(health=health), self.assertRaises(ValueError):
                 cost.require_trace_health(health)
-        cost.require_trace_health({"ready": True, "lost_events": 0,
-                                   "dropped_events": 0, "parse_errors": 0,
-                                   "reader_error": None, "collector_returncode": None})
+        cost.require_trace_health(HEALTHY)
         event = cost.parse_signal_wire("D\tsignal\t100\t15\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\tunknown\t21\t21\t20\t21\t21\t91\tpython\n")
         with self.assertRaises(ValueError):
             cost.validate_fixture_attribution([event], [{"mode": "individual", "sender": {"pid": 20, "tgid": 20}, "targets": [{"pid": 21, "tgid":21}]}])
@@ -163,6 +170,254 @@ class SignalDiagnosticContractTests(unittest.TestCase):
         self.assertNotIn("private-argument", (self.output / "stages-live.jsonl").read_text())
         self.assertNotIn("private-argument", (self.output / "stages.jsonl").read_text())
         self.assertEqual((self.output / "identity.stdout.log").read_text(), "raw phase\n")
+
+
+class LiveHealthEnforcementTests(unittest.TestCase):
+    failures = ("loss", "parse", "reader", "collector-error", "collector-exit", "console", "file")
+
+    def setUp(self):
+        self.fresh_case()
+
+    def fresh_case(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix="live health ")
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self.output = self.root / "output"
+        self.real = self.root / "lean identity"
+        self.real.write_bytes(b"compiler identity fixture")
+
+    def trace(self, output):
+        output.mkdir(exist_ok=True)
+        trace = cost.SignalTrace(output)
+        trace.health.update({k: v for k, v in HEALTHY.items() if k not in ("dropped_events", "collector_returncode")})
+        trace.sink = cost.SignalSink(output / "signal-trace.jsonl", console=io.StringIO())
+        trace.process = subprocess.Popen([sys.executable, "-c",
+            'import signal,sys,time; signal.signal(signal.SIGINT,lambda *_: sys.exit(0)); '
+            'signal.signal(signal.SIGTERM,lambda *_: sys.exit(7)); print("ready",flush=True); time.sleep(30)'],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, process_group=0)
+        self.assertTrue(select.select([trace.process.stdout], [], [], 3)[0])
+        self.assertEqual(trace.process.stdout.readline(), b"ready\n")
+        self.addCleanup(trace.stop)
+        self.addCleanup(trace.process.stdout.close)
+        self.addCleanup(trace.process.stderr.close)
+        trace.start = lambda: trace
+        trace.check()
+        self.assertEqual({k: trace.snapshot()[k] for k in HEALTHY}, HEALTHY)
+        return trace
+
+    def inject_failure(self, trace, kind):
+        if kind == "loss":
+            trace._line("Lost 3 events")
+        elif kind == "parse":
+            trace._line("ERROR unrecognized collector schema")
+        elif kind == "reader":
+            trace.health["reader_error"] = "OSError"
+        elif kind in ("collector-error", "collector-exit"):
+            if kind == "collector-error":
+                trace.process.terminate()
+            else:
+                trace.process.send_signal(signal.SIGINT)
+            trace.process.wait(timeout=2)
+        elif kind == "console":
+            trace.sink.console = Mock(write=Mock(side_effect=BrokenPipeError("fixture console failure")))
+            trace.sink.emit({"kind": "retention-fixture"})
+        elif kind == "file":
+            stream = trace.sink.stream
+            trace.sink.stream = Mock(write=Mock(side_effect=OSError("fixture file failure")), close=stream.close)
+            trace.sink.emit({"kind": "retention-fixture"})
+        else:
+            self.fail("unknown failure kind")
+
+    def command(self, name, text="", active=False, nested_group=False):
+        if not active:
+            body = f'import pathlib,sys; pathlib.Path({str(self.root / (name + ".started"))!r}).write_text("started"); sys.stdout.write({text!r})'
+        else:
+            body = f'''import os,pathlib,signal,subprocess,sys,time
+leaf = subprocess.Popen([sys.executable,"-c", "import os,time; print(os.getpid(),flush=True); time.sleep(30)"], stdout=subprocess.PIPE, **({{"process_group": 0}} if {nested_group!r} else {{}}))
+pid = int(leaf.stdout.readline())
+pathlib.Path({str(self.root / (name + ".leaf"))!r}).write_text(str(pid))
+def finish(*_):
+    rc = leaf.wait(timeout=1.5)
+    pathlib.Path({str(self.root / (name + ".reaped"))!r}).write_text(str(rc))
+    sys.exit(0)
+signal.signal(signal.SIGTERM, finish)
+pathlib.Path({str(self.root / (name + ".started"))!r}).write_text("started")
+print("raw active stdout",flush=True)
+print("raw active stderr",file=sys.stderr,flush=True)
+time.sleep(30)
+'''
+        return [sys.executable, "-c", body]
+
+    def run_chain(self, kind=None, active=None, between=None, late=False):
+        trace = self.trace(self.root / "trace")
+        started = []
+        original_check = trace.check
+        fired = False
+        def check():
+            nonlocal fired
+            if kind and active and not fired and (self.root / (active + ".started")).exists():
+                fired = True
+                self.inject_failure(trace, kind)
+            original_check()
+        trace.check = check
+        observer = cost.observe_command
+        texts = {"compiler-selection": str(self.real) + "\n", "compiler-version": "Lean (version 4.34.1)\n",
+                 "compiler-githash": "fixture-githash\n", "judge-lean-producer": "  /fixture path/producer.dll\n"}
+        expected = {"judge-build": ["make", "-C", "tools", "dotnet", "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"],
+                    "judge-lean-producer": ["bash", "tools/scripts/workflow/judge-lean-producer.sh", str(self.root / "tools/StrataLint.Cli/bin/Release/net10.0")],
+                    "compiled-judge-test": ["make", "compiled-judge-test"],
+                    "full-lean-report": ["make", "lean-report", "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"]}
+        def observe(command, cwd, output, name, env, **kwargs):
+            nonlocal fired
+            if name in expected:
+                self.assertEqual(command, expected[name])
+            if name == "compiled-judge-test":
+                self.assertEqual(env["STRATALINT_LEAN_PRODUCER_DLL"], "/fixture path/producer.dll")
+            try:
+                rc = observer(self.command(name, texts.get(name, ""), name == active), cwd, output, name, env,
+                              interval=.02, signal_trace=kwargs["signal_trace"])
+            finally:
+                if (self.root / (name + ".started")).exists():
+                    started.append(name)
+            if kind and not fired and (name == between or (late and name == "full-lean-report")):
+                fired = True
+                self.inject_failure(trace, kind)
+            return rc
+        # Sampling is orthogonal to this repair; commands, groups, waits and
+        # trace health/sink/collector behavior below are actual local processes.
+        with patch.object(cost, "native_binding", return_value={"inputs": {}}), \
+                patch.object(cost, "input_binding", return_value={}), \
+                patch.object(cost, "SignalTrace", return_value=trace), \
+                patch.object(cost, "emit_process_catalog"), \
+                patch.object(cost, "capability_preflight", return_value={"status": "passed"}), \
+                patch.object(cost, "sample", return_value={"processes": []}), \
+                patch.object(cost, "observe_command", side_effect=observe):
+            error = None
+            rc = None
+            begin = time.monotonic()
+            try:
+                rc = cost.run(self.root, self.output)
+            except ValueError as caught:
+                error = caught
+            elapsed = time.monotonic() - begin
+        result = json.loads((self.output / "result.json").read_text())
+        inventory = json.loads((self.output / "inventory.json").read_text())
+        self.assertIn("result.json", {row["path"] for row in inventory})
+        self.assertEqual(result["preflight"]["status"], "passed")
+        return rc, error, result, started, elapsed
+
+    def test_healthy_chain_preserves_producer_stdout_and_canonical_invocations(self):
+        rc, error, result, started, _ = self.run_chain()
+        self.assertEqual(rc, 0)
+        self.assertIsNone(error)
+        self.assertTrue(result["canonical_chain_complete"])
+        self.assertEqual(started[-4:], ["judge-build", "judge-lean-producer", "compiled-judge-test", "full-lean-report"])
+        self.assertEqual((self.output / "judge-lean-producer.stdout.log").read_bytes(), b"  /fixture path/producer.dll\n")
+
+    def test_live_failure_stops_reaps_descendants_and_forbids_later_stages(self):
+        for active in ("judge-build", "judge-lean-producer", "compiled-judge-test", "full-lean-report"):
+            for kind in self.failures:
+                with self.subTest(active=active, failure=kind):
+                    # Each subcase has an independent bounded command chain.
+                    self.fresh_case()
+                    unrelated = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"], process_group=0)
+                    try:
+                        _, error, result, started, elapsed = self.run_chain(kind, active=active)
+                        self.assertIsInstance(error, ValueError)
+                        self.assertLess(elapsed, 5)
+                        self.assertEqual(started[-1], active)
+                        self.assertFalse(result["canonical_chain_complete"])
+                        self.assertIsNone(result["canonical_returncode"])
+                        self.assertIsNone(result["canonical_failure"])
+                        self.assertTrue(result["observer_failure"])
+                        self.assertEqual((self.root / (active + ".reaped")).read_text(), str(-signal.SIGTERM))
+                        leaf = int((self.root / (active + ".leaf")).read_text())
+                        with self.assertRaises(ProcessLookupError):
+                            os.kill(leaf, 0)
+                        end = json.loads((self.output / "stages.jsonl").read_text().splitlines()[-1])
+                        self.assertTrue(end["cleanup"]["root_reaped"])
+                        self.assertEqual(end["observer_failure"]["retention"], "censored")
+                        self.assertEqual((self.output / (active + ".stdout.log")).read_bytes(), b"raw active stdout\n")
+                        self.assertEqual((self.output / (active + ".stderr.log")).read_bytes(), b"raw active stderr\n")
+                        self.assertIsNone(unrelated.poll())
+                    finally:
+                        unrelated.terminate()
+                        unrelated.wait(timeout=2)
+
+    def test_between_stage_failure_prevents_producer_and_other_next_operations(self):
+        for between in ("compiler-githash", "judge-build", "judge-lean-producer", "compiled-judge-test"):
+            for kind in self.failures:
+                with self.subTest(between=between, failure=kind):
+                    self.fresh_case()
+                    _, error, result, started, _ = self.run_chain(kind, between=between)
+                    self.assertIsInstance(error, ValueError)
+                    self.assertEqual(started[-1], between)
+                    self.assertFalse(result["canonical_chain_complete"])
+                    self.assertIsNone(result["canonical_returncode"])
+
+    def test_late_full_report_failure_retains_inventory_and_never_claims_complete_chain(self):
+        for kind in self.failures:
+            with self.subTest(failure=kind):
+                self.fresh_case()
+                _, error, result, started, _ = self.run_chain(kind, late=True)
+                self.assertIsInstance(error, ValueError)
+                self.assertFalse(result["canonical_chain_complete"])
+                self.assertIsNone(result["canonical_returncode"])
+                self.assertEqual(started[-1], "full-lean-report")
+
+    def test_unresponsive_owned_root_is_killed_and_waited(self):
+        trace = self.trace(self.output)
+        original = trace.check
+        marker = self.root / "unresponsive"
+        def check():
+            if marker.exists():
+                trace.health["lost_events"] = 1
+            original()
+        trace.check = check
+        command = [sys.executable, "-c", f'import pathlib,signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); pathlib.Path({str(marker)!r}).touch(); time.sleep(30)']
+        with patch.object(cost, "sample", return_value={"processes": []}), self.assertRaises(ValueError):
+            cost.observe_command(command, self.root, self.output, "unresponsive", dict(os.environ), signal_trace=trace)
+        end = json.loads((self.output / "stages.jsonl").read_text().splitlines()[-1])
+        self.assertEqual(end["returncode"], -signal.SIGKILL)
+        self.assertTrue(end["cleanup"]["root_reaped"])
+
+    def test_nested_owned_group_is_stopped_and_reaped_but_reused_identity_is_not_signaled(self):
+        self.output.mkdir()
+        name = "nested"
+        child = subprocess.Popen(self.command(name, active=True, nested_group=True), process_group=0,
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        unrelated = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"], process_group=0)
+        try:
+            self.assertTrue(select.select([child.stdout], [], [], 3)[0])
+            self.assertEqual(child.stdout.readline(), b"raw active stdout\n")
+            leaf = int((self.root / (name + ".leaf")).read_text())
+            self.assertEqual(os.getpgid(leaf), leaf)
+            self.assertEqual(os.getpgid(child.pid), child.pid)
+            self.assertNotEqual(leaf, child.pid)
+            rows = [{"pid": leaf, "start_ticks": 10, "pgid": leaf},
+                    {"pid": unrelated.pid, "start_ticks": 20, "pgid": unrelated.pid}]
+            # Inject only the Linux identity-read interface on this portable
+            # test host; both process groups, signals and parent waits are real.
+            def identity(path):
+                pid = int(path.name)
+                if pid == leaf:
+                    os.kill(pid, 0)
+                    return dict(rows[0])
+                return dict(rows[1], start_ticks=21)
+            with patch.object(cost, "proc_row", side_effect=identity):
+                cleanup = cost.stop_owned_command(child, rows)
+            self.assertTrue(cleanup["root_reaped"])
+            self.assertEqual(cleanup["identity_checked_descendants"], [leaf])
+            self.assertEqual((self.root / (name + ".reaped")).read_text(), str(-signal.SIGTERM))
+            with self.assertRaises(ProcessLookupError):
+                os.kill(leaf, 0)
+            self.assertIsNone(unrelated.poll())
+        finally:
+            if child.poll() is None:
+                child.kill()
+            child.communicate(timeout=3)
+            unrelated.terminate()
+            unrelated.wait(timeout=2)
 
 
 class ColdCostTests(unittest.TestCase):
@@ -362,7 +617,7 @@ class ColdCostTests(unittest.TestCase):
                 patch.object(cost, "SignalTrace", return_value=trace), \
                 patch.object(cost, "emit_process_catalog"), \
                 patch.object(cost, "capability_preflight", return_value={"status": "passed"}), \
-                patch.object(cost.subprocess, "check_output", side_effect=checked_output), \
+                patch.object(cost, "observe_output", side_effect=lambda command, *_args: checked_output(command)), \
                 patch.object(cost, "observe_command", side_effect=stage_returns) as observe:
             error = None
             rc = None
@@ -452,7 +707,7 @@ class ColdCostTests(unittest.TestCase):
         self.assertIsNone(rc)
         self.assertIsInstance(error, ValueError)
         self.assertIsNone(result["canonical_returncode"])
-        self.assertTrue(result["canonical_chain_complete"])
+        self.assertFalse(result["canonical_chain_complete"])
         self.assertTrue(all(row["returncode"] == 0 for row in result["canonical_stages"]))
         self.assertIsNone(result["canonical_failure"])
         self.assertEqual(result["observer_failure"]["error"], "ValueError")
