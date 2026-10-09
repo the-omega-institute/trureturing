@@ -12,7 +12,7 @@ $$\forall A \in Type, a \in A, rate \in NNReal,\; \left(\operatorname{NormedRing
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/SpectralBoundary.geometric_bound_supplier` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* TNLean contributors (2026). *Power decay below spectral radius one*. URL: <https://github.com/LionSR/QICLean/blob/c61daa23f385237a4d992a602c94812ca9f909b8/QICLean/Analysis/SpectralRadiusPowerDecay.lean>.
 
 *Commentary.*
 
