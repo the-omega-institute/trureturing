@@ -234,7 +234,7 @@ def chargeArchive (k m : ℕ) : List (ℕ → ZMod 2) → ZMod 2 →
       let next := v + windowCharge k m q j
       some next :: chargeArchive k m rest next (j - (m : ℕ))
 
-private theorem charge_archive_live (k m : ℕ) (rows : List (ℕ → ZMod 2))
+theorem charge_archive_live (k m : ℕ) (rows : List (ℕ → ZMod 2))
     (v : ZMod 2) (j : ZMod (k + 1)) :
     (chargeArchive k m rows v j).length = rows.length ∧
     none ∉ chargeArchive k m rows v j := by

@@ -184,6 +184,8 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWin
 
 For arbitrary odd m at least three, fitting d at least two, repeated-label table and actual Selection, each child vertex starting at the common value and inherited tail one executes the same d literal words. Every endpoint succeeds, and its own successive differences equal all that vertex label code coordinates. The regular branch uses safeRows implied by Selection; the exceptional branch uses the exact terminal01 and prefix110 proof. Both alphabets remain universal. Each supplied native starting record determines its own actual endpoint sequence.
 
+The native endpoint sequence equals chargeArchive in both branches. The no-none clause of charge_archive_live in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse` then supplies endpoint availability for that same sequence.
+
 **Definition 1.16 (The full final code vector).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.codeVector`
@@ -242,3 +244,4 @@ For odd m at least three and k=m+1, fix either original alphabet, an arbitrary a
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder.vertexBit`
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace](OriginalAcquiredTrace.md)
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowSeamCodes](WindowSeamCodes.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse](WindowChargeInverse.md)

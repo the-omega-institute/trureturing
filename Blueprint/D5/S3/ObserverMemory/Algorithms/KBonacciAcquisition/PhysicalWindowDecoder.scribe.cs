@@ -128,7 +128,10 @@ internal sealed class PhysicalWindowDecoderDocument : IScribeDocumentDefinition
                 H("Both branches give all code coordinates"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary odd m at least three, fitting d at least two, repeated-label table and actual Selection, each child vertex starting at the common value and inherited tail one executes the same d literal words. Every endpoint succeeds, and its own successive differences equal all that vertex label code coordinates. The regular branch uses safeRows implied by Selection; the exceptional branch uses the exact terminal01 and prefix110 proof. Both alphabets remain universal. Each supplied native starting record determines its own actual endpoint sequence."))),
+                Blocks(Paragraph(Text("For arbitrary odd m at least three, fitting d at least two, repeated-label table and actual Selection, each child vertex starting at the common value and inherited tail one executes the same d literal words. Every endpoint succeeds, and its own successive differences equal all that vertex label code coordinates. The regular branch uses safeRows implied by Selection; the exceptional branch uses the exact terminal01 and prefix110 proof. Both alphabets remain universal. Each supplied native starting record determines its own actual endpoint sequence.")),
+                    Paragraph(Text("The native endpoint sequence equals chargeArchive in both branches. The no-none clause of charge_archive_live in "),
+                        Ref("D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse"),
+                        Text(" then supplies endpoint availability for that same sequence."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("physical-window-codevector"),

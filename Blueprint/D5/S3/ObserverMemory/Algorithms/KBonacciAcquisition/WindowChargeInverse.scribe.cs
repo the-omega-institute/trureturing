@@ -83,6 +83,10 @@ internal sealed class WindowChargeInverseDocument : IScribeDocumentDefinition
         var start = Call("some", Seq(Open, D(0), Comma, D(0), Comma, D(0), Close));
         var archive = Call("fixedBlockArchive", actions, current);
         var predicted = Call("chargeArchive", k, m, rows, v, j);
+        var archiveLive = All("k", nat, All("m", nat,
+            All("rows", Call("List", rowType), All("v", scalar, All("j", phase,
+                And(Equal(Call("length", predicted), Call("length", rows)),
+                    new Formula.Not(Member(F.Id("none"), predicted))))))));
         var incoming = All("q", rowType, Imp(Member(q, Call("headOption", rows)),
             Or(Equal(s, D(0)), Equal(Apply(q, D(0)), D(0)))));
         var n = F.Id("N"); var source = F.Id("source"); var b = F.Id("b"); var i = F.Id("i");
@@ -173,6 +177,22 @@ internal sealed class WindowChargeInverseDocument : IScribeDocumentDefinition
                             Text(" evaluate the literal increment. Prefix cancellation then "
                                 + "recovers every row entry, with the final entry supplied by "
                                 + "the even total charge."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("window-charge-archive-live"),
+                    DeclarationHandle.Create(Owner + "charge_archive_live"),
+                    H("The predicted archive has one available scalar per row"),
+                    StatementSource.FromAuthor(Disp(archiveLive)),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For arbitrary widths, rows, starting scalar and modular phase, "
+                        + "chargeArchive has exactly as many entries as rows and contains "
+                        + "no none entry. Each recursion step records some of the next "
+                        + "scalar. No evenness or seam condition is needed for this "
+                        + "predicted archive property. Physical endpoint success follows "
+                        + "when native execution equals this archive, as in "),
+                        Ref("D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder"),
+                        Text("."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("actual-shared-charge-suffix"),

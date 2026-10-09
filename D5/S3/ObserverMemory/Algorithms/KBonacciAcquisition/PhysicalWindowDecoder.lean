@@ -586,14 +586,8 @@ theorem physical_endpoint_codes (m d : ℕ) (hm : 3 ≤ m) (odd : Odd m) (hd : 2
       simp only [endpointReading, List.cons.injEq, and_true]
       rw [inv0, nextPhase, inv1]
       exact ⟨rfl, rfl⟩
-  have live : none ∉ chargeArchive (m + 1) m rows v j := by
-    have general : ∀ (rs : List (ℕ → ZMod 2)) (a : ZMod 2) (b : ZMod (m + 2)),
-        none ∉ chargeArchive (m + 1) m rs a b := by
-      intro rs
-      induction rs with
-      | nil => intros; simp [chargeArchive]
-      | cons row rest ih => intros; simp [chargeArchive, ih]
-    exact general rows v j
+  have live : none ∉ chargeArchive (m + 1) m rows v j :=
+    (charge_archive_live (m + 1) m rows v j).2
   refine ⟨by simp [actualWords, actualRows], readings.symm ▸ live, ?_⟩
   rw [readings, charge_differences]
   simpa only [rows, actualRows, Nat.zero_add, Nat.one_mul] using

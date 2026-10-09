@@ -80,7 +80,19 @@ For k>=3 and 1<=m<k, the prescribed even row is exactly the native increment of 
 
 The adjacent coefficient and marker identities of `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/CoprimeSingletonLower` evaluate the literal increment. Prefix cancellation then recovers every row entry, with the final entry supplied by the even total charge.
 
-**Theorem 1.7 (One literal suffix realizes every row on each joint actual source).**
+**Theorem 1.7 (The predicted archive has one available scalar per row).**
+
+$$\forall k \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall rows \in \operatorname{List}\left(\mathbb{N} \to \operatorname{ZMod}\left(2\right)\right),\; \forall v \in \operatorname{ZMod}\left(2\right),\; \forall j \in \operatorname{ZMod}\left(k + 1\right),\; \operatorname{length}\left(\operatorname{chargeArchive}\left(k, m, rows, v, j\right)\right) = \operatorname{length}\left(rows\right) \land \left(\neg none \in \operatorname{chargeArchive}\left(k, m, rows, v, j\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse.charge_archive_live` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary widths, rows, starting scalar and modular phase, chargeArchive has exactly as many entries as rows and contains no none entry. Each recursion step records some of the next scalar. No evenness or seam condition is needed for this predicted archive property. Physical endpoint success follows when native execution equals this archive, as in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder`.
+
+**Theorem 1.8 (One literal suffix realizes every row on each joint actual source).**
 
 $$\forall k \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall alphabet \in Bool,\; \forall rows \in \operatorname{List}\left(\mathbb{N} \to \operatorname{ZMod}\left(2\right)\right),\; \forall v \in \operatorname{ZMod}\left(2\right),\; \forall j \in \operatorname{ZMod}\left(k + 1\right),\; \forall s \in \mathbb{N},\; \left(\left(\left(\left(\left(\left(3 \le k \land 1 \le m\right) \land m < k\right) \land \operatorname{safeRows}\left(m, rows\right)\right) \land s < k\right) \land \left(\forall q \in \mathbb{N} \to \operatorname{ZMod}\left(2\right),\; q \in \operatorname{headOption}\left(rows\right) \Rightarrow \left(s = 0 \lor q\left(0\right) = 0\right)\right)\right) \land \operatorname{gcd}\left(m, k + 1\right) \mid \operatorname{val}\left(-j\right)\right) \Rightarrow \operatorname{let} actions=\operatorname{chargeBlocks}\left(k, m, alphabet, rows\right) \operatorname{in} (\left(\left(\left(\operatorname{length}\left(actions\right) = \operatorname{length}\left(rows\right) \land \operatorname{fixedBlockArchive}\left(actions, \operatorname{some}\left((v,-j,s)\right)\right) = \operatorname{chargeArchive}\left(k, m, rows, v, j\right)\right) \land \operatorname{length}\left(\operatorname{fixedBlockArchive}\left(actions, \operatorname{some}\left((v,-j,s)\right)\right)\right) = \operatorname{length}\left(rows\right)\right) \land \left(\neg none \in \operatorname{fixedBlockArchive}\left(actions, \operatorname{some}\left((v,-j,s)\right)\right)\right)\right) \land \left(\exists N \in \mathbb{N},\; \exists source \in \operatorname{Fin}\left(N\right) \to Bool,\; \left(\left(\left(\left(\left(m \mid N \land \operatorname{DBonacciAdmissible}\left(k, N, source\right)\right) \land \operatorname{runBits}\left(k, source, \operatorname{some}\left((0,0,0)\right)\right) = \operatorname{some}\left((v,-j,s)\right)\right) \land \operatorname{originalWordValue}\left(k, source\right) = v\right) \land \operatorname{tailAfter}\left(0, source\right) = s\right) \land \left(\forall b \in \mathbb{N},\; \left(b + 1\right) \cdot m \le N \Rightarrow \operatorname{DBonacciAdmissible}\left(k, m, (\lambda (i:\operatorname{Fin}\left(m\right)), source\left(\langle b \cdot m + \operatorname{val}\left(i\right)\rangle_{N}\right))\right)\right)\right) \land \operatorname{fixedBlockArchive}\left(actions, \operatorname{runBits}\left(k, source, \operatorname{some}\left((0,0,0)\right)\right)\right) = \operatorname{chargeArchive}\left(k, m, rows, v, j\right)\right))$$
 
@@ -102,6 +114,7 @@ At an acquired child with current phase -jINITIAL+(a+1)m, the relative index in 
 
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse.actual_shared_charge_suffix`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse.bitScalar`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse.charge_archive_live`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse.extendedBit`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse.increment_derivative`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse.short_legal`
@@ -111,3 +124,4 @@ At an acquired child with current phase -jINITIAL+(a+1)m, the relative index in 
 - Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/CoprimeSingletonLower](CoprimeSingletonLower.md)
 - Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/EndpointCells](EndpointCells.md)
 - Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/LiteralModel](LiteralModel.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder](PhysicalWindowDecoder.md)
