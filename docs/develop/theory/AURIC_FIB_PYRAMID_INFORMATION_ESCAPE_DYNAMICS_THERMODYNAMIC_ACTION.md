@@ -945,7 +945,7 @@ g_1=h_1-h_0,\qquad g_2=h_2-h_1,\qquad
 \bigl\{|h_i-h_k|:i<k\bigr\}=\{2,4,6\}.
 \]
 
-这给出了一个最小的“二点可见、三点不可见”例子。任何只依赖无序二点距离的观测，都不能区分 \(H_+\) 与 \(H_-\)；要区分它们，必须保留三点的顺序、定向或三阶关联。仓库中的 triplet-wheel 记录把同一事实写成：两个三胞胎轮的 cyclic pair Gram 在每个模数上相同，而算术三点关联可以不同。因此把更高阶谱矩等同于三点算术量，需要额外的观测识别证明，不能仅由 pair Gram 推出。
+这给出了一个最小的“二点投影相同、三点读出可分离”例子。任何只依赖无序二点距离的观测，都不能区分 \(H_+\) 与 \(H_-\)；要区分它们，必须保留三点的顺序、定向或三阶关联。仓库中的 triplet-wheel 记录把同一事实写成：两个三胞胎轮的 cyclic pair Gram 在每个模数上相同，而算术三点关联可以不同。因此把更高阶谱矩等同于三点算术量，需要额外的观测识别证明，不能仅由 pair Gram 推出。
 
 这里还有一个初等的模 \(3\) 约束。若三个大于 \(3\) 的素数形如 \(n,n+2,n+4\)，三个数在模 \(3\) 中必有一个为零，所以唯一可能的是 \(3,5,7\)。对 \(H_+\)，要避开模 \(3\) 的零类必须有 \(n\equiv2\pmod3\)；对 \(H_-\)，必须有 \(n\equiv1\pmod3\)。两者还都要求 \(n\) 为奇数。于是这两个方向是同一局部几何的两个反射取向，而不是两个独立的连续坐标。
 
@@ -1102,6 +1102,218 @@ C_3=\operatorname{Tr}\!\left(\rho\,Z_1Z_2Z_3\right)
 - 将轮候选层与 LayeredCapture 接口，定义首个三点捕获层 \(K_3\)。
 
 实际的 \(T_H(x)\) 只作为外部算术输入，不放进第一阶段定理。这样形式化对象仍是有限、可计算、可审计的离散动力学；当以后加入经验素数数据时，只是给这条有限轨迹附加观测，而不是把数值样本误充成普遍定理。
+
+
+### 11.2.7. 已有轮筛定理给出的两种三点捕获层
+
+前面的 \(K_3\) 必须带上观测商。令
+
+\[
+a_{H,W}(r)=
+\mathbf 1\{\gcd(r+h,W)=1\text{ 对所有 }h\in H\},
+\]
+
+并定义平移不变二点和三点读出：
+
+\[
+O_2(H,W)=\bigl(C_{H,W}(s)\bigr)_s,
+\qquad
+O_3(H,W)=\bigl(C^{(3)}_{H,W}(s,t)\bigr)_{s,t}.
+\]
+
+另定义固定原点的前缀读出：
+
+\[
+P_{H,W}(b)=
+\sum_{1\le r\le b}a_{H,W}(r).
+\]
+
+基线理论卷第十六节和第二十七节已经给出以下严格桥接。反射
+
+\[
+a_{H_-,W}(r)=a_{H_+,W}(-r-6)
+\]
+
+使两个轮的二点自相关、循环 Gram 和全部二阶谱矩相同。对于平移不变三点读出，存在平移 \(a\) 使
+
+\[
+a_{H_-,W}(r)=a_{H_+,W}(r+a)
+\]
+
+当且仅当 \(W\) 的所有素因子都属于 \(\{2,3,5\}\)。因此沿前素数轮链
+
+\[
+W_1=2,\qquad W_2=6,\qquad W_3=30,\qquad W_4=210,
+\]
+
+有
+
+\[
+K_3^{\mathrm{TI}}=4.
+\]
+
+这里的新增素数是 \(7\)。它第一次破坏两个三胞胎轮之间的循环平移等价。
+
+固定原点的读出给出另一层：
+
+\[
+P_{H_+,30}(10)=0,
+\qquad
+P_{H_-,30}(10)=1,
+\]
+
+所以
+
+\[
+K_3^{\mathrm{origin}}=3.
+\]
+
+这两个层号同时成立并不冲突。它们使用不同的观察商：固定原点保留了绝对位置，平移不变读出把绝对位置压掉，只保留循环结构。
+
+在平移不变三点读出中，\(W=210\) 还有一个最小正跨度 witness：
+
+\[
+C^{(3)}_{H_+,210}(6,30)=1,
+\qquad
+C^{(3)}_{H_-,210}(6,30)=0.
+\]
+
+而所有 \(0<s<t<30\) 的正跨度三点相关在更早的层都不能给出这个分离。因此 \((6,30)\) 是第一条可审计的三点方向证书。素数 \(7\) 在这里具有明确的层间意义：
+
+\[
+W_3=30
+\longrightarrow
+W_4=210=30\cdot7.
+\]
+
+### 11.2.8. 三胞胎逃逸的 \(\kappa\)-fiber 数值证书
+
+基线理论卷第十五节把局部除数事件直接接到金字塔纤维。对奇素数 \(q\)，在 \(\mathbb F_q\) 上取除数指示源。对 \(H_+\) 与 \(H_-\)，都有
+
+\[
+X=Y=Z=\frac1q,
+\]
+
+并且端点联合坐标满足
+
+\[
+\kappa=
+\begin{cases}
+1/3,&q=3,\\
+0,&q>3.
+\end{cases}
+\]
+
+更强的隐藏纤维证书来自
+
+\[
+H_C=\{0,2,4\}
+\]
+
+在 \(q=3\) 时的比较。\(H_A=\{0,2,6\}\) 与 \(H_C\) 具有相同的三均值
+
+\[
+(X,Y,Z)=\left(\frac13,\frac13,\frac13\right),
+\]
+
+但
+
+\[
+(\kappa,p_0)_{H_A}
+=
+\left(\frac13,\frac13\right),
+\qquad
+(\kappa,p_0)_{H_C}
+=
+(0,0).
+\]
+
+因此三维金字塔位置不变，联合概率沿 \(\kappa\) 纤维跳变。
+
+同一有限证书还可以由归一化三向量 Gram 读出。令
+
+\[
+U_c=
+\begin{pmatrix}
+1&c&0\\
+c&1&0\\
+0&0&1
+\end{pmatrix},
+\qquad
+c=\frac{\kappa}{\sqrt{XY}}.
+\]
+
+则
+
+\[
+\operatorname{Spec}(U_c)=\{1-c,1,1+c\},
+\]
+
+并且
+
+\[
+D_\Psi(U_c)
+=
+\frac{2\kappa^2}{XY}.
+\]
+
+在 \(q=3\) 的两份来源律上，该谱读出分别为 \(2\) 和 \(0\)。这给出了一个完全有限、可计算的隐藏纤维逃逸证书，不需要使用任何关于素数三胞胎无穷性的猜想。
+
+\(q=3\) 与 \(W_4=210\) 的作用不同。前者是联合概率 fiber seam，后者是三点方向的循环平移 seam。两者可以出现在同一套层状态中，但不能合并成一个标量。
+
+### 11.2.9. 仅提高 pair Gram 谱阶数无法恢复三点方向
+
+第十六节还给出模 \(7\) 的明确边界。两个禁止点集的循环 Gram 都是
+
+\[
+G=2I_7+2J_7,
+\]
+
+因此
+
+\[
+\operatorname{Spec}(G)=\{16,2,2,2,2,2,2\},
+\]
+
+并且对所有 \(m\ge1\)：
+
+\[
+\operatorname{tr}(G_+^m)
+=
+\operatorname{tr}(G_-^m).
+\]
+
+但三点相关在 \(W=210\) 的 \((6,30)\) witness 处仍然分离。由此得到一个严格的观测层级结论：
+
+\[
+\text{所有 pair Gram 谱矩}
+\;\not\Rightarrow\;
+\text{三点算术方向}.
+\]
+
+形式化时必须分别定义 pairCorr 与 tripleCorr。不能尝试从 Gram 的谱矩反推出三胞胎方向。
+
+### 11.2.10. 形式化接口与已知真源
+
+首批 Lean 目标直接镜像这些已证明接口：
+
+\[
+\begin{aligned}
+&\texttt{Hplus,Hminus : Finset\ \mathbb Z},\\
+&\texttt{wheel},\quad \texttt{pairCorr},\quad \texttt{tripleCorr},\\
+&\texttt{reflectionEq}:a_{H_-,W}(r)=a_{H_+,W}(-r-6),\\
+&\texttt{pairCorrEq}:O_2(H_+,W)=O_2(H_-,W),\\
+&\texttt{originWitness}:P_{H_+,30}(10)=0\land P_{H_-,30}(10)=1,\\
+&\texttt{tripleWitness}:C^{(3)}_{H_+,210}(6,30)=1
+\land C^{(3)}_{H_-,210}(6,30)=0.
+\end{aligned}
+\]
+
+第一批形式化只处理有限轮集合、反射、相关量和有限 witness。实际 \(T_H(x)\) 的无穷性不纳入本文件。对应真源为：
+
+- Foundational Formulas §15、§16、§27；
+- [LayeredCapture](https://github.com/the-omega-institute/trureturing/blob/lane/theory/pyramid-escape-thermodynamics-20261009/Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.md) 的首捕获接口；
+- [triplet-wheel audit](https://github.com/the-omega-institute/trureturing/blob/1494f168dddd4e92445742bf139c9ae0c8b7d5dd/Library/Weil/wang2026proportions.md)。
 
 ## 12. 可逐步形式化的定理包
 
