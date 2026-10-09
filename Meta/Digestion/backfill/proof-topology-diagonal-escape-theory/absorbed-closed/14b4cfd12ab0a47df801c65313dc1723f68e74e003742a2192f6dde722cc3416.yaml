@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:14b4cfd12ab0a47df801c65313dc1723f68e74e003742a2192f6dde722cc3416
+  normalized_sha256: sha256:14b4cfd12ab0a47df801c65313dc1723f68e74e003742a2192f6dde722cc3416
+cas_ref: sha256:14b4cfd12ab0a47df801c65313dc1723f68e74e003742a2192f6dde722cc3416
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/InvolutionLogic/RelativeNegation.relative_complement_expansion
+    target_statement_id: sha256:756407f4171b31d7f38354ece3e20ffd5f3fe78647a46c11562238b03f875e60
+  - gid: D5/S3/ConceptDynamics/InvolutionLogic/RelativeNegation.relative_complement_new_region
+    target_statement_id: sha256:b9c6d4739271309aa796d2b3fa369d3bd248f22b1b9d26ee602aa00984ae36d9
+  - gid: D5/S3/ConceptDynamics/InvolutionLogic/RelativeNegation.relative_complement_parts_disjoint
+    target_statement_id: sha256:664d625a1d286f62ba7a2375179052ef768b52c714f9bd46d83879bae2196530
+receipts:
+  unresolved_subitems: []
