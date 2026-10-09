@@ -75,6 +75,7 @@ private theorem mem_available (s : ℕ → ℕ) (G : Set (List A)) (j : ℕ) (w 
   simp only [available, Finset.mem_filter, Finset.mem_biUnion, Finset.mem_range, mem_words]
   exact ⟨fun h => h.2, fun h => ⟨⟨w.length, by have := h.1.2; omega, rfl⟩, h⟩⟩
 
+omit [Fintype A] [DecidableEq A] in
 private theorem band_unique (s : ℕ → ℕ) (hs : StrictMono s) (w : List A)
     {j k : ℕ} (hj : Band s j w) (hk : Band s k w) : j = k := by
   unfold Band at hj hk
@@ -121,6 +122,7 @@ private def Cut (s : ℕ → ℕ) (G : Set (List A)) (b : ℕ → ℕ) (j : ℕ)
   (∀ g ∈ G, g.length = s (j + 1) → ∃! w, w ∈ C ∧ w <+: g) ∧
   (∀ n, s j < n → n ≤ s (j + 1) → (level (C : Set (List A)) n).card ≤ b n)
 
+omit [Fintype A] [DecidableEq A] in
 private theorem cross_no_prefix (s : ℕ → ℕ) (hs : StrictMono s)
     (G : Set (List A)) (hG : IsPrefixFree G) (a : A) {j k : ℕ} (hjk : j < k)
     {w v : List A} (hw : Band s j w) (hv : Band s k v)
@@ -342,11 +344,9 @@ private theorem cut_iff_equations (s : ℕ → ℕ) (G : Set (List A))
       exact ⟨fun h => h.2, fun h => ⟨(mem_available _ _ _ _).mpr (hC.1 w h), h⟩⟩
     refine ⟨x, ?_, ?_⟩
     · intro g hg hglen
-      change _ = 1
       rw [hc, heq, Finset.card_eq_one_iff_existsUnique]
       simpa only [Finset.mem_filter] using hC.2.1 g hg hglen
     · intro n hl hr
-      change _ ≤ b n
       rw [hn, heq]
       exact hC.2.2 n hl hr
   · rintro ⟨x, hx⟩

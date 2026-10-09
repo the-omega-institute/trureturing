@@ -16,7 +16,7 @@ internal sealed class RetainedDepthExactImageDocument : IScribeDocumentDefinitio
                 + "w followed by some suffix. A code is prefix-free when comparable members are "
                 + "equal. Let s be a strictly increasing sequence of natural depths starting at "
                 + "zero and unbounded above. Segment j, indexed from zero, is (s(j), s(j+1)].")),
-            MathBlock(RetainedFormula()),
+            new DocumentBlock.DisplayFormula(RetainedFormula()),
             Paragraph(Text(
                 "firstDepth(s,n) is s(k), where k is the least index with n <= s(k). "
                 + "D(s,F) contains every word g extending some w in F with length equal to "
@@ -24,7 +24,8 @@ internal sealed class RetainedDepthExactImageDocument : IScribeDocumentDefinitio
                 + "than one selected suffix. The original code F may be infinite. "
                 + "Legal(b,F) uses the same original depths: F is prefix-free, excludes the empty "
                 + "word, and has at most b(n) words of each length n, for every natural n.")),
-            MathBlock(ExpansionFormula()),
+            new DocumentBlock.DisplayFormula(ExpansionFormula()),
+            new DocumentBlock.DisplayFormula(LegalFormula()),
             Paragraph(Text(
                 "Fix a prefix-free target code G whose words all have positive retained lengths. "
                 + "Write G(j) for its words of length s(j+1). The finite set B(j) consists of words "
@@ -33,15 +34,15 @@ internal sealed class RetainedDepthExactImageDocument : IScribeDocumentDefinitio
                 + "A Boolean selection x on all words represents a zero-or-one selection on B(j); "
                 + "its values outside B(j) have no effect and any selection on B(j) extends to one "
                 + "on all words.")),
-            MathBlock(AvailableFormula()),
+            new DocumentBlock.DisplayFormula(AvailableFormula()),
             Paragraph(Text(
                 "Equations(s,G,b,j,x) is the conjunction of the following two systems. "
                 + "For every target leaf the selected ancestor count is exactly one. At every "
                 + "depth strictly above the lower endpoint and at most the upper endpoint, the "
                 + "selected word count respects the original budget. Here indicator(x,w) equals "
                 + "one when x(w) is true and zero otherwise.")),
-            MathBlock(LeafFormula()),
-            MathBlock(BudgetFormula()),
+            new DocumentBlock.DisplayFormula(LeafFormula()),
+            new DocumentBlock.DisplayFormula(BudgetFormula()),
             Describe.Lean(
                 DescribeId.Create("retained-depth-exact-image"),
                 DeclarationHandle.Create("D5/S0/Computability/Coding/RetainedDepthExactImage.result"),
@@ -88,31 +89,40 @@ internal sealed class RetainedDepthExactImageDocument : IScribeDocumentDefinitio
         F.Id("N"), Sp, Le, Sp, Call("s", F.Id("k")), Close));
 
     private static Formula ExpansionFormula() => Disp(F.Seq(
-        F.Id("g"), Sp, In, Sp, Call("D", F.Id("s"), F.Id("F")), Sp, Iff, Sp,
-        Exists, Sp, F.Id("w"), Sp, In, Sp, F.Id("F"), Comma, Sp,
+        F.Id("g"), Sp, InMacro, Sp, Call("D", F.Id("s"), F.Id("F")), Sp, Iff, Sp,
+        Exists, Sp, F.Id("w"), Sp, InMacro, Sp, F.Id("F"), Comma, Sp,
         Call("prefix", F.Id("w"), F.Id("g")), Sp, Land, Sp,
         Call("length", F.Id("g")), Sp, Eq, Sp,
         Call("firstDepth", F.Id("s"), Call("length", F.Id("w")))));
 
     private static Formula AvailableFormula() => Disp(F.Seq(
-        F.Id("w"), Sp, In, Sp, Call("B", F.Id("j")), Sp, Iff, Sp,
+        F.Id("w"), Sp, InMacro, Sp, Call("B", F.Id("j")), Sp, Iff, Sp,
         Call("s", F.Id("j")), Sp, Lt, Sp, Call("length", F.Id("w")), Sp, Le, Sp,
         Call("s", F.Seq(F.Id("j"), Plus, D(1))), Sp, Land, Sp,
         Open, Forall, Sp, F.Id("g"), Comma, Sp,
         Call("length", F.Id("g")), Sp, Eq, Sp, Call("s", F.Seq(F.Id("j"), Plus, D(1))),
         Sp, Land, Sp, Call("prefix", F.Id("w"), F.Id("g")), Sp, Rightarrow, Sp,
-        F.Id("g"), Sp, In, Sp, F.Id("G"), Close));
+        F.Id("g"), Sp, InMacro, Sp, F.Id("G"), Close));
+
+    private static Formula LegalFormula() => Disp(F.Seq(
+        Call("Legal", F.Id("b"), F.Id("F")), Sp, Iff, Sp,
+        Call("IsPrefixFree", F.Id("F")), Sp, Land, Sp,
+        Neg, Open, Call("emptyWord"), Sp, InMacro, Sp, F.Id("F"), Close, Sp, Land, Sp,
+        Open, Forall, Sp, F.Id("n"), Sp, InMacro, Sp, F.Id("Nat"), Comma, Sp,
+        Call("card", F.Seq(OpenBrace, F.Id("w"), Sp, InMacro, Sp, F.Id("F"), Sp, Mid, Sp,
+            Call("length", F.Id("w")), Sp, Eq, Sp, F.Id("n"), CloseBrace)),
+        Sp, Le, Sp, Call("b", F.Id("n")), Close));
 
     private static Formula LeafFormula() => Disp(F.Seq(
-        Forall, Sp, F.Id("g"), Sp, In, Sp, Call("G", F.Id("j")), Comma, Sp,
-        Sum, Underscore, F.Seq(Open, F.Id("w"), Sp, In, Sp, Call("B", F.Id("j")), Comma,
+        Forall, Sp, F.Id("g"), Sp, InMacro, Sp, Call("G", F.Id("j")), Comma, Sp,
+        Sum, Underscore, F.Grp(Open, F.Id("w"), Sp, InMacro, Sp, Call("B", F.Id("j")), Comma,
             Sp, Call("prefix", F.Id("w"), F.Id("g")), Close), Sp,
         Call("indicator", F.Id("x"), F.Id("w")), Sp, Eq, Sp, D(1)));
 
     private static Formula BudgetFormula() => Disp(F.Seq(
         Forall, Sp, F.Id("n"), Comma, Sp, Call("s", F.Id("j")), Sp, Lt, Sp,
         F.Id("n"), Sp, Le, Sp, Call("s", F.Seq(F.Id("j"), Plus, D(1))), Sp, Rightarrow, Sp,
-        Sum, Underscore, F.Seq(Open, F.Id("w"), Sp, In, Sp, Call("B", F.Id("j")), Comma,
+        Sum, Underscore, F.Grp(Open, F.Id("w"), Sp, InMacro, Sp, Call("B", F.Id("j")), Comma,
             Sp, Call("length", F.Id("w")), Sp, Eq, Sp, F.Id("n"), Close), Sp,
         Call("indicator", F.Id("x"), F.Id("w")), Sp, Le, Sp, Call("b", F.Id("n"))));
 
@@ -122,16 +132,16 @@ internal sealed class RetainedDepthExactImageDocument : IScribeDocumentDefinitio
         Forall, Sp, F.Id("s"), Sp, Colon, Sp, F.Seq(F.Id("Nat"), Rightarrow, F.Id("Nat")), Comma, Sp,
         Call("Retained", F.Id("s")), Sp, Rightarrow, Sp,
         Forall, Sp, F.Id("b"), Sp, Colon, Sp, F.Seq(F.Id("Nat"), Rightarrow, F.Id("Nat")), Comma, Sp,
-        Forall, Sp, F.Id("G"), Sp, Subset, Sp, Call("Words", F.Id("A")), Comma, Sp,
+        Forall, Sp, F.Id("G"), Sp, Subseteq, Sp, Call("Words", F.Id("A")), Comma, Sp,
         Call("IsPrefixFree", F.Id("G")), Sp, Land, Sp,
-        Open, Forall, Sp, F.Id("g"), Sp, In, Sp, F.Id("G"), Comma, Sp,
-        Exists, Sp, F.Id("j"), Sp, In, Sp, F.Id("Nat"), Comma, Sp,
+        Open, Forall, Sp, F.Id("g"), Sp, InMacro, Sp, F.Id("G"), Comma, Sp,
+        Exists, Sp, F.Id("j"), Sp, InMacro, Sp, F.Id("Nat"), Comma, Sp,
         Call("length", F.Id("g")), Sp, Eq, Sp, Call("s", F.Seq(F.Id("j"), Plus, D(1))), Close,
         Sp, Rightarrow, Sp,
-        Open, Exists, Sp, F.Id("F"), Sp, Subset, Sp, Call("Words", F.Id("A")), Comma, Sp,
+        Open, Exists, Sp, F.Id("F"), Sp, Subseteq, Sp, Call("Words", F.Id("A")), Comma, Sp,
         Call("Legal", F.Id("b"), F.Id("F")), Sp, Land, Sp,
         Call("D", F.Id("s"), F.Id("F")), Sp, Eq, Sp, F.Id("G"), Close, Sp, Iff, Sp,
-        Open, Forall, Sp, F.Id("j"), Sp, In, Sp, F.Id("Nat"), Comma, Sp,
+        Open, Forall, Sp, F.Id("j"), Sp, InMacro, Sp, F.Id("Nat"), Comma, Sp,
         Exists, Sp, F.Id("x"), Sp, Colon, Sp, F.Seq(Call("Words", F.Id("A")), Rightarrow, F.Id("Bool")),
         Comma, Sp, Call("Equations", F.Id("s"), F.Id("G"), F.Id("b"), F.Id("j"), F.Id("x")), Close));
 
