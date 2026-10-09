@@ -95,3 +95,92 @@ theorem maximum_actual_law : maximumArena.{u}.Law feeActual.{u} := @maximum_exac
 #print axioms fee_bridge
 #print axioms maximum_bridge
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.Exports
+universe u
+open _root_.D5.S3.Arith.FibonacciAtomic
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization
+open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source composition)
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+abbrev compositionSignature : Signature where
+  Params := Unit
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat × Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+abbrev compositionActual : Realization compositionSignature :=
+  realize compositionSignature (fun _ _ U => composition U) (fun e => nomatch e)
+
+abbrev compositionArena : Arena where
+  signature := compositionSignature
+  Law R := ∀ T : Source, (R.readout () () T).1 + (R.readout () () T).2 = T.length
+
+theorem compositionBridge : (type_of% (@composition_total)) ↔ compositionArena.Law compositionActual := Iff.rfl
+theorem compositionLaw : compositionArena.Law compositionActual := @composition_total
+
+structure StepContext where
+  Carrier : Type u
+  finite : Fintype Carrier
+  observer : @Observer Carrier finite
+  source : Source
+
+abbrev stepSignature : Signature where
+  Params := StepContext.{u}
+  State p := p.Carrier
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := p.Carrier
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+abbrev stepActual : Realization stepSignature.{u} :=
+  realize stepSignature (fun _ p e => @sourceStep p.Carrier p.finite p.observer p.source e)
+    (fun e => nomatch e)
+
+abbrev orbitArena : Arena where
+  signature := stepSignature.{u}
+  Law R := ∀ {E : Type u} [Fintype E] (M : Observer E) (U : Source)
+    {e f : E} {t : RawHistory} {b : Bool}, Run M U e t f b →
+      (R.readout () ⟨E, inferInstance, M, U⟩)^[t.length] e = f ∧
+      M.action f = .inr b ∧
+      ∀ i < t.length, ∃ q, M.action
+        ((R.readout () ⟨E, inferInstance, M, U⟩)^[i] e) = .inl q
+
+theorem orbitBridge : (type_of% (@run_orbit.{u})) ↔ orbitArena.{u}.Law stepActual.{u} := Iff.rfl
+theorem orbitLaw : orbitArena.{u}.Law stepActual.{u} := @run_orbit.{u}
+
+structure ObserverContext where
+  Carrier : Type u
+  finite : Fintype Carrier
+
+abbrev observerSignature : Signature where
+  Params := ObserverContext.{u}
+  State p := @Observer p.Carrier p.finite
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := @Observer p.Carrier p.finite
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+abbrev observerActual : Realization observerSignature.{u} :=
+  realize observerSignature (fun _ _ M => M) (fun e => nomatch e)
+
+abbrev lengthArena : Arena where
+  signature := observerSignature.{u}
+  Law R := ∀ {E : Type u} [Fintype E] (M : Observer E) (U : Source)
+    {e f : E} {t : RawHistory} {b : Bool},
+    Run (R.readout () ⟨E, inferInstance⟩ M) U e t f b → t.length < Fintype.card E
+
+theorem lengthBridge : (type_of% (@run_length_bound.{u})) ↔ lengthArena.{u}.Law observerActual.{u} := Iff.rfl
+theorem lengthLaw : lengthArena.{u}.Law observerActual.{u} := @run_length_bound.{u}
+
+
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.Exports
