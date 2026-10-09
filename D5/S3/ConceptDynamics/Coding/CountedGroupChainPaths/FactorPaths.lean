@@ -364,6 +364,51 @@ abbrev PeelBoundary {n k : ℕ} (U : GroupMat H n k) (V : GroupMat H k n)
     (l : ℕ) (i j : Fin n) :=
   Σ x : Fin k, Σ y : Fin k, At U i x × Word (V * U) l x y × At V y j
 
+private def peelRowRearrangeForward {n k l : ℕ} (U : GroupMat H n k)
+    (V : GroupMat H k n) (i j : Fin n) :
+    (Σ z : Fin n, (Σ w : Fin k, At U i w × At V w z) ×
+      PeelBoundary U V l z j) →
+      Σ w : Fin k, Σ y : Fin k, At U i w ×
+        (Σ x : Fin k, (Σ z : Fin n, At V w z × At U z x) ×
+          Word (V * U) l x y) × At V y j :=
+  fun p => ⟨p.2.1.1, p.2.2.2.1, p.2.1.2.1,
+    ⟨p.2.2.1, ⟨p.1, p.2.1.2.2, p.2.2.2.2.1⟩,
+      p.2.2.2.2.2.1⟩, p.2.2.2.2.2.2⟩
+
+private def peelRowRearrangeInverse {n k l : ℕ} (U : GroupMat H n k)
+    (V : GroupMat H k n) (i j : Fin n) :
+    (Σ w : Fin k, Σ y : Fin k, At U i w ×
+      (Σ x : Fin k, (Σ z : Fin n, At V w z × At U z x) ×
+        Word (V * U) l x y) × At V y j) →
+      (Σ z : Fin n, (Σ w : Fin k, At U i w × At V w z) ×
+        PeelBoundary U V l z j) :=
+  fun p => ⟨p.2.2.2.1.2.1.1,
+    ⟨p.1, p.2.2.1, p.2.2.2.1.2.1.2.1⟩,
+    ⟨p.2.2.2.1.1, p.2.1, p.2.2.2.1.2.1.2.2,
+      p.2.2.2.1.2.2, p.2.2.2.2⟩⟩
+
+omit [Fintype H] in
+private theorem peelRowRearrange_roundtrip {n k l : ℕ} (U : GroupMat H n k)
+    (V : GroupMat H k n) (i j : Fin n) :
+    Function.LeftInverse (peelRowRearrangeInverse (l := l) U V i j)
+      (peelRowRearrangeForward (l := l) U V i j) ∧
+      Function.RightInverse (peelRowRearrangeInverse (l := l) U V i j)
+        (peelRowRearrangeForward (l := l) U V i j) := by
+  constructor <;> intro p <;> rfl
+
+private def peelRowRearrangeEquiv {n k l : ℕ} (U : GroupMat H n k)
+    (V : GroupMat H k n) (i j : Fin n) :
+    (Σ z : Fin n, (Σ w : Fin k, At U i w × At V w z) ×
+      PeelBoundary U V l z j) ≃
+      Σ w : Fin k, Σ y : Fin k, At U i w ×
+        (Σ x : Fin k, (Σ z : Fin n, At V w z × At U z x) ×
+          Word (V * U) l x y) × At V y j :=
+  let h := peelRowRearrange_roundtrip (l := l) U V i j
+  { toFun := peelRowRearrangeForward (l := l) U V i j
+    invFun := peelRowRearrangeInverse (l := l) U V i j
+    left_inv := h.1
+    right_inv := h.2 }
+
 /-- One complete peeling layer. Its inverse splits the internal eta edges,
 restores both outside half-edges and joins each theta pair. -/
 noncomputable def peelRow [LinearOrder H] {n k : ℕ}
@@ -384,20 +429,6 @@ noncomputable def peelRow [LinearOrder H] {n k : ℕ}
     exact (pathHeadEquiv (U * V) (.nil _) i j).trans
       ((rightNilEquiv (U * V) i j).trans ((orderedAtEquiv U V i j).trans remove.symm))
   | l + 1, i, j => by
-    let rearrange : (Σ z : Fin n, (Σ w : Fin k, At U i w × At V w z) ×
-        PeelBoundary U V l z j) ≃
-        Σ w : Fin k, Σ y : Fin k, At U i w ×
-          (Σ x : Fin k, (Σ z : Fin n, At V w z × At U z x) ×
-            Word (V * U) l x y) × At V y j := {
-      toFun := fun p => ⟨p.2.1.1, p.2.2.2.1, p.2.1.2.1,
-        ⟨p.2.2.1, ⟨p.1, p.2.1.2.2, p.2.2.2.2.1⟩, p.2.2.2.2.2.1⟩,
-        p.2.2.2.2.2.2⟩
-      invFun := fun p => ⟨p.2.2.2.1.2.1.1,
-        ⟨p.1, p.2.2.1, p.2.2.2.1.2.1.2.1⟩,
-        ⟨p.2.2.2.1.1, p.2.1, p.2.2.2.1.2.1.2.2,
-          p.2.2.2.1.2.2, p.2.2.2.2⟩⟩
-      left_inv := fun _ => rfl
-      right_inv := fun _ => rfl }
     let assemble (w y : Fin k) :
         (Σ x : Fin k, (Σ z : Fin n, At V w z × At U z x) ×
           Word (V * U) l x y) ≃ Word (V * U) (l + 1) w y :=
@@ -407,7 +438,7 @@ noncomputable def peelRow [LinearOrder H] {n k : ℕ}
     exact (pathHeadEquiv (U * V) (wordFactors (U * V) (l + 1)) i j).trans
       ((Equiv.sigmaCongrRight fun z => Equiv.prodCongr
         (orderedAtEquiv U V i z) (peelRow U V l z j)).trans
-          (rearrange.trans (Equiv.sigmaCongrRight fun w =>
+          ((peelRowRearrangeEquiv U V i j).trans (Equiv.sigmaCongrRight fun w =>
             Equiv.sigmaCongrRight fun y => Equiv.prodCongr (Equiv.refl _)
               (Equiv.prodCongr (assemble w y) (Equiv.refl _)))))
 

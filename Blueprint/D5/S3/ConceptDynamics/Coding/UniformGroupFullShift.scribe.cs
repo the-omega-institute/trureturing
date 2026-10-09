@@ -31,8 +31,6 @@ internal sealed class UniformGroupFullShiftDocument : IScribeDocumentDefinition
         Context(Q(f, [B("n", I("Nat")), B("b", I("Nat")), .. vs]), group: false, finite: false, ordered: false);
     private static Formula GroupSymbolN(Formula f, params Formula.BoundVariable[] vs) =>
         Context(Q(f, [B("n", I("Nat")), B("b", I("Nat")), .. vs]), finite: false, ordered: false);
-    private static Formula TopN(Formula f, params Formula.BoundVariable[] vs) =>
-        N(Topology(Q(f, vs)));
     private static Formula N(Formula f, params Formula.BoundVariable[] vs) =>
         G(Q(f, [B("n", I("Nat")), B("b", I("Nat")), .. vs]));
     private static Formula D => Call("uniformEndpoint", I("n"), I("b"));

@@ -17,27 +17,6 @@ internal sealed class CountedGroupChainPathsDocument : IScribeDocumentDefinition
             finite ? Seq(OpenBracket, Call("Fintype", Id("H")), CloseBracket) : Seq(),
             ordered ? Seq(OpenBracket, Call("LinearOrder", Id("H")), CloseBracket) : Seq(),
             body), B("H", Id("Type")));
-    private static Formula FactorsAll(Formula body, bool ordered = false,
-        bool finite = false, params Formula.BoundVariable[] extra) => Group(Quant(body,
-            [B("n", Id("Nat")), B("m", Id("Nat")), B("L", Id("Nat")),
-            B("f", Call("Factors", Id("H"), Id("n"), Id("m"), Id("L"))),
-            .. extra]), ordered, finite || ordered);
-    private static Formula ChainAll(Formula body) => Group(Quant(body,
-        B("n", Id("Nat")), B("m", Id("Nat")), B("L", Id("Nat")),
-        B("A", Call("GroupMat", Id("H"), Id("n"), Id("n"))),
-        B("B", Call("GroupMat", Id("H"), Id("m"), Id("m"))),
-        B("c", Call("Chain", Id("H"), Id("A"), Id("B"), Id("L")))));
-    private static Formula And(Formula a, Formula b) =>
-        Seq(Open, a, Land, Sp, b, Close);
-    private static Formula Product => Call("factorProduct", Id("f"));
-    private static Formula Path => Call("FactorPath", Id("f"), Id("i"), Id("j"));
-    private static Formula Fiber => Call("FactorFiber", Id("f"), Id("i"), Id("j"), Id("g"));
-    private static Formula Copies => Call("Fin", Call("coeff",
-        Call("entry", Product, Id("i"), Id("j")), Id("g")));
-    private static Formula.BoundVariable[] Endpoints =>
-        [B("i", Call("Fin", Id("n"))), B("j", Call("Fin", Id("m")))];
-    private static Formula.BoundVariable[] EndpointsLabel =>
-        [.. Endpoints, B("g", Id("H"))];
     private static DocumentBlock Item(string selector, string title, Formula statement,
         string paragraph, DescribeRole role) => Describe.Lean(
             DescribeId.Create("chainpaths-" + selector.Replace(".", "-").Replace("_", "-").ToLowerInvariant()),
@@ -58,9 +37,6 @@ internal sealed class CountedGroupChainPathsDocument : IScribeDocumentDefinition
         Call("FactorPath", Call(factors, Id("c")), Id(i), Id(j));
     private static Formula W(string matrix, Formula length, string i, string j) =>
         Call("Word", Id(matrix), length, Id(i), Id(j));
-    private static Formula CB(bool dual = false) => Sig("v", Call("Fin", Id(dual ? "n" : "m")),
-        Pair(FP(dual ? "backwardFactors" : "forwardFactors", "i", "v"),
-            FP(dual ? "forwardFactors" : "backwardFactors", "v", "j")));
     private static Formula SweepIn(bool dual = false, bool ranked = false, Formula? length = null) =>
         Sig("x", Call("Fin", Id(dual ? "m" : "n")), Pair(
             length is null ? At(Id(dual ? "B" : "A"), "i", "x") : W(dual ? "B" : "A", length, "i", "x"),
@@ -73,11 +49,6 @@ internal sealed class CountedGroupChainPathsDocument : IScribeDocumentDefinition
             length is null ? At(Id(dual ? "A" : "B"), "y", "j") : W(dual ? "A" : "B", length, "y", "j")));
     private static Formula MapType(string name, Formula domain, Formula codomain, params Formula[] args) =>
         Seq(Call(name, args), Colon, Call("Equiv", domain, codomain));
-    private static Formula Label(Formula f, Formula p) => Call("factorLabel", f, p);
-    private static Formula First(Formula p) => Call("first", p);
-    private static Formula Second(Formula p) => Call("second", p);
-    private static Formula LabelOf(Formula p) => Call("label", p);
-    private static Formula ApplyMap(string name, Formula p) => Call("apply", Call(name, Id("c"), Id("i"), Id("j")), p);
     private static Formula LongLaw(bool dual, bool ranked) => OrderedChainAll(Quant(
         Equal(Call(ranked ? (dual ? "matrixPhiSPower" : "matrixPhiRPower") : (dual ? "phiSPower" : "phiRPower"),
             Id("c"), Id("L"), Id("i"), Id("j"), Call("tuple", Id("x"),
@@ -95,46 +66,10 @@ internal sealed class CountedGroupChainPathsDocument : IScribeDocumentDefinition
         [B("i", Call("Fin", Id(dual ? "m" : "n"))),
             B("j", Call("Fin", Id(square ? (dual ? "m" : "n") : (dual ? "n" : "m"))))];
 
-    private static Formula RowAll(Formula body, params Formula.BoundVariable[] extra) =>
-        Group(Quant(body, [B("n", Id("Nat")), B("l", Id("Nat")),
-            B("A", Call("GroupMat", Id("H"), Id("n"), Id("n"))), .. extra]), finite: false);
-    private static Formula LocalRowAll(Formula body, params Formula.BoundVariable[] extra) =>
-        Group(Quant(body, [B("n", Id("Nat")), B("k", Id("Nat")), B("l", Id("Nat")),
-            B("U", Call("GroupMat", Id("H"), Id("n"), Id("k"))),
-            B("V", Call("GroupMat", Id("H"), Id("k"), Id("n"))),
-            B("r", Call("NumberedRow", Multiply(Id("U"), Id("V")), Id("l"))), .. extra]), true);
-    private static Formula PeelingRowAll(Formula body) =>
-        Group(Quant(body, B("n", Id("Nat")), B("k", Id("Nat")), B("l", Id("Nat")),
-            B("U", Call("GroupMat", Id("H"), Id("n"), Id("k"))),
-            B("V", Call("GroupMat", Id("H"), Id("k"), Id("n"))),
-            B("r", Call("NumberedRow", Multiply(Id("U"), Id("V")), Call("successor", Id("l")))),
-            B("p", Call("G34FactorStep", Id("U"), Id("V"), Id("r")))), true);
-    private static Formula ArraySuccAll(Formula body, params Formula.BoundVariable[] extra) =>
-        Group(Quant(body, [B("L", Id("Nat")), B("l", Id("Nat")),
-            B("data", Call("IndexedChain", Id("H"), Call("successor", Id("L")))), .. extra]), true);
-    private static Formula StepType => Call("G34Step", Id("A"), Id("B"), Id("U"), Id("V"), Id("hA"), Id("hB"), Id("r"));
-    private static Formula StepAll(Formula body, params Formula.BoundVariable[] extra) =>
-        Group(Quant(body, [B("n", Id("Nat")), B("k", Id("Nat")), B("l", Id("Nat")),
-            B("A", Call("GroupMat", Id("H"), Id("n"), Id("n"))),
-            B("B", Call("GroupMat", Id("H"), Id("k"), Id("k"))),
-            B("U", Call("GroupMat", Id("H"), Id("n"), Id("k"))),
-            B("V", Call("GroupMat", Id("H"), Id("k"), Id("n"))),
-            B("hA", Equal(Id("A"), Multiply(Id("U"), Id("V")))),
-            B("hB", Equal(Id("B"), Multiply(Id("V"), Id("U")))),
-            B("r", Call("NumberedRow", Id("A"), Id("l"))), .. extra]), true);
     private static Formula ArrayAll(Formula body, params Formula.BoundVariable[] extra) =>
         Group(Quant(body, [B("L", Id("Nat")), B("l", Id("Nat")),
             B("data", Call("IndexedChain", Id("H"), Id("L"))), .. extra]), true);
-    private static Formula SquareArrayAll(Formula body, params Formula.BoundVariable[] extra) =>
-        Group(Quant(body, [B("L", Id("Nat")),
-            B("data", Call("IndexedChain", Id("H"), Id("L"))), .. extra]), true);
-    private static Formula ArrayType => Call("G34Array", Id("data"), Id("l"));
 
-        private static Formula UnorderedChainAll(Formula body, params Formula.BoundVariable[] extra) =>
-        Group(Quant(body, [B("n", Id("Nat")), B("m", Id("Nat")), B("L", Id("Nat")),
-            B("A", Call("GroupMat", Id("H"), Id("n"), Id("n"))),
-            B("B", Call("GroupMat", Id("H"), Id("m"), Id("m"))),
-            B("c", Call("Chain", Id("H"), Id("A"), Id("B"), Id("L"))), .. extra]));
     private static Formula BoundaryAll(Formula body, params Formula.BoundVariable[] extra) =>
         Group(Quant(body, [B("L", Id("Nat")), B("data", Call("IndexedChain", Id("H"), Id("L"))), .. extra]));
 public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

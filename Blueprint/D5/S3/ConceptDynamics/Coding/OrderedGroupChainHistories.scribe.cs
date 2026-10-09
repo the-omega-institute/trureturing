@@ -60,8 +60,6 @@ internal sealed class OrderedGroupChainHistoriesDocument : IScribeDocumentDefini
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
-    private static Formula Signed(string list, Formula t) =>
-        Multiply(Id("k"), Call("ListProd", Call(list, Id("x"), t)));
     private static Formula Coordinate(Formula t) => Call("anchoredCoordinate", Id("x"), Id("k"), t);
     private static Formula Agree(Formula lo, Formula hi, string x, string y) =>
         Q(Imp(And(Seq(lo, Sp, Leq, Sp, Id("t")), Seq(Id("t"), Sp, Leq, Sp, hi)),
