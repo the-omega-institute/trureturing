@@ -124,10 +124,10 @@ private theorem first_stop_parses (c : FourthControl) (ω : Stream) (b : Letter)
   | zero => simp [FirstStop, trace, readPrefix, Parses]
   | succ n ih => rw [first_stop_head, prefix_succ]; exact and_congr_right (fun _ => ih _ _)
 
-private theorem loop_succ (j : ℕ) : loopWord (j + 1) = 1 :: 0 :: loopWord j := by
+theorem loop_succ (j : ℕ) : loopWord (j + 1) = 1 :: 0 :: loopWord j := by
   simp [loopWord, List.replicate_succ]
 
-private theorem p_word_succ (j : ℕ) (b : Letter) :
+theorem p_word_succ (j : ℕ) (b : Letter) :
     pWord (j + 1) b = 1 :: 0 :: pWord j b := by
   simp [pWord, loop_succ]
 
