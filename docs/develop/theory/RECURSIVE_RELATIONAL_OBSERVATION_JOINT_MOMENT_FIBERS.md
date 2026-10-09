@@ -3652,3 +3652,224 @@ $$
 故（JM.147）–（JM.150）不表示一次原生操作可把任意未知深度 $n$ 的树变成原始树，也不从共同几何取得入口、物理年龄或旋转权限。仅用 $\rho$ 的共同前向比较则有（JM.149）的准确深度差 $n$，而其实际执行权限仍按原合同另供。
 
 ## 追加锚（本行以下为增补区）
+
+## 52. 同词原树内全部三叶位置的同时原始缺陷
+
+**定义 52.1（实际位置、比较族与字面支持）。** 取定义28.1、约定36.1的全部非空有限有序树 $\mathcal T=\operatorname{FreeMagma}\{\alpha,\beta\}$，保持原替换
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=(\beta,\alpha),\qquad
+\rho(s,t)=(\rho s,\rho t),\qquad T_n=\rho^n\alpha.
+\tag{JM.151}
+$$
+
+地址属于 $\mathcal A=\{L,R\}^{*}$，含根 $\varepsilon$。$t|_p$ 是地址 $p$ 的子树，缺席时无值。$r(q,t)$ 是原始四值读数；$\kappa r(q,t)$ 是原粗投影，只有 $\mathsf{br},\mathsf{abs}$ 被合并为 $\mathsf{none}$。地址无需先取得祖先，任意缺席地址仍可查询。定义
+
+$$
+\begin{aligned}
+B&=T_3=((\beta,\alpha),\beta),&
+D&=(\beta,(\alpha,\beta)),\\
+P_n&=\{p\in\mathcal A:T_n|_p=B\},&
+S_p&=\{pL,pR,pLL,pLR,pRL,pRR\},\\
+W_n&=\{U\in\mathcal T:w(U)=w(T_n)\}.&&
+\end{aligned}
+\tag{JM.152}
+$$
+
+对每个 $n\ge3$ 和 $A\subseteq P_n$，$V_A$ 表示在 $T_n$ 中恰把这些位置的整个 $B$ 子树改取为 $D$ 的数学比较输入；其他位置保持原树。其无歧义性由下述反链结论保证。此定义比较不可变输入，不供应观察者的替换、旋转或重置动作。
+
+深度 $\nu$ 与原始端点 $p(t)$ 仍取定理36.3，$Q(t)=(\nu(t),\mathbf1_{p(t)=\alpha})$ 仍取定义49.1。$\operatorname{Pos}(t)$ 仍表示 $t\in\rho^3[\mathcal T]$。这些任务是同一实际树的不同函数。
+
+**候签定理 52.2（所有规模的独立位置与准确回复支持）。** 对全部整数 $n\ge3$，$P_n$ 是有限地址反链，
+
+$$
+|P_n|=F_{n-2},\qquad F_0=0,\quad F_1=1.
+\tag{JM.153}
+$$
+
+每个 $A\subseteq P_n$ 同时实现为一个实际树，且
+
+$$
+\begin{aligned}
+w(V_A)&=w(T_n),&G(V_A)&=G(T_n),\\
+V_\varnothing&=T_n,&Q(V_\varnothing)&=(n,1),\\
+A\ne\varnothing&\Longrightarrow V_A\notin\rho[\mathcal T],&
+A\ne\varnothing&\Longrightarrow Q(V_A)=(0,0).
+\end{aligned}
+\tag{JM.154}
+$$
+
+族映射 $A\mapsto V_A$ 单射。更准确地，对每两个子集 $A,A'\subseteq P_n$，整个无限地址域上的差异支持都是
+
+$$
+\begin{aligned}
+\{q:r(q,V_A)\ne r(q,V_{A'})\}
+&=\bigcup_{p\in A\mathbin\triangle A'}S_p,\\
+\{q:\kappa r(q,V_A)\ne\kappa r(q,V_{A'})\}
+&=\bigcup_{p\in A\mathbin\triangle A'}S_p.
+\end{aligned}
+\tag{JM.155}
+$$
+
+特别地，与 $T_n$ 比较时右端是 $\bigcup_{p\in A}S_p$。不同 $p$ 的 $S_p$ 两两不交。
+
+证明。复用原子关系生成卷定理3.2的结构递推 $T_{j+2}=(T_{j+1},T_j)$ 及叶数 $\ell(T_j)=F_{j+1}$（$j\ge1$）。$T_0,T_1,T_2$ 均不含三叶子树 $B$，$P_3=\{\varepsilon\}$。当 $n>3$，$T_n$ 的叶数严格大于三，故根不在 $P_n$；每个其他位置准确位于左孩子或右孩子。因此
+
+$$
+P_4=L P_3,\qquad
+P_{n+1}=L P_n\ \sqcup\ R P_{n-1}\quad(n\ge4).
+\tag{JM.156}
+$$
+
+这里 $L P=\{Lp:p\in P\}$，$R P$ 同理；$P_2=\varnothing$ 时第二式也适用于 $n=3$。得到 $|P_3|=|P_4|=1$，以后按 Fibonacci 递推，证明（JM.153）。这是实际子树出现次数，未把叶词中可能重叠的 $bab$ 字段当作树位置。
+
+若不同 $p,p'$ 可按前缀比较，则较深的 $B$ 是较浅的 $B$ 的真子树。但有限满二叉树的真子树叶数严格小于全树，两个三叶子树不能如此包含。故 $P_n$ 是反链。沿每个位置的左右路径剖开 $T_n$，得到孔地址恰为 $P_n$ 的有序多孔上下文；各孔可独立填入非空树 $B$ 或 $D$。这给全部子集的共同实现，且与逐孔填入的次序无关。
+
+两种填入都具有完整标签词 $bab$。保持外围及左右叶序便保持整个 $w(T_n)$，所以由约定2.1的词读数保持 $G$。空集给原树；$\alpha$ 不在一阶像内，定理36.3的原射线唯一性给 $\nu(T_n)=n$、原始端点 $\alpha$，无需以第49–51章的候签深度合成律为前提。
+
+对非空 $A$ 取 $p\in A$，填入的 $D$ 在 $pR$ 的左孩子 $pRL$ 保留叶 $\alpha$。反链使其他填入不能改变这个孩子。约定36.2的一阶像语法中，特殊块 $(\beta,\alpha)$ 的左叶是 $\beta$，一般配对的两个孩子都在一阶像内，而 $\alpha$ 不在该像内。对这三种互斥语法结构归纳，任意一阶像在任意地址都不可能有左孩子叶 $\alpha$。因此 $V_A$ 不在一阶像，深度零。它至少有三叶，原始端点不可能为单叶 $\alpha$，给（JM.154）。此障碍比仅排除第三像更强。
+
+在一个孔内，根回复都是 $\mathsf{br}$，六个可能不同的回复逐项为
+
+$$
+\begin{array}{c|rrrrrr}
+q&L&R&LL&LR&RL&RR\\ \hline
+r(q,B)&\mathsf{br}&\beta&\beta&\alpha&\mathsf{abs}&\mathsf{abs}\\
+r(q,D)&\beta&\mathsf{br}&\mathsf{abs}&\mathsf{abs}&\alpha&\beta
+\end{array}
+\tag{JM.157}
+$$
+
+每列的粗回复也不同。长度至少三的孔内地址在两边均缺席，故不存在遗漏的深地址差异。孔的真祖先回复仍为分支，不进入任何孔的地址也未变。每个地址至多进入一个孔，因为孔地址是反链；由此六列在外围准确加上前缀 $p$，得（JM.155），包括任意长的缺席地址。反链也使不同孔的整个前缀锥不交，所以 $S_p$ 两两不交。若 $A\ne A'$，任选 $p\in A\mathbin\triangle A'$，地址 $pL$ 的回复不同，证明单射。
+
+上述同时实现、实际位置数及准确六地址支持属于 `repo-derived`。单个左射线位置的比较已由（JM.148）供应，经典保叶序重结合见 Loday，*Realization of the Stasheff polytope*，[原文](https://arxiv.org/pdf/math/0212126v1) §1、§2.8；其平面树边关系不包含本替换的原始性或地址回复断言。这里只按本卷实际语法推导这些关系，不声称全球优先性。$\square$
+
+## 53. 整个固定叶词纤维的祖先证书
+
+**定义 53.1（指定任务的原生地址证书）。** 固定 $n\ge3$，令 $\tau$ 分别取 $\operatorname{Pos}$、$\nu$、$Q$ 或字面树恒等任务 $\operatorname{id}$。对 $s\in\{\mathrm{raw},\mathrm{coarse}\}$，置 $r_{\mathrm{raw}}=r$、$r_{\mathrm{coarse}}=\kappa r$。有限集 $J\subset\mathcal A$ 在 $T_n$ 的任务证书性质是
+
+$$
+\forall U\in W_n,\quad
+\bigl(\forall q\in J,\ r_s(q,U)=r_s(q,T_n)\bigr)
+\Longrightarrow\tau(U)=\tau(T_n).
+\tag{JM.158}
+$$
+
+以 $C^{s,\tau}_{\mathrm{word}}(T_n)$ 记这类 $|J|$ 的最小值。完整叶地址集是证书，故最小值存在。$J$ 无须前缀闭合，地址长度无额外上限。竞争者是整个 $W_n$，不是 $\{V_A:A\subseteq P_n\}$；完整已知词是此证书定义的显式理论许诺。
+
+**候签定理 53.2（完整词许诺下的证书区间）。** 对每个 $n\ge3$、两种读口 $s$ 以及上述四种指定任务，都有
+
+$$
+F_{n-2}\le C^{s,\tau}_{\mathrm{word}}(T_n)\le F_{n-1}.
+\tag{JM.159}
+$$
+
+下界要求每个证书分别命中所有 $S_p$。上界可取 $T_n$ 的全部 $\alpha$ 叶地址；该同一个证书在整个 $W_n$ 上强制字面树本身等于 $T_n$。此区间不声称两个端点相等，也不将正成员证书与准确深度证书定义为同一任务。
+
+证明。固定一个 $p\in P_n$。定理52.2给 $V_{\{p\}}\in W_n$，它在且仅在 $S_p$ 改变原始或粗回复。它深度零、不是正成员，与 $T_n$ 的深度 $n$、正成员资格、$Q$ 及字面树均不同。若 $J\cap S_p=\varnothing$，该实际竞争者符合证书所有回复，却有不同任务值，违反（JM.158）。因此每个 $S_p$ 至少命中一次；支持两两不交，由（JM.153）给下界。证书必须排除完整纤维中的竞争者，使用其中的这些竞争者作下界见证没有缩小证书的正确域。
+
+上界复用 `ActualImageAddressCertificate.result` 的精确组成证书及其证明中的重建步骤。其完整参数范围是 $k\ge1$、$V\in I_{3k}$、地址窗 $h\ge\operatorname{height}(V)$，竞争者为任意具有准确组成 $c(U)=c(V)$ 的完整有序来源；结论给大小 $c(V)_\alpha$ 的第三层迭代像证书。`rigidity` 在同一参数范围内确定其最小证书恰为全部 $\alpha$ 叶。这里对每个 $n\ge3$ 取
+
+$$
+k=1,\quad V=T_n=\rho^3(T_{n-3}),\quad
+h=\operatorname{height}(T_n)=n-1.
+\tag{JM.160}
+$$
+
+$W_n$ 的每个竞争者都具有准确组成 $c(T_n)=(F_{n-1},F_n)$，所以原证书的完整竞争域包含 $W_n$。地址高度等式由 $\operatorname{height}(T_1)=0$、$\operatorname{height}(T_2)=1$ 及结构递推给出：若相邻高度为 $j-1,j-2$，配对后的高度为 $1+\max(j-1,j-2)=j$。归纳覆盖（JM.160）的全部 $n$。这里只令被查询地址位于上述窗内，没有向（JM.158）的竞争者增加高度许诺，也没有把祖先深度 $n$ 当作地址高度 $n-1$。
+
+为区分像资格与准确深度，使用该供应证明中实际更强的重建结论，而不从“$U\in I_3$”推断“$\nu(U)=n$”。其所用 `AlphaCovered` 是每个分支均有 $\alpha$ 后代、递归地对子树成立。私有 `structural` 对所有 $S\in\mathcal T$ 给 $\rho^2 S$ 的这一性质；`result` 的局部 `upper` 证明：若 $V$ 具有该性质，$U$ 在 $V$ 的每个 $\alpha$ 叶地址回复 $\alpha$，则
+
+$$
+\ell(U)\ge\ell(V),\qquad c(U)_\alpha\ge c(V)_\alpha,
+\qquad c(U)=c(V)\Longrightarrow U=V.
+\tag{JM.161}
+$$
+
+这是原上界证明的中间步骤，非本章新增通用重建定理。其普通结构证明如下。若 $V=\beta$，非空 $U$ 至少有一叶和零个 $\alpha$；组成相同强制 $U=\beta$。若 $V=\alpha$，根的 $\alpha$ 回复直接强制 $U=\alpha$。若 $V=(V_L,V_R)$，它有非空地址上的 $\alpha$ 后代，故匹配者 $U$ 必为分支 $(U_L,U_R)$。两子树分别匹配去掉首字母后的全部 $\alpha$ 地址。归纳给每个子树的叶数及 $\alpha$ 数均不减少，于是相加给两项不等式。若父组成相等，两子树的叶数不等式之和与 $\alpha$ 数不等式之和都取等号，分别强制每个子树的叶数及 $\alpha$ 数相等，继而 $\beta$ 数也相等。归纳的重建结论使两孩子分别相等，父树相等。此证明并未假定匹配者具有 `AlphaCovered` 或属于任何像。
+
+应用于 $T_n=\rho^2(T_{n-2})$。准确词给准确组成，全部 $\alpha$ 地址的原始或粗匹配都恰为原始 $\alpha$ 回复，因此（JM.161）强制 $U=T_n$。这个证书同时供应四个任务，且原 `alpha_card` 给它恰有 $F_{n-1}$ 个地址，证明上界。
+
+命中不同可翻转支持的证书论证是已有方法。Buhrman 与 de Wolf，*Complexity Measures and Decision Tree Complexity: A Survey*，[作者原文](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf)，§4.1的证书定义、§4.2的块敏感度定义及命题1，以 Boolean 输入坐标和块翻转为载体。本章使用的是原树的真实比较输入与四值地址支持，不能直接把 Boolean 立方体定理当作 $W_n$ 的实现定理。新连接是（JM.153）–（JM.155）供应的同词原始竞争者及其对完整 $W_n$ 的适用范围；组成证书、重建和一般命中方法均按原归属复用。$\square$
+
+## 54. 实际前缀之后尚未支付的地址取得
+
+**定义 54.1（同一原生观察者与证据解码）。** 固定 $n\ge3$。观察者仍取 `ActualFiniteObserverAbsentElimination.Observer`：有限完整名义载体 $E$，一个来源无关初态 $e_0$，动作
+
+$$
+\operatorname{action}:E\longrightarrow\mathcal A+\{0,1\},
+\qquad\operatorname{transition}:E\times
+\{\alpha,\beta,\mathsf{br},\mathsf{abs}\}\longrightarrow E,
+\tag{JM.162}
+$$
+
+及地址无重复的原始缓存解码 $\operatorname{decoder}:E\to\operatorname{RawHistory}$。动作、初态、转移及解码均不依未知来源，外部记录不是额外控制输入。每次实际查询固定同一不可变来源、同一纪元；精确缓存命中返回存值，未命中才读取来源并在末尾追加该地址和完整原始回复。缓存不覆盖、不删除、不填入推断回复；重复查询和缺席回复保留在按时序的外部历史中，命中不再次支付。
+
+要求对每个 $U\in W_n$ 的全部实际前缀满足原 `Legal`，并从共同初态有限终止。其初始缓存为空；已有取得以实际前缀表示，不能借 $n$ 或 $W_n$ 把来源相关记录放入初态。若另要求原 `historyAction` 在全部有限历史上因子化通过 $\kappa_{\rm hist}$，保留该要求；下述下界对含这一附加条件的观察者也成立。因子化动作不删除缓存中的四值证据。
+
+对正成员任务，原 Boolean 停止端口必须满足 $b(U)=1\Longleftrightarrow\operatorname{Pos}(U)$，不更换为整数或二元组输出。对准确 $\nu$ 或 $Q$ 任务，另明定一个来源无关、只读已经保留证据的数学消费者
+
+$$
+\Delta_n:\{0,1\}\times\operatorname{RawHistory}
+\longrightarrow Z,\qquad
+\Delta_n(b(U),\operatorname{decoder}(f(U)))=\tau(U),
+\tag{JM.163}
+$$
+
+其中 $Z=\mathbb N_0$ 或 $\mathbb N_0\times\{0,1\}$。Boolean 停止口仍为（JM.162）；（JM.163）是额外指定的任务消费者，原成员正确性本身不供应它。也可让消费者输出 $(J,z)$，其中 $J$ 是实际缓存支持的子集、回复逐条取缓存存值，且对整个 $W_n$ 中匹配这些回复的来源都成立 $\tau(U)=z$。这明确规定证书验证域，不以终止标志代替目标证据。
+
+在 $T_n$ 上取任意实际前缀 $h_0$，末配置为 $e$。令
+
+$$
+J_0=\operatorname{paid}(h_0),\qquad
+R_n(h_0)=\{p\in P_n:S_p\cap J_0=\varnothing\},\qquad
+m_0=|R_n(h_0)|.
+\tag{JM.164}
+$$
+
+这里 $\operatorname{paid}$ 仅去重实际请求的字面地址。原 `actualPrefix_semantics` 保证 $\operatorname{decoder}(e)$ 正是 $h_0$ 的按时序首次出现缓存，故其支持准确为 $J_0$，全部值来自这一个来源。
+
+**候签定理 54.2（每个实际前缀的新增取得下界）。** 在定义54.1的完整合同下，令 $t$ 为从 $e$ 起在 $T_n$ 上任意有限终止续行的时序记录。若读者及其指定消费者对整个 $W_n$ 正确，其指定目标为 $\operatorname{Pos}$、$\nu$ 或 $Q$，则
+
+$$
+\forall p\in R_n(h_0),\quad S_p\cap\operatorname{paid}(t)\ne\varnothing,
+\qquad
+\left|\operatorname{paid}(h_0t)\setminus J_0\right|\ge m_0.
+\tag{JM.165}
+$$
+
+其中 $h_0t$ 表示历史拼接。结论保持所有重复、缓存命中和任意长的缺席查询。它计算新增不同地址，不计已有缓存第二次费用；已经命中至少一个 $S_p$ 的位置不进入 $R_n(h_0)$。$m_0=0$ 时该下界为零，不断言读者已充分。
+
+证明。从初态的有限终止运行与任何实际前缀逐步比较：相同配置给相同动作，查询时同一来源和缓存给相同回复，因此可取消共同的前缀步骤。实际前缀不能越过停止配置，故从其末配置 $e$ 确有有限终止续行。固定任意这样的 $t$，取 $p\in R_n(h_0)$ 并反设整个续行也没有查询 $S_p$。令 $U=V_{\{p\}}$。定理52.2使 $U\in W_n$，且 $U,T_n$ 在 $\operatorname{paid}(h_0t)$ 的每个地址有相同原始回复。
+
+从相同的 $e_0$ 开始，对前缀的每一步归纳。两个来源在同一配置选择同一动作。若命中缓存，两个执行的配置相同、解码缓存相同，存值即相同；若未命中，所请求地址属于上述支持，相同原始回复给相同转移。合法的精确追加使两个实际缓存同时相同。于是 $U$ 上也实际产生完整 $h_0$ 和同一个 $e$。这一步排除了把一个只在 $T_n$ 上真实的前缀作为其他输入免费初态的做法。
+
+从这个共同配置再按续行长度归纳，使用完全相同的命中或读取分支，得到相同续行 $t$、相同终配置 $f$、同一个 Boolean 停止值 $b$ 及同一个完整原始缓存。重复查询取存值，缺席回复也参与原始转移，故两种情形没有例外。此为原 `ActualObserverBoundedLowerBounds` 私有 `run_replay` 的原生重放方法；本处并未新增通用重放定理。
+
+若目标是 $\operatorname{Pos}$，$T_n$ 为正、$U$ 非正，原 Boolean 正确性不能在相同 $b$ 上同时成立。若目标是 $\nu$ 或 $Q$，同一个 $b$ 和缓存给同一个（JM.163）输出，但两个真目标分别为 $n$ 与零，或 $(n,1)$ 与 $(0,0)$，仍矛盾。若交付的是证书 $(J,z)$，两个实际来源同属 $W_n$ 且匹配缓存全部回复，故也匹配 $J$；证书的完整域有效性会使两目标均等于 $z$，同样矛盾。Boolean 端口未被替换为所需任务值。
+
+因此每个未解决位置在续行必须至少命中一次。由于 $S_p$ 两两不交，选出的不同位置请求地址不同；它们又全在 $J_0$ 之外，所以是新增首次取得。拼接历史满足 $\operatorname{paid}(h_0t)=J_0\cup\operatorname{paid}(t)$，计数得到（JM.165）。证明只用真实输入与该同一观察者的实际续行，对全部 $n$、全部实际前缀及其重复次数成立。
+
+该源特定的未解决位置数和续行下界属于 `repo-derived`，一般证书命中及确定性重放按第53章文献和上述原供应复用。正确性范围可更大：若观察者满足原 `Admissible(N,M)` 且 $N\ge F_{n+1}$，整个 $W_n$ 在原叶数域内，正成员结论立即适用；不能反向把仅在 $W_n$ 上正确升级为原完整叶数域正确。准确 $\nu,Q$ 仍需要自己的消费者合同。$\square$
+
+## 55. 已保留的词、指定任务与资源范围
+
+**约定 55.1（词许诺和实际词取得的两种条件）。** （JM.158）、（JM.163）中的固定词可作为明确的数学竞争域许诺，因而不计算把它从来源读出的费用。若词来自一个此前实际取得并保留的原生地址历史，则该历史必须属于同一个 $h_0$，其地址、四值回复、重复和首次出现缓存全部保留；不能只留词摘要后把已收到地址信息从 $J_0$ 删除。此前费用保留在总账，新费用只取（JM.165）的差集。
+
+例如按原完整前沿取得词时，$h_0$ 已包含 $T_n$ 的全部带标签叶地址，且其前缀树与词可由这些保留证据重建，来源不再需要读取。每个 $p\in P_n$ 的地址 $pLL,pLR,pR$ 都是这些叶地址，故 $R_n(h_0)=\varnothing$。若某个另外声明的口只交付抽象词、未交付地址证据，那个口及它的取得费用需另供，不能假定它是原（JM.162）的免费操作。
+
+**约定 55.2（全任务、发现和名义资源的独立义务）。** 证书大小描述给定 $T_n$ 的某组充分回复；它不提供对 $W_n$ 任意未知树发现该组回复的最优策略。（JM.165）是一个既定正确读者在 $T_n$ 上的实际续行必要条件，未声称存在以恰好 $m_0$ 次新取得结束的完整词纤维读者。$\operatorname{Pos}$ 的一个 Boolean 值也不供应准确 $\nu$、射线标志或全 $Q$ 的任务输出。（JM.159）给全 $Q$ 在 $T_n$ 的证书上界；全 $W_n$ 的全 $Q$ 读者构造、正确证据消费者、发现成本及其最优性仍是分别保留的义务。
+
+原 `ActualPureAcquisitionCompiler.pure_acquisition_run` 在全部叶数至多 $N$ 的原树上给完整节点取得，`pure_actual_prefix_cache` 给它实际前缀的完整原始缓存，`pure_admissible` 保持原 Boolean 成员端口与全历史粗动作因子化。这给可复用的取得路线；完整树恢复之后要消费 $\nu$ 或 $Q$，还须（JM.163）的明确解释，不把该编译器原 Boolean 返回类型改读为 $Q$。
+
+在有限名义载体上，原 `bounded_cache_control_lower_bounds` 对原 `Admissible(N,M)` 给每个实际终止记录准确 $|\operatorname{paid}(h)|+1$ 个不同解码缓存，包括初始与终止缓存；其完整正源的叶覆盖及名义配置下界要求整个原叶数域的正确性。$W_n$ 不包含翻标签的同规模竞争者，故不能只凭本章词许诺把那一完整域叶下界套来。`ActualAcquisitionCacheFiber.cacheEquiv` 的全部粗记录原始提升含不可实现的提升，`compatible_cache_card` 的 $2^{\operatorname{noneCount}}$ 不计真实树或真实祖先数，不能删除这些名义行后仍声称原编译器的完整载体。只在有限缺陷族 $\{V_A\}$ 上寻求 $2|P_n|+1$ 名义状态的较尖结论是另一个未决问题；本章既不证明它，也不从它推出整个 $W_n$ 或整个原叶数域的控制器最优性。
+
+以上名义有限行、证书基数与新增地址费用均不等于物理内存、安装描述、地址字母长度、计算时间、通信、档案寿命或输出费用。无物理资源模型时不作这些资源的数值运输。
+
+**约定 55.3（原载体之间的运输边界）。** `KBonacciAcquisition.OriginalAcquiredTrace` 的来源是原始允许 Boolean 块的实际历史，记录同时保留其初始与当前 `LiveRecord`；`OriginalExecutionBridge.NativeExecute` 按发出的块推进记录并测试端点；`WindowChargeInverse` 与 `PhysicalWindowDecoder` 使用有限模相位和物理窗口电荷，从已发出档案解码初始记录。本章来源却是不可变原树，动作是任意字面地址，回复为四值，祖先坐标是逆替换次数。块操作、推进后端点和模相位都没有给（JM.152）的树位置、同词比较或原始性；不存在这些对象、动作、回复和目标的明确对应时，那些解码与电荷界不运输为（JM.159）或（JM.165）。
+
+[记录单纯形与高阶相容卷](AURIC_FIB_ATOM_RECORD_SIMPLEX_AND_HIGHER_ORDER_COMPATIBILITY.md)的载体是五模式概率及附加条件读口；其共同来源重心和高阶相容关系不构成原树地址或替换祖先的实现。[有效付费历史证书卷](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)第12–15章的共同先验、条件风险、逐字母生成和支付口也不具备此处的不可变树及固定词合同。本章不借这些卷的随机风险界推出确定性取得下界。
+
+Kozen，*On the Myhill–Nerode Theorem for Trees*，[作者原文](https://www.cs.cornell.edu/~kozen/Papers/mn.pdf)的单变量上下文代入和有限指数同余仍是第50章构造任务商的成熟背景。构造上下文的任务充分性与实际地址前缀的目标证书是不同的关系；本章的证明使用实际比较来源、准确回复及原生重放，而非从上下文同余取得操作权限。
+
+## 追加锚（本行以下为增补区）
