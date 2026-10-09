@@ -247,7 +247,7 @@ private theorem saturated_tree {n : Nat} {u : Slot} {S : Finset Source}
     obtain ⟨R⟩ := ihr rs
     exact ⟨.fork (different sn tn) separate L R parent ln rn⟩
 
-private theorem next_event {x : Source} {t : Nat} {u : Slot}
+theorem next_event {x : Source} {t : Nat} {u : Slot}
     (h : C.Occurs I x t u) (active : C.action (C.readNext u.1.val u.2) ≠ .halt) :
     ∃ k v, C.Occurs I x k v ∧ t < k ∧
       (∀ i, t < i → i < k → C.action (C.run hp hP x i).2 = .wait) ∧
