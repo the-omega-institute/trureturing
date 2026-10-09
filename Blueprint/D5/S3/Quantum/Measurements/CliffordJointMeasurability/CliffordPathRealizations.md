@@ -438,7 +438,19 @@ $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (S : \operatorname{Type}),\\
 
 This sum fin next identity is used in the CliffordPathRealizations construction.
 
-**Definition 1.37 (tridiagonal).**
+**Lemma 1.37 (sum fin prev).**
+
+$$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (S : \operatorname{Type}),\\{}[\operatorname{AddCommMonoid} S] ,\\\forall (j : \operatorname{Fin} M),\\\forall (f : \operatorname{Fin} M \to S),\\(\sum k , \operatorname{if} k . \operatorname{val} + 1 = j . \operatorname{val} \operatorname{then} f k \operatorname{else} 0) = \operatorname{if} h : 0 < j . \operatorname{val} \operatorname{then} f \langle j . \operatorname{val} - 1 , \operatorname{by} \operatorname{omega} \rangle \operatorname{else} 0\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations.sum_fin_prev` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The previous-index sum selects the preceding coordinate when it exists, and is zero at the left endpoint.
+
+**Definition 1.38 (tridiagonal).**
 
 $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (d : \operatorname{Fin} M \to \mathbb{C}),\\\forall (w : \operatorname{Fin} M \to \mathbb{C}),\\(\operatorname{tridiagonal} (M : = M) (d : = d) (w : = w) : \operatorname{Matrix} (\operatorname{Fin} M) (\operatorname{Fin} M) \mathbb{C}) = (\operatorname{Matrix} . \operatorname{diagonal} d + \operatorname{Matrix} . \operatorname{of} (\operatorname{fun} j k : \operatorname{Fin} M \mapsto \operatorname{if} j . \operatorname{val} + 1 = k . \operatorname{val} \operatorname{then} w j \operatorname{else} 0) + \operatorname{Matrix} . \operatorname{transpose} (\operatorname{Matrix} . \operatorname{of} (\operatorname{fun} j k : \operatorname{Fin} M \mapsto \operatorname{if} j . \operatorname{val} + 1 = k . \operatorname{val} \operatorname{then} w j \operatorname{else} 0)))\end{aligned}$$
 
@@ -450,7 +462,7 @@ $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (d : \operatorname{Fin} M \t
 
 The displayed expression defines tridiagonal.
 
-**Lemma 1.38 (tridiagonal mul apply).**
+**Lemma 1.39 (tridiagonal mul apply).**
 
 $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (N : \mathbb{N}),\\\forall (d : \operatorname{Fin} M \to \mathbb{C}),\\\forall (w : \operatorname{Fin} M \to \mathbb{C}),\\\forall (F : \operatorname{Matrix} (\operatorname{Fin} M) (\operatorname{Fin} N) \mathbb{C}),\\\forall (j : \operatorname{Fin} M),\\\forall (r : \operatorname{Fin} N),\\(\operatorname{tridiagonal} M d w \cdot F) j r = d j \cdot F j r + (\operatorname{if} h : j . \operatorname{val} + 1 < M \operatorname{then} w j \cdot F \langle j . \operatorname{val} + 1 , h \rangle r \operatorname{else} 0) + (\operatorname{if} 0 < j . \operatorname{val} \operatorname{then} w \langle j . \operatorname{val} - 1 , \cdot \rangle \cdot F \langle j . \operatorname{val} - 1 , \cdot \rangle r \operatorname{else} 0)\end{aligned}$$
 
@@ -462,7 +474,7 @@ $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (N : \mathbb{N}),\\\forall (
 
 This tridiagonal mul apply identity is used in the CliffordPathRealizations construction.
 
-**Lemma 1.39 (mul tridiagonal apply).**
+**Lemma 1.40 (mul tridiagonal apply).**
 
 $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (N : \mathbb{N}),\\\forall (d : \operatorname{Fin} M \to \mathbb{C}),\\\forall (w : \operatorname{Fin} M \to \mathbb{C}),\\\forall (F : \operatorname{Matrix} (\operatorname{Fin} N) (\operatorname{Fin} M) \mathbb{C}),\\\forall (j : \operatorname{Fin} N),\\\forall (r : \operatorname{Fin} M),\\(F \cdot \operatorname{tridiagonal} M d w) j r = F j r \cdot d r + (\operatorname{if} h : r . \operatorname{val} + 1 < M \operatorname{then} F j \langle r . \operatorname{val} + 1 , h \rangle \cdot w r \operatorname{else} 0) + (\operatorname{if} 0 < r . \operatorname{val} \operatorname{then} F j \langle r . \operatorname{val} - 1 , \cdot \rangle \cdot w \langle r . \operatorname{val} - 1 , \cdot \rangle \operatorname{else} 0)\end{aligned}$$
 
@@ -474,7 +486,7 @@ $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (N : \mathbb{N}),\\\forall (
 
 This mul tridiagonal apply identity is used in the CliffordPathRealizations construction.
 
-**Definition 1.40 (edgeVector).**
+**Definition 1.41 (edgeVector).**
 
 $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (r : \operatorname{Fin} M),\\\forall (j : \operatorname{Fin} M),\\(\operatorname{edgeVector} (M : = M) (r : = r) (j : = j) : \mathbb{C}) = ((\operatorname{Pi} . \operatorname{single} r (1 : \mathbb{C}) : \operatorname{Fin} M \to \mathbb{C}) j - (\operatorname{if} r . \operatorname{val} + 1 = j . \operatorname{val} \operatorname{then} 1 \operatorname{else} 0))\end{aligned}$$
 
@@ -486,7 +498,7 @@ $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (r : \operatorname{Fin} M),\
 
 The displayed expression defines edgeVector.
 
-**Definition 1.41 (weightedLap).**
+**Definition 1.42 (weightedLap).**
 
 $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (b : \operatorname{Fin} M \to \mathbb{R}),\\(\operatorname{weightedLap} (M : = M) (b : = b) : \operatorname{Matrix} (\operatorname{Fin} M) (\operatorname{Fin} M) \mathbb{C}) = (\sum r , (b r : \mathbb{C}) \cdot \operatorname{Matrix} . \operatorname{vecMulVec} (\operatorname{edgeVector} M r) (\operatorname{star} (\operatorname{edgeVector} M r)))\end{aligned}$$
 
@@ -498,7 +510,7 @@ $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (b : \operatorname{Fin} M \t
 
 The displayed expression defines weightedLap.
 
-**Lemma 1.42 (weightedLap psd).**
+**Lemma 1.43 (weightedLap psd).**
 
 $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (b : \operatorname{Fin} M \to \mathbb{R}),\\(\forall r , 0 \leq b r) \to\\(\operatorname{weightedLap} M b) . \operatorname{PosSemidef}\end{aligned}$$
 
@@ -510,7 +522,7 @@ $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (b : \operatorname{Fin} M \t
 
 This weightedLap psd identity is used in the CliffordPathRealizations construction.
 
-**Lemma 1.43 (weightedLap apply).**
+**Lemma 1.44 (weightedLap apply).**
 
 $$\begin{aligned}\forall (M : \mathbb{N}),\\\forall (b : \operatorname{Fin} M \to \mathbb{R}),\\\forall (j : \operatorname{Fin} M),\\\forall (k : \operatorname{Fin} M),\\\operatorname{weightedLap} M b j k = (\operatorname{if} j = k \operatorname{then} ((b j : \mathbb{C}) + (\operatorname{if} 0 < j . \operatorname{val} \operatorname{then} (b \langle j . \operatorname{val} - 1 , \cdot \rangle : \mathbb{C}) \operatorname{else} 0)) \operatorname{else} 0) - (\operatorname{if} j . \operatorname{val} + 1 = k . \operatorname{val} \operatorname{then} (b j : \mathbb{C}) \operatorname{else} 0) - (\operatorname{if} k . \operatorname{val} + 1 = j . \operatorname{val} \operatorname{then} (b k : \mathbb{C}) \operatorname{else} 0)\end{aligned}$$
 
@@ -558,6 +570,7 @@ This weightedLap apply identity is used in the CliffordPathRealizations construc
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations.realization_majoranas`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations.signed_product`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations.sum_fin_next`
+- Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations.sum_fin_prev`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations.totalPath`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations.tridiagonal`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations.tridiagonal_mul_apply`

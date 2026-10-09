@@ -1,0 +1,18 @@
+### theorem 2（新增读口真正减少的自由度，等于它们在商空间中的秩）
+
+Claim status: open
+
+增加函数 $f_1,\ldots,f_m$，令：
+
+$$
+\mathcal R'=\mathcal R+\operatorname{span}\{f_1,\ldots,f_m\}.
+$$
+
+则：
+
+$$
+\boxed{\dim\mathcal N(\mathcal R)-\dim\mathcal N(\mathcal R')=\dim\operatorname{span}\{[f_1],\ldots,[f_m]\}}
+$$
+
+其中 $[f_i]\in K^\Omega/\mathcal R$。
+
