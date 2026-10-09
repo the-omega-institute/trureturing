@@ -184,6 +184,24 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.assertFalse(self.tree.exists())
         self.run_protocol("remove", "--names", "main", expect=73)
 
+    def test_nested_directory_qualification_preserves_nonempty_prefix_sibling(self):
+        tracked = self.tree / "deep" / "branch" / "leaf.txt"
+        tracked.parent.mkdir(parents=True)
+        tracked.write_text("retained nested content\n")
+        self.g(self.tree, "add", "deep/branch/leaf.txt")
+        self.g(self.tree, "commit", "-m", "nested retained content")
+        self.g(self.tree, "push", "origin", self.branch)
+        unknown = self.tree / "deep" / "branch-extra" / "private"
+        unknown.parent.mkdir()
+        unknown.write_text("unpublished recovery\n")
+        result = self.remove(73)
+        self.assertIn("unknown_directory:", result.stderr)
+        self.assertEqual("unpublished recovery\n", unknown.read_text())
+        unknown.unlink()
+        # Empty untracked directories carry no bytes; all tracked ancestors remain.
+        self.remove()
+        self.assertFalse(self.tree.exists())
+
     def test_busy_and_new_entry_exclusion(self):
         self.hold()
         self.remove(73)

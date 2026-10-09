@@ -112,6 +112,14 @@ def clean_content(path, metadata, head, object_source=None):
         if kind != b"blob":
             raise Refused("nested_repository_or_submodule")
         expected[name] = (mode, oid)
+    # Build the exact ancestor set once. Re-scanning all tracked paths for each
+    # directory makes qualification grow with paths times directories.
+    expected_directories = set()
+    for name in expected:
+        parent = name.rpartition(b"/")[0]
+        while parent:
+            expected_directories.add(parent)
+            parent = parent.rpartition(b"/")[0]
     index = {}
     if (metadata / "index").exists():
         if git(path, "ls-files", "--resolve-undo", "-z").stdout:
@@ -138,8 +146,7 @@ def clean_content(path, metadata, head, object_source=None):
             if candidate.is_symlink():
                 dirs.remove(name)
                 names.append(name)
-            elif not any(key.startswith(os.fsencode(str(candidate.relative_to(path))) + b"/")
-                         for key in expected):
+            elif os.fsencode(str(candidate.relative_to(path))) not in expected_directories:
                 if any(candidate.iterdir()):
                     raise Refused("unknown_directory:" + str(candidate.relative_to(path)))
         for name in names:
