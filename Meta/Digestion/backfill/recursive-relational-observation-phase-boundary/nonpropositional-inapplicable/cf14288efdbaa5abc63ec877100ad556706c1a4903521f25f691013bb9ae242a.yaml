@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cf14288efdbaa5abc63ec877100ad556706c1a4903521f25f691013bb9ae242a
+  normalized_sha256: sha256:cf14288efdbaa5abc63ec877100ad556706c1a4903521f25f691013bb9ae242a
+cas_ref: sha256:cf14288efdbaa5abc63ec877100ad556706c1a4903521f25f691013bb9ae242a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅由钉版 Mathlib（mathlib@db584cd6d46c92f209a44c0f1c829460d327499d）及其基础依赖闭合，仓内无完整六轮回返环境射线结论的可用冻结 GID。参数是同一实际来源的两列 Ψ_n^0、Ψ_n^1、同一个线性联合等距 L 及同一轮单位纯环境 η_n；不另选逐轮接收器。原节给 ab≠0、独立纯启动和六个实际终端，w 与 k 共线给 Ψ_2^1=ζ(aΨ_0^0+bΨ_0^1)，ζ≠0。LinearMap.map_add、LinearMap.map_smul 作用于同一 L，把该关系推进成 Ψ_(n+1)^1⊗η_(n+1)=ζ_n(aΨ_(n-1)^0+bΨ_(n-1)^1)⊗η_(n-1)。来源编码等距和 a≠0 保证混合列非零，单位环境非零。以有限维基表示非零乘积向量，取一个非零列坐标及一个非零环境坐标，eq_div_iff、mul_right_cancel₀、mul_left_cancel₀ 和乘法规范化同时给环境因子共线及下一列相同的比例关系；没有假设待证周期或未执行的未来轮次。Projectivization.mk_eq_mk_iff' 将非零比例精确转成射线等式。有限推进 n=2,3,4,5，恰得 [η_j]=[η_(j-2)] 对所有 3≤j≤6；归一化允许把比例相位吸收到下一列。全部所需线性性、非零性与比例消去来自原假设和上游线性/域合同，无新增内容声明。
+    previous_atom_id: fb67c13cd39ec5a8ce0660d9cc384e91fa4eebddff1399858edbad145078ffd1
+    next_atom_id: ddde1e554c1c4703bc4de7c37e069c210d92b4a9e424653450da2c3cd054c8f8
