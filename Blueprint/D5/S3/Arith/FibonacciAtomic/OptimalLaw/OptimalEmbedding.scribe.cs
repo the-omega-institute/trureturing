@@ -21,8 +21,7 @@ internal sealed class OptimalEmbeddingDocument : IScribeDocumentDefinition
                 Equal(Call("probability",Seq(gamma,Comma,i)),Call("p",Call("sigma",i))),Close,
             Sp,Land,Sp,Equal(Call("anchorMass",gamma),Call("p",k)),Sp,Land,Sp,
             Equal(Call("pathCost",gamma),Call("L",p)));
-        var statement=Seq(Forall,Sp,m,Comma,Sp,p,Comma,Sp,k,Comma,Sp,
-            Call("Optimizer",args),Sp,To,Sp,Call("HasOptimalEmbedding",args));
+        var statement=All("m", nat, All("p", Call("RealVector", m), All("k", Call("Fin", m), Seq(Call("Optimizer",args),Sp,To,Sp,Call("HasOptimalEmbedding",args)))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "One fixed permutation represents every attaining real law by a legal triangular path with exact mass and cost.",
             H("Optimal Laws Embed in the Triangular Graph"), Blocks(
@@ -38,6 +37,6 @@ internal sealed class OptimalEmbeddingDocument : IScribeDocumentDefinition
                     H("Every attaining real law has this embedding"), StatementSource.FromAuthor(Disp(statement)),
                     AssessedProvenance.FromRepo(), Blocks(
                         Paragraph(Text("Strict rounding identifies the departure depth of each larger coordinate. Minimum coordinates are retained forever; every other coordinate remains until its least terminating depth. The floor residual is the sum of the retained fractional tails. A common anchor one digit forces e<=2r. A zero anchor digit forces 2r<e, because the anchor itself supplies one strict half-tail inequality. The retained-label count and residual recurrence jointly give every legal successor.")),
-                        Paragraph(Text("Sort the departure depths once, with permanent labels last in departure time, so every retained set becomes an initial interval. The resulting legal path has precisely the original floor digits in that fixed order. Equality of all dyadic floor prefixes recovers the real probabilities. The minimum and cost identities then follow from the same path and the triangular normalization theorem. No rationality or computability restriction is placed on the input law.")))))));
+                        Paragraph(Text("Sort the departure depths in descending order once, treating permanent labels as having infinite departure time. Permanent labels come first, and every retained set becomes an initial interval. The resulting legal path has precisely the original floor digits in that fixed order. Equality of all dyadic floor prefixes recovers the real probabilities. The minimum and cost identities then follow from the same path and the triangular normalization theorem. No rationality or computability restriction is placed on the input law.")))))));
     }
 }

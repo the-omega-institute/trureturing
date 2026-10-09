@@ -9,6 +9,7 @@
 import D5.S3.Arith.FibonacciAtomic.OptimalLawStrictSlope
 
 set_option autoImplicit false
+set_option relaxedAutoImplicit false
 open scoped BigOperators
 open D5.S3.Arith.FibonacciAtomic
 open DyadicSupportLines

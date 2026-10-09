@@ -14,6 +14,9 @@ import Mathlib.Data.Fintype.Pigeonhole
 import D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding
 import D5.S3.Arith.FibonacciAtomic.OptimalLaw.OptimalEmbedding
 
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
 open scoped BigOperators
 open D5.S3.Arith.FibonacciAtomic
 open TriangularPathNormalization TriangularFirstSplitRecurrence

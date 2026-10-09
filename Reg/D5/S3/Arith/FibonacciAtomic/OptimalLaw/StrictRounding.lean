@@ -4,8 +4,9 @@ import D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding
 
 namespace Reg.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding
 
-open scoped BigOperators
+open scoped BigOperators Classical
 open _root_.D5.S3.Arith.FibonacciAtomic
+open _root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 

@@ -8,7 +8,6 @@ open scoped BigOperators
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open _root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding
 noncomputable section
 
 namespace Donor

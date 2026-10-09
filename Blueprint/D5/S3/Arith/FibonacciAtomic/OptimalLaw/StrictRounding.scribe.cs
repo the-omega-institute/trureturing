@@ -17,16 +17,12 @@ internal sealed class StrictRoundingDocument : IScribeDocumentDefinition
         var grid=Call("OnGrid", Seq(x,Comma,depth));
         var floor=Call("F", Seq(t,Comma,depth));
         var rounded=new Formula.Fraction(Seq(floor,Sp,Plus,Sp,D(1)),new Formula.Power(D(2),depth));
-        var strict=Seq(Exists,Sp,depth,Comma,Sp,D(1),Sp,Le,Sp,depth,Sp,Land,Sp,grid,Sp,Land,Sp,
+        var strict=Seq(Exists,Sp,depth,Sp,InMacro,Sp,nat,Comma,Sp,D(1),Sp,Le,Sp,depth,Sp,Land,Sp,grid,Sp,Land,Sp,
             Open,Forall,Sp,d,Sp,Lt,Sp,depth,Comma,Sp,Neg,Sp,Call("OnGrid",Seq(x,Comma,d)),Close,
             Sp,Land,Sp,Equal(x,rounded));
-        var gridUp=Seq(Forall,Sp,x,Comma,Sp,depth,Comma,Sp,e,Comma,Sp,
-            Open,depth,Sp,Le,Sp,e,Sp,Land,Sp,grid,Close,Sp,To,Sp,Call("OnGrid",Seq(x,Comma,e)));
-        var leastBit=Seq(Forall,Sp,x,Comma,Sp,depth,Comma,Sp,
-            Call("LeastGrid",Seq(x,Comma,depth)),Sp,To,Sp,Equal(Call("b",Seq(x,Comma,depth)),D(1)));
-        var target=Seq(Forall,Sp,m,Comma,Sp,p,Comma,Sp,k,Comma,Sp,
-            Call("Optimizer",Seq(m,Comma,p,Comma,k)),Sp,To,Sp,
-            Call("StrictlyRoundedLaw",Seq(m,Comma,p,Comma,k)));
+        var gridUp=All("x", real, All("D", nat, All("E", nat, Seq(Open,depth,Sp,Le,Sp,e,Sp,Land,Sp,grid,Close,Sp,To,Sp,Call("OnGrid",Seq(x,Comma,e))))));
+        var leastBit=All("x", real, All("D", nat, Seq(Call("LeastGrid",Seq(x,Comma,depth)),Sp,To,Sp,Equal(Call("b",Seq(x,Comma,depth)),D(1)))));
+        var target=All("m", nat, All("p", Call("RealVector", m), All("k", Call("Fin", m), Seq(Call("Optimizer",Seq(m,Comma,p,Comma,k)),Sp,To,Sp,Call("StrictlyRoundedLaw",Seq(m,Comma,p,Comma,k))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Every atom above the minimum of an attaining real law has a least dyadic depth and strict rounding.",
             H("Strict Dyadic Rounding of Optimal Laws"), Blocks(

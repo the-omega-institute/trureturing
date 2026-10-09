@@ -31,8 +31,6 @@ def DyadicStrictRound (x t : ℝ) : Prop :=
 def StrictlyRoundedLaw (m : ℕ) (p : Fin m → ℝ) (k : Fin m) : Prop :=
   ∀ i : Fin m, p k < p i → DyadicStrictRound (p i) (p k)
 
-/-- The full public proposition, with the frozen optimizer hypotheses explicit. -/
-
 private lemma alpha_lt (n m : ℕ) (hn : 1 ≤ n) (h : n < m) : alpha n < alpha m := by
   have step (r : ℕ) : alpha (r + 1) < alpha (r + 2) := by
     by_cases hr : r = 0

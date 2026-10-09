@@ -15,22 +15,22 @@ internal sealed class RationalPriceDocument : IScribeDocumentDefinition
         var m=F.Id("m"); var p=F.Id("p"); var a=F.Id("A"); var x=F.Id("x"); var v=F.Id("v");
         var rational=Seq(Mathbb,Grp(F.Id("Q"))); var real=Seq(Mathbb,Grp(F.Id("R")));
         var alpha=Call("alpha",m); var value=Call("W",Seq(x,Comma,m,Comma,D(1)));
-        var cost=Seq(Forall,Sp,m,Comma,Sp,p,Comma,Sp,
+        var cost=All("m", nat, All("p", Call("RealVector", m), Seq(
             Call("NonnegativeRationalLaw",Seq(m,Comma,p)),Sp,To,Sp,
-            Exists,Sp,v,Sp,InMacro,Sp,rational,Comma,Sp,Equal(Call("realCast",v),Call("L",p)));
-        var price=Seq(Forall,Sp,m,Comma,Sp,Open,D(2),Sp,Le,Sp,m,Close,Sp,To,Sp,
+            Exists,Sp,v,Sp,InMacro,Sp,rational,Comma,Sp,Equal(Call("realCast",v),Call("L",p)))));
+        var price=All("m", nat, Seq(Open,D(2),Sp,Le,Sp,m,Close,Sp,To,Sp,
             Exists,Sp,a,Sp,InMacro,Sp,rational,Comma,Sp,D(0),Sp,Lt,Sp,a,Sp,Land,Sp,
-            Equal(Call("realCast",a),alpha));
-        var zero=Seq(Forall,Sp,m,Comma,Sp,Open,D(2),Sp,Le,Sp,m,Close,Sp,To,Sp,
-            Forall,Sp,x,Sp,InMacro,Sp,real,Comma,Sp,Open,Equal(value,D(0)),Sp,Iff,Sp,Equal(x,alpha),Close);
-        var full=Seq(Forall,Sp,m,Comma,Sp,Open,D(2),Sp,Le,Sp,m,Close,Sp,To,Sp,
+            Equal(Call("realCast",a),alpha)));
+        var zero=All("m", nat, Seq(Open,D(2),Sp,Le,Sp,m,Close,Sp,To,Sp,
+            All("x", real, Seq(Open,Equal(value,D(0)),Sp,Iff,Sp,Equal(x,alpha),Close))));
+        var full=All("m", nat, Seq(Open,D(2),Sp,Le,Sp,m,Close,Sp,To,Sp,
             Exists,Sp,a,Sp,InMacro,Sp,rational,Comma,Sp,D(0),Sp,Lt,Sp,a,Sp,Land,Sp,
-            Equal(Call("realCast",a),alpha),Sp,Land,Sp,Open,Forall,Sp,x,Sp,InMacro,Sp,real,Comma,Sp,
-            Open,Equal(value,D(0)),Sp,Iff,Sp,Equal(x,Call("realCast",a)),Close,Close);
+            Equal(Call("realCast",a),alpha),Sp,Land,Sp,Open,
+            All("x", real, Seq(Open,Equal(value,D(0)),Sp,Iff,Sp,Equal(x,Call("realCast",a)),Close)),Close));
         return DocumentDefinition.Create(ScribeNode.Create(
             "The unrestricted real-law optimum is positive rational and is the unique real zero of the triangular root value.",
             H("The Unique Positive Rational Price"), Blocks(
-                Paragraph(Text("For natural m, L(p) is the sum over natural d of (2^d-sum_i floor(2^d p(i)))/2^d. The quantity alpha(m) is the infimum of L(p)/p(k) over all strictly positive normalized real vectors p on Fin m and every index k of a least coordinate. W(x,m,1) is the infimum of C-x*t over all legal triangular paths starting at residual one with m retained labels. Here C is the sum of the path residuals divided by 2^d and t is the anchor-digit mass. realCast denotes the canonical inclusion of rational numbers into the reals.")),
+                Paragraph(Text("RealVector(m) is the space of real functions on Fin m. For natural m, L(p) is the sum over natural d of (2^d-sum_i floor(2^d p(i)))/2^d. The quantity alpha(m) is the infimum of L(p)/p(k) over all strictly positive normalized real vectors p on Fin m and every index k of a least coordinate. W(x,m,1) is the infimum of C-x*t over all legal triangular paths starting at residual one with m retained labels. Here C is the sum of the path residuals divided by 2^d and t is the anchor-digit mass. realCast denotes the canonical inclusion of rational numbers into the reals.")),
                 Paragraph(Text("NonnegativeRationalLaw(m,p) means p has real coordinates indexed by Fin m, every coordinate is nonnegative, their sum is one, and for every i there exists a rational q whose real cast equals p(i).")),
                 Describe.Lean(DescribeId.Create("rational-law-cost"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/RationalPrice.rational_law_cost"),

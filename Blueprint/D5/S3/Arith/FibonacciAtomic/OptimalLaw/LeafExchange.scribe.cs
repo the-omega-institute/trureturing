@@ -18,16 +18,12 @@ internal sealed class LeafExchangeDocument : IScribeDocumentDefinition
         var args = Seq(m, Comma, depth, Comma, p, Comma, q, Comma, j, Comma, s, Comma, t, Comma, u);
         var bit = Call("b", Seq(x, Comma, depth));
         var delta = new Formula.Fraction(D(1), new Formula.Power(D(2), depth));
-        var prefix = Seq(Forall, Sp, x, Comma, Sp, depth, Comma, Sp,
-            Open, D(1), Sp, Le, Sp, depth, Sp, Land, Sp, Equal(bit, D(1)), Close,
-            Sp, To, Sp, Forall, Sp, d, Sp, Lt, Sp, depth, Comma, Sp,
-            Equal(Call("F", Seq(Seq(x, Sp, Minus, Sp, delta), Comma, d)), Call("F", Seq(x, Comma, d))));
-        var impossible = Seq(Forall, Sp, args, Comma, Sp, Call("ExchangeHyp", args), Sp, To, Sp,
-            Call("b", Seq(Call("p", j), Comma, depth)), Sp, Neq, Sp, D(1));
+        var prefix = All("x", real, All("D", nat, Seq(Open, D(1), Sp, Le, Sp, depth, Sp, Land, Sp, Equal(bit, D(1)), Close, Sp, To, Sp, All("d", nat, Seq(Open, d, Sp, Lt, Sp, depth, Close, Sp, To, Sp, Equal(Call("F", Seq(Seq(x, Sp, Minus, Sp, delta), Comma, d)), Call("F", Seq(x, Comma, d))))))));
+        var impossible = All("m", nat, All("D", nat, All("p", Call("RealVector", m), All("q", Call("RealVector", m), All("j", Call("Fin", m), All("S", Call("Finset", Call("Fin", m)), All("t", real, All("u", real, Seq(Call("ExchangeHyp", args), Sp, To, Sp, Call("b", Seq(Call("p", j), Comma, depth)), Sp, Neq, Sp, D(1))))))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "A dyadic donor and a cheaper receiver produce one common law with controlled residuals.",
             H("Dyadic Leaf Exchange"), Blocks(
-                Paragraph(Text("For real x and natural d, F(x,d) is the integer floor of 2^d x. The binary digit b(x,D) is F(x,D)-2F(x,D-1). All vectors below are indexed by Fin m. Write delta=2^(-D), R(p,d)=2^d-sum_i F(p(i),d), and L(p)=sum_d R(p,d)/2^d.")),
+                Paragraph(Text("RealVector(m) is the space of real functions on Fin m. For real x and natural d, F(x,d) is the integer floor of 2^d x. The binary digit b(x,D) is F(x,D)-2F(x,D-1). All vectors below are indexed by Fin m. Write delta=2^(-D), R(p,d)=2^d-sum_i F(p(i),d), and L(p)=sum_d R(p,d)/2^d.")),
                 Describe.Lean(DescribeId.Create("donor-prefix"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/LeafExchange.donor_prefix"),
                     H("Coarser prefixes survive a donor debit"), StatementSource.FromAuthor(Disp(prefix)),

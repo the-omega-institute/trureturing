@@ -4,7 +4,7 @@ import D5.S3.Arith.FibonacciAtomic.OptimalLaw.OptimalEmbedding
 
 namespace Reg.D5.S3.Arith.FibonacciAtomic.OptimalLaw.OptimalEmbedding
 
-open scoped BigOperators
+open scoped BigOperators Classical
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
