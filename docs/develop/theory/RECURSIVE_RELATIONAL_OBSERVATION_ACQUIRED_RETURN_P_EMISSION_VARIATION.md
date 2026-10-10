@@ -570,3 +570,268 @@ The whitebox consequence is task-relative semantic control of one model's actual
 - **BOS:** Tomer Berg, Or Ordentlich and Ofer Shayevitz, *Statistical Inference with Limited Memory: A Survey*, [arXiv:2312.15225v1](https://arxiv.org/html/2312.15225v1).
 
 ## 追加锚（本行以下为增补区）
+
+## 9. A uniform bridge from small actual-return variation to the conserved class
+
+**Definition 9.1 (unweighted conditional return variation).** Retain exactly Definitions 1.1–1.3. Let $\mathcal H_{p,S}$ be all positive original p histories on the seed-1, marker-100 held-record fibre of (1.5), including every legal paid prefix and every finite fourth-segment return. At such a history let $\rho_h(x)$ be the actual conditional configuration row, $B_{xy}$ the actual p-beta update and $A_{yx'}$ the actual suspended-alpha update on that fibre. Write $u_x$ for the configuration's next synthetic alpha probability. Define
+
+$$
+\begin{aligned}
+\mathcal V_h(M)
+&=\sum_{x,y,x'}\rho_h(x)B_{xy}A_{yx'}|u_x-u_{x'}|,\\
+\mathcal V(M)&=\sup_{h\in\mathcal H_{p,S}}\mathcal V_h(M).
+\end{aligned}
+\tag{9.1}
+$$
+
+This is the conditional mean of $|u_{\mathrm{before}}-u_{\mathrm{after}}|$ given $h$ and the actual noncompleting return beta-alpha. The future actual letters, conditional on the same once-sampled $K$, are independent of the observer's private choices; source-independent initialization and updates imply the same independence conditional on a fixed observed history. The probability of that actual return is $\sum_k\nu_h(k)r_k(1-r_k)>0$ and is independent of the current private configuration conditional on $h$. It therefore cancels from the conditional expectation. No factor $(1-u_x)v_y$ belongs in (9.1), even when a synthetic noncompletion letter has probability zero. All rows, conditionings and absolute differences in this definition are analysis objects, not new runtime inputs.
+
+For a regular stationary table of Definition 2.2 put
+
+$$
+V_\pi=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}|u_x-u_{x'}|,
+\qquad g=\frac{\eta}{400000}.
+\tag{9.2}
+$$
+
+**Theorem 9.2 (finite closure of small return flow, with both configuration risks).** Let $X,Y,\pi,\tau,B,A,u,v$ be a regular stationary table of Definition 2.2, after deleting zero-row labels. For every $t>0$ there is one regular stationary table with the same p labels and row $\pi$, a finite split suspended carrier $Y^c$, row $\tau^c$, kernels $B^c,A^c$, and emissions $u^c,v^c$, whose p emission is conserved on every positive actual return. Both acquired flow identities hold exactly. With $Q_x,W_y$ and $Q_x^c,W_{y,C}^c$ denoting their own generated complete laws, there is a split row satisfying $\sum_C\tau^c_{y,C}=\tau_y$ and
+
+$$
+\begin{aligned}
+D_p&:=\sum_x\pi_x\operatorname{TV}(Q_x,Q_x^c)
+ \le\frac{15}{11}t+\frac4{11}\frac{V_\pi}{t},\\
+D_\beta&:=\sum_{(y,C)\in Y^c}\tau^c_{y,C}
+ \operatorname{TV}(W_y,W_{y,C}^c)
+ \le\frac6{11}t+\frac6{11}\frac{V_\pi}{t}.
+\end{aligned}
+\tag{9.3}
+$$
+
+For every pair of probability targets $T_p,T_\beta$ on the two original complete raw carriers, these same quantities bound the absolute differences of the corresponding configuration-before-TV losses. In particular, (2.4) for the old table implies (2.4) for the new table with slacks $\epsilon_p+D_p,\epsilon_\beta+D_\beta$, simultaneously for every supported depth. The construction has at most
+
+$$
+|Y|\min\{|X|,\lceil(b-a)/t\rceil+2\}
+\tag{9.4}
+$$
+
+suspended labels. This label count is not a COMPLETE or total-resource bound.
+
+Proof. Choose a shifted interval grid of width $t$. For $\theta\in[0,t)$ give $x$ the bin index $\lfloor(u_x-\theta)/t\rfloor$. Let $\mathcal C$ be the occupied bins, viewed as subsets of $X$, and let $C(x)$ denote the bin of $x$. Define the crossing mass
+
+$$
+\delta_\theta=
+\sum_{x,y,x':\,C(x)\ne C(x')}\pi_xB_{xy}A_{yx'}.
+\tag{9.5}
+$$
+
+For two real numbers separated by $d$, the proportion of shifts putting them in different width-$t$ bins is $\min\{1,d/t\}$. Integrating the finite sum (9.5) over the shift therefore gives
+
+$$
+\frac1t\int_0^t\delta_\theta\,d\theta
+=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}
+ \min\{1,|u_x-u_{x'}|/t\}\le V_\pi/t.
+\tag{9.6}
+$$
+
+There is a fixed shift with crossing mass $\delta\le V_\pi/t$. Choose one such shift. The integration is a mathematical selection argument: the installed observer has no shift sampler or correlated source seed. Each occupied bin has emission diameter less than $t$. Choose one old emission $c_C\in[a,b]$ in each bin and put $u_x^c=c_{C(x)}$. There are at most $\min\{|X|,\lceil(b-a)/t\rceil+2\}$ occupied bins.
+
+Split a suspended label by the bin of its incoming p label. Retain exactly the pairs $(y,C)$ with
+
+$$
+\tau^c_{y,C}=\sum_{x\in C}\pi_xB_{xy}>0.
+\tag{9.7}
+$$
+
+Define
+
+$$
+B^c_{x,(y,C)}=\mathbf1_{\{x\in C\}}B_{xy},
+\qquad v^c_{y,C}=v_y.
+\tag{9.8}
+$$
+
+Every row of $B^c$ sums to one; a nonzero entry cannot point to a deleted pair because $\pi_x>0$. Thus $\pi B^c=\tau^c$ exactly and $\sum_C\tau^c_{y,C}=\tau_y$.
+
+For $x'\in C$ define the missing influx
+
+$$
+d_{x'}^C=\pi_{x'}-\sum_y\tau^c_{y,C}A_{yx'}\ge0,
+\qquad D_C=\sum_{x'\in C}d_{x'}^C,
+\qquad m_{y,C}=\sum_{x'\notin C}A_{yx'}.
+\tag{9.9}
+$$
+
+Nonnegativity follows from $\tau A=\pi$ and $\tau^c_{y,C}\le\tau_y$. The equality of outgoing and incoming crossing masses for one bin is
+
+$$
+\begin{aligned}
+D_C
+&=\pi(C)-\sum_y\tau^c_{y,C}\sum_{x'\in C}A_{yx'}\\
+&=\sum_y\tau^c_{y,C}m_{y,C},
+\qquad \sum_C D_C=\delta.
+\end{aligned}
+\tag{9.10}
+$$
+
+Here $\sum_y\tau^c_{y,C}=\pi(C)$. If $D_C>0$, repair the outgoing cross-bin probability by
+
+$$
+A^c_{(y,C),x'}=
+\begin{cases}
+A_{yx'}+m_{y,C}d_{x'}^C/D_C,&x'\in C,\\
+0,&x'\notin C.
+\end{cases}
+\tag{9.11}
+$$
+
+If $D_C=0$, (9.10) implies $m_{y,C}=0$ for every retained pair in that bin; set $A^c_{(y,C),x'}=\mathbf1_{\{x'\in C\}}A_{yx'}$. No division by zero occurs. Every row is stochastic and supported inside $C$. For $x'\in C$,
+
+$$
+\sum_y\tau^c_{y,C}A^c_{(y,C),x'}
+=\sum_y\tau^c_{y,C}A_{yx'}+d_{x'}^C=\pi_{x'},
+\tag{9.12}
+$$
+
+with the same identity in the zero case. Hence $\tau^c A^c=\pi$. Moreover
+
+$$
+\operatorname{TV}(A_{y,\cdot},A^c_{(y,C),\cdot})=m_{y,C},
+\qquad
+\sum_{y,C}\tau^c_{y,C}m_{y,C}=\delta.
+\tag{9.13}
+$$
+
+Indeed probability $m_{y,C}$ is removed outside $C$ and added inside $C$. Every new positive $B^cA^c$ edge stays in one bin, so $u^c$ is exactly return-conserved. This proof uses stationarity for balance, without irreducibility, reversibility or a mixing-time bound.
+
+Use these emissions and these same acquired-letter kernels to generate the new decoders. Both old and new synthetic returns have survival probability at most $4/15$, from every label; their complete laws therefore normalize while retaining the infinite outcome with mass zero. Write
+
+$$
+p_x=\operatorname{TV}(Q_x,Q_x^c),
+\qquad b_{y,C}=\operatorname{TV}(W_y,W_{y,C}^c).
+$$
+
+Maximally couple the p emissions and then use the identical $B$ row with its indicated split label whenever beta matches. The complete-law recursion gives
+
+$$
+p_x\le |u_x-c_{C(x)}|+
+\frac23\sum_yB_{xy}b_{y,C(x)}.
+\tag{9.14}
+$$
+
+At suspension the emissions agree. Compare the old and repaired $A$ rows first, and compare their successor laws configuration by configuration next. Equation (9.13), TV contraction under a kernel of probability laws, and convexity give
+
+$$
+b_{y,C}\le\frac25\left(m_{y,C}+
+\sum_{x'}A^c_{(y,C),x'}p_{x'}\right).
+\tag{9.15}
+$$
+
+These inequalities concern entire stopped laws. They can also be obtained on every finite prefix and passed to the complete carrier using the uniform geometric survival bound; no conditioning on eventual completion is used. Average (9.14)–(9.15) with the same rows, and use both exact new flows:
+
+$$
+D_p\le t+\frac23D_\beta,
+\qquad D_\beta\le\frac25(\delta+D_p).
+\tag{9.16}
+$$
+
+Solving gives $D_p\le15t/11+4\delta/11$ and $D_\beta\le6t/11+6\delta/11$. Equation (9.6) proves (9.3). For a target $T_p$, the configurationwise reverse triangle inequality gives
+
+$$
+\left|\sum_x\pi_x\operatorname{TV}(Q_x^c,T_p)
+-\sum_x\pi_x\operatorname{TV}(Q_x,T_p)\right|\le D_p.
+\tag{9.17}
+$$
+
+At suspension apply the same inequality to each pair $(y,C)$ and use $\sum_C\tau^c_{y,C}=\tau_y$ to obtain the bound $D_\beta$. Thus both risks and every target are controlled by one repaired table, with TV taken before the configuration average.
+
+For its original-domain interpretation, apply [PAID97, Lemma 2.1.1] to this single finite table: keep the full original $C_0$, sample the fixed row $\pi$ privately after the original third record write and latch in that same update, use $B^c$ on p-beta and $A^c$ on suspended-alpha, and use the unchanged original completion and Stop rules. Before the latch use the supplied original-control product and fair synthesis. Both seeds, all marker records, all paid rejections, every finite return and every original permission remain. At every original history on every held-record fibre its actual private row is $\pi$ or $\tau^c$ by induction over these exact flows. Its target is the unchanged posterior mixture for that same once-sampled $K$. Countable TV convexity applies to the target only after each configuration's TV; it therefore turns simultaneous pure-depth upper bounds into all-history configuration-risk upper bounds for this one comparison. Rendering through each original $I_c$ preserves the complete-law comparisons and their Stop blocks.
+
+Only a finite label and the charged original control are retained online. Bins, shifts, flows, deficits and row vectors are fixed mathematical construction data, not readable online rows, an archive, a clock, an acquisition counter, a posterior or a source-reset operation. If all old table data and $t$ are rational, the crossing function has finitely many rational breakpoints and is constant between them. A rational shift in an interval minimizing that function, rational representatives $c_C$, and (9.7)–(9.11) give rational new tables. The supplied finite exact categorical-sampling convention charges all installed thresholds, program, numerical representation, workspace and sampler microstates to COMPLETE and uses the same sampler on acquired and synthetic updates. Arbitrary real entries specify abstract finite stochastic rules, without a physical exact-real oracle. No fixed resource budget or hard marginalized-defect budget is preserved. $\square$
+
+**Theorem 9.3 (uniform original risk–return-variation inequality).** For every finite COMPLETE observer satisfying Definitions 1.1–1.3, on every fixed finite or countable prior with $\mu(1),\mu(2)>0$ and a supported $k\ge3$,
+
+$$
+\frac{61}{11}e(M)+\frac{19}{11}\sqrt{\mathcal V(M)}>g
+=\frac{\eta}{400000}.
+\tag{9.18}
+$$
+
+This is a uniform lower bound on a joint risk-and-variation expression, with no carrier-size, mixing-rate, prior-mass-floor, defect or prescribed-resource hypothesis. It is not a lower bound on the unrestricted excess alone.
+
+Proof. Start from the literal original observer, including its source-independent initialization before the first paid seed Read. Extract the same common rows and actual kernels on (1.5) by [PAID97, Lemma 14.1], as in Citation 2.1. The extraction also retains the needed return statistic. To see this additional consequence, write
+
+$$
+f_x=\sum_{y,x'}B_{xy}A_{yx'}|u_x-u_{x'}|.
+$$
+
+The supplied paid histories approaching each supported pure depth have the same limiting row $\lambda$ from the original initialized rejection-chain and suffix updates. For every fixed $j$, appending $j$ actual returns gives rows tending to $\lambda(BA)^j$. Every approximant remains a positive original history in $\mathcal H_{p,S}$, so its row applied to $f$ is at most $\mathcal V(M)$. Finite-row continuity gives $\lambda(BA)^j f\le\mathcal V(M)$. The same Cesaro averages and the same convergent subsequence used for both phase-risk bounds then give
+
+$$
+\pi f\le\mathcal V(M).
+\tag{9.19}
+$$
+
+The two extracted pure-depth configuration-risk bounds still hold on these same rows, for every supported depth. In particular, no stationary row is optimized independently at either interface. The supplier's summable likelihood-ratio domination handles the countable prior, and all approximants include their actual paid rejections, original records and returns. Transient configurations remain in the original risk and variation domains, although the necessary stationary test can omit them from its positive support.
+
+Delete zero-row labels and clip the two emissions to $[a,b]$, retaining the actual kernels and both rows. The common-row form of [CLIP97, Theorem 3.1], used in Citation 2.1, gives simultaneous slacks at most $61e(M)/11$ in (2.4). Scalar clipping is 1-Lipschitz, hence the clipped stationary variation satisfies
+
+$$
+\widehat V_\pi
+=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}
+ |[u_x]_{[a,b]}-[u_{x'}]_{[a,b]}|
+\le\pi f\le\mathcal V(M).
+\tag{9.20}
+$$
+
+If $\mathcal V(M)>0$, apply Theorem 9.2 to this clipped table with $t=\sqrt{\mathcal V(M)}$. Its two complete-law error bounds satisfy
+
+$$
+D_p\le\frac{19}{11}\sqrt{\mathcal V(M)},
+\qquad
+D_\beta\le\frac{12}{11}\sqrt{\mathcal V(M)}.
+\tag{9.21}
+$$
+
+The one repaired table is exactly return-conserved and satisfies (2.4), simultaneously for the entire supported depth set, with both slacks bounded by
+
+$$
+\epsilon^c=\frac{61}{11}e(M)
+ +\frac{19}{11}\sqrt{\mathcal V(M)}.
+\tag{9.22}
+$$
+
+The supplied conserved-class Theorem 5.1 applies to that comparison and gives $\epsilon^c>g$. If $\mathcal V(M)=0$, (9.20) and nonnegativity show that every positive clipped $BA$ edge conserves its emission. Apply Theorem 5.1 directly with the common slack $61e(M)/11$, obtaining the same strict inequality without a width-zero construction. This proves (9.18).
+
+The original initialization, paid acquisition and complete history domain are used in (9.19); they have not been replaced by a stationary initial source. The repaired observer is a comparison used to contradict the supplied conserved-class bound. Its existence is not sufficient for an unrestricted optimizer, and no comparison changes the meaning of the original $e(M)$ or $\mathcal V(M)$. $\square$
+
+**Corollary 9.4 (nonvanishing return amplitude in a vanishing-excess family).** Under Theorem 9.3's hypotheses, if $e(M)<11g/61$, then
+
+$$
+\mathcal V(M)>
+\left(\frac{11g-61e(M)}{19}\right)^2.
+\tag{9.23}
+$$
+
+For any sequence of lawful finite COMPLETE observers for one fixed such prior, with both original configuration excesses tending to zero,
+
+$$
+\liminf_n\mathcal V(M_n)\ge
+\left(\frac{11\eta}{7600000}\right)^2>0.
+\tag{9.24}
+$$
+
+A finite exact common conf/conf attainer, if one exists, must satisfy the strict inequality $\mathcal V(M)>(11\eta/7600000)^2$. The carriers of the sequence may grow; every member separately obeys the full finite contract.
+
+Proof. Multiply (9.18) by $11$ and isolate its strictly positive square-root term to obtain (9.23). Apply it to a tail of the sequence and pass to the lower limit. The exact-attainer statement is (9.23) with $e(M)=0$. $\square$
+
+**Mathematical citation 9.5 (supplied facts, new bridge and literature scope).** In this section [PAID97] is [Effective paid-history certificates at the fixed source revision](https://github.com/the-omega-institute/trureturing/blob/97ef5c26c09451e8640cad4e381bf66681defe17/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md), specifically Lemmas 2.1.1 and 14.1, and [CLIP97] is [Risk-controlled emission moment feasibility at that revision](https://github.com/the-omega-institute/trureturing/blob/97ef5c26c09451e8640cad4e381bf66681defe17/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md), specifically Theorem 3.1. These supply original-domain realization, initialized paid-history extraction and the $61/11$ factor. Theorem 5.1 supplies the evaluated positive conserved-class constant. They are reused with their original hypotheses, not reproved as new content.
+
+[PAID97, Theorem 9.2] aggregates cells defined by already close complete-law vectors and regenerates decoders while preserving both flows. It does not make p emissions constant on every return when only the mean immediate-emission increment is small. [PAID97, Theorem 13.1] replaces an entire phase kernel by a redraw and controls loss by dispersion of complete successor laws, a different hypothesis. [ALPHA, Theorem 1.1] controls suspended-to-p emission mismatch, which (9.1) does not measure. The new bridge is the directed crossing-flow repair (9.7)–(9.13) together with both complete configuration-loss comparisons (9.14)–(9.17), consumed on the original acquired histories in (9.19)–(9.22). It extends the zero-variation class consequence to an evaluated positive-amplitude necessity; it supplies no new unrestricted risk-only gap.
+
+Random shifted intervals, balancing finite nonnegative flows, maximal couplings and triangle inequalities are mature intermediate tools. Positive realization in [MW, Section 2] starts from a stationary output process and compatible invariant cones. [TS, Abstract and Introduction] and [CJM, Introduction] seek positive realizations of a prescribed linear single-input single-output transfer function, with [TS] minimizing dimension in Markov form. Those results do not by their stated hypotheses supply the two prescribed unweighted acquired flows or configuration-before-TV risk comparisons in (9.17). [CK, Theorem 7 and Corollary 8] evaluates TV for a supplied pair of labelled Markov-chain laws; it does not close this risk-versus-return-variation bridge over every finite observer.
+
+A. Yu. Mitrophanov, *Sensitivity and convergence of uniformly ergodic Markov chains*, [DOI 10.1239/jap/1134587812](https://doi.org/10.1239/jap/1134587812), relates perturbation sensitivity to uniform ergodicity and the iterated-kernel ergodicity coefficient. No uniform ergodicity of the actual return kernel is assumed here. Equations (9.10)–(9.12) instead preserve the chosen stationary p row exactly, and the complete-tail comparison uses the fixed stopping survival bound. No conclusion about perturbations of stationary distributions is borrowed. Theorems 9.2–9.3 are ordinary `repo-derived` mathematics from these supplied source facts and the explicit repair; no kernel verification, frozen status, physical implementation theorem or global literature-priority claim is asserted.
+
+**Definition 9.6 (remaining joint problem and completion criterion).** The original unrestricted quantity is still $\inf_M e(M)$ over all lawful finite COMPLETE observers for the same installed prior, with both risk interfaces and all original positive histories belonging to each one observer. Whether this infimum is zero and whether a finite member attains it remain unresolved by (9.18). The inequality is consistent with a positive unrestricted gap, an unattained zero infimum, or an exact common attainer with sufficiently large actual-return variation. A zero-infimum construction must provide one lawful finite observer per tolerance, with both full-domain excesses tending to zero; a finite-attainment construction must supply one table satisfying both complete phase bounds for every supported depth and its original-domain realization. The positive necessity (9.24), like the supplied alpha, heterogeneity and continuation necessities, is an additional joint condition for such a construction and is not sufficient for one. A positive unrestricted-gap proof must remove the unconstrained variation term by a further original-contract argument; a stationary finite grid or separate phase optimizers do not do so.
+
+## 追加锚（本行以下为增补区）
