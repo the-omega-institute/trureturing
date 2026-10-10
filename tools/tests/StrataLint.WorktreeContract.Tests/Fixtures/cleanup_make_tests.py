@@ -160,6 +160,32 @@ class CleanupMakeTests(NativeFixture):
     def events(result):
         return [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{"event":')]
 
+    def assert_aggregate_result(self, result):
+        events = self.events(result)
+        summaries = [item for item in events if item["event"] == "host_cleanup_summary"]
+        self.assertEqual(1, len(summaries), result.stdout + result.stderr)
+        summary = summaries[0]
+        self.assertEqual(0, summary["worktree_exit"], summary)
+        lanes = [item for item in events if item["event"] == "clean_lanes_summary"]
+        self.assertEqual(1, len(lanes), result.stdout + result.stderr)
+        self.assertEqual(0, lanes[0]["failed_count"], lanes[0])
+        self.assertEqual(0, lanes[0]["partial_count"], lanes[0])
+        if summary["inventory_error"] is not None:
+            # Ordinary-artifact observation can fail independently of successful
+            # worktree checkpoint/removal. Make must still propagate that failure.
+            self.assertTrue(summary["inventory_error"], summary)
+            self.assertEqual("not_started", summary["artifact_sweep"], summary)
+            self.assertEqual("failed", summary["status"], summary)
+            self.assertEqual(2, result.returncode, result.stdout + result.stderr)
+            self.assertFalse(any(item["event"] == "host_cleanup_item" for item in events), events)
+        else:
+            self.assertEqual("succeeded", summary["status"], summary)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertFalse(any(key.endswith(":failed") and value for key, value in summary["counts"].items()))
+            for field in ("disk_available_before", "disk_available_after"):
+                self.assertGreater(summary[field], 0)
+        return summary
+
     def assert_recoverable(self, events, preview=False):
         items = {item["path"]: item for item in events if item["event"] == "clean_lanes_item"}
         for tree in (self.dirty, self.local, self.cache, self.busy):
@@ -211,20 +237,14 @@ class CleanupMakeTests(NativeFixture):
                      "CLEAN_SSHX_HOME=" + relative(self.root / "sshx"),
                      "CLEAN_TMP_ROOT=" + relative(artifacts)]
         removed = self.run_command(arguments, cwd, phase="aggregate-anchor", check=False)
-        self.assertEqual(0, removed.returncode, removed.stdout + removed.stderr)
+        summary = self.assert_aggregate_result(removed)
         events = self.events(removed)
         item = next(item for item in events if item.get("path") == str(selected))
         self.assertEqual("removed", item["action"], item)
         self.assertFalse(selected.exists())
-        self.assertFalse(obsolete.exists())
+        self.assertEqual(summary["inventory_error"] is not None, obsolete.exists(), summary)
         if INVOCATION == "stable":
             self.assertEqual("caller material\n", caller_input.read_text())
-        summary = next(item for item in events if item["event"] == "host_cleanup_summary")
-        self.assertEqual("succeeded", summary["status"])
-        self.assertEqual(0, summary["worktree_exit"])
-        self.assertIsNone(summary["inventory_error"])
-        for field in ("disk_available_before", "disk_available_after"):
-            self.assertGreater(summary[field], 0)
         recovery = self.root / "recovered-anchor"
         branch = "lane/governance/aggregate-anchor"
         self.git("worktree", "add", recovery, branch)
@@ -314,7 +334,11 @@ class CleanupMakeTests(NativeFixture):
                                   "CLEAN_TMP_ROOT=" + self.environment["TMPDIR"], "VERBOSE=1"]
                 if target != "worktree-clean":
                     self.mark_phase(target + ":preview")
-                    preview = self.run_command(arguments, cwd, phase=target + ":preview")
+                    preview = self.run_command(arguments, cwd, phase=target + ":preview", check=False)
+                    if target == "clean-all":
+                        self.assert_aggregate_result(preview)
+                    else:
+                        self.assertEqual(0, preview.returncode, preview.stdout + preview.stderr)
                     preview_events = self.events(preview)
                     item = next(item for item in preview_events if item.get("path") == str(eligible))
                     self.assertEqual("would_remove", item["action"], item)
@@ -322,7 +346,10 @@ class CleanupMakeTests(NativeFixture):
                     self.assert_recoverable(preview_events, preview=True)
                 self.mark_phase(target + ":force")
                 removed = self.run_command(arguments + ["FORCE=1"], cwd, phase=target + ":force", check=False)
-                self.assertEqual(0, removed.returncode, removed.stdout + removed.stderr)
+                if target == "clean-all":
+                    self.assert_aggregate_result(removed)
+                else:
+                    self.assertEqual(0, removed.returncode, removed.stdout + removed.stderr)
                 self.mark_phase("production-assertions")
                 events = self.events(removed)
                 item = next(item for item in events if item.get("path") == str(eligible))
@@ -333,12 +360,6 @@ class CleanupMakeTests(NativeFixture):
                 self.assertEqual(self.baseline, self.git("ls-remote", "origin",
                     "refs/heads/lane/governance/" + name).split()[0])
                 self.assert_recoverable(events)
-                if target == "clean-all":
-                    summary = next(item for item in events if item["event"] == "host_cleanup_summary")
-                    self.assertEqual("succeeded", summary["status"])
-                    self.assertEqual(0, summary["worktree_exit"])
-                    self.assertIsNone(summary.get("inventory_error"))
-                    self.assertFalse(any(key.endswith(":failed") and value for key, value in summary["counts"].items()))
                 print(json.dumps(dict(entrance=target, options=list(map(str, options)),
                     source=str(self.repository), exit=removed.returncode,
                     removed=[str(eligible)], recoverable=[str(tree) for tree in
