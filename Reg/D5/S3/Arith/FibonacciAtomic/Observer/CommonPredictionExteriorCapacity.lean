@@ -10,7 +10,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
-attribute [local instance] Classical.propDecidable
+set_option maxRecDepth 2048
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.CommonPredictionExteriorCapacity
 local notation "W" => Window
 local notation "P" => Polynomial ℤ
@@ -25,8 +25,12 @@ abbrev arena : Arena := ⟨sig, fun R => ∀ {m : ℕ} (p : Fin m → W) (q r v 
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
   have hb := h (m := 0) (fun i => nomatch i) .zero .zero .zero
-  change (2 : Fin 3) = 0 at hb
-  contradiction
+  norm_num [bad, realize, WordCounts.highN, MajorityGeometry.selector,
+    MajorityGeometry.firstTop, MajorityGeometry.lastTop, MajorityGeometry.top0,
+    MajorityGeometry.top1, MajorityGeometry.top2, MajorityGeometry.vt,
+    MajorityGeometry.delta, MajorityGeometry.ld, MajorityGeometry.err,
+    MajorityGeometry.aLabel, MajorityGeometry.bLabel, first, last, Fin.ext_iff] at hb
+  exact (by decide : (2 : Fin 3) ≠ 0) hb
 def registration : Registration arena (type_of% (@ExteriorCounts.exterior_append)) where
   actual := actual
   bridge := Iff.rfl
@@ -35,7 +39,15 @@ def registration : Registration arena (type_of% (@ExteriorCounts.exterior_append
   dependence := by
     change ObservationalDependence sig actual
     intro ⟨⟩
-    exact ⟨1, (fun _ => .zero), ![.high,.low,.low,.zero], by norm_num [actual, realize, Capacity.reservoir_half, Capacity.mulV, Capacity.nc, Capacity.mulB, Capacity.pref, TeacherLabels.leftRoles, TeacherLabels.rightRoles, teacher, LegalPriorityTeacher.gate, first, last, MajorityGeometry.selector, MajorityGeometry.region, MajorityGeometry.representative, MajorityGeometry.firstTop, MajorityGeometry.lastTop, MajorityGeometry.top0, MajorityGeometry.top1, MajorityGeometry.top2, MajorityGeometry.vt, MajorityGeometry.delta, MajorityGeometry.ld, MajorityGeometry.err, MajorityGeometry.aLabel, MajorityGeometry.bLabel]⟩
+    refine ⟨1, Fin.append (fun _ : Fin 1 => .zero) ![.zero,.zero,.zero],
+      Fin.append (fun _ : Fin 1 => .high) ![.low,.low,.zero], ?_⟩
+    dsimp only [actual, realize]
+    rw [ExteriorCounts.exterior_append, ExteriorCounts.exterior_append]
+    norm_num [WordCounts.highN, WordCounts.hb, MajorityGeometry.selector,
+      MajorityGeometry.firstTop, MajorityGeometry.lastTop, MajorityGeometry.top0,
+      MajorityGeometry.top1, MajorityGeometry.top2, MajorityGeometry.vt,
+      MajorityGeometry.delta, MajorityGeometry.ld, MajorityGeometry.err,
+      MajorityGeometry.aLabel, MajorityGeometry.bLabel, first, last, Fin.ext_iff]
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@ExteriorCounts.exterior_append) (type_of% (realize.{0,0,0,0,0} sig (fun _ _ x => ExteriorCounts.exteriorSelector x) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Arith.FibonacciAtomic.CommonPrediction.ExteriorCounts.exterior_append.__information_unit,
@@ -81,7 +93,12 @@ def registration : Registration arena (type_of% (@ExteriorCounts.actual_votes_ap
   dependence := by
     change ObservationalDependence sig actual
     intro ⟨⟩
-    exact ⟨⟨1,0⟩, (fun _ => .zero), ![.high,.low,.low,.zero], by norm_num [actual, realize, Capacity.reservoir_half, Capacity.mulV, Capacity.nc, Capacity.mulB, Capacity.pref, TeacherLabels.leftRoles, TeacherLabels.rightRoles, teacher, LegalPriorityTeacher.gate, first, last, MajorityGeometry.selector, MajorityGeometry.region, MajorityGeometry.representative, MajorityGeometry.firstTop, MajorityGeometry.lastTop, MajorityGeometry.top0, MajorityGeometry.top1, MajorityGeometry.top2, MajorityGeometry.vt, MajorityGeometry.delta, MajorityGeometry.ld, MajorityGeometry.err, MajorityGeometry.aLabel, MajorityGeometry.bLabel]⟩
+    refine ⟨⟨1,0⟩, Fin.append (fun _ : Fin 1 => .zero) ![.zero,.zero,.zero],
+      Fin.append (fun _ : Fin 1 => .high) ![.low,.low,.zero], ?_⟩
+    change ExteriorCounts.actualVotes _ 0 ≠ ExteriorCounts.actualVotes _ 0
+    rw [ExteriorCounts.actual_votes_append, ExteriorCounts.actual_votes_append]
+    norm_num [WordCounts.highN, WordCounts.hb, MajorityGeometry.vt,
+      MajorityGeometry.aLabel, MajorityGeometry.bLabel, first, last, Fin.ext_iff]
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@ExteriorCounts.actual_votes_append) (type_of% (realize.{0,0,0,0,0} sig (fun _ p x => ExteriorCounts.actualVotes x p.2) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Arith.FibonacciAtomic.CommonPrediction.ExteriorCounts.actual_votes_append.__information_unit,
@@ -117,7 +134,11 @@ abbrev arena : Arena := ⟨sig, fun R => ∀ {m : ℕ} (x : Input (m + 3)) (c : 
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
   have hb := h (m := 1) (fun _ => .zero) 0
-  norm_num [bad, realize, MajorityGeometry.selector, MajorityGeometry.firstTop, MajorityGeometry.lastTop, MajorityGeometry.top0, MajorityGeometry.top1, MajorityGeometry.top2, MajorityGeometry.vt, MajorityGeometry.delta, MajorityGeometry.ld, MajorityGeometry.err, MajorityGeometry.aLabel, MajorityGeometry.bLabel, first, last] at hb
+  change 3 ≤ ExteriorCounts.actualVotes (m := 1) (fun _ => .zero)
+    (ExteriorCounts.exteriorSelector (fun _ => .zero)) at hb
+  generalize ExteriorCounts.exteriorSelector (m := 1) (fun _ => .zero) = c at hb
+  fin_cases c <;> norm_num [ExteriorCounts.actualVotes, teacher, TeacherLabels.leftRoles,
+    TeacherLabels.rightRoles, LegalPriorityTeacher.gate, first, last, Fin.ext_iff] at hb
 def registration : Registration arena (type_of% (@ExteriorCounts.exterior_majority)) where
   actual := actual
   bridge := Iff.rfl
@@ -126,7 +147,11 @@ def registration : Registration arena (type_of% (@ExteriorCounts.exterior_majori
   dependence := by
     change ObservationalDependence sig actual
     intro ⟨⟩
-    exact ⟨⟨1,(fun _ => .zero)⟩, 0, 1, by norm_num [actual, realize, Capacity.reservoir_half, Capacity.mulV, Capacity.nc, Capacity.mulB, Capacity.pref, TeacherLabels.leftRoles, TeacherLabels.rightRoles, teacher, LegalPriorityTeacher.gate, first, last, MajorityGeometry.selector, MajorityGeometry.region, MajorityGeometry.representative, MajorityGeometry.firstTop, MajorityGeometry.lastTop, MajorityGeometry.top0, MajorityGeometry.top1, MajorityGeometry.top2, MajorityGeometry.vt, MajorityGeometry.delta, MajorityGeometry.ld, MajorityGeometry.err, MajorityGeometry.aLabel, MajorityGeometry.bLabel]⟩
+    refine ⟨⟨1,Fin.append (fun _ : Fin 1 => .zero) ![.zero,.zero,.zero]⟩, 0, 1, ?_⟩
+    change ExteriorCounts.actualVotes _ 0 ≠ ExteriorCounts.actualVotes _ 1
+    rw [ExteriorCounts.actual_votes_append, ExteriorCounts.actual_votes_append]
+    norm_num [WordCounts.highN, WordCounts.hb, MajorityGeometry.vt,
+      MajorityGeometry.aLabel, MajorityGeometry.bLabel, first, last, Fin.ext_iff]
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@ExteriorCounts.exterior_majority) (type_of% (realize.{0,0,0,0,0} sig (fun _ p c => ExteriorCounts.actualVotes p.2 c) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Arith.FibonacciAtomic.CommonPrediction.ExteriorCounts.exterior_majority.__information_unit,
@@ -165,7 +190,8 @@ private theorem bad_law : ¬ arena.Law bad := by
   have hb := hf (fun _ => .zero) 0
   change 3 ≤ ExteriorCounts.actualVotes (m := 1) (fun _ => .zero) (f (fun _ => .zero)) at hb
   generalize f (fun _ => .zero) = c at hb
-  fin_cases c <;> contradiction
+  fin_cases c <;> norm_num [ExteriorCounts.actualVotes, teacher, TeacherLabels.leftRoles,
+    TeacherLabels.rightRoles, LegalPriorityTeacher.gate, first, last, Fin.ext_iff] at hb
 def registration : Registration arena (type_of% (@CommonSelector.uniform_mass_balanced)) where
   actual := actual
   bridge := Iff.rfl
@@ -174,7 +200,11 @@ def registration : Registration arena (type_of% (@CommonSelector.uniform_mass_ba
   dependence := by
     change ObservationalDependence sig actual
     intro ⟨⟩
-    exact ⟨⟨1,(fun _ => .zero)⟩, 0, 1, by norm_num [actual, realize, Capacity.reservoir_half, Capacity.mulV, Capacity.nc, Capacity.mulB, Capacity.pref, TeacherLabels.leftRoles, TeacherLabels.rightRoles, teacher, LegalPriorityTeacher.gate, first, last, MajorityGeometry.selector, MajorityGeometry.region, MajorityGeometry.representative, MajorityGeometry.firstTop, MajorityGeometry.lastTop, MajorityGeometry.top0, MajorityGeometry.top1, MajorityGeometry.top2, MajorityGeometry.vt, MajorityGeometry.delta, MajorityGeometry.ld, MajorityGeometry.err, MajorityGeometry.aLabel, MajorityGeometry.bLabel]⟩
+    refine ⟨⟨1,Fin.append (fun _ : Fin 1 => .zero) ![.zero,.zero,.zero]⟩, 0, 1, ?_⟩
+    change ExteriorCounts.actualVotes _ 0 ≠ ExteriorCounts.actualVotes _ 1
+    rw [ExteriorCounts.actual_votes_append, ExteriorCounts.actual_votes_append]
+    norm_num [WordCounts.highN, WordCounts.hb, MajorityGeometry.vt,
+      MajorityGeometry.aLabel, MajorityGeometry.bLabel, first, last, Fin.ext_iff]
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@CommonSelector.uniform_mass_balanced) (type_of% (realize.{0,0,0,0,0} sig (fun _ p c => ExteriorCounts.actualVotes p.2 c) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Arith.FibonacciAtomic.CommonPrediction.CommonSelector.uniform_mass_balanced.__information_unit,

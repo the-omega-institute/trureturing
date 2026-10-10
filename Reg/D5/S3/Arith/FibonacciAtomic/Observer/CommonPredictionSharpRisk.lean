@@ -10,7 +10,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
-attribute [local instance] Classical.propDecidable
+set_option maxRecDepth 2048
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.CommonPredictionSharpRisk
 local notation "W" => Window
 local notation "P" => Polynomial ℤ
@@ -41,6 +41,10 @@ def registration : Registration arena (type_of% (@SharpRisk.sharp_risk_full)) wh
     change SharpRisk.T 1 0 ≠ SharpRisk.T 1 1
     unfold SharpRisk.T
     norm_num [Finset.sum_range_succ]
+    change (0 : ℝ) ≠ -6 +
+      (_ * (2 * (min (0 : ℕ) ((1 : ℕ) - (0 : ℕ)) : ℝ) + (min (2 * (0 : ℕ)) ((1 : ℕ) - (0 : ℕ)) : ℝ)) +
+       _ * (2 * (min (1 : ℕ) ((1 : ℕ) - (1 : ℕ)) : ℝ) + (min (2 * (1 : ℕ)) ((1 : ℕ) - (1 : ℕ)) : ℝ)))
+    norm_num
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@SharpRisk.sharp_risk_full) (type_of% (realize.{0,0,0,0,0} sig (fun _ p s => SharpRisk.T p.2.val s) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Arith.FibonacciAtomic.CommonPrediction.SharpRisk.sharp_risk_full.__information_unit,
