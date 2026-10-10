@@ -92,6 +92,56 @@ private def writeBinFileIfChanged (path : FilePath) (contents : ByteArray) : IO 
 private def strings (json : Json) (key : String) : IO (Array String) :=
   IO.ofExcept (json.getObjValAs? (Array String) key)
 
+/-- Discover scope from Lake's current module graph, without building report
+or package default targets. The caller supplies independent roots and the
+registered report population; utility claims add their actual import closure. -/
+script reportScope args do
+  let [requestPath, outputPath] := args
+    | throw <| IO.userError "reportScope requires request and output paths"
+  let request ← readJson requestPath
+  let roots ← strings request "roots"
+  if roots.isEmpty then throw <| IO.userError "reportScope requires nonempty roots"
+  let names ← strings request "modules"
+  let registered := names.foldl (fun set name => set.insert name.toName) ({} : Lean.NameSet)
+  let utilities ← IO.ofExcept (request.getObjValAs? (Array Json) "utilities")
+  let root ← repositoryDir (← getWorkspace).root
+  let graph ← runBuild do
+    let mut queue := roots
+    let mut visited : Lean.NameSet := {}
+    let mut dependencies : Array Json := #[]
+    let mut selected : Array Json := #[]
+    let mut index := 0
+    while index < queue.size do
+      let name := queue[index]!
+      index := index + 1
+      if visited.contains name.toName then continue
+      let some mod := (← getWorkspace).findModule? name.toName
+        | error s!"scoped report module is not in the Lake workspace: {name}"
+      let closure ← (← mod.transImports.fetch).await
+      for dependency in #[mod] ++ closure do
+        if visited.contains dependency.name then continue
+        visited := visited.insert dependency.name
+        let path := (relPathFrom root (← IO.FS.realPath dependency.leanFile)).toString
+        if path.startsWith ".lake/" || path.startsWith "../" then continue
+        let header ← (← dependency.input.fetch).await
+        let imports := ((header.imports.foldl (fun set imp => set.insert imp.module)
+          ({} : Lean.NameSet)).toArray.map Lean.Name.toString).qsort (· < ·)
+        let row := Json.mkObj [("module", Lean.toJson dependency.name.toString),
+          ("source_path", Lean.toJson path), ("imports", Lean.toJson imports)]
+        dependencies := dependencies.push row
+        if registered.contains dependency.name then
+          selected := selected.push row
+          for utility in utilities do
+            let owner ← IO.ofExcept (utility.getObjValAs? String "modulePath")
+            if owner == path then
+              queue := queue.push (← IO.ofExcept (utility.getObjValAs? String "claimModule"))
+    let key (row : Json) := (row.getObjValAs? String "module").toOption.getD ""
+    return Job.pure <| Json.mkObj [("roots", Lean.toJson roots),
+      ("modules", Lean.toJson (selected.qsort (fun a b => key a < key b))),
+      ("dependencies", Lean.toJson (dependencies.qsort (fun a b => key a < key b)))]
+  IO.FS.writeFile outputPath (graph.compress ++ "\n")
+  return 0
+
 package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
   (← fetch <| pkg.facet `reportInputs).mapM fun path => do
     let names ← strings (← readJson path) "modules"

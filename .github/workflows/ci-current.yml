@@ -934,6 +934,7 @@ jobs:
             tools/scripts/report/lean-report-input.sh
             tools/scripts/report/lean-report-selection.py
             tools/scripts/report/lean-report.sh
+            tools/scripts/report/lean-report-scoped.sh
             tools/scripts/report/report-supervisor.sh
             tools/scripts/workflow/install-lean-toolchain.sh
             tools/scripts/worktree/*

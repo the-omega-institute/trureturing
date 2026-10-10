@@ -90,6 +90,30 @@ internal interface ILeanReportSource
     LeanAxiomReport Load(RepositorySnapshot snapshot);
 }
 
+/// Implemented by report sources that can consume a producer's scoped artifact.
+/// Full-only test sources deliberately keep the default path, which preserves
+/// existing full-mode tests while production rejects a scoped schema in Raw's
+/// strict reader.
+internal interface IScopedLeanReportSource
+{
+    LeanAxiomReport Load(LeanReportScope scope);
+}
+
+internal static class LeanReportSourceScope
+{
+    internal static LeanAxiomReport Load(
+        ILeanReportSource source,
+        RepositorySnapshot snapshot,
+        IEnumerable<RepoPath> requestedTargets)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        var scope = LeanReportScope.Create(snapshot, requestedTargets);
+        return source is IScopedLeanReportSource scoped
+            ? scoped.Load(scope)
+            : source.Load(snapshot);
+    }
+}
+
 internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 {
     private static readonly JsonSerializerOptions RouteJsonOptions = new()

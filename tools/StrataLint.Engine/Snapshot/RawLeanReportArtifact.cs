@@ -20,17 +20,42 @@ internal static class RawLeanReportArtifact
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         var fullPath = Path.GetFullPath(path);
         var bytes = File.ReadAllBytes(fullPath);
-        return Read(bytes, snapshot, MaterialsPath(fullPath), validateMaterials);
+        return Read(bytes, snapshot, MaterialsPath(fullPath), validateMaterials, scope: null);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
-        => Read(bytes, snapshot, materialPath: null);
+        => Read(bytes, snapshot, materialPath: null, validateMaterials: false, scope: null);
+
+    internal static LeanAxiomReport ReadFileForScope(
+        string path,
+        LeanReportScope scope,
+        bool validateMaterials = false)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        ArgumentNullException.ThrowIfNull(scope);
+        var fullPath = Path.GetFullPath(path);
+        return Read(
+            File.ReadAllBytes(fullPath),
+            scope.SourceSnapshot,
+            MaterialsPath(fullPath),
+            validateMaterials,
+            scope);
+    }
+
+    internal static LeanAxiomReport ReadForScope(
+        ReadOnlySpan<byte> bytes,
+        LeanReportScope scope)
+    {
+        ArgumentNullException.ThrowIfNull(scope);
+        return Read(bytes, scope.SourceSnapshot, materialPath: null, validateMaterials: false, scope);
+    }
 
     private static LeanAxiomReport Read(
         ReadOnlySpan<byte> bytes,
         RepositorySnapshot snapshot,
         string? materialPath,
-        bool validateMaterials = false)
+        bool validateMaterials,
+        LeanReportScope? scope)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         Reading.Value?.Invoke();
@@ -56,13 +81,17 @@ internal static class RawLeanReportArtifact
 
         using var document = JsonDocument.Parse(text);
         var root = document.RootElement;
-        RequireProperties(root, ["modules", "schema"], "raw Lean report");
-        if (RequiredString(root, "schema") != Schema)
+        RequireProperties(root, ["modules", "schema"], scope is null ? "raw Lean report" : "scoped Lean report");
+        var expectedSchema = scope is null ? Schema : ScopedLeanReportArtifact.Schema;
+        if (RequiredString(root, "schema") != expectedSchema)
         {
-            throw new FormatException($"Raw Lean report schema must be {Schema}.");
+            throw new FormatException($"Lean report schema must be {expectedSchema}.");
         }
 
-        var expected = ExpectedModules(snapshot);
+        var expected = scope is null
+            ? ExpectedModules(snapshot)
+            : ExpectedModules(snapshot).Where(item => scope.Paths.Contains(item.Value.Path))
+                .ToDictionary(static item => item.Key, static item => item.Value, StringComparer.Ordinal);
         var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal);
         var materialArchive = materialPath is null
             ? null
@@ -101,6 +130,17 @@ internal static class RawLeanReportArtifact
             }
 
             var imports = ReadSortedStrings(RequiredArray(moduleElement, "imports"), "imports");
+            if (scope is not null)
+            {
+                var sourceImports = LeanSourceCatalog.ParseFileImports(source.File)
+                    .Order(StringComparer.Ordinal)
+                    .ToImmutableArray();
+                if (!imports.SequenceEqual(sourceImports))
+                {
+                    throw new FormatException(
+                        $"Scoped Lean report imports do not match source for {sourcePath}.");
+                }
+            }
             var declarations = ReadDeclarations(
                 RequiredArray(moduleElement, "declarations"),
                 materialArchive);
@@ -130,7 +170,9 @@ internal static class RawLeanReportArtifact
         }
 
         if (validateMaterials) materialArchive!.ValidateAll();
-        return LeanAxiomReport.Create(reports);
+        return scope is null
+            ? LeanAxiomReport.Create(reports)
+            : LeanAxiomReport.CreateScoped(reports);
     }
 
     internal static ImmutableArray<byte> Write(RepositorySnapshot snapshot, LeanAxiomReport report)

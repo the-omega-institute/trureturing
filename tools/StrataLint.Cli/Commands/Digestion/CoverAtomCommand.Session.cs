@@ -24,12 +24,26 @@ internal static partial class CoverAtomCommand
         internal bool Invalidated { get; private set; }
 
         internal Session(string root, IRepositoryGateway repository, ILeanReportSource reportSource,
-            DateTimeOffset recordedAtUtc, string firstGid, IReadOnlyList<string> atomIds)
+            DateTimeOffset recordedAtUtc, string firstGid, IReadOnlyList<string> atomIds,
+            IReadOnlyCollection<RepoPath>? reportTargets = null)
         {
             this.root = root;
             (CurrentRaw, current, document) = ReadInputs(repository, atomIds);
             Baseline = current;
-            Report = reportSource.Load(Current);
+            IReadOnlyCollection<RepoPath> roots;
+            if (reportTargets is { Count: > 0 })
+            {
+                roots = reportTargets;
+            }
+            else if (Gid.TryParse(firstGid, out var first))
+            {
+                roots = [first.Path];
+            }
+            else
+            {
+                throw new InvalidOperationException($"cover report target is not a GID: {firstGid}");
+            }
+            Report = LeanReportSourceScope.Load(reportSource, Current, roots);
             Lean = ValidateLean(Current, Report);
             try
             {

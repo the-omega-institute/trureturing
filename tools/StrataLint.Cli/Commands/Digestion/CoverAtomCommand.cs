@@ -27,8 +27,14 @@ internal static partial class CoverAtomCommand
         try
         {
             var options = ParseArguments(arguments);
+            var reportTargets = options.Gids
+                .Select(gid => Gid.TryParse(gid, out var parsed)
+                    ? parsed!.Path
+                    : throw new InvalidOperationException($"cover GID is not canonical: {gid}"))
+                .Distinct()
+                .ToArray();
             var session = new Session(repositoryRoot, repository, leanReportSource,
-                recordedAtUtc, options.Gids[0], [options.AtomId]);
+                recordedAtUtc, options.Gids[0], [options.AtomId], reportTargets);
             return Apply(session, options, allowAlreadyApplied: false);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)

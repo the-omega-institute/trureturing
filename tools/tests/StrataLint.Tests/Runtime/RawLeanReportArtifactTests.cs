@@ -32,6 +32,24 @@ public sealed class RawLeanReportArtifactTests
     }
 
     [Fact]
+    public void ScopedSchemaIsReadOnlyThroughTheScopedConsumer()
+    {
+        var snapshot = Snapshot();
+        var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown("Trureturing.lean")]);
+        var scoped = CanonicalReport.Replace(
+            "stratalint-raw-lean-report-v3",
+            "stratalint-scoped-lean-report-v1",
+            StringComparison.Ordinal);
+
+        var report = ScopedLeanReportArtifact.Read(
+            Encoding.UTF8.GetBytes(scoped), scope);
+
+        Assert.True(report.IsScoped);
+        Assert.Throws<FormatException>(() =>
+            RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(scoped), snapshot));
+    }
+
+    [Fact]
     public void CanonicalReportFeedsLeanFileReportAndTheExistingStatementWriter()
     {
         var snapshot = Snapshot();
