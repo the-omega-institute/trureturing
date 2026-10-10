@@ -4,7 +4,7 @@ authors: Andrés Chirre; Harald Andrés Helfgott
 year: 2025
 title: Optimal bounds for sums of bounded arithmetic functions
 url: https://arxiv.org/abs/2511.14736
-claim: The general finite-height residue formula removes an unnecessary simple-zero premise from the actual odd-source annulus application; horizontal bounds, complete residues and the critical signed lower estimate remain explicit obligations.
+claim: Full residues and published good heights give a critically negligible raw odd-source annulus error without additional simplicity or growing-height hypotheses; effective certification and the signed Robin estimate remain unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -296,6 +296,122 @@ additional global simplicity premise. The signed residue contributions
 and their actual pole orders are retained;
 their lower bound against the same actual Robin core remains unproved.
 This is neither an unconditional critical error bound nor a proof of RH.
+
+## Published good heights pay the raw critical annulus
+
+The published [Inoue good-height input](inoue2019mobiuszeta.md),
+Lemma 1 of arXiv:1705.00853v2, supplies, unconditionally, a height
+
+$$
+T=T(x)\in[x^{3/4},x^{3/4}+x^{1/4}],\qquad
+C_T\ll_\varepsilon T^\varepsilon
+\tag{CH8}
+$$
+
+for every sufficiently large real $x$ and each fixed
+$\varepsilon>0$. The source attributes this theorem to
+Ramachandra–Sankaranarayanan. Its extension to all $r\le1$ uses the
+functional equation, as recorded in the linked note. It does not
+give $C_T\le(\log N)^2$. The general error formula (CH1b) already
+accepts the weaker bound in (CH8), so that stronger certificate is
+unnecessary for the following asymptotic application.
+
+Put $B_T=e^2T$ and use the strict hybrid
+
+$$
+A_T^{\rm raw}(v)=
+\begin{cases}
+Z_T^{\rm res}(v),&v>B_T,\\
+M(v),&1\le v\le B_T,
+\end{cases}
+\qquad
+\widetilde O_T^{\rm raw}(t)
+=\sum_{2^a\le t}A_T^{\rm raw}(t/2^a).
+\tag{CH9}
+$$
+
+Every small dyadic argument is kept as its actual prefix. For $T\ge4\pi$
+and $v>B_T$, (CH1b) has $L>2$, $\log v>\log T$,
+$K_T/v^2<1$ and $\tanh\delta\le\pi/(2T)$. Consequently it gives
+
+$$
+|M(v)-Z_T^{\rm res}(v)|\le a_Tv+3,\qquad
+a_T=\frac\pi{2T}+\frac{3\pi}{16T^2}
+       +\frac{\pi C_T}{4T^2(\log T)^2}.
+\tag{CH10}
+$$
+
+The $3\pi/(16T^2)$ term retains both $L^{-1}$ and $L^{-2}$.
+Define $J_T(t)=\#\{a\in\mathbb Z_{\ge0}:t/2^a>B_T\}$.
+The existing dyadic inverse and its geometric sum now give
+
+$$
+|O(t)-\widetilde O_T^{\rm raw}(t)|
+\le E_T^{\rm raw}(t):=2a_Tt+3J_T(t),\qquad
+J_T(t)\le1+\lfloor\log_2t\rfloor\quad(t\ge1).
+\tag{CH11}
+$$
+
+For the same integers $Q\ge N\ge x\ge e$, use the error accounting
+in (CH5) with $E_T^{\rm raw}$ in place of $E_T$. Both endpoints and
+the integral remain. The same kernel bounds and finite Abel identity
+therefore bound this replacement error by
+
+$$
+\ll\frac1{\log x}\left[
+a_T(1+\log(Q/x))^3
+ +\frac{(1+\log Q)(1+\log(Q/x))^2}{N}
+\right].
+\tag{CH12}
+$$
+
+The implicit constant is absolute. No derivative of the hybrid is
+used; its switching points introduce no additional endpoint terms.
+Taking, for example, $\varepsilon=1/2$ in (CH8) gives
+$a_T=O(T^{-1})$. At the already selected
+$Q=N_{18}(x)$ and $N=\lceil8x\rceil$, the two terms in (CH12),
+multiplied by $\sqrt x\log x$, are respectively
+
+$$
+O\!\left(x^{-1/4}(1+\log(Q/x))^3\right),\qquad
+O\!\left(x^{-1/2}(1+\log Q)(1+\log(Q/x))^2\right).
+$$
+
+They tend to zero since $\log Q$ has the fixed logarithmic order
+already given above. The existing paid tail beyond $Q$ then yields
+
+$$
+\begin{aligned}
+I_\psi(x)={}&
+\sum_{\substack{m\le N\\m\text{ odd}}}\mu(m)\mathscr D_x(m)
++\widetilde O_T^{\rm raw}(Q)\mathscr D_x(Q)
+-\widetilde O_T^{\rm raw}(N)\mathscr D_x(N)\\
+&-\int_N^Q\widetilde O_T^{\rm raw}(t)\mathscr D'_x(t)\,dt
++o\!\left(\frac1{\sqrt x\log x}\right).
+\end{aligned}
+\tag{CH13}
+$$
+
+This is an unconditional asymptotic paper application of the cited
+good-height and full-residue theorems and the existing complete-tail
+bound. It imposes neither RH nor simple zeros nor an extra growing-height
+existence assumption. It changes the raw error allowance, rather than
+asserting the identical simplified numerical enclosure (CH1c).
+The unspecified source constants and thresholds supply no effective
+numerical starting point or certified growing spectral dataset here.
+Complete residues, or certified enclosing-contour integrals, must still
+be evaluated if this representation is to give a numerical certificate.
+The analytic error does not pay that numerical error. No running-time
+improvement or new Robin-safe integer range is claimed.
+
+The [existing direct residual formula and core application](polak2026finiterobinca.md)
+already retain the same $I_\psi$ and all zero multiplicities. The new
+parameter application closes only the extra analytic good-height premise
+of this Möbius representation. It gives no lower bound for the signed
+expression in (CH13), nor for $I_\psi(x)+D^*(x)$ at the same selected
+Robin source. Returning to that actual joint signed estimate requires
+additional information; changing between the two representations alone
+does not provide it. This application has no Lean verification.
 
 Section 9.2.2 proposes direct continuous-weight analogues with improved
 $T^{-2}$ terms; it does not provide a theorem for $\mathscr D_x$.
