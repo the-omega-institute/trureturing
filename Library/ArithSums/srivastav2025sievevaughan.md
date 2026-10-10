@@ -2490,3 +2490,124 @@ remaining recovery convolution or complete signed Robin-tail
 estimate follows from this application. For $\eta\ge4/17$,
 the unsigned strips remain available; no enlarged signed strip
 is supplied here.
+
+## The full complementary hyperbola bounds the critical actual response
+
+The general coprime Mertens estimate preceding (SV11) also applies
+outside that equation's highest-support band. Keep all original
+coefficients and define the continuous complementary ramp
+
+$$
+\chi_R(e)=
+\begin{cases}
+0,&e\le U,\\
+\log(e/U)/r,&U<e\le U_1,\\
+1,&e>U_1.
+\end{cases}
+$$
+
+The actual difference weight satisfies
+$\theta'(e)=\mu(e)(1-\chi_R(e))$. Reuse
+$a_R(n)=\sum_{d\mid n}\lambda(d)$ and the original divisor-product
+formula for $H_A$. The classical identity $\mathbf1*\mu=
+\mathbf1_{\{1\}}$ gives, for every real $y\ge1$,
+
+$$
+H_A(y)=1-
+\sum_{\substack{me\le y\\e>U}}
+ \mu(e)\chi_R(e)a_R(me).
+\tag{SV63}
+$$
+
+This finite sum includes all $m\le y/U$ and the saturated range
+$e>U_1$. It is not restricted to the first activation or to the
+highest LCM band. The following is an application of the already
+cited classical Mertens input, without Lean certification or
+historical originality claim.
+
+For squarefree $d\le R$, let $g=(d,m)$ and $q=d/g$. Then
+$d\mid me$ is equivalent to $q\mid e$, and $(g,q)=1$.
+Writing $e=qb$ retains the exact sign identity
+
+$$
+\mu(d)\mu(qb)
+=\mu(g)\mu(q)^2\mu(b)\mathbf1_{(b,q)=1}.
+$$
+
+In particular the common-factor sign $\mu(g)$ is not assumed
+positive. Use the existing coprime bound preceding (SV11), with
+$\mathcal W(u)=u^{3/5}/(\log u)^{1/5}$,
+
+$$
+|M_q(t)|\ll
+t e^{-c_1\mathcal W(\log t)}\frac q{\varphi(q)}
++t^{3/4}\prod_{p\mid q}(1-p^{-1/2})^{-1},
+\qquad
+M_q(t)=\sum_{\substack{n\le t\\(n,q)=1}}\mu(n).
+$$
+
+The bounds already used in (SV52)--(SV53),
+$q/\varphi(q)\ll r$ and
+$\prod_{p\mid q}(1-p^{-1/2})^{-1}\le e^{C\sqrt r}$ for $q\le R$,
+therefore give, uniformly for $R\le t\le2R^4$,
+
+$$
+|M_q(t)|\ll t\Xi_R,\qquad
+\Xi_R=e^{-c_2\mathcal W(r)}.
+$$
+
+The remainder divided by $t$ is at most
+$R^{-1/4}e^{C\sqrt r}$, which is absorbed into $\Xi_R$.
+For each nonempty inner interval in (SV63), put $T=y/(mq)$.
+Its lower endpoint is $U/q\ge R$. The weight
+$b\mapsto\chi_R(qb)$ is continuous, nondecreasing, bounded by
+one, has total variation at most one, and vanishes at $U/q$.
+Abel summation thus supplies
+
+$$
+\left|\sum_{U/q<b\le T}
+ \mu(b)\mathbf1_{(b,q)=1}\chi_R(qb)\right|
+ \ll T\Xi_R
+\qquad(U<y\le2V).
+$$
+
+All real endpoints and the ramp's saturation are retained.
+Expand the actual $a_R$ in (SV63) and only then take absolute
+values. The common-factor identity gives
+
+$$
+|H_A(y)-1|
+\ll\frac{y\Xi_R}{r}
+ \sum_{d\le R}\frac{\mu(d)^2\log(R/d)}d
+ \sum_{m\le y/U}\frac{(d,m)}m.
+$$
+
+For $M\ge1$, the classical gcd-divisor identity gives
+
+$$
+\sum_{m\le M}\frac{(d,m)}m
+=\sum_{b\mid d}\frac{\varphi(b)}b
+ \sum_{j\le M/b}\frac1j
+\le(1+\log M)\tau(d).
+$$
+
+Reuse the ordinary divisor harmonic bound
+$\sum_{d\le R}\tau(d)\log(R/d)/d\ll r^3$.
+Here $\log(y/U)=O(r)$, so the preceding estimate is
+$O(yr^3\Xi_R)$. Absorbing these fixed logarithmic factors and
+using $r=L/8$ yields a fixed $c_0>0$ such that
+
+$$
+|H_A(y)-1|\ll y\Xi_A,\qquad
+E_A(y)\ll y\Xi_A,
+\qquad
+\Xi_A=e^{-c_0\mathcal W(L)},\quad U<y\le2V.
+\tag{SV64}
+$$
+
+The second bound concerns the complete original positive part:
+$E_A(y)=[(1-H_A(y))-1-\sigma_Ay]_+\le|1-H_A(y)|$
+because $\sigma_A\ge0$. It assumes no sign of $S_A$ and takes
+no average before the positive part. The existing two envelopes
+can be combined with this bound on its stated range by taking
+their minimum.
