@@ -3860,7 +3860,7 @@ $$
 $$
 \ell(\mathcal Q)+H_d\,\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L);
 $$
-这是相对于固定前缀最短追加的可验证间隔，不是对 $X^+$ 全局最短 stack 的比值。阈值由 $\varepsilon$ 调到 $\varepsilon'<\varepsilon$ 时可取 $X^-=T_\varepsilon$、$X^+=T_{\varepsilon'}$，新增角色正是 $\delta=\{\eta:\varepsilon'<|h_\eta|\le\varepsilon\}$。
+这是相对于固定前缀最短追加的可验证间隔，不是对 $X^+$ 全局最短 stack 的比值。阈值由 $\varepsilon$ 调到 $\varepsilon'<\varepsilon$ 时可取 $X^-=T_\varepsilon$、$X^+=T_{\varepsilon'}$，新增角色正是 $\delta=\{\eta\in\widehat A\setminus\{1\}:\varepsilon'<|h_\eta|\le\varepsilon\}$。
 
 **证明。** 由定义
 $$
