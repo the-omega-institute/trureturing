@@ -64,6 +64,33 @@ Proposition 7.6 (`prop:moment-workload`) already supplies the complete
 moment–workload duality. These identities and their endpoint bookkeeping
 are reused, not delivered as new project mathematics.
 
+## The existing prime-local bridge
+
+Theorem `thm:direct-bridge`, §4 of the same archived manuscript,
+starts with an actual integer $N>e$ satisfying
+
+$$
+N/p>e,\qquad G(N)\ge G(N/p)\quad(p\mid N),
+\qquad G(N)\ge G(Np)\quad(p\text{ prime}).
+$$
+
+It directly gives $N=C_A$, $\Phi_{\rm CA}(A)=A$ and an event-free
+scale $A=\log N$, with price $1/(A\log A)$. The statement is about
+every proper prime-local Robin well; neither GA1 alone nor an arbitrary
+self-tangent return supplies its insertion hypothesis. This bridge is
+reused without reconstructing its neutral-layer proof.
+
+Lemma `lem:external-extremal-input` and Theorem
+`thm:persistent-obstruction`, §11, select the least global maximizer
+of $G(n)$ on $n>5040$ under RH failure and place this single proper
+GA1–GA2 source at a regular return. They state no unbounded regular
+family with a fixed power-sized excess. The
+[same-source quantified selection](../Arith/caveney2012sacaga.md#the-same-power-excess-family-also-supplies-proper-ga1-sources)
+uses the prime-local bridge on its selected family; its family and excess
+quantifiers are separate from that fixed-maximizer reduction. These
+source statements and their hypothesis correspondence were inspected;
+no independent full proof audit or Lean certification is claimed.
+
 ## The sharp two-moment statement is directly reusable
 
 Theorem 7.7 (`thm:sharp-two-moment`), §7.4, applies to any probability
