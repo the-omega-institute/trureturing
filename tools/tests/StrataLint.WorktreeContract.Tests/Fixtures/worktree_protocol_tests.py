@@ -313,7 +313,9 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
         (metadata / "MERGE_HEAD").write_text(self.base + "\n")
         with ExitStack() as stack:
-            preservation.cache_exclusion(stack, self.tree)
+            stack.enter_context(protocol.lock_file(
+                Path.home() / ".cache" / "stratalint-lean-cache-guards",
+                str((self.tree / ".lake").resolve()), True))
             self.remove()
         self.assertFalse(self.tree.exists())
 
@@ -476,17 +478,6 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.assertNotEqual(0, protocol.git(self.main, "show-ref", "--verify",
                                           "refs/heads/" + self.branch, check=False).returncode)
 
-    def test_snapshot_matches_remote_bytes_and_preserves_unknown(self):
-        snapshot = self.root / "snapshot"
-        snapshot.mkdir()
-        (snapshot / "owned").write_text("original\n")
-        (snapshot / "extra").write_text("unpublished\n")
-        args = ["remove-snapshot", "--path", snapshot, "--base", self.base]
-        self.run_protocol(*args, expect=73)
-        (snapshot / "extra").unlink()
-        self.run_protocol(*args)
-        self.assertFalse(snapshot.exists())
-
     def test_ambient_git_redirects_cannot_hide_real_index(self):
         alternate = self.root / "alternate-index"
         protocol.git(self.tree, "read-tree", "HEAD", env={"GIT_INDEX_FILE": str(alternate)})
@@ -501,14 +492,7 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.run_protocol("remove", "--names", "tree", env=environment)
         self.assertFalse(self.tree.exists())
 
-    def test_snapshot_root_alias_and_observed_identity_drift_preserved(self):
-        snapshot = self.root / "snapshot"
-        snapshot.mkdir()
-        (snapshot / "owned").write_text("original\n")
-        alias = self.root / "alias"
-        alias.symlink_to(snapshot, target_is_directory=True)
-        self.run_protocol("remove-snapshot", "--path", alias, "--base", self.base, expect=73)
-        self.assertTrue(snapshot.exists())
+    def test_observed_identity_drift_preserved(self):
         expected = json.dumps(dict(path=str(self.tree), head="0" * 40, branch="refs/heads/" + self.branch))
         self.remove(73, "--expected", expected)
         self.assertTrue(self.tree.exists())

@@ -88,9 +88,7 @@ internal static partial class CleanLanesCommand
                     events,
                     runner);
                 InspectTempJudges(
-                    root,
                     commonGitDirectory,
-                    baseCommit,
                     options.Force,
                     protectedInventory,
                     tempRoots,
@@ -370,9 +368,7 @@ internal static partial class CleanLanesCommand
     }
 
     private static void InspectTempJudges(
-        string repositoryRoot,
         string commonGitDirectory,
-        string baseCommit,
         bool force,
         IReadOnlyList<RegisteredWorktree> inventory,
         IReadOnlyList<string> tempRoots,
@@ -422,14 +418,32 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var arguments = new List<string> { "remove-snapshot", "--path", path, "--base", baseCommit };
-            if (!force) arguments.Add("--preview");
-            var result = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
+            var sameRepository = HasSameRepositoryPointer(path, commonGitDirectory);
+            var gitlessJudge = !HasGitMarker(path) && HasGitlessJudgeShape(path);
+            if (!sameRepository && !gitlessJudge)
+            {
+                events.Add(new CleanLaneEvent("temp_judge", path, null, null,
+                    "skipped", HasGitMarker(path) ? "foreign_git_directory" : "not_judge_tree"));
+                continue;
+            }
+
+            if (force)
+            {
+                try
+                {
+                    Directory.Delete(path, recursive: true);
+                }
+                catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+                {
+                    events.Add(new CleanLaneEvent("temp_judge", path, null, null,
+                        "partially_removed", "temporary_directory_partial_or_indeterminate"));
+                    continue;
+                }
+            }
+
             events.Add(new CleanLaneEvent("temp_judge", path, null, null,
-                result.Success ? (force ? "removed" : "would_remove")
-                    : result.ExitCode == 74 ? "partially_removed" : "skipped",
-                result.Success ? "remote_preserved_snapshot"
-                    : result.ExitCode == 74 ? "snapshot_partial_or_indeterminate" : "snapshot_preservation_unconfirmed"));
+                force ? "removed" : "would_remove",
+                sameRepository ? "unregistered_same_repository" : "gitless_judge_snapshot"));
         }
     }
 
@@ -441,6 +455,33 @@ internal static partial class CleanLanesCommand
         if (preview) arguments.Add("--preview");
         return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner).Success;
     }
+
+    private static bool HasSameRepositoryPointer(string path, string commonGitDirectory)
+    {
+        var pointerPath = Path.Combine(path, ".git");
+        if (!File.Exists(pointerPath)) return false;
+        var line = File.ReadLines(pointerPath, StrictUtf8).FirstOrDefault();
+        const string prefix = "gitdir: ";
+        if (line is null || !line.StartsWith(prefix, StringComparison.Ordinal)) return false;
+        var raw = line[prefix.Length..];
+        if (raw.Length == 0) return false;
+        var gitDirectory = Path.IsPathRooted(raw)
+            ? Path.GetFullPath(raw)
+            : Path.GetFullPath(raw, path);
+        var relative = Path.GetRelativePath(commonGitDirectory, gitDirectory);
+        return !Path.IsPathRooted(relative)
+            && !string.Equals(relative, "..", StringComparison.Ordinal)
+            && !relative.StartsWith("../", StringComparison.Ordinal)
+            && !relative.StartsWith("..\\", StringComparison.Ordinal);
+    }
+
+    private static bool HasGitlessJudgeShape(string path) =>
+        File.Exists(Path.Combine(path, "CLAUDE.md"))
+        && File.Exists(Path.Combine(path, "AGENTS.md"))
+        && File.Exists(Path.Combine(path, "Trureturing.lean"))
+        && File.Exists(Path.Combine(path, "lean-toolchain"))
+        && Directory.Exists(Path.Combine(path, "D5"))
+        && Directory.Exists(Path.Combine(path, "tools"));
 
     private static string ResolveCommit(
         string repositoryRoot,

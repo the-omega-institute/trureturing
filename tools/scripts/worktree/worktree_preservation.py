@@ -6,16 +6,11 @@ import json
 import os
 from pathlib import Path
 import re
-import stat
 import subprocess
 import time
 
 from worktree_protocol import (Refused, git, value, common, inventory, identity,
-                               acquire, tree_scope, lock_file, remote_endpoint)
-
-
-def unreadable(error):
-    raise Refused("unreadable_material:" + str(error)) from error
+                               acquire, remote_endpoint)
 
 
 def remote_roots(source, branch):
@@ -57,94 +52,6 @@ def reflog_oids(path):
         yield from (field.decode("ascii") for field in fields[:2])
 
 
-def clean_content(path, metadata, head, object_source=None):
-    source = object_source or path
-    expected = {}
-    for entry in git(source, "ls-tree", "-r", "-z", head).stdout.split(b"\0"):
-        if not entry:
-            continue
-        fields, name = entry.split(b"\t", 1)
-        mode, kind, oid = fields.split(b" ")
-        if kind != b"blob":
-            raise Refused("nested_repository_or_submodule")
-        expected[name] = (mode, oid)
-    # Build the exact ancestor set once. Re-scanning all tracked paths for each
-    # directory makes qualification grow with paths times directories.
-    expected_directories = set()
-    for name in expected:
-        parent = name.rpartition(b"/")[0]
-        while parent:
-            expected_directories.add(parent)
-            parent = parent.rpartition(b"/")[0]
-    index = {}
-    if (metadata / "index").exists():
-        if git(path, "ls-files", "--resolve-undo", "-z").stdout:
-            raise Refused("resolve_undo_recovery")
-        for entry in git(path, "ls-files", "--stage", "-z").stdout.split(b"\0"):
-            if not entry:
-                continue
-            fields, name = entry.split(b"\t", 1)
-            mode, oid, stage = fields.split(b" ")
-            if stage != b"0":
-                raise Refused("unmerged_index")
-            index[name] = (mode, oid)
-        if index != expected:
-            raise Refused("staged_material")
-    # Inspect actual bytes, ignoring assume-unchanged, skip-worktree and filters.
-    # Missing checkout fragments are safe only for a locked interrupted initialization.
-    seen = set()
-    for parent, dirs, names in os.walk(path, followlinks=False, onerror=unreadable):
-        if Path(parent) == path:
-            dirs[:] = [name for name in dirs if name != ".git"]
-            names = [name for name in names if name != ".git"]
-        for name in dirs[:]:
-            candidate = Path(parent) / name
-            if candidate.is_symlink():
-                dirs.remove(name)
-                names.append(name)
-            elif os.fsencode(str(candidate.relative_to(path))) not in expected_directories:
-                if any(candidate.iterdir()):
-                    raise Refused("unknown_directory:" + str(candidate.relative_to(path)))
-        for name in names:
-            file = Path(parent) / name
-            key = os.fsencode(str(file.relative_to(path)))
-            if key not in expected:
-                raise Refused("untracked_or_ignored_material:" + os.fsdecode(key))
-            mode, oid = expected[key]
-            info = file.lstat()
-            if stat.S_ISLNK(info.st_mode) and mode == b"120000":
-                actual = git(source, "hash-object", "--stdin", input=os.fsencode(os.readlink(file))).stdout.strip()
-            elif stat.S_ISREG(info.st_mode) and mode in (b"100644", b"100755"):
-                if bool(info.st_mode & stat.S_IXUSR) != (mode == b"100755"):
-                    raise Refused("modified_mode:" + os.fsdecode(key))
-                # Hash raw bytes directly: same native Git blob framing, no per-file process.
-                algorithm = hashlib.sha1 if len(oid) == 40 else hashlib.sha256
-                digest = algorithm()
-                digest.update(b"blob " + str(info.st_size).encode("ascii") + b"\0")
-                with file.open("rb") as stream:
-                    for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-                        digest.update(chunk)
-                actual = digest.hexdigest().encode("ascii")
-            else:
-                raise Refused("unknown_file_kind:" + os.fsdecode(key))
-            if actual != oid:
-                raise Refused("dirty_material:" + os.fsdecode(key))
-            seen.add(key)
-    if seen != set(expected) and (metadata / "index").exists():
-        raise Refused("missing_checkout_material")
-
-
-def cache_exclusion(stack, path):
-    # The existing Lean cache guard has its own owner and key. Acquire that exact
-    # OS lock as well; participation cannot replace donor/build exclusion.
-    address = str((path / ".lake").resolve())
-    directory = Path.home() / ".cache" / "stratalint-lean-cache-guards"
-    try:
-        stack.enter_context(lock_file(directory, address, True))
-    except BlockingIOError as error:
-        raise Refused("cache_in_use") from error
-
-
 LOCK_AGE_SECONDS = 24 * 60 * 60
 
 
@@ -167,11 +74,6 @@ def qualify(source, path):
         if age < LOCK_AGE_SECONDS:
             raise Refused("locked_recent")
     return item
-
-
-def sys_executable():
-    import sys
-    return sys.executable
 
 
 def remove(options):
@@ -258,39 +160,4 @@ def retire_branch(options):
                 return dict(event="worktree_branch_retirement", branch=options.branch, commit=current,
                             status="partial_or_indeterminate", error=str(error))
         return dict(event="worktree_branch_retirement", branch=options.branch, commit=current,
-                    status="would_remove" if options.preview else "removed")
-
-
-def remove_snapshot(options):
-    with ExitStack() as stack:
-        if options.path.is_symlink():
-            raise Refused("linked_snapshot")
-        path = tree_scope(stack, options.source, options.path, True)
-        if not path.is_dir() or path.is_symlink() or path == Path.cwd().resolve():
-            raise Refused("snapshot_identity")
-        if any(Path(row["worktree"]).resolve() == path or path in Path(row["worktree"]).resolve().parents
-               for row in inventory(options.source)):
-            raise Refused("registered_or_nested_tree")
-        if (path / ".git").exists() or (path / ".git").is_symlink():
-            raise Refused("unregistered_metadata_unknown")
-        cache_exclusion(stack, path)
-        base = value(options.source, "rev-parse", "--verify", options.base + "^{commit}")
-        retained(options.source, base, remote_roots(options.source, None))
-        # Use source Git objects for a gitless, partial checkout; every existing
-        # byte must match a retained object, and every unknown file is retained.
-        clean_content(path, path / ".absent-git-metadata", base, object_source=options.source)
-        sampler = Path(__file__).resolve().parents[1] / "host-cleanup.py"
-        result = subprocess.run([sys_executable(), "-B", str(sampler), "active-paths", "--scope", str(path)],
-                                capture_output=True, check=True, timeout=120)
-        if any(Path(active).resolve() == path or path in Path(active).resolve().parents
-               for active in json.loads(result.stdout)):
-            raise Refused("snapshot_host_activity")
-        if not options.preview:
-            import shutil
-            try:
-                shutil.rmtree(path)
-            except OSError as error:
-                return dict(event="worktree_snapshot", path=str(path),
-                            status="partial_or_indeterminate", error=str(error))
-        return dict(event="worktree_snapshot", path=str(path),
                     status="would_remove" if options.preview else "removed")

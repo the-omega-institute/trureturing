@@ -167,9 +167,9 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(judge));
         Assert.True(Directory.Exists(reports));
         var items = ReadItems(result.Output);
-        Assert.Contains(items, item => item.GetProperty("reason").GetString() == "remote_preserved_snapshot"
+        Assert.Contains(items, item => item.GetProperty("reason").GetString() == "gitless_judge_snapshot"
             && Path.GetFileName(item.GetProperty("path").GetString()) == Path.GetFileName(judge));
-        Assert.Contains(items, item => item.GetProperty("reason").GetString() == "snapshot_preservation_unconfirmed"
+        Assert.Contains(items, item => item.GetProperty("reason").GetString() == "not_judge_tree"
             && Path.GetFileName(item.GetProperty("path").GetString()) == Path.GetFileName(reports));
     }
 
