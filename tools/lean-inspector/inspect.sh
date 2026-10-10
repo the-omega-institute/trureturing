@@ -7,7 +7,6 @@ REPOSITORY="" OUTPUT="" LOG_DIR=""
 CACHE_MISS_POLICY=reuse-or-build
 BUILD_TARGETS=()
 PROGRAM_BUILD_PENDING=0
-PRESERVE_RECEIPT=0
 BUILD_PHASES=()
 ACTIVE_PHASE=""
 while [[ $# -gt 0 ]]; do
@@ -50,15 +49,10 @@ resource_observe lean-inspector-start "$REPOSITORY" || true
 # remove a cold worktree's eligibility for donor clonefile seeding.
 FINAL_LOG_DIR="$LOG_DIR"
 STARTUP_LOG_DIR="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-inspector-startup.XXXXXXXX")"
-RECEIPT_SNAPSHOT="$STARTUP_LOG_DIR/.cleanup-receipt"
 LOG_DIR="$STARTUP_LOG_DIR"
 finish() {
   local rc=$?
   trap - EXIT
-  if [[ "$PRESERVE_RECEIPT" == 0 && ( "$rc" != 0 || "$PROGRAM_BUILD_PENDING" == 1 ) ]]; then
-    python3 -B "$SCRIPT_DIR/reuse.py" invalidate-receipt --repository "$REPOSITORY" \
-      --report "$OUTPUT" --receipt-snapshot "$RECEIPT_SNAPSHOT" || true
-  fi
   if [[ "$rc" == 0 && "$PROGRAM_BUILD_PENDING" == 0 ]]; then
     python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
   fi
@@ -80,14 +74,6 @@ finish() {
 trap finish EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
-
-# Observe only an existing output, preserving cold donor seeding.
-if [[ -f "${OUTPUT}.reuse.json" ]]; then
-  OBSERVE_ARGS=()
-  if [[ "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then OBSERVE_ARGS+=(--cache-miss-policy fetch-or-fail); fi
-  python3 -B "$SCRIPT_DIR/reuse.py" observe-receipt --repository "$REPOSITORY" \
-    --report "$OUTPUT" --receipt-snapshot "$RECEIPT_SNAPSHOT" ${OBSERVE_ARGS[@]+"${OBSERVE_ARGS[@]}"}
-fi
 
 run_phase() {
   local phase="$1" status=0
@@ -197,7 +183,6 @@ reuse_report() {
   else
     python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
       --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" \
-      --receipt-snapshot "$RECEIPT_SNAPSHOT" \
       --cache-miss-policy "$CACHE_MISS_POLICY" || status=$?
   fi
   printf '%s\n' "$status" > "$STARTUP_LOG_DIR/reuse.status"
@@ -205,11 +190,7 @@ reuse_report() {
   if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
   return "$status"
 }
-# A rejected local guard has not claimed the output and cannot erase another
-# cache writer's successful receipt, including when its lock is busy.
-if [[ "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then PRESERVE_RECEIPT=1; fi
 run_phase reuse reuse_report
-PRESERVE_RECEIPT=0
 if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   if [[ "$CACHE_MISS_POLICY" == fetch-or-fail && ${#BUILD_TARGETS[@]} -gt 0 ]]; then
     require_lake
@@ -231,10 +212,7 @@ require_lake
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
   --report "$OUTPUT" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
-PRESERVE_RECEIPT=1
-run_phase prepare python3 -B "$SCRIPT_DIR/reuse.py" prepare --repository "$REPOSITORY" --report "$OUTPUT" \
-  --receipt-snapshot "$RECEIPT_SNAPSHOT"
-PRESERVE_RECEIPT=0
+run_phase prepare python3 -B "$SCRIPT_DIR/reuse.py" prepare --repository "$REPOSITORY" --report "$OUTPUT"
 if [[ ${#BUILD_TARGETS[@]} == 0 || "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then
   require_producer
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
@@ -245,7 +223,6 @@ open_logs
 run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 # Publication and seal share one canonical cache guard.
-PRESERVE_RECEIPT=1
 run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \
   "$LOG_DIR/entry-inputs.json"
 cat "$LOG_DIR/publish.stdout.log"

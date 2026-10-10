@@ -390,11 +390,13 @@ class NativePackageConsumerTests(NativeReleaseSupport):
                 self.assertEqual(expected[suffix], actual)
         releases = {p.name for p in (self.root / 'releases').iterdir()}
         # Even an already published run cannot bypass registered program builds.
+        receipt_before_failure = publication.member(output, '.reuse.json').read_bytes()
         self.write('Audit.lean', 'this is not valid Lean\n')
         failed = self.release_run('publish', success=False)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
         self.assertIn('error: Audit.lean:', failed.stderr)
-        self.assertFalse(publication.member(output, '.reuse.json').exists())
+        self.assertEqual(receipt_before_failure, publication.member(output, '.reuse.json').read_bytes(),
+                         '[FAIL] program_failure_preserves_successful_report_receipt')
         self.assertNotIn('LEAN_CACHE_PUBLISH ', failed.stdout)
         self.assertEqual(releases, {p.name for p in (self.root / 'releases').iterdir()})
         self.write('Audit.lean', 'def audit : Nat := 1\n')

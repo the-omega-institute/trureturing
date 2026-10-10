@@ -54,8 +54,10 @@ linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及�
 canonical publication、seal 和 base 写入在同一缓存锁内完成，seal 核对 publication 返回的五件 bundle 身份，
 已被替换的 generation 不重封或改写 base。base 还绑定 seal 写入的成功收据；从 canonical 整份复用时更新身份并保留原生产提交，从自定义种子发布到 canonical 时 base 未知。
 capture 只读输入，不改 base 或成功收据，也不依赖 Release 模块。canonical 生产准备只在现有缓存锁内移除 metadata。
-失败清理在同一锁内只移除与本次入口或复用所捕获身份相同的成功收据；prepare 已移除收据时跳过重复清理，
-竞争 generation 的收据和 base 保留，锁忙时不改活动 generation。自定义输出的生产准备和 seal 保留 canonical base。
+失败清理不移除 canonical 成功收据或 base；入口未改变 canonical 报告时，包含复用后的程序构建失败，保留当前收据和 base。
+成功收据仅在持有现有缓存锁、即将改变报告的准备阶段移除，并在报告成功封口后写入。
+已准备的生产失败保持无收据，下一次入口按既有缺失种子恢复路径处理。锁忙时不改活动 generation。
+自定义输出的生产准备和 seal 保留 canonical base。
 跳过或拒绝的恢复不改 base。
 CI、非 dev 和 detached checkout 不进行可选刷新。记录不参与格式、输入、收据或缓存 key 的兼容性判断。
 `REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；

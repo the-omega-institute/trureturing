@@ -297,67 +297,29 @@ class ReuseTests(unittest.TestCase):
         self.assertIsNone(api.read_seed_base(self.root))
         self.assertFalse(publication.member(self.report, api.SUFFIX).exists())
 
-    def test_failure_cleanup_removes_only_the_observed_receipt(self):
+    def test_reuse_rejection_before_publication_preserves_success_evidence(self):
         api = self.dev_repository()
-        snapshot = self.root / '.lake/cleanup-receipt'
-        try:
-            api.reuse(self.root, self.report, self.report, receipt_snapshot=snapshot)
-        except TypeError as error:
-            self.fail('[FAIL] reuse_captures_cleanup_generation_under_guard: ' + str(error))
-        receipt = publication.member(self.report, api.SUFFIX)
-        observed = receipt.read_bytes()
-        base = (self.root / api.BASE_RECORD).read_bytes()
-        try:
-            api.invalidate_receipt(self.root, self.report, snapshot)
-        except TypeError as error:
-            self.fail('[FAIL] failure_cleanup_requires_observed_generation: ' + str(error))
-        self.assertFalse(receipt.exists(), '[FAIL] cleanup_invalidates_its_own_failed_receipt')
-        receipt.write_bytes(observed)
-        changed = json.loads(observed)
-        changed['completed'] = ['defaults']
-        receipt.write_bytes(materials.canonical_json(changed))
-        competing = receipt.read_bytes()
-        api.invalidate_receipt(self.root, self.report, snapshot)
-        self.assertTrue(receipt.exists(), '[FAIL] cleanup_preserves_a_different_receipt')
-        self.assertEqual(competing, receipt.read_bytes())
-        self.assertEqual(base, (self.root / api.BASE_RECORD).read_bytes())
-        snapshot.unlink()
-        api.invalidate_receipt(self.root, self.report, snapshot)
-        self.assertEqual(competing, receipt.read_bytes(), '[FAIL] no_observed_receipt_means_no_cleanup')
-
-    def test_cleanup_snapshot_write_failure_preserves_accepted_receipt(self):
-        api = self.dev_repository()
-        snapshot = self.root / '.lake/cleanup-directory'
-        snapshot.mkdir()
-        with self.assertRaises(OSError, msg='[FAIL] snapshot_writer_error_stays_outside_seed_rejection'):
-            api.reuse(self.root, self.report, self.report, receipt_snapshot=snapshot)
-        self.assertFalse(api.probe(self.root, self.report)['needs_lake'],
-                         '[FAIL] snapshot_writer_error_preserves_accepted_receipt')
-        self.assertTrue(api.seed_format(self.report)['compatible'])
-        self.assertIsNotNone(api.read_seed_base(self.root))
-
-    def test_initial_receipt_observation_is_guarded_and_preparation_clears_it(self):
-        api = self.dev_repository()
-        snapshot = self.root / '.lake/observed-receipt'
         receipt = publication.member(self.report, api.SUFFIX)
         before_receipt = receipt.read_bytes()
-        before_base = (self.root / api.BASE_RECORD).read_bytes()
-        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
-        from lean_cache_release import cache_guard
-        try:
-            with cache_guard(self.root):
-                with self.assertRaises(BlockingIOError, msg='[FAIL] observation_requires_existing_guard'):
-                    api.observe_receipt(self.root, self.report, snapshot)
-        except AttributeError as error:
-            self.fail('[FAIL] initial_receipt_has_generation_scoped_cleanup: ' + str(error))
-        self.assertFalse(snapshot.exists())
-        api.observe_receipt(self.root, self.report, snapshot)
+        base = self.root / api.BASE_RECORD
+        before_base = base.read_bytes()
+        self.write('D5/A.lean', 'def a := 2\n')
+        result = api.reuse(self.root, self.report, self.report)
+        self.assertTrue(result['needs_lake'])
+        self.assertTrue(receipt.is_file(), '[FAIL] rejected_reuse_has_not_claimed_receipt')
         self.assertEqual(before_receipt, receipt.read_bytes())
-        self.assertEqual(before_base, (self.root / api.BASE_RECORD).read_bytes())
-        self.assertEqual(publication.digest(receipt), snapshot.read_text().strip())
-        api.prepare(self.root, self.report, receipt_snapshot=snapshot)
-        self.assertFalse(snapshot.exists(), '[FAIL] preparation_skips_redundant_cleanup')
-        self.assertFalse(receipt.exists())
+        self.assertEqual(before_base, base.read_bytes())
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_failed_reuse_publication_leaves_no_success_receipt(self):
+        api = self.dev_repository()
+        with patch.object(publication, 'publish', side_effect=OSError('injected publication failure')):
+            result = api.reuse(self.root, self.report, self.report)
+        self.assertTrue(result['needs_lake'])
+        self.assertFalse(publication.member(self.report, api.SUFFIX).exists(),
+                         '[FAIL] guarded_reuse_preparation_invalidates_receipt')
+        self.assertIsNone(api.read_seed_base(self.root))
+        self.assertFalse(api.seed_format(self.report)['compatible'])
 
     def test_custom_source_reuse_does_not_inherit_canonical_producer(self):
         api = self.dev_repository()
@@ -778,6 +740,7 @@ class ReuseTests(unittest.TestCase):
         self.write_policy()
         captured = api.capture(self.root)
         self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
+        api.prepare(self.root, self.report)
         api.seal(self.root, self.report, captured, publication.bundle_identity(self.report))
         self.assertFalse(publication.member(self.report, '.reuse.json').exists())
         self.policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])

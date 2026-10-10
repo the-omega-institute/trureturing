@@ -6,6 +6,7 @@ from pathlib import Path
 import select
 import shlex
 import shutil
+import signal
 import subprocess
 import sys
 import tarfile
@@ -116,25 +117,215 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
             first.communicate()
 
     def test_competing_preparation_cannot_remove_guarded_generation(self):
-        """Preparation must take the same exclusive guard as restore/publication."""
+        """Pin preparation itself after earlier receipt reads have completed."""
         self.canonical_release_fixture()
         receipt = publication.member(self.output, self.api.SUFFIX)
         base = self.root / self.api.BASE_RECORD
         before_receipt, before_base = receipt.read_bytes(), base.read_bytes()
+        self.assertTrue(self.api.seed_format(self.output)['compatible'])
         sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
         from lean_cache_release import cache_guard
         with cache_guard(self.root):
-            result = self.run_entry('--cache-miss-policy', 'build', direct=True)
+            result = subprocess.run([sys.executable, '-B',
+                str(self.root / 'tools/lean-inspector/reuse.py'), 'prepare',
+                '--repository', str(self.root), '--report', str(self.output)],
+                cwd=self.root, env=self.environment, text=True, capture_output=True, timeout=30)
         self.assertNotEqual(0, result.returncode,
                             '[FAIL] competing_preparation_must_not_cross_active_guard')
         self.assertTrue(receipt.is_file(), '[FAIL] competing_preparation_removed_active_receipt')
         self.assertTrue(base.is_file(), '[FAIL] competing_preparation_removed_active_base')
-        self.assertEqual(before_receipt, receipt.read_bytes(),
-                         '[FAIL] competing_preparation_removed_active_receipt')
-        self.assertEqual(before_base, base.read_bytes(),
-                         '[FAIL] competing_preparation_removed_active_base')
-        self.assertFalse(any(call.startswith('lake ') for call in self.calls),
-                         '[FAIL] competing_preparation_entered_lake_without_guard')
+        self.assertEqual(before_receipt, receipt.read_bytes())
+        self.assertEqual(before_base, base.read_bytes())
+        self.assertFalse((self.root / 'calls').exists(), '[FAIL] competing_preparation_never_enters_lake')
+
+    def test_reuse_failure_keeps_its_existing_receipt_and_base(self):
+        self.canonical_release_fixture()
+        self.fixture.write('D5/A.lean', 'def a := 1\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True, capture_output=True)
+        self.git_commit('matching report inputs', empty=True)
+        self.api.reuse(self.root, self.output, self.output)
+        receipt = publication.member(self.output, self.api.SUFFIX)
+        before_receipt = receipt.read_bytes()
+        base = self.root / self.api.BASE_RECORD
+        before_base = base.read_bytes()
+        self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["leanInspector/reportInspector"]'
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(23, result.returncode, '[FAIL] reuse_program_failure_propagates_exit')
+        self.assertIn('phase=programs exit=23', result.stderr)
+        self.assertTrue(receipt.is_file(), '[FAIL] reuse_program_failure_keeps_receipt')
+        self.assertEqual(before_receipt, receipt.read_bytes())
+        self.assertEqual(before_base, base.read_bytes(), '[FAIL] reuse_program_failure_keeps_base')
+        self.assertTrue(self.api.seed_format(self.output)['compatible'])
+
+    def test_reuse_failure_keeps_identical_competing_production(self):
+        self.assert_reuse_failure_keeps_competing_generation('production', identical=True)
+
+    def test_reuse_failure_keeps_different_competing_production(self):
+        self.assert_reuse_failure_keeps_competing_generation('production', identical=False)
+
+    def test_cancelled_entry_keeps_identical_competing_restore(self):
+        self.assert_reuse_failure_keeps_competing_generation('restore', identical=True)
+
+    def test_cancelled_entry_keeps_different_competing_restore(self):
+        self.assert_reuse_failure_keeps_competing_generation('restore', identical=False)
+
+    def assert_reuse_failure_keeps_competing_generation(self, replacement, *, identical):
+        """Reuse hit, writer guard released, B commits, then A fails or is cancelled."""
+        _, release, tag = self.canonical_release_fixture()
+        self.fixture.write('D5/A.lean', 'def a := 1\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True, capture_output=True)
+        self.git_commit('matching report inputs', empty=True)
+        self.prepare_production_entry()
+        self.api.reuse(self.root, self.output, self.output)
+        receipt = publication.member(self.output, self.api.SUFFIX)
+        observed = receipt.read_bytes()
+        gates = self.root / '.lake/cleanup-gates'
+        gates.mkdir()
+        notice, resume = gates / 'notice', gates / 'resume'
+        os.mkfifo(notice)
+        os.mkfifo(resume)
+        helper = self.root / 'bin/guarded-programs.py'
+        helper.write_text("""import os
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path.cwd() / 'tools/scripts/worktree'))
+from lean_cache_release import cache_guard
+with cache_guard(Path.cwd()):
+    pass
+if os.environ.get('FIXTURE_DELAY_FAILURE') == '1':
+    with open(os.environ['FIXTURE_NOTICE'], 'w') as channel:
+        channel.write('guard released\\n')
+    with open(os.environ['FIXTURE_RESUME']) as channel:
+        channel.read()
+    raise SystemExit(23)
+""")
+        self.script('tools/scripts/worktree/lean-cache-run.sh',
+                    'exec ' + shlex.quote(sys.executable) + ' -B ' + shlex.quote(str(helper)) + '\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'tools/scripts/worktree/lean-cache-run.sh'],
+                       check=True, capture_output=True)
+        head = self.git_commit('guarded program fixture', empty=True)
+        environment = dict(self.environment, FIXTURE_DELAY_FAILURE='1',
+            FIXTURE_NOTICE=str(notice), FIXTURE_RESUME=str(resume),
+            STRATALINT_LEAN_BUILD_TARGETS='["leanInspector/reportInspector"]')
+        read_notice = os.open(notice, os.O_RDONLY | os.O_NONBLOCK)
+        first = subprocess.Popen(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
+            '--repository', str(self.root), '--output', str(self.output),
+            '--log-dir', str(self.root / 'logs/first'), '--cache-miss-policy', 'fetch-or-fail'],
+            cwd=self.root, env=environment, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            ready, _, _ = select.select([read_notice], [], [], 30)
+            self.assertTrue(ready, '[FAIL] reuse_entry_reaches_program_guard_boundary')
+            self.assertEqual(b'guard released\n', os.read(read_notice, 1024))
+            self.assertEqual(observed, receipt.read_bytes(), '[FAIL] first_entry_reused_existing_receipt')
+            if replacement == 'restore':
+                # The tests-seat probes distinguish equal and unequal valid receipt bytes.
+                self.set_release_publication_mode(tag, 'cached', different=not identical)
+                second = subprocess.run(['/bin/bash',
+                    str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+                    'fetch', '--repository', str(self.root), '--refresh-stale',
+                    '--approved-tag', tag, '--approved-producer', release],
+                    cwd=self.root, env=self.environment, text=True, capture_output=True, timeout=30)
+                producer = release
+            else:
+                if not identical:
+                    artifact = self.root / '.lake/build/lean-inspector/report.zip'
+                    with zipfile.ZipFile(artifact) as archive:
+                        members = {name: archive.read(name) for name in archive.namelist()}
+                    name = publication.RAW + '.provenance.json'
+                    provenance = json.loads(members[name])
+                    for origin in provenance['module_origins'].values():
+                        origin['producer_sources_sha256'] = 'c' * 64
+                    members[name] = json.dumps(provenance).encode()
+                    with zipfile.ZipFile(artifact, 'w') as archive:
+                        for name, content in members.items():
+                            archive.writestr(name, content)
+                second = self.run_entry('--cache-miss-policy', 'build',
+                                        '--log-dir', str(self.root / 'logs/second'), direct=True)
+                producer = head
+            self.assertEqual(0, second.returncode,
+                             '[FAIL] competing_generation_completes: ' + second.stdout + second.stderr)
+            self.assertEqual(producer, self.api.read_seed_base(self.root))
+            before_receipt = receipt.read_bytes()
+            self.assertEqual(identical, observed == before_receipt,
+                             '[FAIL] requested_receipt_identity_control')
+            base = self.root / self.api.BASE_RECORD
+            before_base, before_seed = base.read_bytes(), self.seed_bytes()
+            if replacement == 'restore':
+                os.kill(first.pid, signal.SIGTERM)
+            with resume.open('w') as channel:
+                channel.write('resume failure\n')
+            stdout, stderr = first.communicate(timeout=30)
+            self.assertEqual(143 if replacement == 'restore' else 23, first.returncode,
+                             '[FAIL] failed_entry_preserves_exit: ' + stdout + stderr)
+            self.assertTrue(receipt.is_file(), '[FAIL] delayed_failure_keeps_competing_receipt')
+            self.assertEqual(before_receipt, receipt.read_bytes())
+            self.assertEqual(before_base, base.read_bytes(), '[FAIL] delayed_failure_keeps_competing_base')
+            self.assertEqual(producer, self.api.read_seed_base(self.root))
+            self.assertTrue(self.api.seed_format(self.output)['compatible'])
+            downloads = self.archive_downloads()
+            next_entry = self.run_entry('--cache-miss-policy', 'fetch-or-fail',
+                                        '--log-dir', str(self.root / 'logs/next'), direct=True)
+            self.assertEqual(0, next_entry.returncode, '[FAIL] next_entry_succeeds: ' + next_entry.stderr)
+            self.assertIn('complete-entry-reused', next_entry.stdout)
+            self.assertEqual(downloads, self.archive_downloads(), '[FAIL] next_entry_keeps_competing_seed')
+            self.assertEqual(before_seed, self.seed_bytes())
+            self.assertEqual(before_base, base.read_bytes())
+            self.assertEqual(producer, self.api.read_seed_base(self.root))
+        finally:
+            os.close(read_notice)
+            if first.poll() is None:
+                first.kill()
+            first.communicate()
+
+    def set_release_publication_mode(self, tag, mode, *, different=False):
+        assets = self.root / 'releases' / tag
+        report = assets / 'build/stratalint' / publication.RAW
+        if different:
+            provenance = publication.member(report, '.provenance.json')
+            record = json.loads(provenance.read_text())
+            for origin in record['module_origins'].values():
+                origin['producer_sources_sha256'] = 'c' * 64
+            provenance.write_text(json.dumps(record))
+        publication.publish(report, report, publication.coordinates(self.root), self.root,
+                            mode=mode, validate=False)
+        self.api.write_receipt(report, self.api.capture(self.root))
+        self.assertTrue(self.api.seed_format(report)['compatible'])
+        archive = assets / 'lean-build.tgz'
+        with tarfile.open(archive, 'w:gz') as output:
+            output.add(assets / 'build', arcname='build')
+        digest, size = publication.digest(archive), archive.stat().st_size
+        manifest = json.loads((assets / 'manifest.json').read_text())
+        manifest.update(archive_sha256=digest, archive_bytes=size)
+        manifest['parts'] = [dict(name=archive.name, sha256=digest, bytes=size)]
+        (assets / 'manifest.json').write_text(json.dumps(manifest))
+        metadata = json.loads((assets / 'metadata.json').read_text())
+        for asset in metadata['assets']:
+            path = assets / asset['name']
+            asset.update(digest='sha256:' + publication.digest(path), size=path.stat().st_size)
+        (assets / 'metadata.json').write_text(json.dumps(metadata))
+
+    def archive_downloads(self):
+        log = self.root / 'releases/calls.jsonl'
+        calls = [json.loads(line) for line in log.read_text().splitlines()] if log.exists() else []
+        return [call for call in calls if call[:2] == ['release', 'download']
+                and call[call.index('--pattern') + 1] != 'manifest.json']
+
+    def test_prepared_failure_leaves_no_receipt_and_next_entry_recovers(self):
+        self.canonical_release_fixture()
+        result = self.run_entry('--cache-miss-policy', 'build', direct=True)
+        self.assertEqual(23, result.returncode, '[FAIL] prepared_production_failure_propagates_exit')
+        receipt = publication.member(self.output, self.api.SUFFIX)
+        self.assertFalse(receipt.exists(), '[FAIL] prepared_production_failure_has_no_receipt')
+        self.assertIsNone(self.api.read_seed_base(self.root))
+        self.assertFalse(self.api.seed_format(self.output)['compatible'])
+        downloads = self.archive_downloads()
+        next_entry = self.run_entry('--cache-miss-policy', 'fetch-or-fail',
+                                        '--log-dir', str(self.root / 'logs/next'), direct=True)
+        self.assertEqual(23, next_entry.returncode, '[FAIL] recovered_stale_seed_reaches_lake')
+        self.assertGreater(len(self.archive_downloads()), len(downloads),
+                           '[FAIL] missing_receipt_takes_existing_recovery')
+        self.assertIn('"status":"unpacked"', next_entry.stdout)
+        self.assertFalse(receipt.exists(), '[FAIL] subsequent_prepared_failure_still_has_no_receipt')
 
     def test_failed_rollback_is_distinct_and_never_enters_lake(self):
         self.canonical_release_fixture()
