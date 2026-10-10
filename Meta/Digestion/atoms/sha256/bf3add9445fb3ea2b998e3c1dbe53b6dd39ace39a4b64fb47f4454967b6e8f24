@@ -1,0 +1,57 @@
+- 对任意记录事件 $E=(\omega,g)$，其概率为
+
+  $$
+  \Pr_{p_\kappa}(E)=
+  A_E+\kappa B_E,
+  $$
+
+  其中
+
+  $$
+  B_E=dM_\omega g.
+  $$
+
+#### 证明
+
+对 $V_m$ 的表达式用 $m$ 归纳。
+
+当 $m=0$ 时，$V_0=\operatorname{span}(G)$。
+
+若 $V_m$ 已由长度不超过 $m$ 的词张成，则对每个 $f=M_\omega g\in V_m$，
+
+$$
+M_{a,o}f=
+M_{a,o}M_\omega g
+$$
+
+对应长度增加一的记录。因此 $V_{m+1}$ 正好由长度不超过 $m+1$ 的词张成。
+
+若 $\mathcal B$ 包含 $G$，且每个 $M_{a,o}$ 保持 $\mathcal B$，归纳可得
+
+$$
+V_m\subseteq \mathcal B
+$$
+
+对所有 $m$ 成立，因而
+
+$$
+V_\infty\subseteq\mathcal B.
+$$
+
+最后，由
+
+$$
+p_\kappa=p_0+\kappa d
+$$
+
+直接得到
+
+$$
+p_\kappa M_\omega g=
+p_0M_\omega g+\kappa(dM_\omega g).
+$$
+
+证毕。
+
+---
+

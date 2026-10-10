@@ -64,6 +64,33 @@ Proposition 7.6 (`prop:moment-workload`) already supplies the complete
 moment–workload duality. These identities and their endpoint bookkeeping
 are reused, not delivered as new project mathematics.
 
+## The existing prime-local bridge
+
+Theorem `thm:direct-bridge`, §4 of the same archived manuscript,
+starts with an actual integer $N>e$ satisfying
+
+$$
+N/p>e,\qquad G(N)\ge G(N/p)\quad(p\mid N),
+\qquad G(N)\ge G(Np)\quad(p\text{ prime}).
+$$
+
+It directly gives $N=C_A$, $\Phi_{\rm CA}(A)=A$ and an event-free
+scale $A=\log N$, with price $1/(A\log A)$. The statement is about
+every proper prime-local Robin well; neither GA1 alone nor an arbitrary
+self-tangent return supplies its insertion hypothesis. This bridge is
+reused without reconstructing its neutral-layer proof.
+
+Lemma `lem:external-extremal-input` and Theorem
+`thm:persistent-obstruction`, §11, select the least global maximizer
+of $G(n)$ on $n>5040$ under RH failure and place this single proper
+GA1–GA2 source at a regular return. They state no unbounded regular
+family with a fixed power-sized excess. The
+[same-source quantified selection](../Arith/caveney2012sacaga.md#the-same-power-excess-family-also-supplies-proper-ga1-sources)
+uses the prime-local bridge on its selected family; its family and excess
+quantifiers are separate from that fixed-maximizer reduction. These
+source statements and their hypothesis correspondence were inspected;
+no independent full proof audit or Lean certification is claimed.
+
 ## The sharp two-moment statement is directly reusable
 
 Theorem 7.7 (`thm:sharp-two-moment`), §7.4, applies to any probability
@@ -506,3 +533,108 @@ replacing it by a divisor-count record nor assuming a later XA retains
 that source. A usable joint-prime supplier must apply at the same actual
 selected integer and control the full Robin-normalized comparison;
 the cited box geometry does not supply it.
+
+## Local root spacing controls the sign-exact first-layer sampling error
+
+Use the existing full largest optimizer $C_b$ and let
+$R(n)=\log G(n)-\gamma$. For $X\ge4$ and
+$X\le u<v\le3X$, put $I=[u,v]$ and $h=v-u$.
+For any real threshold $t$, let $K_I(t)$ count the complete
+positive-length plateaus intersecting $I$ in positive length and
+satisfying $R(C_b)>t$. Define the actual post-event sample count
+
+$$
+P_I(t)=\sum_{\substack{p\text{ prime}\\u\le\tau_{p,1}<v}}
+\mathbf1_{\{R(C_{\tau_{p,1}})>t\}}.
+$$
+
+Every simultaneous layer is included in $C_{\tau_{p,1}}$.
+The [existing actual-event charging](stadlmann2022meansquaregaps.md)
+applies with this exact full-state sign, before its prime-prefix
+upper relaxation. Distinct first-prime samples give distinct
+plateaus, and only an initial boundary plateau or higher-only
+event can create an extra counted state. Consequently
+
+$$
+0\le K_I(t)-P_I(t)\le1+H_I,\qquad
+H_I=\#\{(p,j):j\ge2,\ u\le\tau_{p,j}<v\}.
+\tag{LS1}
+$$
+
+This reuses the existing bookkeeping rather than giving a second
+proof of it. The local bound below adds a dependence on the actual
+interval length; it does not estimate either sample's Robin sign.
+
+For the usual real layer root $x_j(b)>1$, use
+
+$$
+F_j(x)=\frac{\log(1+1/S_j(x))}{\log x},\qquad
+S_j(x)=\sum_{k=1}^j x^k,\qquad F_j(x_j(b))=g(b).
+$$
+
+The classical decreasing threshold has limits $\infty$ and $0$
+at the two ends of $(1,\infty)$, so its inverse root is well
+defined. For $x\ge2$ and $j\ge2$, logarithmic differentiation gives
+
+$$
+-\frac{F_j'(x)}{F_j(x)}
+=\frac{S_j'(x)}{S_j(x)(S_j(x)+1)\log(1+1/S_j(x))}
++\frac1{x\log x}\ge\frac j{4x}.
+\tag{LS2}
+$$
+
+Indeed, $\log(1+1/S_j)\le1/S_j$, $S_j+1\le2S_j$,
+$S_j\le2x^j$ and $S_j'\ge jx^{j-1}$ give the displayed
+lower bound. With $-g'(b)/g(b)\le2/b$ for $b\ge e$,
+implicit differentiation yields
+$0<x_j'(b)\le8x_j(b)/(jb)$ wherever $x_j(b)\ge2$.
+
+Put $Q_X=3X\log(3X)/\log2$ and
+$d_X=\lfloor\log Q_X/\log2\rfloor$.
+The [existing activation cutoff](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+§420.2, proof preceding (420.5), gives $p^j<Q_X$ for every layer active
+by $3X$, hence only $j\le d_X$ can contribute. On the effective
+part $x_j\ge2$ it also gives $x_j<Q_X^{1/j}$. For $j=2$,
+comparison at $x=\sqrt{2b}$ gives $x_2(b)<\sqrt{2b}$:
+$x^2\log x=b\log(2b)>b\log b$ and
+$F_2(x)<1/(x^2\log x)<g(b)$.
+
+Set $r_j(b)=\max(2,x_j(b))$. This increasing root has at most
+one clipping corner; its derivative bound can be integrated on
+either side. Integer counting in its image, followed by the
+derivative estimate, therefore gives the finite bound
+
+$$
+\begin{aligned}
+H_I&\le d_X+\sum_{j=2}^{d_X}[r_j(v)-r_j(u)]\\
+&\le d_X+\frac{8h}{X}
+\left[\frac{\sqrt{6X}}2+Q_X^{1/3}\log d_X\right].
+\end{aligned}
+\tag{LS3}
+$$
+
+The harmonic sum for $j\ge3$ is at most $\log d_X$.
+Root endpoints with $u=\tau_{p,j}$ or $v=\tau_{p,j}$ are
+covered by the one-integer allowance per layer; the right price
+endpoint remains excluded in $H_I$. Together with (LS1), this gives
+uniformly over these intervals and all real $t$,
+
+$$
+\boxed{0\le K_I(t)-P_I(t)
+\ll h/\sqrt X+\log X.}
+\tag{LS4}
+$$
+
+For the particular fixed exponent of the existing selected-source
+interval, $h=\lambda A^{1-\eta/2}e^{(\log A)^{1/4}/2}$,
+take $X=A$. Its sampling error relative to $h/\log A$ is
+$O(\log A/\sqrt A+(\log A)^2/h)=o(1)$.
+The interval and threshold may depend on actual arithmetic data;
+the bound is pointwise and assumes no independence.
+
+Unlike a separate prime-product upper envelope, $P_I$ keeps the
+complete exponent tail and actual size in every sign test. No
+upper estimate on $P_I(t)$ or its positive-part moments is supplied.
+This is a paper-level application of the layer geometry and existing
+charging, not a new prime theorem, originality claim, Lean
+certification, complete signed Robin estimate or RH proof.

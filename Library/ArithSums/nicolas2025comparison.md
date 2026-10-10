@@ -712,6 +712,147 @@ The full integral over $[A,\infty)$ remains in (G9).
 This paper-level improvement does not prove RH, and finite source
 checks and source inspection do not certify its external premises.
 
+## The same effective allowance on actual GA2 cores
+
+The allowance $\mathcal E$ in (G7) also bounds the actual extended core
+of an arbitrary large GA2 integer. This uses the envelope theorem at
+the original integer, without identifying it with an envelope maximizer
+or a CA optimizer. It does not strengthen the independent $D^*(A)$.
+
+Let $N$ be GA2, $A=\log N$, $L=\log A$, and $T=\sqrt A L$, with
+$N\ge N^{(0)}$ and $L\ge26$. The
+[GA2 support argument](../Analytic/polak2026finiterobinca.md#application-to-arbitrary-ga2-sources-including-extra-prime-support)
+gives every $p\le A$ as a divisor of $N$. In particular
+$\vartheta(A)\le A$. Let $x$ be the last prime for which
+$\vartheta(x)\le A<\vartheta(x^+)$; its prime set includes all primes
+at most $A$. Numeric $x\ge A$ is unnecessary. As above,
+$\Phi(N)=\mathcal P(x)$ and $Z(N)\le\Sigma(N)$, so
+
+$$
+\frac{\mathcal P(x)}{Z(N)}
+\ge\frac{\Phi(N)}{\Sigma(N)}\ge R_-(N).
+\tag{A1}
+$$
+
+Every prime $q$ in the suffix $(A,x]$ satisfies
+$\log(1+1/q)<1/q<\log q/(A\log A)$, whether or not $q$ divides
+$N$. The Euler-factor splitting used in (G3), followed by the same
+integer-tail payment (G4), therefore gives
+
+$$
+\begin{aligned}
+\log\frac{\mathcal P(x)}{\mathcal P(A)}
+&\le\frac{\vartheta(x)-\vartheta(A)}{A\log A}
+ +\sum_{q>A}-\log(1-q^{-2})\\
+&<\frac{\vartheta(x)-\vartheta(A)}{A\log A}+\frac1{A-1}.
+\end{aligned}
+\tag{A2}
+$$
+
+The non-strict first comparison and strict positive tail allowance also
+cover an empty suffix. No absent-prime premise is used here.
+
+The actual core in the linked extra-support identity is
+
+$$
+\begin{aligned}
+K_N(A)
+&=\frac{A-\vartheta(A)}{A\log A}
+   +\log\frac{\mathcal P(A)}{Z(N)}-C_{\rm pp}(A)\\
+&=\sum_{p\le A}\Phi_{p,A}(v_p(N))-C_{\rm pp}(A)
+  +\sum_{\substack{p>A\\p\mid N}}\Xi_{p,A}(v_p(N)),\\
+\Delta(N)&=I_\psi(A)+K_N(A).
+\end{aligned}
+\tag{A3}
+$$
+
+Combining (A1)–(A2) and $\vartheta(x)\le A$ gives
+
+$$
+K_N(A)>\log R_-(N)-\frac1{A-1}-C_{\rm pp}(A).
+\tag{A4}
+$$
+
+The existing estimates used in (G6)–(G7) apply to this right-hand side
+unchanged. They give
+
+$$
+\boxed{T K_N(A)>\mathcal E(L)>D_{\rm lb}(A)+0.01.}
+\tag{A5}
+$$
+
+The $D_{\rm lb}$ comparison is (G8), not a new computation. Since GA2
+gives $\Delta(N)\le0$, every such actual source must satisfy
+
+$$
+\boxed{T I_\psi(A)<-\mathcal E(L).}
+\tag{A6}
+$$
+
+Thus the [conditional unbounded GA2 family](../Arith/caveney2012sacaga.md#the-published-unbounded-ga2-supplier-under-rh-failure)
+can be used with this stronger allowance. An eventual lower bound
+$T I_\psi(A)\ge-\mathcal E(L)$ on all sufficiently large GA2 clocks
+would contradict that family under RH failure. This signed lower bound
+remains unproved.
+
+The result estimates $K_N(A)$, not $D^*(A)$: the inequality
+$K_N(A)\ge D^*(A)$ does not transport a lower bound backwards to the
+minimum. The selected CA source has equality by (G1); arbitrary GA2
+sources have no such equality here. This is a source-scope application
+of the existing envelope and payment estimates, without a new core
+theorem, originality claim, finite verification, or Lean result.
+
+### All-integer forward comparisons bound the envelope deficit
+
+The CNS tail maximizers also retain more information than GA2 alone
+provides for this argument. Let $N>e$ satisfy
+$G(m)\le G(N)$ for every integer $m\ge N$, and keep the existing
+$D_N=\log(\Sigma(N)/Z(N))\ge0$. Choose an actual $d\le N$ attaining
+$\Sigma(N)$ and put
+
+$$
+m=d\left\lceil\frac Nd\right\rceil,
+\qquad N\le m<N+d\le2N.
+$$
+
+Divisibility monotonicity gives $Z(d)\le Z(m)$. Applying the same
+forward record condition at this actual $m$ gives
+
+$$
+\frac{\Sigma(N)}{Z(N)}
+\le\frac{Z(m)}{Z(N)}
+\le\frac{\log\log m}{\log\log N}
+<\frac{\log\log(2N)}{\log\log N}.
+$$
+
+Hence, with the same $A=\log N$ and $L=\log A$,
+
+$$
+\boxed{0\le D_N
+<\log\frac{\log(A+\log2)}{\log A}
+<\frac{\log2}{A\log A}.}
+$$
+
+The last comparison is the strict concavity tangent used in (G2).
+The case $d=N$ or $m=N$ has $D_N=0$ and satisfies these strict
+positive allowances. The constructed $m$ need not be a multiple of
+$N$, so this proof uses the all-integer forward comparisons of the
+published tail maximizers, rather than just their GA2 comparisons.
+
+Along the CNS family under RH failure,
+
+$$
+0\le\sqrt A\log A\,D_N<\frac{\log2}{\sqrt A}\longrightarrow0.
+$$
+
+Thus replacing $Z(N)$ by $\Sigma(N)$ loses only a vanishing amount at
+the original critical scale on these actual sources. Conversely, an
+upper bound of this size cannot supply a fixed positive lower funding
+term from $D_N$. It neither identifies an exponent profile nor makes
+$N$ CA or GA1. This is a short application of standard divisibility
+monotonicity and the existing source comparisons, without a priority
+claim, new Lean wrapper, or signed-tail estimate.
+
 ## A fixed positive scale mixture cannot remove the functional-equation weight
 
 The signed formula above and the actual-source condition (G9) are

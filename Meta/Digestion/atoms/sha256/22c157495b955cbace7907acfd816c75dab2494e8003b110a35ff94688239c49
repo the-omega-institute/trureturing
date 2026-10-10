@@ -1,0 +1,13 @@
+\[
+V^{(r+1)}
+=
+\operatorname{span}
+\left(
+V^{(r)}
+\cup
+\bigcup_a U_aV^{(r)}
+\right)
+\]
+
+最终闭包为：
+
