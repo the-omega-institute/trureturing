@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Dyadic leaf exchanges force every larger atom of an optimal real law to terminate at its least strict rounding depth. -/
+   digest: Leaf exchange forces strict dyadic rounding of larger atoms in optimal real laws. -/
 
 import D5.S3.Arith.FibonacciAtomic.OptimalLawStrictSlope
 import D5.S1.Digit.RadixFloorDigit

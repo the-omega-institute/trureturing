@@ -33,7 +33,7 @@ internal sealed class StrictRoundingDocument : IScribeDocumentDefinition
             "Every atom above the minimum of an attaining real law has a least dyadic depth and strict rounding.",
             H("Strict Dyadic Rounding of Optimal Laws"), Blocks(
                 Paragraph(Text("RealVector(m) denotes the real functions on Fin m. The parameter m is natural; p is a real vector on Fin m and k is an index of its least mass. Optimizer(m,p,k) means m>=2, every coordinate is positive, their sum is one, p(k)<=p(i) for every i, and L(p)/p(k)=alpha(m). The optimization domain includes every such real law. F(x,d) is floor(2^d x), L is its dyadic residual cost, and b(x,D)=F(x,D)-2F(x,D-1).")),
-                Paragraph(Text("RealVector(m) is the space of real functions on Fin m. For real x and natural d, F(x,d) is the integer floor of 2^d x. The binary digit b(x,D) is F(x,D)-2F(x,D-1). All vectors below are indexed by Fin m. Write delta=2^(-D), R(p,d)=2^d-sum_i F(p(i),d), and L(p)=sum_d R(p,d)/2^d.")),
+                Paragraph(Text("Write delta=2^(-D), R(p,d)=2^d-sum_i F(p(i),d), and L(p)=sum_d R(p,d)/2^d.")),
                 Describe.Lean(DescribeId.Create("donor-prefix"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/StrictRounding.donor_prefix"),
                     H("Coarser prefixes survive a donor debit"), StatementSource.FromAuthor(Disp(prefix)),
