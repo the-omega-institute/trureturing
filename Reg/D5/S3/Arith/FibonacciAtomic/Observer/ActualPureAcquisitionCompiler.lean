@@ -201,4 +201,101 @@ theorem observer_no_dependence : ¬ ObservationalDependence observerSignature ob
 #print axioms price_bridge
 #print axioms observer_no_dependence
 
+namespace NodeDepth
+
+abbrev signature : Signature where
+  Params := Source
+  State _ := Address
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+noncomputable def actual : Realization signature :=
+  realize signature (fun _ _ q => q.length) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (U : Source) (q : Address), q ∈ nodes U →
+    R.readout () U q + 1 ≤ U.length
+
+theorem bridge : (type_of% (@nodes_length)) ↔ arena.Law actual := Iff.rfl
+
+theorem actual_law : arena.Law actual := nodes_length
+
+noncomputable def bad : Realization signature :=
+  realize signature (fun _ U _ => U.length) (fun e => nomatch e)
+
+theorem bad_law : ¬ arena.Law bad := by
+  intro law
+  have impossible := law (.of true) [] (by simp [nodes])
+  exact (by decide : ¬ ((1 : Nat) + 1 ≤ 1)) impossible
+
+theorem variation : Variation arena actual := ⟨actual_law, bad, bad_law⟩
+
+theorem sensitivity : Sensitivity arena actual := by
+  constructor
+  · intro i
+    refine ⟨bad, ?_, ?_, bad_law⟩
+    · intro j different
+      exact (different (Subsingleton.elim j i)).elim
+    · funext e
+      cases e
+  · intro e
+    cases e
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨.mul (.of true) (.of false), [], [false], ?_⟩
+  change (0 : Nat) ≠ 1
+  decide
+
+noncomputable def family : Registration arena (type_of% (@nodes_length)) where
+  actual := actual
+  bridge := bridge
+  variation := variation
+  sensitivity := sensitivity
+  dependence := dependence
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, _, _,
+    0, 0, 0, 0, 0, 0, 0, 0, 0} (@nodes_length) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.NodeDepth.unit
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.NodeDepth.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := true
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(True.intro : True)⟩ True.intro
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .evidence ⟨(True.intro : True)⟩ True.intro
+  sensitivity := .evidence ⟨(True.intro : True)⟩ True.intro
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms family
+#print axioms registration
+
+end NodeDepth
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler

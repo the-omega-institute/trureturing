@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-output-resolved-instrument-closure"
+path = "docs/develop/theory/AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

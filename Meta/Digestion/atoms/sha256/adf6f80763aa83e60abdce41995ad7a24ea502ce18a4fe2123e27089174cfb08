@@ -1,0 +1,37 @@
+## 5. 五、隐藏关系何时会在未来显现？
+
+静态隐藏不等于永远隐藏。它是否会影响未来，取决于允许的动作如何作用。
+
+设：
+
+$$
+T_a:\Sigma\to\Sigma
+$$
+
+是一个确定动作，定义函数拉回：
+
+$$
+U_af=f\circ T_a
+$$
+
+当前只观察：
+
+$$
+V=\operatorname{span}\{1,x,y,z\}
+$$
+
+对于任意 $f\in V$，有：
+
+$$
+\mathbb E_p[U_af]=
+\mathbb E_p[\pi_V(U_af)]
++
+J(U_af)\kappa
+$$
+
+其中：
+
+$$
+\pi_V(U_af)=U_af-J(U_af)xy
+$$
+
