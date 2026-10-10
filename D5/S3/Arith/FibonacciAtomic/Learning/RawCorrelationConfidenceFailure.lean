@@ -7,6 +7,7 @@
    digest: Raw correlation strictly misorders the actual teacher with limiting probability one half. -/
 
 import D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities
+import D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Logic.Equiv.Prod
@@ -325,14 +326,17 @@ theorem tie_vanishes (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
 
 end LazyLimit
 
+local notation "eventMass" p:max E:max =>
+  _root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass
+    p (Finset.univ.filter E) Finset.univ
+
 namespace Conditioning
 
-def eventMass {α : Type*} [Fintype α] (p : α → ℝ) (E : α → Prop) : ℝ :=
-  ∑ x, if E x then p x else 0
 
 /-- Nonnegative masses give nonnegative event masses. -/
 theorem event_mass_nonneg {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x, 0 ≤ p x)
     (E : α → Prop) : 0 ≤ eventMass p E := by
+  simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
   apply Finset.sum_nonneg
   intro x hx
   split_ifs
@@ -342,6 +346,7 @@ theorem event_mass_nonneg {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x
 /-- Event inclusion preserves the ordering of finite nonnegative masses. -/
 theorem event_mass_mono {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x, 0 ≤ p x)
     (E A : α → Prop) (h : ∀ x, E x → A x) : eventMass p E ≤ eventMass p A := by
+  simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
   apply Finset.sum_le_sum
   intro x hx
   by_cases he : E x
@@ -352,7 +357,7 @@ theorem event_mass_mono {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x, 
 /-- An event and its complement partition the total finite mass. -/
 theorem event_mass_compl {α : Type*} [Fintype α] (p : α → ℝ) (E : α → Prop) :
     eventMass p E + eventMass p (fun x => ¬ E x) = ∑ x, p x := by
-  unfold eventMass
+  simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
   rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro x hx
@@ -383,7 +388,8 @@ theorem conditioning_bound {α : Type*} [Fintype α] (p : α → ℝ)
     dsimp [y,c] at *
     linarith
   have hxy : eventMass p A = x + y := by
-    dsimp [x,y,eventMass]
+    dsimp [x,y]
+    simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro z hz
@@ -444,32 +450,34 @@ theorem raw_clean_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
   have hprob : ∑ w, p w = 1 := by
     dsimp [p]
     rw [← Fintype.sum_pow, total_mass, one_pow]
-  have hE : Conditioning.eventMass p E = (1 - 12 * rho ^ 3) ^ m := by
-    unfold Conditioning.eventMass
+  have hE : eventMass p E = (1 - 12 * rho ^ 3) ^ m := by
+    simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
     dsimp [p,E]
     convert all_clean_mass rho a m using 1
     apply Finset.sum_congr
     · ext w; simp
     · intro w hw
       by_cases he : ∀ i, ¬ reverse (w i) <;> simp [he]
-  have hc : 0 < Conditioning.eventMass p E := by
+  have hc : 0 < eventMass p E := by
     rw [hE]
     exact pow_pos (clean_denominator_pos rho hr hr8) m
   have h := Conditioning.conditioning_bound p hp hprob E A hc
   have hcond : cleanNegative rho a m =
-      Conditioning.eventMass p (fun w => E w ∧ A w) / Conditioning.eventMass p E := by
+      eventMass p (fun w => E w ∧ A w) / eventMass p E := by
     rw [hE]
     unfold cleanNegative
     simp_rw [← clean_sample_factor]
-    unfold Conditioning.eventMass cleanSampleMass
+    unfold cleanSampleMass
+    simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
     rw [Finset.sum_div]
     apply Finset.sum_congr rfl
     intro w hw
     by_cases he : ∀ i, ¬ reverse (w i)
     <;> by_cases hn : (∑ i, score (w i)) < 0
     <;> simp [E,A,p,he,hn]
-  have hA : Conditioning.eventMass p A = misorder rho a m := by
-    unfold Conditioning.eventMass misorder
+  have hA : eventMass p A = misorder rho a m := by
+    unfold misorder
+    simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
     dsimp [p,A]
     apply Finset.sum_congr
     · ext w; simp

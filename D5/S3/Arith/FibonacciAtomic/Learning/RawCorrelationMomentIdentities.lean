@@ -596,8 +596,11 @@ theorem signed_sum_subset {α : Type*} [Fintype α] (s : Finset α) :
     (∑ i, sign ((boolSubset α).symm s i)) = 2 * (s.card : ℤ) - (Fintype.card α : ℤ) := by
   have term (i : α) : sign ((boolSubset α).symm s i) =
       (if i ∈ s then (2 : ℤ) else 0) - 1 := by
-    change D5.S3.Arith.GoldenPell.signedInt (!(decide (i ∈ s))) 1 = _
-    by_cases hi : i ∈ s <;> simp [D5.S3.Arith.GoldenPell.signedInt, hi]
+    simp only [Equiv.symm_trans_apply, Equiv.symm_symm]
+    by_cases hi : i ∈ s <;>
+      simp [D5.S3.Arith.GoldenPell.signedInt, Equiv.piCongrRight,
+        Equiv.propEquivBool, hi]
+    all_goals simpa only [Equiv.symm, Fintype.finsetEquivSet] using hi
   simp_rw [term]
   simp [Finset.sum_sub_distrib, Finset.sum_ite_mem, mul_comm]
 
@@ -754,8 +757,8 @@ theorem difference_formula (w : Record) :
     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
     Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail,
     Function.comp_apply, Fin.succ_zero_eq_one] at ht hu
-  norm_num only [Fin.reduceSucc, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two] at ht hu
+  simp only [Fin.succ_one_eq_two, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail] at ht hu
   unfold difference
   rw [ht, hu]
   ring

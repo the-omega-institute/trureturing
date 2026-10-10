@@ -58,6 +58,15 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
                     + "one at each sample and is supported on maximum-score candidates. "
                     + "It may depend on rho and on the whole sample. Its probability of "
                     + "not returning the true teacher has lower limit at least 1/2."),
+            Node("result", "Population moments and the uniform-confidence obstruction",
+                Seq(Forall, Sp, V("a"), Comma, Sp, V("K"), Comma, Sp,
+                    D(0), Lt, V("a"), Le, D(1), Sp, Land, Sp, D(0), Lt, V("K"),
+                    Sp, Implies, Sp, Call("actualConfidenceObstruction", V("a"), V("K"))),
+                "The combined statement includes legality for every 0<rho<=1/8, the "
+                    + "pointwise difference and all five actual-law moment relations, the "
+                    + "strict-misordering limit, and both deterministic and randomized "
+                    + "maximum-score failure bounds. All these clauses use the same "
+                    + "complete-record mass and sample count."),
             Paragraph(Text("The conclusion concerns finite-sample confidence despite a "
                 + "positive population score gap. It does not assert reversed population "
                 + "ordering or an optimal raw-score sample exponent. The symmetric random "

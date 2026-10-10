@@ -59,8 +59,10 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
                     EqOf(Call("variance"), Seq(Call("kappa", V("a")), V("d"), Minus,
                         D(9), Pow(V("a"), 2), Pow(V("rho"), 6))),
                     Seq(D(0), Lt, Call("mean"))]),
-                "For all rho>0 and a>0, d is the complete-record expectation of D squared, "
-                    + "normGap is the expectation of (C_true-1)^2-(C_rival-1)^2, mean is "
+                "The identities are finite-sum identities for all rho>0 and a>0. For "
+                    + "0<rho<=1/8 and 0<a<=1, the mass is a probability law: d is the "
+                    + "expectation of D squared, normGap is the expectation of "
+                    + "(C_true-1)^2-(C_rival-1)^2, mean is "
                     + "the expectation of score, variance is its second moment minus its "
                     + "squared mean, and kappa(a)=(8+a)/12. These formulas integrate the "
                     + "actual joint window-label mass, with no independent endpoint replacement."),
