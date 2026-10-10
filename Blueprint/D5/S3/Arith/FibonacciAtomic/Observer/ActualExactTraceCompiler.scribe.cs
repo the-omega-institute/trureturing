@@ -16,6 +16,7 @@ internal sealed class ActualExactTraceCompilerDocument : IScribeDocumentDefiniti
             Def("exactAction", "Exact compiler action", "Control reads the full logical coarse history and the sink halts false."),
             Def("exactTransition", "Exact compiler transition", "A query extends the full history when retained and otherwise enters the absorbing sink."),
             Def("strategyPrefixes", "Strategy prefix carrier", "The finite union of all coarse prefixes of the original terminal traces over the allowed source domain."),
+            Theorem("strategy_prefix_mem", "Original actual prefix belongs to the compiler carrier", "For every N, Strategy pi, allowed source U and raw history h prefixing terminal(pi,U).trace, kappa_hist(h) belongs to strategyPrefixes(N,pi). This preserves the original literal addresses, repetitions and coarse chronological order."),
             Def("strategyStateCard", "Strategy carrier cardinality", "The exact state count obtained from the strategy prefix carrier and compatible first-cache fibers."),
             Theorem("strategy_state_card", "Strategy state cardinality", "The strategy-indexed exact carrier has the stated finite cardinality."),
             Def("exactObserver", "Exact finite observer", "The finite carrier supplies an input-independent empty row, full-history coarse control and the first-occurrence raw decoder."),

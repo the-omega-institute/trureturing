@@ -8,7 +8,8 @@ set_option relaxedAutoImplicit false
 open D5.S3.Arith.FibonacciAtomic.Observer.ActualExactSupportPruning
 open D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverFiniteTable
 open D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination
-open D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Strategy)
+open D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Reply Strategy)
+open D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source)
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactSupportPruning
@@ -113,5 +114,110 @@ theorem table_law : tableArena.{u}.Law tableActual := @exact_competitor_table_co
 #print axioms no_dependence
 #print axioms table_bridge
 #print axioms table_law
+
+abbrev tailSignature : Signature where
+  Params := RawHistory
+  State _ := RawHistory
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := RawHistory
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+noncomputable def tailActual : Realization tailSignature :=
+  realize tailSignature (fun _ h s => h ++ s) (fun e => nomatch e)
+
+abbrev tailArena : Arena where
+  signature := tailSignature
+  Law R := ∀ {E : Type u} [Fintype E] (M : Observer E) (U : Source)
+    {e : E} {h : RawHistory}, ActualPrefix M U e h →
+    ∀ {t : RawHistory} {f : E} {b : Bool}, Run M U M.e0 t f b →
+      ∃ s, Run M U e s f b ∧ R.readout () h s = t
+
+theorem tail_bridge : (type_of% (@prefix_run_tail.{u})) ↔ tailArena.{u}.Law tailActual := Iff.rfl
+
+theorem tail_law : tailArena.{u}.Law tailActual := @prefix_run_tail.{u}
+
+theorem tail_dependence : ObservationalDependence tailSignature tailActual := by
+  intro i
+  exact ⟨[], [], [⟨[], Reply.absent⟩], by simp [tailActual, realize]⟩
+
+#print axioms tail_bridge
+#print axioms tail_law
+#print axioms tail_dependence
+
+private def haltObserver : Observer (ULift.{u} Unit) where
+  e0 := ⟨()⟩
+  action _ := .inr false
+  transition e _ := e
+  decoder _ := []
+  decoded_nodup _ := by simp
+
+noncomputable def tailBad : Realization tailSignature :=
+  realize tailSignature (fun _ _ _ => [⟨[], Reply.absent⟩]) (fun e => nomatch e)
+
+theorem tail_bad : ¬ tailArena.{u}.Law tailBad := by
+  intro law
+  obtain ⟨s, _, impossible⟩ := law haltObserver (.of false)
+    ActualPrefix.initial (Run.halt (b := false) rfl)
+  change ([⟨[], Reply.absent⟩] : RawHistory) = [] at impossible
+  cases impossible
+
+theorem tail_variation : Variation tailArena.{u} tailActual := ⟨tail_law, tailBad, tail_bad⟩
+
+theorem tail_sensitivity : Sensitivity tailArena.{u} tailActual := by
+  constructor
+  · intro i
+    refine ⟨tailBad, ?_, ?_, tail_bad⟩
+    · intro j different
+      exact (different (Subsingleton.elim j i)).elim
+    · funext e
+      cases e
+  · intro e
+    cases e
+
+noncomputable def tailFamily : Registration tailArena.{u} (type_of% (@prefix_run_tail.{u})) where
+  actual := tailActual
+  bridge := tail_bridge
+  variation := tail_variation
+  sensitivity := tail_sensitivity
+  dependence := tail_dependence
+
+#print axioms tailFamily
+
+noncomputable def tailRegistration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@prefix_run_tail.{u}) (Realization tailSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactSupportPruning.tailUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactSupportPruning.tailFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨tailArena.{u}⟩
+  objectArena := .source ⟨tailArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := true
+  realization := .source tailArena.{u} ⟨tailFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(True.intro : True)⟩ True.intro
+  readout := some (realize tailSignature tailActual.readout tailActual.anchor)
+  variation := .evidence ⟨(True.intro : True)⟩ True.intro
+  sensitivity := .evidence ⟨(True.intro : True)⟩ True.intro
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualExactSupportPruning
+    definition := none
+    coordinates := #[5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 11
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms tailRegistration
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactSupportPruning

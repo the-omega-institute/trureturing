@@ -8,7 +8,7 @@ set_option relaxedAutoImplicit false
 open D5.S3.Arith.FibonacciAtomic.Observer.ActualExactTraceCompiler
 open D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization (allowedSources)
 open D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination
-open D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Strategy terminal)
+open D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address Reply Strategy terminal)
 open D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory (kappa_hist)
 open D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source)
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -150,5 +150,111 @@ theorem observer_no_dependence : ¬ ObservationalDependence observerSignature ob
 #print axioms prefix_bridge
 #print axioms control_bridge
 #print axioms observer_no_dependence
+
+abbrev membershipSignature : Signature where
+  Params := Unit
+  State _ := RawHistory
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := CoarseHistory
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+noncomputable def membershipActual : Realization membershipSignature :=
+  realize membershipSignature (fun _ _ h => kappa_hist h) (fun e => nomatch e)
+
+abbrev membershipArena : Arena where
+  signature := membershipSignature
+  Law R := ∀ (N : Nat) (π : Strategy) {U : Source}, Allowed N U →
+    ∀ {h : RawHistory}, h.IsPrefix (terminal π U).1 →
+      R.readout () () h ∈ strategyPrefixes N π
+
+theorem membership_bridge : (type_of% (@strategy_prefix_mem)) ↔
+    membershipArena.Law membershipActual := Iff.rfl
+
+theorem membership_law : membershipArena.Law membershipActual := strategy_prefix_mem
+
+theorem membership_dependence : ObservationalDependence membershipSignature membershipActual := by
+  intro i
+  exact ⟨(), [], [⟨[], Reply.absent⟩],
+    by simp [membershipActual, realize, kappa_hist]⟩
+
+#print axioms membership_bridge
+#print axioms membership_law
+#print axioms membership_dependence
+
+private noncomputable def outsidePrefixes : CoarseHistory :=
+  List.replicate (1 + (strategyPrefixes 1 _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.fallback).sup List.length)
+    ⟨[], none⟩
+
+noncomputable def membershipBad : Realization membershipSignature :=
+  realize membershipSignature (fun _ _ _ => outsidePrefixes) (fun e => nomatch e)
+
+theorem membership_bad : ¬ membershipArena.Law membershipBad := by
+  intro law
+  have member := law 1 _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.fallback (U := .of false)
+    le_rfl (h := []) List.nil_prefix
+  change outsidePrefixes ∈ strategyPrefixes 1 _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.fallback at member
+  have bound := Finset.le_sup (f := List.length) member
+  simp only [outsidePrefixes, List.length_replicate] at bound
+  omega
+
+theorem membership_variation : Variation membershipArena membershipActual :=
+  ⟨membership_law, membershipBad, membership_bad⟩
+
+theorem membership_sensitivity : Sensitivity membershipArena membershipActual := by
+  constructor
+  · intro i
+    refine ⟨membershipBad, ?_, ?_, membership_bad⟩
+    · intro j different
+      exact (different (Subsingleton.elim j i)).elim
+    · funext e
+      cases e
+  · intro e
+    cases e
+
+noncomputable def membershipFamily : Registration membershipArena (type_of% (@strategy_prefix_mem)) where
+  actual := membershipActual
+  bridge := membership_bridge
+  variation := membership_variation
+  sensitivity := membership_sensitivity
+  dependence := membership_dependence
+
+#print axioms membershipFamily
+
+noncomputable def membershipRegistration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@strategy_prefix_mem) (Realization membershipSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactTraceCompiler.membershipUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactTraceCompiler.membershipFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨membershipArena⟩
+  objectArena := .source ⟨membershipArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := true
+  realization := .source membershipArena ⟨membershipFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(True.intro : True)⟩ True.intro
+  readout := some (realize membershipSignature membershipActual.readout membershipActual.anchor)
+  variation := .evidence ⟨(True.intro : True)⟩ True.intro
+  sensitivity := .evidence ⟨(True.intro : True)⟩ True.intro
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualExactTraceCompiler
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms membershipRegistration
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactTraceCompiler
