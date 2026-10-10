@@ -4330,4 +4330,90 @@ $$
 
 **范围。** 定理 49.2 只给 §45 的固定 Fourier 二维证书族、固定菜单和不可修改前缀的在线累计保证；不声称对任意 LOSR/CPTP 操作、完整钻石范数或 $X_N$ 的全局最优 stack 给出近似比或资源下界。
 
+## 50. 允许菜单变化下的证书追加摊还
+
+**定义 50.1（批次菜单与保留前缀）。** 固定 §48--49 的非平凡角色全集 $\widehat A\setminus\{1\}$ 和覆盖集
+$$
+\overline C_K:=\{\eta\in\widehat A\setminus\{1\}:\eta\notin K^\perp\}.
+$$
+令
+$$
+X_0\subseteq X_1\subseteq\cdots\subseteq X_N
+\subseteq\widehat A\setminus\{1\}
+$$
+为有限阈值角色集链；第 $t$ 批使用有限、显式枚举的追加菜单 $\mathscr L_t$。已有前缀 $\mathcal Q_0$ 是允许层序列并覆盖 $X_0$。菜单只约束该批新追加的层，历史前缀即使含有不在当前 $\mathscr L_t$ 的层也保留；这是 append-only 菜单语义，不是要求对历史层重新认证。令
+$$
+\delta_t:=X_t\setminus X_{t-1},\qquad
+\Delta_t:=\delta_t\setminus V_{\mathcal Q_{t-1}},
+\qquad
+V_{\mathcal Q}:=\bigcup_{K\in\underline{\mathcal Q}}\overline C_K,
+$$
+其中 $\underline{\mathcal Q}$ 是序列 $\mathcal Q$ 的去重层集合。对菜单 $\mathscr L_t$ 定义
+$$
+\sigma_t:=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L_t,\
+\Delta_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K\right\},
+\qquad
+d_t:=\max_{K\in\mathscr L_t}|\overline C_K\cap\Delta_t|,
+$$
+若没有这样的 $\mathcal R$ 则置 $\sigma_t=\infty$，并约定 $\max\varnothing=0$、$H_0=0$。令
+$$
+L_t:=
+\begin{cases}
+0,&\Delta_t=\varnothing,\\
+\infty,&\Delta_t\ne\varnothing\ \text{且}\ d_t=0,\\
+\left\lceil|\Delta_t|/d_t\right\rceil,&\Delta_t\ne\varnothing\ \text{且}\ d_t>0.
+\end{cases}
+$$
+
+**定理 50.2（菜单变化的可行性单调性与累计追加界）。** 逐批只从 $\mathscr L_t$ 运行最大增益贪心，并令 $\mathcal Q_t=\mathcal Q_{t-1}\mathbin{\|}\mathcal R_t$。若所有 $\sigma_t<\infty$，则每个 $\mathcal Q_t$ 覆盖 $X_t$，并且
+$$
+\sum_{t=1}^N L_t
+\le\ell(\mathcal Q_N)-\ell(\mathcal Q_0)
+\le\sum_{t=1}^N H_{d_t}\sigma_t
+\le\sum_{t=1}^N H_{|\Delta_t|}\sigma_t.
+\tag{50.1}
+$$
+空批次贡献 $0$；若某批 $\Delta_t\ne\varnothing$ 有角色不属于任何 $\overline C_K$（尤其 $d_t=0$ 或 $\mathscr L_t=\varnothing$），则 $\sigma_t=\infty$，该前缀在 append-only 语义下无法通过任何有限的当前菜单追加覆盖 $X_t$，立即停止。
+
+对同一批次残余 $\Delta$ 和前缀 $\mathcal Q$，若两个菜单满足
+$\mathscr L^-\subseteq\mathscr L^+$，则
+$$
+\sigma(\Delta,\mathscr L^+)\le\sigma(\Delta,\mathscr L^-),\qquad
+d(\Delta,\mathscr L^+)\ge d(\Delta,\mathscr L^-).
+\tag{50.2}
+$$
+因此菜单扩张不会把一个可行追加变成不可行，菜单收缩不会制造新的可行性；但 $H_d\sigma$ 的乘积不作单调性断言，因为 $d$ 也可能增大。若菜单收缩后此前缀仍被保留而新残余不可覆盖，结论是当前追加菜单的不可行性，而不是历史层的回溯删除结论。
+
+**证明。** 先证覆盖归纳。$\mathcal Q_0$ 覆盖 $X_0$。若 $\sigma_t<\infty$，贪心追加 $\mathcal R_t\subseteq\mathscr L_t$ 覆盖 $\Delta_t$，而
+$$
+X_t=X_{t-1}\mathbin{\dot\cup}\delta_t
+\subseteq V_{\mathcal Q_{t-1}}\cup\Delta_t
+\subseteq V_{\mathcal Q_t},
+$$
+所以 $\mathcal Q_t$ 覆盖 $X_t$。若 $\Delta_t=\varnothing$ 则无需追加；若 $\sigma_t=\infty$，有角色不在当前菜单的任何覆盖集内，任何后续有限追加仍保留它，故立即不可达。
+
+固定一个可行的非空批次，写 $m=|\Delta_t|>0$、$\sigma=\sigma_t$、$d=d_t>0$。每层至多覆盖初始残余的 $d$ 个角色，所以任何大小为 $q$ 的追加至少满足 $q\ge\lceil m/d\rceil$。取最优 $\mathcal R^*$，$|\mathcal R^*|=\sigma$；贪心第 $i$ 轮开始时设剩余数为 $r_i$、本轮增益为 $g_i=a_i$。$\mathcal R^*$ 覆盖当前剩余集合，其 gains 总和至少为 $r_i$，故
+$$
+g_i\ge r_i/\sigma.
+$$
+给本轮每个新覆盖角色 charge $1/g_i$，本轮总 charge 为 $1$。把角色任意分配给覆盖它的 $R\in\mathcal R^*$；若某轮开始时 $R$ 尚有 $j$ 个未覆盖角色，而本轮分配给它 $a_{i,R}$ 个角色，则总 charge 至多
+$$
+\frac{a_{i,R}}{j}
+\le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
+$$
+这些区间两两不交并包含于 $\{1,\ldots,|R\cap\Delta_t|\}$，故分给 $R$ 的 charge 不超过 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，得到贪心追加数 $s_t\le H_d\sigma_t\le H_m\sigma_t$；又 $s_t\ge\sigma_t\ge\lceil m/d\rceil$。逐批求和并使用
+$\ell(\mathcal Q_t)=\ell(\mathcal Q_{t-1})+s_t$，即得 (50.1)。
+
+对 (50.2)，$\mathscr L^-\subseteq\mathscr L^+$ 意味着任一覆盖 $\mathcal R\subseteq\mathscr L^-$ 仍是正菜单的可行覆盖，所以最小值不增；而最大值是在更大集合上取最大，故 $d(\Delta,\mathscr L^+)\ge d(\Delta,\mathscr L^-)$. 若某角色不在任何当前菜单覆盖集，它在所有有限追加后仍未被覆盖，证明不可行。全程只使用固定 $\overline C_K$ 的集合覆盖关系，菜单变化不改变这一证书族推理。
+
+若逐批维护残余和前缀长度，批次 $t$ 的前缀检查、覆盖预计算和朴素贪心搜索分别为
+$$
+O\!\left(|\delta_t|\ell(\mathcal Q_{t-1})\right),\qquad
+O\!\left(|\Delta_t||\mathscr L_t|\right),\qquad
+O\!\left(|\Delta_t|^2|\mathscr L_t|\right)
+$$
+次 unit-cost membership 检查；若菜单差 $\mathscr L_t\triangle\mathscr L_{t-1}$ 需从显式列表重算嵌套关系，另加 $O(|\mathscr L_t|+|\mathscr L_{t-1}|)$ 列表检查。若 $\delta_t$ 需扫描整个 $\widehat A$ 才能发现，再加 $O(|\widehat A|)$ 角色枚举。累计成本是这些批次项之和。
+
+**范围。** 定理 50.2 只对固定 Fourier 二维证书族、append-only 前缀和每批有限菜单给出可行性与累计追加界；(50.2) 只比较固定残余上的集合覆盖最优值，不是任意 LOSR/CPTP、完整钻石范数或物理资源的单调性或下界。若业务要求菜单收缩时历史层也必须属于新菜单，则需另定义迁移/重优化问题，本定理不覆盖。
+
 ## 追加锚（本行以下为增补区）
