@@ -61,9 +61,10 @@ the factors, or another extension of the entropy), or an error in the spectrum. 
 
 ## Evidence
 
-`D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.lean` defines `jamio`, `pdm`, `S`
-(through the real functional calculus of $x\mapsto -x\log|x|$) and `claim` over finite Kraus channels
-(`FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus`), and proves `result : ¬ claim`. The axiom closure of
+`D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.lean` defines `jamio`, `pdm` and `claim` over
+finite Kraus channels (`FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus`) with the repository's signed spectral
+entropy `ChenKatoBrandaoCMIRefutation.entropy` (a sum of `Real.negMulLog` over the eigenvalues, which equals
+$-\lambda\log|\lambda|$ because `Real.log` is even), and proves `result : ¬ claim`. The axiom closure of
 `result` is exactly `propext`, `Classical.choice` and `Quot.sound`; there is no `sorry` or
 `native_decide`.
 
@@ -88,8 +89,9 @@ is no digestion atom.
   positive part over the $2\log d$ of the two maximally mixed marginals outweighs that loss exactly when
   $d\ge5$.
 - **Computed, not formalized (#14994):** for the same family in dimension $d$ the gap is
-  $\tfrac{d+1}{d}\log(d-1)-\log d$: negative for $d=3,4$ ($-0.1744$, $-0.0130$) and positive for every
-  $d\ge5$ ($+0.0541$ at $d=5$, $+0.0859$ at $d=6$), and it equals $\log(1-\tfrac1d)+\tfrac1d\log(d-1)\sim(\log d-1)/d$, so it tends to $0$.
+  $g(d)=\tfrac{d+1}{d}\log(d-1)-\log d$, with NumPy values $-0.1744$, $-0.0130$, $+0.0541$, $+0.0859$ at
+  $d=3,4,5,6$ (and $+0.1144$, $+0.0359$ at $d=10,100$). Analytically $g(d)=\log(1-\tfrac1d)+\tfrac1d\log(d-1)$, so
+  $g(d)=\tfrac{\log(d-1)-1}{d}+O(d^{-2})$ and $g(d)\to0$; positivity for every $d\ge5$ is not established here.
 - **Open:** the smallest input dimension with a violation (qubit inputs never violate, by Theorem 4.1;
   qutrit and four-level inputs are not decided by this family), and whether the multi-time
   generalization of the entropy admits a modified mutual information that is non-negative.
