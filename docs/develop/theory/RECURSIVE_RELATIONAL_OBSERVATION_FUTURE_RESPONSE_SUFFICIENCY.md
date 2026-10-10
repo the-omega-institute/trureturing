@@ -1691,3 +1691,273 @@ $$
 固定非单例先验和活动第四段是普遍计数恢复的充分且尖锐条件：单例同相位及原终端的正历史反例分别阻止删除它们。两点标量的精确有效逆还要求已安装、已取得的精确有理数据和全部运算费用；一般先验的有效表示、有限精度稳定逆、固定宽度完整记忆、隐藏样本身份、物理时间及更广的空间—时间—边界—记忆恢复没有由本批结算。
 
 ## 追加锚（本行以下为增补区）
+
+## 38. 原第三标记的安装先验纤维与完整付费长度辨识
+
+**定义 38.1（原切面、安装律与共同未来域）。** 保持约定21.1的原来源，令 $\mu=(\mu_k)_{k\ge1}$ 为任意正整数深度概率质量函数，允许零质量、有限支持及无限支持。$K$ 在第一笔 Read 前按 $\mu$ 抽取一次；提种、所有拒绝对、载荷返回与第四段均保持这个 $K$。记
+
+$$
+\begin{aligned}
+r_k&=F_{k+1}/F_{k+3},&s_k&=1-r_k,&q_k&=r_ks_k,\\
+d_k&=1-q_k=r_k+s_k^2,&c_k&=1-2q_k,&u_k&=r_k/d_k,&v_k&=s_k^2/d_k=1-u_k.
+\end{aligned}
+\tag{FR.38.1}
+$$
+
+$T_3$ 为从初始化开始，第三标记完成、记录写入和快照锁存全部结束时已经支付的 Read 数；切面在第四段的第一笔 Read 之前。用 $0=\alpha,1=\beta$，每个首次到达此前的完整 Read 词写成
+
+$$
+\begin{aligned}
+h_3&=\operatorname{retryWord}(a)\operatorname{seedWord}(\rho)
+       p(j_0,b_0)p(j_1,b_1)p(j_2,b_2),\\
+\operatorname{retryWord}(a)&=a_1a_1\cdots a_na_n,\qquad
+\operatorname{seedWord}(0)=01,\quad\operatorname{seedWord}(1)=10,\\
+p(j,0)&=(10)^j0,\qquad p(j,1)=(10)^j11.
+\end{aligned}
+\tag{FR.38.2}
+$$
+
+令 $n_0,n_1$ 为拒绝00、11的次数，$J=j_0+j_1+j_2$，$w=b_0+b_1+b_2$，$R=(\rho,b)$。$J$ 是原 `payloadReturns` 的切面值；$A,B$ 是从第一笔 Read 起取得的活计数；这些均与完整有序词 $h_3$ 分开。完整有限字段、裸 `ThirdSnapshot` 与这些计数也分别解释。这里只用 `LiteralWindowEnd.bits` 的词典
+
+$$
+\mathcal S=\{000,100,010,101,001\}
+\longleftrightarrow(\mathrm{zero},\mathrm{low},\mathrm{middle},\mathrm{ends},\mathrm{high}),
+\tag{FR.38.3}
+$$
+
+定义选择事件 $\mathsf S=\{b\in\mathcal S,T_3<\infty\}$；011、110、111是三个互异排除词。词典没有移植该 Window 的 `step`、`observe` 或 End 守卫。
+
+共同残余域 $\mathcal T$ 为原 `Control.Transcript` 的乘积可测域，其每个坐标是 `Visible = Option (List Operation × NativeControl)`。坐标0是空操作；残余观察只保留切面起的原合法操作与控制。对固定深度 $k$，从 `fourth(active p)` 出发的该律记为 $L_k$。$E\subset\mathcal T$ 是坐标1等于 `some([Read0],fourth(pending0))` 的事件；$D_j$ 是坐标 $2j+2$ 等于发出 $(10)^j0$ 的全部 Read、随后 Stop0、控制 delivered 的事件。切面没有 Stop 权限；Read0到pending0，Read1到活动 $\beta$；pending仅准匹配的Stop，pending和delivered均无Read。
+
+附属来源：[NativeAcquiredPrefixState](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixState.lean) 的 `initial`、`writeMarker`、`completionControl`、`nativeRead`、`nativeStop`；[NativeAcquiredPrefixReconstruction](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixReconstruction.lean) 的 `PrefixFacts`；[LiteralWindowEnd](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.lean) 的 `Window`、`bits`；[NativeConditionalControl](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeConditionalControl.lean) 的 `Visible`、`Transcript`、`drive_control`。它们分别固定原实际切面和上述投影，不新增观测端口。
+
+**命题 38.2（八单元停止律、三矩粗化与同源续接）。** 对定义38.1的每个 $\mu$，$T_3<\infty$ 几乎必然。每个指定完整前缀的联合深度质量为 $\mu_k r_k^A s_k^B$，其中
+
+$$
+A=4-w+2n_0+J,\qquad B=1+2w+2n_1+J,\qquad
+T_3=A+B=5+w+2(n_0+n_1+J).
+\tag{FR.38.4}
+$$
+
+在所有实际拒绝词和返回分配上求和，置 $m_w(k)=u_k^{3-w}v_k^w$、$M_w^\mu=\sum_k\mu_km_w(k)$，则对每一个种子及全部八个标记词有
+
+$$
+\begin{aligned}
+\Pr_\mu(K=k,\rho,b)&=\frac{\mu_k}{2}m_w(k),\\
+\Pr_\mu(K=k,\rho,b,J=\ell)&=
+\frac{\mu_k}{2}\binom{\ell+2}{2}q_k^\ell r_k^{3-w}s_k^{2w},\\
+M_w^\mu&>0,\qquad M_0^\mu+3M_1^\mu+3M_2^\mu+M_3^\mu=1.
+\end{aligned}
+\tag{FR.38.5}
+$$
+
+完整无计数有限字段与 $R$ 互相确定；裸快照不具有此性质。令 $C_\mu=M_0^\mu+3M_1^\mu+M_2^\mu$，则 $0<C_\mu<1$，选择概率为 $C_\mu$，所选模式律为
+
+$$
+p_\mu^{\mathsf S}=\frac{(M_0^\mu,M_1^\mu,M_1^\mu,M_2^\mu,M_1^\mu)}{C_\mu}.
+\tag{FR.38.6}
+$$
+
+令 $e_j^\mu=\sum_k\mu_ku_k^j$，$e_0^\mu=1$。完整种子、八词、有限字段和选择联合律相等，当且仅当 $e_j^\mu=e_j^\eta$ 对 $j=1,2,3$ 成立；精确对应是
+
+$$
+\begin{aligned}
+(M_0,M_1,M_2,M_3)
+&=(e_3,e_2-e_3,e_1-2e_2+e_3,1-3e_1+3e_2-e_3),\\
+e_3&=M_0,\qquad e_2=M_0+M_1,\qquad e_1=M_0+2M_1+M_2.
+\end{aligned}
+\tag{FR.38.7}
+$$
+
+对任意种子和任意八词中的一个正单元，原共同残余律为
+
+$$
+\nu_w^\mu(k)=\frac{\mu_km_w(k)}{M_w^\mu},\qquad
+\mathscr L_w^\mu=\sum_k\nu_w^\mu(k)L_k,\qquad
+L_k(E)=r_k,\quad L_k(D_j)=r_kq_k^j.
+\tag{FR.38.8}
+$$
+
+这里的 $\nu_w^\mu$ 条件于整个粗单元；完整历史后验仍是 $\nu_{h_3}(k)\propto\mu_kr_k^As_k^B$，保留 $J=\ell$ 时则为 $\nu_{w,\ell}^\mu(k)\propto\mu_kq_k^\ell r_k^{3-w}s_k^{2w}$。
+
+**证明。** 原 seed 和 payload 表逐字给出（FR.38.2）；第三次 `writeMarker` 在最后一字之后锁存，`completionControl 2 b₂` 给出 `fourth(active p)`。[NativeAcquiredPrefixReconstruction](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixReconstruction.lean) 的 `native_acquired_prefix_reconstruction` 在 $t=3$、`pendingExponent=0` 供应该切面的活计数与 $J$；[NativeAcquiredPrefixCylinder](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixCylinder.lean) 的 `native_acquired_prefix_cylinder` 把实际发出事件识别为该完整Read柱。于是计数是（FR.38.4），质量是所述乘积。
+
+在固定同一个 $k$，指定种子的接受对质量 $q_k$，拒绝对总质量 $r_k^2+s_k^2=c_k$；全部有序重试求和为 $\sum_{n\ge0}q_kc_k^n=1/2$。各载荷段指定标记的返回求和分别为 $r_k/(1-q_k)=u_k$ 和 $s_k^2/(1-q_k)=v_k$。固定返回总数 $\ell$ 有 $\binom{\ell+2}{2}$ 个三段分配，由此得到（FR.38.5）。这些几何级数与分配计数复用本卷命题13.2的同源段因子，以及 [FourthSegmentStoppedLaw](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.lean) 的 `p_word_mass`、`actual_fourth_segment_stopped_word_law` 所供应的同一Read表；前三段完成时重置为 $p$，并不执行第四段的Stop。
+
+每个深度的无限提种拒绝概率由 $c_k^n\to0$ 控制，每段无限返回概率由 $q_k^n\to0$ 控制。沿可数个已完成前缀柱分解，任一段不完成均为零质量；外层按任意PMF求和仍为零。首次切面只由已读词决定，因而是字母过滤的停止时刻；所用的切面单元为互不相交的可数柱并。此处不要求有限深度支持或有限计数上限。
+
+`marker_fields_recover` 从原完整有限字段读回八词；所有写入字段又是 $(\rho,b)$ 的确定函数。裸快照只含种子、weight、syndrome：种子1的100、010、001均给 $(1,1,1)$，101与110均给 $(1,2,0)$，故它连选择事件也不能确定。$u_k+v_k=1$ 给八词归一化，三个排除词质量为 $2M_2+M_3>0$；选中词也全部为正，得到（FR.38.6）。展开 $u^{3-w}(1-u)^w$ 及逆向相加，得到（FR.38.7）。
+
+对每个实际完整前缀，`sameK_conditional_tail` 在正柱上移位未读流，`native_acquired_prefix_resumption` 从实际完整切面state续接，`drive_control` 使共同Visible律仅依赖相同的控制。固定 $k$ 后，对同一 $(\rho,b)$ 原像中的全部前缀柱求和，因共同未来因子为 $L_k(D)$，对任意可测 $D\subset\mathcal T$ 得
+
+$$
+\Pr_\mu(K=k,\rho,b,V\in D)=\frac{\mu_k}{2}m_w(k)L_k(D).
+\tag{FR.38.9}
+$$
+
+除以正单元质量即为（FR.38.8）。第一笔Read0的原质量为 $r_k$；停止词 $(10)^j0$ 的质量为 $r_kq_k^j$，随后唯一Stop0，所以 $E,D_j$ 都是共同合法事件。这里没有重抽 $K$，也没有条件于未来成功。完整词已经蕴含其停止时刻的似然处理参见 [Hendriksen–de Heide–Grünwald，Optional Stopping with Bayes Factors，§2.1](https://arxiv.org/html/1807.09077v3)；遗忘后的粗单元须对整个原像求和，不能用一个代表历史的似然替代。证毕。
+
+**命题 38.3（相同完整粗律、不同共同合法未来的精确安装对）。** 令 $D=8827864877$，仅在深度1至5安装
+
+$$
+\mu^+=\frac{(24386712,345199752,0,0,8458278413)}{D},\qquad
+\mu^-=\frac{(0,0,2799962165,6027902712,0)}{D},
+\tag{FR.38.10}
+$$
+
+其余深度质量为零。这两个合法PMF具有相同完整种子、八词、无计数有限字段、排除与选择联合律，具体为
+
+$$
+\begin{aligned}
+(M_0,M_1,M_2,M_3)&=\frac{(6656040,6667200,6682920,6703327)}{53409727},\\
+C&=\frac{33340560}{53409727},\qquad
+p^{\mathsf S}=\frac{(6656040,6667200,6667200,6682920,6667200)}{33340560}.
+\end{aligned}
+\tag{FR.38.11}
+$$
+
+但是对任一共同种子、共同词000，
+
+$$
+\mathscr L_0^{\mu^+}(E)=\frac{40830547}{106958865},\qquad
+\mathscr L_0^{\mu^-}(E)=\frac{40830465}{106958865},\qquad
+\mathscr L_0^{\mu^+}(E)-\mathscr L_0^{\mu^-}(E)=\frac{82}{106958865}>0.
+\tag{FR.38.12}
+$$
+
+选中五词总体条件未来也有 $\Pr_{\mu^+}(E\mid\mathsf S)-\Pr_{\mu^-}(E\mid\mathsf S)=-23/7715005584$。这两个先验的完整 $T_3$ 律不相等，已经在
+
+$$
+\Pr_{\mu^+}(T_3=5)-\Pr_{\mu^-}(T_3=5)
+=\frac{276536121975817333583}{52722442388514800624486400000}>0
+\tag{FR.38.13}
+$$
+
+分离。
+
+**证明。** 实际节点为
+
+$$
+(r_1,r_2,r_3,r_4,r_5)=(1/3,2/5,3/8,5/13,8/21),\qquad
+(u_1,u_2,u_3,u_4,u_5)=(3/7,10/19,24/49,65/129,168/337).
+\tag{FR.38.14}
+$$
+
+（FR.38.10）两侧分子均非负，正分子分别相加都为 $D$。令 $v=(24386712,345199752,-2799962165,-6027902712,8458278413)$；直接代入上述有理节点给出 $\sum_{i=1}^5v_i u_i^j=0$，$j=0,1,2,3$。这是五个互异节点的四矩零空间的一个整数向量：经典插值权 $1/\prod_{h\ne i}(u_i-u_h)$ 清分母、除共同因子并选方向后得到 $v$。有限矩歧义在这里仅作为构造中间步骤，参见 [RationalMomentAmbiguityCertificate](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S0/Certificates/RationalMomentAmbiguityCertificate.lean) 的有理矩可行证书合同及 [FiniteVandermondeTomography](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean) 的有限互异节点线性代数；不把该通用构造另立新定理。
+
+将 $\mu^\pm$ 和（FR.38.14）代入 $m_w=u^{3-w}(1-u)^w$，得到（FR.38.11）；其八词归一化的分子恒等式为 $6656040+3\cdot6667200+3\cdot6682920+6703327=53409727$。每一个种子—词单元为对应 $M_w/2$，排除总质量为 $(2\cdot6682920+6703327)/53409727$，选择质量与模式律已列出。因此匹配的是完整粗分布，包含所有排除词，而非一个被选择成功的实现。
+
+共同事件 $E$ 的条件概率是 $\sum_i\mu_i u_i^3r_i/M_0$；代入即为（FR.38.12）。它只要求切面第一笔合法Read，未在pending继续Read或提前Stop。总体选中未来的分子则为 $\sum_i\mu_i r_i(m_0(i)+3m_1(i)+m_2(i))$，除共同 $C$ 得所列差。最后 $T_3=5$ 必须无拒绝、无返回且三词全0，其固定深度质量为 $2q_kr_k^3$；按两个安装律相减即得（FR.38.13）。单个系数只分离此对，不承担任意先验的辨识。关于三次Bernoulli分组的有限混合识别边界，参见 [Vandermeulen–Saitenmacher，Generalized Identifiability Bounds for Mixture Models with Grouped Samples，Definitions 2.1–2.2、Theorems 4.1–4.2](https://arxiv.org/html/2207.11164v1)；其有限组件数和独立性假设不供应下述任意可数安装律结论。证毕。
+
+**定理 38.4（完整原付费长度边缘律辨识任意安装PMF）。** 对定义38.1的任意两个PMF $\mu,\eta$，
+
+$$
+\operatorname{Law}_\mu(T_3)=\operatorname{Law}_\eta(T_3)
+\quad\Longleftrightarrow\quad \mu=\eta.
+\tag{FR.38.15}
+$$
+
+此处输入是未附加种子、标记、返回数或未来记录的完整原 $T_3$ 边缘分布。
+
+**证明。** 复用命题13.2的固定深度因子，令
+
+$$
+g_k(z)=\frac{2q_kz^2}{1-c_kz^2}
+\left(\frac{r_kz+s_k^2z^2}{1-q_kz^2}\right)^3,
+\qquad G_\mu(z)=\sum_{k\ge1}\mu_kg_k(z).
+\tag{FR.38.16}
+$$
+
+原命题的外层两点混合在此替换为任意PMF求和，固定深度的同源公式不变。由命题38.2的几乎必然完成，$g_k$ 是总质量1的概率生成函数。$|z|<1$ 时 $|g_k(z)|\le1$，并且
+
+$$
+\sum_k\sum_{n\ge0}\mu_k\Pr(T_3=n\mid K=k)|z|^n\le1.
+\tag{FR.38.17}
+$$
+
+所以绝对收敛允许交换深度和系数求和，$G_\mu$ 正是完整 $T_3$ 律的生成函数。设两律相等，令 $a_k=\mu_k-\eta_k$，则 $\sum_k|a_k|\le2$，$H(z)=\sum_ka_kg_k(z)=0$ 在单位圆盘内成立。
+
+取上半平面 $U=\{z\in\mathbb C:\operatorname{Im}z>0\}$。命题15.1的实际界给出
+
+$$
+r_k\in[1/3,2/5],\qquad q_k\in[2/9,6/25],\qquad c_k\in[13/25,5/9].
+\tag{FR.38.18}
+$$
+
+每个 $g_k$ 的所有可能极点都是实数 $\pm c_k^{-1/2},\pm q_k^{-1/2}$，所以在 $U$ 全纯。对任意紧集 $Q\subset U$，连续函数 $|1-tz^2|$ 在 $Q\times[13/25,5/9]$ 及 $Q\times[2/9,6/25]$ 上均无零点，故分别有严格正最小值；分子在 $Q$ 及 $r\in[1/3,2/5]$ 上一致有界。由此存在与 $k$ 无关的 $B_Q<\infty$ 使 $\sup_{z\in Q}|g_k(z)|\le B_Q$。$\sum|a_k|<\infty$ 的Weierstrass控制给局部一致收敛，$H$ 在 $U$ 全纯。$U$ 连通，与单位圆盘的交含非空开集；全纯恒等定理推出 $H=0$ 在整个 $U$ 成立。这些全纯极限与恒等定理是成熟中间供给，分别对应钉版mathlib [LocallyUniformLimit](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Complex/LocallyUniformLimit.lean) 的 `TendstoLocallyUniformlyOn.differentiableOn` 和 [Analytic.Uniqueness](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Analytic/Uniqueness.lean) 的 `AnalyticOnNhd.eqOn_of_preconnected_of_eventuallyEq`。
+
+以下逐一隔离每个实际提种极点，不在聚点取留数。复用 §§15、24 的Fibonacci节点递推
+
+$$
+r_{k+1}=T(r_k),\qquad T(r)=\frac{1-r}{2-r},\qquad
+|T'(r)|\le25/64<1,\qquad r_\infty=\frac{3-\sqrt5}{2}.
+\tag{FR.38.19}
+$$
+
+区间 $[1/3,2/5]$ 被 $T$ 保持，$r_\infty$ 是其中唯一不动点；收缩给出 $r_k\to r_\infty$。若 $r_i=r_j$、$i<j$，与不动点比较 $j-i$ 次收缩会迫使 $r_i=r_\infty$，但 $r_i$ 有理而 $r_\infty$ 无理，矛盾。因此所有实际节点互异，且不等于唯一聚点。$r\mapsto r(1-r)$ 在本区间严格递增，所以 $q_k$、$c_k$ 也分别互异，其唯一聚点为
+
+$$
+q_\infty=\sqrt5-2,\qquad c_\infty=5-2\sqrt5.
+\tag{FR.38.20}
+$$
+
+对每个固定 $k$，$z_k=c_k^{-1/2}$ 与其他实际提种极点及其聚点有正距离：收敛尾部离 $z_k$ 有正距离，剩下有限个互异点亦然。所有正提种极点位于 $[3/\sqrt5,5/\sqrt{13}]$，所有载荷极点的绝对值至少 $5/\sqrt6$，两类严格分离。负提种极点也远离 $z_k$。选 $\varepsilon_k>0$，使闭圆盘 $\overline B(z_k,\varepsilon_k)$ 避开其他实际极点及所有极点聚点。
+
+令 $R_{\ne k}=\overline{\{r_j:j\ne k\}}=\{r_j:j\ne k\}\cup\{r_\infty\}$。这是不包含 $r_k$ 的紧集。上述圆盘与这个参数紧集上的两类分母均无零点；与前述相同的紧性估计使 $\sum_{j\ne k}a_jg_j(z)=B_k(z)$ 在圆盘邻域局部一致收敛并全纯，尤其在 $z_k$ 附近有界。这里使用的是删去实际节点后的参数闭包；不能用仍含 $r_k$ 的整个参数区间作这个估计。
+
+从上方在圆盘内趋近 $z_k$，对 $H(z)=a_kg_k(z)+B_k(z)=0$ 乘 $1-c_kz^2$ 并取极限，得到
+
+$$
+0=a_k\,\frac{2q_kz_k^2(r_kz_k+s_k^2z_k^2)^3}
+                  {(1-q_kz_k^2)^3}.
+\tag{FR.38.21}
+$$
+
+因为 $q_k<c_k$、$r_k,s_k,z_k>0$，该有限乘数严格为正，所以 $a_k=0$。对每个 $k$ 均可如此，推出 $\mu=\eta$。全程没有对种子或载荷极点的聚点作解析延拓、交换留数或假定那里无奇性；$\ell^1$ 控制与每个实际极点的局部隔离已经覆盖任意可数支持。反向由（FR.38.16）或原混合律立即成立。证毕。
+
+**命题 38.5（完整返回律、粗单元未来律与安装律的相互确定）。** 记 $\operatorname{Law}_\mu(J)$ 为不另作选择的原保留返回数完整律。对任意 $\mu,\eta$ 及任意固定八词中的 $b$，其共同种子可固定也可求和，有
+
+$$
+\begin{aligned}
+\mu=\eta
+&\Longleftrightarrow\operatorname{Law}_\mu(T_3)=\operatorname{Law}_\eta(T_3)\\
+&\Longleftrightarrow\operatorname{Law}_\mu(J)=\operatorname{Law}_\eta(J)\\
+&\Longleftrightarrow\mathscr L_w^\mu=\mathscr L_w^\eta.
+\end{aligned}
+\tag{FR.38.22}
+$$
+
+故任意不同安装律在每个粗词单元的完整共同未来律上都不同，即使完整粗标记律相等。任何包含 $J$ 或 $T_3$ 边缘的完整联合律也确定安装律。
+
+**证明。** 定理38.4供应第一项。由（FR.38.5）对种子和八词求和得到
+
+$$
+\Pr_\mu(J=\ell)=\binom{\ell+2}{2}\sum_k\mu_kd_k^3q_k^\ell.
+\tag{FR.38.23}
+$$
+
+除去已知组合因子，全部系数就是有限紧支撑测度 $\sum_k\mu_kd_k^3\delta_{q_k}$ 的全部矩；矩确定性、互异 $q_k$ 及严格正 $d_k$ 给出 $\mu_k$ 的恢复。该紧矩中间步骤复用本卷定理21.2及 [Schmüdgen，Ten Lectures on the Moment Problem，Chapter 2开篇](https://arxiv.org/html/2008.12698v1#chapter2) 的Weierstrass确定性，不重证一般矩问题。
+
+未来律相等时，全部共同合法 $D_j$ 给出 $\sum_k\nu_w^\mu(k)r_kq_k^j=\sum_k\nu_w^\eta(k)r_kq_k^j$。现有 [FourthSegmentLawRecovery](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentLawRecovery.lean) 的私有 `all_moments_posterior` 对任意两个PMF、权指数 $e=1$ 的这个精确矩条件供应后验相等；等价地直接复用定理21.2的紧矩恢复。于是 $\nu_w^\mu=\nu_w^\eta$。所有 $m_w(k)>0$，解除正倾斜给出
+
+$$
+\mu_k=\frac{\nu_w^\mu(k)/m_w(k)}{\sum_h\nu_w^\mu(h)/m_w(h)};
+\qquad \sum_h\nu_w^\mu(h)/m_w(h)=1/M_w^\mu<\infty.
+\tag{FR.38.24}
+$$
+
+故安装律相等；反向由（FR.38.8）成立。该有限分母是实际倾斜像的性质，不是假定任意后验都可如此解除。
+
+上述源的 `length_determines_phase_posterior` 及 `complete_original_recovery` 已经对不同先验、各自从零合法取得的活动历史，确定“相位—历史后验”与完整剩余长度／转录的等价。这里新增的连接是先由整个粗切面原像得到 $\nu_w^\mu$，再解除已知正倾斜，以及由过去 $T_3$ 边缘确定安装律；并不将那些历史后验恢复改成安装律或本次隐藏 $K$ 的恢复。固定共同先验下 §§22、34、35 的活计数分类及其支持条件仍照原量词适用。证毕。
+
+**命题 38.6（有限读数、一次实现与可达模式纤维的边界）。** 以上完整律的确定性不能替换为下列任一无附加假设的确定性：完整粗标记律加任意预先指定的有限个 $T_3$／$J$ 系数或矩；这些数据再加任意有限个粗单元共同残余事件概率；一个实际 $T_3$ 或 $J$ 值；一次有限历史对本次隐藏 $K$ 的零错误辨识。原生可达选中模式律在固定占位均值处也没有正宽度纤维。
+
+**证明。** 任意有限系数和矩都是安装律的有限个线性期望。长度矩确实有限：取任意 $1<R_0<3/\sqrt5$，（FR.38.18）使 $g_k(R_0)$ 一致有限，从而任意整数阶 $T_3$ 矩一致有界；$J\le T_3$ 亦然。若还要求有限个粗单元事件概率相等，只需将其分子函数 $m_w(k)L_k(D)$ 加入有限期望表，并保持（FR.38.7）所需三矩以固定全部正分母。有限个保留 $J$ 后的条件概率同理使用对应的正单元权重。
+
+将常数函数1及这张有限函数表在足够多个不同实际深度上取值，列数大于行数即有非零有限实零向量；其总和为零，故正负部分均非空、总质量相等。分别归一化两部分得到不同合法PMF，保持所有指定数据。这是有限线性矩歧义在原期望函数上的应用，通用零空间供给沿用命题38.3的有限矩来源，不另立一般结果。若支持已公开且有限，充分多矩的反演另有 [FiniteVandermondeTomography](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean) 的已知互异节点条件，以及 [FinitePronyHankelReconstruction](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.lean) 的有限秩、非零权条件；它们不消除任意PMF的有限数据障碍。
+
+一次实现不是分布。推论35.2已有同一非单例两点先验下的两个实际历史 $00\,10\mid1100$、$11\,10\mid1100$：同一 $R=(1,100)$、$J=0$、$T_3=8$，但活计数分别 $(5,3),(3,5)$，后验与完整未来不同。沿用该实际反例而不把两个安装世界的完整律相等与固定先验内的单次充分性混合。对每个可行有限 $T_3$ 或 $J$ 值，其至少一条原像词在每个实际深度均有正质量，故该单值也不能排除不同安装PMF。非单例先验下，每个实际有限历史对每个正支持深度仍有 $\mu_kr_k^As_k^B>0$，隐藏样本身份不能零错误识别；此边界复用命题36.2。
+
+最后（FR.38.6）的三种singleton质量相等。按原占位轴 $(x,y,z)=(b_0,b_2,b_1)$，记共同singleton质量为 $a$，则 $X=Y=a+p_{\mathrm{ends}}$、$Z=a$、$\kappa=p_{\mathrm{ends}}=X-Z$；固定 $(X,Y,Z)$ 已固定全部五模式质量。命题38.3展示的是不同安装先验的纤维，不能代入外卷 [AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md](https://github.com/the-omega-institute/trureturing/blob/46ec5166a750ea6d0b0612d157c86f19975688ef/docs/develop/theory/AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md) 的 §§27–29 的任意模式单纯形纤维或固定模式核干预；改变安装律也改变条件未来核。完整有限字段、实际持有银行、历史次序与共同Visible投影仍按 §§32、36 的各自合同保持，不从投影律重建已擦除记录。这里的等价均为精确数学律之间的关系；其假设不包含律的取得、有效或稳定逆、有限样本推断、完整记忆最优、重置、概率端口、时钟端口或物理时间合同。证毕。
+
+## 追加锚（本行以下为增补区）
