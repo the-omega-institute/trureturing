@@ -64,7 +64,7 @@ def ThetaIntervalSupplier (theta : ℝ → ℝ) (X epsilon H0 : ℝ) : Prop :=
 
 theorem price_pos {t : ℝ} (ht : 1 < t) : 0 < price t := by
   unfold price
-  positivity
+  exact one_div_pos.mpr (mul_pos (by linarith) (Real.log_pos ht))
 
 theorem curvature_pos {t : ℝ} (ht : 1 < t) : 0 < curvature t := by
   unfold curvature
@@ -75,7 +75,7 @@ theorem price_strictAnti {u v : ℝ} (hu : 1 < u) (huv : u < v) :
     price v < price u := by
   unfold price
   apply one_div_lt_one_div_of_lt
-  · positivity
+  · exact mul_pos (by linarith) (Real.log_pos hu)
   · have hmono := Real.mul_log_strictMonoOn
       (show u ∈ Set.Ici (Real.exp (-1)) by
         have : Real.exp (-1) < (1 : ℝ) := by norm_num
@@ -99,7 +99,7 @@ theorem first_layer_between_prices {p : ℕ} (hp : p.Prime) :
   have hlogp : 0 < Real.log (p : ℝ) := Real.log_pos hp1
   have hy : 0 < (1 + 1 / (p : ℝ)) := by positivity
   have hupper := Real.log_lt_sub_one_of_pos hy
-    (by have : (1 : ℝ) < 1 + 1 / (p : ℝ) := by positivity; linarith)
+    (ne_of_gt (by have : (1 : ℝ) < 1 + 1 / (p : ℝ) := by positivity; exact this))
   have hinv : 0 < (1 + 1 / (p : ℝ))⁻¹ := inv_pos.mpr hy
   have hneq : (1 + 1 / (p : ℝ))⁻¹ ≠ 1 := by
     intro h
@@ -112,11 +112,13 @@ theorem first_layer_between_prices {p : ℕ} (hp : p.Prime) :
     have hcalc : 1 - (1 + 1 / (p : ℝ))⁻¹ = 1 / ((p : ℝ) + 1) := by
       field_simp
       ring
-    rw [hcalc]
-    linarith
+    calc
+      1 / ((p : ℝ) + 1) = 1 - (1 + 1 / (p : ℝ))⁻¹ := hcalc.symm
+      _ < Real.log (1 + 1 / (p : ℝ)) := by linarith
   have hMarg := golden_layer_marginal_one_eq_log_one_add_inv hp
   have hlogp1 : Real.log (p : ℝ) < Real.log ((p : ℝ) + 1) := by
-    exact Real.strictMonoOn_log (by positivity) (by positivity)
+    exact Real.strictMonoOn_log (by exact_mod_cast hp.pos)
+      (by have : (0 : ℝ) < (p : ℝ) + 1 := by positivity; exact this)
       (by exact_mod_cast (show p < p + 1 by omega))
   have hprod : ((p : ℝ) + 1) * Real.log p <
       ((p : ℝ) + 1) * Real.log ((p : ℝ) + 1) := by
@@ -162,8 +164,8 @@ private theorem forward_prime_absent {b x : ℝ} (hb : 1 < b) (hbx : b < x)
   have hpos : 1 ≤ n.factorization p := Nat.one_le_iff_ne_zero.mpr hne
   have hdec : goldenLayerMarginal p (n.factorization p) ≤
       goldenLayerMarginal p 1 := by
-    rcases eq_or_lt_of_le hpos with rfl | hltk
-    · rfl
+    rcases eq_or_lt_of_le hpos with heq | hltk
+    · simp only [heq]
     · exact (golden_layer_strict_decrease hp (by omega) hltk).le
   have hdiv : p ∣ n := by
     apply Nat.dvd_of_mem_primeFactors
@@ -179,10 +181,11 @@ private theorem reverse_prime_adopted {x b : ℝ} (hx : 1 < x) (hxb : x < b)
     (hp : p.Prime) (hpx : x < p) (hpb : p ≤ b - 1) :
     1 ≤ n.factorization p := by
   have hupper := (golden_resource_optimal_iff_layer_thresholds
-    (price_pos b) hn).1 hopt |>.1 p hp
+    (price_pos (lt_trans hx hxb)) hn).1 hopt |>.1 p hp
   have hxp : price b ≤ price (p + 1) := by
     have hp1 : (1 : ℝ) < (p : ℝ) + 1 := by
-      exact_mod_cast (show 1 < p + 1 by omega)
+      have hpgt : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
+      linarith
     have hp1b : (p : ℝ) + 1 ≤ b := by linarith
     exact price_anti hp1 hp1b
   have hfirst := (first_layer_between_prices hp).1
@@ -235,7 +238,7 @@ theorem actual_optimizer_defect_ge_of_theta_interval_lower
     thetaCharge epsilon (H0 + 1) X x b ≤ actualDefect x b n := by
   by_cases hshort : (x - b) ^ 2 - (H0 + 1) ^ 2 ≤ 0
   · have hzero : thetaCharge epsilon (H0 + 1) X x b = 0 := by
-      simp [thetaCharge, max_eq_left hshort]
+      simp [thetaCharge, max_eq_right hshort]
     rw [hzero]
     exact actual_defect_nonneg hx hn
   · by_cases hdir : b ≤ x
