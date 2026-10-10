@@ -104,7 +104,7 @@ theorem roth_no_moving_chain_aux (Sinf : Finset (InfinitePlace K))
           le_self_pow₀ (le_max_right _ _) u.mult_ne_zero
         _ = ∏ z ∈ ({u} : Finset (InfinitePlace F)), max (z x) 1 ^ z.mult := by simp
         _ ≤ ∏ z : InfinitePlace F, max (z x) 1 ^ z.mult :=
-          Finset.prod_le_prod_of_subset_of_one_le
+          Finset.prod_le_prod_of_subset_of_one_le₀
             (Finset.singleton_subset_iff.mpr (Finset.mem_univ u))
             (fun z _ ↦ pow_nonneg (le_trans zero_le_one (le_max_right _ _)) _)
             (fun z _ _ ↦ one_le_pow₀ (le_max_right _ _))
@@ -125,7 +125,7 @@ theorem roth_no_moving_chain_aux (Sinf : Finset (InfinitePlace K))
       calc
         max (u x) 1 = ∏ z ∈ ({u} : Finset (FinitePlace F)), max (z x) 1 := by simp
         _ ≤ ∏ z ∈ insert u hf.toFinset, max (z x) 1 :=
-          Finset.prod_le_prod_of_subset_of_one_le
+          Finset.prod_le_prod_of_subset_of_one_le₀
             (Finset.singleton_subset_iff.mpr (Finset.mem_insert_self u hf.toFinset))
             (fun z _ ↦ le_trans zero_le_one (le_max_right _ _))
             (fun z _ _ ↦ le_max_right _ _)
@@ -135,7 +135,7 @@ theorem roth_no_moving_chain_aux (Sinf : Finset (InfinitePlace K))
             * ∏ᶠ z : FinitePlace F, max (z x) 1 :=
           le_mul_of_one_le_left
             (finprod_nonneg fun _ ↦ le_trans zero_le_one (le_max_right _ _))
-            (Finset.one_le_prod fun z _ ↦ one_le_pow₀ (le_max_right _ _))
+            (Finset.one_le_prod₀ fun z _ ↦ one_le_pow₀ (le_max_right _ _))
     rcases a with v | v
     · letI : (w v.1.1).LiesOver v.1.1 := hwInf v.1 v.2
       obtain ⟨u, hu⟩ := (isInfinitePlace_iff (w v.1.1)).mp

@@ -5,6 +5,118 @@ namespace StrataLint.ReportSupervisor.Tests;
 
 public sealed class ReportSupervisorScriptTests
 {
+    [Theory]
+    [InlineData("HUP", 129, false)]
+    [InlineData("INT", 130, false)]
+    [InlineData("TERM", 143, false)]
+    [InlineData("HUP", 129, true)]
+    [InlineData("INT", 130, true)]
+    [InlineData("TERM", 143, true)]
+    public void FirstSamplerPublicationSignalPreservesExitCleanupAndOwnership(
+        string signal, int expectedStatus, bool unavailableReceipt)
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var metrics = Path.Combine(fixture.Root, "metrics");
+        Directory.CreateDirectory(metrics);
+        var launcher = fixture.WriteExecutable("publication-launcher.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            injected=0
+            publication_signal() {
+              if [[ "${FUNCNAME[1]:-}" == resource_observation_boundary && "$injected" == 0 \
+                && "${cold_observation_pid:-}" == "${BASHPID:-$$}" \
+                && "${cold_observation_owner:-}" == supervisor && "${phase:-}" == periodic ]]; then
+                injected=1
+                while [[ ! -s "$PWD/scratch.txt" ]]; do :; done
+                builtin printf '%s %s %s\n' "$CHILD_PID" "$STDOUT_RELAY_PID" "$STDERR_RELAY_PID" > "$PWD/publication-pids"
+                builtin printf 'injected\n' > "$PWD/publication-injected"
+                builtin kill -s "$TEST_SIGNAL" "${BASHPID:-$$}"
+              fi
+            }
+            wait() {
+              [[ -z "$(trap -p EXIT HUP INT TERM)" ]] || return 93
+              builtin printf 'cleared\n' > "$PWD/publication-cleanup-traps"
+              builtin printf '%s\n' "$*" >> "$PWD/publication-waits"
+              builtin wait "$@"
+            }
+            set -T
+            trap publication_signal DEBUG
+            source "$1" --role lean-producer --lean-slot -- "$2" "$3"
+            """);
+        // Redirect relays to fixture files so a failing cleanup cannot hold the
+        // test runner's output pipes open. Fallback cleanup records survivors
+        // before terminating them; those survivors fail the ownership assertion.
+        var driver = fixture.WriteExecutable("publication-driver.sh", """
+            #!/usr/bin/env bash
+            set -uo pipefail
+            "$TEST_LAUNCHER" "$TEST_SUPERVISOR" "$TEST_WORKER" "$1" > "$PWD/publication.stdout" 2> "$PWD/publication.stderr"
+            status=$?
+            : > "$PWD/publication-survivors"
+            if [[ -s "$PWD/publication-pids" && -s "$1" ]]; then
+              read -r child stdout_relay stderr_relay < "$PWD/publication-pids"
+              read -r grandchild < "$1"
+              for pid in "$child" "$stdout_relay" "$stderr_relay" "$grandchild"; do
+                state=$(/bin/ps -o stat= -p "$pid" 2>/dev/null || true)
+                if [[ -n "$state" && "$state" != Z* ]]; then
+                  printf '%s\n' "$pid" >> "$PWD/publication-survivors"
+                fi
+                /bin/kill -KILL "$pid" 2>/dev/null || true
+              done
+            fi
+            exit "$status"
+            """);
+        var result = fixture.RunExternalProcess("env",
+            [$"PATH={fixture.Root}:{fixture.HostPath}",
+             $"STRATALINT_SUPERVISOR_ROOT={fixture.StateRoot}",
+             "STRATALINT_LOCK_TIMEOUT_SECONDS=86400", "PREFLIGHT_DEADLINE_AT=",
+             $"COLD_COST_OBSERVATION_DIR={Path.Combine(metrics, unavailableReceipt ? "missing" : ".")}",
+             $"TEST_LAUNCHER={launcher}", $"TEST_SUPERVISOR={fixture.Supervisor}",
+             $"TEST_WORKER={fixture.LongRunningWorker}", $"TEST_SIGNAL={signal}", driver, fixture.ScratchRecord]);
+        Assert.Equal(expectedStatus, result.ExitCode);
+        Assert.DoesNotContain("unbound variable", File.ReadAllText(Path.Combine(fixture.Root, "publication.stderr")), StringComparison.Ordinal);
+        Assert.Equal("injected\n", File.ReadAllText(Path.Combine(fixture.Root, "publication-injected")));
+        Assert.Equal("cleared\n", File.ReadAllText(Path.Combine(fixture.Root, "publication-cleanup-traps")));
+        Assert.Empty(File.ReadAllText(Path.Combine(fixture.Root, "publication-survivors")));
+        var pids = File.ReadAllText(Path.Combine(fixture.Root, "publication-pids"))
+            .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
+        var waits = File.ReadAllLines(Path.Combine(fixture.Root, "publication-waits"));
+        Assert.All(pids, pid => Assert.Contains(pid, waits));
+        Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.StateRoot, "runs")));
+        Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.StateRoot, "slots")));
+        if (!unavailableReceipt)
+        {
+            var text = File.ReadAllText(Directory.GetFiles(metrics, "shell-supervisor-*.metrics").Single());
+            Assert.Contains("phase=final edge=end", text, StringComparison.Ordinal);
+            Assert.Contains("span_depth=2", text, StringComparison.Ordinal);
+            Assert.Contains("in_flight=1", text, StringComparison.Ordinal);
+            Assert.Contains("active_phase=periodic", text, StringComparison.Ordinal);
+            Assert.Contains("counter_snapshot=before-receipt-write snapshot_atomicity=UNAVAILABLE", text, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
+    public void DiagnosticSamplerBoundariesPreserveFailureAndCleanup()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var metrics = Path.Combine(fixture.Root, "metrics");
+        Directory.CreateDirectory(metrics);
+        var result = fixture.RunWithEnvironment("ingest-consumer", false, "/usr/bin/false",
+            $"COLD_COST_OBSERVATION_DIR={metrics}");
+        Assert.Equal(1, result.ExitCode);
+        Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.StateRoot, "runs")));
+        var records = Directory.GetFiles(metrics, "shell-supervisor-*.metrics");
+        Assert.NotEmpty(records);
+        var text = string.Join("\n", records.Select(File.ReadAllText));
+        Assert.Contains("phase=final", text, StringComparison.Ordinal);
+        Assert.Contains("in_flight=0", text, StringComparison.Ordinal);
+        Assert.Contains("completed=", text, StringComparison.Ordinal);
+        Assert.Contains("identity_clock=boot-ticks", text, StringComparison.Ordinal);
+        var denied = fixture.RunWithEnvironment("ingest-consumer", false, "/usr/bin/false",
+            $"COLD_COST_OBSERVATION_DIR={Path.Combine(metrics, "missing")}");
+        Assert.Equal(1, denied.ExitCode);
+        Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.StateRoot, "runs")));
+    }
+
     [Fact]
     public void MissingReportConsumptionFailsClosedWithProducerInstruction()
     {

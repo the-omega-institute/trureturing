@@ -404,7 +404,7 @@ theorem result : WeakAscentQuadrupleDefs.claim215 := by
             MvPowerSeries.truncTotal_subst_eq_truncTotal_subst_truncTotal_of_le
               second_subst (x := fun _ => bound) (fun _ => le_rfl), inputs_truncation]
         have exponent_lower : (Finsupp.single () index).degree < bound := by simpa using index_lower
-        have output_coeff := congrArg (MvPolynomial.coeff (Finsupp.single () index))
+        have output_coeff := congrArg ((fun p => AddMonoidAlgebra.coeff p (Finsupp.single () index)))
           output_truncation
         simpa only [MvPowerSeries.coeff_truncTotal _ exponent_lower, PowerSeries.coeff]
           using output_coeff

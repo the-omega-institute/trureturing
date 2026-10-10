@@ -52,7 +52,7 @@ private lemma one_sub_prod_le_sum {ι : Type*} [LinearOrder ι]
     intro j hj
     exact sub_nonneg.mpr (hx1 j (Finset.mem_filter.mp hj).1)
   have hprod1 : ∏ j ∈ s with j < i, (1 - x j) ≤ 1 := by
-    apply Finset.prod_le_one
+    apply Finset.prod_le_one₀
     · intro j hj
       exact sub_nonneg.mpr (hx1 j (Finset.mem_filter.mp hj).1)
     · intro j hj
@@ -65,7 +65,7 @@ private lemma le_one_sub_prod {ι : Type*}
     x i ≤ 1 - ∏ j ∈ s, (1 - x j) := by
   classical
   have hprod : ∏ j ∈ s, (1 - x j) ≤ ∏ j ∈ ({i} : Finset ι), (1 - x j) := by
-    apply Finset.prod_le_prod_of_subset_of_le_one
+    apply Finset.prod_le_prod_of_subset_of_le_one₀
     · simpa using hi
     · intro j hj
       exact sub_nonneg.mpr (hx1 j hj)
