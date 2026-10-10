@@ -708,3 +708,264 @@ The same selected integer, actual zero real parts and multiplicities,
 all heights, explicit-formula terms and strict Robin core remain
 unchanged. RH remains unproved; this source application is not Lean
 verified and claims no mathematical originality.
+
+## Positive psi points supply a strict actual CA increase
+
+The [Pintz source application](../Analytic/pintz1984remainder.md#positive-psi-error-points-in-power-windows)
+locates positive $\psi$-error points in $[Y^r,Y]$ under its stated
+fixed-exponent conditions. The following correspondence consumes that
+input and the present primary's actual activation rules, equations
+(7)–(12), pp.7–9. It does not repeat Theorem 6's infinite GA1 supplier.
+Use the source's full layer price
+
+$$
+F(x,k)=\frac{\log(1+1/(x+\cdots+x^k))}{\log x},\qquad x>1.
+$$
+
+Let $t\to\infty$ satisfy $\psi(t)>t$, and let $p$ be the largest prime
+at most $t$. The prime number theorem gives $p\sim t$, while the full
+prime-power accounting gives
+
+$$
+\psi(t)-\vartheta(t)
+=\vartheta(\sqrt t)
+ +\sum_{k=3}^{\lfloor\log t/\log2\rfloor}\vartheta(t^{1/k})
+=(1+o(1))\sqrt t.
+$$
+
+The remaining sum is $O(t^{1/3}\log t)$. Since
+$\vartheta(p)=\vartheta(t)$, positivity implies
+$\vartheta(p)-p>-(1+o(1))\sqrt p$.
+
+At the actual price $\epsilon_p=F(p,1)$, let $x_k$ be the root of
+$F(x_k,k)=\epsilon_p$, so $x_1=p$, and retain
+
+$$
+H=\prod_{k:x_k\ge2}\ \prod_{q\le x_k}q,
+\qquad D=H/p.
+$$
+
+Here $q$ ranges over ordinary primes. The published activation rule
+makes $H$ the largest CA integer at this price, including every tied
+layer. The first $p$-layer is tied and no higher $p$-layer is occupied,
+so $D$ is another actual CA integer at the same price.
+
+For each fixed $c>0$,
+$F(c\sqrt p,2)/F(p,1)\to2/c^2$; monotonicity therefore gives
+$x_2\sim\sqrt{2p}$. Lemma 1, p.9, and equation (15), p.11, give
+$x_3<(3p)^{1/3}$ and $O(\log p)$ occupied layers. Thus all layers yield
+
+$$
+\log H=\vartheta(p)+(\sqrt2+o(1))\sqrt p
+ +O(p^{1/3}\log p),
+\qquad \log D\sim\log H\sim t.
+$$
+
+In particular $\log D>p+(\sqrt2-1+o(1))\sqrt p-\log p>p+1$
+eventually. The sign of the gain is then exact:
+
+$$
+\begin{aligned}
+\log\frac{G(H)}{G(D)}
+&=\epsilon_p\log p
+ -\int_{\log D}^{\log H}\frac{du}{u\log u}>0,\\
+\epsilon_p&>\frac1{(p+1)\log(p+1)}.
+\end{aligned}
+$$
+
+Indeed $Z(H)/Z(D)=1+1/p$, $\log H-\log D=\log p$, and
+$u\mapsto1/(u\log u)$ decreases throughout that interval. The positive
+$\sqrt2-1$ term permits a positive $\psi$-point even if
+$\vartheta(p)<p$. The full layer accounting is retained, and possible
+activation ties remain allowed. This correspondence supplies no GA1
+or event-free assertion.
+
+## Quantitative selection into the self-clock-price class
+
+Define the actual source class
+
+$$
+\mathscr S_*=
+\left\{N>e:\ N\text{ is globally CA at }
+\epsilon_N=\frac1{(\log N)\log\log N},\quad
+G(m)\le G(N)\ \text{for every integer }m\ge N\right\}.
+$$
+
+Under RH failure, the preceding correspondence permits an unbounded
+family entirely in this class while retaining a fixed power-sized
+excess. This is a paper-level synthesis of the cited inputs, not a
+priority claim, Lean certification, or bound for the signed tail.
+
+Retain the zero abscissa $1/2<\Theta\le1$. Choose fixed parameters
+
+$$
+1-\Theta<\eta<\frac1{4\Theta},\qquad
+2\eta<r<\frac1{2\sigma},
+$$
+
+where $\Theta<\sigma<\min\{1,1/(4\eta)\}$ if $\Theta<1$, and
+$\sigma=1$ if $\Theta=1$. These choices exist because
+$4\Theta(1-\Theta)<1$. They satisfy both $r\sigma<1/2$ for the Pintz
+application and $0<\eta/r<1/2$ for the final excess. This selects an
+allowed fixed exponent in (O1); it is not a construction for every
+previously chosen $\eta<1/2$.
+
+Take the published CA witnesses $C$ from (O1), with
+$a=\log C\to\infty$, and put $Y=a/8$. Select a positive $\psi$-point
+$t\in[Y^r,Y]$, then construct the actual $D,H$ above. Eventually
+
+$$
+\log D\ge\tfrac12(a/8)^r,\qquad
+\log H\le2t\le a/4,
+\qquad D<H<C,
+\qquad G(H)>G(D).
+\tag{S1}
+$$
+
+The selection of $t$ can be specified without a free continuum choice:
+take the least member of the finite set
+$\{Y^r\}\cup\{q^k:Y^r<q^k\le Y,\ q\text{ prime},\ k\ge1\}$
+where $\psi(t)>t$. Such a member exists since $\psi(u)-u$ decreases
+between its prime-power jumps.
+
+Let $N$ be the rightmost maximizer of $G$ over the integers $n\ge D$.
+The tail contains $C$ with $G(C)>e^\gamma=\limsup G(n)$, so this uses
+the already recalled attained-tail-maximum mechanism and has finitely
+many ties. The strict gain in (S1) gives $N>D$. Lemmas 6 and 2 therefore
+apply with CA base $N_0=D$, selected maximum $N>D$, and price
+$\epsilon_N$; they supply global CA optimization at that exact price.
+Hence $N\in\mathscr S_*$, with all activation ties still allowed.
+
+Put $A=\log N$, $L=\log A$, $T=\sqrt A L$ and
+$k_0=1/(2\,8^r)$. On the same final integer, (S1) gives
+$A\ge k_0a^r$, and consequently
+
+$$
+a^{-\eta}\ge k_0^{\eta/r}A^{-\eta/r},\qquad
+G(N)\ge G(C)>e^\gamma(1+c_*A^{-\eta'}),
+\quad \eta'=\eta/r\in(0,1/2),\quad c_*=c_\eta k_0^{\eta'}>0.
+\tag{S2}
+$$
+
+Also $A\to\infty$. The possible positions $D<N<C$, $N=C$, and $N>C$
+are all covered: the lifting comparison is $N>D$. The earlier procedure
+whose tail starts at $C$ keeps its stated equality-branch price limitation.
+Here the price identification follows from $N>D$ even if $N=C$.
+
+Apply (O3) with the fixed $(\eta',c_*)$ supplied by (S2). Under RH
+failure it yields $T I_\psi(A)\to-\infty$ on an unbounded family inside
+$\mathscr S_*$. The same-source identity, complete original integral
+and actual core $K_N(A)$ are evaluated at $A=\log N$, not at any
+auxiliary clock $t,p,\log D$ or $\log C$.
+
+Accordingly a sufficient remaining target can be restricted to
+
+$$
+\exists M\ge0,\ A_0\quad
+\forall N\in\mathscr S_*,\ A=\log N\ge A_0:\quad
+\sqrt A\log A
+\int_A^\infty(\psi(u)-u)
+ \frac{1+\log u}{u^2\log^2u}\,du\ge-M.
+\tag{S3}
+$$
+
+No bound in (S3) is established. The increment is the quantified
+source-selection interface justifying this narrower class, with the
+original signed obligation preserved. It supplies neither GA1 nor
+regular or event-free states, a favorable cutoff, eliminated ties,
+positive sorting-defect funding, or RH. Those restrictions cannot be
+added to (S3) without another same-source selection argument.
+
+## The same power-excess family also supplies proper GA1 sources
+
+Keep the actual $D,H,N$ and all parameters of (S1)–(S2). The following
+application of equations (10)–(12) and Lemma 6, printed pp.8–9 and p.13,
+provides the additional same-source selection required above. It does
+not reconstruct the paper's known infinite CA–GA1 supplier or claim
+priority for the application.
+
+First the selected maximum satisfies $N\ge H$, not only $N>D$.
+The two endpoints optimize at the common price $\epsilon_p$, with
+$Q=Z(D)D^{-\epsilon_p}=Z(H)H^{-\epsilon_p}$. For $D<m<H$, global
+CA optimization gives
+
+$$
+G(m)\le Qe^{g_{\epsilon_p}(m)},\qquad
+g_\epsilon(t)=\epsilon\log t-\log\log\log t.
+$$
+
+Lemma 6's strict decrease followed by strict increase implies
+$g_{\epsilon_p}(m)<\max\{g_{\epsilon_p}(D),g_{\epsilon_p}(H)\}$.
+Since $G(D)<G(H)$, the larger endpoint is $H$. Together with the
+separate strict comparison at $m=D$, every $D\le m<H$ has
+$G(m)<G(H)$; tail maximality therefore forces $N\ge H$.
+
+Put $q_0(u)=1/(u\log u)$. The same integer's own price now satisfies
+
+$$
+\epsilon_N=q_0(A)\le q_0(\log H)<q_0(p+1)<\epsilon_p.
+$$
+
+Every occupied $H$ layer has price at least $\epsilon_p$ and hence is
+mandatory at $\epsilon_N$, by the cited activation rule. Thus $H\mid N$.
+For any ordinary prime divisor $q$ of $N$, if $q\le p$ then
+$N/q\ge H/q\ge H/p=D$. If $q>p$, the largest prime factor of $H$ is
+$p$, so $H\mid N/q$ and again $N/q\ge H>D$. These comparisons cover
+every multiplicity. The defining maximum over integers at least $D$
+therefore supplies $G(N/q)\le G(N)$ for every such $q$.
+Eventually $p\ge5$, so $\Omega(N)\ge\Omega(H)\ge3$; this is proper GA1
+in the source's exact sense. The power excess (S2) holds on this same $N$.
+
+### Apply the published prime-local regularity bridge
+
+Define the narrower class
+
+$$
+\mathscr S_{\rm reg}=\mathscr S_*\cap\{N:N\text{ is proper GA1}\}.
+$$
+
+Every member meets the hypotheses of the
+[published prime-local bridge](../Analytic/mantovanelli2026primeworkload.md#the-existing-prime-local-bridge):
+properness gives $N/q\ge4>e$ for every prime divisor $q$, GA1 gives
+the deletion comparisons, and right-tail maximality gives
+$G(Nq)\le G(N)$ for every ordinary prime $q$. The cited theorem
+therefore directly supplies the event-free identity
+$N=C_A$ and $\Phi_{\rm CA}(A)=A$ at $A=\log N$.
+No general regularity or activation-tie proof is repeated here. The
+same manuscript's fixed-maximizer reduction in §11 does not supply
+the unbounded family and fixed power excess in (S2).
+
+### Restrict the unpaid signed estimate to this joint source class
+
+The selected family lies in $\mathscr S_{\rm reg}$ and retains (S2).
+Therefore (O3) still forces $T I_\psi(A)\to-\infty$ on that same
+unbounded family if RH fails. It suffices to establish
+
+$$
+\exists M\ge0,\ A_0\quad
+\forall N\in\mathscr S_{\rm reg},\ A=\log N\ge A_0:\quad
+\sqrt A\log A\, I_\psi(A)\ge-M.
+\tag{S4}
+$$
+
+This is the complete original signed integral, with every prime-power
+layer and explicit-formula term retained. The
+[existing regular-return endpoint application](../ArithSums/nicolas2025comparison.md#the-endpoint-condition-at-actual-self-tangent-sources)
+now applies to this same family: it already gives
+$A-\vartheta(A)=\sqrt{2A}(1+o(1))$ and a negligible squared endpoint
+penalty at the actual primorial cutoff. Its proof and the archived
+packet and cone results are reused rather than repeated.
+
+No bound in (S4) follows from those endpoint identities. The added
+interface is joint selection of proper GA1 regular sources with the
+same quantified excess, not a proof that every member of
+$\mathscr S_*$ is GA1. The full signed estimate and RH remain unproved;
+this application is not Lean certified and claims no mathematical
+originality.
+
+The [existing Johnston weighted-sign theorem](../Analytic/johnston2022average.md#direct-transport-to-the-existing-robin-kernel)
+also gives a negative primitive with this kernel, anchored at 2.
+Writing that primitive as $J$ leaves the complete target
+$I_\psi(A)=J_\infty-J(A)$. Its negative bias does not supply the
+required comparison with $J_\infty$ at these same actual integers;
+the uniform floor in (S4) on the already justified source class remains unpaid.
