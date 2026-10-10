@@ -2260,3 +2260,233 @@ savings, insufficient to certify the original power target when
 $\eta>a_k$. No same-source mean rate, critical $y\asymp R^4$
 response, remaining recovery convolution or complete signed Robin
 tail has been supplied by this application.
+
+## Almost-all short sums transfer to the actual dense inner mesh
+
+The almost-all supplier is already cited in FIB §400:
+Matomäki--Radziwiłł--Shao--Tao--Teräväinen,
+[*Higher uniformity of arithmetic functions in short intervals II.
+Almost all intervals*, arXiv:2411.05770v2](https://arxiv.org/html/2411.05770v2),
+Theorem 1.1(i), with the starred norm defined in equation (1.4).
+For fixed $\varepsilon>0$ and every fixed $K>0$, it bounds the
+untwisted starred Möbius sum by $H/(\log T)^K$ for real starting
+points in $[T,2T]$, outside a set of measure
+$O_{K,\varepsilon}(T/(\log T)^K)$, whenever
+$T^{1/3+\varepsilon}\le H\le T^{1-\varepsilon}$.
+Take the testing function identically one and fix the nilsequence
+complexity parameter. The starred supremum already includes every
+initial subinterval; no new maximal-prefix theorem is required.
+
+The following application combines this cited supplier with the
+all-interval supplier used in (SV52)--(SV53). It does not assume
+that the actual sampled endpoints avoid the exceptional set.
+It has no Lean certification or historical originality claim.
+
+Fix a supplied pair $1/2<\theta<1$, $B>0$, and fix
+
+$$
+0<c<\frac{2(1-\theta)}{2-\theta},\qquad
+R^{-c}\le\delta\le R^{-c/2}.
+\tag{SV56}
+$$
+
+The all-interval input is
+$|M(t+h)-M(t)|\ll h/(\log t)^B$ for $t^\theta\le h\le t$.
+Keep the actual $r=\log R$, $U=R^2$, coefficients and signed
+prefix $F_R(H)$ of (SV52). The conclusion is
+
+$$
+\sup_{0\le H\le\delta U}|F_R(H)|
+ \ll_{c,\theta,B}\delta U r^{1-B},\qquad
+\sup_{U<Y\le U(1+\delta)}E_A(Y)
+ \ll_{c,\theta,B}\frac{\delta^2U}{r^B}.
+\tag{SV57}
+$$
+
+### The smooth-source tail retains all endpoint errors
+
+Choose fixed $0<\alpha<1-c$ and put
+
+$$
+P_d(\alpha)=\prod_{p\mid d}(1-p^{-\alpha})^{-1},\qquad
+g_\alpha(q)=\prod_{p\mid q}\frac{p^{-\alpha}}{1-p^{-\alpha}}
+\quad(q\text{ squarefree}),
+$$
+
+with $g_\alpha(1)=1$ and $g_\alpha(q)=0$ otherwise. Expanding
+the product gives $P_d(\alpha)=\sum_{q\mid d}g_\alpha(q)$, and
+
+$$
+\sum_q\frac{g_\alpha(q)}q
+=\prod_p\left(1+\frac{p^{-\alpha}}{p(1-p^{-\alpha})}\right)<\infty.
+$$
+
+The ordinary weighted harmonic sums therefore give
+
+$$
+\sum_{d\le R}\frac{\log(R/d)}dP_d(\alpha)\ll_\alpha r^2,
+\qquad
+\sum_{d\le R}\frac{\log(R/d)}{d^\alpha}P_d(\alpha)
+ \ll_\alpha R^{1-\alpha}.
+\tag{SV58}
+$$
+
+Indeed, after writing $d=qm$, the inner sums are bounded by
+$O((1+\log(R/q))^2)$ and $O_\alpha((R/q)^{1-\alpha})$,
+respectively; the remaining factor is $g_\alpha(q)/q$.
+Thus no uniform subexponential bound for $P_d$ is needed here.
+
+Set $Z=r^C$ with fixed $C>0$. In the exact coprime convolution
+of (SV52), the terms with $a>Z$, $a\mid d^\infty$, retain the
+integer interval bound $\delta U/(da)+1$. The Rankin bounds are
+
+$$
+\sum_{\substack{a>Z\\a\mid d^\infty}}\frac1a
+ \le Z^{-(1-\alpha)}P_d(\alpha),\qquad
+\#\{a\le2U/d:a\mid d^\infty\}
+ \le(2U/d)^\alpha P_d(\alpha).
+$$
+
+Together with (SV58), their total contribution to $F_R$ is at most
+
+$$
+O_\alpha\left(\delta U r Z^{-(1-\alpha)}
+                   +\frac{R^{1+\alpha}}r\right).
+\tag{SV59}
+$$
+
+The second term includes every unit endpoint error. Choose
+$C(1-\alpha)>B+1$. Both terms are then
+$o(\delta U r^{1-B})$: the second has the strict power margin
+$1-c-\alpha>0$. These choices are fixed before $R$ grows.
+
+### Sparse starts use the uniform input; dense starts use an integral
+
+Choose fixed $\omega>0$ sufficiently small that
+
+$$
+c+\omega<1,\qquad
+(2-c-2\omega)(1-\theta)>c,
+$$
+
+and put $D_0=R^{c+\omega}$. For $a\le Z$, $d\le D_0$ and
+$t=U/(da)$, eventually $t\ge R^{2-c-2\omega}$. Thus
+$\delta t^{1-\theta}$ grows by a positive power of $R$.
+The same short-prefix argument in (SV52) bounds every inner
+prefix by $O(\delta t/r^B)$, including lengths below $t^\theta$.
+Reuse $\sum_{a\mid d^\infty}1/a=d/\varphi(d)$ and the weighted
+harmonic bound there. This sparse part is
+$O(\delta U r^{1-B})$.
+
+For the remaining $d>D_0$, fix $a\le Z$ and a dyadic block
+$D<d\le2D$, padding boundary blocks only in the nonnegative envelope bound.
+The actual restored weights remain restricted to $d\le R$, so
+$\log(R/d)$ is never used at a negative value. Put
+$T=U/(2aD)$ and define the common-prefix envelope
+
+$$
+Q_T(t)=\sup_{0\le h\le2\delta T}|M(t+h)-M(t)|.
+$$
+
+The sampled starts $t_d=U/(ad)$ lie in $[T,2T]$, with separation
+comparable to $T/D$. Uniformly for these blocks,
+$T\gg R/Z$, $T\ll R^2$, and $\log T\asymp r$.
+Condition (SV56) implies $c<2/3$. Choose a fixed sufficiently
+small $\varepsilon>0$. The strict margins in
+$\delta T^{2/3-\varepsilon}\gg1$ and
+$\delta T^\varepsilon\ll1$ ensure that the almost-all supplier
+applies to length $2\delta T$, also on a fixed dyadic cover of
+$[T/2,3T]$. On the exceptional set use $Q_T\le2\delta T+1$.
+For every fixed $K>0$ it follows directly that
+
+$$
+\int_{T/2}^{3T}Q_T(t)\,dt
+ \ll_{c,C,K}\frac{\delta T^2}{r^K}.
+$$
+
+Take disjoint cells of length comparable to $T/D$ around the
+starts $t_d$. Since $|\mu(n)|\le1$, moving the start by $v$
+changes any fixed-length interval sum by at most $2|v|+2$.
+Averaging over each cell therefore gives the deterministic bound
+
+$$
+\sum_{D<d\le2D}Q_T(t_d)
+ \ll\frac{\delta DT}{r^K}+T+D.
+\tag{SV60}
+$$
+
+This uses the exceptional-set integral itself, including any
+sampled points it contains. It is valid for the actual mesh at
+every sufficiently large $R$.
+
+For an upper bound, drop $a\mid d^\infty$ and $\mu(d)^2$ only
+in this nonnegative small-$a$ sum. Restore the actual factor
+$\log(R/d)/r$ from (SV52). Summing (SV60) over the blocks and
+$a\le Z$ gives
+
+$$
+O\left(\delta U r^{1-K}\log Z
+       +\frac U{D_0}\log Z+\frac{RZ}r\right).
+$$
+
+Here $\sum_{a\le Z}1/a=O(\log Z)$,
+$\sum_D\log(R/D)=O(r^2)$,
+$\sum_D\log(R/D)/D=O(r/D_0)$, and
+$\sum_D D\log(R/D)=O(R)$. Choose $K>B+2$.
+The first term is $o(\delta U r^{1-B})$; the other two have
+the positive power margins $\omega$ and $1-c$. Combining
+this with the sparse part and (SV59) proves the prefix estimate
+in (SV57). The existing Abel-summation and full-positive-part
+argument of (SV53) supplies its second estimate. The constant
+$1$, full drift $\sigma_A Y$ and original coefficients are retained.
+
+## The mesh application enlarges the signed prime-onset range
+
+Combining (SV57) with the existing prime increment in (SV50)
+gives exactly the cost bound (SV54), now with condition (SV56).
+The supplied source and its original fixed $\eta$ are unchanged.
+
+For every original $0<\eta<15/68$ and every pre-fixed $M>0$,
+take
+
+$$
+\delta=A^{-\eta/3}L^M,\qquad B=3M+2.
+\tag{SV61}
+$$
+
+Choose $\theta>7/12$ sufficiently close to $7/12$. Since
+$c=8\eta/3<10/17=2(1-7/12)/(2-7/12)$, condition (SV56)
+holds eventually. The all-interval supplier allows this fixed
+$B$, and the almost-all supplier allows any fixed $K>B+2$.
+Thus the actual prime-onset cost is $O_{\eta,M}(A^{-\eta}/L^2)$.
+This extends the arbitrary-fixed-$M$ range of (SV55), which
+previously required $\eta<5/32$.
+
+For the additional original range $15/68\le\eta<4/17$, take
+fixed $0<\xi<1/9$ and $3\xi<B<1/3$, and set
+
+$$
+\delta=A^{-\eta/3}L^\xi.
+\tag{SV62}
+$$
+
+Choose $\theta>19/35$ close enough to leave a strict margin,
+because $c=8\eta/3<32/51=2(1-19/35)/(2-19/35)$.
+The same cost is $O(A^{-\eta}/L^{B-3\xi})=o(A^{-\eta})$.
+This extends the small-positive-logarithmic-width range of
+(SV55), which previously stopped at $\eta<6/35$.
+
+The outer prime lengths in both cases still exceed $P_1^{2/3}$
+by a positive power, as required in (SV50), and $p>y$ remains
+true. The actual weights, coprime response, full positive part
+and existing sampled deletion rules therefore retain their
+original scope. The square-layer applications of (SV55) are
+already available and are directly reused.
+
+These are still shrinking strips with the same power exponent
+in their width. No growing $M(A)$, fixed-width prime payment,
+same-source mean estimate, critical $y\asymp R^4$ estimate,
+remaining recovery convolution or complete signed Robin-tail
+estimate follows from this application. For $\eta\ge4/17$,
+the unsigned strips remain available; no enlarged signed strip
+is supplied here.
