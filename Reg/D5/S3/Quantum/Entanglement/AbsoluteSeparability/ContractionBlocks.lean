@@ -212,14 +212,14 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
-  realize signature (fun _ _ f => f) (fun e => nomatch e)
+def actual : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ f => f) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ _ => -1) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ _ _ => -1) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u}
   Law R := ∀ {m n : ℕ} {ι : Type u} [Fintype ι]
     (f : ι → Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ),
     (∀ i, separableCone (f i)) → separableCone (∑ i, R.readout () ⟨m, n, ι⟩ f i)
@@ -253,8 +253,8 @@ def family : Registration arena.{u} (type_of% @separableCone_sum.{u}) where
     have he := congrFun (congrFun (congrFun h ⟨0⟩) (0, 0)) (0, 0)
     norm_num [actual, realize, Matrix.one_apply] at he
 
-def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
-    (@separableCone_sum.{u}) (Realization signature) Unit Unit := {
+def registration : Contract.Registration.{u + 1, 0, 1, 0, 0, 0, u + 1, u, 0, u, 0, 0}
+    (@separableCone_sum.{u}) (Realization signature.{u}) Unit Unit := {
   unitName :=
     `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.SeparableSum.unit
   realizationName :=
@@ -268,7 +268,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨True.intro⟩ True.intro
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature.{u} actual.readout actual.anchor)
   variation := .evidence ⟨True.intro⟩ True.intro
   sensitivity := .evidence ⟨True.intro⟩ True.intro
   partialSensitivity := none
