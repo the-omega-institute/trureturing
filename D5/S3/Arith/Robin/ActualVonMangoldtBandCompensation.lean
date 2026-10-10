@@ -82,7 +82,7 @@ private theorem prefix_eq_Ioc (k : ℕ → ℝ) (y : ℝ) :
       simp only [arithmeticPrefix, Nat.add_comm]
     _ = ∑ n ∈ Finset.Ico 1 (⌊y⌋₊ + 1), k n := by
       rw [Finset.sum_Ico_eq_sum_range]
-      simp
+      simp only [Nat.sub_zero, Nat.add_sub_cancel]
     _ = ∑ n ∈ Finset.Ioc 0 ⌊y⌋₊, k n := by
       congr 1
       ext n
@@ -121,9 +121,11 @@ private theorem reciprocalLog_deriv {c t : ℝ} (hc : 0 < c) (ht : 0 < t)
     ((hasDerivAt_id t).div_const c)
   have h := (hasDerivAt_const t (1 : ℝ)).div ((hasDerivAt_id t).mul hl)
     (mul_ne_zero ht.ne' hz)
-  convert h using 1 <;> simp only [reciprocalLog, bandDerivative, id_eq, one_mul, zero_mul,
-    zero_sub, neg_div]
-  field_simp
+  change HasDerivAt (reciprocalLog c) _ t at h
+  apply h.congr_deriv
+  simp only [bandDerivative, id_eq, Pi.mul_apply, Pi.div_apply, Function.comp_apply,
+    one_mul, zero_mul, zero_sub]
+  field_simp [hc.ne', ht.ne', hz]
   <;> ring
 
 private theorem maxKernel_low {A t : ℝ} (ht : t ≤ A) :
@@ -143,7 +145,7 @@ private theorem dilatedKernel_high {A c t : ℝ} (hc : 0 < c) (ht : c * A ≤ t)
     dilatedKernel A c t = reciprocalLog c t := by
   rw [dilatedKernel, maxKernel_high ((le_div_iff₀ hc).mpr (by simpa [mul_comm] using ht))]
   unfold reciprocalLog
-  field_simp
+  simp [div_eq_mul_inv, mul_inv_rev, hc.ne', mul_assoc, mul_comm, mul_left_comm]
 
 private theorem reciprocalLog_cutoff {A c : ℝ} (hc : 0 < c) :
     reciprocalLog c (c * A) = 1 / (c * A * Real.log A) := by
@@ -176,7 +178,7 @@ private theorem residual_forward {A c t : ℝ} (ha : 1 < A) (hc : 1 ≤ c) :
     exact residual_low ha hc0 ht (ht.trans hAA)
   · have htA : A < t := lt_of_not_ge ht
     by_cases htc : t ≤ c * A
-    · rw [if_pos ⟨htA, htc⟩]
+    · rw [if_pos ⟨htA, htc⟩, reciprocalLog_cutoff hc0]
       simp only [residualKernel, regularKernel, if_neg ht, centeredKernel, tangentKernel,
         dilatedKernel_low hc0 htc, maxKernel_high htA.le, smoothRemainder,
         reciprocalLog_cutoff hc0, reciprocalLog, Real.log_div (ha0.trans htA).ne' hc0.ne']
@@ -244,8 +246,8 @@ private theorem bandDerivative_continuous {a b c : ℝ} (hc : 0 < c) (ha : 0 < a
   intro t ht
   have ht0 : 0 < t := ha.trans_le ht.1
   have hl := Real.continuousAt_log (div_ne_zero ht0.ne' hc.ne')
-  exact ((hl.comp (continuousAt_id.div_const c)).add_const 1 |>.div
-    ((continuousAt_id.pow 2).mul ((hl.comp (continuousAt_id.div_const c)).pow 2))
+  exact ((hl.comp t (continuousAt_id.div_const c)).add_const 1 |>.div
+    ((continuousAt_id.pow 2).mul ((hl.comp t (continuousAt_id.div_const c)).pow 2))
     (by have := hz t ht; positivity)).continuousWithinAt
 
 private theorem bandDerivative_cap {A c t : ℝ} (hA : Real.exp 78 ≤ A)
@@ -274,8 +276,9 @@ private theorem bandDerivative_cap {A c t : ℝ} (hA : Real.exp 78 ≤ A)
     nlinarith [sq_nonneg (t - (99 / 100 : ℝ) * A)]
   have heq : bandDerivative c t * (A ^ 2 * L) =
       (A ^ 2 / t ^ 2) * (L / z) * (1 + 1 / z) := by
-    dsimp [bandDerivative, z]
-    field_simp
+    change (z + 1) / (t ^ 2 * z ^ 2) * (A ^ 2 * L) =
+      (A ^ 2 / t ^ 2) * (L / z) * (1 + 1 / z)
+    field_simp [ht0.ne', hz0.ne']
     <;> ring
   have hbound : bandDerivative c t * (A ^ 2 * L) ≤ (517 / 500 : ℝ) := by
     rw [heq]
@@ -295,8 +298,10 @@ private theorem weightedPrefix_sub {f g : ℝ → ℝ} (R : ℝ) :
 
 private theorem weightedPrefix_const (q R : ℝ) :
     weightedPrefix (fun _ => q) R = q * Chebyshev.psi R := by
-  simp only [weightedPrefix, arithmeticPrefix, Finset.sum_mul]
-  rw [← arithmeticPrefix, prefix_psi]
+  unfold weightedPrefix arithmeticPrefix
+  rw [← Finset.sum_mul]
+  change arithmeticPrefix (fun n => Λ n) R * q = q * Chebyshev.psi R
+  rw [prefix_psi]
   ring
 
 private theorem supported_prefix {a b : ℝ} {f r : ℝ → ℝ} (ha : 0 ≤ a) (hb : 0 < b)
@@ -314,6 +319,7 @@ private theorem supported_prefix {a b : ℝ} {f r : ℝ → ℝ} (ha : 0 ≤ a) 
   apply Finset.sum_congr rfl
   intro i _
   rw [hr]
+  simp only [Nat.cast_add, Nat.cast_one] at *
   split_ifs <;> simp_all
 
 private theorem abel_prefix {a b : ℝ} {f : ℝ → ℝ} (ha : 0 ≤ a) (hab : a ≤ b)
@@ -342,7 +348,7 @@ private theorem prefix_product_integrable {a b : ℝ} {f : ℝ → ℝ} (ha : 0 
 private theorem reciprocalLog_FTC {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab : a ≤ b)
     (hz : ∀ t ∈ Icc a b, 0 < Real.log (t / c)) :
     (∫ t in a..b, bandDerivative c t) = reciprocalLog c a - reciprocalLog c b := by
-  have hi := (bandDerivative_continuous hc ha hz).intervalIntegrable_of_Icc hab
+  have hi := (bandDerivative_continuous hc ha hz).intervalIntegrable_of_Icc (μ := volume) hab
   have hd : ∀ t ∈ uIcc a b, HasDerivAt (fun s => -reciprocalLog c s) (bandDerivative c t) t := by
     intro t ht
     rw [uIcc_of_le hab] at ht
@@ -356,18 +362,18 @@ private theorem band_mass_forward {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab :
       weightedPrefix (fun t => reciprocalLog c t - reciprocalLog c b) a =
         ∫ t in a..b, bandDerivative c t * (Chebyshev.psi t - Chebyshev.psi a) := by
   have hk := bandDerivative_continuous hc ha hz
-  have hki := hk.integrableOn_Icc
+  have hki := hk.integrableOn_Icc (μ := volume)
   have hg : ∀ t ∈ Icc a b, HasDerivAt (reciprocalLog c) (-bandDerivative c t) t :=
     fun t ht => reciprocalLog_deriv hc (ha.trans_le ht.1) (hz t ht).ne'
   have hderiv : ∀ t ∈ Icc a b, deriv (reciprocalLog c) t = -bandDerivative c t :=
     fun t ht => (hg t ht).deriv
   have hgi : IntegrableOn (deriv (reciprocalLog c)) (Icc a b) :=
-    hki.neg.congr_fun hderiv measurableSet_Icc
+    hki.neg.congr_fun (fun t ht => (hderiv t ht).symm) measurableSet_Icc
   have habel := abel_prefix ha.le hab (fun t ht => (hg t ht).differentiableAt) hgi
   have hpsi := prefix_product_integrable ha.le hki
   have hip : IntervalIntegrable (fun t => bandDerivative c t * Chebyshev.psi t) volume a b :=
     (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr hpsi
-  have hic := hk.intervalIntegrable_of_Icc hab |>.mul_const (Chebyshev.psi a)
+  have hic := hk.intervalIntegrable_of_Icc (μ := volume) hab |>.mul_const (Chebyshev.psi a)
   have hdiff : (∫ t in a..b, deriv (reciprocalLog c) t * Chebyshev.psi t) =
       -(∫ t in a..b, bandDerivative c t * Chebyshev.psi t) := by
     rw [← intervalIntegral.integral_neg]
@@ -390,9 +396,9 @@ private theorem band_mass_reverse {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab :
         ∫ t in a..b, bandDerivative c t * (Chebyshev.psi b - Chebyshev.psi t) := by
   have hfor := band_mass_forward hc ha hab hz
   have hk := bandDerivative_continuous hc ha hz
-  have hi := hk.intervalIntegrable_of_Icc hab
+  have hi := hk.intervalIntegrable_of_Icc (μ := volume) hab
   have hip := (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr
-    (prefix_product_integrable ha.le hk.integrableOn_Icc)
+    (prefix_product_integrable ha.le hk.integrableOn_Icc (μ := volume))
   simp only [weightedPrefix_sub, weightedPrefix_const] at *
   rw [show (fun t => bandDerivative c t * (Chebyshev.psi b - Chebyshev.psi t)) =
     (fun t => bandDerivative c t * Chebyshev.psi b - bandDerivative c t * Chebyshev.psi t) by funext t; ring,
@@ -412,7 +418,7 @@ private theorem triangle_volume_forward {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) 
     intro t ht
     rw [uIcc_of_le hab] at ht
     exact reciprocalLog_deriv hc (ha.trans_le ht.1) (hz t ht).ne'
-  have hki := (bandDerivative_continuous hc ha hz).intervalIntegrable_of_Icc hab
+  have hki := (bandDerivative_continuous hc ha hz).intervalIntegrable_of_Icc (μ := volume) hab
   have hgi := (fun t ht => (hd t ht).continuousAt.continuousWithinAt) |>
     ContinuousOn.intervalIntegrable
   have hparts := intervalIntegral.integral_mul_deriv_eq_deriv_mul
@@ -435,7 +441,7 @@ private theorem triangle_volume_reverse {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) 
     intro t ht
     rw [uIcc_of_le hab] at ht
     exact reciprocalLog_deriv hc (ha.trans_le ht.1) (hz t ht).ne'
-  have hki := (bandDerivative_continuous hc ha hz).intervalIntegrable_of_Icc hab
+  have hki := (bandDerivative_continuous hc ha hz).intervalIntegrable_of_Icc (μ := volume) hab
   have hgi := (fun t ht => (hd t ht).continuousAt.continuousWithinAt) |>
     ContinuousOn.intervalIntegrable
   have hparts := intervalIntegral.integral_mul_deriv_eq_deriv_mul
@@ -457,7 +463,7 @@ private theorem integral_supported {a b R : ℝ} {f r : ℝ → ℝ} (ha : 0 ≤
   have he : r = (Ioc a b).indicator f := by
     funext t
     rw [hr]
-    rfl
+    simp only [Set.indicator, Set.mem_Ioc]
   rw [he, intervalIntegral.integral_of_le (ha.trans (hab.trans hbR)),
     setIntegral_indicator measurableSet_Ioc]
   have hs : Ioc a b ⊆ Ioc (0 : ℝ) R := fun t ht => ⟨ha.trans_lt ht.1, ht.2.trans hbR⟩
@@ -467,9 +473,9 @@ private theorem supported_integrable {a b R : ℝ} {f r : ℝ → ℝ} (ha : 0 �
     (hab : a ≤ b) (hbR : b ≤ R) (hf : ContinuousOn f (Icc a b))
     (hr : ∀ t : ℝ, r t = if a < t ∧ t ≤ b then f t else 0) :
     IntervalIntegrable r volume 0 R := by
-  have he : r = (Ioc a b).indicator f := by funext t; rw [hr]; rfl
+  have he : r = (Ioc a b).indicator f := by funext t; rw [hr]; simp only [Set.indicator, Set.mem_Ioc]
   rw [intervalIntegrable_iff_integrableOn_Icc_of_le (ha.trans (hab.trans hbR)), he,
-    IntegrableOn, integrable_indicator_iff measurableSet_Ioc, Measure.restrict_restrict measurableSet_Ioc]
+    IntegrableOn, integrable_indicator_iff measurableSet_Ioc, IntegrableOn, Measure.restrict_restrict measurableSet_Ioc]
   have hs : Ioc a b ⊆ Icc (0 : ℝ) R := fun t ht => ⟨(ha.trans_lt ht.1).le, ht.2.trans hbR⟩
   rw [inter_eq_left.mpr hs]
   exact hf.integrableOn_Icc.mono_set Ioc_subset_Icc_self
@@ -521,14 +527,18 @@ private theorem positive_distance_compensation {h H ε C : ℝ} {k m : ℝ → �
       have hd : ∀ r ∈ uIcc (0 : ℝ) s,
           HasDerivAt (fun t : ℝ => C / 2 * t ^ 2) (C * r) r := by
         intro r _
-        convert ((hasDerivAt_id r).pow 2).const_mul (C / 2) using 1 <;> ring
+        have hd := ((hasDerivAt_id r).pow 2).const_mul (C / 2)
+        change HasDerivAt (fun t : ℝ => C / 2 * t ^ 2) _ r at hd
+        apply hd.congr_deriv
+        simp only [Nat.cast_ofNat, Nat.reduceSub, pow_one, id_eq]
+        ring
       simpa using intervalIntegral.integral_eq_sub_of_hasDerivAt hd hcint
     rwa [heval] at hb
   have hsSq : s ^ 2 = min (H ^ 2) (h ^ 2) := by
     by_cases hHh : H ≤ h
-    · rw [s, min_eq_left hHh, min_eq_left (by nlinarith)]
+    · simp only [s, min_eq_left hHh, min_eq_left (by nlinarith : H ^ 2 ≤ h ^ 2)]
     · have hhH : h ≤ H := le_of_lt (lt_of_not_ge hHh)
-      rw [s, min_eq_right hhH, min_eq_right (by nlinarith)]
+      simp only [s, min_eq_right hhH, min_eq_right (by nlinarith : h ^ 2 ≤ H ^ 2)]
   rw [hsSq] at hshort
   have hsplitv := intervalIntegral.integral_add_adjacent_intervals hs1 hs2
   have hsplitm := intervalIntegral.integral_add_adjacent_intervals hm1 hm2
@@ -559,7 +569,8 @@ private theorem local_band_geometry {A c : ℝ} (hA : Real.exp 78 ≤ A)
   intro t htt
   obtain ⟨htA, hz⟩ := ht t htt
   have hhigh : bandHigh A c ≤ (101 / 100 : ℝ) * A := by
-    apply max_le <;> dsimp [bandHigh] <;> nlinarith
+    unfold bandHigh
+    apply max_le <;> nlinarith
   exact ⟨htA, by linarith [htt.2.trans hhigh], by linarith⟩
 
 private theorem actual_layer_forward {A c : ℝ} (hA : Real.exp 78 ≤ A)
@@ -579,11 +590,11 @@ private theorem actual_layer_forward {A c : ℝ} (hA : Real.exp 78 ≤ A)
   constructor
   · unfold actualCompensation
     rw [bandHigh, max_eq_right hab]
-    rw [supported_prefix ha0.le (mul_pos hc0 ha0) hab (residual_forward ha hc1)]
+    rw [supported_prefix ha0.le (mul_pos hc0 ha0) hab (fun t => residual_forward (t := t) ha hc1)]
     exact band_mass_forward hc0 ha0 hab hz
   · unfold bandVolume
     rw [bandHigh, max_eq_right hab,
-      integral_supported ha0.le hab le_rfl (residual_forward ha hc1)]
+      integral_supported ha0.le hab le_rfl (fun t => residual_forward (t := t) ha hc1)]
     exact triangle_volume_forward hc0 ha0 hab hz
 
 private theorem actual_layer_reverse {A c : ℝ} (hA : Real.exp 78 ≤ A)
@@ -603,11 +614,11 @@ private theorem actual_layer_reverse {A c : ℝ} (hA : Real.exp 78 ≤ A)
   constructor
   · unfold actualCompensation
     rw [bandHigh, max_eq_left hab]
-    rw [supported_prefix (mul_pos hc0 ha0).le ha0 hab (residual_reverse ha hc0 hc1)]
+    rw [supported_prefix (mul_pos hc0 ha0).le ha0 hab (fun t => residual_reverse (t := t) ha hc0 hc1)]
     exact band_mass_reverse hc0 (mul_pos hc0 ha0) hab hz
   · unfold bandVolume
     rw [bandHigh, max_eq_left hab,
-      integral_supported (mul_pos hc0 ha0).le hab le_rfl (residual_reverse ha hc0 hc1)]
+      integral_supported (mul_pos hc0 ha0).le hab le_rfl (fun t => residual_reverse (t := t) ha hc0 hc1)]
     exact triangle_volume_reverse hc0 (mul_pos hc0 ha0) hab hz
 
 private theorem forward_compensation {A c H ε : ℝ} (hA : Real.exp 78 ≤ A)
@@ -632,11 +643,11 @@ private theorem forward_compensation {A c H ε : ℝ} (hA : Real.exp 78 ≤ A)
   have hk := bandDerivative_continuous hc0 ha0 hz
   have hkcoord : ContinuousOn (fun r => bandDerivative c (A + r)) (Icc 0 h) :=
     hk.comp (continuousOn_const.add continuousOn_id) (fun r hr => hband ▸ hmap r hr)
-  have hip := prefix_product_integrable ha0.le hk.integrableOn_Icc
+  have hip := prefix_product_integrable ha0.le hk.integrableOn_Icc (μ := volume)
   have hi : IntervalIntegrable (fun t => bandDerivative c t * (Chebyshev.psi t - Chebyshev.psi A))
       volume A (c * A) := by
-    have hs := hip.sub (hk.integrableOn_Icc.mul_const (Chebyshev.psi A))
-    simpa only [mul_sub] using (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr hs
+    have hs := hip.sub (hk.integrableOn_Icc (μ := volume).mul_const (Chebyshev.psi A))
+    simpa only [mul_sub, Pi.sub_apply] using (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr hs
   have hicoord : IntervalIntegrable
       (fun r => bandDerivative c (A + r) * (Chebyshev.psi (A + r) - Chebyshev.psi A)) volume 0 h := by
     simpa [h] using hi.comp_add_left A
@@ -650,13 +661,12 @@ private theorem forward_compensation {A c H ε : ℝ} (hA : Real.exp 78 ≤ A)
       have hθ' := hθ A (A + r) (by simpa using (hgeo A (by simpa using hma)).1)
         (by linarith) (hgeo (A + r) hm).2.1 (by linarith)
       have hψ := theta_increment_le_psi (show A ≤ A + r by linarith [hr.1])
-      dsimp only at hθ'
       nlinarith)
   have hmtrans := intervalIntegral.integral_comp_add_left
     (fun t => bandDerivative c t * (Chebyshev.psi t - Chebyshev.psi A)) A (a := 0) (b := h)
   have hvtrans := intervalIntegral.integral_comp_add_left
     (fun t => bandDerivative c t * (t - A)) A (a := 0) (b := h)
-  simp only [zero_add, h, sub_add_cancel] at hmtrans hvtrans
+  simp only [add_zero, h, show A + (c * A - A) = c * A by ring] at hmtrans hvtrans
   simp only [add_sub_cancel_left] at hvtrans
   rw [hmtrans, hvtrans, ← (actual_layer_forward hA hc hc' hc1).1,
     ← (actual_layer_forward hA hc hc' hc1).2] at hbound
@@ -690,14 +700,14 @@ private theorem reverse_compensation {A c H ε : ℝ} (hA : Real.exp 78 ≤ A)
   have hk := bandDerivative_continuous hc0 (mul_pos hc0 ha0) hz
   have hkcoord : ContinuousOn (fun r => bandDerivative c (A - r)) (Icc 0 h) :=
     hk.comp (continuousOn_const.sub continuousOn_id) (fun r hr => hband ▸ hmap r hr)
-  have hip := prefix_product_integrable (mul_pos hc0 ha0).le hk.integrableOn_Icc
+  have hip := prefix_product_integrable (mul_pos hc0 ha0).le hk.integrableOn_Icc (μ := volume)
   have hi : IntervalIntegrable (fun t => bandDerivative c t * (Chebyshev.psi A - Chebyshev.psi t))
       volume (c * A) A := by
-    have hs := (hk.integrableOn_Icc.mul_const (Chebyshev.psi A)).sub hip
-    simpa only [mul_sub] using (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr hs
+    have hs := (hk.integrableOn_Icc (μ := volume).mul_const (Chebyshev.psi A)).sub hip
+    simpa only [mul_sub, Pi.sub_apply] using (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr hs
   have hicoord : IntervalIntegrable
       (fun r => bandDerivative c (A - r) * (Chebyshev.psi A - Chebyshev.psi (A - r))) volume 0 h := by
-    simpa [h] using hi.comp_sub_left A
+    simpa [h] using (hi.comp_sub_left A).symm
   have hbound := positive_distance_compensation hh hH hε.le hkcoord hicoord
     (fun r hr => (bandDerivative_cap hA hc hc' (hmap r hr)).1)
     (fun r hr => (bandDerivative_cap hA hc hc' (hmap r hr)).2)
@@ -708,14 +718,12 @@ private theorem reverse_compensation {A c H ε : ℝ} (hA : Real.exp 78 ≤ A)
       have hθ' := hθ (A - r) A (hgeo (A - r) hm).1
         (by linarith) (by simpa using (hgeo A (by simpa using hma)).2.1) (by linarith)
       have hψ := theta_increment_le_psi (show A - r ≤ A by linarith [hr.1])
-      dsimp only at hθ'
       nlinarith)
   have hmtrans := intervalIntegral.integral_comp_sub_left
     (fun t => bandDerivative c t * (Chebyshev.psi A - Chebyshev.psi t)) A (a := 0) (b := h)
   have hvtrans := intervalIntegral.integral_comp_sub_left
     (fun t => bandDerivative c t * (A - t)) A (a := 0) (b := h)
   simp only [sub_zero, h, sub_sub_cancel] at hmtrans hvtrans
-  simp only [sub_sub_cancel] at hvtrans
   rw [hmtrans, hvtrans, ← (actual_layer_reverse hA hc hc' hc1).1,
     ← (actual_layer_reverse hA hc hc' hc1).2] at hbound
   have he : (517 / 500 : ℝ) / (A ^ 2 * Real.log A) / 2 * min (H ^ 2) (h ^ 2) =
@@ -750,7 +758,8 @@ private theorem plateau_prefix {A R q : ℝ} {f : ℝ → ℝ} (hA : 0 ≤ A) (h
     ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
   intro i _
-  by_cases hnA : ((i + 1 : ℕ) : ℝ) ≤ A
+  simp only [Nat.cast_add, Nat.cast_one]
+  by_cases hnA : (i : ℝ) + 1 ≤ A
   · simp [hnA, hnA.trans hAR]
   · simp [hnA]
 
@@ -762,8 +771,8 @@ private theorem plateau_response {A R q : ℝ} {f : ℝ → ℝ} (hA : 0 ≤ A) 
       (q - f A) * discrepancy A + f R * discrepancy R -
         ∫ t in A..R, discrepancy t * deriv f t := by
   have hf : ContinuousOn f (Icc A R) := fun t ht => (hd t ht).continuousAt.continuousWithinAt
-  have hfi := hf.intervalIntegrable_of_Icc hAR
-  have hdfi := hdf.intervalIntegrable_of_Icc hAR
+  have hfi := hf.intervalIntegrable_of_Icc (μ := volume) hAR
+  have hdfi := hdf.intervalIntegrable_of_Icc (μ := volume) hAR
   have hlow : IntervalIntegrable (fun t : ℝ => if t ≤ A then q else f t) volume 0 A := by
     apply (intervalIntegrable_const : IntervalIntegrable (fun _ : ℝ => q) volume 0 A).congr
     intro t ht
@@ -839,7 +848,8 @@ private theorem supported_prefix_stable {a b R : ℝ} {f r : ℝ → ℝ} (ha : 
     prefix_as_finite_sum _ hb (hbR.trans hRN)]
   apply Finset.sum_congr rfl
   intro i _
-  by_cases hi : ((i + 1 : ℕ) : ℝ) ≤ b
+  simp only [Nat.cast_add, Nat.cast_one]
+  by_cases hi : (i : ℝ) + 1 ≤ b
   · simp only [if_pos hi, if_pos (hi.trans hbR)]
   · rw [hr]
     simp [hi]
@@ -857,10 +867,10 @@ private theorem local_residual_support {A c : ℝ} (hA : Real.exp 78 ≤ A)
   rcases le_total 1 c with hc1 | hc1
   · have hab : A ≤ c * A := by have := zero_lt_one.trans ha; nlinarith
     refine ⟨fun t => reciprocalLog c t - reciprocalLog c (c * A), hg.sub continuousOn_const, ?_⟩
-    simpa only [bandLow, bandHigh, min_eq_left hab, max_eq_right hab] using residual_forward ha hc1
+    simpa only [bandLow, bandHigh, min_eq_left hab, max_eq_right hab] using (fun t => residual_forward (t := t) ha hc1)
   · have hab : c * A ≤ A := by have := zero_lt_one.trans ha; nlinarith
     refine ⟨fun t => reciprocalLog c (c * A) - reciprocalLog c t, continuousOn_const.sub hg, ?_⟩
-    simpa only [bandLow, bandHigh, min_eq_right hab, max_eq_left hab] using residual_reverse ha hc0 hc1
+    simpa only [bandLow, bandHigh, min_eq_right hab, max_eq_left hab] using (fun t => residual_reverse (t := t) ha hc0 hc1)
 
 private def smoothSlope (c t : ℝ) : ℝ :=
   -(Real.log t - Real.log c + 1) / (t ^ 2 * (Real.log t - Real.log c) ^ 2) +
@@ -878,8 +888,10 @@ private theorem smoothRemainder_deriv {c t : ℝ} (ht : 0 < t)
   have h3 := (hasDerivAt_const t (1 : ℝ)).div
     ((hasDerivAt_id t).mul (hl.pow 2)) (mul_ne_zero ht.ne' (pow_ne_zero 2 hlog))
   have hd := (h1.sub h2).sub (h3.const_mul (c - 1))
-  convert hd using 1 <;> simp only [smoothRemainder, smoothSlope, id_eq, one_mul, zero_mul,
-    zero_sub, neg_div, Nat.cast_ofNat, Nat.reduceSub, pow_one]
+  change HasDerivAt (smoothRemainder c) _ t at hd
+  apply hd.congr_deriv
+  simp only [smoothSlope, id_eq, Pi.mul_apply, Pi.div_apply, Pi.sub_apply, Pi.pow_apply,
+    one_mul, zero_mul, zero_sub, Nat.cast_ofNat, Nat.reduceSub, pow_one]
   field_simp [ht.ne', hlog, hz]
   <;> ring
 
@@ -906,7 +918,7 @@ private theorem smooth_on_tail {A c R : ℝ} (hA : Real.exp 78 ≤ A)
     have hlogcont := Real.continuousAt_log ht0.ne'
     unfold smoothSlope
     fun_prop (disch := first | positivity | exact ht0.ne')
-  exact hcont.congr (fun t ht => (hd t ht).deriv.symm)
+  exact hcont.congr (fun t ht => (hd t ht).deriv)
 
 /-- Exact finite signed response, with the actual right-closed R atom and the
 smooth formula's trace at A. No derivative of the Chebyshev staircase occurs. -/
@@ -933,8 +945,12 @@ theorem finite_signed_response_identity {A c R : ℝ} (hA : Real.exp 78 ≤ A)
   have hV : (∫ t in (0 : ℝ)..R, residualKernel A c t) = bandVolume A c := by
     unfold bandVolume
     rw [integral_supported hlow.le hlh hhigh hres, integral_supported hlow.le hlh le_rfl hres]
+  change IntervalIntegrable (regularKernel A c) volume 0 R at hreg
   unfold finiteResponse
-  rw [he, weightedPrefix_sub, intervalIntegral.integral_sub hreg hresi, hPi, hV]
+  rw [he, weightedPrefix_sub]
+  change weightedPrefix (regularKernel A c) R - weightedPrefix (residualKernel A c) R -
+    (∫ t in (0 : ℝ)..R, regularKernel A c t - residualKernel A c t) = _
+  rw [intervalIntegral.integral_sub hreg hresi, hPi, hV]
   change _ = smoothBoundary A c R + _ - _
   change weightedPrefix (regularKernel A c) R - (∫ t in (0 : ℝ)..R, regularKernel A c t) = _ at hresponse
   change _ = smoothBoundary A c R at hresponse
