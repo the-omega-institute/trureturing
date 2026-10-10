@@ -605,6 +605,8 @@ material.write_text("new build material\\n")
             (directory / "source.toml").write_text('path = "' + path + '"\n')
             (directory / "residual-open").mkdir()
             (directory / "residual-open/atom.yaml").write_text("receipts:\n  chain_atoms:\n    - chain-atom\n")
+        (ledger / "chain/residual-open/atom.yaml").write_text(
+            "receipts:\n  tail_authorization:\n    path: |\n      Library/block-tail.json\n")
         binary = self.root / "land-stub"
         binary.mkdir()
         for name, body in dict(dotnet="exit 0", gh="echo true").items():
@@ -621,7 +623,7 @@ material.write_text("new build material\\n")
         cover_inputs = ["Golden/Frozen/state/new.json", "Meta/Digestion/atomizers.toml",
                         "Meta/Digestion/atoms/sha256/new", "Meta/Digestion/backfill/chain/absorbed-closed/new.yaml",
                         "Meta/Digestion/backfill/first/residual-open/atom.yaml", "Library/source with space.md",
-                        "Library/chain.md", "tools/Authorizations/digestion-tail/new.json"]
+                        "Library/chain.md", "Library/block-tail.json", "tools/Authorizations/digestion-tail/new.json"]
         make = binary / "make"
         make.write_text(f'''#!{sys.executable}
 import json,os,subprocess,sys

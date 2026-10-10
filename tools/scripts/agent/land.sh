@@ -150,7 +150,9 @@ with ExitStack() as stack:
         # Valid tail artifacts live under tools/Authorizations. Also coordinate
         # any scalar candidate path the child reads before rejecting its receipt.
         for row in (root / "Meta/Digestion/backfill").glob("*/*/*.yaml"):
-            for line in row.read_text().splitlines():
+            lines = [line for line in row.read_text().splitlines()
+                     if line.strip() and not line.strip().startswith("#")]
+            for index, line in enumerate(lines):
                 match = re.fullmatch(r"\s*path\s*:\s*(.+)", line)
                 if match:
                     value = match[1].strip()
@@ -159,7 +161,17 @@ with ExitStack() as stack:
                         except ValueError: value = value[1:-1]
                     elif value[:1] == value[-1:] == "'":
                         value = value[1:-1]
-                    if value not in ("null", "~", "|", "|-", "|+", ">", ">-", ">+"):
+                    if value in ("|", "|-", "|+", ">", ">-", ">+"):
+                        # The supported YAML subset joins trimmed block lines
+                        # with newlines for every block marker.
+                        indent = len(line) - len(line.lstrip(" "))
+                        block = []
+                        for following in lines[index + 1:]:
+                            if len(following) - len(following.lstrip(" ")) <= indent:
+                                break
+                            block.append(following.strip())
+                        value = "\n".join(block)
+                    if value not in ("null", "~", ""):
                         sources.append(value)
         for name in sources:
             target = (root / name).resolve()
