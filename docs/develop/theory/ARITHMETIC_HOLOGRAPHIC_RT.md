@@ -4253,9 +4253,17 @@ $$
 \qquad
 d_t:=\max_{K\in\mathscr L}|\overline C_K\cap\Delta_t|,
 $$
-并约定 $\max\varnothing=0$。若每个 $\Delta_t$ 都可覆盖（等价于 $\sigma_t<\infty$），则所有前缀 $\mathcal Q_t$ 覆盖相应的 $X_t$，并且
+并约定 $\max\varnothing=0$ 且 $H_0:=0$。令
+$
+L_t:=
+\begin{cases}
+0,&\Delta_t=\varnothing,\\
+\left\lceil|\Delta_t|/d_t\right\rceil,&\Delta_t\ne\varnothing.
+\end{cases}
+$
+若每个 $\Delta_t$ 都可覆盖（等价于 $\sigma_t<\infty$），则所有前缀 $\mathcal Q_t$ 覆盖相应的 $X_t$，并且
 $$
-\sum_{t=1}^N\left\lceil\frac{|\Delta_t|}{d_t}\right\rceil
+\sum_{t=1}^N L_t
 \le
 \ell(\mathcal Q_N)-\ell(\mathcal Q_0)
 \le
