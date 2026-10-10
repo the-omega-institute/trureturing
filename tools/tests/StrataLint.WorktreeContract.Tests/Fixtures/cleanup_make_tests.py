@@ -147,16 +147,20 @@ class CleanupMakeTests(NativeFixture):
     def events(result):
         return [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{"event":')]
 
-    def assert_disposable(self, events, preview=False):
+    def assert_recoverable(self, events, preview=False):
         items = {item["path"]: item for item in events if item["event"] == "clean_lanes_item"}
         for tree in (self.dirty, self.local, self.cache, self.busy):
             self.assertEqual(preview, tree.exists(), str(tree))
-            expected = "would_remove" if preview else "partially_removed" if tree == self.local else "removed"
+            expected = "would_remove" if preview else "removed"
             self.assertEqual(expected, items[str(tree)]["action"], items[str(tree)])
         self.assertTrue(self.current.exists())
         self.assertEqual("locked_recent", items[str(self.current)]["reason"])
         if not preview:
-            self.assertEqual("branch_ref_retained", items[str(self.local)]["reason"])
+            self.assertEqual("stale_behind", items[str(self.local)]["reason"])
+            recovery = self.root / "recovered-dirty"
+            self.git("worktree", "add", recovery, "lane/governance/dirty")
+            self.assertEqual("unpublished dirty\n", (recovery / "owned").read_text())
+            self.assertEqual("unpublished untracked\n", (recovery / "untracked").read_text())
             self.assertEqual(self.local_head, self.git("rev-parse", "refs/heads/lane/governance/local"))
         self.assertIsNone(self.job.poll(), "independent participant must survive cleanup")
 
@@ -191,29 +195,29 @@ class CleanupMakeTests(NativeFixture):
                     item = next(item for item in preview_events if item.get("path") == str(eligible))
                     self.assertEqual("would_remove", item["action"], item)
                     self.assertTrue(eligible.exists())
-                    self.assert_disposable(preview_events, preview=True)
+                    self.assert_recoverable(preview_events, preview=True)
                 self.mark_phase(target + ":force")
                 removed = self.run_command(arguments + ["FORCE=1"], cwd, phase=target + ":force", check=False)
-                self.assertEqual(2, removed.returncode, removed.stdout + removed.stderr)
+                self.assertEqual(0, removed.returncode, removed.stdout + removed.stderr)
                 self.mark_phase("production-assertions")
                 events = self.events(removed)
                 item = next(item for item in events if item.get("path") == str(eligible))
                 self.assertEqual("removed", item["action"], item)
                 self.assertFalse(eligible.exists())
-                self.assertNotIn("refs/heads/lane/governance/" + name,
+                self.assertIn("refs/heads/lane/governance/" + name,
                                  self.git("for-each-ref", "--format=%(refname)"))
                 self.assertEqual(self.baseline, self.git("ls-remote", "origin",
                     "refs/heads/lane/governance/" + name).split()[0])
-                self.assert_disposable(events)
+                self.assert_recoverable(events)
                 if target == "clean-all":
                     summary = next(item for item in events if item["event"] == "host_cleanup_summary")
-                    self.assertEqual("failed", summary["status"])
-                    self.assertEqual(2, summary["worktree_exit"])
+                    self.assertEqual("succeeded", summary["status"])
+                    self.assertEqual(0, summary["worktree_exit"])
                     self.assertIsNone(summary.get("inventory_error"))
                     self.assertFalse(any(key.endswith(":failed") and value for key, value in summary["counts"].items()))
                 print(json.dumps(dict(entrance=target, options=list(map(str, options)),
                     source=str(self.repository), exit=removed.returncode,
-                    removed=[str(eligible)], disposable=[str(tree) for tree in
+                    removed=[str(eligible)], recoverable=[str(tree) for tree in
                         (self.dirty, self.local, self.cache, self.busy)])), flush=True)
 
 

@@ -171,7 +171,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("recovery_resolved_conflict_does_not_veto_removal")]
     [InlineData("recovery_published_prior_commit_message_is_reconstructable")]
     [InlineData("recovery_local_repository_is_not_a_remote")]
-    [InlineData("recovery_checkpoint_protects_input_reads")]
+    [InlineData("recovery_checkpoint_protects_message_reads")]
     public void RecoveryQualificationUsesActualIndexAndCommitObjects(string probe)
     {
         if (OperatingSystem.IsWindows()) return;

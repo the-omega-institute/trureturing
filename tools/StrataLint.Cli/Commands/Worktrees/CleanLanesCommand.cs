@@ -96,6 +96,7 @@ internal static partial class CleanLanesCommand
                     runner);
             }
 
+            var failedCount = events.Count(static item => item.Action == "failed");
             var partialCount = events.Count(static item => item.Action == "partially_removed");
             var output = new StringBuilder();
             foreach (var item in events
@@ -132,14 +133,15 @@ internal static partial class CleanLanesCommand
                     item.Action is "would_remove" or "removed"),
                 removed_count = events.Count(static item => item.Action == "removed"),
                 partial_count = partialCount,
+                failed_count = failedCount,
             }));
             output.Append('\n');
             return new CommandResult(
-                partialCount == 0,
+                partialCount + failedCount == 0,
                 output.ToString(),
-                partialCount == 0
+                partialCount + failedCount == 0
                     ? string.Empty
-                    : $"CLEAN_LANES_PARTIAL_FAILURE count={partialCount}\n");
+                    : $"CLEAN_LANES_PARTIAL_FAILURE count={partialCount + failedCount}\n");
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

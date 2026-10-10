@@ -44,7 +44,7 @@ for p in paths:
                 result=remove(argparse.Namespace(source=source,names="",path=[Path(rp)],force=False,
                     preview=not delete,expected=[]))
                 outcome=result["items"][0]["outcome"]
-                if outcome=="partial_or_indeterminate": raise OSError(str(result))
+                if result["status"]=="failed": raise OSError(str(result))
             elif delete:
                 shutil.rmtree(rp) if os.path.isdir(rp) else os.remove(rp)
             rec["eligible"]=True

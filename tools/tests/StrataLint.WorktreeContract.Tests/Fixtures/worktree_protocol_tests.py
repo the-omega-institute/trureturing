@@ -102,7 +102,7 @@ class ProtocolTests(MirrorCases, NativeFixture):
     def checkpoint(self, *args, expect=0):
         message = self.root / "message"
         message.write_text("authorized unit\n")
-        return self.run_protocol("checkpoint", "--path", self.tree, "--write", "owned",
+        return self.run_protocol("checkpoint", "--path", self.tree,
                                  "--message-file", message, *args, expect=expect)
 
     def test_cross_session_dirty_reuse_preserves_bytes(self):
@@ -150,15 +150,21 @@ class ProtocolTests(MirrorCases, NativeFixture):
         finally:
             os.kill(child, signal.SIGKILL)
 
-    def test_attributed_checkpoint_excludes_staged_and_allows_other_editor(self):
+    def test_ordinary_checkpoint_commits_final_working_snapshot(self):
         self.hold("--write", "other")
-        (self.tree / "other").write_text("unrelated staged\n")
+        (self.tree / "other").write_text("staged version\n")
         self.g(self.tree, "add", "other")
-        (self.tree / "owned").write_text("authorized\n")
+        (self.tree / "other").write_text("working version\n")
+        (self.tree / "owned").write_text("current tracked\n")
+        (self.tree / "untracked").write_text("current untracked\n")
+        (self.main / ".git/info/exclude").write_text("ignored-output\n")
+        (self.tree / "ignored-output").write_text("not a snapshot obligation\n")
         self.checkpoint()
-        self.assertEqual("authorized\n", self.g(self.tree, "show", "HEAD:owned"))
-        self.assertEqual("original\n", self.g(self.tree, "show", "HEAD:other"))
-        self.assertEqual("other\n", self.g(self.tree, "diff", "--cached", "--name-only"))
+        for name, value in (("other", "working version\n"), ("owned", "current tracked\n"),
+                            ("untracked", "current untracked\n")):
+            self.assertEqual(value, self.g(self.tree, "show", "HEAD:" + name))
+        self.assertEqual("", self.g(self.tree, "status", "--porcelain"))
+        self.assertNotEqual(0, protocol.git(self.tree, "cat-file", "-e", "HEAD:ignored-output", check=False).returncode)
 
     def test_publication_equality_ancestry_and_failure(self):
         (self.tree / "owned").write_text("authorized\n")
@@ -177,59 +183,46 @@ class ProtocolTests(MirrorCases, NativeFixture):
         self.assertTrue(self.tree.exists())
         self.assertEqual("next\n", (self.tree / "owned").read_text())
 
-    def test_checkpoint_failure_retains_private_index_and_source(self):
-        (self.tree / "owned").write_text("authorized\n")
-        message = self.root / "message"
-        message.write_text("authorized unit\n")
-        binary = self.root / "failure-shim"
-        binary.mkdir()
-        real_git = shutil.which("git")
-        shim = binary / "git"
-        shim.write_text(f'''#!{sys.executable}
-import os,sys
-if "commit-tree" in sys.argv: raise SystemExit(1)
-os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
-''')
-        shim.chmod(0o755)
-        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"])
-        self.run_protocol("checkpoint", "--path", self.tree, "--write", "owned", "--message-file", message,
-                          expect=73, env=environment)
-        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
-        self.assertEqual(1, len(list(metadata.glob("checkpoint-index-*"))))
-        self.assertEqual("authorized\n", (self.tree / "owned").read_text())
-        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+    def test_commit_hook_failure_retains_tree_and_reports_partial_batch(self):
+        second = self.root / "second"
+        self.g(self.main, "worktree", "add", "-b", "second", second, "HEAD")
+        (self.tree / "owned").write_text("recover first\n")
+        (second / "owned").write_text("reject this snapshot\n")
+        hook = self.main / ".git/hooks/pre-commit"
+        hook.write_text('#!/bin/sh\nif test "$(git branch --show-current)" = second; then echo native-hook-rejected >&2; exit 1; fi\n')
+        hook.chmod(0o755)
+        result = self.run_protocol("remove", "--names", "tree second", expect=74)
+        rows = json.loads(result.stdout)["items"]
+        self.assertEqual(["removed", "checkpoint_failed"], [row["outcome"] for row in rows])
+        self.assertIn("native-hook-rejected", rows[1]["error"])
+        self.assertFalse(self.tree.exists())
+        self.assertTrue(second.exists())
+        self.assertEqual(self.base, self.g(second, "rev-parse", "HEAD").strip())
+        self.assertEqual("reject this snapshot\n", (second / "owned").read_text())
+        self.assertEqual("recover first\n", self.g(self.main, "show", self.branch + ":owned"))
 
-    def test_checkpoint_retry_reconciles_attributed_index(self):
+    def test_checkpoint_retry_after_native_index_lock(self):
         self.recover_checkpoint("checkpoint")
 
-    def test_finalization_reconciles_attributed_index(self):
+    def test_finalization_retries_ordinary_checkpoint(self):
         self.recover_checkpoint("finalize")
 
     def recover_checkpoint(self, recovery):
-        authorized = recovery + " authorized\n"
-        (self.tree / "owned").write_text(authorized)
-        (self.tree / "other").write_text(recovery + " unrelated\n")
+        (self.tree / "owned").write_text("current snapshot\n")
+        (self.tree / "other").write_text("included staging\n")
         self.g(self.tree, "add", "other")
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
         lock = metadata / "index.lock"
-        lock.write_text("interrupted native operation\n")
+        lock.write_text("native operation\n")
         self.checkpoint(expect=73)
-        committed = self.g(self.tree, "rev-parse", "HEAD").strip()
-        self.assertEqual(authorized, self.g(self.tree, "show", "HEAD:owned"))
-        self.assertNotEqual(authorized, self.g(self.tree, "show", ":owned"))
-        message = self.root / "message"
-        args = [recovery, "--path", self.tree, "--write", "owned", "--message-file", message]
+        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+        lock.unlink()
+        args = [recovery, "--path", self.tree, "--message-file", self.root / "message"]
         if recovery == "finalize":
             args += ["--branch", self.branch, "--writers-joined"]
-        self.run_protocol(*args, expect=73)
-        lock.unlink()
         self.run_protocol(*args)
-        self.assertEqual(committed, self.g(self.tree, "rev-parse", "HEAD").strip())
-        self.assertEqual(authorized, self.g(self.tree, "show", ":owned"))
-        self.assertEqual("other\n", self.g(self.tree, "diff", "--cached", "--name-only"))
-        self.run_protocol("with", "--path", self.tree, "--git", "--", "git", "commit", "-m", "other unit")
-        self.assertEqual(authorized, self.g(self.tree, "show", "HEAD:owned"))
-        self.assertEqual(recovery + " unrelated\n", self.g(self.tree, "show", "HEAD:other"))
+        self.assertEqual("current snapshot\n", self.g(self.tree, "show", "HEAD:owned"))
+        self.assertEqual("included staging\n", self.g(self.tree, "show", "HEAD:other"))
         self.assertEqual("", self.g(self.tree, "status", "--porcelain"))
 
     def test_publication_uses_push_url_and_confirms_that_endpoint(self):
@@ -278,7 +271,7 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.assertFalse(self.tree.exists())
         self.run_protocol("remove", "--names", "main", expect=73)
 
-    def test_unpublished_nested_content_is_disposable(self):
+    def test_unpublished_nested_content_is_checkpointed(self):
         unknown = self.tree / "deep" / "private"
         unknown.parent.mkdir()
         unknown.write_text("unpublished recovery\n")
@@ -291,39 +284,69 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.assertFalse(self.tree.exists())
         self.assertIsNone(job.poll())
 
-    def test_dirty_untracked_ignored_and_staged_are_disposable(self):
-        for name in ("owned", "untracked", ".private"):
-            (self.tree / name).write_text("recovery\n")
+    def test_recycle_without_remote_recovers_final_snapshot_from_retained_branch(self):
+        (self.tree / "owned").write_text("staged version\n")
         self.g(self.tree, "add", "owned")
+        (self.tree / "owned").write_text("final tracked\n")
+        (self.tree / "untracked").write_text("final untracked\n")
+        (self.main / ".git/info/exclude").write_text("ignored-output\n")
+        (self.tree / "ignored-output").write_text("excluded\n")
         self.g(self.main, "remote", "remove", "origin")
-        self.remove()
+        result = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual("committed", result["checkpoint"]["status"])
+        self.assertEqual("refs/heads/" + self.branch, result["recovery_branch"])
         self.assertFalse(self.tree.exists())
+        recovered = self.root / "recovered"
+        self.g(self.main, "worktree", "add", recovered, self.branch)
+        self.assertEqual("final tracked\n", (recovered / "owned").read_text())
+        self.assertEqual("final untracked\n", (recovered / "untracked").read_text())
+        self.assertFalse((recovered / "ignored-output").exists())
+        self.note("native-recovery", branch=self.branch, commit=result["checkpoint"]["commit"],
+                  files=["owned", "untracked"], remote=False)
 
-    def test_local_only_and_private_history_do_not_veto_removal(self):
-        (self.tree / "owned").write_text("local\n")
+    def test_clean_local_only_branch_is_retained_without_empty_commit(self):
+        (self.tree / "owned").write_text("local commit\n")
         self.checkpoint()
         local = self.g(self.tree, "rev-parse", "HEAD").strip()
-        self.g(self.tree, "reset", "--hard", self.base)
-        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
-        (metadata / "ORIG_HEAD").write_text(local + "\n")
-        self.remove()
-        self.assertFalse(self.tree.exists())
+        self.g(self.main, "remote", "remove", "origin")
+        result = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual("unchanged", result["checkpoint"]["status"])
+        self.assertEqual(local, self.g(self.main, "rev-parse", self.branch).strip())
+        self.g(self.main, "worktree", "add", self.tree, self.branch)
+        self.assertEqual("local commit\n", (self.tree / "owned").read_text())
 
-    def test_unknown_operation_and_cache_guard_do_not_veto_removal(self):
+    def test_unfinished_operation_retains_tree_but_cache_use_does_not_veto(self):
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
-        (metadata / "MERGE_HEAD").write_text(self.base + "\n")
+        marker = metadata / "MERGE_HEAD"
+        marker.write_text(self.base + "\n")
+        (self.tree / "owned").write_text("outstanding\n")
+        result = self.remove(74)
+        self.assertIn("unfinished_operation:MERGE_HEAD", result.stdout)
+        self.assertTrue(self.tree.exists())
+        self.assertEqual("", self.g(self.tree, "diff", "--cached", "--name-only"))
+        marker.unlink()
         with ExitStack() as stack:
             stack.enter_context(protocol.lock_file(
-                Path.home() / ".cache" / "stratalint-lean-cache-guards",
-                str((self.tree / ".lake").resolve()), True))
+                self.root / "cache-guards", str((self.tree / ".lake").resolve()), True))
             self.remove()
         self.assertFalse(self.tree.exists())
+
+    def test_detached_checkout_is_retained_with_specific_failure(self):
+        self.g(self.tree, "checkout", "--detach")
+        (self.tree / "owned").write_text("uncommitted detached\n")
+        result = self.remove(74)
+        self.assertIn("checkpoint_current_branch_required", result.stdout)
+        self.assertTrue(self.tree.exists())
+        self.assertEqual("uncommitted detached\n", (self.tree / "owned").read_text())
 
     def test_whole_batch_preflight_preserves_eligible_member(self):
         other = self.root / "second"
         self.g(self.main, "worktree", "add", "--detach", other, "HEAD")
         self.g(self.main, "worktree", "lock", "--reason", "manual", other)
+        (self.tree / "owned").write_text("not checkpointed\n")
         self.run_protocol("remove", "--names", "tree second", expect=68)
+        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertEqual("", self.g(self.tree, "diff", "--cached", "--name-only"))
         self.assertTrue(self.tree.exists())
 
     def test_manual_and_initialization_locks_use_24_hours(self):
@@ -359,7 +382,7 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
 
     def test_invoking_cwd_tree_can_be_removed_before_remaining_batch(self):
         second = self.root / "second"
-        self.g(self.main, "worktree", "add", "--detach", second, "HEAD")
+        self.g(self.main, "worktree", "add", "-b", "second", second, "HEAD")
         result = self.run_owned_command([sys.executable, "-B", str(SCRIPT), "--source", str(self.tree),
             "remove", "--names", "tree second"], self.tree, phase="remove-from-target", timeout=30)
         self.assertEqual(["removed", "removed"], [item["outcome"] for item in json.loads(result.stdout)["items"]])
@@ -372,7 +395,7 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
         os.utime(metadata / "locked", (1577836800, 1577836800))
         second = self.root / "second"
-        self.g(self.main, "worktree", "add", "--detach", second, "HEAD")
+        self.g(self.main, "worktree", "add", "-b", "second", second, "HEAD")
         binary = self.root / "failure-shim"
         binary.mkdir()
         real_git = shutil.which("git")
@@ -405,8 +428,10 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         protocol.git(self.tree, "update-index", "--index-info",
                      input=f"100644 {oid} 1\towned\n100644 {oid} 2\towned\n".encode())
         self.assertTrue(self.g(self.tree, "ls-files", "--unmerged"))
-        self.remove()
-        self.assertFalse(self.tree.exists())
+        result = self.remove(74)
+        self.assertIn("unmerged_index", result.stdout)
+        self.assertTrue(self.tree.exists())
+        self.assertTrue(self.g(self.tree, "ls-files", "--unmerged"))
 
     def recovery_resolved_conflict_does_not_veto_removal(self):
         oid = self.g(self.tree, "rev-parse", "HEAD:owned").strip()
@@ -443,23 +468,17 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.run_protocol("retire-branch", "--branch", self.branch, "--commit", local, expect=73)
         self.assertEqual(local, self.g(self.main, "rev-parse", "refs/heads/" + self.branch).strip())
 
-    def recovery_checkpoint_protects_input_reads(self):
-        (self.tree / "owned").write_text("authorized\n")
-        input_file = self.tree / "checkpoint-input"
-        input_file.write_text("unit message\n")
-        writer = self.hold("--write", input_file.name)
-        self.checkpoint("--message-file", input_file, expect=73)
-        input_file.write_bytes(b"owned\0")
-        message = self.root / "message"
+    def recovery_checkpoint_protects_message_reads(self):
+        (self.tree / "owned").write_text("working snapshot\n")
+        message = self.tree / "checkpoint-message"
         message.write_text("unit message\n")
-        self.run_protocol("checkpoint", "--path", self.tree, "--paths-from", input_file,
-                          "--message-file", message, expect=73)
+        writer = self.hold("--write", message.name)
+        self.checkpoint("--message-file", message, expect=73)
         self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
         writer.communicate("joined\n", timeout=10)
-        self.run_protocol("checkpoint", "--path", self.tree, "--paths-from", input_file,
-                          "--message-file", message)
-        self.assertEqual("authorized\n", self.g(self.tree, "show", "HEAD:owned"))
-        self.assertNotEqual(0, protocol.git(self.tree, "cat-file", "-e", "HEAD:checkpoint-input", check=False).returncode)
+        self.checkpoint("--message-file", message)
+        self.assertEqual("working snapshot\n", self.g(self.tree, "show", "HEAD:owned"))
+        self.assertEqual("unit message\n", self.g(self.tree, "show", "HEAD:checkpoint-message"))
 
     def test_external_cwd_user_does_not_veto_removal(self):
         job = subprocess.Popen([sys.executable, "-c", 'import sys;print("ready",flush=True);sys.stdin.readline()'],
@@ -529,20 +548,19 @@ os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
         self.note("pause.readiness.end", native_pid=job.pid, descendant_pid=int((self.root / "native.pid").read_text()))
         return job, release
 
-    def test_concurrent_native_staging_cannot_enter_checkpoint(self):
-        (self.tree / "owned").write_text("authorized\n")
+    def test_checkpoint_git_scope_releases_after_native_commit(self):
+        (self.tree / "owned").write_text("snapshot\n")
         message = self.root / "message"
-        message.write_text("authorized unit\n")
-        job, release = self.paused_job("commit-tree", "checkpoint", "--path", self.tree,
-            "--write", "owned", "--message-file", message)
-        (self.tree / "other").write_text("concurrently staged\n")
-        self.g(self.tree, "add", "other")
+        message.write_text("ordinary unit\n")
+        job, release = self.paused_job("commit", "checkpoint", "--path", self.tree,
+            "--message-file", message)
+        self.run_protocol("with", "--path", self.tree, "--git", "--", "true", expect=73)
+        self.run_protocol("with", "--path", self.tree, "--write", "other", "--", "true")
         with release.open("w") as output:
             output.write("continue\n")
         stdout, stderr = job.communicate(timeout=20)
         self.assertEqual(0, job.returncode, stdout + stderr)
-        self.assertEqual("original\n", self.g(self.tree, "show", "HEAD:other"))
-        self.assertEqual("other\n", self.g(self.tree, "diff", "--cached", "--name-only"))
+        self.run_protocol("with", "--path", self.tree, "--git", "--", "true")
 
     def test_removal_does_not_acquire_participation_exclusion(self):
         job, release = self.paused_job("remove", "remove", "--names", "tree")
@@ -595,7 +613,7 @@ os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
     def runlocal_consumer(self):
         root = self.workspace("worktree-runlocal-", "/tmp")
         dirty, snapshot, unknown = root / "dirty", root / "snapshot", root / "unknown"
-        self.g(self.main, "worktree", "add", "--detach", dirty, self.base)
+        self.g(self.main, "worktree", "add", "-b", "runlocal-recovery", dirty, self.base)
         (dirty / "owned").write_text("unpublished recovery\n")
         snapshot.mkdir()
         (snapshot / "owned").write_text("original\n")

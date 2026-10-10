@@ -92,7 +92,7 @@ public sealed partial class RemoveWorktreesCommandTests
         internal string Add(string name, string? branch = null)
         {
             var path = Path.Combine(directory.Path, name);
-            if (branch is null) Git(Main, "worktree", "add", "--detach", path, "HEAD");
+            if (branch is null) Git(Main, "worktree", "add", "-b", "recovery/" + name, path, "HEAD");
             else Git(Main, "worktree", "add", "-b", branch, path, "HEAD");
             return Git(path, "rev-parse", "--show-toplevel").Trim();
         }

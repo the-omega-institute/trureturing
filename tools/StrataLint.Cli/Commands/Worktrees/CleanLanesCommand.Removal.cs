@@ -94,8 +94,18 @@ internal static partial class CleanLanesCommand
             }));
             var removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
             if (!removal.Success)
-                return removal.ExitCode is 68 or 73 ? Refused("identity_or_lock_refused")
-                    : new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate");
+            {
+                if (removal.ExitCode is 68 or 73) return Refused("identity_or_lock_refused");
+                if (removal.Output.Length > 0)
+                {
+                    using var document = System.Text.Json.JsonDocument.Parse(removal.Output);
+                    var outcome = document.RootElement.GetProperty("items").EnumerateArray().Single();
+                    if (outcome.GetProperty("outcome").GetString() == "checkpoint_failed")
+                        return new(LaneRemovalOutcome.CheckpointFailed,
+                            "checkpoint_failed:" + outcome.GetProperty("error").GetString());
+                }
+                return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate");
+            }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -103,19 +113,8 @@ internal static partial class CleanLanesCommand
                 "worktree_remove_failed_state_indeterminate");
         }
 
-        try
-        {
-            if (item.Branch is not null && WorktreeCommand.IsManagedBranch(item.Branch))
-            {
-                if (!DeleteObservedRef(repositoryRoot, item.Branch, item.Head, runner))
-                    return new(LaneRemovalOutcome.BranchRefRetained, "branch_ref_retained");
-            }
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            return new(LaneRemovalOutcome.BranchRefRetained, "branch_ref_retained");
-        }
-
+        // Keep every removed tree's branch. The invocation's observed inventory
+        // also excludes these refs from its later orphan sweep.
         return new(LaneRemovalOutcome.Removed, "stale_behind");
     }
 
@@ -147,7 +146,9 @@ internal static partial class CleanLanesCommand
                 BlockedWorktree(item, result.Reason),
             LaneRemovalOutcome.Removed =>
                 new("stale_worktree", item.Path, item.Branch, item.Head, "removed", result.Reason),
-            LaneRemovalOutcome.WorktreeRemoveFailed or LaneRemovalOutcome.BranchRefRetained =>
+            LaneRemovalOutcome.CheckpointFailed =>
+                new("stale_worktree", item.Path, item.Branch, item.Head, "failed", result.Reason),
+            LaneRemovalOutcome.WorktreeRemoveFailed =>
                 new(
                     "stale_worktree",
                     item.Path,
@@ -163,7 +164,7 @@ internal static partial class CleanLanesCommand
         Refused,
         Removed,
         WorktreeRemoveFailed,
-        BranchRefRetained,
+        CheckpointFailed,
     }
 
     private sealed record LaneRemovalResult(LaneRemovalOutcome Outcome, string Reason);

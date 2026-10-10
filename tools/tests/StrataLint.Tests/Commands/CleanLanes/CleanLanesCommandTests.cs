@@ -193,7 +193,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(retained));
         Assert.True(fixture.BranchExists(retainedBranch));
         Assert.False(Directory.Exists(removed));
-        Assert.False(fixture.BranchExists(removedBranch));
+        Assert.True(fixture.BranchExists(removedBranch));
         Assert.Contains(ReadItems(result.Output), item =>
             ItemMatches(
                 item,
@@ -251,7 +251,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void DirtyDivergedTreeIsRemovedAndUnpublishedBranchIsReported()
+    public void DirtyDivergedTreeIsCheckpointedAndRecovered()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddUnmergedLane("harness/dirty-unmerged");
@@ -263,10 +263,14 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, "--lanes-only", "--force");
 
-        Assert.False(result.Success);
+        Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane));
         Assert.True(fixture.BranchExists("harness/dirty-unmerged"));
-        Assert.Equal("branch_ref_retained", ReasonFor(result.Output, lane));
+        Assert.Equal("stale_behind", ReasonFor(result.Output, lane));
+        CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "worktree", "add", lane, "harness/dirty-unmerged");
+        Assert.Equal("unstaged change", File.ReadAllText(Path.Combine(lane, "README.md")));
+        Assert.Equal("untracked change", File.ReadAllText(Path.Combine(lane, "untracked.txt")));
+        Assert.Equal("staged change", File.ReadAllText(Path.Combine(lane, "staged.txt")));
         Assert.Contains(runner.Invocations, invocation => IsProtocol(invocation.Arguments, "remove"));
 
     }
@@ -353,8 +357,9 @@ public sealed partial class CleanLanesCommandTests
         var recent = fixture.AddDetachedJudge("trureturing-recent-detached");
         var args = lanesOnly ? new[] { "--force", "--lanes-only" } : new[] { "--force" };
         var result = fixture.Run(args);
-        Assert.True(result.Success, result.Error);
-        Assert.False(Directory.Exists(stale));
+        Assert.False(result.Success);
+        Assert.True(Directory.Exists(stale));
+        Assert.Equal("checkpoint_failed:checkpoint_current_branch_required", ReasonFor(result.Output, stale));
         Assert.True(Directory.Exists(recent));
         Assert.Equal("not_far_behind", ReasonFor(result.Output, recent));
     }

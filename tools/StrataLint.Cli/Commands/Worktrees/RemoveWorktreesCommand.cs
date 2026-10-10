@@ -14,7 +14,7 @@ internal static class RemoveWorktreesCommand
         + "Separate names with whitespace; directory names containing whitespace are unsupported. "
         + "All names are resolved before any deletion; duplicates are removed once. "
         + "The main checkout is protected; all Git locks require at least 24 hours since lock-file modification.\n"
-        + "Removal checks target identity and lock age. Selected unlocked worktrees are disposable. "
+        + "Removal checks target identity and lock age. Eligible trees commit ordinary outstanding changes before removal; checkpoint failure retains the tree. "
         + "The optional CLI --force disables the default 300-second removal timeout; inventory remains bounded. "
         + "It may appear before or after --names and does not override main checkout or lock protection. "
         + "Branch refs are retained. Execution failures are reported and remaining resolved trees are attempted; no rollback.\n"

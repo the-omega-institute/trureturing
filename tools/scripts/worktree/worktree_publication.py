@@ -1,14 +1,11 @@
-"""Attributed checkpoints and non-force publication, using native Git objects."""
+"""Ordinary checkpoints and non-force publication, using native Git objects."""
 
 from contextlib import ExitStack
-import json
 import os
 from pathlib import Path
-import subprocess
-import tempfile
 
 from worktree_protocol import (Refused, git, value, identity, tree_scope,
-                               path_scopes, git_scope, acquire, remote_endpoint)
+                               git_scope, acquire, remote_endpoint, read_input)
 
 
 def confirm(root, remote, branch, commit, endpoint=None):
@@ -30,71 +27,35 @@ def confirm(root, remote, branch, commit, endpoint=None):
                 relation="equal" if commit == tip else "ancestor")
 
 
+def commit_snapshot(path, metadata, branch, message):
+    """Consume the ordinary index under the caller's Git operation scope."""
+    if not branch.startswith("refs/heads/"):
+        raise Refused("checkpoint_current_branch_required")
+    if git(path, "ls-files", "--unmerged").stdout:
+        raise Refused("unmerged_index")
+    for marker in ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer"):
+        if (metadata / marker).exists():
+            raise Refused("unfinished_operation:" + marker)
+    parent = value(path, "rev-parse", "--verify", "HEAD^{commit}")
+    git(path, "add", "-A", "--", ".")
+    difference = git(path, "diff", "--cached", "--quiet", "--exit-code", check=False)
+    if difference.returncode not in (0, 1):
+        raise Refused(difference.stderr.decode(errors="replace").strip() or "index_comparison_failed")
+    if difference.returncode:
+        git(path, "commit", "-F", "-", input=message)
+    commit = value(path, "rev-parse", "HEAD")
+    return dict(event="worktree_checkpoint", status="committed" if difference.returncode else "unchanged",
+                commit=commit, parent=parent, branch=branch)
+
+
 def checkpoint(options):
     with ExitStack() as stack:
         path = tree_scope(stack, options.source, options.path)
         _, metadata = identity(options.source, path)
-        paths = options.write
-        if not options.message_file:
-            raise Refused("checkpoint_message_required")
-        if not paths or any(name in (".", "") for name in paths):
-            raise Refused("explicit_checkpoint_paths_required")
-        message_file = Path(options.message_file).resolve()
-        reads = list(options.read)
-        if path in message_file.parents:
-            reads.append(str(message_file.relative_to(path)))
-        else:
-            tree_scope(stack, options.source, message_file.parent)
-            path_scopes(stack, options.source, message_file.parent, reads=(message_file.name,))
-        path_scopes(stack, options.source, path, reads, paths)
         branch = git_scope(stack, options.source, path)
-        if git(path, "ls-files", "--unmerged").stdout:
-            raise Refused("unmerged_index")
-        for marker in ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply"):
-            if (metadata / marker).exists():
-                raise Refused("unfinished_operation:" + marker)
-        parent = value(path, "rev-parse", "HEAD")
-        # This index is crash recovery material until deleted by this invocation.
-        fd, index = tempfile.mkstemp(prefix="checkpoint-index-", dir=metadata)
-        os.close(fd)
-        os.unlink(index)
-        env = dict(GIT_INDEX_FILE=index, GIT_LITERAL_PATHSPECS="1")
-        completed = False
-        try:
-            git(path, "read-tree", parent, env=env)
-            git(path, "add", "-A", "--", *paths, env=env)
-            tree = value_with_env(path, env, "write-tree")
-            if tree == value(path, "rev-parse", parent + "^{tree}"):
-                commit, status = parent, "unchanged"
-            else:
-                message = message_file.read_bytes()
-                commit = git(path, "commit-tree", tree, "-p", parent, env=env, input=message).stdout.decode().strip()
-                git(path, "update-ref", "-m", "worktree checkpoint", branch, commit, parent)
-                status = "committed"
-            # Update only attributed entries. Native index locking preserves concurrent
-            # insertions outside this scope even from an ordinary git add. This also
-            # reconciles a retry after ref advancement but failed index synchronization;
-            # an equal tree alone is not a completed checkpoint.
-            old = git(path, "ls-files", "-z", "--", *paths, env=dict(GIT_LITERAL_PATHSPECS="1")).stdout
-            zero = "0" * len(parent)
-            deletions = b"".join(b"0 " + zero.encode() + b"\t" + name + b"\0"
-                                 for name in old.split(b"\0") if name)
-            entries = git(path, "ls-files", "--stage", "-z", "--", *paths, env=env).stdout
-            git(path, "update-index", "-z", "--index-info", input=deletions + entries)
-            completed = True
-            return dict(event="worktree_checkpoint", status=status, commit=commit,
-                        parent=parent, branch=branch, paths=paths)
-        finally:
-            # Failure retains the private index as native Git recovery material.
-            # Only a completely acknowledged checkpoint removes its own files.
-            if completed:
-                for candidate in (index, index + ".lock"):
-                    if os.path.exists(candidate):
-                        os.unlink(candidate)
-
-
-def value_with_env(root, env, *arguments):
-    return git(root, *arguments, env=env).stdout.decode().strip()
+        message = (read_input(options.source, options.message_file) if options.message_file
+                   else b"Checkpoint working tree before publication\n")
+        return commit_snapshot(path, metadata, branch, message)
 
 
 def publish(options):
@@ -124,9 +85,8 @@ def finalize(options):
     # Other participants keep their shared entry and independent edit scopes.
     if not options.writers_joined:
         raise Refused("host_must_join_task_writers")
-    if options.write:
-        result = checkpoint(options)
-        options.commit = result["commit"]
+    result = checkpoint(options)
+    options.commit = result["commit"]
     return publish(options)
 
 

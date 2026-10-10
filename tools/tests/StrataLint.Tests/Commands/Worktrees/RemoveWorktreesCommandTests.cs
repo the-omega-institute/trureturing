@@ -273,7 +273,7 @@ public sealed partial class RemoveWorktreesCommandTests
     }
 
     [Fact]
-    public void CustomDestinationDetachedAndBranchMismatchAreRemovedByDirectoryName()
+    public void CustomDestinationAndBranchMismatchAreRemovedByDirectoryName()
     {
         using var fixture = new RemovalFixture();
         var custom = fixture.Add("custom-destination", "unrelated-branch");
@@ -288,7 +288,7 @@ public sealed partial class RemoveWorktreesCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void DirtyUnmergedNewWorktreeIsDisposableAndBranchIsRetained(bool force)
+    public void DirtyDivergedNewWorktreeIsCheckpointedAndBranchIsRetained(bool force)
     {
         using var fixture = new RemovalFixture();
         var path = fixture.Add("fresh-dirty", "unmerged-branch");
@@ -297,7 +297,10 @@ public sealed partial class RemoveWorktreesCommandTests
         Assert.NotEqual(mainHead, branchHead);
         AssertResult(fixture.Remove("fresh-dirty", force), 0, 1, 0, 0);
         Assert.False(Directory.Exists(path));
-        Assert.Equal(branchHead, fixture.Git(fixture.Main, "rev-parse", "refs/heads/unmerged-branch").Trim());
+        Assert.NotEqual(branchHead, fixture.Git(fixture.Main, "rev-parse", "refs/heads/unmerged-branch").Trim());
+        fixture.Git(fixture.Main, "worktree", "add", path, "unmerged-branch");
+        Assert.EndsWith("uncommitted\n", File.ReadAllText(Path.Combine(path, "tracked.txt")));
+        Assert.Equal("untracked\n", File.ReadAllText(Path.Combine(path, "untracked.txt")));
     }
 
     [Fact]
