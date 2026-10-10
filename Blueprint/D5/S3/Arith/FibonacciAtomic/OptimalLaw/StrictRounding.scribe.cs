@@ -40,7 +40,8 @@ internal sealed class StrictRoundingDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(), Blocks(
                         Paragraph(Text("If the depth-D digit is one, subtracting one depth-D cylinder leaves every earlier floor prefix unchanged. Division of the depth-(D-1) floor by an integer power of two transports this equality to every coarser depth.")))),
                 Paragraph(Text("ExchangeHyp(m,D,p,q,j,S,t,u) means: m>=2 and D>=1; p and q are nonnegative vectors of total mass one; q(j)=0; t>0 and u>0; for i in S both t<=p(i) and u<=q(i); for i outside S other than j, t+delta*u<=p(i); the donor satisfies t+delta*(1+u)<=p(j); L(p)=alpha(m)*t and L(q)<alpha(m)*u. Here alpha is the infimum of L divided by the smallest coordinate over all positive normalized real laws.")),
-                H("An optimal law has no profitable donor leaf"), Disp(impossible),
+                new DocumentBlock.Section(H("An optimal law has no profitable donor leaf"),
+                    Blocks(new DocumentBlock.DisplayFormula(Disp(impossible)))),
                 Paragraph(Text("Form P(i)=p(i)+delta*q(i)-delta times the indicator of i=j. Coarser residuals do not increase. At depth D+n the residual is at most R(p,D+n)+R(q,n). Splitting the convergent series into its head and shifted tail gives L(P)<=L(p)+delta*L(q). Simultaneously every coordinate of P is at least t+delta*u. The defining lower bound for alpha(m) then contradicts the strict improvement of the same modified law. The classical dyadic cost expression is recalled by Lumbroso; the common-law comparison is the stated additional relation.")),
                 Describe.Lean(DescribeId.Create("dyadic-strict-round"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/StrictRounding.DyadicStrictRound"),
