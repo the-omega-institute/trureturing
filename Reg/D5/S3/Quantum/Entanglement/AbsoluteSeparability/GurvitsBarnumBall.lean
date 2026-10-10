@@ -96,7 +96,8 @@ def family : Registration arena (type_of% @frobSq_le_trace_sq_of_blockPositive) 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@frobSq_le_trace_sq_of_blockPositive) (Realization traceSignature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.TraceBound.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.TraceBound.family
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.TraceBound.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -167,7 +168,8 @@ def family : Registration arena (type_of% @separableCone_of_frob_ball) where
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@separableCone_of_frob_ball) (Realization matrixSignature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.Ball.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.Ball.family
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.Ball.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -248,8 +250,10 @@ def family : Registration arena (type_of% @separableCone_one_sub_rankOne) where
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@separableCone_one_sub_rankOne) (Realization vectorSignature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.RankOneComplement.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.RankOneComplement.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.RankOneComplement.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.RankOneComplement.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -320,8 +324,10 @@ def family : Registration arena (type_of% @separableCone_scaled_one_sub_two_proj
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@separableCone_scaled_one_sub_two_projection) (Realization matrixSignature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.ProjectionRay.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.ProjectionRay.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.ProjectionRay.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.ProjectionRay.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

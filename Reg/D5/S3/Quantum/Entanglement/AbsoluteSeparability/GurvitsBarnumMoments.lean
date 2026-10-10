@@ -61,8 +61,10 @@ def family : Registration arena.{u} (type_of% @designSum_sum.{u}) where
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@designSum_sum.{u}) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Additivity.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Additivity.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Additivity.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Additivity.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -126,8 +128,10 @@ def family : Registration arena (type_of% @re_designSum_mono) where
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@re_designSum_mono) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Monotonicity.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Monotonicity.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Monotonicity.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Monotonicity.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -191,8 +195,10 @@ def family : Registration arena (type_of% @quadratic_product_sum) where
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@quadratic_product_sum) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.QuadraticProduct.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.QuadraticProduct.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.QuadraticProduct.unit
+  realizationName :=
+  `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.QuadraticProduct.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

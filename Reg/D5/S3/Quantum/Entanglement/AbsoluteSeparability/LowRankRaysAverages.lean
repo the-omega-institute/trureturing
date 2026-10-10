@@ -68,7 +68,8 @@ def family : Registration arena (type_of% @separable_kronecker) where
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@separable_kronecker) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.Product.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.Product.family
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.Product.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -154,17 +155,21 @@ def family : Registration arena (type_of% @separable_rankOne_add_reduced) where
     change
       (vecMulVec (fun _ : Fin 1 × Fin 1 => (0 : ℂ))
           (star (fun _ : Fin 1 × Fin 1 => (0 : ℂ))) +
-        (1 : Matrix (Fin 1) (Fin 1) ℂ) ⊗ₖ reduced (fun _ : Fin 1 × Fin 1 => (0 : ℂ))) (0, 0) (0, 0) =
+        (1 : Matrix (Fin 1) (Fin 1) ℂ) ⊗ₖ reduced (fun _ : Fin 1 × Fin 1 => (0 : ℂ))) (0, 0) (0, 0)
+          =
       (vecMulVec (fun _ : Fin 1 × Fin 1 => (1 : ℂ))
           (star (fun _ : Fin 1 × Fin 1 => (1 : ℂ))) +
-        (1 : Matrix (Fin 1) (Fin 1) ℂ) ⊗ₖ reduced (fun _ : Fin 1 × Fin 1 => (1 : ℂ))) (0, 0) (0, 0) at he
+        (1 : Matrix (Fin 1) (Fin 1) ℂ) ⊗ₖ reduced (fun _ : Fin 1 × Fin 1 => (1 : ℂ))) (0, 0) (0, 0)
+          at he
     norm_num [reduced, Matrix.add_apply, Matrix.one_apply, Matrix.kroneckerMap_apply,
       Matrix.vecMulVec_apply, Pi.star_apply] at he
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@separable_rankOne_add_reduced) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.RowAverage.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.RowAverage.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.RowAverage.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.RowAverage.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -269,8 +274,10 @@ def family : Registration arena (type_of% @separable_projected_rankOne) where
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@separable_projected_rankOne) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.ProjectedAverage.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.ProjectedAverage.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.ProjectedAverage.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages.ProjectedAverage.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -290,7 +297,8 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "arg", "fn", "arg", "arg", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none

@@ -101,7 +101,8 @@ def family : Registration arena claim where
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.AhiableKothakondaWinterEq31.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.AhiableKothakondaWinterEq31.family
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.AhiableKothakondaWinterEq31.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -118,10 +119,14 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.AhiableKothakondaWinterEq31
-    definition := some { owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.AhiableKothakondaWinterEq31, name := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.AhiableKothakondaWinterEq31.claim, path := #[] }
+    definition := some { owner :=
+      `D5.S3.Quantum.Entanglement.AbsoluteSeparability.AhiableKothakondaWinterEq31, name :=
+      `D5.S3.Quantum.Entanglement.AbsoluteSeparability.AhiableKothakondaWinterEq31.claim, path :=
+      #[] }
     coordinates := #[0, 1, 8]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg", "arg"]
