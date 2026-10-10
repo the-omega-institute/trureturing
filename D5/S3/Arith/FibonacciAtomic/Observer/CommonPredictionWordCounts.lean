@@ -5,26 +5,19 @@
    anchors: []
    utility: none
    digest: Exact generating functions and parity balance for priority-teacher word classes. -/
-
 import D5.S3.Arith.FibonacciAtomic.HeterogeneousTeacherSeparation
 import Mathlib.Algebra.Polynomial.Eval.Degree
 import Mathlib.Tactic
 import Mathlib.Algebra.Polynomial.Basic
-
-
+import Mathlib.Data.Nat.Choose.Sum
 /-!
 The common two-layer priority-teacher problem on independent complete windows.
 All prefix lengths and all rare-count classes are included.
 -/
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Arith.FibonacciAtomic.CommonPrediction
-
 attribute [local instance] Classical.propDecidable
-
-
 section
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
@@ -60,7 +53,6 @@ private lemma bivariate_generating (n : ℕ) :
     ring
   simp_rw [hpoint]
   simp
-
 /-- Rare-count generating polynomial at a fixed high-endpoint count. -/
 def slice (n k : ℕ) : P := ∑ p : Fin n → W, if highN p = k then X ^ rareN p else 0
 private lemma slice_as_coefficient (n k : ℕ) :
@@ -88,7 +80,6 @@ lemma slice_formula (n k : ℕ) :
   ring
 end
 end WordCounts
-
 namespace WordCounts
 noncomputable section
 local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
@@ -153,7 +144,6 @@ private lemma forced_signed_generating {n : ℕ} (i : Fin n) (h : Bool) :
   · simp only [Bool.true_eq, ↓reduceIte]
     apply Finset.prod_eq_zero (Finset.mem_univ i)
     simpa [fw] using signed_local_high
-
 private lemma forced_signed_slice_zero {n : ℕ} (i : Fin n) (h : Bool) (k : ℕ) (hk : 0 < k) :
     (∑ p : Fin n → W, if highN p=k ∧ last (p i)=h then signedWeight p else 0) = 0 := by
   have eqn := congrArg (fun p : Polynomial P => p.coeff k) (forced_signed_generating i h)
@@ -169,7 +159,6 @@ private lemma forced_signed_slice_zero {n : ℕ} (i : Fin n) (h : Bool) (k : ℕ
       by_cases hh : last (p i)=h <;> by_cases hnk : highN p=k <;>
         simp only [hh, hnk, and_self, and_true, and_false, true_and, false_and, ↓reduceIte, sbw, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero, eq_comm] <;> split_ifs <;> simp_all
     _ = 0 := eqn
-
 /-- The parity of the number of joint-endpoint windows. -/
 def prefixCoin {n : ℕ} (p : Fin n → W) : Bool := decide (endsN p % 2 = 1)
 private lemma signed_weight_coin {n : ℕ} (p : Fin n → W) :
@@ -193,7 +182,6 @@ lemma forced_coin_balance {n : ℕ} (i : Fin n) (h : Bool) (k : ℕ) (hk : 0 < k
   exact sub_eq_zero.mp hs
 end
 end WordCounts
-
 namespace WordCounts
 noncomputable section
 local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
@@ -254,7 +242,6 @@ lemma forced_positive_slice {n : ℕ} (i : Fin n) (k : ℕ) :
     simp only [hh, hnk, and_self, and_true, and_false, true_and, false_and, ↓reduceIte, bw, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero, eq_comm] <;> split_ifs <;> simp_all
 end
 end WordCounts
-
 namespace WordCounts
 noncomputable section
 local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
@@ -290,7 +277,6 @@ lemma high_n_last_false {n : ℕ} (p : Fin n → W) (i : Fin n) (h : last (p i)=
 end
 end WordCounts
 end
-
 section
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
@@ -321,7 +307,6 @@ private lemma anchor_generating :
   classical
   simp [aw,qok,vok,WordCounts.rb,Finset.univ,Fintype.elems]
   ring
-
 /-- Reduced words on which all left teachers are zero and all right teachers are two. -/
 def isReservoir {m : ℕ} (x : LegalPriorityTeacher.Input (m+3)) : Prop :=
   qok (x ⟨m, by omega⟩) ∧ x ⟨m+1, by omega⟩ = .high ∧ vok (x ⟨m+2, by omega⟩)
@@ -369,7 +354,6 @@ private lemma actual_reservoir_generating (m : ℕ) :
   simp_rw [← Finset.mul_sum, anchor_function_sum]
   rw [← Finset.sum_mul, prefix_generating]
   ring
-
 local notation "Reservoir" m => ({x : LegalPriorityTeacher.Input (m+3) // isReservoir x})
 attribute [local instance] Classical.propDecidable
 private lemma reservoir_subtype_generating (m : ℕ) :
@@ -379,7 +363,6 @@ private lemma reservoir_subtype_generating (m : ℕ) :
     (by simp) (fun x : LegalPriorityTeacher.Input (m+3) => X ^ WordCounts.rareN x)
   rw [← hs]
   simpa only [Finset.sum_filter, fullWeight] using actual_reservoir_generating m
-
 /-- Cardinality of the actual reservoir class at rare count z. -/
 def Nz (m z : ℕ) : ℕ := Fintype.card {x : Reservoir m // WordCounts.rareN x.val = z}
 /-- Exact cardinalities of all reservoir mass classes, for every prefix length. -/
@@ -401,7 +384,6 @@ lemma actual_nz_identity (m z : ℕ) :
       by_cases hz : WordCounts.rareN x.val = z
       · simp [hz]
       · simp [hz, Ne.symm hz]
-
 private lemma prefix_rare_perm {m : ℕ} (p : Fin m → W) (σ : Equiv.Perm (Fin m)) :
     WordCounts.rareN (p ∘ σ) = WordCounts.rareN p := by
   unfold WordCounts.rareN
@@ -414,7 +396,6 @@ lemma actual_prefix_perm {m : ℕ} (p : Fin m → W) (a : Fin 3 → W)
   simp [append_rare, prefix_rare_perm, append_res]
 end
 end ReservoirWords
-
 open scoped BigOperators
 namespace TeacherLabels
 open _root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher (Roles teacher)
@@ -427,7 +408,6 @@ def leftRoles {m : ℕ} (i : Fin m) : Roles (m+3) where
   r := ⟨m+1, by omega⟩
   pq := by change i.val < m; exact i.isLt
   qr := by change m < m+1; omega
-
 /-- The teacher at prefix position i and the last two anchors. -/
 def rightRoles {m : ℕ} (i : Fin m) : Roles (m+3) where
   p := i.castAdd 3
@@ -435,7 +415,6 @@ def rightRoles {m : ℕ} (i : Fin m) : Roles (m+3) where
   r := ⟨m+2, by omega⟩
   pq := by change i.val < m+1; omega
   qr := by change m+1 < m+2; omega
-
 /-- Actual left-teacher label after separating prefix and anchor coordinates. -/
 lemma actual_left_label {m : ℕ} (p : Fin m → W) (a : Fin 3 → W) (i : Fin m) :
     teacher (leftRoles i) (Fin.append p a) =
@@ -494,7 +473,6 @@ def selector (m k : ℕ) (q r v : W) (coin : Bool) : Fin 3 :=
     else if top1 m k q r v ∧ (¬top2 m k q r v ∨ delta m k q r v 2 ≤ delta m k q r v 1) then 1 else 2
   else if delta m k q r v (firstTop m k q r v) = delta m k q r v (lastTop m k q r v) then firstTop m k q r v
   else if coin then lastTop m k q r v else firstTop m k q r v
-
 /-- The ordered rational-breakpoint region of a prefix endpoint count. -/
 def region (m k : ℕ) : ℕ :=
   if k = 0 then 0 else if k = m then 7 else if 3*k ≤ m then 1 else
@@ -503,7 +481,6 @@ def region (m k : ℕ) : ℕ :=
 def representative : ℕ → ℕ × ℕ
   | 0 => (1,0) | 1 => (4,1) | 2 => (5,2) | 3 => (4,2)
   | 4 => (5,3) | 5 => (3,2) | 6 => (10,9) | _ => (1,1)
-
 set_option maxHeartbeats 8000000 in
 private lemma selector_region_one (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h3 : 3*k ≤ m)
     (q r v : W) (coin : Bool) : selector m k q r v coin = selector 4 1 q r v coin := by
@@ -511,7 +488,6 @@ private lemma selector_region_one (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k
     simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err, first, last,
       hm, hk, hkm, h3] <;>
     (try split_ifs) <;> omega
-
 set_option maxHeartbeats 8000000 in
 /-- The zero-high prefix has the same selector as its fixed representative. -/
 lemma selector_region_zero (m : ℕ) (hm : 0 < m)
@@ -520,7 +496,6 @@ lemma selector_region_zero (m : ℕ) (hm : 0 < m)
     simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err, first, last,
       hm] <;>
     (try split_ifs) <;> omega
-
 set_option maxHeartbeats 8000000 in
 private lemma selector_region_two (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h3 : m < 3*k) (h2 : 2*k < m)
     (q r v : W) (coin : Bool) : selector m k q r v coin = selector 5 2 q r v coin := by
@@ -528,7 +503,6 @@ private lemma selector_region_two (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k
     simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err, first, last,
       hm, hk, hkm, h3, h2] <;>
     (try split_ifs) <;> omega
-
 set_option maxHeartbeats 8000000 in
 private lemma selector_region_three (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h2 : 2*k = m)
     (q r v : W) (coin : Bool) : selector m k q r v coin = selector 4 2 q r v coin := by
@@ -536,7 +510,6 @@ private lemma selector_region_three (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm :
     simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err, first, last,
       hm, hk, hkm, h2] <;>
     (try split_ifs) <;> omega
-
 set_option maxHeartbeats 8000000 in
 private lemma selector_region_four (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h2 : m < 2*k) (h3 : 3*k < 2*m)
     (q r v : W) (coin : Bool) : selector m k q r v coin = selector 5 3 q r v coin := by
@@ -544,7 +517,6 @@ private lemma selector_region_four (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : 
     simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err, first, last,
       hm, hk, hkm, h3, h2] <;>
     (try split_ifs) <;> omega
-
 set_option maxHeartbeats 8000000 in
 private lemma selector_region_five (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h3 : 3*k = 2*m)
     (q r v : W) (coin : Bool) : selector m k q r v coin = selector 3 2 q r v coin := by
@@ -552,7 +524,6 @@ private lemma selector_region_five (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : 
     simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err, first, last,
       hm, hk, hkm, h3] <;>
     (try split_ifs) <;> omega
-
 set_option maxHeartbeats 8000000 in
 private lemma selector_region_six (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h3 : 2*m < 3*k)
     (q r v : W) (coin : Bool) : selector m k q r v coin = selector 10 9 q r v coin := by
@@ -560,7 +531,6 @@ private lemma selector_region_six (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k
     simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err, first, last,
       hm, hk, hkm, h3] <;>
     (try split_ifs) <;> omega
-
 set_option maxHeartbeats 8000000 in
 private lemma selector_region_seven (m : ℕ) (hm : 0 < m)
     (q r v : W) (coin : Bool) : selector m m q r v coin = selector 1 1 q r v coin := by
@@ -568,7 +538,6 @@ private lemma selector_region_seven (m : ℕ) (hm : 0 < m)
     simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err, first, last,
       hm] <;>
     (try split_ifs) <;> omega
-
 /-- Selector choices agree with the representative throughout each prefix-count region. -/
 lemma selector_stable (m k : ℕ) (hm : 0 < m) (hkm : k ≤ m) (q r v : W) (coin : Bool) :
     selector m k q r v coin =
@@ -590,7 +559,6 @@ lemma selector_stable (m k : ℕ) (hm : 0 < m) (hkm : k ≤ m) (q r v : W) (coin
   by_cases h32e : 3*k = 2*m
   · simpa [region, representative, h0, he, h3, h2, h2e, h32, h32e, (show ¬ (2 * m ≤ m) from by omega)] using selector_region_five m k hm hk hlt h32e q r v coin
   · simpa [region, representative, h0, he, h3, h2, h2e, h32, h32e] using selector_region_six m k hm hk hlt (by omega) q r v coin
-
 /-- The first selected label maximizes teacher votes. -/
 lemma first_top_majority (m k : ℕ) (q r v : W) (c : Fin 3) :
     vt m k q r v c ≤ vt m k q r v (firstTop m k q r v) := by
@@ -611,7 +579,6 @@ lemma selector_majority (m k : ℕ) (q r v : W) (coin : Bool) (c : Fin 3) :
   all_goals
     have hc : c=0 ∨ c=1 ∨ c=2 := by omega
     rcases hc with rfl | rfl | rfl <;> simp only [top0, top1, top2] at * <;> omega
-
 /-- Reservoir condition on an ordered anchor triple. -/
 def isRes (q r v : W) : Prop := q∈({.zero,.middle,.high}:Finset W) ∧ r = .high ∧ v∈({.low,.ends}:Finset W)
 /-- Polynomial discrepancy of the two coin choices over all non-reservoir anchors. -/
@@ -620,7 +587,6 @@ def pairAnchor (m k : ℕ) (h : Bool) : Polynomial ℤ := by
     if isRes q r v then 0 else
       Polynomial.C (ld h q r v (selector m k q r v false) + ld h q r v (selector m k q r v true)) *
         Polynomial.X ^ (WordCounts.rb q + WordCounts.rb r + WordCounts.rb v)
-
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 4000000 in
 /-- Exact paired-anchor polynomial at the one selector representative. -/
@@ -629,7 +595,6 @@ lemma pair_anchor_one (h : Bool) :
   cases h <;>
     simp [pairAnchor, isRes, selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel,
       ld, err, first, last, WordCounts.rb, Finset.univ, Fintype.elems] <;> ring
-
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 4000000 in
 /-- Exact paired-anchor polynomial at the two selector representative. -/
@@ -638,7 +603,6 @@ lemma pair_anchor_two (h : Bool) :
   cases h <;>
     simp [pairAnchor, isRes, selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel,
       ld, err, first, last, WordCounts.rb, Finset.univ, Fintype.elems] <;> ring
-
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 4000000 in
 /-- Exact paired-anchor polynomial at the three selector representative. -/
@@ -647,7 +611,6 @@ lemma pair_anchor_three (h : Bool) :
   cases h <;>
     simp [pairAnchor, isRes, selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel,
       ld, err, first, last, WordCounts.rb, Finset.univ, Fintype.elems] <;> ring
-
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 4000000 in
 /-- Exact paired-anchor polynomial at the four selector representative. -/
@@ -656,7 +619,6 @@ lemma pair_anchor_four (h : Bool) :
   cases h <;>
     simp [pairAnchor, isRes, selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel,
       ld, err, first, last, WordCounts.rb, Finset.univ, Fintype.elems] <;> ring
-
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 4000000 in
 /-- Exact paired-anchor polynomial at the five selector representative. -/
@@ -665,7 +627,6 @@ lemma pair_anchor_five (h : Bool) :
   cases h <;>
     simp [pairAnchor, isRes, selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel,
       ld, err, first, last, WordCounts.rb, Finset.univ, Fintype.elems] <;> ring
-
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 4000000 in
 /-- Exact paired-anchor polynomial at the six selector representative. -/
@@ -674,14 +635,12 @@ lemma pair_anchor_six (h : Bool) :
   cases h <;>
     simp [pairAnchor, isRes, selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel,
       ld, err, first, last, WordCounts.rb, Finset.univ, Fintype.elems] <;> ring
-
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 4000000 in
 /-- Exact paired-anchor polynomial at the seven selector representative. -/
 lemma pair_anchor_seven : pairAnchor 1 1 true = 0 := by
   simp [pairAnchor, isRes, selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel,
     ld, err, first, last, WordCounts.rb, Finset.univ, Fintype.elems] <;> ring
-
 /-- Tie coin obtained from the joint endpoints of the three anchors. -/
 def anchorCoin (q r v : W) : Bool :=
   if first v then decide (v=.ends) else if last q then decide (q=.ends) else decide (r=.ends)
@@ -697,9 +656,242 @@ set_option maxHeartbeats 4000000 in
 lemma zero_anchor_eq_zero : zeroAnchor=0 := by
   simp [zeroAnchor, isRes, anchorCoin, selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel,
     ld, err, first, last, WordCounts.rb, Finset.univ, Fintype.elems] <;> ring
-
 end
 end MajorityGeometry
 end
-
+namespace Capacity
+/-- Binomial weight choose(j,k) times two to the k. -/
+def weight (j k : ℕ) : ℕ := j.choose k * 2 ^ k
+private def tail (j K : ℕ) : ℕ := ∑ k ∈ Finset.range (j + 1), if K < k then weight j k else 0
+/-- Total positive binomial weight at indices at most K. -/
+def low (j K : ℕ) : ℕ := ∑ k ∈ Finset.range (j + 1), if 0 < k ∧ k ≤ K then weight j k else 0
+/-- Prefix coordinates or binomial prefix factor, according to the enclosing namespace. -/
+def pref (n j : ℕ) : ℕ := n.choose j * 2 ^ (n - j)
+private lemma total (j : ℕ) : (∑ k ∈ Finset.range (j+1), weight j k) = 3^j := by
+  simpa [weight, mul_comm] using (add_pow (2 : ℕ) 1 j).symm
+private lemma moment (j : ℕ) : (∑ k ∈ Finset.range (j+1), k * weight j k) = 2*j*3^(j-1) := by
+  cases j with
+  | zero => simp [weight]
+  | succ n =>
+    rw [Finset.sum_range_succ']
+    simp only [zero_mul, add_zero]
+    have hterm (k : ℕ) : (k+1)*weight (n+1) (k+1) = 2*(n+1)*weight n k := by
+      dsimp [weight]
+      rw [pow_succ]
+      have h := Nat.add_one_mul_choose_eq n k
+      calc
+        _ = 2 * ((n+1).choose (k+1) * (k+1)) * 2^k := by ring
+        _ = _ := by rw [← h]; ring
+    simp_rw [hterm]
+    rw [← Finset.mul_sum, total]
+    simp
+private lemma partition (j K : ℕ) : 1 + low j K + tail j K = 3^j := by
+  rw [← total]
+  have h (k : ℕ) : (if k = 0 then 1 else 0) +
+      (if 0 < k ∧ k ≤ K then weight j k else 0) +
+      (if K < k then weight j k else 0) = weight j k := by
+    by_cases hk : k = 0
+    · simp [hk, weight]
+    · by_cases hK : K < k <;> simp [hk, hK, show 0 < k by omega, show (k ≤ K) ↔ ¬K < k by omega]
+  have := Finset.sum_congr (s₁ := Finset.range (j+1)) rfl (fun k _ => h k)
+  simpa [Finset.sum_add_distrib, low, tail] using this
+private lemma tail_markov (m j : ℕ) (hm : 3 ≤ m) (hj : 0 < j) :
+    m*tail j (m/3) + 6*j ≤ 2*j*3^j := by
+  have hpoint (k : ℕ) : m*(if m/3 < k then weight j k else 0) +
+      (if k = 1 then 6*j else 0) ≤ 3*(k*weight j k) := by
+    by_cases hk1 : k = 1
+    · subst k
+      have hK : ¬ m/3 < 1 := by omega
+      simp [hK, weight]
+      omega
+    · by_cases hK : m/3 < k
+      · have hmk : m ≤ 3*k := by omega
+        have hh := Nat.mul_le_mul_right (weight j k) hmk
+        simpa [hK, hk1, mul_assoc] using hh
+      · simp [hK, hk1]
+  have hs := Finset.sum_le_sum (s := Finset.range (j+1)) (fun k _ => hpoint k)
+  have hone : (∑ k ∈ Finset.range (j+1), if k = 1 then 6*j else 0) = 6*j := by
+    simp [show 1 < j+1 by omega]
+  rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum, hone, moment] at hs
+  dsimp [tail]
+  have hp : 3^j = 3^(j-1)*3 := by
+    conv_lhs => rw [show j = (j-1)+1 by omega]
+    rw [pow_succ]
+  nlinarith
+private lemma tail_growth (j K : ℕ) : 3*tail j K ≤ tail (j+1) K := by
+  have hs := Finset.sum_choose_succ_mul
+    (R := ℕ) (fun k _ => if K < k then 2^k else 0) j
+  have hf (n : ℕ) (k : ℕ) : n.choose k * (if K < k then 2^k else 0) = if K < k then weight n k else 0 := by split_ifs <;> simp [weight]
+  simp only [Nat.cast_id, hf] at hs
+  have hb (k : ℕ) : 2*(if K < k then weight j k else 0) ≤ j.choose k * (if K < k+1 then 2^(k+1) else 0) := by
+    by_cases hk : K < k
+    · simp [hk, show K < k+1 by omega, weight, pow_succ,
+        mul_assoc, mul_comm, mul_left_comm]
+    · simp [hk]
+  have hb := Finset.sum_le_sum (s := Finset.range (j+1)) (fun k _ => hb k)
+  rw [← Finset.mul_sum] at hb
+  change tail (j+1) K = tail j K + _ at hs
+  change 2*tail j K ≤ _ at hb
+  omega
+private lemma scalar_capacity (m j : ℕ) (hm : 3 ≤ m) (hj : 0 < j) (hjm : j < m) :
+    2*(m-j)*tail j (m/3) + 2*m+4*j ≤ 6*j*(3^(j-1)+low (j-1) (m/3)) + 2*(m-j) := by
+  have htail := tail_markov m j hm hj
+  have hprev := tail_growth (j-1) (m/3)
+  rw [show j-1+1 = j by omega] at hprev
+  have hpart := partition (j-1) (m/3)
+  have hp : 3^j = 3^(j-1)*3 := by
+    conv_lhs => rw [show j = (j-1)+1 by omega]
+    rw [pow_succ]
+  have hprevscaled := Nat.mul_le_mul_left (2*j) hprev
+  have hmj : m-j+j = m := by omega
+  nlinarith
+private lemma pref_relation (m j : ℕ) (hm : 0 < m) (hj : 0 < j) (hjm : j < m) :
+    (m-j)*pref (m-1) (j-1) = 2*j*pref (m-1) j := by
+  obtain ⟨s, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : j ≠ 0)
+  have hexp : m-1-s = (m-1-(s+1))+1 := by omega
+  have hh := Nat.choose_succ_right_eq (m-1) s
+  have hms : m-(s+1) = m-1-s := by omega
+  simp only [Nat.succ_eq_add_one, Nat.add_sub_cancel, pref, hms]
+  calc
+    _ = ((m-1).choose s * (m-1-s)) * (2^(m-1-(s+1))*2) := by
+      rw [hexp, pow_succ]
+      ring
+    _ = ((m-1).choose (s+1) * (s+1)) * (2^(m-1-(s+1))*2) := by rw [← hh]
+    _ = _ := by ring
+/-- The nonnegative Q coefficient inequality, for every m> = 3 and every degree j. -/
+private theorem coefficient_capacity (m j : ℕ) (hm : 3 ≤ m) :
+    2*pref (m-1) j * tail j (m/3) ≤ 3*pref (m-1) (j-1)*(3^(j-1)+low (j-1) (m/3)) + 2*pref (m-1) j := by
+  by_cases hj : j = 0
+  · simp [hj, tail, weight]
+  by_cases hjm : j < m
+  · have rel := pref_relation m j (by omega) (by omega) hjm
+    have hs := scalar_capacity m j hm (by omega) hjm
+    have hsm := Nat.mul_le_mul_left (pref (m-1) j) hs
+    have heq : pref (m-1) j * (6*j*(3^(j-1)+low (j-1) (m/3))+2*(m-j)) = (m-j)*(3*pref (m-1) (j-1)*(3^(j-1)+low (j-1) (m/3))+2*pref (m-1) j) := by
+      nlinarith [congrArg (fun a => a*(3*(3^(j-1)+low (j-1) (m/3)))) rel]
+    rw [heq] at hsm
+    have hl : (m-j)*(2*pref (m-1) j * tail j (m/3)) ≤ (m-j)*(3*pref (m-1) (j-1)*(3^(j-1)+low (j-1) (m/3))+2*pref (m-1) j) := by
+      nlinarith
+    exact Nat.le_of_mul_le_mul_left hl (by omega)
+  · have hc : (m-1).choose j = 0 := Nat.choose_eq_zero_of_lt (by omega)
+    simp [pref, hc]
+end Capacity
+namespace Capacity
+private def pc (m j : ℕ) : ℤ := (pref (m-1) j : ℤ)*3^j
+private def ac (m j : ℕ) : ℤ := pref (m-1) j
+/-- Coefficient contribution of the low positive prefix-count slices. -/
+def lc (m j : ℕ) : ℤ := (pref (m-1) j : ℤ)*low j (m/3)
+/-- Coefficient transform for multiplication by two plus three X. -/
+def mulB (f : ℕ → ℤ) (j : ℕ) : ℤ := 2*f j + if j=0 then 0 else 3*f (j-1)
+/-- Coefficient transform for multiplication by two plus X. -/
+def mulV (f : ℕ → ℤ) (j : ℕ) : ℤ := 2*f j + if j=0 then 0 else f (j-1)
+/-- Half of the interior exterior-discrepancy coefficient. -/
+def dc (m j : ℕ) : ℤ := mulB (lc m) j - 4*(pc m j-ac m j)
+/-- Half of the interior reservoir coefficient. -/
+def nc (m j : ℕ) : ℤ := mulB (pc m) j
+private lemma pc_nonneg (m j : ℕ) : 0 ≤ pc m j := by unfold pc; positivity
+private lemma lc_le_pc (m j : ℕ) : lc m j ≤ pc m j := by
+  have hh := partition j (m/3)
+  have hl : low j (m/3) ≤ 3^j := by omega
+  unfold lc pc
+  exact mul_le_mul_of_nonneg_left (by exact_mod_cast hl) (by positivity)
+private lemma ac_le_pc (m j : ℕ) : ac m j ≤ pc m j := by
+  have h : 1 ≤ (3 : ℕ)^j := Nat.one_le_pow j 3 (by decide)
+  unfold ac pc
+  nlinarith [mul_le_mul_of_nonneg_left (show (1:ℤ) ≤ 3^j by exact_mod_cast h)
+    (show (0:ℤ) ≤ pref (m-1) j by positivity)]
+private lemma dc_upper (m j : ℕ) : dc m j ≤ nc m j := by
+  have h := lc_le_pc m j
+  have hprev := lc_le_pc m (j-1)
+  have hA := ac_le_pc m j
+  unfold dc nc mulB
+  split_ifs <;> omega
+private lemma dc_lower (m j : ℕ) (hm : 3 ≤ m) : -nc m j ≤ dc m j := by
+  have ht := partition j (m/3)
+  have hi : 1 + (low j (m/3):ℤ) + tail j (m/3) = 3^j := by exact_mod_cast ht
+  have hs := coefficient_capacity m j hm
+  have hsZ : 2*(pref (m-1) j:ℤ)*tail j (m/3) ≤
+      3*(pref (m-1) (j-1):ℤ)*(3^(j-1)+low (j-1) (m/3)) + 2*pref (m-1) j := by
+    exact_mod_cast hs
+  unfold nc dc mulB pc ac lc
+  by_cases hj : j=0
+  · simp [hj, low]
+  · simp only [if_neg hj]
+    nlinarith [congrArg (fun a => (pref (m-1) j:ℤ)*a) hi]
+/-- Coefficientwise capacity of the fixed-label A0/B2 reservoir. -/
+private lemma mul_v_preserves (f g : ℕ → ℤ) (h : ∀ j, -f j ≤ g j ∧ g j ≤ f j) (j : ℕ) :
+    -mulV f j ≤ mulV g j ∧ mulV g j ≤ mulV f j := by
+  have hj := h j
+  have hp := h (j-1)
+  unfold mulV
+  split_ifs <;> omega
+/-- Half of the actual reservoir generating coefficient after the anchor shift. -/
+def reservoir_half (m z : ℕ) : ℤ := if 2 ≤ z then mulV (nc m) (z-2) else 0
+/-- Half of the exterior discrepancy coefficient after the anchor shift. -/
+def discrepancy_half (m z : ℕ) : ℤ := if 2 ≤ z then mulV (dc m) (z-2) else 0
+end Capacity
+namespace Capacity
+private lemma low_zero (j : ℕ) : low j 0 = 0 := by
+  apply Finset.sum_eq_zero
+  intro k hk
+  have h : ¬ (0<k ∧ k≤0) := by omega
+  exact if_neg h
+private lemma nc_nonneg (m j : ℕ) : 0 ≤ nc m j := by
+  have h := pc_nonneg m j
+  have hp := pc_nonneg m (j-1)
+  unfold nc mulB
+  split_ifs <;> omega
+private lemma core_lower_small (m j : ℕ) (hm : m=1 ∨ m=2) : -nc m j ≤ dc m j := by
+  have hl (a b : ℕ) (hm : b<3) : lc b a = 0 := by
+    unfold lc
+    rw [show b/3=0 by omega, low_zero]
+    simp
+  rcases hm with rfl | rfl
+  · have hd : dc 1 j = 0 := by
+      unfold dc mulB
+      rw [hl j 1 (by decide), hl (j-1) 1 (by decide)]
+      by_cases hj : j=0
+      · simp [hj, pc, ac, pref]
+      · have hchoose : (0:ℕ).choose j=0 := Nat.choose_eq_zero_of_lt (by omega)
+        simp [pc, ac, pref, hchoose]
+    rw [hd]
+    have := nc_nonneg 1 j
+    omega
+  · by_cases hj0 : j=0
+    · subst j
+      norm_num [dc, nc, mulB, hl, pc, ac, pref]
+    by_cases hj1 : j=1
+    · subst j
+      norm_num [dc, nc, mulB, hl, pc, ac, pref]
+    have hchoose : (1:ℕ).choose j=0 := Nat.choose_eq_zero_of_lt (by omega)
+    have hd : dc 2 j=0 := by
+      unfold dc mulB
+      rw [hl j 2 (by decide), hl (j-1) 2 (by decide)]
+      simp [pc, ac, pref, hchoose]
+    rw [hd]
+    have := nc_nonneg 2 j
+    omega
+private theorem core_two_sided_positive (m j : ℕ) (hm : 0 < m) :
+    -nc m j ≤ dc m j ∧ dc m j ≤ nc m j := by
+  refine ⟨?_, dc_upper m j⟩
+  by_cases h3 : 3 ≤ m
+  · exact dc_lower m j h3
+  · exact core_lower_small m j (by omega)
+/-- Every positive prefix length and mass class have a legal integer reservoir split. -/
+theorem integer_split_positive (m z : ℕ) (hm : 0 < m) :
+    ∃ t : ℕ, (t:ℤ) ≤ 2*reservoir_half m z ∧
+      2*discrepancy_half m z-2*reservoir_half m z+2*(t:ℤ)=0 := by
+  have hc : -reservoir_half m z ≤ discrepancy_half m z ∧
+      discrepancy_half m z ≤ reservoir_half m z := by
+    unfold reservoir_half discrepancy_half
+    split_ifs
+    · exact mul_v_preserves (nc m) (dc m) (fun j => core_two_sided_positive m j hm) (z-2)
+    · omega
+  have hn : 0 ≤ reservoir_half m z-discrepancy_half m z := by omega
+  refine ⟨(reservoir_half m z-discrepancy_half m z).toNat, ?_, ?_⟩
+  · rw [Int.toNat_of_nonneg hn]
+    omega
+  · rw [Int.toNat_of_nonneg hn]
+    ring
+end Capacity
 end D5.S3.Arith.FibonacciAtomic.CommonPrediction
