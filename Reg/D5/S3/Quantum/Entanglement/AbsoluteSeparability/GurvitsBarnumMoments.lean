@@ -89,7 +89,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       booleanPredicate := false }]
   }
   continuation := .unknown
-  familyRecord := some ⟨arena.{u}, ⟨family.{u}⟩⟩
+  familyRecord := none
   options := #[] }
 
 #print axioms family
@@ -154,7 +154,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       booleanPredicate := false }]
   }
   continuation := .unknown
-  familyRecord := some ⟨arena, ⟨family⟩⟩
+  familyRecord := none
   options := #[] }
 
 #print axioms family
@@ -219,7 +219,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       booleanPredicate := false }]
   }
   continuation := .unknown
-  familyRecord := some ⟨arena, ⟨family⟩⟩
+  familyRecord := none
   options := #[] }
 
 #print axioms family
