@@ -89,6 +89,7 @@ class NativeFixture(unittest.TestCase):
                 if len(line.split()) >= 3 and line.split()[2] == str(group)]
 
     def run_owned_command(self, arguments, cwd, input=None, phase="git", timeout=120, check=True, env=None, pass_fds=()):
+        raise AssertionError("C7_NATIVE_PRE_CLEANUP_REJECT_6ACAC960")
         arguments = list(map(str, arguments))
         cwd = str(cwd)
         if not self.commands_settled or self.fixture_interrupted:
