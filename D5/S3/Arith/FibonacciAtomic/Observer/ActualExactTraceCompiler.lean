@@ -24,7 +24,7 @@ open ActualFiniteObserverAbsentElimination
   (RawHistory cacheUpdate Allowed Observer ActualPrefix queryReply CacheTruth
     queryReply_eq_readout)
 open ActualAcquisitionCacheFiber
-  (CompatCache decode decode_projection decode_pack decode_addresses pack noneCount
+  (CompatCache decode decode_injective decode_projection decode_pack decode_addresses pack noneCount
     compatible_cache_card)
 open ActualTreeReadoutAcquisition (Strategy terminal)
 open ActualObserverAbsorbingNormalization (allowedSources allowedSources_exact
@@ -272,7 +272,24 @@ private theorem exact_actual_prefix_replay {G : Finset CoarseHistory}
       have member' : r.1.1 ++ [⟨q, kappa (readout q U)⟩] ∈ G := by
         simpa only [history, kappa_hist, List.map_append, List.map_cons, List.map_nil]
           using member
+      have projection_first :
+          kappa_hist (firstRaw (h ++ [⟨q, readout q U⟩])) =
+            firstCoarse (r.1.1 ++ [⟨q, kappa (readout q U)⟩]) := by
+        rw [firstRaw_projection]
+        simp only [kappa_hist, List.map_append, List.map_cons, List.map_nil, history]
       let r' := exactAppendRow r q (readout q U) member'
+      let rawRow : ExactRow G :=
+        ⟨⟨r.1.1 ++ [⟨q, kappa (readout q U)⟩], member'⟩,
+          pack _ (firstRaw (h ++ [⟨q, readout q U⟩])) projection_first⟩
+      have row_eq : r' = rawRow := by
+        dsimp [r', exactAppendRow, rawRow]
+        apply Sigma.ext
+        · rfl
+        · apply heq_of_eq
+          apply decode_injective _
+          rw [decode_pack, decode_pack]
+          rw [decoder]
+          exact (firstRaw_append_single h ⟨q, readout q U⟩).symm
       have prenext' :
           (h ++ [(⟨q, queryReply (exactRowDecoder r) q U⟩ :
             Sigma (fun _ : Address => Reply))]).IsPrefix horizon := by
@@ -282,22 +299,18 @@ private theorem exact_actual_prefix_replay {G : Finset CoarseHistory}
         change exactTransition policy (.inl r)
           (queryReply (exactRowDecoder r) q U) = .inl r'
         rw [reply]
-        simp only [exactTransition, action_r, dif_pos member', r']
+        simpa only [exactTransition, action_r, dif_pos member', r'] using
+          congrArg (fun x : ExactRow G => (Sum.inl x : ExactState G)) row_eq
       · rw [state]
         change r'.1.1 = kappa_hist (h ++ [⟨q, queryReply (exactRowDecoder r) q U⟩])
-        rw [reply]
-        simp only [r', exactAppendRow, kappa_hist, List.map_append, List.map_cons, List.map_nil,
-          history]
+        rw [reply, row_eq]
+        simp only [rawRow, kappa_hist, List.map_append, List.map_cons, List.map_nil, history]
       · rw [state]
         change exactRowDecoder r' =
           firstRaw (h ++ [⟨q, queryReply (exactRowDecoder r) q U⟩])
-        rw [reply]
-        calc
-          exactRowDecoder r' = cacheUpdate (exactRowDecoder r) q (readout q U) :=
-            exactTransition_projection r q (readout q U) member'
-          _ = cacheUpdate (firstRaw h) q (readout q U) := by rw [decoder]
-          _ = firstRaw (h ++ [⟨q, readout q U⟩]) :=
-            (firstRaw_append_single h ⟨q, readout q U⟩).symm
+        rw [reply, row_eq]
+        simp only [rawRow, exactRowDecoder]
+        exact decode_pack _ _ _
       · rw [state]
         exact prenext'
 
