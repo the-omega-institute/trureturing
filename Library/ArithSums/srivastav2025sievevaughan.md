@@ -2823,3 +2823,142 @@ $|E_N(n)|\ge[-T_N^w(n)-a\log n-b]_+$.
 This excludes such coefficientwise nonnegative combinations of
 source comparison defects plus an absolutely integrable error.
 It asserts nothing for $a\ge1$ or for a joint signed estimate.
+
+## Natural centering retains the coefficientwise obstruction
+
+The divergence in (SV69) also applies after subtracting the actual
+type-II logarithmic drift and its full constant mean. Keep the same
+fixed $N$ and all the prime powers in (SV67), and put
+
+$$
+\begin{aligned}
+J_A^{\rm II}&=\sum_{\ell\le V}\frac{h(\ell)\log\ell}{\ell},
+&M_V&=\sum_{d\le V}\frac{\Lambda(d)}d,\\
+D_N^g&=\sum_{p^k>V}\frac{\Gamma_N(p^k)}{p^k},
+&c_N^{\rm II}&=1+J_A^{\rm II}+S_A(M_V+D_N^g).
+\end{aligned}
+\tag{SV70}
+$$
+
+These names distinguish the constants from the existing harmonic
+atom $J_A(m)$ and sampled correction $C_N(x)$.
+Since $0\le\beta_{a_p+k}(p)\le\beta_k(p)\le p^{-k}$,
+$D_N^g$ is absolutely convergent. More explicitly, for fixed $N$,
+
+$$
+\sum_{p^k\le x}\Gamma_N(p^k)=O_N(\log x),\qquad
+x\sum_{p^k>x}\frac{\Gamma_N(p^k)}{p^k}=O_N(1).
+$$
+
+The ordinary harmonic and square-reciprocal tails supply these
+bounds; different prime powers have different integer values.
+There is no cutoff of the infinite gain sum in (SV70).
+
+### Sum the complete recovery before centering
+
+Reuse the published PNT consequence $\psi(x)=x+o(x)$, with all
+prime powers included. A directly recorded supplier is
+[Johnston--Yang, arXiv:2204.01980v2, Theorem 1.1, equation (1.3)](../Weil/johnstonyang2022pnt.md).
+Only this asymptotic consequence is used here; its explicit error
+is not promoted to the original fixed-power Robin allowance.
+
+The finite support of $h$ and Stirling's formula give
+
+$$
+\sum_{n\le x}(h*\log)(n)
+=S_Ax\log x-(S_A+J_A^{\rm II})x+O_A(\log x).
+$$
+
+The existing full-support floor correction is
+$H_A(y)=S_Ay+O_A(1)$. Therefore the fixed low convolution and
+the gain term have the respective sums
+
+$$
+\begin{aligned}
+\sum_{n\le x}(\mathbf1*h*\Lambda_{\le V})(n)
+&=S_AM_Vx+O_A(1),\\
+\sum_{n\le x}T_N^g(n)&=-S_AD_N^g x+O_N(\log x).
+\end{aligned}
+$$
+
+For the second line, sum the exact factor
+$\sum_{m\le y}b_A^{\rm II}(m)=1-H_A(y)$ for $y\ge1$.
+The preceding harmonic and reciprocal-tail estimates pay both
+the finite convolution error and the omitted part of $D_N^g$.
+
+Now solve (SV1), with (SV67), for the sum of $T_N^w$.
+The finite $\Lambda_{\le V}$ term is retained and contributes
+$O_A(1)$ as $x\to\infty$. This gives
+
+$$
+\sum_{n\le x}T_N^w(n)
+=-S_Ax\log x+(c_N^{\rm II}+S_A)x+o_N(x).
+$$
+
+Consequently the actual centered coefficients
+
+$$
+\widetilde T_N^w(n)=T_N^w(n)+S_A\log n-c_N^{\rm II}
+$$
+
+satisfy $\sum_{n\le x}\widetilde T_N^w(n)=o_N(x)$.
+This is a fixed-$N$ asymptotic, with no claimed uniform rate as
+$N$ grows and no claim about its own signed improper integral.
+
+The accepted finite mean envelope after (SV64) already gives
+$|S_A|\to0$ along the original large sources. In particular,
+$S_A<1/2$ eventually. Use this existing consequence without
+reproving that envelope or claiming a fixed-power improvement.
+Taking $a=S_A$ and $b=-c_N^{\rm II}$ in (SV69) yields, for
+every sufficiently large original fixed source,
+
+$$
+\boxed{
+\sum_{n\le x}\widetilde T_N^w(n)=o_N(x),\qquad
+\int_A^\infty\sum_{n\le t}
+[-\widetilde T_N^w(n)]_+\,k(t)\,dt=\infty.
+}
+\tag{SV71}
+$$
+
+Thus subtraction of the logarithmic drift, constant mean and
+Euler-gain contribution does not make coefficientwise negative
+mass integrable under the original kernel.
+
+### The complete recovery still cancels on the same integers
+
+On each actual $n_j$ in (SV69), $h$ has no divisor in its
+support other than one, so $(h*\log)(n_j)=\log n_j$.
+No prime power at most $V$ divides $n_j$. Thus the other low
+terms vanish, while all the high gains satisfy
+
+$$
+T_N^w(n_j)=-\log n_j+\epsilon^{-1}\log Z(n_j),\qquad
+T_N^g(n_j)=-\epsilon^{-1}\log Z(n_j).
+$$
+
+The original complete recovery therefore gives exactly
+
+$$
+\mathcal C(n_j)=\log n_j+T_N^w(n_j)+T_N^g(n_j)
+=0=\Lambda(n_j).
+\tag{SV72}
+$$
+
+Prime powers also retain their full compensation: for $p>V$
+and $j\ge1$,
+$(b_A^{\rm II}*\Lambda_{>V})(p^j)=-(j-1)\log p$ and
+$(h*\log)(p^j)=j\log p$, leaving $\Lambda(p^j)=\log p$.
+
+The three operations
+$\sum_{n\le t}[-T_N^w(n)]_+$,
+$[-\sum_{n\le t}T_N^w(n)]_+$ and
+$[-\sum_{n\le t}\mathcal C(n)+t]_+$ are different.
+Equations (SV69)--(SV71) concern only the first and its stated
+centering. They supply no lower bound for the original sampled
+$H_A$ or $E_A$ losses, and do not assert divergence of either
+of the latter two operations. This rules out the specified
+coefficientwise payment scheme, while preserving joint arithmetic
+compensation as the route required by (SV4). The full original
+signed bound and RH remain unproved; no historical originality
+or Lean certification is claimed for this application.
