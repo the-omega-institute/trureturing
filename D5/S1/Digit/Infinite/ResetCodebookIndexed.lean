@@ -22,60 +22,6 @@ set_option maxHeartbeats 1600000
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.FixedTailClosedBudget
 namespace D5.S1.Digit.Infinite.ResetCodebook
-theorem reset_actual_family (anchor : Bool) (K M N : ℕ) (b d : ℝ)
-    (hK : 2 ≤ K) (hM : 1 ≤ M)
-    (hb : lambda-g^2*chi^K*h false < b)
-    (hd : d=(lambda-b)/(g^2*chi^K))
-    (hreset : max (X false) (Y false) < Statement.B M) :
-    0 < Statement.actualEps anchor K M N b ∧ Statement.finiteActual anchor K M N b d hM := by
-  have hp := parameters false
-  have hg : 0 < g := by have := g_bounds; linarith
-  have hfac : 0 < g^2*chi^K := mul_pos (pow_pos hg _) (pow_pos hp.2.2.1 _)
-  have hbeq : b=lambda-g^2*chi^K*d := by
-    have hdeq := (eq_div_iff (ne_of_gt hfac)).mp hd
-    nlinarith
-  have hb0 : Statement.B M=resetFloor M := by simp [Statement.B,resetFloor,closedRun]
-  have hinit : initial false anchor < resetFloor M := by
-    rw [hb0] at hreset
-    cases anchor
-    · exact (le_max_left _ _).trans_lt hreset
-    · exact (le_max_right _ _).trans_lt hreset
-  let gain := (resetFloor M-initial false anchor)*g^N
-  have hgain : 0 < gain := mul_pos (sub_pos.mpr hinit) (pow_pos hg _)
-  have hauto : Statement.autoCost K < b := (automatic_strict K hK).trans hb
-  let eps := Statement.actualEps anchor K M N b
-  have hepsEq : eps=min (b-Statement.autoCost K) (g^2*chi^K*gain)/2 := by
-    simp only [eps,Statement.actualEps,hb0,gain,initial]
-    ring
-  have hgp : 0 < g^2*chi^K*gain := mul_pos hfac hgain
-  have he : 0 < eps := by rw [hepsEq]; exact div_pos (lt_min (sub_pos.mpr hauto) hgp) (by norm_num)
-  have heleft : 2*eps ≤ b-Statement.autoCost K := by
-    rw [hepsEq]
-    linarith [min_le_left (b-Statement.autoCost K) (g^2*chi^K*gain)]
-  have heright : 2*eps ≤ g^2*chi^K*gain := by
-    rw [hepsEq]
-    linarith [min_le_right (b-Statement.autoCost K) (g^2*chi^K*gain)]
-  have hbe : 0 < b-eps := by have := auto_nonneg K; linarith
-  refine ⟨he,?_⟩
-  intro vs hvs
-  let exec := (vs.map (fun v => Statement.reset M hM::v)).flatten
-  have hw : Statement.weak K (d+gain) exec (initial false anchor) :=
-    reset_concatenation_guard anchor K M N d hK hM hinit vs (fun v hv => hvs v hv)
-  have hbud : ∀ low, fullBudget low anchor exec ≤ b-2*eps := by
-    intro low
-    apply (fullBudget_guard anchor K d gain b exec hK hbeq hw low).trans
-    apply max_le <;> linarith
-  obtain ⟨src,hs⟩ := actual_all_slots anchor exec
-  have hw' : Statement.weak K (d+(Statement.B M-initial false anchor)*g^N) exec (initial false anchor) := by
-    simpa only [hb0,gain] using hw
-  refine ⟨hw',src,?_⟩
-  intro low
-  have hc := ((hs low).2.2.2.2).trans (hbud low)
-  refine ⟨(hs low).1,(hs low).2.1,(hs low).2.2.1,hc,?_⟩
-  intro Q hQ
-  obtain ⟨es,hlen,herr⟩ := actual_errors _ _ _ _ (hs low).2.2.1
-    (full_length low anchor exec) b eps he hbe hc Q hQ
-  exact ⟨fun p => es[p]?.getD 0,herr⟩
 end D5.S1.Digit.Infinite.ResetCodebook
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
@@ -87,7 +33,7 @@ noncomputable def pastRec (w : ℤ→Bool) (i : ℤ) : ℕ→ℝ→ℝ
   | 0,z => z
   | n+1,z => Statement.f (w (i-1)) (pastRec w (i-1) n z)
 noncomputable def stateRec (w : ℤ→Bool) (i : ℤ) := ⨆ n, pastRec w i n 0
-theorem f_mono (a : Bool) : Monotone (Statement.f a) := by
+private theorem f_mono (a : Bool) : Monotone (Statement.f a) := by
   have hp := parameters false
   cases a
   · intro x y hxy
@@ -107,18 +53,18 @@ private theorem f_interval (a : Bool) (z : ℝ) (hz : 0 ≤ z) (hh : z ≤ h fal
     nlinarith
   · change 0 ≤ chi*z ∧ chi*z ≤ h false
     exact ⟨mul_nonneg hp.2.2.1.le hz,(mul_le_of_le_one_left hz hp.2.2.2.1.le).trans hh⟩
-theorem pastRec_interval (w : ℤ→Bool) (i : ℤ) (n : ℕ) (z : ℝ)
+private theorem pastRec_interval (w : ℤ→Bool) (i : ℤ) (n : ℕ) (z : ℝ)
     (hz : 0 ≤ z) (hh : z ≤ h false) : 0 ≤ pastRec w i n z ∧ pastRec w i n z ≤ h false := by
   induction n generalizing i with
   | zero => exact ⟨hz,hh⟩
   | succ n ih => exact f_interval _ _ (ih (i-1)).1 (ih (i-1)).2
-theorem pastRec_increasing (w : ℤ→Bool) (i : ℤ) : Monotone (fun n => pastRec w i n 0) := by
+private theorem pastRec_increasing (w : ℤ→Bool) (i : ℤ) : Monotone (fun n => pastRec w i n 0) := by
   apply monotone_nat_of_le_succ
   intro n
   induction n generalizing i with
   | zero => exact (f_interval _ 0 le_rfl (parameters false).2.2.2.2.1.le).1
   | succ n ih => exact f_mono _ (ih (i-1))
-theorem pastRec_bdd (w : ℤ→Bool) (i : ℤ) : BddAbove (Set.range (fun n => pastRec w i n 0)) := by
+private theorem pastRec_bdd (w : ℤ→Bool) (i : ℤ) : BddAbove (Set.range (fun n => pastRec w i n 0)) := by
   refine ⟨h false,?_⟩
   rintro x ⟨n,rfl⟩
   exact (pastRec_interval w i n 0 le_rfl (parameters false).2.2.2.2.1.le).2
@@ -151,7 +97,7 @@ set_option autoImplicit false
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.FixedTailClosedBudget
 namespace D5.S1.Digit.Infinite.ResetCodebook
-theorem reset_family_cutoff (anchor : Bool) (K M N : ℕ) (b d : ℝ)
+private theorem reset_family_cutoff (anchor : Bool) (K M N : ℕ) (b d : ℝ)
     (hK : 2 ≤ K) (hM : 1 ≤ M)
     (hb : lambda-g^2*chi^K*h false < b)
     (hd : d=(lambda-b)/(g^2*chi^K))
@@ -230,7 +176,7 @@ private lemma pastRec_lipschitz (w : ℤ → Bool) (i : ℤ) (n : ℕ) (x y : �
 private lemma pastRec_zero (w : ℤ → Bool) (i : ℤ) (z : ℝ) :
     D5.S1.Digit.Infinite.ResetCodebook.pastRec w i 0 z = z := by
   rw [D5.S1.Digit.Infinite.ResetCodebook.pastRec.eq_def]
-lemma pastRec_succ (w : ℤ → Bool) (i : ℤ) (n : ℕ) (z : ℝ) :
+private lemma pastRec_succ (w : ℤ → Bool) (i : ℤ) (n : ℕ) (z : ℝ) :
     D5.S1.Digit.Infinite.ResetCodebook.pastRec w i (n+1) z =
       Statement.f (w (i-1)) (D5.S1.Digit.Infinite.ResetCodebook.pastRec w (i-1) n z) := by
   rw [show n+1 = Nat.succ n by omega, D5.S1.Digit.Infinite.ResetCodebook.pastRec.eq_def]
@@ -379,7 +325,7 @@ lemma lowerLanguage_eq_XMinus (K n : ℕ) (d : ℝ) :
   ext w
   simp only [Statement.lowerLanguage, XMinus, Set.mem_setOf_eq, past_eq_pastRec]
 /-- Indexed forward intervals keep the start and end in the same realization. -/
-def slice (w : ℤ → Bool) (p : ℤ) (n : ℕ) : List Bool :=
+private def slice (w : ℤ → Bool) (p : ℤ) (n : ℕ) : List Bool :=
   (List.range n).map (fun j : ℕ => w (p + (j : ℤ)))
 private lemma slice_succ (w : ℤ → Bool) (p : ℤ) (n : ℕ) :
     slice w p (n+1) = slice w p n ++ [w (p+(n:ℤ))] := by
@@ -402,12 +348,12 @@ private lemma slice_of_word (w : ℤ → Bool) (p : ℤ) (u : List Bool)
     unfold slice
     rw [List.getElem_map, List.getElem_range]
     exact hu ⟨j,hj'⟩
-lemma stateRec_fold_word (w : ℤ → Bool) (p : ℤ) (u : List Bool)
+private lemma stateRec_fold_word (w : ℤ → Bool) (p : ℤ) (u : List Bool)
     (hu : ∀ j : Fin u.length, w (p+(j.val:ℤ)) = u[j.val]) :
     stateRec w (p+(u.length:ℤ)) =
       u.foldl (fun z a => Statement.f a z) (stateRec w p) := by
   rw [stateRec_fold_slice, slice_of_word w p u hu]
-lemma fold_true (n : ℕ) (z : ℝ) :
+private lemma fold_true (n : ℕ) (z : ℝ) :
     (List.replicate n true).foldl (fun z a => Statement.f a z) z = chi^n*z := by
   induction n generalizing z with
   | zero => simp
@@ -416,7 +362,7 @@ lemma fold_true (n : ℕ) (z : ℝ) :
       change (List.replicate n true).foldl _ (chi*z) = _
       rw [ih, pow_succ]
       ring
-lemma fold_false (n : ℕ) (z : ℝ) :
+private lemma fold_false (n : ℕ) (z : ℝ) :
     (List.replicate n false).foldl (fun z a => Statement.f a z) z =
       (step false)^[n] z := by
   induction n generalizing z with
@@ -481,7 +427,7 @@ private lemma cut_floor (w : ℤ → Bool) (p q : ℤ) (a : Return) (as : List R
   have hm := mul_nonneg hp.1.le hnon
   linarith
 /-- Both the predecessor and current cut are obtained from the supplied typed segmentation. -/
-theorem concatenation_cut_guard
+private theorem concatenation_cut_guard
     (anchor : Bool) (K M N : ℕ) (d : ℝ) (hM : 1 ≤ M)
     (w : ℤ → Bool) (cuts : ℤ → ℤ) (v : ℤ → List Return)
     (hseg : ∀ i, v i ∈ Statement.codebook anchor K N d ∧
@@ -503,7 +449,7 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.FixedTailClosedBudget
 namespace D5.S1.Digit.Infinite.ResetCodebook.Coding
 open D5.S1.Digit.Infinite.ResetCodebook
-theorem reset_weak_at_cut
+private theorem reset_weak_at_cut
     (anchor : Bool) (K M N : ℕ) (d : ℝ) (hM : 1 ≤ M)
     (hreset : initial false anchor < Statement.B M)
     (w : ℤ → Bool) (p : ℤ) (v : List Return)
@@ -512,15 +458,15 @@ theorem reset_weak_at_cut
     Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
       v (run false (Statement.reset M hM) (stateRec w p)) := by
   have hh := (stateRec_interval w p).2
-  have hb : Statement.B M = resetFloor M := by
-    simp [Statement.B, resetFloor, closedRun]
-  have hz : resetFloor M ≤ run false (Statement.reset M hM) (stateRec w p) := by
+  have hb : Statement.B M = Statement.B M := by
+    simp [Statement.B, Statement.B, closedRun]
+  have hz : Statement.B M ≤ run false (Statement.reset M hM) (stateRec w p) := by
     rw [run_closed]
     exact reset_lifts M _ hfloor
   have hg := weak_gain K d (Statement.B M-initial false anchor)
     (initial false anchor) (run false (Statement.reset M hM) (stateRec w p)) v
     (sub_pos.mpr hreset) (by rw [hb]; linarith) hv.2
-  have hweight : totalWeight v = N := hv.1
+  have hweight : Statement.weight v = N := hv.1
   simpa only [hweight] using hg
 end D5.S1.Digit.Infinite.ResetCodebook.Coding
 set_option autoImplicit false

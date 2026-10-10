@@ -15,6 +15,8 @@ local notation "t_sq" => (And.right (And.right (And.right (And.right D5.S1.Digit
 local notation "t_linear" => (And.left (And.right (And.right (And.right D5.S1.Digit.Infinite.SixWindowForcing.algebra))))
 local notation "Vertex" => fun (lang : Set (ℤ → Bool)) (n : ℕ) =>
   {v : Fin n → Bool // ∃ w∈lang, ∃ i : ℤ, D5.S1.Digit.Infinite.ResetCodebook.Transfer.history n w i=v}
+local notation "resetFloor" => D5.S1.Digit.Infinite.ResetCodebook.Statement.B
+local notation "totalWeight" => D5.S1.Digit.Infinite.ResetCodebook.Statement.weight
 set_option autoImplicit false
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open scoped Topology
@@ -52,7 +54,7 @@ theorem parameters (low : Bool) :
   have hc : 0 < chi ∧ chi < 1 := ⟨pow_pos hg0 _,pow_lt_one₀ hg0.le hg1 (by decide)⟩
   refine ⟨hr.1,hr.2,hc.1,hc.2,?_,?_,?_⟩
   all_goals cases low <;> simp only [h,E,coord,if_true,if_false,Bool.false_eq_true,t_sq,center] <;> linarith
-theorem side_map (low : Bool) (D : ℝ) : wordScalar (sideWord low) (coord low D)=coord low (step low D) := by
+private theorem side_map (low : Bool) (D : ℝ) : wordScalar (sideWord low) (coord low D)=coord low (step low D) := by
   cases low
   · exact U_map D
   · exact V_map D
@@ -61,7 +63,7 @@ private theorem step_interval (low : Bool) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ 
   have hp := parameters low
   unfold step A
   constructor <;> nlinarith [hp.1,hp.2.1]
-theorem step_iterate_bounds (low : Bool) (m : ℕ) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) :
+private theorem step_iterate_bounds (low : Bool) (m : ℕ) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) :
     D ≤ (step low)^[m] D ∧ (step low)^[m] D ≤ h low := by
   induction m with
   | zero => exact ⟨le_rfl,hh⟩
@@ -74,7 +76,7 @@ private theorem side_power_scalar (low : Bool) (m : ℕ) (D : ℝ) :
   induction m with
   | zero => rfl
   | succ m ih => rw [wordPower_succ,wordScalar_append,ih,side_map,Function.iterate_succ_apply']
-theorem C_power_scalar (low : Bool) (r : ℕ) (D : ℝ) :
+private theorem C_power_scalar (low : Bool) (r : ℕ) (D : ℝ) :
     wordScalar (wordPower r C) (coord low D)=coord low (chi^r*D) := by
   induction r with
   | zero => simp [wordPower,wordScalar]
@@ -82,7 +84,7 @@ theorem C_power_scalar (low : Bool) (r : ℕ) (D : ℝ) :
     rw [wordPower_succ,wordScalar_append,ih,C_map,pow_succ]
     congr 1
     ring
-theorem return_scalar (low : Bool) (a : Return) (D : ℝ) :
+private theorem return_scalar (low : Bool) (a : Return) (D : ℝ) :
     wordScalar (returnWord low a) (coord low D)=coord low (run low a D) := by
   unfold returnWord run
   rw [wordScalar_append,C_power_scalar,side_power_scalar]
@@ -124,7 +126,7 @@ private theorem C_power_cost (low : Bool) (r : ℕ) (D : ℝ)
       _ ≤ h low := hh
       _ ≤ E low := hp.2.2.2.2.2.1.le
       _ ≤ 1/4 := hp.2.2.2.2.2.2
-theorem return_cost (low : Bool) (a : Return) (D : ℝ)
+private theorem return_cost (low : Bool) (a : Return) (D : ℝ)
     (hD : 0 ≤ D) (hh : D ≤ h low) :
     wordCost (returnWord low a) (returnColors a) (coord low D)
       ≤ max (lambda-g^2*chi^a.val.2*D) (lambda-rho) := by
@@ -147,7 +149,7 @@ open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Words.Powers (wordPower wordPower_succ length_wordPower)
 namespace D5.S1.Digit.Infinite.ResetCodebook
 noncomputable def execute (low : Bool) (as : List Return) (D : ℝ) := as.foldl (fun x a => run low a x) D
-noncomputable def controls (low : Bool) : List Return → ℝ → ℝ
+private noncomputable def controls (low : Bool) : List Return → ℝ → ℝ
   | [], _ => 0
   | a::as, D => max (lambda-g^2*chi^a.val.2*D) (controls low as (run low a D))
 private theorem listWord_append (low : Bool) (as bs : List Return) :
@@ -167,7 +169,7 @@ theorem execute_bounds (low : Bool) (as : List Return) (D : ℝ) (hD : 0 ≤ D) 
   induction as generalizing D with
   | nil => exact ⟨hD,hh⟩
   | cons a as ih => exact ih _ (run_bounds low a D hD hh).1 (run_bounds low a D hD hh).2
-theorem list_scalar (low : Bool) (as : List Return) (D : ℝ) :
+private theorem list_scalar (low : Bool) (as : List Return) (D : ℝ) :
     wordScalar (listWord low as.reverse) (coord low D)=coord low (execute low as D) := by
   induction as generalizing D with
   | nil => rfl
@@ -177,7 +179,7 @@ theorem list_scalar (low : Bool) (as : List Return) (D : ℝ) :
     change wordScalar (listWord low as.reverse) (wordScalar (returnWord low a) (coord low D))=_
     rw [return_scalar,ih]
     rfl
-theorem list_lengths (low : Bool) (as : List Return) : (listWord low as).length=(listColors as).length := by
+private theorem list_lengths (low : Bool) (as : List Return) : (listWord low as).length=(listColors as).length := by
   induction as with
   | nil => rfl
   | cons a as ih =>
@@ -186,7 +188,7 @@ theorem list_lengths (low : Bool) (as : List Return) : (listWord low as).length=
     unfold returnWord returnColors
     simp only [List.length_append,length_wordPower]
     cases low <;> rfl
-theorem all_departure_cost (low : Bool) (as : List Return) (D : ℝ)
+private theorem all_departure_cost (low : Bool) (as : List Return) (D : ℝ)
     (hD : 0 ≤ D) (hh : D ≤ h low) :
     wordCost (listWord low as.reverse) (listColors as.reverse) (coord low D)
       ≤ max (controls low as D) (lambda-rho) := by
@@ -214,7 +216,7 @@ open D5.S1.Digit.Infinite.FixedTailClosedBudget
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Words.Powers (wordPower wordPower_succ length_wordPower)
 namespace D5.S1.Digit.Infinite.ResetCodebook
-def anchorReturn : Return := ⟨(1,1),by decide,by decide⟩
+private def anchorReturn : Return := ⟨(1,1),by decide,by decide⟩
 private theorem anchor_word (low : Bool) : returnWord low anchorReturn=sideWord low++C := by
   simp [returnWord,anchorReturn]
 private theorem anchor_color : returnColors anchorReturn=sixColor++twentyColor := by
@@ -232,7 +234,7 @@ private theorem tail_scalar (low : Bool) : kappa (literalTail low)=coord low (X 
 private theorem h_small (low : Bool) : 1/16<h low := by
   have hg:=g_bounds
   cases low <;> simp only [h,if_true,if_false,Bool.false_eq_true] <;> linarith
-theorem X_bounds (low : Bool) : 0<X low ∧ A low<X low ∧ X low<h low := by
+private theorem X_bounds (low : Bool) : 0<X low ∧ A low<X low ∧ X low<h low := by
   obtain ⟨hr,hr1,hc,hc1,hh,hhE,hE⟩:=parameters low
   have ha : 0<A low := by unfold A; exact mul_pos (by linarith) hh
   have hE0 : 0<E low := hh.trans hhE
@@ -260,7 +262,7 @@ private theorem anchor_scalar (low : Bool) :
   congr 1
   unfold step Y
   ring
-theorem initial_bounds (low anchor : Bool) : 0 ≤ initial low anchor ∧ initial low anchor ≤ h low := by
+private theorem initial_bounds (low anchor : Bool) : 0 ≤ initial low anchor ∧ initial low anchor ≤ h low := by
   cases anchor
   · exact ⟨(X_bounds low).1.le,(X_bounds low).2.2.le⟩
   · have hr:=run_bounds low anchorReturn (X low) (X_bounds low).1.le (X_bounds low).2.2.le
@@ -277,11 +279,11 @@ private theorem full_scalar (low anchor : Bool) (exec : List Return) :
     · rfl
     · exact anchor_scalar low
   rw [he,list_scalar,←anchor_word,return_scalar]
-noncomputable def fullBudget (low anchor : Bool) (exec : List Return) :=
+private noncomputable def fullBudget (low anchor : Bool) (exec : List Return) :=
   max (max (lambda-g^2*chi*execute low exec (initial low anchor)) (lambda-rho))
     (max (max (controls low exec (initial low anchor)) (lambda-rho))
       (if anchor then max (lambda-g^2*chi*X low) (lambda-rho) else 0))
-theorem full_length (low anchor : Bool) (exec : List Return) :
+private theorem full_length (low anchor : Bool) (exec : List Return) :
     (sourcePrefix low anchor exec).length=(colors anchor exec).length := by
   unfold sourcePrefix colors
   simp only [List.length_append,list_lengths]
@@ -318,7 +320,7 @@ private theorem full_departure_cost (low anchor : Bool) (exec : List Return) :
   exact (max_le_max (max_le_max hs hm) ha).trans (le_of_eq (max_assoc _ _ _))
 -- One literal address per side supplies every departure coordinate and all the
 -- same terminal futures. The bound here is not yet the single high-side budget.
-theorem actual_all_slots (anchor : Bool) (exec : List Return) :
+private theorem actual_all_slots (anchor : Bool) (exec : List Return) :
     ∃ src : Bool → LegalDigits, ∀ low,
       stateAddress false (src low) ∧ finiteTail (src low) ∧
       addressPrefix (sourcePrefix low anchor exec) (src low) (literalTail low) ∧
@@ -343,22 +345,20 @@ private theorem step_iterate (low : Bool) (m : ℕ) (D : ℝ) :
   | succ m ih => rw [Function.iterate_succ_apply',ih]; unfold step A; rw [pow_succ]; ring
 theorem run_closed (low : Bool) (a : Return) (D : ℝ) : run low a D=closedRun low a.val.1 a.val.2 D :=
   step_iterate low a.val.1 (chi^a.val.2*D)
-noncomputable def resetFloor (M : ℕ) := closedRun false M 1 (A false)
 theorem reset_lifts (M : ℕ) (z : ℝ) (hz : A false ≤ z) :
     resetFloor M ≤ closedRun false M 1 z := by
   have hp:=parameters false
   have ha:=mul_nonneg (pow_nonneg hp.1.le M) hp.2.2.1.le
-  unfold resetFloor closedRun
+  unfold Statement.B closedRun
   simp only [pow_one]
   nlinarith
-theorem return_difference (low : Bool) (a : Return) (x y : ℝ) :
+private theorem return_difference (low : Bool) (a : Return) (x y : ℝ) :
     run low a x-run low a y=rho^a.val.1*chi^a.val.2*(x-y) := by
   rw [run_closed,run_closed]; unfold closedRun; ring
-def actualWeight (a : Return) := 6*a.val.1+20*a.val.2
-theorem return_slope (a : Return) : rho^a.val.1*chi^a.val.2=g^(actualWeight a) := by
+private def actualWeight (a : Return) := 6*a.val.1+20*a.val.2
+private theorem return_slope (a : Return) : rho^a.val.1*chi^a.val.2=g^(actualWeight a) := by
   unfold rho chi actualWeight
   rw [←pow_mul,←pow_mul,←pow_add]
-def totalWeight (as : List Return) := (as.map actualWeight).sum
 end D5.S1.Digit.Infinite.ResetCodebook
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
@@ -414,7 +414,7 @@ private theorem controls_order (as : List Return) (x y : ℝ) (hxy : x ≤ y) :
       exact mul_le_mul_of_nonneg_left hxy
         (mul_nonneg (sq_nonneg g) (pow_nonneg (parameters false).2.2.1.le _))
     · exact ih _ _ (run_order a x y hxy)
-theorem fullBudget_order (anchor : Bool) (exec : List Return) :
+private theorem fullBudget_order (anchor : Bool) (exec : List Return) :
     fullBudget true anchor exec ≤ fullBudget false anchor exec := by
   have he := execute_order exec _ _ (initial_order anchor)
   have hc := controls_order exec _ _ (initial_order anchor)
@@ -426,7 +426,7 @@ theorem fullBudget_order (anchor : Bool) (exec : List Return) :
     cases anchor
     · exact le_rfl
     · exact max_le_max (sub_le_sub_left (mul_le_mul_of_nonneg_left X_order hs) _) le_rfl
-theorem run_floor (low : Bool) (a : Return) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) :
+private theorem run_floor (low : Bool) (a : Return) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) :
     A low ≤ run low a D := by
   have hm : a.val.1 ≠ 0 := by have := a.property.1; omega
   obtain ⟨m,hm⟩ := Nat.exists_eq_succ_of_ne_zero hm
@@ -439,7 +439,7 @@ theorem run_floor (low : Bool) (a : Return) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤
   change A low ≤ A low+rho*((step low)^[m] (chi^a.val.2*D))
   have hm0 := mul_nonneg hp.1.le ((mul_nonneg (pow_nonneg hp.2.2.1.le _) hD).trans hi.1)
   exact le_add_of_nonneg_right hm0
-theorem initial_floor (low anchor : Bool) : A low ≤ initial low anchor := by
+private theorem initial_floor (low anchor : Bool) : A low ≤ initial low anchor := by
   cases anchor
   · exact (X_bounds low).2.1.le
   · have hp := initial_bounds low false
@@ -461,11 +461,11 @@ set_option maxHeartbeats 1600000
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.FixedTailClosedBudget
 namespace D5.S1.Digit.Infinite.ResetCodebook
- theorem weak_run (K : ℕ) (d : ℝ) (a : Return) (as : List Return) (D : ℝ) :
+theorem weak_run (K : ℕ) (d : ℝ) (a : Return) (as : List Return) (D : ℝ) :
     Statement.weak K d (a::as) D ↔
       a.val.2 ≤ K ∧ (a.val.2=K → d ≤ D) ∧ Statement.weak K d as (run false a D) := by
   simp only [Statement.weak,run_closed,Statement.G,closedRun]
- theorem weak_gain (K : ℕ) (d delta x y : ℝ) (as : List Return)
+theorem weak_gain (K : ℕ) (d delta x y : ℝ) (as : List Return)
     (hd : 0 < delta) (hxy : x+delta ≤ y) (hw : Statement.weak K d as x) :
     Statement.weak K (d+delta*g^(totalWeight as)) as y := by
   have hg := g_bounds
@@ -488,10 +488,10 @@ namespace D5.S1.Digit.Infinite.ResetCodebook
         nlinarith
       have ht := ih _ _ _ hda hnext hw.2.2
       have he : d+(delta*g^(actualWeight a))*g^(totalWeight as)=d+delta*g^(totalWeight (a::as)) := by
-        simp only [totalWeight,List.map_cons,List.sum_cons,pow_add]
+        simp only [Statement.weight,actualWeight,List.map_cons,List.sum_cons,pow_add]
         ring
       exact he ▸ ht
- theorem reset_concatenation_guard (anchor : Bool) (K M N : ℕ) (d : ℝ) (hK : 2 ≤ K)
+private theorem reset_concatenation_guard (anchor : Bool) (K M N : ℕ) (d : ℝ) (hK : 2 ≤ K)
     (hM : 1 ≤ M) (hreset : initial false anchor < resetFloor M)
     (vs : List (List Return)) (hvs : ∀ v∈vs, Statement.weight v=N ∧ Statement.weak K d v (initial false anchor)) :
     Statement.weak K (d+(resetFloor M-initial false anchor)*g^N)
@@ -548,7 +548,7 @@ theorem A_nonneg : 0 ≤ A false := by
   have hp := parameters false
   unfold A
   exact mul_nonneg (by linarith [hp.2.1]) hp.2.2.2.2.1.le
-theorem auto_nonneg (K : ℕ) : 0 ≤ Statement.autoCost K :=
+private theorem auto_nonneg (K : ℕ) : 0 ≤ Statement.autoCost K :=
   auto_positive.le.trans ((le_max_right _ _).trans (le_max_right _ _))
 private theorem controls_budget (K : ℕ) (d gain b : ℝ) (as : List Return) (D : ℝ)
     (hK : 2 ≤ K) (hb : b=lambda-g^2*chi^K*d)
@@ -579,7 +579,7 @@ private theorem controls_budget (K : ℕ) (d gain b : ℝ) (as : List Return) (D
         exact hc.trans ((le_max_left _ _).trans ((le_max_right _ _).trans (le_max_left _ _)))
     · exact ih _ (run_floor false a D (A_nonneg.trans hD) hh)
         (run_bounds false a D (A_nonneg.trans hD) hh).2 hw.2.2
-theorem fullBudget_guard (anchor : Bool) (K : ℕ) (d gain b : ℝ) (as : List Return)
+private theorem fullBudget_guard (anchor : Bool) (K : ℕ) (d gain b : ℝ) (as : List Return)
     (hK : 2 ≤ K) (hb : b=lambda-g^2*chi^K*d)
     (hw : Statement.weak K (d+gain) as (initial false anchor)) :
     ∀ low, fullBudget low anchor as ≤ max (Statement.autoCost K) (b-g^2*chi^K*gain) := by
@@ -633,7 +633,7 @@ private theorem A_gt_chi_h : chi*h false < A false := by
   have hm := mul_pos (by linarith : 0 < 1-rho-chi) hp.2.2.2.2.1
   unfold A
   nlinarith
-theorem automatic_strict (K : ℕ) (hK : 2 ≤ K) :
+private theorem automatic_strict (K : ℕ) (hK : 2 ≤ K) :
     Statement.autoCost K < lambda-g^2*chi^K*h false := by
   have hp := parameters false
   have hg := g_bounds
@@ -672,4 +672,61 @@ theorem automatic_strict (K : ℕ) (hK : 2 ≤ K) :
   apply max_lt
   · nlinarith
   · apply max_lt <;> nlinarith
+end D5.S1.Digit.Infinite.ResetCodebook
+
+namespace D5.S1.Digit.Infinite.ResetCodebook
+theorem reset_actual_family (anchor : Bool) (K M N : ℕ) (b d : ℝ)
+    (hK : 2 ≤ K) (hM : 1 ≤ M)
+    (hb : lambda-g^2*chi^K*h false < b)
+    (hd : d=(lambda-b)/(g^2*chi^K))
+    (hreset : max (X false) (Y false) < Statement.B M) :
+    0 < Statement.actualEps anchor K M N b ∧ Statement.finiteActual anchor K M N b d hM := by
+  have hp := parameters false
+  have hg : 0 < g := by have := g_bounds; linarith
+  have hfac : 0 < g^2*chi^K := mul_pos (pow_pos hg _) (pow_pos hp.2.2.1 _)
+  have hbeq : b=lambda-g^2*chi^K*d := by
+    have hdeq := (eq_div_iff (ne_of_gt hfac)).mp hd
+    nlinarith
+  have hb0 : Statement.B M=resetFloor M := by simp [Statement.B,resetFloor,closedRun]
+  have hinit : initial false anchor < resetFloor M := by
+    rw [hb0] at hreset
+    cases anchor
+    · exact (le_max_left _ _).trans_lt hreset
+    · exact (le_max_right _ _).trans_lt hreset
+  let gain := (resetFloor M-initial false anchor)*g^N
+  have hgain : 0 < gain := mul_pos (sub_pos.mpr hinit) (pow_pos hg _)
+  have hauto : Statement.autoCost K < b := (automatic_strict K hK).trans hb
+  let eps := Statement.actualEps anchor K M N b
+  have hepsEq : eps=min (b-Statement.autoCost K) (g^2*chi^K*gain)/2 := by
+    simp only [eps,Statement.actualEps,hb0,gain,initial]
+    ring
+  have hgp : 0 < g^2*chi^K*gain := mul_pos hfac hgain
+  have he : 0 < eps := by rw [hepsEq]; exact div_pos (lt_min (sub_pos.mpr hauto) hgp) (by norm_num)
+  have heleft : 2*eps ≤ b-Statement.autoCost K := by
+    rw [hepsEq]
+    linarith [min_le_left (b-Statement.autoCost K) (g^2*chi^K*gain)]
+  have heright : 2*eps ≤ g^2*chi^K*gain := by
+    rw [hepsEq]
+    linarith [min_le_right (b-Statement.autoCost K) (g^2*chi^K*gain)]
+  have hbe : 0 < b-eps := by have := auto_nonneg K; linarith
+  refine ⟨he,?_⟩
+  intro vs hvs
+  let exec := (vs.map (fun v => Statement.reset M hM::v)).flatten
+  have hw : Statement.weak K (d+gain) exec (initial false anchor) :=
+    reset_concatenation_guard anchor K M N d hK hM hinit vs (fun v hv => hvs v hv)
+  have hbud : ∀ low, fullBudget low anchor exec ≤ b-2*eps := by
+    intro low
+    apply (fullBudget_guard anchor K d gain b exec hK hbeq hw low).trans
+    apply max_le <;> linarith
+  obtain ⟨src,hs⟩ := actual_all_slots anchor exec
+  have hw' : Statement.weak K (d+(Statement.B M-initial false anchor)*g^N) exec (initial false anchor) := by
+    simpa only [hb0,gain] using hw
+  refine ⟨hw',src,?_⟩
+  intro low
+  have hc := ((hs low).2.2.2.2).trans (hbud low)
+  refine ⟨(hs low).1,(hs low).2.1,(hs low).2.2.1,hc,?_⟩
+  intro Q hQ
+  obtain ⟨es,hlen,herr⟩ := actual_errors _ _ _ _ (hs low).2.2.1
+    (full_length low anchor exec) b eps he hbe hc Q hQ
+  exact ⟨fun p => es[p]?.getD 0,herr⟩
 end D5.S1.Digit.Infinite.ResetCodebook

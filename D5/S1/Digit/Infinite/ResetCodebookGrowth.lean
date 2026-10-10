@@ -35,7 +35,7 @@ lemma radius_smul (A : Matrix ι ι ℝ) (c : ℝ) (hc : 0 ≤ c) :
     rw [hh, smul_pow, norm_smul, Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hc _),
       Real.mul_rpow (pow_nonneg hc _) (norm_nonneg _), one_div, Real.pow_rpow_inv_natCast hc (by omega)]
   exact (tendsto_const_nhds.mul (gelfand A)).congr' (he.mono (fun k hk => hk.symm))
-lemma positive_row_le_norm (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (i : ι) :
+private lemma positive_row_le_norm (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (i : ι) :
     (∑ j, A i j) ≤ ‖complexify A‖ := by
   have he (j : ι) : ‖(complexify A) i j‖ = A i j := by
     simp [RingHom.mapMatrix_apply, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hA i j)]
@@ -45,7 +45,7 @@ lemma positive_row_le_norm (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (i
     _ ≤ (((Finset.univ.sup fun i : ι => ∑ j, ‖(complexify A) i j‖₊) : ℝ≥0) : ℝ) := by
       exact_mod_cast (Finset.le_sup (f := fun x : ι => ∑ j, ‖(complexify A) x j‖₊) (Finset.mem_univ i))
     _ = _ := (Matrix.linfty_opNorm_def _).symm
-lemma row_power_lower (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j)
+private lemma row_power_lower (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j)
     (r : ℝ) (hr : 0 ≤ r) (hrow : ∀ i, r ≤ ∑ j, A i j) (k : ℕ) :
     ∀ i, r^k ≤ ∑ j, (A^k) i j := by
   induction k with
@@ -77,9 +77,7 @@ lemma row_lower_radius (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j)
 lemma radius_sq (A : Matrix ι ι ℝ) : radius (A^2) = radius A ^ 2 := by
   have he : complexify (A^2)=complexify A ^ 2 := map_pow Complex.ofRealHom.mapMatrix A 2
   have hm : Tendsto (fun k : ℕ => 2*k) atTop atTop := by
-    apply tendsto_atTop.mpr
-    intro b
-    exact eventually_atTop.mpr ⟨b,fun k hk => by omega⟩
+    exact tendsto_atTop_mono (fun k : ℕ => show k ≤ 2*k by omega) tendsto_id
   have hh := ((gelfand A).comp hm).pow 2
   apply tendsto_nhds_unique (gelfand (A^2))
   apply hh.congr'

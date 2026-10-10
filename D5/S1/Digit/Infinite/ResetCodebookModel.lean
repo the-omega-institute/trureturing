@@ -46,12 +46,12 @@ noncomputable def Y (low : Bool) : ℝ := A low + rho*chi*X low
 noncomputable def coord (low : Bool) (D : ℝ) : ℝ := if low then c0-D else c0+D
 theorem center : c0=(1+g)/5 := by unfold c0; rw [g_eq]; ring
 def zeroAddress : LegalDigits := ⟨fun _ => false, by simp⟩
-theorem zero_state (s : Bool) : stateAddress s zeroAddress := by simp [stateAddress,zeroAddress]
-theorem zero_finite : finiteTail zeroAddress := ⟨0, by simp [zeroAddress]⟩
-theorem zero_scalar : kappa zeroAddress = 0 := by
+private theorem zero_state (s : Bool) : stateAddress s zeroAddress := by simp [stateAddress,zeroAddress]
+private theorem zero_finite : finiteTail zeroAddress := ⟨0, by simp [zeroAddress]⟩
+private theorem zero_scalar : kappa zeroAddress = 0 := by
   simp [kappa, window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P,
     bitShift, zeroAddress, offset]
-theorem finite_of_prefix (w : List Label) (x y : LegalDigits)
+private theorem finite_of_prefix (w : List Label) (x y : LegalDigits)
     (hp : addressPrefix w x y) (hy : finiteTail y) : finiteTail x := by
   induction w generalizing x with
   | nil => simpa [addressPrefix] using hp.symm ▸ hy
@@ -61,25 +61,25 @@ theorem finite_of_prefix (w : List Label) (x y : LegalDigits)
     intro j hj
     have hv := hN (j-3) (by omega)
     simpa [originalT,bitShift, Nat.sub_add_cancel (show 3≤j by omega)] using hv
-theorem U_path (s : Bool) : SourcePath s U false := by
+private theorem U_path (s : Bool) : SourcePath s U false := by
   cases s <;> exact (SourcePath.cons (s' := true) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.nil false)))))))
-theorem V_path (s : Bool) : SourcePath s V false := by
+private theorem V_path (s : Bool) : SourcePath s V false := by
   cases s <;> exact (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := true) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.nil false)))))))
-theorem C_path (s : Bool) : SourcePath s C true := by
+private theorem C_path (s : Bool) : SourcePath s C true := by
   cases s <;> exact (SourcePath.cons (s' := true) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := true) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := true) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := true) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := true) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := false) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.cons (s' := true) (by simp [lawful,outgoing,fiveLabel,nullLabel,threeLabel,twoLabel,twoFiveLabel]) (SourcePath.nil true)))))))))))))))))))))
-theorem path_power {s : Bool} (w : List Label) (hw : SourcePath s w s) (n : ℕ) :
+private theorem path_power {s : Bool} (w : List Label) (hw : SourcePath s w s) (n : ℕ) :
     SourcePath s (wordPower n w) s := by
   induction n with
   | zero => exact .nil s
   | succ n ih =>
     simpa [wordPower, List.replicate_succ, List.flatten_cons] using path_append hw ih
-theorem side_path (low s : Bool) : SourcePath s (sideWord low) false := by
+private theorem side_path (low s : Bool) : SourcePath s (sideWord low) false := by
   cases low <;> first | exact U_path s | exact V_path s
 def Return := {mr : ℕ × ℕ // 1 ≤ mr.1 ∧ 1 ≤ mr.2}
 def returnWord (low : Bool) (a : Return) :=
   wordPower a.val.1 (sideWord low) ++ wordPower a.val.2 C
 def returnColors (a : Return) := wordPower a.val.1 sixColor ++ wordPower a.val.2 twentyColor
-theorem return_path (low : Bool) (a : Return) : SourcePath true (returnWord low a) true := by
+private theorem return_path (low : Bool) (a : Return) : SourcePath true (returnWord low a) true := by
   have hm0 : a.val.1 ≠ 0 := by have := a.property.1; omega
   obtain ⟨m,hm⟩ := Nat.exists_eq_succ_of_ne_zero hm0
   have hr0 : a.val.2 ≠ 0 := by have := a.property.2; omega
@@ -92,7 +92,7 @@ theorem return_path (low : Bool) (a : Return) : SourcePath true (returnWord low 
       (path_power (sideWord low) (side_path low false) m)
   · exact path_append (C_path false) (path_power C (C_path true) r)
 def tailWord (low : Bool) := sideWord low ++ wordPower 3 C ++ (if low then [] else [fiveLabel])
-theorem tail_path (low : Bool) : SourcePath true (tailWord low) true := by
+private theorem tail_path (low : Bool) : SourcePath true (tailWord low) true := by
   unfold tailWord
   rw [List.append_assoc]
   apply path_append (side_path low true)
@@ -116,11 +116,11 @@ def sourcePrefix (low anchor : Bool) (exec : List Return) :=
   (sideWord low ++ C) ++ listWord low exec.reverse ++ (if anchor then sideWord low ++ C else [])
 def colors (anchor : Bool) (exec : List Return) :=
   (sixColor ++ twentyColor) ++ listColors exec.reverse ++ (if anchor then sixColor ++ twentyColor else [])
-theorem list_path (low : Bool) (as : List Return) : SourcePath true (listWord low as) true := by
+private theorem list_path (low : Bool) (as : List Return) : SourcePath true (listWord low as) true := by
   induction as with
   | nil => exact .nil true
   | cons a as ih => exact path_append (return_path low a) ih
-theorem prefix_path (low anchor : Bool) (exec : List Return) : SourcePath false (sourcePrefix low anchor exec) true := by
+private theorem prefix_path (low anchor : Bool) (exec : List Return) : SourcePath false (sourcePrefix low anchor exec) true := by
   unfold sourcePrefix
   apply path_append
   · exact path_append (path_append (side_path low false) (C_path false)) (list_path low exec.reverse)
@@ -145,7 +145,7 @@ open D5.S1.Digit.Infinite.FixedTailClosedBudget
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open scoped Topology
 namespace D5.S1.Digit.Infinite.ResetCodebook.Statement
-noncomputable def G (low : Bool) (a : D5.S1.Digit.Infinite.ResetCodebook.Return) (D : ℝ) :=
+private noncomputable def G (low : Bool) (a : D5.S1.Digit.Infinite.ResetCodebook.Return) (D : ℝ) :=
   h low-rho^a.val.1*(h low-chi^a.val.2*D)
 noncomputable def weak (K : ℕ) (d : ℝ) : List D5.S1.Digit.Infinite.ResetCodebook.Return → ℝ → Prop
   | [], _ => True
@@ -223,6 +223,19 @@ noncomputable def target6218Language (anchor : Bool) (K M N : ℕ) (b d : ℝ)
 end D5.S1.Digit.Infinite.ResetCodebook.Statement
 set_option autoImplicit false
 open scoped Matrix.Norms.Operator
+namespace D5.S1.Digit.Infinite.ResetCodebook.Spectral
+noncomputable section
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
+lemma positive_pow (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (k : ℕ) :
+    ∀ i j, 0 ≤ (A^k) i j := by
+  induction k with
+  | zero => intro i j; simp only [pow_zero, Matrix.one_apply]; split <;> positivity
+  | succ k ih =>
+    intro i j
+    rw [pow_succ', Matrix.mul_apply]
+    exact Finset.sum_nonneg (fun x _ => mul_nonneg (hA i x) (ih x j))
+end
+end D5.S1.Digit.Infinite.ResetCodebook.Spectral
 namespace D5.S1.Digit.Infinite.ResetCodebook.Transfer
 open D5.S1.Digit.Infinite.ResetCodebook
 noncomputable section
@@ -238,7 +251,7 @@ lemma mem_wordSet (w : List Bool) (k : ℕ) : w∈wordSet k ↔ w.length=k := by
       cases w with
       | nil => simp [wordSet]
       | cons c w => cases c <;> simp [wordSet,ih]
-lemma wordSet_disjoint (k : ℕ) :
+private lemma wordSet_disjoint (k : ℕ) :
     Disjoint ((wordSet k).image (List.cons false)) ((wordSet k).image (List.cons true)) := by
   apply Finset.disjoint_left.mpr
   intro w hw hw'
@@ -277,11 +290,8 @@ lemma transfer_nonneg (z : ℝ) (hz : 0 ≤ z) (v u : ι) :
     0 ≤ transfer next allow z v u := by unfold transfer; positivity
 lemma transfer_pow_nonneg (z : ℝ) (hz : 0 ≤ z) (k : ℕ) (v u : ι) :
     0 ≤ (transfer next allow z ^ k) v u := by
-  induction k generalizing v u with
-  | zero => simp only [pow_zero,Matrix.one_apply]; split <;> positivity
-  | succ k ih =>
-    rw [pow_succ',Matrix.mul_apply]
-    exact Finset.sum_nonneg (fun x _ => mul_nonneg (transfer_nonneg next allow z hz v x) (ih x u))
+  exact D5.S1.Digit.Infinite.ResetCodebook.Spectral.positive_pow
+    (transfer next allow z) (transfer_nonneg next allow z hz) k v u
 lemma word_mass_eq_row (z : ℝ) (v : ι) (k : ℕ) :
     ∑ w ∈ wordSet k, mass next allow z v w = ∑ u, (transfer next allow z ^ k) v u := by
   induction k generalizing v with
@@ -309,9 +319,9 @@ noncomputable section
 attribute [local instance] Classical.propDecidable
 def history (n : ℕ) (w : ℤ → Bool) (i : ℤ) : Fin n → Bool :=
   fun j => w (i-(n:ℤ)+(j.val:ℤ))
-def shiftHistory (n : ℕ) (v : Fin n → Bool) (c : Bool) : Fin n → Bool :=
+private def shiftHistory (n : ℕ) (v : Fin n → Bool) (c : Bool) : Fin n → Bool :=
   fun j => if hj : j.val+1<n then v ⟨j.val+1,hj⟩ else c
-lemma history_shift (n : ℕ) (w : ℤ → Bool) (i : ℤ) :
+private lemma history_shift (n : ℕ) (w : ℤ → Bool) (i : ℤ) :
     history n w (i+1)=shiftHistory n (history n w i) (w i) := by
   funext j
   dsimp [history,shiftHistory]
@@ -335,7 +345,7 @@ def graphNext (lang : Set (ℤ → Bool)) (n : ℕ) (v : Vertex lang n) (c : Boo
     Vertex lang n :=
   if h : ∃ w∈lang, ∃ i : ℤ, history n w i=shiftHistory n v.val c
   then ⟨shiftHistory n v.val c,h⟩ else v
-lemma graphNext_at (lang : Set (ℤ → Bool)) (n : ℕ) (w : ℤ → Bool) (hw : w∈lang) (i : ℤ) :
+private lemma graphNext_at (lang : Set (ℤ → Bool)) (n : ℕ) (w : ℤ → Bool) (hw : w∈lang) (i : ℤ) :
     graphNext lang n (vertexAt lang n w hw i) (w i)=vertexAt lang n w hw (i+1) := by
   have h : ∃ u∈lang, ∃ j : ℤ, history n u j=
       shiftHistory n (vertexAt lang n w hw i).val (w i) := by
@@ -376,7 +386,7 @@ open D5.S1.Digit.Infinite.ResetCodebook
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 noncomputable section
 attribute [local instance] Classical.propDecidable
-lemma shift_path_history (n : ℕ) (hn : 0<n) (v : ℤ → Fin n → Bool) (w : ℤ → Bool)
+private lemma shift_path_history (n : ℕ) (hn : 0<n) (v : ℤ → Fin n → Bool) (w : ℤ → Bool)
     (hs : ∀ i, v (i+1)=shiftHistory n (v i) (w i)) :
     ∀ i, v i=history n w i := by
   have hcoord : ∀ k : ℕ, k<n → ∀ i : ℤ,
@@ -421,17 +431,17 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 noncomputable section
 attribute [local instance] Classical.propDecidable
 /-- The current letter has age zero; the state is measured before it. -/
-def recent (n : ℕ) (v : Fin n → Bool) (c : Bool) (j : ℕ) : Bool :=
+private def recent (n : ℕ) (v : Fin n → Bool) (c : Bool) (j : ℕ) : Bool :=
   if hz : j=0 then c else if hj : j≤n then v ⟨n-j,by omega⟩ else false
-def memoryHigh (n k : ℕ) (v : Fin n → Bool) (c : Bool) : Prop :=
+private def memoryHigh (n k : ℕ) (v : Fin n → Bool) (c : Bool) : Prop :=
   ∀ j<k, recent n v c j=true
-def memoryLow (n : ℕ) (v : Fin n → Bool) : ℝ :=
+private def memoryLow (n : ℕ) (v : Fin n → Bool) : ℝ :=
   (List.ofFn v).foldl (fun D a => Statement.f a D) 0
 /-- The unpruned local edge predicate of definition 62.12. -/
-def localAllowed (K n : ℕ) (d : ℝ) (v : Fin n → Bool) (c : Bool) : Prop :=
+private def localAllowed (K n : ℕ) (d : ℝ) (v : Fin n → Bool) (c : Bool) : Prop :=
   ¬memoryHigh n (K+1) v c ∧
   (memoryHigh n K v c → chi^(K-1)*d < memoryLow n v)
-lemma recent_history (n : ℕ) (w : ℤ → Bool) (i : ℤ) (j : ℕ) (hj : j≤n) :
+private lemma recent_history (n : ℕ) (w : ℤ → Bool) (i : ℤ) (j : ℕ) (hj : j≤n) :
     recent n (history n w i) (w i) j=w (i-(j:ℤ)) := by
   by_cases hz : j=0
   · subst j; simp [recent]
@@ -439,13 +449,13 @@ lemma recent_history (n : ℕ) (w : ℤ → Bool) (i : ℤ) (j : ℕ) (hj : j≤
     congr 1
     change i-(n:ℤ)+((n-j:ℕ):ℤ)=i-(j:ℤ)
     omega
-lemma memoryHigh_history (n k : ℕ) (w : ℤ → Bool) (i : ℤ) (hk : k≤n+1) :
+private lemma memoryHigh_history (n k : ℕ) (w : ℤ → Bool) (i : ℤ) (hk : k≤n+1) :
     memoryHigh n k (history n w i) (w i) ↔ Statement.high k w i := by
   unfold memoryHigh Statement.high
   constructor <;> intro h j hj <;> specialize h j hj
   · rwa [recent_history n w i j (by omega)] at h
   · rwa [recent_history n w i j (by omega)]
-lemma memoryLow_history (n : ℕ) (w : ℤ → Bool) (i : ℤ) :
+private lemma memoryLow_history (n : ℕ) (w : ℤ → Bool) (i : ℤ) :
     memoryLow n (history n w i)=Statement.past w i n 0 := by
   have hl : List.ofFn (history n w i)=
       (List.range n).map (fun j : ℕ => w (i-(n:ℤ)+(j:ℤ))) := by
@@ -464,7 +474,7 @@ lemma memoryLow_history (n : ℕ) (w : ℤ → Bool) (i : ℤ) :
   unfold memoryLow Statement.past
   rw [hl,hcoerce]
   simp only [List.map_map,Function.comp_def]
-lemma localAllowed_history (K n : ℕ) (d : ℝ) (w : ℤ → Bool) (i : ℤ) (hKn : K≤n) :
+private lemma localAllowed_history (K n : ℕ) (d : ℝ) (w : ℤ → Bool) (i : ℤ) (hKn : K≤n) :
     localAllowed K n d (history n w i) (w i) ↔
       ¬Statement.high (K+1) w i ∧
       (Statement.high K w i → chi^(K-1)*d<Statement.past w i n 0) := by
@@ -488,7 +498,7 @@ theorem raw_labels_iff_lower_language (K n : ℕ) (d : ℝ) (hn : 0<n) (hKn : K�
     exact ⟨(localAllowed_history K n d w i hKn).mpr ⟨hw.1 i,hw.2 i⟩,
       history_shift n w i⟩
 /-- The retained edge set is exactly the edges occurring on original bilateral paths. -/
-theorem graphAllowed_iff_pruned (K n : ℕ) (d : ℝ) (hn : 0<n) (hKn : K≤n)
+private theorem graphAllowed_iff_pruned (K n : ℕ) (d : ℝ) (hn : 0<n) (hKn : K≤n)
     (v : Vertex (Statement.lowerLanguage K n d) n) (c : Bool) :
     graphAllowed (Statement.lowerLanguage K n d) n v c ↔
       ∃ w : ℤ → Bool, RawGraphLabels K n d w ∧
@@ -501,16 +511,16 @@ namespace D5.S1.Digit.Infinite.ResetCodebook.Transfer
 open D5.S1.Digit.Infinite.ResetCodebook
 noncomputable section
 attribute [local instance] Classical.propDecidable
-def originalPrunedAllowed (K n : ℕ) (d : ℝ)
+private def originalPrunedAllowed (K n : ℕ) (d : ℝ)
     (v : Vertex (Statement.lowerLanguage K n d) n) (c : Bool) : Prop :=
   ∃ w : ℤ → Bool, RawGraphLabels K n d w ∧
     ∃ i : ℤ, history n w i=v.val ∧ w i=c
 /-- 6/20 adjacency after deleting precisely the edges without bilateral extension. -/
-def originalLowerMatrix (K n : ℕ) (d z : ℝ) :=
+private def originalLowerMatrix (K n : ℕ) (d z : ℝ) :=
   transfer (graphNext (Statement.lowerLanguage K n d) n) (originalPrunedAllowed K n d) z
 def originalLowerComplexMatrix (K n : ℕ) (d z : ℝ) :=
   Complex.ofRealHom.mapMatrix (originalLowerMatrix K n d z)
-lemma originalLowerMatrix_eq (K n : ℕ) (d z : ℝ) (hn : 0<n) (hKn : K≤n) :
+private lemma originalLowerMatrix_eq (K n : ℕ) (d z : ℝ) (hn : 0<n) (hKn : K≤n) :
     originalLowerMatrix K n d z=lowerMatrix K n d z := by
   unfold originalLowerMatrix lowerMatrix transfer
   ext v u
@@ -529,14 +539,14 @@ namespace D5.S1.Digit.Infinite.ResetCodebook.Spectral
 open D5.S1.Digit.Infinite.ResetCodebook D5.S1.Digit.Infinite.ResetCodebook.Transfer
 noncomputable section
 attribute [local instance] Classical.propDecidable
-def lowFuture (w : ℤ → Bool) (i : ℤ) (c : Bool) (p : ℤ) : Bool :=
+private def lowFuture (w : ℤ → Bool) (i : ℤ) (c : Bool) (p : ℤ) : Bool :=
   if p < i then w p else if p = i+1 then c else false
-lemma lowFuture_history (n : ℕ) (w : ℤ → Bool) (i p : ℤ) (c : Bool) (hp : p ≤ i) :
+private lemma lowFuture_history (n : ℕ) (w : ℤ → Bool) (i p : ℤ) (c : Bool) (hp : p ≤ i) :
     history n (lowFuture w i c) p = history n w p := by
   funext j
   dsimp [history, lowFuture]
   rw [if_pos (by omega)]
-lemma lowFuture_noHigh (k : ℕ) (hk : 2 ≤ k) (w : ℤ → Bool) (i p : ℤ) (c : Bool)
+private lemma lowFuture_noHigh (k : ℕ) (hk : 2 ≤ k) (w : ℤ → Bool) (i p : ℤ) (c : Bool)
     (hp : i ≤ p) : ¬Statement.high k (lowFuture w i c) p := by
   intro hh
   have h0 := hh 0 (by omega)
@@ -547,7 +557,7 @@ lemma lowFuture_noHigh (k : ℕ) (hk : 2 ≤ k) (w : ℤ → Bool) (i p : ℤ) (
     simp [hn] at h0
   subst p
   simp [lowFuture] at h1
-lemma lowFuture_mem (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n)
+private lemma lowFuture_mem (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n)
     (w : ℤ → Bool) (hw : w∈Statement.lowerLanguage K n d) (i : ℤ) (c : Bool) :
     lowFuture w i c∈Statement.lowerLanguage K n d := by
   constructor

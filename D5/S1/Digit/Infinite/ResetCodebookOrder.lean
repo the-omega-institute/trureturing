@@ -26,22 +26,14 @@ open Filter
 namespace D5.S1.Digit.Infinite.ResetCodebook.Spectral
 noncomputable section
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
-lemma radius_finite (A : Matrix ι ι ℝ) : spectralRadius ℂ (complexify A) ≠ ∞ :=
+private lemma radius_finite (A : Matrix ι ι ℝ) : spectralRadius ℂ (complexify A) ≠ ∞ :=
   ne_top_of_le_ne_top ENNReal.coe_ne_top (spectrum.spectralRadius_le_nnnorm _)
 lemma gelfand (A : Matrix ι ι ℝ) :
     Tendsto (fun k : ℕ => ‖complexify A ^ k‖ ^ (1 / (k : ℝ))) atTop (𝓝 (radius A)) := by
   have hh := (ENNReal.tendsto_toReal (radius_finite A)).comp
     (spectrum.pow_norm_pow_one_div_tendsto_nhds_spectralRadius (complexify A))
   simpa only [ Function.comp_def, ENNReal.toReal_ofReal (Real.rpow_nonneg (norm_nonneg _) _)] using hh
-lemma positive_pow (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (k : ℕ) :
-    ∀ i j, 0 ≤ (A^k) i j := by
-  induction k with
-  | zero => intro i j; simp only [pow_zero, Matrix.one_apply]; split <;> positivity
-  | succ k ih =>
-    intro i j
-    rw [pow_succ', Matrix.mul_apply]
-    exact Finset.sum_nonneg (fun x _ => mul_nonneg (hA i x) (ih x j))
-lemma positive_pow_le (A B : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j)
+private lemma positive_pow_le (A B : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j)
     (hAB : ∀ i j, A i j ≤ B i j) (k : ℕ) : ∀ i j, (A^k) i j ≤ (B^k) i j := by
   induction k with
   | zero => intro i j; simp
@@ -52,7 +44,7 @@ lemma positive_pow_le (A B : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j)
     intro x _
     exact mul_le_mul (hAB i x) (ih x j) (positive_pow A hA k x j)
       ((hA i x).trans (hAB i x))
-lemma positive_norm_le (A B : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j)
+private lemma positive_norm_le (A B : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j)
     (hAB : ∀ i j, A i j ≤ B i j) : ‖complexify A‖ ≤ ‖complexify B‖ := by
   rw [Matrix.linfty_opNorm_def, Matrix.linfty_opNorm_def]
   apply NNReal.coe_le_coe.mpr

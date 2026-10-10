@@ -29,7 +29,7 @@ set_option maxHeartbeats 1600000
 namespace D5.S1.Digit.Infinite.ResetCodebook.Coding
 open D5.S1.Digit.Infinite.ResetCodebook
 open D5.S0.Computability.Coding.PrefixFreeCode
-lemma weight_cons (a : D5.S1.Digit.Infinite.ResetCodebook.Return) (as : List D5.S1.Digit.Infinite.ResetCodebook.Return) :
+private lemma weight_cons (a : D5.S1.Digit.Infinite.ResetCodebook.Return) (as : List D5.S1.Digit.Infinite.ResetCodebook.Return) :
     D5.S1.Digit.Infinite.ResetCodebook.Statement.weight (a::as) =
       (6*a.val.1 + 20*a.val.2) + D5.S1.Digit.Infinite.ResetCodebook.Statement.weight as := by
   simp [D5.S1.Digit.Infinite.ResetCodebook.Statement.weight]
@@ -142,9 +142,9 @@ theorem codebook_finite (anchor : Bool) (K N : ℕ) (d : ℝ) :
     intro as has
     change D5.S1.Digit.Infinite.ResetCodebook.Statement.weight as = N
     exact has.1)
-lemma boolWeight_pos (c : Bool) : 0 < (if c then 20 else 6 : ℕ) := by
+private lemma boolWeight_pos (c : Bool) : 0 < (if c then 20 else 6 : ℕ) := by
   cases c <;> norm_num
-lemma letterWeight_append (u v : List Bool) :
+private lemma letterWeight_append (u v : List Bool) :
     D5.S1.Digit.Infinite.ResetCodebook.Statement.letterWeight (u ++ v) =
       D5.S1.Digit.Infinite.ResetCodebook.Statement.letterWeight u + D5.S1.Digit.Infinite.ResetCodebook.Statement.letterWeight v := by
   simp [D5.S1.Digit.Infinite.ResetCodebook.Statement.letterWeight, List.map_append, List.sum_append]
@@ -157,7 +157,7 @@ private lemma letterWeight_pos {w : List Bool} (hw : w ≠ []) :
       have hc := boolWeight_pos c
       omega
 /-- A fixed positive weight makes the supplied Boolean code prefix-free. -/
-theorem weighted_prefix_free (N : ℕ) (S : Set (List Bool))
+private theorem weighted_prefix_free (N : ℕ) (S : Set (List Bool))
     (hweight : ∀ w ∈ S, D5.S1.Digit.Infinite.ResetCodebook.Statement.letterWeight w = N) :
     IsPrefixFree S := by
   intro u hu v hv huv
@@ -171,7 +171,7 @@ theorem weighted_prefix_free (N : ℕ) (S : Set (List Bool))
     rw [huN] at hsum
     rw [huvN] at hsum
     omega
-lemma codeword_weight (as : List D5.S1.Digit.Infinite.ResetCodebook.Return) :
+private lemma codeword_weight (as : List D5.S1.Digit.Infinite.ResetCodebook.Return) :
     D5.S1.Digit.Infinite.ResetCodebook.Statement.letterWeight (D5.S1.Digit.Infinite.ResetCodebook.Statement.letters as) =
       D5.S1.Digit.Infinite.ResetCodebook.Statement.weight as := by
   induction as with
@@ -251,7 +251,7 @@ private lemma concatenated_weight
   simp
 /-- The realization premise says every finite parsed word occurs in one actual member of lang.
 The same word supplies both its weight and its occurrence certificate. -/
-theorem weighted_factor_count
+private theorem weighted_factor_count
     (V : Set (List Bool)) (lang : Set (ℤ → Bool)) (L : ℕ)
     (hV : V.Finite) (hL : 0 < L)
     (hweight : ∀ w∈V, Statement.letterWeight w=L)
@@ -269,7 +269,7 @@ theorem weighted_factor_count
     exact congrArg Subtype.val hfg
   have hc := Nat.card_le_card_of_injective enc hinj
   simpa only [Nat.card_fun, Nat.card_fin, Statement.factorCount] using hc
-lemma reset_codeword_weight (M : ℕ) (hM : 1 ≤ M) (v : List Return) :
+private lemma reset_codeword_weight (M : ℕ) (hM : 1 ≤ M) (v : List Return) :
     Statement.letterWeight (Statement.letters (Statement.reset M hM::v)) =
       20+6*M+Statement.weight v := by
   rw [codeword_weight, weight_cons]
@@ -280,7 +280,7 @@ set_option autoImplicit false
 set_option maxHeartbeats 1600000
 namespace D5.S1.Digit.Infinite.ResetCodebook.Coding
 open D5.S1.Digit.Infinite.ResetCodebook
-def leading (b : Bool) : List Bool → ℕ
+private def leading (b : Bool) : List Bool → ℕ
   | [] => 0
   | c::cs => if c=b then leading b cs+1 else 0
 private lemma leading_replicate (b : Bool) (n : ℕ) (w : List Bool) :
@@ -353,7 +353,7 @@ private theorem letters_injective : Function.Injective Statement.letters := by
             change _ ++ Statement.letters as = _ ++ Statement.letters bs at hab
             exact List.append_cancel_left hab
           exact congrArg (fun xs => a::xs) (ih htail)
-noncomputable def resetImage (anchor : Bool) (K M N : ℕ) (d : ℝ) (hM : 1≤M) :
+private noncomputable def resetImage (anchor : Bool) (K M N : ℕ) (d : ℝ) (hM : 1≤M) :
     Set (List Bool) :=
   (fun v => Statement.letters (Statement.reset M hM::v)) ''
     Statement.codebook anchor K N d
@@ -361,7 +361,7 @@ private lemma reset_encoder_injective (M : ℕ) (hM : 1≤M) :
     Function.Injective (fun v : List Return => Statement.letters (Statement.reset M hM::v)) := by
   intro v u he
   exact (List.cons.inj (letters_injective he)).2
-noncomputable def resetBookEquiv
+private noncomputable def resetBookEquiv
     (anchor : Bool) (K M N : ℕ) (d : ℝ) (hM : 1≤M) :
     WeakBook anchor K N d ≃ Words (resetImage anchor K M N d hM) := by
   apply Equiv.ofBijective (fun v =>
@@ -380,7 +380,7 @@ private lemma resetImage_weight (anchor : Bool) (K M N : ℕ) (d : ℝ) (hM : 1�
   rw [reset_codeword_weight,hv.1]
   omega
 /-- Counts the original complete weak book, provided its finite words extend in the given language. -/
-theorem weak_book_factor_count
+private theorem weak_book_factor_count
     (anchor : Bool) (K M N : ℕ) (d : ℝ) (hM : 1≤M)
     (lang : Set (ℤ → Bool))
     (hext : ∀ (k : ℕ) (f : Fin k → Words (resetImage anchor K M N d hM)),
@@ -398,7 +398,7 @@ set_option autoImplicit false
 set_option maxHeartbeats 1600000
 namespace D5.S1.Digit.Infinite.ResetCodebook.Coding
 open D5.S1.Digit.Infinite.ResetCodebook Filter
-noncomputable def weightedReadout (lang : Set (ℤ → Bool)) (n : ℕ) : ℝ :=
+private noncomputable def weightedReadout (lang : Set (ℤ → Bool)) (n : ℕ) : ℝ :=
   Real.log (max 1 (Statement.factorCount lang n):ℝ)/Real.log 2/(n:ℝ)
 private lemma power_count_log_bound
     (lang : Set (ℤ → Bool)) (a L k : ℕ) (ha : 0<a) (hL : 0<L) (hk : 0<k)
@@ -421,7 +421,7 @@ private lemma power_count_log_bound
   exact div_le_div_of_nonneg_right
     (div_le_div_of_nonneg_right hlog h2.le) (mul_pos hk' hL').le
 /-- The real-valued limsup uses an explicit boundedness premise. -/
-theorem weighted_rate_from_counts
+private theorem weighted_rate_from_counts
     (lang : Set (ℤ → Bool)) (a L : ℕ) (ha : 0<a) (hL : 0<L)
     (hc : ∀ k, a^k ≤ Statement.factorCount lang (k*L))
     (hb : Filter.IsBoundedUnder (· ≤ ·) Filter.atTop (weightedReadout lang)) :
@@ -487,7 +487,7 @@ lemma weightedReadout_bounded (lang : Set (ℤ → Bool)) :
   exact ⟨Real.log 3/Real.log 2,
     Filter.eventually_map.mpr (Filter.Eventually.of_forall (weightedReadout_bound lang))⟩
 /-- Exact explicit weighted-language rate, conditional only on actual word extension. -/
-theorem weak_book_language_rate
+private theorem weak_book_language_rate
     (anchor : Bool) (K M N : ℕ) (d : ℝ) (hM : 1≤M)
     (hne : (Statement.codebook anchor K N d).Nonempty)
     (lang : Set (ℤ → Bool))
@@ -508,7 +508,7 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.FixedTailClosedBudget
 namespace D5.S1.Digit.Infinite.ResetCodebook.Coding
 open D5.S1.Digit.Infinite.ResetCodebook
-noncomputable def periodicWord (u : List Bool) (i : ℤ) : Bool :=
+private noncomputable def periodicWord (u : List Bool) (i : ℤ) : Bool :=
   u[(i%(u.length:ℤ)).toNat]?.getD false
 private lemma periodicWord_block (u : List Bool) (t : ℤ) :
     ∀ j : Fin u.length, periodicWord u (t*(u.length:ℤ)+(j.val:ℤ))=u[j.val] := by
@@ -549,7 +549,7 @@ private lemma finite_reset_weak_state
     (z : ℝ) (hz : A false ≤ z) (hh : z ≤ h false) :
     Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
       ((vs.map (fun v => Statement.reset M hM::v)).flatten) z := by
-  have he : Statement.B M=resetFloor M := by simp [Statement.B,resetFloor,closedRun]
+  have he : Statement.B M=Statement.B M := by simp [Statement.B,Statement.B,closedRun]
   have hp := parameters false
   have hA := A_nonneg
   induction vs generalizing z with
@@ -563,7 +563,7 @@ private lemma finite_reset_weak_state
       have hweak := weak_gain K d (Statement.B M-initial false anchor)
         (initial false anchor) (run false (Statement.reset M hM) z) v
         (sub_pos.mpr hreset) (by linarith) hv.2
-      have hweight : totalWeight v=N := hv.1
+      have hweight : Statement.weight v=N := hv.1
       rw [hweight] at hweak
       have hw : Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
           (Statement.reset M hM::v) z := by
@@ -586,7 +586,7 @@ private lemma letters_flatten (vs : List (List Return)) :
       exact congrArg (fun u => Statement.letters v++u) ih
 /-- A finite list is realized by periodic repetition of its literal Boolean word.
 The margin remains the original codebook margin, rather than shrinking with the list length. -/
-theorem periodic_reset_word_membership
+private theorem periodic_reset_word_membership
     (anchor : Bool) (K M N n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hM : 1 ≤ M)
     (hreset : initial false anchor < Statement.B M)
     (hcut : h false*rho^n < chi^(K-1)*(Statement.B M-initial false anchor)*g^N)

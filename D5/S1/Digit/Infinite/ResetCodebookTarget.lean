@@ -28,7 +28,7 @@ namespace D5.S1.Digit.Infinite.ResetCodebook.Spectral
 open D5.S1.Digit.Infinite.ResetCodebook D5.S1.Digit.Infinite.ResetCodebook.Transfer
 noncomputable section
 attribute [local instance] Classical.propDecidable
-lemma two_step_row (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n)
+private lemma two_step_row (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n)
     (v : Vertex (Statement.lowerLanguage K n d) n) :
     2 ≤ ∑ u, (lowerMatrix K n d 1 ^ 2) v u := by
   let next := graphNext (Statement.lowerLanguage K n d) n
@@ -60,19 +60,19 @@ open D5.S1.Digit.Infinite.ResetCodebook D5.S1.Digit.Infinite.ResetCodebook.Trans
 noncomputable section
 attribute [local instance] Classical.propDecidable
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
-lemma transfer_scale_le (next : ι → Bool → ι) (allow : ι → Bool → Prop)
+private lemma transfer_scale_le (next : ι → Bool → ι) (allow : ι → Bool → Prop)
     (x y a : ℝ) (h6 : a*x^6 ≤ y^6) (h20 : a*x^20 ≤ y^20) :
     ∀ i j, (a • transfer next allow x) i j ≤ transfer next allow y i j := by
   intro i j
   simp only [Matrix.smul_apply, smul_eq_mul, transfer, mul_add]
   split_ifs <;> linarith
-lemma transfer_le_scale (next : ι → Bool → ι) (allow : ι → Bool → Prop)
+private lemma transfer_le_scale (next : ι → Bool → ι) (allow : ι → Bool → Prop)
     (x y a : ℝ) (h6 : y^6 ≤ a*x^6) (h20 : y^20 ≤ a*x^20) :
     ∀ i j, transfer next allow y i j ≤ (a • transfer next allow x) i j := by
   intro i j
   simp only [Matrix.smul_apply, smul_eq_mul, transfer, mul_add]
   split_ifs <;> linarith
-lemma transfer_radius_sandwich (next : ι → Bool → ι) (allow : ι → Bool → Prop)
+private lemma transfer_radius_sandwich (next : ι → Bool → ι) (allow : ι → Bool → Prop)
     (x y : ℝ) (hx : 0<x) (hy : 0<y) :
     min ((y/x)^6) ((y/x)^20) * radius (transfer next allow x)
       ≤ radius (transfer next allow y) ∧
@@ -97,7 +97,7 @@ lemma transfer_radius_sandwich (next : ι → Bool → ι) (allow : ι → Bool 
       exact mul_le_mul_of_nonneg_right (le_max_left _ _) (pow_nonneg hx.le 6)
     · rw [←he 20]
       exact mul_le_mul_of_nonneg_right (le_max_right _ _) (pow_nonneg hx.le 20)
-lemma transfer_radius_continuous_pos (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
+private lemma transfer_radius_continuous_pos (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
     ContinuousOn (fun z : ℝ => radius (transfer next allow z)) (Set.Ioi 0) := by
   intro x hx
   have hx0 : 0<x := hx
@@ -118,7 +118,7 @@ lemma transfer_radius_continuous_pos (next : ι → Bool → ι) (allow : ι →
     exact (transfer_radius_sandwich next allow x y hx0 hy).1
   · filter_upwards [eventually_gt_nhds hx0] with y hy
     exact (transfer_radius_sandwich next allow x y hx0 hy).2
-lemma transfer_complex_continuous (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
+private lemma transfer_complex_continuous (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
     Continuous (fun z : ℝ => complexify (transfer next allow z)) := by
   apply continuous_pi
   intro i
@@ -127,11 +127,11 @@ lemma transfer_complex_continuous (next : ι → Bool → ι) (allow : ι → Bo
   change Continuous (fun z : ℝ => ((transfer next allow z i j : ℝ) : ℂ))
   unfold transfer
   split_ifs <;> fun_prop
-lemma transfer_radius_zero (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
+private lemma transfer_radius_zero (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
     radius (transfer next allow 0) = 0 := by
   have he : transfer next allow 0 = 0 := by ext i j; simp [transfer]
   simp [he, RingHom.mapMatrix_apply, spectrum.spectralRadius_zero]
-lemma transfer_radius_continuous_zero (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
+private lemma transfer_radius_continuous_zero (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
     ContinuousAt (fun z : ℝ => radius (transfer next allow z)) 0 := by
   have hc : ContinuousAt (fun z : ℝ => ‖complexify (transfer next allow z)‖) 0 :=
     (transfer_complex_continuous next allow).norm.continuousAt
@@ -145,7 +145,7 @@ lemma transfer_radius_continuous_zero (next : ι → Bool → ι) (allow : ι �
   · intro z; exact ENNReal.toReal_nonneg
   · intro z
     exact (ENNReal.toReal_mono ENNReal.coe_ne_top (spectrum.spectralRadius_le_nnnorm _)).trans_eq (by simp)
-lemma transfer_radius_continuous_Icc (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
+private lemma transfer_radius_continuous_Icc (next : ι → Bool → ι) (allow : ι → Bool → Prop) :
     ContinuousOn (fun z : ℝ => radius (transfer next allow z)) (Set.Icc 0 1) := by
   intro z hz
   by_cases hz0 : z=0
@@ -161,7 +161,7 @@ namespace D5.S1.Digit.Infinite.ResetCodebook.Spectral
 open D5.S1.Digit.Infinite.ResetCodebook D5.S1.Digit.Infinite.ResetCodebook.Transfer
 noncomputable section
 attribute [local instance] Classical.propDecidable
-lemma lower_radius_pos (K n : ℕ) (d z : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) (hz : 0<z) :
+private lemma lower_radius_pos (K n : ℕ) (d z : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) (hz : 0<z) :
     0 < radius (lowerMatrix K n d z) := by
   letI := vertex_nonempty K n d hK
   have hl : z^6 ≤ radius (lowerMatrix K n d z) := by
@@ -178,7 +178,7 @@ lemma lower_radius_pos (K n : ℕ) (d z : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) (h
         graphNext (Statement.lowerLanguage K n d) n v true=u then z^20 else 0 := by positivity
     linarith
   exact (pow_pos hz 6).trans_le hl
-lemma lower_radius_one_gt (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) :
+private lemma lower_radius_one_gt (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) :
     1 < radius (lowerMatrix K n d 1) := by
   letI := vertex_nonempty K n d hK
   have hnn := transfer_nonneg (graphNext (Statement.lowerLanguage K n d) n)
@@ -188,7 +188,7 @@ lemma lower_radius_one_gt (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) :
   rw [radius_sq] at hh
   have hp := lower_radius_pos K n d 1 hK hKn (by norm_num)
   nlinarith
-lemma lower_radius_strict (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) :
+private lemma lower_radius_strict (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) :
     StrictMonoOn (fun z : ℝ => radius (lowerMatrix K n d z)) (Set.Ioi 0) := by
   letI := vertex_nonempty K n d hK
   intro x hx y hy hxy
@@ -280,7 +280,7 @@ private lemma spectral_one_power_bound {ι : Type*} [Fintype ι] [DecidableEq ι
       (one_le_pow₀ hq.le))
 /-- A coefficient-to-path-power bound gives the direction needed at a spectral root.
 This statement keeps the combinatorial bridge explicit. -/
-theorem coefficient_spectral_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
+private theorem coefficient_spectral_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
     (T : Matrix ι ι ℂ) (c : ℕ → ℕ) (z D : ℝ)
     (hz : 0<z) (hz1 : z<1) (hD : 0 ≤ D) (hs : spectralRadius ℂ T=1)
     (hc : ∀ N : ℕ, (c N:ℝ)*z^N  ≤  D * ∑ k ∈ Finset.range (N+1), ‖T^k‖)
@@ -375,7 +375,7 @@ attribute [local instance] Classical.propDecidable
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 variable (next : ι → Bool → ι) (allow : ι → Bool → Prop)
 /-- Finite factor words are counted before any rate or spectral argument. -/
-theorem factor_mass_le_paths
+private theorem factor_mass_le_paths
     (lang : Set (ℤ → Bool)) (z : ℝ) (hz : 0 ≤ z) (N : ℕ)
     (ext : ∀ w : Factors lang N, ∃ v : ι, accepts next allow v w.val) :
     (Statement.factorCount lang N:ℝ)*z^N  ≤ 
@@ -433,17 +433,17 @@ namespace D5.S1.Digit.Infinite.ResetCodebook.Transfer
 open D5.S1.Digit.Infinite.ResetCodebook
 noncomputable section
 attribute [local instance] Classical.propDecidable
-lemma lower_factor_mass_le_paths (K n N : ℕ) (d z : ℝ) (hz : 0≤z) :
+private lemma lower_factor_mass_le_paths (K n N : ℕ) (d z : ℝ) (hz : 0≤z) :
     (Statement.factorCount (Statement.lowerLanguage K n d) N:ℝ)*z^N ≤
       ∑ k ∈ Finset.range (N+1), ∑ v, ∑ u, (lowerMatrix K n d z ^ k) v u := by
   apply factor_mass_le_paths _ _ _ _ hz N
   intro w
   obtain ⟨u,hu,i,hi⟩ := w.property.2
   exact ⟨vertexAt _ n u hu i,factor_accepts _ n w.val u hu i hi⟩
-lemma lowerComplex_pow (K n k : ℕ) (d z : ℝ) :
+private lemma lowerComplex_pow (K n k : ℕ) (d z : ℝ) :
     lowerComplexMatrix K n d z ^ k = Complex.ofRealHom.mapMatrix (lowerMatrix K n d z ^ k) := by
   exact (map_pow Complex.ofRealHom.mapMatrix _ k).symm
-lemma lower_row_le_norm (K n k : ℕ) (d z : ℝ) (hz : 0≤z)
+private lemma lower_row_le_norm (K n k : ℕ) (d z : ℝ) (hz : 0≤z)
     (v : Vertex (Statement.lowerLanguage K n d) n) :
     (∑ u, (lowerMatrix K n d z ^ k) v u) ≤ ‖lowerComplexMatrix K n d z ^ k‖ := by
   have hentry (u : Vertex (Statement.lowerLanguage K n d) n) :
@@ -460,7 +460,7 @@ lemma lower_row_le_norm (K n k : ℕ) (d z : ℝ) (hz : 0≤z)
         (f := fun i : Vertex (Statement.lowerLanguage K n d) n =>
           ∑ u, ‖(lowerComplexMatrix K n d z ^ k) i u‖₊) (Finset.mem_univ v))
     _ = _ := (Matrix.linfty_opNorm_def _).symm
-lemma lower_factor_mass_le_norm_powers (K n N : ℕ) (d z : ℝ) (hz : 0≤z) :
+private lemma lower_factor_mass_le_norm_powers (K n N : ℕ) (d z : ℝ) (hz : 0≤z) :
     (Statement.factorCount (Statement.lowerLanguage K n d) N:ℝ)*z^N ≤
       (Fintype.card (Vertex (Statement.lowerLanguage K n d) n):ℝ) *
         ∑ k ∈ Finset.range (N+1), ‖lowerComplexMatrix K n d z ^ k‖ := by
@@ -473,7 +473,7 @@ lemma lower_factor_mass_le_norm_powers (K n N : ℕ) (d z : ℝ) (hz : 0≤z) :
       exact Finset.sum_le_sum (fun v _ => lower_row_le_norm K n k d z hz v)
     _ = _ := by simp [←Finset.mul_sum] <;> ring
 /-- This direction suffices for 62.18; it needs no Perron eigenvector or irreducibility. -/
-theorem lower_language_rate_le_spectral_gamma (K n : ℕ) (d z : ℝ)
+private theorem lower_language_rate_le_spectral_gamma (K n : ℕ) (d z : ℝ)
     (hz : SpectralRoot K n d z) :
     Statement.rate (Statement.lowerLanguage K n d) ≤ gamma z := by
   apply coefficient_spectral_bound (lowerComplexMatrix K n d z)
@@ -489,7 +489,7 @@ set_option autoImplicit false
 namespace D5.S1.Digit.Infinite.ResetCodebook.Transfer
 open D5.S1.Digit.Infinite.ResetCodebook
 noncomputable section
-theorem original_language_rate_le_spectral_gamma (K n : ℕ) (d z : ℝ)
+private theorem original_language_rate_le_spectral_gamma (K n : ℕ) (d z : ℝ)
     (hn : 0<n) (hKn : K≤n) (hz : OriginalSpectralRoot K n d z) :
     Statement.rate (Statement.lowerLanguage K n d) ≤ gamma z := by
   apply lower_language_rate_le_spectral_gamma K n d z
@@ -505,7 +505,7 @@ open scoped Topology
 namespace D5.S1.Digit.Infinite.ResetCodebook.Coding
 open D5.S1.Digit.Infinite.ResetCodebook
 /-- Clause-complete 62.18 in the explicit weighted-language limsup representation. -/
-theorem codebook_language_realization
+private theorem codebook_language_realization
     (anchor : Bool) (K M N : ℕ) (b d : ℝ)
     (hK : 2 ≤ K) (hM : 1 ≤ M) (hN : 0 < N)
     (hbudget : lambda-g^2*chi^K*h false < b ∧
@@ -570,7 +570,7 @@ noncomputable def target6218 (anchor : Bool) (K M N : ℕ) (b d : ℝ)
 end D5.S1.Digit.Infinite.ResetCodebook.Statement
 namespace D5.S1.Digit.Infinite.ResetCodebook.Transfer
 open D5.S1.Digit.Infinite.ResetCodebook
-theorem spectral_codebook_realization
+private theorem spectral_codebook_realization
     (anchor : Bool) (K M N : ℕ) (b d : ℝ)
     (hK : 2 ≤ K) (hM : 1 ≤ M) (hN : 0 < N)
     (hbudget : lambda-g^2*chi^K*h false < b ∧
@@ -609,7 +609,7 @@ noncomputable section
 /-- The uniquely defined lower spectral root. -/
 def lowerRoot (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) : ℝ :=
   (original_root_exists_unique K n d hK hKn).choose
-lemma lowerRoot_spec (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) :
+private lemma lowerRoot_spec (K n : ℕ) (d : ℝ) (hK : 2 ≤ K) (hKn : K ≤ n) :
     D5.S1.Digit.Infinite.ResetCodebook.Transfer.OriginalSpectralRoot K n d (lowerRoot K n d hK hKn) :=
   (original_root_exists_unique K n d hK hKn).choose_spec.1
 def rootFamily (K : ℕ) (d : ℝ) (hK : 2 ≤ K) : Statement.RootFamily K d :=
