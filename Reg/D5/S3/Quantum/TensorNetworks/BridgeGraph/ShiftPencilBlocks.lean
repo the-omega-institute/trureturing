@@ -2,6 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks
 import Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
 import Reg.Support.BridgeGraphRelations
+import Reg.Support.BridgeGraphEqualityFamilies
 
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles
@@ -16,6 +17,7 @@ open Matrix Module Finset
 open scoped BigOperators
 noncomputable section
 namespace Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks
+universe u_1 u_2 u_3
 
 @[reducible] def pencil_rank_of_leArena : Arena where
   signature := natSignature
@@ -126,6 +128,71 @@ noncomputable def pencil_mulVecRegistration : Contract.Registration.{_,_,_,0,0,0
 #print axioms pencil_mulVecNegative
 #print axioms pencil_mulVecEvidence
 #print axioms pencil_mulVecRegistration
+
+@[reducible] def block_mulVecArena : Arena where
+  signature := rationalSignature
+  Law R := ∀ {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+    {m : ι → Type u_2} {n : ι → Type u_3}
+    [∀ i, Fintype (m i)] [∀ i, Fintype (n i)]
+    (A : ∀ i, Matrix (m i) (n i) ℚ)
+    (z : (Σ i, n i) → ℚ) (i : ι) (j : m i),
+    R.readout () () ((blockDiagonal' A).mulVec z ⟨i, j⟩)
+      ((A i).mulVec (fun k => z ⟨i, k⟩) j)
+theorem block_mulVecPositive : block_mulVecArena.{u_1,u_2,u_3}.Law rationalActual :=
+  @D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.block_mulVec.{u_1,u_2,u_3}
+theorem block_mulVecNegative :
+    ¬ block_mulVecArena.{u_1,u_2,u_3}.Law rationalRejected := by
+  intro h
+  exact h (ι := ULift.{u_1} Unit) (m := fun _ => ULift.{u_2} Unit)
+    (n := fun _ => ULift.{u_3} Unit)
+    (fun _ => 0) (fun _ => 0) ⟨()⟩ ⟨()⟩
+
+def block_mulVecEvidence :
+    Registration block_mulVecArena.{u_1,u_2,u_3}
+      (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.block_mulVec.{u_1,u_2,u_3})) where
+  actual := rationalActual
+  bridge := Iff.rfl
+  variation := ⟨block_mulVecPositive, rationalRejected, block_mulVecNegative⟩
+  sensitivity := ⟨fun i => ⟨rationalRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, block_mulVecNegative⟩,
+    fun i => nomatch i⟩
+  dependence := rationalDependence
+
+noncomputable def block_mulVecRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.block_mulVec.{u_1,u_2,u_3})
+    (type_of% (realize rationalSignature (fun _ _ a b => a = b) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.block_mulVec
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.block_mulVecArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.block_mulVecEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨block_mulVecArena.{u_1,u_2,u_3}⟩,
+  objectArena := .source ⟨block_mulVecArena.{u_1,u_2,u_3}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source block_mulVecArena.{u_1,u_2,u_3} ⟨block_mulVecEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize rationalSignature (fun _ _ a b => a = b) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks, definition := none,
+    coordinates := #[], readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0, functionOperand := true,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.block_mulVec
+#print axioms block_mulVecPositive
+#print axioms block_mulVecNegative
+#print axioms block_mulVecEvidence
+#print axioms block_mulVecRegistration
 
 @[reducible] def rows_cardArena : Arena where
   signature := natSignature
@@ -622,5 +689,77 @@ noncomputable def zero_defect_witnessRegistration : Contract.Registration.{_,_,_
 #print axioms zero_defect_witnessNegative
 #print axioms zero_defect_witnessEvidence
 #print axioms zero_defect_witnessRegistration
+
+open Reg.Support.BridgeGraphEqualityFamilies
+
+noncomputable def antiDiagonal_kernelRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.antiDiagonal_kernel)
+    (type_of% (realize antiDiagonalVectorEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.antiDiagonal_kernel
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.antiDiagonal_kernelArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.antiDiagonal_kernelEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨antiDiagonal_kernelArena⟩, objectArena := .source ⟨antiDiagonal_kernelArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source antiDiagonal_kernelArena ⟨antiDiagonal_kernelEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize antiDiagonalVectorEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks, definition := none,
+    coordinates := #[0], readouts := #[{
+      path := #["body", "fn", "fn"],
+      stateBinder := 0, functionOperand := true,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.antiDiagonal_kernel
+#print axioms antiDiagonal_kernelPositive
+#print axioms antiDiagonal_kernelNegative
+#print axioms antiDiagonal_kernelEvidence
+#print axioms antiDiagonal_kernelRegistration
+
+noncomputable def widthTwo_block_decompositionRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.widthTwo_block_decomposition)
+    (type_of% (realize widthTwoMatrixEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.widthTwo_block_decomposition
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.widthTwo_block_decompositionArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.widthTwo_block_decompositionEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨widthTwo_block_decompositionArena⟩, objectArena := .source ⟨widthTwo_block_decompositionArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source widthTwo_block_decompositionArena ⟨widthTwo_block_decompositionEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize widthTwoMatrixEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks, definition := none,
+    coordinates := #[0, 1, 2, 3, 4, 5], readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0, functionOperand := true,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.widthTwo_block_decomposition
+#print axioms widthTwo_block_decompositionPositive
+#print axioms widthTwo_block_decompositionNegative
+#print axioms widthTwo_block_decompositionEvidence
+#print axioms widthTwo_block_decompositionRegistration
 
 end Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks

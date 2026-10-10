@@ -107,6 +107,12 @@ internal sealed class OwnPathChargesDocument : IScribeDocumentDefinition
                             + "Its rows need not have even full-window parity and need not be a common "
                             + "preset word. It establishes no donor correction, phase-separating "
                             + "fallback stream, preset decoder, finite price or four-block inequality."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(DescribeId.Create("native-fiber"),
+                    DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OwnPathCharges.native_fiber"),
+                    H("Correct original histories give every actual native source"),
+                    StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("For arbitrary k>=2, m>=1, either original alphabet, target f, saved value v, budget d and selector, suppose the selector returns the INITIAL target within d paid complete words on every original history whose free scalar is v. For every phase with gcd(m,k+1) dividing its representative and every inherited legal tail s<k, NativeExecute from (v,phase,s) returns f of that INITIAL record with some fee c<=d. Actual-history realization and scanner agreement transfer correctness without supplying the controller a history, phase, tail or clock."))),
                     DescribeRole.Theorem))));
     }
 }

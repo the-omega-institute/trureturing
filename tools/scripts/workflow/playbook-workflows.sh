@@ -29,7 +29,7 @@ run_cli() {
 }
 
 align_delivery_ledger() {
-  local accepted_modules='[]' closed_modules module closed_query_output
+  local accepted_modules='[]' closed_modules module closed_query_output targets=''
   local accepted_files=("$FROZEN_LEDGER"/*.json)
   local align_args=(ledger-align)
 
@@ -66,10 +66,17 @@ align_delivery_ledger() {
   fi
 
   while IFS= read -r module; do
-    [[ -z "$module" ]] || align_args+=(--add "$module")
+    if [[ -n "$module" ]]; then
+      align_args+=(--add "$module")
+      targets+="${targets:+ }${module%.lean}"
+    fi
   done <<< "$closed_modules"
-  align_args+=(--candidate-lean-report "$REPORT")
-  run_cli "${align_args[@]}"
+  if [[ -n "$targets" ]]; then
+    targets="${targets//\//.}"
+    step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$targets"
+    run_cli "${align_args[@]}" --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json
+  fi
+  run_cli ledger-align --candidate-lean-report "$REPORT"
 }
 
 
@@ -86,7 +93,7 @@ step() {
   local label="$1"
   shift
   begin_step "$label"
-  "$@"
+  "$@" || return $?
   complete_step passed
 }
 
@@ -139,9 +146,33 @@ require_cover_batch_arguments() {
     echo "usage: playbook-workflows.sh cover-batch ATOMS_FILE" >&2
     return 2
   fi
-
+  LEAN_TARGETS="$(run_cli cover-batch --lean-inputs --atoms "$atoms_file")"
 }
 
+prepare_cover_report() {
+  local selected
+  selected="$(run_cli cover-atom --lean-inputs --cover-atom "$ATOM_ID" --gid "$GID")" || return $?
+  if [[ "$COMMAND" != deposit || "$selected" != "${LEAN_TARGETS:-}" ]]; then
+    LEAN_TARGETS="$selected"
+    build_scoped_report
+  fi
+}
+
+build_scoped_report() {
+  [[ -n "$LEAN_TARGETS" ]] || { echo 'PLAYBOOK_INVALID cover report scope is empty' >&2; return 2; }
+  REPORT=".lake/build/stratalint/delivery-lean-report.json"
+  export STRATALINT_LEAN_REPORT="$ROOT/$REPORT"
+  step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS" "LEAN_REPORT=$ROOT/$REPORT"
+}
+
+emit_target() {
+  local paths status=0
+  paths="$(mktemp "${TMPDIR:-/tmp}/deposit-scribe-paths.XXXXXXXX")"
+  printf '%s\0' "$MODULE_PATH" > "$paths"
+  step emit make emit "PATHS=$paths" || status=$?
+  rm -f -- "$paths"
+  return "$status"
+}
 
 require_new_module_blueprint_mirror() {
   local mirror_path="Blueprint/${MODULE_PATH%.lean}.md"
@@ -160,7 +191,15 @@ require_new_module_blueprint_mirror() {
 
 
 freeze_exists() {
-  run_cli ledger-frozen --target "$MODULE_PATH"
+  local output status=0
+  output="$(run_cli ledger-frozen --target "$MODULE_PATH" 2>&1)" || status=$?
+  [[ -z "$output" ]] || printf '%s\n' "$output" >&2
+  # The query's absent-member result is silent. Launcher/build failures must
+  # not be interpreted as permission to write a new freeze.
+  if [[ "$status" -eq 1 && -n "$output" ]]; then
+    return 2
+  fi
+  return "$status"
 }
 
 freeze_module_if_needed() {
@@ -182,10 +221,11 @@ freeze_module_if_needed() {
 deposit_module() {
   local deposit_base_sha freeze_precheck status
   require_new_module_blueprint_mirror
-  step lean-report make lean-report
+  LEAN_TARGETS="${DOCUMENT_GID//\//.}"
+  build_scoped_report
   deposit_base_sha="$(git rev-parse --verify "${BASE}^{commit}")"
   step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH" --protected-base "$deposit_base_sha"
-  step emit make emit
+  emit_target
   if freeze_exists; then
     freeze_precheck=1
     printf 'PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=%s\n' \
@@ -294,11 +334,19 @@ cover_atom_or_resume() {
 }
 
 cover_row() {
+  local status
+  if prepare_cover_report; then
+    :
+  else
+    status=$?
+    COVER_FAILURE_REASON="cover-report-exit-$status"
+    return "$status"
+  fi
   begin_step cover-atom
   if cover_atom_or_resume; then
     complete_step passed
   else
-    local status=$?
+    status=$?
     complete_step failed
     return "$status"
   fi
@@ -337,12 +385,11 @@ case "$COMMAND" in
     ;;
   cover)
     require_transaction_arguments
-    step lean-report make lean-report
     cover_row
     ;;
   cover-batch)
     require_cover_batch_arguments
-    step lean-report make lean-report
+    build_scoped_report
     step cover-batch run_cli cover-batch --atoms "$ATOM_ID"
     ;;
   *)

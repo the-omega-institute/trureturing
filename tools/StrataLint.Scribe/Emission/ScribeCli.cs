@@ -13,6 +13,7 @@ public static class ScribeCli
         "content-check",
         "describe-report",
         .. EmissionCommands.Order(StringComparer.Ordinal),
+        "lean-inputs",
         "markdown-check",
         "projections",
         "resources",
@@ -48,6 +49,28 @@ public static class ScribeCli
         ArgumentNullException.ThrowIfNull(error);
 
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
+        if (command == "lean-inputs")
+        {
+            if (arguments.Count != 3 || arguments[1] != "--paths-from"
+                || string.IsNullOrWhiteSpace(arguments[2]))
+            {
+                error.WriteLine("usage: lean-inputs --paths-from <file|->");
+                return 2;
+            }
+            try
+            {
+                foreach (var module in ScribeLeanInputs.Select(FindRepositoryRoot(workingDirectory),
+                    ReadPaths(arguments[2], input)))
+                    output.WriteLine(module);
+                return 0;
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+                or ArgumentException or FormatException or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
         if (command == "resources")
         {
             return ScribeResourceCommands.Run(arguments, workingDirectory,
@@ -192,15 +215,19 @@ public static class ScribeCli
             }
         }
 
-        if (command == "emit" && arguments.Count is (3 or 4)
+        if (command == "emit" && arguments.Count is >= 3 and <= 5
             && arguments[1] == "--paths-from"
             && !string.IsNullOrWhiteSpace(arguments[2])
-            && (arguments.Count == 3 || arguments[3] == "--check"))
+            && arguments.Skip(3).All(static option => option is "--check" or "--scoped")
+            && arguments.Skip(3).Distinct(StringComparer.Ordinal).Count() == arguments.Count - 3)
         {
             try
             {
                 var repositoryRoot = FindRepositoryRoot(workingDirectory);
                 var paths = ReadPaths(arguments[2], input);
+                var scopedInputs = arguments.Contains("--scoped")
+                    ? ScribeLeanInputs.Select(repositoryRoot, paths)
+                    : ImmutableArray<string>.Empty;
                 if (paths.IsEmpty)
                 {
                     output.WriteLine("emitted: 0 changed blueprint(s)");
@@ -209,10 +236,14 @@ public static class ScribeCli
                 return ScribeEmitter.EmitPaths(
                     repositoryRoot,
                     paths,
-                    arguments.Count == 4,
+                    arguments.Contains("--check"),
                     output,
                     error,
-                    () => leanReport ?? LeanCompiledArtifactReports.ReadRepositoryFiles(repositoryRoot));
+                    () => leanReport ?? (arguments.Contains("--scoped")
+                        ? LeanCompiledArtifactReports.ReadScopedRepositoryFiles(repositoryRoot,
+                            scopedInputs
+                                .Select(static module => module.Replace('.', '/') + ".lean"))
+                        : LeanCompiledArtifactReports.ReadRepositoryFiles(repositoryRoot)));
             }
             catch (Exception exception) when (
                 exception is IOException or UnauthorizedAccessException or ArgumentException
@@ -266,7 +297,7 @@ public static class ScribeCli
 
     private const string Usage =
         "usage: dotnet run --project tools/StrataLint.Scribe -- "
-        + "emit-values|filemap [--check] | emit --paths-from <file|-> [--check] | describe-report --scribe-pack <file> --scribe-pack-digest <hex64> [--json] [--check] "
+        + "emit-values|filemap [--check] | lean-inputs --paths-from <file|-> | emit --paths-from <file|-> [--scoped] [--check] | describe-report --scribe-pack <file> --scribe-pack-digest <hex64> [--json] [--check] "
         + "| content-check --report <file> --paths-from <file|-> "
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> --paths-from <file|-> "

@@ -109,6 +109,12 @@ internal sealed partial class TransactionFixture : IDisposable
 
     internal void FailFrozenQuery() => WriteFile(".ledger-frozen-status", "2\n");
 
+    internal void FailFrozenLauncher()
+    {
+        WriteFile(".ledger-frozen-status", "1\n");
+        WriteFile(".ledger-frozen-diagnostic", "MSBUILD: synthetic launcher failure\n");
+    }
+
     internal void WriteRevokedSnapshot()
     {
         WriteLedger(Array.Empty<string>());
@@ -200,13 +206,18 @@ internal sealed partial class TransactionFixture : IDisposable
         ? []
         : File.ReadAllLines(callsPath).Select(static call =>
         {
-            if (!call.StartsWith("dotnet:", StringComparison.Ordinal)) return call;
-            var command = call["dotnet:".Length..];
+            if (!call.StartsWith("dotnet:", StringComparison.Ordinal)
+                && !call.StartsWith("make:", StringComparison.Ordinal)) return call;
+            var prefix = call[..(call.IndexOf(':') + 1)];
+            var command = call[prefix.Length..];
             var separator = command.IndexOf(' ');
-            return "dotnet:" + (separator < 0 ? command : command[..separator]);
+            return prefix + (separator < 0 ? command : command[..separator])
+                + (command.Contains(" --lean-inputs ", StringComparison.Ordinal) ? " --lean-inputs" : string.Empty);
         }).ToArray();
 
     internal string[] Calls() => File.Exists(callsPath) ? File.ReadAllLines(callsPath) : [];
+
+    internal void SelectCoverageInputs(string modules) => WriteFile(".cover-inputs", modules + "\n");
 
     internal void ClearCalls()
     {
@@ -304,15 +315,23 @@ internal sealed partial class TransactionFixture
     private void WriteMakeStub() => WriteExecutable("make", """
         printf 'make:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
         case "${1:-}" in
-          lean-report)
+          lean-report|lean-report-scoped)
             mkdir -p .lake/build/stratalint
-            printf '{"schema":"synthetic-lean-report"}\n' \
-              > .lake/build/stratalint/raw-lean-report.json
+            report_name=raw-lean-report
+            [[ "$1" != lean-report-scoped ]] || report_name=scoped-lean-report
+            report_path=".lake/build/stratalint/${report_name}.json"
+            for argument in "$@"; do
+              [[ "$argument" != LEAN_REPORT=* ]] || report_path="${argument#LEAN_REPORT=}"
+            done
+            printf '{"schema":"synthetic-lean-report"}\n' > "$report_path"
             if [[ ${PLAYBOOK_STALE_REPORT:-0} != 1 ]]; then
               cp D5/S0/Carrier/Probe.lean .report-source
             fi
             ;;
           emit)
+            if [[ ${PLAYBOOK_CROSS_SCRIBE_SCOPE:-0} == 1 ]]; then
+              printf '{"modules":["Probe","Outside"]}\n' > .lake/build/stratalint/scoped-lean-report.json
+            fi
             if ! cmp -s D5/S0/Carrier/Probe.lean .report-source; then
               echo 'STALE_LEAN_REPORT emit refused stale input' >&2
               exit 41
@@ -331,6 +350,24 @@ internal sealed partial class TransactionFixture
         command=${args##* -- }
         printf 'dotnet:%s\n' "$command" >> "$PLAYBOOK_TEST_CALLS"
         read -r -a parts <<< "$command"
+        if [[ ${parts[1]:-} == --lean-inputs ]]; then
+          if [[ -f .cover-inputs ]]; then cat .cover-inputs; exit 0; fi
+          if [[ ${parts[0]} == cover-atom ]]; then
+            module=${parts[5]%.*}
+            [[ -f "$module.lean" ]] || exit 2
+            printf '%s\n' "${module//\//.}"
+          else
+            modules=()
+            while IFS=$'\t' read -r atom gid; do
+              module=${gid%.*}
+              [[ -n $atom && $gid == D5/*.* && -f "$module.lean" ]] || exit 2
+              modules+=("${module//\//.}")
+            done < "${parts[3]}"
+            [[ ${#modules[@]} -gt 0 ]] || exit 2
+            printf '%s\n' "${modules[@]}" | sort -u | paste -sd' ' -
+          fi
+          exit 0
+        fi
         case "${parts[0]:-}" in
           deposit-header-check)
             if [[ ${parts[1]:-} != --target \
@@ -355,6 +392,7 @@ internal sealed partial class TransactionFixture
             fi
             status=1
             [[ ! -f .ledger-frozen-status ]] || status=$(<.ledger-frozen-status)
+            [[ ! -f .ledger-frozen-diagnostic ]] || cat .ledger-frozen-diagnostic >&2
             [[ $status != 2 ]] || echo 'LEDGER_FROZEN_INVALID synthetic failure' >&2
             exit "$status"
             ;;
@@ -376,6 +414,11 @@ internal sealed partial class TransactionFixture
             elif [[ ${parts[1]:-} != --candidate-lean-report ]]; then
               echo 'LEDGER_ALIGN_INVALID synthetic target transport mismatch' >&2
               exit 97
+            fi
+            if [[ ${PLAYBOOK_CROSS_SCRIBE_SCOPE:-0} == 1 && ${parts[1]:-} == --add ]] \
+                && grep -q Outside "${parts[4]}"; then
+              echo 'LEDGER_ALIGN_FAILED Raw Lean report contains unknown module Outside.' >&2
+              exit 2
             fi
             target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
             if [[ $target_module == D5/S0/Carrier/Probe.lean ]]; then
@@ -451,7 +494,8 @@ internal sealed partial class TransactionFixture
         string? baseRevision = null,
         bool rejectDepositHeader = false,
         string? realCliPath = null,
-        bool throughMake = false) =>
+        bool throughMake = false,
+        bool crossScribeScope = false) =>
         TestProcessRunner.Run(
             "/usr/bin/env",
             [
@@ -459,6 +503,7 @@ internal sealed partial class TransactionFixture
                 $"PLAYBOOK_TEST_CALLS={callsPath}",
                 $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
                 $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
+                $"PLAYBOOK_CROSS_SCRIBE_SCOPE={(crossScribeScope ? "1" : "0")}",
                 $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                 $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                 $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
