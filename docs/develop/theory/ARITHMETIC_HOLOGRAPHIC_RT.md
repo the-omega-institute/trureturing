@@ -3251,9 +3251,8 @@ $$
 **定理 47.1（证书停止的覆盖化与贪心界）。** 在 §46 的固定超阈值集合 $T=T_\varepsilon$ 与有限、显式枚举的允许层族 $\mathscr L$ 下，定义每层覆盖集
 $$
 C_K=\{\eta\in T:\eta\notin K^\perp\}\qquad(K\in\mathscr L).
-记 $\mathscr C:=\{C_K:K\in\mathscr L\}$。
 $$
-若 $n:=|T|=0$，算法零步停止并令 $\tau=0$。若 $n\ge1$，一个 stack 在证书意义下达到阈值，当且仅当其所选层的覆盖集并集包含 $T$。因此在可覆盖时最短 stack 长度恰为
+记 $\mathscr C:=\{C_K:K\in\mathscr L\}$。若 $n:=|T|=0$，算法零步停止并令 $\tau=0$。若 $n\ge1$，一个 stack 在证书意义下达到阈值，当且仅当其所选层的覆盖集并集包含 $T$。因此在可覆盖时最短 stack 长度恰为
 $$
 \tau(T,\mathscr C)=\min\{ |\mathscr Q|:\mathscr Q\subseteq\mathscr C,\ \bigcup\mathscr Q=T\}<\infty,
 $$
@@ -3267,10 +3266,10 @@ $$
 
 **证明。** 由 §46，残余集合经过所选层为
 $$
-T\cap\bigcap_{K\ {m selected}}K^\perp
-=T\setminus\bigcup_{K\ {m selected}}C_K.
+T\cap\bigcap_{K\ \mathrm{selected}}K^\perp
+=T\setminus\bigcup_{K\ \mathrm{selected}}C_K.
 $$
-故清空残余集合等价于覆盖 $T$，最短长度即 $\tau$；若并集不覆盖则不可达。对贪心界，设当前未覆盖集大小为 $r$，最优覆盖的 $\tau$ 个集合至少有一个覆盖不少于 $r/\tau$ 个元素，故贪心每轮后 $r$ 至多变为 $r(1-1/\tau)$；按标准分层求和，清空 $n$ 个元素所需轮数不超过 $\tau(1+1/2+\cdots+1/n)=H_n\tau$。每轮最多扫描 $|\mathscr L|$ 集合并逐项测试 $n$ 个角色，得到所述显式成本。证毕。
+故清空残余集合等价于覆盖 $T$，最短长度即 $\tau$；若并集不覆盖则不可达。对贪心界，取一个最优覆盖 $\mathscr Q^*$，$|\mathscr Q^*|=\tau$。在当前未覆盖集大小为 $r$ 时，$\mathscr Q^*$ 中各集合的 gains 总和至少为 $r$，故贪心 gain $g\ge r/\tau$。给本轮新覆盖的每个元素分配 charge $1/g$；本轮总 charge 为 $1$，且每个新元素的 charge 至多 $\tau/r$。按残余大小 $r=n,n-1,\ldots,1$ 分层求和，所有 charges 总和至多 $\tau H_n$，即贪心层数至多 $H_n\tau$。每轮最多扫描 $|\mathscr L|$ 集合并逐项测试 $n$ 个角色，得到所述显式成本。证毕。
 
 **范围。** $\tau$ 与贪心界只针对固定入口系数产生的 §45 证书族和给定允许层族；不等同于任意 LOSR 操作的最短实现，也不把证书阈值转成完整钻石范数优化。
 
