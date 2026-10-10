@@ -49,6 +49,10 @@ class CleanupAnchorCases:
         cwd = first if mode == "self" else root
         relative = lambda path: os.path.relpath(path, cwd)
         paths = list(map(relative, (first, second, artifact)))
+        if mode == "self":
+            locator = root / "locator"
+            locator.symlink_to(first / "dir", target_is_directory=True)
+            paths[1] = relative(locator) + "/../../second tree"
         manifest = first / "manifest.json"
         manifest.write_text(json.dumps(dict(paths=paths)))
         environment = dict(os.environ)

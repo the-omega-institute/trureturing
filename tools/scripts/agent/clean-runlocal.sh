@@ -21,7 +21,7 @@ from worktree_protocol import inventory,Refused,GitFailure
 from worktree_preservation import remove
 paths=json.load(open(manifest)).get("paths",[]); now=time.time(); out=[]
 # Preserve invocation-relative inputs before moving to Git's protected main tree.
-paths=[(p,os.path.abspath(p)) for p in paths]
+paths=[(p,os.path.realpath(p),os.path.islink(p)) for p in paths]
 anchor_error=None
 try:
     source=Path(inventory(source)[0]["worktree"]).resolve()
@@ -35,9 +35,9 @@ def newest(p):
                 try: m=max(m,os.lstat(os.path.join(d,n)).st_mtime)
                 except FileNotFoundError: pass
     return m
-for p,absolute in paths:
-    rp=os.path.realpath(absolute); rec={"path":p,"eligible":False,"reason":None,"state":"kept"}
-    if os.path.islink(absolute): rec["reason"]="symlink"
+for p,rp,linked in paths:
+    rec={"path":p,"eligible":False,"reason":None,"state":"kept"}
+    if linked or os.path.islink(rp): rec["reason"]="symlink"
     elif rp==root: rec["reason"]="is_root"
     elif not rp.startswith(root+os.sep): rec["reason"]="outside_root"
     elif not os.path.lexists(rp): rec["reason"]="missing"
