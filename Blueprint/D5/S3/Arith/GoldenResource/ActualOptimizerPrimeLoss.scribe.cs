@@ -118,13 +118,15 @@ internal sealed class ActualOptimizerPrimeLossDocument : IScribeDocumentDefiniti
     {
         Formula X = F.Id("X"), e = F.Id("epsilon"), H0 = F.Id("H0"), b = F.Id("b"), n = F.Id("n");
         Formula A = Call("log", n), H = Add(H0, D(1));
-        Formula c = Mul(Call("rhoOverTwo", e, H), Call("curvature", Call("max", A, b)));
+        Formula c = Mul(Div(Call("rho", e, H), D(2)), Call("curvature", Call("max", A, b)));
         Formula reserve = Call("actualReserve", A);
         Formula paid = Add(Mul(Sub(D(1), Call("paymentFraction", X, H)), reserve),
             Mul(c, Call("square", Sub(A, b))));
         return Disp(All([R("X"), R("epsilon"), R("H0"), R("b"), N("n")], Implies(
             AndAll(Le(D(25), X), Le(D(0), e), Lt(e, D(1)), Lt(D(0), H0),
-                Call("ThetaIntervalSupplier", X, e, H0), Call("actualReserveBandCount", X),
+                Call("ThetaIntervalSupplier", X, e, H0),
+                Le(Div(Mul(D(2), Call("sqrt", X)), Mul(D(2), Call("log", Mul(D(4), Call("sqrt", X))))),
+                    Call("card", Call("reserveBand", X))),
                 Le(D(1), n), Le(X, A), Le(A, Mul(D(2), X)), Le(X, b), Le(b, Mul(D(2), X)),
                 Call("IsGoldenResourceOptimal", Call("price", b), n)),
             Le(paid, Add(reserve, Call("actualDefect", A, b, n))))));
@@ -140,6 +142,7 @@ internal sealed class ActualOptimizerPrimeLossDocument : IScribeDocumentDefiniti
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, Grp(b));
     private static Formula AndAll(params Formula[] clauses)
     {
         Formula result = clauses[^1];

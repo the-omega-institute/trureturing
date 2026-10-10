@@ -90,10 +90,12 @@ theorem price_strictAnti {u v : ℝ} (hu : 1 < u) (huv : u < v) :
   · exact mul_pos (by linarith) (Real.log_pos hu)
   · have hmono := Real.mul_log_strictMonoOn
       (show u ∈ Set.Ici (Real.exp (-1)) by
-        have : Real.exp (-1) < (1 : ℝ) := by norm_num
+        have : Real.exp (-1) < (1 : ℝ) := by
+          simpa using (Real.exp_lt_exp.mpr (show (-1 : ℝ) < 0 by norm_num))
         exact this.le.trans hu.le)
       (show v ∈ Set.Ici (Real.exp (-1)) by
-        have : Real.exp (-1) < (1 : ℝ) := by norm_num
+        have : Real.exp (-1) < (1 : ℝ) := by
+          simpa using (Real.exp_lt_exp.mpr (show (-1 : ℝ) < 0 by norm_num))
         exact this.le.trans (hu.trans huv).le)
       huv
     exact hmono
