@@ -1,0 +1,67 @@
+### 第五层：paired calibration observability
+
+PR #15014 给出了一个与 FIB seam 高度相似的递归观测结构。
+
+其固定 kernel 为 $B:X\to Y$ 和 $A:Y\to X$，发射概率为 $u_x,v_y$，完整递归律为
+
+$$
+Q_x=
+u_x\delta_\alpha
++
+(1-u_x)\beta\sum_yB_{xy}W_y,
+$$
+
+$$
+W_y=
+(1-v_y)\delta_\beta
++
+v_y\alpha\sum_xA_{yx}Q_x.
+$$
+
+定义
+
+$$
+L=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,
+$$
+
+$$
+g=\operatorname{diag}(1-u)B(1-v).
+$$
+
+两个事件读口为
+
+$$
+f=g+Lg+L^2g,
+$$
+
+$$
+h=1-v+\operatorname{diag}(v)Ag.
+$$
+
+单独的 $f$ 或 $h$ 都可能留下纤维，但联合 $(f,h)$ 在共同 continuation kernel 下形成闭合反演。文档中的稳定性估计为
+
+$$
+\|u-u'\|_\pi
++
+\frac43\|v-v'\|_\tau
+\le
+14\delta_f+38\delta_h,
+$$
+
+并进一步给出完整递归律的总变差控制
+
+$$
+\pi\operatorname{TV}(Q,Q')
+\le
+20\delta_f+52\delta_h,
+$$
+
+$$
+\tau\operatorname{TV}(W,W')
+\le
+20\delta_f+52\delta_h.
+$$
+
+这与 FIB 的结构对应关系是：
+
+- 单个三均值读口对应一个投影；

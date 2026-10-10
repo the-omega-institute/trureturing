@@ -1,0 +1,99 @@
+### theorem 19.1: 定理 4：FIB 输出仪器的隐藏 seam 判据
+
+设五态初始分布属于固定三均值纤维
+
+$$
+p_\kappa=p_*+\kappa d.
+$$
+
+设 $\mathcal M=\{M_{a,o}\}$ 是一个有限输出 instrument，末端测试空间为 $G$。
+
+定义
+
+$$
+V_\infty=
+\operatorname{span}
+\{M_\omega g:\omega\text{ 为任意有限输出词},\ g\in G\}.
+$$
+
+则：
+
+#### 情形 A：永久隐藏
+
+如果
+
+$$
+d f=0
+\qquad
+\forall f\in V_\infty,
+$$
+
+则所有未来输出记录都与 $\kappa$ 无关。
+
+特别地，如果
+
+$$
+\mathcal B\supseteq G,
+$$
+
+并且
+
+$$
+M_{a,o}\mathcal B\subseteq\mathcal B
+\qquad
+\forall(a,o),
+$$
+
+则
+
+$$
+V_\infty\subseteq\mathcal B,
+$$
+
+因此 $\kappa$ 永久不可见。
+
+#### 情形 B：有限深度暴露
+
+如果存在某个有限输出词 $\omega$ 和末端 probe $g$，使得
+
+$$
+dM_\omega g\neq0,
+$$
+
+那么记录事件 $(\omega,g)$ 的概率对 $\kappa$ 非恒定，因而 $\kappa$ 可被未来数据识别。
+
+最小记录长度为
+
+$$
+\rho_{\mathcal M}(d).
+$$
+
+#### 情形 C：五态局部的最小记忆
+
+由于
+
+$$
+\mathbb R^S/\mathcal B
+$$
+
+是一维，五态局部模型只需要一个额外标量记忆：
+
+$$
+H(\mathcal B)=
+\mathbb R^S/\mathcal B
+\cong
+\mathbb R\,[xy].
+$$
+
+因此在局部五态层：
+
+$$
+\boxed{
+\text{最小额外未来记忆}=1\text{ 个标量 }\kappa.
+}
+$$
+
+但是否需要这个标量，取决于输出 instrument 是否把 $xy$ 拉回到可观测闭包。
+
+---
+

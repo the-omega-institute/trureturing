@@ -1,0 +1,40 @@
+- $K\subseteq\Omega$ 为安全集合。
+
+对一个 belief：
+
+$$
+B\subseteq K
+$$
+
+定义：
+
+$$
+\delta_a(B)=\{\delta(s,a):s\in B\}
+$$
+
+以及观测到 $y$ 后的 belief：
+
+$$
+B_{a,y}=
+\delta_a(B)\cap o^{-1}(y)
+$$
+
+定义算子：
+
+$$
+\mathcal F(S)=
+\left\{
+B\subseteq K:
+\exists a,\ 
+\delta_a(B)\subseteq K,\ 
+B_{a,y}\in S
+\text{ 对所有非空后继成立}
+\right\}
+$$
+
+定义最大不动点：
+
+$$
+V^\ast=\nu S.\mathcal F(S)
+$$
+
