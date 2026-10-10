@@ -5,7 +5,7 @@ year: 2012
 title: On SA, CA, and GA numbers
 doi: null
 url: https://arxiv.org/abs/1112.6010v2
-claim: The paper supplies a critical-source reduction and necessary prime-layer restrictions for proper GA1 integers, as well as infinite CA subclasses; these do not supply a signed forward packet bound.
+claim: The paper supplies a critical-source reduction, an unbounded GA2 family conditional on RH failure, and necessary prime-layer restrictions for proper GA1 integers; these do not supply a signed forward packet bound.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -19,7 +19,8 @@ the retrieved PDF SHA-256 is
 `7bf39ed12be2f708dc6c4dca747d7d9316470c11d8f09f071cdbc79e6f1148ae`.
 Locators below use its printed pages. The relevant statements and their
 proofs in §§5.1–5.2 and §6, together with the recalled reduction and facts
-on printed p.5, were read; no independent audit of the whole paper,
+on printed p.5 and Theorem 5(iii) with its proof on pp.15–16, were read;
+no independent audit of the whole paper,
 journal-version correspondence, or Lean verification is claimed.
 
 The source defines $G(n)=\sigma(n)/(n\log\log n)$ for $n>1$ and calls a
@@ -48,6 +49,40 @@ by size, while $\sigma(2p)/(2p)=\tfrac32(1+1/p)<2$ and
 $\log\log(2p)>2$ when $2p>5040$, so $G(2p)<1<e^\gamma$ excludes GA2.
 This is hypothesis bookkeeping for the existing reduction, not a new
 critical-source theorem or a new enumeration.
+
+## The published unbounded GA2 supplier under RH failure
+
+Theorem 5(iii), printed p.13, states that if RH is false, infinitely many
+GA2 integers exist. It also states that
+$\mu=\max_{n>5040}G(n)>e^\gamma$ and that every integer attaining
+this global maximum is both GA2 and CA. The infinitude and the CA
+classification have different scopes.
+
+Its proof on pp.15–16 uses Robin's published positive oscillation on CA
+integers to obtain $\max_{n\ge t}G(n)>e^\gamma$ for every $t$.
+Together with Gronwall's $\limsup G(n)=e^\gamma$, this permits a
+sequence of tail maximizers $N_i$, with successive tails beginning after
+the largest previous maximizer. Thus
+
+$$
+N_i\longrightarrow\infty,\qquad G(N_i)>e^\gamma,\qquad
+n>N_i\ \Longrightarrow\ G(n)\le G(N_i).
+$$
+
+Every $N_i$ is therefore GA2. This is the source's construction, with
+its integer $A_i$ renamed $N_i$ to distinguish it from the logarithmic
+clock $A=\log N$. The proof classifies global maximizers as CA; it does
+not classify all these later tail maximizers as GA1, CA, or maximizers
+on the original domain $n>5040$.
+
+The [all-GA2 core application](../Analytic/polak2026finiterobinca.md#application-to-arbitrary-ga2-sources-including-extra-prime-support)
+uses this existing unbounded family without requiring those stronger
+classifications. An eventual signed estimate covering every sufficiently
+large GA2 clock can therefore be tested against these actual sources.
+This supplier does not give that estimate. It is distinct from the fixed
+least global maximizer and from the finite XA family under RH failure;
+no new source-selection theorem, infinitude proof, originality claim,
+or Lean verification is asserted.
 
 ## The backward record classification is already published
 
