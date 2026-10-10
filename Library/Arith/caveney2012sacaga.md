@@ -84,6 +84,236 @@ least global maximizer and from the finite XA family under RH failure;
 no new source-selection theorem, infinitude proof, originality claim,
 or Lean verification is asserted.
 
+## Ceiling replacements constrain the same right-tail source
+
+The following applications use the all-integer comparisons of the
+published tail sources, together with the classical Euler-layer
+rearrangement. They retain one actual final integer for every comparison;
+GA2 comparisons with multiples alone do not supply this argument.
+
+Let $N>e$ satisfy $G(m)\le G(N)$ for every integer $m\ge N$, and put
+$A=\log N$, $L=\log A$, $T=\sqrt A L$ and $W(n)=\log Z(n)$.
+For any actual integer $1\le d\le N$, reuse the
+[ceiling replacement](../ArithSums/nicolas2025comparison.md#all-integer-forward-comparisons-bound-the-envelope-deficit)
+and retain its exact clock:
+
+$$
+c=\left\lceil\frac Nd\right\rceil,\qquad m=cd,\qquad
+H=\log(N/d),\qquad s=\log(m/N),\qquad
+C_A(s)=\log\frac{\log(A+s)}L.
+$$
+
+Thus $N\le m<N+d$ and $0\le s<\log(1+e^{-H})$. With
+$b_p=v_p(d)$ and $r_p=v_p(c)$, the actual added Euler reward is
+
+$$
+B_d(c)=\log\frac{Z(cd)}{Z(d)}
+=\sum_p\log\frac{1-p^{-(b_p+r_p+1)}}{1-p^{-(b_p+1)}}\ge0.
+$$
+
+Shared factors of $c$ and $d$ are included. The exact forward comparison
+and the existing concavity tangent give
+
+$$
+\boxed{W(d)-W(N)+B_d(c)\le C_A(s)\le\frac{s}{AL}.}
+\tag{R1}
+$$
+
+If the left side exceeds $C_A(s)$, the same actual $cd>N$ improves
+$G(N)$. No comparison at an intermediate deletion integer is required.
+
+### Rearrange all occupied layers in one integer
+
+For the same $N$, let $S_k=\{p:v_p(N)\ge k\}$ and $r_k=|S_k|$,
+and let $q_j$ be the $j$th ordinary prime. Set
+
+$$
+d_N=\prod_{k\ge1}\prod_{j\le r_k}q_j,\qquad
+\beta_k(p)=\log\frac{Z(p^k)}{Z(p^{k-1})}
+=\log\left(1+\frac1{p+\cdots+p^k}\right).
+$$
+
+The prefixes are nested because $r_{k+1}\le r_k$, so $d_N$ is one
+realizable exponent inventory. Monotonicity of $\log p$ and $\beta_k(p)$
+gives the simultaneous savings
+
+$$
+\begin{aligned}
+H_N&=\sum_k\left(\sum_{p\in S_k}\log p
+                 -\sum_{j\le r_k}\log q_j\right)
+     =\log(N/d_N)\ge0,\\
+\Gamma_N&=\sum_k\left(\sum_{j\le r_k}\beta_k(q_j)
+                      -\sum_{p\in S_k}\beta_k(p)\right)
+          =W(d_N)-W(N)\ge0.
+\end{aligned}
+$$
+
+All sums are finite. Apply (R1) to this complete $d_N$, with
+$c_N=\lceil N/d_N\rceil$ and $s_N=\log(c_Nd_N/N)$:
+
+$$
+\boxed{
+\Gamma_N+B_{d_N}(c_N)\le C_A(s_N)
+<\frac{e^{-H_N}}{AL},\qquad
+0\le T\Gamma_N<\frac{e^{-H_N}}{\sqrt A}.}
+\tag{R2}
+$$
+
+The inequality counts the total rearrangement and its actual padding,
+not separately attainable optimum layers. It gives no positive lower
+funding from a failure of prime-prefix order at the critical scale.
+If $d_N=N$, then $c_N=1$ and both rewards are zero.
+
+### A padding prime outside the replacement gives a strict improvement
+
+Suppose additionally that $Z(d)\ge Z(N)$ and $AL\ge2$. Then
+
+$$
+\boxed{\operatorname{supp}(\lceil N/d\rceil)
+       \subseteq\operatorname{supp}(d).}
+\tag{R3}
+$$
+
+For $d=N$ the multiplier is one. Otherwise $d$ is not a divisor of $N$:
+a proper divisor has strictly smaller $Z$. Thus
+$c-1<N/d<c$, $c\ge2$, $cd>N$, and
+$s<\log(c/(c-1))$. If a prime $p\mid c$ is absent from $d$, then
+$B_d(c)\ge\log(1+1/p)\ge\log(1+1/c)$, so
+
+$$
+\log\frac{G(cd)}{G(N)}
+>\log\frac{c+1}{c}-\frac1{AL}\log\frac c{c-1}>0.
+$$
+
+The last inequality uses
+$\log(c/(c-1))<2\log((c+1)/c)$ for $c\ge2$, equivalently
+$c^2-c-1>0$. This contradicts the actual forward comparison.
+Even when (R3) holds, (R1) keeps all added layers in the same budget:
+$B_d(c)<d/(NAL)$. Both restrictions apply to $d_N$ and to an actual
+integer attaining $\Sigma(N)$.
+
+The argument does not force a violation of (R1)–(R3), identify $N$ as
+CA or GA1, or control the original signed $I_\psi(A)$. A FIB address
+of either comparator must retain this actual prime inventory and clock;
+the address alone supplies no strict improvement. These are applications
+of existing source comparisons and Euler factors, without a priority
+claim, new rearrangement theorem, or Lean verification.
+
+## Inherited oscillation relaxes the eventual signed target
+
+The displayed positive oscillation on printed p.15 of the same CNS v2
+primary supplies more than the existence of arbitrarily large violations.
+Under RH failure, set
+$\Theta=\sup_{\zeta(\rho)=0}\Re\rho>1/2$ and fix
+$1-\Theta<\eta<1/2$. The source applies Robin's oscillation result to
+CA integers $C$ and obtains, for some fixed $c_\eta>0$, arbitrarily large
+actual witnesses satisfying
+
+$$
+G(C)>e^\gamma\left(1+c_\eta(\log C)^{-\eta}\right).
+\tag{O1}
+$$
+
+This is the oscillation used in the published infinitude proof, with an
+explicit positive constant; its underlying Robin proof is cited through
+that primary and is not independently reproved here.
+
+Choose such a $C_j>\max\{e,N_{j-1}\}$ and let $N_j$ be the rightmost maximizer of
+$G$ on the integers $n\ge C_j$. The maximum is attained with finitely
+many ties: $G(C_j)>e^\gamma=\limsup G(n)$ places all sufficiently large
+integers strictly below $G(C_j)$. This is the same tail-selection
+mechanism as on printed p.16, with the tail starting at the chosen
+oscillation witness. Thus
+
+$$
+N_j\ge C_j,\qquad N_j\longrightarrow\infty,\qquad
+G(N_j)\ge G(C_j),\qquad
+m>N_j\ \Longrightarrow\ G(m)\le G(N_j).
+$$
+
+This particular selection can also retain CA status by direct application
+of the same primary's Lemma 2, printed p.10, and Lemma 6, p.13. If
+$N_j=C_j$, it already has that status. If $N_j>C_j$, set
+$\epsilon_j=1/(\log N_j\log\log N_j)$. Lemma 6 makes
+
+$$
+g_{\epsilon_j}(t)=\epsilon_j\log t-\log\log\log t
+$$
+
+minimal at $t=N_j$ on $t>e$. Hence, for every integer $n\ge C_j$,
+
+$$
+Z(n)n^{-\epsilon_j}
+=G(n)e^{-g_{\epsilon_j}(n)}
+\le G(N_j)e^{-g_{\epsilon_j}(N_j)}
+=Z(N_j)N_j^{-\epsilon_j}.
+$$
+
+Lemma 2 applies with $N_0=C_j$ and $N=N_j$ and supplies global CA
+optimization at $\epsilon_j$. Its comparison with a CA parameter for
+$C_j$ is a conclusion of the lemma, not an additional assumption.
+The equality branch $N_j=C_j$ does not identify its optimizing price
+with $\epsilon_j$. This selection does not classify every member of
+the original integer-tail family, or make these $N_j$ GA1 or global
+maximizers on the original $n>5040$ domain.
+
+At their actual clocks $A_j=\log N_j$, $L_j=\log A_j$,
+$T_j=\sqrt{A_j}L_j$, and with
+$\Delta(N)=\gamma-\log G(N)$, positivity of $\eta$ gives
+
+$$
+\Delta(N_j)<-\log(1+c_\eta A_j^{-\eta}).
+\tag{O2}
+$$
+
+There is no bound needed on $N_j/C_j$: increasing the chosen integer
+only decreases $A_j^{-\eta}$ from $(\log C_j)^{-\eta}$.
+Reuse the exact same-source identity
+$\Delta(N)=I_\psi(A)+K_N(A)$ and the
+[actual-core allowance](../ArithSums/nicolas2025comparison.md#the-same-effective-allowance-on-actual-ga2-cores).
+Its thresholds hold eventually along this family. Equations (O1)–(O2)
+then give
+
+$$
+\begin{aligned}
+T_j I_\psi(A_j)
+&<-\mathcal E(L_j)-T_j\log(1+c_\eta A_j^{-\eta})\\
+&\le-\mathcal E(L_j)
+       -\frac{c_\eta}{2}A_j^{1/2-\eta}L_j
+\longrightarrow-\infty.
+\end{aligned}
+\tag{O3}
+$$
+
+The second line uses $c_\eta A_j^{-\eta}\le1$ eventually. The complete
+original improper integral $I_\psi$ and its clock remain unchanged;
+no zero sum, upper endpoint, or elementary correction is discarded.
+In particular, under RH failure, these actual CA right-tail sources
+carry an unbounded negative normalized signed response. Their classical
+prime-prefix support and ordered exponents give $d_{N_j}=N_j$, so the
+sorting reward $\Gamma_{N_j}$ and its padding reward in (R2) are zero.
+Their [existing strict SA property](alaoglu1944highly.md) also gives
+$\Sigma(N_j)=Z(N_j)$ and $D_{N_j}=0$. Neither defect supplies a uniform
+strictly positive funding term on this selectable critical family.
+The source constraints do not establish a favorable-cutoff principle.
+
+A weaker sufficient target for an eventual contradiction is therefore
+an independently established finite lower bound: find fixed $M\ge0$
+and $A_0$ such that every actual CA all-integer right-tail maximizer with
+$A=\log N\ge A_0$ satisfies
+
+$$
+\boxed{\sqrt A\log A\,I_\psi(A)\ge-M.}
+\tag{O4}
+$$
+
+Any such fixed $M$ would contradict (O3) under RH failure. This target
+does not require $M$ to equal the effective core allowance. The lower
+bound (O4) is not proved; the application only relaxes the outstanding
+same-source signed obligation using the already published oscillation.
+It is not a new source theorem, priority claim, Lean result, or proof
+of RH.
+
 ## The backward record classification is already published
 
 Nazardonyavi and Yakubovich, *Superabundant numbers, their subsequences

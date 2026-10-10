@@ -802,6 +802,57 @@ sources have no such equality here. This is a source-scope application
 of the existing envelope and payment estimates, without a new core
 theorem, originality claim, finite verification, or Lean result.
 
+### All-integer forward comparisons bound the envelope deficit
+
+The CNS tail maximizers also retain more information than GA2 alone
+provides for this argument. Let $N>e$ satisfy
+$G(m)\le G(N)$ for every integer $m\ge N$, and keep the existing
+$D_N=\log(\Sigma(N)/Z(N))\ge0$. Choose an actual $d\le N$ attaining
+$\Sigma(N)$ and put
+
+$$
+m=d\left\lceil\frac Nd\right\rceil,
+\qquad N\le m<N+d\le2N.
+$$
+
+Divisibility monotonicity gives $Z(d)\le Z(m)$. Applying the same
+forward record condition at this actual $m$ gives
+
+$$
+\frac{\Sigma(N)}{Z(N)}
+\le\frac{Z(m)}{Z(N)}
+\le\frac{\log\log m}{\log\log N}
+<\frac{\log\log(2N)}{\log\log N}.
+$$
+
+Hence, with the same $A=\log N$ and $L=\log A$,
+
+$$
+\boxed{0\le D_N
+<\log\frac{\log(A+\log2)}{\log A}
+<\frac{\log2}{A\log A}.}
+$$
+
+The last comparison is the strict concavity tangent used in (G2).
+The case $d=N$ or $m=N$ has $D_N=0$ and satisfies these strict
+positive allowances. The constructed $m$ need not be a multiple of
+$N$, so this proof uses the all-integer forward comparisons of the
+published tail maximizers, rather than just their GA2 comparisons.
+
+Along the CNS family under RH failure,
+
+$$
+0\le\sqrt A\log A\,D_N<\frac{\log2}{\sqrt A}\longrightarrow0.
+$$
+
+Thus replacing $Z(N)$ by $\Sigma(N)$ loses only a vanishing amount at
+the original critical scale on these actual sources. Conversely, an
+upper bound of this size cannot supply a fixed positive lower funding
+term from $D_N$. It neither identifies an exponent profile nor makes
+$N$ CA or GA1. This is a short application of standard divisibility
+monotonicity and the existing source comparisons, without a priority
+claim, new Lean wrapper, or signed-tail estimate.
+
 ## A fixed positive scale mixture cannot remove the functional-equation weight
 
 The signed formula above and the actual-source condition (G9) are
