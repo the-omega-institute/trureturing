@@ -2,6 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder
 import Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition
 open LiteralModel EndpointCells OriginalNarrowCost OriginalExecutionBridge OriginalAcquiredTrace PhysicalWindowDecoder
@@ -326,6 +327,265 @@ noncomputable def exceptionalRowsRegistration :
 #print axioms issuedPhaseRegistration
 #print axioms exceptionalRowsEvidence
 #print axioms exceptionalRowsRegistration
+
+@[reducible] def finalScriptLengthSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature Nat (NarrowWindowCost.Archive) (fun _ => Nat)
+
+def finalScriptLengthActual : Realization finalScriptLengthSignature :=
+  realize finalScriptLengthSignature (fun _ _ issued => issued.length) (fun e => nomatch e)
+
+def finalScriptLengthRejected : Realization finalScriptLengthSignature :=
+  realize finalScriptLengthSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+/-- The complete original script Law observes only the issued archive length. -/
+@[reducible] def finalScriptLengthArena : Arena.{0,0,0,0,0} where
+  signature := finalScriptLengthSignature
+  Law R := ∀ {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
+    (words : List (Fin m → Bool)) (decode : NarrowWindowCost.Archive m → Y)
+    (w : List Bool) (free : Option (ZMod 2)) (base : NarrowWindowCost.Archive m),
+    let issued := scriptArchive words (OriginalRecord k (by omega) w)
+    PaidTrace (finalSelector base.length words decode) free
+      (OriginalRecord k (by omega) w) base issued (decode issued) ∧
+    issued.map Prod.fst = words ∧ R.readout () m issued = words.length ∧
+    NarrowWindowCost.execute k (by omega) (finalSelector base.length words decode)
+      words.length w free base = some (decode issued, words.length)
+
+theorem finalScriptLengthPositive : finalScriptLengthArena.{u}.Law finalScriptLengthActual :=
+  scriptEvidence.{u}.bridge.mpr scriptEvidence.{u}.variation.1
+
+theorem finalScriptLengthNegative : ¬ finalScriptLengthArena.{u}.Law finalScriptLengthRejected := by
+  intro law
+  let label : ULift.{u} Unit := ⟨()⟩
+  have impossible := (law 3 1 (by decide) [] (fun _ => label) [] (some 0) []).2.2.1
+  change (1 : ℕ) = 0 at impossible
+  cases impossible
+
+theorem finalScriptLengthDependence :
+    ObservationalDependence finalScriptLengthSignature finalScriptLengthActual := by
+  intro i
+  exact ⟨3, [], [(fun (_ : Fin 3) => false, none)], by decide⟩
+
+def finalScriptLengthEvidence : Registration finalScriptLengthArena.{u}
+    (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.original_final_script.{u})) where
+  actual := finalScriptLengthActual
+  bridge := Iff.rfl
+  variation := ⟨finalScriptLengthPositive, finalScriptLengthRejected, finalScriptLengthNegative⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    (P := Nat) (X := NarrowWindowCost.Archive) (Y := fun _ => Nat)
+    finalScriptLengthArena.{u}.Law finalScriptLengthActual finalScriptLengthRejected finalScriptLengthNegative
+  dependence := finalScriptLengthDependence
+
+noncomputable def finalScriptLengthRegistration :
+    LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.original_final_script.{u})
+      (type_of% (realize finalScriptLengthSignature finalScriptLengthActual.readout finalScriptLengthActual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str
+    `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.original_final_script
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder/finalScriptLengthArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.finalScriptLengthEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨finalScriptLengthArena.{u}⟩, objectArena := .source ⟨finalScriptLengthArena.{u}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source finalScriptLengthArena.{u} ⟨finalScriptLengthEvidence.{u}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize finalScriptLengthSignature finalScriptLengthActual.readout finalScriptLengthActual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder,
+    definition := none, coordinates := #[2],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "arg", "fn"],
+      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+#print axioms finalScriptLengthEvidence
+#print axioms finalScriptLengthRegistration
+
+@[reducible] def endpointLengthSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature Nat (fun m => List (Fin m → Bool)) (fun _ => Nat)
+
+def endpointLengthActual : Realization endpointLengthSignature :=
+  realize endpointLengthSignature (fun _ _ words => words.length) (fun e => nomatch e)
+
+def endpointLengthRejected : Realization endpointLengthSignature :=
+  realize endpointLengthSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+/-- The complete endpoint Law keeps selection, survival and the endpoint vector. -/
+@[reducible] def endpointLengthArena : Arena.{0,0,0,0,0} where
+  signature := endpointLengthSignature
+  Law R := ∀ {Y : Type u} [instDecidableEq : DecidableEq Y] (m d : ℕ) (hm : 3 ≤ m) (odd : Odd m) (hd : 2 ≤ d)
+    (table : Fin (m + 1) → Y) (fit : 2 * d ≤ m + 1)
+    (c : Label table → Word d) (selected : Selection (sourceClauses table d fit) (by omega) c)
+    (unary : ∀ i, i ∉ c ((sourceClauses table d fit).unary i))
+    (v : ZMod 2) (x : Fin (m + 1)) (alphabet : Bool),
+    let q : Option (LiveRecord (m + 1)) := some ⟨v, -(x.val : ZMod (m + 2)) + (m : ℕ), 1⟩
+    let issued := scriptArchive (actualWords table c) q
+    R.readout () m (actualWords table c) = d ∧ none ∉ issued.map Prod.snd ∧
+    endpointDifferences (some v) (issued.map Prod.snd) =
+      List.ofFn (fun i : Fin d => some (vertexBit table c i x))
+
+theorem endpointLengthPositive : endpointLengthArena.{u}.Law endpointLengthActual :=
+  @physical_endpoint_codes.{u}
+
+theorem endpointLengthNegative : ¬ endpointLengthArena.{u}.Law endpointLengthRejected := by
+  intro law
+  let table : Fin (3 + 1) → ULift.{u} Unit := fun _ => ⟨()⟩
+  let c : Label table → Word 2 := fun _ => ∅
+  have unary : ∀ i : Fin 2, i ∉ c ((sourceClauses table 2 (by decide)).unary i) := by
+    intro i
+    exact Finset.not_mem_empty i
+  have regular : ∀ L, c L ∈ codeList (sourceClauses table 2 (by decide)) (by decide) L := by
+    intro L
+    apply (mem_codeList_iff (sourceClauses table 2 (by decide)) (by decide) L (c L)).mpr
+    exact ⟨fun i _ => Finset.not_mem_empty i,
+      fun _ => Finset.not_mem_empty _, fun i _ _ => Or.inl (Finset.not_mem_empty i)⟩
+  have selected : Selection (sourceClauses table 2 (by decide)) (by decide) c := Or.inl regular
+  have impossible := (law 3 2 (by decide) ⟨1, rfl⟩ (by decide) table (by decide)
+    c selected unary 0 0 false).1
+  change (1 : ℕ) = 2 at impossible
+  cases impossible
+
+theorem endpointLengthDependence :
+    ObservationalDependence endpointLengthSignature endpointLengthActual := by
+  intro i
+  exact ⟨3, [], [fun (_ : Fin 3) => false], by decide⟩
+
+def endpointLengthEvidence : Registration endpointLengthArena.{u}
+    (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.physical_endpoint_codes.{u})) where
+  actual := endpointLengthActual
+  bridge := Iff.rfl
+  variation := ⟨endpointLengthPositive, endpointLengthRejected, endpointLengthNegative⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    (P := Nat) (X := fun m => List (Fin m → Bool)) (Y := fun _ => Nat)
+    endpointLengthArena.{u}.Law endpointLengthActual endpointLengthRejected endpointLengthNegative
+  dependence := endpointLengthDependence
+
+noncomputable def endpointLengthRegistration :
+    LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.physical_endpoint_codes.{u})
+      (type_of% (realize endpointLengthSignature endpointLengthActual.readout endpointLengthActual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str
+    `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.physical_endpoint_codes
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder/endpointLengthArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.endpointLengthEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨endpointLengthArena.{u}⟩, objectArena := .source ⟨endpointLengthArena.{u}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source endpointLengthArena.{u} ⟨endpointLengthEvidence.{u}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize endpointLengthSignature endpointLengthActual.readout endpointLengthActual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder,
+    definition := none, coordinates := #[2],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"],
+      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+#print axioms endpointLengthEvidence
+#print axioms endpointLengthRegistration
+
+@[reducible] def literalEqualitySignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => Bool) (fun _ => Bool → Prop)
+
+def literalEqualityActual : Realization literalEqualitySignature :=
+  realize literalEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e)
+
+def literalEqualityRejected : Realization literalEqualitySignature :=
+  realize literalEqualitySignature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+/-- The complete literal execution Law keeps both words and both execution equalities. -/
+@[reducible] def literalEqualityArena : Arena.{0,0,0,0,0} where
+  signature := literalEqualitySignature
+  Law R := ∀ {Y : Type u} [instDecidableEq : DecidableEq Y] (m : ℕ) (hm : 3 ≤ m)
+    (table : Fin (m + 1) → Y) (fit : 4 ≤ m + 1)
+    (c : Label table → Word 2)
+    (unary : ∀ i, i ∉ c ((sourceClauses table 2 fit).unary i))
+    (codes : ∀ i : Fin 4, c (fourOwners (sourceClauses table 2 fit) i) = fourWords i)
+    (v : ZMod 2) (phase : ZMod (m + 2)) (s : ℕ) (hs : s < m + 1),
+    let w₀ := prefixWord m (actualRow table c 0)
+    let w₁ := prefixWord m (actualRow table c 1)
+    R.readout () () (w₀ ⟨0, by omega⟩) false ∧ w₀ ⟨m - 2, by omega⟩ = false ∧
+    w₀ ⟨m - 1, by omega⟩ = true ∧ tailAfter s w₀ = 1 ∧
+    w₁ ⟨0, by omega⟩ = true ∧ w₁ ⟨1, by omega⟩ = true ∧
+    w₁ ⟨2, by omega⟩ = false ∧ 1 + 2 < m + 1 ∧
+    runBits (m + 1) w₀ (some ⟨v, phase, s⟩) =
+      some ⟨v + wordIncrement (m + 1) phase w₀, phase + (m : ℕ), 1⟩ ∧
+    runBits (m + 1) w₁
+      (some ⟨v + wordIncrement (m + 1) phase w₀, phase + (m : ℕ), 1⟩) =
+      some ⟨v + wordIncrement (m + 1) phase w₀ +
+        wordIncrement (m + 1) (phase + (m : ℕ)) w₁,
+        phase + (m : ℕ) + (m : ℕ), tailAfter 0 w₁⟩
+
+theorem literalEqualityPositive : literalEqualityArena.{u}.Law literalEqualityActual :=
+  @exceptional_literal_execution.{u}
+
+theorem literalEqualityNegative : ¬ literalEqualityArena.{u}.Law literalEqualityRejected := by
+  intro law
+  let table : Fin (3 + 1) → ULift.{u} (Fin 4) := fun v => ⟨v⟩
+  let c : Label table → Word 2 := fun L => ![{0}, {0, 1}, ∅, {1}] L.val.down
+  have unary : ∀ i : Fin 2, i ∉ c ((sourceClauses table 2 (by decide)).unary i) := by
+    intro i
+    fin_cases i
+    · change (0 : Fin 2) ∉ (∅ : Word 2)
+      exact Finset.not_mem_empty _
+    · change (1 : Fin 2) ∉ ({0} : Word 2)
+      decide
+  have codes : ∀ i : Fin 4,
+      c (fourOwners (sourceClauses table 2 (by decide)) i) = fourWords i := by
+    intro i
+    fin_cases i <;> rfl
+  exact (law 3 (by decide) table (by decide) c unary codes 0 0 0 (by decide)).1
+
+theorem literalEqualityDependence :
+    ObservationalDependence literalEqualitySignature literalEqualityActual := by
+  intro i
+  refine ⟨(), false, true, ?_⟩
+  intro h
+  have atFalse := congrFun h false
+  change (false = false) = (true = false) at atFalse
+  have impossible : true = false := atFalse ▸ rfl
+  cases impossible
+
+def literalEqualityEvidence : Registration literalEqualityArena.{u}
+    (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.exceptional_literal_execution.{u})) where
+  actual := literalEqualityActual
+  bridge := Iff.rfl
+  variation := ⟨literalEqualityPositive, literalEqualityRejected, literalEqualityNegative⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    (P := Unit) (X := fun _ => Bool) (Y := fun _ => Bool → Prop)
+    literalEqualityArena.{u}.Law literalEqualityActual literalEqualityRejected literalEqualityNegative
+  dependence := literalEqualityDependence
+
+noncomputable def literalEqualityRegistration :
+    LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.exceptional_literal_execution.{u})
+      (type_of% (realize literalEqualitySignature literalEqualityActual.readout literalEqualityActual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str
+    `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.exceptional_literal_execution
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder/literalEqualityArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.literalEqualityEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨literalEqualityArena.{u}⟩, objectArena := .source ⟨literalEqualityArena.{u}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source literalEqualityArena.{u} ⟨literalEqualityEvidence.{u}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize literalEqualitySignature literalEqualityActual.readout literalEqualityActual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder,
+    definition := none, coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"],
+      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+#print axioms literalEqualityEvidence
+#print axioms literalEqualityRegistration
 
 end
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder
