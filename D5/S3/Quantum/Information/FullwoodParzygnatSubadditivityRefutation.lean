@@ -66,9 +66,10 @@ set_option maxHeartbeats 4000000 in
 private theorem action (X : Matrix (Fin 5) (Fin 5) ℂ) :
     (of_kraus K K) X = (1 / 4 : ℂ) • (trace X • 1 - Xᵀ) := by
   change (∑ k, K k * X * (K k)ᴴ) = _
+  unfold K pairs
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [K, pairs, Matrix.sum_apply, Matrix.mul_apply, Fin.sum_univ_succ,
+    simp [Matrix.sum_apply, Matrix.mul_apply, Fin.sum_univ_succ,
       Matrix.conjTranspose_apply, Matrix.single, Matrix.trace] <;> ring
 
 private theorem complete : (∑ k, (K k)ᴴ * K k) = 1 := by
@@ -89,7 +90,8 @@ private theorem jamio_apply {n m : ℕ}
     (E : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix (Fin m) (Fin m) ℂ)
     (a c : Fin n) (b d : Fin m) :
     jamio E (a,b) (c,d) = E (single c a 1) b d := by
-  simp [jamio, Matrix.sum_apply, Matrix.kroneckerMap_apply, Matrix.single, ite_and]
+  unfold jamio
+  simp [Matrix.sum_apply, Matrix.kroneckerMap_apply, Matrix.single, ite_and]
 
 
 private theorem P_hermitian : P.IsHermitian := by
@@ -98,7 +100,8 @@ private theorem P_hermitian : P.IsHermitian := by
 
 private theorem P_idempotent : P * P = P := by
   have hdot : star Ω ⬝ᵥ Ω = (5 : ℂ) := by
-    simp [dotProduct, Fintype.sum_prod_type, Ω]
+    unfold Ω
+    simp [dotProduct, Fintype.sum_prod_type]
   unfold P
   rw [Matrix.smul_mul, Matrix.mul_smul, Matrix.vecMulVec_mul_vecMulVec, hdot]
   ext i j
@@ -108,7 +111,8 @@ private theorem P_idempotent : P * P = P := by
   ring
 
 private theorem P_trace : trace P = 1 := by
-  simp [P, Matrix.trace, Matrix.vecMulVec_apply, Ω, Fintype.sum_prod_type]
+  unfold P Ω
+  simp [Matrix.trace, Matrix.vecMulVec_apply, Fintype.sum_prod_type]
 
 set_option maxRecDepth 100000 in
 private theorem jamio_eq : jamio (of_kraus K K) =
@@ -121,7 +125,8 @@ private theorem jamio_eq : jamio (of_kraus K K) =
     · simp [trace_single_eq_of_ne c a (1 : ℂ) h, h]
   rw [ht]
   clear ht
-  simp [P, Ω, Matrix.single, Matrix.one_apply, Matrix.vecMulVec_apply, Prod.ext_iff]
+  unfold P Ω
+  simp [Matrix.single, Matrix.one_apply, Matrix.vecMulVec_apply, Prod.ext_iff]
   split_ifs <;> simp_all only [Matrix.one_apply, and_self, true_and,
     not_true_eq_false, false_and, and_false, not_false_eq_true] <;> norm_num
 
@@ -130,7 +135,8 @@ private theorem pdm_eq : pdm ρ (of_kraus K K) =
       (-1 / 4 : ℝ) • P := by
   have hkron : ρ ⊗ₖ (1 : Matrix (Fin 5) (Fin 5) ℂ) =
       (1 / 5 : ℝ) • (1 : Matrix (Fin 5 × Fin 5) (Fin 5 × Fin 5) ℂ) := by
-    simp [ρ, Matrix.smul_kronecker]
+    unfold ρ
+    simp [Matrix.smul_kronecker]
   unfold pdm
   rw [hkron, jamio_eq]
   simp only [Matrix.smul_mul, Matrix.mul_smul, one_mul, mul_one]
@@ -139,13 +145,15 @@ private theorem pdm_eq : pdm ρ (of_kraus K K) =
 private theorem stationary : (of_kraus K K) ρ = ρ := by
   rw [action]
   ext i j
-  simp [ρ, Matrix.trace, Matrix.one_apply, eq_comm]
+  unfold ρ
+  simp [Matrix.trace, Matrix.one_apply, eq_comm]
   split_ifs <;> norm_num
 
 private theorem density : ρ.PosSemidef ∧ trace ρ = 1 := by
+  unfold ρ
   constructor
   · exact Matrix.PosSemidef.one.smul (by norm_num : (0 : ℝ) ≤ 1 / 5)
-  · norm_num [ρ, Matrix.trace, Fin.sum_univ_succ]
+  · norm_num [Matrix.trace, Fin.sum_univ_succ]
 
 private theorem projection_cfc {n : Type} [Fintype n] [DecidableEq n]
     (Q : Matrix n n ℂ) (hQ : Q.IsHermitian) (hQQ : Q * Q = Q)
