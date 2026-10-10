@@ -3798,4 +3798,435 @@ $$
 
 然而 $\mathbb F_4^2$ 的加法群指数为二，任意从它到 $C_4$ 的群同态像都被二消去，不能满射。符号双射不能把有限域加法变成循环四元加法。即使重新给十六行另赋群结构，若四个循环坐标同时成为满射同态，就会违背已证明的六十四标签下界。因此这里改变的是允许的控制函数族，而不是同一族中的更小实现。循环根编码与有限域编码的区别亦见 Pistone、Rogantin 的 §6；一般正交阵的两坐标乘积整除界见 Beder、McComack 的 §1.1，均不代替本节的循环群深度约束。证毕。
 
+## 48. 证书层选择的在线增量更新
+
+**定义 48.1（固定菜单与前缀残余）。** 沿用 §45--47 的固定入口 Fourier 标签、固定系数和有限、显式枚举的允许层族 $\mathscr L$；每个 $K\in\mathscr L$ 只施加同一 Fourier 基上的均匀 Schur 平均。对每个允许层先在非平凡角色的全集中定义
+
+$$
+\overline C_K:=\{\eta\in\widehat A\setminus\{1\}:\eta\notin K^\perp\},\qquad
+C_K(X):=X\cap\overline C_K
+$$
+
+其中 $X\subseteq\widehat A\setminus\{1\}$ 为有限阈值角色集。将已有允许 stack 前缀记为序列 $\mathcal Q=(K_1,\ldots,K_{\ell(\mathcal Q)})$，并令 $\underline{\mathcal Q}:=\{K_i\}$ 为其去重后的层集合。重复层只计一次覆盖，但物理前缀长度仍是 $\ell(\mathcal Q)$。置
+$$
+V_{\mathcal Q}:=\bigcup_{K\in\underline{\mathcal Q}}\overline C_K,\qquad
+\Delta_{\mathcal Q}(X):=X\setminus V_{\mathcal Q}.
+$$
+定义保留此前缀时的最短追加层数
+$$
+\tau_{\rm ext}(\mathcal Q;X,\mathscr L)
+:=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L,\ 
+\Delta_{\mathcal Q}(X)\subseteq
+\bigcup_{K\in\mathcal R}\overline C_K\right\};
+$$
+若不存在这样的 $\mathcal R$ 则置 $\tau_{\rm ext}=\infty$，空残余的最小值为 $0$。
+
+**定理 48.2（证书族的在线增量更新与可验证间隔）。** 设
+$$
+X^-\subseteq X^+\subseteq\widehat A\setminus\{1\}
+$$
+为有限阈值角色集，$\mathcal Q$ 为已选的有限允许前缀，置
+$$
+\delta:=X^+\setminus X^-,\qquad
+\Delta^-:=\Delta_{\mathcal Q}(X^-),\qquad
+\Delta^+:=\Delta_{\mathcal Q}(X^+).
+$$
+则残余可增量维护为
+$$
+\Delta^+
+=\Delta^-\cup(\delta\setminus V_{\mathcal Q})
+=\Delta^-\cup\left(\delta\cap\bigcap_{K\in\underline{\mathcal Q}}K^\perp\right).
+\tag{48.1}
+$$
+若 $|\Delta^+|=0$，不追加层且 $\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)=0$。以下令 $\Delta=\Delta^+$、$m=|\Delta|>0$。若存在 $\eta\in\Delta$ 不属于任何 $\overline C_K$，立即报告此前缀不可扩展并令 $\tau_{\rm ext}=\infty$；约定 $\max\varnothing:=0$，并令
+$$
+d:=\max_{K\in\mathscr L}|\overline C_K\cap\Delta|.
+$$
+若 $d=0$，也立即报告不可扩展。否则从当前残余 $U_0=\Delta$ 开始，每轮选择最大 gain
+$$
+g_i=\max_{K\in\mathscr L}|\overline C_K\cap U_{i-1}|,
+$$
+追加达到该最大值的层，并置 $U_i=U_{i-1}\setminus\overline C_K$。若某轮 $U_{i-1}\ne\varnothing$ 而最大 gain 为零，则立即报告不可扩展；在可扩展情形，追加层数 $s$ 满足
+$$
+\left\lceil\frac{m}{d}\right\rceil
+\le\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)
+\le s
+\le H_d\,\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)
+\le H_m\,\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)
+\le(1+\log m)\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L).
+\tag{48.2}
+$$
+因此保留前缀时的总物理层数至多
+$$
+\ell(\mathcal Q)+H_d\,\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L);
+$$
+这是相对于固定前缀最短追加的可验证间隔，不是对 $X^+$ 全局最短 stack 的比值。阈值由 $\varepsilon$ 调到 $\varepsilon'<\varepsilon$ 时可取 $X^-=T_\varepsilon$、$X^+=T_{\varepsilon'}$，新增角色正是 $\delta=\{\eta:\varepsilon'<|h_\eta|\le\varepsilon\}$。
+
+**证明。** 由定义
+$$
+\Delta_{\mathcal Q}(X)
+=X\setminus\bigcup_{K\in\underline{\mathcal Q}}\overline C_K.
+$$
+将 $X^+=X^-\mathbin{\dot\cup}\delta$ 代入，并注意 $\delta\setminus V_{\mathcal Q}=\delta\cap\bigcap_{K\in\underline{\mathcal Q}}K^\perp$，得到 (48.1)。因此旧残余 $\Delta^-$ 原样保留，只有未被此前缀覆盖的新角色需要检查；空前缀时交集约定为全部角色群，恒等式仍成立。
+
+令 $m>0$。每个追加层在初始残余 $\Delta$ 上至多覆盖 $d$ 个角色，故任何大小为 $q$ 的追加集合至多覆盖 $qd$ 个角色；若 $d>0$，得到 $q\ge\lceil m/d\rceil$。若 $d=0$，或有 $\eta\in\Delta$ 不在 $\bigcup_{K\in\mathscr L}\overline C_K$ 中，则不存在有限追加覆盖，故 $\tau_{\rm ext}=\infty$；最大 gain 为零时同样不能删除当前残余中的任何角色。
+
+以下设 $d>0$ 且 $\tau_{\rm ext}=\tau<\infty$。取一个最优追加覆盖 $\mathcal R^*$，$|\mathcal R^*|=\tau$。贪心第 $i$ 轮开始时令 $r_i=|U_{i-1}|$，并令 $a_i=g_i$ 为本轮新覆盖角色数。因为 $\mathcal R^*$ 仍覆盖当前残余，其各层 gains 总和至少为 $r_i$，所以
+$$
+g_i\ge r_i/\tau.
+$$
+给本轮每个新覆盖角色分配 charge $1/g_i$，本轮总 charge 为 $a_i/g_i=1$。按全部 $m$ 个角色的剩余顺序可立即得到 $s\le H_m\tau$；下面给出更尖的 $H_d$ 界。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。固定一个 $R$，在某轮开始时若它尚有 $j$ 个未覆盖角色，则贪心 gain $g_i$ 至少为 $j$（该层 $R$ 本身是候选层）。若本轮分配给 $R$ 的新角色数为 $a_{i,R}$，则这些角色的总 charge 至多为
+$$
+\frac{a_{i,R}}{j}
+\le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
+$$
+各轮对应的这些整数区间两两不交并包含于 $\{1,\ldots,|R\cap\Delta|\}$（若其它角色由其它最优层负责，某些整数只会被跳过），而 $|R\cap\Delta|\le d$；故分配给 $R$ 的 charge 总和至多 $H_d$。对 $\tau$ 个层求和，并注意每轮总 charge 为 $1$，得到
+$$
+s=\sum_i\frac{a_i}{g_i}
+\le\tau H_d
+\le\tau H_m
+\le(1+\log m)\tau.
+$$
+这证明了 (48.2) 的右端和标准 charging argument；左端已由基数计数得到。每个成功轮次至少删除一个角色，故可扩展时算法在至多 $m$ 轮内终止；不可扩展时的零 gain 停滞已在上面说明。
+
+最后，若上一轮已维护 $\Delta^-$，(48.1) 的增量部分只需对每个 $\eta\in\delta$ 检查 $\ell(\mathcal Q)$ 个前缀层；在 unit-cost membership 下为 $O(|\delta|\ell(\mathcal Q))$ 次检查。得到 $\Delta$ 后，预计算 $\overline C_K\cap\Delta$ 需 $O(m|\mathscr L|)$ 次检查，朴素逐轮重算 gains 的搜索成本为 $O(m^2|\mathscr L|)$；若不保留旧残余而从头重算，则前缀检查相应为 $O(|X^+|\ell(\mathcal Q))$。若 $\delta$ 未直接给出而需扫描整个 $\widehat A$ 以判定阈值，再另加 $O(|\widehat A|)$ 次角色枚举（不含阈值判定本身）。证毕。
+
+**范围。** 本定理只维护 §45 的固定 Fourier 二维证书族，把已有 stack 当作不可修改的前缀，并在固定有限层菜单中做增量选择；(48.2) 是 additive recourse 加上证书族内的 harmonic 近似，不等于整个 $X^+$ 的全局最短 stack，也不提供完整钻石范数上界或任意 LOSR/CPTP 操作的近似比。
+
+## 追加锚（本行以下为增补区）
+
+## 44. 实际粗化信道的混合深度最小群控制
+
+**定义 44.1（统一的群同态循环控制）。** 固定定义 39.1 的非空有限扇区集 $S$、正整数源尺寸 $r_s$ 与目标尺寸 $d_s$，并记 $C_m=\mathbb Z/m\mathbb Z$，其中 $C_1$ 为平凡群。源谱 $\lambda_s$ 遍历长度 $r_s$ 的所有非增概率向量，允许零项。对每一族 $\lambda=(\lambda_s)_s$，沿用 §39 的补零约定、共同环境指标 $j<M$、幅度 $\alpha_{saj}$、向量 $\psi_{sj}$、Fourier 向量 $T_{sk}$ 与系数 $c_{sjk}$。特别地，$b_{sj}=c_{sj0}$，$G_{st}=\sum_j b_{sj}b_{tj}$。记该族的完整目标信道为
+
+$$
+\mathcal F^\lambda_G(X)
+=T(G\circ X)T^*+\sum_sX_{ss}L_s,
+\qquad
+L_s=\sum_{k\ne0}\left(\sum_j|c_{sjk}|^2\right)
+|T_{sk}\rangle\langle T_{sk}|.
+$$
+
+这个记号保留由源谱决定的全部 $L_s$；只给出理想子空间上的 $G$ 块不算给出完整信道。
+
+取有限群 $H$，不预设阿贝尔性，以及对每个 $s$ 的满射群同态 $\pi_s:H\twoheadrightarrow C_{d_s}$。令 $h$ 在 $H$ 上均匀分布，两侧在 §39 的局部拆分并丢弃环境后使用同一个 $h$。若 $X_s|s,a\rangle=|s,a+1\bmod d_s\rangle$，置
+
+$$
+U_h=\bigoplus_sX_s^{\pi_s(h)},\qquad V_h=U_h\otimes U_h,
+\qquad
+\mathcal C^\lambda_{H,\pi}(X)
+=\frac1{|H|}\sum_{h\in H}V_h
+\left(\sum_{s,t}X_{st}\sum_{j<M}
+|\psi_{sj}\rangle\langle\psi_{tj}|\right)V_h^*.
+$$
+
+群与同态固定于整个源谱族，不随 $\lambda$ 或输入 $X$ 改变。称它们实现统一粗化，当且仅当对每个允许的 $\lambda$ 有 $\mathcal C^\lambda_{H,\pi}=\mathcal F^\lambda_G$。定义 $N_{\min}(\mathbf r,\mathbf d)$ 为这些实现中的最小 $|H|$；直积群 $\prod_sC_{d_s}$ 的坐标控制给出非空候选集。此处优化的是这一固定拆分之后的均匀群同态循环控制标签数。依定理 42.1，联合控制像的大小与实际不同信道分支数须区分：一个特殊源谱可能使不同控制标签诱导相同的编码后映射，本节不最小化该谱的不同映射数。所求也不是一般 CPTP 或 LOSR 分解的分支数、非均匀或非同态控制的最小支持，不把标签数解释为物理资源。它与定理 39.2 的不受限钻石误差极值属于不同的优化问题。
+
+**定理 44.2（所有源谱的完整信道与两坐标满射，repo-derived）。** 在定义 44.1 中，实现统一粗化当且仅当每一对不同扇区的联合同态
+
+$$
+(\pi_s,\pi_t):H\longrightarrow C_{d_s}\times C_{d_t}
+$$
+
+满射。结论对任意固定的正整数 $r_s,d_s$ 成立，包含 $d_s=1$、源尺寸小于目标尺寸、补零及秩一源谱。这里的信道相等也在附加任意有限被动参考后成立。
+
+**证明。** 实际源基上的拆分是
+
+$$
+E|s,i\rangle=|s,i\bmod d_s\rangle
+|\lfloor i/d_s\rfloor\rangle_E.
+$$
+
+两侧环境使用同一组 $j$ 标签，故编码矩阵单位 $|s\rangle\langle t|$ 在拆分并取环境偏迹后恰为 $\sum_j|\psi_{sj}\rangle\langle\psi_{tj}|$。补零不改变这个偏迹，也不添加源空间的基向量。展开 §39 的正交 Fourier 基，得到
+
+$$
+\begin{aligned}
+A_{stkl}&=\sum_{j<M}c_{sjk}\overline{c_{tjl}},\\
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle t|)
+&=\sum_{k\in C_{d_s}}\sum_{l\in C_{d_t}}
+A_{stkl}\,m_{stkl}|T_{sk}\rangle\langle T_{tl}|,\\
+m_{stkl}&=\frac1{|H|}\sum_{h\in H}
+\exp\!\left(-2\pi i\frac{k\pi_s(h)}{d_s}
++2\pi i\frac{l\pi_t(h)}{d_t}\right).
+\end{aligned}
+$$
+
+此式使用 $V_hT_{sk}=\exp(-2\pi i k\pi_s(h)/d_s)T_{sk}$ 的约定。共同环境产生的是逐 $j$ 的乘积之和 $A_{stkl}$，不能把它替换成两个独立环境和的乘积。
+
+为给出与定理 43.1 的确切接口，置 $A=\prod_sC_{d_s}$、$\Pi=(\pi_s)_s$、$K=\Pi(H)$。实际拆分输出支撑于相关子空间
+
+$$
+\mathcal Q=\bigoplus_s\operatorname{span}\{T_{sk}:k\in C_{d_s}\}.
+$$
+
+其中移位权为 $\theta_{sk}(u)=\exp(-2\pi i ku_s/d_s)$，每个权只依赖一个坐标，所有 $\theta_{s0}$ 都是平凡角色；不同扇区的零模是这一角色的不同重数。矩阵单位 $|T_{sk}\rangle\langle T_{tl}|$ 查询的角色恰为 $\theta_{sk}\theta_{tl}^{-1}$，所以
+
+$$
+m_{stkl}=m_K(\theta_{sk}\theta_{tl}^{-1}),\qquad
+|\operatorname{supp}(\theta_{sk}\theta_{tl}^{-1})|\le2.
+$$
+
+这里复用的是定理 43.1 的矩阵单位乘子公式。其完整角色空间 $\ell^2(\widehat A)$ 可以含有别的角色对，而这些角色对的比值未必来自 $\mathcal Q$ 的两个实际权。因而 $K^\perp$ 中一个支撑大于二的角色，本身不给出此编码中的矩阵单位或非零源系数。实际全谱失败必须在上述查询族内找到角色，并连同实际 $A_{stkl}\ne0$ 一起检验；下面的必要性证明正完成这一步。
+
+同态的每个非空纤维都是核的陪集，所以均匀 $h$ 推前为像子群上的均匀分布。这里使用有限角色正交性与真子群的角色分离性，见 Keith Conrad，[*Characters of finite abelian groups*](https://kconrad.math.uconn.edu/blurbs/grouptheory/charthy.pdf)，Theorem 4.1、Corollary 3.7；子群角色和的同一表述见 van de Ven、Di Bucchianico，[*Factorial Designs and Harmonic Analysis on Finite Abelian Groups*](https://www.eurandom.tue.nl/reports/2006/023-report.pdf)，Lemma 5.4。即使 $H$ 非阿贝尔，角色也通过其阿贝尔像计算。
+
+当 $s=t$ 时，边缘满射给出 $m_{sskl}=\delta_{kl}$，因此
+
+$$
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle s|)
+=\sum_k\left(\sum_j|c_{sjk}|^2\right)
+|T_{sk}\rangle\langle T_{sk}|
+=G_{ss}|T_s\rangle\langle T_s|+L_s.
+$$
+
+当 $s\ne t$ 且两坐标满射时，均匀平均给出 $m_{stkl}=\delta_{k0}\delta_{l0}$。留下的系数是 $A_{st00}=G_{st}$，故
+
+$$
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle t|)
+=G_{st}|T_s\rangle\langle T_t|.
+$$
+
+这同时保留理想块和全部对角泄漏，证明充分性。$d_s=1$ 时仅有零 Fourier 模，$L_s=0$，同样成立。
+
+反之，若某一对的像 $K_{st}\subsetneq C_{d_s}\times C_{d_t}$ 为真子群，角色分离性给出非平凡角色
+
+$$
+\chi(x,y)=\exp(-2\pi i kx/d_s+2\pi i ly/d_t)
+$$
+
+在 $K_{st}$ 上恒为一。边缘满射排除仅一个坐标非平凡的角色，因此 $k\ne0$、$l\ne0$。对每个固定的正整数 $r_u$，取允许的非增谱 $\lambda_u=(1,0,\ldots,0)$。它只有 $j=0,a=0$ 的幅度非零，因而对每个 Fourier 指标有
+
+$$
+c_{u0k}=d_u^{-1/2},\qquad c_{ujk}=0\quad(j>0).
+$$
+
+于是 $A_{stkl}=1/\sqrt{d_sd_t}>0$，而 $m_{stkl}=1$。非零项 $|T_{sk}\rangle\langle T_{tl}|$ 留在实际输出中，却不在 $\mathcal F^\lambda_G(|s\rangle\langle t|)$ 中。正交基中的这个矩阵系数不能被其他项抵消，与所有源谱的相等要求矛盾。如果某个尺寸是一，两坐标像在边缘满射下已自动为满像，不出现这个反例情形。
+
+最后，矩阵单位构成逻辑算子空间的一组基。其作用相同就是线性信道相同；与任何参考系统的恒等映射张量后仍相同。参考不引入第三个扇区控制。一个固定特殊谱可以使某些 $A_{stkl}$ 为零，不能以这种相等替代本定理的全谱量词。证毕。
+
+本证明中的均匀两坐标投影与低支撑 Fourier 消去字典，是混合水平正交阵的已有工具：Pistone、Rogantin，[*Indicator function and complex coding for mixed fractional factorial designs*](https://arxiv.org/pdf/math/0703365v1)，Proposition 4(2),(4)。此处的应用将它接到指定的共同环境系数、泄漏信道及固定任意源尺寸的全谱必要性，不要求消去三坐标或更多坐标支撑的角色。
+
+**定理 44.3（任意正循环尺寸的精确最小标签数，repo-derived）。** 对定义 44.1 的全部尺寸族，令
+
+$$
+a_{p,s}=v_p(d_s),\qquad
+n_{p,a}=\#\{s\in S:a_{p,s}\ge a\}\quad(a\ge1),
+\qquad
+R_p(n)=\min\{r\in\mathbb Z_{\ge0}:p^r\ge1+(p-1)n\}.
+$$
+
+其中 $R_p(0)=0$，各和与积只有有限非零项。则
+
+$$
+\boxed{N_{\min}(\mathbf r,\mathbf d)
+=N_{\min}(\mathbf d)
+=\prod_p p^{\sum_{a\ge1}R_p(n_{p,a})}.}
+$$
+
+这个下界对任意有限群标签成立，并由一个阿贝尔群及实际满射同态同时达到。达到构造仅依赖目标尺寸，适用于每个允许的源谱。若令 $\rho_{p,a}=R_p(n_{p,a})$，可取标签群
+
+$$
+H=\prod_p\widehat{B_p},\qquad
+B_p=\bigoplus_{a\ge1}
+(C_{p^a})^{\rho_{p,a}-\rho_{p,a+1}}.
+$$
+
+这里 $\widehat B$ 是有限阿贝尔群 $B$ 的单位圆角色群；各循环坐标的控制由下述循环子群的角色限制及中国剩余定理给出。
+
+**证明。** 先把全部控制作为一个同态
+
+$$
+\Pi:H\longrightarrow A:=\prod_sC_{d_s},\qquad K=\Pi(H).
+$$
+
+在 $H$ 阿贝尔时，定理 42.1 已给出按联合控制像去重的均匀商群实现。这里还允许 $H$ 非阿贝尔，但同一纤维理由仍适用：每个纤维是 $\ker\Pi$ 的陪集，均有 $|\ker\Pi|$ 个元素，且 $H/\ker\Pi\cong K$。由于目标 $A$ 阿贝尔，$K$ 总是阿贝尔。各分支只依赖 $\Pi(h)$，所以用 $K$ 的坐标投影作控制产生相同的每一个源谱信道，均匀性保持且 $|K|\le|H|$。定理 44.2 的边缘及两坐标满射也同时保留。故非阿贝尔性与重复标签均不能降低最小值；以下在一个共同的阿贝尔像 $K$ 上处理全部素数与深度。
+
+按有限阿贝尔群的素数主分解，$K=\prod_pK_p$。固定 $p$，并暂写 $a_s=a_{p,s}$。识别各目标坐标的 $p$ 主部分为 $C_{p^{a_s}}$，得到满射 $f_s:K_p\to C_{p^{a_s}}$，以及对每对坐标的满射 $(f_s,f_t)$。这是同一群的分解：不同素数的分量映到其他素数的目标主部分必为零，故全局边缘或两坐标满射恰等价于其每个素数分量满射。
+
+置 $B=\widehat{K_p}$，对 $a_s>0$ 令 $D_s\subseteq B$ 为 $f_s$ 拉回的循环角色子群，阶为 $p^{a_s}$；对 $a_s=0$ 置 $D_s=\{0\}$。此处把角色群写成加法群。有限对偶及商群湮灭子工具见 Conrad 的 Theorem 3.14 与 van de Ven、Di Bucchianico 的 Lemma 5.3。两坐标同态的对偶映射为
+
+$$
+\widehat{C_{p^{a_s}}}\oplus\widehat{C_{p^{a_t}}}
+\longrightarrow B,\qquad (u,v)\longmapsto f_s^*u+f_t^*v.
+$$
+
+有限角色分离性表明原映射满射当且仅当这个对偶映射单射；其核为零又当且仅当 $D_s\cap D_t=\{0\}$。每个非平凡循环 $p$ 子群有唯一的阶 $p$ 子群
+
+$$
+\ell_s=p^{a_s-1}D_s\subseteq B[p],\qquad
+B[p]=\{x\in B:px=0\}.
+$$
+
+若两个循环 $p$ 子群相交非平凡，取交中一个非零元素并乘适当的 $p$ 次幂，得到共同的阶 $p$ 子群；反之，共同的阶 $p$ 子群已经给出非零交。因此两坐标约束恰是所有 $a_s>0$ 的 $\ell_s$ 两两不同，而非任意高维子空间的分离条件。
+
+应用有限阿贝尔群的循环分解，写
+
+$$
+B\cong\bigoplus_{j=1}^mC_{p^{b_j}},\qquad b_j\ge1.
+$$
+
+这里复用的结构定理见 van de Ven、Di Bucchianico 的 Theorem 4.14；接下来要计数的是该分解的所有深度，不能只取指数或一层秩。令 $e_j$ 为各循环因子的生成元，定义嵌套的 $\mathbb F_p$ 空间
+
+$$
+V_a=B[p]\cap p^{a-1}B
+=\operatorname{span}_{\mathbb F_p}
+\{p^{b_j-1}e_j:b_j\ge a\},\qquad
+ t_a=\dim_{\mathbb F_p}V_a=\#\{j:b_j\ge a\}.
+$$
+
+等式逐因子可见：$b_j<a$ 的因子在 $p^{a-1}B$ 中已为零；$b_j\ge a$ 的因子则贡献其唯一阶 $p$ 直线。$V_{a+1}\subseteq V_a$，且
+
+$$
+\log_p|B|=\sum_jb_j=\sum_{a\ge1}t_a.
+$$
+
+每个 $a_s\ge a$ 的坐标将不同的直线 $\ell_s$ 放入 $V_a$，因为 $\ell_s\subseteq p^{a_s-1}B\subseteq p^{a-1}B$。$t_a$ 维空间有 $(p^{t_a}-1)/(p-1)$ 条直线：其非零向量按每条直线的 $p-1$ 个非零向量分组。因此，在同一个 $B$ 的每一个深度都有
+
+$$
+n_{p,a}\le\frac{p^{t_a}-1}{p-1},\qquad
+ t_a\ge R_p(n_{p,a}),\qquad
+ |K_p|=|B|\ge p^{\sum_aR_p(n_{p,a})}.
+$$
+
+把这些界在同一群内按深度相加，再按素数相乘，得到所要求的全局下界。这一步并未把各深度分别可达的最小值当作共同可达；共同达到需要以下构造。
+
+现在固定 $p$，取 $\rho_a=R_p(n_{p,a})$。$n_{p,a}$ 非增且最终为零，故 $\rho_a$ 也非增且最终为零，$\rho_a-\rho_{a+1}$ 是非负整数。定义
+
+$$
+B_p=\bigoplus_{a\ge1}(C_{p^a})^{\rho_a-\rho_{a+1}}.
+$$
+
+对这个群，上述深度空间 $V_a$ 的维数恰为
+
+$$
+\sum_{b\ge a}(\rho_b-\rho_{b+1})=\rho_a.
+$$
+
+将所有 $a_s>0$ 的坐标按指数非增排序。在处理指数 $a_s=a$ 的坐标时，从 $V_a$ 中选择一条尚未使用的直线。先处理的坐标指数都不小于 $a$，其直线也都在 $V_a$ 内；连同当前坐标，数量不超过 $n_{p,a}$。而 $V_a$ 至少有 $n_{p,a}$ 条直线，所以这一步总有选择。由此得到一组兼容全部深度且两两不同的直线 $\ell_s$。
+
+还需把每条直线提升为具有指定阶的实际循环子群。将 $B_p$ 的循环因子记为 $C_{p^{b_j}}$，选所指定直线上的非零向量
+
+$$
+y_s=\sum_{b_j\ge a_s}\eta_{sj}p^{b_j-1}e_j,
+\qquad \eta_{sj}\in\{0,\ldots,p-1\},
+$$
+
+其中至少一个系数非零。置
+
+$$
+x_s=\sum_{b_j\ge a_s}\eta_{sj}p^{b_j-a_s}e_j.
+$$
+
+则 $p^{a_s}x_s=0$ 而 $p^{a_s-1}x_s=y_s\ne0$，所以 $x_s$ 的阶恰为 $p^{a_s}$。子群 $D_s=\langle x_s\rangle$ 的唯一阶 $p$ 子群就是所选 $\ell_s$，从而各 $D_s$ 两两相交平凡。这个提升保留循环群 $C_{p^{a_s}}$，没有将它替换成阶相同但指数不同的有限域加法群。
+
+令 $H_p=\widehat{B_p}$。对每个 $a_s>0$，由角色的值定义控制 $\pi_s^{(p)}:H_p\to C_{p^{a_s}}$：
+
+$$
+h_p(x_s)=\exp\!\left(2\pi i\frac{\pi_s^{(p)}(h_p)}{p^{a_s}}\right).
+$$
+
+$x_s$ 的精确阶使右侧指标良定义，且角色乘法使此映射为群同态。Conrad 的 Theorem 3.3 给出子群角色向有限阿贝尔群的延拓。因此限制 $\widehat{B_p}\to\widehat{D_s}$ 满射；若 $s\ne t$，则 $D_s+D_t=D_s\oplus D_t$，其上任意一对角色也同时延拓。这证明 $\pi_s^{(p)}$ 及 $(\pi_s^{(p)},\pi_t^{(p)})$ 均满射。指数为零的坐标取唯一的平凡同态，同一结论仍成立。
+
+在 $H=\prod_pH_p$ 上，对每个 $s$ 用中国剩余定理
+
+$$
+C_{d_s}\cong\prod_{p\mid d_s}C_{p^{a_{p,s}}}
+$$
+
+合并 $\pi_s^{(p)}$ 为 $\pi_s:H\to C_{d_s}$。每个素数分量的边缘及两坐标限制都满射，且不同素数的标签独立取值，故全局边缘与每个两坐标映射均满射。定理 44.2 给出对全部源谱的实际信道相等。群阶为
+
+$$
+|H|=\prod_p|B_p|
+=\prod_p p^{\sum_a a(\rho_{p,a}-\rho_{p,a+1})}
+=\prod_p p^{\sum_a\rho_{p,a}},
+$$
+
+恰好达到下界。若这些控制还有非平凡共同核，商掉它会产生同一族信道和更小的均匀群，违背已经证明的下界。因此这个达到构造的联合控制无重复标签，其不同联合控制值的支持大小也等于 $N_{\min}(\mathbf d)$。按定义 44.1 与定理 42.1 的区分，这里数的是联合控制值，而不把特殊源谱的实际不同编码后分支数认作相同的极值。证毕。
+
+上述公式的边界可直接在同一证明中读取。所有 $d_s=1$ 时素数积为空，$H$ 为平凡群且 $N_{\min}=1$。一个扇区时，每个非零深度的计数是一，$R_p(1)=1$，故 $N_{\min}=d_s$。两个扇区时 $R_p(2)=2$，各深度指数等于两个目标指数之和，故 $N_{\min}=d_sd_t$。两两互质的尺寸使所有 $n_{p,a}\le1$，从而 $N_{\min}=\prod_sd_s$，与 §40 的单循环实现相容。三个扇区时，$R_p(3)=2$；若三个 $p$ 指数排序为 $u\ge v\ge w$，深度和为 $u+v$，所以
+
+$$
+N_{\min}(d_1,d_2,d_3)
+=\operatorname{lcm}(d_1d_2,d_1d_3,d_2d_3)
+=\frac{d_1d_2d_3}{\gcd(d_1,d_2,d_3)}.
+$$
+
+这些是实际全谱信道最小值的边界，不把一般正交阵的存在性作为前提。正交阵的两坐标乘积整除条件本身是已有下界，见 Beder、McComack，[*A note on the minimum size of an orthogonal array*](https://arxiv.org/pdf/1508.06558v1)，§1.1；该文明确区分整除下界与该大小的阵是否存在。本定理的承重推导是各素数、各深度在同一群上的界，以及同时达到这些界的循环子群与控制构造，不主张这些成熟工具或极值综合的文献优先权。
+
+**命题 44.4（实际信道查询与完整多坐标查询的严格差别，repo-derived）。** 在非空 $S$ 且 $d_s\ge2$ 的共同范围中，定义 44.1 的全谱信道最小值满足
+
+$$
+N_{\min}(\mathbf d)\le\prod_sd_s,
+$$
+
+等号当且仅当没有一个素数同时整除三个不同扇区的尺寸。右侧是定理 41.1 在消去全部支撑至少二的角色这一附加条件下的最小值；该附加条件不能由实际信道相等推出。具体地，三个尺寸为二的扇区有实际信道最小值四，而完整多坐标消去需要八；尺寸 $(4,2,2)$ 有实际信道最小值八，而完整多坐标消去需要十六。
+
+**证明。** 对任意 $p$，有 $R_p(0)=0$、$R_p(1)=1$、$R_p(2)=2$，以及 $R_p(n)\le n$。当 $n\ge3$ 时，更有 $R_p(n)<n$：先用
+
+$$
+p^2\ge1+3(p-1)
+$$
+
+处理 $n=3$，再由 $p^{n-1}\ge1+(p-1)n$ 推出 $p^n\ge1+(p-1)(n+1)$。因此定理 44.3 的每个深度指数不超过 $n_{p,a}$，严格小于恰在某个深度计数至少三时发生。又
+
+$$
+\prod_sd_s=\prod_p p^{\sum_a n_{p,a}},
+$$
+
+且存在这样的深度当且仅当某素数整除至少三个尺寸。这证明数值比较与等号条件。定理 41.1 的更强条件检查所有多坐标角色，其完整联合像与乘积下界由该定理给出；定理 44.2 的每个矩阵单位却只使用一个或两个扇区控制。
+
+对三个 $C_2$，取
+
+$$
+H=C_2^2,\qquad
+\pi_1(x,y)=x,\quad\pi_2(x,y)=y,\quad\pi_3(x,y)=x+y.
+$$
+
+任意两个坐标决定 $x,y$，故每个两坐标映射均为双射。定理 44.2 证明它对任意固定源尺寸与所有允许谱实现完整信道；定理 44.3 给 $n_{2,1}=3$、$R_2(3)=2$，故四标签已最小。但联合像是 $C_2^3$ 的奇偶子群，三支撑角色
+
+$$
+\chi(z_1,z_2,z_3)=(-1)^{z_1+z_2+z_3}
+$$
+
+在像上恒为一，平均等于一，不能满足 §41 的附加条件。以所有扇区的秩一谱为具体源，$G_{st}=1/2$，$L_s=\tfrac12|T_{s1}\rangle\langle T_{s1}|$，这个四标签平均仍严格给出
+
+$$
+\mathcal F^\lambda_G(X)
+=\tfrac12T(\mathbf1\mathbf1^{\mathsf T}\circ X)T^*
++\tfrac12\sum_sX_{ss}|T_{s1}\rangle\langle T_{s1}|.
+$$
+
+未消去的三支撑角色不出现在这个信道的任何矩阵单位查询中。具体地，$\mathcal Q$ 的角色权为 $1,(-1)^{z_1},(-1)^{z_2},(-1)^{z_3}$，其中 $1$ 有三个零模重数；任何两个权的比值都不能等于 $\chi$。在定理 43.1 的完整角色表示中则可取角色对 $(\chi,1)$，得到残余非零矩阵单位及该定理的全表示下界。这两个表示的测试向量不同，不能把后一测试向量视为本编码的允许源输出。
+
+对 $(4,2,2)$，取 $H=C_4\times C_2$ 与
+
+$$
+\pi_1(x,y)=x,\qquad
+\pi_2(x,y)=y,\qquad
+\pi_3(x,y)=(x\bmod2)+y.
+$$
+
+第一、二坐标任意给定时直接确定标签；第一、三坐标任意给定时由第三坐标确定 $y$；第二、三坐标任意给定时确定 $x$ 的奇偶，仍有两个 $x$ 可选。所有两坐标映射均满射。计数为 $n_{2,1}=3,n_{2,2}=1$，故最小值是 $2^{2+1}=8$，这个群达到它。联合控制值只有八个，完整十六元直积上的全部角色消去是另一项要求。证毕。
+
+**命题 44.5（四个循环四元坐标与有限域阵的实现边界，repo-derived）。** 四个尺寸为四的扇区，在定义 44.1 的实现类中恰需六十四个均匀群标签，且可取
+
+$$
+H=C_4^3,\qquad
+(\pi_1,\pi_2,\pi_3,\pi_4)(x,y,z)=(x,y,z,x+y+z).
+$$
+
+另有十六行的四水平两坐标均匀阵。将其符号双射标为 $C_4$ 的移位值，也能实现同一个全谱信道，但它不属于循环坐标同态控制族；这个阵不能反驳六十四的受限最小值。
+
+**证明。** 对循环尺寸，$n_{2,1}=n_{2,2}=4$，而 $R_2(4)=3$，故定理 44.3 给 $N_{\min}=2^{3+3}=64$。在所示 $C_4^3$ 控制中，前三个坐标的任意一对显然满射。指定其中一个坐标及第四坐标时，剩下两个变量之和可以任意取值，也给出满射；因此它达到最小值。若增加定理 41.1 的完整角色消去条件，则需整个 $C_4^4$ 的二百五十六个标签。
+
+对照阵使用有限域 $\mathbb F_4=\mathbb F_2[\omega]/(\omega^2+\omega+1)$：
+
+$$
+\{(u,v,u+v,u+\omega v):u,v\in\mathbb F_4\}.
+$$
+
+这是标准有限域线性阵构造在本信道上的应用。四个线性形式的系数行分别为 $(1,0),(0,1),(1,1),(1,\omega)$，任意两个的行列式均非零；含第一行的行列式为 $1,1,\omega$，另三对为 $-1,-1,\omega-1$。故任意两列投影都是 $\mathbb F_4^2$ 的双射，十六行上的均匀分布给每对符号均匀分布。选任意双射 $\iota:\mathbb F_4\to C_4$ 并逐列标号后，这一均匀性保持。定理 44.2 证明充分性所用的矩阵单位平均只需边缘和两坐标均匀性，因此这些十六个非同态控制值也给出完整 $\mathcal F^\lambda_G$，包括每个源谱的实际泄漏。
+
+然而 $\mathbb F_4^2$ 的加法群指数为二，任意从它到 $C_4$ 的群同态像都被二消去，不能满射。符号双射不能把有限域加法变成循环四元加法。即使重新给十六行另赋群结构，若四个循环坐标同时成为满射同态，就会违背已证明的六十四标签下界。因此这里改变的是允许的控制函数族，而不是同一族中的更小实现。循环根编码与有限域编码的区别亦见 Pistone、Rogantin 的 §6；一般正交阵的两坐标乘积整除界见 Beder、McComack 的 §1.1，均不代替本节的循环群深度约束。证毕。
+
 ## 追加锚（本行以下为增补区）
