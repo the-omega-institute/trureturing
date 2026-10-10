@@ -1972,3 +1972,86 @@ originality claim. They control onset strips only. The remaining prime
 and square samples, critical region $y\asymp V$, other finite low layers,
 same-source mean rate, remaining recovery convolutions and complete
 signed Robin tail still require estimates at the original fixed rate.
+
+## Reusing short prime intervals enlarges the paid onset range
+
+The outer integer count in (SV48) can be replaced by the existing
+[Nicolas comparison note's (GS4)](nicolas2025comparison.md#the-local-prime-input-and-its-uniform-range).
+That application supplies the uniform short-increment bound from
+Guth--Maynard Corollary 1.3, including longer intervals and the
+prime-power correction. Combining the two existing inputs keeps the
+actual source, its full drifted positive part, and the original fixed
+exponent.
+
+For $k=1,2$, put $P_k=(x/U)^{1/k}$, $A\le x\le2A$, and
+$c_k=P_k(1+\delta)^{-1/k}$. In addition to (SV47)'s conditions,
+suppose $h_k=P_k-c_k+1\ge P_k^{2/3}$ throughout this window.
+Apply (GS4) with its dummy clock $Y=P_k$, lower endpoint
+$u=c_k-1$ and interval length $h_k$. For sufficiently large $A$,
+$Y/2\le u<Y$ and $u+h_k=Y\le3Y/2$; also
+$h_k\asymp_k\delta P_k$. The onset primes lie in $[c_k,P_k)$,
+contained in $(c_k-1,P_k]$. Hence (GS4) directly gives
+
+$$
+\sum_{c_k\le p<P_k}\log p
+\le\psi(P_k)-\psi(c_k-1)\ll_k\delta P_k.
+$$
+
+The enlarged interval includes the endpoint contribution. The supplier
+is uniform at these real endpoints, and any subset of the original
+prime samples is allowed. With the unchanged $w_{N,p,k}\le\log p$,
+equation (SV47) now gives
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^k\le U(1+\delta)}
+ w_{N,p,k}E_A(x/p^k)
+\ll_k\delta^3 A^{-a_k},
+\qquad a_k=\tfrac34(1-1/k).
+\tag{SV50}
+$$
+
+For $k=1$ and every original fixed $0<\eta<1/2$, and for $k=2$
+only when the original $3/8<\eta<1/2$, choose
+
+$$
+b_k=\frac{\eta-a_k}{3}>0,\qquad
+\widehat\delta_{k,A}=\frac{A^{-b_k}}{\log L}.
+\tag{SV51}
+$$
+
+These widths satisfy all hypotheses uniformly in $A\le x\le2A$.
+Indeed $\widehat\delta_{1,A}U=A^{1/4-\eta/3}/\log L\gg U^{1/4}$;
+the square layer has a larger exponent. At the outer endpoints,
+$h_1\asymp A^{3/4-\eta/3}/\log L\gg P_1^{2/3}$ because
+$3/4-\eta/3>7/12>1/2$, and
+$h_2\asymp A^{3/8-(\eta-3/8)/3}/\log L\gg P_2^{2/3}$ because
+$3/8-(\eta-3/8)/3>1/3>1/4$.
+Both widths tend to zero. Equation (SV50) yields
+
+$$
+O_\eta\!\left(\frac{A^{-\eta}}{(\log L)^3}\right)
+=o(A^{-\eta})
+$$
+
+for the complete original response on these strips. Throughout them
+$p>y=x/p^k$, so the coprime response equals the original response,
+including its mean and drift. Deleting the square samples before
+(SV40)--(SV43) again uses those equations' existing sampled
+absolute-error bounds on the retained subset. No higher-layer adaptive
+cutoff or envelope for a new polynomial positive part is imported
+into the prime layer.
+
+This is a logarithmic enlargement at the original $o(A^{-\eta})$
+target. At (SV51)'s width, the existing integer-count bound (SV48)
+has first term $O(LA^{-\eta}/(\log L)^3)$, which does not establish
+that target. This comparison concerns sufficient upper bounds, not
+a lower bound on the actual response. The explicit widths (SV51)
+are $L/\log L$ times those in (SV46) and (SV49). When $\eta\le3/8$, the previously
+paid fixed-width square strip is likewise reused without recounting it.
+The stronger $O(A^{-\eta}/L^2)$ estimates on the narrower old strips
+remain available. The power exponent has not improved, the prime strip
+still shrinks, and the remaining samples, mean rate, critical region,
+other recovery terms and complete signed Robin tail remain unpaid.
+This is an attributed parameter application of the existing (SV47)
+and (GS4), without a historical originality or Lean-certification claim.
