@@ -28,7 +28,7 @@ def rejected : Realization signature :=
 def sourceStatement : Prop := ∀ (K n : ℕ) (d : ℝ), 2 ≤ K → K ≤ n →
   ∃! z : ℝ, OriginalSpectralRoot K n d z
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (K n : ℕ) (d : ℝ), 2 ≤ K → K ≤ n →
     ∃! z : ℝ, R.readout () (K,n,d) z
@@ -52,7 +52,7 @@ def registration : Registration arena sourceStatement where
   dependence := by
     intro i
     obtain ⟨z,hz,_⟩ := Spectral.original_root_exists_unique 2 2 0 (by omega) (by omega)
-    refine ⟨(2,2,0),z,0,?_⟩
+    refine ⟨(2,2,0),z,(0 : ℝ),?_⟩
     intro he
     have hzero : OriginalSpectralRoot 2 2 0 0 := Eq.mp he hz
     exact (lt_irrefl (0 : ℝ)) hzero.1
@@ -75,7 +75,8 @@ noncomputable def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookTarget,
     definition := none, coordinates := #[0,1,2],
-    readouts := #[{ path := #["body","body","body","body","body","arg","body"],
+    readouts := #[{
+      path := #["body","body","body","body","body","arg","body"],
       stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
