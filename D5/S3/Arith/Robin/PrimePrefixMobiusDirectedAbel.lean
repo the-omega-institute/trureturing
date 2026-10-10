@@ -59,7 +59,7 @@ private theorem harmonic_eq_range (N : ℕ) :
     Finset.sum_union (by simp)]
   simp
 
-private theorem step_sum {D M : ℕ} (hDM : D < M) (b : ℕ → ℝ) :
+theorem step_sum {D M : ℕ} (hDM : D < M) (b : ℕ → ℝ) :
     (∑ n ∈ Ioc D (M-1), (b n-b (n+1))) = b (D+1)-b M := by
   have hset : Ioc D (M-1) = Ico (D+1) M := by
     ext n
@@ -74,30 +74,37 @@ private theorem step_sum {D M : ℕ} (hDM : D < M) (b : ℕ → ℝ) :
       ring
     _ = _ := by rw [sum_Ico_sub b (by omega : D+1 ≤ M)]; ring
 
-private theorem anchored_identity {D M : ℕ} (hDM : D < M) (b : ℕ → ℝ) :
-    weightedTail D M b = b M*prefixDifference D M +
-      ∑ n ∈ Ioc D (M-1), (b n-b (n+1))*prefixDifference D n := by
-  have h := Finset.sum_Ioc_by_parts b
-    (fun n : ℕ => (ArithmeticFunction.moebius n : ℝ)/(n : ℝ)) hDM
-  simp only [smul_eq_mul, ← harmonic_eq_range] at h
-  have hraw : weightedTail D M b = b M*harmonicPrefix M -
-      b (D+1)*harmonicPrefix D -
-        ∑ n ∈ Ioc D (M-1), (b (n+1)-b n)*harmonicPrefix n := by
-    convert h using 1
-    apply sum_congr rfl
-    intro n _
-    ring
-  have hsign : (∑ n ∈ Ioc D (M-1), (b (n+1)-b n)*harmonicPrefix n) =
-      -(∑ n ∈ Ioc D (M-1), (b n-b (n+1))*harmonicPrefix n) := by
+/-- Finite Abel algebra for any actual coefficient sequence, with its exact anchor. -/
+theorem anchored_sum_by_parts {D M : ℕ} (hDM : D < M) (a b : ℕ → ℝ) :
+    (∑ n ∈ Ioc D M, a n*b n) =
+      b M*((∑ n ∈ range (M+1), a n)-(∑ n ∈ range (D+1), a n)) +
+        ∑ n ∈ Ioc D (M-1), (b n-b (n+1))*
+          ((∑ k ∈ range (n+1), a k)-(∑ k ∈ range (D+1), a k)) := by
+  have h := Finset.sum_Ioc_by_parts b a hDM
+  simp only [smul_eq_mul] at h
+  have hraw : (∑ n ∈ Ioc D M, a n*b n) =
+      b M*(∑ n ∈ range (M+1), a n) -
+        b (D+1)*(∑ n ∈ range (D+1), a n) -
+          ∑ n ∈ Ioc D (M-1), (b (n+1)-b n)*(∑ k ∈ range (n+1), a k) := by
+    simpa only [mul_comm] using h
+  have hsign : (∑ n ∈ Ioc D (M-1),
+      (b (n+1)-b n)*(∑ k ∈ range (n+1), a k)) =
+      -(∑ n ∈ Ioc D (M-1), (b n-b (n+1))*(∑ k ∈ range (n+1), a k)) := by
     rw [← sum_neg_distrib]
     apply sum_congr rfl
     intro n _
     ring
   rw [hraw, hsign]
-  unfold prefixDifference
   simp_rw [mul_sub]
   rw [sum_sub_distrib, ← sum_mul, step_sum hDM b]
   ring
+
+private theorem anchored_identity {D M : ℕ} (hDM : D < M) (b : ℕ → ℝ) :
+    weightedTail D M b = b M*prefixDifference D M +
+      ∑ n ∈ Ioc D (M-1), (b n-b (n+1))*prefixDifference D n := by
+  simpa only [weightedTail, prefixDifference, ← harmonic_eq_range] using
+    anchored_sum_by_parts hDM
+      (fun n => (ArithmeticFunction.moebius n : ℝ)/(n : ℝ)) b
 
 private theorem directed_lower {D M : ℕ} (hDM : D < M) {b : ℕ → ℝ}
     (hb : ∀ n ∈ Icc (D+1) M, 0 ≤ b n)
