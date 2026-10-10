@@ -942,3 +942,77 @@ bound at the original $\eta$ rate has been supplied for it.
 The remaining bands, mean requirement, low prime-power layers,
 prime layer $k=1$, recovery terms and complete signed tail (SV4)
 remain unpaid; the original source and target are unchanged.
+
+## Exact-integer sample corrections are paid by a classical divisor bound
+
+Keep the actual normalized weights, so $|\lambda(d)|,|\theta'(d)|\le1$.
+For a positive integer $m$, the LCM definition gives the jump coefficient
+
+$$
+J_A(m):=\sum_{\ell\mid m}h(\ell)
+=\left(\sum_{d\mid m}\lambda(d)\right)
+ \left(\sum_{e\mid m}\theta'(e)\right),
+\qquad |J_A(m)|\le\tau(m)^2.
+\tag{SV17}
+$$
+
+Here $\tau$ is the ordinary divisor-count function. Put $J_A(y)=0$
+for positive noninteger $y$. Use the symmetric sawtooth representative
+$b_{\rm sym}(t)=b(t)+\tfrac12\mathbf1_{\mathbb Z}(t)$, with value zero
+at integers, and define $g_{{\rm sym},A}(y)=\sum_\ell h(\ell)b_{\rm sym}(y/\ell)$.
+For $y>0$, $g_{{\rm sym},A}(y)=g_A(y)+\tfrac12J_A(y)$. For
+$E_{{\rm sym},A}(y)=[c_A+g_{{\rm sym},A}(y)-y(S_A)_+]_+$,
+the positive part's Lipschitz property gives
+
+$$
+|E_A(y)-E_{{\rm sym},A}(y)|\le\tfrac12|J_A(y)|.
+\tag{SV18}
+$$
+
+The same finite Vaaler polynomial $P_J$ approximates $b_{\rm sym}$
+with nonnegative majorant $D_J-\tfrac12\mathbf1_{\mathbb Z}$:
+off the integers the original estimate applies; at integers both
+$b_{\rm sym}$ and $P_J$ are zero and $D_J=1/2$.
+Thus a midpoint Fourier convention can be used only with the explicit
+correction (SV18) when returning to the original response.
+
+For every prime-power layer, including $k=1$, the global own-price
+comparison gives $0\le w_{N,p,k}\le\log p$. Define its full endpoint cost
+
+$$
+C_N(x):=\frac1{2x}\sum_{\substack{p^k\le x\\k\ge1}}
+ w_{N,p,k}|J_A(x/p^k)|.
+$$
+
+If $x$ is noninteger this cost is zero. If $x=M$ is a positive integer,
+only $p^k\mid M$ contribute. Since $\tau(M/p^k)\le\tau(M)$ and
+$\sum_{p^k\mid M}\log p=\log M$, (SV17) gives
+
+$$
+C_N(M)\le\frac{\tau(M)^2\log M}{2M}.
+\tag{SV19}
+$$
+
+Directly reuse [Nicolas's divisor-count maximizing
+reference](nicolas1971repartition.md#objective-and-arbitrary-integer-decomposition),
+printed p.117, equations (6)–(8), with fixed exponent $\nu=1/8$.
+Its reference $Q_\nu$ maximizes $\tau(m)m^{-\nu}$ over all positive
+integers, and therefore
+
+$$
+\tau(m)\le\tau(Q_\nu)Q_\nu^{-\nu}m^\nu,
+\qquad
+\sup_{A\le x\le2A}C_N(x)
+\ll A^{-3/4}\log A=o(A^{-\eta})
+\quad(0<\eta<1/2).
+\tag{SV20}
+$$
+
+The constant is independent of the selected $N$ and $A$; $Q_\nu$ is a
+fixed divisor-count reference, distinct from the actual CA integer $N$
+and its varying price $\epsilon$. This pays the exact-integer
+representative correction for all layers in the original local sampling
+budget. It is a classical application, not a new divisor estimate or a
+Lean-certified result. It controls neither near-jump errors nor the
+signed-error/negative-margin coupling, mean, low-layer residuals, general
+prime-layer cost, recovery terms or complete signed Robin tail.
