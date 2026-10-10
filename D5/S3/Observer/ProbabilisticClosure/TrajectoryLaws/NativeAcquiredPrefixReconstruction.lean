@@ -315,7 +315,7 @@ def executeFinite (f : FiniteFields) : List Operation → Option FiniteFields
 def finiteRun (ops : List Operation) : Option FiniteFields :=
   executeFinite initial.source.finiteFields ops
 
-private theorem execute_finite_projection (c : AcquiredNativeState) (ops : List Operation) :
+theorem execute_finite_projection (c : AcquiredNativeState) (ops : List Operation) :
     (execute c ops).map (fun d => d.source.finiteFields) =
       executeFinite c.source.finiteFields ops := by
   induction ops generalizing c with

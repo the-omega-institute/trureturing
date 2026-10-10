@@ -111,9 +111,9 @@ abbrev signature.{v} : Signature where
   finiteAnchor := inferInstance
 
 def actual.{v} : Realization signature.{v} :=
-  realize signature.{v} (fun _ p F => F p.2.2) (fun e => nomatch e)
+  realize signature.{v} (fun _ p F => F p.2.2) (fun e => Empty.elim e)
 def rejected.{v} : Realization signature.{v} :=
-  realize signature.{v} (fun _ p F => F p.2.2 + 1) (fun e => nomatch e)
+  realize signature.{v} (fun _ p F => F p.2.2 + 1) (fun e => Empty.elim e)
 
 def sourceStatement.{u,v} : Prop := ∀ {α : Type u} {β : Type v} [Fintype α] [Fintype β] [DecidableEq β]
     (f : α → β) (p : α → ℝ) (q : β → ℝ)
@@ -161,7 +161,7 @@ def proof_record.{u,v} : Registration arena.{u,v} sourceStatement.{u,v} where
 
 def audit.{u,v} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Pushforward.product_pushforward.{u,v})
-    (type_of% (realize.{v+1,v,0,0,0} signature.{v} (fun _ p F => F p.2.2) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{v+1,v,0,0,0} signature.{v} (fun _ p F => F p.2.2) (fun e => Empty.elim e))) Unit Unit := {
   unitName := `D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Pushforward.product_pushforward.__information_unit,
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.ProductPushforward.proof_record,
   realizationSource := none, generated := false,
@@ -170,7 +170,7 @@ def audit.{u,v} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,
   realization := .source arena.{u,v} ⟨proof_record.{u,v}⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{v+1,v,0,0,0} signature.{v} (fun _ p F => F p.2.2) (fun e => nomatch e)),
+  readout := some (realize.{v+1,v,0,0,0} signature.{v} (fun _ p F => F p.2.2) (fun e => Empty.elim e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some {
@@ -178,8 +178,8 @@ def audit.{u,v} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,
     definition := none,
     coordinates := #[1,9,11], readouts := #[{
       path := #["body","body","body","body","body","body","body","body","body","body","body","arg","arg","body","fn","arg"],
-      stateBinder := 10, functionOperand := false,
-      stateOperand := none, booleanPredicate := false }] },
+      stateBinder := 0, functionOperand := false,
+      stateOperand := some #["fn"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },

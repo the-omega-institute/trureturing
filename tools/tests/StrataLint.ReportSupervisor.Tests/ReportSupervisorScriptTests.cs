@@ -5,6 +5,26 @@ namespace StrataLint.ReportSupervisor.Tests;
 
 public sealed class ReportSupervisorScriptTests
 {
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void MissingScopedBundleRepairPreservesExplicitTargets(bool scoped, bool sidecarMissing)
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var report = Path.Combine(fixture.Root, "missing.json");
+        if (sidecarMissing) File.WriteAllText(report, "{}");
+        var consumer = Path.Combine(fixture.RepositoryRoot, "tools/scripts/report/report-consumer.sh");
+        string[] targets = scoped ? ["--targets", "D5.A D5.B"] : [];
+        var result = fixture.RunExternalProcess("bash",
+            [consumer, "--role", "scribe-consumer", "--report", report, .. targets, "--", "/usr/bin/true"],
+            maximumOutputBytes: 1024 * 1024);
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(scoped ? "make lean-report-scoped LEAN_TARGETS=\"D5.A D5.B\"" : "run make lean-report first",
+            Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+    }
+
     [Fact]
     public void MissingReportConsumptionFailsClosedWithProducerInstruction()
     {
