@@ -545,11 +545,35 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
                           "--merge", feature, "--message", "mirror: conflict", expect=73)
         self.assertTrue(self.g(mirror, "ls-files", "--unmerged"))
         self.run_protocol("remove", "--names", mirror.name, expect=68)
-        failed = self.root / "mirror-offline"
-        self.g(self.main, "remote", "set-url", "origin", self.root / "missing.git")
-        self.run_protocol("prepare-mirror", "--path", failed, "--branch", "mirror/offline/11", "--base", self.base,
-                          "--merge", feature, "--message", "mirror: offline", expect=73)
+        failed = self.root / "mirror-rejected"
+        branch = "mirror/rejected/11"
+        hook = self.remote / "hooks/pre-receive"
+        hook.write_text("#!/bin/sh\necho publication-rejected >&2\nexit 1\n")
+        hook.chmod(0o755)
+        result = self.run_protocol("prepare-mirror", "--path", failed, "--branch", branch, "--base", self.base,
+                          "--merge", feature, "--message", "mirror: rejected", expect=73)
+        self.assertIn("publication-rejected", result.stderr)
         self.assertEqual("feature\n", (failed / "owned").read_text())
+        head = self.g(failed, "rev-parse", "HEAD").strip()
+        self.assertEqual([self.base, feature], self.g(failed, "show", "-s", "--format=%P", head).split())
+        self.assertEqual(head, self.g(self.main, "rev-parse", "refs/heads/" + branch).strip())
+        self.assertEqual("", self.g(self.remote, "for-each-ref", "refs/heads/" + branch))
+        self.run_protocol("remove", "--names", failed.name, expect=68)
+        hook.unlink()
+        published = self.run_protocol("publish", "--path", failed, "--branch", branch)
+        self.assertEqual("confirmed", json.loads(published.stdout)["status"])
+        self.assertEqual(head, self.g(self.remote, "rev-parse", "refs/heads/" + branch).strip())
+
+    def test_mirror_missing_endpoint_refused_before_creation(self):
+        failed = self.root / "mirror-offline"
+        branch = "mirror/offline/11"
+        before = self.g(self.main, "worktree", "list", "--porcelain")
+        self.g(self.main, "remote", "set-url", "origin", self.root / "missing.git")
+        self.run_protocol("prepare-mirror", "--path", failed, "--branch", branch, "--base", self.base,
+                          "--merge", self.base, "--message", "mirror: offline", expect=73)
+        self.assertFalse(failed.exists())
+        self.assertEqual(before, self.g(self.main, "worktree", "list", "--porcelain"))
+        self.assertEqual("", self.g(self.main, "for-each-ref", "refs/heads/" + branch))
 
     def consumer_mirror_uses_real_git_with_stubbed_github(self):
         self.g(self.main, "push", "origin", self.base + ":refs/heads/integration-tests")
