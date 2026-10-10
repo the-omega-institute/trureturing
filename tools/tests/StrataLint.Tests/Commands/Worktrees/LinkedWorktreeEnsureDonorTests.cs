@@ -272,6 +272,64 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
+    public void LinkedLaneUsesExplicitCurrentPinDonorWhenMainPartitionIsDifferent()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "dev partition cache\n");
+
+        var producer = AddWorktree(repository.Path, "current-pin-producer");
+        ChangeMathlibPartition(producer);
+        Git(producer, "add", "lean-toolchain", "lake-manifest.json", "Reg", "tools/lean-inspector-reg");
+        Git(producer, "commit", "-m", "current partition producer");
+        WriteCache(producer, "current pin producer cache\n", projectWarm: true);
+
+        var target = AddWorktree(producer, "current-pin-target");
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
+        using (var inventory = GitWorktreeInventory.SelectDonor(
+            target,
+            ReadPins(target),
+            runner,
+            FileSystemLeanCacheStateProbe.Instance,
+            requireProjectWarm: true,
+            donorRepository: producer))
+        {
+            Assert.True(
+                string.Equals(
+                    LeanCacheGuard.PhysicalPath(producer),
+                    inventory.Donor,
+                    StringComparison.Ordinal),
+                inventory.Notice);
+        }
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            [
+                "ensure-cache",
+                "--path", target,
+                "--donor-repository", producer,
+            ],
+            runner,
+            cloner);
+
+        Assert.True(result.Success, result.Error);
+        var clone = Assert.Single(cloner.Invocations);
+        Assert.Equal(
+            Path.Combine(LeanCacheGuard.PhysicalPath(producer), ".lake"),
+            clone.Source);
+        Assert.DoesNotContain(runner.Invocations, static call =>
+            Path.GetFileName(call.FileName) == "lake");
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
+        Assert.Equal(
+            LeanCacheGuard.PhysicalPath(producer),
+            receipt.RootElement.GetProperty("donor").GetString());
+        Assert.Equal(ReadPins(target).Sha256, receipt.RootElement.GetProperty("pin_sha256").GetString());
+        Assert.Equal(LinkedArchiveDisabled, receipt.RootElement.GetProperty("archive_skip_reason").GetString());
+    }
+
+    [Fact]
     public void LinkedLaneWithMatchingStampAndColdContentNamesLaneReseedRemediation()
     {
         using var repository = new TemporaryDirectory();

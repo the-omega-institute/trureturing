@@ -366,6 +366,7 @@ internal static partial class LeanCacheEnsureCommand
                             removePartial,
                             stateProbe,
                             location,
+                            donorRepository,
                             replaceExisting: true,
                             stampMiss,
                             out cacheState);
@@ -390,6 +391,7 @@ internal static partial class LeanCacheEnsureCommand
                                 writerGuard,
                                 stateProbe,
                                 location,
+                                donorRepository,
                                 stampMiss,
                                 out cacheState);
                         }
@@ -403,6 +405,7 @@ internal static partial class LeanCacheEnsureCommand
                             removePartial,
                             stateProbe,
                             location,
+                            donorRepository,
                             replaceExisting: true,
                             stampMiss,
                             out cacheState);
@@ -477,7 +480,8 @@ internal static partial class LeanCacheEnsureCommand
                     }
 
                     // Main checkouts retain in-place reproduction for missing or corrupt stamps.
-                    // Linked worktrees return above and provision only from their main checkout.
+                    // Linked worktrees use the main checkout, or an explicitly registered
+                    // current-pin donor inventory when the main checkout is unavailable.
                     try
                     {
                         var reproduced = LeanCacheProvisioner.ReproduceExisting(
@@ -578,6 +582,7 @@ internal static partial class LeanCacheEnsureCommand
                     removePartial,
                     stateProbe,
                     worktreeLocation,
+                    donorRepository,
                     replaceExisting: false,
                     stampMiss,
                     out cacheState);
@@ -732,16 +737,19 @@ internal static partial class LeanCacheEnsureCommand
         Action<string>? removePartial,
         ILeanCacheStateProbe stateProbe,
         LeanWorktreeLocation location,
+        string? donorRepository,
         bool replaceExisting,
         string? stampMiss,
         out CacheState? cacheState)
     {
         cacheState = null;
-        using var selection = GitWorktreeInventory.SelectMainDonor(
+        using var selection = SelectLinkedDonor(
+            root,
             location,
             pins,
             runner,
-            stateProbe);
+            stateProbe,
+            donorRepository);
         if (selection.Donor is null)
             return LinkedFailure(root, pins, location, selection.Notice, stampMiss);
 
@@ -762,7 +770,7 @@ internal static partial class LeanCacheEnsureCommand
                 SuccessReceipt(
                     "seeded",
                     root,
-                    location.MainCheckout,
+                    selection.Donor,
                     provisioned.Method,
                     pins.Sha256,
                     provisioned.Warning,
@@ -799,15 +807,18 @@ internal static partial class LeanCacheEnsureCommand
         LeanCacheWriterGuard writerGuard,
         ILeanCacheStateProbe stateProbe,
         LeanWorktreeLocation location,
+        string? donorRepository,
         string? stampMiss,
         out CacheState? cacheState)
     {
         cacheState = null;
-        using var selection = GitWorktreeInventory.SelectMainDonor(
+        using var selection = SelectLinkedDonor(
+            root,
             location,
             pins,
             runner,
-            stateProbe);
+            stateProbe,
+            donorRepository);
         if (selection.Donor is null)
             return LinkedFailure(root, pins, location, selection.Notice, stampMiss);
 
@@ -836,7 +847,7 @@ internal static partial class LeanCacheEnsureCommand
                 SuccessReceipt(
                     "seeded",
                     root,
-                    location.MainCheckout,
+                    selection.Donor,
                     attempt.Result.Method,
                     pins.Sha256,
                     attempt.Warning,
@@ -863,6 +874,31 @@ internal static partial class LeanCacheEnsureCommand
                     : null,
                 exception.Message);
         }
+    }
+
+    private static LeanCacheDonorSelection SelectLinkedDonor(
+        string root,
+        LeanWorktreeLocation location,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        ILeanCacheStateProbe stateProbe,
+        string? donorRepository)
+    {
+        var main = GitWorktreeInventory.SelectMainDonor(location, pins, runner, stateProbe);
+        if (main.Donor is not null || string.IsNullOrWhiteSpace(donorRepository)) return main;
+
+        var mainNotice = main.Notice;
+        main.Dispose();
+        var registered = GitWorktreeInventory.SelectDonor(
+            root,
+            pins,
+            runner,
+            stateProbe,
+            requireProjectWarm: true,
+            donorRepository: donorRepository);
+        return registered.Donor is null
+            ? new LeanCacheDonorSelection(null, JoinReasons(mainNotice, registered.Notice))
+            : registered;
     }
 
     private static CommandResult SuccessWithState(

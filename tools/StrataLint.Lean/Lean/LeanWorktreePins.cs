@@ -482,8 +482,10 @@ internal sealed record LeanWorktreeLocation(
     string MainCheckout);
 
 /// <summary>
-/// Resolves cache donors. A linked worktree may use only the main checkout of its repository;
-/// main-worktree and standalone callers retain the registered-worktree donor inventory.
+/// Resolves cache donors. A linked worktree uses its main checkout by default; when an explicit
+/// donor repository is supplied, it may use that repository's registered current-pin inventory
+/// after the main checkout is unavailable. Main-worktree and standalone callers retain the
+/// registered-worktree donor inventory.
 /// </summary>
 internal static class GitWorktreeInventory
 {
