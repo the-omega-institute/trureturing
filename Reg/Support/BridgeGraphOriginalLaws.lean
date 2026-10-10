@@ -22,17 +22,20 @@ abbrev vectorFunctionSignature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def vectorFunctionActual : Realization vectorFunctionSignature.{u_1,u_2} :=
-  realize vectorFunctionSignature (fun _ _ f => Function.Injective f) (fun e => nomatch e)
+  realize vectorFunctionSignature
+    (fun _ _ f => @Decidable.decide (Function.Injective f)
+      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e)
 def vectorFunctionRejected : Realization vectorFunctionSignature.{u_1,u_2} :=
-  realize vectorFunctionSignature (fun _ _ _ => False) (fun e => nomatch e)
+  realize vectorFunctionSignature (fun _ _ _ => false) (fun e => nomatch e)
 
 theorem vectorFunctionDependence :
     ObservationalDependence vectorFunctionSignature.{u_1,u_2} vectorFunctionActual := by
+  classical
   intro i
   let p : vectorFunctionSignature.{u_1,u_2}.Params :=
     ⟨ULift.{u_1} Unit, ULift.{u_2} Unit⟩
@@ -46,8 +49,10 @@ theorem vectorFunctionDependence :
     exact congrFun h (⟨()⟩ : ULift.{u_1} Unit)
   refine ⟨p, x, y, ?_⟩
   intro h
-  change Function.Injective x = Function.Injective y at h
-  have hy : Function.Injective y := h ▸ hx
+  change decide (Function.Injective x) = decide (Function.Injective y) at h
+  have hx' : decide (Function.Injective x) = true := by
+    simpa only [decide_eq_true_eq] using hx
+  have hy : Function.Injective y := of_decide_eq_true (h ▸ hx')
   have h01 := @hy (0 : ULift.{u_2} Unit → ℚ) (fun _ => 1) rfl
   have hq := congrFun h01 (⟨()⟩ : ULift.{u_2} Unit)
   change (0 : ℚ) = 1 at hq
@@ -60,17 +65,20 @@ abbrev kernelFunctionSignature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def kernelFunctionActual : Realization kernelFunctionSignature :=
-  realize kernelFunctionSignature (fun _ _ f => Function.Injective f) (fun e => nomatch e)
+  realize kernelFunctionSignature
+    (fun _ _ f => @Decidable.decide (Function.Injective f)
+      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e)
 def kernelFunctionRejected : Realization kernelFunctionSignature :=
-  realize kernelFunctionSignature (fun _ _ _ => False) (fun e => nomatch e)
+  realize kernelFunctionSignature (fun _ _ _ => false) (fun e => nomatch e)
 
 theorem kernelFunctionDependence :
     ObservationalDependence kernelFunctionSignature kernelFunctionActual := by
+  classical
   intro i
   let p : kernelFunctionSignature.Params := ⟨1, ⟨1, ⟨1, ⟨1, 1⟩⟩⟩⟩
   let x : kernelFunctionSignature.State p := kernelEmbedding 1 1 1 1 1
@@ -80,8 +88,10 @@ theorem kernelFunctionDependence :
       1 1 1 1 1
   refine ⟨p, x, y, ?_⟩
   intro h
-  change Function.Injective x = Function.Injective y at h
-  have hy : Function.Injective y := h ▸ hx
+  change decide (Function.Injective x) = decide (Function.Injective y) at h
+  have hx' : decide (Function.Injective x) = true := by
+    simpa only [decide_eq_true_eq] using hx
+  have hy : Function.Injective y := of_decide_eq_true (h ▸ hx')
   have h01 := @hy (0 : Fin 1 × Fin 1 → ℚ) (fun _ => 1) rfl
   have hq := congrFun h01 (0, 0)
   change (0 : ℚ) = 1 at hq
@@ -127,20 +137,31 @@ namespace Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent
   signature := vectorFunctionSignature.{u_1,u_2}
   Law S := ∀ {m : Type u_1} {n : Type u_2} [Fintype n] [DecidableEq m]
     (e : n → m) (he : Function.Injective e),
-    S.readout () ⟨m, n⟩ (inclusion e).mulVec
+    S.readout () ⟨m, n⟩ (inclusion e).mulVec = true
 theorem inclusion_injectivePositive :
-    inclusion_injectiveArena.{u_1,u_2}.Law vectorFunctionActual :=
-  @_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent.inclusion_injective.{u_1,u_2}
+    inclusion_injectiveArena.{u_1,u_2}.Law vectorFunctionActual := by
+  classical
+  intro m n _ _ e he
+  change decide (Function.Injective (inclusion e).mulVec) = true
+  simpa only [decide_eq_true_eq] using
+    _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent.inclusion_injective e he
 theorem inclusion_injectiveNegative :
     ¬ inclusion_injectiveArena.{u_1,u_2}.Law vectorFunctionRejected := by
   intro h
-  exact h (m := ULift.{u_1} Unit) (n := ULift.{u_2} Unit)
-    (fun _ => ⟨()⟩) (fun _ _ _ => Subsingleton.elim _ _)
+  exact Bool.noConfusion (h (m := ULift.{u_1} Unit) (n := ULift.{u_2} Unit)
+    (fun _ => ⟨()⟩) (fun _ _ _ => Subsingleton.elim _ _))
 
 def inclusion_injectiveEvidence : Registration inclusion_injectiveArena.{u_1,u_2}
     (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent.inclusion_injective.{u_1,u_2})) where
   actual := vectorFunctionActual
-  bridge := Iff.rfl
+  bridge := by
+    classical
+    constructor
+    · intro h m n _ _ e he
+      change decide (Function.Injective (inclusion e).mulVec) = true
+      simpa only [decide_eq_true_eq] using h e he
+    · intro h m n _ _ e he
+      exact of_decide_eq_true (h e he)
   variation := ⟨inclusion_injectivePositive, vectorFunctionRejected, inclusion_injectiveNegative⟩
   sensitivity := ⟨fun i => ⟨vectorFunctionRejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, inclusion_injectiveNegative⟩,
@@ -155,19 +176,31 @@ namespace Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur
   signature := kernelFunctionSignature
   Law S := ∀ (p alpha beta gamma delta : ℕ),
     S.readout () ⟨p, ⟨alpha, ⟨beta, ⟨gamma, delta⟩⟩⟩⟩
-      (kernelEmbedding p alpha beta gamma delta)
+      (kernelEmbedding p alpha beta gamma delta) = true
 theorem kernelEmbedding_injectivePositive :
-    kernelEmbedding_injectiveArena.Law kernelFunctionActual :=
-  @_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
+    kernelEmbedding_injectiveArena.Law kernelFunctionActual := by
+  classical
+  intro p alpha beta gamma delta
+  change decide (Function.Injective (kernelEmbedding p alpha beta gamma delta)) = true
+  simpa only [decide_eq_true_eq] using
+    _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
+      p alpha beta gamma delta
 theorem kernelEmbedding_injectiveNegative :
     ¬ kernelEmbedding_injectiveArena.Law kernelFunctionRejected := by
   intro h
-  exact h 0 0 0 0 0
+  exact Bool.noConfusion (h 0 0 0 0 0)
 
 def kernelEmbedding_injectiveEvidence : Registration kernelEmbedding_injectiveArena
     (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective)) where
   actual := kernelFunctionActual
-  bridge := Iff.rfl
+  bridge := by
+    classical
+    constructor
+    · intro h p alpha beta gamma delta
+      change decide (Function.Injective (kernelEmbedding p alpha beta gamma delta)) = true
+      simpa only [decide_eq_true_eq] using h p alpha beta gamma delta
+    · intro h p alpha beta gamma delta
+      exact of_decide_eq_true (h p alpha beta gamma delta)
   variation := ⟨kernelEmbedding_injectivePositive, kernelFunctionRejected, kernelEmbedding_injectiveNegative⟩
   sensitivity := ⟨fun i => ⟨kernelFunctionRejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, kernelEmbedding_injectiveNegative⟩,
@@ -237,19 +270,30 @@ def witness_of_typed_slicesEvidence : Registration witness_of_typed_slicesArena.
   signature := vectorFunctionSignature.{u_1,u_2}
   Law S := ∀ {m : Type u_1} {n : Type u_2} [Fintype m] [Fintype n] [DecidableEq n]
     (A : Matrix m n ℚ) (hA : A.rank = Fintype.card n),
-    S.readout () ⟨m, n⟩ A.mulVecLin
+    S.readout () ⟨m, n⟩ A.mulVecLin = true
 theorem matrix_injective_of_rankPositive :
-    matrix_injective_of_rankArena.{u_1,u_2}.Law vectorFunctionActual :=
-  @_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank.{u_1,u_2}
+    matrix_injective_of_rankArena.{u_1,u_2}.Law vectorFunctionActual := by
+  classical
+  intro m n _ _ _ A hA
+  change decide (Function.Injective A.mulVecLin) = true
+  simpa only [decide_eq_true_eq] using
+    _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank A hA
 theorem matrix_injective_of_rankNegative :
     ¬ matrix_injective_of_rankArena.{u_1,u_2}.Law vectorFunctionRejected := by
   intro h
-  exact h (m := ULift.{u_1} Empty) (n := ULift.{u_2} Empty) 0 (by simp)
+  exact Bool.noConfusion (h (m := ULift.{u_1} Empty) (n := ULift.{u_2} Empty) 0 (by simp))
 
 def matrix_injective_of_rankEvidence : Registration matrix_injective_of_rankArena.{u_1,u_2}
     (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank.{u_1,u_2})) where
   actual := vectorFunctionActual
-  bridge := Iff.rfl
+  bridge := by
+    classical
+    constructor
+    · intro h m n _ _ _ A hA
+      change decide (Function.Injective A.mulVecLin) = true
+      simpa only [decide_eq_true_eq] using h A hA
+    · intro h m n _ _ _ A hA
+      exact of_decide_eq_true (h A hA)
   variation := ⟨matrix_injective_of_rankPositive, vectorFunctionRejected, matrix_injective_of_rankNegative⟩
   sensitivity := ⟨fun i => ⟨vectorFunctionRejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, matrix_injective_of_rankNegative⟩,

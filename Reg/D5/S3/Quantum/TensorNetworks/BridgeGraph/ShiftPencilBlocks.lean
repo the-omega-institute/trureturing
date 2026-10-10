@@ -804,7 +804,8 @@ noncomputable def witness_of_typed_slicesRegistration : Contract.Registration.{_
 
 noncomputable def matrix_injective_of_rankRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank.{u_1,u_2})
-    (type_of% (realize vectorFunctionSignature.{u_1,u_2} (fun _ _ f => Function.Injective f) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize vectorFunctionSignature.{u_1,u_2} (fun _ _ f => @Decidable.decide (Function.Injective f)
+      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank
     "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rankArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rankEvidence,
@@ -815,14 +816,15 @@ noncomputable def matrix_injective_of_rankRegistration : Contract.Registration.{
   realization := .source matrix_injective_of_rankArena.{u_1,u_2} ⟨matrix_injective_of_rankEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize vectorFunctionSignature.{u_1,u_2} (fun _ _ f => Function.Injective f) (fun e => nomatch e)),
+  readout := some (realize vectorFunctionSignature.{u_1,u_2} (fun _ _ f => @Decidable.decide (Function.Injective f)
+      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks, definition := none,
     coordinates := #[0, 1], readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn"],
-      stateBinder := 0, functionOperand := true,
-      stateOperand := none, booleanPredicate := false }] },
+      path := #["body", "body", "body", "body", "body", "body", "body"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := some #["arg"], booleanPredicate := true }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
