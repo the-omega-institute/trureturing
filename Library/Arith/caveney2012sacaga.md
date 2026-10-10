@@ -708,3 +708,68 @@ The same selected integer, actual zero real parts and multiplicities,
 all heights, explicit-formula terms and strict Robin core remain
 unchanged. RH remains unproved; this source application is not Lean
 verified and claims no mathematical originality.
+
+## Positive psi points supply a strict actual CA increase
+
+The [Pintz source application](../Analytic/pintz1984remainder.md#positive-psi-error-points-in-power-windows)
+locates positive $\psi$-error points in $[Y^r,Y]$ under its stated
+fixed-exponent conditions. The following correspondence consumes that
+input and the present primary's actual activation rules, equations
+(7)–(12), pp.7–9. It does not repeat Theorem 6's infinite GA1 supplier.
+
+Let $t\to\infty$ satisfy $\psi(t)>t$, and let $p$ be the largest prime
+at most $t$. The prime number theorem gives $p\sim t$, while the full
+prime-power accounting gives
+
+$$
+\psi(t)-\vartheta(t)
+=\vartheta(\sqrt t)
+ +\sum_{k=3}^{\lfloor\log t/\log2\rfloor}\vartheta(t^{1/k})
+=(1+o(1))\sqrt t.
+$$
+
+The remaining sum is $O(t^{1/3}\log t)$. Since
+$\vartheta(p)=\vartheta(t)$, positivity implies
+$\vartheta(p)-p>-(1+o(1))\sqrt p$.
+
+At the actual price $\epsilon_p=F(p,1)$, let $x_k$ be the root of
+$F(x_k,k)=\epsilon_p$, so $x_1=p$, and retain
+
+$$
+H=\prod_{k:x_k\ge2}\ \prod_{q\le x_k}q,
+\qquad D=H/p.
+$$
+
+Here $q$ ranges over ordinary primes. The published activation rule
+makes $H$ the largest CA integer at this price, including every tied
+layer. The first $p$-layer is tied and no higher $p$-layer is occupied,
+so $D$ is another actual CA integer at the same price.
+
+For each fixed $c>0$,
+$F(c\sqrt p,2)/F(p,1)\to2/c^2$; monotonicity therefore gives
+$x_2\sim\sqrt{2p}$. Lemma 1, p.9, and equation (15), p.11, give
+$x_3<(3p)^{1/3}$ and $O(\log p)$ occupied layers. Thus all layers yield
+
+$$
+\log H=\vartheta(p)+(\sqrt2+o(1))\sqrt p
+ +O(p^{1/3}\log p),
+\qquad \log D\sim\log H\sim t.
+$$
+
+In particular $\log D>p+(\sqrt2-1+o(1))\sqrt p-\log p>p+1$
+eventually. The sign of the gain is then exact:
+
+$$
+\begin{aligned}
+\log\frac{G(H)}{G(D)}
+&=\epsilon_p\log p
+ -\int_{\log D}^{\log H}\frac{du}{u\log u}>0,\\
+\epsilon_p&>\frac1{(p+1)\log(p+1)}.
+\end{aligned}
+$$
+
+Indeed $Z(H)/Z(D)=1+1/p$, $\log H-\log D=\log p$, and
+$u\mapsto1/(u\log u)$ decreases throughout that interval. The positive
+$\sqrt2-1$ term permits a positive $\psi$-point even if
+$\vartheta(p)<p$. No layer or activation tie was removed, and no GA1
+or event-free assertion is supplied by this correspondence.

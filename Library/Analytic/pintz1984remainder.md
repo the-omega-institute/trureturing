@@ -44,3 +44,48 @@ $\Theta=\inf\{\vartheta:\Delta(x)=O(x^\vartheta)\}$.
 For $\Theta<1$, this supplies $|\psi(x)-x|=O(x^\sigma)$ for every fixed
 $\sigma>\Theta$. When $\Theta=1$, the application instead uses the
 prime number theorem's bound with $\sigma=1$.
+
+## Positive psi-error points in power windows
+
+The following application consumes Theorem 4 rather than reconstructing
+its oscillation proof. Fix $1/2<\sigma\le1$ and
+$|E(u)|=O(u^\sigma)$, where $E(u)=\psi(u)-u$. For every fixed
+$r>0$ with $r\sigma<1/2$, each sufficiently large $[Y^r,Y]$ contains
+a $t$ with $\psi(t)>t$.
+
+To see the parameter correspondence, retain every prime power in
+$\Pi(x)=\sum_{p^k\le x}1/k$. Finite partial summation, with weak upper
+endpoints, gives the exact normalization
+
+$$
+\Pi(x)-\operatorname{li}(x)
+=\frac{E(x)}{\log x}
+ +\int_2^x\frac{E(u)}{u\log^2u}\,du+c_0,
+\qquad c_0=\frac2{\log2}-\operatorname{li}(2).
+$$
+
+Also $\Pi(x)-\pi(x)=\sum_{k=2}^{\lfloor\log x/\log2\rfloor}
+\pi(x^{1/k})/k\ge\pi(\sqrt x)/2$ exactly. Put $B=Y^r$ and suppose
+$E\le0$ throughout $[B,Y]$. The published sign-change interval supplies
+a $y\in[Y\exp\{-500(\log\log Y)^3\},Y]$ with
+$\pi(y)-\operatorname{li}(y)>0$; eventually $y>B$. The endpoint term
+and the integral over $[B,y]$ are nonpositive. For fixed positive
+constants $C_1,C_2,c_3$, the error bound and the prime number theorem
+therefore give
+
+$$
+0<\pi(y)-\operatorname{li}(y)
+\le C_1+C_2 B^\sigma-c_3\frac{\sqrt y}{\log y}.
+$$
+
+But $\sqrt y/\log y\ge
+\sqrt Y\exp\{-250(\log\log Y)^3\}/\log Y$ eventually, and this
+dominates $Y^{r\sigma}$ since $r\sigma<1/2$. The upper bound becomes
+negative, a contradiction. All discarded higher prime powers have the
+required upper-bound direction. No effective starting value is obtained.
+
+This is a paper-level application used by the
+[actual CA source construction](../Arith/caveney2012sacaga.md#positive-psi-points-supply-a-strict-actual-ca-increase),
+without a priority claim or Lean certification. A pointwise positive
+$\psi(t)-t$ is not a lower bound for the original Robin signed integral
+at the final selected integer's clock.
