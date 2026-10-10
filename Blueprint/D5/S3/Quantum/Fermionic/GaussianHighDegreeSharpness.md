@@ -24,6 +24,10 @@ $$\mathit{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/GaussianHighDegreeSharpness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/negari-2610-01860-high-degree-constant-sharpness` (proved) by `D5/S3/Quantum/Fermionic/GaussianHighDegreeSharpness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"negari-2610-01860-high-degree-constant-sharpness","declaration_gid":"D5/S3/Quantum/Fermionic/GaussianHighDegreeSharpness.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Amir-Reza Negari; Farzin Salek; Zoltán Zimborás; Aram Harrow; Patrick Hayden; Jens Eisert (2026). *Approximation theorems for fermionic Gaussian states*. DOI: [10.48550/arXiv.2610.01860](https://doi.org/10.48550/arXiv.2610.01860). URL: <https://arxiv.org/abs/2610.01860v1>.
