@@ -185,7 +185,7 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ k := State k → Prop
+  Output _ k := Set (Option (LiveRecord k) × Option (LiveRecord k)) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -228,9 +228,9 @@ private theorem rejected_negative : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  let A0 : State 2 := ∅
+  let A0 : signature.State 2 := ∅
   let p : Option (LiveRecord 2) × Option (LiveRecord 2) := (none, none)
-  let A1 : State 2 := {p}
+  let A1 : signature.State 2 := {p}
   refine ⟨2, A0, A1, ?_⟩
   intro h
   have h0 : (A0 = A0) = (A1 = A0) := by
@@ -254,7 +254,7 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
     (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str
     (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str
-      Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Algorithms")
+      (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Algorithms")
       "KBonacciAcquisition") "OriginalAcquiredTrace") "actual_archive_reply")
       "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveReplyAudit/Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveReplyAudit.arena/[anonymous]")
       "__information_unit",
