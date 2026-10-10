@@ -23,14 +23,18 @@ internal sealed class CStarSmaleHigherOrderDocument : IScribeDocumentDefinition
             Node("result", "The higher-order conjecture is false", "result",
                 Disp(Seq(Neg, Sp, F.Id("claim"))),
                 "Take A = Complex x Complex, n = 3 and z = 0. The roots are (0,0), ((−21+sqrt(437))/2,sqrt(3)) and ((−21−sqrt(437))/2,−sqrt(3)), with real entries embedded into Complex. Their factor product evaluates to (x^3+21x^2+x,y^3−3y). The complete critical set consists of (−7+sqrt(438)/3,1), (−7+sqrt(438)/3,−1), (−7−sqrt(438)/3,1) and (−7−sqrt(438)/3,−1). Its second coordinate forces the norm of P(0)−P(w) to be at least 2. The first and second derivative norms at zero are 3 and 42. Thus the k = 2 expression is at least (42/2)(2/9) = 14/3 > 4 for every critical point. The supremum norm takes the curvature from the first coordinate and the unavoidable critical-value gap from the second; applying the scalar theorem separately does not bound this product of maxima. The source's degree-2 theorem and its scalar higher-order theorem retain their stated scopes.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("krishna-2022-cstar-higher-order-smale-mean-value"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(
         string id, string title, string declaration, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
