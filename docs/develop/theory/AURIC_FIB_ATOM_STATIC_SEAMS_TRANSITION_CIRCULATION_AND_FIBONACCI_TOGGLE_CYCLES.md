@@ -2638,3 +2638,421 @@ $k_Q$ 位补充、已取得域 $D_Q$ 内的无新源读取及域外同码异回�
 对象和桥接条件，不能由函数代数重命名或状态双射推出。
 
 ## 26.99 追加锚（本行以下为增补区）
+
+
+## 27. 合法奇偶来源的三控制自由能与背景响应
+
+**定义 27.1（来源位、图边、控制与共同高斯载体）。** 令
+$\mathcal I=\{A,B,C\}$ 为控制标签集，合法来源域为
+$$
+\mathcal W=\{(b_1,0,b_3,0,b_5):b_1,b_3,b_5\in\{0,1\}\}.
+$$
+这些五位词满足 $b_i b_{i+1}=0$；其三个连续三位窗口各自取值于定义 1.1
+的五态域。来源位置与响应图边通过指定映射
+$$
+b_1\longmapsto A\longmapsto OL,\qquad
+b_3\longmapsto B\longmapsto OR,\qquad
+b_5\longmapsto C\longmapsto LJ
+$$
+相连。此映射是模型数据；三个活动位分处长度五来源中，不是一个三位窗口中
+三个冲突位置的共同激活。令
+$S(w)=\{A:b_1=1\}\cup\{B:b_3=1\}\cup\{C:b_5=1\}$。
+
+响应图固定为定义 25.2 的 $OL,OT,OR,LJ,RJ$，全部基准边权为一，以 $O$
+接地，采用同一坐标空间 $E=\mathbb R^{\{L,T,R,J\}}$。其基准矩阵取定理
+24.3、25.6 的 $K_0$，即
+$$
+K_0=\begin{pmatrix}
+2&0&0&-1\\0&1&0&0\\0&0&2&-1\\-1&0&-1&2
+\end{pmatrix},\qquad G_0=K_0^{-1}.
+$$
+本节的 $x,y,z\ge0$ 仅指三个控制强度，令
+$$
+u_A=\sqrt{x}\,e_L,\qquad u_B=\sqrt{y}\,e_R,\qquad
+u_C=\sqrt{z}\,(e_J-e_L),\qquad
+K_S=K_0+\sum_{i\in S}u_i u_i^{\mathsf T},\quad G_S=K_S^{-1}.
+$$
+坐标向量、图边、来源位与控制标签分别属于上述不同集合；特别地，
+$u_i u_i^{\mathsf T}$ 是作用于 $E$ 的正半定算子。
+所有 $S$ 共用定义 25.1 的 Lebesgue 测度、单位及 $\vartheta>0$，取
+$$
+E_S(\xi)=\tfrac12\xi^{\mathsf T}K_S\xi,\qquad
+\xi\mid S\sim\mathcal N(0,\vartheta G_S),\qquad
+f(S)=-\vartheta\log\frac{Z_S}{Z_\varnothing}
+=\frac{\vartheta}{2}\log\frac{\det K_S}{\det K_0}.
+$$
+这里 $Z_S=\int_E e^{-E_S(\xi)/\vartheta}\,d\xi$。
+每个模式均值及最小二次能量都为零。以 $M=K_S/(2\vartheta)$ 代入
+[Brcic 的有限正定高斯积分](../../../Library/Analytic/brcic2026gaussianquadratic.md)
+及其 [GaussianReplicaReduction 的有限乘积测度积分](../../../D5/S3/Quantum/Entanglement/GaussianReplicaReduction.lean)，
+即给最后的归一化；定义 25.7 中模式平均与退火量的区别仍适用。
+
+为此应用记 $d_S=\det K_S$、$d_0=d_\varnothing$，并定义
+$$
+\begin{aligned}
+\mathcal U={}&f(ABC)-f(AB)-f(AC)-f(BC)\\
+&+f(A)+f(B)+f(C)-f(\varnothing).
+\end{aligned}
+$$
+集合连写表示并集，$\mathcal U$ 是实值目标对控制集合的三阶差，不是来源概率，
+也不是高斯振幅的三阶中心累积量。
+
+**定理 27.2（固定五边基准的加权三阶符号与全部退化）。** 定义 27.1 中
+$$
+\begin{gathered}
+d_0=4,\quad d_A=4+3x,\quad d_B=4+3y,\quad d_C=4+3z,\\
+d_{AB}=4+3x+3y+2xy,\quad d_{AC}=4+3x+3z+2xz,\\
+d_{BC}=4+3y+3z+2yz,\\
+d_{ABC}=4+3(x+y+z)+2(xy+xz+yz)+xyz.
+\end{gathered}
+$$
+因此
+$$
+\mathcal U(x,y,z)=\frac{\vartheta}{2}
+\log\frac{d_{ABC}d_A d_B d_C}{d_{AB}d_{AC}d_{BC}d_0},
+$$
+且有多项式恒等式
+$$
+d_{ABC}d_A d_B d_C-d_{AB}d_{AC}d_{BC}d_0
+=-xyz\,[8+7(x+y+z)+6(xy+xz+yz)+5xyz].
+$$
+在非负强度域内，$\mathcal U<0$ 当且仅当 $xyz>0$，$\mathcal U=0$
+当且仅当至少一个强度为零。三强度均为一时
+$$
+\mathcal U(1,1,1)=\frac{\vartheta}{2}\log\frac{1715}{1728}.
+$$
+更一般地，在同一单位基准五边图中选三条不同边，各增加非负强度：含 $OT$
+的六种选择恒有 $\mathcal U=0$；避开 $OT$ 的四种选择均有上述加权式，
+其中 $x,y,z$ 对应所选三条环边。故在这个固定基准及三条不同边的域内，
+全部零点恰是“选中 $OT$”或“一个选中强度为零”。
+
+证明。定义 25.2 的接地二次型在单位边权下正定；增加非负秩一项保持正定。
+写四环 $O,L,J,R,O$ 的边权为 $a_1,a_2,a_3,a_4>0$，支边权为 $h>0$。
+[矩阵树余子式公式，Zernik 的主余子式特例](../../../Library/Combinatorics/zernik2013allminors.md)
+在此给
+$$
+\det K=h\,(a_1a_2a_3+a_1a_2a_4+a_1a_3a_4+a_2a_3a_4).
+$$
+因为每棵生成树必须包含支边，并恰从四环删去一条边。取 $h=1$，把所选
+三条环边权写成 $1+x,1+y,1+z$，第四条为一，括号就是
+$$
+(1+x)(1+y)(1+z)+(1+x)(1+y)+(1+x)(1+z)+(1+y)(1+z).
+$$
+展开给 $d_{ABC}$；将未激活强度置零给全部其余 $d_S$。这一步还表明四种
+环边选择的相等来自对四条边权对称的生成树多项式。图中唯一度三顶点是 $O$，
+唯一度一顶点是 $T$；图自同构必须固定两者，因而只容许交换 $L,R$ 的反射。
+遗漏外侧环边与遗漏内侧环边的三边组不属于同一自同构轨道。
+
+为显式比较分子 $N$ 与分母 $D$，令
+$s_1=x+y+z$、$s_2=xy+xz+yz$、$s_3=xyz$。三个单项之积为
+$64+48s_1+36s_2+27s_3$。乘开三个二项式以及 $d_{ABC}$ 后，共同部分为
+$$
+H=256+384s_1+272s_2+144s_1^2+204s_1s_2+72s_2^2,
+$$
+而
+$$
+\begin{aligned}
+N&=H+s_3(172+129s_1+90s_2+27s_3),\\
+D&=H+s_3(180+136s_1+96s_2+32s_3).
+\end{aligned}
+$$
+相减即得所列因式。全部 $d_S>0$，方括号在非负域上至少为八，所以对数的
+符号与 $-xyz$ 相同。单位值由 $d_i=7,d_{ij}=12,d_{ABC}=20$ 得到。
+
+若选中 $OT$，接地后的 $T$ 坐标是独立的一维块，故
+$\log\det K_S$ 分解为仅依赖该支边控制的函数与仅依赖另外两控制的函数。
+三阶交替差消去两部分，无论另外两条边是哪一对均为零。两类选择分别有
+$\binom42=6$ 与 $\binom43=4$ 种，穷尽五条边的三元子集。
+
+本符号比较所需的经典点控制中间式另有明确假设。若 $K_0$ 是有限正权图的
+接地内部块、每个内部连通分量连接接地边界，并取
+$v_i=\sqrt{\gamma_i}e_{p_i}$、$\gamma_i>0$，允许 $p_A,p_B,p_C$ 重合，则在开集
+$$
+D_{\rm spd}=\{(s,t,r)\in\mathbb R^3:
+K(s,t,r)=K_0+sv_Av_A^{\mathsf T}+tv_Bv_B^{\mathsf T}+rv_Cv_C^{\mathsf T}>0\}
+$$
+上可微分；该开集包含整个 $[0,1]^3$。它的矩阵是对称非奇异 M 矩阵，
+故 $G=K^{-1}$ 逐项非负；接地和非负逆的范围见
+[Dörfler--Bullo 的图 Laplacian 与约化合同](../../../Library/GraphInvariants/dorflerbullo2013kron.md)。
+这里的非负逆也可直接从 $t=\lambda_{\max}(K)>0$ 看出：
+$B=tI-K$ 逐项非负且 $\|B/t\|_{\rm op}<1$，所以
+$K^{-1}=t^{-1}\sum_{m\ge0}(B/t)^m$ 逐项非负，不要求三个节点互异。
+将数学引文 25.10 所用的经典逆矩阵和 logdet 微分式再微分一次，得到
+$$
+\partial_s\partial_t\partial_r
+\left(\frac{\vartheta}{2}\log\det K\right)
+=\vartheta(v_A^{\mathsf T}Gv_B)(v_B^{\mathsf T}Gv_C)(v_C^{\mathsf T}Gv_A)\ge0.
+$$
+在单位立方体积分即给这种点控制的三阶差非负，重复节点不影响求导或积分。
+本应用的 $u_C=\sqrt z(e_J-e_L)$ 是边差控制，交叉响应不受该逐项符号约束。
+因此非负二次增量本身没有供应一个适用于所有控制向量的三阶符号律。证毕。
+
+**定义 27.3（奇偶来源律与基准共同记录）。** 在 $\mathcal W$ 上，令
+$\mu_{\rm even}$、$\mu_{\rm odd}$ 分别在 $b_1+b_3+b_5$ 为偶数、奇数的四词上
+均匀分布。全部八个词及其响应集合为
+
+| 奇偶 | 合法词 $w$ | $S(w)$ |
+| --- | --- | --- |
+| 偶 | $00000$ | $\varnothing$ |
+| 偶 | $10100$ | $AB$ |
+| 偶 | $10001$ | $AC$ |
+| 偶 | $00101$ | $BC$ |
+| 奇 | $10000$ | $A$ |
+| 奇 | $00100$ | $B$ |
+| 奇 | $00001$ | $C$ |
+| 奇 | $10101$ | $ABC$ |
+
+观察映射取三个完整局部词
+$W_1(w)=(b_1,0,b_3)$、$W_2(w)=(0,b_3,0)$、$W_3(w)=(b_3,0,b_5)$。
+目标 $F(w)=f(S(w))$ 的平均为
+$\overline F_\mu=\sum_{w\in\mathcal W}\mu(w)F(w)$。这里的观察数据指每个
+$W_j$ 各自的完整概率律；三个窗口的共同联合律是另一种数据。
+
+为解释此目标的背景响应，再固定一个共同基准随机向量
+$\xi_0\sim\mathcal N(0,\vartheta G_0)$，取
+$$
+Y_i=u_i^{\mathsf T}\xi_0+\epsilon_i,\qquad
+\epsilon_i\sim\mathcal N(0,\vartheta),\quad i\in\mathcal I,
+$$
+其中噪声彼此独立且与 $\xi_0$ 独立。$Y$ 的律不随 $\mu$ 混合，
+它不是先抽取 $S$ 再从 $\mathcal N(0,\vartheta G_S)$ 抽取的读数律。
+记控制列矩阵为 $\mathsf U=(u_A,u_B,u_C)$，完整读数协方差为
+$$
+\operatorname{Cov}(Y)=\vartheta\boldsymbol\Sigma,\qquad
+\boldsymbol\Sigma=I_3+\mathsf U^{\mathsf T}G_0\mathsf U.
+$$
+$\boldsymbol\Sigma$ 是由共同载体实现的“单位噪声加 Gram”矩阵，不是任意
+正定相关矩阵；它也不是先前的五态标签集 $\Sigma$。
+以 $\xi_0=G_0^{1/2}Z$、$Z\sim\mathcal N(0,\vartheta I_4)$ 白化后，
+观察矩阵为 $\mathsf U^{\mathsf T}G_0^{1/2}$，信号与噪声精度均为
+$\vartheta^{-1}$。这一有限观察合同复用
+[GaussianObservationLaw](../../../D5/S3/Observer/Linear/GaussianObservationLaw.lean)
+及定理 25.9 的共同基准读口。
+
+**定理 27.4（相同完整局部律的加权目标差）。** 定义 27.3 的两份来源律在
+每个 $W_j$ 上有相同的完整分布，但在定义 27.1 的控制映射下
+$$
+\overline F_{\rm odd}-\overline F_{\rm even}
+=\frac14\mathcal U(x,y,z).
+$$
+故在 $x,y,z\ge0$ 上，这两个实际来源的目标平均不同当且仅当 $xyz>0$，
+此时奇来源平均严格较小；只要一个强度为零，两者相等。特别地，三强度为一时
+差为 $\vartheta\log(1715/1728)/8$。在同一个基准记录合同下，这个差还等于
+$$
+\frac{\vartheta}{4}\bigl[I(Y_A;Y_B)-I(Y_A;Y_B\mid Y_C)\bigr].
+$$
+因此正三控制域上的目标平均不能仅由三个完整局部窗口律确定。
+
+证明。任取两个活动位及其四种赋值，在固定奇偶性的来源中恰有一个第三位
+补全，故两位边缘均匀，每种赋值概率为 $1/4$。于是 $W_1,W_3$ 的完整律都在
+$000,001,100,101$ 上各取 $1/4$，而 $W_2$ 在 $000,010$ 上各取 $1/2$。
+这些陈述包括局部五态域内其余词的零概率。它们没有断言三个窗口的联合律相同。
+按定义 27.3 的八词表逐一代入实际控制映射，得到
+$$
+\begin{aligned}
+4\overline F_{\rm even}&=f(\varnothing)+f(AB)+f(AC)+f(BC),\\
+4\overline F_{\rm odd}&=f(A)+f(B)+f(C)+f(ABC).
+\end{aligned}
+$$
+相减给 $\mathcal U$，其严格性与全部零点由定理 27.2 给出。
+此处平均的是各模式的 $-\vartheta\log(Z_S/Z_\varnothing)$，不是
+$-\vartheta\log\sum_w\mu(w)Z_{S(w)}$；定义 25.7、定理 25.8 已区分这两种量。
+
+为把目标差接到共同记录，以下只使用此应用内部的标准矩阵与高斯中间式。
+对 $i,j\notin S$ 且 $i\ne j$，令
+$$
+\begin{aligned}
+J_{ij\mid S}&=f(Sij)-f(Si)-f(Sj)+f(S),\\
+\delta_{i\mid S}&=1+u_i^{\mathsf T}G_Su_i,\qquad
+r_{ij\mid S}=\frac{u_i^{\mathsf T}G_Su_j}
+{\sqrt{\delta_{i\mid S}\delta_{j\mid S}}}.
+\end{aligned}
+$$
+由 [Rasmussen--Williams，Appendix A 的行列式与求逆恒等式](../../../Library/StatisticalMechanics/rasmussenwilliams2006gaussian.md)，
+$$
+\frac{\det K_S}{\det K_0}=\det\boldsymbol\Sigma_S,\qquad
+J_{ij\mid S}=\frac{\vartheta}{2}\log(1-r_{ij\mid S}^2)\le0.
+$$
+这里 $\boldsymbol\Sigma_S$ 是主子矩阵、空行列式为一。两个单项的行列式比分别
+为 $\delta_{i\mid S},\delta_{j\mid S}$，联合比为它们的积减
+$(u_i^{\mathsf T}G_Su_j)^2$，从而得到第二式；单位噪声及 $G_S>0$ 保证
+$|r_{ij\mid S}|<1$。展开定义中的四角差还给
+$$
+\mathcal U=J_{AB\mid C}-J_{AB\mid\varnothing}.
+$$
+因此同一对控制的二项系数可以随背景变化，非正二项系数不能单独决定这个差的符号。
+
+令 $\delta_i=\boldsymbol\Sigma_{ii}$，以这些正对角元归一化后写
+$$
+R=\begin{pmatrix}1&a&c\\a&1&b\\c&b&1\end{pmatrix},\qquad
+(a,b,c)=(r_{AB\mid\varnothing},r_{BC\mid\varnothing},r_{CA\mid\varnothing}).
+$$
+对角尺度在三阶差中消去，于是
+$$
+\mathcal U=\frac{\vartheta}{2}
+\log\frac{1-a^2-b^2-c^2+2abc}{(1-a^2)(1-b^2)(1-c^2)}.
+$$
+这只是 $\boldsymbol\Sigma=I+\mathsf U^{\mathsf T}G_0\mathsf U$ 在本应用中的
+三阶行列式计算。由 [Barrett，§§2--3，式 (5)--(20)](../../../Library/StatisticalMechanics/barrett2015gaussianinformation.md)
+的经典联合高斯条件协方差及互信息公式，
+$$
+\begin{gathered}
+\rho_{AB\cdot C}=\frac{a-bc}{\sqrt{(1-b^2)(1-c^2)}},\\
+I(Y_A;Y_B)=-\tfrac12\log(1-a^2),\qquad
+I(Y_A;Y_B\mid Y_C)=-\tfrac12\log(1-\rho_{AB\cdot C}^2),\\
+1-\rho_{AB\cdot C}^2
+=\frac{\det R}{(1-b^2)(1-c^2)}.
+\end{gathered}
+$$
+故 $\mathcal U=\vartheta[I(Y_A;Y_B)-I(Y_A;Y_B\mid Y_C)]$。
+这也说明 $-\mathcal U/\vartheta$ 是所引文献的 whole-minus-sum 差，
+并未指定一套完整的部分信息分解；两个背景各自的二项式与定理 25.9 的
+共同基准信息式相容。单位五边例中 $a=b=1/7,c=-1/7$，故
+$\rho_{AB\cdot C}=1/6$；在全部 $xyz>0$ 时，定理 27.2 更一般地给
+$I(Y_A;Y_B\mid Y_C)>I(Y_A;Y_B)$。这些 $I$ 均属于定义 27.3 的同一个
+联合高斯律，不能把模式混合律的协方差代入来替代它。
+
+这里的背景续接使用同一组经典秩一公式：
+$$
+\begin{aligned}
+G_{Si}&=G_S-\frac{G_Su_i u_i^{\mathsf T}G_S}{1+u_i^{\mathsf T}G_Su_i},\\
+f(Si)-f(S)&=\frac{\vartheta}{2}\log(1+u_i^{\mathsf T}G_Su_i).
+\end{aligned}
+$$
+最终 $K_S$ 为相同增量的和，与添加顺序无关；逐步增量仍读取当前 $G_S$。
+共同记录中的条件化则须同时保存观测值：以 $\eta\in\mathbb R$ 表示 $Y_C$
+的已记录值，标准高斯条件分布为
+$$
+\xi_0\mid(Y_C=\eta)\sim
+\mathcal N\left(
+\frac{G_0u_C\eta}{1+u_C^{\mathsf T}G_0u_C},\,
+\vartheta\left[G_0-\frac{G_0u_Cu_C^{\mathsf T}G_0}
+{1+u_C^{\mathsf T}G_0u_C}\right]\right).
+$$
+条件协方差为 $\vartheta G_C$，因而 $\rho_{AB\cdot C}=r_{AB\mid C}$；
+实际添加二次控制的模式律却仍有均值零。若先有非零条件均值 $m_S$，再读到
+$Y_i=\eta_i$，均值更新为
+$$
+m_{Si}=m_S+
+\frac{G_Su_i(\eta_i-u_i^{\mathsf T}m_S)}{1+u_i^{\mathsf T}G_Su_i}.
+$$
+故仅保存逆矩阵不能代替完整的条件记录。给定相同读口与全部相同记录值，
+独立似然相乘不依赖处理次序；丢弃记录值或替换背景则已改变问题。
+这些是有限静态更新式，未供应时间演化律。
+
+三角闭路也给同一目标差一个受控展开。令 $Q=R-I_3$，$Q_{ii}=0$，
+$Q_T$ 为 $T\subseteq\mathcal I$ 上的主子矩阵；仅在
+$\|Q\|_{\rm op}\le q<1$ 时使用下列对数级数。对 $|S|\ge2$，
+定义 $\mathcal U(S)=\sum_{T\subseteq S}(-1)^{|S|-|T|}f(T)$；本处 $S\subseteq\mathcal I$。
+正对角尺度的对数是单标签函数，在该差中消去。实对称矩阵的谱分解及标量
+$\log(1+t)$ 级数给
+$$
+\log\det(I+Q_T)=\sum_{\ell\ge1}\frac{(-1)^{\ell+1}}{\ell}
+\operatorname{tr}(Q_T^\ell),\qquad
+|\operatorname{tr}(Q_T^\ell)|\le |T|q^\ell.
+$$
+右侧绝对收敛，所以可与有限的子集求和交换。在每个固定长度 $\ell$ 展开迹，
+访问集合为 $V$ 的闭链得到系数
+$\sum_{V\subseteq T\subseteq S}(-1)^{|S|-|T|}$；它在 $V\subsetneq S$ 时为零，
+在 $V=S$ 时为一。因而按长度分组的绝对收敛式是
+$$
+\mathcal U(S)=\frac{\vartheta}{2}
+\sum_{\ell\ge |S|}\frac{(-1)^{\ell+1}}{\ell}
+\sum_{\substack{i_1,\ldots,i_\ell\in S\\\{i_1,\ldots,i_\ell\}=S}}
+Q_{i_1i_2}\cdots Q_{i_\ell i_1}.
+$$
+$|S|$ 是首个可能的阶数，不保证对应系数非零；即使存在非零闭链，
+同阶闭链总和仍须考虑相消。对三标签，长度三的六个有向起点排列给
+$\vartheta abc$；又
+$\sum_{T\subseteq\mathcal I}|T|=12$、$1/\ell\le1/4$ 对 $\ell\ge4$，故
+$$
+\left|\mathcal U-\vartheta abc\right|
+\le\frac{\vartheta}{2}\sum_{\ell\ge4}\frac{12q^\ell}{\ell}
+\le\frac{3\vartheta q^4}{2(1-q)}.
+$$
+在定义 27.1 的图中，已知 $G_0$ 给出
+$$
+a=\frac{\sqrt{xy}}{\sqrt{(4+3x)(4+3y)}},\quad
+b=\frac{\sqrt{yz}}{\sqrt{(4+3y)(4+3z)}},\quad
+c=-\frac{\sqrt{xz}}{\sqrt{(4+3x)(4+3z)}}.
+$$
+各绝对值小于 $1/3$，因此可取 $q=2/3$；单位例还可取 $q=2/7$。
+这个展开解释了共同背景的闭路读数及其近似余量；本定理的精确符号与零点始终
+由定理 27.2 的多项式决定，不依赖级数条件或截断近似。证毕。
+
+**命题 27.5（同一合法来源目标的成对摘要不足）。** 沿用定义 27.3 的
+合法词、奇偶律及从活动位到 $A,B,C$ 的映射，另取两份共同三维比较模型。
+两模型都在同一 $\mathbb R^3$、同一 Lebesgue 测度、单位和 $\vartheta>0$ 上，
+以 $K_0=I_3$ 及
+$$
+u_A=(1,1,0)^{\mathsf T},\quad u_B=(1,0,1)^{\mathsf T},\quad
+u_C^+=(0,1,1)^{\mathsf T},\quad u_C^-=(0,-1,1)^{\mathsf T}
+$$
+令 $u_A^\pm=u_A,u_B^\pm=u_B$，定义
+$K_S^\pm=I_3+\sum_{i\in S}u_i^\pm(u_i^\pm)^{\mathsf T}$ 与
+$f_\pm(S)=\vartheta\log\det K_S^\pm/2$。此比较只替换响应实现，不把三维向量
+识别为定义 27.1 的四维图边。两模型的全部单项及二项自由能相同，但其实际
+奇偶目标平均差分别为
+$$
+\begin{aligned}
+\overline F_{{\rm odd},+}-\overline F_{{\rm even},+}
+&=\frac{\vartheta}{8}\log\frac{135}{128}>0,\\
+\overline F_{{\rm odd},-}-\overline F_{{\rm even},-}
+&=\frac{\vartheta}{8}\log\frac{27}{32}<0.
+\end{aligned}
+$$
+因此单项及二项自由能摘要不能在这个明确实现的模型对上确定奇偶目标差。
+
+证明。每个增量均为 $uu^{\mathsf T}\succeq0$，负向量分量不影响这一点。
+两份完整的单位噪声加 Gram 矩阵是
+$$
+\boldsymbol\Sigma_+=\begin{pmatrix}3&1&1\\1&3&1\\1&1&3\end{pmatrix},\qquad
+\boldsymbol\Sigma_-=\begin{pmatrix}3&1&-1\\1&3&1\\-1&1&3\end{pmatrix}.
+$$
+它们的单项主子式都是三，二项都是八，三项分别为二十、十六。于是
+$$
+J_{ij\mid\varnothing}=\frac{\vartheta}{2}\log\frac89,\qquad
+\mathcal U_+=\frac{\vartheta}{2}\log\frac{135}{128},\qquad
+\mathcal U_-=\frac{\vartheta}{2}\log\frac{27}{32}.
+$$
+定义 27.3 的八词求和仍给奇偶差为 $\mathcal U_\pm/4$，故同一成对摘要
+所对应的实际奇偶目标差可以异号。
+
+单项及二项摘要只保留 $\delta_i$ 与 $r_{ij}^2$，完整带符号协方差则区分两模型，
+并与零均值一起决定记录 $Y$ 的全部联合及条件高斯分布。两模型的
+$a=b=1/3$、$c=\pm1/3$，
+条件相关分别为 $1/4$ 与 $1/2$，正是定理 27.4 所用条件信息比较的两种方向。
+独立切换读口方向 $u_i\mapsto\varepsilon_i u_i$、$\varepsilon_i\in\{\pm1\}$
+不改变二次控制，使 $r_{ij}\mapsto\varepsilon_i\varepsilon_j r_{ij}$，
+却保持 $r_{AB}r_{BC}r_{CA}$；这是
+[带符号图的 switching 闭路不变量](../../../Library/Combinatorics/zaslavsky1998signedgainglossary.md)
+在此 Gram 读口上的应用。正负两模型的闭路乘积不同，故这种方向切换不能
+把两份约束实现变成同一个模型。
+
+还可用标准 Gram 体积解释同一遗漏量。令 $\delta_i=1+u_i^{\mathsf T}G_0u_i$，
+在 $\mathbb R^3\oplus\mathbb R^3$ 中取
+$$
+v_i=\frac{(G_0^{1/2}u_i,e_i)}{\sqrt{\delta_i}}.
+$$
+这些单位向量的 Gram 矩阵就是 $R$。Gram 行列式体积公式给原点与
+$v_i,v_j$ 所成三角形面积 $A_{ij}$ 及原点与三个 $v_i$ 所成四面体体积 $V$：
+$$
+4A_{ij}^2=1-r_{ij}^2,\qquad36V^2=\det R.
+$$
+比较模型的三个原点邻面面积都相同，而 $\det R$ 为 $20/27$ 或 $16/27$。
+这里没有固定第四个面或全部边长。该几何量正是上面的自由能比中的分子与二项
+分母，故它解释的是成对摘要失去的共同定向。
+
+复内积空间中相应的标准 Gram 中间式见
+[Fernandes--Wagner--Novo--Galvão，三态 Gram 与循环相位](../../../Library/Quantum/fernandes2024imaginarity.md)。
+对三个单位向量 $w_i$ 令 $z_{ij}=\langle w_i,w_j\rangle$，其 Hermitian Gram
+行列式为
+$$
+1-|z_{12}|^2-|z_{23}|^2-|z_{31}|^2
++2\operatorname{Re}(z_{12}z_{23}z_{31}).
+$$
+独立重标相 $w_j\mapsto e^{i\alpha_j}w_j$ 保持循环乘积。这里只以这个
+有类型的 Gram 对应解释实闭路符号；它不能替换定义 27.3 的实联合高斯、
+独立噪声及二次控制合同来取得其互信息等式。证毕。
+
+## 27.99 追加锚（本行以下为增补区）
