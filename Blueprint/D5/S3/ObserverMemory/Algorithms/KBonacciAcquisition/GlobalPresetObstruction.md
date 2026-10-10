@@ -68,11 +68,76 @@ For m=5, H(0)={2,3} and H(1)={3,4}, the literal prefix is 00100|00000|00100; bot
 
 This application concerns only the nonempty unequal internal even-support family with k=2m-2. It does not settle empty or equal support branches, odd supports, tail-sensitive targets, other reader parameters or the general original acquisition objective. The construction and consequences are applications of the cited physical and execution interfaces; no literature-priority assertion is made.
 
+**Theorem 1.4 (Native execution at zero remaining budget).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.native_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.native_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary label type, dimensions, selector, optional native record, saved free output and own archive, NativeExecute at budget zero is exactly the stop label with fee zero when the selector stops, and is undefined when it requests another word. This identity retains the entire native telescope and is used to evaluate the stopped attaining controllers.
+
+**Theorem 1.5 (One complete native paid step).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.native_succ`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.native_succ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every remaining budget d, selector, optional record, saved free output and own archive, NativeExecute at d+1 first tests the selector. A stop returns its label with fee zero. A selected literal word is run in full on the record, its actual endpoint is appended to the same archive, and a successful recursive result has its fee increased by one. This also charges an absorbing rejection word.
+
+**Theorem 1.6 (Equal scheduled charges dominate two-block preset executions).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.native_two_same`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.native_two_same` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix k>=2, arbitrary m, one literal stream and arbitrary own-archive stop function. For any free value v, two phases p,q and a common legal inherited tail s<k, equality of the first scheduled charges at p,q and second scheduled charges at p+m,q+m implies equality of NativeExecute at budget two. The proof includes stops at the root or first endpoint, simultaneous rejection and successful continuation. The second scheduled charge is only an algebraic invariant, not an observation acquired after a stop.
+
+**Theorem 1.7 (Every full literal charge has even total parity).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.charge_even`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.charge_even` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every k>=2, arbitrary m, phase shift and literal word, the sum over the entire phase group ZMod(k+1) of wordIncrement at negative phase plus that shift is zero in ZMod 2. Each selected literal bit contributes to two distinct physical vertices, whose total charge is zero. The full sum is taken before restricting to a reached child archive.
+
+**Theorem 1.8 (The second physical window leaves its exterior blind).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.second_charge_blind`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.second_charge_blind` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m>=5, arbitrary m-bit literal word and phase j whose standard representative satisfies 2<=j<m, wordIncrement for k=2m-2 at phase -j+m is zero. These actual INITIAL phases lie outside the complete second physical window. No safety assumption or controller observation is required for this literal charge identity.
+
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.OriginalPresetFeasible`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.charge_even`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.native_succ`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.native_two_same`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.native_zero`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.original_global_two_block_obstruction`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.presetSelector`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/GlobalPresetObstruction.second_charge_blind`
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder](PhysicalWindowDecoder.md)
 - Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace](OriginalAcquiredTrace.md)
 - Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalExecutionBridge](OriginalExecutionBridge.md)
