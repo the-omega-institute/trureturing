@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import select
 import shlex
 import shutil
 import subprocess
@@ -17,6 +18,103 @@ ROOT = test_reuse.ROOT
 
 
 class SeedGenerationTests:
+    def test_failed_entry_cleanup_preserves_competing_production(self):
+        self.assert_failed_cleanup_preserves_generation('production')
+
+    def test_failed_entry_cleanup_preserves_competing_restore(self):
+        self.assert_failed_cleanup_preserves_generation('restore')
+
+    def assert_failed_cleanup_preserves_generation(self, replacement):
+        """A releases its writer guard, B commits, then A exits unsuccessfully."""
+        _, release, tag = self.canonical_release_fixture()
+        self.prepare_production_entry()
+        current_report = self.root / 'bin/current-report.zip'
+        shutil.copyfile(self.root / '.lake/build/lean-inspector/report.zip', current_report)
+        self.environment['FIXTURE_CURRENT_REPORT'] = str(current_report)
+        gates = self.root / '.lake/cleanup-gates'
+        gates.mkdir()
+        notice, resume = gates / 'notice', gates / 'resume'
+        os.mkfifo(notice)
+        os.mkfifo(resume)
+        helper = self.root / 'bin/guarded-report.py'
+        helper.write_text('''import os, shutil, sys
+from pathlib import Path
+sys.path.insert(0, str(Path.cwd() / 'tools/scripts/worktree'))
+from lean_cache_release import cache_guard
+with cache_guard(Path.cwd()):
+    artifact = Path.cwd() / '.lake/build/lean-inspector/report.zip'
+    artifact.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(os.environ['FIXTURE_CURRENT_REPORT'], artifact)
+if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
+    with open(os.environ['FIXTURE_NOTICE'], 'w') as channel:
+        channel.write('guard released\\n')
+    with open(os.environ['FIXTURE_RESUME']) as channel:
+        channel.read()
+    raise SystemExit(23)
+''')
+        self.script('tools/scripts/worktree/lean-cache-run.sh',
+                    'exec ' + shlex.quote(sys.executable) + ' -B ' + shlex.quote(str(helper)) + '\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'tools/scripts/worktree/lean-cache-run.sh'],
+                       check=True, capture_output=True)
+        head = self.git_commit('guard-release fixture', empty=True)
+        read_notice = os.open(notice, os.O_RDONLY | os.O_NONBLOCK)
+        environment = dict(self.environment, FIXTURE_FAIL_AFTER_GUARD='1',
+                           FIXTURE_NOTICE=str(notice), FIXTURE_RESUME=str(resume))
+        first = subprocess.Popen(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
+            '--repository', str(self.root), '--output', str(self.output),
+            '--log-dir', str(self.root / 'logs/first'), '--cache-miss-policy', 'fetch-or-fail'],
+            cwd=self.root, env=environment, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            ready, _, _ = select.select([read_notice], [], [], 30)
+            self.assertTrue(ready, '[FAIL] failed_entry_reaches_released_guard_boundary')
+            self.assertEqual(b'guard released\n', os.read(read_notice, 1024))
+            self.assertFalse(publication.member(self.output, self.api.SUFFIX).exists(),
+                             '[FAIL] preparation_already_removed_failed_receipt')
+            if replacement == 'restore':
+                second = subprocess.run(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+                    'fetch', '--repository', str(self.root), '--refresh-stale',
+                    '--approved-tag', tag, '--approved-producer', release],
+                    cwd=self.root, env=self.environment, text=True, capture_output=True, timeout=30)
+                producer = release
+            else:
+                second = self.run_entry('--cache-miss-policy', 'fetch-or-fail',
+                                        '--log-dir', str(self.root / 'logs/second'), direct=True)
+                producer = head
+            self.assertEqual(0, second.returncode, '[FAIL] competing_generation_completes: ' + second.stderr)
+            self.assertEqual(producer, self.api.read_seed_base(self.root))
+            receipt = publication.member(self.output, self.api.SUFFIX)
+            before_receipt = receipt.read_bytes()
+            base = self.root / self.api.BASE_RECORD
+            before_base, before_seed = base.read_bytes(), self.seed_bytes()
+            with resume.open('w') as channel:
+                channel.write('resume failure\n')
+            stdout, stderr = first.communicate(timeout=30)
+            self.assertEqual(23, first.returncode, '[FAIL] failed_entry_preserves_native_exit: ' + stdout + stderr)
+            self.assertTrue(receipt.is_file(), '[FAIL] failed_cleanup_preserves_competing_receipt')
+            self.assertEqual(before_receipt, receipt.read_bytes())
+            self.assertEqual(before_base, base.read_bytes(), '[FAIL] failed_cleanup_preserves_competing_base')
+            self.assertEqual(producer, self.api.read_seed_base(self.root))
+            self.assertTrue(self.api.seed_format(self.output)['compatible'])
+            refresh = self.refresh_canonical()
+            self.assertNotIn('"action":"fetch"', refresh.stdout, '[FAIL] next_entry_keeps_competing_seed')
+            self.assertEqual(before_seed, self.seed_bytes())
+            def archive_downloads():
+                calls = [json.loads(line) for line in (self.root / 'releases/calls.jsonl').read_text().splitlines()]
+                return [call for call in calls if call[:2] == ['release', 'download']
+                        and call[call.index('--pattern') + 1] != 'manifest.json']
+            downloads = archive_downloads()
+            next_entry = self.run_entry('--cache-miss-policy', 'fetch-or-fail',
+                                        '--log-dir', str(self.root / 'logs/next'), direct=True)
+            self.assertEqual(0, next_entry.returncode, '[FAIL] next_entry_succeeds: ' + next_entry.stderr)
+            self.assertEqual(downloads, archive_downloads(),
+                             '[FAIL] next_entry_never_restores_older_release')
+            self.assertEqual(head, self.api.read_seed_base(self.root))
+        finally:
+            os.close(read_notice)
+            if first.poll() is None:
+                first.kill()
+            first.communicate()
+
     def test_competing_preparation_cannot_remove_guarded_generation(self):
         """Preparation must take the same exclusive guard as restore/publication."""
         self.canonical_release_fixture()

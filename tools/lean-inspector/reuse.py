@@ -262,9 +262,17 @@ def prepare(repository, report):
         return maintenance
 
 
-def invalidate_receipt(repository, report):
+def invalidate_receipt(repository, report, receipt_snapshot):
+    """A failed invocation may invalidate only the receipt it observed."""
+    if not receipt_snapshot.is_file():
+        return
+    observed = receipt_snapshot.read_text().strip()
+    if re.fullmatch(r'[0-9a-f]{64}', observed) is None:
+        raise ValueError('invalid cleanup receipt identity')
     with publication_guard(repository, report):
-        publication.member(report, SUFFIX).unlink(missing_ok=True)
+        receipt = publication.member(report, SUFFIX)
+        if not receipt.is_symlink() and receipt.is_file() and publication.digest(receipt) == observed:
+            receipt.unlink()
 
 
 def seal(repository, report, captured, produced_sha256):
@@ -291,12 +299,12 @@ def _seal(repository, report, captured, produced_sha256):
         invalidate_seed_base(repository)
 
 
-def reuse(repository, report, output):
+def reuse(repository, report, output, receipt_snapshot=None):
     with publication_guard(repository, output):
-        return _reuse(repository, report, output)
+        return _reuse(repository, report, output, receipt_snapshot)
 
 
-def _reuse(repository, report, output):
+def _reuse(repository, report, output, receipt_snapshot=None):
     captured = capture(repository)
     if not captured['eligible']:
         return miss(captured['reason'])
@@ -325,6 +333,8 @@ def _reuse(repository, report, output):
         write_receipt(output, captured)
         if canonical and base is not None and not record_seed_base(repository, base):
             invalidate_seed_base(repository)
+        if receipt_snapshot is not None:
+            receipt_snapshot.write_text(publication.digest(publication.member(output, SUFFIX)) + '\n')
     except INVALID_SEED as error:
         publication.member(output, SUFFIX).unlink(missing_ok=True)
         return miss('seed-rejected', error)
@@ -542,7 +552,7 @@ def refresh_stale_seed(repository):
     return 0
 
 
-def recover_and_reuse(repository, report, output):
+def recover_and_reuse(repository, report, output, receipt_snapshot=None):
     """Restore and consume a checked seed under the existing private-cache lock."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
     from lean_cache_release import cache_guard, checkout_topology, warm_dev_remediation
@@ -593,7 +603,7 @@ def recover_and_reuse(repository, report, output):
                     raise CacheIncompatible(local['report_format'], checked['report_format'],
                                             'seed-unavailable-after-refresh')
             # Input differences select Lake's incremental path, not a new cache key.
-            return _reuse(repository, report, output)
+            return _reuse(repository, report, output, receipt_snapshot)
     except BlockingIOError as error:
         raise CacheIncompatible(local['report_format'], 'unavailable', 'cache-busy', remediation) from error
 
@@ -606,6 +616,8 @@ def main():
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
+    parser.add_argument('--receipt-snapshot', type=Path,
+                        help='invocation-local receipt identity for generation-scoped failure cleanup')
     parser.add_argument('--bundle-sha256', help='complete bundle identity returned by publication')
     parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
                         default='reuse-or-build')
@@ -618,6 +630,8 @@ def main():
         parser.error('--output is required')
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
+    if args.command == 'invalidate-receipt' and args.receipt_snapshot is None:
+        parser.error('--receipt-snapshot is required')
     if args.command == 'seal' and (args.bundle_sha256 is None
             or re.fullmatch(r'[0-9a-f]{64}', args.bundle_sha256) is None):
         parser.error('--bundle-sha256 must be the produced bundle identity')
@@ -631,7 +645,7 @@ def main():
         if maintenance is not None:
             print('LEAN_REPORT_BASE_MAINTENANCE ' + json.dumps(maintenance, separators=(',', ':')))
     elif args.command == 'invalidate-receipt':
-        invalidate_receipt(args.repository, args.report)
+        invalidate_receipt(args.repository, args.report, args.receipt_snapshot)
     elif args.command == 'seal':
         seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()),
              args.bundle_sha256)
@@ -641,9 +655,9 @@ def main():
         if args.diagnostics:
             warn_mismatch(result, sys.stderr)
     else:
-        result = (recover_and_reuse(args.repository, args.report, args.output)
+        result = (recover_and_reuse(args.repository, args.report, args.output, args.receipt_snapshot)
                   if args.cache_miss_policy == 'fetch-or-fail'
-                  else reuse(args.repository, args.report, args.output))
+                  else reuse(args.repository, args.report, args.output, args.receipt_snapshot))
         print('LEAN_INSPECTOR_REUSE ' + json.dumps(result, separators=(',', ':')))
         warn_mismatch(result, sys.stdout)
         if result['needs_lake']:

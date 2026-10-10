@@ -300,7 +300,10 @@ class ReuseTests(unittest.TestCase):
     def test_failure_cleanup_removes_only_the_observed_receipt(self):
         api = self.dev_repository()
         snapshot = self.root / '.lake/cleanup-receipt'
-        api.reuse(self.root, self.report, self.report, receipt_snapshot=snapshot)
+        try:
+            api.reuse(self.root, self.report, self.report, receipt_snapshot=snapshot)
+        except TypeError as error:
+            self.fail('[FAIL] reuse_captures_cleanup_generation_under_guard: ' + str(error))
         receipt = publication.member(self.report, api.SUFFIX)
         observed = receipt.read_bytes()
         base = (self.root / api.BASE_RECORD).read_bytes()

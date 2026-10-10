@@ -50,13 +50,14 @@ resource_observe lean-inspector-start "$REPOSITORY" || true
 # remove a cold worktree's eligibility for donor clonefile seeding.
 FINAL_LOG_DIR="$LOG_DIR"
 STARTUP_LOG_DIR="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-inspector-startup.XXXXXXXX")"
+RECEIPT_SNAPSHOT="$STARTUP_LOG_DIR/.cleanup-receipt"
 LOG_DIR="$STARTUP_LOG_DIR"
 finish() {
   local rc=$?
   trap - EXIT
   if [[ "$PRESERVE_RECEIPT" == 0 && ( "$rc" != 0 || "$PROGRAM_BUILD_PENDING" == 1 ) ]]; then
     python3 -B "$SCRIPT_DIR/reuse.py" invalidate-receipt --repository "$REPOSITORY" \
-      --report "$OUTPUT" || true
+      --report "$OUTPUT" --receipt-snapshot "$RECEIPT_SNAPSHOT" || true
   fi
   if [[ "$rc" == 0 && "$PROGRAM_BUILD_PENDING" == 0 ]]; then
     python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
@@ -188,6 +189,7 @@ reuse_report() {
   else
     python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
       --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" \
+      --receipt-snapshot "$RECEIPT_SNAPSHOT" \
       --cache-miss-policy "$CACHE_MISS_POLICY" || status=$?
   fi
   printf '%s\n' "$status" > "$STARTUP_LOG_DIR/reuse.status"
