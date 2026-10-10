@@ -265,7 +265,7 @@ private theorem posterior_word_law (μ : PMF Depth) (h : List Operation)
   rw [Measure.map_sum hw.aemeasurable]
   apply congrArg Measure.sum
   funext k
-  rw [Measure.map_smul,Measure.map_map hw (by fun_prop)]
+  rw [Measure.map_smul _ hw.aemeasurable,Measure.map_map hw (by fun_prop)]
   exact congrArg (fun m => posterior μ h c hc k • m)
     (actual_fourth_segment_stopped_word_law (rate k) s).2
 
@@ -412,7 +412,8 @@ private theorem length_mixture_singleton (ν : PMF Depth) (s : ActivePhase) (n :
       ((explicitStoppedWordLaw s (rate k)).map lengthProjection) {n} := by
   unfold lengthMixture wordMixture
   rw [Measure.map_sum (measurable_of_countable lengthProjection).aemeasurable]
-  simp [Measure.sum_apply,Measure.map_smul]
+  simp [Measure.sum_apply,
+    Measure.map_smul _ (measurable_of_countable lengthProjection).aemeasurable]
 
 private theorem five_atoms (ν : PMF Depth) (j : ℕ) :
     lengthMixture ν .p {some (2*j+1)} =

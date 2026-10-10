@@ -40,9 +40,9 @@ private theorem incidence_triple {V : Type} [Fintype V] [DecidableEq V]
       G.incidenceFinset v = {a.val,b.val,c.val} := by
   obtain ⟨a,b,c,hab,hac,hbc,hs⟩ := Finset.card_eq_three.mp
     ((G.card_incidenceFinset_eq_degree v).trans (hdeg v))
-  have ha : a ∈ G.edgeSet := G.incidenceSet_subset v ((G.mem_incidenceFinset v a).mp (by simp [hs]))
-  have hb : b ∈ G.edgeSet := G.incidenceSet_subset v ((G.mem_incidenceFinset v b).mp (by simp [hs]))
-  have hc : c ∈ G.edgeSet := G.incidenceSet_subset v ((G.mem_incidenceFinset v c).mp (by simp [hs]))
+  have ha : a ∈ G.edgeSet := G.incidenceSet_subset v (SimpleGraph.mem_incidenceFinset.mp (by simp [hs]))
+  have hb : b ∈ G.edgeSet := G.incidenceSet_subset v (SimpleGraph.mem_incidenceFinset.mp (by simp [hs]))
+  have hc : c ∈ G.edgeSet := G.incidenceSet_subset v (SimpleGraph.mem_incidenceFinset.mp (by simp [hs]))
   refine ⟨⟨a,ha⟩,⟨b,hb⟩,⟨c,hc⟩,?_,?_,?_,hs⟩
   · exact fun h => hab (congrArg Subtype.val h)
   · exact fun h => hac (congrArg Subtype.val h)
@@ -59,9 +59,9 @@ private theorem incidence_triple_marked {V : Type} [Fintype V] [DecidableEq V]
   have ham : a ∈ (G.incidenceFinset v).erase p.val := by rw [hs]; simp
   have hbm : b ∈ (G.incidenceFinset v).erase p.val := by rw [hs]; simp
   have ha : a ∈ G.edgeSet := G.incidenceSet_subset v
-    ((G.mem_incidenceFinset v a).mp (Finset.mem_erase.mp ham).2)
+    (SimpleGraph.mem_incidenceFinset.mp (Finset.mem_erase.mp ham).2)
   have hb : b ∈ G.edgeSet := G.incidenceSet_subset v
-    ((G.mem_incidenceFinset v b).mp (Finset.mem_erase.mp hbm).2)
+    (SimpleGraph.mem_incidenceFinset.mp (Finset.mem_erase.mp hbm).2)
   refine ⟨⟨a,ha⟩,⟨b,hb⟩,?_,?_,?_,?_⟩
   · exact fun h => (Finset.mem_erase.mp ham).1 (congrArg Subtype.val h).symm
   · exact fun h => (Finset.mem_erase.mp hbm).1 (congrArg Subtype.val h).symm
@@ -72,7 +72,7 @@ private theorem incident_endpoints {V : Type} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (v : V) (p : G.edgeSet)
     (hp : p.val ∈ G.incidenceFinset v) :
     ∃ u, G.Adj v u ∧ p.val = s(v,u) := by
-  have hv : v ∈ p.val := (G.edge_mem_incidenceSet_iff).mp ((G.mem_incidenceFinset v p.val).mp hp)
+  have hv : v ∈ p.val := (G.edge_mem_incidenceSet_iff).mp (SimpleGraph.mem_incidenceFinset.mp hp)
   refine ⟨Sym2.Mem.other hv,?_,(Sym2.other_spec hv).symm⟩
   have he := p.property
   rw [← Sym2.other_spec hv] at he

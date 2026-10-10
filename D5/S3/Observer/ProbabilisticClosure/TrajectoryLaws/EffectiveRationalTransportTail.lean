@@ -81,7 +81,7 @@ theorem historical_survivor_transport {A : Type*} [Fintype A] [DecidableEq A]
     apply ENNReal.ofReal_le_ofReal
     calc
       (∏ i : Fin w.length, q₁ (w.take i.1) (w.get i)) ≤ ∏ _i : Fin w.length, r :=
-        Finset.prod_le_prod (fun i _ => hq₁.1 _ _) (fun i _ => rowupper _ _)
+        Finset.prod_le_prod₀ (fun i _ => hq₁.1 _ _) (fun i _ => rowupper _ _)
       _ = r ^ w.length := by simp
   have compareword (w : List A) :
       μ (wordCylinder w) ≤ ENNReal.ofReal (c ^ w.length) * ν (wordCylinder w) := by
@@ -91,7 +91,7 @@ theorem historical_survivor_transport {A : Type*} [Fintype A] [DecidableEq A]
     calc
       (∏ i : Fin w.length, q₀ (w.take i.1) (w.get i)) ≤
           ∏ i : Fin w.length, c * q₁ (w.take i.1) (w.get i) :=
-        Finset.prod_le_prod (fun i _ => hq₀.1 _ _) (fun i _ => hrow _ _)
+        Finset.prod_le_prod₀ (fun i _ => hq₀.1 _ _) (fun i _ => hrow _ _)
       _ = c ^ w.length * ∏ i : Fin w.length, q₁ (w.take i.1) (w.get i) := by
         rw [Finset.prod_mul_distrib]; simp
   let U := deletedSet F
