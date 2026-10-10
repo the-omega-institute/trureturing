@@ -1,0 +1,70 @@
+#### I.6.2 — 6.2 底面行列式
+
+
+底面四格可以排列成：
+
+$$
+Q=
+\begin{pmatrix}
+p_0&p_5\\
+p_2&p_{25}
+\end{pmatrix}.
+$$
+
+
+定义：
+
+$$
+\Delta=\det Q
+=
+p_0p_{25}-p_2p_5.
+$$
+
+
+代入反解公式：
+
+$$
+\Delta
+=
+(1-Z)\kappa-XY.
+$$
+
+
+如果 $r>0$，则：
+
+$$
+\operatorname{Cov}(x,y\mid z=0)
+=
+\frac{\Delta}{r^2}.
+$$
+
+
+所以：
+
+$$
+\Delta=0
+\Longleftrightarrow
+x\perp y\mid z=0.
+$$
+
+
+乘积补全对应：
+
+$$
+\kappa^\star=\frac{XY}{r},
+$$
+
+
+从而：
+
+$$
+\Delta=0.
+$$
+
+
+但必须区分：
+
+> 条件独立补全是一个最大熵选择，不等于真实来源一定满足条件独立。
+
+---
+

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.Mordell.CanonicalPointHeight
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Field.ULift
@@ -82,18 +83,28 @@ def registration : Registration arena.{u} (arena.Law actual) where
     have hf := nhds_injective h
     norm_num at hf
 
-register_information_theorem Point.canonicalHeight_properties in arena
-  readout via (realize signature (fun _ _ x => 𝓝 x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Factorization.Mordell.CanonicalPointHeight
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg",
-        "body", "arg"]
-      stateBinder := 0
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.WeierstrassCurve.Affine.Point.canonicalHeight_properties.{u_1}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => 𝓝 x) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "WeierstrassCurve") "Affine") "Point") "canonicalHeight_properties") "Reg.D5.S3.Factorization.Mordell.CanonicalPointHeight/Reg.D5.S3.Factorization.Mordell.CanonicalPointHeight.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.Mordell.CanonicalPointHeight.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => 𝓝 x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.Mordell.CanonicalPointHeight, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

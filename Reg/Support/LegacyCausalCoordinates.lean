@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Catalog
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -337,4 +337,6 @@ theorem oi_fine_transport (x y : UnifiedData) :
 end Reg.Support.LegacyCausalCoordinates
 
 open Reg.Support.LegacyCausalCoordinates LeanInformationAudit
-register_information_template pairRealization
+noncomputable def _root_.Reg.Support.LegacyCausalCoordinates.enrollment_1 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.Reg.Support.LegacyCausalCoordinates.pairRealization) := {
+  name := `Reg.Support.LegacyCausalCoordinates.pairRealization, version := 1, constructors := #[],
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }

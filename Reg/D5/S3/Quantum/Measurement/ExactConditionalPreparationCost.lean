@@ -1,6 +1,6 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import Reg.Support.DependentFamily
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -13,7 +13,6 @@ open Lean Elab Command
 open Matrix
 open scoped BigOperators ComplexOrder MatrixOrder
 
-local notation "kact" => fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X
 
 noncomputable section
 namespace Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
@@ -43,23 +42,23 @@ def arena : Arena where
     (R : Matrix ι ι ℂ) (hR : R.PosDef),
     (∀ {m : ℕ} (K : Fin m → Matrix ι ι ℂ), ExactPreparationContract R K →
       ∃ c : ℝ, 0 < c ∧ ∀ X : Matrix ι ι ℂ,
-        kact K X = (c : ℂ) • (CFC.sqrt R * X * CFC.sqrt R)) ∧
+        (fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K X = (c : ℂ) • (CFC.sqrt R * X * CFC.sqrt R)) ∧
     (∀ c : ℝ, 0 < c →
       let Kc : Fin 1 → Matrix ι ι ℂ := fun _ =>
         (Real.sqrt c) • CFC.sqrt R;
       (∀ ρ : Matrix ι ι ℂ, ρ.PosSemidef → ρ.trace = 1 →
-        0 < (kact Kc ρ).trace.re ∧
-        kact Kc ρ = ((kact Kc ρ).trace / (R * ρ).trace) •
+        0 < ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) Kc ρ).trace.re ∧
+        (fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) Kc ρ = (((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) Kc ρ).trace / (R * ρ).trace) •
           (CFC.sqrt R * ρ * CFC.sqrt R)) ∧
       (TraceNonincreasing Kc ↔ (1 - c • R).PosSemidef)) ∧
     (∀ {m : ℕ} (K : Fin m → Matrix ι ι ℂ) (c : ℝ), 0 < c →
       (∀ X : Matrix ι ι ℂ,
-        kact K X = (c : ℂ) • (CFC.sqrt R * X * CFC.sqrt R)) →
+        (fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K X = (c : ℂ) • (CFC.sqrt R * X * CFC.sqrt R)) →
       (TraceNonincreasing K ↔ (1 - (c : ℂ) • R).PosSemidef)) ∧
     (∀ {m : ℕ} (K : Fin m → Matrix ι ι ℂ), ExactPreparationContract R K →
       TraceNonincreasing K → ∃ ρ : Matrix ι ι ℂ,
         ρ.PosSemidef ∧ ρ.trace = 1 ∧
-        (kact K ρ).trace.re ≤
+        ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K ρ).trace.re ≤
           leastEigenvalue R hR / greatestEigenvalue R hR) ∧
     (let Kopt : Fin 1 → Matrix ι ι ℂ := fun _ =>
         (((1 / Real.sqrt (greatestEigenvalue R hR) : ℝ) : ℂ) • CFC.sqrt R);
@@ -69,26 +68,15 @@ def arena : Arena where
         (Kopt 0)ᴴ * Kopt 0 + Kfailᴴ * Kfail = 1 ∧
         ∀ ρ : Matrix ι ι ℂ, ρ.PosSemidef → ρ.trace = 1 →
           leastEigenvalue R hR / greatestEigenvalue R hR ≤
-            (kact Kopt ρ).trace.re) ∧
+            ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) Kopt ρ).trace.re) ∧
     ((∃ (m : ℕ) (K : Fin m → Matrix ι ι ℂ),
         ExactPreparationContract R K ∧ TraceNonincreasing K ∧
         ∀ ρ : Matrix ι ι ℂ, ρ.PosSemidef → ρ.trace = 1 →
-          (kact K ρ).trace = 1) ↔
+          ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K ρ).trace = 1) ↔
       ∃ scalar : ℝ, 0 < scalar ∧
         Q.readout () ι R = (scalar : ℂ) • 1)
 
-run_cmd do
-  let root := `Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
-  let sourceName := `D5.S3.Quantum.Measurement.ExactConditionalPreparationCost ++
-    `exact_conditional_preparation_cost
-  let identity := captureStatement (← getEnv) sourceName
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    capturedStatement := identity
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -101,7 +89,7 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
         ExactPreparationContract 1 K ∧ TraceNonincreasing K ∧
         ∀ ρ : Matrix (ULift.{u} (Fin 1)) (ULift.{u} (Fin 1)) ℂ,
           ρ.PosSemidef → ρ.trace = 1 →
-          (kact K ρ).trace = 1 := by
+          ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K ρ).trace = 1 := by
     exact (exact_conditional_preparation_cost
       (R := (1 : Matrix (ULift.{u} (Fin 1)) (ULift.{u} (Fin 1)) ℂ))
         Matrix.PosDef.one).2.2.2.2.2.mpr
@@ -147,17 +135,28 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem exact_conditional_preparation_cost in arena
-  readout via (realize effectSignature.{u} (fun _ _ R => R) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "fn", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost.exact_conditional_preparation_cost.{u_1}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} effectSignature.{u_1} (fun _ _ R => R) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "ExactConditionalPreparationCost") "exact_conditional_preparation_cost") "Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost/Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} effectSignature.{u_1} (fun _ _ R => R) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.ExactConditionalPreparationCost, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "fn", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms rejected_law
 #print axioms actual_law

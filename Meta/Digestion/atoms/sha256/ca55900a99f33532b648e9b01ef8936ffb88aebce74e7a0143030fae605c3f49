@@ -1,0 +1,18 @@
+**命题 15.3（局部相关坐标的三向量谱消费者）。** 对任何本卷五模式律，假设 $X,Y,Z>0$。在该律的同一个 $L^2$ 空间内，将三个指示函数分别除以 $\sqrt X,\sqrt Y,\sqrt Z$，得到单位向量的非中心化 Gram
+$$
+U_c=\begin{pmatrix}1&c&0\\c&1&0\\0&0&1\end{pmatrix},
+\qquad c=\frac{\kappa}{\sqrt{XY}}\in[0,1].
+$$
+定义非负凸函数与谱泛函
+$$
+\Psi(t)=\begin{cases}(t-1)^2,&0\le t\le2,\\2t-3,&t\ge2,\end{cases}
+\qquad D_\Psi(G)=\operatorname{tr}\Psi(G).
+$$
+则
+$$
+\operatorname{Spec}(U_c)=\{1-c,1,1+c\},\qquad
+\det U_c=1-c^2,\qquad
+D_\Psi(U_c)=2c^2=\frac{2\kappa^2}{XY}=2(1-\det U_c).
+$$
+因此在命题 15.2 的模 $3$ 成对来源上，三均值相同，谱修正量分别为 $2$ 和 $0$。
+

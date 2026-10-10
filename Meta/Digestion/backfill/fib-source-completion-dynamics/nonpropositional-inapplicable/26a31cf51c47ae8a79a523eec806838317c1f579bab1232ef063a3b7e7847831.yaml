@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:26a31cf51c47ae8a79a523eec806838317c1f579bab1232ef063a3b7e7847831
+  normalized_sha256: sha256:26a31cf51c47ae8a79a523eec806838317c1f579bab1232ef063a3b7e7847831
+cas_ref: sha256:26a31cf51c47ae8a79a523eec806838317c1f579bab1232ef063a3b7e7847831
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 的全部命题子句由钉版 mathlib db584cd6d46c92f209a44c0f1c829460d327499d 闭合。上游声明为 LinearRecurrence.mkSol、LinearRecurrence.is_sol_mkSol、LinearRecurrence.mkSol_eq_init、LinearRecurrence.eq_iff_eqOn_range_order、Fin.sum_univ_two，以及 ZMod.natCast_eq_natCast_iff'、ZMod.subsingleton_iff、Bool.injective_iff、CharTwo.two_eq_zero、CharTwo.neg_eq、Nat.mod_eq_of_lt、Nat.sub_add_cancel 的规范化。二阶差序列取 E = ⟨2, ![1, -1]⟩，用 mkSol 延拓有限视界外序列，IsSolution 与初值侧条件由假设及上述上游声明闭合，再实例化 eq_iff_eqOn_range_order；其余步骤为定义展开、有限分情形、下标算术与环规范化。仓内只用冻结定义 GraftAffineClosure.quantity、ProfiniteCharacter.residueProjection、LegalDigits，没有供应该命题的项目 GID；FullCert.lean 中 result 是临时完整绑定证书，不作为项目 GID 或 coverage。判形裁决见 https://github.com/the-omega-institute/trureturing/issues/14425#issuecomment-6057702934。源正模数对应证书参数 m+1，来源域为 LegalDigits × (ProfiniteIntegers × ProfiniteIntegers)，没有添加假设。result 的全部 11 个合取完整对应父项的核公式、证明关系与全部短情形。两个 chain_atoms 子项先分别经 canonical settle 终结；父项完整结算，不新增 Lean 或冻结事件。
+    previous_atom_id: f9999d75b220b0760d9894c6805188486d51e04e57696c9a5d5da88a33e73312
+    next_atom_id: 19dac9f3b87b01eef1a78cdd68f748d2c5d639d8a4d06a8d07b85cc4d1578c02
+  chain_atoms:
+    - c10f3c49c9c4df99b5b5e801848fbf86898d81d4e8f5569066afd7d7967332ed
+    - af6dc9c7325a05164e821849e39e5a880106eed90245f6f030384361695e2f8d

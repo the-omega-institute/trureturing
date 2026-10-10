@@ -136,7 +136,7 @@ private def missing_nonempty (s : Finset ℕ) :
 def mex (s : Finset ℕ) : ℕ :=
   (Finset.range (s.card + 1) \ s).min' (missing_nonempty s)
 
-private def mex_spec (s : Finset ℕ) :
+theorem mex_spec (s : Finset ℕ) :
     mex s ∉ s ∧ ∀ n < mex s, n ∈ s := by
   have hm := Finset.min'_mem _ (missing_nonempty s)
   change mex s ∈ Finset.range (s.card + 1) \ s at hm

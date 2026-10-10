@@ -53,6 +53,64 @@ def BranchSingle (P : Protocol G I C M) (χ : G →+ ZMod 2) : Prop :=
   ∀ a t c, Reachable P χ a t c →
     (NoninjectiveSenders (fun i x => P.reply i x t c)).card ≤ 1
 
+/-- The actual parity fibre of a reachable branch inherits exact sum recovery. -/
+theorem branch_exact_of_decoder
+    (P : Protocol G I C M) (χ : G →+ ZMod 2)
+    (D : (G × G × ((i : I) → M i)) → G)
+    (hD : ∀ s : Source (I := I) χ, D (observe P s) = target s)
+    (a t : G) (c : C) (hb : Reachable P χ a t c) :
+    BranchExact χ (fun i x => P.reply i x t c) (χ (t - a)) := by
+  classical
+  let f : (i : I) → G → M i := fun i x => P.reply i x t c
+  let p := χ (t - a)
+  intro x y hx hy hreply
+  let hxoff : χ (t - a - ∑ i, x i) = 0 := by
+    simpa only [p, map_sub] using (sub_eq_zero.mpr hx.symm)
+  let hyoff : χ (t - a - ∑ i, y i) = 0 := by
+    simpa only [p, map_sub] using (sub_eq_zero.mpr hy.symm)
+  let sx : Source (I := I) χ := ((a, x), ⟨t - a - ∑ i, x i, hxoff⟩)
+  let sy : Source (I := I) χ := ((a, y), ⟨t - a - ∑ i, y i, hyoff⟩)
+  have htx : clock sx = t := by
+    simp [sx, clock, target]
+  have hty : clock sy = t := by
+    simp [sy, clock, target]
+  have hobs : observe P sx = observe P sy := by
+    apply Prod.ext (by rfl)
+    apply Prod.ext
+    · simp [observe, htx, hty]
+    · funext i
+      have hqc : P.query a t = c := by simpa using hb.choose_spec.2.2
+      simpa [observe, sx, sy, htx, hty, hqc] using hreply i
+  have hd := (hD sx).symm.trans ((congrArg D hobs).trans (hD sy))
+  simpa [sx, sy, target] using hd
+
+/-- A branch-exact family separates each characteristic fibre when local inputs embed. -/
+theorem fiber_separated_of_branch_exact
+    (χ : G →+ ZMod 2) (f : (i : I) → G → M i) (p : ZMod 2)
+    (hexact : BranchExact χ f p)
+    (embed : ∀ i x, ∃ z : I → G, χ (∑ k, z k) = p ∧ z i = x) :
+    FiberSeparated χ f := by
+  classical
+  intro i x y hxy hreply
+  obtain ⟨z, hz, hzi⟩ := embed i x
+  let z' : I → G := z + Pi.single i (y - x)
+  have hsum : ∑ k, z' k = (∑ k, z k) + (y - x) := by
+    simp [z', Finset.sum_add_distrib]
+  have hpar : χ (∑ k, z' k) = p := by
+    rw [hsum, map_add, map_sub, hxy, sub_self, add_zero, hz]
+  have hreplies : ∀ k, f k (z k) = f k (z' k) := by
+    intro k
+    by_cases hki : k = i
+    · subst k
+      simpa [z', hzi]
+    · simp [z', Pi.single_eq_of_ne hki]
+  have heq := hexact z z' hz hpar hreplies
+  rw [hsum] at heq
+  have hd : y - x = 0 := by
+    have heq' : (∑ k, z k) + 0 = (∑ k, z k) + (y - x) := by simpa using heq
+    exact add_left_cancel heq'.symm
+  exact (sub_eq_zero.mp hd).symm
+
 /-- Exact recovery is classified by the collisions on each reachable branch. -/
 theorem exact_recovery_iff_branch_conditions
     (P : Protocol G I C M) (χ : G →+ ZMod 2)
@@ -67,27 +125,8 @@ theorem exact_recovery_iff_branch_conditions
   · rintro ⟨D, hD⟩ a t c hb
     let f : (i : I) → G → M i := fun i x => P.reply i x t c
     let p := χ (t - a)
-    have hexact : BranchExact χ f p := by
-      intro x y hx hy hreply
-      let hxoff : χ (t - a - ∑ i, x i) = 0 := by
-        simpa only [p, map_sub] using (sub_eq_zero.mpr hx.symm)
-      let hyoff : χ (t - a - ∑ i, y i) = 0 := by
-        simpa only [p, map_sub] using (sub_eq_zero.mpr hy.symm)
-      let sx : Source (I := I) χ := ((a, x), ⟨t - a - ∑ i, x i, hxoff⟩)
-      let sy : Source (I := I) χ := ((a, y), ⟨t - a - ∑ i, y i, hyoff⟩)
-      have htx : clock sx = t := by
-        simp [sx, clock, target]
-      have hty : clock sy = t := by
-        simp [sy, clock, target]
-      have hobs : observe P sx = observe P sy := by
-        apply Prod.ext (by rfl)
-        apply Prod.ext
-        · simp [observe, htx, hty]
-        · funext i
-          have hqc : P.query a t = c := by simpa using hb.choose_spec.2.2
-          simpa [observe, sx, sy, htx, hty, hqc] using hreply i
-      have hd := (hD sx).symm.trans ((congrArg D hobs).trans (hD sy))
-      simpa [sx, sy, target] using hd
+    have hexact : BranchExact χ f p :=
+      branch_exact_of_decoder P χ D hD a t c hb
     have embed (i : I) (x : G) :
         ∃ z : I → G, χ (∑ k, z k) = p ∧ z i = x := by
       obtain ⟨j, hij⟩ := exists_ne i
@@ -99,26 +138,8 @@ theorem exact_recovery_iff_branch_conditions
           χ x + χ k = χ x + (p - χ x) := by rw [hk]
           _ = p := by abel
       · simp [z, hij]
-    have sep : FiberSeparated χ f := by
-      intro i x y hxy hreply
-      obtain ⟨z, hz, hzi⟩ := embed i x
-      let z' : I → G := z + Pi.single i (y - x)
-      have hsum : ∑ k, z' k = (∑ k, z k) + (y - x) := by
-        simp [z', Finset.sum_add_distrib]
-      have hpar : χ (∑ k, z' k) = p := by
-        rw [hsum, map_add, map_sub, hxy, sub_self, add_zero, hz]
-      have hreplies : ∀ k, f k (z k) = f k (z' k) := by
-        intro k
-        by_cases hki : k = i
-        · subst k
-          simpa [z', hzi]
-        · simp [z', Pi.single_eq_of_ne hki]
-      have heq := hexact z z' hz hpar hreplies
-      rw [hsum] at heq
-      have hd : y - x = 0 := by
-        have heq' : (∑ k, z k) + 0 = (∑ k, z k) + (y - x) := by simpa using heq
-        exact add_left_cancel heq'.symm
-      exact (sub_eq_zero.mp hd).symm
+    have sep : FiberSeparated χ f :=
+      fiber_separated_of_branch_exact χ f p hexact embed
     have oddDiff (q : I) (a b : G) (hab : f q a = f q b)
         (hne : a ≠ b) : χ (b - a) = 1 := by
       have hneq : χ a ≠ χ b := by

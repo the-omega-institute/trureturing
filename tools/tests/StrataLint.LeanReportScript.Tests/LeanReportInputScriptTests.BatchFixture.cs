@@ -23,13 +23,13 @@ public sealed partial class LeanReportInputScriptTests
         var fields = Fields(result);
         var hash = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report)));
         TemporaryFileSystem.File.WriteAllText(report + ".sha256", $"{hash}  {Path.GetFileName(report)}\n");
-        WriteFixtureOrigins(report, fields[1]);
+        WriteFixtureOrigins(root, report);
         TemporaryFileSystem.File.WriteAllText(report + ".input.attestation",
             "schema=stratalint-lean-report-input-attestation-v1\n"
             + $"repository_input_sha256={fields[0]}\nproducer_sha256={fields[1]}\nreport_sha256={hash}\n");
     }
 
-    private static void WriteFixtureOrigins(string report, string compatibility)
+    private static void WriteFixtureOrigins(string root, string report)
     {
         using var document = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllBytes(report));
         var origins = document.RootElement.GetProperty("modules").EnumerateArray().ToDictionary(
@@ -37,8 +37,9 @@ public sealed partial class LeanReportInputScriptTests
             {
                 module = row.GetProperty("module").GetString(),
                 report_sha256 = Convert.ToHexStringLower(SHA256.HashData(StructuredCanonicalWriter.WriteJson(
-                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v2", modules = new[] { row } })).AsSpan())),
-                compatibility_sha256 = compatibility,
+                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v3", modules = new[] { row } })).AsSpan())),
+                input_projection = new { schema = "stratalint-judge-input-projection-v1",
+                    module = row.GetProperty("module").GetString(), inputs = System.Array.Empty<object>() },
                 producer_sources_sha256 = new string('1', 64),
                 inspector_executable_sha256 = new string('2', 64),
             }, StringComparer.Ordinal);

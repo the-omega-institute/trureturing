@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.DenseClauseConversion
 import Reg.Support.DependentFamily
 
@@ -63,19 +64,32 @@ def registration : Registration arena (arena.Law actual) where
     rw [decoded]
     decide
 
-def selection : SourceSelection := {
-  owner := `D5.S0.Computability.DenseClauseConversion
-  coordinates := #[0]
-  readouts := #[
-    { path := #["body","arg","arg","arg","arg","arg"]
-      stateOperand := some #["arg"] }
-  ] }
-
-
-register_information_theorem _root_.PredictiveThermodynamic.BinaryNames.dense_word_run in arena
-  readout via (realize signature (fun _ _ w => Conventional.rawCount w) (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.PredictiveThermodynamic.BinaryNames.dense_word_run) (type_of% (realize signature (fun _ _ w => Conventional.rawCount w) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S0.Computability.DenseClauseConversion.informationUnit,
+  realizationName := `Reg.D5.S0.Computability.DenseClauseConversion.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ w => Conventional.rawCount w) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S0.Computability.DenseClauseConversion, definition := none,
+    coordinates := #[0], readouts := #[{
+      path := #["body","arg","arg","arg","arg","arg"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `autoImplicit, value := .bool false },
+    { name := `backward.isDefEq.respectTransparency, value := .bool false }] }
 
 end Reg.D5.S0.Computability.DenseClauseConversion

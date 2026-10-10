@@ -1,6 +1,6 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight
 import Reg.Support.GraphCutRegistrationTemplates
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -34,18 +34,7 @@ def arena : Arena where
         (∃ a b : V, x a ≠ x b) →
           k ≤ hammingNorm (r.readout () ⟨V, G⟩ x)
 
-run_cmd do
-  let root := `Reg.D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight
-  let sourceName := `D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight ++
-    `edge_connected_iff_gradient_weight
-  let identity := "sha256:1adc10ad04469401acae8c1ce04439ddd5de2c262b30eb8bb5df995be3588364"
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    statementIdentity := identity
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
@@ -91,18 +80,30 @@ def registration : Registration arena.{u} (arena.{u}.Law actual.{u}) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem edge_connected_iff_gradient_weight in arena
-  readout via (realize graphGradientSignature.{u}
-    (fun _ p x => edgeDifferential p.2 x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "body",
-        "arg", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight.edge_connected_iff_gradient_weight.{u_1}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} graphGradientSignature.{u_1}
+    (fun _ p x => edgeDifferential.{u_1} p.2 x) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "EdgeConnectivityGradientWeight") "edge_connected_iff_gradient_weight") "Reg.D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight/Reg.D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} graphGradientSignature.{u_1}
+    (fun _ p x => edgeDifferential.{u_1} p.2 x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "body", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms rejected_law
 #print axioms sensitivity_proof

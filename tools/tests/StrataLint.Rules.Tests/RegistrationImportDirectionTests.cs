@@ -19,7 +19,7 @@ public sealed class RegistrationImportDirectionTests
     [InlineData("LeanInformationAuditAnalysis")]
     [InlineData(Analysis)]
     [InlineData("LeanInformationAuditInterface")]
-    [InlineData("LeanInformationAuditInterface.Syntax")]
+    [InlineData("LeanInformationAuditInterface.Contract.Core")]
     [InlineData("Reg")]
     [InlineData("Reg.D5.S0.Carrier.Source")]
     public void NewEdgeInCleanModuleBlocks(string module)

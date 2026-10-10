@@ -1,0 +1,16 @@
+**Claim status: open.** 定义
+
+$$
+P_u^*(b_1,\ldots,b_N)=
+\frac{\prod_{i=1}^{N-1}\Pi_i(b_i,b_{i+1})}
+{\prod_{i=2}^{N-1}\pi_i(b_i)}.
+$$
+
+则它是归一化的合法来源，具有给定的全部均值。并且在满足
+
+$$
+\Pr(b_{i+1}\mid b_1,\ldots,b_i)=\Pr(b_{i+1}\mid b_i)
+$$
+
+的一阶 Markov 来源中，它是唯一的。
+

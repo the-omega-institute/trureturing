@@ -28,6 +28,12 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open scoped Topology
 
 
+theorem bitShift_bitShift (x : LegalDigits) (m n : ℕ) :
+    bitShift (bitShift x m) n = bitShift x (m + n) := by
+  apply Subtype.ext
+  funext j
+  simp [bitShift, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+
 set_option maxHeartbeats 1600000 in
 /-- The complete finite endpoint graph jointly realizes every finite path from any
 specified actual legal terminal address, retaining its guard and exact deletion clock. -/
@@ -240,11 +246,6 @@ theorem closed_observation_graph_realization :
         simpa [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift, x, raw, hj] using hh
       · have hh := congrArg (fun p : LegalDigits => p.val (j - 3)) hyt
         simpa [originalT, bitShift, x, raw, hj, Nat.sub_add_cancel (by omega : 3 ≤ j)] using hh
-  have hshift (x : LegalDigits) (m n : ℕ) :
-      bitShift (bitShift x m) n = bitShift x (m + n) := by
-    apply Subtype.ext
-    funext j
-    simp [bitShift, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
   have hchainHead {q : ℕ} {R : ℝ} (x : LegalDigits) (v : Vertex q R)
       (vs : List (Vertex q R)) (w : List Label) (h : addressChain x (v :: vs) w) :
       stateAddress v.val.1 x ∧ kappa x ∈ piece v := by
@@ -284,7 +285,7 @@ theorem closed_observation_graph_realization :
       refine ⟨x, ⟨hx.1, hxp, hx.2.1, ?_⟩, ?_⟩
       · simpa [hx.2.2] using hy
       · rw [List.length_cons, show 3 * (w.length + 1) = 3 + 3 * w.length by omega,
-          ← hshift, ← originalT, hx.2.2, hyt]
+          ← bitShift_bitShift, ← originalT, hx.2.2, hyt]
   have hactual (x : LegalDigits) :
       stateAddress (outgoing (window x 0)) (originalT x) := by
     intro h

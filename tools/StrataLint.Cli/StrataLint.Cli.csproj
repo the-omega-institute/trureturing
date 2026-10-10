@@ -5,6 +5,9 @@
     <AssemblyName>StrataLint</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.GC.ConserveMemory" Value="9" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../StrataLint.Runtime/StrataLint.Runtime.csproj" />
 
     <ProjectReference Include="../StrataLint.FileMap/StrataLint.FileMap.csproj" />

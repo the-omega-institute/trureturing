@@ -1,6 +1,6 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent
 import Reg.Support.PathCurrentRegistrationTemplates
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -39,18 +39,7 @@ def arena : Arena where
         Real.log ((1 + r) / (1 - q)) * endpointDefect (region χ z) x T Region.peak -
           Real.log (1 + q) * endpointDefect (region χ z) x T Region.opposite
 
-run_cmd do
-  let root := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent
-  let sourceName := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent ++
-    `log_forward_div_reverse_eq_current
-  let identity := "sha256:9fe0bf0ee41c6c4aa060ac168ffce94a11bf8a412657c49411610c9ce698f7de"
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    statementIdentity := identity
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 /-- The two-state sign space used for the rejected intervention and the dependence witness. -/
 def sign (b : ULift.{u} Bool) : ℝ := if b.down then 1 else -1
@@ -156,23 +145,40 @@ def registration : Registration arena.{u} (arena.{u}.Law actual.{u}) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem log_forward_div_reverse_eq_current in arena
-  readout via (realize signedPeakPathSignature.{u}
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.log_forward_div_reverse_eq_current.{u_1}) (type_of% (realize.{u_1 + 1, u_1, 0, 0, 0} signedPeakPathSignature.{u_1}
     (fun _ p x => Real.log
-      (forwardLaw (kernel p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
+      (forwardLaw.{u_1} (kernel.{u_1} p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
           p.2.2.2.2.2.2 /
-        reverseLaw (kernel p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
+        reverseLaw.{u_1} (kernel.{u_1} p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
           p.2.2.2.2.2.2))
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent
-    coordinates := #[0, 1, 3, 5, 6, 7, 11]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "fn", "arg"]
-      stateBinder := 12 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "TimeArrow") "SinglePeakPathCurrent") "log_forward_div_reverse_eq_current") "Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent/Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_1 + 1, u_1, 0, 0, 0} signedPeakPathSignature.{u_1}
+    (fun _ p x => Real.log
+      (forwardLaw.{u_1} (kernel.{u_1} p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
+          p.2.2.2.2.2.2 /
+        reverseLaw.{u_1} (kernel.{u_1} p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1) p.2.2.2.2.2.1 x
+          p.2.2.2.2.2.2))
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, definition := none, coordinates := #[0, 1, 3, 5, 6, 7, 11], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 12, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms rejected_law
 #print axioms sensitivity_proof

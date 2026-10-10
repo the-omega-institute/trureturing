@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Core
 import Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow
 import Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow
 import Reg.D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.TemplateShadow
@@ -8,8 +9,6 @@ import Reg.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.TemplateShadow
 import Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.TemplateShadow
 import Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.TemplateShadow
 import Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.TemplateShadow
-import Reg.Support.TemplateShadowContract
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -22,12 +21,9 @@ import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 open Lean LeanInformationAudit
 
-run_cmd RootCatalogs.declare Reg.Support.TemplateShadowContract.contract
 
-set_option maxRecDepth 100000 in
-set_option maxHeartbeats 2000000 in
--- Seal the existing finite catalogs under the production seal limit.
-#seal_information_theory
+
+
 
 
 section

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan
 import Reg.Support.DependentFamily
 
@@ -135,18 +136,30 @@ def registration.{u,v} : Registration arena.{u,v} (arena.{u,v}.Law actual.{u,v})
   sensitivity := sensitivity
   dependence := dependence
 
-register_information_theorem actual_adaptive_span in arena
-  readout via (realize signature
-    (fun _ p e => observation p e) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan
-    coordinates := #[0, 3, 8]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "fn", "arg", "body", "body", "arg", "arg", "fn", "arg"]
-      stateBinder := 10 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual_adaptive_span.{u_1, u_3}) (type_of% (realize.{max (u_3 + 1) (u_1 + 1), u_1, 0, max u_3 u_1, 0} signature.{u_1, u_3}
+    (fun _ p e => observation.{u_1, u_3} p e) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "AdaptiveLowInstrumentSpan") "actual_adaptive_span") "Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan/Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_3})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_3}) ⟨(registration.{u_1, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{max (u_3 + 1) (u_1 + 1), u_1, 0, max u_3 u_1, 0} signature.{u_1, u_3}
+    (fun _ p e => observation.{u_1, u_3} p e) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, definition := none, coordinates := #[0, 3, 8], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "arg", "arg", "fn", "arg"], stateBinder := 10, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law

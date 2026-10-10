@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:962142e1d74709bb0548d9a52607080c5ec08ada0cf85d7c0ec077b8d28bb1c2
+  normalized_sha256: sha256:962142e1d74709bb0548d9a52607080c5ec08ada0cf85d7c0ec077b8d28bb1c2
+cas_ref: sha256:962142e1d74709bb0548d9a52607080c5ec08ada0cf85d7c0ec077b8d28bb1c2
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/FourierFibers/FiniteCrystalTimeFrequencyBridge.first_crystal_time_window_injective
+    target_statement_id: sha256:d80f5b7d4f0f7636381a8aa18c8cd9fddc8aca80fbe9ff1a3f4d7944613f420b
+receipts:
+  unresolved_subitems: []

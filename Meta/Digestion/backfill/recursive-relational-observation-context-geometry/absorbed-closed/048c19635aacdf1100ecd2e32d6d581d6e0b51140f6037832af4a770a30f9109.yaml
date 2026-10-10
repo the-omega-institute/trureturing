@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:048c19635aacdf1100ecd2e32d6d581d6e0b51140f6037832af4a770a30f9109
+  normalized_sha256: sha256:048c19635aacdf1100ecd2e32d6d581d6e0b51140f6037832af4a770a30f9109
+cas_ref: sha256:048c19635aacdf1100ecd2e32d6d581d6e0b51140f6037832af4a770a30f9109
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/FinitePositiveIntervalControl.result
+    target_statement_id: sha256:9d17b006737b30ad7844ef0134809ba8210615f95436afafe0a951fad6373f68
+receipts:
+  unresolved_subitems: []

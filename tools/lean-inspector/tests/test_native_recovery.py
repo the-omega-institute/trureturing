@@ -29,7 +29,8 @@ class NativeBatchPartitionTests:
         requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
                     for index in range(201, -1, -1)]
         chunks = []
-        with patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
+        with patch.object(native, 'input_projection', return_value={'inputs': []}), \
+                patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
             native.produce_batch(requests)
         self.assertEqual([len(chunk) for chunk in chunks], [100, 100, 2])
         self.assertEqual([row[1] for chunk in chunks for row in chunk],
@@ -39,7 +40,8 @@ class NativeBatchPartitionTests:
         requests = [['/root', f'Reg.Module.{index:03}', '', '', '/inspector', '']
                     for index in range(97)]
         chunks = []
-        with patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
+        with patch.object(native, 'input_projection', return_value={'inputs': ['registration']}), \
+                patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
             native.produce_batch(requests)
         self.assertEqual([len(chunk) for chunk in chunks], [97])
 

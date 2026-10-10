@@ -1,0 +1,19 @@
+## 5. 记录三角形的精确面积
+
+对上述例子，$\mathbb E_O[u_O]=\mathbb E_O[v_O]=1/2$，且
+
+$$
+\operatorname{Var}_O(u_O)=\frac1{24},\quad
+\operatorname{Var}_O(v_O)=\frac1{18},\quad
+\operatorname{Cov}_O(u_O,v_O)=0.
+$$
+
+记录 Gram 矩阵和行列式为
+
+$$
+G_{\mathrm{rec}}=\begin{pmatrix}1/24&0\\0&1/18\end{pmatrix},\qquad
+\det G_{\mathrm{rec}}=\frac1{432}.
+$$
+
+三个后验点 $(1/4,2/3),(1/2,1/6),(3/4,2/3)$ 围成面积 $A_{\mathrm{rec}}=1/8$ 的三角形。
+

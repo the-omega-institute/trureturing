@@ -1,0 +1,11 @@
+**命题 7.3（当前律的乘积残差）。** 令 $`\widehat f=\mathbb E_{p^\star}f`$。在 $`r>0`$ 时，
+
+```math
+\mathbb E_pf-\widehat f
+=J_f(\kappa-XY/r)=J_f\Delta/r,
+\qquad
+|\mathbb E_pf-\widehat f|\le |J_f|r/4.
+```
+
+证明。两律均值相同，只差共同占位项；使用第五节的锐界即得。顶点时两律相同、残差为零，直接计算而不除以 $`r`$。对当前律，准确当且仅当 $`J_f\Delta=0`$；这不表示整条当前均值纤维唯一。∎
+

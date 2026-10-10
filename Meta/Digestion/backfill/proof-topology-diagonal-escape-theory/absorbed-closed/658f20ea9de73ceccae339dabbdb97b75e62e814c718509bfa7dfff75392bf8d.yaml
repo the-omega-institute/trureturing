@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:658f20ea9de73ceccae339dabbdb97b75e62e814c718509bfa7dfff75392bf8d
+  normalized_sha256: sha256:658f20ea9de73ceccae339dabbdb97b75e62e814c718509bfa7dfff75392bf8d
+cas_ref: sha256:658f20ea9de73ceccae339dabbdb97b75e62e814c718509bfa7dfff75392bf8d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.definitionClosure_extensive
+    target_statement_id: sha256:94bfa4717ebc34d2ed47fbcd06d043ab4ddd5f226604d0c5a6b858dbfe8dfc4f
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.definitionClosure_idempotent
+    target_statement_id: sha256:62ef8b2545ca77b5a254b0cd59d25bbe0de577c1700052b458263cde18de11f4
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.definitionClosure_mono
+    target_statement_id: sha256:a8dfcb80ad02984ee23854bc895ca30e64d7c320c6ae24bf19c76e36d710d615
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.jointKernel_definitionClosure
+    target_statement_id: sha256:ccc85bc143f6c531bfece20f718c509f5358d1c8796853e52bcaf49edb31ecac
+  - gid: D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.inductive_sufficiency_criterion
+    target_statement_id: sha256:49981877cb969dce6156ddac340f96a2165b4e6f4501cef48f86892c00ad4875
+receipts:
+  unresolved_subitems: []

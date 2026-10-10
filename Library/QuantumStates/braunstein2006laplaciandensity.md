@@ -7,7 +7,9 @@ doi: 10.1007/s00026-006-0289-3
 url: https://arxiv.org/abs/quant-ph/0406165v2
 claim: "Conjecture 6.7 asserts that the star maximizes entanglement of formation among connected graph density matrices."
 strata_touched:
-  - D5/S3/Quantum/Entanglement/GraphDensity
+  - D5/S3/Quantum/Entanglement/GraphDensity/FormationBounds
+  - D5/S3/Quantum/Entanglement/GraphDensity/SelectiveFormationBounds
+  - D5/S3/Quantum/Entanglement/GraphDensity/BraunsteinGhoshSeveriniStarRefutation
 license: citation-only
 triage: anchor
 ---

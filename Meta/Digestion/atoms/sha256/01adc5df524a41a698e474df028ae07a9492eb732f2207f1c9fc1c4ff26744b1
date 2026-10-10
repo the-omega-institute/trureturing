@@ -1,0 +1,21 @@
+**定义 18.6（与 Robin 完整余量的接续目标）。** 使用 [Robin 二进尺度卷 §§479、486、488–490](FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_DYADIC_RESOLVENT.md) 中同一个实际有符号积分
+$$
+I_\psi(x)=\int_x^\infty(\psi(t)-t)
+\frac{1+\log t}{t^2\log^2t}\,dt.
+$$
+对每个整数 $n>5040$，其普通整数余量身份仍为
+$$
+\log\frac{e^\gamma\log\log n}{\sigma(n)/n}
+=I_\psi(\log n)+R(\log n)+d_n,\qquad d_n\ge0.
+\tag{18.4}
+$$
+§486 的实际储备下界 $R(x)>1/(50\sqrt x\log x)$、§489 经有限素数证书补齐的 Mathlib 路线 $R(x)>1/(120\sqrt x\log x)$，以及 §488 的奇数二幂补齐成本，均保留各自的前提与原量词。更正命题 490.1 已以 $n=5041$ 否定 §486 末尾拟议的孤立 $I_\psi$ 全域下界，而命题 490.2 证明该整数的完整余量仍严格为正。由本卷有限观测推进 RH 所需的目标，是对式 (18.4) 的同一完整余量，或对实际 Weil 测试类，给足够的有符号下界；命题 490.3 给出了保留压力亏损的有限区间共同锚。分别的正谱量、局部存活率和无原点相关尚未提供所需的全域识别及估计。
+
+若另有 $\psi(t)-t=O(t^\theta(\log t)^B)$，其中固定 $\theta<1$、$B\ge0$，则直接绝对积分只给
+$$
+I_\psi(x)=O\!\left(x^{\theta-1}(\log x)^{B-1}\right),\qquad
+\sqrt x\log x\,I_\psi(x)=O\!\left(x^{\theta-1/2}(\log x)^B\right).
+\tag{18.5}
+$$
+证明为在 $t\ge x\ge e$ 上用 $(1+\log t)/\log^2t\le2/\log t$，再令 $t=xe^u$；剩余积分的 $e^{-(1-\theta)u}$ 乘固定对数幂可积。当 $\theta>1/2$ 时，这一绝对值估计本身不足以与固定平方根储备常数比较符号。它没有排除通过更强的有符号抵消得到所需估计。[固定无零半平面与算术三维空间的来源条目](../../../Library/Analytic/openai2026quasirh.md) 区分了外部 $\mathbb H^3$ 的实际算术作用、本卷三均值几何及尚未建立的解析映射。
+

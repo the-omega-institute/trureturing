@@ -1,0 +1,12 @@
+**Claim status: open.** 令 $\tau=m/C$，则
+
+$$
+\boxed{y(t)=e^{-t/\tau}y(0)+\frac1m\int_0^t e^{-(t-s)/\tau}\sum_i c_i u_i(s)\,ds}
+$$
+
+并且
+
+$$
+\boxed{j_i(t)=c_i u_i(t)-c_i e^{-t/\tau}y(0)-\frac{c_i}{m}\int_0^t e^{-(t-s)/\tau}\sum_jc_j u_j(s)\,ds.}
+$$
+

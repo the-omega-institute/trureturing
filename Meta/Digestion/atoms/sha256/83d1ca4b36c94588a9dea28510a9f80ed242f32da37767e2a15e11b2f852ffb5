@@ -1,0 +1,28 @@
+**数学引文 11.2（原生与辅助核）。** 接缝卷 §二、金字塔关联卷推导 8.3 给两个不同接口：
+
+```math
+\begin{aligned}
+K_{\rm low}(a,b,c)&=B(a)B(b)B(c)
+=\begin{pmatrix}1+a+b&c(1+a)\\1+b&c\end{pmatrix},\\
+K_{\rm high}(a,b,c)&=B(c)B(b)B(a)
+=\begin{pmatrix}1+c+b&a(1+c)\\1+b&a\end{pmatrix}.
+\end{aligned}
+```
+
+第一式是辅助 LOW-to-HIGH 扫描，输入一迫使 $`x=0`$，输出为 $`y`$。第二式才是原生 HIGH-to-LOW，输入一迫使 $`y=0`$，输出为最低位 $`x`$。直接相乘给
+
+```math
+\mathop{\mathrm{tr}}\nolimits K_{\rm low}=\mathop{\mathrm{tr}}\nolimits K_{\rm high}=1+a+b+c,
+\qquad \det K_{\rm low}=\det K_{\rm high}=-abc.
+```
+
+单位活动权时两核相同：
+
+```math
+A=\begin{pmatrix}3&2\\2&1\end{pmatrix}=JM^3J,
+\quad J=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\quad A^2=4A+I,\quad \det A=-1.
+```
+
+因为 $`B(1)=JMJ`$，三步即得共轭式，矩阵乘法给二阶恒等式。这是两状态守卫的三位表达，不是五状态无约束递归。反转完整词须同时反转窗口次序和外端条件；它不保留在线前缀回复。比如辅助低到高词 $`([2],[3])`$ 对应原生逆词 $`([3],[2])`$，总数量都是十五，首窗回复却分别为二、三。
+

@@ -17,19 +17,14 @@ require leanInspectorInterface from "../lean-inspector-interface"
 lean_lib LeanInformationAudit where
   globs := #[.submodules `LeanInformationAudit]
 
-lean_lib LeanInformationAuditAnalysis where
-  globs := #[.submodules `LeanInformationAuditAnalysis]
-
 lean_lib InformationSourceFixture
-
-target nativeImage pkg : FilePath := do
-  buildLeanO (pkg.buildDir / "c" / "native_image.o")
-    (← inputFile (pkg.dir / "native_image.c") true) #[] #["-O3", "-DLEAN_EXPORTING"]
 
 lean_exe reportInspector where
   root := `Inspector
   supportInterpreter := true
-  moreLinkObjs := #[{key := .mk (.packageTarget .anonymous `nativeImage)}]
+
+lean_exe inputDiscovery where
+  root := `LeanInformationAudit.Contract.InputDiscovery
 
 -- Resolve Lake's current package at runtime; copied config oleans contain no host root.
 private partial def repositoryDir (pkg : Package) : IO FilePath := do
@@ -102,12 +97,35 @@ package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
     let names ← strings (← readJson path) "modules"
     return names.foldl (fun set name => set.insert name.toName) {}
 
-/-- Trace semantic compatibility after validating registered inputs.
-Raw configuration identity belongs to the aggregate; module exports carry
-Lake's compiler dependencies. Producer compilation is a separate obligation. -/
+/-- Validate registered inputs without tracing producer implementation.
+Configuration identity belongs to aggregation; module exports carry compiler
+dependencies; every module traces the report format identifier. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
-  return Job.nil.mix (← inputBinFile ((← repositoryDir pkg) / ".lake/build/lean-inspector" / "compatibility"))
+  return Job.nil
+
+/-- Input classification is a compiler fact. Report formats and producer
+program traces do not invalidate it. Read only the target's own olean parts. -/
+module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
+  let pkg := (← getWorkspace).root
+  discard <| (← fetch <| pkg.facet `reportInputs).await
+  let root ← repositoryDir pkg
+  let deps ← fetch <| pkg.facet `reportProducer
+  let exportJob ← mod.exportInfo.fetch
+  let discovery ← inputDiscovery.fetch
+  (deps.add exportJob |>.add discovery).mapM fun _ => do
+    let info ← exportJob.await
+    addTrace (info.allArtsTrace.mix info.legacyTransTrace)
+    let file := root / ".lake/build/lean-inspector" / "judge-inputs" / s!"{mod.name}.json"
+    buildFileUnlessUpToDate' file do
+      IO.FS.createDirAll file.parent.get!
+      proc {
+        cmd := (← discovery.await).toString,
+        args := #[mod.name.toString, mod.oleanFile.toString, file.toString],
+        cwd := some root,
+        env := (← getWorkspace).augmentedEnvVars }
+      pure PUnit.unit
+    return file
 
 /-- A native report artifact. Production validates it completely before it is
 written; like an olean, a traced artifact is afterwards reused as is. -/
@@ -154,15 +172,19 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let record ← readJson utility
   let claims ← strings record "claims"
   let mut deps ← fetch <| pkg.facet `reportProducer
+  let projection ← fetch <| mod.facet `judgeInputs
+  let inputs ← readJson (← projection.await)
+  let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
+  unless ownInputs.isEmpty do
+    -- Fetch the shared program obligation in Lake's dependency graph. Awaiting
+    -- it without mixing its trace preserves implementation-independent reuse.
+    let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
+      | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
+    deps := deps.add (← registry.exportInfo.fetch)
   deps := deps.mix (← inputBinFile mod.leanFile)
   deps := deps.mix (← inputBinFile utility)
   let mut exports := #[(← mod.exportInfo.fetch)]
   let mut sourceModules := #[mod]
-  -- Inspector loads this fixed judge even for an empty registration inventory.
-  -- Demand its build without making this program a report data dependency.
-  let some driver := (← getWorkspace).findModule? `LeanInformationAudit.SealCommand
-    | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
-  let driverBuild ← driver.exportInfo.fetch
   for name in claims do
     let some claim := (← getWorkspace).findModule? name.toName
       | error s!"utility claim module is not in the Lake workspace: {name}"
@@ -192,14 +214,17 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let workspace ← getWorkspace
   let env := workspace.augmentedEnvVars
   let file := root / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
-  (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
-    -- Inspector's private import mode reads transitive private values, also
+  (deps.add (Job.mixArray exports) |>.add projection |>.add inspector).mapM fun _ => do
+    -- The compiler reader consumes transitive private values, also
     -- through public imports. Lake's legacy trace follows that same closure;
     -- allTransTrace follows each import's visibility and can omit those values.
     -- Apply this to the module and every external utility claim.
     for exportJob in exports do
       let info ← exportJob.await
       addTrace (info.allArtsTrace.mix info.legacyTransTrace)
+    let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")
+    discard <| format.await
+    addTrace format.getTrace
     let executable ← inspector.await
     let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
       utility.toString, executable.toString, file.toString]

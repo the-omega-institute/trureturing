@@ -101,8 +101,10 @@ photon counting alone, would not refute `claim`.
 
 `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.lean` exposes
 `meanPhoton`, `outputState`, `momentState`, `finitePOVM`, `bayesianRisk`,
-`MMSE`, `inBetween`, `claim` and the sole theorem `result : ¬ claim`.
-All auxiliary facts, including spectral attainment, are local `have` terms.
+`MMSE`, `inBetween`, `claim` and `result : ¬ claim`. The Kraus-coefficient lemmas
+`sqrt_power`, `source_coefficient` and `sourceKraus` are public, also used by the
+beta-prior refutation `D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation`; the
+measurement arguments and the fixed-instance facts are local `have` terms.
 `result: proof_shape: bind-only; escape_witness: none; admission_basis:
 open-problem-resolution (#11653; Refuted)`. The spectral construction applies
 Mathlib's spectral theorem with finite-sum and matrix normalization; the lower
@@ -130,8 +132,10 @@ reading. No atom or coverage step is associated with this settlement.
   $107725/61953984$. The lower bound holds for every finite POVM and all real
   estimates, and the in-between risk is independent of its phase.
 - **Open:** global optimality of the competitor, the source's integer-energy
-  optimality statement, the beta-prior conjecture and the parameter region in
-  which an adjacent-Fock probe is optimal. None is settled by `result`.
+  optimality statement and the parameter region in
+  which an adjacent-Fock probe is optimal. None is settled by `result`. The
+  beta-prior conjecture is refuted separately in
+  [the beta-prior dossier](zhou-bash-guha-gagatsos-2023-transmissivity-beta-prior-refutation.md).
 - **Open source scope:** conclusions that select an in-between probe by the
   refuted universal optimality claim lose that justification. Results about
   that fixed probe's risk remain compatible with the witness. No other source

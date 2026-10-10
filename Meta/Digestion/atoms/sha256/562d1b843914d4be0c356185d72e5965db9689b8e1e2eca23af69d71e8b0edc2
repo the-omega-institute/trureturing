@@ -1,0 +1,2 @@
+**数学引文 1.2（路径凸包作为局部输入）。** 令 $\mathcal P=\operatorname{conv}\Sigma$。这是三顶点路径的经典稳定集凸包。其独立的原始文献桥为 [Stanley，Definition 2.1、Theorem 2.2、Example 4.3](../../../Library/Words/stanley1986posetpolytopes.md)：取三元偏序 $a<b>c$，按 $(a,b,c)=(x,z,y)$ 识别，反链正好为上述五模式。因此
+

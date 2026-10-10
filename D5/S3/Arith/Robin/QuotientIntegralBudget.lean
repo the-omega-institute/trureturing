@@ -278,7 +278,7 @@ private theorem integral_inv_sq_Ico {d c : ℝ} (hd : 0 < d) (hc : 0 < c) (hc1 :
   rw [integral_Ico_eq_integral_Ioc, ← intervalIntegral.integral_of_le hdc, hFTC]
   field_simp [hd.ne', hc.ne']
   <;> ring
-private theorem hasDerivAt_log_tail_primitive {y : ℝ} (hy : 0 < y) : HasDerivAt (fun z : ℝ => -(Real.log z + 2) / z) ((1 + Real.log y) / y ^ 2) y
+theorem hasDerivAt_log_tail_primitive {y : ℝ} (hy : 0 < y) : HasDerivAt (fun z : ℝ => -(Real.log z + 2) / z) ((1 + Real.log y) / y ^ 2) y
     := by
   have h := (((Real.hasDerivAt_log hy.ne').add_const 2).neg.div (hasDerivAt_id y) hy.ne')
   apply h.congr_deriv
@@ -312,7 +312,7 @@ private theorem integrableOn_low_smooth (A D : ℝ) {m : ℝ} (hm : 1 ≤ m) : I
   have hypos : 0 < y := hminvpos.trans_le hy.1
   have hlog : ContinuousAt Real.log y := Real.continuousAt_log hypos.ne'
   exact (((continuousAt_const.mul (continuousAt_const.add hlog.abs)).add continuousAt_const).div continuousAt_id hypos.ne').continuousWithinAt
-private theorem integral_affine_log_div {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) (P Q : ℝ) : (∫ y in a..b, (P + Q * Real.log y) / y) = P * (Real.log
+theorem integral_affine_log_div {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) (P Q : ℝ) : (∫ y in a..b, (P + Q * Real.log y) / y) = P * (Real.log
     b - Real.log a) + (Q / 2) * ((Real.log b) ^ 2 - (Real.log a) ^ 2) := by
   have hcont : ContinuousOn (fun y : ℝ => (P + Q * Real.log y) / y) (Icc a b) := by
     intro y hy

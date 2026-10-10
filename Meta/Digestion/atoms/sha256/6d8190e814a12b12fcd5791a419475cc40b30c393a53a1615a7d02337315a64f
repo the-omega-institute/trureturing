@@ -1,0 +1,10 @@
+**命题 9.3（硬核族的精确与不精确）。** 记 $H_n=\sup_{\lambda>0}\frac{\lambda}{1+\lambda}\mathbb E^{(n)}_\lambda[u]$，它是命题 7.1 在硬核族上能给出的最好下界。
+
+(i) $H_1=\kappa_1=\tfrac14$，在 $\lambda=1$ 处取到。
+
+(ii) $H_2=\kappa_2=2(3-2\sqrt2)$，在 $\lambda=1/\sqrt2$ 处取到。
+
+(iii) $H_3<\tfrac{507}{1000}<\tfrac{13}{25}\le\kappa_3$；即 $n=3$ 时没有硬核测度是 $\Phi_{\Gamma_3}$ 的最大点。
+
+(iv) 定理 6.2 的分配在 $n=2$ 最优，在 $n=1$ 与 $n=3$ 不最优。
+

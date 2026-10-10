@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:e9a6a3a1762af780a9208cbdac598f2e35650add714ad91e95b9ce97119f6bab
+  normalized_sha256: sha256:e9a6a3a1762af780a9208cbdac598f2e35650add714ad91e95b9ce97119f6bab
+cas_ref: sha256:e9a6a3a1762af780a9208cbdac598f2e35650add714ad91e95b9ce97119f6bab
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteEventCouplingSharpBounds.event_coupling_target_feasible_iff
+    target_statement_id: sha256:2bc522266835cb7431a6b106f62b426c9844b808dbf8a6091de1bf7119e12ea2
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 2f21660263c928cbb3501b20b749bb6c3ec9455ec54deea4df921e3c749c1c4e
+    - da56c416f95fb4e22200e8c8eba6b1c14a1bb6473f9f44d25ffd5e998ce5083e

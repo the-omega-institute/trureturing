@@ -1,0 +1,14 @@
+### theorem 4（两个读口的新增二阶关系，只来自交叉端点）
+
+Claim status: open
+
+$$
+\boxed{\mathcal B(\ell,m)=ab'+a'b.}
+$$
+
+特别地：
+
+$$
+\boxed{J_{\ell^2}=2ab.}
+$$
+

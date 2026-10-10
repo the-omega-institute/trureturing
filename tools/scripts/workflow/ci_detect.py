@@ -12,8 +12,8 @@ hits a unit when it matches an including pattern of the unit or of the shared
 section and no excluding pattern of the unit.
 
 --changed names the NUL-terminated changed-path list. When it does not exist
-the change has no base commit and every unit hits. More than MAX_CHANGED_PATHS
-changed paths fail: the change must be split. Any error exits 2.
+the change has no base commit and every unit hits. Every supplied changed path
+is validated and available for matching, with no path-count cutoff. Any error exits 2.
 """
 import argparse
 import json
@@ -22,7 +22,6 @@ from pathlib import Path
 import re
 import sys
 
-MAX_CHANGED_PATHS = 3000
 UNIT_ID = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 
 
@@ -87,9 +86,6 @@ def read_changed(path):
         paths = [item.decode("utf-8") for item in data.split(b"\0")[:-1]] if data else []
     except UnicodeDecodeError as error:
         raise DetectError(f"cannot read {path}: {error}") from error
-    if len(paths) > MAX_CHANGED_PATHS:
-        raise DetectError(f"{len(paths)} changed paths exceed {MAX_CHANGED_PATHS}; "
-                          "split the change into smaller pull requests")
     return paths
 
 

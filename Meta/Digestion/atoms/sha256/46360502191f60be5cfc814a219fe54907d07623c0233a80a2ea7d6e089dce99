@@ -1,0 +1,22 @@
+**证明。** 后验均值为
+
+$$
+\mathbb E[f\mid o]=\frac{\mathbb E[f\ell_o]}{\mathbb E[\ell_o]}.
+$$
+
+正向由闭包直接计算。反向若某个乘积不在 $\mathcal V$，有限维线性代数给出两份当前均值相同而该后验分子不同的严格正来源律。证毕。
+
+读取 $x$ 时 $\ell_1=x$，要继续更新 $y$ 必须加入 $xy$。利用
+
+$$
+x^2=x,\quad y^2=y,\quad z^2=z,\quad xz=yz=0,
+$$
+
+得到
+
+$$
+\mathcal V_* =\operatorname{span}\{1,x,y,z,xy\},
+$$
+
+它在五模式上已经是全部函数空间。只重复读取 $z$ 时，$\mathcal V_0$ 保持闭合；允许读取两端并预测另一端时，$xy$ 是最小新增关系。
+

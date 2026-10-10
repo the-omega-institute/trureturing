@@ -26,6 +26,15 @@ public sealed class CurrentDeltaCliContractTests
     }
 
     [Fact]
+    public void CliRuntimeConfigurationConservesGarbageCollectedMemory()
+    {
+        var path = Path.ChangeExtension(typeof(StrataLint.Cli.Program).Assembly.Location, ".runtimeconfig.json");
+        using var document = System.Text.Json.JsonDocument.Parse(File.ReadAllBytes(path));
+        var properties = document.RootElement.GetProperty("runtimeOptions").GetProperty("configProperties");
+        Assert.Equal(9, properties.GetProperty("System.GC.ConserveMemory").GetInt32());
+    }
+
+    [Fact]
     public void CurrentReadsAParentlessRemotelessRepositoryBeforeReportingMissingReport()
     {
         using var fixture = new TemporaryDirectory();

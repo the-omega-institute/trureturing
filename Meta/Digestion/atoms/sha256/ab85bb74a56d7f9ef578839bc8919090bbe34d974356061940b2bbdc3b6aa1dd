@@ -1,0 +1,22 @@
+### theorem 1 这些位置构成真正独立的二元选择族
+
+Claim status: open.
+
+对 $n\ge3$：
+
+$$
+\boxed{|P_n|=F_{n-2}.}
+$$
+
+记 $K_n=F_{n-2}$。则 $A\longmapsto V_A$ 是从 $2^{P_n}$ 到实际原树的单射，并且：
+
+$$
+\boxed{w(V_A)=w(T_n)\qquad\forall A.}
+$$
+
+内在深度则满足：
+
+$$
+\boxed{\nu(V_A)=\begin{cases}n,&A=\varnothing,\\0,&A\ne\varnothing.\end{cases}}
+$$
+

@@ -10,8 +10,9 @@ event candidate through `ci-entry.sh` (the checked-out `GITHUB_SHA`, the complet
 event range and the pull-request merge parents), lists the changed paths, and
 `ci_detect.py` decides from the `CI_UNITS` sections written in the workflow which
 units the change hits. A section is named by its job id; `[*]` patterns apply to
-every unit; `*` also matches `/`, `?` matches one character and `!` excludes. More
-than 3000 changed paths fail detection. The patterns are written, not derived from
+every unit; `*` also matches `/`, `?` matches one character and `!` excludes. Detection
+validates and matches the complete changed-path list without a path-count
+cutoff. The patterns are written, not derived from
 project registrations, FILEMAP or call graphs.
 
 Each test project, selftest, compile-fail proof, FILEMAP and current is one job
@@ -45,10 +46,9 @@ reference. TRX validation requires successful executed tests, the selected owner
 assemblies, and no infrastructure hang guard skips. Its owned tests run as their
 own CI unit.
 
-Report compatibility is the explicit `report_cache_release_semantic_version` in the registered
-`lean-report-inputs.json`. Native Lake facets own report reuse and always require
-the default Lean/audit targets and current inspector build. Lake traces and the explicit
-cache release version decide reuse; validators check structure and artifact integrity
+The report format identifier governs strict artifact acceptance. Native Lake facets own report reuse
+and require selected Lean/audit targets and the current inspector build. Compiler traces, utility
+inputs and the report format decide reuse; validators check structure and artifact integrity
 without comparing stored source digests with current repository bytes. Reused rows retain their actual producer
 origins. Native report artifacts travel with `.lake/build` in the project snapshot;
 there is no separate report cache or preparation shortcut. Remote seed compatibility

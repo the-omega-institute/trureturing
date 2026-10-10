@@ -4,7 +4,7 @@ name: CI
 # the unit patterns written below which units the change hits; every unit is a
 # job that runs only when hit, and `required` is the one required check: it is
 # green when detection succeeded and every unit ran exactly when hit and passed.
-# A change of more than 3000 paths fails detection and must be split.
+# Detection validates and routes the complete changed-path list without a path-count cutoff.
 
 on:
   pull_request:
@@ -239,8 +239,6 @@ jobs:
             tools/scripts/agent/lane_brief.sh
             tools/scripts/agent/lane_free.sh
             tools/scripts/agent/merge-gate.sh
-            tools/scripts/agent/nyx-selftest.sh
-            tools/scripts/agent/nyx.sh
             tools/scripts/agent/oeis-prior-art.py
             tools/scripts/agent/oom-guard.sh
             tools/scripts/agent/openproblem/fetch-journal.sh
@@ -428,6 +426,13 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-cache-release]
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_*.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_*.py
+            # Release contracts execute the report receipt and input readers.
+            tools/lean-inspector/reuse.py
+            tools/lean-inspector/publication.py
+            tools/lean-inspector/materials.py
+            tools/scripts/report/lean-report-selection.py
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             Meta/ci-cache-paths.json
@@ -906,14 +911,12 @@ jobs:
             tools/scripts/agent/integration-mirror.sh
             [tests-lean]
             # NativeTestSupport stages the real compiler and package configuration;
-            # the relocation consumer copies and runs the Census package.
             Makefile
             Reg/lakefile.toml
             Reg/lake-manifest.json
             tools/lean-inspector/lakefile.lean
             tools/lean-inspector/native_image.c
             tools/lean-inspector/inspect.sh
-            tools/lean-inspector/Census/*
             Meta/FILEMAP.toml
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
@@ -1565,6 +1568,10 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-script]
+            # Release contracts execute the report receipt and input readers.
+            tools/lean-inspector/reuse.py
+            tools/lean-inspector/publication.py
+            tools/scripts/report/lean-report-selection.py
             tools/tests/StrataLint.ScriptTests/*
             tools/TestSupport/StrataLint.AdmissionTestSupport/*
             tools/TestSupport/StrataLint.LeanTestSupport/*
@@ -1875,7 +1882,12 @@ jobs:
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
-          make lean-report
+          make compiled-judge-test
+          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+      - name: Verify production source binding artifacts
+        env:
+          FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
+        run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName~FourierBridgeSourceEvidenceTests"
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
@@ -2176,7 +2188,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template']
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName!~FourierBridgeSourceEvidenceTests"
       lean: build
       cache-dependency-path: |
         tools/tests/StrataLint.DeclaredTemplate.Tests/packages.lock.json

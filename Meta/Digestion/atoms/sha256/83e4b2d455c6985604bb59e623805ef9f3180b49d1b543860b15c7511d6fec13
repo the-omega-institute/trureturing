@@ -1,0 +1,22 @@
+### theorem 2 每个局部缺陷只转移一单位祖先面积，不改变总面积
+
+Claim status: open.
+
+设某个三叶位置的两个内部叶间隙为 $i_p,i_p+1$。则：
+
+$$
+B:\quad(1,2),\qquad D:\quad(2,1).
+$$
+
+因此：
+
+$$
+\boxed{\mathcal A(V_A)=\mathcal A(T_n)+\sum_{p\in A}(e_{i_p}-e_{i_p+1}).}
+$$
+
+不同位置的两个间隙互不重叠，于是：
+
+$$
+\boxed{\|\mathcal A(V_A)-\mathcal A(V_{A'})\|_2^2=2|A\triangle A'|.}
+$$
+

@@ -10,6 +10,10 @@ Lean statement: `D5/S1/Words/RankOneMorphismIterationBound.effective_iteration_b
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/RankOneMorphismIterationBound.effective_iteration_bound` (`✓ std3`). ∎
 
+*Resolves.* `Problems/filimonova-puzynina-2026-rank-one-iteration-bound` (proved) by `D5/S1/Words/RankOneMorphismIterationBound.effective_iteration_bound`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"filimonova-puzynina-2026-rank-one-iteration-bound","declaration_gid":"D5/S1/Words/RankOneMorphismIterationBound.effective_iteration_bound","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Arina Filimonova; Svetlana Puzynina (2026). *On abelian periodicity of purely morphic words*. URL: <https://arxiv.org/abs/2605.30306v1>.

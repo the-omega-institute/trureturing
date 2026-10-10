@@ -1,0 +1,18 @@
+**Claim status: open.** 对内部、边界分块
+
+$$
+L=\begin{pmatrix}L_{BB}&L_{BI}\\L_{IB}&L_{II}\end{pmatrix},
+$$
+
+若每个内部连通分量连接边界，则
+
+$$
+\boxed{\Lambda=L_{BB}-L_{BI}L_{II}^{-1}L_{IB}}
+$$
+
+且
+
+$$
+\boxed{\min_{u_I}\mathcal E(u_B,u_I)=\tfrac12u_B^{\mathsf T}\Lambda u_B.}
+$$
+

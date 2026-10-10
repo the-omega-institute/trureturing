@@ -30,3 +30,8 @@ name = "LeanInformationAuditRegAnalysis"
 srcDir = "../lean-inspector"
 roots = ["LeanInformationAuditRegAnalysis"]
 globs = ["LeanInformationAuditRegAnalysis.+"]
+
+[[lean_exe]]
+name = "compiledJudgeTests"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegTests.CompiledDiscovery"

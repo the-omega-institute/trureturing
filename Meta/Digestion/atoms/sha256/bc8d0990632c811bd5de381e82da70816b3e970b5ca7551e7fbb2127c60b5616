@@ -1,0 +1,24 @@
+**数学引文 13.1（固定分支和整数奇偶）。** 直接沿用双曲几何与相位边界定义 1.1、推导 3.3；标量定义取既有 [DLMF 条目](../../../Library/Analytic/nist2026dlmfcomplexpowerhyperbolic.md)，经典整数 Binet 取 [Koshy 条目](../../../Library/notes/koshy2001fibonacci.md)。置
+
+```math
+\varphi=(1+\sqrt5)/2,\quad \psi=-\varphi^{-1},\quad a=\ln\varphi,
+\quad F_n=(\varphi^n-\psi^n)/\sqrt5.
+```
+
+对整数 $`k`$，有
+
+```math
+F_{2k}=\frac2{\sqrt5}\sinh(2ka),\qquad
+F_{2k+1}=\frac2{\sqrt5}\cosh((2k+1)a).
+```
+
+选择 $`i^t=e^{i\pi t/2}`$、$`\log(i\varphi)=a+i\pi/2`$，同时将 $`\psi`$ 的幂按下侧值 $`-a-i\pi`$ 定义，得到
+
+```math
+\mathcal F(t)=\frac{2e^{-i\pi t/2}}{\sqrt5}
+\sinh((a+i\pi/2)t)
+=\frac{\varphi^t-\varphi^{-t}e^{-i\pi t}}{\sqrt5},\qquad t\in\mathbb R.
+```
+
+指数和差直接证明各式，且 $`\mathcal F(n)=F_n`$ 对所有整数成立。非整数分支不可省略；[Özvatan–Pashaev v1 §5.1](../../../Library/Analytic/ozvatanpashaev2017binetcurves.md) 的 $`+\pi`$ 曲线在实参数下是此曲线的共轭，整数点相同。负向关系是 $`\mathcal F(-t)=-e^{i\pi t}\mathcal F(t)`$，不是实正负号的连续交替。
+

@@ -1,0 +1,13 @@
+## 二十七、5040 的素数轮商、相关阶数与被遗忘的指数
+
+这里的 5040 连接是一个实际群商。对任意正整数 $W$，令
+$$
+R=\operatorname{rad}(W)=\prod_{p\mid W}p,\qquad q=W/R,
+\qquad \rho:\mathbb Z/W\mathbb Z\longrightarrow\mathbb Z/R\mathbb Z.
+$$
+对有限整数偏移集 $H$，仍使用实际素数轮
+$$
+w_{H,W}(r)=\mathbf1\{\gcd(r+h,W)=1\text{ 对所有 }h\in H\}.
+$$
+整数代表的选取不影响定义。
+

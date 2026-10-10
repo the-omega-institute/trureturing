@@ -13,6 +13,14 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
             + "zero quantum mutual information.",
         H("Partial Trace and Quantum Mutual Information"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("density-positive"),
+                DeclarationHandle.Create(Module + "density_posSemidef"),
+                H("Density states are positive in matrix coordinates"),
+                StatementSource.FromAuthor(DensityPositivityFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The star algebra equivalence from CStarMatrix to Matrix preserves nonnegativity, hence positive semidefiniteness."))),
+                DescribeRole.Theorem),
             Result("left-positive", "partialTraceLeft_posSemidef",
                 "Tracing out the left factor preserves positivity",
                 "For arbitrary finite carriers A and B, the reduced matrix is a finite sum "
@@ -74,6 +82,21 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                 LibraryNoteRef.Create("D5/L/Quantum/blore2026partialtrace")),
             Blocks(Paragraph(Text(text))),
             DescribeRole.Theorem);
+
+    private static Formula DensityPositivityFormula()
+    {
+        Formula n = F.Id("n"), rho = F.Id("rho");
+        Formula body = new Formula.Apply(
+            Seq(Operatorname, Grp(F.Id("Matrix"), Dot, F.Id("PosSemidef"))),
+            [new Formula.Apply(Seq(Operatorname, Grp(F.Id("CStarMatrix"), Dot,
+                F.Id("ofMatrix"), Dot, F.Id("symm"))), [Call("val", rho)])]);
+        body = new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("rho"), Call("DensityState", n), body);
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("n"), Seq(Operatorname, Grp(F.Id("Type"))),
+            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, body)));
+    }
 
     private static Formula PositivityFormula(string partialTrace) => Disp(Seq(
         Forall, Sp, F.Id("M"), Comma, Sp,

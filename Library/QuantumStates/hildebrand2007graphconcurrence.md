@@ -7,7 +7,7 @@ doi: null
 url: https://arxiv.org/abs/cs/0607036v3
 claim: "Section 3 bounds graph-state concurrence by the fraction of unmatched edges and lists its four-vertex values."
 strata_touched:
-  - D5/S3/Quantum/Entanglement/GraphDensity
+  - D5/S3/Quantum/Entanglement/GraphDensity/BraunsteinGhoshSeveriniStarRefutation
 license: citation-only
 triage: anchor
 ---

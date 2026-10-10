@@ -1,0 +1,38 @@
+### 条件推论 21.7：解析比例与三点最优的指定家族
+
+在 (21.10) 的实际解析输入下，对每个固定整数 $m\ge3$，每个子列极限 $r=\lim n/N$ 满足
+$$
+\boxed{r\ge C_0+P_m(r),\qquad
+P_m(r)=\frac{(m-2)r^5}{2(2\pi^2(m-1)^2-r^2)^2}.}
+\tag{21.12}
+$$
+
+**证明。** 丢弃非负谱项先得 $\liminf n/N\ge C_0>0$，故固定 $m$ 下最终 $n\ge m$。对 $K_0$ 使用定理 21.5，取
+$$
+s_0=\max\left\{m-1,\frac{(m-1)B_T}{n-m+1}\right\}.
+$$
+沿任何 $n/N\to r\in(0,1]$ 的子列，有 $s_0\to(m-1)/r$。
+
+记 $d_\varepsilon=\|f_\varepsilon-f_0\|_1$。由于 $|K_\varepsilon-K_0|\le d_\varepsilon$，且两个核在实轴的模长不超过一，每个固定 $m$ 阶块的能量差绝对值至多 $2m(m-1)d_\varepsilon$。函数 $E\mapsto\min(E,1)$ 的 Lipschitz 常数一，所以每个块的 (21.8) 至多损失此量。凸迹压缩的系数为 $1/m$，且 $n\le N$，因而固定 $\varepsilon$，沿所选子列 $\mathcal T$，
+$$
+\liminf_{\substack{T\to\infty\\T\in\mathcal T}}
+\frac{\operatorname{tr}\Psi(G_\varepsilon)}N
+\ge P_m(r)-2(m-1)d_\varepsilon.
+$$
+代回 (21.10) 得 $r\ge2-C_\varepsilon+P_m(r)-2(m-1)d_\varepsilon$，再令 $\varepsilon\to0$ 得 (21.12)。证毕。
+
+对每个 $0<r\le1$，$P_m(r)$ 随整数 $m\ge3$ 严格递减。令 $t=m-1\ge2$，只需比较
+$$
+\frac{t-1}{(ct^2-r^2)^2}.
+$$
+其导数的符号由
+$$
+(ct^2-r^2)-4ct(t-1)=ct(4-3t)-r^2<0
+$$
+决定。因此，(21.2) 的统一总能量、(21.8) 的支撑直线及连续窗口组合所构成的这个指定家族中，三点给出最强下界：
+$$
+\boxed{r\ge C_0+\frac{r^5}{2(8\pi^2-r^2)^2}.}
+\tag{21.13}
+$$
+这个比较不涵盖利用更多局部信息的加权多点证书。
+

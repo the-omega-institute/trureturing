@@ -1,0 +1,27 @@
+#### 31.3 节内标题：3. 观察者历史充分性
+
+即使静态 law 和动态 future law 都恢复，仍可能无法恢复：
+
+- Read 的实际 chronology；
+- selected-count bank；
+- hidden sample identity $K$；
+- pending0、pending1、delivered 的边界义务；
+- 已被接口声明为必须保持的过去记录。
+
+因此必须区分：
+
+$$
+\text{未来律恢复}
+\neq
+\text{完整历史恢复}.
+$$
+
+当前文档 §§36–37 已明确给出边界反例：
+
+- 相同 live counts、phase 和 future law，可以有不同 chronology；
+- 相同 future law，可以有不同 selected-count bank；
+- 非单例正支持下，单次抽取的隐藏深度 $K$ 不能被零误差识别；
+- pending0、pending1、delivered 都可能有剩余 Read 数 $0$，但未来义务分别是 Stop0、Stop1 和空转录。
+
+---
+

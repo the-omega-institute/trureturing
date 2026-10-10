@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.Attractors.FiniteWordAttractors
 import Reg.Support.DependentFamily
 
@@ -79,14 +80,28 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
     intro i
     exact ⟨ULift.{u} Nat, [], [⟨0⟩], by simp [actual, realize, gamma_nil, gamma_singleton]⟩
 
-register_information_theorem attractor_minimum in arena
-  readout via (realize signature (fun _ _ w => gamma w) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Words.Attractors.FiniteWordAttractors
-    coordinates := #[0]
-    readouts := #[{path := #["body","body","body","fn","arg","arg","body","arg","arg"], stateOperand := some #["arg"]}] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Attractors.attractor_minimum.{u_1}) (type_of% (realize.{u_1 + 1, u_1, 0, 0, 0} signature.{u_1} (fun _ _ w => gamma.{u_1} w) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Attractors") "attractor_minimum") "Reg.D5.S1.Words.Attractors.FiniteWordAttractors/Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Minimum.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_1 + 1, u_1, 0, 0, 0} signature.{u_1} (fun _ _ w => gamma.{u_1} w) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Attractors.FiniteWordAttractors, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg", "body", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 
 end Minimum
@@ -143,14 +158,28 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
     intro i
     exact ⟨1, ∅, {1}, by cases i; decide⟩
 
-register_information_theorem attractor_window_transfer in arena
-  readout via (realize signature (fun _ p S => insert (p-1) S) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Words.Attractors.FiniteWordAttractors
-    coordinates := #[4]
-    readouts := #[{path := #["body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","body","fn","arg","arg"], stateOperand := some #["arg"]}] })
-  escape continues (open)
+noncomputable def registration_2.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Attractors.attractor_window_transfer.{u_1}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p S => insert.{0, 0} (p-1) S) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Attractors") "attractor_window_transfer") "Reg.D5.S1.Words.Attractors.FiniteWordAttractors/Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Window.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p S => insert.{0, 0} (p-1) S) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Attractors.FiniteWordAttractors, definition := none, coordinates := #[4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 
 end Window
@@ -200,14 +229,28 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
     intro i
     exact ⟨1, ∅, {1}, by cases i; decide⟩
 
-register_information_theorem periodic_attractor_extension in arena
-  readout via (realize signature (fun _ N S => insert (N-1) S) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Words.Attractors.FiniteWordAttractors
-    coordinates := #[2]
-    readouts := #[{path := #["body","body","body","body","body","body","body","body","arg"], stateBinder := 3}] })
-  escape continues (open)
+noncomputable def registration_3.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Attractors.periodic_attractor_extension.{u_1}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ N S => insert.{0, 0} (N-1) S) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Attractors") "periodic_attractor_extension") "Reg.D5.S1.Words.Attractors.FiniteWordAttractors/Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Attractors.FiniteWordAttractors.HelperAudits.Extension.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ N S => insert.{0, 0} (N-1) S) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Attractors.FiniteWordAttractors, definition := none, coordinates := #[2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 
 end Extension
