@@ -60,7 +60,7 @@ def family : Registration arena.{u} (type_of% @designSum_sum.{u}) where
   dependence := dependence
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@designSum_sum.{u}) (Realization signature) (type_of% @designSum) Unit := {
+    (@designSum_sum.{u}) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Additivity.unit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Additivity.family
   realizationSource := none
@@ -76,7 +76,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .evidence ⟨True.intro⟩ True.intro
   sensitivity := .evidence ⟨True.intro⟩ True.intro
   partialSensitivity := none
-  escapeFrom := some (@designSum)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
     definition := none
@@ -125,7 +125,7 @@ def family : Registration arena (type_of% @re_designSum_mono) where
   dependence := dependence
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@re_designSum_mono) (Realization signature) (type_of% @designSum) Unit := {
+    (@re_designSum_mono) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Monotonicity.unit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.Monotonicity.family
   realizationSource := none
@@ -141,7 +141,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .evidence ⟨True.intro⟩ True.intro
   sensitivity := .evidence ⟨True.intro⟩ True.intro
   partialSensitivity := none
-  escapeFrom := some (@designSum)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
     definition := none
@@ -190,7 +190,7 @@ def family : Registration arena (type_of% @quadratic_product_sum) where
   dependence := dependence
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@quadratic_product_sum) (Realization signature) (type_of% @designSum) Unit := {
+    (@quadratic_product_sum) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.QuadraticProduct.unit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.QuadraticProduct.family
   realizationSource := none
@@ -206,7 +206,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .evidence ⟨True.intro⟩ True.intro
   sensitivity := .evidence ⟨True.intro⟩ True.intro
   partialSensitivity := none
-  escapeFrom := some (@designSum)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
     definition := none
