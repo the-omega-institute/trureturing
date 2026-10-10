@@ -100,28 +100,8 @@ private lemma total_risk {m : ℕ} (w : ℕ → ℝ) (f : Input (m+3) → Fin 3)
   unfold risk
   rw [Finset.sum_comm]
   simp_rw [←Finset.mul_sum, point_loss]
-private lemma lower_bound {m : ℕ} (w : ℕ → ℝ) (hw : ∀ z, 0 ≤ w z)
-    (f : Input (m+3) → Fin 3) :
-    (∑ x : Input (m+3), w (rareN x)*(2*m-(actualVotes x (exteriorSelector x):ℝ))) ≤
-      ∑ t, risk w f t := by
-  have hl (x : Input (m+3)) : (2*m:ℝ)-(actualVotes x (exteriorSelector x):ℝ) ≤
-      ∑ t : Bool × Fin m, (MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ) := by
-    rw [point_loss]
-    have h := exterior_majority x (f x)
-    have hr : (actualVotes x (f x):ℝ) ≤ actualVotes x (exteriorSelector x) := by exact_mod_cast h
-    linarith
-  calc
-    _ ≤ ∑ x : Input (m+3), w (rareN x) *
-        (∑ t : Bool × Fin m, (MajorityGeometry.err (label t.1 t.2 x) (f x) : ℝ)) :=
-      Finset.sum_le_sum (fun x _ => mul_le_mul_of_nonneg_left (hl x) (hw _))
-    _ = ∑ t, risk w f t := by
-      simp_rw [Finset.mul_sum]
-      rw [Finset.sum_comm]
-      rfl
-
-private theorem sharp_class_weighted (m : ℕ) (hm : 0 < m) (w : ℕ → ℝ) (hw : ∀ z, 0 ≤ w z) :
-    (∃ f : Input (m+3) → Fin 3, ∀ t, risk w f t=barrier m w) ∧
-    (∀ ε : ℝ, (∃ f : Input (m+3) → Fin 3, ∀ t, risk w f t ≤ ε) ↔ barrier m w ≤ ε) := by
+private theorem sharp_class_weighted (m : ℕ) (hm : 0 < m) (w : ℕ → ℝ) :
+    ∃ f : Input (m+3) → Fin 3, ∀ t, risk w f t=barrier m w := by
   obtain ⟨f,hmax,hbal⟩ := uniform_mass_balanced m hm
   let t₀ : Bool × Fin m := (false,⟨0,hm⟩)
   have heq (t : Bool × Fin m) := balanced_risks w f hbal t t₀
@@ -137,22 +117,7 @@ private theorem sharp_class_weighted (m : ℕ) (hm : 0 < m) (w : ℕ → ℝ) (h
     rw [heq]
     unfold barrier
     exact (eq_div_iff (ne_of_gt hpos)).mpr (by simpa [mul_comm] using hs)
-  refine ⟨⟨f,hatt⟩,?_⟩
-  intro ε
-  constructor
-  · rintro ⟨g,hg⟩
-    have hb := lower_bound w hw g
-    have hu : (∑ t, risk w g t) ≤ (2*m:ℝ)*ε := by
-      calc
-        _ ≤ ∑ _t : Bool × Fin m, ε := Finset.sum_le_sum (fun t _ => hg t)
-        _ = _ := by simp [Fintype.card_prod] <;> ring
-    have hid : (2*m:ℝ)*barrier m w=
-        ∑ x : Input (m+3), w (rareN x)*(2*m-(actualVotes x (exteriorSelector x):ℝ)) := by
-      unfold barrier
-      field_simp
-    nlinarith
-  · intro h
-    exact ⟨f,fun t => (hatt t).le.trans h⟩
+  exact ⟨f,hatt⟩
 end
 end SharpRisk
 end
@@ -191,19 +156,10 @@ private lemma product_risk_eq_class_risk {m : ℕ} (s : ℝ) (f : Input (m+3) �
     productRisk s f t=risk (classWeight m s) f t := by
   unfold productRisk risk classWeight
   simp_rw [product_mass]
-private lemma class_weight_nonneg (m : ℕ) (s : ℝ) (hs : 0 ≤ s) (hu : s ≤ 1/3) (z : ℕ) :
-    0 ≤ classWeight m s z := by
-  unfold classWeight
-  have ha : 0 ≤ (1-3*s)/2 := by linarith
-  positivity
-
-private theorem sharp_product (m : ℕ) (hm : 0 < m) (s : ℝ) (hs : 0 < s) (hu : s ≤ 1/5) :
-    (∃ f : Input (m+3) → Fin 3, ∀ t, productRisk s f t=barrier m (classWeight m s)) ∧
-    (∀ ε : ℝ, (∃ f : Input (m+3) → Fin 3, ∀ t, productRisk s f t ≤ ε) ↔
-      barrier m (classWeight m s) ≤ ε) := by
+private theorem sharp_product (m : ℕ) (hm : 0 < m) (s : ℝ) (_hs : 0 < s) (_hu : s ≤ 1/5) :
+    ∃ f : Input (m+3) → Fin 3, ∀ t, productRisk s f t=barrier m (classWeight m s) := by
   simp_rw [product_risk_eq_class_risk]
   exact sharp_class_weighted m hm (classWeight m s)
-    (class_weight_nonneg m s hs.le (by linarith))
 end
 end SharpRisk
 end
@@ -537,8 +493,7 @@ private lemma barrier_eq_t (m : ℕ) (hm : 0 < m) (s : ℝ) :
   field_simp [hm0] <;> ring
 
 private theorem sharp_risk_reduced (m : ℕ) (hm : 0 < m) (s : ℝ) (hs : 0 < s) (hu : s ≤ 1/5) :
-    (∃ f : Input (m+3) → Fin 3, ∀ t, productRisk s f t=T m s) ∧
-    (∀ ε : ℝ, (∃ f : Input (m+3) → Fin 3, ∀ t, productRisk s f t ≤ ε) ↔ T m s ≤ ε) := by
+    ∃ f : Input (m+3) → Fin 3, ∀ t, productRisk s f t=T m s := by
   simpa only [barrier_eq_t m hm s] using sharp_product m hm s hs hu
 end
 end SharpRisk
@@ -554,7 +509,7 @@ noncomputable section
 open CommonSelector ExteriorCounts
 attribute [local instance] Classical.propDecidable
 variable {m : ℕ} {J : Type*} [Fintype J] [DecidableEq J]
-local notation "Unused" e => ({j : J // j ∉ Set.range e})
+local notation "Unused" e:arg => ({j : J // j ∉ Set.range e})
 private def indexEquiv (e : Fin (m+3) ↪ J) : Fin (m+3) ⊕ Unused e ≃ J :=
   (Equiv.sumCongr (Equiv.ofInjective e e.injective) (Equiv.refl _)).trans
     (Equiv.sumCompl (fun j => j ∈ Set.range e))
@@ -655,7 +610,7 @@ private lemma full_lower (e : Fin (m+3) ↪ J) (s : ℝ) (hs : 0 ≤ s) (hu : s 
 private theorem sharp_with_unused (e : Fin (m+3) ↪ J) (hm : 0 < m) (s : ℝ) (hs : 0 < s) (hu : s ≤ 1/5) :
     (∃ f : (J → Window) → Fin 3, ∀ t, fullRisk e s f t=T m s) ∧
     (∀ ε : ℝ, (∃ f : (J → Window) → Fin 3, ∀ t, fullRisk e s f t ≤ ε) ↔ T m s ≤ ε) := by
-  obtain ⟨⟨f,hf⟩,_⟩ := sharp_risk_reduced m hm s hs hu
+  obtain ⟨f,hf⟩ := sharp_risk_reduced m hm s hs hu
   have hpos : (0:ℝ)<2*m := by exact_mod_cast (show 0<2*m by omega)
   have hT : numerator m s=(2*m:ℝ)*T m s := by
     have h := barrier_eq_t m hm s
