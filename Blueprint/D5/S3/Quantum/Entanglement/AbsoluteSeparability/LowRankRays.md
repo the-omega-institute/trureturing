@@ -30,3 +30,4 @@ Every averaged vector is a product vector. The proof uses finite moments and com
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.separableCone_one_add_two_rankOne`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRaysAverages](LowRankRaysAverages.md)
+- Dependency: [D5/S3/Resource/SeparableConeResidualWitness](../../../Resource/SeparableConeResidualWitness.md)
