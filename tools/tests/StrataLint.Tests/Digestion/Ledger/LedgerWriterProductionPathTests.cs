@@ -39,6 +39,40 @@ public sealed partial class LedgerWriterProductionPathTests
         AssertCanonicalGidBytes(ReadAtomBytes(repository, inputs.AtomId));
     }
 
+    [Theory]
+    [InlineData("missing-freeze")]
+    [InlineData("state-mismatch")]
+    [InlineData("missing-declaration")]
+    public void ScopedCoverRejectsUnverifiableExistingCoverageWithoutWriting(string defect)
+    {
+        var spec = MaterializeSpec() with
+        {
+            InitialCoverage = [ZetaGid], Migration = "absorbed", Truth = "closed",
+            BaselineTargetIdentical = true,
+        };
+        var world = spec.Materialize();
+        var frozen = world.Files.Keys.Single(path => path.StartsWith("Golden/Frozen/accepted/", StringComparison.Ordinal)
+            && world.Files[path].Contains("D5/S0/Carrier/Zeta.lean", StringComparison.Ordinal));
+        if (defect == "missing-freeze") world.Files.Remove(frozen);
+        else if (defect == "state-mismatch")
+            world.Files["Golden/Frozen/state/D5/S0/Carrier/Zeta.lean.json"] =
+                "{\"statement_id\":\"sha256:" + new string('d', 64) + "\"}\n";
+        else
+        {
+            var value = System.Text.Json.Nodes.JsonNode.Parse(world.Files[frozen])!;
+            value["payload"]!["declaration_statement_ids"] = new System.Text.Json.Nodes.JsonArray();
+            world.Files[frozen] = value.ToJsonString();
+        }
+        using var repository = new TemporaryDirectory();
+        var environment = Environment(repository, world, world.Document, world.Document);
+        var before = ReadAtomBytes(repository, spec.AtomId);
+
+        var result = environment.CoverAtom(["--cover-atom", spec.AtomId, "--gid", AlphaGid]);
+
+        Assert.False(result.Success);
+        Assert.Equal(before, ReadAtomBytes(repository, spec.AtomId));
+    }
+
     [Fact]
     public async Task DepositDelegatedMultiGidCover_WritesLedgerBytesInOrdinalOrder()
     {

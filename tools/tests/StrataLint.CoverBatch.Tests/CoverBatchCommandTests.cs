@@ -512,16 +512,49 @@ public sealed partial class CoverBatchCommandTests
                 reports.TryAdd(path.Value, new LeanFileReport([], []));
             var reportPath = RawLeanReportArtifact.DefaultPath(Root);
             RawLeanReportArtifact.WriteFile(reportPath, snapshot, LeanAxiomReport.Create(reports));
-            ProducerInputFixture.AttestBatchReport(Root, reportPath);
-            return reportPath;
+            var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown("D5/S0/Carrier/Probe.lean")]);
+            var selected = RepositorySnapshot.Create(snapshot.Files.Where(item => scope.Paths.Contains(item.Key))
+                .ToImmutableDictionary());
+            var selectedReports = LeanAxiomReport.Create(reports.Where(item => scope.Paths.Contains(RepoPath.CreateKnown(item.Key)))
+                .ToDictionary(static item => item.Key, item => item.Value with
+                {
+                    Imports = LeanSourceCatalog.ParseFileImports(snapshot.Files[RepoPath.CreateKnown(item.Key)], includeImplicitInit: true),
+                }));
+            var scopedPath = Path.Combine(Root, ".lake/build/stratalint/scoped-lean-report.json");
+            RawLeanReportArtifact.WriteFile(scopedPath, selected, selectedReports);
+            File.WriteAllText(scopedPath, File.ReadAllText(scopedPath).Replace(RawLeanReportArtifact.Schema,
+                RawLeanReportArtifact.ScopedSchema, StringComparison.Ordinal));
+            var rows = scope.Paths.OrderBy(static path => path.Value, StringComparer.Ordinal).Select(path => new
+            {
+                module = path.Value[..^5].Replace('/', '.'), source_path = path.Value,
+                imports = selectedReports.Files[path].Imports,
+            }).OrderBy(static row => row.module, StringComparer.Ordinal).ToArray();
+            ProducerInputFixture.AttestBatchReport(Root, scopedPath, JsonSerializer.Serialize(new
+            {
+                roots = scope.Targets.Select(static path => path.Value[..^5].Replace('/', '.')).ToArray(),
+                modules = rows, dependencies = rows,
+            }));
+            return scopedPath;
         }
 
         internal CommandResult RunProducers(string input)
         {
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             TemporaryFileSystem.File.WriteAllText(path, input);
-            return CoverBatchCommand.Run(Root, Repository, new PrecomputedLeanReportSource(Root),
-                CoverWorld.FixtureUtc, ["--atoms", path]);
+            var previousReport = Environment.GetEnvironmentVariable("STRATALINT_LEAN_REPORT");
+            var previousDonor = Environment.GetEnvironmentVariable("STRATALINT_LEAN_CACHE_DONOR_REPOSITORY");
+            try
+            {
+                Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", Path.Combine(Root, ".lake/build/stratalint/scoped-lean-report.json"));
+                Environment.SetEnvironmentVariable("STRATALINT_LEAN_CACHE_DONOR_REPOSITORY", TestRepositoryLayout.FindRoot());
+                return CoverBatchCommand.Run(Root, Repository, new PrecomputedLeanReportSource(Root),
+                    CoverWorld.FixtureUtc, ["--atoms", path]);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", previousReport);
+                Environment.SetEnvironmentVariable("STRATALINT_LEAN_CACHE_DONOR_REPOSITORY", previousDonor);
+            }
         }
 
         private RawRepositorySnapshot ReadFiles() => RawRepositorySnapshot.Create(

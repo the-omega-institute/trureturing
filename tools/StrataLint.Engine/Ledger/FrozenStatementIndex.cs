@@ -15,19 +15,22 @@ internal sealed class FrozenStatementIndex
 
     private readonly FrozenStateCatalog state;
     private readonly LeanAxiomReport report;
+    private readonly FrozenLedgerBaseView? recorded;
 
-    private FrozenStatementIndex(FrozenStateCatalog state, LeanAxiomReport report)
+    private FrozenStatementIndex(FrozenStateCatalog state, LeanAxiomReport report, FrozenLedgerBaseView? recorded)
     {
         this.state = state;
         this.report = report;
+        this.recorded = recorded;
     }
 
-    internal static FrozenStatementIndex Create(FrozenStateCatalog state, LeanAxiomReport report)
+    internal static FrozenStatementIndex Create(FrozenStateCatalog state, LeanAxiomReport report,
+        FrozenLedgerBaseView? recorded = null)
     {
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(report);
         Creating.Value?.Invoke();
-        return new FrozenStatementIndex(state, report);
+        return new FrozenStatementIndex(state, report, recorded);
     }
 
     internal bool ContainsModule(RepoPath path) => state.Records.ContainsKey(path);
@@ -63,17 +66,25 @@ internal sealed class FrozenStatementIndex
             return true;
         }
 
-        if (!report.Files.TryGetValue(formal.Path, out var module)
-            || !string.IsNullOrEmpty(module.Error))
+        ImmutableArray<FrozenDeclarationStatement> declarations;
+        if (report.Files.TryGetValue(formal.Path, out var module) && string.IsNullOrEmpty(module.Error))
+        {
+            declarations = CanonicalStatementWriter.DeclarationStatementIds(formal.Path, module);
+        }
+        else if (report.IsScoped && recorded is not null
+            && recorded.ActiveByPath.TryGetValue(formal.Path, out var active)
+            && active.Material.StatementId == frozen.StatementId)
+        {
+            declarations = active.Material.DeclarationStatementIds;
+        }
+        else
         {
             message = $"coverage GID resolves to 0 current report declarations: {gid.Value}";
             return false;
         }
 
         var matches = ImmutableArray.CreateBuilder<StatementId>();
-        foreach (var declaration in CanonicalStatementWriter.DeclarationStatementIds(
-                     formal.Path,
-                     module))
+        foreach (var declaration in declarations)
         {
             string decoded;
             int consumedCharacters;

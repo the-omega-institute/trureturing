@@ -55,7 +55,8 @@ internal static partial class CoverAtomCommand
                 throw new InvalidOperationException(
                     $"cover target module {target} is not frozen; run make deposit before cover");
             }
-            FrozenStatements = FrozenStatementIndex.Create(FrozenState, Report);
+            FrozenStatements = FrozenStatementIndex.Create(FrozenState, Report,
+                FrozenLedgerBaseViewReader.Read(Current));
             TruthStates = LeanTruthStates.Resolve(Current, Lean);
             Changes = RawChangeSet.Create([]);
         }
@@ -101,6 +102,7 @@ internal static partial class CoverAtomCommand
             var paths = new[]
                 {
                     TheoryAtomizerDataLoader.DataPath, "D5", "Reg", "Trureturing.lean", "Golden/Frozen/state",
+                    FrozenLedgerChangeClassifier.AcceptedRoot,
                 }
                 .Concat(declared.Select(DigestionQuerySelection.Literal))
                 .Concat(casPaths.Select(DigestionQuerySelection.Literal))

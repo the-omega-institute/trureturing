@@ -109,6 +109,12 @@ internal sealed partial class TransactionFixture : IDisposable
 
     internal void FailFrozenQuery() => WriteFile(".ledger-frozen-status", "2\n");
 
+    internal void FailFrozenLauncher()
+    {
+        WriteFile(".ledger-frozen-status", "1\n");
+        WriteFile(".ledger-frozen-diagnostic", "MSBUILD: synthetic launcher failure\n");
+    }
+
     internal void WriteRevokedSnapshot()
     {
         WriteLedger(Array.Empty<string>());
@@ -359,6 +365,7 @@ internal sealed partial class TransactionFixture
             fi
             status=1
             [[ ! -f .ledger-frozen-status ]] || status=$(<.ledger-frozen-status)
+            [[ ! -f .ledger-frozen-diagnostic ]] || cat .ledger-frozen-diagnostic >&2
             [[ $status != 2 ]] || echo 'LEDGER_FROZEN_INVALID synthetic failure' >&2
             exit "$status"
             ;;

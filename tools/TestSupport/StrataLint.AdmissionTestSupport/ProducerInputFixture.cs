@@ -10,7 +10,6 @@ namespace StrataLint.TestSupport;
 
 internal static class ProducerInputFixture
 {
-    private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
     private const string ProjectRegistrationPath = "Meta/engineering-projects.json";
     private const string InputManifestPath = "lean-report-inputs.json";
     private const string ScribeRegistrationPath = "Meta/ReportProducers/scribe-content.json";
@@ -95,19 +94,18 @@ internal static class ProducerInputFixture
         return files.Keys.ToArray();
     }
 
-    internal static void AttestBatchReport(string root, string report)
+    internal static void AttestBatchReport(string root, string report, string scope)
     {
-        var result = TestProcessRunner.Run("/bin/bash",
-            [Path.Combine(root, InputHelperPath), "address", "--repository", root], root,
-            TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
-        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-        var fields = Encoding.UTF8.GetString(result.StandardOutput).Trim().Split(' ');
-        var hash = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report)));
-        TemporaryFileSystem.File.WriteAllText(report + ".sha256", $"{hash}  {Path.GetFileName(report)}\n");
         WriteFixtureOrigins(root, report);
-        TemporaryFileSystem.File.WriteAllText(report + ".input.attestation",
-            "schema=stratalint-lean-report-input-attestation-v1\n"
-            + $"repository_input_sha256={fields[0]}\nproducer_sha256={fields[1]}\nreport_sha256={hash}\n");
+        var result = TestProcessRunner.Run("python3", ["-c", """
+            import json, pathlib, sys
+            root, report, scope = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2]), json.loads(sys.argv[3])
+            sys.path.insert(0, str(root / 'tools/lean-inspector'))
+            import scoped
+            origins = json.loads(pathlib.Path(str(report) + '.provenance.json').read_bytes())['module_origins']
+            scoped.write_sidecars(report, scoped.capture(root, scope), origins)
+            """, root, report, scope], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
     }
 
     private static void WriteFixtureOrigins(string root, string report)

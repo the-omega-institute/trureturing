@@ -252,6 +252,21 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
+    [Fact]
+    public void DepositRejectsFrozenQueryLauncherFailureBeforeWriting()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.FailFrozenLauncher();
+
+        var result = fixture.Run("deposit-uncovered", atomId: null);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("synthetic launcher failure", Encoding.UTF8.GetString(result.StandardError));
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
+        Assert.Equal(0, fixture.FreezeCount());
+    }
+
     [Theory]
     [InlineData("deposit")]
     [InlineData("deposit-uncovered")]

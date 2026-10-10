@@ -193,7 +193,15 @@ require_new_module_blueprint_mirror() {
 
 
 freeze_exists() {
-  run_cli ledger-frozen --target "$MODULE_PATH"
+  local output status=0
+  output="$(run_cli ledger-frozen --target "$MODULE_PATH" 2>&1)" || status=$?
+  [[ -z "$output" ]] || printf '%s\n' "$output" >&2
+  # The query's absent-member result is silent. Launcher/build failures must
+  # not be interpreted as permission to write a new freeze.
+  if [[ "$status" -eq 1 && -n "$output" ]]; then
+    return 2
+  fi
+  return "$status"
 }
 
 freeze_module_if_needed() {
