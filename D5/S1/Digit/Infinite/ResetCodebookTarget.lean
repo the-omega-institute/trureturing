@@ -113,7 +113,7 @@ private lemma transfer_radius_continuous_pos (next : ι → Bool → ι) (allow 
   have hhi' : Tendsto (fun y : ℝ => max ((y/x)^6) ((y/x)^20) * radius (transfer next allow x))
       (𝓝 x) (𝓝 (radius (transfer next allow x))) := by
     simpa [ContinuousAt, hx0.ne'] using hhi
-  apply tendsto_of_tendsto_of_tendsto_of_le_of_le' hlo' hhi' 
+  apply tendsto_of_tendsto_of_tendsto_of_le_of_le' hlo' hhi'
   · filter_upwards [eventually_gt_nhds hx0] with y hy
     exact (transfer_radius_sandwich next allow x y hx0 hy).1
   · filter_upwards [eventually_gt_nhds hx0] with y hy
@@ -378,7 +378,7 @@ variable (next : ι → Bool → ι) (allow : ι → Bool → Prop)
 private theorem factor_mass_le_paths
     (lang : Set (ℤ → Bool)) (z : ℝ) (hz : 0 ≤ z) (N : ℕ)
     (ext : ∀ w : Factors lang N, ∃ v : ι, accepts next allow v w.val) :
-    (Statement.factorCount lang N:ℝ)*z^N  ≤ 
+    (Statement.factorCount lang N:ℝ)*z^N  ≤
       ∑ k ∈ Finset.range (N+1), ∑ v, ∑ u, (transfer next allow z ^ k) v u := by
   letI : Finite (Factors lang N) := by
     apply Set.Finite.to_subtype
@@ -397,7 +397,7 @@ private theorem factor_mass_le_paths
     refine ⟨w.val.length,?_,?_⟩
     · exact Finset.mem_range.mpr (Nat.lt_succ_of_le (by simpa only [w.property.1] using D5.S1.Digit.Infinite.ResetCodebook.Coding.letter_length_le_weight w.val))
     · exact Finset.mem_product.mpr ⟨(mem_wordSet w.val _).mpr rfl,Finset.mem_univ _⟩
-  have hsum : ∑ w : Factors lang N, mass next allow z (enc w).2 (enc w).1  ≤ 
+  have hsum : ∑ w : Factors lang N, mass next allow z (enc w).2 (enc w).1  ≤
       ∑ p ∈ total, mass next allow z p.2 p.1 := by
     calc
       _ = ∑ p ∈ Finset.univ.image enc, mass next allow z p.2 p.1 :=

@@ -627,7 +627,7 @@ private theorem periodic_reset_word_membership
     exact le_add_of_nonneg_right (mul_nonneg hp.1.le hn)
   have hcm : Statement.cap K (periodicWord u) ∧
       ∀ i, Statement.high K (periodicWord u) i →
-        chi^(K-1)*d+chi^(K-1)*(Statement.B M-initial false anchor)*g^N  ≤ 
+        chi^(K-1)*d+chi^(K-1)*(Statement.B M-initial false anchor)*g^N  ≤
           stateRec (periodicWord u) i := by
     have hg (i : ℤ) := periodicWord_cover u hlen i
     have hlocal (t : ℤ) := weak_word_local_guard (periodicWord u) (t*(u.length:ℤ)) K
