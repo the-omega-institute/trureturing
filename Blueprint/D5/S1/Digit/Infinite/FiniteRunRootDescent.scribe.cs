@@ -22,7 +22,7 @@ internal sealed class FiniteRunRootDescentDocument : IScribeDocumentDefinition
                     + "The roots form a strictly decreasing sequence converging to z. Applying the "
                     + "continuous logarithmic rate map gamma(x) = -log(x)/log(2) makes the rates strictly increasing "
                     + "and convergent to the rate of z."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finiterunrootdescent-root-rate-property"),
                 DeclarationHandle.Create("D5/S1/Digit/Infinite/FiniteRunRootDescent.root_rate_property"),
@@ -33,6 +33,6 @@ internal sealed class FiniteRunRootDescentDocument : IScribeDocumentDefinition
                     "The root-rate property records the interval membership, root equations, uniqueness "
                     + "of the complete and truncated roots, strict ordering, convergence of the roots, "
                     + "and the corresponding monotonicity and convergence of their logarithmic rates."))),
-                DescribeRole.Definition))
-        ));
+                DescribeRole.Definition)
+        )));
 }
