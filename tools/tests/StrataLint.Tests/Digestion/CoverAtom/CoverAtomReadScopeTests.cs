@@ -103,6 +103,7 @@ public sealed partial class CoverAtomTests
                 "Reg",
                 "Trureturing.lean",
                 "Golden/Frozen/state",
+                FrozenLedgerChangeClassifier.AcceptedRoot,
                 DigestionQuerySelection.Literal(source.SourcePath),
             ],
             repository.ScopedCurrentReads[1]);
