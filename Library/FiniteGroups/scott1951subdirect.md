@@ -1,17 +1,17 @@
 ---
-bibkey: scott1951subdirect
-authors: L. Scott
-year: 1951
-title: Subdirect products of groups
-doi: 10.1090/S0002-9904-1951-09722-8
-url: https://doi.org/10.1090/S0002-9904-1951-09722-8
-claim: Normal subdirect products of nonabelian finite simple factors exhibit the rigidity used here; the common commutator-lift formulation is the formal source's explicit proof.
+bibkey: neunen2016subdirect
+authors: Daniel Neuen and Pascal Schweitzer
+year: 2016
+title: Subgroups of 3-factor direct products
+doi: null
+url: https://arxiv.org/abs/1607.03444v1
+claim: The paper extends Goursat's lemma and studies finite-factor subdirect products; it provides the surrounding classical literature context for the normal-subdirect rigidity formalized here.
 strata_touched:
   - D5/S3/FiniteGroups/SurfaceObservers/NormalSubdirectInnerAction
-license: bibliographic citation
+license: arXiv perpetual non-exclusive license
 triage: anchor
 ---
 
 ## Verified locator
 
-- DOI: https://doi.org/10.1090/S0002-9904-1951-09722-8
+- URL: https://arxiv.org/abs/1607.03444v1
