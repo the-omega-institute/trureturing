@@ -494,6 +494,10 @@ theorem weak_gain (K : ℕ) (d delta x y : ℝ) (as : List Return)
         simp only [Statement.weight,actualWeight,List.map_cons,List.sum_cons,pow_add]
         ring
       exact he ▸ ht
+theorem A_nonneg : 0 ≤ A false := by
+  have hp := parameters false
+  unfold A
+  exact mul_nonneg (by linarith [hp.2.1]) hp.2.2.2.2.1.le
 theorem weak_append (K : ℕ) (q : ℝ) (as bs : List Return) (z : ℝ)
     (ha : Statement.weak K q as z)
     (hb : Statement.weak K q bs (execute false as z)) :
@@ -512,10 +516,7 @@ theorem finite_reset_weak_state
     (z : ℝ) (hz : A false ≤ z) (hh : z ≤ h false) :
     Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
       ((vs.map (fun v => Statement.reset M hM::v)).flatten) z := by
-  have hp := parameters false
-  have hA : 0 ≤ A false := by
-    unfold A
-    exact mul_nonneg (by linarith [hp.2.1]) hp.2.2.2.2.1.le
+  have hA := A_nonneg
   induction vs generalizing z with
   | nil => trivial
   | cons v vs ih =>
@@ -548,10 +549,6 @@ private theorem reset_concatenation_guard (anchor : Bool) (K M N : ℕ) (d : ℝ
       ((vs.map (fun v => Statement.reset M hM::v)).flatten) (initial false anchor) := by
   exact finite_reset_weak_state anchor K M N d hK hM hreset vs hvs
     (initial false anchor) (initial_floor false anchor) (initial_bounds false anchor).2
-theorem A_nonneg : 0 ≤ A false := by
-  have hp := parameters false
-  unfold A
-  exact mul_nonneg (by linarith [hp.2.1]) hp.2.2.2.2.1.le
 private theorem auto_nonneg (K : ℕ) : 0 ≤ Statement.autoCost K :=
   auto_positive.le.trans ((le_max_right _ _).trans (le_max_right _ _))
 private theorem controls_budget (K : ℕ) (d gain b : ℝ) (as : List Return) (D : ℝ)
