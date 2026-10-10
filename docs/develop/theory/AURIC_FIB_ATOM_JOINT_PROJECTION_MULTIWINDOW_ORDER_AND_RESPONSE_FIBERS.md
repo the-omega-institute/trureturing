@@ -4040,3 +4040,104 @@ $$
 <!-- end-supplied-source: response-fiber-source.md -->
 
 ## 追加锚（本行以下为增补区）
+
+## 35. 正支撑联合后验的交叉比索引澄清
+
+本节给出 `theorem 8.1`（供文 I 原定理 4）所定义交叉比的完整展开，与 `definition 30.1` 的模式—深度联合后验使用同一索引。分母中的 $\pi_H(J,i)$ 对应 $p_J\mu_i c_J r_i^{A_J}s_i^{B_J}$；其中 $s$ 的下标是 $i$。本节仍属 open 参考输入，是既有条件模型的普通代数澄清，原定义、量词和结论的范围均保留。
+
+### 35.1 正支撑上的完整展开与普通证明
+
+令
+
+$$
+\mathcal M=
+\{F[\mathrm{null}],F[1],F[2],F[3],F[1,3]\}.
+$$
+
+沿用 §§8、30 的共同模型：$p=(p_M)_{M\in\mathcal M}$ 是固定的五态模式先验，$\mu=(\mu_k)_{k\ge1}$ 是固定的正整数深度先验，均为归一化概率律，联合先验为 $p_M\mu_k$。同一次运行中的隐藏深度为同一个 $K$。对同一实际合法有限历史 $H$，所给条件似然为
+
+$$
+L_H(M,k)=c_M r_k^{A_M}s_k^{B_M},
+\qquad
+c_M>0,\qquad A_M,B_M\in\mathbb N_0,
+$$
+
+其中 $c_M$ 与深度无关，两类 Read 计数由该历史在模式 $M$ 下诱导，并且
+
+$$
+r_k=\frac{\mathrm{Fib}_{k+1}}{\mathrm{Fib}_{k+3}},
+\qquad
+s_k=\frac{\mathrm{Fib}_{k+2}}{\mathrm{Fib}_{k+3}},
+\qquad k\ge1.
+$$
+
+这些深度上 $r_k,s_k>0$ 且 $r_k+s_k=1$。$H$ 的条件化须合法且有正概率；联合后验使用同一个有限正归一化常数
+
+$$
+\begin{aligned}
+\mathcal Z_H
+&=\sum_{M\in\mathcal M}\sum_{k\ge1}
+ p_M\mu_k c_M r_k^{A_M}s_k^{B_M},
+\qquad 0<\mathcal Z_H<\infty,\\
+\pi_H(M,k)
+&=\frac{p_M\mu_k c_M r_k^{A_M}s_k^{B_M}}{\mathcal Z_H}.
+\end{aligned}
+$$
+
+这里的归一化是整个共同模式—深度联合律的归一化，不是分别在各模式下归一化。模式条件似然能否在所需原生接口中共同实现，仍须另行桥接。
+
+对任意 $I,J\in\mathcal M$ 和两个不同正整数深度 $i\ne j$，仅在原有正支撑条件
+
+$$
+p_I,p_J,\mu_i,\mu_j,c_I,c_J>0
+$$
+
+下定义
+
+$$
+\Xi_{I,J;i,j}
+=\frac{\pi_H(I,i)\pi_H(J,j)}{\pi_H(I,j)\pi_H(J,i)}.
+$$
+
+此时四个后验单元都严格为正，交叉比合法，并有
+
+$$
+\boxed{
+\Xi_{I,J;i,j}
+=\left(\frac{r_i}{r_j}\right)^{A_I-A_J}
+ \left(\frac{s_i}{s_j}\right)^{B_I-B_J}.
+}
+$$
+
+指数差属于 $\mathbb Z$；正底数的负整数幂按倒数解释。未要求五个模式全部具有正质量，也未把结论扩至零质量模式、未知先验或非整数计数。
+
+证明。把同一联合后验的四个单元逐项代入。分子与分母各含 $\mathcal Z_H^{-2}$，消去后得到
+
+$$
+\begin{aligned}
+\Xi_{I,J;i,j}
+&=\frac{
+ (p_I\mu_i c_I r_i^{A_I}s_i^{B_I})
+ (p_J\mu_j c_J r_j^{A_J}s_j^{B_J})
+}{
+ (p_I\mu_j c_I r_j^{A_I}s_j^{B_I})
+ (p_J\mu_i c_J r_i^{A_J}s_i^{B_J})
+}\\
+&=\frac{r_i^{A_I}r_j^{A_J}}{r_j^{A_I}r_i^{A_J}}
+  \frac{s_i^{B_I}s_j^{B_J}}{s_j^{B_I}s_i^{B_J}}\\
+&=\left(\frac{r_i}{r_j}\right)^{A_I-A_J}
+  \left(\frac{s_i}{s_j}\right)^{B_I-B_J}.
+\end{aligned}
+$$
+
+第二步消去的 $p_Ip_J\mu_i\mu_jc_Ic_J$ 严格为正；第三步使用正底数的整数幂运算法则。分母最后一个单元的两个深度因子均取 $i$，所以该单元是 $r_i^{A_J}s_i^{B_J}$。这完成所定义交叉比的普通证明。若参与单元的模式或深度先验质量为零，则上述交叉比的分母为零，不能通过取消零因子定义它，也不能据此约束零质量模式的计数。
+
+### 35.2 来源与保留边界
+
+来源为 `repo-derived`：§8 的原交叉比定义、`definition 30.1` 的共同联合模型及 `theorem 30.1` 的同一交叉比表达式。此代数澄清不主张新颖性、优先权、Lean 形式化、内核核验、冻结或物理实现；§8 与 §30 引用的 FR 整数核和独立性刚性仍保留其既有归属与正支撑、正整数深度、整数指数条件，未由本节另行认证。
+
+固定响应方面，§§26–29 的共同实向量空间或共同未来域上的有符号测度空间、同一实际边界模式律、固定模式核、合法未来事件及终端合同、精确响应和正宽度纤维条件全部保留。该交叉比不提供 $J_{\mathscr L}\ne0$、共同五模式响应实现或免费精确测量接口；历史后的实际模式质量与原先验不能互换，单点边界纤维与正宽度纤维仍须分开。FR 的固定先验、两点标量恢复、活动 phase、Read 计数与深度支持条件不扩为完整 chronology、selected-count bank、隐藏样本 $K$ 或 pending0/pending1/delivered 的 Stop 与记录职责恢复。
+
+物理 programme 的继承义务全部保持未解决：同一来源、原固定 cap、实际已 populated 的完整空间 particle/Fock/field/reference/auxiliary 载体上的 state-independent controlled operation，真正 accepted 的非空 $\beta$ whole-$\rho$、已取得的 enable/alignment 数据与原始记录更新；完整 domain/collision/ground/mixed-trace 保持，以及每个固定完整联合向量经实际 raw/restricted identifications 对应原 66.2 tensor-field/auxiliary identity 的桥接。全部 complements、两个 cross blocks、旧 mass-one amplitudes、任意 particle/field/reference/auxiliary correlations、bank、actual balanced stiffness、78.53 的 LINEAR same-inverse-diagonal compensation（particle/reference 两支）和 reference evolution 均保留。finite-energy/number-class tolerances、ingress/alignment、preinstallation/control precision、service/paid holds、physical/service clocks 与总 lifetime/storage/maintenance resources 仍须分别履行，不能升级为 unit-ball、source-growing 或联合极限结论。refusal、$\beta$-empty、Read、Stop、chronological record covariances、Left/Right graft laws 及 unique physical-three closure 也未由本节完成。
+
+## 追加锚（本行以下为增补区）
