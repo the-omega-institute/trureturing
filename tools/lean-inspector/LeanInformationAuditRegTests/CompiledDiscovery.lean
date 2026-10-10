@@ -262,6 +262,38 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
           (message.splitOn "reason=missing_witness").length == 2) do
       throw <| IO.userError "compiled.registration:variation_precedence"
     IO.println "[PASS] compiled registration: finite partial support and variation precedence"
+    let some (_, finiteRow) := snapshot.registrations.find?
+        (·.2.input.entry.unitName == `ContractTests.finite.unit)
+      | throw <| IO.userError "compiled.finite_source:fixture_missing"
+    let some finiteDeclaration := finiteRow.input.declaration
+      | throw <| IO.userError "compiled.finite_source:declaration_missing"
+    let some finiteSelection := finiteDeclaration.escapeInput.sourceSelection
+      | throw <| IO.userError "compiled.finite_source:selection_missing"
+    let some finiteInfo := context.find finiteRow.input.entry.theoremName
+      | throw <| IO.userError "compiled.finite_source:source_missing"
+    let finiteContext ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store owners[0]!
+      finiteRow.input.options (({} : NameSet).insert finiteInfo.name)
+    let family := `D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+    let record := mkConst `Reg.Support.LegacyRelations.Preemption.registration
+    let some recordInfo := context.find record.constName!
+      | throw <| IO.userError "compiled.finite_source:record_missing"
+    let finiteAction : CompiledSourceScope.M Unit := do
+      let scope ← CompiledSourceScope.resolve finiteInfo finiteSelection
+      let arena := recordInfo.type.getAppArgs[0]!
+      let actual ← CompiledSourceScope.projectField (family ++ `Registration.actual) record
+      let law ← CompiledSourceScope.projectField (family ++ `Arena.Law) arena #[actual]
+      let signature ← CompiledSourceScope.projectField (family ++ `Arena.signature) arena
+      CompiledSourceScope.reconstruct scope.expanded law
+      CompiledSourceScope.validateFields scope signature actual
+      let incomplete := { finiteSelection with readouts := #[finiteSelection.readouts[2]!] }
+      let partialScope ← CompiledSourceScope.resolve finiteInfo incomplete
+      let rejected ← try
+        CompiledSourceScope.reconstruct partialScope.expanded law
+        pure false
+      catch error => pure (error.toString == "unclassified_form:source.statement_reconstruction")
+      unless rejected do throw <| IO.userError "compiled.finite_source:incomplete_selection_accepted"
+    discard <| (finiteAction.run 524288).run finiteContext
+    IO.println "[PASS] compiled finite source: full Law and incomplete Boolean selection rejection"
     for index in [:5] do
       let name := owners[0]!.str s!"source{index}"
       let some definition := snapshot.definitions.find? (·.info.name == name)
