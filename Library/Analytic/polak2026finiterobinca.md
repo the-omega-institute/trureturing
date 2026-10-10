@@ -5,7 +5,7 @@ year: 2026
 title: A Finite Computer-Assisted Verification of Robin's Inequality via Colossally Abundant Profiles, with Exact Prime-Power Residual Dynamics
 doi: 10.5281/zenodo.21808589
 url: https://doi.org/10.5281/zenodo.21808589
-claim: The preprint reports a finite Robin verification and an effective positive full-support core; the core applies at the selected critical source's own logarithmic clock, but does not bound its signed prime-error tail or prove RH.
+claim: The preprint reports a finite Robin verification and an effective positive full-support core; the core applies at the selected critical clock and, with positive extra-support costs, at arbitrary large GA2 clocks, but does not bound their signed prime-error tails or prove RH.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -248,6 +248,121 @@ Thus the weaker source-specific condition
 $\sqrt A\log A\,I_\psi(A)\ge-\mathcal E(\log A)$ suffices for strict Robin.
 That signed condition is unproved. This is a paper-level application,
 without a new finite verification, originality claim, or Lean result.
+
+## Application to arbitrary GA2 sources, including extra prime support
+
+The full-support core can also be used at a GA2 integer that is not
+known to be GA1, CA, or a global maximizer. Let $N$ be GA2 and put
+$A=\log N\ge3$. This application uses its own clock and actual
+exponents $a_p=v_p(N)$ throughout.
+
+First, GA2 forces every prime $p\le A$ to divide $N$. Indeed, if such
+a prime were absent, multiplicativity would give
+
+$$
+\frac{G(Np)}{G(N)}
+=\left(1+\frac1p\right)\frac{\log A}{\log(A+\log p)}>1,
+$$
+
+because
+
+$$
+\log(A+\log p)<\log A+\frac{\log p}{A}
+\le\left(1+\frac1p\right)\log A.
+$$
+
+The last comparison follows from $p\log p\le A\log A$. This
+contradicts GA2. This support argument needs only $A>1$; the stronger
+$A\ge3$ ensures that the full-support factor
+
+$$
+n_0=\prod_{p\le A}p^{a_p}
+$$
+
+contains both 2 and 3 and hence is at least $6>e$, as required for
+its logarithmic margin. No assertion that $N$ has no primes above $A$
+is needed.
+
+For an occupied prime $p>A$, define its extra-support cost by
+
+$$
+\Xi_{p,A}(a)=a\frac{\log p}{A\log A}-\log Z(p^a),
+\qquad Z(m)=\frac{\sigma(m)}m,\qquad a\ge1.
+$$
+
+These costs are strictly positive. The binomial expansion gives
+$Z(p^a)=\sum_{j=0}^ap^{-j}\le(1+1/p)^a$, so
+
+$$
+\log Z(p^a)\le a\log(1+1/p)<\frac ap
+<a\frac{\log p}{A\log A}.
+$$
+
+The final strict comparison uses $p\log p>A\log A$.
+
+Apply Proposition 6 to $n_0$ at $x=A$. Put $A_0=\log n_0$. The
+budget transport to the same original $N$ is exactly
+
+$$
+\Delta(N)-\Delta(n_0)
+=\log\frac{\log A}{\log A_0}
+ -\sum_{\substack{p>A\\p\mid N}}\log Z(p^{a_p}),
+$$
+
+whereas
+
+$$
+B_2(n_0,A)
+=\log\frac{\log A_0}{\log A}-\frac{A_0-A}{A\log A}.
+$$
+
+Their logarithmic terms cancel, and
+$A-A_0=\sum_{p>A,\,p\mid N}a_p\log p$. Thus the transported identity is
+
+$$
+\boxed{\displaystyle
+\Delta(N)=I_\psi(A)
+ +\sum_{p\le A}\Phi_{p,A}(a_p)-C_{\rm pp}(A)
+ +\sum_{\substack{p>A\\p\mid N}}\Xi_{p,A}(a_p).}
+$$
+
+Taking the existing full-support minimum gives
+
+$$
+\Delta(N)\ge I_\psi(A)+D^*(A)
+ +\sum_{\substack{p>A\\p\mid N}}\Xi_{p,A}(a_p)
+\ge I_\psi(A)+D^*(A).
+$$
+
+This is an inequality at arbitrary GA2 sources. Their actual exponents
+are not asserted to attain the core minimum. Proper-GA1 deletion
+conditions, the selected CA source's equality, and the stronger
+Nicolas envelope above have not been transported to this larger class.
+
+For $A\ge56\,048\,351$, the same Proposition 10 gives
+$\sqrt A\log A\,D^*(A)>D_{\rm lb}(A)>1/2$. Caveney–Nicolas–Sondow's
+Fact 2 gives $G(N)\ge e^\gamma$, hence $\Delta(N)\le0$. Consequently
+every such GA2 source must satisfy
+
+$$
+\boxed{\sqrt A\log A\,I_\psi(A)<-D_{\rm lb}(A)<-\frac12.}
+$$
+
+The [published conditional GA2 family](../Arith/caveney2012sacaga.md#the-published-unbounded-ga2-supplier-under-rh-failure)
+has $N_i\to\infty$ under RH failure. Therefore an eventual lower bound
+$\sqrt A\log A\,I_\psi(A)\ge-D_{\rm lb}(A)$ valid at every
+sufficiently large GA2 clock would contradict that existing family.
+This route would need no effective starting point for the eventual
+bound. It does need a proof of the signed bound on these actual clocks;
+an arbitrary sequence of favorable real cutoffs is insufficient.
+
+The application reuses the published full-support identity, minimum,
+effective core, and conditional infinitude. It supplies the missing
+extra-support accounting needed to use that core on the larger source
+class. It is a paper-level interface assessment, not a new core estimate,
+RH criterion, signed-tail bound, originality claim, or Lean result.
+The fixed global source above retains its stronger structural inputs;
+this unbounded-source route retains the same unpaid signed tail.
 
 ## Published event dynamics and the unpaid prime-state work
 
