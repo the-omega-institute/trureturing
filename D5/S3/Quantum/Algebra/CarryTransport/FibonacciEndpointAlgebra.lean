@@ -103,12 +103,10 @@ private theorem matrix_evolution {R : Type*} [CommRing R]
 
 private theorem low_iterate (r m : ℕ) (a : Labels r) :
     lowTrajectory r m a = step^[m] a := by
-  induction m with
-  | zero => rfl
-  | succ m ih =>
-    simp only [lowTrajectory, Equiv.trans_apply, Function.iterate_succ_apply']
-    rw [ih]
-    rfl
+  rw [low_power]
+  change (⇑(fibonacci r ^ m)) a = _
+  rw [Equiv.Perm.coe_pow]
+  rfl
 
 /-- The native endpoint pullback, with no intermediate-time observation. -/
 def endpointPullback (d e m : ℕ) [NeZero d] [NeZero e] :=
@@ -223,12 +221,8 @@ private theorem transport_conjugate (d e m : ℕ) [NeZero d] [NeZero e]
     (x : Labels d × Labels e) :
     (transport d e ^ m) x =
       (digitJoin d e).symm ((fibonacci (d * e) ^ m) (digitJoin d e x)) := by
-  induction m with
-  | zero => simp
-  | succ m ih =>
-    simp only [pow_succ', Equiv.Perm.mul_apply]
-    rw [ih]
-    simp [transport, Equiv.trans_apply]
+  have hp := map_pow (digitJoin d e).symm.permCongrHom (fibonacci (d * e)) m
+  exact congrArg (fun q : Equiv.Perm (Labels d × Labels e) => q x) hp.symm
 
 private theorem matrix_period_iff (r m : ℕ) :
     sourceMatrix r ^ m = 1 ↔ fibonacci r ^ m = 1 := by
@@ -278,11 +272,12 @@ private theorem alpha_inverse_matrix (d m : ℕ) [NeZero d]
     (B : Matrix (Labels d) (Labels d) ℂ) :
     (endpointAlpha d m).symm B = lowUnitary d ^ m * B * (lowUnitary d ^ m)ᴴ := by
   rw [lowUnitary, ← map_pow]
-  simp only [Matrix.permMatrixHom_apply, Matrix.conjTranspose_permMatrix,
-    inv_inv, Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_mul,
-    PEquiv.mul_toMatrix_toPEquiv]
   rw [← low_power]
-  rfl
+  simpa only [endpointAlpha, Matrix.symm_reindexAlgEquiv,
+    Matrix.coe_reindexAlgEquiv, Matrix.reindex_apply,
+    Matrix.permMatrixHom_apply, Matrix.conjTranspose_permMatrix,
+    inv_inv, Equiv.Perm.inv_def, Equiv.symm_symm] using
+    (matrix_conjugation (lowTrajectory d m).symm B).symm
 
 private theorem endpoint_one_proper (d e : ℕ) [NeZero d] [NeZero e]
     (hd : 2 ≤ d) (he : 2 ≤ e) : endpointAlgebra d e 1 ≠ ⊤ := by

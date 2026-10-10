@@ -128,21 +128,19 @@ def joint_power (d e : ℕ) [NeZero d] [NeZero e]
     simp [jointTrajectory, lowTrajectory, fibreTrajectory, Equiv.Perm.mul_apply,
       Equiv.trans_apply, hact, carryHistory]
 
-def matrix_pullback {X : Type*} [Fintype X] [DecidableEq X]
-    (q : Equiv.Perm X) (B : Matrix X X ℂ) :
-    (Matrix.permMatrixHom (R := ℂ) q)ᴴ * B * Matrix.permMatrixHom q =
-      B.submatrix q q := by
-  simp only [Matrix.permMatrixHom_apply, Matrix.conjTranspose_permMatrix,
-    inv_inv, Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_mul,
-    PEquiv.mul_toMatrix_toPEquiv]
-  rfl
-
 def matrix_conjugation {X : Type*} [Fintype X] [DecidableEq X]
     (q : Equiv.Perm X) (B : Matrix X X ℂ) :
     q.permMatrix ℂ * B * Equiv.Perm.permMatrix ℂ q.symm = B.submatrix q q := by
   rw [Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_mul,
     Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
   rfl
+
+def matrix_pullback {X : Type*} [Fintype X] [DecidableEq X]
+    (q : Equiv.Perm X) (B : Matrix X X ℂ) :
+    (Matrix.permMatrixHom (R := ℂ) q)ᴴ * B * Matrix.permMatrixHom q =
+      B.submatrix q q := by
+  simpa only [Matrix.permMatrixHom_apply, Matrix.conjTranspose_permMatrix,
+    inv_inv, Equiv.Perm.inv_def, Equiv.symm_symm] using matrix_conjugation q B
 
 def movingPullback_mem_iff (d e t : ℕ) [NeZero d] [NeZero e]
     (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
