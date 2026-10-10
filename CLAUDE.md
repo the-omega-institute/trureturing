@@ -479,6 +479,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **目标迭代无总轮数上限**:覆盖 skill 的有限 `pass_budget`/耗尽停机规则,设计/修复/复审/适用独立终止审计不得因轮数停止仍可推进的目标。按证据修真实缺口,无进展须查根因换法,不原样空转。独立实施/评审、无未解 reject、适用完成审计及 PR MERGED 要求仍在;真实能力/授权/资源缺口按第 5.9 条。单次调用、有限重试、失败回退仍按各自契约,不等于目标轮数上限。
 - **默认不用 `isolated-token-subagent`**:覆盖 skill 的每多席阶段一 subagent+一 nyxid+其余 codex 布局,subagent 名额给 codex-cli;推理阶段为一 nyxid+其余 codex,验证阶段全部 codex-cli。`WorkerMode` 失败回退优先序不变,但验证阶段不回退 nyxid-oracle;推理阶段 codex-cli 与 nyxid-oracle 皆不可用、验证阶段 codex-cli 不可用,则该阶段 abstain,不得回退 subagent 顶替。
 - **tests 席只能 codex-cli**:须在 `work_target` 真跑验证;nyxid-oracle 无工作树执行能力,其“跑过什么”一律 `ASSUMED-UNVERIFIED`。
+- **推理提示词要求**:每个 nyx oracle/GPT Pro 推理提示词(含 nyxid-oracle/ChatGPT Pro brief)必须包含原文「深入思考与推理, 如数学推理按照正式定义定理证明推理」。
 - **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/设计/研究等推理任务均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
 - **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要交它推理的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。
 - **oracle 只走 broker 路线**:`tools/scripts/agent/nyx/nyx.py` 与 sshx 的 oracle runner 同用 NyxID oracle broker——先读池列表,再发一次流式 `chat/completions` 并据流的终态判完成;不调用旧 `nyxid oracle` CLI。池按列表现选在线 worker 最多的 active 池,`nyx.py pools` 查看,`NYX_POOL` 可显式指定;不凭记忆写死 slug。
