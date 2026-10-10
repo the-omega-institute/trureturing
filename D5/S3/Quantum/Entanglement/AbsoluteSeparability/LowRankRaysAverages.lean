@@ -417,7 +417,6 @@ private lemma separable_expect (a : Ω → Fin m → ℂ) (b : Ω → Fin n → 
 
 -- The entrywise fourth-moment expansion needs a larger elaboration budget.
 set_option maxHeartbeats 12000000 in
--- reason for change: entrywise finite Wick expansion needs extra elaboration budget
 private lemma high_average
     (g : Ω → Fin m → ℂ)
     (h1 : ∀ i s, (𝔼 w, chooseStar s (g w i)) = 0)

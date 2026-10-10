@@ -36,7 +36,7 @@ internal sealed class LowRankRaysDocument : IScribeDocumentDefinition
         var psi = F.Id("psi");
         var ij = F.Id("ij");
         var domain = F.Seq(Fin(F.Id("m")), F.Times, F.Sp, Fin(F.Id("n")));
-        var norm = F.Seq(F.Vert, F.Sp, F.Vert, F.Sp, Call("psi", ij), F.Sp, F.Vert, F.Sp, F.Vert);
+        var norm = new Formula.Norm(Call("psi", ij));
         var sum = F.Seq(new Formula.Subscript(F.Sum, F.Seq(ij, F.InMacro, F.Sp, domain)),
             F.Sp, Pow(norm, 2), F.Eq, F.D(1));
         var conclusion = Call("separableCone", F.Seq(F.Id("I"), F.Plus,

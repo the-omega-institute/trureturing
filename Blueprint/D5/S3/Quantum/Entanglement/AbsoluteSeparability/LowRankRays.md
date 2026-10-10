@@ -8,7 +8,7 @@ Write R_x = xx* and let the separable cone consist of finite sums of Kronecker p
 
 **Theorem 1.1 (A normalized rank-one ray).**
 
-$$\forall (m:\mathbb{N}), \forall (n:\mathbb{N}), \forall (psi:(Fin\left(m\right)\times Fin\left(n\right))\to \mathbb{C}), (\sum_{ij\in Fin\left(m\right)\times Fin\left(n\right)} \Vert \Vert psi\left(ij\right) \Vert \Vert^{2}=1)\Rightarrow separableCone\left(I+2\cdot R\left(psi\right)\right)$$
+$$\forall (m:\mathbb{N}), \forall (n:\mathbb{N}), \forall (psi:(Fin\left(m\right)\times Fin\left(n\right))\to \mathbb{C}), (\sum_{ij\in Fin\left(m\right)\times Fin\left(n\right)} \left\lVert psi\left(ij\right) \right\rVert^{2}=1)\Rightarrow separableCone\left(I+2\cdot R\left(psi\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.separableCone_one_add_two_rankOne` (`✓ std3`). ∎
 

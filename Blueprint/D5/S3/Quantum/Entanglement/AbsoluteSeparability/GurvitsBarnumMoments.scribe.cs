@@ -22,6 +22,7 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
     private static Formula Dim => F.Id("d");
     private static Formula Index => Call("Fin", Dim);
     private static Formula Vector => Arrow(Index, C);
+    private static Formula Functional => Arrow(Par(Vector), C);
     private static Formula Matrix => Arrow(Index, Arrow(Index, C));
     private static Formula L(Formula f) => Call("L", Dim, f);
     private static Formula Re(Formula f) => Call("Re", f);
@@ -53,8 +54,9 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
         var f = F.Id("f");
         var z = F.Id("z");
         var index = F.Id("J");
+        var finite = Seq(OpenBracket, Call("Fintype", index), CloseBracket);
         return All("d", N, All("J", F.Id("Type"),
-            Imp(Call("Fintype", index), All("f", Arrow(index, Arrow(Vector, C)),
+            Seq(finite, Comma, Sp, All("f", Arrow(index, Par(Functional)),
                 Eq(L(Lam("z", Sum("a", index, Call("f", a, z)))),
                     Sum("a", index, L(Call("f", a))))))));
     }
@@ -62,7 +64,7 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
     private static Formula Monotonicity()
     {
         var z = F.Id("z");
-        return All("d", N, All("f", Arrow(Vector, C), All("g", Arrow(Vector, C),
+        return All("d", N, All("f", Functional, All("g", Functional,
             Imp(All("z", Vector, Le(Re(Call("f", z)), Re(Call("g", z)))),
                 Le(Re(L(F.Id("f"))), Re(L(F.Id("g"))))))));
     }
