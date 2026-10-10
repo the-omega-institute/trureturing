@@ -8,6 +8,7 @@
 
 import Mathlib.NumberTheory.Divisors
 import Mathlib.Data.List.SplitBy
+import D5.S1.Words.AssociatedMersenne.CircularWords
 import Mathlib.Tactic.Linarith
 
 namespace D5.S3.Factorization.TwoDenseDivisorBlocksPalindrome
@@ -19,47 +20,6 @@ def twoDenseBlockLengths (l : List ℕ) : List ℕ :=
 /-- Row n of OEIS A384222, using the increasing first coordinates of the divisor pairs. -/
 def row (n : ℕ) : List ℕ :=
   twoDenseBlockLengths (n.divisorsAntidiagonalList.map Prod.fst)
-
--- Reverse the blocks, reverse each block, and transport its entries. Internal links
--- and separating boundaries are both preserved, so splitBy uniqueness identifies them.
-private theorem split_reverse_map {α β : Type*} (r : α → α → Bool)
-    (s : β → β → Bool) (f : α → β) (l : List α)
-    (h : ∀ a ∈ l, ∀ b ∈ l, s (f b) (f a) = r a b) :
-    (l.reverse.map f).splitBy s =
-      ((l.splitBy r).reverse.map (fun b => b.reverse.map f)) := by
-  apply List.splitBy_eq_iff.mpr
-  refine ⟨?_, ?_, ?_, ?_⟩
-  · conv_lhs => rw [← List.flatten_splitBy r l]
-    simp only [List.reverse_flatten, List.map_flatten, List.map_reverse,
-      List.map_map, Function.comp_def]
-  · simp only [List.mem_map, List.mem_reverse, not_exists, not_and]
-    intro b hb he
-    have : b = [] := by simpa using he
-    exact List.nil_notMem_splitBy r l (this ▸ hb)
-  · intro b hb
-    obtain ⟨c, hc, rfl⟩ := List.mem_map.mp hb
-    have hc' := List.mem_reverse.mp hc
-    rw [List.isChain_map, List.isChain_reverse]
-    apply (List.isChain_of_mem_splitBy hc').imp_of_mem_imp
-    intro a b ha hb hab
-    rw [h a ?_ b ?_]
-    · exact hab
-    · rw [← List.flatten_splitBy r l]
-      exact List.mem_flatten.mpr ⟨c, hc', ha⟩
-    · rw [← List.flatten_splitBy r l]
-      exact List.mem_flatten.mpr ⟨c, hc', hb⟩
-  · rw [List.isChain_map, List.isChain_reverse]
-    apply (List.isChain_getLast_head_splitBy r l).imp_of_mem_imp
-    intro a b ha hb hab
-    obtain ⟨ha', hb', hab⟩ := hab
-    refine ⟨by simpa, by simpa, ?_⟩
-    simp only [List.getLast_map, List.getLast_reverse, List.head_map, List.head_reverse]
-    rw [h (a.getLast ha') ?_ (b.head hb') ?_]
-    · exact hab
-    · rw [← List.flatten_splitBy r l]
-      exact List.mem_flatten.mpr ⟨a, ha, List.getLast_mem _⟩
-    · rw [← List.flatten_splitBy r l]
-      exact List.mem_flatten.mpr ⟨b, hb, List.head_mem _⟩
 
 private theorem divisor_list_finset (n : ℕ) :
     (n.divisorsAntidiagonalList.map Prod.fst).toFinset = n.divisors := by
@@ -106,7 +66,7 @@ private theorem complement_dense (n a b : ℕ) (hn : 0 < n)
 /-- OEIS A384222 Conjecture 1: every positive-indexed row is palindromic.
 Together with row_sum and the nonempty blocks of splitBy, it is a composition of tau(n). -/
 theorem row_palindrome (n : ℕ) (hn : 0 < n) : (row n).reverse = row n := by
-  have h := split_reverse_map (fun a b : ℕ => decide (b ≤ 2 * a))
+  have h := D5.S1.Words.AssociatedMersenne.CircularWords.split_reverse_map (fun a b : ℕ => decide (b ≤ 2 * a))
     (fun a b : ℕ => decide (b ≤ 2 * a)) (n / ·)
     (n.divisorsAntidiagonalList.map Prod.fst) (by
       intro a ha b hb
