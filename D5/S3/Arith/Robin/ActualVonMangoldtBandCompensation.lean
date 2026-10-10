@@ -737,4 +737,221 @@ theorem actual_vonMangoldt_band_compensation_of_theta_increment_lower {A c H ε 
   · exact forward_compensation hA hc hc' h hH hε hθ
   · exact reverse_compensation hA hc hc' h hH hε hθ
 
+private theorem plateau_prefix {A R q : ℝ} {f : ℝ → ℝ} (hA : 0 ≤ A) (hAR : A ≤ R) :
+    weightedPrefix (fun t => if t ≤ A then q else f t) R =
+      q * Chebyshev.psi A + weightedPrefix f R - weightedPrefix f A := by
+  let N := ⌈R⌉₊
+  have hRN : R ≤ (N : ℝ) := Nat.le_ceil R
+  have hAN : A ≤ (N : ℝ) := hAR.trans hRN
+  rw [← weightedPrefix_const q A]
+  unfold weightedPrefix
+  rw [prefix_as_finite_sum _ (hA.trans hAR) hRN, prefix_as_finite_sum _ hA hAN,
+    prefix_as_finite_sum _ (hA.trans hAR) hRN, prefix_as_finite_sum _ hA hAN,
+    ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro i _
+  by_cases hnA : ((i + 1 : ℕ) : ℝ) ≤ A
+  · simp [hnA, hnA.trans hAR]
+  · simp [hnA]
+
+private theorem plateau_response {A R q : ℝ} {f : ℝ → ℝ} (hA : 0 ≤ A) (hAR : A ≤ R)
+    (hd : ∀ t ∈ Icc A R, DifferentiableAt ℝ f t)
+    (hdf : ContinuousOn (deriv f) (Icc A R)) :
+    weightedPrefix (fun t => if t ≤ A then q else f t) R -
+        (∫ t in (0 : ℝ)..R, if t ≤ A then q else f t) =
+      (q - f A) * discrepancy A + f R * discrepancy R -
+        ∫ t in A..R, discrepancy t * deriv f t := by
+  have hf : ContinuousOn f (Icc A R) := fun t ht => (hd t ht).continuousAt.continuousWithinAt
+  have hfi := hf.intervalIntegrable_of_Icc hAR
+  have hdfi := hdf.intervalIntegrable_of_Icc hAR
+  have hlow : IntervalIntegrable (fun t : ℝ => if t ≤ A then q else f t) volume 0 A := by
+    apply (intervalIntegrable_const : IntervalIntegrable (fun _ : ℝ => q) volume 0 A).congr
+    intro t ht
+    rw [uIoc_of_le hA] at ht
+    simp only [if_pos ht.2]
+  have hhigh : IntervalIntegrable (fun t : ℝ => if t ≤ A then q else f t) volume A R := by
+    apply hfi.congr
+    intro t ht
+    rw [uIoc_of_le hAR] at ht
+    simp only [if_neg (not_le.mpr ht.1)]
+  have hpiece : (∫ t in (0 : ℝ)..R, if t ≤ A then q else f t) =
+      q * A + ∫ t in A..R, f t := by
+    rw [← intervalIntegral.integral_add_adjacent_intervals hlow hhigh]
+    have h0 : (∫ t in (0 : ℝ)..A, if t ≤ A then q else f t) = A * q := by
+      rw [show (∫ t in (0 : ℝ)..A, if t ≤ A then q else f t) = ∫ _ in (0 : ℝ)..A, q by
+        apply intervalIntegral.integral_congr
+        intro t ht
+        rw [uIcc_of_le hA] at ht
+        exact if_pos ht.2]
+      simp [intervalIntegral.integral_const]
+    have h1 : (∫ t in A..R, if t ≤ A then q else f t) = ∫ t in A..R, f t := by
+      apply intervalIntegral.integral_congr_ae
+      exact Filter.Eventually.of_forall (fun t ht => by
+        rw [uIoc_of_le hAR] at ht
+        exact if_neg (not_le.mpr ht.1))
+    rw [h0, h1]
+    ring
+  have hparts := intervalIntegral.integral_mul_deriv_eq_deriv_mul
+    (u := fun t : ℝ => t) (u' := fun _ => (1 : ℝ)) (v := f) (v' := deriv f)
+    (fun t _ => hasDerivAt_id t)
+    (fun t ht => hd t ((uIcc_of_le hAR) ▸ ht) |>.hasDerivAt)
+    intervalIntegrable_const hdfi
+  simp only [one_mul] at hparts
+  have hpsi := (intervalIntegrable_iff_integrableOn_Icc_of_le hAR).mpr
+    (prefix_product_integrable hA hdf.integrableOn_Icc)
+  have htprod : IntervalIntegrable (fun t => t * deriv f t) volume A R :=
+    (continuousOn_id.mul hdf).intervalIntegrable_of_Icc hAR
+  have hD : (∫ t in A..R, discrepancy t * deriv f t) =
+      (∫ t in A..R, deriv f t * Chebyshev.psi t) - (∫ t in A..R, t * deriv f t) := by
+    unfold discrepancy
+    rw [show (fun t => (Chebyshev.psi t - t) * deriv f t) =
+      (fun t => deriv f t * Chebyshev.psi t - t * deriv f t) by funext t; ring,
+      intervalIntegral.integral_sub hpsi htprod]
+  have habel := abel_prefix hA hAR hd hdf.integrableOn_Icc
+  rw [plateau_prefix hA hAR, hpiece, hD]
+  unfold discrepancy
+  nlinarith
+
+private theorem plateau_integrable {A R q : ℝ} {f : ℝ → ℝ} (hA : 0 ≤ A) (hAR : A ≤ R)
+    (hf : ContinuousOn f (Icc A R)) :
+    IntervalIntegrable (fun t => if t ≤ A then q else f t) volume 0 R := by
+  have hlow : IntervalIntegrable (fun t : ℝ => if t ≤ A then q else f t) volume 0 A := by
+    apply (intervalIntegrable_const : IntervalIntegrable (fun _ : ℝ => q) volume 0 A).congr
+    intro t ht
+    rw [uIoc_of_le hA] at ht
+    simp only [if_pos ht.2]
+  have hhigh : IntervalIntegrable (fun t : ℝ => if t ≤ A then q else f t) volume A R := by
+    apply (hf.intervalIntegrable_of_Icc hAR).congr
+    intro t ht
+    rw [uIoc_of_le hAR] at ht
+    simp only [if_neg (not_le.mpr ht.1)]
+  exact hlow.trans hhigh
+
+private theorem supported_prefix_stable {a b R : ℝ} {f r : ℝ → ℝ} (ha : 0 ≤ a)
+    (hab : a ≤ b) (hbR : b ≤ R)
+    (hr : ∀ t : ℝ, r t = if a < t ∧ t ≤ b then f t else 0) :
+    weightedPrefix r R = weightedPrefix r b := by
+  let N := ⌈R⌉₊
+  have hb : 0 ≤ b := ha.trans hab
+  have hRN : R ≤ (N : ℝ) := Nat.le_ceil R
+  unfold weightedPrefix
+  rw [prefix_as_finite_sum _ (hb.trans hbR) hRN,
+    prefix_as_finite_sum _ hb (hbR.trans hRN)]
+  apply Finset.sum_congr rfl
+  intro i _
+  by_cases hi : ((i + 1 : ℕ) : ℝ) ≤ b
+  · simp only [if_pos hi, if_pos (hi.trans hbR)]
+  · rw [hr]
+    simp [hi]
+
+private theorem local_residual_support {A c : ℝ} (hA : Real.exp 78 ≤ A)
+    (hc : (99 / 100 : ℝ) ≤ c) (hc' : c ≤ (101 / 100 : ℝ)) :
+    ∃ f : ℝ → ℝ, ContinuousOn f (Icc (bandLow A c) (bandHigh A c)) ∧
+      ∀ t : ℝ, residualKernel A c t =
+        if bandLow A c < t ∧ t ≤ bandHigh A c then f t else 0 := by
+  obtain ⟨ha, hc0, hl, ht⟩ := band_scale hA hc hc'
+  obtain ⟨hlow, hgeo⟩ := local_band_geometry hA hc hc'
+  have hg : ContinuousOn (reciprocalLog c) (Icc (bandLow A c) (bandHigh A c)) := by
+    intro t htt
+    exact (reciprocalLog_deriv hc0 (hlow.trans_le htt.1) (hgeo t htt).2.2.ne').continuousAt.continuousWithinAt
+  rcases le_total 1 c with hc1 | hc1
+  · have hab : A ≤ c * A := by have := zero_lt_one.trans ha; nlinarith
+    refine ⟨fun t => reciprocalLog c t - reciprocalLog c (c * A), hg.sub continuousOn_const, ?_⟩
+    simpa only [bandLow, bandHigh, min_eq_left hab, max_eq_right hab] using residual_forward ha hc1
+  · have hab : c * A ≤ A := by have := zero_lt_one.trans ha; nlinarith
+    refine ⟨fun t => reciprocalLog c (c * A) - reciprocalLog c t, continuousOn_const.sub hg, ?_⟩
+    simpa only [bandLow, bandHigh, min_eq_right hab, max_eq_left hab] using residual_reverse ha hc0 hc1
+
+private def smoothSlope (c t : ℝ) : ℝ :=
+  -(Real.log t - Real.log c + 1) / (t ^ 2 * (Real.log t - Real.log c) ^ 2) +
+    (Real.log t + 1) / (t ^ 2 * (Real.log t) ^ 2) +
+      (c - 1) * (Real.log t + 2) / (t ^ 2 * (Real.log t) ^ 3)
+
+private theorem smoothRemainder_deriv {c t : ℝ} (ht : 0 < t)
+    (hlog : Real.log t ≠ 0) (hz : Real.log t - Real.log c ≠ 0) :
+    HasDerivAt (smoothRemainder c) (smoothSlope c t) t := by
+  have hl := Real.hasDerivAt_log ht.ne'
+  have h1 := (hasDerivAt_const t (1 : ℝ)).div
+    ((hasDerivAt_id t).mul (hl.sub_const (Real.log c))) (mul_ne_zero ht.ne' hz)
+  have h2 := (hasDerivAt_const t (1 : ℝ)).div
+    ((hasDerivAt_id t).mul hl) (mul_ne_zero ht.ne' hlog)
+  have h3 := (hasDerivAt_const t (1 : ℝ)).div
+    ((hasDerivAt_id t).mul (hl.pow 2)) (mul_ne_zero ht.ne' (pow_ne_zero 2 hlog))
+  have hd := (h1.sub h2).sub (h3.const_mul (c - 1))
+  convert hd using 1 <;> simp only [smoothRemainder, smoothSlope, id_eq, one_mul, zero_mul,
+    zero_sub, neg_div, Nat.cast_ofNat, Nat.reduceSub, pow_one]
+  field_simp [ht.ne', hlog, hz]
+  <;> ring
+
+private theorem smooth_on_tail {A c R : ℝ} (hA : Real.exp 78 ≤ A)
+    (hc : (99 / 100 : ℝ) ≤ c) (hc' : c ≤ (101 / 100 : ℝ)) :
+    (∀ t ∈ Icc A R, DifferentiableAt ℝ (smoothRemainder c) t) ∧
+      ContinuousOn (deriv (smoothRemainder c)) (Icc A R) := by
+  obtain ⟨ha, hc0, hL, _⟩ := band_scale hA hc hc'
+  have hlogc : Real.log c ≤ (1 / 100 : ℝ) :=
+    (Real.log_le_sub_one_of_pos hc0).trans (by linarith)
+  have hpos : ∀ t ∈ Icc A R, 0 < t ∧ 0 < Real.log t ∧ 0 < Real.log t - Real.log c := by
+    intro t ht
+    have ht0 : 0 < t := (zero_lt_one.trans ha).trans_le ht.1
+    have hl := Real.log_le_log (zero_lt_one.trans ha) ht.1
+    exact ⟨ht0, by linarith, by linarith⟩
+  have hd : ∀ t ∈ Icc A R, HasDerivAt (smoothRemainder c) (smoothSlope c t) t := by
+    intro t ht
+    obtain ⟨ht0, hl, hz⟩ := hpos t ht
+    exact smoothRemainder_deriv ht0 hl.ne' hz.ne'
+  refine ⟨fun t ht => (hd t ht).differentiableAt, ?_⟩
+  have hcont : ContinuousOn (smoothSlope c) (Icc A R) := by
+    intro t ht
+    obtain ⟨ht0, hl, hz⟩ := hpos t ht
+    have hlogcont := Real.continuousAt_log ht0.ne'
+    unfold smoothSlope
+    fun_prop (disch := first | positivity | exact ht0.ne')
+  exact hcont.congr (fun t ht => (hd t ht).deriv.symm)
+
+/-- Exact finite signed response, with the actual right-closed R atom and the
+smooth formula's trace at A. No derivative of the Chebyshev staircase occurs. -/
+theorem finite_signed_response_identity {A c R : ℝ} (hA : Real.exp 78 ≤ A)
+    (hc : (99 / 100 : ℝ) ≤ c) (hc' : c ≤ (101 / 100 : ℝ))
+    (hAR : A < R) (hcAR : c * A ≤ R) :
+    finiteResponse A c R = smoothBoundary A c R + bandVolume A c - actualCompensation A c := by
+  obtain ⟨ha, hc0, hl, _⟩ := band_scale hA hc hc'
+  obtain ⟨hlow, _⟩ := local_band_geometry hA hc hc'
+  obtain ⟨f, hf, hres⟩ := local_residual_support hA hc hc'
+  have hlh : bandLow A c ≤ bandHigh A c := min_le_max
+  have hhigh : bandHigh A c ≤ R := max_le hAR.le hcAR
+  obtain ⟨hdf, hdc⟩ := smooth_on_tail (R := R) hA hc hc'
+  have hreg := plateau_integrable (q := plateau A c) (zero_lt_one.trans ha).le hAR.le
+    (fun t ht => (hdf t ht).continuousAt.continuousWithinAt)
+  have hresi := supported_integrable hlow.le hlh hhigh hf hres
+  have he : centeredKernel A c = fun t => regularKernel A c t - residualKernel A c t := by
+    funext t
+    unfold residualKernel
+    ring
+  have hresponse := plateau_response (q := plateau A c) (zero_lt_one.trans ha).le hAR.le hdf hdc
+  have hPi : weightedPrefix (residualKernel A c) R = actualCompensation A c := by
+    exact supported_prefix_stable hlow.le hlh hhigh hres
+  have hV : (∫ t in (0 : ℝ)..R, residualKernel A c t) = bandVolume A c := by
+    unfold bandVolume
+    rw [integral_supported hlow.le hlh hhigh hres, integral_supported hlow.le hlh le_rfl hres]
+  unfold finiteResponse
+  rw [he, weightedPrefix_sub, intervalIntegral.integral_sub hreg hresi, hPi, hV]
+  change _ = smoothBoundary A c R + _ - _
+  change weightedPrefix (regularKernel A c) R - (∫ t in (0 : ℝ)..R, regularKernel A c t) = _ at hresponse
+  change _ = smoothBoundary A c R at hresponse
+  linarith
+
+/-- The finite signed-response consumer uses the actual band payment and keeps
+the complete smooth finite boundary. No infinite Gamma or signed anchor claim. -/
+theorem finite_signed_response_upper_of_theta_increment_lower {A c R H ε : ℝ}
+    (hA : Real.exp 78 ≤ A) (hc : (99 / 100 : ℝ) ≤ c) (hc' : c ≤ (101 / 100 : ℝ))
+    (hAR : A < R) (hcAR : c * A ≤ R) (hH : 0 < H) (hε0 : 0 ≤ ε) (hε : ε < 1)
+    (hθ : ThetaIncrementLower ((99 / 100 : ℝ) * A) H ε) :
+    finiteResponse A c R ≤ smoothBoundary A c R + ε * bandVolume A c +
+      (1 - ε) * shortAllowance A c H := by
+  have hPi := actual_vonMangoldt_band_compensation_of_theta_increment_lower hA hc hc' hH hε0 hε hθ
+  have hmax := le_max_right (0 : ℝ) (bandVolume A c - shortAllowance A c H)
+  have hpay := mul_le_mul_of_nonneg_left hmax (by linarith : 0 ≤ 1 - ε)
+  rw [finite_signed_response_identity hA hc hc' hAR hcAR]
+  nlinarith
+
 end D5.S3.Arith.Robin.ActualVonMangoldtBandCompensation
