@@ -12,6 +12,109 @@ public sealed partial class LedgerAlignWriterTests
         "sha256:2737dabb279d14181efe09f7531e5c4664421bdbc19bbcf8b588f8d71123954c";
 
     [Fact]
+    public void ScopedRepinWithExplicitDescendantsMatchesFullAlignment()
+    {
+        var oldA = ModuleWithReport("A", Source("A"), "True");
+        var a = oldA with { StatementMaterial = "True = True" };
+        var b = ModuleWithReport("B", "import D5.S0.Carrier.A\n" + Source("B"), "True") with { Imports = ["A"] };
+        var frozen = BuildCatalog(oldA, b);
+        using var scoped = new AlignFixture(a, b);
+        using var full = new AlignFixture(a, b);
+        foreach (var fixture in new[] { scoped, full })
+        {
+            fixture.InstallAccepted(frozen);
+            foreach (var name in new[] { "A", "B" })
+                fixture.InstallState(name, frozen.ByPath[RepoPathFor(name)].StatementId);
+        }
+
+        var narrow = scoped.Align("--add", PathFor("A"), "--add", PathFor("B"));
+        var broad = full.Align();
+
+        Assert.True(narrow.Success, narrow.Error);
+        Assert.True(broad.Success, broad.Error);
+        Assert.Equal(full.AllPublishedBytes(), scoped.AllPublishedBytes());
+        var events = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
+            FrozenAcceptedEventLoader.LoadFiles(scoped.AcceptedFiles())).Events;
+        Assert.True(DagLedgerLoader.TryOrderClosedDag(events, [], out _));
+    }
+
+    [Fact]
+    public void ScopedAddRejectsChangedFrozenPrerequisiteBeforeWriting()
+    {
+        var oldB = ModuleWithReport("B", Source("B"), "True");
+        var b = oldB with { StatementMaterial = "True = True" };
+        var a = ModuleWithReport("A", "import D5.S0.Carrier.B\n" + Source("A"), "True") with { Imports = ["B"] };
+        using var fixture = new AlignFixture(a, b);
+        var frozen = BuildCatalog(oldB);
+        fixture.InstallAccepted(frozen);
+        fixture.InstallState("B", frozen.ByPath[RepoPathFor("B")].StatementId);
+        var before = fixture.AllPublishedBytes();
+
+        var result = fixture.Align("--add", PathFor("A"));
+
+        Assert.False(result.Success);
+        Assert.Contains("frozen prerequisite identity changed", result.Error, StringComparison.Ordinal);
+        Assert.Contains(PathFor("B"), result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+    }
+
+    [Fact]
+    public void ScopedAddRejectsRepinningAncestorWithUnselectedFrozenDescendant()
+    {
+        var oldA = ModuleWithReport("A", Source("A"), "True");
+        var a = oldA with { StatementMaterial = "True = True" };
+        var b = ModuleWithReport("B", "import D5.S0.Carrier.A\n" + Source("B"), "True") with { Imports = ["A"] };
+        using var fixture = new AlignFixture(a, b);
+        var frozen = BuildCatalog(oldA, b);
+        fixture.InstallAccepted(frozen);
+        foreach (var name in new[] { "A", "B" })
+            fixture.InstallState(name, frozen.ByPath[RepoPathFor(name)].StatementId);
+        var before = fixture.AllPublishedBytes();
+
+        var result = fixture.Align("--add", PathFor("A"));
+
+        Assert.False(result.Success);
+        Assert.Contains("frozen descendants require explicit --add", result.Error, StringComparison.Ordinal);
+        Assert.Contains(PathFor("B"), result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+    }
+
+    [Fact]
+    public void ScopedAddDoesNotRevalidateUnrelatedFrozenMembers()
+    {
+        var a = ModuleWithReport("A", Source("A"), "True");
+        var originalB = ModuleWithReport("B", Source("B"), "True");
+        var brokenB = originalB with { Source = "theorem b : True := by sorry\n", Axioms = ["sorryAx"] };
+        using var fixture = new AlignFixture(a, brokenB);
+        var frozenB = BuildCatalog(originalB);
+        fixture.InstallAccepted(frozenB);
+        fixture.InstallState("B", frozenB.ByPath[RepoPathFor("B")].StatementId);
+        var oldEvent = fixture.EventBytes("B");
+
+        var result = fixture.Align("--add", PathFor("A"));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("selectors_considered=1", result.Output, StringComparison.Ordinal);
+        Assert.Equal(oldEvent, fixture.EventBytes("B"));
+        Assert.Equal(frozenB.ByPath[RepoPathFor("B")].StatementId.Value, fixture.StatePin("B"));
+    }
+
+    [Fact]
+    public void ScopedAddRequiresFrozenPrerequisitesBeforeWriting()
+    {
+        var a = ModuleWithReport("A", "import D5.S0.Carrier.B\n" + Source("A"), "True") with { Imports = ["B"] };
+        var b = ModuleWithReport("B", Source("B"), "True");
+        using var fixture = new AlignFixture(a, b);
+
+        var result = fixture.Align("--add", PathFor("A"));
+
+        Assert.False(result.Success);
+        Assert.Contains(PathFor("B"), result.Error, StringComparison.Ordinal);
+        Assert.Empty(fixture.AcceptedFiles());
+        Assert.Equal(0, fixture.StateFileCount());
+    }
+
+    [Fact]
     public void RegisteredDriftIsAlignedAndSecondRunDoesNotWrite()
     {
         var original = ModuleWithReport("A", Source("A"), "True");
@@ -573,6 +676,8 @@ public sealed partial class LedgerAlignWriterTests
     {
         private readonly TemporaryDirectory temporary = new();
         private readonly string reportPath;
+        private readonly RepositorySnapshot snapshot;
+        private readonly LeanAxiomReport report;
 
         internal AlignFixture(params ModuleSpec[] modules) : this(modules, []) { }
 
@@ -609,9 +714,9 @@ public sealed partial class LedgerAlignWriterTests
 
             var raw = RawRepositorySnapshot.Create(
                 files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
-            var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
                 SnapshotDecoder.Decode(raw)).Snapshot;
-            var report = LeanAxiomReport.Create(reports);
+            report = LeanAxiomReport.Create(reports);
             reportPath = Path.Combine(temporary.Path, "candidate-report.json");
             RawLeanReportArtifact.WriteFile(reportPath, snapshot, report);
             Repository = new FakeRepositoryGateway(
@@ -628,8 +733,34 @@ public sealed partial class LedgerAlignWriterTests
             temporary.Path,
             FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
 
-        internal CommandResult Align(params string[] options) =>
-            Invoke([.. options, "--candidate-lean-report", reportPath]);
+        internal CommandResult Align(params string[] options)
+        {
+            var path = reportPath;
+            if (options.Length > 0 && options.Length % 2 == 0
+                && options.Where((_, index) => index % 2 == 0).All(static option => option == "--add"))
+            {
+                var targets = options.Where((_, index) => index % 2 == 1).Select(RepoPath.CreateKnown).ToArray();
+                if (targets.All(snapshot.Files.ContainsKey)) path = WriteScopedReport(targets);
+            }
+            return Invoke([.. options, "--candidate-lean-report", path]);
+        }
+
+        private string WriteScopedReport(IEnumerable<RepoPath> targets)
+        {
+            var scope = LeanReportScope.Create(snapshot, targets);
+            var selected = RepositorySnapshot.Create(snapshot.Files.Where(item => scope.Paths.Contains(item.Key))
+                .ToImmutableDictionary());
+            var selectedReport = LeanAxiomReport.Create(report.Files.Where(item => scope.Paths.Contains(item.Key))
+                .ToDictionary(static item => item.Key.Value, item => item.Value with
+                {
+                    Imports = LeanSourceCatalog.ParseFileImports(snapshot.Files[item.Key], includeImplicitInit: true),
+                }));
+            var path = Path.Combine(temporary.Path, "scoped-report.json");
+            RawLeanReportArtifact.WriteFile(path, selected, selectedReport);
+            File.WriteAllText(path, File.ReadAllText(path).Replace(RawLeanReportArtifact.Schema,
+                RawLeanReportArtifact.ScopedSchema, StringComparison.Ordinal));
+            return path;
+        }
 
         internal CommandResult Invoke(IReadOnlyList<string> options) =>
             DagLedgerAlignWriter.Align(
