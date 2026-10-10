@@ -23,7 +23,7 @@ public sealed class LeanUtilityInputTests
         var bad = LeanUtilityInputCommand.Run(() => UtilityAdmissionTestSupport.Raw(files),
             ["--targets", "D5.S0.Carrier.Unfinished"]);
         Assert.Equal(2, bad.ExitCode);
-        Assert.Contains("Refutation claim source is absent", bad.Error, StringComparison.Ordinal);
+        Assert.Contains("D5/S0/Carrier/Missing.lean", bad.Error, StringComparison.Ordinal);
         Assert.Equal(2, LeanUtilityInputCommand.Run(() => UtilityAdmissionTestSupport.Raw(files), []).ExitCode);
     }
 

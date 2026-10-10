@@ -156,6 +156,36 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertEqual(value['schema'], 'stratalint-scoped-lean-report-v1')
         return {row['module']: row for row in value['modules']}
 
+    def test_native_selected_utility_reader_ignores_unrelated_unfinished_refutation(self):
+        self.ensure()
+        # Keep cache operations on the fixture carrier, but use the production utility reader.
+        carrier = self.root / 'bin/dotnet'
+        script = carrier.read_text()
+        boundary = 'if "--scope" in sys.argv:'
+        script = script.replace(boundary,
+            'if "lean-utility-input" in sys.argv: os.execv(dotnet, [dotnet, cli, *sys.argv[2:]])\n' + boundary)
+        carrier.write_text(script)
+        header = ('/- GID: D5/S0/Carrier/Unfinished\n'
+                  '   generality: G\n'
+                  '   mirror-B: D5/B/S0/Carrier/Unfinished\n'
+                  '   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)\n'
+                  '   anchors: []\n'
+                  '   utility: kind=certified-instance; basis=refutes=gid:D5/S0/Carrier/Missing.claim; '
+                  'claim=D5/S0/Carrier/Missing.claim; result=D5/S0/Carrier/Unfinished.result\n'
+                  '   digest: Selected refutations require their claim source. -/\n')
+        self.write('D5/S0/Carrier/Unfinished.lean', header + 'this unrelated unfinished module does not compile\n')
+        full = subprocess.run([self.dotnet, str(self.cli), 'lean-utility-input'],
+                              cwd=self.root, capture_output=True, text=True)
+        self.assertEqual(full.returncode, 2, full.stdout + full.stderr)
+        self.assertIn('Refutation claim source is absent', full.stderr)
+        self.scoped('D5.A')
+        self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'})
+        self.verify('D5.A')
+        failed = self.scoped('D5.S0.Carrier.Unfinished', success=False)
+        self.assertNotEqual(failed.returncode, 0)
+        self.assertIn('D5/S0/Carrier/Missing.lean', failed.stdout + failed.stderr)
+        self.assertFalse(publication.member(self.output, '.input.attestation').exists())
+
     def test_native_scope_uses_only_explicit_module_facets(self):
         self.ensure()
         canonical = self.root / '.lake/build/stratalint/raw-lean-report.json'

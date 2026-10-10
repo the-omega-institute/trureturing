@@ -13,6 +13,7 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
     public void ScopedProducerContract(string scenario) => Run(scenario, native: false);
 
     [Theory]
+    [InlineData("test_native_selected_utility_reader_ignores_unrelated_unfinished_refutation")]
     [InlineData("test_native_scope_uses_only_explicit_module_facets")]
     [InlineData("test_native_scope_tracks_changed_imports_and_external_utility_claims")]
     [InlineData("test_native_scope_includes_external_consumer_and_checks_its_closure")]

@@ -221,7 +221,8 @@ class Entry:
         inputs.validate('lean-report')
         if not set(roots) <= inputs.modules().keys():
             raise ValueError('scoped roots must be registered report modules')
-        utility_file = self.phase('utility', ['dotnet', self.producer, 'lean-utility-input'])
+        utility_file = self.phase('utility', ['dotnet', self.producer, 'lean-utility-input',
+            '--targets', ' '.join(roots)])
         utilities = public.read_json(utility_file.read_bytes())
         if not isinstance(utilities, list):
             raise ValueError('utility input must be an array')
@@ -229,7 +230,8 @@ class Entry:
             materials.require_keys(entry, native.UTILITY_FIELDS, 'authoritative utility input')
             if any(not isinstance(value, str) or not value for value in entry.values()):
                 raise ValueError('incomplete authoritative utility input')
-        input_file = self.phase('utility-scope', ['dotnet', self.producer, 'lean-utility-input', '--scope'])
+        input_file = self.phase('utility-scope', ['dotnet', self.producer, 'lean-utility-input', '--scope',
+            '--targets', ' '.join(roots)])
         utility_inputs = public.read_json(input_file.read_bytes())
         if not isinstance(utility_inputs, list):
             raise ValueError('utility scope input must be an array')

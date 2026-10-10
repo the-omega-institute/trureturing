@@ -10,15 +10,19 @@ internal static class LeanUtilityInputCommand
 {
     // Managed Lean plus FILEMAP policy documents: enumeration follows the inputs, not the repository.
     private static readonly string[] Scope = ["D5", "Trureturing.lean", ":(glob)Meta/*"];
+    private static readonly string[] ScopedInputs = ["D5", "Reg", "Trureturing.lean", ":(glob)Meta/*"];
 
     internal static ExplicitCommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments) =>
         Run(() => GitRepositorySnapshotReader.ReadCurrent(repositoryRoot,
-            readContents: LeanClosureValidator.IsManagedLean, pathspecs: Scope), arguments);
+            readContents: arguments.Contains("--targets") ? LeanClosureValidator.IsReportLean : LeanClosureValidator.IsManagedLean,
+            pathspecs: arguments.Contains("--targets") ? ScopedInputs : Scope), arguments);
 
     internal static ExplicitCommandResult Run(Func<RawRepositorySnapshot> readCurrent, IReadOnlyList<string> arguments)
     {
-        var scopeOnly = arguments.Count == 1 && arguments[0] == "--scope";
-        if (arguments.Count != 0 && !scopeOnly) return new(2, string.Empty, "USAGE: StrataLint lean-utility-input [--scope]\n");
+        var scopeOnly = arguments.Count > 0 && arguments[0] == "--scope";
+        var remaining = scopeOnly ? arguments.Skip(1).ToArray() : arguments.ToArray();
+        if (remaining.Length != 0 && (remaining.Length != 2 || remaining[0] != "--targets"))
+            return new(2, string.Empty, "USAGE: StrataLint lean-utility-input [--scope] [--targets MODULES]\n");
         try
         {
             var snapshot = SnapshotDecoder.Decode(readCurrent()) switch
@@ -26,9 +30,13 @@ internal static class LeanUtilityInputCommand
                 SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
                 SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
             };
+            var selected = remaining.Length == 0 ? null : LeanReportScope.Create(snapshot,
+                remaining[1].Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(static module => RepoPath.CreateKnown(module.Replace('.', '/') + ".lean")));
             var obligations = new List<object>();
             foreach (var (path, file) in snapshot.Files.OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
             {
+                if (selected is not null && !selected.Paths.Contains(path)) continue;
                 if (!LeanClosureValidator.IsManagedLean(path.Value)
                     || !RepositoryRules.TryHeader(file.Text, out var header)
                     || !UtilitySyntax.TryParse(header.Utility, out var declaration, out _)
