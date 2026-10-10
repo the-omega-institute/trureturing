@@ -84,7 +84,7 @@ def registration : Registration arena (arena.Law actual) where
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.RawLimit.raw_confidence_failure)
-    (Realization rawSignature) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} rawSignature (fun _ p rho => Law.misorder rho p.1 (Scale.sampleLength rho p.1 p.2)) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.rawLimitUnit,
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.registration,
   realizationSource := none,
@@ -96,7 +96,7 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize rawSignature
+  readout := some (realize.{0,0,0,0,0} rawSignature
     (fun _ p rho => Law.misorder rho p.1 (Scale.sampleLength rho p.1 p.2))
     (fun e => nomatch e)),
   variation := .absent,
@@ -183,7 +183,7 @@ def proof_record : Registration arena (arena.Law actual) where
 
 noncomputable def registration_result : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.result)
-    (Realization rawSignature) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} rawSignature (fun _ p rho => Law.misorder rho p.1 (Scale.sampleLength rho p.1 p.2)) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.resultUnit,
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.MainResult.proof_record,
   realizationSource := none,
@@ -195,7 +195,7 @@ noncomputable def registration_result : LeanInformationAudit.Contract.Registrati
   realization := .source arena ⟨proof_record⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize rawSignature
+  readout := some (realize.{0,0,0,0,0} rawSignature
     (fun _ p rho => Law.misorder rho p.1 (Scale.sampleLength rho p.1 p.2))
     (fun e => nomatch e)),
   variation := .absent,

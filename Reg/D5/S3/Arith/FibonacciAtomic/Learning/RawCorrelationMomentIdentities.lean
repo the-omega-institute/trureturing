@@ -85,7 +85,7 @@ def registration : Registration arena (arena.Law actual) where
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law.nonzero_count_diverges)
-    (Realization countSignature) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} countSignature (fun _ p rho => FiniteTail.tail (Law.cleanRecordMass rho p.1) Law.nonzero (Scale.sampleLength rho p.1 p.2.1) p.2.2) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.countLimitUnit,
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.registration,
   realizationSource := none,
@@ -97,7 +97,7 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize countSignature
+  readout := some (realize.{0,0,0,0,0} countSignature
     (fun _ p rho => FiniteTail.tail (Law.cleanRecordMass rho p.1) Law.nonzero (Scale.sampleLength rho p.1 p.2.1) p.2.2)
     (fun e => nomatch e)),
   variation := .absent,
