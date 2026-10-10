@@ -1,0 +1,17 @@
+### 第三部分导言
+
+Claim status: open.（供文 III 导言及其历史归属。）
+
+> 编者限定（III 导言）：这里“本轮真正的新结论”保留为供文作者措辞；原始作者/模型未知，现有相似标量结果与原生 continuation 结果仍归其已有来源。本部分收集的是条件响应—纤维综合，不宣告新的优先权、已实现统一来源或新 Lean 证明。
+
+这一步继续向前推进：把前一轮的静态隐藏坐标 $\kappa=p_{13}$，与当前项目最新的 Fibonacci 深度后验、native continuation 和 future law 合并成一个统一的“响应—纤维”理论。
+
+当前仓库的主线仍然是：用明确的定义和可复核证明区分“读数恢复了什么”和“信息还在哪里逸出”。仓库主页也明确把 Lean 证明、理论输入、有限实验和开放义务分开处理。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com) 当前 HEAD 是 [`912f4990050451866c2bb1cf71e33151a637d4b7`](https://github.com/the-omega-institute/trureturing/commit/912f4990050451866c2bb1cf71e33151a637d4b7)，PR #14893 的新增内容集中在 future-response 文档 §§34–37；这些新增结论是仓库派生的普通数学证明，不能误称为本次提交新增的 Lean 定理。
+
+本轮真正的新结论是：
+
+> 原始 FIB ATOM 金字塔的隐藏方向 $\kappa$，不是静态层和动态层各自独立的两个问题。它们通过“未来响应向量的四角对比”连接起来。  
+> 对任何未来响应，只要它在 $F[1,3]$ 上相对于 $F[1]$、$F[3]$、$F[\mathrm{null}]$ 产生非零四角差，它就能够穿透 $\kappa$-纤维；否则整条 $\kappa$-纤维会在该未来响应下继续保持不可区分。
+
+---
+

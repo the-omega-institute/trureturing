@@ -1,0 +1,52 @@
+- $y(j)=1$ 表示第二窗口含有 $F[3]$ 或 $F[1,3]$。
+
+定义：
+
+$$
+\mathcal R_1 =
+\{F[1],F[1,3]\},
+$$
+
+$$
+\mathcal C_1 =
+\{F[3],F[1,3]\}.
+$$
+
+合法双窗口集合为：
+
+$$
+\mathcal E =
+(\Sigma\times\Sigma)
+\setminus
+(\mathcal R_1\times\mathcal C_1),
+$$
+
+其中：
+
+$$
+\Sigma =
+\left\{
+F[\mathrm{null}],F[1],F[2],F[3],F[1,3]
+\right\}.
+$$
+
+因为共有 $5\times5=25$ 个有序对，非法块有 $2\times2=4$ 个，所以：
+
+$$
+\boxed{
+|\mathcal E|=21.
+}
+$$
+
+令双窗口联合律为 $P_{ij}$，第一窗口边缘为 $\mu_i$，第二窗口边缘为 $\nu_j$。
+
+定义：
+
+$$
+a=\sum_{i\in\mathcal R_1}\mu_i,
+$$
+
+$$
+b=\sum_{j\in\mathcal C_1}\nu_j.
+$$
+

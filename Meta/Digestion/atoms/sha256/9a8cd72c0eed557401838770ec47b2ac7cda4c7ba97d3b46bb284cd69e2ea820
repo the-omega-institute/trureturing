@@ -1,0 +1,1 @@
+| [ActualCoarseReadoutHistory.lean](../../../D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutHistory.lean)、[ActualCoarseReadoutCompletion.lean](../../../D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.lean) | 实际取得的共同历史和补充读数；不把存在可分读口当作已经取得读数 

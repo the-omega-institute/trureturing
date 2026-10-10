@@ -1,0 +1,35 @@
+- 坐标体积：
+
+$$
+\operatorname{Vol}(\mathcal P)=\frac13.
+$$
+
+
+但概率律所在的完整对象不是三维金字塔，而是五态概率单纯形：
+
+$$
+\Delta(\Sigma)
+=
+\left\{
+p\in\mathbb R_{\ge0}^5:
+\sum_\sigma p_\sigma=1
+\right\}.
+$$
+
+
+因此真正的映射是：
+
+$$
+m:\Delta(\Sigma)\longrightarrow\mathcal P,
+$$
+
+
+$$
+m(p)=(X,Y,Z).
+$$
+
+
+金字塔是概率体的边界读出，而不是概率体本身。
+
+---
+
