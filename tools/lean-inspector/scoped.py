@@ -43,6 +43,7 @@ def check_destination(repository, report):
     canonical = Path(repository) / '.lake/build/stratalint/raw-lean-report.json'
     protected = [public.member(canonical, suffix) for suffix in (*public.SUFFIXES, '.reuse.json')]
     protected.append(native.state(repository) / 'report.zip')
+    protected.append(Path(repository) / '.lake/lean-report-seed-base.json')
     for suffix in public.SUFFIXES:
         path = public.member(report, suffix)
         if any(path.resolve() == member.resolve()
