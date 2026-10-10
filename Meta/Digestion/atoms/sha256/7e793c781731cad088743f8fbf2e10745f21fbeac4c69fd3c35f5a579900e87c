@@ -1,0 +1,16 @@
+## 边界轴
+
+至少还需要
+
+\[
+\tau\in
+\{
+\mathrm{active},
+\mathrm{pending}_0,
+\mathrm{pending}_1,
+\mathrm{delivered}
+\}.
+\]
+
+于是一个能够精确预测未来的最小状态结构至少具有形式
+

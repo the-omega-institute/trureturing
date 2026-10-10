@@ -1,0 +1,14 @@
+## 定理 1：活动 future law 的最小精确摘要
+
+固定一个先验 \(\mu\)，并假设其正支持至少包含两个不同的 Fibonacci 深度。
+
+在实际活动历史域上，有：
+
+\[
+h\sim_{\mathrm{Fut}}h'
+\quad\Longleftrightarrow\quad
+\sigma(h)=\sigma(h').
+\]
+
+也就是说：
+

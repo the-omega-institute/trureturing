@@ -1,0 +1,19 @@
+- 当前项目的公开 PR 列表仍将“recover native Fibonacci Read counts from future laws”列为该理论线的关键工作。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+前一轮已经得到静态关系：
+
+\[
+\kappa=p_{13}=E[xy]
+\]
+
+是三位窗口唯一的隐藏二阶矩。
+
+现在继续证明：
+
+> 对动态历史而言，完整 future law 诱导出一个类似 Myhill–Nerode 的最小状态商。  
+> 在非单例 Fibonacci 深度先验下，这个最小商通常是无限的，不能被有限状态摘要精确替代。
+
+这正是静态 FIB 金字塔和“时间方向上的选择性遗忘”之间的严格连接。
+
+---
+
