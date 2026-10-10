@@ -4,7 +4,7 @@
 
 在 [Foundational Formulas](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) 的五态概率几何上加入一维质量作用流，并与离散分层捕获、黄金热层以及素数/Fibonacci 轴组成带类型的模型接口。把 [Boundary Calculus](AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md) 的离散 native continuation、素数支撑扩张和真实环境热力学接成同一个状态更新，仍然是开放问题。
 
-“信息逃逸”需要分层理解。对只观察均值坐标的观察者，κ 纤维上的状态全部不可辨识，因而是已经逃逸到 kernel 之外的隐藏信息。对完整五态观察者，这部分信息由条件关联和 KL 储备量表示，并在固定纤维且 \(\gamma r>0\) 时沿质量作用流耗散到最大熵完成。这个过程不是信息凭空离开封闭系统。若要称作向环境逃逸，还需要加入环境、chemostat 或擦除协议，并把环境熵流写进账本。
+“信息逃逸”需要分层理解。对只观察均值坐标的观察者，κ 纤维上的状态全部不可辨识，因而是已经逃逸到 kernel 之外的隐藏信息。对完整五态观察者，这部分信息由条件关联和 KL 储备量表示，并在 \(r>0\) 的固定条件纤维上、总暴露 \(G(\infty)=\infty\) 时沿质量作用流耗散到最大熵完成（§9）；\(r=0\) 的顶点不定义条件坐标。这个过程不是信息凭空离开封闭系统。若要称作向环境逃逸，还需要加入环境、chemostat 或擦除协议，并把环境熵流写进账本。
 
 ## 1. 静态金字塔是一个带隐藏纤维的商空间
 
@@ -97,7 +97,7 @@ D(p\Vert p_*)=H_{\ln}(p_*)-H_{\ln}(p)
 K_0\supseteq K_1\supseteq\cdots\supseteq K_m,
 \]
 
-其中 \(K_j\) 是第 \(j\) 层仍然无法区分的 pair 集合。第 \(j\) 层首次分离的 pair 构成 capture 增量，所有增量互不相交并与最终 unresolved 集合一起分割初始 pair 集合。相应的 capture count、escape rate 和 survival/hazard 具有望远镜恒等式。
+其中 \(K_j\) 是第 \(j\) 层仍然无法区分的 pair 集合。第 \(j\) 层首次分离的 pair 构成 capture 增量，所有增量互不相交并与最终 unresolved 集合一起分割初始 pair 集合。相应结果给出 capture count/rate、unresolved count/rate，以及速率的望远镜恒等式。
 
 把这个结构和金字塔连接时，定义带类型的层状态
 
