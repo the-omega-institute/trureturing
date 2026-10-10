@@ -962,3 +962,10 @@ same quantified excess, not a proof that every member of
 $\mathscr S_*$ is GA1. The full signed estimate and RH remain unproved;
 this application is not Lean certified and claims no mathematical
 originality.
+
+The [existing Johnston weighted-sign theorem](../Analytic/johnston2022average.md#direct-transport-to-the-existing-robin-kernel)
+also gives a negative primitive with this kernel, anchored at 2.
+Writing that primitive as $J$ leaves the complete target
+$I_\psi(A)=J_\infty-J(A)$. Its negative bias does not supply the
+required comparison with $J_\infty$ at these same actual integers;
+the uniform floor in (S4) on the already justified source class remains unpaid.
