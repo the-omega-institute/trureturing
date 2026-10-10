@@ -186,3 +186,106 @@ selected class. A future estimate must also justify its connection to
 the actual CA competitors of this $N$. The source contributes an exact
 alternative recovery mechanism and the existing additive-frequency
 expansion; it contributes no new signed Robin margin in this application.
+
+## A classical mean supplier for one fixed mixed response
+
+For a specific permissible weight choice in (SV1), use the same actual
+integer source and clock $A=\log N>1$, and put
+
+$$
+L=\log A,\qquad r=L/8,\qquad
+R=e^r,\quad U=e^{2r},\quad U_1=e^{3r},\quad V=e^{4r},
+$$
+
+$$
+\rho_z(d)=\mu(d)\log(z/d)\mathbf1_{d\le z},\qquad
+\lambda=\rho_R/r,\qquad
+\theta'=(\rho_{U_1}-\rho_U)/r,\qquad \theta=\mu-\theta'.
+$$
+
+These are logarithmic Barban–Vehov weights. They satisfy the general
+identity's normalization; they are not the optimized weights in (2.1).
+The source's quantitative exponential-sum theorems are not asserted
+for this replacement. For the same LCM transform $h$, define
+
+$$
+H_A(y)=\sum_dh(d)\left\lfloor y/d\right\rfloor,\qquad
+S_A=\sum_d\frac{h(d)}d,\qquad H_A^-(y)=\max\{-H_A(y),0\}.
+$$
+
+The finite support lies in $d\le RU_1=\sqrt A$. Use the bilinear form
+$\langle f,g\rangle=\sum_{d,e}f(d)g(e)/[d,e]$, and put
+$\mathcal Q(z)=\langle\rho_z,\rho_z\rangle$ and
+$\mathcal E(a,b)=\langle\rho_b-\rho_a,\rho_b-\rho_a\rangle$.
+The relevant existing supplier is Carneiro–Chirre–Helfgott–Mejía-Cordero,
+[*Optimality for the two-parameter quadratic sieve*, arXiv:2005.03162v6](https://arxiv.org/abs/2005.03162v6),
+Theorem 1.1, equations (1.7)–(1.8). Its normalized weights are defined
+in (1.4)–(1.5). Multiplying the source's $M(1,z;h_0)$ by
+$(\log z)^2$ gives $\mathcal Q(z)$; multiplying $M(a,b;h_0)$ by
+$(\log(b/a))^2$ gives $\mathcal E(a,b)$. Thus the published expansions
+read
+
+$$
+\mathcal Q(z)=\log z-\kappa_{\rm BV}
+ +O\!\left(e^{-c_0\sqrt{\log z}}\right),
+$$
+
+$$
+\mathcal E(a,b)=\log(b/a)-2\kappa_{\rm BV}
+ +O\!\left(e^{-c_0\sqrt{\log(b/a)}}
+           +e^{-c_0\sqrt{\log a}}\right).
+$$
+
+Here $\kappa_{\rm BV}$ is the constant in the cited Theorem 1.1,
+distinct from the small parameter $\kappa$ in (SV3), and $c_0>0$.
+Polarization supplies the parameter correspondence
+
+$$
+2r^2S_A=\mathcal Q(U_1)-\mathcal Q(U)
+          -\mathcal E(R,U_1)+\mathcal E(R,U).
+$$
+
+Both leading terms and both second-order constants cancel. The cited
+classical theorem therefore gives the two-sided envelope
+
+$$
+|S_A|\ll \frac{e^{-c_1\sqrt L}}{L^2}.
+$$
+
+Here $c_1>0$ is fixed.
+
+This application is not a new mean theorem or Lean certification. It
+does not determine the sign of $S_A$. Nor does it estimate all finite
+negative responses: the exact floor correction remains
+
+$$
+H_A(y)=yS_A-\sum_dh(d)\{y/d\},
+$$
+
+with the full support retained even when $d>y$.
+
+For the unchanged actual integer $N$, write $a_p=v_p(N)$ and
+$\epsilon=1/(A\log A)$. The actual next-layer gains and losses are
+
+$$
+\beta_j(p)=\log\frac{1-p^{-(j+1)}}{1-p^{-j}},\qquad
+\delta_{N,p,k}=\epsilon\log p-\beta_{a_p+k}(p).
+$$
+
+Own-price global CA optimality and decreasing layer gains supply
+$0\le\delta_{N,p,k}\le\epsilon\log p$. The local negative-part
+candidate asks for an eventual same-source bound
+
+$$
+\sup_{A\le x\le2A}
+\frac{\sum_{p^k\le x}\delta_{N,p,k}H_A^-(x/p^k)}{\epsilon x}
+\le A^{-\eta}.
+$$
+
+This candidate remains unpaid. A two-sided estimate for $S_A$, or
+positivity of that mean alone, does not supply it. A proof of this
+candidate would control only one local conversion defect; the Euler
+gain, other recovery convolutions, centered baseline and complete
+infinite tail in (SV4) would still need estimates with the same
+source and weight choice. No original Robin-budget improvement is
+claimed from the classical mean correspondence.
