@@ -1,0 +1,131 @@
+### 21. 九、祖先关系是另一种完全不同的隐藏层
+
+Claim status: open.（供文 II 原第 9 节全文。）
+
+> 编者限定（II.9）：祖先断言的对象是指定的有序原树、$n\ge3$ 的缺陷家族和互不嵌套替换地址；叶词、括号、来源深度及面积向量各是不同读口，不能由占位概率或静态 $\kappa$ 直接恢复。所引祖先立方体归已有祖先卷，不作为本卷新证明或物理来源认证。
+
+
+统计联合关系还没有涉及原始 FIB 树的括号。
+
+原始树为：
+
+$$
+\mathbb T::=\alpha\mid\beta\mid\langle\mathbb T,\mathbb T\rangle,
+$$
+
+$$
+\rho(\alpha)=\beta,
+$$
+
+$$
+\rho(\beta)=\langle\beta,\alpha\rangle.
+$$
+
+取：
+
+$$
+B=
+\left\langle
+\langle\beta,\alpha\rangle,\beta
+\right\rangle =
+T_3,
+$$
+
+$$
+D=
+\left\langle
+\beta,\langle\alpha,\beta\rangle
+\right\rangle.
+$$
+
+则：
+
+$$
+w(B)=w(D)=\beta\alpha\beta,
+$$
+
+但：
+
+$$
+\nu(B)=3,
+\qquad
+\nu(D)=0.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{共同出现关系}
+\neq
+\text{共同祖先关系}.
+}
+$$
+
+对 $T_n$，含有三叶块 $B$ 的互不嵌套地址数为：
+
+$$
+K_n=\mathrm{Fib}_{n-2}.
+$$
+
+在任意子集 $A$ 上把 $B$ 替换成 $D$，得到 $V_A$。则：
+
+$$
+w(V_A)=w(T_n),
+$$
+
+但：
+
+$$
+\nu(V_A) =
+\begin{cases}
+n,&A=\varnothing,\\
+0,&A\neq\varnothing.
+\end{cases}
+$$
+
+所以同一个叶词可以拥有：
+
+$$
+2^{\mathrm{Fib}_{n-2}}
+$$
+
+个不同原树。
+
+这个结果说明，以下读数都可能不足以恢复括号：
+
+- 叶标签数量；
+- 叶词；
+- 由叶词计算的线性组成；
+- 结合律下的矩阵乘积；
+- 低阶路径面积；
+- 单窗口 $\kappa$。
+
+要恢复祖先，需要新的读口，例如祖先面积向量：
+
+$$
+\mathcal A(t) =
+(\mathcal A_1(t),\ldots,\mathcal A_{m-1}(t)).
+$$
+
+最新祖先卷给出：
+
+$$
+\mathcal A(V_A)-\mathcal A(T_n) =
+\sum_{p\in A}
+(e_{i_p}-e_{i_p+1}),
+$$
+
+并且：
+
+$$
+\left\|
+\mathcal A(V_A)-\mathcal A(V_{A'})
+\right\|_2^2 =
+2|A\triangle A'|.
+$$
+
+这形成了一个真正的祖先关系立方体。
+
+---
+

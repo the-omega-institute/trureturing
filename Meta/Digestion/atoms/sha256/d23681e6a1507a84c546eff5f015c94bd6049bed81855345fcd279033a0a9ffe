@@ -1,0 +1,91 @@
+#### theorem 8.1: 定理 4：模式—深度独立性的刚性判据
+
+Claim status: open.（供文 I 原第 8 节「定理 4」；保留纸面论证及其边界。）
+
+> 编者限定（I.8，原定理 4）：参与交叉比须有 $p_I,p_J,\mu_i,\mu_j,c_I,c_J>0$，两个不同正整数深度 $i,j$ 和非负整数 Read 计数 $A_I,B_I$，故指数差是整数。独立性只约束正概率模式；零质量模式不能靠取消零因子识别计数。所引是 FR 定理 34.2，其整数核结论编号为 FR.34.3，FR.34.2 则是 Fibonacci 行列式恒等式编号。下方原展开式的分母最后一项印作 $p_J\mu_i c_J r_i^{A_J}s_j^{B_J}$，依其定义的 $\pi_H(J,i)$ 应为 $p_J\mu_i c_J r_i^{A_J}s_i^{B_J}$；此索引不一致作为显式原文勘误保留，原式不静默更正，后续定理仍为 open 参考论证。
+
+
+假设隐藏深度先验至少包含两个不同的正支持点 $i\neq j$。则对任意两个模式 $I,J$，模式与深度的后验交互赔率为
+
+$$
+\Xi_{I,J;i,j} =
+\frac{\pi_H(I,i)\pi_H(J,j)}
+{\pi_H(I,j)\pi_H(J,i)}
+$$
+
+并满足
+
+$$
+\Xi_{I,J;i,j} =
+\left(\frac{r_i}{r_j}\right)^{A_I-A_J}
+\left(\frac{s_i}{s_j}\right)^{B_I-B_J}.
+$$
+
+进一步，若
+
+$$
+\Xi_{I,J;i,j}=1
+$$
+
+对所有模式对 $I,J$ 都成立，则
+
+$$
+A_I=A_J,\qquad B_I=B_J.
+$$
+
+因此：
+
+> 在至少两个 Fibonacci 深度同时有正概率时，模式 $I$ 与隐藏深度 $K$ 后验独立，当且仅当五个模式的 $(A_I,B_I)$ 完全相同。
+
+##### 8.1 证明（I 原定理 4）
+
+将联合后验代入交互赔率：
+
+$$
+\begin{aligned}
+\Xi_{I,J;i,j}
+&=
+\frac{
+p_I\mu_i c_I r_i^{A_I}s_i^{B_I}
+\cdot
+p_J\mu_j c_J r_j^{A_J}s_j^{B_J}
+}{
+p_I\mu_j c_I r_j^{A_I}s_j^{B_I}
+\cdot
+p_J\mu_i c_J r_i^{A_J}s_j^{B_J}
+}\\
+&=
+\left(\frac{r_i}{r_j}\right)^{A_I-A_J}
+\left(\frac{s_i}{s_j}\right)^{B_I-B_J}.
+\end{aligned}
+$$
+
+当前 HEAD §§34–35 中的定理 34.2 给出：
+
+$$
+\left(\frac{r_i}{r_j}\right)^u
+\left(\frac{s_i}{s_j}\right)^v=1
+\quad\Longrightarrow\quad
+u=v=0
+$$
+
+对所有 $i\neq j$ 和整数 $u,v$ 成立。
+
+将
+
+$$
+u=A_I-A_J,\qquad
+v=B_I-B_J
+$$
+
+代入，即得
+
+$$
+A_I-A_J=0,\qquad B_I-B_J=0.
+$$
+
+反方向显然成立。证毕。
+
+这个结果揭示了另一个隐藏关系：
+
+- $\kappa$ 是五态模式内部的四角交互；

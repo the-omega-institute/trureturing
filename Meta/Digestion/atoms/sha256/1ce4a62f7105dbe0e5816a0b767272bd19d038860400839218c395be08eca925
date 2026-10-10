@@ -1,0 +1,10 @@
+- 相对第一父提交只新增了一份理论文档，新增 §§34–37，约 237 行，没有把旧 Lean 文件重新归因到这次提交。
+
+新增文档是：
+
+[RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md](https://github.com/the-omega-institute/trureturing/blob/912f4990050451866c2bb1cf71e33151a637d4b7/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md)
+
+项目主页本身把工作分成 Lean 证明、可复核实验、理论输入和开放问题，并强调“已检查结论”和“仍开放的前沿”必须分开。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com)
+
+| 内容 | 当前状态 |
+|---|---|
