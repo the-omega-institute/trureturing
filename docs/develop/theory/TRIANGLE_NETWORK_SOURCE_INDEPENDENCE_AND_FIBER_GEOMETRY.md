@@ -270,7 +270,11 @@ H(p_*)-H(p)=r\,I(x:y\mid z=0),
 and the total-variation difference is
 
 \[
-\|p-p_*\|_1=\frac{2|\Delta|}{r}.
+d_{\mathrm{TV}}(p,p_*)
+=\frac12\|p-p_*\|_1
+=\frac{2|\Delta|}{r},
+\qquad
+\|p-p_*\|_1=\frac{4|\Delta|}{r}.
 \tag{2.12}
 \]
 
