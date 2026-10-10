@@ -5,6 +5,37 @@ namespace StrataLint.PlaybookScript.Tests;
 public sealed class ScopedFormalizationWorkflowTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DepositReportsFrozenUncoveredWhenCoverageInputSelectionFails(bool queryFails)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        if (queryFails)
+        {
+            var dotnet = Path.Combine(fixture.Root, "bin/dotnet");
+            File.Move(dotnet, dotnet + "-original");
+            File.WriteAllText(dotnet, """
+                #!/usr/bin/env bash
+                if [[ "$*" == *' --lean-inputs '* ]]; then exit 31; fi
+                exec "$0-original" "$@"
+                """);
+            File.SetUnixFileMode(dotnet, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        }
+        else fixture.SelectCoverageInputs(string.Empty);
+        var before = fixture.BackfillContents();
+
+        var result = fixture.Run("deposit");
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(1, fixture.FreezeCount());
+        Assert.Equal(before, fixture.BackfillContents());
+        Assert.DoesNotContain("dotnet:cover-atom", fixture.CallKinds());
+        Assert.Contains($"PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id={AtomId} gid={Gid} reason=cover-report-exit-",
+            Diagnostics(result), StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("deposit")]
     [InlineData("cover")]
     [InlineData("cover-batch")]

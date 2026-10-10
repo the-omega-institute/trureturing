@@ -151,7 +151,7 @@ require_cover_batch_arguments() {
 
 prepare_cover_report() {
   local selected
-  selected="$(run_cli cover-atom --lean-inputs --cover-atom "$ATOM_ID" --gid "$GID")"
+  selected="$(run_cli cover-atom --lean-inputs --cover-atom "$ATOM_ID" --gid "$GID")" || return $?
   if [[ "$COMMAND" != deposit || "$selected" != "${LEAN_TARGETS:-}" ]]; then
     LEAN_TARGETS="$selected"
     build_scoped_report
@@ -334,11 +334,19 @@ cover_atom_or_resume() {
 }
 
 cover_row() {
+  local status
+  if prepare_cover_report; then
+    :
+  else
+    status=$?
+    COVER_FAILURE_REASON="cover-report-exit-$status"
+    return "$status"
+  fi
   begin_step cover-atom
   if cover_atom_or_resume; then
     complete_step passed
   else
-    local status=$?
+    status=$?
     complete_step failed
     return "$status"
   fi
@@ -358,7 +366,6 @@ case "$COMMAND" in
   deposit)
     require_transaction_arguments
     deposit_module
-    prepare_cover_report
     cover_row || {
       status=$?
       printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=%s gid=%s reason=%s\n' \
@@ -378,7 +385,6 @@ case "$COMMAND" in
     ;;
   cover)
     require_transaction_arguments
-    prepare_cover_report
     cover_row
     ;;
   cover-batch)
