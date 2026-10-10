@@ -80,9 +80,8 @@ private theorem exists_unitary_dilation {n : ℕ} (C : Matrix (Fin n) (Fin n) �
     rw [hR.eq]
     exact CFC.sqrt_mul_sqrt_self _ hC.nonneg
   let v : (Fin n ⊕ Fin n) → EuclideanSpace ℂ (Fin n ⊕ Fin n) :=
-    fun j => match j with
-      | Sum.inl j => WithLp.toLp 2 (Sum.elim (fun i => C i j) (fun i => R i j))
-      | Sum.inr _ => 0
+    Sum.elim (fun j => WithLp.toLp 2 (Sum.elim (fun i => C i j) (fun i => R i j)))
+      (fun _ => 0)
   let s : Set (Fin n ⊕ Fin n) := Set.range Sum.inl
   have hv : Orthonormal ℂ (s.domRestrict v) := by
     rw [orthonormal_iff_ite]
@@ -287,11 +286,11 @@ private lemma one_add_posSemidef_of_contraction {ι : Type*} [Fintype ι]
 
 private def pairBlock {n : ℕ} (C : Matrix (Fin n) (Fin n) ℂ) :
     Matrix (Fin 2 × Fin n) (Fin 2 × Fin n) ℂ :=
-  fun i j => match i.1, j.1 with
-    | 0, 0 => if i.2 = j.2 then 1 else 0
-    | 0, 1 => C i.2 j.2
-    | 1, 0 => Cᴴ i.2 j.2
-    | 1, 1 => if i.2 = j.2 then 1 else 0
+  fun i j =>
+    if i.1 = 0 then
+      if j.1 = 0 then (if i.2 = j.2 then 1 else 0) else C i.2 j.2
+    else
+      if j.1 = 0 then Cᴴ i.2 j.2 else (if i.2 = j.2 then 1 else 0)
 
 private def phaseVector (z : ℂ) : Fin 2 → ℂ := fun i =>
   if i = 0 then 1 else star z
