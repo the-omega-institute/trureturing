@@ -94,6 +94,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/AssociatedMersenne/DegreeGeneratingFunction.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wei-yang-2024-associated-mersenne-degree-series` (proved) by `D5/S1/Words/AssociatedMersenne/DegreeGeneratingFunction.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wei-yang-2024-associated-mersenne-degree-series","declaration_gid":"D5/S1/Words/AssociatedMersenne/DegreeGeneratingFunction.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Wei and Y. Yang (2024). *Associated Mersenne graphs*. DOI: [10.48550/arXiv.2407.08237](https://doi.org/10.48550/arXiv.2407.08237). URL: <https://arxiv.org/abs/2407.08237v1>.
