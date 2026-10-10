@@ -1747,6 +1747,7 @@ jobs:
             tools/Architecture/BannedSymbols*.txt
             tools/Architecture/ScribeScriptAllowlist.txt
             tools/StrataLint.Scribe/Vendor/Katex/katex.min.js
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Cli/**/*.cs
             tools/StrataLint.Cli/*.csproj
             tools/StrataLint.Cli/packages.lock.json
