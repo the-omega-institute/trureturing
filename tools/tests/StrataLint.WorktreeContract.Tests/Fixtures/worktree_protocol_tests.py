@@ -17,6 +17,7 @@ import unittest
 
 from native_fixture import NativeFixture
 from mirror_fixture import MirrorCases
+from cleanup_anchor_cases import CleanupAnchorCases
 
 ROOT = Path(sys.argv.pop(1)).resolve()
 SCRIPT = ROOT / "tools/scripts/worktree/worktree_protocol.py"
@@ -25,7 +26,9 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(MirrorCases, NativeFixture):
+class ProtocolTests(CleanupAnchorCases, MirrorCases, NativeFixture):
+    source_root = ROOT
+
     def setUp(self):
         self.root = self.workspace("worktree-contract-")
         self.note("setup.begin")

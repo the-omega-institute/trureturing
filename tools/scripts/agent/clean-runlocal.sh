@@ -11,15 +11,22 @@ while [ $# -gt 0 ]; do case "$1" in
   *) echo "clean-runlocal: USAGE_ERROR: unknown option $1" >&2; exit 64;; esac; done
 [ -n "$manifest" ] && [ -f "$manifest" ] || { echo "clean-runlocal: USAGE_ERROR: --manifest required" >&2; exit 64; }
 case "$root" in /tmp|/private/tmp|/tmp/*|/private/tmp/*) ;; *) echo "clean-runlocal: USAGE_ERROR: root must be /tmp or under it" >&2; exit 64;; esac
-python3 - "$manifest" "$root" "$delete" "$minage" "$source" "$base" "$protocol_root" <<'PY'
+python3 -B - "$manifest" "$root" "$delete" "$minage" "$source" "$base" "$protocol_root" <<'PY'
 import argparse,json,os,sys,shutil,time
 from pathlib import Path
 manifest,root,delete,minage=sys.argv[1],os.path.realpath(sys.argv[2]),sys.argv[3]=="1",float(sys.argv[4])
 source,base=Path(sys.argv[5]),sys.argv[6]
 sys.path.insert(0,str(Path(sys.argv[7])/"tools/scripts/worktree"))
-from worktree_protocol import inventory,Refused
+from worktree_protocol import inventory,Refused,GitFailure
 from worktree_preservation import remove
 paths=json.load(open(manifest)).get("paths",[]); now=time.time(); out=[]
+# Preserve invocation-relative inputs before moving to Git's protected main tree.
+paths=[(p,os.path.abspath(p)) for p in paths]
+anchor_error=None
+try:
+    source=Path(inventory(source)[0]["worktree"]).resolve()
+    os.chdir(source)
+except Exception as e: anchor_error=str(e)
 def newest(p):
     m=os.lstat(p).st_mtime
     if os.path.isdir(p) and not os.path.islink(p):
@@ -28,15 +35,16 @@ def newest(p):
                 try: m=max(m,os.lstat(os.path.join(d,n)).st_mtime)
                 except FileNotFoundError: pass
     return m
-for p in paths:
-    rp=os.path.realpath(p); rec={"path":p,"eligible":False,"reason":None,"state":"kept"}
-    if os.path.islink(p): rec["reason"]="symlink"
+for p,absolute in paths:
+    rp=os.path.realpath(absolute); rec={"path":p,"eligible":False,"reason":None,"state":"kept"}
+    if os.path.islink(absolute): rec["reason"]="symlink"
     elif rp==root: rec["reason"]="is_root"
     elif not rp.startswith(root+os.sep): rec["reason"]="outside_root"
     elif not os.path.lexists(rp): rec["reason"]="missing"
     elif (now-newest(rp))<minage*60: rec["reason"]="too_recent"
     else:
         try:
+            if anchor_error is not None: raise OSError(anchor_error)
             trees=[Path(row["worktree"]).resolve() for row in inventory(source)]
             if any(Path(rp) in tree.parents for tree in trees): raise Refused("nested_worktree")
             registered=Path(rp) in trees
@@ -49,6 +57,7 @@ for p in paths:
                 shutil.rmtree(rp) if os.path.isdir(rp) else os.remove(rp)
             rec["eligible"]=True
             if delete: rec["state"]="removed"
+        except GitFailure as e: rec["state"]="error"; rec["reason"]=str(e)
         except Refused as e: rec["reason"]=str(e)
         except Exception as e: rec["state"]="error"; rec["reason"]=str(e)
     out.append(rec)

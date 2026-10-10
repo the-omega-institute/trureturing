@@ -41,6 +41,10 @@ class Refused(RuntimeError):
     pass
 
 
+class GitFailure(Refused):
+    """A failed Git operation, distinct from an eligibility refusal."""
+
+
 def git_environment(overrides=None):
     # Ambient location/index/object overrides must never redirect canonical
     # inspection. Keep transport and author identity settings.
@@ -59,7 +63,7 @@ def git(root, *args, env=None, input=None, check=True, timeout=300):
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             env=git_environment(env), timeout=timeout, pass_fds=scope_fds())
     if check and result.returncode:
-        raise Refused(result.stderr.decode(errors="replace").strip() or "git failed")
+        raise GitFailure(result.stderr.decode(errors="replace").strip() or "git failed")
     return result
 
 
