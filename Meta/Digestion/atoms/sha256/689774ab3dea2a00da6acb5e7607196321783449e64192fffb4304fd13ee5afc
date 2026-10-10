@@ -1,0 +1,49 @@
+## 第二步：相同 future law 反推出相同摘要
+
+反过来，假设
+
+\[
+\mathscr L_h=\mathscr L_{h'}.
+\]
+
+当前 FR §§34–35 的等价链给出：
+
+\[
+\mathscr L_h=\mathscr L_{h'}
+\Longrightarrow
+(a(h),\nu_h)=(a(h'),\nu_{h'}).
+\]
+
+其中关键的数论输入是：若两个不同深度 \(i\neq j\) 同时具有正先验，则
+
+\[
+\left(\frac{r_i}{r_j}\right)^u
+\left(\frac{s_i}{s_j}\right)^v=1
+\]
+
+只能在
+
+\[
+u=v=0
+\]
+
+时成立。
+
+因此，不同的整数计数 \((A,B)\) 不可能产生同一个深度后验。于是
+
+\[
+\nu_h=\nu_{h'}
+\Longrightarrow
+(A_h,B_h)=(A_{h'},B_{h'}).
+\]
+
+再结合 phase 相等，得到
+
+\[
+\sigma(h)=\sigma(h').
+\]
+
+证毕。
+
+---
+
