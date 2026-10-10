@@ -140,3 +140,56 @@ residence lengths; the existing persistence supplies amplitude
 only when a selected excess source already exists. Neither
 controls how often actual CA states exceed the threshold.
 The complete original Robin tail and RH remain unproved.
+
+
+## The existing uniform prime count gives a stronger source-specific count
+
+For these selected persistence intervals, (R5) is a weaker count
+than the one supplied directly by the
+[existing uniform extension (GS4)](../ArithSums/nicolas2025comparison.md#the-local-prime-input-and-its-uniform-range).
+Reuse that estimate and the same source's (P8), keeping
+$h=\lambda A^{1-\eta'/2}e^{(\log A)^{1/4}/2}$.
+The following application neither re-proves a prime-count theorem
+nor supplies a sign-sensitive count upper bound.
+
+Every prime in $(A+1,A+h-1]$ has its first-layer event strictly
+inside $(A,A+h)$. The event map $\tau(p)$ is strictly increasing:
+$\log(1+1/p)$ decreases and $\log p$ increases with $p$, so its
+activation price decreases strictly. Each event introduces a new
+prime and therefore a different actual CA integer. Higher-layer
+ties do not erase this distinction. Local finiteness gives the
+largest-tie post-event state a positive-length plateau intersecting
+the persistence interval, entirely above its threshold there.
+Thus all of these first-layer events count toward
+$K_{\eta',\delta}(X)$.
+
+For each particular fixed $0<\eta'<1/2$, $h-2\gg A^{2/3}$
+and $h=o(A)$. Apply (GS4) at $Y=2A$ to
+$[A+1,A+h-1]$. Its already paid prime-power correction is
+$o(h)$, giving a $\vartheta$ increment $h(1+o(1))$.
+All prime weights in that interval are uniformly
+$(\log A)(1+o(1))$, hence the existing estimate gives
+$\pi(A+h-1)-\pi(A+1)=(1+o(1))h/\log A$.
+Consequently every scale carrying the same selected source obeys
+
+$$
+\boxed{K_{\eta',\delta}(X)\gg_{\lambda,\eta'}
+\frac{X^{1-\eta'/2}}{\log X}
+\exp\!\left(\frac{(\log X)^{1/4}}2\right).}
+\tag{R6}
+$$
+
+The asymptotic threshold may depend on the fixed exponent; it is
+not uniform as $\eta'\downarrow0$. The ratio of (R6)'s lower
+scale to (R5)'s is
+$X^{23/100+\eta'/2+\epsilon}e^{-(\log X)^{1/4}/2}/\log X$,
+which tends to infinity. Thus an arithmetic count upper bound
+$o\!\left(X^{1-\eta'/2}e^{(\log X)^{1/4}/2}/\log X\right)$
+would already exclude the selected sources. Requiring the smaller
+upper bound after (R5) is unnecessary for that task.
+
+No such upper bound is established. The unrestricted residence
+comparison (R2)–(R4) still applies to arbitrary data-dependent state
+collections; the direct first-prime count applies to the already
+justified persistence interval. Both preserve the same actual source,
+and neither pays the complete signed Robin tail or proves RH.
