@@ -299,6 +299,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let env := workspace.augmentedEnvVars
   let file := root / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
   (deps.add (Job.mixArray exports) |>.add projection |>.add inspector).mapM fun _ => do
+    observePhase "lake-report-programs-callback" "start"
     -- The compiler reader consumes transitive private values, also
     -- through public imports. Lake's legacy trace follows that same closure;
     -- allTransTrace follows each import's visibility and can omit those values.
@@ -310,8 +311,11 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     discard <| format.await
     addTrace format.getTrace
     let executable ← inspector.await
+    observePhase "lake-report-inspector" "ready"
     let analyzer ← analyzer?.mapM fun job => do
+      observePhase "lake-analyzer-await" "start"
       discard <| job.await
+      observePhase "lake-analyzer-await" "finish"
       return root / "tools/scripts/auric-fib-analysis.sh"
     observePhase "lake-report-programs" "finish"
     let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
