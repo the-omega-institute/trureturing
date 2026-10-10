@@ -1,0 +1,22 @@
+#### 12.2 节内标题：2. `ResponseContrast.lean`
+
+对任意五态函数 $f$，证明：
+
+$$
+E[f] =
+\text{visible}(X,Y,Z)+J_f\kappa.
+$$
+
+然后证明：
+
+```text
+J_f ≠ 0  ↔  (X,Y,Z,E[f]) injective on the simplex
+```
+
+其中必须明确限定：
+
+- 全体分布恢复；
+- 或者存在正宽度的内部纤维。
+
+边界退化纤维上，即使 $J_f=0$，也可能因为纤维宽度为零而唯一。
+
