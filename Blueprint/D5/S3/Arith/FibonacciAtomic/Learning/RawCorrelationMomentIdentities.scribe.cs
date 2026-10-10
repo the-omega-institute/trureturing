@@ -14,7 +14,7 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
     private static Formula EqOf(Formula x, Formula y) => Seq(x, Sp, Eq, Sp, y);
 
     private static DocumentBlock Node(string name, string heading, Formula formula, string text) =>
-        Describe.Lean(DescribeId.Create("raw-moments-" + name.Replace('.', '-')),
+        Describe.Lean(DescribeId.Create("raw-moments-" + name.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);

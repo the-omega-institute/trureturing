@@ -12,7 +12,7 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
         new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
     private static Formula Half => Seq(Frac, Grp(D(1)), Grp(D(2)));
     private static DocumentBlock Node(string name, string heading, Formula formula, string text) =>
-        Describe.Lean(DescribeId.Create("raw-confidence-" + name.Replace('.', '-')),
+        Describe.Lean(DescribeId.Create("raw-confidence-" + name.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);

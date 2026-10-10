@@ -316,7 +316,8 @@ theorem tie_vanishes (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
       (Scale.sampleLength rho a K) N) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
     apply (nonzero_count_diverges a K ha ha1 hK N).congr'
     filter_upwards [small] with rho hr
-    exact actual_tail_eq_bernoulli rho a hr.1 hr.2 _ N
+    simpa only [Bool.toNat, Bool.cond_eq_ite] using
+      actual_tail_eq_bernoulli rho a hr.1 hr.2 (Scale.sampleLength rho a K) N
   have hv := FiniteTail.expectation_vanishes (𝓝[>] (0 : ℝ))
     (fun rho => bernoulliMass (Scale.activeProbability rho a)) bit
     (fun rho => Scale.sampleLength rho a K) Binomial.fairTie hq
@@ -328,7 +329,8 @@ end LazyLimit
 
 local notation "eventMass" p:max E:max =>
   _root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass
-    p (Finset.univ.filter E) Finset.univ
+    p (@Finset.filter _ E (fun x => Classical.propDecidable (E x)) Finset.univ)
+      Finset.univ
 
 namespace Conditioning
 
@@ -376,8 +378,8 @@ theorem conditioning_bound {α : Type*} [Fintype α] (p : α → ℝ)
     have h := event_mass_compl p E
     rw [hprob] at h
     have hn := event_mass_nonneg p hp (fun x => ¬ E x)
-    dsimp [c]
-    linarith
+    change eventMass p E ≤ 1
+    linarith only [h, hn]
   have hx0 : 0 ≤ x := event_mass_nonneg p hp _
   have hy0 : 0 ≤ y := event_mass_nonneg p hp _
   have hx : x ≤ c := event_mass_mono p hp _ E (fun z hz => hz.1)
@@ -385,8 +387,8 @@ theorem conditioning_bound {α : Type*} [Fintype α] (p : α → ℝ)
     have h := event_mass_mono p hp (fun z => ¬ E z ∧ A z) (fun z => ¬ E z) (fun z hz => hz.1)
     have hh := event_mass_compl p E
     rw [hprob] at hh
-    dsimp [y,c] at *
-    linarith
+    dsimp only [y,c]
+    linarith only [h, hh]
   have hxy : eventMass p A = x + y := by
     dsimp [x,y]
     simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
@@ -453,11 +455,7 @@ theorem raw_clean_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
   have hE : eventMass p E = (1 - 12 * rho ^ 3) ^ m := by
     simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
     dsimp [p,E]
-    convert all_clean_mass rho a m using 1
-    apply Finset.sum_congr
-    · ext w; simp
-    · intro w hw
-      by_cases he : ∀ i, ¬ reverse (w i) <;> simp [he]
+    exact all_clean_mass rho a m
   have hc : 0 < eventMass p E := by
     rw [hE]
     exact pow_pos (clean_denominator_pos rho hr hr8) m
@@ -478,11 +476,7 @@ theorem raw_clean_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
   have hA : eventMass p A = misorder rho a m := by
     unfold misorder
     simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
-    dsimp [p,A]
-    apply Finset.sum_congr
-    · ext w; simp
-    · intro w hw
-      by_cases hn : (∑ i, score (w i)) < 0 <;> simp [hn]
+    rfl
   rw [← hcond, hE, hA] at h
   exact h
 
