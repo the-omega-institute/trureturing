@@ -34,7 +34,7 @@ The version-specific source for affine source redistribution is
 for a loopless Laplacian it is column stochastic. The lemma assumes a
 symmetric irreducible loopy Laplacian and at least two retained vertices.
 The singleton-boundary and disconnected-internal-block cases in
-[the static-seam continuation, Definition 24.1 and Theorem 24.3](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
+[the static-seam continuation, Definition 25.1 and Theorem 25.3](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
 use their stated grounding condition and direct finite matrices, not a claim
 that these cases literally satisfy every hypothesis of the paper's lemma.
 The source sign in that application is fixed by the term $+q^{\mathsf T}u$.

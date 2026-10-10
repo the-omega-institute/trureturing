@@ -22,7 +22,7 @@ Its logarithmic mean is $(a-b)/(\log a-\log b)$, continued as $a$ at $a=b$.
 The authors attribute antecedents of this gradient structure to Yong and
 Mielke; no historical priority beyond the cited statement is asserted.
 
-The consumer is [Static §23, Assumption 23.3 and Theorem 23.4](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
+The consumer is [Static §24, Assumption 24.3 and Theorem 24.4](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
 The reaction $1+3\rightleftarrows0+13$ supplies a particular normalized
 vector field. The theorem separately constructs its law-dependent
 single-state directed-cycle realization. Reaction detailed balance and

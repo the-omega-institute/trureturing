@@ -23,7 +23,7 @@ lies in a block of $\sigma$. The discrete partition is the bottom and the
 one-block partition is the top. The meet consists of the nonempty
 intersections of blocks; the join is the least common coarsening.
 
-[Section 26 of the static-seams continuation](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
+[Section 27 of the static-seams continuation](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
 uses these definitions to compare support inclusion and a supplied
 single-toggle action with refinement and a partition join. Stanley supplies
 the partition order, not the FIB observation or action contract.

@@ -24,7 +24,7 @@ duality and opposite Riemannian/Lorentzian star-square signs.
 
 The consumer is
 [the five-face and null-field comparison](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md),
-Assumption 21.4 and Proposition 22.3. Its three-dimensional Hodge signs
+Assumption 22.4 and Proposition 23.3. Its three-dimensional Hodge signs
 are calculated from the declared wedge-inner-product convention.
 The ranks of exterior-power bundles are pointwise ranks, not real
 dimensions of their full smooth section spaces. A globally exact
@@ -46,7 +46,7 @@ boundary conditions to obtain the Newtonian Poisson equation and both
 temporal and spatial metric perturbations. These are author-hosted HTML
 lecture notes, used as secondary classical exposition.
 
-[Assumption 24.6 of the static-seam continuation](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
+[Assumption 25.6 of the static-seam continuation](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
 supplies its continuum, units, metric signature and domains independently.
 It uses these comparisons to limit what a scalar energy contrast or clock
 readout determines, without deriving a physical gravitational source

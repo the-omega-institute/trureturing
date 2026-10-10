@@ -30,6 +30,6 @@ $L=B\operatorname{diag}(k_e)B^{\mathsf T}$; its inverse on constants is zero.
 For disconnected graphs, compatibility and the potential gauge are
 componentwise. These are classical intermediate inputs to the
 [five-state seam-field response](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md),
-Sections 9 and 11. The extraction of local probability laws, the source
+Sections 10 and 12. The extraction of local probability laws, the source
 functional and exponential clock response are separately specified model
 data. No physical gravity or continuum limit is supplied by this citation.

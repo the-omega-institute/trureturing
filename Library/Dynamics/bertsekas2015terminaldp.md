@@ -21,7 +21,7 @@ That theorem does not directly cover a graph on which an arbitrary policy
 can cycle forever.
 
 The [five-state terminal-clock application](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md),
-Section 16, instead restricts to deterministic finite paths reaching a
+Section 17, instead restricts to deterministic finite paths reaching a
 designated target, positive finite edge costs and reachability from every
 vertex. Removing cycles makes the minimum finite and attained; the
 first-edge split gives the Bellman equation. A minimizing policy strictly

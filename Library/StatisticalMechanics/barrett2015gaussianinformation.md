@@ -37,7 +37,7 @@ $$
 This difference is net synergy minus redundancy in the paper's terminology;
 it does not by itself specify all parts of a partial information decomposition.
 
-[The legal parity-source application, Theorem 27.4](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
+[The legal parity-source application, Theorem 28.4](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
 consumes this formula with $X=Y_A$, $Y=Y_B$, $Z=Y_C$ and
 $\mathcal U=-\vartheta\operatorname{WMS}$. Its independent calibrated noises,
 common Gaussian source, rank-one interventions and source-to-control map are

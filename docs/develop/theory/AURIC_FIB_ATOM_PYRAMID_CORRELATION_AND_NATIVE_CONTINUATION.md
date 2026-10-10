@@ -1018,7 +1018,7 @@ v_0=(0,0,0),\ v_2=(1,0,0),\ v_5=(0,1,0),\
 v_{25}=(1,1,0),\ v_3=(0,0,1).
 $$
 
-在此顺序下记 $d=(1,-1,-1,1,0)$、$w(s)=x(s)y(s)=\mathbf1_{s=25}$。与[《静态 seam、转移环流与 Fibonacci 切换环》定义 1.1、§§6–7](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)的支持顺序 $(0,1,2,3,13)$ 对应为
+在此顺序下记 $d=(1,-1,-1,1,0)$、$w(s)=x(s)y(s)=\mathbf1_{s=25}$。与[《静态 seam、转移环流与 Fibonacci 切换环》定义 1.1、§§7–8](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)的支持顺序 $(0,1,2,3,13)$ 对应为
 
 $$
 (0,1,2,3,13)_{\rm support}\longmapsto(0,2,3,5,25)_{\rm mode}.

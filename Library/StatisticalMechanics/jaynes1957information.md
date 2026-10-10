@@ -19,7 +19,7 @@ partition function, normalized exponential law and expectation derivative;
 equations (2-14)–(2-15) give fluctuation and parameter-response identities.
 The alternatives and sufficient statistics are fixed during differentiation.
 
-The consumer is [Static §23, Assumption 23.2](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
+The consumer is [Static §24, Assumption 24.2](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
 It substitutes the five Boolean states and the assigned statistic $xy$.
 The energy zero is additive gauge, and recovery of energy from a law fixes
 nonzero inverse temperature. A freely fitted positive five-state law is a

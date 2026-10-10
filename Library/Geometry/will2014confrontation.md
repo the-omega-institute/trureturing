@@ -26,7 +26,7 @@ when arbitrary real $\gamma$ is allowed. Controlled higher metric orders
 and a weak exterior trajectory are needed for an asymptotic error term.
 
 The consumer is
-[the static-seam continuation, Assumption 24.6](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
+[the static-seam continuation, Assumption 25.6](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
 It compares independently supplied metrics with equal leading stationary
 lapse and slow-particle acceleration but different light deflection.
 It does not assert that all these metrics solve one Einstein-matter model,

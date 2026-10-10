@@ -2536,6 +2536,432 @@ data*, arXiv:2606.30723v1，及 Cao--Cheng--Karthikeyan--Li--Preskill,
 arXiv:2603.13475v2，讨论不同的物理构造与恢复条件；本节没有把它们的
 条件或结论替换为本模型的全操作最优值。
 
+## 51. 菜单失败后的显式待办恢复
+
+**定义 51.1（失败批次的显式待办集）。** 固定 §48--50 的非平凡角色全集
+$\Omega:=\widehat A\setminus\{1\}$、覆盖集
+$$
+\overline C_K:=\{\eta\in\Omega:\eta\notin K^\perp\},
+$$
+以及有限、显式枚举的菜单序列
+$\mathscr L_1,\ldots,\mathscr L_N$。令
+$$
+X_0\subseteq X_1\subseteq\cdots\subseteq X_N\subseteq\Omega
+$$
+为有限阈值角色集链；已有前缀 $\mathcal Q_0$ 是一个层序列，允许它暂时未覆盖 $X_0$。
+记 $\underline{\mathcal Q}$ 为序列去重后的层集合；对任意层序列 $\mathcal S$，
+记
+$$
+V_{\mathcal S}:=\bigcup_{K\in\underline{\mathcal S}}\overline C_K.
+$$
+于是
+$$
+V_t:=V_{\mathcal Q_t},
+\qquad
+B_0:=X_0\setminus V_0,
+\qquad
+\delta_t:=X_t\setminus X_{t-1}.
+$$
+第 $t$ 批的活动残余定义为
+$$
+R_t:=(B_{t-1}\cup\delta_t)\setminus V_{t-1}.
+\tag{51.1}
+$$
+在下面的归纳不变式下，它等价于
+$$
+R_t=X_t\setminus V_{t-1}
+=B_{t-1}\cup(\delta_t\setminus V_{t-1}).
+\tag{51.2}
+$$
+
+若 $R_t=\varnothing$，约定 $\sigma_t:=0$、$d_t:=0$、$L_t:=0$，
+取空追加序列 $\mathcal S_t=\varnothing$，并令
+$\mathcal Q_t:=\mathcal Q_{t-1}$、$B_t:=\varnothing$。若 $R_t\ne\varnothing$，
+令
+$$
+\sigma_t:=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L_t,\
+R_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K\right\},
+\qquad
+d_t:=\max_{K\in\mathscr L_t}|\overline C_K\cap R_t|,
+$$
+若不存在覆盖则置 $\sigma_t:=\infty$；约定 $\max\varnothing=0$，并令
+$$
+L_t:=
+\begin{cases}
+\infty,&R_t\ne\varnothing\ \text{且}\ d_t=0,\\
+\left\lceil |R_t|/d_t\right\rceil,&R_t\ne\varnothing\ \text{且}\ d_t>0.
+\end{cases}
+$$
+若 $R_t\ne\varnothing$ 且 $\sigma_t<\infty$，在 $R_t$ 上运行最大增益贪心，
+得到覆盖 $R_t$ 的追加层序列 $\mathcal S_t\subseteq\mathscr L_t$，
+并置
+$$
+\mathcal Q_t:=\mathcal Q_{t-1}\mathbin{\|}\mathcal S_t,
+\qquad B_t:=\varnothing.
+$$
+若 $R_t\ne\varnothing$ 且 $\sigma_t=\infty$，采用 all-or-none 规则：
+预检当前菜单不能覆盖全部 $R_t$，不追加任何层，置
+$$
+\mathcal Q_t:=\mathcal Q_{t-1},
+\qquad B_t:=R_t.
+$$
+令
+$$
+G:=\{t:R_t\ne\varnothing,\ \sigma_t<\infty\},
+\qquad
+s_t:=|\mathcal S_t|\quad(t\in G).
+$$
+
+**定理 51.2（显式待办恢复与摊还追加界）。** 在定义 51.1 的递增角色链和 all-or-none 更新下，对所有 $t$ 有不变式
+$$
+B_t=X_t\setminus V_t.
+\tag{51.3}
+$$
+因此 $\mathcal Q_t$ 覆盖 $X_t$ 当且仅当 $B_t=\varnothing$。
+每个成功批次 $t\in G$ 满足
+$$
+\left\lceil |R_t|/d_t\right\rceil
+\le s_t
+\le H_{d_t}\sigma_t
+\le H_{|R_t|}\sigma_t,
+\tag{51.4}
+$$
+其中成功批次必有 $d_t>0$。失败批次不追加且不计入下式；对空 $G$ 约定和为 $0$。总的追加层数满足
+$$
+\sum_{t\in G}L_t
+\le
+\ell(\mathcal Q_N)-\ell(\mathcal Q_0)
+\le
+\sum_{t\in G}H_{d_t}\sigma_t
+\le
+\sum_{t\in G}H_{|R_t|}\sigma_t.
+\tag{51.5}
+$$
+若某后续批次 $r$ 的活动残余 $R_r$（其中包含此前显式保留的 $B_{r-1}$）可由当前菜单有限覆盖，则该批次成功后 $B_r=\varnothing$；这只是对该批次的局部恢复，后续新角色仍可能产生新的待办集。
+
+**证明。** 归纳基点是 $B_0=X_0\setminus V_0$。假设
+$B_{t-1}=X_{t-1}\setminus V_{t-1}$。由
+$X_t=X_{t-1}\mathbin{\dot\cup}\delta_t$ 得
+$$
+(B_{t-1}\cup\delta_t)\setminus V_{t-1}
+=(X_t\setminus V_{t-1})
+=B_{t-1}\cup(\delta_t\setminus V_{t-1}),
+$$
+证明 (51.2)。若 $R_t=\varnothing$，覆盖集未变且 $X_t\setminus V_t=\varnothing=B_t$。
+若批次成功，$\mathcal S_t$ 覆盖 $R_t$，故
+$X_t\setminus V_t=R_t\setminus V_{\mathcal S_t}=\varnothing=B_t$。
+若批次失败，$V_t=V_{t-1}$ 且 $B_t=R_t=X_t\setminus V_t$。
+因此 (51.3) 对所有批次成立，覆盖等价式随即成立。
+
+固定成功批次，写 $m:=|R_t|>0$、$\sigma:=\sigma_t$、$d:=d_t>0$。
+任何一层在初始残余上至多覆盖 $d$ 个角色，故任一覆盖至少使用
+$\lceil m/d\rceil$ 层；贪心追加数满足 $s_t\ge\sigma\ge\lceil m/d\rceil$。
+取最优覆盖 $\mathcal R^*$，$|\mathcal R^*|=\sigma$。第 $i$ 轮贪心新覆盖
+$g_i>0$ 个角色，并给每个新角色 charge $1/g_i$。将该轮新角色任意分配给
+$\mathcal R^*$ 中覆盖它的层 $R$。若轮开始时 $R$ 尚有 $j>0$ 个未覆盖角色，
+则 $R$ 的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给
+$R$ 的角色数是 $a_{i,R}$，本轮给 $R$ 的 charge 至多为
+$$
+\frac{a_{i,R}}{g_i}
+\le\frac{a_{i,R}}{j}
+\le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
+$$
+若 $j=0$，则 $a_{i,R}=0$ 且该层本轮 charge 为 $0$。
+各轮对应的整数区间两两不交，且包含于
+$\{1,\ldots,|R\cap R_t|\}$，故分给 $R$ 的 charge 不超过
+$H_{|R\cap R_t|}\le H_d$。对 $\sigma$ 个最优层求和，每轮总 charge 为 $1$，
+得到 $s_t\le H_d\sigma_t\le H_m\sigma_t$。成功批次的层数恒等式
+$$
+\ell(\mathcal Q_t)-\ell(\mathcal Q_{t-1})=s_t
+$$
+以及失败、空批次的零追加，求和即得 (51.4)--(51.5)。
+
+若 $\sigma_t=\infty$，菜单覆盖预检失败但不改变历史前缀，未覆盖角色被
+$B_t$ 显式保留；任何后续恢复都必须把该 $B_t$ 带入 (51.1)。
+全程只证明当前批次的证书覆盖，不把一次失败升级为未来菜单下的全局不可达。
+
+若逐批维护待办集，批次 $t$ 的残余检查可用
+$O((|B_{t-1}|+|\delta_t|)\ell(\mathcal Q_{t-1}))$
+次 unit-cost membership 检查；覆盖预计算和菜单可行性预检为
+$O(|R_t||\mathscr L_t|)$，成功批次的朴素贪心搜索为
+$O(|R_t|^2|\mathscr L_t|)$。这些成本对失败批次也计入前两项；
+若 $\delta_t$ 需扫描整个 $\Omega$ 才能发现，另加 $O(|\Omega|)$。
+这里 $\sigma_t$ 只是分析用的最优覆盖基准，算法不需要求解该最优化问题。
+对所有批次求和给出总检查成本。
+
+**范围。** 定理 51.2 只适用于固定 Fourier 二维证书族、固定覆盖集、
+有限显式菜单、append-only 层序列和明确的 all-or-none 失败策略；
+阈值语义仅覆盖降阈值的递增链，升阈值是 deletion-only 更新，不能直接套用
+(51.1)。它不声称全局最短 stack、LOSR/CPTP 操作、完整钻石范数、
+物理资源或全局可达性结论。若需要部分追加后保留未覆盖角色，必须另定义状态
+和相应基准，本定理不覆盖。
+
+## 52. 带正整数层成本的加权菜单摊还
+
+**定义 52.1（加权证书菜单）。** 沿用定义 51.1 的
+$\Omega,\overline C_K,X_t,\mathcal Q_t,B_t,R_t$ 及 all-or-none 更新。
+每批 $\mathscr L_t$ 是去重的有限层身份集合；每个
+$K\in\mathscr L_t$ 带一个正整数成本
+$$
+c_t(K)\in\{1,\ldots,2^{b_t}\}.
+$$
+同一层在不同批次的成本可以不同，历史层的成本视为已经支付。
+若 $R_t=\varnothing$，令
+$\sigma_t^c:=0$、$d_t:=0$，不追加。否则定义加权覆盖基准
+$$
+\sigma_t^c:=
+\min\left\{
+\sum_{K\in\mathcal R}c_t(K):
+\mathcal R\subseteq\mathscr L_t,\
+R_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K
+\right\},
+$$
+无覆盖时置 $\sigma_t^c:=\infty$，并令
+$$
+d_t:=\max_{K\in\mathscr L_t}
+|\overline C_K\cap R_t|,
+\qquad
+\max\varnothing:=0,\quad H_0:=0.
+$$
+在 $\sigma_t^c<\infty$ 的非空批次上，贪心每轮选择尚未选取且使
+$\lvert\overline C_K\cap U\rvert/c_t(K)$ 最大的层；达到覆盖后停止。
+记追加序列为 $\mathcal S_t$、其加权成本为
+$$
+w_t:=\sum_{K\in\mathcal S_t}c_t(K).
+$$
+若 $\sigma_t^c=\infty$，保持 §51 的 all-or-none 规则，不追加并保留
+$B_t=R_t$。令
+$$
+G_c:=\{t:R_t\ne\varnothing,\ \sigma_t^c<\infty\}.
+$$
+
+**推论 52.2（加权摊还界）。** 在定义 52.1 的正成本模型下，
+对每个 $t\in G_c$ 都有 $d_t>0$ 且
+$$
+\sigma_t^c
+\le w_t
+\le H_{d_t}\sigma_t^c
+\le H_{|R_t|}\sigma_t^c.
+\tag{52.1}
+$$
+令总加权追加成本
+$W_N:=\sum_{t\in G_c}w_t$。则
+$$
+\sum_{t\in G_c}\sigma_t^c
+\le W_N
+\le\sum_{t\in G_c}H_{d_t}\sigma_t^c
+\le\sum_{t\in G_c}H_{|R_t|}\sigma_t^c.
+\tag{52.2}
+$$
+空批次和失败批次不计入这些有限和；失败批次的待办集仍按 §51 显式保留，
+以后续菜单覆盖时才可局部恢复。该结论仅是加权证书追加成本界，
+不把 $W_N$ 解释为物理资源或层数。
+
+**证明。** 先看单个成功批次，写
+$m:=|R_t|>0$、$\sigma:=\sigma_t^c$、$d:=d_t>0$。
+贪心选出的层集合覆盖 $R_t$，且成本均为正，故其成本
+$w_t\ge\sigma$；正成本还保证重复选择没有收益。
+取加权最优覆盖 $\mathcal R^*$，令
+$\sum_{K\in\mathcal R^*}c_t(K)=\sigma$。
+贪心第 $i$ 轮选择层 $K_i$，其新覆盖数和成本分别为
+$a_i>0$ 和 $c_i:=c_t(K_i)$。给该轮每个新覆盖角色 charge
+$c_i/a_i$，本轮总 charge 为 $c_i$。将新角色任意分配给
+$\mathcal R^*$ 中覆盖它的层 $K$。若该轮开始时 $K$ 尚有
+$j>0$ 个未覆盖角色，则 $K$ 的候选比值为 $j/c_t(K)$，所以
+$$
+\frac{a_i}{c_i}\ge\frac{j}{c_t(K)},
+\qquad
+\frac{c_i}{a_i}\le\frac{c_t(K)}{j}.
+$$
+若本轮分配给 $K$ 的角色数为 $a_{i,K}$，则分给该层的 charge 至多
+$$
+\frac{a_{i,K}c_t(K)}{j}
+\le
+c_t(K)\sum_{q=j-a_{i,K}+1}^{j}\frac1q.
+$$
+若 $j=0$，则 $a_{i,K}=0$ 且该层本轮 charge 为 $0$。
+各轮对应的整数区间两两不交，且包含于
+$\{1,\ldots,|\overline C_K\cap R_t|\}$，故分给 $K$ 的总 charge
+不超过 $c_t(K)H_{|\overline C_K\cap R_t|}
+\le c_t(K)H_d$。对 $\mathcal R^*$ 求和，并注意每轮总 charge
+为 $c_i$，得到
+$$
+w_t\le H_d\sum_{K\in\mathcal R^*}c_t(K)
+=H_d\sigma_t^c
+\le H_m\sigma_t^c.
+$$
+对 $t\in G_c$ 求和，且失败批次没有加层，得到 (52.2)。
+
+每批覆盖预计算和失败可行性预检各需
+$O(|R_t||\mathscr L_t|)$ 次 unit-cost membership 检查；
+成功批次的比值贪心需
+$O(|R_t|^2|\mathscr L_t|)$ 次候选比值比较。
+残余检查沿用 §51 的
+$O((|B_{t-1}|+|\delta_t|)\ell(\mathcal Q_{t-1}))$；
+若 $\delta_t$ 需扫描整个 $\Omega$，另加 $O(|\Omega|)$。
+这里 $\sigma_t^c$ 是分析用的最优基准，算法不求解该最优化问题。
+在 $b_t$ 位成本上限下，交叉相乘比较的整数位长为
+$O(b_t+\log |R_t|)$；若 $M(q)$ 表示 $q$ 位整数乘法成本，
+成功批次比值比较的 bit-cost 为
+$$
+O\!\left(
+|R_t|^2|\mathscr L_t|\,
+M(b_t+\log |R_t|)
+\right).
+$$
+加权和至多含 $|R_t|$ 个成本，位长同阶；这些成本对失败批次不执行贪心，
+但前两项检查仍计入总复杂度。
+
+**范围。** 推论 52.2 只是在固定 Fourier 二维证书族、固定覆盖集、
+§51 的有限菜单和 append-only/all-or-none 状态上增加正整数的抽象成本；
+它不推出物理层数、物理资源、全局最短 stack、LOSR/CPTP 结论或完整钻石范数界。
+成本必须严格为正；零成本层、重复身份的不同计价及部分追加策略均需另行定义。
+阈值语义仍只覆盖降阈值递增链，升阈值是 deletion-only 更新。菜单扩张、
+收缩或混合变化只影响当前批次 $\sigma_t^c$；不对 $H_d\sigma^c$ 的菜单单调性
+作额外断言。成本比较采用上述整数 bit 模型；若改用 unit-cost exact-ratio oracle，
+应相应替换 bit-cost 说明。
+
+
+## 53. 预算化加权恢复与菜单包含敏感性
+
+**定义 53.1（有限预算批次）。** 沿用定义 51.1--52.1 的
+\(\Omega,\overline C_K,X_t,\mathcal Q_t,B_t,R_t\)，其中活动残余
+\(R_t=(B_{t-1}\cup\delta_t)\setminus V_{t-1}\) 已包含先前失败批次显式保留的待办。
+每批菜单 \(\mathscr L_t\) 是有限、显式枚举且按层身份去重的集合；历史前缀
+\(\mathcal Q_{t-1}\) 保留，即使其层不在当前菜单。菜单沿时间可扩张、收缩或混合变化，
+不要求形成嵌套链。每个当前层带严格正整数成本
+\[
+c_t(K)\in\{1,\ldots,2^{b_t}\},
+\]
+每批另给一个有限非负整数预算 \(\beta_t\)，其二进制长度记为 \(b^\beta_t\)。
+零成本、重复身份的不同计价和无限预算不在本定义内。
+
+若 \(R_t=\varnothing\)，规定
+\[
+\sigma_t^c=d_t=w_t=0,\qquad
+\mathcal S_t=\varnothing,\quad\mathcal Q_t=\mathcal Q_{t-1},\quad B_t=\varnothing
+\]
+（任意 \(\beta_t\ge0\) 都是 no-op）。若 \(R_t\ne\varnothing\)，定义
+\[
+\sigma_t^c:=\min\left\{\sum_{K\in\mathcal R}c_t(K):
+\mathcal R\subseteq\mathscr L_t,\ 
+R_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K\right\},
+\]
+无覆盖时置 \(\sigma_t^c=\infty\)，并令
+\[
+d_t:=\max_{K\in\mathscr L_t}|\overline C_K\cap R_t|,
+\qquad \max\varnothing:=0,\quad H_0:=0.
+\]
+若 \(\sigma_t^c<\infty\)，则 \(R_t\ne\varnothing\) 强制 \(d_t\ge1\)；若
+\(\sigma_t^c=\infty\)（因而可能 \(d_t=0\)），本批立即失败，不解释
+\(H_{d_t}\sigma_t^c\)。
+
+在 \(\sigma_t^c<\infty\) 时，先在整个 \(R_t\) 上运行未受预算约束的
+gain/cost 贪心：每轮从尚未选取层中取最大
+\(|\overline C_K\cap U|/c_t(K)\)，直到覆盖 \(R_t\)，得到追加**序列**
+\(\mathcal S_t\)（序列长度记为 \(\ell(\mathcal S_t)\)）及
+\[
+w_t:=\sum_{K\in\mathcal S_t}c_t(K).
+\]
+仅在贪心完整结束后检查预算。若 \(w_t\le\beta_t\)，提交整个序列
+\(\mathcal Q_t=\mathcal Q_{t-1}\mathbin{\|}\mathcal S_t\)，并令 \(B_t=\varnothing\)；
+若 \(w_t>\beta_t\)，全批回滚，不追加任何层，令
+\[
+\mathcal Q_t=\mathcal Q_{t-1},\qquad B_t=R_t.
+\]
+因此预算失败保持 §51 的 \(B_t=X_t\setminus V_t\) 不变，供后续菜单批次显式带入。
+若 \(\sigma_t^c=\infty\)，也采用上述 all-or-none 失败语义（不运行有限覆盖贪心，
+不追加且 \(B_t=R_t\)）。
+
+**定理 53.2（预算三分法与菜单敏感性）。** 对定义 53.1 的每个非空批次：
+
+1. 若 \(\sigma_t^c=\infty\)，任何有限 \(\beta_t\) 都不可成功；若
+\(d_t=0\)，这是不可覆盖分支，永远不写成 \(H_0\cdot\infty\)。
+2. 若 \(\sigma_t^c<\infty\)，则 \(d_t\ge1\)。当
+\(\beta_t<\sigma_t^c\) 时，没有任何当前菜单覆盖能够在预算内完成，
+故预算化批次必失败。这个必要条件只涉及当前证书菜单。
+3. 当
+\[
+\beta_t\ \ge\ H_{d_t}\,\sigma_t^c
+\tag{53.1}
+\]
+时，完整 ratio-greedy 的成本满足 \(w_t\le H_{d_t}\sigma_t^c\)，因而批次必成功，
+\(B_t=\varnothing\)。条件 (53.1) 是基于 \(\sigma_t^c,d_t\) 的事后分析证书；
+算法只需计算实际整数 \(w_t\) 并与 \(\beta_t\) 比较，不需解最优化或计算调和数。
+中间区间 \(\sigma_t^c\le\beta_t<H_{d_t}\sigma_t^c\) 无统一保证。
+
+对固定残余 \(R\)，若两个菜单使用相同的持久层成本且
+\(\mathscr L^-\subseteq\mathscr L^+\)，则
+\[
+\sigma^c(R,\mathscr L^+)\le\sigma^c(R,\mathscr L^-),\qquad
+d(R,\mathscr L^+)\ge d(R,\mathscr L^-).
+\tag{53.2}
+\]
+所以扩张不增加最优加权覆盖基准，也不把原有可行覆盖变成不可行；收缩则反向地
+可能丢失可行性。由于 \(d\) 也会变化，\(H_d\sigma^c\) 和实际贪心成本不作单调性
+断言。菜单收缩、扩张和混合路径均按每批当前菜单套用上述三分法，历史前缀不回溯删除。
+
+**证明。** 第 1 项由覆盖定义直接得出；有限菜单若有角色不在任何覆盖集，任何有限
+追加仍遗漏该角色。非空且可覆盖时至少有一层覆盖一个角色，故 \(d_t\ge1\)。
+若 \(\beta_t<\sigma_t^c\)，任意覆盖的加权成本都不小于最优值，不能满足预算。
+若 \(\beta_t\ge H_{d_t}\sigma_t^c\)，推论 52.2 的逐批 charging 界给出
+\(w_t\le H_{d_t}\sigma_t^c\)，所以完整贪心序列通过预算并整体提交；失败分支则按
+定义回滚且保留同一 \(R_t\)。式 (53.2) 是同一残余上的集合包含：旧菜单的每个覆盖
+仍在新菜单中，且最大初始基数在更大菜单上不减。整个证明只使用固定
+\(\overline C_K\) 的证书覆盖关系，不使用物理层数或全局最优栈的断言。
+
+**反例（菜单扩张可使预算贪心失败）。** 取证书族的合法有限角色实例
+\(A=C_2^4\)，令 \(\eta_i\) 为对偶坐标字符，
+\(\eta_i(e_j)=-1\) 当且仅当 \(i=j\)，否则为 \(+1\)，并令
+\(T=\{\eta_1,\eta_2,\eta_3,\eta_4\}\)。按
+\(\overline C_K=\{\eta:\eta|_K\ \text{非平凡}\}\)，取
+\[
+K_1=\langle e_1,e_2\rangle,\quad
+K_2=\langle e_3,e_4\rangle,\quad
+K_G=\langle e_1,e_3\rangle.
+\]
+逐项限制字符得到
+\[
+\overline C_{K_1}\cap T=\{\eta_1,\eta_2\},\quad
+\overline C_{K_2}\cap T=\{\eta_3,\eta_4\},\quad
+\overline C_{K_G}\cap T=\{\eta_1,\eta_3\}.
+\]
+给 \(K_1,K_2\) 成本 \(2\)，给 \(K_G\) 成本 \(1\)。旧菜单
+\(\mathscr L^-=\{K_1,K_2\}\) 的两个比值均为 \(2/2=1\)，贪心成本为
+\(4=\sigma^c\)。扩张菜单 \(\mathscr L^+=\mathscr L^-\cup\{K_G\}\) 时，
+\(K_G\) 的比值 \(2/1=2\) 唯一最大；选后残余为
+\(\{\eta_2,\eta_4\}\)，\(K_1,K_2\) 各 gain \(1\)、比值 \(1/2\)，故
+\[
+w=1+2+2=5,\qquad \sigma^c=4,\qquad d=2,\qquad H_d\sigma^c=H_2\cdot4=6.
+\]
+预算 \(\beta=4\) 下旧菜单存在成本 \(4\) 的可行覆盖，但扩张菜单上的完整 ratio-greedy
+成本 \(5\) 超预算而整体回滚。这验证中间区间确实无保证，也说明菜单扩张不保证
+实际贪心成本下降；并未把预算化贪心宣称为全局最优算法。
+
+若维护 §51 的待办和前缀，残余检查仍为
+\(O((|B_{t-1}|+|\delta_t|)\ell(\mathcal Q_{t-1}))\)，覆盖预计算和不可行预检为
+\(O(|R_t||\mathscr L_t|)\)。每个 \(\sigma_t^c<\infty\) 的批次（无论预算最终提交还是
+超预算回滚）都先执行完整 ratio-greedy，需
+\(O(|R_t|^2|\mathscr L_t|)\) 次候选比较；只有 \(\sigma_t^c=\infty\) 的不可行预检分支
+跳过贪心。回滚不提交层但仍计入上述贪心和 bit 成本，预检和残余检查始终照计。
+成本比值交叉相乘的整数位长为
+\(O(b_t+\log|R_t|)\)，预算累计比较再含 \(b^\beta_t\) 位；以 \(M(q)\) 表示
+\(q\) 位整数乘法，每个 \(\sigma_t^c<\infty\) 批次的 bit-cost 可写为
+\[
+O\!\left(|R_t|^2|\mathscr L_t|\,M(b_t+\log|R_t|)
++M(b_t+b^\beta_t+\log|R_t|)\right).
+\]
+若发现新角色需扫描全集 \(\widehat A\)，另加 \(O(|\widehat A|)\)。这些复杂度是证书
+更新实现界；\(\sigma_t^c\) 和 (53.1) 只用于分析，不要求算法求解。
+
+**范围。** 定理 53.2 是固定 Fourier 二维证书族、固定 \(\overline C_K\)、有限显式菜单、
+append-only/all-or-none 前缀上的抽象加权预算恢复结果。它不推出物理层数或资源界、
+全局最短 stack、LOSR/CPTP、完整钻石范数或任意全局优化近似比；菜单扩张反例只在
+该证书-family 覆盖实例内。部分追加、零成本层和无限预算需要另行定义。
+阈值链仍只对降阈值的角色增加适用；升阈值是 deletion-only 更新，不套用
+\(\delta_t=X_t\setminus X_{t-1}\)。
+
+
 ## 追加锚（本行以下为增补区）
 
 ### 36.5 有限单纯形变分支配：既有证明的完整应用
@@ -3246,6 +3672,59 @@ $$
 
 **范围。** 这是给定有限允许层族与固定入口系数时的证书族停止算法；达到阈值只说明 §45 的指定 Fourier 二维下界不超过 $\varepsilon$，不是整个钻石范数的上界，也不优化任意 LOSR 层。
 
+## 47. 允许层搜索的覆盖复杂度
+
+**定理 47.1（证书停止的覆盖化与贪心界）。** 在 §46 的固定超阈值集合 $T=T_\varepsilon$ 与有限、显式枚举（可逐项遍历）的允许层族 $\mathscr L$ 下，定义每层覆盖集
+
+$$
+C_K=\{\eta\in T:\eta\notin K^\perp\}\qquad(K\in\mathscr L).
+$$
+
+记 $\mathscr C:=\{C_K:K\in\mathscr L\}$。若 $n:=|T|=0$，算法零步停止并令 $\tau=0$。若 $n\ge1$，一个 stack 在证书意义下达到阈值，当且仅当其所选层的覆盖集并集包含 $T$。因此在可覆盖时最短 stack 长度恰为
+
+$$
+\tau(T,\mathscr C)=\min\{ |\mathscr Q|:\mathscr Q\subseteq\mathscr C,\ \bigcup\mathscr Q=T\}<\infty,
+$$
+
+其中重复层不增加覆盖；若存在 $\eta\in T$ 不属于任何 $C_K$（特别是 $\mathscr L=\varnothing$ 时），立即判定不可达并定义 $\tau=\infty$，任何有限允许 stack 都不可达。这里的 $H_n\tau$ 界只在 $n\ge1$ 且 $T$ 可覆盖（故 $\tau<\infty$）时使用。
+
+令 $U_0=T$。每轮选择当前未覆盖元素最多的 $C_K$，即取
+$$
+g_i=\max_{K\in\mathscr L}|C_K\cap U_{i-1}|,
+$$
+并令 $a_i=g_i$ 为本轮新覆盖的元素数；若 $U_{i-1}\ne\varnothing$ 而最大 gain 为零，则立即报告不可达。每次成功选择至少删除一个角色，故朴素贪心至多进行 $n$ 轮；在 $n\ge1$ 且可覆盖的情形，它使用的层数至多
+$$
+H_n\,\tau(T,\mathscr C)\le(1+\log n)\tau(T,\mathscr C),
+$$
+其中 $H_n=\sum_{r=1}^n1/r$。该贪心界是搜索复杂度保证，不声称求得最短 stack。
+
+**证明。** 由 §46，残余集合经过所选层为
+$$
+T\cap\bigcap_{K\ \mathrm{selected}}K^\perp
+=T\setminus\bigcup_{K\ \mathrm{selected}}C_K.
+$$
+故清空残余集合等价于覆盖 $T$，最短长度即 $\tau$；若有角色不在任何 $C_K$ 中则不可达。以下设 $n\ge1$ 且取一个最优覆盖 $\mathscr Q^*$，$|\mathscr Q^*|=\tau<\infty$。
+
+在第 $i$ 轮开始时令 $r_i=|U_{i-1}|$。因为 $\mathscr Q^*$ 覆盖当前的 $U_{i-1}$，其各集合的 gains 总和至少为 $r_i$，故贪心 gain
+$$
+g_i\ge r_i/\tau.
+$$
+给本轮新覆盖的每个元素分配 charge $1/g_i$。本轮总 charge 为 $a_i/g_i=1$，且每个新元素的 charge 至多 $\tau/r_i$。由于本轮覆盖 $a_i$ 个元素，且 $r_i$ 在下一轮减少为 $r_i-a_i$，有
+$$
+\frac{a_i}{r_i}\le\sum_{j=r_i-a_i+1}^{r_i}\frac1j.
+$$
+这些整数区间在各轮恰好分层覆盖 $1,2,\ldots,n$，所以
+$$
+\#\{\text{贪心轮数}\}
+=\sum_i\frac{a_i}{g_i}
+\le\tau\sum_i\frac{a_i}{r_i}
+\le\tau\sum_{j=1}^n\frac1j
+=\tau H_n.
+$$
+这就是标准 charging argument。最后，每轮最多扫描全部 $|\mathscr L|$ 个显式枚举层并逐项检查至多 $n$ 个角色；若判断 $\eta\in K^\perp$ 为 unit-cost，覆盖集预计算需 $O(n|\mathscr L|)$ 次 membership 检查，按至多 $n$ 轮朴素重算 gains 的搜索成本为 $O(n^2|\mathscr L|)$ 次检查。
+
+**范围。** $\tau$ 与贪心界只针对固定入口系数产生的 §45 证书族和给定有限、显式枚举的允许层族；不等同于任意 LOSR 操作的最短实现，也不把证书阈值转成完整钻石范数优化。
+
 ## 追加锚（本行以下为增补区）
 
 ## 47. 允许子群菜单的可行性与停滞
@@ -3744,5 +4223,617 @@ $$
 这是标准有限域线性阵构造在本信道上的应用。四个线性形式的系数行分别为 $(1,0),(0,1),(1,1),(1,\omega)$，任意两个的行列式均非零；含第一行的行列式为 $1,1,\omega$，另三对为 $-1,-1,\omega-1$。故任意两列投影都是 $\mathbb F_4^2$ 的双射，十六行上的均匀分布给每对符号均匀分布。选任意双射 $\iota:\mathbb F_4\to C_4$ 并逐列标号后，这一均匀性保持。定理 44.2 证明充分性所用的矩阵单位平均只需边缘和两坐标均匀性，因此这些十六个非同态控制值也给出完整 $\mathcal F^\lambda_G$，包括每个源谱的实际泄漏。
 
 然而 $\mathbb F_4^2$ 的加法群指数为二，任意从它到 $C_4$ 的群同态像都被二消去，不能满射。符号双射不能把有限域加法变成循环四元加法。即使重新给十六行另赋群结构，若四个循环坐标同时成为满射同态，就会违背已证明的六十四标签下界。因此这里改变的是允许的控制函数族，而不是同一族中的更小实现。循环根编码与有限域编码的区别亦见 Pistone、Rogantin 的 §6；一般正交阵的两坐标乘积整除界见 Beder、McComack 的 §1.1，均不代替本节的循环群深度约束。证毕。
+
+## 48. 证书层选择的在线增量更新
+
+**定义 48.1（固定菜单与前缀残余）。** 沿用 §45--47 的固定入口 Fourier 标签、固定系数和有限、显式枚举的允许层族 $\mathscr L$；每个 $K\in\mathscr L$ 只施加同一 Fourier 基上的均匀 Schur 平均。对每个允许层先在非平凡角色的全集中定义
+
+$$
+\overline C_K:=\{\eta\in\widehat A\setminus\{1\}:\eta\notin K^\perp\},\qquad
+C_K(X):=X\cap\overline C_K
+$$
+
+其中 $X\subseteq\widehat A\setminus\{1\}$ 为有限阈值角色集。将已有允许 stack 前缀记为序列 $\mathcal Q=(K_1,\ldots,K_{\ell(\mathcal Q)})$，并令 $\underline{\mathcal Q}:=\{K_i\}$ 为其去重后的层集合。重复层只计一次覆盖，但物理前缀长度仍是 $\ell(\mathcal Q)$。置
+$$
+V_{\mathcal Q}:=\bigcup_{K\in\underline{\mathcal Q}}\overline C_K,\qquad
+\Delta_{\mathcal Q}(X):=X\setminus V_{\mathcal Q}.
+$$
+定义保留此前缀时的最短追加层数
+$$
+\tau_{\rm ext}(\mathcal Q;X,\mathscr L)
+:=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L,\ 
+\Delta_{\mathcal Q}(X)\subseteq
+\bigcup_{K\in\mathcal R}\overline C_K\right\};
+$$
+若不存在这样的 $\mathcal R$ 则置 $\tau_{\rm ext}=\infty$，空残余的最小值为 $0$。
+
+**定理 48.2（证书族的在线增量更新与可验证间隔）。** 设
+$$
+X^-\subseteq X^+\subseteq\widehat A\setminus\{1\}
+$$
+为有限阈值角色集，$\mathcal Q$ 为已选的有限允许前缀，置
+$$
+\delta:=X^+\setminus X^-,\qquad
+\Delta^-:=\Delta_{\mathcal Q}(X^-),\qquad
+\Delta^+:=\Delta_{\mathcal Q}(X^+).
+$$
+则残余可增量维护为
+$$
+\Delta^+
+=\Delta^-\cup(\delta\setminus V_{\mathcal Q})
+=\Delta^-\cup\left(\delta\cap\bigcap_{K\in\underline{\mathcal Q}}K^\perp\right).
+\tag{48.1}
+$$
+若 $|\Delta^+|=0$，不追加层且 $\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)=0$。以下令 $\Delta=\Delta^+$、$m=|\Delta|>0$。若存在 $\eta\in\Delta$ 不属于任何 $\overline C_K$，立即报告此前缀不可扩展并令 $\tau_{\rm ext}=\infty$；约定 $\max\varnothing:=0$，并令
+$$
+d:=\max_{K\in\mathscr L}|\overline C_K\cap\Delta|.
+$$
+若 $d=0$，也立即报告不可扩展。否则从当前残余 $U_0=\Delta$ 开始，每轮选择最大 gain
+$$
+g_i=\max_{K\in\mathscr L}|\overline C_K\cap U_{i-1}|,
+$$
+追加达到该最大值的层，并置 $U_i=U_{i-1}\setminus\overline C_K$。若某轮 $U_{i-1}\ne\varnothing$ 而最大 gain 为零，则立即报告不可扩展；在可扩展情形，追加层数 $s$ 满足
+$$
+\left\lceil\frac{m}{d}\right\rceil
+\le\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)
+\le s
+\le H_d\,\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)
+\le H_m\,\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)
+\le(1+\log m)\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L).
+\tag{48.2}
+$$
+因此保留前缀时的总物理层数至多
+$$
+\ell(\mathcal Q)+H_d\,\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L);
+$$
+这是相对于固定前缀最短追加的可验证间隔，不是对 $X^+$ 全局最短 stack 的比值。阈值由 $\varepsilon$ 调到 $\varepsilon'<\varepsilon$ 时可取 $X^-=T_\varepsilon$、$X^+=T_{\varepsilon'}$，新增角色正是 $\delta=\{\eta:\varepsilon'<|h_\eta|\le\varepsilon\}$。
+
+**证明。** 由定义
+$$
+\Delta_{\mathcal Q}(X)
+=X\setminus\bigcup_{K\in\underline{\mathcal Q}}\overline C_K.
+$$
+将 $X^+=X^-\mathbin{\dot\cup}\delta$ 代入，并注意 $\delta\setminus V_{\mathcal Q}=\delta\cap\bigcap_{K\in\underline{\mathcal Q}}K^\perp$，得到 (48.1)。因此旧残余 $\Delta^-$ 原样保留，只有未被此前缀覆盖的新角色需要检查；空前缀时交集约定为全部角色群，恒等式仍成立。
+
+令 $m>0$。每个追加层在初始残余 $\Delta$ 上至多覆盖 $d$ 个角色，故任何大小为 $q$ 的追加集合至多覆盖 $qd$ 个角色；若 $d>0$，得到 $q\ge\lceil m/d\rceil$。若 $d=0$，或有 $\eta\in\Delta$ 不在 $\bigcup_{K\in\mathscr L}\overline C_K$ 中，则不存在有限追加覆盖，故 $\tau_{\rm ext}=\infty$；最大 gain 为零时同样不能删除当前残余中的任何角色。
+
+以下设 $d>0$ 且 $\tau_{\rm ext}=\tau<\infty$。取一个最优追加覆盖 $\mathcal R^*$，$|\mathcal R^*|=\tau$。贪心第 $i$ 轮开始时令 $r_i=|U_{i-1}|$，并令 $a_i=g_i$ 为本轮新覆盖角色数。因为 $\mathcal R^*$ 仍覆盖当前残余，其各层 gains 总和至少为 $r_i$，所以
+$$
+g_i\ge r_i/\tau.
+$$
+给本轮每个新覆盖角色分配 charge $1/g_i$，本轮总 charge 为 $a_i/g_i=1$。按全部 $m$ 个角色的剩余顺序可立即得到 $s\le H_m\tau$；下面给出更尖的 $H_d$ 界。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。固定一个 $R$，在某轮开始时若它尚有 $j$ 个未覆盖角色，则贪心 gain $g_i$ 至少为 $j$（该层 $R$ 本身是候选层）。若本轮分配给 $R$ 的新角色数为 $a_{i,R}$，则这些角色的总 charge 至多为
+$$
+\frac{a_{i,R}}{j}
+\le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
+$$
+各轮对应的这些整数区间两两不交并包含于 $\{1,\ldots,|R\cap\Delta|\}$（若其它角色由其它最优层负责，某些整数只会被跳过），而 $|R\cap\Delta|\le d$；故分配给 $R$ 的 charge 总和至多 $H_d$。对 $\tau$ 个层求和，并注意每轮总 charge 为 $1$，得到
+$$
+s=\sum_i\frac{a_i}{g_i}
+\le\tau H_d
+\le\tau H_m
+\le(1+\log m)\tau.
+$$
+这证明了 (48.2) 的右端和标准 charging argument；左端已由基数计数得到。每个成功轮次至少删除一个角色，故可扩展时算法在至多 $m$ 轮内终止；不可扩展时的零 gain 停滞已在上面说明。
+
+最后，若上一轮已维护 $\Delta^-$，(48.1) 的增量部分只需对每个 $\eta\in\delta$ 检查 $\ell(\mathcal Q)$ 个前缀层；在 unit-cost membership 下为 $O(|\delta|\ell(\mathcal Q))$ 次检查。得到 $\Delta$ 后，预计算 $\overline C_K\cap\Delta$ 需 $O(m|\mathscr L|)$ 次检查，朴素逐轮重算 gains 的搜索成本为 $O(m^2|\mathscr L|)$；若不保留旧残余而从头重算，则前缀检查相应为 $O(|X^+|\ell(\mathcal Q))$。若 $\delta$ 未直接给出而需扫描整个 $\widehat A$ 以判定阈值，再另加 $O(|\widehat A|)$ 次角色枚举（不含阈值判定本身）。证毕。
+
+**范围。** 本定理只维护 §45 的固定 Fourier 二维证书族，把已有 stack 当作不可修改的前缀，并在固定有限层菜单中做增量选择；(48.2) 是 additive recourse 加上证书族内的 harmonic 近似，不等于整个 $X^+$ 的全局最短 stack，也不提供完整钻石范数上界或任意 LOSR/CPTP 操作的近似比。
+
+## 追加锚（本行以下为增补区）
+
+## 44. 实际粗化信道的混合深度最小群控制
+
+**定义 44.1（统一的群同态循环控制）。** 固定定义 39.1 的非空有限扇区集 $S$、正整数源尺寸 $r_s$ 与目标尺寸 $d_s$，并记 $C_m=\mathbb Z/m\mathbb Z$，其中 $C_1$ 为平凡群。源谱 $\lambda_s$ 遍历长度 $r_s$ 的所有非增概率向量，允许零项。对每一族 $\lambda=(\lambda_s)_s$，沿用 §39 的补零约定、共同环境指标 $j<M$、幅度 $\alpha_{saj}$、向量 $\psi_{sj}$、Fourier 向量 $T_{sk}$ 与系数 $c_{sjk}$。特别地，$b_{sj}=c_{sj0}$，$G_{st}=\sum_j b_{sj}b_{tj}$。记该族的完整目标信道为
+
+$$
+\mathcal F^\lambda_G(X)
+=T(G\circ X)T^*+\sum_sX_{ss}L_s,
+\qquad
+L_s=\sum_{k\ne0}\left(\sum_j|c_{sjk}|^2\right)
+|T_{sk}\rangle\langle T_{sk}|.
+$$
+
+这个记号保留由源谱决定的全部 $L_s$；只给出理想子空间上的 $G$ 块不算给出完整信道。
+
+取有限群 $H$，不预设阿贝尔性，以及对每个 $s$ 的满射群同态 $\pi_s:H\twoheadrightarrow C_{d_s}$。令 $h$ 在 $H$ 上均匀分布，两侧在 §39 的局部拆分并丢弃环境后使用同一个 $h$。若 $X_s|s,a\rangle=|s,a+1\bmod d_s\rangle$，置
+
+$$
+U_h=\bigoplus_sX_s^{\pi_s(h)},\qquad V_h=U_h\otimes U_h,
+\qquad
+\mathcal C^\lambda_{H,\pi}(X)
+=\frac1{|H|}\sum_{h\in H}V_h
+\left(\sum_{s,t}X_{st}\sum_{j<M}
+|\psi_{sj}\rangle\langle\psi_{tj}|\right)V_h^*.
+$$
+
+群与同态固定于整个源谱族，不随 $\lambda$ 或输入 $X$ 改变。称它们实现统一粗化，当且仅当对每个允许的 $\lambda$ 有 $\mathcal C^\lambda_{H,\pi}=\mathcal F^\lambda_G$。定义 $N_{\min}(\mathbf r,\mathbf d)$ 为这些实现中的最小 $|H|$；直积群 $\prod_sC_{d_s}$ 的坐标控制给出非空候选集。此处优化的是这一固定拆分之后的均匀群同态循环控制标签数。依定理 42.1，联合控制像的大小与实际不同信道分支数须区分：一个特殊源谱可能使不同控制标签诱导相同的编码后映射，本节不最小化该谱的不同映射数。所求也不是一般 CPTP 或 LOSR 分解的分支数、非均匀或非同态控制的最小支持，不把标签数解释为物理资源。它与定理 39.2 的不受限钻石误差极值属于不同的优化问题。
+
+**定理 44.2（所有源谱的完整信道与两坐标满射，repo-derived）。** 在定义 44.1 中，实现统一粗化当且仅当每一对不同扇区的联合同态
+
+$$
+(\pi_s,\pi_t):H\longrightarrow C_{d_s}\times C_{d_t}
+$$
+
+满射。结论对任意固定的正整数 $r_s,d_s$ 成立，包含 $d_s=1$、源尺寸小于目标尺寸、补零及秩一源谱。这里的信道相等也在附加任意有限被动参考后成立。
+
+**证明。** 实际源基上的拆分是
+
+$$
+E|s,i\rangle=|s,i\bmod d_s\rangle
+|\lfloor i/d_s\rfloor\rangle_E.
+$$
+
+两侧环境使用同一组 $j$ 标签，故编码矩阵单位 $|s\rangle\langle t|$ 在拆分并取环境偏迹后恰为 $\sum_j|\psi_{sj}\rangle\langle\psi_{tj}|$。补零不改变这个偏迹，也不添加源空间的基向量。展开 §39 的正交 Fourier 基，得到
+
+$$
+\begin{aligned}
+A_{stkl}&=\sum_{j<M}c_{sjk}\overline{c_{tjl}},\\
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle t|)
+&=\sum_{k\in C_{d_s}}\sum_{l\in C_{d_t}}
+A_{stkl}\,m_{stkl}|T_{sk}\rangle\langle T_{tl}|,\\
+m_{stkl}&=\frac1{|H|}\sum_{h\in H}
+\exp\!\left(-2\pi i\frac{k\pi_s(h)}{d_s}
++2\pi i\frac{l\pi_t(h)}{d_t}\right).
+\end{aligned}
+$$
+
+此式使用 $V_hT_{sk}=\exp(-2\pi i k\pi_s(h)/d_s)T_{sk}$ 的约定。共同环境产生的是逐 $j$ 的乘积之和 $A_{stkl}$，不能把它替换成两个独立环境和的乘积。
+
+为给出与定理 43.1 的确切接口，置 $A=\prod_sC_{d_s}$、$\Pi=(\pi_s)_s$、$K=\Pi(H)$。实际拆分输出支撑于相关子空间
+
+$$
+\mathcal Q=\bigoplus_s\operatorname{span}\{T_{sk}:k\in C_{d_s}\}.
+$$
+
+其中移位权为 $\theta_{sk}(u)=\exp(-2\pi i ku_s/d_s)$，每个权只依赖一个坐标，所有 $\theta_{s0}$ 都是平凡角色；不同扇区的零模是这一角色的不同重数。矩阵单位 $|T_{sk}\rangle\langle T_{tl}|$ 查询的角色恰为 $\theta_{sk}\theta_{tl}^{-1}$，所以
+
+$$
+m_{stkl}=m_K(\theta_{sk}\theta_{tl}^{-1}),\qquad
+|\operatorname{supp}(\theta_{sk}\theta_{tl}^{-1})|\le2.
+$$
+
+这里复用的是定理 43.1 的矩阵单位乘子公式。其完整角色空间 $\ell^2(\widehat A)$ 可以含有别的角色对，而这些角色对的比值未必来自 $\mathcal Q$ 的两个实际权。因而 $K^\perp$ 中一个支撑大于二的角色，本身不给出此编码中的矩阵单位或非零源系数。实际全谱失败必须在上述查询族内找到角色，并连同实际 $A_{stkl}\ne0$ 一起检验；下面的必要性证明正完成这一步。
+
+同态的每个非空纤维都是核的陪集，所以均匀 $h$ 推前为像子群上的均匀分布。这里使用有限角色正交性与真子群的角色分离性，见 Keith Conrad，[*Characters of finite abelian groups*](https://kconrad.math.uconn.edu/blurbs/grouptheory/charthy.pdf)，Theorem 4.1、Corollary 3.7；子群角色和的同一表述见 van de Ven、Di Bucchianico，[*Factorial Designs and Harmonic Analysis on Finite Abelian Groups*](https://www.eurandom.tue.nl/reports/2006/023-report.pdf)，Lemma 5.4。即使 $H$ 非阿贝尔，角色也通过其阿贝尔像计算。
+
+当 $s=t$ 时，边缘满射给出 $m_{sskl}=\delta_{kl}$，因此
+
+$$
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle s|)
+=\sum_k\left(\sum_j|c_{sjk}|^2\right)
+|T_{sk}\rangle\langle T_{sk}|
+=G_{ss}|T_s\rangle\langle T_s|+L_s.
+$$
+
+当 $s\ne t$ 且两坐标满射时，均匀平均给出 $m_{stkl}=\delta_{k0}\delta_{l0}$。留下的系数是 $A_{st00}=G_{st}$，故
+
+$$
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle t|)
+=G_{st}|T_s\rangle\langle T_t|.
+$$
+
+这同时保留理想块和全部对角泄漏，证明充分性。$d_s=1$ 时仅有零 Fourier 模，$L_s=0$，同样成立。
+
+反之，若某一对的像 $K_{st}\subsetneq C_{d_s}\times C_{d_t}$ 为真子群，角色分离性给出非平凡角色
+
+$$
+\chi(x,y)=\exp(-2\pi i kx/d_s+2\pi i ly/d_t)
+$$
+
+在 $K_{st}$ 上恒为一。边缘满射排除仅一个坐标非平凡的角色，因此 $k\ne0$、$l\ne0$。对每个固定的正整数 $r_u$，取允许的非增谱 $\lambda_u=(1,0,\ldots,0)$。它只有 $j=0,a=0$ 的幅度非零，因而对每个 Fourier 指标有
+
+$$
+c_{u0k}=d_u^{-1/2},\qquad c_{ujk}=0\quad(j>0).
+$$
+
+于是 $A_{stkl}=1/\sqrt{d_sd_t}>0$，而 $m_{stkl}=1$。非零项 $|T_{sk}\rangle\langle T_{tl}|$ 留在实际输出中，却不在 $\mathcal F^\lambda_G(|s\rangle\langle t|)$ 中。正交基中的这个矩阵系数不能被其他项抵消，与所有源谱的相等要求矛盾。如果某个尺寸是一，两坐标像在边缘满射下已自动为满像，不出现这个反例情形。
+
+最后，矩阵单位构成逻辑算子空间的一组基。其作用相同就是线性信道相同；与任何参考系统的恒等映射张量后仍相同。参考不引入第三个扇区控制。一个固定特殊谱可以使某些 $A_{stkl}$ 为零，不能以这种相等替代本定理的全谱量词。证毕。
+
+本证明中的均匀两坐标投影与低支撑 Fourier 消去字典，是混合水平正交阵的已有工具：Pistone、Rogantin，[*Indicator function and complex coding for mixed fractional factorial designs*](https://arxiv.org/pdf/math/0703365v1)，Proposition 4(2),(4)。此处的应用将它接到指定的共同环境系数、泄漏信道及固定任意源尺寸的全谱必要性，不要求消去三坐标或更多坐标支撑的角色。
+
+**定理 44.3（任意正循环尺寸的精确最小标签数，repo-derived）。** 对定义 44.1 的全部尺寸族，令
+
+$$
+a_{p,s}=v_p(d_s),\qquad
+n_{p,a}=\#\{s\in S:a_{p,s}\ge a\}\quad(a\ge1),
+\qquad
+R_p(n)=\min\{r\in\mathbb Z_{\ge0}:p^r\ge1+(p-1)n\}.
+$$
+
+其中 $R_p(0)=0$，各和与积只有有限非零项。则
+
+$$
+\boxed{N_{\min}(\mathbf r,\mathbf d)
+=N_{\min}(\mathbf d)
+=\prod_p p^{\sum_{a\ge1}R_p(n_{p,a})}.}
+$$
+
+这个下界对任意有限群标签成立，并由一个阿贝尔群及实际满射同态同时达到。达到构造仅依赖目标尺寸，适用于每个允许的源谱。若令 $\rho_{p,a}=R_p(n_{p,a})$，可取标签群
+
+$$
+H=\prod_p\widehat{B_p},\qquad
+B_p=\bigoplus_{a\ge1}
+(C_{p^a})^{\rho_{p,a}-\rho_{p,a+1}}.
+$$
+
+这里 $\widehat B$ 是有限阿贝尔群 $B$ 的单位圆角色群；各循环坐标的控制由下述循环子群的角色限制及中国剩余定理给出。
+
+**证明。** 先把全部控制作为一个同态
+
+$$
+\Pi:H\longrightarrow A:=\prod_sC_{d_s},\qquad K=\Pi(H).
+$$
+
+在 $H$ 阿贝尔时，定理 42.1 已给出按联合控制像去重的均匀商群实现。这里还允许 $H$ 非阿贝尔，但同一纤维理由仍适用：每个纤维是 $\ker\Pi$ 的陪集，均有 $|\ker\Pi|$ 个元素，且 $H/\ker\Pi\cong K$。由于目标 $A$ 阿贝尔，$K$ 总是阿贝尔。各分支只依赖 $\Pi(h)$，所以用 $K$ 的坐标投影作控制产生相同的每一个源谱信道，均匀性保持且 $|K|\le|H|$。定理 44.2 的边缘及两坐标满射也同时保留。故非阿贝尔性与重复标签均不能降低最小值；以下在一个共同的阿贝尔像 $K$ 上处理全部素数与深度。
+
+按有限阿贝尔群的素数主分解，$K=\prod_pK_p$。固定 $p$，并暂写 $a_s=a_{p,s}$。识别各目标坐标的 $p$ 主部分为 $C_{p^{a_s}}$，得到满射 $f_s:K_p\to C_{p^{a_s}}$，以及对每对坐标的满射 $(f_s,f_t)$。这是同一群的分解：不同素数的分量映到其他素数的目标主部分必为零，故全局边缘或两坐标满射恰等价于其每个素数分量满射。
+
+置 $B=\widehat{K_p}$，对 $a_s>0$ 令 $D_s\subseteq B$ 为 $f_s$ 拉回的循环角色子群，阶为 $p^{a_s}$；对 $a_s=0$ 置 $D_s=\{0\}$。此处把角色群写成加法群。有限对偶及商群湮灭子工具见 Conrad 的 Theorem 3.14 与 van de Ven、Di Bucchianico 的 Lemma 5.3。两坐标同态的对偶映射为
+
+$$
+\widehat{C_{p^{a_s}}}\oplus\widehat{C_{p^{a_t}}}
+\longrightarrow B,\qquad (u,v)\longmapsto f_s^*u+f_t^*v.
+$$
+
+有限角色分离性表明原映射满射当且仅当这个对偶映射单射；其核为零又当且仅当 $D_s\cap D_t=\{0\}$。每个非平凡循环 $p$ 子群有唯一的阶 $p$ 子群
+
+$$
+\ell_s=p^{a_s-1}D_s\subseteq B[p],\qquad
+B[p]=\{x\in B:px=0\}.
+$$
+
+若两个循环 $p$ 子群相交非平凡，取交中一个非零元素并乘适当的 $p$ 次幂，得到共同的阶 $p$ 子群；反之，共同的阶 $p$ 子群已经给出非零交。因此两坐标约束恰是所有 $a_s>0$ 的 $\ell_s$ 两两不同，而非任意高维子空间的分离条件。
+
+应用有限阿贝尔群的循环分解，写
+
+$$
+B\cong\bigoplus_{j=1}^mC_{p^{b_j}},\qquad b_j\ge1.
+$$
+
+这里复用的结构定理见 van de Ven、Di Bucchianico 的 Theorem 4.14；接下来要计数的是该分解的所有深度，不能只取指数或一层秩。令 $e_j$ 为各循环因子的生成元，定义嵌套的 $\mathbb F_p$ 空间
+
+$$
+V_a=B[p]\cap p^{a-1}B
+=\operatorname{span}_{\mathbb F_p}
+\{p^{b_j-1}e_j:b_j\ge a\},\qquad
+ t_a=\dim_{\mathbb F_p}V_a=\#\{j:b_j\ge a\}.
+$$
+
+等式逐因子可见：$b_j<a$ 的因子在 $p^{a-1}B$ 中已为零；$b_j\ge a$ 的因子则贡献其唯一阶 $p$ 直线。$V_{a+1}\subseteq V_a$，且
+
+$$
+\log_p|B|=\sum_jb_j=\sum_{a\ge1}t_a.
+$$
+
+每个 $a_s\ge a$ 的坐标将不同的直线 $\ell_s$ 放入 $V_a$，因为 $\ell_s\subseteq p^{a_s-1}B\subseteq p^{a-1}B$。$t_a$ 维空间有 $(p^{t_a}-1)/(p-1)$ 条直线：其非零向量按每条直线的 $p-1$ 个非零向量分组。因此，在同一个 $B$ 的每一个深度都有
+
+$$
+n_{p,a}\le\frac{p^{t_a}-1}{p-1},\qquad
+ t_a\ge R_p(n_{p,a}),\qquad
+ |K_p|=|B|\ge p^{\sum_aR_p(n_{p,a})}.
+$$
+
+把这些界在同一群内按深度相加，再按素数相乘，得到所要求的全局下界。这一步并未把各深度分别可达的最小值当作共同可达；共同达到需要以下构造。
+
+现在固定 $p$，取 $\rho_a=R_p(n_{p,a})$。$n_{p,a}$ 非增且最终为零，故 $\rho_a$ 也非增且最终为零，$\rho_a-\rho_{a+1}$ 是非负整数。定义
+
+$$
+B_p=\bigoplus_{a\ge1}(C_{p^a})^{\rho_a-\rho_{a+1}}.
+$$
+
+对这个群，上述深度空间 $V_a$ 的维数恰为
+
+$$
+\sum_{b\ge a}(\rho_b-\rho_{b+1})=\rho_a.
+$$
+
+将所有 $a_s>0$ 的坐标按指数非增排序。在处理指数 $a_s=a$ 的坐标时，从 $V_a$ 中选择一条尚未使用的直线。先处理的坐标指数都不小于 $a$，其直线也都在 $V_a$ 内；连同当前坐标，数量不超过 $n_{p,a}$。而 $V_a$ 至少有 $n_{p,a}$ 条直线，所以这一步总有选择。由此得到一组兼容全部深度且两两不同的直线 $\ell_s$。
+
+还需把每条直线提升为具有指定阶的实际循环子群。将 $B_p$ 的循环因子记为 $C_{p^{b_j}}$，选所指定直线上的非零向量
+
+$$
+y_s=\sum_{b_j\ge a_s}\eta_{sj}p^{b_j-1}e_j,
+\qquad \eta_{sj}\in\{0,\ldots,p-1\},
+$$
+
+其中至少一个系数非零。置
+
+$$
+x_s=\sum_{b_j\ge a_s}\eta_{sj}p^{b_j-a_s}e_j.
+$$
+
+则 $p^{a_s}x_s=0$ 而 $p^{a_s-1}x_s=y_s\ne0$，所以 $x_s$ 的阶恰为 $p^{a_s}$。子群 $D_s=\langle x_s\rangle$ 的唯一阶 $p$ 子群就是所选 $\ell_s$，从而各 $D_s$ 两两相交平凡。这个提升保留循环群 $C_{p^{a_s}}$，没有将它替换成阶相同但指数不同的有限域加法群。
+
+令 $H_p=\widehat{B_p}$。对每个 $a_s>0$，由角色的值定义控制 $\pi_s^{(p)}:H_p\to C_{p^{a_s}}$：
+
+$$
+h_p(x_s)=\exp\!\left(2\pi i\frac{\pi_s^{(p)}(h_p)}{p^{a_s}}\right).
+$$
+
+$x_s$ 的精确阶使右侧指标良定义，且角色乘法使此映射为群同态。Conrad 的 Theorem 3.3 给出子群角色向有限阿贝尔群的延拓。因此限制 $\widehat{B_p}\to\widehat{D_s}$ 满射；若 $s\ne t$，则 $D_s+D_t=D_s\oplus D_t$，其上任意一对角色也同时延拓。这证明 $\pi_s^{(p)}$ 及 $(\pi_s^{(p)},\pi_t^{(p)})$ 均满射。指数为零的坐标取唯一的平凡同态，同一结论仍成立。
+
+在 $H=\prod_pH_p$ 上，对每个 $s$ 用中国剩余定理
+
+$$
+C_{d_s}\cong\prod_{p\mid d_s}C_{p^{a_{p,s}}}
+$$
+
+合并 $\pi_s^{(p)}$ 为 $\pi_s:H\to C_{d_s}$。每个素数分量的边缘及两坐标限制都满射，且不同素数的标签独立取值，故全局边缘与每个两坐标映射均满射。定理 44.2 给出对全部源谱的实际信道相等。群阶为
+
+$$
+|H|=\prod_p|B_p|
+=\prod_p p^{\sum_a a(\rho_{p,a}-\rho_{p,a+1})}
+=\prod_p p^{\sum_a\rho_{p,a}},
+$$
+
+恰好达到下界。若这些控制还有非平凡共同核，商掉它会产生同一族信道和更小的均匀群，违背已经证明的下界。因此这个达到构造的联合控制无重复标签，其不同联合控制值的支持大小也等于 $N_{\min}(\mathbf d)$。按定义 44.1 与定理 42.1 的区分，这里数的是联合控制值，而不把特殊源谱的实际不同编码后分支数认作相同的极值。证毕。
+
+上述公式的边界可直接在同一证明中读取。所有 $d_s=1$ 时素数积为空，$H$ 为平凡群且 $N_{\min}=1$。一个扇区时，每个非零深度的计数是一，$R_p(1)=1$，故 $N_{\min}=d_s$。两个扇区时 $R_p(2)=2$，各深度指数等于两个目标指数之和，故 $N_{\min}=d_sd_t$。两两互质的尺寸使所有 $n_{p,a}\le1$，从而 $N_{\min}=\prod_sd_s$，与 §40 的单循环实现相容。三个扇区时，$R_p(3)=2$；若三个 $p$ 指数排序为 $u\ge v\ge w$，深度和为 $u+v$，所以
+
+$$
+N_{\min}(d_1,d_2,d_3)
+=\operatorname{lcm}(d_1d_2,d_1d_3,d_2d_3)
+=\frac{d_1d_2d_3}{\gcd(d_1,d_2,d_3)}.
+$$
+
+这些是实际全谱信道最小值的边界，不把一般正交阵的存在性作为前提。正交阵的两坐标乘积整除条件本身是已有下界，见 Beder、McComack，[*A note on the minimum size of an orthogonal array*](https://arxiv.org/pdf/1508.06558v1)，§1.1；该文明确区分整除下界与该大小的阵是否存在。本定理的承重推导是各素数、各深度在同一群上的界，以及同时达到这些界的循环子群与控制构造，不主张这些成熟工具或极值综合的文献优先权。
+
+**命题 44.4（实际信道查询与完整多坐标查询的严格差别，repo-derived）。** 在非空 $S$ 且 $d_s\ge2$ 的共同范围中，定义 44.1 的全谱信道最小值满足
+
+$$
+N_{\min}(\mathbf d)\le\prod_sd_s,
+$$
+
+等号当且仅当没有一个素数同时整除三个不同扇区的尺寸。右侧是定理 41.1 在消去全部支撑至少二的角色这一附加条件下的最小值；该附加条件不能由实际信道相等推出。具体地，三个尺寸为二的扇区有实际信道最小值四，而完整多坐标消去需要八；尺寸 $(4,2,2)$ 有实际信道最小值八，而完整多坐标消去需要十六。
+
+**证明。** 对任意 $p$，有 $R_p(0)=0$、$R_p(1)=1$、$R_p(2)=2$，以及 $R_p(n)\le n$。当 $n\ge3$ 时，更有 $R_p(n)<n$：先用
+
+$$
+p^2\ge1+3(p-1)
+$$
+
+处理 $n=3$，再由 $p^{n-1}\ge1+(p-1)n$ 推出 $p^n\ge1+(p-1)(n+1)$。因此定理 44.3 的每个深度指数不超过 $n_{p,a}$，严格小于恰在某个深度计数至少三时发生。又
+
+$$
+\prod_sd_s=\prod_p p^{\sum_a n_{p,a}},
+$$
+
+且存在这样的深度当且仅当某素数整除至少三个尺寸。这证明数值比较与等号条件。定理 41.1 的更强条件检查所有多坐标角色，其完整联合像与乘积下界由该定理给出；定理 44.2 的每个矩阵单位却只使用一个或两个扇区控制。
+
+对三个 $C_2$，取
+
+$$
+H=C_2^2,\qquad
+\pi_1(x,y)=x,\quad\pi_2(x,y)=y,\quad\pi_3(x,y)=x+y.
+$$
+
+任意两个坐标决定 $x,y$，故每个两坐标映射均为双射。定理 44.2 证明它对任意固定源尺寸与所有允许谱实现完整信道；定理 44.3 给 $n_{2,1}=3$、$R_2(3)=2$，故四标签已最小。但联合像是 $C_2^3$ 的奇偶子群，三支撑角色
+
+$$
+\chi(z_1,z_2,z_3)=(-1)^{z_1+z_2+z_3}
+$$
+
+在像上恒为一，平均等于一，不能满足 §41 的附加条件。以所有扇区的秩一谱为具体源，$G_{st}=1/2$，$L_s=\tfrac12|T_{s1}\rangle\langle T_{s1}|$，这个四标签平均仍严格给出
+
+$$
+\mathcal F^\lambda_G(X)
+=\tfrac12T(\mathbf1\mathbf1^{\mathsf T}\circ X)T^*
++\tfrac12\sum_sX_{ss}|T_{s1}\rangle\langle T_{s1}|.
+$$
+
+未消去的三支撑角色不出现在这个信道的任何矩阵单位查询中。具体地，$\mathcal Q$ 的角色权为 $1,(-1)^{z_1},(-1)^{z_2},(-1)^{z_3}$，其中 $1$ 有三个零模重数；任何两个权的比值都不能等于 $\chi$。在定理 43.1 的完整角色表示中则可取角色对 $(\chi,1)$，得到残余非零矩阵单位及该定理的全表示下界。这两个表示的测试向量不同，不能把后一测试向量视为本编码的允许源输出。
+
+对 $(4,2,2)$，取 $H=C_4\times C_2$ 与
+
+$$
+\pi_1(x,y)=x,\qquad
+\pi_2(x,y)=y,\qquad
+\pi_3(x,y)=(x\bmod2)+y.
+$$
+
+第一、二坐标任意给定时直接确定标签；第一、三坐标任意给定时由第三坐标确定 $y$；第二、三坐标任意给定时确定 $x$ 的奇偶，仍有两个 $x$ 可选。所有两坐标映射均满射。计数为 $n_{2,1}=3,n_{2,2}=1$，故最小值是 $2^{2+1}=8$，这个群达到它。联合控制值只有八个，完整十六元直积上的全部角色消去是另一项要求。证毕。
+
+**命题 44.5（四个循环四元坐标与有限域阵的实现边界，repo-derived）。** 四个尺寸为四的扇区，在定义 44.1 的实现类中恰需六十四个均匀群标签，且可取
+
+$$
+H=C_4^3,\qquad
+(\pi_1,\pi_2,\pi_3,\pi_4)(x,y,z)=(x,y,z,x+y+z).
+$$
+
+另有十六行的四水平两坐标均匀阵。将其符号双射标为 $C_4$ 的移位值，也能实现同一个全谱信道，但它不属于循环坐标同态控制族；这个阵不能反驳六十四的受限最小值。
+
+**证明。** 对循环尺寸，$n_{2,1}=n_{2,2}=4$，而 $R_2(4)=3$，故定理 44.3 给 $N_{\min}=2^{3+3}=64$。在所示 $C_4^3$ 控制中，前三个坐标的任意一对显然满射。指定其中一个坐标及第四坐标时，剩下两个变量之和可以任意取值，也给出满射；因此它达到最小值。若增加定理 41.1 的完整角色消去条件，则需整个 $C_4^4$ 的二百五十六个标签。
+
+对照阵使用有限域 $\mathbb F_4=\mathbb F_2[\omega]/(\omega^2+\omega+1)$：
+
+$$
+\{(u,v,u+v,u+\omega v):u,v\in\mathbb F_4\}.
+$$
+
+这是标准有限域线性阵构造在本信道上的应用。四个线性形式的系数行分别为 $(1,0),(0,1),(1,1),(1,\omega)$，任意两个的行列式均非零；含第一行的行列式为 $1,1,\omega$，另三对为 $-1,-1,\omega-1$。故任意两列投影都是 $\mathbb F_4^2$ 的双射，十六行上的均匀分布给每对符号均匀分布。选任意双射 $\iota:\mathbb F_4\to C_4$ 并逐列标号后，这一均匀性保持。定理 44.2 证明充分性所用的矩阵单位平均只需边缘和两坐标均匀性，因此这些十六个非同态控制值也给出完整 $\mathcal F^\lambda_G$，包括每个源谱的实际泄漏。
+
+然而 $\mathbb F_4^2$ 的加法群指数为二，任意从它到 $C_4$ 的群同态像都被二消去，不能满射。符号双射不能把有限域加法变成循环四元加法。即使重新给十六行另赋群结构，若四个循环坐标同时成为满射同态，就会违背已证明的六十四标签下界。因此这里改变的是允许的控制函数族，而不是同一族中的更小实现。循环根编码与有限域编码的区别亦见 Pistone、Rogantin 的 §6；一般正交阵的两坐标乘积整除界见 Beder、McComack 的 §1.1，均不代替本节的循环群深度约束。证毕。
+
+## 49. 阈值链上的证书增量摊还
+
+**定义 49.1（单调阈值链与批次残余）。** 固定 §48 的有限、显式枚举允许层族 $\mathscr L$、全集 $\widehat A\setminus\{1\}$ 和覆盖集 $\overline C_K$。令
+$$
+X_0\subseteq X_1\subseteq\cdots\subseteq X_N
+\subseteq\widehat A\setminus\{1\}
+$$
+为有限阈值角色集链；已有允许前缀 $\mathcal Q_0$ 是一个序列，且其去重覆盖 $V_{\mathcal Q_0}$ 包含 $X_0$。第 $t$ 批的新角色和此前缀残余分别为
+$$
+\delta_t:=X_t\setminus X_{t-1},\qquad
+\Delta_t:=\delta_t\setminus V_{\mathcal Q_{t-1}}
+\quad(1\le t\le N).
+$$
+若 $\mathcal R_t$ 是第 $t$ 批追加的层序列，则
+$\mathcal Q_t:=\mathcal Q_{t-1}\mathbin{\|}\mathcal R_t$，其中 $\mathbin{\|}$ 表示串接；物理层数满足
+$\ell(\mathcal Q_t)=\ell(\mathcal Q_{t-1})+|\mathcal R_t|$。固定前缀覆盖 $X_{t-1}$ 的条件使 $\Delta_t$ 正好是本批需要处理的残余，而不会重复计入旧批次。
+
+**定理 49.2（在线阈值单调性与摊还追加界）。** 在定义 49.1 中，逐批运行 §48 的最大增益贪心：若 $\Delta_t=\varnothing$，取 $\mathcal R_t=\varnothing$；否则在 $\Delta_t$ 上选择最大增益层并追加，直到清空。令
+$$
+\sigma_t:=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L,\
+\Delta_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K\right\},
+\qquad
+d_t:=\max_{K\in\mathscr L}|\overline C_K\cap\Delta_t|,
+$$
+若不存在这样的 $\mathcal R$ 则置 $\sigma_t=\infty$；并约定 $\max\varnothing=0$ 且 $H_0:=0$。令
+$$
+L_t:=
+\begin{cases}
+0,&\Delta_t=\varnothing,\\
+\infty,&\Delta_t\ne\varnothing\ \text{且}\ d_t=0,\\
+\left\lceil|\Delta_t|/d_t\right\rceil,&\Delta_t\ne\varnothing\ \text{且}\ d_t>0.
+\end{cases}
+$$
+若每个 $\Delta_t$ 都可覆盖（等价于 $\sigma_t<\infty$），则所有前缀 $\mathcal Q_t$ 覆盖相应的 $X_t$，并且
+$$
+\sum_{t=1}^N L_t
+\le
+\ell(\mathcal Q_N)-\ell(\mathcal Q_0)
+\le
+\sum_{t=1}^N H_{d_t}\,\sigma_t
+\le
+\sum_{t=1}^N H_{|\Delta_t|}\,\sigma_t.
+\tag{49.1}
+$$
+空批次 $\Delta_t=\varnothing$ 对三项和都贡献 $0$。当某一批 $\Delta_t\ne\varnothing$ 且有角色不属于任何 $\overline C_K$（尤其 $d_t=0$）时，$\sigma_t=\infty$，此前缀无法通过任何有限允许追加覆盖 $X_t$；这一步立即报告不可达并停止后续更新。
+
+特别地，对只降低阈值的序列 $\varepsilon_0\ge\varepsilon_1\ge\cdots\ge\varepsilon_N$，取
+$X_t=T_{\varepsilon_t}$，则
+$$
+\delta_t
+=\{\eta\in\widehat A\setminus\{1\}:
+\varepsilon_t<|h_\eta|\le\varepsilon_{t-1}\}.
+$$
+若另一步提高阈值（$\varepsilon_t\ge\varepsilon_{t-1}$），则 $X_t\subseteq X_{t-1}$，这是删除角色的 deletion-only 情形，已有覆盖前缀无需追加，也不套用本定理递增链的 $\delta_t$ 定义。式 (49.1) 是固定前缀约束下的累计 additive recourse；它不与 $X_N$ 的全局最短 stack 相比较。
+
+**证明。** 先作归纳。$\mathcal Q_0$ 覆盖 $X_0$。若 $\sigma_t<\infty$，$\mathcal R_t$ 覆盖 $\Delta_t$，而
+$$
+X_t=X_{t-1}\mathbin{\dot\cup}\delta_t
+\subseteq V_{\mathcal Q_{t-1}}\cup\Delta_t
+\subseteq V_{\mathcal Q_t},
+$$
+所以 $\mathcal Q_t$ 覆盖 $X_t$；若 $\Delta_t=\varnothing$，同样无需追加。若 $\sigma_t=\infty$，存在不可覆盖角色或零增益停滞，任何后续有限追加仍保留它，故不可达结论成立。
+
+以下固定一个可覆盖批次，写 $m=|\Delta_t|>0$, $\sigma=\sigma_t$, $d=d_t$。每层在初始 $\Delta_t$ 上至多覆盖 $d$ 个角色，所以任何大小为 $q$ 的覆盖至少需要
+$q\ge\lceil m/d\rceil$；若 $d=0$，正是前述不可达分支。取最优覆盖 $\mathcal R^*$，$|\mathcal R^*|=\sigma$。贪心第 $i$ 轮开始时记本轮新覆盖数为 $g_i$。给本轮每个新覆盖角色分配 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j>0$ 个未覆盖角色，则 $R$ 作为候选层的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给 $R$ 的角色数为 $a_{i,R}$，则本轮对 $R$ 的总 charge 至多
+$$
+\frac{a_{i,R}}{g_i}\le\frac{a_{i,R}}{j}
+\le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
+$$
+若 $j=0$，则 $a_{i,R}=0$ 且该层本轮 charge 为 $0$。
+各轮区间两两不交并包含于
+$\{1,\ldots,|R\cap\Delta_t|\}$；跳过的整数只对应其它最优层已负责的角色。因此分配给 $R$ 的 charge 至多 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，贪心追加数 $s_t$ 满足
+$$
+s_t\le H_d\,\sigma_t.
+$$
+同时 $s_t\ge\sigma_t\ge\lceil m/d\rceil$，而 $H_d\le H_m$，得到该批次的三重界。对 $t=1,\ldots,N$ 求和，使用串接层数恒等式即得 (49.1)。
+
+对于只降低阈值的递增链，差集恰为所示 $\delta_t$，归纳式给出需要处理的批次；若另行提高阈值，则只是删除角色，旧前缀仍覆盖剩余集合。最后，若某角色不在任何允许层覆盖集中，它在任意后续有限串接中都保留，证明不可达。所有论证均在固定 $\overline C_K$、固定菜单和固定证书族内完成。证毕。
+
+若维护每批残余和前缀长度，单调下降阈值且新批次 $\delta_t$ 已显式给出时，批次 $t$ 的增量检查为
+$O(|\delta_t|\ell(\mathcal Q_{t-1}))$，覆盖预计算为
+$O(|\Delta_t||\mathscr L|)$，朴素贪心搜索为
+$O(|\Delta_t|^2|\mathscr L|)$
+次 unit-cost membership 检查；若需扫描整个 $\widehat A$ 发现 $\delta_t$，另加 $O(|\widehat A|)$ 次角色枚举。对所有批次求和给出累计摊还成本
+$$
+O\left(
+\sum_{t=1}^N
+\bigl(
+|\delta_t|\ell(\mathcal Q_{t-1})
++|\Delta_t||\mathscr L|
++|\Delta_t|^2|\mathscr L|
+\bigr)
+\right),
+$$
+另加实际执行的角色扫描成本。该成本界也只是证书更新算法的实现界。
+
+**范围。** 定理 49.2 只给 §45 的固定 Fourier 二维证书族、固定菜单和不可修改前缀的在线累计保证；不声称对任意 LOSR/CPTP 操作、完整钻石范数或 $X_N$ 的全局最优 stack 给出近似比或资源下界。
+
+## 50. 允许菜单变化下的证书追加摊还
+
+**定义 50.1（批次菜单与保留前缀）。** 固定 §48--49 的非平凡角色全集 $\widehat A\setminus\{1\}$ 和覆盖集
+$$
+\overline C_K:=\{\eta\in\widehat A\setminus\{1\}:\eta\notin K^\perp\}.
+$$
+令
+$$
+X_0\subseteq X_1\subseteq\cdots\subseteq X_N
+\subseteq\widehat A\setminus\{1\}
+$$
+为有限阈值角色集链；第 $t$ 批使用有限、显式枚举的追加菜单 $\mathscr L_t$。已有前缀 $\mathcal Q_0$ 是允许层序列并覆盖 $X_0$。菜单只约束该批新追加的层，历史前缀即使含有不在当前 $\mathscr L_t$ 的层也保留；这是 append-only 菜单语义，不是要求对历史层重新认证。令
+$$
+\delta_t:=X_t\setminus X_{t-1},\qquad
+\Delta_t:=\delta_t\setminus V_{\mathcal Q_{t-1}},
+\qquad
+V_{\mathcal Q}:=\bigcup_{K\in\underline{\mathcal Q}}\overline C_K,
+$$
+其中 $\underline{\mathcal Q}$ 是序列 $\mathcal Q$ 的去重层集合。若 $\mathscr L_{t-1}\subseteq\mathscr L_t$，称该步为菜单扩张；若 $\mathscr L_t\subseteq\mathscr L_{t-1}$，称为菜单收缩；定理也允许菜单路径在各批次混合变化。对菜单 $\mathscr L_t$ 定义
+$$
+\sigma_t:=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L_t,\
+\Delta_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K\right\},
+\qquad
+d_t:=\max_{K\in\mathscr L_t}|\overline C_K\cap\Delta_t|,
+$$
+若没有这样的 $\mathcal R$ 则置 $\sigma_t=\infty$，并约定 $\max\varnothing=0$、$H_0=0$。令
+$$
+L_t:=
+\begin{cases}
+0,&\Delta_t=\varnothing,\\
+\infty,&\Delta_t\ne\varnothing\ \text{且}\ d_t=0,\\
+\left\lceil|\Delta_t|/d_t\right\rceil,&\Delta_t\ne\varnothing\ \text{且}\ d_t>0.
+\end{cases}
+$$
+
+**定理 50.2（菜单变化的可行性单调性与累计追加界）。** 逐批只从 $\mathscr L_t$ 运行最大增益贪心，并令 $\mathcal Q_t=\mathcal Q_{t-1}\mathbin{\|}\mathcal R_t$。若所有 $\sigma_t<\infty$，则每个 $\mathcal Q_t$ 覆盖 $X_t$，并且
+$$
+\sum_{t=1}^N L_t
+\le\ell(\mathcal Q_N)-\ell(\mathcal Q_0)
+\le\sum_{t=1}^N H_{d_t}\sigma_t
+\le\sum_{t=1}^N H_{|\Delta_t|}\sigma_t.
+\tag{50.1}
+$$
+空批次贡献 $0$；若某批 $\Delta_t\ne\varnothing$ 有角色不属于任何 $\overline C_K$（尤其 $d_t=0$ 或 $\mathscr L_t=\varnothing$），则 $\sigma_t=\infty$，该批次在 append-only 语义下无法通过任何有限的当前菜单追加覆盖 $X_t$，当前阶段的在线保证在此处停止。若后续菜单扩张引入覆盖该角色的新层，只有显式携带未覆盖角色才可另行尝试恢复（例如在失败批次保留 $\mathcal Q_t:=\mathcal Q_{t-1}$，维护 $U_t:=X_t\setminus V_{\mathcal Q_t}$，并在下一批取 $\Delta_{t+1}:=(\delta_{t+1}\cup U_t)\setminus V_{\mathcal Q_t}$）；本定理的 $\Delta_t=\delta_t\setminus V_{\mathcal Q_{t-1}}$ 定义不自动回溯，也不把当前菜单下的失败升级为对未来菜单的全程不可达。
+
+对同一批次残余 $\Delta$ 和前缀 $\mathcal Q$，若两个菜单满足
+$\mathscr L^-\subseteq\mathscr L^+$，则
+$$
+\sigma(\Delta,\mathscr L^+)\le\sigma(\Delta,\mathscr L^-),\qquad
+d(\Delta,\mathscr L^+)\ge d(\Delta,\mathscr L^-).
+\tag{50.2}
+$$
+因此菜单扩张不会把一个可行追加变成不可行，菜单收缩不会制造新的可行性；但 $H_d\sigma$ 的乘积不作单调性断言，因为 $d$ 也可能增大。若菜单收缩后此前缀仍被保留而新残余不可覆盖，结论是当前追加菜单的不可行性，而不是历史层的回溯删除结论。
+
+**证明。** 先证覆盖归纳。$\mathcal Q_0$ 覆盖 $X_0$。若 $\sigma_t<\infty$，贪心追加 $\mathcal R_t\subseteq\mathscr L_t$ 覆盖 $\Delta_t$，而
+$$
+X_t=X_{t-1}\mathbin{\dot\cup}\delta_t
+\subseteq V_{\mathcal Q_{t-1}}\cup\Delta_t
+\subseteq V_{\mathcal Q_t},
+$$
+所以 $\mathcal Q_t$ 覆盖 $X_t$。若 $\Delta_t=\varnothing$ 则无需追加；若 $\sigma_t=\infty$，有角色不在当前菜单的任何覆盖集内，故当前阶段无法覆盖 $X_t$，在线保证在此处停止；后续菜单若扩张并引入新覆盖层，只有在失败批次保留 $\mathcal Q_t:=\mathcal Q_{t-1}$、显式携带未覆盖角色并重新定义残余后，才可另行尝试恢复，本证明不宣称未来菜单下仍不可达。
+
+固定一个可行的非空批次，写 $m=|\Delta_t|>0$、$\sigma=\sigma_t$、$d=d_t>0$。每层至多覆盖初始残余的 $d$ 个角色，所以任何大小为 $q$ 的追加至少满足 $q\ge\lceil m/d\rceil$。取最优 $\mathcal R^*$，$|\mathcal R^*|=\sigma$；贪心第 $i$ 轮开始时记本轮增益为 $g_i$。给本轮每个新覆盖角色 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j>0$ 个未覆盖角色，则 $R$ 作为候选层的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给 $R$ 的角色数为 $a_{i,R}$，则本轮对 $R$ 的总 charge 至多
+$$
+\frac{a_{i,R}}{g_i}\le\frac{a_{i,R}}{j}
+\le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
+$$
+若 $j=0$，则 $a_{i,R}=0$ 且该层本轮 charge 为 $0$。
+这些区间两两不交并包含于 $\{1,\ldots,|R\cap\Delta_t|\}$，故分给 $R$ 的 charge 不超过 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，得到贪心追加数 $s_t\le H_d\sigma_t\le H_m\sigma_t$；又 $s_t\ge\sigma_t\ge\lceil m/d\rceil$。逐批求和并使用
+$\ell(\mathcal Q_t)=\ell(\mathcal Q_{t-1})+s_t$，即得 (50.1)。
+
+对 (50.2)，$\mathscr L^-\subseteq\mathscr L^+$ 意味着任一覆盖 $\mathcal R\subseteq\mathscr L^-$ 仍是正菜单的可行覆盖，所以最小值不增；而最大值是在更大集合上取最大，故 $d(\Delta,\mathscr L^+)\ge d(\Delta,\mathscr L^-)$. 若某角色不在任何当前菜单覆盖集，它在所有有限追加后仍未被覆盖，证明不可行。全程只使用固定 $\overline C_K$ 的集合覆盖关系，菜单变化不改变这一证书族推理。
+
+若逐批维护残余和前缀长度，批次 $t$ 的前缀检查、覆盖预计算和朴素贪心搜索分别为
+$$
+O\!\left(|\delta_t|\ell(\mathcal Q_{t-1})\right),\qquad
+O\!\left(|\Delta_t||\mathscr L_t|\right),\qquad
+O\!\left(|\Delta_t|^2|\mathscr L_t|\right)
+$$
+次 unit-cost membership 检查；若菜单差 $\mathscr L_t\triangle\mathscr L_{t-1}$ 需从显式列表重算嵌套关系，另加 $O(|\mathscr L_t|+|\mathscr L_{t-1}|)$ 列表检查。若 $\delta_t$ 需扫描整个 $\widehat A$ 才能发现，再加 $O(|\widehat A|)$ 角色枚举。累计成本是这些批次项之和。
+
+**范围。** 定理 50.2 只对固定 Fourier 二维证书族、append-only 前缀和每批有限菜单给出可行性与累计追加界；(50.2) 只比较固定残余上的集合覆盖最优值，不是任意 LOSR/CPTP、完整钻石范数或物理资源的单调性或下界。若 $X_t=T_{\varepsilon_t}$ 采用阈值语义，则本式只覆盖降阈值 $\varepsilon_t\le\varepsilon_{t-1}$ 的递增链；升阈值是删除角色的 deletion-only 更新，不套用本定理，除非另行重建递增链。若业务要求菜单收缩时历史层也必须属于新菜单，则需另定义迁移/重优化问题，本定理不覆盖。
 
 ## 追加锚（本行以下为增补区）

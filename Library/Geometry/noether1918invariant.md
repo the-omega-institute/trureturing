@@ -23,7 +23,7 @@ expressions $\psi=0$ to obtain conservation laws; Section 2 derives
 the divergence identities. Smoothness and the specified symmetry belong
 to the hypotheses.
 
-The consumer is [Static §23, Assumption 23.6](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
+The consumer is [Static §24, Assumption 24.6](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
 Its global phase current uses a separately declared complex scalar
 Lagrangian and generator sign. Conservation of an integrated charge
 additionally requires integrability and zero boundary flux. This

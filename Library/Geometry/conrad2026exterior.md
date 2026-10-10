@@ -25,6 +25,6 @@ not a quotation of Example 8.9.
 
 These are classical intermediate inputs to
 [the five-face projection](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md),
-Definition 21.1, Theorem 21.2 and Assumption 21.4. The exterior product is
+Definition 22.1, Theorem 22.2 and Assumption 22.4. The exterior product is
 not Boolean pointwise multiplication. Equal vector-space dimensions do
 not identify the products or provide a probability law or a physical field.

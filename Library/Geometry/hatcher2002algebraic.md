@@ -22,7 +22,7 @@ vertex to its unit; the edge boundary still has augmentation zero.
 
 This supplies the chain convention in
 [the five-face projection](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md),
-Definition 21.1 and Theorem 21.2. Exterior degree is one more than the
+Definition 22.1 and Theorem 22.2. Exterior degree is one more than the
 chain degree in that chosen basis dictionary. The citation supplies
 neither a chain retraction onto the sparse support nor a homology
 interpretation of a probability-observation kernel.

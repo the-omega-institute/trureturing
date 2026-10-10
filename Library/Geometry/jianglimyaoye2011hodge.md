@@ -33,5 +33,5 @@ equals the gradient projection only when their boundaries match.
 
 These are classical intermediate inputs to the
 [five-edge weighted seam lift and clock obstruction](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md),
-Section 14. The paper's ranking residual is not an independently supplied
+Section 15. The paper's ranking residual is not an independently supplied
 observer error, probability flux, clock cost or physical force.

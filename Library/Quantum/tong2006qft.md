@@ -26,7 +26,7 @@ equations (6.1)–(6.3), gives the Maxwell action and equations of motion;
 equations (6.16)–(6.18) give the constrained Hamiltonian with
 $(|E|^2+|B|^2)/2$ and the Gauss constraint.
 
-The consumer is [Static §23, Assumption 23.6](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
+The consumer is [Static §24, Assumption 24.6](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md).
 Its lightcone factors are obtained by the displayed coordinate transform.
 Its gauge-field stress uses its own explicitly positive internal form and
 normalization; no Yang–Mills or Wilson original equation is quoted.
