@@ -36,13 +36,15 @@ internal sealed class RationalPriceDocument : IScribeDocumentDefinition
                 Equal(Call("probability",Seq(gamma,Comma,i)),Call("p",Call("sigma",i))),Close,
             Sp,Land,Sp,Equal(Call("anchorMass",gamma),Call("p",k)),Sp,Land,Sp,
             Equal(Call("pathCost",gamma),Call("L",p)));
-        var embeddingStatement=All("m", nat, All("p", Call("RealVector", m), All("k", Call("Fin", m), Seq(Call("Optimizer",args),Sp,To,Sp,Call("HasOptimalEmbedding",args)))));
+        var embeddingStatement=All("m", nat, Seq(Open,D(2),Sp,Le,Sp,m,Close,Sp,To,Sp,
+            All("p", Call("RealVector", m), All("k", Call("Fin", m),
+                Seq(Call("Optimizer",args),Sp,To,Sp,Call("HasOptimalEmbedding",args))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "The unrestricted real-law optimum is positive rational and is the unique real zero of the triangular root value.",
             H("The Unique Positive Rational Price"), Blocks(
                 Paragraph(Text("RealVector(m) is the space of real functions on Fin m. For natural m, L(p) is the sum over natural d of (2^d-sum_i floor(2^d p(i)))/2^d. The quantity alpha(m) is the infimum of L(p)/p(k) over all strictly positive normalized real vectors p on Fin m and every index k of a least coordinate. W(x,m,1) is the infimum of C-x*t over all legal triangular paths starting at residual one with m retained labels. Here C is the sum of the path residuals divided by 2^d and t is the anchor-digit mass. realCast denotes the canonical inclusion of rational numbers into the reals.")),
                 Paragraph(Text("NonnegativeRationalLaw(m,p) means p has real coordinates indexed by Fin m, every coordinate is nonnegative, their sum is one, and for every i there exists a rational q whose real cast equals p(i).")),
-                Paragraph(Text("RealVector(m) denotes the real functions on Fin m. The natural label count m is at least two. A law p is a strictly positive real vector on Fin m with total mass one. Optimizer(m,p,k) additionally requires p(k)<=p(i) for every i and L(p)/p(k)=alpha(m), where L is the convergent dyadic floor-residual cost and alpha is the full-real infimum. A triangular state (r,e) has 0<e, r<e, and e<=m. A one action requires e<=2r and has successor (2r-e,e). A zero action with h departures requires 2r<e and h<=2r, and has successor (2r-h,e-h). RootPath(m) starts at (1,m) and satisfies these bounds and successor conditions at every natural depth.")),
+                Paragraph(Text("Optimizer(m,p,k) means that p is strictly positive, its coordinates sum to one, p(k)<=p(i) for every i, and L(p)/p(k)=alpha(m). A triangular state (r,e) has 0<e, r<e, and e<=m. A one action requires e<=2r and has successor (2r-e,e). A zero action with h departures requires 2r<e and h<=2r, and has successor (2r-h,e-h). RootPath(m) starts at (1,m) and satisfies these bounds and successor conditions at every natural depth.")),
                 Describe.Lean(DescribeId.Create("has-optimal-embedding"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLaw/RationalPrice.HasOptimalEmbedding"),
                     H("Joint probability, anchor and cost preservation"), StatementSource.FromAuthor(Disp(
