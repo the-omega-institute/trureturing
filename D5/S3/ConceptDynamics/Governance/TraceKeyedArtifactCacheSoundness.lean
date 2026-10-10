@@ -4,7 +4,7 @@
    mirror-E: none(waiver:theorem-has-no-separate-numeric-evidence)
    anchors: []
    utility: none
-   digest: Writer-filled trace-keyed caches yield from-scratch builds and hit unaffected modules. -/
+   digest: Collision-free writer-filled trace-keyed caches yield exactly the from-scratch builds. -/
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Set.Image
 import Mathlib.Logic.Function.Basic

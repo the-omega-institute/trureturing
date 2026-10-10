@@ -11,8 +11,9 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
         "D5/S3/ConceptDynamics/Governance/TraceKeyedArtifactCacheSoundness.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A trace-keyed artifact cache filled only by from-scratch builds yields from-scratch "
-            + "artifacts and restores every unaffected module.",
+        "When realized build inputs have no key collision, a trace-keyed artifact cache filled "
+            + "only by from-scratch builds yields from-scratch artifacts, and an unaffected module "
+            + "whose writer key is present at lookup is restored.",
         H("Trace-Keyed Artifact Cache Soundness"),
         Blocks(
             Describe.Lean(

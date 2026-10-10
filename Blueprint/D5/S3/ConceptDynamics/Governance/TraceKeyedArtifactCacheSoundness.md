@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A trace-keyed artifact cache filled only by from-scratch builds yields from-scratch artifacts and restores every unaffected module.
+When realized build inputs have no key collision, a trace-keyed artifact cache filled only by from-scratch builds yields from-scratch artifacts, and an unaffected module whose writer key is present at lookup is restored.
 
 **Theorem 1.1 (Reader builds equal from-scratch builds).**
 
