@@ -4229,4 +4229,96 @@ $$
 
 然而 $\mathbb F_4^2$ 的加法群指数为二，任意从它到 $C_4$ 的群同态像都被二消去，不能满射。符号双射不能把有限域加法变成循环四元加法。即使重新给十六行另赋群结构，若四个循环坐标同时成为满射同态，就会违背已证明的六十四标签下界。因此这里改变的是允许的控制函数族，而不是同一族中的更小实现。循环根编码与有限域编码的区别亦见 Pistone、Rogantin 的 §6；一般正交阵的两坐标乘积整除界见 Beder、McComack 的 §1.1，均不代替本节的循环群深度约束。证毕。
 
+## 49. 阈值链上的证书增量摊还
+
+**定义 49.1（单调阈值链与批次残余）。** 固定 §48 的有限、显式枚举允许层族 $\mathscr L$、全集 $\widehat A\setminus\{1\}$ 和覆盖集 $\overline C_K$。令
+$$
+X_0\subseteq X_1\subseteq\cdots\subseteq X_N
+\subseteq\widehat A\setminus\{1\}
+$$
+为有限阈值角色集链；已有允许前缀 $\mathcal Q_0$ 是一个序列，且其去重覆盖 $V_{\mathcal Q_0}$ 包含 $X_0$。第 $t$ 批的新角色和此前缀残余分别为
+$$
+\delta_t:=X_t\setminus X_{t-1},\qquad
+\Delta_t:=\delta_t\setminus V_{\mathcal Q_{t-1}}
+\quad(1\le t\le N).
+$$
+若 $\mathcal R_t$ 是第 $t$ 批追加的层序列，则
+$\mathcal Q_t:=\mathcal Q_{t-1}\mathbin{\|}\mathcal R_t$，其中 $\mathbin{\|}$ 表示串接；物理层数满足
+$\ell(\mathcal Q_t)=\ell(\mathcal Q_{t-1})+|\mathcal R_t|$。固定前缀覆盖 $X_{t-1}$ 的条件使 $\Delta_t$ 正好是本批需要处理的残余，而不会重复计入旧批次。
+
+**定理 49.2（在线阈值单调性与摊还追加界）。** 在定义 49.1 中，逐批运行 §48 的最大增益贪心：若 $\Delta_t=\varnothing$，取 $\mathcal R_t=\varnothing$；否则在 $\Delta_t$ 上选择最大增益层并追加，直到清空。令
+$$
+\sigma_t:=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L,\
+\Delta_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K\right\},
+\qquad
+d_t:=\max_{K\in\mathscr L}|\overline C_K\cap\Delta_t|,
+$$
+并约定 $\max\varnothing=0$。若每个 $\Delta_t$ 都可覆盖（等价于 $\sigma_t<\infty$），则所有前缀 $\mathcal Q_t$ 覆盖相应的 $X_t$，并且
+$$
+\sum_{t=1}^N\left\lceil\frac{|\Delta_t|}{d_t}\right\rceil
+\le
+\ell(\mathcal Q_N)-\ell(\mathcal Q_0)
+\le
+\sum_{t=1}^N H_{d_t}\,\sigma_t
+\le
+\sum_{t=1}^N H_{|\Delta_t|}\,\sigma_t.
+\tag{49.1}
+$$
+空批次 $\Delta_t=\varnothing$ 对三项和都贡献 $0$。当某一批 $\Delta_t\ne\varnothing$ 且有角色不属于任何 $\overline C_K$（尤其 $d_t=0$）时，$\sigma_t=\infty$，此前缀无法通过任何有限允许追加覆盖 $X_t$；这一步立即报告不可达并停止后续更新。
+
+特别地，对阈值序列 $\varepsilon_0\ge\varepsilon_1\ge\cdots\ge\varepsilon_N$，取
+$X_t=T_{\varepsilon_t}$，则
+$$
+\delta_t
+=\{\eta\in\widehat A\setminus\{1\}:
+\varepsilon_t<|h_\eta|\le\varepsilon_{t-1}\},
+$$
+且提高阈值（$\varepsilon_t\ge\varepsilon_{t-1}$）只会删去角色，已有覆盖前缀无需追加。式 (49.1) 是固定前缀约束下的累计 additive recourse；它不与 $X_N$ 的全局最短 stack 相比较。
+
+**证明。** 先作归纳。$\mathcal Q_0$ 覆盖 $X_0$。若 $\sigma_t<\infty$，$\mathcal R_t$ 覆盖 $\Delta_t$，而
+$$
+X_t=X_{t-1}\mathbin{\dot\cup}\delta_t
+\subseteq V_{\mathcal Q_{t-1}}\cup\Delta_t
+\subseteq V_{\mathcal Q_t},
+$$
+所以 $\mathcal Q_t$ 覆盖 $X_t$；若 $\Delta_t=\varnothing$，同样无需追加。若 $\sigma_t=\infty$，存在不可覆盖角色或零增益停滞，任何后续有限追加仍保留它，故不可达结论成立。
+
+以下固定一个可覆盖批次，写 $m=|\Delta_t|>0$, $\sigma=\sigma_t$, $d=d_t$。每层在初始 $\Delta_t$ 上至多覆盖 $d$ 个角色，所以任何大小为 $q$ 的覆盖至少需要
+$q\ge\lceil m/d\rceil$；若 $d=0$，正是前述不可达分支。取最优覆盖 $\mathcal R^*$，$|\mathcal R^*|=\sigma$。贪心第 $i$ 轮开始时令 $r_i$ 为剩余角色数、$g_i=a_i$ 为本轮新覆盖数。$\mathcal R^*$ 覆盖当前剩余集合，故其各层 gains 总和至少为 $r_i$，从而
+$$
+g_i\ge r_i/\sigma.
+$$
+给本轮每个新覆盖角色分配 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j$ 个未覆盖角色，本轮分配给 $R$ 的 $a_{i,R}$ 个角色的总 charge 至多
+$$
+\frac{a_{i,R}}{j}
+\le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
+$$
+各轮区间两两不交并包含于
+$\{1,\ldots,|R\cap\Delta_t|\}$；跳过的整数只对应其它最优层已负责的角色。因此分配给 $R$ 的 charge 至多 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，贪心追加数 $s_t$ 满足
+$$
+s_t\le H_d\,\sigma_t.
+$$
+同时 $s_t\ge\sigma_t\ge\lceil m/d\rceil$，而 $H_d\le H_m$，得到该批次的三重界。对 $t=1,\ldots,N$ 求和，使用串接层数恒等式即得 (49.1)。
+
+若 $\varepsilon_t\ge\varepsilon_{t-1}$，则 $T_{\varepsilon_t}\subseteq T_{\varepsilon_{t-1}}$（等号边界仍因严格 $>$ 而排除），所以此前缀继续覆盖新集合；若阈值下降，差集恰为所示 $\delta_t$，归纳式给出需要处理的批次。最后，若某角色不在任何允许层覆盖集中，它在任意后续有限串接中都保留，证明不可达。所有论证均在固定 $\overline C_K$、固定菜单和固定证书族内完成。证毕。
+
+若维护每批残余和前缀长度，单调下降阈值且新批次 $\delta_t$ 已显式给出时，批次 $t$ 的增量检查为
+$O(|\delta_t|\ell(\mathcal Q_{t-1}))$，覆盖预计算为
+$O(|\Delta_t||\mathscr L|)$，朴素贪心搜索为
+$O(|\Delta_t|^2|\mathscr L|)$
+次 unit-cost membership 检查；若需扫描整个 $\widehat A$ 发现 $\delta_t$，另加 $O(|\widehat A|)$ 次角色枚举。对所有批次求和给出累计摊还成本
+$$
+O\left(
+\sum_{t=1}^N
+\bigl(
+|\delta_t|\ell(\mathcal Q_{t-1})
++|\Delta_t||\mathscr L|
++|\Delta_t|^2|\mathscr L|
+\bigr)
+\right),
+$$
+另加实际执行的角色扫描成本。该成本界也只是证书更新算法的实现界。
+
+**范围。** 定理 49.2 只给 §45 的固定 Fourier 二维证书族、固定菜单和不可修改前缀的在线累计保证；不声称对任意 LOSR/CPTP 操作、完整钻石范数或 $X_N$ 的全局最优 stack 给出近似比或资源下界。
+
 ## 追加锚（本行以下为增补区）
