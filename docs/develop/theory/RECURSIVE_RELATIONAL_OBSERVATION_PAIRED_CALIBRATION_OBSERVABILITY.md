@@ -3654,3 +3654,367 @@ unrestricted zero-versus-positive alternative and fixed-resource optima
 remain unestablished.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Finite-p-support eventual-tail rigidity and its repair consumers
+
+### 18.1 Standing data and the new restriction
+
+**Standing assumptions 18.1.** Retain the source, the once-sampled finite or countable prior, both endpoint masses, every supported target, both seeds, all paid histories, source-independent initialization, the complete raw carriers (including their infinite noncompletion outcomes), the original records, completion and matching Stop, and the same-update rules of Definition 11.2. Let $(\Gamma_B,\Gamma_A)\in\mathfrak C$ have the two full-descriptor residual equations (11.7) and the same unweighted marginals (11.6). Assume that the endpoint coordinate boxes (11.29) hold almost surely for both marginals. The only extra hypothesis in this section is that $\nu_p$ has finite support and that its averaged marker-one masses
+
+$$
+ d_n=\int Q(w_{n,1})\,d\nu_p(Q)
+$$
+
+satisfy, for some integer $N\ge0$,
+
+$$
+ d_{n+2}-\frac{104}{225}d_{n+1}+\frac4{75}d_n=0
+ \qquad(n\ge N).
+ \tag{18.1}
+$$
+
+No atomicity of $\nu_\beta$ is assumed in this standing hypothesis. In particular, (18.1) is a condition on one averaged complete-word sequence; it does not assume native individual laws, native acquired residuals, synchronized four-moment barycentres, a common return rate, reversibility, zero return variation, or a fixed label count.
+
+Put
+
+$$
+ z_a=\frac29,\qquad z_b=\frac6{25},\qquad
+ c_a=(1-a)^2=\frac49,\qquad c_b=(1-b)^2=\frac9{25}.
+$$
+
+Thus the two characteristic roots in (18.1) are $z_a,z_b$, and
+
+$$
+ P_{p,a}(w_{n,1})=c_a z_a^n,\qquad
+ P_{p,b}(w_{n,1})=c_b z_b^n.
+ \tag{18.2}
+$$
+
+The source-relative gap addressed here is the passage from (18.1), a single averaged tail constraint, to the full descriptor and flow classification below. That passage is absent from the supplied native-mixture and synchronized-fibre results.
+
+### 18.2 A finite positive boundary lemma
+
+**Lemma 18.1 (boundary recurrence lemma).** Let a finite regular stationary table have positive rows $\pi,\tau$, kernels $B,A$, emissions $u_i,v_j\in[a,b]$, and own complete laws $Q_i,W_j$ satisfying the two full recursions in (11.19). Suppose every $Q_i$ and $W_j$ lies in its corresponding endpoint coordinate box (11.29). Set
+
+$$
+ L=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,
+ \qquad g=\operatorname{diag}(1-u)B(1-v),
+$$
+
+so that
+
+$$
+ Q_i(w_{n,1})=(L^ng)_i,
+ \qquad
+ d_n=\pi L^n g.
+ \tag{18.3}
+$$
+
+If $d_n$ obeys (18.1) eventually, then the positive labels split into two unions of closed communicating classes, indexed by $r\in\{a,b\}$, such that
+
+$$
+ u_i=v_j=r
+$$
+
+on every p or suspended label in the $r$-union, and no positive $B$- or $A$-edge joins the two unions. Consequently
+
+$$
+ Q_i=P_{p,r},\qquad W_j=P_{\beta,r}
+$$
+
+on the corresponding union.
+
+**Proof.** Put $C=BA$. The two unweighted balances give $\pi C=\pi$. A finite stochastic matrix with a strictly positive stationary row has only closed irreducible classes on its support. Indeed, for a terminal communicating class, stationarity makes its total incoming flow from outside zero. Positivity of $\pi$ then forbids every incoming edge. Every vertex of the finite component graph has a path to a terminal class, so there can be no nonterminal class. Thus $C$ is block diagonal after a permutation.
+
+For a p-class $X_0$, let $Y_0$ consist of its positive $B$ successors. If $B_{ij}>0$ with $i\in X_0$, then every $k$ with $A_{jk}>0$ has $C_{ik}>0$, hence belongs to $X_0$. Distinct p-classes cannot share such a $j$, since its stochastic $A$ row would have to be supported in both. Every suspended label has an incoming $B$ edge because $\tau=\pi B$ is positive. Consequently these $(X_0,Y_0)$ partition both phases into closed bipartite components. Positivity of $1-u_i$ and $v_j$ makes the support of $L$ exactly the support of $C$, so its p-blocks are irreducible, with no restriction on their periods.
+
+The marker-one endpoint ratio is
+
+$$
+ \frac{c_bz_b^n}{c_az_a^n}
+ =\frac{81}{100}\left(\frac{27}{25}\right)^n.
+$$
+
+It exceeds one at $n=3$ and increases thereafter. Therefore the full endpoint boxes imply
+
+$$
+ c_a z_a^n\mathbf1\le L^ng\le c_b z_b^n\mathbf1
+ \qquad(n\ge3).
+ \tag{18.4}
+$$
+
+Row stochasticity and $u_i,v_j\in[a,b]$ also give the finite-coordinate bound
+
+$$
+ c_b\le g_i=(1-u_i)\sum_jB_{ij}(1-v_j)\le c_a.
+ \tag{18.5}
+$$
+
+Fix one component and restrict $L,g$ to $X_0$. The finite irreducible Perron--Frobenius theorem supplies a positive left vector $\ell$ with $\ell^TL=\rho\ell^T$, where $\rho>0$ is this block's spectral radius. Put $S=\ell^T\mathbf1>0$ and $H_0=\ell^Tg>0$. Multiplying (18.4) by $\ell^T$ gives
+
+$$
+ c_a z_a^n S\le\rho^n H_0\le c_b z_b^n S
+ \qquad(n\ge3).
+ \tag{18.6}
+$$
+
+Taking scalar $n$th roots shows $z_a\le\rho\le z_b$. At either boundary, (18.5) and one side of (18.6) saturate exactly:
+
+$$
+ \begin{aligned}
+ \rho=z_a&\ \Longrightarrow\ c_aS\le H_0\le c_aS
+                    \ \Longrightarrow\ g=c_a\mathbf1,\\
+ \rho=z_b&\ \Longrightarrow\ c_bS\ge H_0\ge c_bS
+                    \ \Longrightarrow\ g=c_b\mathbf1.
+ \end{aligned}
+ \tag{18.7}
+$$
+
+The final implications use strict positivity of every $\ell_i$. Each factor in the product defining $g_i$ in (18.5) lies in $[1-b,1-a]$. Its maximum $(1-a)^2$ is attained only when $u_i=a$ and the $B_i$-average of $1-v$ equals $1-a$; the latter equality forces $v_j=a$ on every positive $B_{ij}$. Its minimum $(1-b)^2$ similarly forces $u_i=b$ and $v_j=b$ on every such edge. Every $j\in Y_0$ has such an incoming edge. Hence
+
+$$
+ \rho=z_r\ \Longrightarrow\quad
+ u_i=v_j=r\quad(i\in X_0,\ j\in Y_0),
+ \qquad r\in\{a,b\}.
+ \tag{18.8}
+$$
+
+This boundary argument uses neither convergence of normalized matrix powers nor visibility of peripheral eigenmodes.
+
+On a component satisfying (18.8), the constant assignment of the native endpoint pair solves both full recursions (11.19). For any two normalized solution pairs, their maximal complete-law TV distances $x,y$ over the two finite label sets obey
+
+$$
+ x\le(1-r)y,\qquad y\le r x.
+$$
+
+Thus $x=y=0$, since $r(1-r)<1$. Every own law on this component is therefore $P_{p,r}$ or $P_{\beta,r}$, including every early word and the infinite coordinate. The infinite outcomes stay in the carriers; their zero mass also follows from the regular survival bound. Writing $m_{X_0}=\sum_{i\in X_0}\pi_i$, this component contributes exactly $m_{X_0}c_rz_r^n$ to $d_n$ for every $n\ge0$. This also follows directly from $L=z_rC$ and $g=c_r\mathbf1$ on that component.
+
+It remains to prove that every component has a boundary radius. For each component choose a positive right Perron vector $h$ and positive constants $k_-,k_+$ such that $k_-h\le g\le k_+h$. Nonnegativity of $L$ then gives
+
+$$
+ k_-(\pi_{X_0}h)\rho^n
+ \le\pi_{X_0}L^ng
+ \le k_+(\pi_{X_0}h)\rho^n
+ \qquad(n\ge0).
+ \tag{18.9}
+$$
+
+Here $\pi_{X_0}$ is the original positive row restricted to the component, without renormalization. Thus the $n$th-root growth of the positive output of any nonempty collection of components is the largest radius in that collection. This follows by summing the upper bounds and keeping a largest-radius lower bound in (18.9), and holds for periodic blocks as well.
+
+Every scalar sequence satisfying (18.1) is $A_0z_a^n+B_0z_b^n$ for $n\ge N$: solve for the two coefficients at $N,N+1$, then use the recurrence forward. A strictly positive such sequence has positive leading nonzero coefficient, so its $n$th-root growth is either $z_a$ or $z_b$. Applying this to $d_n$ identifies its largest component radius as one of these two values. If the largest radius is $z_a$, (18.6) makes every radius $z_a$, and (18.8) classifies every component.
+
+If the largest radius is $z_b$, first apply (18.8) and the full-law uniqueness argument to all components with that radius. Their total output is $m_bc_bz_b^n$ for every $n$, where $m_b$ is their total p mass. Only now remove these components. Their output itself satisfies (18.1), so the remaining sum still satisfies the eventual recurrence. If this sum is nonempty, it is strictly positive by (18.9), and its largest radius is strictly below $z_b$. Its $n$th-root growth must therefore be $z_a$. Equation (18.6) then makes every remaining radius $z_a$, and (18.8) classifies them. The empty remainder needs no further argument. This accounts for every component without an inference about unobserved eigenmodes or cancellation at smaller poles. Closedness proves the absence of cross-edges between the two endpoint unions. $\square$
+
+The boundary lemma is deliberately finite and exact. It does not claim a stability estimate for approximate recurrences, and it does not extend the conclusion to a nonatomic $\nu_p$.
+
+### 18.3 Eventual averaged-tail rigidity
+
+**Theorem 18.2 (finite-p-support eventual-tail rigidity).** Under Standing assumptions 18.1, there is $\theta\in[0,1]$ such that
+
+$$
+ \nu_p=(1-\theta)\delta_{P_{p,a}}+\theta\delta_{P_{p,b}},
+ \qquad
+ \nu_\beta=(1-\theta)\delta_{P_{\beta,a}}+\theta\delta_{P_{\beta,b}},
+ \tag{18.10}
+$$
+
+and
+
+$$
+ \Gamma_B=(1-\theta)\delta_{(P_{p,a},P_{\beta,a})}
+ +\theta\delta_{(P_{p,b},P_{\beta,b})},
+$$
+
+$$
+ \Gamma_A=(1-\theta)\delta_{(P_{\beta,a},P_{p,a})}
+ +\theta\delta_{(P_{\beta,b},P_{p,b})}.
+ \tag{18.11}
+$$
+
+The eventual recurrence is an additional hypothesis. It is not inferred from the unrestricted endpoint face, and it constrains only the averaged marker-one word sequence sufficiently far into the tail.
+
+**Proof.** Let $G\subset\mathcal K_\beta$ be the full suspended endpoint box. It is closed, hence Borel: it is a countable intersection of closed coordinate intervals, and atom evaluation is TV-continuous. It has full original $\nu_\beta$ measure by hypothesis. Apply Theorem 13.2 with the given finite p marginal, this $G$, and $q=0$. The resulting finite regular table has exactly the original p own-law marginal $\nu_p$, all its suspended own laws lie in $G$, and both its full recursions and unweighted balances hold. Each of its p laws lies in the p endpoint box because its positive-mass marginal is unchanged. Its averaged marker-one sequence is therefore the original $d_n$ and obeys (18.1).
+
+Lemma 18.1 classifies this finite table. Since Theorem 13.2 preserves the entire p marginal, it follows that the original marginal is
+
+$$
+ \nu_p=(1-\theta)\delta_{P_{p,a}}+\theta\delta_{P_{p,b}}
+$$
+
+for some $\theta\in[0,1]$. No preservation of the original suspended marginal or either original flow is inferred from that realization; those objects are now recovered from the original equations (11.8).
+
+Write $m_a=1-\theta$ and $m_b=\theta$. For each $r\in\{a,b\}$ with $m_r>0$, disintegrate the original $\Gamma_B$ over $Q=P_{p,r}$. Its first residual equation gives the equality of complete measures
+
+$$
+ \int W\,\Gamma_B(dW\mid P_{p,r})
+ =\mathcal R_B(P_{p,r})=P_{\beta,r}.
+$$
+
+Every coordinate $W(\eta)$ lies almost surely between $P_{\beta,a}(\eta)$ and $P_{\beta,b}(\eta)$: this follows from the original second marginal and its full-measure box. At each $\eta$, the barycentre value $P_{\beta,r}(\eta)$ is an endpoint of this interval. Subtracting the lower endpoint, or subtracting from the upper endpoint, gives a nonnegative random variable of mean zero. Thus $W(\eta)=P_{\beta,r}(\eta)$ conditionally almost surely. The carrier is countable, including infinity, so these equalities hold simultaneously and force
+
+$$
+ \Gamma_B(dW\mid P_{p,r})=\delta_{P_{\beta,r}}.
+$$
+
+This proves the first flow identity in (18.11) for the original pair. Its second marginal, equal to the first marginal of the original $\Gamma_A$ by (11.6), is precisely the suspended marginal in (18.10).
+
+For each such present $r$, the second original residual equation gives
+
+$$
+ \int Q\,\Gamma_A(dQ\mid P_{\beta,r})
+ =\mathcal R_A(P_{\beta,r})=P_{p,r}.
+$$
+
+Its conditional p support is contained in $\{P_{p,a},P_{p,b}\}$. Testing the alpha coordinate, whose values at these two laws are the distinct numbers $a,b$, forces the conditional mass to be entirely at $P_{p,r}$. This proves the second flow identity in (18.11). Null endpoint fibres are omitted throughout, so the argument includes $\theta=0$ and $\theta=1$. No atomicity assumption was made on the original suspended marginal.
+
+The resulting full classification gives
+
+$$
+ d_n=(1-\theta)c_a z_a^n+\theta c_b z_b^n
+ \qquad(n\ge0).
+$$
+
+The coefficients are already uniquely determined by any two consecutive late values: the determinant of the columns $c_az_a^n,c_bz_b^n$ at $n,n+1$ is $c_ac_bz_a^nz_b^n(z_b-z_a)\ne0$. Early and non-marker-one coordinates follow from the full-law classification, without running the assumed recurrence backward. $\square$
+
+### 18.4 Exact consumers
+
+**Corollary 18.3 (tail-preserving PAIRED15 repair obstruction).** In the PAIRED15 construction, suppose a proposed repair has finite p support, satisfies the full compatibility equations and endpoint boxes, and preserves the averaged marker-one coordinates for all sufficiently large $n$. Write
+
+$$
+ s_b=\frac12+t,\qquad s_a=\frac12-t,\qquad
+ t=\frac{78975}{2857232}.
+$$
+
+Then (18.1) holds with
+
+$$
+ d_n=s_a c_a z_a^n+s_b c_b z_b^n,
+$$
+
+so Theorem 18.2 forces $\theta=s_b$. Consequently its event means must be
+
+$$
+ \int f\,d\nu_p=C-2t\rho_p,
+ \qquad
+ \int h\,d\nu_\beta=H-2t\rho_\beta,
+ \tag{18.12}
+$$
+
+rather than the two midpoint values $C,H$. In particular, changing only finitely many mean word coordinates cannot repair PAIRED15 while its averaged marker-one coordinates are retained for all sufficiently large $n$.
+
+The p endpoint target already gives the quantitative obstruction
+
+$$
+ \mathcal J\ge2t\rho_p
+ =\frac{14514877}{5357310000}>\frac1{400},
+ \tag{18.13}
+$$
+
+and the suspended midpoint displacement is
+
+$$
+ 2t\rho_\beta=\frac{27963}{14286160}.
+ \tag{18.14}
+$$
+
+**Proof.** Section 15.2 changes only $w_{0,0},w_{0,1},w_{1,1},w_{2,1}$ of its endpoint-mixture p law. Thus its marker-one sequence has the displayed coefficients for every $n\ge3$. Eventual preservation implies (18.1). Theorem 18.2 and the nonzero two-column determinant in its proof give $\theta=s_b$ from any two consecutive retained late values.
+
+The supplied endpoint event masses are $P_{p,a}(E_p)=C+\rho_p$, $P_{p,b}(E_p)=C-\rho_p$ and $P_{\beta,a}(E_\beta)=H+\rho_\beta$, $P_{\beta,b}(E_\beta)=H-\rho_\beta$. Integrating them against the two classified marginals gives (18.12); $t,\rho_p,\rho_\beta>0$, so both original midpoint equations fail. In particular the p endpoint target $a$, which has positive installed mass, gives
+
+$$
+ \mathcal L_p(P_{p,a})-\rho_p
+ =s_b\operatorname{TV}(P_{p,b},P_{p,a})-\rho_p
+ =2t\rho_p.
+$$
+
+Using $\rho_p=1116529/22781250$ and $\rho_\beta=239/6750$ gives (18.13)--(18.14), with
+
+$$
+ 2t\rho_p-\frac1{400}=\frac{560801}{2678655000}>0.
+$$
+
+Enlarging the p support to any other finite size, changing kernels, or changing the coupling cannot evade this conclusion while the same averaged late tail, full compatibility and full boxes are retained. Every successful repair in this class must alter the averaged marker-one sequence at arbitrarily large indices; cancelling only the displayed suspended-coordinate residual of Section 15.6 cannot suffice. $\square$
+
+**Corollary 18.4 (all-supported losses on the rigid branch).** For any fixed finite or countable original prior with positive endpoint masses and at least one supported $k\ge3$, every pair satisfying Theorem 18.2 has
+
+$$
+ \mathcal J\ge\frac\eta4,
+ \qquad
+ \eta=\frac{14219478376}{318644812890625}.
+ \tag{18.15}
+$$
+
+If both endpoint midpoint equations are imposed, then for every supported nonendpoint target $R=P_{p,r_k}$,
+
+$$
+ \mathcal L_p(R)\ge\rho_p+\frac\eta2.
+ \tag{18.16}
+$$
+
+**Proof.** Put $\Delta=2\rho_p$ and $\delta=|\theta-1/2|$. The endpoint configuration losses of the p marginal are $\theta\Delta$ and $(1-\theta)\Delta$, so their maximum excess is $\Delta\delta$. For a supported nonendpoint $r_k$, the complete word $w_{3,1}$ and the endpoint coordinate triangle identity give the supplied bound of Corollary 12.3 and (12.10), with $\eta=g_*$ there,
+
+$$
+ \operatorname{TV}(P_{p,a},R)+\operatorname{TV}(P_{p,b},R)\ge\Delta+\eta,
+$$
+
+while the reverse triangle inequality gives
+
+$$
+ \left|\operatorname{TV}(P_{p,b},R)-\operatorname{TV}(P_{p,a},R)\right|\le\Delta.
+$$
+
+Therefore the mixture loss is at least
+
+$$
+ (1-\theta)\operatorname{TV}(P_{p,a},R)+\theta\operatorname{TV}(P_{p,b},R)
+ \ge\rho_p+\frac\eta2-\Delta\delta.
+$$
+
+The joint excess is at least the maximum of $\Delta\delta$ and $\eta/2-\Delta\delta$, which is at least $\eta/4$. If both midpoint equations hold, the p endpoint event mean is $C$, so $\theta=1/2$ and (18.16) follows. TV is inside the configuration integral throughout. The constant $\eta$ and the endpoint triangle estimate are supplied results; their use here is enabled by the new eventual-tail classification.
+
+For a represented regular table satisfying the theorem's hypotheses, the original-history correspondence of Section 11.4 and Proposition 13.3 in Section 13.2 transfers these supported-target obstructions to its full original configuration-risk suprema. Source-independent latch initialization and both unweighted balances keep the same phase rows at every positive acquired fourth-phase history. At any such history, configurationwise TV convexity compares its fixed-prior posterior target to the supported pure targets. Conversely, positive finite paid histories concentrate the same once-sampled $K$ posterior at each supported depth; the summable likelihood-ratio domination in [PAID, Lemma 14.1] covers countable priors. Complete-law TV continuity then gives the reverse supremum inequality, as in [CLIP, Proposition 2.3]. This retains both seeds, every paid rejection and partial parse, all held records, same-update generation, noncompletion, fourth completion and matching Stop. It supplies no preservation of (18.1) under arbitrary original-observer extraction, clipping or approximation. $\square$
+
+### 18.5 Falsifier, literature boundary and original scope
+
+**Falsifier for Theorem 18.2.** An exact compatible pair with finite $\nu_p$, full endpoint boxes, the two full residual equations and (18.1), but with positive mass on any nonendpoint descriptor, refutes the theorem. A finite regular stationary full-box table with the eventual recurrence and a nonendpoint component would refute Lemma 18.1. More locally, a nonnative closed irreducible component of radius $z_a$ or $z_b$ satisfying these box hypotheses would refute its boundary step.
+
+**Assumption check for Theorem 18.2.** The boxes are essential: with one p and one suspended label, $A=B=(1)$, $u=1/3$ and $v=9/25$, one has
+
+$$
+ L=\frac6{25},\qquad g=\frac{32}{75},\qquad
+ Q(w_{n,1})=\frac{32}{75}\left(\frac6{25}\right)^n.
+$$
+
+This sequence satisfies (18.1), but
+
+$$
+ Q(w_{3,1})-P_{p,b}(w_{3,1})=\frac{72}{78125}>0,
+$$
+
+so the full endpoint box fails. A return rate or an averaged recurrence without all coordinate boxes is therefore insufficient.
+
+**Mathematical citations and source-relative delta.** The finite-matrix supplier in Lemma 18.1 is precisely the existence of positive left and right Perron vectors at the spectral radius of a finite irreducible nonnegative matrix, as stated in [Chi-Kwong Li and Hans Schneider, *Applications of Perron-Frobenius Theory to Population Dynamics*, arXiv:math/0109008v1, Theorem 2.1(a)](https://arxiv.org/html/math/0109008v1). It applies to each $L$ block because its support equals that of the corresponding closed irreducible $BA$ block. It requires no primitivity. Their Theorem 2.3 on convergence of normalized powers requires primitivity and is not invoked. The positive-vector comparison (18.9) and the elementary solution of the two-root scalar recurrence suffice here; no conclusion about visibility of peripheral modes or absence of smaller-pole cancellation is used.
+
+The finite realization is the supplied Theorem 13.2. Its quadrature input is [Christian Bayer and Josef Teichmann, *The proof of Tchakaloff's Theorem*, arXiv:math/0502473v2, Corollary 2](https://arxiv.org/html/math/0502473v2): a positive measure concentrated on a specified measurable set, a measurable finite-dimensional map, and integrability of its norm give positive-weight nodes in that set matching all coordinates. Here the measure is the probability $\xi$ of (13.6), the full set includes the closed suspended box $G$, and the map consists of the bounded Borel coordinates in (13.6) with $q=0$. Their sum of indicator coordinates preserves total mass. This input and Theorem 13.2 preserve the entire p marginal, not the original opposite marginal or joint flows. The latter conclusion in Theorem 18.2 instead uses the original full-descriptor equations (11.8) and coordinate extremality on the countable complete carriers.
+
+The source-relative addition is the implication from one eventual averaged marker-one recurrence and finite p support, together with both full residual equations, shared unweighted marginals and full endpoint boxes, to the complete matched endpoint pair and both original flows. Neither native individual laws nor native acquired residuals are premises. [NATIVE-MIXTURE, Theorem 5.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXTURE_RECURRENCE_OBSTRUCTION.md) assumes the former; [NATIVE-ACQUIRED, Lemma 3.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_RESIDUAL_OBSTRUCTION.md) assumes the latter. Chapters 12 and 14 of this volume assume or measure four synchronized moments. [REV, Chapters 14--15](RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md) treats a prescribed swap-plus-fixed-point periodic kernel class, whereas Lemma 18.1 allows arbitrary finite kernels and periods. [RETURN, Chapter 12](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) regenerates prescribed joint return measures; it does not assert preservation of this exact recurrence under approximation.
+
+**Comparison with the full-residual necessities.** Theorem 16.2 applies to arbitrary compatible Borel pairs, with positive endpoint masses and a supported nonendpoint, and bounds joint excess together with the two edge-mismatch energies. Corollary 16.3 gives a necessary mismatch floor at zero excess. Neither result restricts the eventual marker-one sequence or classifies its descriptors. On the pair forced by Theorem 18.2 both mismatch energies vanish, so these supplied necessities can be applied after the classification; they do not supply that classification. Proposition 16.4 gives a conditional separator from a solution of the fixed 155-coefficient system (16.18)--(16.22). No such solution or full-system infeasibility is supplied by Chapters 16--17, and no coefficient claim follows here.
+
+Chapter 17 tests that fixed system on a different rational complete-law pair. Its full A residual vanishes but its full B residual is the nonzero six-cell measure (17.10). Its multiplier test and positive margin ceiling, (17.15)--(17.18), leave the fixed coefficient problem open. It also has a different late tail: in the notation of (17.2)--(17.4), $Q(w_{n,1})=s c^{n-1}$ for $n\ge4$, with $s>0$ and $z_a<c=467/2000<z_b$. Substitution into the left side of (18.1) gives $s c^{n-1}(c-z_a)(c-z_b)\ne0$ for $n\ge4$. Thus that object meets neither the compatibility nor the eventual-recurrence premise here. Corollary 18.3 concerns the tail of Chapter 15 specifically; it does not exclude every finite-coordinate repair of the Chapter 17 object.
+
+**Comparison with prescribed actual triples.** [RETURN, Theorem 13.4](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) starts with both prescribed finite joint flows and their full-law atoms. In addition to the two edge marginals, a realizable actual triple must satisfy the incoming-pair equation $\mathbb E[Q'\mid Q,W]=\mathcal R_A(W)$. RETURN, Theorems 13.5--13.6, classify the actual triples and their motion in the specified SAME six-p-law/two-suspended-law fibre. RETURN, Theorems 14.4--14.5, then minimize returned suspended COMPLETE configurations and compute motion-budget images in that same fibre. These statements preserve the given flows and laws; they neither assume (18.1) nor derive endpoint laws from an averaged tail. Theorem 18.2 instead identifies the original two flows after its one-sided realization. It prescribes no arbitrary whole triple, returned-cut count or total COMPLETE bound. The incoming-pair criterion remains required for a separately prescribed triple; it is not supplied by generic marginal gluing.
+
+**Comparison with return-survival dispersion.** [Return survival dispersion, Definitions 2.2--2.4 and Theorems 3.1 and 4.1](RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md) uses the same compatible full-law pair but its separate statistic is $D=\int|Z-\int Z\,d\Gamma_B|\,d\Gamma_B$, where $Z=(1-u(Q))v(W)$ on the unweighted B edge. Its stated objective fixes a positive prior on $\{1,2,3\}$; the endpoint-only version of Theorem 4.1 still leaves $D$ free. The response envelope and the signed balances of Proposition 3.3 give necessary conditions on that same descriptor path. They do not force (18.1) or imply Theorem 18.2. In particular, the two matched endpoint components have distinct weights $z_a,z_b$; when both occur their edge-weight dispersion is positive. No common return weight is assumed in the present theorem. The dispersion volume's Section 10 reuses the Chapter 15 event-output counterobject and its failed full B coordinate; it does not rule out every compatible finite-p-support repair retaining that object's eventual mean tail. That exclusion is the direct consumer (18.12)--(18.14).
+
+The complete-law compactness, regeneration and attainment alternatives of [PAID, Chapters 16--17](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md) have the correspondence stated in Section 17.6. Its Theorems 18.1--18.2 provide conditional finite strict certificate existence and rational finite-coordinate verification when the compact value is positive. They supply neither that positivity nor the averaged-tail classification here. These results, like the full-flow necessities just compared, remain supplied ordinary mathematics with their original hypotheses.
+
+The direct consumer is Corollary 18.3's exclusion of every finite-p-support full-compatible full-box repair retaining the PAIRED15 eventual mean tail, even after finite support enlargement or kernel changes. Corollary 18.4 consumes the same classification with the supplied complete-word loss bound (12.10); its loss constants are not additional new constants. These are source-relative ordinary deductions, with no global novelty or priority claim.
+
+The [suspended-emission heterogeneity modulus, Theorem 8.3](RECURSIVE_RELATIONAL_OBSERVATION_SUSPENDED_EMISSION_HETEROGENEITY.md) is conditional on its declared suppliers and retains the separate oscillation statistic; it supplies neither this recurrence nor an unrestricted risk-only gap. The [acquired-kernel blind-direction source, Conventions 1.1--1.2 and Theorems 5.1, 6.3](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md) uses an observation contract omitting the p-to-suspended kernel and a family with interior emissions. Its finite-prefix aliases and risk difference do not settle the compact common face or imply the present classification.
+
+The self-calibration here concerns exactly what the scalar tail determines. Its positive output determines the largest remaining growth rate; the full boxes then force a boundary component to its endpoint emissions and complete laws. Periodic invisible modes are permitted throughout. A one-sided realization transfers only its stated invariants, so the original conditional residual equations are used separately to identify both original flows.
+
+The theorem supplies a restricted bridge only. It does not evaluate the unrestricted $j_c$, prove a zero-level pair or a vanishing family, give a risk-only gap outside the recurrent finite-p-support branch, establish a shape-uniform stability theorem for approximate recurrences, handle nonatomic $\nu_p$, or prove finite effective attainment. Finite atomicity and permitted finitely represented exact sampling remain separate requirements; an arbitrary real endpoint weight need not have a permitted exact sampler. No hard-resource preservation follows. Theorem 10.2 of [RETURN] retains its free $V_\pi$; its bound $\mathcal C\le5000V_\pi$ is not a risk-only unrestricted separation. PAIRED11/RETURN12 approximants need not preserve (18.1), so density of those approximants does not transfer (18.15) to the unrestricted compact domain. The full original quantifiers, complete histories, noncompletion, Stop, TV placement and same-update rules remain those of Sections 11 and 13. $\square$
+
+## 追加锚（本行以下为增补区）
