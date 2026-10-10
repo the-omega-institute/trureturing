@@ -9,15 +9,19 @@ namespace StrataLint.Engine;
 /// </summary>
 internal sealed class LeanReportScope
 {
-    private LeanReportScope(RepositorySnapshot sourceSnapshot, ImmutableHashSet<RepoPath> paths)
+    private LeanReportScope(RepositorySnapshot sourceSnapshot, ImmutableArray<RepoPath> targets,
+        ImmutableHashSet<RepoPath> paths)
     {
         SourceSnapshot = sourceSnapshot;
+        Targets = targets;
         Paths = paths;
     }
 
     internal RepositorySnapshot SourceSnapshot { get; }
 
     internal ImmutableHashSet<RepoPath> Paths { get; }
+
+    internal ImmutableArray<RepoPath> Targets { get; }
 
     internal static LeanReportScope Create(
         RepositorySnapshot sourceSnapshot,
@@ -56,7 +60,16 @@ internal sealed class LeanReportScope
         while (pending.TryPop(out var path))
         {
             if (!paths.Add(path)) continue;
-            var imports = LeanSourceCatalog.ParseFileImports(sourceSnapshot.Files[path]);
+            var source = sourceSnapshot.Files[path];
+            if (RepositoryRules.TryHeader(source.Text, out var header)
+                && UtilitySyntax.TryParse(header.Utility, out var utility, out _)
+                && utility is { BasisKind: UtilityBasisKind.Refutes, Claim: { } claim, Result: not null })
+            {
+                if (!sourceSnapshot.Files.ContainsKey(claim.Path))
+                    throw new InvalidOperationException("scoped Lean report claim source is missing: " + claim.Path.Value);
+                pending.Push(claim.Path);
+            }
+            var imports = LeanSourceCatalog.ParseFileImports(source);
             foreach (var import in imports)
             {
                 if (modules.TryGetValue(import, out var dependency))
@@ -76,7 +89,7 @@ internal sealed class LeanReportScope
             }
         }
 
-        return new LeanReportScope(sourceSnapshot, paths.ToImmutable());
+        return new LeanReportScope(sourceSnapshot, roots, paths.ToImmutable());
     }
 
     private static bool IsRepositoryModule(string module) =>

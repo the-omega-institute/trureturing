@@ -145,9 +145,14 @@ internal static class DagLedgerAlignWriter
         AlignOptions options,
         bool appendAlias)
     {
-        var truth = DagLedgerCommandPreparation.BuildTruth(
-            repository,
-            new DagLedgerCommandPreparation.FileLeanReportSource(options.ReportPath!));
+        var scopedAdd = !appendAlias
+            && !options.Adds.IsEmpty
+            && options.Selectors.IsEmpty
+            && options.Retirements.IsEmpty;
+        var reportSource = new DagLedgerCommandPreparation.FileLeanReportSource(options.ReportPath!);
+        var truth = scopedAdd
+            ? DagLedgerCommandPreparation.BuildTruthScoped(repository, reportSource, options.Adds)
+            : DagLedgerCommandPreparation.BuildTruth(repository, reportSource);
         var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
         ValidateRequestedPaths(options, truth.Snapshot, states);
 
@@ -183,7 +188,9 @@ internal static class DagLedgerAlignWriter
                 .Select(static node => node.RepoPath)
                 .ToImmutableArray()
             : options.Adds;
-        var selected = options.Selectors.IsEmpty
+        var selected = scopedAdd
+            ? ImmutableArray<RepoPath>.Empty
+            : options.Selectors.IsEmpty
             ? state.Records.Keys.Except(retirements).ToImmutableArray()
             : options.Selectors;
         foreach (var selector in options.Selectors)

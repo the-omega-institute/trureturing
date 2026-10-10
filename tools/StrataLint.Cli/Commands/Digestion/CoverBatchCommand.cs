@@ -30,8 +30,15 @@ internal static partial class CoverBatchCommand
         BatchPlan plan;
         try
         {
+            var reportTargets = options.Items
+                .SelectMany(static item => item.Gids)
+                .Select(gid => Gid.TryParse(gid, out var parsed)
+                    ? parsed!.Path
+                    : throw new BatchInputException($"invalid coverage GID: {gid}"))
+                .Distinct()
+                .ToArray();
             session = new CoverAtomCommand.Session(repositoryRoot, repository, reportBundle is null ? leanReportSource : reportBundle,
-                recordedAtUtc, options.Items[0].Gids[0], options.Items.Select(static item => item.AtomId).ToArray());
+                recordedAtUtc, options.Items[0].Gids[0], options.Items.Select(static item => item.AtomId).ToArray(), reportTargets);
             plan = Plan(options.Items, session.Document);
         }
         catch (BatchInputException exception)

@@ -11,6 +11,7 @@ namespace StrataLint.Engine;
 internal static class RawLeanReportArtifact
 {
     internal const string Schema = "stratalint-raw-lean-report-v3";
+    internal const string ScopedSchema = "stratalint-scoped-lean-report-v1";
     internal const string DefaultRelativePath = ".lake/build/stratalint/raw-lean-report.json";
     internal static readonly AsyncLocal<Action?> Reading = new();
 
@@ -82,7 +83,7 @@ internal static class RawLeanReportArtifact
         using var document = JsonDocument.Parse(text);
         var root = document.RootElement;
         RequireProperties(root, ["modules", "schema"], scope is null ? "raw Lean report" : "scoped Lean report");
-        var expectedSchema = scope is null ? Schema : ScopedLeanReportArtifact.Schema;
+        var expectedSchema = scope is null ? Schema : ScopedSchema;
         if (RequiredString(root, "schema") != expectedSchema)
         {
             throw new FormatException($"Lean report schema must be {expectedSchema}.");
