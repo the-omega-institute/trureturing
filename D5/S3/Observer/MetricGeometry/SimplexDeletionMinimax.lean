@@ -155,7 +155,6 @@ theorem simplex_common_center {m : ℕ} (hm : 2 ≤ m)
   change -r ≤ p i - q i ∧ p i - q i ≤ r
   constructor <;> linarith
 
-
 local notation "Source" => (fun m : ℕ => {p : Fin m → ℝ // p ∈ stdSimplex ℝ (Fin m)})
 local notation "Datum" => (fun m : ℕ => ℝ × (Fin m → ℝ))
 
@@ -286,8 +285,5 @@ theorem simplex_deletion_minimax {m : ℕ} (hm : 2 ≤ m) (ε : ℝ) (hε : 0 �
       (⟨(p, y - (1, fun i => 1 - p.val i)), (fits_iff hε p y).mp hp⟩ :
         {s : Source m × Datum m | ‖s.2‖ ≤ ε})
     simp only [add_sub_cancel, le_refl]
-
-#print axioms simplex_common_center
-#print axioms simplex_deletion_minimax
 
 end D5.S3.Observer.MetricGeometry.SimplexDeletionMinimax

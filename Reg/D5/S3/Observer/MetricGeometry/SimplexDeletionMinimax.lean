@@ -193,9 +193,4 @@ def risk_registration :
   familyRecord := none
   options := #[] }
 
-#print axioms centerRegistration
-#print axioms riskRegistration
-#print axioms center_registration
-#print axioms risk_registration
-
 end Reg.D5.S3.Observer.MetricGeometry.SimplexDeletionMinimax
