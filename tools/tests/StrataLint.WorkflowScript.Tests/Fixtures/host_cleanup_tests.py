@@ -366,8 +366,11 @@ class HostCleanupTests(unittest.TestCase):
         target = self.root / "active endpoint"
         target.write_text("owned")
         physical = target.resolve()
+        argument_target = self.root / "argument endpoint"
+        argument_target.write_text("argv owned")
+        argument_physical = argument_target.resolve()
         alias = self.root / "argument-alias"
-        alias.symlink_to(physical)
+        alias.symlink_to(argument_physical)
         resolve = Path.resolve
 
         def inaccessible_endpoint(path, *args, **kwargs):
@@ -379,13 +382,14 @@ class HostCleanupTests(unittest.TestCase):
             if arguments[0] == "lsof":
                 return subprocess.CompletedProcess(arguments, 0, "n" + str(physical) + "\n", "")
             return subprocess.CompletedProcess(arguments, 0,
-                str(os.getuid()) + " runner --output=" + str(alias) + "\n", "")
+                str(os.getuid()) + " runner --output=" + json.dumps(str(alias)) + "\n", "")
 
         with patch.object(cleanup.sys, "platform", "darwin"), \
              patch.object(cleanup.subprocess, "run", side_effect=observed), \
              patch.object(Path, "resolve", inaccessible_endpoint):
             active = cleanup.active_paths(self.root / "codex")
         self.assertIn(physical, active)
+        self.assertIn(argument_physical, active)
         self.assertNotIn(alias, active)
 
     def test_activity_command_reuses_sampler_and_fails_closed(self):

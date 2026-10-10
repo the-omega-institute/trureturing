@@ -238,12 +238,17 @@ def active_paths(codex, scopes=()):
     protected = {Path.cwd().resolve(), Path(__file__).resolve()}
     scopes = tuple(str(Path(scope).resolve()) for scope in scopes)
 
+    physical_parents = {}
+
     def open_path(raw):
-        # Kernel open-file/cwd names are physical: consuming the observation
-        # must not reopen every endpoint. Symbolic process argv is resolved below.
+        # Kernel observations already resolve the endpoint. Canonicalize parent
+        # aliases once per directory; symbolic process argv is resolved below.
         normalized = os.path.normpath(raw)
         if not scopes or any(normalized == scope or normalized.startswith(scope + os.sep) for scope in scopes):
-            protected.add(Path(normalized))
+            path = Path(normalized)
+            if path.parent not in physical_parents:
+                physical_parents[path.parent] = path.parent.resolve()
+            protected.add(physical_parents[path.parent] / path.name)
     if sys.platform.startswith("linux"):
         for process in Path("/proc").iterdir():
             if not process.name.isdigit():

@@ -65,6 +65,9 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
         var runner = new TrackingRollbackRunner(branch, duringWrite, () =>
         {
             // The old owner has already observed absence, or is about to write.
+            AssertBranchMissing(repository.Path, branch);
+            Assert.Equal("origin", Git(repository.Path, "config", "--get", $"branch.{branch}.remote").Trim());
+            Assert.Equal("refs/heads/dev", Git(repository.Path, "config", "--get", $"branch.{branch}.merge").Trim());
             var creator = Task.Run(() => WorktreeCommand.Run(repository.Path, arguments,
                 new RecordingWorktreeProcessRunner()));
             Assert.True(creator.Wait(TimeSpan.FromSeconds(20)), "canonical creator did not settle");
@@ -81,7 +84,11 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
         Assert.True(runner.TrackingApplied, "origin/dev must supply non-null tracking");
         Assert.NotNull(concurrent);
         Assert.False(concurrent.Success, concurrent.Error);
-        Assert.Contains("scope is busy", concurrent.Error, StringComparison.Ordinal);
+        output.WriteLine(concurrent.Error);
+        Assert.Contains("WORKTREE_FAILED", concurrent.Error, StringComparison.Ordinal);
+        foreach (var key in new[] { "remote", "merge" })
+            Assert.Equal(1, TestProcessRunner.Run("git", ["config", "--local", "--get", $"branch.{branch}.{key}"],
+                repository.Path, BoundedProcessRunner.HangDetectionBudget, 4096).ExitCode);
         Assert.False(Directory.Exists(later));
         var retried = WorktreeCommand.Run(repository.Path, arguments, new RecordingWorktreeProcessRunner());
         Assert.True(retried.Success, retried.Error);
@@ -109,7 +116,7 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
             var result = inner.Run(fileName, arguments, workingDirectory, timeout);
             if (fileName == "git" && arguments.Contains("--set-upstream-to=refs/remotes/origin/dev") && result.ExitCode == 0)
                 TrackingApplied = true;
-            if (!duringWrite && !interleaved && fileName == "git" && result.ExitCode == 1
+            if (!duringWrite && TrackingApplied && !interleaved && fileName == "git" && result.ExitCode == 1
                 && arguments.SequenceEqual(new[] { "show-ref", "--verify", "--quiet", $"refs/heads/{branch}" }))
             {
                 interleaved = true;
