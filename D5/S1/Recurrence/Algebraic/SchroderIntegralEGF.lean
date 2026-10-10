@@ -75,7 +75,7 @@ private theorem row_factor (j : ℕ) : F j = F 0 * R ^ j := by
 
 private noncomputable def B : PowerSeries ℚ := F 0 * (1 - X * R)
 private theorem B_zero : constantCoeff B = 1 := by simp [B, F_zero]
-private theorem B_derivative : derivative ℚ B = F 0 := by
+private theorem B_derivative : PowerSeries.derivative (R := ℚ) B = F 0 := by
   have hb : B = F 0 - X * F 1 := by rw [row_factor 1]; simp only [pow_one, B]; ring
   apply eCoeff_ext
   intro m
@@ -95,7 +95,7 @@ private theorem D_quadratic : D ^ 2 - (1 + X) * D + 2 * X = 0 := by
   linear_combination -X * R_eq
 
 private def Algebraic (S : PowerSeries ℚ) : Prop :=
-  (1 + X) * S * derivative ℚ S - 2 * X * (derivative ℚ S) ^ 2 - S ^ 2 = 0
+  (1 + X) * S * PowerSeries.derivative (R := ℚ) S - 2 * X * (PowerSeries.derivative (R := ℚ) S) ^ 2 - S ^ 2 = 0
 
 private theorem B_algebraic : Algebraic B := by
   unfold Algebraic
@@ -104,14 +104,14 @@ private theorem B_algebraic : Algebraic B := by
   linear_combination -(F 0)^2 * D_quadratic
 
 private theorem algebraic_iff_linear (S : PowerSeries ℚ) (hS : constantCoeff S = 1) :
-    Algebraic S ↔ D * derivative ℚ S = S := by
+    Algebraic S ↔ D * PowerSeries.derivative (R := ℚ) S = S := by
   constructor
   · intro h
-    have hz : (D * derivative ℚ S - S) *
-        (2*X*D*derivative ℚ S - D^2*S) = 0 := by
+    have hz : (D * PowerSeries.derivative (R := ℚ) S - S) *
+        (2*X*D*PowerSeries.derivative (R := ℚ) S - D^2*S) = 0 := by
       unfold Algebraic at h
-      linear_combination -D^2 * h - D * S * derivative ℚ S * D_quadratic
-    have hn : 2*X*D*derivative ℚ S - D^2*S ≠ 0 := by
+      linear_combination -D^2 * h - D * S * PowerSeries.derivative (R := ℚ) S * D_quadratic
+    have hn : 2*X*D*PowerSeries.derivative (R := ℚ) S - D^2*S ≠ 0 := by
       intro he
       have hc := congrArg constantCoeff he
       simp [D_zero, hS] at hc
@@ -120,7 +120,7 @@ private theorem algebraic_iff_linear (S : PowerSeries ℚ) (hS : constantCoeff S
     have hD : D ≠ 0 := by intro hz; have := congrArg constantCoeff hz; simp [D_zero] at this
     apply (mul_left_cancel₀ (pow_ne_zero 2 hD))
     linear_combination -S^2 * D_quadratic +
-      ((1+X)*D*S - 2*X*(D*derivative ℚ S+S)) * h
+      ((1+X)*D*S - 2*X*(D*PowerSeries.derivative (R := ℚ) S+S)) * h
 
 private noncomputable def primitive (S : PowerSeries ℚ) : PowerSeries ℚ :=
   mk (fun n => if n = 0 then 0 else coeff (n-1) S / n)
@@ -128,7 +128,7 @@ private noncomputable def primitive (S : PowerSeries ℚ) : PowerSeries ℚ :=
 private theorem primitive_zero (S : PowerSeries ℚ) : constantCoeff (primitive S) = 0 := by
   simp [primitive]
 
-private theorem derivative_primitive (S : PowerSeries ℚ) : derivative ℚ (primitive S) = S := by
+private theorem derivative_primitive (S : PowerSeries ℚ) : PowerSeries.derivative (R := ℚ) (primitive S) = S := by
   ext n
   simp [primitive, coeff_derivative, Nat.cast_add, Nat.cast_one,
     show (n : ℚ) + 1 ≠ 0 by positivity]
@@ -136,15 +136,15 @@ private theorem derivative_primitive (S : PowerSeries ℚ) : derivative ℚ (pri
 /-- The original formal integral equation, with integral constant zero. -/
 def Original (S : PowerSeries ℚ) : Prop :=
   constantCoeff S = 1 ∧ S = 1 + primitive
-    (derivative ℚ (X*S⁻¹) * (derivative ℚ (X*(S^2)⁻¹))⁻¹)
+    (PowerSeries.derivative (R := ℚ) (X*S⁻¹) * (PowerSeries.derivative (R := ℚ) (X*(S^2)⁻¹))⁻¹)
 
 private theorem original_iff_cleared (S : PowerSeries ℚ) (hS : constantCoeff S = 1) :
-    Original S ↔ derivative ℚ S * derivative ℚ (X*(S^2)⁻¹) = derivative ℚ (X*S⁻¹) := by
-  have hd : constantCoeff (derivative ℚ (X*(S^2)⁻¹)) ≠ 0 := by
+    Original S ↔ PowerSeries.derivative (R := ℚ) S * PowerSeries.derivative (R := ℚ) (X*(S^2)⁻¹) = PowerSeries.derivative (R := ℚ) (X*S⁻¹) := by
+  have hd : constantCoeff (PowerSeries.derivative (R := ℚ) (X*(S^2)⁻¹)) ≠ 0 := by
     simp [Derivation.leibniz, constantCoeff_inv, hS]
   constructor
   · intro h
-    have he := congrArg (derivative ℚ) h.2
+    have he := congrArg (PowerSeries.derivative (R := ℚ)) h.2
     simp only [map_add, derivative_one, derivative_primitive, zero_add] at he
     exact (eq_mul_inv_iff_mul_eq hd).mp he
   · intro h
@@ -158,22 +158,22 @@ private theorem original_iff_algebraic (S : PowerSeries ℚ) (hS : constantCoeff
   rw [original_iff_cleared S hS]
   have hSU : S * S⁻¹ = 1 := PowerSeries.mul_inv_cancel S (by simp [hS])
   have hS0 : S ≠ 0 := by intro hz; have := congrArg constantCoeff hz; simp [hS] at this
-  have hN : derivative ℚ (X*S⁻¹) * S^2 = S - X*derivative ℚ S := by
+  have hN : PowerSeries.derivative (R := ℚ) (X*S⁻¹) * S^2 = S - X*PowerSeries.derivative (R := ℚ) S := by
     simp only [Derivation.leibniz, derivative_X, derivative_inv', smul_eq_mul]
     calc
-      _ = S*(S*S⁻¹) - X*derivative ℚ S*(S*S⁻¹)^2 := by ring
+      _ = S*(S*S⁻¹) - X*PowerSeries.derivative (R := ℚ) S*(S*S⁻¹)^2 := by ring
       _ = _ := by rw [hSU]; ring
-  have hQ : derivative ℚ (X*(S^2)⁻¹) * S^3 = S - 2*X*derivative ℚ S := by
+  have hQ : PowerSeries.derivative (R := ℚ) (X*(S^2)⁻¹) * S^3 = S - 2*X*PowerSeries.derivative (R := ℚ) S := by
     rw [pow_two, PowerSeries.mul_inv_rev]
     simp only [Derivation.leibniz, derivative_X, derivative_inv', smul_eq_mul]
     calc
-      _ = S*(S*S⁻¹)^2 - 2*X*derivative ℚ S*(S*S⁻¹)^3 := by ring
+      _ = S*(S*S⁻¹)^2 - 2*X*PowerSeries.derivative (R := ℚ) S*(S*S⁻¹)^3 := by ring
       _ = _ := by rw [hSU]; ring
-  have he : (derivative ℚ S * derivative ℚ (X*(S^2)⁻¹) - derivative ℚ (X*S⁻¹)) * S^3 =
-      (1+X)*S*derivative ℚ S - 2*X*(derivative ℚ S)^2 - S^2 := by
+  have he : (PowerSeries.derivative (R := ℚ) S * PowerSeries.derivative (R := ℚ) (X*(S^2)⁻¹) - PowerSeries.derivative (R := ℚ) (X*S⁻¹)) * S^3 =
+      (1+X)*S*PowerSeries.derivative (R := ℚ) S - 2*X*(PowerSeries.derivative (R := ℚ) S)^2 - S^2 := by
     calc
-      _ = derivative ℚ S * (derivative ℚ (X*(S^2)⁻¹)*S^3) -
-          S*(derivative ℚ (X*S⁻¹)*S^2) := by ring
+      _ = PowerSeries.derivative (R := ℚ) S * (PowerSeries.derivative (R := ℚ) (X*(S^2)⁻¹)*S^3) -
+          S*(PowerSeries.derivative (R := ℚ) (X*S⁻¹)*S^2) := by ring
       _ = _ := by rw [hN, hQ]; ring
   unfold Algebraic
   rw [← he]
@@ -185,9 +185,9 @@ private theorem original_unique (S T : PowerSeries ℚ) (hS : Original S) (hT : 
   have hlS := (algebraic_iff_linear S hS.1).mp ((original_iff_algebraic S hS.1).mp hS)
   have hlT := (algebraic_iff_linear T hT.1).mp ((original_iff_algebraic T hT.1).mp hT)
   have hD : D⁻¹ * D = 1 := PowerSeries.inv_mul_cancel D (by simp [D_zero])
-  have heS : derivative ℚ S = D⁻¹ * S := by
+  have heS : PowerSeries.derivative (R := ℚ) S = D⁻¹ * S := by
     conv_rhs => rw [← hlS, ← mul_assoc, hD, one_mul]
-  have heT : derivative ℚ T = D⁻¹ * T := by
+  have heT : PowerSeries.derivative (R := ℚ) T = D⁻¹ * T := by
     conv_rhs => rw [← hlT, ← mul_assoc, hD, one_mul]
   ext n
   induction n using Nat.strong_induction_on with

@@ -141,7 +141,7 @@ private theorem normalizer_bounds (μ : PMF Depth) (h : List Operation) (c : Acq
   constructor
   · obtain ⟨k,hk⟩ := μ.support_nonempty
     apply lt_of_lt_of_le (ENNReal.mul_pos hk (ne_of_gt (likelihood_pos h k)))
-    exact ENNReal.le_tsum k
+    exact ENNReal.le_tsum (f := fun k => μ k * likelihood h k) k
   · rw [← history_mass μ h c hc]
     calc
       jointLaw μ (nativeEvent h c) ≤ jointLaw μ Set.univ := measure_mono (Set.subset_univ _)

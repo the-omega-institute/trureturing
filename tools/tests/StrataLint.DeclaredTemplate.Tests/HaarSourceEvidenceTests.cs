@@ -48,7 +48,7 @@ public sealed class HaarSourceEvidenceTests
             });
             files.Add(source, file);
         }
-        Assert.Equal("70e70e2d2bea2cbec9c2d3a7b1a13f8a6c91fc12fc70a6d86deae1e725b34b04", Convert.ToHexStringLower(
+        Assert.Equal("de5d4a51dcb21fafb9e9db5c80f0542f8e9fa63aa9d0c4a4ebf168e37537c612", Convert.ToHexStringLower(
             SHA256.HashData(sources[sourcePath].Bytes.AsSpan())));
         var path = RepoPath.CreateKnown(sourcePath);
         var statementId = FrozenContentHash.Compute(FrozenHashDomains.Statement,

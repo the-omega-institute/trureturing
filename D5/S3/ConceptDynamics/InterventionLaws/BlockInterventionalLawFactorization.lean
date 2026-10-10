@@ -147,8 +147,9 @@ theorem block_independence_is_necessary :
     cases i <;> cases first <;> cases second <;> simp [directedEdgeResponse]
   letI (i : Bool) : IsProbabilityMeasure
       (localInterventionalLaw (PMF.uniformOfFintype (Bool × Bool)).toMeasure
-        (fun _ : Bool => ()) directedEdgeResponse i) :=
-    Measure.isProbabilityMeasure_map (measurableEdge i).aemeasurable
+        (fun _ : Bool => ()) directedEdgeResponse i) := by
+    unfold localInterventionalLaw
+    infer_instance
   have lawMismatch :
       Not (blockInterventionalLaw (PMF.uniformOfFintype (Bool × Bool)).toMeasure
         (fun _ : Bool => ()) directedEdgeResponse =

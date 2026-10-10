@@ -37,7 +37,7 @@ theorem result (n : ℕ) (hn : 3 ≤ n) :
     intro j
     simp [intSeries, eCoeff_mul, M]
   have intSeries_shift (f : ℕ → ℤ) :
-      intSeries (fun j => f (j + 1)) = derivative ℚ (intSeries f) := by
+      intSeries (fun j => f (j + 1)) = PowerSeries.derivative (R := ℚ) (intSeries f) := by
     apply eCoeff_ext
     intro j
     simp [intSeries]
@@ -50,7 +50,7 @@ theorem result (n : ℕ) (hn : 3 ≤ n) :
     have hd := congrArg (fun s => eCoeff s j) (derivative_pow (intSeries f) 3)
     rw [← hs, eCoeff_derivative] at hd
     have hh : (3 : PowerSeries ℚ) * intSeries f ^ (3 - 1) *
-        derivative ℚ (intSeries f) =
+        PowerSeries.derivative (R := ℚ) (intSeries f) =
         3 * intSeries (M ℤ (M ℤ f f) (fun i => f (i + 1))) := by
       simp only [intSeries_mul, intSeries_shift]
       norm_num
@@ -72,7 +72,7 @@ theorem result (n : ℕ) (hn : 3 ≤ n) :
         3 * M ℤ (M ℤ (composition (fun i => f (i + 2)) g)
           (fun i => g (i + 1))) (fun i => g (i + 2)) j +
         M ℤ (composition (fun i => f (i + 1)) g) (fun i => g (i + 3)) j := by
-    let D := derivative ℚ
+    let D := PowerSeries.derivative (R := ℚ)
     have hgs : HasSubst (intSeries g) := .of_constantCoeff_zero (by
       change constantCoeff (intSeries g) = 0
       simp [intSeries, hg])

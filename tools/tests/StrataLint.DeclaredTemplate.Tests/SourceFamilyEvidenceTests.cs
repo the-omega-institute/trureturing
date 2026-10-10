@@ -137,12 +137,12 @@ public sealed class SourceFamilyEvidenceTests
     }
 
     [Fact]
-    public void four_original_compiled_occurrences_pass_strict_import_join()
+    public void all_compiled_occurrences_pass_strict_import_join()
     {
         var wire = CompiledWire();
         var (snapshot, report, selected) = Inputs(wire);
         var evidence = InformationTemplateEvidence.Collect(snapshot, report, selected);
-        Assert.Equal(4, evidence.Inventory.Count);
+        Assert.Equal(12, evidence.Inventory.Count);
         var scope = wire[0]!["records"]![0]!["certificate"]!["source_binding"]!;
         Assert.Equal(13, scope["telescope_size"]!.GetValue<int>());
         Assert.Equal(2, scope["level_count"]!.GetValue<int>());
@@ -204,8 +204,8 @@ public sealed class SourceFamilyEvidenceTests
         Assert.Equal("Reg." + quantumOwner,
             quantumRecord["key"]!["registration_module"]!.GetValue<string>());
         var originalBytes = Source(quantumOwner.Replace('.', '/') + ".lean").Bytes.ToArray();
-        Assert.Equal(36217, originalBytes.Length);
-        Assert.Equal("4f45e964a8a60de2e526fa8ecc9d7290e89b061a1a687359917d065453126fb0",
+        Assert.Equal(35786, originalBytes.Length);
+        Assert.Equal("636287da6222c24346d62adfd7968290c3162de12450359b056e5740530729dc",
             Convert.ToHexStringLower(SHA256.HashData(originalBytes)));
         var quantumPath = RepoPath.CreateKnown(quantumOwner.Replace('.', '/') + ".lean");
         var statementId = FrozenContentHash.Compute(FrozenHashDomains.Statement,
@@ -375,9 +375,22 @@ public sealed class SourceFamilyEvidenceTests
     {
         var wire = CompiledWire("CompiledNamedClaimWire.lean");
         var (snapshot, report, selected) = Inputs(wire);
+        var evidence = InformationTemplateEvidence.Collect(snapshot, report, selected);
+        Assert.Equal(4, evidence.Inventory.Count);
+        Assert.All(evidence.Occurrences.Values, row =>
+        {
+            Assert.True(row.HasFourSlots);
+            Assert.Equal(row.SourceOwner + ".claim", row.SourceDefinitionName);
+        });
+        var currentIdentity = wire[0]!["records"]![0]!["statement_identity"]!.GetValue<string>();
+        const string legacyIdentity = "077469a440fdda03bf5eba66fc4a29d6c5a6f0e9a1d5e9833092c8fce252f517";
+        Assert.NotEqual(legacyIdentity, currentIdentity);
+        wire = JsonNode.Parse(wire.ToJsonString().Replace(currentIdentity, legacyIdentity,
+            StringComparison.Ordinal))!.AsArray();
+        (snapshot, report, selected) = Inputs(wire);
         // Closed certificate shape cannot make an obsolete source-reference
-        // encoding current. Current positive joins use producer conformance
-        // vectors and the independently addressed native source materials.
+        // encoding current. The mutation preserves matching certificate fields
+        // while the addressed source still has its current raw type.
         var error = Assert.Throws<FormatException>(() =>
             InformationTemplateEvidence.Collect(snapshot, report, selected));
         Assert.Contains("reference identity differs from current declaration", error.Message, StringComparison.Ordinal);

@@ -52,7 +52,6 @@ private theorem carryIndexWeight_double_succ (i : ℕ) :
   by_cases hi0 : i = 0
   · subst i
     norm_num [carryIndexWeight]
-    omega
   by_cases hi1 : i = 1
   · subst i
     norm_num [carryIndexWeight]
@@ -81,7 +80,6 @@ theorem carryStep_measure_decreases {before after : RawDigits}
       rw [carryMeasure, carryMeasure, hcount]
       apply Prod.Lex.right
       norm_num [indexWeight_add, indexWeight_single, carryIndexWeight]
-      omega
   | double_succ rest i =>
       have hcount :
           tokenCount (rest + Finsupp.single i 1 + Finsupp.single (i + 3) 1) =
