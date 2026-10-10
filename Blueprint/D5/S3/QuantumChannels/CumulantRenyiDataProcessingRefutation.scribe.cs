@@ -18,12 +18,15 @@ internal sealed class CumulantRenyiDataProcessingRefutationDocument : IScribeDoc
                 "For a self-adjoint complex matrix H with H squared equal to the identity, the spectrum lies in {1, -1}. For every real function f and real a and b, the function of a I + b H is the sum of the mean of f(a+b) and f(a-b) times I and half their difference times H. No continuity hypothesis on f is needed because the spectrum is finite.",
                 "two_point_cfc", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("dephasing-action", "The action of complete dephasing",
-                Disp(All(F.Id("A"), Mat(D(2)), Equal(Apply(Call("pinchingEnd"), F.Id("A")),
-                    Call("diagonal", Call("diag", F.Id("A")))))),
+                Disp(All(F.Id("A"), Mat(D(2)), Equal(Call("pinchingEnd", F.Id("A")),
+                    Call("diagonal", Seq(Bang, OpenBracket,
+                        new Formula.Apply(F.Id("A"), [D(0), D(0)]), Comma, Sp,
+                        new Formula.Apply(F.Id("A"), [D(1), D(1)]), CloseBracket))))),
                 "For every complex two by two matrix A, complete dephasing keeps its two diagonal entries and sets the off-diagonal entries to zero.",
                 "dephase_apply", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("dephasing-kraus", "The Kraus representation of complete dephasing",
-                Disp(Equal(Call("pinchingEnd"), Call("ofKraus", BasisProjectors(), BasisProjectors()))),
+                Disp(Equal(Parenthesized(Seq(Named("pinchingEnd"), Sp, Colon, Sp, Map(D(2)))),
+                    Call("ofKraus", BasisProjectors(), BasisProjectors()))),
                 "For j in Fin 2, the family K(j)=single(j,j,1) consists of the two computational basis projectors. The linear map pinchingEnd is exactly their finite Kraus map, ofKraus(K,K).",
                 "pinching_kraus", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("functional", "The cumulant-based relative Renyi functional", FunctionalFormula(),
@@ -53,12 +56,12 @@ internal sealed class CumulantRenyiDataProcessingRefutationDocument : IScribeDoc
             Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
-    private static Formula BasisProjectors() => Seq(Open, LambdaLower, Sp, F.Id("j"), Sp,
+    private static Formula BasisProjectors() => Parenthesized(Seq(LambdaLower, Sp, F.Id("j"), Sp,
         Colon, Sp, Call("Fin", D(2)), Comma, Sp,
-        Call("single", F.Id("j"), F.Id("j"), D(1)), Close);
+        Call("single", F.Id("j"), F.Id("j"), D(1))));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Named(name), [.. args]);
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => Grp(Left, Open, value, Right, Close);
     private static Formula Equal(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Leq(Formula a, Formula b) =>

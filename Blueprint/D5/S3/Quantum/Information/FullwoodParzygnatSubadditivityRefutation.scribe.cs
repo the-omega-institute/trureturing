@@ -41,7 +41,7 @@ internal sealed class FullwoodParzygnatSubadditivityRefutationDocument : IScribe
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
     private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
-    private static Formula Par(Formula x) => Seq(Open, x, Close);
+    private static Formula Par(Formula x) => Grp(Left, Open, x, Right, Close);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula EqTo(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);

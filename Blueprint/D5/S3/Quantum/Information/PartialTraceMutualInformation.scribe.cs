@@ -24,11 +24,11 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
             Result("left-positive", "partialTraceLeft_posSemidef",
                 "Tracing out the left factor preserves positivity",
                 "For arbitrary finite carriers A and B, the reduced matrix is a finite sum "
-                    + "of principal submatrices.", PositivityFormula("partialTraceLeft")),
+                    + "of principal submatrices.", PositivityFormula("partialTraceLeft", "A")),
             Result("right-positive", "partialTraceRight_posSemidef",
                 "Tracing out the right factor preserves positivity",
                 "The same principal-submatrix argument applies to the other factor.",
-                PositivityFormula("partialTraceRight")),
+                PositivityFormula("partialTraceRight", "B")),
             Result("left-trace", "trace_partialTraceLeft",
                 "The left partial trace preserves trace",
                 "For every joint matrix, summing the reduced diagonal recovers its diagonal sum.",
@@ -105,15 +105,38 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                 OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, body)));
     }
 
-    private static Formula PositivityFormula(string partialTrace) => Disp(Seq(
-        Forall, Sp, F.Id("M"), Comma, Sp,
-        Call("PosSemidef", F.Id("M")), Sp, Rightarrow, Sp,
-        Call("PosSemidef", Call(partialTrace, F.Id("M")))));
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
 
-    private static Formula TraceFormula(string partialTrace) => Disp(Seq(
-        Forall, Sp, F.Id("M"), Comma, Sp,
-        Call("trace", Call(partialTrace, F.Id("M"))), Sp, Eq, Sp,
-        Call("trace", F.Id("M"))));
+    private static Formula Instance(string name, Formula type, Formula body) =>
+        Seq(OpenBracket, Call(name, type), CloseBracket, Sp, body);
+
+    private static Formula Carriers(Formula body) =>
+        All("A", Seq(Operatorname, Grp(F.Id("Type"))),
+            All("B", Seq(Operatorname, Grp(F.Id("Type"))), body));
+
+    private static Formula DensityCarriers(Formula body) => Carriers(
+        Instance("Fintype", F.Id("A"), Instance("DecidableEq", F.Id("A"),
+            Instance("Fintype", F.Id("B"), Instance("DecidableEq", F.Id("B"), body)))));
+
+    private static Formula JointCarrier => Seq(F.Id("A"), Sp, F.Times, Sp, F.Id("B"));
+
+    private static Formula PositivityFormula(string partialTrace, string finiteCarrier)
+    {
+        Formula joint = F.Id("joint");
+        Formula body = Seq(Call("PosSemidef", joint), Sp, Rightarrow, Sp,
+            Call("PosSemidef", Call(partialTrace, joint)));
+        return Disp(Carriers(Instance("Fintype", F.Id(finiteCarrier),
+            All("joint", Call("Matrix", JointCarrier, JointCarrier, Seq(Mathbb, Grp(F.Id("C")))), body))));
+    }
+
+    private static Formula TraceFormula(string partialTrace)
+    {
+        Formula joint = F.Id("joint");
+        Formula body = Seq(Call("trace", Call(partialTrace, joint)), Sp, Eq, Sp, Call("trace", joint));
+        return Disp(Carriers(Instance("Fintype", F.Id("A"), Instance("Fintype", F.Id("B"),
+            All("joint", Call("Matrix", JointCarrier, JointCarrier, Seq(Mathbb, Grp(F.Id("C")))), body)))));
+    }
 
     private static Formula FunctionalCalculusTraceFormula()
     {
@@ -128,7 +151,7 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
             Sum, Underscore, Grp(i, Colon, n), Sp,
             new Formula.Apply(f, [new Formula.Apply(eigenvalues, [h, i])]));
         body = new Formula.Bind(FormulaQuantifier.ForAll,
-            FormulaIdentifier.Create("f"), Seq(real, Sp, Rightarrow, Sp, real), body);
+            FormulaIdentifier.Create("f"), new Formula.TypeArrow(real, real), body);
         body = new Formula.Bind(FormulaQuantifier.ForAll,
             FormulaIdentifier.Create("h"), new Formula.Apply(hermitian, [a]), body);
         body = new Formula.Bind(FormulaQuantifier.ForAll,
@@ -139,11 +162,15 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                 OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, body)));
     }
 
-    private static Formula MutualInformationFormula() => Disp(Seq(
-        Call("quantumMutualInformation", Rho), Sp, Eq, Sp,
-        Call("vonNeumannEntropy", Call("marginalRight", Rho)), Sp, Plus, Sp,
-        Call("vonNeumannEntropy", Call("marginalLeft", Rho)), Sp, Minus, Sp,
-        Call("vonNeumannEntropy", Rho)));
+    private static Formula MutualInformationFormula()
+    {
+        Formula rho = F.Id("rho");
+        Formula body = Seq(Call("quantumMutualInformation", rho), Sp, Eq, Sp,
+            Call("vonNeumannEntropy", Call("marginalRight", rho)), Sp, Plus, Sp,
+            Call("vonNeumannEntropy", Call("marginalLeft", rho)), Sp, Minus, Sp,
+            Call("vonNeumannEntropy", rho));
+        return Disp(DensityCarriers(All("rho", Call("DensityState", JointCarrier), body)));
+    }
 
     private static Formula SpectralEntropyFormula()
     {
@@ -167,14 +194,16 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                 OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, bindRho)));
     }
 
-    private static Formula ProductEntropyFormula() => Disp(Seq(
-        Forall, Sp, Rho, Comma, Sp, SigmaLower, Comma, Sp,
-        Call("vonNeumannEntropy", Call("productState", Rho, SigmaLower)), Sp, Eq, Sp,
-        Call("vonNeumannEntropy", Rho), Sp, Plus, Sp,
-        Call("vonNeumannEntropy", SigmaLower)));
+    private static Formula ProductParameters(Formula body) => DensityCarriers(
+        All("rho", Call("DensityState", F.Id("A")),
+            All("sigma", Call("DensityState", F.Id("B")), body)));
 
-    private static Formula ProductInformationFormula() => Disp(Seq(
-        Forall, Sp, Rho, Comma, Sp, SigmaLower, Comma, Sp,
-        Call("quantumMutualInformation", Call("productState", Rho, SigmaLower)), Sp, Eq, Sp,
-        Num(0)));
+    private static Formula ProductEntropyFormula() => Disp(ProductParameters(Seq(
+        Call("vonNeumannEntropy", Call("productState", F.Id("rho"), F.Id("sigma"))), Sp, Eq, Sp,
+        Call("vonNeumannEntropy", F.Id("rho")), Sp, Plus, Sp,
+        Call("vonNeumannEntropy", F.Id("sigma")))));
+
+    private static Formula ProductInformationFormula() => Disp(ProductParameters(Seq(
+        Call("quantumMutualInformation", Call("productState", F.Id("rho"), F.Id("sigma"))), Sp, Eq, Sp,
+        Num(0))));
 }

@@ -18,7 +18,7 @@ The star algebra equivalence from CStarMatrix to Matrix preserves nonnegativity,
 
 **Theorem 1.2 (Tracing out the left factor preserves positivity).**
 
-$$\forall M, \operatorname{PosSemidef}\left(M\right) \Rightarrow \operatorname{PosSemidef}\left(\operatorname{partialTraceLeft}\left(M\right)\right)$$
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] \forall joint \in \operatorname{Matrix}\left(A \times B, A \times B, \mathbb{C}\right),\; \operatorname{PosSemidef}\left(joint\right) \Rightarrow \operatorname{PosSemidef}\left(\operatorname{partialTraceLeft}\left(joint\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft_posSemidef` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ For arbitrary finite carriers A and B, the reduced matrix is a finite sum of pri
 
 **Theorem 1.3 (Tracing out the right factor preserves positivity).**
 
-$$\forall M, \operatorname{PosSemidef}\left(M\right) \Rightarrow \operatorname{PosSemidef}\left(\operatorname{partialTraceRight}\left(M\right)\right)$$
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(B\right)] \forall joint \in \operatorname{Matrix}\left(A \times B, A \times B, \mathbb{C}\right),\; \operatorname{PosSemidef}\left(joint\right) \Rightarrow \operatorname{PosSemidef}\left(\operatorname{partialTraceRight}\left(joint\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_posSemidef` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ The same principal-submatrix argument applies to the other factor.
 
 **Theorem 1.4 (The left partial trace preserves trace).**
 
-$$\forall M, \operatorname{trace}\left(\operatorname{partialTraceLeft}\left(M\right)\right) = \operatorname{trace}\left(M\right)$$
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{Fintype}\left(B\right)] \forall joint \in \operatorname{Matrix}\left(A \times B, A \times B, \mathbb{C}\right),\; \operatorname{trace}\left(\operatorname{partialTraceLeft}\left(joint\right)\right) = \operatorname{trace}\left(joint\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.trace_partialTraceLeft` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ For every joint matrix, summing the reduced diagonal recovers its diagonal sum.
 
 **Theorem 1.5 (The right partial trace preserves trace).**
 
-$$\forall M, \operatorname{trace}\left(\operatorname{partialTraceRight}\left(M\right)\right) = \operatorname{trace}\left(M\right)$$
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{Fintype}\left(B\right)] \forall joint \in \operatorname{Matrix}\left(A \times B, A \times B, \mathbb{C}\right),\; \operatorname{trace}\left(\operatorname{partialTraceRight}\left(joint\right)\right) = \operatorname{trace}\left(joint\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.trace_partialTraceRight` (`✓ std3`). ∎
 
@@ -66,7 +66,7 @@ Together with positivity, trace preservation gives a normalized marginal.
 
 **Theorem 1.6 (Functional calculus traces sum over eigenvalues).**
 
-$$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \forall h \in \operatorname{Matrix.IsHermitian}\left(A\right),\; \forall f \in \mathbb{R} \Rightarrow \mathbb{R},\; \operatorname{re}\left(\operatorname{trace}\left(\operatorname{cfc}\left(f, A\right)\right)\right) = \sum_{i:n} f\left(\operatorname{Matrix.IsHermitian.eigenvalues}\left(h, i\right)\right)$$
+$$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \forall h \in \operatorname{Matrix.IsHermitian}\left(A\right),\; \forall f \in \mathbb{R} \to \mathbb{R},\; \operatorname{re}\left(\operatorname{trace}\left(\operatorname{cfc}\left(f, A\right)\right)\right) = \sum_{i:n} f\left(\operatorname{Matrix.IsHermitian.eigenvalues}\left(h, i\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.re_trace_cfc` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ For any Hermitian matrix on a finite carrier, spectralEntropy sums Real.negMulLo
 
 **Definition 1.8 (Mutual information of a joint density state).**
 
-$$\operatorname{quantumMutualInformation}\left(\rho\right) = \operatorname{vonNeumannEntropy}\left(\operatorname{marginalRight}\left(\rho\right)\right) + \operatorname{vonNeumannEntropy}\left(\operatorname{marginalLeft}\left(\rho\right)\right) - \operatorname{vonNeumannEntropy}\left(\rho\right)$$
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall rho \in \operatorname{DensityState}\left(A \times B\right),\; \operatorname{quantumMutualInformation}\left(rho\right) = \operatorname{vonNeumannEntropy}\left(\operatorname{marginalRight}\left(rho\right)\right) + \operatorname{vonNeumannEntropy}\left(\operatorname{marginalLeft}\left(rho\right)\right) - \operatorname{vonNeumannEntropy}\left(rho\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation` (`✓ std3`).
 
@@ -102,7 +102,7 @@ The only input is the joint state. marginalRight retains A and marginalLeft reta
 
 **Theorem 1.9 (Entropy adds on independent product states).**
 
-$$\forall \rho, \sigma, \operatorname{vonNeumannEntropy}\left(\operatorname{productState}\left(\rho, \sigma\right)\right) = \operatorname{vonNeumannEntropy}\left(\rho\right) + \operatorname{vonNeumannEntropy}\left(\sigma\right)$$
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall rho \in \operatorname{DensityState}\left(A\right),\; \forall sigma \in \operatorname{DensityState}\left(B\right),\; \operatorname{vonNeumannEntropy}\left(\operatorname{productState}\left(rho, sigma\right)\right) = \operatorname{vonNeumannEntropy}\left(rho\right) + \operatorname{vonNeumannEntropy}\left(sigma\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.vonNeumannEntropy_productState` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ The spectrum of the product is the multiset of pairwise eigenvalue products. For
 
 **Theorem 1.10 (Independent product states have zero mutual information).**
 
-$$\forall \rho, \sigma, \operatorname{quantumMutualInformation}\left(\operatorname{productState}\left(\rho, \sigma\right)\right) = 0$$
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall rho \in \operatorname{DensityState}\left(A\right),\; \forall sigma \in \operatorname{DensityState}\left(B\right),\; \operatorname{quantumMutualInformation}\left(\operatorname{productState}\left(rho, sigma\right)\right) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation_productState` (`✓ std3`). ∎
 
