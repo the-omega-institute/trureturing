@@ -16,9 +16,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+REPAIR='run make lean-report first'
+if [[ -n "$TARGETS" ]]; then
+  REPAIR="run make lean-report-scoped LEAN_TARGETS=\"$TARGETS\" LEAN_REPORT=\"$REPORT\" first"
+fi
+
 [[ -n "$ROLE" ]] || { echo "report-consumer: --role is required" >&2; exit 2; }
 [[ -s "$REPORT" ]] || {
-  echo "report-consumer: raw Lean report is missing at $REPORT; run make lean-report first" >&2
+  echo "report-consumer: raw Lean report is missing at $REPORT; $REPAIR" >&2
   exit 2
 }
 [[ $# -gt 0 ]] || { echo "report-consumer: command is required after --" >&2; exit 2; }
@@ -36,7 +41,7 @@ trap 'exit 143' TERM
 SNAPSHOT_REPORT="$SNAPSHOT_ROOT/$(basename "$REPORT")"
 for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
   [[ -f "${REPORT}${suffix}" ]] || {
-    echo "report-consumer: raw Lean report bundle is incomplete at ${REPORT}${suffix}; run make lean-report first" >&2
+    echo "report-consumer: raw Lean report bundle is incomplete at ${REPORT}${suffix}; $REPAIR" >&2
     exit 2
   }
   cp "${REPORT}${suffix}" "${SNAPSHOT_REPORT}${suffix}"
