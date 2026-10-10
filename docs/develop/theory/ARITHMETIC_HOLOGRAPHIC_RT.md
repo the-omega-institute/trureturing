@@ -3205,7 +3205,7 @@ $$
 
 ## 45. 可观测残余谱与层叠停止判据
 
-**定理 45.1（固定输入的残余谱证书）。** 固定一个整段受控移位 stack 的入口编码矩阵单位对 $(\chi_\eta,\psi_\eta)$，其中 $\eta=\chi_\eta\psi_\eta^{-1}\in\widehat A\setminus\{1\}$，并记该单位对的入口系数为 $h_\eta$。在同一 $A$ 与 Fourier 基上，假定每层平均都是 Schur/Fourier 对角的，因而不混合不同矩阵单位。前 $j$ 层分别施加均匀平均 $\mathcal D_{K_1},\ldots,\mathcal D_{K_j}$，层间无其他映射。令 $\Phi_j$ 表示当前 stack 通道，令 $\Phi_{\rm ideal}=\mathcal D_A$ 表示同一 Fourier 子空间上的理想全群平均。定义
+**定理 45.1（固定输入的残余谱证书）。** 对每个 $\eta\in\widehat A\setminus\{1\}$ 固定一对入口 Fourier 标签 $(\chi_\eta,\psi_\eta)$ 满足 $\eta=\chi_\eta\psi_\eta^{-1}$，并记该矩阵单位对的入口系数为 $h_\eta$。在同一 $A$ 与 Fourier 基上，假定每层平均都是 Schur/Fourier 对角的，因而不混合不同矩阵单位。前 $j$ 层分别施加均匀平均 $\mathcal D_{K_1},\ldots,\mathcal D_{K_j}$，层间无其他映射。令 $\Phi_j$ 表示当前 stack 通道，令 $\Phi_{\rm ideal}=\mathcal D_A$ 表示同一 Fourier 子空间上的理想全群平均。定义
 $$
 R_j=(K_1+\cdots+K_j)^\perp\setminus\{1\},\qquad
 \mathsf S_j=\{\,|h_\eta|:\eta\in R_j\,\}.
