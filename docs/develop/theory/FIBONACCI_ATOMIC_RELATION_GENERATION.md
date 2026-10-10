@@ -68126,3 +68126,47 @@ G''(v)=e^{-(c+1)v}
 **来源。** 这里的非例外无界素数族分类是本仓推导（`repo-derived`）；
 指数函数求导、严格单调性、二阶积分估计与积分正测度判据为标准分析工具。
 例外直接引用 §439 的实际素数插入转折定理。
+
+## 441. de Faveri 固定阶字符大筛的非重复接口
+
+截至 2026 年 10 月 10 日，定向检索得到 Alexandre de Faveri 的 [*Optimal large sieve for fixed order characters](../../../Library/Analytic/faveri2026fixedorder.md)，arXiv:2610.04045v1。仓内已有章节已经覆盖 CA/SA 归约、Lagarias/Nicolas 判据、有限 Robin 证书、平滑正性和 Möbius 有符号障碍；这份来源提供的是一个不同的解析输入，因此这里只记录它是否能接到当前尚未闭合的完整 signed joint correlation，不重写那些已有路线。
+
+该文 Theorem 1.1 对含 $n$ 次单位根的数域中的 $n$ 阶 Hecke 字符，在 $n$ 次幂自由理想参数和内变量上给出
+
+$$
+\Theta_n(A,B)
+\ll_{\varepsilon}
+(AB)^\varepsilon
+\left(A+B+A^{1-1/n}B^{2/n}+A^{2/n}B^{1-1/n}\right).
+$$
+
+在 Eisenstein 域和 $n=6$ 时，形式上覆盖当前 sextic 字符背景。活动载体
+
+$$
+a=A_1R_2^2R_3^3R_4^4R_5^5
+$$
+
+若五个 radical 确实是同一实际分解中的互素平方自由理想，则 $a$ 的每个素理想指数至多为5，因而满足该定理的 sixth-power-free 参数条件。冻结 $R_2,R_3,R_4,R_5$、只对 $A_1$ 应用大筛，结合已有列质量后产生四个形式尺度
+
+$$
+R^2,\qquad A_1R,\qquad A_1^{5/6}R^{4/3},\qquad A_1^{1/3}R^{11/6}.
+$$
+
+沿用当前载体预算，四项的最坏源指数为
+
+$$
+\max\left\{\frac5{12},\frac49,\frac{19}{36},\frac49\right\}
+=\frac{19}{36}<\frac23.
+$$
+
+这只说明一个可能的幂次供应商；它还没有成为完整估计。必须先完成以下同源桥接：
+
+1. 用 sextic reciprocity 把项目的 $\chi_p(a)$ 逐项转成该文的 $\chi_a(p)$，并保留有限 ray 相位、共轭方向、单位因子和所有零延拓；
+2. 把原始固定因子和移动 mask 纳入实际行参数，再证明其 sixth-power-free 分解，而不是把 radical 的乘积误当成混合幂参数；
+3. 证明 Möbius 系数、共同 smooth profile、有限 mask 与行权重可以在该 $L^2$ 大筛中固定或分解，且不支付未登记的多项式损失；
+4. 在完整 parent pair 或完整 signed restoration 上使用该估计，保留所有 secondary-$L$ partners、tails 和 common kernels；
+5. 对冻结的其余四个载体在同一实际实现上求和，不能把分别可达的五个最优值拼成一个共同构型。
+
+因此，$19/36$ 是条件性的 source-interface 计算，不是新的 Robin 定理，更不是 RH 证明。若上述五项中任一项不能闭合，应把失败记录为该接口的边界，转而寻找能切开同一 source fiber 的新关系；继续重做 CA 支撑线、Robin 等价式或已有有限枚举不会推进当前缺口。
+
+## 追加锚（本行以下为增补区）
