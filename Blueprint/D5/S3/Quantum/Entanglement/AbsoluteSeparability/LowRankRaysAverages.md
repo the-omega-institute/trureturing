@@ -60,3 +60,5 @@ Let P be a Hermitian idempotent fixing every column of chi. For real a and arbit
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRaysAverages.separable_kronecker`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRaysAverages.separable_projected_rankOne`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRaysAverages.separable_rankOne_add_reduced`
+- Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks](ContractionBlocks.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)

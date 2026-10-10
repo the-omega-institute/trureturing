@@ -62,4 +62,5 @@ For a Hermitian idempotent Q of real trace ell at least one, the matrix is PSD: 
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.separableCone_scaled_one_sub_two_projection`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments](GurvitsBarnumMoments.md)
 - Dependency: [D5/S3/Quantum/GNSMatrix](../../GNSMatrix.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Resource/SeparableConeResidualWitness](../../../Resource/SeparableConeResidualWitness.md)

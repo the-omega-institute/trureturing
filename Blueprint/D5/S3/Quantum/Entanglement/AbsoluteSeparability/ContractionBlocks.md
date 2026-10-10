@@ -4,7 +4,19 @@
 
 Every finite complex Euclidean contraction has a rank-one phase decomposition with twice as many terms as its dimension. This decomposition makes the scalar shift mI + H separable for a Hermitian Euclidean contraction on a product of dimensions m and n.
 
-**Theorem 1.1 (A finite rank-one phase decomposition).**
+**Theorem 1.1 (Finite sums preserve separability).**
+
+$$\forall (m : \mathbb{N}), \forall (n : \mathbb{N}), \forall (I : \operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(I\right)], \forall (f : I \to \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), \mathbb{C}\right)), (\forall (i : I), \operatorname{D5}.\operatorname{S3}.\operatorname{Resource}.\operatorname{CompositeCones}.\operatorname{separableCone}\left(f\left(i\right)\right)) \Rightarrow (\operatorname{D5}.\operatorname{S3}.\operatorname{Resource}.\operatorname{CompositeCones}.\operatorname{separableCone}\left(\sum_{i : I} f\left(i\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks.separableCone_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite index type, a sum of separable matrices is separable. The empty sum is the zero matrix, and adjoining one summand preserves separability by addition. This includes zero dimensions.
+
+**Theorem 1.2 (A finite rank-one phase decomposition).**
 
 $$\forall (n : \mathbb{N}), \forall (C : \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{Matrix}.\operatorname{PosSemidef}\left(1 - \operatorname{Matrix}.\operatorname{conjTranspose}\left(C\right) \cdot C\right)) \Rightarrow (\exists (a : \operatorname{Sum}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right)\right) \to \operatorname{Fin}\left(n\right) \to \mathbb{C}), \exists (c : \operatorname{Sum}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right)\right) \to \mathbb{C}), (\forall (r : \operatorname{Sum}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right)\right)), \left\lVert c\left(r\right) \right\rVert = 1) \land ((\sum_{r : \operatorname{Sum}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right)\right)} \operatorname{Matrix}.\operatorname{vecMulVec}\left(a\left(r\right), \operatorname{star}\left(a\left(r\right)\right)\right) = 1) \land (\sum_{r : \operatorname{Sum}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right)\right)} c\left(r\right) \cdot \operatorname{Matrix}.\operatorname{vecMulVec}\left(a\left(r\right), \operatorname{star}\left(a\left(r\right)\right)\right) = C)))$$
 
@@ -14,9 +26,9 @@ $$\forall (n : \mathbb{N}), \forall (C : \operatorname{Matrix}\left(\operatornam
 
 *Commentary.*
 
-The vectors are indexed by Fin n ⊕ Fin n, including the empty family when n is zero. Their rank-one matrices sum to the identity, and multiplying them by scalars of modulus one reconstructs C. The square root of I − C* C supplies an orthonormal family whose first coordinates are the columns of C. Extending it to an orthonormal basis gives a unitary dilation. A unit scalar outside its finite spectrum permits a Hermitian Cayley transform; its spectral basis and inverse transform provide the phases. Restricting the vectors to the first n coordinates gives the stated decomposition.
+The vectors are indexed by Fin n ⊕ Fin n, including the empty family when n is zero. Their rank-one matrices sum to the identity, and multiplying them by scalars of modulus one reconstructs C. The square root of I − C* C supplies an orthonormal family whose first coordinates are the columns of C. Extending it to an orthonormal basis gives a unitary dilation. The spectral theorem for normal matrices diagonalizes this unitary dilation in an orthonormal basis; unitarity forces each diagonal eigenvalue to have modulus one. Restricting the vectors to the first n coordinates gives the stated decomposition.
 
-**Theorem 1.2 (Separable middle rays).**
+**Theorem 1.3 (Separable middle rays).**
 
 $$\forall (m : \mathbb{N}), \forall (n : \mathbb{N}), \forall (H : \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), \mathbb{C}\right)), (\operatorname{Matrix}.\operatorname{IsHermitian}\left(H\right)) \Rightarrow ((\forall (x : \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right) \to \mathbb{C}), \left\lVert \operatorname{WithLp}.\operatorname{toLp}\left(2, \operatorname{Matrix}.\operatorname{mulVec}\left(H, x\right)\right) \right\rVert \le \left\lVert \operatorname{WithLp}.\operatorname{toLp}\left(2, x\right) \right\rVert) \Rightarrow (\operatorname{D5}.\operatorname{S3}.\operatorname{Resource}.\operatorname{CompositeCones}.\operatorname{separableCone}\left((m : \mathbb{C}) \cdot 1 + H\right)))$$
 
@@ -32,3 +44,5 @@ Aubrun--Davidson--Muller-Hermes--Paulsen--Rahaman Theorem 3.7, printed page 9, g
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks.contraction_decomposition`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks.separableCone_scalar_add_of_opNorm_le_one`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks.separableCone_sum`
+- Dependency: [D5/S3/Quantum/BlockNorm/EssentiallyHermitian](../../BlockNorm/EssentiallyHermitian.md)
