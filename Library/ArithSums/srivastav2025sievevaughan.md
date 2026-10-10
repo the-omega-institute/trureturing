@@ -2055,3 +2055,208 @@ still shrinks, and the remaining samples, mean rate, critical region,
 other recovery terms and complete signed Robin tail remain unpaid.
 This is an attributed parameter application of the existing (SV47)
 and (GS4), without a historical originality or Lean-certification claim.
+
+## Signed short-interval inputs control the actual activation response
+
+The actual coefficients permit a further application of published
+Möbius estimates. Matomäki--Shao--Tao--Teräväinen,
+[*Higher uniformity of arithmetic functions in short intervals I.
+All intervals*, arXiv:2204.03754v4](https://arxiv.org/html/2204.03754v4),
+Theorem 3.1(i), supplies arbitrary fixed logarithmic savings for the
+untwisted Möbius sum at the $7/12$ length threshold. Its starred
+estimate includes the ordinary interval sum. The theorem's upper
+length cutoff is $t^{1-\varepsilon}$; longer intervals up to $t$
+are covered by equal pieces of length comparable to
+$t^{1-2\varepsilon}$, with all their lower endpoints in $[t,2t]$.
+Choose $\varepsilon$ small enough to keep these pieces above the
+lower cutoff. This yields, for fixed $\theta>7/12$ and every
+fixed $B>0$,
+
+$$
+|M(t+h)-M(t)|\ll_{\theta,B}\frac h{(\log t)^B},
+\qquad t^\theta\le h\le t,
+\qquad M(t)=\sum_{n\le t}\mu(n).
+$$
+
+For fixed $\theta>19/35$ and $0<B<1/3$, the same estimate is
+already supplied by [Matomäki--Pandey--Pliego--Teräväinen--Wang,
+arXiv:2610.09567v1, Theorem 1.4](../Analytic/shortuniformity2026robininterfaces.md#a-shorter-interval-range-with-different-quantitative-conclusions).
+Choose its parameter $\varepsilon$ smaller than both
+$\theta-19/35$ and $1/3-B$. These inputs hold at every sufficiently
+large lower endpoint. No exceptional-set avoidance or unrestricted
+nilsequence testing weight is assumed. The following is a paper-level
+application, without Lean certification or a historical novelty claim.
+
+### Preserve coprimality and all short prefixes
+
+Fix a supplied pair $1/2<\theta<1$, $B>0$, and then fix
+$0<\kappa<1-\theta$. Suppose
+
+$$
+R^{\theta-1+\kappa}\le\delta\le1/2,
+\qquad r=\log R,\quad U=R^2.
+$$
+
+For $0\le H\le\delta U$, define the actual signed prefix
+$F_R(H)=\sum_{U<n\le U+H}\mu(n)a_R(n)$. The exact identity
+$\mu(dm)\mu(d)=\mu(d)^2\mu(m)\mathbf1_{(d,m)=1}$ gives
+
+$$
+F_R(H)=\frac1r\sum_{d\le R}\mu(d)^2\log(R/d)
+ \sum_{U/d<m\le(U+H)/d}\mu(m)\mathbf1_{(m,d)=1}.
+\tag{SV52}
+$$
+
+Reuse the finite coprime convolution preceding (SV11). Its inner
+sum is exactly
+
+$$
+\sum_{\substack{a\mid d^\infty\\a\le(U+H)/d}}
+ \left[M\!\left(\frac{U+H}{da}\right)
+       -M\!\left(\frac U{da}\right)\right].
+$$
+
+Here $a\mid d^\infty$ retains all prime powers supported on $d$.
+Split this same finite sum at $Z=R^{\kappa/4}$. For $a\le Z$,
+$d\le R$ and $t=U/(da)$,
+
+$$
+R^{1-\kappa/4}\le t\le R^2,
+\qquad
+\delta t^{1-\theta}\ge R^{\kappa(3+\theta)/4}.
+$$
+
+If $0\le h\le\delta t$ is below $t^\theta$, the integer count
+$|M(t+h)-M(t)|\le h+1\le t^\theta+1$ is absorbed by
+$\delta t/r^B$ using the displayed positive power margin.
+For $h\ge t^\theta$, apply the supplied Möbius estimate. Thus
+every such prefix, including the arbitrarily short ones, satisfies
+$|M(t+h)-M(t)|\ll\delta t/r^B$.
+
+Using $\sum_{a\mid d^\infty}1/a=d/\varphi(d)$, the contribution
+with $a\le Z$ in (SV52) is at most
+
+$$
+\frac{C\delta U}{r^{B+1}}
+ \sum_{d\le R}\frac{\mu(d)^2\log(R/d)}{\varphi(d)}
+\ll\delta U r^{1-B}.
+$$
+
+The last bound uses $\sum_{d\le R}1/\varphi(d)\ll1+r$.
+The elementary divisor identity
+$d/\varphi(d)=\sum_{q\mid d}\mu(q)^2/\varphi(q)$ and the
+convergent product
+$\sum_q\mu(q)^2/(q\varphi(q))
+=\prod_p(1+1/(p(p-1)))$ directly supply it.
+
+For the complementary $a>Z$, put
+$P_d=\prod_{p\mid d}(1-p^{-1/2})^{-1}$.
+The same Rankin estimates used for the coprime convolution give
+
+$$
+\sum_{\substack{a>Z\\a\mid d^\infty}}\frac1a
+\le Z^{-1/2}P_d,
+\qquad
+\#\{a\le2U/d:a\mid d^\infty\}\le(2U/d)^{1/2}P_d.
+$$
+
+Uniformly for $d\le R$, $P_d\le\exp(C\sqrt r)$: enumerate
+its distinct prime factors and use $p_j\ge j+1$ and
+$\omega(d)\le r/\log2$ in the logarithm of the product.
+Retain the interval count $\delta U/(da)+1$ for each large $a$.
+Then this part of (SV52) is bounded by
+
+$$
+\exp(C\sqrt r)
+ \left(\delta U rZ^{-1/2}+\frac{R^{3/2}}r\right).
+$$
+
+The second term includes every unit endpoint error. Here
+$\sum_{d\le R}\log(R/d)/d\ll r^2$ and
+$\sum_{d\le R}\log(R/d)/\sqrt d\ll\sqrt R$.
+Relative to $\delta U r^{1-B}$, the two terms are at most
+
+$$
+\exp(C\sqrt r)
+ \left(r^B R^{-\kappa/8}
+       +r^{B-2}R^{1/2-\theta-\kappa}\right)=o(1).
+$$
+
+All parameters here are fixed and $\theta>1/2$. Consequently,
+with $T_R(Y)=\sum_{U<n\le Y}\mu(n)a_R(n)\log(n/U)$, Abel
+summation of the original logarithmic weight gives
+
+$$
+\begin{aligned}
+\sup_{0\le H\le\delta U}|F_R(H)|
+ &\ll\delta U r^{1-B},\\
+T_R(Y)&=F_R(Y-U)\log(Y/U)
+ -\int_U^Y F_R(t-U)\frac{dt}{t},\\
+\sup_{U<Y\le U(1+\delta)}E_A(Y)
+ &=\sup_{U<Y\le U(1+\delta)}
+   [T_R(Y)/r-1-\sigma_A Y]_+
+ \ll\frac{\delta^2U}{r^B}.
+\end{aligned}
+\tag{SV53}
+$$
+
+The complete constant and drift enter before the upper bound;
+only their already known nonnegativity is used. This is uniform
+control of the original positive part at every real endpoint, rather
+than an average taken before applying the positive part.
+
+### Wider actual prime and square strips
+
+Return to the same $R=A^{1/8}$, $r=L/8$ and actual source.
+The existing outer prime increment in (SV50), combined with (SV53),
+gives for its admissible interval lengths
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^k\le U(1+\delta)}
+ w_{N,p,k}E_A(x/p^k)
+\ll_{k,\theta,B,\kappa}
+ \frac{\delta^3 A^{-a_k}}{L^B}.
+\tag{SV54}
+$$
+
+For $k=1$ with the original $0<\eta<5/32$, and for $k=2$
+with the original $3/8<\eta<1/2$, every fixed $M>0$ permits
+
+$$
+\delta=A^{-(\eta-a_k)/3}L^M,
+\qquad B=3M+2.
+\tag{SV55}
+$$
+
+Indeed $8(\eta-a_k)/3<5/12$; choose $\theta>7/12$ and
+$\kappa>0$ leaving a strict power margin in
+$\delta\ge R^{\theta-1+\kappa}$. Equation (SV54) is then
+$O_{\eta,M}(A^{-\eta}/L^2)$. The outer lengths still exceed
+$P_k^{2/3}$ by a positive power, as in (SV51), and these strips
+still shrink because $M$ is fixed.
+
+For the additional prime-layer range $5/32\le\eta<6/35$, the
+newer $19/35$ supplier applies because $8\eta/3<16/35$.
+Choose fixed $0<\xi<1/9$ and $3\xi<B<1/3$, and use
+
+$$
+\delta=A^{-\eta/3}L^\xi.
+$$
+
+Equation (SV54) gives
+$O(A^{-\eta}/L^{B-3\xi})=o(A^{-\eta})$, with the same strict
+length margin. The original fixed exponent has not been replaced.
+For $\eta\ge6/35$, this signed transfer supplies no additional
+prime strip; the previous unsigned (SV51) remains available.
+The fixed-width square payment for $\eta\le3/8$ is reused.
+
+These enlarged strips retain $p>y=x/p^k$, the full coprime response,
+and the original subset and square-deletion rules in (SV50)--(SV51).
+They improve the permitted logarithmic factor in the width; they do
+not improve its power exponent. Choosing $M=M(A)$ is not allowed.
+At a fixed width the stated bounds provide only fixed logarithmic
+savings, insufficient to certify the original power target when
+$\eta>a_k$. No same-source mean rate, critical $y\asymp R^4$
+response, remaining recovery convolution or complete signed Robin
+tail has been supplied by this application.
