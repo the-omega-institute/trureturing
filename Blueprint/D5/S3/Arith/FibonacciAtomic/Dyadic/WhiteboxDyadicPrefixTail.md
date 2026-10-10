@@ -64,13 +64,11 @@ $$(\forall m: \mathbb{N}, (\forall s: \operatorname{PrefixSampler}\left(\operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Dyadic/WhiteboxDyadicPrefixTail.ddg_lower` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Jeremie Lumbroso (2013). *Optimal Discrete Uniform Generation from Coin Flips, and Applications*. URL: <https://arxiv.org/abs/1304.1916v1>.
+*Citation.* Jeremie Lumbroso (2013). *Optimal Discrete Uniform Generation from Coin Flips, and Applications*. URL: <https://arxiv.org/abs/1304.1916v1>.
 
 *Commentary.*
 
-Tonelli identifies the expected bill with the sum of the survival probabilities. Termwise cylinder bounds give the cost inequality when the real dyadic series is summable. The classical DDG cost expression is recalled in Lumbroso, Section 2.1; the statement here retains the full prefix execution and its common output law.
+Tonelli identifies the expected bill with the sum of the survival probabilities. Termwise cylinder bounds give the cost inequality when the real dyadic series is summable. This is the classical optimal random-bit cost lower bound recalled in Lumbroso, Section 2.1, equations (1)-(2). Its formalization here connects PrefixSampler, emitted, active, and bill to that cost expression on the same execution and output law.
 
 **Theorem 1.6 (Relabelling the emitted event).**
 
