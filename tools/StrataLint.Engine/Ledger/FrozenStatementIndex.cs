@@ -15,7 +15,6 @@ internal sealed class FrozenStatementIndex
 
     private readonly FrozenStateCatalog state;
     private readonly LeanAxiomReport report;
-
     private FrozenStatementIndex(FrozenStateCatalog state, LeanAxiomReport report)
     {
         this.state = state;
@@ -56,6 +55,12 @@ internal sealed class FrozenStatementIndex
             return false;
         }
 
+        if (!report.Files.TryGetValue(formal.Path, out var module) || !string.IsNullOrEmpty(module.Error))
+        {
+            message = $"coverage GID has no current report module: {gid.Value}";
+            return false;
+        }
+
         if (formal.Declaration is null)
         {
             statementId = frozen.StatementId;
@@ -63,17 +68,10 @@ internal sealed class FrozenStatementIndex
             return true;
         }
 
-        if (!report.Files.TryGetValue(formal.Path, out var module)
-            || !string.IsNullOrEmpty(module.Error))
-        {
-            message = $"coverage GID resolves to 0 current report declarations: {gid.Value}";
-            return false;
-        }
+        var declarations = CanonicalStatementWriter.DeclarationStatementIds(formal.Path, module);
 
         var matches = ImmutableArray.CreateBuilder<StatementId>();
-        foreach (var declaration in CanonicalStatementWriter.DeclarationStatementIds(
-                     formal.Path,
-                     module))
+        foreach (var declaration in declarations)
         {
             string decoded;
             int consumedCharacters;

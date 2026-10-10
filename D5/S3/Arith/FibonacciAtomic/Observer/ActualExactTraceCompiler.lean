@@ -398,7 +398,7 @@ of the raw reply quotient. No stored raw branch/absent distinction enters it. -/
 noncomputable def strategyPolicy (π : Strategy) : CoarseHistory → Sum Address Bool :=
   fun g => π.policy (ActualCoarseReadoutCompletion.encodeHistory g)
 
-private theorem encode_projection (g : CoarseHistory) :
+theorem encode_projection (g : CoarseHistory) :
     kappa_hist (ActualCoarseReadoutCompletion.encodeHistory g) = g := by
   induction g with
   | nil => rfl
