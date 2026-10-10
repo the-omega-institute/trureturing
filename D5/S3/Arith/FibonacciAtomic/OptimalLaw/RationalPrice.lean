@@ -10,7 +10,6 @@ import D5.S3.Arith.FibonacciAtomic.TriangularPathNormalization
 import D5.S3.Arith.FibonacciAtomic.OptimalLawStrictSlope
 import Mathlib.Data.Fin.Tuple.Sort
 import D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding
-import D5.S3.Arith.FibonacciAtomic.OptimalLaw.LeafExchange
 import D5.S1.Digit.RadixFloorDigit
 import D5.S3.Arith.FibonacciAtomic.TriangularFirstSplitRecurrence
 import Mathlib.Data.Rat.Cast.Order
@@ -71,7 +70,7 @@ private theorem departure_digits (x t : ℝ) (D : ℕ) (hD : 1 ≤ D)
       field_simp
     calc
       _ = ⌊(2 : ℝ) ^ d * (x - 1 / (2 : ℝ) ^ D)⌋ :=
-        (D5.S3.Arith.FibonacciAtomic.OptimalLaw.LeafExchange.donor_prefix x D hD donor_bit d hd).symm
+        (D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.donor_prefix x D hD donor_bit d hd).symm
       _ = ⌊(2 : ℝ) ^ d * t⌋ := by
         rw [scale, scale, normxd, Int.floor_div_natCast, Int.floor_div_natCast,
           Int.floor_intCast]
