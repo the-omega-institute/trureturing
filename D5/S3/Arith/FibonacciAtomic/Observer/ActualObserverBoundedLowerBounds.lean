@@ -138,7 +138,7 @@ private theorem visits_snoc (M : Observer E) (h : RawHistory)
 
 /-- Every actual first-occurrence append creates one new decoded value. Hits
 preserve the full ordered cache; prior values cannot already contain the new address. -/
-private theorem prefix_cache_spectrum (M : Observer E) (U : Source) (legal : Legal M U)
+theorem prefix_cache_spectrum (M : Observer E) (U : Source) (legal : Legal M U)
     {e : E} {h : RawHistory} (pref : ActualPrefix M U e h) :
     paid (M.decoder e) = paid h ∧
     (cachedVisits M h).card = (paid h).card + 1 ∧
