@@ -284,10 +284,17 @@ def run_inspector(root, executable, arguments, request_file=None, request_captur
     try:
         command = ['--request-file', str(request_file)] if request_file else arguments
         binding = {}
-        if (os.environ.get('STRATALINT_INSPECTOR_OPERATIONS') == '1' and request_capture
+        if (os.environ.get('STRATALINT_INSPECTOR_OPERATIONS') == '1'
                 and os.environ.get('STRATALINT_INSPECTOR_OPERATION_TARGET') in arguments[6::3]):
-            binding['env'] = dict(os.environ,
-                STRATALINT_INSPECTOR_OPERATION_REQUEST='sha256:' + public.digest(request_capture))
+            environment = dict(os.environ)
+            environment.pop('STRATALINT_INSPECTOR_OPERATION_REQUEST', None)
+            if request_capture:
+                try:
+                    environment['STRATALINT_INSPECTOR_OPERATION_REQUEST'] = (
+                        'sha256:' + public.digest(request_capture))
+                except OSError as error:
+                    diagnostic_failure('native request binding', error)
+            binding['env'] = environment
         with inspector_child_output() as output:
             subprocess.run([str(executable), *command], cwd=root, check=True, **output, **binding)
     except subprocess.CalledProcessError as error:
