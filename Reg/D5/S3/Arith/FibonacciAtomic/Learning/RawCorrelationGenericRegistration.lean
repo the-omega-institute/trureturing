@@ -135,7 +135,7 @@ private theorem rejected_law.{u,v} : ¬ arena.{u,v}.Law rejected.{v} := by
   let α := ULift.{u} Unit
   let β := ULift.{v} Unit
   have hb := h (α := α) (β := β) (fun _ => ⟨()⟩) (fun _ => 1) (fun _ => 1)
-    (by intro b; simp [α]) 0 (fun _ => 0)
+    (by intro b; simp [α]; exact Subsingleton.elim _ _) 0 (fun _ => 0)
   norm_num [rejected, realize, α, β] at hb
 
 private theorem dependence.{v} : ObservationalDependence signature.{v} actual := by
