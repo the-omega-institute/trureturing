@@ -20,11 +20,12 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
     private static Formula Sum(Formula x, Formula t, Formula b) =>
         Seq(new Formula.Subscript(F.Sum, Seq(x, Sp, InMacro, Sp, t)), b);
     private static Formula E(Formula f) => Call("E", f);
-    private static DocumentBlock Thm(string n, string title, Formula f, string prose) =>
+    private static DocumentBlock Thm(string n, string title, Formula f, string prose)
+    {
         var declaration = n.StartsWith("Paths.", StringComparison.Ordinal)
             ? n["Paths.".Length..]
             : n;
-        Describe.Lean(DescribeId.Create(n.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
+        return Describe.Lean(DescribeId.Create(n.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
             // Formal GIDs admit one final declaration selector. The resolver matches that
             // selector against the unique full Lean name, so nested Paths declarations retain
             // their full namespace in the source and narrative while using the canonical GID.
@@ -35,6 +36,7 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
                     ? AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg"))
                     : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    }
 
     public DocumentDefinition Create()
     {
