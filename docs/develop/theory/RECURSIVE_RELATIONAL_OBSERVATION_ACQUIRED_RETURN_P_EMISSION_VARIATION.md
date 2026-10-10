@@ -2673,3 +2673,423 @@ This proof uses direct conditional kernels and an explicit two-row interpolation
 The minima in (14.5) and (14.12) are returned-cut counts in this fixed finite law fiber. They are not total COMPLETE minima, sampler size, description size, finite samples, number of histories, worst-case work/bit bounds or unrestricted fixed-resource optima. Finite exact common attainment, an unattained zero infimum, a positive unrestricted gap, finite-dimensional relaxations and fixed-resource optima remain separate. No zero-face existence/value, nonatomic characterization or unrestricted zero/gap alternative is settled. Endpoint-only prior attainments keep their separate scope. The original unrestricted class still admits zero/unit emissions and possible noncompletion. All new universal formal applications remain **OPEN**.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Exact prescribed-return memory and a two-dimensional positive-law fiber
+
+**Hypotheses 15.1 (the original source and the finite admissible domain).** Retain Definitions 1.1–1.3 and 12.1, Hypotheses 13.1 and the original-cut convention of Definition 14.3. The source remains $m=2,d=1,\ell=2,n=4$. Its positive integer $K$ is drawn once before the first paid Read from the fixed installed finite or countable prior $\mu$, with $\mu(1),\mu(2)>0$ and some actually supported $k_\star\ge3$. No mass at depth 3 is assumed. Conditional on $K=k$, all acquired letters have alpha probability $r_k=F_{k+1}/F_{k+3}$ and are independent. Both accepted seeds, every paid rejection and partial parse, all sixteen marker words and prefixes, every original selector and bare or held $B,Q^+,Z$ field, write/latch flags, permissions, fourth completion and its matching Stop remain. The third record is written before its latch. Pending and delivered terminals allow no Read. The complete current-record renderer is the same bijection $I_c$, including every future event block and infinite outcome.
+
+There is one source-independent initialized finite observer with fixed acquired-letter kernels. Synthetic generation uses those identical kernels. COMPLETE includes control, private labels, code, installed numerics, selectors, addresses, program modes, workspace, cursors, service residues and all persistent randomness. Histories and conditional probability rows are analysis objects, not readable online storage. No source reset, new probe, acquired-history counter, external clock, posterior, configuration-distribution input or exact-real runtime port is supplied.
+
+Here a finite admissible $\Xi$ means exactly a finitely supported probability in Definition 12.1. Its distinct p descriptors are $Q_1,\ldots,Q_{N_p}\in\mathcal K_p$ and its distinct suspended descriptors are $W_1,\ldots,W_{N_\beta}\in\mathcal K_\beta$. The descriptor counts $N_p,N_\beta$ do not alter the source parameters. These are normalized complete laws on the original carriers. Put
+
+$$
+t_{ijk}=\Xi\{(Q_i,W_j,Q_k)\},\qquad
+b_{ij}=\sum_k t_{ijk},\qquad a_{jk}=\sum_i t_{ijk},
+$$
+
+$$
+\pi_i=\sum_j b_{ij}=\sum_j a_{ji}>0,\qquad
+\tau_j=\sum_i b_{ij}=\sum_k a_{jk}>0.
+\tag{15.1}
+$$
+
+Zero marginal atoms have been omitted. Both full joint measures are prescribed:
+
+$$
+\Gamma_B=\sum_{i,j}b_{ij}\delta_{(Q_i,W_j)},\qquad
+\Gamma_A=\sum_{j,k}a_{jk}\delta_{(W_j,Q_k)}.
+\tag{15.2}
+$$
+
+Admissibility says, as equalities of complete measures,
+
+$$
+\sum_j b_{ij}W_j=\pi_i\mathcal R_B(Q_i),\qquad
+\sum_k t_{ijk}Q_k=b_{ij}\mathcal R_A(W_j).
+\tag{15.3}
+$$
+
+The second equation is imposed on each incoming pair. It includes every finite word and infinity, with the same residual maps as Chapters 12–13. Summing it over $i$ gives the $A$ equation for (15.2). All these masses are unweighted acquired masses. In particular neither $(1-u(Q_i))$ nor $v(W_j)$ belongs in (15.1). These hypotheses range over the entire finite admissible domain, not just the SAME family of Chapters 13–14. They do not restrict the outer original observer class to regular emissions: regularity here belongs to the prescribed descriptors. No clipping or stationary extraction is used to preserve a triple or a count.
+
+**Definition 15.2 (constrained positive generators and the counted cuts).** For each $j$ define a compact convex probability fiber and its cone by
+
+$$
+\mathcal F_j=\left\{f\in\mathbb R_+^{N_p}:
+ \sum_k f_k=1,\quad \sum_k f_kQ_k=\mathcal R_A(W_j)\right\},
+$$
+
+$$
+\mathcal C_j=\left\{g\in\mathbb R_+^{N_p}:
+ \sum_k g_kQ_k=\Bigl(\sum_k g_k\Bigr)\mathcal R_A(W_j)\right\}.
+\tag{15.4}
+$$
+
+Thus $\mathcal C_j=\{sf:s\ge0,f\in\mathcal F_j\}$ and $\mathcal F_j$ is its mass-one slice. Positive generation means nonnegative coefficients with positive mass for each retained generator; it does not require every transition entry to be strictly positive. Zero and unit transition probabilities remain allowed.
+
+Let $I_j=\{i:b_{ij}>0\}$, $R_{ij}=(t_{ijk}/b_{ij})_{k=1}^{N_p}$ for $i\in I_j$, and $M_j=(t_{ijk})_{i,k}$. Define
+
+$$
+\begin{aligned}
+\kappa_j(\Xi)
+&=\min\left\{r:\ \exists f_1,\ldots,f_r\in\mathcal F_j,
+\ \{R_{ij}:i\in I_j\}\subseteq\operatorname{conv}\{f_1,\ldots,f_r\}\right\}\\
+&=\min\left\{r:\ M_j=UV,\ U\in\mathbb R_+^{N_p\times r},
+\ V_{\ell\cdot}\in\mathcal F_j\ (1\le\ell\le r),
+\ \sum_iU_{i\ell}>0\right\}.
+\end{aligned}
+\tag{15.5}
+$$
+
+The equal definitions follow by setting $U_{i\ell}=b_{ij}c_{i\ell}$ for the convex coefficients, and conversely summing a factorization over $k$ to get $\sum_\ell U_{i\ell}=b_{ij}$. A row with $b_{ij}=0$ is identically zero and is never divided by. Unused columns are removed. Equation (15.3) places every $R_{ij}$ in $\mathcal F_j$, so $1\le\kappa_j\le|I_j|$; the integer minimum is attained. No limiting factor or algorithm for unrepresented real data is needed for this existence assertion. Although (15.4) displays countably many coordinate equalities, their coefficient rows span a finite-dimensional subspace of $\mathbb R^{N_p+1}$. Selecting a basis of that row span gives finitely many equivalent affine equations. Thus $\mathcal F_j$ is a polytope, without asserting an effective way to find that basis from unspecified laws.
+
+Fix a reachable original fourth-segment suspended control/record value $c$. Count COMPLETE configurations after the acquired p-beta update and all of its internal service have returned, before the next original Read. For an observer $M$ realizing the individual descriptors, (15.2) and the entire $\Xi$ at every applicable positive original history, let $Y_j(M,c)$ be the union, over all such histories with this $c$, of reachable returned configurations with raw law $W_j$. Refined p labels, refined suspended labels and history-dependent actual rows are unrestricted and finite. A live selector or sampler residue distinguishes COMPLETE configurations even if its current full law agrees. Exact descriptor marginals preclude additional distinct laws of positive probability at these histories, but do not preclude arbitrarily many copies of any prescribed law.
+
+Write $n_j^{\rm abs}(\Xi;c)$ for the minimum of $|Y_j(M,c)|$ in the abstract finite-stochastic-rule domain, and $N^{\rm abs}(\Xi;c)$ for the minimum of their sum in that same domain. Write $n_j^{\rm rep},N^{\rm rep}$ for the corresponding minima over permitted represented observers, assigning $+\infty$ when this class is empty. Different $W_j$ cannot belong to the same complete configuration. Abstract real rule parameters are not claimed to be represented real registers or permitted effective samplers.
+
+**Theorem 15.3 (exact original returned-cut characterization).** For every finite admissible $\Xi$ in Hypotheses 15.1 and every such $c$,
+
+$$
+\boxed{\quad n_j^{\rm abs}(\Xi;c)=\kappa_j(\Xi),\qquad
+ N^{\rm abs}(\Xi;c)=\sum_{j=1}^{N_\beta}\kappa_j(\Xi).\quad}
+\tag{15.6}
+$$
+
+One original initialized observer simultaneously attains all these minima on every original control/record fiber. The lower bound applies to every finite COMPLETE/p refinement and every nonstationary actual-history row. For represented observers the same expression is always a lower bound. Equality in that domain follows when minimizing factors give permitted finite exact services for the constructed latch row, kernels and emissions, with canonical returned workspace. In particular rational minimizing factors and rational primitive probabilities suffice. Rational input or effective real approximation alone is not asserted to give rational or finitely samplable minimizing factors.
+
+**Proof of necessity at an original history.** Choose any positive p history $h$ whose next beta reaches the original fiber $c$. Use the actual complete-state row $\rho_h(x)$ and returned complete-state kernels $B_{xy},A_{yz}$. Source-independent initialization and updates imply that, conditional on the acquired word $h$, all private state and future private randomness are independent of the single $K$ and its next letters. The source probability of beta-alpha is
+
+$$
+s_h=\sum_k\nu_h(k)r_k(1-r_k)>0,
+$$
+
+with exactly the paid-history posterior of (1.2). It is common to all private paths and cancels on conditioning. Therefore
+
+$$
+\Pr(X=x,Y=y,Z=z\mid h,\beta\alpha)
+ =\rho_h(x)B_{xy}A_{yz}.
+\tag{15.7}
+$$
+
+This reuses the original-history identity (13.9), not a stationary row. Fix $j$ and retain only middle configurations $y$ of law $W_j$ with positive arrival probability at this history. Define
+
+$$
+U^j_{iy}=\sum_{x:Q_x=Q_i}\rho_h(x)B_{xy},\qquad
+f_{y,k}=\sum_{z:Q_z=Q_k}A_{yz}.
+\tag{15.8}
+$$
+
+Every positive successor of a retained $y$ is reachable at the positive history $h\beta\alpha$. The exact third marginal forces its law to be in the prescribed p list. Hence $f_y$ is a probability row. Its full same-update cylinder equation, divided by $v(W_j)\ge1/3$, is
+
+$$
+\sum_k f_{y,k}Q_k=\mathcal R_A(W_j),
+\tag{15.9}
+$$
+
+including infinity. Thus $f_y\in\mathcal F_j$. Pushing (15.7) to the three descriptors gives
+
+$$
+t_{ijk}=\sum_{y:W_y=W_j}U^j_{iy}f_{y,k}.
+\tag{15.10}
+$$
+
+All retained columns have positive total mass. Consequently (15.10) is an admissible factorization in (15.5) with no more than $|Y_j(M,c)|$ columns, proving $|Y_j(M,c)|\ge\kappa_j$.
+
+The row $\rho_h$ can change arbitrarily with history. Its only use was in nonnegative incoming coefficients. The outgoing row in (15.8) depends solely on the complete middle configuration; any information that could change it is already counted in that configuration. Refining p descriptors into multiple complete states is absorbed by the two sums in (15.8). The argument holds at each single history, hence also for the union of reachable cuts. Summing over distinct middle laws proves the lower bound for the total count.
+
+**Proof of simultaneous algebraic attainment.** For each $j$ select minimizing factors $U^j,V^j$ in (15.5), and put $r_j=\kappa_j$. Use p labels $i$ and suspended labels $(j,\ell)$, $1\le\ell\le r_j$, with
+
+$$
+B_{i,(j,\ell)}=\frac{U^j_{i\ell}}{\pi_i},\qquad
+A_{(j,\ell),k}=V^j_{\ell k},\qquad
+\widehat\tau_{j\ell}=\sum_i U^j_{i\ell}>0,
+$$
+
+$$
+u_i=Q_i(\alpha),\qquad v_{j\ell}=1-W_j(\beta).
+\tag{15.11}
+$$
+
+Because $\sum_{j,\ell}U^j_{i\ell}=\sum_jb_{ij}=\pi_i$, $B$ is stochastic. Every row of $A$ is stochastic by (15.4). Direct summation, using the entire prescribed tensor, gives
+
+$$
+\pi B=\widehat\tau,\qquad
+\widehat\tau A=\pi,\qquad
+\sum_\ell\pi_iB_{i,(j,\ell)}A_{(j,\ell),k}=t_{ijk}.
+\tag{15.12}
+$$
+
+The first two are both stationary unweighted balances, not just normalization of each conditional row. Moreover,
+
+$$
+\sum_{j,\ell}B_{i,(j,\ell)}W_j
+ =\sum_j\frac{b_{ij}}{\pi_i}W_j=\mathcal R_B(Q_i),
+\qquad
+\sum_kA_{(j,\ell),k}Q_k=\mathcal R_A(W_j).
+\tag{15.13}
+$$
+
+The second equality is precisely the generator constraint. Thus the candidate laws solve the complete same-update recursions, including all finite and infinite atoms. This is the own-law step supplied by Theorem 12.2 and [PAIRED, (11.19)](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md), with a smaller choice of middle labels.
+
+For completeness its hypotheses can be checked directly. With the emissions in $[1/3,2/5]$ and
+
+$$
+L=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,
+\qquad g=\operatorname{diag}(1-u)B(1-v),
+$$
+
+we have $L\mathbf1\le(4/15)\mathbf1$ and $u+g=\mathbf1-L\mathbf1$. The generated finite-word masses are $L^nu,L^ng$, and
+
+$$
+\sum_{n<N}L^n(u+g)=\mathbf1-L^N\mathbf1.
+\tag{15.14}
+$$
+
+This proves normalization, p tails at most $(4/15)^N$ and suspended tails at most $(2/5)(4/15)^N$. Infinite outcomes stay in the carriers with zero mass. Two normalized solutions of (15.13)'s recursions have maximal TV discrepancies $z_p\le(2/3)z_\beta$ and $z_\beta\le(2/5)z_p$, forcing equality. Hence these are exactly the laws generated by the installed table, rather than assigned predictions unrelated to its transitions. No irreducibility or mixing is needed.
+
+The original installation and exact count are established next; they apply to this single simultaneous table. ∎
+
+**Proposition 15.4 (initialized realization, services and configuration losses).** The table (15.11) has an original abstract realization of (15.6). Under the exact-service premise in Theorem 15.3 it has a represented realization with exactly $r_j$ reachable COMPLETE returned suspended configurations of law $W_j$ at every fixed $c$. At each positive original fourth-phase history the configuration losses are exactly
+
+$$
+\sum_i\pi_i\operatorname{TV}((I_{C_0(h)})_*Q_i,T_h^\mu),
+\qquad
+\sum_j\tau_j\operatorname{TV}((I_{C_0(h)})_*W_j,T_h^\mu),
+\tag{15.15}
+$$
+
+at the respective phases. All configurations and targets in each comparison use that same history's renderer. The assertion is not a claim that these losses are optimal.
+
+**Proof of the original-source bridge.** The finite carriers, positive normalized row $\pi$, stochastic kernels, balances (15.12) and regular emissions discharge [PAID, Definition 2.1 and Lemma 2.1.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md) with observer period one. That period is not a change to source $d=1$. Retain the full $C_0$, with fair synthetic letters before the third latch. In the third-completion update perform its entire original record write, then latch, then sample the fixed row $\pi$ independently of the source and acquired word. This same rule applies on both seeds and every original record fiber. Use (15.11)'s $B$ after p-beta and $A$ after suspended-alpha, in acquired and synthetic execution alike. Completing letters clear the private active labels and perform exactly the original matching pendingStop transition. Only its original Stop delivers; deliveredStop is absorbing.
+
+Projection to $C_0$ is the original transition with its whole event block at every operation. Induction consequently retains every paid equal-pair rejection, partial parse, marker prefix, bare and held field, flag and permission. No acquired letter is discarded, and no service reads the source. $K$ is never resampled. The pre-latch private state is a fixed idle state, not a record of the earlier acquired word.
+
+The first fourth p row is $\pi$. Conditioning on actual letters does not weight private states by their synthetic emissions. The two equalities in (15.12) therefore give $\widehat\tau$ after every beta and $\pi$ after every alpha return, at every positive finite original history. This induction covers arbitrarily many returns, both seeds and all paid prehistories, not merely the first cut. Every retained middle mass $\widehat\tau_{j\ell}$ is positive on every applicable history. Equation (15.7) and the third equality in (15.12) give the exact prescribed $\Xi$ there; projecting gives both full measures (15.2).
+
+The full raw laws from all cuts are the conditional continuation laws of this same generator, rendered through their own $I_c$. This gives (1.3) on every original operation, including completion and Stop. Fair synthetic seed rejection has survival $1/2$ per pair, and each early payload return has survival $1/4$. After the latch use (15.14). At each actual depth, seed rejection has survival $r_k^2+(1-r_k)^2\le5/9$ and each payload return has survival $r_k(1-r_k)\le6/25$. Thus all synthetic and actual noncompletion outcomes remain present with zero mass; a countable mixture of these zero masses is zero. No completion event is used to renormalize a law. The actual provider, its prior description and its own resources remain the original ones, separate from the observer's finite private carrier.
+
+For a rational installation, choose a finite common denominator $D$ for the latch, kernels, emissions and fairness, and $b$ with $2^b\ge D$. A service draws $b$ fresh independent private fair bits into a bounded integer candidate. Reject candidates at least $D$ and repeat using the same storage, with no retry counter. Accepted integers are partitioned into intervals of lengths $Dp_k$ for the requested row. Each accepted value is exactly uniform on $\{0,\ldots,D-1\}$: its probability is $\sum_{r\ge0}(1-D/2^b)^r/2^b=1/D$. The service returns almost surely since $D/2^b>0$. Zero intervals and deterministic rows are allowed. Independent emission and update service calls give the synthetic joint probability $q_z(o)P_o(z,z')$; the acquired update uses that identical update service, without an emission trial.
+
+Commit the selected target label, then deterministically clear the incoming index, row selector, address scratch, candidate, bit cursor, emission flag and all temporary output or arithmetic fields. Finish the original event block and return with common idle code position and canonical service and output cursors. There is no retained unused random bit. Destructive overwriting is permitted: this observer contract imposes no reversibility constraint. All old-state information needed for the update is consumed before this cleanup. Thus, at a fixed returned suspended $c$, the only varying private field is exactly $(j,\ell)$. Immutable program and installed numerics are common fields of these configurations, and every other dynamic field is canonical. The COMPLETE count at the ORIGINAL returned cut is therefore exactly $r_j$, not a quotient by hidden service state and not a cut relocated into the middle of a service.
+
+All internal states, including rejected candidates, arithmetic, code and address states, are nevertheless charged to total COMPLETE. Rejection may continue forever on a null set, with no extra original Read or permission; almost-sure return is not bounded work. Infinite possible source rejections, returns, synthesis and output also prevent a finite worst-case total work or bit bound. Fresh private fair bits are the supplied service convention of Proposition 12.6 and PAID, Proposition 11.3, not the acquired source seed and not free source samples. For real primitives, the same argument requires an allowed finite-COMPLETE exact service with independent randomness, specified entrance laws, almost-sure return and the stated cleanup. Merely computable approximations or an external exact-real port are insufficient.
+
+Finally, summing the repeated $W_j$ labels gives $\sum_\ell\widehat\tau_{j\ell}=\tau_j$, so the phase rows prove (15.15). TV remains inside each configuration average. The original target remains (1.2) for every fixed finite or countable prior, including every supported $k_\star$, with all paid letters in its analysis posterior. Target-mixture convexity, if used, is applied separately at each configuration before averaging. Internal-service continuation laws are part of the installed program, but are not added original queried histories. This proves the asserted abstract attainment and conditional represented attainment of Theorem 15.3. ∎
+
+**Definition 15.5 (a rational single-$W$ descriptor family).** Choose
+
+$$
+c_*=v_*=\frac{11}{30},\qquad q_*=1-c_*=\frac{19}{30},\qquad
+t_*=q_*v_*=\frac{209}{900},
+$$
+
+$$
+(u_1,u_2,u_3,u_4)
+ =\left(\frac13,\frac{16}{45},\frac{17}{45},\frac25\right)
+ =c_*\mathbf1+\frac1{90}(-3,-1,1,3).
+\tag{15.16}
+$$
+
+These local starred scalars have no effect on the source depth $k_\star$ or on $m,d,\ell,n$. Define normalized complete laws by
+
+$$
+G(w_{n,0})=c_*t_*^n,\qquad
+G(w_{n,1})=q_*(1-v_*)t_*^n,\qquad G(\infty_p)=0,
+$$
+
+$$
+W=(1-v_*)\delta_\beta+v_*\alpha G,\qquad
+Q_i=u_i\delta_\alpha+(1-u_i)\beta W.
+\tag{15.17}
+$$
+
+There are four distinct p laws, since $Q_i(\alpha)=u_i$ are distinct, and just one suspended descriptor $W$. No word or infinite coordinate has been suppressed. Indeed $c_*+q_*(1-v_*)=1-t_*$, so the geometric series normalizes $G$, and then prefixing normalizes $W,Q_i$. More explicitly,
+
+$$
+Q_i(w_{0,0})=u_i,\qquad
+Q_i(w_{n,0})=(1-u_i)v_*c_*t_*^{n-1}\quad(n\ge1),
+$$
+
+$$
+Q_i(w_{n,1})=(1-u_i)(1-v_*)t_*^n\quad(n\ge0),\qquad
+Q_i(\infty_p)=W(\infty_\beta)=0.
+\tag{15.18}
+$$
+
+In particular $G=c_*\delta_\alpha+q_*\beta W$, and the exact residuals are
+
+$$
+\mathcal R_B(Q_i)=W,\qquad \mathcal R_A(W)=G.
+\tag{15.19}
+$$
+
+These are equalities on the whole carriers. Here $G(T_p(n))=t_*^n$ and $W(T_\beta(n))=v_*t_*^n$. For $n\ge1$,
+
+$$
+Q_i(T_p(n))=(1-u_i)v_*t_*^{n-1}\le(4/15)^n,
+\tag{15.20}
+$$
+
+since $(1-u_i)v_*\le(2/3)(2/5)=4/15$ and $t_*<4/15$. At $n=0$ each p mass is one. The suspended tail is at most $(2/5)(4/15)^n$. All emissions lie in $[1/3,2/5]$. Thus these are legitimate members of exactly the descriptor spaces in Definition 12.1, with the original residual maps.
+
+**Lemma 15.6 (the actual two-dimensional probability fiber).** For (15.17), the whole constrained fiber in (15.4) is
+
+$$
+\mathcal F=\left\{f\in\mathbb R_+^4:
+ \sum_k f_k=1,\quad -3f_1-f_2+f_3+3f_4=0\right\}.
+\tag{15.21}
+$$
+
+It has affine dimension two and exactly the four vertices
+
+$$
+f^{13}=(1/4,0,3/4,0),\quad f^{14}=(1/2,0,0,1/2),
+$$
+
+$$
+f^{23}=(0,1/2,1/2,0),\quad f^{24}=(0,3/4,0,1/4).
+\tag{15.22}
+$$
+
+**Proof.** For any probability row $f$ the full mixture is
+
+$$
+\sum_i f_iQ_i=(f\cdot u)\delta_\alpha+(1-f\cdot u)\beta W.
+$$
+
+Its equality to $G$ is equivalent, by testing alpha and then using this full formula, to $f\cdot u=c_*$. Hence (15.21) is equivalent to every complete-law coordinate equation, including infinity. Normalization and the displayed mean equation are independent. They have a strictly positive solution, for example $(1/4,1/4,1/4,1/4)$, so the probability fiber has the full affine dimension $4-2=2$.
+
+If a feasible point has at least three positive coordinates, on that support the two linear equations have a nonzero common homogeneous direction. A sufficiently small displacement in either sign stays nonnegative. Such a point is not a vertex. A singleton support is impossible because none of $-3,-1,1,3$ is zero. A two-point support must choose one negative and one positive coefficient. The four choices give exactly (15.22). Each is extreme: any convex decomposition preserves its zero coordinates, and its two remaining masses are uniquely determined by the two equations. This also proves exhaustiveness of the vertex list; it is a proof on the entire fiber rather than a finite sampling of it. ∎
+
+**Theorem 15.7 (a source-realizable two-dimensional consumer with minimum four).** For the laws (15.17), prescribe
+
+$$
+\pi=(1/5,3/10,3/10,1/5),\qquad
+T=\begin{pmatrix}
+1/4&0&3/4&0\\
+1/2&0&0&1/2\\
+0&1/2&1/2&0\\
+0&3/4&0&1/4
+\end{pmatrix},
+\tag{15.23}
+$$
+
+$$
+\Gamma_B=\sum_i\pi_i\delta_{(Q_i,W)},\qquad
+\Gamma_A=\sum_k\pi_k\delta_{(W,Q_k)},\qquad
+\Xi=\sum_{i,k}\pi_iT_{ik}\delta_{(Q_i,W,Q_k)}.
+\tag{15.24}
+$$
+
+Then (15.24) is finite admissible on the unchanged source. At every reachable original suspended control/record fiber $c$ its prescribed-triple minimum is
+
+$$
+\boxed{\quad N^{\rm abs}(\Xi;c)=N^{\rm rep}(\Xi;c)=4>3
+ =\operatorname{rank}(M)=1+\dim\mathcal F,\quad}
+\tag{15.25}
+$$
+
+where the represented equality uses the original finite exact-service convention and $M_{ik}=\pi_iT_{ik}$. This is a comparison with ordinary real matrix rank and affine fiber dimension. It asserts no strict separation from ordinary nonnegative rank.
+
+**Proof of both full flows and admissibility.** The rows of $T$ are exactly the four vertices (15.22), in their displayed order, so they are probability rows of $\mathcal F$. Directly
+
+$$
+\pi T=\pi,
+$$
+
+$$
+\begin{aligned}
+(\pi T)_1&=1/20+3/20=1/5,&
+(\pi T)_2&=3/20+3/20=3/10,\\
+(\pi T)_3&=3/20+3/20=3/10,&
+(\pi T)_4&=3/20+1/20=1/5.
+\end{aligned}
+\tag{15.26}
+$$
+
+Also $\pi\cdot u=c_*$, either by substitution or by averaging $T u=c_*\mathbf1$ using (15.26). Thus $\sum_i\pi_iQ_i=G$. The $B$ full residual equation follows from $\mathcal R_B(Q_i)=W$. The $A$ equation for the second joint flow follows from $\sum_i\pi_iQ_i=G=\mathcal R_A(W)$. At every incoming pair $(Q_i,W)$, the stronger equation is $\sum_kT_{ik}Q_k=G$, proved by Lemma 15.6 on the whole law. The row and column sums give exactly both projections in (15.24), with equal end marginals. This verifies (15.1)–(15.3), not merely a stationary HMM or an arbitrary matrix analogy.
+
+**Proof of the exact count and the two failed proxies.** Every normalized incoming row of $M$ is a different vertex of $\mathcal F$. A convex combination of points of $\mathcal F$ can equal an extreme point only when every positively used point equals that extreme point. Therefore any single collection of generators covering all four incoming rows must contain all four vertices. Equation (15.5) gives $\kappa(\Xi)=4$, and Theorem 15.3 gives the lower bound for every original initialized finite observer, including arbitrary refinements and nonstationary history rows. This is a consumed instance of the characterization, not a separate restriction to identity $B$.
+
+The mass matrix is
+
+$$
+M=\frac1{20}\begin{pmatrix}
+1&0&3&0\\
+3&0&0&3\\
+0&3&3&0\\
+0&3&0&1
+\end{pmatrix}.
+\tag{15.27}
+$$
+
+It kills $(-3,-1,1,3)^{\mathsf T}$, whereas its first three rows and columns have determinant $27/8000\ne0$. Hence its ordinary rank is exactly three. Lemma 15.6 gives $1+\dim\mathcal F=3$. Neither value bounds the simultaneous generator count above. The usual dimension-plus-one representation of one convex combination does not supply a single three-point generating set for all four extreme rows. Positivity is essential to this simultaneous obstruction. It is the mature nested-polytope mechanism reused inside the source-specific fiber.
+
+**Proof of a represented original attainment.** Use p labels $1,\ldots,4$ and four suspended labels $1,\ldots,4$, all of law $W$, with
+
+$$
+B=I_4,\qquad A=T,\qquad \widehat\tau=\pi,
+\qquad u=(1/3,16/45,17/45,2/5),\qquad v=v_*\mathbf1.
+\tag{15.28}
+$$
+
+Thus both unweighted balances are $\pi I_4=\pi$ and $\pi T=\pi$, and the actual tensor is precisely $\pi_iT_{ik}$. Every suspended label is reachable with its positive mass $\pi_i$ at each suspended history. Identity $B$ is chosen solely for this upper witness, and was not used in the lower bound.
+
+Equations (15.19) and $T u=c_*\mathbf1$ prove both full recursions. An explicit all-word check is available: for $a_i=1-u_i$, the return matrix is $L=v_*\operatorname{diag}(a)T$, with
+
+$$
+T a=q_*\mathbf1,\qquad
+L a=t_*a,\qquad L u=v_*c_*a,\qquad
+g=(1-v_*)a.
+\tag{15.29}
+$$
+
+Induction gives $L^nu=v_*c_*t_*^{n-1}a$ for $n\ge1$ and $L^ng=(1-v_*)t_*^na$ for $n\ge0$, exactly (15.18). Suspension gives (15.17). These formulas and (15.20) prove the full tails and zero infinite masses directly, in addition to the uniqueness argument of Theorem 15.3.
+
+All primitive probabilities in (15.28), including the latch row and fair pre-latch emission, have common denominator 180. In units of $1/180$, the p alpha counts are $(60,64,68,72)$, each suspended alpha count is 66, the latch counts are $(36,54,54,36)$, and fairness has count 90. The four alpha-update rows have counts
+
+$$
+(45,0,135,0),\quad(90,0,0,90),\quad
+(0,90,90,0),\quad(0,135,0,45).
+\tag{15.30}
+$$
+
+The beta update is deterministic. Eight fresh private fair bits give candidates in $\{0,\ldots,255\}$; acceptance below 180 has probability $45/64$. Proposition 15.4's finite rejection service therefore implements every row exactly, with independent emission and update bits where needed. The service retains no retry counter. Commit the target and clear every incoming selector, candidate, cursor, flag, temporary field and service mode before the original update returns. At a fixed suspended $c$, just the four retained labels distinguish complete returned configurations. The program, constants and all service microstates remain charged to the total carrier; none is an uncounted persistent random seed. Hence four is attained in the represented count itself.
+
+Install precisely the latch and full-control adapter of Proposition 15.4. It places initialization after the third write and latch in their original update, uses the same acquired and synthetic kernels, retains every source operation, original record and both seeds, and clears labels only on original completion. Its induction gives $\pi,\pi,\pi$ through every acquired return on every original record fiber, for any of the permitted installed priors. No assumption about $\mu(3)$, support finiteness, or source-independent actual letters after marginalizing $K$ has entered: conditional independence at fixed acquired history is exactly what (15.7) uses. This proves all parts of (15.25). ∎
+
+**Corollary 15.8 (the preserved predictions and the type of hidden dimension).** The witness has, at every original fourth p history, the four p laws with masses $\pi$, and at every original suspended history the sole complete law $W$. Its full configuration losses are the p expression in (15.15) and $\operatorname{TV}((I_{C_0(h)})_*W,T_h^\mu)$, respectively. This equality of all four suspended forecasts does not permit merging their complete states while preserving $\Xi$.
+
+The relevant linear law map is $\mathscr L(f)=\sum_i f_iQ_i$. On mass-zero rows its kernel is
+
+$$
+\left\{d\in\mathbb R^4:\ \sum_i d_i=0,\quad \sum_i u_id_i=0\right\},
+\tag{15.31}
+$$
+
+which has dimension two. The probability fiber $\mathscr L^{-1}(G)\cap\Delta_4=\mathcal F$ contains a strictly positive row, so its affine dimension really equals this kernel dimension. The dimension is a dimension of distributions over outgoing descriptors with one common full-law barycenter. It is not the number of physical spatial coordinates, a sample-identification bound, or the number of private states that must be retained at the preceding suspended cut.
+
+**Proof.** The actual-history row identities were proved in Theorem 15.7. Their pushforward gives the losses, with TV before averaging. For a mass-zero $d$, the affine formula in (15.17) gives $\mathscr L(d)=(d\cdot u)(\delta_\alpha-\beta W)$, and the two probability laws in this difference have disjoint supports. Thus its vanishing is equivalent to (15.31). The two constraints are independent, and the positive row in Lemma 15.6 supplies the full probability dimension. The no-merging assertion is the lower bound (15.25). ∎
+
+**Mathematical citation 15.9 (covered mathematics and exact correspondence).** The generic relation between nonnegative factorization and a minimum number of latent generating states, and the rank-three versus four-state quadrilateral obstruction, are mature. [MMM, §§753–758 and 775–776](MATH_MYTH_MATCH.md) already gives normalized factorizations, the ordinary/nonnegative-rank distinction, a square example, its strictly positive perturbations and nested-polygon interpretation, with attribution. Those generic results and mechanisms are explicitly reused here; changing rational coordinates does not make a new generic counterexample. The source-specific deduction is (15.6) at original returned COMPLETE cuts, proved under arbitrary original history rows and refinements, together with the full initialized consumer (15.16)–(15.30).
+
+Nicolas Gillis and François Glineur, [*On the Geometric Interpretation of the Nonnegative Rank*, §2, Definition 1 and §2.1, Theorem 1](https://arxiv.org/html/1009.0880v1), distinguishes ordinary nonnegative rank from restricted nonnegative rank and proves the normalized nested-polytope correspondence. Its restricted factor stays in the prescribed matrix column space. Transposing to row conventions, (15.5) is the same convex-cover algebra, but its permitted generators are constrained by the full-law residual (15.4). That affine slice need not equal the row-space slice of $M_j$ for a general prescribed triple, so no general identification with their restricted rank is asserted. For (15.27), rank three and (15.21) identify that row-space slice with $\mathcal F$; its four extreme rows are a direct nested-polytope obstruction. This comparison supplies no original source initialization or COMPLETE accounting by itself.
+
+Cristiano Bocci, Enrico Carlini and Fabio Rapallo, [*Perturbation of Matrices and Nonnegative Rank with a View toward Statistical Models*, §5](https://arxiv.org/html/1010.3566v3), treats the familiar rank-three/four-generator matrix and its normalized square perturbation, including the $\sqrt2/2$ threshold. MMM §776 attributes its corresponding family to that paper. No new perturbation threshold, new NMF algorithm or separation from ordinary nonnegative rank is claimed here. Alex Monràs and Andreas Winter, [*Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*, §2, Theorem 6](https://arxiv.org/html/1412.3634v1), records the classical positive-realization criterion with its attribution: a suitable pointed polyhedral cone contains the initial vector, is invariant under the word maps and has the output functional in its dual. That criterion concerns its word-function realization, not these two prescribed unweighted flows and full actual triple. No such primary theorem is substituted for (15.7), (15.13) or the original initialization proof.
+
+Theorem 12.2 already regenerates each finite admissible triple by retaining the incoming pair. Theorem 13.4 already proves the full-law incoming-pair iff directly at original histories; Theorems 13.5–13.6 characterize the SAME family and its sharp motion. Chapter 14 already gives that family's exact 2/3/4 returned-cut minima and its motion-budget profile. None of those specific diagnostics is counted again as the two-dimensional consumer. Equation (15.5) permits compression of the incoming-pair construction exactly when its constrained generators permit it; (15.10) proves that every lawful original realization pays that same cost. Proposition 12.6 and PAID, Lemma 2.1.1 and Proposition 11.3, supply the initialization and finite-service conventions, with each premise discharged in Proposition 15.4.
+
+[PAIRED, Chapter 11](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) supplies the compact normalized full-law spaces, common residual flows, stopping uniqueness, regeneration, rational tolerance approximation and finite-atomic attainment criteria. Its approximation theorems can change the prescribed triple, descriptors or their exact count, and are not used to infer exact rational minimizing factors. Its Chapter 12 gives synchronized four-moment rigidity and an incompatible but separately risk-feasible marginal pair. Chapter 13 preserves one marginal and specified opposite integrals while allowing changed joint flows. Chapter 14 compares full losses near the endpoint chord while leaving return coupling free. Chapter 15 gives an event-output no-separator pair whose missing beta residual is nonzero, so that pair is not an installable compatible flow. These scopes are retained: neither scalar event feasibility nor an unweighted marginal alone replaces the full equalities (15.3)–(15.4).
+
+The [observer-relative local model, Definitions 1.2–1.5, 2.2 and §§5–7](AURIC_FIB_ATOM_OBSERVER_RELATIVE_LOCAL_MODELS_AND_FUTURE_IDENTIFIABILITY.md) compares fixed calibrated linear record maps on a common starting mass space, with legal actions and complete branch records. Its mass-zero-kernel criterion has the precise algebraic analogue (15.31): a normalized full-law map on a finite descriptor index set, pulled back to a common source for that map. It does not identify this descriptor distribution with the original physical source $K$ or a native FIB window. The [local source-splitting results, §§2–4, Theorem 8.3 and §§9–10](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md), distinguish feasible probability fibers from signed directions, and full-record identifiability from acquiring exact readouts. Those distinctions apply here as limits on inference: (15.21) is a feasible fiber, whereas an arbitrary direction in (15.31) is not itself a permitted acquisition or separately executable source intervention.
+
+The [complete-five-leaf cache result, Chapter 13](AURIC_FIB_ATOM_ANCESTRY_CUBE_AND_ACQUISITION_COST.md) has a different domain and count. It uses all fourteen trees of $W_4$, a common empty-cache start, deterministic source-independent address actions, exact ordered raw-cache decoding, finite correct Boolean stopping and coarse-action factorization on all nominal histories. Its five-state lower bound distinguishes two actual response splits through distinct retained caches; its upper construction preserves each such cache. Its referenced native declarations `Observer`, `queryReply`, `cacheUpdate`, `Legal` and `historyAction` in [ActualFiniteObserverAbsentElimination](../../../D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.lean) describe that address/cache execution contract. The stopped stochastic source here has no such address readout or ever-growing exact address-cache requirement. Conversely the cache theorem does not prescribe the full law triple (15.24) or allow this count to ignore its initial and terminal states. No operation-, record-, source- and resource-preserving map between those two minimum problems is supplied. Their numerical minima five and four cannot be compared as optima of one object.
+
+These are bounded source correspondences, not an exhaustive declaration or literature-priority claim. Any same-object identification requiring additional unavailable source declarations, calibration or physical realization is **ASSUMED-UNVERIFIED**; it is not inferred from an unsuccessful search or from equality of dimensions.
+
+**Limits 15.10 (what this exact minimum does not decide).** The quantifier in (15.6) covers every finite admissible prescribed $\Xi$ of Definition 12.1 and allows every original initialized finite realization with those fixed laws, flows and triple. It does not replace the unrestricted original common conf/conf problem by a fixed descriptor shape, mixing condition, native-law class or memory budget. The witness (15.24) is an exact memory consumer; it is not asserted to lie on the unrestricted zero-risk-excess face. Its source-faithful initialization makes it a lawful observer for the original prior, not a choice of a new prior or a source-resampling argument.
+
+The returned-cut minimum counts distinct reachable COMPLETE configurations at one original suspended control/record fiber. It does not minimize the total COMPLETE carrier, program length, sampler workspace, persistent description size, physical memory, samples, paid Reads, synthesis work, output length or worst-case time. All such components and services remain charged in their own accounts. A real minimizing factorization is algebraic data, and its physical or effective exact implementation retains the finite-service premise. The rational witness discharges that premise explicitly; it supplies no unconditional samplability theorem for general real minimizers.
+
+Finite exact common conf/conf attainment, an unattained zero infimum, a positive unrestricted gap, the numerical unrestricted value and global COMPLETE/physical/worst-case resource optima remain unresolved. The source-relative finite theorem neither narrows nor completes the sustained AURIC FIB ATOM pure-theory goal. All universal formal applications of this chapter remain **OPEN**.
+
+## 追加锚（本行以下为增补区）
