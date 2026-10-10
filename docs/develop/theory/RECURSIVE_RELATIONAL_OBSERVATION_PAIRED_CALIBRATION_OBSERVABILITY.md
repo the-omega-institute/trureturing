@@ -1893,484 +1893,267 @@ The supplied [BLIND, Conventions 1.1–1.2 and Theorems 5.1, 6.3](https://github
 
 ## 追加锚（本行以下为增补区）
 
-## 14. Continuous full-law defect and all-installed risk exclusion
+## 14. Quantitative endpoint-chord stability for complete configuration losses
 
-### 14.1 Standing full-domain contract and defect coordinates
+**Standing assumptions 14.1 (the same full-law pair and its four-moment defect).** Let $(\Gamma_B,\Gamma_A)$ be any compatible Borel pair of Definition 11.2, with its original common unweighted marginals $\nu_p,\nu_\beta$ and both full-descriptor conditional residual equations (11.8). Use exactly the source, installed finite or countable prior, complete countable carriers and original history domain of Standing assumptions 12.1. In particular, the actual depth $K$ is sampled once, initialization is source-independent, and both seeds, every paid rejection and partial parse, all records, permissions, third-write-before-latch, fourth completion, its matching Stop and all tails including infinite noncompletion remain in the domain. Configuration losses retain TV inside the descriptor integral, as in (11.9).
 
-**Standing assumptions 14.1.** Retain Sections 11.1–11.2 and Standing assumptions 12.1. The original source draws one depth $K$ from one fixed installed finite or countable prior $\mu$ before the first paid Read. Assume $\mu(1),\mu(2)>0$; every $k$ with $\mu(k)>0$ remains an original target. Write
+Retain $m_p,m_\beta,t,q,z,J_p,J_\beta,M_B,M_A,D_B,D_A$ from (12.1), (12.2) and (12.7), and put
 
 $$
-r_k=F_{k+1}/F_{k+3},\qquad a=1/3,\qquad b=2/5,\qquad
-\ell=b-a=1/15,\qquad \lambda=4/15.
+S=D_B+D_A=2J_p+2J_\beta+M_B+M_A\ge0.
 \tag{14.1}
 $$
 
-For $k\ge3$, $r_k\in[3/8,5/13]$. Both accepted seeds, every paid rejection and positive finite return history, original full records and operation blocks, write-before-latch, permissions, fourth completion, matching pendingStop and Stop delivery retain their Section 2 meanings. Initialization and acquired updates are source-independent, and synthetic generation uses those same updates. There is no fresh depth, source reset, future-event conditioning or additional observation.
-
-The complete raw carriers are
+For $s\in\{p,\beta\}$, a normalized complete probability target $T\in\mathcal P(\Omega_s)$ and $0\le\theta\le1$, define
 
 $$
-\Omega_p=\{w_{j,0},w_{j,1}:j\ge0\}\cup\{\infty_p\},\qquad
-\Omega_\beta=\{\beta\}\cup\{\alpha w_{j,0},\alpha w_{j,1}:j\ge0\}
-                    \cup\{\infty_\beta\},
-$$
-
-where $w_{j,0}=(\beta\alpha)^j\alpha$ and $w_{j,1}=(\beta\alpha)^j\beta\beta$. Use precisely the normalized TV law spaces $\mathcal K_p,\mathcal K_\beta$ in (11.2): their emissions lie in $[a,b]$ and their whole tail masses satisfy $Q(T_p(j))\le\lambda^j$ and $W(T_\beta(j))\le b\lambda^j$ for every $j\ge0$. The infinite outcomes stay in the carriers. Their zero masses follow from these tail bounds, without conditioning on completion or renormalizing a truncated future. The injective full-record renderer $I_c$ preserves complete TV and the original residual operation blocks.
-
-Let $(\Gamma_B,\Gamma_A)\in\mathfrak C$ be any compatible pair of Definition 11.2. These are Borel probability measures on the two ordered descriptor products, with
-
-$$
-(\Gamma_B)_1=(\Gamma_A)_2=\nu_p,\qquad
-(\Gamma_B)_2=(\Gamma_A)_1=\nu_\beta.
+H_{s,\theta}(T)=(1-\theta)\operatorname{TV}(P_{s,a},T)
+                  +\theta\operatorname{TV}(P_{s,b},T).
 \tag{14.2}
 $$
 
-Put $u(Q)=Q(\alpha)$ and $v(W)=1-W(\beta)$. The two full-descriptor conditional equations are
+These reference laws are mathematical comparisons on the original complete carriers. They are not installed runtime states or assertions of samplers preserving COMPLETE, description size, work, random-bit use, paid Reads or any other separately charged resource. When a pair comes from a stationary original product, its acquired and synthetic kernels and actual initialization remain exactly those of Sections 2 and 11.4.
+
+**Theorem 14.2 (one endpoint weight for all complete configuration losses).** Every pair in Standing assumptions 14.1 has one common $\theta\in[0,1]$, independent of the target and of the phase, such that, for every normalized complete target at the respective phase,
 
 $$
-\mathcal R_B(Q)=\int W\,\Gamma_B(dW\mid Q),\qquad
-\mathcal R_A(W)=\int Q\,\Gamma_A(dQ\mid W),
+\left|\mathcal L_p(T)-H_{p,\theta}(T)\right|\le C_p S,
+\qquad C_p=\frac{540}{11},
+$$
+
+$$
+\left|\mathcal L_\beta(T)-H_{\beta,\theta}(T)\right|\le C_\beta S,
+\qquad C_\beta=\frac{1395}{22}.
 \tag{14.3}
 $$
 
-almost surely at their respective input marginals, as equalities of normalized laws on the entire countable opposite carrier. They are exactly (11.7)–(11.8), including the infinite-atom tests. Their denominators are $1-u\ge3/5$ and $v\ge1/3$. Countability permits a common full-measure set for all coordinates. Both marginals in (14.2) are **unweighted acquired marginals**; continuation factors $1-u$ and $v$ enter synthetic recursions, not those marginals. Conditioning only on a residual value does not replace conditioning on the entire input descriptor.
-
-For later distances write
+The targets may assign positive mass to infinite noncompletion. One admissible common weight is
 
 $$
-A_s=P_{s,a},\qquad B_s=P_{s,b},\qquad d_s=\operatorname{TV}(A_s,B_s)=2\rho_s,
-$$
-
-$$
-d_p=\frac{1116529}{11390625},\qquad
- d_\beta=\frac{239}{3375}.
+\theta=\nu_p\left\{Q:u(Q)>\frac{a+b}{2}\right\}.
 \tag{14.4}
 $$
 
-These are the supplied complete endpoint distances of Section 2, not terminal projections. The joint excess $\mathcal J$ is exactly (11.9). Thus
+At $S=0$ this comparison is precisely the compatible endpoint pair (12.4)–(12.5), including the endpoint weights $0$ and $1$.
+
+**Proof.** Set $\delta=b-a=1/15$, $m=(a+b)/2$, $j(x)=(x-a)(b-x)$, and let $r(x)$ be the nearest endpoint, with a tie rounded to $a$. For $a\le x\le b$, the distance $d(x)=|x-r(x)|$ is at most $\delta/2$, so $j(x)=d(x)(\delta-d(x))\ge\delta d(x)/2$. Consequently
 
 $$
-\mathcal L_p(T)=\int\operatorname{TV}(Q,T)\,d\nu_p(Q),\qquad
-\mathcal L_\beta(T)=\int\operatorname{TV}(W,T)\,d\nu_\beta(W),
-$$
-
-and each installed target satisfies $\mathcal L_s(P_{s,r_k})\le\rho_s+\mathcal J$. TV stays inside every descriptor integral. Integrating the endpoint triangle inequality gives $\mathcal J\ge0$.
-
-Define $j(x)=(x-a)(b-x)$ on $[a,b]$, and retain the nonnegative quantities
-
-$$
-J_p=\int j(u)\,d\nu_p,\qquad J_\beta=\int j(v)\,d\nu_\beta,
-$$
-
-$$
-M_B=\int(u(Q)-v(W))^2\,d\Gamma_B(Q,W),\qquad
-M_A=\int(v(W)-u(Q))^2\,d\Gamma_A(W,Q).
-$$
-
-The emission defects $J_p,J_\beta$ are distinct from the risk excess $\mathcal J$. With $t,q,z$ as in (12.1), set
-
-$$
-\begin{aligned}
-D_B&=\frac{26}{15}-\frac{19}{15}t-2q=J_p+J_\beta+M_B,\\
-D_A&=\frac{11}{15}t-\frac4{15}-2z=J_p+J_\beta+M_A,\\
-S&=D_B+D_A=2J_p+2J_\beta+M_B+M_A\\
- &=\frac{22}{15}-\frac8{15}t-2(q+z)\ge0.
-\end{aligned}
+e_p:=\int|u-r(u)|\,d\nu_p\le30J_p,
+\qquad
+e_\beta:=\int|v-r(v)|\,d\nu_\beta\le30J_\beta.
 \tag{14.5}
 $$
 
-The equalities are (12.6)–(12.7): the full conditional equations give $q=\int(1-u)(1-v)\,d\Gamma_B$ and $z=\int uv\,d\Gamma_A$, and $x^2=(a+b)x-ab-j(x)$ with the shared marginals gives both expansions. Consequently (14.5) holds throughout $\mathfrak C$, before any endpoint coordinate-box hypothesis. The theorems below impose no finite atomicity, native-mixture, reversible, irreducible, equal-flow or return-conservation hypothesis.
-
-### 14.2 Nearest endpoint rounding controls complete laws
-
-Round a scalar to its nearest endpoint, assigning the midpoint to the left:
+If $r(x)\ne r(y)$, then $(x-m)(y-m)\le0$ and
 
 $$
-\mathfrak r(x)=
-\begin{cases}
-a,&a\le x\le(a+b)/2=11/30,\\
-b,&(a+b)/2<x\le b.
-\end{cases}
+j(x)+j(y)+(x-y)^2
+ =\frac{\delta^2}{2}-2(x-m)(y-m)\ge\frac{\delta^2}{2}.
+$$
+
+For equal rounded endpoints the following inequality is automatic. Thus, pointwise on the whole square $[a,b]^2$,
+
+$$
+\mathbf1_{\{r(x)\ne r(y)\}}
+ \le450\bigl(j(x)+j(y)+(x-y)^2\bigr).
+$$
+
+Let $\kappa_B$ and $\kappa_A$ be the probabilities of unequal rounded endpoints under the original $\Gamma_B$ and $\Gamma_A$, respectively. Their common unweighted marginals and the residual identities (12.7) give
+
+$$
+\kappa_B\le450(J_p+J_\beta+M_B)=450D_B,
+\qquad
+\kappa_A\le450(J_p+J_\beta+M_A)=450D_A.
 \tag{14.6}
 $$
 
-Define the Borel auxiliary complete-law distances
+These are estimates on the two given flows separately; neither flow has been replaced or weighted by a synthetic continuation probability.
+
+Write
 
 $$
-e_p=\int\operatorname{TV}(Q,P_{p,\mathfrak r(u(Q))})\,d\nu_p(Q),\qquad
-e_\beta=\int\operatorname{TV}(W,P_{\beta,\mathfrak r(v(W))})\,d\nu_\beta(W).
+d_p=\int\operatorname{TV}(Q,P_{p,r(u(Q))})\,d\nu_p(Q),\qquad
+d_\beta=\int\operatorname{TV}(W,P_{\beta,r(v(W))})\,d\nu_\beta(W).
+$$
+
+The supplied endpoint distances are
+
+$$
+\Delta_p=\operatorname{TV}(P_{p,a},P_{p,b})=2\rho_p<\frac1{10},\qquad
+\Delta_\beta=\operatorname{TV}(P_{\beta,a},P_{\beta,b})=2\rho_\beta<\frac1{10}.
+$$
+
+Apply the normalized whole-law comparison of (11.19)–(11.20) using the native endpoint recursions in the proof of Theorem 12.2. More explicitly, (11.4), the first full-descriptor conditional identity (11.8) and TV convexity give, for $\nu_p$-almost every $Q$,
+
+$$
+\begin{aligned}
+\operatorname{TV}(Q,P_{p,r(u)})
+&\le |u-r(u)|+(1-u)\int
+       \operatorname{TV}(W,P_{\beta,r(u)})\,\Gamma_B(dW\mid Q)\\
+&\le |u-r(u)|+(1-u)\int
+ \left[\operatorname{TV}(W,P_{\beta,r(v)})
+       +\Delta_\beta\mathbf1_{\{r(u)\ne r(v)\}}\right]
+ \,\Gamma_B(dW\mid Q).
+\end{aligned}
+$$
+
+The corresponding suspended inequality conditions on the entire $W$ in the second identity (11.8), uses $v$ as its continuation coefficient, and has $\Delta_p$ in its mismatch term. Integrate these inequalities against the respective input marginals. Using $1-u\le2/3$, $v\le2/5$, (14.5) and (14.6), with the original unweighted output marginals, yields
+
+$$
+\begin{aligned}
+d_p&\le30J_p+\frac23d_\beta+30D_B,\\
+d_\beta&\le30J_\beta+\frac25d_p+18D_A.
+\end{aligned}
 \tag{14.7}
 $$
 
-They compare each entire descriptor to one entire native endpoint law. They do not assert that the two rounded marginals, or the pushforwards of the old flows under rounding, form a compatible pair.
-
-**Lemma 14.2 (scalar rounding and endpoint mismatch).** For $x,y\in[a,b]$,
+The same two-phase stopping contraction as in (11.20) has denominator $1-(2/3)(2/5)=11/15$. Solving (14.7) and substituting (12.7) gives
 
 $$
-|x-\mathfrak r(x)|\le\frac{2j(x)}\ell,
-\qquad
-\ell^2\mathbf1_{\{\mathfrak r(x)\ne\mathfrak r(y)\}}
- \le2\bigl(j(x)+j(y)+(x-y)^2\bigr).
+\begin{aligned}
+d_p
+&\le\frac{450J_p+300J_\beta+450D_B+180D_A}{11}\\
+&=\frac{1080J_p+930J_\beta+450M_B+180M_A}{11}
+ \le\frac{540}{11}S,\\
+d_\beta
+&\le\frac{180J_p+450J_\beta+180D_B+270D_A}{11}\\
+&=\frac{630J_p+900J_\beta+180M_B+270M_A}{11}
+ \le\frac{450}{11}S.
+\end{aligned}
 \tag{14.8}
 $$
 
-**Proof.** The nearest-endpoint distance $d_0$ belongs to $[0,\ell/2]$ and $j(x)=d_0(\ell-d_0)\ge\ell d_0/2$. This proves the first inequality, including the midpoint. If the endpoints agree, the second inequality follows from nonnegativity. Otherwise, after exchanging $x,y$ if needed, write $\xi=(x-a)/\ell\le1/2$ and $\zeta=(y-a)/\ell>1/2$. Then
+Let $\theta_p=\nu_p\{r(u)=b\}$ and $\theta_\beta=\nu_\beta\{r(v)=b\}$. On either given flow, the difference between these two event probabilities is bounded by the probability of their indicators differing. Therefore
 
 $$
-\frac{j(x)+j(y)+(x-y)^2}{\ell^2}
- =\xi+\zeta-2\xi\zeta
- =\zeta+\xi(1-2\zeta)\ge\frac12.
-$$
-
-The final inequality uses $1-2\zeta<0$ and $\xi\le1/2$. It also covers $x$ exactly at the left-assigned midpoint. $\square$
-
-**Theorem 14.3 (continuous defect bounds the full rounding distance).** Every pair under Standing assumptions 14.1 satisfies
-
-$$
-\begin{aligned}
-e_p&\le\frac{2J_p}{\ell}+\frac23e_\beta
-              +\frac{4d_\beta}{3\ell^2}D_B,\\
-e_\beta&\le\frac{2J_\beta}{\ell}+\frac25e_p
-              +\frac{4d_p}{5\ell^2}D_A.
-\end{aligned}
+|\theta_p-\theta_\beta|
+ \le\min(\kappa_B,\kappa_A)
+ \le450\min(D_B,D_A)\le225S.
 \tag{14.9}
 $$
 
-In particular,
+For every complete target, the reverse triangle inequality applied to each descriptor before integration gives
 
 $$
-e_p\le K_0S,\qquad
-K_0=\frac{225+2250d_\beta+900d_p}{11}
-   =\frac{23922991}{556875}<43.
-\tag{14.10}
+|\mathcal L_s(T)-H_{s,\theta_s}(T)|\le d_s.
 $$
 
-This is an estimate on the entire compatible domain $\mathfrak C$. No endpoint coordinate box is required, and $K_0$ is a sufficient constant, without a sharpness assertion.
-
-**Proof of the two conditional comparisons.** For a whole input descriptor $Q$, put $r=\mathfrak r(u(Q))$. Its exact full recursion and the native endpoint recursion are
+Also $|\operatorname{TV}(P_{s,a},T)-\operatorname{TV}(P_{s,b},T)|\le\Delta_s$. Choose $\theta=\theta_p$. Equations (14.8)–(14.9) prove the p estimate and bound the suspended error by
 
 $$
-Q=u\delta_\alpha+(1-u)\beta\mathcal R_B(Q),\qquad
-P_{p,r}=r\delta_\alpha+(1-r)\beta P_{\beta,r}.
+d_\beta+\Delta_\beta|\theta_p-\theta_\beta|
+ \le\left(\frac{450}{11}+\frac{225}{10}\right)S
+ =\frac{1395}{22}S.
 $$
 
-Compare first with $u\delta_\alpha+(1-u)\beta P_{\beta,r}$. The completion atom is disjoint from the prefixed continuing carrier; prefixing is a complete-law TV isometry. Triangle inequality and (14.3) therefore give
+All conditional equalities and comparisons here concern full normalized measures on the countable carriers. Boundedness and countable TV summation justify their integrals. The infinite outcomes remain atoms throughout; their zero descriptor masses follow from Lemma 11.1, whereas the target's infinite mass is unrestricted. No completion conditioning is used. TV has remained inside every configuration average.
+
+If $S=0$, (14.5), (14.6) and (14.8) force endpoint emissions, zero mismatch on both flows and zero distance to the corresponding native complete laws. Equation (14.9) makes their endpoint weights common. Hence both marginals and flows are exactly (12.4)–(12.5), agreeing with Theorem 12.2. $\square$
+
+**Corollary 14.3 (the same-history full-record targets and the return boundary).** Fix any positive active fourth-segment actual history $h$, at phase $s$, in the original source domain. Let $I_h=I_{C_0(h)}$ be its existing full-record renderer and
+
+$$
+T_{s,h}=\sum_{k:\mu(k)>0}\nu_h(k)P_{s,r_k},\qquad
+\nu_h(k)=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}
+ {\sum_i\mu(i)r_i^{A(h)}(1-r_i)^{B(h)}}.
+$$
+
+With the same $\theta$ of Theorem 14.2 for every such history and both phases,
 
 $$
 \begin{aligned}
-\operatorname{TV}(Q,P_{p,r})
- &\le |u-r|+(1-u)\operatorname{TV}(\mathcal R_B(Q),P_{\beta,r})\\
- &\le |u-r|+(1-u)\int\operatorname{TV}(W,P_{\beta,r})
-                       \,\Gamma_B(dW\mid Q).
+\Bigg|\int\operatorname{TV}\bigl((I_h)_*D,(I_h)_*T_{s,h}\bigr)\,d\nu_s(D)
+&-(1-\theta)\operatorname{TV}\bigl((I_h)_*P_{s,a},(I_h)_*T_{s,h}\bigr)\\
+&-\theta\operatorname{TV}\bigl((I_h)_*P_{s,b},(I_h)_*T_{s,h}\bigr)\Bigg|
+\le C_sS.
 \end{aligned}
+\tag{14.10}
+$$
+
+For the own-law pair (11.24) of an original stationary product, the integral is its original configuration loss at $h$. For a general Borel pair it is a mathematical comparison loss, with no runtime realization assertion. The two flows and these comparisons do not determine the actual three-stage return measure $\Xi$ or its actual return-variation functional $V$.
+
+**Proof.** The posterior is normalized for finite or countable support and includes all paid rejections and partial parses under the same once-sampled $K$, by (2.2). Apply (14.3) to this complete target itself. The full-record isometry of Section 2, supplied by [ST, Section 2.1], transports every law in that inequality through the same $I_h$, giving (14.10). It retains future Read blocks, all held records, permissions, completion and the matching Stop, as well as infinite noncompletion. For an original stationary product the source-independent initialization and same acquired and synthetic updates in Section 11.4 give the phase row $\nu_s$ after every such history; no synthetic-probability reweighting of the actual row occurs.
+
+For the final assertion, the two original tables in [Acquired-return variation, Proposition 11.9](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) have equal full-law flows and hence equal $S$, marginal configuration losses and the weight (14.4), while their actual $\Xi$ and $V$ differ. Their original initialization and record-preserving renderers are supplied there by Proposition 11.10. Thus all the present comparisons agree on that pair without identifying its actual return motion. No triple join has been used in deriving (14.10). $\square$
+
+**Corollary 14.4 (evaluated exclusion near the four-moment endpoint chord).** Suppose $\mu(1),\mu(2)>0$ and the original installed prior supports at least one $k\ge3$. Every compatible pair satisfies
+
+$$
+\mathcal J+\frac{540}{11}S\ge\frac\eta4
+ =\frac{3554869594}{318644812890625},\qquad
+\eta=\frac{14219478376}{318644812890625}.
 \tag{14.11}
 $$
 
-This conditional convexity inequality follows by the countable half-$\ell^1$ formula and Tonelli, so it includes all complete words and the infinite outcome. For each output $W$,
+In particular there is no compatible pair with both
 
 $$
-\operatorname{TV}(W,P_{\beta,r})
- \le\operatorname{TV}(W,P_{\beta,\mathfrak r(v(W))})
-       +d_\beta\mathbf1_{\{\mathfrak r(u(Q))\ne\mathfrak r(v(W))\}}.
-$$
-
-Integrate (14.11), use $1-u\le2/3$ and the output marginal in (14.2), and apply Lemma 14.2. Its mismatch inequality gives
-
-$$
-\Gamma_B\{\mathfrak r(u)\ne\mathfrak r(v)\}
- \le\frac2{\ell^2}(J_p+J_\beta+M_B)=\frac{2D_B}{\ell^2}.
-$$
-
-Together with $\int|u-\mathfrak r(u)|\,d\nu_p\le2J_p/\ell$, this proves the first line of (14.9). The integration uses the same unweighted $\nu_\beta$ as the reverse flow, even though the conditional comparison contains the synthetic factor $1-u$.
-
-For the entire input $W$, put $r=\mathfrak r(v(W))$ and use
-
-$$
-W=(1-v)\delta_\beta+v\alpha\mathcal R_A(W),\qquad
-P_{\beta,r}=(1-r)\delta_\beta+r\alpha P_{p,r}.
-$$
-
-The same argument gives a first cost $|v-r|$, a continuing-law cost with factor $v\le2/5$, and an endpoint-switch cost $d_p$ under $\Gamma_A$. Lemma 14.2 bounds that switch probability by $2D_A/\ell^2$. Its output marginal is $\nu_p$. This proves the second line of (14.9), again on all coordinates.
-
-**Proof of elimination and the constant.** Substitute the second comparison into the first. The continuing coefficient has product $(2/3)(2/5)=4/15$, so its complement is $11/15$. Hence
-
-$$
-e_p\le\frac{30}{11\ell}J_p+\frac{20}{11\ell}J_\beta
-       +\frac{20d_\beta}{11\ell^2}D_B
-       +\frac{8d_p}{11\ell^2}D_A.
+\mathcal J<\frac{1777434797}{318644812890625},\qquad
+S<\frac{19551782767}{172068198960937500}.
 \tag{14.12}
 $$
 
-Insert $\ell=1/15$ and the two sums in (14.5). The respective coefficients of $(J_p,J_\beta,M_B,M_A)$ on the right become
+Write its four coordinates as $\mathbf c=(m_p,m_\beta,q,z)$ and let
 
 $$
-2K_0,\qquad 2K_0-\frac{150}{11},\qquad
-\frac{956}{33},\qquad \frac{8932232}{556875}.
+\mathbf c(\theta_0)=\left(
+ a+(b-a)\theta_0,\ a+(b-a)\theta_0,
+ (1-\theta_0)(1-a)^2+\theta_0(1-b)^2,
+ (1-\theta_0)a^2+\theta_0b^2\right).
 $$
 
-The last two are smaller than $K_0$, with differences $7790491/556875$ and $14990759/556875$. All four defect quantities are nonnegative, so (14.12) is at most $K_0(2J_p+2J_\beta+M_B+M_A)=K_0S$. This proves (14.10).
-
-The argument permits the rounded b masses at the two phases to differ. It neither deletes switching edges nor repairs an acquired flow. The rounding maps and distances are proof data, and no rounded generator, sampler or resource-preserving replacement is inferred. $\square$
-
-### 14.3 Consuming the bound in every installed internal risk
-
-For the fixed installed prior define $I_\mu=\{k\ge3:\mu(k)>0\}$. For each such $k$ put
+The explicitly evaluated simultaneous neighborhood
 
 $$
-R_k=P_{p,r_k},\qquad d_{a,k}=\operatorname{TV}(A_p,R_k),\qquad
- d_{b,k}=\operatorname{TV}(B_p,R_k),
-$$
-
-$$
-\eta_k=\frac{d_{a,k}+d_{b,k}-d_p}{2},\qquad
-L_k=1+\frac{|d_{b,k}-d_{a,k}|}{d_p},\qquad
-E_\mu=\sup_{k\in I_\mu}\frac{\eta_k}{L_k}.
+\mathcal J<\frac{1777434797}{318644812890625},\qquad
+\|\mathbf c-\mathbf c(\theta_0)\|_\infty
+ <\frac{19551782767}{871812208068750000}
+ \quad\text{for some }\theta_0\in[0,1]
 \tag{14.13}
 $$
 
-When $I_\mu$ is empty, set $E_\mu=0$. These quantities use complete TV and the original supported targets, without altering $\mu$ or adding an accumulation target. Triangle and reverse triangle inequalities give $\eta_k\ge0$ and $1\le L_k\le2$. All distances are at most one, so $E_\mu$ is finite; no attainment of its supremum is assumed.
+contains no compatible pair's excess and coordinates. It is a nonempty neighborhood in the ambient nonnegative-excess and moment space, containing $(0,\mathbf c(\theta_0))$ for every $\theta_0$. The supported-nonendpoint hypothesis is necessary: for a prior supported only on depths $1,2$, the fair endpoint-tag pair has $\mathcal J=S=0$.
 
-**Theorem 14.4 (all-installed risk–continuous-defect tradeoff).** Every compatible pair under Standing assumptions 14.1 satisfies
-
-$$
-\mathcal J+K_0S\ge E_\mu,\qquad
-\mathcal J\ge\max\{0,E_\mu-K_0S\}.
-\tag{14.14}
-$$
-
-If $I_\mu\ne\varnothing$, then $E_\mu>0$. Every zero-excess pair must satisfy
+**Proof.** Put $E=\mathcal J+C_pS$ and use the common $\theta$ of Theorem 14.2. The original two endpoint risk bounds in (11.9) and (14.3) imply
 
 $$
-S\ge\frac{E_\mu}{K_0}
- \ge\frac{3167388808254}{12196699185566569375}>0.
-\tag{14.15}
+\theta\Delta_p=H_{p,\theta}(P_{p,a})\le\rho_p+E,
+\qquad
+(1-\theta)\Delta_p=H_{p,\theta}(P_{p,b})\le\rho_p+E.
 $$
 
-Thus the strict region $S<E_\mu/K_0$ contains no zero-excess pair. The equality boundary is not excluded by (14.14).
-
-**Proof of the risk consumption.** Put $\theta=\nu_p\{Q:\mathfrak r(u(Q))=b\}$. The auxiliary rounded p marginal has endpoint configuration losses $d_p\theta$ and $d_p(1-\theta)$. For any complete target $T$, the reverse triangle inequality, applied before integration, gives
+Since $\Delta_p=2\rho_p$, these inequalities give $|\theta-1/2|\Delta_p\le E$. For a supported $k\ge3$, put $r=r_k$. The complete-word gap (12.10) and its coordinate-triangle consequence in Corollary 12.3 give
 
 $$
-\left|\mathcal L_p(T)-
- \int\operatorname{TV}(P_{p,\mathfrak r(u(Q))},T)\,d\nu_p(Q)\right|\le e_p.
-\tag{14.16}
+H_{p,1/2}(P_{p,r})\ge\rho_p+\frac\eta2.
 $$
 
-Apply it to both originally supported endpoints. Their actual losses are at most $d_p/2+\mathcal J$, so
+The reverse triangle inequality for the two endpoint distances gives
 
 $$
-d_p|\theta-1/2|\le\mathcal J+e_p.
-\tag{14.17}
+\left|H_{p,\theta}(P_{p,r})-H_{p,1/2}(P_{p,r})\right|
+ \le|\theta-1/2|\Delta_p\le E.
 $$
 
-For every installed internal $k$, the auxiliary loss is exactly
+On the other hand, the supported target's own bound in (11.9) and (14.3) give $H_{p,\theta}(P_{p,r})\le\rho_p+E$. Combining these three inequalities yields $\eta/2-E\le E$, which is (14.11). The same-history interpretation of supported pure targets retains precisely the paid-history and countable-prior hypotheses recorded in Section 11.4; it does not create a pure-source runtime query.
+
+The two thresholds in (14.12) are exactly $\eta/8$ and $\eta/(8C_p)=11\eta/4320$, so their simultaneous strict inequalities would contradict (14.11). To obtain (14.13), sum the exact identities (12.7):
 
 $$
-(1-\theta)d_{a,k}+\theta d_{b,k}
- =\frac{d_p}{2}+\eta_k
-          +(d_{b,k}-d_{a,k})(\theta-1/2).
+S=\frac{22}{15}-\frac8{15}(m_p+m_\beta)-2q-2z.
 $$
 
-It is at most $d_p/2+\mathcal J+e_p$ by (14.16) and that target's original budget. Use (14.17) to obtain
+This affine expression vanishes at every $\mathbf c(\theta_0)$. Hence if $\|\mathbf c-\mathbf c(\theta_0)\|_\infty<\varepsilon$, its nonnegative value satisfies
 
 $$
-\eta_k\le(\mathcal J+e_p)
-                  +|d_{b,k}-d_{a,k}|\,|\theta-1/2|
-           \le L_k(\mathcal J+e_p).
-\tag{14.18}
+0\le S<\left(\frac{16}{15}+2+2\right)\varepsilon
+       =\frac{76}{15}\varepsilon.
 $$
 
-This consumes the rounding bound on a live risk inequality for every installed internal target. Divide by $L_k>0$, take the fixed-support supremum, and use Theorem 14.3. This proves (14.14), including countably infinite support. All suspended targets continue to enter $\mathcal J$; using just its p budgets for this necessary inequality does not remove their requirements.
+The coordinate threshold in (14.13) is exactly $11\eta/21888$; multiplying it by $76/15$ gives $11\eta/4320$, the excluded $S$ threshold. All displayed thresholds are strictly positive, proving the asserted ambient nonemptiness and exclusion. For endpoint-only support, the fair pair (12.5) has endpoint losses $\rho_s$, endpoint emissions and no mismatch, so $\mathcal J=S=0$, as in Corollary 12.3.
 
-**Proof of strict positivity and the displayed threshold.** The supplied complete-word calculation (12.10) has
-
-$$
-f(r)=r^3(1-r)^5,\qquad
-f'(r)=r^2(1-r)^4(3-8r),\qquad
-\max\{f(a),f(b)\}=f(b)=\frac{1944}{390625}.
-$$
-
-On $[3/8,5/13]$ the function is nonincreasing, so every installed internal target has
-
-$$
-f(r_k)-f(b)\ge
- g_*:=f(5/13)-f(b)=\frac{14219478376}{318644812890625}>0.
-$$
-
-Apply the full coordinate triangle identity (5.7) to $R_k,A_p,B_p$. The $w_{3,1}$ coordinate alone contributes at least $g_*$ to $d_{a,k}+d_{b,k}-d_p$. Every other contribution is nonnegative, including the infinite coordinate. Therefore $\eta_k\ge g_*/2$. Since $L_k\le2$, a nonempty $I_\mu$ gives $E_\mu\ge g_*/4>0$. Dividing this rational bound by $K_0$ yields (14.15), approximately $2.59692295437\times10^{-7}$. The first factor of two comes from the definition of $\eta_k$ with the complete half-$\ell^1$ TV convention; the second comes from $L_k\le2$.
-
-For endpoint-only installed support, $E_\mu=0$ and the supplied fair synchronized endpoint pair has zero excess and $S=0$. Thus the internal-support hypothesis is essential to a positive threshold. $\square$
-
-The exclusion applies beyond the synchronized chord $S=0$: it controls the specified open neighborhood in the entire $\mathfrak C$. It leaves the region $S\ge E_\mu/K_0$ unexcluded. No upper bound forcing $S$ to vanish with $\mathcal J$ is supplied, so (14.14) gives no new sign or value for the unrestricted $j_c$ and no global positive risk gap.
-
-### 14.4 A full boxed native family with unit nonendpoint mass
-
-Let $\mathfrak C_{\rm box}$ denote the compatible pairs whose two marginals obey the full endpoint coordinate boxes (11.29). For a descriptor in its phase box define
-
-$$
-\tau_s(D)=\frac{\operatorname{TV}(D,A_s)}{d_s}\in[0,1].
-\tag{14.19}
-$$
-
-The complete coordinate triangle identity gives $\operatorname{TV}(D,B_s)=d_s(1-\tau_s(D))$. Write $m_s=1-\nu_s(\{A_s,B_s\})$ for each phase's nonendpoint-law mass. The family below has $m_p=m_\beta=1$, denoted $m=1$.
-
-**Proposition 14.5 (mass alone does not give a uniform positive mean gap).** For every integer $n\ge1$, set
-
-$$
-r_n=a+\frac1{60n}\in(a,7/20],\qquad
-Q_n=P_{p,r_n},\qquad W_n=P_{\beta,r_n},
-$$
-
-$$
-\Gamma_B^{(n)}=\delta_{(Q_n,W_n)},\qquad
-\Gamma_A^{(n)}=\delta_{(W_n,Q_n)}.
-\tag{14.20}
-$$
-
-Within this family, $n$ indexes decoder laws and $r_n$ denotes their test emission parameter; the original source parameter $n=4$ and the original installed-depth parameters $r_k$ are fixed. These pairs belong to $\mathfrak C_{\rm box}$ and have $m=1$. Their complete-law mean gaps satisfy
-
-$$
-\int\tau_p\,d\nu_p^{(n)}-\int\tau_\beta\,d\nu_\beta^{(n)}
- =\tau_p(Q_n)-\tau_\beta(W_n)>0,\qquad
-\lim_{n\to\infty}(\tau_p(Q_n)-\tau_\beta(W_n))=0.
-\tag{14.21}
-$$
-
-Consequently no positive constant depending only on the mass value $m=1$ bounds these gaps below throughout that boxed compatible class. Every member violates the original supported b-endpoint risk budgets. This is neither a zero-excess nor a vanishing-excess family.
-
-**Proof of the entire native laws and the two flows.** Put $h(r)=r(1-r)$. The full native coordinates are those of (2.1):
-
-$$
-P_{p,r}(w_{j,0})=r h(r)^j,\qquad
-P_{p,r}(w_{j,1})=(1-r)^2h(r)^j,
-$$
-
-$$
-P_{\beta,r}(\beta)=1-r,\qquad
-P_{\beta,r}(\alpha w_{j,0})=r^2h(r)^j,\qquad
-P_{\beta,r}(\alpha w_{j,1})=r(1-r)^2h(r)^j.
-\tag{14.22}
-$$
-
-Their p sum is $(r+(1-r)^2)/(1-h(r))=1$; their suspended sum is $(1-r)+r=1$. Both infinite coordinates are zero. For $r\in[a,b]$, $h(r)\le6/25<\lambda$, and the full tails are $h(r)^j$ and $rh(r)^j$. These verify membership in the original spaces (11.2) for every $j$, with no cutoff.
-
-Directly on each complete word and on the infinite coordinate,
-
-$$
-P_{p,r}=r\delta_\alpha+(1-r)\beta P_{\beta,r},\qquad
-P_{\beta,r}=(1-r)\delta_\beta+r\alpha P_{p,r}.
-\tag{14.23}
-$$
-
-For example, prefixing $\alpha w_{j,i}$ by beta changes its p index to $j+1$, contributing exactly the extra factor $h(r)$; beta prefixed by beta gives $w_{0,1}$. Thus the normalized residuals are $P_{\beta,r}$ and $P_{p,r}$, respectively. At the Dirac flows (14.20), these equal the entire conditional output descriptors. Both directional flows have the same Dirac marginals and satisfy every full-descriptor test in (11.7). Since $u(Q_n)=v(W_n)=r_n\notin\{a,b\}$, neither descriptor is an endpoint law, and both nonendpoint masses are one.
-
-**Proof of every coordinate box.** On $[a,b]$, derivative signs of the two p word families in (14.22) are respectively
-
-$$
-(j+1)-(2j+1)r,\qquad j-(2j+2)r.
-\tag{14.24}
-$$
-
-The first is positive for all $j\ge0$. For the second, $j=0,1,2$ give nonpositive signs on $[a,b]$ and $j\ge4$ give nonnegative signs there. Those coordinates stay between their two endpoint values. At $j=3$ the turning point is $3/8$. This coordinate is increasing on $[a,7/20]$, and
-
-$$
-f(7/20)=\frac{127353499}{25600000000},\qquad
-f(b)-f(7/20)=\frac{9697}{5120000000}>0,\qquad f(a)<f(b).
-\tag{14.25}
-$$
-
-Thus $f(a)\le f(r_n)<f(b)$ also for this sole exceptional p coordinate. This proves the entire p box.
-
-The standalone suspended beta coordinate decreases. The alpha-prefixed marker-0 derivative sign is $(j+2)-(2j+2)r>0$ on $[a,b]$. The alpha-prefixed marker-1 sign is $(j+1)-(2j+3)r$: it is nonpositive for $j=0$ and nonnegative for every $j\ge1$ on $[a,b]$. Hence all suspended coordinates lie between their endpoint values. The retained infinite coordinates are zero at all these laws and both endpoints. These arguments cover every index $j$, rather than a finite coordinate sample.
-
-**Proof of the positive gap and its limit.** The endpoint-positive events are $E_p=\{w_{0,1},w_{1,1},w_{2,1}\}$ and $E_\beta=\{\beta,\alpha w_{0,1}\}$. Define their native masses
-
-$$
-X(r)=(1-r)^2(1+h(r)+h(r)^2),\qquad
-H(r)=1-2r^2+r^3.
-$$
-
-The boxes and normalized complete laws imply
-
-$$
-\tau_p(P_{p,r_n})=\frac{X(a)-X(r_n)}{d_p},\qquad
-\tau_\beta(P_{\beta,r_n})=\frac{H(a)-H(r_n)}{d_\beta}.
-\tag{14.26}
-$$
-
-Their difference has the exact polynomial factorization
-
-$$
-\frac{X(a)-X(r)}{d_p}-\frac{H(a)-H(r)}{d_\beta}
- =\frac{50625(r-a)(b-r)}{266850431}\,P(r),
-$$
-
-$$
-P(r)=53775r^4-175665r^3+132884r^2-7340r+71995.
-\tag{14.27}
-$$
-
-For an explicit identity check, $X(r)=1-r-r^2-r^3+5r^4-4r^5+r^6$ and $H(r)=1-2r^2+r^3$; substitution of (14.4) and expansion of the right side yield these same coefficients. On $[a,b]$, deleting the nonnegative even-power terms and bounding the two negative terms using $r\le b$ gives
-
-$$
-P(r)\ge71995-175665(2/5)^3-7340(2/5)
-       =\frac{1445411}{25}>0.
-$$
-
-Since $r_n\in(a,b)$, (14.26)–(14.27) give strict positivity. Since $r_n\to a$ and $P$ is continuous, they give the zero limit. The mean integrals equal these individual values because the marginals are Dirac.
-
-**Proof of the original risk failure.** Each summand of $X(r)$ decreases on $[a,7/20]$ by the $j=0,1,2$ case of (14.24), and $H'(r)=r(3r-4)<0$. Therefore
-
-$$
-\tau_p(Q_n)\le\frac{1151096119}{4573302784}<\frac13,\qquad
-\tau_\beta(W_n)\le\frac{3659}{15296}<\frac14.
-\tag{14.28}
-$$
-
-These are the exact values for the first family member, whose test emission is $7/20$. The full-box identity following (14.19) now gives
-
-$$
-\mathcal L_p^{(n)}(B_p)>\frac23d_p>\rho_p,\qquad
-\mathcal L_\beta^{(n)}(B_\beta)>\frac34d_\beta>\rho_\beta.
-\tag{14.29}
-$$
-
-Both targets are installed because $\mu(2)>0$. More explicitly, at $n=1$ the two excesses are $1135555273/46656000000$ and $3989/216000$; for larger $n$ they only increase. In particular $\mathcal J(\Gamma_B^{(n)},\Gamma_A^{(n)})>d_p/6$ for every $n$. No zero or vanishing excess is hidden in the zero limit of the mean gap. Here $r_n$ is a decoder emission parameter, not a redraw of the actual $K$, a new supported depth or a changed target menu.
-
-For consistency with (14.5), this family has $J_p=J_\beta=j(r_n)$ and $M_B=M_A=0$, so
-
-$$
-S_n=4(r_n-a)(b-r_n)=\frac{4n-1}{900n^2}>0,\qquad S_n\longrightarrow0.
-\tag{14.30}
-$$
-
-The full laws themselves converge in TV to $A_p,A_\beta$: all finite coordinates are continuous in $r$, and the remaining tail masses are uniformly bounded by $(6/25)^j$ and $b(6/25)^j$. The limit is the compatible endpoint pair with nonendpoint masses zero. Unit nonendpoint mass thus need not survive this full-law limit. $\square$
-
-Proposition 14.5 only falsifies a mass-only **uniform** positive mean margin on the stated boxed compatible class. It supplies no pair with positive nonendpoint mass and nonpositive mean gap, so the corresponding pointwise strict candidate remains open. Its endpoint risks fail (14.29); it does not test a uniform margin after imposing zero-excess budgets or the two midpoint-mean constraints (11.30). Those additional constraints cannot be discarded from the original problem.
-
-### 14.5 Immutable mathematical RETURN reference
-
-**Mathematical citation 14.6 (the supplier of Theorem 10.2).** Let **RETURN14** denote [Acquired-return p-emission variation at revision `165d338a70c0c4ebfff419f14382d43c42453fa6`](https://github.com/the-omega-institute/trureturing/blob/165d338a70c0c4ebfff419f14382d43c42453fa6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md). The Theorem 10.2 invoked in the paragraph following (12.9) is **[RETURN14, Theorem 10.2]**, entitled *unconditional linear weighted-return compatibility*, with its functional defined in [RETURN14, Definition 10.1]. The local reference RETURN9 continues to designate Theorem 9.3 at its separately specified revision; the Theorem 10.2 invocation has the RETURN14 supplier just given.
-
-Precisely, RETURN14's theorem concerns a finite regular stationary table with stochastic acquired kernels $B,A$, common unweighted rows $\pi B=\tau$, $\tau A=\pi$, emissions in $[a,b]$, and its own complete same-update laws. For its Definition 10.1 functional $\mathcal C_{\rm RETURN}$ it states
-
-$$
-\mathcal C_{\rm RETURN}\le5000V_\pi,\qquad
-V_\pi=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}|u_x-u_{x'}|.
-\tag{14.31}
-$$
-
-The return weights are actual unweighted acquired-flow weights, with no synthetic-emission or survival factor. Its hypotheses impose no configuration-risk budget, reversibility, irreducibility, mixing or extra resource condition. A zero value of $V_\pi$ recovers its conserved-return compatibility inequality. For an original arbitrary observer, the extraction and clipping adapter has the separate hypotheses and conclusions of [RETURN14, Corollary 10.4]; (14.31) does not assert the identical functional for unclipped emissions.
-
-RETURN14 also supplies Proposition 11.9, already used in Section 13.5: identical two directional full-law flows need not determine the three-stage acquired return measure or $V_\pi$. Neither (14.14) nor the native family imposes a bound tying this free actual-return variation to original risk excess. The variation remains free in the original unrestricted problem, and (14.31) is not a risk-only gap.
-
-### 14.6 Attribution and the remaining original boundary
-
-The complete native laws, endpoint distances, full-record renderer and endpoint-tag construction are supplied by Section 2 and [ST, Sections 2.1–2.4]. Definition 11.2 supplies the entire-descriptor residual equations and common unweighted marginals; (12.6)–(12.7) supplies the nonnegative four-moment identity; (12.10) supplies the internal $w_{3,1}$ excess. The endpoint coordinate triangle identity and pure-target/full-history interpretation retain the suppliers and hypotheses identified in Sections 11.4–11.8. These results are supporting statements, not new constructions or reclassified proofs.
-
-The additional source-relative quantitative chain is (14.8) through the two full conditional comparisons (14.9), the $11/15$ elimination (14.12), and its consumption in every installed internal risk (14.18). Its result is the full-domain exclusion (14.15). Proposition 14.5 adds the explicitly boxed unit-mass family, exact positive vanishing mean gap and original-budget failure, distinguishing uniform from pointwise quantifiers. Scalar distance estimates, TV convexity, triangle identities, conditional barycentres and geometric-tail contraction are mature tools. These are `repo-derived` ordinary mathematical deductions; no global literature-priority, Lean/kernel verification or frozen status is asserted.
-
-Any still-possible zero-level pair must satisfy $S\ge E_\mu/K_0$ together with both full endpoint coordinate boxes, both event midpoint means, every original supported configuration-loss bound and both entire-descriptor residual equations on the same acquired marginals. This chapter supplies neither a compatible zero-level witness nor an exclusion of that remaining region. It does not determine the unrestricted $j_c$, abstract or effective exact attainment, a vanishing-excess construction, an optimizer or a fixed COMPLETE/resource optimum. The pointwise strict boxed mean-gap candidate and the saturated countable-support boundary of Section 13.4 remain unresolved. The original zero-versus-positive completion criterion and the free actual-return variation retain their full scopes.
+This argument consumes the complete-loss comparison in the joint feasibility problem of Section 11.8 and quantitatively extends Corollary 12.3's exact-fibre exclusion. Its input tools are the previously supplied residual identities, normalized whole-law stopping contraction, endpoint distances and complete-word gap; it asserts no new general TV or coupling theorem and no literature priority. The necessary relation leaves $S$ free away from the excluded neighborhood and supplies no unrestricted positive risk-only gap, evaluated optimizer, finite attainment, resource optimum or physical-space dimension. $\square$
 
 ## 追加锚（本行以下为增补区）
 
@@ -3872,7 +3655,6 @@ remain unestablished.
 
 ## 追加锚（本行以下为增补区）
 
-
 ## 18. Finite-p-support eventual-tail rigidity and its repair consumers
 
 ### 18.1 Standing data and the new restriction
@@ -4234,148 +4016,6 @@ The [suspended-emission heterogeneity modulus, Theorem 8.3](RECURSIVE_RELATIONAL
 The self-calibration here concerns exactly what the scalar tail determines. Its positive output determines the largest remaining growth rate; the full boxes then force a boundary component to its endpoint emissions and complete laws. Periodic invisible modes are permitted throughout. A one-sided realization transfers only its stated invariants, so the original conditional residual equations are used separately to identify both original flows.
 
 The theorem supplies a restricted bridge only. It does not evaluate the unrestricted $j_c$, prove a zero-level pair or a vanishing family, give a risk-only gap outside the recurrent finite-p-support branch, establish a shape-uniform stability theorem for approximate recurrences, handle nonatomic $\nu_p$, or prove finite effective attainment. Finite atomicity and permitted finitely represented exact sampling remain separate requirements; an arbitrary real endpoint weight need not have a permitted exact sampler. No hard-resource preservation follows. Theorem 10.2 of [RETURN] retains its free $V_\pi$; its bound $\mathcal C\le5000V_\pi$ is not a risk-only unrestricted separation. PAIRED11/RETURN12 approximants need not preserve (18.1), so density of those approximants does not transfer (18.15) to the unrestricted compact domain. The full original quantifiers, complete histories, noncompletion, Stop, TV placement and same-update rules remain those of Sections 11 and 13. $\square$
-
-
-## 追加锚（本行以下为增补区）
-
-## 19. Same-flow fibers and control-memory non-equivalence
-
-### 19.1. Three distinct layers of a returned relation
-
-The latest same-flow analysis in [ACQUIRED-RETURN, Section 14](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) supplies a concrete control-memory test for the present paired-calibration domain. Fix the complete laws, the two directional joint flows and one reachable returned control/record value $c$ used there. A whole returned relation is a probability law
-
-$$
-\Xi(Q,W,Q')
-$$
-
-on the incoming p descriptor, the suspended descriptor and the outgoing p descriptor. Its scalar motion readout is
-
-$$
-\eta_{\mathrm{motion}}(\Xi)=(V_u(\Xi),V_Q(\Xi)),
-$$
-
-where $V_u$ is the actual integral of $|u(Q)-u(Q')|$ and $V_Q$ is the corresponding complete-law variation. The returned-cut memory cost is $N(\Xi;c)$, the minimum number of COMPLETE configurations at the counted suspended cuts needed to realize that prescribed whole relation, with the complete laws and both directional flows fixed.
-
-These objects have different semantic types:
-
-$$
-\boxed{
-\text{law marginals and two edge flows}
-\;\longrightarrow\;
-\text{whole triple }\Xi
-\;\longrightarrow\;
-\text{returned control memory}.
-}
-$$
-
-The arrows cannot be reversed from a scalar motion value alone.
-
-### 19.2. Same motion, same risks, different exact memory
-
-**Proposition 19.1 (motion does not determine prescribed-triple memory).** In the fixed complete-law fiber of [ACQUIRED-RETURN, Section 14], there are three lawful whole triples with
-
-$$
-V_u=V_Q=\frac4{135},
-$$
-
-but with prescribed-triple minima
-
-$$
-N(\Xi;c)=2,\qquad 3,\qquad 4.
-$$
-
-Moreover, the corresponding installations have the same complete configuration-risk expressions at every original fourth-phase history.
-
-**Proof.** The source theorem parameterizes every lawful triple by two block vectors $s^-,s^+$ and gives
-
-$$
-N(\Xi;c)=2+\mathbf 1_{\{s^-\ne C\}}+\mathbf 1_{\{s^+\ne C\}},
-$$
-
-while
-
-$$
-V_u=V_Q=\frac1{45}+\frac{s^-_1+s^+_1}{90},
-\qquad
-C=\left(\frac13,\frac13,\frac13\right).
-$$
-
-Taking $(s^-,s^+)=(C,C),(C,D),(D,D)$ with $D=(1/2,1/3,1/6)$ gives the same value $4/135$ and the three costs $2,3,4$. The source theorem also preserves the six p-law masses, the two suspended-law masses and the complete configuration-loss expressions under these installations. \(\square\)
-
-This is stronger than equality of a posterior target or a scalar risk: the complete generated laws and the two acquired edge flows are held fixed, while the prescribed three-stage successor relation changes.
-
-### 19.3. The control-safe quotient criterion
-
-Let $H$ be a finite family of already acquired histories, and let $\eta:H\to M$ be a proposed memory encoding. For a history $h$, let $B_h$ be its target--state candidate relation, and let $\mathcal W_n$ be the finite $n$-step acquisition domain. The encoding is safe for an $n$-step task exactly when
-
-$$
-\boxed{
-\bigcup_{h:\eta(h)=m}B_h\in\mathcal W_n
-\quad\text{for every }m\in\eta(H).
-}
-$$
-
-This is the finite-history form of the control-fiber condition: one memory value must admit one common continuation policy. The condition is stronger than equality of the target candidate set, the best remaining step count, a complete-law marginal, or a motion scalar.
-
-For an exact prescribed-triple task, the memory observation must additionally retain enough of the successor relation to determine the allowed continuation kernels. A sufficient control-complete observation therefore has the form
-
-$$
-\eta_{\mathrm{ctrl}}(h)=
-\bigl(
-\text{target--state candidates},
-\text{legal actions and responses},
-\text{full-law residual cells},
-\text{joint successor relation},
-\text{remaining certificate rank}
-\bigr),
-$$
-
-with the last four components interpreted relative to the declared task contract. Identifying two histories is sound only after all permitted actions have matching legality, response and successor behavior on their entire candidate fibers.
-
-### 19.4. Consequence for the paired-calibration certificates
-
-The two-flow residual equations in Sections 16--17 are necessary for complete-law compatibility and for the conditional full-vector separator. They do not identify the actual three-stage law $\Xi$. The explicit same-flow family above shows why: equal edge flows can support different successor couplings, and those couplings can have different exact memory minima.
-
-Thus the next FIB refinement is not another scalar defect. It is a higher-order relation layer:
-
-$$
-\boxed{
-\text{two directional residual flows}
-\;+
-\text{one compatible successor coupling }\Xi
-\;+
-\text{legal update and cost data}.
-}
-$$
-
-Only after this layer is fixed does a finite controller search have the right object to minimize. The scalar return-weight dispersion $D$, the four-moment defect $S$ and the mismatch energies $M_A,M_B$ remain useful necessary coordinates, but none is a substitute for $\Xi$ or for the controller's successor map.
-
-### 19.5. Remaining boundary
-
-Proposition 19.1 is a fixed-fiber memory separation. It does not give the unrestricted minimum COMPLETE size, a global risk gap, a finite exact attainer for the original zero face or a native FIB encoding theorem. Rational exact services and almost-sure returned-cut realization are available in the cited fixed fiber; bounded worst-case service cost and unrestricted resource optimality remain separate questions. All statements in this appended section are ordinary mathematical consequences of the cited `dev` results; no new Lean or kernel verification is asserted.
-
-### 19.6. The dynamics-stable common-prediction bridge
-
-The current `dev` line also supplies a precise semantic bridge for the
-behavioral part of this control-fiber distinction. Given an update map
-$u:Y\to Y$ and two readouts $q_1,q_2$, form the complete-future itinerary
-kernels of the two readouts. Let $R_{\mathrm{cp}}$ be the least equivalence
-relation that contains both kernels and is preserved by $u$. Then the quotient
-$Y/R_{\mathrm{cp}}$ is a canonical common prediction quotient: every
-surjective factor $r:Y\to W$ that is computed from both complete-itinerary
-quotients and intertwines $u$ with an update on $W$ factors uniquely through
-$Y/R_{\mathrm{cp}}$.
-
-This is the universal property recorded by the frozen
-`CommonPredictionFactor.common_prediction_factor_universal_property` result
-in the current project. It identifies the smallest required behavioral
-identifications for the two complete readouts. It does not identify the
-finite task quotient in (19.3): the latter must still preserve one common
-continuation policy on each memory fiber. In particular, the universal
-behavior quotient does not by itself preserve action legality, response
-labels, the prescribed successor coupling $\Xi$, completion rank, risk
-thresholds or resource costs. Those data must be shown to descend separately
-before the quotient can serve as an executable controller state.
 
 ## 追加锚（本行以下为增补区）
 ## 19. Equal native endpoint excision and generated opposite-phase slack
@@ -5042,5 +4682,319 @@ The owning [PAIRED source](https://github.com/the-omega-institute/trureturing/bl
 [Reversible common-generator constraints, Chapter 16](https://github.com/the-omega-institute/trureturing/blob/ff85ee478e6bf0c481606ecd10065db1cac54b8c/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md) treats the narrower class of deterministic complete-successor graph flows. Its chord sign and equality classification require the full endpoint boxes and the exact graph equalities $W=\mathcal R_B(Q)$ and $Q=\mathcal R_A(W)$ on the respective flows. For a fixed prior with a supported nonendpoint, its Corollary 16.3 proves an attained strictly positive $j_{\mathrm{det}}$ over that graph class, without a numerical value. Its graph-orbit product formula relies on exact successor laws; it cannot be substituted for the conditional-barycentre recursions (20.8). Nothing here adds a uniform law-branching modulus or extends $j_{\mathrm{det}}>0$ to the unrestricted $j_c$.
 
 For the original fixed prior, the unrestricted common-zero problem still asks for entire marginals satisfying (20.13)--(20.15) and both sets of tests (20.5) simultaneously. No such general zero-level pair, unrestricted positive value of $j_c$, original 155-coefficient tuple or full-system infeasibility certificate is supplied. The early witness is a necessary consumer for finite exact-attainment candidates; it is not an existence theorem for them. Finite exact attainment still requires the atomic realization conditions of Sections 11.7 and 13, and effective attainment additionally requires permitted exact samplers with their numerical descriptions and workspace charged. No total COMPLETE, worst-case execution, physical-resource optimum or preservation of an earlier observer follows. Both results concern ordinary complete-law mathematics on the original source and retain every supported configuration-TV budget, both full flows, noncompletion and matching Stop.
+
+## 21. Same-flow fibers and control-memory non-equivalence
+
+### 21.1. Three distinct layers of a returned relation
+
+The latest same-flow analysis in [ACQUIRED-RETURN, Section 14](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) supplies a concrete control-memory test for the present paired-calibration domain. Fix the complete laws, the two directional joint flows and one reachable returned control/record value $c$ used there. A whole returned relation is a probability law
+
+$$
+\Xi(Q,W,Q')
+$$
+
+on the incoming p descriptor, the suspended descriptor and the outgoing p descriptor. Its scalar motion readout is
+
+$$
+\eta_{\mathrm{motion}}(\Xi)=(V_u(\Xi),V_Q(\Xi)),
+$$
+
+where $V_u$ is the actual integral of $|u(Q)-u(Q')|$ and $V_Q$ is the corresponding complete-law variation. The returned-cut memory cost is $N(\Xi;c)$, the minimum number of COMPLETE configurations at the counted suspended cuts needed to realize that prescribed whole relation, with the complete laws and both directional flows fixed.
+These objects have different semantic types:
+
+$$
+\boxed{
+\text{law marginals and two edge flows}
+\;\longrightarrow\;
+\text{whole triple }\Xi
+\;\longrightarrow\;
+\text{returned control memory}.
+}
+$$
+
+The arrows cannot be reversed from a scalar motion value alone.
+
+### 21.2. Same motion, same risks, different exact memory
+
+**Proposition 21.1 (motion does not determine prescribed-triple memory).** In the fixed complete-law fiber of [ACQUIRED-RETURN, Section 14], there are three lawful whole triples with
+
+$$
+V_u=V_Q=\frac4{135},
+$$
+
+but with prescribed-triple minima
+
+$$
+N(\Xi;c)=2,\qquad 3,\qquad 4.
+$$
+
+Moreover, the corresponding installations have the same complete configuration-risk expressions at every original fourth-phase history.
+**Proof.** The source theorem parameterizes every lawful triple by two block vectors $s^-,s^+$ and gives
+
+$$
+N(\Xi;c)=2+\mathbf 1_{\{s^-\ne C\}}+\mathbf 1_{\{s^+\ne C\}},
+$$
+
+while
+
+$$
+V_u=V_Q=\frac1{45}+\frac{s^-_1+s^+_1}{90},
+\qquad
+C=\left(\frac13,\frac13,\frac13\right).
+$$
+
+Taking $(s^-,s^+)=(C,C),(C,D),(D,D)$ with $D=(1/2,1/3,1/6)$ gives the same value $4/135$ and the three costs $2,3,4$. The source theorem also preserves the six p-law masses, the two suspended-law masses and the complete configuration-loss expressions under these installations. \(\square\)
+This is stronger than equality of a posterior target or a scalar risk: the complete generated laws and the two acquired edge flows are held fixed, while the prescribed three-stage successor relation changes.
+
+### 21.3. The control-safe quotient criterion
+
+Let $H$ be a finite family of already acquired histories, and let $\eta:H\to M$ be a proposed memory encoding. For a history $h$, let $B_h$ be its target--state candidate relation, and let $\mathcal W_n$ be the depth-$n$ acquisition domain (its candidate
+classes need not be finite). The encoding is safe for an $n$-step task exactly when
+
+$$
+\boxed{
+\bigcup_{h:\eta(h)=m}B_h\in\mathcal W_n
+\quad\text{for every }m\in\eta(H).
+}
+$$
+
+This is the finite-history form of the control-fiber condition: one memory value must admit one common continuation policy. It is a **one-time cut compression** criterion; it does not by itself provide a fixed finite-state controller for later updates. The condition is stronger than equality of the target candidate set, the best remaining step count, a complete-law marginal, or a motion scalar.
+For an exact prescribed-triple task, the memory observation must additionally retain enough of the successor relation to determine the allowed continuation kernels. A sufficient control-complete observation therefore has the form
+
+$$
+\eta_{\mathrm{ctrl}}(h)=
+\bigl(
+\text{target--state candidates},
+\text{legal actions and responses},
+\text{full-law residual cells},
+\text{joint successor relation},
+\text{remaining certificate rank}
+\bigr),
+$$
+
+with the last four components interpreted relative to the declared task contract. There are two contracts. **(a)** A full permitted-action behavioral quotient requires legality, responses and successors to descend and repeated finite-memory updates to close. **(b)** The fixed depth-$n$ cut requires only the displayed common-policy condition; a repeated controller additionally needs policy-relative update closure and a terminating rank. An executable controller must still check $\Xi$, legality, responses, rank and cost explicitly.
+
+### 21.4. Consequence for the paired-calibration certificates
+
+The two-flow residual equations in Sections 16--17 are necessary for complete-law compatibility and for the conditional full-vector separator. They do not identify the actual three-stage law $\Xi$. The explicit same-flow family above shows why: equal edge flows can support different successor couplings, and those couplings can have different exact memory minima.
+Thus the next FIB refinement is not another scalar defect. It is a higher-order relation layer:
+
+$$
+\boxed{
+\text{two directional residual flows}
+\;+
+\text{one compatible successor coupling }\Xi
+\;+
+\text{legal update and cost data}.
+}
+$$
+
+Only after this layer is fixed does a finite controller search have the right object to minimize. The scalar return-weight dispersion $D$, the four-moment defect $S$ and the mismatch energies $M_A,M_B$ remain useful necessary coordinates, but none is a substitute for $\Xi$ or for the controller's successor map.
+
+### 21.5. Remaining boundary
+
+Proposition 21.1 is a fixed-fiber memory separation. It does not give the unrestricted minimum COMPLETE size, a global risk gap, a finite exact attainer for the original zero face or a native FIB encoding theorem. Rational exact services and almost-sure returned-cut realization are available in the cited fixed fiber; bounded worst-case service cost and unrestricted resource optimality remain separate questions. All statements in this appended section are ordinary mathematical consequences of the cited `dev` results; no new Lean or kernel verification is asserted.
+
+### 21.6. The dynamics-stable common-prediction bridge
+
+The current `dev` line also supplies a precise semantic bridge for the
+behavioral part of this control-fiber distinction. Given an update map
+$u:Y\to Y$ and two readouts $q_1,q_2$, form the complete-future itinerary
+kernels of the two readouts. Let $R_{\mathrm{cp}}$ be the least equivalence
+relation that contains both kernels and is preserved by $u$. Then the quotient
+$Y/R_{\mathrm{cp}}$ is a canonical common prediction quotient: every
+surjective factor $r:Y\to W$ that is computed from both complete-itinerary
+quotients and intertwines $u$ with an update on $W$ factors uniquely through
+$Y/R_{\mathrm{cp}}$.
+This is the universal property recorded by the frozen
+`CommonPredictionFactor.common_prediction_factor_universal_property` result
+in the current project. It identifies the smallest required behavioral
+identifications for the two complete readouts. It does not identify the
+finite task quotient in (21.3): the latter must still preserve one common
+continuation policy on each memory fiber. In particular, the universal
+behavior quotient does not by itself preserve action legality, response
+labels, the prescribed successor coupling $\Xi$, completion rank, risk
+thresholds or resource costs. Those data must be shown to descend separately
+before the quotient can serve as an executable controller state.
+More precisely, the factor in that theorem must be surjective, semiconjugate
+to the source update, and computed from both complete-itinerary quotients by
+maps out of their quotient types. The relation is the least update-stable
+equivalence containing the two itinerary kernels. It is therefore not a
+greatest invariant subrelation of a preselected relation, and it is not a
+task controller or a proof that a controller can implement every legal
+continuation on its fibers. Under contract (a), it becomes a full permitted-action behavioral quotient
+only when legality, responses, successors, $\Xi$, completion rank and cost
+descend and the repeated finite-memory update is closed. Under contract (b),
+the fixed depth-$n$ continuation needs only the common-policy condition in
+(21.3); a repeated controller additionally needs policy-relative update
+closure and a terminating rank. The remaining $\Xi$, legality, response,
+rank and cost checks stay separate.
+
+### 21.7. Certificate search is a third resource
+
+The latest [ARITHMETIC_HOLOGRAPHIC_RT.md §48](ARITHMETIC_HOLOGRAPHIC_RT.md)
+analysis gives a separate
+finite-search analogue of this distinction. It fixes one finite target role
+set, one Fourier basis and coefficient family, and one finite explicitly
+enumerated menu $\mathscr L$ of allowed layers. An already selected stack
+prefix is an immutable sequence $\mathcal Q=(K_1,\ldots,K_\ell)$; repeated
+layers are deduplicated for coverage but remain present in the physical
+prefix length. Let $T$ be the fixed finite target-role set and, in RT §48 notation, let
+
+$$
+\overline C_K:=\{\eta\in\widehat A\setminus\{1\}:\eta\notin K^\perp\},
+\qquad C_K(X):=X\cap\overline C_K.
+$$
+
+If a layer $K$ resolves exactly the roles in $C_K(T)$,
+then a selected stack resolves the declared certificate precisely when its
+coverage sets have union $T$. With
+
+$$
+V_{\mathcal Q}=\bigcup_{K\in\underline{\mathcal Q}}\overline C_K,
+\qquad
+\Delta_{\mathcal Q}(X)=X\setminus V_{\mathcal Q},
+$$
+
+the fixed-prefix extension cost is
+
+$$
+\tau_{\rm ext}(\mathcal Q;X,\mathscr L)=
+\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L,
+\ \Delta_{\mathcal Q}(X)\subseteq
+\bigcup_{K\in\mathcal R}\overline C_K\right\},
+$$
+
+with value $0$ when the residual is empty, value $\infty$ when the
+nonempty residual is not coverable by the fixed menu, and the displayed
+minimum otherwise. For an enlarged finite threshold set $X^-=X^+\setminus\delta$,
+the residual is maintained by
+
+$$
+\Delta_{\mathcal Q}(X^+)
+=\Delta_{\mathcal Q}(X^-)
+ \cup(\delta\setminus V_{\mathcal Q}).
+\tag{21.23}
+$$
+
+In the nonempty coverable branch write $m=|\Delta_{\mathcal Q}(X^+)|$ and
+$d=\max_{K\in\mathscr L}|\overline C_K\cap\Delta_{\mathcal Q}(X^+)|>0$;
+the maximum-gain greedy extension has $s$ layers with
+
+$$
+\left\lceil\frac md\right\rceil
+\le\tau_{\rm ext}
+\le s
+\le H_d\,\tau_{\rm ext}
+\le H_m\,\tau_{\rm ext}
+\le(1+\log m)\tau_{\rm ext}.
+\tag{21.24}
+$$
+
+The bound is relative to the fixed-prefix optimum; it is not a global
+shortest-stack comparison. The following complexity expressions are
+**unit-cost membership-check counts**, under the explicit maintenance
+condition that the previous residual is already maintained and $\delta$ is
+supplied: incremental membership checks cost
+$O(|\delta|\ell(\mathcal Q))$, precomputing menu intersections costs
+$O(m|\mathscr L|)$, and naive repeated-gain search costs
+$O(m^2|\mathscr L|)$. Rebuilding the residual from scratch replaces the
+incremental term by $O(|X^+|\ell(\mathcal Q))$, with the same unit-cost
+membership convention. If $\delta$ or the new threshold roles must instead
+be discovered by scanning the character universe $\widehat A$, add
+$O(|\widehat A|)$ role-enumeration work plus the cost of the threshold
+decisions themselves. These are offline/search or residual-maintenance
+counts only; they are not bounds on bit length, wall-clock time, memory, or
+physical cost. Empty residuals add no layer; an uncoverable residual is a
+typed failure of this certificate family.
+This is an **offline certificate-search and online maintenance** result for
+the fixed menu, prefix, Fourier basis and coefficients. It does not prove a
+global shortest stack, arbitrary protocol synthesis, a CPTP/LOSR statement,
+or a diamond-norm bound.
+
+### 21.8. Common source, provenance and joint attainable images
+
+The acquisition-side bridge has the same coupling requirement. In the
+source-faithful result
+`D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut`,
+`actualRoute` is followed by a verifier segment `v` and an ordered same-source
+acquisition suffix `a`. In an acquisition cut, `RouteExit` has two cases: if the decoder
+returns `none` on `kappa_hist (actualRoute p U)`, then `v = []` and acquisition
+may begin immediately after the route without a mismatch. If the decoder
+selects a prototype with `some i`, then `v` ends at the first literal mismatch
+report against `F i`, and acquisition starts immediately afterward. In both
+cases, `h = actualRoute p U ++ v ++ a`, with `a` a prefix of
+`acquisitionTrace [] U`. The `acquisition_provenance_contract`
+only applies to an actual terminal prefix satisfying the declared policy and,
+for the completed observer, to every positive $N$ with $1\le N$ and
+`Allowed N U`; it carries the exact route, the selected prototype's first
+mismatch when applicable, continuation policy, terminal prefix and ordered
+foldl cache update over `a` seeded by `firstRaw (actualRoute p U ++ v)`.
+A malformed phase, counterfactual word, or arbitrary history is not provenance.
+The companion
+`ActualAcquisitionCacheFiber` result identifies the **nominal coarse-history
+raw-lift fiber** (including impossible branch/absent choices and absent lifts);
+it does not filter actual sources or replace raw replies by independently
+selected coarse lifts.
+In the notation of Sparse Literal §1.2 and §3.1, fix a certified finite
+history $w$, an epoch $M\ge N(w)$, and a finite address support
+$S\subseteq\mathcal P$; the common source domain is $u\in\mathcal T$,
+with replacement $\rho$ and literal readout $r_y(p)$. The same-source image is
+
+$$
+J_{M,S}:=\{(r_{\rho^M u}(p))_{p\in S}:u\in\mathcal T\}\subseteq\mathcal A^S.
+\tag{21.25}
+$$
+
+The sparse-literal transport theorem uses this same-source set and its
+continuation intersection, rather than a product of coordinate images. The
+factorization result
+`D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage` makes the
+finite analogue explicit: two residue marginals form a joint point exactly
+when they agree after reduction to the common gcd modulus. Thus surjective
+local readouts, or two separately attainable FIB fibers, never justify
+multiplying marginal attainable sets; a common source or compatibility
+coupling is required.
+
+### 21.9. Native legal-word counts and the typed FIB bridge
+
+`D5/S3/Combinatorics/Graph/LegalWords/EdgeCount.edge_count` counts only the
+native legal-word graph: its unordered edge finset equals total occupation,
+which equals the occupation-size-fiber sum. This is a combinatorial identity
+on the declared legal-word carrier. It supplies no controller, no successor
+policy, no online-memory minimum and no physical-cost optimum.
+
+The resulting typed bridge keeps the objects that cannot be collapsed:
+
+$$
+\boxed{
+\begin{gathered}
+J_{\mathrm{common}}\ ;\quad
+\text{raw provenance and ordered cache prefix}\ ;\quad
+\Xi(Q,W,Q')\ ;\\
+\text{action legality, response and continuation}\ ;\quad
+(\mathcal Q,\Delta_{\mathcal Q},\tau_{\rm ext})\ ;\\
+R(\Pi,U;T)=
+\bigl(D_{\rm on},K_{\rm nom},B_{\rm peak};
+ W_{\rm joint}^{\rm off},W_{\rm cert}^{\rm off},W_{\rm check}^{\rm off};\\
+ \sum_t(W_{\rm joint}^{\rm on},W_{\rm cert}^{\rm on},W_{\rm check}^{\rm on});
+ L_{\rm exec},C_{\rm phys}\bigr).
+\end{gathered}}
+\tag{21.26}
+$$
+
+Here $D_{\rm on}$ is online acquisition depth, $K_{\rm nom}$ is named
+control memory, and $B_{\rm peak}$ is peak retained bits. The three offline
+work coordinates cover joint-image construction, certificate search and
+static checking; the summed online coordinates cover their per-update
+maintenance. $L_{\rm exec}$ counts selected execution layers and
+$C_{\rm phys}$ is physical cost. EdgeCount constrains a native combinatorial
+count at most as an offline structural input, while RT §48 constrains the
+fixed-menu certificate and its incremental search/maintenance coordinates;
+neither result determines the other coordinates. The reset/codebook,
+raw-correlation, Mellin/Robin and sparse-literal results already cited in
+this volume remain source- and task-specific bridges with their own actual
+history, basis and arithmetic hypotheses; none is a generic controller
+theorem or a resource-preservation theorem.
 
 ## 追加锚（本行以下为增补区）
