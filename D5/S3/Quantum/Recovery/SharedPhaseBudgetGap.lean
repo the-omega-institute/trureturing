@@ -432,4 +432,22 @@ theorem first_hop_original : ∃ gamma : ℝ, 0<gamma ∧
   rw [←gram_original p z] at hP
   exact h m p z hp hz hP
 
+/-- The ket-row coordinates of the four original records. -/
+def R0 : Matrix (Fin 4) (Fin 2) ℂ :=
+  !![1, 0; 0, 1; (s : ℂ)⁻¹, (s : ℂ)⁻¹; (s : ℂ)⁻¹, I * (s : ℂ)⁻¹]
+
+def C0 : Matrix (Fin 4) (Fin 4) ℂ := R0 * R0ᴴ
+
+def noisyCorrelation (epsilon : ℝ) : Matrix (Fin 4) (Fin 4) ℂ :=
+  (1-epsilon) • C0 + epsilon • (1 : Matrix (Fin 4) (Fin 4) ℂ)
+
+/-- Zero weights include the empty decomposition while keeping a positive branch count. -/
+def phaseMasses (C : Matrix (Fin 4) (Fin 4) ℂ) : Set ℝ :=
+  {t | ∃ (m : ℕ), 1 ≤ m ∧ ∃ (p : Fin m → ℝ) (z : Fin m → Fin 4 → ℂ),
+    (∀ j, 0 ≤ p j) ∧ (∀ j k, ‖z j k‖ = 1) ∧
+    (C - ∑ j, p j • Matrix.vecMulVec (z j) (star (z j))).PosSemidef ∧
+    t = ∑ j, p j}
+
+def eta (C : Matrix (Fin 4) (Fin 4) ℂ) : ℝ := sSup (phaseMasses C)
+
 end D5.S3.Quantum.Recovery.SharedPhaseBudgetGap
