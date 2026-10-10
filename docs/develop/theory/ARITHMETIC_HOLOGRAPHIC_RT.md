@@ -3226,4 +3226,24 @@ $$
 
 **范围。** 结论固定入口矩阵单位对、同一 Fourier 基、Schur 对角无混合及层间无映射条件，针对受控移位 Schur 平均和指定二维测试族；不声称一般 LOSR 误差上界或任意输入的完整谱分类。
 
+## 46. 残余证书族的有限步停止算法
+
+**定理 46.1（有限允许层的精确停止判据）。** 固定 §45 的入口系数 $h_\eta$ 与阈值 $\varepsilon\ge0$，令
+$$
+T_\varepsilon=\{\eta\in\widehat A\setminus\{1\}:|h_\eta|>\varepsilon\}.
+$$
+给定有限允许层族 $\mathscr L$（每个 $K\in\mathscr L$ 都在同一 $A$、同一 Fourier 基上施加 $\mathcal D_K$）。从 $U_0=T_\varepsilon$ 开始，若存在 $K_j\in\mathscr L$ 使
+$$
+U_j:=U_{j-1}\cap K_j^\perp
+$$
+严格小于 $U_{j-1}$，就选取该层继续；当 $U_j=\varnothing$ 时停止。每次成功选择至少删除一个角色，故至多 $|T_\varepsilon|$ 步达到
+$$
+\max\mathsf S_j\le\varepsilon.
+$$
+若在某一步 $U_{j-1}\ne\varnothing$ 且对所有 $K\in\mathscr L$ 都有 $U_{j-1}\cap K^\perp=U_{j-1}$，则任何由 $\mathscr L$ 组成的后续有限 stack 都不能使该证书族达到阈值 $\varepsilon$。
+
+**证明。** §44.1 给出每层把残余角色集合与 $K^\perp$ 相交，因此算法维护的 $U_j$ 正是尚未被删除的超阈值角色。若某层严格缩小，有限性保证至少删除一个元素，故至多 $|T_\varepsilon|$ 次达到空集；§45.1 随即给出证书最大值不超过 $\varepsilon$。若算法停滞，则当前 $U$ 被每个允许层逐点保留；任意后续层仍与 $U$ 相交得到 $U$，归纳可知所有有限序列都保留 $U\ne\varnothing$，其中至少一个 $|h_\eta|>\varepsilon$，所以该证书族不可能达到阈值。证毕。
+
+**范围。** 这是给定有限允许层族与固定入口系数时的证书族停止算法；达到阈值只说明 §45 的指定 Fourier 二维下界不超过 $\varepsilon$，不是整个钻石范数的上界，也不优化任意 LOSR 层。
+
 ## 追加锚（本行以下为增补区）
