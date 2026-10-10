@@ -416,7 +416,7 @@ private theorem conversion_archive {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabe
   rw [rows] at native
   exact native.2.1
 
-private theorem row_readings_index (k m : ℕ) (rows : List (ℕ → ZMod 2)) (j : ZMod (k + 1)) (t : ℕ) :
+theorem row_readings_index (k m : ℕ) (rows : List (ℕ → ZMod 2)) (j : ZMod (k + 1)) (t : ℕ) :
     (rowReadings k m rows j)[t]? = (rows[t]?).map (fun row => some (windowCharge k m row (j - ((t * m : ℕ) : ZMod (k + 1))))) := by
   induction rows generalizing j t with
   | nil => simp [rowReadings]
@@ -461,7 +461,7 @@ private theorem conversion_separates {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alpha
   rw [kept ⟨t, ht⟩ j donor, kept ⟨t, ht⟩ j' donor'] at eq
   exact eq
 
-private theorem script_global_preset {Y : Type*} (k m : ℕ) (hk : 2 ≤ k) (short : m < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y)
+theorem script_global_preset {Y : Type*} (k m : ℕ) (hk : 2 ≤ k) (short : m < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y)
     (words : List (Fin m → Bool)) (decode : ZMod 2 → NarrowWindowCost.Archive m → Y) (decoded : ∀ (v : ZMod 2) (phase : ZMod (k + 1)) (s : ℕ), s < k → decode v (scriptArchive words (some ⟨v, phase, s⟩)) = f (some ⟨v, phase, s⟩)) :
     OriginalPresetFeasible k m (by omega) alphabet f words.length := by
   classical
@@ -573,7 +573,7 @@ def uniformOccupied (m t : ℕ) := if 4 ≤ t ∧ t < 4 + min 2 (m - 5) then
   m - 2 - min 2 (m - 5) else 1
 private def selected (m t : ℕ) : ZMod (2 * m - 2 + 1) := ((t * m + uniformOccupied m t : ℕ) : _)
 private def absent (m e : ℕ) := e = 0 ∨ e = 3 ∨ e = m - 1 ∨ e = m ∨ e = m + 3
-private theorem calendar (m : ℕ) (hm : 5 ≤ m) (h eps i : ℕ) : (((2 * h + eps) * m + i : ℕ) : ZMod (2 * m - 2 + 1)) =
+theorem calendar (m : ℕ) (hm : 5 ≤ m) (h eps i : ℕ) : (((2 * h + eps) * m + i : ℕ) : ZMod (2 * m - 2 + 1)) =
       ((h + eps * m + i : ℕ) : ZMod (2 * m - 2 + 1)) := by
   have period : (2 : ZMod (2 * m - 2 + 1)) * (m : ℕ) = 1 := by
     have equality : 2 * m = (2 * m - 2 + 1) + 1 := by omega
@@ -986,4 +986,7 @@ theorem original_uniform_paid_feedback_bound {Y : Type*} (m : ℕ) (hm : 5 ≤ m
   · exact ENat.add_lt_top.mpr ⟨ENat.natCast_lt_top _, ENat.natCast_lt_top 4⟩
 
 #print axioms original_uniform_paid_feedback_bound
+#print axioms calendar
+#print axioms script_global_preset
+#print axioms row_readings_index
 end D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection
