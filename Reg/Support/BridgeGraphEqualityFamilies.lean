@@ -49,7 +49,8 @@ theorem sourceVectorEqualityDependence :
   have he := congrFun h x
   change (x = x) = (y = x) at he
   have hy : y = x := he ▸ rfl
-  have hh := congrArg (fun v : sourceVectorEqualitySignature.State p => v (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, 0⟩)) hy
+  have hh := congrArg (fun v : sourceVectorEqualitySignature.State p =>
+    v (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, ⟨0, by simp [p, blockLength]⟩⟩)) hy
   change (1 : ℚ) = 0 at hh
   norm_num at hh
 
@@ -81,7 +82,8 @@ theorem annihilatorMatrixEqualityDependence :
   have he := congrFun h x
   change (x = x) = (y = x) at he
   have hy : y = x := he ▸ rfl
-  have hh := congrArg (fun v : annihilatorMatrixEqualitySignature.State p => v (0, 0) (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, 0⟩)) hy
+  have hh := congrArg (fun v : annihilatorMatrixEqualitySignature.State p =>
+    v (0, 0) (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, ⟨0, by simp [p, blockLength]⟩⟩)) hy
   change (1 : ℚ) = 0 at hh
   norm_num at hh
 
@@ -173,8 +175,9 @@ theorem crossMatrixEqualityDependence :
   have he := congrFun h x
   change (x = x) = (y = x) at he
   have hy : y = x := he ▸ rfl
-  have hh := congrArg (fun v : crossMatrixEqualitySignature.State p => v (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, 0⟩)
-    (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, 0⟩)) hy
+  have hh := congrArg (fun v : crossMatrixEqualitySignature.State p =>
+    v (⟨Sum.inl 0, ⟨0, by simp [p, blockLength]⟩⟩, ⟨Sum.inl 0, 0⟩)
+      (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, ⟨0, by simp [p, blockLength]⟩⟩)) hy
   change (1 : ℚ) = 0 at hh
   norm_num at hh
 
@@ -266,8 +269,9 @@ theorem widthTwoMatrixEqualityDependence :
   have he := congrFun h x
   change (x = x) = (y = x) at he
   have hy : y = x := he ▸ rfl
-  have hh := congrArg (fun v : widthTwoMatrixEqualitySignature.State p => v (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, 0⟩)
-    (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, 0⟩)) hy
+  have hh := congrArg (fun v : widthTwoMatrixEqualitySignature.State p =>
+    v (⟨Sum.inl 0, ⟨0, by simp [p, blockLength]⟩⟩, ⟨Sum.inl 0, 0⟩)
+      (⟨Sum.inl 0, 0⟩, ⟨Sum.inl 0, ⟨0, by simp [p, blockLength]⟩⟩)) hy
   change (1 : ℚ) = 0 at hh
   norm_num at hh
 
