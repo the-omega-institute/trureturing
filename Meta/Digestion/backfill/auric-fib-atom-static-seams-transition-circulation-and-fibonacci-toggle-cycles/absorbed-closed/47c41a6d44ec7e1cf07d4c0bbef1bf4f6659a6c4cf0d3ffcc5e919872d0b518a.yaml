@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:47c41a6d44ec7e1cf07d4c0bbef1bf4f6659a6c4cf0d3ffcc5e919872d0b518a
+  normalized_sha256: sha256:47c41a6d44ec7e1cf07d4c0bbef1bf4f6659a6c4cf0d3ffcc5e919872d0b518a
+cas_ref: sha256:47c41a6d44ec7e1cf07d4c0bbef1bf4f6659a6c4cf0d3ffcc5e919872d0b518a
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib
+    target_statement_id: sha256:705c7bcc0099280c8ed68bf461eca8cd390b7cba0709b2017097cd718d7e6bba
+  - gid: D5/S3/Combinatorics/Graph/LegalWordDegree.flippable_bound_and_equality
+    target_statement_id: sha256:48666b1660fc4cf55af9055d15b6bb9c4530825b592662ee1968a437bd7a958a
+  - gid: D5/S3/Combinatorics/Graph/LegalWords/EdgeCount.edge_count
+    target_statement_id: sha256:54c5436f73f4c5652fefedaffc1b222a9d8bcc5b3363d92e94764146ef2757ed
+  - gid: D5/S3/Combinatorics/Graph/LegalWords/SignedBoundary.native_boundary_image_short_exact
+    target_statement_id: sha256:d7854a2d6691b0f23b1de1b08faa221532c0ea515d2f5f3c157552f3427571f0
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 3e50781d4da446aa264cf5e2d7c1a91485bf46f2d88abf9ad34d089476a74178
+    - 1b18878e292488635a7277abc671aa311f91073afdf1655a07557f5882fa519d
+    - 479f58733c16f0eaeaaaf79e5d501f5261ef3e6db5f30ccec36eb4e6e3ba6b98
+    - 16f6e2614525f4a02168fab64e2058627c745812e10374b19a4a17355fb67cff
