@@ -128,7 +128,7 @@ noncomputable def quantumMutualInformation
   vonNeumannEntropy (marginalRight rho) + vonNeumannEntropy (marginalLeft rho) -
     vonNeumannEntropy rho
 
-private theorem density_posSemidef {n : Type*} [Fintype n] [DecidableEq n]
+theorem density_posSemidef {n : Type*} [Fintype n] [DecidableEq n]
     (rho : DensityState n) : (CStarMatrix.ofMatrix.symm rho.1).PosSemidef :=
   Matrix.nonneg_iff_posSemidef.mp
     (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1)
