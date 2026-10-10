@@ -87,7 +87,7 @@ D(p\Vert p_*)=H_{\ln}(p_*)-H_{\ln}(p)
 
 在 \(r>0\) 时成立。仓库的 Shannon 熵定理通常使用 \(H_2\)；本文件热力学公式使用自然对数熵 \(H_{\ln}=-\sum p_i\ln p_i\)。二者关系是 \(H_{\ln}=(\ln2)H_2\)。
 
-状态标签 0、2、3、5、25 是五态字母，不是五个素数。特别是 25 是 \(5^2\)。任何素数动力学都必须另行给出标签到算术坐标的映射和跃迁生成元，不能从标签排列直接推出。
+状态标签 0、2、3、5、25 是五态字母，不是五个素数。按 Foundational Formulas 定义 2.1，native 标签 \([25]=[2+5]\) 表示同窗共同选择，数量为 \(2+5=7\)，不是数值 \(5^2\)。任何素数动力学都必须另行给出标签到算术坐标的映射和跃迁生成元，不能从标签排列直接推出。
 
 ## 2. “一层一层逃逸”的正确类型
 
@@ -419,17 +419,19 @@ M^{z(p)}\equiv aI\pmod p,\qquad a\ne0.
 
 ## 7. 动作最优、耗散最优和做功最优必须分开
 
-固定端点 \(\kappa(0)=\kappa_0,\ \kappa(T)=\kappa_1\)，取 \(T>0\) 和几何二次作用
+在固定纤维 \([\kappa_-,\kappa_+]\) 内，取 \(T>0\) 和合法端点 \(\kappa(0)=\kappa_0,\ \kappa(T)=\kappa_1\)。可容许路径 \(\kappa:[0,T]\to[\kappa_-,\kappa_+]\) 必须绝对连续；用其几乎处处导数定义扩展非负几何二次作用
 
 \[
 \mathcal A[\kappa]=\frac12\int_0^T\dot\kappa(t)^2\,dt.
 \]
 
-[HilbertSubspaceAction](../../../Blueprint/D5/S3/Observer/HilbertGeometry/HilbertSubspaceAction.md) 给出唯一极小路径，即仿射插值，且
+有限作用分支要求 \(\dot\kappa\in L^2([0,T])\)；其余绝对连续路径的作用为 \(+\infty\)。[HilbertSubspaceAction](../../../Blueprint/D5/S3/Observer/HilbertGeometry/HilbertSubspaceAction.md) 定义 1.2、定理 1.6 的绝对连续路径合同，经平移起点和时间缩放，给出这一可容许类中的唯一极小路径，即仿射插值，且
 
 \[
 \mathcal A_{\min}=\frac{(\kappa_1-\kappa_0)^2}{2T}.
 \]
+
+这里绝对连续性给出 \(\kappa_1-\kappa_0=\int_0^T\dot\kappa\,dt\)，Cauchy–Schwarz 给出上述下界；有限分支取等当且仅当导数几乎处处为 \((\kappa_1-\kappa_0)/T\)，再由绝对连续性恢复逐点仿射路径。仿射路径留在同一纤维区间内；连续但非绝对连续的路径不属于此极小问题。
 
 在 \(r>0\) 的固定纤维上，质量作用指数路径的作用量为，令 \(\lambda=\gamma r\ge0\)：
 
@@ -451,13 +453,13 @@ M^{z(p)}\equiv aI\pmod p,\qquad a\ne0.
 
 所以质量作用流是详细平衡和熵产生意义下自然的耗散路径，但在这个固定端点、固定时长的纯二次作用量中，通常不是最小动作路径。两种“最优”优化了不同目标。
 
-若要研究真正的跨层几何最优，应给 \(q=(X,Y,Z)\) 增加可控反应，并定义
+若要研究真正的跨层几何最优，应给 \(q=(X,Y,Z)\) 增加可控反应，并在指定的度量域内，对固定 \(T>0\) 的绝对连续路径 \(q:[0,T]\to P\) 及沿路径可测的半正定 \(\zeta(q)\) 定义
 
 \[
-\mathcal A_q=\frac12\int \dot q^{\mathsf T}\zeta(q)\dot q\,dt
+\mathcal A_q=\frac12\int_0^T \dot q^{\mathsf T}\zeta(q)\dot q\,dt
 \]
 
-或 Fisher–Rao/摩擦度量。然后才可以讨论 q 方向的 geodesic、有限时间耗散和边界奇异性。现有 κ 流只给出了隐藏纤维方向的一个可解切片。
+或 Fisher–Rao/摩擦度量。有限作用要求该非负被积函数可积，否则取扩展值 \(+\infty\)；度量奇异边界的可容许提升须另行指定。然后才可以讨论 q 方向的 geodesic、有限时间耗散和边界奇异性。现有 κ 流只给出了隐藏纤维方向的一个可解切片。
 
 因此目前最可靠的目标不是单一总能量，而是保持分量类型的 Pareto 向量，例如
 
@@ -799,7 +801,7 @@ A=\ln\frac{q_0q_{25}}{q_2q_5}.
 p\longmapsto 2(\sqrt{p_0},\sqrt{p_2},\sqrt{p_3},\sqrt{p_5},\sqrt{p_{25}})
 \]
 
-把 Fisher 度量变成正象限球面上的欧氏度量。对于径向坐标，
+把 Fisher 度量变成正象限球面上的欧氏度量。固定 §8 的正底面条件律 \(q\)，只沿 \(p=(rq_{00},rq_{10},1-r,rq_{01},rq_{11})\) 的同一径向射线改变 \(0<r<1\) 时，取径向坐标
 
 \[
 \theta=2\arcsin\sqrt r,
@@ -811,11 +813,21 @@ p\longmapsto 2(\sqrt{p_0},\sqrt{p_2},\sqrt{p_3},\sqrt{p_5},\sqrt{p_{25}})
 ds_{\mathrm{radial}}^2=d\theta^2.
 \]
 
-所以固定端点、固定时间的纯 Fisher 几何最短路径是在 \(\theta\) 中做仿射插值，即
+在这条固定 \(q\) 射线上，取 \(T>0\) 和端点 \(\theta_0,\theta_1\in(0,\pi)\)。可容许径向路径要求其提升 \(\theta:[0,T]\to(0,\pi)\) 绝对连续；径向 Fisher 二次作用为
+
+\[
+\mathcal A_{\mathrm{radial}}[\theta]=\frac12\int_0^T\dot\theta^2\,dt,
+\qquad
+\mathcal A_{\mathrm{radial},\min}=\frac{(\theta_1-\theta_0)^2}{2T}.
+\]
+
+有限作用要求 \(\dot\theta\in L^2([0,T])\)，否则在绝对连续类中取 \(+\infty\)。由 §7 的同一积分下界与取等条件，唯一作用极小路径是 \(\theta\) 的仿射插值；它以常速实现径向最短长度 \(|\theta_1-\theta_0|\)，并给出
 
 \[
 r(t)=\sin^2\frac{\theta(t)}2.
 \]
+
+若端点的底面条件律 \(q\) 改变，则须使用 §8 的完整 Fisher 度量 \(dr^2/[r(1-r)]+r\,ds^2_{F,\Delta^3}(q)\) 并指定该度量的可容许绝对连续路径，不能使用此固定射线极小结论。
 
 它一般不是指数径向捕获
 
@@ -988,17 +1000,45 @@ C_j(H)=
 以及候选分数
 
 \[
-\rho_j(H)=\frac{|C_j(H)|}{W_j},\qquad
-\varepsilon_j(H)=-\log\rho_j(H).
+\rho_j(H)=\frac{|C_j(H)|}{W_j}\in[0,1].
 \]
 
-\(\varepsilon_j\) 是有限轮上的算术排斥账本；新增一个素数层时，
+有限对数代价仅在 \(\rho_j(H)>0\)，即 \(C_j(H)\ne\varnothing\) 时定义为 \(\varepsilon_j(H)=-\log\rho_j(H)\)。为在后文层状态中保留所有有限模板，另定义扩展排斥坐标
+
+\[
+\bar\varepsilon_j(H)=
+\begin{cases}
+\varepsilon_j(H),&\rho_j(H)>0,\\
++\infty,&\rho_j(H)=0.
+\end{cases}
+\]
+
+新增一个素数层时，只有在 \(\rho_{j-1}(H)>0\) 且 \(\rho_j(H)>0\) 的分支上才定义有限增量
 
 \[
 \Delta\varepsilon_j(H)=\varepsilon_j(H)-\varepsilon_{j-1}(H)
 \]
 
-记录这一层去掉的候选比例。它是组合意义上的对数代价，可以接到热力学式的作用量账本；它还不是物理能量。实际三胞胎计数应另记为
+来记录这一层去掉的候选比例。若 \(C_j(H)=\varnothing\)，下一轮的候选经模 \(W_j\) 约化仍须落在 \(C_j(H)\)，所以以后各轮也为空；这是吸收的排斥分支。从正分数进入空轮记录为灭绝事件，不定义有限增量；空轮之后也不作扩展代价相减，尤其不形成 \(+\infty-(+\infty)\)。例如 §11.2.8 的 \(H_C=\{0,2,4\}\) 满足 \(C_1(H_C)=\{1\}\)、\(C_2(H_C)=C_3(H_C)=\varnothing\)，其后两层只有扩展值和灭绝分支，没有有限对数或差分。
+
+对所有有限 \(H\)，Foundational Formulas 命题 15.4 的 CRT 计数仍给
+
+\[
+\rho_j(H)=\prod_{q\mid W_j}\left(1-\frac{\nu_H(q)}q\right),
+\qquad \nu_H(q)=|H\bmod q|.
+\]
+
+仅当每个 \(q\mid W_j\) 都有 \(\nu_H(q)<q\) 时，该乘积为正且
+
+\[
+\varepsilon_j(H)=-\sum_{q\mid W_j}\log\left(1-\frac{\nu_H(q)}q\right),
+\qquad
+\Delta\varepsilon_j(H)=-\log\left(1-\frac{\nu_H(p_j)}{p_j}\right)\quad(j\ge2).
+\]
+
+最后的增量式同时要求前一层为正。对非空 \(H\)，这里的局部条件就是 Foundational Formulas **定义 16.1** 的 \(1\le\nu_H(q)<q\)；它不限制一般候选集合的定义。\(H_+,H_-\) 在 \(q=2,3\) 的 \(\nu_H(q)\) 分别为一、二，在 \(q\ge5\) 为三，因而各轮上的有限代价和 CRT 公式均适用。
+
+有限代价及其有限增量是组合意义上的对数代价，可以接到热力学式的作用量账本；它们还不是物理能量。实际三胞胎计数应另记为
 
 \[
 T_H(x)=\#\{n\le x:n+h\ \text{对所有 }h\in H\text{ 都为素数}\},
@@ -1083,10 +1123,10 @@ q_+-q_-=\lambda(1,-1,-1,1),
 
 \[
 \Gamma_j=
-\bigl(K_j,r_j,\alpha_j,\beta_j,\eta_j,Q_j,\chi_j,\varepsilon_j\bigr),
+\bigl(K_j,r_j,\alpha_j,\beta_j,\eta_j,Q_j,\chi_j,\bar\varepsilon_j\bigr),
 \]
 
-其中 \(K_j\) 是当前信息核，\(r_j\) 是金字塔径向层，\(\alpha_j=X_j/r_j,\beta_j=Y_j/r_j\)，\(\eta_j=\kappa_j/r_j\)，\(Q_j\) 是整数 toric denominator seam，\(\chi_j\) 是三点方向，\(\varepsilon_j\) 是轮排斥账本。新增素数时，\(K_j\)、候选集、\(\chi_j\) 的可见性和 \(Q_j\) 都可能同时改变；这就是离散层间跃迁。
+其中 \(K_j\) 是当前信息核，\(r_j\) 是金字塔径向层，\(\alpha_j=X_j/r_j,\beta_j=Y_j/r_j\)，\(\eta_j=\kappa_j/r_j\)，\(Q_j\) 是整数 toric denominator seam，\(\chi_j\) 是三点方向，\(\bar\varepsilon_j\) 是含空轮吸收分支的扩展排斥坐标，其有限值为 \(\varepsilon_j\)。新增素数时，\(K_j\)、候选集、\(\chi_j\) 的可见性和 \(Q_j\) 都可能同时改变；这就是离散层间跃迁。
 
 ### 11.2.4. 三胞胎的三种“逃逸”
 
@@ -1324,10 +1364,10 @@ O_{j,k}(x)=O_{j,k}(y).
 \Gamma_{j,k}
 =
 (K_{j,k},X_{j,k},Y_{j,k},Z_{j,k},
-\kappa_{j,k},\chi_{j,k},\varepsilon_{j,k}).
+\kappa_{j,k},\chi_{j,k},\bar\varepsilon_{j,k}).
 \]
-其中前三个量给出金字塔商空间位置，\(\kappa\) 是隐藏 fiber，\(\chi\) 是
-三点方向，\(\varepsilon\) 是轮排斥账本。沿 \(j\) 的跳跃是离散算术更新，沿
+其中 \((X_{j,k},Y_{j,k},Z_{j,k})\) 给出金字塔商空间位置，\(\kappa\) 是隐藏 fiber，\(\chi\) 是
+三点方向，\(\bar\varepsilon\) 是含空轮吸收分支的扩展排斥坐标。沿 \(j\) 的跳跃是离散算术更新，沿
 \(k\) 的跳跃是观测分辨率更新；若再加入质量作用流，才得到每个格点内部的
 连续时间轨迹。这样“逃逸轨迹”具有几何、观测和热力学三重索引，而不是把
 素数序列直接当成唯一的三维空间曲线。
@@ -1553,9 +1593,23 @@ q
 
 - \(J^\mathsf T=-J\) 是辛或 Hamiltonian 结构；
 - \(M\succeq0\) 是 Onsager mobility；
-- \(\mathcal L_{\mathrm{readout}}\) 必须是完全正、保持迹的量子通道或其离散版本；
+- \(\mathcal L_{\mathrm{readout}}\) 的连续量子部分必须是迹湮灭的状态保持生成元；在线性情形，它是算子空间上的生成元，而其演化半群才须完全正、保持迹（CPTP）；CPTP 通道本身用于离散状态更新；
 - \(\mathcal L_{\mathrm{field}}\) 负责局部连接、端口和 gauge phase；
 - 离散 prime/Fibonacci seam 可作为 \(\mathcal L_{\mathrm{field}}\) 的算术 phase sector，但当前仍是模型接口。
+
+对量子密度态，四项的量子分量都须保持指定载体：导数保持 Hermitian 且迹为零，每项的连续演化保持正性和迹一；线性量子项须生成 CPTP 半群。若限定为 §13.1 的 apex/底面块对角载体，还须保持该块结构。各项之和的流存在并保持同一载体也是此方程的模型条件，不能仅由 \(J^\mathsf T=-J\) 或 \(M\succeq0\) 推出。
+
+在有限维 \(\mathcal H\) 上，给定复线性 CPTP 通道 \(\Phi:\mathcal B(\mathcal H)\to\mathcal B(\mathcal H)\) 和常数 \(\lambda\ge0\)，可把连续读出生成元取为
+
+\[
+\mathcal L_{\mathrm{readout}}=\lambda(\Phi-\operatorname{id}),
+\qquad
+e^{t\mathcal L_{\mathrm{readout}}}
+=e^{-\lambda t}\sum_{n=0}^{\infty}\frac{(\lambda t)^n}{n!}\Phi^n
+\quad(t\ge0).
+\]
+
+右侧在有限维算子范数中收敛，是权重和为一的 CPTP 通道混合，形成 CPTP 半群；若 \(\Phi\) 保持所选块载体，其混合半群也保持该载体。对任意密度态，\(\operatorname{Tr}\mathcal L_{\mathrm{readout}}(\rho)=\lambda(\operatorname{Tr}\Phi(\rho)-\operatorname{Tr}\rho)=0\)。离散读出则写为 \(\rho^+=\Phi(\rho^-)\)，不把 \(\Phi(\rho)\) 直接加到导数中。此构造只给已指定通道的连续/离散接口，不供应整个非线性模型的物理实现；§13.4 的实际酉/pinching 步及其熵公式仍按离散合同使用。
 
 对于量子态，标准可逆部分是
 
