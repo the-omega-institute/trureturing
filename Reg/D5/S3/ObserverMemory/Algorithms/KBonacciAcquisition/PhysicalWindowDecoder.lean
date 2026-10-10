@@ -363,7 +363,9 @@ theorem finalScriptLengthNegative : ¬ finalScriptLengthArena.{u}.Law finalScrip
 theorem finalScriptLengthDependence :
     ObservationalDependence finalScriptLengthSignature finalScriptLengthActual := by
   intro i
-  exact ⟨3, [], [(fun (_ : Fin 3) => false, none)], by decide⟩
+  refine ⟨3, [], [(fun (_ : Fin 3) => false, none)], ?_⟩
+  change (0 : ℕ) ≠ 1
+  decide
 
 def finalScriptLengthEvidence : Registration finalScriptLengthArena.{u}
     (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.original_final_script.{u})) where
@@ -434,12 +436,12 @@ theorem endpointLengthNegative : ¬ endpointLengthArena.{u}.Law endpointLengthRe
   let c : Label table → Word 2 := fun _ => ∅
   have unary : ∀ i : Fin 2, i ∉ c ((sourceClauses table 2 (by decide)).unary i) := by
     intro i
-    exact Finset.not_mem_empty i
+    exact Finset.notMem_empty i
   have regular : ∀ L, c L ∈ codeList (sourceClauses table 2 (by decide)) (by decide) L := by
     intro L
     apply (mem_codeList_iff (sourceClauses table 2 (by decide)) (by decide) L (c L)).mpr
-    exact ⟨fun i _ => Finset.not_mem_empty i,
-      fun _ => Finset.not_mem_empty _, fun i _ _ => Or.inl (Finset.not_mem_empty i)⟩
+    exact ⟨fun i _ => Finset.notMem_empty i,
+      fun _ => Finset.notMem_empty _, fun i _ _ => Or.inl (Finset.notMem_empty i)⟩
   have selected : Selection (sourceClauses table 2 (by decide)) (by decide) c := Or.inl regular
   have impossible := (law 3 2 (by decide) ⟨1, rfl⟩ (by decide) table (by decide)
     c selected unary 0 0 false).1
@@ -449,7 +451,9 @@ theorem endpointLengthNegative : ¬ endpointLengthArena.{u}.Law endpointLengthRe
 theorem endpointLengthDependence :
     ObservationalDependence endpointLengthSignature endpointLengthActual := by
   intro i
-  exact ⟨3, [], [fun (_ : Fin 3) => false], by decide⟩
+  refine ⟨3, [], [fun (_ : Fin 3) => false], ?_⟩
+  change (0 : ℕ) ≠ 1
+  decide
 
 def endpointLengthEvidence : Registration endpointLengthArena.{u}
     (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.physical_endpoint_codes.{u})) where
@@ -531,7 +535,7 @@ theorem literalEqualityNegative : ¬ literalEqualityArena.{u}.Law literalEqualit
     intro i
     fin_cases i
     · change (0 : Fin 2) ∉ (∅ : Word 2)
-      exact Finset.not_mem_empty _
+      exact Finset.notMem_empty _
     · change (1 : Fin 2) ∉ ({0} : Word 2)
       decide
   have codes : ∀ i : Fin 4,
