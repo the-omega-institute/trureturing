@@ -29,7 +29,7 @@ run_cli() {
 }
 
 align_delivery_ledger() {
-  local accepted_modules='[]' closed_modules module closed_query_output
+  local accepted_modules='[]' closed_modules module closed_query_output targets=''
   local accepted_files=("$FROZEN_LEDGER"/*.json)
   local align_args=(ledger-align)
 
@@ -66,10 +66,17 @@ align_delivery_ledger() {
   fi
 
   while IFS= read -r module; do
-    [[ -z "$module" ]] || align_args+=(--add "$module")
+    if [[ -n "$module" ]]; then
+      align_args+=(--add "$module")
+      targets+="${targets:+ }${module%.lean}"
+    fi
   done <<< "$closed_modules"
-  align_args+=(--candidate-lean-report "$REPORT")
-  run_cli "${align_args[@]}"
+  if [[ -n "$targets" ]]; then
+    targets="${targets//\//.}"
+    step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$targets"
+    run_cli "${align_args[@]}" --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json
+  fi
+  run_cli ledger-align --candidate-lean-report "$REPORT"
 }
 
 

@@ -50,7 +50,7 @@ public sealed class UtilityDepositEntryTests
         var obligations = Path.Combine(root, ".lake", "utility-input.json");
         File.WriteAllBytes(obligations, RequireSuccess(TestProcessRunner.Run(cli, ["lean-utility-input"], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024)).StandardOutput);
-        var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
+        var report = Path.Combine(root, ".lake", "build", "stratalint", "scoped-lean-report.json");
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
             "--output", report + ".spool", "--material-spool", report + ".materials",
@@ -60,12 +60,14 @@ public sealed class UtilityDepositEntryTests
         RequireSuccess(TestProcessRunner.Run("python3", [Path.Combine(repository, "tools/lean-inspector/materials.py"), "compact",
             report + ".spool", report + ".materials", report], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
+        File.WriteAllText(report, File.ReadAllText(report).Replace(RawLeanReportArtifact.Schema,
+            RawLeanReportArtifact.ScopedSchema, StringComparison.Ordinal));
 
         // Only surrounding build/emission steps are bounded doubles; the judged precheck is the real CLI.
         WriteExecutable(root, "make", """
             #!/usr/bin/env bash
             case "$1" in
-              lean-report) test -s .lake/build/stratalint/raw-lean-report.json ;;
+              lean-report-scoped) test -s .lake/build/stratalint/scoped-lean-report.json ;;
               emit) echo REACHED_EMISSION; exit 77 ;;
               *) exit 96 ;;
             esac
