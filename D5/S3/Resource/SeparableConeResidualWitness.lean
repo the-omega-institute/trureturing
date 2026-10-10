@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The separable matrix argmin gives its canonical negative residual witness. -/
+   digest: The unique separable matrix argmin is the cone projection and gives its canonical negative residual witness. -/
 
 import D5.S3.Resource.SeparableConeClosed
 import D5.S3.Observer.Separation.MoreauDecomposition
