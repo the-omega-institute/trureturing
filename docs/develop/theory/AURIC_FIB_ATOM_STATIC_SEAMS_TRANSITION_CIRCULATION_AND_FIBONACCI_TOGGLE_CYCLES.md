@@ -1836,7 +1836,7 @@ $$
 
 ## 22. 五面删除的乘法与链边界障碍
 
-**定义 22.1（位置、质量、函数、矩与链的分别承载）。** 本节恢复定义 1.1 的位置顺序 $(0,1,2,3,13)$，它与第十七至二十节的列表简记 $(0,2,3,5,25)$ 逐项对应。自由质量空间为 $H=\bigoplus_{s\in\Sigma}\mathbb R\mathbf e_s$，概率域为 $\mathcal D$；函数空间为 $H^\vee=\operatorname{Fun}(\Sigma,\mathbb R)$，事件基记 $\epsilon_s(t)=\mathbf1_{s=t}$。函数点乘、系数基 $(1,x,z,y,xy)$、评价矩阵和对偶矩沿用定义 20.1，故 $p$、函数系数 $c$、评价值 $f$ 与矩 $(1,X,Z,Y,\kappa)$ 不互作替身。常函数 $1=\sum_s\epsilon_s$ 与空态指示 $\epsilon_0=1-x-z-y+xy$ 不同；根则是定义 10.1 中另给的带点结构。
+**定义 22.1（位置、质量、函数、矩与链的分别承载）。** 本节恢复定义 1.1 的位置顺序 $(0,1,2,3,13)$，它与第十八至二十一节的列表简记 $(0,2,3,5,25)$ 逐项对应。自由质量空间为 $H=\bigoplus_{s\in\Sigma}\mathbb R\mathbf e_s$，概率域为 $\mathcal D$；函数空间为 $H^\vee=\operatorname{Fun}(\Sigma,\mathbb R)$，事件基记 $\epsilon_s(t)=\mathbf1_{s=t}$。函数点乘、系数基 $(1,x,z,y,xy)$、评价矩阵和对偶矩沿用定义 20.1，故 $p$、函数系数 $c$、评价值 $f$ 与矩 $(1,X,Z,Y,\kappa)$ 不互作替身。常函数 $1=\sum_s\epsilon_s$ 与空态指示 $\epsilon_0=1-x-z-y+xy$ 不同；根则是定义 10.1 中另给的带点结构。
 
 以 $A$ 表定义 1.1 的占据映射，另记
 
@@ -2170,7 +2170,7 @@ $$
 
 这是带定向与符号的连续极限，非任意晶格上的精确差分式。直接以 $\Delta_1\mathscr A_3-\Delta_3\mathscr A_1+[\mathscr A_1,\mathscr A_3]$ 定义离散数组时，必须另外说明格点、乘积及规范变换，不能据此宣布它是该回路乘积或规范协变量。定义 20.3 的一般随机输运并未供应逆、连接或这些光滑极限。
 
-标量 $U(1)$ 取 $\mathscr A=i\,d\chi$、全局实 $C^2$ 函数 $\chi$ 时，命题 23.3 的 $d^2=0$ 及闭路积分结论给 $\mathscr F=0$ 和恒等 holonomy；交换差分下的标量恰当梯度同样无旋。非阿贝尔的 $\mathscr A=d\chi$ 若 $\chi=s_1T_1+s_3T_3$、$[T_1,T_3]\ne0$，却有 $\mathscr F_{13}=[T_1,T_3]$；它不是纯规范的一般形式。真正的 $\mathscr A=g^{-1}dg$ 由 $d(g^{-1})=-g^{-1}(dg)g^{-1}$ 给 $\mathscr F=0$。平坦与全局平凡另须区分：圆周上的 $i\alpha\,d\theta$ 曲率零，而本平行约定的闭路因子为 $e^{-2\pi i\alpha}$；$\alpha\notin\mathbb Z$ 时非恒等，它没有全局单值实势。这个例子没有把全局恰当梯度变成非零局部场强。外微分背景仍用[本卷命题 22.3 所引 Tong](../../../Library/Geometry/tong2021general.md)，非交换项由此处声明的矩阵连接计算。
+标量 $U(1)$ 取 $\mathscr A=i\,d\chi$、全局实 $C^2$ 函数 $\chi$ 时，命题 23.3 的 $d^2=0$ 及闭路积分结论给 $\mathscr F=0$ 和恒等 holonomy；交换差分下的标量恰当梯度同样无旋。非阿贝尔的 $\mathscr A=d\chi$ 若 $\chi=s_1T_1+s_3T_3$、$[T_1,T_3]\ne0$，却有 $\mathscr F_{13}=[T_1,T_3]$；它不是纯规范的一般形式。真正的 $\mathscr A=g^{-1}dg$ 由 $d(g^{-1})=-g^{-1}(dg)g^{-1}$ 给 $\mathscr F=0$。平坦与全局平凡另须区分：圆周上的 $i\alpha\,d\theta$ 曲率零，而本平行约定的闭路因子为 $e^{-2\pi i\alpha}$；$\alpha\notin\mathbb Z$ 时非恒等，它没有全局单值实势。这个例子没有把全局恰当梯度变成非零局部场强。外微分背景仍用[本卷命题 23.3 所引 Tong](../../../Library/Geometry/tong2021general.md)，非交换项由此处声明的矩阵连接计算。
 
 **假设 24.6（能量、光锥及内部旋转的变分比较）。** 在假设 24.5 之外，若比较规范场能量，另取 $3+1$ 平直时空、$c=1$、度规 $\eta=\operatorname{diag}(+,-,-,-)$，紧群代数上的正定不变实内积 $\langle\ ,\ \rangle$、耦合常数 $g_c>0$，并规定 Lagrangian
 
@@ -2724,7 +2724,55 @@ $\det K_{13}\det K_0/(\det K_1\det K_3)=1-r^2$。
 定理 26.6 的行列式和定理 26.8 给单位消费者。该信息恒等式的
 经典范围见 [Lami--Hirche--Adesso--Winter，式 (1)--(3)、(8)--(10)]
 (../../../Library/StatisticalMechanics/lamihircheadessowinter2017logdet.md)。
-一般的模式混合律不必是高斯律，不能只把混合协方差代入该高斯熵公式。证毕。
+一般的模式混合律不必是高斯律，不能只把混合协方差代入该高斯熵公式。
+
+对于任意有限多端口情形，
+取任意有限 $n,r_A,r_B$ 和实矩阵
+$A\in\mathbb R^{n\times r_A}$、$B\in\mathbb R^{n\times r_B}$，取 $K_0\succ0$、
+$G_0=K_0^{-1}$ 及 $\theta=\vartheta>0$。四个成员使用同一坐标测度和单位，
+并都取 $q=c=0$；令
+$$
+K_A=K_0+AA^{\mathsf T},\qquad K_B=K_0+BB^{\mathsf T},\qquad
+K_{AB}=K_0+AA^{\mathsf T}+BB^{\mathsf T}.
+$$
+在共同基准下取相互独立的
+$\xi\sim\mathcal N(0,\theta G_0)$、
+$\epsilon_A\sim\mathcal N(0,\theta I_{r_A})$ 和
+$\epsilon_B\sim\mathcal N(0,\theta I_{r_B})$，并令
+$$
+Y_A=A^{\mathsf T}\xi+\epsilon_A,\qquad
+Y_B=B^{\mathsf T}\xi+\epsilon_B.
+$$
+于是完整协方差除以 $\theta$ 为
+$$
+\begin{pmatrix}S_A&C\\ C^{\mathsf T}&S_B\end{pmatrix},\qquad
+S_A=I_{r_A}+A^{\mathsf T}G_0A,\quad
+S_B=I_{r_B}+B^{\mathsf T}G_0B,\quad
+C=A^{\mathsf T}G_0B,
+$$
+其白化交叉块为 $R=S_A^{-1/2}CS_B^{-1/2}$。所引用的块行列式与 Schur
+恒等式给出
+$$
+\frac{\det K_{AB}\det K_0}{\det K_A\det K_B}
+=\det(I_{r_A}-RR^{\mathsf T})
+=\prod_j(1-\sigma_j^2),
+$$
+其中 $\sigma_j$ 枚举 $R$ 的全部奇异值。独立正噪声使
+$0\le\sigma_j<1$；零奇异值、秩亏方向以及两端口维数不同时的多余纯噪声方向
+都被计入（后者给单位因子）。因此在共享零源／零偏置约定下，
+$$
+\mathcal J_{\mathcal F}
+=\frac{\theta}{2}\sum_j\log(1-\sigma_j^2)
+=-\theta I(Y_A;Y_B).
+$$
+若恢复非零源或常数，则仍须保留现有的
+$\{c_s-\tfrac12q_s^{\mathsf T}K_s^{-1}q_s\}_s$ 四角修正。两个具体代入给出：
+$K_0=I_2$、$A=B=I_2$ 时 $R=I_2/2$，两项平方奇异值均为 $1/4$，行列式比为
+$9/16$ 且 $\mathcal J_{\mathcal F}/\theta=\log(3/4)$；五边图基端口
+$A=[e_L,e_T]$、$B=[e_R,e_T]$ 时 $R=\operatorname{diag}(1/7,1/2)$，行列式比为
+$36/49$；这里五边图取定理 26.6 的单位基准，即五条边和三个控制均为 $1$。
+一般块恒等式承担上述量词域。标量 logdet 读数本身不恢复符号、取向或相位，
+完整带符号协方差仍是另一对象。证毕。
 
 **数学引文 26.10（定理 26.9 的控制微分中间式）。** 对该五边图取
 $U=e_Le_L^{\mathsf T}$、$V=e_Re_R^{\mathsf T}$，在开集
