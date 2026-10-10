@@ -14,6 +14,8 @@ triage: anchor
 
 ## Verified locator
 
+Source: https://doi.org/10.1112/jlms.12936
+
 DOI: 10.1112/jlms.12936 (J. London Math. Soc. 109, e12936). Text read from
 https://arxiv.org/abs/2401.12352v2, printed p. 9.
 

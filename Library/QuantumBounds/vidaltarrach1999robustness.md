@@ -14,6 +14,8 @@ triage: anchor
 
 ## Verified locator
 
+Source: https://doi.org/10.1103/PhysRevA.59.141
+
 DOI: 10.1103/PhysRevA.59.141 (Phys. Rev. A 59, 141–155). Text read from
 https://arxiv.org/abs/quant-ph/9806094, printed p. 15, Eq. (41):
 
