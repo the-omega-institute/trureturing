@@ -167,7 +167,7 @@ optimization still require separate arguments.
 ### Numerical readings
 
 Experiment entry:
-[check.py](https://github.com/the-omega-institute/trureturing-experiments/tree/602ec65402d492351ebc19230b04caa93001cda8/docs/reports/aloy-mullerrigat-tura-fadel-2024-three-outcome-pibi-validity).
+[check.py](https://github.com/the-omega-institute/trureturing-experiments/tree/3a78ba94e1293532c1584ec5f8bba4cc869a05ee/docs/reports/aloy-mullerrigat-tura-fadel-2024-three-outcome-pibi-validity).
 Run `python3 check.py 12` from that directory with SymPy; exit code 0.
 Script SHA-256: `d9353d6363b3a27bcaf8f64485cd19c2d98306289b4b2f580de81b06e3bdbd33`.
 
