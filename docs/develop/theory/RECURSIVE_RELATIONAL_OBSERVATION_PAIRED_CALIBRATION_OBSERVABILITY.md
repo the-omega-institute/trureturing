@@ -4018,3 +4018,246 @@ The self-calibration here concerns exactly what the scalar tail determines. Its 
 The theorem supplies a restricted bridge only. It does not evaluate the unrestricted $j_c$, prove a zero-level pair or a vanishing family, give a risk-only gap outside the recurrent finite-p-support branch, establish a shape-uniform stability theorem for approximate recurrences, handle nonatomic $\nu_p$, or prove finite effective attainment. Finite atomicity and permitted finitely represented exact sampling remain separate requirements; an arbitrary real endpoint weight need not have a permitted exact sampler. No hard-resource preservation follows. Theorem 10.2 of [RETURN] retains its free $V_\pi$; its bound $\mathcal C\le5000V_\pi$ is not a risk-only unrestricted separation. PAIRED11/RETURN12 approximants need not preserve (18.1), so density of those approximants does not transfer (18.15) to the unrestricted compact domain. The full original quantifiers, complete histories, noncompletion, Stop, TV placement and same-update rules remain those of Sections 11 and 13. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 19. Equal native endpoint excision and generated opposite-phase slack
+
+### 19.1 Standing data and native unit flows
+
+Retain exactly the source, the once-sampled $K$, the fixed finite or countable installed prior, positive endpoint masses, every actually supported target, both seeds, all paid histories and rejections, source-independent initialization, the complete records, noncompletion outcomes, completion and matching Stop, and the same acquired update rules of Definition 11.2. Let $(\Gamma_B,\Gamma_A)\in\mathfrak C$ satisfy
+
+$$
+\mathcal J(\Gamma_B,\Gamma_A)=0.
+\tag{19.1}
+$$
+
+Thus (11.6)--(11.8), the full endpoint boxes (11.29), the midpoint equations (11.30), and every supported complete-configuration loss budget in (11.9) hold on the same pair. No finite support, reversibility, native-mixture, common rate, or atomicity assumption is made here.
+
+For $r\in\{a,b\}$ write the native laws as $P_{p,r},P_{\beta,r}$ and define the unit native flows
+
+$$
+N_r^B=\delta_{(P_{p,r},P_{\beta,r})},
+\qquad
+N_r^A=\delta_{(P_{\beta,r},P_{p,r})}.
+\tag{19.2}
+$$
+
+Each pair $(N_r^B,N_r^A)$ is a compatible unit flow: the native complete recursions on the whole carriers, including the infinite cells, are the residual equations for these flows. Put
+
+$$
+ m_r^p=\nu_p(\{P_{p,r}\}),\qquad
+ m_r^\beta=\nu_\beta(\{P_{\beta,r}\}).
+\tag{19.3}
+$$
+
+The endpoint laws are distinct because their p alpha masses, and their suspended $v=1-W(\beta)$ masses, are $a$ and $b$.
+
+### 19.2 Native fibres are equal and removable
+
+**Theorem 19.1 (equal native endpoint excision).** Under the standing data above, for each $r\in\{a,b\}$,
+
+$$
+ m_r^p=m_r^\beta=:m_r,
+\tag{19.4}
+$$
+
+and the directional flows contain the native unit flows with exactly these masses:
+
+$$
+\Gamma_B\ge m_aN_a^B+m_bN_b^B,
+\qquad
+\Gamma_A\ge m_aN_a^A+m_bN_b^A.
+\tag{19.5}
+$$
+
+Set
+
+$$
+ t=\min(m_a,m_b),\qquad \theta=2t.
+\tag{19.6}
+$$
+
+If the installed prior supports a nonendpoint depth $k\ge3$, then $\theta<1$. For $\theta<1$ define
+
+$$
+ \widehat\Gamma_B=\frac{\Gamma_B-tN_a^B-tN_b^B}{1-\theta},
+ \qquad
+ \widehat\Gamma_A=\frac{\Gamma_A-tN_a^A-tN_b^A}{1-\theta},
+\tag{19.7}
+$$
+
+and let $\widehat\nu_p,\widehat\nu_\beta$ be their common unweighted phase marginals. Then $(\widehat\Gamma_B,\widehat\Gamma_A)\in\mathfrak C$, with the same full regular law spaces, endpoint boxes, midpoint equations, and all supported loss budgets. The remainder may be nonatomic and need not have a finite support.
+
+For every normalized complete target $T$ (including a target with noncompletion mass), put
+
+$$
+ \mathcal L_s^N(T)=\frac12\bigl(\operatorname{TV}(P_{s,a},T)+\operatorname{TV}(P_{s,b},T)\bigr),
+\tag{19.8}
+$$
+
+and
+
+$$
+ \widehat{\mathcal L}_s(T)=\int\operatorname{TV}(D,T)\,d\widehat\nu_s(D),
+ \qquad
+ \mathcal L_s(T)=\int\operatorname{TV}(D,T)\,d\nu_s(D).
+$$
+
+Then the exact marginal-linearity identity is
+
+$$
+ \widehat{\mathcal L}_s(T)
+ =\frac{\mathcal L_s(T)-\theta\mathcal L_s^N(T)}{1-\theta}.
+\tag{19.9}
+$$
+
+In particular $\mathcal L_s^N(T)\ge\rho_s$ by the endpoint triangle inequality, and hence every old budget $\mathcal L_s(T)\le\rho_s$ remains valid after excision. At the two endpoint targets the remainder losses remain exactly $\rho_s$. If $\theta>0$, then for every actually supported $k\ge3$,
+
+$$
+ \widehat{\mathcal L}_p(P_{p,r_k})
+ \le \rho_p-\sigma,
+ \qquad
+ \sigma=\frac{\theta\eta}{2(1-\theta)}>0,
+ \qquad
+ \eta=\frac{14219478376}{318644812890625},
+ \qquad
+ \rho_p=\frac{1116529}{22781250}.
+\tag{19.10}
+$$
+
+No strict suspended-phase inequality or strict worst-case p-risk conclusion is asserted: the endpoint targets remain saturated at $\rho_p$ and $\rho_\beta$.
+
+**Proof.** First suppose $m_r^p>0$. The first full residual equation, with the Borel singleton test $\mathbf1_{\{P_{p,r}\}}$, says that the conditional barycentre of $W$ over $Q=P_{p,r}$ is
+
+$$
+\mathcal R_B(P_{p,r})=P_{\beta,r}.
+\tag{19.11}
+$$
+
+Every conditional $W$ lies in the suspended endpoint box. For each complete atom, including $\infty_\beta$, $P_{\beta,r}(\eta)$ is an endpoint of the interval with endpoints $P_{\beta,a}(\eta),P_{\beta,b}(\eta)$. A random variable in that interval whose mean is this endpoint is equal to it almost surely. The complete carrier is countable, so intersecting these full-measure statements gives
+
+$$
+\Gamma_B(dW\mid P_{p,r})=\delta_{P_{\beta,r}}.
+\tag{19.12}
+$$
+
+No conditioning on a null fibre has been used. Consequently $m_r^\beta\ge m_r^p$. If $m_r^\beta>0$, the second residual equation and the p endpoint box give, by the same singleton and countable-coordinate argument,
+
+$$
+\Gamma_A(dQ\mid P_{\beta,r})=\delta_{P_{p,r}},
+\tag{19.13}
+$$
+
+so $m_r^p\ge m_r^\beta$. If $m_r^p=0$ while $m_r^\beta>0$, (19.13) is impossible; hence both masses vanish. This proves (19.4). The two inequalities also show incoming isolation: the native p-to-native suspended mass already equals the entire native suspended singleton mass, and conversely. Thus no nonnative mass enters either native singleton, proving the measure domination (19.5).
+
+Each pair $(N_r^B,N_r^A)$ satisfies both residual equations, the two unweighted balances, the full boxes, and contributes its native endpoint event values. Subtract the nonnegative subflows in (19.7) before dividing. The residual equations are linear signed-measure identities after the bounded Borel extension of (11.7), so their difference is again zero; the common marginals subtract the same $t$ from both directions. Their total remaining mass is $1-2t$. All remaining descriptors stay in the compact law spaces, so normalization, emission bounds, complete tails, and the zero infinite-cell mass are retained. The midpoint values are retained because the supplied endpoint event identities are
+
+$$
+P_{p,a}(E_p)=C+\rho_p,\quad P_{p,b}(E_p)=C-\rho_p,
+$$
+
+$$
+P_{\beta,a}(E_\beta)=H+\rho_\beta,\quad
+P_{\beta,b}(E_\beta)=H-\rho_\beta;
+$$
+
+removing $t$ of both endpoints subtracts $2tC$ and $2tH$, respectively. This proves all structural assertions about the normalized pair.
+
+The native part of any marginal contributes
+$ t[\operatorname{TV}(P_{s,a},T)+\operatorname{TV}(P_{s,b},T)]=\theta\mathcal L_s^N(T)$. Splitting the configuration integral gives (19.9); TV has remained inside that integral. The reverse triangle inequality and
+$\operatorname{TV}(P_{s,a},P_{s,b})=2\rho_s$ give
+$\mathcal L_s^N(T)\ge\rho_s$. The separate endpoint minima supplied in Section 2 imply that a zero-level pair has $\mathcal L_s(P_{s,a})=\mathcal L_s(P_{s,b})=\rho_s$, and (19.9) gives the same equalities for the remainder.
+
+For a supported $k\ge3$, Corollary 12.3 supplies
+
+$$
+\mathcal L_p^N(P_{p,r_k})\ge\rho_p+\frac\eta2.
+\tag{19.14}
+$$
+
+Combining (19.9), (19.14), and the old p budget proves (19.10). The same descriptorwise identity applies to a posterior target, since it is a normalized complete law; the usual configurationwise TV convexity for posterior mixtures is unchanged. No posterior port, reset, new sampling of $K$, or completion conditioning has been introduced.
+
+If $\theta=1$, then $m_a=m_b=1/2$ and (19.5) exhausts both probability flows. The pair is exactly the fair native endpoint pair (12.5), which is excluded by Corollary 12.3 when a supported $k\ge3$ exists. Hence $\theta<1$. When $\theta=0$, (19.7)--(19.9) are the identity. Unequal removal of the two native masses would not preserve either midpoint equation, so no unequal-removal zero theorem is claimed. $\square$
+
+### 19.3 A conditional symmetric finite-attainment consumer
+
+**Corollary 19.2 (strict generated slack implies symmetric finite attainment).** Assume the installed support is countably infinite. Suppose a zero-level compatible pair has finite suspended marginal with $N$ distinct atoms and $m_a,m_b>0$. Form the excised pair of Theorem 19.1. Then
+
+$$
+1\le N' := |\operatorname{supp}\widehat\nu_\beta|\le N-1,
+\tag{19.15}
+$$
+
+and the excised pair has finite p-target slack at the accumulation parameter
+
+$$
+ r_* =\frac{3-\sqrt5}{2},\qquad c_* =\frac{25}{64},\qquad
+ \delta_p^\circ:=\rho_p-\widehat{\mathcal L}_p(P_{p,r_*})\ge\sigma.
+\tag{19.16}
+$$
+
+Choose $M\ge2$ so that
+
+$$
+ \frac{25}{171}c_*^M<\frac\sigma2,
+ \qquad
+ s_M=|\{k\le M:\mu(k)>0\}|.
+\tag{19.17}
+$$
+
+Then there is an abstract finite original common conf/conf attainer with private table labels satisfying
+
+$$
+ |Y|=N',
+ \qquad
+ |X|\le N'^2+2N'+s_M-1.
+\tag{19.18}
+$$
+
+It preserves the excised suspended marginal exactly. It need not preserve the input p marginal, the input flows, or the original pre-excision pair. The finite table has real stochastic entries; allowed finitely represented exact samplers are a separate requirement for effective attainment.
+
+**Proof.** Because the installed support is infinite, its supported depths are unbounded and $r_k\to r_*$. The complete-target continuity bound (13.19) and the original supported-target budgets give
+
+$$
+\mathcal L_p(P_{p,r_*})\le\rho_p.
+\tag{19.19}
+$$
+
+Taking the limit in (19.14), using the same complete-law continuity, gives
+
+$$
+\mathcal L_p^N(P_{p,r_*})\ge\rho_p+\frac\eta2.
+\tag{19.20}
+$$
+
+Apply (19.9) at $T=P_{p,r_*}$ and use (19.19)--(19.20); this proves (19.16). Since $\theta<1$, the excised suspended marginal has positive total mass and at least one atom. At least one of the two distinct native suspended atoms is removed completely, while no new atom is created, so (19.15) holds.
+
+Use the symmetric direction of Theorem 13.6 on the excised pair, with its $N'$ suspended atoms and the strict slack (19.16). Choose $M$ as in (19.17). Its exact feature menu has
+
+$$
+Q(E_p),\qquad
+\{\operatorname{TV}(Q,P_{p,r_k}):3\le k\le M,\ \mu(k)>0\},
+\qquad
+\operatorname{TV}(Q,P_{p,r_*}),
+\tag{19.21}
+$$
+
+which has $1+(s_M-2)+1=s_M$ entries. The symmetric moment list in Theorem 13.2 therefore gives exactly the bound (19.18), while retaining the complete p endpoint box and every listed loss. For every omitted installed depth $k>M$, the full-law estimate (13.19), not a truncated future, gives
+
+$$
+\widehat{\mathcal L}_p(P_{p,r_k})
+ \le \widehat{\mathcal L}_p(P_{p,r_*})
+      +\frac{25}{171}c_*^M
+ <\rho_p.
+\tag{19.22}
+$$
+
+Thus all supported p losses and the endpoint midpoint are valid in the new finite table, and the entire excised suspended marginal is unchanged. Proposition 13.3 and [PAID, Lemma 2.1.1] install this table with the original $C_0$, both seeds, all paid histories and rejections, source-independent latch initialization, the same acquired/synthetic update, complete noncompletion, completion and matching Stop. They also retain the original records and the once-sampled $K$; no posterior or resampling device is added. This is an abstract finite attainer, with the stated sampler qualification. $\square$
+
+### 19.4 Source map, falsifier and remaining obligations
+
+The full residual and marginal hypotheses in Theorem 19.1 are exactly (11.6)--(11.8), with TV inside (11.9). The endpoint boxes and midpoint event values are (11.29)--(11.30). The native recursions and the complete-coordinate gap (19.14) are supplied by Theorem 12.2 and Corollary 12.3; the constant $\eta$ is reused, not rederived. The equal-endpoint conditional extremality is the same countable-coordinate zero-integral mechanism used in PAIRED18.2. [REV, Theorem 5.1](RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md) records the analogous endpoint-component propagation in its reversible class; reversibility is not a premise of this theorem. The finite feature closure, the full-law continuity estimate (13.19), and the original product adapter are respectively supplied by Theorems 13.2, 13.6, 13.3 and [PAID, Lemma 2.1.1]. No finite quadrature or realization proof is being claimed again.
+
+A direct falsifier for Theorem 19.1 would be a zero-level compatible pair whose p native singleton has positive mass but whose conditional B flow assigns positive mass to a suspended law different from $P_{\beta,r}$ while every coordinate remains between the two suspended endpoint laws; the analogous A failure is also sufficient. Such a pair would contradict the endpoint mean argument in (19.11)--(19.13). A falsifier for Corollary 19.2 would satisfy all its zero-level and finite-suspended hypotheses but have $\delta_p^\circ<\sigma$, or would violate (19.22) at an omitted supported depth; the former contradicts the full-target limit and (19.9), while the latter would contradict the supplied complete-law estimate (13.19).
+
+The source-relative addition is the simultaneous two-direction equal-mass excision and the generated strict p slack (19.10), followed by the symmetric use of the already supplied Chapter 13.6 consumer. It does not evaluate $j_c$, exhibit a zero pair, construct a vanishing family, or prove a positive unrestricted gap. A zero-level search may still have $m_am_b=0$ in the presence of a supported nonendpoint; Theorem 19.1 gives no strict conclusion there. It makes no weak-closed or compact claim for the atom-missing normal form, and it does not increase any finite-support bound. If no finite abstract attainer exists, the theorem only says that any zero pair with finite suspended marginal cannot have both native endpoint masses positive; it does not supply a zero witness. The finite-prior one-sided attainment statement is already Corollary 13.4. Finite atomicity, permitted exact sampling, COMPLETE resources, and the original unrestricted zero-versus-positive and effective-attainment obligations remain separate and unresolved.
+
+## 追加锚（本行以下为增补区）
