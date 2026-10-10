@@ -1745,3 +1745,262 @@ $$
 上述场合同只是定理 23.4 中“能量”一词的分别类型化比较，没有提供从概率、环流、内部振幅或连接之间的对应。若再写 Einstein 方程，还须另供 Lorentz 度规、协变物质作用量、按该度规变分的完整应力张量、场方程及相容的 $\nabla^\mu T_{\mu\nu}=0$；必要的守恒条件也不单独保证 Einstein 方程的解。$J\kappa$、概率占据或状态图回路均未供应这些数据，故本有限模型没有断言 Einstein 源或引力几何。
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 五边图的源标定碰撞与联合能量读口
+
+**定义 24.1（带源的接地合同与既有消元对应）。** 在定义 2.1 的底层无向图上记 $O=0,L=1,T=2,R=3,J=13$，边为 $OL,OT,OR,LJ,RJ$；这些字母在图上标顶点，在 $\Sigma$ 上标模式，两种用途通过这份指定字典对应，不把顶点当作物理位置。一般消元允许有限无向无自环图，$c_{ij}=c_{ji}\ge0$，仅将正电导边计入连通性。取非空保留集 $B$、非空内部集 $I$，每个内部连通分量均有正电导边接到 $B$。$B$ 在本节是顶点集合，不是定义 2.1 的关联矩阵。固定实边界 $b=u_B$、源系数 $q=(q_B,q_I)$ 及电导，采用假设 9.2 的正 Laplacian $L$，声明
+
+$$
+\mathcal I(u;q)=\tfrac12u^{\mathsf T}Lu+q^{\mathsf T}u+g(q),\qquad
+K=L_{II},\qquad K u_I+L_{IB}b+q_I=0.
+$$
+
+$g$ 是另给的、与 $u$ 无关的能量零点函数；不指定时本节取 $g=0$。若赋予单位，$c u^2$、$q u$、$g$ 必须有同一能量单位，比较不同来源时这些单位和零点保持共同标定。这里 $q$ 是 $+q^{\mathsf T}u$ 的系数。按假设 9.2 的下坡电流及向外散度，内部平衡为 $\operatorname{div}j=-q_I$；不能把它不加改号地称为该散度的正注入。边界响应定义为 $j_B=\partial_b\min_{u_I}\mathcal I$，包含 $q_B$，与单独的边电流有不同类型。
+
+所用静态极小值直接复用[《响应三角形与内部记忆》theorem 8.1](AURIC_FIB_ATOM_RESPONSE_TRIANGLE_AND_INTERNAL_MEMORY.md)和[SchurMinimum 的二次型最小值](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean) `schur_quadratic_is_least`。有源对应是在后者取保留向量 $(b,1)$、块
+
+$$
+A_{\rm aug}=\begin{pmatrix}L_{BB}&q_B\\q_B^{\mathsf T}&0\end{pmatrix},\qquad
+B_{\rm aug}=\begin{pmatrix}L_{BI}\\q_I^{\mathsf T}\end{pmatrix},\qquad C=K,
+$$
+
+再将二次型乘 $1/2$ 并加 $g(q)$；实矩阵的极小点也为实向量。由此取得本应用的既有公式
+
+$$
+\begin{aligned}
+u_I^*(b,q)&=-K^{-1}(L_{IB}b+q_I),\\
+\Lambda&=L_{BB}-L_{BI}K^{-1}L_{IB},\\
+W&=-L_{BI}K^{-1},\\
+q_{\rm eff}&=q_B+Wq_I,\\
+C(q)&=-\tfrac12q_I^{\mathsf T}K^{-1}q_I,\\
+V(b;q):=\min_{u_I}\mathcal I&=\tfrac12b^{\mathsf T}\Lambda b+q_{\rm eff}^{\mathsf T}b+C(q)+g(q),\\
+j_B(b;q)&=\Lambda b+q_{\rm eff}.
+\end{aligned}
+$$
+
+接地条件确实给 $K>0$：将内部向量在 $B$ 上补零，零二次能量迫使每个正边分量取同一常数，接到零边界又迫使它为零。若某分量完全没有边界，则 $Lu=-q$ 在该分量可解恰要求源和为零，解只定到常数；不满足时，沿该分量的常数平移使泛函无下界。闭图要逐分量平衡，只有总和为零不足以处理不连通图；非负源在闭图上因而只能为零。这是本有限合同的适用条件，不是对物质源的限制。
+
+[Dörfler–Bullo，v1 式 (1.1)–(1.2)、(2.1)–(2.2) 和 Lemma 2.1](../../../Library/GraphInvariants/dorflerbullo2013kron.md)供应 Schur/Kron 与 accompanying matrix 的经典中间步骤。其原引理的边界至少有两个顶点；这里对单边界或多个内部块使用上述接地条件。接地最大值原理给 $K^{-1}_{ij}\ge0$，恰在 $i,j$ 属于同一内部正边连通分量时严格正：负极小值与非负右端不相容，非零非负右端的零极小值沿内部正边传播即与源矛盾。不同内部块的逆矩阵项为零。由 $L_{BI}\le0$ 及 $K\mathbf1_I+L_{IB}\mathbf1_B=0$ 得
+
+$$
+W\ge0,\qquad \mathbf1_B^{\mathsf T}W=\mathbf1_I^{\mathsf T},\qquad
+\mathbf1_B^{\mathsf T}q_{\rm eff}=\mathbf1^{\mathsf T}q.
+$$
+
+列随机形式只表示这份静态源的非负重新分配，没有随机发射的附加解释。它也不把固定边界的不同内部块接成一块：全图连通仍可能有 $K^{-1}_{ij}=0$。
+
+**定义 24.2（固定源、源族与能量规范的标定范围）。** 对定义 24.1 的全部 $b\in\mathbb R^B$，固定源的边界响应由 $(\Lambda,q_{\rm eff})$ 完全给出；绝对极小值还需 $C(q)+g(q)$。这些是不同任务的充分数据；只给一个源点的常数并不供应改变来源后的响应或导数。对固定 $L$ 及已知仿射控制族
+
+$$
+q_I(t)=q_{I0}+Q_I t,\qquad q_B(t)=q_{B0}+Q_Bt,\qquad t\in D\subseteq\mathbb R^m,
+$$
+
+边界任务使用 $q_{{\rm eff},0}$ 和 $R=Q_B+WQ_I$。若还需能量及其源导数，须保留已标定的整个 $g(q(t))$，以及
+
+$$
+\begin{gathered}
+C_0=-\tfrac12q_{I0}^{\mathsf T}K^{-1}q_{I0},\qquad
+\ell=-Q_I^{\mathsf T}K^{-1}q_{I0},\qquad
+G_Q=Q_I^{\mathsf T}K^{-1}Q_I,\\
+C(q(t))=C_0+\ell^{\mathsf T}t-\tfrac12t^{\mathsf T}G_Qt,\\
+\nabla_t V=R^{\mathsf T}b+\ell-G_Qt+\nabla_t(g\circ q),\qquad
+\nabla_t^2V=-G_Q+\nabla_t^2(g\circ q).
+\end{gathered}
+$$
+
+导数在 $D$ 的开域及所示函数可微的条件下解释，Hessian 还需二次可微。若 $L$ 也变，须给相应的 $\Lambda(t),W(t),C(t)$ 及其导数，不能套用固定算子式。直接以 $q_I,q_B$ 为控制时，固定 $L,b$ 的包络导数分别为 $u_I^*+\partial_{q_I}g$ 和 $b+\partial_{q_B}g$。因此源依赖的加法项虽不影响边界电流，却可以改变源导数和联合能量。
+
+对固定已知 $q_B$、实际允许的内部源集合 $\mathcal Q$，边界源识别要求
+
+$$
+\ker W\cap(\mathcal Q-\mathcal Q)=\{0\}.
+$$
+
+这是[观察者算术卷命题 A-19.4](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md)的实际纤维判据，不是 $W$ 列随机性的推论。若 $q_B$ 也未知，须改查 $(q_B,q_I)\mapsto q_B+Wq_I$ 的实际纤维。共同势原点平移 $u\mapsto u+h\mathbf1$、$b\mapsto b+h\mathbf1_B$ 使 $V$ 增加 $h\mathbf1^{\mathsf T}q$；边界电流不变。对加法源律该项的四角差为零，但任意源依赖的 $g$ 不必如此。固定源、全体电导乘 $a>0$ 时，$W$ 不变而 $K^{-1}$ 与 $C$ 除以 $a$，$\Lambda$ 乘 $a$；源分配本身不校准能量尺度。
+
+**定理 24.3（本五边图的单源标定不能确定共同源能量）。** 在定义 24.1 的五边图取全部电导一，保留 $B=\{O\}$，内部次序 $(L,T,R,J)$，$q_B=0$、$g=0$，边界实值为 $b$。内部坐标向量 $e_L,e_R$ 不是模式概率。比较同一单位和能量零点下的两份源赋值，在全部实控制 $(a,c)$ 上取
+
+$$
+Q^{(A)}(a,c)=ae_L+ce_R,\qquad Q^{(B)}(a,c)=(a+c)e_L.
+$$
+
+两赋值对每个 $(a,c,b)$ 给完全相同的边界电流 $a+c$；在 $c=0$ 或 $a=0$ 的全部单源能量曲线上也完全相同。但同时启用两源时
+
+$$
+\begin{aligned}
+V_A(b;a,c)&=b(a+c)-\tfrac38(a^2+c^2)-\tfrac14ac,\\
+V_B(b;a,c)&=b(a+c)-\tfrac38(a^2+c^2)-\tfrac34ac,\\
+V_B-V_A&=-\tfrac12ac.
+\end{aligned}
+$$
+
+所以“全部边界电流加上各来源分别的全部能量标定”在这个实际源赋值域上仍不能下降为联合能量预测。若把同一五态模式的 $(x(s),y(s))$ 作为 $(a,c)$，令 $U_A(s)=V_A(b;x(s),y(s))$、$U_B(s)=V_B(b;x(s),y(s))$，则
+
+$$
+\begin{gathered}
+U_A=(b-3/8)(x+y)-xy/4,\qquad
+U_B=(b-3/8)(x+y)-3xy/4,\\
+J_{U_A}=-1/4,\qquad J_{U_B}=-3/4,\qquad
+\mathbb E_p(U_B-U_A)=-\kappa/2.
+\end{gathered}
+$$
+
+这里期望使用同一实际律 $p$，$\kappa=p_{13}$；缺失的是源之间的配对，尚未改变概率律。它不同于固定一个能量函数再比较同占据均值、不同 $\kappa$ 的问题。
+
+证明。由五条实际边组装内部块与其逆得
+
+$$
+K=\begin{pmatrix}2&0&0&-1\\0&1&0&0\\0&0&2&-1\\-1&0&-1&2\end{pmatrix},\qquad
+K^{-1}=\tfrac14\begin{pmatrix}3&0&1&2\\0&4&0&0\\1&0&3&2\\2&0&2&4\end{pmatrix},
+\qquad W=(1,1,1,1),\quad\Lambda=0.
+$$
+
+显示矩阵相乘为单位矩阵，$L_{BI}=(-1,-1,-1,0)$、$L_{BB}=3$。代入定义 24.1 的既有极小值公式，两源矩阵的 Gram 数据分别为
+
+$$
+G_A=\begin{pmatrix}3/4&1/4\\1/4&3/4\end{pmatrix},\qquad
+G_B=\begin{pmatrix}3/4&3/4\\3/4&3/4\end{pmatrix}.
+$$
+
+$WQ$ 和两个对角元相等，非对角元不同；这正给相同电流、相同单源曲线与所列交叉差。模式代入只用 $x^2=x,y^2=y$；期望和 $J$ 的消费直接取定义 19.1、23.1 及[观察者算术卷命题 A-2.5](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md)，不另证五函数分解。此处在 $B$ 被接地后，$T$ 独成内部块，$L,R,J$ 同在另一块，故 $K^{-1}_{LT}=0$ 而 $K^{-1}_{LR}=1/4>0$；全图连通并不替代这个内部支撑条件。
+
+同一应用的一般加法源对应是：固定共同 $K$、共同零边界和 $g=0$，另给固定内部向量
+
+$$
+q(s)=q_0+x(s)q_1+z(s)q_2+y(s)q_3,\qquad
+u(s)=-K^{-1}q(s),\qquad U(s)=-\tfrac12q(s)^{\mathsf T}K^{-1}q(s).
+$$
+
+消费[双线性 seam 卷 theorem 2.1 及 Q1–Q4](AURIC_FIB_ATOM_SEAM_BILINEAR_CURVATURE_AND_OUTPUT_FUTURE_QUOTIENT.md)的四角乘积差，以 $K^{-1}$ 收缩即给
+
+$$
+J_u=0,\qquad J_U=-q_1^{\mathsf T}K^{-1}q_3,\qquad
+\Delta\mathbb E_p[U]=-q_1^{\mathsf T}K^{-1}q_3\,\Delta\kappa
+$$
+
+及同 $(X,Z,Y)$ 时相同的 $\mathbb E_p[u]$。最后一个差分比较固定源赋值、固定算子下的两份合法律，使用数学引文 1.2 的实际区间 $[\max(0,X+Y+Z-1),\min(X,Y)]$；非退化时能量期望识别 $\kappa$ 恰要求该交叉系数非零，单点纤维没有待识别参数。不同模式各换算子、不同来源各解不同边界问题、源律另有 $xy$ 项或额外 $g(q(s))$ 时，不能沿用此式。
+
+对 $q_1,q_3\ge0$，定义 24.1 的逆矩阵支撑给精确条件
+
+$$
+J_U<0\quad\Longleftrightarrow\quad
+\exists i,j\in I:\ (q_1)_i>0,\ (q_3)_j>0,
+\quad i,j\text{ 属于同一内部正边连通分量}.
+$$
+
+否则 $J_U=0$；允许有符号源时不承诺此符号。负四角差只是指定能量的结合比较，没有距离导数或力的结论。一个共同场线性响应而能量有交叉项，是上述既有二次型的消费，并非场方程非线性的证据。若实际允许源域包含 $q_1,q_3,q_1+q_3$，已知这三个源的 $C$ 值即可由 $C(q_1+q_3)-C(q_1)-C(q_3)$ 恢复负交叉配对；本反例只缺这份联合标定，不否定极化。∎
+
+**数学引文 24.4（其他边界选择与源摘要的对应）。** 本节消元并未将名称“空”赋予源。若明确仅在 $O$ 放源 $q$、取 $g=0$，并取 $I=\{O\}$、$B=(L,T,R,J)$，本图的 $K=3$。直接在[响应三角形卷 theorem 7.1](AURIC_FIB_ATOM_RESPONSE_TRIANGLE_AND_INTERNAL_MEMORY.md)的源自由星形消元中使用定义 24.1 的仿射源对应，得
+
+$$
+u_O=(b_L+b_T+b_R-q)/3,\qquad
+q_{\rm eff}=(q/3)(1,1,1,0),\qquad C=-q^2/6,
+$$
+
+且原 $LJ,RJ$ 单位边保留，$L,T,R$ 间三条有效边权为 $1/3$。这只是既有星形结果的带源应用。三节点单位链 $0-1-2$、$B=\{2\},I=(0,1)$ 的同一公式给 $K^{-1}=\left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)$、$W=(1,1),\Lambda=0$；分别置单位源 $e_0,e_1$ 时，$j_B=1$，但 $V=b-1,b-1/2$。另一带两个内部点的链 $b_L-i_1-i_2-b_R$、两端接地、单位电导给 $K=\left(\begin{smallmatrix}2&-1\\-1&2\end{smallmatrix}\right)$，对 $q_1=e_{i_1},q_3=e_{i_2}$ 有 $U_1=U_3=-1/3,U_{13}=-1,J_U=-1/3$。这些小矩阵仅说明定义 24.1 的参数对应；定理 24.3 进一步保持了单源能量曲线，缺的仍是非对角配对。
+
+顺序消元仍复用[响应三角形卷 theorem 8.1](AURIC_FIB_ATOM_RESPONSE_TRIANGLE_AND_INTERNAL_MEMORY.md)及[Schur 补结合律](../../../D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean)在可逆内部块上的对应；必须携带仿射项与常数项。[《二阶关系完成》定理 14.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)已有二次、一次、常数的消元参数，Gaussian 积分还含行列式归一化，不可与本节的取极小值混用。边界响应不恢复内部来源的结论依定义 24.2 的实际纤维判据解释，不升级为对任意动态未来的充分性。
+
+**假设 24.5（共同标架中已校准的保留模式相位读口）。** 除定理 24.3 的能量任务外，若另问模式的钟响应，须独立给定有限 $d\ge1$ 维复探针空间、同一个固定正交标架、$\hbar>0$、自伴 $H_{\rm ref},H_s$ 及同一已校准参数 $t$。$N_s>0$ 是无量纲常数。在这份标架中“只缩放生成元时间”的判据量化所有密度输入：
+
+$$
+\forall\rho\in M_d(\mathbb C),\quad
+\rho=\rho^*\ge0,\ \operatorname{tr}\rho=1:\quad
+[H_s,\rho]=N_s[H_{\rm ref},\rho].
+$$
+
+按 [Etingof 等，§1.3 Corollary 1.17](../../../Library/Quantum/etingof2009representation.md)的经典标量交换子结论，此条件等价于 $H_s=N_sH_{\rm ref}+a_s I_d$、$a_s\in\mathbb R$。这里的对应是：密度矩阵实张成 Hermitian 空间，复张成全部矩阵；$H_s-N_sH_{\rm ref}$ 因而在全矩阵代数的中心，自伴性保证标量为实。仅检验一份输入态或一个可交换子代数不够。若 $H_{\rm ref}$ 非标量，$N_s,a_s$ 唯一；若 $H_{\rm ref}=hI_d$，条件仅要求 $H_s$ 为标量，任意正 $N_s$ 都能由 $a_s$ 补偿，钟率不被探针识别。这包括 $d=1$。加法标量不改变这个探针的能隙，未给出其在另一个协变物质理论中是否贡献应力的结论。
+
+采用实际初始联合态
+
+$$
+\rho_{SP}(0)=\sum_{s\in\Sigma}p_s|s\rangle\langle s|\otimes\rho_P,
+\qquad p\in\mathcal D,
+$$
+
+即每个试验开始按同一律 $p$ 抽一次经典模式，探针初态与模式独立，比较期间该模式保持不变。模式条件演化取上述常 Hamiltonian，选择参考本征态 $m,n$、已知非零能隙 $\omega=(E_m-E_n)/\hbar\ne0$，并要求制备 $\rho_{P,mn}\ne0$ 和读出已校准的两相位分量。于是忽略模式后的该非对角元乘以
+
+$$
+\Gamma_p(t)=\sum_s p_s e^{-i\omega N_st}.
+$$
+
+若初态已与模式相关，必须保留各 $\rho_{P|s}$，不再由一个公共非对角元提出这份因子。若选零能隙，$\Gamma_p\equiv1$；没有非零初始相干或相位读口，也不能把形式上的复函数当成实际观测。对有限已知率，特征函数的矩展开给
+
+$$
+\Gamma'_p(0)=-i\omega\mathbb E_p[N],\qquad
+|\Gamma_p(t)|^2=1-\omega^2\operatorname{Var}_p(N)t^2+O(t^4).
+$$
+
+这里模平方是独立副本差 $N-N'$ 的特征函数，奇数阶消失；这是有限和的经典矩恒等式。$\omega\ne0$ 且方差正时，它在零附近不能等于单一确定钟率的纯相位函数，不宣称每个孤立时刻都可区分。
+
+源律、核和取得条件直接使用[局部时钟核卷定理二及 Q1–Q6、Q9–Q10](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md)。具体将命题 A-2.5 的函数分别换成 $\operatorname{Re}e^{-i\omega N_st}$、$\operatorname{Im}e^{-i\omega N_st}$，即为本相位读口的对应，不新增一般恢复定理。对已校准的 $N(s)=1+\varepsilon(x(s)+y(s))$、$\varepsilon>0$，置 $\zeta=e^{-i\omega\varepsilon t}$，同一实际 $p_\kappa$ 给
+
+$$
+\begin{aligned}
+\Gamma_{p_\kappa}(t)&=e^{-i\omega t}\big[1+(X+Y)(\zeta-1)+\kappa(\zeta-1)^2\big],\\
+J_{e^{-i\omega Nt}}&=e^{-i\omega t}(1-\zeta)^2,\\
+\mathbb E_p[N]&=1+\varepsilon(X+Y),\\
+\operatorname{Var}_p(N)&=\varepsilon^2\big[X+Y+2\kappa-(X+Y)^2\big].
+\end{aligned}
+$$
+
+因此在已知 $(X,Z,Y)$ 的非退化实际纤维，固定时刻的完整复响应识别 $\kappa$ 恰在 $\omega\varepsilon t\notin2\pi\mathbb Z$；单点纤维无需额外识别。对已有的两份律 $p^{(A)}=(\delta_O+\delta_J)/2$、$p^{(B)}=(\delta_L+\delta_R)/2$，有
+
+$$
+\Gamma_A=e^{-i\omega(1+\varepsilon)t}\cos(\omega\varepsilon t),\qquad
+\Gamma_B=e^{-i\omega(1+\varepsilon)t}.
+$$
+
+二者均值率同为 $1+\varepsilon$，方差分别为 $\varepsilon^2,0$。可见度 $|\Gamma|$ 仅在 $\omega\varepsilon t\notin\pi\mathbb Z$ 区分这对律；奇数倍 $\pi$ 时可见度相同而复相位相反。可见度因而不等于完整相位读数，零时刻及其他别名时刻不供应单时识别。
+
+对任意有限已知互异率 $r_1,\ldots,r_m$，完整时间函数（或零附近的精确函数）确定的是分组质量 $w_j=\sum_{s:N_s=r_j}p_s$：零到 $m-1$ 阶导数给 $\sum_jw_jr_j^k$，非零 $\omega$ 和互异率的 Vandermonde 矩阵使其可逆。这是有限指数和的经典线性独立性，不恢复同率组内标签。在显示五态律中 $O,T$ 同率，$L,R$ 同率；三个分组质量是 $1-X-Y+\kappa,X+Y-2\kappa,\kappa$。未知能隙或未知时间尺度还会混淆 $\omega N_st$ 的标定，有限样本也不等于已取得完整函数。
+
+跨多个区间的语义使用[二阶关系卷定义 110.1、定理 110.2、命题 110.4](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)。同一次保留模式在区间 $\Delta_j\ge0$ 给 $\Gamma_p(\sum_j\Delta_j)$；每段重新独立按 $p$ 抽取模式且与探针独立，给 $\prod_j\Gamma_p(\Delta_j)$。若模式按过程 $S_t$ 切换，须另供从实际初律 $p$ 出发的路径律，所需量是 $\mathbb E\exp(-i\omega\int_0^tN_{S_v}\,dv)$。该式还依赖本合同的共同 $H_{\rm ref}$ 使条件生成元交换；任意变化轴的 Hamiltonian 须用有序演化。没有把定理 24.3 的能量标定变成这些率、初态或仪器的来源；相同模式标签并不提供这一物理桥梁。
+
+**假设 24.6（能量和钟读口的外部几何比较域）。** 若将定理 24.3 的负交叉项与连续力比较，另行供应 Euclidean 三维空间、$G>0$、质量密度及物理单位。一个足够的静态数学域是 $\rho\in C_c^\infty(\mathbb R^3)$、非负，$\Phi$ 在无穷远趋零，$\int|\nabla\Phi|^2<\infty$，并采用
+
+$$
+\mathcal I[\Phi;\rho]=\frac1{8\pi G}\int|\nabla\Phi|^2\,d^3x+\int\rho\Phi\,d^3x,
+\qquad \Delta\Phi=4\pi G\rho.
+$$
+
+$\Phi$ 的单位为速度平方，$G$、$\rho$ 分别取通常的引力常数和质量密度单位，两个积分均为能量。取紧支撑变分及无穷远条件后，正算子是 $-\Delta/(4\pi G)$；其源符号对应定义 24.1 的 $+q u$。这是 [Tong §5.1.2 的 Newtonian 极限](../../../Library/Geometry/tong2021general.md)中另行选入的 Poisson 模型，不由图推导。用其衰减 Green 核，两份平滑紧支撑源的有限交叉积分为
+
+$$
+U_{\rm cross}=-G\iint\frac{\rho_1(\mathbf x)\rho_3(\mathbf y)}{|\mathbf x-\mathbf y|}\,d^3x\,d^3y.
+$$
+
+理想点源只能另取互作用部分，排除各自发散自能；对不同位置的正质量 $M_1,M_3$、实际距离 $R>0$，$U_{\rm cross}=-GM_1M_3/R$ 才给 $F_R=-\partial_RU=-GM_1M_3/R^2$。本图没有提供这个距离核，因此 $J_U<0$ 自身不推出吸引力。作为 GR 弱场解释还需 $|\Phi|/c^2\ll1$、缓慢且低压物质及相应边界条件；完整应力与几何耦合仍属假设 23.6 的另给合同。
+
+钟率的经典反比较直接用 [Tong §1.2.4 式 (1.26)](../../../Library/Geometry/tong2021general.md)：取 $c=1$、$a>0$、右楔 $1+ax>0$ 及未来定向 $dt>0$，
+
+$$
+T=(a^{-1}+x)\sinh(at),\quad X=(a^{-1}+x)\cosh(at),\qquad
+ds^2=-dT^2+dX^2=-(1+ax)^2dt^2+dx^2.
+$$
+
+这是平直空间的加速坐标，曲率零，固定 $x$ 的 $d\tau=(1+ax)dt$；离开该正楔，必须使用绝对 lapse 并另定时间方向，不能延用正率式。这里采用 $-+$ 签名，与假设 23.6 的 $+-$ 场约定不同。非均匀钟率不单独识别曲率或物质源。
+
+再以 [Will，PPN Box 2、§4.1.1 式 (59)–(60)](../../../Library/Geometry/will2014confrontation.md)作同一读口限制的经典参照。独立给 $3+1$ 维静态各向同性候选度规、$-+++$ 签名，$\Phi=-GM/r$，$G,M,c>0$，固定有限实 $\gamma$，在外部弱场区声明
+
+$$
+ds^2=-[1+2\Phi/c^2+O(\Phi^2/c^4)]c^2dt^2
++[1-2\gamma\Phi/c^2+O(\Phi^2/c^4)]d\mathbf x^2.
+$$
+
+取在所用外部路径上一致受控的光滑高阶项及其所需导数，并要求 $|\Phi|/c^2\ll1$、$|\gamma\Phi|/c^2\ll1$；各时间、空间系数保持正以维持该签名。静止 lapse 在一阶同为 $1+\Phi/c^2$，慢粒子在领先低速、弱场阶有 $\ddot{\mathbf x}=-\nabla\Phi$，不声称高阶运动相同。光学折射率却为
+
+$$
+n_\gamma=1-(1+\gamma)\Phi/c^2+O(\Phi^2/c^4).
+$$
+
+对源与观察者均在渐近无穷远、冲击参数 $b_{\rm imp}>0$、整条散射路径留在外部弱场区的光线，令 $\eta=GM/(b_{\rm imp}c^2)\ll1$ 且 $|\gamma|\eta\ll1$，引文的渐近端点特例给向内为正的偏折
+
+$$
+\delta\theta=2(1+\gamma)\eta+O(\eta^2),\qquad
+|\delta\theta|=2|1+\gamma|\eta+O(\eta^2).
+$$
+
+有限观察者应保留所引式 (59) 的几何因子；$\gamma=-1$ 时领先项为零。$\gamma=0,1$ 分别给 $2\eta,4\eta$ 的领先项，却有相同领先钟率与慢粒子落体。任意 $\gamma$ 的度规族未被声明满足同一 Einstein–物质方程。这些经典比较只列明图源、标量能量、探针相位和时空输运之间尚需供应的对象与操作；五态标签、共同场的交叉项或三均值都没有自动生成该几何。
+
+## 追加锚（本行以下为增补区）

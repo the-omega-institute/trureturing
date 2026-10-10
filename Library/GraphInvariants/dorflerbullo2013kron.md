@@ -27,3 +27,17 @@ paper's graph interpretation supplies an arbitrary-initial-state dynamic
 prediction summary. The volume's three-node vector chain compares those
 contracts explicitly: static Schur response zero, current output three real
 components, complete linear initial-state prediction nine real components.
+
+The version-specific source for affine source redistribution is
+[arXiv:1102.2950v1](https://arxiv.org/pdf/1102.2950v1), equations (1.1)–(1.2),
+(2.1)–(2.2), and Lemma 2.1(1),(3). The accompanying matrix is nonnegative;
+for a loopless Laplacian it is column stochastic. The lemma assumes a
+symmetric irreducible loopy Laplacian and at least two retained vertices.
+The singleton-boundary and disconnected-internal-block cases in
+[the static-seam continuation, Definition 24.1 and Theorem 24.3](../../docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
+use their stated grounding condition and direct finite matrices, not a claim
+that these cases literally satisfy every hypothesis of the paper's lemma.
+The source sign in that application is fixed by the term $+q^{\mathsf T}u$.
+The quadratic minimum's source-dependent constant, energy calibration and
+source-identification conditions are additional data; the accompanying
+matrix alone does not identify an internal source or its joint energy.
