@@ -118,7 +118,10 @@ theorem simplex_common_center {m : ℕ} (hm : 2 ≤ m)
     · simp [hS]
     · have hs := active_sum S hS
       have hcard : (S.card : ℝ) ≤ m := by
-        exact_mod_cast (Finset.card_le_card (Finset.filter_subset _ Finset.univ))
+        have hc : S.card ≤ m := by
+          simpa only [Finset.card_univ, Fintype.card_fin] using
+            (Finset.card_le_card (Finset.subset_univ S))
+        exact_mod_cast hc
       have hc := mul_le_mul_of_nonneg_right hcard (sub_nonneg.mpr hrw)
       rw [Finset.sum_sub_distrib, Finset.sum_const, nsmul_eq_mul]
       nlinarith [hmr]
@@ -153,8 +156,8 @@ theorem simplex_common_center {m : ℕ} (hm : 2 ≤ m)
   constructor <;> linarith
 
 
-local notation "Source" m => ↥(stdSimplex ℝ (Fin m))
-local notation "Datum" m => ℝ × (Fin m → ℝ)
+local notation "Source" => (fun m : ℕ => {p : Fin m → ℝ // p ∈ stdSimplex ℝ (Fin m)})
+local notation "Datum" => (fun m : ℕ => ℝ × (Fin m → ℝ))
 
 private def Fits {m : ℕ} (ε : ℝ) (p : Source m) (y : Datum m) : Prop :=
   |y.1 - 1| ≤ ε ∧ ∀ i, |y.2 i - (1 - p.val i)| ≤ ε
@@ -237,7 +240,7 @@ private theorem probability_estimator_lower {m : ℕ} (hm : 2 ≤ m)
         Fintype.card_fin, nsmul_eq_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
       dsimp [b]
       field_simp
-      <;> ring⟩
+      ring⟩
   refine ⟨p, y, ?_, ?_⟩
   · constructor
     · simpa only [y, sub_self, abs_zero] using hε
@@ -276,7 +279,7 @@ theorem simplex_deletion_minimax {m : ℕ} (hm : 2 ≤ m) (ε : ℝ) (hε : 0 �
     apply ENNReal.ofReal_le_ofReal
     apply hA p _
     apply (fits_iff hε p _).mpr
-    simpa only [add_sub_cancel_left] using hη
+    simpa only [add_sub_cancel_left] using (show ‖η‖ ≤ ε from hη)
   · apply le_iInf
     intro A
     obtain ⟨p, y, hp, hl⟩ := probability_estimator_lower hm ε hε A
