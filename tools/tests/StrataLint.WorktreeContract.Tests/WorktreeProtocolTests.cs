@@ -25,7 +25,26 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
         var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
-                root, sourcePath, entrance, invocation, "CleanupMakeTests"],
+                root, sourcePath, entrance, invocation, "CleanupMakeTests.test_production_cleanup_entrances"],
+            root, TimeSpan.FromSeconds(180), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
+    [InlineData("self")]
+    [InlineData("stable")]
+    public void AggregateCleanupSurvivesRepositoryRemoval(string invocation)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "spaced", "clean-all", invocation,
+                "CleanupMakeTests.test_aggregate_survives_repository_removal"],
             root, TimeSpan.FromSeconds(180), 1024 * 1024,
             standardOutput: stdout, standardError: stderr,
             interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
