@@ -87,6 +87,18 @@ theorem lowering_pow_weight {h e f : Module.End K V} (a : Sl2Relations h e f)
   push_cast
   ring
 
+/-- The lowering power as a map into its shifted weight subspace. -/
+def loweringMap {h e f : Module.End K V} (a : Sl2Relations h e f) (s : ℤ) (r : ℕ) :
+    weightSpace h s →ₗ[K] weightSpace h (s - 2 * (r : ℤ)) :=
+  ((f ^ r).comp (weightSpace h s).subtype).codRestrict _
+    (fun v => lowering_pow_weight a v.property r)
+
+/-- The raising power as a map into its shifted weight subspace. -/
+def raisingMap {h e f : Module.End K V} (a : Sl2Relations h e f) (s : ℤ) (r : ℕ) :
+    weightSpace h s →ₗ[K] weightSpace h (s + 2 * (r : ℤ)) :=
+  ((e ^ r).comp (weightSpace h s).subtype).codRestrict _
+    (fun v => raising_pow_weight a v.property r)
+
 private theorem locally_nilpotent_of_shift [FiniteDimensional K V]
     {h a : Module.End K V} {δ μ : K} (ha : h * a - a * h = δ • a) (hδ : δ ≠ 0)
     {v : V} (hv : h v = μ • v) : ∃ n : ℕ, (a ^ n) v = 0 := by
@@ -133,8 +145,9 @@ private theorem kernel_zero_of_relations {h e f : Module.End K V}
 /-- A lowering power is injective on a weight at least its exponent. -/
 theorem lowering_pow_injective [FiniteDimensional K V]
     {h e f : Module.End K V} (a : Sl2Relations h e f) (s : ℤ) (r : ℕ)
-    (hr : (r : ℤ) ≤ s) : Function.Injective (fun v : weightSpace h s => (f ^ r) (v : V)) := by
-  intro x y hxy
+    (hr : (r : ℤ) ≤ s) : Function.Injective (loweringMap a s r) := by
+  intro x y eqxy
+  have hxy := congrArg Subtype.val eqxy
   have hv : (x : V) - y ∈ weightSpace h s := Submodule.sub_mem _ x.property y.property
   obtain ⟨n, hn⟩ := raising_locally_nilpotent a hv
   have hs : 0 ≤ s := by omega
@@ -150,8 +163,9 @@ theorem lowering_pow_injective [FiniteDimensional K V]
 /-- A raising power is injective on a weight at most minus its exponent. -/
 theorem raising_pow_injective [FiniteDimensional K V]
     {h e f : Module.End K V} (a : Sl2Relations h e f) (t : ℤ) (r : ℕ)
-    (hr : t ≤ -(r : ℤ)) : Function.Injective (fun v : weightSpace h t => (e ^ r) (v : V)) := by
-  intro x y hxy
+    (hr : t ≤ -(r : ℤ)) : Function.Injective (raisingMap a t r) := by
+  intro x y eqxy
+  have hxy := congrArg Subtype.val eqxy
   have hv : (x : V) - y ∈ weightSpace h t := Submodule.sub_mem _ x.property y.property
   obtain ⟨n, hn⟩ := lowering_locally_nilpotent a hv
   have ht : 0 ≤ -t := by omega
@@ -164,6 +178,18 @@ theorem raising_pow_injective [FiniteDimensional K V]
     rw [map_sub, hxy, sub_self]
   have z := kernel_zero_of_relations (relations_symm a) hw (by omega) hn hz
   exact Subtype.ext (sub_eq_zero.mp z)
+
+private theorem lowering_injective_val [FiniteDimensional K V]
+    {h e f : Module.End K V} (a : Sl2Relations h e f) (s : ℤ) (r : ℕ)
+    (hr : (r : ℤ) ≤ s) :
+    Function.Injective ((f ^ r).comp (weightSpace h s).subtype) :=
+  (LinearMap.injective_codRestrict_iff _).mp (lowering_pow_injective a s r hr)
+
+private theorem raising_injective_val [FiniteDimensional K V]
+    {h e f : Module.End K V} (a : Sl2Relations h e f) (t : ℤ) (r : ℕ)
+    (hr : t ≤ -(r : ℤ)) :
+    Function.Injective ((e ^ r).comp (weightSpace h t).subtype) :=
+  (LinearMap.injective_codRestrict_iff _).mp (raising_pow_injective a t r hr)
 
 /-- Opposite integer weight spaces have equal dimension. -/
 theorem weight_finrank_symm [FiniteDimensional K V]
@@ -183,10 +209,12 @@ theorem weight_finrank_symm [FiniteDimensional K V]
           raising_pow_weight a v.property s.toNat)
     have hL : Function.Injective L := by
       intro x y eq
-      exact lowering_pow_injective a s s.toNat (by omega) (congrArg Subtype.val eq)
+      exact lowering_injective_val a s s.toNat (by omega)
+        (congrArg (fun z : weightSpace h (-s) => (z : V)) eq)
     have hR : Function.Injective R := by
       intro x y eq
-      exact raising_pow_injective a (-s) s.toNat (by omega) (congrArg Subtype.val eq)
+      exact raising_injective_val a (-s) s.toNat (by omega)
+        (congrArg (fun z : weightSpace h s => (z : V)) eq)
     exact le_antisymm (LinearMap.finrank_le_finrank_of_injective hL)
       (LinearMap.finrank_le_finrank_of_injective hR)
   by_cases hs : 0 ≤ s
@@ -210,7 +238,8 @@ theorem lowering_pow_surjective [FiniteDimensional K V]
         lowering_pow_weight a v.property n)
   have hL : Function.Injective L := by
     intro x z eq
-    exact lowering_pow_injective a (-t) n (by omega) (congrArg Subtype.val eq)
+    exact lowering_injective_val a (-t) n (by omega)
+      (congrArg (fun w : weightSpace h t => (w : V)) eq)
   have dim : finrank K (weightSpace h (-t)) = finrank K (weightSpace h t) := by
     have eq := weight_finrank_symm a (-t)
     rw [neg_neg] at eq
@@ -305,8 +334,9 @@ private theorem lowering_kernel_GE [FiniteDimensional K V]
   rw [← hvx]
   apply Finset.sum_eq_zero
   intro i hi
-  have inj := lowering_pow_injective a i.val r i.property
-  have z := @inj ⟨v i, hv i⟩ 0 (by simpa only [map_zero, Submodule.coe_zero] using hcomp i hi)
+  have inj := lowering_injective_val a i.val r i.property
+  have z := @inj ⟨v i, hv i⟩ 0 (by
+    simpa only [LinearMap.comp_apply, Submodule.subtype_apply, map_zero] using hcomp i hi)
   exact congrArg (fun y : weightSpace h i.val => (y : V)) z
 
 /-- The rank of a lowering power is the sum of two complementary weight tails. -/
