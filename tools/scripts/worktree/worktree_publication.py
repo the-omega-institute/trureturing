@@ -8,13 +8,14 @@ import subprocess
 import tempfile
 
 from worktree_protocol import (Refused, git, value, identity, tree_scope,
-                               path_scopes, git_scope, acquire)
+                               path_scopes, git_scope, acquire, remote_endpoint)
 
 
-def confirm(root, remote, branch, commit):
+def confirm(root, remote, branch, commit, endpoint=None):
+    endpoint = endpoint or remote_endpoint(root, remote)
     reference = "refs/heads/" + branch
     git(root, "check-ref-format", reference)
-    advertised = git(root, "ls-remote", "--exit-code", "--heads", remote, reference).stdout.splitlines()
+    advertised = git(root, "ls-remote", "--exit-code", "--heads", "--", endpoint, reference).stdout.splitlines()
     if len(advertised) != 1:
         raise Refused("remote_tip_unknown")
     tip, actual = advertised[0].split(b"\t")
@@ -22,7 +23,7 @@ def confirm(root, remote, branch, commit):
         raise Refused("remote_identity")
     tip = tip.decode("ascii")
     # Fetch the observed object, without updating tracking refs or FETCH_HEAD.
-    git(root, "fetch", "--no-write-fetch-head", "--no-tags", remote, tip)
+    git(root, "fetch", "--no-write-fetch-head", "--no-tags", "--", endpoint, tip)
     if git(root, "merge-base", "--is-ancestor", commit, tip, check=False).returncode:
         raise Refused("remote_does_not_retain_commit:" + commit)
     return dict(remote=remote, branch=branch, required_commit=commit, observed_tip=tip,
@@ -38,7 +39,14 @@ def checkpoint(options):
             raise Refused("checkpoint_message_required")
         if not paths or any(name in (".", "") for name in paths):
             raise Refused("explicit_checkpoint_paths_required")
-        path_scopes(stack, options.source, path, options.read, paths)
+        message_file = Path(options.message_file).resolve()
+        reads = list(options.read)
+        if path in message_file.parents:
+            reads.append(str(message_file.relative_to(path)))
+        else:
+            tree_scope(stack, options.source, message_file.parent)
+            path_scopes(stack, options.source, message_file.parent, reads=(message_file.name,))
+        path_scopes(stack, options.source, path, reads, paths)
         branch = git_scope(stack, options.source, path)
         if git(path, "ls-files", "--unmerged").stdout:
             raise Refused("unmerged_index")
@@ -59,7 +67,7 @@ def checkpoint(options):
             if tree == value(path, "rev-parse", parent + "^{tree}"):
                 completed = True
                 return dict(event="worktree_checkpoint", status="unchanged", commit=parent)
-            message = Path(options.message_file).read_bytes()
+            message = message_file.read_bytes()
             commit = git(path, "commit-tree", tree, "-p", parent, env=env, input=message).stdout.decode().strip()
             git(path, "update-ref", "-m", "worktree checkpoint", branch, commit, parent)
             # Update only attributed entries. Native index locking preserves concurrent
@@ -97,12 +105,13 @@ def publish(options):
         commit = value(path, "rev-parse", "--verify", options.commit + "^{commit}")
         if git(path, "merge-base", "--is-ancestor", commit, "HEAD", check=False).returncode:
             raise Refused("publication_commit_outside_branch")
+        endpoint = remote_endpoint(path, options.remote)
         # A newer remote tip already retaining this unit is sufficient; no rewind.
         try:
-            evidence = confirm(path, options.remote, options.branch, commit)
+            evidence = confirm(path, options.remote, options.branch, commit, endpoint)
         except Refused:
-            git(path, "push", "--", options.remote, commit + ":refs/heads/" + options.branch)
-            evidence = confirm(path, options.remote, options.branch, commit)
+            git(path, "push", "--", endpoint, commit + ":refs/heads/" + options.branch)
+            evidence = confirm(path, options.remote, options.branch, commit, endpoint)
         return dict(event="worktree_publication", status="confirmed", **evidence)
 
 
@@ -143,8 +152,9 @@ def prepare_mirror(options):
             raise Refused("mirror_identity_changed")
         if git(path, "merge-base", "--is-ancestor", parents[0], options.base, check=False).returncode:
             raise Refused("mirror_base_outside_integration")
-        git(path, "push", "--", options.remote, head + ":" + reference)
-        evidence = confirm(path, options.remote, options.branch, head)
+        endpoint = remote_endpoint(path, options.remote)
+        git(path, "push", "--", endpoint, head + ":" + reference)
+        evidence = confirm(path, options.remote, options.branch, head, endpoint)
         if (metadata / "locked").read_text().strip() != token:
             raise Refused("mirror_initialization_identity_changed")
         git(options.source, "worktree", "unlock", path)

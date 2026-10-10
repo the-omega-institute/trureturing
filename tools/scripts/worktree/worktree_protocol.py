@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from urllib.parse import unquote, urlsplit
 
 if __name__ == "__main__":
     sys.modules["worktree_protocol"] = sys.modules[__name__]
@@ -69,6 +70,19 @@ def value(root, *args):
 
 def common(root):
     return Path(value(root, "rev-parse", "--path-format=absolute", "--git-common-dir")).resolve()
+
+
+def remote_endpoint(root, remote):
+    result = git(root, "remote", "get-url", "--", remote, check=False)
+    endpoint = os.fsdecode(result.stdout).strip() if result.returncode == 0 else remote
+    parsed = urlsplit(endpoint)
+    if parsed.scheme == "file" or not parsed.scheme and ":" not in endpoint:
+        path = Path(unquote(parsed.path) if parsed.scheme == "file" else endpoint)
+        path = (Path(root) / path).resolve()
+        if common(path) == common(root):
+            raise Refused("remote_is_local_repository")
+        return str(path)
+    return endpoint
 
 
 def inventory(root):
@@ -175,6 +189,14 @@ def git_scope(stack, source, path):
     acquire(stack, source, "ref:" + (branch if branch != "HEAD" else metadata + ":HEAD"), True)
     acquire(stack, source, "index:" + metadata, True)
     return branch
+
+
+def read_input(source, file):
+    with ExitStack() as stack:
+        target = Path(file).resolve()
+        tree_scope(stack, source, target.parent)
+        path_scopes(stack, source, target.parent, reads=(target.name,))
+        return target.read_bytes()
 
 
 def with_command(options):
@@ -300,7 +322,7 @@ def main(argv=None):
         else:
             from worktree_publication import checkpoint, publish, finalize
             if options.paths_from:
-                options.write.extend(os.fsdecode(name) for name in options.paths_from.read_bytes().split(b"\0") if name)
+                options.write.extend(os.fsdecode(name) for name in read_input(options.source, options.paths_from).split(b"\0") if name)
             print(json.dumps(dict(checkpoint=checkpoint, publish=publish, finalize=finalize)[options.action](options)), flush=True)
         return 0
     except (Refused, OSError, ValueError, subprocess.SubprocessError) as error:
