@@ -969,3 +969,128 @@ Writing that primitive as $J$ leaves the complete target
 $I_\psi(A)=J_\infty-J(A)$. Its negative bias does not supply the
 required comparison with $J_\infty$ at these same actual integers;
 the uniform floor in (S4) on the already justified source class remains unpaid.
+
+## Transport one selected source into an actual CA price interval
+
+The Euler optimization and tangent minimum in equations (7)–(12) and
+Lemma 6 of the inspected primary give the following application. It
+quantifies the sampling requirement for a future arithmetic mean or
+exceptional-set estimate; it is not a new optimization theorem, a
+signed-tail bound, an originality claim, or Lean certification. The
+[existing quadratic tail interpolation](../Analytic/guthmaynard2024largevalues.md#finite-interpolation-without-assuming-a-prime-error-bound)
+already supplies the $A^{3/4}$ bounded-loss scale for a different
+comparison. That interpolation and the tangent minimum are reused.
+The tangent gap $R(A,b)$ below is also the existing $c_A(b)$ in
+the [Nicolas pressure application](../ArithSums/nicolas2025comparison.md),
+equation (PH1). Its global Robin maximum hypothesis is not imported
+here: the comparison uses the original source's right-tail maximality
+only at $C_b\ge N$ and retains actual Gronwall values, rather than
+identifying them with pressure away from a self-clock point.
+
+Fix the same $N\in\mathscr S_{\rm reg}$, put $A=\log N>1$,
+$L=\log A$, $T=\sqrt A L$, and retain
+
+$$
+g(b)=\frac1{b\log b},\qquad
+k(b)=-g'(b)=\frac{1+\log b}{b^2\log^2b}.
+$$
+
+For $b\ge A$, let $C_b$ be the largest full CA optimizer at price
+$g(b)$, including all activation ties and repeated prime layers. Write
+$B(b)=\log C_b$ and
+
+$$
+X_N=\log G(N)-\gamma,\qquad X(b)=\log G(C_b)-\gamma.
+$$
+
+The already cited prime-local bridge gives $N=C_A$. The full layer
+rule gives $N\mid C_b$, hence $B(b)\ge A>1$. In general $B(b)\ne b$:
+no self-clock identity, GA1 property, or tail maximality is imposed on
+the later $C_b$.
+
+Global optimization at $g(b)$ supplies
+$\log Z(N)-g(b)A\le\log Z(C_b)-g(b)B(b)$, where $Z(n)=\sigma(n)/n$.
+Lemma 6, in the logarithmic variable $t$, says that
+$F_b(t)=g(b)t-\log\log t$ has its minimum at $t=b$.
+Thus $X_N-X(b)\le F_b(A)-F_b(B(b))\le F_b(A)-F_b(b)$.
+The original $N$'s all-integer right-tail maximality separately gives
+$X(b)\le X_N$. Together these existing comparisons yield
+
+$$
+\begin{aligned}
+0\le X_N-X(b)&\le R(A,b),\\
+R(A,b)&=\log\frac{\log b}{\log A}-\frac{b-A}{b\log b}
+       =\int_A^b(u-A)k(u)\,du\\
+&\le\frac{k(A)}2(b-A)^2.
+\end{aligned}
+\tag{P1}
+$$
+
+The integral follows by differentiating the explicit tangent gap;
+the last inequality uses the existing decreasing kernel. No ordinary
+prime error has been assigned a favorable sign in this comparison.
+
+For $h>0$, define the actual-price mean
+$\mathcal M_A(h)=h^{-1}\int_A^{A+h}X(b)\,db$.
+There are finitely many CA activation events on each such interval;
+the mean is over the actual stepwise arithmetic values, with endpoint
+ties of zero integration weight. Integrating (P1) gives
+
+$$
+0\le X_N-\mathcal M_A(h)
+\le\frac1h\int_A^{A+h}(A+h-u)(u-A)k(u)\,du
+\le\frac{k(A)h^2}{6}.
+\tag{P2}
+$$
+
+At $h=A^{3/4}$ this is
+$0\le T[X_N-\mathcal M_A(h)]\le(1+1/L)/6$.
+It supplies a bounded transport cost, not an upper bound for
+$T\mathcal M_A(h)$. In the existing identity
+$I_\psi(A)+K_N(A)=-X_N$, a bound on that positive mean would still
+need an independent arithmetic supplier before it could fund (S4).
+
+### A power excess occupies a quantified price interval
+
+Use the particular fixed $\eta'\in(0,1/2)$ and $c_*>0$ supplied
+by (S2), rather than choosing a different exponent. Eventually
+$X_N\ge cA^{-\eta'}$ for some fixed $c>0$ on that selected family.
+Choose a fixed $\lambda>0$ with $\lambda^2\le c/2$, and set
+
+$$
+h_{\eta'}(A)=\lambda A^{1-\eta'/2}\sqrt{\log A}=o(A).
+$$
+
+For $L\ge1$, (P1) gives
+$R(A,A+h_{\eta'}(A))\le\lambda^2A^{-\eta'}$.
+Consequently every actual optimizer on this entire interval satisfies
+
+$$
+X(b)\ge\frac c2 A^{-\eta'}
+\qquad(A\le b\le A+h_{\eta'}(A)).
+\tag{P3}
+$$
+
+This provides a quantitative interface for the
+[existing exceptional-center sampling obstruction](../Analytic/mantovanelli2026primeworkload.md#the-remaining-signed-supplier-and-its-sampling-conditions).
+For example, put $\delta=c/(4\,2^{\eta'})$ and
+$\mathcal E_X=\{b\in[X,3X]:X(b)>\delta X^{-\eta'}\}$.
+For any selected source with $A\in[X,2X]$, (P3)'s interval lies in
+$[X,3X]$ eventually and is contained in $\mathcal E_X$. Its length
+is at least $\lambda X^{1-\eta'/2}\sqrt{\log X}$.
+An unconditional estimate
+
+$$
+|\mathcal E_X|=o\!\left(X^{1-\eta'/2}\sqrt{\log X}\right)
+\tag{P4}
+$$
+
+would therefore exclude such selected sources at all sufficiently large
+scales, contradicting the existing RH-failure supplier. Here $|\cdot|$
+is Lebesgue measure in the actual CA price variable $b$. No estimate
+(P4), or uniform upper bound for the mean in (P2), is established.
+Qualitative density $o(X)$ does not reach this required rate; an average
+over integers, prime cutoffs, moduli, or characters cannot be substituted
+without a proved transport of the averaging measure. The interval
+comparison adds no new signed ordinary-prime control and leaves the
+complete original Robin tail and RH unresolved.
