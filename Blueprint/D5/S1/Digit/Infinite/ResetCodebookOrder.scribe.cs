@@ -5,21 +5,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Infinite;
 internal sealed class ResetCodebookOrderDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Digit/Infinite/ResetCodebookOrder.";
-    private static readonly BibKey Source = BibKey.Create("mathlib2026gelfandandivt");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/mathlib2026gelfandandivt");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Reset codebooks, actual sources and weighted lower-memory graphs.",
         H("Reset codebook: Order"),
         Blocks(
-            Node("complexify", "complexify", "The mathematical data are specified by complexify(A : Matrix ι ι ℝ) : Matrix ι ι ℂ := Complex.ofRealHom.mapMatrix A.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
-            Node("radius", "radius", "The mathematical data are specified by radius(A : Matrix ι ι ℝ) : ℝ := (spectralRadius ℂ (complexify A)).toReal.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("radius_finite", "radius finite", "For the specified parameters, the following hypotheses imply the stated relation: (A : Matrix ι ι ℝ) : spectralRadius ℂ (complexify A) ≠ ∞", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("gelfand", "gelfand", "The nth root of the norm of the nth power of a finite complex matrix tends to its spectral radius. This is the classical Gelfand formula, applied to the complexification of a real matrix.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
             Node("positive_pow", "positive pow", "For the specified parameters, the following hypotheses imply the stated relation: (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (k : ℕ) : ∀ i j, 0 ≤ (A^k) i j", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("positive_pow_le", "positive pow le", "For the specified parameters, the following hypotheses imply the stated relation: (A B : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (hAB : ∀ i j, A i j ≤ B i j) (k : ℕ) : ∀ i j, (A^k) i j ≤ (B^k) i j", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("positive_norm_le", "positive norm le", "For the specified parameters, the following hypotheses imply the stated relation: (A B : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (hAB : ∀ i j, A i j ≤ B i j) : ‖complexify A‖ ≤ ‖complexify B‖", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("radius_mono", "radius mono", "For finite square real matrices A and B, entrywise nonnegativity of A and the entrywise inequality A <= B imply that the complex spectral radius of A is at most that of B. The matrices need not be symmetric or irreducible. Entrywise comparisons of all powers and their row norms are combined with the Gelfand formula.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("t_linear", "t linear", "For the specified parameters, the following hypotheses imply the stated relation: t=(1+g)/2", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("lambda_linear", "lambda linear", "For the specified parameters, the following hypotheses imply the stated relation: lambda=(1-g)/20", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("g_tight", "g tight", "For the specified parameters, the following hypotheses imply the stated relation: 236067/1000000 < g ∧ g < 236068/1000000", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("U_scalar_0", "U scalar 0", "For the specified parameters, the following hypotheses imply the stated relation: (x : ℝ) : wordScalar (U.drop 0) x = ((-257/5 : ℝ) + (1096/5 : ℝ)*g) + (-g)^6*(x-c0)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),

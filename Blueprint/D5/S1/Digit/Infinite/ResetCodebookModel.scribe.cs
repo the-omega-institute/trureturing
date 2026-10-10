@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Infinite;
 internal sealed class ResetCodebookModelDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Digit/Infinite/ResetCodebookModel.";
-    private static readonly BibKey Source = BibKey.Create("mathlib2026gelfandandivt");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/mathlib2026gelfandandivt");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Reset codebooks, actual sources and weighted lower-memory graphs.",
@@ -26,12 +26,7 @@ internal sealed class ResetCodebookModelDocument : IScribeDocumentDefinition
             Node("X", "X", "The mathematical data are specified by X(low : Bool) : ℝ := A low + rho*chi^3*E low.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("Y", "Y", "The mathematical data are specified by Y(low : Bool) : ℝ := A low + rho*chi*X low.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("coord", "coord", "The mathematical data are specified by coord(low : Bool) (D : ℝ) : ℝ := if low then c0-D else c0+D.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
-            Node("t_relation", "t relation", "For the specified parameters, the following hypotheses imply the stated relation: t^2+t=1", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("g_eq", "g eq", "For the specified parameters, the following hypotheses imply the stated relation: g=2*t-1", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("g_relation", "g relation", "For the specified parameters, the following hypotheses imply the stated relation: g^2+4*g=1", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("g_bounds", "g bounds", "For the specified parameters, the following hypotheses imply the stated relation: 4/17 < g ∧ g < 17/72", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("center", "center", "For the specified parameters, the following hypotheses imply the stated relation: c0=(1+g)/5", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("t_sq", "t sq", "For the specified parameters, the following hypotheses imply the stated relation: t^2=(1-g)/2", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("zeroAddress", "zeroAddress", "The mathematical data are specified by zeroAddress: LegalDigits := ⟨fun _ => false, by simp⟩.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("zero_state", "zero state", "For the specified parameters, the following hypotheses imply the stated relation: (s : Bool) : stateAddress s zeroAddress", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("zero_finite", "zero finite", "For the specified parameters, the following hypotheses imply the stated relation: finiteTail zeroAddress", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
@@ -93,9 +88,6 @@ internal sealed class ResetCodebookModelDocument : IScribeDocumentDefinition
             Node("history", "history", "The mathematical data are specified by history(n : ℕ) (w : ℤ → Bool) (i : ℤ) : Fin n → Bool := .", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("shiftHistory", "shiftHistory", "The mathematical data are specified by shiftHistory(n : ℕ) (v : Fin n → Bool) (c : Bool) : Fin n → Bool := .", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("history_shift", "history shift", "For the specified parameters, the following hypotheses imply the stated relation: (n : ℕ) (w : ℤ → Bool) (i : ℤ) : history n w (i+1)=shiftHistory n (history n w i) (w i)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("Vertex", "Vertex", "The mathematical data are specified by Vertex(lang : Set (ℤ → Bool)) (n : ℕ) := .", DescribeRole.Definition, AssessedProvenance.FromRepo()),
-            Node("vertexFintype", "vertexFintype", "The mathematical data are specified by vertexFintype(lang : Set (ℤ → Bool)) (n : ℕ) : Fintype (Vertex lang n) := .", DescribeRole.Definition, AssessedProvenance.FromRepo()),
-            Node("vertexDecidableEq", "vertexDecidableEq", "The mathematical data are specified by vertexDecidableEq(lang : Set (ℤ → Bool)) (n : ℕ) : DecidableEq (Vertex lang n) := .", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("vertexAt", "vertexAt", "The mathematical data are specified by vertexAt(lang : Set (ℤ → Bool)) (n : ℕ) (w : ℤ → Bool) (hw : w∈lang) (i : ℤ) : Vertex lang n := ⟨history n w i,w,hw,i,rfl⟩.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("graphAllowed", "graphAllowed", "The mathematical data are specified by graphAllowed(lang : Set (ℤ → Bool)) (n : ℕ) (v : Vertex lang n) (c : Bool) : Prop := .", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("graphNext", "graphNext", "The mathematical data are specified by graphNext(lang : Set (ℤ → Bool)) (n : ℕ) (v : Vertex lang n) (c : Bool) : Vertex lang n := .", DescribeRole.Definition, AssessedProvenance.FromRepo()),

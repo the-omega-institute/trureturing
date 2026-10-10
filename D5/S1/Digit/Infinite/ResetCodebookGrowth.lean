@@ -8,6 +8,15 @@
 
 import D5.S1.Digit.Infinite.ResetCodebookOrder
 import Mathlib.Tactic.LinearCombination
+local notation "g_bounds" => And.intro D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.1 D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.1
+local notation "g_relation" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.1
+local notation "g_eq" => D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations.2.2.2.1
+local notation "t_sq" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.2
+local notation "t_linear" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.1
+local notation "complexify" => Complex.ofRealHom.mapMatrix
+local notation "radius" => fun A => (spectralRadius ℂ (Complex.ofRealHom.mapMatrix A)).toReal
+local notation "Vertex" => fun (lang : Set (ℤ → Bool)) (n : ℕ) =>
+  {v : Fin n → Bool // ∃ w∈lang, ∃ i : ℤ, D5.S1.Digit.Infinite.ResetCodebook.Transfer.history n w i=v}
 set_option autoImplicit false
 open scoped Matrix.Norms.Operator Topology ENNReal NNReal
 open Filter
@@ -18,7 +27,7 @@ lemma radius_smul (A : Matrix ι ι ℝ) (c : ℝ) (hc : 0 ≤ c) :
     radius (c • A) = c * radius A := by
   have hh : complexify (c • A) = c • complexify A := by
     ext i j
-    simp [complexify, smul_eq_mul, Complex.ofReal_mul]
+    simp [RingHom.mapMatrix_apply, smul_eq_mul, Complex.ofReal_mul]
   apply tendsto_nhds_unique (gelfand (c • A))
   have he : ∀ᶠ k : ℕ in atTop,
       ‖complexify (c • A)^k‖ ^ (1/(k:ℝ)) = c * ‖complexify A^k‖ ^ (1/(k:ℝ)) := by
@@ -29,7 +38,7 @@ lemma radius_smul (A : Matrix ι ι ℝ) (c : ℝ) (hc : 0 ≤ c) :
 lemma positive_row_le_norm (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (i : ι) :
     (∑ j, A i j) ≤ ‖complexify A‖ := by
   have he (j : ι) : ‖(complexify A) i j‖ = A i j := by
-    simp [complexify, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hA i j)]
+    simp [RingHom.mapMatrix_apply, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hA i j)]
   calc
     _ = ∑ j, ‖(complexify A) i j‖ := by simp_rw [he]
     _ = ((∑ j : ι, ‖(complexify A) i j‖₊) : ℝ) := by simp

@@ -7,12 +7,18 @@
    digest: Source returns, bilateral histories, and pruned weighted transition matrices. -/
 
 import D5.S1.Digit.Infinite.FixedTailClosedBudget
+import D5.S1.Digit.Infinite.SixWindowForcing
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Data.List.OfFn
 import Mathlib.Order.Filter.AtTopBot.CompleteLattice
 import Mathlib.Tactic.LinearCombination
+local notation "g_bounds" => And.intro D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.1 D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.1
+local notation "g_relation" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.1
+local notation "g_eq" => D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations.2.2.2.1
+local notation "t_sq" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.2
+local notation "t_linear" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.1
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
@@ -38,22 +44,7 @@ noncomputable def E (low : Bool) : ℝ := if low then c0 else t^2-c0
 noncomputable def X (low : Bool) : ℝ := A low + rho*chi^3*E low
 noncomputable def Y (low : Bool) : ℝ := A low + rho*chi*X low
 noncomputable def coord (low : Bool) (D : ℝ) : ℝ := if low then c0-D else c0+D
-theorem t_relation : t^2+t=1 := by
-  dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
-  rw [Real.inv_goldenRatio]
-  nlinarith [Real.goldenConj_sq]
-theorem g_eq : g=2*t-1 := by
-  dsimp [g]
-  linear_combination (t-1)*t_relation
-theorem g_relation : g^2+4*g=1 := by
-  rw [g_eq]
-  nlinarith [t_relation]
-theorem g_bounds : 4/17 < g ∧ g < 17/72 := by
-  have hp : 0 < g := pow_pos (inv_pos.mpr Real.goldenRatio_pos) 3
-  have hr := g_relation
-  constructor <;> nlinarith
 theorem center : c0=(1+g)/5 := by unfold c0; rw [g_eq]; ring
-theorem t_sq : t^2=(1-g)/2 := by rw [g_eq]; nlinarith [t_relation]
 def zeroAddress : LegalDigits := ⟨fun _ => false, by simp⟩
 theorem zero_state (s : Bool) : stateAddress s zeroAddress := by simp [stateAddress,zeroAddress]
 theorem zero_finite : finiteTail zeroAddress := ⟨0, by simp [zeroAddress]⟩
@@ -327,13 +318,15 @@ lemma history_shift (n : ℕ) (w : ℤ → Bool) (i : ℤ) :
   split
   · congr 1; omega
   · congr 1; omega
-/-- Exactly the past vertices occurring in bilateral lower-language realizations. -/
-abbrev Vertex (lang : Set (ℤ → Bool)) (n : ℕ) :=
-  {v : Fin n → Bool // ∃ w∈lang, ∃ i : ℤ, history n w i=v}
-instance vertexFintype (lang : Set (ℤ → Bool)) (n : ℕ) : Fintype (Vertex lang n) :=
-  Fintype.ofFinite _
-instance vertexDecidableEq (lang : Set (ℤ → Bool)) (n : ℕ) : DecidableEq (Vertex lang n) :=
-  Classical.decEq _
+-- Past vertices are exactly those occurring in bilateral lower-language realizations.
+end
+end D5.S1.Digit.Infinite.ResetCodebook.Transfer
+local notation "Vertex" => fun (lang : Set (ℤ → Bool)) (n : ℕ) =>
+  {v : Fin n → Bool // ∃ w∈lang, ∃ i : ℤ, D5.S1.Digit.Infinite.ResetCodebook.Transfer.history n w i=v}
+namespace D5.S1.Digit.Infinite.ResetCodebook.Transfer
+open D5.S1.Digit.Infinite.ResetCodebook
+noncomputable section
+attribute [local instance] Classical.propDecidable
 def vertexAt (lang : Set (ℤ → Bool)) (n : ℕ) (w : ℤ → Bool) (hw : w∈lang) (i : ℤ) :
     Vertex lang n := ⟨history n w i,w,hw,i,rfl⟩
 def graphAllowed (lang : Set (ℤ → Bool)) (n : ℕ) (v : Vertex lang n) (c : Bool) : Prop :=

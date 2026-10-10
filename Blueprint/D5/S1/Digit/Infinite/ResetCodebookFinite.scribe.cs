@@ -1,0 +1,61 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Infinite;
+
+internal sealed class ResetCodebookFiniteDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S1/Digit/Infinite/ResetCodebookFinite.";
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/mathlib2026gelfandandivt");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Reset codebooks, actual sources and weighted lower-memory graphs.",
+        H("Reset codebook: Finite"),
+        Blocks(
+            Node("common_memory_cutoff", "common memory cutoff", "For the specified parameters, the following hypotheses imply the stated relation: (K : ℕ) (height eps : ℝ) (hh : 0 < height) (heps : 0 < eps) : ∃ n : ℕ, K ≤ n ∧ height*rho^n < eps", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("step", "step", "The mathematical data are specified by step(low : Bool) (D : ℝ) := A low+rho*D.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("run", "run", "The mathematical data are specified by run(low : Bool) (a : Return) (D : ℝ) := .", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("parameters", "parameters", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) : 0 < rho ∧ rho < 1 ∧ 0 < chi ∧ chi < 1 ∧ 0 < h low ∧ h low < E low ∧ E low ≤ 1/4", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("side_map", "side map", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (D : ℝ) : wordScalar (sideWord low) (coord low D)=coord low (step low D)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("step_iterate_bounds", "step iterate bounds", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (m : ℕ) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) : D ≤ (step low)^[m] D ∧ (step low)^[m] D ≤ h low", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("C_power_scalar", "C power scalar", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (r : ℕ) (D : ℝ) : wordScalar (wordPower r C) (coord low D)=coord low (chi^r*D)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("return_scalar", "return scalar", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (a : Return) (D : ℝ) : wordScalar (returnWord low a) (coord low D)=coord low (run low a D)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("return_cost", "return cost", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (a : Return) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) : wordCost (returnWord low a) (returnColors a) (coord low D) ≤ max (lambda-g^2*chi^a.val.2*D) (lambda-rho)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("execute", "execute", "The mathematical data are specified by execute(low : Bool) (as : List Return) (D : ℝ) := as.foldl (fun x a => run low a x) D.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("controls", "controls", "The mathematical data are specified by controls(low : Bool) : List Return → ℝ → ℝ | [], _ => 0 | a::as, D => max (lambda-g^2*chi^a.val.2*D) (controls low as (run low a D)) private theorem listWord_append (low : Bool) (as bs : List Return) : listWord low (as++bs)=listWord low as++listWord low bs := List.flatMap_append.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("run_bounds", "run bounds", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (a : Return) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) : 0 ≤ run low a D ∧ run low a D ≤ h low", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("execute_bounds", "execute bounds", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (as : List Return) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) : 0 ≤ execute low as D ∧ execute low as D ≤ h low", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("list_scalar", "list scalar", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (as : List Return) (D : ℝ) : wordScalar (listWord low as.reverse) (coord low D)=coord low (execute low as D)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("list_lengths", "list lengths", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (as : List Return) : (listWord low as).length=(listColors as).length", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("all_departure_cost", "all departure cost", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (as : List Return) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) : wordCost (listWord low as.reverse) (listColors as.reverse) (coord low D) ≤ max (controls low as D) (lambda-rho)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("anchorReturn", "anchorReturn", "The mathematical data are specified by anchorReturn: Return := ⟨(1,1),by decide,by decide⟩.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("X_bounds", "X bounds", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) : 0<X low ∧ A low<X low ∧ X low<h low", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("initial", "initial", "The mathematical data are specified by initial(low anchor : Bool) := if anchor then Y low else X low.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("initial_bounds", "initial bounds", "For the specified parameters, the following hypotheses imply the stated relation: (low anchor : Bool) : 0 ≤ initial low anchor ∧ initial low anchor ≤ h low", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("fullBudget", "fullBudget", "The mathematical data are specified by fullBudget(low anchor : Bool) (exec : List Return) := .", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("full_length", "full length", "For the specified parameters, the following hypotheses imply the stated relation: (low anchor : Bool) (exec : List Return) : (sourcePrefix low anchor exec).length=(colors anchor exec).length", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("actual_all_slots", "actual all slots", "For every finite execution list and either anchor choice, construct the high and low actual finite-tail sources together. The retained literal tails, original source prefixes, all departure color slots, exact source scalars and closed word costs refer to this same pair.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("closedRun", "closedRun", "The mathematical data are specified by closedRun(low : Bool) (m r : ℕ) (D : ℝ) := h low-rho^m*(h low-chi^r*D).", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("run_closed", "run closed", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (a : Return) (D : ℝ) : run low a D=closedRun low a.val.1 a.val.2 D", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("resetFloor", "resetFloor", "The mathematical data are specified by resetFloor(M : ℕ) := closedRun false M 1 (A false).", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("reset_lifts", "reset lifts", "For the specified parameters, the following hypotheses imply the stated relation: (M : ℕ) (z : ℝ) (hz : A false ≤ z) : resetFloor M ≤ closedRun false M 1 z", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("return_difference", "return difference", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (a : Return) (x y : ℝ) : run low a x-run low a y=rho^a.val.1*chi^a.val.2*(x-y)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("actualWeight", "actualWeight", "The mathematical data are specified by actualWeight(a : Return) := 6*a.val.1+20*a.val.2.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("return_slope", "return slope", "For the specified parameters, the following hypotheses imply the stated relation: (a : Return) : rho^a.val.1*chi^a.val.2=g^(actualWeight a)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("totalWeight", "totalWeight", "The mathematical data are specified by totalWeight(as : List Return) := (as.map actualWeight).sum.", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("fullBudget_order", "fullBudget order", "For the specified parameters, the following hypotheses imply the stated relation: (anchor : Bool) (exec : List Return) : fullBudget true anchor exec ≤ fullBudget false anchor exec", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("run_floor", "run floor", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (a : Return) (D : ℝ) (hD : 0 ≤ D) (hh : D ≤ h low) : A low ≤ run low a D", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("initial_floor", "initial floor", "For the specified parameters, the following hypotheses imply the stated relation: (low anchor : Bool) : A low ≤ initial low anchor", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("execute_floor", "execute floor", "For the specified parameters, the following hypotheses imply the stated relation: (low : Bool) (as : List Return) (D : ℝ) (hD : A low ≤ D) (hh : D ≤ h low) : A low ≤ execute low as D", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("A_nonneg", "A nonneg", "For the specified parameters, the following hypotheses imply the stated relation: 0 ≤ A false", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("auto_nonneg", "auto nonneg", "For the specified parameters, the following hypotheses imply the stated relation: (K : ℕ) : 0 ≤ Statement.autoCost K", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("fullBudget_guard", "fullBudget guard", "For the specified parameters, the following hypotheses imply the stated relation: (anchor : Bool) (K : ℕ) (d gain b : ℝ) (as : List Return) (hK : 2 ≤ K) (hb : b=lambda-g^2*chi^K*d) (hw : Statement.weak K (d+gain) as (initial false anchor)) : ∀ low, fullBudget low anchor as ≤ max (Statement.autoCost K) (b-g^2*chi^K*gain)", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("automatic_strict", "automatic strict", "For the specified parameters, the following hypotheses imply the stated relation: (K : ℕ) (hK : 2 ≤ K) : Statement.autoCost K < lambda-g^2*chi^K*h false", DescribeRole.Theorem, AssessedProvenance.FromRepo())
+        )));
+
+    private static DocumentBlock Node(string declaration, string title, string prose,
+        DescribeRole role, AssessedProvenance provenance) =>
+        Describe.Lean(DescribeId.Create("resetcodebookfinite-" + declaration.ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.WithoutFormula(), provenance,
+            Blocks(Paragraph(Text(prose))), role);
+}

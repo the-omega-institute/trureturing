@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Infinite;
 internal sealed class ResetCodebookGrowthDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Digit/Infinite/ResetCodebookGrowth.";
-    private static readonly BibKey Source = BibKey.Create("mathlib2026gelfandandivt");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/mathlib2026gelfandandivt");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Reset codebooks, actual sources and weighted lower-memory graphs.",

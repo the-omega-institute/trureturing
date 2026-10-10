@@ -11,21 +11,28 @@ import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Analysis.Normed.Algebra.GelfandFormula
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Topology.Order.IntermediateValue
+local notation "g_bounds" => And.intro D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.1 D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.1
+local notation "g_relation" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.1
+local notation "g_eq" => D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations.2.2.2.1
+local notation "t_sq" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.2
+local notation "t_linear" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.1
+local notation "complexify" => Complex.ofRealHom.mapMatrix
+local notation "radius" => fun A => (spectralRadius ℂ (Complex.ofRealHom.mapMatrix A)).toReal
+local notation "Vertex" => fun (lang : Set (ℤ → Bool)) (n : ℕ) =>
+  {v : Fin n → Bool // ∃ w∈lang, ∃ i : ℤ, D5.S1.Digit.Infinite.ResetCodebook.Transfer.history n w i=v}
 set_option autoImplicit false
 open scoped Matrix.Norms.Operator Topology ENNReal NNReal
 open Filter
 namespace D5.S1.Digit.Infinite.ResetCodebook.Spectral
 noncomputable section
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
-def complexify (A : Matrix ι ι ℝ) : Matrix ι ι ℂ := Complex.ofRealHom.mapMatrix A
-def radius (A : Matrix ι ι ℝ) : ℝ := (spectralRadius ℂ (complexify A)).toReal
 lemma radius_finite (A : Matrix ι ι ℝ) : spectralRadius ℂ (complexify A) ≠ ∞ :=
   ne_top_of_le_ne_top ENNReal.coe_ne_top (spectrum.spectralRadius_le_nnnorm _)
 lemma gelfand (A : Matrix ι ι ℝ) :
     Tendsto (fun k : ℕ => ‖complexify A ^ k‖ ^ (1 / (k : ℝ))) atTop (𝓝 (radius A)) := by
   have hh := (ENNReal.tendsto_toReal (radius_finite A)).comp
     (spectrum.pow_norm_pow_one_div_tendsto_nhds_spectralRadius (complexify A))
-  simpa only [radius, Function.comp_def, ENNReal.toReal_ofReal (Real.rpow_nonneg (norm_nonneg _) _)] using hh
+  simpa only [ Function.comp_def, ENNReal.toReal_ofReal (Real.rpow_nonneg (norm_nonneg _) _)] using hh
 lemma positive_pow (A : Matrix ι ι ℝ) (hA : ∀ i j, 0 ≤ A i j) (k : ℕ) :
     ∀ i j, 0 ≤ (A^k) i j := by
   induction k with
@@ -77,7 +84,6 @@ open D5.S1.Digit.Infinite.FixedTailClosedBudget
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Words.Powers (wordPower)
 namespace D5.S1.Digit.Infinite.ResetCodebook
-theorem t_linear : t=(1+g)/2 := by rw [g_eq]; ring
 theorem lambda_linear : lambda=(1-g)/20 := by unfold lambda; rw [t_sq]; ring
 theorem g_tight : 236067/1000000 < g ∧ g < 236068/1000000 := by
   have hb:=g_bounds
