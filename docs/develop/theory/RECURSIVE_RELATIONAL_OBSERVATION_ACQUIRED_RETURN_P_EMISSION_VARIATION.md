@@ -835,3 +835,273 @@ A. Yu. Mitrophanov, *Sensitivity and convergence of uniformly ergodic Markov cha
 **Definition 9.6 (remaining joint problem and completion criterion).** The original unrestricted quantity is still $\inf_M e(M)$ over all lawful finite COMPLETE observers for the same installed prior, with both risk interfaces and all original positive histories belonging to each one observer. Whether this infimum is zero and whether a finite member attains it remain unresolved by (9.18). The inequality is consistent with a positive unrestricted gap, an unattained zero infimum, or an exact common attainer with sufficiently large actual-return variation. A zero-infimum construction must provide one lawful finite observer per tolerance, with both full-domain excesses tending to zero; a finite-attainment construction must supply one table satisfying both complete phase bounds for every supported depth and its original-domain realization. The positive necessity (9.24), like the supplied alpha, heterogeneity and continuation necessities, is an additional joint condition for such a construction and is not sufficient for one. A positive unrestricted-gap proof must remove the unconstrained variation term by a further original-contract argument; a stationary finite grid or separate phase optimizers do not do so.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Linear compatibility stability on the unchanged acquired circulation
+
+**Definition 10.1 (the original compatibility functional).** Use the regular stationary table of Definition 2.2: finite carriers $X,Y$, stochastic actual acquired kernels $B,A$, probability rows $\pi,\tau$ with $\pi B=\tau$ and $\tau A=\pi$, emissions $u_x,v_y\in[a,b]=[1/3,2/5]$, and the complete laws (2.3). Delete only zero-row labels by the support-closed rule of Citation 2.1. The configuration-risk inequalities (2.4) are not part of the hypotheses in this definition. Retain $E_p,E_\beta,T_a,q_*$ from Citation 2.3 and exactly $\chi,\zeta_0$ from (3.1). Put
+
+$$
+\begin{aligned}
+\mathcal C={}&\pi Q(E_p)-\chi\tau W(E_\beta)-\zeta_0\\
+&-106\sum_x\pi_x(b-u_x)\bigl(Q_x(w_{2,1})-T_a\bigr)\\
+&-365\sum_x\pi_x(u_x-a)\bigl(Q_x(w_{3,1})-q_*\bigr)\\
+&+\frac1{10}\sum_x\pi_x(u_x-a)(b-u_x),\\
+V_\pi={}&\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}|u_x-u_{x'}|.
+\end{aligned}
+\tag{10.1}
+$$
+
+Thus $\mathcal C$ is the left side minus the right side of (3.2), and $V_\pi$ is exactly (9.2). Its acquired-return weights are unweighted by synthetic emission or survival probabilities. An actual transition is never deleted because a predicted letter has probability zero.
+
+**Theorem 10.2 (unconditional linear weighted-return compatibility).** Every table of Definition 10.1 satisfies
+
+$$
+\mathcal C\le5000V_\pi.
+\tag{10.2}
+$$
+
+The constant is independent of the finite carriers, their stochastic entries and their stationary masses. No configuration-risk, irreducibility, reversibility, mixing or additional resource hypothesis is imposed. At $V_\pi=0$, (10.2) is exactly the original compatibility inequality (3.2).
+
+Proof. Take the stationary alternating analysis chain
+
+$$
+X_0\ \xrightarrow{B}\ Y_0\ \xrightarrow{A}\ X_1
+\ \xrightarrow{B}\ Y_1\ \xrightarrow{A}\ X_2\ \cdots,
+\qquad X_0\sim\pi.
+$$
+
+Set $c_i=u_{X_i}$, $U_i=1-c_i$ and $V_i=v_{Y_i}$. The two flow identities imply stationarity under a shift of one complete $BA$ pair, including all joint finite windows. Consequently
+
+$$
+\mathbb E|c_{i+1}-c_i|=V_\pi,
+\qquad
+\mathbb E|c_i-c_0|\le iV_\pi.
+\tag{10.3}
+$$
+
+The second assertion follows by the triangle inequality and the first one. This chain describes finite compositions of the actual acquired kernels. It does not condition the original source on infinite noncompletion, and its index is not a runtime clock.
+
+For $0\le j\le3$, let
+
+$$
+t_j=\left(\prod_{i=0}^{j}U_i\right)
+       \left(\prod_{i=0}^{j-1}V_i\right)(1-V_j),
+\qquad
+H^{\rm act}=1-V_0+V_0U_1(1-V_1),
+\tag{10.4}
+$$
+
+where an empty product equals one. Iterating the exact individual generation equations (2.3) gives, for any real function $g$ on $[a,b]$,
+
+$$
+\sum_x\pi_xg(u_x)Q_x(w_{j,1})
+=\mathbb E[g(c_0)t_j],
+\qquad
+\tau W(E_\beta)=\mathbb EH^{\rm act}.
+\tag{10.5}
+$$
+
+Indeed $w_{j,1}$ has $j$ noncompleting beta-alpha pairs, followed by p-beta and suspended-beta. Its successive synthetic probabilities are $U_iV_i$ for $i<j$ and $U_j(1-V_j)$ at the end; the intervening transitions are precisely the displayed $B,A$ path. The suspended event has immediate beta probability $1-V_0$, or alpha followed by $w_{0,1}$ with probability $V_0U_1(1-V_1)$. In particular its p factor before comparison is $U_1$, not $U_0$. These identities expand finite words of the complete laws; they neither normalize a weighted return kernel nor replace either complete law.
+
+Replace only the later p factors in these finite expressions by $U_0$:
+
+$$
+t_j^0=U_0^{j+1}\left(\prod_{i=0}^{j-1}V_i\right)(1-V_j),
+\qquad
+H^0=1-V_0+U_0V_0(1-V_1).
+\tag{10.6}
+$$
+
+All factors lie in $[0,1]$. The identity obtained by changing one factor at a time therefore yields
+
+$$
+|t_j-t_j^0|\le\sum_{i=1}^{j}|c_i-c_0|,
+\qquad
+|H^{\rm act}-H^0|\le|c_1-c_0|.
+$$
+
+Together with (10.3), this gives
+
+$$
+\mathbb E|t_j-t_j^0|\le\frac{j(j+1)}2V_\pi,
+\qquad
+\mathbb E|H^{\rm act}-H^0|\le V_\pi.
+\tag{10.7}
+$$
+
+For a fixed $c\in[a,b]$ and $z=(z_0,z_1,z_2,z_3)\in[a,b]^4$, put $U=1-c$ and
+
+$$
+\begin{aligned}
+P(c,z)&=U(1-z_0)+U^2z_0(1-z_1)+U^3z_0z_1(1-z_2),\\
+H(c,z)&=1-z_0+Uz_0(1-z_1)=1-cz_0-Uz_0z_1,\\
+T(c,z)&=U^3z_0z_1(1-z_2),\\
+Z(c,z)&=U^4z_0z_1z_2(1-z_3),\\
+f_c(z)&=P(c,z)-\chi H(c,z)-\zeta_0\\
+&\quad-106(b-c)(T(c,z)-T_a)-365(c-a)(Z(c,z)-q_*)\\
+&\quad+\frac1{10}(c-a)(b-c).
+\end{aligned}
+\tag{10.8}
+$$
+
+Define $F^0=\mathbb Ef_{c_0}(V_0,V_1,V_2,V_3)$. By (10.5), this is exactly the expression for $\mathcal C$ with $t_j,H^{\rm act}$ replaced by $t_j^0,H^0$. The two root weights still use $c_0$; constants and the tent term have not changed. Since $b-a=1/15$ and $0<\chi<2$, (10.7) implies
+
+$$
+\begin{aligned}
+|\mathcal C-F^0|
+&\le\left(1+3+\chi+\frac{106}{15}\,3
+                         +\frac{365}{15}\,6\right)V_\pi\\
+&\le174V_\pi.
+\end{aligned}
+\tag{10.9}
+$$
+
+The first two errors are those for $w_{1,1},w_{2,1}$ in $E_p$; $w_{0,1}$ has zero error. The bounds for the weighted $w_{2,1}$ and $w_{3,1}$ use their nonnegative root weights bounded by $106/15$ and $365/15$. The displayed coefficient is $4+\chi+106/5+146<174$.
+
+We now control $F^0$ on the same joint chain. Regard the binary endpoint tuple $z\in\{a,b\}^4$ as an edge
+
+$$
+(z_0,z_1,z_2)\longrightarrow(z_1,z_2,z_3)
+\tag{10.10}
+$$
+
+of the eight-vertex overlap graph from Section 3, with edge weight $f_c(z)$. On a cyclic word $s$, the mean of its $j$th word term is $U^{j+1}(n_j(s)-n_{j+1}(s))$, and the mean of $H$ is $1-cn_1(s)-Un_2(s)$. Hence its mean edge weight is exactly $R_s(15(b-c))$ of (3.7): $U-3/5=b-c$ and $2/3-U=c-a$. The supplied complete simple-cycle certificate (3.7)–(3.8) therefore gives nonpositive total weight on every directed simple cycle, for every $c\in[a,b]$. It is reused without a second cycle enumeration. Any closed walk has nonpositive total weight, since successively cutting at repeated vertices decomposes it into directed simple cycles.
+
+For each vertex $s$ define $h_c(s)$ as the maximum total $f_c$ weight of a vertex-simple directed path starting at $s$, allowing any endpoint and the zero-length path. Such paths have at most seven edges and form a finite set. Deleting a nonpositive cycle from any walk cannot decrease its total weight and preserves its start and endpoint. Thus $h_c(s)$ is also the maximum over all finite walks starting at $s$. Prepend an edge $s\to t$ to a maximizing path starting at $t$ and delete cycles if needed. It follows that
+
+$$
+f_c(s\to t)\le h_c(s)-h_c(t).
+\tag{10.11}
+$$
+
+This finite-path shortening is the sign-reversed elementary step in [KARP, Lemma 1 proof, printed p.2]. It is used here inside the source-specific proof, without any graph hypothesis about the actual acquired carrier.
+
+The potential can be chosen uniformly Lipschitz in its parameter. For every endpoint tuple in (10.8), direct differentiation gives
+
+$$
+|\partial_cP|\le1+2+3=6,\qquad
+|\partial_cH|=z_0(1-z_1)\le1,\qquad
+|\partial_cT|\le3,\qquad |\partial_cZ|\le4.
+$$
+
+Both $T,T_a$ and $Z,q_*$ lie in $[0,1]$, so their corresponding absolute differences are at most one. Also
+
+$$
+\left|\partial_c\frac{(c-a)(b-c)}{10}\right|
+=\frac{|a+b-2c|}{10}\le\frac1{150}.
+$$
+
+The product rule, the two root weights at most $1/15$, and $\chi<2$ consequently give
+
+$$
+|\partial_cf_c(z)|
+\le6+2+106\left(1+\frac3{15}\right)
+        +365\left(1+\frac4{15}\right)+\frac1{150}
+=\frac{89631}{150}<600.
+\tag{10.12}
+$$
+
+Every simple-path weight is therefore $4200$-Lipschitz as a function of $c$. The finite maximum defining $h_c(s)$ has the same bound: if each path function changes by at most $4200|c-d|$, taking its maximum at the two parameters preserves that inequality in both directions. Hence
+
+$$
+|h_c(s)-h_d(s)|\le4200|c-d|
+\quad(c,d\in[a,b]).
+\tag{10.13}
+$$
+
+This argument also applies at ties between maximizing paths and at zero-weight cycles.
+
+Conditionally on the entire acquired analysis path, round each $V_i$ independently to $\xi_i\in\{a,b\}$, with
+
+$$
+\Pr(\xi_i=b\mid\text{path})=\frac{V_i-a}{b-a},
+\qquad \mathbb E(\xi_i\mid\text{path})=V_i.
+\tag{10.14}
+$$
+
+Distinct time positions use independent proof coins, even when the same suspended configuration recurs. The expression $f_c$ is affine separately in each of its four $z$ arguments. Conditional independence thus preserves each of its monomials, including all their correlations with $c_0$:
+
+$$
+F^0=\mathbb Ef_{c_0}(\xi_0,\xi_1,\xi_2,\xi_3).
+\tag{10.15}
+$$
+
+The rounded joint process stays stationary under the shift of one acquired pair. Put $S_i=(\xi_i,\xi_{i+1},\xi_{i+2})$. In particular $(c_0,S_0)$ and $(c_1,S_1)$ have the same distribution. Apply (10.11) to the edge $S_0\to S_1$ at its actual parameter $c_0$, use this joint stationarity, and then (10.13):
+
+$$
+\begin{aligned}
+F^0
+&\le\mathbb E\bigl[h_{c_0}(S_0)-h_{c_0}(S_1)\bigr]\\
+&=\mathbb E\bigl[h_{c_1}(S_1)-h_{c_0}(S_1)\bigr]\\
+&\le4200\mathbb E|c_1-c_0|=4200V_\pi.
+\end{aligned}
+\tag{10.16}
+$$
+
+All expectations are finite because the graph is finite and its path weights are bounded on the compact parameter interval. The equality does not assume stationarity conditional on $c_0$, independence between p and suspended emissions, or independence of the acquired configurations. Such a conditional-stationarity premise would be unjustified when $u$ varies.
+
+Combining (10.9) and (10.16) gives $\mathcal C\le4374V_\pi\le5000V_\pi$. The stated constant is merely sufficient. If $V_\pi=0$, every nonnegative summand defining $V_\pi$ in (10.1) vanishes, so every positive stationary actual $BA$ edge conserves $u$. All finite-product errors and the potential increment in this proof vanish as well, giving $\mathcal C\le0$, precisely (3.2). The argument alters no emission, acquired kernel, stationary row, target or complete law of the given table. Its paths, rounding coins and potentials are analysis objects. $\square$
+
+**Corollary 10.3 (same-table endpoint concentration).** Add exactly the simultaneous configuration-risk bounds (2.4) to the table of Definition 10.1, with the same two rows, nonnegative slacks and every supported depth, including both original endpoints. Put $\epsilon=\max(\epsilon_p,\epsilon_\beta)$ and $J=\pi[(u-a)(b-u)]$. Then
+
+$$
+\begin{aligned}
+J
+&\le50000V_\pi+\frac{1490}{3}\epsilon_p+10\chi\epsilon_\beta\\
+&\le50000V_\pi+520\epsilon,\\
+\pi\operatorname{dist}(u,\{a,b\})
+&\le1500000V_\pi+15600\epsilon.
+\end{aligned}
+\tag{10.17}
+$$
+
+For $0<d\le1/30$,
+
+$$
+\pi\{a+d\le u\le b-d\}
+\le\min\left\{1,
+\frac{50000V_\pi+520\epsilon}{d(1/15-d)}\right\}.
+\tag{10.18}
+$$
+
+Proof. Write $L=\pi Q(E_p)-\chi\tau W(E_\beta)-\zeta_0$ and let $G$ be the sum of the two weighted coordinate terms subtracted in (10.1). Identity (3.1) and (2.5) give $-L\le\epsilon_p+\chi\epsilon_\beta$. The two weights are nonnegative and bounded by $106/15$ and $365/15$; the larger bound is $73/3$. Equation (2.6) bounds the sum of the two selected upper-coordinate positive violations by $2\epsilon_p$. Thus $G\le(146/3)\epsilon_p$, even when one of its terms is negative. Rearranging (10.2) yields
+
+$$
+\frac J{10}\le5000V_\pi-L+G
+\le5000V_\pi+\frac{149}{3}\epsilon_p+\chi\epsilon_\beta.
+\tag{10.19}
+$$
+
+Since $149/3+\chi<52$, this proves the first line of (10.17), including zero slack. For $u\in[a,b]$, its nearer endpoint distance is at most $30(u-a)(b-u)$: the farther endpoint distance is at least $1/30$. This proves the second bound. On $[a+d,b-d]$ the tent is at least $d(1/15-d)$, proving (10.18). Both configuration risks and the variation have been evaluated on this one actual stationary table. Configuration TV remains inside its configuration average; a bound only on the marginalized law would not supply (2.6). No supported nonendpoint is needed for these concentration bounds, while any such depths remain in (2.4). $\square$
+
+Concentration of $u$ alone does not identify $Q_x$ with a native endpoint law. The acquired-class invariance used in Proposition 4.1 is not assumed here, so its complete-law endpoint recovery is not inferred for a varying-$u$ table.
+
+**Corollary 10.4 (necessary extracted and clipped concentration for an original observer).** Let $M$ satisfy Definitions 1.1–1.3 for its one fixed finite or countable prior, with $\mu(1),\mu(2)>0$. Use the one common-row extraction on (1.5) of [PAID97, Lemma 14.1], followed by the emission clipping of Citation 2.1, keeping the extracted actual kernels and both rows. Denote its clipped p emission by $\widehat u$ and its variation by $\widehat V_\pi$. Then this same extracted, regenerated regular table satisfies
+
+$$
+\begin{aligned}
+\widehat{\mathcal C}&\le5000\widehat V_\pi
+                         \le5000\mathcal V(M),\\
+\pi[(\widehat u-a)(b-\widehat u)]
+&\le\frac{31720}{11}e(M)+50000\mathcal V(M).
+\end{aligned}
+\tag{10.20}
+$$
+
+Writing $N_M=31720e(M)/11+50000\mathcal V(M)$, the same table also satisfies $\pi\operatorname{dist}(\widehat u,\{a,b\})\le30N_M$ and, for $0<d\le1/30$, $\pi\{a+d\le\widehat u\le b-d\}\le\min\{1,N_M/[d(1/15-d)]\}$. All supported depths retain their configuration-risk bounds on these same extracted rows.
+
+Proof. The initialized paid-history extraction retains the actual-return statistic on the same Cesaro rows as both phase losses, as established in (9.19). Thus the unclipped extracted variation is at most $\mathcal V(M)$. Scalar clipping is 1-Lipschitz and retains $B,A,\pi,\tau$, so (9.20) gives $\widehat V_\pi\le\mathcal V(M)$. The common-row clipping consequence (2.2), supplied by [CLIP97, Theorem 3.1], bounds both clipped slacks by $61e(M)/11$, simultaneously for every supported depth. Apply Theorem 10.2 and Corollary 10.3 to this one table, and use $520\cdot61=31720$. These extraction and clipping steps require no supported nonendpoint for this conclusion. $\square$
+
+The assertions in (10.20) concern the extracted clipped stationary emissions and their regenerated complete laws. They do not assert the same functional inequality for unclipped emissions outside $[a,b]$, or concentration at every original history. Original transient labels and every positive paid history remain in the suprema defining $e(M)$ and $\mathcal V(M)$; omission from a stationary support removes no original risk obligation. The extraction begins with the original source-independent initialization before the first paid seed Read, not a substituted stationary initialization of the actual observer.
+
+**Mathematical citation 10.5 (source-specific deduction and bounded literature scope).** Theorem 10.2 is `repo-derived` ordinary mathematics. Its supplied source-specific inputs are (2.1), (2.3), the original functional coefficients, and the conserved-parameter cycle certificate (3.7)–(3.8). The new deduction transfers that fixed finite certificate with a Lipschitz parameter potential on the actual joint circulation and bounds the finite-word p-factor changes by its unweighted return variation. Corollary 10.3 reuses the endpoint consequences (2.5)–(2.6), and Corollary 10.4 reuses the initialized common-row extraction and risk-controlled clipping identified in Citation 9.5. Theorem 9.2 already supplies a conservative comparison of complete laws by a repaired table, and Theorem 9.3 consumes its square-root error. Neither result is a premise of the unconditional functional proof above; the extraction consequences (9.19)–(9.20) are used only for the original-observer corollary.
+
+**KARP:** Richard M. Karp, *A Characterization of the Minimum Cycle Mean in a Digraph*, memorandum UCB/ERL M77/47, [original report](https://www2.eecs.berkeley.edu/Pubs/TechRpts/1977/ERL-m-77-47.pdf), Lemma 1 proof, printed p.2. The report reduces its minimum-cycle-mean problem to strongly connected components, then assumes a strongly connected graph; its full Lemma 1 assumes minimum cycle mean zero. The particular intermediate fact used here is its no-negative-cycle path-shortening step: a minimum-weight walk can be taken with fewer than the number of vertices in edges. Sign reversal gives the nonpositive-cycle formulation explicitly proved before (10.11). No minimum-cycle-mean formula, shortest-path algorithm, zero-cycle existence or strong-connectivity premise is transferred to the actual return kernel. The parameter estimate (10.12)–(10.16) and the stopped-source coefficients are not conclusions of that report.
+
+The finite-graph potential, cycle deletion, conditional rounding, product telescoping and stationary cancellation are mature intermediate methods, not separately new general theory. The supplied [CK, Section 4, Theorem 7 and Corollary 8] concerns approximation of TV between two specified initial laws of a labelled Markov chain, rather than the universal joint acquired-return functional (10.1). These are bounded method and source correspondences. The source-specific deduction carries no claim of global literature priority, exhaustive literature coverage or unrestricted optimality.
+
+**Definition 10.6 (original-domain and spatial obligations retained by this necessary test).** Sections 1–2 retain the complete original carrier and fixed COMPLETE cap per observer, the paid parser and four-marker tree, both seeds, the once-sampled shared $K$, actual histories and permissions, the third-write-before-latch rule, held records, both interfaces, complete tails including noncompletion, and the original completion and Stop delivery. In a regular table, the infinite outcomes have mass zero by the same survival bound $4/15$; they are not discarded or used for conditioning. In an original observer, zero or unit synthetic emissions and possible noncompletion are allowed before the supplied clipping comparison. Their actual acquired updates, including edges of zero synthetic probability, remain part of the original contract. The proof constructs no runtime sampler, observable row, posterior port, clock, source query, reset or compensation operation. Original Read, refusal, beta-empty updates, Stop and graft obligations keep their domains wherever applicable, together with the actual clocks, lifetime and every resource account. The extraction and clipping retain their stated comparison scopes and establish no preservation of a prescribed COMPLETE, hard-defect or total-resource budget.
+
+The same-source spatial programme continues to require complete ordered and symmetric mixed traces, both cross blocks, arbitrary joint correlations and actual same-inverse LINEAR compensation, together with its original source, operation, metric, acquisition, recovery, clock and resource correspondences. The common calibration and menu-closure hypotheses of [the internal three-axis interface, Section 10](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md) and the retained obligations of [GEOM, Definition 78.12] remain separate. Neither endpoint concentration, the eight-vertex proof graph nor an analysis coordinate rank supplies those correspondences or selects physical dimension three. The inequality is a necessary finite-response constraint; it supplies no unrestricted impossibility, attainment, infimum conclusion or fixed-resource improvement.
+
+## 追加锚（本行以下为增补区）
