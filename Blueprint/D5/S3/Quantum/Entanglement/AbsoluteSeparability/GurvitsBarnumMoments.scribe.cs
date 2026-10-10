@@ -35,6 +35,11 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
         "Finite fourth roots of unity, corrected by standard basis vectors, reproduce the two pairings of fourth moments.",
         H("Corrected finite fourth moments"), Blocks(
             Paragraph(Text("For z indexed by Fin d, let q(T,z) be the sum of conjugate(z_i) z_j T_ij. Let L_d(f) be the sum of f over all vectors with coordinates in {1,i,-1,-i}, plus 4^d times the sum of f over the standard basis vectors. The basis term supplies the additional contribution when all four indices coincide. These formulas include d = 0.")),
+            Describe.Lean(DescribeId.Create("gb-design-sum-definition"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.designSum"),
+                H("The corrected phase sum"), StatementSource.FromAuthor(Disp(DesignSumDefinition())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The corrected phase sum evaluates f at every phase vector indexed by a function Fin d to Fin 4, then adds 4^d times its sum over standard basis vectors. Here phase(s) is Complex.I raised to s.val. Both evaluation sums include all elements of their indicated finite types."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("gb-design-sum"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.designSum_sum"),
                 H("Finite additivity"), StatementSource.FromAuthor(Disp(Additivity())),
@@ -43,6 +48,11 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.re_designSum_mono"),
                 H("Real monotonicity"), StatementSource.FromAuthor(Disp(Monotonicity())),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Every weight in L is nonnegative, so it preserves pointwise inequalities of real parts."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("gb-quadratic-definition"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.quadratic"),
+                H("A finite complex quadratic form"), StatementSource.FromAuthor(Disp(QuadraticDefinition())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The quadratic form contracts a vector on Fin d against a complex matrix by summing conjugate(z_i) z_j T_ij over both indices."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("gb-design-quadratic-product"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.quadratic_product_sum"),
                 H("Two quadratic forms"), StatementSource.FromAuthor(Disp(Product())),
@@ -82,4 +92,43 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
                     Sum("i", Index, Sum("j", Index,
                         Mul(Call("T", i, j), Call("U", j, i)))))))))));
     }
+
+    private static Formula DesignSumDefinition()
+    {
+        var d = F.Id("d");
+        var f = F.Id("f");
+        var i = F.Id("i");
+        var a = F.Id("a");
+        var vector = new Formula.TypeArrow(Index, C);
+        var functional = new Formula.TypeArrow(Par(vector), C);
+        var phaseIndex = new Formula.TypeArrow(Index, Call("Fin", D(4)));
+        var phaseVector = Fun("i", Index, Call("phase", Call("z", i)));
+        var basisVector = Fun("i", Index,
+            Seq(F.Id("if"), Sp, Eq(i, a), Sp, F.Id("then"), Sp, D(1), Sp, F.Id("else"), Sp, D(0)));
+        var phaseSum = SumTyped("z", Par(phaseIndex), Call("f", phaseVector));
+        var basisSum = SumTyped("a", Index, Call("f", basisVector));
+        var weighted = Mul(Power(Par(Seq(D(4), Colon, C)), d), Par(basisSum));
+        return All("d", N, All("f", functional,
+            Eq(Par(Seq(Call("designSum", f), Colon, C)), Seq(Par(phaseSum), Plus, weighted))));
+    }
+
+    private static Formula QuadraticDefinition()
+    {
+        var t = F.Id("T");
+        var z = F.Id("z");
+        var i = F.Id("i");
+        var j = F.Id("j");
+        var vector = new Formula.TypeArrow(Index, C);
+        var matrix = Call("Matrix", Index, Index, C);
+        var summand = Mul(Mul(Call("conj", Call("z", i)), Call("z", j)), Call("T", i, j));
+        var body = SumTyped("i", Index, SumTyped("j", Index, summand));
+        return All("d", N, All("T", matrix, All("z", vector,
+            Eq(Par(Seq(Call("quadratic", t, z), Colon, C)), body))));
+    }
+
+    private static Formula SumTyped(string name, Formula type, Formula body) =>
+        Seq(new Formula.Subscript(F.Sum, Par(Seq(F.Id(name), Colon, type))), Sp, body);
+
+    private static Formula Fun(string name, Formula type, Formula body) =>
+        Par(Seq(LambdaLower, Sp, Par(Seq(F.Id(name), Colon, type)), Sp, Mapsto, Sp, body));
 }
