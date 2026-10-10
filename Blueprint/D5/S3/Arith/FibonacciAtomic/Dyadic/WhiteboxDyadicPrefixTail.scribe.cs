@@ -22,9 +22,11 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
     private static Formula E(Formula f) => Call("E", f);
     private static DocumentBlock Thm(string n, string title, Formula f, string prose)
     {
-        var declaration = n.StartsWith("Paths.")
-            ? n.Substring("Paths.".Length)
-            : n;
+        var declaration = n == "Paths.path_expectation"
+            ? "path_expectation"
+            : n == "Paths.path_law"
+                ? "path_law"
+                : n;
         return Describe.Lean(DescribeId.Create(n.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
             // Formal GIDs admit one final declaration selector. The resolver matches that
             // selector against the unique full Lean name, so nested Paths declarations retain
