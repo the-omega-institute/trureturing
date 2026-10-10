@@ -214,6 +214,29 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertFalse(publication.member(self.output, '.input.attestation').exists(),
                          '[FAIL] failed_scoped_entry_has_no_success_seal')
 
+    def test_native_scope_includes_external_consumer_and_checks_its_closure(self):
+        self.ensure()
+        self.write('D5/ConsumerSupport.lean', 'def consumerSupport : Nat := 1\n')
+        self.write('D5/Consumer.lean', 'import D5.A\nimport D5.ConsumerSupport\n'
+                   'def consumed : Nat := value + consumerSupport\n')
+        self.write('D5/Alone.lean', 'this unrelated sibling deliberately does not compile\n')
+        self.write('scope-inputs.json', json.dumps([
+            dict(modulePath='D5/A.lean', inputModules=['D5.Consumer']),
+            dict(modulePath='D5/B.lean', inputModules=['D5.Alone'])]))
+        self.scoped('D5.A')
+        self.assertEqual(set(self.rows()), {'D5.A', 'D5.B', 'D5.Consumer', 'D5.ConsumerSupport'},
+                         '[FAIL] selected_target_consumer_and_imports_are_reported')
+        self.assertFalse((self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip').exists(),
+                         '[FAIL] dependency_utility_does_not_add_unrequested_reverse_dependencies')
+        self.verify('D5.A')
+        self.write('D5/ConsumerSupport.lean', 'def consumerSupport : Nat := 2\n')
+        self.verify('D5.A', success=False)
+        self.scoped('D5.A')
+        self.write('D5/Consumer.lean', 'this selected consumer deliberately does not compile\n')
+        self.assertNotEqual(self.scoped('D5.A', success=False).returncode, 0,
+                            '[FAIL] consumer_compilation_is_required')
+        self.assertFalse(publication.member(self.output, '.input.attestation').exists())
+
 
 if __name__ == '__main__':
     scenario = sys.argv[1]

@@ -15,6 +15,7 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
     [Theory]
     [InlineData("test_native_scope_uses_only_explicit_module_facets")]
     [InlineData("test_native_scope_tracks_changed_imports_and_external_utility_claims")]
+    [InlineData("test_native_scope_includes_external_consumer_and_checks_its_closure")]
     [InlineData("test_native_cached_scope_still_builds_program_and_clears_failure_seal")]
     public void ScopedProducerNativeContract(string scenario) => Run(scenario, native: true);
 

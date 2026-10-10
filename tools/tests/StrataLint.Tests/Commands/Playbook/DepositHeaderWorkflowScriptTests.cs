@@ -261,7 +261,7 @@ public sealed class DepositHeaderUtilityTests
     }
 
     [Fact]
-    public void ScopedDepositRejectsUnimportedUtilityConsumerWithoutInventingEvidence()
+    public void ScopedDepositIncludesUnimportedUtilityConsumerWithoutInventingEvidence()
     {
         var fixture = new RuleFixture();
         AddUtility(fixture, "kind=numeric-reduction; "
@@ -269,8 +269,33 @@ public sealed class DepositHeaderUtilityTests
 
         var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
 
+        Assert.Equal(0, result.ExitCode);
+    }
+
+    [Fact]
+    public void ScopedDepositRejectsMissingUnimportedUtilityConsumerEvidence()
+    {
+        var fixture = new RuleFixture();
+        AddUtility(fixture, "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
+        fixture.Reports.Remove("D5/S0/Carrier/ValuesBinding.lean");
+
+        var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+
+        Assert.NotEqual(0, result.ExitCode);
+    }
+
+    [Fact]
+    public void ScopedDepositRejectsUnimportedUtilityConsumerWithMissingDeclaration()
+    {
+        var fixture = new RuleFixture();
+        AddUtility(fixture, "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.absent; premises=D5/S0/Carrier/Ring.goldenRing");
+
+        var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+
         Assert.Equal(1, result.ExitCode);
-        Assert.Contains("target_module=D5/S0/Carrier/ValuesBinding.lean reason=current-lean-report-missing", result.Output);
+        Assert.Contains("target=D5/S0/Carrier/ValuesBinding.absent", result.Output);
     }
 
     [Fact]

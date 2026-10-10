@@ -117,6 +117,32 @@ public sealed class RawLeanReportArtifactTests
     }
 
     [Fact]
+    public void ScopeIncludesTargetUtilityInputsAndImportsWithoutFollowingDependencyConsumers()
+    {
+        var fixture = UtilityAdmissionTestSupport.InstanceFixture(
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; "
+            + "premises=D5/S0/Carrier/Premise.fact");
+        fixture.Files[RuleFixture.ValuesBindingPath] = "import D5.S0.Carrier.ConsumerSupport\ndef fixtureValue := 0\n";
+        fixture.Files["D5/S0/Carrier/ConsumerSupport.lean"] = "def support := 0\n";
+        fixture.Files["D5/S0/Carrier/Premise.lean"] = "def fact := 0\n";
+        fixture.Files["D5/S0/Carrier/Sibling.lean"] = "def sibling := 0\n";
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            UtilityAdmissionTestSupport.Raw(fixture.Files))).Snapshot;
+
+        var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown(RuleFixture.RingPath)]);
+
+        Assert.Contains(RepoPath.CreateKnown(RuleFixture.ValuesBindingPath), scope.Paths);
+        Assert.Contains(RepoPath.CreateKnown("D5/S0/Carrier/ConsumerSupport.lean"), scope.Paths);
+        Assert.Contains(RepoPath.CreateKnown("D5/S0/Carrier/Premise.lean"), scope.Paths);
+        Assert.DoesNotContain(RepoPath.CreateKnown("D5/S0/Carrier/Sibling.lean"), scope.Paths);
+        fixture.Files.Remove("D5/S0/Carrier/Premise.lean");
+        var missing = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            UtilityAdmissionTestSupport.Raw(fixture.Files))).Snapshot;
+        Assert.Throws<InvalidOperationException>(() =>
+            LeanReportScope.Create(missing, [RepoPath.CreateKnown(RuleFixture.RingPath)]));
+    }
+
+    [Fact]
     public void CanonicalReportFeedsLeanFileReportAndTheExistingStatementWriter()
     {
         var snapshot = Snapshot();
