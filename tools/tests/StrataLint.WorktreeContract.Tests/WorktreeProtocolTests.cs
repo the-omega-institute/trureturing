@@ -228,6 +228,25 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Theory]
+    [InlineData("consumer_mirror_uses_real_git_with_stubbed_github")]
+    [InlineData("consumer_land_commits_snapshot_with_external_checks_stubbed")]
+    [InlineData("consumer_land_cannot_build_during_exclusive_operation")]
+    [InlineData("consumer_land_scopes_operating_children")]
+    public void AgentConsumerUsesRealGitAndPreservesIndependentMaterial(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests." + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Fact]
     public void CooperativeProtocolPreservesRealProcessAndGitState()
     {
