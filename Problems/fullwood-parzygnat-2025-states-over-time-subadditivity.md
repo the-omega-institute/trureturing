@@ -85,9 +85,9 @@ is no digestion atom.
   Choi matrix $(I-F)/(d-1)$, namely $(I-|\Omega\rangle\langle\Omega|)/(d-1)$, so the state over time
   has one negative eigenvalue $-1/d$ and the flat positive spectrum $1/(d(d-1))$ of multiplicity $d^2-1$.
   The positive part carries total weight $1+1/d$ spread over $d^2-1$ levels and contributes
-  $\tfrac{d+1}{d}\log(d(d-1))$; the negative eigenvalue contributes $-\tfrac1d\log d$. The excess of the
-  positive part over the $2\log d$ of the two maximally mixed marginals outweighs that loss exactly when
-  $d\ge5$.
+  $\tfrac{d+1}{d}\log(d(d-1))$; the negative eigenvalue contributes $-\tfrac1d\log d$. At $d=5$ the excess
+  of the positive part over the $2\log d$ of the two maximally mixed marginals outweighs that loss; at
+  $d=3,4$ it does not.
 - **Computed, not formalized (#14994):** for the same family in dimension $d$ the gap is
   $g(d)=\tfrac{d+1}{d}\log(d-1)-\log d$, with NumPy values $-0.1744$, $-0.0130$, $+0.0541$, $+0.0859$ at
   $d=3,4,5,6$ (and $+0.1144$, $+0.0359$ at $d=10,100$). Analytically $g(d)=\log(1-\tfrac1d)+\tfrac1d\log(d-1)$, so
