@@ -345,21 +345,6 @@ def clean_worktrees(repository, base, delete, active_paths=()):
     return subprocess.run(arguments, cwd=repository).returncode
 
 
-def clean_snapshot(repository, path, base, delete):
-    adapter = Path(__file__).resolve().parent / "worktree/worktree_protocol.py"
-    arguments = [sys.executable, "-B", str(adapter), "--source", str(repository),
-                 "remove-snapshot", "--path", str(path), "--base", base]
-    if not delete:
-        arguments.append("--preview")
-    result = subprocess.run(arguments, cwd=repository, capture_output=True, text=True)
-    if result.returncode:
-        return dict(path=str(path), action="failed" if result.returncode == 74 else "kept",
-                    reason="snapshot_partial_or_indeterminate" if result.returncode == 74 else "snapshot_preservation_unconfirmed",
-                    detail=result.stderr.strip(), apparent_bytes=0)
-    outcome = json.loads(result.stdout)
-    return dict(path=str(path), action=outcome["status"], reason="remote_preserved_snapshot", apparent_bytes=0)
-
-
 def nonnegative_hours(value):
     hours = float(value)
     if not math.isfinite(hours) or hours < 0:
@@ -405,14 +390,6 @@ def run_clean(options):
             seen.add(path)
             if any(parent in worktrees for parent in path.parents):
                 result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
-            elif category == "tmp" and path.is_dir() and not path.is_symlink():
-                # A gitless temporary directory can be an interrupted checkout.
-                # Age and a sampled idle observation cannot certify its bytes.
-                observed = inspect_candidate(path, cutoff, protections[category])
-                if observed["reason"] is not None:
-                    result = dict(path=str(path), action="kept", **observed)
-                else:
-                    result = clean_snapshot(options.repository, path, options.base, options.delete)
             else:
                 result = clean_candidate(path, cutoff, protections[category], options.delete)
             counts[category + ":" + result["action"]] += 1

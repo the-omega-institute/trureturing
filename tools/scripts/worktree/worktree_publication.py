@@ -12,7 +12,7 @@ from worktree_protocol import (Refused, git, value, identity, tree_scope,
 
 
 def confirm(root, remote, branch, commit, endpoint=None):
-    endpoint = endpoint or remote_endpoint(root, remote)
+    endpoint = endpoint or remote_endpoint(root, remote, push=True)
     reference = "refs/heads/" + branch
     git(root, "check-ref-format", reference)
     advertised = git(root, "ls-remote", "--exit-code", "--heads", "--", endpoint, reference).stdout.splitlines()
@@ -26,7 +26,7 @@ def confirm(root, remote, branch, commit, endpoint=None):
     git(root, "fetch", "--no-write-fetch-head", "--no-tags", "--", endpoint, tip)
     if git(root, "merge-base", "--is-ancestor", commit, tip, check=False).returncode:
         raise Refused("remote_does_not_retain_commit:" + commit)
-    return dict(remote=remote, branch=branch, required_commit=commit, observed_tip=tip,
+    return dict(remote=remote, endpoint=endpoint, branch=branch, required_commit=commit, observed_tip=tip,
                 relation="equal" if commit == tip else "ancestor")
 
 
@@ -65,13 +65,16 @@ def checkpoint(options):
             git(path, "add", "-A", "--", *paths, env=env)
             tree = value_with_env(path, env, "write-tree")
             if tree == value(path, "rev-parse", parent + "^{tree}"):
-                completed = True
-                return dict(event="worktree_checkpoint", status="unchanged", commit=parent)
-            message = message_file.read_bytes()
-            commit = git(path, "commit-tree", tree, "-p", parent, env=env, input=message).stdout.decode().strip()
-            git(path, "update-ref", "-m", "worktree checkpoint", branch, commit, parent)
+                commit, status = parent, "unchanged"
+            else:
+                message = message_file.read_bytes()
+                commit = git(path, "commit-tree", tree, "-p", parent, env=env, input=message).stdout.decode().strip()
+                git(path, "update-ref", "-m", "worktree checkpoint", branch, commit, parent)
+                status = "committed"
             # Update only attributed entries. Native index locking preserves concurrent
-            # insertions outside this scope even from an ordinary git add.
+            # insertions outside this scope even from an ordinary git add. This also
+            # reconciles a retry after ref advancement but failed index synchronization;
+            # an equal tree alone is not a completed checkpoint.
             old = git(path, "ls-files", "-z", "--", *paths, env=dict(GIT_LITERAL_PATHSPECS="1")).stdout
             zero = "0" * len(parent)
             deletions = b"".join(b"0 " + zero.encode() + b"\t" + name + b"\0"
@@ -79,7 +82,7 @@ def checkpoint(options):
             entries = git(path, "ls-files", "--stage", "-z", "--", *paths, env=env).stdout
             git(path, "update-index", "-z", "--index-info", input=deletions + entries)
             completed = True
-            return dict(event="worktree_checkpoint", status="committed", commit=commit,
+            return dict(event="worktree_checkpoint", status=status, commit=commit,
                         parent=parent, branch=branch, paths=paths)
         finally:
             # Failure retains the private index as native Git recovery material.
@@ -105,7 +108,7 @@ def publish(options):
         commit = value(path, "rev-parse", "--verify", options.commit + "^{commit}")
         if git(path, "merge-base", "--is-ancestor", commit, "HEAD", check=False).returncode:
             raise Refused("publication_commit_outside_branch")
-        endpoint = remote_endpoint(path, options.remote)
+        endpoint = remote_endpoint(path, options.remote, push=True)
         # A newer remote tip already retaining this unit is sufficient; no rewind.
         try:
             evidence = confirm(path, options.remote, options.branch, commit, endpoint)
@@ -131,6 +134,7 @@ def prepare_mirror(options):
     """Producer-owned temporary checkout operation; failure leaves its source."""
     import uuid
     with ExitStack() as stack:
+        endpoint = remote_endpoint(options.source, options.remote, push=True)
         if options.path.exists() or options.path.is_symlink():
             raise Refused("mirror_destination_occupied")
         path = tree_scope(stack, options.source, options.path, True)
@@ -152,7 +156,6 @@ def prepare_mirror(options):
             raise Refused("mirror_identity_changed")
         if git(path, "merge-base", "--is-ancestor", parents[0], options.base, check=False).returncode:
             raise Refused("mirror_base_outside_integration")
-        endpoint = remote_endpoint(path, options.remote)
         git(path, "push", "--", endpoint, head + ":" + reference)
         evidence = confirm(path, options.remote, options.branch, head, endpoint)
         if (metadata / "locked").read_text().strip() != token:

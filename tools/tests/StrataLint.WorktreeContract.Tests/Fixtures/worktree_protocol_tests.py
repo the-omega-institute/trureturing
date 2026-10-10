@@ -198,6 +198,80 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.assertEqual("authorized\n", (self.tree / "owned").read_text())
         self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
 
+    def test_checkpoint_retry_reconciles_attributed_index(self):
+        self.recover_checkpoint("checkpoint")
+
+    def test_finalization_reconciles_attributed_index(self):
+        self.recover_checkpoint("finalize")
+
+    def recover_checkpoint(self, recovery):
+        authorized = recovery + " authorized\n"
+        (self.tree / "owned").write_text(authorized)
+        (self.tree / "other").write_text(recovery + " unrelated\n")
+        self.g(self.tree, "add", "other")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        lock.write_text("interrupted native operation\n")
+        self.checkpoint(expect=73)
+        committed = self.g(self.tree, "rev-parse", "HEAD").strip()
+        self.assertEqual(authorized, self.g(self.tree, "show", "HEAD:owned"))
+        self.assertNotEqual(authorized, self.g(self.tree, "show", ":owned"))
+        message = self.root / "message"
+        args = [recovery, "--path", self.tree, "--write", "owned", "--message-file", message]
+        if recovery == "finalize":
+            args += ["--branch", self.branch, "--writers-joined"]
+        self.run_protocol(*args, expect=73)
+        lock.unlink()
+        self.run_protocol(*args)
+        self.assertEqual(committed, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertEqual(authorized, self.g(self.tree, "show", ":owned"))
+        self.assertEqual("other\n", self.g(self.tree, "diff", "--cached", "--name-only"))
+        self.run_protocol("with", "--path", self.tree, "--git", "--", "git", "commit", "-m", "other unit")
+        self.assertEqual(authorized, self.g(self.tree, "show", "HEAD:owned"))
+        self.assertEqual(recovery + " unrelated\n", self.g(self.tree, "show", "HEAD:other"))
+        self.assertEqual("", self.g(self.tree, "status", "--porcelain"))
+
+    def test_publication_uses_push_url_and_confirms_that_endpoint(self):
+        destination = self.root / "push.git"
+        self.g(self.root, "init", "--bare", destination)
+        self.g(self.main, "remote", "set-url", "--push", "origin", destination)
+        (self.tree / "owned").write_text("authorized\n")
+        self.checkpoint()
+        commit = self.g(self.tree, "rev-parse", "HEAD").strip()
+        result = json.loads(self.run_protocol("publish", "--path", self.tree, "--branch", self.branch).stdout)
+        self.assertEqual("confirmed", result["status"])
+        self.assertEqual(commit + "\n", self.g(destination, "for-each-ref", "--format=%(objectname)", "refs/heads/" + self.branch))
+        self.assertEqual("", self.g(self.remote, "for-each-ref", "refs/heads/" + self.branch))
+        (self.tree / "owned").write_text("later\n")
+        self.checkpoint()
+        self.run_protocol("publish", "--path", self.tree, "--branch", self.branch)
+        result = json.loads(self.run_protocol("publish", "--path", self.tree, "--branch", self.branch,
+                                              "--commit", commit).stdout)
+        self.assertEqual("ancestor", result["relation"])
+
+    def test_publication_refuses_multiple_push_destinations_before_writing(self):
+        destination = self.root / "push.git"
+        self.g(self.root, "init", "--bare", destination)
+        for endpoint in (self.remote, destination):
+            self.g(self.main, "config", "--add", "remote.origin.pushurl", endpoint)
+        self.run_protocol("publish", "--path", self.tree, "--branch", self.branch, expect=73)
+        mirror = self.root / "unsupported-mirror"
+        self.run_protocol("prepare-mirror", "--path", mirror, "--branch", "mirror/unsupported",
+                          "--base", self.base, "--merge", self.base, "--message", "unsupported", expect=73)
+        self.assertFalse(mirror.exists())
+        self.assertEqual("", self.g(self.main, "for-each-ref", "refs/heads/mirror/unsupported"))
+        for endpoint in (self.remote, destination):
+            self.assertEqual("", self.g(endpoint, "for-each-ref", "refs/heads/" + self.branch))
+
+    def test_publication_honors_push_instead_of(self):
+        destination = self.root / "rewritten.git"
+        self.g(self.root, "init", "--bare", destination)
+        self.g(self.main, "config", "url." + str(destination) + ".pushInsteadOf", self.remote)
+        self.run_protocol("publish", "--path", self.tree, "--branch", self.branch)
+        self.assertEqual(self.base + "\n", self.g(destination, "for-each-ref", "--format=%(objectname)",
+                                                  "refs/heads/" + self.branch))
+        self.assertEqual("", self.g(self.remote, "for-each-ref", "refs/heads/" + self.branch))
+
     def test_clean_remote_preserved_removal_and_main_protection(self):
         self.remove()
         self.assertFalse(self.tree.exists())
@@ -446,9 +520,14 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         feature = self.g(self.main, "rev-parse", "HEAD").strip()
         mirror = self.root / "mirror-tree"
         branch = "mirror/integration/11"
+        destination = self.root / "mirror-push.git"
+        self.g(self.root, "init", "--bare", destination)
+        self.g(self.main, "remote", "set-url", "--push", "origin", destination)
         self.run_protocol("prepare-mirror", "--path", mirror, "--branch", branch, "--base", self.base,
                           "--merge", feature, "--message", "mirror: feature")
         self.assertEqual("feature\n", self.g(mirror, "show", "HEAD:feature"))
+        self.assertEqual(self.g(mirror, "rev-parse", "HEAD"), self.g(destination, "rev-parse", "refs/heads/" + branch))
+        self.assertEqual("", self.g(self.remote, "for-each-ref", "refs/heads/" + branch))
         self.run_protocol("remove", "--names", mirror.name)
         self.assertFalse(mirror.exists())
 
@@ -803,17 +882,40 @@ os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
         (unknown / "private").write_text("private recovery\n")
         artifact = root / "artifact"
         artifact.write_text("unconfirmed file\n")
+        container = root / "container"
+        nested = container / "registered"
+        self.g(self.main, "worktree", "add", "--detach", nested, self.base)
+        self.g(self.main, "worktree", "lock", nested)
+        targets = [dirty, snapshot, unknown, artifact]
+        aged = time.time() - 3600
+        for target in [*targets, container]:
+            for path in ([*target.rglob("*"), target] if target.is_dir() else [target]):
+                os.utime(path, (aged, aged))
+        recent = root / "recent"
+        recent.write_text("recent artifact\n")
+        alias = root / "alias"
+        alias.symlink_to(artifact)
         manifest = root / "manifest.json"
-        manifest.write_text(json.dumps(dict(paths=list(map(str, [dirty, snapshot, unknown, artifact])))))
+        manifest.write_text(json.dumps(dict(paths=list(map(str, [*targets, recent, alias, root, container])))))
+        self.g(self.main, "remote", "remove", "origin")
         command = ["/bin/bash", str(ROOT / "tools/scripts/agent/clean-runlocal.sh"), "--manifest", str(manifest),
-            "--root", str(root), "--source", str(self.main), "--base", self.base, "--min-age-min", "0", "--delete"]
-        result = self.run_owned_command(command, self.root, phase="runlocal", timeout=30, check=False)
+            "--root", str(root), "--source", str(self.main), "--base", self.base, "--min-age-min", "15"]
+        preview = self.run_owned_command(command, self.root, phase="runlocal-preview", timeout=30, check=False)
+        self.assertEqual(0, preview.returncode, preview.stdout + preview.stderr)
+        self.assertEqual(list(map(str, targets)), json.loads(preview.stdout)["would_remove"])
+        self.assertTrue(all(path.exists() for path in targets))
+        result = self.run_owned_command([*command, "--delete"], self.root, phase="runlocal", timeout=30, check=False)
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertEqual([str(dirty), str(snapshot)], json.loads(result.stdout)["removed"])
+        self.assertEqual(list(map(str, [dirty, snapshot, unknown, artifact])), json.loads(result.stdout)["removed"])
         self.assertFalse(snapshot.exists())
         self.assertFalse(dirty.exists())
-        self.assertEqual("private recovery\n", (unknown / "private").read_text())
-        self.assertEqual("unconfirmed file\n", artifact.read_text())
+        self.assertFalse(unknown.exists())
+        self.assertFalse(artifact.exists())
+        self.assertEqual("recent artifact\n", recent.read_text())
+        self.assertTrue(alias.is_symlink())
+        self.assertTrue(root.exists())
+        self.assertTrue(nested.exists())
+        self.assertEqual("nested_worktree", json.loads(result.stdout)["entries"][-1]["reason"])
 
     def initializer_lifetime(self, cli=None):
         cli = cli or self.initializer_cli

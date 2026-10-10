@@ -72,9 +72,13 @@ def common(root):
     return Path(value(root, "rev-parse", "--path-format=absolute", "--git-common-dir")).resolve()
 
 
-def remote_endpoint(root, remote):
-    result = git(root, "remote", "get-url", "--", remote, check=False)
-    endpoint = os.fsdecode(result.stdout).strip() if result.returncode == 0 else remote
+def remote_endpoint(root, remote, push=False):
+    flags = ["--push", "--all"] if push else []
+    result = git(root, "remote", "get-url", *flags, "--", remote, check=False)
+    endpoints = os.fsdecode(result.stdout).splitlines() if result.returncode == 0 else [remote]
+    if len(endpoints) != 1 or not endpoints[0]:
+        raise Refused("single_remote_endpoint_required")
+    endpoint = endpoints[0]
     parsed = urlsplit(endpoint)
     if parsed.scheme == "file" or not parsed.scheme and ":" not in endpoint:
         path = Path(unquote(parsed.path) if parsed.scheme == "file" else endpoint)

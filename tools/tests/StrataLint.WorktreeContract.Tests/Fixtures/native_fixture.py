@@ -232,4 +232,3 @@ class NativeFixture(unittest.TestCase):
         result = subprocess.CompletedProcess(arguments, process.returncode, output, errors)
         result.lifetime = evidence
         return result
-

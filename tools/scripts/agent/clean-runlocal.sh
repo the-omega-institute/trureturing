@@ -12,13 +12,13 @@ while [ $# -gt 0 ]; do case "$1" in
 [ -n "$manifest" ] && [ -f "$manifest" ] || { echo "clean-runlocal: USAGE_ERROR: --manifest required" >&2; exit 64; }
 case "$root" in /tmp|/private/tmp|/tmp/*|/private/tmp/*) ;; *) echo "clean-runlocal: USAGE_ERROR: root must be /tmp or under it" >&2; exit 64;; esac
 python3 - "$manifest" "$root" "$delete" "$minage" "$source" "$base" "$protocol_root" <<'PY'
-import argparse,json,os,sys,time
+import argparse,json,os,sys,shutil,time
 from pathlib import Path
 manifest,root,delete,minage=sys.argv[1],os.path.realpath(sys.argv[2]),sys.argv[3]=="1",float(sys.argv[4])
 source,base=Path(sys.argv[5]),sys.argv[6]
 sys.path.insert(0,str(Path(sys.argv[7])/"tools/scripts/worktree"))
 from worktree_protocol import inventory,Refused
-from worktree_preservation import remove,remove_snapshot
+from worktree_preservation import remove
 paths=json.load(open(manifest)).get("paths",[]); now=time.time(); out=[]
 def newest(p):
     m=os.lstat(p).st_mtime
@@ -35,18 +35,18 @@ for p in paths:
     elif not rp.startswith(root+os.sep): rec["reason"]="outside_root"
     elif not os.path.lexists(rp): rec["reason"]="missing"
     elif (now-newest(rp))<minage*60: rec["reason"]="too_recent"
-    elif not os.path.isdir(rp): rec["reason"]="file_preservation_unknown"
     else:
         try:
-            registered=any(Path(row["worktree"]).resolve()==Path(rp) for row in inventory(source))
+            trees=[Path(row["worktree"]).resolve() for row in inventory(source)]
+            if any(Path(rp) in tree.parents for tree in trees): raise Refused("nested_worktree")
+            registered=Path(rp) in trees
             if registered:
                 result=remove(argparse.Namespace(source=source,names="",path=[Path(rp)],force=False,
                     preview=not delete,expected=[]))
                 outcome=result["items"][0]["outcome"]
                 if outcome=="partial_or_indeterminate": raise OSError(str(result))
-            else:
-                result=remove_snapshot(argparse.Namespace(source=source,path=Path(rp),base=base,preview=not delete))
-                if result["status"]=="partial_or_indeterminate": raise OSError(str(result))
+            elif delete:
+                shutil.rmtree(rp) if os.path.isdir(rp) else os.remove(rp)
             rec["eligible"]=True
             if delete: rec["state"]="removed"
         except Refused as e: rec["reason"]=str(e)

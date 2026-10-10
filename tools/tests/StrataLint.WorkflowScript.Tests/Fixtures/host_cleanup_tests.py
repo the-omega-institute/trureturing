@@ -77,6 +77,33 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual("recent", result["reason"])
         self.assertTrue(artifact.exists())
 
+    def test_aggregate_cleanup_applies_ordinary_artifact_policy(self):
+        tmp = self.root / "tmp"
+        ordinary = self.old_file(tmp / "ordinary" / "arbitrary-output")
+        os.utime(ordinary.parent, (self.cutoff - 10, self.cutoff - 10))
+        regular = self.old_file(tmp / "regular")
+        repository = self.old_file(tmp / "repository" / ".git")
+        os.utime(repository.parent, (self.cutoff - 10, self.cutoff - 10))
+        options = cleanup.argparse.Namespace(
+            repository=self.root, base="base", codex_home=self.root / "codex",
+            sshx_home=self.root / "sshx", tmp_root=[tmp],
+            min_age_hours=1, delete=False, verbose=True)
+        with patch.object(cleanup, "active_paths", return_value=set()), \
+             patch.object(cleanup, "registered_worktrees", return_value=set()), \
+             patch.object(cleanup, "clean_worktrees", return_value=0):
+            for delete in (False, True):
+                options.delete = delete
+                output = io.StringIO()
+                with contextlib.redirect_stdout(output):
+                    self.assertEqual(0, cleanup.run_clean(options))
+                rows = [json.loads(line) for line in output.getvalue().splitlines()]
+                actions = {row["path"]: row["action"] for row in rows if "path" in row}
+                for path in (ordinary.parent, regular):
+                    self.assertEqual("removed" if delete else "would_remove", actions[str(path)])
+                    self.assertEqual(not delete, path.exists())
+                self.assertEqual("kept", actions[str(repository.parent)])
+                self.assertTrue(repository.exists())
+
     def test_active_path_keeps_entire_candidate(self):
         artifact = self.old_file(self.root / "flight" / "worker.log")
         os.utime(artifact.parent, (self.cutoff - 10, self.cutoff - 10))
@@ -195,7 +222,7 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual("failed", summary["status"])
         self.assertEqual(2, summary["worktree_exit"])
 
-    def test_aggregate_temporary_sweep_qualifies_bytes_and_retains_unknown(self):
+    def test_aggregate_temporary_sweep_removes_ordinary_directories(self):
         repository = self.root / "repository"
         repository.mkdir()
         remote = self.root / "remote.git"
@@ -223,7 +250,7 @@ class HostCleanupTests(unittest.TestCase):
         with patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(0, cleanup.run_clean(options))
         self.assertFalse(safe.exists())
-        self.assertEqual("recovery\n", (unknown / "private").read_text())
+        self.assertFalse(unknown.exists())
 
     def test_missing_artifact_inspection_does_not_block_worktree_cleanup(self):
         options = cleanup.argparse.Namespace(
