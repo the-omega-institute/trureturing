@@ -316,7 +316,10 @@ theorem tie_vanishes (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
       (Scale.sampleLength rho a K) N) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
     apply (nonzero_count_diverges a K ha ha1 hK N).congr'
     filter_upwards [small] with rho hr
-    simpa only [Bool.toNat, Bool.cond_eq_ite] using
+    have hbit : (fun b : Bool => if b then (1 : ℕ) else 0) = bit := by
+      funext b
+      cases b <;> rfl
+    simpa only [hbit] using
       actual_tail_eq_bernoulli rho a hr.1 hr.2 (Scale.sampleLength rho a K) N
   have hv := FiniteTail.expectation_vanishes (𝓝[>] (0 : ℝ))
     (fun rho => bernoulliMass (Scale.activeProbability rho a)) bit
@@ -328,7 +331,8 @@ theorem tie_vanishes (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
 end LazyLimit
 
 local notation "eventMass" p:max E:max =>
-  _root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass
+  @_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass
+    _ (fun x y => Classical.propDecidable (x = y))
     p (@Finset.filter _ E (fun x => Classical.propDecidable (E x)) Finset.univ)
       Finset.univ
 
