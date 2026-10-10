@@ -14,7 +14,7 @@ namespace Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentitie
 
 namespace TotalMass
 abbrev signature : Signature where
-  Params := ℝ × ℝ
+  Params := Σ _ : ℝ, ℝ
   State p := Record
   Role := Unit
   finiteRole := inferInstance
@@ -33,7 +33,7 @@ def sourceStatement : Prop := ∀ (rho a : ℝ),
 def arena : Arena where
   signature := signature
   Law R := ∀ (rho a : ℝ),
-    (∑ w, R.readout () (rho,a) w) = 1
+    (∑ w, R.readout () ⟨rho,a⟩ w) = 1
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -42,7 +42,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(0,1), (.zero,.zero,.zero,.zero,1), (.high,.zero,.zero,.zero,1), ?_⟩
+  refine ⟨⟨0,1⟩, (.zero,.zero,.zero,.zero,1), (.high,.zero,.zero,.zero,1), ?_⟩
   norm_num [actual, realize, Law.recordMass, Law.cleanRecordMass, Law.biased,
       HeterogeneousTeacherSeparation.extremal, Law.channel, Law.reverse,
       GarbledPosteriorRootGap.teacher, LiteralWindowEnd.first, LiteralWindowEnd.last]
@@ -94,7 +94,7 @@ end TotalMass
 
 namespace RecordNonnegative
 abbrev signature : Signature where
-  Params := ℝ × ℝ
+  Params := Σ _ : ℝ, ℝ
   State p := Record
   Role := Unit
   finiteRole := inferInstance
@@ -115,7 +115,7 @@ def arena : Arena where
   signature := signature
   Law R := ∀ (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (w : Record),
-    0 ≤ R.readout () (rho,a) w
+    0 ≤ R.readout () ⟨rho,a⟩ w
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -125,7 +125,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(0,1), (.zero,.zero,.zero,.zero,1), (.high,.zero,.zero,.zero,1), ?_⟩
+  refine ⟨⟨0,1⟩, (.zero,.zero,.zero,.zero,1), (.high,.zero,.zero,.zero,1), ?_⟩
   norm_num [actual, realize, Law.recordMass, Law.cleanRecordMass, Law.biased,
       HeterogeneousTeacherSeparation.extremal, Law.channel, Law.reverse,
       GarbledPosteriorRootGap.teacher, LiteralWindowEnd.first, LiteralWindowEnd.last]
@@ -177,7 +177,7 @@ end RecordNonnegative
 
 namespace CleanRecordNonnegative
 abbrev signature : Signature where
-  Params := ℝ × ℝ
+  Params := Σ _ : ℝ, ℝ
   State p := Record
   Role := Unit
   finiteRole := inferInstance
@@ -198,7 +198,7 @@ def arena : Arena where
   signature := signature
   Law R := ∀ (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (w : Record),
-    0 ≤ R.readout () (rho,a) w
+    0 ≤ R.readout () ⟨rho,a⟩ w
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -208,7 +208,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(0,1), (.zero,.zero,.zero,.zero,1), (.high,.zero,.zero,.zero,1), ?_⟩
+  refine ⟨⟨0,1⟩, (.zero,.zero,.zero,.zero,1), (.high,.zero,.zero,.zero,1), ?_⟩
   norm_num [actual, realize, Law.recordMass, Law.cleanRecordMass, Law.biased,
       HeterogeneousTeacherSeparation.extremal, Law.channel, Law.reverse,
       GarbledPosteriorRootGap.teacher, LiteralWindowEnd.first, LiteralWindowEnd.last]
@@ -260,7 +260,7 @@ end CleanRecordNonnegative
 
 namespace CleanRecordTotal
 abbrev signature : Signature where
-  Params := ℝ × ℝ
+  Params := Σ _ : ℝ, ℝ
   State p := Record
   Role := Unit
   finiteRole := inferInstance
@@ -279,7 +279,7 @@ def sourceStatement : Prop := ∀ (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 
 def arena : Arena where
   signature := signature
   Law R := ∀ (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8),
-    (∑ w, R.readout () (rho,a) w) = 1
+    (∑ w, R.readout () ⟨rho,a⟩ w) = 1
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -288,7 +288,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(0,1), (.zero,.zero,.zero,.zero,1), (.high,.zero,.zero,.zero,1), ?_⟩
+  refine ⟨⟨0,1⟩, (.zero,.zero,.zero,.zero,1), (.high,.zero,.zero,.zero,1), ?_⟩
   norm_num [actual, realize, Law.recordMass, Law.cleanRecordMass, Law.biased,
       HeterogeneousTeacherSeparation.extremal, Law.channel, Law.reverse,
       GarbledPosteriorRootGap.teacher, LiteralWindowEnd.first, LiteralWindowEnd.last]
@@ -340,7 +340,7 @@ end CleanRecordTotal
 
 namespace CleanSampleFactor
 abbrev signature : Signature where
-  Params := ℝ × ℝ × ℕ
+  Params := Σ _ : ℝ, Σ _ : ℝ, ℕ
   State p := Fin p.2.2 → Record
   Role := Unit
   finiteRole := inferInstance
@@ -359,7 +359,7 @@ def sourceStatement : Prop := ∀ (rho a : ℝ) (m : ℕ) (w : Fin m → Record)
 def arena : Arena where
   signature := signature
   Law R := ∀ (rho a : ℝ) (m : ℕ) (w : Fin m → Record),
-    R.readout () (rho,a,m) w = ∏ i, cleanRecordMass rho a (w i)
+    R.readout () ⟨rho,a,m⟩ w = ∏ i, cleanRecordMass rho a (w i)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -368,7 +368,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(0,1,1), (fun _ => (.zero,.zero,.zero,.zero,1)),
+  refine ⟨⟨0,1,1⟩, (fun _ => (.zero,.zero,.zero,.zero,1)),
     (fun _ => (.high,.zero,.zero,.zero,1)), ?_⟩
   change cleanSampleMass 0 1 _ ≠ cleanSampleMass 0 1 _
   rw [clean_sample_factor, clean_sample_factor]
