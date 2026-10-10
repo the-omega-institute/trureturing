@@ -665,3 +665,148 @@ without Lean certification or a claim of original number theory.
 The mean requirement, finite low layers when needed, prime layer
 $k=1$, other recovery terms and full signed tail in (SV4) remain
 unpaid. No complete Robin-budget gain follows from (SV9) or (SV10).
+
+## A signed lowest-frequency band for these actual coefficients
+
+Keep exactly the logarithmic weights, cutoffs and actual integer source
+above. The following application uses the [existing classical Mertens
+input](../Analytic/ng2004summatorymobius.md#reuse-of-the-unconditional-input),
+not a new cancellation theorem. Write
+
+$$
+\mathcal W(u)=\frac{u^{3/5}}{(\log u)^{1/5}},\qquad
+M(t)=\sum_{n\le t}\mu(n)\ll t e^{-c\mathcal W(\log t)}.
+$$
+
+All estimates in this section are for sufficiently large $A$, with fixed
+positive constants. For an interval $I\subset(V/2,V]$, the actual LCM
+decomposition forces
+
+$$
+[d,e]\in I\ \Longrightarrow\ (d,e)=1,\quad [d,e]=de,
+\quad d>R/2,\quad e>U_1/2>U.
+$$
+
+Indeed $de/[d,e]<2$ and this ratio is the positive integer $(d,e)$.
+Consequently
+
+$$
+\sum_{\ell\in I}h(\ell)
+=\frac1{r^2}\sum_{R/2<d\le R}\mu(d)\log(R/d)
+ \sum_{\substack{de\in I,\ e\le U_1\\(e,d)=1}}
+ \mu(e)\log(U_1/e).
+$$
+
+The coprimality condition can be retained uniformly. The classical
+finite convolution identity and a split at $a=\sqrt t$ give
+
+$$
+\begin{aligned}
+M_d(t)&:=\sum_{\substack{n\le t\\(n,d)=1}}\mu(n)
+ =\sum_{\substack{a\le t\\a\mid d^\infty}}M(t/a),\\
+|M_d(t)|&\ll
+t e^{-c_1\mathcal W(\log t)}\frac d{\varphi(d)}
++t^{3/4}\prod_{p\mid d}(1-p^{-1/2})^{-1}.
+\end{aligned}
+$$
+
+Here $a\mid d^\infty$ means that every prime factor of $a$ divides $d$.
+The first term uses
+$\mathcal W((\log t)/2)\asymp\mathcal W(\log t)$; the second is the
+usual Rankin bound on the complementary smooth reciprocal sum.
+The elementary bounds $d/\varphi(d)\ll\log(2d)$ and
+$\prod_{p\mid d}(1-p^{-1/2})^{-1}\ll d^{1/4}$ then yield
+
+$$
+M_d(t)\ll U_1e^{-c_2\mathcal W(L)}
+\quad(d\le R,\ U_1/2\le t\le U_1).
+$$
+
+The polynomial remainder is $O(U_1^{5/6})$ since $U_1=R^3$.
+It and the logarithmic factor are absorbed by decreasing $c_2$.
+Abel summation against $\log(U_1/e)$ on the inner interval, followed
+by $\log(R/d)\le\log2$, therefore gives the uniform application
+
+$$
+\left|\sum_{\ell\in I}h(\ell)\right|
+\ll \frac V{L^2}e^{-\kappa\mathcal W(L)},
+\qquad I\subset(V/2,V],\quad \kappa>0.
+\tag{SV11}
+$$
+
+To identify its actual finite frequency band, put $b(t)=\{t\}-1/2$,
+$c_A=\frac12\sum_\ell h(\ell)$ and
+$g_A(y)=F_A(y)-c_A=\sum_\ell h(\ell)b(y/\ell)$. Reuse the classical
+Vaaler approximation, as stated in Baker, Banks, Brüdern, Shparlinski
+and Weingartner, [*Piatetski-Shapiro sequences*,
+arXiv:1203.5884v1](https://arxiv.org/pdf/1203.5884v1), §2, equation
+(2.1), PDF p.6, with attribution there to Vaaler (1985). The source
+statement was inspected; its underlying proof is not independently
+audited here. Use its polynomial $P_J$ and nonnegative majorant $D_J$, with
+$|b-P_J|\le D_J$ and $|\widehat P_J(n)|\ll1/|n|$ for $n\ne0$.
+At integers the representatives are explicitly
+$b=-1/2$, $P_J=0$ and $D_J=1/2$. Define
+
+$$
+g_{A,J}(y)=\sum_\ell h(\ell)P_J(y/\ell),\qquad
+r_{A,J}(y)=\sum_\ell|h(\ell)|D_J(y/\ell),
+$$
+
+$$
+b_{A,J}(\xi)=
+\sum_{\substack{\ell\le V,\ 1\le|n|\le J\\n/\ell=\xi}}
+h(\ell)\widehat P_J(n).
+$$
+
+The finite positive frequency band $\mathscr B_+=[1/V,2/V)$ forces
+$n=1$ and $V/2<\ell\le V$. Thus its merged coefficients are exactly
+$b_{A,J}(1/\ell)=h(\ell)\widehat P_J(1)$, without an infinite
+Fourier substitution or a missing harmonic cutoff. Abel summation
+using (SV11) gives, for every interval $\mathcal I\subset\mathscr B_+$,
+$y\ge0$ and integer $J\ge1$,
+
+$$
+\left|\sum_{\xi\in\mathcal I}b_{A,J}(\xi)e^{2\pi i y\xi}\right|
+\ll\frac V{L^2}e^{-\kappa\mathcal W(L)}(1+y/V).
+\tag{SV12}
+$$
+
+In particular the real contribution of this band and its conjugate,
+
+$$
+g_{\rm top,J}(y)=2\Re\!\left(
+\widehat P_J(1)\sum_{V/2<\ell\le V}h(\ell)e^{2\pi i y/\ell}\right),
+$$
+
+has the same bound. Put $g_{\rm rest,J}=g_{A,J}-g_{\rm top,J}$ and
+$Z_{\rm rest,J}(y)=c_A+g_{\rm rest,J}(y)-y(S_A)_+$. The exact identity
+$E_A(y)=[c_A+g_A(y)-y(S_A)_+]_+$ and the positive part's
+$1$-Lipschitz property show where this bound is consumed. For a block
+$\mathcal P$ of actual primes, $y_p=x/p^k\le Y$, and
+$w_{N,p,k}=\delta_{N,p,k}/\epsilon$, let
+$M_{\mathcal P}=\sum_{p\in\mathcal P}w_{N,p,k}$. Then
+
+$$
+\begin{aligned}
+\frac1x\sum_{p\in\mathcal P}w_{N,p,k}E_A(y_p)
+\le{}&\frac1x\sum_{p\in\mathcal P}w_{N,p,k}
+ [Z_{\rm rest,J}(y_p)]_+\\
+&+C\frac{M_{\mathcal P}}x\frac V{L^2}
+ e^{-\kappa\mathcal W(L)}(1+Y/V)
++\frac1x\sum_{p\in\mathcal P}w_{N,p,k}r_{A,J}(y_p).
+\end{aligned}
+\tag{SV13}
+$$
+
+No sign of $S_A$ or replacement of the actual weights is assumed.
+For a dyadic block $\mathcal P\subset\{p:P<p\le2P\}$ with
+$Y=x/P^k$, the existing $w_{N,p,k}\le\log p$ and
+$\vartheta(2P)<4P$ give $M_{\mathcal P}\ll(x/Y)^{1/k}$.
+At $Y\asymp V$, fixed $k\ge2$ and $A\le x\le2A$, the displayed
+band term is therefore $O_k(A^{-\gamma_k}L^{-2}e^{-\kappa\mathcal W(L)})$,
+$\gamma_k=(k-1)/(2k)$. For each remaining layer $k<m_\eta$,
+$\eta>\gamma_k$ and $\mathcal W(L)=o(L)$, so this upper bound
+alone does not reach $o(A^{-\eta})$. Other bands, the actual positive
+part, and the pointwise remainder are still present. This is an
+application of existing classical inputs, without Lean certification
+or a claim of original number theory; it gives no complete Robin gain.
