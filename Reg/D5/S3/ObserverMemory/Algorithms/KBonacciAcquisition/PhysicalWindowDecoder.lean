@@ -146,7 +146,8 @@ noncomputable def donorRowsRegistration :
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 
@@ -198,7 +199,8 @@ noncomputable def regularRowsRegistration :
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 
@@ -253,7 +255,8 @@ noncomputable def issuedPhaseRegistration :
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 
@@ -310,7 +313,8 @@ noncomputable def exceptionalRowsRegistration :
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 
