@@ -1,0 +1,16 @@
+### 32. 八、与 Lean native continuation 的关系
+
+Claim status: open.（供文 III 原第 8 节全文。）
+
+> 编者限定（III.8）：引用固定长度原生合法来源的已有 separation 与 null-reply 结果；完整 exact reply 律、reply 均值和低阶边缘分别保留。所示非交换算式是解释性关系，尚需共同定义域及可组合映射才能成为字面算子等式的否定。
+
+
+当前已有 Lean/Frozen 结果表明：
+
+1. 固定长度合法 source 在追加 null 后的 exact natural reply 是单射；
+2. 但所有 proper local marginals、seam-conditioned local tables 和固定线性 prefix moments 相同，并不保证完整 native continuation 相同；
+3. parity-conditioned full-support laws 可以在低阶局部观察完全一致的情况下，让全局 null reply 分布发生差异。
+
+这可以用本轮的响应—纤维语言重新表达：
+
+- 局部边缘观察只约束部分低阶坐标；
