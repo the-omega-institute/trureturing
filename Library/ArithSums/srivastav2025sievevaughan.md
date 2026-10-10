@@ -495,3 +495,173 @@ original $N$; their implication of (SV8) is the open coupling
 obligation. No required same-source one-sided mean bound,
 negative-part bound or complete original Robin estimate is obtained
 from this interface.
+
+## A classical higher-prime-power budget with the mean unpaid
+
+Keep the same actual $N$, fixed $\eta$, weights and cutoffs. Write
+$\sigma_A=(S_A)_-$ and, for each fixed integer $m\ge2$, define
+
+$$
+D_N^{(\ge m)}(x)=
+\sum_{\substack{p^k\le x\\k\ge m}}
+ \delta_{N,p,k}H_A^-(x/p^k).
+$$
+
+The finite-correlation supplier is Chen An,
+[*A Generalization of Graham's Estimate on the Barban-Vehov Problem*,
+arXiv:2206.10104v1](https://arxiv.org/abs/2206.10104v1), Theorem 1.3.
+Its rational-field case, explicitly attributed there to Graham
+(1978, p. 84), gives
+
+$$
+\mathcal C(w,z;t):=
+\sum_{n\le t}\left(\sum_{d\mid n}\rho_w(d)\right)
+             \left(\sum_{e\mid n}\rho_z(e)\right)
+=t\log w+O(t),\qquad 1\le w<z\le t.
+$$
+
+No condition $wz\le t$ is imposed. For $y\ge U_1$, apply this
+supplier with $(w,z,t)=(R,U_1,y)$ and $(R,U,y)$. For $U<y<U_1$,
+first use the exact truncation relation
+
+$$
+\mathcal C(R,U_1;y)
+=\mathcal C(R,y;y)+r\log(U_1/y),
+$$
+
+then apply the supplier with $(R,y,y)$ and $(R,U,y)$. The resulting
+transition term $\log(U_1/y)/r$ in $H_A(y)$ is nonnegative.
+For $1\le y\le U$, the divisor sum of $\theta'$ is supported only
+at $n=1$, so $H_A(y)=1$ exactly. For $0\le y<1$, $H_A(y)=0$.
+Consequently an absolute constant $C>0$ supplies
+
+$$
+H_A^-(y)=0\quad(0\le y\le U),\qquad
+H_A^-(y)\le Cy/L^2\quad(y>U).
+$$
+
+The full-support floor correction supplies the second envelope
+
+$$
+H_A^-(y)\le \sigma_Ay+B_A,\qquad
+B_A=\frac{(R-1)(U_1-U)}{r^2}
+\le\frac{64\sqrt A}{L^2}.
+$$
+
+Indeed $\sum_d|h(d)|\le(\sum_d|\lambda(d)|)
+(\sum_e|\theta'(e)|)\le B_A$; this bounds the entire fractional-part
+sum, including $d>y$. Set
+
+$$
+E_A(y)=(H_A^-(y)-\sigma_Ay)_+,\qquad a=C/L^2.
+$$
+
+For all $y\ge0$ the two envelopes imply
+$E_A(y)\le\min(ay,B_A)$ and
+$H_A^-(y)\le\sigma_Ay+E_A(y)$. No sign of $S_A$ is assumed.
+
+Reuse the [existing Dusart prime-power input](../Weil/dusart2010estimates.md#同一-robin-来源的有效素数幂修正):
+$\Gamma_2(t)=\psi(t)-\vartheta(t)\ll\sqrt t$ and
+$\vartheta(t)<2t$ for $t\ge1$. For every fixed $m\ge2$, classical
+prime-power counting therefore gives
+
+$$
+\Gamma_m(t):=\sum_{\substack{p^k\le t\\k\ge m}}\log p
+=\sum_{k=m}^{\lfloor\log_2t\rfloor}\vartheta(t^{1/k})
+\le K_m t^{1/m}.
+$$
+
+Here $K_m$ is a fixed constant; the tail after $k=m$ is bounded by
+$2\log_2t\,t^{1/(m+1)}=O_m(t^{1/m})$ for $t\ge2^m$, and the
+count is zero below $2^m$. This is an application of the classical
+counting bound, not a new prime-distribution theorem.
+
+Put $b=B_A/x>0$ and $z=a/b>0$. Enlarging the nonnegative residual
+sum to all $p,k\ge m$ and integrating against its counting measure
+gives the exact identity
+
+$$
+\begin{aligned}
+\sum_{p,\,k\ge m}\log p\min(a/p^k,b)
+&=b\Gamma_m(z)+a\int_{(z,\infty)}\frac{d\Gamma_m(t)}t\\
+&=a\int_z^\infty\frac{\Gamma_m(t)}{t^2}\,dt\\
+&\le\frac{mK_m}{m-1}a^{1/m}b^{1-1/m}.
+\end{aligned}
+$$
+
+The boundary terms cancel because $b=a/z$. The formula includes an
+atom at $z$ in the first term, so it also holds when the real
+splitting point is a prime power. Since
+$0\le\delta_{N,p,k}\le\epsilon\log p$, the uniform application is
+
+$$
+\boxed{
+\sup_{A\le x\le2A}\frac{D_N^{(\ge m)}(x)}{\epsilon x}
+\le\mathfrak c_m\sigma_A
+ +C_m\frac{A^{-\gamma_m}}{L^2},\qquad
+\gamma_m=\frac{m-1}{2m},\quad
+\mathfrak c_m=\sum_p\frac{\log p}{p^{m-1}(p-1)}<\infty.
+}
+\tag{SV9}
+$$
+
+All $k\ge m$ are retained. In particular $m=2$ gives the floor
+residual $O(A^{-1/4}/L^2)$. If the separate same-source mean
+requirement $\sigma_A=O(A^{-\eta}/L)$ were supplied, this complete
+higher-power component would be $o(A^{-\eta})$ for the original
+$0<\eta\le1/4$, including the endpoint. That requirement is unpaid;
+the existing two-sided mean envelope does not have this fixed-power
+rate. For $\eta>1/4$, the $m=2$ upper envelope alone is insufficient,
+which does not refute the negative-part candidate.
+
+For any original fixed $0<\eta<1/2$, take
+$m_\eta=\lceil(1-2\eta)^{-1}\rceil\ge2$ and define the finite
+low-layer residual on that same actual $N$ by
+
+$$
+\mathcal R_{N,\eta}=
+\sup_{A\le x\le2A}\frac1{\epsilon x}
+\sum_{k=2}^{m_\eta-1}\sum_{p^k\le x}
+ \delta_{N,p,k}E_A(x/p^k).
+$$
+
+An empty sum is zero. Since $E_A\le H_A^-$ and
+$\gamma_{m_\eta}\ge\eta$, the same envelopes give
+
+$$
+\mathcal R_{N,\eta}
+\le\sup_{A\le x\le2A}\frac{D_N^{(\ge2)}(x)}{\epsilon x}
+\le\mathcal R_{N,\eta}+\mathfrak c_2\sigma_A
+ +C_{m_\eta}\frac{A^{-\gamma_{m_\eta}}}{L^2}.
+\tag{SV10}
+$$
+
+The last term is unconditionally $o(A^{-\eta})$. Conditional on
+the still-unpaid mean requirement, obtaining
+$\sup_{A\le x\le2A}D_N^{(\ge2)}(x)/(\epsilon x)=o(A^{-\eta})$
+is equivalent to $\mathcal R_{N,\eta}=o(A^{-\eta})$. This stronger
+target is sufficient for the higher-power component of the local
+candidate, whose original threshold is $A^{-\eta}$. For
+$1/4<\eta\le1/3$ this leaves the square layer only; all $k\ge3$
+residuals already have the required rate. No exponent is lowered.
+
+The actual CA layer weights do not supply another power saving by
+themselves. The logarithmic series gives
+$\beta_{j+1}(p)\le p^{-1}\beta_j(p)$, and own-price optimality gives
+$\beta_{a_p+1}(p)\le\epsilon\log p$. Thus for all $k\ge2$,
+
+$$
+(1-p^{1-k})\epsilon\log p
+\le\delta_{N,p,k}\le\epsilon\log p.
+$$
+
+In particular, $D_N^{(\ge2)}(x)/(\epsilon x)$ is between one half
+and one times $x^{-1}\sum_{p^k\le x,\,k\ge2}\log p\,H_A^-(x/p^k)$.
+This comparison gives no lower bound for $H_A^-$ and leaves open
+improvement through its sampling on the selected sources.
+
+These bounds are paper-level applications of existing suppliers,
+without Lean certification or a claim of original number theory.
+The mean requirement, finite low layers when needed, prime layer
+$k=1$, other recovery terms and full signed tail in (SV4) remain
+unpaid. No complete Robin-budget gain follows from (SV9) or (SV10).
