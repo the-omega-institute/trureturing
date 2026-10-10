@@ -26,6 +26,17 @@ internal sealed class GoldenLocalThresholdDocument : IScribeDocumentDefinition
                         + "theorem below restricts p to be prime."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("golden-prime-local-objective-adjacent-difference"),
+                DeclarationHandle.Create(Prefix + "golden_prime_local_objective_diff"),
+                H("The original local increment supplier"),
+                StatementSource.FromAuthor(DifferenceFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The original adjacent-difference proof is exposed at its existing owner "
+                        + "for the geometric mismatch consumer. Its statement and proof are "
+                        + "inherited unchanged; exposing it supplies no new mathematical result."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("golden-prime-local-threshold-sufficiency"),
                 DeclarationHandle.Create(
                     Prefix + "golden_prime_local_objective_maximal_of_threshold"),
@@ -69,6 +80,17 @@ internal sealed class GoldenLocalThresholdDocument : IScribeDocumentDefinition
             [Bound("lambda", Reals()), Bound("p", Naturals()), Bound("a", Naturals())],
             Equal(Call("goldenPrimeLocalObjective", lambda, p, a),
                 Subtract(Call("log", ratio), cost))));
+    }
+
+    private static Formula DifferenceFormula()
+    {
+        Formula l = F.Id("lambda"), p = F.Id("p"), a = F.Id("a");
+        return Disp(ForAll([Bound("p", Naturals()), Bound("lambda", Reals()),
+            Bound("a", Naturals())], Implies(Call("Prime", p), Equal(
+                Subtract(Call("goldenPrimeLocalObjective", l, p, Add(a, D(1))),
+                    Call("goldenPrimeLocalObjective", l, p, a)),
+                Product(Subtract(Call("goldenLayerMarginal", p, Add(a, D(1))), l),
+                    Call("log", p))))));
     }
 
     private static Formula ThresholdFormula()
