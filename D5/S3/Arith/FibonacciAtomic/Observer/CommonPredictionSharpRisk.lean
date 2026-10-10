@@ -710,7 +710,7 @@ open scoped BigOperators
 namespace SharpRisk
 noncomputable section
 open CommonSelector ExteriorCounts
-variable {m : ℕ} {J : Type * } [Fintype J] [DecidableEq J]
+variable {m : ℕ} {J : Type* } [Fintype J] [DecidableEq J]
 local notation "Unused" e:arg => ({j : J // j ∉ Set.range e})
 private def indexEquiv (e : Fin (m + 3) ↪ J) : Fin (m + 3) ⊕ Unused e ≃ J :=
   (Equiv.sumCongr (Equiv.ofInjective e e.injective) (Equiv.refl _)).trans
@@ -733,9 +733,9 @@ private lemma join_inr (e : Fin (m + 3) ↪ J) (xy : Input (m
 private lemma join_core (e : Fin (m + 3) ↪ J) (xy : Input (m + 3) × (Unused e → Window)) :
     ((splitWord e).symm xy) ∘ e = xy.1 := by funext i; exact join_inl e xy i
 /-- Product of the common five-window masses over every coordinate. -/
-def lawMass {I : Type * } [Fintype I] (s : ℝ) (x : I → Window) : ℝ :=
+def lawMass {I : Type* } [Fintype I] (s : ℝ) (x : I → Window) : ℝ :=
   ∏ i, HeterogeneousTeacherSeparation.extremal s (x i)
-private lemma mass_sum (I : Type * ) [Fintype I] [DecidableEq I] (s : ℝ) :
+private lemma mass_sum (I : Type* ) [Fintype I] [DecidableEq I] (s : ℝ) :
     (∑ x : I → Window, lawMass s x) = 1 := by
   unfold lawMass
   rw [←Fintype.prod_sum]
@@ -744,7 +744,7 @@ private lemma mass_sum (I : Type * ) [Fintype I] [DecidableEq I] (s : ℝ) :
     ring
   simp_rw [hl]
   simp
-private lemma law_mass_nonneg {I : Type * } [Fintype I] (s : ℝ) (hs : 0 ≤ s) (hu : s ≤ 1 / 3)
+private lemma law_mass_nonneg {I : Type* } [Fintype I] (s : ℝ) (hs : 0 ≤ s) (hu : s ≤ 1 / 3)
     (x : I → Window) : 0 ≤ lawMass s x := by
   apply Finset.prod_nonneg
   intro i hi
