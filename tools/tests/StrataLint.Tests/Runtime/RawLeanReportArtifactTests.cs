@@ -122,7 +122,11 @@ public sealed class RawLeanReportArtifactTests
         var fixture = UtilityAdmissionTestSupport.InstanceFixture(
             "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; "
             + "premises=D5/S0/Carrier/Premise.fact");
-        fixture.Files[RuleFixture.ValuesBindingPath] = "import D5.S0.Carrier.ConsumerSupport\ndef fixtureValue := 0\n";
+        fixture.Files[RuleFixture.ValuesBindingPath] = fixture.Files[RuleFixture.ValuesBindingPath]
+            .Replace("   anchors: []\n", "   anchors: []\n   utility: kind=checker; "
+                + "basis=consumer=D5/S0/Carrier/Sibling.sibling; instance=D5/S0/Carrier/Sibling.sibling\n",
+                StringComparison.Ordinal)
+            .Replace("def fixtureValue", "import D5.S0.Carrier.ConsumerSupport\n\ndef fixtureValue", StringComparison.Ordinal);
         fixture.Files["D5/S0/Carrier/ConsumerSupport.lean"] = "def support := 0\n";
         fixture.Files["D5/S0/Carrier/Premise.lean"] = "def fact := 0\n";
         fixture.Files["D5/S0/Carrier/Sibling.lean"] = "def sibling := 0\n";

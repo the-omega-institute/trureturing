@@ -298,6 +298,37 @@ public sealed class DepositHeaderUtilityTests
         Assert.Contains("target=D5/S0/Carrier/ValuesBinding.absent", result.Output);
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ScopedFirstFreezePreservesConsumerReachability(bool reachable)
+    {
+        var fixture = new RuleFixture();
+        const string utility = "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing";
+        AddUtility(fixture, utility);
+        if (reachable)
+        {
+            fixture.Files[RuleFixture.ValuesBindingPath] = fixture.Files[RuleFixture.ValuesBindingPath]
+                .Replace("def fixtureValue", "import D5.S0.Carrier.Ring\n\ndef fixtureValue", StringComparison.Ordinal);
+            fixture.Reports[RuleFixture.ValuesBindingPath] = fixture.Reports[RuleFixture.ValuesBindingPath] with
+            {
+                Imports = ["D5.S0.Carrier.Ring"],
+            };
+        }
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            UtilityAdmissionTestSupport.Raw(fixture.Files))).Snapshot;
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+
+        var result = UtilityDeclarationValidator.Validate(UtilityValidationPhase.FirstFreeze,
+            RepoPath.CreateKnown(RuleFixture.RingPath), utility, snapshot,
+            () => LeanReportSourceScope.Load(source, snapshot, [RepoPath.CreateKnown(RuleFixture.RingPath)]));
+
+        Assert.Equal(reachable, result.IsAccepted);
+        Assert.Equal(reachable ? UtilityValidationFailure.None : UtilityValidationFailure.ConsumerUnreachable,
+            result.Failure);
+    }
+
     [Fact]
     public void DepositHeaderReportLoadFailureIsUtilityInputUnknown()
     {
