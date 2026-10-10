@@ -9,6 +9,72 @@ public sealed class ResourceObservationLibraryTests
     private const string LibraryPath = "tools/scripts/lib/resource-observation-lib.sh";
 
     [Theory]
+    [InlineData("baseline", "HUP")]
+    [InlineData("baseline", "INT")]
+    [InlineData("baseline", "TERM")]
+    [InlineData("periodic", "HUP")]
+    [InlineData("periodic", "INT")]
+    [InlineData("periodic", "TERM")]
+    [InlineData("final", "HUP")]
+    [InlineData("final", "INT")]
+    [InlineData("final", "TERM")]
+    [InlineData("signal-HUP", "HUP")]
+    [InlineData("signal-HUP", "INT")]
+    [InlineData("signal-HUP", "TERM")]
+    [InlineData("signal-INT", "HUP")]
+    [InlineData("signal-INT", "INT")]
+    [InlineData("signal-INT", "TERM")]
+    [InlineData("signal-TERM", "HUP")]
+    [InlineData("signal-TERM", "INT")]
+    [InlineData("signal-TERM", "TERM")]
+    public void FirstSamplerIdentityPublicationAllowsSignalReentryAndRepeatedSamples(string phase, string signal)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var result = Run(temporary, """
+            set -euo pipefail
+            source "$1"
+            injected=0
+            publication_signal() {
+              if [[ "${FUNCNAME[1]:-}" == resource_observation_boundary && "$injected" == 0 \
+                && "${cold_observation_pid:-}" == "${BASHPID:-$$}" \
+                && "${cold_observation_owner:-}" == resource ]]; then
+                injected=1
+                builtin kill -s "$TEST_SIGNAL" "${BASHPID:-$$}"
+              fi
+            }
+            set -T
+            trap publication_signal DEBUG
+            trap 'resource_observation_handle_signal "$TEST_SIGNAL" 0 $$ "$PWD" "$PWD" "";
+              for file in "$COLD_COST_OBSERVATION_DIR"/shell-resource-*.metrics; do
+                IFS= read -r receipt < "$file"
+                printf "PUBLICATION_REENTRY %s\n" "$receipt"
+              done' HUP INT TERM
+            resource_observe_sample 0 $$ "$PWD" "$PWD" "$TEST_PHASE" || true
+            resource_observe_sample 1 $$ "$PWD" "$PWD" periodic || true
+            trap - DEBUG HUP INT TERM
+            [[ "$injected" == 1 ]] || exit 92
+            printf 'FINAL_COUNTS calls=%s completed=%s\n' "$cold_observation_calls" "$cold_observation_completed"
+            exit 23
+            """, $"COLD_COST_OBSERVATION_DIR={temporary.Path}", $"TEST_PHASE={phase}", $"TEST_SIGNAL={signal}");
+        Assert.Equal(23, result.ExitCode);
+        Assert.DoesNotContain("unbound variable", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+        var output = Encoding.UTF8.GetString(result.StandardOutput);
+        var nested = output.Split('\n').Single(line => line.StartsWith("PUBLICATION_REENTRY ", StringComparison.Ordinal));
+        Assert.Contains("in_flight=1", nested, StringComparison.Ordinal);
+        Assert.Contains("span_depth=2", nested, StringComparison.Ordinal);
+        Assert.Contains($"active_phase={phase}", nested, StringComparison.Ordinal);
+        Assert.Contains("calls=1 completed=1", nested, StringComparison.Ordinal);
+        Assert.Contains("FINAL_COUNTS calls=3 completed=3", output, StringComparison.Ordinal);
+        var receipt = File.ReadAllText(Directory.GetFiles(temporary.Path, "shell-resource-*.metrics").Single());
+        Assert.Contains("phase=periodic edge=end", receipt, StringComparison.Ordinal);
+        Assert.Contains("in_flight=0", receipt, StringComparison.Ordinal);
+        Assert.Contains("active_phase=none", receipt, StringComparison.Ordinal);
+        Assert.Contains("elapsed_scope=sum-of-completed-spans-including-overlap", receipt, StringComparison.Ordinal);
+        Assert.Contains("counter_snapshot=before-receipt-write snapshot_atomicity=UNAVAILABLE", receipt, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("begin", "HUP")]
     [InlineData("begin", "INT")]
     [InlineData("begin", "TERM")]

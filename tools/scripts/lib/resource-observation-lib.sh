@@ -282,10 +282,13 @@ resource_observation_boundary() {
   fi
   if [[ "$realtime" != UNAVAILABLE ]]; then resolution=1000; fi
   if [[ "${cold_observation_pid:-}" != "$actual_pid" || "${cold_observation_owner:-}" != "$owner" ]]; then
-    cold_observation_pid="$actual_pid" cold_observation_owner="$owner"
-    cold_observation_calls=0 cold_observation_completed=0 cold_observation_errors=0
-    cold_observation_elapsed_us=0 cold_observation_clock_steps=0 cold_observation_write_errors=0
-    cold_observation_completed_bytes=0 cold_observation_attempted_bytes=0
+    # Catchable signal traps run at command boundaries. Publish all counters
+    # and the ready identity in one simple command so EXIT/signal reentry
+    # cannot match that identity while counter initialization is incomplete.
+    cold_observation_calls=0 cold_observation_completed=0 cold_observation_errors=0 \
+      cold_observation_elapsed_us=0 cold_observation_clock_steps=0 cold_observation_write_errors=0 \
+      cold_observation_completed_bytes=0 cold_observation_attempted_bytes=0 \
+      cold_observation_pid="$actual_pid" cold_observation_owner="$owner"
   fi
   if [[ "$edge" == begin ]]; then
     cold_observation_calls=$((cold_observation_calls + 1))
