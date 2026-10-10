@@ -4258,7 +4258,8 @@ $$
 L_t:=
 \begin{cases}
 0,&\Delta_t=\varnothing,\\
-\left\lceil|\Delta_t|/d_t\right\rceil,&\Delta_t\ne\varnothing.
+\infty,&\Delta_t\ne\varnothing\ \text{且}\ d_t=0,\\
+\left\lceil|\Delta_t|/d_t\right\rceil,&\Delta_t\ne\varnothing\ \text{且}\ d_t>0.
 \end{cases}
 $$
 若每个 $\Delta_t$ 都可覆盖（等价于 $\sigma_t<\infty$），则所有前缀 $\mathcal Q_t$ 覆盖相应的 $X_t$，并且
@@ -4274,14 +4275,14 @@ $$
 $$
 空批次 $\Delta_t=\varnothing$ 对三项和都贡献 $0$。当某一批 $\Delta_t\ne\varnothing$ 且有角色不属于任何 $\overline C_K$（尤其 $d_t=0$）时，$\sigma_t=\infty$，此前缀无法通过任何有限允许追加覆盖 $X_t$；这一步立即报告不可达并停止后续更新。
 
-特别地，对阈值序列 $\varepsilon_0\ge\varepsilon_1\ge\cdots\ge\varepsilon_N$，取
+特别地，对只降低阈值的序列 $\varepsilon_0\ge\varepsilon_1\ge\cdots\ge\varepsilon_N$，取
 $X_t=T_{\varepsilon_t}$，则
 $$
 \delta_t
 =\{\eta\in\widehat A\setminus\{1\}:
-\varepsilon_t<|h_\eta|\le\varepsilon_{t-1}\},
+\varepsilon_t<|h_\eta|\le\varepsilon_{t-1}\}.
 $$
-且提高阈值（$\varepsilon_t\ge\varepsilon_{t-1}$）只会删去角色，已有覆盖前缀无需追加。式 (49.1) 是固定前缀约束下的累计 additive recourse；它不与 $X_N$ 的全局最短 stack 相比较。
+若另一步提高阈值（$\varepsilon_t\ge\varepsilon_{t-1}$），则 $X_t\subseteq X_{t-1}$，这是删除角色的 deletion-only 情形，已有覆盖前缀无需追加，也不套用本定理递增链的 $\delta_t$ 定义。式 (49.1) 是固定前缀约束下的累计 additive recourse；它不与 $X_N$ 的全局最短 stack 相比较。
 
 **证明。** 先作归纳。$\mathcal Q_0$ 覆盖 $X_0$。若 $\sigma_t<\infty$，$\mathcal R_t$ 覆盖 $\Delta_t$，而
 $$
@@ -4308,7 +4309,7 @@ s_t\le H_d\,\sigma_t.
 $$
 同时 $s_t\ge\sigma_t\ge\lceil m/d\rceil$，而 $H_d\le H_m$，得到该批次的三重界。对 $t=1,\ldots,N$ 求和，使用串接层数恒等式即得 (49.1)。
 
-若 $\varepsilon_t\ge\varepsilon_{t-1}$，则 $T_{\varepsilon_t}\subseteq T_{\varepsilon_{t-1}}$（等号边界仍因严格 $>$ 而排除），所以此前缀继续覆盖新集合；若阈值下降，差集恰为所示 $\delta_t$，归纳式给出需要处理的批次。最后，若某角色不在任何允许层覆盖集中，它在任意后续有限串接中都保留，证明不可达。所有论证均在固定 $\overline C_K$、固定菜单和固定证书族内完成。证毕。
+对于只降低阈值的递增链，差集恰为所示 $\delta_t$，归纳式给出需要处理的批次；若另行提高阈值，则只是删除角色，旧前缀仍覆盖剩余集合。最后，若某角色不在任何允许层覆盖集中，它在任意后续有限串接中都保留，证明不可达。所有论证均在固定 $\overline C_K$、固定菜单和固定证书族内完成。证毕。
 
 若维护每批残余和前缀长度，单调下降阈值且新批次 $\delta_t$ 已显式给出时，批次 $t$ 的增量检查为
 $O(|\delta_t|\ell(\mathcal Q_{t-1}))$，覆盖预计算为
