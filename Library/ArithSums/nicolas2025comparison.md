@@ -7016,3 +7016,136 @@ directed centered-Gamma transport (GK6), including the endpoint atoms,
 whole mean-one law and $cA<1$ branch; scalar wrappers of the rational
 budget do not close it. No such formal theorem is supplied here.
 The RH/Robin research target remains active and unproved.
+
+## Project application: every integer on the same finite clock interval
+
+The existing effective reserve supplies a stronger quantifier on (GM1).
+This application combines (GM4) with
+[FIB §§249–250, especially (250.6)](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#250-无穷远锚定将有效导数预算变为点值间隔).
+It is a conditional ordinary derivation from those project sources,
+without a new numerical endpoint, literature-priority claim or Lean
+certification. Keep the unrestricted pressure over **all** positive
+integers, including one, and the actual $R(A)$ and $d_n$ defined above.
+
+Let $n$ be **any integer** such that
+
+$$
+\frac72\,10^{46}<A=\log n\le\frac{403}{100}\,10^{46},\qquad
+L=\log A,\qquad T=\sqrt A L.
+\tag{GAI1}
+$$
+
+Retain the classical prime-power pressure and tail identities and all
+the analytic suppliers used in (GE1)–(GE4), (GH1), (GJ1)–(GJ2) and
+(GK1)–(GK6), with the explicit Dusart inputs, finite zero criticality
+through $H=3\cdot10^{12}$, $c_0<0.05$ and the complete
+$S_2(H)<1.48\cdot10^{-12}$ enclosure. These are the same full Gamma,
+centering, dilation, convergence and actual-zero-multiset premises
+stated above. The reserve also uses Dusart v1 Theorem 5.2's precise row
+$(k,\eta_k,x_k)=(2,1/5,3594641)$ from FIB §249.
+The source proofs and computations remain named external or
+project-level analytic inputs; their complete primary verification is
+not supplied by this application.
+
+### The signed estimate does not require source selection
+
+Although (GM1) was first introduced inside a selected-source
+contradiction, its analytic estimate (GM4) holds for every real $A$
+in that interval. Indeed, (GM2) is uniform arithmetic; the stronger
+Dusart row $(2,0.01,7713133853)$ and Proposition 3.2 give (GM3)
+for every $t\ge A$. The centered directed comparison (GK6), including
+the endpoint atoms and all outside Gamma scales, and the complete
+zero-response bound (GJ2) therefore give the displayed five allowances
+for each such $A$. Their sum is strictly less than $0.79321$.
+Neither comparison uses a CA optimizer, CNS selection, properness,
+$d_n=0$ or (GM5). All actual zeros above $H$ retain their real parts,
+both ordinate signs and multiplicities. Consequently
+
+$$
+-T I_\psi(A)<\frac{79321}{100000}
+\quad\text{for every real }A\text{ in (GAI1)}.
+\tag{GAI2}
+$$
+
+The open lower endpoint and included upper endpoint are exactly those
+of (GM1); no extension below or above them has been made.
+
+### The effective actual reserve pays this same clock
+
+FIB (250.6) applies to the same unrestricted $R(x)$ for every
+$x\ge e^{100}$. Its numerical start comes from the explicit Dusart
+row and the event-safe derivative comparison in §249. The boundary
+condition at infinity is paid by §93.2's finite reserve bound
+$0\le R(x)\le5x^{-2/3}+2/x+1/[2(\sqrt x-1)]\to0$.
+It does not require an unspecified start for the asymptotic reserve
+expansion, or the sign of the common tail that cancels in (250.1).
+At $x=A$, (GM2) gives $L>107>100$, hence
+
+$$
+T R(A)>2(\sqrt2-1)
+ -\frac{2(\sqrt2-1)+\sqrt2\log2}{L}
+ +\frac{L}{(L+2)^3}.
+\tag{GAI3}
+$$
+
+The bracket being subtracted is positive. Thus replacing $L>107$
+by $107$ gives a valid lower bound. Use the strict rational enclosures
+
+$$
+\rho_-:=\frac{2828427}{2000000}<\sqrt2
+ <\rho_+:=\frac{1767767}{1250000},\qquad
+\log2<\ell_+:=\frac{2166085}{3125000}.
+$$
+
+The root inequalities follow by exact squaring; the logarithm bound
+follows by the positive series
+$\log2=2\sum_{j\ge0}(1/3)^{2j+1}/(2j+1)$ with its explicit
+geometric remainder. Taking the lower root in the positive term and
+the upper root and logarithm in the subtracted bracket yields
+
+$$
+\begin{aligned}
+T R(A)&>Q+\frac{L}{(L+2)^3},\\
+Q&:=2(\rho_--1)
+ -\frac{2(\rho_+-1)+\rho_+\ell_+}{107}
+ =\frac{67838284064811}{83593750000000}
+ >\frac{8115}{10000}.
+\end{aligned}
+\tag{GAI4}
+$$
+
+This preserves the additional positive barrier term. No equality
+case at $L=107$ or asymptotic numerical start is being assumed.
+
+### Retain the defect for every integer
+
+Use the exact identity $\Delta(n)=I_\psi(A)+R(A)+d_n$ at this
+integer's own clock. Since $T>0$ and $d_n\ge0$, (GAI2) and (GAI4) give
+
+$$
+\begin{aligned}
+T\Delta(n)
+&>\frac{1530885627311}{83593750000000}
+  +\frac{L}{(L+2)^3}+T d_n\\
+&>\frac{1829}{100000}+T d_n>0.
+\end{aligned}
+\tag{GAI5}
+$$
+
+Thus Robin's strict inequality holds for every integer in (GAI1),
+under the stated analytic premises. The defect has not been set to
+zero or transferred from a selected source. The known small-clock
+case $n=5041$, where $I_\psi(\log5041)+R(\log5041)<-1/200$,
+lies outside this interval and still requires its actual defect.
+
+The CNS reduction, properness, exact-price CA bridge, SevenSmooth
+exclusion, Kalyabin endpoint conditions, Nicolas's effective $6.78$
+branch and absent-prime ladder are not premises of (GAI5).
+They remain premises of the earlier argument selecting the least
+global maximizer and placing its clock above $(7/2)10^{46}$.
+That delivered conditional lower bound, ultimately
+$\log N>(403/100)10^{46}$, retains its scope. This application proves
+neither a least-counterexample bound nor an all-integer verification
+below the interval; Polak's separate huge finite sweep is not used.
+The full signed all-integer target beyond this finite interval, its
+formal analytic suppliers and RH remain unproved.
