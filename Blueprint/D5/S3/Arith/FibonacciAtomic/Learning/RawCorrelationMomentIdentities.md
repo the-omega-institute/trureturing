@@ -54,7 +54,7 @@ $$\forall a: \operatorname{Real}\left(\right), \forall K: \operatorname{Real}\le
 
 *Commentary.*
 
-For all fixed a>0 and K>0, put m=ceil(K/(a^2 rho^2)). The reverse event is h1=0,h2=1,l3=1. Its single-record mass is 12 rho^3. The probability that all m independent records avoid it is (1-12 rho^3)^m, which tends to one as rho decreases to zero.
+For all fixed a>0 and K>0, put m=ceil(K/(a^2 rho^2)). The reverse event is h1=0,h2=1,l3=1. Its single-record mass is 12 rho^3. The corresponding all-record product expression is (1-12 rho^3)^m, which tends to one as rho decreases to zero. When 0<a<=1, the underlying mass is a probability law, so this expression is the probability that all m independent records avoid the reverse event.
 
 **Theorem 1.5 (Conditional nonzero counts escape every fixed cutoff).**
 
