@@ -416,6 +416,7 @@ end ReservoirWords
 
 open scoped BigOperators
 namespace TeacherLabels
+open _root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher (Roles teacher)
 noncomputable section
 local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
 /-- The teacher at prefix position i and the first two anchors. -/

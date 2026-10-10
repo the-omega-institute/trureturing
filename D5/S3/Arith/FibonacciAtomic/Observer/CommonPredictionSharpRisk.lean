@@ -45,24 +45,21 @@ private def risk {m : ℕ} (w : ℕ → ℝ) (f : Input (m+3) → Fin 3) (t : Bo
 private lemma weighted_counts {m : ℕ} (w : ℕ → ℝ) (f : Input (m+3) → Fin 3) (t : Bool × Fin m) :
     risk w f t=∑ z ∈ Finset.range (m+4), w z*(errorCount z t.1 t.2 f:ℝ) := by
   unfold risk
-  have hpoint (x : Input (m+3)) :
-      w (rareN x)*(MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ)=
-      ∑ z ∈ Finset.range (m+4), w z*(if rareN x=z then
-        (MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ) else 0) := by
-    rw [Finset.sum_eq_single (rareN x)]
-    · simp
-    · intro z hz hne
-      simp [Ne.symm hne]
-    · intro hx
-      have hmem : rareN x∈Finset.range (m+4) := by
-        simp only [Finset.mem_range]
-        have := rare_le x
-        omega
-      exact (hx hmem).elim
-  rw [Finset.sum_congr rfl (fun x _ => hpoint x), Finset.sum_comm]
+  rw [← Finset.sum_fiberwise_of_maps_to (s := Finset.univ)
+    (t := Finset.range (m+4)) (g := @rareN (m+3))
+    (fun x _ => by
+      simp only [Finset.mem_range]
+      have h := rare_le x
+      omega)
+    (fun x => w (rareN x)*(MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ))]
   apply Finset.sum_congr rfl
   intro z hz
-  simp only [errorCount, Int.cast_sum, apply_ite, Int.cast_zero, Finset.mul_sum]
+  rw [Finset.sum_filter]
+  simp only [errorCount, Int.cast_sum, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro x hx
+  by_cases h : rareN x=z <;> simp [h]
+
 private lemma balanced_risks {m : ℕ} (w : ℕ → ℝ) (f : Input (m+3) → Fin 3)
     (hbal : ∀ z, ∀ i j : Fin m, errorCount z false i f=errorCount z false j f ∧
       errorCount z false i f=errorCount z true j f) (t u : Bool × Fin m) :
@@ -431,21 +428,20 @@ private lemma prefix_expectation (m : ℕ) (s : ℝ) (F : ℕ → ℝ) :
     (∑ p : Fin m → Window, prefixMass s p*F (highN p))=
       ∑ k ∈ Finset.range (m+1), binomialMass m k s*F k := by
   classical
-  have hp (p : Fin m → Window) :
-      prefixMass s p*F (highN p)=∑ k ∈ Finset.range (m+1),
-        (if highN p=k then prefixMass s p else 0)*F k := by
-    rw [Finset.sum_eq_single (highN p)]
-    · simp
-    · intro k hk hne
-      simp [Ne.symm hne]
-    · intro hx
-      have hm : highN p∈Finset.range (m+1) := by
-        simp only [Finset.mem_range]
-        have := WordCounts.high_n_le p
-        omega
-      exact (hx hm).elim
-  rw [Finset.sum_congr rfl (fun p _ => hp p), Finset.sum_comm]
-  simp_rw [←Finset.sum_mul, prefix_binomial]
+  rw [← Finset.sum_fiberwise_of_maps_to (s := Finset.univ)
+    (t := Finset.range (m+1)) (g := @highN m)
+    (fun p _ => by
+      simp only [Finset.mem_range]
+      have h := WordCounts.high_n_le p
+      omega)
+    (fun p => prefixMass s p*F (highN p))]
+  apply Finset.sum_congr rfl
+  intro k hk
+  rw [Finset.sum_filter, ← prefix_binomial m k s, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro p hp
+  by_cases h : highN p=k <;> simp [h]
+
 end
 end SharpRisk
 end
