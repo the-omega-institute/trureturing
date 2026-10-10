@@ -225,6 +225,41 @@ class CleanupMakeTests(NativeFixture):
             recovered={name: (recovery / name).read_text() for name in ("owned", "untracked")},
             ignored_recovered=False, host_summary=summary)), flush=True)
 
+    def test_registered_consumer_survives_source_removal(self):
+        selected = self.add_lane("aaa-anchor")
+        later = self.add_lane("zzz-later")
+        shutil.copytree(self.repository / "tools", selected / "tools",
+                        ignore=shutil.ignore_patterns("bin", "obj"))
+        for name in ("Makefile", "Directory.Build.props", "Directory.Packages.props", "global.json"):
+            shutil.copy2(self.repository / name, selected / name)
+        for tree in (selected, later):
+            (tree / "owned").write_text(tree.name + " tracked\n")
+            (tree / "untracked").write_text(tree.name + " untracked\n")
+        if ENTRANCE == "clean-lanes":
+            arguments = ["make", "--no-print-directory", "-C", "tools", "clean-lanes", "FORCE=1", "BASE=dev"]
+        else:
+            self.assertEqual("worktree-remove", ENTRANCE)
+            arguments = ["make", "--no-print-directory", "worktree-remove",
+                         "NAMES=" + selected.name + " " + later.name]
+        result = self.run_command(arguments, selected, phase="registered-anchor", check=False)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        if ENTRANCE == "clean-lanes":
+            events = self.events(result)
+            removed = [item["path"] for item in events if item.get("action") == "removed"]
+            self.assertLess(removed.index(str(selected)), removed.index(str(later)))
+            self.assert_recoverable(events)
+        else:
+            self.assertIn('"status":"succeeded"', result.stdout)
+        for tree, branch in ((selected, "aaa-anchor"), (later, "zzz-later")):
+            self.assertFalse(tree.exists())
+            recovered = self.root / (branch + "-recovered")
+            self.git("worktree", "add", recovered, "lane/governance/" + branch)
+            self.assertEqual(tree.name + " tracked\n", (recovered / "owned").read_text())
+            self.assertEqual(tree.name + " untracked\n", (recovered / "untracked").read_text())
+        print(json.dumps(dict(event="registered_anchor_result", entrance=ENTRANCE,
+            exit=result.returncode, source_removed=True, later_removed=True,
+            recovery_verified=True)), flush=True)
+
     def test_production_cleanup_entrances(self):
         entrances = [
             (["-C", self.repository / "tools"], "clean-lanes", self.root),
