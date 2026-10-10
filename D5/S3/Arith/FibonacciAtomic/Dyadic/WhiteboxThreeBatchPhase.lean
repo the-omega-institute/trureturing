@@ -131,7 +131,7 @@ private theorem support (p : Fin 3 → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i,
       14*minimumMass p-2 ≤ DyadicSupportLines.cost p := by
   have H := MersenneDyadicSupportLines.mersenne_support_lines 2 (by omega) p hp hs
   norm_num only [Nat.reducePow, Nat.reduceSub, Nat.cast_ofNat] at H
-  dsimp only 
+  dsimp only
   exact ⟨H.2.1,H.2.2.1,by norm_num at H ⊢; exact H.2.2.2.1,
     by norm_num at H ⊢; exact H.2.2.2.2⟩
 
