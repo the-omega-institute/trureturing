@@ -1740,3 +1740,116 @@ the shared sampling prime from the retained periodic and constant
 sectors. The coprime low response, its joint full drift, the separate
 mean estimate, prime layer, other recovery terms and complete signed
 Robin tail still have no bound here at the original target rate.
+
+## The actual response has a quadratic bound just above its cutoff
+
+Keep the original weights, actual source and fixed exponent. Write
+
+$$
+a_R(n)=\sum_{d\mid n}\lambda(d),\qquad
+b_A(n)=\sum_{e\mid n}\theta'(e).
+$$
+
+The defining finite LCM sum gives
+$H_A(y)=\sum_{n\le y}a_R(n)b_A(n)$. For $n\le U$,
+$b_A(n)=\mathbf1_{n=1}$. If
+$U<n\le U(1+\delta)<\min(2U,U_1)$, every proper divisor of $n$
+is at most $U$. Only the divisor $e=n$ can differ from the untruncated
+Möbius response, and
+
+$$
+b_A(n)=\theta'(n)-\mu(n)
+=-\frac{\mu(n)}r\log(n/U).
+$$
+
+Consequently, uniformly for real $U<y\le U(1+\delta)$,
+
+$$
+H_A(y)=1-\frac1r\sum_{U<n\le y}
+ \mu(n)a_R(n)\log(n/U).
+\tag{SV44}
+$$
+
+There is no rounding of the observation endpoint. For sufficiently
+large $A$, every $0<\delta\le1/2$ satisfies the displayed cutoff
+conditions. The existing absolute weight bounds give
+
+$$
+\begin{aligned}
+\sum_{U<n\le U(1+\delta)}|a_R(n)|
+&\le\sum_{d\le R}|\lambda(d)|
+ \left(\left\lfloor\frac{U(1+\delta)}d\right\rfloor
+       -\left\lfloor\frac Ud\right\rfloor\right)\\
+&\le\delta U(1+r)+\frac{R-1}r.
+\end{aligned}
+$$
+
+Here $\sum|\lambda(d)|/d\le1+r$ and
+$\sum|\lambda(d)|\le(R-1)/r$. The first follows from
+$|\lambda(d)|\le1$ and the harmonic-sum bound; the second is the
+same decreasing-logarithm sum used in the original $B_A$ envelope.
+Using $\log(n/U)\le\delta$, $r\ge1$ and the unchanged
+$\sigma_A\ge0$ in $E_A(y)=[-H_A(y)-\sigma_Ay]_+$ gives
+
+$$
+E_A(y)\le2\delta^2U+\frac{\delta R}{r^2},
+\qquad U<y\le U(1+\delta).
+\tag{SV45}
+$$
+
+This controls the complete original positive part. It does not estimate
+the mean by a power, remove its compensation, or bound the constant
+and oscillatory sectors separately.
+
+For the square layer put $P=(x/U)^{1/2}$, $A\le x\le2A$, and
+restrict to any subset of the actual primes satisfying
+
+$$
+U<x/p^2\le U(1+\delta).
+$$
+
+They lie in $[P(1+\delta)^{-1/2},P)$, containing at most
+$C\delta P+1$ integers. The endpoint term is retained. Moreover
+$p\ge A^{3/8}/\sqrt{1+\delta}>U(1+\delta)$ eventually, uniformly
+in $x$ and $\delta$. Thus every denominator in the moving local
+support is smaller than $p$, and
+$E_{A,p}^{\rm cop}(x/p^2)=E_A(x/p^2)$ with the full drift and mean.
+Equation (SV45) and $w_{N,p,2}\le\log p$ yield
+
+$$
+\begin{aligned}
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^2\le U(1+\delta)}
+ w_{N,p,2}E_A(x/p^2)
+\ll{}&L\delta^3A^{-3/8}+L\delta^2A^{-3/4}\\
+&+\frac{\delta^2A^{-1/2}}L
+ +\frac{\delta A^{-7/8}}L.
+\end{aligned}
+\tag{SV46}
+$$
+
+Only when the original fixed $3/8<\eta<1/2$, choose
+$b=(\eta-3/8)/3$ and $\delta_{2,A}=A^{-b}/L$. The first term is
+$A^{-\eta}/L^2$ and the other three have strictly larger power
+exponents. The whole bound is $O_\eta(A^{-\eta}/L^2)$.
+Restricting to the original prime window preserves this bound.
+Removing these square samples from the original nonnegative residual
+therefore changes its supremum by at most that amount; an attained
+supremum is unnecessary.
+
+For comparison, the old $E_A(y)\ll y/L^2$ envelope and the same
+short-interval integer count give only
+$O(\delta A^{-3/8}/L+A^{-3/4}/L)$ here. With $\delta=\delta_{2,A}$,
+its first term is $A^{-\eta+2b}/L^2$, so that upper bound does not
+pay this wider strip. This is a comparison of sufficient bounds,
+not a lower bound on the actual response. When $\eta\le3/8$,
+the old envelope and the existing $\vartheta(P)\ll P$ supplier already
+pay a fixed-width square strip at $O(A^{-3/8}/L^2)$; that case is
+not an additional payment.
+
+The finite onset calculation is an application of the original weight
+definitions and counting bounds, not a new classical sieve theorem,
+historical originality claim or Lean certification. It pays the complete
+response only in the displayed shrinking strip. The critical region
+$y\asymp V$, remaining low layers, mean rate, prime layer, other recovery
+terms and full signed Robin tail retain their original obligations.
