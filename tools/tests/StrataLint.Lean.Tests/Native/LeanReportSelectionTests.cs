@@ -220,7 +220,6 @@ public sealed class LeanReportSelectionTests
               */reuse.py) phase="$2" ;;
               *) exit 97 ;;
             esac
-            [[ "$phase" != invalidate-receipt ]] || exit 0
             printf '%s\n' "$phase" >> "$INSPECTOR_TEST_PHASES"
             [[ "$phase" != "$INSPECTOR_TEST_FAILURE" ]] || exit 23
             [[ "$phase" != reuse ]] || exit 3
