@@ -875,3 +875,101 @@ original signed obligation preserved. It supplies neither GA1 nor
 regular or event-free states, a favorable cutoff, eliminated ties,
 positive sorting-defect funding, or RH. Those restrictions cannot be
 added to (S3) without another same-source selection argument.
+
+## The same power-excess family also supplies proper GA1 sources
+
+Keep the actual $D,H,N$ and all parameters of (S1)–(S2). The following
+application of equations (10)–(12) and Lemma 6, printed pp.8–9 and p.13,
+provides the additional same-source selection required above. It does
+not reconstruct the paper's known infinite CA–GA1 supplier or claim
+priority for the application.
+
+First the selected maximum satisfies $N\ge H$, not only $N>D$.
+The two endpoints optimize at the common price $\epsilon_p$, with
+$Q=Z(D)D^{-\epsilon_p}=Z(H)H^{-\epsilon_p}$. For $D<m<H$, global
+CA optimization gives
+
+$$
+G(m)\le Qe^{g_{\epsilon_p}(m)},\qquad
+g_\epsilon(t)=\epsilon\log t-\log\log\log t.
+$$
+
+Lemma 6's strict decrease followed by strict increase implies
+$g_{\epsilon_p}(m)<\max\{g_{\epsilon_p}(D),g_{\epsilon_p}(H)\}$.
+Since $G(D)<G(H)$, the larger endpoint is $H$. Together with the
+separate strict comparison at $m=D$, every $D\le m<H$ has
+$G(m)<G(H)$; tail maximality therefore forces $N\ge H$.
+
+Put $q_0(u)=1/(u\log u)$. The same integer's own price now satisfies
+
+$$
+\epsilon_N=q_0(A)\le q_0(\log H)<q_0(p+1)<\epsilon_p.
+$$
+
+Every occupied $H$ layer has price at least $\epsilon_p$ and hence is
+mandatory at $\epsilon_N$, by the cited activation rule. Thus $H\mid N$.
+For any ordinary prime divisor $q$ of $N$, if $q\le p$ then
+$N/q\ge H/q\ge H/p=D$. If $q>p$, the largest prime factor of $H$ is
+$p$, so $H\mid N/q$ and again $N/q\ge H>D$. These comparisons cover
+every multiplicity. The defining maximum over integers at least $D$
+therefore supplies $G(N/q)\le G(N)$ for every such $q$.
+Eventually $p\ge5$, so $\Omega(N)\ge\Omega(H)\ge3$; this is proper GA1
+in the source's exact sense. The power excess (S2) holds on this same $N$.
+
+### The self-price has no activation tie
+
+Define the narrower class
+
+$$
+\mathscr S_{\rm reg}=\mathscr S_*\cap\{N:N\text{ is proper GA1}\}.
+$$
+
+Every member has an event-free self-price. Indeed Lemma 6 puts the
+unique strict minimum of $g_{\epsilon_N}$ at $N$. If
+$F(q,k)=\epsilon_N$, equation (11) gives $v_q(N)=k$ or $k-1$.
+When layer $k$ is included, $M=N/q$ is another optimizer at the same
+price; when it is excluded, $M=Nq$ is another such optimizer. In either
+case the common objective gives the exact comparison
+
+$$
+\frac{G(M)}{G(N)}
+=\exp\bigl(g_{\epsilon_N}(M)-g_{\epsilon_N}(N)\bigr)>1.
+$$
+
+In the deletion case, properness gives $M\ge4>e$ and GA1 contradicts
+this strict gain. In the insertion case, $M>N$ and the defining right-tail
+comparison contradicts it. Thus there is no tied layer at any prime or
+depth. Equation (10) identifies $N$ as the unique global CA optimizer
+at its self-price, namely the actual prefix $C_A$ in the
+[existing workload parameter map](../Analytic/mantovanelli2026primeworkload.md#parameters-and-the-actual-packet).
+Consequently $\Phi_{\rm CA}(A)=\log C_A=\log N=A$ and the return is
+regular. This reuses the source's strict-minimum and activation interfaces;
+it introduces no new general regularity theorem or Lean wrapper.
+
+### Restrict the unpaid signed estimate to this joint source class
+
+The selected family lies in $\mathscr S_{\rm reg}$ and retains (S2).
+Therefore (O3) still forces $T I_\psi(A)\to-\infty$ on that same
+unbounded family if RH fails. It suffices to establish
+
+$$
+\exists M\ge0,\ A_0\quad
+\forall N\in\mathscr S_{\rm reg},\ A=\log N\ge A_0:\quad
+\sqrt A\log A\, I_\psi(A)\ge-M.
+\tag{S4}
+$$
+
+This is the complete original signed integral, with every prime-power
+layer and explicit-formula term retained. The
+[existing regular-return endpoint application](../ArithSums/nicolas2025comparison.md#the-endpoint-condition-at-actual-self-tangent-sources)
+now applies to this same family: it already gives
+$A-\vartheta(A)=\sqrt{2A}(1+o(1))$ and a negligible squared endpoint
+penalty at the actual primorial cutoff. Its proof and the archived
+packet and cone results are reused rather than repeated.
+
+No bound in (S4) follows from those endpoint identities. The added
+interface is joint selection of proper GA1 regular sources with the
+same quantified excess, not a proof that every member of
+$\mathscr S_*$ is GA1. The full signed estimate and RH remain unproved;
+this application is not Lean certified and claims no mathematical
+originality.

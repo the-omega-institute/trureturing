@@ -14,6 +14,17 @@ internal sealed class GoldenResourceOptimalIntegerDocument : IScribeDocumentDefi
         H("Golden Resource Optimal Integer"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("reciprocal-divisor-sum"),
+                DeclarationHandle.Create(Prefix + "reciprocal_divisor_sum"),
+                H("The reciprocal divisor sum"),
+                StatementSource.FromAuthor(ReciprocalFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive natural n, pairing d with n/d identifies the sum "
+                    + "of reciprocal divisors with sigma(1,n)/n. Both fractions are real. "
+                    + "This identity is also consumed by SigmaNeighbourPeak."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("golden-resource-objective"),
                 DeclarationHandle.Create(Prefix + "goldenResourceObjective"),
                 H("The resource objective"),
@@ -88,6 +99,19 @@ internal sealed class GoldenResourceOptimalIntegerDocument : IScribeDocumentDefi
                             + "neither the Riemann hypothesis nor optimality for other entropy "
                             + "or compression objectives."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ReciprocalFormula()
+    {
+        Formula n = F.Id("n");
+        Formula d = F.Id("d");
+        Formula reciprocalSum = Seq(
+            new Formula.Subscript(Sum,
+                Relation(d, FormulaRelationOperator.MemberOf, Call("divisors", n))),
+            Sp, new Formula.Fraction(D(1), d));
+        return Disp(ForAll([Bound("n", Naturals())],
+            Implies(Le(D(1), n), Equal(reciprocalSum,
+                new Formula.Fraction(Call("sigma", D(1), n), n)))));
+    }
 
     private static Formula ObjectiveDefinition()
     {
