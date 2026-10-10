@@ -33,7 +33,7 @@ class LocalEntryTests(unittest.TestCase):
         self.output = self.root / '.lake/build/stratalint' / publication.RAW
         for name in ('Makefile', 'tools/scripts/report/lean-report.sh',
                      'tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
-                     'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                     'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py', 'tools/lean-inspector/fib_analysis.py',
                      'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh',
                      'tools/scripts/worktree/lean_cache_release.py',
                      'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py'):

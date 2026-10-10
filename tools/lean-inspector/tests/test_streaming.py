@@ -696,7 +696,7 @@ raise SystemExit(37)
             path.chmod(0o755)
             return path
 
-        for name in ['inspect.sh', 'native.py', 'reuse.py', 'materials.py', 'publication.py']:
+        for name in ['inspect.sh', 'native.py', 'reuse.py', 'materials.py', 'fib_analysis.py', 'publication.py']:
             path = 'tools/lean-inspector/' + name
             write(path, (repository / path).read_text())
         write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
@@ -790,7 +790,7 @@ class EntryPointTests(unittest.TestCase):
                     path.chmod(0o755)
                 repository = Path(publication.__file__).resolve().parents[2]
                 for name in ['tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
-                             'tools/lean-inspector/materials.py', 'tools/lean-inspector/publication.py',
+                             'tools/lean-inspector/materials.py', 'tools/lean-inspector/fib_analysis.py', 'tools/lean-inspector/publication.py',
                              'tools/scripts/report/lean-report-selection.py']:
                     write(name, (repository / name).read_text())
                 write('Trureturing.lean', 'def x : Nat := 1\n')

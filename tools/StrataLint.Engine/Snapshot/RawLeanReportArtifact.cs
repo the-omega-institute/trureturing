@@ -76,6 +76,7 @@ internal static class RawLeanReportArtifact
         {
             var moduleProperties = new List<string> { "declarations", "imports", "module", "source_path", "source_sha256" };
             if (moduleElement.TryGetProperty("information_templates", out _)) moduleProperties.Add("information_templates");
+            if (moduleElement.TryGetProperty("fib_analysis", out _)) moduleProperties.Add("fib_analysis");
             if (moduleElement.TryGetProperty("utility_refutation", out _)) moduleProperties.Add("utility_refutation");
             if (moduleElement.TryGetProperty("information_registration_errors", out _)) moduleProperties.Add("information_registration_errors");
             RequireProperties(moduleElement, moduleProperties, "raw Lean module");
@@ -109,6 +110,8 @@ internal static class RawLeanReportArtifact
                     Refutation = ReadRefutation(moduleElement, source.File, snapshot),
                     InformationTemplates = moduleElement.TryGetProperty("information_templates", out var templates)
                         ? templates.Clone() : null,
+                    FibAnalysis = moduleElement.TryGetProperty("fib_analysis", out var fib)
+                        ? fib.Clone() : null,
                     InformationRegistrationErrors = moduleElement.TryGetProperty("information_registration_errors", out _)
                         ? ReadSortedStrings(RequiredArray(moduleElement, "information_registration_errors"), "information_registration_errors")
                         : null,
@@ -171,6 +174,7 @@ internal static class RawLeanReportArtifact
                                 statement_id = DeclarationStatementId(item.Value.Path, declaration),
                                 type_sha256 = declaration.StatementTypeAddress,
                             }),
+                        fib_analysis = fileReport.FibAnalysis,
                         imports = fileReport.Imports
                             .Distinct(StringComparer.Ordinal)
                             .Order(StringComparer.Ordinal),

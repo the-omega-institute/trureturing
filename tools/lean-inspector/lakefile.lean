@@ -175,7 +175,14 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let projection ← fetch <| mod.facet `judgeInputs
   let inputs ← readJson (← projection.await)
   let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
-  unless ownInputs.isEmpty do
+  let fibInputs := ownInputs.filter fun entry =>
+    (entry.getObjValAs? String "type").toOption ==
+      some "LeanInformationAudit.AuricFib.Contract.Application"
+  let analyzer? ← if fibInputs.isEmpty then pure none else do
+    let some executable := (← getWorkspace).findLeanExe? `auricFibAnalysis
+      | error "fib.analysis_program_missing"
+    pure (some (← executable.fetch))
+  unless ownInputs.size == fibInputs.size do
     -- Fetch the shared program obligation in Lake's dependency graph. Awaiting
     -- it without mixing its trace preserves implementation-independent reuse.
     let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
@@ -226,8 +233,10 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     discard <| format.await
     addTrace format.getTrace
     let executable ← inspector.await
+    let analyzer ← analyzer?.mapM fun job => job.await
     let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
-      utility.toString, executable.toString, file.toString]
+      utility.toString, executable.toString, file.toString,
+      analyzer.map (·.toString) |>.getD ""]
     let build := do
       prepareProduction
       proc { (← nativeCommand pkg (#["module"] ++ args)) with env }
@@ -257,15 +266,29 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job ReportArtifact)
       setTrace row.outputTrace
       return row
     let pending := request.file.addExtension "pending"
+    -- Lake removes a stale output before invoking the build callback. Retain
+    -- the existing module transaction only for FIB leaves that can reuse it.
+    -- This is a transient rename, never a second cache or a freshness key.
+    let previous := request.file.addExtension "fib-previous"
+    if !request.args[6]!.isEmpty && (← previous.pathExists) && !(← request.file.pathExists) then
+      IO.FS.rename previous request.file
+    let preserve := batch?.isNone && !request.args[6]!.isEmpty && (← request.file.pathExists)
+    if preserve then IO.FS.rename request.file previous
+    let args := request.args.push (if preserve then previous.toString else "")
     let build := if batch?.isSome then do
         IO.FS.rename pending request.file
         pure PUnit.unit
       else do
         request.prepareProduction
-        proc { (← nativeCommand pkg (#["module"] ++ request.args)) with env := request.env }
+        proc { (← nativeCommand pkg (#["module"] ++ args)) with env := request.env }
         pure PUnit.unit
     try
-      buildArtifact request.file build
+      let result ← buildArtifact request.file build
+      if preserve then removeFileIfExists previous
+      return result
+    catch error =>
+      if preserve then IO.FS.rename previous request.file
+      throw error
     finally
       if batch?.isSome then removeFileIfExists pending
 
