@@ -93,7 +93,8 @@ noncomputable def recordAppendRegistration :
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalExecutionBridge,
     definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "fn"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
@@ -164,7 +165,8 @@ noncomputable def outputRegistration :
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalExecutionBridge,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "fn", "fn"],
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
@@ -240,7 +242,8 @@ noncomputable def executeRegistration :
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalExecutionBridge,
     definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body",
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
         "body", "body", "body", "fn", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] },
@@ -290,7 +293,8 @@ noncomputable def recordHistoryRegistration :
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalExecutionBridge,
     definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "fn"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
