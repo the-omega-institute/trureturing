@@ -1,6 +1,7 @@
 using StrataLint.Runtime;
 using System.Text;
 using System.Text.Json;
+using System.Security.Cryptography;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -29,7 +30,11 @@ internal static class WorktreeCommand
     private static string CreationKindList => string.Join(", ", CreationKinds);
 
     internal static string Usage { get; } =
-        "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
+        "USAGE: StrataLint worktree with [--path DIR] [--read PATH] [--write PATH] [--git] -- COMMAND [ARG ...] | "
+        + "StrataLint worktree checkpoint --paths-from NUL_FILE --message-file FILE | "
+        + "StrataLint worktree publish --branch NAME [--commit REV] | "
+        + "StrataLint worktree finalize --branch NAME --writers-joined | "
+        + "StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree with-cache-reader [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree validate-branch --branch NAME | "
@@ -65,6 +70,8 @@ internal static class WorktreeCommand
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
+        if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize")
+            return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, Timeout.InfiniteTimeSpan);
         if (arguments.Count > 0
             && string.Equals(arguments[0], "remove", StringComparison.Ordinal))
         {
@@ -102,9 +109,21 @@ internal static class WorktreeCommand
         string? creationMetadata = null;
         WorktreeBranchTracking? branchTracking = null;
         var halfBuiltRecovered = false;
+        var restoreRejected = false;
+        IDisposable? initializationScope = null;
         try
         {
             options = ParseArguments(repositoryRoot, arguments);
+            if (Directory.Exists(options.Path))
+            {
+                var reused = WorktreeProtocolCommand.Run(options.Source,
+                    ["reuse", "--path", options.Path, "--branch", options.Branch, "--base", options.Base], runner);
+                if (!reused.Success) return reused;
+                if (LeanPinSet.TryReadWorktree(options.Path, out var reason) is null)
+                    throw new InvalidOperationException(reason);
+                return reused;
+            }
+            initializationScope = WorktreeInitializationScope.Acquire(options.Source, options.Path, options.Branch);
             halfBuiltRecovered = ValidatePreflight(options, runner);
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             branchOid = VerifyBase(options, runner);
@@ -138,13 +157,13 @@ internal static class WorktreeCommand
             EnsureReviewScaffoldIgnores(options.Path);
             if (!options.SkipRestore)
             {
-                RunRequired(
-                    runner,
-                    "dotnet",
-                    ["restore", SolutionPath, "--locked-mode"],
-                    options.Path,
-                    TimeSpan.FromSeconds(1800),
-                    "dotnet restore failed");
+                var restore = RunProcess(runner, "dotnet", ["restore", SolutionPath, "--locked-mode"],
+                    options.Path, TimeSpan.FromSeconds(1800));
+                if (restore.ExitCode != 0)
+                {
+                    restoreRejected = true;
+                    throw new InvalidOperationException(ProcessError(restore, "dotnet restore failed"));
+                }
             }
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
             RunRequired(
@@ -180,12 +199,15 @@ internal static class WorktreeCommand
                 {
                     creationMetadata ??= WorktreeCreationSafety.FindCreationMetadata(options, creationLock, runner);
                     if (worktreeCreated || creationMetadata is not null)
-                        cleanup = Cleanup(options, creationLock, creationMetadata, runner);
-                    if (cleanup.Length == 0)
+                        cleanup = Cleanup(options, creationLock, creationMetadata, branchOid, restoreRejected, initializationScope, runner);
+                    if (cleanup.Length == 0 && branchTracking is not null)
                     {
-                        WorktreeCreationSafety.CleanupCreatedBranch(options, creationLock, branchOid, branchCreated, runner);
-                        branchTracking?.Rollback(options, runner);
+                        initializationScope?.Dispose();
+                        initializationScope = null;
+                        branchTracking.Rollback(options, runner);
                     }
+                    if (branchCreated && creationMetadata is null && cleanup.Length == 0)
+                        cleanup = "initialization branch retained for recovery";
                 }
             }
             catch (Exception cleanupException) when (cleanupException is not OutOfMemoryException)
@@ -206,6 +228,10 @@ internal static class WorktreeCommand
                 false,
                 string.Empty,
                 $"WORKTREE_FAILED {receipt}\n");
+        }
+        finally
+        {
+            initializationScope?.Dispose();
         }
     }
 
@@ -536,31 +562,39 @@ internal static class WorktreeCommand
         WorktreeOptions options,
         string creationLock,
         string? creationMetadata,
+        string branchOid,
+        bool restoreRejected,
+        IDisposable? initializationScope,
         IWorktreeProcessRunner runner)
     {
         WorktreeCreationSafety.ValidateCleanupOwnership(options, creationLock, creationMetadata, runner);
-        var removal = RunProcess(
-            runner,
-            "git",
-            ["worktree", "remove", "--force", "--force", options.Path],
-            options.Source,
-            BoundedProcessRunner.HangDetectionBudget);
-        if (removal.ExitCode != 0)
+        if (!restoreRejected)
+            return "initialization worktree retained; qualified cleanup or alternate continuation is required";
+        if (creationMetadata is null)
+            return "initialization metadata unavailable; material retained for recovery";
+        var reference = $"refs/heads/{options.Branch}";
+        var common = Path.GetFullPath(File.ReadAllText(Path.Combine(creationMetadata, "commondir")).Trim(), creationMetadata);
+        var log = Path.Combine(common, "logs", reference);
+        if (!File.Exists(log) || File.GetAttributes(log).HasFlag(FileAttributes.ReparsePoint))
+            return "initialization branch history unavailable; material retained for recovery";
+        var history = File.ReadAllBytes(log);
+        if (!Encoding.UTF8.GetString(history).Split('\n')[0].EndsWith("\t" + creationLock, StringComparison.Ordinal))
+            return "initialization branch ownership changed; material retained for recovery";
+        var historyDigest = Convert.ToHexStringLower(SHA256.HashData(history));
+        var expected = JsonSerializer.Serialize(new
         {
-            try
-            {
-                WorktreeCreationSafety.ValidateCleanupOwnership(options, creationLock, creationMetadata, runner);
-                if (Directory.Exists(options.Path)) Directory.Delete(options.Path, recursive: true);
-                if (creationMetadata is not null && Directory.Exists(creationMetadata))
-                    Directory.Delete(creationMetadata, recursive: true);
-            }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
-            {
-                return $"; cleanup failed: {ProcessError(removal, "git worktree remove failed")}; {exception.Message}";
-            }
-        }
-
-        return string.Empty;
+            path = options.Path, head = branchOid, branch = reference, locked = creationLock,
+        });
+        // Close only this participant's handles. Surviving descendants continue
+        // to exclude the existing qualified removal adapter automatically.
+        initializationScope?.Dispose();
+        var removed = WorktreeProtocolCommand.Run(options.Source,
+            ["remove", "--path", options.Path, "--initialization", "--expected", expected], runner);
+        if (!removed.Success) return removed.Error;
+        var retired = WorktreeProtocolCommand.Run(options.Source,
+            ["retire-branch", "--branch", options.Branch, "--commit", branchOid,
+                "--expected-reflog-sha256", historyDigest], runner);
+        return retired.Success ? string.Empty : retired.Error;
     }
 
     private static void RunRequired(

@@ -211,6 +211,36 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual("failed", summary["status"])
         self.assertEqual(2, summary["worktree_exit"])
 
+    def test_aggregate_temporary_sweep_qualifies_bytes_and_retains_unknown(self):
+        repository = self.root / "repository"
+        repository.mkdir()
+        remote = self.root / "remote.git"
+        def git(*args):
+            return subprocess.run(["git", "-C", str(repository), *map(str, args)],
+                                  capture_output=True, text=True, check=True).stdout.strip()
+        git("init", "--initial-branch=dev")
+        git("config", "user.name", "Cleanup Tests")
+        git("config", "user.email", "cleanup@example.invalid")
+        (repository / "owned").write_text("retained\n")
+        git("add", ".")
+        git("commit", "-m", "baseline")
+        git("init", "--bare", remote)
+        git("remote", "add", "origin", remote)
+        git("push", "origin", "dev")
+        temporary = self.root / "tmp"
+        safe, unknown = temporary / "safe", temporary / "unknown"
+        safe.mkdir(parents=True)
+        unknown.mkdir()
+        (safe / "owned").write_text("retained\n")
+        (unknown / "private").write_text("recovery\n")
+        options = cleanup.argparse.Namespace(repository=repository, base="dev",
+            codex_home=self.root / "codex", sshx_home=self.root / "sshx", tmp_root=[temporary],
+            min_age_hours=0, delete=True, verbose=False)
+        with patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, cleanup.run_clean(options))
+        self.assertFalse(safe.exists())
+        self.assertEqual("recovery\n", (unknown / "private").read_text())
+
     def test_missing_active_file_inspection_refuses_cleanup(self):
         options = cleanup.argparse.Namespace(
             repository=self.root, base="base", codex_home=self.root / "codex",
@@ -332,6 +362,32 @@ class HostCleanupTests(unittest.TestCase):
                     cwd=repository, env=env, capture_output=True, text=True)
                 self.assertEqual(2, result.returncode, "[FAIL] clean_lanes_wrapper_rejects_unsupported_activity")
 
+    def test_physical_kernel_observation_does_not_reopen_endpoint_and_argv_resolves_alias(self):
+        target = self.root / "active endpoint"
+        target.write_text("owned")
+        physical = target.resolve()
+        alias = self.root / "argument-alias"
+        alias.symlink_to(physical)
+        resolve = Path.resolve
+
+        def inaccessible_endpoint(path, *args, **kwargs):
+            if path == physical:
+                raise PermissionError("endpoint traversal unavailable")
+            return resolve(path, *args, **kwargs)
+
+        def observed(arguments, **kwargs):
+            if arguments[0] == "lsof":
+                return subprocess.CompletedProcess(arguments, 0, "n" + str(physical) + "\n", "")
+            return subprocess.CompletedProcess(arguments, 0,
+                str(os.getuid()) + " runner --output=" + str(alias) + "\n", "")
+
+        with patch.object(cleanup.sys, "platform", "darwin"), \
+             patch.object(cleanup.subprocess, "run", side_effect=observed), \
+             patch.object(Path, "resolve", inaccessible_endpoint):
+            active = cleanup.active_paths(self.root / "codex")
+        self.assertIn(physical, active)
+        self.assertNotIn(alias, active)
+
     def test_activity_command_reuses_sampler_and_fails_closed(self):
         output = io.StringIO()
         with patch.object(cleanup, "active_paths", return_value={self.root}), contextlib.redirect_stdout(output):
@@ -392,6 +448,49 @@ class HostCleanupTests(unittest.TestCase):
                      contextlib.redirect_stderr(io.StringIO()):
                     self.assertEqual(1, cleanup.main(["active-paths"]))
                 self.assertEqual("", output.getvalue())
+
+    def test_linux_terminal_group_requires_complete_single_thread_evidence(self):
+        process = self.root / "proc/123"
+        (process / "fd").mkdir(parents=True)
+        task = process / "task/123"
+        task.mkdir(parents=True)
+        target = self.old_file(self.root / "checkout/reader.txt")
+        (process / "fd/1").symlink_to(target)
+        (process / "cwd").symlink_to(self.root)
+        iterdir, readlink = Path.iterdir, os.readlink
+        def inventory(path):
+            return iter([process]) if path == Path("/proc") else iterdir(path)
+        def denied(path):
+            if path == process / "cwd":
+                raise PermissionError("cwd is unavailable")
+            return readlink(path)
+        with patch.object(cleanup.sys, "platform", "linux"), \
+             patch.object(Path, "iterdir", inventory), \
+             patch.object(cleanup.os, "readlink", denied), \
+             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")):
+            for state, threads, complete, terminal in (
+                    ("Z", "1", True, True), ("X", "1", True, True),
+                    ("S", "1", True, False), ("Z", "2", True, False),
+                    ("Z", "1", False, False)):
+                with self.subTest(state=state, threads=threads, complete=complete):
+                    (process / "status").write_text("State: " + state + "\nThreads: " + threads + "\n")
+                    if complete:
+                        (task / "status").write_text("State: " + state + "\nThreads: " + threads + "\n")
+                    else:
+                        (task / "status").unlink()
+                    if terminal:
+                        cleanup.active_paths(self.root / "codex")
+                    else:
+                        with self.assertRaisesRegex(OSError, "linux_activity_unavailable"):
+                            cleanup.active_paths(self.root / "codex")
+            # A terminal leader cannot hide a live sibling's cwd or descriptors.
+            sibling = process / "task/124"
+            sibling.mkdir()
+            (sibling / "status").write_text("State: S\nThreads: 2\n")
+            (process / "status").write_text("State: Z\nThreads: 2\n")
+            (task / "status").write_text("State: Z\nThreads: 2\n")
+            with self.assertRaisesRegex(OSError, "linux_activity_unavailable"):
+                cleanup.active_paths(self.root / "codex")
 
     def test_linux_exited_process_does_not_hide_other_process_activity(self):
         exited = self.root / "proc/122"

@@ -202,9 +202,48 @@ def candidates(codex, sshx, tmp_roots):
             yield "tmp", path
 
 
-def active_paths(codex):
+def linux_observation_unavailable(process, boundary, error):
+    """Only a completely observed terminal thread group has no active handles."""
+    try:
+        process.stat()
+    except (FileNotFoundError, ProcessLookupError):
+        return
+    status = {}
+    try:
+        for line in (process / "status").read_text().splitlines():
+            key, separator, value = line.partition(":")
+            if separator and key in ("State", "Threads", "Uid"):
+                status[key] = value.strip()
+        if status.get("State", "").split()[:1] in (["Z"], ["X"]):
+            # A terminal leader alone does not certify surviving threads.
+            tasks = list((process / "task").iterdir())
+            if status.get("Threads") == "1" and [task.name for task in tasks] == [process.name]:
+                observed = (tasks[0] / "status").read_text()
+                fields = dict(line.split(":", 1) for line in observed.splitlines() if ":" in line)
+                if (fields.get("State", "").split()[:1] in (["Z"], ["X"])
+                        and fields.get("Threads", "").strip() == "1"):
+                    return
+    except (OSError, ValueError):
+        # A missing status/task file is not proof of process disappearance.
+        try:
+            process.stat()
+        except (FileNotFoundError, ProcessLookupError):
+            return
+    raise OSError("linux_activity_unavailable " + json.dumps(dict(
+        process=str(process), boundary=boundary, status=status, error=str(error)))) from error
+
+
+def active_paths(codex, scopes=()):
     """Read open files/cwds and process arguments for the current user only."""
     protected = {Path.cwd().resolve(), Path(__file__).resolve()}
+    scopes = tuple(str(Path(scope).resolve()) for scope in scopes)
+
+    def open_path(raw):
+        # Kernel open-file/cwd names are physical: consuming the observation
+        # must not reopen every endpoint. Symbolic process argv is resolved below.
+        normalized = os.path.normpath(raw)
+        if not scopes or any(normalized == scope or normalized.startswith(scope + os.sep) for scope in scopes):
+            protected.add(Path(normalized))
     if sys.platform.startswith("linux"):
         for process in Path("/proc").iterdir():
             if not process.name.isdigit():
@@ -216,30 +255,26 @@ def active_paths(codex):
                 continue
             try:
                 descriptors = list((process / "fd").iterdir())
-            except (FileNotFoundError, ProcessLookupError) as error:
-                try:
-                    process.stat()
-                except (FileNotFoundError, ProcessLookupError):
-                    continue
-                raise OSError("cannot inspect live process descriptors: " + str(process)) from error
+            except (FileNotFoundError, ProcessLookupError, PermissionError) as error:
+                linux_observation_unavailable(process, "fd_inventory", error)
+                continue
             cwd = process / "cwd"
             missing_cwd = None
             for link in [cwd, *descriptors]:
                 try:
                     target = os.readlink(link).removesuffix(" (deleted)")
+                except PermissionError as error:
+                    linux_observation_unavailable(process, "cwd" if link == cwd else "fd", error)
+                    break
                 except (FileNotFoundError, ProcessLookupError) as error:
                     # Closing one handle must not hide the remaining handles.
                     if link == cwd:
                         missing_cwd = error
                     continue
                 if target.startswith("/"):
-                    protected.add(Path(target).resolve())
+                    open_path(target)
             if missing_cwd is not None:
-                try:
-                    process.stat()
-                except (FileNotFoundError, ProcessLookupError):
-                    continue
-                raise OSError("cannot inspect live process cwd: " + str(process)) from missing_cwd
+                linux_observation_unavailable(process, "cwd", missing_cwd)
     elif sys.platform == "darwin":
         result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
                                 capture_output=True, text=True, timeout=120)
@@ -247,14 +282,21 @@ def active_paths(codex):
             raise OSError("cannot inspect active files with lsof: " + result.stderr.strip())
         for line in result.stdout.splitlines():
             if line.startswith("n/"):
-                protected.add(Path(line[1:].removesuffix(" (deleted)")).resolve())
+                open_path(line[1:].removesuffix(" (deleted)"))
     else:
         raise OSError("host cleanup supports macOS and Linux")
-    result = subprocess.run(["ps", "-axo", "uid=,args="], capture_output=True, text=True, timeout=30)
+    result = subprocess.run(["ps", "-axo", "uid=,pid=,args=" if scopes else "uid=,args="],
+                            capture_output=True, text=True, timeout=30)
     if result.returncode != 0:
         raise OSError("cannot inspect process arguments: " + result.stderr.strip())
     for line in result.stdout.splitlines():
-        fields = line.strip().split(None, 1)
+        fields = line.strip().split(None, 2 if scopes else 1)
+        if scopes:
+            # The sampler and its inspecting caller name their target in argv.
+            # Their real cwd/open handles remain inspected; argv is not a user.
+            if len(fields) != 3 or fields[1] in (str(os.getpid()), str(os.getppid())):
+                continue
+            fields = [fields[0], fields[2]]
         if len(fields) != 2 or fields[0] != str(os.getuid()):
             continue
         try:
@@ -304,6 +346,21 @@ def clean_worktrees(repository, base, delete, active_paths=()):
         return subprocess.run(arguments, cwd=repository, check=False).returncode
 
 
+def clean_snapshot(repository, path, base, delete):
+    adapter = Path(__file__).resolve().parent / "worktree/worktree_protocol.py"
+    arguments = [sys.executable, "-B", str(adapter), "--source", str(repository),
+                 "remove-snapshot", "--path", str(path), "--base", base]
+    if not delete:
+        arguments.append("--preview")
+    result = subprocess.run(arguments, cwd=repository, capture_output=True, text=True)
+    if result.returncode:
+        return dict(path=str(path), action="failed" if result.returncode == 74 else "kept",
+                    reason="snapshot_partial_or_indeterminate" if result.returncode == 74 else "snapshot_preservation_unconfirmed",
+                    detail=result.stderr.strip(), apparent_bytes=0)
+    outcome = json.loads(result.stdout)
+    return dict(path=str(path), action=outcome["status"], reason="remote_preserved_snapshot", apparent_bytes=0)
+
+
 def nonnegative_hours(value):
     hours = float(value)
     if not math.isfinite(hours) or hours < 0:
@@ -344,6 +401,14 @@ def run_clean(options):
             seen.add(path)
             if any(parent in worktrees for parent in path.parents):
                 result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
+            elif category == "tmp" and path.is_dir() and not path.is_symlink():
+                # A gitless temporary directory can be an interrupted checkout.
+                # Age and a sampled idle observation cannot certify its bytes.
+                observed = inspect_candidate(path, cutoff, protections[category])
+                if observed["reason"] is not None:
+                    result = dict(path=str(path), action="kept", **observed)
+                else:
+                    result = clean_snapshot(options.repository, path, options.base, options.delete)
             else:
                 result = clean_candidate(path, cutoff, protections[category], options.delete)
             counts[category + ":" + result["action"]] += 1
@@ -371,7 +436,8 @@ def main(arguments=None):
     disk = commands.add_parser("check-disk", help="reject worktree creation below 5%% available disk space")
     disk.add_argument("--path", type=Path, action="append", required=True)
     disk.add_argument("--allow-low-disk", action="store_true")
-    commands.add_parser("active-paths", help="read current host activity for locked worktree reclamation")
+    activity = commands.add_parser("active-paths", help="read current host activity for worktree reclamation")
+    activity.add_argument("--scope", type=Path, action="append", default=[])
     clean = commands.add_parser("clean", help="preview inactive owned artifacts; --delete executes")
     clean.add_argument("--repository", type=Path, default=REPOSITORY)
     clean.add_argument("--base", default="origin/dev")
@@ -387,7 +453,7 @@ def main(arguments=None):
     try:
         if options.command == "active-paths":
             codex = Path(os.environ.get("CODEX_HOME") or Path.home() / ".codex")
-            print(json.dumps(sorted(str(path) for path in active_paths(codex))))
+            print(json.dumps(sorted(str(path) for path in active_paths(codex, options.scope))))
             return 0
         if options.command == "check-disk":
             for report in check_disk(options.path, options.allow_low_disk):
