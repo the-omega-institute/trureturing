@@ -361,27 +361,28 @@ end ForcedCoin
 
 namespace AppendReservoir
 abbrev sig := Reg.Support.SingleDependentReadout.signature (Unit)
-  (fun _p => W) (fun _p => Bool)
-def actual : Realization sig := realize sig (fun _ _ a => @decide (ReservoirWords.qok a) (Classical.propDecidable _)) (fun e => nomatch e)
-def bad : Realization sig := realize sig (fun _ _ _ => false) (fun e => nomatch e)
-abbrev arena : Arena := ⟨sig, fun R => ∀ (m : ℕ) (p : Fin m → W) (a : Fin 3 → W), ReservoirWords.isReservoir (Fin.append p a) ↔ R.readout () () (a 0) = true ∧ a 1 = .high ∧ ReservoirWords.vok (a 2)⟩
+  (fun _p => Fin 3 → W) (fun _p => W)
+def actual : Realization sig := realize sig (fun _ _ a => a 1) (fun e => nomatch e)
+def bad : Realization sig := realize sig (fun _ _ _ => .zero) (fun e => nomatch e)
+abbrev arena : Arena := ⟨sig, fun R => ∀ (m : ℕ) (p : Fin m → W) (a : Fin 3 → W), ReservoirWords.isReservoir (Fin.append p a) ↔ ReservoirWords.qok (a 0) ∧ R.readout () () a = .high ∧ ReservoirWords.vok (a 2)⟩
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
   have hb := (h 0 (fun i => nomatch i) ![.zero,.high,.low]).mp (by simp [ReservoirWords.append_res, ReservoirWords.qok, ReservoirWords.vok])
-  change false = true ∧ _ at hb
-  cases hb.1
+  change _ ∧ (Window.zero = Window.high) ∧ _ at hb
+  cases hb.2.1
 def registration : Registration arena (type_of% (@ReservoirWords.append_res)) where
   actual := actual
-  bridge := by simp [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa [arena, actual, realize, decide_eq_true_eq] using ReservoirWords.append_res, bad, bad_law⟩
+  bridge := Iff.rfl
+  variation := ⟨ReservoirWords.append_res, bad, bad_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ actual bad bad_law
   dependence := by
     change ObservationalDependence sig actual
     intro ⟨⟩
-    refine ⟨(), .zero, .low, ?_⟩
-    simp [actual, realize, ReservoirWords.qok]
+    refine ⟨(), (fun _ => .zero), (fun _ => .high), ?_⟩
+    change Window.zero ≠ Window.high
+    decide
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@ReservoirWords.append_res) (type_of% (realize.{0,0,0,0,0} sig (fun _ _ a => @decide (ReservoirWords.qok a) (Classical.propDecidable _)) (fun e => nomatch e))) Unit Unit := {
+    (@ReservoirWords.append_res) (type_of% (realize.{0,0,0,0,0} sig (fun _ _ a => a 1) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Arith.FibonacciAtomic.CommonPrediction.ReservoirWords.append_res.__information_unit,
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.CommonPredictionWordCounts.AppendReservoir.registration,
   realizationSource := none, generated := false,
@@ -390,13 +391,13 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} sig (fun _ _ a => @decide (ReservoirWords.qok a) (Classical.propDecidable _)) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} sig (fun _ _ a => a 1) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.CommonPredictionWordCounts, definition := none,
     coordinates := #[], readouts := #[{
-      path := #["body", "body", "body", "arg", "fn", "arg"],
-      stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }] },
+      path := #["body", "body", "body", "arg", "arg", "fn", "arg", "fn", "arg"],
+      stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },
