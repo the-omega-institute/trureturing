@@ -4348,7 +4348,7 @@ $$
 \qquad
 V_{\mathcal Q}:=\bigcup_{K\in\underline{\mathcal Q}}\overline C_K,
 $$
-其中 $\underline{\mathcal Q}$ 是序列 $\mathcal Q$ 的去重层集合。对菜单 $\mathscr L_t$ 定义
+其中 $\underline{\mathcal Q}$ 是序列 $\mathcal Q$ 的去重层集合。若 $\mathscr L_{t-1}\subseteq\mathscr L_t$，称该步为菜单扩张；若 $\mathscr L_t\subseteq\mathscr L_{t-1}$，称为菜单收缩；定理也允许菜单路径在各批次混合变化。对菜单 $\mathscr L_t$ 定义
 $$
 \sigma_t:=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L_t,\
 \Delta_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K\right\},
