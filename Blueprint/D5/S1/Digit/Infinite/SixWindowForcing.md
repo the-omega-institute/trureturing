@@ -4,7 +4,19 @@
 
 Local separation and six-window forcing.
 
-**Theorem 1.1 (Shared colors force alternating source blocks).**
+**Theorem 1.1 (Golden parameter relations).**
+
+Lean statement: `D5/S1/Digit/Infinite/SixWindowForcing.algebra`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SixWindowForcing.algebra` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The three-bit contraction satisfies g^2+4g=1 and 4/17<g<17/72. The reciprocal golden ratio satisfies t=(1+g)/2 and t^2=(1-g)/2.
+
+**Theorem 1.2 (Shared colors force alternating source blocks).**
 
 Lean statement: `D5/S1/Digit/Infinite/SixWindowForcing.result`
 
@@ -28,6 +40,7 @@ For nu <= rho=(239g-44)/380, all four strict budget inequalities hold. Thus the 
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Infinite/SixWindowForcing.algebra`
 - Truth anchor: `D5/S1/Digit/Infinite/SixWindowForcing.result`
 - Dependency: [D5/S1/Digit/Infinite/CriticalPrefixSeparation](CriticalPrefixSeparation.md)
 - Dependency: [D5/S1/Digit/Infinite/OddColorThreeSource](OddColorThreeSource.md)
