@@ -84,6 +84,121 @@ least global maximizer and from the finite XA family under RH failure;
 no new source-selection theorem, infinitude proof, originality claim,
 or Lean verification is asserted.
 
+## Ceiling replacements constrain the same right-tail source
+
+The following applications use the all-integer comparisons of the
+published tail sources, together with the classical Euler-layer
+rearrangement. They retain one actual final integer for every comparison;
+GA2 comparisons with multiples alone do not supply this argument.
+
+Let $N>e$ satisfy $G(m)\le G(N)$ for every integer $m\ge N$, and put
+$A=\log N$, $L=\log A$, $T=\sqrt A L$ and $W(n)=\log Z(n)$.
+For any actual integer $1\le d\le N$, reuse the
+[ceiling replacement](../ArithSums/nicolas2025comparison.md#all-integer-forward-comparisons-bound-the-envelope-deficit)
+and retain its exact clock:
+
+$$
+c=\left\lceil\frac Nd\right\rceil,\qquad m=cd,\qquad
+H=\log(N/d),\qquad s=\log(m/N),\qquad
+C_A(s)=\log\frac{\log(A+s)}L.
+$$
+
+Thus $N\le m<N+d$ and $0\le s<\log(1+e^{-H})$. With
+$b_p=v_p(d)$ and $r_p=v_p(c)$, the actual added Euler reward is
+
+$$
+B_d(c)=\log\frac{Z(cd)}{Z(d)}
+=\sum_p\log\frac{1-p^{-(b_p+r_p+1)}}{1-p^{-(b_p+1)}}\ge0.
+$$
+
+Shared factors of $c$ and $d$ are included. The exact forward comparison
+and the existing concavity tangent give
+
+$$
+\boxed{W(d)-W(N)+B_d(c)\le C_A(s)\le\frac{s}{AL}.}
+\tag{R1}
+$$
+
+If the left side exceeds $C_A(s)$, the same actual $cd>N$ improves
+$G(N)$. No comparison at an intermediate deletion integer is required.
+
+### Rearrange all occupied layers in one integer
+
+For the same $N$, let $S_k=\{p:v_p(N)\ge k\}$ and $r_k=|S_k|$,
+and let $q_j$ be the $j$th ordinary prime. Set
+
+$$
+d_N=\prod_{k\ge1}\prod_{j\le r_k}q_j,\qquad
+\beta_k(p)=\log\frac{Z(p^k)}{Z(p^{k-1})}
+=\log\left(1+\frac1{p+\cdots+p^k}\right).
+$$
+
+The prefixes are nested because $r_{k+1}\le r_k$, so $d_N$ is one
+realizable exponent inventory. Monotonicity of $\log p$ and $\beta_k(p)$
+gives the simultaneous savings
+
+$$
+\begin{aligned}
+H_N&=\sum_k\left(\sum_{p\in S_k}\log p
+                 -\sum_{j\le r_k}\log q_j\right)
+     =\log(N/d_N)\ge0,\\
+\Gamma_N&=\sum_k\left(\sum_{j\le r_k}\beta_k(q_j)
+                      -\sum_{p\in S_k}\beta_k(p)\right)
+          =W(d_N)-W(N)\ge0.
+\end{aligned}
+$$
+
+All sums are finite. Apply (R1) to this complete $d_N$, with
+$c_N=\lceil N/d_N\rceil$ and $s_N=\log(c_Nd_N/N)$:
+
+$$
+\boxed{
+\Gamma_N+B_{d_N}(c_N)\le C_A(s_N)
+<\frac{e^{-H_N}}{AL},\qquad
+0\le T\Gamma_N<\frac{e^{-H_N}}{\sqrt A}.}
+\tag{R2}
+$$
+
+The inequality counts the total rearrangement and its actual padding,
+not separately attainable optimum layers. It gives no positive lower
+funding from a failure of prime-prefix order at the critical scale.
+If $d_N=N$, then $c_N=1$ and both rewards are zero.
+
+### A padding prime outside the replacement gives a strict improvement
+
+Suppose additionally that $Z(d)\ge Z(N)$ and $AL\ge2$. Then
+
+$$
+\boxed{\operatorname{supp}(\lceil N/d\rceil)
+       \subseteq\operatorname{supp}(d).}
+\tag{R3}
+$$
+
+For $d=N$ the multiplier is one. Otherwise $d$ is not a divisor of $N$:
+a proper divisor has strictly smaller $Z$. Thus
+$c-1<N/d<c$, $c\ge2$, $cd>N$, and
+$s<\log(c/(c-1))$. If a prime $p\mid c$ is absent from $d$, then
+$B_d(c)\ge\log(1+1/p)\ge\log(1+1/c)$, so
+
+$$
+\log\frac{G(cd)}{G(N)}
+>\log\frac{c+1}{c}-\frac1{AL}\log\frac c{c-1}>0.
+$$
+
+The last inequality uses
+$\log(c/(c-1))<2\log((c+1)/c)$ for $c\ge2$, equivalently
+$c^2-c-1>0$. This contradicts the actual forward comparison.
+Even when (R3) holds, (R1) keeps all added layers in the same budget:
+$B_d(c)<d/(NAL)$. Both restrictions apply to $d_N$ and to an actual
+integer attaining $\Sigma(N)$.
+
+The argument does not force a violation of (R1)–(R3), identify $N$ as
+CA or GA1, or control the original signed $I_\psi(A)$. A FIB address
+of either comparator must retain this actual prime inventory and clock;
+the address alone supplies no strict improvement. These are applications
+of existing source comparisons and Euler factors, without a priority
+claim, new rearrangement theorem, or Lean verification.
+
 ## The backward record classification is already published
 
 Nazardonyavi and Yakubovich, *Superabundant numbers, their subsequences
