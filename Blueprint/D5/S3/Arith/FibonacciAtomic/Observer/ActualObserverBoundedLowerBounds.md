@@ -30,7 +30,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverBoundedLower
 
 positiveSources(N) filters the exact allowedSources(N) enumeration by Positive. It counts distinct original trees, with every ordered shape and both labels, without identifying sources having the same partial observation. Write p_N for its cardinality.
 
-**Theorem 1.3 (Complete bounded-source lower bounds).**
+**Theorem 1.3 (Exact actual-prefix cache spectrum).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverBoundedLowerBounds.prefix_cache_spectrum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverBoundedLowerBounds.prefix_cache_spectrum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every M,U with Legal(M,U), every actual state e and raw prefix h, paid(decoder(M,e)) equals paid(h), card(cachedVisits(M,h)) equals card(paid(h))+1, and every cache in cachedVisits has paid support contained in paid(h). Repeats retain the ordered cache; each fresh address creates one distinct decoder value. The scope includes the empty prefix and terminal cache.
+
+**Theorem 1.4 (Complete bounded-source lower bounds).**
 
 $$\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall N: Nat, (\forall M: \operatorname{Observer}\left(E\right), ((\operatorname{Admissible}\left(N, M\right)) \implies ((\forall U: Source, (((\operatorname{Allowed}\left(N, U\right)) \land (\operatorname{Positive}\left(U\right))) \implies (\forall t: RawHistory, (\forall f: E, (\forall b: Bool, ((\operatorname{Run}\left(M, U, \operatorname{e0}\left(M\right), t, f, b\right)) \implies ((\operatorname{toFinset}\left(\operatorname{leaves}\left(U\right)\right) \subseteq \operatorname{paid}\left(t\right)) \land (\operatorname{length}\left(U\right)+1 \leq \operatorname{card}\left(E\right)) \land (\forall tau: Address \to \mathbb{R}, ((\forall q: Address, (0 \leq \operatorname{tau}\left(q\right))) \implies (\sum_{q \in \operatorname{toFinset}\left(\operatorname{leaves}\left(U\right)\right)} \operatorname{tau}\left(q\right) \leq \operatorname{Fee}\left(M, tau, U\right))))))))))) \land (\forall U: Source, ((\operatorname{Allowed}\left(N, U\right)) \implies (\forall t: RawHistory, (\forall f: E, (\forall b: Bool, ((\operatorname{Run}\left(M, U, \operatorname{e0}\left(M\right), t, f, b\right)) \implies ((\operatorname{paid}\left(\operatorname{decoder}\left(M, f\right)\right) = \operatorname{paid}\left(t\right)) \land (\operatorname{card}\left(\operatorname{cachedVisits}\left(M, t\right)\right) = \operatorname{card}\left(\operatorname{paid}\left(t\right)\right)+1) \land (\forall i: Nat, ((i \leq \operatorname{length}\left(t\right)) \implies (\operatorname{ActualPrefix}\left(M, U, \operatorname{historyState}\left(M, \operatorname{take}\left(t, i\right)\right), \operatorname{take}\left(t, i\right)\right))))))))))) \land ((0 < \operatorname{card}\left(\operatorname{positiveSources}\left(N\right)\right)) \implies (\operatorname{card}\left(\operatorname{positiveSources}\left(N\right)\right)+2 \leq \operatorname{card}\left(E\right)))))))$$
 
@@ -55,4 +67,5 @@ The conclusions concern decoded caches and nominal finite control, not physical 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverBoundedLowerBounds.bounded_cache_control_lower_bounds`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverBoundedLowerBounds.cachedVisits`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverBoundedLowerBounds.positiveSources`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverBoundedLowerBounds.prefix_cache_spectrum`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization](ActualObserverAbsorbingNormalization.md)

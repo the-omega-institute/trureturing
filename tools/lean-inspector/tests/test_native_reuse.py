@@ -198,6 +198,7 @@ class NativeReportConsumerTests:
 
         # A malformed registered implementation still blocks the program build;
         # cached report data cannot conceal that failed obligation.
+        receipt_before_failure = publication.member(output, '.reuse.json').read_bytes()
         self.write('tools/lean-inspector/LeanInformationAudit/ArtifactAssessment.lean',
                    implementation('ArtifactAssessment', 'true'))
         self.assertFalse(reuse.probe(self.root, output)['needs_lake'])
@@ -206,7 +207,8 @@ class NativeReportConsumerTests:
         errors = (logs / 'programs.stdout.log').read_text() + (logs / 'programs.stderr.log').read_text()
         self.assertIn('LeanInformationAudit/ArtifactAssessment.lean', errors)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stdout + failed.stderr)
-        self.assertFalse(publication.member(output, '.reuse.json').exists())
+        self.assertEqual(receipt_before_failure, publication.member(output, '.reuse.json').read_bytes(),
+                         '[FAIL] program_failure_preserves_successful_report_receipt')
         self.assertEqual(expected, output.read_bytes())
         self.assertEqual(report_stamps, self.stamps())
 
@@ -348,6 +350,7 @@ class NativeReportConsumerTests:
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
         # A successful planning probe never exempts the normal entry from the
         # default-only input obligation. A changed audit must reach Lake/fail.
+        receipt_before_failure = publication.member(output, '.reuse.json').read_bytes()
         self.write('Audit.lean', 'def audit : False := True.intro\n')
         probe(phase='invalid-audit-probe')
         clear_calls()
@@ -355,7 +358,8 @@ class NativeReportConsumerTests:
         self.assertFalse(fact.exists(), '[FAIL] failed_build_has_no_successful_work_fact')
         self.assertEqual(builds(), [[*workspace, 'build', *targets]])
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
-        self.assertFalse(publication.member(output, '.reuse.json').exists())
+        self.assertEqual(receipt_before_failure, publication.member(output, '.reuse.json').read_bytes(),
+                         '[FAIL] program_failure_preserves_successful_report_receipt')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         publication.member(seed, '.reuse.json').unlink()
         clear_calls()

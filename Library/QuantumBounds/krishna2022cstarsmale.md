@@ -5,9 +5,10 @@ year: 2022
 title: "C*-algebraic Smale Mean Value Conjecture and Dubinin-Sugawa Dual Mean Value Conjecture"
 doi: 10.48550/arXiv.2206.08154
 url: https://arxiv.org/abs/2206.08154v1
-claim: "Conjecture HIGHERMEAN (journal Conjecture 2.3) asks for one critical point controlling every higher-order Smale ratio in a commutative C*-algebra; the paper proves the degree-2 case."
+claim: "Conjecture HIGHERMEAN (journal Conjecture 2.3) and Conjecture DUALSMALE (Conjecture 3.1) ask for a critical point controlling the Smale ratios, respectively the Dubinin-Sugawa dual ratio, in a commutative C*-algebra; the paper proves both degree-2 cases."
 strata_touched:
   - D5/S3/Quantum/Algebra/CStarSmaleHigherOrder
+  - D5/S3/Quantum/Algebra/CStarDualMeanValue
 license: citation-only
 triage: anchor
 ---
@@ -55,5 +56,35 @@ including any broader interpretation allowing non-unital algebras.
 
 The degree-three refutation uses the supremum norm on `Complex × Complex`.
 It does not alter the degree-2 theorem or the scalar theorem.
-Conjecture DUALSMALE of the same paper is treated separately in #14940.
 The paper's CSMALE, its strong form and its dynamics conjecture are separate questions.
+
+## Conjecture DUALSMALE
+
+Section 2, p. 4, defines the polynomial and its derivative:
+
+> Let 𝒜 be a C*-algebra. For P(z) ≔ (z−a₁)(z−a₂)⋯(z−aₙ) for all z∈𝒜 with a₁, a₂, …, aₙ ∈ 𝒜, we define P′(z)=∑ⱼ₌₁ⁿ (z−a₁)⋯(z−aⱼ)̂⋯(z−aₙ), ∀z∈𝒜 where the term with cap is missing.
+
+The derivative is the sum of ordered products with one factor omitted. The
+gloss in Conjecture CSMALE (Conjecture 2.1, p. 4) is “If z∈𝒜 is not a critical
+point of P (i.e., P′(z)≠0)”.
+
+Section 3, p. 7, states Conjecture DUALSMALE (Conjecture 3.1):
+
+> **C*-algebraic Dubinin-Sugawa Dual Mean Value Conjecture.** Let 𝒜 be a commutative C*-algebra. Let P(z) ≔ (z−a₁)⋯(z−aₙ) be a polynomial of degree n ≥ 2 over 𝒜, a₁, …, aₙ ∈ 𝒜. If z∈𝒜 is not a critical point of P, then there exists a critical point w∈𝒜 of P such that ‖P′(z)‖/deg(P) = ‖P′(z)‖/n ≤ ‖P(z)−P(w)‖/‖z−w‖.
+
+The same norm-form assertion is Conjecture 3.1 in the journal version.
+Theorem 3.3 of the arXiv version (p. 7), numbered Theorem 3.1 in the journal,
+states:
+
+> Conjecture 3.1 holds for degree 2 C*-algebraic polynomials.
+
+For degree two the sole critical point is (a₁+a₂)/2 and the norm inequality
+is an equality. This result is distinct from the degree-three refutation.
+
+The Lean encoding uses zero-based Fin n indices and the ordered product
+`(List.ofFn fun i => z - a i).prod`. It reuses the ordered derivative of
+`CStarSchoenberg`. Noncritical means that derivative is nonzero; critical
+means that it is zero. The degree parameter n is cast to ℝ in the norm
+inequality. The carrier is restricted to unital commutative C*-algebras in
+Type, weakening the source's universal assertion; a counterexample in that
+subclass refutes the source statement.
