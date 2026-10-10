@@ -45,7 +45,7 @@ private lemma densityMatrix_posSemidef (rho : DensityState n) :
   rw [← Matrix.nonneg_iff_posSemidef]
   exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1
 
-private def diagonalStarAlgHom : (n -> ℂ) →⋆ₐ[ℂ] Matrix n n ℂ where
+def diagonalStarAlgHom : (n -> ℂ) →⋆ₐ[ℂ] Matrix n n ℂ where
   toAlgHom := Matrix.diagonalAlgHom ℂ
   map_star' a := by
     ext i j

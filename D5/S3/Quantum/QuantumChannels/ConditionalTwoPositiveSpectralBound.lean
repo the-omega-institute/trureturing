@@ -11,7 +11,7 @@
    Module escape_witness: D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.result.
    Direct frozen dependencies:
    None; direct mathematical imports are the same-delivery modules.
-   Information-escape registration is paused under CLAUDE.md §3.9.
+   Information-escape registration is unfinished; see issue #14881.
    _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.SimilarityCertificate: proof_shape: not-applicable; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.UnitalSimilarityGoal, _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.epsilon_rescaling_is_algebraic.
    _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.UnitalSimilarityGoal: proof_shape: not-applicable; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.epsilon_route_conditional, _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.unital_similarity_certificate.
    _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.epsilon_rescaling_is_algebraic: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.epsilon_route_conditional.
@@ -181,10 +181,10 @@ private lemma extrema_smul [NeZero d] (Phi : (Matrix (Fin d) (Fin d) ℂ →ₗ[
 end
 section
 variable {d : ℕ}
-private def unitalized {d : ℕ} (T : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) (A B : (Matrix (Fin d) (Fin d) ℂ)) (c : ℂ) : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ) :=
+def unitalized {d : ℕ} (T : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) (A B : (Matrix (Fin d) (Fin d) ℂ)) (c : ℂ) : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ) :=
   c⁻¹ • (LinearMap.mulLeftRight ℂ (B, B)).comp
     (T.comp (LinearMap.mulLeftRight ℂ (A, A)))
-private theorem unitalized_one {d : ℕ} (T : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) (A B ρ : (Matrix (Fin d) (Fin d) ℂ))
+theorem unitalized_one {d : ℕ} (T : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) (A B ρ : (Matrix (Fin d) (Fin d) ℂ))
     (c : ℂ) (hc : c ≠ 0) (hA : A * A = ρ) (hBA : B * A = 1)
     (hAB : A * B = 1) (hEigen : T ρ = c • ρ) :
     unitalized T A B c 1 = 1 := by
