@@ -1,171 +1,138 @@
-# Prime Triplet Wheel
+# Prime Triplet Wheel Reflection
 
 ## Abstract
 
-This module separates three different observables for the diameter-six templates
-\[
-H_+=\{0,2,6\},\qquad H_-=\{0,4,6\}.
-\]
-The ordered gap readout distinguishes orientation, while the unordered pair-distance
-support does not. Finite wheel calculations then separate an origin-fixed prefix from a
-translation-invariant three-point correlation. The Lean layer proves the general
-reflection theorem behind the candidate-space symmetry at every nonzero modulus. The
-finite values at \(W=30\) and \(W=210\) remain explicit arithmetic witnesses; they make
-no claim about infinitude or asymptotic counts of actual prime triplets.
+Reflection preserves the cardinality of the two oriented wheel candidate spaces at every nonzero modulus.
 
-The finite readouts are machine-checked as well. `plus_residues_30` and
-`minus_residues_30` identify the two candidate sets as respectively
-`{11,17}` and `{7,13}` in `Fin 30`; the corresponding origin-prefix counts at
-the bound `10` are `0` and `1`. The ordered three-point readout at shifts
-`(6,30)` in `Fin 210` is `1` for the plus orientation and `0` for the minus
-orientation. These are finite `native_decide` certificates for the predicates
-defined in the Lean file, and do not import any statement about prime
-infinitude or asymptotic density.
+**Theorem 1.1 (The affine wheel reflection is an involution).**
 
-## Definitions
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.reflect_involutive`
 
-For a finite offset set \(H\), a modulus \(W\), and a representative \(r\), the candidate predicate is
-\[
-\operatorname{wheelAdmissible}(W,H,r)
-\iff
-\forall h\in H,\ \gcd(r+h,W)=1.
-\]
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeTripletWheel.reflect_involutive` (`✓ std3`). ∎
 
-The finite residue set is
-\[
-R_{H,W}
-=
-\{r<W:\operatorname{wheelAdmissible}(W,H,r)\}.
-\]
+*Source.* Repository-derived.
 
-The fixed-origin prefix count is
-\[
-P_{H,W}(b)
-=
-\#\{1\le r\le b:\operatorname{wheelAdmissible}(W,H,r)\}.
-\]
+*Commentary.*
 
-The ordered three-point candidate correlation is
-\[
-C^{(3)}_{H,W}(s,t)
-=
-\#
-\left\{
-r<W:
-\begin{array}{l}
-a_{H,W}(r)=1,\\
-a_{H,W}(r+s)=1,\\
-a_{H,W}(r+t)=1
-\end{array}
-\right\},
-\]
-where the shifted representatives are reduced modulo \(W\).
+For every nonzero modulus W, the map a ↦ -a-6 on ZMod W is its own inverse. This is the transport map between the two orientation charts.
 
-For a nonzero modulus, the Lean file works in \(ZMod\,W\). It defines
-\[
-A_+(a)\iff \operatorname{IsUnit}(a)\land
-\operatorname{IsUnit}(a+2)\land
-\operatorname{IsUnit}(a+6),
-\]
-\[
-A_-(a)\iff \operatorname{IsUnit}(a)\land
-\operatorname{IsUnit}(a+4)\land
-\operatorname{IsUnit}(a+6),
-\]
-and the affine reflection
-\[
-\rho_W(a)=-a-6.
-\]
+**Theorem 1.2 (Reflection exchanges wheel admissibility).**
 
-## Finite wheel audit
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.plus_reflect_iff`
 
-The finite arithmetic audit gives
-\[
-R_{H_+,30}=\{11,17\},\qquad
-R_{H_-,30}=\{7,13\},
-\]
-hence
-\[
-P_{H_+,30}(10)=0,\qquad P_{H_-,30}(10)=1.
-\]
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeTripletWheel.plus_reflect_iff` (`✓ std3`). ∎
 
-After the \(7\)-layer is added,
-\[
-C^{(3)}_{H_+,210}(6,30)=1,\qquad
-C^{(3)}_{H_-,210}(6,30)=0.
-\]
-For \(0<s<t<30\), the corresponding \(W=210\) candidate triple counts vanish
-for both orientations. These are finite wheel certificates used by the theory audit.
-They are not statements about the infinitude, density, or asymptotic distribution of
-prime triplets.
+*Source.* Repository-derived.
 
-## Machine-checked general theorem
+*Commentary.*
 
-The Lean declarations in
-D5/S3/Arith/PrimeTripletWheel.lean are:
+A residue is admissible for {0,2,6} exactly when its reflected residue is admissible for {0,4,6}. The proof uses only that negation preserves units and that the three offsets are paired by the affine reflection.
 
-- reflect_involutive;
-- plus_reflect_iff;
-- reflectEquiv;
-- candidate_space_card_eq.
+**Definition 1.3 (The two candidate spaces are equivalent).**
 
-The finite audit declarations are:
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.reflectEquiv`
 
-- `plus_residues_30` and `minus_residues_30`;
-- `plus_origin_prefix_30` and `minus_origin_prefix_30`;
-- `plus_triple_readout_210` and `minus_triple_readout_210`.
+*Formalization.* `D5/S3/Arith/PrimeTripletWheel.reflectEquiv` (`✓ std3`).
 
-The finite theory audit uses the ordered gap direction
-\[
-\chi=(g_2-g_1)/2
-\]
-for the two templates, with values \(+1\) and \(-1\). If the unnormalised integer
-difference is used instead, its values are \(+2\) and \(-2\). The current Lean
-module keeps the consumed wheel-reflection chain as its formal core; this numerical
-direction audit remains in the theory layer.
+*Source.* Repository-derived.
 
-The pair-distance object in the original finite audit is an unordered distance
-support, a Finset, rather than a multiplicity-sensitive multiset. In this
-diameter-six example both templates have support \(\{2,4,6\}\).
+*Commentary.*
 
-The central general result is
-\[
-A_+(a)\iff A_-(\rho_W(a)),
-\qquad
-\rho_W(\rho_W(a))=a.
-\]
-Therefore \(\rho_W\) induces an equivalence
-\[
-\{a: A_+(a)\}\simeq \{a:A_-(a)\}
-\]
-and
-\[
-\#\{a:A_+(a)\}=\#\{a:A_-(a)\}
-\]
-for every nonzero modulus \(W\). The result is a candidate-space cardinality
-symmetry. It does not identify the two origin-fixed prefix functions, and it does
-not identify the labelled three-point correlations once an observation chart or a
-translation quotient is fixed.
+The subtype of H-plus wheel candidates and the subtype of H-minus wheel candidates are equivalent finite spaces. This packages the orientation symmetry before any choice of origin or observation chart.
 
-## Relation to the pyramid fiber
+**Theorem 1.4 (Oriented candidate spaces have equal cardinality).**
 
-The wheel candidate results provide a finite arithmetic readout. The AURIC pyramid
-provides the corresponding hidden-fiber readout. Equal three-dimensional marginal
-coordinates can coexist with different joint coordinates \(\kappa\). The \(30\)-layer
-and \(210\)-layer therefore refine different parts of the observation kernel:
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.candidate_space_card_eq`
 
-- modulus \(30\) separates an absolute-origin chart;
-- modulus \(210\) separates an ordered three-point direction after the earlier
-  translation symmetry is quotiented;
-- pairwise candidate readout remains degenerate at the selected witness;
-- the general reflection theorem preserves total candidate cardinality while allowing
-  chart-dependent escape at a fixed prefix or labelled span.
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeTripletWheel.candidate_space_card_eq` (`✓ std3`). ∎
 
-The arithmetic layer is consequently a typed observation interface for the pyramid:
-candidate density is a marginal-like quantity, the origin or span label is a chart
-coordinate, and the ordered three-point direction is a hidden fiber coordinate until
-a three-point readout resolves it.
+*Source.* Repository-derived.
 
-Actual prime-triplet counting is intentionally outside this theorem package. A later
-analytic layer may connect the finite wheel predicates to prime indicators, but that
-connection requires its own hypotheses and proof.
+*Commentary.*
+
+For every nonzero modulus, the two oriented wheel candidate spaces have equal cardinality. The statement locally supplies Fintype.ofFinite instances for both residue subtypes; its only hypothesis is NeZero W. This is a general density-symmetry theorem for finite wheel candidates; it makes no claim about infinitude, asymptotics, or the actual distribution of prime triplets.
+
+**Theorem 1.5 (The plus candidates modulo 30 are 11 and 17).**
+
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.plus_residues_30`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeTripletWheel.plus_residues_30` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite plus wheel candidate set in Fin 30 is exactly {11,17}; this is a kernel-checked finite arithmetic certificate.
+
+**Theorem 1.6 (The minus candidates modulo 30 are 7 and 13).**
+
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.minus_residues_30`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeTripletWheel.minus_residues_30` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite minus wheel candidate set in Fin 30 is exactly {7,13}; this is a kernel-checked finite arithmetic certificate.
+
+**Theorem 1.7 (The plus origin prefix through 10 is empty).**
+
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.plus_origin_prefix_30`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeTripletWheel.plus_origin_prefix_30` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Among residues 1 through 10 modulo 30, no plus wheel candidate occurs.
+
+**Theorem 1.8 (The minus origin prefix through 10 has one candidate).**
+
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.minus_origin_prefix_30`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeTripletWheel.minus_origin_prefix_30` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Among residues 1 through 10 modulo 30, exactly one minus wheel candidate occurs.
+
+**Theorem 1.9 (The plus ordered triple readout at shifts 6 and 30 is one).**
+
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.plus_triple_readout_210`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeTripletWheel.plus_triple_readout_210` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At modulus 210, exactly one plus candidate remains a candidate after both shifts 6 and 30.
+
+**Theorem 1.10 (The minus ordered triple readout at shifts 6 and 30 is zero).**
+
+Lean statement: `D5/S3/Arith/PrimeTripletWheel.minus_triple_readout_210`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeTripletWheel.minus_triple_readout_210` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At modulus 210, no minus candidate remains a candidate after both shifts 6 and 30.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.candidate_space_card_eq`
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.minus_origin_prefix_30`
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.minus_residues_30`
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.minus_triple_readout_210`
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.plus_origin_prefix_30`
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.plus_reflect_iff`
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.plus_residues_30`
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.plus_triple_readout_210`
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.reflectEquiv`
+- Truth anchor: `D5/S3/Arith/PrimeTripletWheel.reflect_involutive`
