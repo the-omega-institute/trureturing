@@ -2,6 +2,7 @@
 import hashlib
 import json
 import os
+from pathlib import Path
 import shlex
 import shutil
 import subprocess
@@ -16,6 +17,54 @@ ROOT = test_reuse.ROOT
 
 
 class SeedGenerationTests:
+    def test_competing_preparation_cannot_remove_guarded_generation(self):
+        """Preparation must take the same exclusive guard as restore/publication."""
+        self.canonical_release_fixture()
+        receipt = publication.member(self.output, self.api.SUFFIX)
+        base = self.root / self.api.BASE_RECORD
+        before_receipt, before_base = receipt.read_bytes(), base.read_bytes()
+        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
+        from lean_cache_release import cache_guard
+        with cache_guard(self.root):
+            result = self.run_entry('--cache-miss-policy', 'build', direct=True)
+        self.assertNotEqual(0, result.returncode,
+                            '[FAIL] competing_preparation_must_not_cross_active_guard')
+        self.assertTrue(receipt.is_file(), '[FAIL] competing_preparation_removed_active_receipt')
+        self.assertTrue(base.is_file(), '[FAIL] competing_preparation_removed_active_base')
+        self.assertEqual(before_receipt, receipt.read_bytes(),
+                         '[FAIL] competing_preparation_removed_active_receipt')
+        self.assertEqual(before_base, base.read_bytes(),
+                         '[FAIL] competing_preparation_removed_active_base')
+        self.assertFalse(any(call.startswith('lake ') for call in self.calls),
+                         '[FAIL] competing_preparation_entered_lake_without_guard')
+
+    def test_failed_rollback_is_distinct_and_never_enters_lake(self):
+        self.canonical_release_fixture()
+        before, old_base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        self.inject_restore_error('rollback')
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        print('CASE ' + self._testMethodName + '\n' + result.stdout + result.stderr, flush=True)
+        self.assertEqual(4, result.returncode,
+                         '[FAIL] failed_rollback_must_fail_closed: ' + result.stdout + result.stderr)
+        self.assertNotIn('lake ', '\n'.join(self.calls),
+                         '[FAIL] failed_rollback_must_not_enter_lake')
+        self.assertIn('release-rollback-failed', result.stdout + result.stderr,
+                      '[FAIL] failed_rollback_must_have_distinct_receipt')
+        self.assertIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr)
+        lines = [line for line in (result.stdout + result.stderr).splitlines()
+                 if 'LEAN_CACHE_FETCH' in line and 'rollback-failed' in line]
+        self.assertTrue(lines, '[FAIL] failed_rollback_receipt_missing')
+        receipt = json.loads(lines[-1].partition(' ')[2])
+        backup = Path(receipt['backup'])
+        self.assertTrue(backup.is_dir(), '[FAIL] failed_rollback_backup_not_retained')
+        self.assertTrue((backup / 'build').is_dir())
+        self.assertTrue((backup / 'replacement').is_dir())
+        self.assertTrue((backup / 'base.json').is_file())
+        self.assertEqual(old_base, (backup / 'base.json').read_bytes())
+        for path, data in before.items():
+            self.assertEqual(data, (backup / 'build' / path).read_bytes())
+        self.assertFalse((self.root / '.lake/build').exists())
+
     def canonical_release_fixture(self, *, damage=None):
         """History A < B < C < HEAD, with real archives and the production fetch."""
         sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
@@ -130,6 +179,7 @@ else:
 
     def test_capture_without_release_module(self):
         self.canonical_release_fixture()
+        base = (self.root / self.api.BASE_RECORD).read_bytes()
         (self.root / 'tools/scripts/worktree/lean_cache_release.py').unlink()
         snapshot = self.root / '.lake/capture.json'
         result = subprocess.run([sys.executable, '-B', str(self.root / 'tools/lean-inspector/reuse.py'),
@@ -137,7 +187,8 @@ else:
             '--snapshot', str(snapshot)], env=self.environment, capture_output=True, text=True)
         self.assertEqual(0, result.returncode, '[FAIL] capture_requires_no_release_module: ' + result.stderr)
         self.assertEqual(self.api.capture(self.root), json.loads(snapshot.read_text()))
-        self.assertFalse((self.root / self.api.BASE_RECORD).exists())
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
+                         '[FAIL] capture_only_reads_seed_metadata')
 
 
     def test_custom_selected_seed_keeps_newer_local_bundle(self):
@@ -306,7 +357,7 @@ else:
         self.assertEqual('ensure', self.calls[0])
         self.assertTrue(self.calls[1].startswith('lake '), '[FAIL] ineligible_capture_uses_lake_path')
         self.assertFalse((self.root / 'releases/calls.jsonl').exists(), '[FAIL] ineligible_capture_never_lists')
-        # Capture clears the receipt before a new production, leaving the seed bytes intact.
+        # Guarded preparation clears the receipt before producing a new report.
         for path, data in before.items():
             if not path.endswith(self.api.SUFFIX):
                 self.assertEqual(data, self.seed_bytes()[path])

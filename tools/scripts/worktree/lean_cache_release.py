@@ -107,6 +107,14 @@ def receipt(verb, status, **fields):
     print("LEAN_CACHE_" + verb.upper() + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
 
 
+class RollbackFailed(Exception):
+    """The previous generation remains in a named backup, not the active cache."""
+    def __init__(self, backup, install_error, rollback_error):
+        self.backup = str(backup)
+        self.install_error, self.rollback_error = str(install_error), str(rollback_error)
+        super().__init__(f"rollback failed: {rollback_error}; installation error: {install_error}")
+
+
 def git_absolute_path(root, *arguments):
     result = subprocess.run(["git", "-C", str(root), "rev-parse", *arguments],
                             check=True, capture_output=True, text=True, timeout=10)
@@ -593,17 +601,20 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                         report_reuse.invalidate_seed_base(root)
                         if approved_producer is not None:
                             raise ValueError("approved snapshot base could not be recorded")
-    except BaseException:
+    except BaseException as install_error:
         if backup is not None:
             # Keep both trees if rollback itself fails; never clean that backup.
-            if installed:
-                target.rename(backup / "replacement")
-            if (backup / "build").is_dir():
-                (backup / "build").rename(target)
-            if base_prepared:
-                report_reuse.invalidate_seed_base(root)
-                if (backup / "base.json").exists() or (backup / "base.json").is_symlink():
-                    (backup / "base.json").rename(base)
+            try:
+                if installed:
+                    target.rename(backup / "replacement")
+                if (backup / "build").is_dir():
+                    (backup / "build").rename(target)
+                if base_prepared:
+                    report_reuse.invalidate_seed_base(root)
+                    if (backup / "base.json").exists() or (backup / "base.json").is_symlink():
+                        (backup / "base.json").rename(base)
+            except OSError as rollback_error:
+                raise RollbackFailed(backup, install_error, rollback_error) from rollback_error
             # Removing discarded bytes is housekeeping after a successful rollback.
             try:
                 shutil.rmtree(backup)
@@ -634,6 +645,10 @@ def fetch_verification(root, partition, identity):
         with cache_guard(root), tempfile.TemporaryDirectory(prefix="lean-fetch-verify-") as temporary:
             restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline, identity, cache_key=cache_key)
         return 0
+    except RollbackFailed as error:
+        receipt("fetch", "rollback-failed", mode="verification", reason=str(error),
+                backup=error.backup, resolved=tag, partition=partition)
+        return 2
     except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
         receipt("fetch", "miss", mode="verification", reason=str(error), resolved=tag, partition=partition)
         return 1
@@ -706,6 +721,10 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
                     except OSError as error:
                         receipt("fetch", "cleanup-deferred", reason=str(error), resolved=tag)
                 return 0
+            except RollbackFailed as error:
+                receipt("fetch", "rollback-failed", reason=str(error), backup=error.backup,
+                        resolved=tag, partition=partition)
+                return 2
             except (OSError, EOFError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
                 reason = str(error)
                 receipt("fetch", "miss", reason=reason, resolved=tag, partition=partition)
@@ -769,6 +788,9 @@ def main():
             return fetch(args.repository, partition, args.writer_owned, args.refresh_stale,
                          args.approved_tag, args.approved_producer)
         return publish(args.repository, partition, verification)
+    except RollbackFailed as error:
+        receipt(args.command, "rollback-failed", reason=str(error), backup=error.backup)
+        return 2
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         receipt(args.command, "miss" if args.command == "fetch" else "failed",
                 reason=("verification: " if args.mode == "verification" else "") + str(error))

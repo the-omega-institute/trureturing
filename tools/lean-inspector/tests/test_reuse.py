@@ -207,6 +207,18 @@ class ReuseTests(unittest.TestCase):
                                                  text=True).strip())
         self.assertEqual(api.seed_format(self.report)['compatible'], True)
 
+    def test_optional_refresh_rechecks_seed_before_lake(self):
+        api = self.dev_repository()
+        def lose_seed(repository, report):
+            publication.member(report, api.SUFFIX).unlink()
+            return report
+        with patch.object(api, '_refresh_stale_seed', side_effect=lose_seed), \
+                patch.object(api, '_reuse') as reuse_entry:
+            with self.assertRaisesRegex(api.CacheIncompatible, 'seed-unavailable-after-refresh',
+                                        msg='[FAIL] refreshed_missing_seed_must_fail_closed'):
+                api.recover_and_reuse(self.root, self.report, self.report)
+            reuse_entry.assert_not_called()
+
     def test_seed_base_record_does_not_participate_in_reuse_or_compatibility(self):
         api = self.receipt()
         before = api.probe(self.root, self.report)

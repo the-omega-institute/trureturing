@@ -55,7 +55,8 @@ finish() {
   local rc=$?
   trap - EXIT
   if [[ "$PRESERVE_RECEIPT" == 0 && ( "$rc" != 0 || "$PROGRAM_BUILD_PENDING" == 1 ) ]]; then
-    rm -f -- "${OUTPUT}.reuse.json"
+    python3 -B "$SCRIPT_DIR/reuse.py" invalidate-receipt --repository "$REPOSITORY" \
+      --report "$OUTPUT" || true
   fi
   if [[ "$rc" == 0 && "$PROGRAM_BUILD_PENDING" == 0 ]]; then
     python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
@@ -220,7 +221,9 @@ require_lake
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
   --report "$OUTPUT" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
-rm -f -- "${OUTPUT}.reuse.json"
+PRESERVE_RECEIPT=1
+run_phase prepare python3 -B "$SCRIPT_DIR/reuse.py" prepare --repository "$REPOSITORY" --report "$OUTPUT"
+PRESERVE_RECEIPT=0
 if [[ ${#BUILD_TARGETS[@]} == 0 || "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then
   require_producer
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"

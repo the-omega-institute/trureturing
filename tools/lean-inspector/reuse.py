@@ -240,6 +240,19 @@ def publication_guard(repository, report):
     return cache_guard(repository)
 
 
+def prepare(repository, report):
+    """Invalidate production metadata only after claiming the output's guard."""
+    with publication_guard(repository, report):
+        if report.resolve() == canonical_seed(repository).resolve():
+            invalidate_seed_base(repository)
+        publication.member(report, SUFFIX).unlink(missing_ok=True)
+
+
+def invalidate_receipt(repository, report):
+    with publication_guard(repository, report):
+        publication.member(report, SUFFIX).unlink(missing_ok=True)
+
+
 def seal(repository, report, captured, produced_sha256):
     with publication_guard(repository, report):
         _seal(repository, report, captured, produced_sha256)
@@ -464,6 +477,15 @@ def _refresh_stale_seed(repository, report):
     print(fetched.stderr, end='', file=sys.stderr, flush=True)
     outcomes = [publication.read_json(line.partition(' ')[2].encode())
                 for line in fetched.stdout.splitlines() if line.startswith('LEAN_CACHE_FETCH ')]
+    failed_rollback = next((outcome for outcome in outcomes if isinstance(outcome, dict)
+                            and outcome.get('status') == 'rollback-failed'), None)
+    if failed_rollback is not None:
+        _seed_decision('fail', 'release-rollback-failed', release=release,
+                       backup=failed_rollback['backup'], detail=failed_rollback['reason'])
+        raise CacheIncompatible(publication.selection.REPORT_FORMAT,
+                                seed_format(report)['report_format'],
+                                'release-rollback-failed',
+                                'Retained recovery backup: ' + failed_rollback['backup'])
     installed = any(isinstance(outcome, dict) and outcome.get('status') == 'unpacked'
         and outcome.get('resolved') == tag and outcome.get('producer_commit_sha') == release
         and outcome.get('installed') == ['build'] for outcome in outcomes)
@@ -479,7 +501,7 @@ def _refresh_stale_seed(repository, report):
 
 
 def refresh_stale_seed(repository):
-    """Warm-donor hook: optional stale-seed optimization never blocks the build."""
+    """Warm-donor hook: transport misses keep the seed; failed rollback blocks."""
     report = repository / '.lake/build/stratalint/raw-lean-report.json'
     try:
         if seed_format(report)['compatible']:
@@ -487,8 +509,14 @@ def refresh_stale_seed(repository):
             from lean_cache_release import cache_guard
             with cache_guard(repository):
                 _refresh_stale_seed(repository, report)
+                checked = seed_format(report)
+                if not checked['compatible']:
+                    raise CacheIncompatible(publication.selection.REPORT_FORMAT,
+                                            checked['report_format'], 'seed-unavailable-after-refresh')
         else:
             _seed_decision('keep', 'seed-unavailable')
+    except CacheIncompatible:
+        raise
     except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError, AttributeError, IndexError,
             subprocess.SubprocessError) as error:
         _seed_decision('keep', 'stale-seed-refresh-unavailable', detail=str(error))
@@ -541,6 +569,10 @@ def recover_and_reuse(repository, report, output):
                                                 'fetch-unavailable' if fetched.returncode else 'seed-incompatible')
             elif not linked:
                 report = _refresh_stale_seed(repository, report)
+                checked = seed_format(report)
+                if not checked['compatible']:
+                    raise CacheIncompatible(local['report_format'], checked['report_format'],
+                                            'seed-unavailable-after-refresh')
             # Input differences select Lake's incremental path, not a new cache key.
             return _reuse(repository, report, output)
     except BlockingIOError as error:
@@ -549,7 +581,8 @@ def recover_and_reuse(repository, report, output):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal', 'refresh-stale-seed'))
+    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'prepare',
+                                           'invalidate-receipt', 'seal', 'refresh-stale-seed'))
     parser.add_argument('--repository', required=True, type=Path)
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
@@ -560,7 +593,7 @@ def main():
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
     args = parser.parse_args()
-    if args.command in ('probe', 'reuse', 'capture', 'seal') and args.report is None:
+    if args.command != 'refresh-stale-seed' and args.report is None:
         parser.error('--report is required')
     if args.command == 'reuse' and args.output is None:
         parser.error('--output is required')
@@ -573,9 +606,11 @@ def main():
         return refresh_stale_seed(args.repository)
     if args.command == 'capture':
         captured = capture(args.repository)
-        if args.report.resolve() == canonical_seed(args.repository).resolve():
-            invalidate_seed_base(args.repository)
         args.snapshot.write_bytes(materials.canonical_json(captured))
+    elif args.command == 'prepare':
+        prepare(args.repository, args.report)
+    elif args.command == 'invalidate-receipt':
+        invalidate_receipt(args.repository, args.report)
     elif args.command == 'seal':
         seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()),
              args.bundle_sha256)

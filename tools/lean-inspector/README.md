@@ -42,16 +42,19 @@ linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及�
 可继续选择时列举兼容 Release 分区的最新快照。只有快照清单的 `producer_commit_sha` 是当前 `HEAD` 的祖先、
 且本地记录是它的严格祖先时才在现有缓存锁内用 `--refresh-stale` 取回；本地记录未知、快照较旧
 或不在当前历史上时保留本地种子。缺失对象或浅历史无法证明祖先关系时打印 ancestry-unprovable 原因，
-与完整历史上已证的非祖先区分。清单、清单读取或取回失败均打印决定收据并继续 Lake 增量路径；
+与完整历史上已证的非祖先区分。列举、清单读取或取回失败且回滚成功时打印 keep 收据并继续 Lake 增量路径；
 输入也相符时打印 `action=keep`、`reason=seed-current`，整份收据仍可直接复用。
 可选取回只恢复已批准的 tag，并核验清单生产提交与批准值一致，
 不重新列举或向较旧快照回退。替换前检查 staged 报告的格式和完整性；build 与 base 在同一安装中
 提交，提交前的失败恢复原 build 和 base，提交后的备份清理失败保留备份并报告已安装。
+回滚失败单独报告 `rollback-failed` 和保留的 backup 路径，以 `reason=release-rollback-failed` 非零退出；
+可选刷新后重新检查种子，缺失或不兼容时拒绝进入 Lake。
 干净谓词包含未跟踪文件。成功的 canonical 种子生产和验证后的恢复更新该记录，
 恢复写入清单的生产提交与安装种子的完整身份；新种子没有可信 base 时先清除旧记录。
 canonical publication、seal 和 base 写入在同一缓存锁内完成，seal 核对 publication 返回的五件 bundle 身份，
 已被替换的 generation 不重封或改写 base。base 还绑定 seal 写入的成功收据；从 canonical 整份复用时更新身份并保留原生产提交，从自定义种子发布到 canonical 时 base 未知。
-自定义输出的 capture 和 seal 保留 canonical base；capture 不依赖 Release 模块。
+capture 只读输入，不改 base 或成功收据，也不依赖 Release 模块。canonical 生产准备与失败清理
+只在现有缓存锁内移除 metadata，锁忙时不改活动 generation。自定义输出的生产准备和 seal 保留 canonical base。
 跳过或拒绝的恢复不改 base。
 CI、非 dev 和 detached checkout 不进行可选刷新。记录不参与格式、输入、收据或缓存 key 的兼容性判断。
 `REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；

@@ -884,6 +884,7 @@ esac
         site.mkdir(exist_ok=True)
         (site / 'sitecustomize.py').write_text('''import os, pathlib, shutil
 replace, rmtree = os.replace, shutil.rmtree
+rename = pathlib.Path.rename
 def failed_replace(source, target):
     if pathlib.Path(target).name == 'lean-report-seed-base.json':
         raise OSError('injected base write failure')
@@ -893,13 +894,23 @@ def failed_cleanup(path, *args, **kwargs):
     if name.startswith(os.environ.get('FAKE_CLEANUP_PREFIX', 'no-match')):
         raise OSError('injected cleanup failure')
     return rmtree(path, *args, **kwargs)
+def failed_rollback(self, target):
+    if (os.environ.get('FAKE_ROLLBACK_FAILURE') == '1'
+            and self.name == 'build' and self.parent.name.startswith('.release-backup-')
+            and pathlib.Path(target).name == 'build'):
+        raise OSError('injected rollback rename failure')
+    return rename(self, target)
 if os.environ.get('FAKE_BASE_WRITE_FAILURE') == '1':
     os.replace = failed_replace
 shutil.rmtree = failed_cleanup
+pathlib.Path.rename = failed_rollback
 ''')
         self.environment['PYTHONPATH'] = str(site)
         if operation == 'base':
             self.environment['FAKE_BASE_WRITE_FAILURE'] = '1'
+        elif operation == 'rollback':
+            self.environment['FAKE_ROLLBACK_FAILURE'] = '1'
+            self.environment['FAKE_CLEANUP_PREFIX'] = '.release-'
         else:
             self.environment['FAKE_CLEANUP_PREFIX'] = operation
 
@@ -946,7 +957,7 @@ shutil.rmtree = failed_cleanup
         self.assertEqual(local, self.api.read_seed_base(self.root))
         self.assertIn('"status":"skipped"', result.stdout)
 
-    def test_production_capture_invalidates_base_before_report_build(self):
+    def test_production_preparation_invalidates_base_before_report_build(self):
         self.canonical_release_fixture()
         self.fixture.write('D5/A.lean', 'def a := 3\n')
         result = self.run_entry('REBUILD_REPORT_CACHE=1')
