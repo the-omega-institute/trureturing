@@ -32,7 +32,10 @@ internal sealed class CStarNovakDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Take n = 3, d = 2 and x j l = A j, with A₁ = 3πI, A₂ = π diag(5,1), and A₃ = (π/4)[[19,√15],[√15,5]]. These are self-adjoint. The three off-diagonal squared differences are 4π²I, 4π²I and π²I. Pairing the exponential-series terms into even and odd powers shows that a scalar square X² = c²I gives ncos X = cos(c)I. Thus the three cosines are I, I and -I, every factor is I or zero, and the matrix is (1/3)[[2,2,2],[2,2,-1],[2,-1,2]] with every entry multiplied by I. At v = (-2,1,1)I its quadratic form is -2I, which is not nonnegative in the matrix positive-semidefinite order. Theorem 4.4 of the source proves the commutative case; this refutation leaves that theorem unaffected."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("krishna-2021-cstar-novak-conjecture"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula,

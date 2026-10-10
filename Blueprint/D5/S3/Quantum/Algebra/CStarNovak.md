@@ -58,6 +58,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CStarNovak.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/krishna-2021-cstar-novak-conjecture` (refuted) by `D5/S3/Quantum/Algebra/CStarNovak.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"krishna-2021-cstar-novak-conjecture","declaration_gid":"D5/S3/Quantum/Algebra/CStarNovak.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. Mahesh Krishna (2021). *C*-algebraic Schur product theorem, Pólya-Szegő-Rudin question and Novak's conjecture*. DOI: [10.48550/arXiv.2108.06662](https://doi.org/10.48550/arXiv.2108.06662). URL: <https://arxiv.org/abs/2108.06662v1>.
