@@ -101,13 +101,6 @@ private theorem matrix_evolution {R : Type*} [CommRing R]
     fin_cases i <;>
       simp [matrixM, Matrix.mulVec, dotProduct, Fin.sum_univ_two, step]
 
-private theorem low_power (r m : ℕ) : lowTrajectory r m = fibonacci r ^ m := by
-  induction m with
-  | zero => rfl
-  | succ m ih =>
-    rw [pow_succ', ← ih]
-    simp [lowTrajectory, Equiv.Perm.mul_def]
-
 private theorem low_iterate (r m : ℕ) (a : Labels r) :
     lowTrajectory r m a = step^[m] a := by
   induction m with
@@ -116,19 +109,6 @@ private theorem low_iterate (r m : ℕ) (a : Labels r) :
     simp only [lowTrajectory, Equiv.trans_apply, Function.iterate_succ_apply']
     rw [ih]
     rfl
-
-private theorem joint_power (d e : ℕ) [NeZero d] [NeZero e]
-    (hd : 2 ≤ d) (he : 2 ≤ e) (m : ℕ) :
-    jointTrajectory d e m = transport d e ^ m := by
-  have hact := (FibonacciOutputAlgebra.result d e hd he).1
-  induction m with
-  | zero => apply Equiv.ext; intro x; rfl
-  | succ m ih =>
-    rw [pow_succ', ← ih]
-    apply Equiv.ext
-    rintro ⟨a,h⟩
-    simp [jointTrajectory, lowTrajectory, fibreTrajectory, Equiv.Perm.mul_apply,
-      Equiv.trans_apply, hact, carryHistory]
 
 /-- The native endpoint pullback, with no intermediate-time observation. -/
 def endpointPullback (d e m : ℕ) [NeZero d] [NeZero e] :=
@@ -185,46 +165,15 @@ private theorem moving_mem (d e m : ℕ) [NeZero d] [NeZero e]
     movingPullback d e m B ∈ (lowTensor d e).range ↔
       ∀ a b, sourceCarry d e m a ≠ sourceCarry d e m b → B a b = 0 := by
   classical
-  have hentry (a b : Labels d) (h h' : Labels e) :
-      movingPullback d e m B (a,h) (b,h') =
-        if fibreTrajectory d e a m h = fibreTrajectory d e b m h' then B a b else 0 := by
-    simp [movingPullback, Matrix.reindex_apply, jointTrajectory,
-      lowTensor, Matrix.one_apply, mul_ite]
-  have hlowentry (C : Matrix (Labels d) (Labels d) ℂ)
-      (a b : Labels d) (h h' : Labels e) :
-      lowTensor d e C (a,h) (b,h') = if h = h' then C a b else 0 := by
-    simp [lowTensor, Matrix.one_apply, mul_ite]
+  rw [movingPullback_mem_iff]
   constructor
-  · rintro ⟨C, hC⟩ a b hab
-    change lowTensor d e C = movingPullback d e m B at hC
+  · intro h a b hab
     by_contra hB
-    apply hab
-    apply (fibre_eq_iff d e m a b).1
-    apply Equiv.ext
-    intro h
-    let h' := (fibreTrajectory d e b m).symm (fibreTrajectory d e a m h)
-    have hh : h' = h := by
-      by_contra hne
-      have heq := congrArg (fun X => X (a,h) (b,h')) hC
-      rw [hentry, hlowentry] at heq
-      have himg : fibreTrajectory d e a m h = fibreTrajectory d e b m h' := by simp [h']
-      rw [if_neg (Ne.symm hne), if_pos himg] at heq
-      exact hB heq.symm
-    have himg : fibreTrajectory d e b m h' = fibreTrajectory d e a m h := by simp [h']
-    rw [hh] at himg
-    exact himg.symm
-  · intro h
-    refine ⟨B, ?_⟩
-    change lowTensor d e B = movingPullback d e m B
-    ext ⟨a,u⟩ ⟨b,v⟩
-    rw [hentry, hlowentry]
-    by_cases hB : B a b = 0
-    · simp [hB]
-    · have hab : sourceCarry d e m a = sourceCarry d e m b := by
-        by_contra hab
-        exact hB (h a b hab)
-      rw [(fibre_eq_iff d e m a b).2 hab]
-      simp only [Equiv.apply_eq_iff_eq]
+    exact hab ((fibre_eq_iff d e m a b).1 (h a b hB))
+  · intro h a b hB
+    apply (fibre_eq_iff d e m a b).2
+    by_contra hne
+    exact hB (h a b hne)
 
 private theorem endpoint_moving (d e m : ℕ) [NeZero d] [NeZero e]
     (hd : 2 ≤ d) (he : 2 ≤ e) (B : Matrix (Labels d) (Labels d) ℂ) :
@@ -255,15 +204,6 @@ private theorem endpoint_blocks (d e m : ℕ) [NeZero d] [NeZero e]
       exact (endpointAlpha d m).apply_symm_apply C
     rw [hh]
     exact hC
-
-private theorem matrix_pullback {X : Type*} [Fintype X] [DecidableEq X]
-    (q : Equiv.Perm X) (B : Matrix X X ℂ) :
-    (Matrix.permMatrixHom (R := ℂ) q)ᴴ * B * Matrix.permMatrixHom q =
-      B.submatrix q q := by
-  simp only [Matrix.permMatrixHom_apply, Matrix.conjTranspose_permMatrix,
-    inv_inv, Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_mul,
-    PEquiv.mul_toMatrix_toPEquiv]
-  rfl
 
 private theorem native_matrix (d e m : ℕ) [NeZero d] [NeZero e]
     (B : Matrix (Labels d) (Labels d) ℂ) :
