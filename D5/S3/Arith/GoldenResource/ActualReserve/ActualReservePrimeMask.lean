@@ -110,7 +110,7 @@ private theorem mask_thresholds {x : ℝ} (hx : 1 < x) {p : ℕ} (hp : p.Prime)
     have harith : (p : ℝ)⁻¹ ^ 2 / Real.log p =
         1 / ((p : ℝ) ^ 2 * Real.log p) := by
       rw [inv_pow]
-      field_simp [hp0.ne', hlp.ne']
+      field_simp [hp0.ne', hlp.ne'] <;> ring
     rw [harith, referencePrice]
     exact (one_div_lt_one_div (mul_pos (pow_pos hp0 2) hlp)
       (mul_pos hx0 hlx)).mpr hden
@@ -130,7 +130,7 @@ private theorem mask_thresholds {x : ℝ} (hx : 1 < x) {p : ℕ} (hp : p.Prime)
     have hprice : referencePrice x * Real.log p < 1 / x := by
       unfold referencePrice
       have heq : 1 / x = Real.log x / (x * Real.log x) := by
-        field_simp [hx0.ne', hlx.ne']
+        field_simp [hx0.ne', hlx.ne'] <;> ring
       rw [heq]
       have hrepr : 1 / (x * Real.log x) * Real.log p =
           Real.log p / (x * Real.log x) := by ring

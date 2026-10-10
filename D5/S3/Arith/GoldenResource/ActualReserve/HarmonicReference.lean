@@ -86,7 +86,7 @@ theorem reference_gain_nonneg_iff {x : ℝ} (hx : 1 < x) {p k : ℕ}
   have hpow : 1 < (p : ℝ) ^ k := one_lt_pow₀ hp1 (by omega)
   have harith : (p : ℝ)⁻¹ ^ k / k = 1 / ((k : ℝ) * (p : ℝ) ^ k) := by
     rw [inv_pow]
-    field_simp [hp0.ne', hk0.ne']
+    field_simp [hp0.ne', hk0.ne'] <;> ring
   have hprice : referencePrice x * Real.log p = Real.log p / (x * Real.log x) := by
     unfold referencePrice
     ring
