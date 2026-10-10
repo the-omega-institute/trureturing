@@ -1198,3 +1198,47 @@ positive part and the complete original budget remain unestimated.
 It is a direct application of an existing exponential-sum theorem,
 not a new prime-distribution result or an identification of its
 frequencies with FIB composition rotations.
+
+## The same approximation budget includes the prime layer at a larger cutoff
+
+Let $\mathcal T^{(\ge1)}_{N,J}$ be the full-support sampling envelope
+defined above with $k\ge1$, retaining the active condition $p^k<x/U$.
+The grouping in (SV21)–(SV22) applies unchanged: with all layers,
+$\sum_{p^k\mid n,\,k\ge1}\log p=\log n$, so the mass at each positive
+integer jump is still at most $\tau(n)^2\log n\ll_\nu n^\nu$.
+For $q>2x$, directly reuse the existing classical bound $\psi(z)\ll z$
+in place of $\Gamma_2(z)\ll\sqrt z$ in (SV23). This bounds the full far
+support by
+$B_AV^2/(M_J^2U^3)\ll A^{3/4}/(M_J^2L^2)$.
+Consequently
+
+$$
+\begin{aligned}
+\sup_{A\le x\le2A}\mathcal T^{(\ge1)}_{N,J}(x)
+&\ll_\nu A^\nu(A^{-1}+M_J^{-1})
+ +\frac{A^{3/4}}{M_J^2L^2},\\
+\sup_{A\le x\le2A}\mathcal T^{(\ge1)}_{N,J_1}(x)
+&\ll_\nu A^{-1+\nu}+A^{-5/4}L^{-2}
+ =o(A^{-\eta}/L),\\
+J_1&=\lceil A\rceil,\qquad \nu=(1-\eta)/2,
+\qquad 0<\eta<1/2.
+\end{aligned}
+\tag{SV29}
+$$
+
+This is a corollary of the same classical suppliers and jump grouping,
+with the original coefficients, representative, source and $\eta$.
+It pays the prime-layer approximation error as well. The prime-layer
+polynomial positive part is not bounded by (SV29).
+
+For the higher-power residual, keep $J_0=\lceil V\rceil$. At each
+actual sample the two polynomial positive parts differ by at most
+$r_{A,J_0}+r_{A,J_1}$. Summing over the same active samples and using
+(SV25) and (SV29) gives
+$|\mathcal R^{\rm poly}_{N,\eta,J_1}
+-\mathcal R^{\rm poly}_{N,\eta,J_0}|=o(A^{-\eta}/L)$.
+Thus the existing $J_0$ high-harmonic supplier remains usable for this
+residual. No application of Liu–Wu–Yang to the extra $J_1$ harmonics is
+asserted. The mean, joint polynomial positive parts, other recovery terms
+and complete signed Robin tail remain unpaid. This application has no
+Lean certification and makes no claim of original number theory.
