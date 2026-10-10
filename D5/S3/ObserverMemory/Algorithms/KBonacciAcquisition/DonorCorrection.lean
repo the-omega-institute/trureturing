@@ -25,29 +25,20 @@ open scoped BigOperators
 /-- Preserve every non-donor entry of the ordered window. -/
 def outside (a : ℕ → ZMod 2) (r i : ℕ) : ZMod 2 :=
   if i = r ∨ i = r + 1 ∨ i = r + 2 then 0 else a i
-
 /-- The first donor cancels the preceding prefix; the middle donor is zero;
 the third absorbs the full remaining parity. -/
 def correctedRow (m : ℕ) (a : ℕ → ZMod 2) (r i : ℕ) : ZMod 2 :=
-  outside a r i +
-    (if i = r then ∑ h ∈ Finset.range r, a h else 0) +
-    (if i = r + 2 then (∑ h ∈ Finset.range r, a h) +
-      (∑ h ∈ Finset.range (m + 1), outside a r h) else 0)
+  outside a r i + (if i = r then ∑ h ∈ Finset.range r, a h else 0) +
+    (if i = r + 2 then (∑ h ∈ Finset.range r, a h) + (∑ h ∈ Finset.range (m + 1), outside a r h) else 0)
 
-private theorem row_even (m : ℕ) (a : ℕ → ZMod 2) (r : ℕ)
-    (bound : r + 2 ≤ m) :
+private theorem row_even (m : ℕ) (a : ℕ → ZMod 2) (r : ℕ) (bound : r + 2 ≤ m) :
     (∑ h ∈ Finset.range (m + 1), correctedRow m a r h) = 0 := by
   classical
   simp only [correctedRow, Finset.sum_add_distrib]
   rw [Finset.sum_ite_eq', Finset.sum_ite_eq']
-  simp only [Finset.mem_range, show r < m + 1 by omega,
-    show r + 2 < m + 1 by omega, if_true]
-  rw [show (∑ h ∈ Finset.range (m + 1), outside a r h) +
-      (∑ h ∈ Finset.range r, a h) +
-      ((∑ h ∈ Finset.range r, a h) +
-        (∑ h ∈ Finset.range (m + 1), outside a r h)) =
-      ((∑ h ∈ Finset.range (m + 1), outside a r h) +
-        (∑ h ∈ Finset.range (m + 1), outside a r h)) +
+  simp only [Finset.mem_range, show r < m + 1 by omega, show r + 2 < m + 1 by omega, if_true]
+  rw [show (∑ h ∈ Finset.range (m + 1), outside a r h) + (∑ h ∈ Finset.range r, a h) + ((∑ h ∈ Finset.range r, a h) + (∑ h ∈ Finset.range (m + 1), outside a r h)) =
+      ((∑ h ∈ Finset.range (m + 1), outside a r h) + (∑ h ∈ Finset.range (m + 1), outside a r h)) +
       ((∑ h ∈ Finset.range r, a h) + (∑ h ∈ Finset.range r, a h)) by abel]
   rw [CharTwo.add_self_eq_zero, CharTwo.add_self_eq_zero, zero_add]
 
@@ -67,37 +58,27 @@ private theorem row_zero (m : ℕ) (a : ℕ → ZMod 2) (r : Fin m) :
   have prefixSum : (∑ h ∈ Finset.range (r.val + 1), correctedRow m a r.val h) = 0 := by
     simp only [correctedRow, Finset.sum_add_distrib]
     rw [all, Finset.sum_ite_eq', Finset.sum_ite_eq']
-    simp only [Finset.mem_range, Nat.lt_succ_self, if_true,
-      show ¬ r.val + 2 < r.val + 1 by omega, if_false, add_zero]
+    simp only [Finset.mem_range, Nat.lt_succ_self, if_true, show ¬ r.val + 2 < r.val + 1 by omega, if_false, add_zero]
     exact CharTwo.add_self_eq_zero _
   simp only [prefixWord, prefixSum, ne_eq, not_true_eq_false, decide_false]
 
 /-- Correcting three consecutive entries gives a literal common archive. The
 unchanged entries, root condition, every seam and original joint source witness
 are retained. Calendar placement and label decoding are separate obligations. -/
-private theorem actual_donor_corrected_suffix (k : ℕ) (hk : 3 ≤ k) (m : ℕ)
-    (hm : 1 ≤ m) (short : m < k) (alphabet : Bool)
-    (marked : List ((ℕ → ZMod 2) × Fin m))
-    (donors : ∀ entry ∈ marked, entry.2.val + 2 ≤ m)
-    (seams : marked.IsChain (fun a b => m + b.2.val ≤ k + a.2.val))
-    (v : ZMod 2) (j : ZMod (k + 1)) (s : ℕ) (hs : s < k)
-    (incoming : ∀ entry ∈ marked.head?, s + entry.2.val < k ∨
-      correctedRow m entry.1 entry.2.val 0 = 0)
-    (actualPhase : Nat.gcd m (k + 1) ∣ (-j).val) :
+private theorem actual_donor_corrected_suffix (k : ℕ) (hk : 3 ≤ k) (m : ℕ) (hm : 1 ≤ m) (short : m < k) (alphabet : Bool)
+    (marked : List ((ℕ → ZMod 2) × Fin m)) (donors : ∀ entry ∈ marked, entry.2.val + 2 ≤ m)
+    (seams : marked.IsChain (fun a b => m + b.2.val ≤ k + a.2.val)) (v : ZMod 2) (j : ZMod (k + 1)) (s : ℕ) (hs : s < k)
+    (incoming : ∀ entry ∈ marked.head?, s + entry.2.val < k ∨ correctedRow m entry.1 entry.2.val 0 = 0) (actualPhase : Nat.gcd m (k + 1) ∣ (-j).val) :
     let rows := marked.map (fun e => correctedRow m e.1 e.2.val)
     let actions := chargeBlocks k m (by omega) short alphabet rows
-    (∀ entry ∈ marked, ∀ i, i ≠ entry.2.val → i ≠ entry.2.val + 1 →
-      i ≠ entry.2.val + 2 → correctedRow m entry.1 entry.2.val i = entry.1 i) ∧
+    (∀ entry ∈ marked, ∀ i, i ≠ entry.2.val → i ≠ entry.2.val + 1 → i ≠ entry.2.val + 2 → correctedRow m entry.1 entry.2.val i = entry.1 i) ∧
     actions.length = marked.length ∧
-    fixedBlockArchive actions (some ⟨v, -j, s⟩) = chargeArchive k m rows v j ∧
-    (fixedBlockArchive actions (some ⟨v, -j, s⟩)).length = marked.length ∧
+    fixedBlockArchive actions (some ⟨v, -j, s⟩) = chargeArchive k m rows v j ∧ (fixedBlockArchive actions (some ⟨v, -j, s⟩)).length = marked.length ∧
     none ∉ fixedBlockArchive actions (some ⟨v, -j, s⟩) ∧
     ∃ (N : ℕ) (source : Fin N → Bool),
       m ∣ N ∧ DBonacciAdmissible k N source ∧
       runBits k source (some ⟨0, 0, 0⟩) = some ⟨v, -j, s⟩ ∧
-      originalWordValue k source = v ∧ tailAfter 0 source = s ∧
-      (∀ (b : ℕ) (hb : (b + 1) * m ≤ N),
-        DBonacciAdmissible k m (fun i : Fin m =>
+      originalWordValue k source = v ∧ tailAfter 0 source = s ∧ (∀ (b : ℕ) (hb : (b + 1) * m ≤ N), DBonacciAdmissible k m (fun i : Fin m =>
           source ⟨b * m + i.val, by nlinarith [i.isLt]⟩)) ∧
       fixedBlockArchive actions (runBits k source (some ⟨0, 0, 0⟩)) =
         chargeArchive k m rows v j := by
@@ -119,8 +100,7 @@ private theorem actual_donor_corrected_suffix (k : ℕ) (hk : 3 ≤ k) (m : ℕ)
     simpa only [transformed, List.isChain_map] using seams
   have nextIncoming : ∀ entry ∈ transformed.head?, s + entry.2.val < k ∨ entry.1 0 = 0 := by
     intro entry he
-    have mapped : transformed.head? = marked.head?.map
-        (fun e => (correctedRow m e.1 e.2.val, e.2)) := List.head?_map
+    have mapped : transformed.head? = marked.head?.map (fun e => (correctedRow m e.1 e.2.val, e.2)) := List.head?_map
     rw [mapped] at he
     cases original : marked.head? with
     | none => simp only [original, Option.map_none, Option.not_mem_none] at he
@@ -137,24 +117,18 @@ private theorem actual_donor_corrected_suffix (k : ℕ) (hk : 3 ≤ k) (m : ℕ)
   rw [rows, show transformed.length = marked.length from List.length_map _] at native
   refine ⟨?_, native⟩
   intro entry _ i first second third
-  simp only [correctedRow, outside, first, second, third, or_self, if_false,
-    add_zero]
+  simp only [correctedRow, outside, first, second, third, or_self, if_false, add_zero]
 
 /-- The six ordinary INITIAL phase donors. -/
 def Donor (m : ℕ) (j : ZMod (2 * m - 2 + 1)) : Prop :=
   ∃ (e : ℕ) (δ : ℕ), e < 2 ∧ δ < 3 ∧
     j = ((m - 4 + e * m + δ : ℕ) : ZMod (2 * m - 2 + 1))
-
 /-- The exact ordered moving-window input extracted from the own phase paths. -/
-def codingRow {Y : Type*} {m : ℕ} (table : ZMod (2 * m - 2 + 1) → Y)
-    (π : NarrowWindowCost.Selector m Y) (d t h : ℕ) : ZMod 2 :=
-  correctedRow m (fun i => phaseCharges table π d t
-    ((t * m + i : ℕ) : ZMod (2 * m - 2 + 1))) (m - 4 - t / 2) h
+def codingRow {Y : Type*} {m : ℕ} (table : ZMod (2 * m - 2 + 1) → Y) (π : NarrowWindowCost.Selector m Y) (d t h : ℕ) : ZMod 2 :=
+  correctedRow m (fun i => phaseCharges table π d t ((t * m + i : ℕ) : ZMod (2 * m - 2 + 1))) (m - 4 - t / 2) h
 
-private theorem donor_calendar (m : ℕ) (hm : 5 ≤ m) (t : ℕ)
-    (quotient : t / 2 ≤ m - 4) (δ : ℕ) :
-    (((t * m + (m - 4 - t / 2) + δ : ℕ)) : ZMod (2 * m - 2 + 1)) =
-      ((m - 4 + (t % 2) * m + δ : ℕ) : ZMod (2 * m - 2 + 1)) := by
+private theorem donor_calendar (m : ℕ) (hm : 5 ≤ m) (t : ℕ) (quotient : t / 2 ≤ m - 4) (δ : ℕ) :
+    (((t * m + (m - 4 - t / 2) + δ : ℕ)) : ZMod (2 * m - 2 + 1)) = ((m - 4 + (t % 2) * m + δ : ℕ) : ZMod (2 * m - 2 + 1)) := by
   have period : (2 : ZMod (2 * m - 2 + 1)) * (m : ℕ) = 1 := by
     have sum : 2 * m = (2 * m - 2 + 1) + 1 := by omega
     have cast := congrArg (fun n : ℕ => (n : ZMod (2 * m - 2 + 1))) sum
@@ -167,12 +141,10 @@ private theorem donor_calendar (m : ℕ) (hm : 5 ≤ m) (t : ℕ)
 
 /-- Two consecutive charge vertices, whose inverse is one literal occupied bit. -/
 def pairRow (r h : ℕ) : ZMod 2 := if h = r ∨ h = r + 1 then 1 else 0
-
 private theorem pair_prefix (m r : ℕ) (i : Fin m) :
     prefixWord m (pairRow r) i = decide (i.val = r) := by
   classical
-  have distinct : ∀ h : ℕ, pairRow r h =
-      (if h = r then (1 : ZMod 2) else 0) + (if h = r + 1 then 1 else 0) := by
+  have distinct : ∀ h : ℕ, pairRow r h = (if h = r then (1 : ZMod 2) else 0) + (if h = r + 1 then 1 else 0) := by
     intro h
     simp only [pairRow]
     split_ifs <;> simp_all <;> omega
@@ -181,39 +153,31 @@ private theorem pair_prefix (m r : ℕ) (i : Fin m) :
   rw [Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.sum_ite_eq']
   simp only [Finset.mem_range]
   by_cases before : i.val < r
-  · simp [show ¬ r < i.val + 1 by omega, show ¬ r + 1 < i.val + 1 by omega,
-      show i.val ≠ r by omega]
+  · simp [show ¬ r < i.val + 1 by omega, show ¬ r + 1 < i.val + 1 by omega, show i.val ≠ r by omega]
   · by_cases equal : i.val = r
     · simp [equal]
-    · simp [show r < i.val + 1 by omega, show r + 1 < i.val + 1 by omega,
-        equal, CharTwo.add_self_eq_zero]
+    · simp [show r < i.val + 1 by omega, show r + 1 < i.val + 1 by omega, equal, CharTwo.add_self_eq_zero]
 
 private theorem pair_even (m r : ℕ) (fit : r + 1 ≤ m) :
     ∑ h ∈ Finset.range (m + 1), pairRow r h = 0 := by
   classical
-  have distinct : ∀ h : ℕ, pairRow r h =
-      (if h = r then (1 : ZMod 2) else 0) + (if h = r + 1 then 1 else 0) := by
+  have distinct : ∀ h : ℕ, pairRow r h = (if h = r then (1 : ZMod 2) else 0) + (if h = r + 1 then 1 else 0) := by
     intro h
     simp only [pairRow]
     split_ifs <;> simp_all <;> omega
   simp_rw [distinct]
   rw [Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.sum_ite_eq']
-  simp [show r < m + 1 by omega, show r + 1 < m + 1 by omega,
-    CharTwo.add_self_eq_zero]
+  simp [show r < m + 1 by omega, show r + 1 < m + 1 by omega, CharTwo.add_self_eq_zero]
 
 /-- The two occurrences of each actual parity use consecutive donor edges.
 The argument t is the offset within the four paid suffix blocks. -/
 def suffixRow (m d t : ℕ) : ℕ → ZMod 2 :=
   pairRow (m - 4 - (d + t) / 2 + t / 2)
-
 /-- All coding rows followed by the four donor-identifying rows. -/
-def conversionRows {Y : Type*} {m : ℕ} (table : ZMod (2 * m - 2 + 1) → Y)
-    (π : NarrowWindowCost.Selector m Y) (d : ℕ) : List (ℕ → ZMod 2) :=
-  List.ofFn (fun t : Fin (d + 4) =>
-    if t.val < d then codingRow table π d t.val else suffixRow m d (t.val - d))
+def conversionRows {Y : Type*} {m : ℕ} (table : ZMod (2 * m - 2 + 1) → Y) (π : NarrowWindowCost.Selector m Y) (d : ℕ) : List (ℕ → ZMod 2) :=
+  List.ofFn (fun t : Fin (d + 4) => if t.val < d then codingRow table π d t.val else suffixRow m d (t.val - d))
 
-private theorem pair_charge (k m r : ℕ) (fit : r + 1 ≤ m) (short : m < k + 1)
-    (j : ZMod (k + 1)) :
+private theorem pair_charge (k m r : ℕ) (fit : r + 1 ≤ m) (short : m < k + 1) (j : ZMod (k + 1)) :
     windowCharge k m (pairRow r) j =
       if j = (r : ℕ) ∨ j = ((r + 1 : ℕ) : ZMod (k + 1)) then 1 else 0 := by
   have eqCast (a : ℕ) (ha : a < k + 1) : j = (a : ℕ) ↔ j.val = a := by
@@ -226,37 +190,26 @@ private theorem pair_charge (k m r : ℕ) (fit : r + 1 ≤ m) (short : m < k + 1
   unfold windowCharge pairRow
   split_ifs <;> simp_all <;> omega
 
-private theorem suffix_charge (m : ℕ) (hm : 5 ≤ m) (d : ℕ)
-    (bound : d ≤ 2 * m - 10) (t : Fin 4) (j : ZMod (2 * m - 2 + 1)) :
-    windowCharge (2 * m - 2) m (suffixRow m d t.val)
-      (j - (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1))) =
-    if j = ((m - 4 + ((d + t.val) % 2) * m + t.val / 2 : ℕ) :
-        ZMod (2 * m - 2 + 1)) ∨
-      j = ((m - 4 + ((d + t.val) % 2) * m + t.val / 2 + 1 : ℕ) :
-        ZMod (2 * m - 2 + 1)) then 1 else 0 := by
+private theorem suffix_charge (m : ℕ) (hm : 5 ≤ m) (d : ℕ) (bound : d ≤ 2 * m - 10) (t : Fin 4) (j : ZMod (2 * m - 2 + 1)) :
+    windowCharge (2 * m - 2) m (suffixRow m d t.val) (j - (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1))) =
+    if j = ((m - 4 + ((d + t.val) % 2) * m + t.val / 2 : ℕ) : ZMod (2 * m - 2 + 1)) ∨
+      j = ((m - 4 + ((d + t.val) % 2) * m + t.val / 2 + 1 : ℕ) : ZMod (2 * m - 2 + 1)) then 1 else 0 := by
   have range := t.isLt
   have quotient : (d + t.val) / 2 ≤ m - 4 := by omega
   rw [suffixRow, pair_charge _ _ _ (by omega) (by omega)]
   have first := donor_calendar m hm (d + t.val) quotient (t.val / 2)
   have second := donor_calendar m hm (d + t.val) quotient (t.val / 2 + 1)
-  have first' : (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1)) +
-      ((m - 4 - (d + t.val) / 2 + t.val / 2 : ℕ) : ZMod (2 * m - 2 + 1)) =
-      ((m - 4 + ((d + t.val) % 2) * m + t.val / 2 : ℕ) :
-        ZMod (2 * m - 2 + 1)) := by
+  have first' : (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1)) + ((m - 4 - (d + t.val) / 2 + t.val / 2 : ℕ) : ZMod (2 * m - 2 + 1)) =
+      ((m - 4 + ((d + t.val) % 2) * m + t.val / 2 : ℕ) : ZMod (2 * m - 2 + 1)) := by
     rw [← Nat.cast_add]
     simpa only [Nat.add_assoc] using first
-  have second' : (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1)) +
-      ((m - 4 - (d + t.val) / 2 + t.val / 2 + 1 : ℕ) : ZMod (2 * m - 2 + 1)) =
-      ((m - 4 + ((d + t.val) % 2) * m + t.val / 2 + 1 : ℕ) :
-        ZMod (2 * m - 2 + 1)) := by
+  have second' : (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1)) + ((m - 4 - (d + t.val) / 2 + t.val / 2 + 1 : ℕ) : ZMod (2 * m - 2 + 1)) =
+      ((m - 4 + ((d + t.val) % 2) * m + t.val / 2 + 1 : ℕ) : ZMod (2 * m - 2 + 1)) := by
     rw [← Nat.cast_add]
     simpa only [Nat.add_assoc] using second
   simp only [sub_eq_iff_eq_add, first', second', add_comm ((m - 4 - (d + t.val) / 2 + t.val / 2 : ℕ) : ZMod (2 * m - 2 + 1)) (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1)), add_comm ((m - 4 - (d + t.val) / 2 + t.val / 2 + 1 : ℕ) : ZMod (2 * m - 2 + 1)) (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1))]
-
-private theorem suffix_charge_val (m : ℕ) (hm : 5 ≤ m) (d : ℕ)
-    (bound : d ≤ 2 * m - 10) (t : Fin 4) (j : ZMod (2 * m - 2 + 1)) :
-    windowCharge (2 * m - 2) m (suffixRow m d t.val)
-      (j - (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1))) =
+private theorem suffix_charge_val (m : ℕ) (hm : 5 ≤ m) (d : ℕ) (bound : d ≤ 2 * m - 10) (t : Fin 4) (j : ZMod (2 * m - 2 + 1)) :
+    windowCharge (2 * m - 2) m (suffixRow m d t.val) (j - (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1))) =
     if j.val = m - 4 + ((d + t.val) % 2) * m + t.val / 2 ∨
       j.val = m - 4 + ((d + t.val) % 2) * m + t.val / 2 + 1 then 1 else 0 := by
   rw [suffix_charge m hm d bound t j]
@@ -272,21 +225,12 @@ private theorem suffix_charge_val (m : ℕ) (hm : 5 ≤ m) (d : ℕ)
   have high : m - 4 + ((d + t.val) % 2) * m + t.val / 2 + 1 < 2 * m - 2 + 1 := by
     rcases (by omega : (d + t.val) % 2 = 0 ∨ (d + t.val) % 2 = 1) with h | h <;>
       simp only [h, Nat.zero_mul, Nat.one_mul] <;> omega
-  simp only [eqCast _ (by omega : m - 4 + ((d + t.val) % 2) * m + t.val / 2 <
-    2 * m - 2 + 1), eqCast _ high]
-
-private theorem suffix_identifies_donors (m : ℕ) (hm : 5 ≤ m) (d : ℕ)
-    (bound : d ≤ 2 * m - 10) (j j' : ZMod (2 * m - 2 + 1))
-    (same : ∀ t : Fin 4,
-      windowCharge (2 * m - 2) m (suffixRow m d t.val)
-        (j - (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1))) =
-      windowCharge (2 * m - 2) m (suffixRow m d t.val)
-        (j' - (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1))))
+  simp only [eqCast _ (by omega : m - 4 + ((d + t.val) % 2) * m + t.val / 2 < 2 * m - 2 + 1), eqCast _ high]
+private theorem suffix_identifies_donors (m : ℕ) (hm : 5 ≤ m) (d : ℕ) (bound : d ≤ 2 * m - 10) (j j' : ZMod (2 * m - 2 + 1))
+    (same : ∀ t : Fin 4, windowCharge (2 * m - 2) m (suffixRow m d t.val) (j - (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1))) =
+      windowCharge (2 * m - 2) m (suffixRow m d t.val) (j' - (((d + t.val) * m : ℕ) : ZMod (2 * m - 2 + 1))))
     (donor : Donor m j) : j = j' := by
-  have tests (t : Fin 4) :
-      (j.val = m - 4 + ((d + t.val) % 2) * m + t.val / 2 ∨
-       j.val = m - 4 + ((d + t.val) % 2) * m + t.val / 2 + 1) ↔
-      (j'.val = m - 4 + ((d + t.val) % 2) * m + t.val / 2 ∨
+  have tests (t : Fin 4) : (j.val = m - 4 + ((d + t.val) % 2) * m + t.val / 2 ∨ j.val = m - 4 + ((d + t.val) % 2) * m + t.val / 2 + 1) ↔ (j'.val = m - 4 + ((d + t.val) % 2) * m + t.val / 2 ∨
        j'.val = m - 4 + ((d + t.val) % 2) * m + t.val / 2 + 1) := by
     have equal := same t
     rw [suffix_charge_val m hm d bound, suffix_charge_val m hm d bound] at equal
@@ -306,8 +250,7 @@ private theorem suffix_identifies_donors (m : ℕ) (hm : 5 ≤ m) (d : ℕ)
   have modtwo : (d + 2) % 2 = d % 2 := by omega
   have modthree : (d + 3) % 2 = 1 - d % 2 := by omega
   interval_cases e <;> interval_cases d % 2 <;>
-    simp only [Fin.val_zero, Fin.val_one, Fin.val_ofNat,
-      modone, modtwo, modthree, Nat.reduceMod, Nat.reduceDiv, Nat.zero_add,
+    simp only [Fin.val_zero, Fin.val_one, Fin.val_ofNat, modone, modtwo, modthree, Nat.reduceMod, Nat.reduceDiv, Nat.zero_add,
       Nat.zero_mul, Nat.one_mul, Nat.add_zero] at zero one two three jvalue <;>
     simp_all <;> omega
 
@@ -315,30 +258,20 @@ private theorem suffix_identifies_donors (m : ℕ) (hm : 5 ≤ m) (d : ℕ)
 discharged from the original controller. Outside the six ordinary donors every
 chronological phase charge is unchanged. All live sources acquire their own
 complete common archive; this is not yet a label-decoding preset controller. -/
-theorem original_donor_coding_archive {Y : Type*}
-    (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
-    (f : Option (LiveRecord (2 * m - 2)) → Y)
-    (table : ZMod (2 * m - 2 + 1) → Y)
-    (target : ∀ (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ),
-      s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
-    (π : NarrowWindowCost.Selector m Y) (d : ℕ) (positive : 1 ≤ d)
-    (bound : d ≤ 2 * m - 10)
-    (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet),
-      let w := history.flatMap (fun a => List.ofFn a.val)
+theorem original_donor_coding_archive {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
+    (f : Option (LiveRecord (2 * m - 2)) → Y) (table : ZMod (2 * m - 2 + 1) → Y)
+    (target : ∀ (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ), s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j) (π : NarrowWindowCost.Selector m Y) (d : ℕ) (positive : 1 ≤ d)
+    (bound : d ≤ 2 * m - 10) (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet), let w := history.flatMap (fun a => List.ofFn a.val)
       NarrowWindowCost.output (2 * m - 2) (by omega) w = some 0 →
       ∃ c ≤ d, NarrowWindowCost.execute (2 * m - 2) (by omega) π d w (some 0) [] =
-        some (f (OriginalRecord (2 * m - 2) (by omega) w), c))
-    (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ) (hs : s < 2 * m - 2) :
+        some (f (OriginalRecord (2 * m - 2) (by omega) w), c)) (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ) (hs : s < 2 * m - 2) :
     let rows := List.ofFn (fun t : Fin d => codingRow table π d t.val)
     let actions := chargeBlocks (2 * m - 2) m (by omega) (by omega) alphabet rows
-    (∀ (t : Fin d) (phase : ZMod (2 * m - 2 + 1)), ¬ Donor m phase →
-      windowCharge (2 * m - 2) m (codingRow table π d t.val)
-        (phase - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1))) =
+    (∀ (t : Fin d) (phase : ZMod (2 * m - 2 + 1)), ¬ Donor m phase → windowCharge (2 * m - 2) m (codingRow table π d t.val) (phase - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1))) =
         phaseCharges table π d t.val phase) ∧
     actions.length = d ∧
     fixedBlockArchive actions (some ⟨v, -j, s⟩) =
-      chargeArchive (2 * m - 2) m rows v j ∧
-    (fixedBlockArchive actions (some ⟨v, -j, s⟩)).length = d ∧
+      chargeArchive (2 * m - 2) m rows v j ∧ (fixedBlockArchive actions (some ⟨v, -j, s⟩)).length = d ∧
     none ∉ fixedBlockArchive actions (some ⟨v, -j, s⟩) := by
   classical
   dsimp only
@@ -372,8 +305,7 @@ theorem original_donor_coding_archive {Y : Type*}
     subst entry
     right
     dsimp [raw, mark, correctedRow, outside]
-    simp only [Nat.zero_div, Nat.sub_zero, Nat.zero_mul, Nat.zero_add,
-      Nat.cast_zero, if_neg (by omega : ¬ (0 = m - 4 ∨ 0 = m - 4 + 1 ∨ 0 = m - 4 + 2)),
+    simp only [Nat.zero_div, Nat.sub_zero, Nat.zero_mul, Nat.zero_add, Nat.cast_zero, if_neg (by omega : ¬ (0 = m - 4 ∨ 0 = m - 4 + 1 ∨ 0 = m - 4 + 2)),
       if_neg (by omega : ¬ 0 = m - 4), if_neg (by omega : ¬ 0 = m - 4 + 2), add_zero]
     exact root
   have gcdOne : Nat.gcd m (2 * m - 2 + 1) = 1 := by
@@ -382,8 +314,7 @@ theorem original_donor_coding_archive {Y : Type*}
     have one := Nat.dvd_sub twice (Nat.gcd_dvd_right m _)
     rw [show 2 * m - (2 * m - 2 + 1) = 1 by omega] at one
     exact Nat.dvd_one.mp one
-  have native := actual_donor_corrected_suffix (2 * m - 2) (by omega) m (by omega)
-    (by omega) alphabet marked donors seams v j s hs incoming (by rw [gcdOne]; exact one_dvd _)
+  have native := actual_donor_corrected_suffix (2 * m - 2) (by omega) m (by omega) (by omega) alphabet marked donors seams v j s hs incoming (by rw [gcdOne]; exact one_dvd _)
   dsimp only at native
   have rows : marked.map (fun e => correctedRow m e.1 e.2.val) =
       List.ofFn (fun t : Fin d => codingRow table π d t.val) := by
@@ -406,39 +337,28 @@ theorem original_donor_coding_archive {Y : Type*}
   unfold windowCharge
   change (if q.val ≤ m then codingRow table π d t.val q.val else 0) = _
   split_ifs with inside
-  · have preserved := native.1 (raw t, mark t) (List.mem_ofFn.mpr ⟨t, rfl⟩) q.val
-      (by simpa only [Nat.add_zero] using avoided 0 (by decide))
+  · have preserved := native.1 (raw t, mark t) (List.mem_ofFn.mpr ⟨t, rfl⟩) q.val (by simpa only [Nat.add_zero] using avoided 0 (by decide))
       (avoided 1 (by decide)) (avoided 2 (by decide))
     change codingRow table π d t.val q.val = raw t q.val at preserved
     rw [preserved]
     exact congrArg (phaseCharges table π d t.val) original
   · exact (support t.val phase (by change m < q.val; omega)).symm
-
 #print axioms original_donor_coding_archive
 
-private theorem conversion_archive {Y : Type*}
-    (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
-    (f : Option (LiveRecord (2 * m - 2)) → Y)
-    (table : ZMod (2 * m - 2 + 1) → Y)
-    (target : ∀ (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ),
-      s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
-    (π : NarrowWindowCost.Selector m Y) (d : ℕ) (positive : 1 ≤ d)
-    (bound : d ≤ 2 * m - 10)
-    (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet),
-      let w := history.flatMap (fun a => List.ofFn a.val)
+private theorem conversion_archive {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
+    (f : Option (LiveRecord (2 * m - 2)) → Y) (table : ZMod (2 * m - 2 + 1) → Y)
+    (target : ∀ (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ), s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j) (π : NarrowWindowCost.Selector m Y) (d : ℕ) (positive : 1 ≤ d)
+    (bound : d ≤ 2 * m - 10) (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet), let w := history.flatMap (fun a => List.ofFn a.val)
       NarrowWindowCost.output (2 * m - 2) (by omega) w = some 0 →
       ∃ c ≤ d, NarrowWindowCost.execute (2 * m - 2) (by omega) π d w (some 0) [] =
-        some (f (OriginalRecord (2 * m - 2) (by omega) w), c))
-    (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ) (hs : s < 2 * m - 2) :
-    fixedBlockArchive (chargeBlocks (2 * m - 2) m (by omega) (by omega) alphabet
-      (conversionRows table π d)) (some ⟨v, -j, s⟩) =
+        some (f (OriginalRecord (2 * m - 2) (by omega) w), c)) (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ) (hs : s < 2 * m - 2) :
+    fixedBlockArchive (chargeBlocks (2 * m - 2) m (by omega) (by omega) alphabet (conversionRows table π d)) (some ⟨v, -j, s⟩) =
       chargeArchive (2 * m - 2) m (conversionRows table π d) v j := by
   classical
   obtain ⟨_, root, _⟩ := original_adaptive_charge_array
     m hm alphabet f table target π d correct
   let row (t : ℕ) := if t < d then codingRow table π d t else suffixRow m d (t - d)
-  let mark (t : ℕ) : Fin m :=
-    ⟨if t < d then m - 4 - t / 2 else m - 1, by split_ifs <;> omega⟩
+  let mark (t : ℕ) : Fin m := ⟨if t < d then m - 4 - t / 2 else m - 1, by split_ifs <;> omega⟩
   let marked := List.ofFn (fun t : Fin (d + 4) => (row t.val, mark t.val))
   have even : ∀ entry ∈ marked, ∑ h ∈ Finset.range (m + 1), entry.1 h = 0 := by
     intro entry he
@@ -479,8 +399,7 @@ private theorem conversion_archive {Y : Type*}
     dsimp [row]
     rw [if_pos (by omega : 0 < d)]
     dsimp [codingRow, correctedRow, outside]
-    simp only [Nat.zero_div, Nat.sub_zero, Nat.zero_mul, Nat.zero_add, Nat.cast_zero,
-      if_neg (by omega : ¬ (0 = m - 4 ∨ 0 = m - 4 + 1 ∨ 0 = m - 4 + 2)),
+    simp only [Nat.zero_div, Nat.sub_zero, Nat.zero_mul, Nat.zero_add, Nat.cast_zero, if_neg (by omega : ¬ (0 = m - 4 ∨ 0 = m - 4 + 1 ∨ 0 = m - 4 + 2)),
       if_neg (by omega : ¬ 0 = m - 4), if_neg (by omega : ¬ 0 = m - 4 + 2), add_zero]
     exact root
   have gcdOne : Nat.gcd m (2 * m - 2 + 1) = 1 := by
@@ -488,8 +407,7 @@ private theorem conversion_archive {Y : Type*}
     have one := Nat.dvd_sub twice (Nat.gcd_dvd_right m _)
     rw [show 2 * m - (2 * m - 2 + 1) = 1 by omega] at one
     exact Nat.dvd_one.mp one
-  have native := actual_internal_zero_charge_suffix (2 * m - 2) (by omega) m
-    (by omega) (by omega) alphabet marked even zero seams v j s hs incoming
+  have native := actual_internal_zero_charge_suffix (2 * m - 2) (by omega) m (by omega) (by omega) alphabet marked even zero seams v j s hs incoming
     (by rw [gcdOne]; exact one_dvd _)
   dsimp only at native
   have rows : marked.map Prod.fst = conversionRows table π d := by
@@ -498,10 +416,8 @@ private theorem conversion_archive {Y : Type*}
   rw [rows] at native
   exact native.2.1
 
-private theorem row_readings_index (k m : ℕ) (rows : List (ℕ → ZMod 2))
-    (j : ZMod (k + 1)) (t : ℕ) :
-    (rowReadings k m rows j)[t]? = (rows[t]?).map
-      (fun row => some (windowCharge k m row (j - ((t * m : ℕ) : ZMod (k + 1))))) := by
+private theorem row_readings_index (k m : ℕ) (rows : List (ℕ → ZMod 2)) (j : ZMod (k + 1)) (t : ℕ) :
+    (rowReadings k m rows j)[t]? = (rows[t]?).map (fun row => some (windowCharge k m row (j - ((t * m : ℕ) : ZMod (k + 1))))) := by
   induction rows generalizing j t with
   | nil => simp [rowReadings]
   | cons row rest ih =>
@@ -515,43 +431,29 @@ private theorem row_readings_index (k m : ℕ) (rows : List (ℕ → ZMod 2))
       push_cast
       ring
 
-private theorem conversion_separates {Y : Type*}
-    (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
-    (f : Option (LiveRecord (2 * m - 2)) → Y)
-    (table : ZMod (2 * m - 2 + 1) → Y)
-    (target : ∀ (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ),
-      s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
-    (π : NarrowWindowCost.Selector m Y) (d : ℕ) (positive : 1 ≤ d)
-    (bound : d ≤ 2 * m - 10)
-    (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet),
-      let w := history.flatMap (fun a => List.ofFn a.val)
+private theorem conversion_separates {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
+    (f : Option (LiveRecord (2 * m - 2)) → Y) (table : ZMod (2 * m - 2 + 1) → Y)
+    (target : ∀ (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ), s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j) (π : NarrowWindowCost.Selector m Y) (d : ℕ) (positive : 1 ≤ d)
+    (bound : d ≤ 2 * m - 10) (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet), let w := history.flatMap (fun a => List.ofFn a.val)
       NarrowWindowCost.output (2 * m - 2) (by omega) w = some 0 →
       ∃ c ≤ d, NarrowWindowCost.execute (2 * m - 2) (by omega) π d w (some 0) [] =
-        some (f (OriginalRecord (2 * m - 2) (by omega) w), c))
-    (j j' : ZMod (2 * m - 2 + 1))
-    (same : rowReadings (2 * m - 2) m (conversionRows table π d) j =
-      rowReadings (2 * m - 2) m (conversionRows table π d) j') : table j = table j' := by
+        some (f (OriginalRecord (2 * m - 2) (by omega) w), c)) (j j' : ZMod (2 * m - 2 + 1))
+    (same : rowReadings (2 * m - 2) m (conversionRows table π d) j = rowReadings (2 * m - 2) m (conversionRows table π d) j') : table j = table j' := by
   have coords (t : Fin (d + 4)) :
-      windowCharge (2 * m - 2) m
-        (if t.val < d then codingRow table π d t.val else suffixRow m d (t.val - d))
+      windowCharge (2 * m - 2) m (if t.val < d then codingRow table π d t.val else suffixRow m d (t.val - d))
         (j - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1))) =
-      windowCharge (2 * m - 2) m
-        (if t.val < d then codingRow table π d t.val else suffixRow m d (t.val - d))
+      windowCharge (2 * m - 2) m (if t.val < d then codingRow table π d t.val else suffixRow m d (t.val - d))
         (j' - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1))) := by
     have eq := congrArg (fun xs => xs[t.val]?) same
-    simp only [row_readings_index, conversionRows,
-      List.getElem?_ofFn, dif_pos t.isLt, Option.map_some] at eq
+    simp only [row_readings_index, conversionRows, List.getElem?_ofFn, dif_pos t.isLt, Option.map_some] at eq
     exact Option.some.inj (Option.some.inj eq)
   have suffixSame (t : Fin 4) := coords ⟨d + t.val, by have := t.isLt; omega⟩
-  simp only [Fin.val_mk, show ∀ t : ℕ, ¬ d + t < d by omega,
-    if_false, Nat.add_sub_cancel_left] at suffixSame
+  simp only [Fin.val_mk, show ∀ t : ℕ, ¬ d + t < d by omega, if_false, Nat.add_sub_cancel_left] at suffixSame
   by_cases donor : Donor m j
   · exact congrArg table (suffix_identifies_donors m hm d bound j j' suffixSame donor)
   by_cases donor' : Donor m j'
-  · exact congrArg table (suffix_identifies_donors m hm d bound j' j
-      (fun t => (suffixSame t).symm) donor').symm
-  have kept := (original_donor_coding_archive m hm alphabet f table target π d
-    positive bound correct 0 0 0 (by omega)).1
+  · exact congrArg table (suffix_identifies_donors m hm d bound j' j (fun t => (suffixSame t).symm) donor').symm
+  have kept := (original_donor_coding_archive m hm alphabet f table target π d positive bound correct 0 0 0 (by omega)).1
   apply (original_adaptive_charge_array m hm alphabet f table target π d correct).2.2
   intro t ht
   have eq := coords ⟨t, by omega⟩
@@ -559,11 +461,8 @@ private theorem conversion_separates {Y : Type*}
   rw [kept ⟨t, ht⟩ j donor, kept ⟨t, ht⟩ j' donor'] at eq
   exact eq
 
-private theorem script_global_preset {Y : Type*} (k m : ℕ) (hk : 2 ≤ k)
-    (short : m < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y)
-    (words : List (Fin m → Bool)) (decode : ZMod 2 → NarrowWindowCost.Archive m → Y)
-    (decoded : ∀ (v : ZMod 2) (phase : ZMod (k + 1)) (s : ℕ), s < k →
-      decode v (scriptArchive words (some ⟨v, phase, s⟩)) = f (some ⟨v, phase, s⟩)) :
+private theorem script_global_preset {Y : Type*} (k m : ℕ) (hk : 2 ≤ k) (short : m < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y)
+    (words : List (Fin m → Bool)) (decode : ZMod 2 → NarrowWindowCost.Archive m → Y) (decoded : ∀ (v : ZMod 2) (phase : ZMod (k + 1)) (s : ℕ), s < k → decode v (scriptArchive words (some ⟨v, phase, s⟩)) = f (some ⟨v, phase, s⟩)) :
     OriginalPresetFeasible k m (by omega) alphabet f words.length := by
   classical
   let stream : ℕ → Fin m → Bool := fun t => words[t]?.getD (fun _ => false)
@@ -584,8 +483,7 @@ private theorem script_global_preset {Y : Type*} (k m : ℕ) (hk : 2 ≤ k)
     | none =>
       refine ⟨0, Nat.zero_le _, ?_⟩
       rw [execute_same k m hk]
-      change NativeExecute (presetSelector stream stop) words.length
-        (OriginalRecord k (by omega) w) (endpointReading (OriginalRecord k (by omega) w)) [] = _
+      change NativeExecute (presetSelector stream stop) words.length (OriginalRecord k (by omega) w) (endpointReading (OriginalRecord k (by omega) w)) [] = _
       rw [initial]
       cases words.length <;> rfl
     | some q =>
@@ -606,16 +504,14 @@ private theorem script_global_preset {Y : Type*} (k m : ℕ) (hk : 2 ≤ k)
         w (some q.value) []
       dsimp only at exactScript
       rw [initial] at exactScript
-      have traced := (FullPositiveWindowPrice.trace_congr (presetSelector stream stop)
-        (finalSelector 0 words (decode q.value)) (some q.value) same _ _ [] _).mpr exactScript.1
+      have traced := (FullPositiveWindowPrice.trace_congr (presetSelector stream stop) (finalSelector 0 words (decode q.value)) (some q.value) same _ _ [] _).mpr exactScript.1
       have correctDecode := decoded q.value q.phase q.tail tail
       have qrecord : (⟨q.value, q.phase, q.tail⟩ : LiveRecord k) = q := by cases q; rfl
       rw [qrecord] at correctDecode
       rw [correctDecode] at traced
       refine ⟨words.length, le_rfl, ?_⟩
       rw [execute_same k m hk]
-      change NativeExecute (presetSelector stream stop) words.length
-        (OriginalRecord k (by omega) w) (endpointReading (OriginalRecord k (by omega) w)) [] = _
+      change NativeExecute (presetSelector stream stop) words.length (OriginalRecord k (by omega) w) (endpointReading (OriginalRecord k (by omega) w)) [] = _
       rw [initial]
       rw [native_execute_paid_trace k m]
       exact ⟨scriptArchive words (some q), traced, exactScript.2.2.1, le_rfl⟩
@@ -624,15 +520,11 @@ private theorem script_global_preset {Y : Type*} (k m : ℕ) (hk : 2 ≤ k)
 one global preset stream costing at most four additional full blocks. The
 stream, its safe suffix, and its decoder are constructed; both free values,
 every original history and legal tail, and free initial bottom are included. -/
-theorem original_donor_preset_feasible {Y : Type*}
-    (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
-    (f : Option (LiveRecord (2 * m - 2)) → Y)
-    (table : ZMod (2 * m - 2 + 1) → Y)
+theorem original_donor_preset_feasible {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
+    (f : Option (LiveRecord (2 * m - 2)) → Y) (table : ZMod (2 * m - 2 + 1) → Y)
     (target : ∀ (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ),
-      s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
-    (π : NarrowWindowCost.Selector m Y) (d : ℕ) (positive : 1 ≤ d)
-    (bound : d ≤ 2 * m - 10)
-    (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet),
+      s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j) (π : NarrowWindowCost.Selector m Y) (d : ℕ) (positive : 1 ≤ d)
+    (bound : d ≤ 2 * m - 10) (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet),
       let w := history.flatMap (fun a => List.ofFn a.val)
       NarrowWindowCost.output (2 * m - 2) (by omega) w = some 0 →
       ∃ c ≤ d, NarrowWindowCost.execute (2 * m - 2) (by omega) π d w (some 0) [] =
@@ -655,8 +547,7 @@ theorem original_donor_preset_feasible {Y : Type*}
     unfold AllowedBlock
     rw [List.map_map]
     rfl
-  have readings : endpointDifferences (some v)
-      ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd) =
+  have readings : endpointDifferences (some v) ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd) =
       rowReadings (2 * m - 2) m rows (-phase) := by
     rw [← wordEq, script_readings]
     have native := conversion_archive m hm alphabet f table target π d positive bound
@@ -665,12 +556,10 @@ theorem original_donor_preset_feasible {Y : Type*}
     change fixedBlockArchive actions (some ⟨v, phase, s⟩) = _ at native
     rw [native, charge_differences]
   have existsPhase : ∃ j, rowReadings (2 * m - 2) m rows j =
-      endpointDifferences (some v)
-        ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd) :=
+      endpointDifferences (some v) ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd) :=
     ⟨-phase, readings.symm⟩
   change (if h : ∃ j, rowReadings (2 * m - 2) m rows j =
-      endpointDifferences (some v)
-        ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd)
+      endpointDifferences (some v) ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd)
     then table (Classical.choose h) else f none) = _
   rw [dif_pos existsPhase]
   have same := (Classical.choose_spec existsPhase).trans readings
@@ -679,15 +568,12 @@ theorem original_donor_preset_feasible {Y : Type*}
   exact separated.trans (by simpa only [neg_neg] using (target v (-phase) s hs).symm)
 
 #print axioms original_donor_preset_feasible
-
 def uniformHorizon (m : ℕ) := 2 * m - 4 - min 2 (m - 5)
 def uniformOccupied (m t : ℕ) := if 4 ≤ t ∧ t < 4 + min 2 (m - 5) then
   m - 2 - min 2 (m - 5) else 1
 private def selected (m t : ℕ) : ZMod (2 * m - 2 + 1) := ((t * m + uniformOccupied m t : ℕ) : _)
 private def absent (m e : ℕ) := e = 0 ∨ e = 3 ∨ e = m - 1 ∨ e = m ∨ e = m + 3
-
-private theorem calendar (m : ℕ) (hm : 5 ≤ m) (h eps i : ℕ) :
-    (((2 * h + eps) * m + i : ℕ) : ZMod (2 * m - 2 + 1)) =
+private theorem calendar (m : ℕ) (hm : 5 ≤ m) (h eps i : ℕ) : (((2 * h + eps) * m + i : ℕ) : ZMod (2 * m - 2 + 1)) =
       ((h + eps * m + i : ℕ) : ZMod (2 * m - 2 + 1)) := by
   have period : (2 : ZMod (2 * m - 2 + 1)) * (m : ℕ) = 1 := by
     have equality : 2 * m = (2 * m - 2 + 1) + 1 := by omega
@@ -696,9 +582,7 @@ private theorem calendar (m : ℕ) (hm : 5 ≤ m) (h eps i : ℕ) :
     simpa only [Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one] using cast
   push_cast
   linear_combination (h : ZMod (2 * m - 2 + 1)) * period
-
-private theorem selected_surjects (m : ℕ) (hm : 7 ≤ m) (e : ℕ)
-    (he : e < 2 * m - 2 + 1) (present : ¬ absent m e) :
+private theorem selected_surjects (m : ℕ) (hm : 7 ≤ m) (e : ℕ) (he : e < 2 * m - 2 + 1) (present : ¬ absent m e) :
     ∃ t : Fin (uniformHorizon m), selected m t.val = (e : ℕ) := by
   have q : min 2 (m - 5) = 2 := Nat.min_eq_left (by omega)
   have H : uniformHorizon m = 2 * m - 6 := by simp only [uniformHorizon, q]; omega
@@ -741,17 +625,13 @@ private theorem selected_surjects (m : ℕ) (hm : 7 ≤ m) (e : ℕ)
     have cal := calendar m (by omega) (e - m - 1) 1 1
     simpa only [Nat.one_mul, show e - m - 1 + m + 1 = e by omega] using cal
 
-
-private theorem profiles_separate (m : ℕ) (hm : 7 ≤ m) (x y : ℕ)
-    (hx : x < 2 * m - 2 + 1) (hy : y < 2 * m - 2 + 1)
-    (tests : ∀ e < 2 * m - 2 + 1, ¬ absent m e →
-      ((x = e ∨ x = (if e + 1 = 2 * m - 2 + 1 then 0 else e + 1)) ↔
+private theorem profiles_separate (m : ℕ) (hm : 7 ≤ m) (x y : ℕ) (hx : x < 2 * m - 2 + 1) (hy : y < 2 * m - 2 + 1)
+    (tests : ∀ e < 2 * m - 2 + 1, ¬ absent m e → ((x = e ∨ x = (if e + 1 = 2 * m - 2 + 1 then 0 else e + 1)) ↔
       (y = e ∨ y = (if e + 1 = 2 * m - 2 + 1 then 0 else e + 1)))) : x = y := by
   let previous (a : ℕ) := if a = 0 then 2 * m - 2 else a - 1
   have prevBound (a : ℕ) (ha : a < 2 * m - 2 + 1) : previous a < 2 * m - 2 + 1 := by
     dsimp [previous]; split_ifs <;> omega
-  have prevNext (a : ℕ) (ha : a < 2 * m - 2 + 1) :
-      (if previous a + 1 = 2 * m - 2 + 1 then 0 else previous a + 1) = a := by
+  have prevNext (a : ℕ) (ha : a < 2 * m - 2 + 1) : (if previous a + 1 = 2 * m - 2 + 1 then 0 else previous a + 1) = a := by
     dsimp [previous]; split_ifs <;> omega
   have ax : absent m x ∨ y = x ∨ y = (if x + 1 = 2 * m - 2 + 1 then 0 else x + 1) := by
     by_cases missing : absent m x
@@ -777,8 +657,6 @@ private theorem profiles_separate (m : ℕ) (hm : 7 ≤ m) (x y : ℕ)
       exact row.mpr (Or.inr rfl)
   dsimp [previous, absent] at ax ay bx byy
   split_ifs at ax ay bx byy <;> omega
-
-
 private def column (m : ℕ) (j : ZMod (2 * m - 2 + 1)) (t : Fin (uniformHorizon m)) : ZMod 2 :=
   if j = selected m t.val ∨ j = selected m t.val + 1 then 1 else 0
 
@@ -818,35 +696,27 @@ private theorem columns_injective (m : ℕ) (hm : 5 ≤ m) :
   simp only [castEq, Nat.mod_eq_of_lt he, next] at equal
   split_ifs at equal <;> simp_all only [true_iff, iff_true, false_iff, iff_false,
     not_true_eq_false, not_false_eq_true, one_ne_zero, zero_ne_one, ite_true, ite_false]
-
 private def rows (m : ℕ) : List (ℕ → ZMod 2) :=
   List.ofFn (fun t : Fin (uniformHorizon m) => pairRow (uniformOccupied m t.val))
-
 private theorem positions_internal (m : ℕ) (hm : 5 ≤ m) (t : ℕ) :
     1 ≤ uniformOccupied m t ∧ uniformOccupied m t + 1 < m := by
   have small : min 2 (m - 5) ≤ 2 := Nat.min_le_left _ _
   have width : min 2 (m - 5) ≤ m - 5 := Nat.min_le_right _ _
   unfold uniformOccupied
   split_ifs <;> omega
-
-private theorem row_column (m : ℕ) (hm : 5 ≤ m) (j : ZMod (2 * m - 2 + 1))
-    (t : Fin (uniformHorizon m)) :
-    windowCharge (2 * m - 2) m (pairRow (uniformOccupied m t.val))
-      (j - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1))) = column m j t := by
+private theorem row_column (m : ℕ) (hm : 5 ≤ m) (j : ZMod (2 * m - 2 + 1)) (t : Fin (uniformHorizon m)) :
+    windowCharge (2 * m - 2) m (pairRow (uniformOccupied m t.val)) (j - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1))) = column m j t := by
   rw [pair_charge _ _ _ (by have := positions_internal m hm t.val; omega) (by omega)]
-  have first : (j - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1)) =
-      ((uniformOccupied m t.val : ℕ) : ZMod (2 * m - 2 + 1))) ↔ j = selected m t.val := by
+  have first : (j - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1)) = ((uniformOccupied m t.val : ℕ) : ZMod (2 * m - 2 + 1))) ↔ j = selected m t.val := by
     rw [sub_eq_iff_eq_add]
     simp only [selected, Nat.cast_add, add_comm]
-  have second : (j - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1)) =
-      ((uniformOccupied m t.val + 1 : ℕ) : ZMod (2 * m - 2 + 1))) ↔
+  have second : (j - ((t.val * m : ℕ) : ZMod (2 * m - 2 + 1)) = ((uniformOccupied m t.val + 1 : ℕ) : ZMod (2 * m - 2 + 1))) ↔
       j = selected m t.val + 1 := by
     rw [sub_eq_iff_eq_add]
     simp only [selected, Nat.cast_add, Nat.cast_one]
     congr 1
     abel
   simp only [first, second, column]
-
 private theorem readings_injective (m : ℕ) (hm : 5 ≤ m) :
     Function.Injective (rowReadings (2 * m - 2) m (rows m)) := by
   intro j j' same
@@ -857,13 +727,9 @@ private theorem readings_injective (m : ℕ) (hm : 5 ≤ m) :
     dif_pos t.isLt, Option.map_some] at equal
   have values := Option.some.inj (Option.some.inj equal)
   simpa only [row_column m hm] using values
-
-private theorem native_archive (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
-    (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ) (hs : s < 2 * m - 2) :
-    fixedBlockArchive (chargeBlocks (2 * m - 2) m (by omega) (by omega) alphabet
-      (rows m)) (some ⟨v, -j, s⟩) = chargeArchive (2 * m - 2) m (rows m) v j := by
-  let marked := List.ofFn (fun t : Fin (uniformHorizon m) =>
-    (pairRow (uniformOccupied m t.val), (⟨0, by omega⟩ : Fin m)))
+private theorem native_archive (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool) (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ) (hs : s < 2 * m - 2) :
+    fixedBlockArchive (chargeBlocks (2 * m - 2) m (by omega) (by omega) alphabet (rows m)) (some ⟨v, -j, s⟩) = chargeArchive (2 * m - 2) m (rows m) v j := by
+  let marked := List.ofFn (fun t : Fin (uniformHorizon m) => (pairRow (uniformOccupied m t.val), (⟨0, by omega⟩ : Fin m)))
   have even : ∀ entry ∈ marked, ∑ h ∈ Finset.range (m + 1), entry.1 h = 0 := by
     intro entry he
     obtain ⟨t, rfl⟩ := List.mem_ofFn.mp he
@@ -891,8 +757,7 @@ private theorem native_archive (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
     have one := Nat.dvd_sub twice (Nat.gcd_dvd_right m _)
     rw [show 2 * m - (2 * m - 2 + 1) = 1 by omega] at one
     exact Nat.dvd_one.mp one
-  have native := actual_internal_zero_charge_suffix (2 * m - 2) (by omega) m
-    (by omega) (by omega) alphabet marked even zero seams v j s hs incoming
+  have native := actual_internal_zero_charge_suffix (2 * m - 2) (by omega) m (by omega) (by omega) alphabet marked even zero seams v j s hs incoming
     (by rw [gcdOne]; exact one_dvd _)
   have rowEq : marked.map Prod.fst = rows m := by
     simp only [marked, rows, List.map_ofFn]
@@ -903,10 +768,8 @@ private theorem native_archive (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
 
 /-- A strictly internal single-one schedule separates every original phase
 and yields one global preset protocol, including widths five and six. -/
-theorem original_uniform_phase_preset {Y : Type*}
-    (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
-    (f : Option (LiveRecord (2 * m - 2)) → Y)
-    (table : ZMod (2 * m - 2 + 1) → Y)
+theorem original_uniform_phase_preset {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
+    (f : Option (LiveRecord (2 * m - 2)) → Y) (table : ZMod (2 * m - 2 + 1) → Y)
     (target : ∀ (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ),
       s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j) :
     OriginalPresetFeasible (2 * m - 2) m (by omega) alphabet f (uniformHorizon m) := by
@@ -925,8 +788,7 @@ theorem original_uniform_phase_preset {Y : Type*}
     unfold actions chargeBlocks AllowedBlock
     rw [List.map_map]
     rfl
-  have readings : endpointDifferences (some v)
-      ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd) =
+  have readings : endpointDifferences (some v) ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd) =
       rowReadings (2 * m - 2) m (rows m) (-phase) := by
     rw [← wordEq, script_readings]
     have native := native_archive m hm alphabet v (-phase) s hs
@@ -934,8 +796,7 @@ theorem original_uniform_phase_preset {Y : Type*}
     change fixedBlockArchive actions (some ⟨v, phase, s⟩) = _ at native
     rw [native, charge_differences]
   have existsPhase : ∃ j, rowReadings (2 * m - 2) m (rows m) j =
-      endpointDifferences (some v) ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd) :=
-    ⟨-phase, readings.symm⟩
+      endpointDifferences (some v) ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd) := ⟨-phase, readings.symm⟩
   change (if h : ∃ j, rowReadings (2 * m - 2) m (rows m) j =
       endpointDifferences (some v) ((scriptArchive words (some ⟨v, phase, s⟩)).map Prod.snd)
     then table (Classical.choose h) else f none) = _
@@ -948,37 +809,30 @@ theorem original_uniform_phase_preset {Y : Type*}
 
 /-- One legal original controller serves both free values and every actual
 complete-word history. Issued complete words, including rejection, are paid. -/
-def OriginalAdaptiveFeasible {Y : Type*} (k m : ℕ) (hk : 0 < k)
-    (alphabet : Bool) (f : Option (LiveRecord k) → Y) (d : ℕ) : Prop :=
+def OriginalAdaptiveFeasible {Y : Type*} (k m : ℕ) (hk : 0 < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) (d : ℕ) : Prop :=
   ∃ π : NarrowWindowCost.Selector m Y,
     FullPositiveWindowPrice.SelectorLegal k alphabet π ∧
     π none [] = .inl (f none) ∧
     ∀ history : List (AllowedBlock k m alphabet),
       let w := history.flatMap (fun a => List.ofFn a.val)
-      ∃ c ≤ d, NarrowWindowCost.execute k hk π d w
-        (NarrowWindowCost.output k hk w) [] = some (f (OriginalRecord k hk w), c)
+      ∃ c ≤ d, NarrowWindowCost.execute k hk π d w (NarrowWindowCost.output k hk w) [] = some (f (OriginalRecord k hk w), c)
 
 /-- The true global adaptive minimum, with infinity for infeasibility. -/
-def GlobalAdaptivePrice {Y : Type*} (k m : ℕ) (hk : 0 < k)
-    (alphabet : Bool) (f : Option (LiveRecord k) → Y) : ℕ∞ :=
+def GlobalAdaptivePrice {Y : Type*} (k m : ℕ) (hk : 0 < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) : ℕ∞ :=
   FullPositiveWindowPrice.BudgetPrice (OriginalAdaptiveFeasible k m hk alphabet f)
 
 /-- The true original global preset minimum, using the existing whole-history
 preset interface and a single literal stream shared by all free values. -/
-def GlobalPresetPrice {Y : Type*} (k m : ℕ) (hk : 0 < k)
-    (alphabet : Bool) (f : Option (LiveRecord k) → Y) : ℕ∞ :=
+def GlobalPresetPrice {Y : Type*} (k m : ℕ) (hk : 0 < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) : ℕ∞ :=
   FullPositiveWindowPrice.BudgetPrice (OriginalPresetFeasible k m hk alphabet f)
 
-private theorem preset_inclusion {Y : Type*} (k m : ℕ) (hk : 0 < k)
-    (alphabet : Bool) (f : Option (LiveRecord k) → Y) (d : ℕ)
+private theorem preset_inclusion {Y : Type*} (k m : ℕ) (hk : 0 < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) (d : ℕ)
     (feasible : OriginalPresetFeasible k m hk alphabet f d) :
     OriginalAdaptiveFeasible k m hk alphabet f d := by
   obtain ⟨stream, stop, legal, bottom, correct⟩ := feasible
   refine ⟨presetSelector stream stop, legal, ?_, correct⟩
   simp only [presetSelector, bottom]
-
-private theorem preset_monotone {Y : Type*} (k m : ℕ) (hk : 2 ≤ k)
-    (alphabet : Bool) (f : Option (LiveRecord k) → Y) (a b : ℕ) (le : a ≤ b)
+private theorem preset_monotone {Y : Type*} (k m : ℕ) (hk : 2 ≤ k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) (a b : ℕ) (le : a ≤ b)
     (feasible : OriginalPresetFeasible k m (by omega) alphabet f a) :
     OriginalPresetFeasible k m (by omega) alphabet f b := by
   obtain ⟨stream, stop, legal, bottom, correct⟩ := feasible
@@ -989,11 +843,8 @@ private theorem preset_monotone {Y : Type*} (k m : ℕ) (hk : 2 ≤ k)
   rw [execute_paid_trace k m hk] at success ⊢
   obtain ⟨issued, trace, count, _⟩ := success
   exact ⟨issued, trace, count, bound.trans le⟩
-
-private theorem constant_preset {Y : Type*} (m : ℕ) (hm : 5 ≤ m)
-    (alphabet : Bool) (f : Option (LiveRecord (2 * m - 2)) → Y)
-    (table : ZMod (2 * m - 2 + 1) → Y)
-    (target : ∀ v j s, s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
+private theorem constant_preset {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool) (f : Option (LiveRecord (2 * m - 2)) → Y)
+    (table : ZMod (2 * m - 2 + 1) → Y) (target : ∀ v j s, s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
     (constant : ∃ y, ∀ j, table j = y) :
     OriginalPresetFeasible (2 * m - 2) m (by omega) alphabet f 0 := by
   obtain ⟨y, labels⟩ := constant
@@ -1003,13 +854,9 @@ private theorem constant_preset {Y : Type*} (m : ℕ) (hm : 5 ≤ m)
       exact (labels (-phase)).symm.trans (by
         simpa only [neg_neg] using (target v (-phase) s hs).symm))
   exact constructed
-
-private theorem one_block_preset {Y : Type*} (m : ℕ) (hm : 5 ≤ m)
-    (alphabet : Bool) (f : Option (LiveRecord (2 * m - 2)) → Y)
-    (table : ZMod (2 * m - 2 + 1) → Y)
-    (target : ∀ v j s, s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
-    (π : NarrowWindowCost.Selector m Y)
-    (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet),
+private theorem one_block_preset {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool) (f : Option (LiveRecord (2 * m - 2)) → Y)
+    (table : ZMod (2 * m - 2 + 1) → Y) (target : ∀ v j s, s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
+    (π : NarrowWindowCost.Selector m Y) (correct : ∀ history : List (AllowedBlock (2 * m - 2) m alphabet),
       let w := history.flatMap (fun a => List.ofFn a.val)
       NarrowWindowCost.output (2 * m - 2) (by omega) w = some 0 →
       ∃ c ≤ 1, NarrowWindowCost.execute (2 * m - 2) (by omega) π 1 w (some 0) [] =
@@ -1017,8 +864,7 @@ private theorem one_block_preset {Y : Type*} (m : ℕ) (hm : 5 ≤ m)
     OriginalPresetFeasible (2 * m - 2) m (by omega) alphabet f 1 := by
   classical
   by_cases constant : ∃ y, ∀ j, table j = y
-  · exact preset_monotone _ _ (by omega) alphabet f 0 1 (by omega)
-      (constant_preset m hm alphabet f table target constant)
+  · exact preset_monotone _ _ (by omega) alphabet f 0 1 (by omega) (constant_preset m hm alphabet f table target constant)
   have array := original_adaptive_charge_array m hm alphabet f table target π 1 correct
   cases chosen : π (some 0) [] with
   | inl label =>
@@ -1052,18 +898,15 @@ private theorem one_block_preset {Y : Type*} (m : ℕ) (hm : 5 ≤ m)
     intro v phase s hs
     have step := (short_safe_execution (2 * m - 2) (by omega) m (by omega) (by omega)
       B v phase s hs (Or.inr head)).1
-    have readings : endpointDifferences (some v)
-        ((scriptArchive [B] (some ⟨v, phase, s⟩)).map Prod.snd) =
+    have readings : endpointDifferences (some v) ((scriptArchive [B] (some ⟨v, phase, s⟩)).map Prod.snd) =
         [some (wordIncrement (2 * m - 2) phase B)] := by
       simp [scriptArchive, step, endpointReading, endpointDifferences]
     have existsPhase : ∃ j, [some (wordIncrement (2 * m - 2) (-j) B)] =
-        endpointDifferences (some v)
-          ((scriptArchive [B] (some ⟨v, phase, s⟩)).map Prod.snd) := by
+        endpointDifferences (some v) ((scriptArchive [B] (some ⟨v, phase, s⟩)).map Prod.snd) := by
       refine ⟨-phase, ?_⟩
       simpa only [neg_neg] using readings.symm
     change (if h : ∃ j, [some (wordIncrement (2 * m - 2) (-j) B)] =
-        endpointDifferences (some v)
-          ((scriptArchive [B] (some ⟨v, phase, s⟩)).map Prod.snd)
+        endpointDifferences (some v) ((scriptArchive [B] (some ⟨v, phase, s⟩)).map Prod.snd)
       then table (Classical.choose h) else f none) = _
     rw [dif_pos existsPhase]
     have code := (Classical.choose_spec existsPhase).trans readings
@@ -1074,11 +917,8 @@ private theorem one_block_preset {Y : Type*} (m : ℕ) (hm : 5 ≤ m)
       rw [charge, charge, neg_neg]
       exact Option.some.inj (List.cons.inj code).1)
     exact separated.trans (by simpa only [neg_neg] using (target v (-phase) s hs).symm)
-
-private theorem adaptive_conversion {Y : Type*} (m : ℕ) (hm : 5 ≤ m)
-    (alphabet : Bool) (f : Option (LiveRecord (2 * m - 2)) → Y)
-    (table : ZMod (2 * m - 2 + 1) → Y)
-    (target : ∀ v j s, s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
+private theorem adaptive_conversion {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool) (f : Option (LiveRecord (2 * m - 2)) → Y)
+    (table : ZMod (2 * m - 2 + 1) → Y) (target : ∀ v j s, s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j)
     (d : ℕ) (adaptive : OriginalAdaptiveFeasible (2 * m - 2) m (by omega) alphabet f d) :
     OriginalPresetFeasible (2 * m - 2) m (by omega) alphabet f (d + 4) := by
   obtain ⟨π, _, _, all⟩ := adaptive
@@ -1094,17 +934,13 @@ private theorem adaptive_conversion {Y : Type*} (m : ℕ) (hm : 5 ≤ m)
   by_cases zero : d = 0
   · subst d
     have array := original_adaptive_charge_array m hm alphabet f table target π 0 correct
-    have constant : ∃ y, ∀ j, table j = y :=
-      ⟨table 0, fun j => array.2.2 j 0 (by intros; omega)⟩
-    exact preset_monotone _ _ (by omega) alphabet f 0 4 (by omega)
-      (constant_preset m hm alphabet f table target constant)
+    have constant : ∃ y, ∀ j, table j = y := ⟨table 0, fun j => array.2.2 j 0 (by intros; omega)⟩
+    exact preset_monotone _ _ (by omega) alphabet f 0 4 (by omega) (constant_preset m hm alphabet f table target constant)
   by_cases one : d = 1
   · subst d
-    exact preset_monotone _ _ (by omega) alphabet f 1 5 (by omega)
-      (one_block_preset m hm alphabet f table target π correct)
+    exact preset_monotone _ _ (by omega) alphabet f 1 5 (by omega) (one_block_preset m hm alphabet f table target π correct)
   by_cases small : d ≤ 2 * m - 10
-  · exact original_donor_preset_feasible m hm alphabet f table target π d
-      (by omega) small correct
+  · exact original_donor_preset_feasible m hm alphabet f table target π d (by omega) small correct
   have fallback := original_uniform_phase_preset m hm alphabet f table target
   apply preset_monotone _ _ (by omega) alphabet f (uniformHorizon m) (d + 4) _ fallback
   unfold uniformHorizon
@@ -1115,21 +951,16 @@ private theorem adaptive_conversion {Y : Type*} (m : ℕ) (hm : 5 ≤ m)
   have large : 7 ≤ m := by omega
   rw [Nat.min_eq_left (by omega : 2 ≤ m - 5)]
   omega
-
 private theorem minimum_price (feasible : ℕ → Prop) (existsBudget : ∃ d, feasible d) :
-    FullPositiveWindowPrice.BudgetPrice feasible =
-      (@Nat.find feasible (Classical.decPred _) existsBudget : ℕ∞) := by
+    FullPositiveWindowPrice.BudgetPrice feasible = (@Nat.find feasible (Classical.decPred _) existsBudget : ℕ∞) := by
   classical
-  exact FullPositiveWindowPrice.price_exact feasible (Nat.find existsBudget)
-    (Nat.find_spec existsBudget) (fun _ proof => Nat.find_min' existsBudget proof)
+  exact FullPositiveWindowPrice.price_exact feasible (Nat.find existsBudget) (Nat.find_spec existsBudget) (fun _ proof => Nat.find_min' existsBudget proof)
 
 /-- Full-family native paid feedback costs at most four complete blocks.
 Both minima are finite and attained; all original histories, both free values,
 both original alphabets, and every legal inherited tail remain in scope. -/
-theorem original_uniform_paid_feedback_bound {Y : Type*}
-    (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
-    (f : Option (LiveRecord (2 * m - 2)) → Y)
-    (table : ZMod (2 * m - 2 + 1) → Y)
+theorem original_uniform_paid_feedback_bound {Y : Type*} (m : ℕ) (hm : 5 ≤ m) (alphabet : Bool)
+    (f : Option (LiveRecord (2 * m - 2)) → Y) (table : ZMod (2 * m - 2 + 1) → Y)
     (target : ∀ (v : ZMod 2) (j : ZMod (2 * m - 2 + 1)) (s : ℕ),
       s < 2 * m - 2 → f (some ⟨v, -j, s⟩) = table j) :
     GlobalAdaptivePrice (2 * m - 2) m (by omega) alphabet f ≤
@@ -1138,18 +969,14 @@ theorem original_uniform_paid_feedback_bound {Y : Type*}
       GlobalAdaptivePrice (2 * m - 2) m (by omega) alphabet f + 4 ∧
     GlobalAdaptivePrice (2 * m - 2) m (by omega) alphabet f + 4 < ⊤ := by
   classical
-  have existsPreset : ∃ d, OriginalPresetFeasible (2 * m - 2) m (by omega) alphabet f d :=
-    ⟨uniformHorizon m,
+  have existsPreset : ∃ d, OriginalPresetFeasible (2 * m - 2) m (by omega) alphabet f d := ⟨uniformHorizon m,
       original_uniform_phase_preset m hm alphabet f table target⟩
-  have existsAdaptive : ∃ d, OriginalAdaptiveFeasible (2 * m - 2) m (by omega) alphabet f d :=
-    ⟨Nat.find existsPreset, preset_inclusion _ _ (by omega) alphabet f _
+  have existsAdaptive : ∃ d, OriginalAdaptiveFeasible (2 * m - 2) m (by omega) alphabet f d := ⟨Nat.find existsPreset, preset_inclusion _ _ (by omega) alphabet f _
       (Nat.find_spec existsPreset)⟩
   have lower : Nat.find existsAdaptive ≤ Nat.find existsPreset :=
-    Nat.find_min' existsAdaptive (preset_inclusion _ _ (by omega) alphabet f _
-      (Nat.find_spec existsPreset))
+    Nat.find_min' existsAdaptive (preset_inclusion _ _ (by omega) alphabet f _ (Nat.find_spec existsPreset))
   have upper : Nat.find existsPreset ≤ Nat.find existsAdaptive + 4 :=
-    Nat.find_min' existsPreset (adaptive_conversion m hm alphabet f table target _
-      (Nat.find_spec existsAdaptive))
+    Nat.find_min' existsPreset (adaptive_conversion m hm alphabet f table target _ (Nat.find_spec existsAdaptive))
   unfold GlobalAdaptivePrice GlobalPresetPrice
   rw [minimum_price _ existsAdaptive, minimum_price _ existsPreset]
   constructor
@@ -1159,5 +986,4 @@ theorem original_uniform_paid_feedback_bound {Y : Type*}
   · exact ENat.add_lt_top.mpr ⟨ENat.natCast_lt_top _, ENat.natCast_lt_top 4⟩
 
 #print axioms original_uniform_paid_feedback_bound
-
 end D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection
