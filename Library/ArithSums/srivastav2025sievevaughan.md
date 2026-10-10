@@ -1740,3 +1740,235 @@ the shared sampling prime from the retained periodic and constant
 sectors. The coprime low response, its joint full drift, the separate
 mean estimate, prime layer, other recovery terms and complete signed
 Robin tail still have no bound here at the original target rate.
+
+## The actual response has a quadratic bound just above its cutoff
+
+Keep the original weights, actual source and fixed exponent. Write
+
+$$
+a_R(n)=\sum_{d\mid n}\lambda(d),\qquad
+b_A(n)=\sum_{e\mid n}\theta'(e).
+$$
+
+The defining finite LCM sum gives
+$H_A(y)=\sum_{n\le y}a_R(n)b_A(n)$. For $n\le U$,
+$b_A(n)=\mathbf1_{n=1}$. If
+$U<n\le U(1+\delta)<\min(2U,U_1)$, every proper divisor of $n$
+is at most $U$. Only the divisor $e=n$ can differ from the untruncated
+Möbius response, and
+
+$$
+b_A(n)=\theta'(n)-\mu(n)
+=-\frac{\mu(n)}r\log(n/U).
+$$
+
+Consequently, uniformly for real $U<y\le U(1+\delta)$,
+
+$$
+H_A(y)=1-\frac1r\sum_{U<n\le y}
+ \mu(n)a_R(n)\log(n/U).
+\tag{SV44}
+$$
+
+There is no rounding of the observation endpoint. For sufficiently
+large $A$, every $0<\delta\le1/2$ satisfies the displayed cutoff
+conditions. The existing absolute weight bounds give
+
+$$
+\begin{aligned}
+\sum_{U<n\le U(1+\delta)}|a_R(n)|
+&\le\sum_{d\le R}|\lambda(d)|
+ \left(\left\lfloor\frac{U(1+\delta)}d\right\rfloor
+       -\left\lfloor\frac Ud\right\rfloor\right)\\
+&\le\delta U(1+r)+\frac{R-1}r.
+\end{aligned}
+$$
+
+Here $\sum|\lambda(d)|/d\le1+r$ and
+$\sum|\lambda(d)|\le(R-1)/r$. The first follows from
+$|\lambda(d)|\le1$ and the harmonic-sum bound; the second is the
+same decreasing-logarithm sum used in the original $B_A$ envelope.
+Using $\log(n/U)\le\delta$, $r\ge1$ and the unchanged
+$\sigma_A\ge0$ in $E_A(y)=[-H_A(y)-\sigma_Ay]_+$ gives
+
+$$
+E_A(y)\le2\delta^2U+\frac{\delta R}{r^2},
+\qquad U<y\le U(1+\delta).
+\tag{SV45}
+$$
+
+This controls the complete original positive part. It does not estimate
+the mean by a power, remove its compensation, or bound the constant
+and oscillatory sectors separately.
+
+For the square layer put $P=(x/U)^{1/2}$, $A\le x\le2A$, and
+restrict to any subset of the actual primes satisfying
+
+$$
+U<x/p^2\le U(1+\delta).
+$$
+
+They lie in $[P(1+\delta)^{-1/2},P)$, containing at most
+$C\delta P+1$ integers. The endpoint term is retained. Moreover
+$p\ge A^{3/8}/\sqrt{1+\delta}>U(1+\delta)$ eventually, uniformly
+in $x$ and $\delta$. Thus every denominator in the moving local
+support is smaller than $p$, and
+$E_{A,p}^{\rm cop}(x/p^2)=E_A(x/p^2)$ with the full drift and mean.
+Equation (SV45) and $w_{N,p,2}\le\log p$ yield
+
+$$
+\begin{aligned}
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^2\le U(1+\delta)}
+ w_{N,p,2}E_A(x/p^2)
+\ll{}&L\delta^3A^{-3/8}+L\delta^2A^{-3/4}\\
+&+\frac{\delta^2A^{-1/2}}L
+ +\frac{\delta A^{-7/8}}L.
+\end{aligned}
+\tag{SV46}
+$$
+
+Only when the original fixed $3/8<\eta<1/2$, choose
+$b=(\eta-3/8)/3$ and $\delta_{2,A}=A^{-b}/L$. The first term is
+$A^{-\eta}/L^2$ and the other three have strictly larger power
+exponents. The whole bound is $O_\eta(A^{-\eta}/L^2)$.
+Restricting to the original prime window preserves this bound.
+Removing these square samples from the original nonnegative residual
+therefore changes its supremum by at most that amount; an attained
+supremum is unnecessary.
+
+For comparison, the old $E_A(y)\ll y/L^2$ envelope and the same
+short-interval integer count give only
+$O(\delta A^{-3/8}/L+A^{-3/4}/L)$ here. With $\delta=\delta_{2,A}$,
+its first term is $A^{-\eta+2b}/L^2$, so that upper bound does not
+pay this wider strip. This is a comparison of sufficient bounds,
+not a lower bound on the actual response. When $\eta\le3/8$,
+the old envelope and the existing $\vartheta(P)\ll P$ supplier already
+pay a fixed-width square strip at $O(A^{-3/8}/L^2)$; that case is
+not an additional payment.
+
+The finite onset calculation is an application of the original weight
+definitions and counting bounds, not a new classical sieve theorem,
+historical originality claim or Lean certification. It pays the complete
+response only in the displayed shrinking strip. The critical region
+$y\asymp V$, remaining low layers, mean rate, prime layer, other recovery
+terms and full signed Robin tail retain their original obligations.
+
+## A published short-sum bound also pays prime-layer onset samples
+
+The floor-counting error in (SV45) can be avoided in a sufficiently
+long onset interval by directly reusing [Henriot's corrected 2014
+New Theorem 5](shiuhenriot2026growingmoments.md#henriot-and-the-indispensable-erratum),
+[erratum printed p.377](https://doi.org/10.1017/S0305004114000280).
+Use its single primitive polynomial $Q(t)=t$ and the fixed function
+$F(n)=\tau(n)$. Its parameters are
+
+$$
+g=k=r_Q=1,\qquad \alpha=1/4,\quad\delta_{\rm coef}=1,
+\quad\varepsilon=1/800<1/400,\quad A_0=2,
+$$
+
+with a fixed divisor-growth constant $B_0=B_0(\varepsilon)$.
+The class follows from multiplicativity,
+$\tau(p^j)=j+1\le2^j$ and the same classical divisor-growth input
+already used in (SV27). These constants do not grow with the Robin
+source. Here $\delta_{\rm coef}$ is the theorem's polynomial parameter,
+not the interval width $\delta$.
+
+Set the source's lower endpoint to $U$ and its interval length to
+$\Delta=\delta U$. Its range is satisfied when
+$U^{1/4}<\Delta\le U$ and $U$ is sufficiently large.
+For this same single-factor polynomial, the corrected root density
+recorded in the cited note is
+
+$$
+\frac{\breve\rho_Q(a)}{a\kappa(a)}
+=\frac1a\prod_{p\mid a}(1-1/p)\le\frac1a.
+$$
+
+The existing harmonic divisor sum is at most $(1+\log U)^2$.
+[Rosser--Schoenfeld Theorem 8, (3.28)](../Arith/rosser1962approximate.md)
+gives $\prod_{p\le U}(1-1/p)\ll1/\log U$.
+Thus the corrected theorem supplies
+
+$$
+\sum_{U<n\le U(1+\delta)}\tau(n)\ll\delta U\log U,
+\qquad U^{1/4}<\delta U\le U.
+$$
+
+This invokes the existing short-sum theorem; it does not reprove it
+or extend Shiu's literal $0<a<q$ residue statement to $a=q=1$.
+Since $|\lambda(d)|\le1$ gives $|a_R(n)|\le\tau(n)$,
+substitution into the unchanged (SV44) yields
+
+$$
+E_A(y)\ll\delta^2U,
+\qquad U<y\le U(1+\delta),\quad
+0<\delta\le1/2,\quad\delta U>U^{1/4}.
+\tag{SV47}
+$$
+
+The positive terms $1$ and $\sigma_Ay$ are retained in the exact
+response before this upper bound is taken. The theorem includes real
+endpoints; there is no omitted unit error in the inner short sum.
+
+For $k=1,2$, put $P_k=(x/U)^{1/k}$ and
+$a_k=\tfrac34(1-1/k)$, so $a_1=0$, $a_2=3/8$.
+The actual onset primes lie in
+$[P_k(1+\delta)^{-1/k},P_k)$.
+Its integer count is $O_k(\delta P_k+1)$, and each prime has
+$\log p=O(L)$ for $A\le x\le2A$. The unchanged weights
+$0\le w_{N,p,k}\le\log p$ and (SV47) give
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^k\le U(1+\delta)}
+ w_{N,p,k}E_A(x/p^k)
+\ll_k L\delta^3A^{-a_k}+L\delta^2A^{-3/4}.
+\tag{SV48}
+$$
+
+The outer endpoint term is explicit. For both $k=1,2$,
+$p>y=x/p^k$ eventually throughout this strip. Hence the same
+estimate applies exactly to $E_{A,p}^{\rm cop}(y)$ with the full
+local slope and mean. Any original sample or window subset is allowed.
+
+For the original fixed $0<\eta<1/2$, choose
+
+$$
+\delta_{1,A}=A^{-\eta/3}/L.
+\tag{SV49}
+$$
+
+Its inner length is $A^{1/4-\eta/3}/L\gg U^{1/4}$; the exponent
+gap is $3/16-\eta/3>1/48$. Equation (SV48) for $k=1$ becomes
+$O_\eta(A^{-\eta}/L^2)$, since its second term has exponent
+$3/4+2\eta/3>\eta$. Thus this shrinking part of the original prime
+layer, including its entire drifted positive part, is paid at
+$o(A^{-\eta})$ without assuming the missing mean rate.
+The old envelope and the same integer count would give
+$O(\delta_{1,A}/L+A^{-3/4}/L)$, which does not pay this strip.
+Again this compares sufficient upper bounds, not actual lower bounds.
+
+When the original $\eta>3/8$, the square width $\delta_{2,A}$ in
+(SV46) also satisfies the short-sum condition. Equation (SV48)
+gives the same $O_\eta(A^{-\eta}/L^2)$ payment with a simpler
+two-term bound; it is not a second payment of that square strip.
+For $\eta\le3/8$ the existing fixed-width square payment remains
+the applicable reuse.
+
+The square strip can be deleted from the original nonnegative residual
+before applying (SV40)--(SV43). Restricting each of their existing
+sampled absolute-error bounds to the retained samples preserves the
+adaptive comparison at $o(A^{-\eta})$. This uses the bounds on the
+original response; it gives no new polynomial positive part the
+original envelopes or vanishing property. The prime-layer calculation
+concerns its original response and does not import the higher-layer
+adaptive cutoffs into $k=1$.
+
+These are attributed applications of the corrected short-sum and
+prime-product suppliers, without Lean certification or a historical
+originality claim. They control onset strips only. The remaining prime
+and square samples, critical region $y\asymp V$, other finite low layers,
+same-source mean rate, remaining recovery convolutions and complete
+signed Robin tail still require estimates at the original fixed rate.
