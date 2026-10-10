@@ -1,0 +1,85 @@
+name: Native operation observation (temporary)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/ci-native-operation-observation.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnostic:
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      lean: toolchain
+      cache-dependency-path: |
+        tools/tests/StrataLint.Lean.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      command: |
+        python3 -B - <<'PY'
+        import hashlib, json, os, pathlib, subprocess
+
+        def emit(kind, **fields):
+            print('FIB_NATIVE_OPERATION_PROBE ' + json.dumps(dict(kind=kind,
+                qualification_count=0, **fields), separators=(',', ':')), flush=True)
+
+        def git(*args):
+            return subprocess.check_output(['git', *args], text=True).strip()
+
+        emit('commitment', hypothesis_name='pre-target-operation-prefix',
+            hypothesis='If the guarded cold case reaches this native producer before TARGET_LOADED, paired flushed operations and complete request identity expose its last entered coarse operation at the guard.',
+            falsifier='No native producer entry, missing or truncated request identity, no retained operation entry, or TARGET_LOADED before the guard prevents a pre-target unfinished-operation conclusion.',
+            interpretation='An unmatched entry at forced termination is interrupted/unresolved. Observation can perturb timing; no performance, cause, semantic repair or engineering acceptance follows.',
+            disposition='Temporary diagnostic only; close probe without merge.')
+        anchors = ['.github/workflows/ci-unit.yml', '.github/workflows/ci-current.yml',
+            '.github/workflows/ci-native-operation-observation.yml',
+            'tools/Makefile', 'tools/scripts/dotnet-test.sh',
+            'tools/tests/StrataLint.Lean.Tests/Native/CompiledFibIntegrationTests.cs',
+            'tools/lean-inspector/tests/test_auric_fib_compiled.py',
+            'tools/lean-inspector/Inspector.lean',
+            'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean',
+            'tools/lean-inspector/LeanInformationAudit/CompiledMetadata.lean',
+            'tools/lean-inspector/native.py', 'tools/lean-inspector/lakefile.lean',
+            'tools/lean-inspector-reg/lakefile.toml', 'tools/scripts/worktree/lean-cache-run.sh',
+            'tools/StrataLint.Runtime/BoundedProcessRunner.cs',
+            'tools/TestSupport/StrataLint.ProcessTestSupport/TestProcessRunner.cs']
+        emit('checkout', M=git('rev-parse', 'HEAD'), B=git('rev-parse', 'HEAD^1'),
+            H=git('rev-parse', 'HEAD^2'), event_sha=os.environ['GITHUB_SHA'],
+            run_id=os.environ['GITHUB_RUN_ID'], run_attempt=os.environ['GITHUB_RUN_ATTEMPT'],
+            command=['make', '-C', 'tools', 'test',
+                'TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj'],
+            cold_owner='StrataLint.Lean.Tests.CompiledFibIntegrationTests.TypedReportsUseCompiledModuleWithoutNativeExecutable',
+            child_selector=['tools/lean-inspector/tests/test_auric_fib_compiled.py', 'CompiledFibProgramTests'],
+            report_target='Reg.Support.AuricFibCompiledFixture:report',
+            source_sha256={p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in anchors})
+        manifest = pathlib.Path('lake-manifest.json')
+        emit('preparation', runner_os=os.environ.get('RUNNER_OS'), runner_arch=os.environ.get('RUNNER_ARCH'),
+            image_os=os.environ.get('ImageOS'), image_version=os.environ.get('ImageVersion'),
+            lean_pin=pathlib.Path('lean-toolchain').read_text().strip(),
+            dotnet_pin=json.loads(pathlib.Path('global.json').read_text()),
+            dependency_pins=json.loads(manifest.read_text()),
+            manifest_sha256=hashlib.sha256(manifest.read_bytes()).hexdigest(),
+            lean_preparation='ci-unit toolchain only; no Lean build seeds, prewarming or provisioning before the test command',
+            ordering_context='Ordinary unfiltered Lean test project; fixture setup and first report build stay inside the original cold case.',
+            operation_setting='STRATALINT_INSPECTOR_OPERATIONS=1; STRATALINT_INSPECTOR_OPERATION_TARGET=Reg.Support.AuricFibCompiledFixture',
+            retention='Existing child stderr plus phases; C# final diagnostic reads both after its unchanged 300-second guard, without a project/job footer.',
+            initial_paths_exist={p: pathlib.Path(p).exists() for p in [
+                '.lake/build/lean-inspector/producer/bin/reportInspector',
+                '.lake/build/lean-inspector/producer/bin/inputDiscovery',
+                '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegAnalysis/AuricFib/Main.olean',
+                'Reg/Support/AuricFibCompiledSource.lean', 'Reg/Support/AuricFibCompiledFixture.lean']})
+        PY
+        export STRATALINT_INSPECTOR_OPERATIONS=1
+        export STRATALINT_INSPECTOR_OPERATION_TARGET=Reg.Support.AuricFibCompiledFixture
+        export TEST_RESULTS_DIRECTORY="$RUNNER_TEMP/native-operation-trx"
+        make -C tools test TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj

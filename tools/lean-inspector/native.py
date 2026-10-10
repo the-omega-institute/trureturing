@@ -100,6 +100,12 @@ def retain_request(root, executable, arguments, utilities, origin=None):
             inspector_executable_sha256=(origin['inspector_executable_sha256'] if origin
                 else public.digest(executable)),
             lean_toolchain=(Path(root) / 'lean-toolchain').read_text(encoding='utf-8'))
+        operations = (os.environ.get('STRATALINT_INSPECTOR_OPERATIONS') == '1'
+            and os.environ.get('STRATALINT_INSPECTOR_OPERATION_TARGET') in arguments[6::3])
+        if operations:
+            payload['raw_artifacts_source_sha256'] = public.digest(
+                Path(root) / 'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean')
+            payload['native_source_sha256'] = public.digest(Path(__file__))
         # Unique names preserve multiple native calls in one diagnostic directory.
         # Only the phase's request_capture identifies this call; old files alone
         # are not evidence that a later invocation captured or ran a request.
@@ -111,6 +117,13 @@ def retain_request(root, executable, arguments, utilities, origin=None):
             target.write('\n')
         capture = temporary.with_suffix('')
         os.replace(temporary, capture)
+        if operations:
+            # The supervisor retains this channel even if the native child is
+            # killed. A capture filename alone does not retain request content.
+            with Path(phase_path).open('a', encoding='utf-8') as target:
+                target.write(json.dumps(dict(phase='native-request', boundary='identity',
+                    monotonic_ns=time.monotonic_ns(), request_id='sha256:' + public.digest(capture),
+                    request_identity=payload), separators=(',', ':')) + '\n')
         return str(capture)
     except (OSError, UnicodeError, ValueError) as error:
         diagnostic_failure('native request capture', error)
@@ -267,11 +280,16 @@ def inspector_child_output():
                     diagnostic_failure('native child close ' + channel, error)
 
 
-def run_inspector(root, executable, arguments, request_file=None):
+def run_inspector(root, executable, arguments, request_file=None, request_capture=None):
     try:
         command = ['--request-file', str(request_file)] if request_file else arguments
+        binding = {}
+        if (os.environ.get('STRATALINT_INSPECTOR_OPERATIONS') == '1' and request_capture
+                and os.environ.get('STRATALINT_INSPECTOR_OPERATION_TARGET') in arguments[6::3]):
+            binding['env'] = dict(os.environ,
+                STRATALINT_INSPECTOR_OPERATION_REQUEST='sha256:' + public.digest(request_capture))
         with inspector_child_output() as output:
-            subprocess.run([str(executable), *command], cwd=root, check=True, **output)
+            subprocess.run([str(executable), *command], cwd=root, check=True, **output, **binding)
     except subprocess.CalledProcessError as error:
         raise ValueError(f'raw.reader_failed:exit={error.returncode}') from error
 
@@ -314,7 +332,7 @@ def module(root, name, source, utility_path, executable, output, analyzer="", pr
             '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)]
         capture = retain_request(root, executable, arguments, record['utilities'])
         with phase('native-inspect', request_capture=capture):
-            run_inspector(root, executable, arguments)
+            run_inspector(root, executable, arguments, request_capture=capture)
         with phase('native-fib', module=name):
             compiled = public.read_json((directory / 'spool.json').read_bytes())
             for row in compiled['modules']:
@@ -395,7 +413,7 @@ def produce_batch_chunk(requests):
         argument_file.write_text(json.dumps(arguments))
         capture = retain_request(root, executable, arguments, utilities, origin)
         with phase('native-inspect', request_capture=capture):
-            run_inspector(root, executable, arguments, argument_file)
+            run_inspector(root, executable, arguments, argument_file, request_capture=capture)
         declarations = 0
         completed = []
         for row in public.report_rows(directory / 'spool.json', materials.SPOOL_SCHEMA):

@@ -414,44 +414,58 @@ def parseArguments : List String → Except String
       "usage: Inspector.lean --output FILE --material-spool DIR [--utility-input FILE] MODULE SOURCE_PATH SOURCE_SHA256 [...]"
 
 private def withReportWriter (reportOutput materialSpool : System.FilePath)
-    (statementOnly : Bool) (action : MaterialWriter → IO.FS.Handle → IO Unit) : IO Unit := do
+    (statementOnly : Bool) (observation : Option RawArtifacts.OperationObservation)
+    (action : MaterialWriter → IO.FS.Handle → IO Unit) : IO Unit := do
   let localWriter := System.FilePath.mk "tools/lean-inspector/materials.py"
   let writerProgram := if (← localWriter.pathExists) || !statementOnly then
     localWriter.toString else informationMaterialWriterProgram
-  let writer ← IO.Process.spawn {
+  let writer ← RawArtifacts.observeOperation observation "writer-spawn" .anonymous "" fun _ => IO.Process.spawn {
     cmd := "python3", args := #["-I", writerProgram, "stream", materialSpool.toString],
     stdin := .piped, stdout := .piped, stderr := .inherit }
   try
-    IO.FS.withFile reportOutput .write fun out => do
-      out.putStr "{\"modules\": ["
-      action writer out
-      writer.stdin.putStr "done\n"
-      writer.stdin.flush
-      unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do
-        throw <| IO.userError "statement spool writer did not complete"
-      out.putStr "], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\n"
-      out.flush
+    let out ← RawArtifacts.observeOperation observation "report-open" .anonymous ""
+      (fun _ => IO.FS.Handle.mk reportOutput .write) reportOutput.toString
+    RawArtifacts.observeOperation observation "report-prefix" .anonymous ""
+      (fun _ => out.putStr "{\"modules\": [") reportOutput.toString
+    action writer out
+    writer.stdin.putStr "done\n"
+    writer.stdin.flush
+    unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do
+      throw <| IO.userError "statement spool writer did not complete"
+    out.putStr "], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\n"
+    out.flush
   catch error =>
-    try writer.kill catch _ => pure ()
-    try discard <| writer.wait catch _ => pure ()
-    try IO.FS.removeFile reportOutput catch _ => pure ()
+    try RawArtifacts.observeOperation observation "writer-kill" .anonymous "" (fun _ => writer.kill)
+      catch _ => pure ()
+    try discard <| RawArtifacts.observeOperation observation "writer-wait" .anonymous "" (fun _ => writer.wait)
+      catch _ => pure ()
+    try
+      RawArtifacts.observeOperation observation "report-remove" .anonymous ""
+        (fun _ => IO.FS.removeFile reportOutput) reportOutput.toString
+    catch _ => pure ()
     throw error
 
 -- No target store, assessment, expression cache or report row escapes this frame.
 @[noinline] private unsafe def produceTarget (base : RawArtifacts.Store)
     (state : IO.Ref RawArtifacts.Store) (statementOnly profiling : Bool)
     (input : ModuleInput) (utilities : Array UtilityInput)
+    (observation : Option RawArtifacts.OperationObservation)
     (generated : IO.Ref (Std.HashMap Name String))
     (seen : IO.Ref (NameMap Name))
     (writer : MaterialWriter) (out : IO.FS.Handle) (counter : IO.Ref Nat) : IO Unit := do
   state.set base.fork
   let target := input.moduleName.toName
-  RawArtifacts.loadModule target state
-  for utility in utilities do RawArtifacts.loadModule utility.claimModule.toName state
+  RawArtifacts.observeOperation observation "target-load" target "all" fun observation =>
+    RawArtifacts.loadModule target state observation
+  for utility in utilities do
+    RawArtifacts.observeOperation observation "claim-load" utility.claimModule.toName "all" fun observation =>
+      RawArtifacts.loadModule utility.claimModule.toName state observation
   if !statementOnly && RawArtifacts.hasTypedInputs (← (← state.get).getModule target) then
-    RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment state
+    RawArtifacts.observeOperation observation "enrollment-load" `LeanInformationAudit.TemplateEnrollment "all" fun observation =>
+      RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment state observation
   let store ← state.get
-  RawArtifacts.checkBatchConstants base store seen
+  RawArtifacts.observeOperation observation "checkBatchConstants" target "all" fun observation =>
+    RawArtifacts.checkBatchConstants base store seen observation
   if profiling then
     let slots := store.moduleOrder.foldl (fun count owner =>
       if base.modules.contains owner then count else
@@ -500,13 +514,14 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
 private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath)
     (statementOnly : Bool) (inputs : Array ModuleInput) (utilities : Array UtilityInput) : IO Unit := do
   let start ← IO.monoNanosNow
+  let observation ← RawArtifacts.operationObservation (String.intercalate "," (inputs.toList.map (·.moduleName)))
   let targets := inputs.map fun input => (input.moduleName.toName,
     utilities.filter (·.modulePath == input.sourcePath) |>.map (·.claimModule.toName))
   let shared ← RawArtifacts.sharedModules targets statementOnly
   let state ← IO.mkRef ({} : RawArtifacts.Store)
   for name in sortedUnique (inputs.map (·.moduleName) ++ utilities.map (·.claimModule)) do
-    if shared.contains name.toName then RawArtifacts.loadModule name.toName state
-  for name in shared.toArray.qsort Name.quickLt do RawArtifacts.loadModule name state
+    if shared.contains name.toName then RawArtifacts.loadModule name.toName state observation
+  for name in shared.toArray.qsort Name.quickLt do RawArtifacts.loadModule name state observation
   let base ← state.get
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   if profiling then
@@ -515,13 +530,15 @@ private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath
   let generated ← IO.mkRef ({} : Std.HashMap Name String)
   let seen ← IO.mkRef ({} : NameMap Name)
   let targetState ← IO.mkRef ({} : RawArtifacts.Store)
-  withReportWriter reportOutput materialSpool statementOnly fun writer out => do
+  withReportWriter reportOutput materialSpool statementOnly observation fun writer out => do
     for h : index in [:inputs.size] do
       let input := inputs[index]
       let selected := utilities.filter (·.modulePath == input.sourcePath)
       if index > 0 then out.putStr ", "
       try
-        produceTarget base targetState statementOnly profiling input selected generated seen writer out counter
+        let observation := observation.map fun context => { context with target := input.moduleName }
+        RawArtifacts.observeOperation observation "produce-target" input.moduleName.toName "all" fun observation =>
+          produceTarget base targetState statementOnly profiling input selected observation generated seen writer out counter
       finally
         RawArtifacts.release targetState
       if profiling then
