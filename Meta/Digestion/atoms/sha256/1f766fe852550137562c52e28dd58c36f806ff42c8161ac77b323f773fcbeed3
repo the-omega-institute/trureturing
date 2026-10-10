@@ -1,0 +1,17 @@
+\dim V^{(\infty)}
+-
+\dim V_{\mathrm{visible}}
+\]
+
+它给出维持指定未来行为所需的最小独立记忆数。
+
+单窗口时：
+
+\[
+d_{\mathrm{life}}=1
+\]
+
+对应 \(\kappa\)。
+
+更长窗口会产生更多 mixed-cycle、三阶或祖先关系。
+
