@@ -222,6 +222,8 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 Instantiate the exact finite observer on all allowed terminal coarse prefixes.
 
+Strategy-indexed replay, exact terminal runs and admissibility assume a positive source bound and an original strategy policy that factors through kappa_hist. Sourcewise replay and run statements range over the allowed sources at that bound.
+
 **Theorem 1.19 (Strategy prefix cache replay).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_actual_prefix_replay`

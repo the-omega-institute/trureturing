@@ -308,9 +308,10 @@ private theorem exact_actual_prefix_replay {G : Finset CoarseHistory}
       · rw [state]
         change exactRowDecoder r' =
           firstRaw (h ++ [⟨q, queryReply (exactRowDecoder r) q U⟩])
-        rw [reply, row_eq]
-        simp only [rawRow, exactRowDecoder]
-        exact decode_pack _ _ _
+        rw [reply]
+        change exactRowDecoder (exactAppendRow r q (readout q U) member') = _
+        rw [exactTransition_projection, decoder]
+        exact (firstRaw_append_single h ⟨q, readout q U⟩).symm
       · rw [state]
         exact prenext'
 

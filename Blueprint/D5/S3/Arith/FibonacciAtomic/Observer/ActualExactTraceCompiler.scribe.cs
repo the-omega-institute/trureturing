@@ -26,6 +26,7 @@ internal sealed class ActualExactTraceCompilerDocument : IScribeDocumentDefiniti
             Def("exactStateCard", "Exact cardinality expression", "The finite sum of compatible cache fiber cardinalities plus the sink."),
             Def("strategyPolicy", "Coarse strategy policy", "Evaluate the original strategy on the fixed coarse-history representative."),
             Def("strategyObserver", "Strategy-indexed observer", "Instantiate the exact finite observer on all allowed terminal coarse prefixes."),
+            Paragraph(Text("Strategy-indexed replay, exact terminal runs and admissibility assume a positive source bound and an original strategy policy that factors through kappa_hist. Sourcewise replay and run statements range over the allowed sources at that bound.")),
             Theorem("strategy_actual_prefix_replay", "Strategy prefix cache replay", "Actual prefixes of the strategy-indexed observer carry the original full coarse history and first-write raw cache."),
             Def("exactControl", "Coarse control projection", "Forget cache lifts while retaining full logical coarse control or the sink."),
             Theorem("exact_all_history_factorization", "All-history ghost safety", "Equal coarse response histories have equal actions, including contradictory repeats and post-halt reports."),
