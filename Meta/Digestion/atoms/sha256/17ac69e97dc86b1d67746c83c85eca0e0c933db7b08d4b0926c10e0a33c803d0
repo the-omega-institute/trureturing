@@ -1,0 +1,70 @@
+### 第四层：动态和控制商
+
+$$
+\sigma=(\mathrm{phase},A,B)
+$$
+
+用于特定 Fibonacci 深度先验下的完整未来律；
+
+$$
+\tau\in
+\{
+\mathrm{active},
+\mathrm{pending}_0,
+\mathrm{pending}_1,
+\mathrm{delivered}
+\}
+$$
+
+记录边界义务；
+
+$$
+V^\ast
+$$
+
+决定一个被压缩的观测 belief 是否仍然可以被控制在安全域内。
+
+最终得到：
+
+$$
+\boxed{
+\begin{aligned}
+\text{静态可见边缘}&:\quad (X,Y,Z),\\
+\text{静态隐藏关系}&:\quad \kappa,\\
+\text{静态闭包读数}&:\quad W=Z+\kappa,\\
+\text{动态未来状态}&:\quad (\mathrm{phase},A,B),\\
+\text{边界义务}&:\quad \tau,\\
+\text{可维护性判据}&:\quad B\in V^\ast.
+\end{aligned}
+}
+$$
+
+这也给出对“生命是逆衰变”的更严格修正：
+
+$$
+\boxed{
+\text{预测}=
+\text{未来等价商上的函数闭合}
+}
+$$
+
+$$
+\boxed{
+\text{维护}=
+\text{在部分观测下仍存在安全共同动作的可行不动点}
+}
+$$
+
+$$
+\boxed{
+\text{生命的候选数学定义}=
+\text{选择性未来商}
++
+\text{可执行记忆更新}
++
+\text{安全可行控制}
+}
+$$
+
+这还没有证明生命在物理上就是逆衰变，也没有证明引力就是时间引力，更没有证明光就是不可恢复信息。它完成的是更基础的一步：把这些直觉中真正可以数学化的部分，拆成了静态联合关系、动态同余、来源历史和控制可行性四个可以分别验证的对象。
+
