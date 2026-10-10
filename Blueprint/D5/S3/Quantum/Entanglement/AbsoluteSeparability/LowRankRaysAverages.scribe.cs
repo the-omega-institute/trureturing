@@ -13,7 +13,6 @@ internal sealed class LowRankRaysAveragesDocument : IScribeDocumentDefinition
     private static Formula Rank(Formula x) => Call("R", x);
     private static Formula Rho(Formula x) => Call("rho", x);
     private static Formula Sep(Formula x) => Call("separableCone", x);
-    private static Formula Psd(Formula x) => Call("PosSemidef", x);
     private static Formula Pow(Formula x, byte n) => new Formula.Power(x, F.D(n));
     private static Formula All(string n, Formula t, Formula b) =>
         F.Seq(F.Forall, F.Sp, Par(F.Seq(F.Id(n), F.Colon, t)), F.Comma, F.Sp, b);
@@ -38,11 +37,6 @@ internal sealed class LowRankRaysAveragesDocument : IScribeDocumentDefinition
                 F.Seq(Rho(F.Id("eta")), F.Eq, new Formula.Subscript(F.Sum, F.Seq(F.Id("i"), F.InMacro, F.Sp, Fin(M))),
                     F.Sp, Rank(Call("row", F.Id("eta"), F.Id("i"))))),
                 "Each row is a vector on Fin n. This is the matrix used in both product-vector averages.", DescribeRole.Definition),
-            Node("separable_kronecker", "A positive product belongs to the separable cone",
-                Dims(All("A", Mat(Fin(M)), All("B", Mat(Fin(N)),
-                    F.Seq(And(Psd(F.Id("A")), Psd(F.Id("B"))), F.Rightarrow, F.Sp,
-                        Sep(Kron(F.Id("A"), F.Id("B"))))))),
-                "The cone includes every Kronecker product of two positive semidefinite factors. Finite sums and nonnegative real scalings preserve it.", DescribeRole.Lemma),
             Node("separable_rankOne_add_reduced", "The row-contraction average", Dimensional("eta",
                 Sep(Add(Rank(F.Id("eta")), Kron(F.Id("I"), Rho(F.Id("eta")))))),
                 "Put y_eta(g) = sum_i conjugate(g_i) row_i(eta). The fourth moments give E R_(g tensor y_eta(g)) = R_eta + I tensor rho_eta. Every vector in this finite average is a product vector, so the matrix belongs to the separable cone.", DescribeRole.Theorem),
