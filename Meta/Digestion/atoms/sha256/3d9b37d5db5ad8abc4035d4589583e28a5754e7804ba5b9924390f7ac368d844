@@ -1,0 +1,21 @@
+## 八、谱闭包：隐藏关系不是只有统计意义，也能进入矩阵谱
+
+项目中定义：
+
+\[
+C(p)=
+\begin{pmatrix}
+1&X&Y\\
+X&1&Z+\kappa\\
+Y&Z+\kappa&1
+\end{pmatrix}
+\]
+
+并定义二阶谱量：
+
+\[
+M_2=\operatorname{tr}(C^2)
+\]
+
+展开得：
+

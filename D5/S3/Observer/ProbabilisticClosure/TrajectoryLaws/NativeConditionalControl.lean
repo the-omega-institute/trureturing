@@ -99,12 +99,12 @@ instance joint_probability (μ : PMF Depth) : IsProbabilityMeasure (jointLaw μ)
 def nativeEvent (h : List Operation) (c : AcquiredNativeState) : Set (Depth × Stream) :=
   {z | nativeDrive initial z.2 h.length = some (h,c,(readLetters h).length)}
 
-private theorem event_eq (h : List Operation) (c : AcquiredNativeState) (hc : run h = some c) :
+theorem event_eq (h : List Operation) (c : AcquiredNativeState) (hc : run h = some c) :
     nativeEvent h c = Prod.snd ⁻¹' prefixCylinder (readLetters h) := by
   ext z
   exact (native_acquired_prefix_cylinder h c z.2 _).trans (by simp [hc, prefixCylinder])
 
-private theorem event_measurable (h : List Operation) (c : AcquiredNativeState) :
+theorem event_measurable (h : List Operation) (c : AcquiredNativeState) :
     MeasurableSet (nativeEvent h c) := by
   by_cases hc : run h = some c
   · rw [event_eq h c hc]
@@ -117,7 +117,7 @@ private theorem event_measurable (h : List Operation) (c : AcquiredNativeState) 
 def likelihood (h : List Operation) (k : Depth) : ℝ≥0∞ := wordMass (rate k) (readLetters h)
 def normalizer (μ : PMF Depth) (h : List Operation) : ℝ≥0∞ := ∑' k, μ k * likelihood h k
 
-private theorem history_mass (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState)
+theorem history_mass (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState)
     (hc : run h = some c) : jointLaw μ (nativeEvent h c) = normalizer μ h := by
   rw [event_eq h c hc]
   simp only [jointLaw, Measure.sum_apply_of_countable, Measure.smul_apply, smul_eq_mul]
@@ -136,7 +136,7 @@ private theorem likelihood_pos (h : List Operation) (k : Depth) : 0 < likelihood
     change 0 < 1 - (rate k : ℝ)
     exact sub_pos.mpr (ratio_interior k).2
 
-private theorem normalizer_bounds (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState)
+theorem normalizer_bounds (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState)
     (hc : run h = some c) : 0 < normalizer μ h ∧ normalizer μ h ≤ 1 := by
   constructor
   · obtain ⟨k,hk⟩ := μ.support_nonempty
@@ -181,7 +181,7 @@ open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws
 open FourthSegmentStoppedLaw NativeAcquiredPrefixState NativeAcquiredPrefixCylinder
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeConditionalControl.DepthLaw
 
-private theorem prefix_tail_factorization (r : unitInterval) (w : List Letter) (s : Set Stream)
+theorem prefix_tail_factorization (r : unitInterval) (w : List Letter) (s : Set Stream)
     (hs : MeasurableSet s) :
     rawReadLaw r (prefixCylinder w ∩ (fun ω => rawTail ω w.length) ⁻¹' s) =
       wordMass r w * rawReadLaw r s := by

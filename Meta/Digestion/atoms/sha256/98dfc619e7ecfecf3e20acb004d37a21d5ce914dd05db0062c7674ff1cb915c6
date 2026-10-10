@@ -1,0 +1,48 @@
+### 第六层：actual return variation
+
+PR #15020 定义了实际 return variation：
+
+$$
+\mathcal V_h(M)=
+\sum_{x,y,x'}
+\rho_h(x)B_{xy}A_{yx'}
+|u_x-u_{x'}|,
+$$
+
+$$
+\mathcal V(M)=\sup_h\mathcal V_h(M).
+$$
+
+并证明风险和 return variation 满足
+
+$$
+\frac{61}{11}e(M)
++
+\frac{19}{11}\sqrt{\mathcal V(M)}
+>
+\frac{\eta}{400000}.
+$$
+
+如果
+
+$$
+e(M)\to0,
+$$
+
+则必有
+
+$$
+\liminf\mathcal V(M)
+\ge
+\left(
+\frac{11\eta}{7600000}
+\right)^2.
+$$
+
+其对 FIB 动力学的启发是：
+
+> 当未来预测精度不断提高时，系统不能简单地把所有发射律压成一个静态常数；实际 return 上仍然必须保留某种状态变化。
+
+因此，$\kappa$ 的未来意义不能只理解为“静态遗漏的一个数字”。在动态模型里，它可能表现为：
+
+- 不同输出支路的条件化差异；

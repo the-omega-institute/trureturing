@@ -208,6 +208,29 @@ partial def replaceAt (e : Expr) (path : List String) (value : Expr) : M Expr :=
   | "arg" :: rest, .app f a => return .app f (← replaceAt a rest value)
   | _, _ => fail "unclassified_form:source.state_operand_path"
 
+/-- Rebuild one admitted source occurrence in its original lexical context.
+The replacement already uses that context's de Bruijn coordinates; surrounding
+binders and untouched fields retain their raw syntax without shifting. -/
+partial def replaceSourceAt (e : Expr) (path : List String) (value : Expr)
+    (depth : Nat := 0) : M Expr := do
+  debit
+  if depth > 256 then fail "incomplete_closure:E8.source_path"
+  let child := fun e rest => replaceSourceAt e rest value (depth + 1)
+  match path, e with
+  | [], _ => return value
+  | "fn" :: rest, .app f a => return .app (← child f rest) a
+  | "arg" :: rest, .app f a => return .app f (← child a rest)
+  | "domain" :: rest, .forallE n d b bi => return .forallE n (← child d rest) b bi
+  | "body" :: rest, .forallE n d b bi => return .forallE n d (← child b rest) bi
+  | "domain" :: rest, .lam n d b bi => return .lam n (← child d rest) b bi
+  | "body" :: rest, .lam n d b bi => return .lam n d (← child b rest) bi
+  | "type" :: rest, .letE n t v b nd => return .letE n (← child t rest) v b nd
+  | "value" :: rest, .letE n t v b nd => return .letE n t (← child v rest) b nd
+  | "body" :: rest, .letE n t v b nd => return .letE n t v (← child b rest) nd
+  | "body" :: rest, .proj n i b => return .proj n i (← child b rest)
+  | "body" :: rest, .mdata m b => return .mdata m (← child b rest)
+  | _, _ => fail "unclassified_form:source.absent_occurrence"
+
 partial def inContext (context : Array SourceBinder) (k : Array Expr → M α)
     (i : Nat := 0) (locals : Array Expr := #[]) : M α := do
   debit
@@ -405,7 +428,7 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
         let term := observation.instantiateRev locals
         unless ← isProp term do fail "unclassified_form:source.boolean_predicate"
         return (← mkEq (← mkDecide term) (mkConst ``Bool.true)).abstract locals
-      reconstructedSource ← replaceAt reconstructedSource selected.path.toList reified
+      reconstructedSource ← replaceSourceAt reconstructedSource selected.path.toList reified
   return {
     source := info.type
     expanded := reconstructedSource

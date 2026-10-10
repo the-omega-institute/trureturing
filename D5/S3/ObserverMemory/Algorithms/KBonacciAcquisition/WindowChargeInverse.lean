@@ -170,7 +170,7 @@ theorem short_legal (k m : ℕ) (hk : 2 ≤ k) (hshort : m < k)
   obtain ⟨a, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : k ≠ 0)
   exact runAdmissible_eq_true_of_length_le a a m w (by omega) le_rfl
 
-private theorem last_false_tail : ∀ (n : ℕ) (w : Fin (n + 1) → Bool) (s : ℕ),
+theorem last_false_tail : ∀ (n : ℕ) (w : Fin (n + 1) → Bool) (s : ℕ),
     w (Fin.last n) = false → tailAfter s w = 0 := by
   intro n
   induction n with

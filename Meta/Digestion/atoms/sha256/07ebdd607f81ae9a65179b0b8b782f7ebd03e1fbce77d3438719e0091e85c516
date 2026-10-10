@@ -1,0 +1,73 @@
+### theorem 13.1: 定理 1：三均值商的唯一隐藏方向
+
+令
+
+$$
+\mathcal B=\operatorname{span}\{1,x,y,z\}.
+$$
+
+则：
+
+1. $\dim\mathcal B=4$；
+2. $\mathcal B^\perp=\operatorname{span}\{d\}$；
+3. 对任意 $f:S\to\mathbb R$，定义
+
+   $$
+   J_f=
+   f(F[1,3])
+   -
+   f(F[1])
+   -
+   f(F[3])
+   +
+   f(F[\mathrm{null}]).
+   $$
+
+   则
+
+   $$
+   \mathbb E_{p_{\kappa+t}}[f]=
+   \mathbb E_{p_\kappa}[f]
+   +
+   tJ_f.
+   $$
+
+4. 因而
+
+   $$
+   f\in\mathcal B
+   \quad\Longleftrightarrow\quad
+   J_f=0.
+   $$
+
+#### 证明
+
+任意 $f\in\mathbb R^S$ 的期望在沿 $d$ 移动时满足
+
+$$
+\mathbb E_{p_{\kappa+t}}[f]=
+(p_\kappa+t d)\cdot f=
+p_\kappa\cdot f+t(d\cdot f).
+$$
+
+而
+
+$$
+d\cdot f=
+f(F[\mathrm{null}])
+-f(F[1])
+-f(F[3])
++f(F[1,3])=
+J_f.
+$$
+
+所以 $J_f=0$ 当且仅当 $f$ 对隐藏方向 $d$ 不敏感。由于 $\mathcal B$ 是四维，而 $d$ 给出唯一一维正交方向，因此
+
+$$
+\ker J=\mathcal B.
+$$
+
+证毕。
+
+---
+

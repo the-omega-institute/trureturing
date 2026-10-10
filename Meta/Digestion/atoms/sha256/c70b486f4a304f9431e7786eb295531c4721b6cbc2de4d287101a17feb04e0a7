@@ -1,0 +1,3 @@
+## Append-only anchor
+
+This anchor closes the current reference edition. Later additions must begin after this heading and must use a new heading before the next anchor; existing source bytes above are not rewritten.
