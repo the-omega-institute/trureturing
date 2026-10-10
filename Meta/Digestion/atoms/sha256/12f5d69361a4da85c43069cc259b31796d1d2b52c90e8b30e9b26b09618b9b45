@@ -1,0 +1,44 @@
+### II.11 — 十一、AURIC FIB-ATOM 中的光应该定义成“边界传输算子”
+
+
+特别要注意：
+
+$$
+[\mathrm{null}]
+\neq
+\text{物理上的光或零传播}.
+$$
+
+
+在 FIB 项目中，$\mathrm{null}$ 只是空窗口选择。它仍然可能执行原生的三步组成更新，因此不是一个物理上的“什么都没有”。
+
+因此，光应该定义成一个独立的边界传输算子：
+
+$$
+\mathcal L:
+(\sigma,h,\kappa,\Delta)
+\longrightarrow
+\mathcal R_{\partial}.
+$$
+
+
+它至少包含三个部分：
+
+1. 路径传播；
+2. 边界记录；
+3. 内部关系是否仍然可恢复。
+
+可以写成：
+
+$$
+\mathcal L
+=
+(\mathcal P_{\mathrm{causal}},
+\mathcal R_{\partial},
+\mathcal Q_{\mathrm{recover}}).
+$$
+
+
+其中：
+
+- $\mathcal P_{\mathrm{causal}}$：光能否沿该边到达；
