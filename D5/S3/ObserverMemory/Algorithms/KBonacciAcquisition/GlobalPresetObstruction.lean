@@ -103,14 +103,14 @@ private theorem even_mask_normal_form {P : Type*} [Fintype P]
     have c0 : coeff 0 = sigma := by simpa only [one, one_mul] using coefficientEq
     rw [form, one, c0, one_mul, add_comm]
 
-private theorem native_zero {Y : Type u} {k m : ℕ}
+theorem native_zero {Y : Type u} {k m : ℕ}
     (π : NarrowWindowCost.Selector m Y) (q : Option (LiveRecord k))
     (y : Option (ZMod 2)) (archive : NarrowWindowCost.Archive m) :
     NativeExecute π 0 q y archive = match π y archive with
       | .inl z => some (z, 0)
       | .inr _ => none := by rfl
 
-private theorem native_succ {Y : Type u} {k m d : ℕ}
+theorem native_succ {Y : Type u} {k m d : ℕ}
     (π : NarrowWindowCost.Selector m Y) (q : Option (LiveRecord k))
     (y : Option (ZMod 2)) (archive : NarrowWindowCost.Archive m) :
     NativeExecute π (d + 1) q y archive = match π y archive with
@@ -133,7 +133,7 @@ private theorem two_even_masks {P : Type*} [Fintype P]
   · exact Or.inr (Or.inl zero)
   exact Or.inr (Or.inr (form₀.trans form₁.symm))
 
-private theorem native_two_same {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
+theorem native_two_same {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
     (stream : ℕ → Fin m → Bool)
     (stop : Option (ZMod 2) → NarrowWindowCost.Archive m → Option Y)
     (v : ZMod 2) (p q : ZMod (k + 1)) (s : ℕ) (hs : s < k)
@@ -190,7 +190,7 @@ private theorem native_correct {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (hm : 1 �
     (endpointReading (OriginalRecord k (by omega) _)) [] = _ at success
   simpa only [record] using success
 
-private theorem charge_even (k m : ℕ) (hk : 2 ≤ k)
+theorem charge_even (k m : ℕ) (hk : 2 ≤ k)
     (shift : ZMod (k + 1)) (word : Fin m → Bool) :
     (∑ j : ZMod (k + 1), wordIncrement k (-j + shift) word) = 0 := by
   classical
@@ -219,7 +219,7 @@ private theorem charge_even (k m : ℕ) (hk : 2 ≤ k)
     exact (e.sum_comp (coefficient k)).trans total
   · simp [selected]
 
-private theorem second_charge_blind (m : ℕ) (hm : 5 ≤ m)
+theorem second_charge_blind (m : ℕ) (hm : 5 ≤ m)
     (word : Fin m → Bool) (j : ZMod (2 * m - 2 + 1))
     (lo : 2 ≤ j.val) (hi : j.val < m) :
     wordIncrement (2 * m - 2) (-j + (m : ℕ)) word = 0 := by

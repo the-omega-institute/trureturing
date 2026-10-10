@@ -38,7 +38,7 @@ private def baseObserver : Observer FiniteFields where
     change z' = (finiteStep z op).getD z at he
     simpa only [hf, Option.getD_some, id_eq] using he
 
-private def liftedBase : Complete.{u} :=
+def liftedBase : Complete.{u} :=
   ⟨ULift.{u} FiniteFields, inferInstance, ⊤, ⟨fun _ => trivial⟩, {
     project := ULift.down,
     init := (baseObserver.init).map ULift.up,

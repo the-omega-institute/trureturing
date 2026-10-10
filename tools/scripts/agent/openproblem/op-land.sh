@@ -23,7 +23,7 @@ bash "$(dirname "$0")/op-require-base.sh" "$WT" "${OP_BASE_GIT:-$HOME/Desktop/om
   || { echo "LAND_ABORT_FOREIGN_CLONE"; exit 7; }
 
 PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
-REPORT=".lake/build/stratalint/raw-lean-report.json"
+REPORT=".lake/build/stratalint/scoped-lean-report.json"
 STATE="Golden/Frozen/state/$MOD.lean.json"
 
 echo "LAND_START=$(date +%T) HEAD0=$(git rev-parse --short HEAD) BRANCH=$(git rev-parse --abbrev-ref HEAD)"
@@ -34,7 +34,7 @@ git merge-base --is-ancestor origin/dev HEAD \
   && echo "BASE_IS_ANCESTOR=yes" \
   || { echo "BASE_IS_ANCESTOR=no"; exit 4; }
 
-make lean-report > /tmp/op-land-report-$$.log 2>&1
+make lean-report-scoped "LEAN_TARGETS=${MOD//\//.}" > /tmp/op-land-report-$$.log 2>&1
 echo "LEAN_REPORT_EXIT=$?"
 ls -la "$REPORT" | cut -c1-120
 

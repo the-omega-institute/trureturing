@@ -942,3 +942,1321 @@ bound at the original $\eta$ rate has been supplied for it.
 The remaining bands, mean requirement, low prime-power layers,
 prime layer $k=1$, recovery terms and complete signed tail (SV4)
 remain unpaid; the original source and target are unchanged.
+
+## Exact-integer sample corrections are paid by a classical divisor bound
+
+Keep the actual normalized weights, so $|\lambda(d)|,|\theta'(d)|\le1$.
+For a positive integer $m$, the LCM definition gives the jump coefficient
+
+$$
+J_A(m):=\sum_{\ell\mid m}h(\ell)
+=\left(\sum_{d\mid m}\lambda(d)\right)
+ \left(\sum_{e\mid m}\theta'(e)\right),
+\qquad |J_A(m)|\le\tau(m)^2.
+\tag{SV17}
+$$
+
+Here $\tau$ is the ordinary divisor-count function. Put $J_A(y)=0$
+for positive noninteger $y$. Use the symmetric sawtooth representative
+$b_{\rm sym}(t)=b(t)+\tfrac12\mathbf1_{\mathbb Z}(t)$, with value zero
+at integers, and define $g_{{\rm sym},A}(y)=\sum_\ell h(\ell)b_{\rm sym}(y/\ell)$.
+For $y>0$, $g_{{\rm sym},A}(y)=g_A(y)+\tfrac12J_A(y)$. For
+$E_{{\rm sym},A}(y)=[c_A+g_{{\rm sym},A}(y)-y(S_A)_+]_+$,
+the positive part's Lipschitz property gives
+
+$$
+|E_A(y)-E_{{\rm sym},A}(y)|\le\tfrac12|J_A(y)|.
+\tag{SV18}
+$$
+
+The same finite Vaaler polynomial $P_J$ approximates $b_{\rm sym}$
+with nonnegative majorant $D_J-\tfrac12\mathbf1_{\mathbb Z}$:
+off the integers the original estimate applies; at integers both
+$b_{\rm sym}$ and $P_J$ are zero and $D_J=1/2$.
+Thus a midpoint Fourier convention can be used only with the explicit
+correction (SV18) when returning to the original response.
+
+For every prime-power layer, including $k=1$, the global own-price
+comparison gives $0\le w_{N,p,k}\le\log p$. Define its full endpoint cost
+
+$$
+C_N(x):=\frac1{2x}\sum_{\substack{p^k\le x\\k\ge1}}
+ w_{N,p,k}|J_A(x/p^k)|.
+$$
+
+If $x$ is noninteger this cost is zero. If $x=M$ is a positive integer,
+only $p^k\mid M$ contribute. Since $\tau(M/p^k)\le\tau(M)$ and
+$\sum_{p^k\mid M}\log p=\log M$, (SV17) gives
+
+$$
+C_N(M)\le\frac{\tau(M)^2\log M}{2M}.
+\tag{SV19}
+$$
+
+Directly reuse [Nicolas's divisor-count maximizing
+reference](nicolas1971repartition.md#objective-and-arbitrary-integer-decomposition),
+printed p.117, equations (6)–(8), with fixed exponent $\nu=1/8$.
+Its reference $Q_\nu$ maximizes $\tau(m)m^{-\nu}$ over all positive
+integers, and therefore
+
+$$
+\tau(m)\le\tau(Q_\nu)Q_\nu^{-\nu}m^\nu,
+\qquad
+\sup_{A\le x\le2A}C_N(x)
+\ll A^{-3/4}\log A=o(A^{-\eta})
+\quad(0<\eta<1/2).
+\tag{SV20}
+$$
+
+The constant is independent of the selected $N$ and $A$; $Q_\nu$ is a
+fixed divisor-count reference, distinct from the actual CA integer $N$
+and its varying price $\epsilon$. This pays the exact-integer
+representative correction for all layers in the original local sampling
+budget. It is a classical application, not a new divisor estimate or a
+Lean-certified result. It controls neither near-jump errors nor the
+signed-error/negative-margin coupling, mean, low-layer residuals, general
+prime-layer cost, recovery terms or complete signed Robin tail.
+
+## A common large truncation pays the higher-power approximation error
+
+Keep the original sawtooth representative and actual coefficients. Put
+$M_J=J+1$ and retain every layer in
+
+$$
+\mathcal T^{(\ge2)}_{N,J}(x)
+=\frac1x\sum_{\substack{p,\ k\ge2\\p^k<x/U}}
+ w_{N,p,k}\sum_{\ell\le V}|h(\ell)|D_J(x/(p^k\ell)).
+$$
+
+For each fixed auxiliary $0<\nu<1$, the existing Nicolas reference at
+exponent $\nu/4$ gives $\tau(n)^2\log n\ll_\nu n^\nu$.
+The actual weights and the LCM definition therefore give the aggregate
+mass at any positive integer jump $n$:
+
+$$
+\begin{aligned}
+\sum_{\substack{p,\ k\ge2,\ \ell\\p^k\ell\mid n}}
+ w_{N,p,k}|h(\ell)|
+&\le\tau(n)^2
+ \sum_{\substack{p,\ k\ge2\\p^k\mid n}}\log p\\
+&\le\tau(n)^2\log n\ll_\nu n^\nu.
+\end{aligned}
+\tag{SV21}
+$$
+
+Indeed $\sum_{\ell\mid n}|h(\ell)|\le\tau(n)^2$ follows by taking
+absolute values before the LCM sum, using $|\lambda|,|\theta'|\le1$.
+The divisor-growth input is reused, rather than reproved.
+
+The Fejér formula gives
+$D_J(t)\le\min(1/2,(8M_J^2\|t\|^2)^{-1})$, with its original value
+$1/2$ at integers. For $q=p^k\ell\le2x$, assign the summand to
+$n=q\lfloor x/q+1/2\rfloor$. Then $1\le n\le2x$, $q\mid n$ and
+$\|x/q\|=|x-n|/q$. Consequently
+
+$$
+D_J(x/q)\le\tfrac12
+ \min\left(1,\frac{(x/M_J)^2}{|x-n|^2}\right).
+\tag{SV22}
+$$
+
+At $x=n$ the minimum means one. For every real $x$ and $a>0$,
+$\sum_{n\in\mathbb Z}\min(1,a^2/|x-n|^2)\ll1+a$: retain the
+nearest integers, count those within distance $a$, and sum the
+square-reciprocal tail. Grouping (SV22) by $n$ and using (SV21) thus
+bounds all $q\le2x$ contributions, uniformly for $A\le x\le2A$, by
+$O_\nu(A^\nu(A^{-1}+M_J^{-1}))$.
+
+For $q>2x$, use $D_J(x/q)\le q^2/(8M_J^2x^2)$. No part of the
+support $\ell>x/p^k$ is discarded. The existing
+$\Gamma_2(z)\ll\sqrt z$ and $B_1\le B_A\ll V/L^2$ give
+
+$$
+\begin{aligned}
+\mathcal T_{q>2x}
+&\le\frac{B_AV^2}{8M_J^2x^3}
+ \left(\frac xU\right)^2\Gamma_2(x/U)\\
+&\ll\frac{A^{3/8}}{M_J^2L^2}.
+\end{aligned}
+\tag{SV23}
+$$
+
+Together these bounds yield the actual, all-layer sampling estimate
+
+$$
+\sup_{A\le x\le2A}\mathcal T^{(\ge2)}_{N,J}(x)
+\ll_\nu A^\nu(A^{-1}+M_J^{-1})
+ +\frac{A^{3/8}}{M_J^2L^2}.
+\tag{SV24}
+$$
+
+Choose the same $J=\lceil V\rceil$ for every sample and layer. With
+$\nu=(1/2-\eta)/2$, the original fixed $0<\eta<1/2$ is unchanged and
+
+$$
+\sup_{A\le x\le2A}\mathcal T^{(\ge2)}_{N,J}(x)
+\ll_\nu A^{-1/2+\nu}+A^{-5/8}L^{-2}
+=o(A^{-\eta}/L).
+\tag{SV25}
+$$
+
+This estimates the full real-variable envelope directly at a larger
+$J$. It leaves (SV15) intact and does not bound the two Fourier
+upper-budget terms in (SV16) separately.
+
+To return to the original response, retain all frequency bands jointly:
+$Z_{{\rm all},J}(y)=c_A+g_{A,J}(y)-y(S_A)_+$.
+Then $|E_A(y)-[Z_{{\rm all},J}(y)]_+|\le r_{A,J}(y)$.
+Let $\mathcal R^{\rm poly}_{N,\eta,J}$ be the residual (SV10) with
+$E_A$ replaced by $[Z_{{\rm all},J}]_+$, restricted to the same active
+samples $p^k<x/U$ and $2\le k<m_\eta$. Since $E_A(y)=0$ for $y\le U$,
+(SV25) and the Lipschitz property give
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm poly}_{N,\eta,J}|
+=o(A^{-\eta}/L),\qquad J=\lceil V\rceil.
+\tag{SV26}
+$$
+
+Likewise the positive signed error exceeding the negative margin is
+bounded by $r_{A,J}$, so its higher-power sampled cost is paid by
+(SV25). The remaining polynomial positive part is not bounded by
+this argument. The constants, drift and lowest frequency band must
+still be estimated jointly. This is an application of existing
+Fejér, divisor-growth and prime-power inputs, without a claim of
+original number theory or Lean certification. The mean, general
+prime layer, recovery terms and complete signed Robin tail remain open.
+
+## A classical high-harmonic supplier on critical rectangular blocks
+
+Directly reuse [Liu–Wu–Yang, Proposition 3.1, equation
+(3.2)](liuwuyang2021variant.md), retaining all four terms of that
+published estimate. Write $e(t)=e^{2\pi it}$ and, for an actual rectangle
+$P<p\le2P$, $D<\ell\le2D$, $H<j\le2H$, put $Y=x/P^k$ and
+
+$$
+B_{D,H,J}(y)=\sum_{D<\ell\le2D}h(\ell)
+ \sum_{\substack{H<j\le2H\\j\le J}}
+ \widehat P_J(j)e(jy/\ell).
+$$
+
+Here $P,D,H\ge1$, $k\ge2$ is fixed, $A\le x\le2A$ and
+$H\le J=\lceil V\rceil$. Set the source parameters to
+
+$$
+(\alpha,\beta,\gamma,\delta)=(1,k,1,0),\qquad
+(M_{\rm src},N_{\rm src},X_{\rm src})=(P,D,HY/D).
+$$
+
+Its remaining hypothesis is $H\le P^{k-1}D$. The actual prime and
+active-sample indicators, $w_{N,p,k}$, $H\widehat P_J(j)$ and any
+test values $|u_p|\le1$ enter $a_{j,p}$; $h(\ell)$ enters $b_\ell$.
+Normalize the coefficients using $w\le\log(2P)$,
+$|\widehat P_J(j)|\ll H^{-1}$ and
+$|h(\ell)|\le\tau(\ell)^2$. The existing Nicolas input absorbs this
+divisor factor into an arbitrarily small fixed power of $A$.
+The source theorem is uniform in these coefficients, so choosing
+$u_p$ as the complex sign of the actual block sum gives
+
+$$
+\begin{aligned}
+\frac1x\sum_{\substack{P<p\le2P\\p^k<x/U}}
+ w_{N,p,k}|B_{D,H,J}(x/p^k)|
+\ll_{k,\nu}\frac{A^\nu}{x}\bigg[&
+ \sqrt{xP^{1-k}}+D\sqrt{P/H}\\
+ &+P\sqrt D+PD\sqrt{D/(HY)}\bigg].
+\end{aligned}
+\tag{SV27}
+$$
+
+The source $X_{\rm src}^{\varepsilon}$, coefficient logarithms and
+dyadic summation losses are absorbed by choosing smaller auxiliary
+exponents before the prescribed $\nu>0$. No independence of the
+test values from the actual coefficients is required. The same bound
+handles conjugate frequencies and actual positive-part indicators.
+
+On $D\asymp Y\asymp V$, $P\asymp A^{1/(2k)}$, (SV27) reduces to
+
+$$
+\ll_{k,\nu} A^\nu
+ \left(A^{-3/4+1/(2k)}+A^{-\gamma_k}H^{-1/2}\right),
+\qquad \gamma_k=\frac{k-1}{2k}.
+\tag{SV28}
+$$
+
+For an unpaid fixed layer $2\le k<m_\eta$, choose a fixed $d>0$
+small enough that $2(\eta-\gamma_k)+d<1/2$, and set
+$H_0=A^{2(\eta-\gamma_k)+d}$. Taking
+$0<\nu<\min(d/2,3/4-1/(2k)-\eta)$ pays the dyadic blocks
+$H\ge H_0$ in this critical region to $o(A^{-\eta})$.
+The source condition holds throughout these blocks for large $A$,
+since $J\asymp A^{1/2}$ and $P^{k-1}D\asymp A^{1-1/(2k)}$.
+
+This supplies only the indicated high harmonics on critical
+rectangles. Low harmonics, other rectangles, the joint drifted
+positive part and the complete original budget remain unestimated.
+It is a direct application of an existing exponential-sum theorem,
+not a new prime-distribution result or an identification of its
+frequencies with FIB composition rotations.
+
+## The same approximation budget includes the prime layer at a larger cutoff
+
+Let $\mathcal T^{(\ge1)}_{N,J}$ be the full-support sampling envelope
+defined above with $k\ge1$, retaining the active condition $p^k<x/U$.
+The grouping in (SV21)–(SV22) applies unchanged: with all layers,
+$\sum_{p^k\mid n,\,k\ge1}\log p=\log n$, so the mass at each positive
+integer jump is still at most $\tau(n)^2\log n\ll_\nu n^\nu$.
+For $q>2x$, directly reuse the existing classical bound $\psi(z)\ll z$
+in place of $\Gamma_2(z)\ll\sqrt z$ in (SV23). This bounds the full far
+support by
+$B_AV^2/(M_J^2U^3)\ll A^{3/4}/(M_J^2L^2)$.
+Consequently
+
+$$
+\begin{aligned}
+\sup_{A\le x\le2A}\mathcal T^{(\ge1)}_{N,J}(x)
+&\ll_\nu A^\nu(A^{-1}+M_J^{-1})
+ +\frac{A^{3/4}}{M_J^2L^2},\\
+\sup_{A\le x\le2A}\mathcal T^{(\ge1)}_{N,J_1}(x)
+&\ll_\nu A^{-1+\nu}+A^{-5/4}L^{-2}
+ =o(A^{-\eta}/L),\\
+J_1&=\lceil A\rceil,\qquad \nu=(1-\eta)/2,
+\qquad 0<\eta<1/2.
+\end{aligned}
+\tag{SV29}
+$$
+
+This is a corollary of the same classical suppliers and jump grouping,
+with the original coefficients, representative, source and $\eta$.
+It pays the prime-layer approximation error as well. The prime-layer
+polynomial positive part is not bounded by (SV29).
+
+For the higher-power residual, keep $J_0=\lceil V\rceil$. At each
+actual sample the two polynomial positive parts differ by at most
+$r_{A,J_0}+r_{A,J_1}$. Summing over the same active samples and using
+(SV25) and (SV29) gives
+$|\mathcal R^{\rm poly}_{N,\eta,J_1}
+-\mathcal R^{\rm poly}_{N,\eta,J_0}|=o(A^{-\eta}/L)$.
+Thus the existing $J_0$ high-harmonic supplier remains usable for this
+residual. No application of Liu–Wu–Yang to the extra $J_1$ harmonics is
+asserted. The mean, joint polynomial positive parts, other recovery terms
+and complete signed Robin tail remain unpaid. This application has no
+Lean certification and makes no claim of original number theory.
+
+## Exact local-support recombination pays high harmonics on all rectangles
+
+Keep the original actual source, fixed $\eta$, integer representative and
+full mean $\sigma_A=(S_A)_-$. The finite floor response gives
+$E_A(y)=[-H_A(y)-\sigma_Ay]_+$. Put
+
+$$
+c_A(y)=\tfrac12\sum_{\ell\le y}h(\ell),\qquad
+s_A(y)=\sum_{\ell\le y}\frac{h(\ell)}\ell,\qquad
+g_{{\rm loc},J}(y)=\sum_{\ell\le y}h(\ell)P_J(y/\ell),
+$$
+
+where $h$ still has its original support $\ell\le V$. Then
+
+$$
+\begin{aligned}
+Z_{{\rm loc},J}(y)
+&=c_A(y)+g_{{\rm loc},J}(y)-y(s_A(y)+\sigma_A),\\
+|E_A(y)-[Z_{{\rm loc},J}(y)]_+|
+&\le\sum_{\ell\le y}|h(\ell)|D_J(y/\ell)
+\le r_{A,J}(y).
+\end{aligned}
+\tag{SV30}
+$$
+
+This is exact recombination of the original floor sum: its terms with
+$\ell>y$ are zero. Their fractional-part contributions in the earlier
+full-support expression are combined with its full linear term, rather
+than discarded. The full $\sigma_A$ remains in (SV30); it is not replaced
+by the negative part of $s_A(y)$. The common $J_0=\lceil V\rceil$
+approximation cost is already paid by (SV25).
+
+Apply the existing four-term supplier (SV27) on dyadic blocks, now keeping
+$\ell\le y_p=x/p^k$ inside each block. This moving prefix can be handled
+by standard finite Fourier completion. For an integer dyadic $D\ge1$,
+write $Q=2D$ and $b_p=\max(0,\min(D,\lfloor y_p\rfloor-D))$. On
+$v=\ell-D\in\{1,\ldots,D\}$ the exact identity is
+
+$$
+\begin{aligned}
+\mathbf1_{v\le b_p}
+&=\sum_{r=0}^{Q-1}\beta_r(p)e(rv/Q),\qquad
+\beta_r(p)=\frac1Q\sum_{u=1}^{b_p}e(-ru/Q),\\
+|\beta_r(p)|&\le\frac{C}{1+\min(r,Q-r)},\qquad
+\sum_{r=0}^{Q-1}\frac{C}{1+\min(r,Q-r)}\ll\log(2D).
+\end{aligned}
+\tag{SV31}
+$$
+
+Finite Fourier orthogonality supplies the identity and the finite
+geometric-sum bound supplies the displayed majorants. For each $r$,
+put the normalized $\beta_r(p)$ in the allowed coefficient $a_{j,p}$,
+together with the actual test sign, own-price weight and sample flags;
+put $h(\ell)e(r(\ell-D)/Q)$ in $b_\ell$. Thus (SV27) still applies with
+only a logarithmic completion cost. No unestimated separation of a joint
+$p,\ell$ indicator is assumed.
+
+For a nonempty block, $D\le\min(V,Y)$ with $Y=x/P^k$. Under the original
+source condition $H\le P^{k-1}D$, the four terms in (SV27) give the uniform
+block cost
+
+$$
+\ll_{k,\nu}A^\nu
+ \left(A^{-1/2}+A^{-\gamma_k}H^{-1/2}\right),
+\qquad \gamma_k=\frac{k-1}{2k}.
+\tag{SV32}
+$$
+
+Indeed the first term is at most $A^{-1/2}$. Splitting at $Y=V$ gives
+$P\sqrt D/x\ll A^{-3/4+1/(2k)}\le A^{-1/2}$,
+$D\sqrt P/x\ll A^{-1/2+1/(4k)}\le A^{-\gamma_k}$ and
+$PD\sqrt{D/Y}/x\ll A^{-\gamma_k}$. These are bounds for the same
+rectangle. If the source condition fails, use direct absolute values:
+the cost is $\ll_{k,\nu}A^\nu PD/x$, and
+$PD<HP^{2-k}\le J_0$ for $k\ge2$. This again costs
+$O_{k,\nu}(A^{-1/2+\nu})$ without using the source theorem outside its
+range. The term $\ell=1$, outside the dyadic denominator blocks, has
+total cost $O_{k,\nu}(A^{-1+3/(4k)+\nu})$ from $p^k<x/U$ and the
+harmonic coefficient bound, and fits the same budget.
+
+For $1\le H_0\le J_0$, define the complete local high-frequency part
+
+$$
+\mathcal G_{k,>H_0}(y)
+=\sum_{\ell\le y}h(\ell)
+ \sum_{H_0<|j|\le J_0}\widehat P_{J_0}(j)e(jy/\ell).
+$$
+
+Dyadic decomposition includes the block crossing $H_0$: take
+$H\ge H_0/2$ and retain both flags $j>H_0$ and $j\le J_0$ in
+$a_{j,p}$. Summing (SV32), its condition-failure bound and the
+$\ell=1$ contribution, and including conjugate frequencies, yields
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{p^k<x/U}w_{N,p,k}
+ |\mathcal G_{k,>H_0}(x/p^k)|
+\ll_{k,\nu} A^\nu
+ \left(A^{-1/2}+A^{-\gamma_k}H_0^{-1/2}\right).
+\tag{SV33}
+$$
+
+Here $k\ge2$ is fixed. Divisor normalization, completion and all dyadic
+losses are absorbed by choosing smaller auxiliary exponents before the
+prescribed $\nu>0$. The bound is uniform in the same actual $x$ and
+sample-dependent test signs; no independent source phases are chosen.
+
+For each original unpaid layer $2\le k<m_\eta$, take a common fixed
+$0<d<1-2\eta$ and set
+$H_{0,k}=A^{2(\eta-\gamma_k)+d}$. Its exponent lies between zero and
+$1/2$. Choose $0<\nu<\min(d/2,1/2-\eta)$; then (SV33) is
+$o(A^{-\eta})$ for every such layer. Define
+
+$$
+g_{{\rm loc},k}^{\rm low}(y)
+=\sum_{\ell\le y}h(\ell)
+ \sum_{1\le|j|\le H_{0,k}}\widehat P_{J_0}(j)e(jy/\ell),
+$$
+
+and let $\mathcal R^{\rm low}_{N,\eta}$ be (SV10)'s residual over the
+same active samples, replacing $E_A(y_p)$ in each layer $k$ by
+$[c_A(y_p)+g_{{\rm loc},k}^{\rm low}(y_p)
+-y_p(s_A(y_p)+\sigma_A)]_+$. Equation (SV30), the positive part's
+Lipschitz property and (SV33) give
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm low}_{N,\eta}|
+=o(A^{-\eta}).
+\tag{SV34}
+$$
+
+Empty layer sums remain zero. This applies the same published supplier
+to all rectangles after exact local-support recombination, extending
+the critical-rectangle scope of (SV28). The low frequencies, moving
+constant and drift remain jointly inside the same positive part; they
+have no bound here at the required rate. The separate full-mean
+requirement, prime layer, other recovery terms and complete signed
+Robin tail remain unpaid. This is an attributed application of
+classical inputs without Lean certification, original-number-theory
+priority or an identification with FIB composition rotation.
+
+## Actual deep-layer weights differ only below the residual target scale
+
+Retain the same selected $N$, its actual $A=\log N$, original $\eta$,
+$E_A$, active samples and finite layers in $\mathcal R_{N,\eta}$. Let
+$\widetilde{\mathcal R}_{A,\eta}$ be that same supremum with only
+$w_{N,p,k}$ replaced by $\log p$. The existing own-price layer comparison
+gives $0\le\log p-w_{N,p,k}\le p^{1-k}\log p$ for $k\ge2$.
+Using the original envelope $E_A\le B_A$, the difference between the
+two nonnegative sums at each $x\in[A,2A]$ is at most
+
+$$
+\frac{B_A}{x}\left(
+ \sum_{p\le\sqrt{x/U}}\frac{\log p}{p}
+ +\sum_p\sum_{k\ge3}\frac{\log p}{p^{k-1}}\right)
+=\frac{B_A}{x}\left(
+ \sum_{p\le\sqrt{x/U}}\frac{\log p}{p}+\mathfrak c_2\right).
+$$
+
+The existing $\vartheta(t)<2t$ input and Abel summation give
+$\sum_{p\le z}(\log p)/p\ll\log(2z)$; $\mathfrak c_2<\infty$
+is already defined in (SV9). Since $B_A\ll\sqrt A/L^2$, the bound
+is uniformly $O(A^{-1/2}/L)$. Pointwise order and the supremum
+inequality therefore give, without requiring either supremum to be
+attained,
+
+$$
+0\le\widetilde{\mathcal R}_{A,\eta}-\mathcal R_{N,\eta}
+\ll\frac{A^{-1/2}}L=o(A^{-\eta}/L),\qquad 0<\eta<1/2.
+\tag{SV35}
+$$
+
+Thus the original local requirement
+$\mathcal R_{N,\eta}=o(A^{-\eta})$ is equivalent to the same requirement
+for $\widetilde{\mathcal R}_{A,\eta}$ along the same selected sources.
+The actual clock has not been replaced by an arbitrary continuous one.
+This application first uses the envelope for $E_A$; it does not assert
+that an arbitrary polynomial positive part is bounded by $B_A$.
+Transport to a polynomial residual requires the already paid
+approximation comparison (SV26).
+
+The depth-dependent lowering of these weights changes this residual
+only below its target scale. This leaves open compensation from the
+actual selected clock, the joint low response and other terms of the
+complete recovery identity. It provides neither the separate mean
+bound nor a complete signed Robin estimate, and has no Lean
+certification or claim of original number theory.
+
+## Rectangle-dependent cutoffs also pay some of the lowest harmonics
+
+The four-term supplier retains more information than the uniform
+critical cutoff in (SV34). For the same local-support rectangle, put
+
+$$
+Q_k(P,D)=\frac{D\sqrt P}{A}
+ +\frac{P^{1+k/2}D^{3/2}}{A^{3/2}},\qquad
+t_k(P,D)=A^{2\eta+d}Q_k(P,D)^2,
+\tag{SV36}
+$$
+
+where $d$ and the auxiliary exponents obey the choices in (SV34).
+Since $A\le x\le2A$, (SV27) with the exact prefix completion (SV31)
+gives the block cost
+$\ll_{k,\nu}A^\nu(A^{-1/2}+Q_k(P,D)H^{-1/2})$ under its size
+condition. The two terms of $Q_k$ are precisely the second and fourth
+terms of that supplier, before maximizing over rectangles.
+
+Remove from the existing low part only the frequencies
+$t_k(P,D)<|j|\le H_{0,k}$. If $t_k\ge1$, include the crossing
+dyadic block $H\ge t_k/2$ and both exact frequency flags. If $t_k<1$,
+all positive frequencies in that rectangle are removed and $H\ge1$.
+In either case $Q_k/\sqrt H\ll A^{-\eta-d/2}$ on the removed blocks.
+The flags are allowed in $a_{j,p}$ for each fixed $P,D,H$.
+When the source size condition fails, the already paid direct bound
+from (SV32) applies instead. Finite dyadic summation, with the same
+small-exponent slack as before, costs $o(A^{-\eta})$ uniformly in $x$.
+
+This deletion includes $j=1$ when $t_k<1$. To handle that singleton
+within the source's convention $H<h\le2H$, take source $H=1$, keep
+only $h=2$ in $a_{h,p}$, and set
+$X_{\rm src}=x/(2P^kD)$. The phase is then exactly $x/(p^k\ell)$,
+the condition $1\le P^{k-1}D$ holds, and the four cost terms change
+only by fixed factors. Negative frequencies are conjugates. The entire
+$\ell=1$ harmonic contribution is separately paid by the absolute
+bound already used in (SV32), also when its lowest frequencies are
+included.
+
+Let $P(p)$ be the dyadic scale satisfying $P(p)<p\le2P(p)$ for the
+actual prime $p$. Define the remaining response, depending on $p$ and $x$, by
+
+$$
+\begin{aligned}
+g_{{\rm ad},k}(p;x)
+={}&\sum_{\substack{D\ \mathrm{dyadic}\\D\le V}}
+ \sum_{\substack{D<\ell\le2D\\\ell\le\min(V,y_p)}}h(\ell)
+ \sum_{1\le|j|\le\min(J_0,H_{0,k},t_k(P(p),D))}
+ \widehat P_{J_0}(j)e(jy_p/\ell),\qquad y_p=x/p^k.
+\end{aligned}
+$$
+
+The dyadic denominator sum begins at $D=1$; it excludes the separately
+paid $\ell=1$. In the original residual, replace $E_A(y_p)$ by
+$[c_A(y_p)+g_{{\rm ad},k}(p;x)-y_p(s_A(y_p)+\sigma_A)]_+$ and call
+the resulting supremum $\mathcal R^{\rm ad}_{N,\eta}$. The constants,
+full mean, drift, active samples and own-price weights are unchanged.
+The positive-part Lipschitz inequality and (SV34) therefore give
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm ad}_{N,\eta}|
+=o(A^{-\eta}).
+\tag{SV37}
+$$
+
+For fixed scales $P\asymp A^u$, $D\asymp A^v$, an entire rectangle,
+including its first harmonic, is paid if
+
+$$
+u+2v<2-2\eta-d,\qquad
+(k+2)u+3v<3-2\eta-d.
+$$
+
+These sufficient conditions describe a region, rather than a single
+example; they are not necessary conditions for a useful estimate.
+The retained rectangles and their joint constant/drift positive part
+still have no bound here at the required rate. This is another
+parameter-specific application of the same published four-term
+supplier, without a new exponential-sum theorem, Lean certification
+or complete signed Robin gain.
+
+## A published moment obstruction applies to the original linear factor
+
+The remaining joint estimate cannot be supplied by assuming that linear
+smoothing automatically gives uniformly bounded high moments of each
+factor. Granville–Koukoulopoulos–Maynard, [*Sieve weights and their
+smoothings*, arXiv:1606.06781v4](https://arxiv.org/abs/1606.06781v4),
+definition (1.9) and Theorem 1.3, directly apply to the original
+$\lambda(d)=\mu(d)(1-\log d/\log R)_+$. With the source's moment
+index $k=3$ and smoothing exponent $1$, their exponent is
+$\binom63-6(1+1)=8$. Thus
+
+$$
+\mathcal M_6(R):=
+\sum_{d_1,\ldots,d_6\le R}
+ \frac{\lambda(d_1)\cdots\lambda(d_6)}{[d_1,\ldots,d_6]}
+=c_{3,1}(\log R)^8+O((\log R)^7),\qquad c_{3,1}>0.
+\tag{SV38}
+$$
+
+At the unchanged actual clock, $R=A^{1/8}$. Expanding the sixth power
+of $\Lambda_R(n)=\sum_{d\mid n}\lambda(d)$ gives
+
+$$
+\frac1A\sum_{n\le A}\Lambda_R(n)^6
+=\mathcal M_6(R)+O\!\left(\frac{R^6}{A}\right)
+=c_{3,1}(\log R)^8+O((\log R)^7+A^{-1/4}).
+$$
+
+The expansion error uses only $|\lambda(d)|\le1$ for the actual
+$d\ge1$ and $|\lfloor A/[d_1,\ldots,d_6]\rfloor
+-A/[d_1,\ldots,d_6]|\le1$. This is an application of the published
+moment theorem, not a new high-moment result or Lean certification.
+
+It rules out a uniformly bounded sixth moment for this single factor
+under ordinary integer averaging. It does not rule out compensation in
+the mixed LCM response $h$, in its drifted positive part, or under the
+actual reciprocal-prime-power sampling: those are different quantities
+and measures. In particular, (SV38) is neither a lower bound for the
+unpaid residual nor a counterexample to its required estimate. Replacing
+the linear weight by a more smoothed one would change the recovery
+contract and does not inherit the estimates for the current $h$.
+
+## The original response envelopes localize the unpaid prime samples
+
+Choose a fixed $0<\omega<1/2-\eta$ and retain only the original
+finite unpaid layers $2\le k<m_\eta$. Put
+
+$$
+P_-=A^{1/2-\eta-\omega},\qquad
+P_{+,k}=A^{(\eta+\omega)/(k-1)}.
+$$
+
+Let $\mathcal R^{\rm win}_{N,\eta}$ be the original $E_A$ residual
+with the additional sample condition $P_-<p\le P_{+,k}$, intersected
+with the same active condition $p^k<x/U$. Apply the envelopes to
+$E_A$, before any polynomial replacement. At each $x\in[A,2A]$, the
+discarded small-prime part in a layer is at most
+
+$$
+\frac{B_A}{x}\sum_{p\le P_-}\log p
+\ll\frac{A^{-1/2}P_-}{L^2}
+=\frac{A^{-\eta-\omega}}{L^2}.
+$$
+
+For the large-prime part, use $E_A(x/p^k)\le Cx/(p^kL^2)$ and
+the existing $\vartheta(t)<2t$ input. Abel summation gives, for $z\ge1$,
+$\sum_{p>z}(\log p)/p^k\le 2kz^{1-k}/(k-1)$. Thus this part is
+also $\ll_k A^{-\eta-\omega}/L^2$. Enlarging each discarded
+nonnegative sum is legitimate, including primes outside the active
+range. Finite layer summation and the pointwise order therefore imply
+
+$$
+0\le\mathcal R_{N,\eta}-\mathcal R^{\rm win}_{N,\eta}
+\ll_{\eta,\omega}\frac{A^{-\eta-\omega}}{L^2},
+\tag{SV39}
+$$
+
+without requiring an attained supremum. For each unpaid layer
+$\gamma_k<\eta$, so
+$P_-<A^{1/(2k)}<P_{+,k}$. This is an explicit prime window
+containing the critical scale; its exponent width need not be small.
+Empty layers and empty intersections still contribute zero.
+
+In this same window, replace the response by the joint adaptive
+positive part of (SV36)–(SV37), and denote its residual by
+$\mathcal R^{\rm ad,win}_{N,\eta}$. The absolute approximation
+errors only shrink on a sample subset, and the window flags are
+permitted in the arbitrary $a_{j,p}$ arrays used to delete harmonics.
+Consequently the original sampled $L^1$ argument applies to this
+subset with the same rate. Together with (SV39), it gives
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm ad,win}_{N,\eta}|
+=o(A^{-\eta}).
+\tag{SV40}
+$$
+
+This conclusion uses that absolute-error argument, not an inference
+from the difference of the two unrestricted suprema in (SV37).
+The constants and full drift stay jointly inside each retained positive
+part. No envelope for an arbitrary polynomial positive part has been
+assumed. The remaining task is now restricted in prime samples as well
+as in harmonics and denominators; the separate mean, prime layer,
+other recovery terms and complete signed tail still need their original
+estimates. Equations (SV39)–(SV40) are a localization application of
+the existing envelopes and prime-counting input, without a new
+prime-distribution theorem or Lean certification.
+
+## Shared sampling primes can be removed from the periodic sector
+
+Retain the same actual source, original fixed $\eta$, support $V=\sqrt A$,
+and full local slope $s_A(y)$ and mean $\sigma_A$. For each sampling prime
+$p$, define
+
+$$
+F_{A,p}^{\rm cop}(y)
+=\sum_{\substack{\ell\le\min(V,y)\\p\nmid\ell}}
+ h(\ell)\{y/\ell\},\qquad
+E_{A,p}^{\rm cop}(y)
+=[F_{A,p}^{\rm cop}(y)-y(s_A(y)+\sigma_A)]_+.
+$$
+
+The local floor identity in (SV30) gives the same expression for $E_A$
+before the condition $p\nmid\ell$ is inserted. Only its fractional-part
+sector is removed. In particular, the original $s_A(y)$ still contains
+the terms with $p\mid\ell$, and $\sigma_A$ still uses the full $S_A$.
+
+Directly reuse $|h(\ell)|\le\tau(\ell)^2$, the Nicolas divisor-growth
+supplier already used in (SV27), and $0\le\{t\}<1$. For every prescribed
+$\nu>0$, they give
+
+$$
+|E_A(y)-E_{A,p}^{\rm cop}(y)|
+\le\sum_{\substack{\ell\le\min(V,y)\\p\mid\ell}}|h(\ell)|
+\ll_\nu A^\nu\frac{\min(V,y)}p.
+\tag{SV41}
+$$
+
+The count is zero when $p>\min(V,y)$; $\ell=1$ is never removed.
+This is an absolute coefficient-counting bound and requires no
+independence between the prime and the denominator.
+
+For any fixed $k\ge1$, use the original $0\le w_{N,p,k}\le\log p$
+where that weight is defined. The existing $\vartheta(t)<2t$ input and
+Abel summation give, with $z=(x/V)^{1/k}\ge1$,
+
+$$
+\begin{aligned}
+\frac1x\sum_p\log p\,\frac{\min(V,x/p^k)}p
+&=\frac Vx\sum_{p\le z}\frac{\log p}p
+  +\sum_{p>z}\frac{\log p}{p^{k+1}}\\
+&\ll_k\frac Vx\log(2z)+z^{-k}
+\ll_k A^{-1/2}\log(2A),\qquad A\le x\le2A.
+\end{aligned}
+$$
+
+An atom at $p=z$ belongs to the first sum. All summands in this
+majorant are nonnegative, so the same bound holds on the original
+active samples, their prime window, or any subset. Choosing a smaller
+auxiliary divisor exponent first absorbs the logarithm. Thus for every
+prescribed $\nu>0$ and fixed $k$,
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{p^k<x/U}w_{N,p,k}
+ |E_A(x/p^k)-E_{A,p}^{\rm cop}(x/p^k)|
+\ll_{k,\nu} A^{-1/2+\nu}.
+\tag{SV42}
+$$
+
+For the original finite unpaid layers, choose $0<\nu<1/2-\eta$.
+Their total is $o(A^{-\eta})$. The fixed-layer estimate also permits
+$k=1$, but it is not an estimate for an unbounded sum of layers or a
+bound for the remaining prime-layer response.
+
+The same deletion applies directly to the already retained adaptive
+polynomial. Define
+
+$$
+c_{A,p}^{\rm cop}(y)
+=\tfrac12\sum_{\substack{\ell\le y\\p\nmid\ell}}h(\ell),
+$$
+
+and define $g_{{\rm ad},k}^{\rm cop}(p;x)$ by inserting $p\nmid\ell$
+in the denominator sum of $g_{{\rm ad},k}(p;x)$, with all its original
+frequency cutoffs intact. Since $|\widehat P_{J_0}(j)|\ll1/|j|$, removing
+the common-prime terms from the constant and oscillatory sectors costs
+at most
+
+$$
+C\log(2J_0)
+ \sum_{\substack{\ell\le\min(V,y_p)\\p\mid\ell}}|h(\ell)|.
+$$
+
+The same sampling calculation pays this extra logarithm. In the
+original window, replace the retained adaptive response by
+
+$$
+[c_{A,p}^{\rm cop}(y_p)+g_{{\rm ad},k}^{\rm cop}(p;x)
+ -y_p(s_A(y_p)+\sigma_A)]_+,
+\qquad y_p=x/p^k,
+$$
+
+and call its residual $\mathcal R^{\rm ad,win,cop}_{N,\eta}$.
+The positive part's Lipschitz bound, the sampled absolute bound above,
+and (SV40) give
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm ad,win,cop}_{N,\eta}|
+=o(A^{-\eta}).
+\tag{SV43}
+$$
+
+The supremum need not be attained. No coprimality indicator is assumed
+to factor into the independent coefficient arrays of (SV27): this
+comparison deletes the common-prime sector by absolute counting after
+the existing harmonic comparisons. Neither $E_{A,p}^{\rm cop}$ nor an
+arbitrary new polynomial positive part is asserted to inherit the
+original $E_A$ envelopes or its vanishing below $U$. The original active
+flags and the full local slope and mean remain explicit.
+
+This is an application of existing divisor-growth and prime-counting
+inputs to the original response, not a new coprime exponential-sum
+theorem, original-number-theory claim, or Lean certification. It removes
+the shared sampling prime from the retained periodic and constant
+sectors. The coprime low response, its joint full drift, the separate
+mean estimate, prime layer, other recovery terms and complete signed
+Robin tail still have no bound here at the original target rate.
+
+## The actual response has a quadratic bound just above its cutoff
+
+Keep the original weights, actual source and fixed exponent. Write
+
+$$
+a_R(n)=\sum_{d\mid n}\lambda(d),\qquad
+b_A(n)=\sum_{e\mid n}\theta'(e).
+$$
+
+The defining finite LCM sum gives
+$H_A(y)=\sum_{n\le y}a_R(n)b_A(n)$. For $n\le U$,
+$b_A(n)=\mathbf1_{n=1}$. If
+$U<n\le U(1+\delta)<\min(2U,U_1)$, every proper divisor of $n$
+is at most $U$. Only the divisor $e=n$ can differ from the untruncated
+Möbius response, and
+
+$$
+b_A(n)=\theta'(n)-\mu(n)
+=-\frac{\mu(n)}r\log(n/U).
+$$
+
+Consequently, uniformly for real $U<y\le U(1+\delta)$,
+
+$$
+H_A(y)=1-\frac1r\sum_{U<n\le y}
+ \mu(n)a_R(n)\log(n/U).
+\tag{SV44}
+$$
+
+There is no rounding of the observation endpoint. For sufficiently
+large $A$, every $0<\delta\le1/2$ satisfies the displayed cutoff
+conditions. The existing absolute weight bounds give
+
+$$
+\begin{aligned}
+\sum_{U<n\le U(1+\delta)}|a_R(n)|
+&\le\sum_{d\le R}|\lambda(d)|
+ \left(\left\lfloor\frac{U(1+\delta)}d\right\rfloor
+       -\left\lfloor\frac Ud\right\rfloor\right)\\
+&\le\delta U(1+r)+\frac{R-1}r.
+\end{aligned}
+$$
+
+Here $\sum|\lambda(d)|/d\le1+r$ and
+$\sum|\lambda(d)|\le(R-1)/r$. The first follows from
+$|\lambda(d)|\le1$ and the harmonic-sum bound; the second is the
+same decreasing-logarithm sum used in the original $B_A$ envelope.
+Using $\log(n/U)\le\delta$, $r\ge1$ and the unchanged
+$\sigma_A\ge0$ in $E_A(y)=[-H_A(y)-\sigma_Ay]_+$ gives
+
+$$
+E_A(y)\le2\delta^2U+\frac{\delta R}{r^2},
+\qquad U<y\le U(1+\delta).
+\tag{SV45}
+$$
+
+This controls the complete original positive part. It does not estimate
+the mean by a power, remove its compensation, or bound the constant
+and oscillatory sectors separately.
+
+For the square layer put $P=(x/U)^{1/2}$, $A\le x\le2A$, and
+restrict to any subset of the actual primes satisfying
+
+$$
+U<x/p^2\le U(1+\delta).
+$$
+
+They lie in $[P(1+\delta)^{-1/2},P)$, containing at most
+$C\delta P+1$ integers. The endpoint term is retained. Moreover
+$p\ge A^{3/8}/\sqrt{1+\delta}>U(1+\delta)$ eventually, uniformly
+in $x$ and $\delta$. Thus every denominator in the moving local
+support is smaller than $p$, and
+$E_{A,p}^{\rm cop}(x/p^2)=E_A(x/p^2)$ with the full drift and mean.
+Equation (SV45) and $w_{N,p,2}\le\log p$ yield
+
+$$
+\begin{aligned}
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^2\le U(1+\delta)}
+ w_{N,p,2}E_A(x/p^2)
+\ll{}&L\delta^3A^{-3/8}+L\delta^2A^{-3/4}\\
+&+\frac{\delta^2A^{-1/2}}L
+ +\frac{\delta A^{-7/8}}L.
+\end{aligned}
+\tag{SV46}
+$$
+
+Only when the original fixed $3/8<\eta<1/2$, choose
+$b=(\eta-3/8)/3$ and $\delta_{2,A}=A^{-b}/L$. The first term is
+$A^{-\eta}/L^2$ and the other three have strictly larger power
+exponents. The whole bound is $O_\eta(A^{-\eta}/L^2)$.
+Restricting to the original prime window preserves this bound.
+Removing these square samples from the original nonnegative residual
+therefore changes its supremum by at most that amount; an attained
+supremum is unnecessary.
+
+For comparison, the old $E_A(y)\ll y/L^2$ envelope and the same
+short-interval integer count give only
+$O(\delta A^{-3/8}/L+A^{-3/4}/L)$ here. With $\delta=\delta_{2,A}$,
+its first term is $A^{-\eta+2b}/L^2$, so that upper bound does not
+pay this wider strip. This is a comparison of sufficient bounds,
+not a lower bound on the actual response. When $\eta\le3/8$,
+the old envelope and the existing $\vartheta(P)\ll P$ supplier already
+pay a fixed-width square strip at $O(A^{-3/8}/L^2)$; that case is
+not an additional payment.
+
+The finite onset calculation is an application of the original weight
+definitions and counting bounds, not a new classical sieve theorem,
+historical originality claim or Lean certification. It pays the complete
+response only in the displayed shrinking strip. The critical region
+$y\asymp V$, remaining low layers, mean rate, prime layer, other recovery
+terms and full signed Robin tail retain their original obligations.
+
+## A published short-sum bound also pays prime-layer onset samples
+
+The floor-counting error in (SV45) can be avoided in a sufficiently
+long onset interval by directly reusing [Henriot's corrected 2014
+New Theorem 5](shiuhenriot2026growingmoments.md#henriot-and-the-indispensable-erratum),
+[erratum printed p.377](https://doi.org/10.1017/S0305004114000280).
+Use its single primitive polynomial $Q(t)=t$ and the fixed function
+$F(n)=\tau(n)$. Its parameters are
+
+$$
+g=k=r_Q=1,\qquad \alpha=1/4,\quad\delta_{\rm coef}=1,
+\quad\varepsilon=1/800<1/400,\quad A_0=2,
+$$
+
+with a fixed divisor-growth constant $B_0=B_0(\varepsilon)$.
+The class follows from multiplicativity,
+$\tau(p^j)=j+1\le2^j$ and the same classical divisor-growth input
+already used in (SV27). These constants do not grow with the Robin
+source. Here $\delta_{\rm coef}$ is the theorem's polynomial parameter,
+not the interval width $\delta$.
+
+Set the source's lower endpoint to $U$ and its interval length to
+$\Delta=\delta U$. Its range is satisfied when
+$U^{1/4}<\Delta\le U$ and $U$ is sufficiently large.
+For this same single-factor polynomial, the corrected root density
+recorded in the cited note is
+
+$$
+\frac{\breve\rho_Q(a)}{a\kappa(a)}
+=\frac1a\prod_{p\mid a}(1-1/p)\le\frac1a.
+$$
+
+The existing harmonic divisor sum is at most $(1+\log U)^2$.
+[Rosser--Schoenfeld Theorem 8, (3.28)](../Arith/rosser1962approximate.md)
+gives $\prod_{p\le U}(1-1/p)\ll1/\log U$.
+Thus the corrected theorem supplies
+
+$$
+\sum_{U<n\le U(1+\delta)}\tau(n)\ll\delta U\log U,
+\qquad U^{1/4}<\delta U\le U.
+$$
+
+This invokes the existing short-sum theorem; it does not reprove it
+or extend Shiu's literal $0<a<q$ residue statement to $a=q=1$.
+Since $|\lambda(d)|\le1$ gives $|a_R(n)|\le\tau(n)$,
+substitution into the unchanged (SV44) yields
+
+$$
+E_A(y)\ll\delta^2U,
+\qquad U<y\le U(1+\delta),\quad
+0<\delta\le1/2,\quad\delta U>U^{1/4}.
+\tag{SV47}
+$$
+
+The positive terms $1$ and $\sigma_Ay$ are retained in the exact
+response before this upper bound is taken. The theorem includes real
+endpoints; there is no omitted unit error in the inner short sum.
+
+For $k=1,2$, put $P_k=(x/U)^{1/k}$ and
+$a_k=\tfrac34(1-1/k)$, so $a_1=0$, $a_2=3/8$.
+The actual onset primes lie in
+$[P_k(1+\delta)^{-1/k},P_k)$.
+Its integer count is $O_k(\delta P_k+1)$, and each prime has
+$\log p=O(L)$ for $A\le x\le2A$. The unchanged weights
+$0\le w_{N,p,k}\le\log p$ and (SV47) give
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^k\le U(1+\delta)}
+ w_{N,p,k}E_A(x/p^k)
+\ll_k L\delta^3A^{-a_k}+L\delta^2A^{-3/4}.
+\tag{SV48}
+$$
+
+The outer endpoint term is explicit. For both $k=1,2$,
+$p>y=x/p^k$ eventually throughout this strip. Hence the same
+estimate applies exactly to $E_{A,p}^{\rm cop}(y)$ with the full
+local slope and mean. Any original sample or window subset is allowed.
+
+For the original fixed $0<\eta<1/2$, choose
+
+$$
+\delta_{1,A}=A^{-\eta/3}/L.
+\tag{SV49}
+$$
+
+Its inner length is $A^{1/4-\eta/3}/L\gg U^{1/4}$; the exponent
+gap is $3/16-\eta/3>1/48$. Equation (SV48) for $k=1$ becomes
+$O_\eta(A^{-\eta}/L^2)$, since its second term has exponent
+$3/4+2\eta/3>\eta$. Thus this shrinking part of the original prime
+layer, including its entire drifted positive part, is paid at
+$o(A^{-\eta})$ without assuming the missing mean rate.
+The old envelope and the same integer count would give
+$O(\delta_{1,A}/L+A^{-3/4}/L)$, which does not pay this strip.
+Again this compares sufficient upper bounds, not actual lower bounds.
+
+When the original $\eta>3/8$, the square width $\delta_{2,A}$ in
+(SV46) also satisfies the short-sum condition. Equation (SV48)
+gives the same $O_\eta(A^{-\eta}/L^2)$ payment with a simpler
+two-term bound; it is not a second payment of that square strip.
+For $\eta\le3/8$ the existing fixed-width square payment remains
+the applicable reuse.
+
+The square strip can be deleted from the original nonnegative residual
+before applying (SV40)--(SV43). Restricting each of their existing
+sampled absolute-error bounds to the retained samples preserves the
+adaptive comparison at $o(A^{-\eta})$. This uses the bounds on the
+original response; it gives no new polynomial positive part the
+original envelopes or vanishing property. The prime-layer calculation
+concerns its original response and does not import the higher-layer
+adaptive cutoffs into $k=1$.
+
+These are attributed applications of the corrected short-sum and
+prime-product suppliers, without Lean certification or a historical
+originality claim. They control onset strips only. The remaining prime
+and square samples, critical region $y\asymp V$, other finite low layers,
+same-source mean rate, remaining recovery convolutions and complete
+signed Robin tail still require estimates at the original fixed rate.
+
+## Reusing short prime intervals enlarges the paid onset range
+
+The outer integer count in (SV48) can be replaced by the existing
+[Nicolas comparison note's (GS4)](nicolas2025comparison.md#the-local-prime-input-and-its-uniform-range).
+That application supplies the uniform short-increment bound from
+Guth--Maynard Corollary 1.3, including longer intervals and the
+prime-power correction. Combining the two existing inputs keeps the
+actual source, its full drifted positive part, and the original fixed
+exponent.
+
+For $k=1,2$, put $P_k=(x/U)^{1/k}$, $A\le x\le2A$, and
+$c_k=P_k(1+\delta)^{-1/k}$. In addition to (SV47)'s conditions,
+suppose $h_k=P_k-c_k+1\ge P_k^{2/3}$ throughout this window.
+Apply (GS4) with its dummy clock $Y=P_k$, lower endpoint
+$u=c_k-1$ and interval length $h_k$. For sufficiently large $A$,
+$Y/2\le u<Y$ and $u+h_k=Y\le3Y/2$; also
+$h_k\asymp_k\delta P_k$. The onset primes lie in $[c_k,P_k)$,
+contained in $(c_k-1,P_k]$. Hence (GS4) directly gives
+
+$$
+\sum_{c_k\le p<P_k}\log p
+\le\psi(P_k)-\psi(c_k-1)\ll_k\delta P_k.
+$$
+
+The enlarged interval includes the endpoint contribution. The supplier
+is uniform at these real endpoints, and any subset of the original
+prime samples is allowed. With the unchanged $w_{N,p,k}\le\log p$,
+equation (SV47) now gives
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^k\le U(1+\delta)}
+ w_{N,p,k}E_A(x/p^k)
+\ll_k\delta^3 A^{-a_k},
+\qquad a_k=\tfrac34(1-1/k).
+\tag{SV50}
+$$
+
+For $k=1$ and every original fixed $0<\eta<1/2$, and for $k=2$
+only when the original $3/8<\eta<1/2$, choose
+
+$$
+b_k=\frac{\eta-a_k}{3}>0,\qquad
+\widehat\delta_{k,A}=\frac{A^{-b_k}}{\log L}.
+\tag{SV51}
+$$
+
+These widths satisfy all hypotheses uniformly in $A\le x\le2A$.
+Indeed $\widehat\delta_{1,A}U=A^{1/4-\eta/3}/\log L\gg U^{1/4}$;
+the square layer has a larger exponent. At the outer endpoints,
+$h_1\asymp A^{3/4-\eta/3}/\log L\gg P_1^{2/3}$ because
+$3/4-\eta/3>7/12>1/2$, and
+$h_2\asymp A^{3/8-(\eta-3/8)/3}/\log L\gg P_2^{2/3}$ because
+$3/8-(\eta-3/8)/3>1/3>1/4$.
+Both widths tend to zero. Equation (SV50) yields
+
+$$
+O_\eta\!\left(\frac{A^{-\eta}}{(\log L)^3}\right)
+=o(A^{-\eta})
+$$
+
+for the complete original response on these strips. Throughout them
+$p>y=x/p^k$, so the coprime response equals the original response,
+including its mean and drift. Deleting the square samples before
+(SV40)--(SV43) again uses those equations' existing sampled
+absolute-error bounds on the retained subset. No higher-layer adaptive
+cutoff or envelope for a new polynomial positive part is imported
+into the prime layer.
+
+This is a logarithmic enlargement at the original $o(A^{-\eta})$
+target. At (SV51)'s width, the existing integer-count bound (SV48)
+has first term $O(LA^{-\eta}/(\log L)^3)$, which does not establish
+that target. This comparison concerns sufficient upper bounds, not
+a lower bound on the actual response. The explicit widths (SV51)
+are $L/\log L$ times those in (SV46) and (SV49). When $\eta\le3/8$, the previously
+paid fixed-width square strip is likewise reused without recounting it.
+The stronger $O(A^{-\eta}/L^2)$ estimates on the narrower old strips
+remain available. The power exponent has not improved, the prime strip
+still shrinks, and the remaining samples, mean rate, critical region,
+other recovery terms and complete signed Robin tail remain unpaid.
+This is an attributed parameter application of the existing (SV47)
+and (GS4), without a historical originality or Lean-certification claim.
+
+## Signed short-interval inputs control the actual activation response
+
+The actual coefficients permit a further application of published
+Möbius estimates. Matomäki--Shao--Tao--Teräväinen,
+[*Higher uniformity of arithmetic functions in short intervals I.
+All intervals*, arXiv:2204.03754v4](https://arxiv.org/html/2204.03754v4),
+Theorem 3.1(i), supplies arbitrary fixed logarithmic savings for the
+untwisted Möbius sum at the $7/12$ length threshold. Its starred
+estimate includes the ordinary interval sum. The theorem's upper
+length cutoff is $t^{1-\varepsilon}$; longer intervals up to $t$
+are covered by equal pieces of length comparable to
+$t^{1-2\varepsilon}$, with all their lower endpoints in $[t,2t]$.
+Choose $\varepsilon$ small enough to keep these pieces above the
+lower cutoff. This yields, for fixed $\theta>7/12$ and every
+fixed $B>0$,
+
+$$
+|M(t+h)-M(t)|\ll_{\theta,B}\frac h{(\log t)^B},
+\qquad t^\theta\le h\le t,
+\qquad M(t)=\sum_{n\le t}\mu(n).
+$$
+
+For fixed $\theta>19/35$ and $0<B<1/3$, the same estimate is
+already supplied by [Matomäki--Pandey--Pliego--Teräväinen--Wang,
+arXiv:2610.09567v1, Theorem 1.4](../Analytic/shortuniformity2026robininterfaces.md#a-shorter-interval-range-with-different-quantitative-conclusions).
+Choose its parameter $\varepsilon$ smaller than both
+$\theta-19/35$ and $1/3-B$. These inputs hold at every sufficiently
+large lower endpoint. No exceptional-set avoidance or unrestricted
+nilsequence testing weight is assumed. The following is a paper-level
+application, without Lean certification or a historical novelty claim.
+
+### Preserve coprimality and all short prefixes
+
+Fix a supplied pair $1/2<\theta<1$, $B>0$, and then fix
+$0<\kappa<1-\theta$. Suppose
+
+$$
+R^{\theta-1+\kappa}\le\delta\le1/2,
+\qquad r=\log R,\quad U=R^2.
+$$
+
+For $0\le H\le\delta U$, define the actual signed prefix
+$F_R(H)=\sum_{U<n\le U+H}\mu(n)a_R(n)$. The exact identity
+$\mu(dm)\mu(d)=\mu(d)^2\mu(m)\mathbf1_{(d,m)=1}$ gives
+
+$$
+F_R(H)=\frac1r\sum_{d\le R}\mu(d)^2\log(R/d)
+ \sum_{U/d<m\le(U+H)/d}\mu(m)\mathbf1_{(m,d)=1}.
+\tag{SV52}
+$$
+
+Reuse the finite coprime convolution preceding (SV11). Its inner
+sum is exactly
+
+$$
+\sum_{\substack{a\mid d^\infty\\a\le(U+H)/d}}
+ \left[M\!\left(\frac{U+H}{da}\right)
+       -M\!\left(\frac U{da}\right)\right].
+$$
+
+Here $a\mid d^\infty$ retains all prime powers supported on $d$.
+Split this same finite sum at $Z=R^{\kappa/4}$. For $a\le Z$,
+$d\le R$ and $t=U/(da)$,
+
+$$
+R^{1-\kappa/4}\le t\le R^2,
+\qquad
+\delta t^{1-\theta}\ge R^{\kappa(3+\theta)/4}.
+$$
+
+If $0\le h\le\delta t$ is below $t^\theta$, the integer count
+$|M(t+h)-M(t)|\le h+1\le t^\theta+1$ is absorbed by
+$\delta t/r^B$ using the displayed positive power margin.
+For $h\ge t^\theta$, apply the supplied Möbius estimate. Thus
+every such prefix, including the arbitrarily short ones, satisfies
+$|M(t+h)-M(t)|\ll\delta t/r^B$.
+
+Using $\sum_{a\mid d^\infty}1/a=d/\varphi(d)$, the contribution
+with $a\le Z$ in (SV52) is at most
+
+$$
+\frac{C\delta U}{r^{B+1}}
+ \sum_{d\le R}\frac{\mu(d)^2\log(R/d)}{\varphi(d)}
+\ll\delta U r^{1-B}.
+$$
+
+The last bound uses $\sum_{d\le R}1/\varphi(d)\ll1+r$.
+The elementary divisor identity
+$d/\varphi(d)=\sum_{q\mid d}\mu(q)^2/\varphi(q)$ and the
+convergent product
+$\sum_q\mu(q)^2/(q\varphi(q))
+=\prod_p(1+1/(p(p-1)))$ directly supply it.
+
+For the complementary $a>Z$, put
+$P_d=\prod_{p\mid d}(1-p^{-1/2})^{-1}$.
+The same Rankin estimates used for the coprime convolution give
+
+$$
+\sum_{\substack{a>Z\\a\mid d^\infty}}\frac1a
+\le Z^{-1/2}P_d,
+\qquad
+\#\{a\le2U/d:a\mid d^\infty\}\le(2U/d)^{1/2}P_d.
+$$
+
+Uniformly for $d\le R$, $P_d\le\exp(C\sqrt r)$: enumerate
+its distinct prime factors and use $p_j\ge j+1$ and
+$\omega(d)\le r/\log2$ in the logarithm of the product.
+Retain the interval count $\delta U/(da)+1$ for each large $a$.
+Then this part of (SV52) is bounded by
+
+$$
+\exp(C\sqrt r)
+ \left(\delta U rZ^{-1/2}+\frac{R^{3/2}}r\right).
+$$
+
+The second term includes every unit endpoint error. Here
+$\sum_{d\le R}\log(R/d)/d\ll r^2$ and
+$\sum_{d\le R}\log(R/d)/\sqrt d\ll\sqrt R$.
+Relative to $\delta U r^{1-B}$, the two terms are at most
+
+$$
+\exp(C\sqrt r)
+ \left(r^B R^{-\kappa/8}
+       +r^{B-2}R^{1/2-\theta-\kappa}\right)=o(1).
+$$
+
+All parameters here are fixed and $\theta>1/2$. Consequently,
+with $T_R(Y)=\sum_{U<n\le Y}\mu(n)a_R(n)\log(n/U)$, Abel
+summation of the original logarithmic weight gives
+
+$$
+\begin{aligned}
+\sup_{0\le H\le\delta U}|F_R(H)|
+ &\ll\delta U r^{1-B},\\
+T_R(Y)&=F_R(Y-U)\log(Y/U)
+ -\int_U^Y F_R(t-U)\frac{dt}{t},\\
+\sup_{U<Y\le U(1+\delta)}E_A(Y)
+ &=\sup_{U<Y\le U(1+\delta)}
+   [T_R(Y)/r-1-\sigma_A Y]_+
+ \ll\frac{\delta^2U}{r^B}.
+\end{aligned}
+\tag{SV53}
+$$
+
+The complete constant and drift enter before the upper bound;
+only their already known nonnegativity is used. This is uniform
+control of the original positive part at every real endpoint, rather
+than an average taken before applying the positive part.
+
+### Wider actual prime and square strips
+
+Return to the same $R=A^{1/8}$, $r=L/8$ and actual source.
+The existing outer prime increment in (SV50), combined with (SV53),
+gives for its admissible interval lengths
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^k\le U(1+\delta)}
+ w_{N,p,k}E_A(x/p^k)
+\ll_{k,\theta,B,\kappa}
+ \frac{\delta^3 A^{-a_k}}{L^B}.
+\tag{SV54}
+$$
+
+For $k=1$ with the original $0<\eta<5/32$, and for $k=2$
+with the original $3/8<\eta<1/2$, every fixed $M>0$ permits
+
+$$
+\delta=A^{-(\eta-a_k)/3}L^M,
+\qquad B=3M+2.
+\tag{SV55}
+$$
+
+Indeed $8(\eta-a_k)/3<5/12$; choose $\theta>7/12$ and
+$\kappa>0$ leaving a strict power margin in
+$\delta\ge R^{\theta-1+\kappa}$. Equation (SV54) is then
+$O_{\eta,M}(A^{-\eta}/L^2)$. The outer lengths still exceed
+$P_k^{2/3}$ by a positive power, as in (SV51), and these strips
+still shrink because $M$ is fixed.
+
+For the additional prime-layer range $5/32\le\eta<6/35$, the
+newer $19/35$ supplier applies because $8\eta/3<16/35$.
+Choose fixed $0<\xi<1/9$ and $3\xi<B<1/3$, and use
+
+$$
+\delta=A^{-\eta/3}L^\xi.
+$$
+
+Equation (SV54) gives
+$O(A^{-\eta}/L^{B-3\xi})=o(A^{-\eta})$, with the same strict
+length margin. The original fixed exponent has not been replaced.
+For $\eta\ge6/35$, this signed transfer supplies no additional
+prime strip; the previous unsigned (SV51) remains available.
+The fixed-width square payment for $\eta\le3/8$ is reused.
+
+These enlarged strips retain $p>y=x/p^k$, the full coprime response,
+and the original subset and square-deletion rules in (SV50)--(SV51).
+They improve the permitted logarithmic factor in the width; they do
+not improve its power exponent. Choosing $M=M(A)$ is not allowed.
+At a fixed width the stated bounds provide only fixed logarithmic
+savings, insufficient to certify the original power target when
+$\eta>a_k$. No same-source mean rate, critical $y\asymp R^4$
+response, remaining recovery convolution or complete signed Robin
+tail has been supplied by this application.
