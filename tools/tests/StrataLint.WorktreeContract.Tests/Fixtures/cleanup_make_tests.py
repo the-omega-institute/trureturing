@@ -249,7 +249,10 @@ class CleanupMakeTests(NativeFixture):
             self.assertLess(removed.index(str(selected)), removed.index(str(later)))
             self.assert_recoverable(events)
         else:
-            self.assertIn('"status":"succeeded"', result.stdout)
+            items = [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{')]
+            self.assertEqual([str(selected), str(later)], [item["path"] for item in items])
+            self.assertEqual(["removed", "removed"], [item["outcome"] for item in items])
+            self.assertIn("WORKTREE_REMOVE_RESULT exit=0 removed=2 failed=0 refused=0", result.stdout)
         for tree, branch in ((selected, "aaa-anchor"), (later, "zzz-later")):
             self.assertFalse(tree.exists())
             recovered = self.root / (branch + "-recovered")
