@@ -426,39 +426,50 @@ t_i\cdot t_j=
 \end{cases}
 \]
 
-For an output triple \((a,b,c)\), define the pairwise Gram sum and the cubic loop invariant
+For an output triple \((a,b,c)\), put
 
 \[
-S=t_a\cdot t_b+t_b\cdot t_c+t_c\cdot t_a,\qquad
-T=(t_a\cdot t_b)(t_b\cdot t_c)(t_c\cdot t_a).
+d_{ab}=t_a\cdot t_b,\quad
+d_{bc}=t_b\cdot t_c,\quad
+d_{ca}=t_c\cdot t_a,
+\]
+\[
+S=d_{ab}+d_{bc}+d_{ca},\qquad
+R=d_{ab}d_{bc}+d_{bc}d_{ca}+d_{ca}d_{ab}.
 \]
 
-Then the exact EJM table (5.1) is
+Then the exact EJM table (5.1) is the symmetric Gram polynomial
 
 \[
-P_{\mathrm{EJM}}(a,b,c)
-=
-\frac{-2-9S+54T}{256}.
+P_{\mathrm{EJM}}(a,b,c)=\frac{4+S+6R}{256}.
 \tag{5.2}
 \]
 
-Indeed, the three equality patterns give
+The three equality patterns give
 
 \[
 \begin{array}{c|c|c|c}
-\text{pattern}&S&T&(-2-9S+54T)/256\\
+\text{pattern}&S&R&(4+S+6R)/256\\
 \hline
-a=b=c&3&1&25/256\\
-\text{exactly two equal}&1/3&1/9&1/256\\
-a,b,c\text{ all distinct}&-1&-1/27&5/256.
+a=b=c&3&3&25/256\\
+\text{exactly two equal}&1/3&-5/9&1/256\\
+a,b,c\text{ all distinct}&-1&1/3&5/256.
 \end{array}
 \]
 
 This identity is an exact finite calculation. It is a genuine three-dimensional representation of the output symmetry because the four outcomes are encoded by a regular tetrahedron in \(\mathbb R^3\). It is not a proof that the causal sources are spatial axes.
 
-The term \(S\) is a sum of pairwise Gram interactions. The term \(T\) is a product around the three-cycle. It is the first symmetric cubic invariant that cannot be read from one pairwise Gram value alone. It is therefore a useful candidate carrier for the project’s loop or holonomy language. The identification of \(T\) with a physical curvature or holonomy remains a conjectural interpretation. What is proved here is only the polynomial identity (5.2).
+The term \(S\) is a sum of pairwise Gram interactions. The term \(R\) is the symmetric product of the three edge-pair Gram entries, so it is a cycle-sensitive invariant that still respects the full permutation symmetry of \(a,b,c\). Equivalently,
 
-The encoding also explains why a purely low-order quotient can be blind. A statistic that retains only one-party means or a single pairwise Gram average can preserve the same \((X,Y,Z)\) while losing the cubic loop sector \(T\). A global triangle-local test must keep enough lifted data to decide whether the pairwise Gram sectors and the cubic sector admit one common product-source realization.
+\[
+256P_{\mathrm{EJM}}
+=5-4(\delta_{ab}+\delta_{bc}+\delta_{ca})
++32\,\mathbf 1_{\{a=b=c\}}.
+\]
+
+The last form makes the three pattern weights transparent; the Gram form makes the regular-tetrahedron, three-dimensional realization transparent. The identification of \(R\) with a physical curvature or holonomy remains a conjectural interpretation. What is proved here is only the polynomial identity (5.2).
+
+The encoding also explains why a purely low-order quotient can be blind. A statistic that retains only one-party means or a single pairwise Gram average can preserve the same \((X,Y,Z)\) while losing the cycle-sensitive \(R\) sector. A global triangle-local test must keep enough lifted data to decide whether the pairwise Gram sectors and the symmetric cycle sector admit one common product-source realization.
 
 ## 6. Noise must be typed before it is compared
 
@@ -617,6 +628,8 @@ The repository already contains a finite classical interface in D5/S3/Quantum/En
 The repository also has a reusable product-source skeleton in D5/S3/ConceptDynamics/PartialIdentification/FiniteIndependentSourceGrouping.lean and the associated response-factorization modules. It proves normalization, pushforward regrouping and restriction, and factorization for disjoint readouts. A triangle is the first overlapping case: the three readouts have supports \(\{\beta,\gamma\}\), \(\{\gamma,\alpha\}\), and \(\{\alpha,\beta\}\), so pairwise output independence is false in general even though the source law is a product. The missing theorem is a single three-output pushforward formula with these overlapping supports, followed by a typed FIB readout map.
  
 Those modules certify explicit **local** models and refute two proposed global bounds. They do not formalize the EJM distribution, Fritz embedding, the Renou parameter family, inflation certificates, quantum sources, or a physical noise threshold. This separation is useful: the finite Lean carrier is the correct base for the source-product layer, while the FIB documents supply a separate readout and hidden-fiber layer. The present document defines the bridge but does not claim that bridge is already kernel-checked.
+
+A second repository warning is already machine-checked in D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean: pairwise local laws can have all one-coordinate marginals compatible and still admit no common global state around a three-cycle. This is not a triangle-locality criterion, but it is the exact finite analogue of why local marginal compatibility is weaker than a product-source global lift. The later inflation layer must therefore carry the common lifted state, not only its pairwise projections.
 
 ### 8.1 Finite incidence carrier
 
