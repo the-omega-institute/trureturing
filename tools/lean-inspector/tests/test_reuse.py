@@ -243,28 +243,84 @@ class ReuseTests(unittest.TestCase):
         api = self.dev_repository()
         path = self.root / api.BASE_RECORD
         read_bytes = Path.read_bytes
-        for failure in ('missing', 'malformed', 'unreadable', 'write-failed'):
+        unlink = Path.unlink
+        for failure in ('missing', 'malformed', 'unreadable', 'write-failed', 'unlink-failed'):
             with self.subTest(failure=failure):
                 self.assertTrue(api.record_seed_base(self.root))
                 self.assertIsNotNone(api.read_seed_base(self.root))
                 if failure == 'missing':
                     path.unlink()
-                elif failure == 'malformed':
+                elif failure in ('malformed', 'unlink-failed'):
                     path.write_text('{invalid')
                 def read(source, *args, **kwargs):
                     if source == path and failure == 'unreadable':
                         raise OSError('injected base read failure')
                     return read_bytes(source, *args, **kwargs)
-                with patch.object(Path, 'read_bytes', read), patch.object(api, 'record_seed_base',
+                def remove(source, *args, **kwargs):
+                    if source == path and failure == 'unlink-failed':
+                        raise OSError('injected base unlink failure')
+                    return unlink(source, *args, **kwargs)
+                compatible = api.seed_format(self.report)
+                with patch.object(Path, 'read_bytes', read), patch.object(Path, 'unlink', remove), patch.object(api, 'record_seed_base',
                         wraps=api.record_seed_base) as record:
                     if failure == 'write-failed':
                         record.return_value = False
                     result = api.reuse(self.root, self.report, self.report)
                 self.assertFalse(result['needs_lake'], '[FAIL] base_failure_does_not_block_canonical_reuse')
                 self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
-                self.assertTrue(api.seed_format(self.report)['compatible'])
+                self.assertEqual(compatible, api.seed_format(self.report))
                 api.read_receipt(self.report, api.capture(self.root))
-                self.assertFalse(path.exists(), '[FAIL] canonical_reuse_invalidates_untrusted_base')
+                if failure == 'unlink-failed':
+                    self.assertIn('injected base unlink failure', result['base_maintenance']['detail'])
+                    self.assertIsNone(api.read_seed_base(self.root))
+                else:
+                    self.assertFalse(path.exists(), '[FAIL] canonical_reuse_invalidates_untrusted_base')
+
+    def test_prepare_tolerates_only_already_unknown_base_unlink_failure(self):
+        api = self.dev_repository()
+        path = self.root / api.BASE_RECORD
+        unlink = Path.unlink
+        def remove(source, *args, **kwargs):
+            if source == path:
+                raise OSError('injected base unlink failure')
+            return unlink(source, *args, **kwargs)
+        with patch.object(Path, 'unlink', remove):
+            with self.assertRaises(OSError, msg='[FAIL] trusted_base_invalidation_remains_required'):
+                api.prepare(self.root, self.report)
+            self.assertTrue(publication.member(self.report, api.SUFFIX).is_file())
+            path.write_text('{invalid')
+            try:
+                result = api.prepare(self.root, self.report)
+            except OSError as error:
+                self.fail('[FAIL] unknown_base_maintenance_does_not_block_prepare: ' + str(error))
+        self.assertIn('injected base unlink failure', result['detail'])
+        self.assertIsNone(api.read_seed_base(self.root))
+        self.assertFalse(publication.member(self.report, api.SUFFIX).exists())
+
+    def test_failure_cleanup_removes_only_the_observed_receipt(self):
+        api = self.dev_repository()
+        snapshot = self.root / '.lake/cleanup-receipt'
+        api.reuse(self.root, self.report, self.report, receipt_snapshot=snapshot)
+        receipt = publication.member(self.report, api.SUFFIX)
+        observed = receipt.read_bytes()
+        base = (self.root / api.BASE_RECORD).read_bytes()
+        try:
+            api.invalidate_receipt(self.root, self.report, snapshot)
+        except TypeError as error:
+            self.fail('[FAIL] failure_cleanup_requires_observed_generation: ' + str(error))
+        self.assertFalse(receipt.exists(), '[FAIL] cleanup_invalidates_its_own_failed_receipt')
+        receipt.write_bytes(observed)
+        changed = json.loads(observed)
+        changed['completed'] = ['defaults']
+        receipt.write_bytes(materials.canonical_json(changed))
+        competing = receipt.read_bytes()
+        api.invalidate_receipt(self.root, self.report, snapshot)
+        self.assertTrue(receipt.exists(), '[FAIL] cleanup_preserves_a_different_receipt')
+        self.assertEqual(competing, receipt.read_bytes())
+        self.assertEqual(base, (self.root / api.BASE_RECORD).read_bytes())
+        snapshot.unlink()
+        api.invalidate_receipt(self.root, self.report, snapshot)
+        self.assertEqual(competing, receipt.read_bytes(), '[FAIL] no_observed_receipt_means_no_cleanup')
 
     def test_custom_source_reuse_does_not_inherit_canonical_producer(self):
         api = self.dev_repository()

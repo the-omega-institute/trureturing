@@ -198,6 +198,15 @@ def invalidate_seed_base(repository):
     (repository / BASE_RECORD).unlink(missing_ok=True)
 
 
+def maintain_unknown_seed_base(repository):
+    """Removing an already-untrusted record cannot change report acceptance."""
+    try:
+        invalidate_seed_base(repository)
+    except OSError as error:
+        return dict(reason='unknown-base-removal-failed', detail=str(error))
+    return None
+
+
 def record_seed_base(repository, commit=None):
     """Record a validated seed base only for a clean dev main checkout."""
     try:
@@ -243,9 +252,14 @@ def publication_guard(repository, report):
 def prepare(repository, report):
     """Invalidate production metadata only after claiming the output's guard."""
     with publication_guard(repository, report):
+        maintenance = None
         if report.resolve() == canonical_seed(repository).resolve():
-            invalidate_seed_base(repository)
+            if read_seed_base(repository) is None:
+                maintenance = maintain_unknown_seed_base(repository)
+            else:
+                invalidate_seed_base(repository)
         publication.member(report, SUFFIX).unlink(missing_ok=True)
+        return maintenance
 
 
 def invalidate_receipt(repository, report):
@@ -286,16 +300,18 @@ def _reuse(repository, report, output):
     captured = capture(repository)
     if not captured['eligible']:
         return miss(captured['reason'])
+    canonical = output.resolve() == canonical_seed(repository).resolve()
+    canonical_source = report.resolve() == canonical_seed(repository).resolve()
+    base = read_seed_base(repository) if canonical and canonical_source else None
+    maintenance = (maintain_unknown_seed_base(repository)
+                   if canonical and canonical_source and base is None else None)
     try:
         # The receipt binds bundle bytes that were validated when produced; like
         # a restored olean they are reused as is. Publication still stages a
         # private snapshot that must match the receipt and current inputs.
         receipt = read_receipt(report, captured)
         coordinates = publication.coordinates(repository)
-        canonical = output.resolve() == canonical_seed(repository).resolve()
-        base = (read_seed_base(repository)
-                if canonical and report.resolve() == canonical_seed(repository).resolve() else None)
-        if canonical and base is None:
+        if canonical and not canonical_source:
             invalidate_seed_base(repository)
         publication.publish(report, output, coordinates, repository, mode='cached',
                             expected_hashes=receipt['bundle'], validate=False)
@@ -312,7 +328,10 @@ def _reuse(repository, report, output):
     except INVALID_SEED as error:
         publication.member(output, SUFFIX).unlink(missing_ok=True)
         return miss('seed-rejected', error)
-    return dict(needs_lake=False, reason='complete-entry-reused')
+    result = dict(needs_lake=False, reason='complete-entry-reused')
+    if maintenance is not None:
+        result['base_maintenance'] = maintenance
+    return result
 
 
 class CacheIncompatible(ValueError):
@@ -608,7 +627,9 @@ def main():
         captured = capture(args.repository)
         args.snapshot.write_bytes(materials.canonical_json(captured))
     elif args.command == 'prepare':
-        prepare(args.repository, args.report)
+        maintenance = prepare(args.repository, args.report)
+        if maintenance is not None:
+            print('LEAN_REPORT_BASE_MAINTENANCE ' + json.dumps(maintenance, separators=(',', ':')))
     elif args.command == 'invalidate-receipt':
         invalidate_receipt(args.repository, args.report)
     elif args.command == 'seal':

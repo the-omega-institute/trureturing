@@ -36,7 +36,7 @@ linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及�
 补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor && make lean-report` 后重新播种，
 并说明无法从当前 worktree 确定其位置，不将 Git store 目录当作主 checkout。
 格式相符而输入有差量时，干净的 dev 主 checkout 读取 `.lake/lean-report-seed-base.json` 中的生产提交，
-记录的 `seed_sha256` 绑定 canonical 报告、全部四个 sidecar 和成功收据的实际字节；任一成员不符或缺失时 base 未知。
+记录的 `seed_sha256` 绑定 canonical 报告、全部四个 sidecar 和成功收据的实际字节；任一成员不符或缺失时 base 未知。已未知 base 的记录清理失败只报告维护诊断，不拒绝有效复用或阻断生产准备；实际替换 generation 的 provenance 写入与失效要求不变。
 只有选中的种子是 canonical 种子时才进行可选刷新；自定义种子打印 `reason=non-canonical-seed` 并保留。
 未知 base、不干净、CI、非 dev 或 detached checkout 均在列举前打印各自的 keep 收据并返回。
 可继续选择时列举兼容 Release 分区的最新快照。只有快照清单的 `producer_commit_sha` 是当前 `HEAD` 的祖先、
