@@ -2490,3 +2490,191 @@ remaining recovery convolution or complete signed Robin-tail
 estimate follows from this application. For $\eta\ge4/17$,
 the unsigned strips remain available; no enlarged signed strip
 is supplied here.
+
+## The full complementary hyperbola bounds the actual finite response
+
+The general coprime Mertens estimate preceding (SV11) also applies
+outside that equation's highest-support band. Keep all original
+coefficients and define the continuous complementary ramp
+
+$$
+\chi_R(e)=
+\begin{cases}
+0,&e\le U,\\
+\log(e/U)/r,&U<e\le U_1,\\
+1,&e>U_1.
+\end{cases}
+$$
+
+The actual difference weight satisfies
+$\theta'(e)=\mu(e)(1-\chi_R(e))$. Reuse
+$a_R(n)=\sum_{d\mid n}\lambda(d)$ and the original divisor-product
+formula for $H_A$. The classical identity $\mathbf1*\mu=
+\mathbf1_{\{1\}}$ gives, for every real $y\ge1$,
+
+$$
+H_A(y)=1-
+\sum_{\substack{me\le y\\e>U}}
+ \mu(e)\chi_R(e)a_R(me).
+\tag{SV63}
+$$
+
+This finite sum includes all $m\le y/U$ and the saturated range
+$e>U_1$. It is not restricted to the first activation or to the
+highest LCM band. The following is an application of the already
+cited classical Mertens input, without Lean certification or
+historical originality claim.
+
+For squarefree $d\le R$, let $g=(d,m)$ and $q=d/g$. Then
+$d\mid me$ is equivalent to $q\mid e$, and $(g,q)=1$.
+Writing $e=qb$ retains the exact sign identity
+
+$$
+\mu(d)\mu(qb)
+=\mu(g)\mu(q)^2\mu(b)\mathbf1_{(b,q)=1}.
+$$
+
+In particular the common-factor sign $\mu(g)$ is not assumed
+positive. Use the existing coprime bound preceding (SV11), with
+$\mathcal W(u)=u^{3/5}/(\log u)^{1/5}$,
+
+$$
+|M_q(t)|\ll
+t e^{-c_1\mathcal W(\log t)}\frac q{\varphi(q)}
++t^{3/4}\prod_{p\mid q}(1-p^{-1/2})^{-1},
+\qquad
+M_q(t)=\sum_{\substack{n\le t\\(n,q)=1}}\mu(n).
+$$
+
+The bounds already used in (SV52)--(SV53),
+$q/\varphi(q)\ll r$ and
+$\prod_{p\mid q}(1-p^{-1/2})^{-1}\le e^{C\sqrt r}$ for $q\le R$,
+therefore give, uniformly for $t\ge R$,
+
+$$
+|M_q(t)|\ll t\Xi_R,\qquad
+\Xi_R=e^{-c_2\mathcal W(r)}.
+$$
+
+The remainder divided by $t$ is at most
+$R^{-1/4}e^{C\sqrt r}$, which is absorbed into $\Xi_R$.
+For each nonempty inner interval in (SV63), put $T=y/(mq)$.
+Its lower endpoint is $U/q\ge R$. The weight
+$b\mapsto\chi_R(qb)$ is continuous, nondecreasing, bounded by
+one, has total variation at most one, and vanishes at $U/q$.
+Abel summation thus supplies
+
+$$
+\left|\sum_{U/q<b\le T}
+ \mu(b)\mathbf1_{(b,q)=1}\chi_R(qb)\right|
+ \ll T\Xi_R
+ \qquad(y>U).
+$$
+
+All real endpoints and the ramp's saturation are retained.
+Expand the actual $a_R$ in (SV63) and only then take absolute
+values. The common-factor identity gives
+
+$$
+|H_A(y)-1|
+\ll\frac{y\Xi_R}{r}
+ \sum_{d\le R}\frac{\mu(d)^2\log(R/d)}d
+ \sum_{m\le y/U}\frac{(d,m)}m.
+$$
+
+For $M\ge1$, the classical gcd-divisor identity gives
+
+$$
+\sum_{m\le M}\frac{(d,m)}m
+=\sum_{b\mid d}\frac{\varphi(b)}b
+ \sum_{j\le M/b}\frac1j
+\le(1+\log M)\tau(d).
+$$
+
+Reuse the ordinary divisor harmonic bound
+$\sum_{d\le R}\tau(d)\log(R/d)/d\ll r^3$.
+For $U<y\le2A=2R^8$, $\log(y/U)=O(r)$, so the preceding estimate is
+$O(yr^3\Xi_R)$. Absorbing these fixed logarithmic factors and
+using $r=L/8$ yields a fixed $c_0>0$ such that
+
+$$
+|H_A(y)-1|\ll y\Xi_A,\qquad
+E_A(y)\ll y\Xi_A,
+\qquad
+\Xi_A=e^{-c_0\mathcal W(L)},\quad U<y\le2A.
+\tag{SV64}
+$$
+
+The second bound concerns the complete original positive part:
+$E_A(y)=[(1-H_A(y))-1-\sigma_Ay]_+\le|1-H_A(y)|$
+because $\sigma_A\ge0$. It assumes no sign of $S_A$ and takes
+no average before the positive part. The existing two envelopes
+can be combined with this bound on its stated range by taking
+their minimum.
+
+Together with the existing $E_A(y)=0$ for $y\le U$, this bound
+covers every actual argument $x/p^k$ in the local response problem
+with $A\le x\le2A$. The existing exact
+floor correction at $y=A$, together with
+$\sum_\ell|h(\ell)|\le B_A\ll R^4/r^2$, also gives
+
+$$
+|S_A|\le\frac{|H_A(A)-1|+1+B_A}{A}
+\ll\Xi_A+\frac{1+B_A}{A}\ll\Xi_A.
+$$
+
+This is a two-sided subexponential mean envelope, not the required
+fixed-power mean estimate. For every fixed $\eta>0$,
+$\Xi_A/(A^{-\eta}/L)=L\exp(\eta L-c_0\mathcal W(L))\to\infty$;
+the stated error allowance does not pay that original rate.
+No estimate for the jointly compensated improper tail follows
+by splitting off this mean.
+
+## A critical prime strip is paid at every original fixed exponent
+
+For the same actual source, $A\le x\le2A$ and
+$0<\delta\le1/16$, retain only prime-layer samples with
+$V<x/p\le V(1+\delta)$. Put $P=x/V\asymp A^{1/2}$.
+Their primes lie in $[P/(1+\delta),P)$, which has at most
+$O(\delta P+1)$ integers. Keep the actual
+$0\le w_{N,p,1}\le\log p\ll L$ and use (SV64). This gives
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{V<x/p\le V(1+\delta)}
+ w_{N,p,1}E_A(x/p)
+ \ll L\Xi_A(\delta+A^{-1/2}).
+\tag{SV65}
+$$
+
+The second term includes the outer integer endpoint error.
+For every original fixed $0<\eta<1/2$, choose
+
+$$
+\delta_{\mathrm{crit}}
+=A^{-\eta}\exp\!\left(\frac{c_0}{2}\mathcal W(L)\right).
+\tag{SV66}
+$$
+
+This tends to zero. The first term in (SV65) is
+$L A^{-\eta}e^{-c_0\mathcal W(L)/2}
+=O(A^{-\eta}/L^2)$, and the endpoint term has the additional
+strict power margin $1/2-\eta>0$. Thus this actual critical strip
+costs $O_\eta(A^{-\eta}/L^2)$ at the original target scale.
+
+Here $p\asymp R^4>U_1$. Every nonzero original LCM coefficient
+uses $d\le R$, $e\le U_1$; its support therefore contains no such
+$p$. The original and coprime responses coincide, and no common
+sampling-prime contribution has been omitted. The previously paid
+sampled approximation and deletion rules can still be used on
+this subset.
+
+The extra width factor in (SV66) exceeds every pre-fixed power
+of $L$, but the width remains $A^{-\eta+o(1)}$ and shrinks.
+This does not improve its fixed power exponent. At fixed width,
+(SV65) gives only subexponential decay in $L$, which does not
+certify the original $A^{-\eta}$ budget. The remaining critical
+samples, same-source mean rate, other recovery terms and complete
+signed Robin tail retain their original obligations; no RH
+conclusion or estimate for an arbitrary new polynomial positive
+part is asserted.

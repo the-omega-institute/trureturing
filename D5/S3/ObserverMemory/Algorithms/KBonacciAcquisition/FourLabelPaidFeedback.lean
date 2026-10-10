@@ -68,7 +68,7 @@ def SelectedPresetPrice {Y : Type u} (k m : ℕ) (hk : 0 < k)
     (alphabet : Bool) (f : Option (LiveRecord k) → Y) : ℕ∞ :=
   FullPositiveWindowPrice.BudgetPrice (OriginalSelectedPresetFeasible k m hk alphabet f)
 
-private theorem coprime (m : ℕ) (hm : 5 ≤ m) : Nat.gcd m (2 * m - 2 + 1) = 1 := by
+theorem coprime (m : ℕ) (hm : 5 ≤ m) : Nat.gcd m (2 * m - 2 + 1) = 1 := by
   have h : Nat.Coprime m (m - 1) := by
     apply (Nat.coprime_self_sub_right (m := 1) (n := m) (by omega)).2
     exact Nat.coprime_one_right m
@@ -746,4 +746,5 @@ theorem original_four_label_paid_feedback {Y : Type u} (m : ℕ) (hm : 5 ≤ m)
 
 #print axioms original_four_label_paid_feedback
 
+#print axioms coprime
 end D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.FourLabelPaidFeedback
