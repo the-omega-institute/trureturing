@@ -583,12 +583,16 @@ private theorem rho_nonneg {epsilon H : ℝ} (heps : epsilon ≤ 1) (hH : 1 ≤ 
     0 ≤ rho epsilon H := by
   unfold rho
   apply mul_nonneg (sub_nonneg.mpr heps)
-  exact sub_nonneg.mpr (one_div_le_one_div_of_le (by norm_num) hH)
+  have hinv : 1 / H ≤ 1 := by
+    simpa using (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 1) hH)
+  exact sub_nonneg.mpr hinv
 
 private theorem rho_le_one {epsilon H : ℝ} (heps0 : 0 ≤ epsilon)
     (hH : 1 ≤ H) : rho epsilon H ≤ 1 := by
   have hfactor : 0 ≤ 1 - 1 / H := by
-    exact sub_nonneg.mpr (one_div_le_one_div_of_le (by norm_num) hH)
+    have hbound : 1 / H ≤ 1 := by
+      simpa using (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 1) hH)
+    exact sub_nonneg.mpr hbound
   have hinv : 0 ≤ 1 / H := by positivity
   unfold rho
   calc
