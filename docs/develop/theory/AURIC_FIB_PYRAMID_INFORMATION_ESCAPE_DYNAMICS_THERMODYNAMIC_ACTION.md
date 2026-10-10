@@ -1003,12 +1003,13 @@ a\longmapsto -a-6\pmod W
 \rho_W(H_+)=\rho_W(H_-),\qquad
 \varepsilon_W(H_+)=\varepsilon_W(H_-).
 \]
-这是一条比小模数表更强的有限定理：只读候选密度的观察者在任何轮层都看不见三胞胎手性。要让逃逸发生，读出必须保留 residue 的有序位置、镜像奇量、实际素数标签或三阶联合事件。
+这是上游单位取负、子类型等价和有限基数供应在轮筛上的应用：只读候选密度的观察者在任何轮层都看不见三胞胎手性；其参数对应与来源见 §11.2.6。要让逃逸发生，读出必须保留 residue 的有序位置、镜像奇量、实际素数标签或三阶联合事件。
 
 在小轮上可以直接看到“密度相同、方向不同”。有限枚举得到
 
 | 轮模数 \(W\) | \(C_j(H_+)\) | \(|C_j(H_+)|/W\) | \(C_j(H_-)\) | \(|C_j(H_-)|/W\) |
 |---:|---|---:|---|---:|
+| \(2\) | \(\{1\}\) | \(1/2\) | \(\{1\}\) | \(1/2\) |
 | \(6\) | \(\{5\}\) | \(1/6\) | \(\{1\}\) | \(1/6\) |
 | \(30\) | \(\{11,17\}\) | \(2/30\) | \(\{7,13\}\) | \(2/30\) |
 | \(210\) | \(\{11,17,41,101,107,137,167,191\}\) | \(8/210\) | \(\{13,37,67,97,103,163,187,193\}\) | \(8/210\) |
@@ -1081,7 +1082,7 @@ q_+-q_-=\lambda(1,-1,-1,1),
 
 ### 11.2.5. 与量子三体关联的接口
 
-三胞胎方向是一个三阶观测。经典概率中，固定全部一阶和二阶边缘仍可能有不同的三点联合律；在量子语言中，二体约化态也不能一般决定三体态。可把 \(\chi\) 的连续化代理写成三体累积量，或在量子提升中使用
+三胞胎方向可以由平移不变三阶观测分离；原点前缀仪器则保留不同的位置数据。经典概率中，固定全部一阶和二阶边缘仍可能有不同的三点联合律；在量子语言中，二体约化态也不能一般决定三体态。可把 \(\chi\) 的连续化代理写成三体累积量，或在量子提升中使用
 
 \[
 C_3=\operatorname{Tr}\!\left(\rho\,Z_1Z_2Z_3\right)
@@ -1091,41 +1092,85 @@ C_3=\operatorname{Tr}\!\left(\rho\,Z_1Z_2Z_3\right)
 
 相应地，若把三胞胎取向看成镜像奇变量，则它自然进入奇的三阶通道；二阶 pair Gram 是镜像偶的，三阶方向是镜像奇的。这与仓库中“pair Gram 相同而 arithmetic three-point correlation 不同”的审计结论一致，也解释了为什么只研究二阶谱量不足以决定三胞胎逃逸。
 
-### 11.2.6. 可形式化的下一步
+### 11.2.6. 上游供应的轮筛应用与后续接口
 
-形式化要先固定观察商，再把通用反射定理与具体有限 witness 分开。当前提交的
-PrimeTripletWheel.lean 采用第一阶段的通用接口：在任意非零模数 (W) 的
-(ZMod,W) 上定义两个有向轮的可容许谓词，证明仿射反射
-[
-ho_W(a)=-a-6
-]
-是 involution，并证明
-[
-A_+(a)Longleftrightarrow A_-(ho_W(a)).
-]
-由此得到两个候选子类型的等势和相同基数。这个定理是任意非零模数上的内容
-定理，不依赖有限枚举，也不使用实际素数三胞胎的无穷性。
+固定 \(W\in\mathbb N\)、\(W\ne0\)，令 \(a\in\mathbb Z/W\mathbb Z\)。把两个有向轮的可容许条件写为
+\[
+A_+(a)=\operatorname{IsUnit}(a)\land
+\operatorname{IsUnit}(a+2)\land\operatorname{IsUnit}(a+6),
+\]
+\[
+A_-(a)=\operatorname{IsUnit}(a)\land
+\operatorname{IsUnit}(a+4)\land\operatorname{IsUnit}(a+6).
+\]
+这里的 \(\operatorname{IsUnit}\) 是模环中的单位条件；对自然数代表元，
+它由 `ZMod.isUnit_iff_coprime` 对应到与 \(W\) 互素的轮筛条件。
+仿射反射
+\[
+\rho_W(a)=-a-6
+\]
+满足
+\[
+\rho_W(\rho_W(a))=a,\qquad
+\rho_W(a)+4=-(a+2),\qquad
+\rho_W(a)+6=-a.
+\]
+第一式是环恒等式；后两式和 \(\rho_W(a)=-(a+6)\) 将三个单位条件逆序对应。
+由单位取负的不变性得到
+\[
+A_+(a)\Longleftrightarrow A_-(\rho_W(a)).
+\]
+用同一个反射作逆映射，就得到
+\[
+\{a\in\mathbb Z/W\mathbb Z:A_+(a)\}\simeq\{b\in\mathbb Z/W\mathbb Z:A_-(b)\},\qquad
+|\{a:A_+(a)\}|=|\{b:A_-(b)\}|.
+\]
+非零模数保证两边有限；这一步不要求平方自由性，也不使用实际素数三胞胎的无穷性。
 
-W=30 的原点前缀数值和 W=210 的三点跨度数值是 Foundational Formulas
-第十六节、第二十七节中的有限审计证书。它们在本阶段作为理论层 witness，
-不被误写成 Lean 的无穷性结论或 CI 结果。后续若要把具体 witness 也升格到
-Lean，应把有限读出定义、观察商和相应 Scribe 声明一起提交。
+上述推导明确应用 Mathlib 修订
+`db584cd6d46c92f209a44c0f1c829460d327499d` 的既有供应，而非新的独立内容定理。
+参数与供应对应如下：
 
-下一阶段的接口仍然是：
+- [ZMod.commRing](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/ZMod/Defs.lean#L175)
+  取 \(n=W\)，提供上述反射恒等式所在的交换环；
+  [IsUnit.neg](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Ring/Units.lean#L98)
+  与 [IsUnit.neg_iff](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Ring/Units.lean#L102)
+  分别应用于 \(a,a+2,a+6\)，提供单位取负的不变性。
+- [Function.Involutive.toPerm](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Equiv/Basic.lean#L774)
+  取 \(f=\rho_W\)，再将
+  [Equiv.subtypeEquiv](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Equiv/Basic.lean#L262)
+  的谓词取为 \(A_+,A_-\)，由逐点等价得到候选子类型的等价。
+- [ZMod.fintype](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/ZMod/Defs.lean#L158)
+  取 \(n=W\ne0\)；再使用
+  [Finite.of_fintype](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Fintype/EquivFin.lean#L170)、
+  [Subtype.finite](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Fintype/EquivFin.lean#L195)
+  与 [Fintype.ofFinite](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Fintype/EquivFin.lean#L179)
+  取得两个候选子类型的有限结构。
+  [Fintype.card_congr](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Fintype/Card.lean#L67)
+  应用于该子类型等价，提供基数相等。
+- [ZMod.isUnit_iff_coprime](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/ZMod/Basic.lean#L809)
+  取自然数代表元 \(m\) 和模数 \(n=W\)，提供单位条件与轮筛解释之间的对应。
 
-- 定义有序间隙和归一化手性 (chi)，证明反射翻转 (chi)；
-- 定义有限轮候选、二点相关和三点相关，并显式标注 origin-fixed 或
-  translation-invariant 观察商；
-- 证明具体的 W=30、W=210 witness 与 LayeredCapture 的首捕获层相容；
-- 将三点方向坐标接入 AURIC 的 (kappa)-fiber，而不把候选密度当成实际
-  prime-triplet count。
+任意模数的参数化及不依赖枚举，本身不提供新的逃逸内容。这条应用链没有在本交付中成为
+新的 Lean 准入或冻结结论；本节不声称完成了该应用的内核核验。
+保留的数学意义是把候选密度、定向读出和实际素数计数分成不同对象。
 
-实际的 (T_H(x)) 只作为外部算术输入，不放进第一阶段定理。这样形式化对象
-仍是有限、可计算、可审计的离散动力学；当以后加入经验素数数据时，只是给这
-条有限轨迹附加观测，而不是把数值样本误充成普遍定理。
+\(W=30\) 的原点前缀数值和 \(W=210\) 的三点跨度数值来自 Foundational Formulas
+§16；§27 解释含重复素因子模数上的轮商。它们在这里是有限数学见证，不能据此宣称
+实际素数三胞胎无穷，也不能将未形式化的读出称作内核已核验结论。
 
+后续接口仍须分别处理：
 
-### 11.2.7. 已有轮筛定理给出的两种三点捕获层
+- 有序间隙和归一化手性 \(\chi\)，以及反射翻转 \(\chi\) 的对应；
+- 有限轮候选、二点相关、三点相关和固定原点前缀，并明确各自的观察商；
+- \(W=6\) 的首次原点前缀分离、\(W=30\) 的后续原点见证，以及
+  \(W=210\) 的首次平移不变三点分离，各自与 LayeredCapture 接口的相容性；
+- 三点方向坐标进入 AURIC 的 \(\kappa\)-fiber 所需的同源编码假设。
+
+实际 \(T_H(x)\) 仍是独立的算术输入。给有限轮轨迹附加经验素数观测，不会把候选密度
+转换为实际 prime-triplet count，也不会把有限样本转换为普遍素数分布定理。
+
+### 11.2.7. 原点前缀与平移不变三点相关的不同捕获层
 
 前面的 \(K_3\) 必须带上观测商。令
 
@@ -1142,12 +1187,15 @@ O_2(H,W)=\bigl(C_{H,W}(s)\bigr)_s,
 O_3(H,W)=\bigl(C^{(3)}_{H,W}(s,t)\bigr)_{s,t}.
 \]
 
-另定义固定原点的前缀读出：
+另定义固定原点的前缀读出。取 \(b\in\mathbb N\)，在整数位置上周期延拓轮指示函数：
 
 \[
-P_{H,W}(b)=
-\sum_{1\le r\le b}a_{H,W}(r).
+P_{H,W}(b)=\sum_{1\le r\le b}a_{H,W}(r\bmod W),\qquad
+O_{\mathrm{origin}}(H,W)=\bigl(P_{H,W}(b)\bigr)_{b\in\mathbb N}.
 \]
+
+此定义允许 \(b\ge W\)，完整周期按次数计入。原点前缀是保留位置标签的一阶轮指示读出，
+不是平移不变三点相关；\(K_3\) 的下标在此标记三点模板，而不表示前缀仪器的关联阶数。
 
 基线理论卷第十六节和第二十七节已经给出以下严格桥接。反射
 
@@ -1175,21 +1223,54 @@ K_3^{\mathrm{TI}}=4.
 
 这里的新增素数是 \(7\)。它第一次破坏两个三胞胎轮之间的循环平移等价。
 
-固定原点的读出给出另一层：
-
+固定原点的前缀读出首次在第二层分离。第一层 \(W_1=2\) 时，
 \[
-P_{H_+,30}(10)=0,
-\qquad
-P_{H_-,30}(10)=1,
+C_1(H_+)=C_1(H_-)=\{1\},
+\]
+因为两个模板的所有偏移都为偶数。因此两个周期指示函数逐点相同，所有
+\(b\in\mathbb N\) 的前缀均相等；没有更早的正轮层能够分离。
+第二层 \(W_2=6\) 时，奇数条件加上模三的条件分别给
+\[
+C_2(H_+)=\{5\},\qquad C_2(H_-)=\{1\}.
+\]
+取 \(b=1<6\)，有
+\[
+P_{H_+,6}(1)=0,\qquad P_{H_-,6}(1)=1.
+\]
+两份单点集合的平移不变二点相关却同为
+\[
+C_{H_+,6}(s)=C_{H_-,6}(s)=
+\begin{cases}1,&s\equiv0\pmod6,\\0,&s\not\equiv0\pmod6.\end{cases}
+\]
+第一层的二点相关也由同一单点公式给出，模数换为二。故上述首捕获定义给
+\[
+K_3^{\mathrm{origin}}=2.
 \]
 
-所以
-
+即使只固定 \(b=10\)，在允许重复周期的前缀定义下，\(1\le r\le10\) 内模六的合法正整数分别为
+\(\{5\}\) 和 \(\{1,7\}\)，所以
 \[
-K_3^{\mathrm{origin}}=3.
+P_{H_+,6}(10)=1,\qquad P_{H_-,6}(10)=2.
 \]
+第一层在同一前缀的读数均为五，故这一固定前缀仪器的首分离层同样为二。
+保留模三十的有效见证：
+\[
+C_3(H_+)=\{11,17\},\qquad C_3(H_-)=\{7,13\},
+\]
+\[
+P_{H_+,30}(10)=0,\qquad P_{H_-,30}(10)=1.
+\]
+它是后续层的分离，不能单独证明首次分离发生于第三层。
 
-这两个层号同时成立并不冲突。它们使用不同的观察商：固定原点保留了绝对位置，平移不变读出把绝对位置压掉，只保留循环结构。
+这与 \(K_3^{\mathrm{TI}}=4\) 使用不同的仪器。第一、二层的两个轮都是循环单点，
+第三层的两个集合相差平移 \(-4\pmod{30}\)，所以这三层的任意阶平移不变相关都相同。
+第四层的三点相关由 Foundational Formulas §16.5 的同标签见证分离：
+\[
+C^{(3)}_{H_+,210}(6,30)=1,\qquad
+C^{(3)}_{H_-,210}(6,30)=0.
+\]
+原点前缀保留绝对位置；平移不变三点相关忘掉绝对位置，保留关系结构。
+两者的首捕获层分别为二和四，不能互换。
 
 #### 11.2.7.1. 二维观测晶格：素数层与读出阶数
 
@@ -1213,10 +1294,11 @@ O_{j,k}(x)=O_{j,k}(y).
 
 - \(k=2\) 的 pair-correlation 和全部 pair-Gram 谱矩在反射取向之间保持
   相同，因此沿 \(j\) 增长也不会自动恢复三点方向；
-- \(k=3\) 的有序三点读出在 \(W_3=30\) 的 origin-fixed chart 已有分离，
-  在 translation-invariant chart 要等到 \(W_4=210\)；
-- \(k=1\) 的候选密度在所有轮层保持相同，因而只记录 arithmetic cost，
-  不记录手性。
+- \(k=3\) 的平移不变三点相关在 \(W_1,W_2,W_3\) 相同，首次分离在 \(W_4=210\)；
+- 另一个保留原点及位置标签的前缀仪器在 \(W_2=6\) 首次分离，
+  \(W_3=30,b=10\) 只是其后续见证，不能归作平移不变三阶读出；
+- \(k=1\) 若只取平移不变的候选密度，在所有轮层保持相同，因而只记录 arithmetic cost，
+  不记录手性；保留位置标签的一阶前缀则具有前述不同的分离能力。
 
 因此三维金字塔 \((X,Y,Z)\) 与二维观测晶格并不是两个互斥空间。完整层状态
 应写成
@@ -1339,41 +1421,29 @@ G=2I_7+2J_7,
 
 形式化时必须分别定义 pairCorr 与 tripleCorr。不能尝试从 Gram 的谱矩反推出三胞胎方向。
 
-### 11.2.10. 形式化接口与已知真源
+### 11.2.10. 应用范围、来源与尚未完成的形式化
 
-当前提交的 Lean/Scribe 真源是：
+§11.2.6 已给出上游单位取负、反射等价和有限基数供应的完整参数对应。
+该应用解释了每个非零模数下两个轮候选集等势，以及为何候选密度不识别方向；
+它没有产生新的独立内容定理。本文中的轮筛应用尚未取得本交付的 Lean 准入或冻结，
+也不声称已完成这些有限读出、首捕获层或与 AURIC 隐藏纤维接口的内核核验。
+理论正文的 \(\chi=(g_2-g_1)/2\) 仍是两个直径六模板的定向坐标，
+并非由候选基数自动恢复的量。
 
-- plusAdmissible / minusAdmissible：
-  \((W:\mathbb N)\to[\mathrm{NeZero}\ W]\to ZMod\,W\to Prop\)；
-- reflect：
-  \(\mathrm{reflect}\ W\ a=-a-6\)；
-- reflect_involutive：
-  \(\mathrm{reflect}\ W(\mathrm{reflect}\ W\ a)=a\)；
-- plus_reflect_iff：
-  \(\mathrm{plusAdmissible}\ W\ a\Longleftrightarrow
-  \mathrm{minusAdmissible}\ W(\mathrm{reflect}\ W\ a)\)；
-- reflectEquiv：
-  \(\mathrm{PlusResidue}\ W\simeq\mathrm{MinusResidue}\ W\)；
-- candidate_space_card_eq：
-  两个候选子类型在每个 \(W\ne0\) 时具有相同的有限基数。
+原点前缀的首捕获层是 \(K_3^{\mathrm{origin}}=2\)，其较早层不分离和模六见证
+由 §11.2.7 的逐项推导给出。\(W=30,b=10\) 的原点见证继续成立，
+但不承担首次性。平移不变三点仪器仍有 \(K_3^{\mathrm{TI}}=4\)，
+\(W=210,(6,30)\) 的见证以及前三层的平移等价分别给出分离和无更早分离。
+这些是有限数学推导，不是本交付新增的 machine-checked declarations；
+实际 \(T_H(x)\) 的无穷性和全 RH/Robin 目标仍未由它们解决。
 
-这组声明把“候选密度相同”提升为任意非零模数上的一般等势定理，同时保留
-三点方向作为观察商依赖的坐标。理论正文用归一化手性
-\(\chi=(g_2-g_1)/2\) 标记两个直径六模板的方向；当前 Lean 核心只冻结被
-反射等价链实际消费的 wheel-admissibility 与候选空间基数结论。
+对应来源为：
 
-W=30 的 origin witness、W=210 的 translation-invariant triple witness、
-以及 \(K_3^{\mathrm{origin}}=3\)、\(K_3^{\mathrm{TI}}=4\) 是 Foundational
-Formulas §15、§16、§27 的有限理论证书。它们尚未被本次 Lean 文件声称为
-machine-checked declarations；下一阶段需连同 finite readout、观察商和
-Scribe 证据一起升格。实际 \(T_H(x)\) 的无穷性仍不在形式化范围内。
-
-对应真源为：
-
-- Foundational Formulas §15、§16、§27；
-- LayeredCapture 的首捕获接口；
-- triplet-wheel audit 的有限相关计算；
-- D5/S3/Arith/PrimeTripletWheel.lean 与同名 Scribe/Blueprint 条目。
+- Foundational Formulas §15 的同源联合概率与纤维坐标；
+- Foundational Formulas §16 的二点障碍、三点恢复及 \(W=30,W=210\) 见证，
+  以及 §27 的含重复素因子轮商；
+- LayeredCapture 的既有首捕获接口，其向本节仪器的形式化接入仍待完成；
+- §11.2.6 所列固定修订的 Mathlib 供应。
 
 ## 12. 可逐步形式化的定理包
 
@@ -1622,7 +1692,7 @@ v_{\mathrm{ext}}^2+v_{\mathrm{int}}^2=c^2
 - 黄金层到金字塔高度 \(r_k,Z_k\) 的显式 embedding。
 - Euclid 素数轨迹、Fibonacci projective rank 与 κ 耗散之间的类型化接口。
 
-这些是理论层的新推导；本次提交另外加入了 PrimeTripletWheel 的通用 ZMod 反射与等势 Lean/Scribe 证据层。W=30、W=210 的具体有限 witness 仍按理论审计记录，未冒称为本次 Lean 声明。文中没有修改 judge、CI 或既有定义，也没有把理论模型标成物理实验定律。
+这些是理论层的模型推导；轮筛反射与等势部分明确应用 §11.2.6 所列上游供应，不作为新的独立数学内容。模六的首次原点前缀分离、模三十的后续原点见证和模二百一十的平移不变三点见证仍是有限数学论证，尚未成为本交付新增的 Lean 准入、冻结或内核核验结果。其形式化接口与实际物理实现均保留各自尚未完成的义务。
 
 ### 建议的下一批 Lean 目标
 
