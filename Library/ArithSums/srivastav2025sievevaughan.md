@@ -132,3 +132,57 @@ $\mathscr F_\kappa$ are zero. The cited theorem bounds the uncentered
 $\psi(x)$; it states no estimate for the centered difference
 $\psi(x)-x$ at this frequency. Its nonzero-frequency savings cannot be
 substituted for the original signed tail merely by changing coordinates.
+
+## The same-source transport obligation
+
+Use the [existing jointly selected source class](../Arith/caveney2012sacaga.md#restrict-the-unpaid-signed-estimate-to-this-joint-source-class),
+with its same actual integer $N$, clock $A=\log N$, own CA price,
+proper GA1, regularity and comparison against every integer $m\ge N$.
+That source application is not Lean certified. Its fixed excess exponent
+$0<\eta<1/2$ is independent of the parameter $\kappa$ in (SV3).
+
+If (SV1) is used as the recovery supplier, write its entire right-hand side as
+
+$$
+\mathcal C(n)=\bigl(h*\log-\mathbf 1*h*\Lambda_{\le V}
+ +[(\mathbf 1*\theta)(\mathbf 1*\lambda)]*\Lambda_{>V}
+ +\Lambda_{\le V}\bigr)(n).
+$$
+
+For any chosen normalized weights, the unpaid quantitative input is a
+same-source lower bound of the form
+
+$$
+\sqrt A\log A\,
+\lim_{Y\to\infty}\int_A^Y
+ \left(\sum_{n\le t}\mathcal C(n)-t\right)
+ \frac{1+\log t}{t^2\log^2t}\,dt
+\ge-B_{\rm new}(A),
+\qquad
+B_{\rm new}(A)=o\!\left(A^{1/2-\eta}\log A\right).
+\tag{SV4}
+$$
+
+The weight choice may depend on $N$, but all terms in $\mathcal C$ must
+use that same choice. Equation (SV1) provides the exact full
+$\Lambda$ recovery in this expression, not an estimate for (SV4).
+The subtracted baseline is still $t$ and the outer integration still
+starts at the actual $A$. The inner summatory functions retain terms
+below $A$ and all prime powers; the finite $\Lambda_{\le V}$ contribution
+and every convolution crossing a cutoff remain present. The limit in
+(SV4) is taken for the joint centered expression, without asserting
+separate convergence of the components.
+
+The original account
+
+$$
+-X_N=I_\psi(A)+K_N(A),\qquad
+X_N=\log G(N)-\gamma,
+$$
+
+keeps its original $K_N(A)$. Neither the norm estimates used for the
+type-II sums nor (SV3) supplies a sign or a rate for (SV4) on this
+selected class. A future estimate must also justify its connection to
+the actual CA competitors of this $N$. The source contributes an exact
+alternative recovery mechanism and the existing additive-frequency
+expansion; it contributes no new signed Robin margin in this application.
