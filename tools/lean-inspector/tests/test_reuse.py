@@ -90,7 +90,7 @@ class ReuseTests(unittest.TestCase):
         import reuse
         self.bundle()
         captured = reuse.capture(self.root)
-        reuse.seal(self.root, self.report, captured, publication.digest(self.report))
+        reuse.seal(self.root, self.report, captured, publication.bundle_identity(self.report))
         return reuse
 
     def test_execution_registration_is_explicit_and_strict(self):
@@ -201,7 +201,7 @@ class ReuseTests(unittest.TestCase):
     def test_seed_base_record_is_written_after_successful_dev_seal(self):
         api = self.dev_repository()
         record = json.loads((self.root / '.lake/lean-report-seed-base.json').read_text())
-        self.assertEqual(record['schema'], 'stratalint-lean-report-seed-base-v1')
+        self.assertEqual(record['schema'], 'stratalint-lean-report-seed-base-v2')
         self.assertEqual(record['producer_commit_sha'],
                          subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'],
                                                  text=True).strip())
@@ -216,6 +216,36 @@ class ReuseTests(unittest.TestCase):
         self.assertEqual(api.probe(self.root, self.report), before)
         self.assertEqual(api.seed_format(self.report),
                          {'report_format': publication.selection.REPORT_FORMAT, 'compatible': True})
+
+    def test_canonical_reuse_preserves_original_producer(self):
+        api = self.dev_repository()
+        base = api.read_seed_base(self.root)
+        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '--allow-empty', '-qm', 'unchanged report inputs'], check=True)
+        self.assertFalse(api.reuse(self.root, self.report, self.report)['needs_lake'])
+        self.assertEqual(base, api.read_seed_base(self.root),
+                         '[FAIL] canonical_reuse_preserves_original_producer')
+
+    def test_custom_source_reuse_does_not_inherit_canonical_producer(self):
+        api = self.dev_repository()
+        canonical, base = self.report, api.read_seed_base(self.root)
+        original = api.seed_identity(canonical)
+        self.write('D5/A.lean', 'def a := 2\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True)
+        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '-qm', 'new custom report inputs'], check=True)
+        self.report = self.output
+        self.report.parent.mkdir(parents=True, exist_ok=True)
+        self.receipt()
+        self.assertEqual(base, api.read_seed_base(self.root))
+        self.assertFalse(api.reuse(self.root, self.report, canonical)['needs_lake'])
+        self.assertNotEqual(original, api.seed_identity(canonical))
+        self.assertIsNone(api.read_seed_base(self.root),
+                          '[FAIL] custom_source_cannot_inherit_canonical_producer')
+        self.assertFalse((self.root / api.BASE_RECORD).exists())
+        self.assertFalse(api.probe(self.root, canonical)['needs_lake'])
 
     def dev_repository(self):
         self.write('.gitignore', '.lake/\nseed/\noutput/\n')
@@ -253,11 +283,27 @@ class ReuseTests(unittest.TestCase):
         api = self.dev_repository()
         record = self.root / api.BASE_RECORD
         contents = json.loads(record.read_text())
-        contents['report_sha256'] = 'f' * 64
+        contents['seed_sha256'] = 'f' * 64
         record.write_text(json.dumps(contents))
         self.assertIsNone(api.read_seed_base(self.root), '[FAIL] different_seed_identity_is_unknown')
         self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
         self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_base_identity_covers_every_sidecar_and_receipt(self):
+        api = self.dev_repository()
+        base = api.read_seed_base(self.root)
+        self.assertIsNotNone(base)
+        for suffix in (*publication.SUFFIXES, api.SUFFIX):
+            with self.subTest(suffix=suffix):
+                path = publication.member(self.report, suffix)
+                original = path.read_bytes()
+                try:
+                    path.write_bytes(original + b'\n')
+                    self.assertIsNone(api.read_seed_base(self.root),
+                                      '[FAIL] complete_seed_identity_binds_member_' + suffix)
+                finally:
+                    path.write_bytes(original)
+                self.assertEqual(base, api.read_seed_base(self.root))
 
     def test_dirty_production_invalidates_previous_base(self):
         api = self.dev_repository()
@@ -316,7 +362,7 @@ class ReuseTests(unittest.TestCase):
         receipt = publication.member(self.report, api.SUFFIX).read_bytes()
         with cache_guard(self.root):
             with self.assertRaises(BlockingIOError, msg='[FAIL] seal_requires_exclusive_cache_ownership'):
-                api.seal(self.root, self.report, api.capture(self.root), publication.digest(self.report))
+                api.seal(self.root, self.report, api.capture(self.root), publication.bundle_identity(self.report))
         self.assertEqual(base, (self.root / api.BASE_RECORD).read_bytes())
         self.assertEqual(receipt, publication.member(self.report, api.SUFFIX).read_bytes())
 
@@ -447,7 +493,7 @@ class ReuseTests(unittest.TestCase):
         self.assertTrue(api.probe(self.root, self.report)['needs_lake'],
                         '[FAIL] report_module_mode_change_invalidates_reuse')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
-            api.seal(self.root, self.report, captured, publication.digest(self.report))
+            api.seal(self.root, self.report, captured, publication.bundle_identity(self.report))
 
     def test_checkout_permission_differences_keep_reuse(self):
         # Two checkouts of one commit may differ in permission bits other than
@@ -583,7 +629,7 @@ class ReuseTests(unittest.TestCase):
         captured = api.capture(self.root)
         self.write('D5/A.lean', 'def a := 2\n')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
-            api.seal(self.root, self.report, captured, publication.digest(self.report))
+            api.seal(self.root, self.report, captured, publication.bundle_identity(self.report))
         self.write('D5/A.lean', 'def a := 1\n')
         api = self.receipt()
         publish = publication.publish
@@ -600,7 +646,7 @@ class ReuseTests(unittest.TestCase):
         self.write_policy()
         captured = api.capture(self.root)
         self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
-        api.seal(self.root, self.report, captured, publication.digest(self.report))
+        api.seal(self.root, self.report, captured, publication.bundle_identity(self.report))
         self.assertFalse(publication.member(self.report, '.reuse.json').exists())
         self.policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])
         self.write_policy()
@@ -616,7 +662,9 @@ class ReuseTests(unittest.TestCase):
         # external cache/build processes. No Lean compilation is needed here.
         for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
                          'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
-                         'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh'):
+                         'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh',
+                         'tools/scripts/worktree/lean_cache_release.py',
+                         'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py'):
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, target)

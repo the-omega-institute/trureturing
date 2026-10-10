@@ -25,7 +25,10 @@ INCOMPLETE_INPUTS = (
 DAMAGED_BUNDLES = ('bundle-empty', 'bundle-member-missing', 'bundle-digest-wrong', 'bundle-bytes-changed')
 
 
-class LocalEntryTests(unittest.TestCase):
+from test_seed_generation import SeedGenerationTests
+
+
+class LocalEntryTests(SeedGenerationTests, unittest.TestCase):
     def setUp(self):
         self.fixture = test_reuse.ReuseTests()
         self.fixture.setUp()
@@ -62,7 +65,8 @@ class LocalEntryTests(unittest.TestCase):
             STRATALINT_LEAN_REPORT_LOG_DIR=str(self.root / 'logs'))
         subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
         self.fixture.write('.gitignore', '.lake/\nbin/\nseed/\ndev-seed/\nlogs/\ncalls\n'
-                           'producer.dll\nrelease-manifest.json\nreleases/\nlake-manifest.json\ncustom-output/\n')
+                           'producer.dll\nrelease-manifest.json\nreleases/\nlake-manifest.json\ncustom-output/\n'
+                           '__pycache__/\nbuild/\n')
         subprocess.run(['git', '-C', str(self.root), 'add', 'Makefile', 'tools', 'D5',
                         'Audit.lean', 'Inspector.lean', 'producer.py', 'lean-toolchain',
                         'lakefile.toml', 'lean-report-inputs.json', '.gitignore'], check=True, capture_output=True)
@@ -295,9 +299,9 @@ class LocalEntryTests(unittest.TestCase):
         path = self.root / '.lake/lean-report-seed-base.json'
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps({
-            'schema': 'stratalint-lean-report-seed-base-v1',
+            'schema': self.api.BASE_SCHEMA,
             'producer_commit_sha': commit,
-            'report_sha256': publication.digest(self.output),
+            'seed_sha256': self.api.seed_identity(self.output),
         }) + '\n')
 
     def git_commit(self, message, *, empty=False):
@@ -338,7 +342,7 @@ class LocalEntryTests(unittest.TestCase):
 if [ -n "${FAKE_RELEASE_FAILURE:-}" ]; then echo "$FAKE_RELEASE_FAILURE" >&2; exit 77; fi
 case "$1 $2" in
   "release list") printf '[{"tagName":"%s","createdAt":"2026-10-10T12:00:00Z","isDraft":false}]\\n' "$FAKE_RELEASE_TAG" ;;
-  api\ repos/the-omega-institute/trureturing/releases/tags/*)
+  api\\ repos/the-omega-institute/trureturing/releases/tags/*)
     printf '{"draft":false,"tag_name":"%s","assets":[{"name":"manifest.json","digest":"sha256:%s"},{"name":"lean-build.tgz","digest":"sha256:%s","size":1}]}\\n' "$FAKE_RELEASE_TAG" "$FAKE_RELEASE_MANIFEST_DIGEST" "$(printf a%.0s {1..64})" ;;
   "release download")
     while [ "$#" -gt 0 ]; do
@@ -360,7 +364,7 @@ esac
             producer = self.git_commit('published release', empty=True)
         self.fixture.write('D5/A.lean', 'def a := 2\n')
         self.write_base(local_base)
-        self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.seed)
+        self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.output)
         self.release_stub(producer, failure=failure)
         if fetch_failure is not None:
             self.environment['FAKE_FETCH_FAILURE'] = str(fetch_failure)
@@ -562,6 +566,7 @@ esac
         newer = self.git_commit('local newer base', empty=True)
         self.fixture.write('D5/A.lean', 'def a := 2\n')
         self.write_base(newer)
+        self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.output)
         self.release_stub(older)
         subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True)
         self.git_commit('clean changed inputs', empty=True)
@@ -577,7 +582,7 @@ esac
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(self.calls[0], 'ensure', '[FAIL] foreign_release_keeps_local_seed')
         self.assertNotIn('fetch ', '\n'.join(self.calls))
-        self.assertIn('"reason":"release-not-head-ancestor"', result.stdout)
+        self.assertIn('"reason":"release-head-ancestry-unprovable"', result.stdout)
 
     def test_stale_seed_with_unknown_base_keeps_local_conservatively(self):
         _, release = self.stale_release_fixture()
@@ -609,114 +614,6 @@ esac
         self.assertIn('"action":"keep"', result.stdout)
         self.assertIn('"reason":"release-download-failed"', result.stdout)
 
-    def canonical_release_fixture(self, *, damage=None):
-        """History A < B < C < HEAD, with real archives and the production fetch."""
-        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
-        import lean_cache_release as transport
-        subprocess.run(['git', '-C', str(self.root), 'branch', '-M', 'dev'],
-                       check=True, capture_output=True)
-        shutil.copy2(ROOT / 'tools/scripts/worktree/lean-cache-publish.sh',
-                     self.root / 'tools/scripts/worktree/lean-cache-publish.sh')
-        subprocess.run(['git', '-C', str(self.root), 'add',
-                        'tools/scripts/worktree/lean-cache-publish.sh'], check=True, capture_output=True)
-        older = self.git_commit('archive A', empty=True)
-        local = self.git_commit('local B', empty=True)
-        producer = self.git_commit('archive C', empty=True)
-        shutil.copytree(self.restore, self.output.parent, dirs_exist_ok=True)
-        (self.output.parent.parent / 'producer.txt').write_text('local B')
-        self.write_base(local)
-        self.fixture.write('D5/A.lean', 'def a := 2\n')
-        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True, capture_output=True)
-        self.git_commit('current inputs', empty=True)
-        self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.output)
-        partition = transport.partition_path(self.root)
-        key = transport.release_key(self.root)
-        remote = self.root / 'releases'
-        remote.mkdir()
-        tags = []
-        for index, commit in ((11, older), (12, producer)):
-            tag = transport.prefix(partition, key) + f'ci-{index}-1'
-            tags.append(tag)
-            assets = remote / tag
-            assets.mkdir()
-            build = assets / 'build'
-            shutil.copytree(self.restore, build / 'stratalint')
-            (build / 'producer.txt').write_text(commit)
-            if index == 12 and damage:
-                report = build / 'stratalint' / publication.RAW
-                if damage == 'format':
-                    receipt = publication.member(report, '.reuse.json')
-                    record = json.loads(receipt.read_text())
-                    record['inputs']['report_format'] = 'incompatible-fixture-format'
-                    receipt.write_text(json.dumps(record))
-                else:
-                    publication.member(report, '.materials.zip').unlink()
-            with tarfile.open(assets / transport.ASSET, 'w:gz') as archive:
-                archive.add(build, arcname='build')
-            archive_bytes = (assets / transport.ASSET).read_bytes()
-            digest = hashlib.sha256(archive_bytes).hexdigest()
-            manifest = dict(schema='lean-release-seed-v4', partition=partition, cache_key=key,
-                producer_commit_sha=commit, publication_id=f'ci-{index}-1',
-                workflow_run_id=str(index), workflow_run_attempt='1',
-                archive_sha256=digest, archive_bytes=len(archive_bytes),
-                parts=[dict(name=transport.ASSET, sha256=digest, bytes=len(archive_bytes))])
-            (assets / transport.MANIFEST).write_text(json.dumps(manifest))
-            metadata = dict(draft=False, tag_name=tag, target_commitish='a' * 40,
-                assets=[dict(name=name, digest='sha256:' + hashlib.sha256((assets / name).read_bytes()).hexdigest(),
-                             size=(assets / name).stat().st_size)
-                        for name in (transport.MANIFEST, transport.ASSET)])
-            (assets / 'metadata.json').write_text(json.dumps(metadata))
-        (remote / 'list.json').write_text(json.dumps([
-            dict(tagName=tag, isDraft=False, createdAt=str(i)) for i, tag in enumerate(tags)]))
-        self.script('bin/gh', 'exec ' + shlex.quote(sys.executable) + ' "$0.py" "$@"\n')
-        (self.root / 'bin/gh.py').write_text('''import json, os, pathlib, shutil, sys
-args = sys.argv[1:]
-root = pathlib.Path(os.environ['FAKE_RELEASE_ROOT'])
-with (root / 'calls.jsonl').open('a') as log:
-    log.write(json.dumps(args) + '\\n')
-if args[:2] == ['release', 'list']:
-    print((root / 'list.json').read_text())
-elif args[0] == 'api':
-    assets = root / args[1].rsplit('/', 1)[1]
-    if os.environ.get('FAKE_CHANGED_PRODUCER') and sum(
-            json.loads(line)[0] == 'api' for line in (root / 'calls.jsonl').read_text().splitlines()) > 1:
-        import hashlib
-        manifest = json.loads((assets / 'manifest.json').read_text())
-        manifest['producer_commit_sha'] = os.environ['FAKE_CHANGED_PRODUCER']
-        (assets / 'manifest.json').write_text(json.dumps(manifest))
-        metadata = json.loads((assets / 'metadata.json').read_text())
-        metadata['assets'][0]['digest'] = 'sha256:' + hashlib.sha256((assets / 'manifest.json').read_bytes()).hexdigest()
-        (assets / 'metadata.json').write_text(json.dumps(metadata))
-    print((assets / 'metadata.json').read_text())
-elif args[:2] == ['release', 'download']:
-    tag = args[2]
-    destination = pathlib.Path(args[args.index('--dir') + 1])
-    for i, value in enumerate(args):
-        if value == '--pattern':
-            name = args[i + 1]
-            if tag == os.environ.get('FAKE_ARCHIVE_FAILURE') and name != 'manifest.json':
-                print('injected approved archive failure', file=sys.stderr)
-                sys.exit(56)
-            shutil.copyfile(root / tag / name, destination / name)
-else:
-    raise AssertionError(args)
-''')
-        self.environment.update(FAKE_RELEASE_ROOT=str(remote), GITHUB_ACTIONS='false',
-            PATH=str(self.root / 'bin') + os.pathsep + self.environment['PATH'])
-        return local, producer, tags[-1]
-
-    def seed_bytes(self):
-        build = self.root / '.lake/build'
-        return {str(path.relative_to(build)): path.read_bytes()
-                for path in build.rglob('*') if path.is_file()}
-
-    def refresh_canonical(self):
-        result = subprocess.run([sys.executable, '-B', str(self.root / 'tools/lean-inspector/reuse.py'),
-            'refresh-stale-seed', '--repository', str(self.root)], env=self.environment,
-            text=True, capture_output=True, timeout=30)
-        self.assertEqual(0, result.returncode, '[FAIL] optional_refresh_continues: ' + result.stderr)
-        print('CASE ' + self._testMethodName + '\n' + result.stdout, flush=True)
-        return result
 
     def test_unknown_base_never_lists_or_downloads(self):
         self.canonical_release_fixture()
@@ -753,7 +650,7 @@ else:
         self.canonical_release_fixture()
         self.fixture.bundle()
         publication.publish(self.seed, self.output, publication.coordinates(self.root), self.root)
-        self.api.seal(self.root, self.output, self.api.capture(self.root), publication.digest(self.output))
+        self.api.seal(self.root, self.output, self.api.capture(self.root), publication.bundle_identity(self.output))
         result = self.refresh_canonical()
         self.assertIn('"action":"keep"', result.stdout, '[FAIL] current_seed_prints_decision')
         self.assertIn('"reason":"seed-current"', result.stdout)
@@ -766,7 +663,7 @@ else:
         captured = self.api.capture(self.root)
         self.fixture.bundle()
         publication.publish(self.seed, custom, publication.coordinates(self.root), self.root)
-        self.api.seal(self.root, custom, captured, publication.digest(custom))
+        self.api.seal(self.root, custom, captured, publication.bundle_identity(custom))
         self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes(),
                          '[FAIL] custom_output_preserves_canonical_base')
         self.assertEqual(before, self.seed_bytes())
@@ -783,6 +680,7 @@ else:
         self.assertTrue((self.root / self.api.BASE_RECORD).exists(),
                         '[FAIL] custom_capture_keeps_canonical_base')
         self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+
 
     def test_restore_between_publication_and_seal_preserves_installed_base(self):
         _, producer, _ = self.canonical_release_fixture()
@@ -813,29 +711,6 @@ else:
         self.assertIsNone(self.api.read_seed_base(self.root), '[FAIL] untracked_restore_has_unknown_base')
         self.assertFalse((self.root / self.api.BASE_RECORD).exists())
 
-    def prepare_production_entry(self, *, restore_before_seal=False):
-        self.fixture.bundle()
-        produced_sha256 = publication.digest(self.seed)
-        archive = self.root / '.lake/build/lean-inspector/report.zip'
-        archive.parent.mkdir(parents=True, exist_ok=True)
-        with zipfile.ZipFile(archive, 'w') as bundle:
-            for suffix in publication.SUFFIXES:
-                source = publication.member(self.seed, suffix)
-                bundle.write(source, source.name)
-        self.script('tools/scripts/worktree/lean-cache-run.sh', 'printf "lake %s\\n" "$*" >> calls\n')
-        native = self.root / 'tools/lean-inspector/native.py'
-        if restore_before_seal:
-            text = native.read_text()
-            marker = "    print(f'RAW_LEAN_REPORT path={destination} sha256={identity}')"
-            self.assertIn(marker, text)
-            restore = ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
-                       'fetch', '--repository', str(self.root), '--refresh-stale']
-            native.write_text(text.replace(marker, '    subprocess.run(' + repr(restore)
-                                          + ', check=True)\n' + marker))
-        subprocess.run(['git', '-C', str(self.root), 'add', 'tools/lean-inspector/native.py',
-                        'tools/scripts/worktree/lean-cache-run.sh'], check=True)
-        self.git_commit('clean production fixture', empty=True)
-        return produced_sha256
 
     def test_entry_production_binds_canonical_identity(self):
         self.canonical_release_fixture()
@@ -844,7 +719,7 @@ else:
         self.assertEqual(0, result.returncode, '[FAIL] canonical_production_entry_succeeds: ' + result.stderr)
         self.assertIn('sha256=' + identity, result.stdout)
         record = json.loads((self.root / self.api.BASE_RECORD).read_text())
-        self.assertEqual(identity, record['report_sha256'])
+        self.assertEqual(self.api.seed_identity(self.output), record['seed_sha256'])
         head = subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'], text=True).strip()
         self.assertEqual(head, self.api.read_seed_base(self.root))
         self.assertTrue(self.api.seed_format(self.output)['compatible'])
@@ -864,17 +739,19 @@ else:
         self.assertTrue(self.api.seed_format(canonical)['compatible'])
         self.assertTrue(self.api.seed_format(self.output)['compatible'])
 
-    def test_entry_restore_before_seal_preserves_installed_receipt(self):
-        _, producer, _ = self.canonical_release_fixture()
+    def test_entry_restore_before_seal_is_excluded(self):
+        self.canonical_release_fixture()
         identity = self.prepare_production_entry(restore_before_seal=True)
         result = self.run_entry('--cache-miss-policy', 'build', '--log-dir', str(self.root / 'logs'), direct=True)
-        self.assertNotEqual(0, result.returncode, '[FAIL] replaced_entry_generation_rejects_seal')
-        self.assertIn('published report generation changed before seal', result.stderr)
-        self.assertIn('sha256=' + identity, (self.root / 'logs/publish.stdout.log').read_text(),
-                      '[FAIL] publication_receipt_retains_produced_identity')
-        self.assertEqual(producer, self.api.read_seed_base(self.root))
+        self.assertEqual(0, result.returncode, '[FAIL] guarded_publication_and_seal_succeed: ' + result.stderr)
+        attempt = json.loads((self.root / 'logs/restore-before-seal.json').read_text())
+        self.assertNotEqual(0, attempt['exit'], '[FAIL] restore_is_excluded_before_seal')
+        self.assertIn('"status":"miss"', attempt['stdout'])
+        self.assertIn('sha256=' + identity, result.stdout)
+        head = subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'], text=True).strip()
+        self.assertEqual(head, self.api.read_seed_base(self.root))
         self.assertTrue(self.api.seed_format(self.output)['compatible'],
-                        '[FAIL] replaced_entry_generation_keeps_installed_receipt')
+                        '[FAIL] guarded_generation_keeps_produced_receipt')
 
     def test_approved_archive_failure_never_falls_back_to_older_seed(self):
         local, _, tag = self.canonical_release_fixture()
@@ -904,6 +781,7 @@ else:
         self.assertEqual(1, sum(call[:2] == ['release', 'list'] for call in calls),
                          '[FAIL] approved_fetch_does_not_reselect')
 
+
     def test_changed_manifest_producer_is_rejected_before_installation(self):
         self.canonical_release_fixture()
         before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
@@ -918,11 +796,19 @@ else:
         self.canonical_release_fixture()
         before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
         self.script('tools/scripts/worktree/lean-cache-publish.sh',
+                    'printf "skipped-fetch-ran\\n" >> calls\n'
                     'printf \'LEAN_CACHE_FETCH {"status":"skipped","reason":"fixture skip"}\\n\'\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'tools/scripts/worktree/lean-cache-publish.sh'],
+                       check=True, capture_output=True)
+        self.git_commit('skipped installation fixture', empty=True)
         result = self.refresh_canonical()
         self.assertEqual(before, self.seed_bytes())
         self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
         self.assertIn('"action":"keep"', result.stdout, '[FAIL] zero_exit_is_not_installation')
+        self.assertIn('"reason":"release-installation-skipped"', result.stdout,
+                      '[FAIL] zero_exit_without_installation_has_skipped_reason')
+        self.assertIn('skipped-fetch-ran', (self.root / 'calls').read_text().splitlines(),
+                      '[FAIL] skipped_fetch_branch_is_reached')
 
     def test_dirty_recovery_install_invalidates_previous_base(self):
         self.canonical_release_fixture()

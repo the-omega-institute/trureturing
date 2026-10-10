@@ -10,6 +10,7 @@ complete seed with the current report format before allowing that entry;
 malformed authored registration remains an error.
 """
 import argparse
+from contextlib import nullcontext
 import json
 import os
 from pathlib import Path
@@ -26,7 +27,7 @@ import materials
 import publication
 
 SCHEMA = 'stratalint-lean-report-reuse-v4'
-BASE_SCHEMA = 'stratalint-lean-report-seed-base-v1'
+BASE_SCHEMA = 'stratalint-lean-report-seed-base-v2'
 BASE_RECORD = '.lake/lean-report-seed-base.json'
 SUFFIX = '.reuse.json'
 COMPLETED = ['defaults', 'report', 'publication']
@@ -167,13 +168,11 @@ def canonical_seed(repository):
 
 
 def seed_identity(report):
-    """Read the report identity from its validated publication sidecar."""
-    path = publication.member(report, '.sha256')
-    if path.is_symlink() or not path.is_file() or not report.is_file():
+    """Bind provenance to the complete installed bundle and success receipt."""
+    try:
+        return publication.bundle_identity(report, (*publication.SUFFIXES, SUFFIX))
+    except INVALID_SEED:
         return None
-    match = re.fullmatch(r'([0-9a-f]{64})  ' + re.escape(report.name) + r'\n',
-                         path.read_text(encoding='ascii'))
-    return match[1] if match else None
 
 
 def read_seed_base(repository):
@@ -186,8 +185,8 @@ def read_seed_base(repository):
         commit = record.get('producer_commit_sha')
         if (record.get('schema') != BASE_SCHEMA or not isinstance(commit, str)
                 or re.fullmatch(r'[0-9a-f]{40}', commit) is None
-                or record.get('report_sha256') is None
-                or record['report_sha256'] != seed_identity(canonical_seed(repository))):
+                or record.get('seed_sha256') is None
+                or record['seed_sha256'] != seed_identity(canonical_seed(repository))):
             return None
         return commit
     except (OSError, UnicodeError, ValueError, TypeError, KeyError):
@@ -222,7 +221,7 @@ def record_seed_base(repository, commit=None):
             with os.fdopen(fd, 'wb') as target:
                 target.write(materials.canonical_json({
                     'schema': BASE_SCHEMA, 'producer_commit_sha': source,
-                    'report_sha256': identity}))
+                    'seed_sha256': identity}))
             os.replace(temporary, path)
         finally:
             Path(temporary).unlink(missing_ok=True)
@@ -232,29 +231,45 @@ def record_seed_base(repository, commit=None):
         return False
 
 
-def seal(repository, report, captured, produced_sha256):
+def publication_guard(repository, report):
+    """Canonical writers share the restore guard; custom outputs own no cache seed."""
+    if report.resolve() != canonical_seed(repository).resolve():
+        return nullcontext()
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
     from lean_cache_release import cache_guard
-    with cache_guard(repository):
-        if seed_identity(report) != produced_sha256 or produced_sha256 is None:
-            raise ValueError('published report generation changed before seal')
-        canonical = report.resolve() == canonical_seed(repository).resolve()
-        if canonical:
-            invalidate_seed_base(repository)
-        current = capture(repository)
-        if current != captured:
-            publication.member(report, SUFFIX).unlink(missing_ok=True)
-            raise ValueError('registered inputs changed during report entry')
-        if not captured['eligible']:
-            publication.member(report, SUFFIX).unlink(missing_ok=True)
-            return
-        # A complete receipt becomes visible only with current or unknown provenance.
-        if canonical and not record_seed_base(repository):
-            invalidate_seed_base(repository)
-        write_receipt(report, captured)
+    return cache_guard(repository)
+
+
+def seal(repository, report, captured, produced_sha256):
+    with publication_guard(repository, report):
+        _seal(repository, report, captured, produced_sha256)
+
+
+def _seal(repository, report, captured, produced_sha256):
+    """Seal within the canonical writer's existing exclusive section."""
+    if produced_sha256 is None or publication.bundle_identity(report) != produced_sha256:
+        raise ValueError('published report generation changed before seal')
+    canonical = report.resolve() == canonical_seed(repository).resolve()
+    if canonical:
+        invalidate_seed_base(repository)
+    current = capture(repository)
+    if current != captured:
+        publication.member(report, SUFFIX).unlink(missing_ok=True)
+        raise ValueError('registered inputs changed during report entry')
+    if not captured['eligible']:
+        publication.member(report, SUFFIX).unlink(missing_ok=True)
+        return
+    write_receipt(report, captured)
+    if canonical and not record_seed_base(repository):
+        invalidate_seed_base(repository)
 
 
 def reuse(repository, report, output):
+    with publication_guard(repository, output):
+        return _reuse(repository, report, output)
+
+
+def _reuse(repository, report, output):
     captured = capture(repository)
     if not captured['eligible']:
         return miss(captured['reason'])
@@ -264,6 +279,11 @@ def reuse(repository, report, output):
         # private snapshot that must match the receipt and current inputs.
         receipt = read_receipt(report, captured)
         coordinates = publication.coordinates(repository)
+        canonical = output.resolve() == canonical_seed(repository).resolve()
+        base = (read_seed_base(repository)
+                if canonical and report.resolve() == canonical_seed(repository).resolve() else None)
+        if canonical and base is None:
+            invalidate_seed_base(repository)
         publication.publish(report, output, coordinates, repository, mode='cached',
                             expected_hashes=receipt['bundle'], validate=False)
         # Rebind source evidence after publication; a same-path republish may
@@ -274,6 +294,8 @@ def reuse(repository, report, output):
         if capture(repository) != captured:
             raise ValueError('registered inputs changed during reuse')
         write_receipt(output, captured)
+        if canonical and base is not None and not record_seed_base(repository, base):
+            invalidate_seed_base(repository)
     except INVALID_SEED as error:
         publication.member(output, SUFFIX).unlink(missing_ok=True)
         return miss('seed-rejected', error)
@@ -332,11 +354,14 @@ def seed_format(report):
         return dict(report_format='unavailable', compatible=False)
 
 
-def _is_ancestor(repository, ancestor, descendant):
-    if ancestor == descendant:
+def _ancestry(repository, ancestor, descendant):
+    result = subprocess.run(['git', '-C', str(repository), 'merge-base', '--is-ancestor',
+                             ancestor, descendant], check=False, capture_output=True)
+    if result.returncode == 0:
         return True
-    return subprocess.run(['git', '-C', str(repository), 'merge-base', '--is-ancestor',
-                          ancestor, descendant], check=False).returncode == 0
+    if result.returncode != 1 or _git(repository, 'rev-parse', '--is-shallow-repository') == 'true':
+        return None
+    return False
 
 
 def _seed_mismatch(repository, report):
@@ -356,6 +381,9 @@ def _seed_decision(action, reason, **fields):
 
 def _refresh_stale_seed(repository, report):
     """Optionally replace a stale compatible seed with a strictly newer Release base."""
+    if report.resolve() != canonical_seed(repository).resolve():
+        _seed_decision('keep', 'non-canonical-seed')
+        return report
     mismatch = _seed_mismatch(repository, report)
     if mismatch is None:
         _seed_decision('keep', 'seed-current')
@@ -409,11 +437,15 @@ def _refresh_stale_seed(repository, report):
     except (OSError, subprocess.SubprocessError, ValueError) as error:
         _seed_decision('keep', 'head-unavailable', detail=str(error), release=release)
         return report
-    if not _is_ancestor(repository, release, head):
-        _seed_decision('keep', 'release-not-head-ancestor', release=release, head=head)
+    reachable = _ancestry(repository, release, head)
+    if reachable is not True:
+        _seed_decision('keep', 'release-head-ancestry-unprovable' if reachable is None
+                       else 'release-not-head-ancestor', release=release, head=head)
         return report
-    if base == release or not _is_ancestor(repository, base, release):
-        _seed_decision('keep', 'release-not-newer', local=base, release=release)
+    newer = _ancestry(repository, base, release)
+    if base == release or newer is not True:
+        _seed_decision('keep', 'local-base-ancestry-unprovable' if newer is None
+                       else 'release-not-newer', local=base, release=release)
         return report
     environment = os.environ.copy()
     environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
@@ -507,7 +539,7 @@ def recover_and_reuse(repository, report, output):
             elif not linked:
                 report = _refresh_stale_seed(repository, report)
             # Input differences select Lake's incremental path, not a new cache key.
-            return reuse(repository, report, output)
+            return _reuse(repository, report, output)
     except BlockingIOError as error:
         raise CacheIncompatible(local['report_format'], 'unavailable', 'cache-busy', remediation) from error
 
@@ -519,7 +551,7 @@ def main():
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
-    parser.add_argument('--report-sha256', help='identity returned by this production publication')
+    parser.add_argument('--bundle-sha256', help='complete bundle identity returned by publication')
     parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
                         default='reuse-or-build')
     parser.add_argument('--diagnostics', action='store_true',
@@ -531,22 +563,19 @@ def main():
         parser.error('--output is required')
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
-    if args.command == 'seal' and (args.report_sha256 is None
-            or re.fullmatch(r'[0-9a-f]{64}', args.report_sha256) is None):
-        parser.error('--report-sha256 must be the produced report identity')
+    if args.command == 'seal' and (args.bundle_sha256 is None
+            or re.fullmatch(r'[0-9a-f]{64}', args.bundle_sha256) is None):
+        parser.error('--bundle-sha256 must be the produced bundle identity')
     if args.command == 'refresh-stale-seed':
         return refresh_stale_seed(args.repository)
     if args.command == 'capture':
-        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
-        from lean_cache_release import cache_guard
-        with cache_guard(args.repository):
-            captured = capture(args.repository)
-            if args.report.resolve() == canonical_seed(args.repository).resolve():
-                invalidate_seed_base(args.repository)
-            args.snapshot.write_bytes(materials.canonical_json(captured))
+        captured = capture(args.repository)
+        if args.report.resolve() == canonical_seed(args.repository).resolve():
+            invalidate_seed_base(args.repository)
+        args.snapshot.write_bytes(materials.canonical_json(captured))
     elif args.command == 'seal':
         seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()),
-             args.report_sha256)
+             args.bundle_sha256)
     elif args.command == 'probe':
         result = probe(args.repository, args.report)
         print(json.dumps(result, separators=(',', ':')))

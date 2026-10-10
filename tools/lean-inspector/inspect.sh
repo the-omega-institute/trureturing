@@ -230,10 +230,8 @@ open_logs
 # The writer owns the private clonefile-seeded .lake through the native build.
 run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
-# Publication and seal check their generation; failure cannot erase a restored receipt.
+# Publication and seal share one canonical cache guard.
 PRESERVE_RECEIPT=1
-run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
-run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
-  --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json" \
-  --report-sha256 "$(sed -n 's/^RAW_LEAN_REPORT .* sha256=//p' "$LOG_DIR/publish.stdout.log")"
+run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \
+  "$LOG_DIR/entry-inputs.json"
 cat "$LOG_DIR/publish.stdout.log"

@@ -490,7 +490,16 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
     return rows, origin
 
 
-def publish(root, destination):
+def publish(root, destination, snapshot=None):
+    import reuse
+    repository, output = Path(root), Path(destination)
+    with reuse.publication_guard(repository, output):
+        identity = _publish(root, destination)
+        if snapshot is not None:
+            reuse._seal(repository, output, public.read_json(Path(snapshot).read_bytes()), identity)
+
+
+def _publish(root, destination):
     inputs = public.coordinates(root)
     with tempfile.TemporaryDirectory(prefix='.publish.', dir=state(root)) as directory:
         report = public.unpack(state(root) / 'report.zip', directory)
@@ -502,7 +511,8 @@ def publish(root, destination):
             print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
         # Lake traced this aggregate of production-validated rows.
         identity = public.publish(report, Path(destination), inputs, root, mode=mode, validate=False)
-    print(f'RAW_LEAN_REPORT path={destination} sha256={identity}')
+    print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(Path(destination))}')
+    return identity
 
 
 def main():

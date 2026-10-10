@@ -248,7 +248,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             clone = Path(directory) / 'worktree'
             git('worktree', 'add', '--detach', str(clone), 'HEAD')
             self.root = clone
-            self.env = dict(self.env, PATH=str(clone / 'bin') + os.pathsep + os.environ['PATH'],
+            self.env = dict(self.env, PATH=self.env['PATH'].replace(str(donor / 'bin'), str(clone / 'bin')),
                 LAKE_CACHE_DIR=str(clone / '.lake/artifact-cache'),
                 STRATALINT_LEAN_INPUT_MEMO_ROOT=str(clone / '.lake/input-memo'),
                 STRATALINT_INSPECTOR_ACTIVITY=str(clone / 'activity.jsonl'),
