@@ -225,7 +225,7 @@ private theorem stopped_valid (s : ActivePhase) (ω : Stream) :
 def validStopped (s : ActivePhase) (ω : Stream) : ValidTail s :=
   ⟨stoppedReadWord s ω, stopped_valid s ω⟩
 
-private theorem validStopped_measurable (s : ActivePhase) : Measurable (validStopped s) :=
+theorem validStopped_measurable (s : ActivePhase) : Measurable (validStopped s) :=
   (measurable_stopped_read_word s).subtype_mk
 
 /-- Constructed raw target from the actual acquired history and same unread source. -/

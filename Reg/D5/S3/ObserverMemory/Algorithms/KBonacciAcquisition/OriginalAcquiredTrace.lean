@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition
 open LiteralModel EndpointCells OriginalNarrowCost OriginalExecutionBridge OriginalAcquiredTrace
@@ -171,3 +172,123 @@ end ArchiveLengthAudit
 #print axioms _root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.archive_length
 
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace
+
+namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveReplyAudit
+
+open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition
+open LiteralModel EndpointCells OriginalNarrowCost OriginalAcquiredTrace
+open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+abbrev signature : Signature where
+  Params := ℕ
+  State k := Set (Option (LiveRecord k) × Option (LiveRecord k))
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ k := Set (Option (LiveRecord k) × Option (LiveRecord k)) → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature
+  (fun _ _ A B => A = B) (fun e => nomatch e)
+
+def rejected : Realization signature := realize signature
+  (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (k m : ℕ) (hk : 2 ≤ k) (localAlphabet : Bool)
+    (sourceHistory : List (AllowedBlock k m localAlphabet))
+    (archive : NarrowWindowCost.Archive m)
+    (sourceArchive : ActualArchive k (by omega)
+      (sourceHistory.flatMap (fun action => List.ofFn action.val)) archive)
+    (B : Fin m → Bool) (reply : Option (ZMod 2)),
+    let w := sourceHistory.flatMap (fun action => List.ofFn action.val)
+    let y₀ := NarrowWindowCost.output k (by omega) w
+    let cell : CandidateState k (Option (LiveRecord k)) :=
+      ⟨AcquiredPairs k m (by omega) localAlphabet y₀ archive,
+        ⟨(OriginalRecord k (by omega) w,
+          OriginalRecord k (by omega) (w ++ archiveWords archive)),
+          sourceHistory, rfl, sourceArchive, rfl, rfl⟩⟩
+    R.readout () k (replyFiber k m cell B reply)
+      (AcquiredPairs k m (by omega) localAlphabet y₀ (archive ++ [(B, reply)]))
+
+private theorem actual_positive : arena.Law actual := by
+  intro k m hk localAlphabet sourceHistory archive sourceArchive B reply
+  exact actual_archive_reply k m hk localAlphabet sourceHistory archive sourceArchive B reply
+
+private theorem rejected_negative : ¬ arena.Law rejected := by
+  intro law
+  have impossible := law 2 1 (by decide) false
+    ([] : List (AllowedBlock 2 1 false))
+    ([] : NarrowWindowCost.Archive 1)
+    (by trivial)
+    (fun _ : Fin 1 => false) none
+  cases impossible
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  let A0 : signature.State 2 := ∅
+  let p : Option (LiveRecord 2) × Option (LiveRecord 2) := (none, none)
+  let A1 : signature.State 2 := {p}
+  refine ⟨2, A0, A1, ?_⟩
+  intro h
+  have h0 : (A0 = A0) = (A1 = A0) := by
+    simpa [actual, realize] using congrFun h A0
+  have hEq : A1 = A0 := Eq.mp h0 rfl
+  have hp : p ∈ A1 := by simp [A1]
+  rw [hEq] at hp
+  simpa [A0] using hp
+
+def evidence : Registration arena (type_of%
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.actual_archive_reply)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_positive, rejected, rejected_negative⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_negative
+  dependence := dependence
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.actual_archive_reply)
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str
+    (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str
+      (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Algorithms")
+      "KBonacciAcquisition") "OriginalAcquiredTrace") "actual_archive_reply")
+      "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveReplyAudit/Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveReplyAudit.arena/[anonymous]")
+      "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveReplyAudit.evidence,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨evidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+#print axioms evidence
+#print axioms registration
+
+end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveReplyAudit
