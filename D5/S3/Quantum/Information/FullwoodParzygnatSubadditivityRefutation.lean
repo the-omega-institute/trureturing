@@ -190,8 +190,8 @@ private theorem entropy_eq_trace {n : Type} [Fintype n] [DecidableEq n]
         ((Lean.Name.num (`_private ++ owner) 0) ++ owner ++ `re_trace_cfc)
       let hermitian := Lean.mkIdent `h
       Lean.Elab.Tactic.evalTactic (← `(tactic| rw [$traceIdentity:ident $hermitian:ident]))
-    simp [D5.S3.Quantum.Information.PartialTraceMutualInformation.spectralEntropy,
-      Real.negMulLog, Real.log_abs]
+    unfold D5.S3.Quantum.Information.PartialTraceMutualInformation.spectralEntropy
+    simp only [Real.negMulLog, Real.log_abs]
   · have hsa : ¬ IsSelfAdjoint X := h
     rw [cfc_apply_of_not_predicate (R := ℝ)
       (f := fun x : ℝ => -x * Real.log |x|) X hsa]
