@@ -282,7 +282,19 @@ $$\forall N: Nat, (\forall p: 1 \leq N, (\forall tau: Address \Rightarrow Real, 
 
 The original J_N of the compiled observer is c times its exact full nominal count plus nodeMax. An original allowed source attains that node maximum. Both statements hold for arbitrary real tau and c; later domination and cutoff arguments additionally require nonnegative tau and strictly positive c.
 
-**Definition 1.24 (Faithful lawful baseline table).**
+**Theorem 1.24 (Original node depth).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodes_length`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodes_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original source U and every literal q in nodes U, q.length + 1 is at most U.length. Each descent leaves a nonempty sibling subtree, so its path requires at least one additional leaf per level. This original node geometry supplies bounded-address membership for the pure table and the routed completion horizon.
+
+**Definition 1.25 (Faithful lawful baseline table).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.lawfulPureTable`
 
@@ -307,6 +319,7 @@ For nonnegative tau and positive c, the existing ActualObserverFiniteTable appli
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.emptyRow`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.lawfulPureTable`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodeMax`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodes_length`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nominalCard`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.pureAction`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.pureObserver`
