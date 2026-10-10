@@ -789,3 +789,539 @@ Project mathematical references use the complete public scientific snapshot at `
 - **BV:** Petra van den Bos and Frits Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2), Definitions 7–11 and Figure 3.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Common complete-law flows and finite same-update regeneration
+
+### 11.1 The fixed task and the complete-law domain
+
+Throughout this chapter the source, installed prior, complete future, configuration-risk order and COMPLETE convention are exactly those of Section 2. In particular, $K$ is sampled once before the first paid Read, $\mu(1),\mu(2)>0$, and every supported depth remains a target. The original $C_0$, both accepted seeds, paid equal-pair rejections, full records, write-before-latch, permissions, fourth completion and matching Stop are retained. There is no prescribed hard marginalized-defect or total-resource budget. The finite tables used below belong to the regular stationary class $\mathfrak S_\mu$ of [PAID, Corollary 2.3]. Abstract finite stochastic rules and finitely represented exact samplers remain distinct notions.
+
+Write $\Omega_p,\Omega_\beta$ for the two complete raw carriers of Section 2, and $\infty_p,\infty_\beta$ for their infinite noncompletion outcomes. Prefixing a suspended future by beta maps $\Omega_\beta$ bijectively onto $\Omega_p\setminus\{\alpha\}$; prefixing a p future by alpha maps $\Omega_p$ bijectively onto $\Omega_\beta\setminus\{\beta\}$. These maps also send the corresponding infinite outcomes to the infinite outcomes. On a current record fibre they include exactly the next original operation block, through $I_c$.
+
+Put $\lambda=4/15$ and, for $j\ge0$, define the complete tail sets
+
+$$
+T_p(j)=\{w_{n,i}:n\ge j,\ i\in\{0,1\}\}\cup\{\infty_p\},
+$$
+
+$$
+T_\beta(j)=\{\alpha w_{n,i}:n\ge j,\ i\in\{0,1\}\}\cup\{\infty_\beta\}.
+\tag{11.1}
+$$
+
+The suspended completing word beta is outside $T_\beta(0)$. Define
+
+$$
+\mathcal K_p=\{Q\in\mathcal P(\Omega_p):
+ a\le Q(\alpha)\le b,\quad Q(T_p(j))\le\lambda^j\ (j\ge0)\},
+$$
+
+$$
+\mathcal K_\beta=\{W\in\mathcal P(\Omega_\beta):
+ a\le1-W(\beta)\le b,\quad W(T_\beta(j))\le b\lambda^j\ (j\ge0)\}.
+\tag{11.2}
+$$
+
+Here $\mathcal P$ means normalized probability laws, not subprobability vectors. Both spaces carry complete-law TV. Set
+
+$$
+u(Q)=Q(\alpha),\qquad U(Q)=1-u(Q),\qquad v(W)=1-W(\beta).
+$$
+
+For $Q\in\mathcal K_p$ and $W\in\mathcal K_\beta$, define the normalized residuals
+
+$$
+\mathcal R_B(Q)(E)=\frac{Q(\beta E)}{U(Q)},\qquad
+\mathcal R_A(W)(E)=\frac{W(\alpha E)}{v(W)}.
+\tag{11.3}
+$$
+
+The first residual is a probability law on $\Omega_\beta$, the second on $\Omega_p$. Neither is required to belong to the opposite $\mathcal K$ for an arbitrary descriptor. Their denominators satisfy $U\ge3/5$ and $v\ge1/3$. In particular the identities
+
+$$
+Q=u(Q)\delta_\alpha+U(Q)\beta\mathcal R_B(Q),\qquad
+W=(1-v(W))\delta_\beta+v(W)\alpha\mathcal R_A(W)
+\tag{11.4}
+$$
+
+hold on the entire carriers, including the infinite outcomes.
+
+**Lemma 11.1 (normalized compact law spaces).** The spaces in (11.2) are convex and compact in TV. Every one of their laws has zero mass at its infinite outcome. The residual maps are TV-continuous, with the bounds
+
+$$
+\operatorname{TV}(\mathcal R_B(Q),\mathcal R_B(Q'))
+ \le\frac{10}{3}\operatorname{TV}(Q,Q'),
+$$
+
+$$
+\operatorname{TV}(\mathcal R_A(W),\mathcal R_A(W'))
+ \le6\operatorname{TV}(W,W').
+\tag{11.5}
+$$
+
+**Proof.** The emission and tail inequalities are affine closed constraints in the probability simplex. From each sequence of laws choose a subsequence on which every completed-word coordinate converges. For each $L$, the finite p set $\{w_{n,i}:n<L\}$ has complement $T_p(L)$ of mass at most $\lambda^L$. At suspension include beta in the finite set; its complement has mass at most $b\lambda^L$. The coordinate limits therefore have total mass one: their finite-set masses approach one uniformly as $L$ increases. Set the infinite coordinate to zero. Its value is also forced by $\Pr(\infty_s)\le\Pr(T_s(L))\to0$.
+
+On a fixed finite set the subsequence converges in $\ell^1$. Outside that set the sum of the two tail masses bounds its $\ell^1$ difference by $2\lambda^L$, or $2b\lambda^L$. Thus the convergence is in complete-law TV. All inequalities survive this convergence. This proves sequential compactness, hence compactness in the metric spaces. The same affine constraints show that barycentres of Borel probability measures on either space remain in that space, by countable summation of coordinates. No mass is removed and no completion conditioning is used.
+
+For normalized laws $P,P'$ and a common conditioning event of probability at least $q$ in $P'$, the conditional event difference is at most $2\operatorname{TV}(P,P')/q$, as proved in [CLIP, Theorem 3.1]. Apply this with the beta cylinder and $q=3/5$, or the alpha cylinder and $q=1/3$, and delete the next block. This gives (11.5). These are maps to the full opposite probability simplex, so continuity does not assume the additional opposite-space tail bounds. $\square$
+
+### 11.2 Two conditional residual equations with common marginals
+
+**Definition 11.2 (compatible complete-law flows).** A compatible pair is a Borel probability measure $\Gamma_B$ on $\mathcal K_p\times\mathcal K_\beta$ and a Borel probability measure $\Gamma_A$ on $\mathcal K_\beta\times\mathcal K_p$ with the same respective phase marginals:
+
+$$
+(\Gamma_B)_1=(\Gamma_A)_2=\nu_p,\qquad
+(\Gamma_B)_2=(\Gamma_A)_1=\nu_\beta.
+\tag{11.6}
+$$
+
+For every continuous real $\phi$ on $\mathcal K_p$, every continuous real $\psi$ on $\mathcal K_\beta$, and every atom $\eta\in\Omega_\beta$, $\omega\in\Omega_p$, require
+
+$$
+\int\phi(Q)\bigl(\mathcal R_B(Q)(\eta)-W(\eta)\bigr)
+ \,d\Gamma_B(Q,W)=0,
+$$
+
+$$
+\int\psi(W)\bigl(\mathcal R_A(W)(\omega)-Q(\omega)\bigr)
+ \,d\Gamma_A(W,Q)=0.
+\tag{11.7}
+$$
+
+The atom tests include the infinite outcomes. Denote this domain by $\mathfrak C$. Its flows are unweighted acquired flows: no factors $U(Q)$ or $v(W)$ are inserted into their marginals. Such factors enter only the synthetic recursions (11.4).
+
+For a fixed $\eta$, the residual difference in the first equation of (11.7) defines a finite signed measure on $\mathcal K_p$ by projection. Annihilation of all continuous functions forces that signed measure to vanish. For example, continuous approximations to the indicator of a closed set, followed by bounded convergence and regularity, prove uniqueness of the signed measure. Consequently (11.7) also holds for every bounded Borel $\phi$, and likewise for $\psi$. Atomwise equalities give equalities of full measures on the countable carrier.
+
+Equivalently, disintegrating these measures on their compact metric spaces gives
+
+$$
+\mathcal R_B(Q)=\int W\,\Gamma_B(dW\mid Q)
+ \quad(\nu_p\text{-almost every }Q),
+$$
+
+$$
+\mathcal R_A(W)=\int Q\,\Gamma_A(dQ\mid W)
+ \quad(\nu_\beta\text{-almost every }W).
+\tag{11.8}
+$$
+
+This interpretation conditions on the entire input descriptor. Conditioning only on its residual value would be weaker. A finite realization below does not require constructing these disintegrations. The descriptor spaces are mathematical carriers, not available continuous configuration registers.
+
+Define the configuration losses against any complete raw target by
+
+$$
+\mathcal L_p(T)=\int\operatorname{TV}(Q,T)\,d\nu_p(Q),\qquad
+\mathcal L_\beta(T)=\int\operatorname{TV}(W,T)\,d\nu_\beta(W),
+$$
+
+and define the joint excess
+
+$$
+\mathcal J(\Gamma_B,\Gamma_A)=
+\max\left\{
+ \sup_{k:\mu(k)>0}\mathcal L_p(P_{p,r_k})-\rho_p,
+ \sup_{k:\mu(k)>0}\mathcal L_\beta(P_{\beta,r_k})-\rho_\beta
+\right\},\qquad
+j_c=\min_{\mathfrak C}\mathcal J.
+\tag{11.9}
+$$
+
+TV remains inside each configuration integral. Formula (11.9) fixes the original targets; it neither optimizes them nor substitutes a new prior.
+
+**Lemma 11.3 (compact feasible domain and attained analytic minimum).** $\mathfrak C$ is nonempty, convex and compact for weak convergence of its two measures. The minimum in (11.9) exists and lies in $[0,1]$.
+
+**Proof.** Borel probability measures on a compact metric space are weakly sequentially compact. One elementary proof uses nested finite Borel partitions of diameter tending to zero. From any sequence select a subsequence with convergent masses on all cells of all partitions. These limiting masses are nonnegative, normalized and consistent under refinement. Subdivide the unit interval recursively according to these masses. Away from the countably many subdivision endpoints, each interval point selects a nested sequence of cells. The closures of those nonempty cells are nested compact sets with diameter tending to zero and hence specify a unique space point. Its distribution is a Borel probability measure. Uniform continuity shows that integrals of each continuous function along the subsequence converge to its integral against this distribution. This proves the stated compactness fact with normalized limits.
+
+Apply this fact to the two compact products in Definition 11.2 and take one joint subsequence. Equalities of marginals are weakly closed, by testing continuous functions on each factor. Every integrand in (11.7) is continuous and bounded, by Lemma 11.1 and continuity of atom evaluation. Thus all the residual constraints are weakly closed. They are linear, as are (11.6), so $\mathfrak C$ is convex and compact.
+
+For nonemptiness take the own complete laws of one singleton regular generator with $u=v=a$, and use point masses on its two ordered law pairs. Its return probability is $(1-a)a\le\lambda$, so those laws lie in (11.2); its recursions give (11.7). This is only a feasible law pair, with no zero-excess assertion.
+
+For each fixed supported target, the function $Q\mapsto\operatorname{TV}(Q,P_{p,r_k})$ is bounded continuous; the suspended function is likewise. The supremum of these weakly continuous integrals is lower semicontinuous, even for countable support. Hence $\mathcal J$ attains its minimum on $\mathfrak C$. Integrating the endpoint triangle inequality gives
+
+$$
+\mathcal L_s(P_{s,a})+\mathcal L_s(P_{s,b})\ge2\rho_s,
+$$
+
+so each phase supremum is at least $\rho_s$ and $\mathcal J\ge0$. Every TV is at most one, giving the stated upper bound. Compactness and an attained analytic minimum supply neither the value $j_c$ nor a finite observer. $\square$
+
+### 11.3 Regeneration from a possibly nonatomic pair
+
+**Theorem 11.4 (finite common-flow regeneration).** Let $(\Gamma_B,\Gamma_A)\in\mathfrak C$ and $0<\varepsilon\le1$. There is one finite regular stationary table with positive rows $\pi,\tau$, acquired kernels $B,A$, and emissions $u,v$ such that
+
+$$
+\pi B=\tau,\qquad\tau A=\pi.
+\tag{11.10}
+$$
+
+Its own complete laws $\widehat Q_i,\widehat W_j$ satisfy, for the cell barycentres $\bar Q_i,\bar W_j$ constructed below,
+
+$$
+\max_i\operatorname{TV}(\widehat Q_i,\bar Q_i)
+ \le d_p^*=\frac{81}{44}\varepsilon,\qquad
+\max_j\operatorname{TV}(\widehat W_j,\bar W_j)
+ \le d_\beta^*=\frac{61}{44}\varepsilon.
+\tag{11.11}
+$$
+
+For every complete probability target $T$ at the relevant phase, the same table has
+
+$$
+-(\varepsilon+d_p^*)\le
+ \sum_i\pi_i\operatorname{TV}(\widehat Q_i,T)-\mathcal L_p(T)
+ \le d_p^*,
+$$
+
+$$
+-(\varepsilon+d_\beta^*)\le
+ \sum_j\tau_j\operatorname{TV}(\widehat W_j,T)-\mathcal L_\beta(T)
+ \le d_\beta^*.
+\tag{11.12}
+$$
+
+The bounds are uniform over targets, including every original supported depth and every original posterior target. They hold after any common measurable projection of the future, using the projected losses. The finite table, rather than its barycentres, is the generator. Its two own-law flow measures can be chosen to converge jointly and weakly to the given pair as $\varepsilon\downarrow0$.
+
+**Proof of the common finite flows.** Choose finite Borel partitions $(C_i)$ of $\mathcal K_p$ and $(D_j)$ of $\mathcal K_\beta$ whose cells have TV diameter at most $\varepsilon$. Finite covers by balls of radius $\varepsilon/2$, made disjoint in a fixed order, suffice. Delete zero-marginal cells. Put
+
+$$
+\pi_i=\nu_p(C_i),\quad\tau_j=\nu_\beta(D_j),\qquad
+\bar Q_i=\frac1{\pi_i}\int_{C_i}Q\,d\nu_p(Q),\quad
+\bar W_j=\frac1{\tau_j}\int_{D_j}W\,d\nu_\beta(W),
+$$
+
+$$
+F^B_{ij}=\Gamma_B(C_i\times D_j),\quad
+F^A_{ji}=\Gamma_A(D_j\times C_i),\qquad
+B_{ij}=F^B_{ij}/\pi_i,\quad A_{ji}=F^A_{ji}/\tau_j,
+$$
+
+$$
+u_i=\bar Q_i(\alpha),\qquad v_j=1-\bar W_j(\beta).
+\tag{11.13}
+$$
+
+All barycentres are normalized complete laws in their respective spaces. Convexity and the cell diameters give
+
+$$
+\operatorname{TV}(Q,\bar Q_i)\le\varepsilon\quad(Q\in C_i),\qquad
+\operatorname{TV}(W,\bar W_j)\le\varepsilon\quad(W\in D_j).
+\tag{11.14}
+$$
+
+The first marginals make $B,A$ stochastic. The other marginals give
+
+$$
+\sum_i\pi_iB_{ij}=\sum_iF^B_{ij}=\tau_j,
+\qquad
+\sum_j\tau_jA_{ji}=\sum_jF^A_{ji}=\pi_i.
+$$
+
+A deleted zero-marginal cell has zero mass under both incident flows, so no positive-row transition enters it. The two flow identities hold exactly. Both emission vectors lie in $[a,b]$. In particular this is a single finite table; its two directional flows have not been optimized separately.
+
+**Proof of the centroid residual bounds.** Use the bounded Borel tests $\mathbf1_{C_i}U(Q)$ and $\mathbf1_{D_j}v(W)$ in (11.7). Combining the resulting full-measure identities with (11.4) gives
+
+$$
+\bar Q_i=u_i\delta_\alpha+
+ \frac1{\pi_i}\int_{C_i\times\mathcal K_\beta}U(Q)\beta W\,d\Gamma_B(Q,W),
+$$
+
+$$
+\bar W_j=(1-v_j)\delta_\beta+
+ \frac1{\tau_j}\int_{D_j\times\mathcal K_p}v(W)\alpha Q\,d\Gamma_A(W,Q).
+\tag{11.15}
+$$
+
+There is no hypothesis that the centroids satisfy the finite-table recursion exactly.
+
+For a probability measure $m$, a scalar $e$ of range width at most $\varepsilon$, its mean $\bar e$, and a measurable family of probability laws $H$, the signed covariance has mass zero and
+
+$$
+\left\|\int(e-\bar e)H\,dm\right\|_{\rm TV}
+ \le\frac12\int|e-\bar e|\,dm\le\frac\varepsilon4.
+\tag{11.16}
+$$
+
+Here the norm is half the $\ell^1$ norm of a zero-mass signed measure. The first inequality follows by summing coordinates and Tonelli. For $e\in[c,d]$ with mean $z$, the chord bound for $|e-z|$ gives
+
+$$
+\int|e-z|\,dm\le\frac{2(z-c)(d-z)}{d-c}\le\frac{d-c}{2};
+$$
+
+the zero-width case is zero. Thus (11.16) applies to integrals, not only finite sums. It is the covariance estimate supplied in [PAID, equation (9.14)].
+
+In the first equation of (11.15), replace $W$ in each $D_j$ by $\bar W_j$. By (11.14) and $U\le2/3$, this costs at most $2\varepsilon/3$. Under the normalized restriction $\Gamma_B|_{C_i\times\mathcal K_\beta}/\pi_i$, the mean of $U$ is $1-u_i$. Its range width is at most $\varepsilon$, because atom evaluation is 1-Lipschitz in TV on $C_i$. Replace $U$ by this mean. Equation (11.16), applied to the probability-law family $\bar W_{j(W)}$, bounds the additional cost by $\varepsilon/4$. Its unweighted mean is exactly $\sum_jB_{ij}\bar W_j$. Therefore
+
+$$
+\operatorname{TV}\left(\bar Q_i,
+ u_i\delta_\alpha+(1-u_i)\beta\sum_jB_{ij}\bar W_j\right)
+ \le\left(\frac23+\frac14\right)\varepsilon=\frac{11}{12}\varepsilon.
+\tag{11.17}
+$$
+
+Apply the same argument to the second equation of (11.15). Replacing $Q$ by its cell centroid costs at most $2\varepsilon/5$. The range of $v(W)$ on $D_j$ has width at most $\varepsilon$ and its conditional mean is $v_j$. Its covariance costs at most $\varepsilon/4$. The remaining unweighted mean is $\sum_iA_{ji}\bar Q_i$. Hence
+
+$$
+\operatorname{TV}\left(\bar W_j,
+ (1-v_j)\delta_\beta+v_j\alpha\sum_iA_{ji}\bar Q_i\right)
+ \le\left(\frac25+\frac14\right)\varepsilon=\frac{13}{20}\varepsilon.
+\tag{11.18}
+$$
+
+These estimates retain the possible dependence between emission and successor law. Omitting that dependence would give a different, unjustified recursion.
+
+**Proof of own-law generation and contraction.** Generate the finite table's complete laws using exactly its emissions and acquired kernels. With
+
+$$
+L=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,
+\qquad g=\operatorname{diag}(1-u)B(1-v),
+$$
+
+its p word masses are $(L^nu)_i$ and $(L^ng)_i$. Since $L\mathbf1\le\lambda\mathbf1$,
+
+$$
+\sum_{n<L_0}L^n(u+g)=\mathbf1-L^{L_0}\mathbf1,
+\qquad L^{L_0}\mathbf1\le\lambda^{L_0}\mathbf1.
+$$
+
+Thus the word masses sum to one and the infinite outcome has mass zero. Suspension uses $(1-v_j)\delta_\beta+v_j\alpha\sum_iA_{ji}\widehat Q_i$, also normalized. Its tail in (11.1) is bounded by $b\lambda^{L_0}$. Infinite outcomes remain in both carriers, and no residual is lost by renormalization. These own laws satisfy
+
+$$
+\widehat Q_i=u_i\delta_\alpha+(1-u_i)\beta\sum_jB_{ij}\widehat W_j,
+$$
+
+$$
+\widehat W_j=(1-v_j)\delta_\beta+v_j\alpha\sum_iA_{ji}\widehat Q_i.
+\tag{11.19}
+$$
+
+These normalized recursions have a unique solution: two solutions with maximal phase distances $z_p,z_\beta$ would obey $z_p\le(2/3)z_\beta$ and $z_\beta\le(2/5)z_p$, so both distances vanish. The contraction is due to synthetic stopping, with no irreducibility or mixing assumption on $BA$.
+
+Let $d_p,d_\beta$ be the maximum distances between these own laws and their centroids. Comparing (11.19) with (11.17)–(11.18) gives
+
+$$
+d_p\le\frac{11}{12}\varepsilon+\frac23d_\beta,
+\qquad d_\beta\le\frac{13}{20}\varepsilon+\frac25d_p.
+\tag{11.20}
+$$
+
+Since $1-(2/3)(2/5)=11/15$, substitution gives
+
+$$
+d_p\le\frac{15}{11}\left(\frac{11}{12}+\frac23\frac{13}{20}\right)\varepsilon
+ =\frac{81}{44}\varepsilon,
+$$
+
+$$
+d_\beta\le\frac{15}{11}\left(\frac{13}{20}+\frac25\frac{11}{12}\right)\varepsilon
+ =\frac{61}{44}\varepsilon.
+$$
+
+Both constants come from (11.13) and its one own-law regeneration.
+
+**Proof of the target-uniform losses.** For every p target $T$, configurationwise triangle inequality and centroid convexity give
+
+$$
+\sum_i\pi_i\operatorname{TV}(\widehat Q_i,T)
+ \le\sum_i\pi_i\operatorname{TV}(\bar Q_i,T)+d_p
+ \le\int\operatorname{TV}(Q,T)\,d\nu_p(Q)+d_p.
+$$
+
+Conversely, for $Q\in C_i$, (11.14) and (11.11) give $\operatorname{TV}(Q,\widehat Q_i)\le\varepsilon+d_p^*$. Integrate the reverse triangle inequality to get the lower bound in (11.12). Use $\tau,W$ for suspension. Every step works after pushing all laws and the target through a common measurable projection, since TV contracts and centroid formation commutes with pushforward. The corresponding marginal-law losses also differ by at most $d_s^*$, since the old mean law is exactly the weighted mean of its centroids. These marginal comparisons do not replace the configuration comparisons.
+
+Finally, push $\Gamma_B$ forward by $(Q,W)\mapsto(\widehat Q_{i(Q)},\widehat W_{j(W)})$, and push $\Gamma_A$ forward by the reversed corresponding map, defining the maps arbitrarily on deleted marginal-null cells. The resulting measures have masses $F^B_{ij},F^A_{ji}$ on the generated law pairs. By (11.10) and (11.19) they are exactly the finite table's compatible own-law flows, even when generated labels share a law. On each product the transport changes the sum-of-phase-TV distance by at most
+
+$$
+2\varepsilon+d_p^*+d_\beta^*=\frac{115}{22}\varepsilon.
+$$
+
+Uniform continuity of every continuous function on the compact products proves joint weak convergence of these two pushforwards to the original pair. Thus $\mathfrak C$ is the weak closure of the compatible flows embedded from finite regular tables; no independent selection of a phase limit is involved. $\square$
+
+### 11.4 Original histories and complete resources
+
+Install the finite table of Theorem 11.4 by [PAID, Lemma 2.1.1], with the entire original $C_0$ as a component. Before the third latch use fair synthesis and original control updates. In the same third-completion update, perform the original record write and latch before sampling the source-independent private row $\pi$. Use $B$ after an actual p-beta and $A$ after an actual suspended-alpha, as well as in synthetic generation. Completing letters clear the labels and enter precisely their original matching pendingStop; Stop and delivery keep their original rules.
+
+Induction over original operations preserves every record, seed, marker, flag and permission. At the first fourth-segment p cut the private row is $\pi$. Equation (11.10) makes the row $\tau$ after any noncompleting p-beta and $\pi$ after any suspended-alpha return. This holds on every positive finite acquired fourth-segment history, on every original record fibre. Conditioning on actual letters does not weight private configurations by synthetic probabilities. Private initialization and all updates are source-independent, and the actual source remains the single originally sampled $K$.
+
+For any such history, pull its target back through $I_{C_0(h)}$:
+
+$$
+T_{s,h}=\sum_k\nu_h(k)P_{s,r_k}.
+$$
+
+This is a normalized countable mixture under the fixed original prior, incorporating every paid rejection and partial parse. For example,
+
+$$
+\int\operatorname{TV}(Q,T_{p,h})\,d\nu_p(Q)
+ \le\sum_k\nu_h(k)\int\operatorname{TV}(Q,P_{p,r_k})\,d\nu_p(Q).
+\tag{11.21}
+$$
+
+The target convexity in (11.21) is applied to each descriptor before integrating; it does not move TV outside the configuration average. Equation (11.12) applies to $T_{s,h}$ itself. Rendering then preserves these complete-law inequalities, including all future records, original operation blocks and the matching Stop. Hence
+
+$$
+R_{\mathrm{conf},p}(\widehat M)
+ \le\sup_{k:\mu(k)>0}\mathcal L_p(P_{p,r_k})+\frac{81}{44}\varepsilon,
+$$
+
+$$
+R_{\mathrm{conf},\beta}(\widehat M)
+ \le\sup_{k:\mu(k)>0}\mathcal L_\beta(P_{\beta,r_k})+\frac{61}{44}\varepsilon.
+\tag{11.22}
+$$
+
+The exact equality of a finite stationary table's phase suprema with its supported pure-depth suprema is [CLIP, Proposition 2.3]. Its lower direction uses finite paid rejection histories concentrating at each supported depth and a fixed legal seed/marker suffix. The summable likelihood-ratio domination in [PAID, Lemma 14.1] covers countable priors. Thus using pure targets here retains the full original history problem, rather than replacing it with hypothetical pure-source experiments.
+
+Only the finite table and label are retained with $C_0$. Cells, descriptors, both flow measures, their barycentres and posterior rows are mathematical construction data. They are not retained as a continuous register or exposed to the observer. For a represented table, installation data, selector and label addresses, numerical thresholds, sampler states, program, workspace and output indices belong to COMPLETE. Every acquired Read, fresh random bit, internal operation and synthetic output remains charged. Each finite approximant may have a different charged size or precision. No fixed COMPLETE budget, hard marginalized-defect bound, worst-case execution bound or physical exact-real sampler follows from (11.22).
+
+### 11.5 Exact all-shape infimum correspondence
+
+**Theorem 11.5 (the compact flow value is the regular infimum).** With exactly the unrestricted source-specific risk scope above,
+
+$$
+j_c=J(\mathfrak S_\mu)=J(\mathfrak E_\mu),
+\qquad
+\frac{11}{61}j_c\le J(\mathfrak M_\mu)\le j_c.
+\tag{11.23}
+$$
+
+In particular $J(\mathfrak M_\mu)=0$ if and only if a compatible pair has $\mathcal J=0$. A strictly positive $j_c$ is equivalent to a strictly positive unrestricted original gap. These are equivalences without an evaluation of either alternative.
+
+**Proof.** Start with one finite stationary regular table on positive labels. Its own laws belong to (11.2) by the regular survival bound. Push the two finite acquired flows forward to laws:
+
+$$
+\Gamma_B=\sum_{x,y}\pi_xB_{xy}\delta_{(Q_x,W_y)},\qquad
+\Gamma_A=\sum_{y,x}\tau_yA_{yx}\delta_{(W_y,Q_x)}.
+\tag{11.24}
+$$
+
+Both are probability measures. Their shared marginals are $\sum_x\pi_x\delta_{Q_x}$ and $\sum_y\tau_y\delta_{W_y}$. The exact same-update recursions (3.2), divided by their positive continuation probabilities, give (11.7), including when different labels have identical laws. Configuration-before-TV risks are unchanged by this pushforward. The all-history equality just cited gives $\mathcal J=e(M)$. Taking the infimum over every finite shape proves $j_c\le J(\mathfrak S_\mu)$.
+
+Conversely, take one compatible pair, without a finite-support assumption. For each $\varepsilon>0$, Theorem 11.4 and its original product realization give one finite same-update observer with
+
+$$
+e(\widehat M)\le\mathcal J(\Gamma_B,\Gamma_A)+\frac{81}{44}\varepsilon.
+$$
+
+Taking $\varepsilon\downarrow0$ proves $J(\mathfrak S_\mu)\le\mathcal J$ for this pair, hence $J(\mathfrak S_\mu)\le j_c$. This converse starts with measure-valued law flows rather than a supplied finite observer. The stationary/periodic equality and the two original-class inequalities are exactly [PAID, Corollary 2.3], which uses [CLIP, Theorem 4.2]. Their hypotheses retain the original complete-law targets, paid histories and same-update observer class; they impose no resource or hard-defect preservation. The equivalences follow from these inequalities, nonnegativity and Lemma 11.3. $\square$
+
+### 11.6 Rational approximants preserve both flows
+
+**Lemma 11.6 (one finite circulation can be rationalized).** Every finite table produced by Theorem 11.4 has rational regular stationary tables of the same finite label shape converging in all its parameters. Their two unweighted flow identities hold exactly. Their complete configuration losses converge uniformly over all complete targets, and therefore over all original positive histories.
+
+**Proof.** View $F^B,F^A$ in (11.13) as one directed bipartite circulation: edges run from p labels to suspended labels and back. Conservation holds at every vertex, and each directional edge total is one. A finite nonnegative circulation decomposes into finitely many directed simple cycles. To see this, follow positive outgoing edges from a positive edge; conservation prevents a dead end. A repeated vertex gives a directed cycle. Subtract its smallest edge flow, deleting at least one positive edge, and repeat. Finitely many subtractions finish the decomposition.
+
+If cycle $c$ has $m_c$ edges in each direction and its coefficient is $h_c>0$, then
+
+$$
+(F^B,F^A)=\sum_c w_c Z_c,\qquad
+Z_c=\frac1{m_c}\mathbf1_{\text{edges of }c},\qquad
+w_c=m_ch_c,\quad\sum_cw_c=1.
+\tag{11.25}
+$$
+
+Each $Z_c$ is rational, conserved and has each directional total one. Approximate the positive weights by positive rational weights summing exactly to one. This preserves conservation and both directional totals, as well as every positive edge in the given cycle support. The resulting rational vertex masses $\pi',\tau'$ converge to the positive original masses. Dividing incident flows by those masses gives rational stochastic $B',A'$ with $\pi'B'=\tau'$ and $\tau'A'=\pi'$, converging to $B,A$. Approximate $u,v$ rationally inside the same closed rational interval $[a,b]$. Thus the two phase tables are approximated jointly, with no stationary-row repair assumed after separate rounding.
+
+For completeness, put
+
+$$
+x_u=\max_i|u_i-u_i'|,\quad x_v=\max_j|v_j-v_j'|,
+\quad x_B=\max_i\operatorname{TV}(B_{i,\cdot},B'_{i,\cdot}),
+\quad x_A=\max_j\operatorname{TV}(A_{j,\cdot},A'_{j,\cdot}).
+$$
+
+Generate both tables' own normalized complete laws. Their maximal law differences satisfy
+
+$$
+z_p\le x_u+\frac23x_B+\frac23z_\beta,
+\qquad z_\beta\le x_v+\frac25x_A+\frac25z_p.
+\tag{11.26}
+$$
+
+Changing a Bernoulli emission costs its absolute difference; changing a successor row costs its TV by contraction through a probability-law kernel. The remaining terms are the continuing-law differences. Solving (11.26) shows $z_p,z_\beta\to0$. This argument compares the full normalized laws; its geometric stopping justification is the same as in (11.19).
+
+For every complete target $T$, the difference of configuration losses at p is at most
+
+$$
+z_p+\operatorname{TV}(\pi,\pi'),
+\tag{11.27}
+$$
+
+because the law-wise reverse triangle bound is $z_p$, and each remaining loss is a function with values in $[0,1]$. Suspension uses $z_\beta+\operatorname{TV}(\tau,\tau')$. These bounds do not depend on $T$. Both tables have their stationary rows on every acquired fourth history and the identical original posterior targets, so (11.27) gives the claimed full-history uniformity. $\square$
+
+**Corollary 11.7 (represented infimum and the conditional tolerance family).** Let $\mathfrak S_\mu^{\mathbb Q}$ denote the stationary regular tables with rational latch rows, kernels and emissions, installed using the supplied finite exact categorical-sampling convention. Then
+
+$$
+J(\mathfrak S_\mu^{\mathbb Q})=j_c.
+\tag{11.28}
+$$
+
+If a compatible pair with $\mathcal J=0$ is supplied, then for every $0<\eta\le1$ there is one rational finite COMPLETE observer with both original configuration excesses at most $\eta$.
+
+**Proof.** Rational tables are included in $\mathfrak S_\mu$. Apply Lemma 11.6 to each finite table approaching $j_c$ in Theorem 11.5, choosing an arbitrarily small additional loss. This proves (11.28). For the conditional statement choose $\varepsilon=22\eta/81$ in Theorem 11.4, so its maximal added loss is at most $\eta/2$, and rationalize that one table to add at most $\eta/2$.
+
+A fixed rational categorical distribution can be sampled exactly using fresh independent fair bits, finite rational thresholds and reusable finite rejection workspace. The program, threshold representation, latch selector, cursors and all sampler microstates are finite and charged; the same represented sampler implements acquired and synthetic updates. Almost-sure termination of this internal service adds no source query or operation permission. Unbounded possible rejection attempts, paid source rejections and legal returns still have no finite worst-case bit or time bound. Thus each chosen table is separately represented and finite. This is an existence statement for finite effective members, not an algorithm taking an arbitrary nonatomic real measure as finite input. Without the zero-level premise it provides no vanishing-excess family. $\square$
+
+### 11.7 Finite atomicity and exact attainment
+
+**Theorem 11.8 (analytic minimizers and finite attainability).** For any compatible pair with both phase marginals finitely supported, there is a finite regular stationary table whose own laws are precisely those marginal atoms and whose configuration losses against every target are exactly $\mathcal L_p,\mathcal L_\beta$. Consequently:
+
+1. The regular value $j_c$ is attained by an abstract finite stationary table if and only if some minimizing compatible pair has finitely supported phase marginals.
+2. A finite abstract common conf/conf attainer exists in the original class $\mathfrak M_\mu$ if and only if a zero-level compatible pair has finitely supported phase marginals.
+
+Finite support of both marginals is equivalent here to finite support of both flow measures.
+
+**Proof.** Write
+
+$$
+\nu_p=\sum_i\pi_i\delta_{Q_i},\qquad
+\nu_\beta=\sum_j\tau_j\delta_{W_j},\qquad \pi_i,\tau_j>0,
+$$
+
+with distinct atoms at each phase. Both flow measures are supported on the respective finite products, because their marginals assign mass one to those products. Define $B_{ij}=\Gamma_B(\{(Q_i,W_j)\})/\pi_i$ and $A_{ji}=\Gamma_A(\{(W_j,Q_i)\})/\tau_j$, and take emissions $u_i=Q_i(\alpha)$, $v_j=1-W_j(\beta)$. The margin equalities give both flow identities. The Borel indicator tests following Definition 11.2 isolate each input atom and give
+
+$$
+\mathcal R_B(Q_i)=\sum_jB_{ij}W_j,\qquad
+\mathcal R_A(W_j)=\sum_iA_{ji}Q_i.
+$$
+
+Together with (11.4), these are exactly (11.19) for $Q_i,W_j$. The unique normalized solution established there shows that the descriptors are the table's own complete generated laws. Thus all losses agree exactly, rather than merely being compared to fitted centroid laws.
+
+For assertion 1, this construction supplies the forward finite realization, and (11.24) embeds every finite minimizing table as a finitely supported minimizing pair. For assertion 2, a finite zero-level pair supplies an original product attainer by Section 11.4 and the separate lower minima. Conversely a finite abstract original attainer gives a finite regular stationary attainer by [CLIP, Theorem 4.2; PAID, Corollary 2.3], and (11.24) gives its finite zero-level pair. No equivalence of positive original and regular minimizers is inferred from the comparison factor. $\square$
+
+**Effective boundary.** Theorem 11.8 concerns finite indexed stochastic rules with real entries. To turn its atomic witness into an effective exact observer, its resulting latch row, both acquired kernels and both emissions must admit allowed finitely represented exact sampling procedures, with all description and workspace charged to COMPLETE. Rational entries are a sufficient instance. Finite atomicity alone supplies no such sampler and does not imply rational exact attainment. In the represented stationary subclass, exact attainment is equivalent to an atomic zero-level witness with these sampler conditions. The abstract extraction from an arbitrary original attainer establishes the atomic criterion; without an additional sampler-preservation argument it does not establish an effective extraction theorem for every numerical representation convention.
+
+An analytic minimizing pair may be nonatomic. Compactness alone therefore proves neither attainment at a finite label shape nor any total-resource optimum. Even a nonatomic zero-level witness gives only the conditional finite tolerance family of Corollary 11.7; Theorem 11.8 requires a possibly different finite atomic zero-level witness for exact finite attainment. The existence of one nonatomic minimizing pair does not exclude another atomic minimizer.
+
+### 11.8 The zero face, mathematical correspondence and residual problem
+
+At $\mathcal J=0$, both endpoint configuration risks at each phase equal their separate radii. Integrate the coordinate triangle identity (5.7). Its nonnegative right-hand side has expectation zero, so, for almost every descriptor and every complete atom,
+
+$$
+P_{s,a}(\omega)\wedge P_{s,b}(\omega)
+ \le D(\omega)\le
+P_{s,a}(\omega)\vee P_{s,b}(\omega).
+\tag{11.29}
+$$
+
+The simultaneous almost-everywhere statement follows because the complete carrier is countable. Inside this coordinate box, the two endpoint distances are opposite signed differences on the endpoint-positive event. Their equality gives
+
+$$
+\int Q(E_p)\,d\nu_p(Q)=C,\qquad
+\int W(E_\beta)\,d\nu_\beta(W)=H.
+\tag{11.30}
+$$
+
+This is the supplied endpoint geometry of [CLIP, Theorem 6.2], now imposed on the same marginals as both residual equations. The coordinate boxes, event midpoint means and all supported interior losses must coexist with (11.7). Separately feasible phase marginals or two scalar calibrated reports need not have this simultaneous compatibility. When an atomic pair is realized, Section 4's inverse applies to its resulting fixed $B,A$ with its full indexed paired arrays; it does not identify the unknown kernels from (11.30).
+
+The new source-relative inference is the implication from a compatible, possibly nonatomic pair of complete-law flows to one finite same-update generator with both full configuration losses controlled, and hence the equality with the all-shape regular infimum and the finite-atomicity criterion. [PAID, Theorem 9.2] already aggregates a supplied finite observer's circulation and proves the emission-successor covariance bound. Equations (11.15)–(11.20) extend that argument to measures without assuming a finite observer to begin with. [PAID, Section 10] already gives error-corrected bounded-shape certificates; [CLIP, Section 6] already gives compact completeness at a fixed finite shape. Those conclusions, standard probability compactness, conditional barycentres, Jensen's inequality and finite cycle decomposition are reused tools, not additional claims of novelty.
+
+For a primary-literature comparison, Leskela and Vihola, *Conditional convex orders and measurable martingale couplings*, [arXiv:1404.0999v3](https://arxiv.org/html/1404.0999v3), Theorems 1.2–1.3, concern probability laws on $\mathbb R^d$ with finite first moments, or probability kernels from a measurable parameter space into $\mathbb R^d$ with that integrability at every parameter. Convex order is equivalent to a martingale coupling; Theorem 1.3 additionally supplies a measurable family of pointwise couplings. Finite completed-word probability projections and their normalized residual projections are bounded finite-dimensional vectors, so the singleton-parameter hypotheses hold for such projected distributions. This supplies mature finite-dimensional barycentric-coupling theory. It does not by itself condition on the entire original descriptor, lift a sequence of unrelated projected witnesses to two full-law flows with the same marginals, or regenerate a finite observer with configuration-before-TV losses. No convex-order converse or new Strassen theorem is needed in the direct proof above. The correspondence identifies a source-specific uncovered delta, without a global priority claim.
+
+The suppliers used here have their full original hypotheses: [ST, Section 2.1] supplies complete stopped laws and the injective full-record renderer; [PAID, Lemma 2.1.1] supplies finite original-domain product realization; [PAID, Lemma 14.1] supplies common paid-history rows and countable-prior domination; [CLIP, Theorems 3.1 and 4.2] supplies complete-law clipping and the $61/11$ comparison; [PAID, Lemma 2.2 and Corollary 2.3] supplies finite stationary replacement in the unrestricted risk scope. These constructions do not preserve a preassigned total-resource or hard-defect budget. No reversible-candidate formula is a premise.
+
+The self-calibration gained by (11.7) is calibration of common realization: the two phase distributions of complete predicted laws must have conditional residual barycentres carried by shared acquired marginals. It does not reveal $K$, install its posterior or evaluate the optimum. The paired-event inequality (1.5) remains a necessary restriction on finite constructions; [RETURN9, Theorem 9.3] remains an additional necessary restriction when the original installed prior supports a nonendpoint depth $k\ge3$. Their free event-range and acquired-return variation terms are not replaced by risk-only bounds.
+
+For the fixed original installed support, the remaining mathematical question is whether the full endpoint faces (11.29), midpoint means (11.30), all supported configuration-loss bounds and both conditional residual equations admit a zero-level pair. If they do, finite atomicity with the sampler conditions decides the stated finite boundary; a general zero-level pair supplies finite positive-tolerance approximants. If the compact minimum is strictly positive, (11.23) transfers that evaluated positivity to the original unrestricted class. No zero-level pair, finite atomic zero-level pair or evaluated positive value is supplied here. The zero-versus-positive original infimum, its numerical value, finite exact attainment and fixed-resource optima consequently remain unresolved in the general-prior problem. The supplied two-endpoint-prior attainer and the supplied strictly positive-excess rational witness retain exactly their original scopes.
+
+- **RETURN9:** [Acquired-return p-emission variation](https://github.com/the-omega-institute/trureturing/blob/47cbb149f0695bff742784a5cb367a6fd15147e6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md), Theorem 9.3.
+
+## 追加锚（本行以下为增补区）
