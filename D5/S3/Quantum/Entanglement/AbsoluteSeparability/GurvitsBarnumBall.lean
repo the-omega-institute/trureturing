@@ -8,6 +8,7 @@
 
 import D5.S3.Resource.EntanglementWitnessExists
 import D5.S3.Quantum.GNSMatrix
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Resource.SeparableConeResidualWitness
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
 
@@ -55,12 +56,9 @@ private theorem sum_interleave {ι κ : Type*} [Fintype ι] [Fintype κ]
 
 open D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
 open D5.S3.Resource.CompositeCones
+open D5.S3.Quantum.Information.PartialTraceMutualInformation
 variable {m n : ℕ}
 
-private def partialLeft (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
-    Matrix (Fin m) (Fin m) ℂ := fun i j => ∑ a, H (i, a) (j, a)
-private def partialRight (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
-    Matrix (Fin n) (Fin n) ℂ := fun a b => ∑ i, H (i, a) (i, b)
 private def compress (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) (z : Fin m → ℂ) :
     Matrix (Fin n) (Fin n) ℂ := fun a b => quadratic (fun i j => H (i, a) (j, b)) z
 
@@ -103,29 +101,25 @@ private theorem compress_psd
 
 private theorem trace_compress
     (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) (z : Fin m → ℂ) :
-    trace (compress H z) = quadratic (partialLeft H) z := by
-  simp only [trace, diag_apply, compress, quadratic, partialLeft, mul_sum]
+    trace (compress H z) = quadratic (partialTraceRight H) z := by
+  simp only [trace, diag_apply, compress, quadratic, partialTraceRight, mul_sum]
   calc
     _ = ∑ i, ∑ a, ∑ j, conj (z i) * z j * H (i, a) (j, a) := by rw [sum_comm]
     _ = _ := by
       apply sum_congr rfl; intro i _; rw [sum_comm]
 
-private theorem trace_partialLeft
-    (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) : trace (partialLeft H) = trace H := by
-  simp [trace, partialLeft, Fintype.sum_prod_type]
-
 private theorem design_trace_square
     (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
     designSum (fun z => trace (compress H z) * trace (compress H z)) =
-      (4 : ℂ) ^ m * (trace H * trace H + trace (partialLeft H * partialLeft H)) := by
-  simp_rw [trace_compress, quadratic_product_sum, trace_partialLeft]
+      (4 : ℂ) ^ m * (trace H * trace H + trace (partialTraceRight H * partialTraceRight H)) := by
+  simp_rw [trace_compress, quadratic_product_sum, trace_partialTraceRight]
   rfl
 
 set_option backward.isDefEq.respectTransparency false in
 private theorem design_trace_product
     (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
     designSum (fun z => trace (compress H z * compress H z)) =
-      (4 : ℂ) ^ m * (trace (partialRight H * partialRight H) + trace (H * H)) := by
+      (4 : ℂ) ^ m * (trace (partialTraceLeft H * partialTraceLeft H) + trace (H * H)) := by
   simp only [trace, diag_apply, mul_apply, compress]
   simp_rw [designSum_sum, quadratic_product_sum]
   simp only [trace, diag_apply, sum_add_distrib, mul_add, ← mul_sum]
@@ -137,8 +131,8 @@ private theorem design_trace_product
 private theorem averaged_psd_bound
     (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) (hH : H.IsHermitian)
     (hpos : blockPositive H) :
-    (trace (partialRight H * partialRight H)).re + (trace (H * H)).re ≤
-      (trace H * trace H).re + (trace (partialLeft H * partialLeft H)).re := by
+    (trace (partialTraceLeft H * partialTraceLeft H)).re + (trace (H * H)).re ≤
+      (trace H * trace H).re + (trace (partialTraceRight H * partialTraceRight H)).re := by
   have h := re_designSum_mono
     (fun z => trace (compress H z * compress H z))
     (fun z => trace (compress H z) * trace (compress H z)) (fun z => by
@@ -185,12 +179,11 @@ private theorem trace_flip
 private theorem trace_flip_square
     (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
     trace (flip H * flip H) = trace (H * H) := by
-  simp only [trace, diag_apply, mul_apply, flip, submatrix_apply, Fintype.sum_prod_type,
-    Prod.swap_prod_mk]
-  rw [sum_comm]
-  apply sum_congr rfl; intro i _
-  apply sum_congr rfl; intro a _
-  rw [sum_comm]
+  change trace (H.submatrix Prod.swap Prod.swap * H.submatrix Prod.swap Prod.swap) = _
+  have he := Matrix.submatrix_mul_equiv H H Prod.swap (Equiv.prodComm _ _) Prod.swap
+  simp only [Equiv.coe_prodComm] at he
+  rw [he]
+  exact trace_flip (H * H)
 
 /-- A Hermitian block-positive bipartite matrix has nonnegative trace and its
 squared Frobenius sum is at most the square of its real trace. -/
@@ -218,8 +211,8 @@ theorem frobSq_le_trace_sq_of_blockPositive
   refine ⟨ht, ?_⟩
   have h₁ := averaged_psd_bound H hH hpos
   have h₂ := averaged_psd_bound (flip H) (hH.submatrix Prod.swap) (flip_blockPositive H hpos)
-  have hA : partialRight (flip H) = partialLeft H := rfl
-  have hB : partialLeft (flip H) = partialRight H := rfl
+  have hA : partialTraceLeft (flip H) = partialTraceRight H := rfl
+  have hB : partialTraceRight (flip H) = partialTraceLeft H := rfl
   rw [hA, hB, trace_flip, trace_flip_square] at h₂
   have him : (trace H).im = 0 := by
     apply Complex.conj_eq_iff_im.mp
@@ -248,27 +241,23 @@ private theorem pairing_cauchy
   simpa only [pow_two] using h
 
 private def hermitianPart
-    (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) := (1/2:ℂ) • (W + Wᴴ)
+    (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :=
+  (realPart W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
 
 private theorem hermitianPart_hermitian
-    (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) : (hermitianPart W).IsHermitian := by
-  simp [hermitianPart, IsHermitian, conjTranspose_smul, conjTranspose_add, add_comm]
+    (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) : (hermitianPart W).IsHermitian :=
+  (realPart W).property.isHermitian
 
 private theorem quadratic_adjoint {ι : Type*} [Fintype ι]
     (W : Matrix ι ι ℂ) (x : ι → ℂ) :
     star x ⬝ᵥ (Wᴴ *ᵥ x) = star (star x ⬝ᵥ (W *ᵥ x)) := by
-  simp only [dotProduct, mulVec, star_sum, star_mul, Pi.star_apply, star_star,
-    conjTranspose_apply, mul_sum]
-  rw [sum_comm]
-  apply sum_congr rfl; intro i _
-  apply sum_congr rfl; intro j _
-  ring
+  rw [mulVec_conjTranspose, dotProduct_star, star_star, ← dotProduct_mulVec]
 
 private theorem hermitianPart_quadratic
     (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) (x : Fin m × Fin n → ℂ) :
     (star x ⬝ᵥ (hermitianPart W *ᵥ x)).re = (star x ⬝ᵥ (W *ᵥ x)).re := by
-  simp only [hermitianPart, smul_mulVec, add_mulVec, dotProduct_smul, dotProduct_add,
-    smul_eq_mul]
+  simp only [hermitianPart, realPart_apply_coe, Matrix.star_eq_conjTranspose,
+    smul_mulVec, add_mulVec, dotProduct_smul, dotProduct_add]
   rw [quadratic_adjoint]
   norm_num [Complex.mul_re]
   ring
@@ -284,10 +273,9 @@ private theorem hermitianPart_pairing
     rw [Matrix.trace_mul_comm, hR.eq]
   unfold pairing at hAdj ⊢
   change (trace (Rᴴ * hermitianPart W)).re = (trace (Rᴴ * W)).re
-  simp only [hermitianPart, Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul,
-    Matrix.trace_add, smul_eq_mul]
+  simp only [hermitianPart, realPart_apply_coe, Matrix.star_eq_conjTranspose,
+    Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul, Matrix.trace_add]
   norm_num [Complex.mul_re]
-  change (1/2:ℝ) * ((trace (Rᴴ * W)).re + (trace (Rᴴ * Wᴴ)).re) = _
   change (trace (Rᴴ * Wᴴ)).re = (trace (Rᴴ * W)).re at hAdj
   rw [hAdj]
   ring
