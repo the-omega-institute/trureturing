@@ -591,6 +591,7 @@ local notation "boolSubset" α =>
 
 local notation "sign" => (fun b : Bool => D5.S3.Arith.GoldenPell.signedInt (!b) 1)
 
+set_option backward.isDefEq.respectTransparency false in
 /-- A fair-sign sum is twice the positive-sign subset size minus the domain size. -/
 theorem signed_sum_subset {α : Type*} [Fintype α] (s : Finset α) :
     (∑ i, sign ((boolSubset α).symm s i)) = 2 * (s.card : ℤ) - (Fintype.card α : ℤ) := by
@@ -600,7 +601,10 @@ theorem signed_sum_subset {α : Type*} [Fintype α] (s : Finset α) :
     by_cases hi : i ∈ s <;>
       simp [D5.S3.Arith.GoldenPell.signedInt, Equiv.piCongrRight,
         Equiv.propEquivBool, hi]
-    all_goals simpa only [Equiv.symm, Fintype.finsetEquivSet] using hi
+    · dsimp [Equiv.symm, Fintype.finsetEquivSet]
+      exact hi
+    · dsimp [Equiv.symm, Fintype.finsetEquivSet]
+      exact hi
   simp_rw [term]
   simp [Finset.sum_sub_distrib, Finset.sum_ite_mem, mul_comm]
 
@@ -757,8 +761,9 @@ theorem difference_formula (w : Record) :
     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
     Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail,
     Function.comp_apply, Fin.succ_zero_eq_one] at ht hu
-  simp only [Fin.succ_one_eq_two, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail] at ht hu
+  simp only [Fin.succ_one_eq_two, Fin.succ_zero_eq_one, Function.comp_apply,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.vecHead, Matrix.vecTail] at ht hu
   unfold difference
   rw [ht, hu]
   ring
