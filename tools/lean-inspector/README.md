@@ -44,6 +44,7 @@ linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及�
 或不在当前历史上时保留本地种子。缺失对象或浅历史无法证明祖先关系时打印 ancestry-unprovable 原因，
 与完整历史上已证的非祖先区分。列举、清单读取或取回失败且回滚成功时打印 keep 收据并继续 Lake 增量路径；
 输入也相符时打印 `action=keep`、`reason=seed-current`，整份收据仍可直接复用。
+复用阶段完成后，入口立即打印一次决策收据，再进行 provisioning、ensure 或程序构建；后续失败保留原退出码。
 可选取回只恢复已批准的 tag，并核验清单生产提交与批准值一致，
 不重新列举或向较旧快照回退。替换前检查 staged 报告的格式和完整性；build 与 base 在同一安装中
 提交，提交前的失败恢复原 build 和 base，提交后的备份清理失败保留备份并报告已安装。
