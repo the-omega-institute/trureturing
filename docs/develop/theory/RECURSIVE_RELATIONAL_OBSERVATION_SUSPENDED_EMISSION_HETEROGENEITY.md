@@ -524,3 +524,483 @@ A concrete remaining mathematical question is whether nonconstant genuinely inte
 - **CK:** Taolue Chen and Stefan Kiefer, *On the Total Variation Distance of Labelled Markov Chains*, [arXiv:1405.2852v1](https://arxiv.org/html/1405.2852v1), DOI [10.1145/2603088.2603099](https://doi.org/10.1145/2603088.2603099).
 
 ## 追加锚（本行以下为增补区）
+
+## 8. A quantitative modulus for variable suspended emissions
+
+**Definition 8.1 (original oscillation and unchanged joint excess).** For an arbitrary observer of Definitions 1.1–1.3, without the constancy restriction of Definition 1.4, let $v_M(y)$ be its next synthetic alpha probability at a suspended COMPLETE configuration. On exactly the designated seed-1, marker-100 held-record fibre of (1.5), define
+
+$$
+\omega=\operatorname{osc}(M)
+=\max_{y\in\mathcal Z_\beta^*(M)}v_M(y)
+ -\min_{y\in\mathcal Z_\beta^*(M)}v_M(y).
+\tag{8.1}
+$$
+
+The set $\mathcal Z_\beta^*(M)$ includes every configuration reached with positive probability after any positive finite actual suspended history on that fibre, including transient configurations and configurations whose emission is zero or one. It is nonempty and finite. No stationary-support restriction is made in (8.1).
+
+Throughout this chapter the loss is the original configuration-before-TV loss, with
+
+$$
+\begin{aligned}
+e=e(M)&=\max\left\{R_{\mathrm{conf},p}(M)-\frac{1116529}{22781250},
+ R_{\mathrm{conf},\beta}(M)-\frac{239}{6750}\right\},\\
+R_{\mathrm{conf},s}(M)&=\sup_{h\in\mathcal H_s}
+ \sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+\end{aligned}
+\tag{8.2}
+$$
+
+In particular the supremum contains all original positive finite fourth-segment histories, not only the first p cut. The installed prior is finite or countable with $\mu(1),\mu(2)>0$; additional supported depths are permitted but not required. The actual source draws the same single $K$ as in Definition 1.1. Its paid rejection histories, partial parses, arbitrary finite payload returns, both seeds, all marker records, original permissions, write-before-latch rule and matching Stop remain those of Section 1. Equation (1.3), including its zero-predicted-probability cases, is unchanged. The quantities in (8.2) are neither marginal-law risks nor actual-history averages.
+
+**Mathematical citation 8.2 (conditional original-domain suppliers).** The conclusions below assume the suppliers declared in Mathematical citations 2.1 and 2.3: simultaneous supported-depth configuration-loss bounds on common reachable stationary analysis rows, their original-history extraction, the clipping comparison (2.2), the full complete-law endpoint radii and coordinates (2.5)–(2.8), and the full-record realization of the same-update comparison laws. These are ordinary mathematical premises from [ST, Sections 1–3], [CLIP, Theorem 3.1 and equations (3.6)–(3.10)] and [PAID, Lemmas 14.1 and 2.1.1]. Their truth is not a consequence of the finite algebra below.
+
+More explicitly, retain the extracted acquired kernels $B:X\to Y$, $A:Y\to X$ and the probability rows
+
+$$
+\pi B=\tau,\qquad\tau A=\pi,
+\tag{8.3}
+$$
+
+delete zero-row labels only in this comparison, and clip the synthetic emissions to $[a,b]=[1/3,2/5]$. Write $u_x,v_y$ for the clipped entries and $Q_x,W_y$ for their regenerated complete raw laws (2.3). For every supported depth, expected configuration losses on these same rows obey the supplied bounds. Consequently their endpoint mean laws satisfy (2.4) with
+
+$$
+\epsilon_p=\frac{61}{11}e,\qquad
+\epsilon_\beta=\frac{53}{11}e.
+\tag{8.4}
+$$
+
+Indeed the separate numerators in (2.2) are $41\varepsilon_p+20\varepsilon_\beta$ and $12\varepsilon_p+41\varepsilon_\beta$, and each original excess is between zero and $e$. Convexity of TV is applied only after these configuration-loss comparisons. This is the sole passage from the original configuration risk to endpoint mean-law constraints.
+
+Every positive-row suspended label is originally reachable on the fibre in (8.1). Since clipping is monotone and 1-Lipschitz, the distinct analysis quantity
+
+$$
+t=\max_{y:\tau_y>0}v_y-\min_{y:\tau_y>0}v_y
+\quad\hbox{satisfies}\quad
+0\le t\le\min\{\omega,1/15\}.
+\tag{8.5}
+$$
+
+Transient labels may be absent from this extracted support. They remain in (8.1), in the original history domain and in (8.2). Original zero/one emissions and possible original noncompletion mass are handled by the clipping supplier, not by an extra termination assumption on $M$.
+
+The actual p-return matrix is $BA$, with $\pi BA=\pi$. The weighted transfer is $B\operatorname{diag}(v)A$, and the full synthetic p-survival matrix is
+
+$$
+K_{\mathrm{syn}}=\operatorname{diag}(1-u)B\operatorname{diag}(v)A
+\le\frac4{15}BA
+\tag{8.6}
+$$
+
+entrywise. Thus the clipped generator survives $j$ returns with probability at most $(4/15)^j$. No stationarity of $K_{\mathrm{syn}}$ or of the weighted transfer is assumed. The deterministic original event blocks and Stop are restored by each configuration's renderer $I_c$, which preserves TV. The comparison uses the same source, prior and acquired $B,A$; rows, moments and centered variables used below are analysis coordinates, not installed runtime observations.
+
+**Theorem 8.3 (uniform quantitative suspended-emission modulus).** Under Mathematical citation 8.2, every original finite COMPLETE observer of Definitions 1.1–1.3 satisfies
+
+$$
+e(M)+\frac{\operatorname{osc}(M)}{898}>\frac1{195200}.
+\tag{8.7}
+$$
+
+A stronger necessary inequality is
+
+$$
+A_\lambda e(M)+\lambda P(\operatorname{osc}(M))
+ +R(\operatorname{osc}(M))\ge D_\lambda,
+\tag{8.8}
+$$
+
+where
+
+$$
+\begin{aligned}
+P(t)&=\frac{45211}{337500}t+\frac{283}{270}t^2+\frac2{27}t^3,\\
+R(t)&=\frac{235691}{25312500}t+\frac5{54}t^2
+ +\frac4{45}t^3+\frac4{81}t^4,\\
+\lambda&=\frac{788005464525177451917}{16672435848499576471250},\\
+A_\lambda&=\frac{326}{11}\lambda+\frac{663}{55},\\
+D_\lambda&=\frac{15204298625345638971348873871931843}
+ {202570095559269854125687500000000000000}.
+\end{aligned}
+\tag{8.9}
+$$
+
+The constants are uniform over finite carrier size, the allowed installed priors, original transient modes and original emission entries in $[0,1]$. The proof consists of the same-path comparison and rational separation below.
+
+**Lemma 8.4 (one dependent path and its centered complete-word expansion).** Start $Y_{-1}$ with row $\tau$, and use alternately $A,B,A,B,\ldots$ to obtain
+
+$$
+Y_{-1},X_0,Y_0,X_1,Y_1,X_2,Y_2,\ldots.
+$$
+
+All $X_i$ have marginal $\pi$, and all $Y_i$ have marginal $\tau$, by (8.3). Put
+
+$$
+\begin{gathered}
+L=\frac35,\quad H=\frac23,\quad
+U_i=1-u(X_i)\in[L,H],\quad V_i=v(Y_i),\\
+s=\mathbb E V_i\in[a,b],\quad\zeta_i=V_i-s,\quad
+m=\mathbb E U_0,\quad
+M_j=\mathbb E\prod_{i=0}^{j-1}U_i\ (j\ge1).
+\end{gathered}
+\tag{8.10}
+$$
+
+Here $V_{-1}=v(Y_{-1})$ and $\zeta_{-1}=V_{-1}-s$ have the same conventions. For $j=0,1,2,3$ exact generation on this common path gives
+
+$$
+\begin{aligned}
+\overline Q(w_{j,1})
+ &=\mathbb E\left[
+ \left(\prod_{i=0}^{j}U_i\right)
+ \left(\prod_{i=0}^{j-1}V_i\right)(1-V_j)\right],\\
+\overline W(E_\beta)
+ &=1-s+\mathbb E[V_{-1}U_0(1-V_0)].
+\end{aligned}
+\tag{8.11}
+$$
+
+The empty product for $j=0$ is one. In particular these identities do not require independent path coordinates.
+
+Proof. Each p beta contributes $U_i$ and kernel $B$, each suspended alpha contributes $V_i$ and kernel $A$, and the final suspended beta contributes $1-V_j$. Summing the finite path weights proves the first identity for the entire complete word $(\beta\alpha)^j\beta\beta$. Starting at suspension, $E_\beta$ is the disjoint union of immediate beta and alpha-beta-beta. Its latter path has factors $V_{-1}U_0(1-V_0)$ and acquired kernels $A,B$. This proves the second identity. The continuation path after a stopping word is only an analysis extension of its finite acquired-kernel path measure. It asserts no additional actual operation after completion. ∎
+
+The following error estimates are embedded uses of bounded-range covariance and Cauchy–Schwarz. If a real random variable lies in an interval of width $d$, its variance is at most $d^2/4$: its second moment about the interval midpoint is at most $d^2/4$, and the mean minimizes that centered second moment. Thus $\mathbb E\zeta_i=0$, $\mathbb E\zeta_i^2\le t^2/4$ and $|\zeta_i|\le t$. If $Z$ is any product of $n$ of the $U$ coordinates, then $Z\in[L^n,H^n]$ and
+
+$$
+|\mathbb E[Z\zeta_i]|
+=|\operatorname{Cov}(Z,V_i)|
+\le\frac{H^n-L^n}{4}t.
+\tag{8.12}
+$$
+
+For any $k\ge2$, bounding $k-2$ factors by $t$ and applying Cauchy–Schwarz to two remaining factors gives
+
+$$
+\mathbb E|\zeta_{i_1}\cdots\zeta_{i_k}|\le\frac{t^k}{4},
+\qquad
+\left|\mathbb E[Z\zeta_{i_1}\cdots\zeta_{i_k}]\right|
+\le\frac{H^n}{4}t^k.
+\tag{8.13}
+$$
+
+Dependence, repeated labels and periodic paths are allowed in these estimates.
+
+Expand every $V_i=s+\zeta_i$ in (8.11). The sums of absolute coefficients at each positive degree in the centered variables, before multiplication by $Z$, have the following bounds on $s\in[1/3,2/5]$:
+
+$$
+\begin{array}{c|cccc}
+\text{factor}&\text{degree 1}&\text{degree 2}&\text{degree 3}&\text{degree 4}\\ \hline
+V_{-1}(1-V_0)&1&1&0&0\\
+1-V_0&1&0&0&0\\
+V_0(1-V_1)&1&1&0&0\\
+V_0V_1(1-V_2)&16/25&7/5&1&0\\
+V_0V_1V_2(1-V_3)&44/125&6/5&9/5&1
+\end{array}
+\tag{8.14}
+$$
+
+For completeness, for the factor with $j$ initial $V$ entries, the degree-$k$ coefficient sum for $1\le k\le j$ is
+
+$$
+\binom jk s^{j-k}(1-s)+\binom j{k-1}s^{j-k+1},
+$$
+
+and the degree-$j+1$ sum is one. For $j=2$ these sums are $2s-s^2,1+s,1$; for $j=3$ they are $3s^2-2s^3,3s,1+2s,1$. Their maxima on the stated interval give (8.14). The first row follows directly from the coefficients $1-s,-s,-1$.
+
+Combining (8.12)–(8.14) gives errors $\eta_\beta,\eta_0,\ldots,\eta_3$ with
+
+$$
+\begin{aligned}
+\overline W(E_\beta)&=1-s+s(1-s)m+\eta_\beta,
+ &|\eta_\beta|&\le b(t),\\
+\overline Q(w_{j,1})&=(1-s)s^jM_{j+1}+\eta_j,
+ &|\eta_j|&\le k_j(t),
+\end{aligned}
+\tag{8.15}
+$$
+
+where every coefficient is explicit:
+
+$$
+\begin{aligned}
+b(t)&=\frac{t}{60}+\frac{t^2}{6},\\
+k_0(t)&=\frac{t}{60},\\
+k_1(t)&=\frac{19t}{900}+\frac{t^2}{9},\\
+k_2(t)&=\frac{1084t}{84375}+\frac{14t^2}{135}+\frac{2t^3}{27},\\
+k_3(t)&=\frac{37829t}{6328125}+\frac{8t^2}{135}
+ +\frac{4t^3}{45}+\frac{4t^4}{81}.
+\end{aligned}
+\tag{8.16}
+$$
+
+For example, the linear coefficient of $k_j$ is $(H^{j+1}-L^{j+1})/4$ times the degree-one entry in (8.14); all higher coefficients are $H^{j+1}/4$ times their entries. The first row uses $n=1$, giving $(H-L)t/4+Ht^2/4=b(t)$. This accounts for every term without replacing a dependent expectation by a product of expectations.
+
+**Lemma 8.5 (robust simultaneous response constraints).** The same scalar $s$ in (8.10) satisfies
+
+$$
+\begin{aligned}
+C_p-F(s)&\le\epsilon_p+5\epsilon_\beta+P(t),\\
+G(s)-q_*&\le2\epsilon_p+\epsilon_\beta/5+R(t),
+\end{aligned}
+\tag{8.17}
+$$
+
+with $F,G$ exactly as in (3.3), $C_p=11758471/22781250$, $q_*=1944/390625$ and the polynomials in (8.9).
+
+Proof. The common stationary $U$ marginals suffice for the product inequalities (3.7)–(3.9):
+
+$$
+\begin{aligned}
+M_2&\le(L+H)m-LH,\\
+M_3&\le(L^2+LH+H^2)m-LH(L+H),\\
+M_4&\ge LH^2(4m-L-2H).
+\end{aligned}
+\tag{8.18}
+$$
+
+Indeed $xy\le(x^2+y^2)/2$ and the three-variable identity preceding (3.7) first give $M_2\le\mathbb E U_0^2$ and $M_3\le\mathbb E U_0^3$; the interval chords then give the first two bounds. The four-product inequality (3.8) is multi-affine in its four arguments. At vertices with respectively $0,1,2,3,4$ arguments equal to $H$, its exact differences are $29/5625,2/1125,0,0,4/2025$. Multilinear interpolation makes the difference nonnegative throughout the box. Taking expectations with the common marginal mean gives the last bound. No equality case or independent attainability of these estimates is used.
+
+Put $c=1489/6750$ and $d=\overline W(E_\beta)-C_\beta$. The supplied endpoint event constraint (2.6) and (8.15) give
+
+$$
+|d|\le\epsilon_\beta,\qquad
+s(1-s)m=s-c+d-\eta_\beta.
+\tag{8.19}
+$$
+
+Using the first three word identities in (8.15) and the first two bounds of (8.18),
+
+$$
+\begin{aligned}
+\overline Q(E_p)
+&\le(1-s)(m+sM_2+s^2M_3)+k_0+k_1+k_2\\
+&\le F(s)+h(s)(d-\eta_\beta)+k_0+k_1+k_2,\\
+h(s)&=\frac1s+\frac{19}{15}+\frac{271}{225}s.
+\end{aligned}
+\tag{8.20}
+$$
+
+Here and below the $k_j$ are evaluated at $t$. Substitution of (8.19) gives the equality defining $F$ in (3.3), since $L+H=19/15$, $LH=2/5$ and $L^2+LH+H^2=271/225$. On the interval, $0<h(s)\le3+19/15+542/1125<5$. Together with $\overline Q(E_p)\ge C_p-\epsilon_p$, this proves the first inequality of (8.17) with error
+
+$$
+k_0+k_1+k_2+5b
+=\frac{45211}{337500}t+\frac{283}{270}t^2+\frac2{27}t^3=P(t).
+\tag{8.21}
+$$
+
+For the fourth word, (8.15), (8.18) and (8.19) instead give
+
+$$
+\begin{aligned}
+\overline Q(w_{3,1})
+&\ge(1-s)s^3LH^2(4m-L-2H)-k_3\\
+&=G(s)+g(s)(d-\eta_\beta)-k_3,\\
+g(s)&=4LH^2s^2\le\frac{64}{375}<\frac15.
+\end{aligned}
+\tag{8.22}
+$$
+
+The equality uses $LH^2=4/15$, $L+2H=29/15$ and $4-L-2H=31/15$, giving precisely $G$ in (3.3). Since $g(s)>0$, combine this with the complete-coordinate upper bound (2.8) to obtain the second inequality of (8.17). Its error is
+
+$$
+k_3+b/5
+=\left(\frac{37829}{6328125}+\frac1{300}\right)t
+ +\frac5{54}t^2+\frac4{45}t^3+\frac4{81}t^4=R(t).
+\tag{8.23}
+$$
+
+Both inequalities concern the one clipped generator, its two complete mean laws, one actual circulation and one common mean $m$. ∎
+
+**Lemma 8.6 (a convex tangent with positive rational separation).** Set $s_*=3679/10000$ and $\lambda=G'(s_*)/F'(s_*)$. This is the positive rational in (8.9), and
+
+$$
+\lambda(C_p-F(s))+G(s)-q_*\ge D_\lambda
+\quad(a\le s\le b).
+\tag{8.24}
+$$
+
+Proof. Differentiating the explicit functions (3.3) gives
+
+$$
+\begin{aligned}
+F'(s)&=\frac c{s^2}+\frac{13}{15}-\frac{271}{225}c
+ +\frac{494}{225}s+\frac{38}{25}s^2>0,\\
+G'(s)&=\frac4{15}s\left(\frac{31}{5}s+\frac{116}{15}s^2-8c\right)>0,\\
+F''(s)&=-\frac{2c}{s^3}+\frac{494}{225}+\frac{76}{25}s,\\
+G''(s)&=\frac4{15}\left(\frac{62}{5}s+\frac{116}{5}s^2-8c\right).
+\end{aligned}
+\tag{8.25}
+$$
+
+The positive first derivatives also follow from the bounds in Section 3. Both second derivatives are increasing on this positive interval. Their relevant endpoint evaluations are
+
+$$
+F''(2/5)=-\frac{94013}{27000}<0,\qquad
+G''(1/3)=\frac{66776}{50625}>0.
+\tag{8.26}
+$$
+
+Therefore $H_\lambda(s)=\lambda(C_p-F(s))+G(s)-q_*$ is strictly convex. Its derivative vanishes at $s_*$ by the definition of $\lambda$, and $s_*\in(a,b)$. Hence its minimum is $H_\lambda(s_*)=D_\lambda$, yielding (8.24) and the exact value in (8.9).
+
+The following rational comparisons give an explicit positive margin:
+
+$$
+\begin{gathered}
+\frac{189}{4000}<\lambda<\frac{5908}{125000},\\
+C_p-F(s_*)-\frac1{4000}
+=\frac{12788985483823}{33524887500000000000}>0,\\
+G(s_*)-q_*-\frac1{16000}-\frac7{10000000}
+=\frac{116200318741}{5062500000000000000}>0.
+\end{gathered}
+\tag{8.27}
+$$
+
+The latter two identities refine the evaluations (3.10). Multiplication by the positive $\lambda$ gives
+
+$$
+D_\lambda>
+\frac{189}{4000}\frac1{4000}+\frac1{16000}+\frac7{10000000}
+=\frac{6001}{80000000}>\frac3{40000}.
+\tag{8.28}
+$$
+
+This is a separation of simultaneous constraints at one tangent; it does not optimize either phase independently. ∎
+
+**Proof of Theorem 8.3.** Multiply the first inequality of (8.17) by $\lambda$ and add the second. Equations (8.4) and (8.24) imply
+
+$$
+\begin{aligned}
+D_\lambda
+&\le(\lambda+2)\epsilon_p+(5\lambda+1/5)\epsilon_\beta
+ +\lambda P(t)+R(t)\\
+&=\left(\frac{326}{11}\lambda+\frac{663}{55}\right)e
+ +\lambda P(t)+R(t).
+\end{aligned}
+\tag{8.29}
+$$
+
+All coefficients of $P,R$ are positive. Thus $t\le\omega$ proves (8.8).
+
+To deduce the strict linear modulus, suppose instead that $e+\omega/898\le T$, where $T=1/195200$. The supplied nonnegative excesses imply
+
+$$
+0\le\omega\le898T=\frac{449}{97600}<\frac1{217},\qquad
+\frac1{217}-\frac{449}{97600}=\frac{167}{21179200}>0.
+\tag{8.30}
+$$
+
+Because $P(t)/t$ and $R(t)/t$ have nonnegative coefficients and increase for $t\ge0$, their exact endpoint margins give
+
+$$
+\begin{aligned}
+\frac{347}{2500}-217P(1/217)&=\frac{38669}{3973134375}>0,\\
+\frac{487}{50000}-217R(1/217)&=\frac{169810643}{1034604191250000}>0.
+\end{aligned}
+\tag{8.31}
+$$
+
+Consequently $P(\omega)\le(347/2500)\omega$ and $R(\omega)\le(487/50000)\omega$, including $\omega=0$. Using the upper bound for $\lambda$ in (8.27), define
+
+$$
+\begin{aligned}
+A^+&=\frac{326}{11}\frac{5908}{125000}+\frac{663}{55}
+ =\frac{2312626}{171875},\\
+K^+&=\frac{5908}{125000}\frac{347}{2500}+\frac{487}{50000}
+ =\frac{2546913}{156250000}.
+\end{aligned}
+\tag{8.32}
+$$
+
+The two budget margins are exactly
+
+$$
+\begin{aligned}
+\frac3{40000}-\frac{A^+}{195200}&=\frac{25453}{4193750000}>0,\\
+\frac3{40000}-\frac{898K^+}{195200}&=\frac{186063}{15250000000000}>0.
+\end{aligned}
+\tag{8.33}
+$$
+
+Finally, (8.8) and the supposed linear bound yield
+
+$$
+\begin{aligned}
+D_\lambda
+&\le A_\lambda e+\lambda P(\omega)+R(\omega)\\
+&\le A^+e+K^+\omega\\
+&\le\max\{A^+,898K^+\}(e+\omega/898)\\
+&\le\max\{A^+,898K^+\}T
+ <\frac3{40000}<D_\lambda,
+\end{aligned}
+$$
+
+a contradiction. This proves (8.7). The only use of mean-law bounds was downstream of (8.4); no mean/configuration risk identification is needed. ∎
+
+**Corollary 8.7 (strict baseline-attainment threshold and limiting necessity).** If an original observer simultaneously attains the two declared baseline radii, meaning precisely
+
+$$
+R_{\mathrm{conf},p}=\rho_p,\qquad
+R_{\mathrm{conf},\beta}=\rho_\beta,
+\quad\hbox{equivalently }e=0,
+$$
+
+then
+
+$$
+\operatorname{osc}(M)>\frac{449}{97600}.
+\tag{8.34}
+$$
+
+More generally, for $e<T$, one has $\operatorname{osc}(M)>898(T-e)$. Let $t_0$ be the unique positive root of
+
+$$
+\lambda P(t_0)+R(t_0)=D_\lambda.
+\tag{8.35}
+$$
+
+Then $e=0$ implies $\operatorname{osc}(M)\ge t_0$, and every sequence of original observers with $e(M_n)\to0$ satisfies
+
+$$
+\liminf_{n\to\infty}\operatorname{osc}(M_n)\ge t_0.
+\tag{8.36}
+$$
+
+Proof. Equation (8.34) is the strict specialization of (8.7), since $898/195200=449/97600$. The polynomial $J(t)=\lambda P(t)+R(t)$ is continuous, starts at zero, is strictly increasing on $[0,\infty)$ and tends to infinity. This proves uniqueness and positivity in (8.35). Equation (8.8) gives $J(\operatorname{osc}(M))\ge D_\lambda-A_\lambda e(M)$. For $e=0$, monotonicity gives the non-strict root bound. For the sequence, oscillations lie in $[0,1]$; a subsequence converging to their liminf and continuity give $J(\liminf\operatorname{osc}(M_n))\ge D_\lambda$. This proves (8.36). Neither root equality nor the existence of the sequence is asserted. ∎
+
+Here simultaneous baseline attainment is a specified objective. An unknown unrestricted optimizer might have $e>0$; calling it an optimum does not license the $e=0$ specialization.
+
+**Proposition 8.8 (stopped-law coupling comparison).** Under the same suppliers, a second, weaker quantitative consequence is
+
+$$
+e(M)+\frac{15}{122}\operatorname{osc}(M)>\frac1{195200}.
+\tag{8.37}
+$$
+
+Proof. In the clipped table set $s_0=(\max v+\min v)/2$ and replace only $v$ by $s_0$, retaining $u,B,A,\pi,\tau$. This is one regular constant-emission comparison with its own charged realization. Its suspended Bernoulli perturbation is at most $t/2$. Couple emissions from identical labels maximally, and after matched letters use the same acquired-update randomness. At p emissions already agree. From suspension the probability of reaching the $j$th further suspended visit without completion or an earlier discrepancy is at most $(4/15)^j$. The coupling inequality and the geometric sum therefore give, for complete stopped laws,
+
+$$
+\sup_y\operatorname{TV}(W_y,W_y^{s_0})\le\frac{t/2}{1-4/15}=\frac{15t}{22},
+\qquad
+\sup_x\operatorname{TV}(Q_x,Q_x^{s_0})\le\frac23\frac{15t}{22}=\frac{5t}{11}.
+\tag{8.38}
+$$
+
+Both regular generators terminate almost surely; their legal infinite outcomes have zero mass. Matching letters and labels match every rendered deterministic event and Stop. These bounds thus concern full laws rather than terminal projections. The triangle inequality before configuration averaging, followed by convexity, gives the endpoint mean-law bounds of Theorem 3.1 for this one constant table, with excess bounds $\epsilon_p+5t/11$ and $\epsilon_\beta+15t/22$. Hence
+
+$$
+\frac1{35200}<\max\{\epsilon_p+5t/11,\epsilon_\beta+15t/22\}
+\le\frac{61}{11}e+\frac{15}{22}t.
+$$
+
+Multiply by $11/61$, use $t\le\omega$ and $11/(61\cdot35200)=1/195200$ to prove (8.37). Only synthetic geometric survival is used, not actual-chain convergence or mixing. ∎
+
+**Mathematical citation 8.9 (proof suppliers and attribution).** The bounded-range covariance estimate in (8.12) is the classical Grüss bound, proved here from a variance bound and Cauchy–Schwarz; (8.13), interval chords, multi-affine interpolation and convex tangent separation are likewise embedded elementary proof steps. Sequential coupling, the coupling inequality and conditional-product TV perturbation are mature suppliers for (8.38). They are not standalone discoveries of this chapter.
+
+For the classical arbitrary-dependence covariance bound, see Martín Egozcue, Luis Fuentes García, Wing-Keung Wong and Ričardas Zitikis, *Grüss-Type Bounds for the Covariance of Transformed Random Variables*, Journal of Inequalities and Applications, volume 2010, article 619423, [DOI 10.1155/2010/619423](https://doi.org/10.1155/2010/619423), Section 2. Only the bounded-range inequality proved in (8.12) is used, not its dependence-sensitive refinements.
+
+For a public precise reference for conditional-product coupling, see Alessandro Abate, Frank Redig and Ilya Tkachev, *On the effect of perturbation of conditional probabilities in total variation*, [arXiv:1311.3066v1](https://arxiv.org/abs/1311.3066v1), Theorems 1–2, Lemma 2 and Section 3.2. Its total-variation norm is twice the event-supremum TV used here. Finite configuration spaces and countable stopped-word carriers meet its measurable-space conditions. Its finite-horizon product estimates require the additional geometric survival argument above to control entire stopped laws uniformly. [CK] supplies context for distances between specified labelled-chain output laws; it does not supply the original-history extraction or simultaneous configuration-loss comparison.
+
+The mathematical contribution here is the source-specific uniform variable-emission modulus (8.7)–(8.9), obtained through the dependent centered-response comparison (8.11)–(8.23). Its attribution is repo-derived ordinary mathematics conditional on Mathematical citation 8.2. The existing source-specific products (3.7)–(3.9), complete-tail events and radii, clipping constants and full-record realization are reused at their declared scopes. No external novelty, priority or optimality of the coefficient $1/898$ is asserted.
+
+**Open mathematical boundary 8.10 (necessity, realization and optimization).** These inequalities are necessary conditions for the original conf/conf objective. They neither construct simultaneous baseline attainment nor establish that a family with $e\to0$ exists. The unrestricted infimum, its sign, attainment, fixed-resource optimization and attainability of the polynomial root remain undetermined by this chapter. Satisfying the inequalities is not sufficient: one same generator must still satisfy exact individual generation, the common actual circulation and all supported-depth full configuration-loss constraints.
+
+No comparison here preserves a fixed COMPLETE allocation or a hard bound on either marginalized defect $\Delta_4,\Delta_{\mathrm{all}}$. It introduces no law/law or mixed-risk transfer, physical-memory bit bound, exact-real physical sampler, new actual source access or runtime access to an analysis posterior, row or path coordinate. The comparison's full-record realization is conditional on the stated supplier; its resource costs belong to that comparison. All original transient histories, zero/one emissions, held records and Stop obligations remain within the original hypotheses. No irreducibility, aperiodicity, independent path coordinates, mixing, or separate stationary law for $B\operatorname{diag}(v)A$ or $K_{\mathrm{syn}}$ is available or required.
+
+## 追加锚（本行以下为增补区）

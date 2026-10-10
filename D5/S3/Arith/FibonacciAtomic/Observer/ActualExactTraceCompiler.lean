@@ -194,7 +194,7 @@ private theorem strategyPrefixes_nonempty (N : Nat) (π : Strategy) (positive : 
   refine Finset.mem_biUnion.mpr ⟨U, member, ?_⟩
   exact List.mem_toFinset.mpr ((List.mem_inits _ _).mpr List.nil_prefix)
 
-private theorem strategy_prefix_mem (N : Nat) (π : Strategy) {U : Source}
+theorem strategy_prefix_mem (N : Nat) (π : Strategy) {U : Source}
     (allowed : Allowed N U) {h : RawHistory}
     (pre : h.IsPrefix (terminal π U).1) :
     kappa_hist h ∈ strategyPrefixes N π := by
@@ -501,7 +501,7 @@ theorem exact_all_history_factorization {G : Finset CoarseHistory}
     | step prior coarse ih => exact exact_bar_control empty policy ih coarse
   exact exact_action_control policy same
 
-private theorem strategy_prefix_action (N : Nat) (π : Strategy) (positive : 1 ≤ N)
+theorem strategy_prefix_action (N : Nat) (π : Strategy) (positive : 1 ≤ N)
     (coarse : Function.FactorsThrough π.policy kappa_hist)
     (U : Source) (allowed : Allowed N U)
     {e : ExactState (strategyPrefixes N π)} {h : RawHistory}

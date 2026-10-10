@@ -114,7 +114,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.
 
 Each allowed source has the prescribed full raw trace and terminal bit. Additional phase observations are not part of this predicate.
 
-**Theorem 1.10 (All exact competitors have finite tables).**
+**Theorem 1.10 (Actual prefix has its terminating tail).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.prefix_run_tail`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.prefix_run_tail` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original observer M and immutable U, an ActualPrefix(M,U,e,h) and Run(M,U,e0,t,f,b) supply a raw suffix s with Run(M,U,e,s,f,b) and h appended to s equal to t. No legality assumption or counterfactual prefix is used.
+
+**Theorem 1.11 (All exact competitors have finite tables).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.exact_competitor_table_coverage`
 
@@ -134,6 +146,7 @@ This result supplies support pruning and nominal table coverage. It does not pro
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.ExactTraces`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.SupportPruningContract`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.exact_competitor_table_coverage`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.prefix_run_tail`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.prescribedSupport`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.supportAction`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.supportCache`

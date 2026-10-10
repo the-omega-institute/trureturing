@@ -449,6 +449,43 @@ project 恢复在 current 与 Lean build 单元中优先请求读者基线分支
 
 工作流不新增文本形状测试；消费 workflow 的生产逻辑可以使用既有合成夹具。实际事件、候选版本、required 名称、权限、覆盖、缓存与性能必须依 CLAUDE.md §8.12 真跑核验。integration 保持每个原始 PR 的独立复测和稳定条数要求，部署资格与本地实现/测试成功分开报告。产物只保留正式结果、必要实验程序与读数，不保存迁移流水。
 
+**A23 Lean 本地共享 artifact cache**
+
+本节规定同一主机上各检出共享 Lake 原生 artifact cache 的契约。
+
+**位置。** 共享缓存是 Lake 默认缓存目录 `~/.elan/toolchains/<lean-toolchain>/lake/cache`，入口不设置 `LAKE_CACHE_DIR`。目录随工具链分区，工具链变更即换用新目录。该目录属于整个工具链，不限于本仓库。缓存与各检出位于同一文件系统时，Lake 以硬链接写入和恢复产物；跨文件系统时退化为复制，语义不变。
+
+**读者。** 所有 linked worktree 与 CI 都是读者。入口与各 lakefile 均不设置 `LAKE_ARTIFACT_CACHE`、`LAKE_RESTORE_ARTIFACTS` 或 `enableArtifactCache`；在此缺省下 Lake 读取缓存、不写入缓存。`LAKE_ARTIFACT_CACHE=false` 同时关闭读取，不用于表达只读。读者的某个模块在本地不是最新时，Lake 以该模块的输入哈希查找缓存：命中则把该模块的全部产物恢复到读者的 build 目录，lean-inspector 照旧从 build 目录读取；未命中则在本地编译，产物不进入共享缓存。读者只读指本仓库入口不向该目录发布本地构建产物；以 Lake 远端缓存服务映射导入的条目在读取时可能把远端产物下载进该目录，这类映射不在本节规则之内。CI 不运行 warm，不写入共享缓存；runner 上该目录随 `~/.elan` 的 Actions 缓存恢复时，其中的条目按同一读者规则使用。
+
+**写者。** 本仓库各入口中唯一的写者是主检出上的 `make warm-donor`；同一工具链的其他项目也可能写入该目录。本仓库只在「清理」一段规定的维护操作中整体清空该目录，此外不删除任何条目。warm-donor 的前置条件不变（干净的 dev 检出）。warm 以 `LAKE_ARTIFACT_CACHE=true LAKE_RESTORE_ARTIFACTS=true` 运行 `make lean` 与 `make lean-report REBUILD_REPORT_CACHE=1`。后者跳过整份报告收据复用，使 Lake 遍历全部逐模块报告 facet；已是最新的产物直接写入缓存，不重新编译。warm 遍历到的每个模块编译产物与逐模块报告 artifact 都写入缓存；`LAKE_RESTORE_ARTIFACTS=true` 使主检出 build 目录保留全部产物，供 clonefile 播种与 inspector 读取。Lake 把写入缓存的本地文件设为只读；写 `.lake/build` 的程序先删除目标再写入，不原地改写已有文件。
+
+**清理。** warm 不清理缓存。本仓库写入缓存的内容是自上次清理以来各次 warm 写入的产物之并。`lake cache clean` 删除整个工具链缓存目录，是单独的维护操作，只在主机上没有使用该工具链的 Lean 构建或报告时运行。清理若与读者并发：读者查找时产物文件已缺失、且映射中也没有可用的存档，Lake 记录警告并按未命中在本地编译；读者已解析出产物路径、在恢复前文件被删除，则恢复以构建错误终止，重跑即按未命中处理。两种情况都不使读者得到与其输入哈希不符的产物：缓存产物按内容哈希寻址，前提是内容哈希在实际出现的产物之间没有碰撞。
+
+**按用途播种。** worktree 的首个 Lean 命令前，`lean-cache-ensure` 按入口用途准备 `.lake`：
+
+- 全量用途——不带 `LEAN_TARGETS` 的 `make lean`、`make lean-report`，以及调用它们的入口——由主检出 clonefile 整个 `.lake`。
+- 定向用途——带 `LEAN_TARGETS` 的 `make lean`——只 clonefile `.lake/packages`；项目 build 目录不复制，所需模块由 Lake 从共享缓存恢复。
+- `.lake` 已存在时不再 clonefile；缺失或过期的模块由共享缓存恢复，未命中才在本地编译。
+
+**报告种子。** linked worktree 的 `make lean-report` 在检查种子之前，若本地规范种子缺失、不完整、损坏或报告格式不符，先从主检出复制规范报告种子（报告、四个 sidecar 与成功收据）；复制所得种子须满足同样的完整性与格式要求，满足后作为增量起点经 Lake `:report` 补齐，逐模块报告 artifact 由共享缓存恢复。复制所得种子仍不满足时，按 §8.3 的既有规则拒绝。`judgeInputs` 与 utility 输入不进入共享缓存，由各 worktree 自行生成。
+
+**正确性。** 下列性质由 `D5/S3/ConceptDynamics/Governance/TraceKeyedArtifactCacheSoundness` 中经 Lean kernel 验证的定理承担：
+
+- `cachedBuild_eq_build`：缓存状态只由写者从零构建的产物经 store 写入，并可被任意次 clean 清空；这些操作与读者查找无论如何交错，读者每个模块得到的产物都等于从零构建的产物。
+- `cachedBuild_restores_unaffected`：模块在写者快照与读者快照中源码相同、依赖集相同且依赖递归地满足同一条件，并且读者查找时缓存在该模块写者快照的键下存有产物，则读者对该模块得到的就是这个缓存产物。读者在本地编译的模块因此都在改动的依赖闭包之内，或在查找时缓存缺少对应的键。
+
+定理的适用边界：
+
+- 模型把每次查找视为一次原子读取，直接返回产物值；Lake 先解析产物路径、再硬链接或复制，其间的文件系统失败不在模型之内，按「清理」一段处理。
+- "恢复而不编译"是模型求值器命中分支的结论；模型不计编译次数。
+- 模型与 Lake 的对应是建模前提，未经机器验证：快照的 `src` 是模块除依赖产物外的全部构建输入（源码、选项、模块名、平台与工具链），Lake 输入哈希中混入的有序 import trace、传递 trace、额外目标与插件计入 `src` 或依赖产物；`deps` 是其构建读取产物的模块集合；`BuildSystem` 的 `compile` 是确定性编译，`hash` 与 `digest` 合成的 `traceKey` 对应 Lake 的输入哈希。
+- 前提 `NoCollision` 要求实际出现的构建输入之间没有键碰撞；该前提不由机器验证，Lake 的哈希不是密码学哈希。
+- 模型中写者存入的是从零构建的产物；主检出实际存入的是其当前 build 目录中的产物，二者相等依赖 Lake 增量构建的正确性，该前提同样不由本节的定理证明。
+
+定理不要求读者只读：写入者只要写入其从零构建的产物，读者结果仍正确。读者只读的作用是使本仓库的写入与清理由主检出独占。
+
+**现行入口。** worktree 缓存入口现行执行 CLAUDE.md §8.3 与 A20 的 clonefile 流程（#15158）。
+
 ---
 
 # 第四部:harness 执法(不变量·状态机)

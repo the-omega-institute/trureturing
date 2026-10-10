@@ -134,7 +134,7 @@ private theorem coarseReply_kappa (z : Option Bool) : kappa (coarseReply z) = z 
   | none => rfl
   | some b => cases b <;> rfl
 
-private theorem leaf_representative (V : Source) (q : Address) (member : q ∈ leaves V) :
+theorem leaf_representative (V : Source) (q : Address) (member : q ∈ leaves V) :
     coarseReply (leafLabel V q) = readout q V := by
   obtain ⟨b, label⟩ := ((seven_leaf_separation.1 V).2 q).mp (List.mem_toFinset.mpr member)
   cases report : readout q V <;> simp [leafLabel, report, coarseReply] at label ⊢
