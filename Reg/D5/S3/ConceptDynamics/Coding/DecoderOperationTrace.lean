@@ -163,7 +163,10 @@ theorem run_dependence : ObservationalDependence relationSignature.{u,v,w} runAc
 
 def stepRegistration : Registration stepArena.{u,v,w}
     (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.step_unique.{u,v,w})) where
-  actual := stepActual
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    relationSignature.{u,v,w}
+    (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
   variation := ⟨@step_unique.{u,v,w}, stepRejected, step_rejected_law⟩
   sensitivity := by
@@ -188,7 +191,10 @@ def stepRegistration : Registration stepArena.{u,v,w}
 
 def traceRegistration : Registration traceArena.{u,v,w}
     (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_closure.{u,v,w})) where
-  actual := traceActual
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    traceSignature.{u,v,w}
+    (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
   variation := ⟨@trace_closure.{u,v,w}, traceRejected, trace_rejected_law⟩
   sensitivity := by
@@ -210,7 +216,10 @@ def traceRegistration : Registration traceArena.{u,v,w}
 
 def runClosureRegistration : Registration runClosureArena.{u,v,w}
     (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_closure.{u,v,w})) where
-  actual := runActual
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    relationSignature.{u,v,w}
+    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
   variation := ⟨@run_closure.{u,v,w}, runRejected, run_closure_rejected_law⟩
   sensitivity := by
@@ -225,7 +234,10 @@ def runClosureRegistration : Registration runClosureArena.{u,v,w}
 
 def runTransRegistration : Registration runTransArena.{u,v,w}
     (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_trans.{u,v,w})) where
-  actual := runActual
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    relationSignature.{u,v,w}
+    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
   variation := ⟨@run_trans.{u,v,w}, runRejected, run_trans_rejected_law⟩
   sensitivity := by
@@ -240,7 +252,10 @@ def runTransRegistration : Registration runTransArena.{u,v,w}
 
 def runComparableRegistration : Registration runComparableArena.{u,v,w}
     (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_comparable.{u,v,w})) where
-  actual := runActual
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    relationSignature.{u,v,w}
+    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
   variation := ⟨@run_comparable.{u,v,w}, runRejected, run_comparable_rejected_law⟩
   sensitivity := by
@@ -269,7 +284,10 @@ def step_unique_registration :
   realization := .source stepArena ⟨stepRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some stepActual
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    relationSignature.{u,v,w}
+    (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -304,7 +322,10 @@ def trace_closure_registration :
   realization := .source traceArena ⟨traceRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some traceActual
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    traceSignature.{u,v,w}
+    (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -340,7 +361,10 @@ def run_closure_registration :
   realization := .source runClosureArena ⟨runClosureRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some runActual
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    relationSignature.{u,v,w}
+    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -376,7 +400,10 @@ def run_trans_registration :
   realization := .source runTransArena ⟨runTransRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some runActual
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    relationSignature.{u,v,w}
+    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -412,7 +439,10 @@ def run_comparable_registration :
   realization := .source runComparableArena ⟨runComparableRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some runActual
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
+    relationSignature.{u,v,w}
+    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
+    (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
