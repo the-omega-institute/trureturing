@@ -14,8 +14,7 @@ namespace D5.S1.Words.ThueMorseMapFirstStart
 open D5.S1.Words.Complexity
 open D5.S1.Words.ThueMorseDyadic
 
-open private thueMorse_zero thueMorse_two_mul thueMorse_two_mul_add_one
-  thueMorse_two_pow_add
+open private thueMorse_two_pow_add
   from D5.S1.Words.Complexity.ThueMorseReducedAbelianOdd
 
 /-- A monochromatic arithmetic progression in the actual zero-indexed word. -/
