@@ -23,7 +23,7 @@ Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
 import D5.S1.Words.ParityCode.OddTopWeight
-import D5.S3.Quantum.SpinChains.Sl2WeightInjectivity
+import D5.S3.Quantum.SpinChains.Sl2WeightFiltration
 
 set_option backward.isDefEq.respectTransparency false
 set_option linter.unusedSimpArgs false
@@ -557,7 +557,7 @@ theorem result : claim := by
       (t : IsSl2Triple g r h) {v : V} {q k : ℕ}
       (hv : g v = (q : ℚ) • v) (hk : k ≤ q) (hz : (h ^ k) v = 0) : v = 0 := by
     obtain ⟨n, hn⟩ := raising_eventually_zero t hv
-    exact Sl2WeightInjectivity.lowering_kernel_zero (K := ℚ) t n v q k hv hk hn hz
+    exact Sl2WeightFiltration.lowering_kernel_zero (K := ℚ) t n v q k hv hk hn hz
   have restrict_injective (L M S k : ℕ) (hM : 1 ≤ M) (hML : M ≤ L)
       (hN : 2 ≤ L - 1) (hμ : (M - 1) * (L - M) + k ≤ 2 * S) :
       Function.Injective (restrict L M S k) := by
