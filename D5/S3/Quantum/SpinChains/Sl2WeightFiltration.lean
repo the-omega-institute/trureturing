@@ -9,6 +9,7 @@
 import D5.S3.Quantum.SpinChains.Sl2WeightInjectivity
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+import Mathlib.LinearAlgebra.DFinsupp
 
 attribute [local instance] LieRing.ofAssociativeRing
 
@@ -222,5 +223,124 @@ theorem lowering_pow_surjective [FiniteDimensional K V]
       lowering_pow_weight a z.property (n - r)
   · have hzy : (f ^ n) (z : V) = y := congrArg Subtype.val hz
     rw [← Module.End.mul_apply, ← pow_add, show r + (n - r) = n by omega, hzy]
+
+private theorem weight_independent (h : Module.End K V) :
+    iSupIndep (weightSpace h) :=
+  h.eigenspaces_iSupIndep.comp (Int.cast_injective : Function.Injective (fun s : ℤ => (s : K)))
+
+private theorem weight_cuts_disjoint (h : Module.End K V) (c : ℤ) :
+    Disjoint (weightGE h c) (weightLE h (c - 1)) := by
+  exact (weight_independent h).disjoint_biSup_biSup
+    (s := Set.Ici c) (t := Set.Iic (c - 1)) (Set.disjoint_left.mpr (by
+      intro s hs ht
+      change c ≤ s at hs
+      change s ≤ c - 1 at ht
+      omega))
+
+omit [CharZero K] in
+private theorem weight_cuts_sup {h : Module.End K V} (hw : IntegralWeights h) (c : ℤ) :
+    weightGE h c ⊔ weightLE h (c - 1) = ⊤ := by
+  obtain ⟨S, hS⟩ := hw
+  apply top_unique
+  rw [← hS]
+  refine iSup₂_le fun s _ => ?_
+  by_cases hs : c ≤ s
+  · exact le_sup_of_le_left (le_iSup_of_le s (le_iSup_of_le hs le_rfl))
+  · exact le_sup_of_le_right (le_iSup_of_le s (le_iSup_of_le (by omega) le_rfl))
+
+private theorem lowering_map_LE {h e f : Module.End K V} (a : Sl2Relations h e f)
+    (s : ℤ) (r : ℕ) :
+    (weightLE h s).map (f ^ r) ≤ weightLE h (s - 2 * (r : ℤ)) := by
+  simp only [weightLE, Submodule.map_iSup]
+  refine iSup₂_le fun t ht => ?_
+  rintro _ ⟨v, hv, rfl⟩
+  exact Submodule.mem_iSup_of_mem (t - 2 * (r : ℤ))
+    (Submodule.mem_iSup_of_mem (show t - 2 * (r : ℤ) ≤ s - 2 * (r : ℤ) by omega)
+      (lowering_pow_weight a hv r))
+
+private theorem lowering_map_GE {h e f : Module.End K V} (a : Sl2Relations h e f)
+    (s : ℤ) (r : ℕ) :
+    (weightGE h s).map (f ^ r) ≤ weightGE h (s - 2 * (r : ℤ)) := by
+  simp only [weightGE, Submodule.map_iSup]
+  refine iSup₂_le fun t ht => ?_
+  rintro _ ⟨v, hv, rfl⟩
+  exact Submodule.mem_iSup_of_mem (t - 2 * (r : ℤ))
+    (Submodule.mem_iSup_of_mem (show s - 2 * (r : ℤ) ≤ t - 2 * (r : ℤ) by omega)
+      (lowering_pow_weight a hv r))
+
+private theorem lowering_map_low_eq [FiniteDimensional K V]
+    {h e f : Module.End K V} (a : Sl2Relations h e f) (r : ℕ) :
+    (weightLE h ((r : ℤ) - 1)).map (f ^ r) = weightLE h (-(r : ℤ) - 1) := by
+  apply le_antisymm
+  · have z := lowering_map_LE a ((r : ℤ) - 1) r
+    have label : (r : ℤ) - 1 - 2 * (r : ℤ) = -(r : ℤ) - 1 := by omega
+    simpa only [label] using z
+  · refine iSup₂_le fun t ht => ?_
+    intro y hy
+    obtain ⟨x, hx, hxy⟩ := lowering_pow_surjective a t r (by omega) y hy
+    exact Submodule.mem_map.mpr ⟨x,
+      Submodule.mem_iSup_of_mem (t + 2 * (r : ℤ))
+        (Submodule.mem_iSup_of_mem (show t + 2 * (r : ℤ) ≤ (r : ℤ) - 1 by omega) hx),
+      hxy⟩
+
+private theorem lowering_kernel_GE [FiniteDimensional K V]
+    {h e f : Module.End K V} (a : Sl2Relations h e f) (r : ℕ)
+    {x : V} (hx : x ∈ weightGE h (r : ℤ)) (hz : (f ^ r) x = 0) : x = 0 := by
+  classical
+  let I := {s : ℤ // (r : ℤ) ≤ s}
+  have hx' : x ∈ ⨆ i : I, weightSpace h i.val := by
+    simpa only [weightGE, iSup_subtype'] using hx
+  obtain ⟨v, hv, hvx⟩ := (Submodule.mem_iSup_iff_exists_finsupp _ x).mp hx'
+  have hi : iSupIndep (fun i : I => weightSpace h (i.val - 2 * (r : ℤ))) := by
+    apply h.eigenspaces_iSupIndep.comp
+    intro i j eq
+    apply Subtype.ext
+    have z : i.val - 2 * (r : ℤ) = j.val - 2 * (r : ℤ) := Int.cast_injective eq
+    omega
+  have hsum : ∑ i ∈ v.support, (f ^ r) (v i) = 0 := by
+    have z := congrArg (fun x : V => (f ^ r) x) hvx
+    simpa only [Finsupp.sum, map_sum, hz] using z
+  have hcomp := (iSupIndep_iff_finsetSum_eq_zero_imp_eq_zero _).mp hi v.support
+    (fun i => (f ^ r) (v i)) (fun i _ => lowering_pow_weight a (hv i) r) hsum
+  rw [← hvx]
+  apply Finset.sum_eq_zero
+  intro i hi
+  have inj := lowering_pow_injective a i.val r i.property
+  have z := @inj ⟨v i, hv i⟩ 0 (by simpa only [map_zero, Submodule.coe_zero] using hcomp i hi)
+  exact congrArg (fun y : weightSpace h i.val => (y : V)) z
+
+/-- The rank of a lowering power is the sum of two complementary weight tails. -/
+theorem lowering_rank_formula [FiniteDimensional K V]
+    {h e f : Module.End K V} (a : Sl2Relations h e f) (hw : IntegralWeights h) (r : ℕ) :
+    finrank K (LinearMap.range (f ^ r)) =
+      finrank K (weightGE h (r : ℤ)) + finrank K (weightLE h (-(r : ℤ) - 1)) := by
+  let A := weightGE h (r : ℤ)
+  let B := weightLE h ((r : ℤ) - 1)
+  let C := weightLE h (-(r : ℤ) - 1)
+  have hAB : A ⊔ B = ⊤ := weight_cuts_sup hw (r : ℤ)
+  have hBC : B.map (f ^ r) = C := lowering_map_low_eq a r
+  have hAC : Disjoint (A.map (f ^ r)) C := by
+    have hg : A.map (f ^ r) ≤ weightGE h (-(r : ℤ)) := by
+      have z := lowering_map_GE a (r : ℤ) r
+      have label : (r : ℤ) - 2 * (r : ℤ) = -(r : ℤ) := by omega
+      simpa only [label] using z
+    exact (weight_cuts_disjoint h (-(r : ℤ))).mono_left hg
+  have hrange : LinearMap.range (f ^ r) = A.map (f ^ r) ⊔ C := by
+    rw [LinearMap.range_eq_map, ← hAB, Submodule.map_sup, hBC]
+  have hA : finrank K (A.map (f ^ r)) = finrank K A := by
+    let L := (f ^ r).domRestrict A
+    have inj : Function.Injective L := by
+      intro x y eq
+      apply Subtype.ext
+      apply sub_eq_zero.mp
+      apply lowering_kernel_GE a r (Submodule.sub_mem _ x.property y.property)
+      change (f ^ r) (x : V) = (f ^ r) (y : V) at eq
+      rw [map_sub, eq, sub_self]
+    have z := (LinearEquiv.ofInjective L inj).finrank_eq
+    rw [LinearMap.range_domRestrict] at z
+    exact z.symm
+  have z := Submodule.finrank_sup_add_finrank_inf_eq (A.map (f ^ r)) C
+  rw [hAC.eq_bot, finrank_bot, add_zero, ← hrange, hA] at z
+  exact z
 
 end D5.S3.Quantum.SpinChains.Sl2WeightFiltration
