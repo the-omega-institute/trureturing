@@ -4,11 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Normal coordinate-surjective subgroups of finite subdirect products of nonabelian simple groups are the whole group, giving perfectness and common inner actions. -/
+   digest: Normal subdirect rigidity, perfectness and common inner actions. -/
 
 import D5.S3.FiniteGroups.NikolovSegal.SmallTwistedGeneration
 import Mathlib.GroupTheory.IsPerfect
 import Mathlib.Data.Fintype.Option
+import Mathlib.GroupTheory.GroupAction.ConjAct
+import Mathlib.GroupTheory.QuotientGroup.Defs
 
 /-!
 Finite subdirect products of nonabelian simple groups have no proper normal
@@ -58,7 +60,7 @@ private theorem two_observer_rigidity [IsSimpleGroup S]
       have hkone : k = 1 := hfaith (Prod.ext
         ((MonoidHom.mem_ker.mp hk).trans (map_one p).symm)
         (hqk.trans (map_one q).symm))
-      simpa [hkone] using M.one_mem
+      simp [hkone]
     · exact kernel_absorption p q hfaith M hqM hfull
         (NikolovSegal.SmallTwistedProduct.noncommutative_simple_commutator_top hnoncomm)
   exact Subgroup.map_injective_of_ker_le p hkM le_top
@@ -90,14 +92,14 @@ theorem finite_observer_rigidity (I : Type u) [Finite I]
       apply top_unique
       intro x _
       have hx : x = 1 := hf x 1 (fun j => PEmpty.elim j)
-      simpa [hx] using N.one_mem
+      simp [hx]
     · intro J _ ih T _ _ hnc K _ a hf hs N _ hN
       let p : K →* (∀ j : J, T (some j)) := MonoidHom.pi (fun j => a (some j))
       let r : K →* p.range := p.rangeRestrict
       let b : ∀ j : J, p.range →* T (some j) :=
         fun j => (Pi.evalMonoidHom (fun j => T (some j)) j).comp p.range.subtype
       have hr : Function.Surjective r := p.rangeRestrict_surjective
-      letI : (N.map r).Normal := Subgroup.Normal.map inferInstance r hr
+      haveI : (N.map r).Normal := Subgroup.Normal.map inferInstance r hr
       have hcomp (j : J) : (b j).comp r = a (some j) := rfl
       have hNr : N.map r = ⊤ := ih (fun j => T (some j)) (fun j => hnc (some j))
         p.range b (by
@@ -147,7 +149,7 @@ theorem normal_joint_range : N.map (MonoidHom.pi rho) = (MonoidHom.pi rho).range
   let f : ∀ i, j.range →* S i :=
     fun i => (Pi.evalMonoidHom S i).comp j.range.subtype
   have hr : Function.Surjective r := j.rangeRestrict_surjective
-  letI : (N.map r).Normal := Subgroup.Normal.map inferInstance r hr
+  haveI : (N.map r).Normal := Subgroup.Normal.map inferInstance r hr
   have hf (i : I) : (f i).comp r = rho i := rfl
   have hNr : N.map r = ⊤ := finite_observer_rigidity I S hnc j.range f
     (by
@@ -177,13 +179,35 @@ private theorem common_lift (e : E) : ∃ n : N, ∀ i, rho i n = rho i e := by
   obtain ⟨n, hn, hne⟩ := Subgroup.mem_map.mp he
   exact ⟨⟨n, hn⟩, fun i => congrFun hne i⟩
 
+/-- The same element of the normal subgroup realizes every coordinate action.
+The automorphism of the actual joint image intertwines the quotient map with
+ambient conjugation; its class modulo inner automorphisms is the identity.
+Thus the induced outer action, including the action of the extension quotient,
+is trivial. -/
 theorem common_inner_action (e : E) :
-    ∃ n : N, ∀ (x : E) (i : I),
-      rho i (e * x * e⁻¹) = rho i ((n : E) * x * (n : E)⁻¹) := by
+    ∃ n : N,
+      (∀ i, rho i n = rho i e) ∧
+      (∀ (x : E) (i : I),
+        rho i (e * x * e⁻¹) = rho i ((n : E) * x * (n : E)⁻¹)) ∧
+      ∃ a : MulAut (N.map (MonoidHom.pi rho)),
+        (∀ x : N,
+          a ((MonoidHom.pi rho).subgroupMap N x) =
+            (MonoidHom.pi rho).subgroupMap N (MulAut.conjNormal e x)) ∧
+        a = MulAut.conj ((MonoidHom.pi rho).subgroupMap N n) ∧
+        (QuotientGroup.mk a :
+          MulAut (N.map (MonoidHom.pi rho)) ⧸
+            (MulAut.conj : N.map (MonoidHom.pi rho) →*
+              MulAut (N.map (MonoidHom.pi rho))).range) = QuotientGroup.mk 1 := by
   obtain ⟨n, hn⟩ := common_lift I S hnc E rho N hN e
-  refine ⟨n, ?_⟩
-  intro x i
-  simp only [map_mul, map_inv, hn i]
-
+  refine ⟨n, hn, ?_, MulAut.conj ((MonoidHom.pi rho).subgroupMap N n), ?_, rfl, ?_⟩
+  · intro x i
+    simp only [map_mul, map_inv, hn i]
+  · intro x
+    apply Subtype.ext
+    funext i
+    change rho i n * rho i x * (rho i n)⁻¹ = rho i (e * (x : E) * e⁻¹)
+    simp only [map_mul, map_inv, hn i]
+  · apply QuotientGroup.eq.mpr
+    exact ⟨((MonoidHom.pi rho).subgroupMap N n)⁻¹, by simp⟩
 
 end D5.S3.FiniteGroups.SurfaceObservers.NormalSubdirectInnerAction
