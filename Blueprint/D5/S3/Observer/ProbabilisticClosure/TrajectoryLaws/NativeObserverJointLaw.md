@@ -60,11 +60,23 @@ Every positive row configuration has the actual native fields. Appending any ope
 
 validStopped(s,omega) pairs stoppedReadWord with its WordFamily witness, or with the unique infinite noncompletion outcome. rawTarget(mu,h,c,s) is the conditional original source mapped to validStopped on its unread tail. fullTarget(M,mu,h,c) is the conditional actual source/private law mapped to the full native transcript of that same tail. The valid carrier retains old synthetic noncompletion; the actual posterior mixture has the original homogeneous stopped-word masses. No clipped law is constructed here.
 
+**Theorem 1.5 (Measurability of the complete lawful tail).**
+
+$$\forall s:ActivePhase, (\operatorname{Measurable}(\operatorname{validStopped}(s)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw.validStopped_measurable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For either active phase, the existing stopped-word map into ValidTail is measurable. Its legal carrier includes every finite completion and the unique infinite return. Runtime lawful-tail construction consumes this original supplier directly.
+
 PhaseHistory(s) consists of every pair H=(h,c) with run(h)=some(c) and c in fourth active phase s. It has no length or rejection bound. LawfulDecoderFamily means a function D assigning to each such H and configuration z a measure on ValidTail(s); it is a separately supplied decoded law, not a constructed generator. fullRisk is the supremum over this entire history type of the finite sum row(M,h)(z) times TV of the rendered D(H,z) and fullTarget. rawRisk uses D(H,z) and rawTarget in the same order. TV is the canonical ENNReal event-supremum measurableTotalVariation. In particular the averaging occurs after TV, before the history supremum.
 
 CutEvidence(M,mu,s,H), for H=(h,c), is the conjunction of: rawTarget and fullTarget are probability measures; fullTarget=(fullRenderer(c,s))_*rawTarget; (Subtype.val)_*rawTarget=wordMixture(posterior(mu,h,c),s); the conditional actual private marginal equals row(M,h).toMeasure; the positive configuration projection; the ordered append-update equality; and the PrefixForm reconstruction in actual_row_refines. It includes the full ordered tagged-history mass factorization for every k, z and measurable unread E, with the same formula as ordered_history_factorization at H. It also includes both full event obligations: for every raw omega and lawful nextNative(c,omega)=(op,d), deleting one operation and its whole event block from fullTranscript(c,omega) equals fullTranscript(d,rawTail(omega,readCost(op))); and for every omega in the acquired readLetters(h) cylinder, the initial full transcript at length(h) contains h, fields(c) and all original blocks, whose replay reconstructs fields(c) and originalView(c). These are all original theorem conjuncts, not additional assumptions.
 
-**Theorem 1.5 (Actual full target and all-history risk transport).**
+**Theorem 1.6 (Actual full target and all-history risk transport).**
 
 $$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall mu:PMFDepth, (\forall s:ActivePhase, (\forall D:LawfulDecoderFamily, ((\forall H:PhaseHistory, (\operatorname{CutEvidence}(M,mu,s,H)))\land(\operatorname{fullRisk}(M,mu,s,D)=\operatorname{rawRisk}(M,mu,s,D))))))))$$
 
@@ -85,4 +97,5 @@ This bridge concerns the exact native source and source-independent finite acqui
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw.native_history_risk_transport`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw.ordered_history_factorization`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw.sameK_private_tail`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw.validStopped_measurable`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeFullResidual](NativeFullResidual.md)
