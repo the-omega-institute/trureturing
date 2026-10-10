@@ -327,7 +327,8 @@ def isReservoir {m : ℕ} (x : LegalPriorityTeacher.Input (m+3)) : Prop :=
   qok (x ⟨m, by omega⟩) ∧ x ⟨m+1, by omega⟩ = .high ∧ vok (x ⟨m+2, by omega⟩)
 private def fullWeight {m : ℕ} (x : LegalPriorityTeacher.Input (m+3)) : Polynomial ℕ := by
   classical exact if isReservoir x then X ^ WordCounts.rareN x else 0
-private lemma append_res (m : ℕ) (p : Fin m → W) (a : Fin 3 → W) :
+/-- The reservoir predicate depends only on the three appended anchors. -/
+lemma append_res (m : ℕ) (p : Fin m → W) (a : Fin 3 → W) :
     isReservoir (Fin.append p a) ↔ qok (a 0) ∧ a 1 = .high ∧ vok (a 2) := by
   change qok (Fin.append p a (Fin.natAdd m 0)) ∧
     Fin.append p a (Fin.natAdd m 1) = .high ∧

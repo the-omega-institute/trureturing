@@ -29,7 +29,7 @@ internal sealed class CommonPredictionWordCountsDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts.actual_nz_identity"),
                 H("Exact reservoir class cardinalities"), StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Separating prefix and anchor coordinates gives the reservoir polynomial 2 X squared times (2+X) times (2+3X) to the m. Taking its coefficient at z counts precisely the actual reservoir words of that mass class. The signed generating polynomial cancels the high-endpoint contribution; this is the parity balance used to integrate tied majority choices."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("ReservoirPolynomial(m) denotes 2 X squared times (2+X) times (2+3X) to the m. Separating prefix and anchor coordinates gives this polynomial. Taking its coefficient at z counts precisely the actual reservoir words of that mass class. The signed generating polynomial cancels the high-endpoint contribution; this is the parity balance used to integrate tied majority choices."))), DescribeRole.Theorem))));
 
     private static Formula ResultFormula() =>
         All("m", V("Nat"), All("z", V("Nat"),

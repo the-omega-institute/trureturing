@@ -74,7 +74,7 @@ local notation "Y" => (Polynomial.X : Polynomial (Polynomial ℤ))
 private def singleAnchor (m k : ℕ) (h coin : Bool) : Polynomial ℤ := by
   classical exact ∑ q : W, ∑ r : W, ∑ v : W,
     if isRes q r v then 0 else Polynomial.C (ld h q r v (selector m k q r v coin))*
-      Polynomial.X^(rb q+rb r+rb v)
+      Polynomial.X^(WordCounts.rb q+WordCounts.rb r+WordCounts.rb v)
 private lemma pair_anchor_single (m k : ℕ) (h : Bool) :
     pairAnchor m k h = singleAnchor m k h false+singleAnchor m k h true := by
   classical
@@ -365,7 +365,7 @@ local notation "X" => (Polynomial.X : Polynomial ℤ)
 local notation "Y" => (Polynomial.X : Polynomial (Polynomial ℤ))
 open WordCounts (highN rareN prefixCoin)
 open MajorityGeometry (singleAnchor fplain fdelta pairAnchor)
-set_option maxHeartbeats 1000000 in
+set_option maxHeartbeats 4000000 in
 private lemma epoly_positive (m : ℕ) (hm : 0 < m) (i : Fin m) :
     Epoly m i = ∑ p : Fin m → W, if highN p=0 then 0 else
       X^rareN p * singleAnchor m (highN p) (last (p i)) (prefixCoin p) := by
@@ -868,7 +868,6 @@ private theorem core_two_sided_positive (m j : ℕ) (hm : 0 < m) :
   · exact dc_lower m j h3
   · exact core_lower_small m j (by omega)
 
-/-- For every positive m and every mass class z the explicit threshold is legal. -/
 /-- Every positive prefix length and mass class have a legal integer reservoir split. -/
 theorem integer_split_positive (m z : ℕ) (hm : 0 < m) :
     ∃ t : ℕ, (t:ℤ) ≤ 2*reservoir_half m z ∧
