@@ -88,7 +88,7 @@ public sealed partial class CleanLanesCommandTests
                 "root=pathlib.Path(__file__).parent\n"
                 "spec=importlib.util.spec_from_file_location('fixture_host',root/'fixture-host-cleanup.py')\n"
                 "module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)\n"
-                "def activity(codex):\n"
+                "def activity(codex, scopes=()):\n"
                 "    state=json.loads((root/'activity.json').read_text())\n"
                 "    observed={pathlib.Path(p) for p in state['paths']}\n"
                 "    if not state['complete']: raise OSError('incomplete controlled activity evidence')\n"

@@ -1,12 +1,13 @@
 using StrataLint.Runtime;
 using System.Text;
+using Xunit.Abstractions;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 [Collection("Lean cache environment")]
-public sealed class WorktreeCacheStrategyTests
+public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
 {
     [Fact]
     public void RestoreRunsLockedAndFailureRollsBack()
@@ -31,6 +32,7 @@ public sealed class WorktreeCacheStrategyTests
             ],
             runner);
 
+        output.WriteLine(result.Error);
         Assert.False(result.Success);
         Assert.Contains("dotnet restore failed", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Contains(
@@ -64,6 +66,7 @@ public sealed class WorktreeCacheStrategyTests
         };
         var result = WorktreeCommand.Run(repository.Path,
             ["--kind", "math", "--name", "failed-restore", "--path", target, "--base", "HEAD"], runner);
+        output.WriteLine(result.Error);
         Assert.False(result.Success);
         Assert.Contains("dotnet restore failed", result.Error, StringComparison.Ordinal);
         Assert.True(Directory.Exists(target));
@@ -93,6 +96,7 @@ public sealed class WorktreeCacheStrategyTests
             ],
             runner);
 
+        output.WriteLine(result.Error);
         Assert.False(result.Success);
         Assert.Contains("simulated concurrent worktree", result.Error, StringComparison.Ordinal);
         Assert.DoesNotContain(

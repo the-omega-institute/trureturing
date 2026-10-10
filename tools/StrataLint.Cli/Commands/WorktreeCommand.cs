@@ -109,6 +109,7 @@ internal static class WorktreeCommand
         string? creationMetadata = null;
         WorktreeBranchTracking? branchTracking = null;
         var halfBuiltRecovered = false;
+        var restoreRejected = false;
         IDisposable? initializationScope = null;
         try
         {
@@ -156,13 +157,13 @@ internal static class WorktreeCommand
             EnsureReviewScaffoldIgnores(options.Path);
             if (!options.SkipRestore)
             {
-                RunRequired(
-                    runner,
-                    "dotnet",
-                    ["restore", SolutionPath, "--locked-mode"],
-                    options.Path,
-                    TimeSpan.FromSeconds(1800),
-                    "dotnet restore failed");
+                var restore = RunProcess(runner, "dotnet", ["restore", SolutionPath, "--locked-mode"],
+                    options.Path, TimeSpan.FromSeconds(1800));
+                if (restore.ExitCode != 0)
+                {
+                    restoreRejected = true;
+                    throw new InvalidOperationException(ProcessError(restore, "dotnet restore failed"));
+                }
             }
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
             RunRequired(
@@ -198,7 +199,7 @@ internal static class WorktreeCommand
                 {
                     creationMetadata ??= WorktreeCreationSafety.FindCreationMetadata(options, creationLock, runner);
                     if (worktreeCreated || creationMetadata is not null)
-                        cleanup = Cleanup(options, creationLock, creationMetadata, branchOid, initializationScope, runner);
+                        cleanup = Cleanup(options, creationLock, creationMetadata, branchOid, restoreRejected, initializationScope, runner);
                     if (cleanup.Length == 0) branchTracking?.Rollback(options, runner);
                     if (branchCreated && creationMetadata is null && cleanup.Length == 0)
                         cleanup = "initialization branch retained for recovery";
@@ -557,10 +558,13 @@ internal static class WorktreeCommand
         string creationLock,
         string? creationMetadata,
         string branchOid,
+        bool restoreRejected,
         IDisposable? initializationScope,
         IWorktreeProcessRunner runner)
     {
         WorktreeCreationSafety.ValidateCleanupOwnership(options, creationLock, creationMetadata, runner);
+        if (!restoreRejected)
+            return "initialization worktree retained; qualified cleanup or alternate continuation is required";
         if (creationMetadata is null)
             return "initialization metadata unavailable; material retained for recovery";
         var reference = $"refs/heads/{options.Branch}";
