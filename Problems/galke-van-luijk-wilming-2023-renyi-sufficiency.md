@@ -32,7 +32,7 @@ Let $\rho_s=(I+\varepsilon A_s)/5$. The real edges are $01,12,03,34$, and the He
 
 `RenyiSufficiencyRefutation.weighted_charpoly_eq` proves equality of characteristic polynomials after arbitrary diagonal weighting. Functional calculus gives equality of trace powers and `checkpoint_profiles` gives equality and finiteness throughout $(2,3)$.
 
-The unitalized round trip fixes the likelihood matrix. `PositiveMapKadison.kadison_finite_weights`, `PositiveMapJordanDomain.hermitian_jordan_domain` and `BouquetFixedPoint.bouquet_fixed_point_rigidity` force it to be the identity. `PositiveInverseProjectionFrame.orthogonal_projection_frame` and `PositiveInverseClassification.unital_positive_inverse_classification` restrict the forward map to unitary or transpose-unitary conjugation. `BouquetHolonomy.two_triangle_holonomy_obstruction` and `bouquet_not_interconvertible` exclude both possibilities for this pair.
+The unitalized round trip fixes the likelihood matrix. `PositiveMapJordanDomain.kadison_finite_weights`, `PositiveMapJordanDomain.hermitian_jordan_domain` and `BouquetFixedPoint.bouquet_fixed_point_rigidity` force it to be the identity. `PositiveInverseProjectionFrame.orthogonal_projection_frame` and `PositiveInverseClassification.unital_positive_inverse_classification` restrict the forward map to unitary or transpose-unitary conjugation. `BouquetHolonomy.two_triangle_holonomy_obstruction` and `bouquet_not_interconvertible` exclude both possibilities for this pair.
 
 ## Falsifier
 

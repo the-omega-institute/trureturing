@@ -9,12 +9,10 @@ claim: "Conjecture 22: equality of finite minimal quantum Rényi profiles on an 
 strata_touched:
   - D5/S3/QuantumChannels/RenyiSufficiency/BouquetFixedPoint
   - D5/S3/QuantumChannels/RenyiSufficiency/BouquetHolonomy
-  - D5/S3/QuantumChannels/RenyiSufficiency/BouquetProfiles
   - D5/S3/QuantumChannels/RenyiSufficiency/LikelihoodSpectrum
   - D5/S3/QuantumChannels/RenyiSufficiency/PositiveInverseClassification
   - D5/S3/QuantumChannels/RenyiSufficiency/PositiveInverseProjectionFrame
   - D5/S3/QuantumChannels/RenyiSufficiency/PositiveMapJordanDomain
-  - D5/S3/QuantumChannels/RenyiSufficiency/PositiveMapKadison
   - D5/S3/QuantumChannels/RenyiSufficiency/RenyiSufficiencyRefutation
 license: citation-only
 triage: anchor
