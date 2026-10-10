@@ -3,6 +3,7 @@ bibkey: chirrehelfgott2025bounded
 authors: Andrés Chirre; Harald Andrés Helfgott
 year: 2025
 title: Optimal bounds for sums of bounded arithmetic functions
+doi: null
 url: https://arxiv.org/abs/2511.14736
 claim: Full residues and published good heights give a critically negligible raw odd-source annulus error without additional simplicity or growing-height hypotheses; effective certification and the signed Robin estimate remain unresolved.
 strata_touched: []
