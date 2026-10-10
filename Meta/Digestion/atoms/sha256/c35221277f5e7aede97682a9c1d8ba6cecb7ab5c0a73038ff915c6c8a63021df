@@ -1,0 +1,8 @@
+**推论 7.4（与均匀系数的线性分离）。** $C_n/n\to\frac{5-\sqrt5}{20}=g(\varphi)=0.13819\ldots$，并且：
+
+(i) 对 $n\ge2$，$C_n\le\frac{7n+4}{50}$，从而 $\kappa_n-C_n\ge\frac{2087}{627950}\,n-\frac{2}{25}$；
+
+(ii) $\liminf_n(\kappa_n-C_n)/n\ge g(r_\star)-g(\varphi)>0.0051$；
+
+(iii) $\kappa_n/C_n\to\frac{20\,c_\star}{5-\sqrt5}$。
+
