@@ -105,10 +105,11 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
-        var result = TestProcessRunner.Run("python3",
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
-                root, "ProtocolTests." + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024);
+                root, "ProtocolTests." + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
@@ -116,14 +117,16 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [Theory]
     [InlineData("consumer_mirror_uses_real_git_with_stubbed_github")]
     [InlineData("consumer_land_attributes_paths_with_external_checks_stubbed")]
+    [InlineData("consumer_land_cannot_build_during_native_destruction")]
     public void AgentConsumerUsesRealGitAndPreservesIndependentMaterial(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
-        var result = TestProcessRunner.Run("python3",
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
-                root, "ProtocolTests." + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024);
+                root, "ProtocolTests." + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
@@ -133,10 +136,11 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
-        var result = TestProcessRunner.Run("python3",
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"), root],
-            root, TimeSpan.FromSeconds(180), 1024 * 1024);
+            root, TimeSpan.FromSeconds(180), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }

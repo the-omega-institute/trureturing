@@ -12,6 +12,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 
 ROOT = Path(sys.argv.pop(1)).resolve()
@@ -24,8 +25,9 @@ import worktree_preservation as preservation
 class ProtocolTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="worktree-contract-")
-        self.addCleanup(self.temp.cleanup)
+        self.addCleanup(self.cleanup_fixture)
         self.root = Path(self.temp.name).resolve()
+        self.note("setup.begin")
         self.main = self.root / "main"
         self.main.mkdir()
         self.remote = self.root / "remote.git"
@@ -49,22 +51,71 @@ class ProtocolTests(unittest.TestCase):
         self.g(self.main, "worktree", "add", "-b", self.branch, self.tree, "HEAD")
         self.jobs = []
         self.addCleanup(self.stop_jobs)
+        self.note("setup.end")
+
+    def note(self, phase, **values):
+        print(json.dumps(dict(probe=self._testMethodName, root=str(self.root),
+            phase=phase, fixture_pid=os.getpid(), monotonic=time.monotonic(), **values)),
+            file=sys.stderr, flush=True)
+
+    def cleanup_fixture(self):
+        result = self._outcome.result if self._outcome else None
+        failed = (any(test is self or getattr(test, "test_case", None) is self
+                      for test, _ in result.failures + result.errors) if result is not None
+                  else sys.exc_info()[0] is not None or self._outcome is not None and not self._outcome.success)
+        if failed:
+            # Failed input is recovery evidence, including when a cleanup fails.
+            self.temp._finalizer.detach()
+            self.note("fixture.retained", reason="failed probe or native settlement")
+        else:
+            self.temp.cleanup()
+            self.note("fixture.cleaned")
 
     def stop_jobs(self):
         for job in self.jobs:
+            self.note("job.settle.begin", native_pid=job.pid, returncode=job.poll())
             if job.poll() is None:
                 job.kill()
             job.communicate(timeout=10)
+            self.note("job.settle.end", native_pid=job.pid, returncode=job.returncode)
 
     def g(self, root, *args):
-        result = protocol.git(root, *args)
-        return os.fsdecode(result.stdout)
+        command = ["git", "-C", str(root), *map(str, args)]
+        start = time.monotonic()
+        job = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                               env=protocol.git_environment(), pass_fds=protocol.scope_fds())
+        self.note("git.begin", command=command, native_pid=job.pid, guard_seconds=300)
+        try:
+            stdout, stderr = job.communicate(timeout=300)
+        except subprocess.TimeoutExpired as error:
+            self.note("git.guard", native_pid=job.pid, elapsed=time.monotonic() - start,
+                      stdout=os.fsdecode(error.output or b""), stderr=os.fsdecode(error.stderr or b""))
+            job.kill()
+            job.communicate()
+            raise
+        self.note("git.end", native_pid=job.pid, elapsed=time.monotonic() - start,
+                  returncode=job.returncode, stdout=os.fsdecode(stdout), stderr=os.fsdecode(stderr))
+        if job.returncode:
+            raise protocol.Refused(os.fsdecode(stderr).strip() or "git failed")
+        return os.fsdecode(stdout)
 
     def run_protocol(self, *args, expect=0, env=None):
-        result = subprocess.run([sys.executable, "-B", str(SCRIPT), "--source", str(self.main), *map(str, args)],
-                                capture_output=True, text=True, timeout=30, env=env)
-        self.assertEqual(expect, result.returncode, result.stdout + result.stderr)
-        return result
+        command = [sys.executable, "-B", str(SCRIPT), "--source", str(self.main), *map(str, args)]
+        start = time.monotonic()
+        job = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env)
+        self.note("protocol.begin", command=command, native_pid=job.pid, guard_seconds=30)
+        try:
+            stdout, stderr = job.communicate(timeout=30)
+        except subprocess.TimeoutExpired as error:
+            self.note("protocol.guard", native_pid=job.pid, elapsed=time.monotonic() - start,
+                      stdout=os.fsdecode(error.output or b""), stderr=os.fsdecode(error.stderr or b""))
+            job.kill()
+            job.communicate()
+            raise
+        self.note("protocol.end", native_pid=job.pid, elapsed=time.monotonic() - start,
+                  returncode=job.returncode, stdout=stdout, stderr=stderr)
+        self.assertEqual(expect, job.returncode, stdout + stderr)
+        return subprocess.CompletedProcess(command, job.returncode, stdout, stderr)
 
     def hold(self, *scopes, code=None):
         code = code or 'import sys; print("ready",flush=True); sys.stdin.readline()'
@@ -72,8 +123,10 @@ class ProtocolTests(unittest.TestCase):
             "with", "--path", str(self.tree), *scopes, "--", sys.executable, "-c", code],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         self.jobs.append(job)
+        self.note("hold.readiness.begin", command=job.args, native_pid=job.pid, guard_seconds=10)
         self.assertTrue(select.select([job.stdout], [], [], 10)[0], "job readiness timeout")
         self.assertEqual("ready\n", job.stdout.readline(), job.stderr.read() if job.poll() is not None else "")
+        self.note("hold.readiness.end", native_pid=job.pid)
         return job
 
     def remove(self, expect=0, *args):
@@ -466,7 +519,6 @@ else: raise SystemExit("unexpected GitHub fixture call: "+repr(a))
         self.assertEqual("feature\n", self.g(self.main, "show", "refs/remotes/origin/dev:feature"))
 
     def consumer_land_attributes_paths_with_external_checks_stubbed(self):
-        (self.tree / "owned").write_text("authorized\n")
         (self.tree / "other").write_text("unrelated staged\n")
         self.g(self.tree, "add", "other")
         paths = self.root / "authorized.paths"
@@ -475,22 +527,101 @@ else: raise SystemExit("unexpected GitHub fixture call: "+repr(a))
         message.write_text("authorized unit\n")
         binary = self.root / "land-stub"
         binary.mkdir()
-        for name, body in dict(dotnet='exit 0', gh='echo true',
-                make='case "$1" in lean-report|cover|gate) exit 0;; pr-open) echo pr=17;; *) exit 99;; esac').items():
+        calls = self.root / "make-calls.jsonl"
+        for name, body in dict(dotnet='exit 0', gh='echo true').items():
             file = binary / name
             file.write_text("#!/bin/sh\n" + body + "\n")
             file.chmod(0o755)
+        make = binary / "make"
+        make.write_text(f'''#!{sys.executable}
+import json,os,sys
+with open({str(calls)!r},"a") as output: output.write(json.dumps(sys.argv[1:])+"\\n")
+if sys.argv[1]=="cover" and sys.argv[2]=="ATOM_ID=atom-failure": raise SystemExit(19)
+if sys.argv[1]=="pr-open": print("pr=17")
+elif sys.argv[1] not in ("lean-report","cover","gate"): raise SystemExit(99)
+''')
+        make.chmod(0o755)
         environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"],
                            LAND_LOG_DIR=str(self.root / "land-logs"))
-        result = subprocess.run(["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"), str(self.tree),
-            self.branch, str(message), "--paths-from", str(paths)], cwd=self.main, env=environment,
-            capture_output=True, text=True, timeout=60)
-        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertEqual("authorized\n", self.g(self.tree, "show", "HEAD:owned"))
-        self.assertEqual("original\n", self.g(self.tree, "show", "HEAD:other"))
-        self.assertEqual("other\n", self.g(self.tree, "diff", "--cached", "--name-only"))
-        self.assertEqual(self.g(self.tree, "rev-parse", "HEAD").strip(),
-                         self.g(self.main, "ls-remote", "origin", "refs/heads/" + self.branch).split()[0])
+        # Exact argument values also distinguish literal backslash-t from a tab.
+        one = [("atom-one", "D5/S3/ConceptDynamics.Result")]
+        multiple = [("atom-tab\tvalue", "gid with space"), (r"atom-literal\tvalue", r"gid-literal\tvalue")]
+        failing = [one[0], ("atom-failure", "D5/S3/ConceptDynamics.Failure"), multiple[0]]
+        for index, covers in enumerate(([], one, multiple, failing)):
+            with self.subTest(covers=covers):
+                owned = f"authorized {index}\n"
+                (self.tree / "owned").write_text(owned)
+                before = self.g(self.tree, "rev-parse", "HEAD").strip()
+                calls.write_text("")
+                arguments = [arg for pair in covers for arg in ("--cover", *pair)]
+                relative = index == 1
+                command = ["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"),
+                    "tree" if relative else str(self.tree), self.branch,
+                    message.name if relative else str(message), "--paths-from",
+                    paths.name if relative else str(paths), "--wait-pr", "11", *arguments]
+                self.note("land.begin", command=command, guard_seconds=60)
+                start = time.monotonic()
+                result = subprocess.run(command, cwd=self.root if relative else self.main, env=environment,
+                    capture_output=True, text=True, timeout=60)
+                recorded = [json.loads(line) for line in calls.read_text().splitlines()]
+                self.note("land.end", elapsed=time.monotonic() - start, returncode=result.returncode,
+                    make_calls=recorded, claimed_merged="PHASE1_MERGED" in result.stdout)
+                expected_covers = covers[:2] if covers == failing else covers
+                self.assertEqual([["cover", "ATOM_ID=" + atom, "GID=" + gid] for atom, gid in expected_covers],
+                                 [call for call in recorded if call[0] == "cover"], result.stdout + result.stderr)
+                if covers == failing:
+                    self.assertEqual(93, result.returncode, result.stdout + result.stderr)
+                    self.assertEqual(["lean-report", "cover", "cover"], [call[0] for call in recorded])
+                    self.assertNotIn("PHASE1_MERGED", result.stdout)
+                    self.assertEqual(before, self.g(self.tree, "rev-parse", "HEAD").strip())
+                    self.assertEqual(owned, (self.tree / "owned").read_text())
+                else:
+                    self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                    self.assertIn("WAITED_PR=11", result.stdout)
+                    self.assertIn("PHASE1_MERGED", result.stdout)
+                    self.assertEqual(owned, self.g(self.tree, "show", "HEAD:owned"))
+                self.assertEqual("original\n", self.g(self.tree, "show", "HEAD:other"))
+                self.assertEqual("unrelated staged\n", (self.tree / "other").read_text())
+                self.assertEqual("other\n", self.g(self.tree, "diff", "--cached", "--name-only"))
+                self.assertEqual(self.g(self.tree, "rev-parse", "HEAD").strip(),
+                                 self.g(self.main, "ls-remote", "origin", "refs/heads/" + self.branch).split()[0])
+
+    def consumer_land_cannot_build_during_native_destruction(self):
+        (self.main / ".git/info/exclude").write_text("tools/obj/\n")
+        paths = self.root / "authorized.paths"
+        paths.write_bytes(b"owned\0")
+        message = self.root / "unit.msg"
+        message.write_text("authorized unit\n")
+        binary = self.root / "land-stub"
+        binary.mkdir()
+        dotnet = binary / "dotnet"
+        material = self.tree / "tools/obj/entry-probe"
+        dotnet.write_text(f'''#!{sys.executable}
+from pathlib import Path
+material=Path({str(material)!r})
+material.parent.mkdir(parents=True,exist_ok=True)
+material.write_text("new build material\\n")
+''')
+        dotnet.chmod(0o755)
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"],
+                           LAND_LOG_DIR=str(self.root / "land-logs"))
+        job, release = self.paused_job("remove", "remove", "--names", "tree")
+        try:
+            result = subprocess.run(["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"), str(self.tree),
+                self.branch, str(message), "--paths-from", str(paths)], cwd=self.main, env=environment,
+                capture_output=True, text=True, timeout=60)
+            self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertIn("busy_scope:tree:", result.stderr)
+            self.assertNotIn("PHASE1_MERGED", result.stdout)
+            self.note("land.excluded", returncode=result.returncode, material_created=material.exists(),
+                      claimed_merged="PHASE1_MERGED" in result.stdout)
+            self.assertFalse(material.exists(), "landing built the target while destruction held entry")
+        finally:
+            with release.open("w") as output:
+                output.write("continue\n")
+            stdout, stderr = job.communicate(timeout=20)
+        self.assertEqual(0, job.returncode, stdout + stderr)
+        self.assertFalse(self.tree.exists())
 
     def paused_job(self, operation, *arguments):
         bin_path = self.root / "bin"
@@ -517,8 +648,10 @@ os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
         job = subprocess.Popen([sys.executable, "-B", str(SCRIPT), "--source", str(self.main), *map(str, arguments)],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, text=True)
         self.jobs.append(job)
+        self.note("pause.readiness.begin", command=job.args, native_pid=job.pid, operation=operation, guard_seconds=20)
         self.assertTrue(select.select([reader], [], [], 20)[0], "paused command readiness timeout")
         self.assertEqual(b"ready\n", os.read(reader, 100))
+        self.note("pause.readiness.end", native_pid=job.pid, descendant_pid=int((self.root / "native.pid").read_text()))
         return job, release
 
     def test_concurrent_native_staging_cannot_enter_checkpoint(self):
