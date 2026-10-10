@@ -1,0 +1,18 @@
+#### 12.2 节内标题：2. `ResponseContrast.lean`
+
+对任意五态函数 $f$，证明：
+
+$$
+E[f] =
+\text{visible}(X,Y,Z)+J_f\kappa.
+$$
+
+然后证明：
+
+```text
+J_f ≠ 0  ↔  (X,Y,Z,E[f]) injective on the simplex
+```
+
+其中必须明确限定：
+
+- 全体分布恢复；
