@@ -82,8 +82,10 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
                 AtScale(Seq(Call("limitCleanMass", V("a"), V("K")), Eq, D(1)), false),
                 "For all fixed a>0 and K>0, put m=ceil(K/(a^2 rho^2)). The reverse event "
                     + "is h1=0,h2=1,l3=1. Its single-record mass is 12 rho^3. The "
-                    + "probability that all m independent records avoid it is "
-                    + "(1-12 rho^3)^m, which tends to one as rho decreases to zero."),
+                    + "corresponding all-record product expression is (1-12 rho^3)^m, "
+                    + "which tends to one as rho decreases to zero. When 0<a<=1, the "
+                    + "underlying mass is a probability law, so this expression is the "
+                    + "probability that all m independent records avoid the reverse event."),
             Node("nonzero_count_diverges", "Conditional nonzero counts escape every fixed cutoff",
                 AtScale(All("N", "Nat", Seq(
                     Call("limitCountTail", V("a"), V("K"), V("N")), Eq, D(0)))),
