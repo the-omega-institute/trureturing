@@ -169,9 +169,9 @@ PY
 }
 
 build_scoped_report() {
-  REPORT=".lake/build/stratalint/scoped-lean-report.json"
+  REPORT=".lake/build/stratalint/delivery-lean-report.json"
   export STRATALINT_LEAN_REPORT="$ROOT/$REPORT"
-  step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS"
+  step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS" "LEAN_REPORT=$ROOT/$REPORT"
 }
 
 emit_target() {

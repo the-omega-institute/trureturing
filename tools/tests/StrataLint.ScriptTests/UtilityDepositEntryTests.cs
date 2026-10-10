@@ -50,7 +50,7 @@ public sealed class UtilityDepositEntryTests
         var obligations = Path.Combine(root, ".lake", "utility-input.json");
         File.WriteAllBytes(obligations, RequireSuccess(TestProcessRunner.Run(cli, ["lean-utility-input"], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024)).StandardOutput);
-        var report = Path.Combine(root, ".lake", "build", "stratalint", "scoped-lean-report.json");
+        var report = Path.Combine(root, ".lake", "build", "stratalint", "delivery-lean-report.json");
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
             "--output", report + ".spool", "--material-spool", report + ".materials",
@@ -67,7 +67,7 @@ public sealed class UtilityDepositEntryTests
         WriteExecutable(root, "make", """
             #!/usr/bin/env bash
             case "$1" in
-              lean-report-scoped) test -s .lake/build/stratalint/scoped-lean-report.json ;;
+              lean-report-scoped) test -s .lake/build/stratalint/delivery-lean-report.json ;;
               emit) echo REACHED_EMISSION; exit 77 ;;
               *) exit 96 ;;
             esac

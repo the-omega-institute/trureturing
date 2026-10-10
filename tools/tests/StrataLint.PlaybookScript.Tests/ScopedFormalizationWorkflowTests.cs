@@ -33,7 +33,8 @@ public sealed class ScopedFormalizationWorkflowTests
         var result = fixture.Run(command, atomId: command == "deposit-uncovered" ? null : AtomId);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Contains("make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.Probe", fixture.Calls());
+        Assert.Contains(fixture.Calls(), call => call.StartsWith(
+            "make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.Probe LEAN_REPORT=", StringComparison.Ordinal));
         Assert.DoesNotContain("make:lean-report", fixture.Calls());
         if (command != "cover")
             Assert.Contains(fixture.Calls(), call => call.StartsWith("make:emit PATHS=", StringComparison.Ordinal));
@@ -66,7 +67,8 @@ public sealed class ScopedFormalizationWorkflowTests
         var result = fixture.RunBatch(batch);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Contains("make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.Probe D5.S3.Observer.WindowRegisterCRT", fixture.Calls());
+        Assert.Contains(fixture.Calls(), call => call.StartsWith(
+            "make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.Probe D5.S3.Observer.WindowRegisterCRT LEAN_REPORT=", StringComparison.Ordinal));
         Assert.DoesNotContain("make:lean-report", fixture.Calls());
     }
 }
