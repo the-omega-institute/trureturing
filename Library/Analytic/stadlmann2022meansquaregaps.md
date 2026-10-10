@@ -5,7 +5,7 @@ year: 2022
 title: On the mean square gap between primes
 doi: null
 url: https://arxiv.org/abs/2212.10867v1
-claim: Theorem 1 gives an unconditional prime-gap square sum. Its application bounds actual CA price-residence lengths and count-to-price transport, without controlling the signed Robin excess.
+claim: Theorem 1 gives an unconditional prime-gap square sum. Applications bound actual CA price residence, quantify the selected-source state count and transport its missing upper bound to the existing prime-prefix surplus; no signed surplus count estimate is supplied.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -193,3 +193,83 @@ comparison (R2)–(R4) still applies to arbitrary data-dependent state
 collections; the direct first-prime count applies to the already
 justified persistence interval. Both preserve the same actual source,
 and neither pays the complete signed Robin tail or proves RH.
+
+
+## Count upper bounds can reuse the existing prime-prefix surplus
+
+Keep the full largest-optimizer path and the positive-length-state
+count $K_{\eta',\delta}(X)$ from (R6). The
+[existing Nicolas prime-prefix readout](../ArithSums/nicolas2025comparison.md#signed-prime-error-at-the-actual-primorial-cutoff)
+can be used at the actual support of each CA state. For a prime
+$p\ge5$ define
+
+$$
+\mathcal P(p)=\prod_{q\le p}(1-1/q)^{-1},\qquad
+U(p)=\log\mathcal P(p)-\gamma-\log\log\vartheta(p).
+$$
+
+This is the existing $-\log f(p)$; it is not a new prime-error
+criterion or a proved estimate. Here $p$ is the largest prime
+actually dividing the state, not the size-envelope cutoff for that
+integer. The bound uses its radical and keeps that same integer.
+
+For an actual state $n=\prod_{q\le p}q^{a_q}$ with every $a_q\ge1$
+and $B=\log n$, the usual Euler formula gives
+
+$$
+\begin{aligned}
+\log G(n)-\gamma
+={}&U(p)+\sum_{q\le p}\log(1-q^{-a_q-1})\\
+&+\log\log\vartheta(p)-\log\log B
+\le U(p).
+\end{aligned}
+\tag{R7}
+$$
+
+Every exponent remains in the displayed identity. Both correction
+terms are nonpositive because $B\ge\vartheta(p)>1$. No assumption
+about independent prime errors, favorable layer timing, or $B=b$
+enters this comparison.
+
+Directly reuse the existing higher-layer event count from the
+[FIB theory volume, §420, equation (420.5)](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+With the same activation index $j\ge2$, its instance at $T=3X$ is
+
+$$
+H(X):=E_{\ge2}(3X)
+=\#\{(q,j):j\ge2,\ \tau_{q,j}\le3X\}
+=O\bigl(\sqrt X(\log X)^{3/2}\bigr).
+\tag{R8}
+$$
+
+This counts each layer in a tied cluster separately and includes
+layers already active at the left endpoint. The existing proof
+and its activation cutoff are not repeated here.
+
+There is at most one plateau crossing the left boundary. Each
+remaining plateau counted by $K$ begins at an event in $(X,3X)$.
+If that event contains a first layer, its new prime $p$ is the
+largest active prime, its post-event state satisfies (R7), and
+$X-1<p<3X$ by $p<\tau(p)<p+1$. Different first-layer events
+have different primes. If it contains no first layer, charge the
+new state to one of its higher-layer pairs. A simultaneous cluster
+creates one post-event state; no isolated partial tied optimizer
+is inserted into the path. Therefore
+
+$$
+\boxed{K_{\eta',\delta}(X)\le1+H(X)
++\#\{p\text{ prime}:X-1<p<3X,\ U(p)>\delta X^{-\eta'}\}.}
+\tag{R9}
+$$
+
+For each particular fixed $0<\eta'<1/2$, (R8) is little-o of
+the lower-count scale in (R6). Thus a prime-prefix surplus count
+little-o of that scale would provide the missing upper count.
+No such signed prime count is proved. This application retains
+all states and exponents while paying their additional count
+explicitly; it neither upper-bounds the count by a lower selector
+of all-positive cells nor relies on lower bounds for plateau
+lengths. The existing Nicolas formula already relates $U(p)$
+to its full signed integral and endpoint correction. No new
+prime-distribution theorem, originality claim, Lean certification,
+full Robin tail estimate or RH proof is supplied here.
