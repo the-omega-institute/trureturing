@@ -84,7 +84,7 @@ private theorem involution_spectrum {n : Type} [Fintype n] [DecidableEq n]
   · exact Or.inl h
   · exact Or.inr h
 
-private theorem two_point_cfc {n : Type} [Fintype n] [DecidableEq n]
+theorem two_point_cfc {n : Type} [Fintype n] [DecidableEq n]
     (f : ℝ → ℝ) (a b : ℝ) (H : Matrix n n ℂ)
     (hH : IsSelfAdjoint H) (hHH : H * H = 1) :
     cfc f (a • (1 : Matrix n n ℂ) + b • H) =
