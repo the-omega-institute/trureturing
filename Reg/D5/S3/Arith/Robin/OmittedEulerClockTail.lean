@@ -63,7 +63,7 @@ def primeRegistration : Registration arena
 /-- The complete dependent-family law and its four kernel obligations are present.
 Raw reconstruction and binding of the implicit series readout are still required;
 this record is not a claim of declared_validated audit evidence. -/
-def primeAudit : Contract.Registration (@prime_tail_bound)
+def primeAudit : Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0} (@prime_tail_bound)
     (Realization signature) Unit Unit where
   unitName := `D5.S3.Arith.Robin.OmittedEulerClockTail.prime_tail_bound.audit
   realizationName := `Reg.D5.S3.Arith.Robin.OmittedEulerClockTail.primeRegistration
