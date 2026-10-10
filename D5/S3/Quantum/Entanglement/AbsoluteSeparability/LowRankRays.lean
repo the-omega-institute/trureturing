@@ -7,6 +7,7 @@
    digest: The identity plus twice any normalized bipartite rank-one matrix is separable. -/
 
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages
+import D5.S3.Resource.SeparableConeResidualWitness
 
 namespace D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays
 
@@ -470,7 +471,8 @@ theorem separableCone_one_add_two_rankOne {m n : ℕ} (ψ : Fin m × Fin n → �
     have hc := small_correction_psd rho (a ^ 2) hl hR
     have hsep := separableCone_add
       (separableCone_smul (by norm_num : (0 : ℝ) ≤ 2) (separable_rankOne_add_reduced ψ))
-      (separable_kronecker PosSemidef.one hc)
+      (D5.S3.Resource.SeparableConeResidualWitness.generator_separable
+        ⟨1, _, PosSemidef.one, hc, rfl⟩)
     convert hsep using 1
     ext ⟨i,j⟩ ⟨k,l⟩
     simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.sub_apply,
@@ -528,7 +530,10 @@ theorem separableCone_one_add_two_rankOne {m n : ℕ} (ψ : Fin m × Fin n → �
     rw [hψeq] at hs
     have hsep := separableCone_add (separableCone_add
       (separableCone_smul (by norm_num : (0 : ℝ) ≤ 2) hs)
-      (separable_kronecker hU hcU)) (separable_kronecker hP hcQ)
+      (D5.S3.Resource.SeparableConeResidualWitness.generator_separable
+        ⟨_, _, hU, hcU, rfl⟩))
+      (D5.S3.Resource.SeparableConeResidualWitness.generator_separable
+        ⟨_, _, hP, hcQ, rfl⟩)
     convert hsep using 1
     ext ⟨i,j⟩ ⟨k,l⟩
     have hid : (if (i,j) = (k,l) then (1 : ℂ) else 0) =

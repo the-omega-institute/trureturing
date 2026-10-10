@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Resource.SeparableConeResidualWitness
 
 namespace D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages
 
@@ -394,12 +395,6 @@ private lemma average_projector (g : Ω → Fin m → ℂ)
   simp_rw [hexpand, Finset.expect_sum_comm, ← Finset.expect_mul, h4]
   simp [add_mul, Finset.sum_add_distrib]
 
-lemma separable_kronecker {A : Matrix (Fin m) (Fin m) ℂ}
-    {B : Matrix (Fin n) (Fin n) ℂ} (hA : A.PosSemidef) (hB : B.PosSemidef) :
-    separableCone (A ⊗ₖ B) := by
-  refine ⟨1, fun _ => A, fun _ => B, fun _ => ⟨hA,hB⟩, ?_⟩
-  simp
-
 private lemma separable_expect (a : Ω → Fin m → ℂ) (b : Ω → Fin n → ℂ) :
     separableCone (𝔼 s, vecMulVec (fun ij : Fin m × Fin n => a s ij.1 * b s ij.2)
       (star (fun ij : Fin m × Fin n => a s ij.1 * b s ij.2))) := by
@@ -408,9 +403,9 @@ private lemma separable_expect (a : Ω → Fin m → ℂ) (b : Ω → Fin n → 
     apply ContractionBlocks.separableCone_sum
     intro s
     rw [← D5.S3.Resource.CompositeConeDuality.kronecker_rank_one]
-    exact separable_kronecker (A := vecMulVec (a s) (star (a s)))
-      (B := vecMulVec (b s) (star (b s)))
-      (posSemidef_vecMulVec_self_star _) (posSemidef_vecMulVec_self_star _)
+    exact D5.S3.Resource.SeparableConeResidualWitness.generator_separable
+      ⟨vecMulVec (a s) (star (a s)), vecMulVec (b s) (star (b s)),
+        posSemidef_vecMulVec_self_star _, posSemidef_vecMulVec_self_star _, rfl⟩
   convert separableCone_smul (c := (Fintype.card Ω : ℝ)⁻¹) (by positivity) hs using 1
   ext i j
   simp [Finset.expect, NNRat.smul_def, Complex.real_smul]
