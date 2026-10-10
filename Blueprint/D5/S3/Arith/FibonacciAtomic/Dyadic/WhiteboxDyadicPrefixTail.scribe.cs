@@ -22,8 +22,8 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
     private static Formula E(Formula f) => Call("E", f);
     private static DocumentBlock Thm(string n, string title, Formula f, string prose)
     {
-        var declaration = n.StartsWith("Paths.", StringComparison.Ordinal)
-            ? n["Paths.".Length..]
+        var declaration = n.StartsWith("Paths.")
+            ? n.Substring("Paths.".Length)
             : n;
         return Describe.Lean(DescribeId.Create(n.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
             // Formal GIDs admit one final declaration selector. The resolver matches that
