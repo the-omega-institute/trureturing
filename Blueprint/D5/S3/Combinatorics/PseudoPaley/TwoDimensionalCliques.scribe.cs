@@ -63,7 +63,10 @@ internal sealed class TwoDimensionalCliquesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("Classification of the two-dimensional cliques"), StatementSource.FromAuthor(Disp(X("claim"))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                    "The p+1 projective points map to cyclotomic classes with at most two points per fiber. A clique fits into (p+1)/2 classes, forcing every fiber to be a pair. The mate of infinity selects a generator power in the zeroth class. Its norm is a square exactly for even indices; a square norm gives a singleton fiber, so clique indices are odd. Conversely, an odd index gives a nonsquare norm and the fixed-point-free pairing exchanges zero with infinity and pairs the other parameters by C/t. Its classes form the required index set."))), DescribeRole.Theorem)), []));
+                    "The p+1 projective points map to cyclotomic classes with at most two points per fiber. A clique fits into (p+1)/2 classes, forcing every fiber to be a pair. The mate of infinity selects a generator power in the zeroth class. Its norm is a square exactly for even indices; a square norm gives a singleton fiber, so clique indices are odd. Conversely, an odd index gives a nonsquare norm and the fixed-point-free pairing exchanges zero with infinity and pairs the other parameters by C/t. Its classes form the required index set."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("asgarli-yip-2021-pseudo-paley-two-dimensional-cliques"),
+                    ResolutionKind.Proved))), []));
 
     private static Formula ClassFormula() => PrimeBody(Alls([("g", FieldType()), ("j", Nat())], Eq(
         Call("cyclotomicClass", X("p"), X("g"), X("j")), SetOf("x", FieldType(), Ex("m", Nat(), Eq(
