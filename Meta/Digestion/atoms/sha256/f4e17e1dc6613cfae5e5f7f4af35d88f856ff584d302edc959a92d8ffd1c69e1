@@ -1,0 +1,11 @@
+### 有限状态 horizon 上界
+
+若 $|S|=N$，则
+
+$$
+\dim V_m\le N.
+$$
+
+从 $V_0$ 开始，维数至多严格增加 $N-\dim V_0$ 次。因此：
+
+- record-only 情形 $V_0=\operatorname{span}\{1\}$ 时，最多 $N-1$ 次严格增长；

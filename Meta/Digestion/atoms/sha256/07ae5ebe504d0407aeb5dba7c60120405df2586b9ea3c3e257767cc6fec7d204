@@ -1,0 +1,60 @@
+**Claim status: open.**
+
+五态函数空间的乘法关系为
+$$
+x^2=x,\quad y^2=y,\quad z^2=z,\quad xz=yz=0,\quad xy\ne0.
+$$
+因此
+$$
+\{1,x,y,z,xy\}
+$$
+是 $\mathbb R^S$ 的一组基，而 $\mathcal B$ 不是乘法代数。若
+$$
+f=a_0+a_1x+a_2y+a_3z,\qquad
+g=b_0+b_1x+b_2y+b_3z,
+$$
+则存在 $h\in\mathcal B$ 使
+$$
+fg=h+(a_1b_2+a_2b_1)xy,
+$$
+从而
+$$
+J_{fg}=a_1b_2+a_2b_1.
+$$
+特别地，取
+$$
+U=x+z,\qquad V=y+z,
+$$
+则
+$$
+UV=(x+z)(y+z)=z+xy,
+$$
+所以
+$$
+E[UV]=Z+\kappa.
+$$
+这给出最小的联合闭包读数。
+
+对
+$$
+q=2x+5y+3z
+$$
+有
+$$
+E[q]=2X+5Y+3Z
+$$
+而
+$$
+q^2=4x+25y+9z+20xy,
+$$
+故
+$$
+E[q^2]=4X+25Y+9Z+20\kappa,\qquad
+\kappa=\frac{E[q^2]-4X-25Y-9Z}{20}.
+$$
+逐样本 $q$ 的可逆性与一阶平均恢复 $\kappa$ 是不同性质；其最小非线性分辨阶满足
+$$
+J(1)=0,\qquad J(q)=0,\qquad J(q^2)=20\ne0,
+$$
+所以 $m_\ast=2$。
+
