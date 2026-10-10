@@ -4,7 +4,8 @@ bibkey: marotti2026consecutive
 doi: 10.48550/arXiv.2610.08889
 url: https://arxiv.org/abs/2610.08889
 triage: theorem
-motivation_gids: [D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSums.result]
+motivation_gids:
+  - D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSums.result
 ---
 
 # Sublinear edge completion for consecutive cycle sums
