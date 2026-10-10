@@ -6,7 +6,7 @@ internal sealed class DelannoySquareRootsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Algebraic/DelannoySquareRoots.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/maowang2026narayana");
+        LibraryNoteRef.Create("D5/L/Zeros/maowang2026narayana");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Upper-circle phase crossings construct distinct roots of the original Delannoy matrix-square rows.",

@@ -14,6 +14,18 @@ triage: anchor
 
 # The original Delannoy matrix-square question
 
+## Verified locator
+
+Source: https://arxiv.org/abs/2607.01572v1
+
+Section 4, *Concluding remarks and open problems*, Conjecture 4.1,
+PDF page 11. The primary source TeX `MW-Narayana.tex` defines the
+path-count Delannoy triangle, sets `G=D²` by ordinary matrix multiplication,
+and asks whether the row generating functions of `A²` and `D²` have only
+real nonpositive roots. Only the `D²` clause is selected here.
+
+## Source and scope
+
 Jianxi Mao and Lijie Wang, *The Narayana transformation*,
 arXiv:2607.01572v1, Concluding remarks and open problems, PDF page 11.
 The source TeX has SHA-256
