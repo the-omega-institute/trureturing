@@ -57,11 +57,11 @@ private theorem positive : arena.{u}.Law actual := by
 private def sampleSupports (v : ZMod 2) : Finset (ZMod 9) :=
   if v = 0 then {2, 3} else {2, 4}
 
-private def sampleTarget : Option (LiveRecord 8) → ULift.{u} Bool
+def sampleTarget : Option (LiveRecord 8) → ULift.{u} Bool
   | none => ⟨false⟩
   | some q => ⟨decide (-q.phase ∈ sampleSupports q.value)⟩
 
-private theorem sample_not_feasible :
+theorem sample_not_feasible :
     ¬ OriginalPresetFeasible 8 5 (by omega) false sampleTarget.{u} 2 := by
   have inside : ∀ v j, j ∈ sampleSupports v → 2 ≤ j.val ∧ j.val < 5 := by
     decide

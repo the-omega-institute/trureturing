@@ -251,7 +251,7 @@ def ExactTraces (N : Nat) (π : ActualTreeReadoutAcquisition.Strategy) (M : Obse
   ∀ U, Allowed N U → ∃ f, Run M U M.e0
     (ActualTreeReadoutAcquisition.terminal π U).1 f (ActualTreeReadoutAcquisition.terminal π U).2
 
-private theorem prefix_run_tail (M : Observer E) (U : Source)
+theorem prefix_run_tail (M : Observer E) (U : Source)
     {e : E} {h : RawHistory} (pref : ActualPrefix M U e h)
     {t : RawHistory} {f : E} {b : Bool} (run : Run M U M.e0 t f b) :
     ∃ s, Run M U e s f b ∧ h ++ s = t := by

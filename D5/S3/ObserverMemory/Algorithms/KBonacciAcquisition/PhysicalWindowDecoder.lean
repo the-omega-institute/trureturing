@@ -464,7 +464,7 @@ one of these words because its length is m<k. -/
 def actualWords (table : Fin (m + 1) → Y) (c : Label table → Word d) :
     List (Fin m → Bool) := (actualRows table c).map (prefixWord m)
 
-private theorem script_readings {k m : ℕ} {alphabet : Bool}
+theorem script_readings {k m : ℕ} {alphabet : Bool}
     (actions : List (AllowedBlock k m alphabet)) (q : Option (LiveRecord k)) :
     (scriptArchive (actions.map Subtype.val) q).map Prod.snd = fixedBlockArchive actions q := by
   induction actions generalizing q with
@@ -480,11 +480,11 @@ def endpointDifferences : Option (ZMod 2) → List (Option (ZMod 2)) → List (O
   | previous, next :: rest =>
     (do let x ← previous; let y ← next; pure (y - x)) :: endpointDifferences next rest
 
-private def rowReadings (k m : ℕ) : List (ℕ → ZMod 2) → ZMod (k + 1) → List (Option (ZMod 2))
+def rowReadings (k m : ℕ) : List (ℕ → ZMod 2) → ZMod (k + 1) → List (Option (ZMod 2))
   | [], _ => []
   | q :: rest, j => some (windowCharge k m q j) :: rowReadings k m rest (j - (m : ℕ))
 
-private theorem charge_differences (k m : ℕ) (rows : List (ℕ → ZMod 2))
+theorem charge_differences (k m : ℕ) (rows : List (ℕ → ZMod 2))
     (v : ZMod 2) (j : ZMod (k + 1)) :
     endpointDifferences (some v) (chargeArchive k m rows v j) = rowReadings k m rows j := by
   induction rows generalizing v j with
