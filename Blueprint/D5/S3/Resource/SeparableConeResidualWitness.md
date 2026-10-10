@@ -78,7 +78,19 @@ $$G=\{S \mid \exists A,B, \operatorname{PosSemidef}(A) \land \left(\operatorname
 
 A ranges over Matrix (Fin m) (Fin m) Complex and B over Matrix (Fin n) (Fin n) Complex, independently. G denotes sourceGenerators m n.
 
-**Theorem 1.7 (Closed nonnegative conic hull is SEP).**
+**Theorem 1.7 (Every PSD product generator is separable).**
+
+$$\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall S \in \operatorname{CompositeMatrix}(m, n),\; S \in \operatorname{sourceGenerators}(m, n) \Rightarrow \operatorname{separableCone}(S)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Resource/SeparableConeResidualWitness.generator_separable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each source generator is a Kronecker product of independent positive semidefinite factors. The single product is a one-term separable sum.
+
+**Theorem 1.8 (Closed nonnegative conic hull is SEP).**
 
 $$\operatorname{closure}(\operatorname{nonnegativeConicHull}(G)) = \{S \mid \operatorname{separableCone}(S)\}$$
 
@@ -90,7 +102,7 @@ $$\operatorname{closure}(\operatorname{nonnegativeConicHull}(G)) = \{S \mid \ope
 
 The hull is PointedCone.hull Real G, so zero and all finite nonnegative real combinations are included. The proof identifies the finite-sum representation and reuses isClosed_separableCone, including empty dimensions.
 
-**Definition 1.8 (The transported proper cone).**
+**Definition 1.9 (The transported proper cone).**
 
 $$K=\{v \in H \mid \operatorname{separableCone}(\operatorname{inverseEntry}(v))\}$$
 
@@ -102,7 +114,7 @@ $$K=\{v \in H \mid \operatorname{separableCone}(\operatorname{inverseEntry}(v))\
 
 K = separableProperCone m n is a ProperCone Real H. mem_separableProperCone gives the displayed membership equivalence, with inverseEntry = e.symm. entry_mem_separableProperCone specializes it to e(S) in K iff separableCone(S). Its closedness is transported through the continuous inverse of e.
 
-**Theorem 1.9 (The concrete nonnegative dual).**
+**Theorem 1.10 (The concrete nonnegative dual).**
 
 $$\forall W \in Mat,\; \operatorname{e}(W) \in \operatorname{innerDual}(K) \Leftrightarrow \operatorname{blockPositive}(W)$$
 
@@ -114,7 +126,7 @@ $$\forall W \in Mat,\; \operatorname{e}(W) \in \operatorname{innerDual}(K) \Left
 
 innerDual uses innerReal(v,e(W)) >= 0 for every v in K. Block positivity on arbitrary complex matrices does not by itself assert Hermiticity.
 
-**Definition 1.10 (The independent argmin predicate).**
+**Definition 1.11 (The independent argmin predicate).**
 
 $$\forall R \in Mat, P \in Mat,\; \operatorname{Argmin}(R, P) \Leftrightarrow \operatorname{separableCone}(P) \land \left(\forall Q \in Mat,\; \operatorname{separableCone}(Q) \Rightarrow \operatorname{distanceSq}(R, P) \leq \operatorname{distanceSq}(R, Q)\right)$$
 
@@ -126,7 +138,7 @@ $$\forall R \in Mat, P \in Mat,\; \operatorname{Argmin}(R, P) \Leftrightarrow \o
 
 This definition contains neither projection nor uniqueness nor a witness conclusion.
 
-**Theorem 1.11 (A unique minimizer for every matrix).**
+**Theorem 1.12 (A unique minimizer for every matrix).**
 
 $$\forall R \in Mat,\; \exists! P \in Mat, \operatorname{Argmin}(R, P)$$
 
@@ -138,7 +150,7 @@ $$\forall R \in Mat,\; \exists! P \in Mat, \operatorname{Argmin}(R, P)$$
 
 nearestSeparable chooses the point from this independent characterization. nearestSeparable_spec proves Argmin(R,nearestSeparable(R)); nearestSeparable_unique proves P = nearestSeparable(R) for every P satisfying Argmin(R,P). Existence is unconditional.
 
-**Theorem 1.12 (Identification with the generic cone projection).**
+**Theorem 1.13 (Identification with the generic cone projection).**
 
 $$\forall R \in Mat,\; \operatorname{e}(\operatorname{nearestSeparable}(R)) = \operatorname{coneProjection}(K, \operatorname{e}(R))$$
 
@@ -152,7 +164,7 @@ This equality is proved after the independent optimization problem has been solv
 
 In the following two statements, for each input R set P = nearestSeparable(R), r = R - P and W = P - R. These are dependent abbreviations, not extra hypotheses.
 
-**Theorem 1.13 (Unique orthogonal polar decomposition).**
+**Theorem 1.14 (Unique orthogonal polar decomposition).**
 
 $$\forall R \in Mat,\; \left(\operatorname{separableCone}(P) \land \left(\operatorname{blockPositive}(-r) \land \left(\operatorname{pairing}(P, r) = 0 \land R = P+r\right)\right)\right) \land \left(\forall Q \in Mat, s \in Mat,\; \left(\operatorname{separableCone}(Q) \land \left(\operatorname{blockPositive}(-s) \land \left(\operatorname{pairing}(Q, s) = 0 \land R = Q+s\right)\right)\right) \Rightarrow \left(Q = P \land s = r\right)\right)$$
 
@@ -164,7 +176,7 @@ $$\forall R \in Mat,\; \left(\operatorname{separableCone}(P) \land \left(\operat
 
 The residual r lies in the polar cone: its negative lies in the nonnegative dual. The uniqueness follows from the existing moreau_decomposition theorem and applies to this orthogonal decomposition, not to all entanglement witnesses.
 
-**Theorem 1.14 (The canonical negative residual witness).**
+**Theorem 1.15 (The canonical negative residual witness).**
 
 $$\forall R \in Mat,\; \operatorname{PosSemidef}(R) \Rightarrow \left(\operatorname{separableCone}(P) \land \left(R = P+r \land \left(\operatorname{IsHermitian}(W) \land \left(\operatorname{blockPositive}(W) \land \left(\operatorname{pairing}(P, r) = 0 \land \left(\left(\forall S \in Mat,\; \operatorname{separableCone}(S) \Rightarrow \left(\operatorname{pairing}(S, r) \leq 0 \land 0 \leq \operatorname{pairing}(S, W)\right)\right) \land \left(\operatorname{pairing}(R, W) = -\operatorname{pairing}(r, r) \land \left(\operatorname{pairing}(R, W) = -\Vert \operatorname{e}(r)\Vert^{2} \land \left(\neg \operatorname{separableCone}(R) \Rightarrow \operatorname{pairing}(R, W)<0\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -176,7 +188,7 @@ $$\forall R \in Mat,\; \operatorname{PosSemidef}(R) \Rightarrow \left(\operatorn
 
 Only the physical witness conclusion requires a PSD input R. The separable minimizer P is PSD, hence P and R are Hermitian and W = P - R is Hermitian. W is not asserted PSD. On this source domain the displayed projection and pairing agree with the finite Hermitian/PSD problem because the same entries and trace pairing are used. Strict negativity additionally requires nonseparability; the negative-square identities hold even inside SEP.
 
-**Theorem 1.15 (Zero residual inside the cone).**
+**Theorem 1.16 (Zero residual inside the cone).**
 
 $$\forall R \in Mat,\; \operatorname{separableCone}(R) \Rightarrow \left(\operatorname{nearestSeparable}(R) = R \land \left(R - \operatorname{nearestSeparable}(R) = 0 \land \operatorname{nearestSeparable}(R) - R = 0\right)\right)$$
 
@@ -188,7 +200,7 @@ $$\forall R \in Mat,\; \operatorname{separableCone}(R) \Rightarrow \left(\operat
 
 nearestSeparable_of_separable also exposes the first equality separately. Zero and any PSD product matrix satisfy this branch.
 
-**Theorem 1.16 (Zero residual characterizes separability).**
+**Theorem 1.17 (Zero residual characterizes separability).**
 
 $$\forall R \in Mat,\; R - \operatorname{nearestSeparable}(R) = 0 \Leftrightarrow \operatorname{separableCone}(R)$$
 
@@ -213,6 +225,7 @@ This unit supplies only the separable-cone row. The finance row still lacks an i
 - Truth anchor: `D5/S3/Resource/SeparableConeResidualWitness.entry_inner`
 - Truth anchor: `D5/S3/Resource/SeparableConeResidualWitness.entry_mem_innerDual_iff`
 - Truth anchor: `D5/S3/Resource/SeparableConeResidualWitness.existsUnique_argmin`
+- Truth anchor: `D5/S3/Resource/SeparableConeResidualWitness.generator_separable`
 - Truth anchor: `D5/S3/Resource/SeparableConeResidualWitness.nearestSeparable_projection`
 - Truth anchor: `D5/S3/Resource/SeparableConeResidualWitness.separableProperCone`
 - Truth anchor: `D5/S3/Resource/SeparableConeResidualWitness.separable_cone_residual_witness`
