@@ -36,6 +36,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [Theory]
     [InlineData("self")]
     [InlineData("stable")]
+    [InlineData("missing")]
+    [InlineData("divergent")]
     public void AggregateCleanupSurvivesRepositoryRemoval(string invocation)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -53,16 +55,18 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Theory]
-    [InlineData("clean-lanes")]
-    [InlineData("worktree-remove")]
-    public void RegisteredCleanupSurvivesCallerRemoval(string entrance)
+    [InlineData("clean-lanes", "self")]
+    [InlineData("clean-lanes", "missing")]
+    [InlineData("clean-lanes", "divergent")]
+    [InlineData("worktree-remove", "divergent")]
+    public void RegisteredCleanupSurvivesCallerRemoval(string entrance, string invocation)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
-                root, "spaced", entrance, "self",
+                root, "spaced", entrance, invocation,
                 "CleanupMakeTests.test_registered_consumer_survives_source_removal"],
             root, TimeSpan.FromSeconds(180), 1024 * 1024,
             standardOutput: stdout, standardError: stderr,

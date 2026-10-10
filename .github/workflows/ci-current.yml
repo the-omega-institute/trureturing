@@ -122,6 +122,7 @@ jobs:
             tools/StrataLint.Engine/*
             tools/Trureturing.Truth/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -181,6 +182,7 @@ jobs:
             tools/StrataLint.Engine/*
             tools/Trureturing.Truth/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -486,6 +488,7 @@ jobs:
             Golden/Projection/*
             Meta/ci-cache-paths.json
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -560,6 +563,7 @@ jobs:
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -632,6 +636,7 @@ jobs:
             D5/X_Frontier/ValuesProducer.lean
             Golden/values-kernels.toml
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1154,6 +1159,7 @@ jobs:
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1234,6 +1240,7 @@ jobs:
             tools/StrataLint.Engine/*
             tools/Trureturing.Truth/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1338,6 +1345,7 @@ jobs:
             docs/develop/theory/INTERFACE_PHILOSOPHY.md
             docs/develop/theory/PERIODIC_TREE_registry.jsonl
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1461,6 +1469,7 @@ jobs:
             D5/S3/Midline/GoldenSpectralMarker.lean
             Golden/Projection/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1631,6 +1640,7 @@ jobs:
             tools/StrataLint.Engine/*
             tools/Trureturing.Truth/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*

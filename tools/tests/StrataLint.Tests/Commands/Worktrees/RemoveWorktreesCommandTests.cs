@@ -195,7 +195,7 @@ public sealed partial class RemoveWorktreesCommandTests
         AssertResult(result, 0, 1, 0, 0);
         AssertItem(result, "linked", "/fixture/linked", "removed");
         var request = Assert.Single(runner.Invocations, call => call.FileName == "python3");
-        Assert.Contains("worktree_protocol.py", request.Arguments[1], StringComparison.Ordinal);
+        Assert.Equal("-c", request.Arguments[1]);
         Assert.Equal("linked", request.Arguments[request.Arguments.ToList().IndexOf("--names") + 1]);
         Assert.DoesNotContain("--force", request.Arguments);
     }
