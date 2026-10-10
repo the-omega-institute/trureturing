@@ -12,7 +12,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("index.lock")]
     [InlineData("MERGE_HEAD")]
     [InlineData("private")]
-    public void ElapsedLockDoesNotRequireContentOrRecoveryPreservation(string material)
+    public void ElapsedLockCheckpointsOrdinaryChangesAndReportsNativeFailures(string material)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/disposable-lock");
@@ -29,8 +29,11 @@ public sealed partial class CleanLanesCommandTests
             return null;
         });
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
-        Assert.True(result.Success, result.Error);
-        Assert.False(Directory.Exists(lane), result.Output);
+        var failed = material is "index.lock" or "MERGE_HEAD";
+        Assert.Equal(!failed, result.Success);
+        Assert.Equal(failed, Directory.Exists(lane));
+        Assert.True(fixture.BranchExists("harness/disposable-lock"));
+        if (failed) Assert.StartsWith("checkpoint_failed:", ReasonFor(result.Output, lane));
     }
 
     [Fact]
@@ -41,6 +44,7 @@ public sealed partial class CleanLanesCommandTests
         fixture.LockLane(lane);
         var result = fixture.RunWithActivePath(lane, "--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
-        Assert.False(Directory.Exists(lane), result.Output);
+        Assert.False(Directory.Exists(lane));
+        Assert.True(fixture.BranchExists("harness/disposable-active"));
     }
 }

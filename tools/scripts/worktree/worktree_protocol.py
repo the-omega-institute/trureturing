@@ -43,8 +43,7 @@ class Refused(RuntimeError):
 
 def git_environment(overrides=None):
     # Ambient location/index/object overrides must never redirect canonical
-    # inspection. Keep transport and author identity settings; owned private
-    # indexes are supplied explicitly by the checkpoint operation.
+    # inspection. Keep transport and author identity settings.
     permitted = {"GIT_SSH", "GIT_SSH_COMMAND", "GIT_SSH_VARIANT", "GIT_ASKPASS",
                  "GIT_TERMINAL_PROMPT", "GIT_AUTHOR_NAME", "GIT_AUTHOR_EMAIL",
                  "GIT_AUTHOR_DATE", "GIT_COMMITTER_NAME", "GIT_COMMITTER_EMAIL",
@@ -288,10 +287,7 @@ def main(argv=None):
     for action in ("checkpoint", "publish", "finalize"):
         publication = commands.add_parser(action)
         publication.add_argument("--path", type=Path, default=Path.cwd())
-        publication.add_argument("--write", action="append", default=[])
-        publication.add_argument("--read", action="append", default=[])
         publication.add_argument("--message-file")
-        publication.add_argument("--paths-from", type=Path)
         publication.add_argument("--remote", default="origin")
         publication.add_argument("--branch")
         publication.add_argument("--commit", default="HEAD")
@@ -320,8 +316,6 @@ def main(argv=None):
             print(json.dumps(prepare_mirror(options)), flush=True)
         else:
             from worktree_publication import checkpoint, publish, finalize
-            if options.paths_from:
-                options.write.extend(os.fsdecode(name) for name in read_input(options.source, options.paths_from).split(b"\0") if name)
             print(json.dumps(dict(checkpoint=checkpoint, publish=publish, finalize=finalize)[options.action](options)), flush=True)
         return 0
     except (Refused, OSError, ValueError, subprocess.SubprocessError) as error:

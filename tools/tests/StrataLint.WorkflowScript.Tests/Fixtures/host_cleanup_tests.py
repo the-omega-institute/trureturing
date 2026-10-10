@@ -27,7 +27,7 @@ class HostCleanupTests(unittest.TestCase):
     def setUp(self):
         self.workspace = tempfile.TemporaryDirectory(prefix="host cleanup test ")
         self.addCleanup(self.workspace.cleanup)
-        self.root = Path(self.workspace.name)
+        self.root = Path(self.workspace.name).resolve()
         self.cutoff = time.time() - 3600
 
     def old_file(self, path):

@@ -35,7 +35,7 @@ public sealed partial class CleanLanesCommandTests
             (repo/'README.md').write_text('rebuildable checkout\n')
             git('add', '.'); git('-c', 'maintenance.auto=false', 'commit', '-m', 'baseline')
             tip = git('rev-parse', 'HEAD')
-            git('worktree', 'add', '--detach', str(lane), tip)
+            git('worktree', 'add', '-b', 'fixture-recovery', str(lane), tip)
             stream = ''.join('commit refs/heads/dev\ncommitter Test <test@example.invalid> 1700000000 +0000\ndata 1\nx\n'
                              + ('from '+tip+'\n' if i == 0 else '') + '\n' for i in range(300))
             subprocess.run(['git', 'fast-import', '--quiet', '--force'], cwd=repo, env=env,

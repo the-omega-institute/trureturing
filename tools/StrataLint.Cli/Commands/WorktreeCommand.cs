@@ -30,7 +30,7 @@ internal static class WorktreeCommand
 
     internal static string Usage { get; } =
         "USAGE: StrataLint worktree with [--path DIR] [--read PATH] [--write PATH] [--git] -- COMMAND [ARG ...] | "
-        + "StrataLint worktree checkpoint --paths-from NUL_FILE --message-file FILE | "
+        + "StrataLint worktree checkpoint --message-file FILE | "
         + "StrataLint worktree publish --branch NAME [--commit REV] | "
         + "StrataLint worktree finalize --branch NAME --writers-joined | "
         + "StrataLint worktree ensure-cache [--path DIR] | "

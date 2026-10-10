@@ -20,8 +20,11 @@ class MirrorCases:
         self.assertEqual("feature\n", self.g(mirror, "show", "HEAD:feature"))
         self.assertEqual(self.g(mirror, "rev-parse", "HEAD"), self.g(destination, "rev-parse", "refs/heads/" + branch))
         self.assertEqual("", self.g(self.remote, "for-each-ref", "refs/heads/" + branch))
+        (mirror / "ordinary-after-push").write_text("recover locally\n")
         self.run_protocol("remove", "--names", mirror.name)
         self.assertFalse(mirror.exists())
+        self.g(self.main, "worktree", "add", mirror, branch)
+        self.assertEqual("recover locally\n", (mirror / "ordinary-after-push").read_text())
 
     def test_mirror_failure_retains_conflict_and_failed_publication(self):
         self.g(self.main, "switch", "-c", "feature")

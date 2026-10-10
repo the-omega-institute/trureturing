@@ -245,13 +245,13 @@ public sealed partial class CleanLanesCommandTests
         internal string AddNestedWorktree(string parent)
         {
             var path = Path.Combine(parent, "nested");
-            Git(repository.Path, "worktree", "add", "--detach", path, "dev");
+            Git(repository.Path, "worktree", "add", "-b", "nested-recovery", path, "dev");
             return Git(path, "rev-parse", "--show-toplevel").Trim();
         }
 
         internal string AddForeignTempDirectory(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Directory.CreateDirectory(path);
             Git(path, "init", "--initial-branch=dev");
             return path;
@@ -259,23 +259,23 @@ public sealed partial class CleanLanesCommandTests
 
         internal string AddAttachedTempDirectory(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Git(repository.Path, "worktree", "add", "-b", "scratch/attached", path, "dev");
             return path;
         }
 
         internal string AddOrphanTempDirectory(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Directory.CreateDirectory(path);
             File.WriteAllText(Path.Combine(path, ".git"),
-                $"gitdir: {Path.Combine(repository.Path, ".git", "worktrees", "unregistered")}\n");
+                $"gitdir: {Path.Combine(RepositoryRoot, ".git", "worktrees", "unregistered")}\n");
             return path;
         }
 
         internal string AddGitlessJudgeSnapshot(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Directory.CreateDirectory(Path.Combine(path, "D5"));
             Directory.CreateDirectory(Path.Combine(path, "tools"));
             Directory.CreateDirectory(Path.Combine(path, "tools", "scripts"));
@@ -292,7 +292,7 @@ public sealed partial class CleanLanesCommandTests
 
         internal string AddReportDirectory(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Directory.CreateDirectory(path);
             File.WriteAllText(Path.Combine(path, "candidate.json"), "{}\n", new UTF8Encoding(false));
             return path;
@@ -426,7 +426,7 @@ public sealed partial class CleanLanesCommandTests
             var allArguments = new List<string> { "--base", "dev" };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(
-                repository.Path,
+                RepositoryRoot,
                 allArguments,
                 runner,
                 [temp.Path],

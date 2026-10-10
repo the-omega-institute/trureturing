@@ -171,7 +171,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("recovery_resolved_conflict_does_not_veto_removal")]
     [InlineData("recovery_published_prior_commit_message_is_reconstructable")]
     [InlineData("recovery_local_repository_is_not_a_remote")]
-    [InlineData("recovery_checkpoint_protects_input_reads")]
+    [InlineData("recovery_checkpoint_protects_message_reads")]
     public void RecoveryQualificationUsesActualIndexAndCommitObjects(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -188,7 +188,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 
     [Theory]
     [InlineData("consumer_mirror_uses_real_git_with_stubbed_github")]
-    [InlineData("consumer_land_attributes_paths_with_external_checks_stubbed")]
+    [InlineData("consumer_land_commits_snapshot_with_external_checks_stubbed")]
     [InlineData("consumer_land_cannot_build_during_exclusive_operation")]
     [InlineData("consumer_land_scopes_operating_children")]
     public void AgentConsumerUsesRealGitAndPreservesIndependentMaterial(string probe)

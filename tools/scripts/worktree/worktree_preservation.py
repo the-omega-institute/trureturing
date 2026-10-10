@@ -10,7 +10,7 @@ import subprocess
 import time
 
 from worktree_protocol import (Refused, git, value, common, inventory, identity,
-                               acquire, remote_endpoint)
+                               acquire, git_scope, remote_endpoint)
 
 
 def remote_roots(source, branch):
@@ -97,8 +97,7 @@ def remove(options):
         targets.append(Path(matches[0]["worktree"]))
     targets = list(dict.fromkeys(targets))
     outcomes = []
-    # Resolve and preflight the entire batch before any native effects. Deletion
-    # has no participation, ref or cache-use lock: these govern other operations.
+    # Resolve and preflight the entire batch before any checkpoint mutation.
     qualified = {}
     for target in targets:
         item = qualify(source, target)
@@ -115,19 +114,40 @@ def remove(options):
         if options.preview:
             outcomes.append(dict(path=str(target), outcome="would_remove"))
             continue
+        checkpoint = None
+        removing = False
         try:
-            if qualify(source, target) != qualified[target]:
-                raise Refused("observed_identity_changed")
-            # Git's force flags implement authorized disposal of dirty and elapsed
-            # locked trees; the CLI --force option controls only the timeout.
-            flags = ["--force", "--force"] if "locked" in qualified[target] else ["--force"]
-            git(source, "worktree", "remove", *flags, "--", target,
-                timeout=None if options.force else 300)
-            outcomes.append(dict(path=str(target), outcome="removed"))
+            with ExitStack() as stack:
+                # Only the compound Git operation is coordinated. No entry,
+                # activity, file-use or cache-use lock qualifies disposal.
+                branch = git_scope(stack, source, target)
+                if qualify(source, target) != qualified[target]:
+                    raise Refused("observed_identity_changed")
+                _, metadata = identity(source, target)
+                from worktree_publication import commit_snapshot
+                checkpoint = commit_snapshot(target, metadata, branch,
+                    b"Checkpoint working tree before recycling\n")
+                refreshed = qualify(source, target)
+                expected = dict(qualified[target], HEAD=checkpoint["commit"])
+                if refreshed != expected:
+                    raise Refused("observed_identity_changed_after_checkpoint")
+                # Concurrent edits or hook changes after staging need another
+                # snapshot; do not silently discard ordinary outstanding files.
+                if git(target, "status", "--porcelain", "--untracked-files=all").stdout:
+                    raise Refused("working_tree_changed_after_checkpoint")
+                flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
+                removing = True
+                git(source, "worktree", "remove", *flags, "--", target,
+                    timeout=None if options.force else 300)
+                outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
+                                     recovery_branch=branch))
         except (Refused, OSError, subprocess.SubprocessError) as error:
-            outcomes.append(dict(path=str(target), outcome="partial_or_indeterminate", error=str(error)))
+            outcomes.append(dict(path=str(target),
+                outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
+                error=str(error), checkpoint=checkpoint))
+
     return dict(event="worktree_removal", items=outcomes,
-                status="failed" if any(item["outcome"] == "partial_or_indeterminate" for item in outcomes) else "succeeded")
+                status="failed" if any(item["outcome"] not in ("removed", "would_remove") for item in outcomes) else "succeeded")
 
 
 def retire_branch(options):
