@@ -1,0 +1,9 @@
+\[
+\mathcal A(V_A)-\mathcal A(T_n)
+=
+\sum_{p\in A}
+(e_{i_p}-e_{i_p+1})
+\]
+
+并且：
+
