@@ -28,7 +28,8 @@ private def rot (i : Fin d) : (Fin d → Fin 4) ≃ (Fin d → Fin 4) :=
 private theorem phase_rot (s : Fin 4) : phase (finRotate 4 s) = I * phase s := by
   fin_cases s <;> norm_num [phase, finRotate_apply, Fin.add_def]
 private theorem phase_unit (s : Fin 4) : conj (phase s) * phase s = 1 := by
-  fin_cases s <;> norm_num [phase]
+  simp only [phase, map_pow, ← mul_pow, Complex.conj_I, neg_mul,
+    Complex.I_mul_I, neg_neg, one_pow]
 private theorem rot_apply (i j : Fin d) (z : Fin d → Fin 4) :
     phase (rot i z j) = (if j = i then I else 1) * phase (z j) := by
   by_cases h : j = i
