@@ -1892,3 +1892,423 @@ The supplied [BLIND, Conventions 1.1–1.2 and Theorems 5.1, 6.3](https://github
 **Remaining original criterion.** On the unrestricted $\mathfrak C$, the endpoint coordinate boxes (11.29), endpoint-event midpoint means (11.30), both full-descriptor residual equations with shared unweighted marginals and every original supported configuration-loss bound must still be imposed jointly. Existence of a zero-level pair, a vanishing family or an evaluated strict separation is not established in this chapter. For a finite prior, one-sided finite support now suffices for abstract finite attainment if such a zero-level pair exists; it is not proved for any unknown optimizer. For a countably infinite prior, Theorem 13.6 covers strict opposite limit slack, leaving saturated accumulation loss unresolved. Permitted finitely represented exact sampling remains an additional effective-attainment requirement. Theorem 11.5's unrestricted zero-versus-positive alternative, general finite effective attainment and fixed-resource questions retain their original completion criteria.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. An exact failed bridge for the selected event class
+
+### 14.1 Standing data and the selected certificate class
+
+Fix the source and its finite or countable installed prior, with positive endpoint masses and every supported nonendpoint retained, together with the once-sampled positive integer $K$, the original $m=2,d=1,\ell=2,n=4$ stopped renderer, both seeds, all marker triples and held registers, every paid rejection and finite return, the third write before the latch, fourth completion, and the matching Stop. Let all complete records, including the infinite noncompletion outcome, remain in the carriers of Chapter 11. The same source-independent acquired-letter kernels are required for actual and synthetic updates. These are the standing hypotheses of Definition 11.2; no posterior, clock, reset, or completion-conditioned law is added.
+
+Only the complete-law definitions, endpoint geometry, configuration-before-TV losses, and the realization hypotheses already stated in those owners are used here. The appended result concerns a specified event-output subfamily; it does not enlarge the vector residual class in (11.7).
+
+Put
+
+$$
+a=\frac13,\qquad b=\frac25,\qquad z_r=r(1-r),\qquad \lambda=\frac4{15},
+$$
+
+$$
+\rho_p=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750},\qquad
+C=\frac{11758471}{22781250},\qquad
+H=\frac{5261}{6750}.
+$$
+
+Write $w_{n,0}=(\beta\alpha)^n\alpha$ and $w_{n,1}=(\beta\alpha)^n\beta\beta$. The native complete laws are
+
+$$
+P_{p,r}(w_{n,0})=r z_r^n,\qquad
+P_{p,r}(w_{n,1})=(1-r)^2z_r^n,
+$$
+
+$$
+P_{\beta,r}(\beta)=1-r,\qquad
+P_{\beta,r}(\alpha w_{n,i})=rP_{p,r}(w_{n,i}),
+$$
+
+with the infinite outcome having the mass prescribed by the complete stopped renderer (zero for these native laws). Let $T_p(j)$ and $T_\beta(j)$ contain every word with return index at least $j$ together with the infinite outcome. For a complete law $Q$ at phase $p$ and $W$ at phase $\beta$, put
+
+$$
+U(Q)=1-Q(w_{0,0}),\qquad v(W)=1-W(\beta),
+$$
+
+$$
+\mathcal R_B(Q)(E)=\frac{Q(\beta E)}{U(Q)},\qquad
+\mathcal R_A(W)(E)=\frac{W(\alpha E)}{v(W)}.
+$$
+
+The denominators are positive on the displayed law spaces: $U(Q)\ge 3/5$ and $v(W)\ge1/3$. In particular,
+
+$$
+\mathcal R_B(Q)(\beta)=\frac{Q(w_{0,1})}{U(Q)},\qquad
+\mathcal R_B(Q)(\alpha w_{n,i})=\frac{Q(w_{n+1,i})}{U(Q)},
+$$
+
+$$
+\mathcal R_A(W)(w_{n,i})=\frac{W(\alpha w_{n,i})}{v(W)}.
+$$
+
+Use the events
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\},
+$$
+
+and the actual event and residual-event coordinates
+
+$$
+f(Q)=Q(E_p),\qquad h(W)=W(E_\beta),
+$$
+
+$$
+b_0(Q)=\frac{Q(w_{0,1})+Q(w_{1,1})}{U(Q)},\qquad
+a_0(W)=\frac{\sum_{n=0}^{2}W(\alpha w_{n,1})}{v(W)}.
+$$
+
+Let $F_p,F_\beta$ denote the complete endpoint coordinate boxes of Chapter 11, with all nonnegativity, normalization, emissions, and tail inequalities. The selected finite domains are their level-five projections, with the level-five tail cell retained as one coordinate. The endpoint interval on that tail is valid because, from level five onward, each endpoint branch has a fixed ordering. Residual endpoint-box conditions may be imposed on the full residuals; the construction below satisfies them on the whole carriers.
+
+For a level $L\le5$, let $\ell_{s,r}^L(D)$ be the total variation distance between the level-$L$ complete-word/tail partition of $D$ and that of $P_{s,r}$, including the infinite outcome in the tail cell. The selected event-output dual permits degree-at-most-two marginal potentials and whole-input polynomial multipliers in the raw displayed coordinates. Its two directional expressions are
+
+$$
+\begin{aligned}
+S_B(Q,W)&=V_p(Q)-V_\beta(W)+\frac12(F_p(Q)+F_\beta(W))
+       +\phi(Q)\bigl(b_0(Q)-h(W)\bigr),\\
+S_A(W,Q)&=V_\beta(W)-V_p(Q)+\frac12(F_p(Q)+F_\beta(W))
+       +\psi(W)\bigl(a_0(W)-f(Q)\bigr),
+\end{aligned}
+$$
+
+where
+
+$$
+F_p(Q)=c_p'(f(Q)-C)+\sum_r m_{p,r}(\ell_{p,r}^L(Q)-\rho_p),
+$$
+
+$$
+F_\beta(W)=c_\beta'(h(W)-H)+\sum_r m_{\beta,r}(\ell_{\beta,r}^L(W)-\rho_\beta),
+$$
+
+with each loss coefficient nonnegative and each sum finite over supported targets. The input multipliers may depend on the whole descriptor; only the tested output is restricted to the event coordinate. A positive separator would be a pair of valid pointwise lower bounds for $S_B,S_A$ whose constants have positive sum.
+
+The associated normalized-residual square subfamily is
+
+$$
+G_p(Q)=\lambda_B b_0(Q)^2-\lambda_A f(Q)^2
+ +\alpha_0(f(Q)-C)+\beta_0(b_0(Q)-H)
+ +c_p(\ell_{p,r}^L(Q)-\rho_p),
+$$
+
+$$
+G_\beta(W)=\lambda_A a_0(W)^2-\lambda_B h(W)^2
+ +\delta_0(h(W)-H)+\epsilon_0(a_0(W)-C)
+ +c_\beta(\ell_{\beta,r}^L(W)-\rho_\beta),
+$$
+
+where $\lambda_A,\lambda_B,c_p,c_\beta\ge0$ and the affine coefficients are arbitrary. These squares are squares of normalized residual-event values; they are not assertions that the squares are raw-coordinate polynomials of degree two.
+
+### 14.2 The rational complete-law pair
+
+Define
+
+$$
+u_0=\frac{1829}{5000},\qquad U_0=\frac{3171}{5000},\qquad
+v_0=\frac{46}{125},\qquad d=\frac{13}{15000},
+$$
+
+$$
+t=\frac{78975}{2857232}
+ =\frac{d}{2\rho_p-(b-a)},\qquad
+s_a=\frac{1349641}{2857232}=\frac12-t,\qquad
+s_b=\frac{1507591}{2857232}=\frac12+t.
+$$
+
+Set
+
+$$
+Q(w_{0,0})=u_0,
+$$
+
+$$
+Q(w_{0,1})=1-\frac{1-H}{v_0}=\frac{995}{2484},
+$$
+
+$$
+Q(w_{2,1})=C-U_0H=\frac{19907803}{911250000},
+$$
+
+$$
+Q(w_{1,1})=U_0H-Q(w_{0,1})
+=\frac{72763013}{776250000}.
+$$
+
+For every other finite $p$-word set
+
+$$
+Q(w_{n,i})=s_aP_{p,a}(w_{n,i})+s_bP_{p,b}(w_{n,i}),
+$$
+
+and set $Q(\infty_p)=0$. Define the suspended law by
+
+$$
+W=(1-v_0)\delta_\beta+v_0\,\alpha Q,
+\qquad W(\infty_\beta)=0.
+$$
+
+Here $\alpha Q$ prefixes every finite word of $Q$ by $\alpha$ and assigns the corresponding mass to the infinite outcome. This is a pair of mathematical complete laws, not an initialized observer.
+
+The full endpoint mixture $s_aP_{p,a}+s_bP_{p,b}$ has total mass one. Its alpha mass and event mass are respectively
+
+$$
+\frac{a+b}{2}+t(b-a),\qquad C-2t\rho_p.
+$$
+
+The correction on the four altered atoms has total
+
+$$
+u_0-\frac{a+b}{2}-t(b-a)+2t\rho_p
+=-d+t\bigl(2\rho_p-(b-a)\bigr)=0.
+$$
+
+Consequently $Q$ is normalized, and the definition of $W$ makes $W$ normalized without conditioning on completion.
+
+The exceptional endpoint inequalities are
+
+$$
+\frac9{25}\le\frac{995}{2484}\le\frac49,\qquad
+\frac{54}{625}\le\frac{72763013}{776250000}\le\frac8{81},\qquad
+\frac{324}{15625}\le\frac{19907803}{911250000}\le\frac{16}{729},
+$$
+
+and $a\le u_0\le b$. Every unchanged coordinate is a convex endpoint mixture. For marker zero and for marker one with $n\ge3$, the endpoint ratios are
+
+$$
+\frac{P_{p,b}(w_{n,0})}{P_{p,a}(w_{n,0})}
+=\frac65\left(\frac{27}{25}\right)^n,\qquad
+\frac{P_{p,b}(w_{n,1})}{P_{p,a}(w_{n,1})}
+=\frac{81}{100}\left(\frac{27}{25}\right)^n.
+$$
+
+Thus the ordering is fixed on the unchanged ranges. Since $a\le v_0\le b$, the suspended coordinates inherited from them lie in their endpoint intervals. The remaining suspended margins are
+
+$$
+\begin{array}{c|c|c}
+\text{atom} & \text{mass minus lower endpoint} & \text{upper endpoint minus mass}\\ \hline
+\alpha w_{0,0}&66103/2812500&7933/312500\\
+\alpha w_{0,1}&23/6750&1/1350\\
+\alpha w_{1,1}&29867117/18984375000&136987/2109375000\\
+\alpha w_{2,1}&123638407/170859375000&14512531/56953125000
+\end{array}
+$$
+
+and $W(\beta)=79/125\in[3/5,2/3]$. Hence $Q\in F_p$ and $W\in F_\beta$ on the complete carriers.
+
+### 14.3 All tails and the opposite residual boxes
+
+For $j\ge3$, no altered $p$-coordinate occurs in the tail and
+
+$$
+Q(T_p(j))=s_a z_a^j+s_b z_b^j\le\lambda^j,
+$$
+
+because $z_a=2/9<4/15$ and $z_b=6/25<4/15$. The two remaining nontrivial checks are
+
+$$
+Q(T_p(1))=\frac{725441}{3105000}<\lambda,\qquad
+Q(T_p(2))=\frac{327003972413}{6026973750000}<\lambda^2.
+$$
+
+The relation defining $W$ gives
+
+$$
+W(T_\beta(j))=v_0Q(T_p(j))\le b\lambda^j
+$$
+
+for all $j$. Thus all complete tails, including the zero-mass infinite outcomes, satisfy the original inequalities.
+
+Since $W=(1-v_0)\delta_\beta+v_0\alpha Q$, direct prefix deletion gives
+
+$$
+\mathcal R_A(W)=Q
+$$
+
+as full measures, including all tail and infinite coordinates. Put $Z=\mathcal R_B(Q)$. Then
+
+$$
+Z(\beta)=\frac{1243750}{1969191},\qquad
+1-Z(\beta)=\frac{725441}{1969191}\in[a,b].
+$$
+
+The exceptional $Z$-coordinate margins are
+
+$$
+\begin{array}{c|c|c}
+\text{atom} & \text{mass minus lower suspended endpoint} & \text{upper endpoint minus mass}\\ \hline
+\beta&311177/9845955&69044/1969191\\
+\alpha w_{0,0}&365871334/15289227009&9540049661/382230675225\\
+\alpha w_{0,1}&1872137/492297750&169987/492297750\\
+\alpha w_{1,1}&881803/577914750&1623269/14447868750\\
+\alpha w_{2,1}&4036404044/8829092593125&575293945052/1103636574140625
+\end{array}
+$$
+
+For marker zero and marker one with $n\ge2$, write
+
+$$
+Z(\alpha w_{n,i})=A_0P_{\beta,a}(\alpha w_{n,i})+B_0P_{\beta,b}(\alpha w_{n,i}),
+$$
+
+$$
+A_0=\frac{s_a(1-a)}{U_0},\qquad B_0=\frac{s_b(1-b)}{U_0},\qquad
+A_0+B_0=\frac{3383091125}{3397606002}<1.
+$$
+
+The endpoint ratio on each branch increases by $27/25$ when $n$ increases. The lower endpoint inequalities at $(n,i)=(0,0)$ and $(2,1)$, together with the five exceptional checks above, therefore imply every remaining lower inequality; $A_0+B_0<1$ gives the upper inequalities. The residual tails satisfy
+
+$$
+Z(T_\beta(j))=\frac{Q(T_p(j+1))}{U_0}.
+$$
+
+At $j=0,1$ the margins are
+
+$$
+b-\frac{Q(T_p(1))}{U_0}=\frac{311177}{9845955},\qquad
+b\lambda-\frac{Q(T_p(2))}{U_0}
+=\frac{80708747827}{3822306752250},
+$$
+
+and for $j\ge2$,
+
+$$
+Z(T_\beta(j))\le
+\frac{s_az_a+s_bz_b}{U_0}\lambda^j,\qquad
+\frac{s_az_a+s_bz_b}{U_0}=\frac{1861149550}{5096409003}<b.
+$$
+
+Therefore $Z\in F_\beta$ and $\mathcal R_A(W)=Q\in F_p$ on the full carriers. In particular, every level-five projection and every residual endpoint-box projection allowed in the selected class contains this pair.
+
+### 14.4 Means and every supported complete-configuration loss
+
+The altered coordinates were chosen so that
+
+$$
+f(Q)=C,\qquad b_0(Q)=H,\qquad h(W)=1-v_0+v_0Q(w_{0,1})=H,\qquad a_0(W)=C.
+$$
+
+The endpoint coordinate-box triangle identities of Chapter 11 give
+
+$$
+\operatorname{TV}(Q,P_{p,a})=P_{p,a}(E_p)-C,\qquad
+\operatorname{TV}(Q,P_{p,b})=C-P_{p,b}(E_p),
+$$
+
+and the corresponding suspended identities with $h(W)=H$. These are complete-law total variations, so all four complete endpoint configuration losses equal $\rho_p$ or $\rho_\beta$ as appropriate. Every coarser level-$L$ word/tail partition is obtained by contraction and therefore has loss at most, rather than necessarily equal to, its corresponding complete endpoint radius.
+
+For every nonendpoint target supported by the original prior, use the source interval $[3/8,5/13]$. A direct complete-word calculation through level five, with the entire remaining mass (including infinity) bounded by the two tail masses, gives
+
+$$
+B_p=\frac{355994686242025987031}{26994670778880000000000}<\frac1{50},
+$$
+
+$$
+B_\beta=\frac{3515477241015883163647}{421791730920000000000000}<\frac1{75},
+$$
+
+where $B_p$ and $B_\beta$ are upper bounds for the complete total variations from $Q,W$ to the native laws at $r_0=3/8$. The complete stopped-parser coupling supplied with the source gives, for $r,t\in[a,b]$,
+
+$$
+\operatorname{TV}(P_{p,r},P_{p,t})\le\frac{125}{57}|r-t|,\qquad
+\operatorname{TV}(P_{\beta,r},P_{\beta,t})\le\frac{107}{57}|r-t|.
+$$
+
+Since $5/13-3/8=1/104$, the triangle inequality yields, uniformly for every $r\in[3/8,5/13]$,
+
+$$
+\operatorname{TV}(Q,P_{p,r})
+<\frac1{50}+\frac{125}{5928}
+=\frac{6089}{148200}<\rho_p,
+$$
+
+$$
+\operatorname{TV}(W,P_{\beta,r})
+<\frac1{75}+\frac{107}{5928}
+=\frac{4651}{148200}<\rho_\beta.
+$$
+
+Indeed,
+
+$$
+\rho_p-\frac{6089}{148200}=\frac{178363777}{22507875000}>0,\qquad
+\rho_\beta-\frac{4651}{148200}=\frac{26837}{6669000}>0.
+$$
+
+Every supported nonendpoint is in this interval, so every complete configuration loss is bounded before any averaging over configurations. Any level-$L$ partition loss with $L\le5$ is no larger by contraction of total variation.
+
+### 14.5 Universal no-separator theorem for the event-output class
+
+**Theorem 14.1 (event-output quadratic no-separator).** No coefficients in the selected class, over the real or rational numbers, produce pointwise bounds
+
+$$
+S_B(Q,W)\ge\kappa_B,\qquad S_A(W,Q)\ge\kappa_A
+$$
+
+on the declared complete level-five domains with $\kappa_B+\kappa_A>0$. No coefficients in the normalized-residual square subfamily produce lower bounds $G_p\ge\kappa_p$, $G_\beta\ge\kappa_\beta$ with $\kappa_p+\kappa_\beta>0$. The claim holds for every permitted $L\le5$ and every finite nonnegative combination of supported target losses.
+
+**Proof.** At the admissible pair $(Q,W)$, the two event residuals vanish:
+
+$$
+b_0(Q)-h(W)=0,\qquad a_0(W)-f(Q)=0.
+$$
+
+The directional point masses
+
+$$
+\widehat\Gamma_B=\delta_{(Q,W)},\qquad
+\widehat\Gamma_A=\delta_{(W,Q)}
+$$
+
+have common unweighted phase marginals $\delta_Q,\delta_W$. Consequently every whole-descriptor multiplier of either displayed event difference integrates to zero, and every marginal potential cancels between the two directions. The centered affine terms vanish by the equalities above. Every allowed loss term is nonpositive because endpoint losses equal their bounds and all interior losses are strictly below them. Therefore any valid pointwise lower bounds imply
+
+$$
+\kappa_B+\kappa_A\le F_p(Q)+F_\beta(W)\le0.
+$$
+
+For the square subfamily, the affine terms vanish and the square terms cancel exactly:
+
+$$
+\lambda_BH^2-\lambda_AC^2+\lambda_AC^2-\lambda_BH^2=0.
+$$
+
+The loss terms again have nonpositive sum, so $\kappa_p+\kappa_\beta\le0$. This is an exact coefficient-independent falsifier. $\square$
+
+The same Dirac pair gives equality of the two scalar event laws, so all scalar convex-order tests of the displayed events pass, including every polynomial degree. This equality does not imply the missing complete-coordinate equation.
+
+### 14.6 Exact missing coordinate and the limit of the conclusion
+
+The residual formula gives
+
+$$
+Q(w_{0,1})-U_0W(\beta)=-\frac{97339}{388125000},
+$$
+
+and therefore
+
+$$
+\mathcal R_B(Q)(\beta)-W(\beta)
+=-\frac{97339}{246148875}\ne0.
+$$
+
+Hence
+
+$$
+\operatorname{TV}(\mathcal R_B(Q),W)
+\ge\frac{97339}{246148875}>0.
+$$
+
+The constant beta-coordinate test in (11.7) already fails. Since both directional marginals are point masses, the only coupling with these marginals is the displayed point mass; changing the coupling cannot repair this coordinate. The pair is therefore not a compatible pair of Chapter 11 and cannot be installed as an observer.
+
+This is a failure of the selected event-output bridge, even though the pair has full endpoint-box membership, all complete tails, both exact event means, both actual event residual equations, the complete $A$ residual equation, and every supported complete-configuration loss. It is not a no-go theorem for the full degree-at-most-two word/tail vector class: the full residual equations of (11.7) remain required, and no global vector separator, zero-level compatible pair, finite exact attainer, evaluated unrestricted gap, or fixed-resource optimum is asserted. The distinction between raw-coordinate polynomial degree at most two and the normalized-residual square extension remains as stated in Section 14.1.
+
+The realization theorem of Chapter 11 applies only after all complete-coordinate barycentre equations hold for common unweighted marginals. Thus its regeneration, rational approximation, finite atomicity, and all-shape infimum conclusions are not invoked for this pair. The original prior, source, paid histories, records, completion, Stop, zero and unit emissions, and possible noncompletion remain exactly those of the standing hypotheses. $\square$
+
+## 追加锚（本行以下为增补区）
