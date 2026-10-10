@@ -13,41 +13,38 @@ open LeanInformationAudit
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Σ m : ℕ, Fin m
-  State := fun a => Fin a.1 → ℝ
+  Params := ℕ
+  State := fun m => Fin m → ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output := fun _ _ => Bool
+  Output := fun _ m => Fin m → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def observation : ∀ (_ : Unit) (a : Σ m : ℕ, Fin m), (Fin a.1 → ℝ) → Bool :=
-  fun _ a p => decide (_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.StrictlyRoundedLaw a.1 p a.2)
+def observation : ∀ (_ : Unit) (m : ℕ), (Fin m → ℝ) → Fin m → Prop :=
+  fun _ m p => StrictlyRoundedLaw m p
 
 def actual : Realization signature := realize signature observation (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ => false) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (m : ℕ), 2 ≤ m → ∀ (p : Fin m → ℝ) (k : Fin m),
     (∀ i, 0 < p i) → (∑ i, p i) = 1 → (∀ i, p k ≤ p i) →
     DyadicSupportLines.cost p / p k = OptimalLawStrictSlope.alpha m →
-      R.readout () ⟨m, k⟩ p = true
+      R.readout () m p k
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨p, k, hp, hs, hk, ho⟩ := OptimalLawStrictSlope.attained 2 (by decide)
-  have H := h 2 (by decide) p k hp hs hk ho
-  change false = true at H
-  cases H
+  exact h 2 (by decide) p k hp hs hk ho
 
 def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.result)) where
   actual := actual
-  bridge := by simp [arena, actual, observation, realize, Realization.readout]
-  variation := ⟨by
-    simpa [arena, actual, observation, realize, Realization.readout] using
-      _root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.result, rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.result,
+    rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
     rfl, rejected_law⟩, fun i => nomatch i⟩
   dependence := by
@@ -66,10 +63,10 @@ def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAt
       apply hleast 0 (by omega)
       refine ⟨1, ?_⟩
       norm_num [q]
-    refine ⟨⟨2, 0⟩, (fun _ => 0), q, ?_⟩
-    change decide (_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.StrictlyRoundedLaw
-      2 (fun _ => 0) 0) ≠ decide (_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.StrictlyRoundedLaw 2 q 0)
-    simp only [good, bad, decide_true, decide_false, ne_eq, Bool.true_eq_false, not_false_eq_true]
+    refine ⟨2, (fun _ => 0), q, ?_⟩
+    intro h
+    have he := congrFun h 0
+    exact bad (he ▸ good)
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.result) (Realization signature) Unit Unit where
@@ -92,48 +89,45 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, 
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding
     definition := none
-    coordinates := #[0, 3]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 2
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
 namespace Grid
 abbrev signature : Signature where
-  Params := Σ _ : ℕ, ℕ
+  Params := Unit
   State := fun _ => ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output := fun _ _ => Bool
+  Output := fun _ _ => ℕ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def observation : ∀ (_ : Unit) (_ : Σ _ : ℕ, ℕ), ℝ → Bool :=
-  fun _ a x => decide (OnGrid x a.2)
+def observation : ∀ (_ : Unit) (_ : Unit), ℝ → ℕ → Prop :=
+  fun _ _ x => OnGrid x
 def actual : Realization signature := realize signature observation (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ => false) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (x : ℝ) (D E : ℕ), D ≤ E → OnGrid x D → R.readout () ⟨D, E⟩ x = true
+  Law R := ∀ (x : ℝ) (D E : ℕ), D ≤ E → OnGrid x D → R.readout () () x E
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have H := h 0 0 0 le_rfl ⟨0, by simp⟩
-  change false = true at H
-  cases H
+  exact h 0 0 0 le_rfl ⟨0, by simp⟩
 
 def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.grid_up)) where
   actual := actual
-  bridge := by simp [arena, actual, observation, realize, Realization.readout]
-  variation := ⟨by
-    simpa [arena, actual, observation, realize, Realization.readout] using
-      _root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.grid_up, rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.grid_up,
+    rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
     rfl, rejected_law⟩, fun i => nomatch i⟩
   dependence := by
@@ -146,9 +140,10 @@ def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAt
       norm_num at F
       subst z
       norm_num at hz
-    refine ⟨⟨0, 0⟩, 0, 1 / 2, ?_⟩
-    change decide (OnGrid 0 0) ≠ decide (OnGrid (1 / 2) 0)
-    simp only [good, bad, decide_true, decide_false, ne_eq, Bool.true_eq_false, not_false_eq_true]
+    refine ⟨(), 0, 1 / 2, ?_⟩
+    intro h
+    have he := congrFun h 0
+    exact bad (he ▸ good)
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.grid_up) (Realization signature) Unit Unit where
@@ -171,13 +166,13 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, 
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding
     definition := none
-    coordinates := #[1, 2]
+    coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "body", "fn"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

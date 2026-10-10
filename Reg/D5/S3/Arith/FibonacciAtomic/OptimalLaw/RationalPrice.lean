@@ -13,41 +13,38 @@ open LeanInformationAudit
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Σ m : ℕ, Fin m
-  State := fun a => Fin a.1 → ℝ
+  Params := ℕ
+  State := fun m => Fin m → ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output := fun _ _ => Bool
+  Output := fun _ m => Fin m → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def observation : ∀ (_ : Unit) (a : Σ m : ℕ, Fin m), (Fin a.1 → ℝ) → Bool :=
-  fun _ a p => decide (_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.HasOptimalEmbedding a.1 p a.2)
+def observation : ∀ (_ : Unit) (m : ℕ), (Fin m → ℝ) → Fin m → Prop :=
+  fun _ m p => _root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.HasOptimalEmbedding m p
 
 def actual : Realization signature := realize signature observation (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ => false) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (m : ℕ), 2 ≤ m → ∀ (p : Fin m → ℝ) (k : Fin m),
     (∀ i, 0 < p i) → (∑ i, p i) = 1 → (∀ i, p k ≤ p i) →
     DyadicSupportLines.cost p / p k = OptimalLawStrictSlope.alpha m →
-      R.readout () ⟨m, k⟩ p = true
+      R.readout () m p k
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨p, k, hp, hs, hk, ho⟩ := OptimalLawStrictSlope.attained 2 (by decide)
-  have H := h 2 (by decide) p k hp hs hk ho
-  change false = true at H
-  cases H
+  exact h 2 (by decide) p k hp hs hk ho
 
 def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.embedding_result)) where
   actual := actual
-  bridge := by simp [arena, actual, observation, realize, Realization.readout]
-  variation := ⟨by
-    simpa [arena, actual, observation, realize, Realization.readout] using
-      _root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.embedding_result, rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.embedding_result,
+    rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
     rfl, rejected_law⟩, fun i => nomatch i⟩
   dependence := by
@@ -61,10 +58,10 @@ def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAt
       have H := (TriangularPathNormalization.result 2 (by decide) gamma).1 k
       rw [he] at H
       norm_num at H
-    refine ⟨⟨2, k⟩, p, (fun _ => -1), ?_⟩
-    change decide (_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.HasOptimalEmbedding 2 p k) ≠
-      decide (_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.HasOptimalEmbedding 2 (fun _ => -1) k)
-    simp only [good, bad, decide_true, decide_false, ne_eq, Bool.true_eq_false, not_false_eq_true]
+    refine ⟨2, p, (fun _ => -1), ?_⟩
+    intro h
+    have he := congrFun h k
+    exact bad (he ▸ good)
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.embedding_result) (Realization signature) Unit Unit where
@@ -87,13 +84,13 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, 
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice
     definition := none
-    coordinates := #[0, 3]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 2
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
