@@ -1,0 +1,21 @@
+**数学引文 1.4（数值矩与四角响应）。** 令 $W=2U+3\mathbf1_{\{2\}}+5V$，其五态值为 $(0,2,3,5,7)$。这是输出列表的加性数值编码。使用[《边界、运输纤维与回路闭合》Q8、§5.1](AURIC_FIB_ATOM_BOUNDARY_TRANSPORT_FIBERS_AND_LOOP_CLOSURE.md)及[《局部源分裂与读出几何》§5](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)的矩公式与四角配对，得
+
+$$
+\begin{aligned}
+\mathbb E_pW&=2X+3Z+5Y,\\
+\mathbb E_pW^2&=4X+9Z+25Y+20\kappa,\\
+\kappa&=\frac{\operatorname{Var}_p(W)+(2X+3Z+5Y)^2-4X-9Z-25Y}{20}.
+\end{aligned}
+$$
+
+恢复式的前提是同一分布的 $X,Z,Y$ 已知且方差为精确值。对 $K:\Sigma\to\mathbb R$，既有配对为 $\Delta_{\mathbf d}K=K(0)-K(1)-K(3)+K(13)$。将其用于状态上的非线性读出 $M_\lambda(s)=\exp(\lambda W(s))$，得到
+
+$$
+\Delta_{\mathbf d}M_\lambda
+=(e^{2\lambda}-1)(e^{5\lambda}-1)>0\quad(\lambda\in\mathbb R\setminus\{0\}),
+\qquad
+\Delta_{\mathbf d}M_\lambda=10\lambda^2+O(\lambda^3)\quad(\lambda\to0).
+$$
+
+因两因子同号，非零实 $\lambda$ 的精确期望在固定边界纤维上分离不同 $\kappa$；展开式由两个指数在零点的展开相乘得到。$\mathbb E[W^2]$ 和 $\mathbb E[e^{\lambda W}]$ 分别是新的状态读出期望，不能以 $(\mathbb EW)^2$ 或 $e^{\lambda\mathbb EW}$ 替换。只对已知均值作后处理不增加纤维区分能力。这些公式讨论精确律的识别，不给出固定样本量下的精确恢复保证。
+

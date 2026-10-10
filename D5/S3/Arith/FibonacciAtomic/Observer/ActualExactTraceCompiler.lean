@@ -501,7 +501,7 @@ theorem exact_all_history_factorization {G : Finset CoarseHistory}
     | step prior coarse ih => exact exact_bar_control empty policy ih coarse
   exact exact_action_control policy same
 
-private theorem strategy_prefix_action (N : Nat) (π : Strategy) (positive : 1 ≤ N)
+theorem strategy_prefix_action (N : Nat) (π : Strategy) (positive : 1 ≤ N)
     (coarse : Function.FactorsThrough π.policy kappa_hist)
     (U : Source) (allowed : Allowed N U)
     {e : ExactState (strategyPrefixes N π)} {h : RawHistory}
