@@ -181,9 +181,7 @@ private theorem probability_estimator_upper {m : ℕ} (hm : 2 ≤ m)
       stdSimplex ℝ (Fin m) ∩ {p | ∀ i, |y.2 i - (1 - p i)| ≤ ε}
     have hcompact : IsCompact K := by
       apply (isCompact_stdSimplex ℝ (Fin m)).inter_right
-      have heq : {p : Fin m → ℝ | ∀ i, |y.2 i - (1 - p i)| ≤ ε} =
-          ⋂ i, {p : Fin m → ℝ | |y.2 i - (1 - p i)| ≤ ε} := by ext; simp
-      rw [heq]
+      rw [Set.ofPred_forall]
       apply isClosed_iInter
       intro i
       exact isClosed_le
