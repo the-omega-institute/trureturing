@@ -3251,6 +3251,7 @@ $$
 **定理 47.1（证书停止的覆盖化与贪心界）。** 在 §46 的固定超阈值集合 $T=T_\varepsilon$ 与有限、显式枚举的允许层族 $\mathscr L$ 下，定义每层覆盖集
 $$
 C_K=\{\eta\in T:\eta\notin K^\perp\}\qquad(K\in\mathscr L).
+记 $\mathscr C:=\{C_K:K\in\mathscr L\}$。
 $$
 若 $n:=|T|=0$，算法零步停止并令 $\tau=0$。若 $n\ge1$，一个 stack 在证书意义下达到阈值，当且仅当其所选层的覆盖集并集包含 $T$。因此在可覆盖时最短 stack 长度恰为
 $$
