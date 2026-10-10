@@ -8,6 +8,7 @@ import Lean.Elab.Term
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
 import LeanInformationAudit.ArtifactAssessment
+import LeanInformationAudit.Contract.FibApplications
 
 namespace LeanInformationAudit.InspectorProducer
 
@@ -187,6 +188,7 @@ structure ModuleReport where
   refutation : Option RefutationReport := none
   informationRegistrationErrors : Array String := #[]
   informationTemplates : Json := Json.null
+  fibApplications : Json := Json.null
 
 def includeInStatement (name : Name) : ConstantInfo → Bool
   | .thmInfo _ => !(privateToUserName name).isInternalDetail
@@ -372,6 +374,8 @@ def renderModule (report : ModuleReport) : String :=
     ++ ", \"information_registration_errors\": " ++ renderStrings report.informationRegistrationErrors
     ++ (if report.informationTemplates == Json.null then "" else
       ", \"information_templates\": " ++ report.informationTemplates.compress)
+    ++ (if report.fibApplications == Json.null then "" else
+      ", \"fib_analysis\": " ++ report.fibApplications.compress)
     ++ ", \"module\": " ++ jsonString report.moduleName
     ++ ", \"source_path\": " ++ jsonString report.sourcePath
     ++ ", \"source_sha256\": " ++ jsonString report.sourceSha256
@@ -485,7 +489,10 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
     (closedNegation (fun name => current.modules.find? name.toName)
       (current.constants.find?) input)
     cache writer counter utilities generatedNames binding input
+  let fib ← if statementOnly then pure Json.null else
+    FibApplications.extract target data.constants (current.constants.find?) (current.owners.find?)
   let row := { row with
+    fibApplications := fib
     informationRegistrationErrors := sortedUnique (row.informationRegistrationErrors ++ enrollmentErrors) }
   out.putStr (renderModule row)
   out.flush

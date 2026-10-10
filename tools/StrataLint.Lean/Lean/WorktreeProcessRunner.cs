@@ -32,14 +32,29 @@ internal interface IWorktreeProcessRunner
     }
 }
 
-internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancellationToken = default) : IWorktreeProcessRunner
+internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancellationToken = default,
+    LeanCacheCommandObservation? observation = null) : IWorktreeProcessRunner
 {
     public ProcessOutput Run(
         string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout,
-        Stream? standardOutput, Stream? standardError) =>
-        BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout,
-            64 * 1024 * 1024, standardOutput: standardOutput, standardError: standardError,
-            environment: GitEnvironment(fileName), cancellationToken: cancellationToken);
+        Stream? standardOutput, Stream? standardError)
+    {
+        observation?.Boundary("cache-child", "start", fileName, arguments, workingDirectory);
+        try
+        {
+            var result = BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout,
+                64 * 1024 * 1024, standardOutput: observation?.Output(standardOutput) ?? standardOutput,
+                standardError: observation?.Error(standardError) ?? standardError, cancellationToken: cancellationToken);
+            observation?.Boundary("cache-child", "finish", fileName, arguments, workingDirectory, result.ExitCode);
+            return result;
+        }
+        catch (Exception error)
+        {
+            observation?.Boundary("cache-child", "finish", fileName, arguments, workingDirectory,
+                error: error.GetType().FullName + ": " + error.Message);
+            throw;
+        }
+    }
 
     public StreamedProcessOutput<T> RunStreaming<T>(
         string fileName,
@@ -48,30 +63,12 @@ internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancella
         TimeSpan timeout,
         Func<Stream, CancellationToken, Task<T>> readStandardOutput) =>
         BoundedProcessRunner.RunStreaming(fileName, arguments, workingDirectory, timeout,
-            64 * 1024 * 1024, readStandardOutput, environment: GitEnvironment(fileName),
-            cancellationToken: cancellationToken);
+            64 * 1024 * 1024, readStandardOutput, cancellationToken: cancellationToken);
 
     public ProcessOutput Run(
         string fileName,
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TimeSpan timeout) =>
-        BoundedProcessRunner.Run(
-            fileName,
-            arguments,
-            workingDirectory,
-            timeout,
-            64 * 1024 * 1024, environment: GitEnvironment(fileName), cancellationToken: cancellationToken);
-
-    private static IReadOnlyDictionary<string, string>? GitEnvironment(string fileName)
-    {
-        if (Path.GetFileName(fileName) != "git") return null;
-        string[] permitted = ["GIT_SSH", "GIT_SSH_COMMAND", "GIT_SSH_VARIANT", "GIT_ASKPASS",
-            "GIT_TERMINAL_PROMPT", "GIT_AUTHOR_NAME", "GIT_AUTHOR_EMAIL", "GIT_AUTHOR_DATE",
-            "GIT_COMMITTER_NAME", "GIT_COMMITTER_EMAIL", "GIT_COMMITTER_DATE"];
-        return Environment.GetEnvironmentVariables().Cast<System.Collections.DictionaryEntry>()
-            .Where(entry => !((string)entry.Key).StartsWith("GIT_", StringComparison.Ordinal)
-                || permitted.Contains((string)entry.Key, StringComparer.Ordinal))
-            .ToDictionary(entry => (string)entry.Key, entry => (string)entry.Value!, StringComparer.Ordinal);
-    }
+        Run(fileName, arguments, workingDirectory, timeout, null, null);
 }

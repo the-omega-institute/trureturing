@@ -84,6 +84,11 @@ public sealed partial class MakeWorkflowTests
 
     private static readonly string[] ToolsTargets =
     [
+        "auric-fib-analysis-build",
+        "auric-fib-analysis",
+        "auric-fib-analysis-test",
+        "auric-fib-compiled-test",
+        "auric-fib-report",
         "help",
         "settle-batch",
         "dotnet",

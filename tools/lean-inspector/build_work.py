@@ -65,13 +65,20 @@ def record(root, logs, destination, *phases):
                  programs=phase_work(root, logs, 'programs', names) if 'programs' in phases else 0)
     if 'report' in phases:
         activity = logs / 'native-work.jsonl'
+        fib_work = {}
         for line in activity.read_text().splitlines():
             row = json.loads(line)
-            if (not isinstance(row, dict) or row.get('kind') not in ('extract', 'aggregate')
+            if (not isinstance(row, dict) or row.get('kind') not in
+                    ('extract', 'aggregate', 'fib-generated', 'fib-reused', 'fib-unavailable')
                     or type(row.get('count')) is not int or row['count'] < 0):
                 raise ValueError('invalid native build activity')
-            if row['count'] > 0:
+            if row['kind'].startswith('fib-'):
+                key = row['kind'][4:]
+                fib_work[key] = fib_work.get(key, 0) + row['count']
+            elif row['count'] > 0:
                 value['report'] = (value['report'] or 0) + row['count']
+        if fib_work:
+            print('LEAN_INSPECTOR_FIB_WORK ' + json.dumps(fib_work, sort_keys=True), flush=True)
     destination.parent.mkdir(parents=True, exist_ok=True)
     descriptor, name = tempfile.mkstemp(prefix='.build-work-', dir=destination.parent)
     temporary = Path(name)

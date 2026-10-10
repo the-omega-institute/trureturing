@@ -485,6 +485,47 @@ $$
 
 报告不得用一个未经定义的 score 替换这些字段，也不得用报告字段反向制造 Lean 证明。
 
+### 9.1 编译取得与声明链接
+
+正常 Inspector 编译报告可以携带独立的 `fib_analysis` 下游数据分区；其中的
+`Application` 来自来源所有者的 Reg 源码。该分区不参与四槽登记、proof escape、
+seal、冻结或准入状态的判定。没有 Application 的声明没有已取得的 FIB 合同；
+下游请求该声明时返回缺少合同的 unavailable 读数。
+
+当前支持的应用域是与 `NullReplyFiber.native_execution` 具有相同编译命题类型的
+定理 occurrence，以及完整的 initialized 单窗 Window 状态域。编译合同用
+`NativeBridge.reader_eq` 和 `reply_eq` 证明所有者读者与实际
+`rawTransition (rawMachine 0).start`、同状态高位后缀总回复一致。原子、接缝、
+守卫和含拒绝的回复由此来源导出，不从声明名称或描述标签识别语义。
+其他命题或无法结构解码的合同保留具名 unavailable 原因；不强迫其他定理成为 FIB。
+
+取得合同分别承载精确归一化的声明有理质量、有限原子档案或 absent 来源律。
+声明质量只认证数学归一化；档案只产生经验推前律；两者都不认证物理真律或 IID。
+absent 来源律仍允许完整五状态 arena 的微观计数，宏观坐标与关联残差保持 unknown。
+任何零质量原子仍属于微观 arena，分母始终为完整状态数的 N(N−1)。
+
+编译器读取当前 olean 的类型、构造子、常量引用及其私有传递依赖，不执行被审计
+Expr 的函数体。构造字段中的 Lean 证明与 accepted axiom closure 负责精确实现桥；
+下游沿已证明的 Window 对应复用有限分析器，保留全部 SPEC 9 字段和原生拒绝。
+源码字符串只提供来源身份，不提供证明或未知来源律。
+
+### 9.2 增量生成与下游消费
+
+Lake 现有 report facet、compiler export/transitive traces、模块材料包和 custody
+控制生产及失效，不增加第二份调度器或缓存。每个 Application 的取得数据与实际
+目标、来源、读者、合同和私有传递常量闭包共同决定其数据身份。重建模块时，
+从原模块材料包复用输入身份与完整取得描述均相同的声明读数；新增、删除、合同
+资格变化以及真实依赖变化更新相应成员。未改变的声明读数保留原字节内容，
+未失效的模块沿原 facet 保留材料包字节及写入时点。
+
+程序重建是独立必需义务，失败传递；程序字节、HEAD 与完整允许来源目录不进入
+读数复用键。汇总与 provenance 随实际成员和材料变化保持一致。完整重生用于首次
+取得、显式迁移或有界等价比较，日常增量不得以全量回退代替依赖失效。
+
+`make -C tools auric-fib-report` 先经过正常 `make lean-report`，再从完成的报告与
+材料、来源 sidecar 消费 FIB 数据；下游不得把该投影重新作为证明证书。
+相同 qualified 输入上的完整与增量消费结果必须一致。
+
 ## 10. 形式化接入顺序
 
 ### 10.1 单窗有限切片

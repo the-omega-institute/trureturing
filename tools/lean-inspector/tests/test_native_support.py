@@ -26,7 +26,7 @@ def copy_contract_interface(source, target):
     Indexed mathematical contracts compile against D5 in the Reg Lean tests.
     These fixtures exercise transport and discovery with no mathematical library.
     """
-    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean'))
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean', 'AuricFib.lean'))
     catalog = target / 'LeanInformationAuditInterface/Contract/Catalog.lean'
     declarations = catalog.read_text().split('/-- Each occurrence retains', 1)[0]
     declarations = declarations.replace(
@@ -49,7 +49,7 @@ def transport_inspector(source):
     supplied as empty data here; real mathematical assessment runs in the Reg
     compiled-discovery and compiled-seal fixtures.
     """
-    source = source.replace('import LeanInformationAudit.ArtifactAssessment\n', '')
+    source = source.replace('import LeanInformationAudit.ArtifactAssessment\n', '').replace('import LeanInformationAudit.Contract.FibApplications\n', '')
     start = source.index('  if !statementOnly && RawArtifacts.hasTypedInputs')
     end = source.index('  let store ← state.get', start)
     source = source[:start] + source[end:]
@@ -61,6 +61,9 @@ def transport_inspector(source):
         '  let enrollmentErrors : Array String := #[]\n') + source[end:]
     source = source.replace('RawArtifacts.sharedModules targets statementOnly',
         'RawArtifacts.sharedModules targets true')
+    start = source.index('  let fib ← if statementOnly')
+    end = source.index('  let row := { row with', start)
+    source = source[:start] + '  let fib := Json.null\n' + source[end:]
     return source
 
 
@@ -179,7 +182,7 @@ defaultFacets = ["static"]
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         self.write('LeanInformationAudit/TemplateEnrollment.lean', 'def fixtureDriver : Nat := 1\n')
         self.write('LeanInformationAudit/FixturePins.lean', 'def fixturePins : Nat := 1\n')
-        for name in ['SourceAudit', 'Literal', 'InputDiscovery']:
+        for name in ['SourceAudit', 'Literal', 'InputDiscovery', 'FibApplications']:
             self.write('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean',
                        (ROOT / ('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean')).read_text())
         with (self.root / 'lakefile.toml').open('a') as target:
@@ -189,9 +192,9 @@ defaultFacets = ["static"]
                 '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n'
                 'globs = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", '
                 '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n')
-        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
+        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'fib_analysis.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
             self.copy('tools/lean-inspector/' + name)
-        for name in ['RawArtifacts', 'CompiledMetadata', 'CompiledAxioms']:
+        for name in ['RawArtifacts', 'CompiledMetadata', 'CompiledAxioms', 'Sha256']:
             self.copy('tools/lean-inspector/LeanInformationAudit/' + name + '.lean')
         # The native-report fixtures supply their own tiny driver at the root.
         # Keep the production facets verbatim with a fixture package header;
@@ -204,9 +207,9 @@ defaultFacets = ["static"]
             + '  leanLibDir := "../../lib/lean"\n\n'
             + 'lean_lib LeanInformationAudit where\n'
             + '  roots := #[`LeanInformationAudit.RawArtifacts, `LeanInformationAudit.CompiledMetadata, `LeanInformationAudit.CompiledAxioms, `LeanInformationAudit.Contract.SourceAudit, '
-            + '`LeanInformationAudit.Contract.Literal, `LeanInformationAudit.Contract.InputDiscovery]\n'
+            + '`LeanInformationAudit.Contract.Literal, `LeanInformationAudit.Contract.FibApplications, `LeanInformationAudit.Sha256, `LeanInformationAudit.Contract.InputDiscovery]\n'
             + '  globs := #[.one `LeanInformationAudit.RawArtifacts, .one `LeanInformationAudit.CompiledMetadata, .one `LeanInformationAudit.CompiledAxioms, .one `LeanInformationAudit.Contract.SourceAudit, '
-            + '.one `LeanInformationAudit.Contract.Literal, .one `LeanInformationAudit.Contract.InputDiscovery]\n\n'
+            + '.one `LeanInformationAudit.Contract.Literal, .one `LeanInformationAudit.Contract.FibApplications, .one `LeanInformationAudit.Sha256, .one `LeanInformationAudit.Contract.InputDiscovery]\n\n'
             + source[source.index('lean_exe reportInspector where'):].replace(
                 'lean_exe reportInspector where', '@[default_target]\nlean_exe reportInspector where'))
         self.write('tools/lean-inspector/lake-manifest.json', json.dumps(dict(
@@ -255,7 +258,7 @@ defaultFacets = ["static"]
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean',
                 'tools/lean-inspector/lakefile.lean',
-                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py', 'tools/lean-inspector/fib_analysis.py',
                 'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))

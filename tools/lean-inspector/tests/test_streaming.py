@@ -696,7 +696,7 @@ raise SystemExit(37)
             path.chmod(0o755)
             return path
 
-        for name in ['inspect.sh', 'native.py', 'reuse.py', 'materials.py', 'publication.py']:
+        for name in ['inspect.sh', 'native.py', 'reuse.py', 'materials.py', 'fib_analysis.py', 'publication.py']:
             path = 'tools/lean-inspector/' + name
             write(path, (repository / path).read_text())
         write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
@@ -760,16 +760,28 @@ class EntryPointTests(unittest.TestCase):
                              [str(binary), 'lean-utility-input'])
             prepared = root / '.lake/build/lean-inspector/inputs/Trureturing.json'
             previous = prepared.read_bytes()
+            aggregate = root / '.lake/build/lean-inspector/inputs.json'
+            previous_aggregate = aggregate.read_bytes()
+            with patch.dict(os.environ, environment), patch.object(publication, 'coordinates') as coordinates:
+                native.prepare(root, 'module-records')
+            coordinates.assert_not_called()
+            deferred = json.loads((root / '.lake/build/lean-inspector/module-inputs.json').read_text())
+            self.assertEqual(deferred['records']['Trureturing'].encode('ascii'), previous)
+            self.assertEqual(prepared.read_bytes(), previous)
+            with patch.object(publication, 'coordinates', return_value={}):
+                native.aggregate_inputs(root)
+            self.assertEqual(aggregate.read_bytes(), previous_aggregate)
             for invalid in ('relative.dll', str(root / 'absent.dll')):
                 with self.subTest(producer=invalid), patch.dict(os.environ,
                         dict(environment, STRATALINT_LEAN_PRODUCER_DLL=invalid)):
                     with self.assertRaisesRegex(ValueError, 'existing absolute path'):
                         native.prepare(root)
                 self.assertEqual(prepared.read_bytes(), previous)
-            with patch.dict(os.environ, dict(environment, UTILITY_EXIT='37')):
-                with self.assertRaises(subprocess.CalledProcessError) as failure:
-                    native.prepare(root)
-            self.assertEqual(failure.exception.returncode, 37)
+            for scope in ('full', 'module-records'):
+                with patch.dict(os.environ, dict(environment, UTILITY_EXIT='37')):
+                    with self.assertRaises(subprocess.CalledProcessError) as failure:
+                        native.prepare(root, scope)
+                self.assertEqual(failure.exception.returncode, 37)
             self.assertEqual(prepared.read_bytes(), previous)
 
     def test_failed_phase_preserves_public_bundle_and_propagates_exit(self):
@@ -790,7 +802,7 @@ class EntryPointTests(unittest.TestCase):
                     path.chmod(0o755)
                 repository = Path(publication.__file__).resolve().parents[2]
                 for name in ['tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
-                             'tools/lean-inspector/materials.py', 'tools/lean-inspector/publication.py',
+                             'tools/lean-inspector/materials.py', 'tools/lean-inspector/fib_analysis.py', 'tools/lean-inspector/publication.py',
                              'tools/scripts/report/lean-report-selection.py']:
                     write(name, (repository / name).read_text())
                 write('Trureturing.lean', 'def x : Nat := 1\n')
