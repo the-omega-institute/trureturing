@@ -3807,12 +3807,12 @@ $$
 C_K(X):=X\cap\overline C_K
 $$
 
-（$X$ 为任意有限阈值角色集）。给定一个有限允许 stack 前缀 $\mathcal Q$，令
+其中 $X\subseteq\widehat A\setminus\{1\}$ 为有限阈值角色集。将已有允许 stack 前缀记为序列 $\mathcal Q=(K_1,\ldots,K_{\ell(\mathcal Q)})$，并令 $\underline{\mathcal Q}:=\{K_i\}$ 为其去重后的层集合。重复层只计一次覆盖，但物理前缀长度仍是 $\ell(\mathcal Q)$。置
 $$
-V_{\mathcal Q}:=\bigcup_{K\in\mathcal Q}\overline C_K,\qquad
+V_{\mathcal Q}:=\bigcup_{K\in\underline{\mathcal Q}}\overline C_K,\qquad
 \Delta_{\mathcal Q}(X):=X\setminus V_{\mathcal Q}.
 $$
-重复层只计一次，因为其覆盖集并集不变。定义保留此前缀时的最短追加层数
+定义保留此前缀时的最短追加层数
 $$
 \tau_{\rm ext}(\mathcal Q;X,\mathscr L)
 :=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L,\ 
@@ -3821,7 +3821,11 @@ $$
 $$
 若不存在这样的 $\mathcal R$ 则置 $\tau_{\rm ext}=\infty$，空残余的最小值为 $0$。
 
-**定理 48.2（证书族的在线增量更新与可验证间隔）。** 设 $X^-\subseteq X^+$ 为有限阈值角色集，$\mathcal Q$ 为已选的有限允许前缀，置
+**定理 48.2（证书族的在线增量更新与可验证间隔）。** 设
+$$
+X^-\subseteq X^+\subseteq\widehat A\setminus\{1\}
+$$
+为有限阈值角色集，$\mathcal Q$ 为已选的有限允许前缀，置
 $$
 \delta:=X^+\setminus X^-,\qquad
 \Delta^-:=\Delta_{\mathcal Q}(X^-),\qquad
@@ -3831,14 +3835,14 @@ $$
 $$
 \Delta^+
 =\Delta^-\cup(\delta\setminus V_{\mathcal Q})
-=\Delta^-\cup\left(\delta\cap\bigcap_{K\in\mathcal Q}K^\perp\right).
+=\Delta^-\cup\left(\delta\cap\bigcap_{K\in\underline{\mathcal Q}}K^\perp\right).
 \tag{48.1}
 $$
-若 $|\Delta^+|=0$，不追加层且 $\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)=0$。以下令 $\Delta=\Delta^+$、$m=|\Delta|>0$。若存在 $\eta\in\Delta$ 不属于任何 $\overline C_K$，立即报告此前缀不可扩展并令 $\tau_{\rm ext}=\infty$；若
+若 $|\Delta^+|=0$，不追加层且 $\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)=0$。以下令 $\Delta=\Delta^+$、$m=|\Delta|>0$。若存在 $\eta\in\Delta$ 不属于任何 $\overline C_K$，立即报告此前缀不可扩展并令 $\tau_{\rm ext}=\infty$；约定 $\max\varnothing:=0$，并令
 $$
-d:=\max_{K\in\mathscr L}|\overline C_K\cap\Delta|=0,
+d:=\max_{K\in\mathscr L}|\overline C_K\cap\Delta|.
 $$
-也立即报告不可扩展。否则从当前残余 $U_0=\Delta$ 开始，每轮选择最大 gain
+若 $d=0$，也立即报告不可扩展。否则从当前残余 $U_0=\Delta$ 开始，每轮选择最大 gain
 $$
 g_i=\max_{K\in\mathscr L}|\overline C_K\cap U_{i-1}|,
 $$
@@ -3852,14 +3856,18 @@ $$
 \le(1+\log m)\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L).
 \tag{48.2}
 $$
-因此保留前缀时的总层数至多 $|\mathcal Q|+H_d\tau_{\rm ext}$；这是相对于固定前缀最短追加的可验证间隔，不是对 $X^+$ 全局最短 stack 的比值。阈值由 $\varepsilon$ 调到 $\varepsilon'<\varepsilon$ 时可取 $X^-=T_\varepsilon$、$X^+=T_{\varepsilon'}$，新增角色正是 $\delta=\{\eta:\varepsilon'<|h_\eta|\le\varepsilon\}$。
+因此保留前缀时的总物理层数至多
+$$
+\ell(\mathcal Q)+H_d\,\tau_{\rm ext}(\mathcal Q;X^+,\mathscr L);
+$$
+这是相对于固定前缀最短追加的可验证间隔，不是对 $X^+$ 全局最短 stack 的比值。阈值由 $\varepsilon$ 调到 $\varepsilon'<\varepsilon$ 时可取 $X^-=T_\varepsilon$、$X^+=T_{\varepsilon'}$，新增角色正是 $\delta=\{\eta:\varepsilon'<|h_\eta|\le\varepsilon\}$。
 
 **证明。** 由定义
 $$
 \Delta_{\mathcal Q}(X)
-=X\setminus\bigcup_{K\in\mathcal Q}\overline C_K.
+=X\setminus\bigcup_{K\in\underline{\mathcal Q}}\overline C_K.
 $$
-将 $X^+=X^-\mathbin{\dot\cup}\delta$ 代入，并注意 $\delta\setminus V_{\mathcal Q}=\delta\cap\bigcap_{K\in\mathcal Q}K^\perp$，得到 (48.1)。因此旧残余 $\Delta^-$ 原样保留，只有未被此前缀覆盖的新角色需要检查；空前缀时交集约定为全部角色群，恒等式仍成立。
+将 $X^+=X^-\mathbin{\dot\cup}\delta$ 代入，并注意 $\delta\setminus V_{\mathcal Q}=\delta\cap\bigcap_{K\in\underline{\mathcal Q}}K^\perp$，得到 (48.1)。因此旧残余 $\Delta^-$ 原样保留，只有未被此前缀覆盖的新角色需要检查；空前缀时交集约定为全部角色群，恒等式仍成立。
 
 令 $m>0$。每个追加层在初始残余 $\Delta$ 上至多覆盖 $d$ 个角色，故任何大小为 $q$ 的追加集合至多覆盖 $qd$ 个角色；若 $d>0$，得到 $q\ge\lceil m/d\rceil$。若 $d=0$，或有 $\eta\in\Delta$ 不在 $\bigcup_{K\in\mathscr L}\overline C_K$ 中，则不存在有限追加覆盖，故 $\tau_{\rm ext}=\infty$；最大 gain 为零时同样不能删除当前残余中的任何角色。
 
@@ -3881,7 +3889,7 @@ s=\sum_i\frac{a_i}{g_i}
 $$
 这证明了 (48.2) 的右端和标准 charging argument；左端已由基数计数得到。每个成功轮次至少删除一个角色，故可扩展时算法在至多 $m$ 轮内终止；不可扩展时的零 gain 停滞已在上面说明。
 
-最后，若上一轮已维护 $\Delta^-$，(48.1) 的增量部分只需对每个 $\eta\in\delta$ 检查 $|\mathcal Q|$ 个前缀层；在 unit-cost membership 下为 $O(|\delta||\mathcal Q|)$ 次检查。得到 $\Delta$ 后，预计算 $\overline C_K\cap\Delta$ 需 $O(m|\mathscr L|)$ 次检查，朴素逐轮重算 gains 的搜索成本为 $O(m^2|\mathscr L|)$；若不保留旧残余而从头重算，则前缀检查相应为 $O(|X^+||\mathcal Q|)$。证毕。
+最后，若上一轮已维护 $\Delta^-$，(48.1) 的增量部分只需对每个 $\eta\in\delta$ 检查 $\ell(\mathcal Q)$ 个前缀层；在 unit-cost membership 下为 $O(|\delta|\ell(\mathcal Q))$ 次检查。得到 $\Delta$ 后，预计算 $\overline C_K\cap\Delta$ 需 $O(m|\mathscr L|)$ 次检查，朴素逐轮重算 gains 的搜索成本为 $O(m^2|\mathscr L|)$；若不保留旧残余而从头重算，则前缀检查相应为 $O(|X^+|\ell(\mathcal Q))$。若 $\delta$ 未直接给出而需扫描整个 $\widehat A$ 以判定阈值，再另加 $O(|\widehat A|)$ 次角色枚举（不含阈值判定本身）。证毕。
 
 **范围。** 本定理只维护 §45 的固定 Fourier 二维证书族，把已有 stack 当作不可修改的前缀，并在固定有限层菜单中做增量选择；(48.2) 是 additive recourse 加上证书族内的 harmonic 近似，不等于整个 $X^+$ 的全局最短 stack，也不提供完整钻石范数上界或任意 LOSR/CPTP 操作的近似比。
 
