@@ -1619,3 +1619,124 @@ other recovery terms and complete signed tail still need their original
 estimates. Equations (SV39)–(SV40) are a localization application of
 the existing envelopes and prime-counting input, without a new
 prime-distribution theorem or Lean certification.
+
+## Shared sampling primes can be removed from the periodic sector
+
+Retain the same actual source, original fixed $\eta$, support $V=\sqrt A$,
+and full local slope $s_A(y)$ and mean $\sigma_A$. For each sampling prime
+$p$, define
+
+$$
+F_{A,p}^{\rm cop}(y)
+=\sum_{\substack{\ell\le\min(V,y)\\p\nmid\ell}}
+ h(\ell)\{y/\ell\},\qquad
+E_{A,p}^{\rm cop}(y)
+=[F_{A,p}^{\rm cop}(y)-y(s_A(y)+\sigma_A)]_+.
+$$
+
+The local floor identity in (SV30) gives the same expression for $E_A$
+before the condition $p\nmid\ell$ is inserted. Only its fractional-part
+sector is removed. In particular, the original $s_A(y)$ still contains
+the terms with $p\mid\ell$, and $\sigma_A$ still uses the full $S_A$.
+
+Directly reuse $|h(\ell)|\le\tau(\ell)^2$, the Nicolas divisor-growth
+supplier already used in (SV27), and $0\le\{t\}<1$. For every prescribed
+$\nu>0$, they give
+
+$$
+|E_A(y)-E_{A,p}^{\rm cop}(y)|
+\le\sum_{\substack{\ell\le\min(V,y)\\p\mid\ell}}|h(\ell)|
+\ll_\nu A^\nu\frac{\min(V,y)}p.
+\tag{SV41}
+$$
+
+The count is zero when $p>\min(V,y)$; $\ell=1$ is never removed.
+This is an absolute coefficient-counting bound and requires no
+independence between the prime and the denominator.
+
+For any fixed $k\ge1$, use the original $0\le w_{N,p,k}\le\log p$
+where that weight is defined. The existing $\vartheta(t)<2t$ input and
+Abel summation give, with $z=(x/V)^{1/k}\ge1$,
+
+$$
+\begin{aligned}
+\frac1x\sum_p\log p\,\frac{\min(V,x/p^k)}p
+&=\frac Vx\sum_{p\le z}\frac{\log p}p
+  +\sum_{p>z}\frac{\log p}{p^{k+1}}\\
+&\ll_k\frac Vx\log(2z)+z^{-k}
+\ll_k A^{-1/2}\log(2A),\qquad A\le x\le2A.
+\end{aligned}
+$$
+
+An atom at $p=z$ belongs to the first sum. All summands in this
+majorant are nonnegative, so the same bound holds on the original
+active samples, their prime window, or any subset. Choosing a smaller
+auxiliary divisor exponent first absorbs the logarithm. Thus for every
+prescribed $\nu>0$ and fixed $k$,
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{p^k<x/U}w_{N,p,k}
+ |E_A(x/p^k)-E_{A,p}^{\rm cop}(x/p^k)|
+\ll_{k,\nu} A^{-1/2+\nu}.
+\tag{SV42}
+$$
+
+For the original finite unpaid layers, choose $0<\nu<1/2-\eta$.
+Their total is $o(A^{-\eta})$. The fixed-layer estimate also permits
+$k=1$, but it is not an estimate for an unbounded sum of layers or a
+bound for the remaining prime-layer response.
+
+The same deletion applies directly to the already retained adaptive
+polynomial. Define
+
+$$
+c_{A,p}^{\rm cop}(y)
+=\tfrac12\sum_{\substack{\ell\le y\\p\nmid\ell}}h(\ell),
+$$
+
+and define $g_{{\rm ad},k}^{\rm cop}(p;x)$ by inserting $p\nmid\ell$
+in the denominator sum of $g_{{\rm ad},k}(p;x)$, with all its original
+frequency cutoffs intact. Since $|\widehat P_{J_0}(j)|\ll1/|j|$, removing
+the common-prime terms from the constant and oscillatory sectors costs
+at most
+
+$$
+C\log(2J_0)
+ \sum_{\substack{\ell\le\min(V,y_p)\\p\mid\ell}}|h(\ell)|.
+$$
+
+The same sampling calculation pays this extra logarithm. In the
+original window, replace the retained adaptive response by
+
+$$
+[c_{A,p}^{\rm cop}(y_p)+g_{{\rm ad},k}^{\rm cop}(p;x)
+ -y_p(s_A(y_p)+\sigma_A)]_+,
+\qquad y_p=x/p^k,
+$$
+
+and call its residual $\mathcal R^{\rm ad,win,cop}_{N,\eta}$.
+The positive part's Lipschitz bound, the sampled absolute bound above,
+and (SV40) give
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm ad,win,cop}_{N,\eta}|
+=o(A^{-\eta}).
+\tag{SV43}
+$$
+
+The supremum need not be attained. No coprimality indicator is assumed
+to factor into the independent coefficient arrays of (SV27): this
+comparison deletes the common-prime sector by absolute counting after
+the existing harmonic comparisons. Neither $E_{A,p}^{\rm cop}$ nor an
+arbitrary new polynomial positive part is asserted to inherit the
+original $E_A$ envelopes or its vanishing below $U$. The original active
+flags and the full local slope and mean remain explicit.
+
+This is an application of existing divisor-growth and prime-counting
+inputs to the original response, not a new coprime exponential-sum
+theorem, original-number-theory claim, or Lean certification. It removes
+the shared sampling prime from the retained periodic and constant
+sectors. The coprime low response, its joint full drift, the separate
+mean estimate, prime layer, other recovery terms and complete signed
+Robin tail still have no bound here at the original target rate.
