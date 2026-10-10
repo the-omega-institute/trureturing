@@ -336,8 +336,9 @@ $$
 
 This is an inequality at arbitrary GA2 sources. Their actual exponents
 are not asserted to attain the core minimum. Proper-GA1 deletion
-conditions, the selected CA source's equality, and the stronger
-Nicolas envelope above have not been transported to this larger class.
+conditions and the selected CA source's equality have not been
+transported to this larger class. The stronger Nicolas allowance
+requires the separate actual-core argument linked below.
 
 For $A\ge56\,048\,351$, the same Proposition 10 gives
 $\sqrt A\log A\,D^*(A)>D_{\rm lb}(A)>1/2$. Caveney–Nicolas–Sondow's
@@ -348,9 +349,16 @@ $$
 \boxed{\sqrt A\log A\,I_\psi(A)<-D_{\rm lb}(A)<-\frac12.}
 $$
 
+The [Nicolas envelope on actual GA2 cores](../ArithSums/nicolas2025comparison.md#the-same-effective-allowance-on-actual-ga2-cores)
+uses $Z(N)\le\Sigma(N)$ without CA equality and pays the primorial
+suffix even when its primes already divide $N$. For $N\ge N^{(0)}$
+and $\log A\ge26$, it strengthens the necessary signed condition to
+$\sqrt A\log A\,I_\psi(A)<-\mathcal E(\log A)$. Its bound is on the
+whole actual core in the displayed identity, not on $D^*(A)$.
+
 The [published conditional GA2 family](../Arith/caveney2012sacaga.md#the-published-unbounded-ga2-supplier-under-rh-failure)
 has $N_i\to\infty$ under RH failure. Therefore an eventual lower bound
-$\sqrt A\log A\,I_\psi(A)\ge-D_{\rm lb}(A)$ valid at every
+$\sqrt A\log A\,I_\psi(A)\ge-\mathcal E(\log A)$ valid at every
 sufficiently large GA2 clock would contradict that existing family.
 This route would need no effective starting point for the eventual
 bound. It does need a proof of the signed bound on these actual clocks;
