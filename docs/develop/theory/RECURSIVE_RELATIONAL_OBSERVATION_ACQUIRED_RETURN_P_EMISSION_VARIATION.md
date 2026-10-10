@@ -2127,3 +2127,549 @@ Lasse Leskelä and Matti Vihola, [*Conditional convex orders and measurable mart
 The interface is one noncompleting return on the original stopped domain, together with complete predictive laws and target-uniform configuration losses. It does not assert fidelity of arbitrary-length acquired joint paths or reconstruction of $\Xi$ from its two directional flows. The spatial research retains separate obligations for ordered and symmetric mixed traces, both cross blocks, arbitrary correlations and LINEAR compensation by the same actual inverse. No map establishing those obligations is supplied by this probabilistic construction; its label counts, state counts and sampling operations imply no physical-space dimension.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Finite actual-triple necessity and the sharp SAME two-flow motion fiber
+
+**Hypotheses 13.1 (original source and complete descriptor scope).** Retain Definitions 1.1–1.3 and 12.1. The source has its original $m=2,d=1,\ell=2,n=4$, one fixed finite or countable prior with positive masses at depths 1 and 2, and one positive integer $K$ sampled before the first paid Read. The unrestricted common conf/conf question also retains a supported nonendpoint. Conditional on this same $K=k$, the letters have alpha probability $r_k=F_{k+1}/F_{k+3}$. Every original paid rejection and partial parse, both accepted seeds, all marker triples and held $B,Q^+,Z$ records, third-write-before-latch, every finite return, fourth completion and its matching Stop remain in the domain. The control is the full $C_0$ of Definition 1.1, with neither terminal permitting Read.
+
+There is one source-independent finite COMPLETE observer, whose acquired-letter kernels also generate its individual synthetic complete laws through (1.3). COMPLETE includes installed program, numerical representation, original control, labels, selectors, addresses, output cursors, workspace, service microstates and persistent randomness. There is no posterior, count, clock, readable probability row, correlated source seed, source reset, future-event-conditioned update, auxiliary measurement or exact-real runtime port. A mathematical finite stochastic table with real entries and a finitely represented effective exact sampler remain different assertions.
+
+The complete raw carriers, including their infinite outcomes, are those of Definition 1.2; each actual configuration uses its own current-record TV isometry $I_c$. Retain exactly the normalized regular descriptor spaces $\mathcal K_p,\mathcal K_\beta$ of [PAIRED, (11.2)](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md), already used in Definition 12.1. Their emission bounds are $a=1/3,b=2/5$ and their return-tail bound uses $\lambda=4/15$. In particular the SAME source-dependent residual maps are
+
+$$
+u(Q)=Q(\alpha),\qquad v(W)=1-W(\beta),\qquad
+\mathcal R_B(Q)(E)=\frac{Q(\beta E)}{1-u(Q)},\qquad
+\mathcal R_A(W)(E)=\frac{W(\alpha E)}{v(W)}.
+\tag{13.1}
+$$
+
+Prefixing includes infinite outcomes and deletes precisely the original next-operation block through $I_c$. The denominators satisfy $1-u\ge3/5$ and $v\ge1/3$. The residual codomains are the full opposite probability simplices; arbitrary residuals need not lie in the opposite regular descriptor space. Regularity is a hypothesis on the prescribed laws in this finite fiber, not a restriction on the unrestricted original observer class, which still permits zero/unit emissions and possible noncompletion.
+
+**Definition 13.2 (two prescribed finite joint flows).** Take distinct full-law atoms $Q_i\in\mathcal K_p$ for a finite nonempty set $I$ and distinct $W_j\in\mathcal K_\beta$ for a finite nonempty set $J$. Let
+
+$$
+\Gamma_B=\sum_{i,j}b_{ij}\delta_{(Q_i,W_j)},\qquad
+\Gamma_A=\sum_{j,k}a_{jk}\delta_{(W_j,Q_k)}
+\tag{13.2}
+$$
+
+be a compatible pair in exactly [PAIRED, Definition 11.2](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md). Thus the masses are nonnegative, each directional total is one, and, after deleting zero phase atoms, their common unweighted marginals are
+
+$$
+\pi_i=\sum_jb_{ij}=\sum_ja_{ji}>0,\qquad
+\tau_j=\sum_ib_{ij}=\sum_ka_{jk}>0.
+\tag{13.3}
+$$
+
+For every completed-word and infinite atom of the respective carrier they satisfy
+
+$$
+\sum_jb_{ij}W_j(\eta)=\pi_i\mathcal R_B(Q_i)(\eta),\qquad
+\sum_ka_{jk}Q_k(\omega)=\tau_j\mathcal R_A(W_j)(\omega).
+\tag{13.4}
+$$
+
+These full-law row equations are equivalent to that definition's continuous-test equations on finite supports: its bounded Borel extension isolates each whole input atom, and summing the atomic row equations gives every test equation. Neither synthetic continuation factor occurs in (13.3).
+
+**Definition 13.3 (actual triples and two realization scopes).** At a positive original fourth p history $h$, let $X,Y,Z$ be the full configurations before beta, after beta and after alpha, conditioned on the next actual noncompleting return beta-alpha. Pull their complete decoder laws back through their respective original record renderers. On the prescribed supports write their joint law as
+
+$$
+\Xi=\sum_{i,j,k}x_{ijk}\delta_{(Q_i,W_j,Q_k)}.
+\tag{13.5}
+$$
+
+Its first-two and last-two marginals must be exactly (13.2). Arbitrarily many distinct finite COMPLETE labels may carry the same descriptor; incoming memory and persistent randomness remain in those full labels. An abstract original-domain realization is one source-independent initialized finite observer with mathematical real stochastic kernels, retaining the full source/control contract of Hypotheses 13.1; it has these flows and triple at every positive fourth p history and these directional flows at their corresponding phases. A represented realization additionally supplies permitted finite exact sampler services for every primitive row and emission, with all their data and states charged. No uniform COMPLETE or other resource bound is asserted in either scope.
+
+**Theorem 13.4 (finite incoming-pair criterion, including arbitrary initialized refinements).** Under Hypotheses 13.1 and Definitions 13.2–13.3, an abstract finite original-domain realization of (13.5) exists if and only if
+
+$$
+x_{ijk}\ge0,\qquad \sum_kx_{ijk}=b_{ij},\qquad
+\sum_ix_{ijk}=a_{jk},
+\tag{13.6}
+$$
+
+and the following equality holds for every $i,j$ and every $\omega\in\Omega_p$, including $\infty_p$:
+
+$$
+\boxed{\ \sum_kx_{ijk}Q_k(\omega)
+       =b_{ij}\mathcal R_A(W_j)(\omega).\ }
+\tag{13.7}
+$$
+
+Necessity already holds at any single such original history, with arbitrary finite COMPLETE refinements and nonstationary history rows. Sufficiency reuses the exact atomic construction of Theorem 12.2. Its represented original installation uses Proposition 12.6 when its specified sampling premise holds. Rational latch, update and emission probabilities satisfy that premise under the supplied fresh private fair-bit convention. The algebraic iff is not an unconditional effective-sampling theorem for arbitrary real data.
+
+**Proof of necessity.** Use the observer's complete-state kernels $B_{xy},A_{yz}$ and actual conditional row $\rho_h(x)$. For a fixed acquired history its private evolution is independent of $K$: source-independent initialization and the applied kernels depend on that word and the complete private state, not on source depth. The same statement includes all persistent random state; no private seed correlated with the source is permitted. The probability of the next actual beta-alpha, with $\nu_h$ exactly the paid-history posterior (1.2), is
+
+$$
+s_h=\sum_k\nu_h(k)r_k(1-r_k)>0.
+\tag{13.8}
+$$
+
+This factor is the same for every current private state and private update path, so conditioning cancels it. Consequently
+
+$$
+\Pr(X=x,Y=y,Z=z\mid h,\beta\alpha)
+       =\rho_h(x)B_{xy}A_{yz}.
+\tag{13.9}
+$$
+
+There are no synthetic factors $(1-u_x)v_y$ in this actual acquired probability. All original paid letters, including rejected pairs and partial parses, remain in $\nu_h$; it is an analysis posterior, not an observer input.
+
+At each complete suspended configuration reached with positive mass, the exact cylinder identity (1.3), pulled back through its own renderer, gives
+
+$$
+W_y=(1-v_y)\delta_\beta+
+           v_y\alpha\sum_zA_{yz}Q_z,
+\qquad
+\sum_zA_{yz}Q_z=\mathcal R_A(W_y).
+\tag{13.10}
+$$
+
+The analogous p identity is $\sum_yB_{xy}W_y=\mathcal R_B(Q_x)$. These are equalities of normalized full measures, including infinity, and their denominators are positive by the prescribed regular laws. Every positive successor contribution in (13.9) belongs to the specified supports. A zero contribution needs no descriptor assignment.
+
+Push (13.9) to descriptors. The exact two joint marginals give (13.6). For a fixed incoming pair $(i,j)$ and complete atom $\omega$, (13.10) gives
+
+$$
+\begin{aligned}
+\sum_kx_{ijk}Q_k(\omega)
+ &=\sum_{\substack{x,y:Q_x=Q_i\\ W_y=W_j}}
+        \rho_h(x)B_{xy}\sum_zA_{yz}Q_z(\omega)\\
+ &=b_{ij}\mathcal R_A(W_j)(\omega).
+\end{aligned}
+$$
+
+All retained incoming memory is already in $y$. Averaging complete states having the same law $W_j$ leaves its residual unchanged, even when their conditional mixture depends on the incoming $Q_i$. Thus no conditional independence of descriptor coordinates, stationary latent row, reversibility or mixing has been assumed. This proves (13.7) under every finite COMPLETE refinement. At $b_{ij}=0$, nonnegativity in (13.6) forces the entire cell to be zero and (13.7) is the undivided equality $0=0$. Likewise $a_{jk}=0$ forces all its incident masses to vanish and is never a divisor.
+
+**Proof of sufficiency by the prescribed-triple supplier.** The finite tensor (13.6) has total mass one. Its first and third marginals both equal $\sum_i\pi_i\delta_{Q_i}$ by (13.3), and its middle marginal is $\sum_j\tau_j\delta_{W_j}$. Its first-two marginal and the first equation of (13.4) give $\mathbb E[W\mid Q]=\mathcal R_B(Q)$. Equation (13.7), divided only on positive incoming cells, gives $\mathbb E[Q'\mid Q,W]=\mathcal R_A(W)$. The laws belong to the exact descriptor spaces of Definition 12.1, and all the identities hold at every finite and infinite atom. Hence every hypothesis of admissibility (12.1) is discharged.
+
+Apply Theorem 12.2 with its $t_{ijk}=x_{ijk}$ and its incoming-pair mass $\tau_{ij}=b_{ij}$. In its notation (12.6) specializes to
+
+$$
+\widetilde B_{i,(r,j)}=\mathbf1_{\{r=i\}}\frac{b_{ij}}{\pi_i},\qquad
+\widetilde A_{(i,j),k}=\frac{x_{ijk}}{b_{ij}},\qquad
+\widetilde u_i=u(Q_i),\qquad
+\widetilde v_{(i,j)}=v(W_j),\qquad b_{ij}>0.
+\tag{13.11}
+$$
+
+These are the supplier's rows, not a second regeneration procedure. Theorem 12.2 supplies their stochasticity, exact balances $\pi\widetilde B=(b_{ij})$ and $(b_{ij})\widetilde A=\pi$, own-law identification with $Q_i,W_j$, and exact tensor $x_{ijk}$. In particular its generated-law uniqueness uses finite stochastic rows and $\widetilde u,\widetilde v\in[a,b]$, all verified here; the two-step contraction is $4/15<1$. It retains the infinite outcomes at zero mass and needs no recurrence or mixing hypothesis. There are at most $|\operatorname{supp}x|$ labels at either phase, before charging original control and representation.
+
+For the algebraic initialized-source conclusion, this table satisfies every hypothesis of [PAID, Definition 2.1 and Lemma 2.1.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md): use observer period one, the finite nonempty positive label sets in (13.11), normalized latch row $\pi$, the two exact flow balances, emissions in $[a,b]$, fair pre-latch synthesis on full $C_0$, and the same fixed source-independent latch row after the original third record write and latch. The acquired updates are precisely $\widetilde B$ on p-beta and $\widetilde A$ on suspended-alpha; they also generate the synthetic laws. Completing letters clear labels and use their original pendingStop, followed only by the matching original Stop. These are exactly the adapter conditions, with no change to source $d=1$.
+
+For a represented installation, require each primitive service in (13.11), the latch row and pre-latch fairness to return its specified conditional distribution at every allowed entrance, use source-independent randomness, return almost surely and restore canonical service workspace at the original operation cut. This is exactly Proposition 12.6's premise. Its proof and PAID, Lemma 2.1.1, then supply one initialized observer on all original histories, both seeds and every record fiber, with exact individual generation at every original cut. They preserve all paid rejections, held records, write-before-latch, finite returns, completion and Stop, including the full infinite-tail carrier. The actual rows are $\pi,(b_{ij}),\pi$ through each return and the mass in (13.9) is $\pi_i\widetilde B_{i,(i,j)}\widetilde A_{(i,j),k}=x_{ijk}$. Its two descriptor marginals are the exact whole measures (13.2). No source query, posterior service or future conditioning enters the construction.
+
+Rational primitive data meet this sampling premise by the finite rejection service in Proposition 12.6: finite installed thresholds, fresh independent private fair bits, reusable finite candidate and cursor storage, almost-sure return and clearing of workspace before the operation cut. Independent emission and update draws give the required product cylinder. All installed data, program, arithmetic, workspace, service microstates and persistent randomness are charged alongside $C_0$; the service adds no actual Read or observable cut. Under a narrower randomness convention the stated service premise remains required. Arbitrary real entries alone provide no represented sampler, and no sampler-preserving extraction from an arbitrary observer is asserted. This proves both the algebraic iff and the conditional represented converse. $\square$
+
+**Theorem 13.5 (the complete SAME six-law fiber).** Keep exactly the two joint flows (11.34) and the individual complete laws (11.29)–(11.31). Thus $\Sigma=\{7/20,23/60\}$, $(u_0,u_1,u_2)=(1/3,11/30,2/5)$, and the notation $m=11/30,q=19/30,t_\sigma=q\sigma$ is that of Definition 11.7; this local scalar $m$ does not change the source parameter $m=2$. Every abstract realizable triple with these flows, allowing arbitrary finite COMPLETE refinements, has exactly the form
+
+$$
+\Xi=\frac16\sum_{\sigma,i,k}T^\sigma_{ik}
+             \delta_{(Q_{\sigma,i},W_\sigma,Q_{\sigma,k})},
+\tag{13.12}
+$$
+
+where the full block parameterization is
+
+$$
+T^\sigma_{i,\cdot}=(s_i^\sigma,1-2s_i^\sigma,s_i^\sigma),\qquad
+0\le s_i^\sigma\le\tfrac12,\qquad
+\sum_{i=0}^2s_i^\sigma=1.
+\tag{13.13}
+$$
+
+Every real choice in (13.13) has the abstract original initialized realization of Theorem 13.4. Rational choices have represented exact realizations under Proposition 12.6's fresh private fair-bit convention.
+
+**Proof.** Propositions 11.8–11.9 already establish the normalized full masses, including zero infinite coordinates, their membership in the required descriptor spaces and the two compatible whole flows. Their distinctness is also exact: alpha distinguishes the three $i$ values, $Q_{\sigma,i}(\beta\beta)=(1-u_i)(1-\sigma)$ distinguishes equal $i$ in different blocks, and $W_\sigma(\beta)=1-\sigma$ distinguishes the two suspended atoms. Thus the p atom masses are $1/6$ and the suspended atom masses are $1/2$, without an unaccounted collision.
+
+Use the SAME residual identities (11.36). The affine full-law relation (11.30) also gives $Q_{\sigma,1}=G_\sigma$ because $u_1=m$. Hence
+
+$$
+\mathcal R_B(Q_{\sigma,i})=W_\sigma,\qquad
+\mathcal R_A(W_\sigma)=G_\sigma=Q_{\sigma,1}
+                         =\tfrac13\sum_kQ_{\sigma,k}.
+\tag{13.14}
+$$
+
+These equalities include every completed word and infinity, and verify (13.4) for these exact flows. Nonnegativity and the exact first-two and last-two marginals exclude all cross-block triple mass. Writing the remaining mass as $T^\sigma_{ik}/6$ forces every row and column of each $T^\sigma$ to sum to one.
+
+For an incoming $i$, the full-law condition (13.7) is $\sum_kT^\sigma_{ik}Q_{\sigma,k}=G_\sigma$. Testing alpha makes it necessary that
+
+$$
+\sum_kT^\sigma_{ik}u_k=m.
+\tag{13.15}
+$$
+
+Conversely, the row sum and the full affine formula $Q_{\sigma,k}=u_k\delta_\alpha+(1-u_k)\beta W_\sigma$ turn (13.15) into the whole mixture $m\delta_\alpha+q\beta W_\sigma=G_\sigma$. This proves every full-law coordinate, including infinity. The reduction to this emission equation is justified by the fixed full-law affine relation, not by emissions alone for general descriptors.
+
+Since $u_k=m+(k-1)/30$, (13.15) is exactly $T^\sigma_{i0}=T^\sigma_{i2}$. Nonnegative row sums give the row form and bounds in (13.13). Column 0 forces $\sum_i s_i^\sigma=1$; this gives column 2 equal to one and column 1 equal to $3-2=1$. These conditions are therefore necessary and sufficient, including boundary rows with zeros. Theorem 13.4 applies to every such tensor. Its supplied realization has p labels $(\sigma,i)$, suspended labels retaining the same incoming $(\sigma,i)$, uniform six-label phase rows, $B=I$ and block alpha-update $A=T^\sigma$. This is a sufficient realization of every triple, while necessity allowed arbitrary refinements and nonstationary original history rows; it imposes no identity-update or reversibility requirement on those other realizations. $\square$
+
+**Theorem 13.6 (sharp joint full-law and emission motion).** On the fiber of Theorem 13.5 define
+
+$$
+V_u(\Xi)=\int|u(Q)-u(Q')|\,d\Xi,\qquad
+V_Q(\Xi)=\int\operatorname{TV}(Q,Q')\,d\Xi.
+\tag{13.16}
+$$
+
+Their abstract attainable set is exactly
+
+$$
+\boxed{\ \{(V_u,V_Q)\}=\{(v,v):1/45\le v\le1/30\}.\ }
+\tag{13.17}
+$$
+
+Both endpoints and every rational value in this interval have a finite represented original observer under the exact sampler convention in Proposition 12.6. Arbitrary real points are attained in the algebraic table sense, without an effective exact sampler claim at an arbitrary real interpolation parameter. For the supplied installations, these are also the conditional motions at every original fourth p history and their designated-fiber history suprema.
+
+**Proof.** The covered full-law identity (11.33) gives $\operatorname{TV}(Q_{\sigma,i},Q_{\sigma,k})=|u_i-u_k|=|i-k|/30$: the difference of laws is $(u_i-u_k)(\delta_\alpha-\beta W_\sigma)$, whose two probability laws have disjoint supports. No cross-block triple contributes. Put $d=1/30$. The three row costs of (13.13) are $d$, $2ds_1^\sigma$ and $d$. With uniform incoming block row, their mean is $(1+s_1^\sigma)/45$. The two blocks each have mass $1/2$, so
+
+$$
+V_u=V_Q=\frac1{45}
+              +\frac{s_1^{7/20}+s_1^{23/60}}{90}.
+\tag{13.18}
+$$
+
+Each middle parameter lies in $[0,1/2]$, proving the asserted bounds. The lower endpoint holds exactly when both middle parameters are zero; then each block's other two row parameters are $1/2$. The upper endpoint holds exactly when both middle parameters are $1/2$; then the other two parameters in each block sum to $1/2$. In particular choose in both blocks
+
+$$
+T_{\min}=\begin{pmatrix}1/2&0&1/2\\0&1&0\\1/2&0&1/2\end{pmatrix},\qquad
+T_{\max}=\begin{pmatrix}1/4&1/2&1/4\\1/2&0&1/2\\1/4&1/2&1/4\end{pmatrix}.
+\tag{13.19}
+$$
+
+The lower matrix is the supplied $A_0$. Every point of the interval is realized by
+
+$$
+T(\theta)=(1-\theta)T_{\min}+\theta T_{\max},\qquad
+0\le\theta\le1,\qquad
+V_u=V_Q=1/45+\theta/90,
+\tag{13.20}
+$$
+
+using the same choice in both blocks. Its row parameters are $(1/2-\theta/4,\theta/2,1/2-\theta/4)$, which satisfy (13.13). The supplied independent join's $A_1$ is $T(2/3)$, with motion $4/135$ strictly between the endpoints.
+
+For represented endpoints, instantiate Proposition 12.6's sampler with common denominator 60. Each of the six latch labels receives 10 accepted integers; pre-latch fairness receives 30. The p alpha counts are 20, 22, 24 and the suspended alpha counts are 21, 23. The beta update is deterministic. The block alpha-update row counts of the two matrices (13.19) are respectively
+
+$$
+(30,0,30),(0,60,0),(30,0,30),\qquad
+(15,30,15),(30,0,30),(15,30,15).
+\tag{13.21}
+$$
+
+The supplier's six-bit rejection service accepts candidates below 60 with probability $15/16$, assigns the indicated cumulative intervals, and restores canonical candidate and cursor workspace before returning. Its output is exactly uniform on the 60 accepted integers, so these counts give all the claimed probabilities, including zero and unit entries. Fresh independent draws for emission and update give the same product cylinder as the algebraic table. All service states, thresholds, row tables, arithmetic, addresses, program counters, output cursors and persistent randomness are included in COMPLETE with $C_0$. Service microstates carry the continuation law of that same installed program; they introduce no original Read or extra queried cut.
+
+For rational $\theta$, all primitive probabilities have a finite common denominator $D$. Proposition 12.6's service with $L=\lceil\log_2D\rceil$ fair bits and rejection of candidates at least $D$ verifies the same premises. Every rational $v$ in (13.17) has rational $\theta=90(v-1/45)$. This proves exact represented attainment without claiming finite worst-case bit, work or output bounds: internal rejections and original paid rejections and returns may be arbitrarily numerous. Six private labels per phase are not the total COMPLETE count.
+
+The rows of every (13.13) are doubly stochastic. Theorem 13.4 and Proposition 12.6 therefore give uniform private phase rows at every positive original history, with one source-independent latch on all seeds and record fibers. Equation (13.8) cancels at each p history. A beta-alpha return leaves the original p control and held records unchanged, so the before and after complete raw laws use the same TV isometry $I_c$. Thus (13.18) is the actual conditional full-record and emission motion at each such history, in particular throughout the designated seed-1, marker-100 fiber. Taking its history supremum gives the same value. $\square$
+
+**Corollary 13.7 (fixed full predictions, risks and paired semantic arrays).** Across all parameters (13.13), both joint flows (11.34), all six individual p laws, both suspended laws with their repetitions and their phase distributions are fixed. For arbitrary complete targets the configuration losses are
+
+$$
+\frac16\sum_{\sigma,i}\operatorname{TV}(Q_{\sigma,i},T_p),\qquad
+\frac12\sum_\sigma\operatorname{TV}(W_\sigma,T_\beta).
+\tag{13.22}
+$$
+
+For the initialized installations, both full fourth-phase configuration-risk suprema are identical. Corresponding original pre-latch and terminal laws also agree. Their indexed event arrays are the unchanged nonconstant arrays (11.32).
+
+**Proof.** The exact two margins give the fixed phase distributions. Integrating per-configuration TV gives (13.22); TV has not been moved outside the configuration average. At every original history the same once-sampled source gives its unchanged posterior target (1.2). Proposition 12.6 supplies the same phase row there, and its own $I_c$ preserves TV, proving the equality of all fourth-phase history losses and their suprema. Before the latch, the same fair original-control program reaches the same uniform latch mixture of the same individual laws. Conditioning on its first latch entrance, or taking the finite-prefix limit with the supplied pre-latch survival bounds, proves equality of the entire pre-latch laws. Completing configurations have the same deterministic original Stop/delivery laws. Internal sampler continuations may differ between different installed row programs; they are not additional queried histories.
+
+The events in (11.32) are coordinates of those fixed full laws. Within a block $f_{\sigma,i}=(1-u_i)(1-\sigma)(1+t_\sigma+t_\sigma^2)$ varies with $i$. The suspended array is $h_{\sigma,i}=(1-\sigma)(1+t_\sigma)=1-m\sigma-q\sigma^2$, strictly decreasing between the two positive $\sigma$ values. Both indexed arrays are therefore nonconstant. [PAIRED, Theorem 4.1 and Corollary 4.2](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) identifies regular emissions and full laws from both indexed arrays on known fixed $B,A$, with its projected fixed point and unprojected equations as the joint realization test. Here the alpha-update varies; this does not assert identification of an unknown kernel from two marginal numbers. These arrays remain semantic events, not runtime probes or free oracle inputs. $\square$
+
+**Proposition 13.8 (diagonal proxy failure and the independent interior point).** The measure
+
+$$
+\Xi_{\rm diag}=\frac16\sum_{\sigma,i}
+             \delta_{(Q_{\sigma,i},W_\sigma,Q_{\sigma,i})}
+\tag{13.23}
+$$
+
+has the two exact joint marginals (11.34) and zero motion, but no original same-update realization with those full laws. Its successor barycenter conditioned only on $W_\sigma$ nevertheless equals the required $G_\sigma$. The conditional independent join is the supplied lawful $\Xi_1$ in (11.37), with motion $4/135$, and conditional independence is not necessary for realization.
+
+**Proof.** The displayed marginals follow by summation. At incoming $i=0$, testing alpha in (13.7) would require $(1/6)(1/3)=(1/6)(11/30)$, which is false. The analogous defect occurs at $i=2$. If identity return rows were imposed, that incoming suspended state's alpha-alpha mass would be $\sigma/3$ instead of the prescribed $\sigma m$. Yet averaging the three successors conditional only on $W_\sigma$ gives $\tfrac13\sum_iQ_{\sigma,i}=G_\sigma$ by (13.14), so that weaker test misses the failure. Conversely (11.37) is $T^\sigma_{ik}=1/3$, which satisfies (13.13), and Theorem 13.6 evaluates its motion. The lower lawful witness has $T_{10}=0$ and differs from that independent join. It proves that imposing conditional independence would discard realizable triples. More generally the independent tensor $x_{ijk}=b_{ij}a_{jk}/\tau_j$ satisfies (13.6)–(13.7) by (13.3)–(13.4); the criterion restricts prescribed triples over a compatible pair and creates no new obstruction to existence of some triple over a finite compatible pair. $\square$
+
+**Mathematical citation 13.9 (exact suppliers and correspondence).** The complete descriptor spaces and source-dependent residual equations are PAIRED, Lemma 11.1 and Definition 11.2. Its Chapter 11 already gives finite same-update regeneration, own-law uniqueness, rational tolerance approximation, exact all-shape regular-infimum equality and finite-atomic attainment criteria. Theorem 12.2 above already gives sufficient regeneration of each prescribed atomic triple, including the retained incoming label and descriptor collisions; Proposition 12.6 gives its exact original installation and sampling bridge. Theorem 13.4 uses precisely those results after verifying (12.1), and adds necessity directly from arbitrary original COMPLETE histories. Propositions 11.8–11.10 already give the explicit laws, equal two whole flows, distinct actual triples, independent join and two represented witnesses. Theorems 13.5–13.6 characterize their entire realizable fiber and its sharp joint motion, including the upper endpoint and all endpoint equality conditions. Conditional expectation and finite affine row algebra are the intermediate methods.
+
+[PAID, Lemma 14.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md) supplies original paid-history common-row extraction, including its countable-prior domination. [CLIP, Theorems 3.1 and 4.2](RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md) supplies regular clipping and its unrestricted risk comparison. Neither is used here to claim preservation of an arbitrary prescribed triple, effective sampler representation or resource budget. PAIRED, Chapter 12 supplies four-moment identities and synchronized endpoint-chord rigidity; its endpoint-chord hypothesis is not forced throughout the unrestricted zero face and is not imposed here. Its Chapters 13–14 retain their separate marginal-realization and quantitative chord-comparison scopes. [REV](RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md) retains its $A=I$ and reversible hypotheses, none of which is used for this characterization. The finite-dimensional conditional-coupling literature comparison and its whole-descriptor limitations are those of Mathematical citation 12.8; no additional generic gluing or compactness theorem is invoked.
+
+**Limits 13.10 (the unchanged unrestricted alternatives).** Section 9's directed crossing-flow repair already gives simultaneous configuration-loss control and the joint original necessity (9.18), namely $61e(M)/11+19\sqrt{\mathcal V(M)}/11>\eta/400000$ for the same fixed prior with a supported nonendpoint. This remains an inequality on one observer. Immediate-emission return variation, full-law return motion, phase-law dispersion, suspended-to-p mismatch and paired event ranges are distinct quantities. Equality of the first two in Theorem 13.6 uses the particular full-law affine relation (11.30). No independently attainable values are multiplied, and no risk-only lower bound follows while variation and ranges remain free. The linear necessity in Theorem 11.5 and the prescribed-return analytic consumer in Corollary 12.7 retain their existing scopes.
+
+The finite atomic characterization does not evaluate a nonatomic triple problem or a global zero-face value; the approximation and analytic statements already established in Chapter 12 retain their own hypotheses. These SAME-fiber witnesses are not asserted to satisfy every endpoint and supported-interior zero-excess risk face. Thus they supply no common exact zero-excess observer, same-prior vanishing-excess family, evaluated unrestricted positive gap, minimal COMPLETE size, exact fixed-resource optimum or physical dimension. Exact finite common attainment, an unattained zero infimum, a positive unrestricted gap, finite-dimensional relaxations and resource-constrained optima remain separate. The special two-endpoint-prior attainment keeps its own scope. Regular supports in this theorem do not remove original zero/unit emissions or possible noncompletion from the unrestricted class. All conclusions here are ordinary mathematical statements; universal formal applications remain OPEN.
+
+## 追加锚（本行以下为增补区）
+
+## 14. Complete middle-cut minima and motion budgets in the SAME actual-triple fiber
+
+**Hypotheses 14.1 (original source, complete configurations and supplied laws).** Retain exactly the original source, complete carriers, renderer and observer convention of Hypotheses 13.1 and Definitions 13.2–13.3 and [PAID, Definitions 1.1–1.3](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md). One positive integer $K$ is sampled before the first paid Read from one installed finite or countable prior with positive masses at 1 and 2. Conditional on $K=k$, every paid letter has alpha probability $r_k=F_{k+1}/F_{k+3}$. The source parameters remain $m=2,d=1,\ell=2,n=4$. The unrestricted common conf/conf question retains a supported nonendpoint. All claims below concern finite observers in the specified SAME fiber, not a restriction of that unrestricted question.
+
+The original control $C_0$ retains both seeds, every paid equal-pair rejection and partial parse, every marker triple, selectors, bare and held $B,Q^+,Z$ records, write/latch flags, permissions, completion and delivery. The third record is written before latching. Every finite legal return remains; fourth completion permits only its matching Stop, and terminal states permit no Read. The bijection $I_c$ renders the complete raw future, including infinite outcomes, with all original event blocks on the current control/record fiber. It preserves TV and commutes with deleting an original block. An already acquired suspended beta is not a future Read.
+
+COMPLETE includes original control and every live private register, program mode, installed numerical description, address, cursor, workspace, sampler residue and persistent randomness. One source-independent initialized observer uses fixed acquired-letter kernels, and synthetic generation uses these same kernels. There is no source reset, extra measurement, future conditioning, count/clock/posterior/probability-row input or exact-real runtime port. Abstract stochastic rules and finitely represented exact samplers are distinct scopes.
+
+Theorems 13.4–13.6 supply the incoming-cell full-law criterion, the entire SAME fiber and its sharp joint motion. Propositions 11.8–11.10 supply the laws, equal two-flow/unequal-triple example and independent join. These are covered results. The increment here is their complete middle-cut minimum and the separately optimized motion images.
+
+**Definition 14.2 (the fixed complete laws, two joint flows and whole triple).** Put
+
+$$
+
+\sigma_-=7/20,\quad\sigma_+=23/60,\quad
+u=(1/3,11/30,2/5),\quad \bar u=11/30,\quad q=19/30.
+
+$$
+
+On the original carriers $w_{n,0}=(\beta\alpha)^n\alpha$, $w_{n,1}=(\beta\alpha)^n\beta\beta$, and their infinite outcomes, retain
+
+$$
+
+G_\sigma(w_{n,0})=\bar u(q\sigma)^n,\qquad
+G_\sigma(w_{n,1})=q(1-\sigma)(q\sigma)^n,\qquad G_\sigma(\infty_p)=0,
+
+$$
+
+$$
+W_\sigma=(1-\sigma)\delta_\beta+\sigma\alpha G_\sigma,
+\qquad Q_{\sigma,i}=u_i\delta_\alpha+(1-u_i)\beta W_\sigma.
+\tag{14.1}
+
+$$
+
+The six $Q$'s and two $W$'s are distinct: alpha distinguishes $i$, beta-beta distinguishes the two blocks at equal $i$, and $W_\sigma(\beta)=1-\sigma$ distinguishes suspension. These are precisely (11.29)–(11.31), with $\bar u$ denoting the local scalar called $m$ there, not the original source parameter $m=2$. Their masses normalize because $\bar u+q(1-\sigma)=1-q\sigma$ and $q\sigma<1$. The SAME residual maps, on every word and infinity, are
+
+$$
+
+\mathcal R_B(Q)(E)=Q(\beta E)/(1-Q(\alpha)),\qquad
+\mathcal R_A(W)(E)=W(\alpha E)/(1-W(\beta)),
+
+$$
+
+$$
+\mathcal R_B(Q_{\sigma,i})=W_\sigma,\qquad
+\mathcal R_A(W_\sigma)=G_\sigma=\tfrac13\sum_iQ_{\sigma,i}.
+\tag{14.2}
+
+$$
+
+Both prescribed full JOINT measures are fixed:
+
+$$
+
+\Gamma_B=\tfrac16\sum_{\sigma,i}\delta_{(Q_{\sigma,i},W_\sigma)},\qquad
+\Gamma_A=\tfrac16\sum_{\sigma,k}\delta_{(W_\sigma,Q_{\sigma,k})}.
+\tag{14.3}
+
+$$
+
+By Theorem 13.5, with the exact laws (11.29)–(11.31) and the two joint flows (11.34), every lawful whole triple over (14.3) is exactly
+
+$$
+
+\Xi(s^-,s^+)=\tfrac16\sum_{\sigma,i,k}T^\sigma_{ik}
+\delta_{(Q_{\sigma,i},W_\sigma,Q_{\sigma,k})},\qquad
+T^\sigma_{i\cdot}=r(s_i^\sigma),\quad r(t)=(t,1-2t,t),
+\tag{14.4}
+
+$$
+
+where $s^\sigma\in[0,1/2]^3$, $\sum_i s_i^\sigma=1$, and $s^-=s^{\sigma_-}$, $s^+=s^{\sigma_+}$. Each $s^\sigma$ is determined by the whole triple. In particular (14.4) does not replace either joint margin by a phase margin. The descriptor-space hypotheses hold by Proposition 11.9: the p tail is bounded by $(4/15)^n$ and the suspended tail by $(2/5)(4/15)^n$. Both full joint flows are exactly a compatible pair of PAIRED, Definition 11.2, with its common unweighted marginals and every-word and infinity residual equations. Theorem 13.4 applies through the full affine relation (14.1), as checked in Theorem 13.5. All these full-law residual identities are covered reuse, not consequences of generic marginal gluing.
+
+**Definition 14.3 (reachable COMPLETE returned-cut count and its minimum).** Fix an original reachable fourth-segment suspended control/record value $c$. A counted cut is after the acquired p-beta update, including its internal service, has returned and before the next original Read. Let $Y_\sigma(M,c)$ be the set of COMPLETE configurations at these cuts reachable with positive conditional probability at some positive original history with $C_0=c$, whose raw decoder law is $W_\sigma$. Count actual configurations, without identifying different private registers, incoming selectors, program modes, sampler residues or persistent random states. Histories themselves are not states. The definition takes a union over all such histories, including all finite returns.
+
+For a prescribed whole $\Xi$, let $n_\sigma(\Xi;c)$ be the minimum of $\lvert Y_\sigma(M,c)\rvert$ over all original initialized abstract finite observers realizing the individual laws (14.1) at every positive fourth-phase history, the two flows (14.3) at their corresponding phases, and this SAME $\Xi$ at every positive fourth p history. Allow arbitrary finite p refinements and nonstationary actual configuration rows. Let $N(\Xi;c)$ minimize the sum of the two cardinalities over that same class. No operation/service cut is moved. All intermediate service configurations belong to total COMPLETE but are not returned original suspended cuts.
+
+**Theorem 14.4 (exact complete middle-cut minimum).** Write $C=(1/3,1/3,1/3)$. For every triple (14.4) and every such $c$,
+
+$$
+
+n_\sigma(\Xi;c)=1+\mathbf1_{\{s^\sigma\ne C\}},\qquad
+N(\Xi;c)=2+\mathbf1_{\{s^-\ne C\}}+\mathbf1_{\{s^+\ne C\}}.
+\tag{14.5}
+
+$$
+
+One original initialized observer attains both block minima simultaneously on every control/record fiber. Rational parameters admit such an observer with finite exact rational services and canonical workspace at all counted cuts. Arbitrary real parameters have the abstract conclusion; a represented real conclusion additionally requires the finite exact services specified below.
+
+**Proof of necessity.** At any positive original p history $h$, let $X,Y,Z$ be the complete configurations before beta, after its returned update, and after the subsequent returned alpha update. Conditional on the acquired word, the private evolution is independent of $K$: initialization and every kernel use source-independent randomness and the known word only. Hence the positive source return probability
+
+$$
+
+\sum_k\nu_h(k)r_k(1-r_k)
+
+$$
+
+uses exactly the paid-history posterior $\nu_h$ of (1.2), is independent of those private choices and cancels. With actual row $\rho_h$ and complete-state kernels $B,A$,
+
+$$
+
+\Pr(X=x,Y=y,Z=z\mid h,\beta\alpha)=\rho_h(x)B_{xy}A_{yz}.
+\tag{14.6}
+
+$$
+
+There are no synthetic weights $ (1-u_x)v_y$ here. This is (13.9), whose source-independence hypotheses are exactly Hypotheses 14.1, directly at the original history, without stationary extraction.
+
+The positive block mass $1/2$ forces at least one middle configuration of each law. If a block has only one, denote it by $y_\sigma$ and set
+
+$$
+
+a_k=\sum_{z:Q_z=Q_{\sigma,k}}A_{y_\sigma z}.
+
+$$
+
+Nonnegativity and the exact joint supports force all reached successors into this block. Every incoming $Q_{\sigma,i}$ has mass $1/6$; (14.6) then gives $T^\sigma_{ik}=a_k$, irrespective of its p refinements or their history-dependent masses. The last-two JOINT margin in (14.3) gives $(1/2)a_k=1/6$, so every $a_k=1/3$. Thus $s^\sigma=C$. The argument already holds at each single history; taking the union over histories cannot reduce the bound. Any hidden selector that changed this outgoing row would be a different COMPLETE middle configuration. The two blocks cannot share a configuration because $W_{\sigma_-}\ne W_{\sigma_+}$. This proves the simultaneous lower bounds in (14.5).
+
+**Proof of attainment and full-law obligations.** Use six p labels $(\sigma,i)$, initialized with $\pi_{\sigma,i}=1/6$. For a uniform block use one suspended label $(\sigma,*)$, with
+
+$$
+
+B_{(\sigma,i),(\sigma,*)}=1,\qquad
+A_{(\sigma,*),(\sigma,k)}=1/3,\qquad \tau_{\sigma,*}=1/2.
+\tag{14.7}
+
+$$
+
+For a nonuniform block use exactly two suspended labels $(\sigma,0),(\sigma,1)$, with
+
+$$
+
+B_{(\sigma,i),(\sigma,0)}=1-2s_i^\sigma,\qquad
+B_{(\sigma,i),(\sigma,1)}=2s_i^\sigma,
+
+$$
+
+$$
+A_{(\sigma,0),(\sigma,\cdot)}=(0,1,0),\qquad
+A_{(\sigma,1),(\sigma,\cdot)}=(1/2,0,1/2),\qquad
+(\tau_{\sigma,0},\tau_{\sigma,1})=(1/6,1/3).
+\tag{14.8}
+
+$$
+
+All other block transitions vanish. Use p emission $u_i$ and suspended emission $\sigma$. Every row is nonnegative stochastic, including zero and unit entries. Directly,
+
+$$
+
+\pi B=\tau,\qquad \tau A=\pi,\qquad
+\sum_jB_{(\sigma,i),(\sigma,j)}A_{(\sigma,j),(\sigma,k)}=T^\sigma_{ik}.
+\tag{14.9}
+
+$$
+
+For (14.8), the first two equalities use $\sum_i s_i^\sigma=1$; all retained middle masses are strictly positive. Formula (14.7) applies only to a uniform block.
+
+Every middle label in a block has candidate law $W_\sigma$. The full-law mixtures of each of its outgoing rows are $G_\sigma$: in (14.7) this is (14.2); in (14.8) it is respectively $Q_{\sigma,1}$ and $(Q_{\sigma,0}+Q_{\sigma,2})/2$. Both equal $G_\sigma$ by the affine FULL-law identity (14.1). Therefore, for every word and infinity,
+
+$$
+
+\sum_yB_{xy}W_y=\mathcal R_B(Q_x),\qquad
+\sum_zA_{yz}Q_z=\mathcal R_A(W_y).
+\tag{14.10}
+
+$$
+
+This explicitly preserves the source residuals; equality of immediate emissions alone would not suffice without (14.1).
+
+The hypotheses of [PAIRED, (11.19)](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) hold: the finite kernels are stochastic, all candidate laws are normalized, and all emissions are in $[1/3,2/5]$. More explicitly, with
+
+$$
+
+L=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,\qquad
+g=\operatorname{diag}(1-u)B(1-v),
+
+$$
+
+we have $L\mathbf1\le(4/15)\mathbf1$ and
+$\sum_{n<N}L^n(u+g)=\mathbf1-L^N\mathbf1$.
+Thus the generated masses of the two completed words are $L^nu,L^ng$, sum to one, and retain infinity with mass zero. Suspension is generated by its same-update recursion and has tail at most $(2/5)(4/15)^N$. Two normalized solutions of (14.10) with these emissions have maximal phase TV discrepancies $z_p\le(2/3)z_\beta$, $z_\beta\le(2/5)z_p$, hence both vanish. The candidate laws are exactly the generated full laws. No mixing, irreducibility, conservation or reversibility assumption is used.
+
+**Proof of original initialization.** Equations (14.7)–(14.9) and the emission bounds discharge [PAID, Definition 2.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md) with observer period one, distinct from the unchanged source parameter. Apply its Lemma 2.1.1 as follows. Keep the entire $C_0$; before the third latch synthesize fair letters. In the third-completion update perform the entire original record write, then latch, then sample the fixed uniform six-label row independently of the source and acquired word, using the identical rule on both seeds and every marker/held-record fiber. Apply exactly $B$ after acquired p-beta and $A$ after acquired suspended-alpha, and use these same kernels synthetically. Completing letters clear private labels and enter precisely the matching original pendingStop; only original Stop delivers.
+
+The projection of each update to $C_0$ and its entire event block is the original one. Induction over operations therefore preserves all paid rejections, partial parses, seeds, marker triples, held fields, flags, permissions, every finite return, fourth completion and Stop. No extra source operation occurs. Fair pre-latch synthetic seed rejection and early return survivals are $1/2$ and $1/4$; the post-latch bound is $4/15$. Actual survivals at each source depth are at most $5/9$ for seed rejection and $6/25$ per payload return. Infinite outcomes remain in the full carrier with zero mass, also after mixing over the countable prior, without conditioning on completion. Pre-latch and internal-service decoders are the conditional continuations of this same installed generator; pending/delivered laws are the original deterministic ones.
+
+At the first fourth p cut the row is $\pi$. Source independence and (14.9) inductively give row $\tau$ after beta and $\pi$ after alpha at EVERY positive finite original history. Equation (14.6) then pushes forward to masses $T^\sigma_{ik}/6$, giving the prescribed whole $\Xi$ and both exact JOINT flows (14.3). Each retained middle label has positive mass at every applicable history. Rendering uses each history's own $I_c$. No probability row or posterior is runtime input.
+
+**Proof of representation and exact returned count.** For rational $s$, choose a finite common denominator $D$ for (14.7)–(14.8), emissions, fairness and the uniform latch, and an integer $b$ with $2^b\ge D$. Draw $b$ fresh independent fair bits into a bounded candidate register; reject candidates at least $D$ and retry in the same finite workspace, with no retry counter. Accepted candidates select consecutive intervals of integer lengths $Dp_j$. Acceptance probability $D/2^b>0$ proves almost-sure return and exact output probabilities $p_j$. Empty intervals and a single full interval handle zero and unit rows. Emission and update services use fresh independent bits as needed for the joint synthetic kernel.
+
+After committing the selected target label, deterministically clear the candidate, bit cursor, incoming index, row/address selector, emission flag, temporary output and every other scratch register; finish the original event block and return with the common idle program counter and canonical cursors. No bits are prefetched or retained. This finite cleanup uses no Read and occurs inside the same update, before its original returned cut. It is possible because copying the chosen target to its retained label precedes overwriting all old registers; these are ordinary, not reversibility-constrained updates. Immutable tables are common to all cuts of this installed observer. At a fixed $c$, the only varying component on return is exactly the indicated middle label. Thus the COMPLETE configurations at that original cut number precisely (14.7) or (14.8), not a quotient concealing workspace.
+
+All installed constants, program, thresholds, addresses, service states and transient workspace remain charged to total COMPLETE. Internal rejection may run forever on a null set; it adds no original query cut. The count concerns returned cuts and the services return almost surely, not within bounded work. For arbitrary real parameters (14.7)–(14.8) specify abstract finite stochastic rules only. The represented conclusion is conditional on allowed finitely represented, finite-COMPLETE exact services for all primitive probabilities, independent fresh randomness, almost-sure return, and this canonical cleanup. Merely effective approximations to real inputs do not discharge those hypotheses; no external exact-real service or uncounted workspace is assumed. This completes (14.5). ∎
+
+**Theorem 14.5 (separately optimized motion budgets).** Let $V_u,V_Q$ be the actual $\Xi$-integrals of $|u(Q)-u(Q')|$ and $\operatorname{TV}(Q,Q')$. Reuse exactly Theorem 13.6, specifically (13.18):
+
+$$
+
+V_u=V_Q=v=\frac1{45}+\frac{s_1^-+s_1^+}{90}.
+\tag{14.11}
+
+$$
+
+For an abstract budget $b$ of returned suspended configurations summed over the two blocks in a fixed fiber, the attainable scalar motion images are
+
+$$
+
+\begin{array}{c|c}
+b&\{v:N(\Xi;c)\le b\}\\\hline
+2&\{4/135\}\\
+3&[7/270,17/540]\\
+4&[1/45,1/30].
+\end{array}
+\tag{14.12}
+
+$$
+
+The separately optimized minimum $M(v)=\min_{\Xi:\,V_u=V_Q=v}N(\Xi;c)$ is 2 at $4/135$, 3 on the three-label interval elsewhere, and 4 on the rest of $[1/45,1/30]$. No triple exists outside that interval. The joint images are the corresponding diagonal sets $(v,v)$. Rational $v$ in every stated budget image has rational exact attainment.
+
+**Proof.** Two configurations force both vectors to be $C$, hence $s_1^-+s_1^+=2/3$. At most three force at least one vector to be $C$, so the sum ranges over $[1/3,5/6]$. Each value occurs by taking the other vector
+
+$$
+
+s(t)=((1-t)/2,t,(1-t)/2),\qquad 0\le t\le1/2.
+
+$$
+
+Four permit both middle coordinates throughout $[0,1/2]$, independently within the already lawful WHOLE-triple family (14.4); taking $s^-=s^+=s(t)$ gives the full sum interval $[0,1]$. Substitution in the covered (14.11) proves (14.12), including endpoints; (14.5) then proves $M$. This is joint realization by the explicit kernels, not multiplication of separately attainable quantities.
+
+For the rational global endpoints use $s^-=s^+=L=(1/2,0,1/2)$, giving $v=1/45,N=4$, and $s^-=s^+=H=(1/4,1/2,1/4)$, giving $v=1/30,N=4$. The three-label endpoints are $(C,L)$ and $(C,H)$. Their primitive denominators divide 60, so the service above can accept 60 of 64 six-bit candidates. For rational motion the displayed $t$'s are rational, giving the same finite representation with a suitable denominator.
+
+Let $D=(1/2,1/3,1/6)$. The three distinct whole triples with block pairs $(C,C),(C,D),(D,D)$ all have motion $4/135$, but their prescribed-triple minima are respectively 2, 3 and 4. Distinctness follows from (14.4), for example its incoming-0/outgoing-0 mass in each changed block. Therefore $M(v)$ cannot substitute for the minimum of a prescribed $\Xi$. ∎
+
+**Corollary 14.6 (unchanged complete configuration risks).** For the installations of Theorem 14.4, at every original fourth-phase history the full configuration losses remain exactly
+
+$$
+
+\frac16\sum_{\sigma,i}\operatorname{TV}((I_c)_*Q_{\sigma,i},T_h^\mu),\qquad
+\frac12\sum_\sigma\operatorname{TV}((I_c)_*W_\sigma,T_h^\mu),
+\tag{14.13}
+
+$$
+
+with the respective phase's $c$ and original posterior target (1.2). TV stays inside the average.
+
+**Proof.** Theorem 14.4 supplies the same six p masses $1/6$ and total suspended mass $1/2$ for each law, at every positive original history. Applying that history's own TV isometry $I_c$ proves (14.13); this also discharges the hypotheses of Corollary 13.7 for the refined middle labels. The posterior uses every paid letter and is only an analysis quantity. These equalities hold for every finite or countable installed prior and all histories; hence their full original risk suprema agree. The common uniform latch and identical subsequent full laws also preserve corresponding pre-latch laws and deterministic terminal laws. Internal sampler laws can differ across programs; they are not added queried histories. $\square$
+
+**Mathematical citation 14.7 (exact reuse and type correspondence).** Theorem 13.4 supplies the incoming-pair full-law criterion; Theorem 13.5 supplies exactly the entire SAME fiber; Theorem 13.6 supplies its joint motion formula and extrema. Propositions 11.8–11.10 supply the six p laws, two suspended laws, both whole joint flows, distinct actual triples, independent join and original represented witnesses. These results are reused with those identical laws, residual maps and joint measures. The additional deduction in Theorems 14.4–14.5 is the minimum number of reachable COMPLETE returned suspended configurations and its separately optimized motion images. Conditional kernels and the two outgoing full-law barycentres in (14.8) give that deduction; the supplied fiber and motion proofs are not new results here.
+
+[PAIRED, Definition 11.2 and (11.19)](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) supplies the precise two-flow domain and normalized own-law recursion, including all infinite coordinates. Its Chapter 11 already supplies compact law spaces, descriptor-conditioned residual barycentres, finite same-update regeneration, rational tolerance approximation, all-shape regular-infimum correspondence and the finite-atomic exact-attainment criterion. Theorem 14.4 uses only the stated finite rows, their exact full-law recursions and stopping contraction. [PAID, Definition 2.1 and Lemma 2.1.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md) supplies original initialized product realization; the displayed balances, emission bounds, fixed source-independent latch and full original control discharge each premise. Proposition 12.6 supplies the exact sampling bridge, whose finite-service and canonical-return hypotheses are verified explicitly in Theorem 14.4. Neither stationary extraction nor clipping is used to preserve the prescribed triple or the count. [REV](RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md) retains its identity-alpha-update and reversibility scopes; neither is assumed here.
+
+The mature comparisons have different inputs. Leskelä and Vihola, [*Conditional convex orders and measurable martingale couplings*, Theorems 1.2–1.3](https://arxiv.org/html/1404.0999v3), concerns finite-dimensional integrable barycentric kernels. Bounded finite word-coordinate projections meet its integrability hypothesis, but its coupling existence does not preserve this prescribed whole triple or construct the original initialized observer. Monràs and Winter, [*Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*, Section 2, Theorem 6](https://arxiv.org/html/1412.3634v1), records the classical stable pointed polyhedral-cone criterion with its own attribution. Taghavian and Sjölund, [*Minimal positive Markov realizations*, Sections III–IV](https://arxiv.org/html/2502.21102v3), concerns positive transfer-function realization. Neither positive-realization result is a supplier for the present original-cut count. O'Connor, McGoff and Nobel, [*Optimal Transport for Stationary Markov Chains via Policy Iteration*](https://jmlr.org/papers/v23/21-0519.html), concerns dynamically constrained stationary transition couplings; its optimization theorem is not used in the nonstationary-history necessity proof. Abate, Redig and Tkachev, [*On the effect of perturbation of conditional probabilities in total variation*](https://arxiv.org/html/1311.3066v1), concerns path-law perturbation, and Haesaert, Soudjani and Abate, [*Verification of General Markov Decision Processes by Approximate Similarity Relations and Policy Refinement*](https://doi.org/10.1137/16M1079397), concerns approximate simulation and control refinement. Neither replaces exact full-law generation and original initialization. Van den Bos and Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, Sections 3–4](https://arxiv.org/html/1907.11034v2), concerns legal controlled tests; no corresponding controllable source experiment is available here. These are applicability comparisons, not additional theorem invocations or an exhaustive priority claim.
+
+The qualified Auric comparisons are [Occlusion and second projection, Q2–Q4](AURIC_FIB_ATOM_OCCLUSION_SECOND_PROJECTION_AND_LOCAL_RECOVERY.md), [Local clock and output seam, Q2, Q4, Q6 and Q16](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md), and [Symmetric seam and Fibonacci hierarchy, Q6–Q7 and Q10–Q11](AURIC_FIB_ATOM_SYMMETRIC_SEAM_PATH_DEFECT_AND_FIBONACCI_HIERARCHY.md). Their hypotheses require a common source law, calibrated exact readouts, legal control/output operations, full compatible histories and explicit correspondence of the objects being compared. Static seam coordinates, noncommuting responses, paired event arrays, complete future laws and actual triple correlations are different objects. No type-preserving map from this returned-cut count to a native-FIB or physical realization is supplied.
+
+**Limits 14.8 (joint necessities and the unchanged unrestricted target).**
+
+The source-specific equality $V_u=V_Q$ does not identify return variation with phase-law dispersion, suspended-to-p mismatch or event ranges. Section 9, specifically (9.18), retains its joint necessity
+
+$$
+
+\frac{61}{11}e(M)+\frac{19}{11}\sqrt{\mathcal V(M)}>
+\frac{\eta}{400000},\qquad \eta=\frac{14219478376}{318644812890625},
+
+$$
+
+where $e=\max\{R_{\mathrm{conf},p}-1116529/22781250,R_{\mathrm{conf},\beta}-239/6750\}$ and $\mathcal V$ is the original seed-1, marker-100 fiber's history supremum. For the constructed observers that supremum equals (14.11), since (14.6) and (14.9) hold at each such history. No risk-only gap follows with variation free. [PAIRED, Chapters 11, 12 and 14](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) already supplies its compatible-law correspondence, four-moment rigidity, common endpoint-weight stability and evaluated joint excess/four-moment exclusion. The stability comparison fixes neither the actual $\Xi$ nor its return variation. No endpoint-chord condition is imposed here on the unrestricted zero face.
+
+[PAIRED, Theorem 4.1 and Corollary 4.2](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) identifies emissions and full laws from indexed paired semantic arrays on KNOWN $B,A$, with the projected fixed point and all unprojected equations. These arrays are not two marginal numbers or runtime observations. On the p labels the values remain $f_{\sigma,i}=(1-u_i)(1-\sigma)(1+q\sigma+(q\sigma)^2)$, and on each retained suspended label $y$ in block $\sigma$ the value is $h_y=(1-\sigma)(1+q\sigma)$, as in (11.32). The first varies with $i$; the second equals $1-\bar u\sigma-q\sigma^2$ and strictly decreases between the blocks. Thus neither indexed array is constant. The present realizations change acquired kernels and label multiplicities; the fixed-known-kernel hypothesis must be applied separately to each installed table, and no unknown-kernel inverse is asserted. The qualified Auric same-law calibrated readouts, static coordinates, commutators and complete future laws have different types. No native-FIB, physical or free-measurement bridge follows from the count.
+
+This proof uses direct conditional kernels and an explicit two-row interpolation, not a new generic positive-realization, compactness, gluing, rounding or factorization theorem. Positive-realization/invariant-cone results concern their specified word functions or transfer functions; stationary transition coupling, approximate simulation and controlled testing do not replace (14.6), (14.10) or original initialization. The correspondence and limits are specified in Mathematical citation 14.7.
+
+The minima in (14.5) and (14.12) are returned-cut counts in this fixed finite law fiber. They are not total COMPLETE minima, sampler size, description size, finite samples, number of histories, worst-case work/bit bounds or unrestricted fixed-resource optima. Finite exact common attainment, an unattained zero infimum, a positive unrestricted gap, finite-dimensional relaxations and fixed-resource optima remain separate. No zero-face existence/value, nonatomic characterization or unrestricted zero/gap alternative is settled. Endpoint-only prior attainments keep their separate scope. The original unrestricted class still admits zero/unit emissions and possible noncompletion. All new universal formal applications remain **OPEN**.
+
+## 追加锚（本行以下为增补区）
