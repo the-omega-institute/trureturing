@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Word counts and coefficient capacity for common priority prediction. -/
+   digest: Word counts, selector geometry and coefficient capacity for common priority prediction. -/
 import D5.S3.Arith.FibonacciAtomic.HeterogeneousTeacherSeparation
 import Mathlib.Algebra.Polynomial.Eval.Degree
 import Mathlib.Tactic
@@ -707,4 +707,180 @@ theorem integer_split_positive (m z : ℕ) (hm : 0 < m) :
   · rw [Int.toNat_of_nonneg hn]
     ring
 end Capacity
+section
+open _root_.D5.S3.Arith.FibonacciAtomic
+open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
+open scoped BigOperators Polynomial
+namespace MajorityGeometry
+noncomputable section
+local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
+/-- Left-teacher label as a function of its prefix high bit and the two anchors. -/
+def aLabel (h : Bool) (q r : W) : Fin 3 :=
+  if h && first q then 1 else if last q && first r then 2 else 0
+/-- Right-teacher label as a function of its prefix high bit and the two anchors. -/
+def bLabel (h : Bool) (r v : W) : Fin 3 :=
+  if h && first r then 1 else if last r && first v then 2 else 0
+/-- Integer zero-one classification loss. -/
+def err (a c : Fin 3) : ℤ := if a = c then 0 else 1
+/-- Signed difference of left and right classification losses at one high bit. -/
+def ld (h : Bool) (q r v : W) (c : Fin 3) : ℤ :=
+  err (aLabel h q r) c - err (bLabel h r v) c
+/-- Total teacher votes when k of the m prefix high bits are true. -/
+def vt (m k : ℕ) (q r v : W) (c : Fin 3) : ℕ :=
+  (m - k) * ((if aLabel false q r = c then 1 else 0) + (if bLabel false r v = c then 1 else 0)) +
+  k * ((if aLabel true q r = c then 1 else 0) + (if bLabel true r v = c then 1 else 0))
+def delta (m k : ℕ) (q r v : W) (c : Fin 3) : ℤ :=
+  (m - k:ℕ) * ld false q r v c + (k:ℤ) * ld true q r v c
+def top0 (m k : ℕ) (q r v : W) := vt m k q r v 1 ≤ vt m k q r v 0
+  ∧ vt m k q r v 2 ≤ vt m k q r v 0
+def top1 (m k : ℕ) (q r v : W) :=
+  vt m k q r v 0 ≤ vt m k q r v 1 ∧ vt m k q r v 2 ≤ vt m k q r v 1 ∧
+    ¬(vt m k q r v 0 = vt m k q r v 1 ∧ vt m k q r v 1 = vt m k q r v 2)
+def top2 (m k : ℕ) (q r v : W) := vt m k q r v 0 ≤ vt m k q r v 2
+  ∧ vt m k q r v 1 ≤ vt m k q r v 2
+/-- First maximal-vote label, with the triple-tie convention used by the selector. -/
+def firstTop (m k : ℕ) (q r v : W) : Fin 3
+  := if top0 m k q r v then 0 else if top1 m k q r v then 1 else 2
+def lastTop (m k : ℕ) (q r v : W) : Fin 3
+  := if top2 m k q r v then 2 else if top1 m k q r v then 1 else 0
+/-- Majority label with a coin to balance tied left-right discrepancies. -/
+def selector (m k : ℕ) (q r v : W) (coin : Bool) : Fin 3 :=
+  if 0 < k ∧ k < m ∧ 3 * k ≤ m then
+    if top0 m k q r v ∧ (¬ top1 m k q r v ∨ delta m k q r v 1 ≤ delta m k q r v 0) ∧
+      (¬top2 m k q r v ∨ delta m k q r v 2 ≤ delta m k q r v 0) then 0
+    else if top1 m k q r v ∧ (¬top2 m k q r v ∨ delta m k q r v 2 ≤ delta m k q r v 1) then 1 else 2
+  else if delta m k q r v (firstTop m k q r v) = delta m k q r v (lastTop m k q r v) then
+    firstTop m k q r v
+  else if coin then lastTop m k q r v else firstTop m k q r v
+/-- The ordered rational-breakpoint region of a prefix endpoint count. -/
+def region (m k : ℕ) : ℕ :=
+  if k = 0 then 0 else if k = m then 7 else if 3 * k ≤ m then 1 else
+  if 2 * k < m then 2 else if 2 * k = m then 3 else if 3 * k < 2 * m then 4 else if 3 * k = 2
+    * m then 5 else 6
+/-- A fixed pair realizing each of the eight selector regions. -/
+def representative : ℕ → ℕ × ℕ
+  | 0 => (1,0) | 1 => (4,1) | 2 => (5,2) | 3 => (4,2)
+  | 4 => (5,3) | 5 => (3,2) | 6 => (10,9) | _ => (1,1)
+set_option maxHeartbeats 8000000 in
+private lemma selector_region_one (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h3 : 3 * k ≤ m)
+    (q r v : W) (coin : Bool) : selector m k q r v coin = selector 4 1 q r v coin := by
+  cases q <;> cases r <;> cases v <;> cases coin <;>
+    simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err,
+      first, last,
+      hm, hk, hkm, h3] <;>
+    (try split_ifs) <;> omega
+set_option maxHeartbeats 8000000 in
+/-- The zero-high prefix has the same selector as its fixed representative. -/
+lemma selector_region_zero (m : ℕ) (hm : 0 < m)
+    (q r v : W) (coin : Bool) : selector m 0 q r v coin = selector 1 0 q r v coin := by
+  cases q <;> cases r <;> cases v <;> cases coin <;>
+    simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err,
+      first, last,
+      hm] <;>
+    (try split_ifs) <;> omega
+set_option maxHeartbeats 8000000 in
+private lemma selector_region_two (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h3 : m < 3
+  * k) (h2 : 2 * k < m)
+    (q r v : W) (coin : Bool) : selector m k q r v coin = selector 5 2 q r v coin := by
+  cases q <;> cases r <;> cases v <;> cases coin <;>
+    simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err,
+      first, last,
+      hm, hk, hkm, h3, h2] <;>
+    (try split_ifs) <;> omega
+set_option maxHeartbeats 8000000 in
+private lemma selector_region_three (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h2 : 2
+  * k = m)
+    (q r v : W) (coin : Bool) : selector m k q r v coin = selector 4 2 q r v coin := by
+  cases q <;> cases r <;> cases v <;> cases coin <;>
+    simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err,
+      first, last,
+      hm, hk, hkm, h2] <;>
+    (try split_ifs) <;> omega
+set_option maxHeartbeats 8000000 in
+private lemma selector_region_four (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h2 : m < 2
+  * k) (h3 : 3 * k < 2 * m)
+    (q r v : W) (coin : Bool) : selector m k q r v coin = selector 5 3 q r v coin := by
+  cases q <;> cases r <;> cases v <;> cases coin <;>
+    simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err,
+      first, last,
+      hm, hk, hkm, h3, h2] <;>
+    (try split_ifs) <;> omega
+set_option maxHeartbeats 8000000 in
+private lemma selector_region_five (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h3 : 3
+  * k = 2 * m)
+    (q r v : W) (coin : Bool) : selector m k q r v coin = selector 3 2 q r v coin := by
+  cases q <;> cases r <;> cases v <;> cases coin <;>
+    simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err,
+      first, last,
+      hm, hk, hkm, h3] <;>
+    (try split_ifs) <;> omega
+set_option maxHeartbeats 8000000 in
+private lemma selector_region_six (m k : ℕ) (hm : 0 < m) (hk : 0 < k) (hkm : k < m) (h3 : 2
+  * m < 3 * k)
+    (q r v : W) (coin : Bool) : selector m k q r v coin = selector 10 9 q r v coin := by
+  cases q <;> cases r <;> cases v <;> cases coin <;>
+    simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err,
+      first, last,
+      hm, hk, hkm, h3] <;>
+    (try split_ifs) <;> omega
+set_option maxHeartbeats 8000000 in
+private lemma selector_region_seven (m : ℕ) (hm : 0 < m)
+    (q r v : W) (coin : Bool) : selector m m q r v coin = selector 1 1 q r v coin := by
+  cases q <;> cases r <;> cases v <;> cases coin <;>
+    simp [selector, firstTop, lastTop, top0, top1, top2, vt, delta, aLabel, bLabel, ld, err,
+      first, last,
+      hm] <;>
+    (try split_ifs) <;> omega
+/-- Selector choices agree with the representative throughout each prefix-count region. -/
+lemma selector_stable (m k : ℕ) (hm : 0 < m) (hkm : k ≤ m) (q r v : W) (coin : Bool) :
+    selector m k q r v coin =
+      selector (representative (region m k)).1 (representative (region m k)).2 q r v coin := by
+  by_cases h0 : k = 0
+  · subst k; simpa [region, representative] using selector_region_zero m hm q r v coin
+  by_cases he : k = m
+  · subst k; simpa [region, representative,
+    show m ≠ 0 by omega] using selector_region_seven m hm q r v coin
+  have hk : 0 < k := by omega
+  have hlt : k < m := by omega
+  by_cases h3 : 3 * k ≤ m
+  · simpa [region, representative, h0, he, h3] using selector_region_one m k hm hk hlt h3 q r v coin
+  by_cases h2 : 2 * k < m
+  · simpa [region, representative, h0, he, h3,
+    h2] using selector_region_two m k hm hk hlt (by omega) h2 q r v coin
+  by_cases h2e : 2 * k = m
+  · simpa [region, representative, h0, he, h3, h2,
+    h2e] using selector_region_three m k hm hk hlt h2e q r v coin
+  by_cases h32 : 3 * k < 2 * m
+  · simpa [region, representative, h0, he, h3, h2, h2e, h32] using
+      selector_region_four m k hm hk hlt (by omega) h32 q r v coin
+  by_cases h32e : 3 * k = 2 * m
+  · simpa [region, representative, h0, he, h3, h2, h2e, h32, h32e,
+      (show ¬ (2 * m ≤ m) from by omega)] using
+      selector_region_five m k hm hk hlt h32e q r v coin
+  · simpa [region, representative, h0, he, h3, h2, h2e, h32, h32e] using
+      selector_region_six m k hm hk hlt (by omega) q r v coin
+/-- The first selected label maximizes teacher votes. -/
+lemma first_top_majority (m k : ℕ) (q r v : W) (c : Fin 3) :
+    vt m k q r v c ≤ vt m k q r v (firstTop m k q r v) := by
+  have hc : c = 0 ∨ c = 1 ∨ c = 2 := by omega
+  rcases hc with rfl | rfl | rfl <;> unfold firstTop <;>
+    split_ifs <;> simp only [top0, top1, top2] at * <;> omega
+private lemma last_top_majority (m k : ℕ) (q r v : W) (c : Fin 3) :
+    vt m k q r v c ≤ vt m k q r v (lastTop m k q r v) := by
+  have hc : c = 0 ∨ c = 1 ∨ c = 2 := by omega
+  rcases hc with rfl | rfl | rfl <;> unfold lastTop <;>
+    split_ifs <;> simp only [top0, top1, top2] at * <;> omega
+/-- Every coin choice of the selector maximizes total teacher votes. -/
+lemma selector_majority (m k : ℕ) (q r v : W) (coin : Bool) (c : Fin 3) :
+    vt m k q r v c ≤ vt m k q r v (selector m k q r v coin) := by
+  unfold selector
+  split_ifs
+  all_goals (try (first | exact first_top_majority m k q r v c |
+    exact last_top_majority m k q r v c))
+  all_goals
+    have hc : c = 0 ∨ c = 1 ∨ c = 2 := by omega
+    rcases hc with rfl | rfl | rfl <;> simp only [top0, top1, top2] at * <;> omega
+end
+end MajorityGeometry
+end
 end D5.S3.Arith.FibonacciAtomic.CommonPrediction
