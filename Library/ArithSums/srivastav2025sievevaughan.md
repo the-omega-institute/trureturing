@@ -810,3 +810,135 @@ alone does not reach $o(A^{-\eta})$. Other bands, the actual positive
 part, and the pointwise remainder are still present. This is an
 application of existing classical inputs, without Lean certification
 or a claim of original number theory; it gives no complete Robin gain.
+
+## A small-truncation boundary for the absolute remainder envelope
+
+Use the classical Fejér-normalized Vaaler majorant
+
+$$
+D_J(t)=\frac1{2(J+1)^2}
+ \left(\frac{\sin\pi(J+1)t}{\sin\pi t}\right)^2
+=\frac1{2(J+1)}\sum_{|n|\le J}
+ \left(1-\frac{|n|}{J+1}\right)e^{2\pi i nt},
+$$
+
+with continuous value $1/2$ at integers. This is the standard
+Vaaler construction, attributed to
+[Vaaler (1985)](https://doi.org/10.1090/S0273-0979-1985-15349-2);
+the original proof has not been independently inspected. The
+approximation statement used above is also supplied by the inspected
+Baker et al. equation (2.1). All estimates below retain the actual
+coefficients and hold for sufficiently large $A$.
+
+Choose primes $q,s$ in the fixed-ratio ranges
+
+$$
+3R/4<q\le7R/8,\qquad 3U_1/4<s\le7U_1/8.
+$$
+
+These ranges are disjoint and $V/2<qs<V$. The only permitted
+LCM decomposition at $\ell=qs$ is $d=q,e=s$: the preceding
+coprimality observation gives $de=qs$, while $s>R$ and $qs>U_1$.
+Thus
+
+$$
+h(qs)=\frac{\log(R/q)\log(U_1/s)}{r^2}\gg L^{-2},
+\qquad
+\sum_{V/2<\ell\le V}|h(\ell)|\gg\frac V{L^4}.
+\tag{SV14}
+$$
+
+The second bound directly applies the [existing unconditional prime
+number theorem](../Weil/dusart2010estimates.md#robin-支撑损失所需的渐近输入)
+to the two fixed-ratio intervals; it is not a new prime-counting result.
+Each pair gives a different product, and their count is
+$\gg RU_1/(\log R\log U_1)\asymp V/L^2$.
+
+If $U<y<2U$, $\ell>V/2$ and $J+1\le V/(8U)$, then
+$0<(J+1)y/\ell<1/2$. The elementary bounds
+$\sin\pi u\ge2u$ for $0\le u\le1/2$ and
+$\sin\pi t\le\pi t$ imply $D_J(y/\ell)\ge2/\pi^2$.
+Together with (SV14), this gives
+$r_{A,J}(y)\gg V/L^4$ throughout $U<y<2U$.
+
+For a fixed integer $k\ge2$, define the full active-sample cost
+
+$$
+\mathcal T_{N,k,J}(x)=\frac1x\sum_{p^k<x/U}
+ w_{N,p,k}r_{A,J}(x/p^k).
+$$
+
+The actual own-price comparison already established above gives
+$(1-p^{1-k})\log p\le w_{N,p,k}\le\log p$.
+Consequently the primes with $x/(2U)<p^k<x/U$ have weighted
+mass $\gg_k(x/U)^{1/k}$, by the same prime number theorem.
+Uniformly for $A\le x\le2A$,
+
+$$
+\mathcal T_{N,k,J}(x)
+\gg_k\frac V{xL^4}\left(\frac xU\right)^{1/k}
+\asymp_k\frac{A^{-1/2+3/(4k)}}{L^4},
+\qquad J\ge1,\quad J+1\le\frac V{8U}.
+\tag{SV15}
+$$
+
+For squares this is $A^{-1/8}/L^4$, larger than the already
+available $A^{-1/4}/L^2$ residual upper envelope for $E_A$.
+This is a lower bound for the absolute approximation envelope,
+not for $E_A$ or the signed error.
+
+Both terms of the Fourier upper budget must therefore be retained.
+Put $B_1=\sum_\ell|h(\ell)|\le B_A$,
+$M_{N,k}(x)=\sum_{p^k<x/U}w_{N,p,k}$ and
+$\mathcal S_{N,k,x}(\alpha)=\sum_{p^k<x/U}
+w_{N,p,k}e^{2\pi i\alpha x/p^k}$. The Fejér formula gives
+
+$$
+\begin{aligned}
+\mathcal T_{N,k,J}(x)\le{}&
+\frac{B_1M_{N,k}(x)}{2x(J+1)}\\
+&+\frac1{x(J+1)}\sum_\ell|h(\ell)|
+ \sum_{n=1}^J\left(1-\frac n{J+1}\right)
+ |\mathcal S_{N,k,x}(n/\ell)|.
+\end{aligned}
+\tag{SV16}
+$$
+
+At $J+1=\lfloor V/(16U)\rfloor$, the first term is
+$O_k(A^{-3/4+3/(4k)}/L^2)$, using
+$M_{N,k}(x)\ll_k(x/U)^{1/k}$ and $B_A\ll V/L^2$.
+Its ratio to the lower scale in (SV15) is
+$O_k(A^{-1/4}L^2)\to0$. Hence the second, oscillatory upper-budget
+term in (SV16) is itself at least a fixed positive multiple of
+the scale in (SV15) eventually. Paying only the zero-frequency
+term cannot pay this absolute envelope.
+
+This excludes only the small-$J$ sufficient condition that asks
+the whole absolute envelope to be small. It excludes neither
+larger $J$ nor cancellation in the signed error, and gives no
+counterexample to the actual-source target or Robin's inequality.
+The estimates are attributed paper-level applications, not
+Lean-certified conclusions or claims of original number theory.
+
+A weaker joint condition remains possible. Write
+$\Delta_J=g_A-g_{A,J}$. The elementary positive-part inequality
+
+$$
+[Z+\Delta]_+\le[Z]_+
+ +[\Delta_+-(-Z)_+]_+
+$$
+
+and the same band removal give
+
+$$
+E_A(y)\le[Z_{\rm rest,J}(y)]_+
+ +[(\Delta_J(y))_+-(-Z_{\rm rest,J}(y))_+]_+
+ +|g_{\rm top,J}(y)|.
+$$
+
+Only the positive signed error exceeding the actual negative
+margin is charged in this expression. No quantitative joint
+bound at the original $\eta$ rate has been supplied for it.
+The remaining bands, mean requirement, low prime-power layers,
+prime layer $k=1$, recovery terms and complete signed tail (SV4)
+remain unpaid; the original source and target are unchanged.
