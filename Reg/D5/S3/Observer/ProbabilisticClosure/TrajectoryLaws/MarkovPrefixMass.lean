@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass
 import Reg.Support.DependentFamily
 
@@ -78,18 +79,32 @@ def registration : Registration arena.{u} (arena.Law actual) where
     have hh := congrArg (fun f => (f 0).down) h
     cases hh
 
-register_information_theorem markov_chain_law_map_prefix_apply_singleton in arena
-  readout via (realize signature.{u}
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton.{u}) (type_of% (realize.{u + 1, u, 0, u, 0} signature.{u}
     (fun (_ : Unit) (p : (_ : Type u) × ℕ) (x : ℕ → p.1)
-      (i : Fin (p.2 + 1)) => x i.1) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass
-    coordinates := #[0, 7]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "fn", "arg", "fn", "arg", "fn",
-        "arg", "body"], stateBinder := 9 }] })
-  escape continues (open)
+      (i : Fin (p.2 + 1)) => x i.1) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "ProbabilisticClosure") "TrajectoryLaws") "MarkovPrefixMass") "markov_chain_law_map_prefix_apply_singleton") "Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass/Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u})⟩,
+  objectArena := .source ⟨(arena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u}) ⟨(registration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u + 1, u, 0, u, 0} signature.{u}
+    (fun (_ : Unit) (p : (_ : Type u) × ℕ) (x : ℕ → p.1)
+      (i : Fin (p.2 + 1)) => x i.1) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, definition := none, coordinates := #[0, 7], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "body"], stateBinder := 9, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end

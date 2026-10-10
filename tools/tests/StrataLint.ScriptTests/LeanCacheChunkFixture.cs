@@ -39,13 +39,28 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         {
             packages = new[] { new { name = "mathlib", rev = Revision, inputRev = "requested-tag" } },
         }));
+        Write(Path.Combine(repository, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
+        Write(Path.Combine(repository, "Trureturing.lean"), "def fixture := 1\n");
+        var reportSetup = TestProcessRunner.Run("python3", ["-B",
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py"),
+            "prepare-release-report", repository], repository, TestBudgets.WorkflowProcessHangGuard, 256 * 1024);
+        Assert.Equal(0, reportSetup.ExitCode);
+        // Content eligibility is tested with real Git by the Python contracts;
+        // this fixture isolates multipart transport from those dependencies.
+        WriteStub("git", """
+            case "$*" in
+              *--absolute-git-dir*|*--git-common-dir*) printf '%s/.git\n' "$PWD" ;;
+              *"worktree list --porcelain -z") printf 'worktree %s\000HEAD 0123456789abcdef0123456789abcdef01234567\000branch refs/heads/dev\000\000' "$PWD" ;;
+              *rev-parse*) printf '%s\n' '0123456789abcdef0123456789abcdef01234567' ;;
+              *status*|*check-ref-format*) exit 0 ;;
+              *) exit 89 ;;
+            esac
+            """);
         WriteStub("make",
             """
             printf '%s\n' "$*" >> "$CHUNK_FIXTURE/build-runs"
             if [ "$1" = "lean-report" ] && [ "$FAKE_BUILD_EXIT" = "0" ]; then
-                mkdir -p .lake/build/stratalint
-                printf '%s\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/report-fixture-$$
-                mv .lake/report-fixture-$$ .lake/build/stratalint/raw-lean-report.json
+                python3 -B "$FAKE_REPORT_FACTORY" write-release-report "$PWD"
             fi
             exit "$FAKE_BUILD_EXIT"
             """);
@@ -54,7 +69,9 @@ internal sealed class LeanCacheChunkFixture : IDisposable
             """exec python3 "$CHUNK_FIXTURE/gh.py" "$@" """);
         var address = Run("address");
         AssertSuccess(address);
-        Partition = JsonNode.Parse(address.Text)!["partition"]!.GetValue<string>();
+        var resolved = JsonNode.Parse(address.Text)!;
+        Partition = resolved["partition"]!.GetValue<string>();
+        CacheKey = resolved["cache_key"]!.AsObject();
         ArchiveBytes = Pack(archive);
         FixtureFile.WriteAllBytes(Path.Combine(temporary.Path, "archive"), ArchiveBytes);
         // Replace only the pack dependency in this child interpreter. Fetch uses
@@ -75,9 +92,10 @@ internal sealed class LeanCacheChunkFixture : IDisposable
     }
 
     internal string Partition { get; }
+    internal JsonObject CacheKey { get; }
     internal byte[] ArchiveBytes { get; }
     internal string Tag => CandidateTag(4242);
-    internal string CandidateTag(int run, string? partition = null) => $"lean-cache-v2-{(partition ?? Partition).Replace('/', '-')}-{run}-1";
+    internal string CandidateTag(int run, string? partition = null) => $"lean-cache-v2-{(partition ?? Partition).Replace('/', '-')}-report-{CacheKey["report_format"]!.GetValue<string>()}-env-{CacheKey["execution_sha256"]!.GetValue<string>()[..12]}-ci-{run}-1";
     internal string? Unpacked => ReadInstalled("build/cache.olean");
     internal string? UnpackedReport => ReadInstalled("build/lean-inspector/report.zip");
     internal string[] DownloadPatterns => ScriptHarnessScratch.ReadRecordedCalls(Path.Combine(temporary.Path, "download-patterns"));
@@ -145,7 +163,8 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         }
         var manifest = new JsonObject
         {
-            ["schema"] = "lean-release-seed-v3", ["partition"] = partition ?? Partition,
+            ["schema"] = "lean-release-seed-v4", ["partition"] = partition ?? Partition,
+            ["cache_key"] = CacheKey.DeepClone(), ["publication_id"] = $"ci-{tag.Split('-')[^2]}-1",
             ["producer_commit_sha"] = ProducerSha, ["workflow_run_id"] = tag.Split('-')[^2],
             ["workflow_run_attempt"] = "1", ["archive_sha256"] = Digest(ArchiveBytes),
             ["archive_bytes"] = ArchiveBytes.Length, ["parts"] = parts,
@@ -200,10 +219,11 @@ internal sealed class LeanCacheChunkFixture : IDisposable
             $"HOME={temporary.Path}", $"PYTHONPATH={bin}", $"CHUNK_FIXTURE={temporary.Path}",
             "STRATALINT_CACHE_REPO=fixture/cache", "STRATALINT_ACTIONS_CACHE_SEEDED=",
             $"GITHUB_SHA={commit}", $"GITHUB_RUN_ID={run}", "GITHUB_RUN_ATTEMPT=1",
-            "CI=true", "GITHUB_ACTIONS=true", "GITHUB_EVENT_NAME=schedule",
+            "CI=true", $"GITHUB_ACTIONS={(verb == "fetch" ? "false" : "true")}", "GITHUB_EVENT_NAME=schedule",
             "GITHUB_REF=refs/heads/dev", "GITHUB_REF_NAME=dev", "LC_ALL=C.UTF-8",
             $"FAKE_FAIL={failure}", $"FAKE_BUILD_EXIT={buildExit}",
             $"FAKE_DEFAULT_RELEASE_TARGET={DefaultReleaseTarget}",
+            $"FAKE_REPORT_FACTORY={Path.Combine(TestRepositoryLayout.FindRoot(), "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py")}",
         };
         if (chunkEnvironment is not null) arguments.Add($"STRATALINT_CACHE_TEST_CHUNK_BYTES={chunkEnvironment}");
         arguments.AddRange(["/bin/bash", script, verb, "--repository", repository]);
@@ -263,6 +283,12 @@ internal sealed class LeanCacheChunkFixture : IDisposable
                      "digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()}
                     for p in directory.iterdir() if p.name != "release.json"]
         if args[0] == "api":
+            if args[1].endswith("/branches/dev"):
+                print(json.dumps({"name":"dev", "protected":True, "commit":{"sha":"0123456789abcdef0123456789abcdef01234567"}}))
+                sys.exit(0)
+            if "/compare/" in args[1]:
+                print(json.dumps({"status":"identical", "merge_base_commit":{"sha":"0123456789abcdef0123456789abcdef01234567"}}))
+                sys.exit(0)
             assert args[1].startswith("repos/fixture/cache/releases/tags/")
             directory = root / "releases" / args[1].split("/")[-1]
             if not directory.exists():

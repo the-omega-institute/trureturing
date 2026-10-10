@@ -66,7 +66,7 @@ public sealed class LeanCacheChunkScriptTests
         var names = new[] { "lean-build.tgz.part-00", "lean-build.tgz.part-01", "lean-build.tgz.part-02" };
         Assert.Equal([.. names, "manifest.json"], fixture.Assets(fixture.Tag));
         var manifest = fixture.Manifest(fixture.Tag);
-        Assert.Equal("lean-release-seed-v3", manifest["schema"]!.GetValue<string>());
+        Assert.Equal("lean-release-seed-v4", manifest["schema"]!.GetValue<string>());
         Assert.Equal(3, manifest["parts"]!.AsArray().Count);
         for (var i = 0; i < names.Length; i++)
         {
@@ -244,21 +244,27 @@ public sealed class LeanCacheChunkScriptTests
     }
 
     [Theory]
-    [InlineData(null, "4242")]
-    [InlineData("nothex", "4242")]
-    [InlineData(LeanCacheChunkFixture.ProducerSha, "")]
-    public void PublishRefusesUnattributedSnapshotsAfterBuilding(string? commit, string runId)
+    [InlineData(null)]
+    [InlineData("nothex")]
+    public void PublicationReadsCheckoutHeadIndependentlyOfWorkflowSha(string? commit)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanCacheChunkFixture();
+        fixture.AssertSuccess(fixture.Publish(commit: commit));
+        Assert.Equal(LeanCacheChunkFixture.ProducerSha, fixture.Manifest(fixture.Tag)["producer_commit_sha"]!.GetValue<string>());
+    }
 
-        var result = fixture.Publish(commit: commit, runId: runId);
-
-        Assert.Equal(0, result.ExitCode);
+    [Fact]
+    public void CiSuffixRequiresRunAttributionAfterBuilding()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanCacheChunkFixture();
+        var result = fixture.Publish(runId: "");
+        Assert.Equal(2, result.ExitCode);
         Assert.Contains("\"status\":\"failed\"", result.Text, StringComparison.Ordinal);
-        Assert.Contains("requires commit, run ID and attempt attribution", result.Text, StringComparison.Ordinal);
+        Assert.Contains("suffix requires a run ID and attempt", result.Text, StringComparison.Ordinal);
         Assert.False(fixture.HasRelease);
-        Assert.Equal(new[] { "lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json" }, fixture.BuildRuns);
+        Assert.Equal(new[] { "lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json" }, fixture.BuildRuns);
     }
 
     [Fact]

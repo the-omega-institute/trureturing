@@ -4,7 +4,7 @@ name: CI
 # the unit patterns written below which units the change hits; every unit is a
 # job that runs only when hit, and `required` is the one required check: it is
 # green when detection succeeded and every unit ran exactly when hit and passed.
-# A change of more than 3000 paths fails detection and must be split.
+# Detection validates and routes the complete changed-path list without a path-count cutoff.
 
 on:
   pull_request:
@@ -50,179 +50,163 @@ jobs:
           # every unit. `*` also matches `/`, `?` matches one character and a
           # leading `!` excludes a path from that unit.
           CI_UNITS: |
-            # Shared: patterns of every unit.
+            # Shared candidate-entry and routing inputs. Project and runtime
+            # inputs belong to each actual consumer below.
             [*]
-            */.editorconfig
-            */.globalconfig
-            */Directory.Build.*
-            */Directory.Packages.props
-            */NuGet.Config
-            */NuGet.config
-            */global.json
-            */nuget.config
+            .github/workflows/ci-current.yml
+            .github/workflows/ci-unit.yml
+            tools/scripts/workflow/ci-entry.sh
+            tools/scripts/workflow/ci_detect.py
+            tools/scripts/workflow/ci_required.py
+            [banned-api-proof]
+            tools/Makefile
+            tools/StrataLint.TestEvidence/*
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
+            tools/tests/Directory.Build.*
+            tools/tests/BannedApiCompileFailProof/*
             .editorconfig
-            .github/*
-            .gitignore
             .globalconfig
             Directory.Build.*
             Directory.Packages.props
-            Golden/gate-authority-roots.toml
-            Makefile
-            Meta/Digestion/atomizers.toml
-            Meta/FILEMAP.*.toml
-            Meta/FILEMAP.toml
-            Meta/ReportProducers/*
-            Meta/ci-checks.json
-            Meta/engineering-projects.json
             NuGet.Config
             NuGet.config
-            Reg/lake-manifest.json
-            Reg/lakefile.toml
-            docs/CONTRIBUTING.md
-            docs/GOVERNANCE.md
-            global.json
-            lake-manifest.json
-            lakefile.toml
-            lean-report-inputs.json
-            lean-toolchain
             nuget.config
-            tools/ARCHITECTURE.md
-            tools/Architecture/*
-            tools/Makefile
-            tools/StrataLint.Engine/*
-            tools/StrataLint.TestEvidence/*
-            tools/StrataLint.sln
-            tools/TOWER.yaml
-            tools/Trureturing.Truth/*
-            tools/lean-inspector-interface/*
-            tools/lean-inspector-reg/*
-            tools/lean-inspector/*.json
-            tools/lean-inspector/*.mjs
-            tools/lean-inspector/*/*.sh
-            tools/lean-inspector/Census/*
-            tools/lean-inspector/LeanInformationAudit/*.py
-            tools/lean-inspector/LeanInformationAuditAnalysis/*
-            tools/lean-inspector/inspect.sh
-            tools/lean-inspector/lakefile.lean
-            tools/lean-inspector/materials.py
-            tools/lean-inspector/native.py
-            tools/lean-inspector/native_image.c
-            tools/lean-inspector/publication.py
-            tools/lean-inspector/reuse.py
-            tools/scripts/*.c
-            tools/scripts/*.lean
-            tools/scripts/*.metal
-            tools/scripts/*.txt
-            tools/scripts/agent/gpu5040/*
-            tools/scripts/agent/openproblem/TARGET-GATES.md
-            tools/scripts/dotnet-test.sh
-            tools/scripts/workflow/ci-entry.sh
-            tools/scripts/workflow/scribe-scope-paths.sh
-            tools/tests/StrataLint.ScriptTests/*
-            [banned-api-proof]
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/scripts/clean-lanes.sh
-            tools/scripts/dotnet-build.sh
-            tools/scripts/ingest.sh
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/lib/*
-            tools/scripts/local-harness-gate.sh
-            tools/scripts/report/*
-            tools/scripts/scribe.sh
-            tools/scripts/stratalint-selftest.sh
-            tools/scripts/update-renderer-contract.sh
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/workflow/math-gate.sh
-            tools/scripts/workflow/playbook-workflows.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/worktree-init.sh
-            tools/scripts/host-cleanup.py
-            tools/scripts/worktree/*
-            tools/tests/BannedApiCompileFailProof/*
-            tools/tests/CompileFailProof/*
+            global.json
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [capability-proof]
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/scripts/clean-lanes.sh
-            tools/scripts/dotnet-build.sh
-            tools/scripts/ingest.sh
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/lib/*
-            tools/scripts/local-harness-gate.sh
-            tools/scripts/report/*
-            tools/scripts/scribe.sh
-            tools/scripts/stratalint-selftest.sh
-            tools/scripts/update-renderer-contract.sh
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/workflow/math-gate.sh
-            tools/scripts/workflow/playbook-workflows.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/worktree-init.sh
-            tools/scripts/host-cleanup.py
-            tools/scripts/worktree/*
-            tools/tests/BannedApiCompileFailProof/*
+            tools/Makefile
+            tools/StrataLint.TestEvidence/*
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
+            tools/tests/Directory.Build.*
             tools/tests/CompileFailProof/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [current]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             *
             !README.md
             !docs/VISION.md
             !docs/assets/inquiry-cycle.svg
             !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
             !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
             !docs/reports/*
             !tools/TestSupport/StrataLint.RuleTestSupport/*
             !tools/lean-inspector/README.md
             !tools/scripts/agent/openproblem/README.md
             !tools/scripts/agent/openproblem/SCREENED-OUT*.md
             !tools/scripts/agent/prime_slabs/CPU.md
-            [filemap]
-            *
-            !README.md
-            !docs/VISION.md
-            !docs/assets/inquiry-cycle.svg
-            !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
-            !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
-            !docs/reports/*
-            !tools/TestSupport/StrataLint.RuleTestSupport/*
-            !tools/lean-inspector/README.md
-            !tools/scripts/agent/openproblem/README.md
-            !tools/scripts/agent/openproblem/SCREENED-OUT*.md
-            !tools/scripts/agent/prime_slabs/CPU.md
-            [selftest]
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe/*
-            tools/scripts/clean-lanes.sh
-            tools/scripts/dotnet-build.sh
-            tools/scripts/ingest.sh
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/lib/*
-            tools/scripts/local-harness-gate.sh
-            tools/scripts/report/*
-            tools/scripts/scribe.sh
+            tools/StrataLint.TestEvidence/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            Makefile
+            tools/Makefile
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            [filemap]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
+            *
+            !README.md
+            !docs/VISION.md
+            !docs/assets/inquiry-cycle.svg
+            !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
+            !docs/develop/spec/trureturing_engineering_optimization_v1.md
+            !docs/develop/theory/*
+            !docs/reports/*
+            !tools/TestSupport/StrataLint.RuleTestSupport/*
+            !tools/lean-inspector/README.md
+            !tools/scripts/agent/openproblem/README.md
+            !tools/scripts/agent/openproblem/SCREENED-OUT*.md
+            !tools/scripts/agent/prime_slabs/CPU.md
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            Makefile
+            tools/Makefile
+            [selftest]
+            tools/Makefile
             tools/scripts/stratalint-selftest.sh
-            tools/scripts/update-renderer-contract.sh
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/workflow/math-gate.sh
-            tools/scripts/workflow/playbook-workflows.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/worktree-init.sh
-            tools/scripts/host-cleanup.py
-            tools/scripts/worktree/*
-            tools/tests/BannedApiCompileFailProof/*
-            tools/tests/CompileFailProof/*
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/StrataLint.Cli/*
+            tools/StrataLint.Configuration/*
+            tools/StrataLint.FileMap/*
+            tools/StrataLint.Lean/*
+            tools/StrataLint.Scribe/*
+            tools/StrataLint.TestEvidence/*
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            Meta/domains.yaml
+            Meta/engineering-projects.json
+            tools/TOWER.yaml
+            tools/*.cs
+            tools/*.csproj
             [tests-architecture]
+            # ProductionTestOnlyTypePolicy reads every tracked C# source;
+            # topology readers inspect all tracked projects, and ColdBuildBudget
+            # counts all tracked D5 modules. These scopes belong to this unit.
+            *.cs
+            *.csproj
+            D5/*.lean
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
@@ -255,8 +239,6 @@ jobs:
             tools/scripts/agent/lane_brief.sh
             tools/scripts/agent/lane_free.sh
             tools/scripts/agent/merge-gate.sh
-            tools/scripts/agent/nyx-selftest.sh
-            tools/scripts/agent/nyx.sh
             tools/scripts/agent/oeis-prior-art.py
             tools/scripts/agent/oom-guard.sh
             tools/scripts/agent/openproblem/fetch-journal.sh
@@ -334,20 +316,53 @@ jobs:
             tools/tests/StrataLint.ReportSupervisor.Tests/*
             tools/tests/StrataLint.RepositoryConfiguration.Tests/*
             tools/tests/StrataLint.RepositoryContract.Tests/*
-            tools/tests/StrataLint.RepositoryDigestion.Tests/*
             tools/tests/StrataLint.RepositoryFileMap.Tests/*
             tools/tests/StrataLint.RepositoryTopology.Tests/*
             tools/tests/StrataLint.ResourceObservation.Tests/*
             tools/tests/StrataLint.Rules.Tests/*
             tools/tests/StrataLint.Scribe.Tests/*
             tools/tests/StrataLint.SourceAtomizer.Tests/*
+            tools/tests/StrataLint.ScriptTests/*
             tools/tests/StrataLint.Tests/*
             tools/tests/StrataLint.TruthRelease.Tests/*
             tools/tests/StrataLint.WorkflowScript.Tests/*
             tools/tests/StrataLint.WorktreeContract.Tests/*
             tools/tests/Trureturing.Truth.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            tools/StrataLint.sln
+            tools/Architecture/*
+            tools/ARCHITECTURE.md
+            tools/TOWER.yaml
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            Meta/ci-checks.json
+            Golden/gate-authority-roots.toml
+            tools/*.cs
+            tools/*.csproj
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-cache]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/scripts/workflow/elan-cache-inventory.sh
+            tools/scripts/worktree/lean-cache-input.sh
             Meta/ci-cache-paths.json
             tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
             tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py
@@ -362,7 +377,28 @@ jobs:
             tools/scripts/worktree/lean_cache.py
             tools/scripts/worktree/lean_cache_release.py
             tools/tests/StrataLint.Cache.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py
             [tests-cache-native]
+            Meta/FILEMAP.toml
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             Meta/ci-cache-paths.json
             tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
@@ -371,7 +407,34 @@ jobs:
             tools/scripts/worktree/lean_actions.py
             tools/scripts/worktree/lean_cache.py
             tools/tests/StrataLint.Cache.Native.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            lean-toolchain
+            lake-manifest.json
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-cache-release]
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_*.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_*.py
+            # Release contracts execute the report receipt and input readers.
+            tools/lean-inspector/reuse.py
+            tools/lean-inspector/publication.py
+            tools/lean-inspector/materials.py
+            tools/scripts/report/lean-report-selection.py
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             Meta/ci-cache-paths.json
             tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
@@ -381,6 +444,30 @@ jobs:
             tools/scripts/worktree/lean_cache.py
             tools/scripts/worktree/lean_cache_release.py
             tools/tests/StrataLint.Cache.Release.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            Makefile
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_transport.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_verification.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_legacy.py
+            tools/scripts/worktree/lean-cache-run.sh
+            tools/scripts/worktree/lean-cache-ensure.sh
             [tests-ci-entry]
             tools/scripts/workflow/ci-entry-test.sh
             tools/scripts/workflow/ci_detect.py
@@ -388,6 +475,10 @@ jobs:
             tools/scripts/workflow/test_ci_detect.py
             tools/scripts/workflow/test_ci_required.py
             [tests-cli]
+            # WorktreeMakeWorkflowTests copies the root dispatch table.
+            Makefile
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             Golden/Projection/*
             Meta/ci-cache-paths.json
             tools/StrataLint.Cli/*
@@ -421,7 +512,49 @@ jobs:
             tools/scripts/worktree/lean_cache.py
             tools/scripts/worktree/lean_cache_release.py
             tools/tests/StrataLint.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            Meta/domains.yaml
+            Meta/ci-checks.json
+            Meta/Digestion/atomizers.toml
+            Golden/gate-authority-roots.toml
+            tools/StrataLint.sln
+            tools/scripts/workflow/scribe-scope-paths.sh
+            lean-toolchain
+            lake-manifest.json
+            lakefile.toml
+            Reg/lakefile.toml
+            Reg/lake-manifest.json
+            lean-report-inputs.json
+            Meta/ReportProducers/*
+            tools/lean-inspector-interface/*
+            tools/lean-inspector-reg/*
+            tools/lean-inspector/*.py
+            tools/lean-inspector/*.json
+            tools/lean-inspector/lakefile.lean
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-cli-integration]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
@@ -437,13 +570,60 @@ jobs:
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/workflow/scribe-content-checks.sh
             tools/tests/StrataLint.CliIntegration.Tests/*
-            tools/tests/StrataLint.Tests/Commands/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            Meta/Digestion/atomizers.toml
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-configuration]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Configuration/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.Configuration.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-cover-batch]
+            # ProducerInputFixture copies registered inspector/dependency sources.
+            tools/lean-inspector/*.lean
+            tools/lean-inspector/native_image.c
+            tools/lean-inspector/inspect.sh
+            lakefile.lean
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             D5/S3/Constants/Values.lean
             D5/X_Frontier/ValuesProducer.lean
             Golden/values-kernels.toml
@@ -480,12 +660,70 @@ jobs:
             tools/scripts/worktree/lean-cache-run.sh
             tools/scripts/worktree/lean_cache.py
             tools/tests/StrataLint.CoverBatch.Tests/*
+            .gitignore
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            lakefile.toml
+            lake-manifest.json
+            Reg/lakefile.toml
+            Reg/lake-manifest.json
+            lean-toolchain
+            lean-report-inputs.json
+            Meta/ReportProducers/*
+            tools/lean-inspector-interface/*
+            tools/lean-inspector-reg/*
+            tools/lean-inspector/*.py
+            tools/lean-inspector/*.json
+            tools/lean-inspector/lakefile.lean
+            Meta/Digestion/atomizers.toml
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-declared-template]
-            D5/S3/Fourier/IntegerCharacterCoercivity.lean
-            D5/S3/TotalVariation/PrimitiveBridgeCancellation.lean
-            Reg/D5/S3/Fourier/IntegerCharacterCoercivity.lean
-            Reg/D5/S3/TotalVariation/PrimitiveBridgeCancellation.lean
+            # The ordinary native facets run LeanUtilityInputCommand over D5
+            # and validate the complete registered module and producer scopes.
+            # Include their actual readers and compiler imports in this unit.
+            D5/*
+            Reg/*.lean
+            Trureturing.lean
+            Meta/FILEMAP.*.toml
+            tools/StrataLint.Lean/*
+            tools/lean-inspector/*.lean
+            tools/lean-inspector/build_work.py
+            tools/lean-inspector/inspect.sh
+            tools/lean-inspector/reuse.py
+            tools/scripts/report/lean-report-selection.py
+            tools/scripts/report/lean-report.sh
+            tools/scripts/report/lean-report-input.sh
+            tools/scripts/report/report-consumer.sh
+            tools/scripts/report/report-supervisor.sh
+            tools/scripts/lean-report-pair.sh
+            tools/scripts/lib/resource-observation-lib.sh
+            tools/scripts/worktree/lean-cache-input.sh
+            tools/scripts/worktree/lean-cache-ensure.sh
+            tools/scripts/worktree/lean-cache-publish.sh
+            Meta/FILEMAP.toml
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/scripts/worktree/lean-cache-run.sh
+            Meta/Digestion/atomizers.toml
             Meta/ci-cache-paths.json
             tools/StrataLint.Configuration/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
@@ -493,16 +731,45 @@ jobs:
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.RuleTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
-            tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineProofHelper.lean
-            tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineProvenanceWire.lean
-            tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineRealization.lean
-            tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineRealizationSource.lean
             tools/scripts/workflow/install-lean-toolchain.sh
             tools/scripts/worktree/cache_material.py
             tools/scripts/worktree/lean_actions.py
             tools/scripts/worktree/lean_cache.py
             tools/tests/StrataLint.DeclaredTemplate.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            lean-toolchain
+            lake-manifest.json
+            tools/lean-inspector-reg/*
+            tools/lean-inspector-interface/*
+            tools/lean-inspector/native.py
+            tools/lean-inspector/publication.py
+            tools/lean-inspector/materials.py
+            tools/lean-inspector/native_image.c
+            tools/lean-inspector/lake-manifest.json
+            lakefile.toml
+            Reg/lakefile.toml
+            Reg/lake-manifest.json
+            lean-report-inputs.json
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-digestion]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Configuration/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.DigestionTestSupport/*
@@ -510,24 +777,110 @@ jobs:
             tools/TestSupport/StrataLint.RuleTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.Digestion.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            Meta/Digestion/atomizers.toml
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-engine]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.Engine.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            tools/TOWER.yaml
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-filemap]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
-            tools/StrataLint.Scribe/*
+            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
+            tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/tests/StrataLint.FileMap.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Trureturing.Truth/*
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-header-script]
+            # The fixture copies this owner's bytes to obtain the hard limit.
+            tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/agent/header-check.sh
             tools/tests/StrataLint.HeaderScript.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-instruction-contract]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             CLAUDE.md
             D5/*
             skills/codex-theory-ingest/*
@@ -535,10 +888,38 @@ jobs:
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/agent/batch_pr.sh
             tools/tests/StrataLint.InstructionContract.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-integration-mirror]
             tools/scripts/agent/integration-mirror-test.sh
             tools/scripts/agent/integration-mirror.sh
             [tests-lean]
+            # NativeTestSupport stages the real compiler and package configuration;
+            Makefile
+            Reg/lakefile.toml
+            Reg/lake-manifest.json
+            tools/lean-inspector/lakefile.lean
+            tools/lean-inspector/native_image.c
+            tools/lean-inspector/inspect.sh
+            Meta/FILEMAP.toml
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/lean-inspector/build_work.py
             Meta/ci-cache-paths.json
             tools/StrataLint.Lean/*
@@ -557,13 +938,66 @@ jobs:
             tools/scripts/workflow/install-lean-toolchain.sh
             tools/scripts/worktree/*
             tools/tests/StrataLint.Lean.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            lean-toolchain
+            lake-manifest.json
+            tools/scripts/worktree/lean_actions.py
+            tools/scripts/worktree/cache_material.py
+            tools/scripts/worktree/lean_cache.py
+            lean-report-inputs.json
+            lakefile.toml
+            tools/lean-inspector/*.py
+            tools/lean-inspector/*.json
+            tools/lean-inspector-interface/*
+            tools/lean-inspector-reg/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-lean-cache-script]
+            # The lock fixture executes the copied make lean entry.
+            Makefile
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Lean/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/worktree/lean-cache-run.sh
             tools/tests/StrataLint.LeanCacheScript.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-lean-report-script]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/scripts/workflow/judge-lean-producer.sh
             tools/lean-inspector/build_work.py
             tools/TestSupport/StrataLint.LeanTestSupport/*
@@ -577,139 +1011,198 @@ jobs:
             tools/scripts/worktree/lean-cache-input.sh
             tools/scripts/worktree/lean-cache-publish.sh
             tools/tests/StrataLint.LeanReportScript.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            tools/tests/StrataLint.ScriptTests/Fixtures/build_work_contract.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/judge_producer_contract.py
+            tools/lean-inspector/inspect.sh
+            tools/lean-inspector/native.py
+            tools/lean-inspector/publication.py
+            tools/lean-inspector/materials.py
             [tests-playbook-script]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.AdmissionTestSupport/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/workflow/playbook-workflows.sh
+            Makefile
             tools/tests/StrataLint.PlaybookScript.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-pr-script]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/pr.sh
+            Makefile
             tools/tests/StrataLint.PrScript.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-report-supervisor]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/lib/resource-observation-lib.sh
             tools/scripts/report/report-consumer.sh
             tools/scripts/report/report-supervisor.sh
             tools/tests/StrataLint.ReportSupervisor.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-repository-configuration]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             Meta/domains.yaml
-            tools/StrataLint.Cli/Commands/FileMap/*
             tools/StrataLint.Configuration/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/report/lean-report.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/worktree/lean-cache-run.sh
             tools/tests/StrataLint.RepositoryConfiguration.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-repository-contract]
+            # CliVerbLinkage reads every shell caller recursively in these roots.
+            tools/scripts/*.sh
+            .github/scripts/*.sh
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/agent/atom_dedup.sh
-            tools/scripts/agent/await.sh
-            tools/scripts/agent/batch_pr.sh
-            tools/scripts/agent/bindonly-probe.sh
-            tools/scripts/agent/clean-runlocal.sh
-            tools/scripts/agent/collect_lane.sh
-            tools/scripts/agent/cover_loop.sh
-            tools/scripts/agent/deposit-evidence/*
-            tools/scripts/agent/digestion/*
-            tools/scripts/agent/frozen/*
-            tools/scripts/agent/header-check.sh
-            tools/scripts/agent/headroom.sh
-            tools/scripts/agent/inflight_mods.sh
-            tools/scripts/agent/integration-mirror.sh
-            tools/scripts/agent/land.sh
-            tools/scripts/agent/lane_brief.sh
-            tools/scripts/agent/lane_free.sh
-            tools/scripts/agent/merge-gate.sh
-            tools/scripts/agent/nyx-selftest.sh
-            tools/scripts/agent/nyx.sh
-            tools/scripts/agent/oom-guard.sh
-            tools/scripts/agent/openproblem/fetch-journal.sh
-            tools/scripts/agent/openproblem/lane.sh
-            tools/scripts/agent/openproblem/op-addendum-ingest-v3.sh
-            tools/scripts/agent/openproblem/op-file-pull.sh
-            tools/scripts/agent/openproblem/op-file-push.sh
-            tools/scripts/agent/openproblem/op-fold-anchor-cover.sh
-            tools/scripts/agent/openproblem/op-governance-pr.sh
-            tools/scripts/agent/openproblem/op-ingest-new-noalign.sh
-            tools/scripts/agent/openproblem/op-ingest-noalign.sh
-            tools/scripts/agent/openproblem/op-land-amend.sh
-            tools/scripts/agent/openproblem/op-land.sh
-            tools/scripts/agent/openproblem/op-require-base.sh
-            tools/scripts/agent/openproblem/op-resume-seat.sh
-            tools/scripts/agent/openproblem/op-seat-run.sh
-            tools/scripts/agent/openproblem/op-sync-dev.sh
-            tools/scripts/agent/openproblem/prereg-readings.sh
-            tools/scripts/agent/pick_atom.sh
-            tools/scripts/agent/prime_pick.sh
-            tools/scripts/agent/prior-art.sh
-            tools/scripts/agent/refresh_exclusions.sh
-            tools/scripts/agent/scope-freeze-delta.sh
-            tools/scripts/agent/scribe_gap.sh
-            tools/scripts/agent/seat/*
-            tools/scripts/agent/section-context.sh
-            tools/scripts/agent/selfaudit.sh
-            tools/scripts/agent/serial-lean.sh
-            tools/scripts/agent/settle-context-check.sh
-            tools/scripts/agent/sl010_check.sh
-            tools/scripts/agent/sl030-real-surface.sh
-            tools/scripts/clean-lanes.sh
-            tools/scripts/dotnet-build.sh
-            tools/scripts/ingest.sh
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/lib/*
-            tools/scripts/local-harness-gate.sh
-            tools/scripts/pr.sh
-            tools/scripts/report/echo-residual-summary.sh
-            tools/scripts/report/lean-report-input.sh
-            tools/scripts/report/lean-report.sh
-            tools/scripts/report/report-consumer.sh
-            tools/scripts/report/report-supervisor.sh
-            tools/scripts/scribe-release.sh
-            tools/scripts/scribe.sh
-            tools/scripts/stratalint-selftest.sh
-            tools/scripts/update-renderer-contract.sh
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/workflow/math-gate.sh
-            tools/scripts/workflow/playbook-workflows.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/worktree-init.sh
-            tools/scripts/host-cleanup.py
-            tools/scripts/worktree/lean-cache-ensure.sh
-            tools/scripts/worktree/lean-cache-input.sh
-            tools/scripts/worktree/lean-cache-publish.sh
-            tools/scripts/worktree/lean-cache-run.sh
-            tools/scripts/worktree/warm-donor.sh
             tools/tests/StrataLint.RepositoryContract.Tests/*
-            [tests-repository-digestion]
-            D5/S0/*
-            D5/S1/*
-            D5/S3/*
-            D5/X_Frontier/*
-            Meta/Digestion/backfill/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.RepositoryDigestion.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            Makefile
             [tests-repository-filemap]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             *
-            !Blueprint/*
-            !D5/*
-            !Evidence/*
-            !Golden/Frozen/*
-            !Library/*
-            !Meta/Digestion/*
-            !Problems/*
-            !Reg/D5/*
-            !docs/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-repository-topology]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             *
             !Blueprint/*
             !D5/*
@@ -720,30 +1213,121 @@ jobs:
             !Problems/*
             !Reg/D5/*
             !docs/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/StrataLint.Cli/*
+            tools/StrataLint.Configuration/*
+            tools/StrataLint.FileMap/*
+            tools/StrataLint.Lean/*
+            tools/StrataLint.Scribe/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-resource-observation]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/lib/resource-observation-lib.sh
             tools/tests/StrataLint.ResourceObservation.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-rules]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Configuration/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.RuleTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.Rules.Tests/*
+            Meta/Digestion/atomizers.toml
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-scribe]
-            Meta/domains.yaml
-            tools/StrataLint.Cli/Commands/FileMap/*
+            # FileMapEmitterTests copies the resolved repository manifest documents.
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/report/lean-report.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/worktree/lean-cache-run.sh
             tools/tests/StrataLint.Scribe.Tests/*
-            tools/tests/StrataLint.Tests/Commands/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            Blueprint/*.scribe.cs
+            Golden/Projection/*
+            CLAUDE.md
+            lakefile.toml
             [tests-source-atomizer]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             Meta/Digestion/atoms/sha256/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901
             Meta/Digestion/backfill/periodic-tree-registry/*
             docs/develop/theory/INTERFACE_PAPER.md
@@ -759,12 +1343,115 @@ jobs:
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.SourceAtomizer.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            Meta/Digestion/atomizers.toml
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            [tests-engineering]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
+            tools/TestSupport/StrataLint.TestSupport/*
+            tools/tests/StrataLint.Engineering.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            [tests-runtime]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
+            tools/TestSupport/StrataLint.TestSupport/*
+            tools/TestSupport/StrataLint.ProcessTestSupport/*
+            tools/tests/StrataLint.Runtime.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-test-evidence]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.TestEvidence.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-truth]
+            tools/Trureturing.Truth/*
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/tests/Trureturing.Truth.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-truth-release]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             Blueprint/D5/S3/Midline/GoldenSpectralMarker.md
             Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs
             D5/S3/Midline/GoldenSpectralMarker.lean
@@ -781,7 +1468,30 @@ jobs:
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.TruthRelease.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            Meta/Digestion/atomizers.toml
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
             [tests-workflow-script]
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/agent/test_xi_quantization.py
@@ -789,7 +1499,6 @@ jobs:
             tools/scripts/clean-lanes.sh
             tools/scripts/ingest.sh
             tools/scripts/local-harness-gate.sh
-            tools/scripts/report/echo-residual-summary.sh
             tools/scripts/report/lean-report.sh
             tools/scripts/report/report-consumer.sh
             tools/scripts/scribe.sh
@@ -803,7 +1512,36 @@ jobs:
             tools/scripts/worktree/lean-cache-ensure.sh
             tools/scripts/worktree/warm-donor.sh
             tools/tests/StrataLint.WorkflowScript.Tests/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/scripts/scribe-release.sh
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            Makefile
+            tools/lean-inspector/inspect.sh
+            tools/scripts/report/report-supervisor.sh
+            tools/scripts/report/lean-report-input.sh
+            tools/scripts/lean-report-pair.sh
+            tools/scripts/worktree/lean-cache-run.sh
             [tests-worktree-contract]
+            # WorktreeCacheStrategyTests scans this executable-tooling scope.
+            .github/scripts/*
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             *.lean
             Blueprint/*.scribe.cs
             docs/reports/*.c
@@ -812,6 +1550,89 @@ jobs:
             docs/reports/*.mjs
             docs/reports/*.py
             tools/*
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            Makefile
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
+            [tests-script]
+            # Release contracts execute the report receipt and input readers.
+            tools/lean-inspector/reuse.py
+            tools/lean-inspector/publication.py
+            tools/scripts/report/lean-report-selection.py
+            tools/tests/StrataLint.ScriptTests/*
+            tools/TestSupport/StrataLint.AdmissionTestSupport/*
+            tools/TestSupport/StrataLint.LeanTestSupport/*
+            tools/TestSupport/StrataLint.ProcessTestSupport/*
+            tools/TestSupport/StrataLint.RegistrationTestSupport/*
+            tools/TestSupport/StrataLint.TestSupport/*
+            Makefile
+            Meta/FILEMAP.toml
+            Meta/FILEMAP.*.toml
+            Meta/domains.yaml
+            Meta/ci-cache-paths.json
+            lean-toolchain
+            tools/lean-inspector/Inspector.lean
+            tools/lean-inspector/materials.py
+            tools/lean-inspector-reg/lake-manifest.json
+            tools/lean-inspector/LeanInformationAuditAnalysis/run-analysis-fixtures.sh
+            tools/scripts/report/lean-report-input.sh
+            tools/scripts/agent/contribution_queue.py
+            tools/scripts/agent/test_xi_quantization.py
+            tools/scripts/agent/xi_quantization.py
+            tools/scripts/workflow/playbook-workflows.sh
+            tools/scripts/workflow/scribe-content-checks.sh
+            tools/scripts/workflow/scribe-scope-paths.sh
+            tools/scripts/worktree/warm-donor.sh
+            tools/scripts/worktree/lean-cache-run.sh
+            tools/scripts/worktree/lean-cache-ensure.sh
+            tools/scripts/worktree/lean-cache-input.sh
+            tools/scripts/worktree/lean-cache-publish.sh
+            tools/scripts/worktree/cache_material.py
+            tools/scripts/worktree/lean_actions.py
+            tools/scripts/worktree/lean_cache.py
+            tools/scripts/worktree/lean_cache_release.py
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
+            tools/Makefile
+            tools/scripts/dotnet-test.sh
+            Meta/engineering-projects.json
+            tools/StrataLint.TestEvidence/*
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
+            tools/tests/Directory.Build.*
+            tools/Architecture/BannedSymbols.Determinism.txt
+            tools/StrataLint.Engine/*
+            tools/Trureturing.Truth/*
+            tools/StrataLint.Cli/*
+            tools/StrataLint.Configuration/*
+            tools/StrataLint.FileMap/*
+            tools/StrataLint.Lean/*
+            tools/StrataLint.Scribe/*
+            tools/Architecture/BannedSymbols*.txt
+            tools/Architecture/ScribeScriptAllowlist.txt
+            lake-manifest.json
+            tools/scripts/workflow/install-lean-toolchain.sh
+            tools/Architecture/BannedSymbols.txt
+            tools/Architecture/BannedSymbols.Guid.txt
         run: python3 tools/scripts/workflow/ci_detect.py --changed "$RUNNER_TEMP/changed-paths"
 
   # Lean report, current-tree rules and Scribe checks; on pull requests also the
@@ -821,7 +1642,7 @@ jobs:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 120
+    timeout-minutes: 180
     env:
       # This job writes project seeds only on dev/integration pushes.
       # Dependency and elan writes also use the PR's own merge-ref scope.
@@ -861,7 +1682,6 @@ jobs:
             !docs/assets/inquiry-cycle.svg
             !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
             !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
             !docs/reports/*
             !tools/TestSupport/StrataLint.RuleTestSupport/*
             !tools/lean-inspector/README.md
@@ -877,34 +1697,108 @@ jobs:
       # The judge cache key binds the resolved SDK, the build recipe and the
       # paths and blob ids of the tracked judge compile inputs listed in
       # JUDGE_INPUTS (git glob pathspecs: the project directories of the CLI
-      # and its references, the Blueprint definitions it compiles, analyzer
-      # files and root build configuration). It is taken before anything is
+      # and its references, explicit copied/embedded runtime inputs, analyzer
+      # files and inherited build configuration). It is taken before anything is
       # built; an exact hit skips the build.
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
           cache: true
-          cache-dependency-path: '**/packages.lock.json'
+          cache-dependency-path: |
+            tools/StrataLint.Cli/packages.lock.json
+            tools/StrataLint.Configuration/packages.lock.json
+            tools/StrataLint.Engine/packages.lock.json
+            tools/StrataLint.Engineering/packages.lock.json
+            tools/StrataLint.Runtime/packages.lock.json
+            tools/StrataLint.FileMap/packages.lock.json
+            tools/StrataLint.Lean/packages.lock.json
+            tools/StrataLint.Scribe/packages.lock.json
+            tools/StrataLint.TestEvidence/packages.lock.json
+            tools/Trureturing.Truth/packages.lock.json
       - id: judge_key
         env:
           JUDGE_INPUTS: |
-            **/.editorconfig
-            **/.globalconfig
-            **/Directory.Build.*
-            **/Directory.Packages.props
-            **/NuGet.Config
-            **/NuGet.config
-            **/global.json
-            **/nuget.config
+            .editorconfig
+            .globalconfig
+            Directory.Build.*
+            Directory.Packages.props
+            NuGet.Config
+            NuGet.config
+            nuget.config
+            global.json
             tools/Architecture/BannedSymbols*.txt
-            tools/StrataLint.Cli/**
-            tools/StrataLint.Configuration/**
-            tools/StrataLint.Engine/**
-            tools/StrataLint.FileMap/**
-            tools/StrataLint.Lean/**
-            tools/StrataLint.Scribe/**
-            tools/StrataLint.TestEvidence/**
-            tools/Trureturing.Truth/**
+            tools/Architecture/ScribeScriptAllowlist.txt
+            tools/StrataLint.Scribe/Vendor/Katex/katex.min.js
+            tools/StrataLint.Cli/**/*.cs
+            tools/StrataLint.Cli/*.csproj
+            tools/StrataLint.Cli/packages.lock.json
+            tools/StrataLint.Cli/.editorconfig
+            tools/StrataLint.Cli/.globalconfig
+            tools/StrataLint.Cli/Directory.Build.*
+            tools/StrataLint.Cli/Directory.Packages.props
+            tools/StrataLint.Configuration/**/*.cs
+            tools/StrataLint.Configuration/*.csproj
+            tools/StrataLint.Configuration/packages.lock.json
+            tools/StrataLint.Configuration/.editorconfig
+            tools/StrataLint.Configuration/.globalconfig
+            tools/StrataLint.Configuration/Directory.Build.*
+            tools/StrataLint.Configuration/Directory.Packages.props
+            tools/StrataLint.Engineering/**/*.cs
+            tools/StrataLint.Engineering/*.csproj
+            tools/StrataLint.Engineering/packages.lock.json
+            tools/StrataLint.Engineering/.editorconfig
+            tools/StrataLint.Engineering/.globalconfig
+            tools/StrataLint.Engineering/Directory.Build.*
+            tools/StrataLint.Engineering/Directory.Packages.props
+            tools/StrataLint.Runtime/**/*.cs
+            tools/StrataLint.Runtime/*.csproj
+            tools/StrataLint.Runtime/packages.lock.json
+            tools/StrataLint.Runtime/.editorconfig
+            tools/StrataLint.Runtime/.globalconfig
+            tools/StrataLint.Runtime/Directory.Build.*
+            tools/StrataLint.Runtime/Directory.Packages.props
+            tools/StrataLint.Engine/**/*.cs
+            tools/StrataLint.Engine/*.csproj
+            tools/StrataLint.Engine/packages.lock.json
+            tools/StrataLint.Engine/.editorconfig
+            tools/StrataLint.Engine/.globalconfig
+            tools/StrataLint.Engine/Directory.Build.*
+            tools/StrataLint.Engine/Directory.Packages.props
+            tools/StrataLint.FileMap/**/*.cs
+            tools/StrataLint.FileMap/*.csproj
+            tools/StrataLint.FileMap/packages.lock.json
+            tools/StrataLint.FileMap/.editorconfig
+            tools/StrataLint.FileMap/.globalconfig
+            tools/StrataLint.FileMap/Directory.Build.*
+            tools/StrataLint.FileMap/Directory.Packages.props
+            tools/StrataLint.Lean/**/*.cs
+            tools/StrataLint.Lean/*.csproj
+            tools/StrataLint.Lean/packages.lock.json
+            tools/StrataLint.Lean/.editorconfig
+            tools/StrataLint.Lean/.globalconfig
+            tools/StrataLint.Lean/Directory.Build.*
+            tools/StrataLint.Lean/Directory.Packages.props
+            tools/StrataLint.Scribe/**/*.cs
+            tools/StrataLint.Scribe/*.csproj
+            tools/StrataLint.Scribe/packages.lock.json
+            tools/StrataLint.Scribe/.editorconfig
+            tools/StrataLint.Scribe/.globalconfig
+            tools/StrataLint.Scribe/Directory.Build.*
+            tools/StrataLint.Scribe/Directory.Packages.props
+            tools/StrataLint.TestEvidence/**/*.cs
+            tools/StrataLint.TestEvidence/*.csproj
+            tools/StrataLint.TestEvidence/packages.lock.json
+            tools/StrataLint.TestEvidence/.editorconfig
+            tools/StrataLint.TestEvidence/.globalconfig
+            tools/StrataLint.TestEvidence/Directory.Build.*
+            tools/StrataLint.TestEvidence/Directory.Packages.props
+            tools/Trureturing.Truth/**/*.cs
+            tools/Trureturing.Truth/*.csproj
+            tools/Trureturing.Truth/packages.lock.json
+            tools/Trureturing.Truth/.editorconfig
+            tools/Trureturing.Truth/.globalconfig
+            tools/Trureturing.Truth/Directory.Build.*
+            tools/Trureturing.Truth/Directory.Packages.props
         run: |
           sdk="$(dotnet --version)"
           [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
@@ -988,7 +1882,12 @@ jobs:
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
-          make lean-report
+          make compiled-judge-test
+          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+      - name: Verify production source binding artifacts
+        env:
+          FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
+        run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName~FourierBridgeSourceEvidenceTests"
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
@@ -1052,6 +1951,11 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       command: make -C tools compile-proof PROOF=banned-api-proof
+      cache-dependency-path: |
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/tests/BannedApiCompileFailProof/packages.lock.json
 
   capability-proof:
     needs: detect
@@ -1059,15 +1963,27 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       command: make -C tools compile-proof PROOF=capability-proof
+      cache-dependency-path: |
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/tests/CompileFailProof/packages.lock.json
 
   filemap:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}')['filemap']
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: >-
-        dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo &&
-        dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll filemap-conform
+      command: make filemap-conform
+      cache-dependency-path: |
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
 
   selftest:
     needs: detect
@@ -1075,6 +1991,17 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       command: make -C tools selftest
+      cache-dependency-path: |
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
 
   tests-architecture:
     needs: detect
@@ -1082,6 +2009,23 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.ArchitectureTests/packages.lock.json
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-cache:
     needs: detect
@@ -1089,6 +2033,13 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.Cache.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-cache-native:
     needs: detect
@@ -1097,6 +2048,13 @@ jobs:
     with:
       project: tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj
       lean: toolchain
+      cache-dependency-path: |
+        tools/tests/StrataLint.Cache.Native.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-cache-release:
     needs: detect
@@ -1104,6 +2062,13 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.Cache.Release.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-ci-entry:
     needs: detect
@@ -1122,6 +2087,29 @@ jobs:
     with:
       project: tools/tests/StrataLint.Tests/StrataLint.Tests.csproj
       lean: toolchain
+      cache-dependency-path: |
+        tools/tests/StrataLint.Tests/packages.lock.json
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.CoverTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.LeanTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-cli-integration:
     needs: detect
@@ -1129,6 +2117,26 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.CliIntegration.Tests/packages.lock.json
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-configuration:
     needs: detect
@@ -1136,6 +2144,16 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.Configuration.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-cover-batch:
     needs: detect
@@ -1143,14 +2161,49 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.CoverBatch.Tests/packages.lock.json
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.CoverTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-declared-template:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template']
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName!~FourierBridgeSourceEvidenceTests"
       lean: build
+      cache-dependency-path: |
+        tools/tests/StrataLint.DeclaredTemplate.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-digestion:
     needs: detect
@@ -1158,6 +2211,19 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.Digestion.Tests/StrataLint.Digestion.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.Digestion.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-engine:
     needs: detect
@@ -1165,6 +2231,16 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.Engine.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-filemap:
     needs: detect
@@ -1172,6 +2248,18 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.FileMap.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-header-script:
     needs: detect
@@ -1179,6 +2267,13 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.HeaderScript.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-instruction-contract:
     needs: detect
@@ -1186,6 +2281,14 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.InstructionContract.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-integration-mirror:
     needs: detect
@@ -1202,6 +2305,16 @@ jobs:
     with:
       project: tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj
       lean: toolchain
+      cache-dependency-path: |
+        tools/tests/StrataLint.Lean.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-lean-cache-script:
     needs: detect
@@ -1209,6 +2322,16 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.LeanCacheScript.Tests/StrataLint.LeanCacheScript.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.LeanCacheScript.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-lean-report-script:
     needs: detect
@@ -1216,6 +2339,16 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.LeanReportScript.Tests/StrataLint.LeanReportScript.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.LeanReportScript.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.LeanTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-playbook-script:
     needs: detect
@@ -1223,6 +2356,16 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.PlaybookScript.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-pr-script:
     needs: detect
@@ -1230,6 +2373,15 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.PrScript.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-report-supervisor:
     needs: detect
@@ -1237,6 +2389,15 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.ReportSupervisor.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-repository-configuration:
     needs: detect
@@ -1244,6 +2405,16 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.RepositoryConfiguration.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-repository-contract:
     needs: detect
@@ -1251,13 +2422,19 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj
-
-  tests-repository-digestion:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-digestion']
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      project: tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.RepositoryContract.Tests/packages.lock.json
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-repository-filemap:
     needs: detect
@@ -1265,6 +2442,19 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.RepositoryFileMap.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-repository-topology:
     needs: detect
@@ -1272,6 +2462,23 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.RepositoryTopology.Tests/packages.lock.json
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-resource-observation:
     needs: detect
@@ -1279,6 +2486,15 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.ResourceObservation.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-rules:
     needs: detect
@@ -1286,6 +2502,18 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.Rules.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-scribe:
     needs: detect
@@ -1293,7 +2521,41 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.Scribe.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
+  tests-script:
+    needs: detect
+    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-script']
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      project: tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj
+      lean: toolchain
+      cache-dependency-path: |
+        tools/tests/StrataLint.ScriptTests/packages.lock.json
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.LeanTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-source-atomizer:
     needs: detect
@@ -1301,6 +2563,49 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.SourceAtomizer.Tests/packages.lock.json
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+
+  tests-engineering:
+    needs: detect
+    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering']
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      project: tools/tests/StrataLint.Engineering.Tests/StrataLint.Engineering.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.Engineering.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+
+  tests-runtime:
+    needs: detect
+    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime']
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      project: tools/tests/StrataLint.Runtime.Tests/StrataLint.Runtime.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.Runtime.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-test-evidence:
     needs: detect
@@ -1308,6 +2613,12 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.TestEvidence.Tests/StrataLint.TestEvidence.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.TestEvidence.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-truth:
     needs: detect
@@ -1315,6 +2626,12 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/Trureturing.Truth.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
 
   tests-truth-release:
     needs: detect
@@ -1322,6 +2639,24 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.TruthRelease.Tests/packages.lock.json
+        tools/StrataLint.Cli/packages.lock.json
+        tools/StrataLint.Configuration/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.FileMap/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
 
   tests-workflow-script:
     needs: detect
@@ -1329,6 +2664,16 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.WorkflowScript.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+
 
   tests-worktree-contract:
     needs: detect
@@ -1336,12 +2681,22 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj
+      cache-dependency-path: |
+        tools/tests/StrataLint.WorktreeContract.Tests/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+
 
   # The one required check. It always runs, so a failed or cancelled unit, or a
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-digestion, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-source-atomizer, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:

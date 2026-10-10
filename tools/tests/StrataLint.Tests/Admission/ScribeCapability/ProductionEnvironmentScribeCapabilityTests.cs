@@ -5,18 +5,23 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// Split from ProductionEnvironmentTests.cs to keep that file under the SL-003 800-line
-// limit (CapacityPolicyTests caught the growth in dotnet test). Same partial class.
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
     public void CheckRetainsStatusValidationWhenAxiomBadgeScribeByteReceiptDrifts()
     {
-        var (outcome, verifier) = CheckReportDerivedScribeStock(reportInputsChanged: true);
+        var (outcome, verifier) = CheckReportDerivedScribeStockCore(
+            reportInputsChanged: true,
+            baselineHasScribeGap: false,
+            baselineOnlyReportProducerInput: false,
+            producerPathSetDiffers: false,
+            handwrittenStatus: true);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         Assert.Contains(rejected.Diagnostics, static diagnostic =>
-            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
+            diagnostic.RuleId == RuleId.CreateKnown(6)
+            && diagnostic.Path == "D5/S0/Carrier/BackfillTarget.lean"
+            && diagnostic.Message.Contains("hand-written status", StringComparison.Ordinal));
         Assert.DoesNotContain(rejected.Diagnostics, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
         Assert.Equal(["std3"], verifier.AxiomBadges);
@@ -27,7 +32,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var (outcome, verifier) = CheckReportDerivedScribeStock(
             reportInputsChanged: false,
-            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
+            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs");
 
         var protectedChange = RequireProtectedSurfaceChange(outcome);
         Assert.DoesNotContain(protectedChange.Observations, static diagnostic =>
@@ -39,7 +44,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckDoesNotReplayBaselineOnlyProducerPathDrift()
     {
         var (outcome, verifier) = CheckBaselineOnlyReportProducerInputStock(
-            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
+            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs");
 
         var protectedChange = RequireProtectedSurfaceChange(outcome);
         Assert.DoesNotContain(protectedChange.Observations, static diagnostic =>
@@ -51,7 +56,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckDoesNotReplayProducerPathSetBaselineDrift()
     {
         var (outcome, verifier) = CheckProducerPathSetsDifferStock(
-            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
+            "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs");
 
         var protectedChange = RequireProtectedSurfaceChange(outcome);
         Assert.DoesNotContain(protectedChange.Observations, static diagnostic =>
@@ -118,8 +123,8 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[definitionPath] = definition;
         fixture.Files[emissionPath] = emission;
         fixture.Baseline[emissionPath] = emission;
-        fixture.Files[ScribeEmissionAttestation.RelativePath] = attestation;
-        fixture.Baseline[ScribeEmissionAttestation.RelativePath] = attestation;
+        fixture.Files[GeneratedArtifactInventory.ScribeAttestation.Path] = attestation;
+        fixture.Baseline[GeneratedArtifactInventory.ScribeAttestation.Path] = attestation;
         var targetReport = new LeanFileReport(
             ImmutableArray<string>.Empty,
             [new LeanDeclaration(
@@ -176,8 +181,7 @@ public sealed partial class ProductionEnvironmentTests
             DigestionEvaluationScope.FullScan,
             baselineDocument,
             current,
-            currentLean,
-            baselineDocument).Entries);
+            currentLean).Entries);
         Assert.Equal(DigestionMigrationState.Absorbed, currentStatus.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, currentStatus.DerivedStatus.Truth);
         Assert.True(currentStatus.Deletable);
@@ -190,7 +194,7 @@ public sealed partial class ProductionEnvironmentTests
         var changedFiles = new Dictionary<string, string>(fixture.Files, StringComparer.Ordinal)
         {
             [emissionPath] = changedEmission,
-            [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(
+            [GeneratedArtifactInventory.ScribeAttestation.Path] = Encoding.UTF8.GetString(
                 ScribeEmissionAttestation.Write(
                 [
                     record with { EmissionSha256 = changedEmissionHash },
@@ -204,8 +208,7 @@ public sealed partial class ProductionEnvironmentTests
             DigestionEvaluationScope.FullScan,
             BackfillInventoryLoader.Load(changedSnapshot),
             changedSnapshot,
-            changedLean,
-            baselineDocument).Entries);
+            changedLean).Entries);
         Assert.Equal(DigestionMigrationState.Absorbed, changedStatus.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, changedStatus.DerivedStatus.Truth);
         Assert.True(changedStatus.Deletable);
@@ -217,6 +220,7 @@ public sealed partial class ProductionEnvironmentTests
         CheckReportDerivedScribeStockCore(
             reportInputsChanged,
             baselineHasScribeGap: !reportInputsChanged,
+            false,
             false,
             false,
             additionalChanges);
@@ -239,11 +243,11 @@ public sealed partial class ProductionEnvironmentTests
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
         CheckBaselineOnlyReportProducerInputStock(params string[] additionalChanges) =>
-        CheckReportDerivedScribeStockCore(false, false, true, false, additionalChanges);
+        CheckReportDerivedScribeStockCore(false, false, true, false, false, additionalChanges);
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
         CheckProducerPathSetsDifferStock(params string[] additionalChanges) =>
-        CheckReportDerivedScribeStockCore(false, false, false, true, additionalChanges);
+        CheckReportDerivedScribeStockCore(false, false, false, true, false, additionalChanges);
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
         CheckReportDerivedScribeStockCore(
@@ -251,6 +255,7 @@ public sealed partial class ProductionEnvironmentTests
             bool baselineHasScribeGap,
             bool baselineOnlyReportProducerInput,
             bool producerPathSetDiffers,
+            bool handwrittenStatus,
             params string[] additionalChanges)
     {
         using var temporary = new TemporaryDirectory();
@@ -288,6 +293,10 @@ public sealed partial class ProductionEnvironmentTests
                 + "Classical.choice (Nonempty.intro ())",
             StringComparison.Ordinal);
         Assert.NotEqual(baselineTarget, candidateTarget);
+        if (handwrittenStatus)
+        {
+            candidateTarget += "-- status: proven\n";
+        }
         fixture.Files[targetPath] = candidateTarget;
         if (!reportInputsChanged)
         {

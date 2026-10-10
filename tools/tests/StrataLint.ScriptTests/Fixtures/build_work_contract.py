@@ -14,7 +14,7 @@ REPO = Path(__file__).resolve().parents[4]
 
 
 class BuildWorkContracts(unittest.TestCase):
-    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False):
+    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
         self.addCleanup(temp.cleanup)
         root = Path(temp.name)
@@ -38,6 +38,13 @@ class BuildWorkContracts(unittest.TestCase):
         script("tools/scripts/worktree/lean-cache-ensure.sh", "#!/bin/bash\nexit 0\n")
         script("tools/scripts/worktree/lean-cache-run.sh",
                "#!/bin/bash\ncat <<'LOG'\n" + output + "LOG\nexit " + str(failure) + "\n")
+        if interrupted:
+            script("tools/scripts/worktree/lean-cache-run.sh",
+                   "#!/bin/bash\n" +
+                   "printf '%s\\n' 'partial Lake output'\n" +
+                   "printf '%s\\n' 'partial Lake error' >&2\n" +
+                   "printf '%s\\n' '{\"phase\":\"native-inspect\",\"boundary\":\"start\",\"monotonic_ms\":1}' >> \"$STRATALINT_INSPECTOR_PHASES\"\n" +
+                   "kill -TERM \"$BUILD_WORK_TEST_INSPECTOR_PID\"\nexit 143\n")
         lake = script("fake-lake", "#!/bin/bash\nexit 0\n")
         producer = root / "producer.dll"
         producer.touch()
@@ -66,8 +73,13 @@ class BuildWorkContracts(unittest.TestCase):
                    STRATALINT_LEAN_PRODUCER_DLL=str(producer), GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                    STRATALINT_LEAN_BUILD_WORK_FILE=str(fact),
                    STRATALINT_LEAN_BUILD_TARGETS='["Probe"]' if targets else '[]')
-        result = subprocess.run(["bash", str(root / "tools/lean-inspector/inspect.sh"),
-                                 "--repository", str(root), "--output", str(root / "report.json")],
+        entry = ["bash", str(root / "tools/lean-inspector/inspect.sh"),
+                 "--repository", str(root), "--output", str(root / "report.json")]
+        if interrupted:
+            # Signal the invocation itself; report commands can have a subshell parent.
+            entry = ["bash", "-c", 'export BUILD_WORK_TEST_INSPECTOR_PID=$$; exec "$@"',
+                     "interrupted-inspector", *entry]
+        result = subprocess.run(entry,
                                 env=env, capture_output=True, text=True)
         return result, fact, root
 
@@ -263,6 +275,16 @@ class BuildWorkContracts(unittest.TestCase):
         result, fact, _ = self.invoke(reused=False, targets=False, failure=23)
         self.assertEqual(23, result.returncode, result.stderr)
         self.assertFalse(fact.exists())
+
+    def test_interrupted_report_exposes_existing_phase_evidence_and_preserves_failure(self):
+        result, fact, _ = self.invoke(reused=False, targets=False, interrupted=True)
+        self.assertEqual(143, result.returncode, result.stderr)
+        self.assertFalse(fact.exists())
+        self.assertIn("LEAN_INSPECTOR_INTERRUPTED phase=report exit=143", result.stderr,
+                      "[FAIL] interrupted_inspector_must_expose_phase_evidence")
+        self.assertIn("partial Lake output", result.stderr)
+        self.assertIn("partial Lake error", result.stderr)
+        self.assertIn('"phase":"native-inspect","boundary":"start"', result.stderr)
 
 
 if __name__ == "__main__":

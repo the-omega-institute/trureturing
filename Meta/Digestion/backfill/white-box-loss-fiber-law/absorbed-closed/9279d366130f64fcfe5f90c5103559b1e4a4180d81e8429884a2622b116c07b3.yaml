@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9279d366130f64fcfe5f90c5103559b1e4a4180d81e8429884a2622b116c07b3
+  normalized_sha256: sha256:9279d366130f64fcfe5f90c5103559b1e4a4180d81e8429884a2622b116c07b3
+cas_ref: sha256:9279d366130f64fcfe5f90c5103559b1e4a4180d81e8429884a2622b116c07b3
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Transportability/ModelClassTransportabilityCriterion.model_class_transportability_criterion
+    target_statement_id: sha256:0e9ea7643e262a9d79c643e1191725ebd7a548d4cca4c89f0809a7345c14aeed
+receipts:
+  unresolved_subitems: []

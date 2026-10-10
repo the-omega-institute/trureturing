@@ -4,7 +4,19 @@
 
 The Cylinder Partition of Legal Digit Windows.
 
-**Theorem 1.1 (Closed intervals and oriented circle cuts).**
+**Theorem 1.1 (Digits of a prepended return-block word).**
+
+Lean statement: `D5/S1/Digit/Infinite/WindowCylinderPartition.prepend_digits`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/WindowCylinderPartition.prepend_digits` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite return-block word w, legal tail y and natural index j, the j-th digit of prependWord w y is the j-th expanded digit of w when j is less than len w. At every later index it is the digit of y at j minus len w. This identifies the prefix and tail in each window cylinder.
+
+**Theorem 1.2 (Closed intervals and oriented circle cuts).**
 
 Lean statement: `D5/S1/Digit/Infinite/WindowCylinderPartition.window_cylinder_partition`
 
@@ -18,5 +30,6 @@ Complete a legal window by appending a zero when its last digit is one. The resu
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Infinite/WindowCylinderPartition.prepend_digits`
 - Truth anchor: `D5/S1/Digit/Infinite/WindowCylinderPartition.window_cylinder_partition`
 - Dependency: [D5/S1/Digit/Infinite/WindowSuccessorGraph](WindowSuccessorGraph.md)

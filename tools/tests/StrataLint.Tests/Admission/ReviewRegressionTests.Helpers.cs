@@ -6,6 +6,10 @@ namespace StrataLint.Tests;
 
 public sealed partial class ReviewRegressionTests
 {
+    private static DeltaRuleContext ActualDelta(RuleFixture fixture) =>
+        fixture.Build(RawChangeSet.Create(fixture.Changes.Concat(fixture.Files.Keys.Union(fixture.Baseline.Keys)
+            .Where(path => fixture.Files.GetValueOrDefault(path) != fixture.Baseline.GetValueOrDefault(path))).Distinct(StringComparer.Ordinal)));
+
     private static ValidatedPolicy AcceptedPolicy(string fileMap)
     {
         var outcome = RepositoryPolicyLoader.Load(
@@ -16,9 +20,6 @@ public sealed partial class ReviewRegressionTests
 
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
-
-    private static int Count(string value, string fragment) =>
-        (value.Length - value.Replace(fragment, string.Empty, StringComparison.Ordinal).Length) / fragment.Length;
 
     private static void InitializeRemoteDefaultBranch(
         string remoteRoot,

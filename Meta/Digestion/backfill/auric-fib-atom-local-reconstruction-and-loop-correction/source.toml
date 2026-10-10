@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-local-reconstruction-and-loop-correction"
+path = "docs/develop/theory/AURIC_FIB_ATOM_LOCAL_RECONSTRUCTION_AND_LOOP_CORRECTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

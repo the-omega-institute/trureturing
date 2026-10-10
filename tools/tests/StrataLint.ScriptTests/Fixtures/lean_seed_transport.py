@@ -6,10 +6,16 @@ import os
 import pathlib
 import random
 import shutil
+import shlex
 import subprocess
+import sys
 import tarfile
+from unittest.mock import patch
 
-from lean_seed_support import OTHER, PUBLISH, REV, PartitionFixture, digest, write
+from lean_seed_support import OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, prepare_release_report, write
+
+sys.path.insert(0, str(PUBLISH.parent))
+from lean_cache_release import checkout_topology
 
 
 class ReleaseTransportCases(PartitionFixture):
@@ -21,13 +27,13 @@ class ReleaseTransportCases(PartitionFixture):
         self.remote.mkdir()
         write(self.root / ".lake/build/lib/lean/D5/A.olean", "locally-produced-olean")
         write(self.root / ".lake/build/stratalint/raw-lean-report.json",
-              '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}\n')
+              '{"modules":[],"schema":"stratalint-raw-lean-report-v3"}\n')
         write(self.bin / "make", '''#!/bin/sh
 printf "%s\\n" "$*" >> "$FAKE_BUILD_LOG"
 if [ "$1" = "lean-report" ] && [ "${FAKE_BUILD_EXIT:-0}" = "0" ]; then
-    mkdir -p .lake/build/stratalint
-    printf '%s\\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/report-fixture-$$
-    mv .lake/report-fixture-$$ .lake/build/stratalint/raw-lean-report.json
+    if [ "${FAKE_REPORT_PRESERVE:-0}" != "1" ]; then
+        python3 -B "$FAKE_REPORT_FACTORY" write-release-report "$PWD"
+    fi
 fi
 exit "${FAKE_BUILD_EXIT:-0}"
 ''')
@@ -38,21 +44,194 @@ exit "${FAKE_BUILD_EXIT:-0}"
         # dependencies in the fixture repository.
         for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py"):
             shutil.copy2(PUBLISH.with_name(name), helper_dir / name)
+        prepare_release_report(self.root)
+        shutil.copy2(ROOT / "Makefile", self.root / "Makefile")
+        write(self.root / ".gitignore", "*\n!untracked-input.lean\n")
+        subprocess.run(["git", "init", "-q", str(self.root)], check=True, capture_output=True)
+        self.commit_fixture()
+        subprocess.run(["python3", "-B", str(ROOT / "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py"),
+            "write-release-report", str(self.root)], check=True, capture_output=True)
         self.publisher = helper_dir / "lean-cache-publish.sh"
         self.publisher.chmod(0o755)
         for path in self.bin.iterdir():
             path.chmod(0o755)
 
+    def commit_fixture(self):
+        subprocess.run(["git", "-C", str(self.root), "add", "-f", "tools", "Makefile", ".gitignore",
+            "lean-report-inputs.json", "lake-manifest.json", "lean-toolchain", "lakefile.toml", "Trureturing.lean", "D5"],
+            check=True, capture_output=True)
+        subprocess.run(["git", "-C", str(self.root), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+            "-c", "commit.gpgsign=false", "commit", "--allow-empty", "-qm", "synthetic Release source"],
+            check=True, capture_output=True)
+        self.producer_commit = subprocess.check_output(["git", "-C", str(self.root), "rev-parse", "HEAD"], text=True).strip()
+
     def transport_environment(self, run="123", **extra):
+        head = subprocess.check_output(["git", "-C", str(self.root), "rev-parse", "HEAD"], text=True).strip()
+        dev = {"name": "dev", "protected": True, "commit": {"sha": head}}
         return {**os.environ, "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
             "HOME": str(self.root), "FAKE_BUILD_LOG": str(self.root / "build-runs"),
-            "FAKE_REMOTE": str(self.remote), "GITHUB_SHA": "d" * 40, "GITHUB_RUN_ID": run,
+            "FAKE_REMOTE": str(self.remote), "GITHUB_SHA": head, "GITHUB_RUN_ID": run,
+            "GITHUB_ACTIONS": "true", "FAKE_DEV_BRANCH": json.dumps(dev),
+            "FAKE_DEV_COMPARE": json.dumps({"status": "identical", "merge_base_commit": {"sha": head}}),
+            "FAKE_REPORT_FACTORY": str(ROOT / "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py"),
             "GITHUB_RUN_ATTEMPT": "1", "GITHUB_EVENT_NAME": "schedule", "GITHUB_REF": "refs/heads/dev",
             "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **extra}
 
     def transport(self, verb, run="123", arguments=(), **extra):
         return subprocess.run(["bash", str(self.publisher), verb, "--repository", str(self.root), *arguments],
-                              text=True, capture_output=True, env=self.transport_environment(run, **extra))
+                              text=True, capture_output=True, env=self.transport_environment(run, **{"GITHUB_ACTIONS": "false" if verb == "fetch" else "true", **extra}))
+
+    def linked_checkout(self):
+        self.main_checkout = self.root.resolve()
+        linked = self.root / "linked checkout"
+        subprocess.run(["git", "-C", str(self.root), "worktree", "add", "--detach",
+                        str(linked), "HEAD"], check=True, capture_output=True)
+        self.root = linked
+
+    def assert_linked_fetch_guarded(self, unknown_main=False):
+        self.linked_checkout()
+        log = self.main_checkout / "linked-gh-calls"
+        lake = self.root / ".lake"
+        for occupied in (False, True):
+            if occupied:
+                write(lake / "build/keep.txt", "private cache")
+            before = {str(path.relative_to(lake)): (path.read_bytes(), path.stat())
+                      for path in lake.rglob("*") if path.is_file()}
+            for arguments in ((), ("--refresh-stale",), ("--refresh-stale", "--writer-owned")):
+                with self.subTest(occupied=occupied, arguments=arguments):
+                    result = self.transport("fetch", arguments=arguments, FAKE_GH_LOG=str(log))
+                    self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                    line = next(line for line in result.stdout.splitlines() if line.startswith("LEAN_CACHE_FETCH "))
+                    receipt = json.loads(line.partition(" ")[2])
+                    self.assertEqual("refused", receipt["status"], '[FAIL] linked_fetch_must_refuse')
+                    self.assertEqual("linked worktree: release archive disabled", receipt["reason"])
+                    remediation = ("sync dev and warm the dev cache in this repository's dev main checkout: "
+                                   "make warm-donor there (its location cannot be determined from this worktree)"
+                                   if unknown_main else "sync dev and warm the dev cache: make -C "
+                                   + shlex.quote(str(self.main_checkout)) + " warm-donor")
+                    self.assertEqual(remediation, receipt["remediation"],
+                                     '[FAIL] linked_fetch_names_real_main_checkout')
+                    if unknown_main:
+                        self.assertNotIn(str(self.git_store), receipt["remediation"],
+                                         '[FAIL] linked_fetch_never_names_git_store')
+                    self.assertFalse(log.exists(), '[FAIL] linked_fetch_never_calls_gh')
+                    self.assertEqual(occupied, lake.exists(), '[FAIL] linked_fetch_never_creates_lake')
+                    after = {str(path.relative_to(lake)): (path.read_bytes(), path.stat())
+                             for path in lake.rglob("*") if path.is_file()}
+                    self.assertEqual(before, after, '[FAIL] linked_fetch_preserves_lake')
+
+    def test_linked_production_fetch_refuses_before_gh_or_lake_writes(self):
+        self.assert_linked_fetch_guarded()
+
+    def test_main_production_fetch_reaches_release_listing(self):
+        log = self.root / "main-gh-calls"
+        result = self.transport("fetch", FAKE_GH_LOG=str(log))
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        calls = [json.loads(line) for line in log.read_text().splitlines()]
+        self.assertTrue(any(call[:2] == ["release", "list"] for call in calls),
+                        '[FAIL] main_fetch_keeps_release_listing')
+
+    def separate_git_directory(self):
+        store = self.root / "repository store" / "git directory"
+        store.parent.mkdir()
+        subprocess.run(["git", "init", "-q", "--separate-git-dir", str(store), str(self.root)],
+                       check=True, capture_output=True)
+        self.git_store = store.resolve()
+
+    def test_separate_git_dir_main_production_fetch_reaches_release_listing(self):
+        self.separate_git_directory()
+        self.test_main_production_fetch_reaches_release_listing()
+
+    def test_separate_git_dir_linked_production_fetch_omits_unvalidated_main_checkout(self):
+        self.separate_git_directory()
+        self.assert_linked_fetch_guarded(unknown_main=True)
+
+    def test_checkout_classification_preserves_physical_path_aliases(self):
+        self.assertEqual((False, None), checkout_topology(self.root), '[FAIL] main_path_is_main')
+        self.assertEqual((False, None), checkout_topology(self.root.resolve()), '[FAIL] physical_main_path_is_main')
+        self.linked_checkout()
+        for root in (self.root, self.root.resolve()):
+            self.assertEqual((True, self.main_checkout), checkout_topology(root),
+                             '[FAIL] linked_path_names_physical_main')
+
+    def test_bare_main_checkout_refuses(self):
+        bare = self.root / "bare repository"
+        subprocess.run(["git", "init", "--bare", "-q", str(bare)], check=True, capture_output=True)
+        with self.assertRaises(ValueError, msg='[FAIL] bare_main_must_refuse'):
+            checkout_topology(bare)
+
+    def test_invalid_worktree_records_refuse(self):
+        real_run = subprocess.run
+        main = str(self.root.resolve())
+        head = "HEAD " + self.producer_commit
+        valid = "worktree " + main + "\0" + head + "\0branch refs/heads/main\0\0"
+        records = ("", "\0\0", "worktree \0" + head + "\0detached\0\0",
+                   "worktree relative\0" + head + "\0detached\0\0",
+                   "worktree " + main + "\0detached\0\0",
+                   "worktree " + main + "\0HEAD invalid\0detached\0\0",
+                   "worktree " + main + "\0" + head + "\0\0",
+                   valid.rstrip("\0"), valid + "unparseable\0\0",
+                   valid.replace(head, head + "\0" + head),
+                   valid.replace("branch refs/heads/main", "unknown field"))
+        for record in records:
+            def git_run(command, **options):
+                if command[-4:] == ["worktree", "list", "--porcelain", "-z"]:
+                    return subprocess.CompletedProcess(command, 0, stdout=record, stderr="")
+                return real_run(command, **options)
+            with self.subTest(record=record), patch('lean_cache_release.subprocess.run', side_effect=git_run):
+                with self.assertRaises(ValueError, msg='[FAIL] invalid_worktree_record_must_refuse'):
+                    checkout_topology(self.root)
+
+    def test_linked_main_candidate_requires_same_common_directory(self):
+        foreign = self.root / "foreign repository"
+        subprocess.run(["git", "init", "-q", str(foreign)], check=True, capture_output=True)
+        self.linked_checkout()
+        real_run = subprocess.run
+        record = ("worktree " + str(foreign.resolve()) + "\0HEAD " + self.producer_commit
+                  + "\0branch refs/heads/main\0\0")
+
+        def git_run(command, **options):
+            if command[-4:] == ["worktree", "list", "--porcelain", "-z"]:
+                return subprocess.CompletedProcess(command, 0, stdout=record, stderr="")
+            return real_run(command, **options)
+
+        with patch('lean_cache_release.subprocess.run', side_effect=git_run):
+            self.assertEqual((True, None), checkout_topology(self.root),
+                             '[FAIL] foreign_main_candidate_is_not_a_remediation_path')
+
+    def test_undetermined_production_checkout_refuses_before_gh_or_lake_writes(self):
+        self.failing_git("rev-parse", 17, "topology unavailable")
+        log = self.root / "unknown-gh-calls"
+        lake = self.root / ".lake"
+        before = {str(path.relative_to(lake)): path.read_bytes()
+                  for path in lake.rglob("*") if path.is_file()}
+        result = self.transport("fetch", FAKE_GH_LOG=str(log))
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"refused"', result.stdout, '[FAIL] unknown_checkout_must_refuse')
+        self.assertIn("topology unavailable", result.stdout)
+        self.assertFalse(log.exists(), '[FAIL] unknown_checkout_never_calls_gh')
+        self.assertEqual(before, {str(path.relative_to(lake)): path.read_bytes()
+                                 for path in lake.rglob("*") if path.is_file()})
+
+    def test_linked_ci_production_fetch_keeps_skip(self):
+        self.linked_checkout()
+        log = self.main_checkout / "ci-linked-gh-calls"
+        result = self.transport("fetch", GITHUB_ACTIONS="true", FAKE_GH_LOG=str(log))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"skipped"', result.stdout)
+        self.assertFalse(log.exists())
+        self.assertFalse((self.root / ".lake").exists())
+
+    def test_linked_verification_fetch_keeps_explicit_ci_source(self):
+        self.verification_fixture()
+        published = self.verification("publish")
+        self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+        self.linked_checkout()
+        result = self.verification("fetch")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"mode":"verification"', result.stdout)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
 
     def fetch_then_build(self, **extra):
         # Exercise the optional-fetch caller protocol under errexit. Workflow
@@ -63,7 +242,7 @@ if ! "$1" fetch --repository "$2"; then
 fi
 make -C "$2" lean
 ''', "optional-fetch", str(self.publisher), str(self.root)], text=True, capture_output=True,
-            env=self.transport_environment(**extra))
+            env=self.transport_environment(**{"GITHUB_ACTIONS": "false", **extra}))
 
     def deadline_probe(self, seconds, step=0):
         # Keep subprocess's own wait clock real. Only the operation's monotonic
@@ -78,11 +257,22 @@ def run(args, *rest, **kwargs):
     if args[0] != "gh": return original(args, *rest, **kwargs)
     with (pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "gh-budgets").open("a") as log:
         log.write(json.dumps({"args": args[1:], "timeout": kwargs.get("timeout")}) + "\\n")
+    # Content eligibility is covered by its own API tests. Keep these declared
+    # responses synchronous so process startup cannot consume the one-second
+    # transport hang budget before the Release operation under test.
+    if args[1] == "api":
+        field = ("FAKE_DEV_BRANCH" if args[2].endswith("/branches/dev") else
+                 "FAKE_DEV_COMPARE" if "/compare/" in args[2] else None)
+        if field:
+            return subprocess.CompletedProcess(args, 0, os.environ[field] + "\\n", "")
     # Infrastructure hang guard for the pre-fix unbounded call. Whether the
     # production owner supplied a timeout, not elapsed time, decides the test.
     kwargs.setdefault("timeout", 1)
     try: return original(args, *rest, **kwargs)
-    finally: clock += int(os.environ["FAKE_CLOCK_STEP"])
+    finally:
+        # Protected-content queries are instantaneous in this transport-clock fixture.
+        if args[1] != "api" or "/releases/" in args[2]:
+            clock += int(os.environ["FAKE_CLOCK_STEP"])
 subprocess.run = run
 ''')
         (self.root / "gh-budgets").unlink(missing_ok=True)
@@ -143,7 +333,7 @@ shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, ext
         extracted = next(event for event in events if event["operation"] == "extract")
         self.assertEqual((self.root / ".lake").resolve(), pathlib.Path(extracted["path"]).parent.resolve())
         materials = [event for event in events if event["operation"] == "material"]
-        self.assertEqual(3, len(materials))
+        self.assertEqual(8, len(materials))
         for material in materials:
             status = (self.root / ".lake" / material["name"]).stat()
             self.assertEqual((material["device"], material["inode"]), (status.st_dev, status.st_ino))
@@ -284,6 +474,7 @@ shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, ext
         (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(random.Random(31).randbytes(3 * 1024 * 1024))
         owner = self.publisher.with_name("lean_cache_release.py")
         owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", "CHUNK_BYTES = 2097152"))
+        self.commit_fixture()
         environment = self.deadline_probe(1)
         with (self.bin / "sitecustomize.py").open("a") as fixture:
             fixture.write('''
@@ -350,7 +541,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                     self.assertEqual([1] * len(self.gh_budgets()),
                                      [call["timeout"] for call in self.gh_budgets()])
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 6,
+        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 6,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_deadline_is_shared_across_snapshots(self):
@@ -395,13 +586,13 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"published"', result.stdout)
         self.assertIn("deadline exhausted", result.stdout)
-        self.assertEqual([7, 6, 5, 4, 3, 2, 1], [call["timeout"] for call in self.gh_budgets()])
-        self.assertEqual(["api", "create", "upload", "edit", "api", "download", "list"],
+        self.assertEqual([7, 7, 7, 6, 5, 4, 3, 2, 1], [call["timeout"] for call in self.gh_budgets()])
+        self.assertEqual(["api", "api", "api", "create", "upload", "edit", "api", "download", "list"],
                          [call["args"][0] if call["args"][0] == "api" else call["args"][1]
                           for call in self.gh_budgets()])
         self.assertEqual(6, len(list(self.remote.glob("*/release.json"))))
 
-    def test_invalid_release_budget_is_optional_but_real_build_failure_is_not(self):
+    def test_invalid_release_budget_rejects_publication_but_optional_fetch_preserves_build_exit(self):
         for value in ("0", "-1", "nan", "1801"):
             with self.subTest(budget=value):
                 environment = {"STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS": value}
@@ -409,7 +600,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertEqual(0, fetched.returncode, fetched.stdout + fetched.stderr)
                 self.assertIn("STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS", fetched.stdout)
                 published = self.transport("publish", **environment)
-                self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+                self.assertEqual(2, published.returncode, published.stdout + published.stderr)
                 self.assertIn('"status":"failed"', published.stdout)
                 self.assertEqual(19, self.transport("publish", **environment, FAKE_BUILD_EXIT="19").returncode)
                 self.assertEqual([], list(self.remote.iterdir()))
@@ -442,7 +633,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                     self.assertEqual(build_exit, result.returncode, result.stdout + result.stderr)
                     self.assertIn('"status":"miss"', result.stdout)
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 4,
+        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 4,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_optional_fetch_valid_seed_still_reaches_build(self):
@@ -451,7 +642,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         result = self.fetch_then_build()
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"unpacked"', result.stdout)
-        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "-C " + str(self.root) + " lean"],
+        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "-C " + str(self.root) + " lean"],
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_unavailable_lock_is_an_explicit_fetch_miss(self):
@@ -465,7 +656,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
 
     def test_unavailable_lock_skips_publication_after_build_success(self):
         write(self.bin / "sitecustomize.py", 'import sys\nsys.modules["fcntl"] = None\n')
-        result = self.transport("publish", PYTHONPATH=str(self.bin))
+        result = self.transport("publish", PYTHONPATH=str(self.bin), FAKE_REPORT_PRESERVE="1")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"skipped"', result.stdout)
         self.assertIn("POSIX cache locking unavailable", result.stdout)
@@ -474,7 +665,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         failed = self.transport("publish", PYTHONPATH=str(self.bin), FAKE_BUILD_EXIT="19")
         self.assertEqual(19, failed.returncode, failed.stdout + failed.stderr)
         self.assertEqual([], list(self.remote.iterdir()))
-        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_cannot_enable_cross_partition_selection(self):
         self.assertEqual(0, self.transport("publish").returncode)
@@ -500,7 +691,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         metadata = json.loads((snapshot / "manifest.json").read_text())
         release = json.loads((snapshot / "release.json").read_text())
         self.assertNotEqual(metadata["producer_commit_sha"], release["target_commitish"])
-        self.assertEqual(("d" * 40, "123", "1"), tuple(metadata[field] for field in
+        self.assertEqual((self.producer_commit, "123", "1"), tuple(metadata[field] for field in
             ("producer_commit_sha", "workflow_run_id", "workflow_run_attempt")))
         packed = (snapshot / "lean-build.tgz").read_bytes()
         self.assertEqual(digest(packed), metadata["archive_sha256"])
@@ -571,7 +762,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertIn('"status":"exists"', result.stdout.replace(" ", ""))
         self.assertEqual(before, {path.name: path.read_bytes() for path in next(self.remote.iterdir()).iterdir()})
         calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
-        self.assertEqual(["api", "download"],
+        self.assertEqual(["api", "api", "api", "download"],
             [call[0] if call[0] == "api" else call[1] for call in calls])
         self.assertEqual(["manifest.json"],
             [call[index + 1] for call in calls for index, value in enumerate(call) if value == "--pattern"])
@@ -610,7 +801,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertFalse(any(call[:2] in (["release", "create"], ["release", "upload"],
                     ["release", "edit"], ["release", "delete"], ["release", "list"]) for call in calls))
                 self.assertFalse(any("lean-build.tgz" in call for call in calls))
-                self.assertFalse(any(call[0] == "api" and "/releases/tags/" not in call[1] for call in calls))
+                self.assertFalse(any(call[0] == "api" and "/actions/" in call[1] for call in calls))
         manifest.write_text(original)
 
     def test_post_edit_manifest_must_match_actual_publisher(self):
@@ -648,7 +839,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertIn('"status":"failed"', result.stdout.replace(" ", ""))
                 self.assertIn("exact release", result.stdout)
                 calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
-                self.assertEqual(["api"], [call[0] for call in calls])
+                self.assertEqual(["api", "api", "api"], [call[0] for call in calls])
                 self.assertEqual(before, {path.name: path.read_bytes() for path in next(self.remote.iterdir()).iterdir()})
 
     def test_failed_exact_lookup_stops_before_remote_writes_and_preserves_diagnostics(self):
@@ -667,7 +858,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertTrue(report["reason"].endswith("stderr: " + diagnostic), report)
                 self.assertEqual([], list(self.remote.iterdir()))
                 calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
-                self.assertEqual(["api"], [call[0] for call in calls])
+                self.assertEqual(["api", "api", "api"], [call[0] for call in calls])
 
     def invalid_post_edit_responses(self, tag, commit):
         published = dict(draft=False, tag_name=tag, target_commitish=commit)
@@ -680,8 +871,8 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
 
     def test_post_edit_confirmation_is_required_before_publication_success(self):
         partition = json.loads(self.transport("address").stdout)["partition"]
-        tag = "lean-cache-v2-" + partition.replace("/", "-") + "-123-1"
-        for metadata, status in self.invalid_post_edit_responses(tag, "d" * 40):
+        tag = json.loads(self.transport("address").stdout)["release_prefix"] + "ci-123-1"
+        for metadata, status in self.invalid_post_edit_responses(tag, self.producer_commit):
             with self.subTest(metadata=metadata, status=status):
                 shutil.rmtree(self.remote)
                 self.remote.mkdir()
@@ -692,7 +883,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertIn('"status":"failed"', result.stdout)
                 self.assertNotIn('"status":"published"', result.stdout)
                 calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
-                self.assertEqual(["api", "create", "upload", "edit", "api"],
+                self.assertEqual(["api", "api", "api", "create", "upload", "edit", "api"],
                                  [call[0] if call[0] == "api" else call[1] for call in calls])
 
     def test_concurrent_publishers_keep_distinct_complete_snapshots(self):
@@ -733,11 +924,14 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertIn('"status":"published"', result.stdout)
         self.assertTrue(list(self.remote.iterdir()))
 
-    def test_pr_cannot_publish_even_after_a_successful_build(self):
-        result = self.transport("publish", GITHUB_EVENT_NAME="pull_request_target")
+    def test_publication_checks_protected_content_without_event_or_actor_gate(self):
+        result = self.transport("publish", GITHUB_EVENT_NAME="push", GITHUB_REF="refs/heads/other",
+                                GITHUB_REPOSITORY="other/repo", GITHUB_SHA="not-a-content-input")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertIn("skipped", result.stdout)
-        self.assertEqual([], list(self.remote.iterdir()))
+        self.assertIn('"status":"published"', result.stdout)
+        self.assertEqual(1, len(list(self.remote.iterdir())))
+        manifest = json.loads(next(self.remote.glob("*/manifest.json")).read_text())
+        self.assertEqual(self.producer_commit, manifest["producer_commit_sha"])
 
     def test_transfer_failure_is_a_miss_and_empty_target_accepts_a_complete_seed(self):
         self.assertEqual(0, self.transport("publish").returncode)
@@ -778,6 +972,10 @@ def fail():
 if len(args) > 1 and os.environ.get("FAKE_FAIL") == verb and verb != "upload": fail()
 if args[:2] == ["release", "list"] and "FAKE_LIST_JSON" in os.environ:
     print(os.environ["FAKE_LIST_JSON"]); sys.exit(0)
+if args[0] == "api" and args[1].endswith("/branches/dev"):
+    print(os.environ["FAKE_DEV_BRANCH"]); sys.exit(0)
+if args[0] == "api" and "/compare/" in args[1] and "FAKE_VERIFICATION_API" not in os.environ:
+    print(os.environ["FAKE_DEV_COMPARE"]); sys.exit(0)
 if args[0] == "api" and "FAKE_API_JSON" in os.environ:
     print(os.environ["FAKE_API_JSON"]); sys.exit(0)
 if args[0] == "api" and "FAKE_VERIFICATION_API" in os.environ:

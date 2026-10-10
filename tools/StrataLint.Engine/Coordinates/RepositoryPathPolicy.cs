@@ -9,11 +9,7 @@ internal sealed record RepositoryPathIssue(RuleId RuleId, string Path, string Me
 internal static partial class RepositoryPathPolicy
 {
     internal const string AgentFilesRootPath = "agents/";
-    // Spec drafts and agent reports have author-chosen names, so this path layer admits
-    // their prefixes without copying a filename registry into the harness. Reports have
-    // a separate FILEMAP gate: FileMapPolicy requires one matching entry per
-    // tracked docs/reports file before the file is usable. Path admission alone is not
-    // registration and must not be treated as a substitute for filemap-conform.
+    // FILEMAP registers spec documents and the retained reports entrypoint/licenses.
     internal const string SpecRootPath = "docs/develop/spec/";
     internal const string ReportsRootPath = "docs/reports/";
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
@@ -132,6 +128,8 @@ internal static partial class RepositoryPathPolicy
     internal static RepositoryPathIssue? Validate(RepoPath path, ValidatedPolicy policy)
     {
         var value = path.Value;
+        if (IsExperimentalMaterialPath(value))
+            return Sl000(value, ExperimentalMaterialsMessage);
         var matches = policy.Manifest.Match(value);
         if (matches is not [var entry])
             return Sl000(value, $"path must match exactly one FILEMAP entry; matches={matches.Length}");
@@ -174,15 +172,13 @@ internal static partial class RepositoryPathPolicy
             || FileMapDocuments.IsPolicyPath(value)
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
-            || IsEchoResidualShardPath(value)
             || ProblemPoolPaths.IsCanonicalPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
             || FrozenStatePath.TryToModulePath(value, out _)
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith(ReportsRootPath, StringComparison.Ordinal)
-            // Generated report filenames are covered by FILEMAP's registered family;
-            // conformance still requires each path to match that family exactly once.
+            // Retained report licenses and the entrypoint still require FILEMAP coverage.
             || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
             || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
             || IsGoldenProjectionData(value)
@@ -229,15 +225,6 @@ internal static partial class RepositoryPathPolicy
             "tools" => Sl000(value, "unknown tools artifact"),
             _ => Sl000(value, "unknown top-level artifact"),
         };
-    }
-
-    internal static bool IsEchoResidualShardPath(string value)
-    {
-        const string prefix = "Generated/echo-residuals/";
-        if (!value.StartsWith(prefix, StringComparison.Ordinal)
-            || !value.EndsWith(".md", StringComparison.Ordinal)) return false;
-        var relative = value[prefix.Length..];
-        return relative.Length > ".md".Length && !relative.Contains('/', StringComparison.Ordinal);
     }
 
     internal static bool TryResolve(RepoPath path, ValidatedPolicy policy, out Gid? gid)

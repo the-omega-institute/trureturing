@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:40ceb471b0704f5a6d3d5ccb3be3de3c0a0f3987bdebbf1255feaa67264f01fb
+  normalized_sha256: sha256:40ceb471b0704f5a6d3d5ccb3be3de3c0a0f3987bdebbf1255feaa67264f01fb
+cas_ref: sha256:40ceb471b0704f5a6d3d5ccb3be3de3c0a0f3987bdebbf1255feaa67264f01fb
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Causal/ConvexSharpIdentification.exact_lower_endpoint_monotone_under_refinement
+    target_statement_id: sha256:3fa9ee091f4973a37b5b3a9422da7ca9994ec017c03bd46b6439ad0a98b26ba7
+  - gid: D5/S3/ConceptDynamics/Causal/ConvexSharpIdentification.exact_lower_endpoint_of_valid_bound_and_witness
+    target_statement_id: sha256:4dba3dc6bb099b4be2bc5c8555405c14ad06a55420983e6d55301e6ce23eb631
+  - gid: D5/S3/ConceptDynamics/Causal/ConvexSharpIdentification.exact_upper_endpoint_monotone_under_refinement
+    target_statement_id: sha256:87d590bc03bb3c29a1069ccc749c3416df9e5795735592d0f64ce407348a6d4b
+  - gid: D5/S3/ConceptDynamics/Causal/ConvexSharpIdentification.exact_upper_endpoint_of_valid_bound_and_witness
+    target_statement_id: sha256:dc436fb81bfae553ee08d613f180d4c07c78fca0888381328f418bd1330fd0a6
+  - gid: D5/S3/ConceptDynamics/Causal/ConvexSharpIdentification.sharp_interval_of_valid_bounds_and_endpoint_witnesses
+    target_statement_id: sha256:3a7b29a48875969f6756c46476c0f74290027cf920f430c16896d469aecec1be
+  - gid: D5/S3/ConceptDynamics/Causal/ConvexSharpIdentification.valid_lower_bound_of_feasible_refinement
+    target_statement_id: sha256:196459a319eb59bb3b751eb4a00efa74acebcec6ddf6119e5a48e9277259e97e
+  - gid: D5/S3/ConceptDynamics/Causal/ConvexSharpIdentification.valid_upper_bound_of_feasible_refinement
+    target_statement_id: sha256:ce3b5dbaa7c654d3491f5cf5fde2f9ed987eee0afd1762cf87915ee8a868879c
+receipts:
+  unresolved_subitems: []

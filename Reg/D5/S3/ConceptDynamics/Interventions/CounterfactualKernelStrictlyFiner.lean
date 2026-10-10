@@ -1,21 +1,11 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
 import Reg.Support.SharedArenaPeers
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer,
-      statementIdentity := "sha256:1a6132946d7a8891764ed2653324de2bf30ed7e60a456bc3718245df3f8e4916",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer,
-      statementIdentity := "sha256:1a6132946d7a8891764ed2653324de2bf30ed7e60a456bc3718245df3f8e4916",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner }
+
 
 namespace Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner
 
@@ -43,13 +33,36 @@ open _root_.D5.S3.ConceptDynamics.ConceptJoinUniversal
 open FourthFifthArenas
 attribute [local instance] modelFintype modelDecidableEq in
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer in finiteInterventionLawArena
-  object_arena finiteInterventionArena catalog finiteProbe
-  readout via (@interventionFiniteRealization DeterministicBoolSCM
-    (fun M => icIntCode M) (fun M => icCFCode M))
-  primitives finiteInterventionRealization.toPrimitiveBundle realization finiteFiner_bridge
-  variation finiteIntervention_law_sensitive sensitivity finiteIntervention_slot_sensitive
-  escape from (DeterministicBoolSCM) escape continues (finiteIntervention_empty)
+theorem _root_.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer.«Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena/finiteProbe».__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionLawArena (And (∀ (M N : D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM), @Eq.{1} (Bool → Bool → Bool → Bool) (D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.CF M) (D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.CF N) → @Eq.{1} (Bool → Bool → Nat) (D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.Int M) (D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.Int N)) (@Exists.{1} D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM fun (M : D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM) => @Exists.{1} D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM fun (N : D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM) => And (@Eq.{1} (Bool → Bool → Nat) (D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.Int M) (D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.Int N)) (@Ne.{1} (Bool → Bool → Bool → Bool) (D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.CF M) (D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.CF N)))) D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionRealization := D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteFiner_bridge
+
+
+
+attribute [local instance] modelFintype modelDecidableEq in
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer) (type_of% (@interventionFiniteRealization DeterministicBoolSCM
+    (fun M => icIntCode M) (fun M => icCFCode M))) (type_of% (DeterministicBoolSCM)) (type_of% (finiteIntervention_empty)) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interventions") "CounterfactualKernelStrictlyFiner") "counterfactual_kernel_strictly_finer") "Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena/finiteProbe") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interventions") "CounterfactualKernelStrictlyFiner") "counterfactual_kernel_strictly_finer") "Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena/finiteProbe") "__primitive_realization"),
+  realizationSource := some `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteFiner_bridge,
+  generated := false,
+  arena := .law ⟨(finiteInterventionLawArena)⟩,
+  objectArena := .finite ⟨(finiteInterventionArena)⟩,
+  catalog := `finiteProbe,
+  localNames := false,
+  realization := .legacy (finiteInterventionLawArena) (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionRealization) (finiteInterventionRealization.toPrimitiveBundle) ⟨(finiteFiner_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (finiteFiner_bridge) (@_root_.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((finiteInterventionRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@interventionFiniteRealization DeterministicBoolSCM
+    (fun M => icIntCode M) (fun M => icCFCode M)),
+  variation := .evidence ⟨(finiteIntervention_law_sensitive)⟩ (by first | exact (finiteIntervention_law_sensitive) | exact ⟨_, _, (finiteIntervention_law_sensitive)⟩),
+  sensitivity := .evidence ⟨(finiteIntervention_slot_sensitive)⟩ (by exact (finiteIntervention_slot_sensitive)),
+  partialSensitivity := none,
+  escapeFrom := some (DeterministicBoolSCM),
+  sourceSelection := none,
+  continuation := .evidence ⟨(finiteIntervention_empty)⟩,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxRecDepth, value := .nat 100000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 end Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner

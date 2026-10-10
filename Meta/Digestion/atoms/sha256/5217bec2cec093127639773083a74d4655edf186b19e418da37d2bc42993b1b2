@@ -1,0 +1,2 @@
+Classical attribution remains explicit. The Parikh matrix mapping is from Mateescu, A. Salomaa, K. Salomaa and Yu, RAIRO ITA 35(6) (2001), 551-564, DOI 10.1051/ita:2001131. Rigo and Salimov, TCS 601 (2015), 47-57, DOI 10.1016/j.tcs.2015.07.025, established the general Sturmian second-order binomial faithfulness phenomenon. The repository contribution is the explicit representation and kernel interface; no priority claim is made for those classical results.
+

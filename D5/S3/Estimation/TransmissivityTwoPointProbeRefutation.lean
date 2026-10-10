@@ -16,7 +16,17 @@ Direct frozen dependencies:
   statement_id: sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3;
   D5/S3/Weil/ZetaLinear/RankTrace.trace_mul_nonneg_of_posSemidef,
   statement_id: sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3.
-Information-escape registration is paused under CLAUDE.md section 3.9.
+sqrt_power: proof_shape: bind-only; escape_witness: none; consumers: source_coefficient.
+Direct frozen dependencies: none.
+source_coefficient: proof_shape: bind-only; escape_witness: none;
+  consumers: result, D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation.result.
+Direct frozen dependencies: none.
+sourceKraus: proof_shape: bind-only; escape_witness: none;
+  consumers: result, D5/S3/Estimation/TransmissivityBetaPriorProbeRefutation.result.
+Direct frozen dependencies:
+  D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.amplitudeKraus,
+  statement_id: sha256:df905a936771b44cd43f36036fe86b519c1e74230454ea6b19e70d563f2788fb.
+Escape audit (CLAUDE.md §3.9): registrations of sqrt_power, source_coefficient and sourceKraus were attempted and are not validated; see issue #14788.
 -/
 
 import D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation
@@ -69,29 +79,31 @@ def claim : Prop :=
       ∀ (N : ℕ) (ψ : Fin (N + 1) → ℂ), ‖WithLp.toLp 2 ψ‖ = 1 → meanPhoton ψ = nbar →
         ∃ φ : ℝ, MMSE q τ₀ τ₁ (inBetween nbar φ) ≤ MMSE q τ₀ τ₁ ψ
 
-theorem result : ¬ claim := by
-  have sqrt_power (t : ℝ) (ht : 0 ≤ t) (k : ℕ) :
-      Real.sqrt (t ^ k) = Real.sqrt t ^ k := by
-    induction k with
-    | zero => simp
-    | succ k ih => rw [pow_succ, Real.sqrt_mul (pow_nonneg ht k), ih, pow_succ]
-  have source_coefficient (n l : ℕ) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
-      Real.sqrt ((Nat.choose n l : ℝ) * τ ^ (n - l) * (1 - τ) ^ l) =
-        Real.sqrt (Nat.choose n l) * Real.sqrt τ ^ (n - l) * Real.sqrt (1 - τ) ^ l := by
-    rw [Real.sqrt_mul (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hτ.1 _)),
-      Real.sqrt_mul (Nat.cast_nonneg _), sqrt_power τ hτ.1,
-      sqrt_power (1 - τ) (sub_nonneg.mpr hτ.2)]
-  have sourceKraus {N : ℕ} (l : Fin (N + 1)) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
-      amplitudeKraus l (1 - τ) = Matrix.of (fun r c : Fin (N + 1) =>
-        if r.val + l.val = c.val then
-          if l.val ≤ c.val then
-            (Real.sqrt ((Nat.choose c.val l.val : ℝ) *
-              τ ^ (c.val - l.val) * (1 - τ) ^ l.val) : ℂ)
-          else 0
-        else 0) := by
-    ext r c
-    simp only [amplitudeKraus, Matrix.of_apply, sub_sub_cancel, source_coefficient _ _ τ hτ]
+lemma sqrt_power (t : ℝ) (ht : 0 ≤ t) (k : ℕ) :
+    Real.sqrt (t ^ k) = Real.sqrt t ^ k := by
+  induction k with
+  | zero => simp
+  | succ k ih => rw [pow_succ, Real.sqrt_mul (pow_nonneg ht k), ih, pow_succ]
 
+lemma source_coefficient (n l : ℕ) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
+    Real.sqrt ((Nat.choose n l : ℝ) * τ ^ (n - l) * (1 - τ) ^ l) =
+      Real.sqrt (Nat.choose n l) * Real.sqrt τ ^ (n - l) * Real.sqrt (1 - τ) ^ l := by
+  rw [Real.sqrt_mul (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hτ.1 _)),
+    Real.sqrt_mul (Nat.cast_nonneg _), sqrt_power τ hτ.1,
+    sqrt_power (1 - τ) (sub_nonneg.mpr hτ.2)]
+
+lemma sourceKraus {N : ℕ} (l : Fin (N + 1)) (τ : ℝ) (hτ : τ ∈ Set.Icc 0 1) :
+    amplitudeKraus l (1 - τ) = Matrix.of (fun r c : Fin (N + 1) =>
+      if r.val + l.val = c.val then
+        if l.val ≤ c.val then
+          (Real.sqrt ((Nat.choose c.val l.val : ℝ) *
+            τ ^ (c.val - l.val) * (1 - τ) ^ l.val) : ℂ)
+        else 0
+      else 0) := by
+  ext r c
+  simp only [amplitudeKraus, Matrix.of_apply, sub_sub_cancel, source_coefficient _ _ τ hτ]
+
+theorem result : ¬ claim := by
   have phase_MMSE (φ : ℝ) :
       MMSE (1/2) (4/9) 1 (inBetween (1/2) φ) =
         MMSE (N:=1) (1/2) (4/9) 1 ![(Real.sqrt (1/2) : ℂ),

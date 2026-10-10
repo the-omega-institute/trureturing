@@ -38,7 +38,7 @@ in Theorem 2's formula B(2m+1)=B(2m)+1. This correction does not refute
 the A110037 difference conjecture, whose domain starts at n=2.
 
 The private Lean theorem `printed_odd_rule_false` in
-`docs/reports/a110037-0910/BoundaryProbe.lean` gives the kernel witness by
+`https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/a110037-0910/BoundaryProbe.lean` gives the kernel witness by
 specializing the printed assertion to n=1 and evaluating the direct finite
 partition sets. The witness is retained in the attempt 2 proof record. It is
 not used to justify freezing an unrelated result.

@@ -1,0 +1,12 @@
+**Claim status: open.** 每个 $E_a\ge0$ 且 $\sum_aE_a=I$，结果概率为
+
+$$
+\boxed{q_a=\operatorname{tr}(\varrho E_a)=\frac{1+n_a\cdot\mathbf r}{4},}
+$$
+
+并且
+
+$$
+\boxed{\mathbf r=3\sum_aq_an_a.}
+$$
+

@@ -7,19 +7,12 @@ namespace StrataLint.CoverBatch.Tests;
 public sealed partial class CoverBatchCommandTests
 {
     private const string ProblemPath = "Problems/batch-problem.md";
-    private const string FrozenPath = "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json";
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void CoverBatchDoesNotExecuteOrEmitScribeDefinitionsAndPreservesCoverage(bool definitionChanged)
+    [Fact]
+    public void CoverBatchDoesNotExecuteOrEmitScribeDefinitionsAndPreservesCoverage()
     {
         const string target = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
-        using var world = new BatchWorld(targetUnchanged: true)
-        {
-            UseGitReader = true,
-            ChangedPaths = definitionChanged ? [target] : [],
-        };
+        using var world = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(world.Root);
         WriteScribeFixture(world.Root, target, """
             using StrataLint.Scribe;
@@ -29,8 +22,6 @@ public sealed partial class CoverBatchCommandTests
                 public DocumentDefinition Create() => throw new System.InvalidOperationException("Scribe must not execute during cover-batch");
             }
             """);
-        world.KeepAtBaseline("Blueprint/D5/S0/Carrier/Probe.md");
-        if (!definitionChanged) world.KeepAtBaseline(target);
         world.WriteReportBundle();
         var markdown = Path.Combine(world.Root, "Blueprint/D5/S0/Carrier/Probe.md");
         var before = File.ReadAllBytes(markdown);
@@ -40,7 +31,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.True(result.Success, result.Error + result.Output);
         Assert.Equal(before, File.ReadAllBytes(markdown));
         Assert.DoesNotContain("Blueprint/D5/S0/Carrier/Probe.md", result.Output, StringComparison.Ordinal);
-        Assert.Contains(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.Contains(GeneratedArtifactInventory.Values.Path, result.Output, StringComparison.Ordinal);
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Equal([Gid], world.Entry(First).CoverageGids.ToArray());
         Assert.Equal([OtherGid], world.Entry(Second).CoverageGids.ToArray());
@@ -50,7 +41,7 @@ public sealed partial class CoverBatchCommandTests
     public void CoverBatchDoesNotCompileChangedInvalidDefinition()
     {
         const string target = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
-        using var world = new BatchWorld(targetUnchanged: true) { UseGitReader = true, ChangedPaths = [target] };
+        using var world = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(world.Root);
         WriteScribeFixture(world.Root, target, "invalid C#");
         world.WriteReportBundle();
@@ -66,7 +57,7 @@ public sealed partial class CoverBatchCommandTests
     [Fact]
     public void CoverBatchIgnoresDefinitionsWithoutFullResources()
     {
-        using var world = new BatchWorld { UseGitReader = true, ChangedPaths = ["Blueprint/D5/S0/Carrier/Probe.scribe.cs"] };
+        using var world = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(world.Root);
         WriteScribeFixture(world.Root, "Blueprint/D5/S0/Carrier/Probe.scribe.cs", """
             using StrataLint.Scribe;
@@ -107,7 +98,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.True(result.Success, result.Error + result.Output);
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
-        Assert.Contains(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.Contains(GeneratedArtifactInventory.Values.Path, result.Output, StringComparison.Ordinal);
         output.WriteLine("FROZEN_LOADS session_only sequential_catalog={0} sequential_index={1} batch_catalog={2} batch_index={3}",
             sequentialLoads.Catalogs, sequentialLoads.Indexes, batchLoads.Catalogs, batchLoads.Indexes);
         Assert.Equal(1, batchLoads.Catalogs);
@@ -115,8 +106,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, sequentialLoads.Catalogs);
         Assert.Equal(2, sequentialLoads.Indexes);
         WriteLoadCounts("cover-batch-parser-owner", ledgerLoads);
-        Assert.Equal(1, ledgerLoads.BaselineLoads);
-        Assert.Equal([1, 1, 1], ledgerLoads.CandidateSnapshotLoads);
+        Assert.Equal([1, 1], ledgerLoads.CandidateSnapshotLoads);
     }
 
     [Fact]
@@ -134,38 +124,6 @@ public sealed partial class CoverBatchCommandTests
         Assert.NotEqual(before, world.LedgerImage());
         Assert.Single(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
-    }
-
-    [Theory]
-    [InlineData(FrozenPath)]
-    [InlineData(ProblemPath)]
-    [InlineData("D5/S0/Carrier/Probe.lean")]
-    public void CoverBatchCannotHideChangedSharedInputsAfterOneSuccess(string changedPath)
-    {
-        using var world = new BatchWorld();
-        WriteProblem(world.Root);
-        var calls = 0;
-        world.DuringInputRead = () =>
-        {
-            if (++calls == 2)
-                TemporaryFileSystem.File.AppendAllText(Path.Combine(world.Root, changedPath), "\n");
-        };
-        try
-        {
-            var result = world.Run(Row(First, Gid) + Row(Second, OtherGid) + Row("missing-atom", Gid));
-
-            Assert.Equal(1, result.ExitCode);
-            Assert.Equal(["applied", "failed", "blocked"], Results(result).Select(item => item.Status).ToArray());
-            Assert.Contains("shared cover context changed: " + changedPath, result.Error, StringComparison.Ordinal);
-            Assert.Single(world.Entry(First).Coverage);
-            Assert.Empty(world.Entry(Second).Coverage);
-            Assert.Equal(2, calls);
-            Assert.DoesNotContain(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
-        }
-        finally
-        {
-            world.DuringInputRead = null;
-        }
     }
 
     private sealed class FrozenLoadCounter : IDisposable

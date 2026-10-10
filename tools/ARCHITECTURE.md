@@ -10,8 +10,9 @@ event candidate through `ci-entry.sh` (the checked-out `GITHUB_SHA`, the complet
 event range and the pull-request merge parents), lists the changed paths, and
 `ci_detect.py` decides from the `CI_UNITS` sections written in the workflow which
 units the change hits. A section is named by its job id; `[*]` patterns apply to
-every unit; `*` also matches `/`, `?` matches one character and `!` excludes. More
-than 3000 changed paths fail detection. The patterns are written, not derived from
+every unit; `*` also matches `/`, `?` matches one character and `!` excludes. Detection
+validates and matches the complete changed-path list without a path-count
+cutoff. The patterns are written, not derived from
 project registrations, FILEMAP or call graphs.
 
 Each test project, selftest, compile-fail proof, FILEMAP and current is one job
@@ -35,17 +36,19 @@ test is run with `make -C tools test TEST_PROJECT=...`; local success is early
 feedback and does not replace remote required checks.
 
 `StrataLint.TestEvidence` owns `list-test-owner-assemblies`, `verify-trx`, and
-`compile-proof`. It references only Engine; its project closure does not include
-Scribe. `dotnet-test.sh` and the compile-proof make target
+`compile-proof`. It references only `StrataLint.Engineering` (registered identity/schema) and
+`StrataLint.Runtime` (bounded execution and the hang protocol). Single-project
+selection reads only `Meta/engineering-projects.json`; Engine retains complete
+repository source, glob, namespace and topology admission. Solution runs retain
+the registered owned-test assembly floor, waived only for filtered solution runs. `dotnet-test.sh` and the compile-proof make target
 build and invoke this executable. CLI forwards the same commands through a project
 reference. TRX validation requires successful executed tests, the selected owner
 assemblies, and no infrastructure hang guard skips. Its owned tests run as their
 own CI unit.
 
-Report compatibility is the explicit `report_cache_release_semantic_version` in the registered
-`lean-report-inputs.json`. Native Lake facets own report reuse and always require
-the default Lean/audit targets and current inspector build. Lake traces and the explicit
-cache release version decide reuse; validators check structure and artifact integrity
+The report format identifier governs strict artifact acceptance. Native Lake facets own report reuse
+and require selected Lean/audit targets and the current inspector build. Compiler traces, utility
+inputs and the report format decide reuse; validators check structure and artifact integrity
 without comparing stored source digests with current repository bytes. Reused rows retain their actual producer
 origins. Native report artifacts travel with `.lake/build` in the project snapshot;
 there is no separate report cache or preparation shortcut. Remote seed compatibility
@@ -88,8 +91,16 @@ FILEMAP also declares each path's required resources and their explicit owners,
 tools, cache layers and materials. These registrations govern planning without
 discovering dependencies from code.
 
-Engine owns the pure current-schema model, parser and canonical policy writer. CLI
-acquires bytes and joins the domain vocabulary; Scribe projects the validated model.
+Engine owns the current-schema model, parser, canonical policy writer and generated
+artifact identity inventory. FileMap, Scribe emitters and snapshot digests consume the
+same path, producer and artifact-id contract; FILEMAP owns disposition and admission.
+Scribe projects the validated model.
+
+`make filemap-conform` builds and runs the FileMap executable with Configuration,
+Engine and their necessary lower dependencies. The aggregate CLI consumes FileMap's
+command implementation. `FILEMAP_SCOPE` and `FILEMAP_PRODUCER` select the scope and
+committed write-set queries. Whole-tree checks read tracked actor sources, including
+Scribe, without compiling or loading Scribe, QuestPDF, Jint or Acornima.
 Current writes use schema 6 and a deterministic TOML encoding. Canonical snapshots use
 schema 2 with `filemap_sha256`, binding the validated FILEMAP policy. Changed policy
 bytes and structured Evidence are checked at the write boundary; unrelated deltas do

@@ -218,7 +218,7 @@ private theorem dist_eq_sqrt_two_of_orthonormal {s : Set E}
   rw [dist_eq_norm]
   nlinarith [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2), Real.sqrt_nonneg 2, hsq, hnn]
 
-private theorem countable_of_orthonormal
+theorem countable_of_orthonormal
     [TopologicalSpace.SeparableSpace E] {s : Set E}
     (h : Orthonormal 𝕜 ((↑) : s → E)) : s.Countable := by
   refine countable_of_pairwise_dist_le (δ := 1) one_pos ?_

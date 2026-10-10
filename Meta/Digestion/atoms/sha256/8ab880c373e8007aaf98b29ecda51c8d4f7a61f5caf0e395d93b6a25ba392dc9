@@ -1,0 +1,19 @@
+### 29.1. 同一窗口在群商下严格交换
+
+固定正整数 $W$，令 $R=\operatorname{rad}(W)$、$q=W/R$，并记第27节的自然满射
+$$
+\rho:\mathbb Z/W\mathbb Z\longrightarrow\mathbb Z/R\mathbb Z.
+$$
+每个纤维大小恰为 $q$。对复信号 $h$ 定义实际拉回和有位置标签的窗口
+$$
+(Jh)(r)=h(\rho r),\qquad
+(S_L^{(M)}h)(r)=\sum_{a=0}^{L-1}h(r+a).
+$$
+窗口允许 $L=0$ 以及 $L>M$ 的重复绕行。因为 $\rho(r+a)=\rho(r)+a$，逐项得到
+$$
+S_L^{(W)}J=JS_L^{(R)},\qquad
+\|Jh\|_W^2=q\|h\|_R^2,
+\tag{29.1}
+$$
+其中范数使用各自循环上的计数测度。第二式按实际等大小纤维求和，不需要选择纤维代表。
+

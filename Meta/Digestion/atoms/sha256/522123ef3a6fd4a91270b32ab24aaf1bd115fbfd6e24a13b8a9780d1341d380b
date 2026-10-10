@@ -1,0 +1,14 @@
+**定义 1.1（来源语法）。** 自由有序二叉树及其替换为
+
+```math
+\mathbb T::=\alpha\mid\beta\mid\langle\mathbb T,\mathbb T\rangle,
+\qquad
+\rho(\alpha)=\beta,\qquad \rho(\beta)=\langle\beta,\alpha\rangle,
+```
+
+```math
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+```
+
+左右次序和括号是来源的一部分，特别是 $`\langle\alpha,\beta\rangle\ne\langle\beta,\alpha\rangle`$。
+

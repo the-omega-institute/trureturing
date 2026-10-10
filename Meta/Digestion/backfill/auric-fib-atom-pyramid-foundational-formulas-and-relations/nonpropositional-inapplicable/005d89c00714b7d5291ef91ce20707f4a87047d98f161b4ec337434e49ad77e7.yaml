@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:005d89c00714b7d5291ef91ce20707f4a87047d98f161b4ec337434e49ad77e7
+  normalized_sha256: sha256:005d89c00714b7d5291ef91ce20707f4a87047d98f161b4ec337434e49ad77e7
+cas_ref: sha256:005d89c00714b7d5291ef91ce20707f4a87047d98f161b4ec337434e49ad77e7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'All propositional clauses are bind-only under CLAUDE.md 3.2. For the actual f0=indicator[-1/2,1/2] cos(sqrt(2)*t)/(sqrt(2)*sin(sqrt(2)/2)) and the same fp=psi^2*f0/A, continuous real even psi, A>0, and an inner support radius 0<=a<1/2, pinned mathlib integral_cos, intervalIntegral.integral_comp_mul_left, ofReal_integral_eq_lintegral_ofReal, mgf_mono_of_nonneg, measure_ge_le_exp_mul_mgf, complexMGF_ofReal, setIntegral_le_integral, intervalIntegral.integral_pos, Real.tendsto_exp_atTop and atTop comparison close d>0, divergence of the actual imaginary-axis kernel difference, and nonexistence of a global complex-plane constant C. The certificate proves normalization, nonnegativity, integrability, support, and the transform bridge for the same actual densities; it does not assume separation. No complete usable frozen repository GID was found. Certificate: LEAN_SKIP_LOCK=1 /bin/bash tools/scripts/worktree/lean-cache-run.sh lake env lean /tmp/f741_settle_f741_26_3_actual.lean; exit_code=0. Probe26.complete_actual has only propext, Classical.choice, Quot.sound. This receipt settles upstream reuse, not a new project theorem or freeze.'
+    previous_atom_id: 0dcea6817882cad5bc17eecf711ad6f9c5d76ec151acef5eed34bc19f9945222
+    next_atom_id: aac40a6d649730fb4337d7322da21f0b66a500208abd14c71babdd1ae11c91af

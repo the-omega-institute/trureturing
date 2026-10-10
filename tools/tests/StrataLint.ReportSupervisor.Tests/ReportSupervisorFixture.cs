@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Diagnostics;
 using System.Text;
 using StrataLint.Engine;
@@ -484,7 +485,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 .Any(line => line.StartsWith(prefix, StringComparison.Ordinal)));
     }
 
-    private string WriteExecutable(string name, string contents)
+    internal string WriteExecutable(string name, string contents)
     {
         var path = Path.Combine(Root, name);
         File.WriteAllText(path, contents + "\n", new UTF8Encoding(false));

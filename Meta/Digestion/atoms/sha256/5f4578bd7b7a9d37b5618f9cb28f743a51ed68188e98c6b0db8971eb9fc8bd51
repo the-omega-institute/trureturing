@@ -1,0 +1,22 @@
+**证明。** 使用 [Keleti–Kolountzakis 的非消失与三点恢复原理](../../../Library/Fourier/keletikolountzakis2006determination.md)，先验证此轮筛的全部前提。对素数 $q$，合法集合
+$$
+R_{H,q}=\mathbb F_q\setminus\{-h:h\in H\}
+$$
+是真非空子集。零频率为正数 $|R_{H,q}|$。若非零频率消失，则其 $0/1$ 多项式
+$$
+P(T)=\sum_{r\in R_{H,q},\,0\le r<q}T^r
+$$
+在一个本原 $q$ 次单位根处为零。该根的最小多项式为 $\Phi_q(T)=1+\cdots+T^{q-1}$，故 $\Phi_q\mid P$；次数比较强制 $P$ 的全部系数相等，与真非空子集矛盾。最小多项式的不可约性亦可由 $\Phi_q(T+1)$ 的 Eisenstein 判别得到。
+
+令 $w_q=W/q$、$c_q=w_q^{-1}\bmod q$。CRT 的表示 $r=\sum_{q\mid W}r_qw_qc_q$ 给
+$$
+\widehat a(k)=\prod_{q\mid W}
+\widehat{\mathbf1_{R_{H,q}}}(kc_q)\ne0.
+\tag{16.3}
+$$
+为明确复共轭与归一化，写 $F_k=\widehat a(k)$、$J_k=\widehat g(k)$，并设 $\mathcal B_a=\mathcal B_g$。由 $\mathcal B_f(0,0)=|F_0|^2F_0$ 及 $z\mapsto|z|^2z$ 的单射性，得到 $J_0=F_0\ne0$；再由 $\mathcal B_f(k,0)=F_0|F_k|^2$ 得 $|J_k|=|F_k|>0$。比值 $R_k=J_k/F_k$ 满足
+$$
+|R_k|=1,\qquad R_{k+\ell}=R_kR_\ell.
+$$
+故 $R_k=R_1^k$ 且 $R_1^W=1$，存在唯一 $t\bmod W$ 使 $R_k=e_W(-kt)$。Fourier 反演给 $g=T_ta$。反向代入双谱时平移因子相消。最后，若还要求 $\widehat g(1)=\widehat a(1)\ne0$，则 $e_W(-t)=1$，故 $t=0$。∎
+

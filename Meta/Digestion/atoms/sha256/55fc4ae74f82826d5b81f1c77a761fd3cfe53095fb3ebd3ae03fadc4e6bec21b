@@ -1,0 +1,10 @@
+### 定义 3.1：正权星形
+
+一个内部变量 $y$ 连接 $m$ 个边界变量 $u_1,\ldots,u_m$，权重为 $c_i>0$：
+
+$$
+\mathcal E(u,y)=\frac12\sum_{i=1}^mc_i(u_i-y)^2.
+$$
+
+边界能量定义为 $\mathcal E_\partial(u)=\min_y\mathcal E(u,y)$。
+

@@ -1,0 +1,13 @@
+**命题 15.2（局部存活率恰好消费遗漏的联合坐标）。** 定义 15.1 的两种来源均满足 $xz=yz=0$，因而其概率律属于本卷五模式单纯形，并且
+$$
+X=Y=Z=\frac1q,\qquad
+\kappa=\begin{cases}1/3,&q=3,\\0,&q>3,\end{cases}
+\qquad
+p_0=1-X-Y-Z+\kappa=1-\frac{\nu_H(q)}q.
+$$
+在 $q=3$ 上，若把端点改为 $x=\mathbf1_{3\mid n}$、$y=\mathbf1_{3\mid n+4}$，中点取 $z=\mathbf1_{3\mid n+2}$，则得到 $H_C=\{0,2,4\}$ 的另一份合法五模式律。它与 $H_A$ 的三均值完全相同，但
+$$
+\kappa_A=\frac13,\quad p_{0,A}=\frac13,\qquad
+\kappa_C=0,\quad p_{0,C}=0.
+$$
+
