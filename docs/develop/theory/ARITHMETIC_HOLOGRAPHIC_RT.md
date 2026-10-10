@@ -4294,10 +4294,10 @@ $$
 
 以下固定一个可覆盖批次，写 $m=|\Delta_t|>0$, $\sigma=\sigma_t$, $d=d_t$。每层在初始 $\Delta_t$ 上至多覆盖 $d$ 个角色，所以任何大小为 $q$ 的覆盖至少需要
 $q\ge\lceil m/d\rceil$；若 $d=0$，正是前述不可达分支。取最优覆盖 $\mathcal R^*$，$|\mathcal R^*|=\sigma$。贪心第 $i$ 轮开始时记本轮新覆盖数为 $g_i$。给本轮每个新覆盖角色分配 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j$ 个未覆盖角色，则 $R$ 作为候选层的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给 $R$ 的角色数为 $a_{i,R}$，则本轮对 $R$ 的总 charge 至多
-$
+$$
 \frac{a_{i,R}}{g_i}\le\frac{a_{i,R}}{j}
 \le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
-$
+$$
 各轮区间两两不交并包含于
 $\{1,\ldots,|R\cap\Delta_t|\}$；跳过的整数只对应其它最优层已负责的角色。因此分配给 $R$ 的 charge 至多 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，贪心追加数 $s_t$ 满足
 $$
@@ -4369,7 +4369,7 @@ $$
 \le\sum_{t=1}^N H_{|\Delta_t|}\sigma_t.
 \tag{50.1}
 $$
-空批次贡献 $0$；若某批 $\Delta_t\ne\varnothing$ 有角色不属于任何 $\overline C_K$（尤其 $d_t=0$ 或 $\mathscr L_t=\varnothing$），则 $\sigma_t=\infty$，该批次在 append-only 语义下无法通过任何有限的当前菜单追加覆盖 $X_t$，当前阶段的在线保证在此处停止。若后续菜单扩张引入覆盖该角色的新层，可在新阶段重新定义残余并尝试恢复；本定理不把当前菜单下的失败升级为对未来菜单的全程不可达。
+空批次贡献 $0$；若某批 $\Delta_t\ne\varnothing$ 有角色不属于任何 $\overline C_K$（尤其 $d_t=0$ 或 $\mathscr L_t=\varnothing$），则 $\sigma_t=\infty$，该批次在 append-only 语义下无法通过任何有限的当前菜单追加覆盖 $X_t$，当前阶段的在线保证在此处停止。若后续菜单扩张引入覆盖该角色的新层，只有显式携带未覆盖角色才可另行尝试恢复（例如维护 $U_t:=X_t\setminus V_{\mathcal Q_t}$，并在下一批取 $\Delta_{t+1}:=(\delta_{t+1}\cup U_t)\setminus V_{\mathcal Q_t}$）；本定理的 $\Delta_t=\delta_t\setminus V_{\mathcal Q_{t-1}}$ 定义不自动回溯，也不把当前菜单下的失败升级为对未来菜单的全程不可达。
 
 对同一批次残余 $\Delta$ 和前缀 $\mathcal Q$，若两个菜单满足
 $\mathscr L^-\subseteq\mathscr L^+$，则
@@ -4386,13 +4386,13 @@ X_t=X_{t-1}\mathbin{\dot\cup}\delta_t
 \subseteq V_{\mathcal Q_{t-1}}\cup\Delta_t
 \subseteq V_{\mathcal Q_t},
 $$
-所以 $\mathcal Q_t$ 覆盖 $X_t$。若 $\Delta_t=\varnothing$ 则无需追加；若 $\sigma_t=\infty$，有角色不在当前菜单的任何覆盖集内，故当前阶段无法覆盖 $X_t$，在线保证在此处停止；后续菜单若扩张并引入新覆盖层，需另行定义新阶段的残余，本证明不宣称未来菜单下仍不可达。
+所以 $\mathcal Q_t$ 覆盖 $X_t$。若 $\Delta_t=\varnothing$ 则无需追加；若 $\sigma_t=\infty$，有角色不在当前菜单的任何覆盖集内，故当前阶段无法覆盖 $X_t$，在线保证在此处停止；后续菜单若扩张并引入新覆盖层，只有显式携带未覆盖角色并重新定义残余，才可另行尝试恢复，本证明不宣称未来菜单下仍不可达。
 
 固定一个可行的非空批次，写 $m=|\Delta_t|>0$、$\sigma=\sigma_t$、$d=d_t>0$。每层至多覆盖初始残余的 $d$ 个角色，所以任何大小为 $q$ 的追加至少满足 $q\ge\lceil m/d\rceil$。取最优 $\mathcal R^*$，$|\mathcal R^*|=\sigma$；贪心第 $i$ 轮开始时记本轮增益为 $g_i$。给本轮每个新覆盖角色 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j$ 个未覆盖角色，则 $R$ 作为候选层的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给 $R$ 的角色数为 $a_{i,R}$，则本轮对 $R$ 的总 charge 至多
-$
+$$
 \frac{a_{i,R}}{g_i}\le\frac{a_{i,R}}{j}
 \le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
-$
+$$
 这些区间两两不交并包含于 $\{1,\ldots,|R\cap\Delta_t|\}$，故分给 $R$ 的 charge 不超过 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，得到贪心追加数 $s_t\le H_d\sigma_t\le H_m\sigma_t$；又 $s_t\ge\sigma_t\ge\lceil m/d\rceil$。逐批求和并使用
 $\ell(\mathcal Q_t)=\ell(\mathcal Q_{t-1})+s_t$，即得 (50.1)。
 
@@ -4406,6 +4406,6 @@ O\!\left(|\Delta_t|^2|\mathscr L_t|\right)
 $$
 次 unit-cost membership 检查；若菜单差 $\mathscr L_t\triangle\mathscr L_{t-1}$ 需从显式列表重算嵌套关系，另加 $O(|\mathscr L_t|+|\mathscr L_{t-1}|)$ 列表检查。若 $\delta_t$ 需扫描整个 $\widehat A$ 才能发现，再加 $O(|\widehat A|)$ 角色枚举。累计成本是这些批次项之和。
 
-**范围。** 定理 50.2 只对固定 Fourier 二维证书族、append-only 前缀和每批有限菜单给出可行性与累计追加界；(50.2) 只比较固定残余上的集合覆盖最优值，不是任意 LOSR/CPTP、完整钻石范数或物理资源的单调性或下界。若业务要求菜单收缩时历史层也必须属于新菜单，则需另定义迁移/重优化问题，本定理不覆盖。
+**范围。** 定理 50.2 只对固定 Fourier 二维证书族、append-only 前缀和每批有限菜单给出可行性与累计追加界；(50.2) 只比较固定残余上的集合覆盖最优值，不是任意 LOSR/CPTP、完整钻石范数或物理资源的单调性或下界。若 $X_t=T_{\varepsilon_t}$ 采用阈值语义，则本式只覆盖降阈值 $\varepsilon_t\le\varepsilon_{t-1}$ 的递增链；升阈值是删除角色的 deletion-only 更新，不套用本定理，除非另行重建递增链。若业务要求菜单收缩时历史层也必须属于新菜单，则需另定义迁移/重优化问题，本定理不覆盖。
 
 ## 追加锚（本行以下为增补区）
