@@ -258,10 +258,10 @@ class HostCleanupTests(unittest.TestCase):
             sshx_home=self.root / "sshx", tmp_root=[self.root / "tmp"],
             min_age_hours=1, delete=True, verbose=False)
         with patch.object(cleanup, "active_paths", side_effect=OSError("probe unavailable")), \
-             patch.object(cleanup, "registered_worktrees", return_value=set()), \
+             patch.object(cleanup, "registered_worktrees", return_value=[self.root / "main", self.root]), \
              patch.object(cleanup, "clean_worktrees", return_value=0) as lanes:
             self.assertEqual(1, cleanup.run_clean(options))
-        lanes.assert_called_once_with(self.root, "base", True)
+        lanes.assert_called_once_with(self.root, "base", True, working_directory=self.root / "main")
 
     def test_worktree_make_blocks_before_dotnet_and_forwards_explicit_override(self):
         repository = self.root / "checkout with spaces"

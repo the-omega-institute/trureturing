@@ -164,6 +164,67 @@ class CleanupMakeTests(NativeFixture):
             self.assertEqual(self.local_head, self.git("rev-parse", "refs/heads/lane/governance/local"))
         self.assertIsNone(self.job.poll(), "independent participant must survive cleanup")
 
+    def test_aggregate_survives_repository_removal(self):
+        selected = self.add_lane("aggregate-anchor")
+        shutil.copytree(self.repository / "tools", selected / "tools",
+                        ignore=shutil.ignore_patterns("bin", "obj"))
+        for name in ("Directory.Build.props", "Directory.Packages.props", "global.json"):
+            shutil.copy2(self.repository / name, selected / name)
+        (selected / "owned").write_text("old staged value\n")
+        self.git("add", "owned", cwd=selected)
+        (selected / "owned").write_text("final tracked value\n")
+        (selected / "untracked").write_text("ordinary untracked value\n")
+        (selected / ".lake").mkdir()
+        (selected / ".lake/ignored").write_text("outside snapshot\n")
+        artifacts = self.root / "artifacts"
+        artifacts.mkdir()
+        obsolete = artifacts / "ordinary-output"
+        obsolete.write_text("independent artifact\n")
+        caller = artifacts / "stable-caller"
+        caller.mkdir()
+        caller_input = caller / "input"
+        caller_input.write_text("caller material\n")
+        for path in (obsolete, caller_input, caller):
+            os.utime(path, (1700000000, 1700000000))
+        self.assertIn(INVOCATION, ("self", "stable"))
+        cwd = selected / "tools" if INVOCATION == "self" else caller
+        makefile = (selected if INVOCATION == "self" else self.repository) / "tools/Makefile"
+        relative = lambda path: os.path.relpath(path, cwd)
+        arguments = ["make", "--no-print-directory", "-f", makefile, "clean-all",
+                     "FORCE=1", "BASE=dev", "VERBOSE=1",
+                     "REPOSITORY=" + relative(selected),
+                     "CLEAN_CODEX_HOME=" + relative(self.root / "codex"),
+                     "CLEAN_SSHX_HOME=" + relative(self.root / "sshx"),
+                     "CLEAN_TMP_ROOT=" + relative(artifacts)]
+        removed = self.run_command(arguments, cwd, phase="aggregate-anchor", check=False)
+        self.assertEqual(0, removed.returncode, removed.stdout + removed.stderr)
+        events = self.events(removed)
+        item = next(item for item in events if item.get("path") == str(selected))
+        self.assertEqual("removed", item["action"], item)
+        self.assertFalse(selected.exists())
+        self.assertFalse(obsolete.exists())
+        if INVOCATION == "stable":
+            self.assertEqual("caller material\n", caller_input.read_text())
+        summary = next(item for item in events if item["event"] == "host_cleanup_summary")
+        self.assertEqual("succeeded", summary["status"])
+        self.assertEqual(0, summary["worktree_exit"])
+        self.assertIsNone(summary["inventory_error"])
+        for field in ("disk_available_before", "disk_available_after"):
+            self.assertGreater(summary[field], 0)
+        recovery = self.root / "recovered-anchor"
+        branch = "lane/governance/aggregate-anchor"
+        self.git("worktree", "add", recovery, branch)
+        self.assertEqual("final tracked value\n", (recovery / "owned").read_text())
+        self.assertEqual("ordinary untracked value\n", (recovery / "untracked").read_text())
+        self.assertFalse((recovery / ".lake/ignored").exists())
+        self.assert_recoverable(events)
+        print(json.dumps(dict(event="aggregate_anchor_result", invocation=INVOCATION,
+            command=list(map(str, arguments)), exit=removed.returncode,
+            selected_tree_exists=selected.exists(), artifact_exists=obsolete.exists(),
+            recovery_branch=branch, recovery_commit=self.git("rev-parse", branch),
+            recovered={name: (recovery / name).read_text() for name in ("owned", "untracked")},
+            ignored_recovered=False, host_summary=summary)), flush=True)
+
     def test_production_cleanup_entrances(self):
         entrances = [
             (["-C", self.repository / "tools"], "clean-lanes", self.root),

@@ -333,16 +333,17 @@ def active_paths(codex, scopes=()):
 def registered_worktrees(repository):
     result = subprocess.run(["git", "-C", str(repository), "worktree", "list", "--porcelain", "-z"],
                             capture_output=True, check=True, timeout=60)
-    return {Path(os.fsdecode(field[len(b"worktree "):])).resolve()
-            for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")}
+    # Git lists the main worktree first; it survives registered-tree cleanup.
+    return [Path(os.fsdecode(field[len(b"worktree "):])).resolve()
+            for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")]
 
 
-def clean_worktrees(repository, base, delete, active_paths=()):
+def clean_worktrees(repository, base, delete, active_paths=(), working_directory=None):
     arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
                  "--base", base, "--lanes-only"]
     if delete:
         arguments.append("--force")
-    return subprocess.run(arguments, cwd=repository).returncode
+    return subprocess.run(arguments, cwd=working_directory or repository).returncode
 
 
 def nonnegative_hours(value):
@@ -353,6 +354,24 @@ def nonnegative_hours(value):
 
 
 def run_clean(options):
+    caller = Path.cwd().resolve()
+    options.repository = options.repository.absolute()
+    options.codex_home = options.codex_home.absolute()
+    options.sshx_home = options.sshx_home.absolute()
+    options.tmp_root = [path.absolute() for path in options.tmp_root]
+    # Worktree removal may unlink both the caller and the repository. Keep
+    # filesystem measurements on the same volume through an OS-owned handle.
+    descriptor = os.open(options.repository, os.O_RDONLY)
+    try:
+        os.chdir("/")
+        return clean_from_anchor(options, caller, descriptor)
+    finally:
+        os.close(descriptor)
+        if caller.is_dir():
+            os.chdir(caller)
+
+
+def clean_from_anchor(options, caller, disk_descriptor):
     codex = options.codex_home.absolute()
     sshx = options.sshx_home.absolute()
     if codex.is_symlink() or sshx.is_symlink():
@@ -366,19 +385,21 @@ def run_clean(options):
         if root.exists() and not root.is_dir():
             raise OSError("artifact root must be a directory: " + str(root))
     roots = {path for path in roots if not any(parent in roots for parent in path.parents)}
-    worktrees = registered_worktrees(options.repository)
-    lanes_exit = clean_worktrees(options.repository, options.base, options.delete)
+    inventory = registered_worktrees(options.repository)
+    worktrees = set(inventory)
+    lanes_exit = clean_worktrees(options.repository, options.base, options.delete,
+                                working_directory=next(iter(inventory), options.repository))
     try:
         active = active_paths(codex)
     except OSError as error:
         emit("host_cleanup_summary", status="failed", worktree_exit=lanes_exit,
              inventory_error=str(error), artifact_sweep="not_started")
         return 1
-    protected = active | worktrees
+    protected = active | worktrees | {caller}
     protections = {"codex": ProtectedPaths(protected), "sshx": ProtectedPaths(protected),
                    "tmp": ProtectedPaths(protected | {codex, sshx})}
     cutoff = time.time() - options.min_age_hours * 3600
-    before = shutil.disk_usage(options.repository).free
+    before = shutil.disk_usage(disk_descriptor).free
     counts, skipped = Counter(), Counter()
     apparent_bytes = 0
     seen = set()
@@ -406,7 +427,7 @@ def run_clean(options):
          min_age_hours=options.min_age_hours, counts=dict(counts), skipped=dict(skipped),
          candidate_apparent_bytes=apparent_bytes, worktree_exit=lanes_exit,
          inventory_error=inventory_error,
-         disk_available_before=before, disk_available_after=shutil.disk_usage(options.repository).free,
+         disk_available_before=before, disk_available_after=shutil.disk_usage(disk_descriptor).free,
          status="failed" if failed else "succeeded")
     return 1 if failed else 0
 
