@@ -3,8 +3,7 @@ bibkey: rasmussenwilliams2006gaussian
 authors: Carl Edward Rasmussen; Christopher K. I. Williams
 year: 2006
 title: Gaussian Processes for Machine Learning
-publisher: MIT Press
-isbn: 026218253X
+doi: null
 url: https://gaussianprocess.org/gpml/chapters/RWA.pdf
 claim: Appendix A gives the finite Gaussian density, conditioning, matrix determinant update, inverse derivative and log-determinant derivative under the stated positive-definite hypotheses.
 strata_touched: []
