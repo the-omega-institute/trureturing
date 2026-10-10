@@ -8,6 +8,7 @@
 
 import Mathlib
 import D5.S3.Resource.EntanglementWitness
+import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -18,56 +19,6 @@ open Matrix
 open D5.S3.Resource.CompositeCones
 open D5.S3.Resource.EntanglementWitness
 open scoped Kronecker ComplexOrder MatrixOrder
-
-private noncomputable def circlePhase (x : ℝ) : ℂ :=
-  ((x : ℂ) - Complex.I) / ((x : ℂ) + Complex.I)
-
-private lemma phase_denominator_ne_zero (x : ℝ) : (x : ℂ) + Complex.I ≠ 0 := by
-  intro h
-  have hi := congrArg Complex.im h
-  norm_num at hi
-
-private lemma circlePhase_norm (x : ℝ) : ‖circlePhase x‖ = 1 := by
-  have hn : ‖(x : ℂ) - Complex.I‖ = ‖(x : ℂ) + Complex.I‖ := by
-    have he : (starRingEnd ℂ) ((x : ℂ) + Complex.I) = (x : ℂ) - Complex.I := by
-      simp [sub_eq_add_neg]
-    rw [← he, Complex.norm_conj]
-  rw [circlePhase, norm_div, hn]
-  exact div_self (norm_ne_zero_iff.mpr (phase_denominator_ne_zero x))
-
-private lemma circlePhase_injective : Function.Injective circlePhase := by
-  intro x y h
-  have hm := (div_eq_div_iff (phase_denominator_ne_zero x)
-    (phase_denominator_ne_zero y)).mp h
-  have he : (x : ℂ) = y := by
-    have hI : Complex.I ≠ 0 := Complex.I_ne_zero
-    apply (mul_left_cancel₀ hI)
-    linear_combination (1 / 2 : ℂ) * hm
-  exact Complex.ofReal_injective he
-
-/-- Every finite complex matrix has an invertible scalar pencil at a unit scalar. -/
-private theorem exists_unit_phase_det_ne_zero {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (C : Matrix ι ι ℂ) :
-    ∃ z : ℂ, ‖z‖ = 1 ∧ (z • (1 : Matrix ι ι ℂ) - C).det ≠ 0 := by
-  classical
-  let f : Fin (Fintype.card ι + 1) → ℂ := fun k => circlePhase (k.val : ℝ)
-  have hf : Function.Injective f := by
-    intro i j h
-    apply Fin.ext
-    exact_mod_cast circlePhase_injective h
-  have hex : ∃ i, C.charpoly.eval (f i) ≠ 0 := by
-    by_contra h
-    have hz : C.charpoly = 0 :=
-      Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero C.charpoly hf
-        (by simpa using h) (by simp)
-    exact C.charpoly_monic.ne_zero hz
-  obtain ⟨i, hi⟩ := hex
-  refine ⟨f i, circlePhase_norm _, ?_⟩
-  have he : Matrix.scalar ι (f i) = f i • (1 : Matrix ι ι ℂ) := by
-    ext a b
-    simp [Matrix.scalar, Matrix.diagonal, Matrix.smul_apply, Matrix.one_apply,
-      Matrix.of_apply, mul_ite]
-  rwa [Matrix.eval_charpoly, he] at hi
 
 private theorem exists_unitary_dilation {n : ℕ} (C : Matrix (Fin n) (Fin n) ℂ)
     (hC : (1 - Cᴴ * C).PosSemidef) :
@@ -113,129 +64,44 @@ private theorem unitary_phase_decomposition {ι : Type*} [Fintype ι] [Decidable
       (∑ r, vecMulVec (v r) (star (v r))) = 1 ∧
       (∑ r, c r • vecMulVec (v r) (star (v r))) = U := by
   classical
-  obtain ⟨z, hz, hdet⟩ := exists_unit_phase_det_ne_zero U
-  have hzn : z ≠ 0 := by intro h; rw [h, norm_zero] at hz; norm_num at hz
-  let B : Matrix ι ι ℂ := z⁻¹ • U
-  let D : Matrix ι ι ℂ := 1 - B
-  have hs : star (z⁻¹) * z⁻¹ = (1 : ℂ) := by
-    change (starRingEnd ℂ) (z⁻¹) * z⁻¹ = 1
-    rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, norm_inv, hz]
-    norm_num
-  have hUU : Uᴴ * U = 1 := by
-    simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp hU
-  have hB : Bᴴ * B = 1 := by
-    simp only [B, Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
-      smul_smul, hUU]
-    rw [mul_comm, hs, one_smul]
-  have hscale : z • D = z • (1 : Matrix ι ι ℂ) - U := by
-    simp [D, B, smul_sub, smul_smul, hzn]
-  have hDn : D.det ≠ 0 := by
-    intro h
-    apply hdet
-    rw [← hscale, Matrix.det_smul, h, mul_zero]
-  have hDu : IsUnit D.det := isUnit_iff_ne_zero.mpr hDn
-  have hDl := Matrix.nonsing_inv_mul D hDu
-  have hDr := Matrix.mul_nonsing_inv D hDu
-  let A : Matrix ι ι ℂ := Complex.I • ((1 + B) * D⁻¹)
-  have hAD : A * D = Complex.I • (1 + B) := by
-    simp only [A, smul_mul_assoc, mul_assoc, hDl, mul_one]
-  have hmid : Dᴴ * A * D = Complex.I • (B - Bᴴ) := by
-    rw [mul_assoc, hAD, Matrix.mul_smul]
-    congr 1
-    simp only [D, Matrix.conjTranspose_sub, Matrix.conjTranspose_one]
-    noncomm_ring [hB]
-  have hmidH : (Complex.I • (B - Bᴴ)).IsHermitian := by
-    change (Complex.I • (B - Bᴴ))ᴴ = _
-    rw [Matrix.conjTranspose_smul, Matrix.conjTranspose_sub,
-      Matrix.conjTranspose_conjTranspose]
-    simp only [RCLike.star_def, Complex.conj_I]
-    module
-  have hA : A.IsHermitian := by
-    rw [← hmid] at hmidH
-    have h := Matrix.isHermitian_conjTranspose_mul_mul D⁻¹ hmidH
-    have he : D⁻¹ᴴ * (Dᴴ * A * D) * D⁻¹ = A := by
-      calc
-        _ = (D * D⁻¹)ᴴ * A * (D * D⁻¹) := by
-          simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
-        _ = A := by rw [hDr]; simp
-    rwa [he] at h
-  let v : ι → ι → ℂ := fun r => ⇑(hA.eigenvectorBasis r)
-  let t : ι → ℝ := hA.eigenvalues
-  have hcomplete : (∑ r, vecMulVec (v r) (star (v r))) = 1 := by
-    have h := Unitary.coe_mul_star_self hA.eigenvectorUnitary
+  let : IsStarNormal U := ⟨by
+    change star U * U = U * star U
+    exact (Unitary.star_mul_self_of_mem hU).trans
+      (Unitary.mul_star_self_of_mem hU).symm⟩
+  obtain ⟨Q, hQ, c, hc⟩ := Matrix.exists_mem_unitaryGroup_star_mul_mul_eq_diagonal U
+  have he : U = Q * Matrix.diagonal c * Qᴴ := by
+    calc
+      U = (Q * star Q) * U * (Q * star Q) := by
+        rw [Unitary.mul_star_self_of_mem hQ]
+        simp
+      _ = Q * (star Q * U * Q) * star Q := by simp only [Matrix.mul_assoc]
+      _ = Q * Matrix.diagonal c * Qᴴ := by rw [hc]; rfl
+  refine ⟨fun r i => Q i r, c, ?_, ?_, ?_⟩
+  · intro r
+    have hd : Matrix.diagonal c ∈ Matrix.unitaryGroup ι ℂ := by
+      rw [← hc]
+      exact mul_mem (mul_mem (Unitary.star_mem hQ) hU) hQ
+    have hh := congrFun (congrFun (Matrix.mem_unitaryGroup_iff'.mp hd) r) r
+    have hz : star (c r) * c r = 1 := by
+      simpa only [Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose,
+        Matrix.diagonal_mul_diagonal, Matrix.diagonal_apply_eq, Matrix.one_apply_eq,
+        starRingEnd_apply, Pi.star_apply] using hh
+    have hn := congrArg norm hz
+    rw [norm_mul, norm_star, norm_one] at hn
+    nlinarith [norm_nonneg (c r)]
+  · ext i j
+    simpa only [Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+      Matrix.mul_apply, Matrix.star_apply] using
+      congrArg (fun M : Matrix ι ι ℂ => M i j) (Unitary.mul_star_self_of_mem hQ)
+  · rw [he]
     ext i j
-    simpa only [v, Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.star_apply,
-      Matrix.mul_apply, Unitary.coe_star, Matrix.star_apply,
-      Matrix.IsHermitian.eigenvectorUnitary_apply] using
-      congrArg (fun M : Matrix ι ι ℂ => M i j) h
-  have hspectral : ∑ r, (t r : ℂ) • vecMulVec (v r) (star (v r)) = A := by
-    conv_rhs => rw [hA.spectral_theorem]
-    ext i j
-    simp only [Unitary.conjStarAlgAut_apply, Matrix.mul_apply, Matrix.diagonal_apply,
-      Function.comp_apply, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
-      if_true, Matrix.star_apply, Matrix.IsHermitian.eigenvectorUnitary_apply,
-      Matrix.sum_apply, Matrix.smul_apply, v, t, Matrix.vecMulVec_apply,
-      Pi.star_apply, smul_eq_mul, RCLike.ofReal_eq_complex_ofReal]
+    simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
+      Pi.star_apply, smul_eq_mul, Matrix.mul_apply, Matrix.diagonal_apply,
+      Matrix.conjTranspose_apply, mul_ite, mul_zero, Finset.sum_ite_eq',
+      Finset.mem_univ, if_true]
     apply Finset.sum_congr rfl
     intro r hr
     ring
-  let d : ι → ℂ := fun r => ((t r : ℂ) - Complex.I) / ((t r : ℂ) + Complex.I)
-  let K : Matrix ι ι ℂ := ∑ r, d r • vecMulVec (v r) (star (v r))
-  have hAB : (A + Complex.I • 1) * B = A - Complex.I • 1 := by
-    have h := hAD
-    simp only [D, Matrix.mul_sub, Matrix.mul_one, smul_add] at h
-    simp only [add_mul, smul_mul_assoc, one_mul]
-    ext i j
-    have he := congrArg (fun M : Matrix ι ι ℂ => M i j) h
-    simp only [Matrix.sub_apply, Matrix.add_apply] at he ⊢
-    linear_combination -he
-  have heig : ∀ r, A * vecMulVec (v r) (star (v r)) =
-      (t r : ℂ) • vecMulVec (v r) (star (v r)) := by
-    intro r
-    rw [Matrix.mul_vecMulVec]
-    have h := hA.mulVec_eigenvectorBasis r
-    rw [h]
-    ext i j
-    simp only [Matrix.vecMulVec_apply, Pi.smul_apply, Matrix.smul_apply,
-      smul_eq_mul, Complex.real_smul]
-    ring
-  have hAK : (A + Complex.I • 1) * K = A - Complex.I • 1 := by
-    have hd : ∀ r, d r * ((t r : ℂ) + Complex.I) = (t r : ℂ) - Complex.I := by
-      intro r
-      exact div_mul_cancel₀ _ (phase_denominator_ne_zero _)
-    change (A + Complex.I • 1) *
-      (∑ r, d r • vecMulVec (v r) (star (v r))) = A - Complex.I • 1
-    rw [Finset.mul_sum]
-    calc
-      _ = ∑ r, ((t r : ℂ) - Complex.I) • vecMulVec (v r) (star (v r)) := by
-        apply Finset.sum_congr rfl
-        intro r hr
-        rw [Matrix.mul_smul, add_mul, heig, smul_mul_assoc, one_mul,
-          ← add_smul, smul_smul, hd]
-      _ = A - Complex.I • 1 := by
-        simp only [sub_smul, Finset.sum_sub_distrib, hspectral,
-          ← Finset.smul_sum, hcomplete]
-  have hplus : (A + Complex.I • 1) * D = (2 * Complex.I) • 1 := by
-    rw [add_mul, hAD, smul_mul_assoc, one_mul, ← smul_add]
-    simp only [D]
-    module
-  have hplus' : A + Complex.I • 1 = (2 * Complex.I) • D⁻¹ := by
-    have h := congrArg (fun M : Matrix ι ι ℂ => M * D⁻¹) hplus
-    simpa only [mul_assoc, hDr, mul_one, smul_mul_assoc, one_mul] using h
-  have hinj : Function.Injective (fun X : Matrix ι ι ℂ => (A + Complex.I • 1) * X) := by
-    apply Matrix.mul_right_injective_of_inv ((2 * Complex.I)⁻¹ • D)
-    rw [hplus', smul_mul_smul_comm, hDr, inv_mul_cancel₀]
-    · exact one_smul _ _
-    · exact mul_ne_zero (by norm_num) Complex.I_ne_zero
-  have hKB : K = B := hinj (hAK.trans hAB.symm)
-  refine ⟨v, fun r => z * d r, ?_, hcomplete, ?_⟩
-  · intro r
-    rw [norm_mul, hz]
-    exact one_mul _ |>.trans (circlePhase_norm (t r))
-  · simp only [mul_smul, ← Finset.smul_sum]
-    change z • K = U
-    rw [hKB]
-    simp [B, smul_smul, hzn]
 
 /-- A Euclidean contraction is a compression of a finite rank-one phase decomposition. -/
 theorem contraction_decomposition {n : ℕ} (C : Matrix (Fin n) (Fin n) ℂ)
@@ -286,11 +152,9 @@ private lemma one_add_posSemidef_of_contraction {ι : Type*} [Fintype ι]
 
 private def pairBlock {n : ℕ} (C : Matrix (Fin n) (Fin n) ℂ) :
     Matrix (Fin 2 × Fin n) (Fin 2 × Fin n) ℂ :=
-  fun i j =>
-    if i.1 = 0 then
-      if j.1 = 0 then (if i.2 = j.2 then 1 else 0) else C i.2 j.2
-    else
-      if j.1 = 0 then Cᴴ i.2 j.2 else (if i.2 = j.2 then 1 else 0)
+  (Matrix.fromBlocks 1 C Cᴴ 1).submatrix
+    (fun i => if i.1 = 0 then Sum.inl i.2 else Sum.inr i.2)
+    (fun j => if j.1 = 0 then Sum.inl j.2 else Sum.inr j.2)
 
 private def phaseVector (z : ℂ) : Fin 2 → ℂ := fun i =>
   if i = 0 then 1 else star z
@@ -320,13 +184,15 @@ private theorem pair_block_separable_of_decomposition {n k : ℕ}
     rcases i with ⟨i, p⟩
     rcases j with ⟨j, q⟩
     fin_cases i <;> fin_cases j
-    · simpa [pairBlock, phaseVector, hcc, Matrix.of_apply, Matrix.sum_apply,
+    · simpa [pairBlock, Matrix.fromBlocks, Matrix.submatrix, phaseVector, hcc,
+        Matrix.of_apply, Matrix.sum_apply,
         Matrix.one_apply,
         Matrix.kroneckerMap,
         Matrix.kroneckerMap_apply,
         Matrix.vecMulVec_apply, Finset.sum_apply] using
         (congrArg (fun M => M p q) hI).symm
-    · simpa [pairBlock, phaseVector, Matrix.of_apply, Matrix.sum_apply,
+    · simpa [pairBlock, Matrix.fromBlocks, Matrix.submatrix, phaseVector,
+        Matrix.of_apply, Matrix.sum_apply,
         Matrix.one_apply,
         Matrix.kroneckerMap,
         Matrix.kroneckerMap_apply,
@@ -340,13 +206,15 @@ private theorem pair_block_separable_of_decomposition {n k : ℕ}
         rw [Matrix.conjTranspose_smul, Matrix.conjTranspose_vecMulVec]
         ext p q
         simp [Matrix.vecMulVec_apply]
-      simpa [pairBlock, phaseVector, Matrix.of_apply, Matrix.sum_apply,
+      simpa [pairBlock, Matrix.fromBlocks, Matrix.submatrix, phaseVector,
+        Matrix.of_apply, Matrix.sum_apply,
         Matrix.one_apply,
         Matrix.kroneckerMap,
         Matrix.kroneckerMap_apply,
         Matrix.vecMulVec_apply, Finset.sum_apply] using
         (congrArg (fun M => M p q) hCstar)
-    · simpa [pairBlock, phaseVector, hcc', Matrix.of_apply, Matrix.sum_apply,
+    · simpa [pairBlock, Matrix.fromBlocks, Matrix.submatrix, phaseVector, hcc',
+        Matrix.of_apply, Matrix.sum_apply,
         Matrix.one_apply,
         Matrix.kroneckerMap,
         Matrix.kroneckerMap_apply,
@@ -355,10 +223,10 @@ private theorem pair_block_separable_of_decomposition {n k : ℕ}
 
 private def block {m n : ℕ}
     (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) (i j : Fin m) :
-    Matrix (Fin n) (Fin n) ℂ := fun p q => H (i, p) (j, q)
+    Matrix (Fin n) (Fin n) ℂ := H.submatrix (fun p => (i, p)) (fun q => (j, q))
 
 private def embedVector {m n : ℕ} (i : Fin m) (x : Fin n → ℂ) :
-    Fin m × Fin n → ℂ := fun ap => if ap.1 = i then x ap.2 else 0
+    Fin m × Fin n → ℂ := fun ap => (Pi.single i x : Fin m → Fin n → ℂ) ap.1 ap.2
 
 private lemma block_contraction {m n : ℕ}
     (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
@@ -369,9 +237,9 @@ private lemma block_contraction {m n : ℕ}
   intro x
   have he : ∀ p, (H *ᵥ embedVector j x) (i, p) = (block H i j *ᵥ x) p := by
     intro p
-    simp [mulVec, dotProduct, Fintype.sum_prod_type, embedVector, block]
+    simp [mulVec, dotProduct, Fintype.sum_prod_type, embedVector, Pi.single_apply, ite_apply, block]
   have hn : ‖WithLp.toLp 2 (embedVector j x)‖ ^ 2 = ‖WithLp.toLp 2 x‖ ^ 2 := by
-    simp [EuclideanSpace.norm_sq_eq, Fintype.sum_prod_type, embedVector,
+    simp [EuclideanSpace.norm_sq_eq, Fintype.sum_prod_type, embedVector, Pi.single_apply, ite_apply,
       apply_ite, Finset.sum_ite_irrel]
   have hle : ‖WithLp.toLp 2 (block H i j *ᵥ x)‖ ^ 2 ≤
       ‖WithLp.toLp 2 (H *ᵥ embedVector j x)‖ ^ 2 := by
@@ -387,7 +255,7 @@ private lemma block_contraction {m n : ℕ}
       (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mpr (hH _)
     _ = _ := hn
 
-private lemma separableCone_sum {m n : ℕ} {ι : Type*} [Fintype ι]
+lemma separableCone_sum {m n : ℕ} {ι : Type*} [Fintype ι]
     (f : ι → Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
     (hf : ∀ i, separableCone (f i)) : separableCone (∑ i, f i) := by
   classical
@@ -444,7 +312,7 @@ private lemma embeddedPair_apply {m n : ℕ} (i j x y : Fin m)
   classical
   simp [embeddedPair, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.kroneckerMap_apply,
-    injectPair, pairBlock, Matrix.one_apply]
+    injectPair, pairBlock, Matrix.fromBlocks, Matrix.submatrix, Matrix.one_apply]
   split_ifs <;> simp_all <;> ring
 
 private def diagonalTerm {m n : ℕ}
@@ -555,6 +423,7 @@ theorem separableCone_scalar_add_of_opNorm_le_one {m n : ℕ}
     · exact embeddedPair_separable i j _
         (contraction_posSemidef _ (block_contraction H hbound i j))
 
+#print axioms separableCone_sum
 #print axioms contraction_decomposition
 #print axioms separableCone_scalar_add_of_opNorm_le_one
 

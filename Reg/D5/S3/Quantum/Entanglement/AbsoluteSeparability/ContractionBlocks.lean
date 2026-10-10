@@ -65,7 +65,8 @@ def family : Registration arena (type_of% @contraction_decomposition) where
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@contraction_decomposition) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.Phases.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.Phases.family
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.Phases.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -85,7 +86,8 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "arg", "body", "fn", "arg", "body", "fn", "arg"]
+      path := #["body", "body", "body", "arg", "body", "arg", "body", "fn", "arg", "body", "fn",
+        "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -157,8 +159,10 @@ def family : Registration arena (type_of% @separableCone_scalar_add_of_opNorm_le
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@separableCone_scalar_add_of_opNorm_le_one) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.ScalarShift.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.ScalarShift.family
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.ScalarShift.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.ScalarShift.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -192,5 +196,103 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 #print axioms registration
 
 end ScalarShift
+
+
+namespace SeparableSum
+
+universe u
+
+abbrev signature : Signature where
+  Params := Σ _m : ℕ, ℕ
+  State p := Matrix (Fin p.1 × Fin p.2) (Fin p.1 × Fin p.2) ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ S => @decide (separableCone S) (Classical.propDecidable _))
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m n : ℕ} {ι : Type u} [Fintype ι]
+    (f : ι → Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ),
+    (∀ i, separableCone (f i)) → R.readout () ⟨m, n⟩ (∑ i, f i) = true
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have he := h (m := 1) (n := 1) (ι := ULift.{u} Empty)
+    (fun i => nomatch i.down) (fun i => nomatch i.down)
+  simp [rejected, realize] at he
+
+def family : Registration arena.{u} (type_of% @separableCone_sum.{u}) where
+  actual := actual
+  bridge := by simp [actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using @separableCone_sum.{u},
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨1, 1⟩, 0, -1, ?_⟩
+    have hz : separableCone (0 : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ) :=
+      _root_.D5.S3.Resource.EntanglementWitness.separableCone_zero
+    have hn : ¬ separableCone (-1 : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ) := by
+      intro hs
+      have hd := (separable_isPosSemidef hs).diag_nonneg (i := (0, 0))
+      norm_num [Matrix.neg_apply, Matrix.one_apply, Complex.le_def] at hd
+    simp [actual, realize, hz, hn]
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@separableCone_sum.{u}) (Realization signature) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.SeparableSum.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.SeparableSum.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := true
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨True.intro⟩ True.intro
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .evidence ⟨True.intro⟩ True.intro
+  sensitivity := .evidence ⟨True.intro⟩ True.intro
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms family
+#print axioms registration
+
+end SeparableSum
 
 end Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks

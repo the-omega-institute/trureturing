@@ -16,8 +16,10 @@ internal sealed class ContractionBlocksDocument : IScribeDocumentDefinition
         "Every finite complex Euclidean contraction has a rank-one phase decomposition with twice as many terms as its dimension. This decomposition makes the scalar shift mI + H separable for a Hermitian Euclidean contraction on a product of dimensions m and n.",
         H("Contraction decompositions and separable scalar shifts"),
         Blocks(
+            Node("separableCone_sum", "Finite sums preserve separability", SeparableSum(),
+                "For any finite index type, a sum of separable matrices is separable. The empty sum is the zero matrix, and adjoining one summand preserves separability by addition. This includes zero dimensions."),
             Node("contraction_decomposition", "A finite rank-one phase decomposition", Decomposition(),
-                "The vectors are indexed by Fin n ⊕ Fin n, including the empty family when n is zero. Their rank-one matrices sum to the identity, and multiplying them by scalars of modulus one reconstructs C. The square root of I − C* C supplies an orthonormal family whose first coordinates are the columns of C. Extending it to an orthonormal basis gives a unitary dilation. A unit scalar outside its finite spectrum permits a Hermitian Cayley transform; its spectral basis and inverse transform provide the phases. Restricting the vectors to the first n coordinates gives the stated decomposition."),
+                "The vectors are indexed by Fin n ⊕ Fin n, including the empty family when n is zero. Their rank-one matrices sum to the identity, and multiplying them by scalars of modulus one reconstructs C. The square root of I − C* C supplies an orthonormal family whose first coordinates are the columns of C. Extending it to an orthonormal basis gives a unitary dilation. The spectral theorem for normal matrices diagonalizes this unitary dilation in an orthonormal basis; unitarity forces each diagonal eigenvalue to have modulus one. Restricting the vectors to the first n coordinates gives the stated decomposition."),
             Node("separableCone_scalar_add_of_opNorm_le_one", "Separable middle rays", MiddleRays(),
                 "Aubrun--Davidson--Muller-Hermes--Paulsen--Rahaman Theorem 3.7, printed page 9, gives d₁(M_n) = n. The formal scalar-shift statement is its dual form under separable and block-positive cone duality, with the factor labels exchanged. The theorem's proof uses a separable block operator with identity diagonal blocks and a scaled contraction off the diagonal. The bound here quantifies all complex coordinate vectors and takes the norm after WithLp.toLp 2, so both norms are Euclidean. The dimensions m and n may be zero; these cases give the zero matrix. Each diagonal block I + Hii is positive semidefinite. Each off-diagonal block Hij is a contraction; its phase decomposition expresses the two-by-two block with identity diagonal as a sum of Kronecker products of positive semidefinite rank-one matrices, the block-separability statement of Gurvits--Barnum Proposition 1, printed page 2. Embedding these blocks and adding the diagonal terms yields mI + H. The separable cone here means a finite sum of Kronecker products of positive semidefinite factors.",
                 AssessedProvenance.FromLiterature(Source))), []));
@@ -28,6 +30,20 @@ internal sealed class ContractionBlocksDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(statement)), provenance ?? AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula SeparableSum()
+    {
+        Formula index = F.Id("I"), f = F.Id("f"), i = F.Id("i");
+        Formula product = Call("Prod", Fin(M), Fin(N));
+        Formula premise = All(i, index,
+            QCall("D5.S3.Resource.CompositeCones", "separableCone", App(f, i)));
+        Formula conclusion = QCall("D5.S3.Resource.CompositeCones", "separableCone",
+            SumOver(i, index, App(f, i)));
+        Formula finite = Seq(OpenBracket, Call("Fintype", index), CloseBracket);
+        return All(M, Nat(), All(N, Nat(), All(index, Call("Type"),
+            Seq(finite, Comma, Sp,
+                All(f, Arrow(index, Mat(product)), Imp(premise, conclusion))))));
+    }
 
     private static Formula Decomposition()
     {
