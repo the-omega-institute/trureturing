@@ -3246,6 +3246,59 @@ $$
 
 **范围。** 这是给定有限允许层族与固定入口系数时的证书族停止算法；达到阈值只说明 §45 的指定 Fourier 二维下界不超过 $\varepsilon$，不是整个钻石范数的上界，也不优化任意 LOSR 层。
 
+## 47. 允许层搜索的覆盖复杂度
+
+**定理 47.1（证书停止的覆盖化与贪心界）。** 在 §46 的固定超阈值集合 $T=T_\varepsilon$ 与有限、显式枚举（可逐项遍历）的允许层族 $\mathscr L$ 下，定义每层覆盖集
+
+$$
+C_K=\{\eta\in T:\eta\notin K^\perp\}\qquad(K\in\mathscr L).
+$$
+
+记 $\mathscr C:=\{C_K:K\in\mathscr L\}$。若 $n:=|T|=0$，算法零步停止并令 $\tau=0$。若 $n\ge1$，一个 stack 在证书意义下达到阈值，当且仅当其所选层的覆盖集并集包含 $T$。因此在可覆盖时最短 stack 长度恰为
+
+$$
+\tau(T,\mathscr C)=\min\{ |\mathscr Q|:\mathscr Q\subseteq\mathscr C,\ \bigcup\mathscr Q=T\}<\infty,
+$$
+
+其中重复层不增加覆盖；若存在 $\eta\in T$ 不属于任何 $C_K$（特别是 $\mathscr L=\varnothing$ 时），立即判定不可达并定义 $\tau=\infty$，任何有限允许 stack 都不可达。这里的 $H_n\tau$ 界只在 $n\ge1$ 且 $T$ 可覆盖（故 $\tau<\infty$）时使用。
+
+令 $U_0=T$。每轮选择当前未覆盖元素最多的 $C_K$，即取
+$$
+g_i=\max_{K\in\mathscr L}|C_K\cap U_{i-1}|,
+$$
+并令 $a_i=g_i$ 为本轮新覆盖的元素数；若 $U_{i-1}\ne\varnothing$ 而最大 gain 为零，则立即报告不可达。每次成功选择至少删除一个角色，故朴素贪心至多进行 $n$ 轮；在 $n\ge1$ 且可覆盖的情形，它使用的层数至多
+$$
+H_n\,\tau(T,\mathscr C)\le(1+\log n)\tau(T,\mathscr C),
+$$
+其中 $H_n=\sum_{r=1}^n1/r$。该贪心界是搜索复杂度保证，不声称求得最短 stack。
+
+**证明。** 由 §46，残余集合经过所选层为
+$$
+T\cap\bigcap_{K\ \mathrm{selected}}K^\perp
+=T\setminus\bigcup_{K\ \mathrm{selected}}C_K.
+$$
+故清空残余集合等价于覆盖 $T$，最短长度即 $\tau$；若有角色不在任何 $C_K$ 中则不可达。以下设 $n\ge1$ 且取一个最优覆盖 $\mathscr Q^*$，$|\mathscr Q^*|=\tau<\infty$。
+
+在第 $i$ 轮开始时令 $r_i=|U_{i-1}|$。因为 $\mathscr Q^*$ 覆盖当前的 $U_{i-1}$，其各集合的 gains 总和至少为 $r_i$，故贪心 gain
+$$
+g_i\ge r_i/\tau.
+$$
+给本轮新覆盖的每个元素分配 charge $1/g_i$。本轮总 charge 为 $a_i/g_i=1$，且每个新元素的 charge 至多 $\tau/r_i$。由于本轮覆盖 $a_i$ 个元素，且 $r_i$ 在下一轮减少为 $r_i-a_i$，有
+$$
+\frac{a_i}{r_i}\le\sum_{j=r_i-a_i+1}^{r_i}\frac1j.
+$$
+这些整数区间在各轮恰好分层覆盖 $1,2,\ldots,n$，所以
+$$
+\#\{\text{贪心轮数}\}
+=\sum_i\frac{a_i}{g_i}
+\le\tau\sum_i\frac{a_i}{r_i}
+\le\tau\sum_{j=1}^n\frac1j
+=\tau H_n.
+$$
+这就是标准 charging argument。最后，每轮最多扫描全部 $|\mathscr L|$ 个显式枚举层并逐项检查至多 $n$ 个角色；若判断 $\eta\in K^\perp$ 为 unit-cost，覆盖集预计算需 $O(n|\mathscr L|)$ 次 membership 检查，按至多 $n$ 轮朴素重算 gains 的搜索成本为 $O(n^2|\mathscr L|)$ 次检查。
+
+**范围。** $\tau$ 与贪心界只针对固定入口系数产生的 §45 证书族和给定有限、显式枚举的允许层族；不等同于任意 LOSR 操作的最短实现，也不把证书阈值转成完整钻石范数优化。
+
 ## 追加锚（本行以下为增补区）
 
 ## 47. 允许子群菜单的可行性与停滞
