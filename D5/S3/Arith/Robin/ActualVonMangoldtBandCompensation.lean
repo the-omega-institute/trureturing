@@ -82,12 +82,9 @@ private theorem prefix_eq_Ioc (k : ℕ → ℝ) (y : ℝ) :
       simp only [arithmeticPrefix, Nat.add_comm]
     _ = ∑ n ∈ Finset.Ico 1 (⌊y⌋₊ + 1), k n := by
       rw [Finset.sum_Ico_eq_sum_range]
-      simp only [Nat.sub_zero, Nat.add_sub_cancel]
+      simp
     _ = ∑ n ∈ Finset.Ioc 0 ⌊y⌋₊, k n := by
       congr 1
-      ext n
-      simp only [Finset.mem_Ico, Finset.mem_Ioc]
-      omega
 
 private theorem prefix_psi (t : ℝ) : arithmeticPrefix (fun n => Λ n) t = Chebyshev.psi t := by
   exact prefix_eq_Ioc _ _
@@ -419,8 +416,8 @@ private theorem triangle_volume_forward {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) 
     rw [uIcc_of_le hab] at ht
     exact reciprocalLog_deriv hc (ha.trans_le ht.1) (hz t ht).ne'
   have hki := (bandDerivative_continuous hc ha hz).intervalIntegrable_of_Icc (μ := volume) hab
-  have hgi := (fun t ht => (hd t ht).continuousAt.continuousWithinAt) |>
-    ContinuousOn.intervalIntegrable
+  have hgi : IntervalIntegrable (reciprocalLog c) volume a b :=
+    ContinuousOn.intervalIntegrable (fun t ht => (hd t ht).continuousAt.continuousWithinAt)
   have hparts := intervalIntegral.integral_mul_deriv_eq_deriv_mul
     (u := fun t : ℝ => t - a) (v := reciprocalLog c)
     (u' := fun _ => (1 : ℝ)) (v' := fun t => -bandDerivative c t)
@@ -442,8 +439,8 @@ private theorem triangle_volume_reverse {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) 
     rw [uIcc_of_le hab] at ht
     exact reciprocalLog_deriv hc (ha.trans_le ht.1) (hz t ht).ne'
   have hki := (bandDerivative_continuous hc ha hz).intervalIntegrable_of_Icc (μ := volume) hab
-  have hgi := (fun t ht => (hd t ht).continuousAt.continuousWithinAt) |>
-    ContinuousOn.intervalIntegrable
+  have hgi : IntervalIntegrable (reciprocalLog c) volume a b :=
+    ContinuousOn.intervalIntegrable (fun t ht => (hd t ht).continuousAt.continuousWithinAt)
   have hparts := intervalIntegral.integral_mul_deriv_eq_deriv_mul
     (u := fun t : ℝ => b - t) (v := reciprocalLog c)
     (u' := fun _ => (-1 : ℝ)) (v' := fun t => -bandDerivative c t)
@@ -885,9 +882,9 @@ private theorem smoothRemainder_deriv {c t : ℝ} (ht : 0 < t)
     ((hasDerivAt_id t).mul (hl.sub_const (Real.log c))) (mul_ne_zero ht.ne' hz)
   have h2 := (hasDerivAt_const t (1 : ℝ)).div
     ((hasDerivAt_id t).mul hl) (mul_ne_zero ht.ne' hlog)
-  have h3 := (hasDerivAt_const t (1 : ℝ)).div
+  have h3 := (hasDerivAt_const t (c - 1)).div
     ((hasDerivAt_id t).mul (hl.pow 2)) (mul_ne_zero ht.ne' (pow_ne_zero 2 hlog))
-  have hd := (h1.sub h2).sub (h3.const_mul (c - 1))
+  have hd := (h1.sub h2).sub h3
   change HasDerivAt (smoothRemainder c) _ t at hd
   apply hd.congr_deriv
   simp only [smoothSlope, id_eq, Pi.mul_apply, Pi.div_apply, Pi.sub_apply, Pi.pow_apply,
