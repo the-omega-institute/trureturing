@@ -531,32 +531,121 @@ noncomputable def rationalRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,
 #print axioms rationalEvidence
 #print axioms rationalRegistration
 
-def slicesEvidence : Registration slicesArena.{u,v,w,z}
+namespace SourceOperands
+
+/-- Coordinate packing follows the four independent source carrier binders. -/
+abbrev matrixSignature : Signature where
+  Params := Σ _ : Type u, Σ _ : Type v, Σ _ : Type w, Type z
+  State p := Matrix (p.1 × p.2.2.2) (p.2.1 × p.2.2.1) ℚ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Matrix (p.1 × p.2.2.2) (p.2.1 × p.2.2.1) ℚ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def matrixActual : Realization matrixSignature.{u,v,w,z} :=
+  realize matrixSignature (fun _ _ A B => A = B) (fun e => nomatch e)
+def matrixRejected : Realization matrixSignature.{u,v,w,z} :=
+  realize matrixSignature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+@[reducible] def slicesArena : Arena where
+  signature := matrixSignature.{u,v,w,z}
+  Law R := ∀ {I : Type u} {J : Type v} {K : Type w} {L : Type z}
+    (A B C : Matrix I J ℚ) (D E F : Matrix L K ℚ),
+    R.readout () ⟨I, ⟨J, ⟨K, L⟩⟩⟩
+      (∑ r : Fin 3, Matrix.kronecker (threeSlices A B C r) (threeSlices D E F r))
+      (Matrix.kronecker A D + Matrix.kronecker B E + Matrix.kronecker C F)
+
+theorem matrixDependence : ObservationalDependence matrixSignature.{u,v,w,z} matrixActual := by
+  intro i
+  let p : matrixSignature.{u,v,w,z}.Params :=
+    ⟨ULift.{u} Unit, ⟨ULift.{v} Unit, ⟨ULift.{w} Unit, ULift.{z} Unit⟩⟩⟩
+  let x : matrixSignature.State p := 0
+  let y : matrixSignature.State p := fun _ _ => 1
+  refine ⟨p, x, y, ?_⟩
+  intro h
+  have he := congrFun h x
+  change (x = x) = (y = x) at he
+  have hy : y = x := he ▸ rfl
+  have hh := congrArg (fun A : matrixSignature.State p => A (⟨()⟩,⟨()⟩) (⟨()⟩,⟨()⟩)) hy
+  change (1 : ℚ) = 0 at hh
+  norm_num at hh
+
+/-- The observation is the curried witness predicate, with a single natural-number role. -/
+abbrev witnessSignature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ → ℕ → ℕ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def witnessActual : Realization witnessSignature :=
+  realize witnessSignature (fun _ _ a b c d => RationalWitness a b c d) (fun e => nomatch e)
+def witnessRejected : Realization witnessSignature :=
+  realize witnessSignature (fun _ _ _ _ _ _ => False) (fun e => nomatch e)
+
+@[reducible] def swapArena : Arena where
+  signature := witnessSignature
+  Law R := ∀ {a b c d : ℕ} (h : RationalWitness a b c d), R.readout () () c d a b
+
+@[reducible] def widthArena : Arena where
+  signature := witnessSignature
+  Law R := ∀ a b c d : ℕ, 0 < a → a ≤ b → 0 < c → c ≤ d →
+    (a = b ∨ c = d ∨ (2 * a ≤ b ∧ d ≤ 2 * c) ∨
+      (b ≤ 2 * a ∧ 2 * c ≤ d)) → R.readout () () a b c d
+
+theorem witnessDependence : ObservationalDependence witnessSignature witnessActual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have he := congrFun (congrFun (congrFun h 4) 1) 4
+  change RationalWitness 0 4 1 4 = RationalWitness 1 4 1 4 at he
+  exact obstructedWitness (he ▸ zeroWitness 4 1 4)
+
+#print axioms matrixSignature
+#print axioms matrixActual
+#print axioms matrixRejected
+#print axioms slicesArena
+#print axioms matrixDependence
+#print axioms witnessSignature
+#print axioms witnessActual
+#print axioms witnessRejected
+#print axioms swapArena
+#print axioms widthArena
+#print axioms witnessDependence
+
+end SourceOperands
+
+def slicesEvidence : Registration SourceOperands.slicesArena.{u,v,w,z}
     (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.typed_three_slice_flow.{u,v,w,z})) where
-  actual := matrixActual
+  actual := SourceOperands.matrixActual
   bridge := Iff.rfl
-  variation := ⟨slicesPositive, matrixRejected, slicesNegative⟩
-  sensitivity := ⟨fun i => ⟨matrixRejected,
+  variation := ⟨slicesPositive, SourceOperands.matrixRejected, slicesNegative⟩
+  sensitivity := ⟨fun i => ⟨SourceOperands.matrixRejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, slicesNegative⟩,
     fun i => nomatch i⟩
-  dependence := matrixDependence
+  dependence := SourceOperands.matrixDependence
 
 noncomputable def slicesRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.typed_three_slice_flow.{u,v,w,z})
-    (type_of% (realize matrixSignature.{u,v,w,z} (fun _ _ A B => A = B) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize SourceOperands.matrixSignature.{u,v,w,z} (fun _ _ A B => A = B) (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.typed_three_slice_flow
     "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.slicesArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.slicesEvidence,
   realizationSource := none,
   generated := false,
-  arena := .source ⟨slicesArena.{u,v,w,z}⟩,
-  objectArena := .source ⟨slicesArena.{u,v,w,z}⟩,
+  arena := .source ⟨SourceOperands.slicesArena.{u,v,w,z}⟩,
+  objectArena := .source ⟨SourceOperands.slicesArena.{u,v,w,z}⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source slicesArena.{u,v,w,z} ⟨slicesEvidence.{u,v,w,z}⟩,
+  realization := .source SourceOperands.slicesArena.{u,v,w,z} ⟨slicesEvidence.{u,v,w,z}⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize matrixSignature.{u,v,w,z} (fun _ _ A B => A = B) (fun e => nomatch e)),
+  readout := some (realize SourceOperands.matrixSignature.{u,v,w,z} (fun _ _ A B => A = B) (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
@@ -582,41 +671,41 @@ noncomputable def slicesRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,
 #print axioms slicesEvidence
 #print axioms slicesRegistration
 
-def swapEvidence : Registration swapArena
+def swapEvidence : Registration SourceOperands.swapArena
     (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.witness_swap)) where
-  actual := swapActual
+  actual := SourceOperands.witnessActual
   bridge := Iff.rfl
-  variation := ⟨swapPositive, witnessRejected, swapNegative⟩
-  sensitivity := ⟨fun i => ⟨witnessRejected,
+  variation := ⟨swapPositive, SourceOperands.witnessRejected, swapNegative⟩
+  sensitivity := ⟨fun i => ⟨SourceOperands.witnessRejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, swapNegative⟩,
     fun i => nomatch i⟩
-  dependence := swapDependence
+  dependence := SourceOperands.witnessDependence
 
 noncomputable def swapRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.witness_swap)
-    (type_of% (realize witnessSignature (fun _ p c => RationalWitness c p.2.2 p.1 p.2.1) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize SourceOperands.witnessSignature (fun _ _ a b c d => RationalWitness a b c d) (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.witness_swap
     "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.swapArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.swapEvidence,
   realizationSource := none,
   generated := false,
-  arena := .source ⟨swapArena⟩,
-  objectArena := .source ⟨swapArena⟩,
+  arena := .source ⟨SourceOperands.swapArena⟩,
+  objectArena := .source ⟨SourceOperands.swapArena⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source swapArena ⟨swapEvidence⟩,
+  realization := .source SourceOperands.swapArena ⟨swapEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize witnessSignature (fun _ p c => RationalWitness c p.2.2 p.1 p.2.1) (fun e => nomatch e)),
+  readout := some (realize SourceOperands.witnessSignature (fun _ _ a b c d => RationalWitness a b c d) (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound, definition := none,
-    coordinates := #[0, 1, 3], readouts := #[{
-      path := #["body", "body", "body", "body", "body"],
-      stateBinder := 2, functionOperand := false, stateOperand := none,
+    coordinates := #[], readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn", "fn", "fn"],
+      stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
@@ -633,32 +722,32 @@ noncomputable def swapRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
 #print axioms swapEvidence
 #print axioms swapRegistration
 
-def widthEvidence : Registration widthArena
+def widthEvidence : Registration SourceOperands.widthArena
     (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.widthTwo_proved)) where
-  actual := witnessActual
+  actual := SourceOperands.witnessActual
   bridge := Iff.rfl
-  variation := ⟨widthPositive, witnessRejected, widthNegative⟩
-  sensitivity := ⟨fun i => ⟨witnessRejected,
+  variation := ⟨widthPositive, SourceOperands.witnessRejected, widthNegative⟩
+  sensitivity := ⟨fun i => ⟨SourceOperands.witnessRejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, widthNegative⟩,
     fun i => nomatch i⟩
-  dependence := witnessDependence
+  dependence := SourceOperands.witnessDependence
 
 noncomputable def widthRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.widthTwo_proved)
-    (type_of% (realize witnessSignature (fun _ p a => RationalWitness a p.1 p.2.1 p.2.2) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize SourceOperands.witnessSignature (fun _ _ a b c d => RationalWitness a b c d) (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.widthTwo_proved
     "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.widthArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.widthEvidence,
   realizationSource := none,
   generated := false,
-  arena := .source ⟨widthArena⟩,
-  objectArena := .source ⟨widthArena⟩,
+  arena := .source ⟨SourceOperands.widthArena⟩,
+  objectArena := .source ⟨SourceOperands.widthArena⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source widthArena ⟨widthEvidence⟩,
+  realization := .source SourceOperands.widthArena ⟨widthEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize witnessSignature (fun _ p a => RationalWitness a p.1 p.2.1 p.2.2) (fun e => nomatch e)),
+  readout := some (realize SourceOperands.witnessSignature (fun _ _ a b c d => RationalWitness a b c d) (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
@@ -668,9 +757,9 @@ noncomputable def widthRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_
       owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound,
       name := `D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.WidthTwo,
       path := #[] },
-    coordinates := #[1, 2, 3], readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body"],
-      stateBinder := 0, functionOperand := false, stateOperand := none,
+    coordinates := #[], readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn", "fn", "fn"],
+      stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
