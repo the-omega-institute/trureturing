@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.SurfaceObservers;
 
 internal sealed class NormalSubdirectInnerActionDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Scott = LibraryNoteRef.Create("D5/L/FiniteGroups/scott1951subdirect");
+    private static readonly LibraryNoteRef Scott = LibraryNoteRef.Create("D5/L/FiniteGroups/neunen2016subdirect");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Normal subdirect products of nonabelian simple groups are rigid and their extension actions are inner.",
