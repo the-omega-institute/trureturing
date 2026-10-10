@@ -510,6 +510,12 @@ The first is now proved. The second still requires a source-typed noise model an
 
 The next Lean-compatible layer should avoid formalizing the full measurable theory at once. Use finite alphabets first.
 
+### 8.0 Existing certified anchor
+
+The repository already contains a finite classical interface in D5/S3/Quantum/Entanglement/TriangleSymmetricLocalRefutation.lean. Its predicate IsTriangleLocal has exactly the three independent uniform edge variables on \([0,1]^3\), measurable response functions \(p_A(a\mid\beta,\gamma)\), \(p_B(b\mid\gamma,\alpha)\), \(p_C(c\mid\alpha,\beta)\), normalization, non-negativity, and the triple integral (1.1). The companion TriangleInequalityL1Refutation.lean reuses this predicate.
+
+Those modules certify explicit **local** models and refute two proposed global bounds. They do not formalize the EJM distribution, Fritz embedding, the Renou parameter family, inflation certificates, quantum sources, or a physical noise threshold. This separation is useful: the finite Lean carrier is the correct base for the source-product layer, while the FIB documents supply a separate readout and hidden-fiber layer. The present document defines the bridge but does not claim that bridge is already kernel-checked.
+
 ### 8.1 Finite incidence carrier
 
 Define finite types
