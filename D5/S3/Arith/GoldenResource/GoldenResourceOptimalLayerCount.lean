@@ -139,7 +139,7 @@ private theorem count_eq_zero_of_not_prime (lambda : ℝ) {p : ℕ} (hp : ¬p.Pr
     optimalLayerCount lambda p = 0 := by
   simp [optimalLayerCount, hp]
 
-private theorem count_layer_active {lambda : ℝ} (hlambda : 0 < lambda)
+theorem count_layer_active {lambda : ℝ} (hlambda : 0 < lambda)
     {p : ℕ} (hp : p.Prime) (ha : 1 ≤ optimalLayerCount lambda p) :
     lambda < goldenLayerMarginal p (optimalLayerCount lambda p) := by
   have hmem : optimalLayerCount lambda p ∈
@@ -148,7 +148,7 @@ private theorem count_layer_active {lambda : ℝ} (hlambda : 0 < lambda)
     exact ⟨ha, le_rfl⟩
   exact hmem.2.2
 
-private theorem count_next_layer_le {lambda : ℝ} (hlambda : 0 < lambda)
+theorem count_next_layer_le {lambda : ℝ} (hlambda : 0 < lambda)
     {p : ℕ} (hp : p.Prime) :
     goldenLayerMarginal p (optimalLayerCount lambda p + 1) ≤ lambda := by
   apply le_of_not_gt

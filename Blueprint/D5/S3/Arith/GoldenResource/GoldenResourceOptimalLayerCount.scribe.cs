@@ -52,6 +52,28 @@ internal sealed class GoldenResourceOptimalLayerCountDocument : IScribeDocumentD
                         + "the fiber is exactly the interval from one through its count."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("golden-count-last-layer-active"),
+                DeclarationHandle.Create(Prefix + "count_layer_active"),
+                H("The original last-layer threshold"),
+                StatementSource.FromAuthor(CountThresholdFormula(false)),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The original proof that a positive count ends on a strictly profitable "
+                        + "layer is exposed for the geometric mismatch consumer. The mathematical "
+                        + "statement and proof are inherited unchanged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-count-next-layer-price-bound"),
+                DeclarationHandle.Create(Prefix + "count_next_layer_le"),
+                H("The original next-layer threshold"),
+                StatementSource.FromAuthor(CountThresholdFormula(true)),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The original proof that the next layer is at most the price is exposed "
+                        + "for the geometric mismatch consumer. Equality-price layers remain "
+                        + "outside the strict-gain count; this is source reuse, not a new result."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("golden-minimal-exponent-count-optimizer"),
                 DeclarationHandle.Create(Prefix + "optimal_layer_count_spec"),
                 H("A simultaneous optimizer with minimal prime exponents"),
@@ -77,6 +99,16 @@ internal sealed class GoldenResourceOptimalLayerCountDocument : IScribeDocumentD
                             + "of equality-price choices, and the 5040 boundary are outside "
                             + "this slice."))),
                 DescribeRole.Theorem))));
+
+    private static Formula CountThresholdFormula(bool next)
+    {
+        Formula l = F.Id("lambda"), p = F.Id("p"), m = Call("optimalLayerCount", l, p);
+        Formula premise = And(Lt(D(0), l), Call("Prime", p));
+        if (!next) premise = And(premise, Le(D(1), m));
+        Formula result = next ? Le(Marginal(p, Add(m, D(1))), l) : Lt(l, Marginal(p, m));
+        return Disp(ForAll([Bound("lambda", Reals()), Bound("p", Naturals())],
+            Implies(premise, result)));
+    }
 
     private static Formula Active(Formula lambda, Formula p, Formula k) =>
         And(Le(D(1), k), And(Call("Prime", p), Lt(lambda, Marginal(p, k))));
