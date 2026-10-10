@@ -603,7 +603,7 @@ The precise status is as follows.
    \[
    P_v=vP_{\mathrm{pure}}+(1-v)U_{64},
    \]
-   the known local construction reaches \(v=3/7\), while the final exact inflation certificate proves nonlocality for \(v>383/512\). The physical EJM point is \(v=3/4\) on this proxy. This proxy must not be identified with independent source Werner noise.
+   the known local construction reaches \(v=3/7\), while the exact inflation certificate reaches the grid point \(v=383/512\), giving the rigorous upper bound \(v_*<383/512\) for the transition on that purified affine path; this is not an exact transition theorem. The physical EJM point is \(v=3/4\) on this proxy. This proxy must not be identified with independent source Werner noise.
 
 5. **Rigorous noise robustness.** Approximate parity-token-counting rigidity gives a general method for noisy four-output triangle distributions. For a best-parameter TBSM family, the published proof tolerates approximately \(0.544\%\) independent source white noise and approximately \(80\%\) dephasing in the reported regime, and proves a total-variation nonlocal ball of approximately \(0.24\%\). These are rigorous sufficient regions for the specified family and noise model. They are not exact transition points, and the white-noise figure should not be transferred automatically to the maximally entangled RGB4 point.
 
