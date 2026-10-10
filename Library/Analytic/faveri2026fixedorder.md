@@ -15,6 +15,14 @@ triage: anchor
 
 The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records the statement of Theorem 1.1 and the conditions relevant to the FIB sextic interface. It is a preprint; no independent proof audit, Lean verification, or claim about the Robin problem is made here.
 
+The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
+
+$$
+\chi_a(b)\,\chi_b(a)^{-1}=\alpha([a],[b]),
+$$
+
+where the phase $\alpha$ depends only on the two ray-class images. Thus the theorem permits a finite ray-class decomposition; it does not permit an unqualified exchange of the two arguments.
+
 ## The large-sieve statement
 
 Let $n\ge3$, let $K$ contain the $n$-th roots of unity, and fix the finite set of places and ray data used to construct the family of $n$-th order Hecke characters $\chi_a$. With $\Theta_n(A,B)$ denoting the operator norm in which both the parameter $a$ and the inner variable $b$ range over $n$-th-power-free ideals, Theorem 1.1 states
