@@ -58,9 +58,20 @@ internal sealed class ActualOddHarmonicMobiusTailDocument : IScribeDocumentDefin
                         "The finite tail is a substantive consumer of the "
                         + "arithmetic bounds. This is a classical elementary "
                         + "estimate, with no mathematical priority claim. "
-                        + "Ordinary infinite signed convergence, the actual "
-                        + "factorial weight's positivity, monotonicity and "
-                        + "decay, the final Robin sign and RH remain obligations. "
-                        + "No absolute summability is asserted."))),
+                        + "This supplier establishes the arithmetic and finite "
+                        + "tail laws. ActualFactorialRobinHighWeight.result "
+                        + "consumes them with the original cumulative representation "
+                        + "to prove the actual q weight's positivity, negative "
+                        + "signed derivative, strict monotonicity, decay and ordinary "
+                        + "convergence of the exclusive prefixes over odd 3<=m<N. "
+                        + "ActualFactorialRobinHighSign.result consumes both suppliers "
+                        + "to prove that same limit satisfies Q<=-q(log(3))/3<0. "
+                        + "These conclusions concern the odd high component. The "
+                        + "actual unit m=1, lowPrimitive, lower x-versus-m clipping, "
+                        + "upper N+1-versus-2m clipping, finite terminal correction "
+                        + "and pressure remain unpaid. The integer-deficit obligation "
+                        + "Ipsi(log(n))+R(log(n))+d_n>0 for every n>5040 and RH "
+                        + "remain open. No absolute summability of the signed "
+                        + "q-family is asserted."))),
                 DescribeRole.Theorem))));
 }

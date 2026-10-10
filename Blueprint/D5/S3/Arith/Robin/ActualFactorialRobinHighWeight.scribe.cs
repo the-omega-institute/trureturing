@@ -62,10 +62,14 @@ internal sealed class ActualFactorialRobinHighWeightDocument : IScribeDocumentDe
                         + "and completeness. The estimates are repository-derived; no "
                         + "literature priority is asserted.")),
                     Paragraph(Text(
-                        "This is ordinary convergence of natural prefixes. No real Summable, "
-                        + "unconditional summability or absolute interchange of the signed "
-                        + "family is asserted. The strict negative infinite high pairing is "
-                        + "unproved. LowPrimitive, both x-versus-m and N+1-versus-2m "
+                        "This supplier proves ordinary convergence of natural prefixes; "
+                        + "its result alone does not determine the limit's sign. "
+                        + "ActualFactorialRobinHighSign.result consumes this q positivity "
+                        + "and convergence together with ActualOddHarmonicMobiusTail "
+                        + "to prove Q<=-q(log(3))/3<0 for the same exclusive natural "
+                        + "prefixes over odd 3<=m<N. No real Summable, unconditional "
+                        + "summability or absolute interchange of the signed q-family "
+                        + "is asserted. LowPrimitive, both x-versus-m and N+1-versus-2m "
                         + "clipping boundaries, the original unit, finite terminal term "
                         + "and actual positive integer pressure remain unpaid. The full "
                         + "obligation Ipsi(log(n))+R(log(n))+d_n>0 for all n>5040 remains "
