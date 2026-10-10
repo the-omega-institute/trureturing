@@ -2,6 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent
 import Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
 import Reg.Support.BridgeGraphRelations
+import Reg.Support.BridgeGraphOriginalLaws
 
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles
@@ -70,5 +71,44 @@ noncomputable def schur_rankRegistration : Contract.Registration.{_,_,_,0,0,0,_,
 #print axioms schur_rankNegative
 #print axioms schur_rankEvidence
 #print axioms schur_rankRegistration
+
+open Reg.Support.BridgeGraphOriginalLaws
+universe u_1 u_2
+
+noncomputable def inclusion_injectiveRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent.inclusion_injective.{u_1,u_2})
+    (type_of% (realize vectorFunctionSignature.{u_1,u_2} (fun _ _ f => Function.Injective f) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent.inclusion_injective
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent.inclusion_injectiveArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent.inclusion_injectiveEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨inclusion_injectiveArena.{u_1,u_2}⟩,
+  objectArena := .source ⟨inclusion_injectiveArena.{u_1,u_2}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source inclusion_injectiveArena.{u_1,u_2} ⟨inclusion_injectiveEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize vectorFunctionSignature.{u_1,u_2} (fun _ _ f => Function.Injective f) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent, definition := none,
+    coordinates := #[0, 1], readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn"],
+      stateBinder := 0, functionOperand := true,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent.inclusion_injective
+#print axioms inclusion_injectivePositive
+#print axioms inclusion_injectiveNegative
+#print axioms inclusion_injectiveEvidence
+#print axioms inclusion_injectiveRegistration
 
 end Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent
