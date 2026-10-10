@@ -6,16 +6,23 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/SumFreeCodeDimensionRefutation.claim; result=D5/S3/Arith/SumFreeCodeDimensionRefutation.result; claim=D5/S3/Arith/SumFreeCodeDimensionRefutation.claim
    digest: Two first-order sum-free maps on the ternary plane yield codes of dimensions five and four. -/
 
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Data.Fintype.Sum
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.LinearIndependent.Basic
-import Lean.Elab.Tactic.Omega
+module
+
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Data.Fintype.Sum
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.LinearIndependent.Basic
+public import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+-- Preserve the original private-instance references while exposing module visibility.
+set_option backward.privateInPublic true
+
+@[expose] public section
 
 namespace D5.S3.Arith.SumFreeCodeDimensionRefutation
 
