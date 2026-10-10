@@ -182,20 +182,28 @@ private theorem projection_cfc {n : Type} [Fintype n] [DecidableEq n]
 private theorem entropy_eq_trace {n : Type} [Fintype n] [DecidableEq n]
     (X : Matrix n n ℂ) :
     entropy X = (trace (cfc (fun x : ℝ => -x * Real.log |x|) X)).re := by
-  unfold entropy
-  split_ifs with h
-  · run_tac
+  change (if h : X.IsHermitian then
+    D5.S3.Quantum.Information.PartialTraceMutualInformation.spectralEntropy h else 0) = _
+  by_cases h : X.IsHermitian
+  · rw [dif_pos h]
+    run_tac
       let owner := `D5.S3.Quantum.Information.PartialTraceMutualInformation
       let traceIdentity := Lean.mkIdent
         ((Lean.Name.num (`_private ++ owner) 0) ++ owner ++ `re_trace_cfc)
       let hermitian := Lean.mkIdent `h
       Lean.Elab.Tactic.evalTactic (← `(tactic| rw [$traceIdentity:ident $hermitian:ident]))
-    unfold D5.S3.Quantum.Information.PartialTraceMutualInformation.spectralEntropy
-    simp only [Real.negMulLog, Real.log_abs]
-  · have hsa : ¬ IsSelfAdjoint X := h
+    change (∑ i, Real.negMulLog (h.eigenvalues i)) =
+      ∑ i, -h.eigenvalues i * Real.log |h.eigenvalues i|
+    apply Finset.sum_congr rfl
+    intro i _
+    change -h.eigenvalues i * Real.log (h.eigenvalues i) =
+      -h.eigenvalues i * Real.log |h.eigenvalues i|
+    rw [Real.log_abs]
+  · rw [dif_neg h]
+    have hsa : ¬ IsSelfAdjoint X := h
     rw [cfc_apply_of_not_predicate (R := ℝ)
       (f := fun x : ℝ => -x * Real.log |x|) X hsa]
-    simp
+    simp only [Matrix.trace_zero, Complex.zero_re]
 
 private theorem entropy_rho : entropy ρ = Real.log 5 := by
   rw [entropy_eq_trace]
