@@ -24,72 +24,48 @@ noncomputable def rho : ℝ := b ^ 2
 noncomputable def a : ℝ := 1 - b
 noncomputable def h : ℝ := (1 + b) / 2
 noncomputable def ceiling : ℝ := a / 2
-
 /-- Each actual sum-indecomposable shape contributes once if its diagonal is occupied. -/
-noncomputable def occupiedCount (n : ℕ) (e : ℤ) : ℕ :=
-  Nat.card {π : Indecomposable false n //
+noncomputable def occupiedCount (n : ℕ) (e : ℤ) : ℕ := Nat.card {π : Indecomposable false n //
     ∃ j : Fin n, (j.val : ℤ) - ((π.val.val j).val : ℤ) = e}
-
 /-- At-least-one diagonal occupation for an actual permutation. -/
 def hitsDiagonal {n : ℕ} (π : Equiv.Perm (Fin n)) (e : ℤ) : Prop :=
   ∃ j : Fin n, (j.val : ℤ) - ((π j).val : ℤ) = e
-
 noncomputable def allOccupiedCount (n : ℕ) (e : ℤ) : ℕ :=
   Nat.card {π : Avoider n // hitsDiagonal π.val e}
-
 noncomputable def signedOccupiedCount (sign : Bool) (n : ℕ) (e : ℤ) : ℕ :=
   Nat.card {π : Indecomposable sign n // hitsDiagonal π.val.val e}
-
 noncomputable def decomposableOccupiedCount (sign : Bool) (n : ℕ) (e : ℤ) : ℕ :=
   Nat.card {π : D5.S1.Words.Patterns.Separable.ActualCardinality.ProperSigned sign n //
     hitsDiagonal π.val.val e}
-
 /-- The length index is shifted to exclude the empty permutation. -/
 noncomputable def rawOccupation (e : ℤ) : ℝ :=
   ∑' n : ℕ, rho ^ (n + 1) * (occupiedCount (n + 1) e : ℝ)
-
 noncomputable def occupation (e : ℤ) : ℝ := (2 / a) * rawOccupation e
-
-noncomputable def shapeWeight (n : ℕ) : ℝ :=
-  rho ^ (n + 1) * (Nat.card (Avoider (n + 1)) : ℝ)
-
+noncomputable def shapeWeight (n : ℕ) : ℝ := rho ^ (n + 1) * (Nat.card (Avoider (n + 1)) : ℝ)
 /-- The correction at index zero is the genuine length-one correction. -/
-noncomputable def kernelWeight (n : ℕ) : ℝ :=
-  shapeWeight n + if n = 0 then rho / 2 else 0
-
+noncomputable def kernelWeight (n : ℕ) : ℝ := shapeWeight n + if n = 0 then rho / 2 else 0
 noncomputable def lossWeight (n : ℕ) : ℝ :=
   (3 / 2 : ℝ) * shapeWeight n + if n = 0 then rho / 2 else 0
-
 noncomputable def loss (x : ℝ) : ℝ := x ^ 2 / (h + x)
-
-noncomputable def neighborTerm (n : ℕ) (x : ℝ) : ℝ :=
-  kernelWeight n * x - lossWeight n * loss x
-
+noncomputable def neighborTerm (n : ℕ) (x : ℝ) : ℝ := kernelWeight n * x - lossWeight n * loss x
 noncomputable def forcing (e : ℤ) : ℝ :=
   if e = 0 then rho else (rho / 2) * shapeWeight (e.natAbs - 1)
-
-noncomputable def occupationMap (u : ℤ → ℝ) (e : ℤ) : ℝ :=
-  forcing e + ∑' n : ℕ,
-    (neighborTerm n (u (e + (n + 1 : ℕ))) +
-      neighborTerm n (u (e - (n + 1 : ℕ))))
-
+noncomputable def occupationMap (u : ℤ → ℝ) (e : ℤ) : ℝ := forcing e + ∑' n : ℕ,
+    (neighborTerm n (u (e + (n + 1 : ℕ))) + neighborTerm n (u (e - (n + 1 : ℕ))))
 set_option maxHeartbeats 4000000 in
 -- Actual convergence, event transport and strict comparison share one proof.
 /-- The literal actual occupation mass is a fixed point of its nonlinear map,
 and bounds every vanishing subsolution in the actual mass box. Critical
 convergence, event transport and reflection retain the singleton correction. -/
-theorem actual_occupation_subsolution_comparison :
-    Summable shapeWeight ∧
+theorem actual_occupation_subsolution_comparison : Summable shapeWeight ∧
     (∑' n, shapeWeight n) = b ∧
     (∑' n, kernelWeight n) = (1 / 2 : ℝ) ∧
     (∀ e, Summable (fun n : ℕ =>
       rho ^ (n + 1) * (occupiedCount (n + 1) e : ℝ))) ∧
     (∀ e, 0 ≤ rawOccupation e ∧ rawOccupation e ≤ ceiling) ∧
-    (∀ sign n e, decomposableOccupiedCount sign n e =
-      ∑ cut ∈ Finset.Ioo 0 n,
+    (∀ sign n e, decomposableOccupiedCount sign n e = ∑ cut ∈ Finset.Ioo 0 n,
         if sign then
-          signedOccupiedCount sign cut (e + (n - cut : ℕ)) *
-              Nat.card (Avoider (n - cut)) +
+          signedOccupiedCount sign cut (e + (n - cut : ℕ)) * Nat.card (Avoider (n - cut)) +
             Nat.card (Indecomposable sign cut) * allOccupiedCount (n - cut) (e - cut)
         else
           signedOccupiedCount sign cut e *
@@ -97,13 +73,11 @@ theorem actual_occupation_subsolution_comparison :
             Nat.card (Indecomposable sign cut) * allOccupiedCount (n - cut) e) ∧
     (∀ sign n e, allOccupiedCount n e =
       signedOccupiedCount sign n e + decomposableOccupiedCount sign n e) ∧
-    (∀ sign n e, 2 ≤ n → decomposableOccupiedCount sign n e =
-      signedOccupiedCount (!sign) n e) ∧
+    (∀ sign n e, 2 ≤ n → decomposableOccupiedCount sign n e = signedOccupiedCount (!sign) n e) ∧
     (∀ sign e, signedOccupiedCount sign 1 e = if e = 0 then 1 else 0) ∧
     (∀ sign n e, signedOccupiedCount sign n e = signedOccupiedCount sign n (-e)) ∧
     (∀ e, rawOccupation e = occupationMap rawOccupation e) ∧
-    (∀ w : ℤ → ℝ,
-      (∀ e, 0 ≤ w e ∧ w e ≤ ceiling) →
+    (∀ w : ℤ → ℝ, (∀ e, 0 ≤ w e ∧ w e ≤ ceiling) →
       (∀ ε : ℝ, 0 < ε → Set.Finite {e : ℤ | ε ≤ w e}) →
       (∀ e, w e ≤ occupationMap w e) → ∀ e, w e ≤ rawOccupation e) := by
   classical
@@ -115,15 +89,13 @@ theorem actual_occupation_subsolution_comparison :
   have hc : 0 < ceiling := by dsimp [ceiling, a, b]; linarith [sqrtBounds.2]
   have hsumc : h + ceiling = 1 := by dsimp [h, ceiling, a, b]; ring
   have hsq : h ^ 2 = (1 / 2 : ℝ) := by dsimp [h, b]; nlinarith
-  have rhop : 0 < rho := by
-    exact pow_pos (sub_pos.mpr sqrtBounds.1) 2
+  have rhop : 0 < rho := by exact pow_pos (sub_pos.mpr sqrtBounds.1) 2
   have tn (n : ℕ) : 0 ≤ shapeWeight n := by
     unfold shapeWeight
     positivity
   obtain ⟨_, actualCounts, _, _, _, _, _, _, _, _⟩ :=
     D5.S1.Words.Patterns.Separable.ActualCardinality.actual_schroder_cardinality
-  have weightCount (n : ℕ) :
-      shapeWeight n = rho ^ (n + 1) * (Nat.largeSchroder n : ℝ) := by
+  have weightCount (n : ℕ) : shapeWeight n = rho ^ (n + 1) * (Nat.largeSchroder n : ℝ) := by
     simp only [shapeWeight, actualCounts (n + 1) (by omega), Nat.add_sub_cancel]
   have weightZero : shapeWeight 0 = rho := by simp [weightCount]
   have recurrence (n : ℕ) : shapeWeight (n + 1) = rho * shapeWeight n +
@@ -151,16 +123,14 @@ theorem actual_occupation_subsolution_comparison :
   have bquadratic : b ^ 2 + 2 * b = 1 := by dsimp [b]; nlinarith
   have rhoValue : rho = 1 - 2 * b := by dsimp [rho]; nlinarith
   have critical : rho + rho * b + b ^ 2 = b := by rw [rhoValue]; nlinarith
-  have triangleBound (n : ℕ) :
-      (∑ k ∈ Finset.range n,
+  have triangleBound (n : ℕ) : (∑ k ∈ Finset.range n,
         ∑ pair ∈ Finset.antidiagonal k, shapeWeight pair.1 * shapeWeight pair.2) ≤
       (∑ k ∈ Finset.range n, shapeWeight k) ^ 2 := by
     have disjoint : Set.PairwiseDisjoint (Finset.range n : Set ℕ) Finset.antidiagonal := by
       intro i _ j _ different
       apply Finset.disjoint_left.mpr
       intro pair hi hj
-      exact different ((Finset.mem_antidiagonal.mp hi).symm.trans
-        (Finset.mem_antidiagonal.mp hj))
+      exact different ((Finset.mem_antidiagonal.mp hi).symm.trans (Finset.mem_antidiagonal.mp hj))
     rw [← Finset.sum_biUnion disjoint]
     calc
       (∑ pair ∈ (Finset.range n).biUnion Finset.antidiagonal,
@@ -185,10 +155,8 @@ theorem actual_occupation_subsolution_comparison :
       rw [Finset.sum_range_succ', weightZero]
       simp_rw [recurrence]
       rw [Finset.sum_add_distrib, ← Finset.mul_sum]
-      have nonneg : 0 ≤ ∑ k ∈ Finset.range n, shapeWeight k :=
-        Finset.sum_nonneg (fun k _ => tn k)
-      have squareBound : (∑ k ∈ Finset.range n, shapeWeight k) ^ 2 ≤ b ^ 2 := by
-        nlinarith
+      have nonneg : 0 ≤ ∑ k ∈ Finset.range n, shapeWeight k := Finset.sum_nonneg (fun k _ => tn k)
+      have squareBound : (∑ k ∈ Finset.range n, shapeWeight k) ^ 2 ≤ b ^ 2 := by nlinarith
       have linearBound := mul_le_mul_of_nonneg_left ih rhop.le
       have quadraticBound := triangleBound n
       linarith [critical]
@@ -281,8 +249,7 @@ theorem actual_occupation_subsolution_comparison :
         nlinarith
   have occupiedBound (n : ℕ) (e : ℤ) :
       rho ^ (n + 1) * (occupiedCount (n + 1) e : ℝ) ≤ indecomposableWeight n := by
-    have cardinal : occupiedCount (n + 1) e ≤
-        Nat.card (Indecomposable false (n + 1)) :=
+    have cardinal : occupiedCount (n + 1) e ≤ Nat.card (Indecomposable false (n + 1)) :=
       Nat.card_le_card_of_injective Subtype.val Subtype.val_injective
     exact mul_le_mul_of_nonneg_left (by exact_mod_cast cardinal) (by positivity)
   have actualSummable (e : ℤ) : Summable (fun n : ℕ =>
@@ -294,17 +261,14 @@ theorem actual_occupation_subsolution_comparison :
     rw [← indecomposableTotal]
     exact (actualSummable e).tsum_le_tsum (fun n => occupiedBound n e)
       indecomposableSummable
-  have blockHit {m k : ℕ} (sign : Bool) (α : Equiv.Perm (Fin m))
-      (β : Equiv.Perm (Fin k)) (e : ℤ) :
+  have blockHit {m k : ℕ} (sign : Bool) (α : Equiv.Perm (Fin m)) (β : Equiv.Perm (Fin k)) (e : ℤ) :
       hitsDiagonal (blockSum sign α β) e ↔
         hitsDiagonal α (e + (if sign then (k : ℤ) else 0)) ∨
         hitsDiagonal β (e - (if sign then (m : ℤ) else 0)) := by
-    have leftval (i : Fin m) :
-        (blockSum sign α β (Fin.castAdd k i)).val =
+    have leftval (i : Fin m) : (blockSum sign α β (Fin.castAdd k i)).val =
           (if sign then k else 0) + (α i).val := by
       cases sign <;> simp [blockSum, Equiv.sumCongr, Equiv.sumComm, Nat.add_comm]
-    have rightval (i : Fin k) :
-        (blockSum sign α β (Fin.natAdd m i)).val =
+    have rightval (i : Fin k) : (blockSum sign α β (Fin.natAdd m i)).val =
           (if sign then 0 else m) + (β i).val := by
       cases sign <;> simp [blockSum, Equiv.sumCongr, Equiv.sumComm]
     constructor
@@ -332,8 +296,7 @@ theorem actual_occupation_subsolution_comparison :
         rw [rightval]
         cases sign <;> simp only [Bool.false_eq_true,
           ↓reduceIte, Fin.val_natAdd, Nat.cast_add, zero_add] at hj ⊢ <;> omega
-  have skewDisjoint {m k : ℕ} (α : Equiv.Perm (Fin m))
-      (β : Equiv.Perm (Fin k)) (e : ℤ) :
+  have skewDisjoint {m k : ℕ} (α : Equiv.Perm (Fin m)) (β : Equiv.Perm (Fin k)) (e : ℤ) :
       ¬(hitsDiagonal α (e + k) ∧ hitsDiagonal β (e - m)) := by
     rintro ⟨⟨i, hi⟩, ⟨j, hj⟩⟩
     have := i.isLt
@@ -372,8 +335,7 @@ theorem actual_occupation_subsolution_comparison :
       (disjoint : ∀ pair : A × B, ¬(P pair.1 ∧ Q pair.2)) :
       Nat.card {pair : A × B // P pair.1 ∨ Q pair.2} =
         Nat.card {x : A // P x} * Nat.card B + Nat.card A * Nat.card {y : B // Q y} := by
-    have separated : Disjoint (fun pair : A × B => P pair.1)
-        (fun pair : A × B => Q pair.2) := by
+    have separated : Disjoint (fun pair : A × B => P pair.1) (fun pair : A × B => Q pair.2) := by
       apply disjoint_iff_inf_le.mpr
       intro pair both
       exact disjoint pair both
@@ -390,10 +352,8 @@ theorem actual_occupation_subsolution_comparison :
     rw [Nat.card_congr (subtypeOrEquiv _ _ separated), Nat.card_sum,
       Nat.card_congr leftEquiv, Nat.card_congr rightEquiv, Nat.card_prod, Nat.card_prod]
   have finiteEvents (sign : Bool) (n : ℕ) (e : ℤ) : decomposableOccupiedCount sign n e =
-      ∑ cut ∈ Finset.Ioo 0 n,
-        if sign then
-          signedOccupiedCount sign cut (e + (n - cut : ℕ)) *
-              Nat.card (Avoider (n - cut)) +
+      ∑ cut ∈ Finset.Ioo 0 n, if sign then
+          signedOccupiedCount sign cut (e + (n - cut : ℕ)) * Nat.card (Avoider (n - cut)) +
             Nat.card (Indecomposable sign cut) * allOccupiedCount (n - cut) (e - cut)
         else
           signedOccupiedCount sign cut e *
@@ -402,8 +362,7 @@ theorem actual_occupation_subsolution_comparison :
     obtain ⟨_, _, _, _, _, _, _, _, enumeration, _⟩ :=
       D5.S1.Words.Patterns.Separable.ActualCardinality.actual_schroder_cardinality
     obtain ⟨equiv, reconstruction⟩ := enumeration sign n
-    let Factors (cut : ↥(Finset.Ioo 0 n)) :=
-      Indecomposable sign cut.val × Avoider (n - cut.val)
+    let Factors (cut : ↥(Finset.Ioo 0 n)) := Indecomposable sign cut.val × Avoider (n - cut.val)
     let event (cut : ↥(Finset.Ioo 0 n)) (pair : Factors cut) :=
       hitsDiagonal pair.1.val.val (e + (if sign then ((n - cut.val : ℕ) : ℤ) else 0)) ∨
       hitsDiagonal pair.2.val (e - (if sign then (cut.val : ℤ) else 0))
@@ -437,8 +396,7 @@ theorem actual_occupation_subsolution_comparison :
         productUnion (fun π : Indecomposable false cut.val => hitsDiagonal π.val.val e)
           (fun π : Avoider (n - cut.val) => hitsDiagonal π.val e)
     | true =>
-      simpa only [event, ↓reduceIte,
-        signedOccupiedCount, allOccupiedCount, Factors] using
+      simpa only [event, ↓reduceIte, signedOccupiedCount, allOccupiedCount, Factors] using
         productDisjoint
           (fun π : Indecomposable true cut.val => hitsDiagonal π.val.val (e + (n - cut.val : ℕ)))
           (fun π : Avoider (n - cut.val) => hitsDiagonal π.val (e - cut.val))
@@ -505,8 +463,7 @@ theorem actual_occupation_subsolution_comparison :
         (occ : D5.S1.Words.Patterns.DerangementRatioNonconvergence.Contains σ π.val.symm) :
         D5.S1.Words.Patterns.DerangementRatioNonconvergence.Contains σ.symm π.val := by
       obtain ⟨f, hf⟩ := occ
-      let g : Fin 4 ↪o Fin n := OrderEmbedding.ofStrictMono
-        (fun i => π.val.symm (f (σ.symm i))) (by
+      let g : Fin 4 ↪o Fin n := OrderEmbedding.ofStrictMono (fun i => π.val.symm (f (σ.symm i))) (by
           intro i j hij
           apply (hf (σ.symm i) (σ.symm j)).mp
           simpa only [Equiv.apply_symm_apply] using hij)
@@ -514,8 +471,7 @@ theorem actual_occupation_subsolution_comparison :
       change σ.symm i < σ.symm j ↔
         π.val (π.val.symm (f (σ.symm i))) < π.val (π.val.symm (f (σ.symm j)))
       simp only [Equiv.apply_symm_apply, f.lt_iff_lt]
-    have patterns :
-        D5.S1.Words.Patterns.Separable.ProperCut.pattern2413.symm =
+    have patterns : D5.S1.Words.Patterns.Separable.ProperCut.pattern2413.symm =
           D5.S1.Words.Patterns.Separable.ProperCut.pattern3142 ∧
         D5.S1.Words.Patterns.Separable.ProperCut.pattern3142.symm =
           D5.S1.Words.Patterns.Separable.ProperCut.pattern2413 := by decide
@@ -529,8 +485,7 @@ theorem actual_occupation_subsolution_comparison :
     rintro ⟨m, hm, hmn, cut⟩
     obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hmn.le
     have hk : 0 < k := by omega
-    obtain ⟨factors, reconstruction, _⟩ :=
-      (fixed_cut_factorization hm hk sign π).mp cut
+    obtain ⟨factors, reconstruction, _⟩ := (fixed_cut_factorization hm hk sign π).mp cut
     have leftval (i : Fin m) : (π.val (Fin.castAdd k i)).val =
         (if sign then k else 0) + (factors.1.val i).val := by
       rw [← reconstruction]
@@ -539,8 +494,7 @@ theorem actual_occupation_subsolution_comparison :
         (if sign then 0 else m) + (factors.2.val i).val := by
       rw [← reconstruction]
       cases sign <;> simp [blockSum, Equiv.sumCongr, Equiv.sumComm]
-    have ranges (i : Fin (m+k)) :
-        ((π.val i).val < (if sign then k else m)) ↔
+    have ranges (i : Fin (m+k)) : ((π.val i).val < (if sign then k else m)) ↔
           (if sign then m ≤ i.val else i.val < m) := by
       refine Fin.addCases (fun j => ?_) (fun j => ?_) i
       · rw [leftval]
@@ -594,15 +548,13 @@ theorem actual_occupation_subsolution_comparison :
       ⟨inversion, inversion, inversionInvolution, inversionInvolution⟩
     let restricted : Indecomposable sign n ≃ Indecomposable sign n :=
       Equiv.subtypeEquiv inv (fun π => (inverseProper sign π).not.symm)
-    exact Nat.card_congr (Equiv.subtypeEquiv restricted
-      (fun π => (inverseHit π.val.val e).symm))
+    exact Nat.card_congr (Equiv.subtypeEquiv restricted (fun π => (inverseHit π.val.val e).symm))
   have actualEven (e : ℤ) : rawOccupation (-e) = rawOccupation e := by
     apply tsum_congr
     intro n
     rw [show occupiedCount (n+1) (-e) = occupiedCount (n+1) e from
       (reflectedEvents false (n+1) e).symm]
-  let J (sign : Bool) (n : ℕ) (e : ℤ) : ℝ :=
-    rho ^ (n+1) * (signedOccupiedCount sign (n+1) e : ℝ)
+  let J (sign : Bool) (n : ℕ) (e : ℤ) : ℝ := rho ^ (n+1) * (signedOccupiedCount sign (n+1) e : ℝ)
   let A (n : ℕ) (e : ℤ) : ℝ := rho ^ (n+1) * (allOccupiedCount (n+1) e : ℝ)
   let D (sign : Bool) (n : ℕ) (e : ℤ) : ℝ :=
     rho ^ (n+1) * (decomposableOccupiedCount sign (n+1) e : ℝ)
@@ -616,8 +568,7 @@ theorem actual_occupation_subsolution_comparison :
     obtain ⟨_, _, counts, _⟩ :=
       D5.S1.Words.Patterns.Separable.ActualCardinality.actual_schroder_cardinality
     rw [counts, counts]
-  have Ibound (n : ℕ) : 0 ≤ indecomposableWeight n ∧
-      indecomposableWeight n ≤ shapeWeight n := by
+  have Ibound (n : ℕ) : 0 ≤ indecomposableWeight n ∧ indecomposableWeight n ≤ shapeWeight n := by
     constructor
     · dsimp [indecomposableWeight]; positivity
     · apply mul_le_mul_of_nonneg_left ?_ (by positivity)
@@ -626,8 +577,7 @@ theorem actual_occupation_subsolution_comparison :
   have Abound (n : ℕ) (e : ℤ) : 0 ≤ A n e ∧ A n e ≤ shapeWeight n := by
     constructor
     · dsimp [A]; positivity
-    · exact mul_le_mul_of_nonneg_left (by exact_mod_cast allCountBound (n+1) e)
-        (by positivity)
+    · exact mul_le_mul_of_nonneg_left (by exact_mod_cast allCountBound (n+1) e) (by positivity)
   have Jbound (sign : Bool) (n : ℕ) (e : ℤ) :
       0 ≤ J sign n e ∧ J sign n e ≤ indecomposableWeight n := by
     constructor
@@ -640,8 +590,7 @@ theorem actual_occupation_subsolution_comparison :
   have Jsum (sign : Bool) (e : ℤ) : Summable (fun n => J sign n e) :=
     Summable.of_nonneg_of_le (fun n => (Jbound sign n e).1)
       (fun n => (Jbound sign n e).2) indecomposableSummable
-  have partitionW (sign : Bool) (n : ℕ) (e : ℤ) :
-      A n e = J sign n e + D sign n e := by
+  have partitionW (sign : Bool) (n : ℕ) (e : ℤ) : A n e = J sign n e + D sign n e := by
     dsimp only [A, J, D]
     rw [eventPartition, Nat.cast_add, mul_add]
   have Dsum (sign : Bool) (e : ℤ) : Summable (fun n => D sign n e) := by
@@ -655,8 +604,7 @@ theorem actual_occupation_subsolution_comparison :
             obtain ⟨c, hc, hb, _⟩ := π.val.property
             omega⟩
     simp [D, decomposableOccupiedCount]
-  let F (sign : Bool) (e : ℤ) (i k : ℕ) : ℝ :=
-    if sign then J sign i (e+(k+1 : ℕ)) * shapeWeight k +
+  let F (sign : Bool) (e : ℤ) (i k : ℕ) : ℝ := if sign then J sign i (e+(k+1 : ℕ)) * shapeWeight k +
       indecomposableWeight i * A k (e-(i+1 : ℕ))
     else J sign i e * (shapeWeight k - A k e) + indecomposableWeight i * A k e
   have Fbound (sign : Bool) (e : ℤ) (i k : ℕ) :
@@ -723,14 +671,12 @@ theorem actual_occupation_subsolution_comparison :
     have sigmaSum : Summable (fun p : Σ n : ℕ, ↥(Finset.antidiagonal n) =>
         F sign e p.2.val.1 p.2.val.2) := E.summable_iff.mpr (Fsum sign e)
     rw [← E.tsum_eq (fun p : ℕ × ℕ => F sign e p.1 p.2)]
-    change _ = ∑' p : Σ n : ℕ, ↥(Finset.antidiagonal n),
-      F sign e p.2.val.1 p.2.val.2
+    change _ = ∑' p : Σ n : ℕ, ↥(Finset.antidiagonal n), F sign e p.2.val.1 p.2.val.2
     rw [sigmaSum.tsum_sigma' (fun n => (hasSum_fintype _).summable)]
     congr 1
     funext n
     rw [tsum_fintype]
-    exact (Finset.sum_coe_sort (Finset.antidiagonal n)
-      (fun p => F sign e p.1 p.2)).symm
+    exact (Finset.sum_coe_sort (Finset.antidiagonal n) (fun p => F sign e p.1 p.2)).symm
   let T (e : ℤ) := ∑' n, A n e
   let P (e : ℤ) := ∑' n, D false n e
   let B (e : ℤ) := ∑' n, J true n e
@@ -742,8 +688,7 @@ theorem actual_occupation_subsolution_comparison :
     exact tsum_congr (partitionW false · e)
   have oppositeTotal (sign : Bool) (e : ℤ) :
       (∑' n, J sign n e) = delta e + ∑' n, D (!sign) n e := by
-    rw [(Jsum sign e).tsum_eq_zero_add, (Dsum (!sign) e).tsum_eq_zero_add,
-      Dzero, zero_add]
+    rw [(Jsum sign e).tsum_eq_zero_add, (Dsum (!sign) e).tsum_eq_zero_add, Dzero, zero_add]
     have singleton : J sign 0 e = delta e := by
       dsimp only [J,delta]
       rw [singletonEvents]
@@ -756,8 +701,7 @@ theorem actual_occupation_subsolution_comparison :
     intro n
     dsimp [J,D]
     rw [oppositeEvents (!sign) (n+1+1) e (by omega), Bool.not_not]
-  have directEquation (e : ℤ) :
-      P e = rawOccupation e * (b - T e) + ceiling * T e := by
+  have directEquation (e : ℤ) : P e = rawOccupation e * (b - T e) + ceiling * T e := by
     rw [show P e = ∑' p : ℕ × ℕ, F false e p.1 p.2 from weightedTransport false e]
     rw [(Fsum false e).tsum_prod]
     have fiber (i : ℕ) : (∑' k, F false e i k) =
@@ -773,8 +717,7 @@ theorem actual_occupation_subsolution_comparison :
     have equation := directEquation e
     have partition := fullPartition e
     have pos : 0 < h + rawOccupation e := by linarith only [hp,(hactual e).1]
-    have constants : 1-ceiling = h ∧ 1+b = 2*h := by
-      dsimp [ceiling,a,h]; constructor <;> ring
+    have constants : 1-ceiling = h ∧ 1+b = 2*h := by dsimp [ceiling,a,h]; constructor <;> ring
     have product : (h+rawOccupation e)*T e = 2*h*rawOccupation e := by
       rw [← constants.2, ← constants.1]
       nlinarith only [equation,partition]
@@ -803,23 +746,20 @@ theorem actual_occupation_subsolution_comparison :
     apply Summable.of_nonneg_of_le (fun p => mul_nonneg (Ibound _).1 (Abound _ _).1)
       (fun p => ?_) productSum
     exact mul_le_mul (Ibound _).2 (Abound _ _).2 (Abound _ _).1 (tn _)
-  have skewEquation (e : ℤ) : rawOccupation e = delta e +
-      (∑' n, shapeWeight n * B (e+(n+1 : ℕ))) +
+  have skewEquation (e : ℤ) : rawOccupation e = delta e + (∑' n, shapeWeight n * B (e+(n+1 : ℕ))) +
       (∑' n, indecomposableWeight n * T (e-(n+1 : ℕ))) := by
     rw [← Ctotal, oppositeTotal]
     simp only [Bool.not_false]
     rw [weightedTransport]
     dsimp only [F]
     simp only [↓reduceIte]
-    rw [(skewLeftSum e).tsum_add (skewRightSum e),
-      (skewLeftSum e).tsum_prod,
+    rw [(skewLeftSum e).tsum_add (skewRightSum e), (skewLeftSum e).tsum_prod,
       (Summable.tsum_comm (f := fun i k => J true i (e+(k+1 : ℕ)) * shapeWeight k)
         (skewLeftSum e)).symm,
       (skewRightSum e).tsum_prod]
     simp_rw [tsum_mul_right,tsum_mul_left]
     simp only [B,T,mul_comm,add_assoc]
-  have leftConvolutionSum (e : ℤ) :
-      Summable (fun n => shapeWeight n * B (e+(n+1 : ℕ))) := by
+  have leftConvolutionSum (e : ℤ) : Summable (fun n => shapeWeight n * B (e+(n+1 : ℕ))) := by
     have sum := (skewLeftSum e).prod_symm.prod
     change Summable (fun n => ∑' i, J true i (e+(n+1 : ℕ)) * shapeWeight n) at sum
     simp only [tsum_mul_right] at sum
@@ -827,19 +767,15 @@ theorem actual_occupation_subsolution_comparison :
   have rightConvolutionSum (e : ℤ) :
       Summable (fun n => indecomposableWeight n * T (e-(n+1 : ℕ))) := by
     simpa only [tsum_mul_left] using (skewRightSum e).prod
-  let G (e : ℤ) (n : ℕ) : ℝ :=
-    shapeWeight n * B (e+(n+1 : ℕ)) +
+  let G (e : ℤ) (n : ℕ) : ℝ := shapeWeight n * B (e+(n+1 : ℕ)) +
       indecomposableWeight n * T (e-(n+1 : ℕ))
-  have Gsum (e : ℤ) : Summable (G e) :=
-    (leftConvolutionSum e).add (rightConvolutionSum e)
+  have Gsum (e : ℤ) : Summable (G e) := (leftConvolutionSum e).add (rightConvolutionSum e)
   have skewCombined (e : ℤ) : rawOccupation e = delta e + ∑' n, G e n := by
-    change rawOccupation e = delta e +
-      ∑' n, (shapeWeight n * B (e+(n+1 : ℕ)) +
+    change rawOccupation e = delta e + ∑' n, (shapeWeight n * B (e+(n+1 : ℕ)) +
         indecomposableWeight n * T (e-(n+1 : ℕ)))
     rw [(leftConvolutionSum e).tsum_add (rightConvolutionSum e)]
     simpa only [add_assoc] using skewEquation e
-  let Q (e : ℤ) (n : ℕ) : ℝ :=
-    (shapeWeight n / 2) * (delta (e+(n+1 : ℕ)) + delta (e-(n+1 : ℕ)))
+  let Q (e : ℤ) (n : ℕ) : ℝ := (shapeWeight n / 2) * (delta (e+(n+1 : ℕ)) + delta (e-(n+1 : ℕ)))
   have deltaBound (e : ℤ) : 0 ≤ delta e ∧ delta e ≤ rho := by
     dsimp [delta]
     split_ifs <;> exact ⟨by positivity, by linarith only [rhop]⟩
@@ -855,8 +791,7 @@ theorem actual_occupation_subsolution_comparison :
         Q e n ≤ (shapeWeight n / 2) * (2*rho) :=
           mul_le_mul_of_nonneg_left bound (div_nonneg (tn n) (by norm_num))
         _ = shapeWeight n * rho := by ring
-  have averageTerm (e : ℤ) (n : ℕ) :
-      (G e n + G (-e) n) / 2 =
+  have averageTerm (e : ℤ) (n : ℕ) : (G e n + G (-e) n) / 2 =
         neighborTerm n (rawOccupation (e+(n+1 : ℕ))) +
         neighborTerm n (rawOccupation (e-(n+1 : ℕ))) + Q e n := by
     have plus : -e+(n+1 : ℕ) = -(e-(n+1 : ℕ)) := by omega
@@ -909,8 +844,7 @@ theorem actual_occupation_subsolution_comparison :
     have reflected := skewCombined (-e)
     rw [actualEven,deltaEven] at reflected
     have original := skewCombined e
-    have avgSum : Summable (fun n => (G e n + G (-e) n)/2) :=
-      ((Gsum e).add (Gsum (-e))).div_const 2
+    have avgSum : Summable (fun n => (G e n + G (-e) n)/2) := ((Gsum e).add (Gsum (-e))).div_const 2
     have avgValue : (∑' n, (G e n + G (-e) n)/2) = rawOccupation e - delta e := by
       rw [tsum_div_const,(Gsum e).tsum_add (Gsum (-e))]
       linarith only [original,reflected]
@@ -936,10 +870,8 @@ theorem actual_occupation_subsolution_comparison :
     fullPartition oppositeTotal directEquation eliminateFull eliminateDirect eliminateSkewIndecomposable
     skewLeftSum skewRightSum skewEquation leftConvolutionSum rightConvolutionSum G Gsum skewCombined
     Q deltaBound deltaEven Qsum averageTerm Qtotal
-  have slopes (x y : ℝ) (hx : 0 ≤ x ∧ x ≤ ceiling)
-      (hy : 0 ≤ y ∧ y ≤ ceiling) (hxy : x ≤ y) :
-      0 ≤ loss y - loss x ∧ loss y - loss x ≤ (y - x) / 2 ∧
-        (x < y → 0 < loss y - loss x) := by
+  have slopes (x y : ℝ) (hx : 0 ≤ x ∧ x ≤ ceiling) (hy : 0 ≤ y ∧ y ≤ ceiling) (hxy : x ≤ y) :
+      0 ≤ loss y - loss x ∧ loss y - loss x ≤ (y - x) / 2 ∧ (x < y → 0 < loss y - loss x) := by
     have dx : 0 < h + x := by linarith
     have dy : 0 < h + y := by linarith
     have dp : 0 < (h + x) * (h + y) := mul_pos dx dy
@@ -947,8 +879,7 @@ theorem actual_occupation_subsolution_comparison :
       have x1 : h + x ≤ 1 := by linarith
       have y1 : h + y ≤ 1 := by linarith
       nlinarith [mul_nonneg (sub_nonneg.mpr x1) (sub_nonneg.mpr y1)]
-    have lower : h ^ 2 ≤ (h + x) * (h + y) := by
-      nlinarith [mul_nonneg hx.1 hy.1]
+    have lower : h ^ 2 ≤ (h + x) * (h + y) := by nlinarith [mul_nonneg hx.1 hy.1]
     have coef0 : 0 ≤ 1 - h ^ 2 / ((h + x) * (h + y)) := by
       have := (div_le_one dp).2 lower
       linarith
@@ -958,8 +889,7 @@ theorem actual_occupation_subsolution_comparison :
         rw [hsq]
         linarith
       linarith
-    have identity : loss y - loss x =
-        (y - x) * (1 - h ^ 2 / ((h + x) * (h + y))) := by
+    have identity : loss y - loss x = (y - x) * (1 - h ^ 2 / ((h + x) * (h + y))) := by
       unfold loss
       field_simp
       ring
@@ -980,27 +910,23 @@ theorem actual_occupation_subsolution_comparison :
     obtain ⟨_, bound, _⟩ := slopes x y hx hy hxy
     unfold neighborTerm
     nlinarith [mul_nonneg (rn n) (by linarith : 0 ≤ (y - x) / 2 - (loss y - loss x)),
-      mul_nonneg (by linarith [kr n] : 0 ≤ kernelWeight n - lossWeight n / 2)
-        (sub_nonneg.mpr hxy)]
+      mul_nonneg (by linarith [kr n] : 0 ≤ kernelWeight n - lossWeight n / 2) (sub_nonneg.mpr hxy)]
   have termBound (n : ℕ) (x : ℝ) (hx : 0 ≤ x ∧ x ≤ ceiling) :
       0 ≤ neighborTerm n x ∧ neighborTerm n x ≤ kernelWeight n * ceiling := by
     have zero : neighborTerm n 0 = 0 := by simp [neighborTerm, loss]
     have positive := zero ▸ termMono n 0 x ⟨le_rfl, hc.le⟩ hx hx.1
-    have lx : 0 ≤ loss x := by
-      exact div_nonneg (sq_nonneg x) (by linarith)
+    have lx : 0 ≤ loss x := by exact div_nonneg (sq_nonneg x) (by linarith)
     constructor
     · exact positive
     · unfold neighborTerm
-      nlinarith [mul_nonneg (rn n) lx,
-        mul_nonneg (kn n) (sub_nonneg.mpr hx.2)]
+      nlinarith [mul_nonneg (rn n) lx, mul_nonneg (kn n) (sub_nonneg.mpr hx.2)]
   have mapSum (u : ℤ → ℝ) (hu : ∀ e, 0 ≤ u e ∧ u e ≤ ceiling) (e : ℤ) :
       Summable (fun n : ℕ => neighborTerm n (u (e + (n + 1 : ℕ))) +
         neighborTerm n (u (e - (n + 1 : ℕ)))) := by
     apply Summable.of_nonneg_of_le
       (fun n => add_nonneg (termBound n _ (hu _)).1 (termBound n _ (hu _)).1)
       (fun n => ?_) (ksum.mul_right (2 * ceiling))
-    nlinarith [(termBound n _ (hu (e + (n + 1 : ℕ)))).2,
-      (termBound n _ (hu (e - (n + 1 : ℕ)))).2]
+    nlinarith [(termBound n _ (hu (e + (n + 1 : ℕ)))).2, (termBound n _ (hu (e - (n + 1 : ℕ)))).2]
   by_contra fails
   push Not at fails
   obtain ⟨start, hstart⟩ := fails
@@ -1020,8 +946,7 @@ theorem actual_occupation_subsolution_comparison :
     · exact hpeak e he
     · have below : w e < threshold := lt_of_not_ge he
       linarith [(hactual e).1, hpeak start startCore]
-  have step (n : ℕ) (e : ℤ) :
-      neighborTerm n (w e) - neighborTerm n (rawOccupation e) ≤
+  have step (n : ℕ) (e : ℤ) : neighborTerm n (w e) - neighborTerm n (rawOccupation e) ≤
         kernelWeight n * maximum ∧
       (n = 0 → neighborTerm n (w e) - neighborTerm n (rawOccupation e) <
         kernelWeight n * maximum) := by
@@ -1046,8 +971,7 @@ theorem actual_occupation_subsolution_comparison :
         have lossPos := mul_pos rzero (positive strict)
         unfold neighborTerm
         nlinarith
-  let difference (n : ℕ) :=
-    (neighborTerm n (w (peak + (n + 1 : ℕ))) +
+  let difference (n : ℕ) := (neighborTerm n (w (peak + (n + 1 : ℕ))) +
       neighborTerm n (w (peak - (n + 1 : ℕ)))) -
     (neighborTerm n (rawOccupation (peak + (n + 1 : ℕ))) +
       neighborTerm n (rawOccupation (peak - (n + 1 : ℕ))))
@@ -1057,11 +981,9 @@ theorem actual_occupation_subsolution_comparison :
     refine Summable.tsum_lt_tsum (i := 0) ?_ ?_ differences (ksum.mul_right (2 * maximum))
     · intro n
       dsimp only [difference]
-      linarith [(step n (peak + (n + 1 : ℕ))).1,
-        (step n (peak - (n + 1 : ℕ))).1]
+      linarith [(step n (peak + (n + 1 : ℕ))).1, (step n (peak - (n + 1 : ℕ))).1]
     · dsimp only [difference]
-      linarith [(step 0 (peak + (0 + 1 : ℕ))).2 rfl,
-        (step 0 (peak - (0 + 1 : ℕ))).1]
+      linarith [(step 0 (peak + (0 + 1 : ℕ))).2 rfl, (step 0 (peak - (0 + 1 : ℕ))).1]
   have totalValue : (∑' n, kernelWeight n * (2 * maximum)) = maximum := by
     rw [tsum_mul_right, hmass]
     ring
@@ -1074,7 +996,5 @@ theorem actual_occupation_subsolution_comparison :
     dsimp [maximum]
     linarith
   linarith
-
 #print axioms actual_occupation_subsolution_comparison
-
 end D5.S1.Words.Patterns.Separable.OccupiedComparison
