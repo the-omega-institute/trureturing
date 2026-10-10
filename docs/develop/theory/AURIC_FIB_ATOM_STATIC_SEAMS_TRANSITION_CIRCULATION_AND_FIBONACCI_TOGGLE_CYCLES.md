@@ -1531,3 +1531,217 @@ $$
 该构造的 $\chi_\theta$ 是相对于 $p_\circ$ 的概率纤维系数，既非定义 19.1 的函数系数，也非 $\kappa-XY$；此处 $\kappa=1/8+\chi_\theta$。参数空间 $U$ 不因这个公式成为物理空间，精确导数读取、共同多点采样律与场动力学均须另供。命题消费[局部源分裂卷 §§1–3](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)的质量和可行路径合同，以这个正律场给出点态秩与 jet 秩的具体分离，不宣称额外内禀单点自由度。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 23. 能量倾斜的归一化关联流与有向环实现
+
+**定义 23.1（指定能量、评价与两种端点表）。** 在定义 21.1 的支持顺序 $(0,1,2,3,13)$ 中，给定与概率律无关的实函数 $H:\Sigma\to\mathbb R$。若称其为能量，另指定能量单位；模式列表本身不供应这个解释。直接使用定义 19.1 的评价矩阵及[基础公式卷数学引文 2.2、7.2、命题 7.3–7.4](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)，记
+
+$$
+\begin{aligned}
+H&=E_0+\epsilon_1x+\epsilon_2z+\epsilon_3y+Jxy,\\
+c_H&=(E_0,\epsilon_1,\epsilon_2,\epsilon_3,J)^{\mathsf T},\\
+\mathbf H&=(H_0,H_1,H_2,H_3,H_{13})^{\mathsf T}=Ec_H\\
+&=(E_0,E_0+\epsilon_1,E_0+\epsilon_2,E_0+\epsilon_3,
+E_0+\epsilon_1+\epsilon_3+J)^{\mathsf T},\\
+\mathcal E_H(p)&=\mathbf H^{\mathsf T}p
+=E_0+\epsilon_1X+\epsilon_2Z+\epsilon_3Y+J\kappa,\\
+J&=H_{13}+H_0-H_1-H_3=\mathbf H^{\mathsf T}h.
+\end{aligned}
+$$
+
+五函数基的唯一性取决于已经固定的 Boolean 坐标；它不是任意换基下的不可约性，也不是物理相互作用的存在证明。$J<0$ 恰比较 $H_{13}+H_0<H_1+H_3$，不单独保证联合态比每个单态更低、动力学稳定或实际结合。$xy$ 是状态函数，$\kappa=\mathbb E_p[xy]$ 是无量纲概率；$Jxy$ 是指定函数的相互作用项，$J\kappa$ 是其期望。固定非退化占据纤维中，目标期望的斜率、乘积补全残差及 minimax 误差直接取上述基础卷以 $f=H$ 的结果，不另证一套能量恢复定理。
+
+定义 21.3 的 $T_{\rm end}=(X,Y,\kappa)$ 在此明确指**无条件**端点联合表，按 $x,y=0,1$ 为行、列：
+
+$$
+W_{\rm end}=\begin{pmatrix}p_0+p_2&p_3\\p_1&p_{13}\end{pmatrix}
+=\begin{pmatrix}1-X-Y+\kappa&Y-\kappa\\X-\kappa&\kappa\end{pmatrix}.
+$$
+
+它的总质量为一，左上格包含中态 $2$。$r=1-Z>0$ 时，条件于 $s\ne2$ 的表另为
+
+$$
+W_{\rm base}=\frac1r\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix}.
+$$
+
+两表的行列式分别为 $\kappa-XY$ 和 $\Delta/r^2$；后者的四格交叉比为 $p_0p_{13}/(p_1p_3)$。这补明定义 21.3 的端点表所用事件，保持其原来的无条件协方差与条件协方差公式。取对数需要对应四格严格正。[隐藏关系卷 C-7.7–C-7.8](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)中消去中态后的有效对数系数属于 $W_{\rm end}$，不能直接替代 $W_{\rm base}$ 的交叉比或这里的 $J$。
+
+**假设 23.2（Gibbs 比较及预先指定的检验对象）。** 给定非空、固定有限支持 $S\subseteq\Sigma$、有限 $H_s$ 和有限实参数 $\beta$，在 $S$ 外取零质量，在 $S$ 上采用计数基准测度及
+
+$$
+\mathcal Z_H(\beta)=\sum_{s\in S}e^{-\beta H_s},\qquad
+\pi_s=\frac{e^{-\beta H_s}}{\mathcal Z_H(\beta)}.
+$$
+
+这是 [Jaynes，式 (2-9)–(2-15)](../../../Library/StatisticalMechanics/jaynes1957information.md)的有限指数族作为本节的比较律。若 $H$ 有能量单位，$\beta$ 有其倒数单位；正温度的自由能解释另外要求 $\beta>0$ 及温标、环境和单位的独立对应。$H\mapsto H+C$ 不改变 $\pi$，只改变配分函数的因子和期望能量的共同零点。以下反演固定 $\beta\ne0$；若连 $\beta$ 也未知，则 $H\mapsto aH,\beta\mapsto\beta/a$ 的尺度不能由同一律辨识。$\beta=0$ 时有限 $H$ 仅给 $S$ 上均匀律。
+
+对全支持严格正五态律，固定 $\beta\ne0$ 后总能取 $H_s=-\beta^{-1}\log p_s+C$。在 $H_0=0$ 的规范中，定义 23.1 的字典给
+
+$$
+\epsilon_i=-\beta^{-1}\log(p_i/p_0)\quad(i=1,2,3),\qquad
+\beta J=-\log\frac{p_0p_{13}}{p_1p_3}.
+$$
+
+故自由拟合五个能级只重写原有四维正概率律，不确认能量、平衡或跃迁率。零概率不能由全支持有限能级给出，须另定支持或明确采用无限能级的极限；支持缩小后也不沿用全五函数系数的可辨识性。用 Gibbs 律提出可被否定的模型时，$S,H,\beta$、允许的控制参数及能量／率的意义须独立于待检验律预先给定，再比较全部状态比，而不是仅比较一个交叉比。样本误差和物理标定不由精确律公式提供。
+
+对固定支持、固定 $\beta\ne0$，仅令 $J$ 通过 $Jxy$ 变化且其余能量系数固定时，所引对数配分函数导数给
+
+$$
+-\beta^{-1}\partial_J\log\mathcal Z_H=\mathbb E_\pi[xy],\qquad
+\partial_J(-\beta^{-1}\log\mathcal Z_H)=\mathbb E_\pi[xy].
+$$
+
+这里读出的是该指定 Gibbs 族对耦合的响应，不是任意非平衡 $p$ 的实验性定义。$\beta>0$ 时括号才采用正温度自由能的称呼。
+
+**假设 23.3（归一化动态与守恒的量词）。** 对固定列随机矩阵 $T$，离散动态是 $p'=Tp$；对固定非负非对角元、行和为零的生成元 $Q=(q_{ij})$，连续动态是 $\dot p=Q^{\mathsf T}p$。定义 19.2 的对偶输运给：指定常时能量对**每个**初律守恒分别要求
+
+$$
+\mathbf H^{\mathsf T}T=\mathbf H^{\mathsf T},\qquad Q\mathbf H=0.
+$$
+
+只需在五个纯态检验这些线性恒等式。减去共同 $E_0$ 后应使用评价列
+
+$$
+e_H=(0,\epsilon_1,\epsilon_2,\epsilon_3,\epsilon_1+\epsilon_3+J)^{\mathsf T},
+$$
+
+而非系数列 $(0,\epsilon_1,\epsilon_2,\epsilon_3,J)^{\mathsf T}$。联合概率及边缘总量对应的评价列分别为 $e_\kappa=(0,0,0,0,1)^{\mathsf T}$、$e_{X+Y}=(0,1,0,1,2)^{\mathsf T}$，须各自代入相应条件。
+
+一份律 $\pi$ 平稳只要求 $T\pi=\pi$ 或 $Q^{\mathsf T}\pi=0$，因此沿这份律所有常时目标均值不变；这不同于所有初律的守恒。详细平衡另要求 $\pi_iT_{ji}=\pi_jT_{ij}$，或 $\pi_iq_{ij}=\pi_jq_{ji}$。在严格正 Gibbs 律与双向正率下，后式要求 $q_{ij}/q_{ji}=e^{-\beta(H_j-H_i)}$；若允许缺边，两个方向的零流也须相等。平稳不逆推此逐边条件，使用定理 3.2、命题 3.3 的已有环流边界。有限不可约链的全初律守恒标量只能是常数：在最大值状态，邻点值的非正差之加权和为零强制所有可达邻点也取最大值；连通传播即得结论。可约的本五边图须按实际活动类处理，不能假称不可约。
+
+仅供应 $1\rightleftarrows3$ 两率时，其余质量固定，$\dot p_1=-k_{13}p_1+k_{31}p_3=-\dot p_3$ 是一个归一化线性交换模型；若两率同为 $k$，则 $p_1-p_3$ 按 $e^{-2kt}$ 衰减。它不从模式标签推出。人口反应 $1+3\rightleftarrows13$ 的浓度方程则有 $\dot c_1=\dot c_3=-R,\dot c_{13}=R$，总粒子浓度变化为 $-R$；单个系统的五态概率不能照搬。反应浓度与粒子数主方程的区分使用 [Maas–Mielke，§1、§2.1–§2.3](../../../Library/StatisticalMechanics/maasmielke2020reaction.md)。即使补上 $\dot p_0=R$，取 $R=p_1p_3-p_{13}$、$p=(0,1/4,0,1/4,1/2)$ 仍给 $\dot p_0=-7/16$，违反单纯形边界。归一化与非负性都是必要条件。
+
+本节采用另行规定的二对二关联律 $1+3\rightleftarrows0+13$，而不把反应对视为单个样本同时占据的状态。取常数 $k_+,k_->0$，定义
+
+$$
+a=k_-p_0p_{13},\qquad b=k_+p_1p_3,\qquad v=b-a,\qquad
+\dot p=vh,\qquad \lambda=\log(k_-/k_+).
+$$
+
+这里 $t$ 是同一指定参数，$k_\pm$ 的单位是其倒数。若消费定义 23.1 的指定能量，额外要求 $\lambda=\beta J$，能量与率比的对应是模型条件。定理 23.4 给该多项式律在原有向图上的单系统概率实现；率依赖当前完整律，不把它称为一个对所有初律相同的固定线性 Markov 生成元。
+
+**定理 23.4（能量倾斜纤维的有界率实现与非均匀 Gibbs 环流）。** 对假设 23.3 的关联律，固定 $0\le Z<1$、$r=1-Z$、$0<X,Y<r$，令 $[l,u]$、$p_\kappa$ 采用数学引文 1.2。每个 $\kappa(0)\in[l,u]$ 有唯一全局解，保持 $X,Z,Y$ 及总质量，且在 $t>0$ 四个底格严格正。它趋向唯一内部平衡 $\kappa_*$，满足
+
+$$
+\frac{p_{*,0}p_{*,13}}{p_{*,1}p_{*,3}}=e^{-\lambda},\qquad
+|\kappa(t)-\kappa_*|\le e^{-r\min(k_+,k_-)t}|\kappa(0)-\kappa_*|.
+$$
+
+令 $\mathcal A(\kappa)=D(p_\kappa\Vert p_{XY/r})$ 采用假设 15.1 的共同支持约定，令 $\Psi(\kappa)=\mathcal A(\kappa)+\lambda\kappa$。在四底格内部，
+
+$$
+\frac{d\Psi}{dt}=-(a-b)\log(a/b)\le0,
+$$
+
+等号恰在 $\kappa=\kappa_*$；并且 $\Psi(\kappa)-\Psi(\kappa_*)=D(p_\kappa\Vert p_{\kappa_*})$。所以至该**受限纤维平衡**的 KL 下降；当 $\lambda\ne0$ 时不声称至原条件独立点的 $\mathcal A$ 本身下降。若 $\lambda=\beta J$，$\Psi$ 与 $\beta\mathcal E_H-S(p)$ 相差一个纤维常数，$S(p)=-\sum_sp_s\log p_s$，而
+
+$$
+\frac{d\mathcal E_H}{dt}=Jv.
+$$
+
+故这项熵下降不等于能量守恒。单个交叉比也不保证 $p_{\kappa_*}$ 等于预先固定全部一体能级的无约束 Gibbs 律；一般需为固定的 $X,Z,Y$ 另加拉格朗日乘子。
+
+在定义 2.1 的原五边次序，取
+
+$$
+\begin{gathered}
+f=(a,b,a,b,0),\\
+q_{01}=k_-p_{13},\quad q_{1,13}=k_+p_3,\quad
+q_{13,3}=k_-p_0,\quad q_{30}=k_+p_1,\quad q_{02}=0.
+\end{gathered}
+$$
+
+其余非对角率为零，对角率为负行和。这些率在整个闭单纯形有界，即使某个底格为零也无除法奇点；每条边有 $f_{ij}=p_iq_{ij}$，且 $Bf=vh$。对每份确定的解 $p(t)$，$Q(p(t))$ 给一个非爆炸的非齐次有限态 Markov 实现；解处于平衡时才冻结为相应常生成元。不能免费取得未知律的完整值来执行这些率。
+
+在内部平衡，$a=b>0$，故 $f=a\mathbf c$。这是反应的正反向通量平衡，同时在单状态有向图上有严格正单向环流，缺少的反向率使详细平衡失败。一个全支持实例为
+
+$$
+\begin{gathered}
+k_+=2,\quad k_-=1,\quad \beta=1,\quad E_0=\epsilon_1=\epsilon_2=\epsilon_3=0,
+\quad J=-\log2,\\
+p_*=(1,1,1,1,2)/6,\quad (X,Z,Y)=(1/2,1/6,1/2),\quad
+\mathcal Z_H=6,\quad f_*=(1,1,1,1,0)/18.
+\end{gathered}
+$$
+
+它恰是这份完整 $H$ 的 Gibbs 律，$\Psi$ 导数为零，单向每边仍有 $1/18$ 流；Gibbs 表示、单律平稳、反应平衡与逐边详细平衡因而有不同结论。
+
+证明。数学引文 1.2 的 $\mathbf1^{\mathsf T}h=0$、$Ah=0$ 给归一化及占据不变。若 $p_0$ 或 $p_{13}$ 为零，则 $a=0$，该零格导数为 $b\ge0$；若 $p_1$ 或 $p_3$ 为零，则 $b=0$，该零格导数为 $a\ge0$；$p_2$ 固定。多项式向量场局部 Lipschitz，闭单纯形正向不变且紧，故解唯一并全局存在。在非退化纤维上 $v(l)>0,v(u)<0$，且
+
+$$
+v'(\kappa)=-k_+(p_1+p_3)-k_-(p_0+p_{13})
+\le-r\min(k_+,k_-)<0.
+$$
+
+这给唯一内部根、端点立即入内及内点不能出界。对 $w=\kappa-\kappa_*$ 用中值公式得 $(w^2)'\le-2r\min(k_+,k_-)w^2$，积分即所列全时界。若 $X$ 或 $Y$ 取 $0,r$，纤维退化为单点且反应两乘积均零；该边界不属于内部对数或收敛率的断言。
+
+消费假设 15.1 的已有导数，$\Psi'=\log(p_0p_{13}/(p_1p_3))+\lambda=\log(a/b)$，再乘 $\dot\kappa=b-a$ 给耗散式。对数严格递增给符号与等号。由 $p_{\kappa_*}$ 的交叉比，$D(p_\kappa\Vert p_{\kappa_*})$ 对 $\kappa$ 的导数同为 $\log(a/b)$，在 $\kappa_*$ 同取零，给上述差值恒等式。这里是 [Maas–Mielke 定理 2.2 及式 (2.9)–(2.12)](../../../Library/StatisticalMechanics/maasmielke2020reaction.md)的一反应熵机制的具体应用；一般熵梯度结论不另立。相应正迁移率是 $\mu=(a-b)/(\log a-\log b)$，在 $a=b$ 以 $\mu=a$ 连续延拓；倾斜势满足 $v=-\mu\Psi'$。第十五节的未倾斜公式取 $\lambda=0$，其证明和结论原样适用。
+
+已有熵导数为 $S'=-\mathcal A'$，而定义 23.1 给 $\mathcal E_H'=J$，所以 $\beta\mathcal E_H-S$ 与 $\Psi$ 的导数相等。$Z=0$ 时固定零格始终省略，四底格内部仍可微；$t=0$ 的端点只用熵的连续延拓，不声称对数导数有限。这个封闭概率模型没有环境能量项；若解释为放热反应，还须另给环境及其交换平衡，不能从 $Jv$ 自动推出整个物理系统的守恒。
+
+原图上的边界恒等式直接取定理 2.2。定理 15.2 已分类全部非负交通；这里对应其最小交通加上 $\min(a,b)\mathbf c$，不是新的交通分类。四条显示率乘各自起点概率即为 $f$，每条率至多 $\max(k_+,k_-)$。因沿解连续且全局有界，直接采用定理 2.4 的有限率实现与前向方程唯一性；这也覆盖端点初态。叶边率零符合命题 3.3。平衡时 $p_{*,0}q_{01}=a>0$ 而 $p_{*,1}q_{10}=0$，故不满足详细平衡；所列实例以权重 $(1,1,1,1,2)$ 归一化，两个反应流均为 $1/18$。平稳环流这一一般障碍已由定理 3.2 给出，这里增加的是非零 $J$、受限平衡及边界有界率的同一实现。
+
+最后，区分本非线性动态与冻结的 $Q(p_*)$：在整个非线性族上，$\dot{\mathcal E}_H=Jv$ 对所有初律恒零恰当且仅当 $J=0$，一体均值均守恒。对固定 $Q(p_*)$ 却须在整个活动方环取常能级，即 $\epsilon_1=\epsilon_3=J=0$，而孤立的 $2$ 允许任意 $\epsilon_2$；这是其四条正边上的 $Q\mathbf H=0$ 逐项所迫。上述 $J=-\log2$ 因而只有指定平稳律的均值不变，没有全初律能量守恒。
+
+更一般地，若一个固定随机核在全五态单纯形上同时保持三个 Boolean 均值，则从每个纯态出发，输出每个 Boolean 位的期望仍为原来的 $0$ 或 $1$，迫使三个输出位逐个确定。三个位区分全部五态，故此核只能为恒等。固定生成元版本由其随机半群同理得到零生成元。这是本应用为何需要律依赖或另供多人系统的边界，不把第十八节的“均值闭合”误换成“均值恒定”。∎
+
+**假设 23.5（同一应用的连接比较接口）。** 定理 23.4 只供应概率、指定能量和有向流。要另谈曲率，须按假设 18.3 供给底流形、向量丛、群作用、读出以及保留所需操作的对应；概率占据 $\kappa$ 不被定义成曲率。作为比较，给光滑底流形、矩阵 Lie 群 $G$ 的表示与局部 $C^2$ 连接一形式 $\mathscr A$，取列截面约定 $D=d+\mathscr A$。定义
+
+$$
+\mathscr F=d\mathscr A+\mathscr A\wedge\mathscr A,\qquad
+[D_1,D_3]\psi=\mathscr F_{13}\psi,\qquad
+\mathscr F_{13}=\partial_1\mathscr A_3-\partial_3\mathscr A_1+[\mathscr A_1,\mathscr A_3].
+$$
+
+规范取 $\psi'=g^{-1}\psi$、$\mathscr A'=g^{-1}\mathscr A g+g^{-1}dg$，则 $\mathscr F'=g^{-1}\mathscr Fg$。离散版本须另供可逆边输运 $U_{u\to v}$，沿路径按后边左乘组成；回路乘积才是相应 holonomy。若这些边来自上述光滑连接的平行方程 $\dot\psi=-\mathscr A(\dot\gamma)\psi$，沿 $+1,+3,-1,-3$ 小矩形且边长以有界非零比例趋零时，起点标架中
+
+$$
+U_{13}=I-a_1a_3\mathscr F_{13}+o(a_1a_3).
+$$
+
+这是带定向与符号的连续极限，非任意晶格上的精确差分式。直接以 $\Delta_1\mathscr A_3-\Delta_3\mathscr A_1+[\mathscr A_1,\mathscr A_3]$ 定义离散数组时，必须另外说明格点、乘积及规范变换，不能据此宣布它是该回路乘积或规范协变量。定义 19.3 的一般随机输运并未供应逆、连接或这些光滑极限。
+
+标量 $U(1)$ 取 $\mathscr A=i\,d\chi$、全局实 $C^2$ 函数 $\chi$ 时，命题 22.3 的 $d^2=0$ 及闭路积分结论给 $\mathscr F=0$ 和恒等 holonomy；交换差分下的标量恰当梯度同样无旋。非阿贝尔的 $\mathscr A=d\chi$ 若 $\chi=s_1T_1+s_3T_3$、$[T_1,T_3]\ne0$，却有 $\mathscr F_{13}=[T_1,T_3]$；它不是纯规范的一般形式。真正的 $\mathscr A=g^{-1}dg$ 由 $d(g^{-1})=-g^{-1}(dg)g^{-1}$ 给 $\mathscr F=0$。平坦与全局平凡另须区分：圆周上的 $i\alpha\,d\theta$ 曲率零，而本平行约定的闭路因子为 $e^{-2\pi i\alpha}$；$\alpha\notin\mathbb Z$ 时非恒等，它没有全局单值实势。这个例子没有把全局恰当梯度变成非零局部场强。外微分背景仍用[本卷命题 22.3 所引 Tong](../../../Library/Geometry/tong2021general.md)，非交换项由此处声明的矩阵连接计算。
+
+**假设 23.6（能量、光锥及内部旋转的变分比较）。** 在假设 23.5 之外，若比较规范场能量，另取 $3+1$ 平直时空、$c=1$、度规 $\eta=\operatorname{diag}(+,-,-,-)$，紧群代数上的正定不变实内积 $\langle\ ,\ \rangle$、耦合常数 $g_c>0$，并规定 Lagrangian
+
+$$
+\mathcal L_{\rm YM}=-\frac1{4g_c^2}\langle\mathscr F_{\mu\nu},\mathscr F^{\mu\nu}\rangle.
+$$
+
+内部内积可对反 Hermitian 矩阵取适当归一化的 $-\operatorname{Tr}(AB)$，不能不声明约定就把任意迹当作正内积。置 $E_i=-\mathscr F_{0i}$、$B=(\mathscr F_{23},\mathscr F_{31},\mathscr F_{12})$；对这份作用量的 Hilbert 张量，采用给出正 $T_{00}$ 的 $+---$ 约定，
+
+$$
+\begin{aligned}
+\langle\mathscr F_{\mu\nu},\mathscr F^{\mu\nu}\rangle
+&=2(\|B\|^2-\|E\|^2),\\
+T_{\mu\nu}&=g_c^{-2}\left(-\langle\mathscr F_{\mu\alpha},\mathscr F_\nu{}^\alpha\rangle
++\tfrac14\eta_{\mu\nu}\langle\mathscr F_{\alpha\beta},\mathscr F^{\alpha\beta}\rangle\right),\\
+T_{00}&=\frac{\|E\|^2+\|B\|^2}{2g_c^2}\ge0.
+\end{aligned}
+$$
+
+这里复用 [Tong，Chapter 6 式 (6.1)–(6.3)、(6.16)–(6.18)](../../../Library/Quantum/tong2006qft.md)的 Abelian 作用量与 Hamiltonian 区别；给定正内部内积后按相同指标收缩得到显示式。例如 $E\perp B$、$\|E\|=\|B\|>0$ 时 Lorentz 收缩为零而 $T_{00}>0$。因此作用量中的 $\mathscr F_{\mu\nu}\mathscr F^{\mu\nu}$ 不是正场能，单个空间分量的平方也只是指定场能中的一项。局部能动守恒还需该 Lagrangian 的无外源场方程；有物质耦合时守恒的是含物质交换的总张量。积分能量守恒须有限能量和空间边界通量为零或无穷远衰减条件。
+
+光锥比较另限 $1+1$ 维，保持 $\eta=\operatorname{diag}(+,-)$，给实 $C^2$ 标量场和 $C^1$ 势，$\mathcal L=\tfrac12\partial_\mu\phi\partial^\mu\phi-V(\phi)$，$x^\pm=(t\pm x)/\sqrt2$，故 $\eta_{+-}=1$。按 [Tong Chapter 1 式 (1.42)–(1.46)](../../../Library/Quantum/tong2006qft.md)的应力张量 $T_{\mu\nu}=\partial_\mu\phi\partial_\nu\phi-\eta_{\mu\nu}\mathcal L$ 作坐标变换，得
+
+$$
+T_{++}=(\partial_+\phi)^2,\quad T_{--}=(\partial_-\phi)^2,\quad T_{+-}=V(\phi),\qquad
+T_{tt}=\frac{T_{++}+T_{--}+2T_{+-}}2,\quad
+T_{tx}=\frac{T_{++}-T_{--}}2.
+$$
+
+这些是下标分量；$T^{0x}=-T_{tx}$，能流符号不省略升降指标。守恒要求满足 $\Box\phi+V'(\phi)=0$；总能量或动量还需可积及端点无净通量。自由无质量且 $V=0$ 时混合项零；非零势函数不保证在每个场值上 $V(\phi)\ne0$，更不推出五态的模式交换机制。这里的混合张量分量不是 $xy$ 或 $p_{13}$。
+
+内部旋转比较另给 $3+1$ 维复场 $\Phi=(\phi_1+i\phi_3)/\sqrt2$、$\mathcal L=\partial_\mu\Phi^*\partial^\mu\Phi-V(|\Phi|^2)$，同取 $+---$。全局变换 $\delta\Phi=i\theta\Phi$ 的流及能量为
+
+$$
+j^\mu=\phi_1\partial^\mu\phi_3-\phi_3\partial^\mu\phi_1,\qquad
+T_{00}=\frac12\sum_{a=1,3}\big((\partial_t\phi_a)^2+|\nabla\phi_a|^2\big)+V(|\Phi|^2).
+$$
+
+[Noether，§1 定理 I 及其 on-shell 限定](../../../Library/Geometry/noether1918invariant.md)，结合 [Tong 式 (1.60)–(1.63)](../../../Library/Quantum/tong2006qft.md)的该复场应用，给满足 Euler–Lagrange 方程时 $\partial_\mu j^\mu=0$；$Q=\int j^0\,d^3x$ 的守恒另需可积和边界 $j$ 通量为零。$V\ge0$ 时显示能量非负；一般势不自动有此性质。流包含导数及旋转生成元，守恒荷不是 $\phi_1\phi_3$，Lorentz 缩并的导数平方也不是显示的正平方和。
+
+上述场合同只是定理 23.4 中“能量”一词的分别类型化比较，没有提供从概率、环流、内部振幅或连接之间的对应。若再写 Einstein 方程，还须另供 Lorentz 度规、协变物质作用量、按该度规变分的完整应力张量、场方程及相容的 $\nabla^\mu T_{\mu\nu}=0$；必要的守恒条件也不单独保证 Einstein 方程的解。$J\kappa$、概率占据或状态图回路均未供应这些数据，故本有限模型没有断言 Einstein 源或引力几何。
+
+## 追加锚（本行以下为增补区）
