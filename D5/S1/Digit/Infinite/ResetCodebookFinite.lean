@@ -464,7 +464,10 @@ namespace D5.S1.Digit.Infinite.ResetCodebook
 theorem weak_run (K : ℕ) (d : ℝ) (a : Return) (as : List Return) (D : ℝ) :
     Statement.weak K d (a::as) D ↔
       a.val.2 ≤ K ∧ (a.val.2=K → d ≤ D) ∧ Statement.weak K d as (run false a D) := by
-  simp only [Statement.weak,run_closed,Statement.G,closedRun]
+  change (a.val.2 ≤ K ∧ (a.val.2 = K → d ≤ D) ∧
+    Statement.weak K d as (closedRun false a.val.1 a.val.2 D)) ↔
+    (a.val.2 ≤ K ∧ (a.val.2 = K → d ≤ D) ∧ Statement.weak K d as (run false a D))
+  rw [run_closed]
 theorem weak_gain (K : ℕ) (d delta x y : ℝ) (as : List Return)
     (hd : 0 < delta) (hxy : x+delta ≤ y) (hw : Statement.weak K d as x) :
     Statement.weak K (d+delta*g^(totalWeight as)) as y := by
