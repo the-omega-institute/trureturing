@@ -969,3 +969,391 @@ Writing that primitive as $J$ leaves the complete target
 $I_\psi(A)=J_\infty-J(A)$. Its negative bias does not supply the
 required comparison with $J_\infty$ at these same actual integers;
 the uniform floor in (S4) on the already justified source class remains unpaid.
+
+## Transport one selected source into an actual CA price interval
+
+The Euler optimization and tangent minimum in equations (7)–(12) and
+Lemma 6 of the inspected primary give the following application. It
+quantifies the sampling requirement for a future arithmetic mean or
+exceptional-set estimate; it is not a new optimization theorem, a
+signed-tail bound, an originality claim, or Lean certification. The
+[existing quadratic tail interpolation](../Analytic/guthmaynard2024largevalues.md#finite-interpolation-without-assuming-a-prime-error-bound)
+already supplies the $A^{3/4}$ bounded-loss scale for a different
+comparison. That interpolation and the tangent minimum are reused.
+The tangent gap $R(A,b)$ below is also the existing $c_A(b)$ in
+the [Nicolas pressure application](../ArithSums/nicolas2025comparison.md),
+equation (PH1). Its global Robin maximum hypothesis is not imported
+here: the comparison uses the original source's right-tail maximality
+only at $C_b\ge N$ and retains actual Gronwall values, rather than
+identifying them with pressure away from a self-clock point.
+
+Fix the same $N\in\mathscr S_{\rm reg}$, put $A=\log N>1$,
+$L=\log A$, $T=\sqrt A L$, and retain
+
+$$
+g(b)=\frac1{b\log b},\qquad
+k(b)=-g'(b)=\frac{1+\log b}{b^2\log^2b}.
+$$
+
+For $b\ge A$, let $C_b$ be the largest full CA optimizer at price
+$g(b)$, including all activation ties and repeated prime layers. Write
+$B(b)=\log C_b$ and
+
+$$
+X_N=\log G(N)-\gamma,\qquad X(b)=\log G(C_b)-\gamma.
+$$
+
+The already cited prime-local bridge gives $N=C_A$. The full layer
+rule gives $N\mid C_b$, hence $B(b)\ge A>1$. In general $B(b)\ne b$:
+no self-clock identity, GA1 property, or tail maximality is imposed on
+the later $C_b$.
+
+Global optimization at $g(b)$ supplies
+$\log Z(N)-g(b)A\le\log Z(C_b)-g(b)B(b)$, where $Z(n)=\sigma(n)/n$.
+Lemma 6, in the logarithmic variable $t$, says that
+$F_b(t)=g(b)t-\log\log t$ has its minimum at $t=b$.
+Thus $X_N-X(b)\le F_b(A)-F_b(B(b))\le F_b(A)-F_b(b)$.
+The original $N$'s all-integer right-tail maximality separately gives
+$X(b)\le X_N$. Together these existing comparisons yield
+
+$$
+\begin{aligned}
+0\le X_N-X(b)&\le R(A,b),\\
+R(A,b)&=\log\frac{\log b}{\log A}-\frac{b-A}{b\log b}
+       =\int_A^b(u-A)k(u)\,du\\
+&\le\frac{k(A)}2(b-A)^2.
+\end{aligned}
+\tag{P1}
+$$
+
+The integral follows by differentiating the explicit tangent gap;
+the last inequality uses the existing decreasing kernel. No ordinary
+prime error has been assigned a favorable sign in this comparison.
+
+For $h>0$, define the actual-price mean
+$\mathcal M_A(h)=h^{-1}\int_A^{A+h}X(b)\,db$.
+There are finitely many CA activation events on each such interval;
+the mean is over the actual stepwise arithmetic values, with endpoint
+ties of zero integration weight. Integrating (P1) gives
+
+$$
+0\le X_N-\mathcal M_A(h)
+\le\frac1h\int_A^{A+h}(A+h-u)(u-A)k(u)\,du
+\le\frac{k(A)h^2}{6}.
+\tag{P2}
+$$
+
+At $h=A^{3/4}$ this is
+$0\le T[X_N-\mathcal M_A(h)]\le(1+1/L)/6$.
+It supplies a bounded transport cost, not an upper bound for
+$T\mathcal M_A(h)$. In the existing identity
+$I_\psi(A)+K_N(A)=-X_N$, a bound on that positive mean would still
+need an independent arithmetic supplier before it could fund (S4).
+
+### A power excess occupies a quantified price interval
+
+Use the particular fixed $\eta'\in(0,1/2)$ and $c_*>0$ supplied
+by (S2), rather than choosing a different exponent. Eventually
+$X_N\ge cA^{-\eta'}$ for some fixed $c>0$ on that selected family.
+Choose a fixed $\lambda>0$ with $\lambda^2\le c/2$, and set
+
+$$
+h_{\eta'}(A)=\lambda A^{1-\eta'/2}\sqrt{\log A}=o(A).
+$$
+
+For $L\ge1$, (P1) gives
+$R(A,A+h_{\eta'}(A))\le\lambda^2A^{-\eta'}$.
+Consequently every actual optimizer on this entire interval satisfies
+
+$$
+X(b)\ge\frac c2 A^{-\eta'}
+\qquad(A\le b\le A+h_{\eta'}(A)).
+\tag{P3}
+$$
+
+This provides a quantitative interface for the
+[existing exceptional-center sampling obstruction](../Analytic/mantovanelli2026primeworkload.md#the-remaining-signed-supplier-and-its-sampling-conditions).
+For example, put $\delta=c/(4\,2^{\eta'})$ and
+$\mathcal E_X=\{b\in[X,3X]:X(b)>\delta X^{-\eta'}\}$.
+For any selected source with $A\in[X,2X]$, (P3)'s interval lies in
+$[X,3X]$ eventually and is contained in $\mathcal E_X$. Its length
+is at least $\lambda X^{1-\eta'/2}\sqrt{\log X}$.
+An unconditional estimate
+
+$$
+|\mathcal E_X|=o\!\left(X^{1-\eta'/2}\sqrt{\log X}\right)
+\tag{P4}
+$$
+
+would therefore exclude such selected sources at all sufficiently large
+scales, contradicting the existing RH-failure supplier. Here $|\cdot|$
+is Lebesgue measure in the actual CA price variable $b$. No estimate
+(P4), or uniform upper bound for the mean in (P2), is established.
+Qualitative density $o(X)$ does not reach this required rate; an average
+over integers, prime cutoffs, moduli, or characters cannot be substituted
+without a proved transport of the averaging measure. The interval
+comparison adds no new signed ordinary-prime control and leaves the
+complete original Robin tail and RH unresolved.
+
+
+## Use the existing short-interval PNT on the actual CA price path
+
+The uniform short-interval theorem in
+[Guth–Maynard, Corollary 1.3](../Analytic/guthmaynard2024largevalues.md#the-short-interval-input)
+can be applied to the same actual path in (P1). The centered
+prime-count conversion and wider interpolation scale are already in the
+[FIB theory volume, §260, equations (260.5) and (260.9)](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+They are reused here. The additional application is the transport from
+one selected $N\in\mathscr S_{\rm reg}$ to all the actual later $C_b$,
+including their higher layers and activation ties. It is a paper-level
+application of existing results, without an originality or Lean
+certification claim.
+
+Retain $A,L,T,g,k,B,X_N,X$ from (P1), in particular $B(A)=A$.
+Put
+
+$$
+u=L^{1/4},\qquad \varepsilon_A=Le^{-u},\qquad t_0=A^{2/3}.
+$$
+
+For all sufficiently large $A$, uniformly for $t_0\le t\le A$,
+the existing arithmetic inputs give
+
+$$
+|B(A+t)-B(A)-t|\le C_0\varepsilon_A t.
+\tag{P5}
+$$
+
+The [existing uniform extension (GS4)](../ArithSums/nicolas2025comparison.md#the-local-prime-input-and-its-uniform-range)
+gives the relative error
+$\ll(\log Y)e^{-(\log Y)^{1/4}}+Y^{-1/10}+Y^{-1/6}$
+on all intervals in $[Y/2,3Y/2]$ of length at least $Y^{2/3}$.
+For $2^{2/3}A^{2/3}\le t\le A$, apply it with $Y=2A$ to
+$[A,A+t]$. For $A^{2/3}\le t<2^{2/3}A^{2/3}$, use directly
+the existing centered conversion (260.9), whose range contains
+this whole segment for large $A$, and its accompanying ordinary
+prime-power correction. Both give
+
+$$
+|\psi(A+t)-\psi(A)-t|\ll\varepsilon_A t
+\qquad(t_0\le t\le A),
+$$
+
+including the already paid ordinary prime-power corrections.
+The [existing full activation correction](../ArithSums/nicolas2025comparison.md#the-arithmetic-correction-vanishes-at-the-paid-heat-scale)
+gives $|B(x)-\psi(x)|\ll\sqrt x\,[\log(2x)]^{5/2}$ for every
+large real price coordinate $x$. Its two endpoint corrections are
+$O(\sqrt A\,L^{5/2})=o(\varepsilon_A t_0)$, proving (P5).
+No regularity or GA1 hypothesis is required of any future $C_b$.
+
+Use the existing pressure from the
+[Nicolas application](../ArithSums/nicolas2025comparison.md#the-same-source-price-minimum-gives-a-nonnegative-heat-cost),
+with its almost-everywhere derivative:
+
+$$
+\begin{aligned}
+P(x)&=\gamma+\log\log x-g(x)x
+      -\max_{m\ge1}\{\log Z(m)-g(x)\log m\},\\
+P'(x)&=k(x)[x-B(x)].
+\end{aligned}
+$$
+
+The concavity tangent gap is
+
+$$
+H(b,B)=\log\log b+g(b)(B-b)-\log\log B\ge0.
+$$
+
+Since $B(A)=A$, the definitions give the exact identity
+$X_N-X(b)=P(b)-P(A)-H(b,B(b))$.
+The original $N$'s right-tail maximality supplies its nonnegative
+left side. For $0\le t<t_0$, monotonicity gives
+$A+t-B(A+t)\le t$; for $t\ge t_0$, (P5) and $B(A)=A$ give
+$A+t-B(A+t)\le C_0\varepsilon_A t$.
+Integrating the existing derivative against decreasing $k$ yields,
+for one fixed $C_1>0$ and all $A\le b\le2A$,
+
+$$
+0\le X_N-X(b)
+\le C_1 k(A)\left[A^{4/3}+\varepsilon_A(b-A)^2\right].
+\tag{P6}
+$$
+
+The short initial segment is paid by $A^{4/3}$, rather than assigning
+a favorable sign to any ordinary-prime error. The pressure comparison
+retains $B(b)$ in the tangent gap; it does not identify $B(b)$ with $b$.
+
+For example, at the already documented wider scale
+$h=A^{3/4}e^{u/2}/L$, (P6) implies
+
+$$
+\sup_{A\le b\le A+h}T[X_N-X(b)]
+\ll A^{-1/6}+\frac1L\longrightarrow0.
+\tag{P7}
+$$
+
+This is the selected-source application of that existing scale,
+not a new interpolation theorem or an upper bound for $X(b)$.
+
+
+### A wider actual-price interval for the same supplied power excess
+
+Keep the particular fixed $\eta'\in(0,1/2)$ and $c>0$ from (S2)
+and (P3). Choose a sufficiently small fixed $\lambda>0$, depending
+only on $c,C_1$, and put
+
+$$
+\widetilde h_{\eta'}(A)
+=\lambda A^{1-\eta'/2}\exp\!\left(\frac{(\log A)^{1/4}}2\right).
+$$
+
+For every fixed $\eta'>0$, this is $o(A)$; no lower bound on
+$\eta'$ beyond positivity is imposed; the sufficiently large threshold
+may depend on that fixed exponent. The reused extension (GS4) in (P5)
+therefore also covers small fixed exponents for which
+$\widetilde h_{\eta'}(A)>A^{0.99}$ eventually.
+Since
+
+$$
+\begin{aligned}
+k(A)\varepsilon_A\widetilde h_{\eta'}(A)^2
+ &=\lambda^2\left(1+\frac1L\right)A^{-\eta'},\\
+k(A)A^{4/3}&=o(A^{-\eta'}),
+\end{aligned}
+$$
+
+(P6), with $\lambda$ small enough, gives eventually
+
+$$
+X(b)\ge\frac c2A^{-\eta'}
+\quad\left(A\le b\le A+\widetilde h_{\eta'}(A)\right).
+\tag{P8}
+$$
+
+The actual-price interval is wider than (P3)'s by a factor
+$e^{(\log A)^{1/4}/2}/\sqrt{\log A}\to\infty$, up to fixed
+constants. The improvement uses the published uniform arithmetic
+estimate, with the same actual integer and all activation layers;
+it does not assert the sign of the remaining Robin tail.
+
+For the same $\delta=c/(4\,2^{\eta'})$ and $\mathcal E_X$ from
+(P4), any selected $A\in[X,2X]$ places this entire interval in
+$\mathcal E_X\subseteq[X,3X]$ eventually. Hence a sufficient
+still-missing exceptional-set estimate can be weakened to
+
+$$
+|\mathcal E_X|
+=o\!\left(X^{1-\eta'/2}
+\exp\!\left(\frac{(\log X)^{1/4}}2\right)\right).
+\tag{P9}
+$$
+
+This is a required rate in Lebesgue measure of the actual price
+variable. No bound (P9), directed mean estimate, effective cutoff,
+complete signed floor (S4), or proof of RH is obtained. Qualitative
+density $o(X)$ and averages in other variables still require the
+quantitative same-source measure transport described after (P4).
+
+## A partial zero-free envelope leaves the supplied excess unpaid
+
+Keep the actual family (S2), proper GA1 and the event-free bridge above.
+Write its original oscillation exponent as $u$ and its output exponent as
+$\eta_{\rm out}=u/r\in(0,1/2)$, so that
+
+$$
+1-\Theta<u,\qquad \Theta<\sigma,\qquad
+2u<r<\frac1{2\sigma},\qquad
+X_N\ge cA^{-\eta_{\rm out}},\quad A=\log N.
+$$
+
+These are the existing source parameters, not a new choice of a smaller
+output exponent. Assume conditionally that $\Theta\le\nu<1$.
+The [already recorded complete explicit formula](../ArithSums/nicolas2025comparison.md#the-2026-signed-formula-and-the-available-absolute-error-scale)
+is directly reused, including all prime powers, actual zero multiplicities,
+the pole and trivial-zero terms, and the infinite endpoint. Its original
+coefficient is
+
+$$
+F_A(s)=\frac1s\int_A^\infty
+ t^{s-2}\frac{\log t+1}{\log^2t}\,dt.
+$$
+
+For $A\ge2$, its logarithmic Laplace representation gives
+
+$$
+F_A(\rho)=\frac{A^{\rho-1}}\rho
+\int_0^\infty\frac{(1+v)A^{-v}}{1+v-\rho}\,dv,
+\qquad
+|F_A(\rho)|\le
+\frac{A^{\Re\rho-1}}{|\rho(1-\rho)|}
+\left(\frac1{\log A}+\frac1{\log^2A}\right).
+$$
+
+Here $|1+v-\rho|\ge|1-\rho|$ on the actual critical strip.
+The finite classical weight
+$C_\zeta=\sum_\rho m_\rho/|\rho(1-\rho)|$ is already used in that
+owning note; no new zero computation or numerical value is needed.
+The complete pole/trivial-zero contribution has magnitude at most
+$\log(2\pi)/(A\log A)$. Thus the conditional supplied envelope is
+
+$$
+|I_\psi(A)|\le\mathcal E_\nu(A):=
+C_\zeta A^{\nu-1}
+\left(\frac1{\log A}+\frac1{\log^2A}\right)
++\frac{\log(2\pi)}{A\log A}.
+$$
+
+This applies the existing integrated formula, rather than introducing a
+new Chebyshev or zero-free estimate. Its upper allowance is eventually
+smaller than $cA^{-\eta_{\rm out}}$ when
+$\eta_{\rm out}\le1-\nu$, including equality because of the logarithmic
+factor. The actual supplied parameters instead satisfy
+
+$$
+\eta_{\rm out}>2\Theta(1-\Theta)>1-\Theta\ge1-\nu.
+$$
+
+In particular, the [cited seven-eighths input](../Analytic/openai2026quasirh.md)
+would give $\eta_{\rm out}>7/32$, whereas that envelope funds only
+$\eta_{\rm out}\le1/8$. The external zero-free result remains a
+conditional source input without this repository's accepted compiled
+dependency/axiom closure. Failure of the allowance to fund this family
+is not a lower bound on the actual tail or a proof that the joint
+arithmetic conditions cannot yield a stronger estimate.
+
+For the same fixed exponent, the unpaid signed part can be isolated
+without truncating the original tail. Define, over the actual distinct nontrivial zeros, with their original
+multiplicities $m_\rho$,
+
+$$
+\mathcal Z_{\eta_{\rm out}}(A)
+=\Re\sum_{1-\eta_{\rm out}<\Re\rho\le\nu}
+ m_\rho F_A(\rho).
+$$
+
+The same formula and absolute weight give the exact decomposition
+
+$$
+I_\psi(A)=-\mathcal Z_{\eta_{\rm out}}(A)+e(A),\qquad
+|e(A)|\le\mathcal E_{1-\eta_{\rm out}}(A)
+=O\!\left(\frac{A^{-\eta_{\rm out}}}{\log A}\right).
+$$
+
+All complementary zeros and the pole/trivial-zero contribution are
+inside $e(A)$. A sufficient additional joint estimate on the original
+selected family would be, for some fixed $0<\delta<c$,
+
+$$
+\mathcal Z_{\eta_{\rm out}}(A)
+\le(c-\delta)A^{-\eta_{\rm out}}
+\quad\text{eventually}.
+$$
+
+It would yield $I_\psi(A)>-cA^{-\eta_{\rm out}}$ at the same source,
+contradicting its existing negative-tail implication (O3).
+No such one-sided bound is supplied here. Keeping the full coefficient
+is essential: an unproved first-term replacement has a logarithmic
+remainder at the slower $A^{\nu-1}$ scale. This is an applicability map
+and a localization of the remaining estimate, not a new RH criterion,
+new signed gain, originality claim, or Lean certification of the
+analytic source inputs.
