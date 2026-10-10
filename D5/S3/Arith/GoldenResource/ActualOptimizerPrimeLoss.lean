@@ -160,10 +160,10 @@ private theorem forward_prime_absent {b x : ℝ} (hb : 1 < b) (hbx : b < x)
   have hlt : goldenLayerMarginal p 1 < price b := hfirst.trans hbp
   by_contra hne
   have hpos : 1 ≤ n.factorization p := Nat.one_le_iff_ne_zero.mpr hne
-  have hdec : goldenLayerMarginal p (n.factorization p + 1) ≤
+  have hdec : goldenLayerMarginal p (n.factorization p) ≤
       goldenLayerMarginal p 1 := by
     rcases eq_or_lt_of_le hpos with rfl | hltk
-    · exact (golden_layer_strict_decrease hp (by omega) (by omega)).le
+    · rfl
     · exact (golden_layer_strict_decrease hp (by omega) hltk).le
   have hdiv : p ∣ n := by
     apply Nat.dvd_of_mem_primeFactors
