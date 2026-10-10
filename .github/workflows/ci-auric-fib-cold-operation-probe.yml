@@ -1,0 +1,104 @@
+name: AURIC FIB cold operation probe
+
+# Temporary operation observation. This job supplies no acceptance evidence.
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  cold-operations:
+    if: github.head_ref == 'lane/tools/auric-fib-cold-operation-probe'
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      lean: toolchain
+      cache-dependency-path: |
+        tools/tests/StrataLint.Lean.Tests/packages.lock.json
+        tools/StrataLint.TestEvidence/packages.lock.json
+        tools/StrataLint.Engineering/packages.lock.json
+        tools/StrataLint.Runtime/packages.lock.json
+        tools/StrataLint.Engine/packages.lock.json
+        tools/Trureturing.Truth/packages.lock.json
+        tools/StrataLint.Lean/packages.lock.json
+        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
+        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      command: |
+        python3 -B - <<'PY'
+        import hashlib, json, os, pathlib, subprocess
+        def emit(kind, **fields):
+            print('FIB_OPERATION_PROBE ' + json.dumps(dict(kind=kind, **fields)), flush=True)
+        emit('commitment', qualification_count=0,
+             hypothesis='The ordinary cold case exposes concrete report-program child operations still unfinished at its unchanged guard.',
+             falsifier='The cold case reaches native-inspect, or the trace cannot bind complete exec and terminal records to that case; no unfinished-member conclusion then follows.',
+             interpretation='Exec, creation, cwd, wait, exit and signal records identify operations; parent Lake, group markers, last logs and process absence do not establish child cause, completion, duplication or serialization.')
+        def git(*args):
+            return subprocess.check_output(['git', *args], text=True).strip()
+        anchors = ['.github/workflows/ci-unit.yml', '.github/workflows/ci-current.yml',
+                   'tools/Makefile', 'tools/scripts/dotnet-test.sh',
+                   'tools/tests/StrataLint.Lean.Tests/Native/CompiledFibIntegrationTests.cs',
+                   'tools/lean-inspector/tests/test_auric_fib_compiled.py',
+                   'tools/lean-inspector/lakefile.lean', 'tools/lean-inspector-reg/lakefile.toml',
+                   'tools/scripts/worktree/lean-cache-run.sh', 'tools/scripts/auric-fib-analysis.sh']
+        emit('checkout', M=git('rev-parse', 'HEAD'), B=git('rev-parse', 'HEAD^1'),
+             H=git('rev-parse', 'HEAD^2'), event_sha=os.environ['GITHUB_SHA'],
+             run_id=os.environ['GITHUB_RUN_ID'], run_attempt=os.environ['GITHUB_RUN_ATTEMPT'],
+             command=['make', '-C', 'tools', 'test', 'TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj'],
+             cold_owner='StrataLint.Lean.Tests.CompiledFibIntegrationTests.TypedReportsUseCompiledModuleWithoutNativeExecutable',
+             child_selector=['tools/lean-inspector/tests/test_auric_fib_compiled.py', 'CompiledFibProgramTests'],
+             report_target='Reg.Support.AuricFibCompiledFixture:report',
+             source_sha256={p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in anchors})
+        manifest = pathlib.Path('lake-manifest.json')
+        emit('preparation', runner_os=os.environ.get('RUNNER_OS'), runner_arch=os.environ.get('RUNNER_ARCH'),
+             image_os=os.environ.get('ImageOS'), image_version=os.environ.get('ImageVersion'),
+             lean_pin=pathlib.Path('lean-toolchain').read_text().strip(),
+             dotnet_pin=json.loads(pathlib.Path('global.json').read_text()),
+             dependency_pins=json.loads(manifest.read_text()),
+             manifest_sha256=hashlib.sha256(manifest.read_bytes()).hexdigest(),
+             lean_preparation='ci-unit toolchain only; no build seeds or prewarming',
+             initial_paths_exist={p: pathlib.Path(p).exists() for p in [
+                 '.lake/build/lean-inspector/producer/bin/reportInspector',
+                 '.lake/build/lean-inspector/producer/bin/inputDiscovery',
+                 '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegAnalysis/AuricFib/Main.olean',
+                 'Reg/Support/AuricFibCompiledSource.lean', 'Reg/Support/AuricFibCompiledFixture.lean']})
+        PY
+        probe_dir="$(mktemp -d "$RUNNER_TEMP/fib-operation-probe.XXXXXXXX")"
+        if ! command -v strace; then
+          echo 'FIB_OPERATION_PROBE capability=unavailable reason=existing-strace-absent qualification_count=0'
+          exit 2
+        fi
+        strace --version
+        capability_rc=0
+        strace -f -ttt -s 65535 -e trace=%process,chdir,fchdir -o "$probe_dir/capability.trace" -- /bin/sh -c '/bin/sh -c "exit 23" & wait; exit 37' || capability_rc=$?
+        if [[ "$capability_rc" != 37 ]] || ! python3 -B - "$probe_dir/capability.trace" <<'PY'
+        import pathlib, sys
+        text = pathlib.Path(sys.argv[1]).read_text()
+        if (text.count('execve(') < 2 or 'wait4(' not in text or
+                'exit_group(23)' not in text or '+++ exited with 23 +++' not in text or
+                'exit_group(37)' not in text or '+++ exited with 37 +++' not in text):
+            raise SystemExit(2)
+        PY
+        then
+          cat "$probe_dir/capability.trace"
+          echo 'FIB_OPERATION_PROBE capability=unavailable reason=process-trace-contract qualification_count=0'
+          exit 2
+        fi
+        echo 'FIB_OPERATION_PROBE capability=verified scope=lifecycle-trace-only qualification_count=0'
+        raw=0
+        strace -f -ttt -s 65535 -e trace=%process,chdir,fchdir -o "$probe_dir/operations.trace" -- \
+          make -C tools test TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj || raw=$?
+        python3 -B - "$probe_dir/operations.trace" "$raw" <<'PY'
+        import hashlib, json, pathlib, sys
+        data = pathlib.Path(sys.argv[1]).read_bytes()
+        print('FIB_OPERATION_PROBE ' + json.dumps(dict(kind='trace-boundary', raw_exit=int(sys.argv[2]),
+              qualification_count=0, bytes=len(data), sha256=hashlib.sha256(data).hexdigest(),
+              trace_path=sys.argv[1], omitted_prefix_bytes=0,
+              boundary='Recorded command lifetime; missing or truncated exec/terminal records remain unknown. Tracing overhead prevents causal timing comparison.')), flush=True)
+        PY
+        echo FIB_OPERATION_TRACE_BEGIN
+        cat "$probe_dir/operations.trace"
+        echo FIB_OPERATION_TRACE_END
+        exit "$raw"
