@@ -211,7 +211,3 @@ theorem common_inner_action (e : E) :
     exact ⟨((MonoidHom.pi rho).subgroupMap N n)⁻¹, by simp⟩
 
 end D5.S3.FiniteGroups.SurfaceObservers.NormalSubdirectInnerAction
-#print axioms finite_observer_rigidity
-#print axioms subdirect_perfect
-#print axioms normal_joint_range
-#print axioms common_inner_action
