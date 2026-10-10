@@ -3811,7 +3811,7 @@ $$
 $$
 U_{\mathcal Q}(X):=X\setminus\operatorname{Cov}_{\mathcal Q}(X).
 $$
-若 $X^-\\subseteq X^+$ 是一次单调增量（例如阈值下降后新加入超阈值角色），定义在保留前缀 $\mathcal Q$ 的约束下的最短追加层数为
+若 $X^-\subseteq X^+$ 是一次单调增量（例如阈值下降后新加入超阈值角色），定义在保留前缀 $\mathcal Q$ 的约束下的最短追加层数为
 $$
 \tau_{\rm ext}(\mathcal Q;X^+,\mathscr L)
 :=\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L,U_{\mathcal Q}(X^+)\subseteq
