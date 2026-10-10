@@ -39,7 +39,10 @@ internal sealed class PrincipalIdealsDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("prio-principalideals-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("result"),
                 StatementSource.FromAuthor(F.Disp(Kw("claimGamma"))),
-                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The quantified statement holds for every parameter satisfying its displayed hypotheses."))), DescribeRole.Theorem)), []));
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The quantified statement holds for every parameter satisfying its displayed hypotheses."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lillo-rosas-2026-priority-lattice-principal-ideals"),
+                    ResolutionKind.Proved))), []));
 
     private static Formula Kw(string name)
     {

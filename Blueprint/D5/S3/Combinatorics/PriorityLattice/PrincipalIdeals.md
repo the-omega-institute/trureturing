@@ -94,6 +94,10 @@ $$\operatorname{claimGamma}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PriorityLattice/PrincipalIdeals.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lillo-rosas-2026-priority-lattice-principal-ideals` (proved) by `D5/S3/Combinatorics/PriorityLattice/PrincipalIdeals.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lillo-rosas-2026-priority-lattice-principal-ideals","declaration_gid":"D5/S3/Combinatorics/PriorityLattice/PrincipalIdeals.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Adrián Lillo and Mercedes Rosas (2026). *The Priority Lattice*. DOI: [10.48550/arXiv.2603.28905](https://doi.org/10.48550/arXiv.2603.28905). URL: <https://arxiv.org/abs/2603.28905v1>.

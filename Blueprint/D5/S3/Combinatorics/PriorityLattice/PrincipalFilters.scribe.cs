@@ -67,7 +67,10 @@ internal sealed class PrincipalFiltersDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("prio-principalfilters-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("result"),
                 StatementSource.FromAuthor(F.Disp(Kw("claimTheta"))),
-                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The quantified statement holds for every parameter satisfying its displayed hypotheses."))), DescribeRole.Theorem)), []));
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The quantified statement holds for every parameter satisfying its displayed hypotheses."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lillo-rosas-2026-priority-lattice-principal-filters"),
+                    ResolutionKind.Proved))), []));
 
     private static Formula Kw(string name)
     {
