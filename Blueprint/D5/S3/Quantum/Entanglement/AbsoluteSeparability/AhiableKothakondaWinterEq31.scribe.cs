@@ -22,7 +22,10 @@ internal sealed class AhiableKothakondaWinterEq31Document : IScribeDocumentDefin
                 DeclarationHandle.Create(Prefix + "result"), H("Absolute separability follows"),
                 StatementSource.FromAuthor(F.Id("claim")), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The spectral theorem orders an eigenbasis and telescopes the spectrum into the identity, the codimension-one projection ray, and the rays a_k I + 2P_k with a_k = min(k,m−1,mn−k−1). The three existing ray constructions prove separability of each summand; Eq. (31) makes the identity coefficient nonnegative. Finite sums and nonnegative scalings preserve separability."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ahiable-kothakonda-winter-2026-eq31-absolute-separability"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimFormula()
     {
