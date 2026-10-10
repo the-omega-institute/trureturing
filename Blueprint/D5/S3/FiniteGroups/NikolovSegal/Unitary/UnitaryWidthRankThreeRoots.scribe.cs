@@ -20,21 +20,21 @@ internal sealed class UnitaryWidthRankThreeRootsDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankThreeRoots.shortUpper"),
                 H("shortUpper"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized shortUpper statement supplies a live step in the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
+                Blocks(Paragraph(Text("The parameterized shortUpper statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("unitary-unitarywidthrankthreeroots-shortupper-matrix"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankThreeRoots.shortUpper_matrix"),
                 H("shortUpper matrix"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized shortUpper matrix statement supplies a live step in the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
+                Blocks(Paragraph(Text("The parameterized shortUpper matrix statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("unitary-unitarywidthrankthreeroots-shortupper-positive"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankThreeRoots.shortUpper_positive"),
                 H("shortUpper positive"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized shortUpper positive statement supplies a live step in the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
+                Blocks(Paragraph(Text("The parameterized shortUpper positive statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("unitary-unitarywidthrankthreeroots-row-shortupper"),
@@ -48,14 +48,14 @@ internal sealed class UnitaryWidthRankThreeRootsDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankThreeRoots.row_shortLower"),
                 H("row shortLower"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized row shortLower statement supplies a live step in the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
+                Blocks(Paragraph(Text("The parameterized row shortLower statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("unitary-unitarywidthrankthreeroots-rankthree-row-isotropic"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankThreeRoots.rankThree_row_isotropic"),
                 H("rankThree row isotropic"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized rankThree row isotropic statement supplies a live step in the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
+                Blocks(Paragraph(Text("The parameterized rankThree row isotropic statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("unitary-unitarywidthrankthreeroots-rankthree-normalize-last"),
@@ -64,5 +64,5 @@ internal sealed class UnitaryWidthRankThreeRootsDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For a nonzero first row coordinate, a single genuine upper short root makes the last coordinate exactly one. Its trace equation is DERIVED from isotropy and the actual scalar norm surjection, including characteristic two."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("These parameterized results and their consumed helpers support proofs about actual matrix groups over finite fields. Every displayed Lean statement retains its original hypotheses. This package contains no finite enumeration or benchmark-instance deposit. The source geometry is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics165 (2007),239-273, DOI10.4007/annals.2007.165.239. The proof implementation is repository-derived and no originality claim is made. Bare arbitrary automorphism classification, small-field/tiny-rank coverage for the prescribed products, all-family exhaustion and strong completeness are separate obligations. Escape registration is unfinished under CLAUDE3.9 and issue12291; this is not declared_validated registration.")))));
+            Paragraph(Text("The results concern special-unitary matrix groups over finite fields. Their geometric setting is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics 165 (2007), 239-273, DOI 10.4007/annals.2007.165.239. Prescribed-product statements retain their field-size, rank and automorphism hypotheses.")))));
 }

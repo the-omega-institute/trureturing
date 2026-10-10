@@ -20,21 +20,21 @@ internal sealed class PartIIUnitaryTypeALeviDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_entry"),
                 H("actual typeA levi entry"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized actual typeA levi entry statement supplies a live step in the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
+                Blocks(Paragraph(Text("The parameterized actual typeA levi entry statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("unitary-partiiunitarytypealevi-actual-typea-levi-injective"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_injective"),
                 H("actual typeA levi injective"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized actual typeA levi injective statement supplies a live step in the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
+                Blocks(Paragraph(Text("The parameterized actual typeA levi injective statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("unitary-partiiunitarytypealevi-actual-typea-levi-unitary"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_unitary"),
                 H("actual typeA levi unitary"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized actual typeA levi unitary statement supplies a live step in the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
+                Blocks(Paragraph(Text("The parameterized actual typeA levi unitary statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("unitary-partiiunitarytypealevi-actual-typea-levi-upper"),
@@ -57,5 +57,5 @@ internal sealed class PartIIUnitaryTypeALeviDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The actual p255 ambient H induces ALL diagonal actions on the type-A Levi inside central SU(2d). ONE genuine determinant-one ambient unitary correction is constructed before ALL full Levi group targets."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("These parameterized results and their consumed helpers support proofs about actual matrix groups over finite fields. Every displayed Lean statement retains its original hypotheses. This package contains no finite enumeration or benchmark-instance deposit. The source geometry is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics165 (2007),239-273, DOI10.4007/annals.2007.165.239. The proof implementation is repository-derived and no originality claim is made. Bare arbitrary automorphism classification, small-field/tiny-rank coverage for the prescribed products, all-family exhaustion and strong completeness are separate obligations. Escape registration is unfinished under CLAUDE3.9 and issue12291; this is not declared_validated registration.")))));
+            Paragraph(Text("The results concern special-unitary matrix groups over finite fields. Their geometric setting is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics 165 (2007), 239-273, DOI 10.4007/annals.2007.165.239. Prescribed-product statements retain their field-size, rank and automorphism hypotheses.")))));
 }
