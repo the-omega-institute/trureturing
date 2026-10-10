@@ -51,10 +51,6 @@ private lemma numerator_pos {k : ℕ} (hk : 0 < k) {x : ℝ} (hx : 0 < x) :
   apply sum_pos' (fun _ _ => pow_nonneg hx.le _)
   exact ⟨0, mem_range.mpr hk, pow_pos hx _⟩
 
-private lemma numerator_mono (k : ℕ) {x y : ℝ} (hx : 0 ≤ x) (hxy : x ≤ y) :
-    numerator k x ≤ numerator k y :=
-  sum_le_sum fun _ _ => pow_le_pow_left₀ hx hxy _
-
 private lemma numerator_strict {k : ℕ} (hk : 0 < k) {x y : ℝ}
     (hx : 0 ≤ x) (hxy : x < y) : numerator k x < numerator k y := by
   apply sum_lt_sum (fun _ _ => pow_le_pow_left₀ hx hxy.le _)
