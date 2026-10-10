@@ -62,7 +62,11 @@ y(v-u)(-1)^nG_n(-y)=
 
 The original squared-row series is used on the left. The identity is valid
 in multiplied form even when `u=v`; its quotient use requires distinct
-parameters. The complementary root counts remain unformalized.
+parameters. The upper-circle count is formalized by `upper_circle_roots`. It produces
+one distinct actual squared-row root in the central positive transformed
+interval for each ordinary-row zero above `sqrt(2)-1`, with all endpoint,
+continuity, cancellation and injectivity conditions proved. The complementary
+real-interval count and final degree/factor closure remain unformalized.
 
 The bounded source comparison distinguishes ordinary Delannoy rows from
 the squared rows. Chebyshev-root formulas and generic continuity or

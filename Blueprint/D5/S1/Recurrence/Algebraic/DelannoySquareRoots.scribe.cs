@@ -9,7 +9,7 @@ internal sealed class DelannoySquareRootsDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Recurrence/maowang2026narayana");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The original Delannoy paths yield the matrix-square divided difference and exclude its root-count threshold.",
+        "Upper-circle phase crossings construct distinct roots of the original Delannoy matrix-square rows.",
         H("Original Delannoy Matrix Square"),
         Blocks(
             Paragraph(Text(
@@ -63,13 +63,52 @@ internal sealed class DelannoySquareRootsDocument : IScribeDocumentDefinition
                         + "gives the original squared-row identity. Its multiplied "
                         + "form permits u=v; division by v-u requires distinctness."))),
                 DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("delannoy-square-upper-circle-roots"),
+                DeclarationHandle.Create(Prefix + "upper_circle_roots"),
+                H("Distinct Roots from the Upper Circle"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "For every degree n, the theorem constructs n distinct positive "
+                        + "ordinary-row zeros z_i and proves T_n(-w)=(-1)^n product_i(w-z_i) "
+                        + "over the complex numbers. Each z_i differs from sqrt(2)-1. "
+                        + "The scaled Chebyshev-U recurrence and its pinned root formula "
+                        + "supply these factors inside the proof. If N counts the z_i "
+                        + "above sqrt(2)-1, an injective family of N actual squared-row "
+                        + "roots has the form -y_i, where "
+                        + "3-2 sqrt(2) < y_i < 3+2 sqrt(2).")),
+                    Paragraph(Text(
+                        "Write u(phi)=-1+sqrt(2)(cos(phi)+i sin(phi)). On the closed "
+                        + "upper arc, u and all u-z_i are nonzero. Their arguments equal "
+                        + "arccos of the real part divided by the norm, so the argument "
+                        + "functions are continuous even at the negative real endpoint. "
+                        + "The continuous phase sum_i arg(u-z_i)-(n+1)arg(u) has "
+                        + "endpoint values N pi and -pi. The intermediate value theorem "
+                        + "gives one interior crossing for each j pi, 0 <= j < N. "
+                        + "Distinct levels force distinct crossing parameters; no phase "
+                        + "monotonicity is used.")),
+                    Paragraph(Text(
+                        "The polar factorization makes T_n(-u)/u^(n+1) real at every "
+                        + "crossing. The circle identity gives v=conjugate(u), "
+                        + "u+v+uv=1 and yuv=1 for y=1/(3-2 sqrt(2) cos(phi)). "
+                        + "The multiplied divided difference then gives G_n(-y)=0. "
+                        + "The imaginary part of u is strictly positive in the interior, "
+                        + "so the factor v-u can be cancelled. Strict decrease of cosine "
+                        + "makes the y parameters injective and places them in the stated "
+                        + "open interval. These are roots of the actual path-count matrix "
+                        + "square, with no root-count premise."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "For P_n(y)=(-1)^n G_n(-y), the formal bridge factors the source "
                 + "denominator into two quadratics indexed by u and "
                 + "v=(1-u)/(1+u), where y=1/(uv). A divided difference connects "
-                + "P_n to the ordinary rows. Upper-circle phase crossings and "
-                + "disjoint real Chebyshev sign intervals must supply the complementary "
-                + "root counts. Those counts and degree closure are "
+                + "P_n to the ordinary rows. The upper circle supplies N=n-k distinct "
+                + "roots, where k counts ordinary zeros below sqrt(2)-1. The disjoint "
+                + "real Chebyshev sign intervals still have to supply k-1 further roots "
+                + "when k is positive. That complementary count, the original row "
+                + "degree and factor closure, and coefficient positivity remain "
                 + "unformalized obligations. No simplicity, interlacing, higher-power "
                 + "or Eulerian claim follows from the source bridge.")))));
 }

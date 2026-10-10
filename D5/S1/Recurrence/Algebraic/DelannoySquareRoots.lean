@@ -12,6 +12,9 @@ import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.RingTheory.PowerSeries.WellKnown
 import Mathlib.Data.Complex.Basic
 import Mathlib.NumberTheory.Zsqrtd.ToReal
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.RootsExtrema
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
 
 open Finset
@@ -527,5 +530,432 @@ theorem source_correspondence :
     rw [Polynomial.hom_eval₂, hτ, hcastτ] at h
     simpa using h
   exact (ne_of_gt (hplus n)) hwτ
+
+
+set_option maxHeartbeats 1600000 in
+/-- Upper-circle phase crossings give distinct actual squared-row roots in the central
+positive interval for the transformed variable, in every degree. -/
+theorem upper_circle_roots (n : ℕ) :
+    ∃ z : Fin n → ℝ, Function.Injective z ∧
+      (∀ i, 0 < z i ∧ z i ≠ Real.sqrt 2 - 1) ∧
+      (∀ w : ℂ, (ordinaryRow n).eval₂ (Int.castRingHom ℂ) (-w) =
+        (-1) ^ n * ∏ i, (w - (z i : ℂ))) ∧
+      ∃ y : Fin ((univ.filter fun i : Fin n => Real.sqrt 2 - 1 < z i).card) → ℝ,
+        Function.Injective y ∧ ∀ i,
+          3 - 2 * Real.sqrt 2 < y i ∧ y i < 3 + 2 * Real.sqrt 2 ∧
+          (squareRow n).eval₂ (Int.castRingHom ℂ) (-(y i : ℂ)) = 0 := by
+  classical
+  have hrec : ∀ n : ℕ, ordinaryRow (n + 2) =
+      (1 + Polynomial.X) * ordinaryRow (n + 1) + Polynomial.X * ordinaryRow n := by
+    intro n
+    have hd : ∀ (a b : Step) (s t : Finset (List Step)), a ≠ b →
+        Disjoint (s.image (a :: ·)) (t.image (b :: ·)) := by
+      intro a b s t hab
+      apply disjoint_left.mpr
+      intro p hp hq
+      obtain ⟨u, _, rfl⟩ := mem_image.mp hp
+      obtain ⟨v, _, hv⟩ := mem_image.mp hq
+      exact hab (List.cons.inj hv).1.symm
+    have hi : ∀ (a : Step) (s : Finset (List Step)),
+        Set.InjOn (a :: ·) s := by
+      intro a s u _ v _ huv
+      exact (List.cons.inj huv).2
+    unfold ordinaryRow
+    rw [paths]
+    simp only [show n + 1 ≠ 0 by omega, if_false, Nat.add_sub_cancel]
+    rw [sum_union (disjoint_union_left.mpr
+      ⟨hd _ _ _ _ (by decide), hd _ _ _ _ (by decide)⟩),
+      sum_union (hd _ _ _ _ (by decide))]
+    rw [sum_image (hi _ _), sum_image (hi _ _), sum_image (hi _ _)]
+    simp only [endpoint, pow_add, pow_one]
+    simp_rw [mul_comm (Polynomial.X : Polynomial ℤ), ← sum_mul]
+    ring
+  have hzero : ordinaryRow 0 = 1 := by simp [ordinaryRow, paths, endpoint]
+  have hone : ordinaryRow 1 = 1 + Polynomial.X := by
+    simp [ordinaryRow, paths, endpoint, add_comm]
+  have hdegree : ∀ m : ℕ, (ordinaryRow m).Monic ∧ (ordinaryRow m).degree = m := by
+    intro m
+    induction m using Nat.twoStepInduction with
+    | zero => simp [hzero]
+    | one => simpa [hone, add_comm] using
+        And.intro (Polynomial.monic_X_add_C (1 : ℤ)) (Polynomial.degree_X_add_C (1 : ℤ))
+    | more m h0 h1 =>
+      rw [hrec]
+      have hd1 : ((1 + Polynomial.X) * ordinaryRow (m + 1)).degree = ((m + 2 : ℕ) : WithBot ℕ) := by
+        rw [Polynomial.degree_mul, h1.2]
+        rw [show (1 + Polynomial.X : Polynomial ℤ) = Polynomial.X + Polynomial.C 1 by simp [add_comm],
+          Polynomial.degree_X_add_C]
+        norm_num [Nat.cast_add, add_comm, add_left_comm, add_assoc]
+      have hd0 : (Polynomial.X * ordinaryRow m).degree = ((m + 1 : ℕ) : WithBot ℕ) := by
+        rw [Polynomial.degree_mul, h0.2]
+        simp [add_comm]
+      have hlt : (Polynomial.X * ordinaryRow m).degree <
+          ((1 + Polynomial.X) * ordinaryRow (m + 1)).degree := by
+        rw [hd0, hd1]
+        exact_mod_cast (show m + 1 < m + 2 by omega)
+      have hm : (1 + Polynomial.X : Polynomial ℤ).Monic := by
+        simpa [add_comm] using Polynomial.monic_X_add_C (1 : ℤ)
+      exact ⟨(hm.mul h1.1).add_of_left hlt,
+        (Polynomial.degree_add_eq_left_of_degree_lt hlt).trans hd1⟩
+  have hscaled : ∀ (m : ℕ) (u : ℝ), 0 < u →
+      (ordinaryRow m).eval₂ (Int.castRingHom ℝ) (-u) =
+        Real.sqrt u ^ m * (Polynomial.Chebyshev.U ℝ m).eval
+          ((1 - u) / (2 * Real.sqrt u)) := by
+    intro m u hu
+    have hs : Real.sqrt u ≠ 0 := ne_of_gt (Real.sqrt_pos.2 hu)
+    have hsq := Real.sq_sqrt hu.le
+    induction m using Nat.twoStepInduction with
+    | zero => simp [hzero, Polynomial.Chebyshev.U]
+    | one =>
+      simp [hone, Polynomial.Chebyshev.U]
+      field_simp
+      ring
+    | more m h0 h1 =>
+      rw [hrec]
+      simp only [Polynomial.eval₂_add, Polynomial.eval₂_mul, Polynomial.eval₂_one,
+        Polynomial.eval₂_X, h0, h1]
+      rw [show ((m + 2 : ℕ) : ℤ) = (m : ℤ) + 2 by omega,
+        Polynomial.Chebyshev.U_add_two]
+      simp only [Polynomial.eval_sub, Polynomial.eval_mul, Polynomial.eval_ofNat,
+        Polynomial.eval_X, Nat.cast_add, Nat.cast_one, pow_succ]
+      field_simp
+      linear_combination hsq * (Polynomial.Chebyshev.U ℝ m).eval ((1-u)/(Real.sqrt u*2))
+  let c : Fin n → ℝ := fun i => Real.cos (((i : ℕ) + 1 : ℝ) * Real.pi / (n + 1))
+  let s : Fin n → ℝ := fun i => Real.sqrt (1 + c i ^ 2) - c i
+  let z : Fin n → ℝ := fun i => s i ^ 2
+  have hs : ∀ i, 0 < s i := by
+    intro i
+    have ht := Real.sq_sqrt (show 0 ≤ 1 + c i ^ 2 by positivity)
+    have ht0 := Real.sqrt_nonneg (1 + c i ^ 2)
+    dsimp only [s]
+    nlinarith [sq_nonneg (c i)]
+  have hz : ∀ i, 0 < z i := fun i => sq_pos_of_pos (hs i)
+  have hc : ∀ i, (1 - z i) / (2 * Real.sqrt (z i)) = c i := by
+    intro i
+    have ht := Real.sq_sqrt (show 0 ≤ 1 + c i ^ 2 by positivity)
+    have hsqrt : Real.sqrt (z i) = s i := by
+      dsimp only [z]
+      exact Real.sqrt_sq (hs i).le
+    rw [hsqrt]
+    apply (div_eq_iff (ne_of_gt (mul_pos (by norm_num) (hs i)))).2
+    dsimp only [z, s]
+    nlinarith
+  have hcinj : Function.Injective c := by
+    intro i j hij
+    have h := (Finset.range n).nodup_map_iff_injOn.mp
+      (Polynomial.Chebyshev.roots_U_real_nodup n)
+    apply Fin.ext
+    exact h (by simp) (by simp) hij
+  have hzinj : Function.Injective z := by
+    intro i j hij
+    apply hcinj
+    rw [← hc i, ← hc j, hij]
+  have hroot : ∀ i, (ordinaryRow n).eval₂ (Int.castRingHom ℝ) (-z i) = 0 := by
+    intro i
+    rw [hscaled n (z i) (hz i), hc i]
+    have hr : c i ∈ (Polynomial.Chebyshev.U ℝ n).roots := by
+      rw [Polynomial.Chebyshev.roots_U_real]
+      exact Finset.mem_val.mpr (mem_image.mpr ⟨i, by simp, rfl⟩)
+    rw [(Polynomial.mem_roots (Polynomial.Chebyshev.U_ne_zero ℝ n (by omega))).mp hr, mul_zero]
+  have hthreshold : ∀ i, z i ≠ Real.sqrt 2 - 1 := by
+    intro i hi
+    have hr := hroot i
+    rw [hi, neg_sub] at hr
+    exact source_correspondence.2.2.1 n hr
+  let T : Polynomial ℝ := (ordinaryRow n).map (Int.castRingHom ℝ)
+  let S : Finset ℝ := univ.image fun i => -z i
+  have hS : T.roots = S.val := by
+    apply Polynomial.roots_eq_of_degree_eq_card
+    · intro x hx
+      obtain ⟨i, _, rfl⟩ := mem_image.mp hx
+      simpa only [T, Polynomial.eval_map] using hroot i
+    · rw [card_image_of_injective _ (fun i j h => hzinj (neg_injective h)), card_univ,
+        Fintype.card_fin]
+      dsimp only [T]
+      rw [Polynomial.degree_map_eq_of_injective (show Function.Injective (Int.castRingHom ℝ) from Int.cast_injective),
+        (hdegree n).2]
+  have hmonic : T.Monic := (hdegree n).1.map _
+  have hfactor : T = ∏ i : Fin n, (Polynomial.X + Polynomial.C (z i)) := by
+    have hcard : T.roots.card = T.natDegree := by
+      rw [hS, Finset.card_val]
+      dsimp only [S]
+      rw [
+        card_image_of_injective _ (fun i j h => hzinj (neg_injective h)), card_univ,
+        Fintype.card_fin]
+      exact (Polynomial.natDegree_eq_of_degree_eq_some (by
+        dsimp only [T]
+        rw [Polynomial.degree_map_eq_of_injective (show Function.Injective (Int.castRingHom ℝ) from Int.cast_injective),
+          (hdegree n).2])).symm
+    rw [← Polynomial.prod_multiset_X_sub_C_of_monic_of_roots_card_eq hmonic hcard, hS]
+    rw [Finset.prod_map_val]
+    dsimp only [S]
+    rw [Finset.prod_image]
+    · simp [sub_eq_add_neg]
+    · intro i _ j _ hij
+      exact hzinj (neg_injective hij)
+  have hfacC : ∀ w : ℂ, (ordinaryRow n).eval₂ (Int.castRingHom ℂ) (-w) =
+      (-1) ^ n * ∏ i, (w - (z i : ℂ)) := by
+    intro w
+    have hf := congrArg (fun p : Polynomial ℝ =>
+      p.eval₂ (algebraMap ℝ ℂ) (-w)) hfactor
+    simp only [T, Polynomial.eval₂_map, Polynomial.eval₂_finsetProd, Polynomial.eval₂_add,
+      Polynomial.eval₂_X, Polynomial.eval₂_C] at hf
+    rw [show (algebraMap ℝ ℂ).comp (Int.castRingHom ℝ) = Int.castRingHom ℂ from
+      Subsingleton.elim _ _] at hf
+    calc
+      (ordinaryRow n).eval₂ (Int.castRingHom ℂ) (-w) =
+          ∏ i : Fin n, (-w + (algebraMap ℝ ℂ) (z i)) := hf
+      _ = ∏ i : Fin n, ((-1 : ℂ) * (w - (z i : ℂ))) := by
+        apply prod_congr rfl
+        intro i _
+        change -w + (z i : ℂ) = -1 * (w - (z i : ℂ))
+        ring
+      _ = _ := by rw [prod_mul_distrib]; simp
+
+  let u : ℝ → ℂ := fun t => ⟨-1 + Real.sqrt 2 * Real.cos t,
+    Real.sqrt 2 * Real.sin t⟩
+  let N : ℕ := (univ.filter fun i : Fin n => Real.sqrt 2 - 1 < z i).card
+  let ψ : ℝ → ℝ := fun t => ∑ i : Fin n, Complex.arg (u t - (z i : ℂ)) -
+    (n + 1 : ℝ) * Complex.arg (u t)
+  have hsqrt : 1 < Real.sqrt 2 := by
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num), Real.sqrt_nonneg 2]
+  have hucont : Continuous u := by
+    have he : u = fun t => ((-1 + Real.sqrt 2 * Real.cos t : ℝ) : ℂ) +
+        (Real.sqrt 2 * Real.sin t : ℝ) * Complex.I := by
+      funext t
+      apply Complex.ext <;> simp only [u, Complex.add_re, Complex.add_im,
+        Complex.ofReal_re, Complex.ofReal_im, Complex.mul_re, Complex.mul_im,
+        Complex.I_re, Complex.I_im, mul_zero, mul_one, zero_mul, sub_self, add_zero, zero_add]
+    rw [he]
+    fun_prop
+  have him : ∀ t ∈ Set.Icc (0 : ℝ) Real.pi, 0 ≤ (u t).im := by
+    intro t ht
+    exact mul_nonneg (Real.sqrt_nonneg 2) (Real.sin_nonneg_of_mem_Icc ht)
+  have himpos : ∀ t ∈ Set.Ioo (0 : ℝ) Real.pi, 0 < (u t).im := by
+    intro t ht
+    exact mul_pos (by positivity) (Real.sin_pos_of_pos_of_lt_pi ht.1 ht.2)
+  have hune : ∀ (r : ℝ), 0 ≤ r → r ≠ Real.sqrt 2 - 1 →
+      ∀ t ∈ Set.Icc (0 : ℝ) Real.pi, u t - (r : ℂ) ≠ 0 := by
+    intro r hr hrt t ht he
+    have heR := congrArg Complex.re he
+    have heI := congrArg Complex.im he
+    by_cases ht0 : t = 0
+    · simp [u, ht0] at heR
+      exact hrt (by linarith)
+    by_cases htp : t = Real.pi
+    · simp [u, htp] at heR
+      linarith
+    have hp := himpos t ⟨lt_of_le_of_ne ht.1 (Ne.symm ht0),
+      lt_of_le_of_ne ht.2 htp⟩
+    exact hp.ne' (by simpa using heI)
+  have hunonzero : ∀ t ∈ Set.Icc (0 : ℝ) Real.pi, u t ≠ 0 := by
+    intro t ht
+    simpa using hune 0 le_rfl (by linarith) t ht
+  have hargcont : ∀ (r : ℝ), 0 ≤ r → r ≠ Real.sqrt 2 - 1 →
+      ContinuousOn (fun t => Complex.arg (u t - (r : ℂ))) (Set.Icc 0 Real.pi) := by
+    intro r hr hrt
+    have hf : Continuous (fun t => u t - (r : ℂ)) := hucont.sub continuous_const
+    have hc : ContinuousOn (fun t => Real.arccos ((u t - (r : ℂ)).re /
+        ‖u t - (r : ℂ)‖)) (Set.Icc 0 Real.pi) :=
+      Real.continuous_arccos.comp_continuousOn
+        ((Complex.continuous_re.comp hf).continuousOn.div hf.norm.continuousOn
+          (fun t ht => norm_ne_zero_iff.mpr (hune r hr hrt t ht)))
+    apply hc.congr
+    intro t ht
+    exact (Complex.arg_of_im_nonneg_of_ne_zero (by simpa using him t ht)
+      (hune r hr hrt t ht))
+  have hψcont : ContinuousOn ψ (Set.Icc 0 Real.pi) := by
+    apply ContinuousOn.sub
+    · exact continuousOn_finsetSum _ (fun i _ => hargcont (z i) (hz i).le (hthreshold i))
+    · have hc := hargcont 0 le_rfl (by linarith)
+      simpa using hc.const_mul (n + 1 : ℝ)
+  have hψzero : ψ 0 = (N : ℝ) * Real.pi := by
+    have hargs : ∀ i : Fin n, Complex.arg (u 0 - (z i : ℂ)) =
+        if Real.sqrt 2 - 1 < z i then Real.pi else 0 := by
+      intro i
+      by_cases hi : Real.sqrt 2 - 1 < z i
+      · rw [if_pos hi]
+        apply Complex.arg_eq_pi_iff.mpr
+        simp only [u, Real.cos_zero, Real.sin_zero, mul_one, mul_zero,
+          Complex.sub_re, Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im]
+        exact ⟨by linarith, by simp⟩
+      · rw [if_neg hi]
+        apply Complex.arg_eq_zero_iff.mpr
+        simp only [u, Real.cos_zero, Real.sin_zero, mul_one, mul_zero,
+          Complex.sub_re, Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im]
+        exact ⟨by linarith [le_of_not_gt hi], by simp⟩
+    have harg0 : Complex.arg (u 0) = 0 := by
+      apply Complex.arg_eq_zero_iff.mpr
+      simpa [u] using And.intro (show 0 ≤ -1 + Real.sqrt 2 by linarith) rfl
+    dsimp only [ψ]
+    rw [harg0, mul_zero, sub_zero]
+    simp_rw [hargs]
+    simp [N, sum_ite]
+  have hψpi : ψ Real.pi = -Real.pi := by
+    have hargs : ∀ i : Fin n, Complex.arg (u Real.pi - (z i : ℂ)) = Real.pi := by
+      intro i
+      apply Complex.arg_eq_pi_iff.mpr
+      simp only [u, Real.cos_pi, Real.sin_pi, mul_neg_one, mul_zero,
+        Complex.sub_re, Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im]
+      exact ⟨by linarith [hz i], by simp⟩
+    have hargpi : Complex.arg (u Real.pi) = Real.pi := by
+      apply Complex.arg_eq_pi_iff.mpr
+      simp only [u, Real.cos_pi, Real.sin_pi, mul_neg_one, mul_zero]
+      exact ⟨by linarith, by trivial⟩
+    dsimp only [ψ]
+    simp_rw [hargs]
+    rw [hargpi]
+    simp only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
+    ring
+  have hcross : ∀ j : Fin N, ∃ t ∈ Set.Ioo (0 : ℝ) Real.pi,
+      ψ t = (j : ℕ) * Real.pi := by
+    intro j
+    have hj : ((j : ℕ) : ℝ) < N := by exact_mod_cast j.isLt
+    have hlevel : (j : ℕ) * Real.pi ∈ Set.Ioo (ψ Real.pi) (ψ 0) := by
+      rw [hψzero, hψpi]
+      constructor
+      · have hnonneg : 0 ≤ ((j : ℕ) : ℝ) * Real.pi := by positivity
+        linarith [Real.pi_pos]
+      · exact mul_lt_mul_of_pos_right hj Real.pi_pos
+    obtain ⟨t, ht, he⟩ := intermediate_value_Ioo' (le_of_lt Real.pi_pos) hψcont hlevel
+    exact ⟨t, ht, he⟩
+  choose t ht hphase using hcross
+  have htin : Function.Injective t := by
+    intro i j hij
+    apply Fin.ext
+    have he := congrArg ψ hij
+    rw [hphase i, hphase j] at he
+    exact_mod_cast (mul_right_cancel₀ Real.pi_ne_zero he)
+  have hreal : ∀ j : Fin N,
+      ((ordinaryRow n).eval₂ (Int.castRingHom ℂ) (-u (t j)) /
+        u (t j) ^ (n + 1)).im = 0 := by
+    intro j
+    let w := u (t j)
+    have hw : w ≠ 0 := hunonzero _ (Set.Ioo_subset_Icc_self (ht j))
+    have hpolar : (ordinaryRow n).eval₂ (Int.castRingHom ℂ) (-w) / w ^ (n + 1) =
+        (-1) ^ n * ((∏ i : Fin n, ‖w - (z i : ℂ)‖ : ℝ) / ‖w‖ ^ (n + 1) : ℝ) *
+          Complex.exp ((ψ (t j) : ℂ) * Complex.I) := by
+      rw [hfacC]
+      have he : Complex.exp ((ψ (t j) : ℂ) * Complex.I) =
+          (∏ i : Fin n, Complex.exp (Complex.arg (w - (z i : ℂ)) * Complex.I)) /
+            Complex.exp (Complex.arg w * Complex.I) ^ (n + 1) := by
+        dsimp only [ψ]
+        simp only [Complex.ofReal_sub, Complex.ofReal_sum, Complex.ofReal_mul,
+          Complex.ofReal_add, Complex.ofReal_natCast, Complex.ofReal_one, sub_mul,
+          sum_mul, Complex.exp_sub, Complex.exp_sum]
+        rw [show ((n : ℂ) + 1) * (Complex.arg w : ℂ) * Complex.I =
+          (n + 1 : ℕ) * ((Complex.arg w : ℂ) * Complex.I) by push_cast; ring,
+          Complex.exp_nat_mul]
+      rw [he]
+      have hnum : ∏ i : Fin n, (w - (z i : ℂ)) =
+          ((∏ i : Fin n, ‖w - (z i : ℂ)‖ : ℝ) : ℂ) *
+            ∏ i : Fin n, Complex.exp (Complex.arg (w - (z i : ℂ)) * Complex.I) := by
+        rw [Complex.ofReal_prod, ← prod_mul_distrib]
+        apply prod_congr rfl
+        intro i _
+        exact (Complex.norm_mul_exp_arg_mul_I _).symm
+      have hden : w ^ (n + 1) = (‖w‖ : ℂ) ^ (n + 1) *
+          Complex.exp (Complex.arg w * Complex.I) ^ (n + 1) := by
+        rw [← mul_pow, Complex.norm_mul_exp_arg_mul_I]
+      rw [hnum, hden]
+      push_cast
+      ring
+    rw [hpolar, hphase j]
+    have he : Complex.exp ((((j : ℕ) : ℝ) * Real.pi : ℝ) * Complex.I) =
+        (-1 : ℂ) ^ (j : ℕ) := by
+      push_cast
+      rw [mul_assoc, Complex.exp_nat_mul, Complex.exp_pi_mul_I]
+    rw [he]
+    rw [show (-1 : ℂ) ^ n = (((-1 : ℝ) ^ n : ℝ) : ℂ) by push_cast; rfl,
+      show (-1 : ℂ) ^ (j : ℕ) = (((-1 : ℝ) ^ (j : ℕ) : ℝ) : ℂ) by push_cast; rfl,
+      ← Complex.ofReal_mul, ← Complex.ofReal_mul]
+    rfl
+  let d : ℝ → ℝ := fun r => 3 - 2 * Real.sqrt 2 * Real.cos r
+  let y : ℝ → ℝ := fun r => 1 / d r
+  have hnorm : ∀ r : ℝ, Complex.normSq (u r) = d r := by
+    intro r
+    dsimp only [u, d]
+    rw [Complex.normSq_apply]
+    have htrig := Real.sin_sq_add_cos_sq r
+    have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+    nlinarith
+  have hdpos : ∀ r ∈ Set.Icc (0 : ℝ) Real.pi, 0 < d r := by
+    intro r hr
+    rw [← hnorm]
+    exact Complex.normSq_pos.mpr (hunonzero r hr)
+  have hrel : ∀ r : ℝ, u r + starRingEnd ℂ (u r) + u r * starRingEnd ℂ (u r) = 1 := by
+    intro r
+    rw [Complex.mul_conj, hnorm]
+    apply Complex.ext
+    · simp only [Complex.add_re, Complex.conj_re, Complex.ofReal_re, Complex.one_re]
+      dsimp only [u, d]
+      ring
+    · simp [Complex.add_im, u]
+  have hy : ∀ r ∈ Set.Icc (0 : ℝ) Real.pi,
+      (y r : ℂ) * u r * starRingEnd ℂ (u r) = 1 := by
+    intro r hr
+    rw [mul_assoc, Complex.mul_conj, hnorm]
+    change ((1 / d r : ℝ) : ℂ) * (d r : ℂ) = 1
+    rw [← Complex.ofReal_mul, one_div_mul_cancel (hdpos r hr).ne']
+    rfl
+  have hrootcircle : ∀ j : Fin N,
+      (squareRow n).eval₂ (Int.castRingHom ℂ) (-(y (t j) : ℂ)) = 0 := by
+    intro j
+    have hc := Set.Ioo_subset_Icc_self (ht j)
+    have hw := hunonzero _ hc
+    have hcw : starRingEnd ℂ (u (t j)) ≠ 0 := by simpa using hw
+    have hdd := source_correspondence.2.2.2 (u (t j)) (starRingEnd ℂ (u (t j)))
+      (y (t j)) hw hcw (hrel _) (hy _ hc) n
+    have hconj : (ordinaryRow n).eval₂ (Int.castRingHom ℂ) (-starRingEnd ℂ (u (t j))) /
+        starRingEnd ℂ (u (t j)) ^ (n + 1) =
+        starRingEnd ℂ ((ordinaryRow n).eval₂ (Int.castRingHom ℂ) (-u (t j)) /
+          u (t j) ^ (n + 1)) := by
+      rw [hfacC, hfacC]
+      simp
+    rw [hconj, (Complex.conj_eq_iff_im.mpr (hreal j)), sub_self] at hdd
+    have hdiff : starRingEnd ℂ (u (t j)) - u (t j) ≠ 0 := by
+      intro he
+      have he' := congrArg Complex.im he
+      have hp := himpos _ (ht j)
+      simp only [Complex.sub_im, Complex.conj_im, Complex.zero_im] at he'
+      linarith
+    exact (mul_eq_zero.mp hdd).resolve_left
+      (mul_ne_zero (mul_ne_zero (by exact_mod_cast (one_div_ne_zero (hdpos _ hc).ne'))
+        hdiff) (pow_ne_zero _ (by norm_num)))
+  have hdinj : Set.InjOn d (Set.Icc (0 : ℝ) Real.pi) := by
+    intro r hr q hq he
+    apply Real.strictAntiOn_cos.injOn hr hq
+    dsimp only [d] at he
+    nlinarith
+  have hyinj : Set.InjOn y (Set.Icc (0 : ℝ) Real.pi) := by
+    intro r hr q hq he
+    apply hdinj hr hq
+    exact inv_injective (by simpa only [y, one_div] using he)
+  have hybounds : ∀ r ∈ Set.Ioo (0 : ℝ) Real.pi,
+      3 - 2 * Real.sqrt 2 < y r ∧ y r < 3 + 2 * Real.sqrt 2 := by
+    intro r hr
+    have hc := Set.Ioo_subset_Icc_self hr
+    have hcos1 : Real.cos r < 1 := by
+      simpa using Real.strictAntiOn_cos ⟨le_rfl, Real.pi_pos.le⟩ hc hr.1
+    have hcosm : -1 < Real.cos r := by
+      simpa using Real.strictAntiOn_cos hc ⟨Real.pi_pos.le, le_rfl⟩ hr.2
+    have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+    have ha : 0 < 3 - 2 * Real.sqrt 2 := by nlinarith [Real.sqrt_nonneg 2]
+    have hab : (3 - 2 * Real.sqrt 2) * (3 + 2 * Real.sqrt 2) = 1 := by nlinarith
+    have hdlo : 3 - 2 * Real.sqrt 2 < d r := by dsimp [d]; nlinarith
+    have hdhi : d r < 3 + 2 * Real.sqrt 2 := by dsimp [d]; nlinarith
+    dsimp only [y]
+    constructor
+    · apply (lt_div_iff₀ (hdpos r hc)).mpr
+      nlinarith [mul_lt_mul_of_pos_left hdhi ha]
+    · apply (div_lt_iff₀ (hdpos r hc)).mpr
+      nlinarith [mul_lt_mul_of_pos_left hdlo (show 0 < 3 + 2 * Real.sqrt 2 by positivity)]
+  refine ⟨z, hzinj, fun i => ⟨hz i, hthreshold i⟩, hfacC, y ∘ t, ?_, ?_⟩
+  · intro i j hij
+    exact htin (hyinj (Set.Ioo_subset_Icc_self (ht i)) (Set.Ioo_subset_Icc_self (ht j)) hij)
+  · intro i
+    exact ⟨(hybounds _ (ht i)).1, (hybounds _ (ht i)).2, hrootcircle i⟩
+
+#print axioms upper_circle_roots
 
 end D5.S1.Recurrence.Algebraic.DelannoySquareRoots

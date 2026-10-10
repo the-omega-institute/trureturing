@@ -6,6 +6,7 @@ url: https://arxiv.org/abs/2607.01572v1
 triage: theorem
 motivation_gids:
   - D5/S1/Recurrence/Algebraic/DelannoySquareRoots.source_correspondence
+  - D5/S1/Recurrence/Algebraic/DelannoySquareRoots.upper_circle_roots
 ---
 
 # Negative roots of the original Delannoy matrix square
@@ -38,7 +39,10 @@ ordinary Delannoy root formulas and from the Eulerian clause.
 The available formal prerequisite is `source_correspondence`: exact path
 enumeration, the original matrix-square generating function in every degree,
 nonvanishing of the ordinary row at `1-sqrt(2)`, and the universal quadratic
-divided difference. The complex-root implication remains open in Lean.
+divided difference. The theorem `upper_circle_roots` constructs at least N
+distinct actual squared-row roots in the central interval in every degree,
+where N counts ordinary-row zeros above `sqrt(2)-1`. The complex-root implication
+remains open in Lean.
 
 ## Route
 
@@ -56,13 +60,17 @@ a quotient additionally requires `v != u`.
 The standard Chebyshev-U description supplies the ordinary-row zeros.
 The threshold `a=sqrt(2)-1` is excluded by the formal endpoint result.
 
-The unresolved root construction has two complementary parts. On
-`u=-1+sqrt(2) exp(i phi)`, `0<phi<pi`, an argument crossing count must
-produce `n-k` distinct actual positive roots of `P_n`, where `k` counts
+The root construction has two complementary parts. On
+`u=-1+sqrt(2) exp(i phi)`, `0<phi<pi`, the formal argument crossing count
+in `upper_circle_roots` produces `n-k` distinct actual positive roots of
+`P_n`, where `k` counts
 ordinary-row zeros below `a`. Alternating real Chebyshev samples must
 produce `k-1` further roots when `k>=1`, in a disjoint interval.
-All continuity, endpoint, sign, injectivity and distinctness conditions
-remain obligations. Dividing out these roots leaves degree at most one;
+Closed-arc argument continuity, endpoint phases, interior crossings,
+polar realness, actual-root correspondence, strict parameter injectivity and
+the central interval bounds are proved. The real-interval sample signs and
+their distinct roots remain obligations. Dividing out these roots leaves
+degree at most one;
 realness of the remaining factor and positivity of the original coefficients
 then recover the exact complex-root conclusion. When `k=0`, the circle
 count alone must supply all `n` roots.
@@ -78,7 +86,9 @@ route without settling the original question.
 The formal definition `negativeRoots` is the exact original complex-root
 target. The theorem `source_correspondence` supplies the path, series,
 threshold and divided-difference prerequisites. It does not prove
-`negativeRoots`.
+`negativeRoots`. The theorem `upper_circle_roots` proves the unconditional
+central-interval root count with its actual ordinary-row factors. It neither
+assumes the missing complementary count nor resolves the final target.
 
 ## Triage
 
