@@ -2,7 +2,8 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 # Remove Make's leading list separator without collapsing spaces in the source path.
-HERE := $(shell tools_makefile="$(MAKEFILE_LIST)"; cd "$$(dirname "$${tools_makefile\# }")" && pwd -P)
+tools_makefile_hash := \#
+HERE := $(shell tools_makefile="$(MAKEFILE_LIST)"; cd "$$(dirname "$${tools_makefile$(tools_makefile_hash) }")" && pwd -P)
 BASE ?= origin/dev
 REPOSITORY ?= $(HERE)/..
 CLEAN_MIN_AGE_HOURS ?= 24
