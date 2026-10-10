@@ -82,6 +82,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/RenyiSufficiency/RenyiSufficiencyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/galke-van-luijk-wilming-2023-renyi-sufficiency` (refuted) by `D5/S3/QuantumChannels/RenyiSufficiency/RenyiSufficiencyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"galke-van-luijk-wilming-2023-renyi-sufficiency","declaration_gid":"D5/S3/QuantumChannels/RenyiSufficiency/RenyiSufficiencyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. Galke, L. van Luijk, H. Wilming (2023). *Sufficiency of Rényi divergences*. DOI: [10.48550/arXiv.2304.12989](https://doi.org/10.48550/arXiv.2304.12989). URL: <https://arxiv.org/abs/2304.12989v6>.

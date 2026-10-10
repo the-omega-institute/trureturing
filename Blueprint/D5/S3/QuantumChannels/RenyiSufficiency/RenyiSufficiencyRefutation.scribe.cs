@@ -33,7 +33,10 @@ internal sealed class RenyiSufficiencyRefutationDocument : IScribeDocumentDefini
                 "Galke, van Luijk and Wilming, Conjecture 22, Section 3.3, arXiv:2304.12989v6, p. 17: “Let (ρ₁, σ₁) and (ρ₂, σ₂) be pairs of density operators on quantum system S₁ and S₂. Let (a, b), ½ ≤ a < b, be any interval on which the minimal quantum Rényi divergences of both dichotomies are finite. Then the dichotomies are interconvertible via positive, trace-preserving maps if and only if they have the same minimal quantum Rényi divergences on this interval, i.e., (ρ₁, σ₁) ↔ (ρ₂, σ₂) ⇐⇒ Dᵐⁱⁿ_α(ρ₁, σ₁) = Dᵐⁱⁿ_α(ρ₂, σ₂) < ∞ ∀α ∈ (a, b).” The dimensions n and m range over Nat; the states are complex Fin-indexed matrices. IsDensity is the existing predicate asserting positive semidefiniteness and trace one. Dmin and DminFinite implement Appendix E with support inclusion also at alpha=1.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "result", "result",
                 Disp(Seq(Neg, Sp, Call("claim"))),
-                "At dimension five, epsilon=1/1000 and interval (2,3), the two bouquet dichotomies have equal finite minimal Rényi profiles. Their two-triangle gain changes sign, which precludes both sigma-preserving conjugation orientations and therefore positive trace-preserving interconversion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "At dimension five, epsilon=1/1000 and interval (2,3), the two bouquet dichotomies have equal finite minimal Rényi profiles. Their two-triangle gain changes sign, which precludes both sigma-preserving conjugation orientations and therefore positive trace-preserving interconversion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("galke-van-luijk-wilming-2023-renyi-sufficiency"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
