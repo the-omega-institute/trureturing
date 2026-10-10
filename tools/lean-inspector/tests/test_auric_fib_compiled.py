@@ -40,11 +40,17 @@ class CompiledFibIntegration(unittest.TestCase):
         self.addCleanup(self.cleanup)
         template = TEMPLATE.read_text()
         first, rest = template.split('def declared :', 1)
-        namespace = 'namespace ' + PREFIX[:-1] + '\n'
-        self.source = first + '\nend ' + PREFIX[:-1] + '\n'
-        self.application = ('import ' + SOURCE_MODULE + '\n\n' + namespace +
-            'open D5.S3.Arith.FibonacciAtomic\nopen LeanInformationAudit.AuricFib.Contract\n\n'
-            + 'def declared :' + rest)
+        # The acquired numeric data has no native-theory dependency. Keep its
+        # private source edge real without importing the full theorem twice.
+        self.source = ('module\npublic section\nnamespace ' + PREFIX[:-1] + '\n'
+            'private def acquiredNullMass : Nat := 1\n'
+            'def acquiredSourceNullMass : Nat := acquiredNullMass\n'
+            'def acquiredSourceDenominator : Nat := 5\n'
+            'end ' + PREFIX[:-1] + '\n')
+        first = first.replace('private def acquiredNullMass : Nat := 1\n', '')
+        first = first.replace('nullMass := acquiredNullMass', 'nullMass := acquiredSourceNullMass')
+        first = first.replace('denominator := 5', 'denominator := acquiredSourceDenominator', 1)
+        self.application = 'import ' + SOURCE_MODULE + '\n' + first + 'def declared :' + rest
         self.write_sources()
         self.env = dict(os.environ, GIT_OPTIONAL_LOCKS='0',
             STRATALINT_LEAN_PRODUCER_DLL=str(ROOT / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll'))
@@ -143,7 +149,8 @@ class CompiledFibIntegration(unittest.TestCase):
         zero = self.first['zeroCondition']['reading']['continuation_target']
         self.assertIsNone(zero['conditional_reply_law'])
         self.source = self.source.replace('acquiredNullMass : Nat := 1', 'acquiredNullMass : Nat := 2')
-        self.source = self.source.replace('denominator := 5', 'denominator := 6')
+        self.source = self.source.replace('acquiredSourceDenominator : Nat := 5',
+                                         'acquiredSourceDenominator : Nat := 6')
         self.write_sources()
         changed = self.build()
         self.assertNotEqual(report['association_coordinate'], changed['declared']['reading']['association_coordinate'])
@@ -168,7 +175,8 @@ class CompiledFibIntegration(unittest.TestCase):
 
     def test_private_transitive_source_and_layer_dependency_updates(self):
         self.source = self.source.replace('acquiredNullMass : Nat := 1', 'acquiredNullMass : Nat := 2')
-        self.source = self.source.replace('denominator := 5', 'denominator := 6')
+        self.source = self.source.replace('acquiredSourceDenominator : Nat := 5',
+                                         'acquiredSourceDenominator : Nat := 6')
         self.write_sources()
         source = self.build()
         self.assertNotEqual(self.first['declared']['input_identity'], source['declared']['input_identity'])
@@ -205,22 +213,22 @@ class CompiledFibIntegration(unittest.TestCase):
         self.assertEqual(unavailable, self.build(full=True))
 
     def test_invalid_native_bridge_fails_compilation(self):
-        self.source = self.source.replace('reader_eq := rfl', 'reader_eq := by cases True.intro')
+        self.application = self.application.replace('reader_eq := rfl', 'reader_eq := by cases True.intro')
         # An ordinary mistyped contract cannot produce new artifact evidence.
-        self.source = self.source.replace('fun a => rawTransition (rawMachine 0).start a',
+        self.application = self.application.replace('fun a => rawTransition (rawMachine 0).start a',
             'fun _ => none')
         self.write_sources()
         before = self.artifact.read_bytes()
         result = self.command(['bash', 'tools/scripts/worktree/lean-cache-run.sh',
             'lake', '-d', 'tools/lean-inspector-reg', 'build', MODULE + ':report'], expected=1)
         diagnostic = result.stdout + result.stderr
-        bridge_line = self.source[:self.source.index('reader_eq :=')].count('\n') + 1
-        self.assertIn(f'AuricFibCompiledSource.lean:{bridge_line}:', diagnostic)
+        bridge_line = self.application[:self.application.index('reader_eq :=')].count('\n') + 1
+        self.assertIn(f'AuricFibCompiledFixture.lean:{bridge_line}:', diagnostic)
         self.assertIn('unsolved goals', diagnostic)
         self.assertEqual(before, self.artifact.read_bytes())
 
     def test_native_reader_and_target_dependency_updates(self):
-        self.source = self.source.replace('fun a => rawTransition (rawMachine 0).start a',
+        self.application = self.application.replace('fun a => rawTransition (rawMachine 0).start a',
             'fun a => rawTransition (rawMachine 0).start (id a)')
         self.write_sources()
         changed = self.build()

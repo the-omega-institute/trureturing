@@ -24,7 +24,8 @@ public sealed class CompiledFibIntegrationTests
             var result = TestProcessRunner.Run("python3",
                 ["-B", "tools/lean-inspector/tests/test_auric_fib_compiled.py",
                     "CompiledFibIntegration." + behavior, "-v"], root,
-                TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+                TestBudgets.ReportSupervisorHangGuard, 1024 * 1024,
+                standardOutput: Console.OpenStandardOutput(), standardError: Console.OpenStandardError());
             Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
                 + Encoding.UTF8.GetString(result.StandardError));
         }

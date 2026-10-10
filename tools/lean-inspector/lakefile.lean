@@ -75,8 +75,8 @@ private def reportSourcePath (root : FilePath)
 This job deliberately has no content trace: each module traces its own record. -/
 package_facet reportInputs (pkg : Package) : FilePath := do
   Job.async do
-    proc (← nativeCommand pkg #["prepare", (← repositoryDir pkg).toString])
-    return (← repositoryDir pkg) / ".lake/build/lean-inspector" / "inputs.json"
+    proc (← nativeCommand pkg #["prepare", (← repositoryDir pkg).toString, "module-records"])
+    return (← repositoryDir pkg) / ".lake/build/lean-inspector" / "module-inputs.json"
 
 private def readJson (path : FilePath) : IO Json := do
   IO.ofExcept (Json.parse (← IO.FS.readFile path))
@@ -92,9 +92,12 @@ private def writeBinFileIfChanged (path : FilePath) (contents : ByteArray) : IO 
 private def strings (json : Json) (key : String) : IO (Array String) :=
   IO.ofExcept (json.getObjValAs? (Array String) key)
 
+package_facet reportInputData (pkg : Package) : Json := do
+  (← fetch <| pkg.facet `reportInputs).mapM fun path => readJson path
+
 package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
-  (← fetch <| pkg.facet `reportInputs).mapM fun path => do
-    let names ← strings (← readJson path) "modules"
+  (← fetch <| pkg.facet `reportInputData).mapM fun config => do
+    let names ← strings config "modules"
     return names.foldl (fun set name => set.insert name.toName) {}
 
 /-- Validate registered inputs without tracing producer implementation.
@@ -169,7 +172,12 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   discard <| (← fetch <| pkg.facet `reportInputs).await
   let root ← repositoryDir pkg
   let utility := root / ".lake/build/lean-inspector" / "inputs" / s!"{mod.name}.json"
-  let record ← readJson utility
+  let config ← (← fetch <| pkg.facet `reportInputData).await
+  let records ← IO.ofExcept (config.getObjVal? "records")
+  let encoded ← IO.ofExcept (records.getObjValAs? String mod.name.toString)
+  IO.FS.createDirAll utility.parent.get!
+  writeBinFileIfChanged utility encoded.toUTF8
+  let record ← IO.ofExcept (Json.parse encoded)
   let claims ← strings record "claims"
   let mut deps ← fetch <| pkg.facet `reportProducer
   let projection ← fetch <| mod.facet `judgeInputs
@@ -342,8 +350,10 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
   let pkg := (← getWorkspace).root
   observePhase "lake-inputs" "start"
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
-  let inputs ← (← fetch <| pkg.facet `reportInputs).await
-  let config ← readJson inputs
+  let config ← (← fetch <| pkg.facet `reportInputData).await
+  let root ← repositoryDir pkg
+  proc (← nativeCommand pkg #["aggregate-inputs", root.toString])
+  let inputs := root / ".lake/build/lean-inspector" / "inputs.json"
   let names ← strings config "modules"
   observePhase "lake-inputs" "finish"
   -- The report owns registered modules. The caller supplies program targets

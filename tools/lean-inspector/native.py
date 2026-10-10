@@ -138,8 +138,10 @@ def write_if_changed(path, data):
 
 
 @phase('native-inputs')
-def prepare(root):
+def prepare(root, scope="full"):
     root = Path(root).resolve()
+    if scope not in ("full", "module-records"):
+        raise ValueError('unknown native input preparation scope')
     with phase('native-input-selection'):
         inputs = selection.Selection(root)
         inputs.validate('lean-report')
@@ -171,18 +173,39 @@ def prepare(root):
             if utility['claimSourceSha256'] != 'sha256:' + public.digest(claim):
                 raise ValueError('stale authoritative claim source')
             by_path[path] = utility
+        records = {}
         for name, path in sorted(modules.items()):
             utility = [by_path[path]] if path in by_path else []
-            write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
-                'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
+            records[name] = dict(utilities=utility,
+                claims=sorted({u['claimModule'] for u in utility}), source_path=path)
+            if scope == "full":
+                write_if_changed(state(root) / 'inputs' / (name + '.json'),
+                    materials.canonical_json(records[name]))
         write_if_changed(state(root) / 'report-format',
             (selection.REPORT_FORMAT + '\n').encode('ascii'))
+        if scope == "module-records":
+            # Lake writes only the records of modules whose facets it fetches.
+            # This invocation input is never an artifact reuse condition.
+            write_if_changed(state(root) / 'module-inputs.json', materials.canonical_json(dict(
+                modules=sorted(modules), configs=inputs.expand('config_inputs'),
+                records={name: materials.canonical_json(record).decode('ascii')
+                         for name, record in records.items()})))
+            return
     # Membership and full config identity affect aggregation only. Each module
     # traces compatibility, source, utility inputs and Lake's compiler dependencies.
     with phase('native-input-coordinates'):
         write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
             'modules': sorted(modules),
             'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))
+
+
+def aggregate_inputs(root):
+    """Produce aggregate coordinates only for the package report consumer."""
+    root = Path(root)
+    config = public.read_json((state(root) / 'module-inputs.json').read_bytes())
+    with phase('native-input-coordinates'):
+        write_if_changed(state(root) / 'inputs.json', materials.canonical_json(dict(
+            modules=config['modules'], configs=config['configs'], coordinates=public.coordinates(root))))
 
 
 @lru_cache(maxsize=None)
@@ -522,7 +545,8 @@ def publish(root, destination):
 
 
 def main():
-    actions = {'prepare': prepare, 'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
+    actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
+               'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
     actions[sys.argv[1]](*sys.argv[2:])
