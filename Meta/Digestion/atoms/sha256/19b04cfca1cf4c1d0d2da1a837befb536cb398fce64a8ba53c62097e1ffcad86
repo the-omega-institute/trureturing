@@ -1,0 +1,53 @@
+**定理 7.3（增长常数的硬核下界）。** 对每个 $r>1$ 与每个 $n\ge1$，
+
+$$
+\kappa_n\ge g(r)\,\frac{n-2-2(r-1)^2/r}{1+\vartheta^{n+2}},\qquad \vartheta=\frac{r-1}{r}.
+\tag{7.4}
+$$
+
+因此 $c_\star\ge g(r)$ 对每个 $r>1$ 成立。多项式 $p$ 在 $(1,\infty)$ 中恰有一个根 $r_\star$，$1.4<r_\star<1.5$；$g$ 在 $(1,r_\star]$ 上严格递增、在 $[r_\star,\infty)$ 上严格递减，于是
+
+$$
+c_\star\ge\sup_{r>1}g(r)=g(r_\star),\qquad
+\frac{1800}{12559}=g\Bigl(\frac{29}{20}\Bigr)\le g(r_\star),\qquad
+0.14333115<g(r_\star)<0.14333116.
+\tag{7.5}
+$$
+
+并且对每个 $n\ge0$，$\kappa_n\ge g(r_\star)\,n\ge\frac{1800}{12559}\,n$。
+
+**证明。** 取 $\lambda=r(r-1)$，则 $\frac{\lambda}{1+\lambda}=\frac{r(r-1)}{r^2-r+1}$。只计内部可翻转零（$2\le i\le n-1$；端点 $i=1,n$ 的贡献非负，略去），由 (7.3)，
+
+$$
+\mathbb E^{(n)}_\lambda[u]\ge\sum_{i=2}^{n-1}\frac{Z_{i-2}Z_{n-i-1}}{Z_n}.
+$$
+
+令 $j=i-2\in\{0,\ldots,n-3\}$，则 $(i-2)+2=j+2$，$(n-i-1)+2=n-1-j$。由 (7.2)，
+
+$$
+\frac{Z_{i-2}Z_{n-i-1}}{Z_n}
+\ge\frac{r^{(j+2)+(n-1-j)}(1-\vartheta^{j+2})(1-\vartheta^{n-1-j})}{(2r-1)^2}\cdot\frac{2r-1}{r^{n+2}(1+\vartheta^{n+2})}
+=\frac{(1-\vartheta^{j+2})(1-\vartheta^{n-1-j})}{r(2r-1)(1+\vartheta^{n+2})}.
+$$
+
+对 $x,y\in[0,1]$ 有 $(1-x)(1-y)\ge1-x-y$，且 $\sum_{j=0}^{n-3}\vartheta^{j+2}\le\vartheta^2/(1-\vartheta)$、$\sum_{j=0}^{n-3}\vartheta^{n-1-j}\le\vartheta^2/(1-\vartheta)$，而 $\vartheta^2/(1-\vartheta)=(r-1)^2/r$。于是对 $n\ge3$，
+
+$$
+\mathbb E^{(n)}_\lambda[u]\ge\frac{n-2-2(r-1)^2/r}{r(2r-1)(1+\vartheta^{n+2})}.
+$$
+
+乘以 $\frac{\lambda}{1+\lambda}$ 并用 $\frac{r(r-1)}{r^2-r+1}\cdot\frac1{r(2r-1)}=g(r)$ 及命题 7.1，得 $n\ge3$ 时的 (7.4)。$n=1,2$ 时 (7.4) 右边的分子 $n-2-2(r-1)^2/r\le0$，不等式由 $\kappa_n\ge0$ 成立。
+
+(7.4) 两边除以 $n$ 并令 $n\to\infty$，$\vartheta^{n+2}\to0$，由定理 5.2 得 $c_\star=\lim\kappa_n/n\ge g(r)$。
+
+对 $r>1$，对数求导并乘以正数 $(r-1)(r^2-r+1)(2r-1)$：
+
+$$
+\frac{g'(r)}{g(r)}(r-1)(r^2-r+1)(2r-1)
+=(r^2-r+1)(2r-1)-(2r-1)^2(r-1)-2(r-1)(r^2-r+1)=-p(r).
+$$
+
+又 $p'(r)=12r^2-18r+6=6(2r-1)(r-1)>0$（$r>1$），$p(1)=-1$，$p(1.4)=-0.264$，$p(1.5)=0.25$，故 $p$ 在 $(1,\infty)$ 上严格递增，恰有一个根 $r_\star\in(1.4,1.5)$，$g'$ 在 $(1,r_\star)$ 上为正、在 $(r_\star,\infty)$ 上为负。由此 $\sup_{r>1}g=g(r_\star)$。代入 $r=29/20$：$r-1=9/20$，$r^2-r+1=661/400$，$2r-1=19/10$，$g=\frac{9}{20}\cdot\frac{4000}{661\cdot19}=\frac{1800}{12559}$。数值区间：若有理数 $\rho_-<r_\star<\rho_+$ 且 $\rho_->1$，则 $g(\rho_-)\le g(r_\star)$；又 $g(r_\star)$ 的分子在 $r_\star$ 处不超过 $\rho_+-1$、分母的两个因子在 $r>1/2$ 上递增，故 $g(r_\star)\le(\rho_+-1)/((\rho_-^2-\rho_-+1)(2\rho_--1))$。第 11 章代码块第 5 段以 $p$ 的符号在有理数上二分 40 次得到宽 $2^{-40}/10$ 的括号，并以精确有理算术核验两侧界落在 $(0.14333115,\,0.14333116)$ 内。
+
+最后，由 (5.3) 左半与 $c_\star\ge g(r_\star)$，$\kappa_n\ge c_\star n\ge g(r_\star)n$。
+

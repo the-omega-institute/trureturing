@@ -3183,4 +3183,67 @@ $$
 
 **与 §39--§42 的接口。** 共同受控移位混合在 Fourier 矩阵单位上恰以 $m_K(\eta)$ 乘法。故 $K^\perp$ 中任一支撑至少两个扇区的角色给出一个可直接测试的残余相干；固定源谱时 $h$ 是相应实际编码系数，不能无条件替换为 $1$。普适任意源谱的失败需另取一个允许谱使 $h\ne0$；定理 40.1 的 universal 量词正是这一额外步骤。结论只给受控移位表示的误差证书，不给任意 LOSR 下界。
 
+## 44. 受控移位层叠的残余特征单调性
+
+**定理 44.1（多层平均的精确合成）。** 对有限阿贝尔群 $A$ 的子群 $K_1,\ldots,K_m$，令 $\mathcal D_K$ 如定理 43.1。则
+$$
+\mathcal D_{K_m}\circ\cdots\circ\mathcal D_{K_1}
+=\mathcal D_{K_1+\cdots+K_m}.
+$$
+在角色矩阵单位上，合成乘子为
+$$
+\prod_{j=1}^m m_{K_j}(\eta)
+=\mathbf 1_{(K_1+\cdots+K_m)^\perp}(\eta).
+$$
+因此残余特征集合为 $(K_1+\cdots+K_m)^\perp=\bigcap_jK_j^\perp$，随层数增加单调缩小；当且仅当 $K_1+\cdots+K_m=A$ 时，合成等于理想全群平均 $\mathcal D_A$。
+
+**证明。** 对 $E_{\chi,\psi}$，定理 43.1 给出每层乘子 $m_{K_j}(\chi\psi^{-1})$。角色在 $K_j$ 上的均匀平均是 $1$（当且仅当 $\chi\psi^{-1}\in K_j^\perp$）或 $0$，故乘积是交集指标。有限阿贝尔群对偶性给出 $(\sum_jK_j)^\perp=\cap_jK_j^\perp$；矩阵单位构成全矩阵代数基，遂得通道恒等式。
+
+**推论 44.2（误差证书的层叠单调性）。** 固定一个整段 stack 的入口编码矩阵单位，其初始 Fourier 系数为 $h_\eta$；每一层只在同一 $A$、同一 Fourier 基上施加均匀平均 $\mathcal D_{K_j}$，层间没有其他映射。则 stack 出口相对 $\mathcal D_A$ 的系数为 $h_\eta\mathbf 1_{(\sum_jK_j)^\perp}(\eta)$。定理 43.1 的二维输入因此给出下界 $|h_\eta|$，但仅对仍在交集中的角色成立。增加一层只能删除残余证书；若和为 $A$，所有残余证书同时消失。若把 $h_\eta$ 改理解为某一中间层的入口系数，则应只使用其后缀层的湮灭子交集，本推论不作该量词断言。
+
+**范围与非可加性。** 这是固定 $A$、固定 Fourier 基和均匀受控移位 Schur 平均的精确组合律，不是任意 LOSR 通道的误差可加定理。重复同一层满足 $\mathcal D_K^2=\mathcal D_K$；因此在每层恰有 $\|\mathcal D_K-\mathcal D_A\|_\diamond=1$ 的特殊情形，重复该同一 $K$ 的总误差仍为 $1$ 而非累加。对不同的 $K_j$ 不作“不累加”断言；其合成按定理 44.1 由子群和决定，甚至可能等于 $\mathcal D_A$。结论只针对角色支撑及相应 $h_\eta$ 证书。
+
+## 45. 可观测残余谱与层叠停止判据
+
+**定理 45.1（固定输入的残余谱证书）。** 对每个 $\eta\in\widehat A\setminus\{1\}$ 固定一对入口 Fourier 标签 $(\chi_\eta,\psi_\eta)$ 满足 $\eta=\chi_\eta\psi_\eta^{-1}$，并记该矩阵单位对的入口系数为 $h_\eta$。在同一 $A$ 与 Fourier 基上，假定每层平均都是 Schur/Fourier 对角的，因而不混合不同矩阵单位。前 $j$ 层分别施加均匀平均 $\mathcal D_{K_1},\ldots,\mathcal D_{K_j}$，层间无其他映射。令 $\Phi_j$ 表示当前 stack 通道，令 $\Phi_{\rm ideal}=\mathcal D_A$ 表示同一 Fourier 子空间上的理想全群平均。定义
+$$
+R_j=(K_1+\cdots+K_j)^\perp\setminus\{1\},\qquad
+\mathsf S_j=\{\,|h_\eta|:\eta\in R_j\,\}.
+$$
+则对每个 $\eta\in R_j$，定理 43.1 的二维归一化输入给出钻石距离证书 $|h_\eta|$；因此
+$$
+\bigl\|\Phi_j-\Phi_{\rm ideal}\bigr\|_\diamond
+\ge \max\mathsf S_j
+$$
+（空集最大值定义为 $0$）。此外
+$$
+R_{j+1}\subseteq R_j,\qquad \max\mathsf S_{j+1}\le\max\mathsf S_j.
+$$
+
+**证明。** 定理 44.1 给出第 $j$ 层出口的该矩阵单位系数 $h_\eta\mathbf1_{R_j}(\eta)$。对任意 $\eta=\chi_\eta\psi_\eta^{-1}\in R_j$，在 $\operatorname{span}\{|\chi_\eta\rangle,|\psi_\eta\rangle\}$ 中取 $|v_\eta\rangle=(|\chi_\eta\rangle+|\psi_\eta\rangle)/\sqrt2$。实际与理想输出之差的两个非零本征值为 $\pm|h_\eta|/2$，故该归一化输入的迹范数为 $|h_\eta|$；取所有输入的上确值得到钻石下界，最后取 $\eta$ 的最大值。子群和随 $j$ 增大而增大，湮灭子反向包含，遂得单调性。证毕。
+
+**推论 45.2（可审计停止判据）。** 对给定输入族和阈值 $\varepsilon\ge0$，若 $R_j=\varnothing$，则所有由定理 43.1 这类 Fourier 二维输入产生的残余证书已经消失；若仅有 $\max\mathsf S_j\le\varepsilon$，则这些可观测证书全部不超过 $\varepsilon$。因此可以按 $R_j$ 的交集更新逐层停止检查。该判据是证书族的充分停止条件，不是整个钻石范数的上界；未观测的通道方向仍可能有误差。
+
+**范围。** 结论固定入口矩阵单位对、同一 Fourier 基、Schur 对角无混合及层间无映射条件，针对受控移位 Schur 平均和指定二维测试族；不声称一般 LOSR 误差上界或任意输入的完整谱分类。
+
+## 46. 残余证书族的有限步停止算法
+
+**定理 46.1（有限允许层的精确停止判据）。** 固定 §45 的入口系数 $h_\eta$ 与阈值 $\varepsilon\ge0$，令
+$$
+T_\varepsilon=\{\eta\in\widehat A\setminus\{1\}:|h_\eta|>\varepsilon\}.
+$$
+由于 $\widehat A$ 有限，$T_\varepsilon$ 有限。给定允许层族 $\mathscr L$，其中每个 $K\in\mathscr L$ 是 $A$ 的子群，并在同一 $A$、同一 Fourier 基上施加 $\mathcal D_K$；stack 只由这些层组成，允许重复选择，且层间无其他映射或 Schur mixing。从 $U_0=T_\varepsilon$ 开始；若 $U_0=\varnothing$ 则立即停止。否则若存在可重复选择的 $K_j\in\mathscr L$ 使
+$$
+U_j:=U_{j-1}\cap K_j^\perp
+$$
+严格小于 $U_{j-1}$，就选取该层继续；当 $U_j=\varnothing$ 时停止。每次成功选择至少删除一个角色，故至多 $|T_\varepsilon|$ 步达到
+$$
+\max\mathsf S_j\le\varepsilon.
+$$
+若在某一步 $U_{j-1}\ne\varnothing$ 且对所有 $K\in\mathscr L$ 都有 $U_{j-1}\cap K^\perp=U_{j-1}$，则任何由 $\mathscr L$ 组成、允许重复层的后续有限 stack 都不能使该证书族达到阈值 $\varepsilon$。
+
+**证明。** §44.1 给出每层把残余角色集合与 $K^\perp$ 相交，因此算法维护的 $U_j$ 正是尚未被删除的超阈值角色。若某层严格缩小，有限性保证至少删除一个元素，故至多 $|T_\varepsilon|$ 次达到空集；§45.1 随即给出证书最大值不超过 $\varepsilon$。若算法停滞，则当前 $U$ 被每个允许层逐点保留；任意后续层仍与 $U$ 相交得到 $U$，归纳可知所有有限序列都保留 $U\ne\varnothing$，其中至少一个 $|h_\eta|>\varepsilon$，所以该证书族不可能达到阈值。证毕。
+
+**范围。** 这是给定有限允许层族与固定入口系数时的证书族停止算法；达到阈值只说明 §45 的指定 Fourier 二维下界不超过 $\varepsilon$，不是整个钻石范数的上界，也不优化任意 LOSR 层。
+
 ## 追加锚（本行以下为增补区）

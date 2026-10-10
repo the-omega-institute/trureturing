@@ -2596,3 +2596,867 @@ The [coprime phase-target cost volume, Sections 3–6](KBONACCI_COPRIME_PHASE_TA
 The [future-response sufficiency volume, Sections 34–37](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md) concerns its original depth prior, scalar future law, active counts and legal Read permissions. It supplies no source/action/endpoint/fee-preserving map to this original complete-block reader. Its semantic recovery and effective-inverse conclusions are not premises of (27.6).
 
 ## 追加锚（本行以下为增补区）
+
+## 28. Arbitrary internal supports and the exact two-fibre GLOBAL compatibility law
+
+**Definition 28.1 (Arbitrary internal-support target).** Retain the complete original INITIAL source, the matched coefficient cycle, both free-value fibres, all unknown histories and inherited tails, the independent absorbing rejection output, and the endpoint-only complete-block fee of Definition 27.1. Fix
+
+$$
+ m\ge5,\qquad k=2m-2,\qquad T=k+1=2m-1,
+ \qquad U=\{2,3,\ldots,m-1\}.
+\tag{28.1}
+$$
+
+For arbitrary subsets $H_0,H_1\subseteq U$, choose labels $A_v\ne B_v$ separately for $v\in\mathbb F_2$ and set
+
+$$
+ f(v,-j,s)=
+ \begin{cases}
+ B_v,&j\in H_v,\\
+ A_v,&j\notin H_v,
+ \end{cases}
+ \qquad 0\le s<k,
+ \qquad f(\bot)=y_\bot.
+\tag{28.2}
+$$
+
+The bottom label is arbitrary. Write
+
+$$
+ D=\{H_v:H_v\ne\varnothing\},
+ \qquad
+ r=\left|\left\{\bigl(\mathbf 1_{H_0}(j),\mathbf 1_{H_1}(j)\bigr):j\in U\right\}\right|.
+\tag{28.3}
+$$
+
+Thus $D$ records the distinct nonempty supports, while $r$ records the number of membership-pair types actually occurring on $U$. Every phase in $P\setminus U$ has pair $(0,0)$. The same literal block at one emitted index is required on every live archive and both free values; stopping may still depend on an archive's own acquired endpoints.
+
+**Theorem 28.2 (Exact adaptive and GLOBAL fees for arbitrary internal supports).** Under Definition 28.1, for either original alphabet,
+
+$$
+ C_{\rm ad}(f)=\max_{v\in\mathbb F_2} c(H_v),
+ \qquad
+ c(H)=
+ \begin{cases}
+ 0,&H=\varnothing,\\
+ 1,&H\ne\varnothing\text{ and }|H|\text{ is even},\\
+ 2,&|H|\text{ is odd},
+ \end{cases}
+\tag{28.4}
+$$
+
+and
+
+$$
+ C_{\rm pre}(f)=
+ \begin{cases}
+ 0,&D=\varnothing,\\
+ 1,&D=\{H\}\text{ and }|H|\text{ is even},\\
+ 2,&D=\{H\}\text{ and }|H|\text{ is odd},\\
+ 2,&|D|=2,\ m\text{ is odd, and }r=2,\\
+ 3,&|D|=2\text{ and }(m\text{ is even or }r\ne2).
+ \end{cases}
+\tag{28.5}
+$$
+
+The emitted-bit fees are $mC_{\rm ad}(f)$ and $mC_{\rm pre}(f)$. In the two-support line, $r=2$ is equivalent to
+
+$$
+ H_0\cup H_1=U
+ \quad\text{and}\quad
+ \bigl(H_0\cap H_1=\varnothing\ \text{or}\ H_0=U\ \text{or}\ H_1=U\bigr).
+\tag{28.6}
+$$
+
+In particular, when both distinct supports are even, the exceptional two-block condition cannot occur, so the even-support classification of Theorem 27.2 is recovered exactly.
+
+**Proof (adaptive fee and one-support cases).** Here
+
+$$
+\gcd(m,T)=\gcd(m,2m-1)=1,
+ \qquad 2m>T,
+ \qquad 3\le m<k.
+\tag{28.7}
+$$
+
+The pinned [PREFIX_DEADLINE_AND_WRAP_COST, Theorem 6.1](KBONACCI_PREFIX_DEADLINE_AND_WRAP_COST.md#6-上半窄宽度的全部二标签分类) therefore applies to each fixed free-value fibre. Its binary table is independent of INITIAL tail and its hypotheses are exactly (28.1): an empty support costs zero, a nonempty even support costs one, and every other nonempty support costs two. The theorem supplies the literal blocks, all original tails, both original alphabets and the all-action lower bound. The freely observed INITIAL value selects the corresponding fibre protocol, so the maximum in (28.4) is both attainable and necessary. This is credited reuse of the complete individual-fibre law, not a new single-fibre theorem.
+
+If $D=\varnothing$, both fibres stop at their free values and the bottom stops at its independent free observation. If $D=\{H\}$, the two fibres use the same supplied stream for the common support $H$, remembering their own value to choose $A_v$ or $B_v$. This gives the first three lines of (28.5), including their lower bounds from (28.4).
+
+It remains to treat two distinct nonempty supports. The following proof constructs one common stream for the three-block upper bound, then proves the two-block compatibility boundary.
+
+**Proof (a common three-block stream).** For a path index $t$ and an even set $E$ contained in its physical path, use the supplied consecutive-edge inverse
+
+$$
+ \mathcal I_t(E)_i
+   =\bigoplus_{h=0}^{i}\mathbf 1_E(tm+h\pmod T),
+ \qquad 0\le i<m.
+\tag{28.8}
+$$
+
+This is the literal path inverse of Interface 1.4 and (27.5), applied to the actual word, not an abstract parity query. Put
+
+$$
+ E_0=H_0\cup
+ \begin{cases}\{m\},&|H_0|\text{ odd},\\\varnothing,&|H_0|\text{ even},\end{cases}
+ \qquad
+ E_1=H_1\cup
+ \begin{cases}\{m+1\},&|H_1|\text{ odd},\\\varnothing,&|H_1|\text{ even}.
+ \end{cases}
+\tag{28.9}
+$$
+
+Both sets are even. They lie respectively in $W_0=\{0,\ldots,m\}$ and $W_2=\{1,\ldots,m+1\}$, and neither contains phase one. Let
+
+$$
+ L=10^{m-1}.
+\tag{28.10}
+$$
+
+The one fixed stream is
+
+$$
+ \mathcal I_0(E_0)\ \mid\ L\ \mid\ \mathcal I_2(E_1),
+\tag{28.11}
+$$
+
+with an arbitrary fixed zero extension that no source needs to execute. Directly from the matched coefficient cycle $c_i=\mathbf 1_{\{0,-1\}}(i\bmod T)$, the three successful charge supports are
+
+$$
+ \operatorname{supp}q_0=E_0,
+ \qquad
+ \operatorname{supp}q_1=\{m,m+1\},
+ \qquad
+ \operatorname{supp}q_2=E_1.
+\tag{28.12}
+$$
+
+On $U$, the observed difference triple is therefore
+
+$$
+ (q_0(j),q_1(j),q_2(j))
+   =\bigl(\mathbf 1_{H_0}(j),0,\mathbf 1_{H_1}(j)\bigr).
+\tag{28.13}
+$$
+
+Outside $U$, the middle coordinate is one exactly at $m,m+1$. The first coordinate can additionally be one at $m$ when $|H_0|$ is odd, and the last can additionally be one at $m+1$ when $|H_1|$ is odd; all other outside phases have the zero triple. Thus the triple determines the membership pair $(\mathbf 1_{H_0},\mathbf 1_{H_1})$, up to the harmless identification of outside phases with the same target pair $(0,0)$. A source remembers its own free value and returns $B_v$ exactly when the relevant component is one.
+
+The first word in (28.11) starts with zero because phase zero is absent from $E_0$, and its internal runs have length at most $m-1$. It clears every inherited tail. Its terminal run is at most $m-1$, so the single leading one of $L$ creates a run of at most $m<k$. The word $L$ ends in zero. The third word also starts with zero because phase one is absent from $E_1$, and every internal run has length at most $m<k$. Consequently every displayed block succeeds from every inherited tail, every crossed seam is legal, and every emitted block is charged. This proves $C_{\rm pre}(f)\le3$ for all distinct nonempty supports. It also gives a lawful own-archive decoder: a source may stop after any prefix whose acquired code already determines its component, or every source may run the full three-block prefix.
+
+**Proof (the exceptional two-block upper bound).** Assume $m$ is odd and $r=2$. The two membership pairs occurring on $U$ are distinct and neither is $(0,0)$: since the supports are distinct and nonempty, at least two different nonzero pairs occur on $U$; if only one nonzero pair occurred, one support would be empty or the supports would be equal. An additional internal $(0,0)$ would therefore give $r\ge3$. Choose one of the two internal classes, say
+
+$$
+ S=\{j\in U:(\mathbf 1_{H_0}(j),\mathbf 1_{H_1}(j))=e\},
+$$
+
+and set
+
+$$
+ E=S\cup
+ \begin{cases}\{m\},&|S|\text{ odd},\\\varnothing,&|S|\text{ even}.
+ \end{cases}
+\tag{28.14}
+$$
+
+The set $E$ is even and is contained in $W_0$. Let
+
+$$
+ J=(10)^{(m-1)/2}1.
+\tag{28.15}
+$$
+
+Because $m$ is odd, $J$ has charge support
+
+$$
+ \operatorname{supp}q_1=P\setminus U=W_1
+$$
+
+and its full-path charge has even cardinality $m+1$. The common two-block stream is
+
+$$
+ \mathcal I_0(E)\ \mid\ J.
+\tag{28.16}
+$$
+
+On $U$ its code is $(\mathbf 1_S,0)$, so the two internal classes are separated. On every outside phase the second coordinate is one, so the outside base pair $(0,0)$ is separated from both internal classes, irrespective of the helper charge at $m$. The root starts with zero and the second alternating word has only singleton runs. If the root ends in one, its seam with $J$ has length at most $m<k$; otherwise the seam is shorter. Hence (28.16) is safe for every inherited tail and gives $C_{\rm pre}(f)\le2$.
+
+Under the exceptional condition the adaptive fee is also two: $r=2$ implies $H_0\cup H_1=U$. If the supports are disjoint, their cardinalities sum to $|U|=m-2$, which is odd, so one is odd. If one support contains the other membership class, one of them is $U$ and is itself odd. Thus at least one fibre has individual fee two by (28.4), and $C_{\rm pre}(f)\ge C_{\rm ad}(f)=2$. This proves the fourth line of (28.5).
+
+**Proof (all-action lower bound excluding two blocks).** Use the exact preset value-join law [INITIAL target-cost theory, Theorem 29.2](KBONACCI_INITIAL_TARGET_COST_THEORY.md#29-one-literal-stream-across-the-two-free-value-fibres). Any two-block GLOBAL stream for $f$ would be the same two-block stream for the ordered joined phase target
+
+$$
+ \Lambda(j)=\bigl(\lambda_0(j),\lambda_1(j)\bigr),
+ \qquad
+ \ell(j)=\bigl(\mathbf 1_{H_0}(j),\mathbf 1_{H_1}(j)\bigr),
+\tag{28.17}
+$$
+
+where equal membership pairs are exactly equal joined labels. Since the supports are distinct and nonempty, the joined target has at least three labels: two distinct nonzero pairs on $U$ and the outside pair $(0,0)$, with any further pair types only increasing the count.
+
+The terminal-tail histories with $s=k-1$ force every successful root to begin with zero. A root beginning with one rejects all those actual sources to the same absorbing endpoint, while their joined labels are unequal. A root beginning with zero succeeds on every source, clears the inherited tail and leaves one common current tail. Let $a(j)$ be its charge. If a second word rejects on a reached mixed archive, rejection is uniform because legality depends only on the common tail and the common literal word; absorption cannot recover the merged labels. Thus every second word that is actually needed succeeds on its reached mixed archive, and its charge $b(j)$ must combine with $a(j)$ to separate all unequal joined labels. This argument allows arbitrary root and second literal words, archive-dependent stopping, rejection attempts and both alphabets.
+
+At block index one the physical path is
+
+$$
+ W_1=\{m,m+1,\ldots,2m-2,0,1\}=P\setminus U.
+\tag{28.18}
+$$
+
+Therefore every successful second charge satisfies $b(j)=0$ for all $j\in U$. If $r\ge3$, at least three different joined labels already occur on $U$, while the root supplies only the two values of $a$, so two blocks are impossible.
+
+Suppose $r=2$. The two internal labels are distinct nonzero vectors, and the root charge must take both values on their two nonempty classes. Every outside phase has the third label $(0,0)$. For any outside phase $j$, the root archive with value $a(j)$ also contains an internal phase with that same root value, so that archive is mixed and cannot stop before the second block. If $b(j)=0$, its pair $(a(j),b(j))$ then equals the pair of that internal class, contradicting separation. Hence necessarily
+
+$$
+ b(j)=1\quad(j\in P\setminus U=W_1).
+\tag{28.19}
+$$
+
+The full-path parity identity for one literal block gives
+
+$$
+ 0=\bigoplus_{j\in W_1}b(j)=m+1\pmod2.
+\tag{28.20}
+$$
+
+Thus $m$ must be odd. When $m$ is even, or when $r\ne2$, no correct two-block GLOBAL stream exists. A one-block stream is already impossible because the forced zero root has only two successful endpoint values while the joined target has at least three labels. Together with the three-block construction, this proves the last line of (28.5).
+
+Finally, (28.6) follows by inspecting the two membership pairs. With two pairs and no $(0,0)$ on $U$, every phase belongs to $H_0\cup H_1$, and the pair pattern is either the two disjoint nonzero vectors, or the two vectors obtained when one support is all of $U$. Conversely each of those forms has exactly two occurring pairs. The proof is complete. $\square$
+
+**Proposition 28.3 (Three concrete full-source consumers).** The following words use the same stream at each displayed block index for both free values and every live archive. The listed charge supports are computed from (28.12) and the original coefficient cycle; the decoders map the resulting charge code to the membership pair and then use the remembered free value.
+
+$$
+\begin{array}{c|c|c|c|c|c}
+ m&k&H_0&H_1&(C_{\rm ad},C_{\rm pre})&\text{one GLOBAL stream}\\ \hline
+ 5&8&\{2\}&\{3\}&(2,3)&00111\mid10000\mid00111\\
+ 6&10&\{2,3,4\}&\{5\}&(2,3)&001011\mid100000\mid000011\\
+ 7&12&\{2,3\}&\{4,5,6\}&(2,2)&0010000\mid1010101
+\end{array}
+\tag{28.21}
+$$
+
+For $m=5$, the three charge supports are
+
+$$
+ \{2,5\},\quad\{5,6\},\quad\{3,6\};
+\tag{28.22}
+$$
+
+for $m=6$ they are
+
+$$
+ \{2,3,4,6\},\quad\{6,7\},\quad\{5,7\};
+\tag{28.23}
+$$
+
+and for $m=7$ the two supports are
+
+$$
+ \{2,3\},\quad\{0,1,7,8,9,10,11,12\}=P\setminus U.
+\tag{28.24}
+$$
+
+The first two rows are distinct odd singleton and even-width complementary odd consumers. Their adaptive words are respectively $00111\mid10000$ and $00011\mid10000$ for the two singleton fibres in the first row, and $001011\mid100000$ and $000001\mid100000$ in the second row. The third row is an odd-width nonsingleton two-block consumer; its first fibre uses the one-block word $0010000$, while the second odd fibre uses $0000101\mid1000000$.
+
+For the first row, phases $2,3,4$ have codes $100,001,000$; phases $5,6$ have $110,011$, and all remaining outside phases have $000$. The first three codes correspond respectively to $(1,0),(0,1),(0,0)$, and the latter two also correspond to $(0,0)$, so the decoder returns exactly the required $A_v/B_v$ label. For the second row, phases $2,3,4,5$ have codes $100,100,100,001$; phases $6,7$ have $110,011$; all remaining phases have $000$. The same membership-pair decoder is exact. For the third row, the two internal classes have codes $10$ and $00$, while every outside phase has code $01$; these are the three required joined labels.
+
+Each first word begins with zero and therefore succeeds from every inherited tail. The maximum run joining a seam in the three-block streams is four for $m=5$ and three for $m=6$; for the two-block stream it is one. All are below $k$ (and every internal run is at most $m<k$). The charge tables include both physical endpoints, so these checks cover every phase, both values and every $0\le s<k$. The actual jointly attainable histories for every displayed source are the supplied witnesses (25.3). No source uses an interior observation, an INITIAL clock, another archive's endpoint, a reset, a copy, an unpaid wait or an unexecuted branch.
+
+
+**Mathematical boundary 28.4 (Falsifiers and residual scope).** A correct two-block GLOBAL controller for distinct nonempty supports with $m$ even or $r\ne2$ would falsify (28.5). Its stream would have to evade the forced root zero, create a nonzero second-window charge on a phase in $U$, or violate the full-path parity equation (28.20); each is an explicit reader-level falsifier. A phase-dependent rejection from a common current tail, or a distinction produced after absorption, would falsify the lower-bound mechanism. Conversely, a charge mismatch in (28.12), a code collision between unequal membership pairs, a rejecting inherited tail, an unsafe seam, different words at one GLOBAL index, an uncharged complete block, an interior observation or an unexecuted-branch endpoint would falsify the corresponding upper witness. Failure of one displayed stream alone does not rule out another stream at that fee.
+
+The result is restricted to $m\ge5$, $k=2m-2$, $g=1$, tail-independent binary tables with supports inside $U$, two free values and the original phase/tail prior. It does not classify exterior or boundary supports, more than two target labels per fibre, tail-sensitive targets, other $(k,m)$, other phase orbits, or general competing GLOBAL streams outside this support family. It does not add a memory, chronology, reset, physical-resource, offline-computation or cross-reader cost theorem. The full all-$k\ge2$, all-$m\ge1$, arbitrary attainable immutable INITIAL-target objective remains open.
+
+**Mathematical citation 28.5 (Supplied results and new content).** The complete source, matched coefficients, actual joint histories, endpoint observations, absorbing rejection and complete-block fee are supplied by (15.1)–(15.4), Lemma 15.1, (25.3) and Definitions 18.1 and 27.1. The individual adaptive classification (28.4) is the exact reuse of [PREFIX_DEADLINE_AND_WRAP_COST, Theorem 6.1](KBONACCI_PREFIX_DEADLINE_AND_WRAP_COST.md#6-上半窄宽度的全部二标签分类), under the explicit correspondence (28.7). The path inverse (28.8), the charge windows (28.12) and full-path parity are the supplied original-reader interface (27.3)–(27.5) and INITIAL target-cost Interface 1.4. The free-value reduction to one ordered joined target is [INITIAL target-cost theory, Theorem 29.2](KBONACCI_INITIAL_TARGET_COST_THEORY.md#29-one-literal-stream-across-the-two-free-value-fibres), including its own stopping and absorption semantics.
+
+The arbitrary-support three-block stream (28.9)–(28.13), the exceptional two-block stream (28.14)–(28.16), and the necessity of the condition $m$ odd with $r=2$ in (28.19)–(28.20) are repo-derived ordinary mathematical deductions. The equivalence (28.6), the three concrete consumers and their charge tables are applications of those deductions. The earlier even-support result is recovered as stated, not replaced. No Lean/kernel verification or literature-priority claim is made.
+
+The remaining all-target objective is unchanged: exact adaptive and one-GLOBAL worst emitted-complete-block fees for every attainable immutable INITIAL target, both original alphabets and all $k\ge2,m\ge1$.
+
+## 追加锚（本行以下为增补区）
+
+## 29. First-window boundary labels: exact common-stream compatibility
+
+**Definition 29.1 (The complete first-window binary family).** Retain the original reader, joint actual histories, immutable INITIAL targets, observations and fees of Definitions 18.1 and 27.1 and [INITIAL target-cost theory, Definitions 1.1–1.3](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee). Fix
+
+$$
+ m\ge5,\qquad k=2m-2,\qquad T=2m-1,\qquad
+ P=\mathbb Z/T\mathbb Z,
+$$
+$$
+ B=\{1,\ldots,m\},\qquad U=\{2,\ldots,m-1\},\qquad
+ R=P\setminus B=\{0,m+1,\ldots,2m-2\}.
+\tag{29.1}
+$$
+
+For each free INITIAL value $v\in\mathbb F_2$, choose labels $A_v\ne B_v$ and an arbitrary support $H_v\subseteq B$. Allow arbitrary coincidences between labels belonging to different free values. On every actual INITIAL record put
+
+$$
+ f(v,-j,s)=
+ \begin{cases}B_v,&j\in H_v,\\ A_v,&j\notin H_v,\end{cases}
+ \qquad j\in P,\quad 0\le s<k.
+\tag{29.2}
+$$
+
+Initial $\bot$ has its arbitrary independently observed label and stops freely. The history and its length are unknown. Every actually emitted complete length-$m$ block costs one, including waits, padding and rejecting blocks; only its endpoint is observed. GLOBAL means one preselected literal word at each emitted block number, shared by every live archive and both free values, with stopping and decoding based on that source's own acquired archive. Both original alphabets are retained. They contain the same length-$m$ literal words here because $m<k$; cross-block rejection remains part of the operation.
+
+Define the ordered membership table, its full and internal images, and the two boundary labels by
+
+$$
+ o=(0,0),\qquad \ell(j)=(\mathbf1_{H_0}(j),\mathbf1_{H_1}(j)),\qquad
+ L=\ell[P],\quad n=|L|,\quad K=\ell[U],\quad r=|K|,
+ \qquad x=\ell(1),\quad y=\ell(m).
+\tag{29.3}
+$$
+
+In particular $\ell|_R=o$. Equality of these membership pairs is exactly equality of the ordered original label pairs, since $A_v\ne B_v$ separately. For $n=2$ put $H=H_0\cup H_1$: its members carry the unique nonbase membership pair. Thus $n=1$ means both supports are empty, and $n=2$ includes both a common nonempty support and one empty fibre.
+
+**Definition 29.2 (The closed two-block boundary relation).** For $n=3$ define
+
+$$
+ \Pi_3\quad\Longleftrightarrow\quad
+ r\le2\ \text{ and }\ (m\text{ is odd or }x\ne o\text{ or }y\ne o).
+\tag{29.4}
+$$
+
+For $n=4$, let $N_z=|\{j\in P:\ell(j)=z\}|$ for each $z\in L$. The odd total $T$ implies that either one or three of the four $N_z$ are odd. Let $d$ be the unique label whose multiplicity parity differs from the other three. Define
+
+$$
+ \Pi_4\quad\Longleftrightarrow\quad
+ |K\setminus\{d\}|\le1\ \text{ and }\ (o\notin K\text{ or }d=o).
+\tag{29.5}
+$$
+
+These multiplicities count each actual phase once, not its inherited tails or the histories realizing it. Equivalently, the four-label relation has the following boundary form:
+
+$$
+\begin{array}{c|c}
+ \text{internal image}&\Pi_4\\ \hline
+ r=1&\text{true}\\
+ r\ge3&\text{false}\\
+ K=\{o,z\},\ z\ne o
+   &|\{j\in U:\ell(j)=z\}|\text{ odd}\\
+ r=2,\ o\notin K
+   &m-1+\mathbf1_{\{x\notin K\}}+\mathbf1_{\{y\notin K\}}
+       \text{ even}.
+\end{array}
+\tag{29.6}
+$$
+
+The equivalence is proved with the classification below. Neither relation requires a search through words or a choice of a different second word on different archives.
+
+**Theorem 29.3 (Exact GLOBAL fees for every first-window support pair).** Under Definition 29.1, for either original alphabet,
+
+$$
+ C_{\rm pre}(f)=
+ \begin{cases}
+ 0,&n=1,\\
+ 1,&n=2,\ |H|\text{ even},\\
+ 2,&n=2,\ |H|\text{ odd},\\
+ 2,&n=3,\ \Pi_3,\\
+ 2,&n=4,\ \Pi_4,\\
+ 3,&n\in\{3,4\}\text{ and its relation fails}.
+ \end{cases}
+\tag{29.7}
+$$
+
+Every finite value in (29.7) is attained by one actual common literal stream on the full source. In particular, all support pairs have a safe common three-block upper bound. The individual adaptive fee is the credited supplier
+
+$$
+ C_{\rm ad}(f)=\max_{v\in\mathbb F_2}c(H_v),\qquad
+ c(J)=\begin{cases}0,&J=\varnothing,\\
+ 1,&J\ne\varnothing,\ |J|\text{ even},\\
+ 2,&|J|\text{ odd}.
+ \end{cases}
+\tag{29.8}
+$$
+
+Equation (29.8) is exactly [PREFIX_DEADLINE_AND_WRAP_COST, Theorem 6.1](KBONACCI_PREFIX_DEADLINE_AND_WRAP_COST.md#6-上半窄宽度的全部二标签分类), because $\gcd(m,2m-1)=1$, $3\le m<k$ and $2m>T$. It is not a new adaptive classification. Exact emitted-bit fees are $m$ times (29.7) and (29.8).
+
+Proof. The full joint sources are the supplied witnesses (25.3), equivalently INITIAL target-cost (1.3): for each $v,j,s$ choose
+
+$$
+ N\equiv0\pmod m,\qquad N\equiv-j\pmod T,\qquad N\ge s+2,
+ \qquad e=\bigoplus_{i=N-s}^{N-1}c_i,
+ \qquad w=(v\oplus e)0^{N-s-1}1^s.
+\tag{29.9}
+$$
+
+Coprimality supplies arbitrarily large such $N$. This is one legal complete-block history realizing the value, phase and tail simultaneously; its separating zero prevents the first bit from joining the terminal run. A rejected history separately realizes initial $\bot$. None of these witness lengths is revealed to the controller.
+
+The exact preset value-join law [INITIAL target-cost theory, Theorem 29.2](KBONACCI_INITIAL_TARGET_COST_THEORY.md#29-one-literal-stream-across-the-two-free-value-fibres) replaces $f$ by $\ell$ without changing its GLOBAL fee. On the same literal stream, complementing the INITIAL value complements each successful scalar endpoint and leaves rejection unchanged. An actual own archive therefore determines both value-translated output strings. Their component decoders may stop at different times; retaining the first answer and continuing until the other stops takes their maximum fee. This executes one source, and uses no endpoint that the actual source has not acquired. Conversely the remembered value selects the required component of a decoded membership pair. Thus different stopping times and cross-value label coincidences do not weaken the joined lower bounds. The adaptive protocols may instead be selected by the free value, which proves (29.8) from its cited individual-fibre supplier.
+
+We use the supplied literal inverse, with block zero first:
+
+$$
+ W_0=\{0,\ldots,m\},\qquad W_1=R\cup\{1,m\},\qquad
+ W_2=\{1,\ldots,m+1\},
+$$
+$$
+ \mathcal I_t(E)_i=\bigoplus_{h=0}^i
+       \mathbf1_E(tm+h\pmod T),\qquad 0\le i<m,
+ \qquad E\subseteq W_t,\quad |E|\text{ even}.
+\tag{29.10}
+$$
+
+The path is ordered, including its wrap. Interface 1.4 of the INITIAL target-cost theory gives exactly $E$ as this word's charge support, with zero charge off the path. Its first bit is the initial-vertex charge and its last bit the terminal-vertex charge. Every construction below uses this actual word and checks its entire concatenation, rather than replacing it by an unrestricted parity query.
+
+(i) A uniform three-block stream. Put $p=\bigoplus_{j\in B}\ell(j)\in\mathbb F_2^2$. Choose a nonzero linear functional $\alpha$ with $\alpha(p)=0$, and a linear functional $\beta$ independent of $\alpha$. Such a choice exists also when $p=0$. Let
+
+$$
+ E_0=\{j\in B:\alpha(\ell(j))=1\},\qquad
+ E_2=\{j\in B:\beta(\ell(j))=1\}
+       \cup\begin{cases}\{m+1\},&\beta(p)=1,\\
+                         \varnothing,&\beta(p)=0.
+             \end{cases}
+\tag{29.11}
+$$
+
+Both supports are even, and belong to $W_0,W_2$ respectively. Issue the one fixed stream
+
+$$
+ \mathcal I_0(E_0)\ \mid\ 010^{m-2}\ \mid\ \mathcal I_2(E_2).
+\tag{29.12}
+$$
+
+The middle word has its only one at physical position $m+1$, hence its actual charge support is $\{m+1,m+2\}\subset R$. On $B$ the acquired difference triple is
+
+$$
+ (\alpha(\ell(j)),0,\beta(\ell(j))).
+\tag{29.13}
+$$
+
+On $m+1,m+2$ it is respectively $(0,1,\beta(p))$ and $(0,1,0)$; all other exterior phases have $000$. The decoder returns $o$ if the middle difference is one, and otherwise inverts the basis $(\alpha,\beta)$ on the first and third differences. This returns $o$ also on the remaining exterior phases. The parity donor $m+1$ and the marked phase $m+2$ are actual base-labelled sources, explicitly decoded, not removed candidates.
+
+The root begins zero because $0\notin E_0$, so it clears every inherited tail. Its remaining runs have length at most $m-1<k$. The middle word begins and ends zero. It therefore breaks both seams, and the final length-$m$ word enters from actual tail zero and has runs at most $m<k$. This checks the full emitted prefix, including every boundary between blocks. All nonbottom sources may execute and pay all three blocks, then decode from their own endpoints. The construction is preselected from the target; no word depends on an observed branch or free value.
+
+(ii) Necessary conditions against all smaller-fee controllers. Fix the joined target on one free-value fibre. If it is nonconstant, the root cannot stop for free. A root beginning one rejects every actual source with INITIAL tail $k-1$ immediately. Those sources include different joined labels by (29.9), but have the same absorbing endpoint archive. No continuation can distinguish them. Consequently every correct root begins zero. It succeeds on every source, clears all inherited tails and leaves one common actual terminal tail, determined by this very root word.
+
+Suppose $n\ge3$ and a correct GLOBAL controller stops within two paid blocks. A binary root endpoint cannot finish every archive, so at least one root archive is mixed. That archive must emit the second word. From the common actual tail, the legality of this word is independent of phase and scalar value. If it rejects, it uniformly absorbs the mixed archive and can never return its unequal labels. The second word must therefore succeed. Its hypothetical execution is safe also on any source already stopped; we use its literal charge identity there, without granting an observation to that source.
+
+Let $a,b$ be the root and second successful charge rows. Necessarily
+
+$$
+ a|_R=0,\qquad b|_U=0,\qquad
+ \bigoplus_{j\in P}a(j)=\bigoplus_{j\in P}b(j)=0,
+ \qquad (a(j),b(j))\text{ refines }\ell(j).
+\tag{29.14}
+$$
+
+The root's zero-leading bit gives $a(0)=0$ as well as the support restriction. The parity equations are full physical-path equations; all vertices here are actual phases. To justify refinement with early stopping, unequal labels having the same pair have the same root archive. It cannot stop homogeneously, so both actually continue and acquire the same second archive, a contradiction. This covers all literal words, paid waits, rejecting attempts and endpoint stopping rules.
+
+Since $b=0$ on $U$, $r\ge3$ is impossible at two blocks. If $n=3$, $r\le2$ and both boundary labels are $o$, the two nonbase labels must both occur on $U$. They occupy codes $00,10$. Every phase of $W_1=R\cup\{1,m\}$ has label $o$, so its second bit must be one. The second full-path charge then has $m+1$ ones, which is odd for even $m$. This excludes exactly the additional failure in $\Pi_3$.
+
+For $n=4$, all four labels must occupy the four different two-bit codes. Each label has exactly one code: splitting one label would consume a fifth code needed for the other three. Let $\gamma:L\to\mathbb F_2^2$ be this bijection. The XOR of the four codes is zero. For either possible multiplicity pattern,
+
+$$
+ \bigoplus_{j\in P}\gamma(\ell(j))
+   =\bigoplus_{z\in L}(N_z\bmod2)\gamma(z)=\gamma(d).
+\tag{29.15}
+$$
+
+Both charge rows in (29.14) are even, so $\gamma(d)=00$. On $U$ only $00,10$ are available; hence $|K\setminus\{d\}|\le1$. If $o\in K$, its internal occurrence requires second bit zero, while its exterior occurrence requires first bit zero. Thus $\gamma(o)=00$ and $d=o$. These are precisely the two conditions of $\Pi_4$. Unlike the saturated four-label case, three labels may legitimately use four codes; no no-splitting premise is imposed on them.
+
+(iii) Zero, one and common-support attainments. If $n=1$, the free value suffices. For $n=2$, a nonconstant fibre supplies a positive-fee lower bound. Any correct one-block root begins zero, and phase zero has charge zero and label $o$. Correctness forces the entire charge support to be $H$, so its full-path parity forces $|H|$ even. Conversely even $H$ is attained by $\mathcal I_0(H)$. For odd $H$ the following are actual common two-block streams:
+
+$$
+\begin{array}{c|c|c}
+ \text{condition}&E_0&E_1\\ \hline
+ m\notin H&H\cup\{m\}&\{m,m+1\}\\
+ m\in H,\ 1\notin H&H\cup\{1\}&\{1,m+1\}\\
+ 1,m\in H&H\setminus\{m\}&\{1,m\}.
+\end{array}
+\qquad \mathcal I_0(E_0)\mid\mathcal I_1(E_1).
+\tag{29.16}
+$$
+
+In the first two rows the members of $H$ have code $10$; the added boundary has $11$, the exterior donor has $01$, and all other nonmembers have $00$. In the last row the members of $H$ are exactly the sources with at least one charge bit one. All supports are even. The first second word is $10^{m-1}$, whose leading run one joins a root tail of at most $m-1$; the second row starts its second word with zero; the last row has a zero-ending root followed by $1^m$. The full run is therefore at most $m<k$ in every case. The odd-support one-block obstruction makes these fees exact. These constructions establish the common-stream bridge directly, without flattening adaptive child choices.
+
+(iv) Two-block attainments for three labels. If $r=1$, use the following even charge supports:
+
+$$
+\begin{array}{c|c|c|c}
+ &E_0&E_1&\text{codes on }(U,R,\{1\},\{m\})\\ \hline
+ m\text{ odd}&U\cup\{1\}&\{1,m\}&(10,00,11,01)\\
+ m\text{ even}&\{1,m\}&R\cup\{1\}&(00,01,11,10).
+\end{array}
+\tag{29.17}
+$$
+
+The four region codes refine any labels when $U$ is homogeneous. The odd-width root ends zero before the all-one second word; the even-width second word begins zero. Thus both whole prefixes are safe on the full inherited-tail prior. The same construction also works when four labels have $r=1$.
+
+It remains to give all $r=2$ three-label attainments admitted by $\Pi_3$. First suppose $K=\{X,Y\}$ does not contain $o$. Orient the internal classes so $X$ has canonical code $00$ and $Y$ canonical code $10$. Every exterior phase has code $01$. The spare code $11$ may represent one of these labels again. Put $S=\{j\in U:\ell(j)=Y\}$ and $t=|S|\bmod2$. Boundary codes must satisfy just the two parity equations
+
+$$
+ a(1)\oplus a(m)=t,\qquad
+ b(1)\oplus b(m)=(m-1)\bmod2.
+\tag{29.18}
+$$
+
+For odd $m$ the internal class sizes have opposite parities. If both boundaries are internal labels, give them their canonical codes and choose the orientation making the root even. Such an orientation exists: interchanging $X,Y$ complements all $m$ root charges on $B$, an odd number. If one boundary is $o$ and the other internal, choose the odd-sized class as $S$, give the internal boundary $11$ and the base boundary $01$. If both boundaries are $o$, choose either orientation and give one boundary $(t,1)$ and the other $(0,1)$. These choices satisfy (29.18) and never identify unequal labels.
+
+For even $m$, $\Pi_3$ supplies an internal-labelled boundary $u$. Give it its canonical code, with $b(u)=0$; let the other boundary $v$ have $b(v)=1$. Both internal classes have the same size parity $t$, invariant under orientation. If $\ell(v)=o$, choose either orientation and set $a(v)=t\oplus a(u)$, using $01$ or $11$ for $o$. If $\ell(v)$ is internal, give it $11$ and orient so $a(u)=1\oplus t$. Again (29.18) holds and only the label at $v$ uses the spare code.
+
+In every such assignment take $E_0=S$ together with the boundary vertices whose first code bit is one, and $E_1=R$ together with those whose second bit is one. Both supports are even and their inverses have exactly these codes. Every vertex $m+1$ has second charge one, so if the second word begins one at $m$, its next bit is zero. Its leading run is at most one, and the root seam has length at most $m<k$. If it begins zero the root tail is cleared. This proves actual common two-block attainment throughout this branch.
+
+Now suppose $K=\{o,X\}$ and denote the third label by $Y$. Put $S=\{j\in U:\ell(j)=X\}$, $q=|S|$ and $h=m+1$. At least one boundary has label $Y$. All possibilities are given by the following table; when the boundary labels differ, $u$ denotes the $Y$ boundary and $v$ the other boundary:
+
+$$
+\begin{array}{c|c|c|c}
+ \text{boundary labels}&\text{condition}&E_0&E_1\\ \hline
+ Y,Y&\text{any }q&S\cup(\{1\}\text{ if }q\text{ odd})&\{1,m\}\\
+ Y,X&q\text{ odd}&S\cup\{1\}&\{1,m\}\\
+ Y,X&q\text{ even}&S\cup\{1,m\}&\{u,h\}\\
+ Y,o&q\text{ odd}&S\cup\{u\}&\{u,h\}\\
+ Y,o&q\text{ even},\ m\text{ odd}&(U\setminus S)\cup\{u\}&W_1\\
+ Y,o&q\text{ even},\ m\text{ even}&(U\setminus S)\cup\{1,m\}&R\cup\{u\}.
+\end{array}
+\tag{29.19}
+$$
+
+An omitted conditional set in the first row is empty. Both supports are even in every case. In the first four rows internal base and $X$ have codes $00,10$; $Y$ has $01$ or $11$, with possible splitting only within a label. Where $\{u,h\}$ is used, the exterior donor's code $01$ also means base. In the last two rows internal base and $X$ instead have $10,00$; exterior phases have $01$, the $Y$ boundary has $11$, and the base boundary has $01$ or $10$. Thus all unequal labels are separated, including the actual donor. A second inverse with support $\{1,m\}$ is all-one, but its root ends zero. Every other listed second word starts zero or has leading run at most one: for $u=m$ a charge at $m+1$ toggles its leading one immediately, and for $u=1$ it starts zero. All roots start zero and all concatenations are safe. This exhausts the three-label cases with $\Pi_3$.
+
+(v) Two-block attainments for four labels. Suppose $\Pi_4$ holds. We construct a bijection $\gamma$ whose two rows satisfy (29.14). If $d\ne o$, set
+
+$$
+ \gamma(d)=00,\qquad\gamma(o)=01.
+\tag{29.20}
+$$
+
+If $K\setminus\{d\}$ is nonempty, give its unique label code $10$; if it is empty, give either remaining label code $10$. Give the last label $11$. Since $o\notin K$, this has first coordinate zero on $R$ and second coordinate zero on $U$.
+
+If $d=o$, there is exactly one internal nonbase label $X$. Indeed $\Pi_4$ allows at most one, and without any internal nonbase label two boundary phases could not supply the other three labels. The other two nonbase labels must occur at the two boundaries, distinctly. Set
+
+$$
+ \gamma(o)=00,\qquad\gamma(X)=10,\qquad
+ \gamma(x)=11,\qquad\gamma(y)=01.
+\tag{29.21}
+$$
+
+This also has the required zero coordinates. Equation (29.15) now makes both full rows even. Let
+
+$$
+ E_0=\{j\in P:\gamma_1(\ell(j))=1\},\qquad
+ E_1=\{j\in P:\gamma_2(\ell(j))=1\}.
+\tag{29.22}
+$$
+
+They lie in the actual paths $W_0,W_1$. Issue $\mathcal I_0(E_0)\mid\mathcal I_1(E_1)$ and decode by $\gamma^{-1}$. If $d=o$, the root's terminal charge at $m$ is zero and $E_1=\{1,m\}$, so a zero-ending root precedes the all-one second block. If $d\ne o$, every exterior vertex has second charge one; the second leading run is zero or one, exactly as after (29.18). The whole prefix is safe for every original tail. This proves sufficiency of $\Pi_4$ with actual words.
+
+For completeness, (29.6) follows directly. With $r=1$, the internal label is nonbase, and the two boundaries have the other two distinct nonbase labels. Their multiplicities are $m-2,m-1,1,1$ for the internal label, base and boundaries. The pivot is the base for odd $m$ and the internal label for even $m$, so $\Pi_4$ always holds. With $r\ge3$ its first condition fails. With $K=\{o,z\}$, the two other labels each occur at one boundary. Writing $q=|\{j\in U:\ell(j)=z\}|$, the multiplicities of $z,o$ have parities $q,1\oplus q$. The pivot is $o$ exactly when $q$ is odd, which is necessary and sufficient because $o\in K$.
+
+Finally let $K=\{X,Y\}$ with $o\notin K$, and let $Z$ be the remaining nonbase label. Four-code saturation forces internal codes $00,10$, exterior code $01$ and $Z$ code $11$. Consequently the second full-path parity is exactly the last line of (29.6). Conversely assume that parity. If neither boundary is internal, it forces odd $m$; the internal class sizes have opposite parities, so choose an internal label $Q$ whose class has size of the same parity as the number of $Z$ boundaries. If one boundary is internal, the other must be $Z$ and the condition forces even $m$. Both internal sizes then have the same parity $t$; choose $Q$ to be the internal boundary's label if $t=0$, and the other internal label if $t=1$. In both cases the root support
+
+$$
+ E_0=\{j\in B:\ell(j)\in\{Q,Z\}\},\qquad
+ E_1=R\cup\{u\in\{1,m\}:\ell(u)\notin K\}
+\tag{29.23}
+$$
+
+is even in each row and realizes the four codes just described. The second word has leading run at most one, so the prefix is safe. Thus this parity condition is sufficient as well, proving the boundary table equivalent to $\Pi_4$.
+
+All constructions may stop exactly after the displayed prefix, using only their own acquired consecutive endpoint differences and their remembered free value. Initial bottom stops at fee zero. For $n\ge3$, fewer than two blocks cannot distinguish the joined labels after the forced zero root; when the appropriate relation fails, (29.14)–(29.15) exclude every two-block controller and (29.12) attains three. For $n=2$ the zero/one obstructions and (29.16) are sharp. Actual sources in (29.9) attain the displayed worst fees.
+
+To recover Theorem 28.2, impose $H_0,H_1\subset U$, so $x=y=o$. For two distinct nonempty supports there are at least three joined labels. If $n=3$, $\Pi_3$ reduces to odd $m$ with $r=2$: both nonbase labels occur internally, so $r$ cannot be one. If $n=4$, all three nonbase labels occur on $U$, so $r\ge3$ and $\Pi_4$ is false. Thus its two-block exception is exactly the odd-width two-internal-label case of Section 28; all other distinct-support cases cost three. The empty and single/common-support clauses agree as well. This proves the exact specialization to Section 28.
+
+The reader, joint witnesses, literal inverse, complete-endpoint fee and absorbing rejection used here are supplied by (15.1)–(15.4), (25.3), (27.3)–(27.5) and INITIAL target-cost Interface 1.4. The adaptive law (29.8) and exact value join are expressly credited in Theorem 29.3. The new deductions are the closed boundary relations, the actual common two-block attainments for all admitted cases, and the common three-block pulse construction with its all-source decoder and full-run safety. The independent-row interface in [RESPONSE_CODES_AND_ADAPTIVITY_BOUNDARIES, Convention 1.1](KBONACCI_RESPONSE_CODES_AND_ADAPTIVITY_BOUNDARIES.md#1-固定读者相位与已到达档案) requires $g\ge2$, whereas here $g=1$. The three- and four-label root-zero companion prices start after a paid all-one root, omit phases $0,m$ from their specified zero archive and restrict its inherited tails. Here every phase and every original tail remain present, and nonconstant targets force a zero-leading root. Those acquired-child prices therefore supply no replacement for the full-source common-stream proof above.
+
+A correct two-block GLOBAL controller when $\Pi_3$ or $\Pi_4$ fails would falsify the classification. It would have to evade forced root zero, common-tail rejection, second-window silence on $U$, full-path even charge, or, in the saturated case, (29.15). On the attainment side, an unequal-label code collision, mismatching literal charge, unsafe full-prefix run, different words at one emitted index, an unpaid complete block or an unacquired endpoint would falsify the corresponding witness. Failure of a particular witness alone would not prove that no other stream attains that fee.
+
+The original objective still includes every $k\ge2,m\ge1$, both original alphabets and every jointly attainable immutable INITIAL target. Supports outside $B$, richer per-value labels, tail-sensitive targets, other phase orbits and arbitrary competing common-stream siblings remain outside this theorem. No reset, source copy, interior observation, hidden INITIAL clock, free clearing, physical-resource cost or cross-reader fee transport follows from it.
+
+This proves all lines of (29.7). $\square$
+
+**Proposition 29.4 (A uniform four-label boundary parity consumer).** For every nonempty proper $S\subset U$, put
+
+$$
+ H_0=S\cup\{1\},\qquad H_1=S\cup\{m\}.
+\tag{29.24}
+$$
+
+On the full original source of Definition 29.1,
+
+$$
+ (C_{\rm ad},C_{\rm pre})=
+ \begin{cases}(1,2),&|S|\text{ odd},\\(2,3),&|S|\text{ even}.
+ \end{cases}
+\tag{29.25}
+$$
+
+Actual common attaining streams are
+
+$$
+ \begin{cases}
+ \mathcal I_0(S\cup\{1\})\mid1^m,&|S|\text{ odd},\\
+ \mathcal I_0(S)\mid1^m\mid0^{m-1}1,&|S|\text{ even}.
+ \end{cases}
+\tag{29.26}
+$$
+
+Proof. The internal labels are $o,11$, both actually occurring, and the two boundary labels are $10,01$. Thus (29.6) makes two blocks possible exactly when $|S|$ is odd. More explicitly, four-code saturation forces base code $00$, internal nonbase code $10$, and distinct boundary codes $01,11$; root even charge then requires $|S|+1$ even. This is an obstruction to every two-block GLOBAL controller for even $|S|$. Both supports have size $|S|+1$, giving (29.8)'s adaptive fees.
+
+For odd $|S|$, the first stream has codes $10$ on $S$, $00$ on its internal complement and $R$, $11$ at phase one and $01$ at phase $m$. Decode $10,11,01,00$ as membership pairs $11,10,01,00$. For even $|S|$, the third word has actual support $\{m,m+1\}$; codes $100,010,011$ mean respectively $11,10,01$, while $000,001$ both mean $o$. In particular the donor $m+1$ is retained and correctly decoded. The root begins and ends zero. In the odd case the last all-one run has length $m<k$; in the even case the final block starts zero and clears the actual tail $m$ left by the all-one middle. Hence the entire concatenation is safe for all inherited tails, not merely its two seams considered separately. Each source uses its own endpoint differences and then its free-value component.
+
+Two explicit non-dyadic members are
+
+$$
+\begin{array}{c|c|c|c|c|c}
+ m&k&H_0&H_1&(C_{\rm ad},C_{\rm pre})&\text{one GLOBAL stream}\\ \hline
+ 5&8&\{1,2\}&\{2,5\}&(1,2)&01000\mid11111\\
+ 5&8&\{1,2,3\}&\{2,3,5\}&(2,3)&00100\mid11111\mid00001.
+\end{array}
+\tag{29.27}
+$$
+
+Their charge supports are respectively $(\{1,2\},\{1,5\})$ and $(\{2,3\},\{1,5\},\{5,6\})$, exactly the codes above. Every value, phase and inherited tail is jointly supplied by (29.9), and all displayed complete blocks are actually paid. $\square$
+
+**Proposition 29.5 (Boundary labels remove the even-width interior obstruction).** Let $m\ge6$ be even and let $S\subset U$ have even size with $2\le|S|\le m-4$. Put
+
+$$
+ H_0=S\cup\{1,m\},\qquad H_1=U\setminus S.
+\tag{29.28}
+$$
+
+Then $(C_{\rm ad},C_{\rm pre})=(1,2)$, with one common stream
+
+$$
+ \mathcal I_0(H_0)\mid(10)^{m/2}.
+\tag{29.29}
+$$
+
+Proof. Both nonempty supports are even. The joined labels are $10,01,o$, the internal image is $\{10,01\}$, and both boundaries have label $10$, so $\Pi_3$ holds despite even $m$. The two charge supports are $H_0$ and $R\cup\{m\}$. Codes $10,11$ mean $10$, code $00$ means $01$, and code $01$ means $o$. The root starts zero; its tail at most $m-1$ joins just one leading one of the second alternating word, giving a run at most $m<k$. Thus the actual complete prefix is safe and its own-archive decoder is exact on every joint source. Three joined labels exclude a one-block GLOBAL solution. For example $m=6$, $S=\{2,3\}$ gives $010111\mid101010$, with supports $\{1,2,3,6\}$ and $\{0,6,7,8,9,10\}$. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 30. A multi-label grid with exact full-INITIAL adaptive and GLOBAL fees
+
+**Definition 30.1 (The near-critical scalar grid target).** Use the original matched scalar reader, actual joint prior and immutable INITIAL, action, endpoint, stopping and fee contract of Definitions 18.1 and 25.1, equivalently [INITIAL target-cost theory, Definitions 1.1–1.3 and Interface 1.4](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee). Fix integers
+
+$$
+ r\ge3,\qquad n=2^r,\qquad m\ge n^2+2r,\qquad
+ k=2m-2,\qquad T=k+1=2m-1.
+\tag{30.1}
+$$
+
+Then $\gcd(m,T)=1$ and every phase in $P=\mathbb Z/T\mathbb Z$ is actual. Use representatives $0\le j<T$ for $j=-\theta_{\rm INITIAL}$. Choose pairwise distinct labels $L_0,\ldots,L_{n-1}$, and put
+
+$$
+ J=\{2r,2r+1,\ldots,2r+n^2-1\}\subseteq\{2r,\ldots,m-1\}.
+\tag{30.2}
+$$
+
+Every $j\in J$ has the unique form $j=2r+pn+q$ with $0\le p,q<n$. The original scalar target, on every legal INITIAL tail, is
+
+$$
+\begin{aligned}
+ f(0,-j,s)&=L_p,& f(1,-j,s)&=L_q
+ &&(j=2r+pn+q\in J,\ 0\le s<k),\\
+ f(v,-j,s)&=L_0
+ &&&&(j\notin J,\ v\in\mathbb F_2,\ 0\le s<k),\\
+ f(\bot)&=L_\bot.
+\end{aligned}
+\tag{30.3}
+$$
+
+The independently observed initial bottom has its separately prescribed label $L_\bot$ and stops for free; no inequality between $L_\bot$ and the live labels is needed. The prior contains all finite actual complete-block histories, including all jointly attainable values, phases and tails and all rejected histories. Neither $J$ nor a chosen tail restricts this prior. INITIAL history and length remain unknown. The free observation is only the initial scalar value or bottom. Subsequent observations are only the endpoints of actually issued complete length-$m$ words. Every issued block costs one, including zero waits, clearing and the entire block containing a rejection. Rejection is absorbing.
+
+Adaptive actions may depend on that source's own archive. GLOBAL requires prefixes of one fixed literal stream on all sources and both free-value fibres, while allowing each source its own archive-dependent endpoint stop. There is no reset, copy, hidden INITIAL clock, intermediate observation, unpaid clearing or access to another source's archive. Both original alphabets are retained: they have the same literal length-$m$ words because $m<k$, but cross-block rejection is still enforced.
+
+For $0\le a<r$ write $\beta_a(z)=\lfloor z/2^a\rfloor\bmod2$, and define the two families of phase supports
+
+$$
+\begin{aligned}
+ E^P_a&=\{2r+pn+q:0\le p,q<n,\ \beta_a(p)=1\},\\
+ E^Q_a&=\{2r+pn+q:0\le p,q<n,\ \beta_a(q)=1\}.
+\end{aligned}
+\tag{30.4}
+$$
+
+These are subsets of actual phases, not observations supplied to a controller.
+
+**Theorem 30.2 (Exact near-critical full-INITIAL grid law).** For every target in Definition 30.1, under each original alphabet,
+
+$$
+ \boxed{C_{\rm ad}(f)=2r-1,\qquad C_{\rm pre}(f)=4r-1.}
+\tag{30.5}
+$$
+
+The exact worst emitted-bit fees are $m(2r-1)$ and $m(4r-1)$. The adaptive upper bound is attained by selecting one literal stream from the free INITIAL value and then issuing its fixed prefix. It establishes no advantage attributable to actions chosen from subsequent paid feedback. The lower bounds permit all such feedback-dependent actions, arbitrary early stopping, rejecting attempts and charged waits.
+
+Proof. First retain the full original source. Lemma 15.1 and the credited actual CRT histories (25.3), equivalently (29.9) and INITIAL target-cost (1.3), simultaneously realize each $(v,-j,s)$: choose
+
+$$
+ \ell\equiv0\pmod m,\qquad \ell\equiv-j\pmod T,\qquad
+ \ell\ge s+2,\qquad
+ d=\bigoplus_{i=\ell-s}^{\ell-1}c_i,\qquad
+ w=(v\oplus d)0^{\ell-s-1}1^s,
+ \quad c_i=\mathbf1_{\{0,T-1\}}(i\bmod T).
+\tag{30.6}
+$$
+
+Coprimality supplies arbitrarily large such lengths. The separating zero prevents the first bit from joining the terminal run $s<k$, and the first bit and terminal run contribute $(v\oplus d)\oplus d=v$. Thus one actual legal complete-block history has the specified value, phase and tail together. Its unknown length is not a controller input. The actual history $1^{2m}$ realizes initial bottom: both length-$m$ blocks are internally legal, and their concatenation rejects. This use of the joint-source supplier does not assert a fixed common history length for all phases.
+
+Both value fibres of (30.3) are nonconstant. Any correct adaptive root on either fibre must start zero: a first bit one immediately rejects every actual INITIAL tail $k-1$ in that fibre, including sources with distinct required labels. Their completed endpoint archives and every future observation are then identical absorbing outputs, so no continuation or early stop can recover those labels. A zero-leading root instead succeeds on every live source, clears its inherited tail during this paid word and leaves a terminal tail determined solely by the literal word. The remaining $m-1$ bits cannot contain a forbidden run. This root constraint is derived on the full prior before using any smaller witness set.
+
+For the lower bounds use the supplied physical charge paths and literal interface (25.7), (27.3)–(27.5), or INITIAL target-cost Interface 1.4. At actual emitted block index $t$, a successful word $x_0\cdots x_{m-1}$ has scalar increment
+
+$$
+ d_t(j)=\bigoplus_{i=0}^{m-1}x_i c_{-j+tm+i},\qquad
+ \operatorname{supp}(d_t)\subseteq W_t=tm+\{0,\ldots,m\}\pmod T.
+\tag{30.7}
+$$
+
+Since $2m\equiv1\pmod T$, for $0\le h\le2r-1$ the actual paths are
+
+$$
+\begin{aligned}
+ W_{2h}&=\{h,h+1,\ldots,h+m\},\\
+ W_{2h+1}&=\{m+h,\ldots,T-1\}\cup\{0,\ldots,h+1\}.
+\end{aligned}
+\tag{30.8}
+$$
+
+Here $m>2r$ makes the first path nonwrapping and the second expression valid. In particular $J$ lies strictly inside every displayed even path. For $0\le h\le2r-2$ it misses every odd path, because
+
+$$
+ h+1\le2r-1<\min J,\qquad \max J\le m-1<m+h.
+\tag{30.9}
+$$
+
+The exceptional possible contact at $h=2r-1$ is beyond both lower-bound horizons and is not used.
+
+Fix one free value and retain actual sources with INITIAL tail zero and phases in $J$, as witnesses against a controller still required to be correct on the entire prior. At any common reached archive these sources have traversed identical literal actions and have equal current tails. Tail evolution and rejection depend only on that tail and the literal bits. Hence a next action either rejects all candidates of that archive or succeeds on all. Common rejection is one absorbing child and cannot distinguish unequal labels, even if later blocks are issued. A correct early stop likewise returns one label. On success an even-index action has at most two endpoint children; by (30.7)–(30.9), an odd-index action within the relevant horizons has increment zero on every retained source and hence only one child. These statements allow arbitrary original words, not merely the words used below for attainment.
+
+The elementary binary-leaf induction supplied by Corollary 19.3 therefore gives at most $2^{r-1}$ nonempty stopping leaves by fee $2r-2$: indices $0,\ldots,2r-3$ contain just $r-1$ even indices, with every odd level unary. Replacing a subtree by an earlier stop cannot increase this bound; neither can a common rejection. On $J$ each fixed-value table has all $n=2^r$ distinct labels. Every correct leaf must be homogeneous for its immutable label, contradicting $2^{r-1}<n$. This proves
+
+$$
+ C_{\rm ad}(f)\ge2r-1.
+\tag{30.10}
+$$
+
+For GLOBAL use exactly the credited same-stream value-join law, [INITIAL target-cost theory, Definition 29.1 and Theorem 29.2](KBONACCI_INITIAL_TARGET_COST_THEORY.md#29-one-literal-stream-across-the-two-free-value-fibres). The joined target is
+
+$$
+ \Gamma(-j,s)=
+ \begin{cases}(L_p,L_q),&j=2r+pn+q\in J,\\
+ (L_0,L_0),&j\notin J.
+ \end{cases}
+\tag{30.11}
+$$
+
+Its GLOBAL fee equals that of the original scalar $f$. This correspondence preserves the actual literal stream and its worst paid depth, including different component stopping times and absorption. From one actually acquired archive and its remembered free value, successful output complementation determines the two value-translated output strings; retaining the first decoded component and continuing until the second stops uses their maximum depth. It grants no unacquired endpoint and executes no second source. Conversely a decoded pair supplies the component selected by the remembered free value.
+
+On one fixed-value, tail-zero witness set the joined table has $n^2=2^{2r}$ distinct grid labels. If its worst fee were at most $4r-2$, indices $0,\ldots,4r-3$ would contain only $2r-1$ even opportunities; every intervening odd index is silent by (30.9). The same all-action induction gives at most $2^{2r-1}<n^2$ homogeneous leaves. It applies even to adaptive controllers for the joined target, so in particular excludes a GLOBAL controller at that fee. Exact joining yields
+
+$$
+ C_{\rm pre}(f)=C_{\rm pre}(\Gamma)\ge4r-1.
+\tag{30.12}
+$$
+
+Every zero wait advances precisely one of these paid indices. Neither waiting nor rejection inserts a free later window. The witness restrictions used in these two contradictions are restrictions only for a lower-bound argument; they change neither the target nor the controller's full-source correctness requirement.
+
+For attainment, every support in (30.4) has
+
+$$
+ |E^P_a|=|E^Q_a|=\frac{n^2}{2}=2^{2r-1},
+\tag{30.13}
+$$
+
+which is even. For any such support $E$ and $0\le h\le2r-1$ define an actual length-$m$ literal word, to be issued at index $2h$, by
+
+$$
+ \mathcal B_{2h}(E)_i
+   =\bigoplus_{b=0}^{i}\mathbf1_E(h+b),
+ \qquad 0\le i<m.
+\tag{30.14}
+$$
+
+This is the credited even-path inverse, not an independent-row assumption. Indeed its first bit is zero because $h<\min J$, its adjacent-bit charges at the interior vertices are exactly $\mathbf1_E$, and its last bit is zero because $E\subseteq\{h+1,\ldots,h+m-1\}$ has even size. The final path vertex $h+m$ is also uncharged. Thus the complete successful charge row on all actual phases is precisely $\mathbf1_E$, including zero on every phase outside $J$.
+
+For $v=0$ put $E^{(v)}_h=E^P_h$ and for $v=1$ put $E^{(v)}_h=E^Q_h$, $0\le h<r$. The adaptive policy selects $v$ from the free INITIAL reading and issues the fixed prefix
+
+$$
+ \mathcal A_v
+ =\mathcal B_0(E^{(v)}_0)\mid0^m\mid
+   \mathcal B_2(E^{(v)}_1)\mid0^m\mid\cdots\mid
+   0^m\mid\mathcal B_{2r-2}(E^{(v)}_{r-1}).
+\tag{30.15}
+$$
+
+There are $r$ coding words and $r-1$ paid zero words, exactly $2r-1$ blocks. Every word starts and ends zero. The root's first zero clears every original tail, including $k-1$, within that paid root; each subsequent seam has adjacent zeros, and every internal one-run has length at most $m-2<k$. The actual whole prefix is therefore safe on every phase, both values and every inherited legal tail. There is no preparation or cleanup action.
+
+Let $y_0=v,y_1,\ldots,y_{2r-1}$ be only this source's acquired scalar endpoints, and put $d_t=y_{t+1}\oplus y_t$. Return
+
+$$
+ L_z,\qquad z=\sum_{h=0}^{r-1}2^h d_{2h}.
+\tag{30.16}
+$$
+
+On $J$ this gives $z=p$ in fibre zero and $z=q$ in fibre one; outside $J$ it gives $z=0$. In particular a grid source with its selected coordinate zero correctly shares the outside code, since its required scalar label is also $L_0$. Initial bottom stops freely. All live sources may stop at the displayed last endpoint, so (30.15) proves $C_{\rm ad}(f)\le2r-1$. No action after the free selection depends on paid feedback.
+
+For one GLOBAL attainment choose, once from the target, the ordered support list
+
+$$
+ (F_0,\ldots,F_{2r-1})
+ =(E^P_0,\ldots,E^P_{r-1},E^Q_0,\ldots,E^Q_{r-1})
+\tag{30.17}
+$$
+
+and the single literal prefix
+
+$$
+ \mathcal G
+ =\mathcal B_0(F_0)\mid0^m\mid
+   \mathcal B_2(F_1)\mid0^m\mid\cdots\mid
+   0^m\mid\mathcal B_{4r-2}(F_{2r-1}).
+\tag{30.18}
+$$
+
+There are $2r$ coding words and $2r-1$ paid zero words, exactly $4r-1$ blocks. Formula (30.14) is valid through $h=2r-1$; the odd words here are literal waits, so no odd-window charge is required. The same start-zero, end-zero and internal-run proof establishes safety on the full INITIAL prior. Each live source acquires its own $4r-1$ endpoints and computes
+
+$$
+ \widehat p=\sum_{a=0}^{r-1}2^a d_{2a},\qquad
+ \widehat q=\sum_{a=0}^{r-1}2^a d_{2(r+a)}.
+\tag{30.19}
+$$
+
+Return $L_{\widehat p}$ if the remembered free value is zero and $L_{\widehat q}$ if it is one. These are $(p,q)$ on the grid and $(0,0)$ outside it. Thus every actual source is decoded correctly with the same literal word at every emitted index. Appending literal zero words defines one infinite stream if required, without charging unissued suffixes. Every issued wait and coding block is included in (30.18); an endpoint stop needs no further clearing. Actual grid histories (30.6) exist and may execute the whole displayed prefix. Together with (30.10) and (30.12), these attainments prove (30.5).
+
+The binary-leaf argument is the supplied Corollary 19.3, and exact value joining is the supplied INITIAL Theorem 29.2; neither is a new general theorem here. Sections 25–26 supply root-conditioned target-image bounds and different dyadic targets at $m=2^r$, whereas (30.1) has $m\ge2^{2r}+2r$. Sections 27–29 price binary component supports and their joins with at most four labels. Here each scalar component has $n\ge8$ labels and the join has $n^2$; those classifications do not give (30.5). [INITIAL target-cost theory, Theorem 29.3](KBONACCI_INITIAL_TARGET_COST_THEORY.md#29-one-literal-stream-across-the-two-free-value-fibres) already proves general unbounded finite preset excess. [FULL POSITIVE WINDOW LOGARITHMIC PRICE, Construction 81.3 and Theorem 81.4](KBONACCI_FULL_POSITIVE_WINDOW_LOGARITHMIC_PRICE.md#81-three-even-joined-classes-and-an-unbounded-two-value-global-surcharge) already uses a row-column grid and proves an unbounded adaptive/GLOBAL separation, with $k=m+1$, mixed INITIAL tail labels and a compulsory root beginning $10$. Its construction and fee law are credited overlap. They do not supply the present $k=2m-2$, fully tail-independent, full-INITIAL zero-leading construction, the silent odd slots (30.9), or the exact fees (30.5). The resulting repo-derived deduction is precisely this near-critical full-INITIAL grid law, without an external novelty-priority claim.
+
+The separation in (30.5) calibrates the representation and stream obligation: the original target remains scalar, free INITIAL value selects its row or column decoder, and a common stream must distinguish the ordered join. It also preserves source-acquisition permissions and the cost boundary: all joint sources remain present, every used endpoint is acquired on that source, and intervening silent slots still cost whole blocks. A root beginning one has the explicit unequal-label terminal-tail collision above. At either excluded smaller horizon, leaf counting forces unequal grid labels into one acquired archive. Conversely a wrong literal charge, any rejected inherited tail, or an unequal-label decoder collision would invalidate the corresponding attaining prefix, without implying that all other prefixes fail. These are the separate lower and upper mathematical obstructions.
+
+This theorem prices only (30.1)–(30.3). It does not classify arbitrary richer tables, tail-dependent targets, smaller widths, other phase orbits or optimal sibling-stream compatibility. In particular it does not settle the original all-parameter objective, nor show an advantage specifically from subsequent paid-feedback-dependent actions. The proof is ordinary mathematics on the credited reader interfaces and makes no kernel-certification claim. $\square$
+
+**Proposition 30.3 (The $r=3$, $m=70$ member).** Let $n=8$, $k=138$, $T=139$, and choose eight pairwise distinct labels $L_0,\ldots,L_7$. On every $0\le s<138$ put
+
+$$
+ f(0,-(6+8p+q),s)=L_p,\qquad
+ f(1,-(6+8p+q),s)=L_q\quad(0\le p,q<8),
+\tag{30.20}
+$$
+
+with both components $L_0$ at every phase outside $\{6,\ldots,69\}$ and arbitrary independently observed initial-bottom label. Then under both original alphabets
+
+$$
+ (C_{\rm ad}(f),C_{\rm pre}(f))=(5,11),\qquad
+ (\text{worst adaptive bits},\text{worst GLOBAL bits})=(350,770).
+\tag{30.21}
+$$
+
+Proof. Here $n^2+2r=64+6=70$, so Theorem 30.2 applies without removing any of the $139$ phases, either value, or any of the $138$ inherited tails. For a concrete description of its literal supports,
+
+$$
+\begin{aligned}
+ E^P_0&=\{14,\ldots,21\}\cup\{30,\ldots,37\}
+          \cup\{46,\ldots,53\}\cup\{62,\ldots,69\},\\
+ E^P_1&=\{22,\ldots,37\}\cup\{54,\ldots,69\},\qquad
+ E^P_2=\{38,\ldots,69\},\\
+ E^Q_a&=\{6+8p+q:0\le p,q<8,\ \beta_a(q)=1\},
+          \qquad a=0,1,2.
+\end{aligned}
+\tag{30.22}
+$$
+
+Each has $32$ phases. At even index $2h$ its complete $70$-bit word is precisely $x_i=\bigoplus_{b=0}^i\mathbf1_E(h+b)$, $0\le i<70$, with $h=0,1,2$ for either adaptive component and $h=0,\ldots,5$ for the GLOBAL list (30.17). These zero-starting, zero-ending words, separated by actually issued $0^{70}$, give the five- and eleven-block prefixes and the decoders (30.16), (30.19) on all sources. For the matching lower bounds, four paid blocks contain only two even opportunities and hence at most four scalar-label leaves, fewer than eight; ten paid blocks contain only five even opportunities and hence at most $32$ joined-label leaves, fewer than $64$. The common-tail and absorption argument in Theorem 30.2 applies to every action at those horizons. Finally $5\cdot70=350$ and $11\cdot70=770$. $\square$
+
+## 追加锚（本行以下为增补区）

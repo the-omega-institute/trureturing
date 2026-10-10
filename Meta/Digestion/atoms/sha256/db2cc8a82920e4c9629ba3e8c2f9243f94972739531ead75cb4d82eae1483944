@@ -1,0 +1,9 @@
+**命题 4.4（星图与最大度下界）。** 对 $m\ge1$，
+
+$$
+\kappa(K_{1,m})=\frac{m}{(1+\sqrt m)^2},
+\tag{4.3}
+$$
+
+中心向每片叶分配份额 $1/(1+\sqrt m)$ 的分配与测度 $\mu_{\mathrm{ctr}}=1/(1+\sqrt m)$、每片叶 $\mu=1/(\sqrt m(1+\sqrt m))$ 分别达到最小与最大。因此每个 $\Delta(G)\ge1$ 的图满足 $\kappa(G)\ge\Delta(G)/(1+\sqrt{\Delta(G)})^2$。特别地 $\kappa(K_{1,2})=2(3-2\sqrt2)$。
+
