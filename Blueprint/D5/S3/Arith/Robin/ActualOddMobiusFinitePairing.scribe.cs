@@ -14,6 +14,22 @@ internal sealed class ActualOddMobiusFinitePairingDocument : IScribeDocumentDefi
                 + "O(N). Every kernel P is a real-valued function on the actual "
                 + "integer inputs, with J(n)=P(n)-P(n+1).")),
             Describe.Lean(
+                DescribeId.Create("actual-odd-mobius-weighted-split"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.weighted_split"),
+                H("The original weighted parity split"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The original private supplier is now public, together with "
+                    + "oddCoefficient, so the actual harmonic consumer applies "
+                    + "this same proof to F(n)=1/n. It splits the full weighted "
+                    + "prefix into its odd prefix minus the odd prefix evaluated "
+                    + "at doubled inputs. Its original parity and multiples "
+                    + "proofs remain here; ActualOddHarmonicMobiusTail.odd_recurrence "
+                    + "is the live new consumer. This exposure is a consumed "
+                    + "helper and carries no claim of new mathematical content."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-odd-mobius-finite-pairing"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.result"),
                 H("The exact odd pairing and terminal remainder"),

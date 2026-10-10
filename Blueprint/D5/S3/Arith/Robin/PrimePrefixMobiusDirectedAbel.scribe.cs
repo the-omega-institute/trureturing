@@ -16,6 +16,37 @@ internal sealed class PrimePrefixMobiusDirectedAbelDocument : IScribeDocumentDef
                 + "D<n<=M. The real weight b is arbitrary until the stated "
                 + "order conditions are imposed.")),
             Describe.Lean(
+                DescribeId.Create("prime-prefix-abel-step-sum"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PrimePrefixMobiusDirectedAbel.step_sum"),
+                H("The original complete increment mass"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The original finite telescoping supplier is exposed "
+                    + "at its owner. For D<M, the sum of b(n)-b(n+1) on "
+                    + "D<n<=M-1 equals b(D+1)-b(M). The new actual odd "
+                    + "harmonic tail consumer uses this exact coefficient "
+                    + "mass, including the separate terminal weight. The "
+                    + "source attribution below is retained. This is a "
+                    + "consumed helper, not new mathematical content."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("prime-prefix-anchored-sum-by-parts"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PrimePrefixMobiusDirectedAbel.anchored_sum_by_parts"),
+                H("The same anchored algebra for arbitrary coefficients"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The existing private anchored proof is generalized "
+                    + "at this owner to any real coefficient sequence a, "
+                    + "using prefix sums from range(n+1). Both the original "
+                    + "full harmonic anchored_identity and the new actual "
+                    + "odd harmonic odd_anchored directly consume it. The "
+                    + "terminal term, exact lower anchor and original "
+                    + "source attribution remain. This is reusable proof "
+                    + "organization, with no separate new-content claim."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("prime-prefix-mobius-directed-abel"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PrimePrefixMobiusDirectedAbel.result"),
                 H("The complete finite identity and exact directed budgets"),

@@ -34,7 +34,7 @@ def mobiusPrefix (N : ℕ) : ℝ :=
 def oddMobiusPrefix (N : ℕ) : ℝ :=
   ∑ n ∈ (Ioc 0 N).filter Odd, (ArithmeticFunction.moebius n : ℝ)
 
-private def oddCoefficient (n : ℕ) : ℝ :=
+def oddCoefficient (n : ℕ) : ℝ :=
   if Odd n then (ArithmeticFunction.moebius n : ℝ) else 0
 
 private theorem twice_coefficient (m : ℕ) :
@@ -89,7 +89,7 @@ private theorem multiples_sum (N : ℕ) (f : ℕ → ℝ) :
   · intro n _
     rfl
 
-private theorem weighted_split (N : ℕ) (F : ℕ → ℝ) :
+theorem weighted_split (N : ℕ) (F : ℕ → ℝ) :
     (∑ n ∈ Ioc 0 N, (ArithmeticFunction.moebius n : ℝ)*F n) =
       (∑ n ∈ Ioc 0 N, oddCoefficient n*F n) -
         ∑ m ∈ Ioc 0 (N/2), oddCoefficient m*F (2*m) := by
