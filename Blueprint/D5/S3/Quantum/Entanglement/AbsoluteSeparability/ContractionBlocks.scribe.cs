@@ -9,7 +9,7 @@ internal sealed class ContractionBlocksDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumStates/aubrun2024completely");
+        LibraryNoteRef.Create("D5/L/QuantumChannels/aubrun2024completely");
     private static readonly Formula N = F.Id("n"), M = F.Id("m"), C = F.Id("C"), Hm = F.Id("H");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsoluteSeparab
 internal sealed class LowRankRaysDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumStates/vidaltarrach1999robustness");
+        LibraryNoteRef.Create("D5/L/QuantumBounds/vidaltarrach1999robustness");
     private static Formula Call(string name, params Formula[] xs) => new Formula.Apply(F.Id(name), [.. xs]);
     private static Formula Par(Formula f) => F.Seq(F.Open, f, F.Close);
     private static Formula Pow(Formula f, byte n) => new Formula.Power(f, F.D(n));

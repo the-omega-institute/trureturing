@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsoluteSeparab
 internal sealed class GurvitsBarnumBallDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumStates/gurvitsbarnum2002largest");
+        LibraryNoteRef.Create("D5/L/QuantumBounds/gurvitsbarnum2002largest");
     private static Formula Call(string n, params Formula[] xs) => new Formula.Apply(F.Id(n), [.. xs]);
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula All(string n, Formula t, Formula body) =>
