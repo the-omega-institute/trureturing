@@ -36,6 +36,10 @@ $$\forall r k d : \mathbb{N} , d \le r \to d \le k \to (S r k d : \mathbb{Z}) = 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/AlternatingSignRectangles/ExtendedAvoidanceClosedForm.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hongesberg-konvalinka-linusson-2026-asr-312-closed-form` (proved) by `D5/S3/Combinatorics/AlternatingSignRectangles/ExtendedAvoidanceClosedForm.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hongesberg-konvalinka-linusson-2026-asr-312-closed-form","declaration_gid":"D5/S3/Combinatorics/AlternatingSignRectangles/ExtendedAvoidanceClosedForm.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* H. Höngesberg; Matjaž Konvalinka; Svante Linusson (2026). *Pattern avoidance in alternating sign rectangles I: Extended avoidance*. DOI: [10.48550/arXiv.2610.07442](https://doi.org/10.48550/arXiv.2610.07442). URL: <https://arxiv.org/abs/2610.07442v1>.

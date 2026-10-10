@@ -24,7 +24,8 @@ internal sealed class ExtendedAvoidanceClosedFormDocument : IScribeDocumentDefin
             Describe.Lean(DescribeId.Create("extended-avoidance-closed-form-2"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/AlternatingSignRectangles/ExtendedAvoidanceClosedForm.result"), H("result"),
                 StatementSource.FromAuthor(Formula2()), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The closed form follows from the three source recurrences, the large-Schröder power series, the diagonal coefficient identity, and the even-Catalan identity."))), DescribeRole.Theorem)), []));
+                Blocks(Paragraph(Text("The closed form follows from the three source recurrences, the large-Schröder power series, the diagonal coefficient identity, and the even-Catalan identity."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hongesberg-konvalinka-linusson-2026-asr-312-closed-form"), ResolutionKind.Proved))), []));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
