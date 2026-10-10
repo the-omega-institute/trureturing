@@ -2946,7 +2946,7 @@ w=1+2+2=5,\qquad \sigma^c=4,\qquad d=2,\qquad H_d\sigma^c=H_2\cdot4=6.
 跳过贪心。回滚不提交层但仍计入上述贪心和 bit 成本，预检和残余检查始终照计。
 成本比值交叉相乘的整数位长为
 \(O(b_t+\log|R_t|)\)，预算累计比较再含 \(b^\beta_t\) 位；以 \(M(q)\) 表示
-\(q\) 位整数乘法，成功批次的 bit-cost 可写为
+\(q\) 位整数乘法，每个 \(\sigma_t^c<\infty\) 批次的 bit-cost 可写为
 \[
 O\!\left(|R_t|^2|\mathscr L_t|\,M(b_t+\log|R_t|)
 +M(b_t+b^\beta_t+\log|R_t|)\right).
