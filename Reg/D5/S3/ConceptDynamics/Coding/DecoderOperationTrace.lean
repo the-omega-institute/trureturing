@@ -268,8 +268,7 @@ def step_unique_registration :
   realization := .source stepArena ⟨stepRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize relationSignature.{u,v,w}
-    (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
+  readout := some stepActual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -304,8 +303,7 @@ def trace_closure_registration :
   realization := .source traceArena ⟨traceRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize traceSignature.{u,v,w}
-    (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
+  readout := some traceActual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -341,8 +339,7 @@ def run_closure_registration :
   realization := .source runClosureArena ⟨runClosureRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize relationSignature.{u,v,w}
-    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
+  readout := some runActual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -378,8 +375,7 @@ def run_trans_registration :
   realization := .source runTransArena ⟨runTransRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize relationSignature.{u,v,w}
-    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
+  readout := some runActual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -415,8 +411,7 @@ def run_comparable_registration :
   realization := .source runComparableArena ⟨runComparableRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize relationSignature.{u,v,w}
-    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
+  readout := some runActual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
