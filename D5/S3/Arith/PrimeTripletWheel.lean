@@ -78,8 +78,15 @@ noncomputable def reflectEquiv (W : ℕ) [NeZero W] :
 
 /-- The two oriented wheel candidate spaces have equal cardinality for every nonzero modulus. -/
 theorem candidate_space_card_eq (W : ℕ) [NeZero W] :
+    letI : Fintype (PlusResidue W) :=
+      Fintype.ofFinite {a : ZMod W // plusAdmissible W a}
+    letI : Fintype (MinusResidue W) :=
+      Fintype.ofFinite {a : ZMod W // minusAdmissible W a}
     Fintype.card (PlusResidue W) = Fintype.card (MinusResidue W) := by
   classical
-  exact Fintype.card_congr (reflectEquiv W)
+  exact @Fintype.card_congr _ _
+    (Fintype.ofFinite {a : ZMod W // plusAdmissible W a})
+    (Fintype.ofFinite {a : ZMod W // minusAdmissible W a})
+    (reflectEquiv W)
 
 end D5.S3.Arith.PrimeTripletWheel
