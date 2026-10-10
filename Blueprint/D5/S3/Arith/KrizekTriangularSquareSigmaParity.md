@@ -4,7 +4,19 @@
 
 A positive triangular number is square exactly when its index and value have odd divisor sums.
 
-**Theorem 1.1 (The triangular-square divisor-sum characterization).**
+**Theorem 1.1 (Divisor-sum parity).**
+
+$$\forall m \in \mathbb{N},\; m > 0 \Rightarrow \left(Odd\left(\left(\sigma_{1}\right)\left(m\right)\right) \Leftrightarrow (IsSquare\left(m\right) \lor \left(\exists t \in \mathbb{N},\; m = 2 \cdot t^{2}\right))\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/KrizekTriangularSquareSigmaParity.sigma_odd_iff_square_or_twice_square` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a positive natural number, the divisor sum is odd exactly when the number is a square or twice a square. The proof factors the divisor sum into prime-power geometric sums and characterizes the parity of each exponent at an odd prime. This criterion is also consumed by the twin-prime sigma-gcd results.
+
+**Theorem 1.2 (The triangular-square divisor-sum characterization).**
 
 $$\forall n \in \mathbb{N},\; (n > 0) \Rightarrow ((IsSquare\left((n \cdot (n + 1)) / 2\right)) \Leftrightarrow ((Odd\left(\left(\sigma_{1}\right)\left(n\right)\right)) \land (Odd\left(\left(\sigma_{1}\right)\left((n \cdot (n + 1)) / 2\right)\right))))$$
 
@@ -25,3 +37,4 @@ The classical divisor-sum parity characterization reduces each odd divisor sum t
 ## References
 
 - Truth anchor: `D5/S3/Arith/KrizekTriangularSquareSigmaParity.result`
+- Truth anchor: `D5/S3/Arith/KrizekTriangularSquareSigmaParity.sigma_odd_iff_square_or_twice_square`
