@@ -82,7 +82,7 @@ noncomputable def registration_1 :
   escapeFrom := none
   sourceSelection := none
   continuation := .unknown
-  familyRecord := some ⟨arena, ⟨registration⟩⟩
+  familyRecord := none
   options := #[] }
 
 #print axioms registration
