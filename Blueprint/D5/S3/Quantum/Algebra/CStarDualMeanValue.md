@@ -34,6 +34,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CStarDualMeanValue.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/krishna-2022-cstar-dubinin-sugawa-dual-mean-value` (refuted) by `D5/S3/Quantum/Algebra/CStarDualMeanValue.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"krishna-2022-cstar-dubinin-sugawa-dual-mean-value","declaration_gid":"D5/S3/Quantum/Algebra/CStarDualMeanValue.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. Mahesh Krishna (2022). *C*-algebraic Smale Mean Value Conjecture and Dubinin-Sugawa Dual Mean Value Conjecture*. DOI: [10.48550/arXiv.2206.08154](https://doi.org/10.48550/arXiv.2206.08154). URL: <https://arxiv.org/abs/2206.08154v1>.

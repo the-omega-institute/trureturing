@@ -20,13 +20,17 @@ internal sealed class CStarDualMeanValueDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The norm-form conjecture is false", new Formula.Not(Named("claim")),
                 "Take A = ℂ × ℂ, n = 3, z = (0,0) and roots (0,3/2), (3,3/2), (3,3/2). The polynomial is (x(x−3)²,(y−3/2)³), and its ordered derivative is (3(x−1)(x−3),3(y−3/2)²). The only critical points are (1,3/2) and (3,3/2). At z = 0 the derivative is (9,27/4), whose supremum norm is 9. The two difference quotients are 8/3 and 9/8, both strictly below the required threshold 3. At the first critical point the second coordinate enlarges the denominator from 1 to 3/2 while the numerator norm remains 4; at the second the first coordinate contributes zero to the polynomial difference. Thus the scalar lower bound fails to pass to the supremum norm on products. The source's degree-two theorem remains intact.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("krishna-2022-cstar-dubinin-sugawa-dual-mean-value"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
