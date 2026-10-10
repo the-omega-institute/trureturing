@@ -2696,6 +2696,131 @@ $O(|R_t|^2|\mathscr L_t|)$。这些成本对失败批次也计入前两项；
 物理资源或全局可达性结论。若需要部分追加后保留未覆盖角色，必须另定义状态
 和相应基准，本定理不覆盖。
 
+## 52. 带正整数层成本的加权菜单摊还
+
+**定义 52.1（加权证书菜单）。** 沿用定义 51.1 的
+$\Omega,\overline C_K,X_t,\mathcal Q_t,B_t,R_t$ 及 all-or-none 更新。
+每批 $\mathscr L_t$ 是去重的有限层身份集合；每个
+$K\in\mathscr L_t$ 带一个正整数成本
+$$
+c_t(K)\in\{1,\ldots,2^{b_t}\}.
+$$
+同一层在不同批次的成本可以不同，历史层的成本视为已经支付。
+若 $R_t=\varnothing$，令
+$\sigma_t^c:=0$、$d_t:=0$，不追加。否则定义加权覆盖基准
+$$
+\sigma_t^c:=
+\min\left\{
+\sum_{K\in\mathcal R}c_t(K):
+\mathcal R\subseteq\mathscr L_t,\
+R_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K
+\right\},
+$$
+无覆盖时置 $\sigma_t^c:=\infty$，并令
+$$
+d_t:=\max_{K\in\mathscr L_t}
+|\overline C_K\cap R_t|,
+\qquad
+\max\varnothing:=0,\quad H_0:=0.
+$$
+在 $\sigma_t^c<\infty$ 的非空批次上，贪心每轮选择尚未选取且使
+$\lvert\overline C_K\cap U\rvert/c_t(K)$ 最大的层；达到覆盖后停止。
+记追加序列为 $\mathcal S_t$、其加权成本为
+$$
+w_t:=\sum_{K\in\mathcal S_t}c_t(K).
+$$
+若 $\sigma_t^c=\infty$，保持 §51 的 all-or-none 规则，不追加并保留
+$B_t=R_t$。令
+$$
+G_c:=\{t:R_t\ne\varnothing,\ \sigma_t^c<\infty\}.
+$$
+
+**推论 52.2（加权摊还界）。** 在定义 52.1 的正成本模型下，
+对每个 $t\in G_c$ 都有 $d_t>0$ 且
+$$
+\sigma_t^c
+\le w_t
+\le H_{d_t}\sigma_t^c
+\le H_{|R_t|}\sigma_t^c.
+\tag{52.1}
+$$
+令总加权追加成本
+$W_N:=\sum_{t\in G_c}w_t$。则
+$$
+\sum_{t\in G_c}\sigma_t^c
+\le W_N
+\le\sum_{t\in G_c}H_{d_t}\sigma_t^c
+\le\sum_{t\in G_c}H_{|R_t|}\sigma_t^c.
+\tag{52.2}
+$$
+空批次和失败批次不计入这些有限和；失败批次的待办集仍按 §51 显式保留，
+以后续菜单覆盖时才可局部恢复。该结论仅是加权证书追加成本界，
+不把 $W_N$ 解释为物理资源或层数。
+
+**证明。** 先看单个成功批次，写
+$m:=|R_t|>0$、$\sigma:=\sigma_t^c$、$d:=d_t>0$。
+贪心选出的层集合覆盖 $R_t$，且成本均为正，故其成本
+$w_t\ge\sigma$；正成本还保证重复选择没有收益。
+取加权最优覆盖 $\mathcal R^*$，令
+$\sum_{K\in\mathcal R^*}c_t(K)=\sigma$。
+贪心第 $i$ 轮选择层 $K_i$，其新覆盖数和成本分别为
+$a_i>0$ 和 $c_i:=c_t(K_i)$。给该轮每个新覆盖角色 charge
+$c_i/a_i$，本轮总 charge 为 $c_i$。将新角色任意分配给
+$\mathcal R^*$ 中覆盖它的层 $K$。若该轮开始时 $K$ 尚有
+$j>0$ 个未覆盖角色，则 $K$ 的候选比值为 $j/c_t(K)$，所以
+$$
+\frac{a_i}{c_i}\ge\frac{j}{c_t(K)},
+\qquad
+\frac{c_i}{a_i}\le\frac{c_t(K)}{j}.
+$$
+若本轮分配给 $K$ 的角色数为 $a_{i,K}$，则分给该层的 charge 至多
+$$
+\frac{a_{i,K}c_t(K)}{j}
+\le
+c_t(K)\sum_{q=j-a_{i,K}+1}^{j}\frac1q.
+$$
+若 $j=0$，则 $a_{i,K}=0$ 且该层本轮 charge 为 $0$。
+各轮对应的整数区间两两不交，且包含于
+$\{1,\ldots,|\overline C_K\cap R_t|\}$，故分给 $K$ 的总 charge
+不超过 $c_t(K)H_{|\overline C_K\cap R_t|}
+\le c_t(K)H_d$。对 $\mathcal R^*$ 求和，并注意每轮总 charge
+为 $c_i$，得到
+$$
+w_t\le H_d\sum_{K\in\mathcal R^*}c_t(K)
+=H_d\sigma_t^c
+\le H_m\sigma_t^c.
+$$
+对 $t\in G_c$ 求和，且失败批次没有加层，得到 (52.2)。
+
+每批覆盖预计算和失败可行性预检各需
+$O(|R_t||\mathscr L_t|)$ 次 unit-cost membership 检查；
+成功批次的比值贪心需
+$O(|R_t|^2|\mathscr L_t|)$ 次候选比值比较。
+残余检查沿用 §51 的
+$O((|B_{t-1}|+|\delta_t|)\ell(\mathcal Q_{t-1}))$；
+若 $\delta_t$ 需扫描整个 $\Omega$，另加 $O(|\Omega|)$。
+这里 $\sigma_t^c$ 是分析用的最优基准，算法不求解该最优化问题。
+在 $b_t$ 位成本上限下，交叉相乘比较的整数位长为
+$O(b_t+\log |R_t|)$；若 $M(q)$ 表示 $q$ 位整数乘法成本，
+成功批次比值比较的 bit-cost 为
+$$
+O\!\left(
+|R_t|^2|\mathscr L_t|\,
+M(b_t+\log |R_t|)
+\right).
+$$
+加权和至多含 $|R_t|$ 个成本，位长同阶；这些成本对失败批次不执行贪心，
+但前两项检查仍计入总复杂度。
+
+**范围。** 推论 52.2 只是在固定 Fourier 二维证书族、固定覆盖集、
+§51 的有限菜单和 append-only/all-or-none 状态上增加正整数的抽象成本；
+它不推出物理层数、物理资源、全局最短 stack、LOSR/CPTP 结论或完整钻石范数界。
+成本必须严格为正；零成本层、重复身份的不同计价及部分追加策略均需另行定义。
+阈值语义仍只覆盖降阈值递增链，升阈值是 deletion-only 更新。菜单扩张、
+收缩或混合变化只影响当前批次 $\sigma_t^c$；不对 $H_d\sigma^c$ 的菜单单调性
+作额外断言。成本比较采用上述整数 bit 模型；若改用 unit-cost exact-ratio oracle，
+应相应替换 bit-cost 说明。
+
 ## 追加锚（本行以下为增补区）
 
 ### 36.5 有限单纯形变分支配：既有证明的完整应用
