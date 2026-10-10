@@ -196,9 +196,11 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     (entry.getObjValAs? String "type").toOption ==
       some "LeanInformationAudit.AuricFib.Contract.Application"
   let analyzer? ← if fibInputs.isEmpty then pure none else do
-    let some executable := (← getWorkspace).findLeanExe? `auricFibAnalysis
+    let some analyzer := (← getWorkspace).findModule? `LeanInformationAuditRegAnalysis.AuricFib.Main
       | error "fib.analysis_program_missing"
-    pure (some (← executable.fetch))
+    -- The existing entry executes this compiled module with Lean's interpreter.
+    -- Its export closure must compile, without requesting native link objects.
+    pure (some (← analyzer.exportInfo.fetch))
   unless ownInputs.size == fibInputs.size do
     -- Fetch the shared program obligation in Lake's dependency graph. Awaiting
     -- it without mixing its trace preserves implementation-independent reuse.
@@ -251,7 +253,9 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     discard <| format.await
     addTrace format.getTrace
     let executable ← inspector.await
-    let analyzer ← analyzer?.mapM fun job => job.await
+    let analyzer ← analyzer?.mapM fun job => do
+      discard <| job.await
+      return root / "tools/scripts/auric-fib-analysis.sh"
     observePhase "lake-report-programs" "finish"
     let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
       utility.toString, executable.toString, file.toString,

@@ -147,4 +147,4 @@ auric-fib-report:
 
 # These are compiler-to-consumer production contract fixtures.
 auric-fib-compiled-test:
-	@$(MAKE) --no-print-directory -C "$(REPOSITORY)" lean LEAN_TARGETS="leanInspector/reportInspector leanInspector/inputDiscovery regInspector/auricFibAnalysis Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber" >&2 && $(MAKE) --no-print-directory test TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj TEST_FILTER=FullyQualifiedName~CompiledFibIntegrationTests
+	@$(MAKE) --no-print-directory -C "$(REPOSITORY)" lean LEAN_TARGETS="leanInspector/reportInspector leanInspector/inputDiscovery LeanInformationAuditRegAnalysis.AuricFib.Main Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber" >&2 && $(MAKE) --no-print-directory test TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj TEST_FILTER=FullyQualifiedName~CompiledFibIntegrationTests

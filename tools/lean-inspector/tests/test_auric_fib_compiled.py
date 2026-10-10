@@ -286,6 +286,42 @@ class CompiledFibIntegration(unittest.TestCase):
         self.assertEqual(target, self.build(full=True))
 
 
+class CompiledFibProgramTests(unittest.TestCase):
+    def test_report_uses_compiled_module_without_native_executable(self):
+        config = ROOT / 'tools/lean-inspector-reg/lakefile.toml'
+        before = config.read_bytes()
+        metadata = config.stat()
+        self.assertEqual(before.count(b'name = "auricFibAnalysis"'), 1)
+        fixture = CompiledFibIntegration()
+        try:
+            # Remove the executable target, retaining the actual analyzer module
+            # and every source/contract dependency in the production workspace.
+            config.write_bytes(before.replace(b'name = "auricFibAnalysis"',
+                b'name = "unrequestedNativeFibAnalysis"'))
+            fixture.setUp()
+            report = fixture.first['declared']['reading']
+            self.assertEqual(report['arena']['cardinality'], 5)
+            self.assertEqual(report['arena']['ordered_pair_denominator'], 20)
+            requests = [x['request'] for x in publication.validate_rows(
+                Path(fixture.work.name) / 'raw-lean-report.json',
+                Path(fixture.work.name) / 'raw-lean-report.json.materials.zip')[0]
+                ['fib_analysis']['applications'] if x['request'] is not None]
+            standalone = subprocess.run(['bash', 'tools/scripts/auric-fib-analysis.sh', '--batch'],
+                cwd=ROOT, env=fixture.env, input=json.dumps(requests),
+                text=True, capture_output=True, check=False)
+            self.assertEqual(standalone.returncode, 2, standalone.stdout + standalone.stderr)
+            self.assertEqual(json.loads(standalone.stdout), [x['reading'] for x in
+                publication.validate_rows(Path(fixture.work.name) / 'raw-lean-report.json',
+                    Path(fixture.work.name) / 'raw-lean-report.json.materials.zip')[0]
+                ['fib_analysis']['applications'] if x['request'] is not None])
+        finally:
+            fixture.doCleanups()
+            config.write_bytes(before)
+            os.chmod(config, metadata.st_mode)
+            os.utime(config, ns=(metadata.st_atime_ns, metadata.st_mtime_ns))
+        self.assertEqual(config.read_bytes(), before)
+
+
 class CompiledFibObservationTests(unittest.TestCase):
     def test_live_native_output_precedes_exit_and_preserves_raw_failure(self):
         import native
