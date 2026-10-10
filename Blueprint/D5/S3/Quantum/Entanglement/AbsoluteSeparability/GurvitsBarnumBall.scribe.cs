@@ -6,6 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsoluteSeparab
 
 internal sealed class GurvitsBarnumBallDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/QuantumStates/gurvitsbarnum2002largest");
     private static Formula Call(string n, params Formula[] xs) => new Formula.Apply(F.Id(n), [.. xs]);
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula All(string n, Formula t, Formula body) =>
@@ -44,11 +46,11 @@ internal sealed class GurvitsBarnumBallDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("gb-block-positive-frobenius"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.frobSq_le_trace_sq_of_blockPositive"),
                 H("Block-positive Frobenius bound"), StatementSource.FromAuthor(Disp(Bound())),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Compressing a Hermitian block-positive matrix against a vector in either factor gives a positive semidefinite matrix. Its trace square bounds its Frobenius sum. Applying the corrected finite fourth-moment identity in each factor gives two inequalities whose partial-trace terms cancel. Product basis vectors give the nonnegative trace."))), DescribeRole.Theorem),
+                AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text("Szarek--Werner--Zyczkowski, J. Math. Phys. 49, 032113 (2008), printed page 18, states Tr(H squared) ≤ (Tr H) squared for block-positive H, as quoted in the Gurvits--Barnum note. For Hermitian H, the entrywise Frobenius sum equals Tr(H squared), so the formal inequality is the same statement, with the nonnegative real trace also made explicit. Compressing H against a vector in either factor gives a positive semidefinite matrix. Its trace square bounds its Frobenius sum. Applying the corrected finite fourth-moment identity in each factor gives two inequalities whose partial-trace terms cancel. Product basis vectors give the nonnegative trace."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gb-separable-frobenius-ball"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.separableCone_of_frob_ball"),
                 H("Separable ball criterion"), StatementSource.FromAuthor(Disp(Ball())),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("If the PSD matrix were outside the separable cone, the separation theorem would give a block-positive matrix with negative Hilbert--Schmidt pairing. Its Hermitian part preserves both product quadratic forms and pairing with the given PSD matrix. The Frobenius bound and Cauchy--Schwarz force that pairing to be nonnegative throughout the stated ball, a contradiction."))), DescribeRole.Theorem),
+                AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text("Gurvits--Barnum Theorem 1, printed page 4, states that I + Delta is separable when Delta is Hermitian and its Frobenius norm is at most one. The formal statement is its scalar form A = c(I + Delta), using the scaling in Corollary 2, printed page 5; c = 0 gives the zero matrix. If the PSD matrix were outside the separable cone, the separation theorem would give a block-positive matrix with negative Hilbert--Schmidt pairing. Its Hermitian part preserves both product quadratic forms and pairing with the given PSD matrix. The Frobenius bound and Cauchy--Schwarz force that pairing to be nonnegative throughout the stated ball, a contradiction."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gb-rank-one-complement"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.separableCone_one_sub_rankOne"),
                 H("Unit rank-one complement"), StatementSource.FromAuthor(Disp(RankOne())),

@@ -5,6 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsoluteSeparab
 
 internal sealed class LowRankRaysDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/QuantumStates/vidaltarrach1999robustness");
     private static Formula Call(string name, params Formula[] xs) => new Formula.Apply(F.Id(name), [.. xs]);
     private static Formula Par(Formula f) => F.Seq(F.Open, f, F.Close);
     private static Formula Pow(Formula f, byte n) => new Formula.Power(f, F.D(n));
@@ -22,8 +24,9 @@ internal sealed class LowRankRaysDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("identity-plus-twice-rank-one-is-separable"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.separableCone_one_add_two_rankOne"),
                 H("A normalized rank-one ray"), StatementSource.FromAuthor(F.Disp(Statement())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Compactness of the two unit spheres provides a product pair u,v maximizing the real overlap with the vector. If alpha is the maximal overlap and lambda = alpha squared, the two partial contractions equal alpha u and alpha v. The same maximum bounds the reduced matrix by lambda I.")),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("Vidal--Tarrach Eq. (41), printed page 15, gives random robustness mn a₁a₂ for a normalized pure state with largest Schmidt coefficients a₁,a₂. Since 2a₁a₂ ≤ a₁ squared + a₂ squared ≤ 1, the matrix R_x + one half I is separable. The formal statement is the consequence scaled by two, I + 2 R_x, in the finite-sum separable cone.")),
+                    Paragraph(Text("Compactness of the two unit spheres provides a product pair u,v maximizing the real overlap with the vector. If alpha is the maximal overlap and lambda = alpha squared, the two partial contractions equal alpha u and alpha v. The same maximum bounds the reduced matrix by lambda I.")),
                     Paragraph(Text("When lambda is at most one half, twice the finite product-vector average represents 2 R_x plus a reduced-matrix term. The remaining factor I - 2 rho is positive semidefinite.")),
                     Paragraph(Text("When lambda is at least one half, subtract alpha u tensor v to obtain chi, orthogonal to both selected factors. Put U = R_u, V = R_v, P = I - U and Q = I - V. The squared norm of chi is 1 - lambda, and compression of the Gram bound proves K = (1 - lambda) Q - rho_chi positive semidefinite. The projected finite average is corrected by U tensor (V + Q - 4 lambda rho_chi) and P tensor (Q - 2 rho_chi). The correction factors equal V + (2 lambda - 1) squared Q + 4 lambda K and (2 lambda - 1) Q + 2 K, respectively.")),
                     Paragraph(Text("Every averaged vector is a product vector. The proof uses finite moments and compactness, without a Schmidt decomposition. Separability here is the algebraic cone property of finite matrices."))), DescribeRole.Theorem))));

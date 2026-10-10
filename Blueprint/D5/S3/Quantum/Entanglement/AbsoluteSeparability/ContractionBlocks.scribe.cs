@@ -8,6 +8,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsoluteSeparab
 internal sealed class ContractionBlocksDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Entanglement/AbsoluteSeparability/ContractionBlocks.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/QuantumStates/aubrun2024completely");
     private static readonly Formula N = F.Id("n"), M = F.Id("m"), C = F.Id("C"), Hm = F.Id("H");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -17,12 +19,14 @@ internal sealed class ContractionBlocksDocument : IScribeDocumentDefinition
             Node("contraction_decomposition", "A finite rank-one phase decomposition", Decomposition(),
                 "The vectors are indexed by Fin n ⊕ Fin n, including the empty family when n is zero. Their rank-one matrices sum to the identity, and multiplying them by scalars of modulus one reconstructs C. The square root of I − C* C supplies an orthonormal family whose first coordinates are the columns of C. Extending it to an orthonormal basis gives a unitary dilation. A unit scalar outside its finite spectrum permits a Hermitian Cayley transform; its spectral basis and inverse transform provide the phases. Restricting the vectors to the first n coordinates gives the stated decomposition."),
             Node("separableCone_scalar_add_of_opNorm_le_one", "Separable middle rays", MiddleRays(),
-                "The bound quantifies all complex coordinate vectors and takes the norm after WithLp.toLp 2, so both norms are Euclidean. The dimensions m and n may be zero. Each diagonal block I + Hii is positive semidefinite. Each off-diagonal block Hij is a contraction; its phase decomposition expresses the two-by-two block with identity diagonal as a sum of Kronecker products of positive semidefinite rank-one matrices. Embedding these blocks and adding the diagonal terms yields mI + H. The separable cone here means a finite sum of Kronecker products of positive semidefinite factors.")), []));
+                "Aubrun--Davidson--Muller-Hermes--Paulsen--Rahaman Theorem 3.7, printed page 9, gives d₁(M_n) = n. The formal scalar-shift statement is its dual form under separable and block-positive cone duality, with the factor labels exchanged. The theorem's proof uses a separable block operator with identity diagonal blocks and a scaled contraction off the diagonal. The bound here quantifies all complex coordinate vectors and takes the norm after WithLp.toLp 2, so both norms are Euclidean. The dimensions m and n may be zero; these cases give the zero matrix. Each diagonal block I + Hii is positive semidefinite. Each off-diagonal block Hij is a contraction; its phase decomposition expresses the two-by-two block with identity diagonal as a sum of Kronecker products of positive semidefinite rank-one matrices, the block-separability statement of Gurvits--Barnum Proposition 1, printed page 2. Embedding these blocks and adding the diagonal terms yields mI + H. The separable cone here means a finite sum of Kronecker products of positive semidefinite factors.",
+                AssessedProvenance.FromLiterature(Source))), []));
 
-    private static DocumentBlock Node(string name, string title, Formula statement, string prose) =>
+    private static DocumentBlock Node(string name, string title, Formula statement, string prose,
+        AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("contraction-blocks-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(statement)), provenance ?? AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static Formula Decomposition()

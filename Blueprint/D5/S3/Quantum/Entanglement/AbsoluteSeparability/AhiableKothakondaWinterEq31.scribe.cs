@@ -8,7 +8,7 @@ internal sealed class AhiableKothakondaWinterEq31Document : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Quantum/Entanglement/AbsoluteSeparability/AhiableKothakondaWinterEq31.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumStates/ahiable2026absolutesep");
+        LibraryNoteRef.Create("D5/L/QuantumStates/ahiablekothakondawinter2026geometry");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The linear spectral condition in Eq. (31) implies absolute separability.",
