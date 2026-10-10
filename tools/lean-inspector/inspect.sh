@@ -7,7 +7,6 @@ REPOSITORY="" OUTPUT="" LOG_DIR=""
 CACHE_MISS_POLICY=reuse-or-build
 BUILD_TARGETS=()
 PROGRAM_BUILD_PENDING=0
-PRESERVE_RECEIPT=0
 BUILD_PHASES=()
 ACTIVE_PHASE=""
 while [[ $# -gt 0 ]]; do
@@ -54,9 +53,6 @@ LOG_DIR="$STARTUP_LOG_DIR"
 finish() {
   local rc=$?
   trap - EXIT
-  if [[ "$PRESERVE_RECEIPT" == 0 && ( "$rc" != 0 || "$PROGRAM_BUILD_PENDING" == 1 ) ]]; then
-    rm -f -- "${OUTPUT}.reuse.json"
-  fi
   if [[ "$rc" == 0 && "$PROGRAM_BUILD_PENDING" == 0 ]]; then
     python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
   fi
@@ -194,11 +190,8 @@ reuse_report() {
   if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
   return "$status"
 }
-# A rejected local guard has not claimed the output and cannot erase another
-# cache writer's successful receipt, including when its lock is busy.
-if [[ "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then PRESERVE_RECEIPT=1; fi
 run_phase reuse reuse_report
-PRESERVE_RECEIPT=0
+cat "$LOG_DIR/reuse.stdout.log"
 if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   if [[ "$CACHE_MISS_POLICY" == fetch-or-fail && ${#BUILD_TARGETS[@]} -gt 0 ]]; then
     require_lake
@@ -212,15 +205,13 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
       "$LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
     PROGRAM_BUILD_PENDING=0
   fi
-  cat "$LOG_DIR/reuse.stdout.log"
   exit 0
 fi
-cat "$LOG_DIR/reuse.stdout.log"
 require_lake
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
-  --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
+  --report "$OUTPUT" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
-rm -f -- "${OUTPUT}.reuse.json"
+run_phase prepare python3 -B "$SCRIPT_DIR/reuse.py" prepare --repository "$REPOSITORY" --report "$OUTPUT"
 if [[ ${#BUILD_TARGETS[@]} == 0 || "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then
   require_producer
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
@@ -230,7 +221,7 @@ open_logs
 # The writer owns the private clonefile-seeded .lake through the native build.
 run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
-run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
-run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
-  --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
+# Publication and seal share one canonical cache guard.
+run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \
+  "$LOG_DIR/entry-inputs.json"
 cat "$LOG_DIR/publish.stdout.log"
