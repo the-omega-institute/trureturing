@@ -3616,3 +3616,200 @@ The threshold $m\ge5$ is essential to the stated placement obstruction: it gives
 The mature state-identification framework is [van den Bos and Vaandrager, State Identification for Labeled Transition Systems with Inputs and Outputs, Definition 11 and Figure 3](https://arxiv.org/html/1907.11034v2): permitted first actions and irreversible mergers matter for an adaptive distinguishing graph. Here one input is an actual complete block, one later observation is its completed endpoint, and only unequal INITIAL labels need separation. That framework supplies no value for the reader-specific fees (31.3); those fees are the repo-derived deduction proved here from the credited KBonacci interfaces and the particular table (31.2). The conclusion is limited to this table and parameter family. Exact fees for arbitrary tail-independent multi-label tables, tail-sensitive targets, other widths and phase orbits, and a uniform unbounded advantage attributable to paid feedback remain unresolved. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 32. A uniform four-block bound for equal-value near-critical INITIAL tables
+
+**Definition 32.1 (The full-source phase-table family).** Retain the original matched reader, integer weights, actual joint histories, immutable INITIAL labels and complete-block contract of Definition 31.1 and [INITIAL target-cost theory, Definitions 1.1–1.3 and Interface 1.4](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee). For every integer $m\ge5$, put
+
+$$
+ k=2m-2,\qquad T=2m-1,\qquad P=\mathbb Z/T\mathbb Z,
+ \qquad j=-\theta_{\rm INITIAL}\pmod T.
+\tag{32.1}
+$$
+
+Let $Y$ be any label set and let $\lambda:P\to Y$ be arbitrary. On the entire original source set define
+
+$$
+ f_\lambda(v,-j,s)=\lambda(j)
+ \quad(v\in\mathbb F_2,\ j\in P,\ 0\le s<k),
+ \qquad f_\lambda(\bot)=y_\bot,
+ \qquad D_m(\lambda)=C_{\rm pre}(f_\lambda)-C_{\rm ad}(f_\lambda).
+\tag{32.2}
+$$
+
+The initial-bottom label $y_\bot$ is arbitrary. Every value, phase and legal inherited tail occurs jointly in one actual complete-block history, as supplied by (31.4); the history and its length are unobserved. Both original alphabets contain every literal $m$-bit word, because $m<k$. Rejection across a seam is still absorbing. The free INITIAL reading is value or bottom; every later reading is the completed endpoint of a block actually issued on that source. Every issued whole block is charged, including waits, clearing, padding and any remainder after interior rejection. GLOBAL means one literal stream at each emitted block index across both free values and every running archive. Own-archive stopping and decoding are allowed. There is no reset, copy, interior reading, hidden INITIAL clock or borrowed record. Offline selection and storage are outside this block fee.
+
+**Theorem 32.2 (Uniform finite paid-feedback excess on the full family).** For every $m\ge5$ and every target in Definition 32.1, under either original alphabet,
+
+$$
+ C_{\rm ad}(f_\lambda)\le C_{\rm pre}(f_\lambda)
+ \le C_{\rm ad}(f_\lambda)+4<\infty.
+\tag{32.3}
+$$
+
+Consequently the unchanged same-table family has
+
+$$
+ 1\le\sup_{m\ge5,\,Y,\,\lambda:P\to Y}D_m(\lambda)\le4.
+\tag{32.4}
+$$
+
+The upper constant four is not asserted to be sharp. The emitted-bit excess is bounded by $4m$; this is not a uniform four-bit bound and gives no lower growth law for emitted-bit excess.
+
+Proof (extracting the available coordinates from every adaptive action). Theorem 18.3 supplies a safe common stream identifying the whole INITIAL phase. Its hypotheses hold at (32.1), with $p=T$. Thus both fees are finite. Let $d=C_{\rm ad}(f_\lambda)$ and take an attaining adaptive controller; the least finite integer fee is attained. Fix its free-value-zero fibre for the following extraction. No permission or source restriction is added to the actual attaining stream constructed below.
+
+If $\lambda$ is constant, all sources stop at the free reading and both fees are zero. Otherwise a correct root begins zero: a leading one rejects the jointly actual sources $(0,-j,k-1)$ for every phase, merging unequal INITIAL labels into the same absorbing endpoint. All continuations on these sources then remain indistinguishable. A zero-leading root succeeds on every inherited tail and leaves one common current tail determined by its literal word. At any later common reached archive, equal current tails remain equal under the same next word. Rejection therefore absorbs every candidate in that archive together. A nonconstant archive cannot benefit from this outcome, and a homogeneous archive can stop before issuing it. Stop homogeneous archives immediately. Every remaining issued action succeeds and has only two scalar endpoint children. This is the supplied all-action common-tail and stopping argument of Corollary 19.3 and Theorem 31.2, applied to arbitrary $\lambda$, without restricting the controller to safe word templates.
+
+For each actual INITIAL phase $j$, follow its own path in this normalized controller, using its tail-zero joint witness (31.4). Let $a_t(j)$ be its successful endpoint difference at block index $t<d$ while it runs, and put $a_t(j)=0$ after its own stop. The supplied literal charge interface gives
+
+$$
+ a_t(j)=0\quad(j\notin W_t),\qquad
+ W_t=tm+\{0,\ldots,m\}\pmod T,
+ \qquad a_0(0)=0.
+\tag{32.5}
+$$
+
+The path followed by one phase may use a different literal word from another phase at the same index. Thus (32.5) alone does not give even full-row parity or a preset action. However its columns do separate unequal labels:
+
+$$
+ \lambda(j)\ne\lambda(j')\quad\Longrightarrow\quad
+ a_{<d}(j)\ne a_{<d}(j').
+\tag{32.6}
+$$
+
+Indeed equal padded columns imply equal acquired differences through the earlier stopping time. Starting with the same free value, the controller consequently chooses the same actions and has the same scalar endpoints through that time. Both sources reach the same stopping archive and receive the same label, a contradiction. This includes sources retired before depth $d$ and all adaptive words, waits and rejection attempts. The padded array is only finite design data extracted from this controller; it does not give the new controller an unexecuted branch's observation.
+
+Proof (six actual donors, exact parity and a zero in each coding block). First assume
+
+$$
+ 1\le d\le2m-10,\qquad p=m-4,
+ \qquad A=\{p,p+1,p+2\},\qquad B=A+m,
+ \qquad R=A\sqcup B.
+\tag{32.7}
+$$
+
+Here $A,B$ are six distinct actual phase representatives in $\{0,\ldots,T-1\}$, and phase zero is not in $R$. They remain ordinary sources with their original labels. Write $t=2h+\epsilon$, $\epsilon\in\{0,1\}$. Throughout $0\le t\le d+3$, (32.7) implies $h\le p$, and the actual ordered paths are
+
+$$
+ W_{2h}=\{h,\ldots,h+m\},\qquad
+ W_{2h+1}=\{m+h,\ldots,T-1,0,\ldots,h+1\}.
+\tag{32.8}
+$$
+
+Neither the even path nor the high segment containing $B$ wraps before its donor triple. Thus $A\subseteq W_{2h}$, $B\subseteq W_{2h+1}$, and $r_t=p+\epsilon m$ is at literal local position $p-h$ in its path. These are actual calendar identities from $2m\equiv1\pmod T$, not rotations or free waits.
+
+For each $t<d$, change only the three entries of $a_t$ at $r_t,r_t+1,r_t+2$. Let $O_t$ be the other vertices of $W_t$. Preserve $a_t$ on $O_t$, put zero off $W_t$, and prescribe
+
+$$
+\begin{aligned}
+ q_t(r_t)&=\bigoplus_{u\text{ preceding }r_t\text{ in }W_t}a_t(u),\\
+ q_t(r_t+1)&=0,\\
+ q_t(r_t+2)&=q_t(r_t)\oplus\bigoplus_{u\in O_t}a_t(u).
+\end{aligned}
+\tag{32.9}
+$$
+
+All sums are in $\mathbb F_2$. No entry preceding $r_t$ was changed. Therefore the whole path has even charge, and its prefix charge through $r_t$ is zero. Use exactly the supplied consecutive-edge inverse of INITIAL Interface 1.4:
+
+$$
+ X^{(t)}_i=\bigoplus_{b=0}^{i}q_t(tm+b\pmod T),
+ \qquad 0\le i<m.
+\tag{32.10}
+$$
+
+Evenness makes its terminal-vertex charge equal to the prescribed one as well. Hence the full successful response of this actual literal word is exactly $q_t$ on every phase; it vanishes off the path. The zero prefix charge in (32.9) gives
+
+$$
+ X^{(t)}_{p-\lfloor t/2\rfloor}=0.
+\tag{32.11}
+$$
+
+The root starts zero because $q_0(0)=a_0(0)=0$. This first paid bit clears every legal inherited tail. In the concatenation of the first $d$ words, the specified zeros have absolute issued-bit positions
+
+$$
+ z_t=tm+p-\lfloor t/2\rfloor,\qquad
+ z_{t+1}-z_t=
+ \begin{cases}m,&t\text{ even},\\m-1,&t\text{ odd}.
+ \end{cases}
+\tag{32.12}
+$$
+
+The initial root zero is at position zero and $z_0=p<m$. Between successive specified zeros a one-run has length at most $m-1<k$, and after the last one there are fewer than $m$ bits in the final coding block. Thus the entire $d$-word concatenation is safe, including every seam, on all phases, both values and every inherited tail. This proof concerns the literal concatenation; merely reporting even parity would not establish it.
+
+For every phase outside $R$ its first $d$ charge coordinates remain precisely $a_{<d}(j)$, so (32.6) still separates every pair of unequal labels outside $R$. The altered donor coordinates are recovered as follows, rather than declaring these phases absent or borrowing their records.
+
+Proof (four paid rows that identify every donor). At the next four actual indices $d,d+1,d+2,d+3$, there are exactly two even and two odd indices. For the first even index prescribe full charge support $\{p,p+1\}$, and for the second prescribe $\{p+1,p+2\}$. At the first and second odd indices prescribe respectively $\{p+m,p+m+1\}$ and $\{p+m+1,p+m+2\}$. All four supports are even and are contained in their actual paths by (32.8). Their literal inverses (32.10) are single-one words, with their one at local position $p-h$ or $p+1-h$, as appropriate. These positions belong to $\{0,\ldots,m-1\}$; every other bit in each entire block is zero.
+
+In the two even coordinates the three $A$ donors have codes $10,11,01$ in their displayed order. Their two odd coordinates are zero. The three $B$ donors have these same three nonzero codes in the odd coordinates and zero in the even coordinates. Every non-donor phase has all four suffix coordinates zero. Thus the six suffix columns are distinct from one another and from every non-donor column, regardless of $\lambda$'s coincidences. Each donor is decoded to its own original $\lambda(j)$.
+
+The first suffix word has leading run at most one, whereas the preceding coding word has terminal run at most $m-1$. Their seam has run at most $m<k$. Between single-one suffix words a seam has run at most two, also below $k$. Internal runs are one. Every full-source execution therefore succeeds through all $d+4$ paid blocks. The controller preselects this one entire stream from the finite array, identically for both free values. Each source acquires only its own endpoints $y_0,\ldots,y_{d+4}$ and forms $y_{t+1}\oplus y_t$. A nonzero suffix code identifies its donor and label; a zero suffix code selects the unique label permitted by (32.6) among non-donors sharing its first $d$ coordinates. The free initial scalar offsets cancel in these differences. Initial bottom stops freely. All live sources may stop at the last displayed endpoint; a fixed zero-word extension can define an infinite GLOBAL stream without issuing or charging that extension. This proves $C_{\rm pre}(f_\lambda)\le d+4$ in (32.7).
+
+Proof (the remaining horizons and the small-width boundary). The donor construction is needed only for $d\le2m-10$. For larger $d$, a sufficiently short full-phase stream already supplies the required bound. Theorem 18.3 gives the credited full-phase upper bound
+
+$$
+ H_m=\min\left(2m-2,
+  2\left\lceil\log_2\left(\binom{2m-1}{2}+1\right)\right\rceil\right).
+\tag{32.13}
+$$
+
+For every $m\ge11$ one has $H_m\le2m-5$. At $m=11$ its logarithmic term is $16$. For $12\le m\le16$, $\binom{2m-1}{2}+1\le466<512$, so the term is at most $18\le2m-5$. For $m\ge17$, put $r=\lceil\log_2m\rceil\ge5$. Then
+
+$$
+ \binom{2m-1}{2}+1<2m^2\le2^{2r+1},\qquad
+ H_m\le4r+2\le2^r-3\le2m-5.
+\tag{32.14}
+$$
+
+The middle inequality holds at $r=5$ and is preserved by increasing $r$: the right side increases by $2^r$, exceeding the left side's increase four. The last inequality uses $m\ge2^{r-1}+1$. Hence $d>2m-10$ implies $d\ge2m-9$ and
+
+$$
+ C_{\rm pre}(f_\lambda)\le H_m\le2m-5\le d+4.
+\tag{32.15}
+$$
+
+For $5\le m\le10$ the following fully written safe phase prefixes supply bounds $b_m=6$ at $m=5,6$ and $b_m=8$ at $m=7,8,9,10$. A vertical bar separates whole literal blocks, not interior readings.
+
+| $m$ | One full-phase literal prefix |
+| --- | --- |
+| $5$ | $01010\mid01000\mid01110\mid00110\mid00110\mid00100$ |
+| $6$ | $010100\mid011010\mid010010\mid010110\mid010010\mid001100$ |
+| $7$ | $0101010\mid0001010\mid0111010\mid0110010\mid0011010\mid0111010\mid0101100\mid0110100$ |
+| $8$ | $01010110\mid01011000\mid01001010\mid01000010\mid01101110\mid01000010\mid00100110\mid00011000$ |
+| $9$ | $010101010\mid010001000\mid001101110\mid000001010\mid010000110\mid011011010\mid011011100\mid011010010$ |
+| $10$ | $0101101010\mid0101100110\mid0010111010\mid0000101010\mid0010101110\mid0110001010\mid0001101110\mid0011011100$ |
+
+Each word starts and ends zero, so the whole prefix is safe from every inherited tail and across every seam. For a displayed stream $X^{(0)},\ldots,X^{(b_m-1)}$, define the ordinary integer encoding of its actual phase column by
+
+$$
+ e_m(j)=\sum_{t=0}^{b_m-1}2^{b_m-1-t}
+ \left(\bigoplus_{i=0}^{m-1}X^{(t)}_i
+ \mathbf1_{\{0,T-1\}}(-j+tm+i\pmod T)\right).
+\tag{32.16}
+$$
+
+Substitution gives the following complete column lists in order $j=0,\ldots,T-1$:
+
+| $m$ | $(e_m(0),\ldots,e_m(T-1))$ |
+| --- | --- |
+| $5$ | $(1,37,40,32,34,8,18,16,4)$ |
+| $6$ | $(16,37,40,42,34,8,10,18,4,20,21)$ |
+| $7$ | $(85,149,165,128,138,162,170,40,10,16,68,81,64)$ |
+| $8$ | $(16,149,164,168,128,170,42,160,34,72,82,84,4,64,1)$ |
+| $9$ | $(21,148,133,169,138,160,162,130,136,32,74,64,4,1,68,85,17)$ |
+| $10$ | $(84,148,133,160,40,168,138,136,170,162,32,72,66,68,0,85,16,81,21)$ |
+
+The entries in each row are distinct. The own-endpoint differences therefore determine $j$ and hence every $\lambda(j)$, on both values and all tails, with exactly the displayed whole-block bound. These finite certificates cover only the remaining finite widths; the all-$m$ argument is (32.7)–(32.15).
+
+At fee $d=1$, a nonconstant target's single zero-leading root on value zero is itself a preset word for both values: decode from its own value increment. Its clearing and full-source safety were established above. Thus $C_{\rm pre}=1$ whenever $C_{\rm ad}=1$ here. At $m=5$ and $d\ge2$, the bound $b_5=6\le d+4$ suffices. At $m=6$, the donor construction handles $d\le2$, and $d\ge3$ gives $b_6=6\le d+4$. At $m=7,8$, it handles respectively $d\le4,6$, and the remaining horizons satisfy $8\le d+4$. At $m=9,10$, $d\le C_{\rm pre}\le8\le2m-10$, so the donor construction applies. Constant targets were already treated. This exhausts every width, target and optimal adaptive horizon. The inequality $C_{\rm ad}\le C_{\rm pre}$ is the original inclusion of preset protocols among adaptive ones, proving (32.3).
+
+Proof (supremum, mathematical supply and remaining contracts). Theorem 31.2 supplies an actual same-value, tail-independent four-label target at every $m\ge5$ with gap one; it is reused unchanged for the lower side of (32.4). Inequality (32.3) supplies its upper side. Thus no divergent block-gap family exists within Definition 32.1. Sections 24 and 31 and [RESPONSE CODES, Proposition 5.1](KBONACCI_RESPONSE_CODES_AND_ADAPTIVITY_BOUNDARIES.md#51-互素三位块的自适应与预设分离) already supply genuine paid-feedback separation. Theorem 30.2 supplies an unbounded near-critical difference when the two free-value tables differ; its row-column join is not diagonal and is outside (32.2). The same-table bound does not revise those supplied conclusions or the broader INITIAL objective.
+
+The actual joint source and bit updates are the supplied (15.1)–(15.4), (31.4) and INITIAL Chapter 1. Interface 1.4 supplies full ordered-path even charge and the literal inverse used in (32.10). The common-tail rejection argument, adaptive path extraction and binary endpoint semantics are the supplied Corollary 19.3, [JOINT, Theorem 3.3 and the successful-path extraction in the proof of Theorem 3.4](KBONACCI_JOINT_RESPONSE_AND_SEAM_COST.md#3-源特定的全时域响应接缝证书) and Section 31. JOINT's independent-row realization in Theorem 3.4 requires $k\ge2m$ and a fixed support with two holes in every window; neither is assumed here. Only its path-extraction argument is reused. Theorem 18.3 supplies only the separate short-phase bound (32.13). [INITIAL, Definitions 36.1–36.2 and Theorems 37.1 and 38.1](KBONACCI_INITIAL_TARGET_COST_THEORY.md#36-a-wide-initial-common-cut-and-the-parity-of-one-global-stream) supplies exact vector-multiplicity and literal coding at its declared wide-width and room-qualified hypotheses; $m<k$ here, so its legal stream is not imported. The new reader-specific bridge is (32.9)–(32.12) together with the four donor rows: it simultaneously discharges the actual moving-window, parity, inherited-tail, seam and paid-acquisition obligations while preserving every target distinction. The auxiliary finite certificates do not replace that bridge or assign new content to the credited supplier results.
+
+For the mature identification comparison, van den Bos and Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2, Definitions 9–11 and Figure 3](https://arxiv.org/html/1907.11034v2), supplies compatible input tests, completed observed traces and destructive mergers that can prevent later identification. One input here is one actual complete block, and its response is only the completed endpoint; the label remains attached to INITIAL. Those definitions and the existence of distinguishing graphs give no additive four-block conversion on this particular coefficient calendar. Chistopolskaya and Podolskii, [*Parity Decision Tree Complexity is Greater Than Granularity*, arXiv:1810.08668v1, Introduction and Section 2.2](https://arxiv.org/html/1810.08668v1), permits querying an arbitrary subset parity of one unknown Boolean input and counts those queries. That permission is broader than the physical path (32.5), and neither its query cost nor its abstract parity questions replace (32.9)–(32.12). These credited frameworks are intermediate comparison contracts, not suppliers of (32.3). The four-block conclusion is a repo-derived ordinary deduction from the specified reader interfaces; no literature-priority assertion is made.
+
+The calibrated relation is the compatibility of an arbitrary adaptive phase code with one full-source literal calendar. Actual donor phases can absorb the row-parity and safety corrections only because they are separately distinguished again by four charged endpoint observations. Their sources and labels are never deleted, their correction zeros occur within counted blocks, and no observation is transported between archives. This decides finite versus unbounded block excess on (32.2), while retaining the original acquisition and cost contract.
+
+The sharp supremum in (32.4), individual exact fees of arbitrary $\lambda$, differing free-value tables, tail-sensitive targets, other $(k,m)$ and phase orbits, and the original all-parameter arbitrary-INITIAL exact-fee objective retain their remaining obligations. No optimum for offline search, target presentation, memory or a different physical resource follows. For an arbitrary label set the construction is semantic; an effective selection can use a presented finite partition or decidable table, as in INITIAL Note 5.3, without an asserted complexity bound. $\square$
+
+## 追加锚（本行以下为增补区）
