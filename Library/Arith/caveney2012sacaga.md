@@ -199,6 +199,90 @@ the address alone supplies no strict improvement. These are applications
 of existing source comparisons and Euler factors, without a priority
 claim, new rearrangement theorem, or Lean verification.
 
+## Inherited oscillation relaxes the eventual signed target
+
+The displayed positive oscillation on printed p.15 of the same CNS v2
+primary supplies more than the existence of arbitrarily large violations.
+Under RH failure, set
+$\Theta=\sup_{\zeta(\rho)=0}\Re\rho>1/2$ and fix
+$1-\Theta<\eta<1/2$. The source applies Robin's oscillation result to
+CA integers $C$ and obtains, for some fixed $c_\eta>0$, arbitrarily large
+actual witnesses satisfying
+
+$$
+G(C)>e^\gamma\left(1+c_\eta(\log C)^{-\eta}\right).
+\tag{O1}
+$$
+
+This is the oscillation used in the published infinitude proof, with an
+explicit positive constant; its underlying Robin proof is cited through
+that primary and is not independently reproved here.
+
+Choose such a $C_j>N_{j-1}$ and let $N_j$ be the rightmost maximizer of
+$G$ on the integers $n\ge C_j$. The maximum is attained with finitely
+many ties: $G(C_j)>e^\gamma=\limsup G(n)$ places all sufficiently large
+integers strictly below $G(C_j)$. This is the same tail-selection
+mechanism as on printed p.16, with the tail starting at the chosen
+oscillation witness. Thus
+
+$$
+N_j\ge C_j,\qquad N_j\longrightarrow\infty,\qquad
+G(N_j)\ge G(C_j),\qquad
+m>N_j\ \Longrightarrow\ G(m)\le G(N_j).
+$$
+
+No CA or GA1 classification of these $N_j$ is required. At their actual
+clocks $A_j=\log N_j$, $L_j=\log A_j$, $T_j=\sqrt{A_j}L_j$, and with
+$\Delta(N)=\gamma-\log G(N)$, positivity of $\eta$ gives
+
+$$
+\Delta(N_j)<-\log(1+c_\eta A_j^{-\eta}).
+\tag{O2}
+$$
+
+There is no bound needed on $N_j/C_j$: increasing the chosen integer
+only decreases $A_j^{-\eta}$ from $(\log C_j)^{-\eta}$.
+Reuse the exact same-source identity
+$\Delta(N)=I_\psi(A)+K_N(A)$ and the
+[actual-core allowance](../ArithSums/nicolas2025comparison.md#the-same-effective-allowance-on-actual-ga2-cores).
+Its thresholds hold eventually along this family. Equations (O1)–(O2)
+then give
+
+$$
+\begin{aligned}
+T_j I_\psi(A_j)
+&<-\mathcal E(L_j)-T_j\log(1+c_\eta A_j^{-\eta})\\
+&\le-\mathcal E(L_j)
+       -\frac{c_\eta}{2}A_j^{1/2-\eta}L_j
+\longrightarrow-\infty.
+\end{aligned}
+\tag{O3}
+$$
+
+The second line uses $c_\eta A_j^{-\eta}\le1$ eventually. The complete
+original improper integral $I_\psi$ and its clock remain unchanged;
+no zero sum, upper endpoint, or elementary correction is discarded.
+In particular, under RH failure, the source-selection and ceiling
+constraints above are compatible with an unbounded negative normalized
+signed response. They do not establish a favorable-cutoff principle.
+
+A weaker sufficient target for an eventual contradiction is therefore
+an independently established finite lower bound: find fixed $M\ge0$
+and $A_0$ such that every actual all-integer right-tail maximizer with
+$A=\log N\ge A_0$ satisfies
+
+$$
+\boxed{\sqrt A\log A\,I_\psi(A)\ge-M.}
+\tag{O4}
+$$
+
+Any such fixed $M$ would contradict (O3) under RH failure. This target
+does not require $M$ to equal the effective core allowance. The lower
+bound (O4) is not proved; the application only relaxes the outstanding
+same-source signed obligation using the already published oscillation.
+It is not a new source theorem, priority claim, Lean result, or proof
+of RH.
+
 ## The backward record classification is already published
 
 Nazardonyavi and Yakubovich, *Superabundant numbers, their subsequences
