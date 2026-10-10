@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.MetricGeometry.ContractingDigitMemory
 import Reg.Support.DependentFamily
 
@@ -70,18 +71,28 @@ theorem dependence : ObservationalDependence signature actual := by
 def registration : Registration arena (arena.Law actual) :=
   Registration.mk actual Iff.rfl ⟨positiveLaw, rejected, rejected_law⟩ sensitivity dependence
 
-register_information_theorem
-  _root_.D5.S3.Observer.MetricGeometry.ContractingDigitMemory.contracting_digit_memory_exact
-  in arena
-  readout via (realize signature (fun _ _ t => 2 ^ t) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.MetricGeometry.ContractingDigitMemory
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Observer.MetricGeometry.ContractingDigitMemory.contracting_digit_memory_exact) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ t => 2 ^ t) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "MetricGeometry") "ContractingDigitMemory") "contracting_digit_memory_exact") "Reg.D5.S3.Observer.MetricGeometry.ContractingDigitMemory/Reg.D5.S3.Observer.MetricGeometry.ContractingDigitMemory.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Observer.MetricGeometry.ContractingDigitMemory.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ t => 2 ^ t) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Observer.MetricGeometry.ContractingDigitMemory, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Reg.D5.S3.Observer.MetricGeometry.ContractingDigitMemory

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:74c30b26f895541fa219cd528afeec174a5b69a679c12854cf6bccd137e56930
+  normalized_sha256: sha256:74c30b26f895541fa219cd528afeec174a5b69a679c12854cf6bccd137e56930
+cas_ref: sha256:74c30b26f895541fa219cd528afeec174a5b69a679c12854cf6bccd137e56930
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This child is a source status annotation and proposed implementation route, not a mathematical proposition. It introduces no carrier, quantifier, hypothesis or additional conclusion. The preceding mathematical clause retains its existing frozen coverage; this receipt does not prove the annotation or supply any mathematical coverage.
+    previous_atom_id: 2e5d9803683cc7f33cf4aa5783ab42207867ebb6f89c01750eb5d87850baa477
+    next_atom_id: b966cfc0c836544fc09ea01cebe0d42e6d4a4dac9b27d962379211ea1145f939

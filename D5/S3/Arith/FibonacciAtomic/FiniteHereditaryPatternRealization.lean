@@ -99,6 +99,59 @@ def entry {m : ℕ} {K : Finset (Finset (Fin m))} (i : Fin m) : Column K → Blo
   | .inl c => faceEntry i c
   | .inr c => if i = c.1 then .u else .a
 
+
+/-- Composition of the complete right-comb hole table. -/
+theorem composition_comb (n : ℕ) (X : Fin (n + 1) → Source) :
+    composition (B_T n X) = ∑ j, composition (X j) := by
+  induction n with
+  | zero => simp [B_T]
+  | succ n hn =>
+    rw [B_T, composition, hn]
+    exact (Fin.sum_univ_succ (fun j : Fin (n + 2) => composition (X j))).symm
+
+/-- Locating a hole address returns its original hole and suffix. -/
+theorem hole_locate (n : ℕ) (j : Fin (n + 1)) (v : Address) :
+    locate n (hole n j ++ v) = some (j, v) := by
+  induction n with
+  | zero => have hj : j = 0 := Fin.eq_zero j; subst j; rfl
+  | succ n hn =>
+    refine Fin.cases ?_ (fun k => ?_) j
+    · rfl
+    · simpa [hole, locate] using congrArg
+        (fun p : Option (Fin (n + 1) × Address) => p.map (fun q => (q.1.succ, q.2)))
+        (hn k)
+/-- A located hole and suffix reconstruct the full address. -/
+theorem locate_eq (n : ℕ) (w : Address) (j : Fin (n + 1)) (v : Address) :
+    locate n w = some (j, v) ↔ w = hole n j ++ v := by
+  induction n generalizing w with
+  | zero =>
+    have hj : j = 0 := Fin.eq_zero j
+    subst j
+    simp [locate, hole]
+  | succ n hn =>
+    refine Fin.cases ?_ (fun k => ?_) j
+    · cases w with
+      | nil => simp [locate, hole]
+      | cons b w =>
+        cases b with
+        | false => simp [locate, hole]
+        | true =>
+          cases hl : locate n w <;> simp [locate, hole, hl, Fin.succ_ne_zero]
+    · cases w with
+      | nil => simp [locate, hole]
+      | cons b w =>
+        cases b with
+        | false =>
+          have hne : (0 : Fin (n + 2)) ≠ k.succ := Ne.symm (Fin.succ_ne_zero k)
+          simp [locate, hole, hne]
+        | true =>
+          cases hl : locate n w with
+          | none => simp [locate, hole, hl, ← hn w k]
+          | some p =>
+            rcases p with ⟨a, u⟩
+            simpa [locate, hole, hl, ← hn w k] using
+              (show (a = k ∧ u = v) ↔ (a = k ∧ u = v) from Iff.rfl)
+
 set_option maxHeartbeats 2000000 in -- Full address decomposition and finite face-table construction.
 /-- Right-comb block reports and the equal-composition actual realization of every
 finite hereditary family containing the singleton faces. -/
@@ -166,46 +219,6 @@ theorem result :
           | true =>
             have h := hn (fun j => X j.succ) w
             cases hl : locate n w <;> simpa [B_T, locate, readout, hl] using h
-    have hole_locate (n : ℕ) (j : Fin (n + 1)) (v : Address) :
-        locate n (hole n j ++ v) = some (j, v) := by
-      induction n with
-      | zero => have hj : j = 0 := Fin.eq_zero j; subst j; rfl
-      | succ n hn =>
-        refine Fin.cases ?_ (fun k => ?_) j
-        · rfl
-        · simpa [hole, locate] using congrArg
-            (fun p : Option (Fin (n + 1) × Address) => p.map (fun q => (q.1.succ, q.2)))
-            (hn k)
-    have locate_eq (n : ℕ) (w : Address) (j : Fin (n + 1)) (v : Address) :
-        locate n w = some (j, v) ↔ w = hole n j ++ v := by
-      induction n generalizing w with
-      | zero =>
-        have hj : j = 0 := Fin.eq_zero j
-        subst j
-        simp [locate, hole]
-      | succ n hn =>
-        refine Fin.cases ?_ (fun k => ?_) j
-        · cases w with
-          | nil => simp [locate, hole]
-          | cons b w =>
-            cases b with
-            | false => simp [locate, hole]
-            | true =>
-              cases hl : locate n w <;> simp [locate, hole, hl, Fin.succ_ne_zero]
-        · cases w with
-          | nil => simp [locate, hole]
-          | cons b w =>
-            cases b with
-            | false =>
-              have hne : (0 : Fin (n + 2)) ≠ k.succ := Ne.symm (Fin.succ_ne_zero k)
-              simp [locate, hole, hne]
-            | true =>
-              cases hl : locate n w with
-              | none => simp [locate, hole, hl, ← hn w k]
-              | some p =>
-                rcases p with ⟨a, u⟩
-                simpa [locate, hole, hl, ← hn w k] using
-                  (show (a = k ∧ u = v) ↔ (a = k ∧ u = v) from Iff.rfl)
     exact ⟨read, hole_locate, locate_eq⟩
 
   have face_facts (m : ℕ) (hm : 2 ≤ m) (K : Finset (Finset (Fin m)))
@@ -437,13 +450,6 @@ theorem result :
         subst k
         subst u
         exact ⟨hX, hu⟩
-  have composition_comb (n : ℕ) (X : Fin (n + 1) → Source) :
-      composition (B_T n X) = ∑ j, composition (X j) := by
-    induction n with
-    | zero => simp [B_T]
-    | succ n hn =>
-      rw [B_T, composition, hn]
-      exact (Fin.sum_univ_succ (fun j : Fin (n + 2) => composition (X j))).symm
   have substitution_comb (n : ℕ) (X : Fin (n + 1) → Source) :
       substitution^[3] (B_T n X) = B_T n (fun j => substitution^[3] (X j)) := by
     induction n with

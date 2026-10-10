@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -6,27 +6,7 @@ import D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq,
-      statementIdentity := "sha256:cd129c14a2561274769568cc1b202f52388daa5a0bade1344c03ab7761260418",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits,
-      statementIdentity := "sha256:a4092d2733c8819e7e7bae60e764686bbcbb4ab064a2adbcf8601fce8ed682ae",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq,
-      statementIdentity := "sha256:cd129c14a2561274769568cc1b202f52388daa5a0bade1344c03ab7761260418",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits,
-      statementIdentity := "sha256:a4092d2733c8819e7e7bae60e764686bbcbb4ab064a2adbcf8601fce8ed682ae",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary }]
-  companionPrefix := some `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary }
+
 
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary
@@ -148,24 +128,54 @@ theorem stableSensitivity : FiniteSlotSensitivity stableArena.toPrimitiveLawAren
   · intro i
     exact Fin.elim0 i
 
-register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq
-  in upperArena
-  readout via (@mechanicalReadoutRealization UpperOutput (Classical.decEq _)
-    (fun _ : Unit => upperReadout))
-  primitives upperRealization.toPrimitiveBundle
-  realization upperBridge
-  variation upperVariation sensitivity upperSensitivity
-  escape from (ℝ) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq) (type_of% (@mechanicalReadoutRealization UpperOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => upperReadout))) (type_of% (ℝ)) (Unit) := {
+  unitName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq.__information_unit,
+  realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.upperBridge,
+  realizationSource := none,
+  generated := false,
+  arena := .object ⟨(upperArena)⟩,
+  objectArena := .object ⟨(upperArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperRealization) (upperRealization.toPrimitiveBundle) ⟨(upperBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (upperBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((upperRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@mechanicalReadoutRealization UpperOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => upperReadout)),
+  variation := .evidence ⟨(upperVariation)⟩ (by first | exact (upperVariation) | exact ⟨_, _, (upperVariation)⟩),
+  sensitivity := .evidence ⟨(upperSensitivity)⟩ (by exact (upperSensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (ℝ),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
-register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits
-  in stableArena
-  readout via (@mechanicalReadoutRealization StableOutput (Classical.decEq _)
-    (fun _ : Unit => stableReadout))
-  primitives stableRealization.toPrimitiveBundle
-  realization stableBridge
-  variation stableVariation sensitivity stableSensitivity
-  escape from (ℝ) escape continues (open)
+
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits) (type_of% (@mechanicalReadoutRealization StableOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => stableReadout))) (type_of% (ℝ)) (Unit) := {
+  unitName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits.__information_unit,
+  realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.stableBridge,
+  realizationSource := none,
+  generated := false,
+  arena := .object ⟨(stableArena)⟩,
+  objectArena := .object ⟨(stableArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableRealization) (stableRealization.toPrimitiveBundle) ⟨(stableBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (stableBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((stableRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@mechanicalReadoutRealization StableOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => stableReadout)),
+  variation := .evidence ⟨(stableVariation)⟩ (by first | exact (stableVariation) | exact ⟨_, _, (stableVariation)⟩),
+  sensitivity := .evidence ⟨(stableSensitivity)⟩ (by exact (stableSensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (ℝ),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary

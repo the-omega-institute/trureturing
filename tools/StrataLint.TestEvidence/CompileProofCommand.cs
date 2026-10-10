@@ -1,6 +1,6 @@
+using StrataLint.Runtime;
 using System.Text;
 using System.Text.Json;
-using StrataLint.Engine;
 
 namespace StrataLint.TestEvidence;
 
@@ -22,6 +22,13 @@ internal static class CompileProofCommand
                 ? File.ReadAllText(Path.Combine(repositoryRoot, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs")) : null;
             var restore = Capture(["restore", project, "--locked-mode", "-nr:false"]);
             if (restore.ExitCode != 0) return new(2, output.ToString(), "INFRASTRUCTURE_FAILURE compile-proof restore failed\n");
+            if (proof == "capability-proof")
+            {
+                var prerequisite = Capture(["build", "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+                    "--no-restore", "--configuration", "Release", "-nr:false"]);
+                if (prerequisite.ExitCode != 0)
+                    return new(2, output.ToString(), "INFRASTRUCTURE_FAILURE compile-proof prerequisite build failed\n");
+            }
             var build = Capture(["build", project, "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"]);
             var text = Encoding.UTF8.GetString(build.StandardOutput) + Encoding.UTF8.GetString(build.StandardError);
             if (build.ExitCode is not (0 or 1)) return new(2, output.ToString(), "INFRASTRUCTURE_FAILURE compile-proof build failed\n");

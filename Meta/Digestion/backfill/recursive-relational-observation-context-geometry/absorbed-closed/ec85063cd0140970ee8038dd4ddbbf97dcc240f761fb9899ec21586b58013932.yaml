@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:ec85063cd0140970ee8038dd4ddbbf97dcc240f761fb9899ec21586b58013932
+  normalized_sha256: sha256:ec85063cd0140970ee8038dd4ddbbf97dcc240f761fb9899ec21586b58013932
+cas_ref: sha256:ec85063cd0140970ee8038dd4ddbbf97dcc240f761fb9899ec21586b58013932
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Completion/ConditionalInformationSufficiency.conditional_information_zero_iff_support_sufficiency
+    target_statement_id: sha256:f206df5ede0514f80d0cc2668f76c09bb544cf0be08477c6546c3d97f8308668
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 362e0311093b55422f2727885deaf81b1547a22ad0d2a761dd2dcd2b72cf3004
+    - c519cbe1d60687259b5d5a7cf016e3e47cf0cce23836379eae116266282232a2

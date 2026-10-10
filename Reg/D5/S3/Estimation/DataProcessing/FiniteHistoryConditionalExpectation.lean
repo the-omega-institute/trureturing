@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Reg.Support.FiniteHistoryFamily
 
@@ -18,17 +19,27 @@ def registration : Registration arena.{u,v} (FullLaw identityFamily) where
   sensitivity := Reg.Support.FiniteHistoryFamily.sensitivity
   dependence := Reg.Support.FiniteHistoryFamily.dependence
 
-register_information_theorem history_law_conditional_expectation in arena
-  readout via (realize signature.{u,v} (fun _ _ w => w.2) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation
-    coordinates := #[0, 1, 11]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "arg", "fn", "arg",
-        "body", "body", "body", "fn", "arg", "arg", "body", "arg", "arg"]
-      stateBinder := 16 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.history_law_conditional_expectation.{u_1, u_2}) (type_of% (realize.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, u_2, 0} signature.{u_1, u_2} (fun _ _ w => w.2) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "DataProcessing") "FiniteHistoryConditionalExpectation") "history_law_conditional_expectation") "Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation/D5.S3.ConceptDynamics.InformationEscape.FiniteHistoryFamily.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, u_2, 0} signature.{u_1, u_2} (fun _ _ w => w.2) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation, definition := none, coordinates := #[0, 1, 11], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "body", "body", "body", "fn", "arg", "arg", "body", "arg", "arg"], stateBinder := 16, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation

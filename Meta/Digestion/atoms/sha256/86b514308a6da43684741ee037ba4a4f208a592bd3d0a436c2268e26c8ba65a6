@@ -1,0 +1,29 @@
+**定理 16.2（加权实际像高度前沿及同组成见证）。** 对每个 $h\in\mathbb N_0$，有
+
+$$
+\boxed{\quad
+\Lambda_d(h)=
+\begin{cases}
+a,&0\le h\le d-2,\\[2pt]
+b+a(h-d+1),&h\ge d-1.
+\end{cases}\quad}
+\tag{16.9}
+$$
+
+而且每个边界都有同组成的实际像/非像见证。若 $0\le h\le d-2$，取 $V=A_d$，在地址 $\mathtt L^{\,d-2}$ 的子树 $\langle\beta,\alpha\rangle$ 换成 $\langle\alpha,\beta\rangle$ 得 $W$。若 $h\ge d-1$，置 $m=h-d+1$，定义右梳来源
+
+$$
+U_0=\beta,\qquad U_{r+1}=\langle\alpha,U_r\rangle,\qquad
+V=\rho^d(U_m).
+\tag{16.10}
+$$
+
+则 $V$ 在地址 $\mathtt R^{\,m}$ 有 $B_d$ 块，在其余 $m$ 个梳侧有 $A_d$ 块；在地址 $\mathtt R^{\,m}\mathtt L^{\,d-1}$ 的末端樱桃换序得到 $W$。两种情形均满足
+
+$$
+V\in\mathcal I_d,\quad W\notin\mathcal I_d,\quad
+c(W)=c(V),\quad O_h(W)=O_h(V),\quad
+|\operatorname{Leaves}(V)|=\Lambda_d(h).
+\tag{16.11}
+$$
+

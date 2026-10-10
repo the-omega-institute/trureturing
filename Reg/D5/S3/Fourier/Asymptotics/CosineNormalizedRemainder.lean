@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder
 import Reg.Support.DependentFamily
 
@@ -87,18 +88,30 @@ def registration : Registration arena (arena.Law actual) where
       div_neg_of_neg_of_pos Real.cos_two_neg (by norm_num)
     exact (not_lt_of_ge Real.cos_one_pos.le) (h.symm ▸ hn)
 
-register_information_theorem _root_.D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder.result in arena
-  readout via (realize signature
-    (fun _ p k => Real.cos ((k : ℝ) * p.1) / (k : ℝ)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder
-    coordinates := #[1, 4]
-    readouts := #[{
-      path := #["arg", "body", "arg", "body", "body", "body", "body", "body",
-        "fn", "arg", "arg", "fn", "arg", "arg", "body"]
-      stateBinder := 6 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder.result) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p k => Real.cos ((k : ℝ) * p.1) / (k : ℝ)) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "Asymptotics") "CosineNormalizedRemainder") "result") "Reg.D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder/Reg.D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p k => Real.cos ((k : ℝ) * p.1) / (k : ℝ)) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder, definition := none, coordinates := #[1, 4], readouts := #[{ path := #["arg", "body", "arg", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "arg", "body"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

@@ -7,14 +7,13 @@
    digest: A fixed Parikh matrix and its Chen coordinates recover legal golden factors. -/
 
 import D5.S1.Words.GoldenRecovery.GoldenFactorSecondOrderBinomialRigidity
+import D5.S1.Words.Palindromes.GoldenPalindromicFactorComplexity
 import D5.S3.Observer.GoldenChronology.BinaryParikhStepTwoBridge
 
 /-!
 # Golden-language faithfulness of the fixed Parikh observer
 
-This recovers the unmerged #5014 adapter, reusing the unique binary observer.
-The companion uploaded GoldenFactorHeisenbergReadout candidate is not copied:
-it defines the same matrix readout again. The first two entries recover length
+The first two entries recover length
 and counts, and the central entry recovers the scattered-pair statistic.
 The conclusion concerns word content, not absolute starts or prime labels.
 -/
@@ -30,35 +29,14 @@ open D5.S3.Observer.Chronology.StepTwoChronologicalSignature
 open D5.S3.Observer.GoldenChronology.BinaryParikhStepTwoBridge
 open scoped BigOperators
 
-private theorem golden_factor_append_letter (n i : ℕ) :
-    goldenFactor (n + 1) i = goldenFactor n i ++ [goldenWord (i + n)] := by
-  simp only [goldenFactor, List.ofFn_succ', List.concat_eq_append,
-    Fin.val_castSucc, Fin.val_last]
-
-private theorem golden_count_succ (i n : ℕ) :
-    goldenWindowTrueCount i (n + 1) = goldenWindowTrueCount i n +
-      if goldenWord (i + n) = true then 1 else 0 := by
-  classical
-  by_cases h : goldenWord (i + n) = true <;>
-    simp [goldenWindowTrueCount, Finset.range_add_one, Finset.filter_insert, h]
-
-/-- The actual word count is the canonical Beatty-window count. -/
-theorem golden_factor_true_count (n i : ℕ) :
-    (goldenFactor n i).count true = goldenWindowTrueCount i n := by
-  induction n with
-  | zero => simp [goldenFactor, goldenWindowTrueCount]
-  | succ n ih =>
-      rw [golden_factor_append_letter, List.count_append, golden_count_succ, ih]
-      cases h : goldenWord (i + n) <;> simp [h]
-
 /-- The actual pair counter is the canonical golden binomial statistic. -/
 theorem golden_factor_scattered_count (n i : ℕ) :
     scatteredTrueFalseCount (goldenFactor n i) = goldenTrueFalseCount i n := by
   induction n with
   | zero => simp [goldenFactor, scatteredTrueFalseCount, goldenTrueFalseCount]
   | succ n ih =>
-      rw [golden_factor_append_letter, scattered_true_false_count_append_letter,
-        ih, golden_factor_true_count]
+      rw [goldenFactor_succ, scattered_true_false_count_append_letter,
+        ih, goldenFactor_count_true]
       simp only [goldenTrueFalseCount, Finset.sum_range_succ]
 
 /-- Explicit division-free central Lie coordinate on a golden factor. -/
@@ -69,13 +47,13 @@ theorem golden_factor_doubled_magnus_center (n i : ℕ) :
         (goldenWindowTrueCount i n : ℤ) *
           ((n : ℤ) - (goldenWindowTrueCount i n : ℤ)) := by
   have hlength := binary_letter_counts_length (goldenFactor n i)
-  rw [golden_factor_true_count] at hlength
+  rw [goldenFactor_count_true] at hlength
   have hfactorLength : (goldenFactor n i).length = n := by simp [goldenFactor]
   rw [hfactorLength] at hlength
   have hfalse : ((goldenFactor n i).count false : ℤ) =
       (n : ℤ) - (goldenWindowTrueCount i n : ℤ) := by omega
   rw [binary_doubled_magnus_center, golden_factor_scattered_count,
-    golden_factor_true_count, hfalse]
+    goldenFactor_count_true, hfalse]
 
 /-- Equality of actual Parikh endpoints is exactly equality of legal factors. -/
 theorem golden_factor_eq_iff_parikh_matrix_eq (n m i j : ℕ) :
@@ -109,7 +87,7 @@ theorem golden_factor_eq_iff_parikh_matrix_eq (n m i j : ℕ) :
     have hnm : n = m := by omega
     subst m
     apply golden_factor_eq_of_second_order_counts n i j
-    · simpa only [golden_factor_true_count] using htrueNat
+    · simpa only [goldenFactor_count_true] using htrueNat
     · simpa only [golden_factor_scattered_count] using hpairNat
 
 /-- First degree and the Magnus center recover the full legal word. -/

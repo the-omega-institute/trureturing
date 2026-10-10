@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:7a2a8d534f929b14ca615c04e48b4789016cdc34f1dd698933e6be371251e3df
+  normalized_sha256: sha256:7a2a8d534f929b14ca615c04e48b4789016cdc34f1dd698933e6be371251e3df
+cas_ref: sha256:7a2a8d534f929b14ca615c04e48b4789016cdc34f1dd698933e6be371251e3df
+coverage_gids:
+  - gid: D5/S0/Carrier/Norm.norm_mul
+    target_statement_id: sha256:9f11eb40d16b0fc9a152145c1fce6333869f8f0abcd6d0e4df9278c7dc73c1ad
+  - gid: D5/S0/Carrier/Norm.norm_phi
+    target_statement_id: sha256:c256aed342f2cce710cd2fe13a723cd152a42bc58adaeeed1edf7d9a510cc4bd
+  - gid: D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.actual_source_value
+    target_statement_id: sha256:3406f7f53328a8887b698d60102470a698f404607b583b2621aaf8683594e9e3
+  - gid: D5/S3/Arith/FibonacciAtomic/RemoteVectorCompensation.sourceComposition
+    target_statement_id: sha256:2f9a421fcd2766b4c3044c6e76cb4e565332e7d34ce6a919bcbf44beaddaa129
+  - gid: D5/S3/Axis/AxisConvergence.goldenRatio_pow_div_le_fib_succ
+    target_statement_id: sha256:f22fe1b1c56b35a9abd4bb42370417d7e4565879637e7eaa44c6b50bdad3e9b3
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 9a8e2ec785e820b77ae17b9dc994f3dac2cd67ba3ee8a942271e2a712ce7bec8
+    - 5ae741a6eaeafdb1339ab1821b61ea27e7972a9f672e14ab95ce294105d5c17b

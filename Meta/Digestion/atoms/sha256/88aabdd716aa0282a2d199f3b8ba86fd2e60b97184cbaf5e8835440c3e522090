@@ -1,0 +1,10 @@
+**推论 5.3（逐步增量与首批数值）。** 对一切 $n\ge0$：
+
+(i) $\kappa_n\le\kappa_{n+1}\le\kappa_n+\tfrac14$ 且 $\kappa_{n+2}\ge\kappa_n+\tfrac14$；
+
+(ii) $\kappa_0=0$，$\kappa_1=\tfrac14$，$\kappa_2=2(3-2\sqrt2)$；
+
+(iii) $\tfrac18\le c_\star\le3-2\sqrt2$；
+
+(iv) 对 $n\ge2$ 有 $\kappa_n<n/4$。
+

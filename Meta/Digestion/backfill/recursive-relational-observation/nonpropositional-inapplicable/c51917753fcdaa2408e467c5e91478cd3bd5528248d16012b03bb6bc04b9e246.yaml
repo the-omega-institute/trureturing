@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:c51917753fcdaa2408e467c5e91478cd3bd5528248d16012b03bb6bc04b9e246
+  normalized_sha256: sha256:c51917753fcdaa2408e467c5e91478cd3bd5528248d16012b03bb6bc04b9e246
+cas_ref: sha256:c51917753fcdaa2408e467c5e91478cd3bd5528248d16012b03bb6bc04b9e246
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅由钉版 Mathlib（mathlib@db584cd6d46c92f209a44c0f1c829460d327499d）及其 Lean 基础依赖闭合，仓内无直接供应这两个完整反例的可用冻结 GID。第一例 X_n={m:n≤m} 逐层以 m=n 为见证；包含映射相容性就是 x_(n+1)=x_n，展开相同的恒等递推得 x_n=x_0，取 n=x_0+1 与 Nat.not_succ_le_self 矛盾。第二例 x_n=2^n-1 在 n=0 时为0；Nat.pow_pos、pow_succ、Nat.sub_add_cancel、Nat.add_mod、Nat.add_mod_right 与 Nat.mod_eq_of_lt 给 (2^(n+1)-1) mod 2^n=2^n-1，Nat.mod_mod_of_dvd 与 Nat.pow_dvd_pow 给原 q_n 的模约化相容性。对任意拟议提升 m，取 n=m+1，Nat.lt_two_pow_self 给 m+1<2^(m+1)，Nat.mod_eq_of_lt 给 m mod 2^n=m，而 m<2^n-1；故不存在同一个 m 实现全部层。PadicInt.toZModPow、map_neg、map_one 与 ZMod.val_neg_one 在 p=2 的实例给该线程确为2进整数-1的逐层像（n=0 的 ZMod 1 同样为0）。结尾区分有限层延拓、无限线程、指定实现像提升与预算取得，没有另行声称数值预算或计算算法。全部层量词和同一个 m 均保留；不以单层非空或逐层分别选 m 代替线程或实际提升。
+    previous_atom_id: 902b097ecd56e1e5b230efe2cd8f7c669b3188e214cade67c6aaff3ad51452d6
+    next_atom_id: 9ce0b3727eeab616a04751cdd32e9e0a505dd5dd3648d9f447f052efe697bbf0
+  chain_atoms:
+    - cbf468a5e20d939812f94c3e61425bcdf60d4a19c1cf52306f428f4a8b555d98
+    - 691eda0f1ca08cc3f94175d3aed89170450506268d0cd9ecfdd2165d89605660

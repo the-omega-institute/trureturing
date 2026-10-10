@@ -190,8 +190,8 @@ public sealed class LeanReportSelectionTests
         foreach (var buildProducer in new[] { false, true })
         foreach (var unavailableClock in new[] { false, true })
         foreach (var failedPhase in buildProducer
-                     ? new[] { "", "inputs", "reuse", "capture", "producer-build", "ensure", "report", "publish", "seal" }
-                     : new[] { "", "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" })
+                     ? new[] { "", "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "publish" }
+                     : new[] { "", "inputs", "reuse", "capture", "prepare", "ensure", "report", "publish" })
             yield return [failedPhase, unavailableClock, buildProducer];
     }
 
@@ -275,11 +275,11 @@ public sealed class LeanReportSelectionTests
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
             $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}");
         var allPhases = buildProducer
-            ? new[] { "inputs", "reuse", "capture", "producer-build", "ensure", "report", "publish", "seal" }
-            : new[] { "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" };
+            ? new[] { "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "publish" }
+            : new[] { "inputs", "reuse", "capture", "prepare", "ensure", "report", "publish" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
-        Assert.Equal(failedPhase.Length == 0 || failedPhase == "seal", File.Exists(report));
+        Assert.Equal(failedPhase.Length == 0, File.Exists(report));
         var standardOutput = Encoding.UTF8.GetString(result.StandardOutput);
         Assert.Equal(failedPhase.Length == 0 ? "fixture report published\n" : "", standardOutput);
         Assert.DoesNotContain("LEAN_INSPECTOR_PHASE", standardOutput, StringComparison.Ordinal);
@@ -350,6 +350,7 @@ public sealed class LeanReportSelectionTests
                 --repository) repository="$2" ;;
                 --output) output="$2" ;;
                 --log-dir) log_dir="$2" ;;
+                --cache-miss-policy) [[ "$2" == fetch-or-fail ]] || exit 97 ;;
                 *) exit 97 ;;
               esac
               shift 2
@@ -387,7 +388,8 @@ public sealed class LeanReportSelectionTests
         var recorded = ScriptHarnessScratch.ReadRecordedCalls(argumentLog);
         Assert.True(recorded.Length >= 4, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(fixture, ScriptHarnessScratch.ReadScratchText(Path.Combine(recorded[1], "fixture.identity")));
-        var expected = new List<string> { "--repository", recorded[1], "--output", output };
+        var expected = new List<string> { "--repository", recorded[1], "--output", output,
+            "--cache-miss-policy", "fetch-or-fail" };
         if (!string.IsNullOrEmpty(logDirectory)) expected.AddRange(["--log-dir", logDirectory]);
         Assert.Equal(expected, recorded);
         var expectedLogDirectory = string.IsNullOrEmpty(logDirectory) ? output + ".logs" : logDirectory;

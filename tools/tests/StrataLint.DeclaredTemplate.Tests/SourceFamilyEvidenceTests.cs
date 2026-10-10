@@ -157,26 +157,19 @@ public sealed class SourceFamilyEvidenceTests
 
     // Opt in with a directory of the focused Lake :report module artifacts.
     // This consumes the production exports; it does not build or aggregate reports.
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void generated_source_artifacts_pass_real_import_material_and_axiom_join(bool historical)
+    [Fact]
+    public void generated_source_artifacts_pass_real_import_material_and_axiom_join()
     {
-        var directory = Environment.GetEnvironmentVariable(historical
-            ? "QUANTUM_HISTORICAL_ARTIFACTS" : "SOURCE_FAMILY_ARTIFACTS");
+        var directory = Environment.GetEnvironmentVariable("SOURCE_FAMILY_ARTIFACTS");
         Skip.If(string.IsNullOrEmpty(directory), "Focused native module artifacts were not supplied.");
         var root = TestRepositoryLayout.FindRoot();
         var files = new Dictionary<string, LeanFileReport>();
         var sources = new Dictionary<string, RawRepositoryEntry>();
-        RawRepositoryEntry Source(string path)
-        {
-            var isolatedSource = Path.Combine(directory!, "sources", path);
-            var file = historical && File.Exists(isolatedSource) ? isolatedSource : Path.Combine(root, path);
-            return new(path, ImmutableArray.CreateRange(File.ReadAllBytes(file)));
-        }
+        RawRepositoryEntry Source(string path) =>
+            new(path, ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path))));
         using var scratch = new TemporaryDirectory();
         var artifacts = Directory.GetFiles(directory!, "*.zip").Order(StringComparer.Ordinal).ToArray();
-        Assert.Equal(historical ? 5 : 24, artifacts.Length);
+        Assert.Equal(24, artifacts.Length);
         foreach (var artifact in artifacts)
         {
             var extracted = Path.Combine(scratch.Path, Path.GetFileNameWithoutExtension(artifact));
@@ -203,52 +196,40 @@ public sealed class SourceFamilyEvidenceTests
             RawRepositorySnapshot.Create(sources.Values))).Snapshot;
         var selected = new List<RepoPath>();
         AssertOriginalCyclicInventory(CompiledWire("CompiledCyclicWire.lean"));
-        var quantumFixture = historical ? "CompiledQuantumHistoricalWire.lean" : "CompiledQuantumWire.lean";
-        var quantum = CompiledWire(quantumFixture);
+        var quantum = CompiledWire("CompiledQuantumWire.lean");
         var quantumRecord = Assert.Single(Assert.Single(quantum)!["records"]!.AsArray())!;
         const string quantumOwner = "D5.S3.Quantum.Information.ActualQubitChordObstruction";
-        var quantumName = quantumOwner + (historical
-            ? ".actual_two_probe_chord_obstruction" : ".actual_two_probe_chord_and_qfi");
+        var quantumName = quantumOwner + ".actual_two_probe_chord_and_qfi";
         Assert.Equal(quantumName, quantumRecord["key"]!["theorem"]!.GetValue<string>());
         Assert.Equal("Reg." + quantumOwner,
             quantumRecord["key"]!["registration_module"]!.GetValue<string>());
         var originalBytes = Source(quantumOwner.Replace('.', '/') + ".lean").Bytes.ToArray();
-        Assert.Equal(historical ? 22806 : 36217, originalBytes.Length);
-        Assert.Equal(historical
-            ? "e38587117aa2fd85bf40596abc5c556725faafbfabcaddb21ae96b9f9211f61b"
-            : "4f45e964a8a60de2e526fa8ecc9d7290e89b061a1a687359917d065453126fb0",
+        Assert.Equal(36217, originalBytes.Length);
+        Assert.Equal("4f45e964a8a60de2e526fa8ecc9d7290e89b061a1a687359917d065453126fb0",
             Convert.ToHexStringLower(SHA256.HashData(originalBytes)));
         var quantumPath = RepoPath.CreateKnown(quantumOwner.Replace('.', '/') + ".lean");
-        if (!historical)
-        {
-            var statementId = FrozenContentHash.Compute(FrozenHashDomains.Statement,
-                CanonicalStatementWriter.WriteModule(quantumPath,
-                    CanonicalStatementWriter.DeclarationStatementIds(quantumPath, files[quantumPath.Value])).AsSpan());
-            var pin = JsonNode.Parse(File.ReadAllBytes(Path.Combine(root,
-                "Golden/Frozen/state/" + quantumPath.Value + ".json")))!;
-            Assert.Equal(pin["statement_id"]!.GetValue<string>(), statementId);
-        }
-        foreach (var wire in historical ? quantum : AllWire())
+        var statementId = FrozenContentHash.Compute(FrozenHashDomains.Statement,
+            CanonicalStatementWriter.WriteModule(quantumPath,
+                CanonicalStatementWriter.DeclarationStatementIds(quantumPath, files[quantumPath.Value])).AsSpan());
+        var pin = JsonNode.Parse(File.ReadAllBytes(Path.Combine(root,
+            "Golden/Frozen/state/" + quantumPath.Value + ".json")))!;
+        Assert.Equal(pin["statement_id"]!.GetValue<string>(), statementId);
+        foreach (var wire in AllWire())
         {
             var path = wire!["records"]![0]!["registration_source_path"]!.GetValue<string>();
             selected.Add(RepoPath.CreateKnown(path));
             Assert.True(JsonNode.DeepEquals(wire,
                 JsonNode.Parse(files[path].InformationTemplates!.Value.GetRawText())));
-            if (!historical)
-            {
-                var original = wire["records"]![0]!["certificate"]!["source_binding"]!["source_owner"]!
-                    .GetValue<string>().Replace('.', '/') + ".lean";
-                AssertFrozenOriginal(root, original, files[original]);
-            }
+            var original = wire["records"]![0]!["certificate"]!["source_binding"]!["source_owner"]!
+                .GetValue<string>().Replace('.', '/') + ".lean";
+            AssertFrozenOriginal(root, original, files[original]);
         }
         var evidence = InformationTemplateEvidence.Collect(joinedSnapshot,
             LeanAxiomReport.Create(files), selected);
-        Assert.Equal(historical ? 1 : 29, evidence.Inventory.Count);
+        Assert.Equal(29, evidence.Inventory.Count);
         Assert.All(evidence.Occurrences.Values, occurrence => Assert.True(occurrence.HasFourSlots));
         // A present theorem file is insufficient when its actual import path is absent.
-        foreach (var missing in historical ? new[] {
-            "D5/S3/ConceptDynamics/InformationEscape/QubitChordFamily.lean",
-            "Reg/Support/QubitChordChannels.lean" } : new[] {
+        foreach (var missing in new[] {
             "D5/S3/ConceptDynamics/InformationEscape/CyclicStackFamily.lean",
             "Reg/Support/FiniteHistoryFamily.lean",
             "D5/S3/ConceptDynamics/InformationEscape/QubitChordFamily.lean",
@@ -390,17 +371,16 @@ public sealed class SourceFamilyEvidenceTests
             LeanAxiomReport.Create(files), [selected[0]]).Inventory);
     }
     [Fact]
-    public void four_original_named_claims_pass_compiled_strict_join()
+    public void obsolete_named_reference_fixture_is_rejected_by_current_join()
     {
         var wire = CompiledWire("CompiledNamedClaimWire.lean");
         var (snapshot, report, selected) = Inputs(wire);
-        var evidence = InformationTemplateEvidence.Collect(snapshot, report, selected);
-        Assert.Equal(4, evidence.Inventory.Count);
-        Assert.All(evidence.Occurrences.Values, row =>
-        {
-            Assert.True(row.HasFourSlots);
-            Assert.Equal(row.SourceOwner + ".claim", row.SourceDefinitionName);
-        });
+        // Closed certificate shape cannot make an obsolete source-reference
+        // encoding current. Current positive joins use producer conformance
+        // vectors and the independently addressed native source materials.
+        var error = Assert.Throws<FormatException>(() =>
+            InformationTemplateEvidence.Collect(snapshot, report, selected));
+        Assert.Contains("reference identity differs from current declaration", error.Message, StringComparison.Ordinal);
         Assert.All(wire, module =>
         {
             var source = module!["records"]![0]!["certificate"]!["source_binding"]!;

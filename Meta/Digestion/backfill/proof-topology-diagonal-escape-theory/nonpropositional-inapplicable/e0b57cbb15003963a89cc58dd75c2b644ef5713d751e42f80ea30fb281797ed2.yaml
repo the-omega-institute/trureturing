@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e0b57cbb15003963a89cc58dd75c2b644ef5713d751e42f80ea30fb281797ed2
+  normalized_sha256: sha256:e0b57cbb15003963a89cc58dd75c2b644ef5713d751e42f80ea30fb281797ed2
+cas_ref: sha256:e0b57cbb15003963a89cc58dd75c2b644ef5713d751e42f80ea30fb281797ed2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream closure; mathlib v4.33.0 at db584cd6d46c92f209a44c0f1c829460d327499d. Set.mem_Icc and integer translation identities (add_sub_cancel, sub_add_cancel, add_le_add_iff_right) normalize the full graph equivalence (l<=x and x<=u and y=x+d) iff (l+d<=y and y<=u+d and x=y-d). Mathlib.Tactic.Omega closes the resulting integer linear arithmetic. Original nonempty normal form and carrier constraints are retained; no global total inverse or composition identity is claimed. No usable frozen repository GID found; no new Lean declaration.
+    previous_atom_id: 75bc8c909aab09461876c8884c1e29c1d4f32ca3931ab52640ad23ac3466d5fb
+    next_atom_id: 1658de6006036bf2f2ca5ed3ebb0d35ea2152c532c57e2d50a257d670a495390

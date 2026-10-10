@@ -5,7 +5,7 @@ year: 2026
 title: A Finite Computer-Assisted Verification of Robin's Inequality via Colossally Abundant Profiles, with Exact Prime-Power Residual Dynamics
 doi: 10.5281/zenodo.21808589
 url: https://doi.org/10.5281/zenodo.21808589
-claim: The preprint reports a finite Robin verification and an effective positive full-support core; the core applies at the selected critical source's own logarithmic clock, but does not bound its signed prime-error tail or prove RH.
+claim: The preprint reports a finite Robin verification and an effective positive full-support core; the core applies at the selected critical clock and, with positive extra-support costs, at arbitrary large GA2 clocks, but does not bound their signed prime-error tails or prove RH.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -248,6 +248,129 @@ Thus the weaker source-specific condition
 $\sqrt A\log A\,I_\psi(A)\ge-\mathcal E(\log A)$ suffices for strict Robin.
 That signed condition is unproved. This is a paper-level application,
 without a new finite verification, originality claim, or Lean result.
+
+## Application to arbitrary GA2 sources, including extra prime support
+
+The full-support core can also be used at a GA2 integer that is not
+known to be GA1, CA, or a global maximizer. Let $N$ be GA2 and put
+$A=\log N\ge3$. This application uses its own clock and actual
+exponents $a_p=v_p(N)$ throughout.
+
+First, GA2 forces every prime $p\le A$ to divide $N$. Indeed, if such
+a prime were absent, multiplicativity would give
+
+$$
+\frac{G(Np)}{G(N)}
+=\left(1+\frac1p\right)\frac{\log A}{\log(A+\log p)}>1,
+$$
+
+because
+
+$$
+\log(A+\log p)<\log A+\frac{\log p}{A}
+\le\left(1+\frac1p\right)\log A.
+$$
+
+The last comparison follows from $p\log p\le A\log A$. This
+contradicts GA2. This support argument needs only $A>1$; the stronger
+$A\ge3$ ensures that the full-support factor
+
+$$
+n_0=\prod_{p\le A}p^{a_p}
+$$
+
+contains both 2 and 3 and hence is at least $6>e$, as required for
+its logarithmic margin. No assertion that $N$ has no primes above $A$
+is needed.
+
+For an occupied prime $p>A$, define its extra-support cost by
+
+$$
+\Xi_{p,A}(a)=a\frac{\log p}{A\log A}-\log Z(p^a),
+\qquad Z(m)=\frac{\sigma(m)}m,\qquad a\ge1.
+$$
+
+These costs are strictly positive. The binomial expansion gives
+$Z(p^a)=\sum_{j=0}^ap^{-j}\le(1+1/p)^a$, so
+
+$$
+\log Z(p^a)\le a\log(1+1/p)<\frac ap
+<a\frac{\log p}{A\log A}.
+$$
+
+The final strict comparison uses $p\log p>A\log A$.
+
+Apply Proposition 6 to $n_0$ at $x=A$. Put $A_0=\log n_0$. The
+budget transport to the same original $N$ is exactly
+
+$$
+\Delta(N)-\Delta(n_0)
+=\log\frac{\log A}{\log A_0}
+ -\sum_{\substack{p>A\\p\mid N}}\log Z(p^{a_p}),
+$$
+
+whereas
+
+$$
+B_2(n_0,A)
+=\log\frac{\log A_0}{\log A}-\frac{A_0-A}{A\log A}.
+$$
+
+Their logarithmic terms cancel, and
+$A-A_0=\sum_{p>A,\,p\mid N}a_p\log p$. Thus the transported identity is
+
+$$
+\boxed{\displaystyle
+\Delta(N)=I_\psi(A)
+ +\sum_{p\le A}\Phi_{p,A}(a_p)-C_{\rm pp}(A)
+ +\sum_{\substack{p>A\\p\mid N}}\Xi_{p,A}(a_p).}
+$$
+
+Taking the existing full-support minimum gives
+
+$$
+\Delta(N)\ge I_\psi(A)+D^*(A)
+ +\sum_{\substack{p>A\\p\mid N}}\Xi_{p,A}(a_p)
+\ge I_\psi(A)+D^*(A).
+$$
+
+This is an inequality at arbitrary GA2 sources. Their actual exponents
+are not asserted to attain the core minimum. Proper-GA1 deletion
+conditions and the selected CA source's equality have not been
+transported to this larger class. The stronger Nicolas allowance
+requires the separate actual-core argument linked below.
+
+For $A\ge56\,048\,351$, the same Proposition 10 gives
+$\sqrt A\log A\,D^*(A)>D_{\rm lb}(A)>1/2$. Caveney–Nicolas–Sondow's
+Fact 2 gives $G(N)\ge e^\gamma$, hence $\Delta(N)\le0$. Consequently
+every such GA2 source must satisfy
+
+$$
+\boxed{\sqrt A\log A\,I_\psi(A)<-D_{\rm lb}(A)<-\frac12.}
+$$
+
+The [Nicolas envelope on actual GA2 cores](../ArithSums/nicolas2025comparison.md#the-same-effective-allowance-on-actual-ga2-cores)
+uses $Z(N)\le\Sigma(N)$ without CA equality and pays the primorial
+suffix even when its primes already divide $N$. For $N\ge N^{(0)}$
+and $\log A\ge26$, it strengthens the necessary signed condition to
+$\sqrt A\log A\,I_\psi(A)<-\mathcal E(\log A)$. Its bound is on the
+whole actual core in the displayed identity, not on $D^*(A)$.
+
+The [published conditional GA2 family](../Arith/caveney2012sacaga.md#the-published-unbounded-ga2-supplier-under-rh-failure)
+has $N_i\to\infty$ under RH failure. Therefore an eventual lower bound
+$\sqrt A\log A\,I_\psi(A)\ge-\mathcal E(\log A)$ valid at every
+sufficiently large GA2 clock would contradict that existing family.
+This route would need no effective starting point for the eventual
+bound. It does need a proof of the signed bound on these actual clocks;
+an arbitrary sequence of favorable real cutoffs is insufficient.
+
+The application reuses the published full-support identity, minimum,
+effective core, and conditional infinitude. It supplies the missing
+extra-support accounting needed to use that core on the larger source
+class. It is a paper-level interface assessment, not a new core estimate,
+RH criterion, signed-tail bound, originality claim, or Lean result.
+The fixed global source above retains its stronger structural inputs;
+this unbounded-source route retains the same unpaid signed tail.
 
 ## Published event dynamics and the unpaid prime-state work
 
@@ -1826,3 +1949,90 @@ RH remain unproved. In particular the growing fixed-$H$ allowance
 in (X2) is still present; the finite interval cannot be extrapolated
 to all clocks. This is a paper-level application of existing results,
 without a mathematical originality claim or Lean certification.
+
+## A finite log-free density row lowers the complete upper envelope
+
+Chiara Bellotti, *An explicit log-free zero density estimate for the
+Riemann zeta-function*,
+[arXiv:2405.12545v2](https://arxiv.org/pdf/2405.12545v2), Theorem 1.1
+on printed pp.2–3 and Table 2 on printed p.28, supplies
+
+$$
+N_>(\sigma,t)\le C t^{B(1-\sigma)},\qquad
+C=6.23\cdot10^6,\quad B=2.152,
+\quad 0.985\le\sigma<1,\quad e^{500}<t\le e^{1000}.
+\tag{Y1}
+$$
+
+Here $N_>$ uses the source's strict conditions $\beta>\sigma$ and
+$0<\gamma<t$, with the zero-count multiplicities. Its analytic proof
+and table computation remain external inputs. The publication locator
+is [J. Number Theory 269 (2025), 37–77](https://doi.org/10.1016/j.jnt.2024.10.001);
+the cited interface is the pinned preprint, without an assertion that
+its text equals the published version. Only this table row is used.
+
+Let $D_I(\sigma,t)$ denote the existing right side of (W1), and put
+$\alpha=197/200$, $u=e^{500}$, $v=e^{1000}$. Define
+
+$$
+M(\sigma,t)=
+\begin{cases}
+\min\{D_I(\sigma,t),Ct^{B(1-\sigma)}\},
+ &\alpha\le\sigma<1,\ u<t\le v,\\
+D_I(\sigma,t),&\text{otherwise}.
+\end{cases}
+\tag{Y2}
+$$
+
+Both inputs bound the same actual strict count, so $N_>\le M$
+on the whole original domain. For the strict reflected sum, (W2)
+gives $F_2^>(\sigma)\le4\int_H^\infty M(\sigma,t)t^{-3}\,dt$.
+The strict height endpoints do not change this counting integral.
+Strict real-part endpoints do not change (W5)'s layer integral;
+zeros on $\beta=\alpha$ retain their layers below $\alpha$.
+Reflection and every multiplicity keep the original factor $4$.
+
+On the rectangle in (Y1),
+$B<3/(2-\sigma)$, $q(\sigma)\ge2$, and
+$C<47\cdot500^2=11.75\cdot10^6$ imply
+$Ct^{B(1-\sigma)}<D_I(\sigma,t)$.
+For $A>1$, reuse $Q_A$ and $S_2(H)$ from (W5) and define
+
+$$
+U_M(A)=Q_A(3/4)S_2(H)
+ +4\int_{3/4}^1 Q_A'(\sigma)
+       \int_H^\infty M(\sigma,t)t^{-3}\,dt\,d\sigma.
+\tag{Y3}
+$$
+
+Let $U_I$ be the same expression with $D_I$ in place of $M$.
+These envelopes are finite at each $A>1$, and (W5) gives
+$B_2(A)\le U_M(A)$. Their exact difference is
+
+$$
+U_I(A)-U_M(A)
+=4\int_\alpha^1 Q_A'(\sigma)
+       \int_u^v\bigl[D_I(\sigma,t)-Ct^{B(1-\sigma)}\bigr]
+                    t^{-3}\,dt\,d\sigma>0.
+\tag{Y4}
+$$
+
+Finally, (W7) and $B_3\le B_2/H$ preserve the original coefficient
+factors and give, with $L=\log A$,
+
+$$
+C_{\rm high}(A)\le
+\left[1+\frac1L+\frac2H\left(\frac1L+\frac2{L^2}\right)\right]U_M(A).
+\tag{Y5}
+$$
+
+Outside the finite rectangle, the original Ingham envelope still
+extends to infinity. Thus this is a complete high-part allowance,
+with no discarded heights, real parts or multiplicities. The low
+and elementary contributions, selected integer, its clock and the
+strict core are unchanged. Equation (Y4) improves explicit upper
+envelopes; it supplies no cancellation theorem, certified numerical
+Robin margin, new source-clock exclusion or uniform bound as
+$A\to\infty$. The complete selected-source signed target and RH
+remain unproved. This reuses Bellotti and (W2), (W5), (W7), without
+reproving a density theorem or claiming Lean verification.

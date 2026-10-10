@@ -1,0 +1,19 @@
+**静态证书范围（Claim status: open）。** 此处 $C_{\mathrm{word}}$ 须固定指定任务与读口：固定源 §53.1–53.2 对 $\operatorname{Pos}$、$\nu$、$Q$、字面树恒等四个不同任务，以及原始、粗两种读口分别给出同一区间。$\operatorname{Pos}(t)$ 表示 $t\in\rho^3[\mathbb T]$；$Q(t)$ 沿用固定源的“内在深度、原始端点是否为 $\alpha$”二元任务。区间的上界取 $T_n$ 的全部 $\alpha$ 叶地址，复用 `ActualImageAddressCertificate.result` 证明内的重建结论，在整个 $W_n$ 上强制字面树等于 $T_n$；它不从一次成员回答推出准确深度。下界用本缺陷子族中的真实竞争者排除完整域上的证书。给定充分回复的静态证书、从空缓存发现这些回复的读者，以及实际前缀之后的新增取得，是三项不同对象。
+
+对 $n=10$：
+
+$$
+\boxed{21\le C_{\mathrm{word}}(T_{10})\le34.}
+$$
+
+### 正反证据并不对称
+
+Claim status: open.
+
+在缺陷子族内：
+
+- 找到一个缺陷，就能证明 $\nu=0$；
+- 确认没有缺陷，需要检查全部独立位置。
+
+这正对应经典证书复杂度与查询复杂度的区别；本篇的额外工作是把这些布尔位置实际实现为同词原树中的互不交叠地址支持。[CWI主页](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf)
+

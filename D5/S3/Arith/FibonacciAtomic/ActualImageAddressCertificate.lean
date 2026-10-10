@@ -56,14 +56,14 @@ def rightComb : ℕ → Source
   | m + 1 => .mul (.of true) (rightComb m)
 
 
-private theorem image_positive {d : ℕ} (hd : 3 ≤ d) (U : Source)
+theorem image_positive {d : ℕ} (hd : 3 ≤ d) (U : Source)
     (hU : U ∈ ActualImage d) : Positive U := by
   obtain ⟨T, hT⟩ := hU
   refine ⟨substitution^[d - 3] T, ?_⟩
   rw [← Function.iterate_add_apply, show 3 + (d - 3) = d by omega]
   exact hT
 
-private theorem alpha_mul (s t : Source) : alphaLeaves (s * t) =
+theorem alpha_mul (s t : Source) : alphaLeaves (s * t) =
     (alphaLeaves s).image (List.cons false) ∪ (alphaLeaves t).image (List.cons true) := by
   classical
   ext u
@@ -90,11 +90,12 @@ private theorem leaf_card (t : Source) :
   have he : F = G := FreeMagma.hom_ext (by funext b; cases b <;> rfl)
   exact (congrArg (fun f : Source →ₙ* Multiplicative ℕ => Multiplicative.toAdd (f t)) he).symm
 
-private theorem positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
+/-- Every complete source has at least one leaf in its composition. -/
+theorem positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
   rw [← leaf_card t, (ActualImageSevenLeafSeparation.seven_leaf_separation.1 t).1]
   exact FreeMagma.length_pos t
 
-private theorem alpha_card (t : Source) : (alphaLeaves t).card = (composition t).1 := by
+theorem alpha_card (t : Source) : (alphaLeaves t).card = (composition t).1 := by
   have disj (A B : Finset Address) :
       Disjoint (A.image (List.cons false)) (B.image (List.cons true)) := by
     apply Finset.disjoint_left.mpr
@@ -116,7 +117,7 @@ private theorem alpha_card (t : Source) : (alphaLeaves t).card = (composition t)
     cases b <;> simp [alpha_of, composition])
   exact congrArg (fun f : Source →ₙ* Multiplicative ℕ => Multiplicative.toAdd (f t)) he
 
-private theorem leaf_data (t : Source) :
+theorem leaf_data (t : Source) :
     (∀ u ∈ leafAddresses t, u.length ≤ height t) ∧
     ((leafAddresses t).filter (fun u => readout u t = .beta)).card = (composition t).2 := by
   classical
@@ -228,7 +229,7 @@ private theorem structural (t : Source) :
           (Finset.mem_image.mpr ⟨us, hus, rfl⟩), ?_⟩
         change us.length + 1 = max (height S) (height T) + 1
         rw [hds, max_eq_left hle]
-private theorem no_left_alpha (t : Source) (ht : Positive t) (r : Address)
+theorem no_left_alpha (t : Source) (ht : Positive t) (r : Address)
     (hr : subtree (r ++ [false]) t = some (.of true)) : False := by
   have ha : readout (r ++ [false]) t = .alpha := by
     rw [← List.append_nil (r ++ [false]),
@@ -444,7 +445,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
       exact hu.trans ((congrArg (fun r : Address => r ++ [true]) hrs).trans hv.symm)
     rw [← alpha_card V]
     exact Finset.card_le_card_of_injective hf
-private theorem leaf_change (t : Source) (s : Address) (b c : Bool)
+theorem leaf_change (t : Source) (s : Address) (b c : Bool)
     (hs : subtree s t = some (.of b)) :
     subtree s (replace t s (.of c)) = some (.of c) ∧
     composition (replace t s (.of c)) + composition (.of b) =
@@ -495,6 +496,71 @@ private theorem no_beta_cherry (t : Source) (ht : Positive t) (r : Address)
   rw [ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.1, hs] at hl
   cases hl
 
+theorem image_structure (k : ℕ) (hk : 1 ≤ k) (U : Source) (hU : U ∈ ActualImage (3 * k)) :
+    AlphaCovered U ∧ ∀ u ∈ alphaLeaves U, ∃ r : Address,
+      u = r ++ [true] ∧ subtree r U = some (.mul (.of false) (.of true)) := by
+  obtain ⟨T, hT⟩ := hU
+  let S := substitution^[3 * k - 2] T
+  have he : U = substitution (substitution S) := by
+    change U = substitution^[2] S
+    dsimp only [S]
+    rw [← Function.iterate_add_apply, show 2 + (3 * k - 2) = 3 * k by omega]
+    exact hT.symm
+  rw [he]
+  exact ⟨(structural S).1, (structural S).2.1⟩
+
+theorem beta_surplus (k : ℕ) (hk : 1 ≤ k) (V : Source)
+  (hV : V ∈ ActualImage (3 * k)) : (composition V).1 < (composition V).2 := by
+  obtain ⟨T, hT⟩ := hV
+  let Z := substitution^[3 * k - 3] T
+  have he : substitution^[3] Z = V := by
+    dsimp only [Z]
+    rw [← Function.iterate_add_apply, show 3 + (3 * k - 3) = 3 * k by omega]
+    exact hT
+  have hc := (GenealogicalFiberTransport.fiberMap (composition Z) 3 ⟨Z, rfl⟩).property
+  change composition (substitution^[3] Z) = GraftAffineClosure.step^[3] (composition Z) at hc
+  rw [he] at hc
+  have ha := congrArg Prod.fst hc
+  have hb := congrArg Prod.snd hc
+  simp [Function.iterate_succ_apply', GraftAffineClosure.step] at ha hb
+  have hp := positive Z
+  omega
+
+theorem exchange_composition (V : Source) (s t : Address)
+    (hc₁ : composition (replace V s (.of false)) + composition (.of true) =
+      composition V + composition (.of false))
+    (hc₂ : composition (replace (replace V s (.of false)) t (.of true)) + composition (.of false) =
+      composition (replace V s (.of false)) + composition (.of true)) :
+    composition (replace (replace V s (.of false)) t (.of true)) = composition V := by
+  have ha₁ := congrArg Prod.fst hc₁
+  have hb₁ := congrArg Prod.snd hc₁
+  have ha₂ := congrArg Prod.fst hc₂
+  have hb₂ := congrArg Prod.snd hc₂
+  simp only [Prod.fst_add, Prod.snd_add, composition] at ha₁ hb₁ ha₂ hb₂
+  apply Prod.ext <;> omega
+
+theorem exchange_conflict (V W₁ W : Source) (s t r : Address)
+    (hst : s ≠ t) (hsr : s = r ++ [true])
+    (hr : subtree r V = some (.mul (.of false) (.of true)))
+    (ht : readout t V = .beta) (h₁s : subtree s W₁ = some (.of false))
+    (h₂t : subtree t W = some (.of true))
+    (ho₁ : ∀ u : Address, u ≠ s → readout u W₁ = readout u V)
+    (ho₂ : ∀ u : Address, u ≠ t → readout u W = readout u W₁)
+    (hW : Positive W) : False := by
+  have distinct (r : Address) : r ++ [false] ≠ r ++ [true] := by simp
+  have subtree_readout (t v : Source) (r u : Address)
+      (hr : subtree r t = some v) : readout (r ++ u) t = readout u v := by
+    rw [ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.1 r u t, hr]
+  by_cases htl : t = r ++ [false]
+  · exact no_left_alpha W hW r (htl ▸ h₂t)
+  · have hl : readout (r ++ [false]) W = .beta := by
+      exact (ho₂ _ (fun he => htl he.symm)).trans ((ho₁ _ (by rw [hsr]; exact distinct r)).trans
+        (subtree_readout V _ r [false] hr))
+    have hsW₁ : readout s W₁ = .beta := by
+      simpa only [List.append_nil, readout] using subtree_readout W₁ (.of false) s [] h₁s
+    have hsW : readout s W = .beta := (ho₂ s hst).trans hsW₁
+    exact no_beta_cherry W hW r hl (hsr ▸ hsW)
+
 set_option maxHeartbeats 2000000 in -- Two leaf replacements and whole-tree reconstruction.
 /-- Uniqueness of the optimal fixed-composition certificate, and complete-leaf
 certificates when competitors have no composition or leaf-count promise. -/
@@ -518,38 +584,8 @@ theorem rigidity (k : ℕ) (hk : 1 ≤ k) (V : Source)
   have leaf_subtree (t : Source) (u : Address) (b : Bool)
       (hs : readout u t = readout [] (.of b)) : subtree u t = some (.of b) :=
     ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1 t u b (by cases b <;> exact hs)
-  have image_structure (U : Source) (hU : U ∈ ActualImage (3 * k)) :
-      AlphaCovered U ∧ ∀ u ∈ alphaLeaves U, ∃ r : Address,
-        u = r ++ [true] ∧ subtree r U = some (.mul (.of false) (.of true)) := by
-    obtain ⟨T, hT⟩ := hU
-    let S := substitution^[3 * k - 2] T
-    have he : U = substitution (substitution S) := by
-      change U = substitution^[2] S
-      dsimp only [S]
-      rw [← Function.iterate_add_apply, show 2 + (3 * k - 2) = 3 * k by omega]
-      exact hT.symm
-    rw [he]
-    exact ⟨(structural S).1, (structural S).2.1⟩
-  obtain ⟨hcovered, hterminal⟩ := image_structure V hV
-  have beta_surplus : (composition V).1 < (composition V).2 := by
-    obtain ⟨T, hT⟩ := hV
-    let Z := substitution^[3 * k - 3] T
-    have he : substitution^[3] Z = V := by
-      dsimp only [Z]
-      rw [← Function.iterate_add_apply, show 3 + (3 * k - 3) = 3 * k by omega]
-      exact hT
-    have hc := (GenealogicalFiberTransport.fiberMap (composition Z) 3 ⟨Z, rfl⟩).property
-    change composition (substitution^[3] Z) = GraftAffineClosure.step^[3] (composition Z) at hc
-    rw [he] at hc
-    have ha := congrArg Prod.fst hc
-    have hb := congrArg Prod.snd hc
-    simp [Function.iterate_succ_apply', GraftAffineClosure.step] at ha hb
-    have hp := positive Z
-    omega
-  have distinct (r : Address) : r ++ [false] ≠ r ++ [true] := by simp
-  have subtree_readout (t v : Source) (r u : Address)
-      (hr : subtree r t = some v) : readout (r ++ u) t = readout u v := by
-    rw [ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.1 r u t, hr]
+  obtain ⟨hcovered, hterminal⟩ := image_structure k hk V hV
+  have beta_surplus := beta_surplus k hk V hV
   have optimal_unique (h : ℕ) (Q : Finset Address)
       (hQ : Sound (3 * k) V h Q) (hcard : Q.card = (composition V).1) :
       Q = alphaLeaves V := by
@@ -576,26 +612,13 @@ theorem rigidity (k : ℕ) (hk : 1 ≤ k) (V : Source)
         leaf_subtree W₁ t false ((ho₁ t hst.symm).trans ht)
       let W := replace W₁ t (.of true)
       obtain ⟨h₂t, hc₂, ho₂⟩ := leaf_change W₁ t false true h₁t
-      have hc : composition W = composition V := by
-        have ha₁ := congrArg Prod.fst hc₁
-        have hb₁ := congrArg Prod.snd hc₁
-        have ha₂ := congrArg Prod.fst hc₂
-        have hb₂ := congrArg Prod.snd hc₂
-        simp only [Prod.fst_add, Prod.snd_add, composition] at ha₁ hb₁ ha₂ hb₂
-        apply Prod.ext <;> dsimp only [W, W₁] at ha₁ hb₁ ha₂ hb₂ ⊢ <;> omega
+      have hc : composition W = composition V := exchange_composition V s t hc₁ hc₂
       have hW : W ∈ ActualImage (3 * k) := hQ.2 W hc (by
         intro u hu
         exact (ho₂ u (fun he => htQ (he ▸ hu))).trans
           (ho₁ u (fun he => hsQ (he ▸ hu))))
-      by_cases htl : t = r ++ [false]
-      · exact no_left_alpha W (image_positive (d := 3 * k) (by omega) W hW) r (htl ▸ h₂t)
-      · have hl : readout (r ++ [false]) W = .beta := by
-          exact (ho₂ _ (fun he => htl he.symm)).trans ((ho₁ _ (by rw [hsr]; exact distinct r)).trans
-            (subtree_readout V _ r [false] hr))
-        have hsW₁ : readout s W₁ = .beta := by
-          simpa only [List.append_nil, readout] using subtree_readout W₁ (.of false) s [] h₁s
-        have hsW : readout s W = .beta := (ho₂ s hst).trans hsW₁
-        exact no_beta_cherry W (image_positive (d := 3 * k) (by omega) W hW) r hl (hsr ▸ hsW)
+      exact exchange_conflict V W₁ W s t r hst hsr hr ht h₁s h₂t ho₁ ho₂
+        (image_positive (d := 3 * k) (by omega) W hW)
     exact (Finset.eq_of_subset_of_card_le hsub (by rw [alpha_card V, hcard])).symm
   have leaf_iff (Q : Finset Address) : UnSound (3 * k) V Q ↔ leafAddresses V ⊆ Q := by
     constructor

@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-moment-triangles-and-inverse-precision"
+path = "docs/develop/theory/AURIC_FIB_ATOM_MOMENT_TRIANGLES_AND_INVERSE_PRECISION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

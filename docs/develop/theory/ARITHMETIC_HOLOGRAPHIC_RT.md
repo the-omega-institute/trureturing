@@ -2592,7 +2592,7 @@ $$
 
 ### 36.6 实际有限相位、取向覆盖胶合与隐藏层边界
 
-`docs/reports/fib-canonical-budget/certificate.py` 的 `weight_orbit`
+`https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-canonical-budget/certificate.py` 的 `weight_orbit`
 使用初值 $(2,3)$ 及以下模 $m>0$ 递推：
 
 $$
@@ -2716,5 +2716,1033 @@ $n=0$ 指两个位置而非单点；这时两个端点都等于 $1/(1+a_0)$，�
 第 34 节对不同损失排序为 $\ell_1<\cdots<\ell_k$。这里取 $k=n+2$、$\ell_{j+1}=\ell(j)$，则 $a_j=\kappa_{j+1}$，本节的内部位置 $i+1$ 对应原来的一基位置 $i+2$。严格有序时 $0<a_j<1$，所以端点和内部公式都严格正。相同有序指数核的既有平衡行等式给 $Kw^{(n+1)}=\mathbf1$；结合第 34 节在不同位置上的逆核，得到 $w^{(n+1)}=K^{-1}\mathbf1$。这保留了原来有序、不同位置的条件，不给任意损失附加可逆或正概率结论。
 
 命题 37.1 的新内容是同一递推中任意早期坐标经过无界多次增添位置后仍保持其相邻系数公式，属于仓内推导。行等式、有序正性和逆核联系在这里复用；本节不主张文献原创性。完整的物理操作、共同局部实现、参考系统和最优误差仍分别需要第 34—36 节原来的条件及论证。
+
+## 追加锚（本行以下为增补区）
+
+## 38. 最优粗化信道的唯一性与单测试稳健认证
+
+**定义 38.1（编码后信道与共同测试）。** 沿用第 36.1 节的有限谱模型，令扇区集合为非空有限集 $S$，$N=|S|$，目标向量为 $T_s=J_d|s\rangle$，目标信道为 $\mathcal T(X)=J_dXJ_d^*$。残余平方根谱及其核仍记为 $v_s$、$K_{st}=\langle v_t,v_s\rangle$。允许的物理操作仍是两侧局部 CPTP 映射的乘积或有限共享经典随机混合，无通信、后选择或额外共享纠缠。其编码后信道记为 $\mathcal F=\Phi\circ\mathcal J_\lambda$，不要求任何基扇区输出正确。定义
+
+$$
+q=\min_{p\in\Delta_S}p^{\mathsf T}Kp,
+\qquad \delta_*=2(1-q),
+\qquad \mathcal F_K(X)=J_d(K\circ X)J_d^*.
+$$
+
+对任一最小点 $p$，取同一个参考输入和理想输出
+
+$$
+|\Omega_p\rangle=\sum_s\sqrt{p_s}|s\rangle_R|s\rangle_L,
+\qquad |\Theta_p\rangle=\sum_s\sqrt{p_s}|s\rangle_RT_s,
+$$
+
+并记二元投影测试的成功概率为
+
+$$
+f_p(\mathcal F)=\langle\Theta_p|
+(\operatorname{id}_R\otimes\mathcal F)
+(|\Omega_p\rangle\langle\Omega_p|)|\Theta_p\rangle.
+$$
+
+本节钻石范数均不含二分之一。第 36.1 节给出 $f_p(\mathcal F)\le q$ 及共同最优误差 $\delta_*$；下面研究哪些信道能够达到等号，以及接近等号迫使什么。
+
+**定理 38.2（满支撑测试暴露唯一编码后信道，repo-derived）。** 设 $p$ 为上述二次型的任意最小点，$A=\{s:p_s>0\}$。若 $\|\mathcal F-\mathcal T\|_\diamond=\delta_*$，则
+
+$$
+\mathcal F(|s\rangle\langle t|)=K_{st}|T_s\rangle\langle T_t|
+\qquad(s,t\in A).
+$$
+
+在任一有限乘积混合分解 $\mathcal F=\sum_z w_z\mathcal F_z$ 中，每个 $w_z>0$ 的分量也满足这个矩阵单位等式。若存在满支撑最小点，则在允许类内
+
+$$
+f_p(\mathcal F)=q
+\quad\Longleftrightarrow\quad
+\mathcal F=\mathcal F_K
+\quad\Longleftrightarrow\quad
+\|\mathcal F-\mathcal T\|_\diamond=\delta_*.
+$$
+
+因此 $\mathcal F_K$ 是允许编码后信道凸集的暴露点。这里只断言源编码后的作用唯一，不断言物理局部信道、Kraus 表示、环境等距或编码算符空间之外的作用唯一。满支撑最小点只须存在，不须是唯一最小点。
+
+**证明。** 对每个乘积分量取局部 Stinespring 等距，记第 $s$ 编码基向量的扩张输出为 $\Xi_{zs}$，并置
+
+$$
+\zeta_{zs}=(\langle T_s|\otimes I)\Xi_{zs},\qquad
+C^z_{st}=\langle\zeta_{zt},\zeta_{zs}\rangle,\qquad
+D^z_{st}=K_{st}-\operatorname{Re}C^z_{st}.
+$$
+
+第 36.1 节的投影环境 Ky Fan 界给出 $|C^z_{st}|\le K_{st}$，故所有 $D^z_{st}\ge0$。沿同一个参考测试展开，得到
+
+$$
+f_p(\mathcal F)=\sum_{z,s,t}w_zp_sp_t\operatorname{Re}C^z_{st},
+\qquad q-f_p(\mathcal F)=\sum_{z,s,t}w_zp_sp_tD^z_{st}.
+$$
+
+二元测试给出 $\|\mathcal F-\mathcal T\|_\diamond\ge2(1-f_p(\mathcal F))$。达到最优值因而迫使 $f_p(\mathcal F)=q$。非负和为零，故 $w_z>0$ 且 $s,t\in A$ 时 $D^z_{st}=0$。对角项给出 $\|\zeta_{zs}\|^2=1$；$\Xi_{zs}$ 本来是单位向量，正交投影的勾股等式遂给出
+
+$$
+\Xi_{zs}=T_s\otimes\zeta_{zs}.
+$$
+
+非对角项满足 $\operatorname{Re}C^z_{st}=K_{st}$ 及 $|C^z_{st}|\le K_{st}$，所以 $C^z_{st}=K_{st}$，包括 $K_{st}=0$ 的情形。对 $|\Xi_{zs}\rangle\langle\Xi_{zt}|$ 作环境偏迹即得矩阵单位等式。此推导只用测试等号，故满支撑时 $f_p=q$ 已迫使整个编码后信道为 $\mathcal F_K$。反向由共同达到构造与其范数公式成立。证毕。
+
+**推论 38.3（平坦整数秩的最优性强迫精确基输出，repo-derived）。** 对第 34 节的正整数残余秩 $m_s$，每个最优允许编码后信道都严格等于
+
+$$
+X\longmapsto J_d\left(
+\bigl(e^{-|\log m_s-\log m_t|/2}\bigr)_{st}\circ X
+\right)J_d^*.
+$$
+
+特别地，精确输出每个基扇区的目标纯态是最优性的结论，无须作为竞争操作的前提。任意共享经典混合的正权重乘积分量具有同一个编码后作用。
+
+**证明。** 合并相同的 $\log m_s$，在不同的有序值上使用第 34.1 节的严格正平衡概率，再将每个组的质量正地分配给该组所有原标签。核只依赖组标签，所以这仍是最小点，且在原集合上满支撑。只有一个不同秩时，任意满支撑概率都最小。应用定理 38.2。证毕。
+
+**定理 38.4（测试亏缺的平方根认证，repo-derived）。** 固定满支撑最小点 $p$，令 $a=\min_s p_s>0$、$\eta=q-f_p(\mathcal F)\ge0$。则
+
+$$
+\boxed{\quad
+\|\mathcal F-\mathcal F_K\|_\diamond
+\le\min\left\{2,\frac{2+\sqrt{2N}}a\sqrt\eta\right\}.
+\quad}
+$$
+
+若仅已知 $\|\mathcal F-\mathcal T\|_\diamond\le\delta_*+\epsilon$，其中 $\epsilon\ge0$，则 $\eta\le\epsilon/2$，从而
+
+$$
+\|\mathcal F-\mathcal F_K\|_\diamond
+\le\min\left\{2,\frac{\sqrt2+\sqrt N}a\sqrt\epsilon\right\}.
+$$
+
+此外，第 $s$ 个基输出的目标失败概率 $l_s$ 满足
+
+$$
+\sum_s p_s^2l_s\le\eta,\qquad
+l_s\le\frac{\eta}{p_s^2}.
+$$
+
+任一正权重分量的对应失败概率满足 $l_{zs}\le\eta/(w_zp_s^2)$。结论依赖指定局部操作类和已知模型；这不是对未知全局操作的设备无关认证。
+
+**证明。** 令 $C=\sum_z w_zC^z$、$D_{st}=K_{st}-\operatorname{Re}C_{st}$。上一定理的恒等式给出
+
+$$
+D_{st}\ge0,\qquad
+\sum_{s,t}p_sp_tD_{st}=\eta,\qquad |C_{st}|\le K_{st}.
+$$
+
+对角项就是 $D_{ss}=1-\langle T_s|\mathcal F(|s\rangle\langle s|)|T_s\rangle=l_s$。取非负和的对角子和得 $\sum_sp_s^2l_s\le\eta$，所以 $\sum_s l_s\le\eta/a^2$。对分量不先求和即得 $w_zp_s^2l_{zs}\le\eta$。
+
+将各分量扩张输出放入带正交标记的环境直和，得到编码后信道的一个等距 $V$，以及
+
+$$
+\zeta_s=\bigoplus_z\sqrt{w_z}\zeta_{zs},
+\qquad W|s\rangle=T_s\otimes\zeta_s.
+$$
+
+目标向量正交，且 $\|\zeta_s\|\le1$，故 $\|W\|\le1$。$V-W$ 第 $s$ 列的范数平方为 $l_s$，于是
+
+$$
+\|V-W\|^2\le\sum_s l_s\le\eta/a^2.
+$$
+
+记 $W$ 给出的完全正、迹不增映射为 $\mathcal F_C(X)=J_d(C\circ X)J_d^*$。展开 $VXV^*-WXW^*$ 为两项并使用迹范数的理想性质，得到
+
+$$
+\|\mathcal F-\mathcal F_C\|_\diamond
+\le(\|V\|+\|W\|)\|V-W\|
+\le 2\sqrt\eta/a.
+$$
+
+这里偏迹对任意算子的迹范数收缩可直接由对偶性核对：对任意酉 $U$，$|\operatorname{Tr}(U\operatorname{Tr}_E Y)|=|\operatorname{Tr}((U\otimes I_E)Y)|\le\|Y\|_1$。同一论证保留任意参考因子，不把迹不增的 $W$ 映射冒作信道。
+
+另一方面，$|C_{st}|\le K_{st}\le1$ 给出
+
+$$
+|C_{st}-K_{st}|^2\le2K_{st}D_{st}\le2D_{st}.
+$$
+
+置 $H=D_{\sqrt p}(C-K)D_{\sqrt p}$，其 Hilbert–Schmidt 范数满足 $\|H\|_{\rm HS}^2\le2\eta$，故 $\|H\|_1\le\sqrt{2N\eta}$。任一归一化纯参考输入可写成 $\sum_s|s\rangle|u_s\rangle$。定义 $B|s\rangle=T_s\otimes u_s/\sqrt{p_s}$；其列因 $T_s$ 正交而正交，所以 $\|B\|^2\le1/a$。这两个 Schur 映射在该输入上的输出差是 $BHB^*$，因而其迹范数不超过 $\sqrt{2N\eta}/a$。
+
+混合密度输入由凸性处理。为覆盖钻石范数中的任意算子，先将 Hermitian 输入作正负谱分解；再对任意 $X$ 添加一个参考二能级系统，使用 Hermitian 块矩阵 $\frac12\left(\begin{smallmatrix}0&X\\X^*&0\end{smallmatrix}\right)$。它的迹范数为 $\|X\|_1$；保 Hermitian 映射后的同形块矩阵具有对应输出的迹范数。这说明上述密度输入界也适用于 $\mathcal F_C-\mathcal F_K$，即使 $\mathcal F_C$ 未必保迹。三角不等式给出所列常数，两个信道的距离另有上界二。最后二元测试界给 $2(1-f_p)\le2(1-q)+\epsilon$，故 $\eta\le\epsilon/2$。证毕。
+
+**命题 38.5（固定两扇区模型中的最优指数，repo-derived）。** 即使固定两个不同的平坦残余秩，定理 38.4 中的平方根指数也不能统一改为任何大于 $1/2$ 的指数。
+
+**证明。** 此时 $K=\left(\begin{smallmatrix}1&k\\k&1\end{smallmatrix}\right)$，$0<k<1$，$\delta_*=1-k$。共同拆分后，在一侧输出旗标施加相位酉 $\operatorname{diag}(1,e^{i\theta})$，得到允许的乘积操作，其编码后信道 $\mathcal F_\theta$ 的非对角系数为 $ke^{i\theta}$，相位符号不影响以下量。
+
+两个标签上，对角为零、非对角系数为 $b$ 的保 Hermitian Schur 差，其不除二钻石范数是 $|b|$：纯参考输入的输出差是非对角块矩阵，迹范数为 $2|b|\sqrt{p_1p_2}\le|b|$，等质量达到。因此
+
+$$
+\delta_\theta=\|\mathcal F_\theta-\mathcal T\|_\diamond
+=|1-ke^{i\theta}|,
+\qquad d_\theta=\|\mathcal F_\theta-\mathcal F_K\|_\diamond
+=k|e^{i\theta}-1|.
+$$
+
+令 $\epsilon_\theta=\delta_\theta-(1-k)$，直接平方得到
+
+$$
+d_\theta^2=k\bigl(2(1-k)\epsilon_\theta+\epsilon_\theta^2\bigr).
+$$
+
+故 $\theta\to0$ 时 $d_\theta/\sqrt{\epsilon_\theta}\to\sqrt{2k(1-k)}>0$。对等质量测试，$q=(1+k)/2$ 且 $\eta_\theta=k(1-\cos\theta)/2$，更有精确等式 $d_\theta=2\sqrt{k\eta_\theta}$。两种认证参数都不允许更大的统一指数；这不声称定理 38.4 的常数最优。证毕。
+
+**命题 38.6（无满支撑最小点时的非唯一最优信道，repo-derived）。** 第 36.1 节的允许模型中存在三个扇区、每个目标秩为一的实例，具有两个不同的最优编码后信道。
+
+**证明。** 取排序的平方根谱
+
+$$
+v_1=(1,0),\quad v_2=(1/\sqrt2,1/\sqrt2),\quad
+v_3=(\cos(\pi/8),\sin(\pi/8)).
+$$
+
+令 $k=1/\sqrt2$、$c=\cos(\pi/8)$、$q=(1+k)/2=c^2$。于是
+
+$$
+K=\begin{pmatrix}1&k&c\\k&1&c\\c&c&1\end{pmatrix},
+\qquad p=(1/2,1/2,0),\qquad Kp=(q,q,c)^{\mathsf T}.
+$$
+
+$K\succeq0$ 且 $c>q$，所以单纯形最优性条件证明 $p$ 最小、值为 $q$。对任一概率 $x$，二次型展开中的线性项为 $2(c-q)x_3$，余项非负，因此任何最小点必须有 $x_3=0$；余下两标签二次型的唯一最小点是等质量。故不存在满支撑最小点。
+
+共同拆分给出 $\mathcal F_K$。再在一侧对第三输出旗标施加退相干，使第三标签与前两者的相干乘以 $c$，前两者间相干不变。这是一个 CPTP Schur 映射：其核是两个相同单位向量和另一个与它们重叠为 $c$ 的单位向量之 Gram 矩阵。所得乘积协议的核为
+
+$$
+C=\begin{pmatrix}1&k&q\\k&1&q\\q&q&1\end{pmatrix},
+\qquad Cp=q\mathbf1.
+$$
+
+$C$ 是两个正半定核的 Schur 乘积，正半定且对角为一，所有元素属于 $[0,1]$。对任一概率 $x$，$x^{\mathsf T}Cx=q+(x-p)^{\mathsf T}C(x-p)\ge q$。第 36.1 节的 Schur 范数推导适用于此核，故 $\|\mathcal F_C-\mathcal T\|_\diamond=2(1-q)$。然而 $C_{13}=q<c=K_{13}$，所以两个编码后信道不同。它们在活跃标签 $\{1,2\}$ 上完全相同，保留定理 38.2 的精确范围。证毕。
+
+**来源与适用范围。** 本节复用第 36.1 节的全操作最优值、共同拆分及投影环境界，以及第 34.1 节的正平衡概率；这些前置不作为新增结果。新增的等号分类、完整编码后信道的测试认证、指数最优性和满支撑边界属于本仓推导。Stinespring 表示、完全有界迹范数和一般通道优化的对偶条件属于已有量子信息理论；比较文献为 Watrous, *The Theory of Quantum Information* (2018)，以及 Coutts–Girard–Watrous, *Certifying optimality for convex quantum channel optimization problems*, Quantum 5, 448 (2021), [arXiv:1810.13295](https://arxiv.org/abs/1810.13295)。后者的全信道最优性条件不替代本节局部乘积混合类的投影环境界。本节不分类局部信道在未使用物理输入上的自由度，不包括通信、共享纠缠或任意全局操作，也不建立连续 CFT 与引力 RT 的实现字典。
+
+## 追加锚（本行以下为增补区）
+
+## 39. 任意源谱与平坦目标的共同随机粗化
+
+**定义 39.1（源谱的目标尺寸分块）。** 令 $S$ 为非空有限扇区集，$r_s,d_s$ 为正整数，$\lambda_s=(\lambda_{si})_{0\le i<r_s}$ 为非增概率向量，允许零项。两侧源空间为 $A=\bigoplus_s\mathbb C^{r_s}$，输出空间为 $B=\bigoplus_s\mathbb C^{d_s}$。定义源、目标等距
+
+$$
+J|s\rangle=\sum_{i<r_s}\sqrt{\lambda_{si}}|s,i\rangle_X|s,i\rangle_Y,
+\qquad T_s=T|s\rangle=\frac1{\sqrt{d_s}}\sum_{a<d_s}|s,a\rangle_X|s,a\rangle_Y.
+$$
+
+记相应编码信道为 $\mathcal J$、$\mathcal T$。允许两侧独立 CPTP 映射以及有限共享经典随机混合，不允许通信、后选择或额外共享纠缠，竞争输出不必保持旗标或基扇区纯态。误差仍为包含任意被动参考且不除以二的钻石范数。
+
+置 $M=\max_s\lceil r_s/d_s\rceil$，将每个 $\lambda_s$ 补零到 $d_sM$ 项，并定义
+
+$$
+\alpha_{saj}=\sqrt{\lambda_{s,d_sj+a}},\qquad
+b_{sj}=\frac1{\sqrt{d_s}}\sum_{a<d_s}\alpha_{saj},\qquad
+G_{st}=\sum_{j<M}b_{sj}b_{tj},\qquad
+q=\min_{p\in\Delta_S}p^{\mathsf T}Gp.
+$$
+
+每个 $b_s$ 非负且非增。分块 Cauchy–Schwarz 给 $\|b_s\|_2^2\le1$，所以 $G\succeq0$、$0\le G_{st}\le1$；此处一般只有 $G_{ss}\le1$。
+
+单扇区的最佳纯目标保真度 $\sum_jb_{sj}^2$ 是 George–Chitambar 的已有结果：其定理 8 的递减分块系数优化经 Cauchy–Schwarz 达到于与 $b_{sj}^2$ 成比例的辅助概率。定理 4 同时给出该保真度目标下 LO 与 LOSR 的等价性。以下结论研究同一个相干多扇区信道与被动参考，不把这一单态公式认作新增结果。精确来源见 [零通信纯态转化](../../../Library/QuantumChannels/george2024zerocommunication.md)。
+
+**定理 39.2（任意源谱的共同 LOSR 最优值，repo-derived）。** 对定义 39.1 的模型，
+
+$$
+\boxed{\inf_{\Phi\in\operatorname{conv}_{\rm fin}
+\{\Lambda_X\otimes\Lambda_Y:\Lambda_X,\Lambda_Y\ {
+m CPTP}\}}
+\|\Phi\circ\mathcal J-\mathcal T\|_\diamond=2(1-q).}
+$$
+
+一个同时作用于全部扇区的局部坐标拆分，加上至多 $\prod_s d_s$ 个共享循环移位分支，达到此值。不要求源系数恰好重复 $d_s$ 次，也不要求 $r_s/d_s$ 是整数。此值是乘积信道的共同下界，但不声称乘积类总能达到它。
+
+**证明。** 先固定任意乘积竞争操作及其局部 Stinespring 等距。令 $\Xi_s$ 为源列 $J|s\rangle$ 的扩张输出，$\zeta_s=(\langle T_s|\otimes I)\Xi_s$ 为分析用的投影环境向量，$Z_s$ 为其系数矩阵。跨 $X_{\rm out}E_X\mid Y_{\rm out}E_Y$，$\Xi_s$ 的非零奇异值仍为 $\sqrt{\lambda_{si}}$。将系数矩阵压缩到两侧目标 $s$ 旗标得到 $Q'_s$，则
+
+$$
+Z_s=\frac1{\sqrt{d_s}}\sum_{a<d_s}(Q'_s)_{aa}.
+$$
+
+对环境中的秩 $k$ 部分等距 $W$，$I_{d_s}\otimes W$ 的非零奇异值是一、秩为 $d_sk$。von Neumann 奇异值迹界及压缩不增奇异值给出
+
+$$
+|\operatorname{Tr}(W^*Z_s)|
+\le\frac1{\sqrt{d_s}}\sum_{i<d_sk}\sigma_i(Q'_s)
+\le\frac1{\sqrt{d_s}}\sum_{i<d_sk}\sqrt{\lambda_{si}}
+=\sum_{j<k}b_{sj}.
+$$
+
+所有序列按需补零。Ky Fan 变分公式给出 $\sigma(Z_s)\prec_w b_s$。对非负递减权重作前缀和的分部求和，先后用于两侧，再用奇异值迹界，得到
+
+$$
+|\langle\zeta_t,\zeta_s\rangle|
+\le\sigma(Z_t)\mathbin{\cdot}\sigma(Z_s)
+\le b_t\mathbin{\cdot}b_s=G_{st}.
+$$
+
+这是第 36.1 节同一投影机制在一般源谱上的应用；不把投影当作实现中的后选择。输入 $|\Omega_p\rangle=\sum_s\sqrt{p_s}|s\rangle_R|s\rangle_L$，对理想输出 $|\Theta_p\rangle=\sum_s\sqrt{p_s}|s\rangle_RT_s$ 作投影，成功概率至多 $p^{\mathsf T}Gp$。二元测试给钻石误差至少 $2(1-p^{\mathsf T}Gp)$。取最小点即得 $2(1-q)$。同一个输入与测试对所有竞争乘积操作有效，成功概率又对输出线性，故下界覆盖有限共享混合。
+
+下面构造共同达到操作。每侧在实际源基上定义
+
+$$
+E|s,i\rangle=|s,i\bmod d_s\rangle_{
+m out}
+|\lfloor i/d_s\rfloor\rangle_E.
+$$
+
+不同 $(s,i)$ 映到不同 $(s,a,j)$，故 $E^*E=I$，丢弃环境得到局部 CPTP 映射。补零只是系数约定，不添加待输入的物理基向量。令
+
+$$
+\psi_{sj}=\sum_{a<d_s}\alpha_{saj}|s,a\rangle_X|s,a\rangle_Y.
+$$
+
+两侧拆分后的矩阵单位作用为 $|s\rangle\langle t|\mapsto\sum_j|\psi_{sj}\rangle\langle\psi_{tj}|$。
+
+对每个 $s$ 令 $X_s$ 为 $d_s$ 个输出坐标的循环移位，均匀选择有限随机变量 $h\in\prod_s\mathbb Z/d_s\mathbb Z$。两侧使用同一个 $h$，各自在丢弃环境后施加 $U_h=\bigoplus_sX_s^{h_s}$。这是至多 $\prod_sd_s$ 个乘积 CPTP 映射的有限混合，各分支对所有逻辑输入相同。
+
+取 $\omega_s=e^{2\pi i/d_s}$，定义相关子空间的正交 Fourier 基
+
+$$
+T_{sk}=\frac1{\sqrt{d_s}}\sum_a\omega_s^{ka}|s,a\rangle_X|s,a\rangle_Y,
+\qquad
+c_{sjk}=\frac1{\sqrt{d_s}}\sum_a\alpha_{saj}\omega_s^{-ka}.
+$$
+
+这里 $T_{s0}=T_s$、$c_{sj0}=b_{sj}$。$X_s^{h_s}\otimes X_s^{h_s}$ 在 $T_{sk}$ 上乘以 $\omega_s^{-kh_s}$。同扇区平均只保留相同 Fourier 指标；不同扇区的独立 $h_s,h_t$ 平均只保留两者均为零的指标。因此最终编码后信道严格为
+
+$$
+\mathcal F_G(X)=T(G\circ X)T^*+\sum_sX_{ss}L_s,
+\qquad
+L_s=\sum_{k\ne0}\left(\sum_j|c_{sjk}|^2\right)|T_{sk}\rangle\langle T_{sk}|.
+$$
+
+$L_s\succeq0$，与全部理想向量 $T_t$ 正交，且 $\operatorname{Tr}L_s=1-G_{ss}$。$d_s=1$ 时非零 Fourier 模集合为空，$L_s=0$、$G_{ss}=1$。整个构造没有连续随机平均或无穷共享随机性。
+
+对任意纯参考输入 $\sum_s|s\rangle|u_s\rangle$，令 $p_s=\|u_s\|^2$。理想减实际输出的理想子空间块等距于
+
+$$
+B_p=D_{\sqrt p}(\mathbf1\mathbf1^{\mathsf T}-G)D_{\sqrt p},
+$$
+
+其余是正交的负半定泄漏块 $-\sum_s|u_s\rangle\langle u_s|\otimes L_s$，泄漏迹为
+
+$$
+\ell_p=\sum_sp_s(1-G_{ss})=\operatorname{Tr}B_p\ge0.
+$$
+
+$B_p$ 是秩一正矩阵减正半定矩阵，至多有一个正本征值；其迹非负，所以包括零情形在内，完整输出差的迹范数是
+
+$$
+\|B_p\|_1+\ell_p
+=2\lambda_{\max}(B_p)-\operatorname{Tr}B_p+\ell_p
+=2\lambda_{\max}(B_p).
+$$
+
+此处不能将 $B_p$ 当作迹零矩阵。记 $A=\mathbf1\mathbf1^{\mathsf T}-G$，它逐项非负，最大 Rayleigh 向量可取非负。置 $y_s=\sqrt{p_s}x_s$，$\|x\|_2=1$，则 $\sum_sy_s\le1$，填补概率质量不会降低 $y^{\mathsf T}Ay$。反向对任意 $z\in\Delta_S$ 取 $p=z$、$x=\sqrt z$，于是
+
+$$
+\max_p\lambda_{\max}(B_p)=\max_{z\in\Delta_S}z^{\mathsf T}Az=1-q.
+$$
+
+混合参考输入由凸性处理；任意算子输入先作 Hermitian 正负谱分解，再对 $\frac12\left(\begin{smallmatrix}0&X\\X^*&0\end{smallmatrix}\right)$ 加一个参考二能级系统即可归约到该界，保持对应迹范数。因此任意有限被动参考均已覆盖，候选钻石误差恰为 $2(1-q)$，达到下界。证毕。
+
+**推论 39.3（非整数平坦秩比，repo-derived）。** 若每个源谱在 $r_s$ 项上均匀，写 $r_s=d_sm_s+k_s$、$0\le k_s<d_s$，则定理 39.2 的核由
+
+$$
+b_{sj}=\begin{cases}
+\sqrt{d_s/r_s},&j<m_s,\\
+k_s/\sqrt{d_sr_s},&j=m_s,\\
+0,&j>m_s
+\end{cases}
+$$
+
+直接计算。单扇区的有限混合最优误差为 $2k(d-k)/(rd)$。若所有 $k_s=0$，则恢复第 34—36 节的残余 Gram 核，全部 $L_s$ 消失，达到操作可取原来的单个乘积信道。
+
+**证明。** 将均匀源幅度代入分块定义。单扇区 $q=(md^2+k^2)/(rd)$，代入定理 39.2。所有余数为零时，各有效块内幅度相等，非零 Fourier 模全部为零。证毕。单态保真度部分仍归属 George–Chitambar 定理 8；这里的非整数多扇区公式是共同信道定理的应用。
+
+**命题 39.4（共享随机性可以严格改善粗化，repo-derived）。** 允许模型中存在共享随机混合最优误差严格小于乘积最优误差的实例；这种严格差异也存在于满 Schmidt 秩三的源到平坦秩二目标之间。
+
+**证明。** 先取单扇区积态源及 Bell 二维目标。定理 39.2 给混合误差一；显式两分支制备 $(|00\rangle\langle00|+|11\rangle\langle11|)/2$ 达到它。乘积操作只能输出 $\tau\otimes\sigma$。密度矩阵对构成紧集，迹距离连续，故乘积最小值 $\mu$ 达到。若 $\mu=1$，理想投影测试迫使
+
+$$
+\frac12\operatorname{Tr}(\tau\sigma^{\mathsf T})\ge\frac12.
+$$
+
+但 $\operatorname{Tr}(\tau\sigma^{\mathsf T})\le\lambda_{\max}(\sigma)\le1$。等号迫使 $\sigma$ 为纯态，且 $\tau$ 支撑于 $\sigma^{\mathsf T}$ 的同一一维空间。输出因而为纯的对齐积态，与 Bell 态的平方重叠为 $1/2$，其不除二迹距离是 $\sqrt2>1$，矛盾。因此 $\mu>1$。
+
+在固定三维源空间中，以
+
+$$
+|\psi_\epsilon\rangle=\sqrt{1-\epsilon}|00\rangle
++\sqrt{\epsilon/2}|11\rangle+\sqrt{\epsilon/2}|22\rangle,
+\qquad 0<\epsilon<2/3
+$$
+
+替换积态。它具有满 Schmidt 秩三，与积态的迹距离为 $2\sqrt\epsilon$。任意乘积信道的迹距离收缩及三角不等式给 $\delta_{\rm prod}(\epsilon)\ge\mu-2\sqrt\epsilon$；分块公式则给
+
+$$
+\delta_{\rm mix}(\epsilon)=1-\sqrt{2\epsilon(1-\epsilon)}<1.
+$$
+
+所以 $0<\epsilon<\min\{2/3,((\mu-1)/2)^2\}$ 时，源秩三大于目标秩二，严格差异仍在。此为由紧性正差给出的存在区间，不声称已求出 $\mu$ 或区间的显式有理端点。它不与 LO、LOSR 最佳纯目标保真度相等矛盾：纯目标保真度是线性目标，迹距离一般不是。证毕。
+
+**来源与范围。** 单态分块保真度、Stinespring 表示、Ky Fan 与 von Neumann 奇异值界、有限 Fourier 正交性均复用已有结果。新增的承重内容是一个共同相干多扇区实现、正交泄漏的迹补偿及包含任意被动参考的精确混合最优值。目标仍须逐扇区平坦；任意非平坦目标、混合源、一般 LOCC 或额外纠缠辅助的优化不在结论内。单扇区 trace-distance 值也可由已有保真度及保持目标的相关酉平均得到，不作为独立文献原创性主张。本节不建立连续 CFT 或引力 RT 字典。
+
+## 追加锚（本行以下为增补区）
+
+## 40. 有限共享随机性的分支压缩与精确障碍
+
+**定理 40.1（受控循环移位的精确判据）。** 沿用定理 39.2 的共同块拆分。令每个扇区 $s$ 的目标维数为 $d_s$，并考虑一个均匀分布的单循环共享随机变量 $h\in\mathbb Z/L\mathbb Z$，其中 $d_s\mid L$，两侧在扇区 $s$ 上同时施加坐标循环移位 $h\bmod d_s$。若要求该有限混合对**每一种允许的源谱**都在所有编码矩阵单位上产生定理 39.2 的目标信道 $\mathcal F_G$（包括消除不同扇区之间全部非零 Fourier 模），则当且仅当
+
+$$
+\gcd(d_s,d_t)=1\qquad\text{for every }s\ne t.
+$$
+
+在这一情形，取 $L=\operatorname{lcm}_s d_s=\prod_s d_s$ 即可；所以原来的随机支撑可由一个循环表述而不增加分支数。若某一对 $d_s,d_t$ 有公因子 $g>1$，任意这样的单循环平均都保留一项跨扇区 Fourier 模；因此对某个允许源谱（且该碰撞模的两个系数非零）不能实现定理 39.2 的 $\mathcal F_G$。对一个固定的特殊源谱，碰撞模的系数可能恰为零，此时不能从 gcd 单独推出失败。
+
+**证明。** 扇区 $s$ 的 Fourier 模 $k\in\mathbb Z/d_s\mathbb Z$ 在移位下获得特征值 $\exp(2\pi i kh/d_s)$。平均跨扇区 $(s,t)$ 的模 $(k,l)$ 时，所得系数为
+
+$$
+\frac1L\sum_{h=0}^{L-1}
+\exp\!\left(2\pi i h\left(\frac{k}{d_s}-\frac{l}{d_t}\right)\right),
+$$
+
+等于 $1$ 当且仅当 $k/d_s-l/d_t\in\mathbb Z$，否则为零。因为 $0\le k/d_s,l/d_t<1$，这里只可能相等。若 $\gcd(d_s,d_t)=1$，两个分数的最小分母互质，故相等只在 $k=l=0$。这保留正是 $b_{sj}b_{tj}|T_s\rangle\langle T_t|$ 的目标项。
+
+反之，若 $g>1$，令 $k=d_s/g$、$l=d_t/g$。二者均为合法非零模且 $k/d_s=l/d_t=1/g$，所以该跨扇区项平均后系数为 $1$。取各自首个目标块内具有两个不等幅坐标的源谱，使该碰撞模的 Fourier 系数均非零；该项不为零，故单循环不能对所有源谱给出 $\mathcal F_G$。证毕。
+
+**推论 40.2（两扇区受控移位族的最小支撑）。** 对两个扇区 $s,t$，令 $H$ 为有限群，并令控制移位由满射同态 $\pi_s:H\twoheadrightarrow\mathbb Z/d_s\mathbb Z$、$\pi_t:H\twoheadrightarrow\mathbb Z/d_t\mathbb Z$ 给出。若 $H$ 平均必须消灭所有非零跨扇区 Fourier 模，则联合同态
+
+$$
+\Pi:H\longrightarrow\mathbb Z/d_s\mathbb Z\times\mathbb Z/d_t\mathbb Z
+$$
+
+必须满射。因此 $|H|\ge d_sd_t$，且 $H=\mathbb Z/d_s\mathbb Z\times\mathbb Z/d_t\mathbb Z$ 达到下界。
+
+**证明。** 若 $\Pi(H)$ 是真子群，其湮灭子中存在非平凡角色 $(k,l)$。满射性排除了 $k=0$ 或 $l=0$ 的情形，所以 $k,l$ 都非零；该角色正是一个非零跨扇区 Fourier 模，并在 $H$ 上恒为一，矛盾。故 $\Pi$ 满射，按基数得到下界。证毕。
+
+For three or more sectors, the analogous statement requires an explicit hypothesis that the joint map is surjective onto the full product (or an equivalent annihilator condition for every nonempty multi-coordinate support). Pair-supported character cancellation alone is insufficient: for example $H=\{(x,y,z)\in(\mathbb Z/2)^3:x+y+z=0\}$ has order $4<8$.
+
+**范围。** 这是 §39 任意源谱相干信道的有限特征实现定理。它不对任意乘积信道的分支数给出下界，也不改变精确钻石范数最优值；不增加 CFT、引力、通信辅助或共享纠缠的解释。
+
+## 41. 全多坐标特征湮灭下的多扇区最小支撑
+
+**定理 41.1（完整多坐标正交性的充要条件）。** 设 $S$ 为有限扇区集，$d_s\ge2$，$H$ 为有限阿贝尔群。每个扇区的受控循环移位由满射同态
+$$
+\pi_s:H\twoheadrightarrow\mathbb Z/d_s\mathbb Z
+$$
+给出，并令联合同态为 $\Pi=(\pi_s)_s:H\to A:=\prod_{s\in S}\mathbb Z/d_s\mathbb Z$。令 $h$ 在 $H$ 上均匀分布。对 $A$ 的角色 $\chi=(\chi_s)_s\in\widehat A=\prod_s\widehat{\mathbb Z/d_s\mathbb Z}$，定义 $\operatorname{supp}\chi=\{s:\chi_s\ne1\}$。则对给定的 $(H,\Pi)$，下列两条件等价：
+1. 对每个 $\chi\in\widehat A$ 满足 $|\operatorname{supp}\chi|\ge2$，有 $|H|^{-1}\sum_{h\in H}\chi(\Pi(h))=0$；
+2. $\Pi$ 满射。
+此外，任一满足这些条件的实现都有 $|H|\ge|A|=\prod_s d_s$，且下界由 $H=A$、$\Pi=\mathrm{id}_A$ 达到。
+
+因此，对于 §39 的任意源谱，若要求一个有限受控移位混合消灭全部非零多坐标 Fourier 模，而不仅是两坐标模，则乘积群既是充分实现，也是该实现类中的最小支撑。若各 $d_s$ 两两互质，Chinese remainder theorem 将这个乘积群识别为单个循环群 $\mathbb Z/\prod_s d_s\mathbb Z$；若存在公因子，单循环方案仍受定理 40.1 的碰撞障碍约束。
+
+**证明。** $1\Rightarrow2$：若 $\Pi(H)$ 是直积 $A$ 的真子群，则有限阿贝尔群的角色分离性给出一个非平凡角色 $\chi\in\widehat A$，在 $\Pi(H)$ 上恒等于 $1$。由于每个 $\pi_s$ 满射，$\chi$ 不可能只在一个坐标上非平凡：若其唯一非平凡坐标为 $s$，则 $\chi_s\circ\pi_s$ 仍是 $\mathbb Z/d_s\mathbb Z$ 上的非平凡角色，不能在 $H$ 上恒为 $1$。所以 $|\operatorname{supp}\chi|\ge2$，与条件 1 矛盾。$2\Rightarrow1$：满射时 $\Pi(h)$ 在 $A$ 上均匀，非平凡角色的均匀 Haar 平均为零。满射还给出 $|H|\ge|A|$；取 $H=A$ 与恒等联合同态达到下界。证毕。
+
+**推论 41.2（§39 的多扇区充分条件）。** 若 $d_s$ 两两互质，则对任意有限源谱族，取 $H=\mathbb Z/L\mathbb Z$、$L=\prod_sd_s$，并令扇区 $s$ 的移位参数为 $h\bmod d_s$。均匀循环混合消灭全部非零多坐标 Fourier 模，故严格复现 §39 的共同信道 $\mathcal F_G$。其共享随机分支数为 $L$，并且在完整多坐标正交条件下达到定理 41.1 的支撑下界。
+
+**范围。** 这里的最小性只针对受控移位与完整多坐标特征湮灭条件，不是对任意 LOSR 或一般乘积信道分支数的下界。结论保持 §39 的平坦逐扇区目标与有限维模型，不引入 CFT、引力或通信辅助解释。
+
+## 42. 控制器商的精确分支资源
+
+**定理 42.1（去重控制与商群资源）。** 设 $H$ 为有限阿贝尔控制器，$A=\prod_{s\in S}\mathbb Z/d_s\mathbb Z$，且 $\Pi:H\to A$ 为各扇区循环移位参数的联合同态。记 $K=\operatorname{im}\Pi$、$N=\ker\Pi$。令 $\{\Lambda_h\}_{h\in H}$ 为由 $h$ 控制的乘积 CPTP 映射，其中 $\Lambda_h$ 只通过 $\Pi(h)$ 作用。则：
+
+1. 控制器标签按 $\Pi(h)$ 去重后恰有 $|K|$ 个不同的受控移位标签；若记由标签诱导的 CPTP 表示为 $\rho:K\to\operatorname{CPTP}$，则实际不同通道数为 $|\rho(K)|\le|K|$。在标准全输出循环移位且各 $d_s\ge2$ 的忠实表示下，$|\rho(K)|=|K|$。
+在下式中记 $\Lambda_k:=\rho(k)$。
+2. $h\mapsto\Pi(h)$ 将 $H$ 的均匀分布推前为 $K$ 上的均匀分布，故
+   $$|H|^{-1}\sum_{h\in H}\Lambda_h=|K|^{-1}\sum_{k\in K}\Lambda_k.$$
+3. 由 $H/N\cong K$，用商控制器 $H/N$ 实现同一混合且恰有 $|K|$ 个控制标签；实际通道分支数为 $|\rho(K)|$。于是原始控制器大小 $|H|$ 不是该受控移位表示的资源成本：标签成本是 $|K|$，通道成本是 $|\rho(K)|$。
+
+若每个坐标投影 $\pi_s$ 满射且要求湮灭全部支撑至少两个坐标的角色，则 $K=A$，从而精确成本为 $|K|=\prod_s d_s$。这与 §41 的最小支撑结论一致，同时允许 $|H|>|K|$ 的冗余控制器。
+
+**证明。** 同态的纤维均为 $N$ 的陪集，故每个 $k\in K$ 有恰好 $|N|$ 个原像；这给出均匀推前公式。控制作用只依赖 $\Pi(h)$，故标签去重和逐项合并成立。第一同构定理给出 $H/N\cong K$，把每个陪集标记为其像即得商控制器。最后，在满射坐标投影与全多坐标角色湮灭条件下，§41.1 的 (1)⇔(2) 应用于 $K\hookrightarrow A$，得到 $K=A$；因此 $|K|=\prod_s d_s$。本定理只计算受控移位表示的分支资源，不给任意 LOSR 分支数下界。
+
+**范围。** 结论针对有限共享经典控制与受控循环移位的表示成本；不扩展 §39 的钻石范数最优性，不涉及一般 LOSR、通信或共享纠缠，也不引入 CFT/引力解释。
+
+## 43. 未湮灭特征的可审计误差下界
+
+**定理 43.1（受控移位残余特征的钻石下界）。** 令 $A$ 为有限阿贝尔群，$K\le A$，$\widehat A$ 为其角色群，且在 $\mathcal H=\ell^2(\widehat A)$ 上定义
+$$
+U_u|\chi\rangle=\chi(u)|\chi\rangle,\qquad
+\mathcal D_K(X)=|K|^{-1}\sum_{u\in K}U_uXU_u^* .
+$$
+记 $m_K(\eta)=|K|^{-1}\sum_{u\in K}\eta(u)$。则
+$$
+\mathcal D_K(|\chi\rangle\langle\psi|)
+ =m_K(\chi\psi^{-1})|\chi\rangle\langle\psi|.
+$$
+若 $\eta=\chi\psi^{-1}\in K^\perp\setminus\{1\}$，则对理想全群平均 $\mathcal D_A$，
+$$
+\|\mathcal D_K-\mathcal D_A\|_\diamond\ge1 .
+$$
+更一般地，若在某个编码子空间上实际通道与 $\mathcal D_K$ 的该矩阵单位系数为 $h$（理想通道系数为零），则相同二维测试给出钻石距离下界 $|h|$。
+
+**证明。** 角色正交性给出 $m_K(\eta)=1$ 当且仅当 $\eta\in K^\perp$，否则为零；对 $A$ 则 $m_A(\eta)=0$ 对每个非平凡 $\eta$。取归一化输入
+$$
+|v\rangle=(|\chi\rangle+|\psi\rangle)/\sqrt2,qquad \rho_v=|v\rangle\langle v|.
+$$
+当 $\eta\in K^\perp\setminus\{1\}$ 时，$(\mathcal D_K-\mathcal D_A)(\rho_v)=\tfrac12(|\chi\rangle\langle\psi|+|\psi\rangle\langle\chi|)$。其在 $\operatorname{span}\{|\chi\rangle,|\psi\rangle\}$ 上本征值为 $+1/2,-1/2$，故迹范数为 $1$；输入归一化，遂钻石范数至少为 $1$。若该 surviving coefficient 为 $h$，同一计算的两个本征值为 $\pm|h|/2$，得到下界 $|h|$。被动参考系统不改变下界，因钻石范数取所有参考输入的上确界。证毕。
+
+**与 §39--§42 的接口。** 共同受控移位混合在 Fourier 矩阵单位上恰以 $m_K(\eta)$ 乘法。故 $K^\perp$ 中任一支撑至少两个扇区的角色给出一个可直接测试的残余相干；固定源谱时 $h$ 是相应实际编码系数，不能无条件替换为 $1$。普适任意源谱的失败需另取一个允许谱使 $h\ne0$；定理 40.1 的 universal 量词正是这一额外步骤。结论只给受控移位表示的误差证书，不给任意 LOSR 下界。
+
+## 44. 受控移位层叠的残余特征单调性
+
+**定理 44.1（多层平均的精确合成）。** 对有限阿贝尔群 $A$ 的子群 $K_1,\ldots,K_m$，令 $\mathcal D_K$ 如定理 43.1。则
+$$
+\mathcal D_{K_m}\circ\cdots\circ\mathcal D_{K_1}
+=\mathcal D_{K_1+\cdots+K_m}.
+$$
+在角色矩阵单位上，合成乘子为
+$$
+\prod_{j=1}^m m_{K_j}(\eta)
+=\mathbf 1_{(K_1+\cdots+K_m)^\perp}(\eta).
+$$
+因此残余特征集合为 $(K_1+\cdots+K_m)^\perp=\bigcap_jK_j^\perp$，随层数增加单调缩小；当且仅当 $K_1+\cdots+K_m=A$ 时，合成等于理想全群平均 $\mathcal D_A$。
+
+**证明。** 对 $E_{\chi,\psi}$，定理 43.1 给出每层乘子 $m_{K_j}(\chi\psi^{-1})$。角色在 $K_j$ 上的均匀平均是 $1$（当且仅当 $\chi\psi^{-1}\in K_j^\perp$）或 $0$，故乘积是交集指标。有限阿贝尔群对偶性给出 $(\sum_jK_j)^\perp=\cap_jK_j^\perp$；矩阵单位构成全矩阵代数基，遂得通道恒等式。
+
+**推论 44.2（误差证书的层叠单调性）。** 固定一个整段 stack 的入口编码矩阵单位，其初始 Fourier 系数为 $h_\eta$；每一层只在同一 $A$、同一 Fourier 基上施加均匀平均 $\mathcal D_{K_j}$，层间没有其他映射。则 stack 出口相对 $\mathcal D_A$ 的系数为 $h_\eta\mathbf 1_{(\sum_jK_j)^\perp}(\eta)$。定理 43.1 的二维输入因此给出下界 $|h_\eta|$，但仅对仍在交集中的角色成立。增加一层只能删除残余证书；若和为 $A$，所有残余证书同时消失。若把 $h_\eta$ 改理解为某一中间层的入口系数，则应只使用其后缀层的湮灭子交集，本推论不作该量词断言。
+
+**范围与非可加性。** 这是固定 $A$、固定 Fourier 基和均匀受控移位 Schur 平均的精确组合律，不是任意 LOSR 通道的误差可加定理。重复同一层满足 $\mathcal D_K^2=\mathcal D_K$；因此在每层恰有 $\|\mathcal D_K-\mathcal D_A\|_\diamond=1$ 的特殊情形，重复该同一 $K$ 的总误差仍为 $1$ 而非累加。对不同的 $K_j$ 不作“不累加”断言；其合成按定理 44.1 由子群和决定，甚至可能等于 $\mathcal D_A$。结论只针对角色支撑及相应 $h_\eta$ 证书。
+
+## 45. 可观测残余谱与层叠停止判据
+
+**定理 45.1（固定输入的残余谱证书）。** 对每个 $\eta\in\widehat A\setminus\{1\}$ 固定一对入口 Fourier 标签 $(\chi_\eta,\psi_\eta)$ 满足 $\eta=\chi_\eta\psi_\eta^{-1}$，并记该矩阵单位对的入口系数为 $h_\eta$。在同一 $A$ 与 Fourier 基上，假定每层平均都是 Schur/Fourier 对角的，因而不混合不同矩阵单位。前 $j$ 层分别施加均匀平均 $\mathcal D_{K_1},\ldots,\mathcal D_{K_j}$，层间无其他映射。令 $\Phi_j$ 表示当前 stack 通道，令 $\Phi_{\rm ideal}=\mathcal D_A$ 表示同一 Fourier 子空间上的理想全群平均。定义
+$$
+R_j=(K_1+\cdots+K_j)^\perp\setminus\{1\},\qquad
+\mathsf S_j=\{\,|h_\eta|:\eta\in R_j\,\}.
+$$
+则对每个 $\eta\in R_j$，定理 43.1 的二维归一化输入给出钻石距离证书 $|h_\eta|$；因此
+$$
+\bigl\|\Phi_j-\Phi_{\rm ideal}\bigr\|_\diamond
+\ge \max\mathsf S_j
+$$
+（空集最大值定义为 $0$）。此外
+$$
+R_{j+1}\subseteq R_j,\qquad \max\mathsf S_{j+1}\le\max\mathsf S_j.
+$$
+
+**证明。** 定理 44.1 给出第 $j$ 层出口的该矩阵单位系数 $h_\eta\mathbf1_{R_j}(\eta)$。对任意 $\eta=\chi_\eta\psi_\eta^{-1}\in R_j$，在 $\operatorname{span}\{|\chi_\eta\rangle,|\psi_\eta\rangle\}$ 中取 $|v_\eta\rangle=(|\chi_\eta\rangle+|\psi_\eta\rangle)/\sqrt2$。实际与理想输出之差的两个非零本征值为 $\pm|h_\eta|/2$，故该归一化输入的迹范数为 $|h_\eta|$；取所有输入的上确值得到钻石下界，最后取 $\eta$ 的最大值。子群和随 $j$ 增大而增大，湮灭子反向包含，遂得单调性。证毕。
+
+**推论 45.2（可审计停止判据）。** 对给定输入族和阈值 $\varepsilon\ge0$，若 $R_j=\varnothing$，则所有由定理 43.1 这类 Fourier 二维输入产生的残余证书已经消失；若仅有 $\max\mathsf S_j\le\varepsilon$，则这些可观测证书全部不超过 $\varepsilon$。因此可以按 $R_j$ 的交集更新逐层停止检查。该判据是证书族的充分停止条件，不是整个钻石范数的上界；未观测的通道方向仍可能有误差。
+
+**范围。** 结论固定入口矩阵单位对、同一 Fourier 基、Schur 对角无混合及层间无映射条件，针对受控移位 Schur 平均和指定二维测试族；不声称一般 LOSR 误差上界或任意输入的完整谱分类。
+
+## 46. 残余证书族的有限步停止算法
+
+**定理 46.1（有限允许层的精确停止判据）。** 固定 §45 的入口系数 $h_\eta$ 与阈值 $\varepsilon\ge0$，令
+$$
+T_\varepsilon=\{\eta\in\widehat A\setminus\{1\}:|h_\eta|>\varepsilon\}.
+$$
+由于 $\widehat A$ 有限，$T_\varepsilon$ 有限。给定允许层族 $\mathscr L$，其中每个 $K\in\mathscr L$ 是 $A$ 的子群，并在同一 $A$、同一 Fourier 基上施加 $\mathcal D_K$；stack 只由这些层组成，允许重复选择，且层间无其他映射或 Schur mixing。从 $U_0=T_\varepsilon$ 开始；若 $U_0=\varnothing$ 则立即停止。否则若存在可重复选择的 $K_j\in\mathscr L$ 使
+$$
+U_j:=U_{j-1}\cap K_j^\perp
+$$
+严格小于 $U_{j-1}$，就选取该层继续；当 $U_j=\varnothing$ 时停止。每次成功选择至少删除一个角色，故至多 $|T_\varepsilon|$ 步达到
+$$
+\max\mathsf S_j\le\varepsilon.
+$$
+若在某一步 $U_{j-1}\ne\varnothing$ 且对所有 $K\in\mathscr L$ 都有 $U_{j-1}\cap K^\perp=U_{j-1}$，则任何由 $\mathscr L$ 组成、允许重复层的后续有限 stack 都不能使该证书族达到阈值 $\varepsilon$。
+
+**证明。** §44.1 给出每层把残余角色集合与 $K^\perp$ 相交，因此算法维护的 $U_j$ 正是尚未被删除的超阈值角色。若某层严格缩小，有限性保证至少删除一个元素，故至多 $|T_\varepsilon|$ 次达到空集；§45.1 随即给出证书最大值不超过 $\varepsilon$。若算法停滞，则当前 $U$ 被每个允许层逐点保留；任意后续层仍与 $U$ 相交得到 $U$，归纳可知所有有限序列都保留 $U\ne\varnothing$，其中至少一个 $|h_\eta|>\varepsilon$，所以该证书族不可能达到阈值。证毕。
+
+**范围。** 这是给定有限允许层族与固定入口系数时的证书族停止算法；达到阈值只说明 §45 的指定 Fourier 二维下界不超过 $\varepsilon$，不是整个钻石范数的上界，也不优化任意 LOSR 层。
+
+## 追加锚（本行以下为增补区）
+
+## 47. 允许子群菜单的可行性与停滞
+
+**替代关系。** 定理 46.1 中“至多 $|T_\varepsilon|$ 步达到
+$\max\mathsf S_j\le\varepsilon$”，以及其证明中“至多 $|T_\varepsilon|$
+次达到空集”，由定理 47.2 替代：无条件结论是至多这么多次严格缩小后达到空集或停滞；
+保证达到阈值须加上精确的允许子群可行性条件 (47.1)。
+定理 46.1 的非空停滞阻碍后续有限 stack 的断言保留，并在下面给出其精确集合形式。
+
+**定义 47.1（固定菜单与不可删除证书）。** 沿用 §43–46 的模型：
+$A$ 为有限阿贝尔群，$\widehat A$ 为其角色群；对每个非平凡 $\eta$，
+固定入口 Fourier 标签对 $(\chi_\eta,\psi_\eta)$，
+$\eta=\chi_\eta\psi_\eta^{-1}$，及其入口矩阵单位系数 $h_\eta$。
+阈值 $\varepsilon\ge0$，允许菜单 $\mathscr L$ 是 $A$ 的子群族，
+在整段 stack 中固定，允许重复选层。每层仅施加同一 Fourier 基上的均匀
+Schur 平均 $\mathcal D_K$，层间没有其他映射或矩阵单位混合：
+
+$$
+\begin{aligned}
+\mathcal D_K(E_{\chi,\psi})
+ &=m_K(\chi\psi^{-1})E_{\chi,\psi},\\
+m_K(\eta)&=\frac1{|K|}\sum_{u\in K}\eta(u),\\
+K^\perp&=\{\eta\in\widehat A:\eta(u)=1\ \text{对全部 }u\in K\}.
+\end{aligned}
+$$
+
+定义
+
+$$
+\begin{aligned}
+T_\varepsilon&=\{\eta\in\widehat A\setminus\{1\}:|h_\eta|>\varepsilon\},\\
+B_{\mathscr L}&=\bigcap_{K\in\mathscr L}K^\perp,\\
+F_\varepsilon&=T_\varepsilon\cap B_{\mathscr L}.
+\end{aligned}
+$$
+
+空菜单时取 $B_{\varnothing}=\widehat A$，允许空 stack。
+称该证书任务可行，是指存在一个有限允许 stack，使 §45 的全部指定二维
+残余下界证书均不超过 $\varepsilon$；这不是整个钻石范数不超过
+$\varepsilon$ 的定义。
+
+**定理 47.2（可行性、严格步数与终端停滞）。** 在定义 47.1 的全部条件下，
+证书任务可行当且仅当
+
+$$
+\boxed{
+F_\varepsilon
+=T_\varepsilon\cap\bigcap_{K\in\mathscr L}K^\perp
+=\varnothing.
+}
+\tag{47.1}
+$$
+
+从 $U_0=T_\varepsilon$ 开始，每次仅在存在 $K\in\mathscr L$ 使
+$U\cap K^\perp\subsetneq U$ 时选取这样的层，并以 $U\cap K^\perp$ 更新 $U$；
+在 $U=\varnothing$ 或不存在这样的层时停止。
+不论怎样选择严格缩小层，至多 $|T_\varepsilon|$ 次严格选层后停止，
+终端集合恰为 $F_\varepsilon$。
+因此 (47.1) 成立时达到 $\max\mathsf S_j\le\varepsilon$；
+不成立时在非空集合 $F_\varepsilon$ 上停滞，
+任何后续有限允许 stack 都保留其中每一个超阈值证书。
+
+**证明。** 若 $\eta$ 在 $K$ 上恒为一，则 $m_K(\eta)=1$。
+否则选 $u_0\in K$ 使 $\eta(u_0)\ne1$。
+平移 $u\mapsto u+u_0$ 置换 $K$，故
+
+$$
+\sum_{u\in K}\eta(u)
+=\eta(u_0)\sum_{u\in K}\eta(u),
+$$
+
+迫使该和为零。因此 $m_K(\eta)=\mathbf1_{K^\perp}(\eta)$。
+对已选的 $K_1,\ldots,K_j$，置
+$W_j=\bigcap_{i=1}^jK_i^\perp$，$W_0=\widehat A$。
+固定入口和无混合条件给出出口系数
+
+$$
+h_\eta\prod_{i=1}^jm_{K_i}(\eta)
+=h_\eta\mathbf1_{W_j}(\eta).
+$$
+
+于是 §45 的残余谱和算法集合正是
+
+$$
+\mathsf S_j=\{|h_\eta|:\eta\in W_j\setminus\{1\}\},
+\qquad U_j=T_\varepsilon\cap W_j,
+$$
+
+且 $U_{j+1}=U_j\cap K_{j+1}^\perp$。
+按 §45 的空集最大值为零的约定，$\varepsilon\ge0$ 保证
+
+$$
+\max\mathsf S_j\le\varepsilon
+\quad\Longleftrightarrow\quad U_j=\varnothing.
+$$
+
+这里每个存活的 $|h_\eta|$ 仍是 §43–45 的二维归一化输入给出的钻石距离
+下界：该 Schur 模型的差在相应二维支持上有非对角系数
+$h_\eta/2$ 及其共轭，本征值为 $\pm|h_\eta|/2$。
+这些下界全部不超过阈值不产生钻石范数的上界。
+
+若 $\eta\in F_\varepsilon$，它在每个允许子群上恒为一，
+所以在任何有限选层序列中都存活。特别地 $F_\varepsilon\subseteq U_j$，
+非空 $F_\varepsilon$ 阻碍达到阈值，证明 (47.1) 的必要性。
+反之，若 $F_\varepsilon=\varnothing$，则对每个 $\eta\in T_\varepsilon$
+存在 $K_\eta\in\mathscr L$ 使 $\eta\notin K_\eta^\perp$。
+$T_\varepsilon$ 有限，逐个取这些允许层组成长度至多
+$|T_\varepsilon|$ 的 stack，就删除全部 $T_\varepsilon$。
+若 $T_\varepsilon$ 为空，空 stack 即可。
+该构造只选取菜单中的层，不要求这些子群的和也在菜单中，证明充分性。
+
+对于定理中的严格选层规则，每步至少删除一个角色且不能加入角色，
+所以严格步数至多 $|T_\varepsilon|$。
+若终端 $U$ 为空，由 $F_\varepsilon\subseteq U$ 得二者均为空。
+若终端 $U$ 非空，则不存在严格缩小层等价于
+
+$$
+\forall K\in\mathscr L,\quad U\cap K^\perp=U
+\quad\Longleftrightarrow\quad U\subseteq B_{\mathscr L}.
+$$
+
+又因 $U\subseteq T_\varepsilon$，得到 $U\subseteq F_\varepsilon$；
+和始终成立的反向包含合起来，终端 $U=F_\varepsilon$。
+此集合与每个允许 $K^\perp$ 相交都不变，归纳可知任意后续有限
+stack 仍保留它及其固定的超阈值系数。证毕。
+
+当菜单为空时，$F_\varepsilon=T_\varepsilon$；
+故仅在入口证书已达阈值时可行，否则零次严格选层就停滞。
+等于阈值的系数不属于 $T_\varepsilon$。
+步数界只数上述严格选层；任意插入不缩小集合的重复层，
+不受这个层数界约束，也不改变可行性条件。
+
+**反例 47.3（合法菜单中的立即停滞）。** 取
+$A=\mathbb Z/2\mathbb Z$，$\widehat A=\{1,\eta\}$，
+$\eta(1)=-1$。入口通道为恒等，固定标签对为 $(\eta,1)$，
+故 $h_\eta=1$；取 $\varepsilon=1/2$。
+允许菜单只有平凡子群：$\mathscr L=\{\{0\}\}$。
+此时
+
+$$
+\mathcal D_{\{0\}}=\mathrm{id},\qquad
+T_\varepsilon=F_\varepsilon=\{\eta\},\qquad
+B_{\mathscr L}=\widehat A.
+$$
+
+每个有限允许 stack 都是恒等通道，$U_0$ 非空且不能严格缩小。
+对 $|v\rangle=(|1\rangle+|\eta\rangle)/\sqrt2$，
+恒等输出与理想 $\mathcal D_A$ 输出之差为
+
+$$
+\frac12\bigl(|1\rangle\langle\eta|+|\eta\rangle\langle1|\bigr).
+$$
+
+它的本征值为 $\pm1/2$，迹范数为一；
+所以证书 $1>\varepsilon$ 始终存在。
+所有层仍是均匀允许子群平均，固定入口、固定 Fourier 基、无层间映射和无混合
+条件全部满足，却不能在 $|T_\varepsilon|=1$ 步内达到阈值。
+
+本节仅限定 §46.1 的成功条件并明确其停滞集合，使用 §43–45 的固定入口乘子
+与下界证书；不优化层的搜索成本、整个钻石误差或任意 LOSR 操作。
+证书的删除不提供读数取得、已填充全载体上的物理操作、物理钟或寿命结论。
+
+## 追加锚（本行以下为增补区）
+
+## 44. 实际粗化信道的混合深度最小群控制
+
+**定义 44.1（统一的群同态循环控制）。** 固定定义 39.1 的非空有限扇区集 $S$、正整数源尺寸 $r_s$ 与目标尺寸 $d_s$，并记 $C_m=\mathbb Z/m\mathbb Z$，其中 $C_1$ 为平凡群。源谱 $\lambda_s$ 遍历长度 $r_s$ 的所有非增概率向量，允许零项。对每一族 $\lambda=(\lambda_s)_s$，沿用 §39 的补零约定、共同环境指标 $j<M$、幅度 $\alpha_{saj}$、向量 $\psi_{sj}$、Fourier 向量 $T_{sk}$ 与系数 $c_{sjk}$。特别地，$b_{sj}=c_{sj0}$，$G_{st}=\sum_j b_{sj}b_{tj}$。记该族的完整目标信道为
+
+$$
+\mathcal F^\lambda_G(X)
+=T(G\circ X)T^*+\sum_sX_{ss}L_s,
+\qquad
+L_s=\sum_{k\ne0}\left(\sum_j|c_{sjk}|^2\right)
+|T_{sk}\rangle\langle T_{sk}|.
+$$
+
+这个记号保留由源谱决定的全部 $L_s$；只给出理想子空间上的 $G$ 块不算给出完整信道。
+
+取有限群 $H$，不预设阿贝尔性，以及对每个 $s$ 的满射群同态 $\pi_s:H\twoheadrightarrow C_{d_s}$。令 $h$ 在 $H$ 上均匀分布，两侧在 §39 的局部拆分并丢弃环境后使用同一个 $h$。若 $X_s|s,a\rangle=|s,a+1\bmod d_s\rangle$，置
+
+$$
+U_h=\bigoplus_sX_s^{\pi_s(h)},\qquad V_h=U_h\otimes U_h,
+\qquad
+\mathcal C^\lambda_{H,\pi}(X)
+=\frac1{|H|}\sum_{h\in H}V_h
+\left(\sum_{s,t}X_{st}\sum_{j<M}
+|\psi_{sj}\rangle\langle\psi_{tj}|\right)V_h^*.
+$$
+
+群与同态固定于整个源谱族，不随 $\lambda$ 或输入 $X$ 改变。称它们实现统一粗化，当且仅当对每个允许的 $\lambda$ 有 $\mathcal C^\lambda_{H,\pi}=\mathcal F^\lambda_G$。定义 $N_{\min}(\mathbf r,\mathbf d)$ 为这些实现中的最小 $|H|$；直积群 $\prod_sC_{d_s}$ 的坐标控制给出非空候选集。此处优化的是这一固定拆分之后的均匀群同态循环控制标签数。依定理 42.1，联合控制像的大小与实际不同信道分支数须区分：一个特殊源谱可能使不同控制标签诱导相同的编码后映射，本节不最小化该谱的不同映射数。所求也不是一般 CPTP 或 LOSR 分解的分支数、非均匀或非同态控制的最小支持，不把标签数解释为物理资源。它与定理 39.2 的不受限钻石误差极值属于不同的优化问题。
+
+**定理 44.2（所有源谱的完整信道与两坐标满射，repo-derived）。** 在定义 44.1 中，实现统一粗化当且仅当每一对不同扇区的联合同态
+
+$$
+(\pi_s,\pi_t):H\longrightarrow C_{d_s}\times C_{d_t}
+$$
+
+满射。结论对任意固定的正整数 $r_s,d_s$ 成立，包含 $d_s=1$、源尺寸小于目标尺寸、补零及秩一源谱。这里的信道相等也在附加任意有限被动参考后成立。
+
+**证明。** 实际源基上的拆分是
+
+$$
+E|s,i\rangle=|s,i\bmod d_s\rangle
+|\lfloor i/d_s\rfloor\rangle_E.
+$$
+
+两侧环境使用同一组 $j$ 标签，故编码矩阵单位 $|s\rangle\langle t|$ 在拆分并取环境偏迹后恰为 $\sum_j|\psi_{sj}\rangle\langle\psi_{tj}|$。补零不改变这个偏迹，也不添加源空间的基向量。展开 §39 的正交 Fourier 基，得到
+
+$$
+\begin{aligned}
+A_{stkl}&=\sum_{j<M}c_{sjk}\overline{c_{tjl}},\\
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle t|)
+&=\sum_{k\in C_{d_s}}\sum_{l\in C_{d_t}}
+A_{stkl}\,m_{stkl}|T_{sk}\rangle\langle T_{tl}|,\\
+m_{stkl}&=\frac1{|H|}\sum_{h\in H}
+\exp\!\left(-2\pi i\frac{k\pi_s(h)}{d_s}
++2\pi i\frac{l\pi_t(h)}{d_t}\right).
+\end{aligned}
+$$
+
+此式使用 $V_hT_{sk}=\exp(-2\pi i k\pi_s(h)/d_s)T_{sk}$ 的约定。共同环境产生的是逐 $j$ 的乘积之和 $A_{stkl}$，不能把它替换成两个独立环境和的乘积。
+
+为给出与定理 43.1 的确切接口，置 $A=\prod_sC_{d_s}$、$\Pi=(\pi_s)_s$、$K=\Pi(H)$。实际拆分输出支撑于相关子空间
+
+$$
+\mathcal Q=\bigoplus_s\operatorname{span}\{T_{sk}:k\in C_{d_s}\}.
+$$
+
+其中移位权为 $\theta_{sk}(u)=\exp(-2\pi i ku_s/d_s)$，每个权只依赖一个坐标，所有 $\theta_{s0}$ 都是平凡角色；不同扇区的零模是这一角色的不同重数。矩阵单位 $|T_{sk}\rangle\langle T_{tl}|$ 查询的角色恰为 $\theta_{sk}\theta_{tl}^{-1}$，所以
+
+$$
+m_{stkl}=m_K(\theta_{sk}\theta_{tl}^{-1}),\qquad
+|\operatorname{supp}(\theta_{sk}\theta_{tl}^{-1})|\le2.
+$$
+
+这里复用的是定理 43.1 的矩阵单位乘子公式。其完整角色空间 $\ell^2(\widehat A)$ 可以含有别的角色对，而这些角色对的比值未必来自 $\mathcal Q$ 的两个实际权。因而 $K^\perp$ 中一个支撑大于二的角色，本身不给出此编码中的矩阵单位或非零源系数。实际全谱失败必须在上述查询族内找到角色，并连同实际 $A_{stkl}\ne0$ 一起检验；下面的必要性证明正完成这一步。
+
+同态的每个非空纤维都是核的陪集，所以均匀 $h$ 推前为像子群上的均匀分布。这里使用有限角色正交性与真子群的角色分离性，见 Keith Conrad，[*Characters of finite abelian groups*](https://kconrad.math.uconn.edu/blurbs/grouptheory/charthy.pdf)，Theorem 4.1、Corollary 3.7；子群角色和的同一表述见 van de Ven、Di Bucchianico，[*Factorial Designs and Harmonic Analysis on Finite Abelian Groups*](https://www.eurandom.tue.nl/reports/2006/023-report.pdf)，Lemma 5.4。即使 $H$ 非阿贝尔，角色也通过其阿贝尔像计算。
+
+当 $s=t$ 时，边缘满射给出 $m_{sskl}=\delta_{kl}$，因此
+
+$$
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle s|)
+=\sum_k\left(\sum_j|c_{sjk}|^2\right)
+|T_{sk}\rangle\langle T_{sk}|
+=G_{ss}|T_s\rangle\langle T_s|+L_s.
+$$
+
+当 $s\ne t$ 且两坐标满射时，均匀平均给出 $m_{stkl}=\delta_{k0}\delta_{l0}$。留下的系数是 $A_{st00}=G_{st}$，故
+
+$$
+\mathcal C^\lambda_{H,\pi}(|s\rangle\langle t|)
+=G_{st}|T_s\rangle\langle T_t|.
+$$
+
+这同时保留理想块和全部对角泄漏，证明充分性。$d_s=1$ 时仅有零 Fourier 模，$L_s=0$，同样成立。
+
+反之，若某一对的像 $K_{st}\subsetneq C_{d_s}\times C_{d_t}$ 为真子群，角色分离性给出非平凡角色
+
+$$
+\chi(x,y)=\exp(-2\pi i kx/d_s+2\pi i ly/d_t)
+$$
+
+在 $K_{st}$ 上恒为一。边缘满射排除仅一个坐标非平凡的角色，因此 $k\ne0$、$l\ne0$。对每个固定的正整数 $r_u$，取允许的非增谱 $\lambda_u=(1,0,\ldots,0)$。它只有 $j=0,a=0$ 的幅度非零，因而对每个 Fourier 指标有
+
+$$
+c_{u0k}=d_u^{-1/2},\qquad c_{ujk}=0\quad(j>0).
+$$
+
+于是 $A_{stkl}=1/\sqrt{d_sd_t}>0$，而 $m_{stkl}=1$。非零项 $|T_{sk}\rangle\langle T_{tl}|$ 留在实际输出中，却不在 $\mathcal F^\lambda_G(|s\rangle\langle t|)$ 中。正交基中的这个矩阵系数不能被其他项抵消，与所有源谱的相等要求矛盾。如果某个尺寸是一，两坐标像在边缘满射下已自动为满像，不出现这个反例情形。
+
+最后，矩阵单位构成逻辑算子空间的一组基。其作用相同就是线性信道相同；与任何参考系统的恒等映射张量后仍相同。参考不引入第三个扇区控制。一个固定特殊谱可以使某些 $A_{stkl}$ 为零，不能以这种相等替代本定理的全谱量词。证毕。
+
+本证明中的均匀两坐标投影与低支撑 Fourier 消去字典，是混合水平正交阵的已有工具：Pistone、Rogantin，[*Indicator function and complex coding for mixed fractional factorial designs*](https://arxiv.org/pdf/math/0703365v1)，Proposition 4(2),(4)。此处的应用将它接到指定的共同环境系数、泄漏信道及固定任意源尺寸的全谱必要性，不要求消去三坐标或更多坐标支撑的角色。
+
+**定理 44.3（任意正循环尺寸的精确最小标签数，repo-derived）。** 对定义 44.1 的全部尺寸族，令
+
+$$
+a_{p,s}=v_p(d_s),\qquad
+n_{p,a}=\#\{s\in S:a_{p,s}\ge a\}\quad(a\ge1),
+\qquad
+R_p(n)=\min\{r\in\mathbb Z_{\ge0}:p^r\ge1+(p-1)n\}.
+$$
+
+其中 $R_p(0)=0$，各和与积只有有限非零项。则
+
+$$
+\boxed{N_{\min}(\mathbf r,\mathbf d)
+=N_{\min}(\mathbf d)
+=\prod_p p^{\sum_{a\ge1}R_p(n_{p,a})}.}
+$$
+
+这个下界对任意有限群标签成立，并由一个阿贝尔群及实际满射同态同时达到。达到构造仅依赖目标尺寸，适用于每个允许的源谱。若令 $\rho_{p,a}=R_p(n_{p,a})$，可取标签群
+
+$$
+H=\prod_p\widehat{B_p},\qquad
+B_p=\bigoplus_{a\ge1}
+(C_{p^a})^{\rho_{p,a}-\rho_{p,a+1}}.
+$$
+
+这里 $\widehat B$ 是有限阿贝尔群 $B$ 的单位圆角色群；各循环坐标的控制由下述循环子群的角色限制及中国剩余定理给出。
+
+**证明。** 先把全部控制作为一个同态
+
+$$
+\Pi:H\longrightarrow A:=\prod_sC_{d_s},\qquad K=\Pi(H).
+$$
+
+在 $H$ 阿贝尔时，定理 42.1 已给出按联合控制像去重的均匀商群实现。这里还允许 $H$ 非阿贝尔，但同一纤维理由仍适用：每个纤维是 $\ker\Pi$ 的陪集，均有 $|\ker\Pi|$ 个元素，且 $H/\ker\Pi\cong K$。由于目标 $A$ 阿贝尔，$K$ 总是阿贝尔。各分支只依赖 $\Pi(h)$，所以用 $K$ 的坐标投影作控制产生相同的每一个源谱信道，均匀性保持且 $|K|\le|H|$。定理 44.2 的边缘及两坐标满射也同时保留。故非阿贝尔性与重复标签均不能降低最小值；以下在一个共同的阿贝尔像 $K$ 上处理全部素数与深度。
+
+按有限阿贝尔群的素数主分解，$K=\prod_pK_p$。固定 $p$，并暂写 $a_s=a_{p,s}$。识别各目标坐标的 $p$ 主部分为 $C_{p^{a_s}}$，得到满射 $f_s:K_p\to C_{p^{a_s}}$，以及对每对坐标的满射 $(f_s,f_t)$。这是同一群的分解：不同素数的分量映到其他素数的目标主部分必为零，故全局边缘或两坐标满射恰等价于其每个素数分量满射。
+
+置 $B=\widehat{K_p}$，对 $a_s>0$ 令 $D_s\subseteq B$ 为 $f_s$ 拉回的循环角色子群，阶为 $p^{a_s}$；对 $a_s=0$ 置 $D_s=\{0\}$。此处把角色群写成加法群。有限对偶及商群湮灭子工具见 Conrad 的 Theorem 3.14 与 van de Ven、Di Bucchianico 的 Lemma 5.3。两坐标同态的对偶映射为
+
+$$
+\widehat{C_{p^{a_s}}}\oplus\widehat{C_{p^{a_t}}}
+\longrightarrow B,\qquad (u,v)\longmapsto f_s^*u+f_t^*v.
+$$
+
+有限角色分离性表明原映射满射当且仅当这个对偶映射单射；其核为零又当且仅当 $D_s\cap D_t=\{0\}$。每个非平凡循环 $p$ 子群有唯一的阶 $p$ 子群
+
+$$
+\ell_s=p^{a_s-1}D_s\subseteq B[p],\qquad
+B[p]=\{x\in B:px=0\}.
+$$
+
+若两个循环 $p$ 子群相交非平凡，取交中一个非零元素并乘适当的 $p$ 次幂，得到共同的阶 $p$ 子群；反之，共同的阶 $p$ 子群已经给出非零交。因此两坐标约束恰是所有 $a_s>0$ 的 $\ell_s$ 两两不同，而非任意高维子空间的分离条件。
+
+应用有限阿贝尔群的循环分解，写
+
+$$
+B\cong\bigoplus_{j=1}^mC_{p^{b_j}},\qquad b_j\ge1.
+$$
+
+这里复用的结构定理见 van de Ven、Di Bucchianico 的 Theorem 4.14；接下来要计数的是该分解的所有深度，不能只取指数或一层秩。令 $e_j$ 为各循环因子的生成元，定义嵌套的 $\mathbb F_p$ 空间
+
+$$
+V_a=B[p]\cap p^{a-1}B
+=\operatorname{span}_{\mathbb F_p}
+\{p^{b_j-1}e_j:b_j\ge a\},\qquad
+ t_a=\dim_{\mathbb F_p}V_a=\#\{j:b_j\ge a\}.
+$$
+
+等式逐因子可见：$b_j<a$ 的因子在 $p^{a-1}B$ 中已为零；$b_j\ge a$ 的因子则贡献其唯一阶 $p$ 直线。$V_{a+1}\subseteq V_a$，且
+
+$$
+\log_p|B|=\sum_jb_j=\sum_{a\ge1}t_a.
+$$
+
+每个 $a_s\ge a$ 的坐标将不同的直线 $\ell_s$ 放入 $V_a$，因为 $\ell_s\subseteq p^{a_s-1}B\subseteq p^{a-1}B$。$t_a$ 维空间有 $(p^{t_a}-1)/(p-1)$ 条直线：其非零向量按每条直线的 $p-1$ 个非零向量分组。因此，在同一个 $B$ 的每一个深度都有
+
+$$
+n_{p,a}\le\frac{p^{t_a}-1}{p-1},\qquad
+ t_a\ge R_p(n_{p,a}),\qquad
+ |K_p|=|B|\ge p^{\sum_aR_p(n_{p,a})}.
+$$
+
+把这些界在同一群内按深度相加，再按素数相乘，得到所要求的全局下界。这一步并未把各深度分别可达的最小值当作共同可达；共同达到需要以下构造。
+
+现在固定 $p$，取 $\rho_a=R_p(n_{p,a})$。$n_{p,a}$ 非增且最终为零，故 $\rho_a$ 也非增且最终为零，$\rho_a-\rho_{a+1}$ 是非负整数。定义
+
+$$
+B_p=\bigoplus_{a\ge1}(C_{p^a})^{\rho_a-\rho_{a+1}}.
+$$
+
+对这个群，上述深度空间 $V_a$ 的维数恰为
+
+$$
+\sum_{b\ge a}(\rho_b-\rho_{b+1})=\rho_a.
+$$
+
+将所有 $a_s>0$ 的坐标按指数非增排序。在处理指数 $a_s=a$ 的坐标时，从 $V_a$ 中选择一条尚未使用的直线。先处理的坐标指数都不小于 $a$，其直线也都在 $V_a$ 内；连同当前坐标，数量不超过 $n_{p,a}$。而 $V_a$ 至少有 $n_{p,a}$ 条直线，所以这一步总有选择。由此得到一组兼容全部深度且两两不同的直线 $\ell_s$。
+
+还需把每条直线提升为具有指定阶的实际循环子群。将 $B_p$ 的循环因子记为 $C_{p^{b_j}}$，选所指定直线上的非零向量
+
+$$
+y_s=\sum_{b_j\ge a_s}\eta_{sj}p^{b_j-1}e_j,
+\qquad \eta_{sj}\in\{0,\ldots,p-1\},
+$$
+
+其中至少一个系数非零。置
+
+$$
+x_s=\sum_{b_j\ge a_s}\eta_{sj}p^{b_j-a_s}e_j.
+$$
+
+则 $p^{a_s}x_s=0$ 而 $p^{a_s-1}x_s=y_s\ne0$，所以 $x_s$ 的阶恰为 $p^{a_s}$。子群 $D_s=\langle x_s\rangle$ 的唯一阶 $p$ 子群就是所选 $\ell_s$，从而各 $D_s$ 两两相交平凡。这个提升保留循环群 $C_{p^{a_s}}$，没有将它替换成阶相同但指数不同的有限域加法群。
+
+令 $H_p=\widehat{B_p}$。对每个 $a_s>0$，由角色的值定义控制 $\pi_s^{(p)}:H_p\to C_{p^{a_s}}$：
+
+$$
+h_p(x_s)=\exp\!\left(2\pi i\frac{\pi_s^{(p)}(h_p)}{p^{a_s}}\right).
+$$
+
+$x_s$ 的精确阶使右侧指标良定义，且角色乘法使此映射为群同态。Conrad 的 Theorem 3.3 给出子群角色向有限阿贝尔群的延拓。因此限制 $\widehat{B_p}\to\widehat{D_s}$ 满射；若 $s\ne t$，则 $D_s+D_t=D_s\oplus D_t$，其上任意一对角色也同时延拓。这证明 $\pi_s^{(p)}$ 及 $(\pi_s^{(p)},\pi_t^{(p)})$ 均满射。指数为零的坐标取唯一的平凡同态，同一结论仍成立。
+
+在 $H=\prod_pH_p$ 上，对每个 $s$ 用中国剩余定理
+
+$$
+C_{d_s}\cong\prod_{p\mid d_s}C_{p^{a_{p,s}}}
+$$
+
+合并 $\pi_s^{(p)}$ 为 $\pi_s:H\to C_{d_s}$。每个素数分量的边缘及两坐标限制都满射，且不同素数的标签独立取值，故全局边缘与每个两坐标映射均满射。定理 44.2 给出对全部源谱的实际信道相等。群阶为
+
+$$
+|H|=\prod_p|B_p|
+=\prod_p p^{\sum_a a(\rho_{p,a}-\rho_{p,a+1})}
+=\prod_p p^{\sum_a\rho_{p,a}},
+$$
+
+恰好达到下界。若这些控制还有非平凡共同核，商掉它会产生同一族信道和更小的均匀群，违背已经证明的下界。因此这个达到构造的联合控制无重复标签，其不同联合控制值的支持大小也等于 $N_{\min}(\mathbf d)$。按定义 44.1 与定理 42.1 的区分，这里数的是联合控制值，而不把特殊源谱的实际不同编码后分支数认作相同的极值。证毕。
+
+上述公式的边界可直接在同一证明中读取。所有 $d_s=1$ 时素数积为空，$H$ 为平凡群且 $N_{\min}=1$。一个扇区时，每个非零深度的计数是一，$R_p(1)=1$，故 $N_{\min}=d_s$。两个扇区时 $R_p(2)=2$，各深度指数等于两个目标指数之和，故 $N_{\min}=d_sd_t$。两两互质的尺寸使所有 $n_{p,a}\le1$，从而 $N_{\min}=\prod_sd_s$，与 §40 的单循环实现相容。三个扇区时，$R_p(3)=2$；若三个 $p$ 指数排序为 $u\ge v\ge w$，深度和为 $u+v$，所以
+
+$$
+N_{\min}(d_1,d_2,d_3)
+=\operatorname{lcm}(d_1d_2,d_1d_3,d_2d_3)
+=\frac{d_1d_2d_3}{\gcd(d_1,d_2,d_3)}.
+$$
+
+这些是实际全谱信道最小值的边界，不把一般正交阵的存在性作为前提。正交阵的两坐标乘积整除条件本身是已有下界，见 Beder、McComack，[*A note on the minimum size of an orthogonal array*](https://arxiv.org/pdf/1508.06558v1)，§1.1；该文明确区分整除下界与该大小的阵是否存在。本定理的承重推导是各素数、各深度在同一群上的界，以及同时达到这些界的循环子群与控制构造，不主张这些成熟工具或极值综合的文献优先权。
+
+**命题 44.4（实际信道查询与完整多坐标查询的严格差别，repo-derived）。** 在非空 $S$ 且 $d_s\ge2$ 的共同范围中，定义 44.1 的全谱信道最小值满足
+
+$$
+N_{\min}(\mathbf d)\le\prod_sd_s,
+$$
+
+等号当且仅当没有一个素数同时整除三个不同扇区的尺寸。右侧是定理 41.1 在消去全部支撑至少二的角色这一附加条件下的最小值；该附加条件不能由实际信道相等推出。具体地，三个尺寸为二的扇区有实际信道最小值四，而完整多坐标消去需要八；尺寸 $(4,2,2)$ 有实际信道最小值八，而完整多坐标消去需要十六。
+
+**证明。** 对任意 $p$，有 $R_p(0)=0$、$R_p(1)=1$、$R_p(2)=2$，以及 $R_p(n)\le n$。当 $n\ge3$ 时，更有 $R_p(n)<n$：先用
+
+$$
+p^2\ge1+3(p-1)
+$$
+
+处理 $n=3$，再由 $p^{n-1}\ge1+(p-1)n$ 推出 $p^n\ge1+(p-1)(n+1)$。因此定理 44.3 的每个深度指数不超过 $n_{p,a}$，严格小于恰在某个深度计数至少三时发生。又
+
+$$
+\prod_sd_s=\prod_p p^{\sum_a n_{p,a}},
+$$
+
+且存在这样的深度当且仅当某素数整除至少三个尺寸。这证明数值比较与等号条件。定理 41.1 的更强条件检查所有多坐标角色，其完整联合像与乘积下界由该定理给出；定理 44.2 的每个矩阵单位却只使用一个或两个扇区控制。
+
+对三个 $C_2$，取
+
+$$
+H=C_2^2,\qquad
+\pi_1(x,y)=x,\quad\pi_2(x,y)=y,\quad\pi_3(x,y)=x+y.
+$$
+
+任意两个坐标决定 $x,y$，故每个两坐标映射均为双射。定理 44.2 证明它对任意固定源尺寸与所有允许谱实现完整信道；定理 44.3 给 $n_{2,1}=3$、$R_2(3)=2$，故四标签已最小。但联合像是 $C_2^3$ 的奇偶子群，三支撑角色
+
+$$
+\chi(z_1,z_2,z_3)=(-1)^{z_1+z_2+z_3}
+$$
+
+在像上恒为一，平均等于一，不能满足 §41 的附加条件。以所有扇区的秩一谱为具体源，$G_{st}=1/2$，$L_s=\tfrac12|T_{s1}\rangle\langle T_{s1}|$，这个四标签平均仍严格给出
+
+$$
+\mathcal F^\lambda_G(X)
+=\tfrac12T(\mathbf1\mathbf1^{\mathsf T}\circ X)T^*
++\tfrac12\sum_sX_{ss}|T_{s1}\rangle\langle T_{s1}|.
+$$
+
+未消去的三支撑角色不出现在这个信道的任何矩阵单位查询中。具体地，$\mathcal Q$ 的角色权为 $1,(-1)^{z_1},(-1)^{z_2},(-1)^{z_3}$，其中 $1$ 有三个零模重数；任何两个权的比值都不能等于 $\chi$。在定理 43.1 的完整角色表示中则可取角色对 $(\chi,1)$，得到残余非零矩阵单位及该定理的全表示下界。这两个表示的测试向量不同，不能把后一测试向量视为本编码的允许源输出。
+
+对 $(4,2,2)$，取 $H=C_4\times C_2$ 与
+
+$$
+\pi_1(x,y)=x,\qquad
+\pi_2(x,y)=y,\qquad
+\pi_3(x,y)=(x\bmod2)+y.
+$$
+
+第一、二坐标任意给定时直接确定标签；第一、三坐标任意给定时由第三坐标确定 $y$；第二、三坐标任意给定时确定 $x$ 的奇偶，仍有两个 $x$ 可选。所有两坐标映射均满射。计数为 $n_{2,1}=3,n_{2,2}=1$，故最小值是 $2^{2+1}=8$，这个群达到它。联合控制值只有八个，完整十六元直积上的全部角色消去是另一项要求。证毕。
+
+**命题 44.5（四个循环四元坐标与有限域阵的实现边界，repo-derived）。** 四个尺寸为四的扇区，在定义 44.1 的实现类中恰需六十四个均匀群标签，且可取
+
+$$
+H=C_4^3,\qquad
+(\pi_1,\pi_2,\pi_3,\pi_4)(x,y,z)=(x,y,z,x+y+z).
+$$
+
+另有十六行的四水平两坐标均匀阵。将其符号双射标为 $C_4$ 的移位值，也能实现同一个全谱信道，但它不属于循环坐标同态控制族；这个阵不能反驳六十四的受限最小值。
+
+**证明。** 对循环尺寸，$n_{2,1}=n_{2,2}=4$，而 $R_2(4)=3$，故定理 44.3 给 $N_{\min}=2^{3+3}=64$。在所示 $C_4^3$ 控制中，前三个坐标的任意一对显然满射。指定其中一个坐标及第四坐标时，剩下两个变量之和可以任意取值，也给出满射；因此它达到最小值。若增加定理 41.1 的完整角色消去条件，则需整个 $C_4^4$ 的二百五十六个标签。
+
+对照阵使用有限域 $\mathbb F_4=\mathbb F_2[\omega]/(\omega^2+\omega+1)$：
+
+$$
+\{(u,v,u+v,u+\omega v):u,v\in\mathbb F_4\}.
+$$
+
+这是标准有限域线性阵构造在本信道上的应用。四个线性形式的系数行分别为 $(1,0),(0,1),(1,1),(1,\omega)$，任意两个的行列式均非零；含第一行的行列式为 $1,1,\omega$，另三对为 $-1,-1,\omega-1$。故任意两列投影都是 $\mathbb F_4^2$ 的双射，十六行上的均匀分布给每对符号均匀分布。选任意双射 $\iota:\mathbb F_4\to C_4$ 并逐列标号后，这一均匀性保持。定理 44.2 证明充分性所用的矩阵单位平均只需边缘和两坐标均匀性，因此这些十六个非同态控制值也给出完整 $\mathcal F^\lambda_G$，包括每个源谱的实际泄漏。
+
+然而 $\mathbb F_4^2$ 的加法群指数为二，任意从它到 $C_4$ 的群同态像都被二消去，不能满射。符号双射不能把有限域加法变成循环四元加法。即使重新给十六行另赋群结构，若四个循环坐标同时成为满射同态，就会违背已证明的六十四标签下界。因此这里改变的是允许的控制函数族，而不是同一族中的更小实现。循环根编码与有限域编码的区别亦见 Pistone、Rogantin 的 §6；一般正交阵的两坐标乘积整除界见 Beder、McComack 的 §1.1，均不代替本节的循环群深度约束。证毕。
 
 ## 追加锚（本行以下为增补区）

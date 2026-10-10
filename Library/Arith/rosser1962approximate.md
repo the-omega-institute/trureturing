@@ -52,8 +52,8 @@ lower bound at \(B\). Since \(\log B>\ell\), monotonicity of
 \]
 
 This elementary consequence is the premise used in
-[Chapter 32, JR20](../../docs/reports/erdos7-odd-covering/problem-details/32-conditional-root-measures-and-unrestricted-prime-tails.md)
-and [Chapter 33, SH11](../../docs/reports/erdos7-odd-covering/problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md).
+[Chapter 32, JR20](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/32-conditional-root-measures-and-unrestricted-prime-tails.md)
+and [Chapter 33, SH11](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md).
 Their rational certificates evaluate its consumers; they do not
 prove the cited analytic theorem.
 

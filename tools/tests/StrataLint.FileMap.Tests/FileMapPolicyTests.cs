@@ -1,17 +1,15 @@
 using System.Text;
 using StrataLint.Engine;
-using StrataLint.Scribe;
 
 namespace StrataLint.FileMap.Tests;
 
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void AgentReportsAreAdmittedByRepositoryPathPolicy()
+    public void ReportLicensesAreAdmittedByRepositoryPathPolicy()
     {
-        // FILEMAP uses a family registration because report names are generated.
-        const string value = "docs/reports/diag-lane-a/synthetic-open-report.md";
-        var policy = SyntheticPolicy("docs/reports/**/*.md");
+        const string value = "docs/reports/library/library-LICENSE.txt";
+        var policy = SyntheticPolicy("docs/reports/**/*.txt");
         var path = RepoPath.CreateKnown(value);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, policy.Policy));
@@ -128,11 +126,11 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Theory]
-    [InlineData("docs/reports/**", "docs/reports/meaningful.md")]
-    [InlineData("docs/reports/experiment/**", "docs/reports/experiment/nested/results.json")]
-    [InlineData("docs/reports/**/*.py", "docs/reports/probe.py")]
-    [InlineData("docs/reports/**/*.py", "docs/reports/experiment/nested/probe.py")]
-    public void ReportCoveredByADirectoryPatternIsAcceptedByTheGreenFixture(string pattern, string path)
+    [InlineData("docs/reports/**", "docs/reports/README.md")]
+    [InlineData("docs/reports/licenses/**", "docs/reports/licenses/third-party.md")]
+    [InlineData("docs/reports/**/*.txt", "docs/reports/library/library-LICENSE.txt")]
+    [InlineData("docs/reports/**/*.txt", "docs/reports/library/nested/library-NOTICE.txt")]
+    public void RetainedReportMaterialCoveredByADirectoryPatternIsAccepted(string pattern, string path)
     {
         var manifest = Parse(Entry(
             pattern,
@@ -156,16 +154,16 @@ public sealed partial class FileMapPolicyTests
 
         var finding = Assert.Single(FileMapPolicy.InspectCoverage(
             manifest,
-            ["docs/reports/unregistered.md"]));
+            ["docs/reports/LICENSE.txt"]));
 
         Assert.Equal("FILEMAP-REPORT-UNREGISTERED", finding.Code);
-        Assert.Equal("docs/reports/unregistered.md", finding.Path);
+        Assert.Equal("docs/reports/LICENSE.txt", finding.Path);
     }
 
     [Fact]
     public void ReportWithAnExactFileMapEntryIsAcceptedByTheGreenFixture()
     {
-        var path = "docs/reports/meaningful.md";
+        var path = "docs/reports/LICENSE.txt";
         var manifest = Parse(Entry(
             path,
             "data",
@@ -179,12 +177,12 @@ public sealed partial class FileMapPolicyTests
     [Fact]
     public void ReportCanBeRegisteredBeforeItsContentIsAdded()
     {
-        const string path = "docs/reports/experiment/results.json";
+        const string path = "docs/reports/library/library-LICENSE.txt";
         var entry = Entry(path, "data", "none", "agent", "SnapshotDecoder")
             .Replace("admission_plane = \"judge\"", "admission_plane = \"content\"", StringComparison.Ordinal);
         var manifest = Parse(entry);
 
-        // A registration may reserve report content before it is added.
+        // A registration may reserve a source license before it is added.
         Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
         Assert.Empty(FileMapPolicy.InspectCoverage(manifest, [path]));
         var decision = AdmissionPlanePolicy.Evaluate(
@@ -199,11 +197,11 @@ public sealed partial class FileMapPolicyTests
     [Fact]
     public void ReportDirectoryPatternCanBeRegisteredBeforeContentIsAdded()
     {
-        var manifest = Parse(Entry("docs/reports/experiment/*", "data", "none", "agent", "SnapshotDecoder"));
+        var manifest = Parse(Entry("docs/reports/library/*", "data", "none", "agent", "SnapshotDecoder"));
 
         Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
-        Assert.Empty(FileMapPolicy.InspectCoverage(manifest, ["docs/reports/experiment/result.json"]));
-        var finding = Assert.Single(FileMapPolicy.InspectCoverage(manifest, ["docs/reports/other/result.json"]));
+        Assert.Empty(FileMapPolicy.InspectCoverage(manifest, ["docs/reports/library/library-LICENSE.txt"]));
+        var finding = Assert.Single(FileMapPolicy.InspectCoverage(manifest, ["docs/reports/other/library-LICENSE.txt"]));
         Assert.Equal("FILEMAP-REPORT-UNREGISTERED", finding.Code);
     }
 

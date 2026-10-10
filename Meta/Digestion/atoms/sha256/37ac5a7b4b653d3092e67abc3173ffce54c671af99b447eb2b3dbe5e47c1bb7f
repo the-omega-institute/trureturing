@@ -1,0 +1,12 @@
+**Claim status: open.** 上表四个后验金字塔均值形成体积
+
+$$
+\boxed{V_{\mathrm{rec}}=\frac1{24}}
+$$
+
+的非退化四面体；其记录分离矩阵满足
+
+$$
+\boxed{\det B=\frac1{5000}.}
+$$
+

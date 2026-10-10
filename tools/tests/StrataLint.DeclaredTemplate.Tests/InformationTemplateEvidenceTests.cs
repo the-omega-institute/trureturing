@@ -34,11 +34,11 @@ public sealed class InformationTemplateEvidenceTests
         return DeclaredTemplateFixture.Tree(files);
     }
 
-    private static JsonElement Wire(bool declared = false, bool foreignClaim = false, int? compatibility = null) =>
-        JsonSerializer.SerializeToElement(new
+    private static JsonElement Wire(bool declared = false, bool foreignClaim = false, int? compatibility = null)
+    {
+        var result = JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
-            compatibility_version = compatibility ?? InformationTemplateFixture.ManifestVersion(InformationTemplateFixture.PolicyFiles()),
             inventory = foreignClaim ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             registered = foreignClaim ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             records = new[] { new
@@ -65,6 +65,12 @@ public sealed class InformationTemplateEvidenceTests
                 } : null,
             } },
         });
+        if (compatibility is null) return result;
+        var retired = JsonSerializer.SerializeToNode(result)!.AsObject();
+        retired["compatibility_version"] = compatibility;
+        return JsonSerializer.SerializeToElement(retired);
+    }
+
 
     private static System.Text.Json.Nodes.JsonObject SourceWire()
     {
@@ -280,7 +286,7 @@ public sealed class InformationTemplateEvidenceTests
     {
         var wire = JsonSerializer.SerializeToElement(new
         {
-            schema = "stratalint-raw-lean-report-v2",
+            schema = "stratalint-raw-lean-report-v3",
             modules = new[] { new
             {
                 module = ModuleA,
@@ -327,7 +333,7 @@ public sealed class InformationTemplateEvidenceTests
     [Theory]
     [InlineData("legacy", true)]
     [InlineData("forward", true)]
-    [InlineData("witness", true)]
+    [InlineData("witness", false)]
     [InlineData("unknown", false)]
     public void strict_bridge_vocabulary(string kind, bool accepted)
     {
@@ -383,7 +389,7 @@ public sealed class InformationTemplateEvidenceTests
         var snapshot = Snapshot((PathA, TextA));
         var module = Module(InformationTemplateEvidence.Read(Wire(), PathA, snapshot));
         // Sealing imports creates root-qualified abbreviations of retained
-        // units without executing register_information_theorem again.
+        // units without executing registration code again.
         module = module with { Declarations = module.Declarations.Add(
             new(ModuleA + ".sealed.__information_unit", "def", "fixture sealed unit", [])) };
         var error = Record.Exception(() =>
@@ -503,8 +509,7 @@ public sealed class InformationTemplateEvidenceTests
         var owner = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
         var bridge = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(new
         {
-            schema_version = 1, compatibility_version = InformationTemplateFixture.ManifestVersion(InformationTemplateFixture.PolicyFiles()),
-            inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
+            schema_version = 1, inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
             records = System.Array.Empty<object>(),
         }), PathB, snapshot);
         return Collect(snapshot, LeanAxiomReport.Create(
@@ -649,46 +654,5 @@ public sealed class InformationTemplateEvidenceTests
     [InlineData("Fixture.")]
     public void noncanonical_lean_name_rejected(string name) =>
         Assert.Throws<FormatException>(() => InformationTemplateJson.Name(name));
-    [Theory]
-    [InlineData(false, "valid")]
-    [InlineData(true, "valid")]
-    [InlineData(true, "permuted-universes")]
-    [InlineData(true, "instantiated-universe")]
-    [InlineData(true, "metadata-wrapper")]
-    [InlineData(true, "missing-material")]
-    [InlineData(true, "wrong-polarity")]
-    public void named_reference_uses_raw_rigid_universes_and_structural_names(bool negated, string mutation)
-    {
-        // Synthetic statement-v1 materials exercise the bounded grammar beyond
-        // the native clients' zero universes: UTF-8, quoted dots and a num node.
-        const string nameKey = "ns(nn(ns(ns(ns(n0,2:D5),5:Probe),4:x.λ),7),5:claim)";
-        const string referenceHash = "65960cfc15c52484d5f0825d7c9279debbdd37c841d4c3eddb3f9461b8cf9df9";
-        const string negativeHash = "707564a4041c1bf2627e069ead2754a3de3c4bfc60642f419a2e2ec671a61f91";
-        const string parameters = "ns(n0,1:u),ns(n0,1:v)";
-        var levels = mutation switch {
-            "permuted-universes" => "lp(ns(n0,1:v)),lp(ns(n0,1:u))",
-            "instantiated-universe" => "l0,lp(ns(n0,1:v))",
-            _ => "lp(ns(n0,1:u)),lp(ns(n0,1:v))",
-        };
-        var rawReference = "ec(" + nameKey + ",[" + levels + "])";
-        var rawType = negated && mutation != "wrong-polarity"
-            ? "ea(ec(ns(n0,3:Not),[])," + rawReference + ")" : rawReference;
-        if (mutation == "metadata-wrapper") rawType = "ed(" + rawType + ")";
-        var theorem = new LeanDeclaration("D5.Probe.result", "theorem",
-            mutation == "missing-material" ? "unavailable"
-                : "statement-v1(uparams=[" + parameters + "],type=" + rawType + ")", []);
-        var definition = new LeanDeclaration("D5.Probe.«x.λ».7.claim", "def",
-            "statement-v1(uparams=[ns(n0,1:a),ns(n0,1:b)],type=es(l0),value=fixture)", []) {
-            NameKey = nameKey };
-        var binding = JsonSerializer.SerializeToElement(new {
-            level_count = 2,
-            definition_entry = new { path = negated ? new[] { "arg" } : Array.Empty<string>(),
-                reference_identity = referenceHash },
-        });
-        void Check() => InformationTemplateDefinitionReference.Check(binding,
-            negated ? negativeHash : referenceHash, theorem, definition);
-        if (mutation == "valid") Check();
-        else Assert.Throws<FormatException>(Check);
-    }
 
 }

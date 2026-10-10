@@ -3,25 +3,23 @@
    mirror-B: none(waiver:new-cross-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=certified-instance; basis=terminal=gid:D5/S3/Observer/GoldenChronology/BinaryParikhStepTwoBridge.binary_parikh_arbitrary_word_collision
+   utility: none
    digest: Binary Parikh matrices realize count and ordered-pair Chen coordinates. -/
 
 import D5.S3.Observer.Chronology.StepTwoChronologicalSignature
+import Mathlib.Data.Bool.Count
 import Mathlib.LinearAlgebra.Matrix.Notation
 
 /-!
 # Binary Parikh matrices as a step-two chronological observer
 
-Recovered from the unmerged #5014 candidate. This is the sole binary observer
-owner in this batch. The standard Parikh generators are I+E01 and I+E12;
+The standard Parikh generators are I+E01 and I+E12;
 their three upper entries count true, false, and scattered true-before-false
 pairs. Existing Chen composition is reused, not redefined.
 
 Classical source: Mateescu, A. Salomaa, K. Salomaa and Yu, A sharpening of the
 Parikh mapping, RAIRO ITA 35(6) (2001), 551-564, DOI 10.1051/ita:2001131.
-No novelty is claimed for that representation. The explicit adapter and its
-kernel behavior are the formal content here. No matching owner was found on
-the pinned dev branch; the uploaded Heisenberg duplicate is not imported.
+The representation applies to arbitrary binary words, including the empty word.
 -/
 
 set_option autoImplicit false
@@ -75,19 +73,8 @@ theorem scattered_true_false_count_append_letter (word : List Bool) (letter : Bo
 
 /-- The two binary letter counts exhaust the word length. -/
 theorem binary_letter_counts_length (word : List Bool) :
-    word.count true + word.count false = word.length := by
-  induction word with
-  | nil => rfl
-  | cons head tail ih =>
-      cases head
-      · have ht : (false :: tail).count true = tail.count true := by simp
-        have hf : (false :: tail).count false = tail.count false + 1 := by simp
-        rw [ht, hf, List.length_cons]
-        omega
-      · have ht : (true :: tail).count true = tail.count true + 1 := by simp
-        have hf : (true :: tail).count false = tail.count false := by simp
-        rw [ht, hf, List.length_cons]
-        omega
+    word.count true + word.count false = word.length :=
+  List.count_true_add_count_false word
 
 /-- The usual binary Parikh matrix is a literal ordered product of unipotent
 integer matrices. -/
@@ -201,28 +188,10 @@ theorem binary_parikh_eq_of_counts_and_magnus (left right : List Bool)
   have hpairs : scatteredTrueFalseCount left = scatteredTrueFalseCount right := by omega
   rw [parikh_normal_form, parikh_normal_form, htrue, hfalse, hpairs]
 
-/-- This representation is two-step nilpotent: all triple generator products vanish. -/
-theorem binary_letter_triple_product_zero (a b c : Bool) :
-    binaryLetterObservation a * binaryLetterObservation b * binaryLetterObservation c = 0 := by
-  cases a <;> cases b <;> cases c <;>
-    simp [binaryLetterObservation, upper_mul, upper_zero]
-
-/-- The language restriction in a recovery theorem cannot be dropped. -/
-theorem binary_parikh_arbitrary_word_collision :
-    binaryParikhMatrix [true, false, false, true] =
-      binaryParikhMatrix [false, true, true, false] ∧
-      ([true, false, false, true] : List Bool) ≠ [false, true, true, false] := by
-  constructor
-  · rw [parikh_normal_form, parikh_normal_form]
-    rfl
-  · decide
-
 #print axioms scattered_true_false_count_append_letter
 #print axioms binary_parikh_matrix_entries
 #print axioms binary_step_two_signature_entries
 #print axioms binary_doubled_magnus_center
 #print axioms binary_parikh_eq_of_counts_and_magnus
-#print axioms binary_letter_triple_product_zero
-#print axioms binary_parikh_arbitrary_word_collision
 
 end D5.S3.Observer.GoldenChronology.BinaryParikhStepTwoBridge

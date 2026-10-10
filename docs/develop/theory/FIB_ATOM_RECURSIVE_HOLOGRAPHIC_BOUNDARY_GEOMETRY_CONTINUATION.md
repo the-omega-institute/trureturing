@@ -1409,3 +1409,3580 @@ The ordinary proofs and exact finite discriminators establish `repo-derived` ded
 The remaining native correspondence is substantive: exhibit an actually permitted source apparatus implementing an amplitude transfer and between-event Hamiltonian, with matched original actions/records, preparation, clock, errors and prices; bind the authentic source/root/epoch and beta masks using the existing paid acquisition when its exact promises apply, and acquire and retain the consumed hidden coefficients/phases through authorized channels; or prove a different faithful positive interaction bridge. Hypothesis15.1's full rotations, attainable faithful Euclidean displacement, physical field/kinetic/maintenance/precision/record prices and common-environment propagation/task-capacity remain unproved. The unit occurrence geometry is not mesh refinement or an open Euclidean three-dimensional region. Finite-clock full-state preservation is a useful conditional interaction relation on the same original source; it does not by itself settle physical spatial dimension, unbounded time, all-state fidelity or the full why-three-dimensions objective.
 
 ## 58.99 追加锚（本行以下为增补区）
+## 59. 混色实际地址费用的部分界
+
+**定义 59.1（部分界接口）。** 在原定义57.1的同组成、空取得历史与四值原地址合同下，若 $d=3k\ge3$、$a,b>0$、$n=a+b\ge4$、$h\ge d+n-1$，则 [混色实际地址费用卷定理1.4、5.3、7.3](FIB_ATOM_MIXED_ACTUAL_ADDRESS_PARTIAL_BOUNDS.md) 给出 $A+3\le D_h\le A+n-2+c_d(a,b)$，其中 $c_3=a$，$d\ge6$ 时 $c_d=\min(a,b)$；这是部分界，不是准确值。
+
+其普通证明保留同一固定正源的完整原历史、重复动作、不同实际地址收费与两色终端分支；上界实际诊断、真实缓存和完整前沿补查覆盖全部同组成高负源。
+
+## 59.99 追加锚（本行以下为增补区）
+
+## 60. A source-owned finite actuator for the installed whole-rho interaction
+
+**Definition 60.1 (the source, apparatus and two clocks).** Fix a public integer $H\ge1$ and the exact private-source processor [PR57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#57-a-complete-paid-ideal-realization-of-the-original-ordered-tree-interface). Its actual source is its current valid $N=2H-1$ slot packet, with the literal two-bit tokens PAD, alpha, beta, PAIR of PR57.6. This packet, its preparation occurrence and its original INITIAL identity are the source throughout. There is no source selected from an observer fiber. Every supplied private ingress bit, validation, original request, complete candidate, guard, committed response, chronological row, copy, refusal and Stop uses PR57's own routines and ownership. The public actor starts with its original source-independent initialization and receives exactly its original records. Only original whole-rho modifications are used for the interaction trajectory here. The full PR57 source menu is retained: any actual named Left/Right context is still completely supplied, processed, guarded and recorded by its original routines. Rejected contexts leave the actuator installed. An accepted context may be compiled by Theorem60.2 on its actual new packet, but ends a commissioned whole-rho comparison; its different occurrence injection is not relabelled as the same-address transfer of §58. Any new amplitude commission after such a graft needs its own supplied supported state and paid carrier/preparation, with no reset of an unknown state.
+
+Adjoin the following explicitly supplied ideal apparatus, owned by the producer. Its classical private workspace is read only with respect to the current-source packet. At an idle cut it locks that actual producer block, saves the public cursor positions, obtains the actual original interval descriptor by the paid read/copy routine of Lemma60.10, scans its fixed $N$ slots with the PR57 read/Boolean routines, and restores every borrowed cursor before releasing the lock. Save, seek, scan and restoration are charged apparatus work; no original packet data bit is written. It may compute private derived bits, but these bits have no actor, verifier or consumer observation port. Its quantum bank has one qubit for each address in
+
+$$
+\mathcal A_H=\{p\in\{L,R\}^*:|p|\le H-1\},\qquad
+K=2^H-1,
+\tag{60.1}
+$$
+
+and one additional qubit $r$ for a phase reference. All are constructed individually in $|0\rangle$ by a charged `QNew` occurrence. An excitation at address $p$ is denoted $|p\rangle$; an excitation at $r$ is $|r\rangle$. The declared operating sector is
+$\mathcal U_H=\operatorname{span}\{|r\rangle,|p\rangle:p\in\mathcal A_H\}$, the one-excitation sector of these $K+1$ qubits. The much larger sectors of the qubit tensor product are not identified with occurrence amplitudes.
+
+The supplied interaction blocks are a one-mode phase and a two-mode hopping gate, together with fixed finite preparation gates and an exact identity hold. With a classical private enable bit $v\in\{0,1\}$, the first two have the literal matrices
+
+$$
+\begin{aligned}
+P_p(v,\xi)&=\exp(-iv\xi n_p),\qquad n_p=|1\rangle\langle1|_p,\\
+B_{pq}(v,\xi)|_{\{|p\rangle,|q\rangle\}}
+&=\begin{pmatrix}\cos(v\xi)&i\sin(v\xi)\\i\sin(v\xi)&\cos(v\xi)\end{pmatrix}.
+\end{aligned}
+\tag{60.2}
+$$
+
+$B$ fixes $|00\rangle,|11\rangle$ on its two qubits; $P=\operatorname{diag}(1,e^{-iv\xi})$ on its qubit. Both act as identity on untouched qubits. A block has public wiring and a finite signed dyadic angle string. Classical enable bits are loaded by charged fixed-address reads into a private latch. They are not quantum address queries. To execute a block without a word-sized angle latch, write $\xi=\sigma\sum_{j=0}^{J-1}d_j2^{j-b}$, $d_j\in\{0,1\}$, and scan every one of its $J$ digits. On digit $j$ execute the fixed rotation of angle $\sigma2^{j-b}$ with enable $vd_j$. The apparatus explicitly supplies a finite catalog of these elementary $P$ and $B$ rotations for all public exponents and signs required by the commissioned finite run. Catalog control descriptions and every digit fetch are installed and paid. Rotations within one block commute, so their product is exactly (60.2) at the written angle. Disabled digits still execute their charged identity slots. The catalog entries have exactly their declared matrices; that is the new ideal executed-parameter permission, not an inference from a numerical native Read or a claim that precision is free. A further error model below permits discrepancies at each elementary rotation. No physical implementation of this catalog is postulated as a consequence of FIB.
+
+Each elementary catalog rotation occupies one logical gate tick; an angle block occupies $J$ such ticks, in addition to all its classical fetch work. All ingress, classical computation, construction, wire/angle description, fetch, gate execution and retention are paid. Keep the original PR57 receipt chain and fence numbering for original-processor work. The added actuator has a separately owned receipt chain for its extra routines and quantum events; its boundary cells and control are explicitly supplied and counted as apparatus foundation. Original work still appends exactly its original receipts, and extra work appends only actuator receipts. The total logical count is the sum of these two actual chains. Thus the original archive's closed-cut numerals and fees are preserved rather than silently reinterpreted as actuator time. The supplied phase reference has generator zero during interaction gates, and all modes have exact identity evolution during classical source service and compilation. Identity hold is an additional memory permission with its own retention price. The comparison clock $\tau$ advances by declared nonnegative rational intervals at completed interaction checkpoints. It is not PR57's receipt count, the number of substitutions or a calibrated physical time. Intermediate digital gate cuts are retained execution cuts, but are not asserted to satisfy the continuous Schrödinger equation of §58.1. Finite gate and compilation duration can therefore realize its zero-duration switch in the comparison clock without asserting zero work or zero apparatus time.
+
+The additional carrier, classical private access, gate matrices, reference coherence, perfect ideal hold, supply of angle parameters, clock interpretation and all their prices are new permissions. The original source menu has acquired none of them.
+
+**Theorem 60.2 (literal private compilation and the complete installed generator).** From the authentic current packet of any $s\in\mathcal T_H$, a finite fixed-schedule private Boolean computation constructs, for every public $p\in\mathcal A_H$,
+
+$$
+x_p=[p\in\operatorname{Pos}(s)],\qquad
+b_p=[s|_p=\beta].
+\tag{60.3}
+$$
+
+It constructs these bits from the current source, without a source-size reply, address oracle, acquired archive, private-data-dependent seek or counterfactual source. The resulting supplied gate decomposition has, on $\mathcal U_H$, generator
+
+$$
+\widehat H_s=
+\sum_{p\in\mathcal A_H}x_p\bigl(a d_p-g2^{-|p|}\bigr)|p\rangle\langle p|
+-a\sum_{\substack{q\in\mathcal A_H\\q\ne\varepsilon}}
+ x_q\bigl(|q^-\rangle\langle q|+|q\rangle\langle q^-|\bigr),
+\qquad d_p=\begin{cases}2,&p=\varepsilon,\\3,&p\ne\varepsilon.\end{cases}
+\tag{60.4}
+$$
+
+Here $q^-$ is the actual parent address. It fixes the reference and inactive coordinates. If $V_s:\ell^2(D)\to\mathcal U_H$, $D=\operatorname{Pos}(s)$, sends $e_p$ to $|p\rangle$, then
+
+$$
+\widehat H_s=0_{\mathbb C r}\oplus V_s\mathsf H_DV_s^*
+ \oplus0_{\operatorname{span}\{|p\rangle:x_p=0\}}.
+\tag{60.5}
+$$
+
+In particular every actual leaf keeps both missing-child killing terms, the potential is the common $2^{-|p|}$ restriction, and every internal, exceptional and root-invisible direction is retained. No free-standing subtree potential or newly solved killed field occurs.
+
+Proof. The all-source address cover and its size are the existing [Fiber Calculus II Lemma38.40](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#384-叶预算的原几何与精确迹编译), with its leaf-budget parameter set to this $H$. This is only a finite cover for allocating the bank; it does not restrict the original menu or make a source reply available.
+
+Here are explicit compiler instructions. Use $H+1$ private pending-address rows, each containing an $H$-bit zero-padded path and a length, and a private stack height $h$. Put the root in row zero and set $h=1$. Use width $w=\lceil\log_2(4H+8)\rceil$ for lengths and signed temporary counters. For each of the $N$ token slots, in its public order, select the top row by OR-ing the row bits under the masks $[j=h-1]$ over every $0\le j\le H$. The case $h=0$ selects a zero dummy row. Record its path and length with the token's non-PAD bit. Every row and bit is scanned even on PAD.
+
+For PAIR, replace row $h-1$ by that path followed by $R$, replace row $h$ by that path followed by $L$, and set $h$ to $h+1$. For a leaf set $h$ to $h-1$; for PAD leave it unchanged. These are bitwise MUX writes to every row, selected by equality masks, not writes at a private address. Stale rows above the new height are immaterial and remain private. Form both possible children even when the token is a leaf or PAD. A child path is formed by scanning every path-bit position and testing equality with the old length; incrementing its length is a fixed-width addition. Actual branch depths are at most $H-2$, while unused leaf-child expressions have length at most $H$, so the reserved path and counter widths suffice. The unselected arithmetic arms are inside the signed range; no underflow is interpreted as a valid address.
+
+The pending rows, from top downward, are exactly the remaining preorder node addresses. This invariant follows by replacing the first pending address by left then right on a branch and by deleting it on a leaf. It holds initially and at each active token. Valid padding begins only after closure by PR57.T1, when $h=0$. The stack never has more than $H$ pending nodes: every pending subtree is nonempty and their disjoint leaves belong to the same source of at most $H$ leaves. Thus each recorded active address is exactly that token's actual address. Fold all $N$ recorded rows against each public $p$, using full path-and-length equality, and OR the active matches to get $x_p$; add the beta-token test to get $b_p$. Distinct active tokens have distinct addresses, although the OR recipe does not assume a unique match as a machine primitive.
+
+All operations just described expand into PR57.5's fixed-width additions, comparisons, Boolean truth tables and MUXs; PR57.3 supplies allocation, unary descriptors and every seek. For example a sufficient upper bound on the number of Boolean gates, including initial constant writes, is
+
+$$
+G_{\rm flag}(H)=100N(H+1)(H+w+1)^2+20NK(H+w+1).
+\tag{60.6}
+$$
+
+To check this bound, in each token iteration the two counter updates, top equality selection, child construction and two MUX writes per row take at most $100(H+1)(H+w+1)^2$ gates using the five-gate adder, three-gate-per-bit equality and one-gate MUX of PR57.5. Each recorded-row/public-address match and the two folds take at most $20(H+w+1)$ gates. The generous constants also cover initialization and the terminal height check. This is a Boolean-gate bound, not a native tick count. Generation writes every instruction and all unary references, and their native costs are counted separately in Definition60.7.
+
+The only edges installed in (60.4) are parent–child seams with an actual child. Downward closure gives an actual parent. A leaf diagonal is never obtained by counting its installed neighbours: it is the inherited $a d_p-g2^{-|p|}$ even when its children are absent. Consequently (55.4) is exactly the active principal block, proving (60.5). The common field values are generated from public depth by a binary shift, not read from a hidden field oracle. $\square$
+
+**Theorem 60.3 (guarded installation, same-source renewal and record projection).** Supply a producer lock excluding simultaneous source service and interaction gates. Compile the initial current block after its original valid preparation. Thereafter run the original PR57 source schedule for each whole-rho request, including its complete candidate guard and original response. At whole-rho acceptance compile from the just-installed current block and atomically release the new actuator version; at rejection retain the old actuator version. During service and compilation hold the entire quantum bank. Each Read preserves the current source and installed actuator, and each refusal supplies no candidate Read. Every Stop is absorbing for source requests, interaction checkpoints and quantum readout. Any commissioned terminal quantum readout is completed before Stop; only the original finite record delivery, verification and consumer-output routines may remain after its source-stop commitment.
+
+Every finite original lawful source history retains its unique original service and records. For a whole-rho interaction commission with finite public local work, the additional schedules give a unique finite joint execution as well. Projection retains its exact INITIAL, current source, original initialization, chronological requests, every original Read/accept/reject/Stop and all original record fields and copies. If $s'=\rho s$ is actually accepted, then the unchanged bank realizes precisely §58.2's $J$:
+
+$$
+V_{s'}J=V_s,\qquad
+\widehat H_{s'}V_s-V_s\mathsf H_D
+=-a\sum_{p:b_p=1}|pL\rangle\langle e_p|
+-a\sum_{p:b_p=1}|pR\rangle\langle e_p|.
+\tag{60.7}
+$$
+
+No new excitation, copy or measurement of the old state is used at renewal. The private label changes are installed even when $D'=D$, as for a single alpha leaf becoming beta.
+
+Proof. PR57.T1–T2 give the authentic original packet, full-candidate guard, exact responses and actual successor. PR57.L4 gives chronological record and copy authenticity, and PR57.T5 gives finite progress. The new flag compiler terminates by its finite public loops and PR57's terminating routines. The lock makes its input one committed current version. No actuator descriptor refers to an uncommitted or refused candidate. Since $\rho$ preserves old addresses and only adds children at old beta leaves, §58.2 gives $D\subset D'$. The same physical bank vectors therefore satisfy $V_{s'}J=V_s$. Their initially unoccupied new coordinates stay zero during hold; identity release is the forced transfer, with no state-dependent preparation. The old principal block and newly enabled child seams give (60.7). This consumes the established renewal identity rather than rederiving it from a scalar spectrum.
+
+Induction on original cuts proves the projection assertion. Source service and original archives are the original routines; additional private computations do not edit their source or response fields. Private compiled bits are derived workspace, not a second callable source, current-to-INITIAL reset or an actor-readable source copy. All original record-copy work remains executed and charged. The separate actuator receipts do not advance the original processor's meter. Each borrowed source cursor is restored before original service resumes; the original routine therefore has exactly its old entry cursor, packet and meter. Original fence numerals, source records and copies retain their literal original values and framing, while actuator fences belong to its separately named chain. No response is synthesized from an actuator or a retained spectral calculation.
+
+There is also an observation boundary. Give the original actor the public extra instruction, address, busy/idle and fee labels, but no enables, unreleased private workspace or quantum measurement. At each fixed $H$, the flag compiler, wire schedule and gate count depend only on public bounds and original committed responses. If interval/preparation choices are supplied publicly or selected from that same acquired prefix, PR57.T3 extends by simulating these extra fixed schedules with dummy private bits. Thus these added labels disclose no source distinction beyond the actor's original acquired history. This is an ideal observation theorem: electrical activity, state-dependent failure, a leaked enable or a quantum readout would be additional observations requiring another contract. A separately commissioned quantum readout may distinguish sources, but is never an original Clifford Read. $\square$
+
+**Theorem 60.4 (source-generated finite circuits with full-phase error).** Suppose $a,g>0$ are public rationals, or come with paid effective rational enclosures and public upper bounds $\bar a,\bar g$. Choose nonnegative rational approximants $\widetilde a,\widetilde g$ within those upper bounds and certified errors $\delta_a,\delta_g$. Exact rational coefficients permit $\delta_a=\delta_g=0$. Set
+
+$$
+\overline M=6\bar a+\bar g,\qquad F=K+(K-1)=2K-1.
+\tag{60.8}
+$$
+
+There is a public three-colouring of the bank's parent–child seams such that each colour is a matching. One product slice executes the $K$ phase slots of (60.2), then all edge slots in colour order $0,1,2$, using the installed private bits (60.3). For an interval $\theta\ge0$, use $m\ge1$ slices with $\delta=\theta/m$, angle $\delta(\widetilde a d_p-\widetilde g2^{-|p|})$ at site $p$ and angle $\delta\widetilde a$ on every edge. Round every angle to a signed dyadic with absolute error at most $u=2^{-b}$; retain and fetch all angle bits. Let $\widetilde U_s(\theta)$ be the actually executed ideal circuit. Then, on the whole one-excitation sector,
+
+$$
+\left\|\widetilde U_s(\theta)-e^{-i\theta\widehat H_s}\right\|
+\le \frac{\overline M^2\theta^2}{2m}+Fm\,2^{-b}
++\theta(6\delta_a+\delta_g).
+\tag{60.9}
+$$
+
+This is an operator norm with the reference phase fixed, not a distance modulo a scalar phase. The product-formula part is independent of $H$; its actual gate and angle-precision prices still depend on $K$.
+
+Proof. Assign a virtual incoming colour zero at the root, without installing an incoming edge. At a vertex with incoming colour $c$, assign colours $c+1,c+2$ modulo three to its left and right child seams. Each nonroot vertex has three distinct incident colours; the root has two. Removing inactive edges preserves the matching property. This public recursive wire list is generated from addresses, with no private traversal.
+
+On $\mathcal U_H$, group all diagonal terms as $A_0$ and each matching's hopping terms as $A_1,A_2,A_3$, using the approximated coefficients. The diagonal norm is at most $3\bar a+\bar g$. Each matching is an orthogonal direct sum of two-by-two matrices of norm at most $\bar a$, and zero coordinates. Hence
+
+$$
+\sum_{j=0}^3\|A_j\|\le\overline M.
+\tag{60.10}
+$$
+
+This estimate is on the declared one-excitation sector, not on every excitation sector of the qubits. Terms in each group commute, so its exponential is exactly the corresponding list of local gates before angle rounding. In particular no scalar identity part of $A_0$ is dropped.
+
+Use the classical first-order Hermitian product bound of Childs–Su–Tran–Wiebe–Zhu, [*A Theory of Trotter Error*, Proposition15, equation(145)](https://arxiv.org/html/1912.08854v3#S5.SS1), published as *Theory of Trotter Error with Commutator Scaling*, [DOI10.1103/PhysRevX.11.011020](https://doi.org/10.1103/PhysRevX.11.011020). It bounds a slice's error by
+$\delta^2\sum_{j<k}\|[A_j,A_k]\|/2\le\delta^2\overline M^2/2$.
+Its hypotheses hold because the four groups just constructed are Hermitian on this same finite invariant sector. Unitary telescoping over $m$ slices gives the first term in (60.9). This mature simulation estimate is an intermediate, not new Trotter theory.
+
+The generators of each enabled $P$ or $B$ have norm at most one, so changing its angle by $u$ changes its unitary by at most $u$, by the unitary Duhamel estimate already used in §58.8. There are exactly $Fm$ slots, including disabled ones; telescoping gives the second term. Finally (60.5) and $\|L_D\|\le6$, $\|M_\phi\|\le1$ give generator error at most $6\delta_a+\delta_g$. The reference and inactive blocks are zero for both coefficient choices. Duhamel gives the last term. Every gate leaves the inactive amplitude subspace invariant, because no enabled edge leaves the actual domain. $\square$
+
+**Corollary 60.5 (finite histories, executed parameters and complete spectral correspondence).** Commission $L$ finite interaction checkpoints at original idle cuts, with intervals $\theta_\ell\ge0$, total $S\le T<\infty$, and any finite number of intervening original Reads, refused requests and accepted whole-rho renewals. Let $U_{\rm hist}$ be §58.1's exact time-ordered finite-domain propagator with its forced transfers, represented in the fixed bank. Execute the circuits of Theorem60.4 on the current committed packet at each interval. For possibly different $m_\ell,b_\ell$ put
+
+$$
+E_{\rm circ}=
+\sum_{\ell=1}^L\left[
+\frac{\overline M^2\theta_\ell^2}{2m_\ell}
++F m_\ell2^{-b_\ell}
++\theta_\ell(6\delta_a+\delta_g)\right].
+\tag{60.11}
+$$
+
+At every completed commissioned checkpoint, the operator difference from $U_{\rm hist}$, on the initially active sector and the reference, is at most the corresponding prefix of this sum. It includes arbitrary hidden coefficients and their relative phases. Zero intervals need no gate slots.
+
+For a supplied unit prepared state with norm error $\eta_{\rm prep}$, actual unitary gates preserving the declared sector with deviations bounded there in operator norm by $\zeta_j$, accumulated sector-preserving unitary hold/locking error $\eta_{\rm hold}$, and a declared comparison-clock interval discrepancy sum $\eta_\tau$, the state bound gains at most
+
+$$
+\eta_{\rm prep}+\sum_j\zeta_j+\eta_{\rm hold}
++(6a+g)\eta_\tau.
+\tag{60.12}
+$$
+
+The ideal model executes the literal dyadic angles, so $\zeta_j=0$; its comparison clock is the commanded interval string, so $\eta_\tau=0$. For a perturbed angle law, a certificate $|\xi_j^{\rm exec}-\xi_j^{\rm cmd}|\le\gamma_j$ supplies $\zeta_j\le\gamma_j$. Other gate, reference or hold faults need their own bounds; they are not inferred from native Read errors. No error independence is required. The formula is conditional on the authentic packet, exact source guard and version lock; a wrong source or omitted channel is not a precision certificate.
+
+Proof. The bank is unchanged at switches and holds, so Theorem60.3 gives the exact transfer at every accepted renewal and identity on refusal/Read. Telescope the finite unitary factors, using (60.9) at each actually installed version. Unitarity propagates errors without amplification. The same argument for the actual gate products gives the sum of $\zeta_j$; the stipulated hold error is added on its actual cuts. The source-independent bound $6a+g$ and the clock comparison of §58.8 give the final term. Nothing takes an event after an infinite prefix or after Stop.
+
+For exact spectral correspondence, extend $V_s$ by the reference. Formula (60.5) implies for every Borel set $\Omega$ that the restriction of $E_{\widehat H_s}(\Omega)$ to the active sector is $V_sE_{\mathsf H_D}(\Omega)V_s^*$. Its reference block is $\mathbf1_{0\in\Omega}$, and the inactive zero blocks are explicitly outside the target. Thus every finite exceptional energy, full multiplicity, hidden eigenvector and full normalization in §55.5 survives in the installed target generator. For complete old/new orthonormal eigenbases, its renewal coefficients are exactly $\Gamma_{\nu\mu}$ of (58.3), because $V_{s'}J=V_s$. The actual finite gate product has the propagator error (60.11); it is not claimed to have the exact eigenvectors of $\mathsf H_D$ or to supply an acquired spectral archive.
+
+If the preparation and reached-domain hypotheses of §58.7, or of §58.8, are separately fulfilled, its common full-state comparison gains (60.11)–(60.12). That inference reuses the same common field, all contrast channels, actual irregular domains and full phases. The present source compiler does not prepare an unspecified infinite spectral state or remove those hypotheses. $\square$
+
+For example, given rational $\varepsilon>0$, $L\ge1$, a public $T$ and coefficient upper bounds, choose a common
+$m=\max\{1,\lceil2\overline M^2T^2/\varepsilon\rceil\}$ and a finite integer $b\ge0$ with $2^b\ge4LFm/\varepsilon$. The first two terms in (60.11) total at most $\varepsilon/4$ each, since $\sum\theta_\ell^2\le T^2$. Supply coefficient errors with $T(6\delta_a+\delta_g)\le\varepsilon/4$ and preparation/remaining errors at most $\varepsilon/4$. The total is at most $\varepsilon$. This supplies finite parameters for every commissioned finite accuracy, not a physical calibration or an accuracy uniform over unbounded $T$.
+
+**Proposition 60.6 (paid preparations, full phase and an operational boundary).** An input-independent preparation is available for every actual source: construct all $K+1$ zero qubits, apply a supplied exact bit flip at $r$, then a supplied balanced two-mode gate mapping $|r\rangle$ to $(|r\rangle+|\varepsilon\rangle)/\sqrt2$. These two fixed finite gates and their descriptions are charged. The reference and target amplitudes are retained in this one carrier, not in two copies of an unknown state.
+
+More generally an explicitly supplied finite nonzero complex rational array $z=(z_p)$, supported on the actual domain, permits paid preparation of either $V_sz/\|z\|$ or
+$(|r\rangle+V_sz/\|z\|)/\sqrt2$ to any positive norm tolerance. This is effective known-state preparation from material data, not preparation of an arbitrary unknown state or inference of coefficients from the source's spectrum.
+
+Proof. The first construction has the stated literal result and requires no source-dependent controller initialization. For the second, start either with a charged root bit flip or with that balanced reference/root preparation, and apply the following address-mode rotations, which fix $r$. Let $f=z/\|z\|$ and enumerate the bank with root first. A succession of real two-mode rotations between root and each other mode $p_j$ splits off its prescribed nonnegative magnitude. At step $j$, choose
+
+$$
+\sin\vartheta_j=
+\frac{|f_{p_j}|}{\sqrt{|f_\varepsilon|^2+\sum_{k\ge j}|f_{p_k}|^2}};
+\tag{60.13}
+$$
+
+a zero denominator gives the identity. The remaining root amplitude is the square root of the unused total weight, so induction gives all magnitudes. Phase gates then install $\arg f_p$ at each nonzero coordinate. Real rotations are conjugates of $B$ by the supplied fixed phases $\operatorname{diag}(1,i)$ and its inverse. The balanced gate, these fixed phases, and the bit flip are finite constant matrices explicitly included in the apparatus, not arbitrary angle advice.
+
+There are at most $K-1$ variable rotations and $K$ variable phases, with their fixed conjugating gates. For rational input the zero cases are decidable. Rational interval arithmetic, square-root bisection and sine/cosine bisection on fixed quadrants compute each angle to any given positive tolerance: positive denominators have finite rational lower bounds obtained from the nonzero input entries; the continuous inverse on $[0,\pi/2]$ can be bracketed to any positive angle width. Trigonometric values can be enclosed by their convergent Taylor series with explicit factorial remainder. Use overlapping brackets of width below the desired angle tolerance, with strict outward inequalities; a root on one mesh boundary is interior to a neighbouring overlapping bracket. Refining the value enclosures then certifies a bracket in finitely many steps. The zero and unit endpoints are detected from rational squared magnitudes. Thus no exact equality test on computable transcendental values is required. Charge all these arithmetic steps and all supplied input bits. Rounding these $2K-1$ variable angles within $v$ changes the preparation by at most $(2K-1)v$; fixed conjugations are exact in the ideal model. This is a constructive finite procedure, with no unknown-state oracle. A promise that the array is supported on $D$ must either be supplied or checked privately against (60.3), and that check is paid. A falsely supported array has no promised target preparation.
+
+The phase reference is load bearing. For a singleton current source at $H=1$, the exact target is $[2a-g]$, and after interval $\theta$ the prepared joint state is
+$(|r\rangle+e^{-i(2a-g)\theta}|\varepsilon\rangle)/\sqrt2$. The separately supplied terminal effect onto $(|r\rangle+|\varepsilon\rangle)/\sqrt2$ has probability
+$[1+\cos((2a-g)\theta)]/2$. Dropping a scalar shift from the target changes this relative phase and generally changes this probability. A one-state ray account cannot replace (60.9).
+
+For a common preparation digit width $J_P=b_P+3$, retaining every variable slot gives $G_P=1+(2K-1)J_P+2(K-1)$ elementary preparation gates for the target alone, or $G_P=2+(2K-1)J_P+2(K-1)$ for the joint reference/target state. The extra one is the balanced gate; the two fixed phase conjugations per hopping block are included. The magnitude margin covers all angles in $[-\pi,\pi]$. These are declared schedule counts, including zero entries; all rational-array ingress, normalization/angle computation, root-to-mode wire and signed-catalog descriptions, fetches and classical receipts remain additional in (60.16). Choosing a finite $b_P$ and certified angle brackets with $(2K-1)v\le\eta_{\rm prep}$ gives the stated preparation tolerance. This uses explicitly supplied root-to-mode preparation wiring, not an original source operation.
+
+The displayed terminal effect is implemented by the inverse balanced gate on $(r,\varepsilon)$ followed by one explicitly supplied computational-basis measurement of the reference qubit. These are two quantum slots; output-bit construction, framing and delivery are separately paid classical work. Other terminal effects require their own specified finite measurement circuit and error contract. A single execution gives one outcome, not an exact calibrated probability Read. No repetition, fresh source, reset or independent noise law is supplied. Arbitrary supplied states are transported by the all-state operator bounds without being measured or copied, but their acquisition and preparation must come from an actually permitted source. The construction does not add a coherent reference to an arbitrary unknown input: an unknown joint input must already have its expressly supplied reference/preparation contract. $\square$
+
+**Definition 60.7 (finite descriptions, exact logical prices and simultaneous storage).** The following prices belong to this ideal apparatus. They do not replace the original charges or claim physical optimality. All added classical routines use PR57's opcodes, complete tape encodings, actual allocator recipes, one-cell receipt rule and fee two per core occurrence, routed to the actuator's own chain. Source cursors borrowed under the producer lock are restored by paid Home/Seek routines. Original service retains its original meter and charges; no source-service event is omitted or assigned to both chains. Add `QNew`, one enabled/disabled elementary catalog rotation and a fixed terminal measurement as finite-local quantum core occurrences, each with one new meter receipt and fee two. An elementary rotation changes only its named one or two qubits; its enable is a finite private latch, and its public catalog index is already installed finite control. Digit/enable loading and all catalog/description work are separate classical occurrences. `QNew` creates one qubit in the stated state; it never resets an already constructed qubit. An ideal hold has identity action; retention costs one quantum-mode unit per bank mode per logical tick, including compilation and original service. One quantum mode and eight classical bits are separate storage coordinates.
+
+A public bank description lists every address, wire and three-colour edge, plus the reference, and is installed bit by bit. The address of each qubit is its bank-list ordinal in unary, with its actual connection specified by the public list. No private integer chooses a qubit. Each angle block has a literal record consisting of its opcode, unary endpoint ordinal(s), unary enable-workspace offset, sign, unary scale $U(b)$ and length-framed fixed-width angle magnitude; a terminal marker ends the list. A fixed interpreter scans/copies these fields using PR57's complete routines, then loops over the stored finite magnitude length. Each iteration reads the next digit, reads the fixed enable, computes their AND with `BF`, executes the installed catalog rotation for that public digit position/sign, advances the digit cursor and paid unary position counter, and tests its stored bound. Its only new quantum transition is the declared fixed-angle local rotation; no primitive reads an unbounded angle word. Catalog selection depends on public position, never the private enable. All these finite control, scan and counter occurrences are counted. In particular fixed wiring is supplied material, not a qRAM lookup. Parameter length, synthesis and routing costs are retained, even for disabled gates.
+
+For positive intervals put
+
+$$
+G_{\rm block}=F\sum_{\ell=1}^L m_\ell,\qquad
+G_Q=F\sum_{\ell=1}^L m_\ell J_\ell,
+\quad J_\ell=b_\ell+k_\ell,
+\quad k_\ell=\left\lceil\log_2(2+(3\bar a+\bar g)\theta_\ell+\bar a\theta_\ell)\right\rceil+2.
+\tag{60.14}
+$$
+
+These are respectively the exact interaction angle-block count and elementary quantum rotation count when all magnitudes use that declared fixed width. The integer margin covers sign/magnitude rounding. Zero enable/digit slots are included. Preparation and terminal measurement add their own actual elementary gate counts. Write every repeated slot in full, or retain a finite literal body with a paid unary loop counter; either representation is charged by its actual routine. One elementary finite description bound is obtained by writing the complete list. If $R_c$ is the largest allocated enable-workspace offset and $B_\ell$ bounds a signed fixed-point angle string, the length of its interaction part is at most
+
+$$
+1+\sum_{\ell=1}^L Fm_\ell(40+4K+R_c+2B_\ell),
+\quad
+B_\ell=4(b_\ell+k_\ell)+20.
+\tag{60.15}
+$$
+
+The $2B_\ell$ allowance covers sign, unary scale, unary length framing and all $J_\ell$ magnitude digits; the constant covers opcodes, separators and field terminators. The enable offset is stored in unary, and the two endpoint ordinals are at most $K$. A publicly supplied rational upper bound can replace the expression inside the logarithm; its width is found by the paid integer-doubling routine. This is a finite encoding bound, not an automatically installed program.
+
+For a finite joint run let $E_C$ be its actual classical core count, obtained by expanding all PR57 service and generator recipes, including source supply, compilation, parameter arithmetic, instruction construction/fetch, original policy, all original rows/copies and any record-only verification/output actually commissioned. Let $Q_N=K+1$ count qubit construction, and let $G_P,G_R$ count actual preparation and readout quantum slots. Then the declared exact price coordinates include
+
+$$
+\begin{aligned}
+E&=E_C+Q_N+G_Q+G_P+G_R,\qquad \mathrm{Fee}=2E,\\
+\mathrm{Storage}(c)&=
+\bigl(S_0+b_{\rm ctl}(c)+8A(c)+8E(c),\ Q(c)\bigr),\\
+\mathrm{Retention}(r)&=\sum_{c\text{ a logical tick of }r}Q(c).
+\end{aligned}
+\tag{60.16}
+$$
+
+$A(c)$ counts all constructed ordinary cells, including erased compiler versions, the authentic current packet, complete refused-candidate scratch, all instructions/angles, private flags, original archives, mailboxes and verifier/consumer copies simultaneously. Here $Q(c)$ is the number of qubits already constructed at that same cut, at most $K+1$; after bank construction it is $K+1$, and this is its peak. The second storage coordinate is qubits. Classical peak is the maximum of the displayed first coordinate over the same cuts, not a sum of separate phase maxima. Retained but erased cells are still counted. Every original or added core event constructs one receipt in its own chain, so their total cumulative meter term is $8E(c)$, including quantum events; the two chains' boundary/control foundations are counted in $S_0$. Original fee $2E_{\rm original}$ and added fee $2E_{\rm actuator}$ are separate coordinates whose sum is $2E$. Any separately supplied hardware/control/reference description outside the fixed primitive basis is installed and counted in $b_{\rm ctl}$ or $A$.
+
+These expressions are effective finite evaluations of displayed recipes. For each compiler Boolean gate, its literal code length and interpreter cost are PR57.05–PR57.06 with the actual constructed operand addresses; thus (60.6) does not silently price one Boolean operation as one tape tick. Initial supply has exactly the original $2N$ private ingress bits and their paid writes. Each subsequent compilation reads the very same committed source block, generates all flags and retains their version binding. Finite $H$, finite effective public parameter supply, finite original local computations and a finite commissioned checkpoint list give finite description, $E$, simultaneous storage and retention. There is no uniform bound over arbitrary finite histories, an optimality claim, a physical energy price or a source-copy credit.
+
+**Proposition 60.8 (actual guarded distinctions and finite certificates).** Let $H=3$ and take two actual INITIAL trees
+
+$$
+t=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+\qquad u=\langle\alpha,\langle\alpha,\alpha\rangle\rangle.
+\tag{60.17}
+$$
+
+Both have the original Clifford history
+$\operatorname{Read}[A];\rho[\mathrm{accept}];\operatorname{Read}[-B];
+\rho[\mathrm{reject}];\operatorname{Read}[-B];\operatorname{Stop}$.
+The actual leaf counts are $3,3,6$. On the common bank, at their initial or once-accepted versions, for $a=1,g=16$,
+
+$$
+(\widehat H_t-\widehat H_u)|L\rangle
+=-|LL\rangle-|LR\rangle,\qquad
+\|(\widehat H_t-\widehat H_u)|L\rangle\|^2=2.
+\tag{60.18}
+$$
+
+This distinction is generated by their authentic private packets although their original numerical records coincide. It need not be exported to the original actor. The refused second renewal never enables its candidate children.
+
+Proof. Their leaf words are both $\alpha\alpha\alpha$, and after one whole substitution both are $\beta\beta\beta$. The original relations give $A^3=A$, $B^3=-B$; the complete guard at $H=3$ accepts the first three-leaf candidate and rejects the next six-leaf candidate. The installed domains are respectively $\{o,L,R,LL,LR\}$ and $\{o,L,R,RL,RR\}$, with unchanged shapes after the first substitution. Formula (60.4) gives the identical inherited diagonal at $L$ in both, the identical parent seam, and only the first source's two actual child seams there. This gives (60.18). Compiling a public representative of their shared Read fiber would fail this all-state identity on one of the actual sources.
+
+For the single actual source $E=\langle\beta,\alpha\rangle$ at the same cap, the accepted domain and full matrix are exactly (55.22) with potential diagonal $(-14,-5,-5,-1,-1)$. In preorder $(o,L,R,LL,LR)$ the producer-generated edge groups are
+$\{(L,LR)\}$ in colour zero, $\{(o,L)\}$ in colour one, and $\{(o,R),(L,LL)\}$ in colour two. The last two edges are disjoint. The normalized hidden state $(0,0,0,1,-1)/\sqrt2$ remains an exact target eigenvector at $-1$, even though the digital factors individually need not preserve that eigenspace. The full target characteristic polynomial is precisely (55.24), not the cancelled root resolvent. Thus (60.9) bounds its complete phase evolution as well as the visible modes.
+
+The prepared $f_\pm$ of §58.5 are known finite vectors and can be supplied by Proposition60.6 to any positive norm tolerance. After the actual accepted renewal their original full target probability difference at $\theta=1/100$ has the exact certificate (58.11), whose magnitude exceeds $3.435\cdot10^{-8}$. Reuse that certificate. If each separately prepared and executed comparison has state error at most $\eta$, its root-effect probability error is at most $2\eta$, so the difference error is at most $4\eta$. Choosing, for example, $\eta\le10^{-9}$ preserves the negative sign. This is finite by (60.11) and Proposition60.6, with all preparation and execution work charged. It does not assert an exact-probability native Read or an independently resampled experiment.
+
+A less demanding explicit parameter certificate is $\bar a=1,\bar g=16,T=1$, $L=4$, $K=7$, $\varepsilon=1/100$. The sufficient choices above give $m=96800$, $b=31$ and $G_{\rm block}=5033600$; choosing the common public magnitude width $J=38$ gives $G_Q=191276800$ elementary rotations, before preparation/readout; the product-formula budget is $1/400$ and the angle budget is $5033600/2^{31}<1/400$. These counts concern exactly four commissioned positive intervals with total at most one, independently of how many original source Reads occur between them. They are upper bounds for declared ideal precision, not timings of a physical apparatus. $\square$
+
+**Definition 60.9 (source attributions and mathematical boundary).** The source algebra, actual substitution, ordered labels and brackets are `GenealogicalFiberTransport.Source/substitution/composition`, and their actual address functions are `ActualTreeReadoutAcquisition.readout/nodes/leaves`. PR57.1–PR57.11 supplies the actual material packet, private fixed schedules, original Clifford responses, whole guard, unchanged INITIAL, paid ownership/copy records, effective finite control and exact logical tally. The source is that installed packet, not the readout function of a different immutable-source consumer. §§55.1–55.5 supplies the exact common potential, counting norm, inherited kinetic/boundary operator and complete spectral account; §§58.1–58.3 supplies the renewal law, forced transfer and complete modal update. Those facts are prerequisites consumed at their original objects and parameters.
+
+Fiber Calculus II §38 supplies bounded address coverage and distinguishes exact actual-trace preservation from protocol redesign, coarse quotient and finite observer claims. Only its address cover is used to allocate this actuator; no original Read, including a long request in an auxiliary supplied interface, is deleted by an absent-address optimization. [Joint Moment Fibers §§28–35](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md#28-同一原生树的完整前沿与任务取得) supplies genuine complete-frontier acquisition, raw/coarse separation, same-controller costs and retained-record scope. If such an authentic acquired archive is actually supplied to another consumer, its known decoding may recover syntax; this construction requires no such archive and obtains no phase, actuation or INITIAL history from those acquisition theorems. Their proofs and costs are not repeated or identified with (60.16).
+
+Number-conserving two-mode rotations and phase gates are mature circuit tools; the [existing circuit note](../../../Library/QuantumStates/kerenidis2026scalablequantumml.md) records their one-excitation matrices and the danger of losing a common vacuum phase. Barenco et al., [*Elementary gates for quantum computation*](https://arxiv.org/abs/quant-ph/9503016), [DOI10.1103/PhysRevA.52.3457](https://doi.org/10.1103/PhysRevA.52.3457), supplies the mature one-/two-qubit circuit setting. It does not supply this source's enable bits, prices or physical gates. Its general universality is not substituted for the explicit source compiler. The product-formula and Duhamel facts have their precise roles in Theorem60.4. Known-state rotation preparation is a classical intermediate in Proposition60.6. No additional Library construction is required for these uses.
+
+The `repo-derived` content is the source-private fixed-schedule producer of the exact installed field/kinetic interaction, its guard-locked same-bank renewal, the reference-preserving complete-sector correspondence, and the finite circuit/resource/error composition on the actual original records. It is an ordinary mathematical construction in an explicitly supplied finite ideal actuation model. No global novelty, current kernel verification, physical hardware conformance or optimal circuit complexity is asserted.
+
+The actuator's public address wiring is an added computational carrier, not an Euclidean displacement system. Tree degree, qubit count, local direction dimension, retained source information, precision and physical cost remain different quantities. The original $\mathcal D_2$ model, its arbitrary independent unbounded visible initialization, untagged hidden value, destructive actions, command/executed-control distinctions, joint adversarial Read errors and INITIAL target remain unchanged. No identification with that source is made. Actual rotations/displacements, physical field and kinetic suppliers, calibrated elapsed time, extensive many-body stability, mesh/continuum limits and the complete why-three-dimensions objective remain separate obligations. The finite circuit comparison is at its declared checkpoints and finite comparison clock; it does not strengthen §58's full-phase scope to unbounded time, create a limit Read, or prepare an unspecified common bound state.
+
+**Lemma 60.10 (expanded Boolean code, authentic input and cursor restoration).** The compiler of Theorem60.2 admits a literal implementation in (PR57.05), with no instruction depending on a private address. One implementation allocates two constant cells, a private $2N$-bit input cache, and one fresh result cell for every Boolean gate. Constants and input-cache cells are initialized by actual writes. This dedicated workspace begins at data index zero on its own apparatus port. Its $R$ signal cells and fixed code can be reused at subsequent versions after a complete charged erase/initialization and authentic input copy. Every signal is rewritten before its current use. Erased cells remain constructed, and any separately commissioned retained flag snapshot is actually copied and charged. This is classical workspace reuse under the lock, not a quantum reset or a new original source. The cache is a derived private workspace, has no callable source/actor port, and is bound to the locked current block and its original version. Copying it does not duplicate the running source, acquire INITIAL from a later version, or permit another original action on a copy. This additional private read/copy permission is precisely Definition60.1's producer access, and its complete work and retained cells are charged.
+
+Use little-endian two's-complement counter vectors. Construct $h-1,h+1$ by the five-gate addition recurrence with constant vectors $-1,1$. For each row $j$ form $e_j=[j=h-1]$ by the three-gate equality fold, and select every top-row bit by the AND/OR fold over all $j$. The dummy row at $h=0$ is zero. For each path position $i$ compute $[i=\mathrm{length}]$; a left child replaces that position by zero and a right child by one, using one MUX for each output bit. Increment the child length by the same adder. For every row compute both $[j=h-1]$ and $[j=h]$ and perform the two branch-conditioned MUX writes, with right replacement first and left replacement second. These masks are disjoint. Finally select the two counter updates or the old counter according to PAIR, leaf or PAD. Recorded top rows refer to values before these writes. Implement a recorded/public-address match as the equality of all $H+w$ path/length bits, then the active/beta ANDs and the two OR folds. No expression tests a private bit to choose a control edge. Sharing a previously computed signal is a literal operand reference; a new signal receives its own initialized cell and encoded reference.
+
+For this expansion, writing each constant row/counter bit by a projection gate, the exact public Boolean count is
+
+$$
+\begin{aligned}
+C_{\rm init}&=(H+1)(H+w)+w,\\
+C_{\rm token}&=(H+1)(4H+10w+2)+3Hw+17w+2H+5,\\
+C_{\rm match}&=3(H+w)+4,\\
+\mathcal G&=C_{\rm init}+NC_{\rm token}+NKC_{\rm match}+3w.
+\end{aligned}
+$$
+
+The last $3w$ computes the terminal height equality. The two constant cells themselves are initialized by separate material writes. The token count consists of five token gates, $10w$ height-update gates, $3w(H+1)$ top masks, $2(H+w)(H+1)$ top-bit folds, $3Hw$ child-position masks, $2H$ child MUXs, $5w$ child-length gates, $(H+1)(2+3w+2(H+w))$ row-update gates and $2w$ height MUXs. Each match uses its complete equality, two ANDs and two ORs. These exact expressions are bounded by (60.6): the token count is below $50(H+1)(H+w+1)^2$, each match below $20(H+w+1)$, and initialization/terminal work fits the remaining $50N(H+1)(H+w+1)^2$ allowance. Thus the total bound concerns the fully expanded gates, including unused arithmetic arms and constant writes, rather than an unspecified word operation. The width condition is substantive: a discarded $h-1$ can be $-1$, a discarded $h+1$ can be $H+1$, and a leaf-child length can be $H$. All are strictly inside the signed range at the stated $w$. The computation uses their bit values only, and no negative temporary becomes a seek address.
+
+Here is a reversible cursor-save routine using only the existing primitives. Borrow the actual source port and, when separately stored, its original public interval-descriptor port; the actuator's code, cache, saved positions and latches use its separately constructed ports. No original private latch is used. The source packet can lie at a nonzero arena offset. Copy the original descriptor's complete finite address/length fields into an apparatus tape by actual `RD/AppendWord` work under the same lock, saving and restoring that descriptor port by the cursor routine below. These fields name the original constructed interval and its $2N$ fixed bits, not its private active length or a newly chosen source. The copied literal $U(b)$ then drives ordinary `Seek(source,U(b))`; copying all $2N$ bits uses fixed loop bounds. Thus this compiler does not obtain a source origin from a free integer or assume that the original packet starts at index zero. The descriptor is read only, has no new public output, and its copy, save/restore, reference and version binding are charged. Apply the following routine separately to each borrowed port. On a private apparatus tape append a public separator. While the source head is not at $L$, execute `RD(source); ML(source); Append(save,1)`; append a terminal zero when the boundary test succeeds. It constructs $U(h)$ for the original head distance $h$ without reading a source bit into public control. Ordinary 0/1 have the same successor. Apart from positioning the save tape, this takes $5h+7$ occurrences including its separator. Copy all $2N$ bits from the actual current interval by fixed-address reads/writes; its existing descriptor, or a complete paid origin/descriptor scan, supplies the starting position. No source data cell is written.
+
+Before unlock, run `Home(source)`, position the saved $U(h)$, and for each leading 1 execute `RD(save); MR(source); MR(save)`, reading the terminal zero once. This restores the original source head, including the case $h=0$ at $L$. Locating the latest saved block can itself be done by `Tail(save); ML; RD(0); ML`, then `RD; ML` across the leading ones until the public separator, followed by `MR`. Its cost is $2h+6$ when entered at the right marker. If the source head is at distance $q$ before restoration, save plus restore costs $10h+2q+15$, apart from initial save-tape positioning, lock/unlock and the actual fixed input-copy work. All these additional occurrences append only actuator receipts. Original source ownership and availability are returned before the next original service. Both borrowed cursors and their symbols are restored; all other original cursors, latches, control, receipt append/read heads and fence counter remain untouched.
+
+Proof. The Boolean instructions are the displayed recurrences of PR57.5, expanded in a public loop order. The pending-address invariant in Theorem60.2 therefore applies to their actual bits. Each `Emit` writes the complete truth table and all four unary references, including zero operands, through `AppendWord`; public unary increments construct the fresh reference. Thus there is no assumed gate list or reference allocator. Source copying reads the same committed block under the lock and initializes the input wires used by this very program. During cursor saving the source head moves left once for each appended leading 1. During restoration it moves right exactly that many times from $L$. Only moves affect the source head and only reads/moves touch its data interval. Consequently its symbols and cursor are exactly restored. The separately routed receipt side effect preserves every original fence and closed-cut numeral; it is not a renumbering of an interleaved single chain. Restored source state, ownership and unchanged original control establish the entry condition for the next original routine. Induction using PR57.L4 retains all original archive fields and actual copies, rather than recomputing them from actuator time. $\square$
+
+**Proposition 60.11 (finite tape execution and catalog prices).** Let $\mathcal G$ be the actual number of generated flag gates, $\mathcal G\le G_{\rm flag}(H)$, and $R=2+2N+\mathcal G$. All four gate references are less than $R$. The complete instruction length has the concrete bound
+
+$$
+B_{\rm flag}=1+\sum_{g=1}^{\mathcal G}(13+d_g+a_g+b_g+c_g)
+\le1+\mathcal G(13+4R).
+\tag{60.19}
+$$
+
+The interpreter can keep four append-only field-cache tapes and four public descriptor tapes. Before copying a field, position its descriptor tape at its existing right marker by `Tail`, then execute `Base` on its cache, appending a separator and the actual resulting $U(b)$ to its descriptor tape. Copy every field bit by `RD(code); EX(cache); WR(cache,bit); MR(cache); MR(code)`, including its terminal zero. Position its descriptor's latest block by the paid reverse separator scan of Lemma60.10, then execute the ordinary `Seek(cache,U(b))`. Its head is now at the actual newly cached field; the ordinary workspace seek consumes that literal field. Private operand latches survive these public scans exactly as in PR57.5. All previous fields/descriptors remain constructed. This uses the original gate encoding and interpreter operations; the reverse scan merely makes its allowed descriptor positioning explicit.
+
+Let $A_0$ count the apparatus ordinary cells already constructed before this compiler version, excluding its constant boundary/control foundation. Put $M=A_0+\mathcal G(R+1)$. Each cache has at most $M$ cells, and each cached-base descriptor has magnitude at most $M$. The total ordinary cells after code, workspace and these eight tapes, with input-copy/save tapes separately added, are bounded by
+
+$$
+A_{\rm flag}\le A_0+B_{\rm flag}+R+4\mathcal G(R+1)
+ +4\mathcal G(M+2).
+\tag{60.20}
+$$
+
+Their gate-interpreter core count, including all Base scans, field copies, descriptor positions, operand/result seeks and the terminal header/exit, satisfies
+
+$$
+E_{\rm flag}\le200\mathcal G\bigl(M+R+10\bigr)+2.
+\tag{60.21}
+$$
+
+These are bounds for this particular deliberately inefficient interpreter, not a native one-tick Boolean model. Code writes cost $3B_{\rm flag}$ append occurrences before their actual generator reads, frame/reference creation and public arithmetic; workspace allocation and all input copies are additional. A generator traverses the finite expression forest in the order specified in Lemma60.10, storing its frames and references and emitting each full record. Its work is the sum of PR57.D9's actual `Base`, `Allocate`, unary increment/copy, frame push/pop and `AppendWord` event words for those finite visits. This sum, together with (60.21) and the source-cursor routine, gives a total finite classical price for a compiler version; it is not replaced by $\mathcal G$. Public parameter arithmetic, all original services and record copies are added by the same disjoint event recurrence. There is no history-independent bound on arbitrary effective policy/parameter-supply computation.
+
+For an interaction run with common exponent set of size $J$, its literal local catalog has $2FJ$ signed wire entries: $2KJ$ phase entries and $2(K-1)J$ hopping entries. Each entry specifies its public wire, kind, sign and dyadic exponent, with its exact matrix (60.2). Its control description is installed by finite bit writes and remains in the control/tape storage coordinate. The endpoint descriptions and every entry are retained material. Preparation adds the root-to-mode wires it actually uses, their signed angle catalogs, the bit flip, balanced gate and fixed phase conjugations; these are separate from the $2FJ$ interaction entries. A reference qubit is one of the $K+1$ constructed/retained modes, and a reference preparation/effect is charged in $G_P,G_R$ and their descriptions. No unknown-state reference attachment is implemented by this catalog.
+
+Proof. Record length is PR57.05. There are at most $\mathcal G$ new fields on each cache, each of length at most $R+1$, in addition to at most $A_0$ previously constructed cells. Workspace reuse keeps its literal signal references at offsets less than $R$; cache/descriptor offsets are separately constructed by Base and may grow across versions. A descriptor has at most $M$ leading ones, one separator and one terminal zero. This gives (60.20). `Base` costs at most $7M+20$ with its positioning, separator and descriptor-tail positioning (the previous descriptor head is at its last terminal zero); a field copy costs at most $5(R+1)$. Locating its latest descriptor, seeking its cache and then its workspace costs at most $7M+5R+30$. There are four of each per gate, plus 18 header/table occurrences, four data reads/writes and one BF. Their sum is below the allowance in (60.21). Native code installation and generation precede execution and are counted separately, so these bounds omit no instruction supply by treating it as a primitive. All generated forest visits and public loops have finite sealed bounds, and PR57.L1–L3 supplies each visit's finite expanded event word. Sequence adds those words; this proves effective finiteness of the entire producer, including its generator, rather than assuming runtime access to source flags.
+
+Every enabled digit fetch selects one installed entry by public position and sign. Its private enable is only an argument of a finite local quantum transition, never a port/address selector. A catalog entry is a new exact apparatus permission for its full local matrix, including identity on vacuum/double excitation; an equality only up to a scalar phase is insufficient. Catalog construction/control, command digits and their reads, and the quantum events are different charged occurrences. The actual ideal executed angle is therefore exactly the signed sum of all fetched enabled dyadic digits. Since the local generator is the same within a block, commuting its finite digit factors proves its exact commanded block matrix. Rounding affects that angle by the certified $2^{-b}$; a physical departure from a catalog entry instead requires the elementary $\zeta_j$ certificate of (60.12). Neither certificate is a native Clifford Read. $\square$
+
+**Proposition 60.12 (instruction and full-phase finite evidence).** The following independently generated finite calculations instantiate the preceding construction; their scopes are deliberately finite. A Boolean assembler using exactly the five-gate adder, three-gate equality fold and complete three-input truth tables generated flags for every labelled ordered source at caps $H=1,2,3,4,5$. There are respectively $2,6,22,102,550$ sources. Its respective program sizes are $224,985,3017,6806,15029$ Boolean gates, all below (60.6). Every output address/beta mask agrees with independent structural preorder recursion. Every complete guarded renewal agrees with the same-address born-child set and with (60.7), including unchanged refused sources and alpha-to-beta steps with unchanged domain.
+
+A separate primitive-routine calculation also checked 1,696 source/descriptor cursor cases at caps $1,2$, with block offsets $0,1,2,3$ and every head position on the two constructed tapes, including $L$ and $R$. The input packet was copied through its actual unary base descriptor; both original tapes and heads were restored and the original receipt/archive fixture retained. The save/restore counts agree with $10h+2q+15$ for each borrowed cursor, excluding the separately counted copy/positioning work.
+
+Separate Boolean expansions of the original full Read and $3N$-slot rho candidate, parser and all-$N$-slot commit MUXs checked those same 682 cap/source cases. The original Read coefficients agree with direct Clifford multiplication; complete candidate tokens and whole guards agree with literal substitution/leaf counting. No rejected candidate was installed. Exhaustive grammar checking at caps $1,2,3$ covers all $4,64,1024$ fixed token words, including premature padding, post-closure active tokens and every valid packet. The original source-action proof remains PR57.T2; these calculations do not manufacture original replies from a quantum response.
+
+Literal programs of (PR57.05) were executed by a standalone tape interpreter for all eight valid sources at $H=1,2$, using actual `RD/WR/ML/MR/EX/BF` operations, full field copies, `Base`, descriptor scans and `Seek`. The tape lengths are respectively 61,296 and 1,203,360 instruction bits. The respective interpreter-only core counts are 62,748,306 and 5,648,797,037. Including the test's literal code writes, workspace/input material, cursor save/restore, flag extraction and 16 tape boundary pairs gives 63,060,395 and 5,654,873,903 core occurrences, with fee twice the count, and 4,552,468 and 404,865,959 constructed ordinary cells. Its additional receipt counts equal those complete core counts. These figures concern that explicitly stated standalone initialization, not the complete original runtime or a minimal compiler. The host executes the shared public opcode/address word once per cap while evaluating all that cap's private source bits in parallel; every source has its own workspace values. `BF` evaluates the specified table for each source, and no private value selects a simulated successor, port or move. This is an exact finite execution of the common interpreter word, not a private-data timing model. Within each cap that opcode/address trace is identical across all sources while the private output flags differ. Original source bytes and cursor are restored and the separate original receipt/archive fixtures are unchanged. The host represents its uniform receipt-symbol run by a run-length count that is never read by simulated control; it does not grant a native integer counter. The generated code is installed by actual bit writes in this check. Native generator/frame construction, complete control bootstrap, original source-service/archive-copy routines, higher-cap interpreter runs and quantum hardware are not exhaustively emulated; their general mathematical construction and prices are supplied by the displayed recipes and the consumed PR57 lemmas.
+
+There is also a certified full-sector digital calculation on the actual accepted source $\rho\langle\beta,\alpha\rangle$, at $H=3$, $a=1,g=16$, $\theta=1/100$, $m=32$, $b=24$, $J=31$. Flags are generated from its authentic packet by the above Boolean assembler. Executing every one of the $13\cdot32\cdot31=12896$ digit slots, of which 2144 have enable one, gives a whole eight-dimensional one-excitation matrix. Its operator error against the complete matrix exponential is bounded by
+
+$$
+\left\|U_{\rm digits}-e^{-i\mathsf H_{\rm bank}/100}\right\|
+\le\frac{4486959180075231302540271}
+{19807040628566084398385987584}
+<\frac{255933}{327680000},
+\tag{60.22}
+$$
+
+where the last fraction is (60.9)'s analytic budget. The reference and both inactive rows remain exact identity rows. This is an absolute full-phase operator bound, not a root response or an eigenbasis comparison.
+
+For a reproducible arithmetic certificate, use outward integer interval arithmetic with scale $2^{100}$. Round an angle by taking the floor of its scaled absolute magnitude and then restoring its sign. Every digit slot is applied, with exact identity entries when its enable is zero. Each used sine/cosine is enclosed by its real degree-13 Taylor polynomial with remainder at most $|\xi|^{14}/14!$. Multiply the actual individual signed dyadic local matrices with outward rounding at every scalar product. Compare with the degree-20 Taylor polynomial of the full $-i\mathsf H_{\rm bank}/100$, enclosing its operator remainder by $2(22/100)^{21}/21!$. If $v$ is the largest resulting real/imaginary component discrepancy interval bound, $\|\Delta U\|\le16v$ bounds the complex eight-by-eight Frobenius norm and hence its operator norm; this gives the first fraction in (60.22). Thus floating roundoff is not an unpriced precision premise.
+
+The larger example of Proposition60.8 has exactly $5,033,600$ blocks, magnitude width 38, $191,276,800$ elementary interaction rotations, and 988 signed wire catalog entries for exponents $-31,\ldots,6$. Its angle budget is $39325/16777216<1/400$. These are independently reproducible integer/rational counts, not an execution of that entire commission. Classical compilation, original service/archives, catalog/control installation, preparation, reference, holds and readout still add their actual prices through (60.16). In particular the qubit count or quantum-rotation count alone is not a total cost estimate.
+
+The finite calculations support the expanded ordinary proofs and their explicit ideal apparatus hypotheses. They supply no current Lean evidence, physical calibration, exact-probability measurement, all-history machine verification, unbounded-clock theorem or complete why-three-dimensions conclusion.
+
+## 60.99 追加锚（本行以下为增补区）
+
+
+## 61. 两个四叶混色格的显式证书入口
+
+**定义 61.1（具体证书与原供应）。** 对原定义57.1的完整同组成来源、原四值端点、空取得历史与不同实际地址收费，[四叶显式证书卷定理5.1](FIB_ATOM_MIXED_FOUR_LEAF_EXPLICIT_CERTIFICATES.md#5-具体证书有效性的普通证明与精确费用)列全 $(a,b,d)=(2,2,3),(3,1,3)$ 的有限普通上界证书，并证明其对全部同组成负源正确且有限终止。与[混色部分界卷定义9.1及定理5.3](FIB_ATOM_MIXED_ACTUAL_ADDRESS_PARTIAL_BOUNDS.md#9-两个四叶混色格的显式证书)所引下界配合，对每个 $h\ge6$ 含无穷得到费用9、8。
+
+定义57.11已经报告混色四叶 $E=3$ 的有限数值；定理57.3提供两色完整前沿与同组成刚性，定理57.4提供深度独立性，定理57.7已提供真实诊断、缓存和补查的实际取得桥。新增内容归于两张具体上界证书的完整有限证据与普通有效性证明，不归于数值发现、一般操作桥或下界。原一般混色、GeneralH、同一实际整数严格预算及长期几何代数目标保持原域和未解边界。
+
+## 61.99 追加锚（本行以下为增补区）
+
+## 62. Source-owned hard-core Green interactions and population-uniform renewal retention
+
+**Definition 62.1 (commissioned occupation sectors and the original source).** Use the actual PR57 source, INITIAL occurrence, fixed leaf cap $H$, complete candidate guard and chronological original records of Definition60.1. Write $M=2H-1$ for its packet-slot count and $K=2^H-1$ for the address-bank size; neither is the particle count. The inherited occurrence seams, counting measure, root $o=\varepsilon$, $L$, $L_D$, $\phi(p)=2^{-|p|}$ and $\lambda=3-2\sqrt2$ are exactly §§55.1–55.3. For an authentic current domain $D=\operatorname{Pos}(s)$ and a commissioned integer $1\le N\le |D|$, set
+
+$$
+\mathcal C_N(D)=\{S\subset D:|S|=N\},\qquad
+\mathscr H_{D,N}=\ell^2(\mathcal C_N(D)).
+\tag{62.1}
+$$
+
+Different equal-valued occurrences remain different sites. The occupation is zero or one at each site. Adjoin three explicitly supplied computational qubits $c,u,v$, initially zero, to §60's $K$ address qubits and reference qubit $r$. Thus the retained quantum carrier has $K+4$ qubits. The additional wires connect $c$ to every public address and to $u,v$; the old parent–child wires are retained. These are computational wires with construction and control prices, not new occurrence seams, distances or displacements. The supplied interaction matrices are still exactly $P$ and $B$ of (60.2) on their full two-/one-qubit spaces. A private classical enable is not a quantum control or a public observation.
+
+Let $b_p=|0\rangle\langle1|_p$ and $n_p=b_p^*b_p$. The target isometry $E_{D,N}$ sends $e_S$ to the bit string occupied at $S$, with $c,u,v,r$ zero and all inactive addresses zero. A separately supplied reference vector has $r=1$ and every other qubit zero; it is fixed by the interaction. A commissioned coherent reference/target input must itself be supplied with its preparation contract. For $N>1$ these two branches have different total excitation numbers; no number-conserving gate is alleged to attach that reference to an unknown input. The default known preparations below need no such superposition.
+
+There are two pair prescriptions, both retaining the original one-body potential:
+
+$$
+\begin{aligned}
+G^{\rm c}_D(p,q)&=\langle e_p,L^{-1}e_q\rangle,\\
+G^{\rm k}_D(p,q)&=\langle e_p,L_D^{-1}e_q\rangle,\\
+H^\diamond_{D,N}&=
+aK_{D,N}-g\sum_{p\in D}\phi(p)n_p
+-\nu\sum_{\{p,q\}\subset D}G^\diamond_D(p,q)n_pn_q,\qquad \diamond\in\{\mathrm c,\mathrm k\},\\
+K_{D,N}&=\left.\left[\sum_{p\in D}d_pn_p-
+\sum_{\{p,q\}\text{ actual seam in }D}(b_p^*b_q+b_q^*b_p)\right]\right|_{\mathscr H_{D,N}},
+\qquad d_o=2,\quad d_p=3\ (p\ne o).
+\end{aligned}
+\tag{62.2}
+$$
+
+Here $a,g>0$ and $\nu\ge0$ are commissioned Hamiltonian parameters, independent of the hidden source and original actor initialization. This $a$ imposes no condition on the original $\mathcal D_2$ actor variable. The notation in (62.2) transports the qubit operators through the occupation isometry. The new charge strength and supported occupation sector are commissioned premises. At $N=1$ the pair term vanishes and the target is literally $aL_D-gM_\phi$ of §60, for both prescriptions. The killed prescription re-solves only the pair coefficients; it does not replace $\phi$ by $\phi_D^0$.
+
+**Theorem 62.2 (literal statistics, full carrier and the same-L pair field).** On the full qubit carrier, $P_p(1,\xi)=e^{-i\xi n_p}$ and $B_{pq}(1,\xi)=e^{i\xi(b_p^*b_q+b_q^*b_p)}$, including their vacuum and double-occupation entries. Consequently their installed one-body generator on (62.1) is exactly the hard-core operator in (62.2). Its diagonal counts inherited exterior and collision killing; it is not the Laplacian obtained by counting only allowed configuration moves. It is not an exterior-power substitution for the literal gates.
+
+For all addresses $p,q$ in the same infinite rooted occurrence tree, let $p\wedge q$ be their longest common prefix and let $d(p,q)=|p|+|q|-2|p\wedge q|$. Then
+
+$$
+G^{\rm c}(p,q)=\frac23\,2^{-d(p,q)}+\frac13\,2^{-(|p|+|q|)}.
+\tag{62.3}
+$$
+
+It is the kernel of the already installed $L^{-1}$, not a new pair-field supplier. For every authentic $D$,
+
+$$
+0<G_D^{\rm k}(p,q)\le G^{\rm c}(p,q),\qquad
+0<L_D^{-1}\le\lambda^{-1}I,\qquad
+0<P_DL^{-1}P_D\le\lambda^{-1}I.
+\tag{62.4}
+$$
+
+Proof. The generator $b_p^*b_q+b_q^*b_p$ interchanges $10,01$ and kills $00,11$. Exponentiation gives exactly (60.2), including phase one on $11$. Operators at distinct sites commute; a permitted hop has coefficient $-a$ with no ordering sign. Embed $e_S$ into the normalized symmetric sum of the $N!$ ordered distinct-site tensors. Compression of $\sum_{i=1}^N L_D^{(i)}$ to these tensors gives diagonal $\sum_{p\in S}d_p$ and coefficient $-1$ for each allowed single-site replacement. A replacement onto an occupied site is projected out; its inherited diagonal contribution remains. This proves the operator correspondence and, from §55's gap, $K_{D,N}\ge N\lambda I$. The normalized symmetric embedding is a proof device, not a carrier copy or a preparation permission.
+
+For (62.3), fix $q$. At each nonroot $p\ne q$, the distance term satisfies $3f(p)-f(p^-)-f(pL)-f(pR)=0$. At $p=q\ne o$ its value after applying $L$ is $3(2/3)-3(1/3)=1$. The depth term is harmonic off the root. When $q\ne o$, the distance term's root residual is $-(1/3)2^{-|q|}$, canceled by the depth term's root residual $+(1/3)2^{-|q|}$. When $q=o$, both terms combine to $2^{-|p|}$ and the root residual is one by (55.5). Each column is square summable: split into the finitely many branches meeting the root-to-$q$ path and use the geometric sum $\sum_{j\ge0}2^j4^{-j}$. Hence $LG^{\rm c}(\cdot,q)=e_q$ in $\ell^2$. The positive gap makes this column $L^{-1}e_q$ uniquely.
+
+For the entrywise comparison use $L=3(I-P)$, with $P=I-L/3$ the nonnegative substochastic/compression matrix of §55. The parent–child adjacency has norm at most $2\sqrt2$: sum $2|f(p)f(pz)|\le2^{-1/2}|f(p)|^2+2^{1/2}|f(pz)|^2$ over the two children. Hence $\lambda I\le L\le(3+2\sqrt2)I=(6-\lambda)I$, and $\|P\|\le1-\lambda/3<1$. The inverse is $\frac13\sum_{n\ge0}P^n$. Compressing after every factor retains only paths staying in $D$; compressing the infinite inverse retains all paths with endpoints in $D$. All terms are nonnegative and some finite path connects every two sites. This proves the entrywise assertions. The operator inequalities follow directly from the gap, and do not assert that an arbitrary entrywise comparison is an operator comparison. $\square$
+
+**Theorem 62.3 (all-source extensive stability in the commissioned sectors).** For every authentic finite $D$, every supported $N$, either pair prescription and every $f\in\mathscr H_{D,N}$,
+
+$$
+\langle f,H^\diamond_{D,N}f\rangle
+\ge \left[a\lambda-g-\frac{\nu}{2\lambda}\right]N\|f\|^2.
+\tag{62.5}
+$$
+
+The same bound holds for the infinite common operator on $\ell^2(\mathcal C_N(\{L,R\}^*))$. The constant is independent of the source, its cap, its irregular boundary and $N$. It is an extensive bound for this hard-core/Green law, not for unrestricted product-state attraction.
+
+Proof. For a realized occupation $S$, put $z_p=\mathbf1_{p\in S}$. On the same $D$ and the same pair kernel,
+
+$$
+\sum_{\{p,q\}\subset S}G^\diamond_D(p,q)
+=\frac12\left[z^*G^\diamond_Dz-\sum_{p\in S}G^\diamond_D(p,p)\right]
+\le\frac{N}{2\lambda}.
+\tag{62.6}
+$$
+
+This uses $\|z\|^2=N$, the positive diagonal and the operator bound (62.4). It does not combine separately attained estimates on different realizations. Also $0<\phi\le1$, so the one-body attraction is bounded by $gN$. Apply the kinetic bound proved inside Theorem62.2. The infinite kinetic operator is bounded and has the same compressed tensor proof; (62.6) applies to each finite occupation. Thus its pair multiplier is bounded for each fixed $N$ and the conclusion extends by density. These estimates prove lower boundedness, not a negative ground state, its attainment or precompactness of near-minimizers. $\square$
+
+**Theorem 62.4 (authentic renewal: common compression and exact killed update).** Let a whole-rho candidate actually be accepted, let $D'=\operatorname{Pos}(\rho s)$, and let $\mathcal B$ be the authentic old beta-leaf mask. Let $J_Ne_S=e_S$ be the unchanged-bank injection. Old addresses and occupations retain their identities. For the common prescription,
+
+$$
+G^{\rm c}_{D'}|_{D\times D}=G^{\rm c}_D,
+\qquad
+J_N^*H^{\rm c}_{D',N}J_N=H^{\rm c}_{D,N}.
+\tag{62.7}
+$$
+
+Equality of this compression does not give $H^{\rm c}_{D',N}J_N=J_NH^{\rm c}_{D,N}$. Born-child hopping survives in the latter difference. In the one-particle case it is exactly (60.7); in an occupation it moves each occupied beta leaf to each empty born child with coefficient $-a$.
+
+For the killed prescription let $U:\mathbb C^{\mathcal B}\to\ell^2(D)$ have columns $e_p$, $p\in\mathcal B$, and put $G=L_D^{-1}$. If $\mathcal B$ is empty the update is zero. Otherwise
+
+$$
+\begin{aligned}
+G^{\rm k}_{D'}|_{D\times D}
+&=\left(L_D-\frac23UU^*\right)^{-1}\\
+&=G+GU\left(\frac32I-U^*GU\right)^{-1}U^*G.
+\end{aligned}
+\tag{62.8}
+$$
+
+All inverse factors displayed here exist and the increment is nonnegative entrywise. For an old occupation basis vector,
+
+$$
+\langle J_Ne_S,H^{\rm k}_{D',N}J_Ne_S\rangle
+-\langle e_S,H^{\rm k}_{D,N}e_S\rangle
+=-\nu\sum_{\{p,q\}\subset S}
+\left[G^{\rm k}_{D'}(p,q)-G^{\rm k}_D(p,q)\right].
+\tag{62.9}
+$$
+
+Proof. TM22–23 and §58.2 give precisely two new children at each old beta leaf. Old diagonals, old seams and the root field are unchanged. This proves (62.7), since a new occupied site is absent in $J_Ne_S$. It also identifies the nonzero born hopping rather than asserting intertwining.
+
+In old/new site blocks, $L_{D'}$ has old block $L_D$, new block $3I$, and two $-1$ entries from each beta leaf to its children. The old Schur complement is therefore $L_D-(2/3)UU^*$. Positivity of $L_{D'}$ implies positivity of that complement. The inverse identity in (62.8) follows by multiplying its proposed right-hand side by that complement. Positivity also gives $I-(2/3)U^*GU>0$. Its nonnegative inverse follows from the convergent series in $(2/3)U^*GU$, whose spectral radius is below one. All entries of $G$ are nonnegative, so the increment is entrywise nonnegative. Finally a basis occupation has zero hopping expectation, and every unchanged diagonal cancels in the energy comparison. $\square$
+
+**Proposition 62.5 (jointly realized unbounded-population retention defect).** For each integer $h\ge1$, choose the authentic complete ordered depth-$h$ source with every leaf beta. Its old leaf count is $2^h$ and it has an accepted whole-rho step at public cap $H=2^{h+1}$. Put
+
+$$
+S_h=\{p:|p|=h-1\}\ \cup\ \{pL:|p|=h-1\},
+\qquad N_h=|S_h|=2^h.
+\tag{62.10}
+$$
+
+A paid known preparation of $e_{S_h}$ then has, for the killed prescription at this one actual renewal,
+
+$$
+\langle e_{S_h},H^{\rm k}_{D_h,N_h}e_{S_h}\rangle
+-\langle J_{N_h}e_{S_h},H^{\rm k}_{D_h',N_h}J_{N_h}e_{S_h}\rangle
+\ge\frac{\nu N_h}{81}.
+\tag{62.11}
+$$
+
+For the same occupation and common prescription the expectation difference is zero. Thus a cap-/population-independent absolute tolerance on retaining old-state energy through the killed renewal cannot tend to zero for $\nu>0$. The extensive lower bound (62.5) remains valid.
+
+Proof. The nonnegative series for the old inverse gives $G(p,p)\ge1/3$ and $G(p,p^-)\ge1/9$ for each beta leaf $p$. Expansion of (62.8), keeping just its first nonnegative term and the column of that very beta leaf, gives
+
+$$
+G'(p,p^-)-G(p,p^-)
+\ge\frac23G(p,p)G(p,p^-)
+\ge\frac{2}{81}.
+\tag{62.12}
+$$
+
+The $2^{h-1}$ distinct selected parent/left-leaf pairs all belong to the one occupation $S_h$. All other pair increments are nonnegative. Summing in (62.9) proves (62.11). Every tree, mask, occupation and successor used here belongs to that same realization. This is not a combination of individually optimal states, and it uses no new source copy, reset or sampling. The paid source preparation and population are part of this explicitly growing family, rather than free resources at fixed $H$. $\square$
+
+**Theorem 62.6 (fixed-N infima and their recovery quantifiers).** Fix $a,g,\nu$ and a finite integer $N$. On the infinite occurrence tree let $H_N^{\rm c}$ be the common operator of (62.2), and put $m_N=\inf_{\|f\|=1}\langle f,H_N^{\rm c}f\rangle$. For any original nonempty finite source $t$, let $D_j=\operatorname{Pos}(\rho^jt)$ as in §55. Once $|D_j|\ge N$, let $m_{j,N}^{\rm c},m_{j,N}^{\rm k}$ be the finite normalized infima. Then
+
+$$
+m_{j,N}^{\rm k}\ge m_{j,N}^{\rm c}\ge m_N,
+\qquad
+\lim_{j\to\infty}m_{j,N}^{\rm c}
+=\lim_{j\to\infty}m_{j,N}^{\rm k}=m_N.
+\tag{62.13}
+$$
+
+More precisely, for every $\epsilon>0$ there is a unit vector $f$ with finite configuration support and $\langle f,H_N^{\rm c}f\rangle\le m_N+\epsilon/2$. For each $t$ there is a finite $j_0$ such that for every $j\ge j_0$ its identical-address embedding $f_j$ is defined and
+
+$$
+\langle f_j,H_{D_j,N}^{\rm c}f_j\rangle
+=\langle f,H_N^{\rm c}f\rangle,
+\quad
+0\le\langle f_j,(H_{D_j,N}^{\rm k}-H_{D_j,N}^{\rm c})f_j\rangle
+\le\epsilon/2.
+\tag{62.14}
+$$
+
+The vector is selected for fixed $N,\epsilon$, before the tail comparison; it is not an exact state acquired by a Read. These claims contain no strong precompactness or ground-attainment conclusion, and no quantifier uniform in growing $N$ or unbounded clock time.
+
+Proof. The infinite fixed-$N$ operator is bounded, by the kinetic degree bound and (62.6). Finite configuration vectors are dense, hence supply the stated variational recovery vector. The all-source exhaustion in §55 eventually contains every address in its support and their old identities. Zero-extension makes the common expectation exactly equal, including killing. Entrywise domination in (62.4) makes the killed-minus-common pair multiplier nonnegative, proving the inequalities of infima.
+
+For fixed $p,q$, the path expansion proving (62.4) also proves $G_{D_j}^{\rm k}(p,q)\uparrow G^{\rm c}(p,q)$. Indeed each finite path is eventually in $D_j$, and the nonnegative convergent series permits taking its increasing union. Only finitely many coefficients occur in the expectation of the selected $f$. Their differences tend to zero, so choose $j_0$ for their finite weighted sum. This proves (62.14) and the matching limsup, while the common lower bound supplies the liminf.
+
+For actual finite execution each specified prefix $j$ is commissioned at a finite cap at least its largest actual leaf count; the bank and every word are finite. A fixed-cap source may instead refuse further growth. The mathematical family in (62.13) is a comparison of finite supported prefixes, not permission to change a running cap, prepare copies of an unknown source, sample independent histories, or execute a Read after an infinite prefix. The growing occupations in Proposition62.5 are outside the fixed-$N$ quantifier and prevent reversing that distinction. $\square$
+
+**Theorem 62.7 (a derived density phase with three retained auxiliaries).** Let $p\ne q$ be two public address wires, and put
+
+$$
+F_{ab}=P_a(1,\pi/2)P_b(1,\pi/2)B_{ab}(1,\pi/2).
+\tag{62.15}
+$$
+
+Products act rightmost first. This is the full matrix which swaps $01,10$, fixes $00$, and negates $11$. Let $C_{cp}$ be the chronological word
+
+$$
+F_{cu},\ F_{cp},\ F_{cv},\ F_{cu},\ F_{cp},\ F_{cv},\ F_{cp}.
+\tag{62.16}
+$$
+
+On $u=v=0$, it returns both auxiliary bits to zero and acts as $(-1)^{n_cn_p}$ on $c,p$. Define
+
+$$
+U_{pq}=B_{qc}(1,\pi/4)\,C_{cp}\,B_{qc}(1,-\pi/4)\,C_{cp}.
+\tag{62.17}
+$$
+
+On the clean input $c=u=v=0$,
+
+$$
+U_{pq}^*P_c(1,\xi)U_{pq}
+=e^{-i\xi n_pn_q},
+\tag{62.18}
+$$
+
+with all three auxiliaries returned to zero and every original state phase preserved. Its expanded chronological word has exactly 89 $P/B$ angle blocks. The reference wire is untouched. The signs and angles in (62.15)–(62.18) describe a real-angle reference, not an exact signed-dyadic catalog or a free inverse.
+
+Proof. A hop of angle $\pi/2$ multiplies each single-occupation swap by $i$. The two phases multiply that swapped excitation by $-i$ and multiply $11$ by $(-i)^2=-1$, proving (62.15) on all four inputs. This is precisely the mature fermionic-swap matrix of Brod–Childs equation(4), consumed from [the matchgate note](../../../Library/QuantumStates/brodchilds2014matchgates.md); it does not change the statistics of the old literal hopping generator.
+
+Track (62.16) on its four clean inputs. With zero or one excitation every swap has sign one and returns the input bits. With $c=p=1$, the occupied pairs are successively $\{u,p\},\{u,c\},\{u,v\},\{c,v\},\{p,v\},\{p,c\},\{p,c\}$. Only the final swap has both endpoints occupied, so it contributes exactly minus one. This proves the clean controlled sign by linearity, including entanglement with every untouched wire.
+
+If $p=0$, the two $C$ factors in (62.17) act as identity and the two $B$ factors cancel. If $p=1$, they act as $Z_c$, and $Z_cB_{qc}(-\pi/4)Z_c=B_{qc}(\pi/4)$ on the single-occupation space. Thus $U$ moves $q=1,c=0$ to $q=0,c=1$ with phase $i$, while fixing the joint vacuum. At this cut $n_c=n_pn_q$ on all four clean input columns. Applying $P_c(\xi)$ and then the explicitly reversed, negated 44-block word returns the complete input with precisely the phase in (62.18). Each $C$ uses $7\cdot3=21$ blocks, so $U$ uses 44 and (62.18) uses $44+1+44=89$. The auxiliaries are shared sequentially between pair words, never measured, projected or reset. $\square$
+
+**Theorem 62.8 (finite private rational coefficients from the actual packet).** At a locked original idle cut, the fixed flag word of Theorem60.2 yields actual address bits $x_p$ and the beta mask. There is a public fixed-order arithmetic word, independent of these bit values, that computes every killed pair coefficient exactly as an unreduced rational with positive denominator. It needs neither a pair oracle, a private-address seek nor a private pivot selection.
+
+For each public address $p$, process the bank from deepest to shallowest. Set absent child pairs to $(A,B)=(1,1)$, put $d_p^x=1+x_p(d_p-1)$, and set
+
+$$
+\begin{aligned}
+B_p&=A_{pL}A_{pR},\\
+A_p&=d_p^xA_{pL}A_{pR}
+-x_{pL}B_{pL}A_{pR}-x_{pR}B_{pR}A_{pL}.
+\end{aligned}
+\tag{62.19}
+$$
+
+Then process root to leaves, retaining unreduced numerator/denominator pairs $C_p=N_p/D_p$:
+
+$$
+C_o=B_o/A_o,
+\qquad
+C_p=B_p/A_p+x_p C_{p^-}(B_p/A_p)^2\quad(p\ne o).
+\tag{62.20}
+$$
+
+For $w=p\wedge q$ the required all-bank output is
+
+$$
+\gamma_{pq}=x_px_q C_w
+\prod_{w\prec z\preceq p}\frac{B_z}{A_z}
+\prod_{w\prec z\preceq q}\frac{B_z}{A_z}.
+\tag{62.21}
+$$
+
+It is zero for an inactive endpoint and is $G_D^{\rm k}(p,q)$ otherwise. The common prescription uses (62.3) at the same public endpoints and masks. In neither prescription is a computed coefficient a public source reply.
+
+Proof. Extend $L_D$ to the full bank by identity on inactive sites. Its active edge to child $z$ is $-x_z$. Downward closure implies that an inactive parent has no active descendant. Eliminating children gives pivot $t_p=A_p/B_p=d_p^x-\sum_{z=pL,pR}x_z/t_z$. An active nonroot pivot is at least two by bottom-up induction, and the active root pivot is at least one; an inactive pivot is one. Thus all denominators are positive. More explicitly, put $T_{p,p^-}=x_p/t_p$ and all other entries zero. The extended matrix is $(I-T)^*\operatorname{diag}(t_p)(I-T)$: each off-diagonal is $-x_p$, and its diagonal is $t_p+\sum_{z=pL,pR}x_z/t_z=d_p^x$. Since $T$ is strictly triangular, $(I-T)^{-1}$ is its finite path sum. Multiplying this sum, $\operatorname{diag}(t_p^{-1})$, and its adjoint gives (62.20) for the diagonal and (62.21) for the two common-ancestor paths. This is direct finite factorization of the actual installed $L_D$, not an assumed inverse supplier.
+
+Here are finite widths and Boolean recurrences for this word. Let $B_0$ bound the bit lengths of all supplied rational parameter numerators/denominators, including interval lengths, $m$, and public coefficient approximants. Let $b,k$ be the digit bounds of Theorem62.9. A sufficient signed workspace width is
+
+$$
+W=64K(H+1)+8(B_0+b+k+1).
+\tag{62.22}
+$$
+
+No fraction reduction is necessary. If $s_p$ is the size of the public bank subtree rooted at $p$, (62.19) gives $1\le A_p,B_p\le3^{s_p}$. Expanding (62.20) as
+$N_p=B_pA_pD_{p^-}+x_pN_{p^-}B_p^2$, $D_p=A_p^2D_{p^-}$
+shows that the maximum numerator/denominator bit length increases by at most $4K+2$ per level. Multiplying the two public paths in (62.21) adds at most $4KH$ bits. Parameter multiplication and scaling by $2^b$ add at most $4B_0+b+2$ bits. All products, discarded subtraction arms and restoring-division trials therefore lie strictly inside the signed range of (62.22), with two spare bits.
+
+Use PR57.07's five-gate full adder, complement-plus-adder subtraction, PR57.08's seven-gate comparison, and a one-gate bit MUX. A schoolbook product forms every partial AND bit and adds every shifted row; fewer than $10W^2$ Boolean gates suffice, including unused high bits and copies. Every division is the $W$-step recurrence, from most significant numerator bit downward,
+
+$$
+z=2r+n_i,\quad e=[z\ge d],\quad r'=\operatorname{MUX}(e,z-d,z),
+\quad q'=2q+e,
+\tag{62.23}
+$$
+
+with zero initial remainder/quotient. Both subtraction arms and the complete comparison execute regardless of $e$. Since $0\le r<d$, the recurrence maintains the Euclidean division invariant and ends with the exact quotient and remainder. No private bit selects a code edge. Constants, copies, masks, additions, multiplications and division all expand into literal truth-table records (PR57.05). A sufficient bound on new Boolean gates for (62.19)–(62.23), all coefficient digits and all endpoint masks is
+
+$$
+G_{\rm pair}\le
+100W^2\left[20K+\binom K2(8H+20)+1\right].
+\tag{62.24}
+$$
+
+Indeed (62.19) uses at most ten integer products/masks/additions per node and (62.20) at most eight, so their combined allowance is $20K$. Each pair uses at most four products per path level plus its parameter products, mask and one restoring division. Each such operation, including its constant/copy bits, is below the allowance $100W^2$; grouping the two node recurrences and the path operations gives the displayed deliberately loose bound. The flag gates are additional. Every gate's material record, operand references, field fetches and tape execution have their separate prices in Proposition62.11. $\square$
+
+**Theorem 62.9 (both actual signed-dyadic evolutions).** Fix a supported maximum $N_*$, public nonnegative rational parameter approximants $\widetilde a,\widetilde g,\widetilde\nu$ with rational bounds $0\le\widetilde a\le\bar a$, $0\le\widetilde g\le\bar g$, $0\le\widetilde\nu\le\bar\nu$, a finite checkpoint list, and public rational intervals $\theta_\ell\ge0$. For an interval put $\delta=\theta/m$, $m\ge1$. One reference product slice consists of the $K$ diagonal phase slots with angles $\delta(\widetilde a d_p-\widetilde g\phi(p))$, the $K-1$ inherited seam slots with angles $\delta\widetilde a$ in §60's three matching colours, and every public unordered bank pair in a fixed order. The pair word is (62.18) with
+
+$$
+\xi_{pq}=-\delta\widetilde\nu\gamma_{pq}
+\quad\hbox{or}\quad
+\xi_{pq}=-\delta\widetilde\nu G^{\rm c}(p,q),
+\qquad \text{enable }x_px_q.
+\tag{62.25}
+$$
+
+All one-body enables remain the authentic $x_p,x_q$ of §60. The pair word's enable multiplies every constituent rotation, including all fixed-angle rotations. There are exactly
+
+$$
+F_*=2K-1+89\binom K2
+\tag{62.26}
+$$
+
+angle blocks per slice. Choose public $k\ge2$ with
+$2^k>2+T(3\bar a+\bar g+6\bar\nu)$, where $T$ bounds the total commissioned comparison time, and put $J=b+k$, $b\ge0$. Compute each fixed $\pi/2,\pi/4$ angle effectively and round it to a signed dyadic within $2^{-b}$. Compute killed rational digits by (62.23), and common digits by the rational (62.3); round each coefficient angle within $2^{-b}$. Every block scans all $J$ magnitude digits. Every enabled digit invokes the already supplied literal $P$ or $B$ catalog matrix of signed angle $\pm2^{j-b}$. A disabled digit invokes its charged identity matrix. The public elementary angle cap is therefore $2^{k-1}$, with enable amplitude in $\{0,1\}$; a common finite run uses the maximum of these caps across its commissioned intervals. This is part of the supplied finite catalog contract, not an inferred physical control-amplitude capability.
+
+Thus both prescriptions have finite actual evolutions from the same original packet and the supplied P/B vocabulary. The matrices executed at finite accuracy are the dyadic products, rather than the real-angle reference in Theorem62.7.
+
+Proof. The width covers the fixed constants, diagonal angles, edge angles and pair angles, since (62.4) gives $G_D^{\rm k}(p,q)\le\lambda^{-1}<6$. The rational quotient from (62.23) supplies the floor of the scaled magnitude. A fixed effective enclosure of $\pi$ follows, for example, from the classical identity $\pi=16\arctan(1/5)-4\arctan(1/239)$ and alternating-series remainders. Its finite rational terms, additions and required digit determination are paid public computation. When an enclosure crosses a digit threshold, a certified overlapping bracket of width below $2^{-b}$ followed by rational rounding still gives the required angle error; no exact equality test on $\pi$ is needed. No catalog entry has an alleged exact-dyadic $\pi$ angle.
+
+Digits of a block use the same generator and hence commute; their product is the exact literal matrix at the written dyadic angle. Negating and reversing a word constructs and executes its inverse by all its actual slots. In particular the last 44 blocks of the pair word are charged, and the same rounded constants can be used in reverse. The private enable affects only its finite local matrix, never its wiring, successor or timing. The central pair sign is the public minus sign even when its magnitude is zero; diagonal signs depend only on public depth and supplied parameters. No computed private zero or sign chooses a catalog row. A zero or inactive pair retains all 89 blocks and all $89J$ digit slots. Public original responses can select the next finite commission, but private flags cannot select a public schedule. The new classical signals have no callable actor, verifier or consumer port. $\square$
+
+**Theorem 62.10 (full retained-state finite error, leakage and clock budget).** Put
+
+$$
+\overline A=(6\bar a+\bar g+3\bar\nu)N_*,
+\qquad
+\Delta_A=(6\delta_a+\delta_g+3\delta_\nu)N_*.
+\tag{62.27}
+$$
+
+Here the coefficient errors are certified absolute errors; exact rational inputs permit all three to be zero. For a finite history of actual accepted/refused whole-rho requests and original Reads, use the just-committed prescription at each idle interval, hold the entire carrier through service and compilation, and keep the carrier unchanged at renewal. If $U_{\rm hist}^\diamond$ is the exact finite time-ordered occupation propagator with these injections, the actually ideal dyadic circuit on a supplied clean supported input obeys, at every completed checkpoint,
+
+$$
+\eta_{\rm circ}\le
+\sum_{\ell\text{ in prefix}}\left[
+\frac{\overline A^2\theta_\ell^2}{2m_\ell}
++F_*m_\ell2^{-b_\ell}+\theta_\ell\Delta_A\right].
+\tag{62.28}
+$$
+
+This is a norm bound against the complete target vector with its phases, including a separately supplied reference branch. Every imperfect auxiliary component remains in the full carrier. No clean-subspace projection or auxiliary reset is used between pair words, slices, source events or checkpoints.
+
+Suppose additionally that the supplied preparation has norm error $\eta_P$, actual elementary gates have full-carrier unitary error bounds $\zeta_j$, all actual locking/service/retention holds have accumulated full-carrier unitary error $\eta_H$, and actual comparison intervals have discrepancy sum $\eta_\tau$. Then the state bound gains
+
+$$
+\eta_P+\sum_j\zeta_j+\eta_H
++(6a+g+3\nu)N_*\eta_\tau.
+\tag{62.29}
+$$
+
+No independence of errors is assumed. At a checkpoint the auxiliary-excitation amplitude norm is at most the total bound $\eta$; its mathematical probability is at most $\eta^2$. For any separately commissioned terminal effect $0\le F\le I$, the ideal/actual probabilities differ by at most $2\eta$ for unit inputs. Neither number is an acquired exact probability Read.
+
+Proof. On the supported occupation sector the diagonal group has norm at most $(3\bar a+\bar g)N_*$. Each matching hopping group has norm at most $\bar a N_*$: its disjoint local generators have eigenvalues $0,\pm1$, and at most $N_*$ of their pairs can have single occupation simultaneously. The pair multiplier has norm at most $\bar\nu N_*/(2\lambda)<3\bar\nu N_*$. Thus the sum of group norms is bounded by $\overline A$. The first-order Hermitian product bound used in Theorem60.4, from Childs–Su–Tran–Wiebe–Zhu, gives the first term of (62.28); this is its application to the literal occupation groups, not new product-formula theory. Duhamel with the same fixed coefficients gives $\Delta_A$.
+
+For each pair block, compare the complete 89-factor dyadic word with its real-angle word on the full $2^{K+4}$ carrier. Each local generator has norm at most one there, so its angle perturbation contributes at most $2^{-b}$. Full-space unitary telescoping gives $89\,2^{-b}$ without assuming that the perturbed input to any later factor is clean. The exact reference word returns auxiliaries to zero at block endpoints and implements (62.18), so applying this full-space estimate successively compares with the clean ideal target. The one-body factors use the same estimate. This proves the second term and, importantly, prices all imperfect components rather than deleting them.
+
+At a switch the same addressed occupation is retained. This gives an isometry, even though the killed old energy changes and even though the common generator does not intertwine. At a refusal/Read no actuator version changes. Telescope along the finite actual history. The same argument handles arbitrary correlated gate errors and holds on the whole retained carrier, including leakage. The clock term follows from the source-independent target norm bound; comparison intervals are not native receipt counts or calibrated physical durations. Finally the target has zero auxiliary components, so their orthogonal component in the actual vector is bounded by its norm difference, without performing a projection as an action. The effect estimate follows by inserting the ideal vector in the two quadratic factors.
+
+For any public rational accuracy $\epsilon>0$, finite checkpoint count $L\ge1$ and time bound $T$, one finite choice is $m=\max\{1,\lceil2\overline A^2T^2/\epsilon\rceil\}$, together with $2^b\ge4LF_*m/\epsilon$. These give at most $\epsilon/4$ each for the first two accumulated terms, since $\sum\theta_\ell^2\le T^2$. Supply coefficient enclosures with $T\Delta_A\le\epsilon/4$ and the entire preparation/gate/hold/clock sum at most $\epsilon/4$. The total is then at most $\epsilon$. Each required increase in $m,b$ changes the actual words, catalog, fetches and retention in (62.32); accuracy is not free. Zero-time intervals may retain zero interaction slots by a public choice. $\square$
+
+**Proposition 62.11 (complete native prices of the derived words).** Use §60's separately owned actuator receipt chain, producer lock and restored original cursors. Every added classical operation is expanded into the existing PR57 finite tape primitives. Let $\mathcal G$ be the actual number of emitted flag, coefficient, division, enable and preparation-check Boolean gates, and let $B_{\rm in}$ count additional material input bits used as operands, including any supplied occupation array and parameter bits. Put $R=2+2M+B_{\rm in}+\mathcal G$ for the two constant cells, authentic input cache, those additional operand cells and fresh signal cells. Every input cell has its actual ingress/copy and initialization word. An exact code-size bound is
+
+$$
+B_{\rm code}=1+\sum_{g=1}^{\mathcal G}(13+d_g+a_g+b_g+c_g)
+\le1+\mathcal G(13+4R).
+\tag{62.30}
+$$
+
+Every record is emitted by actual `AppendWord`, all four unary operand fields are fetched, and each gate's interpreter word has exactly the count (PR57.06), with its actual tape-head positions and complete descriptor positioning. In particular $\mathcal G$ is not the native event count.
+
+Let $\omega_C$ denote the concatenation of the following finite primitive words in their actual chronological order: apparatus control/boundary construction; original private source ingress, complete source services and every original archive/copy/output actually commissioned; lock and authentic descriptor/input copy with both borrowed cursor saves/restorations; initialization and generation of the flag expressions in Theorem60.2 and the arithmetic expressions (62.19)–(62.23); their entire interpreters; public parameter and $\pi$ arithmetic; every coefficient/angle/enable reference and instruction write; every wire/catalog description write; every digit and enable fetch and Boolean AND; known preparation data/support checks; holds' classical control; terminal output/framing. Each of these words is given by PR57.3–57.5, PR57.D9, Lemma60.10 and Proposition60.11, applied to the displayed finite expressions and bounds. No private pivot, discarded arm, disabled slot, field-cache positioning or original refused candidate is omitted.
+
+Define $E_C=|\omega_C|$. More explicitly, Boolean interpreter contributions are $\sum_g I(g)+2$ per program, where $I(g)$ is (PR57.06); instruction writes contribute $3B_{\rm code}$ plus the generator's actual frame/reference/arithmetic words. The latter are the PR57 depth-first finite-forest traversal, allocating one fresh result and emitting each complete record after its children. Sequence adds word lengths, a public unary loop sums its body at every stored digit, and each `Home`, `Base`, `Seek`, `Allocate`, `Append` is counted by its already supplied primitive recurrence. This defines an effective exact integer from the material input and descriptors, rather than an unspecified charge for a word operation. For an interpreter with $A_0$ already constructed apparatus cells, the explicit upper bounds (60.20)–(60.21) apply with this $\mathcal G,R$; generator/input/catalog work is additional. They permit reuse of classical signal cells only after every current signal is rewritten; erased material remains counted.
+
+The interaction wiring has $K+3$ phase endpoints and $2K+1$ hop wires: the $K-1$ inherited seams, $K$ center/address wires and the two center/auxiliary wires. A common $J$-digit catalog therefore has
+
+$$
+2(3K+4)J
+\tag{62.31}
+$$
+
+signed kind/wire/exponent entries. Its full endpoint and control descriptions are constructed and retained. A word description stores its kind, public endpoint ordinals, sign, scale, $J$ magnitude bits and the unary enable/bit-field addresses. Their complete lengths are the sums of these literal fields, and their construction uses `AppendWord`; computed private angle bits still require their actual reads and writes. Any preparation/reference wire or fixed gate not in (62.31) adds its own description and construction slots.
+
+Here is one explicit serial fetch word, including the public descriptions. Store every instruction field in the literal unary-reference/framed-bit format of PR57.03 and PR57.05. At each digit, copy and position the complete bit and enable reference fields by the four-cache/descriptor routine of Proposition60.11, then execute `Seek(workspace,U(bit)); RD(workspace,0)`, `Seek(workspace,U(enable)); RD(workspace,1)`, and one `BF(AND)` into latch 3. Each seek uses its actual field head and current workspace head; its count is $2h+3v+3$, with the field's complete positioning counted separately. The operand latches survive these public scans. Consume the complete kind, endpoint, sign and exponent fields of the scheduled catalog entry by their paid `RD; MR` scan, driven by their constructed public lengths. The corresponding fixed local catalog row then executes one quantum occurrence with latch 3 as enable. No private bit chooses that row or an endpoint. Its finite installed control row and wire descriptions were already constructed bit by bit; their control size is in $b_{\rm ctl}$. For later use, reposition these sealed descriptions by their actual unary descriptors and the same paid seek routine. All descriptions, source bits and discarded digit slots remain retained. Literal code-bit installation contributes three append occurrences per bit; when a material bit string is copied, its additional source `RD; MR` pair makes the complete `AppendWord` cost five per bit. Those reads and moves belong to $\omega_C$ as well.
+
+This recipe is applied on every one of the $G_Q$ slots, including coefficient-zero, enable-zero and magnitude-zero slots. A supplied known-preparation bit is fetched by the same word before its fixed bit-flip slot. Terminal effect descriptions and their output framing are likewise consumed before delivery. Every requested additional idle hold tick is an explicit identity-control `CTL` occurrence with its receipt; classical service ticks already hold the complete carrier. Thus no additional clock interval, preparation/effect visit or catalog/wire fetch is absorbed into an unpriced word operation.
+
+
+Let $G_Q=\sum_\ell F_*m_\ell J_\ell$ include every enabled and disabled elementary interaction slot, and let $G_P,G_R$ be actual preparation and terminal quantum slots. All $K+4$ qubits are individually constructed and retained. With all holds represented by their actual classical control intervals, the complete logical price and storage coordinates are
+
+$$
+\begin{aligned}
+E&=E_C+(K+4)+G_Q+G_P+G_R,\qquad \mathrm{Fee}=2E,\\
+\mathrm{Storage}(z)&=\left(S_0+b_{\rm ctl}(z)+8A(z)+8E(z),\ Q(z)\right),\\
+\mathrm{Retention}&=\sum_{z\text{ logical tick}}Q(z).
+\end{aligned}
+\tag{62.32}
+$$
+
+Here $A(z)$ includes original current packet, complete rejected scratch, original rows/copies, private coefficient integers and digits, all instructions, flags, descriptors and caches simultaneously. $E(z)$ counts both disjoint receipt chains, $Q(z)$ is the constructed qubit count, and $S_0$ includes both chains' actual foundations. After full bank construction $Q(z)=K+4$ through preparation, service, arithmetic, catalog fetch, all interaction cuts and terminal delivery. Holding an auxiliary's imperfect state is included in exactly the same retention coordinate. Classical peak is the maximum at one common cut, not the sum of separate maxima.
+
+Proof. The source-copy/cursor routine is exactly Lemma60.10 on the actual current packet descriptor. The arithmetic word has finite fixed loops and positive denominators by Theorem62.8. PR57.L1–L3 expands its additions, comparisons and truth tables into terminating native words and establishes that private values never select their traces. The interpreter field lengths give (62.30); all its seeks and cache descriptors are actual constructed strings. The wire enumeration gives (62.31), with both signs and every exponent paid. A digit consumes its fixed stored bit and enable, computes their AND on actual latches, and invokes one supplied matrix; no digit or identity slot is skipped on a private zero. Each core event constructs exactly one receipt and has fee two, including the added finite quantum events of §60. Summing those disjoint actual words gives (62.32). Every parameter-supply algorithm declared effective has finite work here, but no history-independent cost bound over arbitrary effective policies or rational input lengths is asserted. These are ideal logical prices and simultaneous material counts, not physical energy, calibrated elapsed time or a minimal circuit price. $\square$
+
+**Proposition 62.12 (known preparation, version authentication and original records).** A known supported occupation $S$ has a finite paid preparation: construct all $K+4$ zero qubits, supply its $K$-bit occupation array, execute one explicitly supplied fixed bit-flip slot at every public address with that array's private enable, and retain every zero slot. Thus $G_P=K$ before optional reference/other preparation slots. The support and count are privately checked by fixed Boolean folds against $x_p$ and the public commissioned $N$; their ingress, additions, comparisons and complete code are paid. They do not become source-dependent public preparation labels. This preparation uses known material coefficients, not acquired amplitudes or an inferred ground state.
+
+An arbitrary supported unit state may instead be supplied by its own permitted preparation with the error and full carrier of Theorem62.10. The theorem transports its unknown phases but does not acquire them. A joint reference input likewise requires its own actual finite preparation word and all its prices; for $N=1$ the balanced reference/root construction is exactly Proposition60.6. A terminal computational-basis effect has one supplied measurement slot plus all classical framing/delivery; more elaborate effects require their own finite word. No measurement is used in the interaction or renewal, and no probability is an original exact Read.
+
+At actual accepted whole-rho requests the held bank is released with coefficients from the just-installed authenticated packet. At refusal the old installed coefficients remain. Original Reads and source stops use their unchanged routines, errors and original response fields; Stop is absorbing for quantum checkpoints/readout as well. Any terminal effect precedes Stop. Projection of the joint chronological record to original fields is precisely the record of §60.3, including INITIAL, preparation identity, every command, executed acceptance/refusal, Read and original copy/fence numeral.
+
+Proof. Enabled bit flips on the complete zero bank create exactly its supplied occupation; every unused address remains present. The support/count fold is a fixed-width Boolean expression, so its private values have no public successor. Its success is a premise of the supported preparation contract; it is not a free particle-count reply or an actor initialization depending on the source. Every active program and gate is installed while the original source block is locked, and all borrowed original heads are restored. Induct using PR57.T1–T5 and Theorem60.3. Extra private arithmetic/quantum events append only to the added chain, so no original numeral is renumbered. Private coefficient arrays have no callable source port and provide no action on a duplicate source. An accepted non-whole context retains its original full guard and response but ends this same-address comparison, exactly as in Definition60.1. Holding and refusing require neither a new quantum state nor an auxiliary reset. $\square$
+
+**Proposition 62.13 (the actual H3 discriminator, statistics and phase).** At $H=3$ the authentic INITIAL $\langle\beta,\alpha\rangle$ has the actual chronological history
+
+$$
+\operatorname{Read}[BA];\ \rho[\mathrm{accept}];\
+\operatorname{Read}[A+B];\ \rho[\mathrm{reject}];\
+\operatorname{Read}[A+B];\ \operatorname{Stop}.
+\tag{62.33}
+$$
+
+Its original INITIAL target is $(1,(1,1),BA,A+B)$, unchanged by the added apparatus. Old addresses are $D=\{o,L,R\}$; accepted addresses are $D'=\{o,L,R,LL,LR\}$. Their killed root/left coefficients are respectively $1/4,9/26$ and their common coefficient is $1/2$ at both versions. Hence the old two-particle occupation $\{o,L\}$ has killed renewal energy change $-5\nu/52$ and common change zero, with the same one-body $\phi$ in both.
+
+The two-particle hard-core kinetic operator on $D'$ is not spectrally equivalent to $\Lambda^2 L_{D'}$: with $a=1,g=\nu=0$,
+
+$$
+\operatorname{tr}(K_{D',2}^6)=759280,
+\qquad
+\operatorname{tr}((\mathrm d\Gamma_{\wedge^2}L_{D'})^6)=759256.
+\tag{62.34}
+$$
+
+In particular their full-phase finite propagators differ. At $\theta=1/100$ the real part of their trace difference is strictly between
+
+$$
+-\frac{23121015983636759877992957832379}
+{694702008000000000000000000000000000000000000}
+\quad\text{and}\quad
+-\frac{23121015983636725212194415013051}
+{694702008000000000000000000000000000000000000}.
+\tag{62.35}
+$$
+
+Proof. The leaf counts are $2,3,5$, giving exactly one acceptance. The actual products are $BA$ and $BAB=A+B$, using the original $A^2=1,B^2=-1,AB+BA=1$. The full second candidate is refused and supplies no Read. The matrices for the old and new domains have diagonals $2,3,\ldots,3$ and $-1$ on the displayed actual seams. Their old Schur complements are respectively $L_D$ and $L_D-(2/3)|L\rangle\langle L|$. Direct rational inversion gives the stated two entries; (62.3) gives $1/2$. Substitution in (62.9) proves the energy change.
+
+For (62.34), enumerate the ten two-site configurations in the displayed address order. The hard-core diagonal at $S$ is $\sum_{p\in S}d_p$; each allowed move contributes $-1$. The exterior diagonal is the same, but a move $q\mapsto p$ contributes $-(-1)^{\#\{i\in S:i<q\}+\#\{i\in S\setminus\{q\}:i<p\}}$. These complete finite matrix formulas give (62.34) by six matrix multiplications. The six-move closed occupation path
+$\{o,LL\},\{L,LL\},\{LL,LR\},\{L,LR\},\{o,LR\},\{o,L\},\{o,LL\}$
+has hard-core hopping product $+1$ and exterior hopping product $-1$. This closed sign discriminator is stronger than a removable single basis-edge sign.
+
+For the explicit finite phase inequality, form powers through degree sixteen of those same integer matrices and sum the even Taylor trace terms of $e^{-i\theta K}$. Both matrices have norm at most twelve by the one-body compression bound. Each ten-dimensional trace tail after degree sixteen is at most $20(12\theta)^{17}/17!$; the two tails together are at most $40(12\theta)^{17}/17!$, since $12\theta<1/2$. Adding/subtracting this rational remainder from the computed rational even sum gives exactly (62.35). It is a mathematical propagator calculation, not an acquired trace or a new original Read. $\square$
+
+**Proposition 62.14 (finite actual dyadic pair certificates).** For either killed coefficient in Proposition62.13, take $\nu=1$, $\theta=1/10$, $b=24$, $J=26$ and the 89-block pair word with all fixed-angle magnitudes rounded down to multiples of $2^{-24}$ and every negative sign restored. The actual central phase angles are
+
+$$
+\widetilde\xi_{\rm old}=-209715/8388608,
+\qquad
+\widetilde\xi_{\rm new}=-580749/16777216.
+\tag{62.36}
+$$
+
+Executing every $89\cdot26=2314$ digit slots, including identities, gives on the four clean data input columns of the full five-qubit pair carrier the full-phase operator-error bounds
+
+$$
+\begin{aligned}
+\eta_{\rm old}&\le
+\frac{15469415171574642961544437}{40564819207303340847894502572032}<10^{-6},\\
+\eta_{\rm new}&\le
+\frac{30335154456616661277356327}{40564819207303340847894502572032}<10^{-6}.
+\end{aligned}
+\tag{62.37}
+$$
+
+Both are below the analytic $89\cdot2^{-24}$ bound. For the common coefficient $1/2$, the same finite prescription has central angle $-209715/4194304$ and operator-error upper bound $30909823706171090313337097/40564819207303340847894502572032<10^{-6}$. The reached auxiliary amplitudes are included, rather than discarded. At $H=3$, $a=g=\nu=1$ and $T=1/10$, the public width $J=26$ is valid: a whole public slice has 1,882 angle blocks, 48,932 digit slots, 1,300 signed catalog entries and 11 constructed quantum modes. These are interaction/carrier coordinates, to which every classical, preparation, hold and terminal coordinate of (62.32) is added.
+
+Proof. The scaled rational magnitudes are divided by their positive denominators by the forty-step restoring recurrence (62.23); the quotient gives (62.36). For the fixed constants use the Machin identity in Theorem62.9 with ninety terms for each alternating arctangent. Both endpoints have the same required dyadic floor.
+
+Here is a rational interval prescription for all scalar matrix entries. Use integer scale $2^{110}$ and outward lower/upper rounding at every real multiplication and addition. For each actual digit angle $x$, enclose its sine and cosine by their degree-48 real Taylor polynomials with remainder $|x|^{49}/49!$. Multiply all individual signed local digit matrices in the exact chronological word of Theorem62.7 on each of the four clean columns; an enable-zero slot is the exact identity matrix. Compare each reached component with the ideal clean column of $e^{-i\xi n_pn_q}$, enclosing its central sine/cosine by the same prescription. If $v$ is the maximum real/imaginary component discrepancy, the complex $32\times4$ Frobenius norm is at most $16v$. Outward arithmetic gives respectively the two fractions in (62.37). Since all 32 components are included, this bounds the clean-input operator norm into the full carrier, including leakage.
+
+The rational coefficient word (62.19)–(62.21) agrees with direct inversion for every authentic source at caps $1,2,3,4$, respectively $2,6,22,102$ sources: the complete comparison contains 11,190 unordered public-bank coefficient outputs, including masked zeros. The largest unreduced integer in that finite comparison has 36 bits. Its 30 accepted renewals satisfy the complete beta-mask inverse update, including 16 acceptances without domain growth; its 102 refusals retain the old packet. The common expression also satisfies 441 exact local field equations for addresses through depth five and charge addresses through depth two. The mathematical comparison is the displayed factorization, independently evaluated against rational Gaussian elimination of each authentic $L_D$; Gaussian elimination is only the comparison calculation, not the private producer. For Proposition62.5 at depths $1,2,3$, the exact pair losses divided by $\nu$ are $1/8,263/840,5727/8680$, respectively, above $2/81,4/81,8/81$. These finite consequences corroborate the general proofs; they do not replace their all-source quantifiers or give unknown-state preparation, physical calibration or an infinite-time gate law.
+
+There is also a separately assembled literal Boolean witness from the two authentic ten-bit $H=3$ packets in Proposition62.13. Its fixed-order flag word uses 3,738 Boolean gates. All seven public-bank downward pivots and upward diagonal rational pairs are then formed by the five-gate adder, seven-gate comparison, complete schoolbook products and MUX masks of PR57.5, followed by the root/left coefficient and a forty-step restoring division. The unreduced outputs are $9/36$ and $567/1638$, not externally supplied inverse coefficients. Scaling their numerators by $2^{24}$ and their denominators by ten gives respectively $(150994944,360)$ and $(9512681472,16380)$. The actual quotients are 419,430 and 580,749, with remainders 144 and 12,852. Both give exactly (62.36). The displayed public width (62.22) is a general sufficient width; this finite witness uses a verified forty-bit arithmetic workspace.
+
+This witness contains 679,659 complete truth-table records and 679,671 signal cells. Its literal unary-field code length is 620,738,706,249 bits. Replaying those truth-table records on the two authentic input caches gives the same outputs under one source-independent instruction/address trace. Counting the four caches, their complete base descriptors, every actual head position and every unary loop by the primitive recurrences of PR57.03–06 gives 1,964,789,879,561,424,993 interpreter core occurrences and fee 3,929,579,759,122,849,986. Independent summation by (PR57.06) gives the same count. The four caches and four descriptor tapes retain 140,342,222,930,423,142 ordinary cells at their final common cut. Literal code appends add 1,862,216,118,747 core occurrences; copying all material code bits adds their further 1,241,477,412,498 reads/moves. These are deliberately inefficient interpreter coordinates, not a total commission price or an optimality claim: source/lock/cursor work, bootstrap, generator frames and references, workspace allocation, catalog/fetch work, preparation, gates, holds and effects are additionally the explicit words of Proposition62.11. The host calculation represents unary runs by their exact finite primitive-count recurrence, rather than materializing that many receipts or executing a full original-processor bootstrap. No compressed host representation becomes an extra native primitive, accessible counter or free code supplier.
+
+A finite extension of that same authentic coefficient circuit computes one pair enable and then emits a full AND record for each of its 2,314 digit slots. The AND operands are the actual restoring-division output cells for the central magnitude and the constructed constant cells for the fixed magnitudes. Its 681,974 Boolean records have 1,238 enabled and 1,076 disabled quantum slots on each of the two sources. Use the seven address-bank ordinals $0,\ldots,6$, inherited reference ordinal $7$, and auxiliary ordinals $c=8,u=9,v=10$. Every slot consumes its complete public kind, two endpoint, sign and exponent fields; these fields contain 62,023 bits in total. Their literal `RD; MR` scan, initial `Home; MR` and final exit use 124,051 core occurrences. Every AND result remains in the private latch through its paid destination seek/write and supplies the fixed quantum row.
+
+The complete coefficient/enable/digit interpreter, that public field scan and the 2,314 quantum rows together have 1,984,959,124,199,447,681 core occurrences, fee 3,969,918,248,398,895,362 and, with the eleven-mode bank already constructed and held throughout, 21,834,550,366,193,924,491 qubit-ticks of retention. The code, fields, descriptors, workspace and receipts remain retained. These are exact coordinates of this expanded finite subword, not a total commission price: its control/bootstrap, generation and installation, original source/input/cursor/service words, preparation, terminal effect/framing and additional idle holds contribute their separately expanded words in Proposition62.11. No measurement result or exact probability is inferred from this price calculation. $\square$
+
+
+**Definition 62.15 (scope of the interaction correspondence).** Equations(62.2), (62.7)–(62.9), (62.18)–(62.32) concern one authentic finite ordered source, the inherited unit occurrence realization and its expressly supplied ideal carrier. Their mathematical correspondence consumes §§55,58,60 and PR57 directly. The fermionic-swap matrix and branching-wire method are classical intermediates from Brod–Childs; the particular source coefficients, produced finite pair words, original-record projection and the joint renewal/retention relation are the deduction here. No primary-paper originality or abstract general-theorem priority is assigned to them.
+
+The physical gates, clocks, noise bounds, displacement law, unknown-state ingress and reference acquisition are independent unverified realization premises. Tree degree, local three-dimensional direction, computational wiring, state-sector dimension, coefficient precision and retained population are different objects. In particular no operation-/metric-preserving correspondence from the original local direction interface to a Euclidean region is defined here. The original $\mathcal D_2$ source, independent arbitrary unbounded $a$ including zero, untagged radius-$7/25$ $b$, destructive actions, joint adversarial/history-dependent errors, source-independent initialization, actual Reads and INITIAL/Stop target keep their original domains. No tags, copies of a running source, reset, independent resampling or limit Read is added to that menu. Fixed-$N$ infimum convergence, extensive lower boundedness, old-energy retention, dynamical intertwining, ground-state attainment, precompactness, continuum convergence and thermodynamic/physical stability remain distinct mathematical assertions; only the displayed implications are used.
+
+## 追加锚（本行以下为增补区）
+
+## 63. Fixed-population cluster escape, attained binding and complete recursive spectral retention
+
+**Definition 63.1 (one commissioned source and its fixed-population operator).** Retain the whole joint source of §§55.1,58.1,60.1 and62.1: immutable ordered INITIAL, actual source packet, authentic addressed versions $D_j(t)$, original preparation, complete candidate guards, every actual Read, acceptance, refusal and Stop. The added occurrence realization has the same root $o$, counting measure, unit parent–child seams, inherited degrees $d_o=2$, $d_p=3$ otherwise, root field $\phi(p)=2^{-|p|}$ and $\lambda=3-2\sqrt2$. Its commissioned parameters are $a,g>0$, $\nu\ge0$. Fix any finite integer $N\ge2$. On $\mathscr H_N=\ell^2(\mathcal C_N(\mathcal P))$ write
+
+$$
+\begin{aligned}
+H_N&=aK_N-g\sum_{p\in S}\phi(p)
+-\nu\sum_{\{p,q\}\subset S}G^{\rm c}(p,q),\\
+G^{\rm c}(p,q)&=G_0(p,q)+\tfrac13\phi(p)\phi(q),\qquad
+G_0(p,q)=\tfrac23\,2^{-d(p,q)},\\
+m_k&=\inf\sigma(H_k),\qquad m_0=0,\qquad
+\Sigma_N=\inf\sigma_{\rm ess}(H_N).
+\end{aligned}
+\tag{63.1}
+$$
+
+Multipliers in this notation act at the occupation $S$. The $k$-particle operators have the same parameters and literal hard-core statistics. By §§62.2–62.3 they are bounded self-adjoint, and $K_k\ge k\lambda I$. An allowed configuration edge replaces one occupied address by one empty adjacent address, with coefficient $-a$. Its graph degree is at most $3k$, but its kinetic diagonal is $\sum_{p\in S}d_p$, including every collision and exterior killing term. The two degrees are not interchangeable. Finite common operators are precisely compressions of $H_N$; finite killed operators retain the same $\phi$ and replace only pair coefficients by $G_D^{\rm k}$. All occupation embeddings below are same-address zero extensions. An index beyond one actual execution belongs to §55.1's mathematical family of separately legal finite prefixes; only actually reached versions belong to that execution.
+
+The task is the missing implication from fixed-$N$ infimum recovery to actual bound states and their complete finite spectral spaces. An escaping group may remain internally adjacent, so its pair multiplier need not tend to zero. Nothing here replaces that group by independent particles or regards the many-particle potential as compact.
+
+**Lemma 63.2 (joint occupation bounds used by the escape certificate).** Put $c_0=b_0=r_0=A_0=0$, and for $m\ge1$ define
+
+$$
+\begin{aligned}
+c_m&=\min\left\{\frac{m(m-1)}6,\frac{m}{2\lambda}-\frac m3\right\},
+&b_m&=am\lambda-\nu c_m,\\
+r_m&=\min\left\{\frac{m(m-1)}4,\frac{m}{2\lambda}-\frac m3\right\}.
+\end{aligned}
+\tag{63.2}
+$$
+
+Order the addresses by increasing depth, breaking ties by left/right lexicographic order; let $S_m$ be the first $m$ addresses and set
+
+$$
+A_m=\sum_{p\in S_m}\phi(p),\qquad
+P_m=\sum_{\{p,q\}\subset S_m}G^{\rm c}(p,q).
+\tag{63.3}
+$$
+
+In particular $A_m=h+(m-2^h+1)2^{-h}$ when $2^h\le m+1<2^{h+1}$. For every actual $m$-site occupation $Y$,
+
+$$
+\sum_{\{p,q\}\subset Y}G_0(p,q)\le c_m,
+\quad
+\sum_{\{p,q\}\subset Y}G^{\rm c}(p,q)\le r_m,
+\quad
+\sum_{p\in Y}\phi(p)\le A_m,
+\quad
+m_m\ge am\lambda-gA_m-\nu r_m.
+\tag{63.4}
+$$
+
+Proof. Off the diagonal, $G_0\le1/3$ and $G^{\rm c}\le1/2$: in the latter case $d(p,q)\ge1$ and distinct addresses satisfy $|p|+|q|\ge1$. These give the first alternatives in (63.2). For $z=\mathbf1_Y$, the already supplied inverse bound gives $z^*G^{\rm c}z\le m/\lambda$, while $G^{\rm c}(p,p)\ge2/3$. Subtracting the diagonal and dividing by two gives the second alternative for $r_m$. Also
+
+$$
+z^*G_0z=z^*G^{\rm c}z-\tfrac13\left(\sum_{p\in Y}\phi(p)\right)^2\le m/\lambda,
+\qquad G_0(p,p)=2/3,
+$$
+
+giving the second alternative for $c_m$. No new positivity assumption on a comparison kernel is needed. The depth ordering maximizes the sum of the $m$ largest field values. Combining these pointwise bounds with $K_m\ge m\lambda I$ proves the operator lower bound. These are consumed consequences of the same-L kernel and occupation bound of §62, rather than an independent stability claim. $\square$
+
+**Theorem 63.3 (all-configuration localization with an explicit exterior error).** Define the joint lower escape certificate
+
+$$
+B_N=\min_{0\le k<N}\{m_k+b_{N-k}\}.
+\tag{63.5}
+$$
+
+For each integer $R\ge2$ let $\mathcal F_R=\mathcal C_N(B_{(2N+1)R})$. Every $f\in\mathscr H_N$ vanishing on this finite configuration core satisfies
+
+$$
+\begin{aligned}
+\langle f,H_Nf\rangle&\ge(B_N-\eta_N(R))\|f\|^2,\\
+\eta_N(R)&=\frac{6aN(9N+1)}{R^2}
++\left(gN+\frac{\nu N^2}4\right)2^{-R}
++\frac{\nu N(N-1)}6\,2^{-2R} \longrightarrow0.
+\end{aligned}
+\tag{63.6}
+$$
+
+The estimate includes partial, multiple and intact cluster escape, with no cluster-separation hypothesis on $f$ and no attainment assumption on any $m_k$.
+
+Proof. For a configuration $S$, sort its depths as $d_1\le\cdots\le d_N$, with $d_0=0$. Define the continuous piecewise affine functions
+
+$$
+\begin{aligned}
+\psi_R(x)&=\begin{cases}
+1,&x\le2NR,\\
+((2N+1)R-x)/R,&2NR<x<(2N+1)R,\\
+0,&x\ge(2N+1)R,
+\end{cases}\\
+\gamma_R(x)&=\begin{cases}
+0,&x\le R,\\
+(x-R)/R,&R<x<2R,\\
+1,&x\ge2R.
+\end{cases}
+\end{aligned}
+\tag{63.7}
+$$
+
+Set $w_N(S)=\psi_R(d_N)$, $w_k(S)=\psi_R(d_k)\gamma_R(d_{k+1}-d_k)$ for $0\le k<N$, and
+
+$$
+\chi_k(S)=\frac{w_k(S)}{\left(\sum_{i=0}^Nw_i(S)^2\right)^{1/2}}.
+\tag{63.8}
+$$
+
+The denominator is at least one. Indeed, if $d_N\le2NR$ then $w_N=1$. Otherwise some consecutive gap is at least $2R$. Before the first such gap all gaps are less than $2R$, so its preceding depth $d_k\le2kR\le2NR$ and $w_k=1$. This covers every configuration, including tied depths, and $\sum\chi_k^2=1$. The support of $\chi_N$ is inside the finite core. On the support of $\chi_k$ for $k<N$, the $k$ shallowest particles form a uniquely determined group $X$, with
+
+$$
+\max_{p\in X}|p|<(2N+1)R,\qquad
+\min_{q\in Y}|q|-\max_{p\in X}|p|>R,\qquad Y=S\setminus X,
+\tag{63.9}
+$$
+
+when $k>0$; for $k=0$ every particle has depth greater than $R$.
+
+A permitted hop changes each depth order statistic by at most one, hence a gap by at most two. Thus each $w_k$, $k<N$, changes by at most $3/R$, and $w_N$ by at most $1/R$. For vectors $u,v$ with norms at least one,
+$\|u/\|u\|-v/\|v\|\|\le2\|u-v\|$; consequently every allowed edge $S\sim T$ satisfies
+
+$$
+\sum_{k=0}^N|\chi_k(S)-\chi_k(T)|^2\le\frac{4(9N+1)}{R^2}.
+\tag{63.10}
+$$
+
+Write $q_N(f)=\langle f,H_Nf\rangle$. All diagonal terms cancel in the discrete IMS identity, leaving exactly
+
+$$
+\sum_kq_N(\chi_kf)-q_N(f)
+=a\sum_{\{S,T\}:S\sim T}\operatorname{Re}(\overline{f(S)}f(T))
+\sum_k(\chi_k(S)-\chi_k(T))^2.
+\tag{63.11}
+$$
+
+Using $2|f(S)f(T)|\le|f(S)|^2+|f(T)|^2$, the configuration degree bound $3N$ and (63.10), its absolute value is at most $6aN(9N+1)\|f\|^2/R^2$. Collision killing and inherited exterior degrees remain on the diagonal throughout this identity.
+
+It remains to estimate each localized piece, rather than assume a cluster formula. For $k<N$ put $m=N-k$ and $h=\chi_kf$. Map its support isometrically by $S\mapsto(X,Y)$ into
+$\ell^2(\mathcal C_k(\mathcal P))\otimes\ell^2(\mathcal C_m(\mathcal P))$, putting zero at every other pair. The gap in (63.9) is greater than two. An allowed hop between two support configurations therefore cannot exchange membership across this split. Conversely every nonzero tensor hopping matrix entry between supported pairs is precisely one allowed original hop. On the support the two groups are disjoint and not adjacent, so no between-group collision term is lost. The diagonal remains the sum of all original site degrees. Hence the kinetic form is exactly the form of $K_k\otimes I+I\otimes K_m$ on this zero-extended tensor vector. For $k=0$ the first factor is the scalar vacuum.
+
+Keep the full root potential and full common pair attraction inside $X$. These terms and its kinetic operator give $H_k\ge m_kI$ in the first factor. Keep *all* $G_0$ pair attractions inside $Y$, even if $Y$ consists of several clusters or one intact cluster; Lemma63.2 and the inherited kinetic gap give $aK_m-\nu\sum_YG_0\ge b_mI$. The remaining attractive terms are small pointwise. Every far address has $\phi(q)\le2^{-R}$. A near/far pair has $d(p,q)>R$ and $|p|+|q|>R$, so $G^{\rm c}(p,q)\le2^{-R}$. Therefore
+
+$$
+q_N(h)\ge\left[m_k+b_m-gm2^{-R}
+-\nu km2^{-R}-\frac\nu3\binom m2\,2^{-2R}\right]\|h\|^2.
+\tag{63.12}
+$$
+
+All estimates refer to the same tensor vector and the same actual occupation; separately optimal configurations were not combined. If $f$ vanishes on $\mathcal F_R$, then $\chi_Nf=0$. Sum (63.12), use $km\le N^2/4$, $m\le N$, the partition norm identity and (63.11). This proves (63.6). In particular the far group never needed an internal partition, so equal-depth clusters and arbitrarily many mutually escaping subgroups are covered. $\square$
+
+**Theorem 63.4 (two-sided certificates and actual escaping trial families).** For every fixed finite $N\ge2$,
+
+$$
+B_N\le\Sigma_N\le
+\min_{0\le k<N}\{m_k+u_{N-k}\},
+\qquad
+u_m:=\min\{am\lambda,3am-\nu w_m\},\qquad
+w_m:=\tfrac23(m-2+2^{1-m}).
+\tag{63.13}
+$$
+
+Proof. First, any weakly null unit sequence $f_n$ has
+
+$$
+\liminf_n q_N(f_n)\ge B_N.
+\tag{63.14}
+$$
+
+For fixed $R$, $\chi_N$ has finite support, so $\chi_Nf_n\to0$ strongly and its energy tends to zero. Apply (63.11)–(63.12) to the other pieces, take the lower limit, then let $R\to\infty$. If the spectral subspace below some $c<B_N$ were infinite dimensional, an orthonormal sequence in it would be weakly null with energies at most $c$, contradicting (63.14). Thus below each such $c$ the full spectral subspace is finite dimensional, proving $\Sigma_N\ge B_N$.
+
+For the upper bounds fix $k<N$, $m=N-k$ and a unit finite-support root trial $f$ for $H_k$ with energy at most $m_k+\epsilon$. For $k=0$ take the scalar vacuum. For the free branch, use the actual radial sine packets of §55.3, each on finitely many levels of a deep descendant subtree. Choose $m$ such subtrees pairwise disjoint and separated by distances tending to infinity, and also escaping the finite support of $f$. Each packet has kinetic expectation tending to $\lambda$ and root-field expectation tending to zero. Their tensor product has exactly one particle in each disjoint support. Union of its occupations with those of $f$ is a literal occupation isometry; there are no factorial normalization or ordering signs. The inherited kinetic expectations add, including support-boundary killing. All far-far and near-far pair terms tend to zero, since the support separations tend to infinity. These weakly null unit trials have limiting energy at most $m_k+\epsilon+am\lambda$.
+
+For the intact-cluster branch take one basis occupation on $m$ consecutive nonroot vertices of a ray, translated to depth tending to infinity. Its diagonal kinetic expectation is exactly $3m$, even though adjacent particles block moves. Its root-field and image-pair terms tend to zero, while
+
+$$
+\sum_{r=1}^{m-1}(m-r)\frac23\,2^{-r}
+=\frac23(m-2+2^{1-m})=w_m.
+\tag{63.15}
+$$
+
+The same union isometry with $f$ gives weakly null unit trials of limiting energy at most $m_k+\epsilon+3am-\nu w_m$. Cross-group attraction tends to zero because $f$ is fixed and finite. These basis occupations are variational trials, not asserted Weyl eigenvectors.
+
+For a bounded self-adjoint operator, any weakly null unit sequence has energy lower limit at least the essential lower edge: its projection onto the finite-dimensional spectral subspace below any number smaller than that edge tends to zero. This also follows directly from the min-max principle of §55.8. Apply it to the two trial families, let $\epsilon\downarrow0$ and minimize over $k$. The constructed finite-energy weakly null families also show the essential spectrum is nonempty. The result is a sufficient sandwich, not an assumed sharp HVZ identity. $\square$
+
+**Theorem 63.5 (an explicit nonempty binding regime for every fixed N).** The actual occupation trial $e_{S_N}$ has energy
+
+$$
+E_N^{\rm root}=a(3N-1)-gA_N-\nu P_N.
+\tag{63.16}
+$$
+
+If, for every $0\le k<N$,
+
+$$
+g(A_N-A_k)>
+a(3N-1-N\lambda)+\nu(r_k+c_{N-k}-P_N),
+\tag{63.17}
+$$
+
+then $m_N\le E_N^{\rm root}<B_N\le\Sigma_N$. This is a nonempty regime for each fixed $N,a,\nu$: every $A_N-A_k$ is strictly positive, so any positive $g$ larger than all the finitely many right-hand-side quotients in (63.17) suffices. No common $g$ for unbounded $N$ is asserted.
+
+Whenever $m_N<B_N$, the infimum is attained, the ground eigenspace is nonzero and finite dimensional, and *every* normalized near-minimizing sequence is strongly precompact. Its cluster points are unit ground states. There is a positive gap from $m_N$ to the spectrum on the orthogonal complement of that entire groundspace.
+
+Proof. The breadth-first occupation includes the root. Its diagonal is $2+3(N-1)$, and a single occupation basis vector has zero hopping expectation, proving (63.16). Lemma63.2 gives
+
+$$
+m_k+b_{N-k}\ge aN\lambda-gA_k-\nu(r_k+c_{N-k}).
+\tag{63.18}
+$$
+
+Inequality(63.17) compares the *one* actual trial (63.16) strictly with every lower channel in (63.18). It proves the claimed gap without assuming the existence of a bound state in any smaller sector.
+
+For attainment, let $f_n$ be any unit near-minimizing sequence, pass to a weak limit $f$ and put $r_n=f_n-f$. Boundedness of $H_N$ makes the cross energy vanish; $\|r_n\|^2\to1-\|f\|^2$. Rescaling (63.14), including the zero-norm case by boundedness, gives
+
+$$
+\begin{aligned}
+m_N&\ge q_N(f)+B_N(1-\|f\|^2)\\
+&\ge m_N\|f\|^2+B_N(1-\|f\|^2).
+\end{aligned}
+\tag{63.19}
+$$
+
+The strict gap forces $\|f\|=1$, hence strong convergence and energy $m_N$. Variation gives $H_Nf=m_Nf$. This argument applies to every near-minimizing sequence. The finite-dimensional subthreshold spectral conclusion in Theorem63.4, applied at a number strictly between $m_N$ and $B_N$, gives finite ground multiplicity and isolates $m_N$ from the rest. No single radial channel, source-label permutation or ground-state preparation was used. $\square$
+
+**Lemma 63.6 (actual-domain buffers for killed coefficients and moving packets).** Set $\varrho=1-\lambda/3<1$. If an authentic domain $D$ contains the occurrence ball of radius $b$ around $p$, then, for every $q\in D$,
+
+$$
+0\le G^{\rm c}(p,q)-G_D^{\rm k}(p,q)
+\le\frac{\varrho^{b+1}}\lambda.
+\tag{63.20}
+$$
+
+For a normalized finite state whose every occupied address has such a buffer, its killed-minus-common energy is at most
+$\nu\binom N2\varrho^{b+1}/\lambda$.
+
+Proof. Consume §62.2's nonnegative path expansion $L^{-1}=\frac13\sum_{n\ge0}P^n$, with $P=I-L/3$ and $\|P\|\le\varrho$. The killed expansion keeps exactly the paths staying in $D$. A path starting at $p$ with at most $b$ steps cannot leave the contained ball; all differences therefore start at $n=b+1$. Bound each matrix entry of $P^n$ by $\|P\|^n$ and sum the geometric tail, using $3(1-\varrho)=\lambda$. Sum this same coefficient bound over the pairs in each actual occupation and then over its probability weights. $\square$
+
+Every finite packet used in Theorem63.4 can consequently be placed on actual, separately commissioned whole-rho prefixes with buffers tending to infinity, giving the same common and killed trial limits. Indeed choose a finite radius $r$ containing all its addresses and a buffer $b$, and a finite accepted index $j\ge2(r+b)$. The already proved $B_{\lfloor j/2\rfloor}\subset D_j(t)$ supplies all required buffers, uniformly in the original finite source $t$. Commission that finite prefix at a cap sufficient for its actual leaf counts. This construction retains the actual irregular domain; it is not a replacement ball or a change to a running cap. A moving address merely belonging to a frontier does not satisfy (63.20) with $b\to\infty$, so no moving-frontier killed limit follows without this buffer.
+
+**Theorem 63.7 (all finite near-minimizers, common and killed).** Suppose $m_N<B_N$, in particular under (63.17). For every sequence of original finite sources $t_n$ and legal-prefix indices $j_n\to\infty$, write $D_n=D_{j_n}(t_n)$. For either prescription $\diamond\in\{\mathrm c,\mathrm k\}$, let $f_n\in\ell^2(\mathcal C_N(D_n))$ be unit and satisfy
+
+$$
+\langle f_n,H^\diamond_{D_n,N}f_n\rangle
+-\inf\sigma(H^\diamond_{D_n,N})\longrightarrow0.
+\tag{63.21}
+$$
+
+Their identical-address zero extensions are strongly precompact in $\mathscr H_N$, and every cluster point is a unit common ground state. In particular this holds along every fixed original source's legal-prefix family.
+
+Proof. Theorem62.6 supplies the finite infimum recovery. Its proof is uniform under contained-ball exhaustion: choose its finite recovery vector first, contain its finitely many occupied addresses in $B_r$, and use (63.20) with $b=\lfloor j_n/2\rfloor-r$. This gives the needed local coefficient recovery for arbitrary varying $t_n$, without a norm limit of the full Green operators. The finite inequalities are exactly
+
+$$
+m_N\le q_N(I_{D_n,N}f_n)
+=\langle f_n,H^{\rm c}_{D_n,N}f_n\rangle
+\le\langle f_n,H^{\rm k}_{D_n,N}f_n\rangle.
+\tag{63.22}
+$$
+
+Thus either near-minimizer family is a common near-minimizer. Apply Theorem63.5. This uses the actual inherited diagonal and the pointwise killed/common ordering, not a claim that all finite pair multipliers converge in operator norm. $\square$
+
+**Theorem 63.8 (uniform tightness of every certified subthreshold eigenvector).** Fix $c<B_N$. For all sufficiently large integers $R$, every unit eigenvector with energy $z\le c$, either of $H_N$ or of any authentic finite common/killed operator, has
+
+$$
+\bigl\|\mathbf1_{\mathcal C_N(\mathcal P)\setminus
+\mathcal C_N(B_{(2N+2)R})}f\bigr\|^2
+\le\frac{3aN}{(B_N-c)R^2}.
+\tag{63.23}
+$$
+
+Finite vectors in this formula are zero extended. No radial, root-visible or occupation-symmetry sector is removed.
+
+Proof. Let $r(S)=\max_{p\in S}|p|$ and let $h_R(S)$ be zero for $r(S)\le(2N+1)R$, one for $r(S)\ge(2N+2)R$, and affine between. It is $1/R$-Lipschitz on allowed configuration edges, and $h_Rf$ vanishes on $\mathcal F_R$. For a finite eigenvector use its *finite* eigen-equation; all diagonal terms, including its killed pair multiplier, cancel in the exact identity
+
+$$
+q^\diamond_D(h_Rf)-z\|h_Rf\|^2
+=a\sum_{\{S,T\}\text{ allowed in }D}
+\operatorname{Re}(\overline{f(S)}f(T))(h_R(S)-h_R(T))^2
+\le\frac{3aN}{2R^2}.
+\tag{63.24}
+$$
+
+The same identity holds for a common infinite eigenvector. Exterior and collision killing stay in both diagonal expressions. The common exterior bound (63.6) applies after zero extension, and killed energy is at least common energy. Hence
+
+$$
+(B_N-z-\eta_N(R))\|h_Rf\|^2\le\frac{3aN}{2R^2}.
+\tag{63.25}
+$$
+
+Choose $R$ so that $\eta_N(R)\le(B_N-c)/2$; where $r(S)\ge(2N+2)R$, $h_R=1$. This proves (63.23). Its finite cores and vanishing tails imply strong precompactness of all such eigenvectors over arbitrary authentic domains. The conclusion is stronger than local convergence of their matrix entries. $\square$
+
+**Theorem 63.9 (complete finite spectral windows on actual recursive domains).** Fix a compact window $W=[\alpha,\beta]$ with $\beta<B_N$ and $\alpha,\beta\notin\sigma(H_N)$. Let $D_n=D_{j_n}(t_n)$ with arbitrary original finite $t_n$ and $j_n\to\infty$. For both common and killed prescriptions, the ordered eigenvalues in $W$ converge to the common eigenvalues, repeated by multiplicity; eventually the total rank in $W$ equals the common rank. More precisely, for every common variational eigenvalue $\lambda_\ell<B_N$, ordered from the bottom and repeated by multiplicity,
+
+$$
+\lambda_\ell(H^\diamond_{D_n,N})\longrightarrow\lambda_\ell(H_N),
+\qquad
+\left\|I_{D_n,N}\mathbf1_W(H^\diamond_{D_n,N})I_{D_n,N}^*
+-\mathbf1_W(H_N)\right\|\longrightarrow0.
+\tag{63.26}
+$$
+
+The projection statement includes every hidden occupation mode and exceptional or degenerate eigenspace. In particular, for an isolated common eigenvalue $z<B_N$, choose gap endpoints enclosing $z$ and no other common eigenvalue. The finite eigenvalues in that interval may split; their total multiplicity eventually equals $\dim\ker(H_N-zI)$, and the projection onto their entire cluster converges to the full common eigenspace projection. An individual split finite eigenspace is not identified with the whole limiting degenerate space. An empty common window is eventually empty in both finite prescriptions.
+
+Proof. The common spectrum below every $c<B_N$ has finite total multiplicity by Theorem63.4. The min-max principle in §55.8 and finite killed/common ordering give the lower inequalities for every finite variational level. For the reverse inequality, choose the finite span of the first $\ell$ common eigenvectors. Truncate it to configurations in $B_r$, with $r\to\infty$. Boundedness of $H_N$ gives uniform norm and form convergence on its finite-dimensional unit sphere; its dimension is eventually preserved. Place this one truncated span in $D_n$. Its common form is unchanged. For fixed $r$, (63.20), with $b=\lfloor j_n/2\rfloor-r$, makes the killed correction tend uniformly to zero on that span. Min-max gives the required limiting upper inequalities, first taking $n\to\infty$ and then $r\to\infty$. This argument neither assumes bound states in all smaller particle sectors nor changes the source realization.
+
+If $c<B_N$ is in a common gap and $r_c$ common eigenvalues lie below it, their convergence supplies at least $r_c$ finite eigenvalues below $c$. There cannot be $r_c+1$: their finite spectral span would, after zero extension, have common Rayleigh values below $c$, contradicting common min-max. Thus the count is eventually exactly $r_c$. Apply this at both window endpoints to get complete rank and exclude spectral pollution or excess multiplicities. All variational levels below $\beta$ have already been controlled, so isolated common gaps inside the window contain no extra finite eigenvalues.
+
+To prove preservation of the spaces, not just their eigenvalues, take any sequence of finite unit eigenvectors with energies in $W$. Theorem63.8 gives a strongly convergent subsequence with unit limit $f$, and the energies have a convergent subsequence, say $z_n\to z$. For any finite-support configuration test $v$, its occupied addresses and every address reached by one hop are eventually in $D_n$. Thus the common compressed test operator is exactly the common operator there. For the killed alternative its difference on this fixed test support tends to zero by (63.20). In the finite eigen-equation, passage to the limit gives
+
+$$
+\langle H_Nv,f\rangle=z\langle v,f\rangle.
+\tag{63.27}
+$$
+
+Density and boundedness yield $H_Nf=zf$. The gap endpoints ensure $z\in W$.
+
+Choose complete finite orthonormal eigenbases in $W$. Their eventually fixed finite size, tightness and subsequence extraction give orthonormal common limits. The rank equality makes those limits a complete basis of the common window space. Strong convergence of these finitely many basis vectors implies operator-norm convergence of their rank-one projection sums. Any subsequence has a further subsequence with this same limiting projection, proving the full projection limit (63.26). Degenerate vectors may rotate within their space; the space itself is preserved. No root resolvent cancellation or radial reduction enters this proof. $\square$
+
+**Corollary 63.10 (recursive groundspace retention for both ideal prescriptions).** Assume $m_N<B_N$, and let $P_0$ be the full common ground projection. Write
+
+$$
+\gamma_N=\inf\sigma(H_N|_{\operatorname{ran}(I-P_0)})-m_N>0.
+\tag{63.28}
+$$
+
+Consider any finite legal whole-rho history with the ideal same-occupation transfer and between-checkpoint finite generators already supplied in §§60,62. At original Reads and refusals there is no actuator change. Use consistently either the common or the killed pair prescription. If the initial supplied unit state has finite energy $E_0^\diamond$, then its actual ideal states $u(\tau)$, zero extended by their same addresses, obey throughout every supplied finite clock interval
+
+$$
+\|(I-P_0)u(\tau)\|^2\le\frac{E_0^\diamond-m_N}{\gamma_N},
+\qquad
+\operatorname{dist}\bigl(u(\tau),\{v\in\operatorname{ran}P_0:\|v\|=1\}\bigr)
+\le\sqrt{\frac{2(E_0^\diamond-m_N)}{\gamma_N}}.
+\tag{63.29}
+$$
+
+Proof. For the common prescription its finite energy is unchanged through every switch, by (62.7). For the killed prescription (62.8) makes every old pair coefficient increase, so its compression on old occupations decreases as a quadratic form. Thus its finite energy can only decrease at a renewal. Each between-event ideal unitary preserves its currently installed energy. At every cut the common energy of the zero extension is at most the current killed energy by (63.22). In either case $q_N(u(\tau))\le E_0^\diamond$. Apply the spectral inequality $H_N-m_NI\ge\gamma_N(I-P_0)$. Normalizing $P_0u$ and the identity $2(1-\|P_0u\|)\le2(1-\|P_0u\|^2)$ give the second bound; if the projection is zero, any unit ground vector has distance $\sqrt2$ and the same inequality still holds. $\square$
+
+Expressly supplied finite ground states, or states satisfying (63.21), make this bound tend to zero along the actual-prefix families of Theorem63.7. The result is a bound on distance to the entire groundspace, for arbitrary finite duration and renewal count under the ideal law. It is not a full-phase dynamical intertwining theorem. Digital-gate checkpoints retain §62.10's accumulated state-error budget, which can be added to the distance bound when its preparation, parameter, hold and clock conditions are actually supplied. Energy monotonicity does not price physical work or prepare an unknown ground state.
+
+**Proposition 63.11 (an actual pair binds although its one-particle sector is unbound).** Take exactly §55.6's INITIAL $t=\langle\beta,\alpha\rangle$ and fixed cap $H=3$, with its actual history
+
+$$
+\operatorname{Read}[BA];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad\rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad\operatorname{Stop}.
+\tag{63.30}
+$$
+
+Commission $a=1$, $g=1/10$, $\nu=360$, $N=2$, and the existing paid known occupation $S=\{o,L\}$. The accepted domain is precisely $(o,L,R,LL,LR)$, with §55.6's inherited matrix and six exterior seams. Then
+
+$$
+\begin{aligned}
+m_1&=\lambda\quad\text{with no attained one-particle minimum},\\
+B_2&=2\lambda-120=-114-4\sqrt2,\\
+\langle e_S,H^{\rm c}_{D,2}e_S\rangle&=-3503/20<B_2,\\
+\langle e_S,H^{\rm k}_{D,2}e_S\rangle&=-31139/260<B_2,\\
+B_2-\langle e_S,H^{\rm c}_{D,2}e_S\rangle
+&=1223/20-4\sqrt2>0,\\
+B_2-\langle e_S,H^{\rm k}_{D,2}e_S\rangle
+&=1499/260-4\sqrt2>0.
+\end{aligned}
+\tag{63.31}
+$$
+
+Consequently $m_2<B_2$, so the common pair has an attained finite-dimensional groundspace and all-near-minimizer compactness, with the finite common/killed preservation of Theorems63.7–63.9. This is interaction-induced root binding despite the unbound one-particle sector, in a model whose coescaping adjacent pairs also retain attraction.
+
+Proof. The no-binding range (55.18b) applies because $1/10<1/(2+3\sqrt2)$. It gives $m_1=\lambda$ and escape near-minimizers. It also excludes a nonzero threshold eigenvector: its proof gives
+$H_1-\lambda I\ge[1-g(2+3\sqrt2)](L-\lambda I)$, with strictly positive prefactor, and the channel excess forms displayed before (55.18b) have zero kernel. Indeed their sums of squared differences and positive endpoint term can vanish only for the zero sequence. Hence the one-particle infimum is not attained.
+
+Here $c_1=0$, $c_2=1/3$, so the two lower channels are $m_1+b_1=2\lambda$ and $b_2=2\lambda-120$; the latter is $B_2$. The occupied root/left pair has kinetic diagonal five, field sum $3/2$ and common pair coefficient $1/2$. Direct inversion of the actual accepted $L_D$ gives $G_D^{\rm k}(o,L)=9/26$, as in §62.13. Substitution gives
+
+$$
+5-\frac3{20}-180=-\frac{3503}{20},\qquad
+5-\frac3{20}-\frac{360\cdot9}{26}=-\frac{31139}{260}.
+\tag{63.32}
+$$
+
+The killed strict margin is certified without rounding by $1499^2-32\cdot260^2=83801>0$. On the initial three-site domain the killed coefficient is only $1/4$, giving trial energy $-1703/20$; that particular trial does not certify separation from $B_2$. No absence of other initial finite bound trials is inferred from it. The accepted pair trial is a genuine common trial by zero extension; the higher killed value also lies below the same lower escape certificate. All original leaf counts $2,3,5$, numerical replies, refusal and INITIAL target remain exactly §55.6's. No spectrum is inserted into an original Read. $\square$
+
+**Proposition 63.12 (actual coescape distinguishes a retained pair from separated particles).** In separately legal finite prefixes of the same INITIAL of (63.30), let
+
+$$
+S_h^{\rm adj}=\{L^h,L^{h+1}\},\qquad
+S_h^{\rm sep}=\{L^h,R^h\},\qquad h\ge1.
+\tag{63.33}
+$$
+
+Commission a finite cap sufficient to reach an index $j_h\ge2(h+1+b_h)$, where $b_h\to\infty$, and use the authentic $D_{j_h}(t)$. Both known occupation preparations are within that same source-domain family. These are separate finite commissions with this INITIAL, not continuations of the stopped $H=3$ history. Their common, and buffered killed, basis-trial energies have limits
+
+$$
+E_h^{\rm adj}\longrightarrow6a-\nu/3,
+\qquad E_h^{\rm sep}\longrightarrow6a.
+\tag{63.34}
+$$
+
+Proof. All occupied sites are nonroot, so both inherited kinetic diagonals are six. Their root potentials tend to zero. Formula(62.3) gives
+
+$$
+G^{\rm c}(L^h,L^{h+1})=\frac13+\frac13\,2^{-(2h+1)},
+\qquad
+G^{\rm c}(L^h,R^h)=2^{-2h}.
+\tag{63.35}
+$$
+
+The contained global ball supplies the stated buffers; Lemma63.6 makes the killed/common differences tend to zero. Thus (63.34) follows. Each family of basis vectors is weakly null, but no operator-residual estimate or Weyl eigenvector claim is made. For (63.31), these limits are $-114$ and $6$, while the root pair trial lies strictly below the lower certificate $-114-4\sqrt2$. The retained attraction of the adjacent escape family explains why the one-particle essential threshold alone cannot establish pair binding. $\square$
+
+**Definition 63.13 (consumed methods, new relation and remaining correspondence).** The exact suppliers are §§55.1–55.5 for the same-root carrier, gap and actual contained-ball exhaustion; §§58,60 for the separate ideal transfer/actuator/clock contract and its source-record projection; §§62.2,62.4,62.6 for literal statistics, the same-L pair kernel, killed ordering/update and fixed-$N$ variational recovery. They are consumed, not re-delivered as new results. Teschl's primary min-max theorem, already supplied in §55.8, applies to the bounded self-adjoint operators and their full variational subspaces used here. Its compact-perturbation Weyl theorem is not applied to the noncompact many-particle pair multiplier.
+
+The primary comparisons are Mathieu Lewin, [*Geometric methods for nonlinear many-body quantum systems*, arXiv:1009.2836v3, §3.2, Theorem3.1](https://arxiv.org/pdf/1009.2836v3); Christoph Fischbacher and Günter Stolz, [*Droplet states in quantum XXZ spin systems on general graphs*, arXiv:1712.10276v2, §2.1–2.4](https://arxiv.org/pdf/1712.10276v2); and Jonathan Breuer, Sergey Denisov and Latif Eliaz, [*On the essential spectrum of Schrödinger operators on trees*, arXiv:1711.10049v2, Theorems2–4](https://arxiv.org/pdf/1711.10049v2). Lewin's theorem concerns Euclidean many-body operators, with even pair potential, and both external and pair potentials finite sums of $L^p(\mathbb R^d)$ functions with $\max(d/2,1)<p<\infty$, or $L^\infty$ functions tending to zero at infinity; its cluster-localization method motivates retaining the escaping group's energy, but its formula is not imported to this tree. Fischbacher–Stolz supply the mature symmetric-configuration-graph viewpoint for connected countable bounded-degree graphs; their XXZ potential is not (63.1), whose total-degree diagonal and Green attraction remain literal. Breuer–Denisov–Eliaz distinguish general bounded-degree R-limit inclusion from the regular-tree equality and exhibit failure of the reverse inclusion on a general graph. The $N$-occupation graph is not the one-particle regular tree, so that equality does not supply a sharp threshold here. The partition, tensor-form equality, exterior error and spectral tightness needed for this carrier are proved in (63.7)–(63.12), (63.24)–(63.27). These primary methods require no additional Library supplier for the deduction.
+
+The `repo-derived` relation is the joint chain on the already commissioned source: all fixed-$N$ partial/intact/multiple escape is controlled with vanishing error; an explicit nonempty coupling regime and the actual pair witness force strict separation; this gives attained states, compactness of every near-minimizer, and complete common/killed finite spectral spaces through actual whole-rho exhaustion. The primary comparisons and ordinary calculations do not assert global mathematical priority or exhaustive literature absence.
+
+The existing [same-source three-axis interface, §§10.1–10.6](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md) already supplies a conditional common $\Pi$ under its full-vector, spanning, common-zero, quadratic-distance/PSD-Gram, at least two independent directions, alternating-bilinear/exact-area/Jacobi, actual orthonormal-probe and finite binary-calibration conditions, with every actual linear generator preserving its hidden kernel. Its seven-value native direction image and its five-dimensional direction-plus-count task retain their scopes. It is a genuine conditional task bridge; it is not an isometry or operator transport from this unit occurrence graph to a Euclidean displacement region. [Local Choice, §§9–10](https://github.com/the-omega-institute/trureturing/blob/f41910858bd5ad5592fae12340cfb62c79a8c673/docs/develop/theory/FIB_ATOM_LOCAL_CHOICE_GEOMETRY.md) adds a separately supplied same-label probe-and-guard contract and preserves its missing joint-statistic and single-archive acquisition boundaries. Neither source supplies or contradicts the configuration localization of this chapter. The Robin dyadic resolvent concerns arithmetic weighted recursion; the KBonacci mixed-tail root-zero cut prices concern their own immutable INITIAL reader and complete-block fees. Their inverses and recursive costs are not identified with occurrence transport by shared notation.
+
+The [finite acquisition correspondence, Atomic Generation Acquisition §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md#12-不可逆根后的被动切口阶梯容量与原生关系呈现) retains its paid positive-root archive, exact nonadvancing cut port, finite stopping/decoding, protected written records after refusal/closure, aligned actual generation, trusted markers, no unrecorded source change, actual write/protect/retain/query rights, closed strong ports and inclusion of every reply-affecting retained source influence in the service price. It is not unknown-state acquisition or preparation of a spectral state. The ideal known occupation preparations in (63.30)–(63.35) consume §62's paid premise; they do not grant ground-state preparation, unknown-source copies, reset or independent sampling.
+
+All infinite quantifiers describe common mathematical operators and families of separately commissioned finite prefixes. A fixed-cap execution can refuse, a stopped source has no later event, and there is no Read after an infinite prefix. The original $\mathcal D_2$ source retains independent arbitrary unbounded $a$, including zero, untagged radius-$7/25$ $b$, destructive actions, joint adversarial/history-dependent errors, source-independent initialization and its actual INITIAL/Read/Stop task. The positive commissioned kinetic parameter in (63.1) is not that actor variable. No extra geometric/quantum controls or physical clock are inferred.
+
+The constants, core size, binding criterion and spectral windows are for each fixed finite $N$. They give neither uniform population/refinement/thermodynamic/continuum control nor a vanishing moving-boundary Green norm, and they do not overturn §62.5's growing-population killed-renewal defect. Full subthreshold eigenspaces are preserved only in certified windows below $B_N$ with common-gap endpoints; (63.29) preserves near-groundspace distance under the supplied ideal law, not global all-energy dynamics or full-phase rho intertwining. Authentic spectral acquisition, operation-/metric-/field-/kinetic-preserving physical transport, calibrated time and matched maintenance/precision/storage prices remain unproved. Local direction dimension, ordered syntax, graph growth/degree, Hilbert dimension and physical cost stay distinct. These ordinary conditional results advance stable native structure on the commissioned carrier; they do not settle Euclidean spatial dimension three or the whole why-three objective.
+
+## 63.99 追加锚（本行以下为增补区）
+
+## 64. Same-source Green channels and the retained one/two-occupation response
+
+**Definition 64.1 (the joint source witness and the two pair laws).** Use the actual INITIAL
+$t=\langle\beta,\alpha\rangle$ and the fixed-cap history of Proposition55.6:
+\[
+\operatorname{Read}[BA];\quad \rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad \rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad \operatorname{Stop}.
+\]
+The leaf counts are $2,3,5$; the second candidate is refused and supplies no candidate
+Read. The accepted current domain is, in the ordered basis
+\[
+D=(o,L,R,LL,LR),
+\]
+the same five-site domain of §§55,60,62, with the same source version, labels, reference,
+clock and retained original records. In particular, no source state, event, or later Read is
+created by the calculations below.
+
+The ten unordered H3 pair targets are retained together. The common field law of
+(62.3) gives
+\[
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&LR&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G^{\rm c}(p,q)&
+1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16
+\end{array}
+\]
+and direct inversion of the actual $L_D$ gives
+\[
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&LR&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G^{\rm k}_D(p,q)&
+9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78 .
+\end{array}
+\]
+Here $G^{\rm c}(p,q)=\langle e_p,L^{-1}e_q\rangle$ is the one common field restricted
+to $D$, whereas $G_D^{\rm k}(p,q)=\langle e_p,L_D^{-1}e_q\rangle$ is the separately
+solved killed pair law. Both use the same $\phi(p)=2^{-|p|}$ in the one-body term. The
+common field is not replaced by $\phi_D^0$, and neither pair table changes the original
+source or its history.
+
+**Lemma 64.2 (a three-channel one-calibration metric floor).** Let $x,y,o$ be three
+distinct points in an injectively metrized space, and suppose one positive calibration
+$\kappa$ is used for all three pair readings,
+\[
+\widehat G(p,q)=\frac{\kappa}{d(\iota p,\iota q)}.
+\]
+If $w,u,v>0$, $w=G(o,o)$, $G(o,x)=wu$, $G(o,y)=wv$, and $G(x,y)=wuv$ with
+$u+v<1$, then the maximum relative error on these three readings obeys
+\[
+\max_{pq\in\{ox,oy,xy\}}
+\frac{|\widehat G(p,q)-G(p,q)|}{G(p,q)}
+\ \ge\ \frac{1-u-v}{1+u+v}.                                      \tag{64.1}
+\]
+If the error is measured in the Green units themselves, then
+\[
+\max_{pq}|\widehat G(p,q)-G(p,q)|
+\ \ge\delta(A,B,C),\qquad
+\delta(A,B,C)=\frac{2(A+B-C)-\sqrt{4(A+B-C)^2-12(AB-C(A+B))}}{6},
+\tag{64.2}
+\]
+where $A=G(o,x)$, $B=G(o,y)$, and $C=G(x,y)$.
+
+Proof. Put $r_{pq}=\kappa/\widehat G(p,q)$. The metric triangle inequality is
+$r_{xy}\le r_{ox}+r_{oy}$. For $\epsilon\ge1$ the claimed lower bound is immediate. Under a relative error $0\le\epsilon<1$, the most favorable
+choice for this inequality has $\widehat G(x,y)=(1+\epsilon)wuv$ and
+$\widehat G(o,x),\widehat G(o,y)$ equal to $(1-\epsilon)wu,(1-\epsilon)wv$.
+Therefore
+\[
+\frac1{(1+\epsilon)uv}\le\frac1{(1-\epsilon)u}
++\frac1{(1-\epsilon)v},
+\]
+which is equivalent to (64.1). For an additive error at most $\delta$, the favorable
+endpoints are $x_1=A-\delta$, $x_2=B-\delta$, $x_3=C+\delta$; positivity holds at the
+smaller root below. The reciprocal triangle inequality is
+$x_3\ge x_1x_2/(x_1+x_2)$. Equality gives
+\[
+3\delta^2-2(A+B-C)\delta+\bigl(AB-C(A+B)\bigr)=0,
+\]
+and the smaller root is (64.2). No choice of the common $\kappa$ or of the three
+distances can evade this argument. $\square$
+
+**Theorem 64.3 (the actual H3 joint defect).** For the common table choose
+$(x,y)=(LL,R)$. Then $(w,u,v)=(1,1/4,1/2)$, and (64.1) gives
+\[
+\epsilon_{\rm c}\ge\frac17,\qquad
+\delta_{\rm c}\ge\frac{5-\sqrt{19}}{24}.
+\tag{64.3}
+\]
+For the killed table the same source triple has
+$(w,u,v)=(21/26,1/7,1/3)$, and therefore
+\[
+\epsilon_{\rm k}\ge\frac{11}{31},\qquad
+\delta_{\rm k}\ge\frac{9-4\sqrt3}{78}.
+\tag{64.4}
+\]
+The three entries $(o,LL),(o,R),(LL,R)$ are one joint defect: they are not three
+independently fitted sector marginals. The other seven entries in Definition64.1 remain
+part of the same source-qualified target.
+
+Proof. In the common case $(A,B,C)=(1/4,1/2,1/8)$, and in the killed case
+$(A,B,C)=(3/26,7/26,1/26)$. Substitution in (64.2) gives (64.3) and (64.4);
+the relative forms follow from (64.1). The source, calibration and pair law are held
+fixed across all three channels. $\square$
+
+**Theorem 64.4 (the defect survives a consistent one/two-occupation operator law).**
+Let $h_D=aL_D-gM_{\phi|D}$ and let $P_{D,2}$ be the hard-core symmetric projection
+inside the two-fold symmetric tensor of $\ell^2(D)$. For one common calibration
+$\widehat G$ on all ten pairs, define
+\[
+\widehat H_{D,1}=B,\qquad
+\widehat H_{D,2}=P_{D,2}\,d\Gamma(B)\,P_{D,2}
+-\nu\sum_{\{p,q\}}\widehat G(p,q)n_pn_q,
+\]
+where $B$ is any Hermitian one-body law and $\nu\ge0$ is the same coefficient used
+in the source operator. For either $\diamond\in\{\mathrm c,\mathrm k\}$, put
+\[
+H^\diamond_{D,1}=h_D,\qquad
+H^\diamond_{D,2}=P_{D,2}\,d\Gamma(h_D)\,P_{D,2}
+-\nu\sum_{\{p,q\}}G_D^\diamond(p,q)n_pn_q .
+\]
+The compression keeps the diagonal $\sum_{p\in S}d_p$ and hence every inherited
+collision and exterior-killing contribution of (62.2). With
+\[
+E_1=\|B-h_D\|,\qquad E_2^\diamond=
+\|\widehat H_{D,2}-H^\diamond_{D,2}\|,
+\]
+one has
+\[
+E_2^\diamond+2E_1\ \ge\
+\nu\max_{\{p,q\}\subset D}|\widehat G(p,q)-G_D^\diamond(p,q)|
+\ \ge\ \nu\delta_\diamond .                              \tag{64.5}
+\]
+Consequently a same-$L_D$ installation has $E_1=0$ and $E_2^\diamond\ge\nu\delta_\diamond$
+for both pair prescriptions. At $N=1$ the pair multiplier vanishes, so the two
+prescriptions have exactly the same one-occupation operator $h_D$.
+
+Proof. On a pair basis vector $e_{\{p,q\}}$, the diagonal pair difference is
+$-\nu(\widehat G(p,q)-G_D^\diamond(p,q))$. The norm of the hard-core compression of
+$d\Gamma(B-h_D)$ is at most $2E_1$. Taking the largest diagonal entry and applying the
+triangle inequality gives the first inequality. The second is Theorem64.3. This argument
+uses the full ten-pair diagonal and the same $B,\widehat G$ in both sectors; fitting a
+different one-body or pair calibration in the two sectors would not be the stated
+operator law. $\square$
+
+**Definition 64.5 (one producer measure and its actual collision domain).**
+For every authentic nonempty finite $D$, let $X_D$ have one unit cable for each
+inherited seam and two distinct unit grounded stubs at each current leaf. The
+outer stub ends have zero trace and no atomic mass. Every actual port has atomic
+mass one; every open cable has the same mass density $0<\delta\le1$. Thus
+\[
+\mu_\delta=\sum_{p\in D}\delta_p+\delta\sum_{e\in\mathcal E_D}dx_e,
+\qquad \mathcal K_{D,1}=L^2(X_D,\mu_\delta).
+\tag{64.6}
+\]
+Here $\delta_p$ is a Dirac measure, distinct from the cable density $\delta$.
+Stub incidence plus actual seam incidence is exactly $d_p$, including $d_o=2$.
+Neither degrees nor source operators are recalibrated with $\delta$.
+If $d=|D|$, the full binary source has $d-1$ internal seams and $d+1$
+grounded stubs, hence $2d$ unit cables. The retained one-position measure has
+total mass $d+2d\delta$. Before exchange restriction, the two-position account
+has $d(d-1)$ atomic coordinates, $4d^2$ atom/cable slices and $4d^2$
+cable/cable cells, with norm weights $1,\delta,\delta^2$. Each of the $2d$
+same-cable cells is dissected, not removed. Thus its total measure is
+$d(d-1)+4d^2\delta+4d^2\delta^2$. These are storage measures and stratum
+counts, not physical masses, finite mode counts or a price formula; every
+interval and cell retains its entire infinite-dimensional function space.
+
+For two identical particles take the symmetric part of
+$L^2((X_D\times X_D)\setminus\Delta,\mu_\delta\otimes\mu_\delta)$, where
+$\Delta=\{(x,x):x\in X_D\}$ is the actual same-position set. In particular the
+positive-mass atomic states $(p,p)$ are absent. Keep all atom/cable and cable/cable
+strata. A same-cable square is dissected into $x<y$ and $x>y$; both collision
+traces are zero. Different-cable rectangles are retained, including cables incident
+at the same port. Write this Hilbert space as $\mathcal K_{D,2}^{\rm hc}$.
+It is a genuine two-position space on $X_D$, with exchange symmetry and no ordering
+sign. It is not a graph whose vertices are occupation labels.
+
+The form domain $\mathcal Q_{D,1}$ consists of cable $H^1$ functions with endpoint
+traces equal to the corresponding atomic port values, and zero grounded traces.
+The domain $\mathcal Q_{D,2}$ consists of symmetric, piecewise $H^1$ functions on
+all rectangles and dissected triangles, and $H^1$ functions on all atom/cable
+slices, with the following trace equalities. A rectangle's boundary at a port
+is the corresponding atom/cable slice; that slice's endpoint is the corresponding
+atomic pair value. Set the missing atomic value $(p,p)$ to zero in these endpoint
+conditions. Grounded ends give zero traces in either coordinate. Both traces on
+each same-cable diagonal are zero. These requirements also cover collision at a
+shared vertex approached along different incident cables: the incident slices end
+at the same zero atomic collision value. No pointwise trace of an arbitrary
+rectangle $H^1$ function at its corner is assumed.
+
+Let $k_{\delta,1}(F)=\sum_e\int|F'_e|^2$. For $N=2$, using ordered coordinates
+before restriction to the symmetric space, put
+\[
+\begin{split}
+k_{\delta,2}(F)={}&
+\sum_{e\in\mathcal E_D,\ q\in D}\int|\partial_xF(e,x;q)|^2dx
++\sum_{p\in D,\ e\in\mathcal E_D}\int|\partial_yF(p;e,y)|^2dy\\
+&+\delta\sum_{e,f\in\mathcal E_D}\int_{e\times f}
+ (|\partial_xF|^2+|\partial_yF|^2)dxdy .
+\end{split}                                                    \tag{64.7}
+\]
+For $e=f$ the last integral is over both triangles. The corresponding norm has
+weights $1,\delta,\delta^2$ on atomic pairs, slices and cells respectively. Formula
+(64.7) is the sum of the same one-coordinate cable derivative forms integrated
+against the other coordinate's measure. Hard-core conditions change its domain,
+not its kinetic coefficient. This conditional producer choice replaces the
+unrestricted $\operatorname{Sym}^2d\Gamma(T)$ domain; it is not a new native control.
+
+Let $A_{\delta,D,N}$ be the operator associated with $a k_{\delta,N}$ on this domain.
+Define $\phi_A$ to equal $\phi(p)$ at port $p$ and zero on open cables. Use the bounded
+real multiplication operators
+\[
+\begin{aligned}
+U^\diamond_{D,1}(x)&=-g\phi_A(x),\\
+U^\diamond_{D,2}(x,y)&=-g(\phi_A(x)+\phi_A(y))
+-\nu\mathbf1_{x=p,y=q\in D,\ p\ne q}G_D^\diamond(p,q),\\
+\mathcal T^\diamond_{\delta,D,N}&=A_{\delta,D,N}+U^\diamond_{D,N}.
+\end{aligned}                                                    \tag{64.8}
+\]
+The pair multiplier has the same value on $(p,q)$ and $(q,p)$ and is zero on other
+strata. The one-body potential is additive even on mixed strata. All ten actual
+coefficients of Definition64.1 are used, including $G^{\rm c}(LL,LR)=3/16$.
+This explicitly declared atomic interaction is a mathematical supplier choice;
+a physical field-mediated force or its switching mechanism is not inferred.
+
+**Lemma 64.5a (closed forms and invariant literal hard-core statistics).**
+The forms in (64.7) are densely defined, nonnegative and closed. Operators (64.8)
+are self-adjoint and semibounded. For $N=2$ their full unitary evolution preserves
+$\mathcal K_{D,2}^{\rm hc}$ and its form domain $\mathcal Q_{D,2}$. Thus any
+admissible finite-energy input has zero atomic double occupation and zero
+same-cable collision trace throughout evolution, for every finite clock value.
+
+Proof. For fixed $\delta>0$, the sum of the weighted norm and derivative norm is
+an equivalent direct-sum $H^1$ norm on the finitely many intervals, rectangles
+and triangles, with their atomic coordinates. Endpoint, boundary and diagonal
+trace maps are continuous into their respective finite-dimensional or $L^2$
+trace spaces. All stipulated equalities therefore define a closed subspace.
+For density, first approximate a cell function by a smooth function supported
+away from every boundary, including the diagonal. For prescribed atomic data,
+use linear endpoint bumps of width $h<1/2$ on each incident cable. Lift a pair
+value by the products of its two endpoint bumps. On a same-cable square use
+$u(p,q)[\theta_p(x)\theta_q(y)+\theta_q(x)\theta_p(y)]$; the two endpoint supports
+are disjoint, so its collision trace is zero. Slice traces match these products,
+with zero at collision and ground corners. Their additional slice and cell
+masses tend to zero as $h\to0$, while each positive-width function has finite
+energy. To approximate a slice independently, take its desired function compactly
+supported away from its endpoints, then extend it into each incident cell by an
+endpoint bump in the other coordinate. Choose the bump width smaller than the
+slice's distance from its endpoints; this also avoids the same-cable diagonal.
+The additional cell mass tends to zero. There are finitely many strata, so these
+three constructions approximate arbitrary Hilbert data. Exchange averaging
+preserves the conditions and proves density in the symmetric space. Bounded real $U$ is a bounded self-adjoint perturbation of
+the represented operator, with unchanged form domain and lower bound
+$-M_N$, where
+\[
+M_N=Ng+\binom N2\nu/\lambda,\qquad N=1,2.
+\]
+Here $G_D^\diamond(p,q)\le\lambda^{-1}$ is the supplied same-source bound (62.4).
+The positive form of $\mathcal T+M_N+1$ has domain $\mathcal Q_{D,N}$ and obeys
+\[
+a k_{\delta,N}(F)+\|F\|^2
+\le \| (\mathcal T+M_N+1)^{1/2}F\|^2
+\le a k_{\delta,N}(F)+(2M_N+1)\|F\|^2.
+\]
+Its spectral calculus commutes with the full unitary evolution and preserves
+this square-root norm, proving form-domain invariance even though multiplication
+by the atomic potential need not itself preserve the trace equalities.
+Atomic collision coordinates
+are absent in that space and continuum collision traces vanish in that domain.
+This is invariance of the actual producer state, without deleting any evolved
+output or applying a clean-state projection. $\square$
+
+**Lemma 64.5b (the source diagonal, a uniform fast-state bound and a trial lift).**
+Let $R_N$ restrict a producer vector to its atomic distinct-port coordinates,
+identified with $\mathscr H_{D,N}$; let $J_N=R_N^*$ be the atomic injection. For
+$N=2$ the ordered atomic values are
+$u(p,q)=f(\{p,q\})/\sqrt2$ for $p\ne q$, and $u(p,p)=0$.
+Then $\sum_{p,q}|u(p,q)|^2=\|f\|^2$. Write $K_{D,1}=L_D$ and take $K_{D,2}$
+literally from (62.2). For every form vector,
+\[
+k_{\delta,N}(F)\ge\langle R_NF,K_{D,N}R_NF\rangle,
+\qquad
+R_NZ=0\ \Longrightarrow\ \|Z\|^2\le9\delta k_{\delta,N}(Z).
+\tag{64.9}
+\]
+There is a linear symmetric form-domain lift $I_N$ with $R_NI_N=I$ such that
+\[
+\begin{aligned}
+k_{\delta,1}(I_1f)&=\langle f,L_Df\rangle,
+&\|I_1f-J_1f\|^2&\le\tfrac32\delta\|f\|^2,\\
+0\le k_{\delta,2}(I_2f)-\langle f,K_{D,2}f\rangle&\le18\delta\|f\|^2,
+&\|I_2f-J_2f\|^2&\le(3\delta+\tfrac94\delta^2)\|f\|^2.
+\end{aligned}                                                    \tag{64.10}
+\]
+All constants are independent of the finite source, cap, boundary and installed $D$.
+
+Proof. An interval with endpoint values $v,w$ has derivative energy at least
+$|v-w|^2$. Apply this to every slice, using zero at grounded ends and at an
+occupied endpoint. The resulting sum is exactly the symmetric compression of
+$L_D\otimes I+I\otimes L_D$: the hopping coefficient is $-1$ on every allowed
+move, while the diagonal is $d_p+d_q$. A blocked hop has a zero collision
+endpoint and contributes its killing energy; it does not disappear with the hop.
+Grounded stubs similarly retain every exterior contribution. This proves the
+first inequality, including the normalization factors. For $N=1$ the same
+argument gives the original $L_D$.
+
+For $R_NZ=0$, each slice has zero endpoints, so
+$\int|Z|^2\le\int|Z'|^2$ by the fundamental theorem of calculus and
+Cauchy--Schwarz. A same-cable function with zero traces on both diagonals glues
+to an $H^1$ function on the square; no derivative delta mass is introduced.
+On any square, choose its first cable's endpoint $v_e$, and use
+\[
+\int_{e\times f}|Z|^2\le
+2\int_f|Z(v_e,y)|^2dy+2\int_{e\times f}|\partial_x Z|^2dxdy.
+\]
+The boundary term is zero if $v_e$ is grounded. Otherwise a port is chosen at
+most three times, since its total incidence is at most three. Summing with mass
+$\delta^2$, and adding all slice masses $\delta$, bounds the norm by
+$(\delta+6\delta^2)$ times the slice derivative energy plus $2\delta$ times the
+cell part of (64.7). This is at most $9\delta k_{\delta,2}(Z)$ for $\delta\le1$.
+The one-particle bound is smaller. This proof counts every slice and cell, rather
+than assuming that the continuum modes have been removed.
+
+For the trial lift, interpolate every one-particle cable linearly. For two
+particles interpolate each atom/cable slice linearly from its atomic endpoints.
+On distinct-cable rectangles use bilinear interpolation of the four atomic corner
+values, treating ground and collision corners as zero. On a same-cable square
+with distinct port endpoints $p,q$, use
+\[
+(I_2f)_{ee}(x,y)=u(p,q)|x-y| .
+\]
+On a stub's same-cable square this is zero. The slice boundary values match,
+both collision traces vanish, and the lift is symmetric. It has the exact source
+slice energy just proved. For a rectangle with corners $v_{ij}$, convexity gives
+$\int|I_2f|^2\le\tfrac14\sum_{ij}|v_{ij}|^2$ and
+$\int|\nabla I_2f|^2\le2\sum_{ij}|v_{ij}|^2$. On a same-cable square the respective
+integrals are $|u(p,q)|^2/6$ and $2|u(p,q)|^2$, obeying the same upper bounds.
+A given ordered atomic corner occurs at most $d_pd_q\le9$ times. Each coordinate's
+slice norm is at most $\tfrac12\sum_{p,q}d_p|u(p,q)|^2\le\tfrac32\|f\|^2$.
+Summing these exact integrals proves both two-particle bounds. For one particle
+integration gives $I_1^*I_1=I+\delta(D_D/3+A_D/6)$, whose continuum Gram norm is
+at most $3/2$. $\square$
+
+**Theorem 64.6 (admissible harmonic calibration and the missing operator relation).**
+For each $N=1,2$ and $f\in\mathscr H_{D,N}$, let $E_Nf$ minimize $k_{\delta,N}$
+over all form vectors with $R_NF=f$. Put
+\[
+\begin{aligned}
+\langle f,B_Nh\rangle&=k_{\delta,N}(E_Nf,E_Nh),\\
+F_N&=E_N^*E_N=I+(E_N-J_N)^*(E_N-J_N),\\
+S_N&=F_N^{-1/2},\qquad W_N=E_NS_N,\\
+\beta_1&=\sqrt{3\delta/2},\qquad
+\beta_2=\sqrt{3\delta+9\delta^2/4}+9\sqrt2\,\delta.
+\end{aligned}                                                    \tag{64.11}
+\]
+These are supplied preparation/identification maps defined by the same measure
+and form rule, with no fit of a separate kinetic scale, potential, pair coefficient
+or clock in either sector. They are independent of $g,\nu$ and the pair choice.
+They satisfy
+\[
+\begin{gathered}
+R_NE_N=I,\qquad W_N^*W_N=I,\qquad
+\|E_N-J_N\|\le\beta_N,\\
+B_1=L_D,\qquad 0\le B_2-K_{D,2}\le18\delta I,\qquad
+A_{\delta,D,N}E_N=J_NaB_N.
+\end{gathered}
+\]
+In particular $W_Nf$ lies in the actual operator domain of (64.8), has full norm
+$\|f\|$, and is an admissible finite-energy hard-core preparation. Its calibration
+mixes distinct-port data only; it cannot produce an atomic collision. Its kinetic
+preparation energy has the uniform bound
+\[
+a k_{\delta,N}(W_Nf)\le a(6N+18\delta\mathbf1_{N=2})\|f\|^2,
+\]
+since $\|K_{D,N}\|\le6N$ and $\|S_N\|\le1$.
+
+Proof. On the closed form subspace $Z_N=\ker R_N$, (64.9) makes $k$ an equivalent
+complete form norm. Solve
+$k(z,v)=-k(I_Nf,v)$ for $v\in Z_N$ by the Hilbert-space representation theorem,
+and set $E_Nf=I_Nf+z$. This gives existence, uniqueness, linearity and
+$k(E_Nf,Z_N)=0$, as well as the minimum. Exchange symmetry is retained in this
+construction. Comparing the minimum with the first inequality in (64.9) and with
+(64.10) proves the two matrix bounds for $B_N$. In particular
+\[
+k_{\delta,2}(E_2f-I_2f)
+=k_{\delta,2}(I_2f)-k_{\delta,2}(E_2f)\le18\delta\|f\|^2.
+\]
+This difference has zero atomic values. The fast-state bound (64.9) therefore gives
+$\|E_2f-I_2f\|\le9\sqrt2\,\delta\|f\|$. Combine it with the trial norm in (64.10)
+to obtain $\beta_2$. For one particle the linear lift already annihilates $Z_1$
+in the kinetic form, so $E_1=I_1$ and $\beta_1$ follows. Orthogonality of atomic and
+continuum strata gives the formula for $F_N$; thus $S_N$ exists and $W_N$ is an
+isometry into the whole retained space.
+
+Every form test $v$ decomposes as $E_NR_Nv+(v-E_NR_Nv)$, with its second term in
+$Z_N$. Hence
+\[
+a k_{\delta,N}(E_Nf,v)=\langle aB_Nf,R_Nv\rangle
+=\langle J_NaB_Nf,v\rangle .
+\]
+The defining operator criterion for a closed form proves the displayed operator
+identity and puts $E_Nf$, and therefore $W_Nf$, in $\operatorname{Dom}(A)$.
+The bounded potential does not change that operator domain. This is the needed
+input/domain/operator relation, proved on the untruncated continuum. Merely
+imposing a named barrier or interpolating a collision-free trial would not prove
+this relation: the trial $I_2$ need not itself satisfy the operator criterion.
+$\square$
+
+**Theorem 64.7 (homogeneous full retained-state finite-horizon correspondence).**
+For every authentic finite installed $D$, both prescriptions, $N=1,2$, and every
+$f\in\mathscr H_{D,N}$, define
+\[
+\begin{aligned}
+C_N&=6aN+M_N,\qquad s_N=1-(1+\beta_N^2)^{-1/2},\\
+r_N&=18a\delta\mathbf1_{N=2}+2C_Ns_N+\beta_N(C_N+M_N).
+\end{aligned}
+\]
+For every declared $T<\infty$ and every $|\tau|\le T$,
+\[
+\left\|e^{-i\tau\mathcal T^\diamond_{\delta,D,N}}W_Nf
+-W_Ne^{-i\tau H^\diamond_{D,N}}f\right\|
+\le |\tau|r_N\|f\|\le Tr_N\|f\| .                    \tag{64.12}
+\]
+This norm includes every atomic, mixed and continuum component and every phase.
+An initial admissible component $z\in\mathcal Q_{D,N}$ with $\|z\|\le\eta$ adds
+at most $\eta$, without any orthogonality assumption or reset. For fixed
+$a,g,\nu,T$ the bound tends to zero with $\delta$, uniformly over all finite
+installed $D$ and both fixed populations. It is not uniform over unbounded
+population or unbounded horizon. Decreasing $\delta$ changes storage mass at
+fixed unit seam lengths; no mesh, thermodynamic or physical-mass limit is supplied.
+
+Proof. Write $V_N=H^\diamond_{D,N}-aK_{D,N}$. The multiplier in (64.8) satisfies
+$U J_N=J_NV_N$, $\|U\|,\|V_N\|\le M_N$, and
+$\|H^\diamond_{D,N}\|\le C_N$. Set $Q_N=E_N-J_N$ and
+$D_N=a(B_N-K_{D,N})$. The exact operator identity of Theorem64.6 gives
+\[
+\mathcal T W_N-W_NH
+=J_N[H,S_N]+J_ND_NS_N+UQ_NS_N-Q_NS_NH .
+\]
+Since $\|S_N\|\le1$, $\|S_N-I\|\le s_N$ and
+$\|D_N\|\le18a\delta\mathbf1_{N=2}$, its norm is at most $r_N$.
+For the entire finite target space $W_Nf\in\operatorname{Dom}(\mathcal T)$, so
+integrating the exact derivative of
+$e^{-i(\tau-s)\mathcal T}W_Ne^{-isH}f$ is justified. Unitarity gives (64.12),
+including its factor $\|f\|$. An initial $z$ contributes exactly its preserved
+norm bound. The constants use only total incidence at most three and the common
+Green bound, not the number or shape of sites. $\square$
+
+There is one density choice for the whole joint approximation, without a
+sector-specific fit. For $0<\delta\le1$, $\beta_N\le16\sqrt\delta$ and
+$s_N\le\beta_N^2/2\le128\delta$. Put
+\[
+M=2g+\nu/\lambda,\qquad C=12a+M,\qquad
+R=18a+256C+16(C+M).
+\]
+Then $r_N\le R\sqrt\delta$ for both $N=1,2$ and both pair prescriptions,
+on every authentic finite $D$. For a declared $T>0$ and absolute unit-input
+tolerance $\varepsilon>0$, any single
+$0<\delta\le\min\{1,(\varepsilon/(TR))^2\}$ gives error at most
+$\varepsilon\|f\|$ throughout the horizon. At $T=0$ every declared density
+works. This is a common mathematical storage/preparation choice, not a native
+density control or a finite-price preparation procedure.
+
+For a singleton $D=\{o\}$ both grounded stubs remain and $B_1=[2]$.
+The target $\mathscr H_{D,2}$ is the zero space, so $E_2,W_2$ are its unique zero
+maps and (64.12) holds for its zero input. The full two-position cable space still
+exists and all its modes are retained; an auxiliary initial state there is covered
+by its $\eta$ budget. No unit two-port preparation is commissioned when $|D|<2$.
+This treats the degenerate finite domain without excluding that source. Zero
+$\nu$, zero comparison time, identical-domain alpha-to-beta versions and every
+finite source boundary are included. The strictly positive commissioned $a$ is
+independent of the original actor's arbitrary unbounded parameter, including zero.
+
+A supplied zero-generator reference branch may be adjoined by direct sum, using
+$0\oplus\mathcal T$, $0\oplus H$ and $I\oplus W_N$; tensoring supplied retained
+registers with identity gives the same bound. This keeps relative reference phase
+and the same comparison clock, with no phase quotient. Unknown joint reference
+preparation remains a separate permission. The joint object retains all original
+classical records. Unused address-bank modes and the $c,u,v$ and supplied clock/
+reference registers remain explicit full auxiliary factors with their stipulated
+identity holds; (64.12) also holds for target inputs entangled with those factors.
+The active target is transported through $W_N$, without preparing a second copy.
+Their construction,
+preparation, storage, hold and any error budgets are additional resources; (64.12)
+does not supply them or replace §62's actual digital circuit by a cable device.
+
+**Proposition 64.8 (source discriminators and the retained mathematical boundary).**
+The finite form account is source qualified. Its one-coordinate lift gives exactly
+$L_D$, so §55's hidden vector and §60's mirrored-source operator distinction
+remain full-vector target identities. Its slice form is the literal symmetric
+$K_{D,2}$, including the six-move sign and trace discriminator (62.34); no
+fermionic or determinantal replacement is made. Either full pair multiplier is
+$V_N$ on the same atomic data. A shared inverse-distance replacement is therefore
+still subject to (64.5), independently of the vanishing cable-density error.
+
+The unrestricted symmetric generator fails on the same adjacent input:
+\[
+(I-P_{D,2})d\Gamma(h_D)e_{\{o,L\}}
+=-\sqrt2a(e_{o,o}+e_{L,L}),\qquad\text{norm }2a.
+\]
+Those positive-mass output states are absent in the producer domain of Definition64.5,
+and the admitted $W_2e_{\{o,L\}}$ has zero collision traces at preparation and
+throughout its actual evolution by Lemma64.5a. In particular for the actual H3
+source, $a=g=1$, $\nu=0$, $\delta=10^{-8}$, $T=10^{-2}$, the elementary bounds
+$\beta_2<1/5000$, $s_2\le\beta_2^2/2$ give
+\[
+Tr_2<\frac1{100}
+ \left(\frac{18}{10^8}+\frac{14}{5000^2}+\frac{16}{5000}\right)
+<\frac1{30000}.
+\]
+For input norm 100 this bound is multiplied by 100. This tests the identical
+finite-clock source counterexample against the repaired construction, in its
+whole retained norm. The bound rests on the analytic operator proof, not a
+finite cable-mode simulation. Atomic double occupation is exactly zero, rather
+than a discarded component of this error budget.
+
+For an already commissioned target contraction $C$, its mathematical transport
+is $CW_N^*$ on the whole producer space. Its norm is at most one and
+\[
+\|CW_N^*e^{-i\tau\mathcal T}W_Nf-Ce^{-i\tau H}f\|
+\le |\tau|r_N\|f\|,
+\]
+by $W_N^*W_N=I$ and (64.12). An already commissioned target effect
+$0\le F\le I$ transports to $W_NFW_N^*$; for unit inputs its probability
+error is at most $2|\tau|r_N$. Thus the hidden-vector, mirrored-source and
+relative-phase target tests of §§55,58,60 and the literal-statistics test of §62
+can be checked on their supplied known inputs during an actual installed idle
+interval. The full-state theorem still accounts for all components outside the
+calibrated range. These target maps neither add an original numerical Read nor
+supply physical measurement, acquisition, or a transfer between cable spaces.
+
+The common pair field is the supplied static restriction of $L^{-1}$.
+Both installed amplitude targets use $L_D$ and the same common $\phi$.
+No common exterior amplitude-memory target is inferred from the common static
+pair table. A separately commissioned common exterior dynamic response would
+need its full retained exterior state and further calibration.
+
+The mathematical producer must supply the forms, all atomic and cable masses,
+the correlated harmonic preparations $W_Nf$, and the full retained evolution.
+Preparing $W_2f$ is not obtained by tensoring independently prepared $W_1$ modes.
+The variational construction proves an admissible state and its correspondence;
+it is not a finite-price native preparation algorithm or acquisition of unknown
+coefficients. The domain conditions and atomic interaction are conditional
+realization choices within this contract, with no claim that native or physical
+rights implement them. Replacing grounded stubs at a renewal changes these
+continuum domains: (64.12) is a uniform theorem on each installed idle interval,
+not an unproved full-state switch between cable spaces. A physical switching,
+renewal transfer or nonidentity hold needs its own supplied law and error/price.
+
+Unpaid obligations remain: an operation- and metric-preserving displacement map,
+isotropy and a physical three-dimensional local realization; field-mediated force
+and its actual implementation; switching, renewal, acquisition and unknown-state
+ingress; same-reference preparation and calibrated physical time; finite precision,
+all auxiliary modes/masses, storage, retention, production, maintenance and total
+price. The original $\mathcal D_2$ independent arbitrary unbounded $a$ including
+zero, untagged radius-$7/25$ $b$, destructive actions, joint adversarial/history-dependent
+errors, source-independent initialization and actual INITIAL/Read/refusal/Stop
+remain unchanged. The conditional $\Pi$ and paid promised-family acquisition
+retain all their existing hypotheses and rights. No source copy, reset,
+independent resampling, exact limit Read or new native geometric/quantum control
+is inferred. Nothing here selects spatial dimension three, supplies a physical
+realization, validates a kernel or completes the broader goal.
+
+**Definition 64.9 (exact suppliers and ordinary-proof scope).**
+The exact source suppliers are §§55.1–55.6 for the actual source, $L_D$, common
+field and grounded boundary; §§58,60 for source/record/clock ownership and the
+complete retained target; §§62.1–62.4 for literal symmetric statistics and both
+pair laws; and legacy §52.7 for the distinct Euclidean point-source contract.
+Chapter63's already completed binding/escape/spectral results are inherited;
+none is claimed as another accomplishment here.
+
+Bolte--Kerner, [*Quantum graphs with two-particle contact interactions*,
+arXiv:1207.5648v1, Definition3.1 and Proposition3.2](https://arxiv.org/pdf/1207.5648v1),
+supplies the mature diagonal-Dirichlet hard-core form method on a finite compact
+metric graph with Lebesgue edge-product measure. Its boundary maps $P,L$ are
+bounded and measurable, $P$ is an orthogonal projection, and $L$ is self-adjoint
+on $\ker P$; contact and vertex blocks are separated. Hard-core contact chooses
+$P_{\rm contact}=I$, $L_{\rm contact}=0$. Its delta-type Lipschitz strength is a
+different case. Proposition3.2 supplies closed semibounded forms, not automatic
+$H^2$ operator regularity; that further identification in Proposition3.3 requires
+additional regularity. It supplies neither atomic port masses, the mixed-stratum
+gluing nor this calibrated small-density limit and preparation. Lemmas64.5a–64.5b
+and Theorems64.6–64.7 prove those missing relations directly; no supplier theorem
+is applied outside its conditions. Closed-form representation, Hilbert-space
+orthogonal minimization and unitary Duhamel are classical intermediates. No
+additional Library note is needed.
+
+Equations (64.1)–(64.5) are ordinary metric/finite-matrix deductions with the full
+ten-pair target. Equations (64.6)–(64.12) are a new conditional stratified particle
+form, its admissible joint calibration and whole-state operator estimate.
+Exact finite checks of source coefficients, slice matrices, collision-free trial
+integrals and the stated bounds support the displayed finite identities; they
+cannot replace the continuum closedness, minimization or evolution proofs.
+These are ordinary repo-derived mathematics, without literature-priority,
+fresh Lean/kernel, current CI or physical evidence claims.
+
+## 64.99 追加锚（本行以下为增补区）
+
+## 65. Authentic all-pair obstruction to a homogeneous hyperbolic point-Green law
+
+**Definition 65.1 (separately commissioned sources and their actual history).**
+Keep the free nonempty ordered source algebra of [Continuation Definition1.1](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md),
+the whole substitution (55.1), and the fixed-cap TM30/PR57 contract used in
+Definitions55.1 and60.1. Define a family of original sources by
+
+$$
+T_0=\beta,\qquad T_{h+1}=\langle T_h,T_h\rangle,\qquad
+B_h=\operatorname{Pos}(T_h)=\{p\in\{L,R\}^*:|p|\le h\}.
+\tag{65.1}
+$$
+
+The two subtrees in this mathematical definition have distinct ordered occurrences.
+Each $T_h$ is a separately supplied INITIAL source, as in Proposition62.5;
+(65.1) is not a source-copy operation on a running unknown tree. INITIAL,
+labels, brackets, left/right order, the root and all addressed occurrences belong
+to the full source. The domain $B_h$ is its actual initial domain, rather than a
+ball substituted for an irregular source domain.
+
+For $h\ge3$, fix the public cap $H=2^{h+1}$ before execution. The source-independent
+command word $\operatorname{Read};\rho;\operatorname{Read};\rho;
+\operatorname{Read};\operatorname{Stop}$ has the actual record
+
+$$
+\operatorname{Read}[B^{2^h}];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[(BA)^{2^h}];\quad\rho[\mathrm{reject}];\quad
+\operatorname{Read}[(BA)^{2^h}];\quad\operatorname{Stop}.
+\tag{65.2}
+$$
+
+Here $A=E(\alpha)$ and $B=E(\beta)$ are the original Clifford readings,
+not spatial coordinates or Green coefficients. Their source relations are
+$A^2=1$, $B^2=-1$ and $AB+BA=1$. The initial, first-candidate and
+second-candidate leaf counts are $2^h$, $2^{h+1}$ and $3\cdot2^h$.
+Equality with the cap is accepted. The rejected candidate produces no candidate
+Read, and the following Read is of the unchanged accepted current source.
+The accepted domain is $B_{h+1}$, but its depth-$(h+1)$ child labels are
+$\beta,\alpha$ at each former beta leaf: this successor is not the separately
+commissioned all-beta INITIAL $T_{h+1}$.
+
+In particular $h=3$, $H=16$ gives eight beta leaves and fifteen initial sites.
+Writing $S=BA$, the identity $S^2=S+1$ gives $S^8=13+21S$, whereas $B^8=1$.
+Thus (65.2) becomes
+
+$$
+\operatorname{Read}[1];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[13+21BA];\quad\rho[\mathrm{reject}];\quad
+\operatorname{Read}[13+21BA];\quad\operatorname{Stop}.
+\tag{65.3}
+$$
+
+The installed site counts are $15,31,31$; the refused candidate has twenty-four
+leaves. In TM30's literal field order the immutable original target is
+$q_{16}(T_3)=(1,(0,8),1,13+21BA)$. It is not the boundary of the stopped current
+source. These statements follow from the actual ordered leaf substitution and
+the complete candidate guard, not from the unlabelled domain alone. For example,
+the all-alpha depth-three INITIAL has the same domain $B_3$ and initial Read
+$A^8=1$, but its first two candidates have eight and sixteen leaves and are both
+accepted. Its readings in the same command word are $1,1,13+21BA$, and its
+INITIAL boundary has tag two. An equality of initial geometric domains therefore
+does not authenticate the source or its history.
+
+All original source services and charges remain attached. At $H=16$, PR57's
+source packet has $2H-1=31$ slots and sixty-two ingress bits; the separately
+supplied §62 address bank has $K=2^H-1=65535$ address qubits and $K+4=65539$
+total qubits. These different counts retain their original meanings. A Green
+coefficient is no additional public Read, and the geometric calculations below
+provide no source acquisition, free preparation, cap increase or event after Stop.
+The full original menu also retains each named, actually supplied nonempty
+Left/Right whole-context request, with its complete candidate guard and actual
+response. The witness (65.2) simply chooses whole substitution. An accepted graft
+keeps Definition60.1's distinct occurrence injection and ends its commissioned
+whole-rho comparison; it is not silently treated as same-address renewal.
+
+**Definition 65.2 (the complete response target and the point-field model).**
+Use the unit-conductance, counting-measure rooted occurrence operator $L$ and
+its authentic Dirichlet compression $L_D$ from Definitions55.1–55.2. Retain,
+separately, the common and killed pair prescriptions of (62.2):
+
+$$
+G_D^{\rm c}(p,q)=\langle e_p,L^{-1}e_q\rangle,\qquad
+G_D^{\rm k}(p,q)=\langle e_p,L_D^{-1}e_q\rangle,
+\qquad p,q\in D.
+\tag{65.4}
+$$
+
+Neither prescription changes the common one-body field $\phi(p)=2^{-|p|}$.
+The inherited root diagonal is two, every other diagonal is three, and every
+actual seam has entry $-1$. Missing-child and collision contributions are
+retained as in (62.2). There is no added parent seam at the root.
+
+The representation under consideration assigns finite points $x_p$ in the
+complete homogeneous hyperbolic space $\mathbb H^3_\ell$ of curvature
+$-\ell^{-2}$ and uses
+
+$$
+\widehat G_D(p,q)=
+\frac{\kappa}{\exp(2d_{\mathbb H^3_\ell}(x_p,x_q)/\ell)-1},
+\qquad \kappa>0,\quad\ell>0,\quad p\ne q.
+\tag{65.5}
+$$
+
+There is one calibration $\kappa$ for the entire table. Both $\kappa$ and $\ell$,
+and the whole configuration, may be independently refitted for each source or
+installed version. Pair-specific calibration, alteration of prescribed entries
+or removal of actual pairs is outside (65.5). At $D=B_3$ the target comprises
+all $\binom{15}{2}=105$ unordered off-diagonal pairs, for either choice in (65.4).
+Restrictions to eight or five terminal sites below are necessary witnesses for
+that full target, not new target domains.
+
+The unscreened, decaying, volume-normalized Laplace–Beltrami point fundamental
+solution in this complete homogeneous space is the special case
+$\kappa=(2\pi\ell)^{-1}$. Cohl–Kalnins,
+[arXiv:1201.4406v1, Theorem3.1, its dimension-three evaluation and Proposition4.1](https://arxiv.org/pdf/1201.4406v1),
+supplies this law with precisely those source, operator and exterior conditions.
+Indeed the area of a geodesic sphere is $4\pi\ell^2\sinh^2 r$,
+$r=d/\ell$; unit flux and decay give
+$(4\pi\ell)^{-1}\int_r^\infty\sinh^{-2}u\,du
+=(4\pi\ell)^{-1}(\coth r-1)$, which equals (65.5) at that normalization.
+Allowing arbitrary positive $\kappa$ enlarges the admissible family, so an
+obstruction for (65.5) also obstructs the unit-source subfamily.
+
+Exact positive responses would fix the normalized distances and their candidate
+Lorentz Gram matrix by
+
+$$
+r_{pq}=\frac12\log\left(1+\frac{\kappa}{G_D^\diamond(p,q)}\right),
+\qquad C_{pp}=1,\qquad C_{pq}=\cosh r_{pq}\quad(p\ne q),
+\qquad \diamond\in\{\mathrm c,\mathrm k\}.
+\tag{65.6}
+$$
+
+Thus $\ell$ does not change the normalized dimension test. The diagonal one
+in $C$ is hyperboloid normalization. It is not a fitted value of the finite
+original $G_D^\diamond(p,p)$: a point-field self-response in (65.5) is singular.
+Coincident modeled sites have infinite off-diagonal response and cannot give
+a finite-error fit to the positive finite original coefficients.
+
+**Theorem 65.3 (rooted coefficients on the authentic complete domains).**
+For terminal addresses $|p|=|q|=h\ge1$, $p\ne q$, put
+$k=|p\wedge q|<h$. The two responses are
+
+$$
+g^{\rm c}_{h,k}=\frac{2\cdot4^k+1}{3\cdot4^h},\qquad
+g^{\rm k}_{h,k}=F_k,
+\tag{65.7}
+$$
+
+where, for the killed domain $B_h$,
+
+$$
+A_d=2^{h-d+1}-1\quad(0\le d\le h),\qquad
+F_k=\frac1{2^{h+1}A_0}
++\sum_{r=1}^k\frac1{A_{r-1}A_r}.
+\tag{65.8}
+$$
+
+More generally, for arbitrary $p,q\in B_h$, including the diagonal, with
+$d=|p|$, $e=|q|$ and $k=|p\wedge q|$,
+
+$$
+G_{B_h}^{\rm k}(p,q)=A_dA_eF_k.
+\tag{65.9}
+$$
+
+Each terminal response in (65.7) is strictly positive and strictly increasing
+with $k$. At depth three the complete twenty-eight-pair terminal restriction is
+
+| Common-prefix depth $k$ | Number of unordered terminal pairs | $g^{\rm c}_{3,k}$ | $g^{\rm k}_{3,k}$ |
+| --- | ---: | ---: | ---: |
+| $0$ | $16$ | $1/64$ | $1/240$ |
+| $1$ | $8$ | $3/64$ | $23/1680$ |
+| $2$ | $4$ | $11/64$ | $103/1680$ |
+
+Proof. The common coefficient is the direct terminal restriction of the already
+supplied exact identity (62.3), retaining both its tree-distance term and its
+rooted image term. For the killed coefficient, expose the rooted triangular
+factorization used in (62.19)–(62.21). Set
+
+$$
+s_0=\frac{2^{h+1}}{A_0},\qquad
+s_d=\frac{A_{d-1}}{A_d}\quad(1\le d\le h).
+$$
+
+For real site coordinates $x$, expansion gives
+
+$$
+x^\mathsf TL_{B_h}x
+=s_0x_o^2+\sum_{v\in B_h\setminus\{o\}}
+s_{|v|}\left(x_v-\frac{x_{v^-}}{s_{|v|}}\right)^2.
+\tag{65.10}
+$$
+
+Every cross term is $-2x_vx_{v^-}$. At an internal nonroot site of depth $d$,
+the diagonal is $s_d+2/s_{d+1}=3$, because
+$A_{d-1}=2A_d+1$ and $A_d=2A_{d+1}+1$. At a leaf it is $s_h=3$.
+At the root it is $s_0+2/s_1=2$. For $h=0$ the empty sum leaves
+$s_0=2$ and $L_{B_0}=[2]$, so the same formula includes the singleton without
+an artificial root edge.
+
+Write $x_v=A_{|v|}w_v$. Equation (65.10) then has root coefficient
+$2^{h+1}A_0$ on $w_o^2$ and coefficient $A_{r-1}A_r$ on each
+$(w_v-w_{v^-})^2$ at depth $r$. The map from $w$ to its root and edge
+differences is triangular and invertible. Its inverse expresses $w_p$ as the
+sum of those differences along the root-to-$p$ path. Inverting the diagonal
+quadratic form therefore gives a matrix entry equal to the sum of reciprocal
+coefficients on the shared path, namely $F_{|p\wedge q|}$.
+Multiplying by $A_dA_e$ proves (65.9). This is finite algebra on the actual
+occurrence operator; no random innovations, resampled source or extra seam
+is supplied by the factorization. Since $A_h=1$, (65.7) follows. Positivity
+and strict increase follow from the positive summands in (65.8). Substituting
+$h=3$ gives the displayed table, and counting the ordered binary clusters gives
+its pair multiplicities. $\square$
+
+**Theorem 65.4 (all-calibration terminal inertia and exact distance dimension).**
+For either prescription, every finite $h\ge1$ and every $\kappa>0$, the matrix
+in (65.6) on the $n=2^h$ terminal sites has inertia
+
+$$
+(n_+,n_-,n_0)=(1,n-1,0).
+\tag{65.11}
+$$
+
+Every restriction to $m\ge1$ distinct terminals has inertia $(1,m-1,0)$.
+Consequently its exact normalized hyperbolic distance dimension is $m-1$:
+the distances can be realized on a common future hyperboloid sheet in
+$\mathbb H^{m-1}$, and cannot be realized in a smaller hyperbolic dimension.
+For $m=1$ this means the singleton. In particular any five terminals obstruct
+$\mathbb H^3$, whereas every restriction to at most four terminals can be
+realized in $\mathbb H^3$. This cardinality statement concerns terminal
+restrictions, not arbitrary sets of internal and terminal sites.
+
+Proof. Fix one prescription and write $g_k=g^\diamond_{h,k}$. Define
+
+$$
+f(z)=\cosh\left(\tfrac12\log(1+z)\right)-1,
+\qquad a_k=f(\kappa/g_k).
+$$
+
+Theorem65.3 and strict monotonicity of $f$ on $z>0$ give
+$a_0>a_1>\cdots>a_{h-1}>0$. Let $J$ be the all-ones matrix on the
+terminals. For $1\le r\le h-1$, let $Q_r$ have entry one when two
+addresses have the same first $r$ letters and zero otherwise. It is the sum
+of outer products of the depth-$r$ cluster indicators, hence is positive
+semidefinite. The exact matrix identity is
+
+$$
+C=(1+a_0)J
+-\sum_{r=1}^{h-1}(a_{r-1}-a_r)Q_r-a_{h-1}I.
+\tag{65.12}
+$$
+
+For a distinct pair with common-prefix depth $k$, the sum telescopes to
+$1+a_k$; on the diagonal it gives one. Thus, on the zero-sum subspace,
+
+$$
+\begin{aligned}
+\sum_i z_i=0\quad\Longrightarrow\quad
+z^\mathsf TCz
+&=-a_{h-1}\|z\|_2^2\\
+&\quad-\sum_{r=1}^{h-1}(a_{r-1}-a_r)
+\sum_{|u|=r}\left(\sum_{p\text{ below }u}z_p\right)^2
+\le-a_{h-1}\|z\|_2^2.
+\end{aligned}
+\tag{65.13}
+$$
+
+The variational characterization of inertia supplies at least $n-1$
+strictly negative eigenvalues. Since $\operatorname{tr}C=n>0$, the remaining
+eigenvalue is positive and none is zero. Restrict (65.12) to any terminal
+subset: its restricted cluster matrices are still positive semidefinite,
+and the same argument applies on its $(m-1)$-dimensional zero-sum subspace.
+The trace there is $m$, proving the restricted assertion.
+
+For the dimension conclusion, use the classical Lorentz Gram recognition in
+Keller-Ressel–Nargang,
+[arXiv:1903.08977v2, LemmaA.1 and its proof](https://arxiv.org/pdf/1903.08977v2).
+In the sign convention here, points $v_i$ on the unit future hyperboloid have
+$C_{ij}=v_i^\mathsf T\operatorname{diag}(1,-I_d)v_j=\cosh r_{ij}$.
+Such a Gram matrix has at most one positive and at most $d$ negative
+eigenvalues. Conversely a real symmetric matrix with diagonal one, all
+off-diagonal entries greater than one and inertia $(1,m-1,0)$ has a real
+factorization in that Lorentz space. Each factored row has Lorentz norm one.
+Any two rows have positive Lorentz product, so their timelike sheets agree;
+a common sign puts all rows on the future sheet. Their geodesic distances
+are exactly $\operatorname{arcosh}C_{ij}$, without altering any prescribed entry.
+The negative index forces $d\ge m-1$, and the factorization attains equality.
+Embedding this hyperboloid as a totally geodesic subspace gives the assertion
+for at most four terminals. $\square$
+
+The hierarchical step has mature precedents. The matrix $C-J$, with zero
+diagonal and off-diagonal entries $a_{|p\wedge q|}$, is an ultrametric distance
+matrix: longer shared prefixes give smaller distances, and in every triple
+the largest distance occurs at least twice. Faver et al.,
+[arXiv:1201.6669v5, Theorem5.1 and Corollaries5.3–5.5](https://arxiv.org/pdf/1201.6669v5),
+supplies strict $p$-negative type for ultrametrics for every $p\ge0$.
+The cluster-indicator method is also present in Gorman–Lladser,
+[arXiv:2208.09927v1, Definitions1.1–1.2 and equations1.1–1.3](https://arxiv.org/pdf/2208.09927v1),
+for strict ultrametric covariance matrices. Equation (65.13) supplies the
+explicit margin needed here; it does not infer fixed hyperbolic dimension from
+a Hilbert embedding or add the covariance representation's auxiliary root edge
+to the occurrence graph.
+
+**Proposition 65.5 (the authentic class obstruction with sourcewise refitting).**
+For each separate prescription $\diamond\in\{\mathrm c,\mathrm k\}$, the
+INITIAL $T_3$ of (65.3) has no exact realization (65.5) of all its actual pairs,
+for every $\kappa>0$ and $\ell>0$. Hence both assertions
+
+$$
+\begin{aligned}
+&\exists\kappa,\ell>0\quad
+\forall\text{ authentic }D\quad\exists(x_p)_{p\in D}\quad
+\forall p\ne q\in D\quad \widehat G_D(p,q)=G_D^\diamond(p,q),\\
+&\forall\text{ authentic }D\quad
+\exists\kappa_D,\ell_D>0\quad\exists(x_p)_{p\in D}\quad
+\forall p\ne q\in D\quad \widehat G_D(p,q)=G_D^\diamond(p,q)
+\end{aligned}
+\tag{65.14}
+$$
+
+are false. The admissible $D$ in these quantifiers are actual installed domains
+or separately commissioned original finite sources and legal finite versions,
+with the full source/history contract of Definition65.1. Even a fresh whole-table
+fit for every such source does not remove the obstruction. More generally,
+under the same radial transformation (65.6), no fixed finite hyperbolic dimension
+realizes this all-beta source class at every depth.
+
+Proof. Every full-domain representation restricts to its eight depth-three
+terminals. Theorem65.4 gives seven negative eigenvalues there, whereas a Gram
+matrix of $\mathbb H^3$ has at most three. Already the five actual terminals
+
+$$
+\mathcal S_5=\{LLL,LLR,LRL,RLL,RRL\}\subset B_3
+\tag{65.15}
+$$
+
+give inertia $(1,4,0)$. Their ten pairs are a principal restriction of the
+original 105-pair target. This contradiction holds for every positive calibration,
+and normalized distances make the radius irrelevant to it. Definition65.1
+provides this actual source and legal record, so it refutes each universal
+assertion in (65.14). For any fixed $d<\infty$, choose a separately commissioned
+$T_h$ with $2^h-1>d$ and apply the same negative-index argument. $\square$
+
+The terminal table does have an exact distance realization in
+$\mathbb H^{2^h-1}$, by Theorem65.4. This is only a statement about those
+terminal distances under (65.6). No full-$B_h$ distance realization in that
+dimension is established, and (65.5) is the dimension-three Laplace Green law:
+its use as a response-to-distance transform does not make it a Laplace Green
+field in dimension $2^h-1$. Edge completion cannot evade (65.14), because all
+pairs are already prescribed. In Putinar–Vishwakarma,
+[arXiv:2609.10403v1, TheoremsA, B and D, Proposition2.7 and §7.1](https://arxiv.org/pdf/2609.10403v1),
+anchored positive-semidefinite rank recognition controls dimension, chordal
+completion requires compatible specified clique data, and tree product completion
+chooses unspecified pairs while preserving supplied edges. None authorizes
+changing this complete table or dropping its fixed dimension requirement.
+Likewise the opposite-sign characterization in Tabaghi–Dokmanić,
+[arXiv:2005.08672v2, Propositions1–2, §3.1 and AppendixA](https://arxiv.org/pdf/2005.08672v2),
+retains both rank constraints: the positive and negative semidefinite parts have
+ranks at most $d$ and one, with diagonal $-1$ and entries at most $-1$.
+Relaxing rank or projecting a matrix can change prescribed distances and is not
+an exact fit of (65.4).
+
+**Theorem 65.6 (strictly positive relative-response floors uniform in calibration).**
+For an authentic domain with at least two sites, define the full-table relative
+error of (65.5) by
+
+$$
+E_D^\diamond=\max_{\{p,q\}\subset D}
+\left|\frac{\widehat G_D(p,q)}{G_D^\diamond(p,q)}-1\right|.
+\tag{65.16}
+$$
+
+Coincident modeled sites give $E_D^\diamond=+\infty$. On $D=B_3$, every
+positive $\kappa,\ell$ and every finite configuration in $\mathbb H^3_\ell$
+satisfy both the eight-terminal bounds
+
+$$
+E_{B_3}^{\rm c}\ge\varepsilon_{{\rm c},8}
+:=1-\sqrt{\frac{847}{848}}>0,\qquad
+E_{B_3}^{\rm k}\ge\varepsilon_{{\rm k},8}
+:=1-\sqrt{\frac{10609}{10616}}>0,
+\tag{65.17}
+$$
+
+and the stronger five-terminal bounds
+
+$$
+E_{B_3}^{\rm c}\ge\varepsilon_{{\rm c},5}
+:=1-\sqrt{\frac{484}{485}}>\frac1{970},\qquad
+E_{B_3}^{\rm k}\ge\varepsilon_{{\rm k},5}
+:=1-\sqrt{\frac{42436}{42485}}>\frac{49}{84970}.
+\tag{65.18}
+$$
+
+The respective restriction errors on the eight terminals or on $\mathcal S_5$
+already obey the displayed bound. These are certified uniform lower bounds,
+not identified optimal minimax errors.
+
+Proof. For the function $f$ in Theorem65.4, put $u=\sqrt{1+z}>1$.
+Then $f(z)=(u-1)^2/(2u)$ and
+
+$$
+\frac{zf'(z)}{f(z)}
+=\frac{(1+(1+z)^{-1/2})^2}{2}\le2\qquad(z>0).
+\tag{65.19}
+$$
+
+Integrating this logarithmic derivative gives, for $t\ge1$,
+$f(tz)\le t^2f(z)$. If $g_{\min}$ and $g_{\max}$ are the smallest and
+largest coefficients on the complete terminal table, set
+$a_{\max}=f(\kappa/g_{\min})$ and
+$a_{\min}=f(\kappa/g_{\max})$. Thus
+
+$$
+\frac{a_{\min}}{a_{\max}}
+\ge\left(\frac{g_{\min}}{g_{\max}}\right)^2.
+\tag{65.20}
+$$
+
+This controls the relative negative margin even when $\kappa$ tends to zero
+or to infinity; a fixed-parameter rank argument alone would not give this
+uniform response bound.
+
+Consider a restriction to $m\ge5$ terminals. Let $E$ be its relative-response
+error. For $E\ge1$ all the claimed bounds hold. If $E<1$, every pair satisfies
+$(1-E)g\le\widehat g\le(1+E)g$. Applying (65.19) to
+$f(\kappa/\widehat g)$ and $f(\kappa/g)$ yields
+
+$$
+\left|f(\kappa/\widehat g)-f(\kappa/g)\right|
+\le a_{\max}\bigl[(1-E)^{-2}-1\bigr].
+\tag{65.21}
+$$
+
+For the lower endpoint use
+$f(\kappa/\widehat g)\ge(1+E)^{-2}f(\kappa/g)$ and
+$1-(1+E)^{-2}\le(1-E)^{-2}-1$; the upper endpoint uses
+$(1-E)^{-2}$. The modeled Gram $\widehat C$ and the prescribed $C$ have
+the same diagonal one. The symmetric row-sum bound therefore gives
+
+$$
+\|\widehat C-C\|_{\rm op}
+\le(m-1)a_{\max}\bigl[(1-E)^{-2}-1\bigr].
+\tag{65.22}
+$$
+
+If the right side were smaller than $a_{\min}$, (65.13) would make
+$\widehat C$ strictly negative on the $(m-1)$-dimensional zero-sum subspace.
+The classical variational perturbation argument is immediate here:
+$z^\mathsf T\widehat Cz\le
+[-a_{\min}+\|\widehat C-C\|_{\rm op}]\|z\|^2$ on that subspace.
+Since a hyperbolic-three Gram has at most three negative eigenvalues, this is
+impossible. Equations (65.20)–(65.22) consequently imply
+
+$$
+E\ge1-\left[1+\frac{(g_{\min}/g_{\max})^2}{m-1}\right]^{-1/2}.
+\tag{65.23}
+$$
+
+The depth-three ratios are $1/11$ and $7/103$. With $m=8$, (65.23) gives
+(65.17); with $m=5$ and the actual subset (65.15), it gives (65.18).
+That subset includes a sibling pair and a pair separated at the root, so both
+terminal extremes are retained. Its negative margin follows from the same
+restricted cluster identity, without fitting only five chosen response entries.
+The bounds apply to all its ten pairs and hence to the full 105 pairs.
+Finally $1-\sqrt{1-x}=x/(1+\sqrt{1-x})>x/2$ for $0<x<1$
+proves the rational strict lower bounds in (65.18). $\square$
+
+**Theorem 65.7 (lawful all-source refinement and buffered killed targets).**
+Let $t$ be any original nonempty finite source and let
+$D_j(t)=\operatorname{Pos}(\rho^jt)$ retain the actual irregular domain,
+root and history interpretation of Definition55.1. For every actually reached
+version, or every separately legal finite prefix, with $j\ge6$, the common
+full-table target has
+
+$$
+E_{D_j(t)}^{\rm c}\ge\varepsilon_{{\rm c},5}
+\ge\varepsilon_{{\rm c},8}.
+\tag{65.24}
+$$
+
+Set $\lambda=3-2\sqrt2$, $\varrho=1-\lambda/3$ and, for an integer $R\ge3$,
+
+$$
+\eta_R=\frac{64\varrho^{R-2}}{\lambda}.
+\tag{65.25}
+$$
+
+For every such separately legal $j\ge2R$, the killed full-table target obeys
+
+$$
+E_{D_j(t)}^{\rm k}\ge
+\max\{0,\varepsilon_{{\rm c},5}-\eta_R\}.
+\tag{65.26}
+$$
+
+In particular the finite choice $R=241$, $j\ge482$, certifies, uniformly
+over all original finite $t$ and all sourcewise refits,
+
+$$
+E_{D_j(t)}^{\rm k}\ge\tfrac12\varepsilon_{{\rm c},8}>0.
+\tag{65.27}
+$$
+
+These quantifiers permit arbitrary varying finite $t$ with separately legal
+indices; they do not permit an increase of a running cap, installation of a
+refused candidate, an event after Stop or an event after an infinite prefix.
+
+Proof. Equation (55.2) gives $B_3\subset D_j(t)$ for $j\ge6$.
+The common coefficients on its eight terminals are exactly the unchanged
+common table of Theorem65.3. Restriction and Theorem65.6 prove (65.24).
+For $j\ge2R$ one has $B_R\subset D_j(t)$. Every depth-three address then
+has an occurrence-metric buffer of radius $R-3$ contained in that actual
+domain. Lemma63.6, applied with this buffer, gives on the terminal pairs
+
+$$
+0\le G^{\rm c}(p,q)-G_{D_j(t)}^{\rm k}(p,q)
+\le\frac{\varrho^{R-2}}\lambda,
+\qquad
+0\le1-\frac{G_{D_j(t)}^{\rm k}(p,q)}{G^{\rm c}(p,q)}\le\eta_R,
+\tag{65.28}
+$$
+
+since their common minimum is $1/64$. If a modeled response has relative
+killed error $e_{pq}$ and
+$d_{pq}=1-G_{D_j(t)}^{\rm k}(p,q)/G^{\rm c}(p,q)$, then
+
+$$
+\frac{\widehat G(p,q)}{G^{\rm c}(p,q)}-1
+=(1-d_{pq})e_{pq}-d_{pq}.
+$$
+
+Positivity and killed domination give $0\le d_{pq}<1$, and hence its absolute
+value is at most $|e_{pq}|+\eta_R$. Apply the common five-terminal bound to
+the same modeled responses on $\mathcal S_5$. Their maximum killed error
+is at least $\varepsilon_{{\rm c},5}-\eta_R$, proving (65.26).
+This comparison uses one actual table and one configuration throughout, rather
+than combining independently attainable fits.
+
+For the stated finite threshold, the rational inequalities
+
+$$
+\sqrt2<\frac{99}{70},\qquad
+\lambda>\frac6{35},\qquad\varrho<\frac{33}{35},\qquad
+64\frac{35}{6}\left(\frac{33}{35}\right)^{239}
+\le\frac1{3392}<\frac{\varepsilon_{{\rm c},8}}2
+\tag{65.29}
+$$
+
+give $\eta_{241}<\varepsilon_{{\rm c},8}/2$. The power inequality is an
+exact rational certificate, equivalently
+$3392\cdot64\cdot35\cdot33^{239}\le6\cdot35^{239}$.
+The last strict inequality follows from
+$\varepsilon_{{\rm c},8}>1/1696$. Equations (65.26) and
+$\varepsilon_{{\rm c},5}>\varepsilon_{{\rm c},8}$ imply (65.27).
+$\square$
+
+At each finite prefix the cap must cover that source's actual candidate leaf
+counts; no assertion here supplies its bank, preparation or price for free.
+The domain remains $D_j(t)$, not $B_R$. Under actual accepted renewal, the
+common old-pair values retain (62.7), whereas the killed values undergo the
+authentic mask-dependent Schur update (62.8). At a refusal or Read the installed
+source and operator version do not change. A static obstruction with arbitrary
+sourcewise refitting is already a necessary failure for any stronger demand
+of one persistent geometric assignment through those versions; this implication
+does not establish a retained-state switching law.
+
+**Theorem 65.8 (necessary consequence for the same full one/two-occupation law).**
+Fix the actual INITIAL $D=B_3$ of Definition65.1 and one prescription.
+Retain the full source-qualified Hilbert spaces $\mathscr H_{D,1}$ and
+$\mathscr H_{D,2}$ of (62.1), with their counting-measure norms and literal
+hard-core symmetric statistics. Let
+
+$$
+\begin{aligned}
+h_D&=aL_D-gM_{\phi|D},\\
+H_{D,1}^\diamond&=h_D,\\
+H_{D,2}^\diamond&=P_{D,2}\,d\Gamma(h_D)\,P_{D,2}
+-\nu\sum_{\{p,q\}\subset D}G_D^\diamond(p,q)n_pn_q.
+\end{aligned}
+\tag{65.30}
+$$
+
+The two-occupation space has dimension 105. The compression retains the
+diagonal $d_p+d_q$, including inherited exterior and blocked-collision killing;
+it is not a Laplacian of only allowed moves or a fermionic exterior power.
+Here $a,g>0$ and $\nu\ge0$ are the commissioned parameters of §62,
+independent of the original $\mathcal D_2$ actor variable.
+
+For any one Hermitian one-body law $B_D$ used consistently in both sectors,
+and any whole-table point law (65.5) with finite distinct points, define
+
+$$
+\begin{aligned}
+\widehat H_{D,1}&=B_D,\\
+\widehat H_{D,2}&=P_{D,2}\,d\Gamma(B_D)\,P_{D,2}
+-\nu\sum_{\{p,q\}\subset D}\widehat G_D(p,q)n_pn_q,\\
+E_1&=\|B_D-h_D\|_{\rm op},\qquad
+E_2^\diamond=\|\widehat H_{D,2}-H_{D,2}^\diamond\|_{\rm op}.
+\end{aligned}
+\tag{65.31}
+$$
+
+Put
+
+$$
+\delta_{{\rm c},65}=\frac{\varepsilon_{{\rm c},5}}{64},\qquad
+\delta_{{\rm k},65}=\frac{\varepsilon_{{\rm k},5}}{240}.
+$$
+
+Then the necessary joint bound is
+
+$$
+E_2^\diamond+2E_1
+\ge\nu\max_{\{p,q\}\subset D}
+|\widehat G_D(p,q)-G_D^\diamond(p,q)|
+\ge\nu\delta_{\diamond,65}.
+\tag{65.32}
+$$
+
+In particular, preserving the original one-body and kinetic terms gives $E_1=0$
+and, for $\nu>0$, a strictly positive full two-occupation generator-norm floor
+$E_2^\diamond\ge\nu\delta_{\diamond,65}$. At $N=1$ the pair multiplier
+vanishes for both prescriptions, and at $\nu=0$ this obstruction yields no
+positive joint generator floor.
+
+Proof. On $\mathscr H_{D,2}$ the pair difference is diagonal. Its entry at the
+actual occupation $\{p,q\}$ is
+$-\nu(\widehat G_D(p,q)-G_D^\diamond(p,q))$, so its operator norm is
+$\nu$ times the maximum absolute coefficient error on all 105 pairs. The
+hard-core compression of $d\Gamma(B_D-h_D)$ has norm at most $2E_1$.
+The triangle inequality proves the first inequality in (65.32), precisely as
+the same-sector argument in Theorem64.4. This consumes that operator principle;
+the new bound is supplied by the distinct hyperbolic class obstruction.
+
+The five-terminal restriction has maximum relative error at least
+$\varepsilon_{\diamond,5}$. On that restriction its smallest common coefficient
+is $1/64$ and its smallest killed coefficient is $1/240$. Consequently the
+maximum absolute error there is at least $\delta_{\diamond,65}$, and the
+maximum on the full domain is no smaller. An actual pair attaining that finite
+maximum gives the diagonal occupation witness. No alternative one-body fit
+can cancel it in the two-occupation sector without entering the same $E_1$
+budget. $\square$
+
+This is a necessary condition on a law that transports the same complete
+$N=1$ and $N=2$ generators, with the supplied source, reference and clock.
+It does not replace that task by a static configuration or one-body task.
+No finite-time propagator, state, acquired probability, measurement or clock
+error lower bound follows merely from (65.32). Such a bound needs its own
+common input, time, reference, observation and spectral argument; Duhamel's
+usual generator-norm upper estimate cannot be reversed for this purpose.
+Neither independent sector fits nor a quotient by global phase is part of
+the unchanged full joint target.
+
+**Definition 65.9 (supplier scopes and the remaining full correspondence).**
+The source and history suppliers are Continuation Definition1.1, TM30's
+fixed-cap boundary and guard, PR57's authentic processor, and §§55.1–55.2,
+58 and60. The response and literal-statistics suppliers are (62.2)–(62.4);
+the rooted factorization is (62.19)–(62.21), actual renewal is (62.7)–(62.8),
+and the buffered coefficient comparison is Lemma63.6. The conditional
+stratified producer, its common preparation and complete finite-horizon
+retained-state correspondence remain exactly Definitions64.5 and
+Theorems64.6–64.7. The pair obstruction here does not alter that producer's
+explicit atomic interaction. Chapter64's conditional results retain that scope.
+Chapter63's binding, cluster escape and spectral retention are likewise
+inherited in their stated scope.
+
+The all-beta depth-three source at cap sixteen and the terminal subset
+$\mathcal S_5$ differ from Chapter64's cap-three source and its five-site domain
+$\{o,L,R,LL,LR\}$. The term “H3 source” for the latter cap is distinct from
+the ambient space $\mathbb H^3_\ell$. Prior finite five-site fits retain their
+original finite targets and conditions. An obstruction to a class containing
+$T_3$ does not deny a fit of a different finite table, and the inverse-distance
+law in (64.1) is not the hyperbolic point law (65.5).
+
+Cohl–Kalnins supplies only the complete homogeneous Laplace–Beltrami point
+problem with its stated volume normalization and decay. Keller-Ressel–Nargang
+and Tabaghi–Dokmanić supply finite Lorentz/rank recognition with exact prescribed
+entries and normalization. Faver et al. and Gorman–Lladser supply the mature
+ultrametric and cluster methods in the scopes identified after Theorem65.4.
+Putinar–Vishwakarma supplies recognition and compatible completion, not freedom
+to complete already specified all-pair values at an imposed lower dimension.
+The row-sum and variational perturbation steps in Theorem65.6 are classical
+matrix estimates. The rooted source coefficients, all-parameter application,
+response floors and lawful-source joint consequences here are repo-derived
+ordinary mathematical deductions from these suppliers. They carry no claim of
+global novelty, fresh kernel validation or physical verification. Finite exact
+instances can corroborate coefficients and inertia identities; the all-depth,
+all-calibration and all-source assertions depend on the displayed ordinary
+proofs, not an extrapolation from those instances. Optimal minimax response
+error, full-domain higher-dimensional distance realization and a corresponding
+higher-dimensional Green field are not established.
+
+The obstruction applies to the entire specified homogeneous unscreened
+point-field model class (65.5). It excludes neither physical three-space nor
+inhomogeneous media, screening, different operators, finite boundary problems,
+extended sources or other realization contracts. It selects no physical
+dimension. The distinct Euclidean point-source and localization contract in
+[legacy §52.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md#527-reuse-exact-scope-and-the-missing-native-connection)
+retains its own domain, isotropic second-order operator, far-field and form
+assumptions; no transfer of that classification is asserted by equal site degree,
+direction count or terminal embedding dimension.
+
+The unchanged full joint problem retains actual INITIAL acquisition and every
+original numerical response, all ordered operations and legal histories, every
+cap guard, refusal and Stop. It retains the complete $N=1/N=2$ amplitudes and
+phases, kinetic law and propagators, the common one-body field, separate pair
+prescriptions, exterior and collision terms, all auxiliary and retained state,
+authentic renewal and switching, reference coherence, the same clock and the
+full norm without discarding components. A field-mediated interaction, an
+operation- and metric-preserving displacement map, isotropy and local physical
+realization remain unproved bridges. Finite unknown-state ingress, preparation,
+measurement, precision and time calibration, together with construction,
+control, service, production, storage, retention, maintenance and total resource
+price, remain independent obligations. No unlimited horizon, unlimited population
+or finite total-price conclusion is supplied by (65.24)–(65.32).
+
+In particular the original $\mathcal D_2$ source keeps independent arbitrary
+unbounded $a$, including zero, untagged radius-$7/25$ $b$, destructive actions,
+joint adversarial and history-dependent errors, source-independent initialization
+and its original INITIAL/Read/Stop task. The positive commissioned kinetic $a$
+in (65.30) is another variable. The existing common $\Pi$ bridge, consumed in
+Definition63.13, keeps its full-vector, spanning, common-zero, whole quadratic
+distance/positive-semidefinite Gram, at least two independent directions,
+alternating bilinear exact-area/Jacobi, actual orthonormal-probe, finite binary
+calibration and hidden-kernel-preserving generator hypotheses. It supplies no
+new spatial/operator transport here. Section57 retains its separate
+composition-promised immutable endpoint-query contract, with all its original
+depth caps, common source-independent initialization, actual retained
+query/reply histories, correct finite stopping on every same-composition
+positive and negative source, and distinct-address fees; Definition57.12 grants
+no old-source archive. The separate [paid promised-family archive/cut acquisition
+contract, Atomic Generation Acquisition §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md#12-不可逆根后的被动切口阶梯容量与原生关系呈现),
+consumed in Definition63.13, retains its paid positive-root archive, exact
+nonadvancing cut port, finite stopping/decoding, protected written records after
+refusal/closure, aligned actual generation, trusted markers, no unrecorded source
+change, actual write/protect/retain/query rights, closed strong ports and inclusion
+of every reply-affecting retained source influence in the service price. These
+acquisition contracts and the common $\Pi$ bridge supply no source copy, reset,
+independent resampling, exact limit Read or new native geometric or quantum
+control. The necessary exclusion of (65.5) and its generator consequence
+leave these full operational and physical obligations intact.
+
+## 65.99 追加锚（本行以下为增补区）
+## 66. Whole-rho transport of the full stratified state, finite histories and the graft boundary
+
+**Definition 66.1 (one actual source and the finite comparison).** The source is the actual labelled, bracketed, ordered nonempty tree of Definitions55.1,60.1 and62.1, installed by PR57 at its declared fixed leaf cap $H$. Its immutable INITIAL, original source-independent actor initialization, current root, epoch, request/context identities, actual candidate, whole-candidate guard, every accepted or refused response, every original Read, retained chronological row and copy, and absorbing Stop remain part of the joint object. Equal-valued occurrences are distinct. An attempted whole-rho is not an accepted renewal; refusal supplies no candidate Read. A beta-empty acceptance changes labels and epoch even when the geometric domain does not change. The full original Left/Right menu is retained, with each named actual positive context supplied and guarded by its original routines. Accepted context grafts are considered separately in Proposition66.8; they are not whole-rho inclusions.
+
+Use exactly the measure, mixed strata, symmetric hard-core form and atomic interaction of Definition64.5, at one density $0<\delta\le1$ for the entire commission. The intrinsic length and conductance of every cable are one. Root incidence is two, nonroot incidence three; every current leaf retains two distinct grounded stubs. The one-body field is always the same $\phi(p)=2^{-|p|}$ on actual atomic addresses and zero on open cables. The separate pair choices are the complete common restriction $G^{\rm c}_D$ and the complete killed inverse $G^{\rm k}_D$, without changing $\phi$. The commissioned $a,g>0,\nu\ge0$ are independent of the original actor's parameters. Retain $\lambda=3-2\sqrt2$ from (62.4). Write
+
+$$
+\mathcal K_{D,1}=L^2(X_D,\mu_\delta),\qquad
+\mathcal K_{D,2}=\mathcal K^{\rm hc}_{D,2},\qquad
+\mathcal Q_{D,N}=\mathcal Q_{D,N}^{(64.5)}.
+$$
+
+A finite commissioned whole-rho trajectory can contain any finite number of original Reads, refused rho/context attempts and accepted whole-rho steps, and supplied idle intervals with total comparison time at most $T<\infty$. It stops at or before an accepted graft, or original Stop. The graft is still executed and recorded by the original source contract; the positive whole-rho amplitude theorem is not asserted across it. Proposition66.8 proves why one natural full-data/full-norm graft requirement fails, rather than treating that event as a reset or omitting it from the original menu. A fixed-cap trajectory never changes its cap, never has an event after an infinite prefix, and has no interaction or readout after Stop. Any commissioned readout precedes Stop.
+
+The preparations $W_{D,N}$, atomic injections $J_{D,N}=R_{D,N}^*$, and constants $\beta_N,s_N,r_N$ below are exactly Theorems64.6–64.7. They are mathematical identifications, not newly acquired coefficients, free controls or physical preparation procedures. Empty $D$ is only a zero-space convention for statements about maps: $X_\varnothing$ and its $N=1,2$ Hilbert/form spaces are empty or zero, with their unique maps. No original source is empty. For a singleton, the full two-position producer space still contains all its slice and cell modes, although $\mathscr H_{D,2}=0$.
+
+**Definition 66.2 (the labelled cable inclusion).** Let the actual whole-rho candidate be accepted, with old source $s$, beta-leaf set $\mathcal B(s)$, and $D'=\operatorname{Pos}(\rho s)$. Retain each old seam with its intrinsic coordinate. At each $p\in\mathcal B(s)$, name its two old grounded stubs by $pL,pR$. Identify the complete open stub named $pz$ with the new unit seam from $p$ to $pz$, preserving its coordinate from $p$ toward its former ground tip. That tip becomes the new atomic port $pz$. Its old zero trace is retained; its newly created atomic coordinate is assigned zero at the transfer. Add the two new grounded stubs at each newborn child. At an old alpha leaf both old grounded stubs remain grounded. This identifies every old open cable with exactly one new open cable and never identifies two occurrences, two stubs or two coordinates.
+
+Define $\mathsf T_{D'D,1}$ on the entire direct-sum Hilbert space by copying all old atomic coordinates and every old open-cable function to these identified strata, and putting zero on every new atomic coordinate and new open cable. This is a direct-sum definition: assigning a new mass-one atom at a former mass-zero ground tip does not copy a value from an $L^2$ representative at that tip. It assigns zero independently. For $N=2$, copy all old distinct atomic pairs, all ordered old atom/cable slices and all old cable/cable cells under the same identification, and put zero on every stratum involving a new atom or a new cable. Same-cable cells keep both dissected triangles and both zero diagonal traces. Denote its symmetric restriction by $\mathsf T_{D'D,2}$. The target occupation injection is the distinct-occurrence map $\jmath_{D'D,N}e_S=e_S$ of Theorem62.4. These definitions specify the full maps before restricting to any calibrated range.
+
+**Theorem 66.3 (full-space isometric kinetic-form and collision-domain transfer).** For every actual accepted whole-rho, $N=1,2$, and every vector in the indicated spaces,
+
+$$
+\begin{aligned}
+\mathsf T_{D'D,N}^*\mathsf T_{D'D,N}&=I,
+& R_{D',N}\mathsf T_{D'D,N}&=\jmath_{D'D,N}R_{D,N},\\
+\mathsf T_{D'D,N}J_{D,N}&=J_{D',N}\jmath_{D'D,N},
+&\mathsf T_{D'D,N}\mathcal Q_{D,N}&\subseteq\mathcal Q_{D',N},\\
+k_{\delta,D',N}(\mathsf T_{D'D,N}F,\mathsf T_{D'D,N}G)
+&=k_{\delta,D,N}(F,G).
+\end{aligned}                                                    \tag{66.1}
+$$
+
+Here the isometry is an injection defined on the whole old Hilbert space, including arbitrary old continuum components, rather than only on $W_{D,N}\mathscr H_{D,N}$. It need not be onto the new space. It preserves the actual form/collision domain, not an asserted equality of operator domains or propagators. If $\mathcal B(s)=\varnothing$, it is the identity on every stratum even though the source version and labels are updated. For successive accepted steps and their canonical cable identifications,
+
+$$
+\mathsf T_{D''D',N}\mathsf T_{D'D,N}=\mathsf T_{D''D,N},\qquad
+\jmath_{D''D',N}\jmath_{D'D,N}=\jmath_{D''D,N}.       \tag{66.2}
+$$
+
+The right-hand cable map means the direct inclusion along this actual source history; it does not identify different sources or different histories.
+
+Proof. The one-position norm is the sum of atomic norm squares and $\delta$ times every open-cable norm square. Each copied stratum keeps exactly its old coefficient and intrinsic coordinate; every added coordinate is zero. Thus its norm is unchanged. In ordered two-position coordinates the same argument applies with weights $1,\delta,\delta^2$, before exchange restriction. Diagonal atomic coordinates are absent on both sides. The map commutes with exchange and is therefore an isometry on its symmetric hard-core subspace, with exactly the old normalization of distinct atomic pairs. This also proves the two identities involving $R,J$.
+
+For the one-particle form, an old stub's value at its old atomic end is unchanged. Its former grounded zero trace is now the trace at a new atom whose assigned value is zero. Each new grounded stub has zero function and zero port value. Every other endpoint equality is the old equality. Derivative integrals are unchanged, and zero new functions contribute no energy.
+
+For two particles consider every trace type of Definition64.5. The boundary of a copied old cell at an old port remains its copied old slice; that slice ends at the copied old atomic pair, or at zero when its two port labels coincide. A copied old cell boundary at a newly atomic former ground tip was a grounded zero boundary and is still zero, now matching the new atom/old-cable slice assigned zero. An old atom/old-stub slice likewise has old grounded endpoint zero, matching the newly created atomic pair assigned zero. A cell involving a new cable is zero: at a newborn child its incident slice is a new-atom slice and hence zero, and its grounded boundary is zero. A slice involving a new cable has zero atomic endpoints for the same reason. These statements include cells between two old stubs which simultaneously become seams, and cells between incident cables meeting an old port. Both traces on an old same-cable diagonal are retained, while new same-cable diagonals have zero function. Distinct-cable shared-port collisions still terminate their slices at the same zero atomic collision coordinate. No corner value of a general two-dimensional $H^1$ function is used. All required trace equalities therefore hold.
+
+The two-coordinate derivative form is the sum of slice derivatives and $\delta$ times both cell derivatives in (64.7). Every old term is copied with its coefficient, including all collision and grounded-end terms. Every new term is zero. Equality follows, and polarization gives (66.1) for complex $F,G$. This proof treats all old mixed and cell functions, not merely separable or interpolated states. The zero-space and singleton conventions satisfy the same statements; in particular the singleton's full two-position space is transported by the preceding stratum argument rather than declared absent.
+
+A cable, once created, is never deleted or split under whole-rho. A currently grounded tip may later become an atom, but a zero assigned coordinate remains zero under further inclusions. Existing atomic coordinates keep their addresses. Copying a stratum twice is consequently the same as copying it directly, and a coordinate introduced after the starting version is zero in both compositions. This proves (66.2). When there is no beta leaf, no stratum changes at all. $\square$
+
+**Proposition 66.3a (a nonzero full two-position transfer with zero atomic target).** For the actual singleton source $s=\beta$, followed by its accepted whole-rho at cap $H=2$, the old target $\mathscr H_{\{o\},2}$ is zero but the full-space transfer in Theorem66.3 has nonzero admissible mixed inputs. Parameterize its two old stubs from the root by $x\in[0,1]$. On every ordered root/stub slice use $g(x)=x(1-x)$, with no atomic pair. On each same-stub cell use
+
+$$
+h(x,y)=|x-y|(1-\max(x,y)),
+$$
+
+and on each different-stub cell use
+
+$$
+b(x,y)=g(y)(1-x)+g(x)(1-y).
+$$
+
+These functions define a symmetric form vector $F$ with
+
+$$
+\|F\|^2=\frac{2\delta}{15}+\frac{17\delta^2}{180},\qquad
+k_{\delta,2}(F)=\frac43+\frac{56\delta}{45}.          \tag{66.1a}
+$$
+
+Both quantities are preserved by its actual whole-rho transfer. In particular at $\delta=1/10$ they are $257/18000$ and $328/225$ respectively. This vector is full retained continuum data, not a unit two-port target preparation.
+
+Proof. The slice has zero trace at both endpoints. The same-stub function has root boundaries $g$, grounded boundaries zero, and zero traces on both sides of the diagonal. The different-stub function has root boundaries $g$ and grounded boundaries zero; its shared-root corner agrees with the missing atomic collision value zero. Exchange symmetry is literal. Each triangular polynomial is $H^1$, as is the different-stub polynomial, so these are the actual domain conditions without a corner trace assumption for general $H^1$ data. Direct polynomial integration gives slice norm/derivative integrals $1/30,1/3$, same-stub full-square integrals $1/90,1/3$, and different-stub integrals $13/360,13/45$. There are four ordered slices, two same-stub cells and two different-stub cells. Multiply their norm integrals by $\delta,\delta^2$ and their derivative integrals by $1,\delta$ as in (64.7), obtaining (66.1a). At renewal all these old functions are copied; their old ground boundaries are zero at the new atoms and all new strata are zero. Thus the positive-mass mixed input meets Theorem66.3, including the zero-target case. $\square$
+
+**Proposition 66.4 (complete potential update, without dynamic intertwining).** Let $q^\diamond_{D,N}=a k_{\delta,D,N}+\langle\cdot,U^\diamond_{D,N}\cdot\rangle$ be the full form of (64.8). For the common prescription,
+
+$$
+U^{\rm c}_{D',N}\mathsf T_{D'D,N}=\mathsf T_{D'D,N}U^{\rm c}_{D,N},\qquad
+q^{\rm c}_{D',N}(\mathsf TF)=q^{\rm c}_{D,N}(F).     \tag{66.3}
+$$
+
+For the killed prescription the one-particle equality is the same, while for $N=2$,
+
+$$
+q^{\rm k}_{D',2}(\mathsf TF)-q^{\rm k}_{D,2}(F)
+=-\nu\sum_{\{p,q\}\subset D}\Delta G(p,q)
+       |(R_{D,2}F)(\{p,q\})|^2,                  \tag{66.4}
+$$
+
+where the entire actual update, not a selected pair fit, is
+
+$$
+\Delta G=GU\left(\tfrac32 I-U^*GU\right)^{-1}U^*G,
+\qquad G=L_D^{-1},\quad U=(e_p)_{p\in\mathcal B(s)}. \tag{66.5}
+$$
+
+An empty beta mask means zero update. All inverse and positivity conditions in (66.5) are supplied by Theorem62.4.
+
+Proof. Every old atomic depth is unchanged. A copied mixed slice has precisely its old additive one-body potential, and a copied cell still has zero atomic one-body multiplier. New strata have zero state. The common inverse is the same infinite $L^{-1}$ at every version, so all old atomic pair multipliers coincide. Theorem66.3 proves the remaining kinetic equality. For the killed choice only the old atomic pair coefficients change on the transferred state. Apply (62.8) with its authentic beta mask and the normalized symmetric atomic coordinates of Lemma64.5b to obtain (66.4)–(66.5). No positive-mass coordinate or trace is dropped in this computation. $\square$
+
+Form equality on the isometric image is a compression statement. After release, the new generator acts on the larger space and may move amplitude out of that image. The actual born-child hopping of (60.7),(62.7) persists. For the killed choice the old pair energy change in (62.9) persists as well; it is not a small-$\delta$ calibration error. Proposition58.3's failure of all-time rho intertwining and Proposition62.5's growing-population killed-energy defect are inherited, not contradicted. The full-space inclusion alone grants neither a physical switching law nor a new common exterior dynamic state.
+
+**Lemma 66.5 (calibration mismatch at an actual enlargement).** Put
+
+$$
+\omega_N=\sqrt{\beta_N^2+s_N^2},\qquad
+s_N=1-(1+\beta_N^2)^{-1/2},\qquad
+\omega=\max(\omega_1,\omega_2).
+$$
+
+For either pair prescription, using the same preparation rule and density on both versions,
+
+$$
+\|W_{D,N}-J_{D,N}\|\le\omega_N,\qquad
+\|\mathsf T_{D'D,N}W_{D,N}-W_{D',N}\jmath_{D'D,N}\|
+\le2\omega_N.                                      \tag{66.6}
+$$
+
+When $D'=D$ the second norm is zero. For $0<\delta\le1$, $\omega\le16\sqrt\delta+128\delta\le144\sqrt\delta$.
+
+Proof. Consume Theorem64.6: $W=(J+Q)S$, $Q=E-J$, $\|Q\|\le\beta_N$, $\|S\|\le1$ and $\|S-I\|\le s_N$. Atomic and continuum ranges are orthogonal, so
+
+$$
+\|(W-J)f\|^2=\|J(S-I)f\|^2+\|QSf\|^2
+\le(s_N^2+\beta_N^2)\|f\|^2.
+$$
+
+Insert $\mathsf TJ=J'\jmath$ from (66.1), and use the full isometry of $\mathsf T$ and $\jmath$ to bound the two remaining differences by $\omega_N$ each. An unchanged geometric domain has literally the same measure, form, restriction and unique harmonic minimizer, so $W'=W$ and $\mathsf T=\jmath=I$. The last bound uses the already supplied $\beta_N\le16\sqrt\delta$ and $s_N\le128\delta$ from §64. No minimization, idle operator relation or continuum-mode elimination is re-proved here. $\square$
+
+**Theorem 66.6 (same-clock finite histories in the full joint norm).** Fix an actual finite legal trajectory of Definition66.1. Let $m$ count its accepted whole-rho steps, and let $q\le m$ count only those with nonempty beta mask. At its idle intervals, use its actual current $D_i$ and the complete $H^\diamond_{D_i,N}$ of (62.2). The exact target history $\mathsf V^\diamond_h$ is the time-ordered composition of $e^{-i\theta_iH^\diamond_{D_i,N}}$, the accepted occurrence injections $\jmath$, and identity at the other source-service cuts. The producer history $\mathsf P^\diamond_{\delta,h}$ uses the actual full unitaries $e^{-i\theta_i\mathcal T^\diamond_{\delta,D_i,N}}$, the full-space inclusions $\mathsf T$, and the same identity cuts. No calibrated state is prepared again at a switch. For every target vector $f$ and every checkpoint of that history,
+
+$$
+\|\mathsf P^\diamond_{\delta,h}W_{D_0,N}f
+     -W_{D_h,N}\mathsf V^\diamond_h f\|
+\le\left(\sum_i\theta_i r_N+2q\omega_N\right)\|f\|. \tag{66.7}
+$$
+
+Use each checkpoint's actual prefix sums. For the joint object, set
+
+$$
+\begin{aligned}
+\mathscr H_D^{\rm joint}
+ &=\mathbb C r\oplus\mathscr H_{D,1}\oplus\mathscr H_{D,2},\\
+\mathcal K_D^{\rm joint}
+ &=\mathbb C r\oplus\mathcal K_{D,1}\oplus\mathcal K_{D,2},\\
+W_D^{\rm joint}&=I_r\oplus W_{D,1}\oplus W_{D,2},
+\end{aligned}
+$$
+
+with zero reference generator and identity reference transfer. Tensor all these maps with identity on any supplied retained auxiliary Hilbert space $\mathcal A$, including unused bank modes, $c,u,v$, clock/reference registers and all quantum retention factors. This requires their supplied fixed-factor identification and identity law across the whole commission, rather than inferring such a law from an idle interval. Newly born atomic coordinates of $\mathcal K_{D',N}$ are not taken from an unknown auxiliary register. Physically promoting a previously retained bank mode into an active atom, or coupling an auxiliary during service, requires its own complete joint transfer certificate; a second copy or reset of that mode is not supplied. For every $f\in\mathscr H_{D_0}^{\rm joint}\otimes\mathcal A$, with arbitrary unknown correlations between its sectors, reference and auxiliaries, the bound is
+
+$$
+\|\mathsf P^\diamond_{\delta,h}W_{D_0}^{\rm joint}f
+-W_{D_h}^{\rm joint}\mathsf V^\diamond_h f\|
+\le (TR\sqrt\delta+2q\omega)\|f\|
+\le(TR+288m)\sqrt\delta\,\|f\|,                   \tag{66.8}
+$$
+
+where $R$ is the common constant displayed after Theorem64.7. The two prescriptions are separate full commissions, each satisfying the same bound; they are not blended or independently optimized marginals. An initial retained component $z$ of norm at most $\eta$ adds at most $\eta$ and is carried through the whole history without projection, reset, resampling or a new copy. If $z$ is a form vector, its form admissibility is retained at every ideal cut and every idle interval. Hilbert vectors without a finite-energy premise still satisfy the norm assertion.
+
+Proof. The one-interval discrepancy is exactly (64.12). Suppose the current discrepancy from $W_Df_i$ is $e$. An idle unitary preserves its norm and adds at most $\theta_i r_N\|f_i\|$; the target unitary has $\|f_i\|=\|f\|$. At an accepted enlargement the full isometry preserves the old discrepancy and (66.6) adds at most $2\omega_N\|f\|$. An identical-domain acceptance, Read or refusal adds zero. Induction gives (66.7). No inference that the actual producer state remains in the calibrated range is made: its entire previous discrepancy is propagated in its full norm. Direct-sum operator norm is the maximum of the two sector bounds, and tensoring with identity leaves the operator norm unchanged, proving the entangled-input statement. Apply the uniform residual $r_N\le R\sqrt\delta$ of Theorem64.7. Every factor in the ideal history is an isometry or a unitary, so $z$ retains its norm. Theorem66.3 and Lemma64.5a retain its form domain when supplied. $\square$
+
+For fixed finite $T,m,a,g,\nu$ and target norm, this bound decreases to zero with the single density $\delta$. No subescape, spectral-gap, localization or visible-state restriction on $f$ is imposed. In particular it includes the hidden phases and complete contrast directions of §§55,58,63, every one/two-particle basis direction, and arbitrary combinations with the same reference. It is not uniform as $T$ or the number of renewals becomes unbounded. Finite cap is a legality condition, not permission to complete an infinite refinement or make an exact limit Read.
+
+**Theorem 66.7 (ingress, service, calibration and comparison-clock errors).** The following explicit certificates extend (66.8) to a supplied finite implementation. They are premises on the actual commission, not conclusions about a native apparatus. Every ideal and actual map acts on the whole declared retained space, including all leakage modes, reference and auxiliaries; actual maps are linear isometries, or contractions without conditioning or postselection. Their source version and all original guards/responses are authentic. A wrong source, lost row or omitted retained mode is not a small calibration error.
+
+Let actual ingress differ from $W_{D_0}^{\rm joint}$ by operator norm at most $\epsilon_{\rm in}$, with additional supplied initial component of norm at most $\eta$. For every service/locking/hold/transfer block $k$, let its actual full map differ from its ideal identity or $\mathsf T$ by operator norm at most $h_k$. A supplied full-space certificate of this kind includes phase/reference faults and any nonidentity auxiliary evolution. At idle interval $i$, let the actual evolution differ by full-space operator norm at most $e_i$ from the evolution of the declared producer with comparison interval $\widehat\theta_i\ge0$, commissioned approximants $\widehat a_i>0,\widehat g_i>0,\widehat\nu_i\ge0$, and its actual approximate atomic pair multiplier. There is no assumed bounded-generator operator-norm clock estimate on arbitrary continuum modes.
+
+Use common finite upper bounds $\bar a,\bar g,\bar\nu$ for the exact and approximate commissioned parameters. Supply
+
+$$
+\begin{gathered}
+|\widehat a_i-a|\le d_{a,i},\quad
+|\widehat g_i-g|\le d_{g,i},\quad
+|\widehat\nu_i-\nu|\le d_{\nu,i},\\
+\max_{\{p,q\}\subset D_i}|\widehat G_i(p,q)-G^\diamond_{D_i}(p,q)|
+\le\kappa_i,\qquad
+|\widehat\theta_i-\theta_i|\le t_i.
+\end{gathered}
+$$
+
+The maximum over an empty pair set is defined as zero. The complete pair certificate covers every actual pair of the selected common or killed law. Suppose any additional bounded multiplier discrepancy, for example a certified implementation departure from the unchanged common one-body field, has full norm at most $v_i$. Define
+
+$$
+\begin{aligned}
+\bar M&=2\bar g+\bar\nu/\lambda,
+&\bar C&=12\bar a+\bar M,\\
+\bar R&=18\bar a+256\bar C+16(\bar C+\bar M),
+& C&=12a+2g+\nu/\lambda,\\
+b_i&=12d_{a,i}+2d_{g,i}+d_{\nu,i}/\lambda
+                 +\bar\nu\kappa_i+v_i,
+&\Delta_\tau&=\sum_i t_i.
+\end{aligned}
+$$
+
+Then at every completed commissioned checkpoint the actual retained vector $\widehat F_h$ satisfies
+
+$$
+\begin{aligned}
+\|\widehat F_h-W_{D_h}^{\rm joint}\mathsf V^\diamond_h f\|
+\le\eta+\Bigl[\epsilon_{\rm in}+\sum_k h_k+\sum_i e_i
+  +(T+\Delta_\tau)\bar R\sqrt\delta
+  +2q\omega+\sum_i\widehat\theta_i b_i
+  +C\Delta_\tau\Bigr]\|f\|.                       \tag{66.9}
+\end{aligned}
+$$
+
+The bound allows jointly correlated, history-dependent certified errors; no independence assumption is used. It covers all target vectors, not just known prepared inputs. Actual acquisition/preparation of an unknown correlated $f$ remains a supplied ingress right, never an inference from that quantifier.
+
+Proof. Apply Theorem64.7 to the exact source pair law with the approximant parameters, at interval $\widehat\theta_i$. Its preparation $W_D$ is unchanged because Theorem64.6 makes it independent of $a,g,\nu$ and pair choice. Its residual is at most $\bar R\sqrt\delta$. Replacing the exact source pair coefficient by $\widehat G_i$ changes the full producer only by a bounded atomic multiplier, of norm at most $\bar\nu\kappa_i$ for $N=2$ and zero for $N=1$. The further multiplier change has norm at most $v_i$. Bounded-perturbation unitary Duhamel gives their contribution $\widehat\theta_i(\bar\nu\kappa_i+v_i)$ on every retained vector. This step applies to unbounded kinetic generators because their difference here is bounded.
+
+On the finite target, $\|K_{D,N}\|\le6N$, $0\le\phi\le1$ and $G^\diamond_D(p,q)\le1/\lambda$. Its coefficient difference is at most $12d_{a,i}+2d_{g,i}+d_{\nu,i}/\lambda$ in the joint sectors. Unitary Duhamel on that bounded target gives the corresponding $\widehat\theta_i$ contribution. Its exact generator norm is at most $C$, so the remaining target clock difference is at most $Ct_i$. Combining these steps yields a one-interval bound on input $W_D f_i$ of
+
+$$
+[\widehat\theta_i\bar R\sqrt\delta
+ +\widehat\theta_i b_i+Ct_i]\|f_i\|.
+$$
+
+This avoids assigning a finite global clock-Lipschitz constant to the unbounded continuum generator. Arbitrary previously accumulated continuum discrepancy is simply propagated by the actual contraction. For a service block, its difference on the ideal comparison vector $W_Df_i$ is at most $h_k\|f\|$, in addition to (66.6) if it is an enlargement. For an idle block its extra discrepancy is $e_i\|f\|$. Telescope as in Theorem66.6; $\sum_i\widehat\theta_i\le T+\Delta_\tau$. The actual maps propagate the ingress component and ingress error without amplification. Direct sums and identity tensors retain the same bounds and all correlations. This proves (66.9). $\square$
+
+At fixed $T,m$ the total bound tends to zero when the single density and all displayed supplied error budgets tend to zero, with bounded parameter envelopes. If an ingress, hold or calibration budget is fixed positive, (66.9) retains it and does not promise vanishing total error. For a desired unit-input tolerance $\varepsilon$, if all terms other than the density terms total at most $\varepsilon/2$, one sufficient single choice is
+
+$$
+0<\delta\le\min\left\{1,
+ \left(\frac{\varepsilon}{2[(T+\Delta_\tau)\bar R+288m]}\right)^2\right\}, \tag{66.10}
+$$
+
+when the denominator is positive; if it is zero, no density restriction beyond $\delta\le1$ is needed. This is a finite mathematical accuracy allocation. The actual supply and price of each certified ingress, multiplier, evolution and hold are independent obligations. A paid service/compilation hold has positive apparatus duration and retention cost. Freezing the comparison clock during it is its stated premise, not zero physical time; any departure must satisfy the indicated clock/hold certificates.
+
+Every original request, source-service routine, record write/copy, refusal, acquisition and Stop remains executed and charged as in §§60,62. Forgetting the additional continuum state and certificates returns that actual original history, rather than synthesizing replies from a Green calculation. The uniform bounds do not depend on an observer acquiring $D$, a beta mask or a coefficient, or having source-specific initialization. Public scheduling must use only the original supplied public data and actually acquired prefix. If new apparatus telemetry, fee labels, preparation data or readout reveals private source influence, source-independent observation needs its own contract, such as the fixed-public-schedule and private-enable boundary of Theorem60.3; the form theorem does not certify that implementation. An already commissioned terminal contraction $C_0$ can be compared mathematically through $C_0(W_{D_h}^{\rm joint})^*$, whose norm is at most one. Its error is bounded by (66.9). An already commissioned effect transports through $W_{D_h}^{\rm joint}F(W_{D_h}^{\rm joint})^*$; for unit normalized inputs its probability error is at most twice the full-state error. These are comparison maps, not new native ports or physical acquisition procedures, and no evolved component is silently discarded.
+
+**Proposition 66.8 (an accepted graft obstructs exact full-data/full-norm inclusion).** Consider an actual accepted original Right$(v)$ graft with its supplied nonempty context $v$, or its Left analogue. The old occurrence injection is respectively $p\mapsto Lp$ or $p\mapsto Rp$. It relocates the old root to a nonroot port and adds a parent seam; it is not the same-address whole-rho injection. Identify the old seams and old grounded stubs with the corresponding seams/stubs in the relocated subtree, with their intrinsic coordinates unchanged. Suppose a candidate transfer is required to retain every old atomic and open-cable component literally under this injection, and to preserve its full norm in the new active producer space, without a separate retained carrier or repreparation. For any old form vector $F$ with nonzero old-root atomic value, no such transfer can belong to the new one-particle form domain. Consequently no transfer meeting these requirements works on the full joint $N=1/N=2$ state space.
+
+Proof. The retained old strata already contribute exactly $\|F\|^2$ to the new norm. Full-norm equality forces every new atomic and open-cable component to be zero in its $L^2$ space. In particular the newly added parent cable is zero almost everywhere. If its function is $H^1$, both endpoint traces are zero. The trace at the relocated old root must instead equal its retained nonzero atomic value. This contradicts the new form-domain equality. The argument uses orthogonal positive-mass strata and does not assume that the transfer is linear. Failure on one one-particle input also rules out a map satisfying the joint all-input requirement. Keeping only old atomic data instead of all old components is a different retention requirement and is not covered by this impossibility. $\square$
+
+This has a minimal actual fixed-cap witness. At $H=2$, initialize the genuine source $t=\alpha$ and supply the named context $v=\alpha$. The original Right$(\alpha)$ candidate $\langle\alpha,\alpha\rangle$ has two leaves and is accepted at equality. Its immutable INITIAL is still the one-leaf source. The old $X_{\{o\}}$ has two grounded stubs. Let $F(o)=c$, with $F_e(x)=c(1-x)$ on both stubs and
+
+$$
+|c|^2=(1+2\delta/3)^{-1}.
+$$
+
+Then $F\in\mathcal Q_{\{o\},1}$, $\|F\|=1$ and $k(F)=2|c|^2$. It is also a calibrated input: the harmonic lift is exactly $E_1e_o$, and normalization gives $W_{\{o\},1}e_o$. The retained old components alone have new norm one. The new parent cable from the current root to $L$ would require trace $c$ at $L$, which zero added norm cannot supply. This is an actually legal source/context pair, not an idle theorem counterexample or an unguarded hypothetical graft. The Left case uses the same construction at $R$.
+
+There is a quantitative boundary if one instead allows added norm but imposes finite kinetic budget. Let $h$ be the new parent-cable function, parameterized with its old-root endpoint at $1$, with $h(1)=c\ne0$, and suppose $\int_0^1|h'|^2\le E<\infty$. Setting $n=\int_0^1|h|^2$, the fundamental theorem and Cauchy--Schwarz give
+
+$$
+|c|^2\le n+2\sqrt{nE},\qquad
+n\ge\left(\sqrt{E+|c|^2}-\sqrt E\right)^2>0.        \tag{66.11}
+$$
+
+Indeed integrate $|h(1)|^2=|h(x)|^2+2\operatorname{Re}\int_x^1h'\overline h$ over $x$, and bound the last integral by $2\|h'\|_2\|h\|_2$. Solve the resulting quadratic in $\sqrt n$. Thus retaining all old components entails squared-norm increase at least $\delta(\sqrt{E+|c|^2}-\sqrt E)^2$, before accounting for any other new strata. Boundary layers can make this addition small only by relaxing exact norm or allowing increasing energy; they do not supply exact full-data/full-norm transfer at a fixed density. Rescaling the whole vector to recover its norm changes its retained old amplitudes and relative reference data.
+
+Even at the finite target level a graft is not the common compression of (62.7). With current-root degrees and field defined as in §55 on the new source, the relocated old root gains degree one, and its old field values become $\phi(Lp)=\phi(Rp)=\phi(p)/2$. For the one-particle occurrence injection $\iota$ this gives
+
+$$
+\iota^*L_{D'}\iota=L_D+|e_o\rangle\langle e_o|,
+\qquad
+\iota^*H_{D',1}\iota-H_{D,1}
+=a|e_o\rangle\langle e_o|+\tfrac g2 M_{\phi|D}.     \tag{66.12}
+$$
+
+Old seams persist, but current-root anchoring does not. If a different graft comparison retains the old physical root/field instead, it must declare that law and all added ports and boundary conditions; it cannot use (62.7) by renaming addresses. Likewise its common and killed pair targets need their own faithful identification/update, rather than importing (66.5). The moving-root realization of legacy §52 is a distinct field/boundary contract. Proposition66.8 is an obstruction to the stated active-space full-retention requirement, not a proof that every physical graft realization is impossible. An alternative would have to specify an actual joint retained carrier, its unknown-state isometric ingress, the location and continued accessibility of all old data, new active generator and field, reference phase, collision conditions, clock, acquisition rights and finite price, and prove its correspondence without copying or resetting the unknown state. That bridge remains unresolved here.
+
+**Proposition 66.9 (a planar incidence realization of the same conditional mathematics).** All the full-space maps, trace domains, atomic multipliers and finite-history bounds above admit a compatible injective planar placement of their one-position supports. The same placement included in $\mathbb R^3$ has identical mathematics. This supplies a two-dimensional ambient incidence comparison, not a physical field-mediated counterrealization or a dimension-three selection.
+
+Proof. For each binary address $p$ of depth $d$, let $I_p$ be its dyadic interval in $[0,1]$ and place its port at $(\operatorname{mid}(I_p),-d)$. Join it by a straight segment to the corresponding centers of $I_{pL},I_{pR}$ at level $-d-1$. In each horizontal level band the two children of one parent remain inside that parent's dyadic strip, different parents have disjoint strip interiors, and the two sibling segments meet only at their parent. Bands meet only at their designated port points. This is an injective embedding of the full binary cable tree; every compact planar region meets only finitely many of its level bands and finitely many edges in those bands. For a finite current $D$, retain all actual seams and the next two segments at each current leaf as its grounded stubs, putting zero mass and zero trace at their outer tips. At whole-rho these very tips become the newborn atoms, so Definition66.2 is compatible with this single drawing. At fixed cap only a finite public address cover and its ground tips are needed; the infinite drawing is a mathematical comparison, not an infinite commissioned apparatus.
+
+Push forward the mass-one atomic measure and $\delta\,dx$ on each intrinsic unit cable. An intrinsic coordinate, not the planar segment's Euclidean length, defines the derivative form. The resulting map is a one-particle Hilbert/form isometry. Its product placement is injective on ordered pairs and carries the actual diagonal to the same-position diagonal, so its symmetric restriction preserves all mixed measures, dissected cells, boundary equalities and collision traces of Definition64.5. Copy the explicitly declared $\phi_A$ and both complete atomic pair multipliers; the transported operators are unitarily equivalent by closed-form representation. The full-space inclusions, calibrated preparations and error estimates therefore transport as well. They are not merely a fit of a root response or a ten-pair scalar table. $\square$
+
+If an edge has Euclidean arclength $\ell_e$, rewriting its intrinsic form in arclength $s$ gives cable density $\delta/\ell_e$ and derivative coefficient $\ell_e$: $\delta\int_0^1|F|^2dx=(\delta/\ell_e)\int_0^{\ell_e}|f|^2ds$ and $\int_0^1|F'|^2dx=\ell_e\int_0^{\ell_e}|f'|^2ds$. These are declared graph weights with singular atomic masses and junction/collision conditions, not an isotropic ambient Laplace operator. No ambient inverse-distance or hyperbolic point Green law is substituted for $G^{\rm c},G^{\rm k}$, so the actual all-pair obstructions of Chapters64–65 remain intact. Positive tube width, transverse modes, leakage, local spatial force, finite packing, displacement metrics and construction resources are absent from an incidence drawing.
+
+For contrast, any injective continuous cable-support embedding with a degree-three port cannot lie in $\mathbb R$. Three distinct incident arc germs must have disjoint interiors. Each image germ is an interval extending to the left or right of the image port; two of the three choose the same side, and their intervals overlap, violating injectivity. Every nonroot port of $X_D$ has incidence three, including its grounded stubs, so a nonsingleton authentic $D$ gives this one-dimensional obstruction. The singleton's two-stub interval has no such obstruction. It is a topological limitation of this particular injective-support contract, not exclusion of every one-dimensional encoded, nonlocal or temporally routed apparatus. A planar placement defeats inference that this graph-support mechanism alone requires three ambient dimensions, but it supplies no full physical two-space counterexample.
+
+**Definition 66.10 (exact suppliers, completed relations and remaining obligations).** Source, occurrence, boundary, record and actual renewal semantics are supplied by Continuation Definition1.1, TM22–23, TM30, PR57 and §§55,58,60,62. The fixed-space harmonic minimizers, actual collision domain, residual operator relation and idle evolution estimate are precisely Definition64.5 and Theorems64.6–64.7. Their mature closed-form and contact-domain methods are credited in Definition64.9, including Bolte--Kerner arXiv:1207.5648v1, Definition3.1 and Proposition3.2 in its Lebesgue-product metric-graph scope. It does not supply the atomic mixed-stratum enlargement map used here. No new third-party theorem about changing atomic cable spaces is assumed. Direct-sum isometry, trace continuity, polarization, bounded-perturbation Duhamel and the endpoint estimate are classical intermediates. The new source-qualified deductions are (66.1)–(66.9), the faithful accepted-graft retention obstruction and finite-energy cost (66.11)–(66.12), and their compatible planar incidence comparison. They are ordinary repo-derived proofs, without mathematical-priority, fresh Lean/kernel, physical or CI claims.
+
+The full whole-rho state-transfer and finite-history gap named in Proposition64.8 is resolved within its explicitly supplied stratified producer: every old mixed component is kept, every new atomic mass is treated, identity versions and composition hold, and one density gives a common full-norm bound for both occupations and both separately commissioned pair prescriptions. This does not construct the source-owned cable switch or license its physical execution. The graft obstruction concerns exactly literal old-stratum retention plus exact norm in the new active cable space; other retained-carrier graft contracts remain unresolved. No idle isometry or old-root relabeling is offered as their proof.
+
+All remaining physical/native bridges of Definition65.9 retain their scope: the operation- and metric-preserving displacement map; an isotropic local physical realization and its packing/transverse/exterior/collision controls; a genuine field mediator producing every common/killed pair coefficient with the unchanged one-body field; actual switching and retained-state graft law; source-independent ingress, unknown-input correlations, preparation, acquisition and readout; same-reference coherence and calibrated physical time; finite precision and every construction, control, service, production, storage, hold, retention, maintenance and total resource cost. A continuum support contains infinite-dimensional interval/cell spaces even at fixed cap. Its mass counts are not finite memory, apparatus mass, a minimum price or an unlimited-resource implementation. Chapter63's binding/spectral conclusions and Chapter65's dimension/reuse limits are consumers and constraints, not new capabilities supplied by the transfer.
+
+In particular the original $\mathcal D_2$ source still has its independent arbitrary unbounded actor $a$, including zero, its untagged radius-$7/25$ $b$, destructive actions, jointly adversarial/history-dependent errors, source-independent initialization and original INITIAL/Read/refusal/Stop. Those variables are not the positive commissioned $a$ and supplied error certificates above. The common $\Pi$ of Definition63.13 retains full-vector, spanning, common-zero, whole quadratic-distance/positive-semidefinite Gram, at least two independent directions, alternating bilinear exact-area/Jacobi, actual orthonormal-probe, finite binary-calibration and hidden-kernel-preserving-generator hypotheses. It supplies no cable ingress, new spatial operation or field mediator.
+
+The immutable composition-promised endpoint acquisition of §57 retains its depth caps, common source-independent initialization, actual query/reply histories, finite correct stopping on every same-composition positive and negative source, and distinct actual-address fees. Definition57.12 supplies no old-source archive. The separate paid promised-family archive/cut acquisition of Atomic Generation Acquisition §12 retains its paid positive-root archive, exact nonadvancing cut port, finite stopping/decoding, protected written records after refusal/closure, aligned actual generation, trusted markers, no unrecorded source change, actual write/protect/retain/query rights, closed strong ports and all reply-affecting retained source influence in the service price. Neither acquisition is unknown-state harmonic preparation, source cloning, reset, independent sampling or an exact limit Read. The phase-coherent full-tail minimax theory uses its own once-sampled-depth actual Read process and paid stopped transcript; none of its radii, finite-state counts, update matrices or clock is transferred to these occurrence/cable states.
+
+The planar comparison is compatible with the exact conditional graph laws and defeats only a graph-incidence inference of dimension three. It neither certifies a full physical lower-dimensional counterrealization nor adds a reason selecting three. The original sustained why-three-dimensions question, with its full source/operation/field/acquisition/resource target, remains open beyond this finite ordinary-proof increment.
+
+## 66.99 追加锚（本行以下为增补区）
+
+## 67. A source-uniform retained-field interface on every particle stratum
+
+**Definition 67.1 (source, retained carrier and commissioned field).** Retain the entire source object of Definitions55.1,62.1,64.5 and66.1: immutable INITIAL, every label, bracket, left/right order and distinct occurrence, fixed original leaf cap $H$, source-independent original initialization, actual versions and contexts, complete candidates and their whole-candidate guards, all acceptances and refusals, original Read and absorbing Stop, and every acquired chronological record. A mathematical field attached to a version is neither another source nor a new observation. Accepted Left/Right grafts remain distinct from whole-rho and retain Proposition66.8's boundary.
+
+For each authentic nonempty installed $D$, use exactly the particle spaces, measures, cable and stub coordinates, exterior killing, mixed slices, dissected cells, exchange symmetry, missing atomic collision coordinates and trace conditions of Definition64.5. Write $A_D=0\oplus A_{\delta,D,1}\oplus A_{\delta,D,2}$, $K_D=0\oplus K_{D,1}\oplus K_{D,2}$ and
+
+$$
+\begin{aligned}
+\mathscr H_D&=\mathbb Cr\oplus\mathscr H_{D,1}\oplus\mathscr H_{D,2},&
+\mathcal K_D&=\mathbb Cr\oplus\mathcal K_{D,1}\oplus\mathcal K_{D,2}^{\rm hc},\\
+W_D&=I_r\oplus W_{D,1}\oplus W_{D,2},&
+J_D&=I_r\oplus J_{D,1}\oplus J_{D,2}.
+\end{aligned}
+\tag{67.1}
+$$
+
+Here $J$ is atomic injection and $W$ is the already supplied harmonic calibration of Theorem64.6; no harmonic minimization, Schur reduction or particle-only history theorem is counted again as new content. All particle generators on the reference are zero. The singleton has its full two-position cable space but zero discrete two-occupation space, exactly as in §64.
+
+Keep the separately commissioned complete prescriptions $G_D^{\rm c}$ and $G_D^{\rm k}$ of (62.2)–(62.4), both with the unchanged common one-body field $\phi(p)=2^{-|p|}$. Put
+
+$$
+F_D^{\rm k}=L_D,\qquad F_D^{\rm c}=L_D-P_{\operatorname{Leaf}(D)},\qquad
+(F_D^\diamond)^{-1}=G_D^\diamond,\qquad
+\lambda I\le F_D^\diamond\le6I,\quad\lambda=3-2\sqrt2.
+\tag{67.2}
+$$
+
+These are static input identities. For completeness the common boundary identification follows directly from (62.3): if $p$ is a current leaf and $q\in D$, each absent child's common Green column value is $G^{\rm c}(p,q)/2$. Restoring the two absent terms subtracts exactly $G^{\rm c}(p,q)$ from the compressed row. Every nonleaf row is unchanged, so $(L_D-P_{\operatorname{Leaf}})G_D^{\rm c}=I$. This includes the singleton $F^{\rm c}=[1]$, whereas $F^{\rm k}=[2]$. The bounds follow from (62.4) and $0<F^{\rm c}\le L_D\le6I$. Equivalently $F^{\rm c}$ is the internal unit-conductance graph Laplacian with leaf pinning one; $F^{\rm k}$ has leaf pinning two. These local boundary loads are not a retained dynamic exterior for the infinite common field.
+
+At the fixed cap supply an additional field bank with one canonical oscillator for each address in $\mathcal B_H=\{p:|p|\le H-1\}$. Every full binary tree with at most $H$ leaves has depth at most $H-1$, since a path of depth $d$ has at least $d$ off-path sibling leaves. Thus this bank covers every legal installed source, including later newborn ports. Its $2^H-1$ oscillators are additional apparatus, distinct from the original qubit/address bank. Extend $F_D^\diamond$ by identity on $\mathcal B_H\setminus D$, with no cross block, and call the result $\widehat F_D^\diamond$. On the complete bosonic Fock space $\mathcal F_H=\Gamma_s(\ell^2(\mathcal B_H))$, set
+
+$$
+\mathsf n=d\Gamma(I),\qquad h_D=d\Gamma(\widehat F_D^\diamond),\qquad
+q_p=\frac{b_p+b_p^*}{\sqrt2},\quad
+\pi_p=\frac{b_p-b_p^*}{i\sqrt2},\qquad
+\lambda\mathsf n\le h_D\le6\mathsf n.
+\tag{67.3}
+$$
+
+Every installed mode, every excitation and all spectator modes are retained; a finite oscillator count is not a finite-state carrier. In these fixed canonical coordinates
+
+$$
+h_D=\tfrac12(q^{\mathsf T}\widehat F_D^\diamond q+
+\pi^{\mathsf T}\widehat F_D^\diamond\pi-\operatorname{tr}\widehat F_D^\diamond).
+\tag{67.4}
+$$
+
+This choice supplies both coordinate and momentum couplings along actual seams. In particular the momentum couplings are a new apparatus premise, not a native spring law. The same Fock vacuum is annihilated by every $h_D$ and has energy zero under one declared normal-ordering convention on reference and particle branches. An ordinary coordinate-spring field $(\pi^{\mathsf T}\pi+q^{\mathsf T}F_Dq-\operatorname{tr}\sqrt{F_D})/2$ has instead vacuum covariance $\langle qq^{\mathsf T}\rangle=F_D^{-1/2}/2$, generally changing with $D$. It is a different field contract; its vacuum cannot be replaced at renewal for free. All actual physical zero-energy calibration remains a supply obligation.
+
+**Definition 67.2 (the field generates the complete pair, with its self-energy retained).** On $\mathcal K_D$, let $m_p$ count particle coordinates equal to the mass-one atom $p$, and let it vanish on $r$. On a mixed stratum it counts only the atomic coordinate; on a cell it is zero. Literal hard core gives $m_p^2=m_p$ and $\sum_pm_p\le2$. On $\mathscr H_D$ let $n_p$ be the corresponding occupation multiplier, also zero on $r$. Thus $m_pJ_D=J_Dn_p$. For $\Omega\ge1$, $\nu\ge0$, and the same commissioned $a,g>0$ as before, put $\kappa=\sqrt{\nu\Omega}$ and declare
+
+$$
+\begin{aligned}
+\mathbb M_D={}&A_D\otimes I+I\otimes\Omega h_D
+-g\sum_{p\in D}\phi(p)m_p\otimes I
+-\kappa\sum_{p\in D}m_p\otimes q_p
++\frac\nu2\sum_{p\in D}G_D^\diamond(p,p)m_p\otimes I,\\
+\mathbb M_D^{\rm d}={}&aK_D\otimes I+I\otimes\Omega h_D
+-g\sum_{p\in D}\phi(p)n_p\otimes I
+-\kappa\sum_{p\in D}n_p\otimes q_p
++\frac\nu2\sum_{p\in D}G_D^\diamond(p,p)n_p\otimes I,\\
+\mathbb H_D^0={}&H_D^\diamond\otimes I+I\otimes\Omega h_D,
+\qquad H_D^\diamond=0\oplus H_{D,1}^\diamond\oplus H_{D,2}^\diamond.
+\end{aligned}
+\tag{67.5}
+$$
+
+The reference in all three has precisely $\Omega h_D$; it is stationary only on vacuum. Each generator is tensored with identity on every supplied retained auxiliary factor $\mathcal A$. No off-diagonal pair coefficient is installed as a particle multiplier in $\mathbb M_D$. The extra on-site compensation in (67.5) is indispensable, uses the actual diagonal of the same inverse as the entire pair table, and requires source-owned computation, installation and price. It is not a sector fit or a free Green observation port.
+
+Indeed, at any fixed particle position let $z=(m_p)$, extend it by zero to the bank, and set
+
+$$
+\alpha_z=\sqrt{\frac\nu{2\Omega}}\,(G_D^\diamond z)\oplus0,
+\qquad D(\alpha)=\exp\{b^*(\alpha)-b(\alpha)\}.
+\tag{67.6}
+$$
+
+For this field fibre, $D(\alpha)^*b_pD(\alpha)=b_p+\alpha_p$ and
+
+$$
+\begin{aligned}
+D(\alpha_z)^*\left(\Omega h_D-\kappa\sum_pz_pq_p\right)D(\alpha_z)
+&=\Omega h_D-\frac\nu2z^{\mathsf T}G_D^\diamond z,\\
+-\frac\nu2z^{\mathsf T}G_D^\diamond z+
+\frac\nu2\sum_pG_D^\diamond(p,p)z_p
+&=-\nu\sum_{p<q}G_D^\diamond(p,q)z_pz_q.
+\end{aligned}
+\tag{67.7}
+$$
+
+The ordering in the last sum only enumerates unordered pairs; it adds no statistics sign. On two distinct atoms this is the entire prescribed pair potential, with equal value under exchange. On every mixed stratum, every cell, the one-particle sector and the reference it is zero. In particular all ten entries of both separate tables in Definition64.1, including the common $LL,LR$ entry $3/16$ and killed entry $5/78$, arise from the single corresponding inverse; none is selected for fitting. The common $\phi$ and all kinetic, exterior and collision terms are untouched. This fibre algebra is mature displacement algebra, not a claim that displacement conjugates the full cable kinetic operator on its original domain.
+
+**Lemma 67.3 (actual operator domain and the atom-only displacement defect).** For each finite commission the self-adjoint semibounded operator $\mathbb M_D$ is defined on
+
+$$
+\operatorname{Dom}(A_D\otimes I)\cap
+\operatorname{Dom}(I\otimes\mathsf n).
+\tag{67.8}
+$$
+
+Its form domain is the intersection of the full Fock-valued particle form domain of Definition64.5 with $\operatorname{Dom}(I\otimes\mathsf n^{1/2})$. All interval endpoint, slice/cell, ground and collision traces are equalities in field/auxiliary Hilbert norm. This domain, including its literal symmetry and collision conditions, is preserved by its full unitary evolution. No assumption that $m_p$ preserves the particle domain is required.
+
+Proof. Put $B=(\mathsf n+I)^{1/2}$. The usual creation and annihilation estimates give, for each real bank vector $z$,
+
+$$
+\|q(z)\psi\|\le\sqrt2\|z\|\,\|B\psi\|,
+\qquad q(z)=\sum_pz_pq_p.
+\tag{67.9}
+$$
+
+At every particle configuration $\|z\|^2=\sum_pm_p\le2$. Apply (67.9) fibrewise, including mixed and cell strata, and integrate their actual measures. It follows that
+
+$$
+\left\|\sum_pm_p\otimes q_p\,\Xi\right\|\le2\|B\Xi\|,
+\qquad
+\left\|\sum_pn_p\otimes q_p\,\Psi\right\|\le2\|B\Psi\|.
+\tag{67.10}
+$$
+
+There is no number-of-sites factor. The positive tensor sum $A_D\otimes I+I\otimes\Omega h_D$ has the intersection domain in (67.8), since its summands strongly commute and $\lambda\mathsf n\le h_D\le6\mathsf n$. The square-root estimate (67.10) makes the linear coupling infinitesimally operator-bounded relative to that sum. The other two multipliers in (67.5) have combined norm at most $M=2g+\nu/\lambda$. Kato–Rellich therefore gives (67.8); the corresponding infinitesimal form bound gives the stated form domain with equivalent shifted form norm. Semiboundedness also follows fibrewise from (67.7), the positive displaced field energy and the bounded complete pair multiplier. The positive shifted square root of $\mathbb M_D$ commutes with its unitary group, so this actual form domain is invariant. The source particle trace constraints, including both collision traces in a same-cable cell, are part of that domain. $\square$
+
+The distinction between relative boundedness and domain preservation matters. On the legal singleton, take the one-particle form vector with atomic value $c\ne0$ and each grounded stub function $c(1-x)$, tensor any field vector changed by $D(\alpha_{e_o})$. An atom-only displacement changes the atomic field vector while leaving the open-stub endpoint vector unchanged. The trace equality fails. Similarly, $m_oF$ has zero cable traces and atomic value $c$; it belongs to the particle form domain only if $c=0$. Thus no dense subdomain of $\operatorname{Dom}(A)$ invariant under $m_o$ exists: it would lie in the closed subspace with zero mass-one atomic coordinate. This rules out that particular invariant-domain hypothesis in Suzuki's unbounded-system scaling theorem; it does not rule out the relative-bound construction (67.8).
+
+**Lemma 67.4 (the source-uniform field-weighted lift defect).** Use $\omega=\max_N\sqrt{\beta_N^2+s_N^2}$ from Lemma66.5, so $\|W_D-J_D\|\le\omega\le144\sqrt\delta$. Write $Q_A=\sum_pm_p\otimes q_p$ and $Q_n=\sum_pn_p\otimes q_p$. Then on the field-number form domain,
+
+$$
+\|[Q_A(W_D\otimes I)-(W_D\otimes I)Q_n]\Psi\|
+\le4\omega\|B\Psi\|.
+\tag{67.11}
+$$
+
+Consequently there is a bounded field-independent operator $R_{0,D}$ with $\|R_{0,D}\|\le R\sqrt\delta$, where $R$ is exactly the common constant after Theorem64.7, such that
+
+$$
+\mathbb M_D(W_D\otimes I)-(W_D\otimes I)\mathbb M_D^{\rm d}
+=R_{0,D}\otimes I-\kappa[Q_A(W_D\otimes I)-(W_D\otimes I)Q_n].
+\tag{67.12}
+$$
+
+Proof. The atomic identity gives $Q_A(J_D\otimes I)=(J_D\otimes I)Q_n$. Subtract it and write $C_D=W_D-J_D$. Since $C_D$ commutes with $B$, (67.10) bounds $Q_A(C_D\otimes I)\Psi$ by $2\omega\|B\Psi\|$, and $(C_D\otimes I)Q_n\Psi$ by the same quantity. This proves (67.11) without summing the norms of individual port defects.
+
+For (67.12), consume Theorem64.6's operator relation $AE=JaB_N$ and its residual calculation in Theorem64.7, now with the compatible bounded potentials
+
+$$
+U_0=-g\sum_p\phi(p)m_p+\frac\nu2\sum_pG_D^\diamond(p,p)m_p,
+\qquad
+V_0=-g\sum_p\phi(p)n_p+\frac\nu2\sum_pG_D^\diamond(p,p)n_p.
+$$
+
+They satisfy $U_0J=JV_0$ and $\|U_0\|,\|V_0\|\le M=2g+\nu/\lambda$. Thus the same calculation bounds the particle residual by
+$18a\delta+2(12a+M)s_N+\beta_N(12a+2M)\le R\sqrt\delta$ in both sectors. It is zero on $r$. The free field commutes with $W$ and cancels exactly. Subtracting the remaining linear coupling gives (67.12). In particular the field's large free energy has not been replaced by a frequency estimate on a discarded mode. $\square$
+
+**Lemma 67.5 (a domain-safe discrete comparison device).** For the reference set $\alpha_r=0$; for a literal discrete occupation $S$ use $z=\mathbf1_S$ in (67.6). Define the block unitary $U_D$ on $\mathscr H_D\otimes\mathcal F_H$ by $D(\alpha_S)$ on its $S$ block. Put
+
+$$
+\rho=\frac{\sqrt\nu}{\lambda\sqrt\Omega},\qquad
+b(\Psi)=\|B\Psi\|.
+$$
+
+For arbitrary correlations with the reference, sectors and retained auxiliaries,
+
+$$
+\begin{aligned}
+\|(U_D-I)\Psi\|&\le2\rho\,b(\Psi),&
+b(U_D\Psi)&\le b(\Psi)+\rho\|\Psi\|,\\
+\|[\mathbb M_D^{\rm d}U_D-U_D\mathbb H_D^0]\Psi\|
+&\le12a\rho\,b(\Psi).
+\end{aligned}
+\tag{67.13}
+$$
+
+Moreover $(W_D\otimes I)U_D$ maps $\mathscr H_D\otimes\operatorname{Dom}(\mathsf n)$ into (67.8). Displacement is applied to discrete coefficients before the Fock-valued harmonic lift, never to atomic coordinates after that lift.
+
+Proof. The inverse bound and $|S|\le2$ give $\|\alpha_S\|\le\rho$. Integrating the unitary group generated by $b^*(\alpha)-b(\alpha)$ gives
+$\|(D(\alpha)-I)\psi\|\le2\|\alpha\|\|B\psi\|$. The annihilation-vector identity $b_pD(\alpha)=D(\alpha)(b_p+\alpha_p)$, with the unchanged identity component appended, gives
+$\|BD(\alpha)\psi\|\le\|B\psi\|+\|\alpha\|\|\psi\|$.
+Sum the squares over the orthogonal occupation blocks to get the first two inequalities, using the triangle inequality for the direct sum in the second.
+
+Equation(67.7) cancels the linear fields and their complete diagonal self-energy on each block, leaving precisely $H_D^\diamond+\Omega h_D$ and dressed hopping. The inherited kinetic diagonal commutes with $U_D$; it still counts every blocked collision hop and exterior seam. An allowed hop $S\to T$ changes $z$ by $e_q-e_p$, hence $\|\alpha_T-\alpha_S\|\le\rho$. All these vectors are real, so there is no extra Weyl composition phase, and
+
+$$
+\|(D(\alpha_T)-D(\alpha_S))\psi\|
+=\|(D(\alpha_T-\alpha_S)-I)\psi\|
+\le2\rho\|B\psi\|.
+\tag{67.14}
+$$
+
+The matrix of allowed occupation moves has at most $3N\le6$ entries in each row and column. Cauchy–Schwarz in each row followed by the column count bounds its field-valued commutator by $6\cdot2a\rho\,b(\Psi)$, proving (67.13). This estimates the entire hopping operator on the field vector, not its vacuum expectation and not a renormalized choice of $a$.
+
+For finite bank size, a fixed Weyl displacement preserves $\operatorname{Dom}(\mathsf n)$: on finite-number vectors conjugating $\mathsf n$ adds $b^*(\alpha)+b(\alpha)+\|\alpha\|^2$, which is $\mathsf n$-bounded; graph closure and the inverse displacement prove domain equality. The finitely many occupation blocks therefore preserve this domain. The operator relation in Theorem64.6 makes $A_DW_D$ bounded on the whole discrete particle space, also for field-valued coefficients. $W_D$ commutes with $\mathsf n$. These facts put the composed map in both domains of (67.8). No continuum displacement-domain assertion is used. $\square$
+
+**Theorem 67.6 (complete retained-norm finite-clock comparison).** Fix any finite $E,T$, the commissioned $a,g>0$, $\nu\ge0$, and one $0<\delta\le1$, $\Omega\ge1$. For every authentic nonempty finite source at any finite legal cap, either separate complete pair prescription, every supplied auxiliary Hilbert space, and every joint input
+
+$$
+\Psi\in\mathscr H_D\otimes\mathcal F_H\otimes\mathcal A,
+\qquad \|\mathsf n^{1/2}\Psi\|^2\le E\|\Psi\|^2,
+\tag{67.15}
+$$
+
+the following bound holds for every $|\tau|\le T$:
+
+$$
+\begin{aligned}
+&\|e^{-i\tau\mathbb M_D}(W_D\otimes I)\Psi
+ -(W_D\otimes I)e^{-i\tau\mathbb H_D^0}\Psi\|\\
+&\quad\le |\tau|R\sqrt\delta\,\|\Psi\|
++\left[(4+12a|\tau|)\rho+
+4|\tau|\kappa\omega(1+\rho)\right]b(\Psi)\\
+&\quad\le\left\{TR\sqrt\delta+
+\left[(4+12aT)\rho+4T\kappa\omega(1+\rho)\right]\sqrt{E+1}\right\}\|\Psi\|.
+\end{aligned}
+\tag{67.16}
+$$
+
+Every norm is the full joint Hilbert norm with its absolute reference convention. It includes all atomic, mixed, cell and field components, all excitations and all retained correlations. No trace, clean-state projection, postselection, phase quotient, field reset or source copy occurs. Input(67.15) is arbitrary within this energy/moment class, including unknown particle–field–auxiliary entanglement; it is not restricted to a vacuum or product field. Its particle ingress is the explicitly supplied $W_D$ range. An additional arbitrary retained vector of norm at most $\eta$ contributes at most $\eta$ to this comparison by unitarity; a large arbitrary continuum particle component is not silently included in the calibrated input class.
+
+Proof. First take $\Psi\in\operatorname{Dom}(\mathsf n)$ and let $P_D=(W_D\otimes I)U_D$. This is an isometry and has the domain property in Lemma67.5. Combining (67.12) and (67.13) gives, on this core,
+
+$$
+\|[\mathbb M_DP_D-P_D\mathbb H_D^0]\Xi\|
+\le R\sqrt\delta\,\|\Xi\|
++4\kappa\omega[b(\Xi)+\rho\|\Xi\|]
++12a\rho\,b(\Xi).
+\tag{67.17}
+$$
+
+The ideal generator $\mathbb H_D^0$ commutes with $\mathsf n$; it preserves both $b(\Psi)$ and $\|\Psi\|$. Its particle part is bounded and its field part preserves $\operatorname{Dom}(\mathsf n)$. Consequently the exact derivative of
+$e^{-i(\tau-s)\mathbb M_D}P_De^{-is\mathbb H_D^0}\Psi$ is legitimate in Hilbert norm. Integrate (67.17). Replace $P_D$ at the two endpoints by $W_D\otimes I$ using the first inequality of (67.13), adding $4\rho b(\Psi)$. Since $\|\Psi\|\le b(\Psi)$, the result is the first inequality of (67.16). Finite-number spectral cutoffs approximate any input of (67.15) in the $B$ graph norm; unitarity and the bounded isometries pass the result to that input. Tensor identities and the direct-sum estimates apply throughout, so no product-input restriction was inserted. The second inequality uses $b(\Psi)\le\sqrt{E+1}\|\Psi\|$. $\square$
+
+For a single explicit common choice $\delta=\Omega^{-2}$, let $c=\sqrt\nu/\lambda$. Since $\omega\le144/\Omega$, (67.16) implies
+
+$$
+\sup_{|\tau|\le T}\frac{\|\text{full comparison difference}\|}{\|\Psi\|}
+\le\frac{TR}{\Omega}
++\frac{[(4+12aT)c+576T\sqrt\nu(1+c)]\sqrt{E+1}}{\sqrt\Omega}.
+\tag{67.18}
+$$
+
+The constants are independent of $D$, its cap, shape, boundary, bank size and pair choice. Thus the supremum over all separately legal finite commissions and their inputs satisfying the same moment bound tends to zero. This is uniformity of an estimate, not one apparatus completing an infinite refinement, an infinite population limit, an unbounded-horizon assertion or a finite total construction price. A fixed scaled-field-energy bound $\langle h_D\rangle\le E_h\|\Psi\|^2$ suffices with $E=E_h/\lambda$. The unscaled free field energy in a commissioned input is $\Omega\langle h_D\rangle$, so maintaining a fixed number-moment class while increasing $\Omega$ does not keep that resource fixed. At $\nu=0$ all displacement/coupling terms vanish and the already supplied particle-only residual remains. The zero two-occupation target on a singleton, zero time and all reference superpositions are included.
+
+**Theorem 67.7 (finite whole-rho histories retaining the actual field).** Fix an actual finite legal history with accepted whole-rho and original services, without an accepted Left/Right graft in the compared prefix. Let $q$ count only accepted renewals with a nonempty beta mask, and let $T$ be its total nonnegative idle comparison time. Use the one fixed bank $\mathcal F_H$, density, $\Omega$, moment bound and normal-ordering convention throughout. At a genuine renewal use the full inclusion $\mathsf T_{D'D}\otimes I_{\mathcal F_H\otimes\mathcal A}$ of Theorem66.3; the field vector and every field correlation are literally retained. At identity-domain acceptances, Read and refusal use identity on the retained quantum factors and keep the original actual classical record. On each idle interval evolve the producer by $\mathbb M_D$ and the ideal target by $\mathbb H_D^0$ of the actual current version. The target cut uses $\jmath_{D'D}\otimes I$. Denote these complete histories by $\mathbb P_h$ and $\mathbb V_h^0$.
+
+For every initial input(67.15) and every checkpoint,
+
+$$
+\begin{aligned}
+&\|\mathbb P_h(W_{D_0}\otimes I)\Psi
+ -(W_{D_h}\otimes I)\mathbb V_h^0\Psi\|\\
+&\quad\le (TR\sqrt\delta+2q\omega)\|\Psi\|
++\left([4(q+1)+12aT]\rho+
+4T\kappa\omega(1+\rho)\right)b(\Psi).
+\end{aligned}
+\tag{67.19}
+$$
+
+Use each checkpoint's actual prefix $q,T$. In particular the choice $\delta=\Omega^{-2}$ gives
+
+$$
+\frac{\|\text{full history difference}\|}{\|\Psi\|}
+\le\frac{TR+288q}{\Omega}
++\frac{\{[4(q+1)+12aT]c+576T\sqrt\nu(1+c)\}\sqrt{E+1}}{\sqrt\Omega}.
+\tag{67.20}
+$$
+
+Proof. Combine all idle pieces separated only by identity-domain source services: their geometric particle/field generators agree, so no extra endpoint estimate is charged merely for another Read or a label-changing identity version. There are at most $q+1$ remaining idle blocks. Ideal idle evolution commutes with $\mathsf n$, and each ideal occurrence injection is an isometry tensored with identity on the field, so $b(\Psi)$ and its norm remain fixed along the ideal history. Apply (67.16) to each ideal current input. Previously accumulated producer error is carried by the full unitary or inclusion; no bound on the actual field excitation of that error, and no return to the prepared range, is assumed. At an enlargement Lemma66.5 gives the additional full calibration mismatch $2\omega\|\Psi\|$ after tensoring with field identity. Summation gives (67.19), and (67.20) follows as in (67.18). The fibrewise form of Theorem66.3 preserves all Hilbert-valued particle traces at a cut; (67.3) makes the field-number form domain common to both source versions. Thus a supplied form-admissible initial component remains form-admissible as well. An arbitrary extra initial vector of norm at most $\eta$ adds at most $\eta$ and is retained in full. $\square$
+
+The whole-rho field change here is a change of the commissioned local generator on the same bank, including its boundary pinning and on-site compensation, not re-preparation of a vacuum or deletion of an old oscillator. The common and killed updates keep their different actual pair laws, including (66.5); compression is still not exact dynamic intertwining. The field comparison explicitly includes the time-ordered free field on the reference and target. Refusals do not install a refused candidate or release a candidate Read. A source-owned execution certificate for these inclusions, stiffness switches, compensation updates and all service/locking/hold durations is not furnished by (67.19). If such actual full-map certificates are separately supplied, their norm errors and an ingress error may be added by the same isometric telescoping. An unrecorded service evolution or missing mode is not such a certificate.
+
+**Proposition 67.8 (why unrestricted unknown-field operator norm does not follow).** For $\nu>0$ the finite-clock comparison above cannot be upgraded to a vanishing full operator-norm estimate over all normalized unknown field inputs, even on the legal singleton and even when $\delta=\Omega^{-2}$. This is a counterexample within the commissioned field model, not a universal obstruction to all mediated physical models.
+
+Proof. Fix either singleton prescription $F=[f]$, $f=1$ for common and $f=2$ for killed. In the discrete one-particle block $H_1=2a-g$, write $\alpha=\sqrt{\nu/(2\Omega)}/f>0$. There is no hopping. Equation(67.7), with its compensation, gives exactly
+
+$$
+\mathbb M^{\rm d}=D(\alpha)[H_1+\Omega f\mathsf n]D(\alpha)^*.
+$$
+
+At $t_\Omega=\pi/(\Omega f)$ the relative field unitary against the ideal free evolution is $D(2\alpha)$; its Weyl scalar is one because the rotation angle is $\pi$. Choose the initial coherent vector $|iy_\Omega\rangle$ with $y_\Omega=\pi/(4\alpha)$. The ideal output is, up to the common particle phase, $|-iy_\Omega\rangle$. The coherent-vector identity yields
+
+$$
+\langle-iy_\Omega|D(2\alpha)|-iy_\Omega\rangle
+=-e^{-2\alpha^2},\qquad
+\|[e^{-it_\Omega\mathbb M^{\rm d}}-e^{-it_\Omega\mathbb H^0}]
+(e_o\otimes|iy_\Omega\rangle)\|^2=2+2e^{-2\alpha^2}\longrightarrow4.
+\tag{67.21}
+$$
+
+The field moment is $y_\Omega^2=\pi^2\Omega f^2/(8\nu)$, which is outside every fixed class(67.15). This already diagnoses the precise unknown-input boundary of the finite discrete supplier. It also survives the actual stratified lift. Along this exact discrete evolution the field amplitude is
+$\alpha+e^{-is\Omega f}(iy_\Omega-\alpha)$, so its $B$ norm is at most $b_\Omega+2\alpha$, where $b_\Omega=\sqrt{y_\Omega^2+1}$. Integrating the domain-valid residual(67.12), now directly against this discrete evolution, bounds the difference between its lifted output and the full stratified output by
+
+$$
+t_\Omega\left[R\sqrt\delta+4\kappa\omega(b_\Omega+2\alpha)\right].
+\tag{67.22}
+$$
+
+For $\delta=\Omega^{-2}$ this tends to zero: $t_\Omega=O(\Omega^{-1})$, $\kappa=O(\Omega^{1/2})$, $b_\Omega=O(\Omega^{1/2})$ and $\omega=O(\Omega^{-1})$, with the fixed constants displayed above. Since $W$ is an isometry, (67.21) therefore gives a full stratified discrepancy tending to two, at times lying in every fixed positive horizon for all sufficiently large $\Omega$. If a relative-phase witness is desired, use $(r+e_o)/\sqrt2$ with the same field input; the reference discrepancy is zero and the joint discrepancy tends to $\sqrt2$. No auxiliary trace or global-phase identification removes that witness. $\square$
+
+The example neither excludes the fixed-$E$ estimate nor shows failure for every fixed unknown field vector: it selects a growing-energy family. It disproves the stronger uniform quantifier. Unknown-state ingress without a verified moment/energy promise consequently remains unresolved. A promised vacuum is the $E=0$ subfamily, not an arbitrary unknown field state.
+
+**Proposition 67.9 (spatial and clock content of the interface).** The proved comparison uses the source's bounded incidence, complete Green inverses, literal occupation bound and the declared local field matrices, with no ambient dimension parameter. Transporting the particle carrier by the compatible planar incidence placement of Proposition66.9 and identifying the same address-indexed field bank transports (67.5)–(67.20) unitarily; including that placement in three-space gives the identical estimate. This extends that existing comparison to the new retained field, rather than proving its incidence embedding again. It supplies no selection of ambient dimension three and no full physical planar counterrealization.
+
+Indeed the field matrix has only seam-neighbour and on-site entries in both canonical quadratures, so the graph-local declaration is preserved by either placement. But neither placement supplies an isotropic ambient differential field operator, Euclidean unit lengths, positive cable width, finite packing, transverse-mode/leakage controls, a metric-preserving displacement or a physical realization of momentum coupling. The common finite boundary load matches the full static common pair matrix; it does not import an unknown exterior dynamical state. The Euclidean and homogeneous hyperbolic point-source hypotheses tested in Chapters64–65 remain distinct and their actual all-pair obstructions remain in force. Any dimension selection requires an additional faithful spatial/operator/operation contract and a proof that lower-dimensional or inhomogeneous alternatives fail that same contract. Counting modes, graph degree or the number of fitted scalars supplies none.
+
+The comparison clock is the one declared $\tau$ on every branch, field mode and interval. Native event order, physical elapsed time and paid digital ticks have no newly proved conversion. Its energetic precision dependence is explicit even in the ideal comparator: for an input(67.15), $\|H_D^\diamond\|\le C=12a+2g+\nu/\lambda$ and $h_D\le6\mathsf n$ give
+
+$$
+\|[e^{-iu\mathbb H_D^0}-e^{-iv\mathbb H_D^0}]\Psi\|
+\le\left[C|u-v|+\sqrt{12\Omega|u-v|E}\right]\|\Psi\|.
+\tag{67.23}
+$$
+
+Use $|e^{-ix}-1|^2\le2|x|$ and the field spectral theorem for the second term. Thus bounded particle coefficients alone do not price a field clock fault. The physical calibration and service-clock certificates remain required, with their actual state class and resources.
+
+**Definition 67.10 (primary-source reuse and scope of the addition).** Akito Suzuki, [*A scaling limit for quantum field models*, RIMS Kôkyûroku1510, pp52–69](https://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/1510-6.pdf), §2 Proposition2.2/Corollary2.3 and §3.3 Theorem3.1/Corollary3.2, printed pp55–59, supplies the mature qualitative vacuum scaling result. Its generalized spin-boson model has lower-bounded self-adjoint $A$, finitely many bounded self-adjoint $B_j$, a nonnegative injective one-boson $T$, inverse-power form-factor conditions and real pairings. Unbounded $A$ additionally requires a dense $B_j$-invariant domain and commutator control, (3.4) and the following assumptions. Bounded finite occupation $A$ satisfies those extra assumptions. With scaling $\Lambda^2=\Omega$, real port form factors and $T=\widehat F_D$, its effective quadratic interaction (3.7) gives the same finite discrete static interaction; the compensation in (67.5) must still be retained. That qualitative finite-source vacuum consequence is direct supplier reuse, not a new theorem here. Suzuki's invariant-domain hypothesis does not apply to the atomic/mixed particle kinetic operator, as Lemma67.3 shows. The source-uniform moment-dependent rate and the domain-safe stratified residual (67.11)–(67.17) are not attributed to his qualitative result.
+
+Tadahiro Miyao, [*Nagaoka's theorem in the Holstein–Hubbard model*, arXiv:1611.08659v4](https://arxiv.org/pdf/1611.08659v4), §5.2, equations(5.2)–(5.7), PDF pp10–11, supplies the mature Lang–Firsov displacement mechanism, including operator-valued hopping and induced density energy. The finite-lattice, spinful-fermion, one-hole/Gutzwiller and dispersionless-field assumptions of its main theorem are not the source's literal symmetric hard-core assumptions. Its expressly ignored constant in (5.6) cannot be discarded for the present reference contract. Only the algebraic method is reused here, with the full self-energy and hopping audited in (67.7),(67.14).
+
+Diego Porras and J.I. Cirac, [*Effective quantum spin systems with trapped ions*, arXiv:quant-ph/0401102v1](https://arxiv.org/pdf/quant-ph/0401102v1), PDF p2, equations(1)–(8), derives inverse-elasticity spin couplings while retaining induced one-body terms and residual field coupling. Its accuracy discussion on PDF pp3–4, equation(9) and the following thermal-error expansion, assumes a product thermal phonon input and studies reduced/averaged spin fidelity. It is not a full retained-norm arbitrary-correlated-field theorem, and supplies neither the rooted matrix nor the balanced momentum apparatus of (67.4). Toshimitsu Takaesu, [*Scaling Limits for the System of Semi-Relativistic Particles Coupled to a Scalar Bose Field*, arXiv:1004.4261v2](https://arxiv.org/pdf/1004.4261v2), §2.1 equations(4)–(5), PDF p3, supplies the standard field-relative-bound estimates used in Lemma67.3. Its continuum semi-relativistic scaling theorem, with additional spatial derivative hypotheses, is not transplanted to discontinuous atomic densities. The prior contact-form literature and atomic/mixed closed-form enlargement retain exactly the reuse scopes in Definitions64.9 and66.10.
+
+The mathematical increment is the source-size-independent field-weighted lift defect, its domain-safe all-mode use, the explicit joint finite-clock rate and retained-field whole-rho consequence, and the scoped growing-energy obstruction. Static elimination, qualitative finite-system vacuum scaling, the completed particle-only idle/history mathematics and planar incidence embedding are suppliers. These are ordinary source-qualified proofs, with no claim of fresh Lean/kernel verification, physical validation, mathematical priority, publication status or sustained-goal completion.
+
+**Definition 67.11 (unresolved source, operation, acquisition and price obligations).** The consumer is precisely the mediator gap in Proposition64.8/Definition66.10: replace the installed atomic pair multiplier by one local field rule while retaining the complete source, particle operators and joint state. Equations(67.16)–(67.20) supply that conditional interface on the declared ingress/moment class. A wrong common/killed inverse, uncanceled diagonal, omitted hopping/field mode, failed Hilbert-valued domain relation, growing source-size constant, or a finite-moment input violating (67.16) falsifies that claim. No premise authorizes a different source, another cap, copied/relabelled INITIAL or a private coefficient/clock/readout port.
+
+All native and physical obligations in Definition66.10 persist unless explicitly supplied in this chapter. These include actual acquisition and installation of the source-qualified field and its on-site compensation, unknown joint-state ingress with a usable moment promise, preparation of $W_D$ without copying, a physical local/isotropic/metric realization with packing, transverse and exterior controls, genuine retained switching, and an accepted-graft retained-carrier law satisfying Proposition66.8. A whole-rho theorem cannot license the distinct Left/Right graft. Also still required are reference preparation/calibration, every actual clock conversion, readout, original error handling and actual finite execution certificates. Fixed-cap bank size, input energy, increasing $\Omega$, $\sqrt{\nu\Omega}$ coupling, decreasing cable mass density, source-dependent stiffness/compensation precision, all unused modes, all field/particle correlations and service durations are priced coordinates to be supplied, not free controls. Construction, source service, production, storage, hold, retention, maintenance, precision and total lifetime costs remain obligations. The analytic rate is neither a physical cost advantage nor a minimum-price law.
+
+The original $\mathcal D_2$ actor $a$ remains arbitrary, unbounded and possibly zero, its $b$ remains untagged with radius $7/25$, and its destructive operations and correlated/history-dependent errors retain their original joint quantifiers. They are not the positive commissioned Hamiltonian parameters or moment/clock certificates. Original source-independent actor initialization, INITIAL, Read, refusals and Stop are unchanged.
+
+The common $\Pi$ of Definition63.13 retains its full-vector and spanning assumptions, common zero, whole quadratic-distance/positive-semidefinite Gram relation, at least two independent directions, alternating bilinear exact-area/Jacobi law, actual orthonormal probes, finite binary calibration and hidden-kernel-preserving generator conditions. None supplies field or cable ingress, a new spatial operation or a clock. The immutable composition-promised endpoint acquisition of §57 retains fixed depth caps, common source-independent initialization, actual query/reply histories, finite correct stopping on every same-composition positive and negative source, and distinct actual-address fees; Definition57.12 supplies no old-source archive. The separate paid promised-family archive/cut supplier of Atomic Generation Acquisition §12 retains the paid positive-root archive, exact nonadvancing cut port, finite stopping/decoding, protected written records after refusal/closure, aligned actual generation, trusted markers, no unrecorded source change, actual write/protect/retain/query rights, closed strong ports, and all reply-affecting retained source influence included in its service price. Neither supplier gives cloning, reset, independent resampling, unknown-state harmonic/field preparation or an exact limit Read. The full-tail phase-coherent theory keeps its separate once-sampled-depth actual Read process and paid stopped transcript; its radii, finite-state counts, update matrices and clock are not transferred here.
+
+The finite assignment therefore proves a conditional complete-stratum, all-mode, source-uniform dynamic interface and its finite whole-rho use. It leaves unrestricted unknown ingress, actual execution and physical resource realization open, and supplies no hypothesis selecting three spatial dimensions. Those unresolved terms belong to the intact sustained source/operation/field/acquisition/resource question.
+
+## 67.99 追加锚（本行以下为增补区）
+
+## 68. Sharp square-root depth loss for the actual retained-memory graft form at zero charge
+
+**Definition 68.1 (unchanged source and complete recursive carrier).** Use exactly Definitions64.5 and67.1–67.3, at fixed commissioned $a,g>0$, $\Omega\ge1$, $0<\delta\le1$ and $\nu=0$ throughout each execution. Fix either complete common or complete killed prescription separately.
+Every actual source retains its labels, brackets, order, distinct equal-valued occurrences, immutable INITIAL, original source-independent actor initialization, fixed cap $H$, complete supplied contexts, whole candidates and guards, accepts/refusals, original numerical Read, absorbing Stop and every actually acquired chronological record.
+No refused candidate Read, source substitute, archive, reset, cloning or exact-limit Read is introduced.
+
+Let $D_0,\ldots,D_n$ be the successive actual versions of a finite accepted Left/Right graft prefix. Intervening original Reads and refusals retain their source and records and do not count as grafts; this recurrence does not insert an accepted whole-rho enlargement.
+The occurrence injection $\iota_j$ is $p\mapsto Rp$ for Left and $p\mapsto Lp$ for Right, on both literal occupation sectors, and identity on the reference.
+Each new parent seam, relocated old-root degree and current-root field $\phi(p)=2^{-|p|}$ is used at its actual version. Put
+
+$$
+\begin{aligned}
+X_j&=\mathcal K_{D_j}\otimes\mathcal F_H\otimes\mathcal A,&
+T_j&=A_{D_j}-g\sum_{p\in D_j}\phi(p)m_p,\\
+H_j&=aK_{D_j}-g\sum_{p\in D_j}\phi(p)n_p,&
+\mathbb M_j&=T_j\otimes I+I\otimes\Omega h_{D_j},\\
+\mathcal E_j&=\operatorname{Dom}(A_{D_j}^{1/2}\otimes I)
+ \cap\operatorname{Dom}(I\otimes\mathsf n^{1/2}),&q_j&=q_{D_j}.
+\end{aligned}
+\tag{68.1}
+$$
+
+Here $q_j$ is precisely the form of (67.5) at zero charge, with auxiliary identities. The particle domain is the full Hilbert-valued trace domain of Definition64.5: all atoms, intervals, atom/cable slices, rectangles and both dissected same-cable triangles, exchange symmetry, exterior killing and every ground/collision trace remain.
+On a singleton the nonzero continuum $N=2$ space remains. The reference has its actual $\Omega h_{D_j}$. Both complete Green inverses and their different field matrices remain the separately declared laws; their pair, linear-coupling and compensation coefficients vanish because $\nu=0$, not by deleting a mode.
+There is one complete bank, with every spectator, excitation and unknown correlation.
+
+Write $W_j=W_{D_j}$, $`P_j=W_jW_j^*`$, $Q_j=I-P_j$ and
+$`V_j=W_{j+1}\iota_jW_j^*`$, tensoring all these particle maps with the same bank
+and auxiliary identities. Define
+
+$$
+\begin{aligned}
+Y_n&=\left(\mathcal K_{D_n}\oplus\bigoplus_{j<n}Q_j\mathcal K_{D_j}\right)
+ \otimes\mathcal F_H\otimes\mathcal A,\\
+\boldsymbol q_0&=q_0,\\
+\boldsymbol q_{j+1}[b,z,\mathbf r]
+ &=q_{j+1}[b]+\boldsymbol q_j[V_j^*b+z,\mathbf r]-q_j[V_j^*b],
+ \qquad z\in Q_jX_j.
+\end{aligned}
+\tag{68.2}
+$$
+
+The bank is factored once, not copied for each reserve. No reserve stiffness,
+scalar offset, alternative diagonal or deleted historical cross term is installed.
+The form intersection in (68.2) is part of its definition, not an assumption of
+native accessibility. The proposed cut is $U_j(x,\mathbf r)=(V_jx,Q_jx,\mathbf r)$.
+
+**Lemma 68.2 (full domains and the bounded old-branch cross form).** The maps
+$`P_j,Q_j,V_j,V_j^*`$ preserve their corresponding particle/number form intersections.
+The restricted form $q_j$ on $\mathcal E_j\cap Q_jX_j$ is dense in $Q_jX_j$ and
+closed. For $p\in P_j\mathcal E_j$, $z\in Q_j\mathcal E_j$,
+
+$$
+q_j(p,z)=\langle (Q_j\mathcal R_j\otimes I)W_j^*p,z\rangle,
+\qquad \mathcal R_j=T_jW_j-W_jH_j,\qquad
+|q_j(p,z)|\le r\|p\|\|z\|,
+\tag{68.3}
+$$
+
+where the actual residual of Theorem64.7 at $\nu=0$ is
+
+$$
+\begin{aligned}
+\beta_1&=\sqrt{3\delta/2},&
+\beta_2&=\sqrt{3\delta+9\delta^2/4}+9\sqrt2\,\delta,\\
+s_N&=1-(1+\beta_N^2)^{-1/2},&
+r_N&=18a\delta\mathbf1_{N=2}+2N(6a+g)s_N+N(6a+2g)\beta_N,\\
+r&=\max(r_1,r_2).&&
+\end{aligned}
+\tag{68.4}
+$$
+
+Proof. Theorem64.6 gives $\|A_DW_D\|\le30a$ and $\|A_D^{1/2}W_D\|\le\sqrt{30a}$, including both populations and the zero particle reference.
+By (67.3), the shifted squared form norm $q_j[x]+(2g+1)\|x\|^2$ is equivalent to $\|A_{D_j}^{1/2}x\|^2+\|\mathsf n^{1/2}x\|^2+\|x\|^2$, with tensor identities understood; the lower and upper field coefficients are $\Omega\lambda$ and $6\Omega$.
+Hence $P$ produces actual operator-domain particle vectors and $\|A_D^{1/2}Qx\|\le\|A_D^{1/2}x\|+\sqrt{30a}\|x\|$.
+Both projections commute with every field operator. Since $\lambda\mathsf n\le h_D\le6\mathsf n$, $\lambda=3-2\sqrt2$, the field form domain is common to all versions on this bank. The calibrated outputs of $`V,V^*`$ therefore satisfy the respective full intersections.
+Subtracting those outputs preserves every Hilbert-valued linear trace equality; no $H^1$ cell-corner trace is assumed. The original dense particle forms tensored with finite-number field vectors and auxiliary vectors give density.
+Projecting this dense domain by $Q$ gives $Q\mathcal E=\mathcal E\cap QX$, dense in $QX$. A Cauchy sequence in its shifted form norm converges in $\mathcal E$ and stays in the Hilbert-closed $QX$; thus the restriction is closed.
+Its operator is defined by form representation, not by an assumed self-adjoint operator compression $QAQ$.
+
+For the cross form, $h_j^{1/2}$ commutes with $P_j,Q_j$, so $\langle h_j^{1/2}p,h_j^{1/2}z\rangle=0$. This is orthogonality on the full tensor space for arbitrary correlated inputs, not a vacuum expectation or a moment cutoff.
+The particle operator relation in64.7 and $Q_jW_j=0$ give (68.3); tensoring a bounded operator with identity preserves its norm. One can first use finite-number vectors and then pass in the full form norm.
+The reference residual is zero. On singleton $N=2$, $P_2=0$, $Q_2=I$, so its entire continuum sector is retained. The cancellation is within one old branch only: it neither equates $h_j$ with $h_{j+1}$ nor removes any actual free-field diagonal. $\square$
+
+**Theorem 68.3 (exact expansion, finite closure and universal lower control).**
+For every prefix of Definition68.1 the recursive domain is exactly
+$\mathcal E_n\oplus\bigoplus_{j<n}(\mathcal E_j\cap Q_jX_j)$. The form is dense,
+closed and semibounded there. For $y=(b,z_{n-1},\ldots,z_0)$ define the backward maps
+
+$$
+\begin{aligned}
+I_{j,n}&=\iota_{n-1}\cdots\iota_j,\\
+B_{j,n}&=V_j^*V_{j+1}^*\cdots V_{n-1}^*
+ =W_jI_{j,n}^*W_n^*:X_n\longrightarrow P_jX_j,\qquad p_j=B_{j,n}b.
+\end{aligned}
+\tag{68.5}
+$$
+
+Then
+
+$$
+\begin{aligned}
+\boldsymbol q_n[y]&=q_n[b]+\sum_{j<n}\{q_j[z_j]+2\operatorname{Re}q_j(p_j,z_j)\},\\
+\boldsymbol q_n[y]&\ge-(2g+r\sqrt n)\|y\|^2.
+\end{aligned}
+\tag{68.6}
+$$
+
+The coefficient has no source, cap, context, bank-size, auxiliary-dimension or
+field-moment dependence. The bound itself depends on depth.
+
+Proof. For one cut polarization of (68.2) gives
+$q_1[b]+q_0[z]+2\operatorname{Re}q_0(V_0^*b,z)$ on the stated intersection;
+Lemma68.2 makes the cross form bounded. For induction substitute (68.2).
+Every earlier backward argument annihilates the newest reserve because
+$`V_{k-1}^*Q_k=0`$, while $`W_k^*W_k=I`$ collapses the intervening calibrations.
+This proves (68.5)–(68.6)'s exact expansion with every historical cross term.
+Absence of reserve/reserve terms is this annihilation identity, not a deletion.
+The adjoints have matched old/new types; a forward product acting on $b\in X_n$
+would not. Since $V_j^*b\in\mathcal E_j$, the recursive domain condition on
+$V_j^*b+z$ is equivalent to $z\in\mathcal E_j$, proving the domain equality.
+
+Each $B_{j,n}$ is a contraction. By (68.3) the column
+$`C_nb=(Q_j\mathcal R_jI_{j,n}^*W_n^*b)_{j<n}`$ has norm at most
+$r\sqrt n\|b\|$. The Hermitian off-diagonal block
+$`L_n(b,\mathbf z)=(C_n^*\mathbf z,C_nb)`$ consequently has norm at most $r\sqrt n$.
+The complete diagonal direct-sum form is dense and closed by Lemma68.2 and has
+lower bound $-2g$, since $A_D,h_D\ge0$ and $\sum_p\phi(p)m_p\le2$ on every stratum.
+Its bounded Hermitian perturbation $L_n$ proves closure and semiboundedness,
+including the one-cut base, by bounded form perturbation. Explicitly the cross
+sum is bounded in absolute value by
+$2r\sqrt n\|b\|(\sum_j\|z_j\|^2)^{1/2}\le r\sqrt n\|y\|^2$, proving the lower
+bound. Form representation gives a self-adjoint finite-history generator whose
+unitary group preserves this full form domain by spectral calculus. No analytic
+shift used to prove completeness is an installed energy offset. $\square$
+
+**Proposition 68.4 (all-input cuts, complete decoding and the dynamic boundary).**
+$U_j$ is an isometry on every Hilbert input, preserves the form intersections and
+exactly the shared number-form norm. Its adjoint and exact cut energy are
+
+$$
+\begin{aligned}
+U_j^*(b,z,\mathbf r)&=(V_j^*b+z,\mathbf r),&U_j^*U_j&=I,\\
+\boldsymbol q_{j+1}[U_j(x,\mathbf r)]
+ &=\boldsymbol q_j[x,\mathbf r]+q_{j+1}[V_jx]-q_j[P_jx].
+\end{aligned}
+\tag{68.7}
+$$
+
+With $`\Pi_j=V_jV_j^*`$ the full decoder
+$`(b,z,\mathbf r)\mapsto((V_j^*b+z,\mathbf r),(I-\Pi_j)b)`$ is unitary onto
+$Y_j\oplus(I-\Pi_j)X_{j+1}$, with inverse
+$((x,\mathbf r),c)\mapsto(V_jx+c,Q_jx,\mathbf r)$. The new complement is retained.
+
+Proof. $`V_j^*V_j=P_j`$ and $P_j+Q_j=I$ prove norm equality and the adjoint formula.
+The decoder inverse follows from orthogonality of $\Pi_j$ and its complement.
+Lemma68.2 also applies to $`\Pi_j=W_{j+1}\iota_j\iota_j^*W_{j+1}^*`$, so both decoder
+directions preserve the corresponding form domains. Substitution proves the energy
+identity. Tensor identities prove number-form norm equality even with correlations.
+Composing these maps gives coherent finite cut ingress and image recovery.
+
+This does not make the cut image dynamically invariant. In the legal $H=2$,
+INITIAL $\alpha$, Left$(\alpha)$ cut, take old $W_0e_o$ and the shared vacuum,
+with $0<g<a\lambda$. Its image $v=(W_1e_R,0)$ is in the represented one-cut
+operator domain. Its active derivative is the nonzero purely atomic vector
+$T_1W_1e_R=J_1(aL_{D_1}-g\Phi_{D_1})S_1e_R$, since the discrete matrix is positive.
+In the one-particle space $\operatorname{Ran}J_1\cap\operatorname{Ran}W_1=\{0\}$:
+a harmonic vector with all affine cable components zero has every port value zero.
+Thus this derivative has a component outside $\operatorname{Ran}V_0$. If $M$ is
+the represented one-cut generator, differentiability at zero gives
+
+$$
+\|U_0^*e^{-itM}v\|^2
+=1-t^2\|(I-U_0U_0^*)Mv\|^2+o(t^2)<1
+\quad\text{for sufficiently small nonzero }t.
+\tag{68.8}
+$$
+
+Right uses $e_L$ identically. Nor are old/new field dynamics equal: on the same
+reference branch the bank one-boson vector $(e_L-e_R)/\sqrt2$ has old spectator
+eigenvalue one, new common eigenvalue two and new killed eigenvalue three. The
+old/new full reference outputs differ by norm two at $t=\pi/\Omega$ common or
+$t=\pi/(2\Omega)$ killed. These are the actual matrices (67.2)–(67.3).
+Consequently image left-inversion supplies neither recovery of arbitrary evolved
+vectors by $`U^*`$ alone nor dynamic intertwining. The complete decoder retains the
+complement; no native reverse operation, original Read/Stop adapter or execution
+certificate follows. Proposition66.8's literal active-space retention obstruction
+remains intact. $\square$
+
+**Lemma 68.5 (exact cable Grams and normalized reserves).** In the one-particle
+space of any actual $D$ write $D_{\rm deg}=\operatorname{diag}(d_p)$, $A_{\rm adj}$
+for seam adjacency, $L_D=D_{\rm deg}-A_{\rm adj}$, $E$ for the affine harmonic lift,
+$`\Gamma=E^*E`$ and $S=\Gamma^{-1/2}$. Set $\eta(x)=4x(1-x)$ on every open cable,
+zero at atoms, and $Z(v)=M_\eta Ev$. Then
+
+$$
+\begin{aligned}
+\Gamma&=I+\delta(2D_{\rm deg}+A_{\rm adj})/6,&
+G_\eta=E^*M_\eta E&=\delta(3D_{\rm deg}+2A_{\rm adj})/15,\\
+\|Z(v)\|^2&=\langle v,N_\eta v\rangle,&
+N_\eta&=\delta(16D_{\rm deg}+12A_{\rm adj})/105,\\
+k[Z(v)]&=\langle v,K_\eta v\rangle,&
+K_\eta&=(8/15)(4D_{\rm deg}+A_{\rm adj}).
+\end{aligned}
+\tag{68.9}
+$$
+
+Let $\gamma=1+3\delta/2$. Then $I\le\Gamma\le\gamma I$,
+$(2\delta/15)I\le G_\eta\le\delta I$,
+$(8\delta/105)I\le N_\eta\le(4\delta/5)I$ and $0\le K_\eta\le8I$.
+If $0<g<a\lambda$, put $\mu=a\lambda-g$, $H^{(1)}=aL_D-g\Phi_D$ and, for any
+unit discrete $f$, define
+
+$$
+\theta=H^{(1)}Sf,\qquad v=G_\eta^{-1}\Gamma\theta,\qquad
+z=QZ(v),\qquad w=z/\|z\|.
+\tag{68.10}
+$$
+
+This is a nonzero admissible normalized reserve, with the vacuum-restricted full
+form, equivalently its particle form, satisfying
+
+$$
+q_D(Wf,w)=-\|\theta\|^2/\|z\|\le-k_*,\qquad q_D[w]\le C_{\rm res},\qquad
+k_*=\frac{\mu\sqrt{5\delta}}{15\gamma^{3/2}}>0,\qquad
+C_{\rm res}=6a+\frac{105\gamma a}{\delta}.
+\tag{68.11}
+$$
+
+Proof. For the endpoint basis $(1-x,x)$ the four local matrices, respectively
+unweighted mass, $\eta$-weighted mass, $\eta^2$-weighted mass and bump derivative,
+are
+
+$$
+\begin{pmatrix}1/3&1/6\\1/6&1/3\end{pmatrix},\quad
+\begin{pmatrix}1/5&2/15\\2/15&1/5\end{pmatrix},\quad
+\begin{pmatrix}16/105&4/35\\4/35&16/105\end{pmatrix},\quad
+\begin{pmatrix}32/15&8/15\\8/15&32/15\end{pmatrix}.
+\tag{68.12}
+$$
+
+Integrate the displayed polynomials on $[0,1]$ and sum over actual seams and
+both distinct grounded stubs, with ground endpoint value zero. This gives (68.9).
+The edge inequality $2|u_pu_q|\le|u_p|^2+|u_q|^2$ gives $-D_{\rm deg}\le A_{\rm adj}\le D_{\rm deg}$; also $2I\le D_{\rm deg}\le3I$.
+The asserted bounds follow directly. In particular the weighted Gram is invertible;
+$\Gamma-I$ is the actual continuum Gram. Also $\mu I\le H^{(1)}\le6aI$, hence
+$\|\theta\|\ge\mu/\sqrt\gamma$ and
+$\|v\|\le15\gamma\|\theta\|/(2\delta)$.
+
+The bump has zero atoms and zero endpoint/ground traces, so it is a form vector.
+$`E^*Z=G_\eta v=\Gamma\theta`$ gives $PZ=E\theta$ and
+$z=Z-E\theta$, with atomic coordinates $-\theta$. Therefore $\|z\|\ge\|\theta\|>0$.
+The actual operator identity $T_DWf=J_D\theta$ gives $q_D(Wf,Z)=0$ and
+$q_D(Wf,z)=-\|\theta\|^2$. Harmonic orthogonality to zero-atomic form vectors gives
+$q_D[z]=a k[Z]+\langle\theta,H^{(1)}\theta\rangle$ exactly; no potential or kinetic
+cross term was discarded. The upper norm bound
+$\|z\|\le\|Z\|\le\sqrt{4\delta/5}\|v\|
+\le15\gamma\|\theta\|/\sqrt{5\delta}$ proves the coupling inequality.
+
+For normalized energy a lower norm bound is required. Write $C=(E-J)S$, so
+$`C^*C=I-\Gamma^{-1}\le(1-\gamma^{-1})I`$. Because $Z$ has zero atoms,
+$`\|PZ\|^2=\|C^*Z\|^2\le(1-\gamma^{-1})\|Z\|^2`$. Thus
+$\|z\|^2\ge\gamma^{-1}\|Z\|^2\ge8\delta\|v\|^2/(105\gamma)$.
+Combining this with $k[Z]\le8\|v\|^2$, and separately using
+$\|z\|^2\ge\|\theta\|^2$ for the $H^{(1)}$ term, proves $C_{\rm res}$.
+These two estimates concern the same vector, not separately optimized states.
+An upper bound on $\|z\|$ alone would not prove its Rayleigh-quotient bound.
+For example on the actual two-stub singleton, writing $\gamma_0=1+2\delta/3$,
+this construction has
+$q_D[z]/\|\theta\|^2=(80a/3)\gamma_0^2/\delta^2+2a-g$.
+The proposed unnormalized coefficient $6a+388800a/(\delta\lambda^2)$ is false:
+at $a=1,g=1/10,\delta=10^{-8}$ the exact ratio is $72000000960000003713/270$,
+exceeding $1399680000000006$, an upper bound for that coefficient since
+$\lambda>1/6$. The normalized estimates (68.11) do not use that claim. $\square$
+
+**Theorem 68.6 (joint legal witness and sharp exponent).** Fix the parameters of
+Lemma68.5. For every $n\ge1$ take one run with immutable INITIAL $t_0=\alpha$,
+one fixed cap $H_n=n+1$, and $n$ original Left$(\alpha)$ calls,
+$t_{j+1}=\langle\alpha,t_j\rangle$. Each complete candidate has $j+2$ leaves,
+so the original guard accepts, including final equality. Every context occurrence
+is distinct, $|D_j|=2j+1$, $\iota_j(p)=Rp$, and $f_j=e_{R^j}$ obeys
+$f_{j+1}=\iota_jf_j$. Right$(\alpha)$ uses $Lp,e_{L^j}$; any prescribed direction
+word works with its actual successive prefixes. The policy uses public inputs
+only. Original Reads at checkpoints return $E(t_j)=A^{j+1}$ in the pinned Clifford
+algebra. An extra alpha graft at full cap is refused and retains the old source,
+without candidate Read; a subsequent Read and Stop keep their original meanings.
+No event follows Stop. These services change no $D_j$ in the compared prefix.
+
+For each $j<n$ construct $w_j$ by (68.10) at the actual $D_j,f_j$, using particle maps before tensoring. In the single
+complete bank use its common canonical vacuum $|0_{H_n}\rangle$, and any fixed
+unit auxiliary $\xi$. The joint trial
+
+$$
+\Psi_n=\frac1{\sqrt2}\left(W_nf_n,n^{-1/2}w_{n-1},\ldots,n^{-1/2}w_0\right)
+ \otimes|0_{H_n}\rangle\otimes\xi
+\tag{68.13}
+$$
+
+is normalized and form-admissible, and
+
+$$
+\boldsymbol q_n[\Psi_n]\le C_0-k_*\sqrt n,\qquad C_0=3a+C_{\rm res}/2.
+\tag{68.14}
+$$
+
+Proof. There are finitely many admissible components; the same full-bank vacuum
+belongs to the number domain and is annihilated by every actual common or killed
+$h_{D_j}$. Orthogonality of direct-sum branches makes the squared norm before
+$1/\sqrt2$ exactly two. Equation(68.5) gives $p_j=W_jf_j$ simultaneously for
+this one active input. Its active energy is
+$\langle S_nf_n,H_n^{(1)}S_nf_n\rangle\le6a$. Lemma68.5 bounds the reserve average
+by $C_{\rm res}$ and the complete cross sum by $-2k_*\sqrt n$ before normalization.
+The exact expansion proves (68.14). All reference, two-particle, mixed/cell and
+oscillator sectors remain in the carrier; only this chosen variational vector has
+zero amplitude in unused sectors. No native preparation or reachability follows.
+For fixed parameters in this regime, the infimum over normalized full form inputs
+and separately legal length-$n$ histories is between $-2g-r\sqrt n$ and
+$C_0-k_*\sqrt n$. Thus the worst negative energy grows as $\Theta(\sqrt n)$, with
+no optimal-coefficient claim. In one fixed-$H$ run every nonempty accepted graft
+adds a leaf, so $n\le H-\operatorname{leaves}(\mathrm{INITIAL})$; (68.6) gives a
+finite cap-dependent floor. The unbounded sequence instead varies $H$ between
+separately legal finite runs and refutes a cap/history-uniform constant floor for
+this recurrence in the stated regime. It is not an infinite fixed-cap execution,
+a physical instability certificate or a joint depth/density limit. $\square$
+
+**Definition 68.7 (suppliers, exact scope and undischarged obligations).**
+The source menu and guards are PR57 §57.1/TheoremPR57.T2 in [Transport Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#571-the-unchanged-source-and-the-exact-target). The full stratified domains, harmonic operator relation, residual and one-bank law are the ordinary suppliers64.5–64.7 and67.1–67.3.
+Gerald Teschl, [*Mathematical Methods in Quantum Mechanics*](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems2.13 and6.24, printed pp71,150, supplies representation of dense closed semibounded Hermitian forms and KLMN for relative form bound below one; the finite block here is bounded and has relative bound zero.
+Bolte–Kerner, [arXiv:1207.5648v1](https://arxiv.org/pdf/1207.5648v1), Definition3.1/Proposition3.2, supplies diagonal-Dirichlet hard-core and closed semibounded metric-graph product forms for bounded measurable boundary maps, with orthogonal $P$ and self-adjoint $L$ on $\ker P$.
+Its Lebesgue product does not supply the atomic/mixed enlargement, $H^2$ regularity or arbitrary $H^1$ corner traces. Those domains remain64.5's.
+Classical isometry, Cauchy–Schwarz and bounded block perturbation are suppliers; the additional deduction is the exact repeated-memory source-qualified rate and jointly normalized legal realization.
+These are ordinary proofs, without fresh Lean/kernel, physical validation, priority, model-diversity or prior-independence claims.
+
+The lower half covers all $a,g>0$ and arbitrary correlated full form inputs; the upper half is restricted to $0<g<a\lambda$. Other upper regimes, optimal coefficients and $\nu>0$ remain unclassified.
+No dimension parameter enters this rate; the conditional planar incidence transports66.9/67.9 remain compatible. A spatial-three bridge still requires the original operation/metric correspondence, isotropic local physical mediator for both complete laws, packing, transverse, exterior, leakage and collision controls.
+Finite admissibility does not acquire an unknown native state, shared field, reference/clock calibration, harmonic/projection control, complement-retaining decoder, cross-block generator or switching right. Continuing original Read/Stop covariance and actual execution remain obligations.
+Actual field/compensation/stiffness installation, every preparation and service duration, calibration and original joint error guarantees still require their supplied execution and price certificates.
+
+Every acquisition hypothesis in66.10/67.11 persists: §57's immutable composition-promised endpoint source, fixed depth caps, source-independent initialization, actual histories, correct finite stopping and distinct-address fees with no old-source archive;
+the separate paid positive-root archive/nonadvancing cut supplier with protected records, aligned actual generation, trusted markers, closed strong ports and priced write/protect/retain/query rights, including every reply-affecting retained influence.
+The full-tail once-sampled actual Read process and all common $\Pi$ hypotheses of63.13 remain separate unchanged suppliers. None grants copying, reset, re-preparation, independent resampling or exact-limit Read.
+The original arbitrary/unbounded/possibly zero actor $a$, untagged radius-$7/25$ $b$, destructive actions and joint history-dependent errors are distinct from the commissioned positive parameters and remain intact.
+The full bank has $2^{H_n}-1$ modes and every reserve retains infinite-dimensional interval/cell spaces. Every construction, control, service, production, storage, hold, retention, maintenance, precision and total lifetime price remains undischarged.
+No energy exponent is a price or dimension law. The sustained until-2027 why-three/source/operation/field/acquisition/resource/DEV-publication objective remains active; this finite result does not complete it.
+
+## 68.99 追加锚（本行以下为增补区）

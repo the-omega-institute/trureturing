@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using StrataLint.Cli;
@@ -45,8 +46,56 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("--base")]
     [InlineData("--force", "--force")]
     [InlineData("--lanes-only", "--lanes-only")]
+    [InlineData("--active-paths-file")]
+    [InlineData("--active-path", "/active")]
     public void ParseRejectsUnknownMissingOrDuplicateArguments(params string[] arguments)
     {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            CleanLanesCommand.ParseArguments(arguments));
+
+        Assert.Contains("USAGE: StrataLint clean-lanes", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ParseReadsActivePathsFromOneFile()
+    {
+        using var directory = new TemporaryDirectory(TestScratchRoot.Current);
+        var first = Path.Combine(directory.Path, "active path");
+        var second = Path.Combine(directory.Path, "nested", "lane") + Path.DirectorySeparatorChar;
+        var file = Path.Combine(directory.Path, "activity.json");
+        File.WriteAllText(file, System.Text.Json.JsonSerializer.Serialize(new[] { first, second }));
+
+        var options = CleanLanesCommand.ParseArguments(["--active-paths-file", file]);
+
+        Assert.Equal(
+            new[] { first, Path.TrimEndingDirectorySeparator(second) }.Order(StringComparer.Ordinal),
+            options.ActivePaths.Order(StringComparer.Ordinal));
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("not-json")]
+    [InlineData("object")]
+    [InlineData("relative")]
+    [InlineData("empty-entry")]
+    [InlineData("duplicate-option")]
+    public void ParseRejectsUnusableActivePathsFile(string shape)
+    {
+        using var directory = new TemporaryDirectory(TestScratchRoot.Current);
+        var file = Path.Combine(directory.Path, "activity.json");
+        var content = shape switch
+        {
+            "not-json" => "[",
+            "object" => "{}",
+            "relative" => "[\"relative/lane\"]",
+            "empty-entry" => "[\"\"]",
+            _ => "[]",
+        };
+        if (shape != "missing") File.WriteAllText(file, content);
+        string[] arguments = shape == "duplicate-option"
+            ? ["--active-paths-file", file, "--active-paths-file", file]
+            : ["--active-paths-file", file];
+
         var exception = Assert.Throws<InvalidOperationException>(() =>
             CleanLanesCommand.ParseArguments(arguments));
 
@@ -178,7 +227,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(locked));
         Assert.False(Directory.Exists(unlocked));
-        Assert.Equal("locked", ReasonFor(result.Output, locked));
+        Assert.Equal("locked_intentional", ReasonFor(result.Output, locked));
         Assert.Equal("stale_behind", ReasonFor(result.Output, unlocked));
     }
 
@@ -389,7 +438,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(snapshot));
         Assert.True(Directory.Exists(child));
         Assert.True(fixture.WorktreeRegistered(child));
-        Assert.Equal("locked", ReasonFor(result.Output, child));
+        Assert.Equal("locked_intentional", ReasonFor(result.Output, child));
     }
 
     private sealed partial class CleanLanesFixture : IDisposable
@@ -451,7 +500,7 @@ public sealed partial class CleanLanesCommandTests
         private void AddWorktree(string branch, string path) =>
             Git(repository.Path, "worktree", "add", "-b", branch, path, "dev");
 
-        private static string Git(string root, params string[] arguments) =>
+        internal static string Git(string root, params string[] arguments) =>
             TestGit.Run(root, arguments);
     }
 

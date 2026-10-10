@@ -1,0 +1,59 @@
+---
+bibkey: zhu2024thirdmoments
+authors: H. Zhu, C. Mao, C. Yi
+year: 2024
+title: "Third moments of qudit Clifford orbits and 3-designs based on magic orbits"
+doi: 10.48550/arXiv.2410.13575
+url: https://arxiv.org/abs/2410.13575v1
+claim: "Conjecture 2: for an odd prime d and |Ψ⟩ ∈ H_d^{⊗n}, 0 ≤ κ(Ψ,𝒯) ≤ 1 for every stochastic Lagrangian subspace 𝒯 ∈ Σ(d), together with three aggregate inequalities that follow from it; κ(Ψ,𝒯) = tr[R(𝒯)(|Ψ⟩⟨Ψ|)^{⊗3}], R(𝒯) = r(𝒯)^{⊗n}, r(𝒯) = Σ_{(x;y)∈𝒯} |x⟩⟨y|."
+strata_touched:
+  - D5/S3/Quantum/Magic/CliffordThirdMomentNegativity
+  - D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation
+  - D5/S3/Quantum/Magic/CliffordThirdMomentSigmaRefutation
+license: citation-only
+triage: anchor
+---
+
+# Zhu, Mao and Yi, third moments of qudit Clifford orbits
+
+H. Zhu, C. Mao and C. Yi, *Third moments of qudit Clifford orbits and 3-designs based on magic
+orbits*, arXiv:2410.13575v1 (17 October 2024; quant-ph, cross-listed math-ph); Commun. Math.
+Phys. 407, 242 (2026), DOI 10.1007/s00220-026-05583-8.
+
+## Verified locator
+
+DOI: 10.48550/arXiv.2410.13575.
+Primary version: https://arxiv.org/abs/2410.13575v1 (the only arXiv version).
+The TeX source `3rdMoment.tex` of v1 supplies the stochastic Lagrangian subspaces
+(`sec:SLSspanningSet`), the operators $r(\mathcal T)$ and $R(\mathcal T)$ (`eq:rRT`), the
+definition of $\kappa(\Psi,\mathcal T)$ (`eq:kappapsiT`), the stochastic orthogonal group
+(`sec:Otd`, `eq:TOdef`), the subsets of $\Sigma(d)$ (`eq:scrTSIEO`), the sums over subsets (lines
+1945–1948) and Conjecture 2 (`con:kappaTLUB`, Eq. (147)).
+
+## Source statements
+
+Stochastic Lagrangian subspaces: "A subspace $\caT \leq \bbF_d^{2t}$ ... is a \emph{stochastic
+Lagrangian subspace} if it satisfies the following three conditions: $\bfx \cdot \bfx - \bfy \cdot
+\bfy = 0$ for any $(\bfx;\bfy) \in \caT$. $\caT$ has dimension $t$. $\mathbf{1}_{2t} \in \caT$."
+$\Sigma(d):=\Sigma_{3,3}(d)$.
+
+Operators: "$r(\caT):= \sum_{(\bfx;\bfy) \in \caT} |\bfx\> \<\bfy|, \quad R(\caT):= r(\caT)^{\otimes n}$".
+
+Moments: "$\kappa(\Psi,\caT):=\tr[R(\caT)(|\Psi\>\<\Psi|)^{\otimes 3}]$"; for a subset, "$\kappa(\Psi,\scrT,j):=\sum_{\caT\in \scrT}\kappa^j(\Psi,\caT)$ … abbreviated as $\kappa(\Psi,\scrT)$ … when $j=1$".
+
+Stochastic orthogonal group: "A $t \times t$ matrix $O$ over $\bbF_d$ is a stochastic isometry if it satisfies the following two conditions: $O\bfx\cdot O\bfx=\bfx\cdot \bfx $ for any $\bfx \in \bbF_d^t$. $O \cdot \mathbf{1}_t = \mathbf{1}_t$ … The two conditions imply that $O^\top O=OO^\top=\mathds{1}$ … The stochastic orthogonal group $O_t(d)$ is the group of all stochastic isometries on $\bbF_d^t$", with "$\caT_O:=\left\{ (O\bfx;\bfx)\, | \, \bfx \in \bbF_d^t \right\}$".
+
+Subsets of $\Sigma(d)$: "$\scrT_\sym:=\{\caT_O\ |\ O\in S_3\}$, $\scrT_\ns:=\Sigma(d)\setminus\scrT_\sym$, $\scrT_\iso:= \{T_O \; | \; O \in O_3(d)\}$".
+
+Cardinality (`eq:Sigma33DefectNum`): "$|\Sigma(d)|=2d+2, \quad |\scrT_\defe|=|\Sigma(d)|-|O_3(d)|= \begin{cases} 2 & d=3,\\ 4 & d = 1\mmod 3,\\ 0 & d=2\mmod 3. \end{cases}$" followed by "When $d = 2\mmod 3$, $\scrT_\defe$ is empty and $\Sigma(d)=\scrT_\iso$ contains only one double coset."
+
+Conjecture 2: "Suppose $d$ is an odd prime and $|\Psi\>\in\caH_d^{\otimes n}$. Then
+$0\leq \kappa(\Psi,\caT)\leq 1 \quad \forall \caT\in \Sigma(d), \quad 6\leq \kappa(\Psi,\Sigma(d))\leq 2d+2, \quad 0\leq \kappa(\Psi,\scrT_\ns)\leq 2d-4, \quad \kappa(\Psi, \scrT_\iso)\geq 6.$"
+followed by "If the first inequality in \eref{eq:kappaTLUBcon} holds, then all inequalities hold
+thanks to \lref{lem:kappaTLUB}."
+
+## Scope
+
+The paper proves $-1\le\kappa(\Psi,\mathcal T)\le1$ in general (Lemma 20), the conjecture for
+$d=3$, $\kappa=1$ for stabilizer states (Proposition 4) and nonnegativity for its cubic-phase
+magic-state families.

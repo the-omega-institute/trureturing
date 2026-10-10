@@ -133,12 +133,12 @@ theorem natural_window_arc (L : ℕ) (hL : 1 ≤ L) (n : ℕ) (p : X L) :
         exact False.elim (hRowAvoid n j hj (congrArg phase he |>.trans (hEndpoint j hj).1))
   · exact Or.inl
 local notation "gamma" => (fun t : ℕ => (((t : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)))
-private theorem cut_injective : Function.Injective E := by
+theorem cut_injective : Function.Injective E := by
   intro i j hij
   have he : D5.S1.Phase.goldenPhase (-(i : ℤ)) = D5.S1.Phase.goldenPhase (-(j : ℤ)) := by
     simpa only [E, D5.S1.Phase.goldenPhase, Int.cast_neg, Int.cast_natCast, neg_mul] using hij
   exact_mod_cast neg_injective (D5.S1.Phase.goldenPhase_injective he)
-private theorem natural_phase_visit (U : Set (AddCircle (1 : ℝ))) (hU : IsOpen U) (hne : U.Nonempty) (B : ℕ) :
+theorem natural_phase_visit (U : Set (AddCircle (1 : ℝ))) (hU : IsOpen U) (hne : U.Nonempty) (B : ℕ) :
     ∃ n : ℕ, B < n ∧ (((n : ℝ) * Real.goldenRatio : ℝ) : AddCircle (1 : ℝ)) ∈ U := by
   classical
   have hz : DenseRange (fun k : ℤ => k • (Real.goldenRatio : AddCircle (1 : ℝ))) :=
@@ -167,7 +167,7 @@ private theorem endpoint_phase (k : ℕ) (hk : 1 ≤ k) :
     phase (eMinus k) = E k ∧ phase (ePlus k) = E k :=
   ⟨((window_cylinder_partition.2.1 k hk).2 _).mpr (by exact Or.inl rfl),
     ((window_cylinder_partition.2.1 k hk).2 _).mpr (by exact Or.inr rfl)⟩
-private theorem window_arc_avoids_cut (L : ℕ) (hL : 1 ≤ L) (p : X L) (k : ℕ)
+theorem window_arc_avoids_cut (L : ℕ) (hL : 1 ≤ L) (p : X L) (k : ℕ)
     (hk : 1 ≤ k) (hkL : k ≤ G L) : E k ∉ A p := by
   classical
   intro ha
@@ -181,16 +181,16 @@ private theorem window_arc_avoids_cut (L : ℕ) (hL : 1 ≤ L) (p : X L) (k : �
     rw [hC]
     exact Or.inl (by change phase (ePlus k) ∈ A p; rwa [(endpoint_phase k hk).2])
   exact ((window_cylinder_partition.2.2 L hL).2.2.2.2.2.2 k hk).mpr hkL (hminus.trans hplus.symm)
-private theorem window_arc_isOpen (L : ℕ) (p : X L) : IsOpen (A p) :=
+theorem window_arc_isOpen (L : ℕ) (p : X L) : IsOpen (A p) :=
   QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo
-private theorem golden_inverse_data : 0 < alpha ∧ alpha < 1 ∧ alpha ^ 2 + alpha = 1 := by
+theorem golden_inverse_data : 0 < alpha ∧ alpha < 1 ∧ alpha ^ 2 + alpha = 1 := by
   refine ⟨inv_pos.mpr Real.goldenRatio_pos,
     inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio, ?_⟩
   unfold alpha
   rw [Real.inv_goldenRatio]
   nlinarith [Real.goldenConj_sq]
 private theorem signed_interval_length : b = a + 1 := by dsimp [a, b]; linarith [golden_inverse_data.2.2]
-private theorem window_arc_cover (L : ℕ) (hL : 1 ≤ L) (z : AddCircle (1 : ℝ))
+theorem window_arc_cover (L : ℕ) (hL : 1 ≤ L) (z : AddCircle (1 : ℝ))
     (hz : z ∉ B L) : ∃ p : X L, z ∈ A p := by
   classical
   have hc : z ∈ ((fun x : ℝ => (x : AddCircle (1 : ℝ))) '' Set.Icc a b) := by
@@ -249,7 +249,7 @@ private theorem window_cut_orientation (L : ℕ) (hL : 1 ≤ L) (k : ℕ) (hk : 
           ((congrArg phase heq).trans (endpoint_phase j hj).1))
         subst j
         exact False.elim ((window_cylinder_partition.2.1 k hk).1 heq.symm)
-private theorem circle_integer_offset (x y : ℝ) (h : (x : AddCircle (1 : ℝ)) = y) :
+theorem circle_integer_offset (x y : ℝ) (h : (x : AddCircle (1 : ℝ)) = y) :
     ∃ k : ℤ, (k : ℝ) = x - y := by
   have hz : ((x - y : ℝ) : AddCircle (1 : ℝ)) = 0 := by
     rw [AddCircle.coe_sub, h, sub_self]
@@ -344,7 +344,7 @@ private theorem natural_phase_visit_sides (c δ : ℝ) (hd : 0 < δ) (hdhalf : �
     exact hsub ⟨by linarith [hxa.1], by linarith [hxa.2]⟩
   · rw [natural_row_phase b, ← heb]
     exact hsub ⟨by linarith [hxb.1], by linarith [hxb.2]⟩
-private theorem translated_cut (t j : ℕ) : E (t + j) + gamma t = E j := by
+theorem translated_cut (t j : ℕ) : E (t + j) + gamma t = E j := by
   dsimp [E]
   rw [← AddCircle.coe_add]
   congr 1
@@ -364,6 +364,23 @@ private theorem translated_cut_mem (L t k : ℕ) : E k + gamma t ∈ B L ↔
     simp only [Finset.mem_Icc] at hk
     refine ⟨k - t, ⟨by omega, by omega⟩, ?_⟩
     rw [← translated_cut t (k - t), show t + (k - t) = k by omega]
+theorem phase_surjective : Function.Surjective phase := by
+  intro z
+  have hz : z ∈ ((fun r : ℝ => (r : AddCircle (1 : ℝ))) '' Set.Icc a b) := by
+    rw [signed_interval_length, AddCircle.coe_image_Icc_eq]
+    trivial
+  obtain ⟨r, hr, rfl⟩ := hz
+  have hr' : r ∈ Set.range signedValue := signed_series_range.1.symm ▸ hr
+  obtain ⟨x, hx⟩ := hr'
+  exact ⟨x, congrArg (fun r : ℝ => (r : AddCircle (1 : ℝ))) hx⟩
+theorem window_arc_unique (L : ℕ) (hL : 1 ≤ L) (p q : X L) (z : AddCircle (1 : ℝ))
+    (hp : z ∈ A p) (hq : z ∈ A q) : p = q := by
+  obtain ⟨x, rfl⟩ := phase_surjective z
+  obtain ⟨i, j, hi, hiL, hj, hjL, hei, hej, hCp⟩ := (window_cylinder_partition.2.2 L hL).2.2.2.2.2.1 p
+  obtain ⟨i', j', hi', hiL', hj', hjL', hei', hej', hCq⟩ := (window_cylinder_partition.2.2 L hL).2.2.2.2.2.1 q
+  have hxp : P L x = p := by change x ∈ C p; rw [hCp]; exact Or.inl hp
+  have hxq : P L x = q := by change x ∈ C q; rw [hCq]; exact Or.inl hq
+  exact hxp.symm.trans hxq
 theorem missing_cut_witness (m M : ℕ) (hm : 1 ≤ m)
     (hmM : m ≤ M) (S : Finset ℕ) (k : ℕ) (hk : k ∈ Finset.Icc 1 (G M)) (hnot : k ∉ cuts m S)
     (B0 : ℕ) : ∃ a b : ℕ, B0 < a ∧ B0 < b ∧
@@ -797,23 +814,6 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
       subst M
       subst m
       simpa only [sigma, Nat.add_zero] using congrFun hs ⟨0, h0⟩
-  have hPhaseSurj : Function.Surjective phase := by
-    intro z
-    have hz : z ∈ ((fun r : ℝ => (r : AddCircle (1 : ℝ))) '' Set.Icc a b) := by
-      rw [signed_interval_length, AddCircle.coe_image_Icc_eq]
-      trivial
-    obtain ⟨r, hr, rfl⟩ := hz
-    have hr' : r ∈ Set.range signedValue := signed_series_range.1.symm ▸ hr
-    obtain ⟨x, hx⟩ := hr'
-    exact ⟨x, congrArg (fun r : ℝ => (r : AddCircle (1 : ℝ))) hx⟩
-  have hArcUnique (L : ℕ) (hL : 1 ≤ L) (p q : X L) (z : AddCircle (1 : ℝ))
-      (hp : z ∈ A p) (hq : z ∈ A q) : p = q := by
-    obtain ⟨x, rfl⟩ := hPhaseSurj z
-    obtain ⟨i, j, hi, hiL, hj, hjL, hei, hej, hCp⟩ := (hData L hL).2.2.2.2.2.1 p
-    obtain ⟨i', j', hi', hiL', hj', hjL', hei', hej', hCq⟩ := (hData L hL).2.2.2.2.2.1 q
-    have hxp : P L x = p := by change x ∈ C p; rw [hCp]; exact Or.inl hp
-    have hxq : P L x = q := by change x ∈ C q; rw [hCq]; exact Or.inl hq
-    exact hxp.symm.trans hxq
   have hPredict (heq : cuts m S = Finset.Icc 1 (G M)) (a b : ℕ)
       (hq : q M a = q M b) : sigma m S a = sigma m S b := by
     have hM : 1 ≤ M := by omega
@@ -830,7 +830,7 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
       apply Set.disjoint_left.mpr
       intro x hx hy
       obtain ⟨pq, hpq⟩ := Set.mem_iUnion.mp hy
-      exact pq.property (hArcUnique m hm pq.val pa (f x) hpq hx)
+      exact pq.property (window_arc_unique m hm pq.val pa (f x) hpq hx)
     have hcover : Set.Ioo (ell p) (upper p) ⊆ U ∪ V := by
       intro x hx
       have hnc : f x ∉ B m := by
@@ -996,5 +996,4 @@ theorem sparse_window_mutual_determination (m M : ℕ) (hm : 1 ≤ m)
     · exact hActual
     · exact hdec
 
-#print axioms sparse_window_mutual_determination
 end D5.S1.Digit.Infinite.SparseWindowMutualDetermination

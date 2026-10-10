@@ -1,0 +1,132 @@
+#### theorem 7.1: 定理 3：主效应更新下隐藏交互的相对不变量
+
+Claim status: open.（供文 I 原第 7 节「定理 3」；保留纸面论证及其边界。）
+
+> 编者限定（I.7，原定理 3）：乘积主效应似然是另加假设，不因一个操作名为 Read 而成立。普通赔率 $\Omega(w)$ 及其更新要求 $w_1w_3\ne0$；非负权重模型中这要求两者均正，归一化还要求总权正。行列式恒等式本身不需对零单元取商。
+
+
+假设某段历史 $H$ 对五个模式的似然具有局部主效应形式：
+
+$$
+\ell_I(H) =
+\lambda
+u^{x(I)}
+v^{y(I)}
+t^{z(I)}
+$$
+
+其中 $\lambda,u,v,t>0$。
+
+则更新后的权重满足
+
+$$
+C(w') =
+\lambda^2uv\,C(w).
+$$
+
+因此：
+
+1. $C(w)$ 的零性和符号保持；
+2. 概率行列式 $\Delta$ 的零性和符号保持；
+3. 四角赔率
+
+   $$
+   \Omega(w) =
+   \frac{w_{\mathrm{null}}w_{13}}{w_1w_3}
+   $$
+
+   完全不变。
+
+##### 7.1 证明（I 原定理 3）
+
+五个模式的似然分别为
+
+$$
+\ell_{\mathrm{null}}=\lambda,
+$$
+
+$$
+\ell_1=\lambda u,
+$$
+
+$$
+\ell_2=\lambda t,
+$$
+
+$$
+\ell_3=\lambda v,
+$$
+
+$$
+\ell_{13}=\lambda uv.
+$$
+
+所以
+
+$$
+w'_{\mathrm{null}}=\lambda w_{\mathrm{null}},
+$$
+
+$$
+w'_1=\lambda u w_1,
+$$
+
+$$
+w'_3=\lambda v w_3,
+$$
+
+$$
+w'_{13}=\lambda uv w_{13}.
+$$
+
+于是
+
+$$
+\begin{aligned}
+C(w')
+&=w'_{\mathrm{null}}w'_{13}-w'_1w'_3\\
+&=(\lambda w_{\mathrm{null}})
+(\lambda uvw_{13})
+-(\lambda uw_1)(\lambda vw_3)\\
+&=\lambda^2uv
+(w_{\mathrm{null}}w_{13}-w_1w_3)\\
+&=\lambda^2uvC(w).
+\end{aligned}
+$$
+
+同理，
+
+$$
+\Omega(w') =
+\frac{(\lambda w_{\mathrm{null}})
+(\lambda uvw_{13})}
+{(\lambda uw_1)(\lambda vw_3)}
+=\Omega(w).
+$$
+
+证毕。
+
+这说明，如果初始分布处于乘积完成面
+
+$$
+\Delta=0,
+$$
+
+那么只含局部主效应的 Read 历史不会凭空生成四角交互。
+
+如果似然额外包含一个真正的联合因子
+
+$$
+\eta^{xy},
+$$
+
+那么只有 $F[1,3]$ 的权重多出 $\eta$，从而
+
+$$
+\Omega'=\eta\Omega.
+$$
+
+这才是隐藏 seam 被仪器主动注入或测量的通道。
+
+---
+

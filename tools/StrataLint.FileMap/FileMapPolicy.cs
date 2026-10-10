@@ -1,10 +1,10 @@
+using StrataLint.Engineering;
 using System.Buffers;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Configuration;
-using StrataLint.Scribe;
 
 namespace StrataLint.FileMap;
 
@@ -449,6 +449,13 @@ internal static partial class FileMapPolicy
         var findings = new List<FileMapFinding>();
         foreach (var path in paths.Order(StringComparer.Ordinal))
         {
+            if (RepositoryPathPolicy.IsExperimentalMaterialPath(path))
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-EXPERIMENT-EXTERNAL", path,
+                    RepositoryPathPolicy.ExperimentalMaterialsMessage));
+                continue;
+            }
             var matches = manifest.Match(path);
             if (matches.Length == 0)
             {
@@ -673,7 +680,7 @@ internal static partial class FileMapPolicy
                 && !FileMapDocuments.IsPolicyPath(path)
                 && IsMachineDataPath(path))
             {
-                var content = path == EngineeringProjectRegistry.ManifestPath
+                var content = path == EngineeringProjectSchema.ManifestPath
                     ? EngineeringContentStrings(source).ToArray() : [source];
                 foreach (var generatedPath in content.Any(text => text.AsSpan().ContainsAny(generatedSearch))
                     ? generatedPaths.Where(generated => content.Any(text => text.Contains(generated, StringComparison.Ordinal)))
@@ -710,7 +717,7 @@ internal static partial class FileMapPolicy
     private static IEnumerable<string> EngineeringContentStrings(string source)
     {
         // Validate the canonical project schema before inspecting its content references.
-        _ = EngineeringProjectRegistry.Parse(source);
+        _ = EngineeringProjectRegistry.ValidateManifest(source);
         using var document = JsonDocument.Parse(source);
         return JsonStrings(document.RootElement).ToArray();
     }

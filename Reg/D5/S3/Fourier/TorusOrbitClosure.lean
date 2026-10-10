@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.TorusOrbitClosure
 import Reg.Support.DependentFamily
 
@@ -65,18 +66,32 @@ def registration : Registration arena.{u} (arena.Law actual) where
       (fun f : ℕ → ULift.{u} Unit → Circle => ((f 1 ⟨()⟩ : Circle) : ℂ)) h
     norm_num [actual, realize] at heq
 
-register_information_theorem result in arena
-  readout via (realize signature.{u}
-    (fun (_ : Unit) (I : Type u) (g : I → Circle) (n : ℕ) => g ^ n)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.TorusOrbitClosure
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg", "arg"]
-      stateBinder := 2 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.TorusOrbitClosure.result.{u_1}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1}
+    (fun (_ : Unit) (I : Type (u_1)) (g : I → Circle) (n : ℕ) => g ^ n)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "TorusOrbitClosure") "result") "Reg.D5.S3.Fourier.TorusOrbitClosure/Reg.D5.S3.Fourier.TorusOrbitClosure.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.TorusOrbitClosure.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1}
+    (fun (_ : Unit) (I : Type (u_1)) (g : I → Circle) (n : ℕ) => g ^ n)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.TorusOrbitClosure, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end

@@ -1,3 +1,4 @@
+using StrataLint.Engineering;
 using StrataLint.Engine;
 using StrataLint.Scribe;
 using System.Xml.Linq;
@@ -17,11 +18,11 @@ public sealed class DependencyDirectionTests
     /// against it adds exactly one name here and nothing beneath it.
     /// </summary>
     [Fact]
-    public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynAndTruth()
+    public void EngineReferencesExactlyDeclaredDependencies()
     {
         // YamlDotNet also supplies the parser for SL-030.
         Assert.Equal(
-            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
+            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "StrataLint.Engineering", "StrataLint.Runtime", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
     }
 
@@ -31,7 +32,7 @@ public sealed class DependencyDirectionTests
         var root = TestRepositoryLayout.FindRoot();
         var paths = StrataLint.FileMap.FileMapPolicy.TrackedPaths(root);
         var registry = EngineeringProjectRegistry.Read(paths.Select(path => new EngineeringSource(path,
-            path == EngineeringProjectRegistry.ManifestPath ? File.ReadAllText(Path.Combine(root, path)) : string.Empty)).ToArray());
+            path == EngineeringProjectSchema.ManifestPath ? File.ReadAllText(Path.Combine(root, path)) : string.Empty)).ToArray());
         Assert.All(registry.Projects, project => Assert.DoesNotContain(project.Include,
             input => input.StartsWith("Blueprint/", StringComparison.Ordinal)));
         foreach (var project in registry.Projects)
@@ -51,6 +52,7 @@ public sealed class DependencyDirectionTests
                 "StrataLint.Engine",
                 "StrataLint.FileMap",
                 "StrataLint.Lean",
+                "StrataLint.Runtime",
                 "StrataLint.Scribe",
                 "StrataLint.TestEvidence",
                 "Tomlyn",
@@ -60,11 +62,11 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void TestEvidenceReferencesExactlyEngine()
+    public void TestEvidenceReferencesOnlyIdentitySchemaAndProcessRuntime()
     {
-        Assert.Equal(["StrataLint.Engine"],
+        Assert.Equal(["StrataLint.Engineering", "StrataLint.Runtime"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.TestEvidence.Program).Assembly));
-        Assert.Equal(["../StrataLint.Engine/StrataLint.Engine.csproj"], ProjectReferences(XDocument.Load(
+        Assert.Equal(["../StrataLint.Engineering/StrataLint.Engineering.csproj", "../StrataLint.Runtime/StrataLint.Runtime.csproj"], ProjectReferences(XDocument.Load(
             Path.Combine(RepositoryLayout.FindRoot(), "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj"))));
     }
 

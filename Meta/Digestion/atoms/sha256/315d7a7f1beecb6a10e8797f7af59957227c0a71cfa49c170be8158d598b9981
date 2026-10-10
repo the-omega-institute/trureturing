@@ -1,0 +1,16 @@
+**定理 16.4（两种三胞胎的二点障碍与平移分界）。** 对任意平方自由 $W\ge2$，写 $a_A=a_{H_A,W}$、$a_B=a_{H_B,W}$。有
+$$
+a_B(r)=a_A(-r-6),\quad
+\widehat a_B(k)=e_W(6k)\overline{\widehat a_A(k)},\quad
+G_{a_A}=G_{a_B},
+\tag{16.5}
+$$
+其中 $G_a(i,j)=\langle T_ia,T_ja\rangle=C_a(i-j)$ 保留全部相同移位标签。此外
+$$
+\exists t:\ a_B=T_ta_A
+\quad\Longleftrightarrow\quad
+q\mid W\Longrightarrow q\in\{2,3,5\}.
+\tag{16.6}
+$$
+因此若 $W$ 含素因子 $q\ge7$，两轮筛的二点相关和全部循环 Gram 谱函数仍相同，其三点相关却必不相同。
+

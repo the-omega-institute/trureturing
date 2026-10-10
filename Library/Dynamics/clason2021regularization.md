@@ -83,7 +83,7 @@ Suppose F_m maps L2(I) into a finite span of actual w_t, ||F-F_m||<=delta, and |
 $$\|C_\pm(n_\varepsilon-n_{\varepsilon,m})\|
 \le\frac{\delta(2M_F+\delta)}{2\sqrt2\,\varepsilon}\|h_0\|.\tag{R6}$$
 
-Both differences lie in N, so this is a common paired edge norm bound; the source norm bound is R6 divided by sqrt(c_*). With m equal cells of I and midpoint w_t samples, one may take delta<=L_w(2r)^(3/2)/(sqrt(12)m), where L_w is an independently validated upper bound for sup_I||w'_t||. The [directed small-window bounds](../../docs/reports/theta-mixed-matrix/theta-translation-bounds.md) supply numerical M_F and L_w for this interface. No finite Fredholm matrix has been certified here. R6 controls discretization for fixed epsilon; it does not pay the regularization error R5.
+Both differences lie in N, so this is a common paired edge norm bound; the source norm bound is R6 divided by sqrt(c_*). With m equal cells of I and midpoint w_t samples, one may take delta<=L_w(2r)^(3/2)/(sqrt(12)m), where L_w is an independently validated upper bound for sup_I||w'_t||. The [directed small-window bounds](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/theta-translation-bounds.md) supply numerical M_F and L_w for this interface. No finite Fredholm matrix has been certified here. R6 controls discretization for fixed epsilon; it does not pay the regularization error R5.
 
 ## Finite epsilon does not erase the old exact raw Schur obstruction
 
@@ -98,7 +98,7 @@ The concrete new interface is R1–R4: it replaces an unspecified P_N primitive 
 
 ## Numerical inputs for the fixed-parameter discretization bound
 
-The [actual-theta translation norm computation](../../docs/reports/theta-mixed-matrix/theta-translation-bounds.md)
+The [actual-theta translation norm computation](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/theta-translation-bounds.md)
 uses the existing derivative supplier and the full original probability
 measure, including both spatial tails. Its outward interval bounds give
 
@@ -121,7 +121,7 @@ certification is supplied.
 
 ## One fixed quadratic-input complementary residual
 
-The [direct actual-operator enclosure](../../docs/reports/theta-mixed-matrix/theta-common-residual-bounds.md)
+The [direct actual-operator enclosure](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/theta-common-residual-bounds.md)
 uses seven finite critical directions and eight individual certified real
 Xi-zero witnesses for h=x^2. Under the inherited actual-model and
 numerical-supplier premises it supplies
@@ -290,7 +290,7 @@ normalization is nonzero, and $p_t$ is an even sharp-low unit input,
 $\langle p_t,v_0\rangle=0$, $p_t\rightharpoonup0$,
 $\|b_t\|\to\sqrt{\gamma_\Lambda}$ and
 $\langle p_t,n_t\rangle\to\sqrt{\gamma_\Lambda}$.
-The existing [sharp-center (SC1)](../../docs/reports/theta-mixed-matrix/sharp-center.md#operator-domain-and-complete-block)
+The existing [sharp-center (SC1)](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/sharp-center.md#operator-domain-and-complete-block)
 places every physical finite-band input in the original minimal
 operator domain; in $L^2(\nu)$ the corresponding input is $U^{-1}p_t$.
 
@@ -720,7 +720,7 @@ The infinite principal synthesis remains present.
 ## Pay the finite remainder with the existing common-source certificate
 
 The new kernel columns in (J4) can be used by the existing
-[actual primal/dual residual certificate](../../docs/reports/theta-mixed-matrix/theta-common-residual-bounds.md),
+[actual primal/dual residual certificate](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/theta-common-residual-bounds.md),
 conditionally on acquiring their simultaneous residual Gram.
 This reuses (G4)'s metric inverse and the common coefficient estimate;
 it is not a new generic Gram or projection theorem.
@@ -1033,7 +1033,7 @@ half-bound, Robin, RH and Lean certification remain unresolved.
 This conditional original-model application keeps the original measure,
 unitary map, unit ground, critical space and whole-critical-space
 minimal-domain and mixed-nullity premises. It reuses the
-[relative theta factorization (SR1)–(SR3)](../../docs/reports/theta-mixed-matrix/strip-root.md),
+[relative theta factorization (SR1)–(SR3)](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/strip-root.md),
 the [original derivative polynomials and (WC1)–(WC3)](../Analytic/romik2021orthogonal.md#weighted-fourier-coefficient-suppliers),
 and (A1)–(A4). The new suppliers below are explicit convergent-series
 and Gamma expressions for the actual endpoint constants; small-real-window
@@ -1537,7 +1537,7 @@ existing Cauchy allowance. No new generic derivative theorem is introduced.
 
 ## Directed caps for the same endpoint choice
 
-The [constant producer](../../docs/reports/theta-mixed-matrix/theta_endpoint_constants.py)
+The [constant producer](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/theta_endpoint_constants.py)
 evaluates these conditional original-series bounds with Python 3.13.12,
 python-flint 0.9.0 and 256-bit precision. It reuses the existing
 `derivative_supplier` definitions and scalar WC constants; the old
@@ -1547,7 +1547,7 @@ The ground polynomial cap uses the full positive-line maximum
 $(m/\zeta)^me^{-m}$, which also bounds its restriction to $u\ge1$;
 a rounded maximizer is not substituted.
 
-The [directed result](../../docs/reports/theta-mixed-matrix/theta-endpoint-constants-result.json)
+The [directed result](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/theta-endpoint-constants-result.json)
 records exact dyadic upper caps, both supplier hashes and the chosen
 threshold. The coarse and two-rate choices give the following valid
 allowances in the same inherited model:
