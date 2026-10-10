@@ -410,8 +410,8 @@ private lemma separable_expect (a : Ω → Fin m → ℂ) (b : Ω → Fin n → 
   ext i j
   simp [Finset.expect, NNRat.smul_def, Complex.real_smul]
 
--- The entrywise fourth-moment expansion needs a larger elaboration budget.
 set_option maxHeartbeats 12000000 in
+-- The entrywise fourth-moment expansion needs a larger elaboration budget.
 private lemma high_average
     (g : Ω → Fin m → ℂ)
     (h1 : ∀ i s, (𝔼 w, chooseStar s (g w i)) = 0)
