@@ -36,6 +36,7 @@ import Mathlib.LinearAlgebra.UnitaryGroup
 
 open scoped BigOperators Matrix
 open MvPolynomial Finset
+local notation "coeff" m:arg p:arg => AddMonoidAlgebra.coeff p m
 
 namespace D5.S3.Quantum.Algebra.TraceKernelFunctionPolarization
 set_option maxHeartbeats 1500000 in
@@ -144,7 +145,7 @@ theorem trace_kernel_function_polarization (m n N : ℕ) (hN : 1 ≤ N)
           by_cases h : j = i
           · subst j
             simp [hd, ones]
-          · have hv := Finsupp.mapDomain_apply Subtype.val_injective e (⟨j, h⟩ : T)
+          · have hv := Finsupp.mapDomain_apply_of_injective Subtype.val_injective e (⟨j, h⟩ : T)
             simpa [d, e, ones, h] using hv
         have hKX (j : J) : K (X j) = if h : j ≠ i then X (⟨j, h⟩ : T) else 0 := by
           by_cases h : j ≠ i
@@ -220,8 +221,13 @@ theorem trace_kernel_function_polarization (m n N : ℕ) (hN : 1 ≤ N)
     have hF (x : J → σ → ℂ) : F x = k * coeff (Finsupp.equivFunOnFinite.symm (fun _ : J => 1))
           (eval₂ C (fun v => if v.1 then ∑ j : Fin n, C (x (Sum.inr j) v.2) * X (Sum.inr j)
             else ∑ i : Fin m, C (x (Sum.inl i) v.2) * X (Sum.inl i)) P) := by
-      simp only [F, smul_apply, MultilinearMap.compLinearMap_apply, smul_eq_mul, hG]; congr 2; congr 1; funext v; rcases v with ⟨b,v⟩
-      cases b <;> simp [J, L, color, Fintype.sum_sum_type]
+      simp only [F, smul_apply, MultilinearMap.compLinearMap_apply, smul_eq_mul, hG]
+      have hs : (fun v : Bool × σ => ∑ j : J, C (L j (x j) v) * X j) =
+          (fun v => if v.1 then ∑ j : Fin n, C (x (Sum.inr j) v.2) * X (Sum.inr j)
+            else ∑ i : Fin m, C (x (Sum.inl i) v.2) * X (Sum.inl i)) := by
+        funext v; rcases v with ⟨b, v⟩
+        cases b <;> simp [J, L, color, Fintype.sum_sum_type]
+      rw [hs]
     refine ⟨F, hF, ?_, ?_⟩
     · intro Z W
       rw [hF]

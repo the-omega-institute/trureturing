@@ -60,6 +60,7 @@ Information-escape audit unfinished: https://github.com/the-omega-institute/trur
 -/
 
 import Mathlib.Data.Rat.Floor
+import Mathlib.Algebra.Order.Ring.Rat
 import Mathlib.LinearAlgebra.Matrix.Rank
 
 set_option backward.isDefEq.respectTransparency false
@@ -389,7 +390,7 @@ theorem common_node_product_bound (κ : ℚ) (hκ : 0 < κ)
   have hq1 : κ / (κ + 1) ≤ 1 := by
     apply (div_le_one (by linarith : (0 : ℚ) < κ + 1)).mpr
     linarith
-  apply prod_le_prod
+  apply prod_le_prod₀
   · intro t ht
     split_ifs
     · exact (mul_pos hq0 (hw _)).le
