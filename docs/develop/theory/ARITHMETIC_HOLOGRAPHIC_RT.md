@@ -2838,7 +2838,7 @@ c_t(K)\in\{1,\ldots,2^{b_t}\},
 
 若 \(R_t=\varnothing\)，规定
 \[
-\sigma_t^c=d_t=w_t=L_t=0,\qquad
+\sigma_t^c=d_t=w_t=0,\qquad
 \mathcal S_t=\varnothing,\quad\mathcal Q_t=\mathcal Q_{t-1},\quad B_t=\varnothing
 \]
 （任意 \(\beta_t\ge0\) 都是 no-op）。若 \(R_t\ne\varnothing\)，定义
@@ -2940,9 +2940,11 @@ w=1+2+2=5,\qquad \sigma^c=4,\qquad d=2,\qquad H_d\sigma^c=H_2\cdot4=6.
 
 若维护 §51 的待办和前缀，残余检查仍为
 \(O((|B_{t-1}|+|\delta_t|)\ell(\mathcal Q_{t-1}))\)，覆盖预计算和不可行预检为
-\(O(|R_t||\mathscr L_t|)\)，成功时 ratio-greedy 为
-\(O(|R_t|^2|\mathscr L_t|)\) 次候选比较；预算失败不执行贪心的提交，但预检和残余检查
-照计。成本比值交叉相乘的整数位长为
+\(O(|R_t||\mathscr L_t|)\)。每个 \(\sigma_t^c<\infty\) 的批次（无论预算最终提交还是
+超预算回滚）都先执行完整 ratio-greedy，需
+\(O(|R_t|^2|\mathscr L_t|)\) 次候选比较；只有 \(\sigma_t^c=\infty\) 的不可行预检分支
+跳过贪心。回滚不提交层但仍计入上述贪心和 bit 成本，预检和残余检查始终照计。
+成本比值交叉相乘的整数位长为
 \(O(b_t+\log|R_t|)\)，预算累计比较再含 \(b^\beta_t\) 位；以 \(M(q)\) 表示
 \(q\) 位整数乘法，成功批次的 bit-cost 可写为
 \[
