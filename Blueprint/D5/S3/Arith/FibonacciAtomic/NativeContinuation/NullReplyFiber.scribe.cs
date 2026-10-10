@@ -42,11 +42,28 @@ internal sealed class NullReplyFiberDocument : IScribeDocumentDefinition
                 + "S(a,b)=(a+2b,2a+3b), and its quantity is q(a,b)=2a+3b. At modulus zero its coefficient carrier "
                 + "is the integers, with no reduction.")),
             Paragraph(Text(
+                "This application is one scoped adapter for the author-owned analysis interface. Any theorem "
+                + "kind may supply a typed contract faithfully tied to its own original source occurrence; neither "
+                + "the name nor the proposition type of native_execution defines generic eligibility. The generic "
+                + "contract must preserve universes, the full dependent telescope and implicit, instance and proof "
+                + "context, and identify the actual source, readouts, selected task and layers. Positive proof escape, "
+                + "positive information gain, finite states, an acquired probability law and Fibonacci semantics "
+                + "are not conditions for representing an analysis contract. These are interface obligations, not "
+                + "a compiled universal source bridge or a theorem assigning Fibonacci semantics to every theorem. "
+                + "Analysis does not complete or certify ordinary four-slot Registration. Direct source registration "
+                + "keeps its complete DependentFamily evidence in realization and familyRecord=none; a nonempty "
+                + "familyRecord belongs only to the existing finite catalog / LegacyPrimitiveRealization adapter "
+                + "with its finite bridge. The ordinary registration obligations and statuses retain their scope.")),
+            Paragraph(Text(
                 "For the initialized single-window application, the source is the complete five-letter Window "
                 + "type. The initial seam is false and the composition is (0,0). The first state is "
                 + "rawTransition(rawMachine(0).start,a), exactly rawMachine(0).toDFA.eval([a]); its seam is "
                 + "first(a) and its composition is residue(0,bitComposition(a)). This is the singleton-word "
-                + "application of native_execution. The middle bit excludes both endpoint bits, while the ends "
+                + "application of native_execution with s=false, c=(0,0) and w=[a], for every a:Window. The "
+                + "original theorem still ranges over both seams, all natural initial compositions and all finite "
+                + "words, and retains its error equivalence and every candidate successful-state equivalence. "
+                + "The finite application does not replace that telescope or claim counts for its full domain. "
+                + "The middle bit excludes both endpoint bits, while the ends "
                 + "letter occupies low 2 and high 5 together, with no additional position.")),
             Paragraph(Text(
                 "Continue with the existing high letter on that same first state. The reached state is "
@@ -89,6 +106,39 @@ internal sealed class NullReplyFiberDocument : IScribeDocumentDefinition
                 + "sampling contract. A single-window atom law gives no cross-window joint relation, and the bottom "
                 + "determinant is not the directed native seam-transfer determinant. No information gain, proof "
                 + "escape or scalar score follows merely from this response identity.")),
+            Paragraph(Text(
+                "For the micro analysis in this adapter, State is the complete Window alphabet, including letters "
+                + "of zero probability. The atom is a itself, with modeIndex as an injective code; seam is "
+                + "some(first(a)), and guard is the complement of first(a). "
+                + "and reply is the actual total high-suffix reply above. These maps, not an unrelated five-row "
+                + "table, define the joint readout kernel. The generic finite consumer requires a complete "
+                + "duplicate-free actual-state enumeration, or an equivalent finite presentation, with proofs "
+                + "that every table kernel agrees in both directions with these actual readouts. Reported values "
+                + "and selected task outputs additionally require exact decoding correspondence. An initial "
+                + "readout bundle and each later addition must refer to these same states and maps. The existing "
+                + "LayerChain interface allows a nontrivial initial kernel and equal adjacent kernels; initial "
+                + "capture and collapsed layers remain in the spectrum, and final unresolved pairs remain separate. "
+                + "In particular guard after seam is a collapsed layer. Ordered unequal pairs use N(N-1), with "
+                + "N=5 here, irrespective of probability support. This count concerns Window, not an arbitrary "
+                + "source Omega that pushes forward to Window. A restriction, parameter fiber or quotient must "
+                + "be explicit and proved to preserve the selected readouts and task within its stated scope; "
+                + "its count cannot be substituted for the original domain's count.")),
+            Paragraph(Text(
+                "StructuralArena and StructuralCatalog supply arbitrary-state kernels; DependentFamily supplies "
+                + "dependent parameter/state/output types, while its ordinary Registration separately requires "
+                + "variation, sensitivity and actual observational dependence. Those latter requirements are not "
+                + "universal analysis eligibility conditions. Finite acquisition reuses Counting's "
+                + "Arena.StateEnumeration and the FusedCorrectness declarations fusedFull_eq_escapeNumerator, "
+                + "fusedUnique_eq_uniqueCaptureCount and fusedWithout_eq_escapeNumerator_without; generated "
+                + "extensional kernels and layeredCapture_partition retain their existing hypotheses. Their use "
+                + "requires each client's source and table reflection proofs, not a new bind-only theorem. "
+                + "A probability law and its same-source pushforward are needed for the macro and conditional "
+                + "readings, not for unweighted micro counts. An absent law leaves its law statistics unknown; "
+                + "missing or unsupported acquisition evidence makes the affected reading unavailable; a finite "
+                + "pair rate on an infinite or at-most-singleton domain, or a conditional law on a zero-mass "
+                + "event, is not applicable. These distinctions are per-reading explanations, not audit statuses. "
+                + "The generic interface and client acquisition obligations require their own compiled evidence; "
+                + "the existing native proofs and this application exposition do not establish that implementation.")),
             Definition("highBits", "The complete high-to-low bit history",
                 "highBits(w) concatenates the reversal of each letter's existing bit list, without reversing the window list. Every window contributes three bits. Thus legal(s,highBits(w)) imposes the incoming high boundary s and every actual seam, while leaving the last seam free. The empty word, leading null windows and all-null words retain their original positions."),
             Definition("bitComposition", "Natural window contributions",
