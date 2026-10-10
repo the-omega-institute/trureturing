@@ -58,9 +58,12 @@ theorem dependence_proof : ObservationalDependence countSignature actual := by
   refine ⟨(1,1,0), 0, rho, ?_⟩
   have hz : FiniteTail.tail (Law.cleanRecordMass 0 1) Law.nonzero
       (Scale.sampleLength 0 1 1) 0 = 1 := by
-    simp [Scale.sampleLength, FiniteTail.tail, FiniteTail.count]
+    have hm : Scale.sampleLength 0 1 1 = 0 := by norm_num [Scale.sampleLength]
+    rw [hm]
+    simp [FiniteTail.tail, FiniteTail.count]
   change FiniteTail.tail (Law.cleanRecordMass 0 1) Law.nonzero
-    (Scale.sampleLength 0 1 1) 0 ≠ _
+    (Scale.sampleLength 0 1 1) 0 ≠
+    FiniteTail.tail (Law.cleanRecordMass rho 1) Law.nonzero (Scale.sampleLength rho 1 1) 0
   rw [hz]
   linarith
 
@@ -106,7 +109,8 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities,
     definition := none, coordinates := #[0, 1, 5],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "fn", "arg", "body"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn", "arg", "body"],
       stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,

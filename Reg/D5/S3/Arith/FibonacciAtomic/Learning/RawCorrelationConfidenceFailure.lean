@@ -58,8 +58,11 @@ theorem dependence_proof : ObservationalDependence rawSignature actual := by
     (lt_mem_nhds (by norm_num : (1 / 4 : ℝ) < 1 / 2))).exists
   refine ⟨(1,1), 0, rho, ?_⟩
   have hz : Law.misorder 0 1 (Scale.sampleLength 0 1 1) = 0 := by
-    simp [Scale.sampleLength, Law.misorder]
-  change Law.misorder 0 1 (Scale.sampleLength 0 1 1) ≠ _
+    have hm : Scale.sampleLength 0 1 1 = 0 := by norm_num [Scale.sampleLength]
+    rw [hm]
+    simp [Law.misorder]
+  change Law.misorder 0 1 (Scale.sampleLength 0 1 1) ≠
+    Law.misorder rho 1 (Scale.sampleLength rho 1 1)
   rw [hz]
   linarith
 
@@ -105,7 +108,8 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure,
     definition := none, coordinates := #[0, 1],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "fn", "arg", "body"],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn", "arg", "body"],
       stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
