@@ -46,14 +46,17 @@ public sealed class ScribeLeanInputSelectionTests
             TextWriter.Null, new StringWriter(), new StringReader(paths)));
     }
 
-    [Fact]
-    public void ScopedEmitConsumesOnlyItsIndependentlySelectedLeanInputs()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ScopedEmitConsumesOnlyItsIndependentlySelectedLeanInputs(bool implicitInit)
     {
         using var root = new TemporaryRoot(sdkConfiguration: true);
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         const string source = "D5/S0/Test/Selected.lean";
         const string path = "Blueprint/D5/S0/Test/Selected.scribe.cs";
-        File.WriteAllText(root.Resolve(source), "-- selected source\n");
+        var sourceText = implicitInit ? "-- selected source\n" : "prelude\n-- selected source\n";
+        File.WriteAllText(root.Resolve(source), sourceText);
         File.WriteAllText(root.Resolve("D5/S0/Test/Unselected.lean"), "-- unselected source\n");
         File.WriteAllText(root.Resolve(path), """
             using StrataLint.Scribe;
@@ -65,10 +68,13 @@ public sealed class ScribeLeanInputSelectionTests
             }
             """);
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
-            RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(source, "-- selected source\n")]))).Snapshot;
+            RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(source, sourceText)]))).Snapshot;
         var reportPath = root.Resolve(".lake/build/stratalint/raw-lean-report.json");
         RawLeanReportArtifact.WriteFile(reportPath, snapshot,
-            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [source] = new([], []) }));
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+            {
+                [source] = new(implicitInit ? ["Init"] : [], []),
+            }));
         File.WriteAllText(reportPath, File.ReadAllText(reportPath).Replace(
             "stratalint-raw-lean-report-v3", "stratalint-scoped-lean-report-v1", StringComparison.Ordinal));
         var error = new StringWriter();

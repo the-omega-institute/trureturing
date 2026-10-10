@@ -132,7 +132,7 @@ internal static class RawLeanReportArtifact
             var imports = ReadSortedStrings(RequiredArray(moduleElement, "imports"), "imports");
             if (scope is not null)
             {
-                var sourceImports = LeanSourceCatalog.ParseFileImports(source.File)
+                var sourceImports = LeanSourceCatalog.ParseFileImports(source.File, includeImplicitInit: true)
                     .Order(StringComparer.Ordinal)
                     .ToImmutableArray();
                 if (!imports.SequenceEqual(sourceImports))

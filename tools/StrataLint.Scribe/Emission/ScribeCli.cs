@@ -236,7 +236,11 @@ public static class ScribeCli
                     arguments.Contains("--check"),
                     output,
                     error,
-                    () => leanReport ?? LeanCompiledArtifactReports.ReadRepositoryFiles(repositoryRoot));
+                    () => leanReport ?? (arguments.Contains("--scoped")
+                        ? LeanCompiledArtifactReports.ReadScopedRepositoryFiles(repositoryRoot,
+                            ScribeLeanInputs.Select(repositoryRoot, paths)
+                                .Select(static module => module.Replace('.', '/') + ".lean"))
+                        : LeanCompiledArtifactReports.ReadRepositoryFiles(repositoryRoot)));
             }
             catch (Exception exception) when (
                 exception is IOException or UnauthorizedAccessException or ArgumentException
