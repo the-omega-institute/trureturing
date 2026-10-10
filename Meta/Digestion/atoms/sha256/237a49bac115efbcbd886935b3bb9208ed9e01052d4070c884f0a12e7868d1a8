@@ -1,0 +1,92 @@
+- $\mathcal D$：衰变和内部信息丢失映射。
+
+它的核心演化为：
+
+$$
+(\sigma_j,h_j,\kappa_j)
+\xrightarrow[\ A_\Gamma\ ]{\ \delta_j\ }
+(\sigma_{j+1},h_{j+1},\kappa_{j+1})
+\xrightarrow{\ \mathcal L\ }
+R_{j+1}.
+$$
+
+
+其中：
+
+$$
+h_{j+1}=b_0(\sigma_j),
+$$
+
+
+$$
+h_jb_2(\sigma_j)=0,
+$$
+
+
+$$
+R_j=(X_j,Y_j,Z_j),
+$$
+
+
+$$
+\Delta_j=r_j\kappa_j-X_jY_j.
+$$
+
+
+若 $\Delta_j$ 被保存，则：
+
+$$
+\kappa_j=\frac{X_jY_j+\Delta_j}{r_j}.
+$$
+
+
+若 $\Delta_j$ 被丢弃，则：
+
+$$
+\kappa_j\in
+\left[
+\max(0,X_j+Y_j-r_j),
+\min(X_j,Y_j)
+\right].
+$$
+
+
+于是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{时间方向}
+&=\text{接缝状态和合法模式的正向延续},\\
+\text{引力方向}
+&=\text{对这些延续的权重和钟率的偏置},\\
+\text{衰变}
+&=\text{内部 }\kappa,\Delta\text{ 等关系进入不可恢复纤维},\\
+\text{光}
+&=\text{把这些内部关系运输到边界的通道}.
+\end{aligned}
+}
+$$
+
+
+最凝练的说法是：
+
+> **AURIC FIB-ATOM 金字塔不是一个静态物体，而是一个有限的未来生成器。金字塔的点表示局部合法选择，接缝表示时间记忆，内部纤维表示尚未被边界恢复的关系，$\Delta$ 表示最小隐藏关联，光是把这些隐藏关联送向边界的传播口，衰变则是这些关系从可恢复内部结构变成观察者不可逆的边界商。**
+
+当前仓库中的五模式、概率纤维、$\kappa$、$\Delta$、严格接缝和边界响应都属于有限数学模型；它们还没有单独推出真实的引力场方程或粒子物理。真正需要继续加入的是：
+
+$$
+\boxed{
+\text{FIB 合法转移}
+\longrightarrow
+\text{场加权核}
+\longrightarrow
+\text{局部钟校准}
+\longrightarrow
+\text{辐射传播}
+\longrightarrow
+\text{物理守恒律}.
+}
+$$
+
+
