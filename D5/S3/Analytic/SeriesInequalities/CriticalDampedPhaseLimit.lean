@@ -13,7 +13,9 @@ import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.Choose
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Push
 
 open scoped BigOperators ENNReal
 open Filter Set Topology
@@ -132,21 +134,13 @@ private theorem spiral_bound (k s : ℝ) (hs : 0 ≤ s) : spiral k s ≤ 2 := by
 
 private theorem spiral_parameter_bound (k l s : ℝ) (hs : 0 ≤ s) :
     |spiral k s - spiral l s| ≤ Real.exp (-1) * |k - l| := by
-  have hfactor : Complex.exp ((k * s : ℝ) * Complex.I) -
-      Complex.exp ((l * s : ℝ) * Complex.I) =
-      Complex.exp ((l * s : ℝ) * Complex.I) *
-        (Complex.exp (((k - l) * s : ℝ) * Complex.I) - 1) := by
-    rw [mul_sub, mul_one, ← Complex.exp_add]
-    have he : ((l * s : ℝ) : ℂ) * Complex.I +
-        (((k - l) * s : ℝ) : ℂ) * Complex.I = ((k * s : ℝ) : ℂ) * Complex.I := by
-      push_cast
-      ring
-    rw [he]
   have hchar : ‖Complex.exp ((k * s : ℝ) * Complex.I) -
       Complex.exp ((l * s : ℝ) * Complex.I)‖ ≤ |k - l| * s := by
-    rw [hfactor, norm_mul, Complex.norm_exp_ofReal_mul_I, one_mul]
-    have h := Real.norm_exp_I_mul_ofReal_sub_one_le (x := (k - l) * s)
-    simpa [mul_comm, Real.norm_eq_abs, abs_mul, abs_of_nonneg hs] using h
+    have h := Real.norm_exp_I_mul_ofReal_sub_one_le (x := k * s - l * s)
+    rw [mul_comm Complex.I, Complex.ofReal_sub, sub_mul, Complex.exp_sub,
+      div_sub_one (Complex.exp_ne_zero _), norm_div,
+      Complex.norm_exp_ofReal_mul_I, div_one] at h
+    simpa only [← sub_mul, Real.norm_eq_abs, abs_mul, abs_of_nonneg hs] using h
   have hnorm := abs_norm_sub_norm_le
     (1 - (Real.exp (-s) : ℂ) * Complex.exp ((k * s : ℝ) * Complex.I))
     (1 - (Real.exp (-s) : ℂ) * Complex.exp ((l * s : ℝ) * Complex.I))
@@ -396,7 +390,7 @@ theorem critical_damped_phase_limit
       Tendsto (fun j => ‖U - V j‖) atTop (𝓝 (A / (1 + ρ) * envelope κ)) := by
   classical
   have ha (i : ℕ) : ‖-(A : ℂ) * ζ ^ (i + 1)‖ ≤ A := by
-    simp [norm_mul, norm_pow, hζ, Complex.norm_real, Real.norm_of_nonneg hA.le]
+    simp [norm_pow, hζ, Complex.norm_real, Real.norm_of_nonneg hA.le]
   have hw (j : ℕ) : ‖Complex.exp ((-τ j : ℝ) + (θ j : ℂ) * Complex.I)‖ ≤ 1 := by
     rw [Complex.norm_exp]
     simp only [Complex.add_re, Complex.ofReal_re, Complex.mul_re, Complex.I_re,
