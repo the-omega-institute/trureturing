@@ -262,7 +262,7 @@ private theorem adaptiveTranscript_adaptiveProtocol_eq_iff
           funext coordinate
           exact congrFun code_equal coordinate.castSucc⟩
 
-private theorem adaptiveProtocol_uses_identity_readout
+theorem adaptiveProtocol_uses_identity_readout
     {State : Type u} {B depth : Nat} (protocol : AdaptiveProtocol State B depth) :
     UsesReadoutFamily
       (id : (State -> Fin B) -> State -> Fin B) protocol := by
