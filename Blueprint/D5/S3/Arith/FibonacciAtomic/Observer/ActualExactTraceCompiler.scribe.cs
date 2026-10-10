@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
 internal sealed class ActualExactTraceCompilerDocument : IScribeDocumentDefinition
 {
@@ -26,6 +28,14 @@ internal sealed class ActualExactTraceCompilerDocument : IScribeDocumentDefiniti
             Def("ExactState", "Exact state carrier", "The row carrier plus one absorbing unit sink."),
             Def("exactStateCard", "Exact cardinality expression", "The finite sum of compatible cache fiber cardinalities plus the sink."),
             Def("strategyPolicy", "Coarse strategy policy", "Evaluate the original strategy on the fixed coarse-history representative."),
+            Describe.Lean(DescribeId.Create("actual-exact-trace-compiler-encode-projection"),
+                DeclarationHandle.Create(Prefix + "encode_projection"), H("Exact coarse projection of the fixed section"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("g"), Colon, Sp, F.Id("CoarseHistory"), Comma, Sp,
+                    new Formula.Apply(Seq(Operatorname, Grp(F.Id("kappaHist"))),
+                        [new Formula.Apply(Seq(Operatorname, Grp(F.Id("encodeHistory"))), [F.Id("g")])]),
+                    Sp, Eq, Sp, F.Id("g")))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every original coarse history g, kappa_hist(encodeHistory(g)) equals g. The section preserves each literal address and chronological repetition, chooses raw branch for coarse none, and chooses the corresponding raw Boolean leaf for a Boolean label. This is a right inverse of coarse projection, not an identity on arbitrary raw histories: branch and absent remain distinct raw replies. The native counterfactual completion obstruction consumes this exact supplier to certify its route representative."))),
+                DescribeRole.Theorem),
             Def("strategyObserver", "Strategy-indexed observer", "Instantiate the exact finite observer on all allowed terminal coarse prefixes."),
             Paragraph(Text("Strategy-indexed replay, exact terminal runs and admissibility assume a positive source bound and an original strategy policy that factors through kappa_hist. Sourcewise replay and run statements range over the allowed sources at that bound.")),
             Theorem("strategy_actual_prefix_replay", "Strategy prefix cache replay", "Actual prefixes of the strategy-indexed observer carry the original full coarse history and first-write raw cache."),
