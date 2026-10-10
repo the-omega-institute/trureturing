@@ -90,10 +90,7 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
     private static Formula Binders() => Seq(
         Forall, Sp, F.Id("B"), Colon, Sp, Operatorname, Grp(F.Id("BuildSystem")), Comma, Sp,
         F.Id("writers"), Colon, Sp, Call("Set", SnapshotType()), Comma, Sp,
-        F.Id("T"), Colon, Sp, SnapshotType(), Comma, RowBreak, Grp(),
-        F.Id("schedule"), Colon, Sp,
-        Arrow(Field("Node"), Call("List", Call("Op", Field("Node"), Field("Src")))), Comma,
-        RowBreak, Grp());
+        F.Id("T"), Colon, Sp, SnapshotType(), Comma, RowBreak, Grp());
 
     private static Formula Hypotheses()
     {
@@ -103,6 +100,9 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
         return Seq(
             Call("NoCollision", F.Id("B"), Call("insert", F.Id("T"), F.Id("writers"))), Sp,
             Rightarrow, RowBreak, Grp(),
+            Forall, Sp, F.Id("schedule"), Colon, Sp,
+            Arrow(Field("Node"), Call("List", Call("Op", Field("Node"), Field("Src")))), Comma,
+            RowBreak, Grp(),
             Open, Forall, Sp, n, Comma, Sp, w, Comma, Sp, m, Comma, Sp,
             Call("store", w, m), Sp, InMacro, Sp, Call("schedule", n), Sp, Rightarrow, Sp,
             w, Sp, InMacro, Sp, F.Id("writers"), Close, Sp, Rightarrow, RowBreak, Grp());
