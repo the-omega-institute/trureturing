@@ -31,7 +31,6 @@ local notation "P" => Polynomial ℤ
 local notation "X" => (Polynomial.X : Polynomial ℤ)
 local notation "Y" => (Polynomial.X : Polynomial (Polynomial ℤ))
 open scoped BigOperators Polynomial
-local notation "P" => Polynomial ℤ
 private lemma affine_coeff (a b : ℤ) (n j : ℕ) :
     ((Polynomial.C a+Polynomial.C b*Polynomial.X)^n).coeff j =
       (n.choose j:ℤ)*a^(n-j)*b^j := by
@@ -51,7 +50,6 @@ private lemma slice_coeff (n k j : ℕ) :
       Polynomial.C ((n.choose k:ℤ)*2^k)*(Polynomial.X^k*(2+Polynomial.X)^(n-k)) := by
     rw [WordCounts.slice_formula]
     simp only [map_mul, map_pow, Polynomial.C_eq_natCast, Polynomial.C_ofNat, mul_pow]
-    skip
     ring
   rw [he, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow_mul']
   by_cases hkj : k ≤ j
@@ -94,7 +92,6 @@ private lemma l_coeff (m j : ℕ) : (ExteriorCounts.L m).coeff j=Capacity.lc m j
   have hL : ExteriorCounts.L m=∑ k ∈ Finset.Icc 1 (m/3), WordCounts.slice (m-1) k := by
     unfold ExteriorCounts.L
     simp_rw [WordCounts.slice_formula]
-    rfl
   rw [hL, Polynomial.finsetSum_coeff]
   simp_rw [slice_coeff]
   rw [← Finset.mul_sum]
@@ -146,7 +143,7 @@ private lemma e_coeff (m z : ℕ) :
           4*((2+3*Polynomial.X)^(m-1)-(2+Polynomial.X)^(m-1))):P).coeff j=dc m j := by
       rw [Polynomial.coeff_sub, Polynomial.coeff_ofNat_mul, Polynomial.coeff_sub,
         mul_b_coeff]
-      simp_rw [l_coeff, b_coeff, v_coeff]
+      simp only [l_coeff, b_coeff, v_coeff]
       rfl
     simp_rw [hD]
     rfl
@@ -191,6 +188,7 @@ open scoped BigOperators Polynomial
 attribute [local instance] Classical.propDecidable
 namespace CommonSelector
 noncomputable section
+local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
 open ExteriorCounts
 open WordCounts (rareN)
 /-- The actual teacher label indexed by layer and prefix position. -/
@@ -257,6 +255,7 @@ open scoped BigOperators Polynomial
 attribute [local instance] Classical.propDecidable
 namespace CommonSelector
 noncomputable section
+local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
 open ExteriorCounts
 open WordCounts (rareN)
 private lemma actual_flat {m : ℕ} (x : Input (m+3)) (hx : ReservoirWords.isReservoir x) (i : Fin m) :
@@ -280,15 +279,9 @@ private lemma reservoir_majority {m : ℕ} (x : Input (m+3)) (hx : ReservoirWord
 
 private def Rset (m z : ℕ) : Finset (Input (m+3)) :=
   Finset.univ.filter (fun x => ReservoirWords.isReservoir x ∧ rareN x=z)
-private def reservoirClassEquiv (m z : ℕ) :
-    {x : {x : LegalPriorityTeacher.Input (m+3) // ReservoirWords.isReservoir x} // WordCounts.rareN x.val=z} ≃
-      {x : Input (m+3) // ReservoirWords.isReservoir x ∧ rareN x=z} where
-  toFun x := ⟨x.val.val, x.val.property, x.property⟩
-  invFun x := ⟨⟨x.val, x.property.1⟩, x.property.2⟩
-  left_inv x := rfl
-  right_inv x := rfl
 private lemma rset_card (m z : ℕ) : (Rset m z).card=ReservoirWords.Nz m z := by
-  have hc := Fintype.card_congr (reservoirClassEquiv m z)
+  have hc := Fintype.card_congr (Equiv.subtypeSubtypeEquivSubtypeInter
+    (@ReservoirWords.isReservoir m) (fun x : Input (m+3) => rareN x=z))
   change ReservoirWords.Nz m z = _ at hc
   rw [Fintype.card_subtype] at hc
   exact hc.symm
@@ -378,6 +371,7 @@ open _root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher (Input)
 open scoped BigOperators
 namespace CommonSelector
 noncomputable section
+local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
 open ExteriorCounts
 open WordCounts (rareN)
 private lemma outside_difference {m : ℕ} (z : ℕ) (i : Fin m) :
