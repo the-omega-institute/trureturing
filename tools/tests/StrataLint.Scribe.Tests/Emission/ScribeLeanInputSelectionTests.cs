@@ -47,6 +47,25 @@ public sealed class ScribeLeanInputSelectionTests
     }
 
     [Theory]
+    [InlineData("")]
+    [InlineData("docs/unrelated.md")]
+    public void ScopedEmitRejectsEmptyLeanScopeBeforeWriting(string paths)
+    {
+        using var root = new TemporaryRoot(sdkConfiguration: true);
+        Directory.CreateDirectory(root.Resolve("Blueprint"));
+        File.WriteAllText(root.Resolve("global.json"), "{}\n");
+        var error = new StringWriter();
+
+        var exit = ScribeCli.Run(["emit", "--paths-from", "-", "--scoped"], root.Path,
+            TextWriter.Null, error, leanReport: null, new StringReader(paths));
+
+        Assert.NotEqual(0, exit);
+        Assert.Contains("scope is empty", error.ToString(), StringComparison.Ordinal);
+        Assert.Empty(Directory.EnumerateFiles(root.Resolve("Blueprint"), "*.md", SearchOption.AllDirectories));
+        Assert.False(Directory.Exists(root.Resolve(".lake")));
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void ScopedEmitConsumesOnlyItsIndependentlySelectedLeanInputs(bool implicitInit)

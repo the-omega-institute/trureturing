@@ -225,6 +225,9 @@ public static class ScribeCli
             {
                 var repositoryRoot = FindRepositoryRoot(workingDirectory);
                 var paths = ReadPaths(arguments[2], input);
+                var scopedInputs = arguments.Contains("--scoped")
+                    ? ScribeLeanInputs.Select(repositoryRoot, paths)
+                    : ImmutableArray<string>.Empty;
                 if (paths.IsEmpty)
                 {
                     output.WriteLine("emitted: 0 changed blueprint(s)");
@@ -238,7 +241,7 @@ public static class ScribeCli
                     error,
                     () => leanReport ?? (arguments.Contains("--scoped")
                         ? LeanCompiledArtifactReports.ReadScopedRepositoryFiles(repositoryRoot,
-                            ScribeLeanInputs.Select(repositoryRoot, paths)
+                            scopedInputs
                                 .Select(static module => module.Replace('.', '/') + ".lean"))
                         : LeanCompiledArtifactReports.ReadRepositoryFiles(repositoryRoot)));
             }
