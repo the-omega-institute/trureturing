@@ -1242,3 +1242,314 @@ residual. No application of Liu–Wu–Yang to the extra $J_1$ harmonics is
 asserted. The mean, joint polynomial positive parts, other recovery terms
 and complete signed Robin tail remain unpaid. This application has no
 Lean certification and makes no claim of original number theory.
+
+## Exact local-support recombination pays high harmonics on all rectangles
+
+Keep the original actual source, fixed $\eta$, integer representative and
+full mean $\sigma_A=(S_A)_-$. The finite floor response gives
+$E_A(y)=[-H_A(y)-\sigma_Ay]_+$. Put
+
+$$
+c_A(y)=\tfrac12\sum_{\ell\le y}h(\ell),\qquad
+s_A(y)=\sum_{\ell\le y}\frac{h(\ell)}\ell,\qquad
+g_{{\rm loc},J}(y)=\sum_{\ell\le y}h(\ell)P_J(y/\ell),
+$$
+
+where $h$ still has its original support $\ell\le V$. Then
+
+$$
+\begin{aligned}
+Z_{{\rm loc},J}(y)
+&=c_A(y)+g_{{\rm loc},J}(y)-y(s_A(y)+\sigma_A),\\
+|E_A(y)-[Z_{{\rm loc},J}(y)]_+|
+&\le\sum_{\ell\le y}|h(\ell)|D_J(y/\ell)
+\le r_{A,J}(y).
+\end{aligned}
+\tag{SV30}
+$$
+
+This is exact recombination of the original floor sum: its terms with
+$\ell>y$ are zero. Their fractional-part contributions in the earlier
+full-support expression are combined with its full linear term, rather
+than discarded. The full $\sigma_A$ remains in (SV30); it is not replaced
+by the negative part of $s_A(y)$. The common $J_0=\lceil V\rceil$
+approximation cost is already paid by (SV25).
+
+Apply the existing four-term supplier (SV27) on dyadic blocks, now keeping
+$\ell\le y_p=x/p^k$ inside each block. This moving prefix can be handled
+by standard finite Fourier completion. For an integer dyadic $D\ge1$,
+write $Q=2D$ and $b_p=\max(0,\min(D,\lfloor y_p\rfloor-D))$. On
+$v=\ell-D\in\{1,\ldots,D\}$ the exact identity is
+
+$$
+\begin{aligned}
+\mathbf1_{v\le b_p}
+&=\sum_{r=0}^{Q-1}\beta_r(p)e(rv/Q),\qquad
+\beta_r(p)=\frac1Q\sum_{u=1}^{b_p}e(-ru/Q),\\
+|\beta_r(p)|&\le\frac{C}{1+\min(r,Q-r)},\qquad
+\sum_{r=0}^{Q-1}\frac{C}{1+\min(r,Q-r)}\ll\log(2D).
+\end{aligned}
+\tag{SV31}
+$$
+
+Finite Fourier orthogonality supplies the identity and the finite
+geometric-sum bound supplies the displayed majorants. For each $r$,
+put the normalized $\beta_r(p)$ in the allowed coefficient $a_{j,p}$,
+together with the actual test sign, own-price weight and sample flags;
+put $h(\ell)e(r(\ell-D)/Q)$ in $b_\ell$. Thus (SV27) still applies with
+only a logarithmic completion cost. No unestimated separation of a joint
+$p,\ell$ indicator is assumed.
+
+For a nonempty block, $D\le\min(V,Y)$ with $Y=x/P^k$. Under the original
+source condition $H\le P^{k-1}D$, the four terms in (SV27) give the uniform
+block cost
+
+$$
+\ll_{k,\nu}A^\nu
+ \left(A^{-1/2}+A^{-\gamma_k}H^{-1/2}\right),
+\qquad \gamma_k=\frac{k-1}{2k}.
+\tag{SV32}
+$$
+
+Indeed the first term is at most $A^{-1/2}$. Splitting at $Y=V$ gives
+$P\sqrt D/x\ll A^{-3/4+1/(2k)}\le A^{-1/2}$,
+$D\sqrt P/x\ll A^{-1/2+1/(4k)}\le A^{-\gamma_k}$ and
+$PD\sqrt{D/Y}/x\ll A^{-\gamma_k}$. These are bounds for the same
+rectangle. If the source condition fails, use direct absolute values:
+the cost is $\ll_{k,\nu}A^\nu PD/x$, and
+$PD<HP^{2-k}\le J_0$ for $k\ge2$. This again costs
+$O_{k,\nu}(A^{-1/2+\nu})$ without using the source theorem outside its
+range. The term $\ell=1$, outside the dyadic denominator blocks, has
+total cost $O_{k,\nu}(A^{-1+3/(4k)+\nu})$ from $p^k<x/U$ and the
+harmonic coefficient bound, and fits the same budget.
+
+For $1\le H_0\le J_0$, define the complete local high-frequency part
+
+$$
+\mathcal G_{k,>H_0}(y)
+=\sum_{\ell\le y}h(\ell)
+ \sum_{H_0<|j|\le J_0}\widehat P_{J_0}(j)e(jy/\ell).
+$$
+
+Dyadic decomposition includes the block crossing $H_0$: take
+$H\ge H_0/2$ and retain both flags $j>H_0$ and $j\le J_0$ in
+$a_{j,p}$. Summing (SV32), its condition-failure bound and the
+$\ell=1$ contribution, and including conjugate frequencies, yields
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{p^k<x/U}w_{N,p,k}
+ |\mathcal G_{k,>H_0}(x/p^k)|
+\ll_{k,\nu} A^\nu
+ \left(A^{-1/2}+A^{-\gamma_k}H_0^{-1/2}\right).
+\tag{SV33}
+$$
+
+Here $k\ge2$ is fixed. Divisor normalization, completion and all dyadic
+losses are absorbed by choosing smaller auxiliary exponents before the
+prescribed $\nu>0$. The bound is uniform in the same actual $x$ and
+sample-dependent test signs; no independent source phases are chosen.
+
+For each original unpaid layer $2\le k<m_\eta$, take a common fixed
+$0<d<1-2\eta$ and set
+$H_{0,k}=A^{2(\eta-\gamma_k)+d}$. Its exponent lies between zero and
+$1/2$. Choose $0<\nu<\min(d/2,1/2-\eta)$; then (SV33) is
+$o(A^{-\eta})$ for every such layer. Define
+
+$$
+g_{{\rm loc},k}^{\rm low}(y)
+=\sum_{\ell\le y}h(\ell)
+ \sum_{1\le|j|\le H_{0,k}}\widehat P_{J_0}(j)e(jy/\ell),
+$$
+
+and let $\mathcal R^{\rm low}_{N,\eta}$ be (SV10)'s residual over the
+same active samples, replacing $E_A(y_p)$ in each layer $k$ by
+$[c_A(y_p)+g_{{\rm loc},k}^{\rm low}(y_p)
+-y_p(s_A(y_p)+\sigma_A)]_+$. Equation (SV30), the positive part's
+Lipschitz property and (SV33) give
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm low}_{N,\eta}|
+=o(A^{-\eta}).
+\tag{SV34}
+$$
+
+Empty layer sums remain zero. This applies the same published supplier
+to all rectangles after exact local-support recombination, extending
+the critical-rectangle scope of (SV28). The low frequencies, moving
+constant and drift remain jointly inside the same positive part; they
+have no bound here at the required rate. The separate full-mean
+requirement, prime layer, other recovery terms and complete signed
+Robin tail remain unpaid. This is an attributed application of
+classical inputs without Lean certification, original-number-theory
+priority or an identification with FIB composition rotation.
+
+## Actual deep-layer weights differ only below the residual target scale
+
+Retain the same selected $N$, its actual $A=\log N$, original $\eta$,
+$E_A$, active samples and finite layers in $\mathcal R_{N,\eta}$. Let
+$\widetilde{\mathcal R}_{A,\eta}$ be that same supremum with only
+$w_{N,p,k}$ replaced by $\log p$. The existing own-price layer comparison
+gives $0\le\log p-w_{N,p,k}\le p^{1-k}\log p$ for $k\ge2$.
+Using the original envelope $E_A\le B_A$, the difference between the
+two nonnegative sums at each $x\in[A,2A]$ is at most
+
+$$
+\frac{B_A}{x}\left(
+ \sum_{p\le\sqrt{x/U}}\frac{\log p}{p}
+ +\sum_p\sum_{k\ge3}\frac{\log p}{p^{k-1}}\right)
+=\frac{B_A}{x}\left(
+ \sum_{p\le\sqrt{x/U}}\frac{\log p}{p}+\mathfrak c_2\right).
+$$
+
+The existing $\vartheta(t)<2t$ input and Abel summation give
+$\sum_{p\le z}(\log p)/p\ll\log(2z)$; $\mathfrak c_2<\infty$
+is already defined in (SV9). Since $B_A\ll\sqrt A/L^2$, the bound
+is uniformly $O(A^{-1/2}/L)$. Pointwise order and the supremum
+inequality therefore give, without requiring either supremum to be
+attained,
+
+$$
+0\le\widetilde{\mathcal R}_{A,\eta}-\mathcal R_{N,\eta}
+\ll\frac{A^{-1/2}}L=o(A^{-\eta}/L),\qquad 0<\eta<1/2.
+\tag{SV35}
+$$
+
+Thus the original local requirement
+$\mathcal R_{N,\eta}=o(A^{-\eta})$ is equivalent to the same requirement
+for $\widetilde{\mathcal R}_{A,\eta}$ along the same selected sources.
+The actual clock has not been replaced by an arbitrary continuous one.
+This application first uses the envelope for $E_A$; it does not assert
+that an arbitrary polynomial positive part is bounded by $B_A$.
+Transport to a polynomial residual requires the already paid
+approximation comparison (SV26).
+
+The depth-dependent lowering of these weights changes this residual
+only below its target scale. This leaves open compensation from the
+actual selected clock, the joint low response and other terms of the
+complete recovery identity. It provides neither the separate mean
+bound nor a complete signed Robin estimate, and has no Lean
+certification or claim of original number theory.
+
+## Rectangle-dependent cutoffs also pay some of the lowest harmonics
+
+The four-term supplier retains more information than the uniform
+critical cutoff in (SV34). For the same local-support rectangle, put
+
+$$
+Q_k(P,D)=\frac{D\sqrt P}{A}
+ +\frac{P^{1+k/2}D^{3/2}}{A^{3/2}},\qquad
+t_k(P,D)=A^{2\eta+d}Q_k(P,D)^2,
+\tag{SV36}
+$$
+
+where $d$ and the auxiliary exponents obey the choices in (SV34).
+Since $A\le x\le2A$, (SV27) with the exact prefix completion (SV31)
+gives the block cost
+$\ll_{k,\nu}A^\nu(A^{-1/2}+Q_k(P,D)H^{-1/2})$ under its size
+condition. The two terms of $Q_k$ are precisely the second and fourth
+terms of that supplier, before maximizing over rectangles.
+
+Remove from the existing low part only the frequencies
+$t_k(P,D)<|j|\le H_{0,k}$. If $t_k\ge1$, include the crossing
+dyadic block $H\ge t_k/2$ and both exact frequency flags. If $t_k<1$,
+all positive frequencies in that rectangle are removed and $H\ge1$.
+In either case $Q_k/\sqrt H\ll A^{-\eta-d/2}$ on the removed blocks.
+The flags are allowed in $a_{j,p}$ for each fixed $P,D,H$.
+When the source size condition fails, the already paid direct bound
+from (SV32) applies instead. Finite dyadic summation, with the same
+small-exponent slack as before, costs $o(A^{-\eta})$ uniformly in $x$.
+
+This deletion includes $j=1$ when $t_k<1$. To handle that singleton
+within the source's convention $H<h\le2H$, take source $H=1$, keep
+only $h=2$ in $a_{h,p}$, and set
+$X_{\rm src}=x/(2P^kD)$. The phase is then exactly $x/(p^k\ell)$,
+the condition $1\le P^{k-1}D$ holds, and the four cost terms change
+only by fixed factors. Negative frequencies are conjugates. The entire
+$\ell=1$ harmonic contribution is separately paid by the absolute
+bound already used in (SV32), also when its lowest frequencies are
+included.
+
+Let $P(p)$ be the dyadic scale satisfying $P(p)<p\le2P(p)$ for the
+actual prime $p$. Define the remaining response, depending on $p$ and $x$, by
+
+$$
+\begin{aligned}
+g_{{\rm ad},k}(p;x)
+={}&\sum_{\substack{D\ \mathrm{dyadic}\\D\le V}}
+ \sum_{\substack{D<\ell\le2D\\\ell\le\min(V,y_p)}}h(\ell)
+ \sum_{1\le|j|\le\min(J_0,H_{0,k},t_k(P(p),D))}
+ \widehat P_{J_0}(j)e(jy_p/\ell),\qquad y_p=x/p^k.
+\end{aligned}
+$$
+
+The dyadic denominator sum begins at $D=1$; it excludes the separately
+paid $\ell=1$. In the original residual, replace $E_A(y_p)$ by
+$[c_A(y_p)+g_{{\rm ad},k}(p;x)-y_p(s_A(y_p)+\sigma_A)]_+$ and call
+the resulting supremum $\mathcal R^{\rm ad}_{N,\eta}$. The constants,
+full mean, drift, active samples and own-price weights are unchanged.
+The positive-part Lipschitz inequality and (SV34) therefore give
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm ad}_{N,\eta}|
+=o(A^{-\eta}).
+\tag{SV37}
+$$
+
+For fixed scales $P\asymp A^u$, $D\asymp A^v$, an entire rectangle,
+including its first harmonic, is paid if
+
+$$
+u+2v<2-2\eta-d,\qquad
+(k+2)u+3v<3-2\eta-d.
+$$
+
+These sufficient conditions describe a region, rather than a single
+example; they are not necessary conditions for a useful estimate.
+The retained rectangles and their joint constant/drift positive part
+still have no bound here at the required rate. This is another
+parameter-specific application of the same published four-term
+supplier, without a new exponential-sum theorem, Lean certification
+or complete signed Robin gain.
+
+## A published moment obstruction applies to the original linear factor
+
+The remaining joint estimate cannot be supplied by assuming that linear
+smoothing automatically gives uniformly bounded high moments of each
+factor. Granville–Koukoulopoulos–Maynard, [*Sieve weights and their
+smoothings*, arXiv:1606.06781v4](https://arxiv.org/abs/1606.06781v4),
+definition (1.9) and Theorem 1.3, directly apply to the original
+$\lambda(d)=\mu(d)(1-\log d/\log R)_+$. With the source's moment
+index $k=3$ and smoothing exponent $1$, their exponent is
+$\binom63-6(1+1)=8$. Thus
+
+$$
+\mathcal M_6(R):=
+\sum_{d_1,\ldots,d_6\le R}
+ \frac{\lambda(d_1)\cdots\lambda(d_6)}{[d_1,\ldots,d_6]}
+=c_{3,1}(\log R)^8+O((\log R)^7),\qquad c_{3,1}>0.
+\tag{SV38}
+$$
+
+At the unchanged actual clock, $R=A^{1/8}$. Expanding the sixth power
+of $\Lambda_R(n)=\sum_{d\mid n}\lambda(d)$ gives
+
+$$
+\frac1A\sum_{n\le A}\Lambda_R(n)^6
+=\mathcal M_6(R)+O\!\left(\frac{R^6}{A}\right)
+=c_{3,1}(\log R)^8+O((\log R)^7+A^{-1/4}).
+$$
+
+The expansion error uses only $|\lambda(d)|\le1$ for the actual
+$d\ge1$ and $|\lfloor A/[d_1,\ldots,d_6]\rfloor
+-A/[d_1,\ldots,d_6]|\le1$. This is an application of the published
+moment theorem, not a new high-moment result or Lean certification.
+
+It rules out a uniformly bounded sixth moment for this single factor
+under ordinary integer averaging. It does not rule out compensation in
+the mixed LCM response $h$, in its drifted positive part, or under the
+actual reciprocal-prime-power sampling: those are different quantities
+and measures. In particular, (SV38) is neither a lower bound for the
+unpaid residual nor a counterexample to its required estimate. Replacing
+the linear weight by a more smoothed one would change the recovery
+contract and does not inherit the estimates for the current $h$.
