@@ -1,0 +1,24 @@
+#### 10.1 节内标题：1. 固定长度 native null continuation 的注入性
+
+对固定长度 $n$ 的合法窗口串 $w$，在末尾追加一个 null continuation 后，精确自然数 reply
+
+$$
+R_n(w)
+$$
+
+是单射。
+
+证明结构是：
+
+1. 组成坐标经过固定的 Fibonacci 变换得到整数；
+2. 追加 null 后得到等长的 Zeckendorf 型无相邻 $1$ 编码；
+3. 精确 reply 等于该编码的 Fibonacci 值；
+4. 固定长度 canonical representation 的唯一性恢复整串编码；
+5. 三位窗口编码逐位恢复原始 $w$。
+
+这个结论不与“数量均值看不到 $\kappa$”冲突。两者观察对象不同：
+
+- 精确单次 native reply 是高阶、固定长度、整数值的完整编码；
+- $E[q]$ 是五态分布上的一阶期望；
+- 一次精确编码可以单射，并不意味着对应的一阶均值能恢复所有混合分布。
+
