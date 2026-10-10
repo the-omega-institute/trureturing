@@ -1,0 +1,26 @@
+**数学引文 13.2（次序、同步替换与普通通道不可见的符号）。** 固定代表给
+
+```math
+[2]\mapsto A,\quad[3]\mapsto B,\quad[5]\mapsto C,
+\quad[25]\mapsto CA=-B,
+\qquad AB=-BA.
+```
+
+同组成的 $`t_+=\langle\beta,\alpha\rangle,t_-=\langle\alpha,\beta\rangle`$ 在每个同步替换尺度 $`n\ge0`$ 仍满足
+
+```math
+c(\rho^nt_+)=c(\rho^nt_-),\qquad
+U_{\rho^nt_-}=-U_{\rho^nt_+}.
+```
+
+推导。矩阵乘法给 $`A^2=B^2=C^2=-I,AB=-BA,CA=-B`$。若交换联合代表为 $`\langle\alpha,T_2\rangle`$，则 $`AC=B`$，说明模式相位依赖选定次序。置 $`A_n=U_{T_n},B_n=U_{\rho^n\beta}`$，替换使 $`A_{n+1}=B_n,B_{n+1}=B_nA_n`$。若 $`A_n,B_n`$ 平方均为 $`-I`$ 且反交换，则 $`(B_nA_n)^2=-I`$，并且 $`B_n(B_nA_n)=-A_n`$、$`(B_nA_n)B_n=A_n`$，故性质归纳保持。两反序树分别映成 $`B_nA_n,A_nB_n`$，始终差符号；组成则由 $`M^n`$ 作用保持相同。这复用二阶卷定理 106.2 的具体实现。
+
+然而 $`\mathrm{Ad}_U(\varrho)=U\varrho U^\dagger=\mathrm{Ad}_{-U}(\varrho)`$，所以普通通道看不到该符号。来源表示还因矩阵乘法结合律合并不同括号，不能恢复完整自由树。经典模式随机选择且不相干比较分支时，通道为
+
+```math
+\mathcal N(\varrho)=p_0\varrho+p_2X_P\varrho X_P
++(p_3+p_{25})Y_P\varrho Y_P+p_5Z_P\varrho Z_P.
+```
+
+因此完整五模式概率律与通道读出也不是同一个信息对象。证毕。
+

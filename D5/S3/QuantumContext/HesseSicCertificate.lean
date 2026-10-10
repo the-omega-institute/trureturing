@@ -105,7 +105,7 @@ private lemma invSqrtTwo_norm_sq : ‖invSqrtTwo‖ ^ 2 = (1 / 2 : ℝ) := by
 private lemma omega_sq_reduce : omega ^ 2 = -omega - 1 := by
   linear_combination omega_sum
 
-private lemma omega_pow_four : omega ^ 4 = omega := by
+theorem omega_pow_four : omega ^ 4 = omega := by
   calc
     omega ^ 4 = omega ^ 3 * omega := by ring
     _ = omega := by rw [omega_cubed]; ring

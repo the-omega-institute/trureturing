@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:41f4ab966413c96273e92274b5472804af8b40b667691b890fb8f9b8df6b5d42
+  normalized_sha256: sha256:41f4ab966413c96273e92274b5472804af8b40b667691b890fb8f9b8df6b5d42
+cas_ref: sha256:41f4ab966413c96273e92274b5472804af8b40b667691b890fb8f9b8df6b5d42
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometry/SemiconjugacyComposition.semiconjugacy_defect_composition
+    target_statement_id: sha256:7757a802dea3f2f2db2419405392d33b14ee1cb8f897e6b477eb54b7ff745855
+receipts:
+  unresolved_subitems: []

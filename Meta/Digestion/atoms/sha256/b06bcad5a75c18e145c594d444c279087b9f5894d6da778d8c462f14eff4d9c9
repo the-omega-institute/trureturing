@@ -1,0 +1,16 @@
+### theorem 8（两个边界秩都为四，但遗漏不同；合并以后恢复全部五模式概率）
+
+Claim status: open
+
+$$
+\boxed{\dim\mathcal R_{\mathrm{geo}}=\dim\mathcal R_{\mathrm{beh}}=4,}
+$$
+
+$$
+\boxed{\dim(\mathcal R_{\mathrm{geo}}\cap\mathcal R_{\mathrm{beh}})=3,}
+$$
+
+$$
+\boxed{\mathcal R_{\mathrm{geo}}+\mathcal R_{\mathrm{beh}}=\operatorname{span}\{1,x,y,z,xy\}=K^\Sigma.}
+$$
+

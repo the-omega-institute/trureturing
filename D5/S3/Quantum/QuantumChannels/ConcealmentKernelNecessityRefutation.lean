@@ -124,7 +124,7 @@ private theorem all_density_tomographically_complete (d : ℕ) :
       (positive_mem _ (Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg A)))
 
 /-- Nonnegative normalized real diagonal entries define a POVM. -/
-private theorem diagonal_povm {d : ℕ} {Ω : Type} [Fintype Ω]
+theorem diagonal_povm {d : ℕ} {Ω : Type} [Fintype Ω]
     (p : Ω → Fin d → ℝ) (hp : ∀ a i, 0 ≤ p a i) (hs : ∀ i, ∑ a, p a i = 1) :
     IsPOVM (fun a => diagonal (fun i => (p a i : ℂ))) := by
   refine ⟨fun a => Matrix.PosSemidef.diagonal

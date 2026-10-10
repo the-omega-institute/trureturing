@@ -1,0 +1,6 @@
+**定义 17.1（全局来源与局部能量）。** 固定一个 $N$ 阶 Hermitian 半正定矩阵 $G$，$G_{ii}=1$，并保持其原始维数。对三元素索引集 $S$，置
+$$
+B=G[S],\qquad e(B)=\sum_{i<j,\ i,j\in S}|G_{ij}|^2\in[0,3].
+$$
+$D_\Psi$ 使用命题 15.3 的同一函数。以下将 Wolkowicz–Styan 的经典迹矩特征值界和 Hansen–Pedersen 的迹 Jensen 方法特化到当前有限 Gram；[Wang 文献条目](../../../Library/Weil/wang2026proportions.md) 给出这两项主源、零点计数消费者及原先的不交三点块范围。
+

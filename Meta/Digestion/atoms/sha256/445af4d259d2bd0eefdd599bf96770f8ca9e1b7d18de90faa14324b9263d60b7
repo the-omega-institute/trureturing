@@ -1,0 +1,14 @@
+### theorem 3 深度任务是“所有位置都没有缺陷”的共同条件
+
+Claim status: open.
+
+$$
+\boxed{\nu(V_A)=n\prod_{p\in P_n}(1-\epsilon_p).}
+$$
+
+它的逻辑反面为：
+
+$$
+\boxed{\mathbf1_{\{\nu(V_A)=0\}}=1-\prod_p(1-\epsilon_p).}
+$$
+

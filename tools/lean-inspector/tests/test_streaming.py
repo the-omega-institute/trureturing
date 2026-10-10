@@ -119,15 +119,17 @@ class NativeBatchStateTests(unittest.TestCase):
                             material_file=material, name='value', name_key='ns(n0,5:value)')]))
                 Path(arguments[1]).write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=rows)))
 
-            retained, completed_rows, references = [], [], []
+            retained, completed_rows, references, decode_alive = [], [], [], []
             read_json = publication.read_json
             class ReportRow(dict):
                 pass
             def read(data):
                 value = read_json(data)
-                if isinstance(value, dict) and value.get('schema') == materials.SPOOL_SCHEMA:
-                    value['modules'] = [ReportRow(row) for row in value['modules']]
-                    references.extend(weakref.ref(row) for row in value['modules'])
+                if (isinstance(value, dict) and 'module' in value
+                        and any('material_file' in d for d in value.get('declarations', []))):
+                    decode_alive.append(sum(reference() is not None for reference in references))
+                    value = ReportRow(value)
+                    references.append(weakref.ref(value))
                 return value
             validate_rows = publication.validate_rows
             def validate(report, archive, verified_materials=None, **kwargs):
@@ -146,8 +148,11 @@ class NativeBatchStateTests(unittest.TestCase):
                 '[FAIL] batch_selection_scans_independent_of_module_count')
             self.assertEqual(retained, [0, 0, 0],
                 '[FAIL] completed_module_validation_state_released')
+            self.assertEqual(len(references), 3, '[FAIL] all_produced_rows_observed')
             self.assertEqual(completed_rows, [0, 0, 0],
                 '[FAIL] completed_module_report_rows_released')
+            self.assertEqual(decode_alive, [0, 0, 0],
+                '[FAIL] previous_module_report_row_released_before_next_decode')
             for _, name, _, utility, _, output in requests:
                 with zipfile.ZipFile(output) as archive:
                     row = json.loads(archive.read(publication.RAW))['modules'][0]
@@ -157,6 +162,41 @@ class NativeBatchStateTests(unittest.TestCase):
                         row['source_path'], 'def', 'ns(n0,5:value)', 'Nat'))
                     record = json.loads(archive.read(publication.RAW + '.provenance.json'))
                     publication.check_origin(record, row)
+
+
+class ReportLifetimeTests(unittest.TestCase):
+    def test_report_rows_release_previous_target_before_decoding_next(self):
+        class Row(dict):
+            pass
+        references = []
+        decode = publication.read_json
+        def observed(data):
+            value = decode(data)
+            if isinstance(value, dict) and 'module' in value:
+                self.assertTrue(all(ref() is None for ref in references),
+                    '[FAIL] PreviousTargetReportRowReleased')
+                value = Row(value)
+                references.append(weakref.ref(value))
+            return value
+        with tempfile.TemporaryDirectory() as directory:
+            report = Path(directory) / 'report.json'
+            report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA,
+                modules=[dict(module=str(i), certificate='x' * 100000) for i in range(8)])))
+            with patch.object(publication, 'read_json', side_effect=observed):
+                for row in publication.report_rows(report, materials.REPORT_SCHEMA, canonical=True):
+                    self.assertEqual(len(row['certificate']), 100000)
+                    del row
+            self.assertTrue(all(ref() is None for ref in references))
+
+    def test_report_rows_reject_truncated_envelope_after_last_target(self):
+        with tempfile.TemporaryDirectory() as directory:
+            report = Path(directory) / 'report.json'
+            for body in [b'{"modules": [{"module": "A"}]',
+                         b'{"modules": [{"module": "A"}], "schema": "wrong"}',
+                         b'{"modules": [{"module": "A"}], "modules": [], "schema": "x"}']:
+                report.write_bytes(body)
+                with self.assertRaises(ValueError):
+                    list(publication.report_rows(report, materials.REPORT_SCHEMA))
 
 
 class StreamingTests(unittest.TestCase):

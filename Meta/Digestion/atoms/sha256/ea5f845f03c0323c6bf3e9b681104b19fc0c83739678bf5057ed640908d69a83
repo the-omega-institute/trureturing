@@ -1,0 +1,12 @@
+**定义与命题 18.5（有序筛信息通向实际三胞胎的估计目标）。** 对 $H_A$ 或 $H_B$ 及整数 $N\ge19$，取
+$$
+W_N=\prod_{q\le\sqrt{N+6}}q,\qquad
+T_H(N)=\#\{1\le n\le N:\ n+h\text{ 对每个 }h\in H\text{ 都为素数}\}.
+$$
+则
+$$
+0\le T_H(N)-A_H(N;W_N)\le\lfloor\sqrt{N+6}\rfloor.
+\tag{18.3}
+$$
+因此若能另证某个常数 $c_0>0$ 下 $A_H(N;W_N)\ge c_0N/(\log N)^3$ 对全部充分大 $N$ 成立，即得到该三胞胎无穷性。
+

@@ -1,0 +1,82 @@
+#### theorem 34.3: 定理 C：动态响应的四角判据
+
+Claim status: open.（供文 III 原第 10 节「定理 C」；形式化建议。）
+
+
+给定每个模式的完整 future law
+
+$$
+\mathscr L_{\mathrm{null}},
+\mathscr L_1,
+\mathscr L_2,
+\mathscr L_3,
+\mathscr L_{13},
+$$
+
+定义
+
+$$
+J_{\mathscr L} =
+\mathscr L_{13}
+-\mathscr L_1
+-\mathscr L_3
++\mathscr L_{\mathrm{null}}.
+$$
+
+证明：
+
+$$
+J_{\mathscr L}=0
+\Longleftrightarrow
+\text{未来律在原始 }\kappa\text{-纤维上不变}.
+$$
+
+这三条定理连起来，就得到一个清晰的统一结构：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{FIB 数量读出：} &&J_q=0,\\
+&\text{闭包关系读出：} &&J_\chi=1,\\
+&\text{动态未来读出：} &&J_{\mathscr L}\text{ 决定是否穿透 }\kappa,\\
+&\text{Fibonacci 深度：} &&\Xi_{I,J;i,j}\text{ 决定模式—深度是否耦合}.
+\end{aligned}
+}
+$$
+
+所以，Auric FIB ATOM 金字塔的真正递归结构不是单纯的
+
+$$
+\mathrm{null}\to2\to3\to5\to[2,5],
+$$
+
+而是：
+
+$$
+\boxed{
+\text{一阶占用}
+\;\longrightarrow\;
+\text{二阶共同激活}
+\;\longrightarrow\;
+\text{深度后验}
+\;\longrightarrow\;
+\text{未来响应}
+\;\longrightarrow\;
+\text{观察者历史}.
+}
+$$
+
+其中第一条不可见轴就是
+
+$$
+\boxed{
+\kappa =
+p_{13} =
+E[xy] =
+W-Z.
+}
+$$
+
+这条等式把静态闭包、四角交互、未来响应和信息逸出统一到了同一个基础元素上。
+<!-- end-supplied-source: response-fiber-source.md -->
+

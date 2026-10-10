@@ -1,0 +1,6 @@
+- [稀疏字面历史传输](https://github.com/the-omega-institute/trureturing/blob/46ec5166a750ea6d0b0612d157c86f19975688ef/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md)
+
+这些文档中，有一部分是仓库中的 open reference input，尚未进入 Lean/Frozen 真值层。因此下面把“项目已经有的结论”“在有限模型中可直接证明的新定理”“物理解释”明确分开。
+
+---
+

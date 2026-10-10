@@ -1,0 +1,20 @@
+**Claim status: open.** 内部极小点为
+
+$$
+\boxed{u_O=(u_L+u_R+u_T)/3.}
+$$
+
+消去 $O$ 后，$L,R,T$ 之间出现三条权重 $1/3$ 的有效边，$L-J$ 与 $R-J$ 两条单位边保留。按 $(L,R,J,T)$ 排列，边界 Laplacian 为
+
+$$
+\boxed{
+\Lambda=\frac13
+\begin{pmatrix}
+5&-1&-3&-1\\
+-1&5&-3&-1\\
+-3&-3&6&0\\
+-1&-1&0&2
+\end{pmatrix}.
+}
+$$
+

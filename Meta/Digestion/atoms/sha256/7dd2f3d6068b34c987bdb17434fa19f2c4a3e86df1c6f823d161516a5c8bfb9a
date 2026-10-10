@@ -1,0 +1,88 @@
+#### I.2.2 — 定义 2：组成与数量读口
+
+
+定义组成映射
+
+$$
+c(\alpha)=
+\begin{pmatrix}
+1\\0
+\end{pmatrix},
+\qquad
+c(\beta)=
+\begin{pmatrix}
+0\\1
+\end{pmatrix},
+$$
+
+
+$$
+c(\langle s,t\rangle)=c(s)+c(t).
+$$
+
+
+定义
+
+$$
+M=
+\begin{pmatrix}
+0&1\\
+1&1
+\end{pmatrix},
+\qquad
+q=(2,3).
+$$
+
+
+则
+
+$$
+c(\rho t)=Mc(t).
+$$
+
+
+因为
+
+$$
+M^2=M+I,
+\qquad
+\det M=-1,
+$$
+
+
+所以对某种初值，组成递归与 Fibonacci 递归完全一致。
+
+定义数量读口
+
+$$
+N(t)=q\,c(t).
+$$
+
+
+于是：
+
+$$
+N(T_0)=2,
+\qquad
+N(T_1)=3,
+\qquad
+N(T_2)=5,
+$$
+
+
+更一般地，
+
+$$
+N(T_n)=qM^nc(\alpha)=F_{n+3}.
+$$
+
+
+所以：
+
+- $2$ 是 $\alpha$ 的数量；
+- $3$ 是 $\beta$ 的数量；
+- $5$ 是第一次递归组合的数量；
+- $7$ 不是新的 Fibonacci 原子，而是两个端点联合选择后的数量。
+
+---
+

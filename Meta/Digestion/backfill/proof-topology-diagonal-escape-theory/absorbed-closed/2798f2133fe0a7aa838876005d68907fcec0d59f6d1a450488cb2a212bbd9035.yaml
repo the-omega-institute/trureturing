@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2798f2133fe0a7aa838876005d68907fcec0d59f6d1a450488cb2a212bbd9035
+  normalized_sha256: sha256:2798f2133fe0a7aa838876005d68907fcec0d59f6d1a450488cb2a212bbd9035
+cas_ref: sha256:2798f2133fe0a7aa838876005d68907fcec0d59f6d1a450488cb2a212bbd9035
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.definition_relation_galois
+    target_statement_id: sha256:ac2bbcf78dc3db99255a9497f04ddeda1cd1b51c5d7f2375a690271f2e5bf144
+receipts:
+  unresolved_subitems: []

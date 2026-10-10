@@ -1,0 +1,14 @@
+### 定义 2.1：加权边差能量
+
+在有限连通无向图上，每条边赋正权 $c_{ij}>0$，节点读数为 $u_i\in\mathbb R$。定义
+
+$$
+\mathcal E(u)=\frac12\sum_{\{i,j\}}c_{ij}(u_i-u_j)^2.
+$$
+
+图 Laplacian 为 $L$ 时，$\mathcal E(u)=u^{\mathsf T}Lu/2$，响应为 $j=Lu$。因此 $\sum_i j_i=0$，而
+
+$$
+\mathcal E(u+\lambda\mathbf1)=\mathcal E(u).
+$$
+

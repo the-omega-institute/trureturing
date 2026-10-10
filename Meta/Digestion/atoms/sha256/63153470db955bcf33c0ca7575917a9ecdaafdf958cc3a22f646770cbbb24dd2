@@ -1,0 +1,4 @@
+**数学引文 0.3（经典原料）。** [Stanley 的 chain polytope 与 Ehrhart 条款](../../../Library/Words/stanley1986posetpolytopes.md) 供应凸体与格点的经典归属；[Drton–Sullivant v1，例 4、16](../../../Library/Estimation/drtonsullivant2007algebraic.md) 供应正概率比坐标和条件独立的二次方程；[Nigam–Phillips v3，式 (1.2)、(2.3)、(6.1)](../../../Library/Geometry/nigamphillips2007pyramids.md) 供应同坐标金字塔与指定有理形函数的先例。[Shannon 修正版重印本 §6](../../../Library/Estimation/shannon1948communication.md) 供应有限熵和链式分解；[Wainwright–Jordan，例 2.2、式 (4.13)、(5.9)](../../../Library/Estimation/wainwrightjordan2008graphical.md) 供应 separator 拼接、互信息与现代 KL 定义；[Sullivant math/0602052v1，例 1.2](../../../Library/Estimation/sullivant2006toricfiber.md) 供应正方形二阶 minor 的经典代数背景。下文以普通证明给出这些原料在指定任务中的对应，不将经典公式或前卷结果作为新的独立发现。
+
+## 一、原生公式：两个原子、有序组合与递归替换
+

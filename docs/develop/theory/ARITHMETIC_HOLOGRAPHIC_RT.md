@@ -2592,7 +2592,7 @@ $$
 
 ### 36.6 实际有限相位、取向覆盖胶合与隐藏层边界
 
-`docs/reports/fib-canonical-budget/certificate.py` 的 `weight_orbit`
+`https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-canonical-budget/certificate.py` 的 `weight_orbit`
 使用初值 $(2,3)$ 及以下模 $m>0$ 递推：
 
 $$
@@ -2947,7 +2947,8 @@ $$
 
 $$
 \boxed{\inf_{\Phi\in\operatorname{conv}_{\rm fin}
-\{\Lambda_X\otimes\Lambda_Y:\Lambda_X,\Lambda_Y\ {m CPTP}\}}
+\{\Lambda_X\otimes\Lambda_Y:\Lambda_X,\Lambda_Y\ {
+m CPTP}\}}
 \|\Phi\circ\mathcal J-\mathcal T\|_\diamond=2(1-q).}
 $$
 
@@ -2981,7 +2982,8 @@ $$
 下面构造共同达到操作。每侧在实际源基上定义
 
 $$
-E|s,i\rangle=|s,i\bmod d_s\rangle_{m out}
+E|s,i\rangle=|s,i\bmod d_s\rangle_{
+m out}
 |\lfloor i/d_s\rfloor\rangle_E.
 $$
 
@@ -3082,5 +3084,329 @@ $$
 所以 $0<\epsilon<\min\{2/3,((\mu-1)/2)^2\}$ 时，源秩三大于目标秩二，严格差异仍在。此为由紧性正差给出的存在区间，不声称已求出 $\mu$ 或区间的显式有理端点。它不与 LO、LOSR 最佳纯目标保真度相等矛盾：纯目标保真度是线性目标，迹距离一般不是。证毕。
 
 **来源与范围。** 单态分块保真度、Stinespring 表示、Ky Fan 与 von Neumann 奇异值界、有限 Fourier 正交性均复用已有结果。新增的承重内容是一个共同相干多扇区实现、正交泄漏的迹补偿及包含任意被动参考的精确混合最优值。目标仍须逐扇区平坦；任意非平坦目标、混合源、一般 LOCC 或额外纠缠辅助的优化不在结论内。单扇区 trace-distance 值也可由已有保真度及保持目标的相关酉平均得到，不作为独立文献原创性主张。本节不建立连续 CFT 或引力 RT 字典。
+
+## 追加锚（本行以下为增补区）
+
+## 40. 有限共享随机性的分支压缩与精确障碍
+
+**定理 40.1（受控循环移位的精确判据）。** 沿用定理 39.2 的共同块拆分。令每个扇区 $s$ 的目标维数为 $d_s$，并考虑一个均匀分布的单循环共享随机变量 $h\in\mathbb Z/L\mathbb Z$，其中 $d_s\mid L$，两侧在扇区 $s$ 上同时施加坐标循环移位 $h\bmod d_s$。若要求该有限混合对**每一种允许的源谱**都在所有编码矩阵单位上产生定理 39.2 的目标信道 $\mathcal F_G$（包括消除不同扇区之间全部非零 Fourier 模），则当且仅当
+
+$$
+\gcd(d_s,d_t)=1\qquad\text{for every }s\ne t.
+$$
+
+在这一情形，取 $L=\operatorname{lcm}_s d_s=\prod_s d_s$ 即可；所以原来的随机支撑可由一个循环表述而不增加分支数。若某一对 $d_s,d_t$ 有公因子 $g>1$，任意这样的单循环平均都保留一项跨扇区 Fourier 模；因此对某个允许源谱（且该碰撞模的两个系数非零）不能实现定理 39.2 的 $\mathcal F_G$。对一个固定的特殊源谱，碰撞模的系数可能恰为零，此时不能从 gcd 单独推出失败。
+
+**证明。** 扇区 $s$ 的 Fourier 模 $k\in\mathbb Z/d_s\mathbb Z$ 在移位下获得特征值 $\exp(2\pi i kh/d_s)$。平均跨扇区 $(s,t)$ 的模 $(k,l)$ 时，所得系数为
+
+$$
+\frac1L\sum_{h=0}^{L-1}
+\exp\!\left(2\pi i h\left(\frac{k}{d_s}-\frac{l}{d_t}\right)\right),
+$$
+
+等于 $1$ 当且仅当 $k/d_s-l/d_t\in\mathbb Z$，否则为零。因为 $0\le k/d_s,l/d_t<1$，这里只可能相等。若 $\gcd(d_s,d_t)=1$，两个分数的最小分母互质，故相等只在 $k=l=0$。这保留正是 $b_{sj}b_{tj}|T_s\rangle\langle T_t|$ 的目标项。
+
+反之，若 $g>1$，令 $k=d_s/g$、$l=d_t/g$。二者均为合法非零模且 $k/d_s=l/d_t=1/g$，所以该跨扇区项平均后系数为 $1$。取各自首个目标块内具有两个不等幅坐标的源谱，使该碰撞模的 Fourier 系数均非零；该项不为零，故单循环不能对所有源谱给出 $\mathcal F_G$。证毕。
+
+**推论 40.2（两扇区受控移位族的最小支撑）。** 对两个扇区 $s,t$，令 $H$ 为有限群，并令控制移位由满射同态 $\pi_s:H\twoheadrightarrow\mathbb Z/d_s\mathbb Z$、$\pi_t:H\twoheadrightarrow\mathbb Z/d_t\mathbb Z$ 给出。若 $H$ 平均必须消灭所有非零跨扇区 Fourier 模，则联合同态
+
+$$
+\Pi:H\longrightarrow\mathbb Z/d_s\mathbb Z\times\mathbb Z/d_t\mathbb Z
+$$
+
+必须满射。因此 $|H|\ge d_sd_t$，且 $H=\mathbb Z/d_s\mathbb Z\times\mathbb Z/d_t\mathbb Z$ 达到下界。
+
+**证明。** 若 $\Pi(H)$ 是真子群，其湮灭子中存在非平凡角色 $(k,l)$。满射性排除了 $k=0$ 或 $l=0$ 的情形，所以 $k,l$ 都非零；该角色正是一个非零跨扇区 Fourier 模，并在 $H$ 上恒为一，矛盾。故 $\Pi$ 满射，按基数得到下界。证毕。
+
+For three or more sectors, the analogous statement requires an explicit hypothesis that the joint map is surjective onto the full product (or an equivalent annihilator condition for every nonempty multi-coordinate support). Pair-supported character cancellation alone is insufficient: for example $H=\{(x,y,z)\in(\mathbb Z/2)^3:x+y+z=0\}$ has order $4<8$.
+
+**范围。** 这是 §39 任意源谱相干信道的有限特征实现定理。它不对任意乘积信道的分支数给出下界，也不改变精确钻石范数最优值；不增加 CFT、引力、通信辅助或共享纠缠的解释。
+
+## 41. 全多坐标特征湮灭下的多扇区最小支撑
+
+**定理 41.1（完整多坐标正交性的充要条件）。** 设 $S$ 为有限扇区集，$d_s\ge2$，$H$ 为有限阿贝尔群。每个扇区的受控循环移位由满射同态
+$$
+\pi_s:H\twoheadrightarrow\mathbb Z/d_s\mathbb Z
+$$
+给出，并令联合同态为 $\Pi=(\pi_s)_s:H\to A:=\prod_{s\in S}\mathbb Z/d_s\mathbb Z$。令 $h$ 在 $H$ 上均匀分布。对 $A$ 的角色 $\chi=(\chi_s)_s\in\widehat A=\prod_s\widehat{\mathbb Z/d_s\mathbb Z}$，定义 $\operatorname{supp}\chi=\{s:\chi_s\ne1\}$。则对给定的 $(H,\Pi)$，下列两条件等价：
+1. 对每个 $\chi\in\widehat A$ 满足 $|\operatorname{supp}\chi|\ge2$，有 $|H|^{-1}\sum_{h\in H}\chi(\Pi(h))=0$；
+2. $\Pi$ 满射。
+此外，任一满足这些条件的实现都有 $|H|\ge|A|=\prod_s d_s$，且下界由 $H=A$、$\Pi=\mathrm{id}_A$ 达到。
+
+因此，对于 §39 的任意源谱，若要求一个有限受控移位混合消灭全部非零多坐标 Fourier 模，而不仅是两坐标模，则乘积群既是充分实现，也是该实现类中的最小支撑。若各 $d_s$ 两两互质，Chinese remainder theorem 将这个乘积群识别为单个循环群 $\mathbb Z/\prod_s d_s\mathbb Z$；若存在公因子，单循环方案仍受定理 40.1 的碰撞障碍约束。
+
+**证明。** $1\Rightarrow2$：若 $\Pi(H)$ 是直积 $A$ 的真子群，则有限阿贝尔群的角色分离性给出一个非平凡角色 $\chi\in\widehat A$，在 $\Pi(H)$ 上恒等于 $1$。由于每个 $\pi_s$ 满射，$\chi$ 不可能只在一个坐标上非平凡：若其唯一非平凡坐标为 $s$，则 $\chi_s\circ\pi_s$ 仍是 $\mathbb Z/d_s\mathbb Z$ 上的非平凡角色，不能在 $H$ 上恒为 $1$。所以 $|\operatorname{supp}\chi|\ge2$，与条件 1 矛盾。$2\Rightarrow1$：满射时 $\Pi(h)$ 在 $A$ 上均匀，非平凡角色的均匀 Haar 平均为零。满射还给出 $|H|\ge|A|$；取 $H=A$ 与恒等联合同态达到下界。证毕。
+
+**推论 41.2（§39 的多扇区充分条件）。** 若 $d_s$ 两两互质，则对任意有限源谱族，取 $H=\mathbb Z/L\mathbb Z$、$L=\prod_sd_s$，并令扇区 $s$ 的移位参数为 $h\bmod d_s$。均匀循环混合消灭全部非零多坐标 Fourier 模，故严格复现 §39 的共同信道 $\mathcal F_G$。其共享随机分支数为 $L$，并且在完整多坐标正交条件下达到定理 41.1 的支撑下界。
+
+**范围。** 这里的最小性只针对受控移位与完整多坐标特征湮灭条件，不是对任意 LOSR 或一般乘积信道分支数的下界。结论保持 §39 的平坦逐扇区目标与有限维模型，不引入 CFT、引力或通信辅助解释。
+
+## 42. 控制器商的精确分支资源
+
+**定理 42.1（去重控制与商群资源）。** 设 $H$ 为有限阿贝尔控制器，$A=\prod_{s\in S}\mathbb Z/d_s\mathbb Z$，且 $\Pi:H\to A$ 为各扇区循环移位参数的联合同态。记 $K=\operatorname{im}\Pi$、$N=\ker\Pi$。令 $\{\Lambda_h\}_{h\in H}$ 为由 $h$ 控制的乘积 CPTP 映射，其中 $\Lambda_h$ 只通过 $\Pi(h)$ 作用。则：
+
+1. 控制器标签按 $\Pi(h)$ 去重后恰有 $|K|$ 个不同的受控移位标签；若记由标签诱导的 CPTP 表示为 $\rho:K\to\operatorname{CPTP}$，则实际不同通道数为 $|\rho(K)|\le|K|$。在标准全输出循环移位且各 $d_s\ge2$ 的忠实表示下，$|\rho(K)|=|K|$。
+在下式中记 $\Lambda_k:=\rho(k)$。
+2. $h\mapsto\Pi(h)$ 将 $H$ 的均匀分布推前为 $K$ 上的均匀分布，故
+   $$|H|^{-1}\sum_{h\in H}\Lambda_h=|K|^{-1}\sum_{k\in K}\Lambda_k.$$
+3. 由 $H/N\cong K$，用商控制器 $H/N$ 实现同一混合且恰有 $|K|$ 个控制标签；实际通道分支数为 $|\rho(K)|$。于是原始控制器大小 $|H|$ 不是该受控移位表示的资源成本：标签成本是 $|K|$，通道成本是 $|\rho(K)|$。
+
+若每个坐标投影 $\pi_s$ 满射且要求湮灭全部支撑至少两个坐标的角色，则 $K=A$，从而精确成本为 $|K|=\prod_s d_s$。这与 §41 的最小支撑结论一致，同时允许 $|H|>|K|$ 的冗余控制器。
+
+**证明。** 同态的纤维均为 $N$ 的陪集，故每个 $k\in K$ 有恰好 $|N|$ 个原像；这给出均匀推前公式。控制作用只依赖 $\Pi(h)$，故标签去重和逐项合并成立。第一同构定理给出 $H/N\cong K$，把每个陪集标记为其像即得商控制器。最后，在满射坐标投影与全多坐标角色湮灭条件下，§41.1 的 (1)⇔(2) 应用于 $K\hookrightarrow A$，得到 $K=A$；因此 $|K|=\prod_s d_s$。本定理只计算受控移位表示的分支资源，不给任意 LOSR 分支数下界。
+
+**范围。** 结论针对有限共享经典控制与受控循环移位的表示成本；不扩展 §39 的钻石范数最优性，不涉及一般 LOSR、通信或共享纠缠，也不引入 CFT/引力解释。
+
+## 43. 未湮灭特征的可审计误差下界
+
+**定理 43.1（受控移位残余特征的钻石下界）。** 令 $A$ 为有限阿贝尔群，$K\le A$，$\widehat A$ 为其角色群，且在 $\mathcal H=\ell^2(\widehat A)$ 上定义
+$$
+U_u|\chi\rangle=\chi(u)|\chi\rangle,\qquad
+\mathcal D_K(X)=|K|^{-1}\sum_{u\in K}U_uXU_u^* .
+$$
+记 $m_K(\eta)=|K|^{-1}\sum_{u\in K}\eta(u)$。则
+$$
+\mathcal D_K(|\chi\rangle\langle\psi|)
+ =m_K(\chi\psi^{-1})|\chi\rangle\langle\psi|.
+$$
+若 $\eta=\chi\psi^{-1}\in K^\perp\setminus\{1\}$，则对理想全群平均 $\mathcal D_A$，
+$$
+\|\mathcal D_K-\mathcal D_A\|_\diamond\ge1 .
+$$
+更一般地，若在某个编码子空间上实际通道与 $\mathcal D_K$ 的该矩阵单位系数为 $h$（理想通道系数为零），则相同二维测试给出钻石距离下界 $|h|$。
+
+**证明。** 角色正交性给出 $m_K(\eta)=1$ 当且仅当 $\eta\in K^\perp$，否则为零；对 $A$ 则 $m_A(\eta)=0$ 对每个非平凡 $\eta$。取归一化输入
+$$
+|v\rangle=(|\chi\rangle+|\psi\rangle)/\sqrt2,qquad \rho_v=|v\rangle\langle v|.
+$$
+当 $\eta\in K^\perp\setminus\{1\}$ 时，$(\mathcal D_K-\mathcal D_A)(\rho_v)=\tfrac12(|\chi\rangle\langle\psi|+|\psi\rangle\langle\chi|)$。其在 $\operatorname{span}\{|\chi\rangle,|\psi\rangle\}$ 上本征值为 $+1/2,-1/2$，故迹范数为 $1$；输入归一化，遂钻石范数至少为 $1$。若该 surviving coefficient 为 $h$，同一计算的两个本征值为 $\pm|h|/2$，得到下界 $|h|$。被动参考系统不改变下界，因钻石范数取所有参考输入的上确界。证毕。
+
+**与 §39--§42 的接口。** 共同受控移位混合在 Fourier 矩阵单位上恰以 $m_K(\eta)$ 乘法。故 $K^\perp$ 中任一支撑至少两个扇区的角色给出一个可直接测试的残余相干；固定源谱时 $h$ 是相应实际编码系数，不能无条件替换为 $1$。普适任意源谱的失败需另取一个允许谱使 $h\ne0$；定理 40.1 的 universal 量词正是这一额外步骤。结论只给受控移位表示的误差证书，不给任意 LOSR 下界。
+
+## 44. 受控移位层叠的残余特征单调性
+
+**定理 44.1（多层平均的精确合成）。** 对有限阿贝尔群 $A$ 的子群 $K_1,\ldots,K_m$，令 $\mathcal D_K$ 如定理 43.1。则
+$$
+\mathcal D_{K_m}\circ\cdots\circ\mathcal D_{K_1}
+=\mathcal D_{K_1+\cdots+K_m}.
+$$
+在角色矩阵单位上，合成乘子为
+$$
+\prod_{j=1}^m m_{K_j}(\eta)
+=\mathbf 1_{(K_1+\cdots+K_m)^\perp}(\eta).
+$$
+因此残余特征集合为 $(K_1+\cdots+K_m)^\perp=\bigcap_jK_j^\perp$，随层数增加单调缩小；当且仅当 $K_1+\cdots+K_m=A$ 时，合成等于理想全群平均 $\mathcal D_A$。
+
+**证明。** 对 $E_{\chi,\psi}$，定理 43.1 给出每层乘子 $m_{K_j}(\chi\psi^{-1})$。角色在 $K_j$ 上的均匀平均是 $1$（当且仅当 $\chi\psi^{-1}\in K_j^\perp$）或 $0$，故乘积是交集指标。有限阿贝尔群对偶性给出 $(\sum_jK_j)^\perp=\cap_jK_j^\perp$；矩阵单位构成全矩阵代数基，遂得通道恒等式。
+
+**推论 44.2（误差证书的层叠单调性）。** 固定一个整段 stack 的入口编码矩阵单位，其初始 Fourier 系数为 $h_\eta$；每一层只在同一 $A$、同一 Fourier 基上施加均匀平均 $\mathcal D_{K_j}$，层间没有其他映射。则 stack 出口相对 $\mathcal D_A$ 的系数为 $h_\eta\mathbf 1_{(\sum_jK_j)^\perp}(\eta)$。定理 43.1 的二维输入因此给出下界 $|h_\eta|$，但仅对仍在交集中的角色成立。增加一层只能删除残余证书；若和为 $A$，所有残余证书同时消失。若把 $h_\eta$ 改理解为某一中间层的入口系数，则应只使用其后缀层的湮灭子交集，本推论不作该量词断言。
+
+**范围与非可加性。** 这是固定 $A$、固定 Fourier 基和均匀受控移位 Schur 平均的精确组合律，不是任意 LOSR 通道的误差可加定理。重复同一层满足 $\mathcal D_K^2=\mathcal D_K$；因此在每层恰有 $\|\mathcal D_K-\mathcal D_A\|_\diamond=1$ 的特殊情形，重复该同一 $K$ 的总误差仍为 $1$ 而非累加。对不同的 $K_j$ 不作“不累加”断言；其合成按定理 44.1 由子群和决定，甚至可能等于 $\mathcal D_A$。结论只针对角色支撑及相应 $h_\eta$ 证书。
+
+## 45. 可观测残余谱与层叠停止判据
+
+**定理 45.1（固定输入的残余谱证书）。** 对每个 $\eta\in\widehat A\setminus\{1\}$ 固定一对入口 Fourier 标签 $(\chi_\eta,\psi_\eta)$ 满足 $\eta=\chi_\eta\psi_\eta^{-1}$，并记该矩阵单位对的入口系数为 $h_\eta$。在同一 $A$ 与 Fourier 基上，假定每层平均都是 Schur/Fourier 对角的，因而不混合不同矩阵单位。前 $j$ 层分别施加均匀平均 $\mathcal D_{K_1},\ldots,\mathcal D_{K_j}$，层间无其他映射。令 $\Phi_j$ 表示当前 stack 通道，令 $\Phi_{\rm ideal}=\mathcal D_A$ 表示同一 Fourier 子空间上的理想全群平均。定义
+$$
+R_j=(K_1+\cdots+K_j)^\perp\setminus\{1\},\qquad
+\mathsf S_j=\{\,|h_\eta|:\eta\in R_j\,\}.
+$$
+则对每个 $\eta\in R_j$，定理 43.1 的二维归一化输入给出钻石距离证书 $|h_\eta|$；因此
+$$
+\bigl\|\Phi_j-\Phi_{\rm ideal}\bigr\|_\diamond
+\ge \max\mathsf S_j
+$$
+（空集最大值定义为 $0$）。此外
+$$
+R_{j+1}\subseteq R_j,\qquad \max\mathsf S_{j+1}\le\max\mathsf S_j.
+$$
+
+**证明。** 定理 44.1 给出第 $j$ 层出口的该矩阵单位系数 $h_\eta\mathbf1_{R_j}(\eta)$。对任意 $\eta=\chi_\eta\psi_\eta^{-1}\in R_j$，在 $\operatorname{span}\{|\chi_\eta\rangle,|\psi_\eta\rangle\}$ 中取 $|v_\eta\rangle=(|\chi_\eta\rangle+|\psi_\eta\rangle)/\sqrt2$。实际与理想输出之差的两个非零本征值为 $\pm|h_\eta|/2$，故该归一化输入的迹范数为 $|h_\eta|$；取所有输入的上确值得到钻石下界，最后取 $\eta$ 的最大值。子群和随 $j$ 增大而增大，湮灭子反向包含，遂得单调性。证毕。
+
+**推论 45.2（可审计停止判据）。** 对给定输入族和阈值 $\varepsilon\ge0$，若 $R_j=\varnothing$，则所有由定理 43.1 这类 Fourier 二维输入产生的残余证书已经消失；若仅有 $\max\mathsf S_j\le\varepsilon$，则这些可观测证书全部不超过 $\varepsilon$。因此可以按 $R_j$ 的交集更新逐层停止检查。该判据是证书族的充分停止条件，不是整个钻石范数的上界；未观测的通道方向仍可能有误差。
+
+**范围。** 结论固定入口矩阵单位对、同一 Fourier 基、Schur 对角无混合及层间无映射条件，针对受控移位 Schur 平均和指定二维测试族；不声称一般 LOSR 误差上界或任意输入的完整谱分类。
+
+## 46. 残余证书族的有限步停止算法
+
+**定理 46.1（有限允许层的精确停止判据）。** 固定 §45 的入口系数 $h_\eta$ 与阈值 $\varepsilon\ge0$，令
+$$
+T_\varepsilon=\{\eta\in\widehat A\setminus\{1\}:|h_\eta|>\varepsilon\}.
+$$
+由于 $\widehat A$ 有限，$T_\varepsilon$ 有限。给定允许层族 $\mathscr L$，其中每个 $K\in\mathscr L$ 是 $A$ 的子群，并在同一 $A$、同一 Fourier 基上施加 $\mathcal D_K$；stack 只由这些层组成，允许重复选择，且层间无其他映射或 Schur mixing。从 $U_0=T_\varepsilon$ 开始；若 $U_0=\varnothing$ 则立即停止。否则若存在可重复选择的 $K_j\in\mathscr L$ 使
+$$
+U_j:=U_{j-1}\cap K_j^\perp
+$$
+严格小于 $U_{j-1}$，就选取该层继续；当 $U_j=\varnothing$ 时停止。每次成功选择至少删除一个角色，故至多 $|T_\varepsilon|$ 步达到
+$$
+\max\mathsf S_j\le\varepsilon.
+$$
+若在某一步 $U_{j-1}\ne\varnothing$ 且对所有 $K\in\mathscr L$ 都有 $U_{j-1}\cap K^\perp=U_{j-1}$，则任何由 $\mathscr L$ 组成、允许重复层的后续有限 stack 都不能使该证书族达到阈值 $\varepsilon$。
+
+**证明。** §44.1 给出每层把残余角色集合与 $K^\perp$ 相交，因此算法维护的 $U_j$ 正是尚未被删除的超阈值角色。若某层严格缩小，有限性保证至少删除一个元素，故至多 $|T_\varepsilon|$ 次达到空集；§45.1 随即给出证书最大值不超过 $\varepsilon$。若算法停滞，则当前 $U$ 被每个允许层逐点保留；任意后续层仍与 $U$ 相交得到 $U$，归纳可知所有有限序列都保留 $U\ne\varnothing$，其中至少一个 $|h_\eta|>\varepsilon$，所以该证书族不可能达到阈值。证毕。
+
+**范围。** 这是给定有限允许层族与固定入口系数时的证书族停止算法；达到阈值只说明 §45 的指定 Fourier 二维下界不超过 $\varepsilon$，不是整个钻石范数的上界，也不优化任意 LOSR 层。
+
+## 追加锚（本行以下为增补区）
+
+## 47. 允许子群菜单的可行性与停滞
+
+**替代关系。** 定理 46.1 中“至多 $|T_\varepsilon|$ 步达到
+$\max\mathsf S_j\le\varepsilon$”，以及其证明中“至多 $|T_\varepsilon|$
+次达到空集”，由定理 47.2 替代：无条件结论是至多这么多次严格缩小后达到空集或停滞；
+保证达到阈值须加上精确的允许子群可行性条件 (47.1)。
+定理 46.1 的非空停滞阻碍后续有限 stack 的断言保留，并在下面给出其精确集合形式。
+
+**定义 47.1（固定菜单与不可删除证书）。** 沿用 §43–46 的模型：
+$A$ 为有限阿贝尔群，$\widehat A$ 为其角色群；对每个非平凡 $\eta$，
+固定入口 Fourier 标签对 $(\chi_\eta,\psi_\eta)$，
+$\eta=\chi_\eta\psi_\eta^{-1}$，及其入口矩阵单位系数 $h_\eta$。
+阈值 $\varepsilon\ge0$，允许菜单 $\mathscr L$ 是 $A$ 的子群族，
+在整段 stack 中固定，允许重复选层。每层仅施加同一 Fourier 基上的均匀
+Schur 平均 $\mathcal D_K$，层间没有其他映射或矩阵单位混合：
+
+$$
+\begin{aligned}
+\mathcal D_K(E_{\chi,\psi})
+ &=m_K(\chi\psi^{-1})E_{\chi,\psi},\\
+m_K(\eta)&=\frac1{|K|}\sum_{u\in K}\eta(u),\\
+K^\perp&=\{\eta\in\widehat A:\eta(u)=1\ \text{对全部 }u\in K\}.
+\end{aligned}
+$$
+
+定义
+
+$$
+\begin{aligned}
+T_\varepsilon&=\{\eta\in\widehat A\setminus\{1\}:|h_\eta|>\varepsilon\},\\
+B_{\mathscr L}&=\bigcap_{K\in\mathscr L}K^\perp,\\
+F_\varepsilon&=T_\varepsilon\cap B_{\mathscr L}.
+\end{aligned}
+$$
+
+空菜单时取 $B_{\varnothing}=\widehat A$，允许空 stack。
+称该证书任务可行，是指存在一个有限允许 stack，使 §45 的全部指定二维
+残余下界证书均不超过 $\varepsilon$；这不是整个钻石范数不超过
+$\varepsilon$ 的定义。
+
+**定理 47.2（可行性、严格步数与终端停滞）。** 在定义 47.1 的全部条件下，
+证书任务可行当且仅当
+
+$$
+\boxed{
+F_\varepsilon
+=T_\varepsilon\cap\bigcap_{K\in\mathscr L}K^\perp
+=\varnothing.
+}
+\tag{47.1}
+$$
+
+从 $U_0=T_\varepsilon$ 开始，每次仅在存在 $K\in\mathscr L$ 使
+$U\cap K^\perp\subsetneq U$ 时选取这样的层，并以 $U\cap K^\perp$ 更新 $U$；
+在 $U=\varnothing$ 或不存在这样的层时停止。
+不论怎样选择严格缩小层，至多 $|T_\varepsilon|$ 次严格选层后停止，
+终端集合恰为 $F_\varepsilon$。
+因此 (47.1) 成立时达到 $\max\mathsf S_j\le\varepsilon$；
+不成立时在非空集合 $F_\varepsilon$ 上停滞，
+任何后续有限允许 stack 都保留其中每一个超阈值证书。
+
+**证明。** 若 $\eta$ 在 $K$ 上恒为一，则 $m_K(\eta)=1$。
+否则选 $u_0\in K$ 使 $\eta(u_0)\ne1$。
+平移 $u\mapsto u+u_0$ 置换 $K$，故
+
+$$
+\sum_{u\in K}\eta(u)
+=\eta(u_0)\sum_{u\in K}\eta(u),
+$$
+
+迫使该和为零。因此 $m_K(\eta)=\mathbf1_{K^\perp}(\eta)$。
+对已选的 $K_1,\ldots,K_j$，置
+$W_j=\bigcap_{i=1}^jK_i^\perp$，$W_0=\widehat A$。
+固定入口和无混合条件给出出口系数
+
+$$
+h_\eta\prod_{i=1}^jm_{K_i}(\eta)
+=h_\eta\mathbf1_{W_j}(\eta).
+$$
+
+于是 §45 的残余谱和算法集合正是
+
+$$
+\mathsf S_j=\{|h_\eta|:\eta\in W_j\setminus\{1\}\},
+\qquad U_j=T_\varepsilon\cap W_j,
+$$
+
+且 $U_{j+1}=U_j\cap K_{j+1}^\perp$。
+按 §45 的空集最大值为零的约定，$\varepsilon\ge0$ 保证
+
+$$
+\max\mathsf S_j\le\varepsilon
+\quad\Longleftrightarrow\quad U_j=\varnothing.
+$$
+
+这里每个存活的 $|h_\eta|$ 仍是 §43–45 的二维归一化输入给出的钻石距离
+下界：该 Schur 模型的差在相应二维支持上有非对角系数
+$h_\eta/2$ 及其共轭，本征值为 $\pm|h_\eta|/2$。
+这些下界全部不超过阈值不产生钻石范数的上界。
+
+若 $\eta\in F_\varepsilon$，它在每个允许子群上恒为一，
+所以在任何有限选层序列中都存活。特别地 $F_\varepsilon\subseteq U_j$，
+非空 $F_\varepsilon$ 阻碍达到阈值，证明 (47.1) 的必要性。
+反之，若 $F_\varepsilon=\varnothing$，则对每个 $\eta\in T_\varepsilon$
+存在 $K_\eta\in\mathscr L$ 使 $\eta\notin K_\eta^\perp$。
+$T_\varepsilon$ 有限，逐个取这些允许层组成长度至多
+$|T_\varepsilon|$ 的 stack，就删除全部 $T_\varepsilon$。
+若 $T_\varepsilon$ 为空，空 stack 即可。
+该构造只选取菜单中的层，不要求这些子群的和也在菜单中，证明充分性。
+
+对于定理中的严格选层规则，每步至少删除一个角色且不能加入角色，
+所以严格步数至多 $|T_\varepsilon|$。
+若终端 $U$ 为空，由 $F_\varepsilon\subseteq U$ 得二者均为空。
+若终端 $U$ 非空，则不存在严格缩小层等价于
+
+$$
+\forall K\in\mathscr L,\quad U\cap K^\perp=U
+\quad\Longleftrightarrow\quad U\subseteq B_{\mathscr L}.
+$$
+
+又因 $U\subseteq T_\varepsilon$，得到 $U\subseteq F_\varepsilon$；
+和始终成立的反向包含合起来，终端 $U=F_\varepsilon$。
+此集合与每个允许 $K^\perp$ 相交都不变，归纳可知任意后续有限
+stack 仍保留它及其固定的超阈值系数。证毕。
+
+当菜单为空时，$F_\varepsilon=T_\varepsilon$；
+故仅在入口证书已达阈值时可行，否则零次严格选层就停滞。
+等于阈值的系数不属于 $T_\varepsilon$。
+步数界只数上述严格选层；任意插入不缩小集合的重复层，
+不受这个层数界约束，也不改变可行性条件。
+
+**反例 47.3（合法菜单中的立即停滞）。** 取
+$A=\mathbb Z/2\mathbb Z$，$\widehat A=\{1,\eta\}$，
+$\eta(1)=-1$。入口通道为恒等，固定标签对为 $(\eta,1)$，
+故 $h_\eta=1$；取 $\varepsilon=1/2$。
+允许菜单只有平凡子群：$\mathscr L=\{\{0\}\}$。
+此时
+
+$$
+\mathcal D_{\{0\}}=\mathrm{id},\qquad
+T_\varepsilon=F_\varepsilon=\{\eta\},\qquad
+B_{\mathscr L}=\widehat A.
+$$
+
+每个有限允许 stack 都是恒等通道，$U_0$ 非空且不能严格缩小。
+对 $|v\rangle=(|1\rangle+|\eta\rangle)/\sqrt2$，
+恒等输出与理想 $\mathcal D_A$ 输出之差为
+
+$$
+\frac12\bigl(|1\rangle\langle\eta|+|\eta\rangle\langle1|\bigr).
+$$
+
+它的本征值为 $\pm1/2$，迹范数为一；
+所以证书 $1>\varepsilon$ 始终存在。
+所有层仍是均匀允许子群平均，固定入口、固定 Fourier 基、无层间映射和无混合
+条件全部满足，却不能在 $|T_\varepsilon|=1$ 步内达到阈值。
+
+本节仅限定 §46.1 的成功条件并明确其停滞集合，使用 §43–45 的固定入口乘子
+与下界证书；不优化层的搜索成本、整个钻石误差或任意 LOSR 操作。
+证书的删除不提供读数取得、已填充全载体上的物理操作、物理钟或寿命结论。
 
 ## 追加锚（本行以下为增补区）

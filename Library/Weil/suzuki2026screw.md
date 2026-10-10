@@ -85,7 +85,7 @@ The project already has [golden support-layer positivity induction](../../D5/S3/
 
 ## Retain the theta model's metric in the derivative coordinates
 
-The [weighted window interface](../../docs/reports/theta-mixed-matrix/weighted-window-metric.md)
+The [weighted window interface](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/weighted-window-metric.md)
 reuses the derivative pairing of Suzuki,
 [arXiv:2206.03682v4](https://arxiv.org/html/2206.03682v4), Proposition 3.1,
 equation (3.8), and the existing theta ground-transform identity.
@@ -95,7 +95,7 @@ $\mathcal G_{L_j}+\varepsilon_jB_{L_j}\succeq0$ with
 $L_j\to\infty$ and $\varepsilon_j\to0$, not positivity in a substituted
 unweighted metric. Its scalar conversion has a vanishing denominator
 and requires a relative error rate for the converted window allowance.
-The [fixed-test and centered-window interface](../../docs/reports/theta-mixed-matrix/centered-window.md)
+The [fixed-test and centered-window interface](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/centered-window.md)
 separately gives the sufficient absolute-error limit on fixed tests and
 the original-mean parameter map for the published pole constraint.
 These are applications of existing criteria and domain suppliers;

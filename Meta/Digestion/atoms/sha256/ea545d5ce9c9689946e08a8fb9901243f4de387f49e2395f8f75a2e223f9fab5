@@ -1,0 +1,31 @@
+**数学引文 17.2（已有谱包络的三点形式）。** [有限维包络的来源与对应](../../../Library/Weil/trmdy2026simplezeros.md) 给出本式与 $\Phi_3(2e)$ 的关系；它作为下列具体相关证书的中间谱界使用。仅给定 $e=e(B)$ 时，
+$$
+D_\Psi(B)\ge F(e):=
+2e-\left(2\sqrt{e/3}-1\right)_+^2
+=\begin{cases}
+2e,&0\le e\le3/4,\\
+\frac23e+4\sqrt{e/3}-1,&3/4\le e\le3.
+\end{cases}
+\tag{17.1}
+$$
+对每个 $e\in[0,3]$ 都有实对称半正定单位对角矩阵达到此界。$F$ 严格递增；所以已证 $e(B)\ge e_*$ 时可使用 $F(e_*)$。在 $e\le3/4$ 时，所有这样的 $B$ 都有精确等式 $D_\Psi(B)=2e$。
+
+**证明。** 设特征值 $\lambda_1\ge\lambda_2\ge\lambda_3\ge0$。迹为三，且
+$$
+\sum_j\lambda_j^2=3+2e.
+$$
+至多一个特征值大于二。用 $\Psi(t)=(t-1)^2-(t-2)_+^2$ 得
+$$
+D_\Psi(B)=2e-(\lambda_1-2)_+^2.
+$$
+另由 Cauchy–Schwarz，
+$$
+3+2e\ge\lambda_1^2+\frac{(3-\lambda_1)^2}{2}
+=3+\frac32(\lambda_1-1)^2.
+$$
+$\lambda_1\ge1$，故 $\lambda_1\le1+2\sqrt{e/3}$，即得下界。取 $r=\sqrt{e/3}\in[0,1]$，
+$$
+B_e=(1-r)I_3+r\mathbf1\mathbf1^*
+$$
+的谱为 $1+2r,1-r,1-r$，恰达到该界。$F$ 的导数在下段为二，在上段为 $2/3+2/\sqrt{3e}>0$，接点两导数相同，证明单调性及全部断言。∎
+

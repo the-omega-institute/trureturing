@@ -1,0 +1,25 @@
+**数学引文 14.1（明确已有的 Pauli 实现）。** 使用二阶关系完成定义 101.1、106.1 和 §103 的来源代表，在 $`\mathbb C^2`$ 上取
+
+```math
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+```
+
+```math
+A=-i\sigma_x,\quad B=-i\sigma_y,\quad C=BA=i\sigma_z,
+\qquad A^2=B^2=C^2=-I,\quad AB=-BA.
+```
+
+来源读出 $`U_\alpha=A,U_\beta=B,U_{\langle s,t\rangle}=U_sU_t`$；右因子先作用于态。指定高位置在来源左侧的代表为
+
+| 模式 | 来源代表或空贡献 | 表示 |
+| --- | --- | --- |
+| $`0`$ | 空选择单位 | $`I`$ |
+| $`2`$ | $`\alpha`$ | $`A`$ |
+| $`3`$ | $`\beta`$ | $`B`$ |
+| $`5`$ | $`\langle\beta,\alpha\rangle`$ | $`C`$ |
+| $`25`$ | $`\langle\langle\beta,\alpha\rangle,\alpha\rangle`$ | $`CA=-B`$ |
+
+若把两端代表改为 $`\langle\alpha,\langle\beta,\alpha\rangle\rangle`$，则表示为 $`AC=B`$，故 $`25\mapsto-B`$ 依赖次序和代表。这份表示保留部分叶序相位，却因矩阵乘法结合而合并不同括号；例如 $`\langle\langle\alpha,\alpha\rangle,\beta\rangle`$ 与 $`\langle\alpha,\langle\alpha,\beta\rangle\rangle`$ 都映到 $`-B`$。它不是自由来源树的单射编码。空选择单位 $`I`$ 也不是原生 $`[null]`$ 动作。
+

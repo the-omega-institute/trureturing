@@ -1,0 +1,21 @@
+**定理 5.2（近可加性与增长常数）。** 对一切整数 $n,m\ge0$，
+
+$$
+\kappa_{n+m}\le\kappa_n+\kappa_m\le\kappa_{n+m+1}.
+\tag{5.1}
+$$
+
+极限 $c_\star=\lim_{n\to\infty}\kappa_n/n$ 存在，且
+
+$$
+c_\star=\inf_{n\ge1}\frac{\kappa_n}{n}=\sup_{n\ge0}\frac{\kappa_n}{n+1}.
+\tag{5.2}
+$$
+
+因此对每个 $n\ge0$，
+
+$$
+c_\star\,n\le\kappa_n\le c_\star\,(n+1).
+\tag{5.3}
+$$
+

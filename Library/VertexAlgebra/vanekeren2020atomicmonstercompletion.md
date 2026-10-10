@@ -44,6 +44,6 @@ No general FLM uniqueness result, actual existence/nonexistence of the all-A ran
 
 ## Actual finite checks in the publication pass
 
-`docs/reports/monster-atomic-defect-bridge/atomic_defect_checks.py` was rerun with exact integers/Fraction and produced byte-identical `atomic_defect_results.json`. Both files are unchanged from the supplied bundle. Checker Git blob: `93ecb7cb7a82cfcb3a7dfcc4d5e34493289999df`; result Git blob: `1a2a3937430f68a018eaee5a6072bbeef1ed567d`.
+`https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/monster-atomic-defect-bridge/atomic_defect_checks.py` was rerun with exact integers/Fraction and produced byte-identical `atomic_defect_results.json`. Both files are unchanged from the supplied bundle. Checker Git blob: `93ecb7cb7a82cfcb3a7dfcc4d5e34493289999df`; result Git blob: `1a2a3937430f68a018eaee5a6072bbeef1ed567d`.
 
 The checker covers all eight sign tables, the finite quadratic space, truncated character projections, all 30 completions and canonical dual traces, seven-point permutation actions and rational toy octonion vectors. It does not construct a VOA, an intertwiner, an actual extension or a Monster action, and it does not verify Lean or CI. A rerun is execution evidence, not an independent mathematical review.

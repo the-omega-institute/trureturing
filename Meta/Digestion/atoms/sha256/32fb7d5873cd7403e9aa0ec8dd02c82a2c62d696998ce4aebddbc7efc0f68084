@@ -1,0 +1,35 @@
+### 定义3　三阶矩关系矩阵
+
+令 $m_0=1$，定义：
+
+```math
+\boxed{
+H_2=
+\begin{pmatrix}
+1&m_1&m_2\\
+m_1&m_2&m_3\\
+m_2&m_3&m_4
+\end{pmatrix}.
+}
+```
+
+它是三个函数：
+
+```math
+1,\quad r,\quad r^2
+```
+
+在概率内积：
+
+```math
+\langle f,g\rangle_\nu=\mathbb E_\nu[fg]
+```
+
+下的 Gram 矩阵，所以：
+
+```math
+H_2\succeq0.
+```
+
+这种矩与正性之间的关系属于经典矩问题理论；这里使用其有限或紧支撑形式。[arXiv](https://arxiv.org/abs/2008.12698)
+
