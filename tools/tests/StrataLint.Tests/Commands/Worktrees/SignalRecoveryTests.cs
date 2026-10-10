@@ -17,7 +17,8 @@ public sealed partial class WorktreeCommandTests
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
                 root, "--initializer", typeof(StrataLint.Cli.Program).Assembly.Location],
-            root, TimeSpan.FromSeconds(90), 1024 * 1024);
+            root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
