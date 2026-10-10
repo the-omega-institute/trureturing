@@ -2549,9 +2549,14 @@ $$
 X_0\subseteq X_1\subseteq\cdots\subseteq X_N\subseteq\Omega
 $$
 为有限阈值角色集链；已有前缀 $\mathcal Q_0$ 是一个层序列，允许它暂时未覆盖 $X_0$。
-记 $\underline{\mathcal Q}$ 为序列去重后的层集合，
+记 $\underline{\mathcal Q}$ 为序列去重后的层集合；对任意层序列 $\mathcal S$，
+记
 $$
-V_t:=V_{\mathcal Q_t}:=\bigcup_{K\in\underline{\mathcal Q_t}}\overline C_K,
+V_{\mathcal S}:=\bigcup_{K\in\underline{\mathcal S}}\overline C_K.
+$$
+于是
+$$
+V_t:=V_{\mathcal Q_t},
 \qquad
 B_0:=X_0\setminus V_0,
 \qquad
