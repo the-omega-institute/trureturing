@@ -1904,7 +1904,7 @@ $$
 
 对指定函数 $f$，定义 20.1 的混合系数则是 $J_f=f_{13}-f_1-f_3+f_0=\langle f,h\rangle$。它描述该目标沿质量方向 $h$ 的响应，不是联合质量或协方差。是否可从边缘恢复由实际来源族决定；协方差非零本身不否定可识别性，已有 C-7.4 的正活动族给出具体受限来源。
 
-若另供有限维量子联合态 $\rho_{RQ'}$，取 $S(\rho)=-\operatorname{tr}(\rho\log_2\rho)$，则 [Schumacher–Nielsen §4、式 (3)](../../../Library/Quantum/schumachernielsen1996quantum.md)的相干信息为 $I_c(R\rangle Q')=S(\rho_{Q'})-S(\rho_{RQ'})$；解释为通道相干信息还需供给输入纯化与作用于输入系统的通道。非对角相位／相干又须指定共同 Hilbert 载体、基和可比较操作，直接采用 C-28.12.1–C-28.12.3。经典概率、$J_f$、协方差、相干信息和非对角元在这些合同下分别定义。
+若另供有限维量子联合态 $\rho_{RQ'}$，取 $S(\rho)=-\operatorname{tr}(\rho\log_2\rho)$，则 [Schumacher–Nielsen §4、式 (3)](../../../Library/QuantumChannels/schumachernielsen1996quantum.md)的相干信息为 $I_c(R\rangle Q')=S(\rho_{Q'})-S(\rho_{RQ'})$；解释为通道相干信息还需供给输入纯化与作用于输入系统的通道。非对角相位／相干又须指定共同 Hilbert 载体、基和可比较操作，直接采用 C-28.12.1–C-28.12.3。经典概率、$J_f$、协方差、相干信息和非对角元在这些合同下分别定义。
 
 **假设 22.4（外形式三元的比较接口）。** 为比较而额外供给实余向量空间 $W^*=\operatorname{span}(\theta^0,\theta^1,\theta^3)$，有序定向体积 $\mathrm{vol}_W=\theta^0\wedge\theta^1\wedge\theta^3$ 和余度规 $\operatorname{diag}(\sigma,1,1)$，其中 $\sigma=1$ 为 Euclidean，$\sigma=-1$ 为 $2+1$ Lorentzian。取诱导外幂内积，以 $\alpha\wedge\star\beta=\langle\alpha,\beta\rangle\mathrm{vol}_W$ 定义 Hodge 星号。由 [Tong 的 Hodge 定义及星号平方公式 (3.97)–(3.98)](../../../Library/Geometry/tong2021general.md)，在这个明确约定下
 
@@ -2190,9 +2190,9 @@ T_{00}&=\frac{\|E\|^2+\|B\|^2}{2g_c^2}\ge0.
 \end{aligned}
 $$
 
-这里复用 [Tong，Chapter 6 式 (6.1)–(6.3)、(6.16)–(6.18)](../../../Library/Quantum/tong2006qft.md)的 Abelian 作用量与 Hamiltonian 区别；给定正内部内积后按相同指标收缩得到显示式。例如 $E\perp B$、$\|E\|=\|B\|>0$ 时 Lorentz 收缩为零而 $T_{00}>0$。因此作用量中的 $\mathscr F_{\mu\nu}\mathscr F^{\mu\nu}$ 不是正场能，单个空间分量的平方也只是指定场能中的一项。局部能动守恒还需该 Lagrangian 的无外源场方程；有物质耦合时守恒的是含物质交换的总张量。积分能量守恒须有限能量和空间边界通量为零或无穷远衰减条件。
+这里复用 [Tong，Chapter 6 式 (6.1)–(6.3)、(6.16)–(6.18)](../../../Library/Geometry/tong2006qft.md)的 Abelian 作用量与 Hamiltonian 区别；给定正内部内积后按相同指标收缩得到显示式。例如 $E\perp B$、$\|E\|=\|B\|>0$ 时 Lorentz 收缩为零而 $T_{00}>0$。因此作用量中的 $\mathscr F_{\mu\nu}\mathscr F^{\mu\nu}$ 不是正场能，单个空间分量的平方也只是指定场能中的一项。局部能动守恒还需该 Lagrangian 的无外源场方程；有物质耦合时守恒的是含物质交换的总张量。积分能量守恒须有限能量和空间边界通量为零或无穷远衰减条件。
 
-光锥比较另限 $1+1$ 维，保持 $\eta=\operatorname{diag}(+,-)$，给实 $C^2$ 标量场和 $C^1$ 势，$\mathcal L=\tfrac12\partial_\mu\phi\partial^\mu\phi-V(\phi)$，$x^\pm=(t\pm x)/\sqrt2$，故 $\eta_{+-}=1$。按 [Tong Chapter 1 式 (1.42)–(1.46)](../../../Library/Quantum/tong2006qft.md)的应力张量 $T_{\mu\nu}=\partial_\mu\phi\partial_\nu\phi-\eta_{\mu\nu}\mathcal L$ 作坐标变换，得
+光锥比较另限 $1+1$ 维，保持 $\eta=\operatorname{diag}(+,-)$，给实 $C^2$ 标量场和 $C^1$ 势，$\mathcal L=\tfrac12\partial_\mu\phi\partial^\mu\phi-V(\phi)$，$x^\pm=(t\pm x)/\sqrt2$，故 $\eta_{+-}=1$。按 [Tong Chapter 1 式 (1.42)–(1.46)](../../../Library/Geometry/tong2006qft.md)的应力张量 $T_{\mu\nu}=\partial_\mu\phi\partial_\nu\phi-\eta_{\mu\nu}\mathcal L$ 作坐标变换，得
 
 $$
 T_{++}=(\partial_+\phi)^2,\quad T_{--}=(\partial_-\phi)^2,\quad T_{+-}=V(\phi),\qquad
@@ -2209,7 +2209,7 @@ j^\mu=\phi_1\partial^\mu\phi_3-\phi_3\partial^\mu\phi_1,\qquad
 T_{00}=\frac12\sum_{a=1,3}\big((\partial_t\phi_a)^2+|\nabla\phi_a|^2\big)+V(|\Phi|^2).
 $$
 
-[Noether，§1 定理 I 及其 on-shell 限定](../../../Library/Geometry/noether1918invariant.md)，结合 [Tong 式 (1.60)–(1.63)](../../../Library/Quantum/tong2006qft.md)的该复场应用，给满足 Euler–Lagrange 方程时 $\partial_\mu j^\mu=0$；$Q=\int j^0\,d^3x$ 的守恒另需可积和边界 $j$ 通量为零。$V\ge0$ 时显示能量非负；一般势不自动有此性质。流包含导数及旋转生成元，守恒荷不是 $\phi_1\phi_3$，Lorentz 缩并的导数平方也不是显示的正平方和。
+[Noether，§1 定理 I 及其 on-shell 限定](../../../Library/Geometry/noether1918invariant.md)，结合 [Tong 式 (1.60)–(1.63)](../../../Library/Geometry/tong2006qft.md)的该复场应用，给满足 Euler–Lagrange 方程时 $\partial_\mu j^\mu=0$；$Q=\int j^0\,d^3x$ 的守恒另需可积和边界 $j$ 通量为零。$V\ge0$ 时显示能量非负；一般势不自动有此性质。流包含导数及旋转生成元，守恒荷不是 $\phi_1\phi_3$，Lorentz 缩并的导数平方也不是显示的正平方和。
 
 上述场合同只是定理 24.4 中“能量”一词的分别类型化比较，没有提供从概率、环流、内部振幅或连接之间的对应。若再写 Einstein 方程，还须另供 Lorentz 度规、协变物质作用量、按该度规变分的完整应力张量、场方程及相容的 $\nabla^\mu T_{\mu\nu}=0$；必要的守恒条件也不单独保证 Einstein 方程的解。$J\kappa$、概率占据或状态图回路均未供应这些数据，故本有限模型没有断言 Einstein 源或引力几何。
 
@@ -2969,7 +2969,7 @@ $[1\sim2],[2\sim3],[1\sim3]$。记所对应的划分双射为 $f$：
 | $xy$ | $(1,1,0)$ | $123$ |
 
 五划分及 $B_3=5$ 的经典背景见
-[Stanley，§1.9，p.82](../../../Library/Combinatorics/stanley2011enumerative.md)。
+[Stanley，§1.9，p.82](../../../Library/ConceptDynamics/stanley2011enumerative.md)。
 函数代数的重编码归于[关系商卷 I.7，theorem 1.4 及限定 Q11](AURIC_FIB_ATOM_RELATIONAL_QUOTIENTS_AND_PHYSICAL_CANDIDATES.md)；
 此处只使用上述有限状态对应及其指定均值。
 
@@ -3044,7 +3044,7 @@ $$
 划分按细化排序，即较细 $\le$ 较粗。取
 $J(\pi)=\pi\vee(12\mid3)$，其中 $\vee$ 是划分格中的最小共同粗化，
 并令 $\widehat J=f^{-1}\circ J\circ f$。所用格、交与并的定义见
-[Stanley，Example 3.10.4，p.318，Figure 3.20](../../../Library/Combinatorics/stanley2011enumerative.md)。
+[Stanley，Example 3.10.4，p.318，Figure 3.20](../../../Library/ConceptDynamics/stanley2011enumerative.md)。
 这里的 $J$ 是另行选择的划分动作；其能否作为单次切换，须按假设 27.3 检查。
 
 **定理 27.6（序的保留范围与动作长度）。** 定义 27.1 的 $f$ 单调，

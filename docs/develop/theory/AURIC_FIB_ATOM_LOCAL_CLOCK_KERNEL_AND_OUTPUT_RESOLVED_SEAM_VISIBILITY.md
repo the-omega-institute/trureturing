@@ -1797,7 +1797,7 @@ H_{mn}=M((m+n)h),\quad 0\le m<R,\ 0\le n<C,
 
 准确描述这一恢复的范围，可对任一实际实验族定义 $\mu\sim_{\mathscr E}\nu$ 为每个 $e\in\mathscr E$ 的结果律均相等。若 $\mathscr E\subseteq\mathscr E'$，增加等式条件给出 $\sim_{\mathscr E'}\subseteq\sim_{\mathscr E}$。定理20的两个单时钟终端族之并把整条纤维合为一类；加入一个同源混合等待及其对齐测量，逆式使本纤维上的类成为单点。这一新增操作不是旧边缘律的后处理；合法菜单及实际可行增量的所有者为 [输出仪器卷 Q1–Q4、Q7–Q8](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)。单点纤维则无需任何新增读数。
 
-本逆式也不是未知频谱恢复。为限定两者的关系，在此消费 [Kunis 等，arXiv:1506.00450v1，§2、定理3.1](../../../Library/Analytic/kunis2015multivariateprony.md) 的有限节点插值方法：若另把来源类改为至多 $r\ge1$ 个未知实频率，仍供应同源等待及假设18的探针，并要求 $b/a\notin\mathbb Q$，则相位对 $\omega\mapsto(z,w)=(e^{-i\omega a},e^{-i\omega b})$ 单射。因为相同相位对给 $(\omega-\omega')a=2\pi k$、$(\omega-\omega')b=2\pi l$，非零差会使 $b/a=l/k$。相反，对约分有理比 $p/q$，频率差 $2\pi q/a$ 给完全相同的相位对，所以无界实频率上全局单射需要无理比；这比定理20的已知模式纤维目标更强。
+本逆式也不是未知频谱恢复。为限定两者的关系，在此消费 [Kunis 等，arXiv:1506.00450v1，§2、定理3.1](../../../Library/Fourier/kunis2015multivariateprony.md) 的有限节点插值方法：若另把来源类改为至多 $r\ge1$ 个未知实频率，仍供应同源等待及假设18的探针，并要求 $b/a\notin\mathbb Q$，则相位对 $\omega\mapsto(z,w)=(e^{-i\omega a},e^{-i\omega b})$ 单射。因为相同相位对给 $(\omega-\omega')a=2\pi k$、$(\omega-\omega')b=2\pi l$，非零差会使 $b/a=l/k$。相反，对约分有理比 $p/q$，频率差 $2\pi q/a$ 给完全相同的相位对，所以无界实频率上全局单射需要无理比；这比定理20的已知模式纤维目标更强。
 
 这里所需的三角形取样界由如下普通分离步骤给出，不冒称是该文矩形取样定理的逐字结论。两份至多 $r$ 点测度的相位对并集有 $q\le2r$ 个不同点 $\zeta_j=(z_j,w_j)$。对每个 $k\ne j$ 选一个能区分两点的坐标函数 $u_{jk}\in\{z,w\}$，置
 
@@ -1855,7 +1855,7 @@ V_s(b)V_s(a)|+\rangle
 
 这个区别在 $\Omega=\pi Z_{\rm P}/a$、$\mathcal V=\operatorname{span}_{\mathbb R}\{I,X_{\rm P}\}$ 处可直接看出：整数 $a$ 刻度的酉为标量，但 $\mathcal A_{a/4}(X_{\rm P})=-Y_{\rm P}\notin\mathcal V$。这套另外供应的观察空间不是从五模式实验推得的共同历史。
 
-同样，为限定“局部消失后返回”的量子读法，消费 [二阶关系卷命题110.4、假设111.1与定理111.2、命题115.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) 的保留环境与新环境区分。其连续参数示例采用 [Ziman 等，Quantum homogenization，arXiv:quant-ph/0110164v1，§II 式(2.1)–(2.7)](../../../Library/Quantum/ziman2001quantumhomogenization.md) 的标准部分交换：另给系统比特 $S$、环境比特 $E$、$g>0$、初态 $\rho\otimes I/2$，令
+同样，为限定“局部消失后返回”的量子读法，消费 [二阶关系卷命题110.4、假设111.1与定理111.2、命题115.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) 的保留环境与新环境区分。其连续参数示例采用 [Ziman 等，Quantum homogenization，arXiv:quant-ph/0110164v1，§II 式(2.1)–(2.7)](../../../Library/QuantumChannels/ziman2001quantumhomogenization.md) 的标准部分交换：另给系统比特 $S$、环境比特 $E$、$g>0$、初态 $\rho\otimes I/2$，令
 
 ~~~math
 U_t=\cos(gt)I-i\sin(gt)\mathsf S,\qquad \mathsf S^2=I.
@@ -1886,7 +1886,7 @@ U_t(\rho\otimes I/2)U_t^\dagger
 
 而在半刻度另行丢弃 $E$ 并放入新 $I/2$ 后，联合态变为 $I/2\otimes I/2$，第二次交换仍是它。对 $\rho=|0\rangle\langle0|$，末端 $Z_{\rm P}$ 的正输出概率分别为 $1$ 和 $1/2$。各向同性与粗刻度返回因而没有确定中间的局部信息或替换环境后的历史。
 
-这个联合态计算只消费已有模型来限定本五模式结论的外推；它不是该五模式的量子实现，也没有增加假设18的干预菜单。[Pollock 等，arXiv:1801.09811v1，第2页过程张量及第3页定义、定理与引理](../../../Library/Quantum/pollock2018operationalmarkov.md) 要求以明确控制序列及因果断裂讨论过程记忆。若另供半刻度系统替换 $\mathcal R_\sigma(A)=\operatorname{Tr}(A)\sigma$，则两初始准备 $\rho,\rho'$ 在该时刻分别变为 $\sigma\otimes\rho,\sigma\otimes\rho'$，末次交换给不同系统态 $\rho,\rho'$；这才是相同系统再准备后的记忆见证，且使用了额外控制。本应用仅以已写出的保留/重置对照说明限制，不从 $\Phi_t$ 或 $C_\kappa(t)$ 单独推断完整过程张量。证毕。
+这个联合态计算只消费已有模型来限定本五模式结论的外推；它不是该五模式的量子实现，也没有增加假设18的干预菜单。[Pollock 等，arXiv:1801.09811v1，第2页过程张量及第3页定义、定理与引理](../../../Library/QuantumChannels/pollock2018operationalmarkov.md) 要求以明确控制序列及因果断裂讨论过程记忆。若另供半刻度系统替换 $\mathcal R_\sigma(A)=\operatorname{Tr}(A)\sigma$，则两初始准备 $\rho,\rho'$ 在该时刻分别变为 $\sigma\otimes\rho,\sigma\otimes\rho'$，末次交换给不同系统态 $\rho,\rho'$；这才是相同系统再准备后的记忆见证，且使用了额外控制。本应用仅以已写出的保留/重置对照说明限制，不从 $\Phi_t$ 或 $C_\kappa(t)$ 单独推断完整过程张量。证毕。
 
 ### 定义23（原树上的辅助黄金时长选择）
 
