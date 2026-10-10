@@ -1,0 +1,12 @@
+\[
+\boxed{
+\mathscr L_h=\mathscr L_{h'}
+\Longleftrightarrow
+\bigl(a(h),A_h,B_h\bigr)
+=
+\bigl(a(h'),A_{h'},B_{h'}\bigr).
+}
+\]
+
+因此，\(\sigma(h)\) 是活动 future law 的最小精确摘要。
+

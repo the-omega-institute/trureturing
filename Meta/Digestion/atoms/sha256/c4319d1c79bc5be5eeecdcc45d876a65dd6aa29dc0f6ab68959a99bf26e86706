@@ -1,0 +1,59 @@
+### 最值得新增的 Lean 文件
+
+下一步可以新增一个局部、清晰、可机械验证的文件：
+
+```text
+D5/
+  InstrumentClosure.lean
+```
+
+建议依次形式化：
+
+1. 五态类型
+
+   ```lean
+   inductive FIBState
+   | null
+   | one
+   | two
+   | three
+   | oneThree
+   ```
+
+2. 函数 $x,y,z,xy$；
+3. 分布参数化 $p_\kappa$；
+4. 定理
+
+   $$
+   d\cdot1=d\cdot x=d\cdot y=d\cdot z=0,
+   \qquad
+   d\cdot xy=1;
+   $$
+
+5. instrument 子核 $M_0,M_1$；
+6. 证明
+
+   $$
+   M_1 1=x,
+   \qquad
+   M_1x=xy,
+   \qquad
+   M_0x=y-xy;
+   $$
+
+7. 证明
+
+   $$
+   pM_1M_1 1=\kappa;
+   $$
+
+8. 证明平均核满足
+
+   $$
+   K\mathcal B\subseteq\mathcal B;
+   $$
+
+9. 证明逐输出闭合和平均闭合之间的严格差异。
+
+这样可以把“隐藏 seam 在未来记录中何时出现”变成一个真正可复用的形式化组件。接下来再定义 native FIB continuation 是否能实现这个 instrument，才可以把这个抽象定理接回仓库的原生规则。
+
