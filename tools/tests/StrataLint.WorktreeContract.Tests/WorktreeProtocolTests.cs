@@ -1,10 +1,11 @@
 using System.Text;
+using Xunit.Abstractions;
 using StrataLint.Runtime;
 using StrataLint.Engine;
 
 namespace StrataLint.WorktreeContract.Tests;
 
-public sealed class WorktreeProtocolTests
+public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 {
     [Theory]
     [InlineData("spaced", "clean-lanes", "directory")]
@@ -22,8 +23,30 @@ public sealed class WorktreeProtocolTests
         var result = TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
-                root, sourcePath, entrance, invocation],
+                root, sourcePath, entrance, invocation, "CleanupMakeTests"],
             root, TimeSpan.FromSeconds(180), 1024 * 1024);
+        output.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
+        output.WriteLine(Encoding.UTF8.GetString(result.StandardError));
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
+    [InlineData("normal")]
+    [InlineData("nonzero")]
+    [InlineData("deadline")]
+    [InlineData("launcher")]
+    public void CleanupFixtureSettlesOwnedNativeCommands(string mode)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "clean-lanes", "directory", "CommandLifetimeTests.test_" + mode],
+            root, TimeSpan.FromSeconds(180), 1024 * 1024);
+        output.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
+        output.WriteLine(Encoding.UTF8.GetString(result.StandardError));
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }

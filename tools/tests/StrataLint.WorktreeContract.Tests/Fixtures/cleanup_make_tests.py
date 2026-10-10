@@ -4,10 +4,12 @@ import json
 import os
 from pathlib import Path
 import select
+import signal
 import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 
 SOURCE = Path(sys.argv.pop(1)).resolve()
@@ -17,23 +19,111 @@ INVOCATION = sys.argv.pop(1)
 
 
 class CleanupMakeTests(unittest.TestCase):
-    def run_command(self, arguments, cwd=None, input=None):
-        result = subprocess.run(list(map(str, arguments)), cwd=cwd or self.repository,
-                                env=self.environment, input=input, capture_output=True, text=True,
-                                timeout=120)
-        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+    def dispose_workspace(self):
+        if self.commands_settled:
+            shutil.rmtree(self.root)
+        else:
+            print(json.dumps(dict(event="fixture_inputs_retained", path=str(self.root))), flush=True)
+
+    @staticmethod
+    def group_snapshot(group):
+        result = subprocess.run(["ps", "-axo", "pid=,ppid=,pgid=,stat=,wchan=,command="],
+                                capture_output=True, text=True, timeout=5)
+        return [line.strip() for line in result.stdout.splitlines()
+                if len(line.split()) >= 3 and line.split()[2] == str(group)]
+
+    def run_command(self, arguments, cwd=None, input=None, phase="git"):
+        arguments = list(map(str, arguments))
+        cwd = str(cwd or self.repository)
+        started = time.monotonic()
+        # File-backed output lets launcher exit and pipe inheritance be independent.
+        # All three streams remain owned until the native group has settled.
+        with tempfile.TemporaryFile(mode="w+", dir=self.root) as stdin, \
+                tempfile.TemporaryFile(mode="w+", dir=self.root) as stdout, \
+                tempfile.TemporaryFile(mode="w+", dir=self.root) as stderr:
+            if input is not None:
+                stdin.write(input)
+                stdin.seek(0)
+            process = subprocess.Popen(arguments, cwd=cwd, env=self.environment,
+                                       stdin=stdin, stdout=stdout, stderr=stderr,
+                                       start_new_session=True)
+            evidence = dict(event="fixture_command", phase=phase, command=arguments, cwd=cwd,
+                            pid=process.pid, guard_seconds=120)
+            if phase != "git":
+                print(json.dumps(dict(evidence, status="started")), flush=True)
+            expired = False
+            interrupted = None
+            before = []
+            settlement_error = None
+            try:
+                process.wait(timeout=120)
+            except subprocess.TimeoutExpired:
+                expired = True
+            except BaseException as error:
+                interrupted = error
+            finally:
+                # Only this newly created process group is signalled. Other participants
+                # and reused external services have independent OS lifetimes.
+                try:
+                    try:
+                        before = self.group_snapshot(process.pid)
+                    except (OSError, subprocess.SubprocessError) as error:
+                        evidence["snapshot_error"] = repr(error)
+                    for signum in (signal.SIGTERM, signal.SIGKILL):
+                        try:
+                            os.killpg(process.pid, signum)
+                        except ProcessLookupError:
+                            break
+                        until = time.monotonic() + 5
+                        while time.monotonic() < until:
+                            process.poll()
+                            try:
+                                os.killpg(process.pid, 0)
+                            except ProcessLookupError:
+                                break
+                            select.select([], [], [], 0.05)
+                        else:
+                            continue
+                        break
+                    process.poll()
+                    try:
+                        os.killpg(process.pid, 0)
+                    except ProcessLookupError:
+                        evidence["settled"] = True
+                    else:
+                        raise RuntimeError("owned process group survived SIGKILL")
+                except BaseException as error:
+                    self.commands_settled = False
+                    settlement_error = repr(error)
+            stdout.seek(0)
+            stderr.seek(0)
+            output, errors = stdout.read(), stderr.read()
+        evidence.update(status="deadline" if expired else "exited", returncode=process.returncode,
+                        elapsed_seconds=time.monotonic() - started, native_before=before)
+        if settlement_error is not None:
+            evidence.update(status="unsettled", error=settlement_error, inputs_retained=str(self.root))
+        if phase != "git" or expired or process.returncode != 0 or settlement_error is not None:
+            print(json.dumps(evidence), flush=True)
+        if settlement_error is not None or expired or process.returncode != 0:
+            self.fail(json.dumps(dict(evidence, stdout=output, stderr=errors)))
+        if interrupted is not None:
+            raise interrupted
+        result = subprocess.CompletedProcess(arguments, process.returncode, output, errors)
+        result.lifetime = evidence
         return result
 
     def git(self, *arguments, cwd=None, input=None):
         return self.run_command(["git", *arguments], cwd, input).stdout.strip()
 
     def setUp(self):
-        self.workspace = tempfile.TemporaryDirectory(prefix="cleanup-make-")
-        self.addCleanup(self.workspace.cleanup)
-        self.root = Path(self.workspace.name).resolve()
+        self.commands_settled = True
+        self.root = Path(tempfile.mkdtemp(prefix="cleanup-make-")).resolve()
+        self.addCleanup(self.dispose_workspace)
         self.repository = self.root / ("checkout with  spaces" if SPACED else "checkout")
         self.repository.mkdir()
         self.environment = dict(os.environ, TMPDIR=str(self.root / "tmp"),
+                                MSBUILDDISABLENODEREUSE="1", DOTNET_CLI_USE_MSBUILD_SERVER="0",
+                                UseSharedCompilation="false",
                                 GIT_AUTHOR_DATE="1700000000 +0000",
                                 GIT_COMMITTER_DATE="1700000000 +0000")
         Path(self.environment["TMPDIR"]).mkdir()
@@ -65,7 +155,7 @@ class CleanupMakeTests(unittest.TestCase):
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(SOURCE / relative, target)
         self.run_command(["make", "--no-print-directory", "-C", self.repository / "tools", "dotnet",
-                          "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"])
+                          "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], phase="canonical-build")
         self.dirty = self.add_lane("dirty")
         (self.dirty / "owned").write_text("unpublished dirty\n")
         (self.dirty / "untracked").write_text("unpublished untracked\n")
@@ -151,13 +241,13 @@ class CleanupMakeTests(unittest.TestCase):
                                   "CLEAN_SSHX_HOME=" + str(self.root / "sshx"),
                                   "CLEAN_TMP_ROOT=" + self.environment["TMPDIR"], "VERBOSE=1"]
                 if target != "worktree-clean":
-                    preview = self.run_command(arguments, cwd)
+                    preview = self.run_command(arguments, cwd, phase=target + ":preview")
                     preview_events = self.events(preview)
                     item = next(item for item in preview_events if item.get("path") == str(eligible))
                     self.assertEqual("would_remove", item["action"], item)
                     self.assertTrue(eligible.exists())
                     self.assert_retained(preview_events)
-                removed = self.run_command(arguments + ["FORCE=1"], cwd)
+                removed = self.run_command(arguments + ["FORCE=1"], cwd, phase=target + ":force")
                 events = self.events(removed)
                 item = next(item for item in events if item.get("path") == str(eligible))
                 self.assertEqual("removed", item["action"], item)
@@ -175,6 +265,89 @@ class CleanupMakeTests(unittest.TestCase):
                     source=str(self.repository), exit=removed.returncode,
                     removed=str(eligible), retained=[str(tree) for tree in
                         (self.dirty, self.local, self.cache, self.busy)])), flush=True)
+
+
+class CommandLifetimeTests(unittest.TestCase):
+    # Exercise the exact cleanup-fixture consumer, without copying/building another CLI.
+    run_command = CleanupMakeTests.run_command
+    group_snapshot = staticmethod(CleanupMakeTests.group_snapshot)
+    dispose_workspace = CleanupMakeTests.dispose_workspace
+
+    def setUp(self):
+        self.commands_settled = True
+        self.root = Path(tempfile.mkdtemp(prefix="cleanup-lifetime-")).resolve()
+        self.repository = self.root
+        self.environment = dict(os.environ)
+        self.addCleanup(self.dispose_workspace)
+
+    def check_lifetime(self, mode):
+        material = self.root / "unrelated-input"
+        material.write_text("independent material\n")
+        participant = subprocess.Popen(["/bin/sh", "-c",
+            'exec 3<"$1"; printf "ready\\n"; read line; cat <&3', "participant", str(material)],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, start_new_session=True)
+        def stop_participant():
+            if participant.poll() is None:
+                participant.communicate("finish\n", timeout=10)
+        self.addCleanup(stop_participant)
+        self.assertTrue(select.select([participant.stdout], [], [], 10)[0])
+        self.assertEqual("ready\n", participant.stdout.readline())
+        child_file = self.root / "child.pid"
+        fifo = self.root / "ready"
+        os.mkfifo(fifo)
+        if mode == "normal":
+            command = ['cat "$1"; printf "normal-error\\n" >&2', "native", str(material)]
+        else:
+            command = [
+                "/bin/sh -c 'trap \"\" TERM; printf \"ready\\\\n\" > \"$1\"; exec sleep 600' "
+                'child "$1" & child=$!; read ready < "$1"; '
+                'printf "%s\\n" "$child" > "$2"; kill -STOP "$child"; '
+                'printf "partial-output\\n"; printf "partial-error\\n" >&2; '
+                + ("wait" if mode == "deadline" else "exit 7" if mode == "nonzero" else "exit 0"),
+                "launcher", str(fifo), str(child_file)]
+        if mode in ("nonzero", "deadline"):
+            with self.assertRaises(AssertionError) as failure:
+                self.run_command(["/bin/sh", "-c", *command], phase=mode)
+            evidence = json.loads(str(failure.exception))
+            self.assertEqual("deadline" if mode == "deadline" else "exited", evidence["status"], evidence)
+            if mode == "nonzero":
+                self.assertEqual(7, evidence["returncode"])
+            self.assertEqual("partial-output\n", evidence["stdout"])
+            self.assertEqual("partial-error\n", evidence["stderr"])
+            self.assertEqual(mode, evidence["phase"])
+        else:
+            result = self.run_command(["/bin/sh", "-c", *command], phase=mode)
+            evidence = result.lifetime
+            self.assertEqual(0, result.returncode)
+            self.assertEqual("independent material\n" if mode == "normal" else "partial-output\n",
+                             result.stdout)
+        self.assertTrue(evidence["settled"])
+        with self.assertRaises(ProcessLookupError):
+            os.killpg(evidence["pid"], 0)
+        if mode != "normal":
+            child = int(child_file.read_text())
+            with self.assertRaises(ProcessLookupError):
+                os.kill(child, 0)
+        self.assertIsNone(participant.poll(), "independent process sharing inputs must survive")
+        self.assertEqual("independent material\n", material.read_text())
+        output, error = participant.communicate("finish\n", timeout=10)
+        self.assertEqual(0, participant.returncode, error)
+        self.assertEqual("independent material\n", output)
+        print(json.dumps(dict(event="native_lifetime_assertions", mode=mode, owned_group=evidence["pid"],
+                              settled=True, independent_survived=True, material_retained=True)), flush=True)
+
+    def test_normal(self):
+        self.check_lifetime("normal")
+
+    def test_nonzero(self):
+        self.check_lifetime("nonzero")
+
+    def test_deadline(self):
+        self.check_lifetime("deadline")
+
+    def test_launcher(self):
+        self.check_lifetime("launcher")
 
 
 if __name__ == "__main__":
