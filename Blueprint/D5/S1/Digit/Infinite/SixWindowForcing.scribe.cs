@@ -8,6 +8,12 @@ internal sealed class SixWindowForcingDocument : IScribeDocumentDefinition
         "Local separation and six-window forcing.",
         H("Local separation and six-window forcing"),
         Blocks(Describe.Lean(
+            DescribeId.Create("sixwindowforcing-algebra"),
+            DeclarationHandle.Create("D5/S1/Digit/Infinite/SixWindowForcing.algebra"),
+            H("Golden parameter relations"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The three-bit contraction satisfies g^2+4g=1 and 4/17<g<17/72. The reciprocal golden ratio satisfies t=(1+g)/2 and t^2=(1-g)/2."))),
+            DescribeRole.Theorem), Describe.Lean(
             DescribeId.Create("sixwindowforcing-result"),
             DeclarationHandle.Create("D5/S1/Digit/Infinite/SixWindowForcing.result"),
             H("Shared colors force alternating source blocks"),
