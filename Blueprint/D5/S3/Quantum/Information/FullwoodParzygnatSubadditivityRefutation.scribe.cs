@@ -20,14 +20,11 @@ internal sealed class FullwoodParzygnatSubadditivityRefutationDocument : IScribe
             Node("pdm", "Two-time pseudo-density matrix", PdmFormula(),
                 "Equation (15) defines a quantum state over time by half the anticommutator of rho tensor the output identity with the Jamiołkowski matrix. The channel is a complex-linear map between full matrix algebras.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("S", "Signed spectral entropy", EntropyFormula(),
-                "The real functional calculus applies the function x maps to -x log |x|. For Hermitian matrices, the spectral theorem identifies the real trace with the sum of this function over the eigenvalues, counted with multiplicity. This includes negative eigenvalues with their sign retained. Real.log |0| is zero, so the zero-eigenvalue contribution is zero. The total definition has no Hermiticity proof argument; the conjecture uses its Hermitian domain.",
-                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Fullwood–Parzygnat subadditivity conjecture", ClaimFormula(),
-                "Remark 1 of On Dynamical Measures of Quantum Information conjectures subadditivity on quantum states over time. Both dimensions are positive. The input is positive semidefinite with trace one, and the arbitrary finite Kraus family satisfies the completeness equation. ofKraus(K,K) is FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus, whose action is the sum of K_k X K_k adjoint. Thus the hypothesis gives a completely positive trace-preserving map. The bound compares the signed entropy of the two-time matrix with the entropies of the input and output states. Fullwood and Yang, arXiv:2608.28946v1, Section 6, also state the higher-dimensional question as open.",
+                "Remark 1 of On Dynamical Measures of Quantum Information conjectures subadditivity on quantum states over time. Both dimensions are positive. The input is positive semidefinite with trace one, and the arbitrary finite Kraus family satisfies the completeness equation. ofKraus(K,K) is FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus, whose action is the sum of K_k X K_k adjoint. Thus the hypothesis gives a completely positive trace-preserving map. The bound uses ChenKatoBrandaoCMIRefutation.entropy: on Hermitian matrices it is PartialTraceMutualInformation.spectralEntropy, the sum of -lambda log |lambda| over the eigenvalues with multiplicity, including zero contributions at zero; its value on other matrices is zero. The bound compares this signed entropy of the two-time matrix with the entropies of the input and output states. Fullwood and Yang, arXiv:2608.28946v1, Section 6, also state the higher-dimensional question as open.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A five-level Werner–Holevo counterexample", Disp(new Formula.Not(F.Id("claim"))),
-                "Let rho be the identity divided by five and use the ten Kraus operators (E_ij - E_ji)/2, one for each i < j. Their adjoint products sum to the identity. Their channel action is (trace(X) I - transpose(X))/4 and fixes rho. Let Omega have entry one exactly on equal input and output indices, and let P be its outer product divided by five. P is a Hermitian idempotent of trace one. The Jamiołkowski matrix is (I - 5P)/4, and the two-time matrix is (I - 5P)/20. Its eigenvalues are -1/5 once and 1/20 twenty-four times. A two-point functional calculus on P gives entropy log 5 + (6/5) log 4. Each marginal entropy is log 5. The excess is (1/5) log(4096/3125), which is strictly positive because 4096 > 3125. This contradicts the universal subadditivity bound.",
+                "Let rho be the identity divided by five and use the ten Kraus operators (E_ij - E_ji)/2, one for each i < j. Their adjoint products sum to the identity. Their channel action is (trace(X) I - transpose(X))/4 and fixes rho. Let Omega have entry one exactly on equal input and output indices, and let P be its outer product divided by five. P is a Hermitian idempotent of trace one. The Jamiołkowski matrix is (I - 5P)/4, and the two-time matrix is (I - 5P)/20. Its eigenvalues are -1/5 once and 1/20 twenty-four times. Apply CumulantRenyiDataProcessingRefutation.two_point_cfc to the self-adjoint involution H = 2P - I with a = -3/40 and b = -1/8. This evaluates the signed entropy ChenKatoBrandaoCMIRefutation.entropy through PartialTraceMutualInformation.re_trace_cfc and gives log 5 + (6/5) log 4. Each marginal entropy is log 5. The excess is (1/5) log(4096/3125), which is strictly positive because 4096 > 3125. This contradicts the universal subadditivity bound.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("fullwood-parzygnat-2025-states-over-time-subadditivity"),
@@ -54,7 +51,6 @@ internal sealed class FullwoodParzygnatSubadditivityRefutationDocument : IScribe
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula Complexes => Seq(Mathbb, Grp(F.Id("C")));
-    private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula FinOf(Formula n) => Call("Fin", n);
     private static Formula Mat(Formula rows, Formula cols) => Call("Matrix", rows, cols, Complexes);
@@ -62,8 +58,6 @@ internal sealed class FullwoodParzygnatSubadditivityRefutationDocument : IScribe
     private static Formula Channel(Formula n, Formula m) => Call("LinearMap", Complexes, Square(FinOf(n)), Square(FinOf(m)));
     private static Formula SumOver(Formula x, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(x, Colon, type), Sp, Par(body));
-    private static Formula Lambda(Formula x, Formula type, Formula body) =>
-        Seq(Named("fun"), Sp, Par(Seq(x, Colon, type)), Sp, Mapsto, Sp, body);
     private static Formula Instance(string name, Formula type, Formula body) =>
         Seq(OpenBracket, Call(name, type), CloseBracket, Sp, body);
 
@@ -85,21 +79,13 @@ internal sealed class FullwoodParzygnatSubadditivityRefutationDocument : IScribe
                 Call("smul", Div(D(1), D(2)), Add(Mul(r, j), Mul(j, r)))))))));
     }
 
-    private static Formula EntropyFormula()
-    {
-        Formula t = F.Id("t"), x = F.Id("X"), r = F.Id("r");
-        Formula f = Lambda(r, Reals, Mul(new Formula.Negate(r), Call("log", Call("abs", r))));
-        Formula body = All("X", Square(t), EqTo(Call("S", x), Call("realPart", Call("trace", Call("cfc", f, x)))));
-        return Disp(All("t", Named("Type"), Instance("Fintype", t, Instance("DecidableEq", t, body))));
-    }
-
     private static Formula ClaimFormula()
     {
         Formula n = F.Id("n"), m = F.Id("m"), rho = F.Id("rho"), iota = F.Id("iota"),
             k = F.Id("K"), i = F.Id("k");
         Formula e = Call("ofKraus", k, k);
         Formula complete = EqTo(SumOver(i, iota, Mul(Call("conjTranspose", Apply(k, i)), Apply(k, i))), D(1));
-        Formula bound = LeqTo(Call("S", Call("pdm", rho, e)), Add(Call("S", rho), Call("S", Apply(e, rho))));
+        Formula bound = LeqTo(Call("entropy", Call("pdm", rho, e)), Add(Call("entropy", rho), Call("entropy", Apply(e, rho))));
         Formula families = All("iota", Named("Type"), Instance("Fintype", iota,
             All("K", new Formula.TypeArrow(iota, Mat(FinOf(m), FinOf(n))), Imp(complete, bound))));
         Formula inputs = All("rho", Square(FinOf(n)), Imp(Call("PosSemidef", rho),

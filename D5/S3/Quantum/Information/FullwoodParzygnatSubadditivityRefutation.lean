@@ -7,6 +7,8 @@
    digest: The Werner–Holevo channel on the maximally mixed five-level state violates PDM subadditivity. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation
+import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
@@ -17,6 +19,7 @@ set_option relaxedAutoImplicit false
 open Matrix
 open scoped BigOperators Kronecker ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap
+open D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation (entropy)
 
 noncomputable section
 namespace D5.S3.Quantum.Information.FullwoodParzygnatSubadditivityRefutation
@@ -34,18 +37,13 @@ def pdm {n m : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
   (1 / 2 : ℝ) • ((ρ ⊗ₖ (1 : Matrix (Fin m) (Fin m) ℂ)) * jamio E +
     jamio E * (ρ ⊗ₖ (1 : Matrix (Fin m) (Fin m) ℂ)))
 
-/-- Signed spectral entropy, defined by real functional calculus without a proof argument.
-For Hermitian X this is the sum of -λ log |λ|, including the value zero at λ = 0. -/
-def S {n : Type} [Fintype n] [DecidableEq n] (X : Matrix n n ℂ) : ℝ :=
-  (trace (cfc (fun x : ℝ => -x * Real.log |x|) X)).re
-
 /-- Subadditivity for every finite-dimensional density and complete finite Kraus family. -/
 def claim : Prop :=
   ∀ (n m : ℕ), 1 ≤ n → 1 ≤ m →
   ∀ (ρ : Matrix (Fin n) (Fin n) ℂ), ρ.PosSemidef → trace ρ = 1 →
   ∀ (ι : Type) [Fintype ι] (K : ι → Matrix (Fin m) (Fin n) ℂ),
     (∑ k, (K k)ᴴ * K k) = 1 →
-    S (pdm ρ (of_kraus K K)) ≤ S ρ + S ((of_kraus K K) ρ)
+    entropy (pdm ρ (of_kraus K K)) ≤ entropy ρ + entropy ((of_kraus K K) ρ)
 
 private def pairs : Fin 10 → Fin 5 × Fin 5 :=
   ![(0,1), (0,2), (0,3), (0,4), (1,2), (1,3), (1,4), (2,3), (2,4), (3,4)]
@@ -160,39 +158,56 @@ private theorem projection_cfc {n : Type} [Fintype n] [DecidableEq n]
     (f : ℝ → ℝ) (a b : ℝ) :
     cfc f (a • (1 : Matrix n n ℂ) + b • Q) =
       f a • (1 : Matrix n n ℂ) + (f (a+b) - f a) • Q := by
-  have hsa : IsSelfAdjoint Q := hQ
-  have haff : cfc (fun x : ℝ => a + b*x) Q = a • (1 : Matrix n n ℂ) + b • Q := by
-    rw [cfc_const_add a (fun x : ℝ => b*x) Q (by fun_prop) hsa,
-      cfc_const_mul_id b Q hsa, Algebra.algebraMap_eq_smul_one]
-  rw [← haff, ← cfc_comp f (fun x : ℝ => a+b*x) Q hsa
-    ((Q.finite_real_spectrum.image _).continuousOn _) (by fun_prop)]
-  calc
-    cfc (fun x : ℝ => f (a+b*x)) Q =
-        cfc (fun x : ℝ => f a + (f (a+b) - f a)*x) Q := by
-      apply cfc_congr
-      intro x hx
-      have hspec := (show IsIdempotentElem Q from hQQ).spectrum_subset ℝ hx
-      rcases Set.mem_insert_iff.mp hspec with rfl | hx
-      · simp
-      · have hx : x = 1 := Set.mem_singleton_iff.mp hx
-        subst x
-        simp
-    _ = _ := by
-      rw [cfc_const_add _ (fun x : ℝ => (f (a+b) - f a)*x) Q (by fun_prop) hsa,
-        cfc_const_mul_id _ Q hsa, Algebra.algebraMap_eq_smul_one]
+  let H : Matrix n n ℂ := (2 : ℝ) • Q - 1
+  have hH : IsSelfAdjoint H :=
+    (hQ.smul (isSelfAdjoint_iff.mpr (by simp) : IsSelfAdjoint (2 : ℝ))).sub
+      Matrix.isHermitian_one
+  have hHH : H * H = 1 := by
+    dsimp [H]
+    simp only [sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul, mul_one, one_mul,
+      hQQ, smul_smul]
+    module
+  have h := D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation.two_point_cfc
+    f (a + b / 2) (b / 2) H hH hHH
+  have harg : (a + b / 2) • (1 : Matrix n n ℂ) + (b / 2) • H = a • 1 + b • Q := by
+    dsimp [H]
+    module
+  rw [harg, show a + b / 2 + b / 2 = a + b by ring,
+    show a + b / 2 - b / 2 = a by ring] at h
+  rw [h]
+  dsimp [H]
+  module
 
 
-private theorem entropy_rho : S ρ = Real.log 5 := by
-  unfold S ρ
+private theorem entropy_eq_trace {n : Type} [Fintype n] [DecidableEq n]
+    (X : Matrix n n ℂ) :
+    entropy X = (trace (cfc (fun x : ℝ => -x * Real.log |x|) X)).re := by
+  unfold entropy
+  split_ifs with h
+  · run_tac
+      let owner := `D5.S3.Quantum.Information.PartialTraceMutualInformation
+      let traceIdentity := Lean.mkIdent
+        ((Lean.Name.num (`_private ++ owner) 0) ++ owner ++ `re_trace_cfc)
+      let hermitian := Lean.mkIdent `h
+      Lean.Elab.Tactic.evalTactic (← `(tactic| rw [$traceIdentity:ident $hermitian:ident]))
+    simp [D5.S3.Quantum.Information.PartialTraceMutualInformation.spectralEntropy,
+      Real.negMulLog, Real.log_abs]
+  · have hsa : ¬ IsSelfAdjoint X := h
+    rw [cfc_apply_of_not_predicate (R := ℝ)
+      (f := fun x : ℝ => -x * Real.log |x|) X hsa]
+    simp
+
+private theorem entropy_rho : entropy ρ = Real.log 5 := by
+  rw [entropy_eq_trace]
+  unfold ρ
   rw [← Algebra.algebraMap_eq_smul_one, cfc_algebraMap, Algebra.algebraMap_eq_smul_one, trace_smul, trace_one]
   simp only [Complex.smul_re, smul_eq_mul, Complex.natCast_re]
   norm_num [Real.log_div]
   ring
 
-private theorem entropy_pdm : S (pdm ρ (of_kraus K K)) =
+private theorem entropy_pdm : entropy (pdm ρ (of_kraus K K)) =
     Real.log 5 + (6 / 5 : ℝ) * Real.log 4 := by
-  unfold S
-  rw [pdm_eq, projection_cfc P P_hermitian P_idempotent,
+  rw [entropy_eq_trace, pdm_eq, projection_cfc P P_hermitian P_idempotent,
     trace_add, trace_smul, trace_smul, trace_one, P_trace]
   simp only [Complex.add_re, Complex.smul_re, smul_eq_mul, Complex.natCast_re,
     Complex.one_re]
