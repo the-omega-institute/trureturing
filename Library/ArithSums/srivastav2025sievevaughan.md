@@ -1383,3 +1383,50 @@ requirement, prime layer, other recovery terms and complete signed
 Robin tail remain unpaid. This is an attributed application of
 classical inputs without Lean certification, original-number-theory
 priority or an identification with FIB composition rotation.
+
+## Actual deep-layer weights differ only below the residual target scale
+
+Retain the same selected $N$, its actual $A=\log N$, original $\eta$,
+$E_A$, active samples and finite layers in $\mathcal R_{N,\eta}$. Let
+$\widetilde{\mathcal R}_{A,\eta}$ be that same supremum with only
+$w_{N,p,k}$ replaced by $\log p$. The existing own-price layer comparison
+gives $0\le\log p-w_{N,p,k}\le p^{1-k}\log p$ for $k\ge2$.
+Using the original envelope $E_A\le B_A$, the difference between the
+two nonnegative sums at each $x\in[A,2A]$ is at most
+
+$$
+\frac{B_A}{x}\left(
+ \sum_{p\le\sqrt{x/U}}\frac{\log p}{p}
+ +\sum_p\sum_{k\ge3}\frac{\log p}{p^{k-1}}\right)
+=\frac{B_A}{x}\left(
+ \sum_{p\le\sqrt{x/U}}\frac{\log p}{p}+\mathfrak c_2\right).
+$$
+
+The existing $\vartheta(t)<2t$ input and Abel summation give
+$\sum_{p\le z}(\log p)/p\ll\log(2z)$; $\mathfrak c_2<\infty$
+is already defined in (SV9). Since $B_A\ll\sqrt A/L^2$, the bound
+is uniformly $O(A^{-1/2}/L)$. Pointwise order and the supremum
+inequality therefore give, without requiring either supremum to be
+attained,
+
+$$
+0\le\widetilde{\mathcal R}_{A,\eta}-\mathcal R_{N,\eta}
+\ll\frac{A^{-1/2}}L=o(A^{-\eta}/L),\qquad 0<\eta<1/2.
+\tag{SV35}
+$$
+
+Thus the original local requirement
+$\mathcal R_{N,\eta}=o(A^{-\eta})$ is equivalent to the same requirement
+for $\widetilde{\mathcal R}_{A,\eta}$ along the same selected sources.
+The actual clock has not been replaced by an arbitrary continuous one.
+This application first uses the envelope for $E_A$; it does not assert
+that an arbitrary polynomial positive part is bounded by $B_A$.
+Transport to a polynomial residual requires the already paid
+approximation comparison (SV26).
+
+The depth-dependent lowering of these weights changes this residual
+only below its target scale. This leaves open compensation from the
+actual selected clock, the joint low response and other terms of the
+complete recovery identity. It provides neither the separate mean
+bound nor a complete signed Robin estimate, and has no Lean
+certification or claim of original number theory.
