@@ -39,7 +39,8 @@ class ReuseTests(unittest.TestCase):
                 'scribe-content': dict(include=[], exclude=[])}, report_execution=copy.deepcopy(EXECUTION))
         for path, value in {'D5/A.lean': 'def a := 1\n', 'Audit.lean': 'def audit := 1\n',
                 'Inspector.lean': 'def inspector := 1\n', 'producer.py': '# producer\n',
-                'lean-toolchain': 'fixture\n', 'lakefile.toml': 'name = "fixture"\n'}.items():
+                'lean-toolchain': 'fixture\n', 'lakefile.toml': 'name = "fixture"\n',
+                'lake-manifest.json': json.dumps({'packages': [{'name': 'mathlib', 'rev': 'a' * 40}]})}.items():
             self.write(path, value)
         self.write_policy()
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
@@ -89,7 +90,7 @@ class ReuseTests(unittest.TestCase):
         import reuse
         self.bundle()
         captured = reuse.capture(self.root)
-        reuse.seal(self.root, self.report, captured)
+        reuse.seal(self.root, self.report, captured, publication.bundle_identity(self.report))
         return reuse
 
     def test_execution_registration_is_explicit_and_strict(self):
@@ -196,6 +197,268 @@ class ReuseTests(unittest.TestCase):
                 report_format=publication.selection.REPORT_FORMAT, compatible=True),
                 '[FAIL] complete_seed_format_does_not_compare_current_inputs')
             self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
+
+    def test_seed_base_record_is_written_after_successful_dev_seal(self):
+        api = self.dev_repository()
+        record = json.loads((self.root / '.lake/lean-report-seed-base.json').read_text())
+        self.assertEqual(record['schema'], 'stratalint-lean-report-seed-base-v2')
+        self.assertEqual(record['producer_commit_sha'],
+                         subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'],
+                                                 text=True).strip())
+        self.assertEqual(api.seed_format(self.report)['compatible'], True)
+
+    def test_optional_refresh_rechecks_seed_before_lake(self):
+        api = self.dev_repository()
+        def lose_seed(repository, report):
+            publication.member(report, api.SUFFIX).unlink()
+            return report
+        with patch.object(api, '_refresh_stale_seed', side_effect=lose_seed), \
+                patch.object(api, '_reuse') as reuse_entry:
+            with self.assertRaisesRegex(api.CacheIncompatible, 'seed-unavailable-after-refresh',
+                                        msg='[FAIL] refreshed_missing_seed_must_fail_closed'):
+                api.recover_and_reuse(self.root, self.report, self.report)
+            reuse_entry.assert_not_called()
+
+    def test_seed_base_record_does_not_participate_in_reuse_or_compatibility(self):
+        api = self.receipt()
+        before = api.probe(self.root, self.report)
+        path = self.root / '.lake/lean-report-seed-base.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text('{"schema":"invalid","producer_commit_sha":"not-a-sha"}\n')
+        self.assertEqual(api.probe(self.root, self.report), before)
+        self.assertEqual(api.seed_format(self.report),
+                         {'report_format': publication.selection.REPORT_FORMAT, 'compatible': True})
+
+    def test_canonical_reuse_preserves_original_producer(self):
+        api = self.dev_repository()
+        base = api.read_seed_base(self.root)
+        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '--allow-empty', '-qm', 'unchanged report inputs'], check=True)
+        self.assertFalse(api.reuse(self.root, self.report, self.report)['needs_lake'])
+        self.assertEqual(base, api.read_seed_base(self.root),
+                         '[FAIL] canonical_reuse_preserves_original_producer')
+
+    def test_canonical_reuse_is_independent_of_base_record_failures(self):
+        api = self.dev_repository()
+        path = self.root / api.BASE_RECORD
+        read_bytes = Path.read_bytes
+        unlink = Path.unlink
+        for failure in ('missing', 'malformed', 'unreadable', 'write-failed', 'unlink-failed'):
+            with self.subTest(failure=failure):
+                self.assertTrue(api.record_seed_base(self.root))
+                self.assertIsNotNone(api.read_seed_base(self.root))
+                if failure == 'missing':
+                    path.unlink()
+                elif failure in ('malformed', 'unlink-failed'):
+                    path.write_text('{invalid')
+                def read(source, *args, **kwargs):
+                    if source == path and failure == 'unreadable':
+                        raise OSError('injected base read failure')
+                    return read_bytes(source, *args, **kwargs)
+                def remove(source, *args, **kwargs):
+                    if source == path and failure == 'unlink-failed':
+                        raise OSError('injected base unlink failure')
+                    return unlink(source, *args, **kwargs)
+                compatible = api.seed_format(self.report)
+                with patch.object(Path, 'read_bytes', read), patch.object(Path, 'unlink', remove), patch.object(api, 'record_seed_base',
+                        wraps=api.record_seed_base) as record:
+                    if failure == 'write-failed':
+                        record.return_value = False
+                    result = api.reuse(self.root, self.report, self.report)
+                self.assertFalse(result['needs_lake'], '[FAIL] base_failure_does_not_block_canonical_reuse')
+                self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
+                self.assertEqual(compatible, api.seed_format(self.report))
+                api.read_receipt(self.report, api.capture(self.root))
+                if failure == 'unlink-failed':
+                    self.assertIn('injected base unlink failure', result['base_maintenance']['detail'])
+                    self.assertIsNone(api.read_seed_base(self.root))
+                else:
+                    self.assertFalse(path.exists(), '[FAIL] canonical_reuse_invalidates_untrusted_base')
+
+    def test_prepare_tolerates_only_already_unknown_base_unlink_failure(self):
+        api = self.dev_repository()
+        path = self.root / api.BASE_RECORD
+        unlink = Path.unlink
+        def remove(source, *args, **kwargs):
+            if source == path:
+                raise OSError('injected base unlink failure')
+            return unlink(source, *args, **kwargs)
+        with patch.object(Path, 'unlink', remove):
+            with self.assertRaises(OSError, msg='[FAIL] trusted_base_invalidation_remains_required'):
+                api.prepare(self.root, self.report)
+            self.assertTrue(publication.member(self.report, api.SUFFIX).is_file())
+            path.write_text('{invalid')
+            try:
+                result = api.prepare(self.root, self.report)
+            except OSError as error:
+                self.fail('[FAIL] unknown_base_maintenance_does_not_block_prepare: ' + str(error))
+        self.assertIn('injected base unlink failure', result['detail'])
+        self.assertIsNone(api.read_seed_base(self.root))
+        self.assertFalse(publication.member(self.report, api.SUFFIX).exists())
+
+    def test_reuse_rejection_before_publication_preserves_success_evidence(self):
+        api = self.dev_repository()
+        receipt = publication.member(self.report, api.SUFFIX)
+        before_receipt = receipt.read_bytes()
+        base = self.root / api.BASE_RECORD
+        before_base = base.read_bytes()
+        self.write('D5/A.lean', 'def a := 2\n')
+        result = api.reuse(self.root, self.report, self.report)
+        self.assertTrue(result['needs_lake'])
+        self.assertTrue(receipt.is_file(), '[FAIL] rejected_reuse_has_not_claimed_receipt')
+        self.assertEqual(before_receipt, receipt.read_bytes())
+        self.assertEqual(before_base, base.read_bytes())
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_failed_reuse_publication_leaves_no_success_receipt(self):
+        api = self.dev_repository()
+        with patch.object(publication, 'publish', side_effect=OSError('injected publication failure')):
+            result = api.reuse(self.root, self.report, self.report)
+        self.assertTrue(result['needs_lake'])
+        self.assertFalse(publication.member(self.report, api.SUFFIX).exists(),
+                         '[FAIL] guarded_reuse_preparation_invalidates_receipt')
+        self.assertIsNone(api.read_seed_base(self.root))
+        self.assertFalse(api.seed_format(self.report)['compatible'])
+
+    def test_custom_source_reuse_does_not_inherit_canonical_producer(self):
+        api = self.dev_repository()
+        canonical, base = self.report, api.read_seed_base(self.root)
+        original = api.seed_identity(canonical)
+        self.write('D5/A.lean', 'def a := 2\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True)
+        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '-qm', 'new custom report inputs'], check=True)
+        self.report = self.output
+        self.report.parent.mkdir(parents=True, exist_ok=True)
+        self.receipt()
+        self.assertEqual(base, api.read_seed_base(self.root))
+        self.assertFalse(api.reuse(self.root, self.report, canonical)['needs_lake'])
+        self.assertNotEqual(original, api.seed_identity(canonical))
+        self.assertIsNone(api.read_seed_base(self.root),
+                          '[FAIL] custom_source_cannot_inherit_canonical_producer')
+        self.assertFalse((self.root / api.BASE_RECORD).exists())
+        self.assertFalse(api.probe(self.root, canonical)['needs_lake'])
+
+    def dev_repository(self):
+        self.write('.gitignore', '.lake/\nseed/\noutput/\n')
+        self.report = self.root / '.lake/build/stratalint' / publication.RAW
+        self.report.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(['git', 'init', '-q', '-b', 'dev', str(self.root)], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5', 'lean-toolchain', 'lakefile.toml',
+                        '.gitignore', 'Audit.lean', 'Inspector.lean', 'producer.py', 'tools',
+                        'bin', 'lean-report-inputs.json', 'lake-manifest.json'],
+                       check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '-qm', 'base fixture'], check=True, capture_output=True)
+        return self.receipt()
+
+    def test_untracked_file_prevents_trusted_seed_base(self):
+        api = self.dev_repository()
+        self.assertIsNotNone(api.read_seed_base(self.root))
+        self.write('untracked.txt', 'extra input\n')
+        self.receipt()
+        self.assertIsNone(api.read_seed_base(self.root), '[FAIL] untracked_file_has_unknown_base')
+        self.assertFalse((self.root / api.BASE_RECORD).exists())
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_untracked_registered_lean_source_prevents_trusted_seed_base(self):
+        api = self.dev_repository()
+        self.write('D5/Untracked.lean', 'def extra := 2\n')
+        self.assertIn('D5/Untracked.lean', api.capture(self.root)['files'])
+        self.receipt()
+        self.assertIsNone(api.read_seed_base(self.root), '[FAIL] untracked_lean_has_unknown_base')
+        self.assertFalse((self.root / api.BASE_RECORD).exists())
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_seed_identity_mismatch_is_unknown(self):
+        api = self.dev_repository()
+        record = self.root / api.BASE_RECORD
+        contents = json.loads(record.read_text())
+        contents['seed_sha256'] = 'f' * 64
+        record.write_text(json.dumps(contents))
+        self.assertIsNone(api.read_seed_base(self.root), '[FAIL] different_seed_identity_is_unknown')
+        self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_base_identity_covers_every_sidecar_and_receipt(self):
+        api = self.dev_repository()
+        base = api.read_seed_base(self.root)
+        self.assertIsNotNone(base)
+        for suffix in (*publication.SUFFIXES, api.SUFFIX):
+            with self.subTest(suffix=suffix):
+                path = publication.member(self.report, suffix)
+                original = path.read_bytes()
+                try:
+                    path.write_bytes(original + b'\n')
+                    self.assertIsNone(api.read_seed_base(self.root),
+                                      '[FAIL] complete_seed_identity_binds_member_' + suffix)
+                finally:
+                    path.write_bytes(original)
+                self.assertEqual(base, api.read_seed_base(self.root))
+
+    def test_dirty_production_invalidates_previous_base(self):
+        api = self.dev_repository()
+        self.assertIsNotNone(api.read_seed_base(self.root))
+        self.write('D5/A.lean', 'def a := 2\n')
+        self.receipt()
+        self.assertFalse((self.root / api.BASE_RECORD).exists(), '[FAIL] dirty_production_removes_old_base')
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+
+    def test_failed_base_write_invalidates_previous_base(self):
+        api = self.dev_repository()
+        with patch.object(api.os, 'replace', side_effect=OSError('injected base write failure')):
+            recorded = api.record_seed_base(self.root)
+        self.assertFalse(recorded)
+        self.assertFalse((self.root / api.BASE_RECORD).exists(), '[FAIL] failed_base_write_removes_old_base')
+
+    def test_non_dev_detached_and_linked_seed_records_are_invalidated(self):
+        api = self.dev_repository()
+        path = self.root / api.BASE_RECORD
+        record = path.read_bytes()
+        for scope in ('non-dev', 'detached', 'linked'):
+            with self.subTest(scope=scope):
+                repository = self.root
+                if scope == 'non-dev':
+                    subprocess.run(['git', '-C', str(self.root), 'branch', '-M', 'topic'], check=True)
+                elif scope == 'detached':
+                    subprocess.run(['git', '-C', str(self.root), 'checkout', '-q', '--detach'], check=True)
+                else:
+                    repository = self.root / 'linked'
+                    subprocess.run(['git', '-C', str(self.root), 'worktree', 'add', '-q', '-b', 'dev',
+                                    str(repository), 'HEAD'], check=True)
+                target = repository / api.BASE_RECORD
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(record)
+                self.assertFalse(api.record_seed_base(repository))
+                self.assertFalse(target.exists(), '[FAIL] untrusted_production_removes_old_base')
+
+    def test_non_object_base_record_is_unknown(self):
+        api = self.receipt()
+        path = self.root / api.BASE_RECORD
+        path.parent.mkdir(parents=True, exist_ok=True)
+        for value in ([], None, 42, 'commit'):
+            with self.subTest(value=value):
+                path.write_text(json.dumps(value))
+                try:
+                    base = api.read_seed_base(self.root)
+                except AttributeError as error:
+                    self.fail('[FAIL] non_object_base_is_unknown: ' + str(error))
+                self.assertIsNone(base)
+
+    def test_seal_and_base_write_share_cache_guard(self):
+        api = self.dev_repository()
+        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
+        from lean_cache_release import cache_guard
+        base = (self.root / api.BASE_RECORD).read_bytes()
+        receipt = publication.member(self.report, api.SUFFIX).read_bytes()
+        with cache_guard(self.root):
+            with self.assertRaises(BlockingIOError, msg='[FAIL] seal_requires_exclusive_cache_ownership'):
+                api.seal(self.root, self.report, api.capture(self.root), publication.bundle_identity(self.report))
+        self.assertEqual(base, (self.root / api.BASE_RECORD).read_bytes())
+        self.assertEqual(receipt, publication.member(self.report, api.SUFFIX).read_bytes())
 
     def test_standalone_program_entry_builds_the_producer_once_before_ensure(self):
         process, calls = self.entry_with_program_build(['leanInspector/LeanInformationAudit'], prebuilt=False)
@@ -324,7 +587,7 @@ class ReuseTests(unittest.TestCase):
         self.assertTrue(api.probe(self.root, self.report)['needs_lake'],
                         '[FAIL] report_module_mode_change_invalidates_reuse')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
-            api.seal(self.root, self.report, captured)
+            api.seal(self.root, self.report, captured, publication.bundle_identity(self.report))
 
     def test_checkout_permission_differences_keep_reuse(self):
         # Two checkouts of one commit may differ in permission bits other than
@@ -460,7 +723,7 @@ class ReuseTests(unittest.TestCase):
         captured = api.capture(self.root)
         self.write('D5/A.lean', 'def a := 2\n')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
-            api.seal(self.root, self.report, captured)
+            api.seal(self.root, self.report, captured, publication.bundle_identity(self.report))
         self.write('D5/A.lean', 'def a := 1\n')
         api = self.receipt()
         publish = publication.publish
@@ -477,7 +740,8 @@ class ReuseTests(unittest.TestCase):
         self.write_policy()
         captured = api.capture(self.root)
         self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
-        api.seal(self.root, self.report, captured)
+        api.prepare(self.root, self.report)
+        api.seal(self.root, self.report, captured, publication.bundle_identity(self.report))
         self.assertFalse(publication.member(self.report, '.reuse.json').exists())
         self.policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])
         self.write_policy()
@@ -493,7 +757,9 @@ class ReuseTests(unittest.TestCase):
         # external cache/build processes. No Lean compilation is needed here.
         for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
                          'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
-                         'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh'):
+                         'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh',
+                         'tools/scripts/worktree/lean_cache_release.py',
+                         'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py'):
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, target)
