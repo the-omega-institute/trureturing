@@ -37,7 +37,7 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
                 + "the rows of R are (1/2,1/4,1/4), (3/8,1/4,3/8), (1/4,1/4,1/2). "
                 + "Z=Y-1 and score=Z(C_true-C_rival). The complete record mass is the "
                 + "product of the four window masses and this conditional label mass.")),
-            Node("Law.positionLaw_admissible", "Legal whole-window position laws",
+            Node("Law.position_law_admissible", "Legal whole-window position laws",
                 Seq(Forall, Sp, V("rho"), Comma, Sp, D(0), Lt, V("rho"), Le,
                     Seq(Frac, Grp(D(1)), Grp(D(8))), Sp, Implies, Sp,
                     Call("Admissible", V("rho"), Call("positionLaw", V("rho")))),

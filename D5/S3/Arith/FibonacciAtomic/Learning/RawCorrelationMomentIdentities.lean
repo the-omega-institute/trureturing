@@ -25,6 +25,7 @@ set_option maxHeartbeats 2000000
 set_option maxRecDepth 4096
 
 noncomputable section
+attribute [local instance] Classical.propDecidable
 open Filter
 open scoped BigOperators Topology
 
@@ -35,6 +36,7 @@ namespace Scale
 
 def sampleLength (rho a K : ℝ) : ℕ := ⌈K / (a ^ 2 * rho ^ 2)⌉₊
 
+/-- The rounded sample count times rho squared tends to the prescribed constant. -/
 theorem scaled_length (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     Tendsto (fun rho => (sampleLength rho a K : ℝ) * rho ^ 2)
       (𝓝[>] (0 : ℝ)) (𝓝 (K / a ^ 2)) := by
@@ -60,6 +62,7 @@ theorem scaled_length (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     (by simpa using (tendsto_const_nhds.add (id0.pow 2) : Tendsto (fun rho : ℝ => K / a ^ 2 + rho ^ 2) (𝓝[>] (0 : ℝ)) (𝓝 (K / a ^ 2 + 0 ^ 2))))
     low high
 
+/-- At the target sample scale, the expected reverse-event count tends to zero. -/
 theorem reverse_negligible (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     Tendsto (fun rho => (sampleLength rho a K : ℝ) * 12 * rho ^ 3)
       (𝓝[>] (0 : ℝ)) (𝓝 0) := by
@@ -67,6 +70,7 @@ theorem reverse_negligible (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     ((tendsto_id.mono_left nhdsWithin_le_nhds).const_mul (12 : ℝ))
   simpa only [mul_zero, zero_mul] using h.congr (fun rho => by dsimp; ring)
 
+/-- All records avoid the reverse event with probability tending to one. -/
 theorem clean_probability (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     Tendsto (fun rho => (1 - 12 * rho ^ 3) ^ (sampleLength rho a K))
       (𝓝[>] (0 : ℝ)) (𝓝 1) := by
@@ -100,6 +104,7 @@ theorem clean_probability (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
 def activeProbability (rho a : ℝ) : ℝ :=
   ((8 + a) / 12) * (2 * rho * (1 - 3 * rho) * (1 - 2 * rho)) / (1 - 12 * rho ^ 3)
 
+/-- The expected conditional nonzero count tends to infinity. -/
 theorem active_mean_diverges (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     Tendsto (fun rho => (sampleLength rho a K : ℝ) * activeProbability rho a)
       (𝓝[>] (0 : ℝ)) atTop := by
@@ -125,12 +130,12 @@ theorem active_mean_diverges (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
 end Scale
 
 namespace FiniteTail
-local instance (p : Prop) : Decidable p := Classical.propDecidable p
 
 def count {α : Type*} {m : ℕ} (b : α → ℕ) (w : Fin m → α) : ℕ := ∑ i, b (w i)
 def tail {α : Type*} [Fintype α] (q : α → ℝ) (b : α → ℕ) (m N : ℕ) : ℝ :=
   ∑ w : Fin m → α, if count b w ≤ N then ∏ i, q (w i) else 0
 
+/-- The count Laplace transform factors over independent finite records. -/
 theorem laplace_product {α : Type*} [Fintype α] (q : α → ℝ)
     (b : α → ℕ) (m : ℕ) :
     (∑ w : Fin m → α, (∏ i, q (w i)) * Real.exp (-(count b w : ℝ))) =
@@ -140,6 +145,7 @@ theorem laplace_product {α : Type*} [Fintype α] (q : α → ℝ)
     ← Finset.prod_mul_distrib]
   exact (Fintype.sum_pow (fun a => q a * Real.exp (-(b a : ℝ))) m).symm
 
+/-- A fixed-count lower tail is bounded by its exponential transform. -/
 theorem tail_laplace_bound {α : Type*} [Fintype α] (q : α → ℝ)
     (b : α → ℕ) (hq : ∀ a, 0 ≤ q a) (m N : ℕ) :
     tail q b m N ≤ Real.exp (N : ℝ) * (∑ a, q a * Real.exp (-(b a : ℝ))) ^ m := by
@@ -158,6 +164,7 @@ theorem tail_laplace_bound {α : Type*} [Fintype α] (q : α → ℝ)
   · simp only [if_neg h]
     positivity
 
+/-- The finite-product lower tail has an exponential upper bound. -/
 theorem tail_exponential {α : Type*} [Fintype α] (q : α → ℝ)
     (b : α → ℕ) (hq : ∀ a, 0 ≤ q a) (m N : ℕ) (p : ℝ)
     (hlap : (∑ a, q a * Real.exp (-(b a : ℝ))) = 1 - p + p * Real.exp (-1)) :
@@ -176,6 +183,7 @@ theorem tail_exponential {α : Type*} [Fintype α] (q : α → ℝ)
   rw [heq] at hp
   exact hl.trans (mul_le_mul_of_nonneg_left hp (Real.exp_pos _).le)
 
+/-- Diverging activation means force every fixed lower tail to vanish. -/
 theorem escapes {α ι : Type*} [Fintype α] (l : Filter ι) (q : ι → α → ℝ)
     (b : α → ℕ) (n : ι → ℕ) (p : ι → ℝ)
     (hq : ∀ᶠ t in l, ∀ a, 0 ≤ q t a)
@@ -205,6 +213,7 @@ def expectation {α : Type*} [Fintype α] (q : α → ℝ) (b : α → ℕ)
     (m : ℕ) (f : ℕ → ℝ) : ℝ :=
   ∑ w : Fin m → α, (∏ i, q (w i)) * f (count b w)
 
+/-- A cutoff separates bounded small-count and uniformly small large-count contributions. -/
 theorem expectation_cutoff {α : Type*} [Fintype α] (q : α → ℝ)
     (b : α → ℕ) (hq : ∀ a, 0 ≤ q a) (hprob : ∑ a, q a = 1)
     (m N : ℕ) (f : ℕ → ℝ) (hf : ∀ j, f j ≤ 1) (eps : ℝ)
@@ -227,6 +236,7 @@ theorem expectation_cutoff {α : Type*} [Fintype α] (q : α → ℝ)
         exact mul_le_mul_of_nonneg_left (hfar _ (Nat.lt_of_not_ge h)) hp
     _ = _ := by rw [Finset.sum_add_distrib, ← Finset.sum_mul, htotal, one_mul]
 
+/-- A bounded vanishing count observable has vanishing expectation when counts escape. -/
 theorem expectation_vanishes {α ι : Type*} [Fintype α] (l : Filter ι)
     (q : ι → α → ℝ) (b : α → ℕ) (n : ι → ℕ) (f : ℕ → ℝ)
     (hq : ∀ᶠ t in l, ∀ a, 0 ≤ q t a) (hprob : ∀ᶠ t in l, ∑ a, q t a = 1)
@@ -252,16 +262,17 @@ theorem expectation_vanishes {α ι : Type*} [Fintype α] (l : Filter ι)
 end FiniteTail
 
 namespace Law
-local instance (p : Prop) : Decidable p := Classical.propDecidable p
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
 open _root_.D5.S3.Arith.FibonacciAtomic.HeterogeneousTeacherSeparation (extremal)
 
 abbrev Record := Window × Window × Window × Window × Fin 3
 
+set_option quotPrecheck false in
 local notation "trueClass" =>
   (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
     ![w.1, w.2.2.1, w.2.2.2.1])
+set_option quotPrecheck false in
 local notation "rivalClass" =>
   (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
     ![w.2.1, w.2.2.1, w.2.2.2.1])
@@ -299,27 +310,31 @@ def cleanMass (rho a : ℝ) (s : ℤ) : ℝ := by
   classical
   exact oneSum (fun w => if ¬ reverse w ∧ score w = s then recordMass rho a w else 0)
 
-theorem oneSum_eq_sum (f : Record → ℝ) : oneSum f = ∑ w, f w := by
+/-- The explicit five-symbol record sum equals the complete finite sum. -/
+theorem one_sum_eq_sum (f : Record → ℝ) : oneSum f = ∑ w, f w := by
   classical
   have win (g : Window → ℝ) : (∑ w, g w) = sumWindow g := by
     change (∑ w ∈ ({Window.zero, Window.low, Window.middle, Window.ends, Window.high} : Finset Window), g w) = _
     simp [sumWindow, add_assoc]
   simp only [Fintype.sum_prod_type, win, Fin.sum_univ_three, oneSum]
 
+/-- The actual window-label mass has total one. -/
 theorem total_mass (rho a : ℝ) : (∑ w, recordMass rho a w) = 1 := by
-  rw [← oneSum_eq_sum]
+  rw [← one_sum_eq_sum]
   simp (config := { maxSteps := 1000000 }) [oneSum, sumWindow, recordMass, biased, extremal, channel,
     GarbledPosteriorRootGap.teacher, LiteralWindowEnd.first, LiteralWindowEnd.last]
   ring
 
+/-- Excluding the reverse event removes exactly its cubic mass. -/
 theorem clean_total (rho a : ℝ) :
     (∑ w : Record, if ¬ reverse w then recordMass rho a w else 0) = 1 - 12 * rho ^ 3 := by
   classical
-  rw [← oneSum_eq_sum]
+  rw [← one_sum_eq_sum]
   simp (config := { maxSteps := 1000000 }) [oneSum, sumWindow, reverse, recordMass, biased, extremal, channel,
     GarbledPosteriorRootGap.teacher, LiteralWindowEnd.first, LiteralWindowEnd.last]
   ring
 
+/-- The two nonzero score masses are equal after excluding the reverse event. -/
 theorem clean_signs (rho a : ℝ) :
     cleanMass rho a 1 = (8 + a) / 12 * (2 * rho * (1 - 3 * rho) * (1 - 2 * rho)) / 2 ∧
     cleanMass rho a (-1) = (8 + a) / 12 * (2 * rho * (1 - 3 * rho) * (1 - 2 * rho)) / 2 := by
@@ -336,6 +351,7 @@ def cleanSampleMass (rho a : ℝ) {m : ℕ} (w : Fin m → Record) : ℝ := by
   exact (if ∀ i, ¬ reverse (w i) then ∏ i, recordMass rho a (w i) else 0) /
     (1 - 12 * rho ^ 3) ^ m
 
+/-- Conditioning all records on avoiding the reverse event preserves their product form. -/
 theorem clean_sample_factor (rho a : ℝ) (m : ℕ) (w : Fin m → Record) :
     cleanSampleMass rho a w = ∏ i, cleanRecordMass rho a (w i) := by
   classical
@@ -347,6 +363,7 @@ theorem clean_sample_factor (rho a : ℝ) (m : ℕ) (w : Fin m → Record) :
     apply Finset.prod_eq_zero (Finset.mem_univ i)
     simp [cleanRecordMass, hi]
 
+/-- The simultaneous clean event has the exact product probability. -/
 theorem all_clean_mass (rho a : ℝ) (m : ℕ) :
     (∑ w : Fin m → Record, if ∀ i, ¬ reverse (w i) then
       ∏ i, recordMass rho a (w i) else 0) = (1 - 12 * rho ^ 3) ^ m := by
@@ -354,8 +371,12 @@ theorem all_clean_mass (rho a : ℝ) (m : ℕ) :
   have eqProd (w : Fin m → Record) :
       (if ∀ i, ¬ reverse (w i) then ∏ i, recordMass rho a (w i) else 0) =
         ∏ i, (if ¬ reverse (w i) then recordMass rho a (w i) else 0) :=
-    (Fintype.prod_ite_zero (p := fun i => ¬ reverse (w i))
-      (f := fun i => recordMass rho a (w i))).symm
+    by
+      have h := (Fintype.prod_ite_zero (p := fun i => ¬ reverse (w i))
+        (f := fun i => recordMass rho a (w i))).symm
+      by_cases hw : ∀ i, ¬ reverse (w i)
+      · simpa only [if_pos hw] using h
+      · simpa only [if_neg hw] using h
   simp_rw [eqProd]
   have h := (Fintype.sum_pow (fun w : Record =>
     if ¬ reverse w then recordMass rho a w else 0) m).symm
@@ -364,17 +385,18 @@ theorem all_clean_mass (rho a : ℝ) (m : ℕ) :
 end Law
 
 namespace Law
-local instance (p : Prop) : Decidable p := Classical.propDecidable p
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
 open _root_.D5.S3.Arith.FibonacciAtomic.HeterogeneousTeacherSeparation (extremal)
+/-- The single-record conditioning event has positive mass in the legal rho range. -/
 theorem clean_denominator_pos (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
     0 < 1 - 12 * rho ^ 3 := by
   have hc : rho ^ 3 ≤ (1 / 8 : ℝ) ^ 3 := pow_le_pow_left₀ hr.le hr8 3
   norm_num at hc
   linarith
 
-theorem recordMass_nonneg (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
+/-- Every actual complete-record mass is nonnegative in the legal parameter range. -/
+theorem record_mass_nonneg (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (w : Record) : 0 ≤ recordMass rho a w := by
   have hb (v : Window) : 0 ≤ biased rho v := by cases v <;> simp [biased] <;> linarith
   have he (v : Window) : 0 ≤ extremal rho v := by cases v <;> simp [extremal] <;> linarith
@@ -383,15 +405,17 @@ theorem recordMass_nonneg (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     split_ifs <;> linarith
   exact mul_nonneg (mul_nonneg (mul_nonneg (mul_nonneg (hb _) (he _)) (he _)) (he _)) (hc _ _)
 
-theorem cleanRecordMass_nonneg (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
+/-- The conditioned complete-record mass is nonnegative. -/
+theorem clean_record_mass_nonneg (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (w : Record) : 0 ≤ cleanRecordMass rho a w := by
   by_cases h : reverse w
   · simp [cleanRecordMass, h]
   · simp only [cleanRecordMass, if_pos h]
-    exact div_nonneg (recordMass_nonneg rho a hr hr8 ha ha1 w)
+    exact div_nonneg (record_mass_nonneg rho a hr hr8 ha ha1 w)
       (clean_denominator_pos rho hr hr8).le
 
-theorem cleanRecordMass_total (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
+/-- The conditioned complete-record law has total one. -/
+theorem clean_record_mass_total (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
     (∑ w, cleanRecordMass rho a w) = 1 := by
   have ht (w : Record) : cleanRecordMass rho a w =
       (if ¬ reverse w then recordMass rho a w else 0) / (1 - 12 * rho ^ 3) := by
@@ -400,6 +424,7 @@ theorem cleanRecordMass_total (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
   simp_rw [ht]
   rw [← Finset.sum_div, clean_total, div_self (clean_denominator_pos rho hr hr8).ne']
 
+/-- The actual raw-score difference takes only the three integer values minus one, zero and one. -/
 theorem score_range (w : Record) : score w = -1 ∨ score w = 0 ∨ score w = 1 := by
   rcases w with ⟨w1,w2,w3,w4,y⟩
   fin_cases y <;>
@@ -409,22 +434,25 @@ theorem score_range (w : Record) : score w = -1 ∨ score w = 0 ∨ score w = 1 
 def cleanScore (rho a : ℝ) (s : ℤ) : ℝ :=
   ∑ w, if score w = s then cleanRecordMass rho a w else 0
 
-theorem cleanScore_eq (rho a : ℝ) (s : ℤ) :
+/-- Conditioned score masses are the corresponding restricted masses divided by the clean mass. -/
+theorem clean_score_eq (rho a : ℝ) (s : ℤ) :
     cleanScore rho a s = cleanMass rho a s / (1 - 12 * rho ^ 3) := by
   unfold cleanScore cleanMass
-  rw [oneSum_eq_sum, Finset.sum_div]
+  rw [one_sum_eq_sum, Finset.sum_div]
   apply Finset.sum_congr rfl
   intro w hw
   unfold cleanRecordMass
   by_cases hr : reverse w <;> by_cases hs : score w = s <;> simp [hr, hs]
 
-theorem cleanScore_signs (rho a : ℝ) :
+/-- The positive and negative conditional score masses both equal half the activity probability. -/
+theorem clean_score_signs (rho a : ℝ) :
     cleanScore rho a 1 = (((8 + a) / 12) * (2 * rho * (1 - 3 * rho) * (1 - 2 * rho)) / (1 - 12 * rho ^ 3)) / 2 ∧
     cleanScore rho a (-1) = (((8 + a) / 12) * (2 * rho * (1 - 3 * rho) * (1 - 2 * rho)) / (1 - 12 * rho ^ 3)) / 2 := by
-  rw [cleanScore_eq, cleanScore_eq, (clean_signs rho a).1, (clean_signs rho a).2]
+  rw [clean_score_eq, clean_score_eq, (clean_signs rho a).1, (clean_signs rho a).2]
   constructor <;> ring
 
-theorem cleanScore_partition (rho a : ℝ) :
+/-- The three conditional score categories partition the record mass. -/
+theorem clean_score_partition (rho a : ℝ) :
     cleanScore rho a (-1) + cleanScore rho a 0 + cleanScore rho a 1 =
       ∑ w, cleanRecordMass rho a w := by
   unfold cleanScore
@@ -435,6 +463,7 @@ theorem cleanScore_partition (rho a : ℝ) :
 
 def nonzero (w : Record) : ℕ := if score w = 0 then 0 else 1
 
+/-- The exact conditional nonzero mass agrees with the activity probability. -/
 theorem clean_active_mass (rho a : ℝ) :
     (∑ w, if score w ≠ 0 then cleanRecordMass rho a w else 0) =
       Scale.activeProbability rho a := by
@@ -445,10 +474,11 @@ theorem clean_active_mass (rho a : ℝ) :
     apply Finset.sum_congr rfl
     intro w hw
     rcases score_range w with hs | hs | hs <;> simp [hs]
-  rw [hp, (cleanScore_signs rho a).1, (cleanScore_signs rho a).2]
+  rw [hp, (clean_score_signs rho a).1, (clean_score_signs rho a).2]
   unfold Scale.activeProbability
   ring
 
+/-- The actual conditional nonzero indicator has the Bernoulli Laplace transform. -/
 theorem laplace_actual (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
     (∑ w, cleanRecordMass rho a w * Real.exp (-(nonzero w : ℝ))) =
       1 - Scale.activeProbability rho a + Scale.activeProbability rho a * Real.exp (-1) := by
@@ -458,16 +488,18 @@ theorem laplace_actual (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
     unfold nonzero
     by_cases h : score w = 0 <;> simp [h] <;> ring
   simp_rw [term]
-  rw [Finset.sum_add_distrib, ← Finset.sum_mul, cleanRecordMass_total rho a hr hr8,
+  rw [Finset.sum_add_distrib, ← Finset.sum_mul, clean_record_mass_total rho a hr hr8,
     clean_active_mass]
   ring
 
+/-- The probability of simultaneously excluding all reverse events tends to one. -/
 theorem all_clean_limit (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     Tendsto (fun rho => ∑ w : Fin (Scale.sampleLength rho a K) → Record,
       if ∀ i, ¬ reverse (w i) then ∏ i, recordMass rho a (w i) else 0)
       (𝓝[>] (0 : ℝ)) (𝓝 1) := by
   simpa only [all_clean_mass] using Scale.clean_probability a K ha hK
 
+/-- Every fixed nonzero-count lower tail vanishes in the actual conditional product law. -/
 theorem nonzero_count_diverges (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K)
     (N : ℕ) :
     Tendsto (fun rho => FiniteTail.tail (cleanRecordMass rho a) nonzero
@@ -481,7 +513,7 @@ theorem nonzero_count_diverges (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 
     nonzero (fun rho => Scale.sampleLength rho a K)
     (fun rho => Scale.activeProbability rho a)
   · filter_upwards [small] with rho hr
-    exact cleanRecordMass_nonneg rho a hr.1 hr.2 ha ha1
+    exact clean_record_mass_nonneg rho a hr.1 hr.2 ha ha1
   · filter_upwards [small] with rho hr
     exact laplace_actual rho a hr.1 hr.2
   · exact Scale.active_mean_diverges a K ha hK
@@ -490,6 +522,7 @@ end Law
 
 namespace Pushforward
 
+/-- Coordinatewise pushforward of a finite product law is the product of the coordinate pushforwards. -/
 theorem product_pushforward {α β : Type*} [Fintype α] [Fintype β] [DecidableEq β]
     (f : α → β) (p : α → ℝ) (q : β → ℝ)
     (hq : ∀ b, q b = ∑ a, if f a = b then p a else 0)
@@ -519,11 +552,13 @@ namespace Binomial
 
 def fairTie (j : ℕ) : ℝ := if j % 2 = 0 then (j.choose (j / 2) : ℝ) / (2 : ℝ) ^ j else 0
 
-theorem fairTie_nonneg (j : ℕ) : 0 ≤ fairTie j := by
+/-- Fair-sign tie coefficients are nonnegative. -/
+theorem fair_tie_nonneg (j : ℕ) : 0 ≤ fairTie j := by
   unfold fairTie
   split_ifs <;> positivity
 
-theorem fairTie_square_bound (j : ℕ) : (fairTie j) ^ 2 ≤ 1 / ((j : ℝ) + 1) := by
+/-- The frozen central-binomial inequality bounds the square of the fair-sign tie coefficient. -/
+theorem fair_tie_square_bound (j : ℕ) : (fairTie j) ^ 2 ≤ 1 / ((j : ℝ) + 1) := by
   unfold fairTie
   split_ifs
   · have h := Nat.choose_middle_sq_mul_le j
@@ -537,42 +572,40 @@ theorem fairTie_square_bound (j : ℕ) : (fairTie j) ^ 2 ≤ 1 / ((j : ℝ) + 1)
   · simp
     positivity
 
-theorem fairTie_vanishes : Tendsto fairTie atTop (𝓝 (0 : ℝ)) := by
+/-- Fair-sign tie coefficients tend to zero with the number of signs. -/
+theorem fair_tie_vanishes : Tendsto fairTie atTop (𝓝 (0 : ℝ)) := by
   have lim : Tendsto (fun j : ℕ => 1 / ((j : ℝ) + 1)) atTop (𝓝 (0 : ℝ)) :=
     tendsto_const_nhds.div_atTop (tendsto_natCast_atTop_atTop.atTop_add tendsto_const_nhds)
-  have sq : Tendsto (fun j => fairTie j ^ 2) atTop (𝓝 (0 : ℝ)) :=
-    tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds lim
-      (fun j => sq_nonneg _) fairTie_square_bound
-  have heq : (fun j => Real.sqrt (fairTie j ^ 2)) = fairTie := by
-    funext j
-    exact Real.sqrt_sq (fairTie_nonneg j)
-  simpa only [heq, Real.sqrt_zero] using sq.sqrt
+  exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds
+    (by simpa only [Real.sqrt_zero] using lim.sqrt)
+    fair_tie_nonneg (fun j => Real.le_sqrt_of_sq_le (fair_tie_square_bound j))
+
 
 end Binomial
 
 namespace FairWalk
-local instance (p : Prop) : Decidable p := Classical.propDecidable p
 
-local notation "boolSubset" =>
-  (fun (α : Type*) [Fintype α] =>
-    Equiv.trans (Equiv.piCongrRight (fun _ : α => Equiv.symm Equiv.propEquivBool))
-      (Equiv.symm (Fintype.finsetEquivSet (α := α))))
+local notation "boolSubset" α =>
+  (Equiv.trans (Equiv.piCongrRight (fun _ : α => Equiv.symm Equiv.propEquivBool))
+    (Equiv.symm (Fintype.finsetEquivSet (α := α))))
 
 local notation "sign" => (fun b : Bool => D5.S3.Arith.GoldenPell.signedInt (!b) 1)
 
+/-- A fair-sign sum is twice the positive-sign subset size minus the domain size. -/
 theorem signed_sum_subset {α : Type*} [Fintype α] (s : Finset α) :
     (∑ i, sign ((boolSubset α).symm s i)) = 2 * (s.card : ℤ) - (Fintype.card α : ℤ) := by
   have term (i : α) : sign ((boolSubset α).symm s i) =
       (if i ∈ s then (2 : ℤ) else 0) - 1 := by
-    simp [D5.S3.Arith.GoldenPell.signedInt, Fintype.finsetEquivSet, Equiv.propEquivBool, Equiv.piCongrRight]
-    split_ifs <;> norm_num
+    change D5.S3.Arith.GoldenPell.signedInt (!(decide (i ∈ s))) 1 = _
+    by_cases hi : i ∈ s <;> simp [D5.S3.Arith.GoldenPell.signedInt, hi]
   simp_rw [term]
   simp [Finset.sum_sub_distrib, Finset.sum_ite_mem, mul_comm]
 
 noncomputable def fairTie {α : Type*} [Fintype α] : ℝ :=
   ∑ u : α → Bool, if (∑ i, sign (u i)) = 0 then (1 / 2 : ℝ) ^ (Fintype.card α) else 0
 
-theorem fairTie_formula (α : Type*) [Fintype α] :
+/-- The exact fair-sign tie mass is its central-binomial coefficient at even lengths. -/
+theorem fair_tie_formula (α : Type*) [Fintype α] :
     fairTie (α := α) = Binomial.fairTie (Fintype.card α) := by
   classical
   unfold fairTie
@@ -602,11 +635,11 @@ theorem fairTie_formula (α : Type*) [Fintype α] :
 end FairWalk
 
 namespace ActiveFair
-local instance (p : Prop) : Decidable p := Classical.propDecidable p
 open FairWalk
 local notation "sign" => (fun b : Bool => D5.S3.Arith.GoldenPell.signedInt (!b) 1)
 
-theorem active_fairTie {α : Type*} [Fintype α] (a : α → Bool) :
+/-- Inactive fair signs integrate out and leave the tie coefficient of the active set. -/
+theorem active_fair_tie {α : Type*} [Fintype α] (a : α → Bool) :
     (∑ u : α → Bool, if (∑ i, if a i then sign (u i) else 0) = 0 then
       (1 / 2 : ℝ) ^ (Fintype.card α) else 0) =
       Binomial.fairTie (Fintype.card {i : α // a i = true}) := by
@@ -655,7 +688,7 @@ theorem active_fairTie {α : Type*} [Fintype α] (a : α → Bool) :
       split_ifs
       · exact factor
       · simp
-    _ = _ := fairTie_formula A
+    _ = _ := fair_tie_formula A
 
 end ActiveFair
 
@@ -664,9 +697,11 @@ open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
 open _root_.D5.S3.Arith.FibonacciAtomic.HeterogeneousTeacherSeparation (extremal)
 
+set_option quotPrecheck false in
 local notation "trueClass" =>
   (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
     ![w.1, w.2.2.1, w.2.2.2.1])
+set_option quotPrecheck false in
 local notation "rivalClass" =>
   (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
     ![w.2.1, w.2.2.1, w.2.2.2.1])
@@ -689,7 +724,7 @@ def variance (rho a : ℝ) : ℝ :=
     (expectation rho a (fun w => (score w : ℝ))) ^ 2
 
 /-- All five symbols satisfy the required lower mass bound at every position. -/
-theorem positionLaw_admissible (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
+theorem position_law_admissible (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
     HeterogeneousTeacherSeparation.Admissible rho (positionLaw rho) := by
   classical
   constructor
@@ -717,7 +752,10 @@ theorem difference_formula (w : Record) :
   simp only [HeterogeneousTeacherSeparation.classValue,
     HeterogeneousTeacherSeparation.firstGate, t, u, x,
     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
-    Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail] at ht hu
+    Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail,
+    Function.comp_apply, Fin.succ_zero_eq_one] at ht hu
+  norm_num only [Fin.reduceSucc, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two] at ht hu
   unfold difference
   rw [ht, hu]
   ring
@@ -733,27 +771,27 @@ theorem actual_moments (rho a : ℝ) (hr : 0 < rho) (ha : 0 < a) :
     0 < expectation rho a (fun w => (score w : ℝ)) := by
   have hd : expectation rho a (fun w => difference w ^ 2) = 2 * rho * (1 - 5 * rho + 12 * rho ^ 2) := by
     unfold expectation
-    rw [← oneSum_eq_sum]
+    rw [← one_sum_eq_sum]
     simp (config := { maxSteps := 1000000 }) [oneSum, sumWindow, difference, recordMass,
       biased, extremal, channel, GarbledPosteriorRootGap.teacher, first, last]
     ring
   have hn : expectation rho a (fun w => (((trueClass w).val : ℝ) - 1) ^ 2 -
       (((rivalClass w).val : ℝ) - 1) ^ 2) = -2 * rho + 10 * rho ^ 2 := by
     unfold expectation
-    rw [← oneSum_eq_sum]
+    rw [← one_sum_eq_sum]
     simp (config := { maxSteps := 1000000 }) [oneSum, sumWindow, recordMass,
       biased, extremal, channel, GarbledPosteriorRootGap.teacher, first, last]
     ring
   have hm : expectation rho a (fun w => (score w : ℝ)) = 3 * a * rho ^ 3 := by
     unfold expectation
-    rw [← oneSum_eq_sum]
+    rw [← one_sum_eq_sum]
     simp (config := { maxSteps := 1000000 }) [oneSum, sumWindow, score, recordMass,
       biased, extremal, channel, GarbledPosteriorRootGap.teacher, first, last]
     ring
   have hs : expectation rho a (fun w => (score w : ℝ) ^ 2) =
       (8 + a) / 12 * (2 * rho * (1 - 5 * rho + 12 * rho ^ 2)) := by
     unfold expectation
-    rw [← oneSum_eq_sum]
+    rw [← one_sum_eq_sum]
     simp (config := { maxSteps := 1000000 }) [oneSum, sumWindow, score, recordMass,
       biased, extremal, channel, GarbledPosteriorRootGap.teacher, first, last]
     ring
