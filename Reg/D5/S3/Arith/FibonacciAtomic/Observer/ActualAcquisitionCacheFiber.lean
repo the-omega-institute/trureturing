@@ -256,6 +256,66 @@ def surjectivityProof : Registration surjectivityArena
     exact (show branchCache.1.val ≠ absentCache.1.val by decide)
       (congrArg (fun a => a.2) heads.1)
 
+theorem packing_rejected_law : ¬ packingArena.Law decoderRejected := by
+  intro h
+  let g : CoarseHistory := [⟨[], none⟩]
+  let raw : D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination.RawHistory :=
+    [⟨[], .absent⟩]
+  have projection :
+      D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory.kappa_hist raw = g := by
+    rfl
+  have decoded := h g raw projection
+  change ([] : D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination.RawHistory) = raw at decoded
+  simp [raw] at decoded
+
+def packingProof : Registration packingArena
+    (∀ g h (equal : D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory.kappa_hist h = g),
+      decoderActual.readout () g (pack g h equal) = h) where
+  actual := decoderActual
+  bridge := Iff.rfl
+  variation := ⟨packing_actual_law, decoderRejected, packing_rejected_law⟩
+  sensitivity := ⟨fun i => ⟨decoderRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, packing_rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    let g : CoarseHistory := [⟨[], none⟩]
+    let branchCache : CompatCache g := (⟨.branch, rfl⟩, PUnit.unit)
+    let absentCache : CompatCache g := (⟨.absent, rfl⟩, PUnit.unit)
+    refine ⟨g, branchCache, absentCache, ?_⟩
+    intro equality
+    have heads := List.cons.inj equality
+    exact (show branchCache.1.val ≠ absentCache.1.val by decide)
+      (congrArg (fun a => a.2) heads.1)
+
+theorem addresses_rejected_law : ¬ addressesArena.Law decoderRejected := by
+  intro h
+  let g : CoarseHistory := [⟨[], none⟩]
+  let branchCache : CompatCache g := (⟨.branch, rfl⟩, PUnit.unit)
+  have addresses := h g branchCache
+  change ([] : List D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.Address) =
+    [([] : D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.Address)] at addresses
+  simp at addresses
+
+def addressesProof : Registration addressesArena
+    (∀ g c, (decoderActual.readout () g c).map Sigma.fst = g.map Sigma.fst) where
+  actual := decoderActual
+  bridge := Iff.rfl
+  variation := ⟨addresses_actual_law, decoderRejected, addresses_rejected_law⟩
+  sensitivity := ⟨fun i => ⟨decoderRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, addresses_rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    let g : CoarseHistory := [⟨[], none⟩]
+    let branchCache : CompatCache g := (⟨.branch, rfl⟩, PUnit.unit)
+    let absentCache : CompatCache g := (⟨.absent, rfl⟩, PUnit.unit)
+    refine ⟨g, branchCache, absentCache, ?_⟩
+    intro equality
+    have heads := List.cons.inj equality
+    exact (show branchCache.1.val ≠ absentCache.1.val by decide)
+      (congrArg (fun a => a.2) heads.1)
+
 noncomputable def decode_injective_registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
     (@D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.decode_injective)
     (Realization decoderSignature) (Type) (Unit) where
@@ -306,6 +366,56 @@ noncomputable def decode_surjective_registration : LeanInformationAudit.Contract
   familyRecord := none
   options := #[]
 
+noncomputable def decode_pack_registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.decode_pack)
+    (Realization decoderSignature) (Type) (Unit) where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.decode_pack
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.packingProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨packingArena⟩
+  objectArena := .source ⟨packingArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source packingArena ⟨packingProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize decoderSignature
+    (fun _ g c => decode g c) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+noncomputable def decode_addresses_registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.decode_addresses)
+    (Realization decoderSignature) (Type) (Unit) where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.decode_addresses
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.addressesProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨addressesArena⟩
+  objectArena := .source ⟨addressesArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source addressesArena ⟨addressesProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize decoderSignature
+    (fun _ g c => decode g c) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "fn", "arg", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 #print axioms injectivity_bridge
 #print axioms surjectivity_bridge
 #print axioms packing_bridge
@@ -319,5 +429,9 @@ noncomputable def decode_surjective_registration : LeanInformationAudit.Contract
 #print axioms decode_injective_registration
 #print axioms surjectivityProof
 #print axioms decode_surjective_registration
+#print axioms packingProof
+#print axioms decode_pack_registration
+#print axioms addressesProof
+#print axioms decode_addresses_registration
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber
