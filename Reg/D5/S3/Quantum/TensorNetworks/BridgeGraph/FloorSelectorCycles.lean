@@ -63,11 +63,6 @@ noncomputable def monodromy_forces_zeroRegistration : Contract.Registration.{_,_
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.monodromy_forces_zero
-#print axioms monodromy_forces_zeroPositive
-#print axioms monodromy_forces_zeroNegative
-#print axioms monodromy_forces_zeroEvidence
-#print axioms monodromy_forces_zeroRegistration
 
 @[reducible] def recurrence_product_boundedArena : Arena where
   signature := rationalSignature
@@ -118,11 +113,6 @@ noncomputable def recurrence_product_boundedRegistration : Contract.Registration
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.recurrence_product_bounded
-#print axioms recurrence_product_boundedPositive
-#print axioms recurrence_product_boundedNegative
-#print axioms recurrence_product_boundedEvidence
-#print axioms recurrence_product_boundedRegistration
 
 @[reducible] def balanced_cycle_zeroArena : Arena where
   signature := rationalSignature
@@ -186,11 +176,6 @@ noncomputable def balanced_cycle_zeroRegistration : Contract.Registration.{_,_,_
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.balanced_cycle_zero
-#print axioms balanced_cycle_zeroPositive
-#print axioms balanced_cycle_zeroNegative
-#print axioms balanced_cycle_zeroEvidence
-#print axioms balanced_cycle_zeroRegistration
 
 @[reducible] def backward_applyArena : Arena where
   signature := rationalSignature
@@ -240,11 +225,6 @@ noncomputable def backward_applyRegistration : Contract.Registration.{_,_,_,0,0,
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.backward_apply
-#print axioms backward_applyPositive
-#print axioms backward_applyNegative
-#print axioms backward_applyEvidence
-#print axioms backward_applyRegistration
 
 @[reducible] def forwardHalf_applyArena : Arena where
   signature := rationalSignature
@@ -295,11 +275,6 @@ noncomputable def forwardHalf_applyRegistration : Contract.Registration.{_,_,_,0
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.forwardHalf_apply
-#print axioms forwardHalf_applyPositive
-#print axioms forwardHalf_applyNegative
-#print axioms forwardHalf_applyEvidence
-#print axioms forwardHalf_applyRegistration
 
 @[reducible] def index_val_intArena : Arena where
   signature := integerSignature
@@ -349,11 +324,6 @@ noncomputable def index_val_intRegistration : Contract.Registration.{_,_,_,0,0,0
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_val_int
-#print axioms index_val_intPositive
-#print axioms index_val_intNegative
-#print axioms index_val_intEvidence
-#print axioms index_val_intRegistration
 
 @[reducible] def index_add_oneArena : Arena where
   signature := natSignature
@@ -403,11 +373,6 @@ noncomputable def index_add_oneRegistration : Contract.Registration.{_,_,_,0,0,0
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_add_one
-#print axioms index_add_onePositive
-#print axioms index_add_oneNegative
-#print axioms index_add_oneEvidence
-#print axioms index_add_oneRegistration
 
 @[reducible] def index_sub_oneArena : Arena where
   signature := natSignature
@@ -457,11 +422,6 @@ noncomputable def index_sub_oneRegistration : Contract.Registration.{_,_,_,0,0,0
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_sub_one
-#print axioms index_sub_onePositive
-#print axioms index_sub_oneNegative
-#print axioms index_sub_oneEvidence
-#print axioms index_sub_oneRegistration
 
 @[reducible] def tensor_mulVec_orbitArena : Arena where
   signature := rationalSignature
@@ -512,11 +472,6 @@ noncomputable def tensor_mulVec_orbitRegistration : Contract.Registration.{_,_,_
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.tensor_mulVec_orbit
-#print axioms tensor_mulVec_orbitPositive
-#print axioms tensor_mulVec_orbitNegative
-#print axioms tensor_mulVec_orbitEvidence
-#print axioms tensor_mulVec_orbitRegistration
 
 @[reducible] def whole_tensor_excessArena : Arena where
   signature := integerSignature
@@ -568,11 +523,6 @@ noncomputable def whole_tensor_excessRegistration : Contract.Registration.{_,_,_
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.whole_tensor_excess
-#print axioms whole_tensor_excessPositive
-#print axioms whole_tensor_excessNegative
-#print axioms whole_tensor_excessEvidence
-#print axioms whole_tensor_excessRegistration
 
 @[reducible] def jump_indexArena : Arena where
   signature := integerSignature
@@ -622,11 +572,6 @@ noncomputable def jump_indexRegistration : Contract.Registration.{_,_,_,0,0,0,_,
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.jump_index
-#print axioms jump_indexPositive
-#print axioms jump_indexNegative
-#print axioms jump_indexEvidence
-#print axioms jump_indexRegistration
 
 @[reducible] def edge_productArena : Arena where
   signature := rationalSignature
@@ -676,11 +621,6 @@ noncomputable def edge_productRegistration : Contract.Registration.{_,_,_,0,0,0,
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.edge_product
-#print axioms edge_productPositive
-#print axioms edge_productNegative
-#print axioms edge_productEvidence
-#print axioms edge_productRegistration
 
 @[reducible] def jump_zero_or_oneArena : Arena where
   signature := integerSignature
@@ -731,11 +671,6 @@ noncomputable def jump_zero_or_oneRegistration : Contract.Registration.{_,_,_,0,
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.jump_zero_or_one
-#print axioms jump_zero_or_onePositive
-#print axioms jump_zero_or_oneNegative
-#print axioms jump_zero_or_oneEvidence
-#print axioms jump_zero_or_oneRegistration
 
 @[reducible] def jump_one_iff_fin_selectorArena : Arena where
   signature := integerSignature
@@ -784,11 +719,6 @@ noncomputable def jump_one_iff_fin_selectorRegistration : Contract.Registration.
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.jump_one_iff_fin_selector
-#print axioms jump_one_iff_fin_selectorPositive
-#print axioms jump_one_iff_fin_selectorNegative
-#print axioms jump_one_iff_fin_selectorEvidence
-#print axioms jump_one_iff_fin_selectorRegistration
 
 @[reducible] def opposite_direction_excessArena : Arena where
   signature := integerSignature
@@ -837,11 +767,6 @@ noncomputable def opposite_direction_excessRegistration : Contract.Registration.
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.opposite_direction_excess
-#print axioms opposite_direction_excessPositive
-#print axioms opposite_direction_excessNegative
-#print axioms opposite_direction_excessEvidence
-#print axioms opposite_direction_excessRegistration
 
 @[reducible] def half_pow_lt_oneArena : Arena where
   signature := rationalSignature
@@ -890,11 +815,6 @@ noncomputable def half_pow_lt_oneRegistration : Contract.Registration.{_,_,_,0,0
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.half_pow_lt_one
-#print axioms half_pow_lt_onePositive
-#print axioms half_pow_lt_oneNegative
-#print axioms half_pow_lt_oneEvidence
-#print axioms half_pow_lt_oneRegistration
 
 @[reducible] def common_node_product_boundArena : Arena where
   signature := rationalSignature
@@ -943,11 +863,6 @@ noncomputable def common_node_product_boundRegistration : Contract.Registration.
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.common_node_product_bound
-#print axioms common_node_product_boundPositive
-#print axioms common_node_product_boundNegative
-#print axioms common_node_product_boundEvidence
-#print axioms common_node_product_boundRegistration
 
 @[reducible] def edge_posArena : Arena where
   signature := rationalSignature
@@ -996,11 +911,6 @@ noncomputable def edge_posRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.edge_pos
-#print axioms edge_posPositive
-#print axioms edge_posNegative
-#print axioms edge_posEvidence
-#print axioms edge_posRegistration
 
 @[reducible] def tensor_edge_product_lt_oneArena : Arena where
   signature := rationalSignature
@@ -1049,10 +959,5 @@ noncomputable def tensor_edge_product_lt_oneRegistration : Contract.Registration
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.tensor_edge_product_lt_one
-#print axioms tensor_edge_product_lt_onePositive
-#print axioms tensor_edge_product_lt_oneNegative
-#print axioms tensor_edge_product_lt_oneEvidence
-#print axioms tensor_edge_product_lt_oneRegistration
 
 end Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles
