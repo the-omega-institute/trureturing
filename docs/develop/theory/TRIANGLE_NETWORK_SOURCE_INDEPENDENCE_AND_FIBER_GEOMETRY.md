@@ -413,6 +413,53 @@ A symmetry-reduced inflation with source-copy size \((2,2,4)\), followed by a Fr
 
 This makes the geometry-to-network map precise: the EJM proof does not merely find a negative coordinate in the three-dimensional quotient. It shows that no globally consistent product-source lift exists after all copied-edge compatibility conditions are imposed.
 
+
+### 5.1 A concrete three-dimensional EJM encoding
+
+There is an exact geometric encoding of the four EJM outcomes that makes the three-dimensional connection concrete without identifying the network with physical space. Let \(t_0,t_1,t_2,t_3\in\mathbb R^3\) be the unit vectors at the vertices of a regular tetrahedron, so
+
+\[
+t_i\cdot t_j=
+\begin{cases}
+1,&i=j,\\
+-1/3,&i\ne j.
+\end{cases}
+\]
+
+For an output triple \((a,b,c)\), define the pairwise Gram sum and the cubic loop invariant
+
+\[
+S=t_a\cdot t_b+t_b\cdot t_c+t_c\cdot t_a,\qquad
+T=(t_a\cdot t_b)(t_b\cdot t_c)(t_c\cdot t_a).
+\]
+
+Then the exact EJM table (5.1) is
+
+\[
+P_{\mathrm{EJM}}(a,b,c)
+=
+\frac{-2-9S+54T}{256}.
+\tag{5.2}
+\]
+
+Indeed, the three equality patterns give
+
+\[
+\begin{array}{c|c|c|c}
+\text{pattern}&S&T&(-2-9S+54T)/256\\
+\hline
+a=b=c&3&1&25/256\\
+\text{exactly two equal}&1/3&1/9&1/256\\
+a,b,c\text{ all distinct}&-1&-1/27&5/256.
+\end{array}
+\]
+
+This identity is an exact finite calculation. It is a genuine three-dimensional representation of the output symmetry because the four outcomes are encoded by a regular tetrahedron in \(\mathbb R^3\). It is not a proof that the causal sources are spatial axes.
+
+The term \(S\) is a sum of pairwise Gram interactions. The term \(T\) is a product around the three-cycle. It is the first symmetric cubic invariant that cannot be read from one pairwise Gram value alone. It is therefore a useful candidate carrier for the project’s loop or holonomy language. The identification of \(T\) with a physical curvature or holonomy remains a conjectural interpretation. What is proved here is only the polynomial identity (5.2).
+
+The encoding also explains why a purely low-order quotient can be blind. A statistic that retains only one-party means or a single pairwise Gram average can preserve the same \((X,Y,Z)\) while losing the cubic loop sector \(T\). A global triangle-local test must keep enough lifted data to decide whether the pairwise Gram sectors and the cubic sector admit one common product-source realization.
+
 ## 6. Noise must be typed before it is compared
 
 The phrase “add noise” hides three mathematically different paths.
