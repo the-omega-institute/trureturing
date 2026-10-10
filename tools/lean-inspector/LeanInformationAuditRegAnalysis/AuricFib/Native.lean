@@ -1,6 +1,5 @@
 import D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber
 import D5.S3.ConceptDynamics.InformationEscapeCounting.Fused
-import LeanInformationAuditRegAnalysis.Projection.ProjectionCounts
 
 namespace LeanInformationAudit.AuricFib
 
