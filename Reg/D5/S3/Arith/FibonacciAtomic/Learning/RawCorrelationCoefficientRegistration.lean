@@ -322,7 +322,7 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[1], readouts := #[{
       path := #["body","body","fn","arg","fn","arg"],
       stateBinder := 0, functionOperand := false,
-      stateOperand := none, booleanPredicate := false }] },
+      stateOperand := some #["fn", "fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },
@@ -406,7 +406,7 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[1], readouts := #[{
       path := #["body","body","fn","arg","fn","arg","fn","arg"],
       stateBinder := 0, functionOperand := false,
-      stateOperand := none, booleanPredicate := false }] },
+      stateOperand := some #["fn", "fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },
@@ -488,7 +488,7 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[1], readouts := #[{
       path := #["body","body","arg"],
       stateBinder := 0, functionOperand := false,
-      stateOperand := none, booleanPredicate := false }] },
+      stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },
