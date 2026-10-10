@@ -2439,3 +2439,54 @@ this with the sparse part and (SV59) proves the prefix estimate
 in (SV57). The existing Abel-summation and full-positive-part
 argument of (SV53) supplies its second estimate. The constant
 $1$, full drift $\sigma_A Y$ and original coefficients are retained.
+
+## The mesh application enlarges the signed prime-onset range
+
+Combining (SV57) with the existing prime increment in (SV50)
+gives exactly the cost bound (SV54), now with condition (SV56).
+The supplied source and its original fixed $\eta$ are unchanged.
+
+For every original $0<\eta<15/68$ and every pre-fixed $M>0$,
+take
+
+$$
+\delta=A^{-\eta/3}L^M,\qquad B=3M+2.
+\tag{SV61}
+$$
+
+Choose $\theta>7/12$ sufficiently close to $7/12$. Since
+$c=8\eta/3<10/17=2(1-7/12)/(2-7/12)$, condition (SV56)
+holds eventually. The all-interval supplier allows this fixed
+$B$, and the almost-all supplier allows any fixed $K>B+2$.
+Thus the actual prime-onset cost is $O_{\eta,M}(A^{-\eta}/L^2)$.
+This extends the arbitrary-fixed-$M$ range of (SV55), which
+previously required $\eta<5/32$.
+
+For the additional original range $15/68\le\eta<4/17$, take
+fixed $0<\xi<1/9$ and $3\xi<B<1/3$, and set
+
+$$
+\delta=A^{-\eta/3}L^\xi.
+\tag{SV62}
+$$
+
+Choose $\theta>19/35$ close enough to leave a strict margin,
+because $c=8\eta/3<32/51=2(1-19/35)/(2-19/35)$.
+The same cost is $O(A^{-\eta}/L^{B-3\xi})=o(A^{-\eta})$.
+This extends the small-positive-logarithmic-width range of
+(SV55), which previously stopped at $\eta<6/35$.
+
+The outer prime lengths in both cases still exceed $P_1^{2/3}$
+by a positive power, as required in (SV50), and $p>y$ remains
+true. The actual weights, coprime response, full positive part
+and existing sampled deletion rules therefore retain their
+original scope. The square-layer applications of (SV55) are
+already available and are directly reused.
+
+These are still shrinking strips with the same power exponent
+in their width. No growing $M(A)$, fixed-width prime payment,
+same-source mean estimate, critical $y\asymp R^4$ estimate,
+remaining recovery convolution or complete signed Robin-tail
+estimate follows from this application. For $\eta\ge4/17$,
+the unsigned strips remain available; no enlarged signed strip
+is supplied here.
