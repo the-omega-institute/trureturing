@@ -200,10 +200,10 @@ end ScalarShift
 
 namespace SeparableSum
 
-universe u
+universe u_1
 
 abbrev signature : Signature where
-  Params := Σ _m : ℕ, Σ _n : ℕ, Type u
+  Params := Σ _m : ℕ, Σ _n : ℕ, Type u_1
   State p := p.2.2 → Matrix (Fin p.1 × Fin p.2.1) (Fin p.1 × Fin p.2.1) ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -212,31 +212,31 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
-  realize signature.{u} (fun _ _ f => f) (fun e => nomatch e)
+def actual : Realization signature.{u_1} :=
+  realize signature.{u_1} (fun _ _ f => f) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
-  realize signature.{u} (fun _ _ _ _ => -1) (fun e => nomatch e)
+def rejected : Realization signature.{u_1} :=
+  realize signature.{u_1} (fun _ _ _ _ => -1) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ {m n : ℕ} {ι : Type u} [Fintype ι]
+  signature := signature.{u_1}
+  Law R := ∀ {m n : ℕ} {ι : Type u_1} [Fintype ι]
     (f : ι → Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ),
     (∀ i, separableCone (f i)) → separableCone (∑ i, R.readout () ⟨m, n, ι⟩ f i)
 
-theorem rejected_law : ¬ arena.{u}.Law rejected := by
+theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  have hs := h (m := 1) (n := 1) (ι := ULift.{u} (Fin 1)) (fun _ => 0)
+  have hs := h (m := 1) (n := 1) (ι := ULift.{u_1} (Fin 1)) (fun _ => 0)
     (fun _ => _root_.D5.S3.Resource.EntanglementWitness.separableCone_zero)
   have hn : separableCone (-1 : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ) := by
     simpa [rejected, realize] using hs
   have hd := (separable_isPosSemidef hn).diag_nonneg (i := (0, 0))
   norm_num [Matrix.neg_apply, Matrix.one_apply, Complex.le_def] at hd
 
-def family : Registration arena.{u} (type_of% @separableCone_sum.{u}) where
+def family : Registration arena.{u_1} (type_of% @separableCone_sum.{u_1}) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨by simpa [arena, actual, realize] using @separableCone_sum.{u},
+  variation := ⟨by simpa [arena, actual, realize] using @separableCone_sum.{u_1},
     rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -248,27 +248,27 @@ def family : Registration arena.{u} (type_of% @separableCone_sum.{u}) where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨1, 1, ULift.{u} (Fin 1)⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+    refine ⟨⟨1, 1, ULift.{u_1} (Fin 1)⟩, (fun _ => 0), (fun _ => 1), ?_⟩
     intro h
     have he := congrFun (congrFun (congrFun h ⟨0⟩) (0, 0)) (0, 0)
     norm_num [actual, realize, Matrix.one_apply] at he
 
-def registration : Contract.Registration.{u + 1, 0, 1, 0, 0, 0, u + 1, u, 0, u, 0, 0}
-    (@separableCone_sum.{u}) (Realization signature.{u}) Unit Unit := {
+def registration : Contract.Registration.{u_1 + 1, 0, 1, 0, 0, 0, u_1 + 1, u_1, 0, u_1, 0, 0}
+    (@separableCone_sum.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName :=
     `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.SeparableSum.unit
   realizationName :=
     `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.SeparableSum.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
+  arena := .source ⟨arena.{u_1}⟩
+  objectArena := .source ⟨arena.{u_1}⟩
   catalog := Lean.Name.anonymous
   localNames := true
-  realization := .source arena.{u} ⟨family.{u}⟩
+  realization := .source arena.{u_1} ⟨family.{u_1}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨True.intro⟩ True.intro
-  readout := some (realize signature.{u} actual.readout actual.anchor)
+  readout := some (realize signature.{u_1} actual.readout actual.anchor)
   variation := .evidence ⟨True.intro⟩ True.intro
   sensitivity := .evidence ⟨True.intro⟩ True.intro
   partialSensitivity := none
