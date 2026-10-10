@@ -3248,21 +3248,21 @@ $$
 
 ## 47. 允许层搜索的覆盖复杂度
 
-**定理 47.1（证书停止的覆盖化与贪心界）。** 在 §46 的固定有限超阈值集合 $T=T_\varepsilon$ 与允许层族 $\mathscr L$ 下，定义每层覆盖集
+**定理 47.1（证书停止的覆盖化与贪心界）。** 在 §46 的固定超阈值集合 $T=T_\varepsilon$ 与有限、显式枚举的允许层族 $\mathscr L$ 下，定义每层覆盖集
 $$
 C_K=\{\eta\in T:\eta\notin K^\perp\}\qquad(K\in\mathscr L).
 $$
-一个 stack 在证书意义下达到阈值，当且仅当其所选层的覆盖集并集包含 $T$。因此最短 stack 长度恰为集合覆盖数
+若 $n:=|T|=0$，算法零步停止并令 $\tau=0$。若 $n\ge1$，一个 stack 在证书意义下达到阈值，当且仅当其所选层的覆盖集并集包含 $T$。因此在可覆盖时最短 stack 长度恰为
 $$
-\tau(T,\mathscr C)=\min\{ |\mathscr Q|:\mathscr Q\subseteq\mathscr C,\ \bigcup\mathscr Q=T\},
+\tau(T,\mathscr C)=\min\{ |\mathscr Q|:\mathscr Q\subseteq\mathscr C,\ \bigcup\mathscr Q=T\}<\infty,
 $$
-其中重复层不增加覆盖。若 $T$ 不被 $\mathscr C=\{C_K\}$ 覆盖，则任何有限允许 stack 都不可达。
+其中重复层不增加覆盖；若不可覆盖则定义 $\tau=\infty$，任何有限允许 stack 都不可达。
 
-每轮选择当前未覆盖元素最多的 $C_K$ 的贪心算法，在 $|T|=n$ 时至多使用
+每轮选择当前未覆盖元素最多的 $C_K$ 的贪心算法；若当前最大 gain 为零，则立即报告不可达。对 $n\ge1$ 且可覆盖的情形，算法至多使用
 $$
 H_n\,\tau(T,\mathscr C)\le(1+\log n)\tau(T,\mathscr C)
 $$
-层；朴素实现至多进行 $n$ 轮，每轮扫描全部允许层并检查至多 $n$ 个角色，故角色集合显式给定时搜索成本为 $O(n^2|\mathscr L|)$ 次成员检查。该算法界是搜索复杂度保证，不声称求得最短 stack。
+层；朴素实现至多进行 $n$ 轮，每轮扫描全部显式枚举的允许层并检查至多 $n$ 个角色。若 membership 检查为 unit-cost，搜索成本为 $O(n^2|\mathscr L|)$ 次检查，覆盖集预计算成本为 $O(n|\mathscr L|)$。该算法界是搜索复杂度保证，不声称求得最短 stack。
 
 **证明。** 由 §46，残余集合经过所选层为
 $$
