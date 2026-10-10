@@ -7,6 +7,22 @@ public sealed class ScopedFormalizationWorkflowTests
     [Theory]
     [InlineData("deposit")]
     [InlineData("deposit-uncovered")]
+    public void CrossClosureScribeEmissionPreservesTheFreezeReport(string command)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+
+        var result = fixture.Run(command, atomId: command == "deposit" ? AtomId : null,
+            crossScribeScope: true);
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Equal(1, fixture.FreezeCount());
+    }
+
+    [Theory]
+    [InlineData("deposit")]
+    [InlineData("deposit-uncovered")]
     [InlineData("cover")]
     public void LocalFormalizationBuildsOnlyTheRequestedModule(string command)
     {

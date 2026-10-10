@@ -8,6 +8,26 @@ namespace StrataLint.Tests;
 public sealed class LeanUtilityInputTests
 {
     [Fact]
+    public void SelectedUtilityReaderIgnoresUnrelatedDanglingClaimAndRejectsSelectedClaim()
+    {
+        var fixture = UtilityAdmissionTestSupport.RefutationFixture();
+        var files = new Dictionary<string, string>(fixture.Files)
+        {
+            ["D5/S0/Carrier/Unfinished.lean"] = fixture.Files[RuleFixture.RingPath]
+                .Replace(UtilityAdmissionTestSupport.Claim, "D5/S0/Carrier/Missing.proposed_law", StringComparison.Ordinal),
+        };
+        var selected = LeanUtilityInputCommand.Run(() => UtilityAdmissionTestSupport.Raw(files),
+            ["--targets", "D5.S0.Carrier.Ring"]);
+        Assert.Equal(0, selected.ExitCode);
+        Assert.Single(JsonDocument.Parse(selected.Output).RootElement.EnumerateArray());
+        var bad = LeanUtilityInputCommand.Run(() => UtilityAdmissionTestSupport.Raw(files),
+            ["--targets", "D5.S0.Carrier.Unfinished"]);
+        Assert.Equal(2, bad.ExitCode);
+        Assert.Contains("Refutation claim source is absent", bad.Error, StringComparison.Ordinal);
+        Assert.Equal(2, LeanUtilityInputCommand.Run(() => UtilityAdmissionTestSupport.Raw(files), []).ExitCode);
+    }
+
+    [Fact]
     public void ScopeInputListsEveryCompiledUtilityReferenceWithoutRefutationEvidence()
     {
         var fixture = UtilityAdmissionTestSupport.InstanceFixture(

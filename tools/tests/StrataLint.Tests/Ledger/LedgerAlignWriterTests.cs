@@ -12,6 +12,47 @@ public sealed partial class LedgerAlignWriterTests
         "sha256:2737dabb279d14181efe09f7531e5c4664421bdbc19bbcf8b588f8d71123954c";
 
     [Fact]
+    public void ScopedAddRejectsChangedFrozenPrerequisiteBeforeWriting()
+    {
+        var oldB = ModuleWithReport("B", Source("B"), "True");
+        var b = oldB with { StatementMaterial = "True = True" };
+        var a = ModuleWithReport("A", "import D5.S0.Carrier.B\n" + Source("A"), "True") with { Imports = ["B"] };
+        using var fixture = new AlignFixture(a, b);
+        var frozen = BuildCatalog(oldB);
+        fixture.InstallAccepted(frozen);
+        fixture.InstallState("B", frozen.ByPath[RepoPathFor("B")].StatementId);
+        var before = fixture.AllPublishedBytes();
+
+        var result = fixture.Align("--add", PathFor("A"));
+
+        Assert.False(result.Success);
+        Assert.Contains("frozen prerequisite identity changed", result.Error, StringComparison.Ordinal);
+        Assert.Contains(PathFor("B"), result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+    }
+
+    [Fact]
+    public void ScopedAddRejectsRepinningAncestorWithUnselectedFrozenDescendant()
+    {
+        var oldA = ModuleWithReport("A", Source("A"), "True");
+        var a = oldA with { StatementMaterial = "True = True" };
+        var b = ModuleWithReport("B", "import D5.S0.Carrier.A\n" + Source("B"), "True") with { Imports = ["A"] };
+        using var fixture = new AlignFixture(a, b);
+        var frozen = BuildCatalog(oldA, b);
+        fixture.InstallAccepted(frozen);
+        foreach (var name in new[] { "A", "B" })
+            fixture.InstallState(name, frozen.ByPath[RepoPathFor(name)].StatementId);
+        var before = fixture.AllPublishedBytes();
+
+        var result = fixture.Align("--add", PathFor("A"));
+
+        Assert.False(result.Success);
+        Assert.Contains("frozen descendants require explicit --add", result.Error, StringComparison.Ordinal);
+        Assert.Contains(PathFor("B"), result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+    }
+
+    [Fact]
     public void ScopedAddDoesNotRevalidateUnrelatedFrozenMembers()
     {
         var a = ModuleWithReport("A", Source("A"), "True");

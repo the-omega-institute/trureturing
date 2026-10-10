@@ -316,13 +316,19 @@ internal sealed partial class TransactionFixture
             mkdir -p .lake/build/stratalint
             report_name=raw-lean-report
             [[ "$1" != lean-report-scoped ]] || report_name=scoped-lean-report
-            printf '{"schema":"synthetic-lean-report"}\n' \
-              > ".lake/build/stratalint/${report_name}.json"
+            report_path=".lake/build/stratalint/${report_name}.json"
+            for argument in "$@"; do
+              [[ "$argument" != LEAN_REPORT=* ]] || report_path="${argument#LEAN_REPORT=}"
+            done
+            printf '{"schema":"synthetic-lean-report"}\n' > "$report_path"
             if [[ ${PLAYBOOK_STALE_REPORT:-0} != 1 ]]; then
               cp D5/S0/Carrier/Probe.lean .report-source
             fi
             ;;
           emit)
+            if [[ ${PLAYBOOK_CROSS_SCRIBE_SCOPE:-0} == 1 ]]; then
+              printf '{"modules":["Probe","Outside"]}\n' > .lake/build/stratalint/scoped-lean-report.json
+            fi
             if ! cmp -s D5/S0/Carrier/Probe.lean .report-source; then
               echo 'STALE_LEAN_REPORT emit refused stale input' >&2
               exit 41
@@ -387,6 +393,11 @@ internal sealed partial class TransactionFixture
             elif [[ ${parts[1]:-} != --candidate-lean-report ]]; then
               echo 'LEDGER_ALIGN_INVALID synthetic target transport mismatch' >&2
               exit 97
+            fi
+            if [[ ${PLAYBOOK_CROSS_SCRIBE_SCOPE:-0} == 1 && ${parts[1]:-} == --add ]] \
+                && grep -q Outside "${parts[4]}"; then
+              echo 'LEDGER_ALIGN_FAILED Raw Lean report contains unknown module Outside.' >&2
+              exit 2
             fi
             target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
             if [[ $target_module == D5/S0/Carrier/Probe.lean ]]; then
@@ -462,7 +473,8 @@ internal sealed partial class TransactionFixture
         string? baseRevision = null,
         bool rejectDepositHeader = false,
         string? realCliPath = null,
-        bool throughMake = false) =>
+        bool throughMake = false,
+        bool crossScribeScope = false) =>
         TestProcessRunner.Run(
             "/usr/bin/env",
             [
@@ -470,6 +482,7 @@ internal sealed partial class TransactionFixture
                 $"PLAYBOOK_TEST_CALLS={callsPath}",
                 $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
                 $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
+                $"PLAYBOOK_CROSS_SCRIBE_SCOPE={(crossScribeScope ? "1" : "0")}",
                 $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                 $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                 $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
