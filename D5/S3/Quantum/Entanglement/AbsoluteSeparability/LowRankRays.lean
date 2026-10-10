@@ -16,37 +16,6 @@ open D5.S3.Resource.CompositeCones
 open D5.S3.Resource.EntanglementWitness
 open D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages
 
-private theorem support_max_eq {E : Type*} [NormedAddCommGroup E]
-    [InnerProductSpace ℂ E] (q u : E) (hu : ‖u‖ = 1)
-    (hmax : ∀ w : E, ‖w‖ = 1 → (inner ℂ w q).re ≤ (inner ℂ u q).re) :
-    0 ≤ (inner ℂ u q).re ∧ q = ((inner ℂ u q).re : ℂ) • u := by
-  by_cases hq : q = 0
-  · subst q
-    simp
-  · let a := (inner ℂ u q).re
-    have hqn : ‖q‖ ≠ 0 := norm_ne_zero_iff.mpr hq
-    have hbound : ‖q‖ ≤ a := by
-      have h := hmax ((‖q‖⁻¹ : ℂ) • q) (norm_smul_inv_norm hq)
-      have hid : (inner ℂ ((‖q‖⁻¹ : ℂ) • q) q).re = ‖q‖ := by
-        rw [inner_smul_left, ← Complex.ofReal_inv, Complex.conj_ofReal,
-          Complex.re_ofReal_mul]
-        have hself : (inner ℂ q q).re = ‖q‖ ^ 2 :=
-          (norm_sq_eq_re_inner (𝕜 := ℂ) q).symm
-        rw [hself]
-        simp [pow_two, hqn]
-      simpa only [hid] using h
-    have ha : 0 ≤ a := le_trans (norm_nonneg q) hbound
-    refine ⟨ha, ?_⟩
-    apply eq_of_norm_le_re_inner_eq_norm_sq (𝕜 := ℂ) (x := q) (y := (a : ℂ) • u)
-    · rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg ha, hu, mul_one]
-      exact hbound
-    · change (inner ℂ q ((a : ℂ) • u)).re = ‖(a : ℂ) • u‖ ^ 2
-      have hsym : (inner ℂ q u).re = (inner ℂ u q).re := inner_re_symm (𝕜 := ℂ) q u
-      rw [inner_smul_right, Complex.re_ofReal_mul, hsym, norm_smul,
-        Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg ha, hu, mul_one]
-      change a * a = a ^ 2
-      simp [pow_two]
-
 private theorem norm_le_of_unit_support {E : Type*} [NormedAddCommGroup E]
     [InnerProductSpace ℂ E] (q : E) (a : ℝ) (ha : 0 ≤ a)
     (hmax : ∀ w : E, ‖w‖ = 1 → (inner ℂ w q).re ≤ a) : ‖q‖ ≤ a := by
@@ -62,6 +31,34 @@ private theorem norm_le_of_unit_support {E : Type*} [NormedAddCommGroup E]
       rw [hself]
       simp [pow_two, hqn]
     simpa only [hid] using h
+
+private theorem support_max_eq {E : Type*} [NormedAddCommGroup E]
+    [InnerProductSpace ℂ E] (q u : E) (hu : ‖u‖ = 1)
+    (hmax : ∀ w : E, ‖w‖ = 1 → (inner ℂ w q).re ≤ (inner ℂ u q).re) :
+    0 ≤ (inner ℂ u q).re ∧ q = ((inner ℂ u q).re : ℂ) • u := by
+  by_cases hq : q = 0
+  · subst q
+    simp
+  · let a := (inner ℂ u q).re
+    have hbound : ‖q‖ ≤ a :=
+      norm_le_of_unit_support q a
+        (by
+          have h := hmax (-u) (by simpa using hu)
+          simp only [inner_neg_left, Complex.neg_re] at h
+          dsimp [a]
+          linarith)
+        hmax
+    have ha : 0 ≤ a := le_trans (norm_nonneg q) hbound
+    refine ⟨ha, ?_⟩
+    apply eq_of_norm_le_re_inner_eq_norm_sq (𝕜 := ℂ) (x := q) (y := (a : ℂ) • u)
+    · rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg ha, hu, mul_one]
+      exact hbound
+    · change (inner ℂ q ((a : ℂ) • u)).re = ‖(a : ℂ) • u‖ ^ 2
+      have hsym : (inner ℂ q u).re = (inner ℂ u q).re := inner_re_symm (𝕜 := ℂ) q u
+      rw [inner_smul_right, Complex.re_ofReal_mul, hsym, norm_smul,
+        Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg ha, hu, mul_one]
+      change a * a = a ^ 2
+      simp [pow_two]
 
 private theorem exists_maximizing_pair
     {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
@@ -326,9 +323,8 @@ private lemma rank_one_idem {J : Type*} [Fintype J] (v : J → ℂ)
 private lemma complement_idem {J : Type*} [Fintype J] [DecidableEq J] (v : J → ℂ)
     (hv : ∑ j, ‖v j‖ ^ 2 = 1) :
     (1 - vecMulVec v (star v)) * (1 - vecMulVec v (star v)) =
-      (1 - vecMulVec v (star v)) := by
-  rw [sub_mul, mul_sub, mul_sub, one_mul, mul_one, one_mul, rank_one_idem v hv]
-  abel
+      (1 - vecMulVec v (star v)) :=
+  (show IsIdempotentElem (vecMulVec v (star v)) from rank_one_idem v hv).one_sub
 
 private lemma complement_psd {J : Type*} [Fintype J] [DecidableEq J] (v : J → ℂ)
     (hv : ∑ j, ‖v j‖ ^ 2 = 1) :
@@ -461,7 +457,9 @@ theorem separableCone_one_add_two_rankOne {m n : ℕ} (ψ : Fin m × Fin n → �
   let rho := reduced ψ
   have hrho : rho = ∑ i, vecMulVec (fun j => ψ (i,j)) (star (fun j => ψ (i,j))) := by
     ext j l
-    dsimp [rho, reduced]
+    dsimp [rho, reduced,
+      D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft,
+      Matrix.vecMulVec, star]
     rw [Matrix.sum_apply]
     rfl
   by_cases hl : a ^ 2 ≤ 1 / 2
@@ -507,7 +505,9 @@ theorem separableCone_one_add_two_rankOne {m n : ℕ} (ψ : Fin m × Fin n → �
       have hsum : (∑ i, vecMulVec (fun j => χ (i,j)) (star (fun j => χ (i,j)))) =
           reduced χ := by
         ext j l
-        dsimp [reduced]
+        dsimp [reduced,
+          D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft,
+          Matrix.vecMulVec, star]
         rw [Matrix.sum_apply]
         rfl
       change ((((1 - a ^ 2 : ℝ) : ℂ) •

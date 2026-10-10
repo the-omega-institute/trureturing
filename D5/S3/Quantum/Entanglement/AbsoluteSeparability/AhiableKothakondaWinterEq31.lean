@@ -178,17 +178,7 @@ theorem result : claim := by
     · rw [min_eq_left hlow]
       have hsep : separableCone
           (∑ i : Fin k, (1 + (2 : ℂ) • vecMulVec (v i) (star (v i)))) := by
-        have sum_sep {J : Type} [Fintype J]
-            (f : J → Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
-            (hf : ∀ j, separableCone (f j)) : separableCone (∑ j, f j) := by
-          have finite_sum (s : Finset J) : separableCone (∑ j ∈ s, f j) := by
-            induction s using Finset.induction_on with
-            | empty => simpa using (separableCone_zero (m := m) (n := n))
-            | @insert a s has ih =>
-                rw [Finset.sum_insert has]
-                exact separableCone_add (hf a) ih
-          simpa using finite_sum Finset.univ
-        exact sum_sep _ (fun i =>
+        exact ContractionBlocks.separableCone_sum _ (fun i =>
           LowRankRays.separableCone_one_add_two_rankOne (m := m) (n := n) (v i) (hv i))
       convert hsep using 1
       rw [Finset.sum_add_distrib, ← Finset.smul_sum, ← hsum]

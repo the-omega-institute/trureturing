@@ -6,7 +6,8 @@
    utility: none
    digest: Finite product-vector moments give separable rank-one and projected averages. -/
 
-import D5.S3.Resource.EntanglementWitness
+import D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 namespace D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages
 
@@ -22,8 +23,10 @@ private noncomputable def omega8 (q : Fin 8) : ℂ :=
 private def flip8 : Fin 8 ≃ Fin 8 :=
   (Equiv.swap 4 5).trans (Equiv.swap 6 7)
 
+private def chooseStar (b : Bool) (z : ℂ) : ℂ := if b then star z else z
+
 private noncomputable def signedOmega (b : Bool) (q : Fin 8) : ℂ :=
-  if b then star (omega8 q) else omega8 q
+  chooseStar b (omega8 q)
 
 private theorem expectation_product {ι : Type} [Fintype ι] [DecidableEq ι]
     (f : ι → Fin 8 → ℂ) :
@@ -203,7 +206,7 @@ private theorem omega_moments {ι : Type} [Fintype ι] [DecidableEq ι] :
     fin_cases q <;> simp [flip8, omega8, Equiv.swap_apply_def]
   have signedOmega_flip8 (b : Bool) (q : Fin 8) :
       signedOmega b (flip8 q) = -signedOmega b q := by
-    cases b <;> simp [signedOmega, omega_flip8]
+    cases b <;> simp [signedOmega, chooseStar, omega_flip8]
   have omega_mean (i : ι) (b : Bool) :
       (𝔼 g : ι → Fin 8, signedOmega b (g i)) = 0 := by
     let e : (ι → Fin 8) ≃ (ι → Fin 8) := Equiv.piCongrRight (fun _ => flip8)
@@ -236,13 +239,11 @@ private theorem omega_moments {ι : Type} [Fintype ι] [DecidableEq ι] :
       have h := congrArg star (omega_pseudoSecond i j)
       simpa [Fintype.expect_eq_sum_div_card, star_div₀, map_sum, star_mul, mul_comm] using h
     cases s <;> cases t
-    · simpa [signedOmega] using omega_pseudoSecond i j
-    · simpa [signedOmega] using omega_second i j
-    · simpa [signedOmega, mul_comm, eq_comm] using omega_second j i
-    · simpa [signedOmega] using hstar
+    · simpa [signedOmega, chooseStar] using omega_pseudoSecond i j
+    · simpa [signedOmega, chooseStar] using omega_second i j
+    · simpa [signedOmega, chooseStar, mul_comm, eq_comm] using omega_second j i
+    · simpa [signedOmega, chooseStar] using hstar
   exact ⟨omega_mean, omega_second_signed, omega_third, omega_fourth⟩
-
-private def chooseStar (b : Bool) (z : ℂ) : ℂ := if b then star z else z
 
 private theorem affine_wick {ι Ω : Type*} [Fintype ι] [DecidableEq ι]
     [Fintype Ω] [Nonempty Ω] (x : Ω → ι → ℂ)
@@ -345,11 +346,12 @@ private theorem affine_wick {ι Ω : Type*} [Fintype ι] [DecidableEq ι]
 variable {m n : ℕ} {Ω : Type*} [Fintype Ω] [Nonempty Ω]
 
 noncomputable def reduced (ψ : Fin m × Fin n → ℂ) : Matrix (Fin n) (Fin n) ℂ :=
-  fun j l => ∑ i, ψ (i,j) * star (ψ (i,l))
+  D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft
+    (vecMulVec ψ (star ψ))
 
 private noncomputable def contracted (ψ : Fin m × Fin n → ℂ)
     (g : Fin m → ℂ) : Fin n → ℂ :=
-  fun j => ∑ i, star (g i) * ψ (i,j)
+  (star g) ᵥ* (fun i j => ψ (i,j))
 
 omit [Nonempty Ω] in
 private lemma average_projector (g : Ω → Fin m → ℂ)
@@ -367,14 +369,16 @@ private lemma average_projector (g : Ω → Fin m → ℂ)
         (star (fun ij : Fin m × Fin n => g s ij.1 * contracted ψ (g s) ij.2)))
         (i,j) (k,l) = g s i * (∑ a, star (g s a) * ψ (a,j)) *
           (star (g s k) * ∑ b, g s b * star (ψ (b,l))) := by
-    simp only [vecMulVec_apply, Pi.star_apply, contracted, star_sum, star_mul, star_star,
+    simp only [vecMulVec_apply, Pi.star_apply, contracted, Matrix.vecMul, dotProduct,
+      star_sum, star_mul, star_star,
       mul_assoc, mul_left_comm, mul_comm]
   have hev (f : Ω → Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
       (𝔼 s, f s) (i,j) (k,l) = 𝔼 s, f s (i,j) (k,l) := by
     simp only [Finset.expect, Matrix.smul_apply, Matrix.sum_apply]
   rw [hev]
   simp only [hentry, Matrix.add_apply, vecMulVec_apply, Pi.star_apply,
-    Matrix.kroneckerMap_apply, Matrix.one_apply, reduced]
+    Matrix.kroneckerMap_apply, Matrix.one_apply, reduced,
+    D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft]
   have hexpand (s : Ω) :
       g s i * (∑ a, star (g s a) * ψ (a,j)) *
         (star (g s k) * ∑ b, g s b * star (ψ (b,l))) =
@@ -396,19 +400,12 @@ lemma separable_kronecker {A : Matrix (Fin m) (Fin m) ℂ}
   refine ⟨1, fun _ => A, fun _ => B, fun _ => ⟨hA,hB⟩, ?_⟩
   simp
 
-private lemma separable_sum {ι : Type*} [Fintype ι]
-    (f : ι → Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
-    (hf : ∀ i, separableCone (f i)) : separableCone (∑ i, f i) := by
-  classical
-  exact Finset.sum_induction f (fun S => separableCone S)
-    (fun a b ha hb => separableCone_add ha hb) separableCone_zero (fun i _ => hf i)
-
 private lemma separable_expect (a : Ω → Fin m → ℂ) (b : Ω → Fin n → ℂ) :
     separableCone (𝔼 s, vecMulVec (fun ij : Fin m × Fin n => a s ij.1 * b s ij.2)
       (star (fun ij : Fin m × Fin n => a s ij.1 * b s ij.2))) := by
   have hs : separableCone (∑ s, vecMulVec (fun ij : Fin m × Fin n => a s ij.1 * b s ij.2)
       (star (fun ij : Fin m × Fin n => a s ij.1 * b s ij.2))) := by
-    apply separable_sum
+    apply ContractionBlocks.separableCone_sum
     intro s
     rw [← D5.S3.Resource.CompositeConeDuality.kronecker_rank_one]
     exact separable_kronecker (A := vecMulVec (a s) (star (a s)))
@@ -467,7 +464,7 @@ private lemma high_average
         (r⁻¹ * v j + ∑ t, χ (t,j) * star (g s t)) *
         (r * (a : ℂ) * star (u k) + ∑ t, star (P k t) * star (g s t)) *
         (r⁻¹ * star (v l) + ∑ t, star (χ (t,l)) * g s t) := by
-    simp only [vecMulVec_apply, Pi.star_apply, contracted, Matrix.mulVec, dotProduct,
+    simp only [vecMulVec_apply, Pi.star_apply, contracted, Matrix.vecMul, Matrix.mulVec, dotProduct,
       star_add, star_mul, star_sum, star_star, star_inv₀, hrstar, hastar,
       mul_assoc, mul_comm]
   change (𝔼 s, vecMulVec (fun ij : Fin m × Fin n =>
@@ -537,14 +534,14 @@ theorem separable_projected_rankOne
   let g : (Fin m → Fin 8) → Fin m → ℂ := fun s i => omega8 (s i)
   obtain ⟨h1,h2,h3,h4⟩ := omega_moments (ι := Fin m)
   have h1' : ∀ i s, (𝔼 w, chooseStar s (g w i)) = 0 := by
-    simpa only [g, chooseStar, signedOmega] using h1
+    simpa only [g, signedOmega] using h1
   have h2' : ∀ i j s t, (𝔼 w, chooseStar s (g w i) * chooseStar t (g w j)) =
       if s = t then 0 else if i = j then 1 else 0 := by
-    simpa only [g, chooseStar, signedOmega] using h2
+    simpa only [g, signedOmega] using h2
   have h3' : ∀ i j k s t u,
       (𝔼 w, chooseStar s (g w i) * chooseStar t (g w j) *
         chooseStar u (g w k)) = 0 := by
-    simpa only [g, chooseStar, signedOmega] using h3
+    simpa only [g, signedOmega] using h3
   have h4' : ∀ i j k l, (𝔼 w, g w i * star (g w j) * star (g w k) * g w l) =
       (if i = j then 1 else 0) * (if k = l then 1 else 0) +
       (if i = k then 1 else 0) * (if j = l then 1 else 0) := by
