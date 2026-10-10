@@ -45,17 +45,19 @@ With $D=mn$, $t=\lambda_D$, $\delta_k=\lambda_k-\lambda_{k+1}$, $a_k=\min\{k,m-1
 onto the first $k$ eigenvectors of $U\rho U^\dagger$:
 
 1. Abel summation turns (31) into $\sum_{k=1}^{D-2}a_k\delta_k\le2t$, and
-   $\rho=(t-\tfrac12\sum a_k\delta_k)I+\delta_{D-1}P_{D-1}+\sum_{k=1}^{D-2}\tfrac{\delta_k}{2}(a_kI+2P_k)$ with
+   $U\rho U^\dagger=(t-\tfrac12\sum a_k\delta_k)I+\delta_{D-1}P_{D-1}+\sum_{k=1}^{D-2}\tfrac{\delta_k}{2}(a_kI+2P_k)$ with
    nonnegative coefficients.
 2. **High-rank rays and $P_{D-1}=I-|\psi\rangle\langle\psi|$** lie in the Gurvits–Barnum ball
    $\lVert R-cI\rVert_2\le c$; the ball is separable because a Hermitian block-positive $H$ satisfies
    $\mathrm{Tr}H^2\le(\mathrm{Tr}H)^2$, proved by a finite fourth-moment functional over the phases
    $\{\pm1,\pm i\}$ corrected by the basis vectors, together with the frozen separation theorem
    `exists_entanglementWitness`.
-3. **Middle rays** $mI+(2P_k-I)$: every contraction $C$ is a finite combination $\sum_rc_rR_{a_r}$ with
-   $|c_r|=1$ and $\sum_rR_{a_r}=I$ (from a characteristic-polynomial choice of phase, the Hermitian spectral
-   theorem and a resolvent compression), so each $2\times2$ contraction block is separable and the block
-   identity $mI+H=\sum_iE_{ii}\otimes(I+H_{ii})+\sum_{i<j}(\text{blocks})$ finishes.
+3. **Middle rays** $mI+(2P_k-I)$: for a contraction $C$, the square root of $I-C^*C$ supplies an orthonormal
+   family whose first coordinates are the columns of $C$; extending it to an orthonormal basis gives a unitary
+   dilation $V$ with upper-left block $C$, and diagonalizing the normal matrix $V$ in an orthonormal basis
+   (eigenvalues of modulus one) and restricting to the first coordinates gives $C=\sum_rc_rR_{a_r}$ with
+   $|c_r|=1$ and $\sum_rR_{a_r}=I$. Hence each $2\times2$ contraction block is separable, and the block identity
+   $mI+H=\sum_iE_{ii}\otimes(I+H_{ii})+\sum_{i<j}(\text{blocks})$ finishes.
 4. **Low-rank rays** $kI+2P_k=\sum_{i\le k}(I+2|v_i\rangle\langle v_i|)$: with a product pair maximizing the
    overlap (compactness) and an eight-point Gaussian-like average, $I+2|\psi\rangle\langle\psi|$ is an explicit
    sum of product PSD terms, without the Schmidt decomposition.
