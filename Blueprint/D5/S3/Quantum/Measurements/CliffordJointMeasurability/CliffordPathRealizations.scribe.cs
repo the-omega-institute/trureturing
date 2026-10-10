@@ -122,6 +122,9 @@ internal sealed class CliffordPathRealizationsDocument : IScribeDocumentDefiniti
             Node("sum-fin-next", "sum fin next", F35(),
                 "This sum fin next identity is used in the CliffordPathRealizations construction.", "sum_fin_next",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Node("sum-fin-prev", "sum fin prev", SumFinPrev(),
+                "The previous-index sum selects the preceding coordinate when it exists, and is zero at the left endpoint.", "sum_fin_prev",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("tridiagonal", "tridiagonal", F36(),
                 "The displayed expression defines tridiagonal.", "tridiagonal",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
@@ -487,6 +490,15 @@ internal sealed class CliffordPathRealizationsDocument : IScribeDocumentDefiniti
             Seq(Forall, Sp, Parenthesized(Seq(F.Id("j"), Sp, Colon, Sp, Call("Fin"), Sp, F.Id("M"))), Comma),
             Seq(Forall, Sp, Parenthesized(Seq(F.Id("f"), Sp, Colon, Sp, Call("Fin"), Sp, F.Id("M"), Sp, To, Sp, F.Id("S"))), Comma),
             Seq(Parenthesized(Seq(Sum, Sp, F.Id("k"), Sp, Comma, Sp, Call("if"), Sp, F.Id("j"), Sp, Dot, Sp, Call("val"), Sp, Plus, Sp, D(1), Sp, Eq, Sp, F.Id("k"), Sp, Dot, Sp, Call("val"), Sp, Call("then"), Sp, F.Id("f"), Sp, F.Id("k"), Sp, Call("else"), Sp, D(0))), Sp, Eq, Sp, Call("if"), Sp, F.Id("h"), Sp, Colon, Sp, F.Id("j"), Sp, Dot, Sp, Call("val"), Sp, Plus, Sp, D(1), Sp, Lt, Sp, F.Id("M"), Sp, Call("then"), Sp, F.Id("f"), Sp, Seq(Langle, Sp, Seq(F.Id("j"), Sp, Dot, Sp, Call("val"), Sp, Plus, Sp, D(1), Sp, Comma, Sp, F.Id("h")), Sp, Rangle), Sp, Call("else"), Sp, D(0))
+        ]));
+
+    private static Formula SumFinPrev() => Disp(new Formula.Aligned([
+            Seq(Forall, Sp, Parenthesized(Seq(F.Id("M"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma),
+            Seq(Forall, Sp, Parenthesized(Seq(F.Id("S"), Sp, Colon, Sp, Call("Type"))), Comma),
+            Seq(Grp(), OpenBracket, Seq(Call("AddCommMonoid"), Sp, F.Id("S")), CloseBracket, Sp, Comma),
+            Seq(Forall, Sp, Parenthesized(Seq(F.Id("j"), Sp, Colon, Sp, Call("Fin"), Sp, F.Id("M"))), Comma),
+            Seq(Forall, Sp, Parenthesized(Seq(F.Id("f"), Sp, Colon, Sp, Call("Fin"), Sp, F.Id("M"), Sp, To, Sp, F.Id("S"))), Comma),
+            Seq(Parenthesized(Seq(Sum, Sp, F.Id("k"), Sp, Comma, Sp, Call("if"), Sp, F.Id("k"), Sp, Dot, Sp, Call("val"), Sp, Plus, Sp, D(1), Sp, Eq, Sp, F.Id("j"), Sp, Dot, Sp, Call("val"), Sp, Call("then"), Sp, F.Id("f"), Sp, F.Id("k"), Sp, Call("else"), Sp, D(0))), Sp, Eq, Sp, Call("if"), Sp, F.Id("h"), Sp, Colon, Sp, D(0), Sp, Lt, Sp, F.Id("j"), Sp, Dot, Sp, Call("val"), Sp, Call("then"), Sp, F.Id("f"), Sp, Seq(Langle, Sp, Seq(F.Id("j"), Sp, Dot, Sp, Call("val"), Sp, Minus, Sp, D(1), Sp, Comma, Sp, Call("by"), Sp, Call("omega")), Sp, Rangle), Sp, Call("else"), Sp, D(0))
         ]));
 
     private static Formula F36() => Disp(new Formula.Aligned([

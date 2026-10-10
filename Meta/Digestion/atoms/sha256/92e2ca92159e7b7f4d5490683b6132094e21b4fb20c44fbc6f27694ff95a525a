@@ -1,0 +1,15 @@
+**定理 3.2（对偶式与鞍点结构）。** 对每个有限图 $G=(V,E)$，$\Phi_G$ 在 $[0,\infty)^V$ 上连续且凹，并且
+
+$$
+\kappa(G)=\max_{\mu\in\mathcal P(V)}\Phi_G(\mu),
+\tag{3.2}
+$$
+
+右边最大值取到。进一步，对式（2.1）的任一最小点 $a^\star$ 与式（3.2）的任一最大点 $\mu^\star$：
+
+(i) $\sum_b\mu^\star_bL_b^G(a^\star)=\kappa(G)$，且凡 $\mu^\star_b>0$ 的顶点都有 $L_b^G(a^\star)=\kappa(G)$；
+
+(ii) 凡 $\mu^\star_b+\mu^\star_c>0$ 的边 $\{b,c\}$ 都有 $a^\star_{c\leftarrow b}=\mu^\star_c/(\mu^\star_b+\mu^\star_c)$；
+
+(iii) 对任意 $a\in\mathcal A(G)$ 与 $\mu\in\mathcal P(V)$ 有 $\Phi_G(\mu)\le\kappa(G)\le\max_bL_b^G(a)$。
+
