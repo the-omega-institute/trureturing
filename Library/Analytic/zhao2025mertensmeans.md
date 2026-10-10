@@ -44,8 +44,9 @@ Theorem 2's analogous discussion of the nonlinear product error $E_3$
 has an additional boundary: if
 $\Theta=\sup\{\Re\rho:\zeta(\rho)=0\}=1$, its sign-change conclusion
 assumes Assumption 1. That assumption must not be dropped when citing
-the nonlinear criterion. Corollary 1, printed p.3, assumes RH for its
-positive averages on $[cX,X]$ and an eventual cutoff depending on $c$.
+the nonlinear criterion. Corollary 1, printed p.3, assumes RH and
+$0<c<[(2-B_1)/(2+B_1)]^2$, where $B_1=2+\gamma-\log(4\pi)$,
+for its positive averages on $[cX,X]$ and an eventual cutoff depending on $c$.
 None is an unconditional estimate at a selected Robin source.
 
 ## Use the existing tail identity at the same cutoff
