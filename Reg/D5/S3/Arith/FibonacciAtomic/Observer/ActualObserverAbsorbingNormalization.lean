@@ -417,20 +417,68 @@ noncomputable def fee_run_registration : LeanInformationAudit.Contract.Registrat
 #print axioms fee_run_registration
 
 
+private abbrev maximumEvaluationSignature : Signature where
+  Params := Source
+  State _ := Source → ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def maximumEvaluationActual : Realization maximumEvaluationSignature :=
+  realize maximumEvaluationSignature (fun _ U fee => fee U) (fun e => nomatch e)
+
+private abbrev maximumEvaluationArena : Arena where
+  signature := maximumEvaluationSignature
+  Law R := ∀ {E : Type u} [Fintype E] (N : Nat) (positive : 1 ≤ N)
+    (M : Observer E) (tau : Address → ℝ),
+    (∀ U, Allowed N U → R.readout () U (Fee M tau) ≤ maxFee N M tau) ∧
+    ∃ U, Allowed N U ∧ maxFee N M tau = Fee M tau U
+
+private noncomputable def maximumEvaluationRejected : Realization maximumEvaluationSignature :=
+  realize maximumEvaluationSignature (fun _ U fee => fee U + 1) (fun e => nomatch e)
+
+private theorem maximumEvaluation_rejected : ¬ maximumEvaluationArena.{u}.Law maximumEvaluationRejected := by
+  intro h
+  obtain ⟨U, allowed, attained⟩ := (maximum_exact 1 (by omega) feeWitness.{u} (fun _ => 1)).2
+  have bad := (h 1 (by omega) feeWitness (fun _ => 1)).1 U allowed
+  change Fee feeWitness (fun _ => 1) U + 1 ≤ _ at bad
+  rw [attained] at bad
+  linarith
+
+private noncomputable def maximumEvaluationProof : Registration maximumEvaluationArena.{u}
+    (type_of% (@maximum_exact.{u})) where
+  actual := maximumEvaluationActual
+  bridge := Iff.rfl
+  variation := ⟨@maximum_exact.{u}, maximumEvaluationRejected, maximumEvaluation_rejected⟩
+  sensitivity := ⟨fun i => ⟨maximumEvaluationRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, maximumEvaluation_rejected⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨.of true, Fee feeWitness.{u} (fun _ => 0), Fee feeWitness.{u} (fun _ => 1), ?_⟩
+    change Fee feeWitness (fun _ => 0) (.of true) ≠ Fee feeWitness (fun _ => 1) (.of true)
+    rw [fee_run _ _ _ feeWitness_short, fee_run _ _ _ feeWitness_short]
+    norm_num [charge, D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.paid]
+
+#print axioms maximumEvaluationProof
+
 noncomputable def maximum_exact_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.maximum_exact.{u}) (Realization maximumArena.{u}.signature) Unit Unit where
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.maximum_exact.{u}) (Realization maximumEvaluationArena.{u}.signature) Unit Unit where
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.maximum_exact
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization.maximumProof
+  realizationName := ``maximumEvaluationProof
   realizationSource := none
   generated := false
-  arena := .source ⟨maximumArena⟩
-  objectArena := .source ⟨maximumArena⟩
+  arena := .source ⟨maximumEvaluationArena.{u}⟩
+  objectArena := .source ⟨maximumEvaluationArena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source maximumArena ⟨maximumProof⟩
+  realization := .source maximumEvaluationArena.{u} ⟨maximumEvaluationProof.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize maximumArena.signature feeActual.readout feeActual.anchor)
+  readout := some (realize maximumEvaluationArena.{u}.signature maximumEvaluationActual.readout maximumEvaluationActual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -438,8 +486,8 @@ noncomputable def maximum_exact_registration : LeanInformationAudit.Contract.Reg
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverAbsorbingNormalization
     definition := none
-    coordinates := #[0, 1, 4, 5]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    coordinates := #[6]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

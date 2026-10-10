@@ -767,20 +767,52 @@ noncomputable def pure_acquisition_run_registration : LeanInformationAudit.Contr
 #print axioms pure_acquisition_run_registration
 
 
+private abbrev cacheTraceArena : Arena where
+  signature := runSignature
+  Law R := ∀ (N : Nat) (positive : 1 ≤ N) (U : Source), Allowed N U →
+    ∀ {e : PureState N} {h : RawHistory}, ActualPrefix (pureObserver N positive) U e h →
+      h.IsPrefix (R.readout () () U) ∧ (pureObserver N positive).decoder e = h ∧ CacheTruth h U
+
+private theorem cacheTrace_rejected : ¬ cacheTraceArena.Law runRejected := by
+  intro h
+  obtain ⟨f, run⟩ := pure_acquisition_run 1 (by omega) (.of true) (by exact Nat.le_refl 1)
+  have pref := (run_from_actualPrefix _ _ run ActualPrefix.initial).1
+  simp only [List.nil_append] at pref
+  have bad := (h 1 (by omega) (.of true) (by exact Nat.le_refl 1) pref).1
+  change (acquisitionTrace [] (.of true)).IsPrefix [] at bad
+  have empty := List.eq_nil_of_prefix_nil bad
+  simp [acquisitionTrace] at empty
+
+private def cacheTraceProof : Registration cacheTraceArena (type_of% (@pure_actual_prefix_cache)) where
+  actual := runActual
+  bridge := Iff.rfl
+  variation := ⟨pure_actual_prefix_cache, runRejected, cacheTrace_rejected⟩
+  sensitivity := ⟨fun i => ⟨runRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, cacheTrace_rejected⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨(), .of true, .of false, ?_⟩
+    intro bad
+    cases bad
+
+#print axioms cacheTraceProof
+#print axioms _root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_actual_prefix_cache
+
 noncomputable def pure_actual_prefix_cache_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_actual_prefix_cache) (Realization cacheArena.signature) Unit Unit where
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_actual_prefix_cache) (Realization cacheTraceArena.signature) Unit Unit where
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_actual_prefix_cache
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.cacheProof
+  realizationName := ``cacheTraceProof
   realizationSource := none
   generated := false
-  arena := .source ⟨cacheArena⟩
-  objectArena := .source ⟨cacheArena⟩
+  arena := .source ⟨cacheTraceArena⟩
+  objectArena := .source ⟨cacheTraceArena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source cacheArena ⟨cacheProof⟩
+  realization := .source cacheTraceArena ⟨cacheTraceProof⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize cacheArena.signature cacheActual.readout cacheActual.anchor)
+  readout := some (realize cacheTraceArena.signature runActual.readout runActual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -788,8 +820,8 @@ noncomputable def pure_actual_prefix_cache_registration : LeanInformationAudit.C
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
     definition := none
-    coordinates := #[0, 1]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
