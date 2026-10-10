@@ -1194,3 +1194,62 @@ $$
 
 This is the selected-source application of that existing scale,
 not a new interpolation theorem or an upper bound for $X(b)$.
+
+
+### A wider actual-price interval for the same supplied power excess
+
+Keep the particular fixed $\eta'\in(0,1/2)$ and $c>0$ from (S2)
+and (P3). Choose a sufficiently small fixed $\lambda>0$, depending
+only on $c,C_1$, and put
+
+$$
+\widetilde h_{\eta'}(A)
+=\lambda A^{1-\eta'/2}\exp\!\left(\frac{(\log A)^{1/4}}2\right).
+$$
+
+For every fixed $\eta'>0$, this is $o(A)$; no lower bound on
+$\eta'$ beyond positivity is imposed; the sufficiently large threshold
+may depend on that fixed exponent. The reused extension (GS4) in (P5)
+therefore also covers small fixed exponents for which
+$\widetilde h_{\eta'}(A)>A^{0.99}$ eventually.
+Since
+
+$$
+\begin{aligned}
+k(A)\varepsilon_A\widetilde h_{\eta'}(A)^2
+ &=\lambda^2\left(1+\frac1L\right)A^{-\eta'},\\
+k(A)A^{4/3}&=o(A^{-\eta'}),
+\end{aligned}
+$$
+
+(P6), with $\lambda$ small enough, gives eventually
+
+$$
+X(b)\ge\frac c2A^{-\eta'}
+\quad\left(A\le b\le A+\widetilde h_{\eta'}(A)\right).
+\tag{P8}
+$$
+
+The actual-price interval is wider than (P3)'s by a factor
+$e^{(\log A)^{1/4}/2}/\sqrt{\log A}\to\infty$, up to fixed
+constants. The improvement uses the published uniform arithmetic
+estimate, with the same actual integer and all activation layers;
+it does not assert the sign of the remaining Robin tail.
+
+For the same $\delta=c/(4\,2^{\eta'})$ and $\mathcal E_X$ from
+(P4), any selected $A\in[X,2X]$ places this entire interval in
+$\mathcal E_X\subseteq[X,3X]$ eventually. Hence a sufficient
+still-missing exceptional-set estimate can be weakened to
+
+$$
+|\mathcal E_X|
+=o\!\left(X^{1-\eta'/2}
+\exp\!\left(\frac{(\log X)^{1/4}}2\right)\right).
+\tag{P9}
+$$
+
+This is a required rate in Lebesgue measure of the actual price
+variable. No bound (P9), directed mean estimate, effective cutoff,
+complete signed floor (S4), or proof of RH is obtained. Qualitative
+density $o(X)$ and averages in other variables still require the
+quantitative same-source measure transport described after (P4).
