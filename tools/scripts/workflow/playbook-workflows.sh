@@ -86,7 +86,7 @@ step() {
   local label="$1"
   shift
   begin_step "$label"
-  "$@"
+  "$@" || return $?
   complete_step passed
 }
 
@@ -139,9 +139,42 @@ require_cover_batch_arguments() {
     echo "usage: playbook-workflows.sh cover-batch ATOMS_FILE" >&2
     return 2
   fi
-
+  # Resolve every requested module before any report or coverage write.
+  LEAN_TARGETS="$(python3 - "$atoms_file" <<'PY'
+import pathlib, re, sys
+modules = set()
+for number, line in enumerate(pathlib.Path(sys.argv[1]).read_text(encoding='utf-8').splitlines(), 1):
+    fields = line.split('\t')
+    if len(fields) != 2 or not re.fullmatch(r'[a-z0-9-]+', fields[0]):
+        raise SystemExit(f'PLAYBOOK_INVALID line {number} must be ATOM_ID<TAB>DECL_GID')
+    gid = fields[1]
+    document, separator, declaration = gid.rpartition('.')
+    path = pathlib.Path(document + '.lean')
+    if (not separator or not re.fullmatch(r'D5/(?:[A-Za-z0-9_]+/)*[A-Za-z0-9_]+', document)
+            or not re.fullmatch(r'[A-Za-z0-9_]+', declaration) or not path.is_file()):
+        raise SystemExit(f'PLAYBOOK_INVALID GID does not resolve to a Lean module: {gid}')
+    modules.add(document.replace('/', '.'))
+if not modules:
+    raise SystemExit('PLAYBOOK_INVALID cover-batch scope is empty')
+print(' '.join(sorted(modules)))
+PY
+  )"
 }
 
+build_scoped_report() {
+  REPORT=".lake/build/stratalint/scoped-lean-report.json"
+  export STRATALINT_LEAN_REPORT="$ROOT/$REPORT"
+  step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS"
+}
+
+emit_target() {
+  local paths status=0
+  paths="$(mktemp "${TMPDIR:-/tmp}/deposit-scribe-paths.XXXXXXXX")"
+  printf '%s\0' "$MODULE_PATH" > "$paths"
+  step emit make emit "PATHS=$paths" || status=$?
+  rm -f -- "$paths"
+  return "$status"
+}
 
 require_new_module_blueprint_mirror() {
   local mirror_path="Blueprint/${MODULE_PATH%.lean}.md"
@@ -182,10 +215,11 @@ freeze_module_if_needed() {
 deposit_module() {
   local deposit_base_sha freeze_precheck status
   require_new_module_blueprint_mirror
-  step lean-report make lean-report
+  LEAN_TARGETS="${DOCUMENT_GID//\//.}"
+  build_scoped_report
   deposit_base_sha="$(git rev-parse --verify "${BASE}^{commit}")"
   step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH" --protected-base "$deposit_base_sha"
-  step emit make emit
+  emit_target
   if freeze_exists; then
     freeze_precheck=1
     printf 'PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=%s\n' \
@@ -337,12 +371,13 @@ case "$COMMAND" in
     ;;
   cover)
     require_transaction_arguments
-    step lean-report make lean-report
+    LEAN_TARGETS="${DOCUMENT_GID//\//.}"
+    build_scoped_report
     cover_row
     ;;
   cover-batch)
     require_cover_batch_arguments
-    step lean-report make lean-report
+    build_scoped_report
     step cover-batch run_cli cover-batch --atoms "$ATOM_ID"
     ;;
   *)

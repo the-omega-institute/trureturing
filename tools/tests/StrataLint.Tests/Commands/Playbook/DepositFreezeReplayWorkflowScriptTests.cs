@@ -27,7 +27,7 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
         Assert.NotEqual(historyBefore, fixture.LedgerState());
         Assert.Equal(
             [
-                "make:lean-report", "dotnet:deposit-header-check", "make:emit",
+                "make:lean-report-scoped", "dotnet:deposit-header-check", "make:emit",
                 "dotnet:ledger-frozen", "dotnet:ledger-align", "dotnet:ledger-frozen",
                 "dotnet:cover-atom",
             ],
@@ -73,7 +73,7 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
         Assert.Equal(pinBefore, fixture.StatePinContents());
         Assert.Equal(
             [
-                "make:lean-report", "dotnet:deposit-header-check", "make:emit",
+                "make:lean-report-scoped", "dotnet:deposit-header-check", "make:emit",
                 "dotnet:ledger-frozen", "dotnet:cover-atom",
             ],
             fixture.CallKinds());

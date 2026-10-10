@@ -3,10 +3,14 @@ set -euo pipefail
 
 ROLE=""
 REPORT=""
+TARGETS=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --role) ROLE="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
+    --targets)
+      [[ $# -ge 2 && -n "$2" ]] || { echo 'report-consumer: --targets must be nonempty' >&2; exit 2; }
+      TARGETS="$2"; shift 2 ;;
     --) shift; break ;;
     *) echo "report-consumer: unknown argument '$1'" >&2; exit 2 ;;
   esac
@@ -37,7 +41,11 @@ for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
   }
   cp "${REPORT}${suffix}" "${SNAPSHOT_REPORT}${suffix}"
 done
-"$INPUT_VERIFIER" verify --repository "$ROOT" --report "$SNAPSHOT_REPORT"
+if [[ -n "$TARGETS" ]]; then
+  "$INPUT_VERIFIER" verify-scoped --repository "$ROOT" --report "$SNAPSHOT_REPORT" --targets "$TARGETS"
+else
+  "$INPUT_VERIFIER" verify --repository "$ROOT" --report "$SNAPSHOT_REPORT"
+fi
 set +e
 "$SUPERVISOR" --role "$ROLE" -- env STRATALINT_LEAN_REPORT="$SNAPSHOT_REPORT" "$@"
 rc=$?

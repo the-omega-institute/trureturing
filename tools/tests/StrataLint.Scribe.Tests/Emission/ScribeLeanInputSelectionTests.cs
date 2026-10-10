@@ -14,9 +14,8 @@ public sealed class ScribeLeanInputSelectionTests
             internal sealed class Selected : IScribeDocumentDefinition
             {
                 public DocumentDefinition Create() => DocumentDefinition.Create(
-                    ScribeNode.Create("digest", H("Selected"), Blocks(Paragraph(Text("body"))),
-                        [DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S0/Test/Referenced.result"))]));
+                    ScribeNode.Create("digest", H("Selected"), Blocks(
+                        Paragraph(Text("body"), Ref("D5/S0/Test/Referenced.result")))));
             }
             """);
         File.WriteAllText(root.Resolve("Blueprint/D5/S0/Test/Unselected.scribe.cs"), "invalid unselected source");

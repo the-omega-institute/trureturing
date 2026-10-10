@@ -11,6 +11,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
+        fixture.AddSecondaryFormalization();
         var atoms = fixture.WriteBatchFile(
             $"{TransactionFixture.AtomId}\t{TransactionFixture.Gid}\n"
             + $"{TransactionFixture.SecondaryAtomId}\t{TransactionFixture.SecondaryGid}\n");
@@ -20,7 +21,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         Assert.Equal(failure ? 1 : 0, result.ExitCode);
         Assert.Equal(before, fixture.CommitCount());
-        Assert.Equal(["make:lean-report", "dotnet:cover-batch"], fixture.CallKinds());
+        Assert.Equal(["make:lean-report-scoped", "dotnet:cover-batch"], fixture.CallKinds());
         Assert.Contains($"dotnet:cover-batch --atoms {atoms}", fixture.Calls());
     }
 

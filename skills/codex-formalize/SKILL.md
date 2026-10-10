@@ -173,7 +173,7 @@ Committed Blueprint `.md` renderer oracles are excluded from capacity, but `.scr
 Iterate on the source artifacts, then run the canonical door when they are ready:
 
 ```sh
-make lean
+make lean LEAN_TARGETS="D5.<dotted.module>"
 ```
 
 Attempt the escape audit for each new public D5 theorem/lemma as described above. Compile the mathematical targets and this delivery's actual retained Reg sources through the governed entry; when the mirrored Reg source is retained, for example (the plain root `lake build Reg...` form is not valid):
@@ -186,12 +186,16 @@ make lean LEAN_TARGETS="D5.<dotted.module> Reg.D5.<mirrored.dotted.module>"
 
 When no valid Reg source can be delivered, omit that Reg target and use the linked-issue exception; do not invent a mirror or placeholder target. Retain successful audit sources, compiled proofs and current binding evidence. Remove this attempt's failed audit source additions and imports if they would break the normal build; do not remove pre-existing or successful sources to hide failures. Compile every retained Reg source, including support/enrollment sources, with its existing kernel, `sorry` and axiom checks. A successful D5 build establishes no registration completion.
 
-Judge completion only by exit code, never elapsed time or quiet output. Full doors cost minutes each; a landed lane died by burning its entire three-hour budget on seventy-two full local validation runs chasing a flaky unrelated test. Iterate scoped, verify canonically once.
+Judge completion only by exit code, never elapsed time or quiet output. Iterate with explicit module targets; CI retains its full verification scope.
 
-Complete any pending canonical report production through `make lean-report`, then run `make emit` to
-generate the canonical committed projections, including this document's Blueprint `.md`. Never
-hand-write a mirror or placeholder. Scoped Lean compilation and Scribe formula tests do not inspect
-the complete publication inventory.
+Obtain exact statement, axiom and material evidence through
+`make lean-report-scoped LEAN_TARGETS="D5.<dotted.module>"` (include actual retained Reg targets when
+needed). Targets must be explicit and nonempty; Lake owns their import closure and incremental
+compilation. Run `make emit PATHS=<NUL-separated selected Lean/Scribe paths>` to generate the
+canonical projections; it builds only the selected Scribe Lean inputs and imports. Never hand-write
+a mirror or placeholder. `deposit`/`deposit-uncovered`/`cover` derive their scope from the GID, and
+`cover-batch` from all batch GIDs. These local doors require no full report or full build. CI and
+explicit whole-repository verification retain `make lean-report`, `make test` and `make gate`.
 
 If the implementation seat delegates report production or emission to the caller, its handoff is
 explicitly **source-only, not publication-ready**: name the intended source paths, pending producers

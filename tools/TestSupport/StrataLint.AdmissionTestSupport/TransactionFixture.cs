@@ -200,10 +200,12 @@ internal sealed partial class TransactionFixture : IDisposable
         ? []
         : File.ReadAllLines(callsPath).Select(static call =>
         {
-            if (!call.StartsWith("dotnet:", StringComparison.Ordinal)) return call;
-            var command = call["dotnet:".Length..];
+            if (!call.StartsWith("dotnet:", StringComparison.Ordinal)
+                && !call.StartsWith("make:", StringComparison.Ordinal)) return call;
+            var prefix = call[..(call.IndexOf(':') + 1)];
+            var command = call[prefix.Length..];
             var separator = command.IndexOf(' ');
-            return "dotnet:" + (separator < 0 ? command : command[..separator]);
+            return prefix + (separator < 0 ? command : command[..separator]);
         }).ToArray();
 
     internal string[] Calls() => File.Exists(callsPath) ? File.ReadAllLines(callsPath) : [];
@@ -304,10 +306,12 @@ internal sealed partial class TransactionFixture
     private void WriteMakeStub() => WriteExecutable("make", """
         printf 'make:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
         case "${1:-}" in
-          lean-report)
+          lean-report|lean-report-scoped)
             mkdir -p .lake/build/stratalint
+            report_name=raw-lean-report
+            [[ "$1" != lean-report-scoped ]] || report_name=scoped-lean-report
             printf '{"schema":"synthetic-lean-report"}\n' \
-              > .lake/build/stratalint/raw-lean-report.json
+              > ".lake/build/stratalint/${report_name}.json"
             if [[ ${PLAYBOOK_STALE_REPORT:-0} != 1 ]]; then
               cp D5/S0/Carrier/Probe.lean .report-source
             fi
