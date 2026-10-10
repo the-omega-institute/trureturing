@@ -289,3 +289,209 @@ gain, other recovery convolutions, centered baseline and complete
 infinite tail in (SV4) would still need estimates with the same
 source and weight choice. No original Robin-budget improvement is
 claimed from the classical mean correspondence.
+
+## Fixed-truncation Mellin interface and remaining source coupling
+
+The same source's Theorem 1.2 also applies with the common parameters
+$(D_1,D_2)=(1,R^3)$. The two normalized profiles have derivative
+supports $(2/3,1)$ and $(0,1/3)$, respectively. Their derivative inner
+product is zero, so this theorem supplies a two-sided error rather
+than a positive main term for the fixed mixed mean. The following
+interface uses the published Mellin kernel in section 2.1,
+equation (2.5). The finite-truncation and local-residue computations
+are mathematical applications of that kernel; no originality or
+Lean certification is asserted.
+
+Write
+
+$$
+\mathfrak G(s,w)=\prod_p\left(
+1-\frac{p^{-2-s-w}(1-p^{-s})(1-p^{-w})}
+{(1-p^{-1-s})(1-p^{-1-w})}\right).
+$$
+
+This is the source's Euler factor in equivalent notation, with
+
+$$
+\sum_{d,e\ge1}\frac{\mu(d)\mu(e)}{[d,e]d^s e^w}
+=\frac{\zeta(1+s+w)\mathfrak G(s,w)}
+       {\zeta(1+s)\zeta(1+w)}
+\qquad(\Re s,\Re w>0).
+$$
+
+Keeping the actual finite $d$-cutoff, define
+
+$$
+P_R(w)=\sum_{d\le R}\frac{\mu(d)\log(R/d)}d
+ \prod_{p\mid d}\frac{1-p^{-w}}{1-p^{-1-w}},
+\qquad
+F_R(w)=\frac{(R^{3w}-R^{2w})P_R(w)}{w^2\zeta(1+w)}.
+$$
+
+Summing the $e$-variable by its Euler product and applying Mellin
+inversion gives the exact interface
+
+$$
+r^2S_A=\frac1{2\pi i}\int_{(c)}F_R(w)\,dw,
+\qquad c>0.
+\tag{SV5}
+$$
+
+Here $P_R(0)=r$ and $F_R(0)=r^2$ by removable continuation; zero is
+not an omitted pole. Choose $0<b<1$ and $Y>0$ so that the boundary
+of the rectangle with vertical sides $c,-b$ and horizontal sides
+$\pm Y$ meets no zero of $\zeta(1+w)$. Let $\Gamma$ run from $c-iY$ to $-b-iY$,
+then to $-b+iY$ and $c+iY$. The full finite-height identity is
+
+$$
+r^2S_A=
+\sum_{\substack{\zeta(\nu)=0\\\Re\nu>1-b,\ |\Im\nu|<Y}}
+ \operatorname{Res}_{w=\nu-1}F_R(w)
+ +\mathcal E_R,
+$$
+
+$$
+\mathcal E_R=\frac1{2\pi i}\left[
+ \int_\Gamma F_R(w)\,dw
+ +\int_{c-i\infty}^{c-iY}F_R(w)\,dw
+ +\int_{c+iY}^{c+i\infty}F_R(w)\,dw\right].
+$$
+
+Zeros are summed by distinct position; pole orders retain their
+multiplicities. The finite Euler factors have possible poles on
+$\Re w=-1$, which this rectangle does not cross. In particular,
+the auxiliary height $Y$ neither truncates away the remaining
+contributions nor replaces the original arithmetic scale
+$T=\sqrt A\log A$. For
+
+$$
+M_R(c)=\sum_{d\le R}\frac{|\mu(d)|\log(R/d)}d
+ \prod_{p\mid d}\frac{1+p^{-c}}{1-p^{-1-c}},
+$$
+
+the two right-line tails obey
+
+$$
+\int_{|t|>Y}|F_R(c+it)|\,dt
+\le\frac{2(R^{3c}+R^{2c})\zeta(1+c)M_R(c)}Y.
+$$
+
+No required fixed-power bound for $\mathcal E_R$ follows from this
+identity or its displayed tail estimate.
+
+For a fixed zero $\rho=\beta+i\tau$ with $\beta>1/2$ and $\tau>0$,
+put $\alpha=\rho-1$ and $\delta=1-\beta\in(0,1/2)$. In a fixed
+sufficiently small neighborhood of $\alpha$, the truncated factor
+has the local expansion
+
+$$
+P_R(w)=R^{-w}\frac{\mathfrak G(-w,w)}{w^2\zeta(1-w)}
+       +O_\rho(R^{\delta/2}).
+\tag{SV6}
+$$
+
+Its contour derivation starts from
+
+$$
+P_R(w)=\frac1{2\pi i}\int_{(a)}
+ \frac{R^s}{s^2}\frac{\zeta(1+s+w)}{\zeta(1+s)}
+ \mathfrak G(s,w)\,ds,\qquad a>\delta,
+$$
+
+with the neighborhood chosen small enough for initial absolute
+convergence. Move this line to $\Re s=\delta/2>0$. The only crossed
+pole is $s=-w$. On the new line, $\zeta(1+s)$ has real-part parameter
+greater than one, and $\Re w>-1/2$ ensures locally uniform absolute
+convergence of this Euler product. The usual vertical growth bound
+for $\zeta(1+s+w)$ together with $s^{-2}$ gives the stated error.
+This local argument does not extend the source's narrower uniform
+region by assertion. Uniformity on the neighborhood also controls
+each fixed derivative of the error by Cauchy's estimate.
+
+The coefficient in (SV6) is nonzero at $w=\alpha$. Indeed,
+
+$$
+\mathfrak G(-w,w)=\prod_p
+ \frac{(p-1)(p+1-p^w-p^{-w})}
+ {(p^{1+w}-1)(p^{1-w}-1)}.
+$$
+
+For $|\Re w|<1$ this product is locally absolutely convergent. Its
+denominators are nonzero. If its numerator vanished and $z=p^w$,
+then $z+z^{-1}=p+1$, whereas
+$p^{-1}<|z|<p$ implies
+$|z+z^{-1}|\le |z|+|z|^{-1}<p+1$. Thus every factor is nonzero.
+Also $\zeta(1-\alpha)=\zeta(2-\rho)\ne0$ since its real-part
+parameter exceeds one. The first term at $\alpha$ has size a
+nonzero constant times $R^\delta$, so
+$P_R(\rho-1)\ne0$ for all sufficiently large $R$.
+
+Let $m\ge1$ be the multiplicity of $\rho$ and define
+
+$$
+C_\rho=
+\frac{m\,\mathfrak G(1-\rho,\rho-1)}
+ { (\rho-1)^4\zeta(2-\rho)\zeta^{(m)}(\rho)}\ne0.
+$$
+
+For this pair alone, the normalized residue contribution is
+
+$$
+\begin{aligned}
+\mathcal Z_\rho(r)
+&=\frac1{r^2}\left(
+ \operatorname{Res}_{w=\rho-1}F_R(w)
+ +\operatorname{Res}_{w=\bar\rho-1}F_R(w)\right)\\
+&=-2r^{m-3}R^{-\delta}\Re(C_\rho e^{i\tau r})
+ +O_\rho\!\left(r^{m-3}R^{-\delta}
+       (r^{-1}+R^{-\delta/2})\right).
+\end{aligned}
+\tag{SV7}
+$$
+
+To obtain the coefficient, insert (SV6) into $F_R$. The main
+meromorphic part is
+$(R^{2w}-R^w)\mathfrak G(-w,w)/
+ (w^4\zeta(1-w)\zeta(1+w))$.
+The leading Laurent term of $1/\zeta(1+w)$ at $\alpha$ is
+$m!/(\zeta^{(m)}(\rho)(w-\alpha)^m)$.
+The $(m-1)$st derivative of $-R^w$ contributes
+$-C_\rho r^{m-1}R^\alpha$ before normalization. Lower derivatives,
+the $R^{2w}$ term and the error in (SV6) give the displayed local
+error. Other zero contributions remain outside that local error.
+
+For a rectangle containing this pair, let $\mathcal B_{\rho,N}$
+contain all other residues and $\mathcal E_R$, divided by $r^2$.
+Then $S_A=\mathcal Z_\rho(r)+\mathcal B_{\rho,N}$ exactly. If a
+same-source estimate
+$(S_A)_-\le C_\eta A^{-\eta}/L$ were supplied, (SV7) would require
+
+$$
+\begin{aligned}
+2\Re(C_\rho e^{i\tau L/8})
+\le{}&\frac{\mathcal B_{\rho,N}}
+             {r^{m-3}A^{-\delta/8}}
+ +K_\rho(r^{-1}+A^{-\delta/16})\\
+&+\frac{C_\eta}{8}r^{2-m}A^{-\eta+\delta/8}
+\end{aligned}
+\tag{SV8}
+$$
+
+for a constant $K_\rho$ independent of $N$. When
+$\beta>1-8\eta$, the last term tends to zero. Thus an individual
+zero package cannot be paid by its decay alone at this scale;
+the full other contributions or the actual source phases must be
+controlled. Neither an actual negative-phase source subsequence
+nor that compensating control is supplied here. Local oscillation
+on continuous clocks does not establish a sign change of the full
+$S_A$ or a failure on the selected integer family.
+
+The phase in this interface is $\tau L/8$. Identifying it with FIB
+composition rotation $C=MJ$ would require an additional intertwining
+map preserving these weights and source conditions. This interface
+constructs no such map. The CA fixed point, all-integer right-tail
+maximality and source excess remain the joint hypotheses of the
+original $N$; their implication of (SV8) is the open coupling
+obligation. No required same-source one-sided mean bound,
+negative-part bound or complete original Robin estimate is obtained
+from this interface.
