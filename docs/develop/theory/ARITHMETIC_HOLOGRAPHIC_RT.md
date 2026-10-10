@@ -4293,11 +4293,13 @@ $$
 所以 $\mathcal Q_t$ 覆盖 $X_t$；若 $\Delta_t=\varnothing$，同样无需追加。若 $\sigma_t=\infty$，存在不可覆盖角色或零增益停滞，任何后续有限追加仍保留它，故不可达结论成立。
 
 以下固定一个可覆盖批次，写 $m=|\Delta_t|>0$, $\sigma=\sigma_t$, $d=d_t$。每层在初始 $\Delta_t$ 上至多覆盖 $d$ 个角色，所以任何大小为 $q$ 的覆盖至少需要
-$q\ge\lceil m/d\rceil$；若 $d=0$，正是前述不可达分支。取最优覆盖 $\mathcal R^*$，$|\mathcal R^*|=\sigma$。贪心第 $i$ 轮开始时记本轮新覆盖数为 $g_i$。给本轮每个新覆盖角色分配 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j$ 个未覆盖角色，则 $R$ 作为候选层的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给 $R$ 的角色数为 $a_{i,R}$，则本轮对 $R$ 的总 charge 至多
+$q\ge\lceil m/d\rceil$；若 $d=0$，正是前述不可达分支。取最优覆盖 $\mathcal R^*$，$|\mathcal R^*|=\sigma$。贪心第 $i$ 轮开始时记本轮新覆盖数为 $g_i$。给本轮每个新覆盖角色分配 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j>0$ 个未覆盖角色，则 $R$ 作为候选层的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给 $R$ 的角色数为 $a_{i,R}$，则本轮对 $R$ 的总 charge 至多
 $$
 \frac{a_{i,R}}{g_i}\le\frac{a_{i,R}}{j}
 \le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
 $$
+若 $j=0$，则 $a_{i,R}=0$ 且该层本轮 charge 为 $0$。
+若 $j=0$，则 $a_{i,R}=0$ 且该层本轮 charge 为 $0$。
 各轮区间两两不交并包含于
 $\{1,\ldots,|R\cap\Delta_t|\}$；跳过的整数只对应其它最优层已负责的角色。因此分配给 $R$ 的 charge 至多 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，贪心追加数 $s_t$ 满足
 $$
@@ -4369,7 +4371,7 @@ $$
 \le\sum_{t=1}^N H_{|\Delta_t|}\sigma_t.
 \tag{50.1}
 $$
-空批次贡献 $0$；若某批 $\Delta_t\ne\varnothing$ 有角色不属于任何 $\overline C_K$（尤其 $d_t=0$ 或 $\mathscr L_t=\varnothing$），则 $\sigma_t=\infty$，该批次在 append-only 语义下无法通过任何有限的当前菜单追加覆盖 $X_t$，当前阶段的在线保证在此处停止。若后续菜单扩张引入覆盖该角色的新层，只有显式携带未覆盖角色才可另行尝试恢复（例如维护 $U_t:=X_t\setminus V_{\mathcal Q_t}$，并在下一批取 $\Delta_{t+1}:=(\delta_{t+1}\cup U_t)\setminus V_{\mathcal Q_t}$）；本定理的 $\Delta_t=\delta_t\setminus V_{\mathcal Q_{t-1}}$ 定义不自动回溯，也不把当前菜单下的失败升级为对未来菜单的全程不可达。
+空批次贡献 $0$；若某批 $\Delta_t\ne\varnothing$ 有角色不属于任何 $\overline C_K$（尤其 $d_t=0$ 或 $\mathscr L_t=\varnothing$），则 $\sigma_t=\infty$，该批次在 append-only 语义下无法通过任何有限的当前菜单追加覆盖 $X_t$，当前阶段的在线保证在此处停止。若后续菜单扩张引入覆盖该角色的新层，只有显式携带未覆盖角色才可另行尝试恢复（例如在失败批次保留 $\mathcal Q_t:=\mathcal Q_{t-1}$，维护 $U_t:=X_t\setminus V_{\mathcal Q_t}$，并在下一批取 $\Delta_{t+1}:=(\delta_{t+1}\cup U_t)\setminus V_{\mathcal Q_t}$）；本定理的 $\Delta_t=\delta_t\setminus V_{\mathcal Q_{t-1}}$ 定义不自动回溯，也不把当前菜单下的失败升级为对未来菜单的全程不可达。
 
 对同一批次残余 $\Delta$ 和前缀 $\mathcal Q$，若两个菜单满足
 $\mathscr L^-\subseteq\mathscr L^+$，则
@@ -4386,9 +4388,9 @@ X_t=X_{t-1}\mathbin{\dot\cup}\delta_t
 \subseteq V_{\mathcal Q_{t-1}}\cup\Delta_t
 \subseteq V_{\mathcal Q_t},
 $$
-所以 $\mathcal Q_t$ 覆盖 $X_t$。若 $\Delta_t=\varnothing$ 则无需追加；若 $\sigma_t=\infty$，有角色不在当前菜单的任何覆盖集内，故当前阶段无法覆盖 $X_t$，在线保证在此处停止；后续菜单若扩张并引入新覆盖层，只有显式携带未覆盖角色并重新定义残余，才可另行尝试恢复，本证明不宣称未来菜单下仍不可达。
+所以 $\mathcal Q_t$ 覆盖 $X_t$。若 $\Delta_t=\varnothing$ 则无需追加；若 $\sigma_t=\infty$，有角色不在当前菜单的任何覆盖集内，故当前阶段无法覆盖 $X_t$，在线保证在此处停止；后续菜单若扩张并引入新覆盖层，只有在失败批次保留 $\mathcal Q_t:=\mathcal Q_{t-1}$、显式携带未覆盖角色并重新定义残余后，才可另行尝试恢复，本证明不宣称未来菜单下仍不可达。
 
-固定一个可行的非空批次，写 $m=|\Delta_t|>0$、$\sigma=\sigma_t$、$d=d_t>0$。每层至多覆盖初始残余的 $d$ 个角色，所以任何大小为 $q$ 的追加至少满足 $q\ge\lceil m/d\rceil$。取最优 $\mathcal R^*$，$|\mathcal R^*|=\sigma$；贪心第 $i$ 轮开始时记本轮增益为 $g_i$。给本轮每个新覆盖角色 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j$ 个未覆盖角色，则 $R$ 作为候选层的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给 $R$ 的角色数为 $a_{i,R}$，则本轮对 $R$ 的总 charge 至多
+固定一个可行的非空批次，写 $m=|\Delta_t|>0$、$\sigma=\sigma_t$、$d=d_t>0$。每层至多覆盖初始残余的 $d$ 个角色，所以任何大小为 $q$ 的追加至少满足 $q\ge\lceil m/d\rceil$。取最优 $\mathcal R^*$，$|\mathcal R^*|=\sigma$；贪心第 $i$ 轮开始时记本轮增益为 $g_i$。给本轮每个新覆盖角色 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j>0$ 个未覆盖角色，则 $R$ 作为候选层的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给 $R$ 的角色数为 $a_{i,R}$，则本轮对 $R$ 的总 charge 至多
 $$
 \frac{a_{i,R}}{g_i}\le\frac{a_{i,R}}{j}
 \le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
