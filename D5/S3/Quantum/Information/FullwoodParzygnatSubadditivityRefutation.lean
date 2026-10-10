@@ -62,6 +62,7 @@ private def P : Matrix (Fin 5 × Fin 5) (Fin 5 × Fin 5) ℂ :=
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 4000000 in
+-- The ten Kraus terms are expanded entrywise over all five input indices.
 private theorem action (X : Matrix (Fin 5) (Fin 5) ℂ) :
     (of_kraus K K) X = (1 / 4 : ℂ) • (trace X • 1 - Xᵀ) := by
   change (∑ k, K k * X * (K k)ᴴ) = _
@@ -121,10 +122,8 @@ private theorem jamio_eq : jamio (of_kraus K K) =
   rw [ht]
   clear ht
   simp [P, Ω, Matrix.single, Matrix.one_apply, Matrix.vecMulVec_apply, Prod.ext_iff]
-  split_ifs <;> simp_all only [Matrix.one_apply, and_self, and_true, true_and,
-    not_true_eq_false, false_and, and_false, not_false_eq_true] <;> norm_num <;>
-    simp_all only [Matrix.one_apply, and_self, and_true, true_and,
-      not_true_eq_false, false_and, and_false, not_false_eq_true] <;> norm_num <;> ring
+  split_ifs <;> simp_all only [Matrix.one_apply, and_self, true_and,
+    not_true_eq_false, false_and, and_false, not_false_eq_true] <;> norm_num
 
 private theorem pdm_eq : pdm ρ (of_kraus K K) =
     (1 / 20 : ℝ) • (1 : Matrix (Fin 5 × Fin 5) (Fin 5 × Fin 5) ℂ) +
