@@ -311,7 +311,8 @@ internal static class DagLedgerAlignWriter
             replacementFiles,
             "aligned frozen ledger");
         _ = ReadView(replacementFiles);
-        if ((!prerequisiteRepairs.IsEmpty || !retirements.IsEmpty)
+        if ((scopedAdd && regeneration.Any(baseView.ActiveByPath.ContainsKey)
+                || !prerequisiteRepairs.IsEmpty || !retirements.IsEmpty)
             && !DagLedgerLoader.TryOrderClosedDag(replacementEvents, [], out _))
         {
             throw new InvalidOperationException(

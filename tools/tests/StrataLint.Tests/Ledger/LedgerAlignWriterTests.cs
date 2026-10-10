@@ -12,6 +12,33 @@ public sealed partial class LedgerAlignWriterTests
         "sha256:2737dabb279d14181efe09f7531e5c4664421bdbc19bbcf8b588f8d71123954c";
 
     [Fact]
+    public void ScopedRepinWithExplicitDescendantsMatchesFullAlignment()
+    {
+        var oldA = ModuleWithReport("A", Source("A"), "True");
+        var a = oldA with { StatementMaterial = "True = True" };
+        var b = ModuleWithReport("B", "import D5.S0.Carrier.A\n" + Source("B"), "True") with { Imports = ["A"] };
+        var frozen = BuildCatalog(oldA, b);
+        using var scoped = new AlignFixture(a, b);
+        using var full = new AlignFixture(a, b);
+        foreach (var fixture in new[] { scoped, full })
+        {
+            fixture.InstallAccepted(frozen);
+            foreach (var name in new[] { "A", "B" })
+                fixture.InstallState(name, frozen.ByPath[RepoPathFor(name)].StatementId);
+        }
+
+        var narrow = scoped.Align("--add", PathFor("A"), "--add", PathFor("B"));
+        var broad = full.Align();
+
+        Assert.True(narrow.Success, narrow.Error);
+        Assert.True(broad.Success, broad.Error);
+        Assert.Equal(full.AllPublishedBytes(), scoped.AllPublishedBytes());
+        var events = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
+            FrozenAcceptedEventLoader.LoadFiles(scoped.AcceptedFiles())).Events;
+        Assert.True(DagLedgerLoader.TryOrderClosedDag(events, [], out _));
+    }
+
+    [Fact]
     public void ScopedAddRejectsChangedFrozenPrerequisiteBeforeWriting()
     {
         var oldB = ModuleWithReport("B", Source("B"), "True");

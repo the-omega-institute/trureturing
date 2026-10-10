@@ -68,6 +68,8 @@ public sealed class RawLeanReportArtifactTests
         {
             case "missing":
                 bytes = "{\"modules\": [], \"schema\": \"stratalint-scoped-lean-report-v1\"}\n";
+                File.Delete(RawLeanReportArtifact.MaterialsPath(path));
+                using (var archive = ZipFile.Open(RawLeanReportArtifact.MaterialsPath(path), ZipArchiveMode.Create)) { }
                 break;
             case "stale":
                 snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
@@ -87,7 +89,14 @@ public sealed class RawLeanReportArtifactTests
         File.WriteAllText(path, bytes);
         var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown("Trureturing.lean")]);
 
-        Assert.ThrowsAny<Exception>(() => RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true));
+        if (defect == "missing")
+        {
+            var exception = Assert.Throws<FormatException>(() =>
+                RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true));
+            Assert.Contains("Raw Lean report is missing modules: Trureturing", exception.Message, StringComparison.Ordinal);
+        }
+        else
+            Assert.ThrowsAny<Exception>(() => RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true));
     }
 
     [Fact]

@@ -53,6 +53,43 @@ class ScopedContracts(unittest.TestCase):
         producer.write_sidecars(report, producer.capture(self.root, self.scope), {'D5.A': origin})
         return report
 
+    def test_selected_utility_discovery_uses_production_reader(self):
+        producer = api(self)
+        subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True, capture_output=True)
+        self.fixture.write('D5/S0/Carrier/Unfinished.lean',
+            '/- GID: D5/S0/Carrier/Unfinished\n'
+            '   generality: G\n'
+            '   mirror-B: D5/B/S0/Carrier/Unfinished\n'
+            '   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)\n'
+            '   anchors: []\n'
+            '   utility: kind=certified-instance; basis=refutes=gid:D5/S0/Carrier/Missing.claim; '
+            'result=D5/S0/Carrier/Unfinished.result; claim=D5/S0/Carrier/Missing.claim\n'
+            '   digest: Selected claim sources are required. -/\n')
+        cli = ROOT / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll'
+        full = subprocess.run(['dotnet', str(cli), 'lean-utility-input'], cwd=self.root,
+                              capture_output=True, text=True)
+        self.assertEqual(full.returncode, 2, full.stdout + full.stderr)
+        self.assertIn('Refutation claim source is absent', full.stderr)
+        temporary = self.root / 'scope-discovery'
+        logs = temporary / 'logs'
+        logs.mkdir(parents=True)
+        entry = producer.Entry(self.root, temporary, logs)
+        entry.producer = str(cli)
+        original = entry.phase
+        def phase(name, command):
+            if name != 'scope':
+                return original(name, command)
+            # Only Lake's already-covered graph selection is supplied by this fixture.
+            request = json.loads(Path(command[-2]).read_text())
+            self.assertEqual(request['roots'], ['D5.A'])
+            self.assertEqual(request['utilities'], [])
+            self.assertEqual(request['utility_inputs'], [])
+            Path(command[-1]).write_bytes(materials.canonical_json(self.scope))
+        entry.phase = phase
+        scope, utilities = entry.discover(['D5.A'])
+        self.assertEqual(scope, self.scope)
+        self.assertEqual(utilities, [])
+
     def test_rejects_empty_targets_and_canonical_destination(self):
         producer = api(self)
         for value in ('', '  \t\n', ':report', 'reg/Reg', '../D5.A', 'D5.A:report'):
@@ -171,7 +208,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
                   '   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)\n'
                   '   anchors: []\n'
                   '   utility: kind=certified-instance; basis=refutes=gid:D5/S0/Carrier/Missing.claim; '
-                  'claim=D5/S0/Carrier/Missing.claim; result=D5/S0/Carrier/Unfinished.result\n'
+                  'result=D5/S0/Carrier/Unfinished.result; claim=D5/S0/Carrier/Missing.claim\n'
                   '   digest: Selected refutations require their claim source. -/\n')
         self.write('D5/S0/Carrier/Unfinished.lean', header + 'this unrelated unfinished module does not compile\n')
         full = subprocess.run([self.dotnet, str(self.cli), 'lean-utility-input'],
