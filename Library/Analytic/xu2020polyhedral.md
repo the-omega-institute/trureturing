@@ -15,7 +15,7 @@ triage: anchor
 # Scope
 
 The source is https://arxiv.org/abs/2012.06394v2, Theorem 5.1,
-equations (54)–(55), and Corollary 4.3. On a positive common box
+equations (31)–(32), and Corollary 4.3. On a positive common box
 with endpoints L and H, the product's upper envelope gives the
 quadratic and cubic chord bounds after taking expectations with common
 coordinate mean. The four-coordinate lower facet at the vertex type
