@@ -278,10 +278,6 @@ def main(argv=None):
     retirement.add_argument("--commit", required=True)
     retirement.add_argument("--preview", action="store_true")
     retirement.add_argument("--expected-reflog-sha256")
-    snapshot = commands.add_parser("remove-snapshot")
-    snapshot.add_argument("--path", type=Path, required=True)
-    snapshot.add_argument("--base", required=True)
-    snapshot.add_argument("--preview", action="store_true")
     mirror = commands.add_parser("prepare-mirror")
     mirror.add_argument("--path", type=Path, required=True)
     mirror.add_argument("--branch", required=True)
@@ -313,9 +309,9 @@ def main(argv=None):
             result = remove(options)
             print(json.dumps(result), flush=True)
             return 74 if result["status"] == "failed" else 0
-        elif options.action in ("retire-branch", "remove-snapshot"):
-            from worktree_preservation import retire_branch, remove_snapshot
-            result = (retire_branch if options.action == "retire-branch" else remove_snapshot)(options)
+        elif options.action == "retire-branch":
+            from worktree_preservation import retire_branch
+            result = retire_branch(options)
             print(json.dumps(result), flush=True)
             if result["status"] == "partial_or_indeterminate":
                 return 74
