@@ -1553,3 +1553,69 @@ and measures. In particular, (SV38) is neither a lower bound for the
 unpaid residual nor a counterexample to its required estimate. Replacing
 the linear weight by a more smoothed one would change the recovery
 contract and does not inherit the estimates for the current $h$.
+
+## The original response envelopes localize the unpaid prime samples
+
+Choose a fixed $0<\omega<1/2-\eta$ and retain only the original
+finite unpaid layers $2\le k<m_\eta$. Put
+
+$$
+P_-=A^{1/2-\eta-\omega},\qquad
+P_{+,k}=A^{(\eta+\omega)/(k-1)}.
+$$
+
+Let $\mathcal R^{\rm win}_{N,\eta}$ be the original $E_A$ residual
+with the additional sample condition $P_-<p\le P_{+,k}$, intersected
+with the same active condition $p^k<x/U$. Apply the envelopes to
+$E_A$, before any polynomial replacement. At each $x\in[A,2A]$, the
+discarded small-prime part in a layer is at most
+
+$$
+\frac{B_A}{x}\sum_{p\le P_-}\log p
+\ll\frac{A^{-1/2}P_-}{L^2}
+=\frac{A^{-\eta-\omega}}{L^2}.
+$$
+
+For the large-prime part, use $E_A(x/p^k)\le Cx/(p^kL^2)$ and
+the existing $\vartheta(t)<2t$ input. Abel summation gives, for $z\ge1$,
+$\sum_{p>z}(\log p)/p^k\le 2kz^{1-k}/(k-1)$. Thus this part is
+also $\ll_k A^{-\eta-\omega}/L^2$. Enlarging each discarded
+nonnegative sum is legitimate, including primes outside the active
+range. Finite layer summation and the pointwise order therefore imply
+
+$$
+0\le\mathcal R_{N,\eta}-\mathcal R^{\rm win}_{N,\eta}
+\ll_{\eta,\omega}\frac{A^{-\eta-\omega}}{L^2},
+\tag{SV39}
+$$
+
+without requiring an attained supremum. For each unpaid layer
+$\gamma_k<\eta$, so
+$P_-<A^{1/(2k)}<P_{+,k}$. This is an explicit prime window
+containing the critical scale; its exponent width need not be small.
+Empty layers and empty intersections still contribute zero.
+
+In this same window, replace the response by the joint adaptive
+positive part of (SV36)–(SV37), and denote its residual by
+$\mathcal R^{\rm ad,win}_{N,\eta}$. The absolute approximation
+errors only shrink on a sample subset, and the window flags are
+permitted in the arbitrary $a_{j,p}$ arrays used to delete harmonics.
+Consequently the original sampled $L^1$ argument applies to this
+subset with the same rate. Together with (SV39), it gives
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm ad,win}_{N,\eta}|
+=o(A^{-\eta}).
+\tag{SV40}
+$$
+
+This conclusion uses that absolute-error argument, not an inference
+from the difference of the two unrestricted suprema in (SV37).
+The constants and full drift stay jointly inside each retained positive
+part. No envelope for an arbitrary polynomial positive part has been
+assumed. The remaining task is now restricted in prime samples as well
+as in harmonics and denominators; the separate mean, prime layer,
+other recovery terms and complete signed tail still need their original
+estimates. Equations (SV39)–(SV40) are a localization application of
+the existing envelopes and prime-counting input, without a new
+prime-distribution theorem or Lean certification.
