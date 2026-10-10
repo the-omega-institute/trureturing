@@ -7282,3 +7282,138 @@ No growing event-dependent selector is inserted into a fixed-parameter
 OpenAI correlation theorem. No numerical common starting $X$, transfer
 of the $4.03\cdot10^{46}$ global-maximizer bound, least-counterexample
 bound, full Robin/RH proof, or official acceptance is supplied.
+
+## Project application: the same actual reserve extends the clock to 4.23
+
+The global complete-response estimates (GK6) and (GJ2), together with
+the actual effective reserve (GAI3)–(GAI4), extend the all-integer
+interval (GAI1). This is a conditional ordinary application of the same
+project sources, without a new zero computation, external zero ceiling,
+numerical reserve-asymptotic start or Lean certification.
+
+Let $n$ be any integer with its own clock
+
+$$
+\frac72\,10^{46}<A=\log n\le\frac{423}{100}\,10^{46},
+\qquad L=\log A,\qquad T=\sqrt A L.
+\tag{GAJ1}
+$$
+
+Retain all the analytic premises of the preceding effective-reserve
+application: unrestricted pressure and tail identities, the full
+classical explicit formula, endpoint-inclusive Stieltjes conventions,
+convergence and PNT inputs, the complete Gamma product and whole-law
+moments, and all elementary responses, including scales with $cA<1$.
+The exact Dusart v1 Theorem 5.2 rows remain
+$(2,0.01,7713133853)$ for the global error and
+$(2,1/5,3594641)$ for the reserve, with Proposition 3.2's full
+higher-prime-power correction and the coarse $k=0$ bound.
+Keep criticality through $H=3\cdot10^{12}$, the positive reciprocal
+identity $c_0<0.05$ and the complete $S_2(H)<1.48\cdot10^{-12}$.
+The actual reserve remains the unrestricted one over all positive
+integers, including one, from FIB §§249–250 and its finite §93.2
+anchor. These source proofs and computations remain named analytic
+premises; their complete primary certification is not supplied here.
+
+### Evaluate the global formulas at the larger endpoint
+
+Keep the identical noninteger shape and rate
+
+$$
+\alpha=\frac{292000000000000000000001}{2},\qquad
+C\sim\operatorname{Gamma}(\text{shape }\alpha,\text{rate }\alpha).
+$$
+
+Set $r=(2057/1000)10^{23}$. Exact squaring gives
+$r^2=4.231249\cdot10^{46}>4.23\cdot10^{46}$, so
+$\sqrt A<r$ even at the included upper endpoint of (GAJ1).
+The lower endpoint still gives $L>107$ and $\sqrt A>10^{23}$.
+Thus the global domain $A\ge e^{78}$, noninteger $\alpha\ge4$ of
+(GK6), and $L>78$ of the full-coefficient (GJ2), both apply.
+The interval subsequently used to illustrate (GJ2) does not restrict
+its global proof. In particular, the old interval estimate (GM4) is
+not being extrapolated.
+
+The unchanged shape, height and lower endpoint retain
+
+$$
+M_1<\frac{10001}{10000},\qquad
+\frac{H^2}{2(\alpha+H)}>\frac{1541}{50},\qquad
+\eta_0(A)<10^{-6}.
+$$
+
+Here (GM3)'s proof uses the stronger Dusart row for every $t\ge A$
+and only the lower clock endpoint; it therefore remains uniform on
+(GAJ1). Reuse the positive exponential-series enclosures
+$e^{1541/50}>(121/50)10^{13}$ and
+$e^{\alpha/60000}>10^{53}$. Inserting these into the actual global
+formulas gives the complete five allowances:
+
+| Contribution | Exact rational upper allowance |
+|---|---:|
+| Verified head, full coefficient | $(10001/10000)(108/107)(1.054)(0.05)$ |
+| All tail heights, both signs | $2(10001/10000)^2(108/107)r(1.48\cdot10^{-12})/[(121/50)10^{13}]$ |
+| Centered regular and signed local payment | $(0.520002)r/\alpha$ |
+| Every outside Gamma scale | $400r/10^{53}$ |
+| Full elementary response, including $cA<1$ | $5(10001/10000)/10^{23}$ |
+
+Every terminating decimal denotes an exact rational. Let $U_{423}$
+be their sum. All actual tail-zero real parts, multiplicities, heights
+and ordinate signs remain, as do the coefficient remainder, endpoint
+atoms and centering before the whole Gamma law is split. Consequently
+
+$$
+-T I_\psi(A)<U_{423}\quad\text{throughout (GAJ1)}.
+\tag{GAJ2}
+$$
+
+### Pay the same integer with its actual reserve and defect
+
+The unchanged (GAI4), anchored by the finite reserve bound and valid
+for $L>107$, gives
+
+$$
+T R(A)>Q_R+\frac{L}{(L+2)^3},\qquad
+Q_R=\frac{67838284064811}{83593750000000}.
+$$
+
+Exact subtraction of the complete five-row sum yields
+
+$$
+Q_R-U_{423}
+=\frac{22837901643254399996290102708491463199999986623442401}
+ {78110000000000000000000267500000000000000000000000000000}
+>\frac1{4000}.
+\tag{GAJ3}
+$$
+
+Use the same-clock identity
+$\Delta(n)=I_\psi(A)+R(A)+d_A(n)$, with its actual
+$d_A(n)\ge0$. Equations (GAJ2)–(GAJ3) therefore give
+
+$$
+\boxed{T\Delta(n)>\frac1{4000}
+ +\frac{L}{(L+2)^3}+T d_A(n)>0}
+\quad\text{for every integer in (GAJ1)}.
+\tag{GAJ4}
+$$
+
+No CA selection, zero-defect transfer or finite sweep is needed for
+this interval consequence. Under the additional unchanged original
+source-selection and lower-clock chain that gives
+$\log N>4.03\cdot10^{46}$ for the same least global maximizer of
+$G(n)=\sigma(n)/(n\log\log n)$ over $n>5040$ under Robin failure,
+(GAJ4) excludes its remaining interval up to $4.23\cdot10^{46}$.
+Thus that same conditional selected restriction improves to
+
+$$
+\log N>4.23\cdot10^{46}.
+\tag{GAJ5}
+$$
+
+The CNS/properness, exact-price CA, SevenSmooth, Kalyabin eligible
+endpoint, Axler finite-stop, Nicolas $6.78$ and original lower-clock
+ladder premises retain their original role in that preceding chain.
+This is not a least-counterexample bound or all-integer verification
+below the interval. The unbounded signed Robin/RH target remains unproved. This application
+supplies no new Lean/kernel or complete formal analytic verification.
