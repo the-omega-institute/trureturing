@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/PrimeTripletWheel
    generality: G
-   mirror-B: none
+   mirror-B: none(waiver:general-reflection-theorem)
    mirror-E: none(waiver:general-reflection-theorem)
    anchors: [docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md#十六轮筛三点相关绝对原点与-fibonacci-窗口]
    utility: none
