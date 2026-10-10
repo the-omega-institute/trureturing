@@ -166,6 +166,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CSSMeromorphicSuppression.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/burton-anwar-2026-css-meromorphic-suppression` (proved) by `D5/S3/Quantum/Information/CSSMeromorphicSuppression.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"burton-anwar-2026-css-meromorphic-suppression","declaration_gid":"D5/S3/Quantum/Information/CSSMeromorphicSuppression.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Simon Burton; Hussain Anwar (2026). *Meromorphic Quantum Computing*. DOI: [10.48550/arXiv.2605.06251](https://doi.org/10.48550/arXiv.2605.06251). URL: <https://arxiv.org/abs/2605.06251v1>.

@@ -62,7 +62,9 @@ internal sealed class CSSMeromorphicSuppressionDocument : IScribeDocumentDefinit
             Node("result", "The four-point suppression theorem", Disp(F.Id("claim")),
                 CodewordDerivation + "Adding the all-ones vector sends every X stabilizer to a logical-X representative, so the numerator is divisible by z^d and the denominator is 1 at zero. Degree-n reversal gives infinity. At 1 and -1, binary character orthogonality factors P-Q and P+Q through odd logical-Z representatives, giving the same distance divisibility and the fixed-point equalities.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                null)),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("burton-anwar-2026-css-meromorphic-suppression"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
