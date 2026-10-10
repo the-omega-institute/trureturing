@@ -435,8 +435,7 @@ private theorem weighted_coarsening_cancellation (s : Finset α) (hs : s.Nonempt
 
 variable {R : Type*} [CommRing R]
 
-local instance {s : Finset α} : LocallyFiniteOrder (Finpartition s) :=
-  Fintype.toLocallyFiniteOrder
+attribute [local instance] Fintype.toLocallyFiniteOrder
 
 theorem partition_mobius_coefficient (s : Finset α) (hs : s.Nonempty)
     (P : Finpartition s) :
@@ -445,14 +444,19 @@ theorem partition_mobius_coefficient (s : Finset α) (hs : s.Nonempty)
   have hsum (Q : Finpartition s) :
       (if Q = ⊤ then (1 : R) else 0) =
         ∑ T ∈ Ici Q, (-1 : R) ^ (T.parts.card - 1) * ((T.parts.card - 1).factorial : R) := by
-    rw [sum_subtype (p := fun T : Finpartition s => Q ≤ T) (Ici Q) (fun _ => mem_Ici)]
-    have h := congrArg (Int.castRingHom R) (weighted_coarsening_cancellation s hs Q)
-    simpa using h.symm
-  have h := IncidenceAlgebra.moebius_inversion_top
+    have hcast := congrArg (Int.castRingHom R) (weighted_coarsening_cancellation s hs Q)
+    calc
+      _ = ∑ T : {T : Finpartition s // Q ≤ T},
+          (-1 : R) ^ (T.1.parts.card - 1) * ((T.1.parts.card - 1).factorial : R) := by
+        simpa using hcast.symm
+      _ = _ := (sum_subtype (p := fun T : Finpartition s => Q ≤ T)
+        (Ici Q) (fun _ => mem_Ici)
+        (fun T => (-1 : R) ^ (T.parts.card - 1) * ((T.parts.card - 1).factorial : R))).symm
+  have hinverse := IncidenceAlgebra.moebius_inversion_top
     (fun Q : Finpartition s =>
       (-1 : R) ^ (Q.parts.card - 1) * ((Q.parts.card - 1).factorial : R))
     (fun Q => if Q = ⊤ then (1 : R) else 0) hsum P
-  simpa using h.symm
+  simpa using hinverse.symm
 
 open D5.S3.Analytic.SeriesInequalities.PartitionMobiusInversion
 

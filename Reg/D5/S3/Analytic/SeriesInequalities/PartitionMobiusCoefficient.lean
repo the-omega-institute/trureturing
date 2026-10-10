@@ -12,8 +12,7 @@ namespace Reg.D5.S3.Analytic.SeriesInequalities.PartitionMobiusCoefficient
 universe u v
 noncomputable section
 attribute [local instance] Classical.propDecidable
-local instance {α : Type u} [DecidableEq α] {A : Finset α} :
-    LocallyFiniteOrder (Finpartition A) := Fintype.toLocallyFiniteOrder
+attribute [local instance] Fintype.toLocallyFiniteOrder
 
 namespace Coefficient
 
@@ -65,7 +64,7 @@ def evidence : Registration arena.{u,v} (arena.Law actual) where
     exact ⟨(), 0, 2, by norm_num [actual, realize]⟩
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Analytic.SeriesInequalities.PartitionMobiusCoefficient.partition_mobius_coefficient.{u,v})
+    (@partition_mobius_coefficient.{u,v})
     (type_of% (realize signature (fun _ _ k => Nat.factorial k) (fun e => nomatch e)))
     Unit Unit := {
   unitName := `Reg.D5.S3.Analytic.SeriesInequalities.PartitionMobiusCoefficient.Coefficient.unit
@@ -168,7 +167,7 @@ def evidence : Registration arena.{u,v} (arena.Law actual) where
     simp [actual, realize]
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Analytic.SeriesInequalities.PartitionMobiusCoefficient.moment_cumulant_without_mu_assumption.{u,v})
+    (@moment_cumulant_without_mu_assumption.{u,v})
     (type_of% (realize signature.{u,v} (fun _ p A => p.2.2 A) (fun e => nomatch e)))
     Unit Unit := {
   unitName := `Reg.D5.S3.Analytic.SeriesInequalities.PartitionMobiusCoefficient.Inversion.unit
