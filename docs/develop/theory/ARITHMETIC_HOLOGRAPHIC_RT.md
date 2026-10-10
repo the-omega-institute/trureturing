@@ -3872,7 +3872,7 @@ $$
 \frac{a_{i,R}}{j}
 \le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
 $$
-各轮对应的这些整数区间依次分割 $1,\ldots,|R\cap\Delta|$，而 $|R\cap\Delta|\le d$；故分配给 $R$ 的 charge 总和至多 $H_d$。对 $\tau$ 个层求和，并注意每轮总 charge 为 $1$，得到
+各轮对应的这些整数区间两两不交并包含于 $\{1,\ldots,|R\cap\Delta|\}$（若其它角色由其它最优层负责，某些整数只会被跳过），而 $|R\cap\Delta|\le d$；故分配给 $R$ 的 charge 总和至多 $H_d$。对 $\tau$ 个层求和，并注意每轮总 charge 为 $1$，得到
 $$
 s=\sum_i\frac{a_i}{g_i}
 \le\tau H_d
