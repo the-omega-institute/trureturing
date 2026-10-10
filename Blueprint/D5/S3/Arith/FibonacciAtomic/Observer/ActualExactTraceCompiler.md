@@ -102,7 +102,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 The finite union of all coarse prefixes of the original terminal traces over the allowed source domain.
 
-**Definition 1.9 (Strategy carrier cardinality).**
+**Theorem 1.9 (Original actual prefix belongs to the compiler carrier).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_prefix_mem`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_prefix_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every N, Strategy pi, allowed source U and raw history h prefixing terminal(pi,U).trace, kappa_hist(h) belongs to strategyPrefixes(N,pi). This preserves the original literal addresses, repetitions and coarse chronological order.
+
+**Definition 1.10 (Strategy carrier cardinality).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategyStateCard`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 The exact state count obtained from the strategy prefix carrier and compatible first-cache fibers.
 
-**Theorem 1.10 (Strategy state cardinality).**
+**Theorem 1.11 (Strategy state cardinality).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_state_card`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 The strategy-indexed exact carrier has the stated finite cardinality.
 
-**Definition 1.11 (Exact finite observer).**
+**Definition 1.12 (Exact finite observer).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.exactObserver`
 
@@ -138,7 +150,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.e
 
 The finite carrier supplies an input-independent empty row, full-history coarse control and the first-occurrence raw decoder.
 
-**Definition 1.12 (Replay continuation contract).**
+**Definition 1.13 (Replay continuation contract).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.ReplayStep`
 
@@ -150,7 +162,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.R
 
 Every requested extension from a specified original horizon prefix remains a retained coarse prefix and an original horizon prefix.
 
-**Definition 1.13 (Exact history index).**
+**Definition 1.14 (Exact history index).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.ExactIndex`
 
@@ -162,7 +174,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.E
 
 A finite carrier index for each retained coarse control history.
 
-**Definition 1.14 (Exact cache row).**
+**Definition 1.15 (Exact cache row).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.ExactRow`
 
@@ -174,7 +186,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.E
 
 A control history paired with every compatible first-coarse raw cache lift.
 
-**Definition 1.15 (Exact state carrier).**
+**Definition 1.16 (Exact state carrier).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.ExactState`
 
@@ -186,7 +198,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.E
 
 The row carrier plus one absorbing unit sink.
 
-**Definition 1.16 (Exact cardinality expression).**
+**Definition 1.17 (Exact cardinality expression).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.exactStateCard`
 
@@ -198,7 +210,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.e
 
 The finite sum of compatible cache fiber cardinalities plus the sink.
 
-**Definition 1.17 (Coarse strategy policy).**
+**Definition 1.18 (Coarse strategy policy).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategyPolicy`
 
@@ -210,7 +222,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 Evaluate the original strategy on the fixed coarse-history representative.
 
-**Definition 1.18 (Strategy-indexed observer).**
+**Definition 1.19 (Strategy-indexed observer).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategyObserver`
 
@@ -224,7 +236,7 @@ Instantiate the exact finite observer on all allowed terminal coarse prefixes.
 
 Strategy-indexed replay, exact terminal runs and admissibility assume a positive source bound and an original strategy policy that factors through kappa_hist. Sourcewise replay and run statements range over the allowed sources at that bound.
 
-**Theorem 1.19 (Strategy prefix cache replay).**
+**Theorem 1.20 (Strategy prefix cache replay).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_actual_prefix_replay`
 
@@ -236,7 +248,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 Actual prefixes of the strategy-indexed observer carry the original full coarse history and first-write raw cache.
 
-**Definition 1.20 (Coarse control projection).**
+**Definition 1.21 (Coarse control projection).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.exactControl`
 
@@ -248,7 +260,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.e
 
 Forget cache lifts while retaining full logical coarse control or the sink.
 
-**Theorem 1.21 (All-history ghost safety).**
+**Theorem 1.22 (All-history ghost safety).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.exact_all_history_factorization`
 
@@ -260,7 +272,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.e
 
 Equal coarse response histories have equal actions, including contradictory repeats and post-halt reports.
 
-**Theorem 1.22 (Exact terminal run).**
+**Theorem 1.23 (Exact terminal run).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_exact_run`
 
@@ -272,7 +284,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 The compiled observer realizes the original terminal trace and output bit.
 
-**Theorem 1.23 (Finite observer admissibility).**
+**Theorem 1.24 (Finite observer admissibility).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_admissible`
 
@@ -284,7 +296,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 The strategy-indexed observer satisfies the original bounded finite observer contract.
 
-**Theorem 1.24 (Exact state bound).**
+**Theorem 1.25 (Exact state bound).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_state_card_bound`
 
@@ -322,6 +334,7 @@ The exact state count is one plus the sum of 2 to the number of distinct coarse-
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_actual_prefix_replay`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_admissible`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_exact_run`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_prefix_mem`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_state_card`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_state_card_bound`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion](../ActualCoarseReadoutCompletion.md)

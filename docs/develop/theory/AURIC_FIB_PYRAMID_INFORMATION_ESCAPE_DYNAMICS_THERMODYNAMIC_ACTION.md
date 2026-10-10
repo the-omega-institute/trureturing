@@ -1,8 +1,8 @@
 # AURIC FIB 金字塔：信息逃逸、素数轨迹与热力学作用
 
-## 状态与范围
+## 模型与适用范围
 
-本文把仓库中已有的 AURIC FIB 五态概率几何、Information Escape 的分层捕获、黄金热层以及素数/Fibonacci 轴放到同一套接口中。文中有三种状态标签：已有结果，本文件的新推导，以及尚未完成的开放接口。已有结果来自 Foundational Formulas、Boundary Calculus、KernelChain、LayeredCapture、GoldenHeatLayers、PrimeAxisEscape 和相关 Lean 文件。本文件的新推导是在已有静态几何上加入一维质量作用流。把离散 native continuation、素数支撑扩张和真实环境热力学接成同一个状态更新，仍然是开放问题。
+在 [Foundational Formulas](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) 的五态概率几何上加入一维质量作用流，并与离散分层捕获、黄金热层以及素数/Fibonacci 轴组成带类型的模型接口。把 [Boundary Calculus](AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md) 的离散 native continuation、素数支撑扩张和真实环境热力学接成同一个状态更新，仍然是开放问题。
 
 “信息逃逸”需要分层理解。对只观察均值坐标的观察者，κ 纤维上的状态全部不可辨识，因而是已经逃逸到 kernel 之外的隐藏信息。对完整五态观察者，这部分信息由条件关联和 KL 储备量表示，并在固定纤维且 \(\gamma r>0\) 时沿质量作用流耗散到最大熵完成。这个过程不是信息凭空离开封闭系统。若要称作向环境逃逸，还需要加入环境、chemostat 或擦除协议，并把环境熵流写进账本。
 
@@ -91,7 +91,7 @@ D(p\Vert p_*)=H_{\ln}(p_*)-H_{\ln}(p)
 
 ## 2. “一层一层逃逸”的正确类型
 
-Information Escape 的 KernelChain 和 LayeredCapture 已经给出离散层级
+[KernelChain](../../../Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.md) 和 [LayeredCapture](../../../Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.md) 给出离散层级
 
 \[
 K_0\supseteq K_1\supseteq\cdots\supseteq K_m,
@@ -99,7 +99,7 @@ K_0\supseteq K_1\supseteq\cdots\supseteq K_m,
 
 其中 \(K_j\) 是第 \(j\) 层仍然无法区分的 pair 集合。第 \(j\) 层首次分离的 pair 构成 capture 增量，所有增量互不相交并与最终 unresolved 集合一起分割初始 pair 集合。相应的 capture count、escape rate 和 survival/hazard 具有望远镜恒等式。
 
-把这个结构和金字塔连接时，建议使用带类型的层状态
+把这个结构和金字塔连接时，定义带类型的层状态
 
 \[
 \mathcal S_j=(K_j,\ P_j,\ \kappa_j,\ \Delta_j),
@@ -217,7 +217,7 @@ w_\kappa=r\min\{\alpha,\beta,1-\alpha,1-\beta\}=O(r),
 J=k_f p_2p_5-k_r p_0p_{25},\qquad \dot p=J\nu.
 \]
 
-设状态能量为 \(E_i\)，并满足详细平衡比值
+设状态能量为 \(E_i\)、逆温度 \(\beta>0\)，并满足详细平衡比值
 
 \[
 \frac{k_f}{k_r}=e^{-\beta\Delta E},\qquad
@@ -230,7 +230,7 @@ J=k_f p_2p_5-k_r p_0p_{25},\qquad \dot p=J\nu.
 F(p)=\sum_iE_ip_i-\beta^{-1}H_{\ln}(p).
 \]
 
-则
+在底部四格均为正的内部，
 
 \[
 \dot F
@@ -248,24 +248,29 @@ F(p)=\sum_iE_ip_i-\beta^{-1}H_{\ln}(p).
 
 这是固定 \((X,Y,Z)\) 化学计量类上的 free-energy Lyapunov 定理。对称正速率情形 \(k_f=k_r=\gamma>0\) 等价于 \(\Delta E=0\)，所以平衡点正是最大熵完成 \(p_*\)。若 \(\Delta E\ne0\)，平衡 κ 会移动，不能继续使用 \(XY/r\) 作为平衡坐标。
 
-也可以用对数平均 mobility
+对 \(a,b>0\)，定义对数平均 mobility；非对角时使用商式，沿对角线作连续延拓：
 
 \[
-L(a,b)=\frac{a-b}{\ln a-\ln b}>0
+L(a,b)=
+\begin{cases}
+\dfrac{a-b}{\ln a-\ln b},&a\ne b,\\
+a,&a=b,
+\end{cases}
+\qquad L(a,b)>0.
 \]
 
-把对称流写成
+对角值由 \(\ln\) 的导数或商式极限得到。底部四格均为正时，把对称流写成
 
 \[
 \dot\kappa=-\gamma L(a,b)\,\partial_\kappa
 \bigl[-H_{\ln}(p)\bigr].
 \]
 
-这说明它是固定纤维上的 Onsager 梯度流。它严格表达了“热力学耗散最优”的一部分，但没有给出有限时间的唯一动作最优，也没有自动包含外界做功。
+这说明它是固定纤维上的 Onsager 梯度流。\(a=b>0\) 时，熵梯度和流都为零，mobility 仍为 \(a\)。零概率边界不使用对数商或有限熵梯度；若作单边延拓，需同时指定 mobility 与梯度乘积的极限，ODE 的通量仍按原概率多项式定义。它严格表达了“热力学耗散最优”的一部分，但没有给出有限时间的唯一动作最优，也没有自动包含外界做功。
 
 ## 5. 金字塔层与黄金热层的几何接口
 
-GoldenHeatLayers 已经给出每个黄金层的发散横坐标
+[GoldenHeatLayers](../../../Blueprint/D5/S3/Midline/HeatLayers/GoldenHeatLayers.md) 给出每个黄金层的发散横坐标
 
 \[
 \alpha_k=\frac1{o5Beta(k+1)},\qquad
@@ -292,7 +297,7 @@ Z_k=1-r_k.
 |\Delta_k|\le r_k^2/4.
 \]
 
-这正好把几何横截面、关联容量和黄金热层的二次缩放放在同一坐标中。但这是定义的 embedding，不是从现有物理模型推出的热力学等式。仓库目前没有把层号 \(k\) 证明为真实时间，也没有把 \(r_k\) 证明为实际温度、能量或动力学松弛参数。
+这把几何横截面、关联容量和黄金热层的二次缩放放在同一坐标中。该 embedding 是模型定义，不是从物理模型推出的热力学等式；层号 \(k\) 与真实时间、\(r_k\) 与实际温度、能量或动力学松弛参数之间的关系仍须另行给出。
 
 在离散层上，可以把每一层的三个读数并列保存：
 
@@ -314,7 +319,7 @@ Z_k=1-r_k.
 N(S)=\prod_{p\in S}p+1.
 \]
 
-已有 PrimeAxisEscape 定理保证存在素数 \(q\mid N(S)\) 且 \(q\notin S\)。因此可以构造图
+[PrimeAxisEscape](../../../Blueprint/D5/S3/Axis/PrimeAxisEscape.md) 保证存在素数 \(q\mid N(S)\) 且 \(q\notin S\)。因此可以构造图
 
 \[
 S\longrightarrow S\cup\{q\},
@@ -420,7 +425,7 @@ M^{z(p)}\equiv aI\pmod p,\qquad a\ne0.
 \mathcal A[\kappa]=\frac12\int_0^T\dot\kappa(t)^2\,dt.
 \]
 
-现有 HilbertSubspaceAction 定理给出唯一极小路径，即仿射插值，且
+[HilbertSubspaceAction](../../../Blueprint/D5/S3/Observer/HilbertGeometry/HilbertSubspaceAction.md) 给出唯一极小路径，即仿射插值，且
 
 \[
 \mathcal A_{\min}=\frac{(\kappa_1-\kappa_0)^2}{2T}.
@@ -529,7 +534,7 @@ r\min\{\alpha,\beta,1-\alpha,1-\beta\}.
 
 因此隐藏纤维的绝对长度按 \(r\) 缩放，关联 determinant 按 \(r^2\) 缩放，而条件分布中的关联 \(\eta-\alpha\beta\) 可以保持 \(O(1)\)。
 
-概率 Fisher 度量在这个分解下满足
+在 \(0<r<1\) 且底部四格 \(q_i>0\) 的内部，概率 Fisher 度量在这个分解下满足
 
 \[
 ds_F^2
@@ -924,7 +929,7 @@ u_\beta H_\beta f
 - \(-\gamma r\Lambda_q A_q\partial_\eta\) 是隐藏纤维上的 Onsager/KL 梯度流；
 - 最后一项是 prime seam、Fibonacci phase 或 kernel layer 的离散跳跃。
 
-当前文档已经严格推导了径向捕获和纤维耗散两个特例。把 kernel 跳跃和 prime 跳跃加入同一个 \(\mathcal G\) 仍是候选框架，需要为每个离散跳跃指定高度更新、fiber lift 和成本单位。
+§§3、9 的径向捕获和纤维耗散是两个特例。把 kernel 跳跃和 prime 跳跃加入同一个 \(\mathcal G\) 仍是候选框架，需要为每个离散跳跃指定高度更新、fiber lift 和成本单位。
 
 在这个统一框架中，必须区分三种逃逸：
 
@@ -960,7 +965,7 @@ g_1=h_1-h_0,\qquad g_2=h_2-h_1,\qquad
 \bigl\{|h_i-h_k|:i<k\bigr\}=\{2,4,6\}.
 \]
 
-这给出了一个最小的“二点投影相同、三点读出可分离”例子。任何只依赖无序二点距离的观测，都不能区分 \(H_+\) 与 \(H_-\)；要区分它们，必须保留三点的顺序、定向或三阶关联。仓库中的 triplet-wheel 记录把同一事实写成：两个三胞胎轮的 cyclic pair Gram 在每个模数上相同，而算术三点关联可以不同。因此把更高阶谱矩等同于三点算术量，需要额外的观测识别证明，不能仅由 pair Gram 推出。
+这给出了一个最小的“二点投影相同、三点读出可分离”例子。任何只依赖无序二点距离的观测，都不能区分 \(H_+\) 与 \(H_-\)；要区分它们，必须保留三点的顺序、定向或三阶关联。Foundational Formulas §16.4 给出两个三胞胎轮的 cyclic pair Gram 在每个轮模数上相同，而算术三点关联可以不同。因此把更高阶谱矩等同于三点算术量，需要额外的观测识别证明，不能仅由 pair Gram 推出。
 
 这里还有一个初等的模 \(3\) 约束。若三个大于 \(3\) 的素数形如 \(n,n+2,n+4\)，三个数在模 \(3\) 中必有一个为零，所以唯一可能的是 \(3,5,7\)。对 \(H_+\)，要避开模 \(3\) 的零类必须有 \(n\equiv2\pmod3\)；对 \(H_-\)，必须有 \(n\equiv1\pmod3\)。两者还都要求 \(n\) 为奇数。于是这两个方向是同一局部几何的两个反射取向，而不是两个独立的连续坐标。
 
@@ -1105,9 +1110,9 @@ C_3=\operatorname{Tr}\!\left(\rho\,Z_1Z_2Z_3\right)
 
 这样的三体 Pauli 串。\(C_3\) 与 \(\langle Z_iZ_k\rangle\) 属于不同阶的可观测量；前者可以在二体 Gram 完全相同的情况下分裂两条三胞胎轨道。这个量子表达是接口候选，不是声称素数三胞胎本身已经实现了某个量子态。
 
-相应地，若把三胞胎取向看成镜像奇变量，则它自然进入奇的三阶通道；二阶 pair Gram 是镜像偶的，三阶方向是镜像奇的。这与仓库中“pair Gram 相同而 arithmetic three-point correlation 不同”的审计结论一致，也解释了为什么只研究二阶谱量不足以决定三胞胎逃逸。
+相应地，若把三胞胎取向看成镜像奇变量，则它自然进入奇的三阶通道；二阶 pair Gram 是镜像偶的，三阶方向是镜像奇的。这与 Foundational Formulas §16 的“pair Gram 相同而 arithmetic three-point correlation 不同”一致，也解释了为什么只研究二阶谱量不足以决定三胞胎逃逸。
 
-### 11.2.6. 上游供应的轮筛应用与后续接口
+### 11.2.6. 轮筛反射的参数与来源
 
 固定 \(W\in\mathbb N\)、\(W\ne0\)，令 \(a\in\mathbb Z/W\mathbb Z\)。把两个有向轮的可容许条件写为
 \[
@@ -1166,15 +1171,13 @@ A_+(a)\Longleftrightarrow A_-(\rho_W(a)).
 - [ZMod.isUnit_iff_coprime](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/ZMod/Basic.lean#L809)
   取自然数代表元 \(m\) 和模数 \(n=W\)，提供单位条件与轮筛解释之间的对应。
 
-任意模数的参数化及不依赖枚举，本身不提供新的逃逸内容。这条应用链没有在本交付中成为
-新的 Lean 准入或冻结结论；本节不声称完成了该应用的内核核验。
-保留的数学意义是把候选密度、定向读出和实际素数计数分成不同对象。
+任意模数的参数化及不依赖枚举，本身不提供新的独立数学内容；候选密度、定向读出和实际素数计数仍是不同对象。
 
 \(W=30\) 的原点前缀数值和 \(W=210\) 的三点跨度数值来自 Foundational Formulas
 §16；§27 解释含重复素因子模数上的轮商。它们在这里是有限数学见证，不能据此宣称
 实际素数三胞胎无穷，也不能将未形式化的读出称作内核已核验结论。
 
-后续接口仍须分别处理：
+层间接口须保留以下对象与对应条件：
 
 - 有序间隙和归一化手性 \(\chi\)，以及反射翻转 \(\chi\) 的对应；
 - 有限轮候选、二点相关、三点相关和固定原点前缀，并明确各自的观察商；
@@ -1406,7 +1409,7 @@ D_\Psi(U_c)
 
 ### 11.2.9. 仅提高 pair Gram 谱阶数无法恢复三点方向
 
-第十六节还给出模 \(7\) 的明确边界。两个禁止点集的循环 Gram 都是
+[Foundational Formulas §16.6](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) 给出模 \(7\) 的明确边界。取两个三点禁集 \(D_+=\{0,1,5\}\)、\(D_-=\{0,1,3\}\)，其**合法补集** \(D_+^c,D_-^c\) 的循环 Gram 都是
 
 \[
 G=2I_7+2J_7,
@@ -1418,7 +1421,9 @@ G=2I_7+2J_7,
 \operatorname{Spec}(G)=\{16,2,2,2,2,2,2\},
 \]
 
-并且对所有 \(m\ge1\)：
+禁点集本身的循环 Gram 则为 \(2I_7+J_7\)，谱为 \(\{9,2,2,2,2,2,2\}\)。这是因为禁点集的自相关在零位移为三、非零位移为一；补集的对应值为四和二。这里 \(J_7\) 为全一矩阵，常数方向的特征值为七，零和子空间的特征值为零。
+
+对每个相同载体上的两个取向，Gram 逐项相等，因而对所有 \(m\ge1\)：
 
 \[
 \operatorname{tr}(G_+^m)
@@ -1426,7 +1431,7 @@ G=2I_7+2J_7,
 \operatorname{tr}(G_-^m).
 \]
 
-但三点相关在 \(W=210\) 的 \((6,30)\) witness 处仍然分离。由此得到一个严格的观测层级结论：
+上述模七矩阵是局部载体。另在 \(W=210\) 的同一轮筛载体上，§11.2.7 的两个 pair Gram 也逐项相等，而带相同位移标签 \((6,30)\) 的三点相关为一和零。因此无需把模七矩阵与模二百一十矩阵认作同一个矩阵，就得到观测层级结论：
 
 \[
 \text{所有 pair Gram 谱矩}
@@ -1434,14 +1439,13 @@ G=2I_7+2J_7,
 \text{三点算术方向}.
 \]
 
-形式化时必须分别定义 pairCorr 与 tripleCorr。不能尝试从 Gram 的谱矩反推出三胞胎方向。
+pair Gram 的矩阵指标与算术三点相关的位置标签是不同的读出；前者的全部谱矩不能反推出三胞胎方向。§11.2.8 的 \(q=3\) 联合概率纤维接缝仍是另一载体上的关系。
 
-### 11.2.10. 应用范围、来源与尚未完成的形式化
+### 11.2.10. 数学来源与适用边界
 
 §11.2.6 已给出上游单位取负、反射等价和有限基数供应的完整参数对应。
 该应用解释了每个非零模数下两个轮候选集等势，以及为何候选密度不识别方向；
-它没有产生新的独立内容定理。本文中的轮筛应用尚未取得本交付的 Lean 准入或冻结，
-也不声称已完成这些有限读出、首捕获层或与 AURIC 隐藏纤维接口的内核核验。
+它是既有结果的应用。本文的轮筛读出、首捕获层和 AURIC 隐藏纤维接口尚未取得 Lean 准入或冻结，也未完成内核核验。
 理论正文的 \(\chi=(g_2-g_1)/2\) 仍是两个直径六模板的定向坐标，
 并非由候选基数自动恢复的量。
 
@@ -1449,7 +1453,7 @@ G=2I_7+2J_7,
 由 §11.2.7 的逐项推导给出。\(W=30,b=10\) 的原点见证继续成立，
 但不承担首次性。平移不变三点仪器仍有 \(K_3^{\mathrm{TI}}=4\)，
 \(W=210,(6,30)\) 的见证以及前三层的平移等价分别给出分离和无更早分离。
-这些是有限数学推导，不是本交付新增的 machine-checked declarations；
+这些是有限数学推导；
 实际 \(T_H(x)\) 的无穷性和全 RH/Robin 目标仍未由它们解决。
 
 对应来源为：
@@ -1460,20 +1464,13 @@ G=2I_7+2J_7,
 - LayeredCapture 的既有首捕获接口，其向本节仪器的形式化接入仍待完成；
 - §11.2.6 所列固定修订的 Mathlib 供应。
 
-## 12. 可逐步形式化的定理包
+## 12. 层间兼容条件与开放桥梁
 
-建议在 D5/S3/Arith/FibonacciAtomic/AuricPyramid/ 下建立以下文件，先做静态线性代数，再做解析流：
+§§1、3 的投影、重构式、合法纤维区间、核方向和 \(\Delta\) 描述固定均值的状态；凸组合松弛保持同点与非负性，指数质量作用流进一步给出导数和收缩。§9 的径向捕获改变底部质量，保持 \(\alpha,\beta\)，其关联松弛取决于 exposure。这些是不同的状态映射。
 
-1. ProjectionFiber.lean：定义 Law、PyramidPoint、投影 \(\pi\)、重构式、fiber interval、核方向和 \(\Delta\)。
-2. ConditionalBottom.lean：定义底面条件分布，证明 \(\Delta=0\) 与条件独立的关系，并调用 MutualInformation。
-3. RelaxationMap.lean：先用凸组合形式证明 \(\kappa\) 合法、同点和 \(\Delta\) 收缩，暂时避开 Real.exp 和微分。
-4. MassActionFlow.lean：再形式化指数解、导数和 \(\Delta(t)\) 收缩。
-5. RadialCapture.lean：证明 \(r\) 的指数衰减、固定 ray、不变的 \(\alpha,\beta\) 和 exposure 公式。
-6. LayeredEscapeProduct.lean：把已有 LayerChain、capture partition 和 \(r_j,\alpha_j,\beta_j,\eta_j\) 组成 typed product。只声明 kernel refinement 与高度更新的兼容条件，不从 capture 自动推出物理热层。
-7. PrimeSeam.lean：先形式化整数四格的 \(R\mid AB\) 判据、TV 下界、分母障碍，再连接 PrimeAxisEscape。
-8. FibonacciProjectiveSeam.lean：先证明 Fibonacci 矩阵幂公式，再单独证明 projective rank 与 scalar period 的关系。
+候选层间映射须同时携带 LayerChain 的 kernel refinement、capture partition 和 \((r_j,\alpha_j,\beta_j,\eta_j)\)：更新后的坐标须给出合法五态律，且与指定高度更新和观察投影相容。离散 capture 本身不推出物理热层，也不供应这种相容性证明。
 
-第一阶段最稳的可编译范围是 ProjectionFiber、RelaxationMap 和 LayeredEscapeProduct 的有限组合部分。熵导数、对数平均和 PGL scalar period 应作为后续文件，避免第一版形式化被边界和实分析拖住。
+§6.3 的整数四格 \(R\mid AB\) 判据、TV 下界与分母障碍，若要接入 Euclid 支撑扩张，仍须给出边际计数和支撑的共同更新。Fibonacci 矩阵幂、projective rank 和 scalar period 的对应则保留自身的有限尺度因子及 \(p=2,5\) 边界。把这些算术关系、底面条件独立与互信息、熵导数及对数平均共同接入分层动力学，仍须满足各自的载体、支撑和极限条件。
 
 ## 13. Quantum lift：与四大力学统一框架的接口
 
@@ -1538,7 +1535,7 @@ q
 
 ### 13.2 四大力学的共同生成元结构
 
-把用户之前的四个方向写成同一个状态变量 \(x\) 的四类生成元：
+对同一个状态变量 \(x\)，考虑四类候选生成元：
 
 \[
 \dot x
@@ -1592,7 +1589,7 @@ L_\ell\rho L_\ell^\dagger
 
 ### 13.3 当前金字塔对应哪一部分
 
-当前 \(\kappa\) 质量作用流是对角概率 sector 上的确定性 mean-field dissipative closure：
+在底部四格均为正的内部，\(\kappa\) 质量作用流是对角概率 sector 上的确定性 mean-field dissipative closure：
 
 \[
 \dot\kappa
@@ -1608,35 +1605,83 @@ L_\ell\rho L_\ell^\dagger
 
 的直接结果，也不是一个线性 CPTP 通道的完整表达。要把它升级为量子动力学，需要构造一个量子 detailed-balance channel，使其在指定测量基下诱导出相应的 classical transition law，或明确声明它是测量后的 mean-field limit。
 
-量子系统的相对熵满足 Gibbs/free-energy 关系：
+对有限维 Hermitian Hamiltonian \(H\)、逆温度 \(\beta_{\rm th}>0\) 和实际匹配的 Gibbs 参考态
 
 \[
-D(\rho\Vert\rho_\beta)
-=
-\beta\bigl(F(\rho)-F(\rho_\beta)\bigr).
+\rho_{\beta_{\rm th}}=\frac{e^{-\beta_{\rm th}H}}{\mathcal Z_{\beta_{\rm th}}},\qquad
+\mathcal Z_{\beta_{\rm th}}=\operatorname{Tr}e^{-\beta_{\rm th}H},\qquad
+F(\rho)=\operatorname{Tr}(H\rho)-\beta_{\rm th}^{-1}S(\rho),
 \]
 
-在 \(\rho\) 和 \(\rho_\beta\) 都是块对角、且能量只依赖五个 classical sectors 时，当前的
+[Gibbs/free-energy 身份式](../../../Blueprint/D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity.md) 给出
 
 \[
-D_{\mathrm h}=rI(q)
+D(\rho\Vert\rho_{\beta_{\rm th}})
+=\beta_{\rm th}\bigl(F(\rho)-F(\rho_{\beta_{\rm th}})\bigr).
 \]
 
-可以视为量子相对熵在选定观测代数上的 classical restriction。若 \(\sigma\) 含有 coherence 或 entanglement，则完整量子相对熵还包含：
+这里 \(\beta_{\rm th}\) 与底部边际 \(\beta=Y/r\) 是不同参数。要识别 §9 的 \(D_{\rm h}\)，先固定五个正交扇区投影 \(P_i\)，满足 \(\sum_iP_i=I\)，及读出
 
 \[
-D(\rho\Vert\rho_\beta)
-=
-D_{\mathrm{classical}}
-+
-D_{\mathrm{coherence/correlation}}
+\mathcal C(\rho)=(\operatorname{Tr}P_i\rho)_i=p,\qquad
+\mathcal P(\rho)=\sum_iP_i\rho P_i.
 \]
 
-的额外部分。这个分解需要指定 pinching map 和参考 Gibbs state 后才具有定理意义。
+在 §13.1 的五维载体上，\(P_i\) 是计算基的五个一维投影。对 \(r>0\)，令 \(q\) 为归一化底面条件律，\(\alpha=X/r,\beta=Y/r\)，则 [Foundational Formulas §9.3](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) 的参考是
 
-### 13.4 与此前 QCA/Dirac 统一线的连接
+\[
+q_*=\bigl((1-\alpha)(1-\beta),\alpha(1-\beta),(1-\alpha)\beta,\alpha\beta\bigr),
+\]
 
-此前 QCA/Dirac 方案中的局部有限维 Hilbert 空间、酉局部更新、Lieb–Robinson 型有限传播和 SU(2)/Bloch 内部结构，可作为本框架的 reversible/quantum carrier 候选；若另行指定生成 Hamiltonian 及其连续时间演化，记为：
+\[
+p_*=(rq_{*,00},rq_{*,10},1-r,rq_{*,01},rq_{*,11}),\qquad
+D(p\Vert p_*)=rD(q\Vert q_*)=rI(q)=D_{\rm h}.
+\]
+
+要以模型定义的 \(D_{\rm h}\) 作为该粗读出的相对熵，须指定参考态满足 \(\mathcal C(\rho_{\rm ref})=p_*\)。它要求参考的 apex/底面权重同为 \(1-r,r\)，底面参考同为当前边际的乘积律，不能由块对角性决定。
+
+对同一扇区分解下的块对角态
+
+\[
+\rho=\bigoplus_i p_i\rho_i,\qquad
+\rho_{\rm ref}=\bigoplus_i s_i\tau_i,
+\]
+
+在支撑包含 \(\operatorname{supp}\rho\subseteq\operatorname{supp}\rho_{\rm ref}\) 时，按块展开对数得到
+
+\[
+D(\rho\Vert\rho_{\rm ref})
+=D(p\Vert s)+\sum_{i:p_i>0}p_iD(\rho_i\Vert\tau_i).
+\]
+
+因此 \(s=p_*\) 后，完整量子相对熵等于 \(D_{\rm h}\) 还要求每个正权扇区内 \(\rho_i=\tau_i\)；块对角性不会使后一个求和自动为零。五个一维扇区的对角嵌入 \(\rho=\operatorname{diag}(p),\rho_{\rm ref}=\operatorname{diag}(p_*)\) 满足这一条件。若 \(\rho\) 还有跨扇区相干且参考块对角，同一 pinching 分解在支撑包含下还给
+
+\[
+D(\rho\Vert\rho_{\rm ref})
+=D(\mathcal P\rho\Vert\rho_{\rm ref})+D(\rho\Vert\mathcal P\rho).
+\]
+
+这些附加项不能由经典五态读出恢复，也不能将扇区内相关与跨扇区相干混作一个已消失的量。
+
+若进一步要求参考态是 Gibbs 态，必须验证上述扇区权重、条件态与 \(H,\beta_{\rm th},\mathcal Z_{\beta_{\rm th}}\) 的匹配。对五个一维扇区且所有 \(p_{*,i}>0\)，模型上可取 \(E_i=-\beta_{\rm th}^{-1}\ln p_{*,i}+c\)，于是 \(\mathcal Z_{\beta_{\rm th}}=e^{-\beta_{\rm th}c}\)；这只是为指定 \(p_*\) 匹配的参考，不是任意给定物理能量的结论。高维扇区即使能量在扇区内常数，其 Gibbs 权重也为 \(d_i e^{-\beta_{\rm th}E_i}/\mathcal Z_{\beta_{\rm th}}\)，条件态为 \(I_{d_i}/d_i\)，仍须逐项匹配。若 \(p_*\) 有零分量，应在其活动支撑上定义参考，或明确给出极限；有限能量、有限正温的完整五维 Gibbs 态不能有零权重。\(r=0\) 时两份经典律均为 \(\delta_3\)，\(D_{\rm h}=0\)，不定义底面 \(q\)。
+
+**反例命题。** 块对角性和五扇区零能量不足以把完整 Gibbs 相对熵识别为 \(D_{\rm h}\)。
+
+**证明。** 取 \(r=1/2\)、均匀底面 \(q=(1/4,1/4,1/4,1/4)\) 和五个零能量。此时 \(p=p_*=(1/8,1/8,1/2,1/8,1/8)\)，故 \(D_{\rm h}=0\)；零能量 Gibbs 态却为 \(I_5/5\)，对角相对熵展开为
+
+\[
+D(\operatorname{diag}(p)\Vert I_5/5)
+=\frac12\ln\frac58+\frac12\ln\frac52
+=\ln\frac54>0.
+\]
+
+∎
+
+一般物理 Gibbs 参考与 \(p_*\) 的匹配，以及非线性流的量子实现，仍是条件接口。
+
+### 13.4 QCA/Dirac 载体的条件接口
+
+QCA/Dirac 模型中的局部有限维 Hilbert 空间、酉局部更新、Lieb–Robinson 型有限传播和 SU(2)/Bloch 内部结构，可作为本框架的 reversible/quantum carrier 候选；若另行指定生成 Hamiltonian 及其连续时间演化，记为：
 
 \[
 U_{\mathrm{QCA}}^t
@@ -1658,9 +1703,9 @@ Fibonacci 或黄金 transfer 可以作为离散的 SL\(_2\) sector，量子 phas
 \text{KL/Onsager dissipation}.
 \]
 
-已有 EntropyProductionCoherenceDeletionIdentity 的熵产身份式要求有限维密度态、实际给定的酉 \(U\)，以及每步关系 \(\rho_{k+1}=\operatorname{pinch}(U\rho_kU^\dagger)\)；它本身不提供上述非线性流的通道或极限推导。Boundary Calculus §§13.4–13.6 的相干递归还要求共同输出载体、跨历史相位和满足 \(\sum_aK_{a|h}^\dagger K_{a|h}=I\) 的算子，并保留以后可能重接的实际环境、控制和记忆。重复使用同一环境与每步使用新环境是不同的更新，不能仅由经典边际或通道名称确定这条桥接。
+[EntropyProductionCoherenceDeletionIdentity](../../../Blueprint/D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.md) 的熵产身份式要求有限维密度态、实际给定的酉 \(U\)，以及每步关系 \(\rho_{k+1}=\operatorname{pinch}(U\rho_kU^\dagger)\)；它本身不提供上述非线性流的通道或极限推导。Boundary Calculus §§13.4–13.6 的相干递归还要求共同输出载体、跨历史相位和满足 \(\sum_aK_{a|h}^\dagger K_{a|h}=I\) 的算子，并保留以后可能重接的实际环境、控制和记忆。重复使用同一环境与每步使用新环境是不同的更新，不能仅由经典边际或通道名称确定这条桥接。
 
-此前的关系
+候选运动学关系
 
 \[
 v_{\mathrm{ext}}^2+v_{\mathrm{int}}^2=c^2
@@ -1679,59 +1724,11 @@ v_{\mathrm{ext}}^2+v_{\mathrm{int}}^2=c^2
 
 这还没有产生 Maxwell 方程、U(1) curvature 或真实电磁场。要完成电磁连接，需要在层状态上定义 gauge group action、link variable、field strength 和 gauge-invariant cost，并证明其与 kernel refinement 及 radial transport 的兼容性。
 
-因此当前的四大力学对应关系是：
+上述四类接口的条件分别为：
 
-| 方向 | 当前框架中的对象 | 当前状态 |
+| 方向 | 模型对象 | 所需桥梁与适用边界 |
 |---|---|---|
-| 动力学 | QCA/SL\(_2\) reversible transfer、候选 Hamiltonian flow | 有模型锚点，尚未与全部 seam 合并 |
-| 量子力学 | \(\rho\)、unitary、pinching、CPTP/GKSL | 有严格接口，金字塔是 classical readout sector |
-| 热力学 | \(D_{\mathrm h}\)、Onsager mobility、free-energy decrease | κ-flow 已给出理论模型 |
+| 动力学 | QCA/SL\(_2\) reversible transfer、候选 Hamiltonian flow | 与各 seam 的共同状态映射仍待构造 |
+| 量子力学 | \(\rho\)、unitary、pinching、CPTP/GKSL | 指定载体、读出和通道；金字塔是 classical readout sector |
+| 热力学 | \(D_{\mathrm h}\)、Onsager mobility、free-energy decrease | 内部 κ-flow；Gibbs 识别要求匹配参考；环境热须另供协议 |
 | 电磁/规范 | horizontal connection、phase、boundary port | 仍是待构造的 field extension |
-
-## 14. 证据账本：已有结果、本文推导与下一步 formalization
-
-### 已有仓库结果
-
-- AURIC FIB 五态概率律、金字塔像、κ fiber、fiber width 和 determinant \(\Delta\)。
-- 最大熵完成、KL/条件互信息身份式和 TV 关系。
-- KernelChain、LayeredCapture 的分层捕获、survival/hazard 望远镜。
-- GoldenHeatLayers 的 \(\alpha_k\) 单调下降和 \(\alpha_0=1/\varphi^2\)。
-- PrimeAxisEscape 的 Euclid 外部素数扩张。
-- HilbertSubspaceAction 的固定端点二次作用量极小路径。
-- Gibbs/relative-entropy、量子关联和 Jarzynski 相关的独立热力学接口。
-
-### 本文件新增加的数学模型
-
-- 用唯一核方向 \(\nu=(1,-1,0,-1,1)\) 定义 κ 质量作用流。
-- 精确解 \(\kappa(t)=\kappa_*+(\kappa_0-\kappa_*)e^{-\gamma rt}\)。
-- \(\Delta\)、TV、KL 和条件互信息的单调/指数收缩结论。
-- 非对称 \(k_f,k_r\) 下的详细平衡 free-energy 下降和熵产生。
-- 黄金层到金字塔高度 \(r_k,Z_k\) 的显式 embedding。
-- Euclid 素数轨迹、Fibonacci projective rank 与 κ 耗散之间的类型化接口。
-
-这些是理论层的模型推导；轮筛反射与等势部分明确应用 §11.2.6 所列上游供应，不作为新的独立数学内容。模六的首次原点前缀分离、模三十的后续原点见证和模二百一十的平移不变三点见证仍是有限数学论证，尚未成为本交付新增的 Lean 准入、冻结或内核核验结果。其形式化接口与实际物理实现均保留各自尚未完成的义务。
-
-### 建议的下一批 Lean 目标
-
-1. 在五态向量上形式化 \(\nu\) 的四个守恒量和一维 κ lift。
-2. 证明 \(\kappa_*\) 位于可行区间，并用凸组合证明正性和不变性。
-3. 形式化 \(\Delta(t)\) 与 TV 的指数收缩。
-4. 在自然对数版本中证明 \(\dot H_{\ln}\ge0\) 和详细平衡 free-energy 下降。
-5. 给 KernelChain/LayeredCapture 加上 \((P_j,\kappa_j,D_j)\) 的 typed product，而不是把离散 escape 和宏观 law 混成一个标量。
-6. 证明 Fibonacci 的 projective order 与 full Pisano period 之间的有限尺度因子，并显式处理 \(p=2,5\)。
-
-## 仓库锚点
-
-- docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md
-- docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md
-- Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.md
-- Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.md
-- Blueprint/D5/S3/Midline/HeatLayers/GoldenHeatLayers.md
-- Blueprint/D5/S3/Axis/PrimeAxisEscape.md
-- Blueprint/D5/S3/Observer/HilbertGeometry/HilbertSubspaceAction.md
-- Blueprint/D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.md
-- Blueprint/D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity.md
-- Blueprint/D5/S3/Entropy/Thermodynamics/JarzynskiSecondLaw.md
-- 与 AURIC FIB escape audit typed spec 相邻的 PR #14815
-
-本文只建立理论接口和可验证的下一步，不宣称已经完成 AURIC 到 Information Escape 的 Lean bridge，也不宣称素数轨迹是唯一的物理几何轨迹。

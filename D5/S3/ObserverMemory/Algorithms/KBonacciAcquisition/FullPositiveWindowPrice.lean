@@ -79,7 +79,7 @@ def ChildPresetPrice {Y : Type z} (k m : ℕ) (hk : 0 < k) (alphabet : Bool)
     (fun π => ∃ stream : ℕ → AllowedBlock k m alphabet,
       PresetPolicy stream archive.length π))
 
-private theorem price_exact (feasible : ℕ → Prop) (n : ℕ)
+theorem price_exact (feasible : ℕ → Prop) (n : ℕ)
     (attains : feasible n) (least : ∀ d, feasible d → n ≤ d) :
     BudgetPrice feasible = (n : ℕ∞) := by
   rw [BudgetPrice, ENat.iInf_eq_natCast_iff]
@@ -187,7 +187,7 @@ private theorem trace_terminal {Y : Type z} {k m : ℕ}
     obtain ⟨chosen,reply,next⟩ := traced
     simpa only [List.append_assoc, List.singleton_append] using ih _ _ next
 
-private theorem trace_congr {Y : Type z} {k m : ℕ}
+theorem trace_congr {Y : Type z} {k m : ℕ}
     (π τ : NarrowWindowCost.Selector m Y) (free : Option (ZMod 2))
     (same : ∀ ar, π free ar = τ free ar)
     (issued : NarrowWindowCost.Archive m) (q : Option (LiveRecord k))
