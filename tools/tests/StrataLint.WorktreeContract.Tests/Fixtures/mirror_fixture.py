@@ -69,3 +69,4 @@ class MirrorCases:
         self.assertFalse(failed.exists())
         self.assertEqual(before, self.g(self.main, "worktree", "list", "--porcelain"))
         self.assertEqual("", self.g(self.main, "for-each-ref", "refs/heads/" + branch))
+# C7_MIRROR_POSITIVE_6ACAC960
