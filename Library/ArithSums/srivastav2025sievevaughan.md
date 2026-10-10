@@ -2678,3 +2678,148 @@ samples, same-source mean rate, other recovery terms and complete
 signed Robin tail retain their original obligations; no RH
 conclusion or estimate for an arbitrary new polynomial positive
 part is asserted.
+
+## The actual type-II coefficients have an infinite negative-part cost
+
+Fix the original actual $N$, its clock $A$, price
+$\epsilon=1/(A\log A)$, and the weights and cutoffs above. The
+following is an application of the published recovery (SV1), not
+a new recovery theorem or a Lean-certified result. It tests a
+coefficientwise payment scheme; the original joint target (SV4)
+is unchanged.
+
+To distinguish the type-II factor from the existing divisor
+response $b_A(n)$, put
+
+$$
+b_A^{\rm II}=(\mathbf1*\theta)(\mathbf1*\lambda)
+=\delta_1-\mathbf1*h.
+$$
+
+The second equality is the divisor-product identity used in the
+proof of Lemma 2.1: $(\mathbf1*\mu)(n)=\delta_1(n)$,
+$\lambda(1)=1$, and
+$(\mathbf1*\theta')(\mathbf1*\lambda)=\mathbf1*h$.
+Reuse that identity directly. For every ordinary prime $p$, let
+$a_p=v_p(N)$ and define the original increment and its complement by
+
+$$
+\begin{aligned}
+\beta_j(p)&=\log\frac{1-p^{-(j+1)}}{1-p^{-j}},\qquad j\ge1,\\
+W_N(p^k)&=w_{N,p,k}
+=\log p-\epsilon^{-1}\beta_{a_p+k}(p),\\
+\Gamma_N(p^k)&=\epsilon^{-1}\beta_{a_p+k}(p),\qquad k\ge1.
+\end{aligned}
+$$
+
+Both arithmetic functions vanish away from prime powers. They
+retain every actual multiplicity, and $W_N+\Gamma_N=\Lambda$.
+The original CA price gives $0\le W_N(p^k)\le\log p$.
+Consequently the complete type-II term splits exactly as
+
+$$
+b_A^{\rm II}*\Lambda_{>V}
+=T_N^w+T_N^g,\qquad
+T_N^w=b_A^{\rm II}*(W_N)_{>V},\quad
+T_N^g=b_A^{\rm II}*(\Gamma_N)_{>V}.
+\tag{SV67}
+$$
+
+### Actual rough multiples retain the original gains
+
+Call $n$ $V$-rough when every prime factor of $n$ exceeds $V$.
+Since $R<U_1<V$, for such $n>1$ the only divisors in the
+supports of $\lambda$ and $\theta'$ are one. Their values at
+one are both one. Hence
+
+$$
+b_A^{\rm II}(1)=0,\qquad
+b_A^{\rm II}(n)=-1\quad(n>1\text{ is }V\text{-rough}).
+$$
+
+If additionally $(n,N)=1$ and $n$ has at least two distinct
+prime factors, every prime-power divisor is proper. All the
+convolution factors $b_A^{\rm II}(n/p^k)$ are therefore $-1$,
+and $a_p=0$ on these primes. The complete layer telescoping gives
+
+$$
+T_N^w(n)=-\sum_{p^k\mid n}w_{N,p,k}
+=-\log n+\epsilon^{-1}\log Z(n).
+\tag{SV68}
+$$
+
+The same source's all-integer right-tail comparison applies to
+the actual competitor $Nn$. Multiplicativity, using $(n,N)=1$,
+gives
+
+$$
+0\le\log Z(n)
+\le\log\frac{\log(A+\log n)}{\log A}
+=o_N(\log n).
+$$
+
+Thus (SV68) is $-\log n+o_N(\log n)$ on these integers. The
+comparison is applicable but is not necessary for this asymptotic:
+the ordinary bound $Z(n)\le\sum_{d\le n}1/d\le1+\log n$
+already suffices at fixed $N$. No favorable actual source phase
+or additional prime-distribution hypothesis has been selected.
+
+### The full kernel detects divergence on one arithmetic progression
+
+Set
+
+$$
+M_N=\operatorname{lcm}\left(\operatorname{rad}(N),
+\prod_{p\le V}p\right).
+$$
+
+Choose two distinct primes $p_0,q_0>\max\{V,P^+(N)\}$ and put
+$n_j=p_0q_0(1+jM_N)$ for $j\ge0$. Euclid's theorem supplies
+these two primes; no enumeration or progression-prime theorem
+is needed. Each $n_j$ is $V$-rough, coprime to $N$, and has at
+least the two distinct prime factors $p_0,q_0$. Also
+$n_j>A$, since $p_0q_0>V^2=A$. Every $Nn_j$ is an actual
+integer covered by the original source comparison.
+
+For any fixed real $a<1$ and $b$, (SV68) gives eventually
+
+$$
+[-T_N^w(n_j)-a\log n_j-b]_+
+\ge\frac{1-a}{2}\log n_j.
+$$
+
+Retain the complete original kernel, including its logarithmic
+correction:
+
+$$
+k(t)=\frac{1+\log t}{t^2\log^2t}
+=-\frac{d}{dt}\frac1{t\log t},\qquad
+\int_n^\infty k(t)\,dt=\frac1{n\log n}\quad(n>1).
+$$
+
+Tonelli's theorem for the nonnegative integrand now gives
+
+$$
+\begin{aligned}
+\int_A^\infty\sum_{n\le t}
+[-T_N^w(n)-a\log n-b]_+\,k(t)\,dt
+&\ge\frac{1-a}{2}\sum_{j\ge j_0}\frac1{n_j}\\
+&=\infty.
+\end{aligned}
+\tag{SV69}
+$$
+
+The last series is a fixed positive multiple of
+$\sum_j(1+jM_N)^{-1}$. Fixing the original $N$ precedes
+taking the infinite integration endpoint; a large fixed modulus
+cannot make this harmonic series converge.
+
+In particular, no representation
+$T_N^w(n)+a\log n+b=Q_N(n)+E_N(n)$ with $Q_N(n)\ge0$
+can satisfy
+$\int_A^\infty\sum_{n\le t}|E_N(n)|k(t)\,dt<\infty$
+when $a<1$: at each negative coefficient,
+$|E_N(n)|\ge[-T_N^w(n)-a\log n-b]_+$.
+This excludes such coefficientwise nonnegative combinations of
+source comparison defects plus an absolutely integrable error.
+It asserts nothing for $a\ge1$ or for a joint signed estimate.
