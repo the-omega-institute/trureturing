@@ -1,0 +1,120 @@
+### 9. 九、如何接入当前 §§34–35 的未来响应结果
+
+Claim status: open.（供文 I 原第 9 节全文。）
+
+> 编者限定（I.9）：FR §§34–35 的恢复限定于一个已安装且固定的先验、至少两个不同正整数深度的正支持、实际正概率有限历史、活动第四段、原合法接口及精确响应。单标量恢复限定于两点支持，并非任意混合后验、未知先验或有限精度的稳定逆。相位、活计数、chronology、selected-count bank、隐藏样本 $K$ 以及 active/pending0/pending1/delivered 各有不同的记录或权限；提出的 $(P,W,\text{phase},\text{boundary})$ 不是未指定联合来源的自动充分状态。
+
+
+当前提交 §§34–37 的主要结论可以压缩成下面的形式。
+
+对固定的非单例深度先验，令
+
+$$
+\Omega_{\mathrm{FR}}(h) =
+(D_h(1),D_h(2))
+$$
+
+表示文档中的两维未来响应窗口。则在活动第四段历史上：
+
+$$
+\nu_h=\nu_{h'}
+\Longleftrightarrow
+(A_h,B_h)=(A_{h'},B_{h'}),
+$$
+
+并且
+
+$$
+\Omega_{\mathrm{FR}}(h) =
+\Omega_{\mathrm{FR}}(h')
+$$
+
+等价于：
+
+- 隐藏深度后验相同；
+- 已支付 Read 计数 $(A,B)$ 相同；
+- 当前 phase 相同；
+- 完整合法剩余未来律相同。
+
+这是一项重要的动态充分性结果，但必须满足：
+
+1. 先验已经固定；
+2. 支持至少包含两个正深度；
+3. 历史位于活动第四段；
+4. 响应值是精确值；
+5. 使用原始合法接口；
+6. 不能把 pending、delivered 和 active 混成同一个状态。
+
+文档还给出了两点支持时的单标量恢复。定义
+
+$$
+f_k=\frac{r_k}{1-r_k+r_k^2},
+\qquad
+g_k=\frac{r_k^2}{1-r_k+r_k^2}.
+$$
+
+若当前 phase 为 $p$，则
+
+$$
+q_{\mathrm{FR}}(h) =
+\nu_h(i)f_i+\nu_h(j)f_j.
+$$
+
+若当前 phase 为 $\beta$，则
+
+$$
+q_{\mathrm{FR}}(h) =
+\nu_h(i)g_i+\nu_h(j)g_j.
+$$
+
+两个 phase 的响应区间不相交，因此精确的 $q_{\mathrm{FR}}$ 可以先恢复 phase，再恢复后验，最后通过
+
+$$
+x=
+\frac{\nu_h(j)/\nu_h(i)}
+{\mu_j/\mu_i} =
+\left(\frac{r_j}{r_i}\right)^A
+\left(\frac{s_j}{s_i}\right)^B
+$$
+
+恢复整数计数 $A,B$。
+
+这说明动态未来响应的逻辑顺序应当是：
+
+$$
+\text{精确响应}
+\to
+\text{phase}
+\to
+\text{posterior}
+\to
+\text{Read counts}
+\to
+\text{future law}.
+$$
+
+而静态五态层的逻辑顺序是：
+
+$$
+(P,W)
+\to
+\kappa
+\to
+p_{\mathrm{null}},p_1,p_2,p_3,p_{13}.
+$$
+
+两条链不能互相替代。更准确地说，应当使用：
+
+$$
+(P,W,\text{phase},\text{boundary})
+$$
+
+作为动态未来预测的输入。若还要恢复实际观察者的完整记忆，则还需要：
+
+- chronology；
+- selected-count bank；
+- 已交付或待交付的 Stop 标签；
+- 其他由接口明确声明并实际持有的记录。
+
+---
+

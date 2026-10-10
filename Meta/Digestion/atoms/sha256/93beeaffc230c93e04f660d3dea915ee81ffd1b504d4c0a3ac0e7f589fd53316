@@ -1,0 +1,8 @@
+# Auric FIB ATOM：联合投影、多窗关系阶数与响应纤维
+
+**Reference input: open.** 本卷完整保存三份供文的陈述、定义、证明、证明草图、表格、例子、重复说明、历史归属、总结与拟议形式化内容。原作者称为“定理”或“证明”的文字仍是 open 参考输入；Lean 声明、证明项及其公理闭包才承载本库形式系统内的数学真值，本文不认证当前 Lean/Frozen 状态、物理实现或优先权。
+
+**来源。** 供文属 mixed supplied provenance，原始作者及原始模型均 unknown；接收时点为 2026-10-10。来源标识分别为 `joint-projection-source.md`、`multiwindow-relational-order-source.md`、`response-fiber-source.md`。下表的 SHA-256 标识接收的原始文件，正文中的来源边界标识各自完整文本的归属，不把编辑者注释归给原作者。
+
+| 部分 | 原始供文标识 | 原始物理行数 | 原始 SHA-256 |
+| --- | --- | ---: | --- |
