@@ -131,7 +131,7 @@ internal sealed class NullReplyFiberDocument : IScribeDocumentDefinition
                 + "Arena.StateEnumeration and the FusedCorrectness declarations fusedFull_eq_escapeNumerator, "
                 + "fusedUnique_eq_uniqueCaptureCount and fusedWithout_eq_escapeNumerator_without; generated "
                 + "extensional kernels and layeredCapture_partition retain their existing hypotheses. Their use "
-                + "requires each client's source and table reflection proofs, not a new bind-only theorem. "
+                + "requires each client's source and table reflection proofs. "
                 + "A probability law and its same-source pushforward are needed for the macro and conditional "
                 + "readings, not for unweighted micro counts. An absent law leaves its law statistics unknown; "
                 + "missing or unsupported acquisition evidence makes the affected reading unavailable; a finite "
