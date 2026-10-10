@@ -25,7 +25,7 @@ The source leaves Conjecture 5.9 open after a finite verification. The settling 
 
 ## Gap
 
-Issue [#14878](https://github.com/the-omega-institute/trureturing/issues/14878) preregistered the source statement, conventions, route and criteria. The pinned v5 source states Conjecture 5.9 and does not give a universal proof. The related Xiong–Yip result, arXiv:2604.04126, Theorem 1.6, assumes $q\equiv-1\pmod d$; here $q=p^2$ and $d=p+1$ give $q\equiv1\pmod d$, so it does not supply this classification.
+Issue [#14878](https://github.com/the-omega-institute/trureturing/issues/14878) preregistered the source statement, conventions, route and criteria. The pinned v5 source states Conjecture 5.9 and does not give a universal proof. The related Xiong–Yip result, arXiv:2604.04126v1, Theorem 1.8 and Corollary 1.9, assumes $q\equiv-1\pmod d$; here $q=p^2$ and $d=p+1$ give $q\equiv1\pmod d$, so it does not supply this classification.
 
 The source-bound escape audit is unfinished under [#14979](https://github.com/the-omega-institute/trureturing/issues/14979). The delivered head carries no registration for the public theorem targets. Their DTR verdict is `DTR-Unregistered`; the missing evidence is a decodable, faithful typed registration with enrolled-template binding for each target. This audit status does not alter the kernel-checked settlement.
 
@@ -41,7 +41,7 @@ lands in the quadratic subfield. Equal classes give the cross-product equation f
 
 ## Falsifier
 
-A counterexample would be an odd prime, primitive root, admissible two-dimensional subspace and index set satisfying the formal hypotheses while violating the stated equivalence. The proof does not classify the source’s Conjectures 5.6–5.8, higher-dimensional cliques, or other divisors $d\mid q+1$.
+A counterexample would be an odd prime, primitive root, admissible two-dimensional subspace and index set satisfying the formal hypotheses while violating the stated equivalence. The proof does not classify the source’s Conjectures 1.4, 5.6, or 5.8, higher-dimensional cliques, or other divisors $d\mid q+1$.
 
 ## Evidence
 
@@ -61,12 +61,12 @@ The numerical reading is the experiment entry [`check.py`](https://github.com/th
 - **Proved:** cliquehood forces all fibers to be pairs and forces $V=\mathbb F_p\oplus a\mathbb F_p$ with $a=g^{(p+1)k}$. The settling result supplies the complete equivalence.
 - **Proved:** the fibers for the selected generator are the orbits of $t\mapsto C/t$ with $C=a^{p^2+1}$, and the parity of $k$ decides whether $C$ is a square and singleton fibers occur. Odd $k$ gives the clique and even $k$ is excluded.
 - **Computed:** the number of cliques is $(p^2+1)/2$ in the tested scope $p\in\{3,5,7\}$. The command, exit code and script SHA-256 are recorded in Evidence above; a uniform counting theorem beyond the tested scope remains open.
-- **Literature:** Xiong–Yip arXiv:2604.04126, Theorem 1.6, does not cover this congruence case $q\equiv1\pmod{p+1}$.
-- **Open:** the source’s Conjectures 5.6–5.8 are not addressed by this settlement.
+- **Literature:** Xiong–Yip arXiv:2604.04126v1, Theorem 1.8 and Corollary 1.9, do not cover this congruence case $q\equiv1\pmod{p+1}$.
+- **Open:** the source’s Conjectures 1.4, 5.6, and 5.8 are not addressed by this settlement; Proposition 5.7 is a separate density proposition.
 - **Open:** classification by the degree-two class-map method for $PP(q^2,d,I)$ with other $d\mid q+1$ remains open.
 - **Open:** higher-dimensional cliques remain open.
-- **Open:** the source’s implication from Conjectures 5.6, 5.7 and 5.9 to Conjecture 5.8 therefore remains conditional on the first two conjectures.
+- **Open:** Proposition 5.10 states that Conjectures 1.4, 5.6, and 5.9 together imply Conjecture 5.8. After this settlement of Conjecture 5.9, that implication remains conditional on Conjectures 1.4 and 5.6.
 
 ## ASSUMED-UNVERIFIED
 
-The literature non-settlement reading is bounded to the source and searches recorded in issue #14878; it is not an exhaustive priority certificate. The finite computation tests only $p=3,5,7$. Uniform counting, the other source conjectures, other divisors and higher-dimensional cliques remain outside this result. The escape audit remains unfinished at #14979 with `DTR-Unregistered` observations and missing registration evidence.
+The literature non-settlement reading is bounded to the source and searches recorded in issue #14878; it is not an exhaustive priority certificate. The finite computation tests only $p=3,5,7$. Conjectures 1.4, 5.6, and 5.8, other divisors and higher-dimensional cliques remain outside this result. The escape audit remains unfinished at #14979 with `DTR-Unregistered` observations and missing registration evidence.

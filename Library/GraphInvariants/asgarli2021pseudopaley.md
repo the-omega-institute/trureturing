@@ -38,7 +38,7 @@ Proposition 5.10 (pp. 17–18):
 
 > Conjecture 1.4, Conjecture 5.6, and Conjecture 5.9 together imply Conjecture 5.8.
 
-The Proposition's proof counts $(p^2+1)/2$ subspaces of the indicated form. That count and the implication to Conjecture 5.8 are literature statements; the Lean classification does not certify a general counting theorem or prove Conjectures 1.4 or 5.6–5.8.
+The Proposition's proof counts $(p^2+1)/2$ subspaces of the indicated form. That count and the implication to Conjecture 5.8 are literature statements; the Lean classification does not certify a general counting theorem or prove Conjectures 1.4, 5.6, or 5.8. Proposition 5.7 is a separate density proposition.
 
 ## Encoding and scope
 
@@ -46,4 +46,4 @@ The formal field is `GaloisField p 4`, with prime field `ZMod p`. The cyclotomic
 
 The class-map argument uses the norm power $(b+t)^{p^2+1}$ and its quadratic expansion. Nonconstant projective fibers have at most two points. Cliquehood forces paired fibers; the norm of the selected generator power is a square exactly when the index is even. The internal projective line is `Option (ZMod p)`, with `none` representing infinity and the mate exchanging infinity with zero.
 
-The related Xiong–Yip theorem (arXiv:2604.04126, Theorem 1.6) assumes $q\equiv-1\pmod d$. Here $q=p^2$ and $d=p+1$ give $q\equiv1\pmod d$, so that result does not supply this classification. Its application and the absence of a prior settlement remain subject to the literature readings in the problem dossier.
+The related Xiong–Yip theorem (arXiv:2604.04126v1, Theorem 1.8, with Corollary 1.9) assumes $q\equiv-1\pmod d$. Here $q=p^2$ and $d=p+1$ give $q\equiv1\pmod d$, so that result does not supply this classification. Its application and the absence of a prior settlement remain subject to the literature readings in the problem dossier.
