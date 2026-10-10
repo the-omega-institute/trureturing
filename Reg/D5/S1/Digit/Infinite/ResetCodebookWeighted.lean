@@ -34,7 +34,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   have hh' := hh [false]
-  norm_num [rejected,realize] at hh' 
+  norm_num [rejected,realize] at hh'
 def registration : Registration arena sourceStatement where
   actual := actual
   bridge := Iff.rfl
@@ -124,4 +124,3 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.ResetCodebookWeighted.codebook_finite
-
