@@ -39,10 +39,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (p := 2) (by decide) 0 1 0
   have hd := golden_prime_local_objective_diff (by decide : Nat.Prime 2) 0 0
-  change geometricMismatchBudget 0 2 1 0 ≤
-    (goldenPrimeLocalObjective 0 2 0 + (0 : ℝ)) -
-      (goldenPrimeLocalObjective 0 2 1 + (1 : ℝ)) at hh
-  norm_num [geometricMismatchBudget, Finset.sum_range_succ] at hh
+  norm_num [rejected, realize, geometricMismatchBudget, Finset.sum_range_succ] at hh
   norm_num at hd
   nlinarith
 
@@ -60,7 +57,7 @@ def familyRegistration : Registration arena
     refine ⟨(0, 2), 0, 1, ?_⟩
     change goldenPrimeLocalObjective 0 2 0 ≠ goldenPrimeLocalObjective 0 2 1
     norm_num [goldenPrimeLocalObjective]
-    exact (Real.log_pos (by norm_num : (1 : ℝ) < 3 / 2)).ne.symm
+    exact (Real.log_pos (by norm_num : (1 : ℝ) < 3 / 2)).ne
 
 /-- Faithful family proof; source-coordinate binding remains unfinished under issue5214.
 `sourceSelection := none` is deliberately disclosed and is not declared_validated.
@@ -91,6 +88,11 @@ def registration : LeanInformationAudit.Contract.Registration
   familyRecord := none
   options := #[]
 
+#print axioms signature
+#print axioms arena
+#print axioms actual
+#print axioms rejected
+#print axioms rejected_law
 #print axioms familyRegistration
 #print axioms registration
 

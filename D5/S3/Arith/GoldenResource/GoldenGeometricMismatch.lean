@@ -83,8 +83,9 @@ private theorem layer_contraction {p k : ℕ} (hp : p.Prime) (hk : 1 ≤ k) :
       (p : ℝ)⁻¹ * (1 - ((1 - (p : ℝ)⁻¹ ^ (k + 1)) /
         (1 - (p : ℝ)⁻¹ ^ k))⁻¹) := by
     rw [inv_div]
-    field_simp [he.ne', hp0.ne']
-    simp only [pow_succ]
+    generalize (p : ℝ)⁻¹ = q at he ⊢
+    simp only [pow_succ] at he ⊢
+    field_simp [he.ne']
     ring
   unfold goldenLayerMarginal
   simp only [mul_div_cancel₀ _ hl]
@@ -150,6 +151,7 @@ private theorem extra_layers_gap {p : ℕ} (hp : p.Prime)
       push_cast
       have hindex : m + 1 + j = m + j + 1 := by omega
       rw [hindex] at hb
+      simp only [Nat.add_zero, Nat.succ_eq_add_one, Nat.add_assoc] at *
       nlinarith
 
 /-- The geometric budget is a lower bound on the actual local prime-power gap.
@@ -160,8 +162,10 @@ theorem prime_power_objective_gap_ge_geometric_mismatch {p : ℕ} (hp : p.Prime)
       goldenPrimeLocalObjective lambda p m - goldenPrimeLocalObjective lambda p a := by
   unfold geometricMismatchBudget
   split_ifs with ham hma
-  · simpa [Nat.add_sub_of_le ham.le] using missing_layers_gap hp lambda a (m - a)
-  · simpa [Nat.add_sub_of_le hma.le] using extra_layers_gap hp lambda m (a - m)
+  · simpa [Nat.add_sub_of_le ham.le, Nat.cast_sub ham.le] using
+      missing_layers_gap hp lambda a (m - a)
+  · simpa [Nat.add_sub_of_le hma.le, Nat.cast_sub hma.le] using
+      extra_layers_gap hp lambda m (a - m)
   · have h : a = m := by omega
     subst a
     simp
@@ -221,6 +225,7 @@ theorem geometric_mismatch_budget_coercive {p : ℕ} (hp : p.Prime)
       have hb := mul_le_mul_of_nonneg_left (hlower (by omega)) hl.le
       have hbs := mul_le_mul_of_nonneg_right hb hs0
       have hts := mul_le_mul_of_nonneg_left hs ht
+      rw [Nat.cast_sub ham.le] at hts
       have hd : 0 ≤ ((m - a - 1 : ℕ) : ℝ) := by positivity
       nlinarith [mul_nonneg ht hd]
     · rw [Nat.dist_eq_sub_of_le_right hma.le]
@@ -230,6 +235,7 @@ theorem geometric_mismatch_budget_coercive {p : ℕ} (hp : p.Prime)
       have hb := mul_le_mul_of_nonneg_left hupper hl.le
       have hbs := mul_le_mul_of_nonneg_right hb hs0
       have hts := mul_le_mul_of_nonneg_left hs ht
+      rw [Nat.cast_sub hma.le] at hts
       nlinarith
     · have h : a = m := by omega
       subst a
@@ -279,12 +285,19 @@ theorem golden_resource_objective_gap_ge_geometric_mismatch
   · rw [mul_sum]
     apply sum_le_sum
     intro p hp
-    have h := (hlocal p hp).1
-    convert h using 1 <;> ring
+    simpa only [div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using
+      (hlocal p hp).1
   · rw [golden_resource_supremum_eq_positive_part_sum hlambda,
       ← objective_at_optimal_eq_positive_part_sum hlambda hM hcounts]
     exact hgap
 
+#print axioms geometricMismatchBudget
+#print axioms layer_contraction
+#print axioms layer_geometric_decay
+#print axioms missing_layers_gap
+#print axioms extra_layers_gap
+#print axioms missing_geometric_sum_lower
+#print axioms extra_geometric_sum_upper
 #print axioms prime_power_objective_gap_ge_geometric_mismatch
 #print axioms geometric_mismatch_budget_coercive
 #print axioms golden_resource_objective_gap_ge_geometric_mismatch
