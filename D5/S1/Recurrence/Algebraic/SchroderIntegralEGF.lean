@@ -24,14 +24,14 @@ def f : ℕ → ℕ → ℕ
 termination_by j m => (m, j)
 
 private noncomputable def F (j : ℕ) : PowerSeries ℚ := encode (fun m => f j m)
-private noncomputable def R : PowerSeries ℚ := largeSchroderSeries.map (Nat.castRingHom ℚ)
+noncomputable def R : PowerSeries ℚ := largeSchroderSeries.map (Nat.castRingHom ℚ)
 
-private theorem R_eq : R = 1 + X * R + X * R ^ 2 := by
+theorem R_eq : R = 1 + X * R + X * R ^ 2 := by
   have h := congrArg (PowerSeries.map (Nat.castRingHom ℚ))
     largeSchroderSeries_eq_one_add_X_mul_largeSchroderSeries_add_X_mul_largeSchroderSeries_sq
   simpa only [map_add, map_one, map_mul, map_X, map_pow, R] using h
 
-private theorem R_zero : constantCoeff R = 1 := by
+theorem R_zero : constantCoeff R = 1 := by
   simp [R, ← coeff_zero_eq_constantCoeff, coeff_map]
 private theorem F_zero (j : ℕ) : constantCoeff (F j) = 1 := by simp [F, f]
 private theorem F_coeff (j m : ℕ) : eCoeff (F j) m = (f j m : ℚ) := eCoeff_encode _ _
@@ -87,7 +87,7 @@ private theorem B_derivative : derivative ℚ B = F 0 := by
   push_cast
   ring
 
-private noncomputable def D : PowerSeries ℚ := 1 - X * R
+noncomputable def D : PowerSeries ℚ := 1 - X * R
 
 private theorem D_zero : constantCoeff D = 1 := by simp [D]
 private theorem D_quadratic : D ^ 2 - (1 + X) * D + 2 * X = 0 := by
@@ -122,13 +122,13 @@ private theorem algebraic_iff_linear (S : PowerSeries ℚ) (hS : constantCoeff S
     linear_combination -S^2 * D_quadratic +
       ((1+X)*D*S - 2*X*(D*derivative ℚ S+S)) * h
 
-private noncomputable def primitive (S : PowerSeries ℚ) : PowerSeries ℚ :=
+noncomputable def primitive (S : PowerSeries ℚ) : PowerSeries ℚ :=
   mk (fun n => if n = 0 then 0 else coeff (n-1) S / n)
 
 private theorem primitive_zero (S : PowerSeries ℚ) : constantCoeff (primitive S) = 0 := by
   simp [primitive]
 
-private theorem derivative_primitive (S : PowerSeries ℚ) : derivative ℚ (primitive S) = S := by
+theorem derivative_primitive (S : PowerSeries ℚ) : derivative ℚ (primitive S) = S := by
   ext n
   simp [primitive, coeff_derivative, Nat.cast_add, Nat.cast_one,
     show (n : ℚ) + 1 ≠ 0 by positivity]
