@@ -1094,3 +1094,162 @@ over integers, prime cutoffs, moduli, or characters cannot be substituted
 without a proved transport of the averaging measure. The interval
 comparison adds no new signed ordinary-prime control and leaves the
 complete original Robin tail and RH unresolved.
+
+
+## Use the existing short-interval PNT on the actual CA price path
+
+The uniform short-interval theorem in
+[Guth–Maynard, Corollary 1.3](../Analytic/guthmaynard2024largevalues.md#the-short-interval-input)
+can be applied to the same actual path in (P1). The centered
+prime-count conversion and wider interpolation scale are already in the
+[FIB theory volume, §260, equations (260.5) and (260.9)](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+They are reused here. The additional application is the transport from
+one selected $N\in\mathscr S_{\rm reg}$ to all the actual later $C_b$,
+including their higher layers and activation ties. It is a paper-level
+application of existing results, without an originality or Lean
+certification claim.
+
+Retain $A,L,T,g,k,B,X_N,X$ from (P1), in particular $B(A)=A$.
+Put
+
+$$
+u=L^{1/4},\qquad \varepsilon_A=Le^{-u},\qquad t_0=A^{2/3}.
+$$
+
+For all sufficiently large $A$, uniformly for $t_0\le t\le A$,
+the existing arithmetic inputs give
+
+$$
+|B(A+t)-B(A)-t|\le C_0\varepsilon_A t.
+\tag{P5}
+$$
+
+The [existing uniform extension (GS4)](../ArithSums/nicolas2025comparison.md#the-local-prime-input-and-its-uniform-range)
+gives the relative error
+$\ll(\log Y)e^{-(\log Y)^{1/4}}+Y^{-1/10}+Y^{-1/6}$
+on all intervals in $[Y/2,3Y/2]$ of length at least $Y^{2/3}$.
+For $2^{2/3}A^{2/3}\le t\le A$, apply it with $Y=2A$ to
+$[A,A+t]$. For $A^{2/3}\le t<2^{2/3}A^{2/3}$, use directly
+the existing centered conversion (260.9), whose range contains
+this whole segment for large $A$, and its accompanying ordinary
+prime-power correction. Both give
+
+$$
+|\psi(A+t)-\psi(A)-t|\ll\varepsilon_A t
+\qquad(t_0\le t\le A),
+$$
+
+including the already paid ordinary prime-power corrections.
+The [existing full activation correction](../ArithSums/nicolas2025comparison.md#the-arithmetic-correction-vanishes-at-the-paid-heat-scale)
+gives $|B(x)-\psi(x)|\ll\sqrt x\,[\log(2x)]^{5/2}$ for every
+large real price coordinate $x$. Its two endpoint corrections are
+$O(\sqrt A\,L^{5/2})=o(\varepsilon_A t_0)$, proving (P5).
+No regularity or GA1 hypothesis is required of any future $C_b$.
+
+Use the existing pressure from the
+[Nicolas application](../ArithSums/nicolas2025comparison.md#the-same-source-price-minimum-gives-a-nonnegative-heat-cost),
+with its almost-everywhere derivative:
+
+$$
+\begin{aligned}
+P(x)&=\gamma+\log\log x-g(x)x
+      -\max_{m\ge1}\{\log Z(m)-g(x)\log m\},\\
+P'(x)&=k(x)[x-B(x)].
+\end{aligned}
+$$
+
+The concavity tangent gap is
+
+$$
+H(b,B)=\log\log b+g(b)(B-b)-\log\log B\ge0.
+$$
+
+Since $B(A)=A$, the definitions give the exact identity
+$X_N-X(b)=P(b)-P(A)-H(b,B(b))$.
+The original $N$'s right-tail maximality supplies its nonnegative
+left side. For $0\le t<t_0$, monotonicity gives
+$A+t-B(A+t)\le t$; for $t\ge t_0$, (P5) and $B(A)=A$ give
+$A+t-B(A+t)\le C_0\varepsilon_A t$.
+Integrating the existing derivative against decreasing $k$ yields,
+for one fixed $C_1>0$ and all $A\le b\le2A$,
+
+$$
+0\le X_N-X(b)
+\le C_1 k(A)\left[A^{4/3}+\varepsilon_A(b-A)^2\right].
+\tag{P6}
+$$
+
+The short initial segment is paid by $A^{4/3}$, rather than assigning
+a favorable sign to any ordinary-prime error. The pressure comparison
+retains $B(b)$ in the tangent gap; it does not identify $B(b)$ with $b$.
+
+For example, at the already documented wider scale
+$h=A^{3/4}e^{u/2}/L$, (P6) implies
+
+$$
+\sup_{A\le b\le A+h}T[X_N-X(b)]
+\ll A^{-1/6}+\frac1L\longrightarrow0.
+\tag{P7}
+$$
+
+This is the selected-source application of that existing scale,
+not a new interpolation theorem or an upper bound for $X(b)$.
+
+
+### A wider actual-price interval for the same supplied power excess
+
+Keep the particular fixed $\eta'\in(0,1/2)$ and $c>0$ from (S2)
+and (P3). Choose a sufficiently small fixed $\lambda>0$, depending
+only on $c,C_1$, and put
+
+$$
+\widetilde h_{\eta'}(A)
+=\lambda A^{1-\eta'/2}\exp\!\left(\frac{(\log A)^{1/4}}2\right).
+$$
+
+For every fixed $\eta'>0$, this is $o(A)$; no lower bound on
+$\eta'$ beyond positivity is imposed; the sufficiently large threshold
+may depend on that fixed exponent. The reused extension (GS4) in (P5)
+therefore also covers small fixed exponents for which
+$\widetilde h_{\eta'}(A)>A^{0.99}$ eventually.
+Since
+
+$$
+\begin{aligned}
+k(A)\varepsilon_A\widetilde h_{\eta'}(A)^2
+ &=\lambda^2\left(1+\frac1L\right)A^{-\eta'},\\
+k(A)A^{4/3}&=o(A^{-\eta'}),
+\end{aligned}
+$$
+
+(P6), with $\lambda$ small enough, gives eventually
+
+$$
+X(b)\ge\frac c2A^{-\eta'}
+\quad\left(A\le b\le A+\widetilde h_{\eta'}(A)\right).
+\tag{P8}
+$$
+
+The actual-price interval is wider than (P3)'s by a factor
+$e^{(\log A)^{1/4}/2}/\sqrt{\log A}\to\infty$, up to fixed
+constants. The improvement uses the published uniform arithmetic
+estimate, with the same actual integer and all activation layers;
+it does not assert the sign of the remaining Robin tail.
+
+For the same $\delta=c/(4\,2^{\eta'})$ and $\mathcal E_X$ from
+(P4), any selected $A\in[X,2X]$ places this entire interval in
+$\mathcal E_X\subseteq[X,3X]$ eventually. Hence a sufficient
+still-missing exceptional-set estimate can be weakened to
+
+$$
+|\mathcal E_X|
+=o\!\left(X^{1-\eta'/2}
+\exp\!\left(\frac{(\log X)^{1/4}}2\right)\right).
+\tag{P9}
+$$
+
+This is a required rate in Lebesgue measure of the actual price
+variable. No bound (P9), directed mean estimate, effective cutoff,
+complete signed floor (S4), or proof of RH is obtained. Qualitative
+density $o(X)$ and averages in other variables still require the
+quantitative same-source measure transport described after (P4).
