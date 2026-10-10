@@ -119,8 +119,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookWeighted, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+      path := #["body", "body", "body", "body"], stateBinder := 0,
+      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.ResetCodebookWeighted.codebook_finite

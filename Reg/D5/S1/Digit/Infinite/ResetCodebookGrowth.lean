@@ -90,14 +90,15 @@ abbrev signature : Signature where
 
 def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ (x : ℝ) => lambda-x) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
 def sourceStatement : Prop := 0 < lambda-rho
 abbrev arena : Arena where
   signature := signature
   Law R := 0 < R.readout () () rho
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
-  exact (lt_irrefl (0 : ℝ)) hh
+  change 0 < (-1 : ℝ) at hh
+  norm_num at hh
 def registration : Registration arena sourceStatement where
   actual := actual
   bridge := Iff.rfl

@@ -75,17 +75,17 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℝ → Prop
+  Output _ _ := Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := 0 ≤ A false
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () () 0 (A false)
+  Law R := R.readout () () (A false)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   exact hh
@@ -97,13 +97,15 @@ def registration : Registration arena sourceStatement where
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨(),(0 : ℝ),(1 : ℝ),?_⟩
+    refine ⟨(),(-1 : ℝ),(0 : ℝ),?_⟩
     intro he
-    have bad : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he 0) le_rfl
+    have he' : (0 ≤ (-1 : ℝ)) = (0 ≤ (0 : ℝ)) := by
+      simpa [actual, realize] using he
+    have bad : (0 : ℝ) ≤ -1 := Eq.mpr he' (by norm_num)
     norm_num at bad
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.A_nonneg)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.A_nonneg.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.ParameterBounds.A_nonneg.registration,
   realizationSource := none, generated := false,
@@ -112,13 +114,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+      path := #[], stateBinder := 0,
+      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.ParameterBounds.A_nonneg
