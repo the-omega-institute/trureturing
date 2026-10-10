@@ -233,6 +233,59 @@ Consequently, \(\mathbb E_p[f]\) is constant on every non-degenerate \(\kappa\)-
 
 This is the first rigorous information-escape statement for the triangle interface. Any statistic with \(J_f=0\) factors through the three-coordinate quotient. It cannot see the hidden joint coupling \(\kappa\), even though two laws with the same \((X,Y,Z)\) can have different full distributions and different continuation behavior. A witness for source independence must therefore be sensitive either to a nonzero fiber coordinate or to a higher lift carrying the edge-incidence constraints.
 
+
+### Proposition 2.3: the product completion and the information action
+
+Write \(r=1-Z\) and form the bottom conditional table
+
+\[
+Q=
+\begin{pmatrix}
+r-X-Y+\kappa&Y-\kappa\\
+X-\kappa&\kappa
+\end{pmatrix}.
+\]
+
+Its determinant is
+
+\[
+\Delta=r\kappa-XY.
+\tag{2.9}
+\]
+
+When \(r>0\), the unique conditional-product completion with the same \(X,Y,Z\) is
+
+\[
+\kappa_*=\frac{XY}{r}.
+\tag{2.10}
+\]
+
+Under the finite FIB model, the entropy difference satisfies
+
+\[
+H(p_*)-H(p)=r\,I(x:y\mid z=0),
+\tag{2.11}
+\]
+
+and the total-variation difference is
+
+\[
+\|p-p_*\|_1=\frac{2|\Delta|}{r}.
+\tag{2.12}
+\]
+
+These identities provide a useful thermodynamic interpretation of the hidden fiber: \(\Delta\) measures displacement from the maximum-entropy conditional-product section. They do not turn the FIB \((x,y,z)\) variables into the three triangle sources.
+
+Under the mean-field mass-action closure used in the existing information-escape volume, the reversible move \(2+5\rightleftharpoons0+25\) has
+
+\[
+\dot\kappa=-\gamma(r\kappa-XY),\qquad
+\Delta(t)=\Delta(0)e^{-\gamma r t}.
+\tag{2.13}
+\]
+
+Thus the hidden coupling decays while the quotient coordinates remain fixed. Near the apex \(r\to0\), the fiber width is \(O(r)\), its admissible determinant is \(O(r^2)\), and the relaxation time \((\gamma r)^{-1}\) diverges. This is an escape bottleneck: the hidden amount is small but slow to resolve. Equation (2.13) is a deterministic closure, not a general quantum channel, Lindblad equation, or theorem about physical source noise. A quantum lift must separately retain coherence, entanglement, and the environment ledger.
+
 ## 3. What “three-dimensional” means in the network interface
 
 The triangle incidence matrix has three edge columns and three party rows. Each party sees exactly two columns:
