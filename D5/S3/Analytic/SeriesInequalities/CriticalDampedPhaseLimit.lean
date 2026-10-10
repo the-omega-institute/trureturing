@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Positive shrinking damping with a finite phase ratio gives the exact full-array distance limit. -/
+   digest: Shrinking damping with a finite phase ratio gives the full-array distance limit. -/
 
 import D5.S3.Analytic.SeriesInequalities.NegativeBoundaryEnvelope
 import Mathlib.Topology.Order.LiminfLimsup
@@ -265,4 +265,175 @@ private theorem damping_phase_sup_limit
   simp only [pow_mul, Complex.ofReal_exp, ← Complex.exp_add, he]
 
 
+
+/-- Multiplying the boundary in degree `i+1` transports every recursive coordinate
+in its total degree `n+k+1`. -/
+private theorem extension_graded (a : ℕ → ℂ) (z : ℂ) (n k : ℕ) :
+    extension (fun i => z ^ (i + 1) * a i) n k =
+      z ^ (n + k + 1) * extension a n k := by
+  classical
+  induction k using Nat.strong_induction_on generalizing n with
+  | h k ih =>
+    cases k with
+    | zero => simp [extension]
+    | succ k =>
+      rw [extension, extension, ih k (by omega)]
+      simp_rw [ih _ (Fin.isLt _)]
+      have hterm (j : Fin (k + 1)) :
+          z ^ (n + (j : ℕ) + 1) * extension a n j *
+            (z ^ (k - j + 1) * a (k - j)) =
+          z ^ (n + (k + 1) + 1) * (extension a n j * a (k - j)) := by
+        calc
+          _ = (z ^ (n + (j : ℕ) + 1) * z ^ (k - j + 1)) *
+              (extension a n j * a (k - j)) := by ring
+          _ = _ := by rw [← pow_add]; congr 2; omega
+      simp_rw [hterm]
+      rw [← Finset.mul_sum]
+      have hi : n + 1 + k + 1 = n + (k + 1) + 1 := by omega
+      rw [hi, mul_sub]
+
+private theorem amplitude_mono (A : ℝ) (hA : 0 ≤ A)
+    (hpos : ∀ k, 0 ≤ amplitude A k) : Monotone (amplitude A) := by
+  apply monotone_nat_of_le_succ
+  intro k
+  rw [amplitude]
+  exact le_add_of_nonneg_right (mul_nonneg hA (Finset.sum_nonneg fun j _ => hpos j))
+
+private theorem phase_coordinate_norm
+    (A ρ : ℝ) (hA : 0 < A) (hρ : 0 < ρ) (hρ1 : ρ < 1)
+    (hcrit : A * ρ = (1 - ρ) ^ 2) (ζ w : ℂ) (hζ : ‖ζ‖ = 1)
+    (U V : WeightedArray ℂ)
+    (hU : ∀ n k, U (n, k) = (ρ ^ (n + k)) •
+      extension (fun i => -(A : ℂ) * ζ ^ (i + 1)) n k)
+    (hV : ∀ n k, V (n, k) = (ρ ^ (n + k)) •
+      extension (fun i => w ^ (i + 1) * (-(A : ℂ) * ζ ^ (i + 1))) n k)
+    (n k : ℕ) :
+    ‖(U - V) (n, k)‖ =
+      ρ ^ (n + k) * amplitude A k * ‖1 - w ^ (n + k + 1)‖ := by
+  have henv := negative_boundary_envelope (K := ℂ) A ρ hA hρ hρ1 hcrit
+  have he : extension (fun i => -(A : ℂ) * ζ ^ (i + 1)) n k =
+      ζ ^ (n + k + 1) * -(amplitude A k : ℂ) := by
+    rw [show (fun i : ℕ => -(A : ℂ) * ζ ^ (i + 1)) =
+      (fun i => ζ ^ (i + 1) * -(A : ℂ)) by funext i; ring]
+    rw [extension_graded]
+    congr 1
+    simpa only [RCLike.ofReal_eq_complex_ofReal] using henv.2.1 n k
+  simp only [lp.coeFn_sub, Pi.sub_apply, hU, hV,
+    extension_graded, he, ← smul_sub]
+  have hf : ζ ^ (n + k + 1) * -(amplitude A k : ℂ) -
+      w ^ (n + k + 1) * (ζ ^ (n + k + 1) * -(amplitude A k : ℂ)) =
+      (1 - w ^ (n + k + 1)) * ζ ^ (n + k + 1) * -(amplitude A k : ℂ) := by ring
+  rw [hf, norm_smul, Real.norm_of_nonneg (pow_nonneg hρ.le _), norm_mul,
+    norm_mul, norm_pow, hζ, one_pow, mul_one, norm_neg, Complex.norm_real,
+    Real.norm_of_nonneg (henv.1 k).1]
+  ring
+
+private theorem phase_array_norm
+    (A ρ : ℝ) (hA : 0 < A) (hρ : 0 < ρ) (hρ1 : ρ < 1)
+    (hcrit : A * ρ = (1 - ρ) ^ 2) (ζ w : ℂ) (hζ : ‖ζ‖ = 1)
+    (U V : WeightedArray ℂ)
+    (hU : ∀ n k, U (n, k) = (ρ ^ (n + k)) •
+      extension (fun i => -(A : ℂ) * ζ ^ (i + 1)) n k)
+    (hV : ∀ n k, V (n, k) = (ρ ^ (n + k)) •
+      extension (fun i => w ^ (i + 1) * (-(A : ℂ) * ζ ^ (i + 1))) n k) :
+    ‖U - V‖ = sSup (range fun k : ℕ =>
+      (A / (1 + ρ) + (A / (1 + ρ) * ρ) * ρ ^ (2 * k)) * ‖1 - w ^ (k + 1)‖) := by
+  have henv := negative_boundary_envelope (K := ℂ) A ρ hA hρ hρ1 hcrit
+  have hmono := amplitude_mono A hA.le (fun k => (henv.1 k).1)
+  let q : ℕ → ℝ := fun k =>
+    (A / (1 + ρ) + (A / (1 + ρ) * ρ) * ρ ^ (2 * k)) * ‖1 - w ^ (k + 1)‖
+  have haxis (k : ℕ) : ‖(U - V) (0, k)‖ = q k := by
+    rw [phase_coordinate_norm A ρ hA hρ hρ1 hcrit ζ w hζ U V hU hV, zero_add,
+      (henv.1 k).2]
+    dsimp [q]
+    rw [pow_succ]
+    ring
+  have hbd : BddAbove (range q) := by
+    refine ⟨‖U - V‖, ?_⟩
+    rintro x ⟨k, rfl⟩
+    rw [← haxis]
+    exact lp.norm_apply_le_norm (by simp) (U - V) (0, k)
+  apply le_antisymm
+  · apply lp.norm_le_of_forall_le'
+    rintro ⟨n, k⟩
+    calc
+      ‖(U - V) (n, k)‖ =
+          ρ ^ (n + k) * amplitude A k * ‖1 - w ^ (n + k + 1)‖ :=
+        phase_coordinate_norm A ρ hA hρ hρ1 hcrit ζ w hζ U V hU hV n k
+      _ ≤ ρ ^ (n + k) * amplitude A (n + k) * ‖1 - w ^ (n + k + 1)‖ :=
+        mul_le_mul_of_nonneg_right
+          (mul_le_mul_of_nonneg_left (hmono (by omega)) (pow_nonneg hρ.le _)) (norm_nonneg _)
+      _ = q (n + k) := by
+        rw [(henv.1 (n + k)).2]
+        dsimp [q]
+        rw [pow_succ]
+        ring
+      _ ≤ sSup (range q) := le_csSup hbd (mem_range_self _)
+  · apply csSup_le (range_nonempty _)
+    rintro x ⟨k, rfl⟩
+    change q k ≤ ‖U - V‖
+    rw [← haxis]
+    exact lp.norm_apply_le_norm (by simp) (U - V) (0, k)
+
+
+/-- Every unit-phase source and every positive damping path with a finite
+phase-to-damping ratio have the stated limit in the full weighted array norm.
+The two arrays are the actual recursively extended sources. -/
+theorem critical_damped_phase_limit
+    (A ρ : ℝ) (hA : 0 < A) (hρ : 0 < ρ) (hρ1 : ρ < 1)
+    (hcrit : A * ρ = (1 - ρ) ^ 2) (ζ : ℂ) (hζ : ‖ζ‖ = 1)
+    (τ θ : ℕ → ℝ) (κ : ℝ) (hτ : ∀ j, 0 < τ j)
+    (hτlim : Tendsto τ atTop (𝓝 0))
+    (hratio : Tendsto (fun j => θ j / τ j) atTop (𝓝 κ)) :
+    ∃ (U : WeightedArray ℂ) (V : ℕ → WeightedArray ℂ),
+      (∀ n k, U (n, k) = (ρ ^ (n + k)) •
+        extension (fun i => -(A : ℂ) * ζ ^ (i + 1)) n k) ∧
+      (∀ j n k, V j (n, k) = (ρ ^ (n + k)) •
+        extension (fun i => Complex.exp ((-τ j : ℝ) + (θ j : ℂ) * Complex.I) ^ (i + 1) *
+          (-(A : ℂ) * ζ ^ (i + 1))) n k) ∧
+      (∀ j, ‖U - V j‖ = phaseReadout (A / (1 + ρ)) (A / (1 + ρ) * ρ) ρ (τ j) (θ j)) ∧
+      Tendsto θ atTop (𝓝 0) ∧
+      Tendsto (fun j => ‖U - V j‖) atTop (𝓝 (A / (1 + ρ) * envelope κ)) := by
+  classical
+  have ha (i : ℕ) : ‖-(A : ℂ) * ζ ^ (i + 1)‖ ≤ A := by
+    simp [norm_mul, norm_pow, hζ, Complex.norm_real, Real.norm_of_nonneg hA.le]
+  have hw (j : ℕ) : ‖Complex.exp ((-τ j : ℝ) + (θ j : ℂ) * Complex.I)‖ ≤ 1 := by
+    rw [Complex.norm_exp]
+    simp only [Complex.add_re, Complex.ofReal_re, Complex.mul_re, Complex.I_re,
+      Complex.ofReal_im, Complex.I_im, mul_zero, zero_mul, sub_zero, add_zero]
+    exact Real.exp_le_one_iff.mpr (neg_nonpos.mpr (hτ j).le)
+  have hda (j i : ℕ) :
+      ‖Complex.exp ((-τ j : ℝ) + (θ j : ℂ) * Complex.I) ^ (i + 1) *
+        (-(A : ℂ) * ζ ^ (i + 1))‖ ≤ A := by
+    rw [norm_mul, norm_pow]
+    exact (mul_le_mul (pow_le_one₀ (norm_nonneg _) (hw j)) (ha i)
+      (norm_nonneg _) zero_le_one).trans_eq (one_mul A)
+  have himage := (critical_recursive_image_closure (K := ℂ) A ρ hA hρ hρ1 hcrit).1
+  obtain ⟨U, _, hU⟩ := himage _ ha
+  have hVexists := fun j => himage _ (hda j)
+  choose V hVbound hV using hVexists
+  have hnorm (j : ℕ) :
+      ‖U - V j‖ = phaseReadout (A / (1 + ρ)) (A / (1 + ρ) * ρ) ρ (τ j) (θ j) := by
+    rw [phase_array_norm A ρ hA hρ hρ1 hcrit ζ _ hζ U (V j) hU (hV j)]
+    unfold phaseReadout
+    apply congrArg sSup
+    apply congrArg Set.range
+    funext n
+    have hexp : Complex.exp ((-τ j : ℝ) + (θ j : ℂ) * Complex.I) ^ (n + 1) =
+        Complex.exp ((-(((n : ℝ) + 1) * τ j) : ℝ) +
+          ((((n : ℝ) + 1) * θ j : ℝ) : ℂ) * Complex.I) := by
+      rw [← Complex.exp_nat_mul]
+      congr 1
+      push_cast
+      ring
+    rw [hexp]
+  have hθlim : Tendsto θ atTop (𝓝 0) := by
+    have h := hratio.mul hτlim
+    simpa only [div_mul_cancel₀ _ (hτ _).ne', mul_zero] using h
+  refine ⟨U, V, hU, hV, hnorm, hθlim, ?_⟩
+  simp_rw [hnorm]
+  exact damping_phase_sup_limit _ _ ρ κ (by positivity) (by positivity) hρ.le hρ1
+    τ θ hτ hτlim hratio
+
+#print axioms critical_damped_phase_limit
 end D5.S3.Analytic.SeriesInequalities.CriticalDampedPhaseLimit
