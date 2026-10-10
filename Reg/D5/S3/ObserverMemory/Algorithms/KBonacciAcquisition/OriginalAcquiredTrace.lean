@@ -95,4 +95,79 @@ def traceEvidence : Registration traceArena.{z}
 
 end
 
+
+
+namespace ArchiveLengthAudit
+@[reducible] def signature : Signature where
+  Params := ℕ
+  State m := NarrowWindowCost.Archive m
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature
+  (fun _ _ ar => (archiveWords ar).length) (fun e => nomatch e)
+def oracle : Realization signature := realize signature
+  (fun _ _ ar => (archiveWords ar).length + 1) (fun e => nomatch e)
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (archive : NarrowWindowCost.Archive m),
+    R.readout () m archive = archive.length * m
+private theorem positive : arena.Law actual := archive_length
+private theorem negative : ¬ arena.Law oracle := by
+  intro law
+  have bad := law ([] : NarrowWindowCost.Archive 1)
+  norm_num [oracle, realize, archiveWords] at bad
+def evidence : Registration arena (type_of% (@archive_length)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, oracle, negative⟩
+  sensitivity := ⟨fun i => ⟨oracle, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl, negative⟩, fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨1, [], [(fun _ => false, none)], ?_⟩
+    cases i
+    decide
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.archive_length)
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.archive_length
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ArchiveLengthAudit/Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ArchiveLengthAudit.arena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ArchiveLengthAudit.evidence,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨evidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"],
+      stateBinder := 1,
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+#print axioms evidence
+#print axioms registration
+end ArchiveLengthAudit
+#print axioms _root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.archive_length
+
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace

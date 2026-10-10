@@ -73,5 +73,35 @@ internal sealed class GlobalPresetObstructionDocument : IScribeDocumentDefinitio
             Paragraph(Text(
                 "For m=5, H(0)={2,3} and H(1)={3,4}, the literal prefix is 00100|00000|00100; both value-one root fibres are mixed and pay three. For m=6, H(0)={2,3} and H(1)={4,5}, it is 001000|000000|000100. Its value-one root-one fibre is constant zero and stops after one word; the root-zero fibre is mixed and pays three. The third word 000100 differs from the independently usable unshifted H(1) root word 000010. Replacing the latter support by {2,3,4,5} makes the value-one root-one fibre constant one, still stopping after one word. The worst emitted-bit fees are fifteen and eighteen respectively, because each of the three paid words has m bits. All these statements retain every inherited legal tail, both alphabets and arbitrary separately distinct labels.")),
             Paragraph(Text(
-                "This application concerns only the nonempty unequal internal even-support family with k=2m-2. It does not settle empty or equal support branches, odd supports, tail-sensitive targets, other reader parameters or the general original acquisition objective. The construction and consequences are applications of the cited physical and execution interfaces; no literature-priority assertion is made.")))));
+                "This application concerns only the nonempty unequal internal even-support family with k=2m-2. It does not settle empty or equal support branches, odd supports, tail-sensitive targets, other reader parameters or the general original acquisition objective. The construction and consequences are applications of the cited physical and execution interfaces; no literature-priority assertion is made.")),
+            Describe.Lean(
+                DescribeId.Create("native-zero"),
+                DeclarationHandle.Create(Owner + "native_zero"),
+                H("Native execution at zero remaining budget"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary label type, dimensions, selector, optional native record, saved free output and own archive, NativeExecute at budget zero is exactly the stop label with fee zero when the selector stops, and is undefined when it requests another word. This identity retains the entire native telescope and is used to evaluate the stopped attaining controllers."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("native-succ"),
+                DeclarationHandle.Create(Owner + "native_succ"),
+                H("One complete native paid step"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every remaining budget d, selector, optional record, saved free output and own archive, NativeExecute at d+1 first tests the selector. A stop returns its label with fee zero. A selected literal word is run in full on the record, its actual endpoint is appended to the same archive, and a successful recursive result has its fee increased by one. This also charges an absorbing rejection word."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("native-two-same"),
+                DeclarationHandle.Create(Owner + "native_two_same"),
+                H("Equal scheduled charges dominate two-block preset executions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Fix k>=2, arbitrary m, one literal stream and arbitrary own-archive stop function. For any free value v, two phases p,q and a common legal inherited tail s<k, equality of the first scheduled charges at p,q and second scheduled charges at p+m,q+m implies equality of NativeExecute at budget two. The proof includes stops at the root or first endpoint, simultaneous rejection and successful continuation. The second scheduled charge is only an algebraic invariant, not an observation acquired after a stop."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("charge-even"),
+                DeclarationHandle.Create(Owner + "charge_even"),
+                H("Every full literal charge has even total parity"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every k>=2, arbitrary m, phase shift and literal word, the sum over the entire phase group ZMod(k+1) of wordIncrement at negative phase plus that shift is zero in ZMod 2. Each selected literal bit contributes to two distinct physical vertices, whose total charge is zero. The full sum is taken before restricting to a reached child archive."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("second-charge-blind"),
+                DeclarationHandle.Create(Owner + "second_charge_blind"),
+                H("The second physical window leaves its exterior blind"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every m>=5, arbitrary m-bit literal word and phase j whose standard representative satisfies 2<=j<m, wordIncrement for k=2m-2 at phase -j+m is zero. These actual INITIAL phases lie outside the complete second physical window. No safety assumption or controller observation is required for this literal charge identity."))), DescribeRole.Theorem))));
 }

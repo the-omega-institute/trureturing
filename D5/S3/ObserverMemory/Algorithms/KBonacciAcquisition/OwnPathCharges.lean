@@ -119,7 +119,7 @@ private theorem charge_separates {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
         have same := ex.symm.trans ey
         exact (Prod.mk.inj (Option.some.inj same)).1
 
-private theorem native_fiber {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
+theorem native_fiber {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
     (alphabet : Bool) (f : Option (LiveRecord k) → Y) (v : ZMod 2) (d : ℕ)
     (π : NarrowWindowCost.Selector m Y)
     (correct : ∀ history : List (AllowedBlock k m alphabet),
