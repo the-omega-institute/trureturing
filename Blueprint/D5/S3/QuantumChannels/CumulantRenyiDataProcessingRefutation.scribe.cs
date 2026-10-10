@@ -61,7 +61,7 @@ internal sealed class CumulantRenyiDataProcessingRefutationDocument : IScribeDoc
         Call("single", F.Id("j"), F.Id("j"), D(1))));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Named(name), [.. args]);
-    private static Formula Parenthesized(Formula value) => Grp(Left, Open, value, Right, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Equal(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Leq(Formula a, Formula b) =>
