@@ -39,7 +39,7 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.designSum"),
                 H("The corrected phase sum"), StatementSource.FromAuthor(Disp(DesignSumDefinition())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The corrected phase sum evaluates f at every phase vector indexed by a function Fin d to Fin 4, then adds 4^d times its sum over standard basis vectors. Here phase(s) is Complex.I raised to s.val. Both evaluation sums include all elements of their indicated finite types."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The corrected phase sum evaluates f at every phase vector indexed by a function Fin d to Fin 4, then adds 4^d times its sum over standard basis vectors. Each coordinate is the imaginary unit Complex.I raised to the natural-number value val(z(i)) of z(i) : Fin 4. Both evaluation sums include all elements of their indicated finite types."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("gb-design-sum"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.designSum_sum"),
                 H("Finite additivity"), StatementSource.FromAuthor(Disp(Additivity())),
@@ -102,7 +102,8 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
         var vector = new Formula.TypeArrow(Index, C);
         var functional = new Formula.TypeArrow(Par(vector), C);
         var phaseIndex = new Formula.TypeArrow(Index, Call("Fin", D(4)));
-        var phaseVector = Fun("i", Index, Call("phase", Call("z", i)));
+        var imaginaryUnit = Seq(Operatorname, Grp(F.Id("Complex")), Dot, Operatorname, Grp(F.Id("I")));
+        var phaseVector = Fun("i", Index, Power(imaginaryUnit, Call("val", Call("z", i))));
         var basisVector = Fun("i", Index,
             Seq(F.Id("if"), Sp, Eq(i, a), Sp, F.Id("then"), Sp, D(1), Sp, F.Id("else"), Sp, D(0)));
         var phaseSum = SumTyped("z", Par(phaseIndex), Call("f", phaseVector));

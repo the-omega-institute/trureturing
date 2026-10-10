@@ -8,7 +8,7 @@ For z indexed by Fin d, let q(T,z) be the sum of conjugate(z_i) z_j T_ij. Let L_
 
 **Definition 1.1 (The corrected phase sum).**
 
-$$\forall (d:\mathbb{N}), \forall (f:(Fin\left(d\right) \to \mathbb{C}) \to \mathbb{C}), (designSum\left(f\right):\mathbb{C})=(\sum_{(z:(Fin\left(d\right) \to Fin\left(4\right)))} f\left((\lambda (i:Fin\left(d\right)) \mapsto phase\left(z\left(i\right)\right))\right))+(4:\mathbb{C})^{d}\cdot (\sum_{(a:Fin\left(d\right))} f\left((\lambda (i:Fin\left(d\right)) \mapsto if i=a then 1 else 0)\right))$$
+$$\forall (d:\mathbb{N}), \forall (f:(Fin\left(d\right) \to \mathbb{C}) \to \mathbb{C}), (designSum\left(f\right):\mathbb{C})=(\sum_{(z:(Fin\left(d\right) \to Fin\left(4\right)))} f\left((\lambda (i:Fin\left(d\right)) \mapsto \operatorname{Complex}.\operatorname{I}^{val\left(z\left(i\right)\right)})\right))+(4:\mathbb{C})^{d}\cdot (\sum_{(a:Fin\left(d\right))} f\left((\lambda (i:Fin\left(d\right)) \mapsto if i=a then 1 else 0)\right))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.designSum` (`✓ std3`).
 
@@ -16,7 +16,7 @@ $$\forall (d:\mathbb{N}), \forall (f:(Fin\left(d\right) \to \mathbb{C}) \to \mat
 
 *Commentary.*
 
-The corrected phase sum evaluates f at every phase vector indexed by a function Fin d to Fin 4, then adds 4^d times its sum over standard basis vectors. Here phase(s) is Complex.I raised to s.val. Both evaluation sums include all elements of their indicated finite types.
+The corrected phase sum evaluates f at every phase vector indexed by a function Fin d to Fin 4, then adds 4^d times its sum over standard basis vectors. Each coordinate is the imaginary unit Complex.I raised to the natural-number value val(z(i)) of z(i) : Fin 4. Both evaluation sums include all elements of their indicated finite types.
 
 **Theorem 1.2 (Finite additivity).**
 
