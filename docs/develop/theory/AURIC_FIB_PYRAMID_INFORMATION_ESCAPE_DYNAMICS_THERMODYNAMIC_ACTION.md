@@ -4,7 +4,7 @@
 
 本文把仓库中已有的 AURIC FIB 五态概率几何、Information Escape 的分层捕获、黄金热层以及素数/Fibonacci 轴放到同一套接口中。文中有三种状态标签：已有结果，本文件的新推导，以及尚未完成的开放接口。已有结果来自 Foundational Formulas、Boundary Calculus、KernelChain、LayeredCapture、GoldenHeatLayers、PrimeAxisEscape 和相关 Lean 文件。本文件的新推导是在已有静态几何上加入一维质量作用流。把离散 native continuation、素数支撑扩张和真实环境热力学接成同一个状态更新，仍然是开放问题。
 
-“信息逃逸”需要分层理解。对只观察均值坐标的观察者，κ 纤维上的状态全部不可辨识，因而是已经逃逸到 kernel 之外的隐藏信息。对完整五态观察者，这部分信息由条件关联和 KL 储备量表示，并沿质量作用流耗散到最大熵完成。这个过程不是信息凭空离开封闭系统。若要称作向环境逃逸，还需要加入环境、chemostat 或擦除协议，并把环境熵流写进账本。
+“信息逃逸”需要分层理解。对只观察均值坐标的观察者，κ 纤维上的状态全部不可辨识，因而是已经逃逸到 kernel 之外的隐藏信息。对完整五态观察者，这部分信息由条件关联和 KL 储备量表示，并在固定纤维且 \(\gamma r>0\) 时沿质量作用流耗散到最大熵完成。这个过程不是信息凭空离开封闭系统。若要称作向环境逃逸，还需要加入环境、chemostat 或擦除协议，并把环境熵流写进账本。
 
 ## 1. 静态金字塔是一个带隐藏纤维的商空间
 
@@ -182,13 +182,13 @@ w_\kappa=r\min\{\alpha,\beta,1-\alpha,1-\beta\}=O(r),
 |\Delta|\le r^2/4=O(r^2),
 \]
 
-而固定 \(\gamma\) 下的绝对松弛时间
+而在 \(\gamma r>0\) 时，绝对松弛时间为
 
 \[
 \tau=(\gamma r)^{-1}
 \]
 
-发散。也就是说，顶点附近可藏的绝对信息量变少，隐藏方向的可走长度变短，但相对于归一化后的剩余质量，动力学变慢。这是一个明确的 escape bottleneck，而不是“越靠近顶点越快”。
+在固定 \(\gamma>0\)、\(r\to0^+\) 时发散。\(\gamma=0\) 时，任意合法初态的流恒为零，\(p_t=p_0\)，没有有限的松弛时间；\(r=0\) 时只有顶点态，也不使用上述倒数。也就是说，在正速率分支上，顶点附近可藏的绝对信息量变少，隐藏方向的可走长度变短，但相对于归一化后的剩余质量，动力学变慢。这是一个明确的 escape bottleneck，而不是“越靠近顶点越快”。
 
 对内部点，熵导数为
 
@@ -198,7 +198,7 @@ w_\kappa=r\min\{\alpha,\beta,1-\alpha,1-\beta\}=O(r),
 = \gamma(b-a)\ln\frac{b}{a}\ge0.
 \]
 
-严格不等式在 \(a\ne b\) 时成立。由已有 KL/条件互信息身份式，
+严格不等式恰在 \(\gamma>0\) 且 \(a\ne b\) 时成立；\(\gamma=0\) 时熵导数为零。由已有 KL/条件互信息身份式，
 
 \[
 \frac{d}{dt}D(p_t\Vert p_*)
@@ -246,7 +246,7 @@ F(p)=\sum_iE_ip_i-\beta^{-1}H_{\ln}(p).
 =J\ln\frac{k_fp_2p_5}{k_rp_0p_{25}}\ge0.
 \]
 
-这是固定 \((X,Y,Z)\) 化学计量类上的 free-energy Lyapunov 定理。对称情形 \(k_f=k_r=\gamma\) 等价于 \(\Delta E=0\)，所以平衡点正是最大熵完成 \(p_*\)。若 \(\Delta E\ne0\)，平衡 κ 会移动，不能继续使用 \(XY/r\) 作为平衡坐标。
+这是固定 \((X,Y,Z)\) 化学计量类上的 free-energy Lyapunov 定理。对称正速率情形 \(k_f=k_r=\gamma>0\) 等价于 \(\Delta E=0\)，所以平衡点正是最大熵完成 \(p_*\)。若 \(\Delta E\ne0\)，平衡 κ 会移动，不能继续使用 \(XY/r\) 作为平衡坐标。
 
 也可以用对数平均 mobility
 
@@ -378,7 +378,7 @@ R=\prod_p p^{e_p}
 \frac{R}{\gcd(R,AB)}.
 \]
 
-如果 \(p\) 是 Fibonacci 的 primitive divisor，满足 \(p\mid R\)、\(p\nmid AB\)，那么这个 prime seam 在该层首次出现。取 \(R=F_n\) 时，若 \(z(p)=n\)，则 \(p\) 在第 \(n\) 层进入目标分母。这给出素数几何的严格版本：连续 κ 流趋向零关联，有限整数载体却在 primitive rank 处出现有限分辨率的 lattice 残差。
+如果 \(p\) 是 Fibonacci 的 primitive divisor，满足 \(p\mid R\)、\(p\nmid AB\)，那么这个 prime seam 在该层首次出现。取 \(R=F_n\) 时，若 \(z(p)=n\)，则 \(p\) 在第 \(n\) 层进入目标分母。这给出素数几何的严格版本：固定纤维且 \(\gamma r>0\) 时，连续 κ 流趋向零关联，有限整数载体却在 primitive rank 处出现有限分辨率的 lattice 残差。
 
 这里仍需保留两个边界。第一，primitive p 只证明该层的独立目标不可达，不保证最近格点距离或自由能地板随层单调增加。第二，若边际 \(A,B\) 随层变化，p-adic 余量也会变化，必须把它们写进层间 map 后才能讨论全局单调性。
 
@@ -414,7 +414,7 @@ M^{z(p)}\equiv aI\pmod p,\qquad a\ne0.
 
 ## 7. 动作最优、耗散最优和做功最优必须分开
 
-固定端点 \(\kappa(0)=\kappa_0,\ \kappa(T)=\kappa_1\)，取几何二次作用
+固定端点 \(\kappa(0)=\kappa_0,\ \kappa(T)=\kappa_1\)，取 \(T>0\) 和几何二次作用
 
 \[
 \mathcal A[\kappa]=\frac12\int_0^T\dot\kappa(t)^2\,dt.
@@ -426,7 +426,7 @@ M^{z(p)}\equiv aI\pmod p,\qquad a\ne0.
 \mathcal A_{\min}=\frac{(\kappa_1-\kappa_0)^2}{2T}.
 \]
 
-质量作用指数路径的作用量为，令 \(\lambda=\gamma r\)：
+在 \(r>0\) 的固定纤维上，质量作用指数路径的作用量为，令 \(\lambda=\gamma r\ge0\)：
 
 \[
 \mathcal A_{\exp}
@@ -434,13 +434,15 @@ M^{z(p)}\equiv aI\pmod p,\qquad a\ne0.
 \bigl(1-e^{-2\lambda T}\bigr).
 \]
 
-与同端点仿射极小值相比，比例为
+当 \(\lambda>0\) 且 \(\kappa_0\ne\kappa_*\) 时，与同端点 \(\kappa_1=\kappa(T)\) 的仿射极小值相比，比例为
 
 \[
 \frac{\mathcal A_{\exp}}{\mathcal A_{\rm affine}}
 =\frac{\lambda T}{2}
 \coth\frac{\lambda T}{2}\ge1.
 \]
+
+若 \(\lambda=0\) 或 \(\kappa_0=\kappa_*\)，质量作用路径为常值，两种作用量均为零，比例不定义；右侧函数在 \(\lambda T\to0^+\) 时的极限为一，不是零速率下的 \(0/0\) 比值。顶点 \(r=0\) 也只有常值路径，无需定义 \(\kappa_*\) 的商式。
 
 所以质量作用流是详细平衡和熵产生意义下自然的耗散路径，但在这个固定端点、固定时长的纯二次作用量中，通常不是最小动作路径。两种“最优”优化了不同目标。
 
@@ -737,7 +739,7 @@ G(\infty)<\infty
 \text{归一化条件关联可能残留}.
 \]
 
-特别地，当 \(\mu,\gamma\) 为常数时，
+特别地，当 \(\mu,\gamma\) 为常数且 \(\mu>0\) 时，
 
 \[
 r(t)=r_0e^{-\mu t},
@@ -745,7 +747,20 @@ r(t)=r_0e^{-\mu t},
 G(\infty)=\frac{\gamma r_0}{\mu}<\infty.
 \]
 
-这意味着如果层间逃逸太快，系统会先到达 apex，而每一层内部的归一化关联还没有完全热化。这是动力学和热力学之间的实际 tradeoff，不是单纯的几何类比。
+在此 \(\mu>0\) 分支且 \(r_0>0\) 时，系统渐近趋向 apex；若初始条件关联非零，有限的总 exposure 使归一化关联仍有残留。这是动力学和热力学之间的实际 tradeoff，不是单纯的几何类比。
+
+常数 \(\mu=0\) 时则保留另一分支：
+
+\[
+r(t)=r_0,\qquad G(t)=\gamma r_0t,\qquad
+G(\infty)=
+\begin{cases}
+\infty,&\gamma r_0>0,\\
+0,&\gamma r_0=0.
+\end{cases}
+\]
+
+因此零径向速率不产生向 apex 的运动；当 \(\gamma r_0=0\) 时 exposure 恒为零，不使用 \(\gamma r_0/\mu\)。
 
 定义隐藏残差
 
@@ -1621,7 +1636,7 @@ D_{\mathrm{coherence/correlation}}
 
 ### 13.4 与此前 QCA/Dirac 统一线的连接
 
-此前 QCA/Dirac 方案中的局部有限维 Hilbert 空间、酉局部更新、Lieb–Robinson 型有限传播和 SU(2)/Bloch 内部结构，可以提供本框架的 reversible/quantum carrier：
+此前 QCA/Dirac 方案中的局部有限维 Hilbert 空间、酉局部更新、Lieb–Robinson 型有限传播和 SU(2)/Bloch 内部结构，可作为本框架的 reversible/quantum carrier 候选；若另行指定生成 Hamiltonian 及其连续时间演化，记为：
 
 \[
 U_{\mathrm{QCA}}^t
@@ -1629,9 +1644,9 @@ U_{\mathrm{QCA}}^t
 e^{-itH_{\mathrm{QCA}}}.
 \]
 
-Fibonacci 或黄金 transfer 可以作为离散的 SL\(_2\) sector，量子 phase 则由 Hilbert space 中的 unitary representation 携带。金字塔的 \(\eta\) 流和 radial capture 属于对这个可逆 carrier 做 coarse-graining 后得到的不可逆 effective dynamics。
+Fibonacci 或黄金 transfer 可以作为离散的 SL\(_2\) sector，量子 phase 则由 Hilbert space 中的 unitary representation 携带。金字塔的 \(\eta\) 流和 radial capture 与该可逆 carrier 的关系是拟议的 coarse-graining/mean-field 接口：只有指定具体 carrier、观测映射，并构造相应通道或推导明确的测量后 mean-field limit，才能将它们识别为该 carrier 的不可逆 effective dynamics。§13.3 所述的精确非线性质量作用流实现仍待完成。
 
-这提供了一个分层统一结构：
+这提出了一个仍需上述桥接的候选分层结构：
 
 \[
 \text{QCA/Dirac unitary carrier}
@@ -1642,6 +1657,8 @@ Fibonacci 或黄金 transfer 可以作为离散的 SL\(_2\) sector，量子 phas
 \longrightarrow
 \text{KL/Onsager dissipation}.
 \]
+
+已有 EntropyProductionCoherenceDeletionIdentity 的熵产身份式要求有限维密度态、实际给定的酉 \(U\)，以及每步关系 \(\rho_{k+1}=\operatorname{pinch}(U\rho_kU^\dagger)\)；它本身不提供上述非线性流的通道或极限推导。Boundary Calculus §§13.4–13.6 的相干递归还要求共同输出载体、跨历史相位和满足 \(\sum_aK_{a|h}^\dagger K_{a|h}=I\) 的算子，并保留以后可能重接的实际环境、控制和记忆。重复使用同一环境与每步使用新环境是不同的更新，不能仅由经典边际或通道名称确定这条桥接。
 
 此前的关系
 
