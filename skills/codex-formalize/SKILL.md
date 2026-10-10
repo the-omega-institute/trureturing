@@ -197,6 +197,10 @@ a mirror or placeholder. `deposit`/`deposit-uncovered`/`cover` derive their scop
 `cover-batch` from all batch GIDs. These local doors require no full report or full build. CI and
 explicit whole-repository verification retain `make lean-report`, `make test` and `make gate`.
 
+Scoped deposit retains SL-031's compiled utility checks. A required utility consumer outside the
+selected import closure causes rejection; do not replace its compiled evidence with a source
+reference or silently add reverse dependencies to the build scope.
+
 If the implementation seat delegates report production or emission to the caller, its handoff is
 explicitly **source-only, not publication-ready**: name the intended source paths, pending producers
 and expected committed projections, and report only the checks actually run. The caller must complete
