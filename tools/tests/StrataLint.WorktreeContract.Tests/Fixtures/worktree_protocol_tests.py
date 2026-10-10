@@ -15,6 +15,8 @@ import tempfile
 import time
 import unittest
 
+from native_fixture import NativeFixture
+
 ROOT = Path(sys.argv.pop(1)).resolve()
 SCRIPT = ROOT / "tools/scripts/worktree/worktree_protocol.py"
 sys.path.insert(0, str(SCRIPT.parent))
@@ -22,11 +24,9 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(unittest.TestCase):
+class ProtocolTests(NativeFixture):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="worktree-contract-")
-        self.addCleanup(self.cleanup_fixture)
-        self.root = Path(self.temp.name).resolve()
+        self.root = self.workspace("worktree-contract-")
         self.note("setup.begin")
         self.main = self.root / "main"
         self.main.mkdir()
@@ -58,64 +58,29 @@ class ProtocolTests(unittest.TestCase):
             phase=phase, fixture_pid=os.getpid(), monotonic=time.monotonic(), **values)),
             file=sys.stderr, flush=True)
 
-    def cleanup_fixture(self):
-        result = self._outcome.result if self._outcome else None
-        failed = (any(test is self or getattr(test, "test_case", None) is self
-                      for test, _ in result.failures + result.errors) if result is not None
-                  else sys.exc_info()[0] is not None or self._outcome is not None and not self._outcome.success)
-        if failed:
-            # Failed input is recovery evidence, including when a cleanup fails.
-            self.temp._finalizer.detach()
-            self.note("fixture.retained", reason="failed probe or native settlement")
-        else:
-            self.temp.cleanup()
-            self.note("fixture.cleaned")
-
     def stop_jobs(self):
+        self.jobs_settled = False
         for job in self.jobs:
             self.note("job.settle.begin", native_pid=job.pid, returncode=job.poll())
             if job.poll() is None:
                 job.kill()
             job.communicate(timeout=10)
             self.note("job.settle.end", native_pid=job.pid, returncode=job.returncode)
+        self.jobs_settled = True
 
     def g(self, root, *args):
         command = ["git", "-C", str(root), *map(str, args)]
-        start = time.monotonic()
-        job = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                               env=protocol.git_environment(), pass_fds=protocol.scope_fds())
-        self.note("git.begin", command=command, native_pid=job.pid, guard_seconds=300)
-        try:
-            stdout, stderr = job.communicate(timeout=300)
-        except subprocess.TimeoutExpired as error:
-            self.note("git.guard", native_pid=job.pid, elapsed=time.monotonic() - start,
-                      stdout=os.fsdecode(error.output or b""), stderr=os.fsdecode(error.stderr or b""))
-            job.kill()
-            job.communicate()
-            raise
-        self.note("git.end", native_pid=job.pid, elapsed=time.monotonic() - start,
-                  returncode=job.returncode, stdout=os.fsdecode(stdout), stderr=os.fsdecode(stderr))
-        if job.returncode:
-            raise protocol.Refused(os.fsdecode(stderr).strip() or "git failed")
-        return os.fsdecode(stdout)
+        result = self.run_owned_command(command, self.root, phase="git", timeout=300,
+                                        check=False, env=protocol.git_environment(), pass_fds=protocol.scope_fds())
+        if result.returncode:
+            raise protocol.Refused(result.stderr.strip() or "git failed")
+        return result.stdout
 
     def run_protocol(self, *args, expect=0, env=None):
         command = [sys.executable, "-B", str(SCRIPT), "--source", str(self.main), *map(str, args)]
-        start = time.monotonic()
-        job = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env)
-        self.note("protocol.begin", command=command, native_pid=job.pid, guard_seconds=30)
-        try:
-            stdout, stderr = job.communicate(timeout=30)
-        except subprocess.TimeoutExpired as error:
-            self.note("protocol.guard", native_pid=job.pid, elapsed=time.monotonic() - start,
-                      stdout=os.fsdecode(error.output or b""), stderr=os.fsdecode(error.stderr or b""))
-            job.kill()
-            job.communicate()
-            raise
-        self.note("protocol.end", native_pid=job.pid, elapsed=time.monotonic() - start,
-                  returncode=job.returncode, stdout=stdout, stderr=stderr)
-        self.assertEqual(expect, job.returncode, stdout + stderr)
-        return subprocess.CompletedProcess(command, job.returncode, stdout, stderr)
+        result = self.run_owned_command(command, self.root, phase="protocol", timeout=30, check=False, env=env)
+        self.assertEqual(expect, result.returncode, result.stdout + result.stderr)
+        return result
 
     def hold(self, *scopes, code=None):
         code = code or 'import sys; print("ready",flush=True); sys.stdin.readline()'
@@ -123,6 +88,7 @@ class ProtocolTests(unittest.TestCase):
             "with", "--path", str(self.tree), *scopes, "--", sys.executable, "-c", code],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         self.jobs.append(job)
+        self.jobs_settled = False
         self.note("hold.readiness.begin", command=job.args, native_pid=job.pid, guard_seconds=10)
         self.assertTrue(select.select([job.stdout], [], [], 10)[0], "job readiness timeout")
         self.assertEqual("ready\n", job.stdout.readline(), job.stderr.read() if job.poll() is not None else "")
@@ -397,6 +363,7 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         job = subprocess.Popen([sys.executable, "-c", 'import sys;print("ready",flush=True);sys.stdin.readline()'],
             cwd=self.tree, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         self.jobs.append(job)
+        self.jobs_settled = False
         self.assertEqual("ready\n", job.stdout.readline())
         result = self.remove(73)
         self.assertIn("host_activity", result.stderr)
@@ -511,14 +478,15 @@ else: raise SystemExit("unexpected GitHub fixture call: "+repr(a))
         temporary.mkdir()
         environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"], TMPDIR=str(temporary))
         script = ROOT / "tools/scripts/agent/integration-mirror.sh"
-        result = subprocess.run(["/bin/bash", str(script), "--integration", "integration-tests", "--since", self.base],
-            cwd=self.tree, env=environment, capture_output=True, text=True, timeout=60)
+        result = self.run_owned_command(["/bin/bash", str(script), "--integration", "integration-tests", "--since", self.base],
+            self.tree, phase="mirror", timeout=60, check=False, env=environment)
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn("MIRROR_RESULT mirrored=1 pending=0 exit=0", result.stdout)
         self.assertFalse(list(temporary.iterdir()))
         self.assertEqual("feature\n", self.g(self.main, "show", "refs/remotes/origin/dev:feature"))
 
     def consumer_land_attributes_paths_with_external_checks_stubbed(self):
+        (self.tree / "lean-report-inputs.json").write_bytes((ROOT / "lean-report-inputs.json").read_bytes())
         (self.tree / "other").write_text("unrelated staged\n")
         self.g(self.tree, "add", "other")
         paths = self.root / "authorized.paths"
@@ -549,9 +517,12 @@ elif sys.argv[1] not in ("lean-report","cover","gate"): raise SystemExit(99)
         failing = [one[0], ("atom-failure", "D5/S3/ConceptDynamics.Failure"), multiple[0]]
         for index, covers in enumerate(([], one, multiple, failing)):
             with self.subTest(covers=covers):
+                self.assertTrue(self.commands_settled and not self.fixture_interrupted,
+                                "earlier land lifetime is unresolved or the fixture is interrupted")
                 owned = f"authorized {index}\n"
                 (self.tree / "owned").write_text(owned)
                 before = self.g(self.tree, "rev-parse", "HEAD").strip()
+                self.assertTrue(self.commands_settled, "unsettled prior land command owns these inputs")
                 calls.write_text("")
                 arguments = [arg for pair in covers for arg in ("--cover", *pair)]
                 relative = index == 1
@@ -561,8 +532,8 @@ elif sys.argv[1] not in ("lean-report","cover","gate"): raise SystemExit(99)
                     paths.name if relative else str(paths), "--wait-pr", "11", *arguments]
                 self.note("land.begin", command=command, guard_seconds=60)
                 start = time.monotonic()
-                result = subprocess.run(command, cwd=self.root if relative else self.main, env=environment,
-                    capture_output=True, text=True, timeout=60)
+                result = self.run_owned_command(command, self.root if relative else self.main,
+                    phase="land", timeout=60, check=False, env=environment)
                 recorded = [json.loads(line) for line in calls.read_text().splitlines()]
                 self.note("land.end", elapsed=time.monotonic() - start, returncode=result.returncode,
                     make_calls=recorded, claimed_merged="PHASE1_MERGED" in result.stdout)
@@ -607,9 +578,9 @@ material.write_text("new build material\\n")
                            LAND_LOG_DIR=str(self.root / "land-logs"))
         job, release = self.paused_job("remove", "remove", "--names", "tree")
         try:
-            result = subprocess.run(["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"), str(self.tree),
-                self.branch, str(message), "--paths-from", str(paths)], cwd=self.main, env=environment,
-                capture_output=True, text=True, timeout=60)
+            result = self.run_owned_command(["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"), str(self.tree),
+                self.branch, str(message), "--paths-from", str(paths)], self.main,
+                phase="land-exclusion", timeout=60, check=False, env=environment)
             self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
             self.assertIn("busy_scope:tree:", result.stderr)
             self.assertNotIn("PHASE1_MERGED", result.stdout)
@@ -622,6 +593,82 @@ material.write_text("new build material\\n")
             stdout, stderr = job.communicate(timeout=20)
         self.assertEqual(0, job.returncode, stdout + stderr)
         self.assertFalse(self.tree.exists())
+
+    def consumer_land_scopes_operating_children(self):
+        declaration = json.loads((ROOT / "lean-report-inputs.json").read_text())
+        declaration["report_modules"]["include"].append(dict(pattern="Library/operative/**/*.lean", optional=True))
+        (self.tree / "lean-report-inputs.json").write_text(json.dumps(declaration))
+        ledger = self.tree / "Meta/Digestion/backfill"
+        for source, path in (("first", "Library/source with space.md"), ("chain", "Library/chain.md")):
+            directory = ledger / source
+            directory.mkdir(parents=True)
+            (directory / "source.toml").write_text('path = "' + path + '"\n')
+            (directory / "residual-open").mkdir()
+            (directory / "residual-open/atom.yaml").write_text("receipts:\n  chain_atoms:\n    - chain-atom\n")
+        binary = self.root / "land-stub"
+        binary.mkdir()
+        for name, body in dict(dotnet="exit 0", gh="echo true").items():
+            file = binary / name
+            file.write_text("#!/bin/sh\n" + body + "\n")
+            file.chmod(0o755)
+        evidence = self.root / "scope-evidence.jsonl"
+        report = self.root / "configured output/report.json"
+        logs = self.root / "configured logs"
+        report_inputs = ["D5/new.lean", "Reg/new.lean", "lean-toolchain", "lake-manifest.json",
+                         "lakefile.toml", "Directory.Build.props", "tools/StrataLint.Cli/obj/new",
+                         "Meta/FILEMAP.toml", "Library/operative/new.lean", "build/lean-cache/new",
+                         "lean-report-inputs.json", str(report), str(report) + ".sha256", str(logs / "new")]
+        cover_inputs = ["Golden/Frozen/state/new.json", "Meta/Digestion/atomizers.toml",
+                        "Meta/Digestion/atoms/sha256/new", "Meta/Digestion/backfill/chain/absorbed-closed/new.yaml",
+                        "Meta/Digestion/backfill/first/residual-open/atom.yaml", "Library/source with space.md",
+                        "Library/chain.md", "tools/Authorizations/digestion-tail/new.json"]
+        make = binary / "make"
+        make.write_text(f'''#!{sys.executable}
+import json,os,subprocess,sys
+from pathlib import Path
+command=sys.argv[1]
+if command=="gate": raise SystemExit(17)
+paths={report_inputs!r} + ({cover_inputs!r} if command=="cover" else [])
+for path in paths:
+    target=Path(path)
+    base=Path.cwd() if not target.is_absolute() else target.parent
+    name=path if not target.is_absolute() else target.name
+    if target.is_absolute():
+        worker="from contextlib import ExitStack; import sys; " \
+            "sys.path.insert(0,sys.argv[1]); import worktree_protocol as p; " \
+            "stack=ExitStack(); p.path_scopes(stack,sys.argv[2],__import__('pathlib').Path(sys.argv[3]),writes=(sys.argv[4],))"
+        result=subprocess.run([{sys.executable!r},"-B","-c",worker,{str(SCRIPT.parent)!r},
+            str(Path.cwd()),str(base),name],capture_output=True,text=True)
+        assert "busy_scope:file:" in result.stderr,(path,result.stdout,result.stderr)
+    else:
+        result=subprocess.run([{sys.executable!r},"-B",{str(SCRIPT)!r},"--source",str(Path.cwd()),
+            "with","--path",str(base),"--write",name,"--","true"],capture_output=True,text=True)
+    assert result.returncode==(1 if target.is_absolute() else 73) and "busy_scope:file:" in result.stderr,(path,result.stdout,result.stderr)
+result=subprocess.run([{sys.executable!r},"-B",{str(SCRIPT)!r},"--source",str(Path.cwd()),
+    "with","--path",str(Path.cwd()),"--write","other","--",{sys.executable!r},"-c",
+    "from pathlib import Path; Path('other').write_text('independent edit'+chr(10))"],capture_output=True,text=True)
+assert result.returncode==0,(result.stdout,result.stderr)
+with open({str(evidence)!r},"a") as output:
+    output.write(json.dumps(dict(command=command,protected=paths,disjoint_edit=True))+"\\n")
+''')
+        make.chmod(0o755)
+        message, paths = self.root / "unit.msg", self.root / "paths"
+        message.write_text("scope fixture\n")
+        paths.write_bytes(b"owned\0")
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"],
+                           LAND_LOG_DIR=str(self.root / "land-logs"), LEAN_REPORT=str(report),
+                           STRATALINT_LEAN_REPORT_LOG_DIR=str(logs))
+        command = ["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"), str(self.tree), self.branch,
+                   str(message), "--paths-from", str(paths), "--cover", "atom", "D5/module.result"]
+        result = self.run_owned_command(command, self.main, phase="land-scopes", timeout=60,
+                                        check=False, env=environment)
+        self.assertEqual(94, result.returncode, result.stdout + result.stderr)
+        self.assertIn("HALT_GATE", result.stdout)
+        rows = [json.loads(line) for line in evidence.read_text().splitlines()]
+        self.assertEqual(["lean-report", "cover"], [row["command"] for row in rows])
+        self.assertTrue(all(row["disjoint_edit"] for row in rows))
+        self.assertEqual("independent edit\n", (self.tree / "other").read_text())
+        self.note("land.scopes", children=rows, settled=result.lifetime["settled"])
 
     def paused_job(self, operation, *arguments):
         bin_path = self.root / "bin"
@@ -648,6 +695,7 @@ os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
         job = subprocess.Popen([sys.executable, "-B", str(SCRIPT), "--source", str(self.main), *map(str, arguments)],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, text=True)
         self.jobs.append(job)
+        self.jobs_settled = False
         self.note("pause.readiness.begin", command=job.args, native_pid=job.pid, operation=operation, guard_seconds=20)
         self.assertTrue(select.select([reader], [], [], 20)[0], "paused command readiness timeout")
         self.assertEqual(b"ready\n", os.read(reader, 100))
@@ -718,30 +766,30 @@ os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
         self.remove(73)
 
     def runlocal_consumer(self):
-        with tempfile.TemporaryDirectory(prefix="worktree-runlocal-", dir="/tmp") as directory:
-            root = Path(directory)
-            dirty, snapshot, unknown = root / "dirty", root / "snapshot", root / "unknown"
-            self.g(self.main, "worktree", "add", "--detach", dirty, self.base)
-            (dirty / "owned").write_text("unpublished recovery\n")
-            snapshot.mkdir()
-            (snapshot / "owned").write_text("original\n")
-            unknown.mkdir()
-            (unknown / "private").write_text("private recovery\n")
-            artifact = root / "artifact"
-            artifact.write_text("unconfirmed file\n")
-            manifest = root / "manifest.json"
-            manifest.write_text(json.dumps(dict(paths=list(map(str, [dirty, snapshot, unknown, artifact])))))
-            command = ["/bin/bash", str(ROOT / "tools/scripts/agent/clean-runlocal.sh"), "--manifest", str(manifest),
-                "--root", str(root), "--source", str(self.main), "--base", self.base, "--min-age-min", "0", "--delete"]
-            result = subprocess.run(command, capture_output=True, text=True, timeout=30)
-            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-            self.assertEqual([str(snapshot)], json.loads(result.stdout)["removed"])
-            self.assertFalse(snapshot.exists())
-            self.assertEqual("unpublished recovery\n", (dirty / "owned").read_text())
-            self.assertEqual("private recovery\n", (unknown / "private").read_text())
-            self.assertEqual("unconfirmed file\n", artifact.read_text())
+        root = self.workspace("worktree-runlocal-", "/tmp")
+        dirty, snapshot, unknown = root / "dirty", root / "snapshot", root / "unknown"
+        self.g(self.main, "worktree", "add", "--detach", dirty, self.base)
+        (dirty / "owned").write_text("unpublished recovery\n")
+        snapshot.mkdir()
+        (snapshot / "owned").write_text("original\n")
+        unknown.mkdir()
+        (unknown / "private").write_text("private recovery\n")
+        artifact = root / "artifact"
+        artifact.write_text("unconfirmed file\n")
+        manifest = root / "manifest.json"
+        manifest.write_text(json.dumps(dict(paths=list(map(str, [dirty, snapshot, unknown, artifact])))))
+        command = ["/bin/bash", str(ROOT / "tools/scripts/agent/clean-runlocal.sh"), "--manifest", str(manifest),
+            "--root", str(root), "--source", str(self.main), "--base", self.base, "--min-age-min", "0", "--delete"]
+        result = self.run_owned_command(command, self.root, phase="runlocal", timeout=30, check=False)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual([str(snapshot)], json.loads(result.stdout)["removed"])
+        self.assertFalse(snapshot.exists())
+        self.assertEqual("unpublished recovery\n", (dirty / "owned").read_text())
+        self.assertEqual("private recovery\n", (unknown / "private").read_text())
+        self.assertEqual("unconfirmed file\n", artifact.read_text())
 
-    def initializer_lifetime(self, cli):
+    def initializer_lifetime(self, cli=None):
+        cli = cli or self.initializer_cli
         # Exercise the production .NET launcher, not just Python fork/exec.
         (self.main / "lake-manifest.json").write_bytes((ROOT / "lake-manifest.json").read_bytes())
         self.g(self.main, "add", "lake-manifest.json")
@@ -772,6 +820,7 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
             env=dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"]))
         self.jobs.append(job)
+        self.jobs_settled = False
         self.assertTrue(select.select([reader], [], [], 20)[0], "native initializer readiness timeout")
         self.assertEqual(b"ready\n", os.read(reader, 100))
         native_pid = int((self.root / "native.pid").read_text())
@@ -806,12 +855,11 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
 
 
 if __name__ == "__main__":
+    NativeFixture.install_interrupt_handler()
     if len(sys.argv) == 3 and sys.argv[1] == "--initializer":
-        fixture = ProtocolTests("test_cross_session_dirty_reuse_preserves_bytes")
-        fixture.setUp()
-        try:
-            fixture.initializer_lifetime(sys.argv[2])
-        finally:
-            fixture.doCleanups()
+        fixture = ProtocolTests("initializer_lifetime")
+        fixture.initializer_cli = sys.argv[2]
+        result = unittest.TextTestRunner(verbosity=2).run(fixture)
+        sys.exit(0 if result.wasSuccessful() else 1)
     else:
         unittest.main(verbosity=2)

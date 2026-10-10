@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using Xunit.Abstractions;
 using StrataLint.Runtime;
 using StrataLint.Engine;
@@ -26,7 +27,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
                 root, sourcePath, entrance, invocation, "CleanupMakeTests"],
             root, TimeSpan.FromSeconds(180), 1024 * 1024,
-            standardOutput: stdout, standardError: stderr), output.WriteLine);
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
@@ -45,9 +47,61 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
                 root, "plain", "clean-lanes", "directory", "CommandLifetimeTests.test_" + mode],
             root, TimeSpan.FromSeconds(180), 1024 * 1024,
-            standardOutput: stdout, standardError: stderr), output.WriteLine);
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void FixtureDisposalWaitsForCompleteOutcomeAndNativeSettlement()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "clean-lanes", "directory", "FixtureDisposalTests"],
+            root, TimeSpan.FromSeconds(180), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void OuterInterruptionRetainsFailedInputsAndPublishesOwnedGroupSettlement()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var captured = new List<string>();
+        var failure = Assert.Throws<SkipException>(() => CaptureCleanupOutput((stdout, stderr) =>
+            TestProcessRunner.Run("python3", ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "clean-lanes", "directory", "CommandLifetimeTests.test_deadline"],
+                root, TimeSpan.FromSeconds(3), 1024 * 1024,
+                standardOutput: stdout, standardError: stderr,
+                interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), captured.Add));
+        Assert.StartsWith(InfrastructureHangGuard.SkipReasonPrefix, failure.Message);
+        foreach (var value in captured) output.WriteLine(value);
+        var events = captured[0].Split('\n').Where(line => line.StartsWith('{'))
+            .Select(line => JsonDocument.Parse(line).RootElement.Clone()).ToArray();
+        var command = Assert.Single(events, item => item.GetProperty("event").GetString() == "fixture_command"
+            && item.GetProperty("status").GetString() == "interrupted");
+        Assert.True(command.GetProperty("settled").GetBoolean());
+        Assert.Equal(120, command.GetProperty("guard_seconds").GetInt32());
+        var completion = Assert.Single(events, item => item.GetProperty("event").GetString() == "fixture_completion");
+        Assert.False(completion.GetProperty("successful").GetBoolean());
+        Assert.True(completion.GetProperty("commands_settled").GetBoolean());
+        Assert.True(completion.GetProperty("interrupted").GetBoolean());
+        var inputs = completion.GetProperty("inputs").EnumerateArray().Select(item => item.GetString()!).ToArray();
+        foreach (var path in inputs) Assert.True(Directory.Exists(path));
+        var group = command.GetProperty("pid").GetInt32().ToString(System.Globalization.CultureInfo.InvariantCulture);
+        var native = TestProcessRunner.Run("python3",
+            ["-c", "import os,sys; os.killpg(int(sys.argv[1]),0)", group], root, TimeSpan.FromSeconds(10), 4096);
+        Assert.NotEqual(0, native.ExitCode);
+        Assert.Contains("ProcessLookupError", Encoding.UTF8.GetString(native.StandardError), StringComparison.Ordinal);
+        foreach (var path in inputs) Directory.Delete(path, recursive: true);
     }
 
     private static ProcessOutput CaptureCleanupOutput(
@@ -109,7 +163,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
                 root, "ProtocolTests." + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
-            standardOutput: stdout, standardError: stderr), output.WriteLine);
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
@@ -118,6 +173,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("consumer_mirror_uses_real_git_with_stubbed_github")]
     [InlineData("consumer_land_attributes_paths_with_external_checks_stubbed")]
     [InlineData("consumer_land_cannot_build_during_native_destruction")]
+    [InlineData("consumer_land_scopes_operating_children")]
     public void AgentConsumerUsesRealGitAndPreservesIndependentMaterial(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -126,7 +182,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
                 root, "ProtocolTests." + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
-            standardOutput: stdout, standardError: stderr), output.WriteLine);
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
@@ -140,7 +197,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"), root],
             root, TimeSpan.FromSeconds(180), 1024 * 1024,
-            standardOutput: stdout, standardError: stderr), output.WriteLine);
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }

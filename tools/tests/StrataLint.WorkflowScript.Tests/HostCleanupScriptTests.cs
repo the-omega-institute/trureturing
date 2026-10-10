@@ -13,7 +13,8 @@ public sealed class HostCleanupScriptTests
         var result = TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
-                root, "ProtocolTests.runlocal_consumer"], root, TimeSpan.FromSeconds(90), 1024 * 1024);
+                root, "ProtocolTests.runlocal_consumer"], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }

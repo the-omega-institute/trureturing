@@ -1,7 +1,7 @@
 """Canonical cleanup Make entrances with current production CLI, Git and OS."""
 
-import codecs
 import json
+import gc
 import os
 from pathlib import Path
 import select
@@ -13,13 +13,15 @@ import tempfile
 import time
 import unittest
 
+from native_fixture import NativeFixture
+
 SOURCE = Path(sys.argv.pop(1)).resolve()
 SPACED = sys.argv.pop(1) == "spaced"
 ENTRANCE = sys.argv.pop(1)
 INVOCATION = sys.argv.pop(1)
 
 
-class CleanupMakeTests(unittest.TestCase):
+class CleanupMakeTests(NativeFixture):
     def mark_phase(self, phase):
         now = time.monotonic()
         if hasattr(self, "phase_started"):
@@ -33,143 +35,9 @@ class CleanupMakeTests(unittest.TestCase):
         print(json.dumps(dict(event="fixture_phase", phase=phase, status="started",
                               fixture_elapsed_seconds=now - self.fixture_started)), flush=True)
 
-    def dispose_workspace(self):
-        self.mark_phase("dispose")
-        if self.commands_settled:
-            shutil.rmtree(self.root)
-        else:
-            print(json.dumps(dict(event="fixture_inputs_retained", path=str(self.root))), flush=True)
-        print(json.dumps(dict(event="fixture_phase", phase="dispose",
-                              elapsed_seconds=time.monotonic() - self.phase_started,
-                              fixture_elapsed_seconds=time.monotonic() - self.fixture_started)), flush=True)
-
-    @staticmethod
-    def group_snapshot(group):
-        result = subprocess.run(["ps", "-axo", "pid=,ppid=,pgid=,stat=,wchan=,command="],
-                                capture_output=True, text=True, timeout=5)
-        return [line.strip() for line in result.stdout.splitlines()
-                if len(line.split()) >= 3 and line.split()[2] == str(group)]
-
     def run_command(self, arguments, cwd=None, input=None, phase="git"):
-        arguments = list(map(str, arguments))
-        cwd = str(cwd or self.repository)
-        started = time.monotonic()
-        # File-backed output lets launcher exit and pipe inheritance be independent.
-        # All three streams remain owned until the native group has settled.
-        with tempfile.TemporaryFile(mode="w+", dir=self.root) as stdin, \
-                tempfile.TemporaryFile(mode="w+", dir=self.root) as stdout, \
-                tempfile.TemporaryFile(mode="w+", dir=self.root) as stderr:
-            if input is not None:
-                stdin.write(input)
-                stdin.seek(0)
-            process = subprocess.Popen(arguments, cwd=cwd, env=self.environment,
-                                       stdin=stdin, stdout=stdout, stderr=stderr,
-                                       start_new_session=True)
-            evidence = dict(event="fixture_command", phase=phase, command=arguments, cwd=cwd,
-                            pid=process.pid, guard_seconds=120,
-                            fixture_elapsed_seconds=started - self.fixture_started)
-            print(json.dumps(dict(evidence, status="started")), flush=True)
-            expired = False
-            interrupted = None
-            before = []
-            settlement_error = None
-            offsets = [0, 0]
-            decoders = [codecs.getincrementaldecoder("utf-8")(errors="replace") for _ in offsets]
-            def emit_partial(final=False):
-                for index, (stream, name) in enumerate(((stdout, "stdout"), (stderr, "stderr"))):
-                    data = os.pread(stream.fileno(), os.fstat(stream.fileno()).st_size - offsets[index],
-                                    offsets[index])
-                    offsets[index] += len(data)
-                    text = decoders[index].decode(data, final=final)
-                    if text:
-                        print(json.dumps(dict(event="fixture_command_output", phase=phase,
-                                              command=arguments, pid=process.pid, stream=name,
-                                              output=text, byte_offset=offsets[index],
-                                              fixture_elapsed_seconds=time.monotonic() - self.fixture_started)),
-                              flush=True)
-            try:
-                deadline = started + 120
-                last_snapshot = 0
-                while process.poll() is None:
-                    remaining = deadline - time.monotonic()
-                    if remaining <= 0:
-                        expired = True
-                        break
-                    try:
-                        process.wait(timeout=min(1, remaining))
-                    except subprocess.TimeoutExpired:
-                        pass
-                    emit_partial()
-                    now = time.monotonic()
-                    if process.poll() is None and now - self.fixture_started >= 165 and now - last_snapshot >= 5:
-                        print(json.dumps(dict(evidence, event="fixture_native_wait", status="running",
-                                              elapsed_seconds=now - started,
-                                              fixture_elapsed_seconds=now - self.fixture_started,
-                                              native=self.group_snapshot(process.pid))), flush=True)
-                        last_snapshot = now
-            except BaseException as error:
-                interrupted = error
-            finally:
-                execution_elapsed = time.monotonic() - started
-                snapshot_started = time.monotonic()
-                # Only this newly created process group is signalled. Other participants
-                # and reused external services have independent OS lifetimes.
-                try:
-                    try:
-                        before = self.group_snapshot(process.pid)
-                    except (OSError, subprocess.SubprocessError) as error:
-                        evidence["snapshot_error"] = repr(error)
-                    snapshot_elapsed = time.monotonic() - snapshot_started
-                    for signum in (signal.SIGTERM, signal.SIGKILL):
-                        try:
-                            os.killpg(process.pid, signum)
-                        except ProcessLookupError:
-                            break
-                        until = time.monotonic() + 5
-                        while time.monotonic() < until:
-                            process.poll()
-                            try:
-                                os.killpg(process.pid, 0)
-                            except ProcessLookupError:
-                                break
-                            select.select([], [], [], 0.05)
-                        else:
-                            continue
-                        break
-                    process.poll()
-                    try:
-                        os.killpg(process.pid, 0)
-                    except ProcessLookupError:
-                        evidence["settled"] = True
-                    else:
-                        raise RuntimeError("owned process group survived SIGKILL")
-                except BaseException as error:
-                    self.commands_settled = False
-                    settlement_error = repr(error)
-            settlement_elapsed = time.monotonic() - started - execution_elapsed
-            emit_partial(final=True)
-            stdout.seek(0)
-            stderr.seek(0)
-            output, errors = stdout.read(), stderr.read()
-        evidence.update(status="deadline" if expired else "exited", returncode=process.returncode,
-                        elapsed_seconds=time.monotonic() - started, native_before=before,
-                        execution_seconds=execution_elapsed, settlement_seconds=settlement_elapsed,
-                        snapshot_seconds=time.monotonic() - snapshot_started if settlement_error else snapshot_elapsed)
-        self.phase_commands.append(dict(phase=phase, command=arguments,
-                                        elapsed_seconds=evidence["elapsed_seconds"],
-                                        execution_seconds=execution_elapsed,
-                                        settlement_seconds=settlement_elapsed,
-                                        snapshot_seconds=evidence["snapshot_seconds"]))
-        if settlement_error is not None:
-            evidence.update(status="unsettled", error=settlement_error, inputs_retained=str(self.root))
-        print(json.dumps(evidence), flush=True)
-        if settlement_error is not None or expired or process.returncode != 0:
-            self.fail(json.dumps(dict(evidence, stdout=output, stderr=errors)))
-        if interrupted is not None:
-            raise interrupted
-        result = subprocess.CompletedProcess(arguments, process.returncode, output, errors)
-        result.lifetime = evidence
-        return result
+        return self.run_owned_command(arguments, cwd or self.repository, input, phase,
+                                      timeout=120, env=self.environment)
 
     def git(self, *arguments, cwd=None, input=None):
         return self.run_command(["git", *arguments], cwd, input).stdout.strip()
@@ -178,8 +46,7 @@ class CleanupMakeTests(unittest.TestCase):
         self.fixture_started = time.monotonic()
         self.mark_phase("initialize")
         self.commands_settled = True
-        self.root = Path(tempfile.mkdtemp(prefix="cleanup-make-")).resolve()
-        self.addCleanup(self.dispose_workspace)
+        self.root = self.workspace("cleanup-make-")
         self.repository = self.root / ("checkout with  spaces" if SPACED else "checkout")
         self.repository.mkdir()
         self.environment = dict(os.environ, TMPDIR=str(self.root / "tmp"),
@@ -239,6 +106,7 @@ class CleanupMakeTests(unittest.TestCase):
             sys.executable, "-c", 'import sys; print("ready",flush=True); sys.stdin.readline()'],
             cwd=self.root, env=self.environment, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
             stderr=subprocess.PIPE, text=True)
+        self.jobs_settled = False
         self.addCleanup(self.stop_job)
         self.assertTrue(select.select([self.job.stdout], [], [], 10)[0], "participant readiness")
         self.assertEqual("ready\n", self.job.stdout.readline())
@@ -250,6 +118,7 @@ class CleanupMakeTests(unittest.TestCase):
             self.job.stdin.flush()
         self.job.communicate(timeout=10)
         self.assertEqual(0, self.job.returncode)
+        self.jobs_settled = True
 
     def add_lane(self, name):
         tree = self.root / ("tree-" + name)
@@ -337,21 +206,18 @@ class CleanupMakeTests(unittest.TestCase):
                         (self.dirty, self.local, self.cache, self.busy)])), flush=True)
 
 
-class CommandLifetimeTests(unittest.TestCase):
+class CommandLifetimeTests(NativeFixture):
     # Exercise the exact cleanup-fixture consumer, without copying/building another CLI.
     run_command = CleanupMakeTests.run_command
     mark_phase = CleanupMakeTests.mark_phase
-    group_snapshot = staticmethod(CleanupMakeTests.group_snapshot)
-    dispose_workspace = CleanupMakeTests.dispose_workspace
 
     def setUp(self):
         self.fixture_started = time.monotonic()
         self.mark_phase("native-lifetime")
         self.commands_settled = True
-        self.root = Path(tempfile.mkdtemp(prefix="cleanup-lifetime-")).resolve()
+        self.root = self.workspace("cleanup-lifetime-")
         self.repository = self.root
         self.environment = dict(os.environ)
-        self.addCleanup(self.dispose_workspace)
 
     def check_lifetime(self, mode):
         material = self.root / "unrelated-input"
@@ -423,5 +289,67 @@ class CommandLifetimeTests(unittest.TestCase):
         self.check_lifetime("launcher")
 
 
+class FixtureDisposalTests(NativeFixture):
+    def test_completed_outcomes_and_finalizers(self):
+        for publication in ("immediate", "deferred"):
+            for failure in (None, "setup", "body", "subtest", "teardown", "cleanup",
+                            "incomplete", "unsettled", "nested-input"):
+                with self.subTest(publication=publication, failure=failure):
+                    class Result(unittest.TestResult):
+                        def __init__(self):
+                            super().__init__()
+                            self.pending = []
+                        def addError(self, test, error):
+                            if publication == "deferred": self.pending.append((test, error))
+                            else: super().addError(test, error)
+                        def stopTest(self, test):
+                            for item, error in self.pending:
+                                super().addError(item, error)
+                            super().stopTest(test)
+
+                    class Probe(NativeFixture):
+                        def setUp(self):
+                            self.root = self.workspace("fixture-disposal-")
+                            (self.root / "input").write_text("recoverable input\n")
+                            if failure == "nested-input":
+                                self.nested = self.workspace("fixture-nested-", "/tmp")
+                                (self.nested / "input").write_text("nested recovery\n")
+                            def cleanup():
+                                # Every supported runtime temporarily resets this flag.
+                                self.assertTrue(self._outcome.success)
+                                if failure == "cleanup": raise RuntimeError("cleanup failed")
+                            self.addCleanup(cleanup)
+                            if failure == "setup": raise RuntimeError("setup failed")
+                        def test_body(self):
+                            if failure == "incomplete": raise KeyboardInterrupt()
+                            if failure == "unsettled": self.commands_settled = False
+                            if failure == "subtest":
+                                with self.subTest(): self.fail("subtest failed")
+                            if failure in ("body", "nested-input"): raise RuntimeError("body failed")
+                        def tearDown(self):
+                            if failure == "teardown": raise RuntimeError("teardown failed")
+
+                    probe = Probe("test_body")
+                    result = Result()
+                    if failure == "incomplete":
+                        with self.assertRaises(KeyboardInterrupt): probe.run(result)
+                    else:
+                        probe.run(result)
+                    paths = list(probe.workspaces)
+                    del probe
+                    gc.collect()
+                    for path in paths:
+                        self.assertEqual(failure is not None, path.exists(), str(path))
+                        if path.exists():
+                            self.assertIn("recovery" if failure == "nested-input" and len(paths) > 1
+                                          and path == paths[1] else "recoverable", (path / "input").read_text())
+                            # Dispose only the intentionally failed regression input,
+                            # after verifying survival beyond fixture/GC finalization.
+                            shutil.rmtree(path)
+        print(json.dumps(dict(event="fixture_disposal_assertions", publication_orders=2,
+                              outcomes_per_order=9, retained_after_gc=True)), flush=True)
+
+
 if __name__ == "__main__":
+    NativeFixture.install_interrupt_handler()
     unittest.main()
