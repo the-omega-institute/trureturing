@@ -218,7 +218,7 @@ This is the oscillation used in the published infinitude proof, with an
 explicit positive constant; its underlying Robin proof is cited through
 that primary and is not independently reproved here.
 
-Choose such a $C_j>N_{j-1}$ and let $N_j$ be the rightmost maximizer of
+Choose such a $C_j>\max\{e,N_{j-1}\}$ and let $N_j$ be the rightmost maximizer of
 $G$ on the integers $n\ge C_j$. The maximum is attained with finitely
 many ties: $G(C_j)>e^\gamma=\limsup G(n)$ places all sufficiently large
 integers strictly below $G(C_j)$. This is the same tail-selection
@@ -231,8 +231,34 @@ G(N_j)\ge G(C_j),\qquad
 m>N_j\ \Longrightarrow\ G(m)\le G(N_j).
 $$
 
-No CA or GA1 classification of these $N_j$ is required. At their actual
-clocks $A_j=\log N_j$, $L_j=\log A_j$, $T_j=\sqrt{A_j}L_j$, and with
+This particular selection can also retain CA status by direct application
+of the same primary's Lemma 2, printed p.10, and Lemma 6, p.13. If
+$N_j=C_j$, it already has that status. If $N_j>C_j$, set
+$\epsilon_j=1/(\log N_j\log\log N_j)$. Lemma 6 makes
+
+$$
+g_{\epsilon_j}(t)=\epsilon_j\log t-\log\log\log t
+$$
+
+minimal at $t=N_j$ on $t>e$. Hence, for every integer $n\ge C_j$,
+
+$$
+Z(n)n^{-\epsilon_j}
+=G(n)e^{-g_{\epsilon_j}(n)}
+\le G(N_j)e^{-g_{\epsilon_j}(N_j)}
+=Z(N_j)N_j^{-\epsilon_j}.
+$$
+
+Lemma 2 applies with $N_0=C_j$ and $N=N_j$ and supplies global CA
+optimization at $\epsilon_j$. Its comparison with a CA parameter for
+$C_j$ is a conclusion of the lemma, not an additional assumption.
+The equality branch $N_j=C_j$ does not identify its optimizing price
+with $\epsilon_j$. This selection does not classify every member of
+the original integer-tail family, or make these $N_j$ GA1 or global
+maximizers on the original $n>5040$ domain.
+
+At their actual clocks $A_j=\log N_j$, $L_j=\log A_j$,
+$T_j=\sqrt{A_j}L_j$, and with
 $\Delta(N)=\gamma-\log G(N)$, positivity of $\eta$ gives
 
 $$
@@ -262,13 +288,18 @@ $$
 The second line uses $c_\eta A_j^{-\eta}\le1$ eventually. The complete
 original improper integral $I_\psi$ and its clock remain unchanged;
 no zero sum, upper endpoint, or elementary correction is discarded.
-In particular, under RH failure, the source-selection and ceiling
-constraints above are compatible with an unbounded negative normalized
-signed response. They do not establish a favorable-cutoff principle.
+In particular, under RH failure, these actual CA right-tail sources
+carry an unbounded negative normalized signed response. Their classical
+prime-prefix support and ordered exponents give $d_{N_j}=N_j$, so the
+sorting reward $\Gamma_{N_j}$ and its padding reward in (R2) are zero.
+Their [existing strict SA property](alaoglu1944highly.md) also gives
+$\Sigma(N_j)=Z(N_j)$ and $D_{N_j}=0$. Neither defect supplies a uniform
+strictly positive funding term on this selectable critical family.
+The source constraints do not establish a favorable-cutoff principle.
 
 A weaker sufficient target for an eventual contradiction is therefore
 an independently established finite lower bound: find fixed $M\ge0$
-and $A_0$ such that every actual all-integer right-tail maximizer with
+and $A_0$ such that every actual CA all-integer right-tail maximizer with
 $A=\log N\ge A_0$ satisfies
 
 $$
