@@ -94,7 +94,7 @@ public sealed partial class RemoveWorktreesCommandTests
         var result = Remove(runner, "locked", force);
         AssertResult(result, 68, 0, 0, 1);
         AssertItem(result, "locked", "/fixture/locked", "locked");
-        Assert.Contains("git worktree unlock", result.Output, StringComparison.Ordinal);
+        Assert.Contains("lock is retained", result.Output, StringComparison.Ordinal);
         Assert.Empty(runner.Removals);
     }
 
@@ -173,7 +173,7 @@ public sealed partial class RemoveWorktreesCommandTests
         AssertItem(result, "next", "/fixture/next", "removed");
         using var failedItem = JsonDocument.Parse(result.Output.Split('\n')[0]);
         Assert.Equal(originalError, failedItem.RootElement.GetProperty("error").GetString());
-        Assert.Equal(["/fixture/linked", "/fixture/next"], runner.Removals.Select(call => call.Arguments[^1]));
+        Assert.Single(runner.Invocations, call => call.FileName == "python3");
     }
 
     [Fact]
@@ -185,38 +185,38 @@ public sealed partial class RemoveWorktreesCommandTests
             ThrowOnRemoval = true,
         };
         AssertResult(Remove(runner, "linked next"), 74, 1, 1, 0);
-        Assert.Equal(2, runner.Removals.Count());
+        Assert.Single(runner.Invocations, call => call.FileName == "python3");
     }
 
     [Fact]
-    public void SingleNameIsRemovedWithOneForceAndMainWorkingDirectory()
+    public void SingleNameDelegatesWholeBatchPreservationQualification()
     {
+
         var runner = new InventoryRunner();
         var result = Remove(runner, "linked");
         AssertResult(result, 0, 1, 0, 0);
         AssertItem(result, "linked", "/fixture/linked", "removed");
-        var remove = Assert.Single(runner.Removals);
-        Assert.Equal("/fixture/main", remove.WorkingDirectory);
-        Assert.Equal(["worktree", "remove", "--force", "--", "/fixture/linked"], remove.Arguments);
+        var request = Assert.Single(runner.Invocations, call => call.FileName == "python3");
+        Assert.Contains("worktree_protocol.py", request.Arguments[1], StringComparison.Ordinal);
+        Assert.Equal("linked", request.Arguments[request.Arguments.ToList().IndexOf("--names") + 1]);
+        Assert.DoesNotContain("--force", request.Arguments);
     }
 
     [Theory]
     [InlineData(false, false)]
     [InlineData(true, false)]
     [InlineData(true, true)]
-    public void ForceDisablesOnlyDeletionTimeout(bool force, bool forceFirst)
+    public void ForceIsPassedOnlyAsRemovalTimeoutOption(bool force, bool forceFirst)
     {
+
         var runner = new InventoryRunner(Entry("/fixture/main"), Entry("/fixture/a"), Entry("/fixture/b"));
         var arguments = forceFirst ? new[] { "--force", "--names", "a b" }
             : force ? ["--names", "a b", "--force"] : ["--names", "a b"];
         AssertResult(Run(runner, arguments), 0, 2, 0, 0);
-        Assert.Equal(TimeSpan.FromSeconds(120), Assert.Single(runner.Invocations, call => !IsRemoval(call)).Timeout);
-        Assert.Equal(2, runner.Removals.Count());
-        Assert.All(runner.Removals, call =>
-        {
-            Assert.Equal(force ? Timeout.InfiniteTimeSpan : TimeSpan.FromSeconds(300), call.Timeout);
-            Assert.Equal(["worktree", "remove", "--force", "--", call.Arguments[^1]], call.Arguments);
-        });
+        var request = Assert.Single(runner.Invocations, call => call.FileName == "python3");
+        Assert.Equal(force, request.Arguments.Contains("--force"));
+        Assert.Equal(Timeout.InfiniteTimeSpan, request.Timeout);
+        Assert.Contains("--names", request.Arguments);
     }
 
     [Theory]
@@ -226,7 +226,8 @@ public sealed partial class RemoveWorktreesCommandTests
     {
         var runner = new InventoryRunner(Entry("/fixture/main"), Entry("/fixture/--force"));
         AssertResult(Remove(runner, "--force", force), 0, 1, 0, 0);
-        Assert.Equal("/fixture/--force", Assert.Single(runner.Removals).Arguments[^1]);
+        var request = Assert.Single(runner.Invocations, call => call.FileName == "python3");
+        Assert.Equal("--force", request.Arguments[request.Arguments.ToList().IndexOf("--names") + 1]);
     }
 
     [Fact]
@@ -235,7 +236,8 @@ public sealed partial class RemoveWorktreesCommandTests
         var runner = new InventoryRunner(Entry("/fixture/main"), Entry("/fixture/a"), Entry("/fixture/b"));
         var result = Remove(runner, " \tb\r\na  ");
         AssertResult(result, 0, 2, 0, 0);
-        Assert.Equal(["/fixture/b", "/fixture/a"], runner.Removals.Select(call => call.Arguments[^1]));
+        var request = Assert.Single(runner.Invocations, call => call.FileName == "python3");
+        Assert.Equal("b a", request.Arguments[request.Arguments.ToList().IndexOf("--names") + 1]);
         Assert.Single(runner.Invocations, call => call.Arguments.SequenceEqual(["worktree", "list", "--porcelain", "-z"]));
     }
 
@@ -244,23 +246,19 @@ public sealed partial class RemoveWorktreesCommandTests
     {
         var runner = new InventoryRunner();
         AssertResult(Remove(runner, "linked linked\tlinked"), 0, 1, 0, 0);
-        Assert.Single(runner.Removals);
+        Assert.Single(runner.Invocations, call => call.FileName == "python3");
     }
 
     [Fact]
-    public void RemovalNeverConsultsReclamationCriteriaOrDeletesRefs()
+    public void CallerDelegatesPreservationAndRetainsBranchRefs()
     {
+
         var runner = new InventoryRunner();
         AssertResult(Remove(runner, "linked"), 0, 1, 0, 0);
         Assert.Equal(2, runner.Invocations.Count);
-        Assert.All(runner.Invocations, call =>
-        {
-            Assert.Equal("git", call.FileName);
-            Assert.Equal("worktree", call.Arguments[0]);
-            Assert.Contains(call.Arguments[1], new[] { "list", "remove" });
-            Assert.DoesNotContain(call.Arguments, arg =>
-                new[] { "status", "merge-base", "rev-list", "log", "gh", "lsof", "update-ref", "branch", "-D" }.Contains(arg));
-        });
+        Assert.Single(runner.Invocations, call => call.FileName == "python3"
+            && call.Arguments.Contains("remove") && call.Arguments.Contains("--names"));
+        Assert.DoesNotContain(runner.Invocations, call => call.Arguments.Contains("update-ref"));
     }
 
     [Theory]
@@ -292,27 +290,27 @@ public sealed partial class RemoveWorktreesCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void DirtyUnmergedNewWorktreeIsRemovedAndItsBranchRefSurvives(bool force)
+    public void DirtyUnmergedNewWorktreeAndBranchArePreserved(bool force)
     {
         using var fixture = new RemovalFixture();
         var path = fixture.Add("fresh-dirty", "unmerged-branch");
         var branchHead = fixture.CommitAndDirty(path);
         var mainHead = fixture.Git(fixture.Main, "rev-parse", "HEAD").Trim();
         Assert.NotEqual(mainHead, branchHead);
-        AssertResult(fixture.Remove("fresh-dirty", force), 0, 1, 0, 0);
-        Assert.False(Directory.Exists(path));
+        AssertResult(fixture.Remove("fresh-dirty", force), 73, 0, 0, 1);
+        Assert.True(Directory.Exists(path));
         Assert.Equal(branchHead, fixture.Git(fixture.Main, "rev-parse", "refs/heads/unmerged-branch").Trim());
     }
 
     [Fact]
-    public void CallerLinkedWorktreeCanBeRemovedFromMainCheckout()
+    public void CallerLinkedWorktreeIsProtected()
     {
+
         using var fixture = new RemovalFixture();
         var path = fixture.Add("caller");
         var result = WorktreeCommand.Run(path, ["remove", "--names", "caller"], fixture.Runner);
-        AssertResult(result, 0, 1, 0, 0);
-        Assert.False(Directory.Exists(path));
-        Assert.Equal(fixture.Main, Assert.Single(fixture.Runner.Invocations, IsRemoval).WorkingDirectory);
+        AssertResult(result, 73, 0, 0, 1);
+        Assert.True(Directory.Exists(path));
     }
 
     [Fact]
@@ -348,13 +346,13 @@ public sealed partial class RemoveWorktreesCommandTests
     {
         var result = Run(new InventoryRunner(), "--help");
         Assert.True(result.Success, result.Error);
-        foreach (var text in new[] { "--names", "--force", "300", "timeout", "complete", "whitespace", "unmerged", "dirty", "age", "open PR", "process", "git worktree unlock", "0/2", "WORKTREE_REMOVE_RESULT" })
+        foreach (var text in new[] { "--names", "--force", "300", "timeout", "complete", "whitespace", "remote preservation", "content", "OS entry/cache exclusion", "0/2", "WORKTREE_REMOVE_RESULT" })
             Assert.Contains(text, result.Output, StringComparison.Ordinal);
         Assert.Contains("StrataLint worktree remove --names", WorktreeCommand.Usage, StringComparison.Ordinal);
     }
 
     private static CommandResult Run(InventoryRunner runner, params string[] arguments) =>
-        WorktreeCommand.Run("/fixture/linked", new[] { "remove" }.Concat(arguments).ToArray(), runner);
+        WorktreeCommand.Run("/fixture/invoker", new[] { "remove" }.Concat(arguments).ToArray(), runner);
 
     private static CommandResult Remove(InventoryRunner runner, string names, bool force = false) =>
         Run(runner, force ? ["--names", names, "--force"] : ["--names", names]);

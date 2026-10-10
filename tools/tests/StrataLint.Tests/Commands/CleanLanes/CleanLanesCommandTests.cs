@@ -170,9 +170,9 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(judge));
         Assert.True(Directory.Exists(reports));
         var items = ReadItems(result.Output);
-        Assert.Contains(items, item => item.GetProperty("reason").GetString() == "gitless_judge_snapshot"
+        Assert.Contains(items, item => item.GetProperty("reason").GetString() == "remote_preserved_snapshot"
             && Path.GetFileName(item.GetProperty("path").GetString()) == Path.GetFileName(judge));
-        Assert.Contains(items, item => item.GetProperty("reason").GetString() == "not_judge_tree"
+        Assert.Contains(items, item => item.GetProperty("reason").GetString() == "snapshot_preservation_unconfirmed"
             && Path.GetFileName(item.GetProperty("path").GetString()) == Path.GetFileName(reports));
     }
 
@@ -185,9 +185,7 @@ public sealed partial class CleanLanesCommandTests
         var retained = fixture.AddLandedLane(retainedBranch);
         var removed = fixture.AddLandedLane(removedBranch);
         var runner = new SelectiveFailureRunner(
-            arguments => arguments.Count > 1
-                && arguments[0] == "worktree"
-                && arguments[1] == "remove"
+            arguments => IsProtocol(arguments, "remove")
                 && arguments.Contains(retained, StringComparer.Ordinal),
             "synthetic worktree removal failure");
 
@@ -255,7 +253,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void DirtyDivergedWorktreeIsForceRemovedWithoutStatusPrOrProcessQueries()
+    public void DirtyDivergedWorktreeAndStagingArePreservedByForce()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddUnmergedLane("harness/dirty-unmerged");
@@ -268,13 +266,13 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunWithRaw(runner, "--lanes-only", "--force");
 
         Assert.True(result.Success, result.Error);
-        Assert.False(Directory.Exists(lane));
-        Assert.False(fixture.BranchExists("harness/dirty-unmerged"));
-        Assert.DoesNotContain(runner.Invocations, invocation => invocation.FileName != "git"
-            || invocation.Arguments[0] is "status" or "merge-base");
-        var removal = Assert.Single(runner.Invocations, invocation =>
-            invocation.Arguments.Take(2).SequenceEqual(new[] { "worktree", "remove" }));
-        Assert.Equal(new[] { "worktree", "remove", "--force", "--", lane }, removal.Arguments);
+        Assert.True(Directory.Exists(lane));
+        Assert.True(fixture.BranchExists("harness/dirty-unmerged"));
+        Assert.Equal("unstaged change", File.ReadAllText(Path.Combine(lane, "README.md")));
+        Assert.Equal("untracked change", File.ReadAllText(Path.Combine(lane, "untracked.txt")));
+        Assert.Contains("staged.txt", TestGit.Run(lane, "diff", "--cached", "--name-only"), StringComparison.Ordinal);
+        Assert.Contains(runner.Invocations, invocation => IsProtocol(invocation.Arguments, "remove"));
+
     }
 
     [Fact]
@@ -404,7 +402,7 @@ public sealed partial class CleanLanesCommandTests
         if (childEligible) fixture.AdvanceBase(300);
         var preview = fixture.Run("--lanes-only");
         Assert.True(preview.Success, preview.Error);
-        Assert.Equal(childEligible ? 2 : 0, ReadSummary(preview.Output).GetProperty("removable_count").GetInt32());
+        Assert.Equal(childEligible ? 1 : 0, ReadSummary(preview.Output).GetProperty("removable_count").GetInt32());
         var result = fixture.Run("--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         Assert.Equal(!childEligible, Directory.Exists(parent));
@@ -504,6 +502,13 @@ public sealed partial class CleanLanesCommandTests
             TestGit.Run(root, arguments);
     }
 
+    private static bool IsProtocol(IReadOnlyList<string> arguments, string action) =>
+        arguments.Count > 4 && arguments[1].EndsWith("worktree_protocol.py", StringComparison.Ordinal)
+        && arguments[4] == action;
+
+    private static string ProtocolValue(IReadOnlyList<string> arguments, string option) =>
+        arguments[arguments.ToList().IndexOf(option) + 1];
+
     private sealed class SelectiveFailureRunner(
         Func<IReadOnlyList<string>, bool> shouldFail,
         string error) : IWorktreeProcessRunner
@@ -515,7 +520,7 @@ public sealed partial class CleanLanesCommandTests
             IReadOnlyList<string> arguments,
             string workingDirectory,
             TimeSpan timeout) =>
-            fileName == "git" && shouldFail(arguments)
+            (fileName == "git" || fileName == "python3") && shouldFail(arguments)
                 ? new ProcessOutput(128, [], Encoding.UTF8.GetBytes(error + "\n"))
                 : inner.Run(fileName, arguments, workingDirectory, timeout);
     }

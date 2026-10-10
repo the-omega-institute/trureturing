@@ -124,13 +124,14 @@ public sealed partial class CleanLanesCommandTests
         var production = new ProductionWorktreeProcessRunner();
         var runner = fixture.CreateRunner((file, args, cwd) =>
         {
-            if (file != "git" || !args.Take(2).SequenceEqual(["worktree", "remove"])) return null;
-            Assert.Equal(new[] { "worktree", "remove", "--force", "--force", "--", lane }, args);
+            if (file != "python3" || !IsProtocol(args, "remove")) return null;
+            Assert.Contains("--initialization", args);
+            Assert.Equal(lane, ProtocolValue(args, "--path"));
             Assert.Equal(InitializationLock,
                 File.ReadAllText(Path.Combine(fixture.WorktreeGitDirectory(lane), "locked")).Trim());
             if (boundary == "native-refusal")
             {
-                var refused = production.Run(file, ["worktree", "remove", "--force", "--", lane],
+                var refused = production.Run("git", ["worktree", "remove", "--force", "--", lane],
                     cwd, TestBudgets.ScriptProcessHangGuard);
                 Assert.NotEqual(0, refused.ExitCode);
                 return refused;
@@ -415,13 +416,13 @@ public sealed partial class CleanLanesCommandTests
         var native = new ProductionWorktreeProcessRunner();
         var runner = fixture.CreateRunner((file, args, cwd) =>
         {
-            if (file != "git") return null;
-            if (boundary == "branch-ref" && args.Take(2).SequenceEqual(["update-ref", "-d"])
-                && args.Contains($"refs/heads/{branch}")) return GitFailure("controlled ref refusal");
-            if (boundary == "branch-ref" || !args.Take(2).SequenceEqual(["worktree", "remove"])) return null;
+            if (file != "python3") return null;
+            if (boundary == "branch-ref" && IsProtocol(args, "retire-branch")
+                && args.Contains(branch)) return GitFailure("controlled ref refusal");
+            if (boundary == "branch-ref" || !IsProtocol(args, "remove")) return null;
             if (boundary == "native-refusal")
             {
-                var refused = native.Run(file, ["worktree", "remove", "--force", "--", lane],
+                var refused = native.Run("git", ["worktree", "remove", "--force", "--", lane],
                     cwd, TestBudgets.ScriptProcessHangGuard);
                 Assert.NotEqual(0, refused.ExitCode);
                 return refused;
@@ -493,13 +494,14 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(lane));
         runner = fixture.CreateRunner();
         var result = fixture.RunWithRaw(runner, "--force");
-        Assert.True(result.Success, result.Error);
+        Assert.True(result.Success, result.Error + result.Output);
         Assert.False(Directory.Exists(lane));
         Assert.False(fixture.WorktreeRegistered(lane));
         Assert.False(fixture.BranchExists(branch));
         Assert.False(fixture.BranchExists("harness/idle-orphan-control"));
         Assert.False(Directory.Exists(snapshot));
-        Assert.False(Directory.Exists(pointer));
+        Assert.True(Directory.Exists(pointer));
+        Assert.Contains("gitdir:", File.ReadAllText(Path.Combine(pointer, ".git")), StringComparison.Ordinal);
         Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         Assert.Equal(JsonValueKind.Null, ReadSummary(result.Output).GetProperty("extra_sweeps_reason").ValueKind);
     }

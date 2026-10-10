@@ -94,6 +94,7 @@ internal static partial class CleanLanesCommand
                 InspectTempJudges(
                     root,
                     commonGitDirectory,
+                    baseCommit,
                     options.Force,
                     protectedInventory,
                     tempRoots,
@@ -332,6 +333,15 @@ internal static partial class CleanLanesCommand
                     continue;
                 }
 
+                var lockedPreview = WorktreeProtocolCommand.Run(repositoryRoot,
+                    ["remove", "--path", item.Path, "--preview", "--initialization"], runner,
+                    TimeSpan.FromSeconds(600));
+                if (!lockedPreview.Success)
+                {
+                    events.Add(BlockedWorktree(item, "preservation_or_use_unconfirmed"));
+                    incomplete = true;
+                    continue;
+                }
                 events.Add(new CleanLaneEvent(
                     "stale_worktree",
                     item.Path,
@@ -359,6 +369,14 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
+            var preview = WorktreeProtocolCommand.Run(repositoryRoot,
+                ["remove", "--path", item.Path, "--preview"], runner, TimeSpan.FromSeconds(600));
+            if (!preview.Success)
+            {
+                events.Add(BlockedWorktree(item, "preservation_or_use_unconfirmed"));
+                incomplete = true;
+                continue;
+            }
             events.Add(new CleanLaneEvent(
                 "stale_worktree",
                 item.Path,
@@ -424,9 +442,11 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            if (force)
+            if (!DeleteObservedRef(repositoryRoot, branch, head, runner, preview: !force))
             {
-                DeleteObservedRef(repositoryRoot, branch, head, runner);
+                events.Add(new CleanLaneEvent("orphan_branch", null, branch, head,
+                    "skipped", "remote_preservation_or_use_unconfirmed"));
+                continue;
             }
 
             events.Add(new CleanLaneEvent(
@@ -442,6 +462,7 @@ internal static partial class CleanLanesCommand
     private static void InspectTempJudges(
         string repositoryRoot,
         string commonGitDirectory,
+        string baseCommit,
         bool force,
         IReadOnlyList<RegisteredWorktree> inventory,
         IReadOnlyList<string> tempRoots,
@@ -491,98 +512,25 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            if (!HasSameRepositoryPointer(path, commonGitDirectory))
-            {
-                if (!File.Exists(Path.Combine(path, ".git"))
-                    && !Directory.Exists(Path.Combine(path, ".git"))
-                    && HasGitlessJudgeShape(path))
-                {
-                    if (force)
-                    {
-                        if (!HasGitlessJudgeShape(path))
-                        {
-                            throw new InvalidOperationException(
-                                $"judge snapshot identity changed during cleanup: {path}");
-                        }
-
-                        Directory.Delete(path, recursive: true);
-                    }
-
-                    events.Add(new CleanLaneEvent(
-                        "temp_judge",
-                        path,
-                        null,
-                        null,
-                        force ? "removed" : "would_remove",
-                        "gitless_judge_snapshot"));
-                    continue;
-                }
-
-                events.Add(new CleanLaneEvent(
-                    "temp_judge",
-                    path,
-                    null,
-                    null,
-                    "skipped",
-                    File.Exists(Path.Combine(path, ".git"))
-                        || Directory.Exists(Path.Combine(path, ".git"))
-                        ? "foreign_git_directory"
-                        : "not_judge_tree"));
-                continue;
-            }
-
-            if (force)
-            {
-                Directory.Delete(path, recursive: true);
-            }
-
-            events.Add(new CleanLaneEvent(
-                "temp_judge",
-                path,
-                null,
-                null,
-                force ? "removed" : "would_remove",
-                "unregistered_same_repository"));
+            var arguments = new List<string> { "remove-snapshot", "--path", path, "--base", baseCommit };
+            if (!force) arguments.Add("--preview");
+            var result = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
+            events.Add(new CleanLaneEvent("temp_judge", path, null, null,
+                result.Success ? (force ? "removed" : "would_remove")
+                    : result.ExitCode == 74 ? "partially_removed" : "skipped",
+                result.Success ? "remote_preserved_snapshot"
+                    : result.ExitCode == 74 ? "snapshot_partial_or_indeterminate" : "snapshot_preservation_unconfirmed"));
         }
     }
 
-    private static void DeleteObservedRef(
-        string repositoryRoot,
-        string branch,
-        string observedHead,
-        IWorktreeProcessRunner runner) =>
-        RunGit(
-            repositoryRoot,
-            ["update-ref", "-d", $"refs/heads/{branch}", observedHead],
-            runner,
-            "managed branch moved during cleanup");
-
-    private static bool HasSameRepositoryPointer(string path, string commonGitDirectory)
+    private static bool DeleteObservedRef(
+        string repositoryRoot, string branch, string observedHead, IWorktreeProcessRunner runner,
+        bool preview = false)
     {
-        var pointerPath = Path.Combine(path, ".git");
-        if (!File.Exists(pointerPath)) return false;
-        var line = File.ReadLines(pointerPath, StrictUtf8).FirstOrDefault();
-        const string prefix = "gitdir: ";
-        if (line is null || !line.StartsWith(prefix, StringComparison.Ordinal)) return false;
-        var raw = line[prefix.Length..];
-        if (raw.Length == 0) return false;
-        var gitDirectory = Path.IsPathRooted(raw)
-            ? Path.GetFullPath(raw)
-            : Path.GetFullPath(raw, path);
-        var relative = Path.GetRelativePath(commonGitDirectory, gitDirectory);
-        return !Path.IsPathRooted(relative)
-            && !string.Equals(relative, "..", StringComparison.Ordinal)
-            && !relative.StartsWith("../", StringComparison.Ordinal)
-            && !relative.StartsWith("..\\", StringComparison.Ordinal);
+        var arguments = new List<string> { "retire-branch", "--branch", branch, "--commit", observedHead };
+        if (preview) arguments.Add("--preview");
+        return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner).Success;
     }
-
-    private static bool HasGitlessJudgeShape(string path) =>
-        File.Exists(Path.Combine(path, "CLAUDE.md"))
-        && File.Exists(Path.Combine(path, "AGENTS.md"))
-        && File.Exists(Path.Combine(path, "Trureturing.lean"))
-        && File.Exists(Path.Combine(path, "lean-toolchain"))
-        && Directory.Exists(Path.Combine(path, "D5"))
-        && Directory.Exists(Path.Combine(path, "tools"));
 
     private static string ResolveCommit(
         string repositoryRoot,
