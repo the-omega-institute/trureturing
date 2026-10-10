@@ -589,3 +589,16 @@ A quantum distribution is network-nonlocal when its observed and low-order geome
 - Prove a sound fiber-sensitive inflation relaxation whose certificate can be expressed in the existing Gram or boundary language.
 - Evaluate one exact EJM or RGB4 certificate on the multi-affine independent-source noise polynomial (6.5).
 - Separate rigorous outer bounds, numerical inner models, and exact transition claims in every future noise table.
+
+
+## References and repository anchors
+
+- Fritz, “Beyond Bell’s theorem: correlation scenarios,” New J. Phys. 14 (2012), arXiv:1206.5115.
+- Renou, Bäumer, Boreiri, Brunner, Gisin, Beigi, “Genuine quantum nonlocality in the triangle network,” Phys. Rev. Lett. 123, 140401 (2019), https://arxiv.org/abs/1905.04902.
+- Pozas-Kerstjens, Gisin, Renou, “Proofs of network quantum nonlocality in continuous families of distributions,” Phys. Rev. Lett. 130, 090201 (2023), https://arxiv.org/abs/2203.16543.
+- Bäumer, Gitton, Kriváchy, Gisin, Renner, “Exploring the Local Landscape in the Triangle Network,” Phys. Rev. A 111, 052453 (2025), https://arxiv.org/abs/2405.08939.
+- Boreiri, Ulu, Brunner, Sekatski, “Noise-robust proofs of quantum network nonlocality,” Quantum 9, 1830 (2025), https://arxiv.org/abs/2311.02182.
+- Gitton, Renner, “The Elegant Joint Measurement is Non-Classical in the Triangle Network,” arXiv:2510.15143 (2025), https://arxiv.org/abs/2510.15143.
+- Existing finite classical carrier: D5/S3/Quantum/Entanglement/TriangleSymmetricLocalRefutation.lean.
+- Existing inequality counterexample using that carrier: D5/S3/Quantum/Entanglement/TriangleInequalityL1Refutation.lean.
+- Existing FIB quotient and hidden-fiber source: docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md and docs/develop/theory/AURIC_FIB_ATOM_READOUT_CLOSURE_AND_RECORD_TRIANGLE.md.
