@@ -716,6 +716,11 @@ locates positive $\psi$-error points in $[Y^r,Y]$ under its stated
 fixed-exponent conditions. The following correspondence consumes that
 input and the present primary's actual activation rules, equations
 (7)–(12), pp.7–9. It does not repeat Theorem 6's infinite GA1 supplier.
+Use the source's full layer price
+
+$$
+F(x,k)=\frac{\log(1+1/(x+\cdots+x^k))}{\log x},\qquad x>1.
+$$
 
 Let $t\to\infty$ satisfy $\psi(t)>t$, and let $p$ be the largest prime
 at most $t$. The prime number theorem gives $p\sim t$, while the full
@@ -771,5 +776,102 @@ $$
 Indeed $Z(H)/Z(D)=1+1/p$, $\log H-\log D=\log p$, and
 $u\mapsto1/(u\log u)$ decreases throughout that interval. The positive
 $\sqrt2-1$ term permits a positive $\psi$-point even if
-$\vartheta(p)<p$. No layer or activation tie was removed, and no GA1
-or event-free assertion is supplied by this correspondence.
+$\vartheta(p)<p$. The full layer accounting is retained, and possible
+activation ties remain allowed. This correspondence supplies no GA1
+or event-free assertion.
+
+## Quantitative selection into the self-clock-price class
+
+Define the actual source class
+
+$$
+\mathscr S_*=
+\left\{N>e:\ N\text{ is globally CA at }
+\epsilon_N=\frac1{(\log N)\log\log N},\quad
+G(m)\le G(N)\ \text{for every integer }m\ge N\right\}.
+$$
+
+Under RH failure, the preceding correspondence permits an unbounded
+family entirely in this class while retaining a fixed power-sized
+excess. This is a paper-level synthesis of the cited inputs, not a
+priority claim, Lean certification, or bound for the signed tail.
+
+Retain the zero abscissa $1/2<\Theta\le1$. Choose fixed parameters
+
+$$
+1-\Theta<\eta<\frac1{4\Theta},\qquad
+2\eta<r<\frac1{2\sigma},
+$$
+
+where $\Theta<\sigma<\min\{1,1/(4\eta)\}$ if $\Theta<1$, and
+$\sigma=1$ if $\Theta=1$. These choices exist because
+$4\Theta(1-\Theta)<1$. They satisfy both $r\sigma<1/2$ for the Pintz
+application and $0<\eta/r<1/2$ for the final excess. This selects an
+allowed fixed exponent in (O1); it is not a construction for every
+previously chosen $\eta<1/2$.
+
+Take the published CA witnesses $C$ from (O1), with
+$a=\log C\to\infty$, and put $Y=a/8$. Select a positive $\psi$-point
+$t\in[Y^r,Y]$, then construct the actual $D,H$ above. Eventually
+
+$$
+\log D\ge\tfrac12(a/8)^r,\qquad
+\log H\le2t\le a/4,
+\qquad D<H<C,
+\qquad G(H)>G(D).
+\tag{S1}
+$$
+
+The selection of $t$ can be specified without a free continuum choice:
+take the least member of the finite set
+$\{Y^r\}\cup\{q^k:Y^r<q^k\le Y,\ q\text{ prime},\ k\ge1\}$
+where $\psi(t)>t$. Such a member exists since $\psi(u)-u$ decreases
+between its prime-power jumps.
+
+Let $N$ be the rightmost maximizer of $G$ over the integers $n\ge D$.
+The tail contains $C$ with $G(C)>e^\gamma=\limsup G(n)$, so this uses
+the already recalled attained-tail-maximum mechanism and has finitely
+many ties. The strict gain in (S1) gives $N>D$. Lemmas 6 and 2 therefore
+apply with CA base $N_0=D$, selected maximum $N>D$, and price
+$\epsilon_N$; they supply global CA optimization at that exact price.
+Hence $N\in\mathscr S_*$, with all activation ties still allowed.
+
+Put $A=\log N$, $L=\log A$, $T=\sqrt A L$ and
+$k_0=1/(2\,8^r)$. On the same final integer, (S1) gives
+$A\ge k_0a^r$, and consequently
+
+$$
+a^{-\eta}\ge k_0^{\eta/r}A^{-\eta/r},\qquad
+G(N)\ge G(C)>e^\gamma(1+c_*A^{-\eta'}),
+\quad \eta'=\eta/r\in(0,1/2),\quad c_*=c_\eta k_0^{\eta'}>0.
+\tag{S2}
+$$
+
+Also $A\to\infty$. The possible positions $D<N<C$, $N=C$, and $N>C$
+are all covered: the lifting comparison is $N>D$. The earlier procedure
+whose tail starts at $C$ keeps its stated equality-branch price limitation.
+Here the price identification follows from $N>D$ even if $N=C$.
+
+Apply (O3) with the fixed $(\eta',c_*)$ supplied by (S2). Under RH
+failure it yields $T I_\psi(A)\to-\infty$ on an unbounded family inside
+$\mathscr S_*$. The same-source identity, complete original integral
+and actual core $K_N(A)$ are evaluated at $A=\log N$, not at any
+auxiliary clock $t,p,\log D$ or $\log C$.
+
+Accordingly a sufficient remaining target can be restricted to
+
+$$
+\exists M\ge0,\ A_0\quad
+\forall N\in\mathscr S_*,\ A=\log N\ge A_0:\quad
+\sqrt A\log A
+\int_A^\infty(\psi(u)-u)
+ \frac{1+\log u}{u^2\log^2u}\,du\ge-M.
+\tag{S3}
+$$
+
+No bound in (S3) is established. The increment is the quantified
+source-selection interface justifying this narrower class, with the
+original signed obligation preserved. It supplies neither GA1 nor
+regular or event-free states, a favorable cutoff, eliminated ties,
+positive sorting-defect funding, or RH. Those restrictions cannot be
+added to (S3) without another same-source selection argument.

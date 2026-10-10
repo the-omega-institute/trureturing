@@ -69,7 +69,7 @@ Also $\Pi(x)-\pi(x)=\sum_{k=2}^{\lfloor\log x/\log2\rfloor}
 $E\le0$ throughout $[B,Y]$. The published sign-change interval supplies
 a $y\in[Y\exp\{-500(\log\log Y)^3\},Y]$ with
 $\pi(y)-\operatorname{li}(y)>0$; eventually $y>B$. The endpoint term
-and the integral over $[B,y]$ are nonpositive. For fixed positive
+and the integral over $[B,y]$ are nonpositive. For suitable fixed positive
 constants $C_1,C_2,c_3$, the error bound and the prime number theorem
 therefore give
 
