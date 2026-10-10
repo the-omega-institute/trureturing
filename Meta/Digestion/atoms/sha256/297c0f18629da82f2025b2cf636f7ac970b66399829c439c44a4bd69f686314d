@@ -1,0 +1,124 @@
+#### theorem 1.4: 定理 4：FIB 选择代数与三点划分代数同构
+
+**Claim status: open.**
+
+
+定义原始选择代数：
+
+$$
+\mathcal A
+=
+\mathbb R[x,y,z]/
+(x^2-x,\ y^2-y,\ z^2-z,\ xz,\ yz).
+$$
+
+
+定义划分闭包代数：
+
+$$
+\mathcal B
+=
+\mathbb R[a,b,c]/
+(a^2-a,\ b^2-b,\ c^2-c,\ ab-ac,\ ab-bc).
+$$
+
+
+定义：
+
+$$
+\Phi:\mathcal B\to\mathcal A,
+$$
+
+
+$$
+\Phi(a)=x,
+\qquad
+\Phi(b)=y,
+\qquad
+\Phi(c)=z+xy.
+$$
+
+
+则 $\Phi$ 是代数同构，其逆映射为：
+
+$$
+\Phi^{-1}(x)=a,
+\qquad
+\Phi^{-1}(y)=b,
+\qquad
+\Phi^{-1}(z)=c-ab.
+$$
+
+
+证明如下。
+
+在 $\mathcal A$ 中：
+
+$$
+ac\mapsto x(z+xy)=xz+x^2y=xy,
+$$
+
+
+$$
+bc\mapsto y(z+xy)=yz+xy^2=xy,
+$$
+
+
+因此：
+
+$$
+ab=ac=bc.
+$$
+
+
+反向，在 $\mathcal B$ 中令：
+
+$$
+z'=c-ab.
+$$
+
+
+则：
+
+$$
+(z')^2
+=
+(c-ab)^2
+=
+c-2ab+ab
+=
+c-ab
+=
+z'.
+$$
+
+
+并且：
+
+$$
+az'=a(c-ab)=ac-ab=0,
+$$
+
+
+$$
+bz'=b(c-ab)=bc-ab=0.
+$$
+
+
+所以 $z'$ 满足原始的中位排斥关系，逆映射成立。
+
+因此：
+
+> “中位排斥两端”与“等价关系具有传递闭包”是同一个五态代数的两种坐标描述。
+
+原坐标把联合边 $xy$ 隐藏起来；闭包坐标把它加入第三条关系边：
+
+$$
+c=z+xy.
+$$
+
+
+所以，$xy$ 不是一个额外创造出来的新模式，而是三点关系传递性要求的补边。
+
+---
+
