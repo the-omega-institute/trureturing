@@ -36,6 +36,10 @@ public sealed partial class CleanLanesCommandTests
             disposeWorktrees = worktrees.Dispose;
             disposeTemp = temp.Dispose;
             CopyDirectory(TemplateRepositoryPath, repository.Path);
+            var remote = Path.Combine(temp.Path, "remote.git");
+            Git(temp.Path, "init", "--bare", remote);
+            Git(repository.Path, "remote", "add", "origin", remote);
+            Git(repository.Path, "push", "origin", "dev");
             now = new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration);
         }
 
@@ -49,7 +53,13 @@ public sealed partial class CleanLanesCommandTests
                 Path.Combine(path, "README.md"),
                 "# clean lanes fixture\n",
                 new UTF8Encoding(false));
-            Git(path, "add", "README.md");
+            foreach (var name in new[] { "CLAUDE.md", "AGENTS.md", "Trureturing.lean", "lean-toolchain", "tools/scripts/local-harness-gate.sh" })
+            {
+                var file = Path.Combine(path, name);
+                Directory.CreateDirectory(Path.GetDirectoryName(file)!);
+                File.WriteAllText(file, "fixture\n", new UTF8Encoding(false));
+            }
+            Git(path, "add", ".");
             // The template is copied immediately; maintenance must not keep modifying .git.
             Git(path, "-c", "maintenance.auto=false", "commit", "-m", "fixture baseline");
             return path;
@@ -394,6 +404,7 @@ public sealed partial class CleanLanesCommandTests
             using var activity = new TemporaryDirectory(TestScratchRoot.Current);
             var activityFile = Path.Combine(activity.Path, "activity.json");
             File.WriteAllText(activityFile, System.Text.Json.JsonSerializer.Serialize(new[] { activePath }));
+            Git(repository.Path, "push", "origin", "dev");
             var allArguments = new List<string> { "--base", "dev", "--active-paths-file", activityFile };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(
@@ -408,6 +419,7 @@ public sealed partial class CleanLanesCommandTests
             IWorktreeProcessRunner runner,
             params string[] arguments)
         {
+            Git(repository.Path, "push", "origin", "dev");
             var allArguments = new List<string> { "--base", "dev" };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(
@@ -434,6 +446,7 @@ public sealed partial class CleanLanesCommandTests
             IReadOnlyList<string> arguments,
             string baseRevision = "dev")
         {
+            Git(repository.Path, "push", "origin", "dev");
             var allArguments = new List<string> { "--base", baseRevision };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(

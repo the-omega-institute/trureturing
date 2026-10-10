@@ -10,6 +10,30 @@ namespace StrataLint.WorktreeContract.Tests;
 public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 {
     [Theory]
+    [InlineData("spaced", "clean-lanes", "directory")]
+    [InlineData("spaced", "clean-all", "directory")]
+    [InlineData("spaced", "worktree-clean", "directory")]
+    [InlineData("spaced", "clean-lanes", "file")]
+    [InlineData("spaced", "clean-all", "file")]
+    [InlineData("plain", "clean-lanes", "directory")]
+    [InlineData("plain", "clean-all", "directory")]
+    [InlineData("plain", "worktree-clean", "directory")]
+    public void CleanupMakeEntrancesUseProductionQualification(string sourcePath, string entrance, string invocation)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, sourcePath, entrance, invocation, "CleanupMakeTests"],
+            root, TimeSpan.FromSeconds(180), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
     [InlineData("normal")]
     [InlineData("nonzero")]
     [InlineData("deadline")]
@@ -141,6 +165,25 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
         }
         Assert.Equal(["phase=owned-command partial-output\n", "partial-error\n"], captured);
         foreach (var item in captured) output.WriteLine(item);
+    }
+
+    [Theory]
+    [InlineData("recovery_clean_index_with_resolved_conflict_is_preserved")]
+    [InlineData("recovery_published_prior_commit_message_is_reconstructable")]
+    [InlineData("recovery_local_repository_is_not_a_remote")]
+    [InlineData("recovery_checkpoint_protects_input_reads")]
+    public void RecoveryQualificationUsesActualIndexAndCommitObjects(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests." + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
     [Theory]
