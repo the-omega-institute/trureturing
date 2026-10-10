@@ -4299,7 +4299,6 @@ $$
 \le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
 $$
 若 $j=0$，则 $a_{i,R}=0$ 且该层本轮 charge 为 $0$。
-若 $j=0$，则 $a_{i,R}=0$ 且该层本轮 charge 为 $0$。
 各轮区间两两不交并包含于
 $\{1,\ldots,|R\cap\Delta_t|\}$；跳过的整数只对应其它最优层已负责的角色。因此分配给 $R$ 的 charge 至多 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，贪心追加数 $s_t$ 满足
 $$
@@ -4395,6 +4394,7 @@ $$
 \frac{a_{i,R}}{g_i}\le\frac{a_{i,R}}{j}
 \le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
 $$
+若 $j=0$，则 $a_{i,R}=0$ 且该层本轮 charge 为 $0$。
 这些区间两两不交并包含于 $\{1,\ldots,|R\cap\Delta_t|\}$，故分给 $R$ 的 charge 不超过 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，得到贪心追加数 $s_t\le H_d\sigma_t\le H_m\sigma_t$；又 $s_t\ge\sigma_t\ge\lceil m/d\rceil$。逐批求和并使用
 $\ell(\mathcal Q_t)=\ell(\mathcal Q_{t-1})+s_t$，即得 (50.1)。
 
