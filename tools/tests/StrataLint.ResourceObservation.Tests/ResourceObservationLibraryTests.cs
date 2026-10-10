@@ -8,6 +8,143 @@ public sealed class ResourceObservationLibraryTests
 {
     private const string LibraryPath = "tools/scripts/lib/resource-observation-lib.sh";
 
+    [Theory]
+    [InlineData("begin", "HUP")]
+    [InlineData("begin", "INT")]
+    [InlineData("begin", "TERM")]
+    [InlineData("end", "HUP")]
+    [InlineData("end", "INT")]
+    [InlineData("end", "TERM")]
+    public void DiagnosticSignalDuringBoundaryReceiptPreservesFinalActiveState(string edge, string signal)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var result = Run(temporary, """
+            set -uo pipefail
+            source "$1"
+            injected=0
+            printf() {
+              if [[ "$1" == -v && "$2" == receipt && "${edge:-}" == "$TEST_EDGE" && "${phase:-}" == final && "$injected" == 0 ]]; then
+                injected=1
+                builtin kill -s "$TEST_SIGNAL" "${BASHPID:-$$}"
+              fi
+              builtin printf "$@"
+            }
+            trap 'resource_observation_handle_signal "$TEST_SIGNAL" 0 $$ "$PWD" "$PWD" ""' HUP INT TERM
+            resource_observe_sample 0 $$ "$PWD" "$PWD" final || true
+            trap - HUP INT TERM
+            printf 'FINAL_COUNTS calls=%s completed=%s\n' "$cold_observation_calls" "$cold_observation_completed"
+            [[ "$injected" == 1 ]] || exit 92
+            exit 23
+            """, $"COLD_COST_OBSERVATION_DIR={temporary.Path}", $"TEST_EDGE={edge}", $"TEST_SIGNAL={signal}");
+        Assert.Equal(23, result.ExitCode);
+        var receipt = File.ReadAllText(Directory.GetFiles(temporary.Path, "shell-resource-*.metrics").Single());
+        Assert.Contains("phase=final edge=end", receipt, StringComparison.Ordinal);
+        Assert.Contains("in_flight=0", receipt, StringComparison.Ordinal);
+        Assert.Contains("active_phase=none", receipt, StringComparison.Ordinal);
+        Assert.Contains("counter_snapshot=before-receipt-write snapshot_atomicity=UNAVAILABLE", receipt, StringComparison.Ordinal);
+        Assert.Contains("FINAL_COUNTS calls=2 completed=2", Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("baseline", "HUP")]
+    [InlineData("baseline", "INT")]
+    [InlineData("baseline", "TERM")]
+    [InlineData("periodic", "HUP")]
+    [InlineData("periodic", "INT")]
+    [InlineData("periodic", "TERM")]
+    [InlineData("final", "HUP")]
+    [InlineData("final", "INT")]
+    [InlineData("final", "TERM")]
+    [InlineData("signal-HUP", "HUP")]
+    [InlineData("signal-HUP", "INT")]
+    [InlineData("signal-HUP", "TERM")]
+    [InlineData("signal-INT", "HUP")]
+    [InlineData("signal-INT", "INT")]
+    [InlineData("signal-INT", "TERM")]
+    [InlineData("signal-TERM", "HUP")]
+    [InlineData("signal-TERM", "INT")]
+    [InlineData("signal-TERM", "TERM")]
+    public void DiagnosticNestedSignalSampleRetainsEnclosingSpan(string phase, string signal)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var result = Run(temporary, """
+            set -uo pipefail
+            source "$1"
+            nested=0
+            resource_observation_lean_inputs() {
+              if [[ "$nested" == 0 ]]; then
+                nested=1
+                cold_observation_started=111.000001
+                cold_observation_uptime_started=222.00
+                builtin kill -s "$TEST_SIGNAL" "${BASHPID:-$$}"
+                printf 'RESTORED_START realtime=%s uptime=%s\n' "$cold_observation_started" "$cold_observation_uptime_started"
+                for file in "$COLD_COST_OBSERVATION_DIR"/shell-resource-*.metrics; do
+                  IFS= read -r receipt < "$file"
+                  printf 'NESTED_END %s\n' "$receipt"
+                done
+              fi
+            }
+            trap 'resource_observation_handle_signal "$TEST_SIGNAL" 0 $$ "$PWD" "$PWD" ""' HUP INT TERM
+            resource_observe_sample 0 $$ "$PWD" "$PWD" "$TEST_PHASE" "" 23 || true
+            trap - HUP INT TERM
+            exit 23
+            """, $"COLD_COST_OBSERVATION_DIR={temporary.Path}", $"TEST_PHASE={phase}", $"TEST_SIGNAL={signal}");
+        Assert.Equal(23, result.ExitCode);
+        var output = Encoding.UTF8.GetString(result.StandardOutput);
+        var nestedEnd = output.Split('\n').Single(line => line.StartsWith("NESTED_END ", StringComparison.Ordinal));
+        Assert.Contains("in_flight=1", nestedEnd, StringComparison.Ordinal);
+        Assert.Contains($"active_phase={phase}", nestedEnd, StringComparison.Ordinal);
+        Assert.Contains("calls=2 completed=1", nestedEnd, StringComparison.Ordinal);
+        Assert.Contains("RESTORED_START realtime=111.000001 uptime=222.00", output, StringComparison.Ordinal);
+        var receipt = File.ReadAllText(Directory.GetFiles(temporary.Path, "shell-resource-*.metrics").Single());
+        Assert.Contains("calls=2 completed=2", receipt, StringComparison.Ordinal);
+        Assert.Contains("in_flight=0", receipt, StringComparison.Ordinal);
+        Assert.Contains($"phase={phase}", receipt, StringComparison.Ordinal);
+        Assert.Contains("realtime_started=111.000001", receipt, StringComparison.Ordinal);
+        Assert.Contains("uptime_started=222.00", receipt, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("HUP")]
+    [InlineData("INT")]
+    [InlineData("TERM")]
+    public void DiagnosticNestedFinalSamplePreservesWrapperTrapsStatusAndCleanup(string signal)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var result = Run(temporary, """
+            set -uo pipefail
+            source "$1"
+            trap 'printf previous-hup' HUP
+            trap 'printf previous-int' INT
+            trap 'printf previous-term' TERM
+            previous_traps=$(trap -p HUP INT TERM)
+            resource_observe_periodically() { return 0; }
+            observed_command() { return 23; }
+            resource_observation_lean_inputs() {
+              if [[ "$2" == final ]]; then
+                builtin kill -s "$TEST_SIGNAL" "${BASHPID:-$$}"
+                for file in "$COLD_COST_OBSERVATION_DIR"/shell-resource-*.metrics; do
+                  IFS= read -r receipt < "$file"
+                  if [[ "$receipt" == *"pid=${BASHPID:-$$} "* ]]; then printf 'NESTED_FINAL %s\n' "$receipt"; fi
+                done
+              fi
+            }
+            resource_observe_run_periodic observed_command
+            status=$?
+            [[ "$(trap -p HUP INT TERM)" == "$previous_traps" ]] || exit 91
+            exit "$status"
+            """, $"COLD_COST_OBSERVATION_DIR={temporary.Path}", $"RUNNER_TEMP={temporary.Path}", $"TEST_SIGNAL={signal}");
+        Assert.Equal(23, result.ExitCode);
+        var output = Encoding.UTF8.GetString(result.StandardOutput);
+        var nestedEnd = output.Split('\n').Single(line => line.StartsWith("NESTED_FINAL ", StringComparison.Ordinal));
+        Assert.Contains("in_flight=1", nestedEnd, StringComparison.Ordinal);
+        Assert.Contains("active_phase=final", nestedEnd, StringComparison.Ordinal);
+        Assert.Empty(Directory.GetDirectories(temporary.Path, ".resource-observation.*"));
+    }
+
     [Fact]
     public void DiagnosticSamplerRecordsActualPhasesAndUnavailableClockWithoutChangingExit()
     {

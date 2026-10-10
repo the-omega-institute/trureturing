@@ -291,11 +291,9 @@ resource_observation_boundary() {
     cold_observation_calls=$((cold_observation_calls + 1))
     cold_observation_started="$realtime"
     cold_observation_uptime_started="$uptime"
-    cold_observation_in_flight=1
   else
     cold_observation_completed=$((cold_observation_completed + 1))
     [[ "$status" == 0 ]] || cold_observation_errors=$((cold_observation_errors + 1))
-    cold_observation_in_flight=0
     if [[ "$realtime" != UNAVAILABLE && "${cold_observation_started:-UNAVAILABLE}" != UNAVAILABLE ]]; then
       local end_us="${realtime/./}" begin_us="${cold_observation_started/./}"
       if [[ "$end_us" =~ ^[0-9]+$ && "$begin_us" =~ ^[0-9]+$ ]]; then
@@ -309,15 +307,25 @@ resource_observation_boundary() {
   fi
   local measured_elapsed="$cold_observation_elapsed_us"
   if [[ "$realtime" == UNAVAILABLE || "${cold_observation_started:-UNAVAILABLE}" == UNAVAILABLE ]]; then measured_elapsed=UNAVAILABLE; fi
+  local active_phase="$phase" active_started="${cold_observation_started:-UNAVAILABLE}"
+  local active_uptime_started="${cold_observation_uptime_started:-UNAVAILABLE}"
+  local in_flight="${cold_observation_span_depth:-1}"
+  if [[ "$edge" != begin ]]; then
+    in_flight=$((in_flight - 1))
+    active_phase="${cold_observation_parent_phase:-none}"
+    active_started="${cold_observation_parent_started:-UNAVAILABLE}"
+    active_uptime_started="${cold_observation_parent_uptime_started:-UNAVAILABLE}"
+  fi
   local file="${COLD_COST_OBSERVATION_DIR%/}/shell-$owner-$((actual_pid % 128)).metrics"
   # Builtins only: no timer/identity subprocesses, no stdout dependency.
   # Readers reject a partial or changing overwritten receipt.
   local receipt=""
-  printf -v receipt 'owner=%s phase=%s edge=%s pid=%s start_ticks=%s identity_clock=boot-ticks calls=%s completed=%s errors=%s in_flight=%s realtime=%s realtime_started=%s realtime_resolution_ns=%s elapsed_us=%s clock_steps=%s uptime=%s uptime_started=%s uptime_resolution_ns=10000000 clock_uncertainty=quantized-boottime-and-realtime-steps clock_step_detection=backward-only bash_version=%s status=%s persistence_errors=%s completed_bytes_before=%s attempted_bytes_before=%s partial_bytes_on_error=UNAVAILABLE slot_retention=latest-identity-only' \
+  printf -v receipt 'owner=%s phase=%s edge=%s pid=%s start_ticks=%s identity_clock=boot-ticks calls=%s completed=%s errors=%s in_flight=%s realtime=%s realtime_started=%s realtime_resolution_ns=%s elapsed_us=%s clock_steps=%s uptime=%s uptime_started=%s uptime_resolution_ns=10000000 clock_uncertainty=quantized-boottime-and-realtime-steps clock_step_detection=backward-only bash_version=%s status=%s persistence_errors=%s completed_bytes_before=%s attempted_bytes_before=%s partial_bytes_on_error=UNAVAILABLE slot_retention=latest-identity-only span_depth=%s active_phase=%s active_realtime_started=%s active_uptime_started=%s elapsed_scope=sum-of-completed-spans-including-overlap counter_snapshot=before-receipt-write snapshot_atomicity=UNAVAILABLE' \
       "$owner" "$phase" "$edge" "$actual_pid" "$start" "$cold_observation_calls" "$cold_observation_completed" \
-      "$cold_observation_errors" "$cold_observation_in_flight" "$realtime" "${cold_observation_started:-UNAVAILABLE}" \
+      "$cold_observation_errors" "$in_flight" "$realtime" "${cold_observation_started:-UNAVAILABLE}" \
       "$resolution" "$measured_elapsed" "$cold_observation_clock_steps" "$uptime" \
-      "${cold_observation_uptime_started:-UNAVAILABLE}" "$BASH_VERSION" "$status" "$cold_observation_write_errors" "$cold_observation_completed_bytes" "$cold_observation_attempted_bytes"
+      "${cold_observation_uptime_started:-UNAVAILABLE}" "$BASH_VERSION" "$status" "$cold_observation_write_errors" "$cold_observation_completed_bytes" "$cold_observation_attempted_bytes" \
+      "${cold_observation_span_depth:-1}" "$active_phase" "$active_started" "$active_uptime_started"
   cold_observation_attempted_bytes=$((cold_observation_attempted_bytes + ${#receipt} + 1))
   if { printf '%s\n' "$receipt" > "$file"; } 2>/dev/null; then
     cold_observation_completed_bytes=$((cold_observation_completed_bytes + ${#receipt} + 1))
@@ -328,6 +336,13 @@ resource_observation_boundary() {
 }
 
 resource_observe_sample() {
+  # Dynamic locals keep a suspended invocation's clocks and phase across traps.
+  local cold_observation_span_depth=$(( ${cold_observation_span_depth:-0} + 1 )) \
+    cold_observation_parent_phase="${cold_observation_phase:-none}" \
+    cold_observation_parent_started="${cold_observation_started:-UNAVAILABLE}" \
+    cold_observation_parent_uptime_started="${cold_observation_uptime_started:-UNAVAILABLE}" \
+    cold_observation_phase="${5:-periodic}" \
+    cold_observation_started=UNAVAILABLE cold_observation_uptime_started=UNAVAILABLE
   resource_observation_boundary resource "${5:-periodic}" begin || true
   local sequence="$1"
   local root_pid="$2"

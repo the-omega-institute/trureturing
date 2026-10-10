@@ -2302,7 +2302,10 @@ def post_spawn(*args,**kwargs):
     os.kill(os.getpid(),signal.SIGINT)
     return child
 def command(_command,cwd,output,name,env,**kwargs):
-    body='import os,pathlib,time; pathlib.Path('+repr(str(root/"command.pid"))+').write_text(str(os.getpid())); pathlib.Path('+repr(str(root/"ready"))+').touch(); time.sleep(30)'
+    body='import os,pathlib,time; marker=pathlib.Path('+repr(str(root/"command.pid"))+'); pending=marker.with_suffix(".pid.tmp"); pending.write_text(str(os.getpid())); pending.replace(marker); pathlib.Path('+repr(str(root/"ready"))+').touch(); time.sleep(30)'
+    if mode=="interrupted-publication":
+        injected='def blocked_write(path,value):\\n    with path.open("w") as stream:\\n        pathlib.Path('+repr(str(root/"ready"))+').touch()\\n        time.sleep(30)\\n        return stream.write(value)\\n'
+        body='import os,pathlib,time; exec('+repr(injected)+'); pathlib.Path.write_text=blocked_write; '+body
     if mode=="post-spawn":
         with patch.object(cost.subprocess,"Popen",side_effect=post_spawn):
             return observe([sys.executable,"-c",body],cwd,output,name,env,signal_trace=kwargs["signal_trace"])
@@ -2323,7 +2326,7 @@ finally:
         witness = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"], process_group=0)
         driver = self.cancellation_driver(mode)
         try:
-            if mode == "external":
+            if mode != "post-spawn":
                 deadline = time.monotonic() + 5
                 while not (self.root / "ready").exists():
                     self.assertIsNone(driver.poll())
@@ -2368,6 +2371,17 @@ finally:
 
     def test_post_popen_sigint(self):
         self.check_signal(signal.SIGINT, "post-spawn")
+
+
+class CancellationFixturePublicationTests(unittest.TestCase):
+    setUp = CancellationBehaviorTests.setUp
+    cancellation_driver = CancellationBehaviorTests.cancellation_driver
+    check_signal = CancellationBehaviorTests.check_signal
+
+    def test_cancellation_during_pid_publication(self):
+        self.check_signal(signal.SIGTERM, "interrupted-publication")
+        self.assertFalse((self.root / "command.pid").exists())
+        self.assertEqual((self.root / "command.pid.tmp").read_text(), "")
 
 
 @unittest.skipUnless(sys.platform == "linux", "genuine Linux subreaper ownership pending; portable fixtures are not Linux proof")

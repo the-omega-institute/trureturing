@@ -492,6 +492,12 @@ record_supervised_processes() {
 }
 
 sample_supervised_resources() {
+  local cold_observation_span_depth=$(( ${cold_observation_span_depth:-0} + 1 )) \
+    cold_observation_parent_phase="${cold_observation_phase:-none}" \
+    cold_observation_parent_started="${cold_observation_started:-UNAVAILABLE}" \
+    cold_observation_parent_uptime_started="${cold_observation_uptime_started:-UNAVAILABLE}" \
+    cold_observation_phase="${1:-periodic}" \
+    cold_observation_started=UNAVAILABLE cold_observation_uptime_started=UNAVAILABLE
   if [[ -n "${COLD_COST_OBSERVATION_DIR:-}" ]]; then resource_observation_boundary supervisor "${1:-periodic}" begin || true; fi
   local pid rss fd members
   local rss_total=0

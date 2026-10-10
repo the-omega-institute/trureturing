@@ -1727,6 +1727,7 @@ DIAGNOSTIC_PATHS = ('.github/workflows/lean-cold-cost.yml', 'Meta/FILEMAP.toml',
 
 OBSERVATION_BASE = "ed9b30f560520f7a785dc44b2cd5e0883bdea4f5"
 OBSERVATION_PATHS = frozenset((
+    ".github/workflows/lean-cold-cost.yml",
     "tools/scripts/report/cold_cost.py", "tools/scripts/report/report-supervisor.sh",
     "tools/scripts/lib/resource-observation-lib.sh", "tools/scripts/report/tests/test_cold_cost.py",
     "tools/tests/StrataLint.ReportSupervisor.Tests/ReportSupervisorScriptTests.cs",
