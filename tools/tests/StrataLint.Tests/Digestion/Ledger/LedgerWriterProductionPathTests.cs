@@ -213,6 +213,27 @@ public sealed partial class LedgerWriterProductionPathTests
         }
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ScopedCurrentEdgeRejectsHistoryWithoutCurrentReport(bool moduleTarget)
+    {
+        var world = MaterializeSpec().Materialize();
+        world.Files["D5/S0/Carrier/Zeta.lean"] += "\ntheorem zeta : True ∧ True := ⟨True.intro, True.intro⟩\n";
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(CoverWorld.Raw(world.Files))).Snapshot;
+        var report = LeanAxiomReport.CreateScoped(world.Report.Files
+            .Where(pair => pair.Key.Value == "D5/S0/Carrier/Alpha.lean")
+            .ToDictionary(pair => pair.Key.Value, pair => pair.Value));
+        var index = FrozenStatementIndex.Create(FrozenStateCatalog.Load(snapshot), report,
+            FrozenLedgerBaseViewReader.Read(snapshot));
+
+        var edge = CurrentEdgeValidator.Validate(moduleTarget ? "D5/S0/Carrier/Zeta" : ZetaGid,
+            snapshot, report, new Dictionary<RepoPath, TruthState>(), index);
+
+        Assert.False(edge.IsClosed);
+        Assert.False(edge.IsResolved);
+    }
+
     private sealed class FullCurrentReport(LeanAxiomReport report) : ILeanReportSource
     {
         public LeanAxiomReport Load(RepositorySnapshot snapshot) => report;

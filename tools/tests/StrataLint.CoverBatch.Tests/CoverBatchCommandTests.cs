@@ -391,10 +391,15 @@ public sealed partial class CoverBatchCommandTests
         internal ImmutableArray<string> ChildIds { get; } = [];
 
         internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false,
-            bool externalChild = false)
+            bool externalChild = false, bool secondaryTarget = false)
         {
             Root = Path.Combine(temporary.Path, "repo");
-            inputs = Canonicalize(new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"] }.Materialize());
+            var materialized = new CoverSpec
+            {
+                OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"],
+                SecondaryTarget = secondaryTarget ? ("D5/S0/Carrier/Zeta", "zeta") : null,
+            }.Materialize();
+            inputs = secondaryTarget ? materialized : Canonicalize(materialized);
             var document = inputs.Document.WithDigestionSources(inputs.Document.RequireDigestionSources()
                 .Select(source => source with
                 {
@@ -524,12 +529,12 @@ public sealed partial class CoverBatchCommandTests
             };
         }
 
-        internal CommandResult Run(string input)
+        internal CommandResult Run(string input, ILeanReportSource? report = null, bool leanInputs = false)
         {
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             File.WriteAllText(path, input);
-            return CoverBatchCommand.Run(Root, Repository, Report,
-                CoverWorld.FixtureUtc, ["--atoms", path]);
+            return CoverBatchCommand.Run(Root, Repository, report ?? Report,
+                CoverWorld.FixtureUtc, leanInputs ? ["--lean-inputs", "--atoms", path] : ["--atoms", path]);
         }
 
         internal void RunSingles()
