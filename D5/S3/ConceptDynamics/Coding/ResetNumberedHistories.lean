@@ -1,5 +1,5 @@
 /- GID: D5/S3/ConceptDynamics/Coding/ResetNumberedHistories
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/Coding/ResetNumberedHistories
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
