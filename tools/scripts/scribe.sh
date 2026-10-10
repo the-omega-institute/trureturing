@@ -6,7 +6,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 PROJECT="$ROOT/tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
-LEAN_REPORT="$ROOT/.lake/build/stratalint/raw-lean-report.json"
+LEAN_REPORT="$ROOT/.lake/build/stratalint/scoped-lean-report.json"
 CONSUMER="$ROOT/tools/scripts/report/report-consumer.sh"
 MODE="${1:-}"
 
@@ -30,11 +30,18 @@ else
   git ls-files --others --exclude-standard -z >> "$PATHS_FILE"
 fi
 
+dotnet build "$PROJECT" --configuration Release --nologo --verbosity quiet
+SCRIBE_DLL="$ROOT/tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll"
+LEAN_TARGETS="$(dotnet "$SCRIBE_DLL" lean-inputs --paths-from "$PATHS_FILE")"
+[[ -n "$LEAN_TARGETS" ]] || { echo 'scribe: Lean input scope is empty' >&2; exit 2; }
+LEAN_TARGETS="${LEAN_TARGETS//$'\n'/ }"
+make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS"
+
 run_scribe() {
-  local command=(dotnet run --project "$PROJECT" --configuration Release -- "$1")
+  local command=(dotnet "$SCRIBE_DLL" "$1")
   if [[ "$1" == "emit" ]]; then
-    command+=(--paths-from "$PATHS_FILE")
-    "$CONSUMER" --role scribe-consumer --report "$LEAN_REPORT" -- "${command[@]}"
+    command+=(--paths-from "$PATHS_FILE" --scoped)
+    "$CONSUMER" --role scribe-consumer --report "$LEAN_REPORT" --targets "$LEAN_TARGETS" -- "${command[@]}"
   else
     "${command[@]}"
   fi

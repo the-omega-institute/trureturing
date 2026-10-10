@@ -3689,3 +3689,719 @@ finite exact common attainer, hard-resource or hard-defect preservation,
 fixed COMPLETE optimum, model-independence or sterile-prior claim follows.
 
 ## 追加锚（本行以下为后续增补区）
+
+## 17. Joint deterministic comparison and the cost of complete-law branching
+
+**Definition 17.1 (unchanged compatible domain and branching costs).**
+Retain Definition 16.1, including both full-descriptor residual equations,
+the shared unweighted marginals, the complete carriers and the fixed finite
+or countable installed prior. In particular, $\mathfrak C$, $d_B,d_A$,
+$\mathfrak C_{\rm det}$, $\mathcal J$ and $j_{\rm det}$ have exactly the
+meanings (16.1)--(16.8). The input below is any pair in $\mathfrak C$;
+no endpoint boxes, native representation, reversibility, finite support,
+common rate or return-motion restriction is imposed. Set
+
+$$
+c_p=\frac{10d_B+4d_A}{11},\qquad
+c_\beta=\frac{4d_B+6d_A}{11},\qquad
+c_* =\max\{c_p,c_\beta\}.
+\tag{17.1}
+$$
+
+For a complete probability target $T$ on the indicated phase, write
+$\mathcal L_p(T)=\int\operatorname{TV}(Q,T)\,d\nu_p$ and
+$\mathcal L_\beta(T)=\int\operatorname{TV}(W,T)\,d\nu_\beta$.
+The TV convention is half the complete countable $\ell^1$ distance.
+
+**Theorem 17.2 (one joint comparison, conditional barycentres and all targets).**
+For every pair $(\Gamma_B,\Gamma_A)\in\mathfrak C$, there is a pair
+$(\widehat\Gamma_B,\widehat\Gamma_A)\in\mathfrak C_{\rm det}$ and
+one stationary sequence of quadruples
+$(Q_t,W_t,\widehat Q_t,\widehat W_t)_{t\ge0}$ such that
+
+$$
+\begin{aligned}
+\operatorname{Law}(Q_t,W_t)&=\Gamma_B,&
+\operatorname{Law}(W_t,Q_{t+1})&=\Gamma_A,\\
+\operatorname{Law}(\widehat Q_t,\widehat W_t)&=\widehat\Gamma_B,&
+\operatorname{Law}(\widehat W_t,\widehat Q_{t+1})&=\widehat\Gamma_A.
+\end{aligned}
+\tag{17.2}
+$$
+
+Both new flows share new unweighted phase marginals
+$\widehat\nu_p,\widehat\nu_\beta$. One such comparison is the
+construction (17.6)--(17.8) below. On this coupling,
+
+$$
+\begin{aligned}
+\mathbb E[\widehat Q_t\mid Q_t]&=Q_t,&
+\mathbb E[\widehat W_t\mid W_t]&=W_t,\\
+u(\widehat Q_t)&=u(Q_t),&v(\widehat W_t)&=v(W_t),\\
+\mathbb E\operatorname{TV}(\widehat Q_t,Q_t)&\le c_p,&
+\mathbb E\operatorname{TV}(\widehat W_t,W_t)&\le c_\beta.
+\end{aligned}
+\tag{17.3}
+$$
+
+The first row is equality of conditional complete probability measures,
+on every coordinate including noncompletion. With configuration TV still
+inside the integrals, the same comparison satisfies, simultaneously for
+every complete probability target at either phase,
+
+$$
+\begin{aligned}
+0&\le\widehat{\mathcal L}_p(T)-\mathcal L_p(T)\le c_p,\\
+0&\le\widehat{\mathcal L}_\beta(T)-\mathcal L_\beta(T)\le c_\beta.
+\end{aligned}
+\tag{17.4}
+$$
+
+Here $\widehat{\mathcal L}_s$ uses $\widehat\nu_s$. In particular, for
+the one original installed prior and every one of its supported targets,
+
+$$
+\mathcal J\le\widehat{\mathcal J}\le\mathcal J+c_*.
+\tag{17.5}
+$$
+
+**Proof.** Disintegrate the two input flows as
+$\Gamma_B(dQ,dW)=\nu_p(dQ)B(Q,dW)$ and
+$\Gamma_A(dW,dQ)=\nu_\beta(dW)A(W,dQ)$.
+The compact metric descriptor spaces are standard Borel. Thus these are
+Borel probability kernels, with arbitrary probability versions at null
+inputs, and compatibility gives
+
+$$
+\begin{gathered}
+\nu_pB=\nu_\beta,\qquad\nu_\beta A=\nu_p,\\
+\mathcal R_B(Q)=\int W\,B(Q,dW),\qquad
+\mathcal R_A(W)=\int Q\,A(W,dQ)
+\quad\text{almost surely}.
+\end{gathered}
+\tag{17.6}
+$$
+
+Construct the alternating Markov trajectory
+$Q_0\xrightarrow B W_0\xrightarrow A Q_1\xrightarrow B W_1\to\cdots$
+with $Q_0\sim\nu_p$. Countable kernel extension gives its probability
+measure. Its finite-dimensional laws are invariant under one full-pair
+shift: the marginal of every $Q_t$ is $\nu_p$, and the subsequent kernels
+are always $B,A,B,A,\ldots$. Cylinder uniqueness extends this stationarity
+to the entire sequence. Its two edge laws are the first row of (17.2).
+Countably many times and complete atoms allow all identities in (17.6)
+to hold on one full-measure trajectory set. No conditioning on an infinite
+actual noncompletion event is involved.
+
+For each trajectory put $u_t=u(Q_t)$, $v_t=v(W_t)$ and
+
+$$
+z_t=(1-u_t)v_t\le\lambda=\frac4{15},\qquad
+s_{t,n}=\prod_{i=0}^{n-1}z_{t+i},\qquad s_{t,0}=1.
+\tag{17.7}
+$$
+
+Define the comparison laws by all their completed-word coordinates:
+
+$$
+\begin{aligned}
+\widehat Q_t(w_{n,0})&=s_{t,n}u_{t+n},\\
+\widehat Q_t(w_{n,1})&=s_{t,n}(1-u_{t+n})(1-v_{t+n}),\\
+\widehat Q_t(\infty_p)&=0,\qquad
+\widehat W_t=(1-v_t)\delta_\beta+v_t\alpha\widehat Q_{t+1}.
+\end{aligned}
+\tag{17.8}
+$$
+
+For each $n$, the sum of the two p masses is
+$s_{t,n}(1-z_{t+n})=s_{t,n}-s_{t,n+1}$.
+Consequently the mass completed before level $N$ is $1-s_{t,N}$, and
+$s_{t,N}\le\lambda^N\to0$. The laws are normalized on the complete
+carriers, without conditioning on completion. Their tails obey
+$\widehat Q_t(T_p(N))\le\lambda^N$ and
+$\widehat W_t(T_\beta(N))\le b\lambda^N$.
+The immediate completing masses give the second row of (17.3); hence
+$\widehat Q_t\in\mathcal K_p$ and
+$\widehat W_t\in\mathcal K_\beta$.
+Each finite coordinate is a measurable function of finitely many trajectory
+coordinates. The uniform tail bounds imply measurability into the TV
+descriptor spaces, whose Borel structures are generated by the atom
+evaluations. Formula (17.8) commutes with the pair shift, so the quadruple
+sequence is stationary.
+
+Deleting the first operation in (17.8) gives the complete identities
+
+$$
+\widehat Q_t=u_t\delta_\alpha+(1-u_t)\beta\widehat W_t,
+\qquad
+\widehat W_t=(1-v_t)\delta_\beta+v_t\alpha\widehat Q_{t+1}.
+\tag{17.9}
+$$
+
+Define the two new flows by the second row of (17.2). Stationarity gives
+their shared unweighted marginals. The positive denominators in (16.2)
+and (17.9) give
+$\mathcal R_B(\widehat Q_t)=\widehat W_t$ and
+$\mathcal R_A(\widehat W_t)=\widehat Q_{t+1}$ almost surely.
+Thus both full residual equations hold and both new dispersions vanish.
+Even if different trajectories give the same input law, its complete
+residual is unique, so this pushforward remains a residual graph.
+This proves membership in $\mathfrak C_{\rm det}$ jointly for the two flows.
+
+To prove the conditional barycentres, set
+$H_p(Q)=\mathbb E[\widehat Q_0\mid Q_0=Q]$ and
+$H_\beta(W)=\mathbb E[\widehat W_0\mid W_0=W]$.
+Conditional expectations here are taken coordinatewise; countable
+summation shows that they are normalized laws almost everywhere.
+The future after $W_t$ depends on the past only through $W_t$, and the
+future after $Q_{t+1}$ only through $Q_{t+1}$. Applying these Markov
+properties to (17.9), with the same conditional kernels (17.6), gives
+
+$$
+\begin{aligned}
+H_p(Q)&=u(Q)\delta_\alpha+
+ (1-u(Q))\beta\int H_\beta(W)\,B(Q,dW),\\
+H_\beta(W)&=(1-v(W))\delta_\beta+
+ v(W)\alpha\int H_p(Q)\,A(W,dQ).
+\end{aligned}
+\tag{17.10}
+$$
+
+For example, first condition on $(Q_t,W_t)$; the conditional mean of
+$\widehat W_t$ is $H_\beta(W_t)$, since (17.8) uses only the future
+starting at $W_t$. This justifies the first substitution without assuming
+independence of the trajectory emissions. The second substitution is the
+same argument at $Q_{t+1}$.
+The original $Q,W$ solve these equations by (17.6) and (11.4) of PAIRED.
+Let
+$h_p=\int\operatorname{TV}(H_p(Q),Q)\,d\nu_p$ and
+$h_\beta=\int\operatorname{TV}(H_\beta(W),W)\,d\nu_\beta$.
+Prefixing preserves TV; convexity, $1-u\le2/3$, $v\le2/5$ and the
+two unweighted balances yield
+$h_p\le(2/3)h_\beta$ and $h_\beta\le(2/5)h_p$.
+Both are bounded by one, so both vanish. Stationarity proves the first
+row of (17.3) at every time, on all complete coordinates.
+
+For the quantitative comparison define
+
+$$
+\begin{aligned}
+e_p&=\mathbb E\operatorname{TV}(\widehat Q_0,Q_0),&
+e_\beta&=\mathbb E\operatorname{TV}(\widehat W_0,W_0),\\
+b_t&=\operatorname{TV}(W_t,\mathcal R_B(Q_t)),&
+a_t&=\operatorname{TV}(Q_{t+1},\mathcal R_A(W_t)).
+\end{aligned}
+\tag{17.11}
+$$
+
+The first row of (17.2) gives $\mathbb E b_t=d_B$ and
+$\mathbb E a_t=d_A$. Compare (17.9) with the original complete
+decompositions (11.4) of PAIRED. The immediate completion masses agree,
+and the continuation prefixes are injective, including at infinity.
+The triangle inequality therefore gives, trajectory by trajectory,
+
+$$
+\begin{aligned}
+\operatorname{TV}(\widehat Q_t,Q_t)
+ &\le\frac23\bigl[\operatorname{TV}(\widehat W_t,W_t)+b_t\bigr],\\
+\operatorname{TV}(\widehat W_t,W_t)
+ &\le\frac25\bigl[\operatorname{TV}(\widehat Q_{t+1},Q_{t+1})+a_t\bigr].
+\end{aligned}
+\tag{17.12}
+$$
+
+Averaging under this one stationary coupling yields
+$e_p\le(2/3)(e_\beta+d_B)$ and
+$e_\beta\le(2/5)(e_p+d_A)$.
+Since $1-(2/3)(2/5)=11/15$, substitution gives
+$11e_p\le10d_B+4d_A$ and $11e_\beta\le4d_B+6d_A$.
+This proves the last row of (17.3) on the entire laws.
+
+For any fixed complete target, the conditional barycentre identity and
+conditional Jensen, applied to the half-$\ell^1$ norm, give
+$\mathbb E\operatorname{TV}(\widehat Q_0,T)
+\ge\mathbb E\operatorname{TV}(Q_0,T)$.
+Countable Tonelli justifies this calculation, including a target with
+positive noncompletion mass. The reverse triangle inequality bounds the
+difference above by $e_p$. The suspended argument gives $e_\beta$.
+This proves (17.4) without choosing a new comparison for a new target.
+Take the suprema over precisely the supported depths of the fixed prior,
+subtract the unchanged radii, and take the phase maximum to obtain (17.5).
+$\square$
+
+**Corollary 17.3 (small-branching exclusion on the unrestricted compatible domain).**
+Suppose the fixed installed prior also has a supported $k\ge3$.
+For every $(\Gamma_B,\Gamma_A)\in\mathfrak C$,
+
+$$
+\mathcal J+c_*\ge j_{\rm det}>0.
+\tag{17.13}
+$$
+
+Thus the subdomain $c_*\le\delta<j_{\rm det}$ has
+$\mathcal J\ge j_{\rm det}-\delta>0$. Every zero-level compatible pair
+must satisfy
+
+$$
+\max\{10d_B+4d_A,\ 4d_B+6d_A\}\ge11j_{\rm det},
+\qquad d_A+d_B\ge\frac{11}{10}j_{\rm det}.
+\tag{17.14}
+$$
+
+For every compatible sequence with $\mathcal J_n\to0$,
+$\liminf_n(d_{A,n}+d_{B,n})\ge11j_{\rm det}/10$.
+In particular no such sequence has vanishing complete-law branching.
+
+**Proof.** Corollary 16.3 supplies $j_{\rm det}>0$ on *all* residual
+graphs, including those outside the endpoint boxes. Theorem 17.2 supplies
+one such graph pair with $j_{\rm det}\le\widehat{\mathcal J}
+\le\mathcal J+c_*$. This proves (17.13) without placing the comparison
+inside the boxes. Setting $\mathcal J=0$ gives the first inequality in
+(17.14). Since $c_*\le10(d_A+d_B)/11$, (17.13) also gives
+$d_A+d_B\ge(11/10)(j_{\rm det}-\mathcal J)$, proving the remaining
+claims and the sequence assertion.
+
+For the original-source consumer, a finite regular stationary observer
+pushes forward to exactly $\mathfrak C$ by PAIRED (11.24); its two
+configuration risks are the supported-target suprema in $\mathcal J$.
+Thus (17.13) applies to all such original observers, without a label bound.
+For any original positive paid history at either active fourth-phase cut,
+its raw target is the normalized posterior mixture from the same
+once-sampled $K$. Equation (17.4) applies to this target as well.
+Pushing all laws through that history's common
+$I_c$ preserves TV and the original full records, completion and matching
+Stop. Both seeds, paid rejections, partial parses and every finite return
+remain in the history domain, as in PAIRED Section 11.4.
+For arbitrary finite COMPLETE observers, the extraction and clipping
+suppliers remain necessary before applying this regular-domain inequality;
+no bound on their unclipped branching is inferred.
+$\square$
+
+**Mathematical citation 17.4 (reused suppliers and the additional implication).**
+PAIRED Lemma 11.1 and Definition 11.2 supply the compact TV spaces,
+disintegration interface and full conditional residual identities.
+[Return-survival dispersion, Theorem 3.1](RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md)
+already uses this stationary descriptor path and its averaged finite-word
+products. [PAID, Theorem 13.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)
+already solves the same two-phase contraction inequalities for a different
+comparison: it replaces one acquired kernel by a row-independent kernel,
+and its $b_p,b_\beta$ measure variation of residual barycentres across
+inputs. Those quantities are not the individual-law branching
+$d_B,d_A$ in (16.5). Neither the contraction arithmetic nor the existence
+of a stationary kernel path is a new theorem here.
+
+The additional joint statement is that the complete laws generated along
+one such path give a residual-graph pair with (17.3), and that its
+configuration losses satisfy the target-uniform (17.4). Corollary 16.3's
+already supplied graph minimum then gives the quantitative necessity
+(17.13) on arbitrary stochastic compatible pairs. The comparison can
+change both phase distributions while preserving their conditional
+complete-law barycentres. PAIRED Chapters 12--14's endpoint-chord and
+one-sided finite-marginal comparisons, and Chapter 19's native endpoint
+excision, impose different hypotheses and supply no substitute for this
+joint statement. No endpoint excision is used in its proof.
+
+[Abate, Redig and Tkachev, *On the effect of perturbation of conditional
+probabilities in total variation*, Proposition 2](https://arxiv.org/html/1311.3066v1)
+states the countable kernel-extension theorem used above: an initial
+probability measure and a sequence of measurable probability kernels on
+the successive finite products determine one trajectory law. Here the
+spaces alternate between $\mathcal K_p$ and $\mathcal K_\beta$, the
+initial law is $\nu_p$, and the history kernels are $B,A$ composed with
+the last-coordinate maps. All are measurable probability kernels.
+Their Theorems 1--2 bound finite-product perturbations by uniform
+kernel-TV errors; $d_B,d_A$ here are instead stationary expectations of
+complete *output-law* deviations. Their estimates are not invoked as
+bounds for these two numbers.
+
+[Attal, *Markov Chains and Dynamical Systems: The Open System Point of
+View*, Section 2.3, Theorem 2.5](https://arxiv.org/html/1010.2894v1)
+supplies the mature deterministic-dilation perspective: given a measurable
+one-step dilation, independent environment copies and their shift recover
+every iterate of its Markov operator after averaging the environment.
+The phase-tagged disjoint union of the two descriptor spaces is a standard
+Borel state space for the alternating kernel. In (17.8) the whole analysis
+trajectory supplies the enlarged deterministic coordinate; the synthetic
+stopping law is then generated from its emissions. No independent-emission
+assumption, original finite apparatus or preservation of nonlinear
+configuration losses follows from the dilation perspective. The direct
+proof (17.6)--(17.12) supplies the needed complete-law and loss statements.
+
+**Definition 17.5 (preservation boundary and falsification domain).**
+The conditional identities (17.3) preserve both complete mean laws, hence
+both endpoint-event midpoint means whenever the input has them. They do
+not place every sampled comparison law in its endpoint box: a conditional
+mean constraint is not a pointwise constraint. The comparison's two
+residual equations and new shared marginals are exact, but the original
+phase distributions, prescribed actual return triples and supported loss
+budgets need not be preserved. Its Markov joining is an analysis choice,
+not a claim that an original observer's projected descriptor process has
+that joining. In particular the comparison trajectory is not a permitted
+uncounted persistent random tape or a finite installed apparatus.
+
+A falsifier for Theorem 17.2 is an input satisfying both full conditional
+equations and both unweighted balances for which the construction
+(17.6)--(17.8) violates either conditional complete barycentre identity
+or one inequality of (17.4) for a normalized complete target. A falsifier
+for (17.13) is such an input, for one fixed endpoint-positive prior with
+a supported nonendpoint, having $\mathcal J+c_*<j_{\rm det}$.
+Selected-event compatibility, synthetic-weighted stationarity or a
+finite-prefix loss violation alone does not meet these hypotheses.
+
+The unrestricted objective remains $j_c=\min_{\mathfrak C}\mathcal J$.
+Its zero-versus-positive alternative and the value of $j_{\rm det}$ are
+not evaluated by (17.13). A zero pair, if it exists, must jointly meet the
+original endpoint boxes, midpoint calibration, every supported loss budget
+and both residual equations; (17.14) adds a necessary branching floor.
+It supplies neither such a pair nor a vanishing family. Finite atomicity
+under PAIRED Theorem 11.8 and permitted finitely represented exact sampling
+remain separate obligations for finite exact and effective attainment.
+No hard COMPLETE-resource or hard marginalized-defect preservation follows.
+
+## 追加锚（本行以下为后续增补区）
+
+
+## 18. Original paired-history complete-successor branching
+
+**Definition 18.1 (original acquired-row dispersion).** Fix one installed
+finite or countable prior $\mu$ with $\mu(1),\mu(2)>0$ and at least one
+supported $k\ge3$. Retain every supported target and exactly the source,
+complete carriers, original interface and COMPLETE convention of
+Definition 16.1. In particular, one $K$ supplies all paid Reads; both seeds,
+paid rejections and partial parses, all finite returns, original records,
+write-before-latch, permissions, completion and matching Stop remain.
+Let $M$ be any original finite observer, including its installed semantic
+emitter $\mathsf e$ and source-independent acquired updates. No regularity,
+determinism, recurrence, native-mixture representation or defect bound is
+assumed of $M$.
+
+Write $D_z=\operatorname{fullLaw}(M,\mathsf e,z)$ for its own complete
+configuration law, $T_h^\mu=\operatorname{fullTarget}(M,\mu,h,c(h))$ for
+the original target, and $\rho_h=\operatorname{row}(M,h)$ for its actual
+ordered acquired row. Define, on the full positive-history phase domains,
+
+$$
+\begin{aligned}
+R_{{\rm conf},s}(M)&=\sup_{h\in\mathcal H_s}
+ \sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu),\qquad s=p,\beta,\\
+e(M)&=\max\{R_{{\rm conf},p}(M)-\rho_p,
+                 R_{{\rm conf},\beta}(M)-\rho_\beta\}.
+\end{aligned}
+\tag{18.1}
+$$
+
+Here the constants $\rho_p,\rho_\beta$ are those of (16.8), distinct from
+the row $\rho_h$. These are configuration-before-TV risks: TV is taken
+separately for each configuration, then averaged, then maximized over
+histories. The supplied separate phase minima give $e(M)\ge0$.
+
+For the diagnostic only, use the seed-1, marker-100 held-record fibre
+reached by $S=\beta\alpha\mid\beta\beta\alpha\alpha$ as in
+[PAID, Lemma 14.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md).
+Let $X,Y$ be the original configurations reachable with positive probability
+after some positive finite history on this fibre at p and suspension.
+Let $B_{xy}$ be the actual acquired p-beta update and $A_{yx}$ the actual
+acquired suspended-alpha update. They include the original operation
+blocks. Source independence gives $\rho_{h\beta}=\rho_hB$ and
+$\rho_{h\beta\alpha}=\rho_hBA$. Since every supported source rate lies in
+$[1/3,2/5]$, these two extensions are positive actual histories whenever
+$h$ is a positive p history. Thus every positive successor of a reachable
+configuration is in the indicated reachable set, and these are stochastic
+rows on $X,Y$.
+
+Pull $D_x,D_y$ back through their current full-record renderers to the
+common complete raw carriers, and call the resulting own laws $Q_x,W_y$.
+They include $\infty_p,\infty_\beta$, with no completion conditioning.
+Set $u_x=Q_x(\{\alpha\})$ and $v_y=1-W_y(\{\beta\})$; the installed
+first-block recursion identifies these coordinates with the corresponding
+synthetic alpha probabilities on the two phase fibres.
+Put
+
+$$
+\begin{aligned}
+L_x&=\sum_yB_{xy}W_y,&
+ b_B(x)&=\sum_yB_{xy}\operatorname{TV}(W_y,L_x),\\
+J_y&=\sum_xA_{yx}Q_x,&
+ b_A(y)&=\sum_xA_{yx}\operatorname{TV}(Q_x,J_y),\\
+\operatorname{Br}_{\rm orig}(M)
+ &=\sup_{h\in\mathcal H_p^{100,1}}
+ \left\{\sum_x\rho_h(x)b_B(x)
+       +\sum_y\rho_{h\beta}(y)b_A(y)\right\}.
+\end{aligned}
+\tag{18.2}
+$$
+
+$\mathcal H_p^{100,1}$ comprises all positive actual p histories on this
+held-record fibre, including arbitrary paid seed histories and finite
+returns. Each sum inside the supremum uses the same $h$ and its actual
+noncompleting beta extension. Each row barycentre is a normalized law
+because its acquired row is stochastic, even if the synthetic probability
+of that operation is zero. In particular $L_x$ at $u_x=1$ and $J_y$ at
+$v_y=0$ are not defined by conditioning a null synthetic event. The
+unconditional own-law equations remain
+$Q_x=u_x\delta_\alpha+(1-u_x)\beta L_x$ and
+$W_y=(1-v_y)\delta_\beta+v_y\alpha J_y$.
+
+The statistic lies in $[0,2]$. A row has zero dispersion precisely when
+its positive successors have one common complete law; their labels can
+still be random. This distinguishes (18.2) from label count, transition
+entropy, return-weight dispersion, variation of $L_x,J_y$ across inputs,
+normalized conditional residual error and the diameter of all reachable
+laws. All entries in (18.2) belong to the original $M$, before comparison.
+
+The native correspondence is literal. In
+[NativeObserverJointLaw](https://github.com/the-omega-institute/trureturing/blob/9622561ab8abd128c4fcd573e5224f809437d233/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw.lean),
+`Observer`, `advance`, `row`, `ordered_history_factorization`,
+`conditional_history_product` and `actual_row_refines` give precisely these
+source-independent rows and append identities on the original finite $Z$.
+The private `advance_append` and `history_rectangle` identify the ordered
+product and the entire conditional private row; no configuration is
+selected before conditioning on the actual history.
+In [NativeInstalledFullLaw](https://github.com/the-omega-institute/trureturing/blob/9622561ab8abd128c4fcd573e5224f809437d233/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.lean),
+`InstalledEmitter`, `markedRow`, `fullLaw`, `tailLaw`,
+`installed_configuration_identity` and `installed_first_block_recursion`
+construct these own laws and their unconditional generation equations.
+The private `marked_regenerate`, `decoded_mark_irrelevance`, `decode_first`
+and `marked_some_mass` prove the recursion before any division; zero
+emissions and positive noncompletion mass are allowed. `pending_emission`
+and `delivered_law` retain matching Stop and delivery.
+
+For each actual history, the renderer in
+[NativeFullResidual](https://github.com/the-omega-institute/trureturing/blob/9622561ab8abd128c4fcd573e5224f809437d233/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeFullResidual.lean)
+retains its complete fields and event blocks. `full_renderer_all_paths`,
+`full_renderer_readback`, the private `readback_left`, and
+`full_renderer_tv` give a measurable left inverse and TV equality, including
+noncompletion; `full_delete_block` removes exactly one original block.
+Thus rendering a row barycentre commutes with its finite mixture and
+preserves each TV in (18.2). In NativeObserverJointLaw, `sameK_private_tail`
+and the private `fullTarget_eq`, `rawTarget_words`, `rawTarget_probability`
+identify the target as the normalized posterior mixture for that same
+once-sampled $K$. Its `native_history_risk_transport` and the private
+`history_risk` in NativeInstalledFullLaw identify (18.1) with the raw
+own-law risks used in [PAIRED, Section 2](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md).
+Both laws in each distance are probability measures, so the native
+nonnegative extended-real risks are bounded by one and have these ordinary
+real values; on the countable carrier TV is half the $\ell^1$ distance.
+None of these statements equates an own law with its target. Installed
+semantic probabilities are not an executable exact-real sampler, and marked
+paths, histories and rows are analysis data, not extra COMPLETE memory.
+
+**Theorem 18.2 (original paired-history branching necessity).** For every
+$M$ of Definition 18.1, with exactly the symbolic minimum $j_{\rm det}(\mu)$
+of (16.8) and Corollary 16.3,
+
+$$
+1911e(M)+110\operatorname{Br}_{\rm orig}(M)
+ \ge121j_{\rm det}(\mu)>0.
+\tag{18.3}
+$$
+
+Consequently, if a sequence of original finite observers for this same
+fixed prior, source and interface satisfies $e(M_n)\to0$, then
+
+$$
+\liminf_n\operatorname{Br}_{\rm orig}(M_n)
+ \ge\frac{11}{10}j_{\rm det}(\mu).
+\tag{18.4}
+$$
+
+The sequence assertion is conditional on existence of such a sequence.
+
+**Proof.** Apply the supplied support-closed extraction of PAID Lemma 14.1
+and PAIRED Section 6 once. It supplies rows $\pi,\tau$ with
+$\pi B=\tau$, $\tau A=\pi$, retaining the actual kernels and original own
+complete laws on their positive supports. Each supported pure-target
+configuration loss is bounded by the corresponding original risk in
+(18.1). These are the same rows for every supported depth, including a
+countable support, by that lemma's summable likelihood-ratio domination
+along positive finite paid histories. Its deletion of zero-row labels
+changes no positive-row law or positive outgoing edge. These suppliers
+require no restriction on original emissions or noncompletion mass.
+
+To transport the particular diagnostic, apply PAIRED Section 6's bounded
+state-statistic conclusion to the one original p statistic
+
+$$
+H(x)=b_B(x)+\sum_yB_{xy}b_A(y).
+$$
+
+It is fixed by the original installed data, nonnegative and bounded by two.
+At every actual $h\in\mathcal H_p^{100,1}$, the append identity gives
+$\rho_hH=\rho_hb_B+\rho_{h\beta}b_A$, exactly the summand in (18.2).
+The supplied finite-row limits and Cesaro averaging preserve this linear
+inequality. With $\delta_B=\pi b_B$ and $\delta_A=\tau b_A$, it follows that
+
+$$
+\delta_B+\delta_A=\pi H\le\operatorname{Br}_{\rm orig}(M).
+\tag{18.5}
+$$
+
+This uses one paired-history statistic, not a sum of separately maximized
+phase statistics. Reachability and support closure are those of the
+supplied extraction; no stationary replacement of the actual source is
+made.
+
+Now use the supplied same-row clipping and full-law regeneration in
+PAIRED (6.2), which specializes CLIP Theorem 3.1, (3.7)--(3.10).
+Keep this very $B,A,\pi,\tau$, clip emissions to $[1/3,2/5]$, and denote
+the resulting own complete laws by $\widehat Q_x,\widehat W_y$. Write
+$\widehat e$ for their two-phase maximum of all supported pure-target
+configuration excesses. With $e=e(M)$ the supplied estimates are
+
+$$
+\begin{aligned}
+\Delta_Q&=\sum_x\pi_x\operatorname{TV}(Q_x,\widehat Q_x)
+ \le\frac{50}{11}e,\\
+\Delta_W&=\sum_y\tau_y\operatorname{TV}(W_y,\widehat W_y)
+ \le\frac{42}{11}e,\qquad
+\widehat e\le\frac{61}{11}e.
+\end{aligned}
+\tag{18.6}
+$$
+
+These estimates include all old noncompletion mass; the new laws are
+regenerated laws, not coordinatewise clipped probability vectors. No
+small-excess premise used for the separate marginal-defect bound in CLIP
+is needed for (18.6).
+
+For a fixed stochastic row $q_i$ and two families of complete laws
+$P_i,P'_i$ on the same carrier, put $\bar P=\sum_iq_iP_i$ and
+$\bar P'=\sum_iq_iP'_i$. The reverse triangle inequality and mixture
+convexity give
+
+$$
+\begin{aligned}
+\left|\sum_iq_i\operatorname{TV}(P'_i,\bar P')
+      -\sum_iq_i\operatorname{TV}(P_i,\bar P)\right|
+&\le\sum_iq_i\operatorname{TV}(P'_i,P_i)
+      +\operatorname{TV}(\bar P',\bar P)\\
+&\le2\sum_iq_i\operatorname{TV}(P'_i,P_i).
+\end{aligned}
+\tag{18.7}
+$$
+
+All distances include infinity. This elementary norm estimate does not
+normalize a residual or require a positive synthetic emission. Apply it
+to every retained B row and average under $\pi$, then to every A row and
+average under $\tau$. The unweighted balances give
+
+$$
+\pi\widehat b_B\le\delta_B+2\Delta_W
+ \le\delta_B+\frac{84}{11}e,\qquad
+\tau\widehat b_A\le\delta_A+2\Delta_Q
+ \le\delta_A+\frac{100}{11}e.
+\tag{18.8}
+$$
+
+Here $\widehat b_B,\widehat b_A$ mean (18.2)'s row formula using the new
+laws and unchanged acquired rows.
+
+Use exactly PAIRED (11.24) to push these two finite flows to descriptors:
+
+$$
+\widehat\Gamma_B=\sum_{x,y}\pi_xB_{xy}
+ \delta_{(\widehat Q_x,\widehat W_y)},\qquad
+\widehat\Gamma_A=\sum_{y,x}\tau_yA_{yx}
+ \delta_{(\widehat W_y,\widehat Q_x)}.
+\tag{18.9}
+$$
+
+For completeness of the statistic correspondence, the regular survival
+bounds put the regenerated laws in (16.1). Their same-update full
+recursions give
+
+$$
+\mathcal R_B(\widehat Q_x)=\sum_yB_{xy}\widehat W_y,
+\qquad
+\mathcal R_A(\widehat W_y)=\sum_xA_{yx}\widehat Q_x.
+\tag{18.10}
+$$
+
+Only here are continuation probabilities divided out: they are at least
+$3/5$ and $1/3$. Hence (18.9) has both shared unweighted marginals and both
+full input-conditioned residual equations, including infinity, so it is
+in $\mathfrak C$. If input labels have the same complete law, (18.10)
+gives the same unique residual barycentre; merging their descriptors
+changes none of the following integrals. Exactly, in the notation (16.5),
+
+$$
+\widehat d_B=\pi\widehat b_B,\qquad
+\widehat d_A=\tau\widehat b_A,\qquad
+\mathcal J(\widehat\Gamma_B,\widehat\Gamma_A)=\widehat e.
+\tag{18.11}
+$$
+
+The last equality preserves each configuration-TV integral for every
+supported target. The original all-history interpretation uses PAIRED
+Section 11.4 and CLIP Proposition 2.3 with PAID Lemma 14.1's countable-prior
+domination: posterior-mixture convexity is applied at each configuration,
+and concentrating finite paid histories supply the converse. No target,
+phase or history selects a different comparison object.
+
+Apply the already supplied Corollary 17.3 to this one regular pair.
+By (18.8)--(18.11),
+
+$$
+\begin{aligned}
+j_{\rm det}(\mu)
+&\le\widehat e+
+ \frac1{11}\max\{10\widehat d_B+4\widehat d_A,
+                   4\widehat d_B+6\widehat d_A\}\\
+&\le\frac{61}{11}e+
+ \frac1{11}\max\left\{10\delta_B+4\delta_A+\frac{1240}{11}e,
+                       4\delta_B+6\delta_A+\frac{936}{11}e\right\}\\
+&\le\frac{1911}{121}e+\frac{10}{11}(\delta_B+\delta_A)\\
+&\le\frac{1911}{121}e+\frac{10}{11}\operatorname{Br}_{\rm orig}(M).
+\end{aligned}
+\tag{18.12}
+$$
+
+The arithmetic is $1240=10\cdot84+4\cdot100$,
+$936=4\cdot84+6\cdot100$ and $1911=11\cdot61+1240$;
+$e,\delta_B,\delta_A$ are nonnegative. Multiplication by 121 proves
+(18.3), with strict positivity supplied solely by Corollary 16.3.
+Rearranging gives
+$\operatorname{Br}_{\rm orig}(M)\ge11j_{\rm det}(\mu)/10-1911e(M)/110$.
+The same $j_{\rm det}(\mu)$ applies to every member of the proposed
+sequence, so taking a lower limit proves (18.4). $\square$
+
+**Mathematical citation 18.3 (coverage and applicability).** PAID Lemma
+14.1 already supplies original-law support-closed extraction; PAIRED
+Section 6 supplies bounded-statistic transport and same-row clipping;
+PAIRED (11.24) supplies the compatible-flow pushforward. Corollary 16.3
+supplies the symbolic positive deterministic-domain minimum, and Theorem
+17.2 and Corollary 17.3 supply the regular-domain deterministic comparison
+and branching floor. None is reproved here. The additional consumer is
+(18.5), (18.7)--(18.11) and their composition (18.12), which makes the
+floor a necessity for the original paired-history quantity (18.2).
+Theorem 16.4 already covers deterministic acquired updates. PAID Theorem
+13.1 controls variation of row barycentres across inputs, and its Theorem
+14.2 controls a whole reachable-law diameter. PAIRED's event-readout,
+mismatch and complete-marginal results use different statistics;
+[return-survival dispersion, Definition 2.3 and Section 6](RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md)
+uses a return-weight dispersion and an explicitly clipped edge span.
+Those statements do not already give (18.3) on arbitrary original laws.
+
+The bounded primary comparison is Abate, Redig and Tkachev,
+[*On the effect of perturbation of conditional probabilities in total
+variation*, Proposition 2, Theorems 1--2 and Section 3](https://arxiv.org/html/1311.3066v1).
+Its kernel extension and coupling methods are suppliers already used by
+CLIP and Section 17. Its perturbation constants are uniform kernel-TV
+errors, with TV norm twice the convention here; they are not the
+acquired-row complete-output-law dispersions in (18.2). The elementary
+mixture estimate (18.7) is not claimed as a new general TV theorem, and
+no global priority assertion is made.
+
+This is an ordinary mathematical result with a source-specific necessary
+relation. It does not evaluate $j_{\rm det}$ or unrestricted $j_c$, assert
+sharp constants, construct a vanishing sequence or a common zero pair,
+produce an original155 certificate, or prove an unrestricted risk-only
+positive gap. A supremum bound on paired histories is not a lower bound
+at every history or at each interface separately. The comparison can
+change laws, marginals and losses at the later deterministic-comparison
+stage; it preserves no prescribed actual return triple, hard defect or
+COMPLETE/resource budget. No finite exact or effective attainment,
+executable sampler, native Gram/dynamic/physical bridge, or termination
+of the sustained research objective follows.
+
+## 追加锚（本行以下为后续增补区）

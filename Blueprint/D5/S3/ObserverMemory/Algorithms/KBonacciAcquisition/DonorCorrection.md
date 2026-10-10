@@ -220,12 +220,49 @@ For 1<=d<=2m-10 use the six-donor construction. Outside that range and with d>=2
 
 This result is the full same-table upper price bound. It does not assert a sharp lower gap, supremum equality, or the separate attainment claim in section 31.
 
+**Theorem 1.17 (The near-critical literal calendar).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.calendar`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.calendar` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m>=5 and all natural h, eps and i, in ZMod(2m-1) the vertex ((2h+eps)m+i) equals h+eps*m+i. The identity follows from 2m=1 modulo 2m-1. It supplies physical window positions, rather than acquired observations.
+
+**Theorem 1.18 (A fixed original script supplies one common preset).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.script_global_preset`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.script_global_preset` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any label universe Y, k>=2, m<k, either original alphabet, immutable target f, fixed finite list words of m-bit literals and decoder decode(saved scalar,own archive), assume the scriptArchive at every scalar, phase and legal inherited tail decodes to f of that INITIAL record. Then OriginalPresetFeasible holds at words.length. Every actual history is included. Initial bottom returns f(bottom) freely; live sources use one literal stream extending words by zero words, stop at the final acquired endpoint and pay the full script length. The actual archive and execution follow the existing original_final_script and native paid-trace equivalence.
+
+**Theorem 1.19 (A scheduled row within the own reading sequence).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.row_readings_index`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.row_readings_index` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural k,m,t, any finite list of charge rows and phase j, entry t of rowReadings(k,m,rows,j) is obtained by mapping rows[t] to the optional scalar windowCharge(k,m,row,j-t*m). The index uses the chronological paid position. The formula describes a fixed physical reading sequence; it grants no endpoint after a source has stopped.
+
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.Donor`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.GlobalAdaptivePrice`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.GlobalPresetPrice`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.OriginalAdaptiveFeasible`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.calendar`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.codingRow`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.conversionRows`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.correctedRow`
@@ -235,6 +272,8 @@ This result is the full same-table upper price bound. It does not assert a sharp
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.original_uniform_phase_preset`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.outside`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.pairRow`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.row_readings_index`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.script_global_preset`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.suffixRow`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.uniformHorizon`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.uniformOccupied`

@@ -51,7 +51,7 @@ local notation "H" => D5.S1.Digit.Infinite.OddColorThreeSource.highLabel
 local notation "N" => nextColor
 local notation "C" => commonNextLabel
 
-private theorem algebra : g ^ 2 + 4 * g = 1 ∧ (4 / 17 : ℝ) < g ∧
+theorem algebra : g ^ 2 + 4 * g = 1 ∧ (4 / 17 : ℝ) < g ∧
     g < 17 / 72 ∧ t = (1 + g) / 2 ∧ t ^ 2 = (1 - g) / 2 := by
   obtain ⟨ht, ht1, ht2, hg, hh⟩ :=
     D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations

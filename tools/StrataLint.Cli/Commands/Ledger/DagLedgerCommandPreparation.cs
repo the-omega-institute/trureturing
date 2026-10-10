@@ -174,6 +174,16 @@ internal static class DagLedgerCommandPreparation
         return BuildTruth(snapshot, report, lean);
     }
 
+    internal static TruthContext BuildTruthScoped(
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        IReadOnlyCollection<RepoPath> requestedTargets)
+    {
+        var snapshot = Decode(Ask(() => repository.ReadCurrentProjection(TruthExportCommand.IsTruthInput)));
+        var report = LeanReportSourceScope.Load(leanReportSource, snapshot, requestedTargets);
+        return BuildTruth(snapshot, report, ValidateLean(snapshot, report));
+    }
+
     private static TruthContext BuildLeanTruth(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
@@ -253,6 +263,9 @@ internal static class DagLedgerCommandPreparation
     {
         public LeanAxiomReport Load(RepositorySnapshot snapshot) =>
             RawLeanReportArtifact.ReadFile(path, snapshot);
+
+        public LeanAxiomReport Load(LeanReportScope scope) =>
+            RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true);
     }
 
     internal static ImmutableArray<DagLedgerFileEvent> LoadLedgerDirectory(
