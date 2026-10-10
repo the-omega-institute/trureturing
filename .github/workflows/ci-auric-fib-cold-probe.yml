@@ -1,0 +1,18 @@
+name: AURIC FIB cold probe
+
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  cold-single-case:
+    if: github.head_ref == 'lane/tools/auric-fib-cold-probe'
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      lean: toolchain
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj TEST_FILTER=FullyQualifiedName~CompiledFibIntegrationTests.TypedReportsUseCompiledModuleWithoutNativeExecutable
