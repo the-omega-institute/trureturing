@@ -220,6 +220,24 @@ internal static class DagLedgerAlignWriter
             return ConflictResult(considered.Length, consistencyConflicts);
         }
 
+        if (scopedAdd)
+        {
+            foreach (var path in LeanImportAdjacency.DependenciesFirst(addPaths, adjacency).Except(addPaths))
+            {
+                if (!baseView.ActiveByPath.TryGetValue(path, out var active)) continue;
+                var candidate = catalog.ByPath[path];
+                if (active.Material.StatementId != candidate.StatementId
+                    || !active.Material.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds)
+                    || !state.Records.TryGetValue(path, out var pin)
+                    || pin.StatementId != active.Material.StatementId)
+                {
+                    throw new InvalidOperationException(
+                        $"frozen prerequisite identity changed: {path.Value}; include --add {path.Value} "
+                        + "and its frozen descendants in this request before freezing dependents");
+                }
+            }
+        }
+
         var addedPaths = addPaths
             .Where(path => !state.Records.ContainsKey(path))
             .Distinct()
@@ -266,9 +284,18 @@ internal static class DagLedgerAlignWriter
             .Union(prerequisiteRepairs)
             .Union(retirementClosure);
         var regeneration = DescendantClosure(
-            initialRegeneration,
+            scopedAdd
+                ? FrozenLedgerReplacementClosure.DescendantsFrom(baseView, initialRegeneration)
+                : initialRegeneration,
             baseView.ActiveByPath.Keys,
             adjacency);
+        if (scopedAdd)
+        {
+            var missing = regeneration.Except(addPaths).OrderBy(static path => path.Value, StringComparer.Ordinal).ToArray();
+            if (missing.Length > 0)
+                throw new InvalidOperationException("frozen descendants require explicit --add: "
+                    + string.Join(" ", missing.Select(static path => "--add " + path.Value)));
+        }
         ValidateClosed(regeneration, truth.Snapshot, states);
         var newEventFiles = BuildAlignedEventFiles(
             regeneration,
