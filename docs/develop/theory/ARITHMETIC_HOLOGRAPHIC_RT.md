@@ -4293,15 +4293,11 @@ $$
 所以 $\mathcal Q_t$ 覆盖 $X_t$；若 $\Delta_t=\varnothing$，同样无需追加。若 $\sigma_t=\infty$，存在不可覆盖角色或零增益停滞，任何后续有限追加仍保留它，故不可达结论成立。
 
 以下固定一个可覆盖批次，写 $m=|\Delta_t|>0$, $\sigma=\sigma_t$, $d=d_t$。每层在初始 $\Delta_t$ 上至多覆盖 $d$ 个角色，所以任何大小为 $q$ 的覆盖至少需要
-$q\ge\lceil m/d\rceil$；若 $d=0$，正是前述不可达分支。取最优覆盖 $\mathcal R^*$，$|\mathcal R^*|=\sigma$。贪心第 $i$ 轮开始时令 $r_i$ 为剩余角色数、$g_i=a_i$ 为本轮新覆盖数。$\mathcal R^*$ 覆盖当前剩余集合，故其各层 gains 总和至少为 $r_i$，从而
-$$
-g_i\ge r_i/\sigma.
-$$
-给本轮每个新覆盖角色分配 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j$ 个未覆盖角色，本轮分配给 $R$ 的 $a_{i,R}$ 个角色的总 charge 至多
-$$
-\frac{a_{i,R}}{j}
+$q\ge\lceil m/d\rceil$；若 $d=0$，正是前述不可达分支。取最优覆盖 $\mathcal R^*$，$|\mathcal R^*|=\sigma$。贪心第 $i$ 轮开始时记本轮新覆盖数为 $g_i$。给本轮每个新覆盖角色分配 charge $1/g_i$，本轮总 charge 为 $1$。把每个新覆盖角色分配给 $\mathcal R^*$ 中任意一个覆盖它的层 $R$。若第 $i$ 轮开始时 $R$ 尚有 $j$ 个未覆盖角色，则 $R$ 作为候选层的当前增益为 $j$，贪心最大增益给出 $g_i\ge j$；若本轮分配给 $R$ 的角色数为 $a_{i,R}$，则本轮对 $R$ 的总 charge 至多
+$
+\frac{a_{i,R}}{g_i}\le\frac{a_{i,R}}{j}
 \le\sum_{q=j-a_{i,R}+1}^{j}\frac1q.
-$$
+$
 各轮区间两两不交并包含于
 $\{1,\ldots,|R\cap\Delta_t|\}$；跳过的整数只对应其它最优层已负责的角色。因此分配给 $R$ 的 charge 至多 $H_{|R\cap\Delta_t|}\le H_d$。对 $\sigma$ 个最优层求和，贪心追加数 $s_t$ 满足
 $$
