@@ -143,6 +143,19 @@ class CleanupMakeTests(NativeFixture):
             log.write_text("\n".join(lines) + "\n")
         return tree
 
+    def diverge_main_adapter(self):
+        # The invoking checkout retains candidate sources. Git's protected main
+        # anchor is independently versioned and need not provide that program.
+        directory = self.repository / "tools/scripts/worktree"
+        if INVOCATION == "missing":
+            for path in directory.glob("worktree_*.py"):
+                path.unlink()
+        elif INVOCATION == "divergent":
+            (directory / "worktree_protocol.py").write_text(
+                'raise RuntimeError("another checkout implementation selected")\n')
+            (self.repository / "base64.py").write_text(
+                'raise RuntimeError("repository file selected as adapter support")\n')
+
     @staticmethod
     def events(result):
         return [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{"event":')]
@@ -170,6 +183,7 @@ class CleanupMakeTests(NativeFixture):
                         ignore=shutil.ignore_patterns("bin", "obj"))
         for name in ("Directory.Build.props", "Directory.Packages.props", "global.json"):
             shutil.copy2(self.repository / name, selected / name)
+        self.diverge_main_adapter()
         (selected / "owned").write_text("old staged value\n")
         self.git("add", "owned", cwd=selected)
         (selected / "owned").write_text("final tracked value\n")
@@ -186,9 +200,9 @@ class CleanupMakeTests(NativeFixture):
         caller_input.write_text("caller material\n")
         for path in (obsolete, caller_input, caller):
             os.utime(path, (1700000000, 1700000000))
-        self.assertIn(INVOCATION, ("self", "stable"))
-        cwd = selected / "tools" if INVOCATION == "self" else caller
-        makefile = (selected if INVOCATION == "self" else self.repository) / "tools/Makefile"
+        self.assertIn(INVOCATION, ("self", "stable", "missing", "divergent"))
+        cwd = caller if INVOCATION == "stable" else selected / "tools"
+        makefile = (self.repository if INVOCATION == "stable" else selected) / "tools/Makefile"
         relative = lambda path: os.path.relpath(path, cwd)
         arguments = ["make", "--no-print-directory", "-f", makefile, "clean-all",
                      "FORCE=1", "BASE=dev", "VERBOSE=1",
@@ -232,9 +246,18 @@ class CleanupMakeTests(NativeFixture):
                         ignore=shutil.ignore_patterns("bin", "obj"))
         for name in ("Makefile", "Directory.Build.props", "Directory.Packages.props", "global.json"):
             shutil.copy2(self.repository / name, selected / name)
+        self.diverge_main_adapter()
         for tree in (selected, later):
+            (tree / "deleted").write_text("delete from ordinary snapshot\n")
+            self.git("add", "deleted", cwd=tree)
+            self.git("commit", "-m", "deletion baseline", cwd=tree)
+            (tree / "deleted").unlink()
+            (tree / "owned").write_text("superseded staged value\n")
+            self.git("add", "owned", cwd=tree)
             (tree / "owned").write_text(tree.name + " tracked\n")
             (tree / "untracked").write_text(tree.name + " untracked\n")
+            (tree / ".lake").mkdir()
+            (tree / ".lake/ignored").write_text("ignored bytes\n")
         if ENTRANCE == "clean-lanes":
             arguments = ["make", "--no-print-directory", "-C", "tools", "clean-lanes", "FORCE=1", "BASE=dev"]
         else:
@@ -259,6 +282,8 @@ class CleanupMakeTests(NativeFixture):
             self.git("worktree", "add", recovered, "lane/governance/" + branch)
             self.assertEqual(tree.name + " tracked\n", (recovered / "owned").read_text())
             self.assertEqual(tree.name + " untracked\n", (recovered / "untracked").read_text())
+            self.assertFalse((recovered / "deleted").exists())
+            self.assertFalse((recovered / ".lake/ignored").exists())
         print(json.dumps(dict(event="registered_anchor_result", entrance=ENTRANCE,
             exit=result.returncode, source_removed=True, later_removed=True,
             recovery_verified=True)), flush=True)

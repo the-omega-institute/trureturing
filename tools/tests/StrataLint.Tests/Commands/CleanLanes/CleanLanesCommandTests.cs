@@ -505,8 +505,8 @@ public sealed partial class CleanLanesCommandTests
     }
 
     private static bool IsProtocol(IReadOnlyList<string> arguments, string action) =>
-        arguments.Count > 4 && arguments[1].EndsWith("worktree_protocol.py", StringComparison.Ordinal)
-        && arguments[4] == action;
+        arguments.Count > 5 && arguments[1] == "-c" && arguments[3] == "--source"
+        && arguments[5] == action;
 
     private static string ProtocolValue(IReadOnlyList<string> arguments, string option) =>
         arguments[arguments.ToList().IndexOf(option) + 1];
