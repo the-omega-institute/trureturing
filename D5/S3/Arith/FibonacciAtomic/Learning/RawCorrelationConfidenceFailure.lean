@@ -581,7 +581,7 @@ private theorem failure_mass_bounds (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 
     · exact hp w
 
 /-- Every full-candidate raw-score maximizer has failure probability lower limit at least one half. -/
-theorem failure_liminf (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K)
+theorem deterministic_failure_liminf (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K)
     (select : (rho : ℝ) → (Fin (Scale.sampleLength rho a K) → Record) → Fin 4)
     (hmax : ∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c, candidateScore c w ≤ candidateScore (select rho w) w) :
     (1 / 2 : ℝ) ≤ liminf (fun rho => failureMass rho a (Scale.sampleLength rho a K) (select rho))
@@ -639,7 +639,7 @@ private theorem failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     exact mul_nonneg hp (sub_nonneg.mpr hq1)
 
 /-- Every full-candidate raw-score maximizer has failure probability lower limit at least one half. -/
-theorem failure_liminf (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K)
+theorem randomized_failure_liminf (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K)
     (q : (rho : ℝ) → (Fin (Scale.sampleLength rho a K) → Record) → Fin 4 → ℝ)
     (hq : ∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c, 0 ≤ q rho w c)
     (hnorm : ∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w, ∑ c, q rho w c = 1)
@@ -736,8 +736,8 @@ theorem result (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
   · intro rho hr hr8
     exact ⟨position_law_admissible rho hr hr8, difference_formula, actual_moments rho a hr ha⟩
   · intro select hmax
-    exact Selection.failure_liminf a K ha ha1 hK select hmax
+    exact Selection.deterministic_failure_liminf a K ha ha1 hK select hmax
   · intro q hq hnorm hsupport
-    exact RandomSelection.failure_liminf a K ha ha1 hK q hq hnorm hsupport
+    exact RandomSelection.randomized_failure_liminf a K ha ha1 hK q hq hnorm hsupport
 
 end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure
