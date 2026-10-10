@@ -516,6 +516,224 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.remove(73, "--expected", expected)
         self.assertTrue(self.tree.exists())
 
+    def consumer_mirror_uses_real_git_with_stubbed_github(self):
+        self.g(self.main, "push", "origin", self.base + ":refs/heads/integration-tests")
+        self.g(self.main, "switch", "-c", "feature")
+        (self.main / "feature").write_text("feature\n")
+        self.g(self.main, "add", "feature")
+        self.g(self.main, "commit", "-m", "feature")
+        self.g(self.main, "switch", "dev")
+        self.g(self.main, "merge", "--no-ff", "-m", "Merge pull request #11 from fixture/feature", "feature")
+        self.g(self.main, "push", "origin", "dev")
+        binary = self.root / "github-stub"
+        binary.mkdir()
+        gh = binary / "gh"
+        gh.write_text(f'''#!{sys.executable}
+import json,subprocess,sys
+a=sys.argv[1:]
+if a[:2]==["auth","status"]: pass
+elif a[:2]==["repo","view"]: print("fixture/repo")
+elif a[0]=="api": print(json.dumps(dict(protected=True,protection=dict(required_status_checks=dict(contexts=["required"])))))
+elif a[:2]==["pr","list"]: print("[]")
+elif a[:2]==["pr","create"]: print("https://example.invalid/fixture/repo/pull/17")
+elif a[:2]==["pr","checks"]:
+    if "--json" in a: print(json.dumps([dict(name="required",bucket="pass")]))
+elif a[:2]==["pr","merge"]:
+    subprocess.run(["git","push","origin","refs/heads/mirror/integration-tests/11:refs/heads/integration-tests"],check=True)
+elif a[:3]==["pr","view","11"]: print(json.dumps(dict(title="feature",url="https://example.invalid/fixture/repo/pull/11")))
+elif a[:3]==["pr","view","17"]: print(json.dumps(dict(state="MERGED",mergedAt="2030-01-01T00:00:00Z")))
+else: raise SystemExit("unexpected GitHub fixture call: "+repr(a))
+''')
+        gh.chmod(0o755)
+        temporary = self.root / "scratch"
+        temporary.mkdir()
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"], TMPDIR=str(temporary))
+        script = ROOT / "tools/scripts/agent/integration-mirror.sh"
+        result = self.run_owned_command(["/bin/bash", str(script), "--integration", "integration-tests", "--since", self.base],
+            self.tree, phase="mirror", timeout=60, check=False, env=environment)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn("MIRROR_RESULT mirrored=1 pending=0 exit=0", result.stdout)
+        self.assertFalse(list(temporary.iterdir()))
+        self.assertEqual("feature\n", self.g(self.main, "show", "refs/remotes/origin/dev:feature"))
+
+    def consumer_land_commits_snapshot_with_external_checks_stubbed(self):
+        (self.tree / "lean-report-inputs.json").write_bytes((ROOT / "lean-report-inputs.json").read_bytes())
+        (self.tree / "other").write_text("unrelated staged\n")
+        self.g(self.tree, "add", "other")
+        message = self.root / "unit.msg"
+        message.write_text("authorized unit\n")
+        binary = self.root / "land-stub"
+        binary.mkdir()
+        calls = self.root / "make-calls.jsonl"
+        for name, body in dict(dotnet='exit 0', gh='echo true').items():
+            file = binary / name
+            file.write_text("#!/bin/sh\n" + body + "\n")
+            file.chmod(0o755)
+        make = binary / "make"
+        make.write_text(f'''#!{sys.executable}
+import json,os,sys
+with open({str(calls)!r},"a") as output: output.write(json.dumps(sys.argv[1:])+"\\n")
+if sys.argv[1]=="cover" and sys.argv[2]=="ATOM_ID=atom-failure": raise SystemExit(19)
+if sys.argv[1]=="pr-open": print("pr=17")
+elif sys.argv[1] not in ("lean-report","cover","gate"): raise SystemExit(99)
+''')
+        make.chmod(0o755)
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"],
+                           LAND_LOG_DIR=str(self.root / "land-logs"))
+        # Exact argument values also distinguish literal backslash-t from a tab.
+        one = [("atom-one", "D5/S3/ConceptDynamics.Result")]
+        multiple = [("atom-tab\tvalue", "gid with space"), (r"atom-literal\tvalue", r"gid-literal\tvalue")]
+        failing = [one[0], ("atom-failure", "D5/S3/ConceptDynamics.Failure"), multiple[0]]
+        for index, covers in enumerate(([], one, multiple, failing)):
+            with self.subTest(covers=covers):
+                self.assertTrue(self.commands_settled and not self.fixture_interrupted,
+                                "earlier land lifetime is unresolved or the fixture is interrupted")
+                owned = f"authorized {index}\n"
+                (self.tree / "owned").write_text(owned)
+                before = self.g(self.tree, "rev-parse", "HEAD").strip()
+                self.assertTrue(self.commands_settled, "unsettled prior land command owns these inputs")
+                calls.write_text("")
+                arguments = [arg for pair in covers for arg in ("--cover", *pair)]
+                relative = index == 1
+                command = ["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"),
+                    "tree" if relative else str(self.tree), self.branch,
+                    message.name if relative else str(message), "--wait-pr", "11", *arguments]
+                self.note("land.begin", command=command, guard_seconds=60)
+                start = time.monotonic()
+                result = self.run_owned_command(command, self.root if relative else self.main,
+                    phase="land", timeout=60, check=False, env=environment)
+                recorded = [json.loads(line) for line in calls.read_text().splitlines()]
+                self.note("land.end", elapsed=time.monotonic() - start, returncode=result.returncode,
+                    make_calls=recorded, claimed_merged="PHASE1_MERGED" in result.stdout)
+                expected_covers = covers[:2] if covers == failing else covers
+                self.assertEqual([["cover", "ATOM_ID=" + atom, "GID=" + gid] for atom, gid in expected_covers],
+                                 [call for call in recorded if call[0] == "cover"], result.stdout + result.stderr)
+                if covers == failing:
+                    self.assertEqual(93, result.returncode, result.stdout + result.stderr)
+                    self.assertEqual(["lean-report", "cover", "cover"], [call[0] for call in recorded])
+                    self.assertNotIn("PHASE1_MERGED", result.stdout)
+                    self.assertEqual(before, self.g(self.tree, "rev-parse", "HEAD").strip())
+                    self.assertEqual(owned, (self.tree / "owned").read_text())
+                else:
+                    self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                    self.assertIn("WAITED_PR=11", result.stdout)
+                    self.assertIn("PHASE1_MERGED", result.stdout)
+                    self.assertEqual(owned, self.g(self.tree, "show", "HEAD:owned"))
+                self.assertEqual("unrelated staged\n", self.g(self.tree, "show", "HEAD:other"))
+                self.assertEqual("", self.g(self.tree, "diff", "--cached", "--name-only"))
+                self.assertEqual(self.g(self.tree, "rev-parse", "HEAD").strip(),
+                                 self.g(self.main, "ls-remote", "origin", "refs/heads/" + self.branch).split()[0])
+
+    def consumer_land_cannot_build_during_exclusive_operation(self):
+        (self.main / ".git/info/exclude").write_text("tools/obj/\n")
+        message = self.root / "unit.msg"
+        message.write_text("authorized unit\n")
+        binary = self.root / "land-stub"
+        binary.mkdir()
+        dotnet = binary / "dotnet"
+        material = self.tree / "tools/obj/entry-probe"
+        dotnet.write_text(f'''#!{sys.executable}
+from pathlib import Path
+material=Path({str(material)!r})
+material.parent.mkdir(parents=True,exist_ok=True)
+material.write_text("new build material\\n")
+''')
+        dotnet.chmod(0o755)
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"],
+                           LAND_LOG_DIR=str(self.root / "land-logs"))
+        job = self.hold("--exclusive")
+        try:
+            result = self.run_owned_command(["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"), str(self.tree),
+                self.branch, str(message)], self.main,
+                phase="land-exclusion", timeout=60, check=False, env=environment)
+            self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertIn("busy_scope:tree:", result.stderr)
+            self.assertNotIn("PHASE1_MERGED", result.stdout)
+            self.note("land.excluded", returncode=result.returncode, material_created=material.exists(),
+                      claimed_merged="PHASE1_MERGED" in result.stdout)
+            self.assertFalse(material.exists(), "landing built the target while destruction held entry")
+        finally:
+            stdout, stderr = job.communicate("joined\n", timeout=20)
+        self.assertEqual(0, job.returncode, stdout + stderr)
+        self.assertTrue(self.tree.exists())
+
+    def consumer_land_scopes_operating_children(self):
+        declaration = json.loads((ROOT / "lean-report-inputs.json").read_text())
+        declaration["report_modules"]["include"].append(dict(pattern="Library/operative/**/*.lean", optional=True))
+        (self.tree / "lean-report-inputs.json").write_text(json.dumps(declaration))
+        ledger = self.tree / "Meta/Digestion/backfill"
+        for source, path in (("first", "Library/source with space.md"), ("chain", "Library/chain.md")):
+            directory = ledger / source
+            directory.mkdir(parents=True)
+            (directory / "source.toml").write_text('path = "' + path + '"\n')
+            (directory / "residual-open").mkdir()
+            (directory / "residual-open/atom.yaml").write_text("receipts:\n  chain_atoms:\n    - chain-atom\n")
+        (ledger / "chain/residual-open/atom.yaml").write_text(
+            "receipts:\n  tail_authorization:\n    path: |\n      Library/block-tail.json\n")
+        binary = self.root / "land-stub"
+        binary.mkdir()
+        for name, body in dict(dotnet="exit 0", gh="echo true").items():
+            file = binary / name
+            file.write_text("#!/bin/sh\n" + body + "\n")
+            file.chmod(0o755)
+        evidence = self.root / "scope-evidence.jsonl"
+        report = self.root / "configured output/report.json"
+        logs = self.root / "configured logs"
+        report_inputs = ["D5/new.lean", "Reg/new.lean", "lean-toolchain", "lake-manifest.json",
+                         "lakefile.toml", "Directory.Build.props", "tools/StrataLint.Cli/obj/new",
+                         "Meta/FILEMAP.toml", "Library/operative/new.lean", "build/lean-cache/new",
+                         "lean-report-inputs.json", str(report), str(report) + ".sha256", str(logs / "new")]
+        cover_inputs = ["Golden/Frozen/state/new.json", "Meta/Digestion/atomizers.toml",
+                        "Meta/Digestion/atoms/sha256/new", "Meta/Digestion/backfill/chain/absorbed-closed/new.yaml",
+                        "Meta/Digestion/backfill/first/residual-open/atom.yaml", "Library/source with space.md",
+                        "Library/chain.md", "Library/block-tail.json", "tools/Authorizations/digestion-tail/new.json"]
+        make = binary / "make"
+        make.write_text(f'''#!{sys.executable}
+import json,os,subprocess,sys
+from pathlib import Path
+command=sys.argv[1]
+if command=="gate": raise SystemExit(17)
+paths={report_inputs!r} + ({cover_inputs!r} if command=="cover" else [])
+for path in paths:
+    target=Path(path)
+    base=Path.cwd() if not target.is_absolute() else target.parent
+    name=path if not target.is_absolute() else target.name
+    if target.is_absolute():
+        worker="from contextlib import ExitStack; import sys; " \
+            "sys.path.insert(0,sys.argv[1]); import worktree_protocol as p; " \
+            "stack=ExitStack(); p.path_scopes(stack,sys.argv[2],__import__('pathlib').Path(sys.argv[3]),writes=(sys.argv[4],))"
+        result=subprocess.run([{sys.executable!r},"-B","-c",worker,{str(SCRIPT.parent)!r},
+            str(Path.cwd()),str(base),name],capture_output=True,text=True)
+        assert "busy_scope:file:" in result.stderr,(path,result.stdout,result.stderr)
+    else:
+        result=subprocess.run([{sys.executable!r},"-B",{str(SCRIPT)!r},"--source",str(Path.cwd()),
+            "with","--path",str(base),"--write",name,"--","true"],capture_output=True,text=True)
+    assert result.returncode==(1 if target.is_absolute() else 73) and "busy_scope:file:" in result.stderr,(path,result.stdout,result.stderr)
+result=subprocess.run([{sys.executable!r},"-B",{str(SCRIPT)!r},"--source",str(Path.cwd()),
+    "with","--path",str(Path.cwd()),"--write","other","--",{sys.executable!r},"-c",
+    "from pathlib import Path; Path('other').write_text('independent edit'+chr(10))"],capture_output=True,text=True)
+assert result.returncode==0,(result.stdout,result.stderr)
+with open({str(evidence)!r},"a") as output:
+    output.write(json.dumps(dict(command=command,protected=paths,disjoint_edit=True))+"\\n")
+''')
+        make.chmod(0o755)
+        message = self.root / "unit.msg"
+        message.write_text("scope fixture\n")
+        environment = dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"],
+                           LAND_LOG_DIR=str(self.root / "land-logs"), LEAN_REPORT=str(report),
+                           STRATALINT_LEAN_REPORT_LOG_DIR=str(logs))
+        command = ["/bin/bash", str(ROOT / "tools/scripts/agent/land.sh"), str(self.tree), self.branch,
+                   str(message), "--cover", "atom", "D5/module.result"]
+        result = self.run_owned_command(command, self.main, phase="land-scopes", timeout=60,
+                                        check=False, env=environment)
+        self.assertEqual(94, result.returncode, result.stdout + result.stderr)
+        self.assertIn("HALT_GATE", result.stdout)
+        rows = [json.loads(line) for line in evidence.read_text().splitlines()]
+        self.assertEqual(["lean-report", "cover"], [row["command"] for row in rows])
+        self.assertTrue(all(row["disjoint_edit"] for row in rows))
+        self.assertEqual("independent edit\n", (self.tree / "other").read_text())
+        self.note("land.scopes", children=rows, settled=result.lifetime["settled"])
+
     def paused_job(self, operation, *arguments):
         bin_path = self.root / "bin"
         bin_path.mkdir(exist_ok=True)
