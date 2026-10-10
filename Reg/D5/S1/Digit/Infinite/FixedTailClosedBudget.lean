@@ -134,7 +134,7 @@ abbrev signature : Signature where
 
 def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ w z => wordScalar w z) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+  realize signature (fun _ _ z => z + 1) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ (w : List Label) (x y : LegalDigits), addressPrefix w x y → kappa x = wordScalar w (kappa y)
 abbrev arena : Arena where
   signature := signature
@@ -142,9 +142,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   have he := hh [] zeroAddress zeroAddress rfl
-  change kappa zeroAddress = 1 at he
-  have hz : kappa zeroAddress = 0 := by
-    simp [kappa,window,WindowSuccessorGraph.P,bitShift,zeroAddress,offset]
+  change kappa zeroAddress = kappa zeroAddress + 1 at he
   linarith
 def registration : Registration arena sourceStatement where
   actual := actual

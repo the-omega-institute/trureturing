@@ -100,9 +100,8 @@ def registration : Registration arena sourceStatement where
     change Set.Finite ∅ ≠ Set.Finite _
     intro he
     have hf := Eq.mp he (Set.finite_empty : (∅ : Set (List Return)).Finite)
-    have hi : Function.Injective (fun n : ℕ => List.replicate n (⟨(1,1),by constructor <;> omega⟩ : Return)) := by
-      intro m n hmn
-      simpa using congrArg List.length hmn
+    have hi : Function.Injective (fun n : ℕ => List.replicate n (⟨(1,1),by constructor <;> omega⟩ : Return)) :=
+      List.replicate_left_injective _
     exact (Set.infinite_range_of_injective hi) hf
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.Coding.codebook_finite)
