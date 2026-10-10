@@ -3,6 +3,7 @@ bibkey: chirrehelfgott2025bounded
 authors: Andrés Chirre; Harald Andrés Helfgott
 year: 2025
 title: Optimal bounds for sums of bounded arithmetic functions
+doi: null
 url: https://arxiv.org/abs/2511.14736
 claim: The general finite-height residue formula removes an unnecessary simple-zero premise from the actual odd-source annulus application; horizontal bounds, complete residues and the critical signed lower estimate remain explicit obligations.
 strata_touched: []
