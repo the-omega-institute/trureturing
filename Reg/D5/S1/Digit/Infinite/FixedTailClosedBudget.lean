@@ -60,7 +60,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[0, 1],
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg"], stateBinder := 2,
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"], stateBinder := 2,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -113,7 +114,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "fn", "arg"], stateBinder := 1,
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"], stateBinder := 1,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -169,7 +171,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"], stateBinder := 0,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -223,7 +226,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[0, 3, 4],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body"], stateBinder := 0,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -276,7 +280,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[0, 1, 2, 3, 5],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -329,7 +334,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[0, 1, 2],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }

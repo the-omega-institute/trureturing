@@ -60,7 +60,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "fn", "arg", "fn"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "fn", "arg", "fn"], stateBinder := 0,
       functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -113,7 +114,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[],
-    readouts := #[{ path := #["fn"], stateBinder := 0,
+    readouts := #[{
+      path := #["fn"], stateBinder := 0,
       functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }

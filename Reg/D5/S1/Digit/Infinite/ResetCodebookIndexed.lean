@@ -60,7 +60,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "arg"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "arg"], stateBinder := 0,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -113,7 +114,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "fn", "arg", "fn"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn"], stateBinder := 0,
       functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -168,7 +170,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[0, 1],
-    readouts := #[{ path := #["body", "body", "arg"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "arg"], stateBinder := 0,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -221,7 +224,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[0, 1, 2],
-    readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 3,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"], stateBinder := 3,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -275,7 +279,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[0, 1],
-    readouts := #[{ path := #["body", "body"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body"], stateBinder := 0,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -302,7 +307,8 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   obtain ⟨u,hu⟩ := hh ⟨⟨1,1⟩,by constructor <;> omega⟩ []
-  norm_num [rejected,realize,Statement.letters] at hu
+  change [true,false] = [] at hu
+  cases hu
 def registration : Registration arena sourceStatement where
   actual := actual
   bridge := Iff.rfl
@@ -328,7 +334,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "arg", "body", "arg"], stateBinder := 2,
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "arg"], stateBinder := 2,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -348,10 +355,10 @@ abbrev signature : Signature where
 def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ p w => w ∈ XMinus p.1 p.2.1 p.2.2) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => False) (fun e => nomatch e)
-def sourceStatement : Prop := ∀ (K n : ℕ) (tau eps : ℝ) (w : ℤ → Bool), Statement.cap K w → ⟨∀ i, Statement.high K w i → tau + eps ≤ stateRec w i⟩ → 0 < eps → h false*rho^n < eps → w ∈ XMinus K n tau
+def sourceStatement : Prop := ∀ (K n : ℕ) (tau eps : ℝ) (w : ℤ → Bool), Statement.cap K w → (∀ i, Statement.high K w i → tau + eps ≤ stateRec w i) → 0 < eps → h false*rho^n < eps → w ∈ XMinus K n tau
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (K n : ℕ) (tau eps : ℝ) (w : ℤ → Bool), Statement.cap K w → ⟨∀ i, Statement.high K w i → tau + eps ≤ stateRec w i⟩ → 0 < eps → h false*rho^n < eps → R.readout () ⟨K,n,tau⟩ w
+  Law R := ∀ (K n : ℕ) (tau eps : ℝ) (w : ℤ → Bool), Statement.cap K w → (∀ i, Statement.high K w i → tau + eps ≤ stateRec w i) → 0 < eps → h false*rho^n < eps → R.readout () ⟨K,n,tau⟩ w
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   apply hh 2 0 0 (h false+1) (fun _ => false)
@@ -398,7 +405,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[0, 1, 2],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body"], stateBinder := 4,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body"], stateBinder := 4,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -456,6 +464,7 @@ def registration : Registration arena sourceStatement where
         norm_num [pastRec]
     refine ⟨⟨2,0⟩,(-1 : ℝ),(0 : ℝ),?_⟩
     intro he
+    change XMinus 2 0 (-1) = XMinus 2 0 0 at he
     have hm' : w ∈ XMinus 2 0 0 := he ▸ hm
     have hi : Statement.high 2 w 0 := by
       intro j hj
@@ -478,7 +487,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[0, 1],
-    readouts := #[{ path := #["body", "body", "body", "arg"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "body", "arg"], stateBinder := 0,
       functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
