@@ -6739,3 +6739,280 @@ $\mathcal E(L)$. The constants have not been numerically certified
 against the selected finite clock, so an $o(1)$ comparison alone is
 not an exact finite Robin certificate. The original strict core and
 positive $r_A$ still require enough signed slack. RH remains unproved.
+
+## Project supplement: a uniform selected-source interval through 4.03e46
+
+This is a project derivation from the named premises below, extending
+(GL4) on one additional interval. The interval choice and rational
+enclosures are project calculations, not results attributed to Nicolas's
+manuscript or the other cited papers. This is a conditional ordinary
+proof and application, without a literature-priority, Lean-certification,
+or all-integer finite-verification claim.
+
+### Keep the selected integer, exact clock and source premises
+
+Suppose Robin's strict inequality fails at some integer above 5040.
+By the [Caveney–Nicolas–Sondow reduction](../Arith/caveney2012sacaga.md#which-potentially-critical-robin-source-is-covered),
+Theorems 4(ii) and 5(iii), select the **same least global maximizer**
+$N>5040$ of $G(n)=\sigma(n)/(n\log\log n)$. Put
+
+$$
+A=\log N,\qquad L=\log A,\qquad T=\sqrt A L,\qquad
+W(n)=\log\frac{\sigma(n)}n,\qquad \lambda=\frac1{AL}.
+$$
+
+The selected level is at least $e^\gamma$, so
+$\Delta(N)=\gamma+\log L-W(N)\le0$. This $N$ is not the least
+counterexample. Reuse the finite ladder ending in (GL4), with its
+[Axler finite-stop premise](../notes/axler2023robin.md) and its cited
+zero-free and density inputs, to obtain $A>(7/2)10^{46}$.
+
+For comparison, at an arbitrary integer $n>5040$ use its own
+$A=\log n$, $L=\log A$ and $\lambda=1/(AL)$, and define
+$\Delta(n)=\gamma+\log L-W(n)$. Here primes and positive powers
+are used in $P_{\rm pp}$, and the pressure maximum is over integers:
+
+$$
+\begin{aligned}
+M(\lambda)&=\max_{m\in\mathbb Z_{\ge1}}\{W(m)-\lambda\log m\},&
+d_n&=M(\lambda)-W(n)+\lambda A\ge0,\\
+P_{\rm pp}(A)&=\sum_{p^j\le A}\frac1{jp^j},&
+R(A)&=P_{\rm pp}(A)-\lambda\psi(A)-M(\lambda),\\
+I_\psi(A)&=\int_A^\infty(\psi(t)-t)
+                  \frac{1+\log t}{t^2\log^2t}\,dt.
+\end{aligned}
+$$
+
+The existing pressure and tail identities give
+$\Delta(n)=I_\psi(A)+R(A)+d_n$; $d_n$ remains in this all-integer
+identity. At the selected $N$ alone, the
+[same-source transport](../Analytic/polak2026finiterobinca.md#application-at-the-same-critical-source-and-clock)
+gives $d_N=0$ and $R(A)=D^*(A)$, hence (G1). Its premises are explicit:
+CNS Fact 1 and GA2 make $N$ proper, so $N/p\ge4>e$ for deletion;
+[Mantovanelli's archived direct bridge](../Analytic/mantovanelli2026primeworkload.md#the-existing-prime-local-bridge)
+at the exact price $\lambda$ gives the event-free CA optimizer;
+the existing unrestricted-exponent
+[SevenSmooth exclusion](../../Blueprint/D5/S3/Arith/Robin/SevenSmooth.md)
+rules out support index $k\le4$; and
+[Kalyabin's Theorem 2 endpoint conditions](../Analytic/kalyabin2026maximalgronwall.md)
+give $P=P^+(N)<A<P^+$ and exponent one at $P$.
+Thus primes $p\le A$ are exactly the actual support, every actual
+exponent attains Polak's full-support minimum over $a\ge1$, and his
+Proposition 6 has $z(N,A)=B_2(N,A)=0$. There is no transfer of this
+zero defect to arbitrary integers.
+
+Reuse (G6)–(G7), including Nicolas's effective Theorem 1.3 branch
+$6.78$, whose exact $N^{(0)}$ threshold is paid above. The primorial
+cutoff $x$, support endpoint $P$ and clock $A$ stay distinct: (G2)–(G5)
+pay the absent-prime suffix by GA2 and use $\Sigma(N)=Z(N)$ from CA;
+they do not assume common maximizers of $\Phi$ and $\Sigma$.
+
+The analytic inputs are the full classical explicit formula and its
+endpoint-inclusive Stieltjes identities, [Dusart v1](https://arxiv.org/pdf/1002.0442v1)
+Theorem 5.2 and Proposition 3.2,
+[Platt–Trudgian's verification through height $3000175332800$](https://arxiv.org/abs/2004.09765v1),
+and the Hasanalizade–Shen–Wong full zero count used in
+[(F3) and (Z4) of the Polak note](../Analytic/polak2026finiterobinca.md#reusing-the-complete-residual-envelope).
+Keep $H=3\cdot10^{12}$, $c_0=2+\gamma-\log(4\pi)<0.05$ and
+$S_2(H)=\sum_{\Im\rho>H}m_\rho/(\Im\rho)^2<1.48\cdot10^{-12}$.
+The preceding project derivations (GE1)–(GE4), (GH1), (GJ1)–(GJ2)
+and (GK1)–(GK6) are used with exactly these premises.
+The cited finite Robin and zero-verification computations, analytic
+proofs and density-table computations are not rerun here. The
+Mantovanelli, Kalyabin, Polak and Nicolas inputs retain their stated
+preprint/archive status; no complete independent primary-proof audit
+or fresh SevenSmooth compilation is asserted. Polak's separate huge
+finite sweep is not a premise of the added interval.
+
+### Uniform arithmetic and Gamma enclosures
+
+Assume, for contradiction, that the same selected clock satisfies
+
+$$
+\frac72\,10^{46}<A\le\frac{403}{100}\,10^{46},\qquad
+\alpha=\frac{73}{50}\,10^{23}+\frac12
+       =\frac{292000000000000000000001}{2}.
+\tag{GM1}
+$$
+
+Use the whole law $C\sim\operatorname{Gamma}(\text{shape }\alpha,
+\text{rate }\alpha)$, not scale $\alpha$. Its mean is one,
+$\mathbb E(C-1)^2=1/\alpha$ and
+$M_1=\mathbb EC^{-1}=\alpha/(\alpha-1)$. The shape is noninteger
+and at least $4$, as required in (GK6). With the complete coefficient
+$F_A(s)=s^{-1}\int_A^\infty u^{s-2}(1+\log u)/\log^2u\,du$, put
+
+$$
+H_\alpha(s)=\frac{\Gamma(\alpha+s-1)}
+ {\Gamma(\alpha)\alpha^{s-1}},\qquad
+Z_\alpha(A)=\sum_\rho m_\rho H_\alpha(\rho)F_A(\rho).
+$$
+
+Every actual nontrivial zero, both ordinate signs and all multiplicities
+are included. The preceding absolute-convergence arguments justify this
+sum; conjugate pairing makes it real. Criticality is used only for
+$|\Im\rho|\le H$; the tail retains every actual $0<\Re\rho<1$.
+
+On the **whole** interval (GM1),
+
+$$
+L>107,\qquad 10^{23}<\sqrt A<r:=\frac{251}{125}\,10^{23},\qquad
+M_1<\frac{10001}{10000},\qquad
+\frac{H^2}{2(\alpha+H)}>\frac{1541}{50}.
+\tag{GM2}
+$$
+
+Indeed, $\log10>2.3$ and $\log(7/2)>1.25$ give $L>107$;
+$r^2=4.032064\cdot10^{46}>4.03\cdot10^{46}$.
+The moment and damping bounds are direct rational comparisons at
+the fixed $\alpha$, with no sampling of $A$.
+
+Dusart's stronger Theorem 5.2 row is exactly
+$k=2$, $\eta_k=0.01$, $x_k=7713133853$. It applies to **every**
+$t\ge A$ in (GM1). Proposition 3.2 includes all higher prime powers,
+so the decreasing right side gives
+
+$$
+\begin{aligned}
+\eta_0(A)&:=\sup_{t\ge A}\frac{|\psi(t)-t|}{t}\\
+&\le\frac{0.01}{L^2}+1.00007A^{-1/2}+1.78A^{-2/3}\\
+&<\frac{0.01}{107^2}+\frac{1.00007}{10^{23}}
+                  +\frac{1.78}{10^{30}}<10^{-6}.
+\end{aligned}
+\tag{GM3}
+$$
+
+This stronger constant is used with its own effective threshold;
+it is not assigned to the earlier $3.965$ row.
+
+The directed (GK6) and the absolute (GJ2) now give
+
+$$
+\begin{aligned}
+-T I_\psi(A)\le{}&T Z_\alpha(A)
+ +(0.52+2\eta_0(A))\frac{\sqrt A}{\alpha}
+ +400\sqrt A e^{-\alpha/60000}+\frac{5M_1}{\sqrt A},\\
+T|Z_\alpha(A)|<{}&M_1(1+1/L)
+ \left[1.054c_0+2(1.0001)\sqrt A S_2(H)
+            e^{-H^2/[2(\alpha+H)]}\right].
+\end{aligned}
+$$
+
+Centering in (GK6) occurs before splitting the whole Gamma law at
+$[0.99,1.01]$. Its regular part uses (GM3) for all $t\ge A$;
+its local residual is nonpositive against the positive prime-power
+measure, including endpoint atoms. The $c<1$ local part below $A$
+uses this sign, not an unprovided prime-error bound below $A$.
+All outside scales are paid by (GK5). In particular, $cA<1$ and the
+finite endpoint response in (GE3) are retained; (GE4) is used only
+as a directed upper bound, not an absolute bound.
+
+For $x>0$, $e^x>\sum_{j=0}^{149}x^j/j!$. Exact rational evaluation
+at $x=1541/50$ gives $e^{1541/50}>(121/50)10^{13}$.
+Also $\alpha/60000>10^{18}$ and $e^x>x^3/6$ give
+$e^{\alpha/60000}>10^{53}$. Substituting these and (GM2)–(GM3)
+gives the following complete rational allowances:
+
+| Contribution | Rational upper allowance | Strict outward bound |
+|---|---:|---:|
+| Verified head with full coefficient remainder | $(10001/10000)(108/107)(1.054)(0.05)$ | $0.0532$ |
+| All heights above $H$, both signs | $2(10001/10000)^2(108/107)r(1.48\cdot10^{-12})/[(121/50)10^{13}]$ | $0.0248$ |
+| Centered regular and signed local payment | $(0.520002)r/\alpha$ | $0.7152$ |
+| Every outside Gamma scale | $400r/10^{53}$ | $9\cdot10^{-28}$ |
+| Complete elementary/trivial response, including $cA<1$ | $5(10001/10000)/10^{23}$ | $6\cdot10^{-23}$ |
+
+For clarity, the first three rational allowances are respectively
+$142304229/2675000000$,
+$25079915230749/1011484375000000$, and
+$208832803200000000000000/292000000000000000000001$.
+Summing the rational allowances, or their strict outward bounds, yields
+
+$$
+\boxed{-T I_\psi(A)<0.79321\quad\text{throughout (GM1)}.}
+\tag{GM4}
+$$
+
+The damping exponent $t^2/[2(\alpha+t)]$ increases for $t>0$;
+the full $S_2(H)$ therefore pays every height above $H$ through infinity.
+No tail real part is moved to $1/2$, and no sign or coefficient remainder
+is omitted in passing from $T Z_\alpha$ to its absolute upper allowance.
+
+### Transcendental enclosures and the strict core
+
+All decimal constants here denote exact terminating rationals. The
+load-bearing logarithms can be enclosed by the convergent positive
+series, with $z=(y-1)/(y+1)$ and $1\le y\le2$,
+
+$$
+q_m(y)=2\sum_{j=0}^{m-1}\frac{z^{2j+1}}{2j+1},\qquad
+0\le\log y-q_m(y)
+\le\frac{2z^{2m+1}}{(2m+1)(1-z^2)}.
+$$
+
+This follows by integrating the geometric series for $1/(1-z^2)$;
+each omitted denominator is at least $2m+1$.
+Write any rational $y\ge1$ as $2^k v$, $1\le v<2$, and add
+the brackets for $v$ and $k\log2$. With $m=64$ the resulting rational
+comparisons give $\log2<0.6931472$, $\log10>2.3$ and
+$\log(7/2)>1.25$, as used above. Squaring positive rational endpoints
+gives $1.4142135<\sqrt2<1.4142136$.
+Positive Taylor prefixes through degree 149 give
+$e^{17}>2\cdot10^7$ and $e^{52}>10^{22}$, as well as the damping
+comparison used in (GM4). These are analytic enclosures with explicit
+remainders or one-sided positive prefixes, not floating-point values.
+
+For the existing core function $\mathcal E$ in (G7), differentiation
+gives
+
+$$
+\mathcal E'(L)=\frac{(2+\log2)\sqrt2}{L^2}
+-\frac{13.56}{L^3}+\frac{2.67}{6}e^{-L/6}
+ +\left(L-2+\frac5{2L}+\frac5{L^2}\right)e^{-L/2}>0
+\qquad(L\ge26).
+$$
+
+The first two terms have sum greater than $(2L-13.56)/L^3>0$;
+the other terms are positive. Thus $L>107$ gives
+$\mathcal E(L)>\mathcal E(107)$ uniformly. Since $107/6>17$ and
+$107/2>52$, the outward enclosures just proved yield
+
+$$
+\begin{aligned}
+\mathcal E(107)>{}&2(1.4142135)
+ -\frac{(2+0.6931472)(1.4142136)}{107}
+ +\frac{6.78}{107^2}-2.00014\\
+&-\frac{2.67}{2\cdot10^7}
+ -\frac{214+5/107}{10^{22}}>0.79328.
+\end{aligned}
+\tag{GM5}
+$$
+
+The last comparison is exact rational arithmetic. Together with (G6),
+this is a whole-interval strict lower bound for the core at the same $N$.
+
+### Contradiction and remaining boundary
+
+By (G1), (GM4) and (GM5),
+
+$$
+\boxed{T\Delta(N)=T I_\psi(A)+T D^*(A)
+ >0.79328-0.79321=\frac7{100000}>0
+ \quad\text{throughout (GM1)}.}
+\tag{GM6}
+$$
+
+This contradicts the selected source's $\Delta(N)\le0$.
+Together with (GL4), it proves the conditional restriction
+$\log N>(403/100)10^{46}$ for the same least global maximizer.
+The open lower endpoint is supplied by (GL4), and the upper endpoint
+is included by the uniform enclosures; there is no uncovered clock.
+
+This excludes a selected-source interval, not every integer below
+$\exp((403/100)10^{46})$, and gives no least-counterexample bound.
+For arbitrary $n$ the exact $d_n$ remains. At surviving selected clocks,
+the full signed requirement (G9), with its positive elementary
+correction, remains unpaid. A substantive formal frontier is the
+directed centered-Gamma transport (GK6), including the endpoint atoms,
+whole mean-one law and $cA<1$ branch; scalar wrappers of the rational
+budget do not close it. No such formal theorem is supplied here.
+The RH/Robin research target remains active and unproved.

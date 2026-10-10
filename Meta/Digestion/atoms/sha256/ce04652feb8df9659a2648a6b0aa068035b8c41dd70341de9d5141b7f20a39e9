@@ -1,0 +1,24 @@
+**定义 5.1（独立支持与单位置切换）。** 对整数 $n\ge0$，令 $[n]=\{1,\ldots,n\}$，其中 $[0]=\varnothing$，并取
+
+$$
+\Sigma_n=\{I\subseteq[n]:i\in I\Rightarrow i+1\notin I\}.
+$$
+
+图 $\Gamma_n$ 的顶点为 $\Sigma_n$，无向边为 $\{I,J\}$，其中 $|I\mathbin\triangle J|=1$。这是 Fibonacci cube 的一位差邻接，且 $\Gamma_0=K_1$，参见 S. Klavžar，[《Structure of Fibonacci cubes: a survey》§1](https://users.fmf.uni-lj.si/klavzar/preprints/FibonacciCubesRevised.pdf)，Journal of Combinatorial Optimization 25 (2013), 505–522，[DOI:10.1007/s10878-011-9433-z](https://doi.org/10.1007/s10878-011-9433-z)。对每条无向边任选一次参考定向，得到有符号边界映射 $B_n:\mathbb R^{E(\Gamma_n)}\to H_n=\mathbb R^{\Sigma_n}$。参考定向尚不声明可执行的跳跃方向。
+
+定义
+
+$$
+T_n=\{v\in H_n:\textstyle\sum_Iv_I=0\},\qquad
+(A_nv)_i=\sum_{I\ni i}v_I\quad(i\in[n]),
+$$
+
+并记 $V_n=|\Sigma_n|$、$E_n=|E(\Gamma_n)|$、$h_n=\dim\ker(A_n|_{T_n})$、$c_n=\dim\ker B_n$。取 $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，并置 $K_n=\lfloor(n+1)/2\rfloor$。所需的既有计数和观察秩来自[《对称 seam、路径缺陷与 Fibonacci 层级》Q7–Q8、第二部分定理 3–4](AURIC_FIB_ATOM_SYMMETRIC_SEAM_PATH_DEFECT_AND_FIBONACCI_HIERARCHY.md)：
+
+$$
+N_{n,k}=\begin{cases}\binom{n-k+1}{k},&0\le k\le K_n,\\0,&\text{其他整数 }k,\end{cases}
+\qquad V_n=F_{n+2},\qquad h_n=V_n-n-1.
+$$
+
+这里 $N_{n,k}$ 是含 $k$ 个位置的合法支持数；质量行与 $n$ 个单点观察的秩为 $n+1$。下述有限和均只在 $0\le k\le K_n$ 取值，空和为零。
+
