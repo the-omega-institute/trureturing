@@ -94,7 +94,7 @@ private def strings (json : Json) (key : String) : IO (Array String) :=
 
 /-- Discover scope from Lake's current module graph, without building report
 or package default targets. The caller supplies independent roots and the
-registered report population; utility claims add their actual import closure. -/
+registered report population; target utility inputs add their import closure. -/
 script reportScope args do
   let [requestPath, outputPath] := args
     | throw <| IO.userError "reportScope requires request and output paths"
@@ -104,6 +104,7 @@ script reportScope args do
   let names ← strings request "modules"
   let registered := names.foldl (fun set name => set.insert name.toName) ({} : Lean.NameSet)
   let utilities ← IO.ofExcept (request.getObjValAs? (Array Json) "utilities")
+  let utilityInputs ← IO.ofExcept (request.getObjValAs? (Array Json) "utility_inputs")
   let root ← repositoryDir (← getWorkspace).root
   let graph ← runBuild do
     let mut queue := roots
@@ -131,6 +132,11 @@ script reportScope args do
         dependencies := dependencies.push row
         if registered.contains dependency.name then
           selected := selected.push row
+          if roots.contains dependency.name.toString then
+            for input in utilityInputs do
+              let owner ← IO.ofExcept (input.getObjValAs? String "modulePath")
+              if owner == path then
+                queue := queue ++ (← strings input "inputModules")
           for utility in utilities do
             let owner ← IO.ofExcept (utility.getObjValAs? String "modulePath")
             if owner == path then

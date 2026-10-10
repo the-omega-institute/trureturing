@@ -4,7 +4,7 @@ namespace StrataLint.Engine;
 
 /// <summary>
 /// An independently selected set of Lean module paths and its source-derived
-/// repository import closure.  Report consumers must construct this value from
+/// utility inputs and repository import closure. Report consumers construct this value from
 /// their explicit request targets; a report cannot enlarge its own scope.
 /// </summary>
 internal sealed class LeanReportScope
@@ -63,11 +63,19 @@ internal sealed class LeanReportScope
             var source = sourceSnapshot.Files[path];
             if (RepositoryRules.TryHeader(source.Text, out var header)
                 && UtilitySyntax.TryParse(header.Utility, out var utility, out _)
-                && utility is { BasisKind: UtilityBasisKind.Refutes, Claim: { } claim, Result: not null })
+                && utility is not null)
             {
-                if (!sourceSnapshot.Files.ContainsKey(claim.Path))
-                    throw new InvalidOperationException("scoped Lean report claim source is missing: " + claim.Path.Value);
-                pending.Push(claim.Path);
+                IEnumerable<Gid> references = roots.Contains(path)
+                    ? UtilityDeclarationValidator.DeclarationReferences(utility)
+                    : utility is { BasisKind: UtilityBasisKind.Refutes, Claim: { } claim, Result: not null }
+                        ? [claim]
+                        : Enumerable.Empty<Gid>();
+                foreach (var reference in references)
+                {
+                    if (!sourceSnapshot.Files.ContainsKey(reference.Path))
+                        throw new InvalidOperationException("scoped Lean report utility input source is missing: " + reference.Path.Value);
+                    pending.Push(reference.Path);
+                }
             }
             var imports = LeanSourceCatalog.ParseFileImports(source);
             foreach (var import in imports)

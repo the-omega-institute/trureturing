@@ -17,7 +17,8 @@ internal static class LeanUtilityInputCommand
 
     internal static ExplicitCommandResult Run(Func<RawRepositorySnapshot> readCurrent, IReadOnlyList<string> arguments)
     {
-        if (arguments.Count != 0) return new(2, string.Empty, "USAGE: StrataLint lean-utility-input\n");
+        var scopeOnly = arguments.Count == 1 && arguments[0] == "--scope";
+        if (arguments.Count != 0 && !scopeOnly) return new(2, string.Empty, "USAGE: StrataLint lean-utility-input [--scope]\n");
         try
         {
             var snapshot = SnapshotDecoder.Decode(readCurrent()) switch
@@ -31,7 +32,17 @@ internal static class LeanUtilityInputCommand
                 if (!LeanClosureValidator.IsManagedLean(path.Value)
                     || !RepositoryRules.TryHeader(file.Text, out var header)
                     || !UtilitySyntax.TryParse(header.Utility, out var declaration, out _)
-                    || declaration is not { BasisKind: UtilityBasisKind.Refutes, Claim: { } claim, Result: { } result })
+                    || declaration is null)
+                    continue;
+                if (scopeOnly)
+                {
+                    var inputModules = UtilityDeclarationValidator.DeclarationReferences(declaration)
+                        .Select(static gid => LeanImportClosure.ModuleName(gid.Path))
+                        .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+                    if (inputModules.Length > 0) obligations.Add(new { modulePath = path.Value, inputModules });
+                    continue;
+                }
+                if (declaration is not { BasisKind: UtilityBasisKind.Refutes, Claim: { } claim, Result: { } result })
                     continue;
                 var claimTarget = (Target.Formal)claim.ToTarget();
                 var resultTarget = (Target.Formal)result.ToTarget();

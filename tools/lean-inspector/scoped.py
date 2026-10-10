@@ -229,8 +229,20 @@ class Entry:
             materials.require_keys(entry, native.UTILITY_FIELDS, 'authoritative utility input')
             if any(not isinstance(value, str) or not value for value in entry.values()):
                 raise ValueError('incomplete authoritative utility input')
+        input_file = self.phase('utility-scope', ['dotnet', self.producer, 'lean-utility-input', '--scope'])
+        utility_inputs = public.read_json(input_file.read_bytes())
+        if not isinstance(utility_inputs, list):
+            raise ValueError('utility scope input must be an array')
+        for entry in utility_inputs:
+            materials.require_keys(entry, {'modulePath', 'inputModules'}, 'authoritative utility scope input')
+            if not isinstance(entry['modulePath'], str) or not entry['modulePath']:
+                raise ValueError('incomplete authoritative utility scope input')
+            materials.require_sorted_strings(entry['inputModules'], 'utility input modules')
+            if any(not MODULE.fullmatch(name) for name in entry['inputModules']):
+                raise ValueError('invalid utility input module')
         request, output = self.temporary / 'scope-request.json', self.temporary / 'selected-modules.json'
-        request.write_bytes(materials.canonical_json(dict(roots=roots, modules=sorted(inputs.modules()), utilities=utilities)))
+        request.write_bytes(materials.canonical_json(dict(roots=roots, modules=sorted(inputs.modules()),
+            utilities=utilities, utility_inputs=utility_inputs)))
         self.phase('scope', self.guarded('script', 'run', 'leanInspector/reportScope', str(request), str(output)))
         scope = public.read_json(output.read_bytes())
         check_scope(self.root, scope, roots)

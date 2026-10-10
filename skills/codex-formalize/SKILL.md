@@ -190,16 +190,16 @@ Judge completion only by exit code, never elapsed time or quiet output. Iterate 
 
 Obtain exact statement, axiom and material evidence through
 `make lean-report-scoped LEAN_TARGETS="D5.<dotted.module>"` (include actual retained Reg targets when
-needed). Targets must be explicit and nonempty; Lake owns their import closure and incremental
+needed). Targets must be explicit and nonempty; the scope includes their named utility inputs, and Lake owns each import closure and incremental
 compilation. Run `make emit PATHS=<NUL-separated selected Lean/Scribe paths>` to generate the
-canonical projections; it builds only the selected Scribe Lean inputs and imports. Never hand-write
+canonical projections; it builds only the selected Scribe Lean inputs, their named utility inputs and imports. Never hand-write
 a mirror or placeholder. `deposit`/`deposit-uncovered`/`cover` derive their scope from the GID, and
 `cover-batch` from all batch GIDs. These local doors require no full report or full build. CI and
 explicit whole-repository verification retain `make lean-report`, `make test` and `make gate`.
 
-Scoped deposit retains SL-031's compiled utility checks. A required utility consumer outside the
-selected import closure causes rejection; do not replace its compiled evidence with a source
-reference or silently add reverse dependencies to the build scope.
+Scoped deposit retains SL-031's compiled utility checks. A target's named utility references
+(consumer, instance, premises, result and claim) add their modules and import closures to the scope.
+Missing or invalid compiled evidence still causes rejection; unrelated reverse dependencies are not selected.
 
 If the implementation seat delegates report production or emission to the caller, its handoff is
 explicitly **source-only, not publication-ready**: name the intended source paths, pending producers
