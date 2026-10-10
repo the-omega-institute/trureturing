@@ -66,3 +66,4 @@ The divisor complement d maps to n divided by d, using natural integer division,
 - Truth anchor: `D5/S3/Factorization/TwoDenseDivisorBlocksPalindrome.row_palindrome`
 - Truth anchor: `D5/S3/Factorization/TwoDenseDivisorBlocksPalindrome.row_sum`
 - Truth anchor: `D5/S3/Factorization/TwoDenseDivisorBlocksPalindrome.twoDenseBlockLengths`
+- Dependency: [D5/S1/Words/AssociatedMersenne/CircularWords](../../S1/Words/AssociatedMersenne/CircularWords.md)
