@@ -191,6 +191,7 @@ reuse_report() {
   return "$status"
 }
 run_phase reuse reuse_report
+cat "$LOG_DIR/reuse.stdout.log"
 if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   if [[ "$CACHE_MISS_POLICY" == fetch-or-fail && ${#BUILD_TARGETS[@]} -gt 0 ]]; then
     require_lake
@@ -204,10 +205,8 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
       "$LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
     PROGRAM_BUILD_PENDING=0
   fi
-  cat "$LOG_DIR/reuse.stdout.log"
   exit 0
 fi
-cat "$LOG_DIR/reuse.stdout.log"
 require_lake
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
   --report "$OUTPUT" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"

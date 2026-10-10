@@ -141,21 +141,90 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
     def test_reuse_failure_keeps_its_existing_receipt_and_base(self):
         self.canonical_release_fixture()
         self.fixture.write('D5/A.lean', 'def a := 1\n')
-        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean'], check=True, capture_output=True)
+        self.script('tools/scripts/worktree/lean-cache-run.sh',
+                    'printf "lake %s\\n" "$*" >> calls\nexit "${FIXTURE_PROGRAM_EXIT:-23}"\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean',
+                        'tools/scripts/worktree/lean-cache-run.sh'], check=True, capture_output=True)
         self.git_commit('matching report inputs', empty=True)
         self.api.reuse(self.root, self.output, self.output)
         receipt = publication.member(self.output, self.api.SUFFIX)
         before_receipt = receipt.read_bytes()
         base = self.root / self.api.BASE_RECORD
         before_base = base.read_bytes()
+        before_seed = {suffix: publication.member(self.output, suffix).read_bytes()
+                       for suffix in publication.SUFFIXES}
         self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["leanInspector/reportInspector"]'
         result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
         self.assertEqual(23, result.returncode, '[FAIL] reuse_program_failure_propagates_exit')
         self.assertIn('phase=programs exit=23', result.stderr)
+        self.assert_entry_seed_decision(result, 'keep', 'seed-current')
         self.assertTrue(receipt.is_file(), '[FAIL] reuse_program_failure_keeps_receipt')
         self.assertEqual(before_receipt, receipt.read_bytes())
         self.assertEqual(before_base, base.read_bytes(), '[FAIL] reuse_program_failure_keeps_base')
+        for suffix, content in before_seed.items():
+            self.assertEqual(content, publication.member(self.output, suffix).read_bytes())
         self.assertTrue(self.api.seed_format(self.output)['compatible'])
+        self.assert_successful_program_reuse()
+        self.assertEqual(before_receipt, receipt.read_bytes())
+        self.assertEqual(before_base, base.read_bytes())
+
+    def test_refreshed_reuse_failure_keeps_its_installed_receipt_and_base(self):
+        local, producer, tag = self.canonical_release_fixture()
+        # The local generation has changed inputs; the approved archive matches HEAD.
+        self.fixture.bundle()
+        publication.publish(self.seed, self.output, publication.coordinates(self.root), self.root)
+        self.api.write_receipt(self.output, self.api.capture(self.root))
+        self.write_base(local)
+        self.fixture.write('D5/A.lean', 'def a := 1\n')
+        self.script('tools/scripts/worktree/lean-cache-run.sh',
+                    'printf "lake %s\\n" "$*" >> calls\nexit "${FIXTURE_PROGRAM_EXIT:-23}"\n')
+        subprocess.run(['git', '-C', str(self.root), 'add', 'D5/A.lean',
+                        'tools/scripts/worktree/lean-cache-run.sh'], check=True, capture_output=True)
+        self.git_commit('matching release inputs', empty=True)
+        self.set_release_publication_mode(tag, 'cached')
+        restored = self.root / 'releases' / tag / 'build/stratalint' / publication.RAW
+        expected_seed = {suffix: publication.member(restored, suffix).read_bytes()
+                         for suffix in (*publication.SUFFIXES, self.api.SUFFIX)}
+        self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["leanInspector/reportInspector"]'
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(23, result.returncode, '[FAIL] refreshed_program_failure_propagates_exit')
+        self.assertIn('phase=programs exit=23', result.stderr)
+        decision = self.assert_entry_seed_decision(result, 'fetch', 'newer-release')
+        self.assertEqual((local, producer, tag), (decision['local'], decision['release'], decision['tag']))
+        self.assertEqual(1, len(self.archive_downloads()), '[FAIL] refreshed_program_failure_fetches_once')
+        for suffix, content in expected_seed.items():
+            self.assertEqual(content, publication.member(self.output, suffix).read_bytes(),
+                             '[FAIL] refreshed_program_failure_keeps_installed_bundle: ' + suffix)
+        self.assertEqual(producer, self.api.read_seed_base(self.root),
+                         '[FAIL] refreshed_program_failure_keeps_installed_base')
+        self.assertTrue(self.api.seed_format(self.output)['compatible'])
+        base = self.root / self.api.BASE_RECORD
+        before_base = base.read_bytes()
+        self.assert_successful_program_reuse()
+        self.assertEqual(1, len(self.archive_downloads()), '[FAIL] successful_reuse_does_not_refetch')
+        self.assertEqual(before_base, base.read_bytes())
+        for suffix, content in expected_seed.items():
+            self.assertEqual(content, publication.member(self.output, suffix).read_bytes())
+
+    def assert_entry_seed_decision(self, result, action, reason):
+        lines = [line for line in (result.stdout + result.stderr).splitlines()
+                 if line.startswith('LEAN_REPORT_SEED_DECISION ')]
+        self.assertEqual(1, len(lines), '[FAIL] entry_prints_seed_decision_exactly_once: '
+                         + result.stdout + result.stderr)
+        self.assertIn(lines[0], result.stdout, '[FAIL] completed_reuse_decision_reaches_stdout')
+        decision = json.loads(lines[0].partition(' ')[2])
+        self.assertEqual((action, reason), (decision['action'], decision['reason']),
+                         '[FAIL] entry_prints_completed_seed_decision')
+        return decision
+
+    def assert_successful_program_reuse(self):
+        self.environment['FIXTURE_PROGRAM_EXIT'] = '0'
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail',
+                                '--log-dir', str(self.root / 'logs/success'), direct=True)
+        self.assertEqual(0, result.returncode, '[FAIL] successful_program_reuse_completes: ' + result.stderr)
+        self.assertIn('phase=programs', result.stderr)
+        self.assertIn('complete-entry-reused', result.stdout)
+        self.assert_entry_seed_decision(result, 'keep', 'seed-current')
 
     def test_reuse_failure_keeps_identical_competing_production(self):
         self.assert_reuse_failure_keeps_competing_generation('production', identical=True)
