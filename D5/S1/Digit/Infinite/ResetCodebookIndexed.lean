@@ -10,11 +10,11 @@ import D5.S1.Digit.Infinite.ResetCodebookFinite
 import Mathlib.Data.Int.ConditionallyCompleteOrder
 import Mathlib.Data.Set.Finite.List
 import Mathlib.Topology.Order.MonotoneConvergence
-local notation "g_bounds" => And.intro D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.1 D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.1
-local notation "g_relation" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.1
-local notation "g_eq" => D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations.2.2.2.1
-local notation "t_sq" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.2
-local notation "t_linear" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.1
+local notation "g_bounds" => And.intro (And.left (And.right D5.S1.Digit.Infinite.SixWindowForcing.algebra)) (And.left (And.right (And.right D5.S1.Digit.Infinite.SixWindowForcing.algebra)))
+local notation "g_relation" => (And.left D5.S1.Digit.Infinite.SixWindowForcing.algebra)
+local notation "g_eq" => (And.left (And.right (And.right (And.right D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations))))
+local notation "t_sq" => (And.right (And.right (And.right (And.right D5.S1.Digit.Infinite.SixWindowForcing.algebra))))
+local notation "t_linear" => (And.left (And.right (And.right (And.right D5.S1.Digit.Infinite.SixWindowForcing.algebra))))
 local notation "Vertex" => fun (lang : Set (ℤ → Bool)) (n : ℕ) =>
   {v : Fin n → Bool // ∃ w∈lang, ∃ i : ℤ, D5.S1.Digit.Infinite.ResetCodebook.Transfer.history n w i=v}
 set_option autoImplicit false

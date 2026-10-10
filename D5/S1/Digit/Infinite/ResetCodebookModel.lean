@@ -14,11 +14,11 @@ import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Data.List.OfFn
 import Mathlib.Order.Filter.AtTopBot.CompleteLattice
 import Mathlib.Tactic.LinearCombination
-local notation "g_bounds" => And.intro D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.1 D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.1
-local notation "g_relation" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.1
-local notation "g_eq" => D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations.2.2.2.1
-local notation "t_sq" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.2
-local notation "t_linear" => D5.S1.Digit.Infinite.SixWindowForcing.algebra.2.2.2.1
+local notation "g_bounds" => And.intro (And.left (And.right D5.S1.Digit.Infinite.SixWindowForcing.algebra)) (And.left (And.right (And.right D5.S1.Digit.Infinite.SixWindowForcing.algebra)))
+local notation "g_relation" => (And.left D5.S1.Digit.Infinite.SixWindowForcing.algebra)
+local notation "g_eq" => (And.left (And.right (And.right (And.right D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations))))
+local notation "t_sq" => (And.right (And.right (And.right (And.right D5.S1.Digit.Infinite.SixWindowForcing.algebra))))
+local notation "t_linear" => (And.left (And.right (And.right (And.right D5.S1.Digit.Infinite.SixWindowForcing.algebra))))
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
