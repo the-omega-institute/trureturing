@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tarfile
 import unittest
+from unittest.mock import patch
 import zipfile
 
 import test_reuse
@@ -305,14 +306,42 @@ class LocalEntryTests(SeedGenerationTests, unittest.TestCase):
         }) + '\n')
 
     def git_commit(self, message, *, empty=False):
+        command = ['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                   '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                   'commit']
         if empty:
-            subprocess.run(['git', '-C', str(self.root), 'commit', '--allow-empty', '-qm', message],
+            subprocess.run([*command, '--allow-empty', '-qm', message],
                            check=True, capture_output=True)
         else:
             subprocess.run(['git', '-C', str(self.root), 'add', '-A'], check=True, capture_output=True)
-            subprocess.run(['git', '-C', str(self.root), 'commit', '-qm', message],
+            subprocess.run([*command, '-qm', message],
                            check=True, capture_output=True)
         return subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'], text=True).strip()
+
+    def test_history_fixture_commits_without_ambient_identity_or_signing(self):
+        global_config = self.root / '.git/fixture-global.config'
+        global_config.write_text('[user]\n\tuseConfigOnly = true\n[commit]\n\tgpgsign = true\n')
+        environment = dict(os.environ, GIT_CONFIG_GLOBAL=str(global_config),
+                           GIT_CONFIG_SYSTEM='/dev/null', GIT_CONFIG_COUNT='0')
+        for name in ('GIT_AUTHOR_NAME', 'GIT_AUTHOR_EMAIL', 'GIT_COMMITTER_NAME',
+                     'GIT_COMMITTER_EMAIL', 'EMAIL', 'GIT_CONFIG_PARAMETERS'):
+            environment.pop(name, None)
+        with patch.dict(os.environ, environment, clear=True):
+            for empty in (True, False):
+                with self.subTest(empty=empty):
+                    if not empty:
+                        self.fixture.write('D5/A.lean', 'def a := 2\n')
+                    try:
+                        self.git_commit('isolated fixture history', empty=empty)
+                    except subprocess.CalledProcessError as error:
+                        self.fail('[FAIL] fixture_history_commit_is_independent_of_ambient_git: '
+                                  + error.stderr.decode())
+                    identity = subprocess.check_output(
+                        ['git', '-C', str(self.root), 'log', '-1', '--format=%an <%ae>|%cn <%ce>'],
+                        text=True).strip()
+                    self.assertEqual(identity,
+                        'Fixture <fixture@example.invalid>|Fixture <fixture@example.invalid>',
+                        '[FAIL] fixture_history_uses_fixture_author_and_committer')
 
     def release_stub(self, producer, *, failure=None):
         sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
@@ -608,8 +637,14 @@ esac
     def test_stale_seed_release_download_failure_keeps_local_and_continues(self):
         self.stale_release_fixture(fetch_failure=19)
         result = self.run_entry()
-        self.assertNotEqual(result.returncode, 0)
+        self.assertTrue(self.calls, '[FAIL] download_failure_continues_incrementally')
+        self.assertEqual(result.returncode, 2, '[FAIL] download_failure_returns_make_failure: '
+                         + result.stdout + result.stderr)
+        self.assertIn('LEAN_INSPECTOR_FAILED phase=report exit=23', result.stderr,
+                      '[FAIL] download_failure_returns_lake_exit')
         self.assertEqual(self.calls[0], 'ensure')
+        self.assertTrue(any(call.startswith('lake ') for call in self.calls),
+                        '[FAIL] download_failure_reaches_lake')
         self.assertNotIn('fetch ', '\n'.join(self.calls))
         self.assertIn('"action":"keep"', result.stdout)
         self.assertIn('"reason":"release-download-failed"', result.stdout)
