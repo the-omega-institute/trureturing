@@ -54,6 +54,23 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Fact]
+    public void NativeSignalErrorsDoNotPrematurelyEndOwnedSettlement()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "clean-lanes", "directory", "SignalErrorTests.test_delivery_error",
+                "SignalErrorTests.test_observation_error"],
+            root, TimeSpan.FromSeconds(180), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
     public void FixtureDisposalWaitsForCompleteOutcomeAndNativeSettlement()
     {
         if (OperatingSystem.IsWindows()) return;

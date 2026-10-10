@@ -289,6 +289,32 @@ class CommandLifetimeTests(NativeFixture):
         self.check_lifetime("launcher")
 
 
+class SignalErrorTests(CommandLifetimeTests):
+    def check_signal_error(self, operation):
+        native_killpg = os.killpg
+        injected = []
+        def killpg(group, signum):
+            if not injected and ((operation == "signal" and signum == signal.SIGTERM)
+                                 or (operation == "probe" and signum == 0)):
+                injected.append((group, signum))
+                raise PermissionError(1, "injected owned-group signal/probe error")
+            return native_killpg(group, signum)
+        os.killpg = killpg
+        try:
+            self.check_lifetime("launcher")
+        finally:
+            os.killpg = native_killpg
+        self.assertEqual(1, len(injected))
+        print(json.dumps(dict(event="native_signal_error_assertions", operation=operation,
+                              settled=True, independent_survived=True)), flush=True)
+
+    def test_delivery_error(self):
+        self.check_signal_error("signal")
+
+    def test_observation_error(self):
+        self.check_signal_error("probe")
+
+
 class FixtureDisposalTests(NativeFixture):
     def test_completed_outcomes_and_finalizers(self):
         for publication in ("immediate", "deferred"):

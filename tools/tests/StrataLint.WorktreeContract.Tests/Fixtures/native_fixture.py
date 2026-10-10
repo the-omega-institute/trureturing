@@ -115,6 +115,7 @@ class NativeFixture(unittest.TestCase):
             expired = False
             interrupted = None
             before = []
+            signal_errors = []
             settlement_error = None
             offsets = [0, 0]
             decoders = [codecs.getincrementaldecoder("utf-8")(errors="replace") for _ in offsets]
@@ -168,6 +169,8 @@ class NativeFixture(unittest.TestCase):
                             os.killpg(process.pid, signum)
                         except ProcessLookupError:
                             break
+                        except OSError as error:
+                            signal_errors.append(dict(operation="signal", signal=signum, error=repr(error)))
                         until = time.monotonic() + 5
                         while time.monotonic() < until:
                             process.poll()
@@ -175,6 +178,10 @@ class NativeFixture(unittest.TestCase):
                                 os.killpg(process.pid, 0)
                             except ProcessLookupError:
                                 break
+                            except OSError as error:
+                                observation = dict(operation="probe", signal=signum, error=repr(error))
+                                if observation not in signal_errors:
+                                    signal_errors.append(observation)
                             select.select([], [], [], 0.05)
                         else:
                             continue
@@ -190,6 +197,8 @@ class NativeFixture(unittest.TestCase):
                 except BaseException as error:
                     self.commands_settled = False
                     settlement_error = repr(error)
+                finally:
+                    evidence["signal_errors"] = signal_errors
             settlement_elapsed = time.monotonic() - started - execution_elapsed
             emit_partial(final=True)
             stdout.seek(0)
