@@ -22,7 +22,8 @@ The source is reference input; it was not independently formalized here.
 
 ## The collective budget
 
-Assume that $c$ is the least integer violating Robin's inequality. For
+Assume that $c>5040$ is the least integer violating Robin's strict inequality
+in that range. For
 
 $$
 D(n)=\sum_{p\mid n}-\log\bigl(1-p^{-\nu_p(n)-1}\bigr),
@@ -70,8 +71,9 @@ claimed.
 The result is multiplicative: it uses $\nu_p(c)$, initial prime support and
 the same integer's divisor-sum factorization. A five-window address
 $[null,2,3,2\,5,5]$ records additive Fibonacci inclusion and does not imply
-any of these $p$-adic valuations. Applying the criterion to a FIB-generated
-integer would require a new theorem transporting its address to the complete
-prime-exponent vector and preserving the least-counterexample hypotheses.
-The card therefore records a stronger conditional obstruction and a precise
-remaining interface, rather than a new FIB estimate.
+any of these $p$-adic valuations. Existing modular observations can test the
+necessary divisibility conditions on the same generated integer; see the
+[combined-cutoff application](cavalcante2026blockexchange.md#application-through-the-existing-fib-crt-interface).
+Such a filter does not recover the complete exponent vector, establish
+superabundance, or pay the signed Robin tail. The source supplies stronger
+conditional valuation inputs, rather than a new FIB estimate.
