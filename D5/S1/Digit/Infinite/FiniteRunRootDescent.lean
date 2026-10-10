@@ -36,8 +36,6 @@ private theorem geometric_crossing (a h : ℝ) (ha : 0 < a) (hh : 0 ≤ h)
       (n : ℝ) = ∑ _j ∈ range n, (1 : ℝ) := by simp
       _ ≤ ∑ j ∈ range n, h ^ j := sum_le_sum fun j _ => one_le_pow₀ hge
 
-#print axioms geometric_crossing
-
 noncomputable def numerator (k : ℕ) (x : ℝ) : ℝ :=
   ∑ r ∈ range k, x ^ (26 + 20 * r)
 noncomputable def cap (k : ℕ) (x : ℝ) : ℝ := numerator k x / (1 - x ^ 6)
