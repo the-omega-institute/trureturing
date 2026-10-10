@@ -22,6 +22,7 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+/-- Exact optimal embedding as a predicate on the distinguished label of one law. -/
 def observation : ∀ (_ : Unit) (m : ℕ), (Fin m → ℝ) → Fin m → Prop :=
   fun _ m p => _root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.HasOptimalEmbedding m p
 
@@ -61,7 +62,7 @@ def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAt
     refine ⟨2, p, (fun _ => -1), ?_⟩
     intro h
     have he := congrFun h k
-    exact bad (he ▸ good)
+    exact bad (Eq.mp he good)
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.embedding_result) (Realization signature) Unit Unit where

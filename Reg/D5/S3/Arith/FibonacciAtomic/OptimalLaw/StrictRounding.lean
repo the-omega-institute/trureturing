@@ -22,6 +22,7 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+/-- Strict rounding as a predicate on the distinguished label of one law. -/
 def observation : ∀ (_ : Unit) (m : ℕ), (Fin m → ℝ) → Fin m → Prop :=
   fun _ m p => StrictlyRoundedLaw m p
 
@@ -66,7 +67,7 @@ def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAt
     refine ⟨2, (fun _ => 0), q, ?_⟩
     intro h
     have he := congrFun h 0
-    exact bad (he ▸ good)
+    exact bad (Eq.mp he good)
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.result) (Realization signature) Unit Unit where
@@ -111,6 +112,7 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+/-- Grid membership as a predicate on the resolution of one real coordinate. -/
 def observation : ∀ (_ : Unit) (_ : Unit), ℝ → ℕ → Prop :=
   fun _ _ x => OnGrid x
 def actual : Realization signature := realize signature observation (fun e => nomatch e)
@@ -143,7 +145,7 @@ def proof_record : Registration arena (type_of% (@_root_.D5.S3.Arith.FibonacciAt
     refine ⟨(), 0, 1 / 2, ?_⟩
     intro h
     have he := congrFun h 0
-    exact bad (he ▸ good)
+    exact bad (Eq.mp he good)
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.OptimalLaw.StrictRounding.grid_up) (Realization signature) Unit Unit where
