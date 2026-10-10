@@ -532,52 +532,7 @@ private lemma periodicWord_cover (u : List Bool) (hn : 0 < u.length) (i : ℤ) :
   · omega
   · rw [add_mul,one_mul]
     omega
-private lemma weak_append (K : ℕ) (q : ℝ) (as bs : List Return) (z : ℝ)
-    (ha : Statement.weak K q as z)
-    (hb : Statement.weak K q bs (execute false as z)) :
-    Statement.weak K q (as++bs) z := by
-  induction as generalizing z with
-  | nil => exact hb
-  | cons a as ih =>
-      rw [weak_run] at ha
-      rw [List.cons_append,weak_run]
-      exact ⟨ha.1,ha.2.1,ih _ ha.2.2 hb⟩
 /-- All finite codeword lists share the strengthened guard for every legal cut state. -/
-private lemma finite_reset_weak_state
-    (anchor : Bool) (K M N : ℕ) (d : ℝ) (hK : 2 ≤ K) (hM : 1 ≤ M)
-    (hreset : initial false anchor < Statement.B M)
-    (vs : List (List Return))
-    (hvs : ∀ v∈vs, v∈Statement.codebook anchor K N d)
-    (z : ℝ) (hz : A false ≤ z) (hh : z ≤ h false) :
-    Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
-      ((vs.map (fun v => Statement.reset M hM::v)).flatten) z := by
-  have hp := parameters false
-  have hA := A_nonneg
-  induction vs generalizing z with
-  | nil => trivial
-  | cons v vs ih =>
-      have hv := hvs v (by simp)
-      have hr := run_bounds false (Statement.reset M hM) z (hA.trans hz) hh
-      have hresetz : Statement.B M  ≤  run false (Statement.reset M hM) z := by
-        rw [run_closed]
-        exact reset_lifts M z hz
-      have hweak := weak_gain K d (Statement.B M-initial false anchor)
-        (initial false anchor) (run false (Statement.reset M hM) z) v
-        (sub_pos.mpr hreset) (by linarith) hv.2
-      have hweight : Statement.weight v=N := hv.1
-      rw [hweight] at hweak
-      have hw : Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
-          (Statement.reset M hM::v) z := by
-        rw [weak_run]
-        refine ⟨by change 1 ≤ K; omega,?_,hweak⟩
-        intro heq
-        change 1=K at heq
-        omega
-      have hexf := execute_floor false (Statement.reset M hM::v) z hz hh
-      have hexh := (execute_bounds false (Statement.reset M hM::v) z (hA.trans hz) hh).2
-      have htail := ih (fun x hx => hvs x (by simp [hx])) _ hexf hexh
-      simp only [List.map_cons,List.flatten_cons]
-      exact weak_append K _ _ _ z hw htail
 private lemma letters_flatten (vs : List (List Return)) :
     Statement.letters vs.flatten = (vs.map Statement.letters).flatten := by
   induction vs with
@@ -630,9 +585,13 @@ private theorem periodic_reset_word_membership
         chi^(K-1)*d+chi^(K-1)*(Statement.B M-initial false anchor)*g^N  ≤
           stateRec (periodicWord u) i := by
     have hg (i : ℤ) := periodicWord_cover u hlen i
+    have hvs' : ∀ v∈vs,
+        Statement.weight v=N ∧ Statement.weak K d v (initial false anchor) := by
+      intro v hv
+      simpa [Statement.codebook, initial] using hvs v hv
     have hlocal (t : ℤ) := weak_word_local_guard (periodicWord u) (t*(u.length:ℤ)) K
       (d+(Statement.B M-initial false anchor)*g^N) exec
-      (finite_reset_weak_state anchor K M N d hK hM hreset vs hvs _ (hfloor t)
+      (finite_reset_weak_state anchor K M N d hK hM hreset vs hvs' _ (hfloor t)
         (stateRec_interval (periodicWord u) _).2)
       (hprev t) (periodicWord_block u t)
     constructor

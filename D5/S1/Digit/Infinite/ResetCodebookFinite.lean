@@ -494,59 +494,60 @@ theorem weak_gain (K : ℕ) (d delta x y : ℝ) (as : List Return)
         simp only [Statement.weight,actualWeight,List.map_cons,List.sum_cons,pow_add]
         ring
       exact he ▸ ht
+theorem weak_append (K : ℕ) (q : ℝ) (as bs : List Return) (z : ℝ)
+    (ha : Statement.weak K q as z)
+    (hb : Statement.weak K q bs (execute false as z)) :
+    Statement.weak K q (as++bs) z := by
+  induction as generalizing z with
+  | nil => exact hb
+  | cons a as ih =>
+      rw [weak_run] at ha
+      rw [List.cons_append,weak_run]
+      exact ⟨ha.1,ha.2.1,ih _ ha.2.2 hb⟩
+theorem finite_reset_weak_state
+    (anchor : Bool) (K M N : ℕ) (d : ℝ) (hK : 2 ≤ K) (hM : 1 ≤ M)
+    (hreset : initial false anchor < Statement.B M)
+    (vs : List (List Return))
+    (hvs : ∀ v∈vs, Statement.weight v=N ∧ Statement.weak K d v (initial false anchor))
+    (z : ℝ) (hz : A false ≤ z) (hh : z ≤ h false) :
+    Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
+      ((vs.map (fun v => Statement.reset M hM::v)).flatten) z := by
+  have hp := parameters false
+  have hA : 0 ≤ A false := by
+    unfold A
+    exact mul_nonneg (by linarith [hp.2.1]) hp.2.2.2.2.1.le
+  induction vs generalizing z with
+  | nil => trivial
+  | cons v vs ih =>
+      have hv := hvs v (by simp)
+      have hr := run_bounds false (Statement.reset M hM) z (hA.trans hz) hh
+      have hresetz : Statement.B M ≤ run false (Statement.reset M hM) z := by
+        rw [run_closed]
+        exact reset_lifts M z hz
+      have hweak := weak_gain K d (Statement.B M-initial false anchor)
+        (initial false anchor) (run false (Statement.reset M hM) z) v
+        (sub_pos.mpr hreset) (by linarith) hv.2
+      have hweight : Statement.weight v=N := hv.1
+      rw [hweight] at hweak
+      have hw : Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
+          (Statement.reset M hM::v) z := by
+        rw [weak_run]
+        refine ⟨by change 1 ≤ K; omega,?_,hweak⟩
+        intro heq
+        change 1=K at heq
+        omega
+      have hexf := execute_floor false (Statement.reset M hM::v) z hz hh
+      have hexh := (execute_bounds false (Statement.reset M hM::v) z (hA.trans hz) hh).2
+      have htail := ih (fun x hx => hvs x (by simp [hx])) _ hexf hexh
+      simp only [List.map_cons,List.flatten_cons]
+      exact weak_append K _ _ _ z hw htail
 private theorem reset_concatenation_guard (anchor : Bool) (K M N : ℕ) (d : ℝ) (hK : 2 ≤ K)
     (hM : 1 ≤ M) (hreset : initial false anchor < resetFloor M)
     (vs : List (List Return)) (hvs : ∀ v∈vs, Statement.weight v=N ∧ Statement.weak K d v (initial false anchor)) :
     Statement.weak K (d+(resetFloor M-initial false anchor)*g^N)
       ((vs.map (fun v => Statement.reset M hM::v)).flatten) (initial false anchor) := by
-  have hp := parameters false
-  have hA : 0 ≤ A false := by unfold A; exact mul_nonneg (by linarith [hp.2.1]) hp.2.2.2.2.1.le
-  have hg := g_bounds
-  have hg0 : 0 ≤ g := by linarith
-  have hd : 0 < resetFloor M-initial false anchor := sub_pos.mpr hreset
-  have aux : ∀ (ws : List (List Return)) (z : ℝ),
-      (∀ v∈ws, Statement.weight v=N ∧ Statement.weak K d v (initial false anchor)) →
-      A false ≤ z → z ≤ h false →
-      Statement.weak K (d+(resetFloor M-initial false anchor)*g^N)
-        ((ws.map (fun v => Statement.reset M hM::v)).flatten) z := by
-    intro ws
-    induction ws with
-    | nil => intro z _ _ _; trivial
-    | cons v ws ih =>
-      intro z hv hz hz1
-      have hvr := hv v (by simp)
-      have hzs := run_bounds false (Statement.reset M hM) z (hA.trans hz) hz1
-      have hzb : resetFloor M ≤ run false (Statement.reset M hM) z := by
-        rw [run_closed]
-        exact reset_lifts M z hz
-      have hvboost := weak_gain K d (resetFloor M-initial false anchor)
-        (initial false anchor) (run false (Statement.reset M hM) z) v hd (by linarith) hvr.2
-      have hvw : totalWeight v=N := hvr.1
-      rw [hvw] at hvboost
-      have hfinish := execute_bounds false v _ hzs.1 hzs.2
-      have hfloor := execute_floor false v _ (run_floor false (Statement.reset M hM) z (hA.trans hz) hz1) hzs.2
-      have hrest := ih _ (fun u hu => hv u (by simp [hu])) hfloor hfinish.2
-      have happ : ∀ (as bs : List Return) (q : ℝ),
-          Statement.weak K (d+(resetFloor M-initial false anchor)*g^N) as q →
-          Statement.weak K (d+(resetFloor M-initial false anchor)*g^N) bs (execute false as q) →
-          Statement.weak K (d+(resetFloor M-initial false anchor)*g^N) (as++bs) q := by
-        intro as
-        induction as with
-        | nil => intro bs q _ hb; exact hb
-        | cons a as iha =>
-          intro bs q ha hb
-          simp only [List.cons_append]
-          rw [weak_run] at ha ⊢
-          exact ⟨ha.1,ha.2.1,iha bs (run false a q) ha.2.2 hb⟩
-      change Statement.weak K _ (Statement.reset M hM::(v++_)) z
-      rw [weak_run]
-      refine ⟨by change 1 ≤ K; omega,?_,happ _ _ _ hvboost hrest⟩
-      intro heq
-      -- The theorem needs K>=2: a reset is low, not a guarded high return.
-      exfalso
-      change 1=K at heq
-      omega
-  exact aux vs (initial false anchor) hvs (initial_floor false anchor) (initial_bounds false anchor).2
+  exact finite_reset_weak_state anchor K M N d hK hM hreset vs hvs
+    (initial false anchor) (initial_floor false anchor) (initial_bounds false anchor).2
 theorem A_nonneg : 0 ≤ A false := by
   have hp := parameters false
   unfold A
