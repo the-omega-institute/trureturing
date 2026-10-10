@@ -20,12 +20,11 @@ internal sealed class CommonPredictionExteriorCapacityDocument : IScribeDocument
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The external teacher discrepancy fits inside every actual reservoir mass class.", H("Exterior Discrepancy and Reservoir Capacity"), Blocks(
+        "The majority selector gives an exact external discrepancy in every rare-count class.", H("Exterior Discrepancy and Coefficients"), Blocks(
             Paragraph(Text("For each reduced word, exteriorSelector selects a label with maximal total teacher votes. Outside the reservoir, Ez(m,z,i) is the sum of left-teacher error minus right-teacher error over words with z rare symbols. The subtraction compares the two teachers at the same prefix coordinate i.")),
             Paragraph(Text("Write L(m) for the sum of the positive prefix slices of length m-1 through floor(m/3). The complete exterior discrepancy polynomial is 2 X squared times (2+X), multiplied by ((2+3X)L(m) minus 4((2+3X)^(m-1)-(2+X)^(m-1))). Its coefficient at z is Ez(m,z,i), independently of i.")),
             Paragraph(Text("Positive prefix fibers split according to one endpoint bit. Coin balance halves each fiber uniformly. Pairing the anchor configurations then gives the same signed discrepancy for each teacher. The zero-prefix fiber cancels separately.")),
-            Paragraph(Text("The binomial weights choose(j,k) 2^k have total 3^j and first moment 2j 3^(j-1). A tail estimate at floor(m/3), together with tail growth, bounds the discrepancy coefficients between minus the reservoir coefficients and the reservoir coefficients. The cases m=1 and m=2 are included.")),
-            Paragraph(Text("The reservoir and discrepancy coefficients are both twice integers. Their half difference is nonnegative and does not exceed the full reservoir size. Therefore every positive m and every z admit an integer split with exterior discrepancy plus twice the split size minus the reservoir size equal to zero.")),
+            Paragraph(Text("The majority selector compares all three vote counts and uses a parity or anchor coin on tied choices. Its regions cover all prefix counts. The reservoir and discrepancy polynomials have even integer coefficients; coefficient extraction identifies their halves with the capacity sequences.")),
             Describe.Lean(DescribeId.Create("exterior-capacity"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionExteriorCapacity.actual_ez_identity"),
                 H("Actual exterior discrepancy coefficients"), StatementSource.FromAuthor(ResultFormula()),

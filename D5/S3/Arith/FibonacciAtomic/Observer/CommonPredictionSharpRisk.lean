@@ -1,30 +1,245 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionSharpRisk
    generality: G
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Observer/CommonPredictionSharpRisk
-   mirror-E: none(waiver:unbounded-symbolic-proof)
+   mirror - B: D5 / B / S3 / Arith / FibonacciAtomic / Observer / CommonPredictionSharpRisk
+   mirror - E: none(waiver:unbounded - symbolic - proof)
    anchors: []
    utility: none
-   digest: The sharp simultaneous prediction risk for the two-layer priority-teacher family. -/
-
-import D5.S3.Arith.FibonacciAtomic.Observer.CommonPredictionSelector
+   digest: The sharp simultaneous prediction risk for the two - layer priority - teacher family. -/
+import D5.S3.Arith.FibonacciAtomic.Observer.CommonPredictionExteriorCapacity
 import Mathlib.Algebra.Polynomial.Derivative
 import Mathlib.Logic.Equiv.Set
 import Mathlib.Logic.Equiv.Sum
-
-
 /-!
-The common two-layer priority-teacher problem on independent complete windows.
-All prefix lengths and all rare-count classes are included.
+The common two - layer priority - teacher problem on independent complete windows.
+All prefix lengths and all rare - count classes are included.
 -/
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Arith.FibonacciAtomic.CommonPrediction
-
 attribute [local instance] Classical.propDecidable
-
-
+section
+open _root_.D5.S3.Arith.FibonacciAtomic
+open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (first last)
+open _root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher (Input teacher)
+open scoped BigOperators Polynomial
+namespace CommonSelector
+noncomputable section
+local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
+open ExteriorCounts
+open WordCounts (rareN)
+/-- The actual teacher label indexed by layer and prefix position. -/
+def label {m : ℕ} (side : Bool) (i : Fin m) (x : Input (m + 3)) : Fin 3 :=
+  if side then teacher (TeacherLabels.rightRoles i) x else teacher (TeacherLabels.leftRoles i) x
+private def outsideCount {m : ℕ} (z : ℕ) (side : Bool) (i : Fin m) : ℤ :=
+  ∑ x : Input (m + 3), if ¬ReservoirWords.isReservoir x ∧ rareN x = z then
+    MajorityGeometry.err (label side i x) (exteriorSelector x) else 0
+private def wordPerm {m : ℕ} (σ : Equiv.Perm (Fin m)) : Input (m + 3) ≃ Input (m + 3) :=
+  (Fin.appendEquiv m 3).symm.trans
+    ((Equiv.prodCongr ((Equiv.arrowCongr σ.symm (Equiv.refl W))) (Equiv.refl (Fin 3 → W))).trans
+      (Fin.appendEquiv m 3))
+private lemma word_perm_append {m : ℕ} (σ : Equiv.Perm (Fin m)) (p : Fin m → W) (a : Fin 3 → W) :
+    wordPerm σ (Fin.append p a) = Fin.append (p ∘ σ) a := by
+  change (Fin.appendEquiv m 3)
+    ((Equiv.prodCongr ((Equiv.arrowCongr σ.symm (Equiv.refl W))) (Equiv.refl _))
+    ((Fin.appendEquiv m 3).symm ((Fin.appendEquiv m 3) (p,a)))) = _
+  rw [Equiv.symm_apply_apply]
+  rfl
+private lemma word_perm_views {m : ℕ} (σ : Equiv.Perm (Fin m)) (x : Input (m + 3)) :
+    wordPerm σ x = Fin.append ((pref x) ∘ σ) ![q x,r x,v x] := by
+  conv_lhs => rw [←append_views x, word_perm_append]
+private lemma rare_perm {m : ℕ} (σ : Equiv.Perm (Fin m)) (x : Input (m + 3)) :
+    rareN (wordPerm σ x) = rareN x := by
+  rw [word_perm_views]
+  exact (ReservoirWords.actual_prefix_perm (pref x) ![q x,r x,v x] σ).1.trans
+    (congrArg rareN (append_views x))
+private lemma res_perm {m : ℕ} (σ : Equiv.Perm (Fin m)) (x : Input (m + 3)) :
+    ReservoirWords.isReservoir (wordPerm σ x) ↔ ReservoirWords.isReservoir x := by
+  rw [word_perm_views]
+  simpa only [append_views] using (ReservoirWords.actual_prefix_perm (pref x) ![q x,r x,v x] σ).2
+private lemma selector_perm {m : ℕ} (σ : Equiv.Perm (Fin m)) (x : Input (m + 3)) :
+    exteriorSelector (wordPerm σ x) = exteriorSelector x := by
+  rw [word_perm_views]
+  simpa only [append_views] using exterior_prefix_permutation (pref x) (q x) (r x) (v x) σ
+private lemma label_swap {m : ℕ} (i j : Fin m) (side : Bool) (x : Input (m + 3)) :
+    label side i (wordPerm (Equiv.swap i j) x) = label side j x := by
+  have ha := TeacherLabels.actual_left_label (pref x) ![q x,r x,v x] j
+  have hb := TeacherLabels.actual_right_label (pref x) ![q x,r x,v x] j
+  rw [append_views] at ha hb
+  rw [word_perm_views]
+  cases side
+  · simpa only [label, Bool.false_eq_true, ↓reduceIte, TeacherLabels.actual_left_label,
+      Function.comp_apply, Equiv.swap_apply_left] using ha.symm
+  · simpa only [label, Bool.true_eq, ↓reduceIte, TeacherLabels.actual_right_label,
+      Function.comp_apply, Equiv.swap_apply_left] using hb.symm
+private lemma outside_count_equal {m : ℕ} (z : ℕ) (side : Bool) (i j : Fin m) :
+    outsideCount z side i = outsideCount z side j := by
+  let F : Input (m + 3) → ℤ := fun x => if ¬ReservoirWords.isReservoir x ∧ rareN x = z then
+    MajorityGeometry.err (label side i x) (exteriorSelector x) else 0
+  calc
+    outsideCount z side i = ∑ x, F (wordPerm (Equiv.swap i j) x) :=
+      (Equiv.sum_comp (wordPerm (Equiv.swap i j)) F).symm
+    _ = outsideCount z side j := by
+      apply Finset.sum_congr rfl
+      intro x hx
+      simp only [F, rare_perm, res_perm, selector_perm, label_swap]
+end
+end CommonSelector
+end
+section
+open _root_.D5.S3.Arith.FibonacciAtomic
+open _root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher (Input teacher)
+open scoped BigOperators Polynomial
+namespace CommonSelector
+noncomputable section
+local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
+open ExteriorCounts
+open WordCounts (rareN)
+private lemma actual_flat {m : ℕ} (x : Input (m
+  + 3)) (hx : ReservoirWords.isReservoir x) (i : Fin m) :
+    teacher (TeacherLabels.leftRoles i) x = 0 ∧ teacher (TeacherLabels.rightRoles i) x = 2 := by
+  have hres : ReservoirWords.qok (q x) ∧ r x = .high ∧ ReservoirWords.vok (v x) := hx
+  have hq : q x = .zero ∨ q x = .middle ∨ q x = .high := by
+    simpa [ReservoirWords.qok] using hres.1
+  have hv : v x = .low ∨ v x = .ends := by simpa [ReservoirWords.vok] using hres.2.2
+  have hword : Fin.append (pref x) ![q x,.high,v x] = x := by
+    rw [←hres.2.1]
+    exact append_views x
+  rw [←hword]
+  exact TeacherLabels.actual_reservoir_flat (pref x) (q x) (v x) hq hv i
+private lemma reservoir_majority {m : ℕ} (x : Input (m + 3)) (hx : ReservoirWords.isReservoir x)
+    (c d : Fin 3) (hd : d = 0 ∨ d = 2) : actualVotes x c ≤ actualVotes x d := by
+  have hleft : ∀ i, teacher (TeacherLabels.leftRoles i) x = 0 := fun i => (actual_flat x hx i).1
+  have hright : ∀ i, teacher (TeacherLabels.rightRoles i) x = 2 := fun i => (actual_flat x hx i).2
+  simp only [actualVotes]
+  simp_rw [hleft, hright]
+  rcases hd with rfl | rfl <;> fin_cases c <;> simp
+private def Rset (m z : ℕ) : Finset (Input (m + 3)) :=
+  Finset.univ.filter (fun x => ReservoirWords.isReservoir x ∧ rareN x = z)
+private lemma rset_card (m z : ℕ) : (Rset m z).card = ReservoirWords.Nz m z := by
+  have hc := Fintype.card_congr (Equiv.subtypeSubtypeEquivSubtypeInter
+    (@ReservoirWords.isReservoir m) (fun x : Input (m + 3) => rareN x = z))
+  change ReservoirWords.Nz m z = _ at hc
+  rw [Fintype.card_subtype] at hc
+  exact hc.symm
+private lemma exists_split (m z : ℕ) (hm : 0 < m) :
+    ∃ S : Finset (Input (m + 3)), S ⊆ Rset m z ∧
+      (Eformula m).coeff z + 2 * (S.card:ℤ) - (ReservoirWords.Nz m z:ℤ) = 0 := by
+  obtain ⟨t,ht,hbal⟩ := Capacity.integer_split_positive m z hm
+  have hN := CapacityCoefficients.n_coeff m z hm
+  have hE := CapacityCoefficients.e_coeff m z
+  have hc : t ≤ (Rset m z).card := by
+    rw [rset_card]
+    have hh : (t:ℤ) ≤ (ReservoirWords.Nz m z:ℤ) := by omega
+    exact_mod_cast hh
+  obtain ⟨S,hS,hcard⟩ := Finset.exists_subset_card_eq hc
+  refine ⟨S,hS,?_⟩
+  rw [hcard]
+  omega
+private def classifier {m : ℕ} (S : ℕ → Finset (Input (m + 3))) (x : Input (m + 3)) : Fin 3 :=
+  if ReservoirWords.isReservoir x then if x ∈ S (rareN x) then 2 else 0 else exteriorSelector x
+private lemma classifier_majority {m : ℕ} (S : ℕ → Finset (Input (m + 3)))
+    (x : Input (m + 3)) (c : Fin 3) : actualVotes x c ≤ actualVotes x (classifier S x) := by
+  by_cases hr : ReservoirWords.isReservoir x
+  · apply reservoir_majority x hr c
+    by_cases hs : x ∈ S (rareN x) <;> simp [classifier, hr, hs]
+  · simpa only [classifier, if_neg hr] using exterior_majority x c
+/-- Integer error count of one classifier in a specified rare-symbol class. -/
+def errorCount {m : ℕ} (z : ℕ) (side : Bool) (i : Fin m)
+    (f : Input (m + 3) → Fin 3) : ℤ :=
+  ∑ x : Input (m + 3), if rareN x = z then MajorityGeometry.err (label side i x) (f x) else 0
+private lemma indicator_sum {m : ℕ} (S : Finset (Input (m + 3))) :
+    (∑ x : Input (m + 3), if x∈S then (1:ℤ) else 0) = (S.card:ℤ) := by
+  rw [←Finset.sum_filter]
+  simp
+private lemma left_count {m : ℕ} (S : ℕ → Finset (Input (m + 3)))
+    (hS : ∀ z, S z ⊆ Rset m z) (z : ℕ) (i : Fin m) :
+    errorCount z false i (classifier S) = outsideCount z false i + (S z).card := by
+  have hpoint (x : Input (m + 3)) :
+      (if rareN x = z then MajorityGeometry.err (label false i x) (classifier S x) else 0) =
+      (if ¬ReservoirWords.isReservoir x ∧ rareN x = z then
+        MajorityGeometry.err (label false i x) (exteriorSelector x) else 0) +
+      (if x∈S z then (1:ℤ) else 0) := by
+    have hin : x∈S z → ReservoirWords.isReservoir x ∧ rareN x = z := by
+      intro hx
+      exact (Finset.mem_filter.mp (hS z hx)).2
+    by_cases hz : rareN x = z
+    · by_cases hr : ReservoirWords.isReservoir x
+      · have hf := (actual_flat x hr i).1
+        by_cases hs : x∈S z <;> simp [label, classifier, hz, hr, hs, hf, MajorityGeometry.err]
+      · have hs : x∉S z := fun hx => hr (hin hx).1
+        simp [label, classifier, hz, hr, hs]
+    · have hs : x∉S z := fun hx => hz (hin hx).2
+      simp [hz, hs]
+  unfold errorCount outsideCount
+  rw [Finset.sum_congr rfl (fun x _ => hpoint x), Finset.sum_add_distrib, indicator_sum]
+private lemma right_count {m : ℕ} (S : ℕ → Finset (Input (m + 3)))
+    (hS : ∀ z, S z ⊆ Rset m z) (z : ℕ) (i : Fin m) :
+    errorCount z true i (classifier S) = outsideCount z true i +
+      (ReservoirWords.Nz m z:ℤ) - (S z).card := by
+  have hpoint (x : Input (m + 3)) :
+      (if rareN x = z then MajorityGeometry.err (label true i x) (classifier S x) else 0) =
+      (if ¬ReservoirWords.isReservoir x ∧ rareN x = z then
+        MajorityGeometry.err (label true i x) (exteriorSelector x) else 0) +
+      (if x∈Rset m z then (1:ℤ) else 0) - (if x∈S z then (1:ℤ) else 0) := by
+    have hin : x∈S z → ReservoirWords.isReservoir x ∧ rareN x = z := by
+      intro hx
+      exact (Finset.mem_filter.mp (hS z hx)).2
+    by_cases hz : rareN x = z
+    · by_cases hr : ReservoirWords.isReservoir x
+      · have hf := (actual_flat x hr i).2
+        by_cases hs : x∈S z <;> simp [label, classifier, hz, hr, hs, hf, Rset, MajorityGeometry.err]
+      · have hs : x∉S z := fun hx => hr (hin hx).1
+        simp [label, classifier, hz, hr, hs, Rset]
+    · have hs : x∉S z := fun hx => hz (hin hx).2
+      simp [hz, hs, Rset]
+  unfold errorCount outsideCount
+  rw [Finset.sum_congr rfl (fun x _ => hpoint x), Finset.sum_sub_distrib,
+    Finset.sum_add_distrib, indicator_sum, indicator_sum, rset_card]
+end
+end CommonSelector
+end
+section
+open _root_.D5.S3.Arith.FibonacciAtomic
+open _root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher (Input)
+open scoped BigOperators
+namespace CommonSelector
+noncomputable section
+local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
+open ExteriorCounts
+open WordCounts (rareN)
+private lemma outside_difference {m : ℕ} (z : ℕ) (i : Fin m) :
+    outsideCount z false i - outsideCount z true i = Ez m z i := by
+  unfold outsideCount Ez
+  rw [←Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro x hx
+  by_cases h : ¬ReservoirWords.isReservoir x ∧ rareN x = z <;> simp [h, label]
+private def UniformMassBalanced : Prop :=
+  ∀ m : ℕ, 0 < m → ∃ f : Input (m + 3) → Fin 3,
+    (∀ x c, actualVotes x c ≤ actualVotes x (f x)) ∧
+    (∀ z, ∀ i j : Fin m,
+      errorCount z false i f = errorCount z false j f ∧
+      errorCount z false i f = errorCount z true j f)
+/-- One deterministic pointwise majority classifier balances all teachers in every rare-count
+  class. -/
+private theorem uniform_mass_balanced : UniformMassBalanced := by
+  intro m hm
+  choose S hS hbal using fun z => exists_split m z hm
+  refine ⟨classifier S, classifier_majority S, ?_⟩
+  have hcross (z : ℕ) (i : Fin m) :
+      errorCount z false i (classifier S) = errorCount z true i (classifier S) := by
+    rw [left_count S hS, right_count S hS]
+    have he := actual_ez_identity m z hm i
+    have hd := outside_difference z i
+    have hb := hbal z
+    omega
+  intro z i j
+  have hleft : errorCount z false i (classifier S) = errorCount z false j (classifier S) := by
+    rw [left_count S hS, left_count S hS, outside_count_equal z false i j]
+  exact ⟨hleft, hleft.trans (hcross z j)⟩
+end
+end CommonSelector
+end
 section
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher (Input teacher)
@@ -33,37 +248,34 @@ namespace SharpRisk
 noncomputable section
 open CommonSelector ExteriorCounts
 open WordCounts (rareN)
-attribute [local instance] Classical.propDecidable
 private lemma rare_le {n : ℕ} (x : Input n) : rareN x ≤ n := by
   have hp (a : LiteralWindowEnd.Window) : WordCounts.rb a ≤ 1 := by cases a <;> decide
   calc
     rareN x ≤ ∑ _i : Fin n, 1 := Finset.sum_le_sum (fun i _ => hp (x i))
     _ = n := by simp
-
-private def risk {m : ℕ} (w : ℕ → ℝ) (f : Input (m+3) → Fin 3) (t : Bool × Fin m) : ℝ :=
-  ∑ x : Input (m+3), w (rareN x)*(MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ)
-private lemma weighted_counts {m : ℕ} (w : ℕ → ℝ) (f : Input (m+3) → Fin 3) (t : Bool × Fin m) :
-    risk w f t=∑ z ∈ Finset.range (m+4), w z*(errorCount z t.1 t.2 f:ℝ) := by
+private def risk {m : ℕ} (w : ℕ → ℝ) (f : Input (m + 3) → Fin 3) (t : Bool × Fin m) : ℝ :=
+  ∑ x : Input (m + 3), w (rareN x) * (MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ)
+private lemma weighted_counts {m : ℕ} (w : ℕ → ℝ) (f : Input (m + 3) → Fin 3) (t : Bool × Fin m) :
+    risk w f t = ∑ z ∈ Finset.range (m + 4), w z * (errorCount z t.1 t.2 f:ℝ) := by
   unfold risk
   rw [← Finset.sum_fiberwise_of_maps_to (s := Finset.univ)
-    (t := Finset.range (m+4)) (g := @rareN (m+3))
+    (t := Finset.range (m + 4)) (g := @rareN (m + 3))
     (fun x _ => by
       simp only [Finset.mem_range]
       have h := rare_le x
       omega)
-    (fun x => w (rareN x)*(MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ))]
+    (fun x => w (rareN x) * (MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ))]
   apply Finset.sum_congr rfl
   intro z hz
   rw [Finset.sum_filter]
   simp only [errorCount, Int.cast_sum, Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro x hx
-  by_cases h : rareN x=z <;> simp [h]
-
-private lemma balanced_risks {m : ℕ} (w : ℕ → ℝ) (f : Input (m+3) → Fin 3)
-    (hbal : ∀ z, ∀ i j : Fin m, errorCount z false i f=errorCount z false j f ∧
-      errorCount z false i f=errorCount z true j f) (t u : Bool × Fin m) :
-    risk w f t=risk w f u := by
+  by_cases h : rareN x = z <;> simp [h]
+private lemma balanced_risks {m : ℕ} (w : ℕ → ℝ) (f : Input (m + 3) → Fin 3)
+    (hbal : ∀ z, ∀ i j : Fin m, errorCount z false i f = errorCount z false j f ∧
+      errorCount z false i f = errorCount z true j f) (t u : Bool × Fin m) :
+    risk w f t = risk w f u := by
   rw [weighted_counts, weighted_counts]
   apply Finset.sum_congr rfl
   intro z hz
@@ -75,10 +287,9 @@ private lemma balanced_risks {m : ℕ} (w : ℕ → ℝ) (f : Input (m+3) → Fi
   · exact (hbal z i j).2
   · exact (hbal z j i).2.symm
   · exact (hbal z i i).2.symm.trans (hbal z i j).2
-
-private lemma point_loss {m : ℕ} (f : Input (m+3) → Fin 3) (x : Input (m+3)) :
-    (∑ t : Bool × Fin m, (MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ))=
-      2*m-(actualVotes x (f x):ℝ) := by
+private lemma point_loss {m : ℕ} (f : Input (m + 3) → Fin 3) (x : Input (m + 3)) :
+    (∑ t : Bool × Fin m, (MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ)) =
+      2 * m - (actualVotes x (f x):ℝ) := by
   have hi (i : Fin m) :
       (MajorityGeometry.err (label true i x) (f x) : ℝ) +
         (MajorityGeometry.err (label false i x) (f x) : ℝ) =
@@ -92,28 +303,27 @@ private lemma point_loss {m : ℕ} (f : Input (m+3) → Fin 3) (x : Input (m+3))
   simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
     actualVotes, Nat.cast_sum]
   ring
-
 private def barrier (m : ℕ) (w : ℕ → ℝ) : ℝ :=
-  (∑ x : Input (m+3), w (rareN x)*(2*m-(actualVotes x (exteriorSelector x):ℝ))) / (2*m)
-private lemma total_risk {m : ℕ} (w : ℕ → ℝ) (f : Input (m+3) → Fin 3) :
-    (∑ t, risk w f t)=∑ x : Input (m+3), w (rareN x)*(2*m-(actualVotes x (f x):ℝ)) := by
+  (∑ x : Input (m + 3), w (rareN x) * (2 * m - (actualVotes x (exteriorSelector x):ℝ))) / (2 * m)
+private lemma total_risk {m : ℕ} (w : ℕ → ℝ) (f : Input (m + 3) → Fin 3) :
+    (∑ t, risk w f t) = ∑ x : Input (m + 3), w (rareN x) * (2 * m - (actualVotes x (f x):ℝ)) := by
   unfold risk
   rw [Finset.sum_comm]
   simp_rw [←Finset.mul_sum, point_loss]
 private theorem sharp_class_weighted (m : ℕ) (hm : 0 < m) (w : ℕ → ℝ) :
-    ∃ f : Input (m+3) → Fin 3, ∀ t, risk w f t=barrier m w := by
+    ∃ f : Input (m + 3) → Fin 3, ∀ t, risk w f t = barrier m w := by
   obtain ⟨f,hmax,hbal⟩ := uniform_mass_balanced m hm
   let t₀ : Bool × Fin m := (false,⟨0,hm⟩)
   have heq (t : Bool × Fin m) := balanced_risks w f hbal t t₀
-  have hmaxeq (x : Input (m+3)) : actualVotes x (f x)=actualVotes x (exteriorSelector x) :=
+  have hmaxeq (x : Input (m + 3)) : actualVotes x (f x) = actualVotes x (exteriorSelector x) :=
     Nat.le_antisymm (exterior_majority x (f x)) (hmax x (exteriorSelector x))
-  have hs : (2*m:ℝ)*risk w f t₀=
-      ∑ x : Input (m+3), w (rareN x)*(2*m-(actualVotes x (exteriorSelector x):ℝ)) := by
+  have hs : (2 * m:ℝ) * risk w f t₀ =
+      ∑ x : Input (m + 3), w (rareN x) * (2 * m - (actualVotes x (exteriorSelector x):ℝ)) := by
     have hh := total_risk w f
     simp_rw [heq, hmaxeq] at hh
     simpa [Fintype.card_prod] using hh
-  have hpos : (0:ℝ)<2*m := by exact_mod_cast (show 0<2*m by omega)
-  have hatt (t : Bool × Fin m) : risk w f t=barrier m w := by
+  have hpos : (0:ℝ) < 2 * m := by exact_mod_cast (show 0 < 2 * m by omega)
+  have hatt (t : Bool × Fin m) : risk w f t = barrier m w := by
     rw [heq]
     unfold barrier
     exact (eq_div_iff (ne_of_gt hpos)).mpr (by simpa [mul_comm] using hs)
@@ -121,7 +331,6 @@ private theorem sharp_class_weighted (m : ℕ) (hm : 0 < m) (w : ℕ → ℝ) :
 end
 end SharpRisk
 end
-
 section
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher (Input)
@@ -131,39 +340,38 @@ noncomputable section
 open WordCounts (rareN rb)
 open CommonSelector ExteriorCounts
 private lemma product_mass {n : ℕ} (s : ℝ) (x : Input n) :
-    (∏ i, HeterogeneousTeacherSeparation.extremal s (x i))=
-      s^rareN x*((1-3*s)/2)^(n-rareN x) := by
+    (∏ i, HeterogeneousTeacherSeparation.extremal s (x i)) =
+      s ^ rareN x * ((1 - 3 * s) / 2) ^ (n - rareN x) := by
   have hpoint (a : LiteralWindowEnd.Window) :
-      HeterogeneousTeacherSeparation.extremal s a=s^rb a*((1-3*s)/2)^(1-rb a) := by
+      HeterogeneousTeacherSeparation.extremal s a = s ^ rb a * ((1 - 3 * s) / 2) ^ (1 - rb a) := by
     cases a <;> simp [rb, HeterogeneousTeacherSeparation.extremal]
-  have hsmall (i : Fin n) : rb (x i)+(1-rb (x i))=1 := by
+  have hsmall (i : Fin n) : rb (x i) + (1 - rb (x i)) = 1 := by
     cases x i <;> decide
   have hs := Finset.sum_congr (s₁ := (Finset.univ : Finset (Fin n))) rfl (fun i _ => hsmall i)
   rw [Finset.sum_add_distrib] at hs
   simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul, mul_one] at hs
-  have hdiff : (∑ i : Fin n, (1-rb (x i)))=n-rareN x := by
-    change rareN x+_ = n at hs
+  have hdiff : (∑ i : Fin n, (1 - rb (x i))) = n - rareN x := by
+    change rareN x + _ = n at hs
     omega
   simp_rw [hpoint]
   rw [Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, Finset.prod_pow_eq_pow_sum, hdiff]
   rfl
-
-private def classWeight (m : ℕ) (s : ℝ) (z : ℕ) : ℝ := s^z*((1-3*s)/2)^(m+3-z)
-private def productRisk {m : ℕ} (s : ℝ) (f : Input (m+3) → Fin 3) (t : Bool × Fin m) : ℝ :=
-  ∑ x : Input (m+3), (∏ i, HeterogeneousTeacherSeparation.extremal s (x i))*
+private def classWeight (m : ℕ) (s : ℝ) (z : ℕ) : ℝ := s ^ z * ((1 - 3 * s) / 2) ^ (m + 3 - z)
+private def productRisk {m : ℕ} (s : ℝ) (f : Input (m + 3) → Fin 3) (t : Bool × Fin m) : ℝ :=
+  ∑ x : Input (m + 3), (∏ i, HeterogeneousTeacherSeparation.extremal s (x i)) *
     (MajorityGeometry.err (label t.1 t.2 x) (f x):ℝ)
-private lemma product_risk_eq_class_risk {m : ℕ} (s : ℝ) (f : Input (m+3) → Fin 3) (t : Bool × Fin m) :
-    productRisk s f t=risk (classWeight m s) f t := by
+private lemma product_risk_eq_class_risk {m : ℕ} (s : ℝ) (f : Input (m
+  + 3) → Fin 3) (t : Bool × Fin m) :
+    productRisk s f t = risk (classWeight m s) f t := by
   unfold productRisk risk classWeight
   simp_rw [product_mass]
-private theorem sharp_product (m : ℕ) (hm : 0 < m) (s : ℝ) (_hs : 0 < s) (_hu : s ≤ 1/5) :
-    ∃ f : Input (m+3) → Fin 3, ∀ t, productRisk s f t=barrier m (classWeight m s) := by
+private theorem sharp_product (m : ℕ) (hm : 0 < m) (s : ℝ) (_hs : 0 < s) (_hu : s ≤ 1 / 5) :
+    ∃ f : Input (m + 3) → Fin 3, ∀ t, productRisk s f t = barrier m (classWeight m s) := by
   simp_rw [product_risk_eq_class_risk]
   exact sharp_class_weighted m hm (classWeight m s)
 end
 end SharpRisk
 end
-
 section
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
@@ -172,21 +380,20 @@ namespace SharpRisk
 noncomputable section
 open MajorityGeometry
 private def rawLoss (m k : ℕ) (q r v : Window) : ℕ :=
-  min (2*m-vt m k q r v 0) (min (2*m-vt m k q r v 1) (2*m-vt m k q r v 2))
+  min (2 * m - vt m k q r v 0) (min (2 * m - vt m k q r v 1) (2 * m - vt m k q r v 2))
 private lemma loss_first_top (m k : ℕ) (q r v : Window) :
-    2*m-vt m k q r v (firstTop m k q r v)=rawLoss m k q r v := by
+    2 * m - vt m k q r v (firstTop m k q r v) = rawLoss m k q r v := by
   have h0 := first_top_majority m k q r v 0
   have h1 := first_top_majority m k q r v 1
   have h2 := first_top_majority m k q r v 2
-  have hc : firstTop m k q r v=0 ∨ firstTop m k q r v=1 ∨ firstTop m k q r v=2 := by omega
+  have hc : firstTop m k q r v = 0 ∨ firstTop m k q r v = 1 ∨ firstTop m k q r v = 2 := by omega
   rcases hc with hc | hc | hc <;> simp only [hc, rawLoss] at * <;> omega
 private lemma loss_selector (m k : ℕ) (q r v : Window) (b : Bool) :
-    2*m-vt m k q r v (selector m k q r v b)=rawLoss m k q r v := by
+    2 * m - vt m k q r v (selector m k q r v b) = rawLoss m k q r v := by
   have h₁ := first_top_majority m k q r v (selector m k q r v b)
   have h₂ := selector_majority m k q r v b (firstTop m k q r v)
   have he := Nat.le_antisymm h₁ h₂
   rw [he, loss_first_top]
-
 private def anchorType : Window → Window → Window → ℕ
   | .zero, .low, .zero => 1
   | .zero, .low, .low => 1
@@ -278,23 +485,22 @@ private def anchorType : Window → Window → Window → ℕ
 private def normalLoss (m k : ℕ) (q r v : Window) : ℕ :=
   match anchorType q r v with
   | 1 => k
-  | 2 => 2*min k (m-k)
+  | 2 => 2 * min k (m - k)
   | 3 => m
-  | 4 => (m-k)+min (2*k) (m-k)
+  | 4 => (m - k) + min (2 * k) (m - k)
   | _ => 0
 set_option maxHeartbeats 1000000 in
 private lemma anchor_normal (m k : ℕ) (hkm : k ≤ m) (q r v : Window) :
-    rawLoss m k q r v=normalLoss m k q r v := by
+    rawLoss m k q r v = normalLoss m k q r v := by
   cases q <;> cases r <;> cases v <;>
     simp [rawLoss, normalLoss, anchorType, vt, aLabel, bLabel, first, last] <;> omega
-
 private lemma anchor_loss_sum (m k : ℕ) (hkm : k ≤ m) (s : ℝ) :
     (∑ q : Window, ∑ r : Window, ∑ v : Window,
       HeterogeneousTeacherSeparation.extremal s q *
       HeterogeneousTeacherSeparation.extremal s r *
       HeterogeneousTeacherSeparation.extremal s v * (rawLoss m k q r v:ℝ)) =
-      (8*s^2-8*s^3)*m+(4*s-14*s^2+4*s^3)*k+
-        4*s^2*(min k (m-k):ℝ)+2*s^2*(min (2*k) (m-k):ℝ) := by
+      (8 * s ^ 2 - 8 * s ^ 3) * m + (4 * s - 14 * s ^ 2 + 4 * s ^ 3) * k +
+        4 * s ^ 2 * (min k (m - k):ℝ) + 2 * s ^ 2 * (min (2 * k) (m - k):ℝ) := by
   simp_rw [anchor_normal m k hkm]
   have hsum (F : Window → ℝ) : (∑ a : Window, F a) =
       F .zero + F .low + F .middle + F .ends + F .high := by
@@ -306,7 +512,6 @@ private lemma anchor_loss_sum (m k : ℕ) (hkm : k ≤ m) (s : ℝ) :
 end
 end SharpRisk
 end
-
 section
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window last)
@@ -317,48 +522,47 @@ open WordCounts (highN hb)
 private def prefixMass {m : ℕ} (s : ℝ) (p : Fin m → Window) : ℝ :=
   ∏ i, HeterogeneousTeacherSeparation.extremal s (p i)
 private def prefixBw {m : ℕ} (s : ℝ) (p : Fin m → Window) : Polynomial ℝ :=
-  Polynomial.C (prefixMass s p)*Polynomial.X^highN p
+  Polynomial.C (prefixMass s p) * Polynomial.X ^ highN p
 private lemma prefix_bw_product {m : ℕ} (s : ℝ) (p : Fin m → Window) :
-    prefixBw s p=∏ i, Polynomial.C (HeterogeneousTeacherSeparation.extremal s (p i))*
-      Polynomial.X^hb (p i) := by
+    prefixBw s p = ∏ i, Polynomial.C (HeterogeneousTeacherSeparation.extremal s (p i)) *
+      Polynomial.X ^ hb (p i) := by
   unfold prefixBw prefixMass highN
   rw [map_prod, ←Finset.prod_pow_eq_pow_sum, Finset.prod_mul_distrib]
 private lemma prefix_generating (m : ℕ) (s : ℝ) :
-    (∑ p : Fin m → Window, prefixBw s p)=
-      (Polynomial.C (1-2*s)+Polynomial.C (2*s)*Polynomial.X)^m := by
+    (∑ p : Fin m → Window, prefixBw s p) =
+      (Polynomial.C (1 - 2 * s) + Polynomial.C (2 * s) * Polynomial.X) ^ m := by
   simp_rw [prefix_bw_product]
   rw [←Fintype.prod_sum (fun (_ : Fin m) (a : Window) =>
-    Polynomial.C (HeterogeneousTeacherSeparation.extremal s a) * Polynomial.X^hb a)]
-  have hl : (∑ a : Window, Polynomial.C (HeterogeneousTeacherSeparation.extremal s a)*
-      Polynomial.X^hb a)=Polynomial.C (1-2*s)+Polynomial.C (2*s)*Polynomial.X := by
-    have he : ((1-3*s)/2)+((1-3*s)/2)+s=1-2*s := by ring
-    have hh : s+s=2*s := by ring
+    Polynomial.C (HeterogeneousTeacherSeparation.extremal s a) * Polynomial.X ^ hb a)]
+  have hl : (∑ a : Window, Polynomial.C (HeterogeneousTeacherSeparation.extremal s a) *
+      Polynomial.X ^ hb a) = Polynomial.C (1 - 2 * s) + Polynomial.C (2 * s) * Polynomial.X := by
+    have he : ((1 - 3 * s) / 2) + ((1 - 3 * s) / 2) + s = 1 - 2 * s := by ring
+    have hh : s + s = 2 * s := by ring
     calc
-      _ = Polynomial.C (((1-3*s)/2)+((1-3*s)/2)+s)+
-          Polynomial.C (s+s)*Polynomial.X := by
+      _ = Polynomial.C (((1 - 3 * s) / 2) + ((1 - 3 * s) / 2) + s) +
+          Polynomial.C (s + s) * Polynomial.X := by
         have hsum (F : Window → Polynomial ℝ) : (∑ a : Window, F a) =
             F .zero + F .low + F .middle + F .ends + F .high := by
           simp [Finset.univ, Fintype.elems, add_assoc]
         rw [hsum]
-        change Polynomial.C ((1-3*s)/2)*Polynomial.X^0 +
-            Polynomial.C s*Polynomial.X^0 +
-            Polynomial.C ((1-3*s)/2)*Polynomial.X^0 + Polynomial.C s*Polynomial.X^1 +
-            Polynomial.C s*Polynomial.X^1 = _
+        change Polynomial.C ((1 - 3 * s) / 2) * Polynomial.X ^ 0 +
+            Polynomial.C s * Polynomial.X ^ 0 +
+            Polynomial.C ((1 - 3 * s) / 2) * Polynomial.X ^ 0 + Polynomial.C s * Polynomial.X ^ 1 +
+            Polynomial.C s * Polynomial.X ^ 1 = _
         simp only [pow_zero, pow_one, mul_one, map_add]
         ring
       _ = _ := by rw [he, hh]
   simp_rw [hl]
   simp
-
 private def binomialMass (m k : ℕ) (s : ℝ) : ℝ :=
-  (m.choose k:ℝ)*(2*s)^k*(1-2*s)^(m-k)
+  (m.choose k:ℝ) * (2 * s) ^ k * (1 - 2 * s) ^ (m - k)
 private lemma prefix_binomial (m k : ℕ) (s : ℝ) :
-    (∑ p : Fin m → Window, if highN p=k then prefixMass s p else 0)=binomialMass m k s := by
+    (∑ p : Fin m → Window, if highN p = k then prefixMass s p else 0) = binomialMass m k s := by
   classical
   have hs := congrArg (fun P : Polynomial ℝ => P.coeff k) (prefix_generating m s)
   rw [Polynomial.finsetSum_coeff] at hs
-  have hc : (Polynomial.C (1-2*s)+Polynomial.C (2*s)*Polynomial.X)^m=
-      ((Polynomial.X+Polynomial.C (1-2*s))^m).comp (Polynomial.C (2*s)*Polynomial.X) := by
+  have hc : (Polynomial.C (1 - 2 * s) + Polynomial.C (2 * s) * Polynomial.X) ^ m =
+      ((Polynomial.X + Polynomial.C (1 - 2 * s)) ^ m).comp (Polynomial.C (2 * s) * Polynomial.X) := by
     simp only [Polynomial.pow_comp, Polynomial.add_comp, Polynomial.X_comp, Polynomial.C_comp]
     rw [add_comm]
   rw [hc, Polynomial.comp_C_mul_X_coeff, Polynomial.coeff_X_add_C_pow] at hs
@@ -366,42 +570,40 @@ private lemma prefix_binomial (m k : ℕ) (s : ℝ) :
     _ = ∑ p : Fin m → Window, (prefixBw s p).coeff k := by
       apply Finset.sum_congr rfl
       intro p hp
-      by_cases h : highN p=k
+      by_cases h : highN p = k
       · simp [prefixBw, Polynomial.coeff_C_mul_X_pow, h]
       · simp [prefixBw, Polynomial.coeff_C_mul_X_pow, h, Ne.symm h]
     _ = _ := by rw [hs]; unfold binomialMass; ring
-private lemma prefix_total (m : ℕ) (s : ℝ) : (∑ p : Fin m → Window, prefixMass s p)=1 := by
+private lemma prefix_total (m : ℕ) (s : ℝ) : (∑ p : Fin m → Window, prefixMass s p) = 1 := by
   have hs := congrArg (fun P : Polynomial ℝ => P.eval 1) (prefix_generating m s)
   simpa [prefixBw, Polynomial.eval_finsetSum, Polynomial.eval_pow, Polynomial.eval_mul,
     Polynomial.eval_add, Polynomial.eval_C, Polynomial.eval_X] using hs
 private lemma prefix_mean (m : ℕ) (s : ℝ) :
-    (∑ p : Fin m → Window, prefixMass s p*(highN p:ℝ))=(m:ℝ)*(2*s) := by
+    (∑ p : Fin m → Window, prefixMass s p * (highN p:ℝ)) = (m:ℝ) * (2 * s) := by
   have hs := congrArg (fun P : Polynomial ℝ => P.derivative.eval 1) (prefix_generating m s)
   simpa [prefixBw, Polynomial.derivative_sum, Polynomial.eval_finsetSum,
     Polynomial.derivative_mul, Polynomial.derivative_pow, Polynomial.derivative_add,
     Polynomial.derivative_C, Polynomial.derivative_X] using hs
 private lemma prefix_expectation (m : ℕ) (s : ℝ) (F : ℕ → ℝ) :
-    (∑ p : Fin m → Window, prefixMass s p*F (highN p))=
-      ∑ k ∈ Finset.range (m+1), binomialMass m k s*F k := by
+    (∑ p : Fin m → Window, prefixMass s p * F (highN p)) =
+      ∑ k ∈ Finset.range (m + 1), binomialMass m k s * F k := by
   classical
   rw [← Finset.sum_fiberwise_of_maps_to (s := Finset.univ)
-    (t := Finset.range (m+1)) (g := @highN m)
+    (t := Finset.range (m + 1)) (g := @highN m)
     (fun p _ => by
       simp only [Finset.mem_range]
       have h := WordCounts.high_n_le p
       omega)
-    (fun p => prefixMass s p*F (highN p))]
+    (fun p => prefixMass s p * F (highN p))]
   apply Finset.sum_congr rfl
   intro k hk
   rw [Finset.sum_filter, ← prefix_binomial m k s, Finset.sum_mul]
   apply Finset.sum_congr rfl
   intro p hp
-  by_cases h : highN p=k <;> simp [h]
-
+  by_cases h : highN p = k <;> simp [h]
 end
 end SharpRisk
 end
-
 section
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window)
@@ -412,43 +614,45 @@ noncomputable section
 open MajorityGeometry ExteriorCounts
 open WordCounts (highN rareN)
 private lemma vt_le (m k : ℕ) (hkm : k ≤ m) (q r v : Window) (c : Fin 3) :
-    vt m k q r v c ≤ 2*m := by
-  have ha : (if aLabel false q r=c then 1 else 0)+(if bLabel false r v=c then 1 else 0) ≤ 2 := by
+    vt m k q r v c ≤ 2 * m := by
+  have ha : (if aLabel false q r = c then 1 else 0)
+    + (if bLabel false r v = c then 1 else 0) ≤ 2 := by
     split_ifs <;> omega
-  have hb : (if aLabel true q r=c then 1 else 0)+(if bLabel true r v=c then 1 else 0) ≤ 2 := by
+  have hb : (if aLabel true q r = c then 1 else 0) + (if bLabel true r v = c then 1 else 0) ≤ 2
+    := by
     split_ifs <;> omega
   unfold vt
-  have hm : m-k+k=m := Nat.sub_add_cancel hkm
-  nlinarith [Nat.mul_le_mul_left (m-k) ha, Nat.mul_le_mul_left k hb]
+  have hm : m - k + k = m := Nat.sub_add_cancel hkm
+  nlinarith [Nat.mul_le_mul_left (m - k) ha, Nat.mul_le_mul_left k hb]
 private lemma loss_real_append {m : ℕ} (p : Fin m → Window) (q r v : Window) :
-    (2*m:ℝ)-(actualVotes (Fin.append p ![q,r,v])
-      (exteriorSelector (Fin.append p ![q,r,v])):ℝ)=(rawLoss m (highN p) q r v:ℝ) := by
+    (2 * m:ℝ) - (actualVotes (Fin.append p ![q,r,v])
+      (exteriorSelector (Fin.append p ![q,r,v])):ℝ) = (rawLoss m (highN p) q r v:ℝ) := by
   rw [actual_votes_append, exterior_append]
-  let b := if highN p=0 then anchorCoin q r v else WordCounts.prefixCoin p
+  let b := if highN p = 0 then anchorCoin q r v else WordCounts.prefixCoin p
   have hc := congrArg (fun a : ℕ => (a:ℝ)) (loss_selector m (highN p) q r v b)
   rw [Nat.cast_sub (vt_le m (highN p) (WordCounts.high_n_le p) q r v _)] at hc
   simpa only [Nat.cast_mul, Nat.cast_ofNat] using hc
 private lemma mass_append {m : ℕ} (s : ℝ) (p : Fin m → Window) (q r v : Window) :
-    (∏ i, HeterogeneousTeacherSeparation.extremal s (Fin.append p ![q,r,v] i))=
-      prefixMass s p*HeterogeneousTeacherSeparation.extremal s q*
-        HeterogeneousTeacherSeparation.extremal s r*HeterogeneousTeacherSeparation.extremal s v := by
+    (∏ i, HeterogeneousTeacherSeparation.extremal s (Fin.append p ![q,r,v] i)) =
+      prefixMass s p * HeterogeneousTeacherSeparation.extremal s q *
+        HeterogeneousTeacherSeparation.extremal s r
+          * HeterogeneousTeacherSeparation.extremal s v := by
   simp [Fin.prod_univ_add, Fin.prod_univ_three, prefixMass, mul_assoc]
-private lemma word_sum_real (m : ℕ) (F : Input (m+3) → ℝ) :
-    (∑ x, F x)=∑ p : Fin m → Window, ∑ q : Window, ∑ r : Window, ∑ v : Window,
+private lemma word_sum_real (m : ℕ) (F : Input (m + 3) → ℝ) :
+    (∑ x, F x) = ∑ p : Fin m → Window, ∑ q : Window, ∑ r : Window, ∑ v : Window,
       F (Fin.append p ![q,r,v]) := by
   have h := Equiv.sum_comp (wordEquiv m).symm F
   change (∑ t : (Fin m → Window) × Window × Window × Window,
-    F (Fin.append t.1 ![t.2.1,t.2.2.1,t.2.2.2]))=∑ x, F x at h
+    F (Fin.append t.1 ![t.2.1,t.2.2.1,t.2.2.2])) = ∑ x, F x at h
   simpa only [Fintype.sum_prod_type] using h.symm
-
 private def numerator (m : ℕ) (s : ℝ) : ℝ :=
-  ∑ x : Input (m+3), classWeight m s (rareN x)*(2*m-(actualVotes x (exteriorSelector x):ℝ))
+  ∑ x : Input (m + 3), classWeight m s (rareN x) * (2 * m - (actualVotes x (exteriorSelector x):ℝ))
 private lemma numerator_nested (m : ℕ) (s : ℝ) :
-    numerator m s=∑ p : Fin m → Window, prefixMass s p*(
+    numerator m s = ∑ p : Fin m → Window, prefixMass s p * (
       ∑ q : Window, ∑ r : Window, ∑ v : Window,
-        HeterogeneousTeacherSeparation.extremal s q*
-        HeterogeneousTeacherSeparation.extremal s r*
-        HeterogeneousTeacherSeparation.extremal s v*(rawLoss m (highN p) q r v:ℝ)) := by
+        HeterogeneousTeacherSeparation.extremal s q *
+        HeterogeneousTeacherSeparation.extremal s r *
+        HeterogeneousTeacherSeparation.extremal s v * (rawLoss m (highN p) q r v:ℝ)) := by
   unfold numerator classWeight
   simp_rw [←product_mass s]
   rw [word_sum_real]
@@ -463,20 +667,20 @@ private lemma numerator_nested (m : ℕ) (s : ℝ) :
   apply Finset.sum_congr rfl
   intro v hv
   ring
-
-private def G (m k : ℕ) : ℝ := 2*(min k (m-k):ℝ)+(min (2*k) (m-k):ℝ)
+private def G (m k : ℕ) : ℝ := 2 * (min k (m - k):ℝ) + (min (2 * k) (m - k):ℝ)
 /-- Sharp common prediction threshold, including the complete binomial correction. -/
 def T (m : ℕ) (s : ℝ) : ℝ :=
-  8*s^2-18*s^3+4*s^4+(s^2/m)*(∑ k ∈ Finset.range (m+1), binomialMass m k s*G m k)
+  8 * s ^ 2 - 18 * s ^ 3 + 4 * s ^ 4 + (s ^ 2 / m) * (∑ k ∈ Finset.range (m + 1), binomialMass m k s
+    * G m k)
 private lemma numerator_formula (m : ℕ) (s : ℝ) :
-    numerator m s=2*m*(8*s^2-18*s^3+4*s^4)+
-      2*s^2*(∑ k ∈ Finset.range (m+1), binomialMass m k s*G m k) := by
+    numerator m s = 2 * m * (8 * s ^ 2 - 18 * s ^ 3 + 4 * s ^ 4) +
+      2 * s ^ 2 * (∑ k ∈ Finset.range (m + 1), binomialMass m k s * G m k) := by
   rw [numerator_nested]
   simp_rw [anchor_loss_sum m _ (WordCounts.high_n_le _) s]
   calc
-    _ = ((8*s^2-8*s^3)*m)*(∑ p : Fin m → Window, prefixMass s p)+
-        (4*s-14*s^2+4*s^3)*(∑ p : Fin m → Window, prefixMass s p*(highN p:ℝ))+
-        2*s^2*(∑ p : Fin m → Window, prefixMass s p*G m (highN p)) := by
+    _ = ((8 * s ^ 2 - 8 * s ^ 3) * m) * (∑ p : Fin m → Window, prefixMass s p) +
+        (4 * s - 14 * s ^ 2 + 4 * s ^ 3) * (∑ p : Fin m → Window, prefixMass s p * (highN p:ℝ)) +
+        2 * s ^ 2 * (∑ p : Fin m → Window, prefixMass s p * G m (highN p)) := by
       simp_rw [Finset.mul_sum]
       rw [←Finset.sum_add_distrib, ←Finset.sum_add_distrib]
       apply Finset.sum_congr rfl
@@ -485,20 +689,18 @@ private lemma numerator_formula (m : ℕ) (s : ℝ) :
       ring
     _ = _ := by rw [prefix_total, prefix_mean, prefix_expectation]; ring
 private lemma barrier_eq_t (m : ℕ) (hm : 0 < m) (s : ℝ) :
-    barrier m (classWeight m s)=T m s := by
-  change numerator m s/(2*m)=T m s
+    barrier m (classWeight m s) = T m s := by
+  change numerator m s / (2 * m) = T m s
   rw [numerator_formula]
   unfold T
   have hm0 : (m:ℝ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hm)
   field_simp [hm0] <;> ring
-
-private theorem sharp_risk_reduced (m : ℕ) (hm : 0 < m) (s : ℝ) (hs : 0 < s) (hu : s ≤ 1/5) :
-    ∃ f : Input (m+3) → Fin 3, ∀ t, productRisk s f t=T m s := by
+private theorem sharp_risk_reduced (m : ℕ) (hm : 0 < m) (s : ℝ) (hs : 0 < s) (hu : s ≤ 1 / 5) :
+    ∃ f : Input (m + 3) → Fin 3, ∀ t, productRisk s f t = T m s := by
   simpa only [barrier_eq_t m hm s] using sharp_product m hm s hs hu
 end
 end SharpRisk
 end
-
 section
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window)
@@ -507,89 +709,91 @@ open scoped BigOperators
 namespace SharpRisk
 noncomputable section
 open CommonSelector ExteriorCounts
-attribute [local instance] Classical.propDecidable
-variable {m : ℕ} {J : Type*} [Fintype J] [DecidableEq J]
+variable {m : ℕ} {J : Type * } [Fintype J] [DecidableEq J]
 local notation "Unused" e:arg => ({j : J // j ∉ Set.range e})
-private def indexEquiv (e : Fin (m+3) ↪ J) : Fin (m+3) ⊕ Unused e ≃ J :=
+private def indexEquiv (e : Fin (m + 3) ↪ J) : Fin (m + 3) ⊕ Unused e ≃ J :=
   (Equiv.sumCongr (Equiv.ofInjective e e.injective) (Equiv.refl _)).trans
     (Equiv.sumCompl (fun j => j ∈ Set.range e))
-private def splitWord (e : Fin (m+3) ↪ J) : (J → Window) ≃ Input (m+3) × (Unused e → Window) :=
+private def splitWord (e : Fin (m + 3) ↪ J) : (J → Window) ≃ Input (m + 3) × (Unused e → Window) :=
   (Equiv.arrowCongr (indexEquiv e).symm (Equiv.refl Window)).trans
     (Equiv.sumArrowEquivProdArrow _ _ _)
-private lemma join_inl (e : Fin (m+3) ↪ J) (xy : Input (m+3) × (Unused e → Window)) (i : Fin (m+3)) :
-    (splitWord e).symm xy (e i)=xy.1 i := by
+private lemma join_inl (e : Fin (m + 3) ↪ J) (xy : Input (m
+  + 3) × (Unused e → Window)) (i : Fin (m + 3)) :
+    (splitWord e).symm xy (e i) = xy.1 i := by
   change Sum.elim xy.1 xy.2 ((indexEquiv e).symm ((indexEquiv e) (Sum.inl i))) = _
   rw [Equiv.symm_apply_apply]
   rfl
-private lemma join_inr (e : Fin (m+3) ↪ J) (xy : Input (m+3) × (Unused e → Window)) (j : Unused e) :
-    (splitWord e).symm xy j.val=xy.2 j := by
+private lemma join_inr (e : Fin (m + 3) ↪ J) (xy : Input (m
+  + 3) × (Unused e → Window)) (j : Unused e) :
+    (splitWord e).symm xy j.val = xy.2 j := by
   change Sum.elim xy.1 xy.2 ((indexEquiv e).symm ((indexEquiv e) (Sum.inr j))) = _
   rw [Equiv.symm_apply_apply]
   rfl
-private lemma join_core (e : Fin (m+3) ↪ J) (xy : Input (m+3) × (Unused e → Window)) :
-    ((splitWord e).symm xy) ∘ e=xy.1 := by funext i; exact join_inl e xy i
-
+private lemma join_core (e : Fin (m + 3) ↪ J) (xy : Input (m + 3) × (Unused e → Window)) :
+    ((splitWord e).symm xy) ∘ e = xy.1 := by funext i; exact join_inl e xy i
 /-- Product of the common five-window masses over every coordinate. -/
-def lawMass {I : Type*} [Fintype I] (s : ℝ) (x : I → Window) : ℝ :=
+def lawMass {I : Type * } [Fintype I] (s : ℝ) (x : I → Window) : ℝ :=
   ∏ i, HeterogeneousTeacherSeparation.extremal s (x i)
-private lemma mass_sum (I : Type*) [Fintype I] [DecidableEq I] (s : ℝ) :
-    (∑ x : I → Window, lawMass s x)=1 := by
+private lemma mass_sum (I : Type * ) [Fintype I] [DecidableEq I] (s : ℝ) :
+    (∑ x : I → Window, lawMass s x) = 1 := by
   unfold lawMass
   rw [←Fintype.prod_sum]
-  have hl : (∑ a : Window, HeterogeneousTeacherSeparation.extremal s a)=1 := by
+  have hl : (∑ a : Window, HeterogeneousTeacherSeparation.extremal s a) = 1 := by
     simp [HeterogeneousTeacherSeparation.extremal, Finset.univ, Fintype.elems]
     ring
   simp_rw [hl]
   simp
-private lemma law_mass_nonneg {I : Type*} [Fintype I] (s : ℝ) (hs : 0 ≤ s) (hu : s ≤ 1/3)
+private lemma law_mass_nonneg {I : Type * } [Fintype I] (s : ℝ) (hs : 0 ≤ s) (hu : s ≤ 1 / 3)
     (x : I → Window) : 0 ≤ lawMass s x := by
   apply Finset.prod_nonneg
   intro i hi
   cases x i <;> simp only [HeterogeneousTeacherSeparation.extremal] <;> linarith
-private lemma mass_join (e : Fin (m+3) ↪ J) (s : ℝ) (xy : Input (m+3) × (Unused e → Window)) :
-    lawMass s ((splitWord e).symm xy)=lawMass s xy.1*lawMass s xy.2 := by
+private lemma mass_join (e : Fin (m + 3) ↪ J) (s : ℝ) (xy : Input (m + 3) × (Unused e → Window)) :
+    lawMass s ((splitWord e).symm xy) = lawMass s xy.1 * lawMass s xy.2 := by
   unfold lawMass
-  rw [←Equiv.prod_comp (indexEquiv e) (fun j => HeterogeneousTeacherSeparation.extremal s ((splitWord e).symm xy j))]
+  rw [←Equiv.prod_comp (indexEquiv e)
+    (fun j => HeterogeneousTeacherSeparation.extremal s ((splitWord e).symm xy j))]
   rw [Fintype.prod_sum_type]
   change (∏ i, HeterogeneousTeacherSeparation.extremal s ((splitWord e).symm xy (e i))) *
     (∏ j : Unused e, HeterogeneousTeacherSeparation.extremal s
       ((splitWord e).symm xy j.val)) = _
   simp only [join_inl, join_inr]
-private lemma full_sum (e : Fin (m+3) ↪ J) (F : (J → Window) → ℝ) :
-    (∑ x, F x)=∑ a : Input (m+3), ∑ b : Unused e → Window, F ((splitWord e).symm (a,b)) := by
+private lemma full_sum (e : Fin (m + 3) ↪ J) (F : (J → Window) → ℝ) :
+    (∑ x, F x) = ∑ a : Input (m + 3), ∑ b : Unused e → Window, F ((splitWord e).symm (a,b)) := by
   have h := Equiv.sum_comp (splitWord e).symm F
   simpa only [Fintype.sum_prod_type] using h.symm
-private lemma marginalize (e : Fin (m+3) ↪ J) (s : ℝ) (F : Input (m+3) → ℝ) :
-    (∑ x : J → Window, lawMass s x*F (x ∘ e))=
-      ∑ a : Input (m+3), lawMass s a*F a := by
+private lemma marginalize (e : Fin (m + 3) ↪ J) (s : ℝ) (F : Input (m + 3) → ℝ) :
+    (∑ x : J → Window, lawMass s x * F (x ∘ e)) =
+      ∑ a : Input (m + 3), lawMass s a * F a := by
   classical
   rw [full_sum e]
   simp_rw [mass_join, join_core]
   apply Finset.sum_congr rfl
   intro a ha
   calc
-    _ = (lawMass s a*F a)*(∑ b : Unused e → Window, lawMass s b) := by
+    _ = (lawMass s a * F a) * (∑ b : Unused e → Window, lawMass s b) := by
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro b hb
       ring
     _ = _ := by rw [mass_sum]; ring
-
-private def fullRisk (e : Fin (m+3) ↪ J) (s : ℝ) (f : (J → Window) → Fin 3) (t : Bool × Fin m) : ℝ :=
-  ∑ x : J → Window, lawMass s x*(MajorityGeometry.err (label t.1 t.2 (x ∘ e)) (f x):ℝ)
-private lemma full_risk_lift (e : Fin (m+3) ↪ J) (s : ℝ) (f : Input (m+3) → Fin 3) (t : Bool × Fin m) :
-    fullRisk e s (fun x => f (x ∘ e)) t=productRisk s f t := by
+private def fullRisk (e : Fin (m
+  + 3) ↪ J) (s : ℝ) (f : (J → Window) → Fin 3) (t : Bool × Fin m) : ℝ :=
+  ∑ x : J → Window, lawMass s x * (MajorityGeometry.err (label t.1 t.2 (x ∘ e)) (f x):ℝ)
+private lemma full_risk_lift (e : Fin (m + 3) ↪ J) (s : ℝ) (f : Input (m
+  + 3) → Fin 3) (t : Bool × Fin m) :
+    fullRisk e s (fun x => f (x ∘ e)) t = productRisk s f t := by
   exact marginalize e s (fun a => (MajorityGeometry.err (label t.1 t.2 a) (f a):ℝ))
-private lemma full_lower (e : Fin (m+3) ↪ J) (s : ℝ) (hs : 0 ≤ s) (hu : s ≤ 1/3)
+private lemma full_lower (e : Fin (m + 3) ↪ J) (s : ℝ) (hs : 0 ≤ s) (hu : s ≤ 1 / 3)
     (f : (J → Window) → Fin 3) : numerator m s ≤ ∑ t, fullRisk e s f t := by
-  have hmarg := marginalize e s (fun a => (2*m:ℝ)-(actualVotes a (exteriorSelector a):ℝ))
-  have hnum : numerator m s=∑ x : J → Window,
-      lawMass s x*((2*m:ℝ)-(actualVotes (x ∘ e) (exteriorSelector (x ∘ e)):ℝ)) := by
+  have hmarg := marginalize e s (fun a => (2 * m:ℝ) - (actualVotes a (exteriorSelector a):ℝ))
+  have hnum : numerator m s = ∑ x : J → Window,
+      lawMass s x * ((2 * m:ℝ) - (actualVotes (x ∘ e) (exteriorSelector (x ∘ e)):ℝ)) := by
     rw [hmarg]
     unfold numerator lawMass classWeight
     simp_rw [product_mass]
   rw [hnum]
-  have hl (x : J → Window) : (2*m:ℝ)-(actualVotes (x ∘ e) (exteriorSelector (x ∘ e)):ℝ) ≤
+  have hl (x : J → Window) : (2 * m:ℝ) - (actualVotes (x ∘ e) (exteriorSelector (x ∘ e)):ℝ) ≤
       ∑ t : Bool × Fin m, (MajorityGeometry.err (label t.1 t.2 (x ∘ e)) (f x):ℝ) := by
     have h := point_loss (fun _ => f x) (x ∘ e)
     rw [h]
@@ -598,7 +802,7 @@ private lemma full_lower (e : Fin (m+3) ↪ J) (s : ℝ) (hs : 0 ≤ s) (hu : s 
       exact_mod_cast hb
     linarith
   calc
-    _ ≤ ∑ x : J → Window, lawMass s x*
+    _ ≤ ∑ x : J → Window, lawMass s x *
         (∑ t : Bool × Fin m, (MajorityGeometry.err (label t.1 t.2 (x ∘ e)) (f x):ℝ)) :=
       Finset.sum_le_sum (fun x _ => mul_le_mul_of_nonneg_left (hl x)
         (law_mass_nonneg s hs hu x))
@@ -606,17 +810,17 @@ private lemma full_lower (e : Fin (m+3) ↪ J) (s : ℝ) (hs : 0 ≤ s) (hu : s 
       simp_rw [Finset.mul_sum]
       rw [Finset.sum_comm]
       rfl
-
-private theorem sharp_with_unused (e : Fin (m+3) ↪ J) (hm : 0 < m) (s : ℝ) (hs : 0 < s) (hu : s ≤ 1/5) :
-    (∃ f : (J → Window) → Fin 3, ∀ t, fullRisk e s f t=T m s) ∧
+private theorem sharp_with_unused (e : Fin (m
+  + 3) ↪ J) (hm : 0 < m) (s : ℝ) (hs : 0 < s) (hu : s ≤ 1 / 5) :
+    (∃ f : (J → Window) → Fin 3, ∀ t, fullRisk e s f t = T m s) ∧
     (∀ ε : ℝ, (∃ f : (J → Window) → Fin 3, ∀ t, fullRisk e s f t ≤ ε) ↔ T m s ≤ ε) := by
   obtain ⟨f,hf⟩ := sharp_risk_reduced m hm s hs hu
-  have hpos : (0:ℝ)<2*m := by exact_mod_cast (show 0<2*m by omega)
-  have hT : numerator m s=(2*m:ℝ)*T m s := by
+  have hpos : (0:ℝ) < 2 * m := by exact_mod_cast (show 0 < 2 * m by omega)
+  have hT : numerator m s = (2 * m:ℝ) * T m s := by
     have h := barrier_eq_t m hm s
-    change numerator m s/(2*m)=T m s at h
+    change numerator m s / (2 * m) = T m s at h
     exact (div_eq_iff (ne_of_gt hpos)).mp h |>.trans (mul_comm _ _)
-  have hatt (t : Bool × Fin m) : fullRisk e s (fun x => f (x ∘ e)) t=T m s := by
+  have hatt (t : Bool × Fin m) : fullRisk e s (fun x => f (x ∘ e)) t = T m s := by
     rw [full_risk_lift]
     exact hf t
   refine ⟨⟨_,hatt⟩,?_⟩
@@ -624,7 +828,7 @@ private theorem sharp_with_unused (e : Fin (m+3) ↪ J) (hm : 0 < m) (s : ℝ) (
   constructor
   · rintro ⟨g,hg⟩
     have hb := full_lower e s hs.le (by linarith) g
-    have hu : (∑ t, fullRisk e s g t) ≤ (2*m:ℝ)*ε := by
+    have hu : (∑ t, fullRisk e s g t) ≤ (2 * m:ℝ) * ε := by
       calc
         _ ≤ ∑ _t : Bool × Fin m, ε := Finset.sum_le_sum (fun t _ => hg t)
         _ = _ := by simp [Fintype.card_prod] <;> ring
@@ -635,7 +839,6 @@ private theorem sharp_with_unused (e : Fin (m+3) ↪ J) (hm : 0 < m) (s : ℝ) (
 end
 end SharpRisk
 end
-
 section
 open _root_.D5.S3.Arith.FibonacciAtomic
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window)
@@ -644,23 +847,21 @@ open scoped BigOperators
 namespace SharpRisk
 noncomputable section
 open CommonSelector
-attribute [local instance] Classical.propDecidable
-
-private def coreEmbedding {n : ℕ} (q r v : Fin n) (qr : q < r) (rv : r < v) : Fin (q.val+3) ↪ Fin n where
+private def coreEmbedding {n : ℕ} (q r v : Fin n) (qr : q < r) (rv : r < v) : Fin (q.val
+  + 3) ↪ Fin n where
   toFun i := if h : i.val < q.val then ⟨i.val,lt_trans h q.isLt⟩ else
-    if i.val=q.val then q else if i.val=q.val+1 then r else v
+    if i.val = q.val then q else if i.val = q.val + 1 then r else v
   inj' := by
     intro i j hij
     apply Fin.ext
-    have hqr : q.val<r.val := qr
-    have hrv : r.val<v.val := rv
+    have hqr : q.val < r.val := qr
+    have hrv : r.val < v.val := rv
     have hi := i.isLt
     have hj := j.isLt
     dsimp only at hij
     split_ifs at hij <;> have hv := congrArg Fin.val hij <;>
       try dsimp only at hv
     all_goals omega
-
 /-- A left-layer teacher at arbitrary ordered anchors in the full input. -/
 def leftGapped {n : ℕ} (q r : Fin n) (qr : q < r) (i : Fin q.val) : Roles n where
   p := ⟨i.val,lt_trans i.isLt q.isLt⟩
@@ -668,7 +869,6 @@ def leftGapped {n : ℕ} (q r : Fin n) (qr : q < r) (i : Fin q.val) : Roles n wh
   r := r
   pq := i.isLt
   qr := qr
-
 /-- A right-layer teacher at arbitrary ordered anchors in the full input. -/
 def rightGapped {n : ℕ} (q r v : Fin n) (qr : q < r) (rv : r < v) (i : Fin q.val) : Roles n where
   p := ⟨i.val,lt_trans i.isLt q.isLt⟩
@@ -676,39 +876,40 @@ def rightGapped {n : ℕ} (q r v : Fin n) (qr : q < r) (rv : r < v) (i : Fin q.v
   r := v
   pq := lt_trans i.isLt qr
   qr := rv
-
 private lemma left_restrict {n : ℕ} (q r v : Fin n) (qr : q < r) (rv : r < v)
     (i : Fin q.val) (x : Input n) :
-    teacher (TeacherLabels.leftRoles i) (x ∘ coreEmbedding q r v qr rv)=teacher (leftGapped q r qr i) x := by
-  have he (j : Fin (q.val+3)) : coreEmbedding q r v qr rv j =
+    teacher (TeacherLabels.leftRoles i) (x ∘ coreEmbedding q r v qr rv) =
+      teacher (leftGapped q r qr i) x := by
+  have he (j : Fin (q.val + 3)) : coreEmbedding q r v qr rv j =
       (if h : j.val < q.val then ⟨j.val, lt_trans h q.isLt⟩ else
-        if j.val=q.val then q else if j.val=q.val+1 then r else v) := rfl
+        if j.val = q.val then q else if j.val = q.val + 1 then r else v) := rfl
   simp [teacher, LegalPriorityTeacher.gate, TeacherLabels.leftRoles, leftGapped,
     Function.comp_def, he, i.isLt]
 private lemma right_restrict {n : ℕ} (q r v : Fin n) (qr : q < r) (rv : r < v)
     (i : Fin q.val) (x : Input n) :
-    teacher (TeacherLabels.rightRoles i) (x ∘ coreEmbedding q r v qr rv)=teacher (rightGapped q r v qr rv i) x := by
-  have he (j : Fin (q.val+3)) : coreEmbedding q r v qr rv j =
+    teacher (TeacherLabels.rightRoles i) (x ∘ coreEmbedding q r v qr rv) =
+      teacher (rightGapped q r v qr rv i) x := by
+  have he (j : Fin (q.val + 3)) : coreEmbedding q r v qr rv j =
       (if h : j.val < q.val then ⟨j.val, lt_trans h q.isLt⟩ else
-        if j.val=q.val then q else if j.val=q.val+1 then r else v) := rfl
+        if j.val = q.val then q else if j.val = q.val + 1 then r else v) := rfl
   simp [teacher, LegalPriorityTeacher.gate, TeacherLabels.rightRoles, rightGapped,
     Function.comp_def, he, i.isLt]
-
 /-- Original zero-one teacher risk under the full independent complete-window law. -/
 def gappedRisk {n : ℕ} (q r v : Fin n) (qr : q < r) (rv : r < v) (s : ℝ)
     (f : Input n → Fin 3) (t : Bool × Fin q.val) : ℝ :=
-  ∑ x : Input n, lawMass s x*(MajorityGeometry.err
-    (if t.1 then teacher (rightGapped q r v qr rv t.2) x else teacher (leftGapped q r qr t.2) x) (f x):ℝ)
+  ∑ x : Input n, lawMass s x * (MajorityGeometry.err
+    (if t.1 then teacher (rightGapped q r v qr rv t.2) x
+      else teacher (leftGapped q r qr t.2) x) (f x):ℝ)
 private lemma full_risk_eq_gapped {n : ℕ} (q r v : Fin n) (qr : q < r) (rv : r < v) (s : ℝ)
     (f : Input n → Fin 3) (t : Bool × Fin q.val) :
-    fullRisk (coreEmbedding q r v qr rv) s f t=gappedRisk q r v qr rv s f t := by
+    fullRisk (coreEmbedding q r v qr rv) s f t = gappedRisk q r v qr rv s f t := by
   unfold fullRisk gappedRisk label
   simp_rw [left_restrict, right_restrict]
-
-/-- One classifier attains the same sharp risk for all teachers; every classifier meets the worst-teacher bound. -/
+/-- One classifier attains the same sharp risk for all teachers; every classifier meets the
+  worst - teacher bound. -/
 theorem sharp_risk_full {n : ℕ} (q r v : Fin n) (hq : 0 < q.val) (qr : q < r) (rv : r < v)
-    (s : ℝ) (hs : 0 < s) (hu : s ≤ 1/5) :
-    (∃ f : Input n → Fin 3, ∀ t, gappedRisk q r v qr rv s f t=T q.val s) ∧
+    (s : ℝ) (hs : 0 < s) (hu : s ≤ 1 / 5) :
+    (∃ f : Input n → Fin 3, ∀ t, gappedRisk q r v qr rv s f t = T q.val s) ∧
     (∀ f : Input n → Fin 3, ∃ t, T q.val s ≤ gappedRisk q r v qr rv s f t) ∧
     (∀ ε : ℝ, (∃ f : Input n → Fin 3, ∀ t, gappedRisk q r v qr rv s f t ≤ ε) ↔ T q.val s ≤ ε) := by
   have h := sharp_with_unused (coreEmbedding q r v qr rv) hq s hs hu
@@ -724,5 +925,4 @@ theorem sharp_risk_full {n : ℕ} (q r v : Fin n) (hq : 0 < q.val) (qr : q < r) 
 end
 end SharpRisk
 end
-
 end D5.S3.Arith.FibonacciAtomic.CommonPrediction

@@ -20,19 +20,27 @@ internal sealed class CommonPredictionWordCountsDocument : IScribeDocumentDefini
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Exact word counts and parity cancellation for the two-layer priority-teacher model.", H("Word Counts for Common Priority Prediction"), Blocks(
+        "Word counts, parity cancellation and coefficient capacity for common priority prediction.", H("Word Counts and Coefficient Capacity"), Blocks(
             Paragraph(Text("Window is the five-symbol alphabet zero, low, middle, ends, high. The two endpoint bits are first and last. A rare symbol is low, ends or high; rareN counts rare symbols, and highN counts high endpoints in a prefix. All words are admitted, with no seam conditioning.")),
             Paragraph(Text("The bivariate generating polynomial records both rare symbols and high endpoints. The slice with k high endpoints is choose(n,k) times (2X)^k times (2+X)^(n-k). The parity of the number of ends symbols supplies a coin. On every positive high-endpoint slice, fixing any one endpoint bit leaves equal polynomial weights for the two coin values.")),
             Paragraph(Text("A reduced word has a prefix of length m and three anchors. The reservoir requires its first anchor to be zero, middle or high, its second anchor to be high, and its third anchor to be low or ends. Every left-layer teacher has label zero there and every right-layer teacher has label two. Nz(m,z) counts reservoir words with exactly z rare symbols.")),
-            Paragraph(Text("The majority selector compares the votes of the three labels. Its choice depends on the number of high endpoints, the three anchors and a tie coin. The seven nonzero regions, together with the zero region, exhaust every positive m and every prefix count from zero through m. These identities hold for arbitrary prefix lengths.")),
+            Paragraph(Text("The binomial weights choose(j,k) times 2 to the k have total 3 to the j and first moment 2j times 3 to the j-1. The truncated tail at floor(m/3) satisfies a strengthened moment estimate and grows by at least a factor of three when the degree increases. These relations bound the signed discrepancy coefficients on both sides by the reservoir coefficients, including m=1 and m=2.")),
             Describe.Lean(DescribeId.Create("word-counts"),
-                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts.actual_nz_identity"),
-                H("Exact reservoir class cardinalities"), StatementSource.FromAuthor(ResultFormula()),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts.integer_split_positive"),
+                H("Integer reservoir capacity"), StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("ReservoirPolynomial(m) denotes 2 X squared times (2+X) times (2+3X) to the m. Separating prefix and anchor coordinates gives this polynomial. Taking its coefficient at z counts precisely the actual reservoir words of that mass class. The signed generating polynomial cancels the high-endpoint contribution; this is the parity balance used to integrate tied majority choices."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The reservoir and discrepancy half coefficients are integers. Their two-sided bound makes the half difference a nonnegative integer, at most the complete reservoir coefficient. This supplies a legal split size in every rare-count class. Prefix and anchor generating functions identify the coefficients with actual word counts."))), DescribeRole.Theorem))));
 
-    private static Formula ResultFormula() =>
-        All("m", V("Nat"), All("z", V("Nat"),
-            Eq(Call("Nz", V("m"), V("z")),
-                Call("coeff", Call("ReservoirPolynomial", V("m")), V("z")))));
+    private static Formula ResultFormula()
+    {
+        var capacity = Le(Call("int", V("t")),
+            Seq(D(2), Cdot, Call("reservoir-half", V("m"), V("z"))));
+        var balance = Eq(Seq(D(2), Cdot,
+            Call("discrepancy-half", V("m"), V("z")), Minus, D(2), Cdot,
+            Call("reservoir-half", V("m"), V("z")), Plus, D(2), Cdot,
+            Call("int", V("t"))), D(0));
+        return All("m", V("Nat"), All("z", V("Nat"),
+            Imp(Seq(D(0), Sp, Lt, Sp, V("m")),
+                Ex("t", V("Nat"), And(capacity, balance)))));
+    }
 }
