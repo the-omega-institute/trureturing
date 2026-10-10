@@ -1,18 +1,18 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts
    generality: G
-   mirror - B: D5 / B / S3 / Arith / FibonacciAtomic / Observer / CommonPredictionWordCounts
-   mirror - E: none(waiver:unbounded - symbolic - proof)
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts
+   mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Exact generating functions and parity balance for priority - teacher word classes. -/
+   digest: Word counts and coefficient capacity for common priority prediction. -/
 import D5.S3.Arith.FibonacciAtomic.HeterogeneousTeacherSeparation
 import Mathlib.Algebra.Polynomial.Eval.Degree
 import Mathlib.Tactic
 import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.Data.Nat.Choose.Sum
 /-!
-The common two - layer priority - teacher problem on independent complete windows.
-All prefix lengths and all rare - count classes are included.
+The common two-layer priority-teacher problem on independent complete windows.
+All prefix lengths and all rare-count classes are included.
 -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -567,8 +567,8 @@ private lemma pref_relation (m j : ℕ) (hm : 0 < m) (hj : 0 < j) (hjm : j < m) 
     _ = _ := by ring
 /-- The nonnegative Q coefficient inequality, for every m> = 3 and every degree j. -/
 private theorem coefficient_capacity (m j : ℕ) (hm : 3 ≤ m) :
-    2 * pref (m - 1) j * tail j (m / 3) ≤ 3 * pref (m - 1) (j - 1) * (3 ^ (j - 1) + low (j - 1) (m / 3)) + 2
-      * pref (m - 1) j := by
+    2 * pref (m - 1) j * tail j (m / 3) ≤
+      3 * pref (m - 1) (j - 1) * (3 ^ (j - 1) + low (j - 1) (m / 3)) + 2 * pref (m - 1) j := by
   by_cases hj : j = 0
   · simp [hj, tail, weight]
   by_cases hjm : j < m

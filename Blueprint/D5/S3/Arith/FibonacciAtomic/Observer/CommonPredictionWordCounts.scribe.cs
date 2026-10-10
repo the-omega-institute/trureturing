@@ -34,10 +34,10 @@ internal sealed class CommonPredictionWordCountsDocument : IScribeDocumentDefini
     private static Formula ResultFormula()
     {
         var capacity = Le(Call("int", V("t")),
-            Seq(D(2), Cdot, Call("reservoir-half", V("m"), V("z"))));
+            Seq(D(2), Cdot, Call("reservoirHalf", V("m"), V("z"))));
         var balance = Eq(Seq(D(2), Cdot,
-            Call("discrepancy-half", V("m"), V("z")), Minus, D(2), Cdot,
-            Call("reservoir-half", V("m"), V("z")), Plus, D(2), Cdot,
+            Call("discrepancyHalf", V("m"), V("z")), Minus, D(2), Cdot,
+            Call("reservoirHalf", V("m"), V("z")), Plus, D(2), Cdot,
             Call("int", V("t"))), D(0));
         return All("m", V("Nat"), All("z", V("Nat"),
             Imp(Seq(D(0), Sp, Lt, Sp, V("m")),

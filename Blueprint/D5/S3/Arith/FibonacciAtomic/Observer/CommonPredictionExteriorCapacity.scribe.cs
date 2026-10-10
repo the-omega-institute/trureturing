@@ -12,11 +12,7 @@ internal sealed class CommonPredictionExteriorCapacityDocument : IScribeDocument
     private static Formula Par(Formula body) => Seq(Left, Open, body, Right, Close);
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Par(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
-    private static Formula Ex(string name, Formula type, Formula body) =>
-        Seq(Exists, Sp, Par(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
-    private static Formula Le(Formula a, Formula b) => Seq(a, Sp, F.Le, Sp, b);
-    private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

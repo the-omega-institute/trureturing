@@ -1,17 +1,17 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionExteriorCapacity
    generality: G
-   mirror - B: D5 / B / S3 / Arith / FibonacciAtomic / Observer / CommonPredictionExteriorCapacity
-   mirror - E: none(waiver:unbounded - symbolic - proof)
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Observer/CommonPredictionExteriorCapacity
+   mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Exterior teacher discrepancy and the reservoir capacity inequalities. -/
+   digest: Selector geometry, exterior teacher discrepancy and coefficient identifications. -/
 import D5.S3.Arith.FibonacciAtomic.Observer.CommonPredictionWordCounts
 import D5.S3.Arith.FibonacciAtomic.HeterogeneousTeacherSeparation
 import Mathlib.Tactic
 import Mathlib.Data.Nat.Choose.Sum
 /-!
-The common two - layer priority - teacher problem on independent complete windows.
-All prefix lengths and all rare - count classes are included.
+The common two-layer priority-teacher problem on independent complete windows.
+All prefix lengths and all rare-count classes are included.
 -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -66,12 +66,12 @@ def selector (m k : ℕ) (q r v : W) (coin : Bool) : Fin 3 :=
     firstTop m k q r v
   else if coin then lastTop m k q r v else firstTop m k q r v
 /-- The ordered rational-breakpoint region of a prefix endpoint count. -/
-def region (m k : ℕ) : ℕ :=
+private def region (m k : ℕ) : ℕ :=
   if k = 0 then 0 else if k = m then 7 else if 3 * k ≤ m then 1 else
   if 2 * k < m then 2 else if 2 * k = m then 3 else if 3 * k < 2 * m then 4 else if 3 * k = 2
     * m then 5 else 6
 /-- A fixed pair realizing each of the eight selector regions. -/
-def representative : ℕ → ℕ × ℕ
+private def representative : ℕ → ℕ × ℕ
   | 0 => (1,0) | 1 => (4,1) | 2 => (5,2) | 3 => (4,2)
   | 4 => (5,3) | 5 => (3,2) | 6 => (10,9) | _ => (1,1)
 set_option maxHeartbeats 8000000 in
@@ -194,10 +194,10 @@ lemma selector_majority (m k : ℕ) (q r v : W) (coin : Bool) (c : Fin 3) :
     have hc : c = 0 ∨ c = 1 ∨ c = 2 := by omega
     rcases hc with rfl | rfl | rfl <;> simp only [top0, top1, top2] at * <;> omega
 /-- Reservoir condition on an ordered anchor triple. -/
-def isRes (q r v : W) : Prop := q∈({.zero,.middle,.high}:Finset W) ∧ r = .high
+private def isRes (q r v : W) : Prop := q∈({.zero,.middle,.high}:Finset W) ∧ r = .high
   ∧ v∈({.low,.ends}:Finset W)
 /-- Polynomial discrepancy of the two coin choices over all non-reservoir anchors. -/
-def pairAnchor (m k : ℕ) (h : Bool) : Polynomial ℤ := by
+private def pairAnchor (m k : ℕ) (h : Bool) : Polynomial ℤ := by
   classical exact ∑ q : W, ∑ r : W, ∑ v : W,
     if isRes q r v then 0 else
       Polynomial.C (ld h q r v (selector m k q r v false) + ld h q r v (selector m k q r v true)) *
@@ -266,7 +266,7 @@ private lemma pair_anchor_seven : pairAnchor 1 1 true = 0 := by
 def anchorCoin (q r v : W) : Bool :=
   if first v then decide (v = .ends) else if last q then decide (q = .ends) else decide (r = .ends)
 /-- Discrepancy polynomial of the zero-high prefix class. -/
-def zeroAnchor : Polynomial ℤ := by
+private def zeroAnchor : Polynomial ℤ := by
   classical exact ∑ q : W, ∑ r : W, ∑ v : W,
     if isRes q r v then 0 else
       Polynomial.C (ld false q r v (selector 1 0 q r v (anchorCoin q r v))) *
@@ -806,7 +806,8 @@ private lemma slice_coeff (n k j : ℕ) :
     (WordCounts.slice n k).coeff j =
       (Capacity.pref n j:ℤ) * (Capacity.weight j k:ℤ) := by
   have he : WordCounts.slice n k =
-      Polynomial.C ((n.choose k:ℤ) * 2 ^ k) * (Polynomial.X ^ k * (2 + Polynomial.X) ^ (n - k)) := by
+      Polynomial.C ((n.choose k:ℤ) * 2 ^ k) *
+        (Polynomial.X ^ k * (2 + Polynomial.X) ^ (n - k)) := by
     rw [WordCounts.slice_formula]
     simp only [map_mul, map_pow, Polynomial.C_eq_natCast, Polynomial.C_ofNat, mul_pow]
     ring
@@ -894,7 +895,8 @@ lemma e_coeff (m z : ℕ) :
   · rw [mul_v_coeff, mulV]
     have hD (j : ℕ) :
         (((2 + 3 * Polynomial.X) * ExteriorCounts.L m-
-          4 * ((2 + 3 * Polynomial.X) ^ (m - 1) - (2 + Polynomial.X) ^ (m - 1))):P).coeff j = dc m j := by
+          4 * ((2 + 3 * Polynomial.X) ^ (m - 1) - (2 + Polynomial.X) ^ (m - 1))):P).coeff j =
+          dc m j := by
       rw [Polynomial.coeff_sub, Polynomial.coeff_ofNat_mul, Polynomial.coeff_sub,
         mul_b_coeff]
       simp only [l_coeff, b_coeff, v_coeff]

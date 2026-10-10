@@ -1,17 +1,17 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionSharpRisk
    generality: G
-   mirror - B: D5 / B / S3 / Arith / FibonacciAtomic / Observer / CommonPredictionSharpRisk
-   mirror - E: none(waiver:unbounded - symbolic - proof)
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Observer/CommonPredictionSharpRisk
+   mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: The sharp simultaneous prediction risk for the two - layer priority - teacher family. -/
+   digest: The sharp simultaneous prediction risk for the two-layer priority-teacher family. -/
 import D5.S3.Arith.FibonacciAtomic.Observer.CommonPredictionExteriorCapacity
 import Mathlib.Algebra.Polynomial.Derivative
 import Mathlib.Logic.Equiv.Set
 import Mathlib.Logic.Equiv.Sum
 /-!
-The common two - layer priority - teacher problem on independent complete windows.
-All prefix lengths and all rare - count classes are included.
+The common two-layer priority-teacher problem on independent complete windows.
+All prefix lengths and all rare-count classes are included.
 -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -28,7 +28,7 @@ local notation "W" => _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window
 open ExteriorCounts
 open WordCounts (rareN)
 /-- The actual teacher label indexed by layer and prefix position. -/
-def label {m : ℕ} (side : Bool) (i : Fin m) (x : Input (m + 3)) : Fin 3 :=
+private def label {m : ℕ} (side : Bool) (i : Fin m) (x : Input (m + 3)) : Fin 3 :=
   if side then teacher (TeacherLabels.rightRoles i) x else teacher (TeacherLabels.leftRoles i) x
 private def outsideCount {m : ℕ} (z : ℕ) (side : Bool) (i : Fin m) : ℤ :=
   ∑ x : Input (m + 3), if ¬ReservoirWords.isReservoir x ∧ rareN x = z then
@@ -144,7 +144,7 @@ private lemma classifier_majority {m : ℕ} (S : ℕ → Finset (Input (m + 3)))
     by_cases hs : x ∈ S (rareN x) <;> simp [classifier, hr, hs]
   · simpa only [classifier, if_neg hr] using exterior_majority x c
 /-- Integer error count of one classifier in a specified rare-symbol class. -/
-def errorCount {m : ℕ} (z : ℕ) (side : Bool) (i : Fin m)
+private def errorCount {m : ℕ} (z : ℕ) (side : Bool) (i : Fin m)
     (f : Input (m + 3) → Fin 3) : ℤ :=
   ∑ x : Input (m + 3), if rareN x = z then MajorityGeometry.err (label side i x) (f x) else 0
 private lemma indicator_sum {m : ℕ} (S : Finset (Input (m + 3))) :
@@ -562,7 +562,8 @@ private lemma prefix_binomial (m k : ℕ) (s : ℝ) :
   have hs := congrArg (fun P : Polynomial ℝ => P.coeff k) (prefix_generating m s)
   rw [Polynomial.finsetSum_coeff] at hs
   have hc : (Polynomial.C (1 - 2 * s) + Polynomial.C (2 * s) * Polynomial.X) ^ m =
-      ((Polynomial.X + Polynomial.C (1 - 2 * s)) ^ m).comp (Polynomial.C (2 * s) * Polynomial.X) := by
+      ((Polynomial.X + Polynomial.C (1 - 2 * s)) ^ m).comp
+        (Polynomial.C (2 * s) * Polynomial.X) := by
     simp only [Polynomial.pow_comp, Polynomial.add_comp, Polynomial.X_comp, Polynomial.C_comp]
     rw [add_comm]
   rw [hc, Polynomial.comp_C_mul_X_coeff, Polynomial.coeff_X_add_C_pow] at hs
