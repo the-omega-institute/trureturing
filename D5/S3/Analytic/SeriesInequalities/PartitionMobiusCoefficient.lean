@@ -2,9 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/SeriesInequalities/PartitionMobiusCoefficient
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.IncidenceAlgebra, mathlib/module/Mathlib.Order.Partition.Finpartition]
+   anchors: []
    utility: none
-   digest: Block-union and point-insertion bijections compute the partition-lattice Mobius coefficient over every commutative ring. -/
+   digest: Finite partition Mobius coefficients and moment-cumulant inversion. -/
 
 import D5.S3.Analytic.SeriesInequalities.PartitionMobiusInversion
 import Mathlib.Data.Finset.Grade
@@ -20,16 +20,16 @@ attribute [local instance] Classical.propDecidable
 open Finset
 
 local notation "blockUnion" => (Finset.biUnion · id)
-local notation "weight" => (fun k : ℕ => (-1 : ℤ) ^ (k - 1) * ((k - 1).factorial : ℤ))
+local notation "weight" => (fun k : ℕ => (-1 : ℤ) ^ (k - 1) * (Nat.factorial (k - 1) : ℤ))
 
 variable {α : Type*} [DecidableEq α] {s : Finset α}
 
-private lemma blockUnion_subset (P : Finpartition s) {U : Finset (Finset α)}
+private lemma block_union_subset (P : Finpartition s) {U : Finset (Finset α)}
     (hU : U ⊆ P.parts) : blockUnion U ⊆ s := by
   exact biUnion_subset.mpr fun b hb => P.subset (hU hb)
 
 /-- A union of whole disjoint nonempty blocks remembers exactly which blocks were used. -/
-private lemma block_subset_blockUnion_iff (P : Finpartition s) {U : Finset (Finset α)}
+private lemma block_subset_block_union_iff (P : Finpartition s) {U : Finset (Finset α)}
     (hU : U ⊆ P.parts) {b : Finset α} (hb : b ∈ P.parts) :
     b ⊆ blockUnion U ↔ b ∈ U := by
   classical
@@ -48,15 +48,15 @@ private lemma block_subset_blockUnion_iff (P : Finpartition s) {U : Finset (Fins
       exact ⟨c, hU hcU, hcU, hxc⟩
   simpa [hu, t] using h
 
-private lemma blockUnion_injective (P : Finpartition s) {U V : Finset (Finset α)}
+private lemma block_union_injective (P : Finpartition s) {U V : Finset (Finset α)}
     (hU : U ⊆ P.parts) (hV : V ⊆ P.parts)
     (h : blockUnion U = blockUnion V) : U = V := by
   ext b
   by_cases hb : b ∈ P.parts
-  · rw [← block_subset_blockUnion_iff P hU hb, ← block_subset_blockUnion_iff P hV hb, h]
+  · rw [← block_subset_block_union_iff P hU hb, ← block_subset_block_union_iff P hV hb, h]
   · exact iff_of_false (fun hu => hb (hU hu)) (fun hv => hb (hV hv))
 
-private lemma blockUnion_nonempty (P : Finpartition s) {U : Finset (Finset α)}
+private lemma block_union_nonempty (P : Finpartition s) {U : Finset (Finset α)}
     (hU : U ⊆ P.parts) (hne : U.Nonempty) : (blockUnion U).Nonempty := by
   obtain ⟨b, hb⟩ := hne
   obtain ⟨x, hx⟩ := P.nonempty_of_mem_parts (hU hb)
@@ -67,7 +67,7 @@ private def coarsen (P : Finpartition s) (Q : Finpartition P.parts) : Finpartiti
   refine Finpartition.ofExistsUnique (Q.parts.image blockUnion) ?_ ?_ ?_
   · intro b hb
     obtain ⟨U, hU, rfl⟩ := mem_image.mp hb
-    exact blockUnion_subset P (Q.subset hU)
+    exact block_union_subset P (Q.subset hU)
   · intro x hx
     obtain ⟨b, hb, hxb⟩ := P.exists_mem hx
     obtain ⟨U, hU, hbU⟩ := Q.exists_mem hb
@@ -81,7 +81,7 @@ private def coarsen (P : Finpartition s) (Q : Finpartition P.parts) : Finpartiti
     exact congrArg blockUnion hVU
   · intro h
     obtain ⟨U, hU, hzero⟩ := mem_image.mp h
-    exact (blockUnion_nonempty P (Q.subset hU) (Q.nonempty_of_mem_parts hU)).ne_empty hzero
+    exact (block_union_nonempty P (Q.subset hU) (Q.nonempty_of_mem_parts hU)).ne_empty hzero
 
 @[simp] private lemma coarsen_parts (P : Finpartition s) (Q : Finpartition P.parts) :
     (coarsen P Q).parts = Q.parts.image blockUnion := rfl
@@ -90,30 +90,29 @@ private lemma le_coarsen (P : Finpartition s) (Q : Finpartition P.parts) : P ≤
   intro b hb
   obtain ⟨U, hU, hbU⟩ := Q.exists_mem hb
   exact ⟨blockUnion U, mem_image.mpr ⟨U, hU, rfl⟩,
-    (block_subset_blockUnion_iff P (Q.subset hU) hb).mpr hbU⟩
+    (block_subset_block_union_iff P (Q.subset hU) hb).mpr hbU⟩
 
 private lemma coarsen_card (P : Finpartition s) (Q : Finpartition P.parts) :
     (coarsen P Q).parts.card = Q.parts.card := by
   rw [coarsen_parts]
   apply card_image_iff.mpr
   intro U hU V hV h
-  exact blockUnion_injective P (Q.subset hU) (Q.subset hV) h
-
+  exact block_union_injective P (Q.subset hU) (Q.subset hV) h
 
 private def blockGroup (P : Finpartition s) (b : Finset α) : Finset (Finset α) :=
   P.parts.filter (fun c => c ⊆ b)
 
-private lemma blockGroup_subset (P : Finpartition s) (b : Finset α) :
+private lemma block_group_subset (P : Finpartition s) (b : Finset α) :
     blockGroup P b ⊆ P.parts := filter_subset _ _
 
-private lemma blockGroup_blockUnion (P : Finpartition s) {U : Finset (Finset α)}
+private lemma block_group_union (P : Finpartition s) {U : Finset (Finset α)}
     (hU : U ⊆ P.parts) : blockGroup P (blockUnion U) = U := by
   ext b
   simp only [blockGroup, mem_filter]
-  exact ⟨fun h => (block_subset_blockUnion_iff P hU h.1).mp h.2,
-    fun h => ⟨hU h, (block_subset_blockUnion_iff P hU (hU h)).mpr h⟩⟩
+  exact ⟨fun h => (block_subset_block_union_iff P hU h.1).mp h.2,
+    fun h => ⟨hU h, (block_subset_block_union_iff P hU (hU h)).mpr h⟩⟩
 
-private lemma blockUnion_blockGroup (P R : Finpartition s) (hPR : P ≤ R)
+private lemma block_union_group (P R : Finpartition s) (hPR : P ≤ R)
     {b : Finset α} (hb : b ∈ R.parts) : blockUnion (blockGroup P b) = b := by
   ext x
   constructor
@@ -126,16 +125,16 @@ private lemma blockUnion_blockGroup (P R : Finpartition s) (hPR : P ≤ R)
     have hdb : d = b := R.eq_of_mem_parts hd hb (hcd hxc) hx
     exact mem_biUnion.mpr ⟨c, mem_filter.mpr ⟨hc, hdb ▸ hcd⟩, hxc⟩
 
-private lemma blockGroup_injective (P R : Finpartition s) (hPR : P ≤ R)
+private lemma block_group_injective (P R : Finpartition s) (hPR : P ≤ R)
     {a b : Finset α} (ha : a ∈ R.parts) (hb : b ∈ R.parts)
     (h : blockGroup P a = blockGroup P b) : a = b := by
-  rw [← blockUnion_blockGroup P R hPR ha, ← blockUnion_blockGroup P R hPR hb, h]
+  rw [← block_union_group P R hPR ha, ← block_union_group P R hPR hb, h]
 
-private lemma blockGroup_nonempty (P R : Finpartition s) (hPR : P ≤ R)
+private lemma block_group_nonempty (P R : Finpartition s) (hPR : P ≤ R)
     {b : Finset α} (hb : b ∈ R.parts) : (blockGroup P b).Nonempty := by
   apply nonempty_iff_ne_empty.mpr
   intro h
-  have heq := blockUnion_blockGroup P R hPR hb
+  have heq := block_union_group P R hPR hb
   rw [h] at heq
   exact R.ne_empty hb heq.symm
 
@@ -144,7 +143,7 @@ private def uncoarsen (P R : Finpartition s) (hPR : P ≤ R) : Finpartition P.pa
   refine Finpartition.ofExistsUnique (R.parts.image (blockGroup P)) ?_ ?_ ?_
   · intro U hU
     obtain ⟨b, hb, rfl⟩ := mem_image.mp hU
-    exact blockGroup_subset P b
+    exact block_group_subset P b
   · intro c hc
     obtain ⟨b, hb, hcb⟩ := hPR hc
     refine ⟨blockGroup P b, ⟨mem_image.mpr ⟨b, hb, rfl⟩,
@@ -156,7 +155,7 @@ private def uncoarsen (P R : Finpartition s) (hPR : P ≤ R) : Finpartition P.pa
     exact congrArg (blockGroup P) hdb
   · intro h
     obtain ⟨b, hb, heq⟩ := mem_image.mp h
-    exact (blockGroup_nonempty P R hPR hb).ne_empty heq
+    exact (block_group_nonempty P R hPR hb).ne_empty heq
 
 @[simp] private lemma uncoarsen_parts (P R : Finpartition s) (hPR : P ≤ R) :
     (uncoarsen P R hPR).parts = R.parts.image (blockGroup P) := rfl
@@ -166,7 +165,7 @@ private lemma coarsen_uncoarsen (P R : Finpartition s) (hPR : P ≤ R) :
   apply Finpartition.ext
   rw [coarsen_parts, uncoarsen_parts, image_image]
   calc
-    _ = R.parts.image id := image_congr fun b hb => blockUnion_blockGroup P R hPR hb
+    _ = R.parts.image id := image_congr fun b hb => block_union_group P R hPR hb
     _ = _ := image_id
 
 private lemma uncoarsen_coarsen (P : Finpartition s) (Q : Finpartition P.parts) :
@@ -174,7 +173,7 @@ private lemma uncoarsen_coarsen (P : Finpartition s) (Q : Finpartition P.parts) 
   apply Finpartition.ext
   rw [uncoarsen_parts, coarsen_parts, image_image]
   calc
-    _ = Q.parts.image id := image_congr fun U hU => blockGroup_blockUnion P (Q.subset hU)
+    _ = Q.parts.image id := image_congr fun U hU => block_group_union P (Q.subset hU)
     _ = _ := image_id
 
 /-- The block-union construction is a bijection, not merely a way to make some coarsenings. -/
@@ -194,7 +193,6 @@ private theorem sum_coarsenings (P : Finpartition s) (w : ℕ → ℤ) :
   apply Fintype.sum_equiv (coarseningEquiv P)
   intro Q
   exact congrArg w (coarsen_card P Q).symm
-
 
 variable {a : α}
 
@@ -235,7 +233,7 @@ private def insertPoint (P : Finpartition s) (ha : a ∉ s) (b : Finset α)
         rcases mem_insert.mp hd with rfl | hd
         · have hxb : x ∈ b := (mem_insert.mp hxd).resolve_left hxa
           have hbP : b ∈ P.parts := (mem_insert.mp hb).resolve_left (by
-            intro hb0; simpa [hb0] using hxb)
+            intro hb0; simp [hb0] at hxb)
           exact (hcb (P.eq_of_mem_parts hc hbP hxc hxb)).elim
         · exact P.eq_of_mem_parts (mem_erase.mp hd).2 hc hxd hxc
   · intro h
@@ -243,11 +241,11 @@ private def insertPoint (P : Finpartition s) (ha : a ∉ s) (b : Finset α)
     · exact (insert_nonempty a b).ne_empty h.symm
     · exact P.empty_notMem_parts (mem_erase.mp h).2
 
-@[simp] private lemma insertPoint_parts (P : Finpartition s) (ha : a ∉ s)
+@[simp] private lemma insert_point_parts (P : Finpartition s) (ha : a ∉ s)
     (b : Finset α) (hb : b ∈ insert ∅ P.parts) :
     (insertPoint P ha b hb).parts = insert (insert a b) (P.parts.erase b) := rfl
 
-private lemma insertPoint_part (P : Finpartition s) (ha : a ∉ s)
+private lemma insert_point_part (P : Finpartition s) (ha : a ∉ s)
     (b : Finset α) (hb : b ∈ insert ∅ P.parts) :
     (insertPoint P ha b hb).part a = insert a b := by
   exact (insertPoint P ha b hb).part_eq_of_mem (mem_insert_self _ _) (mem_insert_self _ _)
@@ -257,16 +255,16 @@ private def erasePoint (R : Finpartition (insert a s)) (ha : a ∉ s) : Finparti
     change (insert a s) \ {a} = s
     rw [sdiff_singleton_eq_erase, erase_insert ha])
 
-@[simp] private lemma erasePoint_parts (R : Finpartition (insert a s)) (ha : a ∉ s) :
+@[simp] private lemma erase_point_parts (R : Finpartition (insert a s)) (ha : a ∉ s) :
     (erasePoint R ha).parts = (R.parts.image (fun b => b.erase a)).erase ∅ := by
   simp [erasePoint, Finpartition.avoid, Finpartition.ofErase, Finpartition.copy,
     sdiff_singleton_eq_erase]
 
-private lemma erasePoint_insertPoint (P : Finpartition s) (ha : a ∉ s)
+private lemma erase_point_insertPoint (P : Finpartition s) (ha : a ∉ s)
     (b : Finset α) (hb : b ∈ insert ∅ P.parts) :
     erasePoint (insertPoint P ha b hb) ha = P := by
   apply Finpartition.ext
-  rw [erasePoint_parts, insertPoint_parts, image_insert]
+  rw [erase_point_parts, insert_point_parts, image_insert]
   have hab : a ∉ b := fun h => ha (choice_subset P hb h)
   rw [erase_insert hab]
   have himage : (P.parts.erase b).image (fun c => c.erase a) = P.parts.erase b := by
@@ -284,14 +282,14 @@ private lemma erased_part_choice (R : Finpartition (insert a s)) (ha : a ∉ s) 
   by_cases hzero : (R.part a).erase a = ∅
   · exact mem_insert.mpr (Or.inl hzero)
   · apply mem_insert_of_mem
-    rw [erasePoint_parts]
+    rw [erase_point_parts]
     exact mem_erase.mpr ⟨hzero, mem_image.mpr
       ⟨R.part a, R.part_mem.mpr (mem_insert_self _ _), rfl⟩⟩
 
-private lemma insertPoint_erasePoint (R : Finpartition (insert a s)) (ha : a ∉ s) :
+private lemma insert_point_erasePoint (R : Finpartition (insert a s)) (ha : a ∉ s) :
     insertPoint (erasePoint R ha) ha ((R.part a).erase a) (erased_part_choice R ha) = R := by
   apply Finpartition.ext
-  rw [insertPoint_parts, erasePoint_parts,
+  rw [insert_point_parts, erase_point_parts,
     insert_erase (R.mem_part_self.mpr (mem_insert_self _ _))]
   have hpart : R.part a ∈ R.parts := R.part_mem.mpr (mem_insert_self _ _)
   have haP : a ∈ R.part a := R.mem_part_self.mpr (mem_insert_self _ _)
@@ -330,29 +328,28 @@ private def insertionEquiv (s : Finset α) (a : α) (ha : a ∉ s) :
     rcases C with ⟨P, b, hb⟩
     dsimp only
     have hab : a ∉ b := fun h => ha (choice_subset P hb h)
-    apply Sigma.ext (erasePoint_insertPoint P ha b hb)
+    apply Sigma.ext (erase_point_insertPoint P ha b hb)
     apply (Subtype.heq_iff_coe_eq (by
       intro x
       change x ∈ insert ∅ (erasePoint (insertPoint P ha b hb) ha).parts ↔
         x ∈ insert ∅ P.parts
-      rw [erasePoint_insertPoint])).mpr
+      rw [erase_point_insertPoint])).mpr
     change ((insertPoint P ha b hb).part a).erase a = b
-    rw [insertPoint_part, erase_insert hab]
-  right_inv R := insertPoint_erasePoint R ha
+    rw [insert_point_part, erase_insert hab]
+  right_inv R := insert_point_erasePoint R ha
 
-private lemma insertPoint_card (P : Finpartition s) (ha : a ∉ s)
+private lemma insert_point_card (P : Finpartition s) (ha : a ∉ s)
     (b : Finset α) (hb : b ∈ insert ∅ P.parts) :
     (insertPoint P ha b hb).parts.card = if b = ∅ then P.parts.card + 1 else P.parts.card := by
   have hnew : insert a b ∉ P.parts.erase b := by
     intro h
     exact ha (P.subset (mem_erase.mp h).2 (mem_insert_self _ _))
-  rw [insertPoint_parts, card_insert_of_notMem hnew]
+  rw [insert_point_parts, card_insert_of_notMem hnew]
   by_cases hb0 : b = ∅
   · simp [hb0, P.empty_notMem_parts]
   · rw [if_neg hb0, card_erase_of_mem ((mem_insert.mp hb).resolve_left hb0)]
     have : 0 < P.parts.card := card_pos.mpr ⟨b, (mem_insert.mp hb).resolve_left hb0⟩
     omega
-
 
 private lemma weight_cancel (k : ℕ) (hk : 0 < k) :
     weight (k + 1) + k * weight k = 0 := by
@@ -369,11 +366,10 @@ private theorem partition_sum_insert (s : Finset α) (a : α) (ha : a ∉ s) (w 
   intro P hP
   change (∑ b : {b : Finset α // b ∈ insert ∅ P.parts},
     w (insertPoint P ha b.1 b.2).parts.card) = _
-  simp_rw [insertPoint_card]
+  simp_rw [insert_point_card]
   rw [sum_coe_sort (insert ∅ P.parts)
     (fun b : Finset α => w (if b = ∅ then P.parts.card + 1 else P.parts.card)),
     sum_insert P.empty_notMem_parts]
-  simp only [if_pos rfl]
   congr 1
   calc
     _ = ∑ b ∈ P.parts, w P.parts.card := by
@@ -385,14 +381,14 @@ private theorem partition_sum_insert (s : Finset α) (a : α) (ha : a ∉ s) (w 
 private theorem partition_weight_sum_zero (s : Finset α) (a : α)
     (ha : a ∉ s) (hs : s.Nonempty) :
     (∑ Q : Finpartition (insert a s), weight Q.parts.card) = 0 := by
-  rw [partition_sum_insert s a ha]
+  rw [partition_sum_insert s a ha weight]
   apply sum_eq_zero
   intro P hP
   exact weight_cancel P.parts.card (card_pos.mpr (P.parts_nonempty hs.ne_empty))
 
 private lemma partition_weight_sum_singleton (a : α) :
     (∑ Q : Finpartition ({a} : Finset α), weight Q.parts.card) = 1 := by
-  haveI := (isAtom_singleton a).uniqueFinpartition (P := (⊤ : Finpartition ({a} : Finset α)))
+  letI := (isAtom_singleton a).uniqueFinpartition (P := (⊤ : Finpartition ({a} : Finset α)))
   have hp (P : Finpartition ({a} : Finset α)) : P.parts.card = 1 := by
     have hlo : 0 < P.parts.card := card_pos.mpr
       (P.parts_nonempty (singleton_nonempty a).ne_empty)
@@ -441,9 +437,8 @@ private theorem weighted_coarsening_cancellation (s : Finset α) (hs : s.Nonempt
     (P : Finpartition s) :
     (∑ Q : {Q : Finpartition s // P ≤ Q}, weight Q.1.parts.card) =
       if P = ⊤ then 1 else 0 := by
-  rw [sum_coarsenings, partition_weight_sum P.parts (P.parts_nonempty hs.ne_empty)]
+  rw [sum_coarsenings P weight, partition_weight_sum P.parts (P.parts_nonempty hs.ne_empty)]
   simp only [card_parts_one_iff_top s hs]
-
 
 variable {R : Type*} [CommRing R]
 
@@ -459,7 +454,7 @@ theorem partition_mobius_coefficient (s : Finset α) (hs : s.Nonempty)
         ∑ T ∈ Ici Q, (-1 : R) ^ (T.parts.card - 1) * ((T.parts.card - 1).factorial : R) := by
     rw [sum_subtype (Ici Q) (fun _ => mem_Ici)]
     have h := congrArg (Int.castRingHom R) (weighted_coarsening_cancellation s hs Q)
-    simpa [] using h.symm
+    simpa using h.symm
   have h := IncidenceAlgebra.moebius_inversion_top
     (fun Q : Finpartition s =>
       (-1 : R) ^ (Q.parts.card - 1) * ((Q.parts.card - 1).factorial : R))
@@ -479,6 +474,5 @@ theorem moment_cumulant_without_mu_assumption
   apply partition_mobius_moment_cumulant_inversion A hA moment cumulant hrelation
   intro P
   exact partition_mobius_coefficient A hA P
-
 
 end D5.S3.Analytic.SeriesInequalities.PartitionMobiusCoefficient
