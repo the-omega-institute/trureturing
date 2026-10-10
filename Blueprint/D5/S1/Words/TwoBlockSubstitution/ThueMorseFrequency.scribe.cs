@@ -23,7 +23,10 @@ internal sealed class ThueMorseFrequencyDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The frequency is one half", Named("claim"),
                 "For signs 1 − 2xₙ, one substitution step maps a pair (u,v) to (u,v,−v). After k steps, its coefficient functional is periodic modulo 2ᵏ. Multiplication by 3 permutes those residues, and the adjacent correlation sums cancel. The squared coefficient energy is 3ᵏ⁻¹ for k ≥ 1. Finite Cauchy–Schwarz bounds each aligned block sum by √(2ᵏ3ᵏ⁻¹). Splitting a prefix into aligned blocks and a bounded remainder makes the signed mean tend to zero, giving the asserted frequency.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dekking-keane-2022-two-block-thue-morse-frequency"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,

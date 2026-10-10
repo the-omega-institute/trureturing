@@ -46,6 +46,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/TwoBlockSubstitution/ThueMorseFrequency.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/dekking-keane-2022-two-block-thue-morse-frequency` (proved) by `D5/S1/Words/TwoBlockSubstitution/ThueMorseFrequency.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dekking-keane-2022-two-block-thue-morse-frequency","declaration_gid":"D5/S1/Words/TwoBlockSubstitution/ThueMorseFrequency.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* F. M. Dekking and M. Keane (2022). *Two-block substitutions and morphic words*. DOI: [10.48550/arXiv.2202.13548](https://doi.org/10.48550/arXiv.2202.13548). URL: <https://arxiv.org/abs/2202.13548v1>.
