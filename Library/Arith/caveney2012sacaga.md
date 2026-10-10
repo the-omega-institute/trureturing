@@ -875,3 +875,43 @@ original signed obligation preserved. It supplies neither GA1 nor
 regular or event-free states, a favorable cutoff, eliminated ties,
 positive sorting-defect funding, or RH. Those restrictions cannot be
 added to (S3) without another same-source selection argument.
+
+## The same power-excess family also supplies proper GA1 sources
+
+Keep the actual $D,H,N$ and all parameters of (S1)–(S2). The following
+application of equations (10)–(12) and Lemma 6, printed pp.8–9 and p.13,
+provides the additional same-source selection required above. It does
+not reconstruct the paper's known infinite CA–GA1 supplier or claim
+priority for the application.
+
+First the selected maximum satisfies $N\ge H$, not only $N>D$.
+The two endpoints optimize at the common price $\epsilon_p$, with
+$Q=Z(D)D^{-\epsilon_p}=Z(H)H^{-\epsilon_p}$. For $D<m<H$, global
+CA optimization gives
+
+$$
+G(m)\le Qe^{g_{\epsilon_p}(m)},\qquad
+g_\epsilon(t)=\epsilon\log t-\log\log\log t.
+$$
+
+Lemma 6's strict decrease followed by strict increase implies
+$g_{\epsilon_p}(m)<\max\{g_{\epsilon_p}(D),g_{\epsilon_p}(H)\}$.
+Since $G(D)<G(H)$, the larger endpoint is $H$. Together with the
+separate strict comparison at $m=D$, every $D\le m<H$ has
+$G(m)<G(H)$; tail maximality therefore forces $N\ge H$.
+
+Put $q_0(u)=1/(u\log u)$. The same integer's own price now satisfies
+
+$$
+\epsilon_N=q_0(A)\le q_0(\log H)<q_0(p+1)<\epsilon_p.
+$$
+
+Every occupied $H$ layer has price at least $\epsilon_p$ and hence is
+mandatory at $\epsilon_N$, by the cited activation rule. Thus $H\mid N$.
+For any ordinary prime divisor $q$ of $N$, if $q\le p$ then
+$N/q\ge H/q\ge H/p=D$. If $q>p$, the largest prime factor of $H$ is
+$p$, so $H\mid N/q$ and again $N/q\ge H>D$. These comparisons cover
+every multiplicity. The defining maximum over integers at least $D$
+therefore supplies $G(N/q)\le G(N)$ for every such $q$.
+Eventually $p\ge5$, so $\Omega(N)\ge\Omega(H)\ge3$; this is proper GA1
+in the source's exact sense. The power excess (S2) holds on this same $N$.
