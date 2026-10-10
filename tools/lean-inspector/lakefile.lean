@@ -53,6 +53,73 @@ private def observePhase (phase boundary : String) : IO Unit := do
     catch error =>
       try IO.eprintln s!"LEAN_INSPECTOR_DIAGNOSTIC_UNAVAILABLE lake phase: {error}" catch _ => pure ()
 
+-- Read existing task handles only. A waiting handle can also be waiting for a
+-- worker; it does not identify a dependency or an active external command.
+private def observeColdRequiredFacets (mod : Module) (workspace : Workspace)
+    (jobs : Array (String × String × OpaqueJob)) : IO Unit := do
+  unless mod.name == `Reg.Support.AuricFibCompiledFixture do return ()
+  unless (← IO.getEnv "STRATALINT_COLD_FACET_OBSERVATION") == some "1" do return ()
+  let observed ← (do
+    unless (workspace.findLeanExe? `auricFibAnalysis).isNone &&
+        (workspace.findLeanExe? `unrequestedNativeFibAnalysis).isSome do return ()
+    let some path ← IO.getEnv "STRATALINT_INSPECTOR_PHASES" | return ()
+    -- The unchanged fixture clears this channel before each command. Only its
+    -- first command is eligible; no marker or completion file is created here.
+    let first ← IO.FS.withFile path .read fun input => input.getLine
+    let record ← IO.ofExcept (Json.parse first)
+    unless (record.getObjValAs? String "observation").toOption == some "FIB_COMPILED_STAGE" &&
+        (record.getObjValAs? String "stage").toOption == some "command" &&
+        (record.getObjValAs? String "boundary").toOption == some "start" &&
+        (record.getObjValAs? Nat "sequence").toOption == some 1 do return ()
+    let started ← IO.monoMsNow
+    let snapshot : IO Unit := do
+      let mut rows := #[]
+      for (key, consumer, job) in jobs do
+        let state ← IO.getTaskState job.task
+        let result :=
+          if state == .finished then
+            match job.task.get with
+            | .ok _ s => Json.mkObj [
+                ("outcome", Lean.toJson "ok"), ("action", Lean.toJson (reprStr s.action)),
+                ("wants_rebuild", Lean.toJson s.wantsRebuild)]
+            | .error _ s => Json.mkObj [
+                ("outcome", Lean.toJson "error"), ("action", Lean.toJson (reprStr s.action)),
+                ("wants_rebuild", Lean.toJson s.wantsRebuild)]
+          else Json.null
+        rows := rows.push <| Json.mkObj [
+          ("key", Lean.toJson key), ("consumer", Lean.toJson consumer),
+          ("handle_state", Lean.toJson state.toString), ("result", result)]
+      let encoded := (Json.mkObj [
+        ("phase", Lean.toJson "lake-cold-required-facets"),
+        ("boundary", Lean.toJson "snapshot"), ("monotonic_ms", Lean.toJson (← IO.monoMsNow)),
+        ("elapsed_ms", Lean.toJson ((← IO.monoMsNow) - started)),
+        ("target", Lean.toJson mod.name.toString), ("first_command", record),
+        ("jobs", Lean.toJson rows),
+        ("scope", Lean.toJson "Existing returned handles; renewed results can omit job-local logs/action. No transitive pending-leaf attribution."),
+        ("unavailable", Lean.toJson #["active_action_argv", "primitive_exit_code",
+          "live_job_log", "missing_or_stale_input_reason", "internal_dependency_edges"]),
+        ("interruption", Lean.toJson "An unfinished handle has no terminal outcome; forced termination leaves it unresolved."),
+        ("limits", Lean.toJson "4 snapshots; 4096 UTF-8 bytes each; no log replay or job inventory")]).compress
+      if encoded.toUTF8.size > 4096 then
+        IO.FS.withFile path .append fun out => out.putStrLn
+          "{\"phase\":\"lake-cold-required-facets\",\"boundary\":\"unavailable\",\"reason\":\"snapshot exceeds 4096 bytes; omitted whole record\"}"
+      else
+        IO.FS.withFile path .append fun out => out.putStrLn encoded
+    snapshot
+    -- This detached I/O task is not a Lake job and never awaits/fetches a build.
+    -- It is not a prerequisite of the producer and cannot change its result.
+    discard <| IO.asTask (prio := .dedicated) do
+      let delayed ← (do
+        for delay in #[5000, 15000, 30000] do
+          IO.sleep delay
+          snapshot
+        : IO Unit).toBaseIO
+      if let .error error := delayed then
+        discard <| (IO.eprintln s!"LEAN_INSPECTOR_DIAGNOSTIC_UNAVAILABLE cold facets: {(error.toString.take 256).toString}").toBaseIO
+    : IO Unit).toBaseIO
+  if let .error error := observed then
+    discard <| (IO.eprintln s!"LEAN_INSPECTOR_DIAGNOSTIC_UNAVAILABLE cold facets: {(error.toString.take 256).toString}").toBaseIO
+
 private structure ReportState where
   started : IO.Ref Lean.NameSet
   batch : IO.Ref (Option (Lean.NameSet × Job Unit))
@@ -239,6 +306,21 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   observePhase "lake-report-programs" "start"
   let inspector ← reportInspector.fetch
   let workspace ← getWorkspace
+  if mod.name == `Reg.Support.AuricFibCompiledFixture &&
+      (← IO.getEnv "STRATALINT_COLD_FACET_OBSERVATION") == some "1" then
+    let mut observed := #[
+      ("anonymous preparation aggregate (exact constituent keys unavailable)",
+        "prepareNativeModuleReport dependency barrier", deps.toOpaque),
+      (mod.exportInfo.key.toString, "report compiler traces and native module reader", exports[0]!.toOpaque),
+      ((mod.facet `judgeInputs).key.toString, "typed input classification and dependency barrier", projection.toOpaque)]
+    if let some exe := workspace.findLeanExe? `reportInspector then
+      observed := observed.push (exe.exe.key.toString,
+        "inspector.await -> native.py module executable argument -> run_inspector", inspector.toOpaque)
+    if let some analyzer := workspace.findModule? `LeanInformationAuditRegAnalysis.AuricFib.Main then
+      if let some job := analyzer? then
+        observed := observed.push (analyzer.exportInfo.key.toString,
+          "analyzer await -> auric-fib-analysis.sh Lean interpreter", job.toOpaque)
+    observeColdRequiredFacets mod workspace observed
   let env := workspace.augmentedEnvVars
   let file := root / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
   (deps.add (Job.mixArray exports) |>.add projection |>.add inspector).mapM fun _ => do
