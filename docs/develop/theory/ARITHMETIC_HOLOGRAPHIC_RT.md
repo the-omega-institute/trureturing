@@ -2997,7 +2997,7 @@ w=L\sum_{j=1}^d\frac1j=L H_d=H_{d_t}\sigma^c.
 \(\beta\ge\sigma^c\)）可因合法 tie-break 而回滚；\(\beta\ge H_{d_t}\sigma^c\)
 的充分门槛不能统一降低。
 
-**唯一比值版本。** 取 \(B=M d!\)，其中 \(M\) 足够大，并令
+**唯一比值版本。** 取 \(B=M d!\)，其中整数 \(M\ge2\) 足够大，并令
 \[
 c(K_0)=B,\qquad c(K_i)=B/r_i-1.
 \]
@@ -3027,15 +3027,17 @@ c(K_0)=B,\qquad c(K_i)=B/r_i-1.
 不调用物理层数、资源、LOSR/CPTP 或 full-diamond 结论。
 
 **推论 54.2（任意有限集合系统的证书嵌入）。** 令 \(U=[n]\) 且
-\(\mathcal F\subseteq2^U\) 是任意有限菜单。取
+\(\mathcal F\subseteq2^U\) 是任意有限、去重的菜单（重复集合按菜单语义先合并，
+保留其最低成本）。取
 \(A=(\mathbb Z/2\mathbb Z)^n\)、\(T=\{\eta_1,\ldots,\eta_n\}\)，并以
 \(K_S=\langle e_i:i\in S\rangle\) 表示每个 \(S\in\mathcal F\)。则
 \[
 \overline C_{K_S}\cap T=\{\eta_i:i\in S\}.
 \]
 因此任意有限（加权）set-cover 实例及其 \(\sigma^c,d\)、所有 gain/cost
-比较和 tie-breaking，都可在该 certificate family 中逐项复现；\(H_d\) 的一般
-set-cover 常数在此模型中没有额外的集合结构改进。
+比较和 tie-breaking，都可在该 certificate family 中逐项复现；这里的嵌入是代数菜单
+构造，需这些 \(K_S\) 确实列入允许菜单；在此范围内 \(H_d\) 的一般 set-cover
+常数没有额外的集合结构改进。
 
 **最小菜单扩张实例（\(C_2^4\)）。** 取
 \(T=\{\eta_1,\eta_2,\eta_3,\eta_4\}\) 和
