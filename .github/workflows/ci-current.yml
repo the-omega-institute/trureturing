@@ -477,6 +477,8 @@ jobs:
             tools/scripts/workflow/test_ci_detect.py
             tools/scripts/workflow/test_ci_required.py
             [tests-cli]
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/native_fixture.py
             # WorktreeMakeWorkflowTests copies the root dispatch table.
             Makefile
             tools/StrataLint.Engineering/*
@@ -1492,6 +1494,8 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-workflow-script]
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/native_fixture.py
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
