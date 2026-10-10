@@ -881,7 +881,7 @@ s=(K,\text{prime seam},\text{Fibonacci phase}).
 \mathcal M
 =
 \{(m,s):
-0\le r\le1,\ 
+0\le r\le1,\
 \eta\in I(\alpha,\beta)\}.
 \]
 
