@@ -273,11 +273,11 @@ private theorem kpositive_iff_q (k d : ℕ) (α β : ℝ) :
     rw [kron_phi_rankone_form]
     exact_mod_cast h U W
 
-private def fourierRows (k d : ℕ) [NeZero d] (hkd : k ≤ d) :
+def fourierRows (k d : ℕ) [NeZero d] (hkd : k ≤ d) :
     Matrix (Fin k) (Fin d) ℂ := fun a i =>
   ZMod.stdAddChar ((ZMod.finEquiv d i) * (ZMod.finEquiv d (Fin.castLE hkd a)))
 
-private theorem fourierRows_gram (k d : ℕ) [NeZero d] (hkd : k ≤ d) :
+theorem fourierRows_gram (k d : ℕ) [NeZero d] (hkd : k ≤ d) :
     fourierRows k d hkd * (fourierRows k d hkd)ᴴ =
       (d : ℂ) • (1 : Matrix (Fin k) (Fin k) ℂ) := by
   classical

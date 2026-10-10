@@ -25,6 +25,22 @@ internal sealed class LatticeSugawaraConformalDocument : IScribeDocumentDefiniti
                 + "N(i,j;k,m-k)v is supported in [min(0,m-R),R]. Each input, "
                 + "including each intermediate current image, has its own bound.")),
             Describe.Lean(
+                DescribeId.Create("latticesugawaraconformal-exponential-constant"),
+                DeclarationHandle.Create(Prefix + "exponential_constant"),
+                H("exponential constant"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every ordinary D and integral charge alpha, the degree-zero coefficient of the actual creationExponential(D,alpha) is one. The creation series has zero constant coefficient."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticesugawaraconformal-translated-smul"),
+                DeclarationHandle.Create(Prefix + "translated_smul"),
+                H("translated smul"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every ordinary D, integral charge alpha, complex scalar c and oscillator polynomial p, translatedPolynomial(D,alpha,c*p)=c*translatedPolynomial(D,alpha,p). This is the original algebra-homomorphism scalar action."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-lattice-zero-mode"),
                 DeclarationHandle.Create(Prefix + "sugawaraMode_zero_single"),
                 H("Zero mode equals frequency Euler plus the lattice norm"),

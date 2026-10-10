@@ -128,7 +128,7 @@ noncomputable def quantumMutualInformation
   vonNeumannEntropy (marginalRight rho) + vonNeumannEntropy (marginalLeft rho) -
     vonNeumannEntropy rho
 
-private theorem density_posSemidef {n : Type*} [Fintype n] [DecidableEq n]
+theorem density_posSemidef {n : Type*} [Fintype n] [DecidableEq n]
     (rho : DensityState n) : (CStarMatrix.ofMatrix.symm rho.1).PosSemidef :=
   Matrix.nonneg_iff_posSemidef.mp
     (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1)
@@ -167,7 +167,7 @@ section SpectralPorts
 open Matrix Polynomial
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private noncomputable def spectralEntropy {rho : Matrix n n ℂ} (h : rho.IsHermitian) : ℝ :=
+noncomputable def spectralEntropy {rho : Matrix n n ℂ} (h : rho.IsHermitian) : ℝ :=
   ∑ i, Real.negMulLog (h.eigenvalues i)
 
 private theorem charpoly_conj_unitary {ρ U : Matrix n n ℂ} (hU : star U * U = 1) :

@@ -1,0 +1,33 @@
+**定义 35.1（同组成五来源与原全有限树合同）。** 沿用[定义 30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $\mathcal T$、$\mathcal I_3=\rho^3(\mathcal T)$、$\mathcal I_3(n)$、$\operatorname{NC}$、$K,K_\circ,D$ 和 $\mathsf{Cap}$。未知输入仍为任意非空有限自由有序满二叉 $\alpha/\beta$ 树 $U\in\mathcal T$；同一个确定性控制器须在全部 $\mathcal T$ 上正确判定 $\iota_3(U)$ 并有限终止。共同初始化只含固定描述，不给未知输入组成、叶数、高度、正性或候选身份承诺。所有有限左右地址，包括空地址，均可直接查询同一不变输入；四值报告保持 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$，费用只计真实缓存后的不同实际请求地址。计算、定位和地址长度沿用原费用约定。
+
+以下 $P_i,Q_i,F$ 均限于本章。直接使用式（30.2）的既有字面块
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\qquad
+B=\langle C,A\rangle=\rho^3(\langle\beta,\alpha\rangle).
+\tag{35.1}
+$$
+
+取五棵完整树及五个完整字面前像描述：
+
+$$
+\begin{aligned}
+P_1&=\langle A,\langle A,\langle A,B\rangle\rangle\rangle,
+&Q_1&=\langle\alpha,\langle\alpha,\langle\alpha,\langle\beta,\alpha\rangle\rangle\rangle\rangle,\\
+P_2&=\langle A,\langle A,\langle B,A\rangle\rangle\rangle,
+&Q_2&=\langle\alpha,\langle\alpha,\langle\langle\beta,\alpha\rangle,\alpha\rangle\rangle\rangle,\\
+P_3&=\langle A,\langle B,\langle A,A\rangle\rangle\rangle,
+&Q_3&=\langle\alpha,\langle\langle\beta,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle\rangle,\\
+P_4&=\langle B,\langle A,\langle A,A\rangle\rangle\rangle,
+&Q_4&=\langle\langle\beta,\alpha\rangle,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle,\\
+P_5&=\langle\langle\langle A,\langle A,A\rangle\rangle,A\rangle,C\rangle,
+&Q_5&=\langle\langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,\alpha\rangle,\beta\rangle,\\
+F&=\{P_1,P_2,P_3,P_4,P_5\}.&&
+\end{aligned}
+\tag{35.2}
+$$
+
+对树 $T$ 记 $\mathcal F(T)=\{(u,\lambda_T(u)):u\in L(T)\}$。对地址 $w$ 及带标签前沿 $\Phi$，写 $w\Phi=\{(wu,\ell):(u,\ell)\in\Phi\}$；$wL(T)$ 同样表示地址拼接。若 $V$ 是地址集，$\mathcal F(T)|_V$ 表示保留地址属于 $V$ 的带标签叶。本定义只指定实际树和只读接口，不以组成逆公式生成前像。
+

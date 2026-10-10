@@ -136,3 +136,59 @@ by calling the [selected global Robin maximizer](../Arith/caveney2012sacaga.md)
 a higher-order contact. Maximum preservation is supplied by the different
 construction in §4; the growth and exponent conclusions above are not
 stated for that construction.
+
+## A claimed convex-hull proof does not supply the positive margin
+
+A separate preprint by Wonbin Seo, *On the Asymptotic Stability of the
+Robin Inequality via the Convexity of Colossally Abundant Numbers*,
+[Zenodo record 17919096](https://doi.org/10.5281/zenodo.17919096),
+published 13 December 2025, claims an unconditional proof of Robin on
+all CA integers above 5040. The inspected nine-page PDF has SHA-256
+`36efc7dc4342973954f39d6cb1a45b4c99b0a90006b5ea218cbd27e42bea9f46`;
+its MD5 matches the record metadata. The relevant passages are Table 1,
+printed p.3, Theorem 5.1, p.6, and Theorem 8.1 and Appendix A.2,
+pp.7–8. This assessment concerns those printed definitions and proof
+steps; it does not certify the cited Dusart estimates, figures or
+claimed interval computations, and adds no Lean result.
+
+Theorem 8.1 defines $R(n)=\sigma(n)/n$, but Table 1 gives
+$R(5040)=1.7909$. The exact divisor response at that integer is
+
+$$
+R(5040)=\frac{31}{16}\frac{13}{9}\frac65\frac87
+=\frac{403}{105}>3.
+$$
+
+Thus the table does not use its theorem's stated quantity. Its printed
+positive gap cannot be used as a certificate with those definitions.
+In particular, a different normalization must also transport the budget
+and the comparison; changing the response alone does not preserve a
+Robin margin.
+
+Appendix A.2, equation (5), asserts an Euler-product upper bound
+
+$$
+\prod_{p\le x}(1-p^{-1})^{-1}
+<e^\gamma\log x\left(1+\frac{0.2}{(\log x)^2}\right).
+$$
+
+The positive error term lies above $e^\gamma\log x$. Besides needing a
+justified relation between this cutoff $x$ and the actual CA integer,
+this upper bound does not yield the positive safety margin claimed in
+equation (6) and Theorem 5.1. Even an already-transported upper bound
+$R(n)<B(n)+\varepsilon(n)$, with $\varepsilon(n)>0$, gives only
+
+$$
+B(n)-R(n)>-\varepsilon(n),
+\qquad B(n)=e^\gamma\log\log n.
+$$
+
+It supplies no positive lower bound. Theorem 8.1's induction invokes a
+positive initial margin and a transition justified by decreasing prime
+reciprocals; the inspected argument gives no quantitative comparison
+that pays the missing signed error at every transition. The convex-hull
+description alone does not pay that comparison. The claimed proof
+therefore supplies neither the required positive Robin margin nor the
+[selected source's complete signed-tail estimate](polak2026finiterobinca.md).
+This identifies a gap in the source's justification, without settling
+Robin or RH.

@@ -7,10 +7,12 @@ import json
 import os
 from pathlib import Path
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
 import time
+import types
 import unittest
 from unittest.mock import patch
 
@@ -134,11 +136,55 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual(7, len(selected))
         self.assertFalse(any(name in str(selected) for name in ("auth.json", "config.toml", "state.sqlite", "skill.md")))
 
+    def test_codex_inventory_selects_only_superseded_package_releases(self):
+        codex = self.root / "codex"
+        packages = codex / "packages"
+        for package in ("standalone", "app-server-daemon", "dangling", "outside", "plain"):
+            for version in ("0.1", "0.2", "0.3"):
+                self.old_file(packages / package / "releases" / version / "bin" / "codex")
+            self.old_file(packages / package / "auto-update-version")
+        os.symlink("releases/0.3", packages / "standalone" / "current")
+        (packages / "app-server-daemon" / "current").symlink_to(packages / "app-server-daemon" / "releases" / "0.2")
+        os.symlink("releases/9.9", packages / "dangling" / "current")
+        (packages / "outside" / "current").symlink_to(self.root)
+        target = self.root / "linked target"
+        for version in ("0.1", "0.2"):
+            self.old_file(target / "releases" / version / "bin" / "codex")
+        os.symlink("releases/0.2", target / "current")
+        (packages / "linked").symlink_to(target, target_is_directory=True)
+        inventory = {path for category, path in cleanup.candidates(codex, self.root / "sshx", [])
+                     if category == "codex"}
+        expected = {packages / "standalone" / "releases" / "0.1", packages / "standalone" / "releases" / "0.2",
+                    packages / "app-server-daemon" / "releases" / "0.1",
+                    packages / "app-server-daemon" / "releases" / "0.3"}
+        self.assertEqual(expected, inventory, "[FAIL] codex_superseded_releases_selected")
+
     def test_clean_lanes_failure_is_propagated(self):
         with patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 2)) as run:
             self.assertEqual(2, cleanup.clean_worktrees(self.root, "base", True))
         self.assertIn("--lanes-only", run.call_args.args[0])
         self.assertIn("--force", run.call_args.args[0])
+
+    def test_clean_lanes_receives_large_activity_through_one_file(self):
+        active = {self.root / ("active-" + str(index) + "-" + "x" * 160) for index in range(20000)}
+        observed = {}
+
+        def run(arguments, **_):
+            position = arguments.index("--active-paths-file")
+            source = Path(arguments[position + 1])
+            observed.update(arguments=arguments, source=source, paths=json.loads(source.read_text()),
+                            mode=source.stat().st_mode & 0o777)
+            return subprocess.CompletedProcess(arguments, 0)
+
+        with patch.object(cleanup.subprocess, "run", side_effect=run):
+            self.assertEqual(0, cleanup.clean_worktrees(self.root, "base", True, active))
+        self.assertNotIn("--active-path", observed["arguments"], "[FAIL] clean_lanes_activity_not_in_argv")
+        self.assertLess(sum(len(os.fsencode(argument)) + 1 for argument in observed["arguments"]), 4096,
+                        "[FAIL] clean_lanes_argv_bounded")
+        self.assertEqual(sorted(str(path.resolve()) for path in active), observed["paths"],
+                         "[FAIL] clean_lanes_activity_file_content")
+        self.assertEqual(0o600, observed["mode"], "[FAIL] clean_lanes_activity_file_private")
+        self.assertFalse(observed["source"].exists(), "[FAIL] clean_lanes_activity_file_removed")
 
     def test_invalid_age_is_rejected(self):
         for age in ("-1", "nan", "inf"):
@@ -245,6 +291,146 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual(0, result.returncode)
         self.assertIn("5% available disk space", result.stdout)
 
+    def test_canonical_bash_wrapper_handles_empty_and_nonempty_active_arguments(self):
+        workspace = tempfile.TemporaryDirectory(prefix="clean-lanes-wrapper-")
+        self.addCleanup(workspace.cleanup)
+        repository = Path(workspace.name) / "checkout"
+        scripts = repository / "tools/scripts"
+        scripts.mkdir(parents=True)
+        shutil.copy(SCRIPT.parents[1] / "Makefile", repository / "tools/Makefile")
+        shutil.copy(SCRIPT.with_name("clean-lanes.sh"), scripts / "clean-lanes.sh")
+        bin_dir = self.root / "wrapper bin"
+        bin_dir.mkdir()
+        dotnet = bin_dir / "dotnet"
+        dotnet.write_text("#!" + sys.executable + "\nimport json,sys\nprint(json.dumps(sys.argv[1:]))\n")
+        dotnet.chmod(0o700)
+        env = dict(os.environ, PATH=str(bin_dir) + os.pathsep + os.environ["PATH"])
+        for force in (False, True):
+            result = subprocess.run(
+                ["make", "--no-print-directory", "-C", str(repository / "tools"),
+                 "clean-lanes", "BASE=HEAD", "FORCE=" + str(int(force))],
+                env=env, capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stderr)
+            args = json.loads(result.stdout)
+            self.assertEqual(["clean-lanes", "--base", "HEAD"] + (["--force"] if force else []),
+                             args[args.index("--") + 1:])
+        activity = str(self.root / "literal $(touch sentinel) `touch other` activity.json")
+        result = subprocess.run(
+            ["/bin/bash", str(scripts / "clean-lanes.sh"), "--base", "HEAD", "--lanes-only",
+             "--active-paths-file", activity],
+            cwd=repository, env=env, capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        args = json.loads(result.stdout)
+        self.assertEqual(["clean-lanes", "--base", "HEAD", "--lanes-only", "--active-paths-file", activity],
+                         args[args.index("--") + 1:])
+        self.assertFalse((repository / "sentinel").exists())
+        self.assertFalse((repository / "other").exists())
+        for rejected in (["--active-path", activity], ["--active-paths-file", activity, "--active-paths-file", activity]):
+            with self.subTest(rejected=rejected[0]):
+                result = subprocess.run(
+                    ["/bin/bash", str(scripts / "clean-lanes.sh"), "--base", "HEAD", *rejected],
+                    cwd=repository, env=env, capture_output=True, text=True)
+                self.assertEqual(2, result.returncode, "[FAIL] clean_lanes_wrapper_rejects_unsupported_activity")
+
+    def test_activity_command_reuses_sampler_and_fails_closed(self):
+        output = io.StringIO()
+        with patch.object(cleanup, "active_paths", return_value={self.root}), contextlib.redirect_stdout(output):
+            self.assertEqual(0, cleanup.main(["active-paths"]))
+        self.assertEqual([str(self.root)], json.loads(output.getvalue()))
+        with patch.object(cleanup, "active_paths", side_effect=OSError("activity unavailable")), \
+             contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(1, cleanup.main(["active-paths"]))
+
+    def test_linux_disappearing_links_preserve_observable_siblings(self):
+        process = self.root / "proc/123"
+        descriptors = process / "fd"
+        descriptors.mkdir(parents=True)
+        (process / "cwd").symlink_to(self.root)
+        target = self.old_file(self.root / "checkout/reader.txt")
+        links = [descriptors / str(index) for index in range(3)]
+        for link in links:
+            link.symlink_to(target if link == links[-1] else self.root)
+        iterdir, readlink = Path.iterdir, os.readlink
+        def inventory(path):
+            if path == Path("/proc"):
+                return iter([process])
+            if path == descriptors:
+                return iter(links)
+            return iterdir(path)
+        for position in (0, 1):
+            for error in (FileNotFoundError, ProcessLookupError):
+                with self.subTest(position=position, error=error.__name__):
+                    observed = []
+                    def interrupted(link):
+                        observed.append(link)
+                        if link == links[position]:
+                            raise error("handle disappeared")
+                        return readlink(link)
+                    with patch.object(cleanup.sys, "platform", "linux"), \
+                         patch.object(Path, "iterdir", inventory), \
+                         patch.object(cleanup.os, "readlink", interrupted), \
+                         patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")):
+                        self.assertIn(target.resolve(), cleanup.active_paths(self.root / "codex"))
+                    self.assertIn(links[-1], observed)
+
+    def test_linux_unverifiable_live_process_observation_fails_closed(self):
+        process = self.root / "proc/123"
+        descriptors = process / "fd"
+        descriptors.mkdir(parents=True)
+        iterdir = Path.iterdir
+        for boundary in ("cwd", "fd"):
+            with self.subTest(boundary=boundary):
+                def inventory(path):
+                    if path == Path("/proc"):
+                        return iter([process])
+                    if path == descriptors and boundary == "fd":
+                        raise FileNotFoundError("descriptor inventory disappeared")
+                    return iterdir(path)
+                with patch.object(cleanup.sys, "platform", "linux"), \
+                     patch.object(Path, "iterdir", inventory), \
+                     contextlib.redirect_stdout(io.StringIO()) as output, \
+                     contextlib.redirect_stderr(io.StringIO()):
+                    self.assertEqual(1, cleanup.main(["active-paths"]))
+                self.assertEqual("", output.getvalue())
+
+    def test_linux_exited_process_does_not_hide_other_process_activity(self):
+        exited = self.root / "proc/122"
+        live = self.root / "proc/123"
+        (exited / "fd").mkdir(parents=True)
+        (exited / "cwd").symlink_to(self.root)
+        (live / "fd").mkdir(parents=True)
+        (live / "cwd").symlink_to(self.root)
+        target = self.old_file(self.root / "checkout/reader.txt")
+        (live / "fd/1").symlink_to(target)
+        iterdir, path_stat, readlink = Path.iterdir, Path.stat, os.readlink
+        for boundary in ("stat", "fd", "cwd"):
+            with self.subTest(boundary=boundary):
+                gone = boundary == "stat"
+                def process_stat(path, *args, **kwargs):
+                    if path == exited and gone:
+                        raise FileNotFoundError("process exited")
+                    return path_stat(path, *args, **kwargs)
+                def inventory(path):
+                    nonlocal gone
+                    if path == Path("/proc"):
+                        return iter([exited, live])
+                    if path == exited / "fd" and boundary == "fd":
+                        gone = True
+                        raise ProcessLookupError("process exited during descriptor inventory")
+                    return iterdir(path)
+                def link(path):
+                    nonlocal gone
+                    if path == exited / "cwd" and boundary == "cwd":
+                        gone = True
+                        raise FileNotFoundError("process exited during cwd observation")
+                    return readlink(path)
+                with patch.object(cleanup.sys, "platform", "linux"), \
+                     patch.object(Path, "iterdir", inventory), \
+                     patch.object(Path, "stat", process_stat), \
+                     patch.object(cleanup.os, "readlink", link), \
+                     patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")):
+                    self.assertIn(target.resolve(), cleanup.active_paths(self.root / "codex"))
+
     def test_inventory_failure_reports_already_removed_artifacts(self):
         artifact = self.old_file(self.root / "tmp" / "old-output")
         options = cleanup.argparse.Namespace(
@@ -279,6 +465,56 @@ class HostCleanupTests(unittest.TestCase):
             result = cleanup.clean_candidate(artifact, self.cutoff, [], delete=True)
         self.assertEqual("failed", result["action"])
         self.assertTrue(artifact.exists())
+
+    def test_protected_flag_anywhere_keeps_entire_candidate(self):
+        artifact = self.old_file(self.root / "service" / "nested" / "state")
+        for directory in (artifact.parent, artifact.parent.parent):
+            os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+        lstat = Path.lstat
+        for flag in (stat.UF_IMMUTABLE, stat.UF_APPEND, stat.UF_NOUNLINK,
+                     stat.SF_IMMUTABLE, stat.SF_APPEND, stat.SF_NOUNLINK):
+            def flagged(path):
+                info = lstat(path)
+                if path != artifact.parent:
+                    return info
+                fields = {name: getattr(info, name) for name in dir(info) if name.startswith("st_")}
+                return types.SimpleNamespace(**dict(fields, st_flags=flag))
+            with self.subTest(flag=hex(flag)), patch.object(Path, "lstat", flagged), \
+                 patch.object(cleanup.shutil, "rmtree") as rmtree:
+                result = cleanup.clean_candidate(artifact.parent.parent, self.cutoff, [], delete=True)
+                self.assertEqual(("kept", "protected_flag"), (result["action"], result["reason"]),
+                                 "[FAIL] protected_flag_candidate_kept")
+                rmtree.assert_not_called()
+        self.assertTrue(artifact.exists())
+
+    @unittest.skipUnless(sys.platform == "darwin" and hasattr(os, "chflags"), "BSD file flags")
+    def test_real_immutable_flag_is_retained_without_failure(self):
+        artifact = self.old_file(self.root / "service" / "state")
+        os.utime(artifact.parent, (self.cutoff - 10, self.cutoff - 10))
+        os.chflags(artifact, stat.UF_IMMUTABLE)
+        self.addCleanup(os.chflags, artifact, 0)
+        result = cleanup.clean_candidate(artifact.parent, self.cutoff, [], delete=True)
+        self.assertEqual(("kept", "protected_flag"), (result["action"], result["reason"]),
+                         "[FAIL] real_immutable_candidate_kept")
+        self.assertTrue(artifact.exists())
+
+    def test_owned_read_only_tree_is_removed_without_following_links(self):
+        outside = self.root / "outside"
+        outside.mkdir()
+        packet = self.root / "packet"
+        sealed = packet / "sealed"
+        self.old_file(sealed / "ENTRY.md")
+        link = sealed / "external"
+        link.symlink_to(outside, target_is_directory=True)
+        os.utime(link, (self.cutoff - 10, self.cutoff - 10), follow_symlinks=False)
+        for directory in (sealed, packet, outside):
+            os.utime(directory, (self.cutoff - 10, self.cutoff - 10))
+            directory.chmod(0o555)
+            self.addCleanup(lambda directory=directory: directory.exists() and directory.chmod(0o755))
+        result = cleanup.clean_candidate(packet, self.cutoff, [], delete=True)
+        self.assertEqual("removed", result["action"], "[FAIL] read_only_owned_tree_removed")
+        self.assertFalse(packet.exists(), "[FAIL] read_only_owned_tree_absent")
+        self.assertEqual(0o555, stat.S_IMODE(outside.lstat().st_mode), "[FAIL] read_only_removal_stays_inside_tree")
 
 
 if __name__ == "__main__":

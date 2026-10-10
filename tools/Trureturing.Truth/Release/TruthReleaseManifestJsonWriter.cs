@@ -28,7 +28,7 @@ public static class TruthReleaseManifestJsonWriter
 
         var element = JsonSerializer.SerializeToElement(new
         {
-            schema = "truth-release.v1",
+            schema = "truth-release.v2",
             source = new
             {
                 source_repo = manifest.Source.SourceRepo,
@@ -59,7 +59,6 @@ public static class TruthReleaseManifestJsonWriter
                 truth_export = Artifact(manifest.Artifacts.TruthExport),
                 blueprint_index = Artifact(manifest.Artifacts.BlueprintIndex),
                 frozen_ledger_head = Artifact(manifest.Artifacts.FrozenLedgerHead),
-                residual_frontier = Artifact(manifest.Artifacts.ResidualFrontier),
             },
             sha256sums_digest = manifest.Sha256SumsDigest,
             produced_at = manifest.ProducedAt,

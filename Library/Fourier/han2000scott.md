@@ -7,7 +7,7 @@ doi: 10.1016/S0024-3795(00)00035-5
 url: https://doi.org/10.1016/S0024-3795(00)00035-5
 claim: "The cycle-geodesic product is a specialization of the generalized Scott permanent identity."
 strata_touched:
-  - D5/S3/Combinatorics/Permanental/CycleGeodesic
+  - D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicProduct
 license: citation-only
 triage: anchor
 ---

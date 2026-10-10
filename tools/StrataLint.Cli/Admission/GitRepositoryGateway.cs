@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Text;
@@ -7,6 +8,16 @@ namespace StrataLint.Cli;
 
 internal interface IGitProcessRunner
 {
+    StreamedProcessOutput<T> RunStreaming<T>(string fileName, IReadOnlyList<string> arguments,
+        string workingDirectory, TimeSpan timeout, int maximumErrorBytes,
+        Func<Stream, CancellationToken, Task<T>> readStandardOutput, ReadOnlyMemory<byte> standardInput = default)
+    {
+        var result = Run(fileName, arguments, workingDirectory, timeout, int.MaxValue, standardInput);
+        using var stream = new MemoryStream(result.StandardOutput, writable: false);
+        return new StreamedProcessOutput<T>(result.ExitCode,
+            readStandardOutput(stream, CancellationToken.None).GetAwaiter().GetResult(), result.StandardError);
+    }
+
     ProcessOutput Run(
         string fileName,
         IReadOnlyList<string> arguments,
@@ -18,6 +29,12 @@ internal interface IGitProcessRunner
 
 internal sealed class ProductionGitProcessRunner : IGitProcessRunner
 {
+    public StreamedProcessOutput<T> RunStreaming<T>(string fileName, IReadOnlyList<string> arguments,
+        string workingDirectory, TimeSpan timeout, int maximumErrorBytes,
+        Func<Stream, CancellationToken, Task<T>> readStandardOutput, ReadOnlyMemory<byte> standardInput = default) =>
+        BoundedProcessRunner.RunStreaming(fileName, arguments, workingDirectory, timeout,
+            maximumErrorBytes, readStandardOutput, standardInput);
+
     public ProcessOutput Run(
         string fileName,
         IReadOnlyList<string> arguments,
@@ -161,6 +178,18 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);
 
+    public RawRepositorySnapshot ReadCurrentProjection(Func<string, bool> readContents,
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null) =>
+        GitRepositorySnapshotReader.ReadCurrentProjection(root, readContents, observeContentDigest);
+
+    public RawRepositorySnapshot ReadRevisionProjection(string revision, Func<string, bool> readContents,
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null) =>
+        GitRepositorySnapshotReader.ReadRevisionProjection(revision,
+            (arguments, maximumOutputBytes, standardInput) => GitRaw(arguments, false, maximumOutputBytes, standardInput),
+            (arguments, maximumErrorBytes, standardInput, readStandardOutput) =>
+                GitStreaming(arguments, maximumErrorBytes, readStandardOutput, standardInput),
+            readContents, observeContentDigest);
+
     public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths) =>
         GitRepositorySnapshotReader.ReadCurrent(
             root,
@@ -172,13 +201,48 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
             ]);
 
     public RawRepositorySnapshot ReadRevision(string revision) =>
+        ReadRevisionProjection(revision, static _ => true);
+
+    private StreamedProcessOutput<T> GitStreaming<T>(IReadOnlyList<string> arguments, int maximumErrorBytes,
+        Func<Stream, CancellationToken, Task<T>> readStandardOutput, ReadOnlyMemory<byte> standardInput)
+    {
+        try
+        {
+            var result = processRunner.RunStreaming(gitExecutable, arguments, root, gitTimeout,
+                maximumErrorBytes, readStandardOutput, standardInput);
+            if (result.ExitCode != 0)
+                throw InfrastructureFailure(GitCommandFailureKind.NonzeroExit, arguments,
+                    exitCode: result.ExitCode, standardError: DecodeFailureText(result.StandardError));
+            return result;
+        }
+        catch (GitInfrastructureException) { throw; }
+        catch (TimeoutException exception)
+        {
+            throw InfrastructureFailure(GitCommandFailureKind.Timeout, arguments, detail: exception.Message, exception: exception);
+        }
+        catch (Win32Exception exception)
+        {
+            throw InfrastructureFailure(exception.NativeErrorCode is 2 or 3
+                ? GitCommandFailureKind.ExecutableNotFound : GitCommandFailureKind.Process,
+                arguments, nativeErrorCode: exception.NativeErrorCode, detail: exception.Message, exception: exception);
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or InvalidOperationException)
+        {
+            throw InfrastructureFailure(exception is InvalidOperationException
+                ? GitCommandFailureKind.Process : GitCommandFailureKind.Io,
+                arguments, detail: exception.Message, exception: exception);
+        }
+    }
+
+    public RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths) =>
         GitRepositorySnapshotReader.ReadRevision(
             revision,
             (arguments, maximumOutputBytes, standardInput) => GitRaw(
                 arguments,
                 allowNonzero: false,
                 maximumOutputBytes,
-                standardInput));
+                standardInput),
+            paths);
 
     private string GitText(params string[] arguments) => StrictUtf8.GetString(GitBytes(arguments));
 

@@ -94,7 +94,7 @@ theorem rankOne_inner (f g h k : Lp ℝ 2 μ) :
     _ = _ := integral_prod_mul (μ := μ) (ν := μ)
       (fun x : X => h x * f x) (fun x : X => k x * g x)
 
-private theorem rankOne_total (k : Lp ℝ 2 (μ.prod μ))
+theorem rankOne_total (k : Lp ℝ 2 (μ.prod μ))
     (hk : ∀ f g : Lp ℝ 2 μ, ⟪rankOne μ f g, k⟫ = 0) : k = 0 := by
   have hi : Integrable k (μ.prod μ) := (Lp.memLp k).integrable (by norm_num)
   have hr (s t : Set X) (hs : MeasurableSet s) (ht : MeasurableSet t) :
@@ -134,7 +134,7 @@ private theorem rankOne_total (k : Lp ℝ 2 (μ.prod μ))
   exact (hi.ae_eq_zero_of_forall_setIntegral_eq_zero
     (fun s hs _ => hall s hs)).trans (Lp.coeFn_zero ℝ 2 (μ.prod μ)).symm
 
-private theorem kernelFlip_rankOne (f g : Lp ℝ 2 μ) :
+theorem kernelFlip_rankOne (f g : Lp ℝ 2 μ) :
     kernelFlip μ (rankOne μ f g) = rankOne μ g f := by
   apply Lp.ext
   have hf := rankOne_coe μ f g

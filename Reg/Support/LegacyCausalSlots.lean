@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Catalog
 import Reg.Support.LegacyCausalCoordinates
 
 set_option backward.isDefEq.respectTransparency false
@@ -283,4 +284,6 @@ end Reg.Support.LegacyCausalSlots
 
 open Reg.Support.LegacyCausalSlots LeanInformationAudit
 
-register_information_template slotRealization
+noncomputable def _root_.Reg.Support.LegacyCausalSlots.enrollment_1 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.Reg.Support.LegacyCausalSlots.slotRealization) := {
+  name := `Reg.Support.LegacyCausalSlots.slotRealization, version := 1, constructors := #[],
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }

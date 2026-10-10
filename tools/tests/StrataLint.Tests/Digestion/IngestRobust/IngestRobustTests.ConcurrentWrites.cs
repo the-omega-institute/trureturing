@@ -24,7 +24,7 @@ public sealed partial class IngestRobustTests
         });
 
         var result = Environment(fixture, temporary, dependencies: dependencies)
-            .Ingest(sourceScoped ? Arguments("alpha") : Arguments());
+            .Ingest(sourceScoped ? Arguments("alpha") : Arguments("alpha", "beta"));
 
         Assert.False(result.Success);
         var atomId = Atom(Addition).Fingerprints.RawSha256[7..];

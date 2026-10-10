@@ -1,0 +1,20 @@
+**Claim status: open.**
+
+当前条件
+$$
+K_a\mathcal B\subseteq\mathcal B,\qquad K_a=\sum_oM_{a,o}
+$$
+只说明输出分支中的 seam 泄漏在求和后抵消。完整未来记录要求更强的逐输出条件
+$$
+M_{a,o}\mathcal B\subseteq\mathcal B\quad\forall(a,o).
+$$
+在两步反例中
+$$
+dM_1 1=0,\qquad dM_1M_1 1=d(xy)=1.
+$$
+因此第一步边缘不能更新 $\kappa$，而第二步记录 $11$ 精确读出
+$$
+\kappa=p_{13}.
+$$
+未来可见性由词级 pullback 决定，而不是由平均矩阵的单步闭合决定。
+

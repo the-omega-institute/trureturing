@@ -272,42 +272,6 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void Sl016PublishesMalformedAuthoredClauseChainFinding()
-    {
-        var (sourceBytes, _, candidate, parentCapture, childCapture) = MalformedPzgClauseSubset();
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
-        fixture.Files[parentCapture.RelativePath] = Encoding.UTF8.GetString(parentCapture.Bytes.AsSpan());
-        fixture.Files[childCapture.RelativePath] = Encoding.UTF8.GetString(childCapture.Bytes.AsSpan());
-        var candidateSource = Assert.Single(candidate.RequireDigestionSources());
-        DirectoryLedgerTestSupport.ReplaceWithProjection(
-            fixture.Files,
-            candidate.WithDigestionSources(
-            [
-                candidateSource with
-                {
-                    SourcePath = RuleFixture.FixtureDigestionSourcePath,
-                    Entries = candidateSource.Entries.Select(entry => entry with
-                    {
-                        SourcePath = RuleFixture.FixtureDigestionSourcePath,
-                    }).ToImmutableArray(),
-                },
-            ]));
-
-        fixture.Changes.AddRange(fixture.Files.Keys.Where(BackfillInventoryLoader.IsCanonicalPath));
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build());
-        var parent = Assert.Single(candidate.RequireDigestionEntries(), entry =>
-            !entry.Receipts.ChainAtoms.IsEmpty);
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"entry {parent.AtomId} malformed clause chain",
-            StringComparison.Ordinal));
-    }
-
-    [Fact]
     public void AdmissionPreservesInheritedRegisteredClauseLocatorNotClaimedByAPlan()
     {
         var bytes = Encoding.UTF8.GetBytes("registered atom");

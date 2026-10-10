@@ -10,7 +10,6 @@ namespace StrataLint.TestSupport;
 
 internal static class ProducerInputFixture
 {
-    private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
     private const string ProjectRegistrationPath = "Meta/engineering-projects.json";
     private const string InputManifestPath = "lean-report-inputs.json";
     private const string ScribeRegistrationPath = "Meta/ReportProducers/scribe-content.json";
@@ -95,22 +94,46 @@ internal static class ProducerInputFixture
         return files.Keys.ToArray();
     }
 
-    internal static void AttestBatchReport(string root, string report)
+    internal static void AttestBatchReport(string root, string report, string scope)
     {
-        var result = TestProcessRunner.Run("/bin/bash",
-            [Path.Combine(root, InputHelperPath), "address", "--repository", root], root,
-            TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        WriteFixtureOrigins(root, report);
+        var result = TestProcessRunner.Run("python3", ["-c", """
+            import json, pathlib, sys
+            root, report, scope = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2]), json.loads(sys.argv[3])
+            sys.path.insert(0, str(root / 'tools/lean-inspector'))
+            import scoped
+            origins = json.loads(pathlib.Path(str(report) + '.provenance.json').read_bytes())['module_origins']
+            scoped.write_sidecars(report, scoped.capture(root, scope), origins)
+            """, root, report, scope], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-        var fields = Encoding.UTF8.GetString(result.StandardOutput).Trim().Split(' ');
-        var hash = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report)));
-        TemporaryFileSystem.File.WriteAllText(report + ".sha256", $"{hash}  {Path.GetFileName(report)}\n");
-        WriteFixtureOrigins(report, fields[1]);
-        TemporaryFileSystem.File.WriteAllText(report + ".input.attestation",
-            "schema=stratalint-lean-report-input-attestation-v1\n"
-            + $"repository_input_sha256={fields[0]}\nproducer_sha256={fields[1]}\nreport_sha256={hash}\n");
+        // The fixture supplies the independently selected scope; native inspector
+        // tests exercise Lake discovery. Keep the actual scoped bundle validator.
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, ".fixture-report-scope.json"), scope);
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "tools/scripts/report/lean-report-input.sh"), """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            python3 -B - "$@" <<'PY'
+            import argparse, json, pathlib, sys
+            parser = argparse.ArgumentParser()
+            parser.add_argument('command', choices=['verify-scoped'])
+            parser.add_argument('--repository', type=pathlib.Path, required=True)
+            parser.add_argument('--report', type=pathlib.Path, required=True)
+            parser.add_argument('--targets', required=True)
+            args = parser.parse_args()
+            sys.path.insert(0, str(args.repository / 'tools/lean-inspector'))
+            import scoped
+            scope = json.loads((args.repository / '.fixture-report-scope.json').read_bytes())
+            scoped.check_scope(args.repository, scope, scoped.parse_targets(args.targets))
+            try:
+                scoped.validate_bundle(args.report, args.repository, scope)
+            except (ValueError, OSError) as error:
+                print(str(error), file=sys.stderr)
+                sys.exit(2)
+            PY
+            """ + "\n");
     }
 
-    private static void WriteFixtureOrigins(string report, string compatibility)
+    private static void WriteFixtureOrigins(string root, string report)
     {
         using var document = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllBytes(report));
         var origins = document.RootElement.GetProperty("modules").EnumerateArray().ToDictionary(
@@ -118,8 +141,9 @@ internal static class ProducerInputFixture
             {
                 module = row.GetProperty("module").GetString(),
                 report_sha256 = Convert.ToHexStringLower(SHA256.HashData(StructuredCanonicalWriter.WriteJson(
-                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v2", modules = new[] { row } })).AsSpan())),
-                compatibility_sha256 = compatibility,
+                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v3", modules = new[] { row } })).AsSpan())),
+                input_projection = new { schema = "stratalint-judge-input-projection-v1",
+                    module = row.GetProperty("module").GetString(), inputs = System.Array.Empty<object>() },
                 producer_sources_sha256 = new string('1', 64),
                 inspector_executable_sha256 = new string('2', 64),
             }, StringComparer.Ordinal);

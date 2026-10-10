@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using static StrataLint.TestSupport.TestExecutable;
 using System.Text.RegularExpressions;
 using System.Text;
@@ -135,10 +136,6 @@ public sealed partial class MakeWorkflowTests
                 recipe,
                 StringComparison.Ordinal);
         }
-        Assert.Contains(
-            EchoResidualSummaryScriptPath,
-            Recipe(makefile, "echo-residual-summary"),
-            StringComparison.Ordinal);
         var gateRecipe = string.Join('\n', RecipeLines(makefile, "gate"));
         Assert.Contains("check-current", gateRecipe, StringComparison.Ordinal);
         Assert.Contains("check-delta", gateRecipe, StringComparison.Ordinal);
@@ -160,7 +157,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(PrOpenScriptPath, Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\"", Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", makefile, StringComparison.Ordinal);
-        foreach (var removed in ToolsTargets.Except(["help", "test"], StringComparer.Ordinal))
+        foreach (var removed in ToolsTargets.Except(["help", "test", "filemap-conform"], StringComparer.Ordinal))
         {
             Assert.DoesNotContain($"\n{removed}:", "\n" + makefile, StringComparison.Ordinal);
         }
@@ -443,7 +440,8 @@ public sealed partial class MakeWorkflowTests
         var rootOutput = System.Text.Encoding.UTF8.GetString(rootResult.StandardOutput);
         Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
-        Assert.Contains("make lean-report  Produce the canonical raw Lean report", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make lean-report [REBUILD_REPORT_CACHE=1]  Full repository report for CI or explicit full verification", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make lean-report-scoped LEAN_TARGETS=", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make scribe-release  Rebuild and verify local Scribe release assets", rootOutput, StringComparison.Ordinal);

@@ -1,3 +1,5 @@
+import Reg.Support.SourceSelection
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum
 import Reg.Support.DependentFamily
 import Reg.D5.S1.Words.Attractors.FiniteWordAttractors
@@ -118,7 +120,7 @@ def registration : Registration arena
     simp only [actual, realize, hg0, hg1]
     decide
 
-def selection : LeanInformationAudit.SourceSelection where
+def selection : _root_.Reg.Support.SourceSelection where
   owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum
   coordinates := #[0, 2]
   readouts := #[
@@ -129,11 +131,28 @@ def selection : LeanInformationAudit.SourceSelection where
       "arg", "body", "fn", "arg"], stateOperand := some #["arg"]}]
 
 
-register_information_theorem result in arena
-  readout via (realize signature (fun _ _ w => gamma w) (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Attractors.result) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ w => gamma.{0} w) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Attractors") "result") "Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum/Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ w => gamma.{0} w) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, definition := none, coordinates := #[0, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }, { path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end
@@ -197,14 +216,28 @@ def registration : Registration arena (arena.Law actual) where
     intro i
     exact ⟨2, [], [0,0], by cases i; decide⟩
 
-register_information_theorem cyclic_fractional_prefix in arena
-  readout via (realize signature (fun _ _ w => w.dropLast) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum
-    coordinates := #[0]
-    readouts := #[{path := #["body","body","body","body","body","body","body","fn","arg"], stateOperand := some #["arg"]}] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Attractors.cyclic_fractional_prefix) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ w => w.dropLast) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Attractors") "cyclic_fractional_prefix") "Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum/Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ w => w.dropLast) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 
 end Fractional
@@ -258,14 +291,28 @@ def registration : Registration arena (arena.Law actual) where
     intro i
     exact ⟨⟨2,⟨fun _ => 1,by omega⟩⟩,0,1,by cases i; decide⟩
 
-register_information_theorem cyclic_iterate_structure in arena
-  readout via (realize signature (fun _ p n => cyclicLength (by have := p.2.property; omega) p.2.val n) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum
-    coordinates := #[0,1,2]
-    readouts := #[{path := #["body","body","body","body","body","arg","arg","arg","fn","arg","body","arg"], stateBinder := 5}] })
-  escape continues (open)
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Attractors.cyclic_iterate_structure) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p n => cyclicLength (by have := p.2.property; omega) p.2.val n) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Attractors") "cyclic_iterate_structure") "Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum/Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p n => cyclicLength (by have := p.2.property; omega) p.2.val n) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg", "body", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 
 end Structure
@@ -313,14 +360,28 @@ def registration : Registration arena (arena.Law actual) where
     intro i
     exact ⟨⟨2,⟨fun _ => 1,by omega⟩⟩,0,1,by cases i; decide⟩
 
-register_information_theorem cyclic_word_recurrence in arena
-  readout via (realize signature (fun _ p n => cyclicWord (by have := p.2.property; omega) p.2.val n) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum
-    coordinates := #[0,1,2]
-    readouts := #[{path := #["body","body","body","body","body","fn","arg","body","body","fn","arg"], stateBinder := 5}] })
-  escape continues (open)
+noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Words.Attractors.cyclic_word_recurrence) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p n => cyclicWord (by have := p.2.property; omega) p.2.val n) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Attractors") "cyclic_word_recurrence") "Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum/Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p n => cyclicWord (by have := p.2.property; omega) p.2.val n) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 
 end Recurrence

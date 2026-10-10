@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:be0b4c072f282a2f8813d357f26397b2fb25688d4e1245523e0ae0a216c9b744
+  normalized_sha256: sha256:be0b4c072f282a2f8813d357f26397b2fb25688d4e1245523e0ae0a216c9b744
+cas_ref: sha256:be0b4c072f282a2f8813d357f26397b2fb25688d4e1245523e0ae0a216c9b744
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅由钉版 Mathlib v4.33.0 闭合，仓内无可用冻结项目 GID。将正权重 Hilbert 坐标 vγ 映为 √aγ·vγ，有限关系法向量映为 nγ/√aγ；lp.coeFn_sum、lp.coeFn_single、Finset.sum_apply、lp.inner_single_left、real_inner_self_eq_norm_sq、Real.sq_sqrt 及有限和规范化给法向量范数平方 Qn 与内积 Ln。关系空间取全部关系法向量的 innerSL 核之交；Submodule.mem_iInf、ContinuousLinearMap.isClosed_ker、isClosed_iInter、IsClosed.completeSpace_coe 和 Submodule.HasOrthogonalProjection.ofCompleteSpace 给完整成员条件、闭性及正交投影。Submodule.norm_sq_eq_add_norm_sq_starProjection 与 Submodule.starProjection_add_starProjection_orthogonal 给 R2=7A+残差范数平方；Finsupp.mem_support_iff、Finset.sum_pos' 和正权重给非零关系的 Qn>0；abs_real_inner_le_norm、sq_le_sq₀、div_le_iff₀ 与代数规范化给 Ln²/Qn≤残差范数平方及 Ln≠0 时严格增益。Submodule.starProjection_eq_self_iff、norm_eq_zero、sq_eq_zero_iff 与核交成员条件给 R2=7A 当且仅当全部关系 Ln=0。全部命题子句均由这些上游声明的参数实例、逻辑投影与规范化闭合，不新增 Lean 声明或项目冻结。
+    previous_atom_id: 70c21bb6c9f07105bc5d1556d287b1bb38275d1a094817a125c4bfb159b853c3
+    next_atom_id: caa232d61fdc249e2f228e43f7115a2de4cef4c906b17ce5dee376f1a1b4b69e

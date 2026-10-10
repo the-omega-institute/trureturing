@@ -18,7 +18,6 @@ public sealed class RuleEngineTests
         { 11, "domain" },
         { 12, "header" },
         { 15, "formula" },
-        { 16, "backfill" },
         { 17, "query" },
         { 18, "values" },
         { 19, "anomaly" },
@@ -54,7 +53,6 @@ public sealed class RuleEngineTests
         { 11, "Chronicle/2026/07/10-old.md" },
         { 12, RuleFixture.BlueprintPath },
         { 15, null },
-        { 16, "Chronicle/2026/07/10-old.md" },
         { 17, "Chronicle/2026/07/10-old.md" },
         { 18, "Chronicle/2026/07/10-old.md" },
         { 19, RuleFixture.BlueprintPath },
@@ -283,198 +281,7 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void DirectoryBackfillReachesSharedDownstreamValidationWithoutFormatDiagnostics()
-    {
-        var fixture = new RuleFixture();
-        fixture.UseSyntheticDirectoryBackfill();
-        var atomPath = fixture.Files.Keys.Single(path =>
-            BackfillInventoryLoader.IsCanonicalPath(path) && path.EndsWith(".yaml", StringComparison.Ordinal));
-        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
-            "cas_ref: sha256:" + new string('0', 64),
-            "cas_ref: sha256:" + new string('1', 64),
-            StringComparison.Ordinal);
-        fixture.Baseline.Clear();
-        foreach (var pair in fixture.Files) fixture.Baseline.Add(pair.Key, pair.Value);
-        fixture.Changes.Clear();
-        fixture.Changes.AddRange(fixture.Files.Keys.Where(BackfillInventoryLoader.IsCanonicalPath));
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
-
-        Assert.DoesNotContain(diagnostics, diagnostic =>
-            diagnostic.Message.Contains("canonical", StringComparison.Ordinal)
-            || diagnostic.Message.Contains("metadata", StringComparison.Ordinal)
-            || diagnostic.Message.Contains("ticket index", StringComparison.Ordinal)
-            || diagnostic.Message.Contains("directory", StringComparison.Ordinal));
-        Assert.Contains(diagnostics, diagnostic =>
-            diagnostic.Message.Contains("fingerprint", StringComparison.Ordinal)
-            || diagnostic.Message.Contains("CAS", StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void ValidDirectoryBackfillIsGreenWithDirectoryBaseline()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.UseValidDirectoryBackfill();
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
-
-        Assert.Empty(diagnostics);
-    }
-
-    [Fact]
-    public void Sl016DifferentialIgnoresUnavailableBaselineGenreProjection()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Baseline[RuleFixture.FixtureBackfillSourcePath] = RemoveGenreMarkers(
-            fixture.Baseline[RuleFixture.FixtureBackfillSourcePath]);
-        fixture.Changes.Add(RuleFixture.FixtureBackfillSourcePath);
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
-
-        Assert.Empty(diagnostics);
-    }
-
-    [Fact]
-    public void Sl016RejectsLegacyGenreMarkerSchemaInCandidate()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[RuleFixture.FixtureBackfillSourcePath] = RemoveGenreMarkers(
-            fixture.Files[RuleFixture.FixtureBackfillSourcePath]);
-        fixture.Changes.Add(RuleFixture.FixtureBackfillSourcePath);
-
-        var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics);
-
-        Assert.Equal(
-            $"source metadata keys are not canonical: {RuleFixture.FixtureBackfillSourcePath}",
-            diagnostic.Message);
-    }
-
-    [Fact]
-    public void Sl016ValidatesReceiptStructureWithoutCheckingMissingCasBytes()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files.Remove(RuleFixture.FixtureCasPath);
-        fixture.Changes.Add(RuleFixture.FixtureCasPath);
-        fixture.Changes.Add(RuleFixture.FixtureBackfillAtomPath);
-        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
-                RuleFixture.FixtureBackfillAtomPath]
-            .Replace(
-                "gid: D5/S0/Carrier/BackfillTarget",
-                "gid: not-a-gid",
-                StringComparison.Ordinal);
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
-
-        Assert.Equal(
-            $"entry {RuleFixture.FixtureAtomId} has invalid coverage GID not-a-gid",
-            Assert.Single(diagnostics).Message);
-    }
-
-    private static string RemoveGenreMarkers(string metadata) => metadata
-        .Replace("genre_registry_check = \"no-registry\"\n", string.Empty, StringComparison.Ordinal)
-        .Replace("unregistered_genres = []\n", string.Empty, StringComparison.Ordinal);
-
-    [Fact]
-    public void Sl016ValidatesReceiptStructureWithoutRehashingCasBytes()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Changes.Clear();
-        fixture.Changes.Add(RuleFixture.FixtureCasPath);
-        fixture.Files[RuleFixture.FixtureCasPath] = "corrupt";
-        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
-                RuleFixture.FixtureBackfillAtomPath]
-            .Replace(
-                "gid: D5/S0/Carrier/BackfillTarget",
-                "gid: not-a-gid",
-                StringComparison.Ordinal);
-
-        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(
-                fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))));
-
-        Assert.Equal(
-            $"entry {RuleFixture.FixtureAtomId} has invalid coverage GID not-a-gid",
-            Assert.Single(completed.Capability.Diagnostics,
-                diagnostic => diagnostic.RuleId == RuleId.CreateKnown(16)).Message);
-    }
-
-    [Fact]
-    public void Sl016DoesNotReplayCommittedCasIntegrityForAnUnrelatedCandidateDelta()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[RuleFixture.FixtureCasPath] = "trusted committed bytes";
-        var context = fixture.BuildScopeProbe(RawChangeSet.Create(["notes/unrelated.txt"]));
-
-        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(context));
-
-        Assert.DoesNotContain(
-            completed.Capability.Diagnostics,
-            static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(16));
-    }
-
-    [Fact]
-    public void Sl016RechecksCoverageReceiptWhenFrozenStatementChanges()
-    {
-        var (fixture, frozenChanges) = FrozenStatementDriftFixture();
-        var changes = RawChangeSet.Create(frozenChanges);
-        var context = fixture.BuildScopeProbe(changes);
-        var document = BackfillInventoryLoader.Load(context.Current);
-        var evaluation = DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.ChangedSet,
-            document,
-            context.Current,
-            context.Lean,
-            casEvaluation: DigestionCasStore.EvaluateLedgerReferences(document, context.Current, changes),
-            changes: changes);
-
-        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
-        Assert.Contains(
-            Assert.Single(evaluation.Entries).Gaps,
-            static gap => gap.Code == "coverage-target-mismatch");
-    }
-
-    [Fact]
-    public void LeanToolchainChangeWakesSl016BecauseItsLeanReportInputCanDrift()
-    {
-        var fixture = new RuleFixture();
-        var context = fixture.BuildScopeProbe(RawChangeSet.Create(["lean-toolchain"]));
-
-        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
-    }
-
-    [Theory]
-    [InlineData("tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs")]
-    [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
-    [InlineData("Directory.Build.props")]
-    [InlineData("Directory.Packages.props")]
-    [InlineData("global.json")]
-    public void EveryAtomizerBuildInputWakesSl016BecauseItsProjectionCanDrift(string changedPath)
-    {
-        var fixture = new RuleFixture();
-        var context = fixture.BuildScopeProbe(RawChangeSet.Create([changedPath]));
-
-        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
-    }
-
-    [Fact]
-    public void Sl016DerivedStatusIsTheSameWhetherOrNotFrozenStatementDriftIsInTheCandidateDelta()
+    public void WriterDerivedStatusIsTheSameWhetherOrNotFrozenStatementDriftIsInTheCandidateDelta()
     {
         // Current edges are validated regardless of whether the frozen drift itself is in
         // the candidate delta, so both projections must report the same stale target.
@@ -493,32 +300,6 @@ public sealed class RuleEngineTests
         Assert.Contains(untouched.Gaps, static gap => gap.Code == "coverage-target-mismatch");
         Assert.Equal(DigestionMigrationState.Partial, untouched.DerivedStatus.Migration);
         Assert.Equal(touched.DerivedStatus, untouched.DerivedStatus);
-    }
-
-    [Fact]
-    public void Sl016ComparesProjectedStatusOnlyWhenItsAuthorityClosureChanges()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline })
-        {
-            var atom = files[RuleFixture.FixtureBackfillAtomPath];
-            files.Remove(RuleFixture.FixtureBackfillAtomPath);
-            files[$"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml"] = atom;
-        }
-
-        var unrelated = Assert.IsType<RuleExecutionOutcome.Completed>(RuleCatalog.Default.Execute(
-            fixture.BuildScopeProbe(RawChangeSet.Create([RuleFixture.BlueprintPath])))).Capability;
-
-        Assert.DoesNotContain(unrelated.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
-
-        fixture.Files[RuleFixture.FixtureDigestionSourcePath] += "changed";
-        var relevant = Assert.IsType<RuleExecutionOutcome.Completed>(RuleCatalog.Default.Execute(
-            fixture.BuildScopeProbe(RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath])))).Capability;
-
-        Assert.Contains(relevant.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
     }
 
     private static DigestionEntryEvaluation StatementDriftEvaluation(
@@ -732,7 +513,7 @@ public sealed class RuleEngineTests
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 23).Except([5]).Append(25).Append(26).Append(30), exercised);
+        Assert.Equal(Enumerable.Range(1, 23).Except([5, 16]).Append(25).Append(26).Append(30), exercised);
     }
 
     [Fact]

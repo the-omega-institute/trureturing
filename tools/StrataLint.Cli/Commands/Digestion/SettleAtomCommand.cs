@@ -11,75 +11,6 @@ internal static partial class SettleAtomCommand
     private const string Usage = "USAGE: StrataLint settle-atom --request FILE | settle-atom --clear ATOM_ID";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    private sealed class Session
-    {
-        internal Session(IRepositoryGateway repository)
-        {
-            var loaded = DigestionWorkingTree.ReadLedger(
-                repository,
-                Decode,
-                BackfillInventoryLoader.LoadForDigestion);
-            CurrentRaw = loaded.Raw;
-            Current = loaded.Snapshot;
-            Document = loaded.Document;
-        }
-
-        internal RawRepositorySnapshot CurrentRaw { get; private set; }
-        internal RepositorySnapshot Current { get; private set; }
-        internal BackfillInventoryDocument Document { get; private set; }
-
-        internal void Extend(IRepositoryGateway repository, params string[] paths)
-        {
-            var loaded = DigestionWorkingTree.Extend(
-                repository,
-                (CurrentRaw, Current, Document),
-                Decode,
-                paths);
-            CurrentRaw = loaded.Raw;
-            Current = loaded.Snapshot;
-            Document = loaded.Document;
-        }
-
-        internal void ReadChainEvaluation(IRepositoryGateway repository, DigestionLedgerEntry target)
-        {
-            var closure = ChainClosureIds(Document, target.AtomId);
-            var paths = Document.RequireDigestionEntries()
-                .Where(entry => closure.Contains(entry.AtomId))
-                .SelectMany(static entry => entry.CoverageGids
-                    .Select(static gid => Gid.TryParse(gid, out var parsed) ? parsed.Path.Value : null)
-                    .Append(entry.Receipts.TailAuthorization?.Path)
-                    .Append(entry.SourcePath))
-                .OfType<string>()
-                .Concat(["D5", "Reg", "Trureturing.lean", "Golden/Frozen/state"])
-                .Distinct(StringComparer.Ordinal)
-                .ToArray();
-            var loaded = DigestionWorkingTree.Extend(
-                repository,
-                (CurrentRaw, Current, Document),
-                Decode,
-                paths);
-            CurrentRaw = loaded.Raw;
-            Current = loaded.Snapshot;
-            Document = loaded.Document;
-        }
-
-        internal void Commit(ImmutableArray<IngestCommand.LedgerUpdate> updates)
-        {
-            var entries = CurrentRaw.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
-            foreach (var update in updates)
-            {
-                if (update.Bytes is { } bytes)
-                    entries[update.Path] = new RawRepositoryEntry(update.Path, bytes);
-                else
-                    entries.Remove(update.Path);
-            }
-
-            CurrentRaw = RawRepositorySnapshot.Create(entries.Values);
-            Current = Decode(CurrentRaw);
-            Document = BackfillInventoryLoader.LoadForDigestion(Current);
-        }
-    }
-
     internal static CommandResult Run(string root, IRepositoryGateway repository, IReadOnlyList<string> arguments,
         ILeanReportSource? reportSource = null) =>
         Run(root, repository, arguments, BackfillInventoryWriter.WriteAtom, ReadRequest,
@@ -115,6 +46,7 @@ internal static partial class SettleAtomCommand
                 ?? (options!.RequestPath is null ? null : LoadRequest(readRequest(root, options.RequestPath)));
             var atomId = request?.AtomId ?? options!.ClearAtomId!;
             session ??= new Session(repository);
+            session.ReadAtom(atomId);
             var current = session.CurrentRaw;
             var snapshot = session.Current;
             var document = session.Document;
@@ -133,20 +65,7 @@ internal static partial class SettleAtomCommand
             else
             {
                 RequireWritable(target);
-                var sourceCasPaths = DigestionWorkingTree.ChainCasPaths(
-                    document,
-                    [
-                        target.AtomId,
-                        .. document.RequireDigestionEntries()
-                        .Where(entry => entry.SourceId == target.SourceId)
-                        .SelectMany(static entry => entry.Receipts.ChainAtoms),
-                    ]);
-                var requiredPaths = new[]
-                {
-                    target.SourcePath,
-                    TheoryAtomizerDataLoader.DataPath,
-                }.Concat(sourceCasPaths).ToArray();
-                session.Extend(repository, requiredPaths);
+                session.ReadContext(atomId);
                 current = session.CurrentRaw;
                 snapshot = session.Current;
                 document = session.Document;
@@ -163,7 +82,7 @@ internal static partial class SettleAtomCommand
                     throw Invalid("CONTEXT_MISMATCH", $"atom_id={atomId}");
                 if (!target.Receipts.ChainAtoms.IsEmpty)
                 {
-                    session.ReadChainEvaluation(repository, target);
+                    session.ReadChainEvaluation(target);
                     current = session.CurrentRaw;
                     snapshot = session.Current;
                     document = session.Document;

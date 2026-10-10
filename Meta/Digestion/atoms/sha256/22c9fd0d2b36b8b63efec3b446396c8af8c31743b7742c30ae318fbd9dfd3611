@@ -1,0 +1,2 @@
+**Source boundary.** The supplied continuation is preserved in normalized theorem headings below. Structural normalization adds provenance and claim-status labels; it does not promote the claims to Lean/Frozen truth or silently repair their hypotheses.
+

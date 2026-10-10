@@ -38,7 +38,7 @@ public sealed partial class CoverBatchCommandTests
         using var batch = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(batch.Root);
         var reportPath = batch.WriteReportBundle();
-        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath })
+        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", GeneratedArtifactInventory.Values.Path })
         {
             TestGit.Run(batch.Root, "ls-files", "--error-unmatch", path);
             TemporaryFileSystem.File.Delete(Path.Combine(batch.Root, path));
@@ -61,7 +61,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Empty(result.Error);
         Assert.False(File.Exists(Path.Combine(batch.Root, "Blueprint/D5/S0/Carrier/Probe.md")));
-        foreach (var path in new[] { CanonicalValuesWriter.RelativePath })
+        foreach (var path in new[] { GeneratedArtifactInventory.Values.Path })
         {
             Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(batch.Root, path)));
             Assert.Single(result.Output.Split('\n'), line => line.Contains(path, StringComparison.Ordinal));
@@ -137,7 +137,7 @@ public sealed partial class CoverBatchCommandTests
     [InlineData(".provenance.json")]
     [InlineData(".input.attestation")]
     [InlineData("sha-drift")]
-    [InlineData("producer-drift")]
+    [InlineData("input-drift")]
     public void RealFinalEmissionRejectsBadBundlesAfterKeepingSuccessfulCoverage(string failure)
     {
         using var world = new BatchWorld { UseGitReader = true };
@@ -151,7 +151,7 @@ public sealed partial class CoverBatchCommandTests
         {
             var path = report + ".input.attestation";
             var lines = TemporaryFileSystem.File.ReadAllText(path).Split('\n');
-            lines[2] = "producer_sha256=" + new string('0', 64);
+            lines[1] = "input_sha256=" + new string('0', 64);
             TemporaryFileSystem.File.WriteAllText(path, string.Join('\n', lines));
         }
 
@@ -161,7 +161,8 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(1, result.ExitCode);
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Contains("COVER_BATCH_EMIT_FAILED", result.Error, StringComparison.Ordinal);
-        Assert.Contains(failure.StartsWith(".", StringComparison.Ordinal) ? "incomplete" : "stale",
+        Assert.Contains(failure.StartsWith(".", StringComparison.Ordinal) ? "incomplete"
+                : failure == "sha-drift" ? "SHA mismatch" : "input attestation",
             result.Error, StringComparison.Ordinal);
         Assert.Single(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
@@ -170,13 +171,13 @@ public sealed partial class CoverBatchCommandTests
 
     private static void WriteEmissionInputs(string root)
     {
-        TemporaryFileSystem.File.Delete(Path.Combine(root, ScribeEmissionAttestation.RelativePath));
+        TemporaryFileSystem.File.Delete(Path.Combine(root, GeneratedArtifactInventory.ScribeAttestation.Path));
         WriteProblem(root);
         WriteScribeFixture(root, "Trureturing.lean", "-- synthetic root module\n");
         WriteScribeFixture(root, ".gitignore",
             File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".gitignore")));
         WriteScribeFixture(root, "Blueprint/D5/S0/Carrier/Probe.md", "old blueprint projection\n");
-        WriteScribeFixture(root, CanonicalValuesWriter.RelativePath, "old values projection\n");
+        WriteScribeFixture(root, GeneratedArtifactInventory.Values.Path, "old values projection\n");
         WriteValuesInputs(root);
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var documents = FileMapDocuments.Resolve(

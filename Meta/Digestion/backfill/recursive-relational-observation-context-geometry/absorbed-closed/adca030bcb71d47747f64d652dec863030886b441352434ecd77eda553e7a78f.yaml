@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:adca030bcb71d47747f64d652dec863030886b441352434ecd77eda553e7a78f
+  normalized_sha256: sha256:adca030bcb71d47747f64d652dec863030886b441352434ecd77eda553e7a78f
+cas_ref: sha256:adca030bcb71d47747f64d652dec863030886b441352434ecd77eda553e7a78f
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/FixedForestUnitCapacity.original_context8319
+    target_statement_id: sha256:30dc71da6924ec1339ccd1d49d35eee80ce7712c04026bcef92b575d71f05e5a
+receipts:
+  unresolved_subitems: []

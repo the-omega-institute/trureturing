@@ -1,0 +1,71 @@
+**定理 40.4（实际周期的规范缺陷质量下界）。** 在完整假设 40.1 下，对每个整数 $n\ge3$ 和定义 40.2 的每一条实际周期，令 $m=\lfloor p/2\rfloor$，则
+
+$$
+\begin{aligned}
+S_O&\ge\sum_{i=1}^{m}
+ \left\lfloor\alpha^2(x_{p+1-i}-x_i)\right\rfloor\\
+ &\ge B_p:=\sum_{i=1}^{m}\lfloor\alpha^2(p+1-2i)\rfloor\\
+ &\ge\alpha^2\left\lfloor\frac{p^2}{4}\right\rfloor
+       -\left\lfloor\frac p2\right\rfloor
+ \ge\frac{\alpha^2p^2}{4}-\frac p2.
+\end{aligned}
+\tag{40.10}
+$$
+
+因此根无关的充分常数与均值界为
+
+$$
+a=\frac{\alpha^2}{4}=\frac{3-\sqrt5}{8}>0,
+\qquad b=\frac12,\qquad
+S_O\ge ap^2-bp,\qquad
+\frac{S_O}{p}\ge\frac{B_p}{p}\ge ap-b.
+\tag{40.11}
+$$
+
+$S_O\ge B_p\ge0$；$B_1=B_2=0$。$B_p$ 是上述明确有限 floor 和的值，不声称它是实际周期的最小可达质量，也不声称 $a,b$ 最优。初始化根 $n=2$ 的唯一周期同样满足 (40.10)--(40.11)，其质量为零。
+
+奇偶两种情形的精确秩和可写为
+
+$$
+B_{2m}=\sum_{k=1}^{m}\lfloor\alpha^2(2k-1)\rfloor\quad(m\ge1),
+\qquad
+B_{2m+1}=\sum_{k=1}^{m}\lfloor2\alpha^2k\rfloor\quad(m\ge0).
+$$
+
+两式仅以 $k=m+1-i$ 重列 (40.10) 的同一求和；奇数情形的中心容量余量仍按引理 40.3 保留为非负项。
+
+证明。来源合法域给 $1\le C(x)\le x$；对 $x\in D_n$，于是 $1\le n-C(x)\le n-1$。一条实际周期的时间枚举 $q_0,\ldots,q_{p-1}$ 有不同整数点，并满足 $T_n(q_i)=q_{(i+1)\bmod p}$。因此 $T_n|_O$ 是置换，逆为同一周期的前一步。排序保留这同一个点集，未把循环次序替换为反序配对。
+
+$2<\sqrt5<3$ 给 $0<\alpha<1$，直接展开给 $1-\alpha=\alpha^2$。在引理 40.3 中逐项取
+
+$$
+A=O,\quad z_i=x_i,\quad r=n,\quad f=C|_O,
+\quad t=\alpha,\quad c=\alpha,\quad
+g=G|_O,\quad\sigma=T_n|_O.
+$$
+
+非负实际差 $f-g=E_C|_O$ 来自继承的黄金下界，整数值与不同整数点来自实际序列及周期，置换条件已证。这验证全部一般假设，(40.3) 在实际对象上成为 $x_{p+1-i}+G(x_i)\le n$，(40.5) 成为
+
+$$
+S_O=pn-\sum_{x\in O}x-\sum_{x\in O}G(x).
+\tag{40.12}
+$$
+
+直接应用 (40.4) 得 (40.10)。每个 floor 和的自变量非负，故 $B_p\ge0$。$\alpha^2=(3-\sqrt5)/2$ 给常数式；除以 $p>0$ 给均值界。
+
+对初始化根 $n=2$，$D_2=\{1\}$，初值直接给 $T_2(1)=2-C(1)=1$。又 $G(1)=\lfloor\sqrt5-1\rfloor=1=C(1)$，故其唯一周期为 $\{1\}$，$p=1$、$S_O=0$。这只使用初值与取整，不把一、二视为递归拆分根。$\square$
+
+定理 19.2 的独立振幅结论仍是 $s<\varphi^2(\Delta_O+1)$、$p\le\lceil\varphi^2(\Delta_O+1)\rceil$、$\Delta_O\ge\lfloor\alpha^2(p-1)\rfloor$，且 $\Delta_O=0$ 时 $p\le2$；它不要求假设 18.1。在非负缺陷下，这些振幅式直接给的质量约束是 $S_O\ge\Delta_O$ 的线性下界。(40.10) 使用全部后缀容量与成对整数秩距，得到二次总量；它补充振幅信息，不把最大缺陷或空间跨度平均成周期总量。大质量也不反向证明长周期存在。
+
+定理 15.3 的既有解释可逐点用于每个 $x$ 自己的实际拆分树 $\mathcal T_x$：
+
+$$
+S_O=\sum_{x\in O}\sum_{u\in I_x}
+\delta(g_{m_u},m_u-g_{m_u}).
+\tag{40.13}
+$$
+
+这里 $I_x$ 按该树的内部出现位置计数，双重求和保留标签 $(x,u)$。相同物理索引、共享子树或多个根中的别名保留出现重数，每个内部根仍使用自己的内历史、规定深度和停止条件。右侧是有符号总进位，包含负进位，不是正事件数，也不是外侧某一棵选择树的占用量。(40.13) 是已有树恒等式的应用，不参与秩证明。
+
+在同一 $O$ 中改变时间起点，只循环置换全体求和项，所以完整 $S_O$ 及 $S_O/p$ 与该起点无关。这不证明逐点缺陷、互补标量读出或被规定深度选中的输出恒定，也不证明不同周期或观察纤维具有共同输出。
+

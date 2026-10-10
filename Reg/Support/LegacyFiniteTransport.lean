@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Catalog
 import Reg.Support.DependentFamily
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
@@ -69,8 +70,17 @@ theorem realization_ext {X : Type} {S : PrimitiveSignature X}
     (ha : a.anchor = b.anchor) : a = b := by
   cases a; cases b; cases hr; cases ha; rfl
 
-register_information_template RegistrationTemplates.binaryFamilyRealization
-register_information_template admitRealization
-register_information_template agendaRealization
+noncomputable def enrollment_1 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.binaryFamilyRealization) := {
+  name := `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.binaryFamilyRealization, version := 1, constructors := #[],
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
+noncomputable def enrollment_2 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.Reg.Support.LegacyFiniteTransport.admitRealization) := {
+  name := `Reg.Support.LegacyFiniteTransport.admitRealization, version := 1, constructors := #[],
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
+noncomputable def enrollment_3 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.Reg.Support.LegacyFiniteTransport.agendaRealization) := {
+  name := `Reg.Support.LegacyFiniteTransport.agendaRealization, version := 1, constructors := #[],
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.Support.LegacyFiniteTransport

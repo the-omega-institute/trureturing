@@ -1,0 +1,89 @@
+**推导 7.1（正权重与唯一概率比）。** 此处是经典正概率比参数化在五模式支撑上的应用；[Drton–Sullivant Example 4](../../../Library/Estimation/drtonsullivant2007algebraic.md) 给出正概率单纯形与对数概率比的对应。
+
+令：
+
+```math
+(p_0,p_2,p_3,p_5,p_{25})
+=
+\frac1{\mathcal Z}(1,a,b,c,ac).
+```
+
+则：
+
+```math
+\boxed{\Delta=0.}
+```
+
+反过来，任意五项都严格为正、且 $\Delta=0$ 的概率，都唯一具有这种形式。
+
+证明。
+
+正向：
+
+```math
+p_0p_{25}
+=
+\frac{ac}{\mathcal Z^2}
+=
+p_2p_5.
+```
+
+反向取：
+
+```math
+a=\frac{p_2}{p_0},
+\qquad
+b=\frac{p_3}{p_0},
+\qquad
+c=\frac{p_5}{p_0}.
+```
+
+由 $p_0p_{25}=p_2p_5$：
+
+```math
+\frac{p_{25}}{p_0}=ac.
+```
+
+归一化便恢复原分布。证毕。
+
+若要允许任意严格正的联合关系，只需额外给两端共同项一个权重：
+
+```math
+\boxed{
+1,\quad a,\quad b,\quad c,\quad \eta ac.
+}
+```
+
+其中：
+
+```math
+\boxed{
+\eta=\frac{p_0p_{25}}{p_2p_5}.
+}
+```
+
+其归一化总权必须相应改成
+
+```math
+\mathcal Z_\eta=1+a+b+c+\eta ac,
+\qquad p=\frac{(1,a,b,c,\eta ac)}{\mathcal Z_\eta}.
+```
+
+对任意严格正的五项律，仍取 $a=p_2/p_0,b=p_3/p_0,c=p_5/p_0$，再取所列 $\eta$；则 $\eta ac=p_{25}/p_0$ 且 $\mathcal Z_\eta=1/p_0$，全部参数唯一。
+
+所以：
+
+```math
+\boxed{
+\text{三个单位置权重}
++
+\text{一个两端联合权重}
+}
+```
+
+足以表示全部严格正的五模式概率。
+
+**这个额外量不是第六个模式，而是第五个模式与其他模式之间的权重关系。**
+
+---
+

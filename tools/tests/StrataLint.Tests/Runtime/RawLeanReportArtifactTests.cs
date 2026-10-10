@@ -19,7 +19,141 @@ public sealed class RawLeanReportArtifactTests
         + "\"imports\": [], \"information_registration_errors\": [], \"module\": \"Trureturing\", "
         + "\"source_path\": \"Trureturing.lean\", \"source_sha256\": "
         + "\"sha256:da33f5efbd5a92bd6c18a7a11a36dfbcd0ac00fbe05c267a85dec98370deadd4\"}], "
-        + "\"schema\": \"stratalint-raw-lean-report-v2\"}\n";
+        + "\"schema\": \"stratalint-raw-lean-report-v3\"}\n";
+
+    [Fact]
+    public void PreviousReportFormatIsRejected()
+    {
+        // The strict reader accepts only the current extraction format.
+        var previous = CanonicalReport.Replace("stratalint-raw-lean-report-v3",
+            "stratalint-raw-lean-report-v2", StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() =>
+            RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(previous), Snapshot()));
+    }
+
+    [Fact]
+    public void ScopedSchemaIsReadOnlyThroughTheScopedConsumer()
+    {
+        var snapshot = Snapshot();
+        var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown("Trureturing.lean")]);
+        var scoped = CanonicalReport.Replace(
+            "stratalint-raw-lean-report-v3",
+            "stratalint-scoped-lean-report-v1",
+            StringComparison.Ordinal).Replace("\"imports\": []", "\"imports\": [\"Init\"]", StringComparison.Ordinal);
+
+        var report = RawLeanReportArtifact.ReadForScope(
+            Encoding.UTF8.GetBytes(scoped), scope);
+
+        Assert.True(report.IsScoped);
+        Assert.Throws<FormatException>(() =>
+            RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(scoped), snapshot));
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("stale")]
+    [InlineData("material")]
+    [InlineData("statement")]
+    [InlineData("imports")]
+    public void ScopedReportRejectsInvalidMembersSourcesMaterialsAndImports(string defect)
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "scoped.json");
+        WriteMaterialFixture(path, "statement-v1(test)");
+        var bytes = File.ReadAllText(path).Replace(RawLeanReportArtifact.Schema,
+            RawLeanReportArtifact.ScopedSchema, StringComparison.Ordinal)
+            .Replace("\"imports\": []", "\"imports\": [\"Init\"]", StringComparison.Ordinal);
+        var snapshot = Snapshot();
+        switch (defect)
+        {
+            case "missing":
+                bytes = "{\"modules\": [], \"schema\": \"stratalint-scoped-lean-report-v1\"}\n";
+                File.Delete(RawLeanReportArtifact.MaterialsPath(path));
+                using (var archive = ZipFile.Open(RawLeanReportArtifact.MaterialsPath(path), ZipArchiveMode.Create)) { }
+                break;
+            case "stale":
+                snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+                    RawRepositorySnapshot.Create([RawRepositoryEntry.FromText("Trureturing.lean", Source + "-- changed\n")]))).Snapshot;
+                break;
+            case "material":
+                File.WriteAllBytes(RawLeanReportArtifact.MaterialsPath(path), [0xff]);
+                break;
+            case "statement":
+                bytes = bytes.Replace("sha256:452d97f1469d85ac204ab83dbbb919e19289c28674b14ab9df96586c535b1763",
+                    "sha256:" + new string('0', 64), StringComparison.Ordinal);
+                break;
+            case "imports":
+                bytes = bytes.Replace("\"imports\": [\"Init\"]", "\"imports\": [\"Init\", \"Mathlib\"]", StringComparison.Ordinal);
+                break;
+        }
+        File.WriteAllText(path, bytes);
+        var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown("Trureturing.lean")]);
+
+        if (defect == "missing")
+        {
+            var exception = Assert.Throws<FormatException>(() =>
+                RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true));
+            Assert.Contains("Raw Lean report is missing modules: Trureturing", exception.Message, StringComparison.Ordinal);
+        }
+        else
+            Assert.ThrowsAny<Exception>(() => RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true));
+    }
+
+    [Fact]
+    public void ScopedReportRequiresIndependentNonemptyResolvableTargets()
+    {
+        Assert.Throws<ArgumentException>(() => LeanReportScope.Create(Snapshot(), []));
+        Assert.Throws<InvalidOperationException>(() => LeanReportScope.Create(Snapshot(), [RepoPath.CreateKnown("D5/Missing.lean")]));
+    }
+
+    [Fact]
+    public void ScopeIncludesRefutationClaimInputsAndTheirImports()
+    {
+        var fixture = UtilityAdmissionTestSupport.InstanceFixture(
+            "kind=certified-instance; basis=refutes=gid:D5/S0/Carrier/Claim.claim; "
+            + "result=D5/S0/Carrier/Ring.refuted_law; claim=D5/S0/Carrier/Claim.claim");
+        fixture.Files["D5/S0/Carrier/Claim.lean"] = "import D5.S0.Carrier.ClaimSupport\ndef claim : Prop := False\n";
+        fixture.Files["D5/S0/Carrier/ClaimSupport.lean"] = "def support : Nat := 0\n";
+        fixture.Files["D5/S0/Carrier/Sibling.lean"] = "def sibling : Nat := 0\n";
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            UtilityAdmissionTestSupport.Raw(fixture.Files))).Snapshot;
+
+        var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown(RuleFixture.RingPath)]);
+
+        Assert.Contains(RepoPath.CreateKnown("D5/S0/Carrier/Claim.lean"), scope.Paths);
+        Assert.Contains(RepoPath.CreateKnown("D5/S0/Carrier/ClaimSupport.lean"), scope.Paths);
+        Assert.DoesNotContain(RepoPath.CreateKnown("D5/S0/Carrier/Sibling.lean"), scope.Paths);
+    }
+
+    [Fact]
+    public void ScopeIncludesTargetUtilityInputsAndImportsWithoutFollowingDependencyConsumers()
+    {
+        var fixture = UtilityAdmissionTestSupport.InstanceFixture(
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; "
+            + "premises=D5/S0/Carrier/Premise.fact");
+        fixture.Files[RuleFixture.ValuesBindingPath] = fixture.Files[RuleFixture.ValuesBindingPath]
+            .Replace("   anchors: []\n", "   anchors: []\n   utility: kind=checker; "
+                + "basis=consumer=D5/S0/Carrier/Sibling.sibling; instance=D5/S0/Carrier/Sibling.sibling\n",
+                StringComparison.Ordinal)
+            .Replace("def fixtureValue", "import D5.S0.Carrier.ConsumerSupport\n\ndef fixtureValue", StringComparison.Ordinal);
+        fixture.Files["D5/S0/Carrier/ConsumerSupport.lean"] = "def support := 0\n";
+        fixture.Files["D5/S0/Carrier/Premise.lean"] = "def fact := 0\n";
+        fixture.Files["D5/S0/Carrier/Sibling.lean"] = "def sibling := 0\n";
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            UtilityAdmissionTestSupport.Raw(fixture.Files))).Snapshot;
+
+        var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown(RuleFixture.RingPath)]);
+
+        Assert.Contains(RepoPath.CreateKnown(RuleFixture.ValuesBindingPath), scope.Paths);
+        Assert.Contains(RepoPath.CreateKnown("D5/S0/Carrier/ConsumerSupport.lean"), scope.Paths);
+        Assert.Contains(RepoPath.CreateKnown("D5/S0/Carrier/Premise.lean"), scope.Paths);
+        Assert.DoesNotContain(RepoPath.CreateKnown("D5/S0/Carrier/Sibling.lean"), scope.Paths);
+        fixture.Files.Remove("D5/S0/Carrier/Premise.lean");
+        var missing = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            UtilityAdmissionTestSupport.Raw(fixture.Files))).Snapshot;
+        Assert.Throws<InvalidOperationException>(() =>
+            LeanReportScope.Create(missing, [RepoPath.CreateKnown(RuleFixture.RingPath)]));
+    }
 
     [Fact]
     public void CanonicalReportFeedsLeanFileReportAndTheExistingStatementWriter()
@@ -278,74 +412,17 @@ public sealed class RawLeanReportArtifactTests
     {
         const string unicodeSource = "def term𝒪φ : Nat := 1\n";
         using var repository = new TemporaryDirectory();
-        var manifest = Path.Combine(repository.Path, LeanReportRegistrationFixture.ManifestPath);
-        File.WriteAllText(manifest, LeanReportRegistrationFixture.Manifest);
-        File.WriteAllText(
-            Path.Combine(repository.Path, "lakefile.toml"),
+        File.WriteAllText(Path.Combine(repository.Path, "lakefile.toml"),
             "name = \"producer_probe\"\nversion = \"0.1.0\"\ndefaultTargets = [\"Trureturing\"]\n\n[[lean_lib]]\nname = \"Trureturing\"\n",
             new UTF8Encoding(false));
-        File.WriteAllText(
-            Path.Combine(repository.Path, "lean-toolchain"),
-            "leanprover/lean4:v4.31.0\n",
-            new UTF8Encoding(false));
-        File.WriteAllText(
-            Path.Combine(repository.Path, "Trureturing.lean"),
-            unicodeSource,
-            new UTF8Encoding(false));
-        var build = TestProcessRunner.Run(
-            "lake",
-            ["build"],
-            repository.Path,
-            TestBudgets.LeanProcessHangGuard,
-            8 * 1024 * 1024);
-        Assert.True(
-            build.ExitCode == 0,
-            Encoding.UTF8.GetString(build.StandardOutput) + Encoding.UTF8.GetString(build.StandardError));
-        var output = Path.Combine(repository.Path, "raw-lean-report.json");
-        var spoolReport = output + ".spool.json";
-        var spoolMaterials = output + ".spool-materials";
-        var inspector = Path.Combine(
-            TestRepositoryLayout.FindRoot(),
-            "tools", "lean-inspector",
-            "Inspector.lean");
-        var sourceHash = "sha256:" + Convert.ToHexStringLower(
-            SHA256.HashData(Encoding.UTF8.GetBytes(unicodeSource)));
-
-        var inspected = TestProcessRunner.Run(
-            "lake",
-            [
-                "env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
-                "--output", spoolReport,
-                "--material-spool", spoolMaterials,
-                "Trureturing", "Trureturing.lean", sourceHash,
-            ],
-            repository.Path,
-            TestBudgets.LeanProcessHangGuard,
-            8 * 1024 * 1024);
-
-        Assert.True(
-            inspected.ExitCode == 0,
-            Encoding.UTF8.GetString(inspected.StandardOutput)
-                + Encoding.UTF8.GetString(inspected.StandardError));
-        var compacted = TestProcessRunner.Run(
-            "python3",
-            [
-                Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "materials.py"),
-                "compact", spoolReport, spoolMaterials, output, manifest,
-            ],
-            repository.Path,
-            TestBudgets.LeanProcessHangGuard,
-            8 * 1024 * 1024);
-        Assert.True(
-            compacted.ExitCode == 0,
-            Encoding.UTF8.GetString(compacted.StandardOutput)
-                + Encoding.UTF8.GetString(compacted.StandardError));
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"),
+            Path.Combine(repository.Path, "lean-toolchain"));
         var raw = RawRepositorySnapshot.Create(new[]
         {
             RawRepositoryEntry.FromText("Trureturing.lean", unicodeSource),
         });
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
-        var report = RawLeanReportArtifact.ReadFile(output, snapshot);
+        var report = new StandaloneLeanInspectorTests.TestLeanReportProducer(repository.Path).Inspect(snapshot);
         Assert.Contains(
             report.Files.Single().Value.Declarations,
             declaration => declaration.Name == "term𝒪φ");

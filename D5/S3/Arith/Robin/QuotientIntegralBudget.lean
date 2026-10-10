@@ -278,7 +278,7 @@ private theorem integral_inv_sq_Ico {d c : ℝ} (hd : 0 < d) (hc : 0 < c) (hc1 :
   rw [integral_Ico_eq_integral_Ioc, ← intervalIntegral.integral_of_le hdc, hFTC]
   field_simp [hd.ne', hc.ne']
   <;> ring
-private theorem hasDerivAt_log_tail_primitive {y : ℝ} (hy : 0 < y) : HasDerivAt (fun z : ℝ => -(Real.log z + 2) / z) ((1 + Real.log y) / y ^ 2) y
+theorem hasDerivAt_log_tail_primitive {y : ℝ} (hy : 0 < y) : HasDerivAt (fun z : ℝ => -(Real.log z + 2) / z) ((1 + Real.log y) / y ^ 2) y
     := by
   have h := (((Real.hasDerivAt_log hy.ne').add_const 2).neg.div (hasDerivAt_id y) hy.ne')
   apply h.congr_deriv
@@ -292,12 +292,12 @@ private theorem tendsto_log_tail_primitive : Tendsto (fun y : ℝ => -(Real.log 
   have hconst : Tendsto (fun y : ℝ => 2 / y) atTop (𝓝 0) := by
     simpa only [div_eq_mul_inv, mul_zero] using (tendsto_inv_atTop_zero : Tendsto (fun y : ℝ => y⁻¹) atTop (𝓝 0)).const_mul (2 : ℝ)
   simpa only [add_div, neg_div, add_zero, neg_zero] using (hlog.add hconst).neg
-private theorem integrableOn_log_tail {a : ℝ} (ha : 1 ≤ a) : IntegrableOn (fun y : ℝ => (1 + Real.log y) / y ^ 2) (Ioi a) := by
+theorem integrableOn_log_tail {a : ℝ} (ha : 1 ≤ a) : IntegrableOn (fun y : ℝ => (1 + Real.log y) / y ^ 2) (Ioi a) := by
   refine integrableOn_Ioi_deriv_of_nonneg' (fun y hy => hasDerivAt_log_tail_primitive (zero_lt_one.trans_le (ha.trans hy))) ?_
       tendsto_log_tail_primitive
   intro y hy
   exact div_nonneg (add_nonneg zero_le_one (Real.log_nonneg (ha.trans hy.le))) (sq_nonneg y)
-private theorem integral_log_tail {a : ℝ} (ha : 1 ≤ a) : (∫ y in Ioi a, (1 + Real.log y) / y ^ 2) = (Real.log a + 2) / a := by
+theorem integral_log_tail {a : ℝ} (ha : 1 ≤ a) : (∫ y in Ioi a, (1 + Real.log y) / y ^ 2) = (Real.log a + 2) / a := by
   have hderiv : ∀ y ∈ Ici a, HasDerivAt (fun z : ℝ => -(Real.log z + 2) / z) ((1 + Real.log y) / y ^ 2) y := by
     intro y hy
     exact hasDerivAt_log_tail_primitive (zero_lt_one.trans_le (ha.trans hy))
@@ -312,7 +312,7 @@ private theorem integrableOn_low_smooth (A D : ℝ) {m : ℝ} (hm : 1 ≤ m) : I
   have hypos : 0 < y := hminvpos.trans_le hy.1
   have hlog : ContinuousAt Real.log y := Real.continuousAt_log hypos.ne'
   exact (((continuousAt_const.mul (continuousAt_const.add hlog.abs)).add continuousAt_const).div continuousAt_id hypos.ne').continuousWithinAt
-private theorem integral_affine_log_div {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) (P Q : ℝ) : (∫ y in a..b, (P + Q * Real.log y) / y) = P * (Real.log
+theorem integral_affine_log_div {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) (P Q : ℝ) : (∫ y in a..b, (P + Q * Real.log y) / y) = P * (Real.log
     b - Real.log a) + (Q / 2) * ((Real.log b) ^ 2 - (Real.log a) ^ 2) := by
   have hcont : ContinuousOn (fun y : ℝ => (P + Q * Real.log y) / y) (Icc a b) := by
     intro y hy
@@ -427,7 +427,7 @@ private def jumpTerm (k : ℕ → ℝ) (i : ℕ) (c y : ℝ) : ℝ := (Ico ((i +
 
 private def jumpEnvelope (k : ℕ → ℝ) (N : ℕ) (c y : ℝ) : ℝ := ∑ i ∈ Finset.range N, jumpTerm k i c y
 private def smoothDensity (A D y : ℝ) : ℝ := (|A| * (1 + |Real.log y|) + |D|) / y
-private theorem measurable_residual (k : ℕ → ℝ) (A D : ℝ) : Measurable (residual k A D) := by
+theorem measurable_residual (k : ℕ → ℝ) (A D : ℝ) : Measurable (residual k A D) := by
   exact (measurable_prefix k).sub (by unfold mainTerm; fun_prop)
 private theorem measurable_normalizedKernel (d : KernelData) (m : ℕ) : Measurable (normalizedKernel d m) := by
   unfold normalizedKernel
@@ -635,7 +635,7 @@ private theorem prefix_at_most_one (d : KernelData) {y : ℝ} (hy : y ≤ 1) : a
       arithmeticPrefix d.k y ≤ arithmeticPrefix d.k 1 := prefix_monotone d.k d.coefficient_nonneg hy
       _ = 0 := by simp [arithmeticPrefix, coefficient_one d]
   · exact prefix_nonneg d.k d.coefficient_nonneg y
-private theorem residual_at_most_one (d : KernelData) {y : ℝ} (hy : y ≤ 1) : residual d.k d.A d.D y = d.D * y - d.A * (y * Real.log y) := by
+theorem residual_at_most_one (d : KernelData) {y : ℝ} (hy : y ≤ 1) : residual d.k d.A d.D y = d.D * y - d.A * (y * Real.log y) := by
   rw [residual, prefix_at_most_one d hy, mainTerm]
   ring
 private theorem residual_difference_high (d : KernelData) {y z : ℝ} (hz : 1 ≤ z) (hzy : z ≤ y) : |residual d.k d.A d.D y - residual d.k d.A d.D

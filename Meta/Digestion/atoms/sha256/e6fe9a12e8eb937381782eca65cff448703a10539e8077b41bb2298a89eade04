@@ -1,0 +1,12 @@
+**数学引文 4.1（尖锐概率区间）。** 三均值对应的全部律恰由
+
+$$
+\kappa_{\min}=\max(0,X+Y+Z-1)
+\le\kappa\le
+\kappa_{\max}=\min(X,Y)
+$$
+
+参数化。概率反解属前卷 §§39、53 的既有输入；其经典概率归属为 [Puccetti–Wang，Theorems 2.1、3.1 与式 (3.5)](../../../Library/Estimation/puccettiwang2015dependence.md) 所列的二事件 Fréchet–Hoeffding 界。
+
+直接证明如下。逆式五项的非负性分别要求 $\kappa\ge0$、$\kappa\le X$、$\kappa\le Y$、$Z\ge0$、$\kappa\ge X+Y+Z-1$。它们的和恒为一，故这些条件充分。对 $\mathcal P$ 内点，$X+Y+Z-1\le X,Y$，所以区间非空，且两端都给合法律。若 $r=1-Z>0$，在非中位模式上条件化，两端的边缘为 $X/r,Y/r$，联合为 $\kappa/r$，经典二事件界乘回 $r$ 正好为上式。$r=0$ 时只能是顶点，直接给 $\kappa=0$，不用除以零。
+

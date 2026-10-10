@@ -12,7 +12,7 @@ public sealed class TruthReleaseManifestReaderTests
 
     private const string ValidManifest = """
         {
-          "schema": "truth-release.v1",
+          "schema": "truth-release.v2",
           "source": {
             "source_repo": "the-omega-institute/trureturing",
             "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -37,8 +37,7 @@ public sealed class TruthReleaseManifestReaderTests
             "raw_lean_report":    { "file": "raw-lean-report.json",    "sha256": "sha256:3333333333333333333333333333333333333333333333333333333333333333" },
             "truth_export":       { "file": "truth-export.v1.json",    "sha256": "sha256:4444444444444444444444444444444444444444444444444444444444444444" },
             "blueprint_index":    { "file": "blueprint-index.v1.json", "sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555" },
-            "frozen_ledger_head": { "file": "frozen-ledger-head.json", "sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666" },
-            "residual_frontier":  { "file": "echo-residual-summary.md","sha256": "sha256:7777777777777777777777777777777777777777777777777777777777777777" }
+            "frozen_ledger_head": { "file": "frozen-ledger-head.json", "sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666" }
           },
           "sha256sums_digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
           "produced_at": "2026-08-20T00:00:00Z"
@@ -46,7 +45,7 @@ public sealed class TruthReleaseManifestReaderTests
         """;
 
     [Fact]
-    public void ParsesAValidV1Manifest()
+    public void ParsesAValidV2Manifest()
     {
         var m = TruthReleaseManifestReader.Read(ValidManifest);
 
@@ -137,7 +136,7 @@ public sealed class TruthReleaseManifestReaderTests
     [Fact]
     public void RejectsWrongSchemaTag()
     {
-        var bad = ValidManifest.Replace("truth-release.v1", "truth-release.v2", StringComparison.Ordinal);
+        var bad = ValidManifest.Replace("truth-release.v2", "truth-release.v1", StringComparison.Ordinal);
         Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
     }
 
@@ -146,6 +145,18 @@ public sealed class TruthReleaseManifestReaderTests
     {
         // Rename the required "truth_export" artifact key → it is now absent.
         var bad = ValidManifest.Replace("\"truth_export\":", "\"truth_exportz\":", StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+    }
+
+    [Fact]
+    public void RejectsADigestionArtifactInTheReleaseContract()
+    {
+        var bad = ValidManifest.Replace(
+            "\"artifacts\": {",
+            "\"artifacts\": { \"residual_frontier\": { \"file\": \"echo-residual-summary.md\", \"sha256\": \"sha256:"
+                + new string('7', 64) + "\" },",
+            StringComparison.Ordinal);
+
         Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
     }
 

@@ -1,0 +1,20 @@
+**推论 17.4（局部 $\kappa$ 模型的稳健实际消费者）。** 若实际三阶主块 $B$ 满足
+$$
+\left(\sum_{i<j}|B_{ij}-(U_c)_{ij}|^2\right)^{1/2}\le\varepsilon,
+$$
+则 $e(B)\ge(c-\varepsilon)_+^2$。保留指定相关对还给更强的
+$$
+D_\Psi(B)\ge2|B_{12}|^2\ge2(c-\varepsilon)_+^2.
+\tag{17.5}
+$$
+对于同一个 $G$ 内多组这样的指定相关对 $E_\alpha$，只要 $w_\alpha\ge0$ 且
+$\sum_{\alpha:i\in E_\alpha}w_\alpha\le1$，便有
+$$
+D_\Psi(G)\ge2\sum_\alpha w_\alpha(c_\alpha-\varepsilon_\alpha)_+^2.
+\tag{17.6}
+$$
+
+**证明。** 非对角向量的反三角不等式给能量界，也给 $|B_{12}|\ge(c-\varepsilon)_+$。这对索引组成的二阶主块有特征值 $1\pm|B_{12}|$，谱修正量恰为 $2|B_{12}|^2$。直接在定理 17.3 中采用该二阶主块即可；第三个坐标无需占用式 (17.6) 的索引容量。∎
+
+所有块必须来自已经指定的同一实际矩阵。分别选择不同核、不同来源或不同归一化下的最好局部值，不满足这里的量词。若仅知全 Frobenius 误差不超过 $\varepsilon_F$，则单位对角条件给上述非对角误差 $\varepsilon=\varepsilon_F/\sqrt2$。命题 15.3 的局部除数律本身还未供应这样的实际核近似。
+

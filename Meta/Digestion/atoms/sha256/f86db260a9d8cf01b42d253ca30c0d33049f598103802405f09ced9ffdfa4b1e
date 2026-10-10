@@ -1,0 +1,26 @@
+**同样叫“面积”，一项读取沿路径怎样经过，另一项读取哪些叶子共享哪个祖先。它们是不同的关系探针。**
+
+---
+
+## 5. 整个关系立方体可以在归一化几何中缩小，来源区别却没有减少
+
+Claim status: open.
+
+令 $S_n=\binom{M_n}{2}$、$\widehat{\mathcal A}(t)=\mathcal A(t)/S_n$。
+
+### corollary 2.1. 归一化后的整个隐藏立方体直径趋于零
+
+Claim status: open.
+
+$$
+\boxed{\operatorname{diam}\{\widehat{\mathcal A}(V_A)\}=\frac{\sqrt{2K_n}}{S_n}.}
+$$
+
+因为 $K_n$ 与 $M_n$ 同阶：
+
+$$
+\boxed{\operatorname{diam}=O(M_n^{-3/2}).}
+$$
+
+但其中仍有 $2^{K_n}$ 个不同实际来源，且包含深度分别为 $n$ 与零的来源。
+

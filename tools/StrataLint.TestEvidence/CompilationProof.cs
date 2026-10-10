@@ -6,7 +6,7 @@ internal static partial class CompilationProof
 {
     internal static bool ValidateCapability(int exit, string output) =>
         exit == 1 && CapabilityDiagnostic().IsMatch(output)
-        && Errors(output).All(line => line.Contains(": error CS7036:", StringComparison.Ordinal));
+        && Errors(output).All(line => CapabilityDiagnostic().IsMatch(line));
 
     internal static bool ValidateBannedApi(int exit, string output, string source)
     {

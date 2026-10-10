@@ -1,3 +1,5 @@
+import Reg.Support.SourceSelection
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.ZeckendorfResidualCover
 import Reg.Support.DependentFamily
 
@@ -66,18 +68,36 @@ def registration : Registration arena (arena.Law actual) where
     simpa [actual,realize,_root_.D5.S1.Digit.ZeckendorfRawWindow.residual,NoAdjacentOnes,value,
       D5.S1.Digit.GoldenBase4IntervalMachine.fibPair,parity,h0,h1] using ee
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S1.Digit.ZeckendorfResidualCover
   coordinates := #[1]
   readouts := #[{path := #["body","body","body","body","body","body","arg","body",
       "arg","arg","fn","arg"], stateOperand := some #["arg"]}] }
 
-register_information_theorem all_state_cover in arena
-  readout via (realize signature (fun _ c w => _root_.D5.S1.Digit.ZeckendorfRawWindow.residual c w)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Digit.ZeckendorfResidualCover.all_state_cover) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ c w => _root_.D5.S1.Digit.ZeckendorfRawWindow.residual c w)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Digit") "ZeckendorfResidualCover") "all_state_cover") "Reg.D5.S1.Digit.ZeckendorfResidualCover/Reg.D5.S1.Digit.ZeckendorfResidualCover.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Digit.ZeckendorfResidualCover.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ c w => _root_.D5.S1.Digit.ZeckendorfRawWindow.residual c w)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Digit.ZeckendorfResidualCover, definition := none, coordinates := #[1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end

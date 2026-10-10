@@ -73,7 +73,11 @@ public static class RepositoryCanonicalizer
             }
             ValidateStructuredArtifacts(snapshot, policy, changes);
 
+            foreach (var file in snapshot.Files.Values)
+                if (!file.ContentWasRead && !DigestionOpaquePathPolicy.IsAuxiliaryData(file.Path))
+                    throw new FormatException($"Required admission input was not read: {file.Path.Value}.");
             var expectedEntries = snapshot.Files
+                .Where(static item => item.Value.ContentWasRead)
                 .OrderBy(static item => item.Key.Value, StringComparer.Ordinal)
                 .Select(static item => SnapshotEntry.FromFile(item.Key, item.Value))
                 .ToImmutableArray();
@@ -176,7 +180,8 @@ internal static class CanonicalSnapshotWriter
         }
 
         var builder = new StringBuilder();
-        builder.Append("schema_version: 2\n");
+        builder.Append("schema_version: 3\n");
+        builder.Append("input_scope: admission-inputs\n");
         builder.Append("filemap_sha256: ").Append(fileMapSha256).Append('\n');
         builder.Append("files:\n");
         foreach (var entry in entries)

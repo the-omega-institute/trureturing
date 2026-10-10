@@ -1,0 +1,34 @@
+### theorem 1: 实际配对的共同深度与特殊闭合
+
+**Claim status: open.** 若 $Q(s)=(a,e)$、$Q(t)=(b,f)$，则
+
+$$
+Q(\rho t)=(b+1,f),
+$$
+
+$$
+Q(\langle s,t\rangle)=
+\begin{cases}
+(b+2,1),&e=f=1,\ a=b+1,\\
+(\min(a,b),0),&\text{其他情况}.
+\end{cases}
+$$
+
+这是共同矩纤维卷 §49.2 的合成律。
+
+证明。先共同去掉 $m=\min(a,b)$ 层替换，得到
+
+$$
+\langle s,t\rangle=\rho^m\langle s_0,t_0\rangle.
+$$
+
+此时至少一个孩子已经不能继续逆解。要让整个配对仍然具有前像，只剩特殊块
+
+$$
+\langle s_0,t_0\rangle=\langle\beta,\alpha\rangle=\rho^2\alpha.
+$$
+
+这恰好对应两个孩子都在原始 $\alpha$ 射线上、左深度比右深度多一。其余情况下，整个配对在共同深度 $m$ 处停止。证毕。
+
+两个孩子各自多深还不够，还要知道它们是否属于同一条原始生成射线。
+

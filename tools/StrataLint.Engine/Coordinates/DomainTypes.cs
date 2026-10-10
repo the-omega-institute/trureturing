@@ -1,3 +1,4 @@
+using StrataLint.Engineering;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -58,13 +59,9 @@ public sealed record RepoPath
 
     public static bool TryCreate(string? value, [NotNullWhen(true)] out RepoPath? path)
     {
-        if (!string.IsNullOrEmpty(value)
-            && !value.StartsWith("/", StringComparison.Ordinal)
-            && value.IndexOf('\\') < 0
-            && value.IndexOf('\0') < 0
-            && value.Split('/').All(static segment => segment.Length > 0 && segment is not "." and not ".."))
+        if (RepositoryPathSyntax.IsValid(value))
         {
-            path = new RepoPath(value);
+            path = new RepoPath(value!);
             return true;
         }
 

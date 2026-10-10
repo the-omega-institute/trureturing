@@ -1,0 +1,18 @@
+**Claim status: open.** 对任意输入，$\operatorname{tr}\mathcal J_{\mathrm{same}}(\varrho)=\operatorname{tr}\mathcal I_{\mathrm{same}}(\varrho)$。对 $|+\rangle|+\rangle$，结果概率均为 $1/2$，条件输出分别为
+
+$$
+|\Phi_+\rangle=(|00\rangle+|11\rangle)/\sqrt2,
+\qquad \varrho_{\mathrm{mix}}=\tfrac12|00\rangle\langle00|+\tfrac12|11\rangle\langle11|.
+$$
+
+它们的经典占位概率相同，但
+
+$$
+\langle\sigma_x\otimes\sigma_x\rangle_{\Phi_+}=1,\qquad
+\operatorname{tr}[\varrho_{\mathrm{mix}}(\sigma_x\otimes\sigma_x)]=0.
+$$
+
+证明。前者保留 $00$ 与 $11$ 的非对角项，后者删除它们，直接展开即得。证毕。
+
+量子层不仅要问报告了哪个分类结果，也要问仪器是否已留下分类内部的可区分记录。丢弃环境日志不会自动恢复被记录过程改变的局部干涉。经典粗化产生关联不等于产生量子纠缠；相干输出需要相应仪器。
+

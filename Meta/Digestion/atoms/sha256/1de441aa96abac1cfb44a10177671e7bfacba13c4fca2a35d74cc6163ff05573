@@ -1,0 +1,6 @@
+**Claim status: open.** 设当前保存的函数空间 $\mathcal V$ 含常数一。要对全部来源律恢复每个结果概率及结果后的全部 $\mathcal V$ 均值，当且仅当
+
+$$
+\boxed{K_o^{\mathsf T}\mathcal V\subseteq\mathcal V\quad\text{对所有 }o.}
+$$
+

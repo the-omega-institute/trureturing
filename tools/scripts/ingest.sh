@@ -7,20 +7,20 @@ PROJECT="$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj"
 
 cd "$ROOT"
 usage() {
-  echo "USAGE: ingest.sh ingest [SOURCES] | mathlib-reanchor BASE" >&2
+  echo "USAGE: ingest.sh ingest SOURCES | mathlib-reanchor BASE" >&2
   exit 2
 }
 
 case "$VERB" in
   ingest)
-    [[ $# -le 2 ]] || usage
+    [[ $# -eq 2 && -n "$2" ]] || usage
     ingest_args=(ingest)
     set -f
     for selector in ${2:-}; do
       ingest_args+=(--source "$selector")
     done
     set +f
-    if [[ -n "${2:-}" && ${#ingest_args[@]} -eq 1 ]]; then
+    if [[ ${#ingest_args[@]} -eq 1 ]]; then
       echo "SOURCE must contain at least one selector" >&2
       usage
     fi

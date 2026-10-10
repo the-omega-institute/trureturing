@@ -1,0 +1,10 @@
+**推论 4.3（度数两侧界与等号刻画）。** 对每个有限图 $G$：
+
+(i) $C(G)\le\kappa(G)\le\Delta(G)/4$；
+
+(ii) $\kappa(G)=C(G)$ 当且仅当 $G$ 正则；
+
+(iii) $\kappa(G)=\Delta(G)/4$ 当且仅当 $G$ 有一个 $\Delta(G)$ 正则的连通分支；
+
+(iv) $d$ 正则图满足 $\kappa=d/4$；特别地 $\kappa(K_2)=1/4$，$\kappa(Q_d)=d/4$。
+

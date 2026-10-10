@@ -292,7 +292,7 @@ private lemma inner_A_mulVec_eq (A : Matrix n n ℂ) (v w : n → ℂ) :
 
 /-- Singular value decomposition for square complex matrices, with singular values expressed as
 square roots of the eigenvalues of `Aᴴ * A`. -/
-private theorem exists_svd_sqrt_eigenvalues (A : Matrix n n ℂ) :
+theorem exists_svd_sqrt_eigenvalues (A : Matrix n n ℂ) :
     let hH : (Aᴴ * A).IsHermitian := by
       simpa using (Matrix.isHermitian_mul_conjTranspose_self A.conjTranspose)
     ∃ V W : Matrix.unitaryGroup n ℂ,

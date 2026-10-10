@@ -1,0 +1,25 @@
+**定义 1.1（支持、输出与观察）。** 令
+
+$$
+\Sigma=\{0,1,2,3,13\}
+=\{\varnothing,\{1\},\{2\},\{3\},\{1,3\}\}.
+$$
+
+固定状态顺序为 $(0,1,2,3,13)$，用 $\mathbf e_s$ 表示状态空间 $H=\mathbb R^\Sigma$ 的单位向量。输出标签函数为
+
+$$
+F(0)=\mathrm{null},\quad F(1)=[2],\quad F(2)=[3],\quad
+F(3)=[5],\quad F(13)=[2,5].
+$$
+
+支持状态、输出列表、状态概率和数值读出分别属于不同的载体。特别地，列表 $[2,5]$ 不等于数值 $7$。令 $\mathcal D=\{p\in H:p_s\ge0,\ \sum_sp_s=1\}$，并定义
+
+$$
+\begin{aligned}
+T&=\{v\in H:\textstyle\sum_sv_s=0\},\\
+A(v)&=(v_1+v_{13},v_2,v_3+v_{13}),\\
+(X,Z,Y)&=A(p),\qquad \kappa=p_{13},\qquad
+\mathbf d=(1,-1,0,-1,1).
+\end{aligned}
+$$
+

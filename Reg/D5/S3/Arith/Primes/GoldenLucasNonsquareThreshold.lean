@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold
 import Reg.Support.DependentFamily
 
@@ -57,18 +58,29 @@ def registration : Registration arena
     change goldenLucas 0 ≠ goldenLucas 1
     norm_num [goldenLucas, D5.S0.Carrier.trace, D5.S0.Carrier.phi, pow_succ]
 
-register_information_theorem
-  golden_lucas_nonsquare_threshold
-  in arena
-  readout via (realize signature (fun _ _ n => goldenLucas n)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "fn", "arg"]
-      stateBinder := 1 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.golden_lucas_nonsquare_threshold) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => goldenLucas n)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Primes") "GoldenLucasNonsquareThreshold") "golden_lucas_nonsquare_threshold") "Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold/Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => goldenLucas n)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Arith.Primes.GoldenLucasNonsquareThreshold

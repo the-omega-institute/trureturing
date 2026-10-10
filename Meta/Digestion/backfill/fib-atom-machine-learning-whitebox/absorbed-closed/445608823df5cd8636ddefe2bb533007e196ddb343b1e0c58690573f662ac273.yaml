@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:445608823df5cd8636ddefe2bb533007e196ddb343b1e0c58690573f662ac273
+  normalized_sha256: sha256:445608823df5cd8636ddefe2bb533007e196ddb343b1e0c58690573f662ac273
+cas_ref: sha256:445608823df5cd8636ddefe2bb533007e196ddb343b1e0c58690573f662ac273
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.class_value_formula
+    target_statement_id: sha256:ca162c7391317a396e5e19a7be6e1265b96b426729d6b64fd0c51b05527c56af
+  - gid: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.first_gate_binary
+    target_statement_id: sha256:1baac916cba0e972da76f9180fa0d1cd8891d237b1c75b8f7589609d48b73bda
+  - gid: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.high_indicator_mean
+    target_statement_id: sha256:a591bcf18dd588483513f47667835fd4a267efc9b81d14f6c87becdfed5643ee
+  - gid: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.joint_endpoint_mean
+    target_statement_id: sha256:817fba1078516f62f070f72fd663115b3993c92901fd049366ad7b64365c764d
+  - gid: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.low_indicator_mean
+    target_statement_id: sha256:a67694c6c83e0df15ea54f55587ca866d2f04a1c9acced460c01baa268b63a49
+  - gid: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.product_expectation_linear_combination
+    target_statement_id: sha256:37f719a5a57e178c5c66f230d038030e80e5f8dd54be8f9dc91cbd4990b16c8c
+  - gid: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.product_expectation_three_positions
+    target_statement_id: sha256:838698a13a3c91f413ddb8de6d97e830d80a7ca3b485793cb5399e8a7e928ce2
+  - gid: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.product_expectation_two_positions
+    target_statement_id: sha256:04ae0c200385a15d45cab9b5f97aace380c3de5ea7ae82f952719fbd0168fef3
+  - gid: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.result
+    target_statement_id: sha256:76b10631c5df92ffc9a5ae7e60b9aa202cc254c0c8f428f69414654691ca9909
+receipts:
+  unresolved_subitems: []

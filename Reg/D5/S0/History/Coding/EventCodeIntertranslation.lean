@@ -1,27 +1,11 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations
 import Reg.Support.MapInjectiveRegistrationTemplates
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S0.History.Coding.EventCodeIntertranslation
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.markerArena, theoremName := `D5.S0.History.Coding.EventCodeIntertranslation.marker_digit_injective,
-      statementIdentity := "sha256:a8a72984ee6e03fd422c616af7b7d089aa74da390c05f7710cbbbda1537b4e48",
-      registrationModuleName := `Reg.D5.S0.History.Coding.EventCodeIntertranslation },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.opcodeArena, theoremName := `D5.S0.History.Coding.EventCodeIntertranslation.opcode_index_injective,
-      statementIdentity := "sha256:f6c867468f7db617eb31f910b6c94236158ff940a852c72020b35a0b813d1521",
-      registrationModuleName := `Reg.D5.S0.History.Coding.EventCodeIntertranslation }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.markerArena, theoremName := `D5.S0.History.Coding.EventCodeIntertranslation.marker_digit_injective,
-      statementIdentity := "sha256:a8a72984ee6e03fd422c616af7b7d089aa74da390c05f7710cbbbda1537b4e48",
-      registrationModuleName := `Reg.D5.S0.History.Coding.EventCodeIntertranslation },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.opcodeArena, theoremName := `D5.S0.History.Coding.EventCodeIntertranslation.opcode_index_injective,
-      statementIdentity := "sha256:f6c867468f7db617eb31f910b6c94236158ff940a852c72020b35a0b813d1521",
-      registrationModuleName := `Reg.D5.S0.History.Coding.EventCodeIntertranslation }]
-  companionPrefix := some `Reg.D5.S0.History.Coding.EventCodeIntertranslation }
+
 
 namespace Reg.D5.S0.History.Coding.EventCodeIntertranslation
 
@@ -34,11 +18,32 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations
 open MapInjectiveRegistrationTemplates LeanInformationAudit
 open _root_.D5.S0.History _root_.D5.S0.History.Coding.EventCodeIntertranslation
 
-register_information_theorem _root_.D5.S0.History.Coding.EventCodeIntertranslation.marker_digit_injective in markerArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization
-    (Fin 2) (Fin 2) (instDecidableEqFin 2) (fun i => i))
-  primitives markerRealization.toPrimitiveBundle realization marker_bridge
-  variation marker_lawSensitive sensitivity marker_slotSensitive
+
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S0.History.Coding.EventCodeIntertranslation.marker_digit_injective) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization
+    (Fin 2) (Fin 2) (instDecidableEqFin 2) (fun i => i))) (Unit) (Unit) := {
+  unitName := `Reg.D5.S0.History.Coding.EventCodeIntertranslation.D5.S0.History.Coding.EventCodeIntertranslation.marker_digit_injective.__information_unit,
+  realizationName := `D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.marker_bridge,
+  realizationSource := none,
+  generated := false,
+  arena := .law ⟨(markerArena)⟩,
+  objectArena := .law ⟨(markerArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (markerArena) (D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.markerRealization) (markerRealization.toPrimitiveBundle) ⟨(marker_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (marker_bridge) (@_root_.D5.S0.History.Coding.EventCodeIntertranslation.marker_digit_injective))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((markerRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization
+    (Fin 2) (Fin 2) (instDecidableEqFin 2) (fun i => i)),
+  variation := .evidence ⟨(marker_lawSensitive)⟩ (by first | exact (marker_lawSensitive) | exact ⟨_, _, (marker_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(marker_slotSensitive)⟩ (by exact (marker_slotSensitive)),
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := none,
+  continuation := .absent,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 section
@@ -50,11 +55,32 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations
 open MapInjectiveRegistrationTemplates LeanInformationAudit
 open _root_.D5.S0.History _root_.D5.S0.History.Coding.EventCodeIntertranslation
 
-register_information_theorem _root_.D5.S0.History.Coding.EventCodeIntertranslation.opcode_index_injective in opcodeArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization
-    (Fin 12) (Fin 12) (instDecidableEqFin 12) (fun i => i))
-  primitives opcodeRealization.toPrimitiveBundle realization opcode_bridge
-  variation opcode_lawSensitive sensitivity opcode_slotSensitive
+
+
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S0.History.Coding.EventCodeIntertranslation.opcode_index_injective) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization
+    (Fin 12) (Fin 12) (instDecidableEqFin 12) (fun i => i))) (Unit) (Unit) := {
+  unitName := `Reg.D5.S0.History.Coding.EventCodeIntertranslation.D5.S0.History.Coding.EventCodeIntertranslation.opcode_index_injective.__information_unit,
+  realizationName := `D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.opcode_bridge,
+  realizationSource := none,
+  generated := false,
+  arena := .law ⟨(opcodeArena)⟩,
+  objectArena := .law ⟨(opcodeArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (opcodeArena) (D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.opcodeRealization) (opcodeRealization.toPrimitiveBundle) ⟨(opcode_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (opcode_bridge) (@_root_.D5.S0.History.Coding.EventCodeIntertranslation.opcode_index_injective))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((opcodeRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrationTemplates.mapInjectiveRealization
+    (Fin 12) (Fin 12) (instDecidableEqFin 12) (fun i => i)),
+  variation := .evidence ⟨(opcode_lawSensitive)⟩ (by first | exact (opcode_lawSensitive) | exact ⟨_, _, (opcode_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(opcode_slotSensitive)⟩ (by exact (opcode_slotSensitive)),
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := none,
+  continuation := .absent,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 section
@@ -65,7 +91,7 @@ set_option relaxedAutoImplicit false
 open _root_.D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations
 open MapInjectiveRegistrationTemplates LeanInformationAudit
 open _root_.D5.S0.History _root_.D5.S0.History.Coding.EventCodeIntertranslation
-example : _root_.Reg.D5.S0.History.Coding.EventCodeIntertranslation.D5.S0.History.Coding.EventCodeIntertranslation.marker_digit_injective.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.marker_bridge.toTheoremUnit _root_.D5.S0.History.Coding.EventCodeIntertranslation.marker_digit_injective).Statement =
     Function.Injective markerDigit := rfl
 end
 
@@ -77,7 +103,7 @@ set_option relaxedAutoImplicit false
 open _root_.D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations
 open MapInjectiveRegistrationTemplates LeanInformationAudit
 open _root_.D5.S0.History _root_.D5.S0.History.Coding.EventCodeIntertranslation
-example : _root_.Reg.D5.S0.History.Coding.EventCodeIntertranslation.D5.S0.History.Coding.EventCodeIntertranslation.opcode_index_injective.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.MapInjectiveRegistrations.opcode_bridge.toTheoremUnit _root_.D5.S0.History.Coding.EventCodeIntertranslation.opcode_index_injective).Statement =
     Function.Injective opcodeIndex := rfl
 end
 

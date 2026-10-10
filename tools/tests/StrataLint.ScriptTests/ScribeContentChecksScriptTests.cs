@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Globalization;
 using System.Text;
 using StrataLint.Engine;

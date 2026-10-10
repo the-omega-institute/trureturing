@@ -54,7 +54,7 @@ private theorem substDecoder_flatMap (w : List Bool) :
               simpa [subst, substDecoder] using congrArg (fun x => false :: x) ih
       · simp [subst, substDecoder, ih]
 
-private theorem flatMap_subst_injective :
+theorem flatMap_subst_injective :
     Function.Injective (fun w : List Bool => w.flatMap subst) :=
   Function.LeftInverse.injective substDecoder_flatMap
 

@@ -1,7 +1,7 @@
 ---
 slug: rivin-2026-cycle-geodesic-midpoint-formula
 bibkey: rivin2026permanents
-doi: 10.48550/arXiv.2602.10141
+doi: null
 url: https://arxiv.org/abs/2602.10141v3
 triage: theorem
 motivation_gids:

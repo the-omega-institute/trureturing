@@ -1,0 +1,24 @@
+fingerprints:
+  raw_sha256: sha256:e762aff42d8973e20f19021da816fcdea95a30d510cd297dfd2082442875f908
+  normalized_sha256: sha256:e762aff42d8973e20f19021da816fcdea95a30d510cd297dfd2082442875f908
+cas_ref: sha256:e762aff42d8973e20f19021da816fcdea95a30d510cd297dfd2082442875f908
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/HermitianPosPart.rank_hermPosPart
+    target_statement_id: sha256:0fa83cd618ea952e042317cc0d96f4586034cd289a7072c40c4eb22b4ba7b27e
+  - gid: D5/S3/Weil/ZetaLinear/Inertia.posIndex_add_le
+    target_statement_id: sha256:a5a7e1b05641985c80a37b85c8f8873e220e6960ebb946528f2ecce2e368f0c3
+  - gid: D5/S3/Weil/ZetaLinear/Inertia.posIndex_conj_le
+    target_statement_id: sha256:2b686ac579eec25a17506839031e30e53f45aa41ee203c424cd070056156a26e
+  - gid: D5/S3/Weil/ZetaLinear/PosIndex.posIndex_le_card
+    target_statement_id: sha256:f708962574a5050ed322e71dea398e0f5bc8e9422e6fcaa294c4b7bcb8686b47
+  - gid: D5/S3/Weil/ZetaLinear/PosIndex.rtrace_eq_sum_eigenvalues
+    target_statement_id: sha256:7de56e963243100cb0d7ed9e3a63e24c1f7a82297129182e1158ce2a9aa88e58
+  - gid: D5/S3/Weil/ZetaLinear/RankTrace.rank_trace_ineq
+    target_statement_id: sha256:9d85d5e400d312096d9a0620fe20dca6f5df1d017861df82f8c29e525ea1fbec
+  - gid: D5/S3/Weil/ZetaLinear/Sylvester.hermForm_nonneg_of_posSemidef
+    target_statement_id: sha256:467dabda89d201a4260ecb924766ef5f5a7b11b1b56b8ff9eede8ff42f8845fa
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 12226d833335f029dc61a5353ce8b1f6fd1fadfeb3c754384c30ff27cd8bc48c
+    - 3cb8dd695923ec22cbc88ceee03492e39a229ab573ddf03e648b8882341f775a

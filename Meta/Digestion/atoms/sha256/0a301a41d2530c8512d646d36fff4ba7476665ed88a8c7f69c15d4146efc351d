@@ -1,0 +1,14 @@
+**定理 4.1（子图单调、边并次可加与不交并）。** 设 $G,H$ 为有限图。
+
+(i) 若 $H$ 同构于 $G$ 的一个子图（顶点子集连同其间的部分边），则 $\kappa(H)\le\kappa(G)$。
+
+(ii) 若 $E_1\cap E_2=\varnothing$，则 $\kappa\bigl((V,E_1\cup E_2)\bigr)\le\kappa\bigl((V,E_1)\bigr)+\kappa\bigl((V,E_2)\bigr)$。
+
+(iii) $\kappa(G\sqcup H)=\max\{\kappa(G),\kappa(H)\}$。
+
+**证明。** (i) 由同构不变性，可设 $V(H)\subseteq V(G)$、$E(H)\subseteq E(G)$。取 $\Phi_H$ 的最大点 $\mu$，补零得 $\tilde\mu\in\mathcal P(V(G))$。$h\ge0$ 且在 $E(H)$ 的边上两者取值相同，故 $\Phi_G(\tilde\mu)\ge\Phi_H(\mu)=\kappa(H)$；由定理 3.2(iii)，$\kappa(G)\ge\Phi_G(\tilde\mu)$。
+
+(ii) 取 $(V,E_1)$ 与 $(V,E_2)$ 的最小点 $a^1,a^2$。因边集不交，在 $E_1$ 上用 $a^1$、在 $E_2$ 上用 $a^2$ 得到 $(V,E_1\cup E_2)$ 的可行分配，其负载为 $L_b^{(V,E_1)}(a^1)+L_b^{(V,E_2)}(a^2)\le\kappa((V,E_1))+\kappa((V,E_2))$。
+
+(iii) 由 (i)，左边不小于右边。反向，把 $G$ 与 $H$ 的最小点拼成 $G\sqcup H$ 的分配；两部分之间无边，每个顶点的负载等于它在所属部分中的负载，故最大负载不超过 $\max\{\kappa(G),\kappa(H)\}$。
+

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.DecisionRisk.AsymmetricFamilyDeficiency
 import Reg.Support.DependentFamily
 
@@ -118,24 +119,40 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem asymmetric_family_deficiency in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Estimation.DecisionRisk.AsymmetricFamilyDeficiency.asymmetric_family_deficiency) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p dTwo =>
       let L := p.2.1 - p.1
       let QOne := asymmetricExperiment p.1 p.2.2 (L - p.2.2)
       let QTwo := asymmetricExperiment p.1 dTwo (L - dTwo)
-      finiteDeficiency QOne QTwo)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Estimation.DecisionRisk.AsymmetricFamilyDeficiency
-    coordinates := #[0, 1, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body",
-        "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 3 }] })
-  escape continues (open)
+      finiteDeficiency.{0, 0, 0} QOne QTwo)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "DecisionRisk") "AsymmetricFamilyDeficiency") "asymmetric_family_deficiency") "Reg.D5.S3.Estimation.DecisionRisk.AsymmetricFamilyDeficiency/Reg.D5.S3.Estimation.DecisionRisk.AsymmetricFamilyDeficiency.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Estimation.DecisionRisk.AsymmetricFamilyDeficiency.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p dTwo =>
+      let L := p.2.1 - p.1
+      let QOne := asymmetricExperiment p.1 p.2.2 (L - p.2.2)
+      let QTwo := asymmetricExperiment p.1 dTwo (L - dTwo)
+      finiteDeficiency.{0, 0, 0} QOne QTwo)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Estimation.DecisionRisk.AsymmetricFamilyDeficiency, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms rejected_law
 #print axioms actual_law

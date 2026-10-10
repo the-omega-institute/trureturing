@@ -23,7 +23,7 @@ internal static class DeclaredTemplateFixture
         var engineering = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest())!;
         engineering["rule_build_inputs"] = JsonSerializer.SerializeToNode(new[] { Judge });
         files[EngineeringRegistrationFixture.Path] = engineering.ToJsonString();
-        files[Registration] = "import D5.S0.Carrier.Target\nimport LeanInformationAuditInterface.Syntax\n";
+        files[Registration] = "import D5.S0.Carrier.Target\nimport LeanInformationAuditInterface.Contract.Core\n";
         files[Target] = "-- synthetic imported theorem source\n";
         files[AdmissionPlanePolicy.FileMapPath] = "schema_version = 3\ninclude = [\"FILEMAP.inputs.toml\"]\n";
         files["Meta/FILEMAP.inputs.toml"] = "schema_version = 3\nfiles = [\n" + string.Join("\n",
@@ -53,8 +53,7 @@ internal static class DeclaredTemplateFixture
             var own = path == Registration ? keys : [];
             var wire = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = ManifestVersion(files),
-                inventory = own.Select(InformationTemplateJson.KeyJson),
+                schema_version = 1, inventory = own.Select(InformationTemplateJson.KeyJson),
                 registered = own.Select(InformationTemplateJson.KeyJson),
                 records = own.Select(key => new
                 {
@@ -81,14 +80,14 @@ internal static class DeclaredTemplateFixture
                 (path == Registration ? ".unit" : ".realization"), "def", "True", [])).ToImmutableArray();
             string[] imports = path == Registration
                 ? indirectJudgePath
-                    ? ["LeanInformationAuditInterface.Syntax"]
-                    : [TargetModule, "LeanInformationAuditInterface.Syntax"]
+                    ? ["LeanInformationAuditInterface.Contract.Core"]
+                    : [TargetModule, "LeanInformationAuditInterface.Contract.Core"]
                 : [];
             reports[path] = new(imports.ToImmutableArray(), declarations)
             { InformationTemplates = wire, InformationRegistrationErrors = [] };
         }
         if (indirectJudgePath)
-            reports["tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean"] =
+            reports["tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean"] =
                 new([TargetModule], []);
         var report = LeanAxiomReport.Create(reports);
         // Round-trip canonical raw bytes for every fixture, including the

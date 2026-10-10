@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e506f0bae8e8ed2fdc8069631ad082bddee8f66789f699d59b490c71d32c5a87
+  normalized_sha256: sha256:e506f0bae8e8ed2fdc8069631ad082bddee8f66789f699d59b490c71d32c5a87
+cas_ref: sha256:e506f0bae8e8ed2fdc8069631ad082bddee8f66789f699d59b490c71d32c5a87
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Closed solely by pinned Mathlib v4.33.0; no usable frozen project GID. For p : Fin 3 -> Fin 4 -> Real, Fintype.linearIndependent_iff and Fin.sum_univ_succ turn an arbitrary zero row combination into four scalar equalities. Instantiate the ordered-ring product sign lemmas mul_pos, mul_neg_of_neg_of_pos, mul_nonpos_of_nonneg_of_nonpos, mul_nonpos_of_nonpos_of_nonneg, mul_nonneg, and mul_nonneg_of_nonpos_of_nonpos at each coefficient sign case supplied by lt_or_gt_of_ne and le_total. The four given column sign patterns and linarith force the positive-row coefficient to vanish. The remaining two-row determinant on columns 00 and 10 is positive by mul_pos_of_neg_of_neg and mul_neg_of_pos_of_neg; polynomial linear-combination normalization and mul_eq_zero force the other two coefficients to vanish. LinearIndependent.of_comp at the subspace inclusion and LinearIndependent.fintype_card_le_finrank imply every containing subspace has dimension at least three, including exclusion of dimensions zero and one. LinearIndependent.rank_matrix yields rank exactly three for every matrix with this strict sign table. The table itself, realized by the explicit plus/minus-one real matrix, satisfies the signs by finite-index normalization and witnesses existence, so its strict sign rank is exactly three. All clauses use these upstream instances, given atomic sign hypotheses, and normalization. No project Lean declaration or freeze is added.'
+    previous_atom_id: af21a897f8d2c69969b89b5a8eaff659567e70d661f3302b10d7ec4b4ebe6387
+    next_atom_id: 166379785de8105cd269a48ffc997df9356298c18e62aba38fe323c88fddfd28

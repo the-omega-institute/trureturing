@@ -53,13 +53,13 @@ public sealed class RuleApplicabilityTests
     }
 
     [Theory]
-    [InlineData("Meta/Digestion/backfill/fixture-v1/source.toml", true)]
-    [InlineData("Meta/Digestion/backfill/fixture-v1/residual-open/fixture.yaml", true)]
+    [InlineData("Meta/Digestion/backfill/fixture-v1/source.toml", false)]
+    [InlineData("Meta/Digestion/backfill/fixture-v1/residual-open/fixture.yaml", false)]
     [InlineData("Meta/Digestion/backfill/fixture-v1/deferred-open/fixture.yaml", false)]
     [InlineData("Meta/Digestion/backfill/fixture-v1/residual-open/fixture.toml", false)]
     [InlineData("Meta/BACKFILL.yaml", false)]
     [InlineData("notes/backfill.yaml", false)]
-    public void Sl016ApplicabilityMatchesCanonicalBackfillInventoryPaths(
+    public void AuxiliaryLedgerHasNoAutomaticDigestionRule(
         string path,
         bool expected)
     {

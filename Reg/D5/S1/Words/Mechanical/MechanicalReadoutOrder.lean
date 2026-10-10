@@ -1,31 +1,11 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights,
-      statementIdentity := "sha256:11aadd35f6b85336828d84b165fbeeaa864ee887c147903bedd58ba8f017e6fd",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.isometricArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion,
-      statementIdentity := "sha256:89c5ad6ba8c8a28280ac3325089a6260e8d0a103e4225d75d42ff950c5e54762",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights,
-      statementIdentity := "sha256:11aadd35f6b85336828d84b165fbeeaa864ee887c147903bedd58ba8f017e6fd",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.isometricArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion,
-      statementIdentity := "sha256:89c5ad6ba8c8a28280ac3325089a6260e8d0a103e4225d75d42ff950c5e54762",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder }]
-  companionPrefix := some `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder }
+
 
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder
@@ -123,24 +103,54 @@ theorem isometricSensitivity : FiniteSlotSensitivity isometricArena.toPrimitiveL
   · intro i
     exact Fin.elim0 i
 
-register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights
-  in localOrderArena
-  readout via (@mechanicalReadoutRealization PrefixOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.actualPrefix))
-  primitives localOrderRealization.toPrimitiveBundle
-  realization orderBridge
-  variation orderVariation sensitivity orderSensitivity
-  escape from (ℝ) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights) (type_of% (@mechanicalReadoutRealization PrefixOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualPrefix))) (type_of% (ℝ)) (Unit) := {
+  unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights.__information_unit,
+  realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.orderBridge,
+  realizationSource := none,
+  generated := false,
+  arena := .object ⟨(localOrderArena)⟩,
+  objectArena := .object ⟨(localOrderArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderRealization) (localOrderRealization.toPrimitiveBundle) ⟨(orderBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (orderBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((localOrderRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@mechanicalReadoutRealization PrefixOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualPrefix)),
+  variation := .evidence ⟨(orderVariation)⟩ (by first | exact (orderVariation) | exact ⟨_, _, (orderVariation)⟩),
+  sensitivity := .evidence ⟨(orderSensitivity)⟩ (by exact (orderSensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (ℝ),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
-register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion
-  in isometricArena
-  readout via (@mechanicalReadoutRealization CompletionOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))
-  primitives completionRealization.toPrimitiveBundle
-  realization isometricBridge
-  variation isometricVariation sensitivity isometricSensitivity
-  escape from (ℝ) escape continues (open)
+
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion) (type_of% (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))) (type_of% (ℝ)) (Unit) := {
+  unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion.__information_unit,
+  realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.isometricBridge,
+  realizationSource := none,
+  generated := false,
+  arena := .object ⟨(isometricArena)⟩,
+  objectArena := .object ⟨(isometricArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.isometricArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.completionRealization) (completionRealization.toPrimitiveBundle) ⟨(isometricBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (isometricBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((completionRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion)),
+  variation := .evidence ⟨(isometricVariation)⟩ (by first | exact (isometricVariation) | exact ⟨_, _, (isometricVariation)⟩),
+  sensitivity := .evidence ⟨(isometricSensitivity)⟩ (by exact (isometricSensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (ℝ),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder

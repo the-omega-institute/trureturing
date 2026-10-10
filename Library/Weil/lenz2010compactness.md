@@ -864,7 +864,7 @@ in the smoothing estimate or establish a practical matrix rank.
 
 The center matrix signs and a cofinal $\varepsilon\downarrow0$
 certificate remain missing. Neither this complete exterior bound nor the
-[scalar assembly pilot](../../docs/reports/theta-mixed-matrix/README.md)
+[scalar assembly pilot](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/README.md)
 proves the critical-half inequality, RH or Robin.
 
 ## Weighted Fourier finite-family interface

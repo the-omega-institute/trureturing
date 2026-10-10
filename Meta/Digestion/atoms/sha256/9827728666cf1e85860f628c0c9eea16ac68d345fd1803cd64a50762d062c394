@@ -1,0 +1,35 @@
+\[
+\boxed{
+\mathcal O_{\min}
+=
+\bigl(
+\kappa,\,
+a,\,
+A,\,
+B,\,
+\tau
+\bigr)
+}
+\]
+
+但这里要加一个重要条件：
+
+- \(\kappa\) 只有在 future response 的 \(J_{\mathscr L}\neq0\) 时才必须保留；
+- 如果未来律对五态模式完全没有四角差，则 \(\kappa\) 可以从 future-prediction 摘要中删去；
+- 如果目标不只是预测未来，而是重构静态 law，则 \(\kappa\) 仍然必须保留；
+- chronology、selected-count bank 和隐藏样本身份 \(K\) 仍可能在这个摘要之外。
+
+因此，“最小摘要”必须相对于任务定义：
+
+\[
+\text{静态重构},
+\quad
+\text{未来预测},
+\quad
+\text{历史重构}
+\]
+
+三者的最小状态不同。
+
+---
+

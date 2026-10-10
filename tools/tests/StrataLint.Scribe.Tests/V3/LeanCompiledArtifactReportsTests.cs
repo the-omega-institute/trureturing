@@ -15,7 +15,7 @@ public sealed class LeanCompiledArtifactReportsTests
         try
         {
             var exception = Assert.Throws<InvalidOperationException>(
-                () => LeanCompiledArtifactReports.InspectRepository(root));
+                () => LeanCompiledArtifactReports.ReadRepositoryFiles(root));
 
             Assert.Contains("raw Lean report", exception.Message, StringComparison.Ordinal);
             Assert.Contains("inspect.sh", exception.Message, StringComparison.Ordinal);
@@ -34,7 +34,7 @@ public sealed class LeanCompiledArtifactReportsTests
             Path.GetTempPath(),
             "stratalint-configured-report-" + Guid.NewGuid().ToString("N") + ".json");
         var exception = Assert.Throws<InvalidOperationException>(
-            () => LeanCompiledArtifactReports.ReadRepository(repositoryRoot, configured));
+            () => LeanCompiledArtifactReports.ReadRepositoryFiles(repositoryRoot, configured));
 
         Assert.Contains(configured, exception.Message, StringComparison.Ordinal);
     }

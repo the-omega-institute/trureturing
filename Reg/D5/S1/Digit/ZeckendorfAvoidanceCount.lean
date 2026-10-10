@@ -1,3 +1,5 @@
+import Reg.Support.SourceSelection
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.ZeckendorfAvoidanceCount
 import Reg.Support.DependentFamily
 
@@ -62,18 +64,37 @@ def registration : Registration arena (arena.Law actual) where
     norm_num [actual,realize,legalWords,avoid [] (by simp),
       avoid [0] (by simp),avoid [1] (by simp)]
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S1.Digit.ZeckendorfAvoidanceCount
   coordinates := #[]
   readouts := #[{path := #["body","fn","arg","arg"], stateOperand := some #["arg","arg","fn","arg"]}] }
 
-register_information_theorem uniform_avoidance_count in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Digit.ZeckendorfAvoidanceCount.uniform_avoidance_count) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ _ H => ((legalWords H 0).filter (fun w => decide (¬ B1 <:+: w))).length)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Digit") "ZeckendorfAvoidanceCount") "uniform_avoidance_count") "Reg.D5.S1.Digit.ZeckendorfAvoidanceCount/Reg.D5.S1.Digit.ZeckendorfAvoidanceCount.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Digit.ZeckendorfAvoidanceCount.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ H => ((legalWords H 0).filter (fun w => decide (¬ B1 <:+: w))).length)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Digit.ZeckendorfAvoidanceCount, definition := none, coordinates := #[], readouts := #[{ path := #["body", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg", "fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end

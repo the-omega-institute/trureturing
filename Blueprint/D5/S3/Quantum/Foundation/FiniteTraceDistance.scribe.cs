@@ -1,3 +1,4 @@
+using System.Linq;
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -40,6 +41,20 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                     + "All coordinate types are finite with decidable equality, including empty types. "
                     + "RCLike is the existing Mathlib scalar interface. Adjoint means conjugate "
                     + "transpose and the square root uses the positive-semidefinite matrix order.")),
+                Item("exists_svd_sqrt_eigenvalues", "Singular value decomposition", All(
+                    [Bound("n", F.Id("Type"))], Seq(
+                        Seq(OpenBracket, Call("Fintype", n), CloseBracket),
+                        Seq(OpenBracket, Call("DecidableEq", n), CloseBracket),
+                        All([Bound("A", csquare)], Seq(
+                            F.Text, Grp(F.Id("let"), Sp), Sp, F.Id("hH"), Colon, QCall("Matrix", "IsHermitian", Mul(QCall("Matrix", "conjTranspose", a), a)),
+                            Comma, new Formula.BindMany(FormulaQuantifier.Exists,
+                                [Bound("V", QCall("Matrix", "unitaryGroup", n, complex)),
+                                    Bound("W", QCall("Matrix", "unitaryGroup", n, complex))],
+                                Eqn(a, Mul(Mul(Call("val", F.Id("V")),
+                                    QCall("Matrix", "diagonal", Seq(LambdaLower, Parenthesized(Seq(F.Id("i"), Colon, n)), Mapsto,
+                                        QCall("Complex", "ofReal", QCall("Real", "sqrt",
+                                            QCall("Matrix.IsHermitian", "eigenvalues", F.Id("hH"), F.Id("i"))))))),
+                                    QCall("Matrix", "conjTranspose", Call("val", F.Id("W"))))))))))),
                 Item("traceNorm", "Actual trace norm", NormForAll(Eqn(TN(a),
                     Call("re", Call("trace", Call("sqrt", Mul(Adjoint(a), a)))))), true),
                 Item("traceNorm_neg", "Negation invariance", NormForAll(Eqn(
@@ -69,6 +84,11 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                 Item("traceDistance_triangle", "Density distance triangle inequality", States(
                     Le(D(rho, tau), Add(D(rho, sigma), D(sigma, tau))), true)),
                 Item("traceDistance_le_one", "All density distances are at most one", States(Le(D(rho, sigma), Num(1)))),
+                Item("trace_norm_jordan_mass", "Hermitian Jordan mass", All(
+                    [Bound("n", F.Id("FiniteType")), Bound("A", csquare)],
+                    Implies(QCall("Matrix", "IsHermitian", a), Eqn(TN(a),
+                        Add(Call("re", Call("trace", Call("posPart", a))),
+                            Call("re", Call("trace", Call("negPart", a)))))))),
                 Item("traceDistance_contract", "Every CPTP channel contracts trace distance", All(
                     [Bound("n", F.Id("FiniteType")), Bound("C", Call("QuantumChannel", n, n)),
                         Bound("rho", state), Bound("sigma", state)],
@@ -94,6 +114,8 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
             definition ? DescribeRole.Definition : DescribeRole.Theorem);
     private static AssessedProvenance Provenance(string name) => name switch
     {
+        "exists_svd_sqrt_eigenvalues" => AssessedProvenance.FromLiterature(
+            LibraryNoteRef.Create("D5/L/QuantumStates/meiburg2025svd")),
         "traceNorm" or "traceNorm_neg" or "traceNorm_nonneg" or "traceNorm_eq_max_re_tr_U" or "traceNorm_add_le"
             or "traceNorm_of_posSemidef" => AssessedProvenance.FromLiterature(
                 LibraryNoteRef.Create("D5/L/Quantum/wilde2017quantum")),
@@ -101,6 +123,7 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
     };
     private static string Explanation(string name) => name switch
     {
+        "exists_svd_sqrt_eigenvalues" => "For every finite complex square matrix, two unitary factors give a diagonal singular-value decomposition. The diagonal entries are the real square roots of the eigenvalues of its Gram matrix. The let-bound hH is the canonical Hermitian proof for that Gram matrix; ofReal denotes the real-to-complex embedding. The retained proof is Alex Meiburg's Physlib SVD.",
         "traceNorm" => "This is the real part of the trace of the positive square root of the Gram matrix.",
         "traceNorm_neg" => "Negation leaves the Gram matrix unchanged.",
         "traceNorm_nonneg" => "The positive square root is positive semidefinite and has nonnegative real trace.",
@@ -113,9 +136,16 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
         "traceDistance_symm" => "Reversing the state difference negates the matrix and preserves its trace norm.",
         "traceDistance_triangle" => "Split the state difference through the intermediate state and apply the trace-norm triangle inequality.",
         "traceDistance_le_one" => "Each density matrix has trace norm one; the triangle inequality bounds their difference by two.",
+        "trace_norm_jordan_mass" => "For a Hermitian matrix A, its trace norm equals the sum of the real traces of its positive and negative Jordan parts.",
         "traceDistance_contract" => "Split the Hermitian state difference into positive and negative parts. Positivity and trace preservation preserve their trace-norm masses, whose sum is the original trace norm.",
         _ => throw new System.ArgumentOutOfRangeException(nameof(name))
     };
+    private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
+    private static Formula QCall(string owner, string name, params Formula[] args) =>
+        Seq(Operatorname, Grp(Seq((owner + "." + name).Split('.').SelectMany((part, index) =>
+                index == 0 ? new[] { F.Id(part) } : new[] { Dot, F.Id(part) }).ToArray())),
+            Parenthesized(Seq(args.SelectMany((arg, index) =>
+                index == 0 ? new[] { arg } : new[] { Comma, Sp, arg }).ToArray())));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula.BoundVariable Bound(string name, Formula type) => new(FormulaIdentifier.Create(name), type);

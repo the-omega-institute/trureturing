@@ -50,6 +50,90 @@ public sealed class ParentSettlementTests
     }
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ParentChecksNonpropositionalChildAgainstItsOwningSource(bool validReceipt)
+    {
+        var fixture = Create();
+        var parent = Target(fixture);
+        var child = fixture.Document.RequireDigestionEntries().Single(entry =>
+            entry.AtomId == parent.Receipts.ChainAtoms[0]);
+        const string before = "**Theorem 6.1** Foreign preceding assertion.\n\n";
+        const string after = "**Theorem 7.1** Foreign following assertion.\n\n";
+        var rawChild = fixture.Current.Entries.Single(entry =>
+            entry.Path == DigestionCasStore.RootPath + child.AtomId).Bytes;
+        var moved = child with
+        {
+            SourceId = "foreign", SourcePath = "docs/foreign.md",
+            Receipts = child.Receipts with { Nonpropositional = child.Receipts.Nonpropositional! with
+            {
+                PreviousAtomId = validReceipt ? DecomposeFixture.Entry(before).AtomId : null,
+                NextAtomId = validReceipt ? DecomposeFixture.Entry(after).AtomId : null,
+            } },
+        };
+        var source = fixture.Document.RequireDigestionSources().Single() with
+        {
+            SourceId = moved.SourceId, SourcePath = moved.SourcePath, Entries = [moved],
+        };
+        fixture.Replace(moved);
+        fixture.Current = RawRepositorySnapshot.Create(fixture.Current.Entries.Concat(new[]
+        {
+            new RawRepositoryEntry(BackfillInventoryLoader.RootPath + "foreign/source.toml",
+                BackfillInventoryWriter.WriteSourceMetadata(source)),
+            RawRepositoryEntry.FromText(moved.SourcePath, before + Encoding.UTF8.GetString(rawChild.AsSpan()) + after),
+        }));
+        using var temporary = new TemporaryDirectory();
+        SettleAtomCommandTests.WriteFiles(temporary.Path, fixture.Current);
+        var beforeImage = SettleAtomCommandTests.Image(temporary);
+        var result = SettleAtomCommandTests.Run(temporary.Path, fixture.Current,
+            Request(parent.AtomId, DecomposeFixture.Entry(Before).AtomId, DecomposeFixture.Entry(After).AtomId));
+        Assert.Equal(validReceipt, result.Success);
+        if (!validReceipt)
+        {
+            Assert.StartsWith("SETTLE_INVALID CONTEXT_MISMATCH", result.Error, StringComparison.Ordinal);
+            Assert.Equal(beforeImage, SettleAtomCommandTests.Image(temporary));
+        }
+        else Assert.Empty(result.Error);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ContextAndSettlementUseLeafNeighborFromReusedForeignParent(bool leafNeighbor)
+    {
+        var fixture = Create();
+        var parent = Target(fixture);
+        var lastChild = parent.Receipts.ChainAtoms[^1];
+        var originalSource = fixture.Document.RequireDigestionSources().Single();
+        foreach (var entry in originalSource.Entries)
+            fixture.Replace(entry with { SourceId = "foreign", SourcePath = "docs/foreign.md" });
+        var foreign = originalSource with { SourceId = "foreign", SourcePath = "docs/foreign.md" };
+        fixture.Current = RawRepositorySnapshot.Create(fixture.Current.Entries.Concat(new[]
+        {
+            new RawRepositoryEntry(BackfillInventoryLoader.RootPath + "foreign/source.toml",
+                BackfillInventoryWriter.WriteSourceMetadata(foreign)),
+            RawRepositoryEntry.FromText("docs/foreign.md", Before + ParentText + After),
+        }));
+        var target = DecomposeFixture.Entry(After);
+        fixture.Add(target, After);
+        var context = AtomContextCommand.Run(fixture.Gateway, ["--atom-id", target.AtomId, "--source", "probe"]);
+        Assert.True(context.Success, context.Error);
+        Assert.Contains($"PREVIOUS atom_id={lastChild} state={State}\n", context.Output, StringComparison.Ordinal);
+
+        using var temporary = new TemporaryDirectory();
+        SettleAtomCommandTests.WriteFiles(temporary.Path, fixture.Current);
+        var beforeImage = SettleAtomCommandTests.Image(temporary);
+        var result = SettleAtomCommandTests.Run(temporary.Path, fixture.Current,
+            Request(target.AtomId, leafNeighbor ? lastChild : parent.AtomId, null));
+        Assert.Equal(leafNeighbor, result.Success);
+        if (!leafNeighbor)
+        {
+            Assert.StartsWith("SETTLE_INVALID CONTEXT_MISMATCH", result.Error, StringComparison.Ordinal);
+            Assert.Equal(beforeImage, SettleAtomCommandTests.Image(temporary));
+        }
+    }
+
+    [Theory]
     [InlineData("open", "CHAIN_INCOMPLETE")]
     [InlineData("unresolved", "CHAIN_INCOMPLETE")]
     [InlineData("forged-terminal", "CHAIN_INCOMPLETE")]

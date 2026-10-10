@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.PrimeNumberTheorem.PntSmoothing
 import Reg.Support.DependentFamily
 import Reg.Support.PntAuditFacts
@@ -10,9 +11,6 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Reg.Support.PntAuditFacts
 open LeanInformationAudit
 
-local notation "ζ" => riemannZeta
-local notation "ζ'" => deriv ζ
-local notation "𝓜" => mellin
 
 noncomputable section
 
@@ -74,17 +72,28 @@ def registration : Registration arena
     simp only [Real.log_exp, zero_mul, one_mul, mul_one]
     exact ne_of_lt (Real.exp_pos 1)
 
-register_information_theorem _root_.SmoothedChebyshevClose in arena
-  readout via (realize signature (fun _ p C => C * p.2 * p.1 * Real.log p.1) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Weil.PrimeNumberTheorem.PntSmoothing
-    coordinates := #[6, 8]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 0
-      stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg"] }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.SmoothedChebyshevClose) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p C => C * p.2 * p.1 * Real.log p.1) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "SmoothedChebyshevClose") "Reg.D5.S3.Weil.PrimeNumberTheorem.PntSmoothing/Reg.D5.S3.Weil.PrimeNumberTheorem.PntSmoothing.SmoothedChebyshevClose.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntSmoothing.SmoothedChebyshevClose.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p C => C * p.2 * p.1 * Real.log p.1) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.PntSmoothing, definition := none, coordinates := #[6, 8], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end SmoothedChebyshevClose
 

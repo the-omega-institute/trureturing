@@ -1,0 +1,24 @@
+**假设 40.1（完整继承的实际来源条件）。** 完整保留假设 24.1，以及它经假设 23.1、21.1 承继的全部条件、原生合法域与有限基础。本章的 $C$ 是定义 15.1 的同一个变深度 Cloitre 序列：
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+D_N&=\{1,\ldots,N-1\},&T_N(x)&=N-C(x),\\
+x_0&=N-1,&x_{i+1}&=T_N(x_i),\\
+d_N&=C(N-1),&g_N&=x_{d_N},\\
+C(N)&=C(g_N)+C(N-g_N)&& (N\ge3).
+\end{aligned}
+\tag{40.1}
+$$
+
+全局 $G\le C\le U\le\mathrm{id}$、$U$ 的分段式与增量界、锚值、邻点及锚前值、正负偏移捕获与全锚交集、规定深度入周期、闭块两子域和继承自然阶数、参数行与终端合同均保持假设 21.1、23.1、24.1 的完整范围。证明直接使用其中的合法域、实际内步和黄金下界；其余继承条件仍附于实际结论。$C$ 的单调性、周期均值、无界周期长度族及全局收敛均未加入前提。
+
+原生来源固定为 [foundations](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/proof.md) 与 [golden structure](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/golden-proof.md)，后者的进位算术见同修订的 [landing，§§1--2](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/landing.md)。未经重算的有限来源前提保持 ASSUMED-UNVERIFIED：比值域 $16384\le n\le131071$、黄金归纳基 $1\le n\le65535$、规定深度入周期基域 $3\le n\le52$，以及
+
+$$
+\lambda_8=[0,0,0,1,1,2,3,4,5],\qquad
+\lambda_9=[0,0,0,0,1,1,2,2,3,5,6,6,7,8],
+$$
+
+及全部继承的轮廓、collar、字母表、单位位、接缝、选择器和证书种子。本章的条件纸面推导不改变这些前提的证据地位。
+

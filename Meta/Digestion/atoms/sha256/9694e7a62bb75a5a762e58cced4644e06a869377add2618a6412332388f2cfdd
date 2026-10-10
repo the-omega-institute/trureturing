@@ -1,0 +1,16 @@
+**推论 9.6（熵差的实际消费者）。** 同一档案任务的平均预测损失、相对于真律的额外损失以及 TV 分别为
+
+```math
+\mathbb E_p[-\log_2\mu^\star(A,R)]
+=H(p)+D_2(p\Vert p^\star)=H(p^\star),
+```
+
+```math
+D_2(\mu_p\Vert\mu^\star)=D_2(p\Vert p^\star),\qquad
+\mathop{\mathrm{TV}}\nolimits(\mu_p,\mu^\star)=\mathop{\mathrm{TV}}\nolimits(p,p^\star).
+```
+
+证明。实际档案对与模式的双射重排概率分量，保持熵、KL 和 TV；对数损失的期望展开为 $`H+D`$。定理 9.3 给最后的熵等式。∎
+
+此处熵比较承担具体的原生继续回复预测损失。它不说来源已经取得，亦不从高熵推出真实 $`\Delta=0`$。首次若保存精确数量，该次模式已经可恢复，预测条件应使用更细档案；上述任务专指奇偶保留合同。
+

@@ -1,0 +1,31 @@
+**数学引文 7.5（环上的行列式与窗口历史计数）。** 在交换环中，才使用减法、迹与行列式，有
+
+```math
+\det K_{\rm low}=\det K_{\rm high}=-abc,\qquad
+\mathrm{tr}K_{\rm low}=\mathrm{tr}K_{\rm high}=1+a+b+c.
+```
+
+全权一时
+
+```math
+A=\begin{pmatrix}3&2\\2&1\end{pmatrix}
+=JM^3J,\qquad J=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\qquad A^2=4A+I.
+```
+
+这些式子由矩阵乘法得，不能把 $`-abc`$ 当作半环中的负概率或合法三占位。以空接缝开始、末端自由的 $`L`$ 个窗口合法历史数为
+
+```math
+a_L=(1,0)A^L\binom11=F_{3L+2},\qquad
+a_0=1,\ a_1=5,\ a_{L+2}=4a_{L+1}+a_L.
+```
+
+长度 $`3L`$ 的无相邻一位词按最后位分解，给 $`F_{3L+2}`$；矩阵二阶式给同一递推。因此
+
+```math
+a_L=1,5,21,89,377,\ldots,\qquad
+\sum_{L\ge0}a_Lt^L=\frac{1+t}{1-4t-t^2}.
+```
+
+它与第六节格点级数 $`\frac{1+t}{(1-t)^4}`$ 的分子相同，但分母及所计对象不同。一个计按接缝排列的历史，一个计无序累计占位地址。证毕。
+

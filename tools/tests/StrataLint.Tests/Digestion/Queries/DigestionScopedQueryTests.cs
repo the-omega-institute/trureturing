@@ -8,6 +8,48 @@ namespace StrataLint.Tests;
 public sealed class DigestionScopedQueryTests
 {
     [Theory]
+    [InlineData("docs/source.md")]
+    [InlineData("docs/renamed-volume.md")]
+    public void SourcePathSearchKeepsStoredIdentityAndReadsMetadataIndividually(string sourcePath)
+    {
+        var fixture = Create();
+        var raw = RawRepositorySnapshot.Create(WithCas(fixture).Entries.Select(entry =>
+            Entry(entry.Path.Replace("/backfill/source/", "/backfill/legacy/", StringComparison.Ordinal),
+                Encoding.UTF8.GetString(entry.Bytes.AsSpan())
+                    .Replace("source_id = \"source\"", "source_id = \"legacy\"", StringComparison.Ordinal)
+                    .Replace("docs/source.md", sourcePath, StringComparison.Ordinal))).Append(
+            Entry("Meta/Digestion/backfill/unrelated/source.toml", "invalid = [")));
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
+
+        var result = SearchAtomsCommand.Run(gateway, ["--source", sourcePath]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("source_id=legacy", result.Output, StringComparison.Ordinal);
+        Assert.Contains(Id(fixture.Atomized.Claims[1]), result.Output, StringComparison.Ordinal);
+        Assert.Equal(0, gateway.WholeTreeReadCount);
+        Assert.All(gateway.ScopedCurrentReads, scope =>
+            Assert.EndsWith("/source.toml", Assert.Single(scope), StringComparison.Ordinal));
+        Assert.DoesNotContain(gateway.ScopedCurrentReads.SelectMany(static scope => scope),
+            static path => path.StartsWith(":(glob)", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void SourcePathSearchRejectsAmbiguityEvenWhenDerivedIdMatches()
+    {
+        var fixture = Create();
+        var raw = RawRepositorySnapshot.Create(WithCas(fixture).Entries.Append(
+            Entry("Meta/Digestion/backfill/legacy/source.toml",
+                "source_id = \"legacy\"\npath = \"docs/source.md\"\n")));
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
+
+        var result = SearchAtomsCommand.Run(gateway, ["--source", "docs/source.md"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("count=2", result.Error, StringComparison.Ordinal);
+        Assert.Empty(result.Output);
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void QueryIgnoresUnrelatedBrokenTheory(bool context)

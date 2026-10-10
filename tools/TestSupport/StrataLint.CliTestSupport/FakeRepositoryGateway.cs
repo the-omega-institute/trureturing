@@ -25,14 +25,20 @@ internal sealed class FakeRepositoryGateway(
     internal int WholeTreeReadCount { get; private set; }
 
     internal List<IReadOnlyList<string>> ScopedCurrentReads { get; } = [];
+    internal List<(string Revision, IReadOnlyList<string> Paths)> ScopedRevisionReads { get; } = [];
     internal List<IReadOnlyList<string>> CurrentPathSearches { get; } = [];
 
     internal int CurrentRevisionResolutionCount { get; private set; }
+    internal int PrepareCount { get; private set; }
 
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
         throw new InvalidOperationException("topology should not be inspected");
 
-    public PreparedRepository Prepare(string? protectedBase) => new("baseline", changes);
+    public PreparedRepository Prepare(string? protectedBase)
+    {
+        PrepareCount++;
+        return new("baseline", changes);
+    }
 
     public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
     {
@@ -72,6 +78,12 @@ internal sealed class FakeRepositoryGateway(
     {
         WholeTreeReadCount++;
         return ReadWholeRevision(revision);
+    }
+
+    public RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths)
+    {
+        ScopedRevisionReads.Add((revision, paths));
+        return Scoped(ReadWholeRevision(revision), paths);
     }
 
     private RawRepositorySnapshot ReadWholeCurrent()

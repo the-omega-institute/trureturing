@@ -1,0 +1,6 @@
+**Claim status: open.** 若有 $m$ 个正概率结果，则
+
+$$
+\boxed{\operatorname{rank}B\le m-1.}
+$$
+

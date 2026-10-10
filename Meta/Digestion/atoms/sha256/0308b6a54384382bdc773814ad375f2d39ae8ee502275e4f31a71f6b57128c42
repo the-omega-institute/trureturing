@@ -1,0 +1,6 @@
+**引理 3.1（调和项的变分式）。** 对一切 $s,t\ge0$，下列结论成立。
+
+(i) $\min_{\alpha\in[0,1]}\bigl[s\alpha^2+t(1-\alpha)^2\bigr]=h(s,t)$；若 $s+t>0$，最小点唯一，等于 $\alpha=t/(s+t)$。
+
+(ii) $0\le h(s,t)\le\min\{s,t\}$；$h$ 在 $[0,\infty)^2$ 上连续且凹；对每个 $\gamma\ge0$ 有 $h(\gamma s,\gamma t)=\gamma\,h(s,t)$。
+

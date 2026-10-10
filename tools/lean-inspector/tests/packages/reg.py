@@ -43,7 +43,7 @@ class NativeRegTests(NativeRegSupport):
         self.assertIn('REG-MANIFEST-GIT-AGREEMENT', result.stdout + result.stderr)
         self.assertFalse((self.root / 'Reg/.lake').exists())
         self.assertFalse((self.root / '.lake/packages/mathlib').exists())
-        result = self.guarded_command(['make', 'lean-report'], cwd=self.root, env=self.env, timeout=120)
+        result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], cwd=self.root, env=self.env, timeout=120)
         self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('REG-MANIFEST-GIT-AGREEMENT', result.stdout + result.stderr)
         self.assertFalse((self.root / 'Reg/.lake').exists())
@@ -65,7 +65,7 @@ class NativeRegConsumerTests(NativeRegSupport):
         self.assertFalse((self.root / '.lake/build/reg/lib/lean/Reg').exists())
         self.assertTrue((self.root / '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegTests/Required.olean').is_file())
         self.assertFalse((self.root / '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegAnalysis').exists())
-        self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Records\n'
+        self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Contract.Core\n'
                    'def registrationValue := value\n')
         self.make_lean('Reg.Support.Entry', 'D5.Alone')
         self.assertTrue((self.root / '.lake/build/reg/lib/lean/Reg/Support/Entry.olean').is_file())
@@ -88,9 +88,9 @@ class NativeRegConsumerTests(NativeRegSupport):
         self.reg_package()
         self.build_reg_report()
         self.assertFalse(any(r['module'].startswith('Reg.') for r in self.report()[0]))
-        self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Records\n'
+        self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Contract.Core\n'
                    'def registrationValue := value\n')
-        result = self.guarded_command(['make', 'lean-report'], cwd=self.root, env=self.env, timeout=120)
+        result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], cwd=self.root, env=self.env, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         published = json.loads((self.root / '.lake/build/stratalint/raw-lean-report.json').read_text())
         self.assertIn('Reg.Support.Entry', [r['module'] for r in published['modules']])
@@ -98,7 +98,7 @@ class NativeRegConsumerTests(NativeRegSupport):
         row = next(r for r in rows if r['module'] == 'Reg.Support.Entry')
         self.assertEqual(row['source_path'], 'Reg/Support/Entry.lean')
         sources = json.loads((self.root / '.lake/build/lean-inspector/inputs/Reg.Support.Entry.json.sources.json').read_text())
-        self.assertIn('tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean', sources)
+        self.assertIn('tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean', sources)
         self.assertTrue(all(not p.startswith(('../', '/')) for p in sources))
         # Preserve the donor while using its copied config and module oleans in a
         # different root containing spaces. No absolute path is a source identity.
@@ -121,8 +121,16 @@ class NativeRegConsumerTests(NativeRegSupport):
             self.assertEqual(moved, row)
             leaf = 'Reg/Support/Entry.lean'
             original = (donor / leaf).read_text()
+            report_stamps = self.stamps()
+            artifacts = {name: (self.root / '.lake/build/lean-inspector/modules' / (name + '.zip')).read_bytes()
+                         for name in report_stamps}
             self.write(leaf, original + 'def relocatedOnly : Nat := 73\n')
             self.build_reg_report()
+            self.assertEqual({name for name, stamp in self.stamps().items()
+                              if stamp != report_stamps[name]}, {'Reg.Support.Entry'})
+            for name in report_stamps.keys() - {'Reg.Support.Entry'}:
+                self.assertEqual((self.root / '.lake/build/lean-inspector/modules' / (name + '.zip')).read_bytes(),
+                                 artifacts[name], '[FAIL] Reg_leaf_keeps_peer_artifact_bytes')
             changed = next(r for r in self.report()[0] if r['module'] == 'Reg.Support.Entry')
             self.assertEqual(changed['source_sha256'], 'sha256:' + publication.digest(self.root / leaf))
             self.assertNotEqual(changed['source_sha256'], row['source_sha256'])

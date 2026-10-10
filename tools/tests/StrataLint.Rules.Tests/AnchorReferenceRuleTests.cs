@@ -70,7 +70,7 @@ public sealed class AnchorReferenceRuleTests
     [Theory]
     [InlineData("tools/lean-inspector", "LeanInformationAudit.Syntax")]
     [InlineData("tools/lean-inspector", "LeanInformationAuditAnalysis.Probe")]
-    [InlineData("tools/lean-inspector-interface", "LeanInformationAuditInterface.Syntax")]
+    [InlineData("tools/lean-inspector-interface", "LeanInformationAuditInterface.Contract.Core")]
     public void ImportClosureUsesInspectorSourceRootForTooling(string sourceRoot, string module)
     {
         var path = sourceRoot + "/" + module.Replace('.', '/') + ".lean";

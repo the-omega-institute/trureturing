@@ -1,0 +1,2 @@
+**约定 2.3（Cartesian 积与不交并）。** $G\mathbin{\square}H$ 的顶点集为 $V(G)\times V(H)$，$(g,x)\sim(g',x')$ 当且仅当 $g=g'$ 且 $x\sim x'$，或 $x=x'$ 且 $g\sim g'$。前一类边称 $H$ 型边，后一类称 $G$ 型边；每条边恰属其一。$G\sqcup H$ 为不交并。$K_2$ 为单边图，$Q_d=K_2^{\square d}$ 为 $d$ 维方体（$d\ge1$），$K_{1,m}$ 为有 $m$ 片叶的星图。
+

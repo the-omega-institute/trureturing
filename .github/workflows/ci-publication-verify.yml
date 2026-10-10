@@ -29,32 +29,54 @@ jobs:
           # The publication and restore programs and the build configuration they read.
           CI_HIT_PATHS: |
             .editorconfig
-            .github/workflows/ci-*.yml
+            .globalconfig
+            .github/workflows/ci-publication-verify.yml
+            .github/workflows/lean-analysis-fixtures.yml
             .github/workflows/lean-cache-publish.yml
             .gitignore
-            Directory.Build.props
+            D5/*.lean
+            Directory.Build.*
             Directory.Packages.props
             Makefile
-            Meta/ReportProducers/*
-            Meta/engineering-projects.json
+            Meta/FILEMAP.toml
+            Meta/ci-cache-paths.json
+            NuGet.Config
+            NuGet.config
+            Reg/*.lean
+            Reg/lake-manifest.json
+            Reg/lakefile.*
+            Trureturing.lean
             global.json
             lake-manifest.json
-            lakefile.toml
+            lakefile.*
+            lean-report-inputs.json
             lean-toolchain
+            nuget.config
+            tools/.editorconfig
+            tools/.globalconfig
             tools/Architecture/*
+            tools/Directory.Build.*
+            tools/Directory.Packages.props
             tools/Makefile
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
+            tools/NuGet.Config
+            tools/NuGet.config
             tools/StrataLint.Engine/*
-            tools/StrataLint.FileMap/*
+            tools/StrataLint.Engineering/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
+            tools/StrataLint.Runtime/*
             tools/Trureturing.Truth/*
-            tools/StrataLint.TestEvidence/*
-            tools/scripts/dotnet-test.sh
-            tools/scripts/workflow/*
+            tools/global.json
+            tools/lean-inspector/*
+            tools/lean-inspector-interface/*
+            tools/lean-inspector-reg/*
+            tools/nuget.config
+            tools/scripts/dotnet-build.sh
+            tools/scripts/lean-report-pair.sh
+            tools/scripts/lib/resource-observation-lib.sh
+            tools/scripts/report/*
+            tools/scripts/workflow/ci-entry.sh
+            tools/scripts/workflow/install-lean-toolchain.sh
             tools/scripts/worktree/*
-            tools/tests/Directory.Build.props
           CI_PUSH_BEFORE: ${{ github.event.before }}
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Validate entry result
@@ -66,7 +88,7 @@ jobs:
         with:
           global-json-file: global.json
       - if: steps.entry.outputs.hit == 'true'
-        run: make -C tools dotnet
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - if: steps.entry.outputs.hit == 'true'
         id: keys
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
@@ -104,11 +126,6 @@ jobs:
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - if: steps.entry.outputs.hit == 'true'
-        name: Try the same-partition Release fallback
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: make lean-cache-from-github-without-mathlib || printf '%s\n' 'Optional Release seed unavailable; production continues'
-      - if: steps.entry.outputs.hit == 'true'
         name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
@@ -133,6 +150,7 @@ jobs:
         env:
           CI_HIT_PATHS: |
             .editorconfig
+            .globalconfig
             .github/workflows/ci-publication-verify.yml
             .github/workflows/scribe-release-publish.yml
             .gitignore
@@ -142,16 +160,23 @@ jobs:
             Golden/Projection/*.json
             Makefile
             Meta/FILEMAP.toml
+            NuGet.Config
+            NuGet.config
             global.json
             nuget.config
+            tools/.editorconfig
+            tools/.globalconfig
             tools/Architecture/*
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
+            tools/Directory.Build.*
+            tools/Directory.Packages.props
+            tools/NuGet.Config
+            tools/NuGet.config
             tools/StrataLint.Engine/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Runtime/*
             tools/StrataLint.Scribe/*
             tools/Trureturing.Truth/*
+            tools/nuget.config
             tools/scripts/scribe-release.sh
             tools/scripts/workflow/ci-entry.sh
           CI_PUSH_BEFORE: ${{ github.event.before }}

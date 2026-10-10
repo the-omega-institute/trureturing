@@ -1,0 +1,4 @@
+**Claim status: open.**
+
+当前 Auric FIB ATOM 线的相关资料分别属于 Lean 形式化源、理论 prose、实验观察和开放研究输入。PR #14965、#14999、#15014、#15020 的相关文档可作为 reference input；它们不会因为被引用而自动成为 Lean theorem。最值得后续形式化的是有限、可复用的 instrument 组件：五态类型、$x,y,z,xy$、$p_\kappa$、子核 $M_0,M_1$、恒等式 $M_1 1=x$、$M_1x=xy$、$M_0x=y-xy$、以及 $pM_1M_1 1=\kappa$。native FIB continuation 是否实现该 instrument 仍是后续证明义务。
+

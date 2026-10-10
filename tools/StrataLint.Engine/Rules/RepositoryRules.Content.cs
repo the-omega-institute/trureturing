@@ -21,7 +21,8 @@ internal static partial class RepositoryRules
         foreach (var material in materials)
         {
             var path = RepoPath.CreateKnown(material);
-            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
+            if (DigestionOpaquePathPolicy.IsAuxiliaryData(path)
+                || RepositoryPathPolicy.Validate(path, context.Policy) is not null
                 || !path.Value.EndsWith(".json", StringComparison.Ordinal))
             {
                 continue;
@@ -39,7 +40,8 @@ internal static partial class RepositoryRules
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
-            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
+            if (DigestionOpaquePathPolicy.IsAuxiliaryData(path)
+                || RepositoryPathPolicy.Validate(path, context.Policy) is not null
                 || !TryHeader(file.Text, out var header))
             {
                 continue;
@@ -60,7 +62,8 @@ internal static partial class RepositoryRules
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
-            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
+            if (DigestionOpaquePathPolicy.IsAuxiliaryData(path)
+                || RepositoryPathPolicy.Validate(path, context.Policy) is not null
                 || !TryHeader(file.Text, out var header))
             {
                 continue;
@@ -87,7 +90,8 @@ internal static partial class RepositoryRules
         var seenGids = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
-            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
+            if (DigestionOpaquePathPolicy.IsAuxiliaryData(path)
+                || RepositoryPathPolicy.Validate(path, context.Policy) is not null
                 || !TryHeader(file.Text, out var header)
                 || !SafeFieldPattern.IsMatch(header.Gid))
             {

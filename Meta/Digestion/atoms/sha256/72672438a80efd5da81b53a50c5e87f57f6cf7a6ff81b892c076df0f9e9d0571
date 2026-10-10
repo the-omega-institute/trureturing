@@ -1,0 +1,13 @@
+**定义 8.3（指定有理延拓）。** 以 $`\widehat f(P)=\mathbb E_{p^\star(P)}f`$ 定义内部函数，顶点取 $`f_3`$。它有连续顶点值，因为底面总权 $`r`$ 趋零。Nigam–Phillips 式 (2.3)、(6.1) 的具体对应是
+
+```math
+X=u/(1+h),\quad Y=v/(1+h),\quad Z=h/(1+h),\quad r=1/(1+h),
+```
+
+```math
+(p_0^\star,p_2^\star,p_5^\star,p_{25}^\star,p_3^\star)
+=(\widetilde\pi_1,-\widetilde\pi_2,-\widetilde\pi_3,\widetilde\pi_4,\widetilde\pi_5).
+```
+
+两处负号按文献印刷形函数保留；这里的概率权全部非负。
+

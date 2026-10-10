@@ -18,12 +18,7 @@ internal static class DecomposeAtomCommand
         try
         {
             var (id, dryRun, reconcileChain, splitAt) = Parse(arguments);
-            var loaded = DigestionWorkingTree.ReadLedger(
-                repository,
-                Decode,
-                BackfillInventoryLoader.LoadForDigestion,
-                TheoryAtomizerDataLoader.DataPath,
-                DigestionCasStore.RootPath + id);
+            var loaded = DigestionQuerySelection.ReadAtom(repository, id);
             var raw = loaded.Raw;
             var snapshot = loaded.Snapshot;
             var ledger = loaded.Document;
@@ -34,14 +29,12 @@ internal static class DecomposeAtomCommand
             if (!(parent.ProjectedStatus.Migration == DigestionMigrationState.Partial
                 || parent.ProjectedStatus == new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open)))
                 throw new FormatException("PARENT_STATE requires residual-open or partial parent");
-            var sourceCasPaths = DigestionWorkingTree.ChainCasPaths(
-                ledger,
-                parent.Receipts.ChainAtoms);
+            loaded = DigestionQuerySelection.ReadChains(repository, loaded, allowMissing: true);
             loaded = DigestionWorkingTree.Extend(
                 repository,
                 loaded,
                 Decode,
-                [parent.SourcePath, .. sourceCasPaths]);
+                [parent.SourcePath, TheoryAtomizerDataLoader.DataPath, DigestionCasStore.RootPath + id]);
             raw = loaded.Raw;
             snapshot = loaded.Snapshot;
             ledger = loaded.Document;
@@ -51,6 +44,14 @@ internal static class DecomposeAtomCommand
             var rules = TheoryAtomizerDataLoader.Load(snapshot);
             var atomizer = (atomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(parent.Atomizer);
             var plan = DigestionDecomposition.Plan(parent, blob.RawBytes, atomizer, rules, snapshot, splitAt);
+            var existingChildren = DigestionQuerySelection.ReadAtoms(repository,
+                plan.Children.Select(static child => child.Fingerprints.RawSha256[7..]).Distinct(StringComparer.Ordinal).ToArray());
+            loaded = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(raw, existingChildren.Raw));
+            loaded = DigestionQuerySelection.ReadChains(repository, loaded,
+                existingChildren.Document.RequireDigestionEntries().Select(static child => child.AtomId), allowMissing: true);
+            raw = loaded.Raw;
+            snapshot = loaded.Snapshot;
+            ledger = loaded.Document;
             var entries = ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
             var requiredCasIds = DigestionWorkingTree.ChainCasPaths(
                     ledger,

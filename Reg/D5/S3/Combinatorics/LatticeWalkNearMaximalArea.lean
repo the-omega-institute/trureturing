@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.LatticeWalkNearMaximalArea
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.NormNum
@@ -65,20 +66,28 @@ noncomputable def registration : Registration arena claim where
       exact nomatch i
   dependence := dependence_proof
 
-register_information_theorem
-  _root_.D5.S3.Combinatorics.LatticeWalkNearMaximalArea.result in arena
-  readout via (realize signature (fun _ _ n => a029552 n) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Combinatorics.LatticeWalkNearMaximalArea
-    «definition» := some {
-      owner := `D5.S3.Combinatorics.LatticeWalkNearMaximalArea
-      name := `D5.S3.Combinatorics.LatticeWalkNearMaximalArea.claim }
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "fn", "arg", "arg", "arg"]
-      stateBinder := 1 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Combinatorics.LatticeWalkNearMaximalArea.result) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => a029552 n) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Combinatorics") "LatticeWalkNearMaximalArea") "result") "Reg.D5.S3.Combinatorics.LatticeWalkNearMaximalArea/Reg.D5.S3.Combinatorics.LatticeWalkNearMaximalArea.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Combinatorics.LatticeWalkNearMaximalArea.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => a029552 n) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Combinatorics.LatticeWalkNearMaximalArea, definition := some { owner := `D5.S3.Combinatorics.LatticeWalkNearMaximalArea, name := `D5.S3.Combinatorics.LatticeWalkNearMaximalArea.claim, path := #[] }, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Reg.D5.S3.Combinatorics.LatticeWalkNearMaximalArea

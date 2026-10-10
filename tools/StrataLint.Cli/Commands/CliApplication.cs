@@ -17,12 +17,10 @@ internal interface ICliEnvironment
 
     CommandResult Coverage(IReadOnlyList<string> arguments);
 
-    CommandResult DigestStatus(IReadOnlyList<string> arguments);
+    CommandResult SearchAtoms(IReadOnlyList<string> arguments);
 
     CommandResult ShowAtom(IReadOnlyList<string> arguments);
     CommandResult AtomContext(IReadOnlyList<string> arguments);
-
-    ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments);
 
@@ -133,10 +131,8 @@ internal static class CliApplication
                 RenderExplicit(environment.DepositHeaderCheck(tail), console),
             ["lean-utility-input"] = static (environment, tail, console) =>
                 RenderExplicit(environment.LeanUtilityInput(tail), console),
-            ["digest-status"] = static (environment, tail, console) =>
-                RenderCommand(environment.DigestStatus(tail), console),
-            ["echo-verify"] = static (environment, tail, console) =>
-                RenderExplicit(environment.EchoVerify(tail), console),
+            ["search-atoms"] = static (environment, tail, console) =>
+                RenderCommand(environment.SearchAtoms(tail), console),
             ["gate-authority"] = static (environment, tail, console) =>
                 RenderExplicit(environment.GateAuthority(tail), console),
             ["verify-trx"] = static (_, tail, console) => RenderTestEvidence("verify-trx", tail, console),
