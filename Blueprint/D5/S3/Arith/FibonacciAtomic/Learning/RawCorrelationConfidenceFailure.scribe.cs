@@ -39,15 +39,13 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
                 + "maximum-score condition and nonnegative normalized maximum-supported "
                 + "kernel conditions throughout 0<rho<=1/8. failureLiminf and "
                 + "randomFailureLiminf take the corresponding lower limits at zero.")),
-            Node("LazyLimit.tie_vanishes", "Conditional ties vanish",
-                AtScale(Seq(Call("limitTie", V("a"), V("K")), Eq, D(0))),
-                "After excluding the reverse event independently in every record, the "
+            Paragraph(Text("Conditional ties vanish. After excluding the reverse event independently in every record, the "
                     + "score difference has masses p/2,1-p,p/2 at -1,0,1. Its full "
                     + "product law is represented by independent activation bits and fair "
                     + "signs. The exact tie mixture averages the fair-sign tie coefficient "
                     + "at the activation count. Every fixed-count lower tail vanishes "
                     + "and the fair-sign tie coefficient tends to zero, so this mixture "
-                    + "also tends to zero as rho decreases to zero."),
+                    + "also tends to zero as rho decreases to zero.")),
             Node("RawLimit.raw_confidence_failure", "Strict raw misordering has a half-probability limit",
                 AtScale(Seq(Call("limitMisorder", V("a"), V("K")), Eq, Half)),
                 "For every fixed 0<a<=1 and K>0, the probability that the true raw score "

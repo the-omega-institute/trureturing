@@ -46,11 +46,11 @@ def delta (b : Fin 3) : ℤ := (b.val : ℤ) - 1
 def category (w : Record) : Fin 3 := if score w = -1 then 0 else if score w = 0 then 1 else 2
 
 /-- The three-valued score encoding preserves the actual integer score. -/
-theorem category_score (w : Record) : delta (category w) = score w := by
+private theorem category_score (w : Record) : delta (category w) = score w := by
   rcases score_range w with h | h | h <;> simp [category, delta, h]
 
 /-- The score category determines exactly its corresponding integer value. -/
-theorem category_iff (w : Record) (b : Fin 3) : category w = b ↔ score w = delta b := by
+private theorem category_iff (w : Record) (b : Fin 3) : category w = b ↔ score w = delta b := by
   constructor
   · intro h
     rw [← category_score, h]
@@ -63,7 +63,7 @@ theorem category_iff (w : Record) (b : Fin 3) : category w = b ↔ score w = del
 def lazyMass (p : ℝ) (b : Fin 3) : ℝ := if b = 1 then 1 - p else p / 2
 
 /-- The actual conditioned score law is the symmetric three-category law. -/
-theorem clean_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (b : Fin 3) :
+private theorem clean_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (b : Fin 3) :
     lazyMass (Scale.activeProbability rho a) b =
       ∑ w, if category w = b then cleanRecordMass rho a w else 0 := by
   simp_rw [category_iff]
@@ -79,7 +79,7 @@ theorem clean_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (b 
   · simpa [lazyMass, delta, Scale.activeProbability] using (clean_score_signs rho a).1.symm
 
 /-- The complete conditional sample score pushes forward to the symmetric lazy-walk score. -/
-theorem sample_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
+private theorem sample_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (m : ℕ) (F : ℤ → ℝ) :
     (∑ w : Fin m → Record, F (∑ i, score (w i)) * ∏ i, cleanRecordMass rho a (w i)) =
       ∑ v : Fin m → Fin 3, F (∑ i, delta (v i)) *
@@ -94,12 +94,12 @@ def pairCategory (x : Bool × Bool) : Fin 3 := if x.1 then if x.2 then 2 else 0 
 def pairMass (p : ℝ) (x : Bool × Bool) : ℝ := bernoulliMass p x.1 / 2
 
 /-- An independent activation bit and fair sign have the symmetric three-category law. -/
-theorem pair_pushforward (p : ℝ) (b : Fin 3) :
+private theorem pair_pushforward (p : ℝ) (b : Fin 3) :
     lazyMass p b = ∑ x, if pairCategory x = b then pairMass p x else 0 := by
   fin_cases b <;> simp [Fintype.sum_prod_type, pairCategory, pairMass, bernoulliMass, lazyMass] <;> ring
 
 /-- The activation-and-fair-sign representation preserves every total-score observable. -/
-theorem lazy_pair_pushforward (p : ℝ) (m : ℕ) (F : ℤ → ℝ) :
+private theorem lazy_pair_pushforward (p : ℝ) (m : ℕ) (F : ℤ → ℝ) :
     (∑ x : Fin m → Bool × Bool, F (∑ i, delta (pairCategory (x i))) * ∏ i, pairMass p (x i)) =
       ∑ v : Fin m → Fin 3, F (∑ i, delta (v i)) * ∏ i, lazyMass p (v i) :=
   Pushforward.product_pushforward pairCategory (pairMass p) (lazyMass p)
@@ -108,7 +108,7 @@ theorem lazy_pair_pushforward (p : ℝ) (m : ℕ) (F : ℤ → ℝ) :
 def activity (w : Record) : Bool := decide (score w ≠ 0)
 
 /-- The actual conditioned nonzero indicator has the Bernoulli law. -/
-theorem activity_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (b : Bool) :
+private theorem activity_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (b : Bool) :
     bernoulliMass (Scale.activeProbability rho a) b =
       ∑ w, if activity w = b then cleanRecordMass rho a w else 0 := by
   cases b
@@ -127,7 +127,7 @@ theorem activity_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) 
   · simpa [bernoulliMass, activity] using (clean_active_mass rho a).symm
 
 /-- The actual conditioned count lower tail equals the corresponding Bernoulli count lower tail. -/
-theorem actual_tail_eq_bernoulli (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (m N : ℕ) :
+private theorem actual_tail_eq_bernoulli (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (m N : ℕ) :
     FiniteTail.tail (cleanRecordMass rho a) nonzero m N =
       FiniteTail.tail (bernoulliMass (Scale.activeProbability rho a))
         (fun b => if b then 1 else 0) m N := by
@@ -155,13 +155,13 @@ def positive (p : ℝ) (m : ℕ) : ℝ := ∑ v : Fin m → Fin 3, if 0 < totalS
 def tie (p : ℝ) (m : ℕ) : ℝ := ∑ v : Fin m → Fin 3, if totalScore v = 0 then sampleMass p v else 0
 
 /-- The actual window-label mass has total one. -/
-theorem total_mass (p : ℝ) (m : ℕ) : (∑ v : Fin m → Fin 3, sampleMass p v) = 1 := by
+private theorem total_mass (p : ℝ) (m : ℕ) : (∑ v : Fin m → Fin 3, sampleMass p v) = 1 := by
   unfold sampleMass
   have h : (∑ b : Fin 3, lazyMass p b) = 1 := by simp [Fin.sum_univ_three, lazyMass]; ring
   rw [← Fintype.sum_pow, h, one_pow]
 
 /-- Sign reversal equates the strict negative and positive total-score masses. -/
-theorem neg_eq_pos (p : ℝ) (m : ℕ) : negative p m = positive p m := by
+private theorem neg_eq_pos (p : ℝ) (m : ℕ) : negative p m = positive p m := by
   classical
   let er : Fin 3 ≃ Fin 3 := {
     toFun := Fin.rev
@@ -185,7 +185,7 @@ theorem neg_eq_pos (p : ℝ) (m : ℕ) : negative p m = positive p m := by
   simp_rw [hs, hm, neg_lt_zero]
 
 /-- Strict negative mass is half of one minus the tie mass. -/
-theorem negative_eq_half (p : ℝ) (m : ℕ) : negative p m = (1 - tie p m) / 2 := by
+private theorem negative_eq_half (p : ℝ) (m : ℕ) : negative p m = (1 - tie p m) / 2 := by
   have hsplit : negative p m + tie p m + positive p m = 1 := by
     unfold negative tie positive
     rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib, ← total_mass p m]
@@ -211,13 +211,13 @@ open ScoreBridge Law
 local notation "bit" => Bool.toNat
 
 /-- The activation-sign representation has zero increment when inactive and its fair sign when active. -/
-theorem pair_delta (b : Bool × Bool) : delta (pairCategory b) =
+private theorem pair_delta (b : Bool × Bool) : delta (pairCategory b) =
     if b.1 then walkSign b.2 else 0 := by
   rcases b with ⟨a,u⟩
   cases a <;> cases u <;> norm_num [delta, pairCategory, D5.S3.Arith.GoldenPell.signedInt]
 
 /-- The lazy-walk tie mass is the mixture of fair-sign tie masses over the activation count. -/
-theorem tie_mixture (p : ℝ) (m : ℕ) :
+private theorem tie_mixture (p : ℝ) (m : ℕ) :
     LazySymmetry.tie p m = FiniteTail.expectation (bernoulliMass p) bit m
       Binomial.fairTie := by
   classical
@@ -271,7 +271,7 @@ theorem tie_mixture (p : ℝ) (m : ℕ) :
   · intro u hu; rfl
 
 /-- The actual conditional activation probability lies in the unit interval. -/
-theorem active_probability_mem (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
+private theorem active_probability_mem (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) :
     0 ≤ Scale.activeProbability rho a ∧ Scale.activeProbability rho a ≤ 1 := by
   rw [← clean_active_mass]
@@ -289,7 +289,7 @@ theorem active_probability_mem (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8
     · exact clean_record_mass_nonneg rho a hr hr8 ha ha1 w
 
 /-- Each fair-sign tie coefficient is at most one. -/
-theorem fair_tie_le_one (j : ℕ) : Binomial.fairTie j ≤ 1 := by
+private theorem fair_tie_le_one (j : ℕ) : Binomial.fairTie j ≤ 1 := by
   have h := Binomial.fair_tie_square_bound j
   have hb : 1 / ((j : ℝ) + 1) ≤ 1 := by
     rw [div_le_one (by positivity)]
@@ -298,7 +298,7 @@ theorem fair_tie_le_one (j : ℕ) : Binomial.fairTie j ≤ 1 := by
   nlinarith [Binomial.fair_tie_nonneg j]
 
 /-- The target-scale conditional total-score tie probability tends to zero. -/
-theorem tie_vanishes (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
+private theorem tie_vanishes (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
     Tendsto (fun rho => LazySymmetry.tie (Scale.activeProbability rho a)
       (Scale.sampleLength rho a K)) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
   have small : ∀ᶠ rho : ℝ in 𝓝[>] (0 : ℝ), 0 < rho ∧ rho ≤ 1 / 8 := by
@@ -340,7 +340,7 @@ namespace Conditioning
 
 
 /-- Nonnegative masses give nonnegative event masses. -/
-theorem event_mass_nonneg {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x, 0 ≤ p x)
+private theorem event_mass_nonneg {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x, 0 ≤ p x)
     (E : α → Prop) : 0 ≤ eventMass p E := by
   simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
   apply Finset.sum_nonneg
@@ -350,7 +350,7 @@ theorem event_mass_nonneg {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x
   · exact le_rfl
 
 /-- Event inclusion preserves the ordering of finite nonnegative masses. -/
-theorem event_mass_mono {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x, 0 ≤ p x)
+private theorem event_mass_mono {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x, 0 ≤ p x)
     (E A : α → Prop) (h : ∀ x, E x → A x) : eventMass p E ≤ eventMass p A := by
   simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
   apply Finset.sum_le_sum
@@ -361,7 +361,7 @@ theorem event_mass_mono {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ x, 
   · by_cases ha : A x <;> simp [he,ha,hp x]
 
 /-- An event and its complement partition the total finite mass. -/
-theorem event_mass_compl {α : Type*} [Fintype α] (p : α → ℝ) (E : α → Prop) :
+private theorem event_mass_compl {α : Type*} [Fintype α] (p : α → ℝ) (E : α → Prop) :
     eventMass p E + eventMass p (fun x => ¬ E x) = ∑ x, p x := by
   simp only [_root_.D5.S3.ConceptDynamics.ObservationOrder.CommonPriorPosteriorAgreement.eventMass, Finset.mem_filter, Finset.mem_univ, true_and]
   rw [← Finset.sum_add_distrib]
@@ -370,7 +370,7 @@ theorem event_mass_compl {α : Type*} [Fintype α] (p : α → ℝ) (E : α → 
   by_cases h : E x <;> simp [h]
 
 /-- Conditioning on a positive-probability event changes any event mass by at most its omitted mass. -/
-theorem conditioning_bound {α : Type*} [Fintype α] (p : α → ℝ)
+private theorem conditioning_bound {α : Type*} [Fintype α] (p : α → ℝ)
     (hp : ∀ x, 0 ≤ p x) (hprob : ∑ x, p x = 1) (E A : α → Prop)
     (hE : 0 < eventMass p E) :
     |eventMass p A - eventMass p (fun x => E x ∧ A x) / eventMass p E| ≤ 1 - eventMass p E := by
@@ -419,7 +419,7 @@ def cleanNegative (rho a : ℝ) (m : ℕ) : ℝ :=
     ∏ i, cleanRecordMass rho a (w i) else 0
 
 /-- The actual conditional strict misordering mass is the symmetric lazy-walk negative mass. -/
-theorem clean_negative_eq (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (m : ℕ) :
+private theorem clean_negative_eq (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (m : ℕ) :
     cleanNegative rho a m = LazySymmetry.negative (Scale.activeProbability rho a) m := by
   have h := ScoreBridge.sample_pushforward rho a hr hr8 m
     (fun s => if s < 0 then (1 : ℝ) else 0)
@@ -431,7 +431,7 @@ theorem clean_negative_eq (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (m 
     · intro w hw; rfl)
 
 /-- Actual conditioned strict misordering tends to one half. -/
-theorem clean_negative_limit (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
+private theorem clean_negative_limit (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
     Tendsto (fun rho => cleanNegative rho a (Scale.sampleLength rho a K))
       (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2 : ℝ)) := by
   have ht := LazyLimit.tie_vanishes a K ha ha1 hK
@@ -445,7 +445,7 @@ theorem clean_negative_limit (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < 
   rw [clean_negative_eq rho a hr hr8.le, LazySymmetry.negative_eq_half]
 
 /-- The original and conditioned strict misordering masses differ by at most the reverse-event exclusion loss. -/
-theorem raw_clean_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
+private theorem raw_clean_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (m : ℕ) :
     |misorder rho a m - cleanNegative rho a m| ≤ 1 - (1 - 12 * rho ^ 3) ^ m := by
   let p : (Fin m → Record) → ℝ := fun w => ∏ i, recordMass rho a (w i)
@@ -525,7 +525,7 @@ def candidateScore {m : ℕ} (c : Fin 4) (w : Fin m → Record) : ℤ :=
   ∑ i, (((w i).2.2.2.2.val : ℤ) - 1) * ((candidateClass c (w i)).val : ℤ)
 
 /-- The difference of the two raw candidate totals is the sum of their actual record score differences. -/
-theorem score_gap (m : ℕ) (w : Fin m → Record) :
+private theorem score_gap (m : ℕ) (w : Fin m → Record) :
     candidateScore 2 w - candidateScore 3 w = ∑ i, score (w i) := by
   unfold candidateScore score
   rw [← Finset.sum_sub_distrib]
@@ -538,7 +538,7 @@ def failureMass (rho a : ℝ) (m : ℕ) (select : (Fin m → Record) → Fin 4) 
   ∑ w : Fin m → Record, if select w ≠ 2 then ∏ i, recordMass rho a (w i) else 0
 
 /-- Strict misordering is contained in the failure event of every deterministic raw-score maximizer. -/
-theorem argmax_failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
+private theorem argmax_failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (m : ℕ) (select : (Fin m → Record) → Fin 4)
     (hmax : ∀ w c, candidateScore c w ≤ candidateScore (select w) w) :
     misorder rho a m ≤ failureMass rho a m select := by
@@ -559,7 +559,7 @@ theorem argmax_failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     · exact le_rfl
 
 /-- Every deterministic selection failure mass lies in the unit interval. -/
-theorem failure_mass_bounds (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
+private theorem failure_mass_bounds (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (m : ℕ) (select : (Fin m → Record) → Fin 4) :
     0 ≤ failureMass rho a m select ∧ failureMass rho a m select ≤ 1 := by
   have hp : ∀ w : Fin m → Record, 0 ≤ ∏ i, recordMass rho a (w i) := fun w =>
@@ -614,7 +614,7 @@ def failureMass (rho a : ℝ) (m : ℕ) (q : (Fin m → Record) → Fin 4 → �
   ∑ w : Fin m → Record, (∏ i, recordMass rho a (w i)) * (1 - q w 2)
 
 /-- Strict misordering forces every randomized maximizing kernel to assign zero mass to the true teacher. -/
-theorem failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
+private theorem failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (m : ℕ) (q : (Fin m → Record) → Fin 4 → ℝ)
     (hq : ∀ w c, 0 ≤ q w c) (hnorm : ∀ w, ∑ c, q w c = 1)
     (hsupport : ∀ w c, 0 < q w c → ∀ d, candidateScore d w ≤ candidateScore c w) :

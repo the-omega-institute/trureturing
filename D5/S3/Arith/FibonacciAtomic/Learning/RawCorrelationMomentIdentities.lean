@@ -37,7 +37,7 @@ namespace Scale
 def sampleLength (rho a K : ℝ) : ℕ := ⌈K / (a ^ 2 * rho ^ 2)⌉₊
 
 /-- The rounded sample count times rho squared tends to the prescribed constant. -/
-theorem scaled_length (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
+private theorem scaled_length (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     Tendsto (fun rho => (sampleLength rho a K : ℝ) * rho ^ 2)
       (𝓝[>] (0 : ℝ)) (𝓝 (K / a ^ 2)) := by
   have ha0 : a ≠ 0 := ne_of_gt ha
@@ -63,7 +63,7 @@ theorem scaled_length (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     low high
 
 /-- At the target sample scale, the expected reverse-event count tends to zero. -/
-theorem reverse_negligible (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
+private theorem reverse_negligible (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     Tendsto (fun rho => (sampleLength rho a K : ℝ) * 12 * rho ^ 3)
       (𝓝[>] (0 : ℝ)) (𝓝 0) := by
   have h := (scaled_length a K ha hK).mul
@@ -71,7 +71,7 @@ theorem reverse_negligible (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
   simpa only [mul_zero, zero_mul] using h.congr (fun rho => by dsimp; ring)
 
 /-- All records avoid the reverse event with probability tending to one. -/
-theorem clean_probability (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
+private theorem clean_probability (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     Tendsto (fun rho => (1 - 12 * rho ^ 3) ^ (sampleLength rho a K))
       (𝓝[>] (0 : ℝ)) (𝓝 1) := by
   have low : ∀ᶠ rho : ℝ in 𝓝[>] 0,
@@ -105,7 +105,7 @@ def activeProbability (rho a : ℝ) : ℝ :=
   ((8 + a) / 12) * (2 * rho * (1 - 3 * rho) * (1 - 2 * rho)) / (1 - 12 * rho ^ 3)
 
 /-- The expected conditional nonzero count tends to infinity. -/
-theorem active_mean_diverges (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
+private theorem active_mean_diverges (a K : ℝ) (ha : 0 < a) (hK : 0 < K) :
     Tendsto (fun rho => (sampleLength rho a K : ℝ) * activeProbability rho a)
       (𝓝[>] (0 : ℝ)) atTop := by
   have id0 : Tendsto (fun rho : ℝ => rho) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
@@ -136,7 +136,7 @@ def tail {α : Type*} [Fintype α] (q : α → ℝ) (b : α → ℕ) (m N : ℕ)
   ∑ w : Fin m → α, if count b w ≤ N then ∏ i, q (w i) else 0
 
 /-- The count Laplace transform factors over independent finite records. -/
-theorem laplace_product {α : Type*} [Fintype α] (q : α → ℝ)
+private theorem laplace_product {α : Type*} [Fintype α] (q : α → ℝ)
     (b : α → ℕ) (m : ℕ) :
     (∑ w : Fin m → α, (∏ i, q (w i)) * Real.exp (-(count b w : ℝ))) =
       (∑ a, q a * Real.exp (-(b a : ℝ))) ^ m := by
@@ -146,7 +146,7 @@ theorem laplace_product {α : Type*} [Fintype α] (q : α → ℝ)
   exact (Fintype.sum_pow (fun a => q a * Real.exp (-(b a : ℝ))) m).symm
 
 /-- A fixed-count lower tail is bounded by its exponential transform. -/
-theorem tail_laplace_bound {α : Type*} [Fintype α] (q : α → ℝ)
+private theorem tail_laplace_bound {α : Type*} [Fintype α] (q : α → ℝ)
     (b : α → ℕ) (hq : ∀ a, 0 ≤ q a) (m N : ℕ) :
     tail q b m N ≤ Real.exp (N : ℝ) * (∑ a, q a * Real.exp (-(b a : ℝ))) ^ m := by
   unfold tail
@@ -165,7 +165,7 @@ theorem tail_laplace_bound {α : Type*} [Fintype α] (q : α → ℝ)
     positivity
 
 /-- The finite-product lower tail has an exponential upper bound. -/
-theorem tail_exponential {α : Type*} [Fintype α] (q : α → ℝ)
+private theorem tail_exponential {α : Type*} [Fintype α] (q : α → ℝ)
     (b : α → ℕ) (hq : ∀ a, 0 ≤ q a) (m N : ℕ) (p : ℝ)
     (hlap : (∑ a, q a * Real.exp (-(b a : ℝ))) = 1 - p + p * Real.exp (-1)) :
     tail q b m N ≤ Real.exp (N : ℝ) * Real.exp (-((1 - Real.exp (-1)) * (m : ℝ) * p)) := by
@@ -184,7 +184,7 @@ theorem tail_exponential {α : Type*} [Fintype α] (q : α → ℝ)
   exact hl.trans (mul_le_mul_of_nonneg_left hp (Real.exp_pos _).le)
 
 /-- Diverging activation means force every fixed lower tail to vanish. -/
-theorem escapes {α ι : Type*} [Fintype α] (l : Filter ι) (q : ι → α → ℝ)
+private theorem escapes {α ι : Type*} [Fintype α] (l : Filter ι) (q : ι → α → ℝ)
     (b : α → ℕ) (n : ι → ℕ) (p : ι → ℝ)
     (hq : ∀ᶠ t in l, ∀ a, 0 ≤ q t a)
     (hlap : ∀ᶠ t in l, (∑ a, q t a * Real.exp (-(b a : ℝ))) = 1 - p t + p t * Real.exp (-1))
@@ -214,7 +214,7 @@ def expectation {α : Type*} [Fintype α] (q : α → ℝ) (b : α → ℕ)
   ∑ w : Fin m → α, (∏ i, q (w i)) * f (count b w)
 
 /-- A cutoff separates bounded small-count and uniformly small large-count contributions. -/
-theorem expectation_cutoff {α : Type*} [Fintype α] (q : α → ℝ)
+private theorem expectation_cutoff {α : Type*} [Fintype α] (q : α → ℝ)
     (b : α → ℕ) (hq : ∀ a, 0 ≤ q a) (hprob : ∑ a, q a = 1)
     (m N : ℕ) (f : ℕ → ℝ) (hf : ∀ j, f j ≤ 1) (eps : ℝ)
     (heps : 0 ≤ eps) (hfar : ∀ j, N < j → f j ≤ eps) :
@@ -311,7 +311,7 @@ def cleanMass (rho a : ℝ) (s : ℤ) : ℝ := by
   exact oneSum (fun w => if ¬ reverse w ∧ score w = s then recordMass rho a w else 0)
 
 /-- The explicit five-symbol record sum equals the complete finite sum. -/
-theorem one_sum_eq_sum (f : Record → ℝ) : oneSum f = ∑ w, f w := by
+private theorem one_sum_eq_sum (f : Record → ℝ) : oneSum f = ∑ w, f w := by
   classical
   have win (g : Window → ℝ) : (∑ w, g w) = sumWindow g := by
     change (∑ w ∈ ({Window.zero, Window.low, Window.middle, Window.ends, Window.high} : Finset Window), g w) = _
@@ -326,7 +326,7 @@ theorem total_mass (rho a : ℝ) : (∑ w, recordMass rho a w) = 1 := by
   ring
 
 /-- Excluding the reverse event removes exactly its cubic mass. -/
-theorem clean_total (rho a : ℝ) :
+private theorem clean_total (rho a : ℝ) :
     (∑ w : Record, if ¬ reverse w then recordMass rho a w else 0) = 1 - 12 * rho ^ 3 := by
   classical
   rw [← one_sum_eq_sum]
@@ -335,7 +335,7 @@ theorem clean_total (rho a : ℝ) :
   ring
 
 /-- The two nonzero score masses are equal after excluding the reverse event. -/
-theorem clean_signs (rho a : ℝ) :
+private theorem clean_signs (rho a : ℝ) :
     cleanMass rho a 1 = (8 + a) / 12 * (2 * rho * (1 - 3 * rho) * (1 - 2 * rho)) / 2 ∧
     cleanMass rho a (-1) = (8 + a) / 12 * (2 * rho * (1 - 3 * rho) * (1 - 2 * rho)) / 2 := by
   constructor <;>
@@ -435,7 +435,7 @@ def cleanScore (rho a : ℝ) (s : ℤ) : ℝ :=
   ∑ w, if score w = s then cleanRecordMass rho a w else 0
 
 /-- Conditioned score masses are the corresponding restricted masses divided by the clean mass. -/
-theorem clean_score_eq (rho a : ℝ) (s : ℤ) :
+private theorem clean_score_eq (rho a : ℝ) (s : ℤ) :
     cleanScore rho a s = cleanMass rho a s / (1 - 12 * rho ^ 3) := by
   unfold cleanScore cleanMass
   rw [one_sum_eq_sum, Finset.sum_div]
@@ -479,7 +479,7 @@ theorem clean_active_mass (rho a : ℝ) :
   ring
 
 /-- The actual conditional nonzero indicator has the Bernoulli Laplace transform. -/
-theorem laplace_actual (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
+private theorem laplace_actual (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
     (∑ w, cleanRecordMass rho a w * Real.exp (-(nonzero w : ℝ))) =
       1 - Scale.activeProbability rho a + Scale.activeProbability rho a * Real.exp (-1) := by
   have term (w : Record) : cleanRecordMass rho a w * Real.exp (-(nonzero w : ℝ)) =
@@ -593,7 +593,7 @@ local notation "sign" => (fun b : Bool => D5.S3.Arith.GoldenPell.signedInt (!b) 
 
 set_option backward.isDefEq.respectTransparency false in
 /-- A fair-sign sum is twice the positive-sign subset size minus the domain size. -/
-theorem signed_sum_subset {α : Type*} [Fintype α] (s : Finset α) :
+private theorem signed_sum_subset {α : Type*} [Fintype α] (s : Finset α) :
     (∑ i, sign ((boolSubset α).symm s i)) = 2 * (s.card : ℤ) - (Fintype.card α : ℤ) := by
   have term (i : α) : sign ((boolSubset α).symm s i) =
       (if i ∈ s then (2 : ℤ) else 0) - 1 := by
@@ -612,7 +612,7 @@ noncomputable def fairTie {α : Type*} [Fintype α] : ℝ :=
   ∑ u : α → Bool, if (∑ i, sign (u i)) = 0 then (1 / 2 : ℝ) ^ (Fintype.card α) else 0
 
 /-- The exact fair-sign tie mass is its central-binomial coefficient at even lengths. -/
-theorem fair_tie_formula (α : Type*) [Fintype α] :
+private theorem fair_tie_formula (α : Type*) [Fintype α] :
     fairTie (α := α) = Binomial.fairTie (Fintype.card α) := by
   classical
   unfold fairTie
