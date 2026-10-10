@@ -336,6 +336,29 @@ class ReuseTests(unittest.TestCase):
         self.assertTrue(api.seed_format(self.report)['compatible'])
         self.assertIsNotNone(api.read_seed_base(self.root))
 
+    def test_initial_receipt_observation_is_guarded_and_preparation_clears_it(self):
+        api = self.dev_repository()
+        snapshot = self.root / '.lake/observed-receipt'
+        receipt = publication.member(self.report, api.SUFFIX)
+        before_receipt = receipt.read_bytes()
+        before_base = (self.root / api.BASE_RECORD).read_bytes()
+        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
+        from lean_cache_release import cache_guard
+        try:
+            with cache_guard(self.root):
+                with self.assertRaises(BlockingIOError, msg='[FAIL] observation_requires_existing_guard'):
+                    api.observe_receipt(self.root, self.report, snapshot)
+        except AttributeError as error:
+            self.fail('[FAIL] initial_receipt_has_generation_scoped_cleanup: ' + str(error))
+        self.assertFalse(snapshot.exists())
+        api.observe_receipt(self.root, self.report, snapshot)
+        self.assertEqual(before_receipt, receipt.read_bytes())
+        self.assertEqual(before_base, (self.root / api.BASE_RECORD).read_bytes())
+        self.assertEqual(publication.digest(receipt), snapshot.read_text().strip())
+        api.prepare(self.root, self.report, receipt_snapshot=snapshot)
+        self.assertFalse(snapshot.exists(), '[FAIL] preparation_skips_redundant_cleanup')
+        self.assertFalse(receipt.exists())
+
     def test_custom_source_reuse_does_not_inherit_canonical_producer(self):
         api = self.dev_repository()
         canonical, base = self.report, api.read_seed_base(self.root)

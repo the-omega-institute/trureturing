@@ -249,7 +249,15 @@ def publication_guard(repository, report):
     return cache_guard(repository)
 
 
-def prepare(repository, report):
+def observe_receipt(repository, report, receipt_snapshot):
+    """Capture the entry's existing receipt without changing the generation."""
+    with publication_guard(repository, report):
+        receipt = publication.member(report, SUFFIX)
+        if not receipt.is_symlink() and receipt.is_file():
+            receipt_snapshot.write_text(publication.digest(receipt) + '\n')
+
+
+def prepare(repository, report, receipt_snapshot=None):
     """Invalidate production metadata only after claiming the output's guard."""
     with publication_guard(repository, report):
         maintenance = None
@@ -259,6 +267,8 @@ def prepare(repository, report):
             else:
                 invalidate_seed_base(repository)
         publication.member(report, SUFFIX).unlink(missing_ok=True)
+        if receipt_snapshot is not None:
+            receipt_snapshot.unlink(missing_ok=True)
         return maintenance
 
 
@@ -335,6 +345,8 @@ def _reuse(repository, report, output, receipt_snapshot=None):
             invalidate_seed_base(repository)
     except INVALID_SEED as error:
         publication.member(output, SUFFIX).unlink(missing_ok=True)
+        if receipt_snapshot is not None:
+            receipt_snapshot.unlink(missing_ok=True)
         return miss('seed-rejected', error)
     if receipt_snapshot is not None:
         receipt_snapshot.write_text(publication.digest(publication.member(output, SUFFIX)) + '\n')
@@ -610,7 +622,7 @@ def recover_and_reuse(repository, report, output, receipt_snapshot=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'prepare',
+    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'prepare', 'observe-receipt',
                                            'invalidate-receipt', 'seal', 'refresh-stale-seed'))
     parser.add_argument('--repository', required=True, type=Path)
     parser.add_argument('--report', type=Path)
@@ -630,7 +642,7 @@ def main():
         parser.error('--output is required')
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
-    if args.command == 'invalidate-receipt' and args.receipt_snapshot is None:
+    if args.command in ('observe-receipt', 'invalidate-receipt') and args.receipt_snapshot is None:
         parser.error('--receipt-snapshot is required')
     if args.command == 'seal' and (args.bundle_sha256 is None
             or re.fullmatch(r'[0-9a-f]{64}', args.bundle_sha256) is None):
@@ -641,9 +653,11 @@ def main():
         captured = capture(args.repository)
         args.snapshot.write_bytes(materials.canonical_json(captured))
     elif args.command == 'prepare':
-        maintenance = prepare(args.repository, args.report)
+        maintenance = prepare(args.repository, args.report, args.receipt_snapshot)
         if maintenance is not None:
             print('LEAN_REPORT_BASE_MAINTENANCE ' + json.dumps(maintenance, separators=(',', ':')))
+    elif args.command == 'observe-receipt':
+        observe_receipt(args.repository, args.report, args.receipt_snapshot)
     elif args.command == 'invalidate-receipt':
         invalidate_receipt(args.repository, args.report, args.receipt_snapshot)
     elif args.command == 'seal':

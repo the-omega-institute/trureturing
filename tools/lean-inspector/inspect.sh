@@ -81,6 +81,12 @@ trap finish EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
+# Observe only an existing output, preserving cold donor seeding.
+if [[ -f "${OUTPUT}.reuse.json" ]]; then
+  python3 -B "$SCRIPT_DIR/reuse.py" observe-receipt --repository "$REPOSITORY" \
+    --report "$OUTPUT" --receipt-snapshot "$RECEIPT_SNAPSHOT"
+fi
+
 run_phase() {
   local phase="$1" status=0
   local phase_started="${SECONDS:-unavailable}" phase_finished phase_elapsed=unavailable
@@ -224,7 +230,8 @@ run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOS
   --report "$OUTPUT" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
 PRESERVE_RECEIPT=1
-run_phase prepare python3 -B "$SCRIPT_DIR/reuse.py" prepare --repository "$REPOSITORY" --report "$OUTPUT"
+run_phase prepare python3 -B "$SCRIPT_DIR/reuse.py" prepare --repository "$REPOSITORY" --report "$OUTPUT" \
+  --receipt-snapshot "$RECEIPT_SNAPSHOT"
 PRESERVE_RECEIPT=0
 if [[ ${#BUILD_TARGETS[@]} == 0 || "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then
   require_producer
