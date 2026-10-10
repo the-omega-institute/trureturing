@@ -3203,4 +3203,27 @@ $$
 
 **范围与非可加性。** 这是固定 $A$、固定 Fourier 基和均匀受控移位 Schur 平均的精确组合律，不是任意 LOSR 通道的误差可加定理。重复同一层满足 $\mathcal D_K^2=\mathcal D_K$；因此在每层恰有 $\|\mathcal D_K-\mathcal D_A\|_\diamond=1$ 的特殊情形，重复该同一 $K$ 的总误差仍为 $1$ 而非累加。对不同的 $K_j$ 不作“不累加”断言；其合成按定理 44.1 由子群和决定，甚至可能等于 $\mathcal D_A$。结论只针对角色支撑及相应 $h_\eta$ 证书。
 
+## 45. 可观测残余谱与层叠停止判据
+
+**定理 45.1（固定输入的残余谱证书）。** 对每个 $\eta\in\widehat A\setminus\{1\}$ 固定一对入口 Fourier 标签 $(\chi_\eta,\psi_\eta)$ 满足 $\eta=\chi_\eta\psi_\eta^{-1}$，并记该矩阵单位对的入口系数为 $h_\eta$。在同一 $A$ 与 Fourier 基上，假定每层平均都是 Schur/Fourier 对角的，因而不混合不同矩阵单位。前 $j$ 层分别施加均匀平均 $\mathcal D_{K_1},\ldots,\mathcal D_{K_j}$，层间无其他映射。令 $\Phi_j$ 表示当前 stack 通道，令 $\Phi_{\rm ideal}=\mathcal D_A$ 表示同一 Fourier 子空间上的理想全群平均。定义
+$$
+R_j=(K_1+\cdots+K_j)^\perp\setminus\{1\},\qquad
+\mathsf S_j=\{\,|h_\eta|:\eta\in R_j\,\}.
+$$
+则对每个 $\eta\in R_j$，定理 43.1 的二维归一化输入给出钻石距离证书 $|h_\eta|$；因此
+$$
+\bigl\|\Phi_j-\Phi_{\rm ideal}\bigr\|_\diamond
+\ge \max\mathsf S_j
+$$
+（空集最大值定义为 $0$）。此外
+$$
+R_{j+1}\subseteq R_j,\qquad \max\mathsf S_{j+1}\le\max\mathsf S_j.
+$$
+
+**证明。** 定理 44.1 给出第 $j$ 层出口的该矩阵单位系数 $h_\eta\mathbf1_{R_j}(\eta)$。对任意 $\eta=\chi_\eta\psi_\eta^{-1}\in R_j$，在 $\operatorname{span}\{|\chi_\eta\rangle,|\psi_\eta\rangle\}$ 中取 $|v_\eta\rangle=(|\chi_\eta\rangle+|\psi_\eta\rangle)/\sqrt2$。实际与理想输出之差的两个非零本征值为 $\pm|h_\eta|/2$，故该归一化输入的迹范数为 $|h_\eta|$；取所有输入的上确值得到钻石下界，最后取 $\eta$ 的最大值。子群和随 $j$ 增大而增大，湮灭子反向包含，遂得单调性。证毕。
+
+**推论 45.2（可审计停止判据）。** 对给定输入族和阈值 $\varepsilon\ge0$，若 $R_j=\varnothing$，则所有由定理 43.1 这类 Fourier 二维输入产生的残余证书已经消失；若仅有 $\max\mathsf S_j\le\varepsilon$，则这些可观测证书全部不超过 $\varepsilon$。因此可以按 $R_j$ 的交集更新逐层停止检查。该判据是证书族的充分停止条件，不是整个钻石范数的上界；未观测的通道方向仍可能有误差。
+
+**范围。** 结论固定入口矩阵单位对、同一 Fourier 基、Schur 对角无混合及层间无映射条件，针对受控移位 Schur 平均和指定二维测试族；不声称一般 LOSR 误差上界或任意输入的完整谱分类。
+
 ## 追加锚（本行以下为增补区）
