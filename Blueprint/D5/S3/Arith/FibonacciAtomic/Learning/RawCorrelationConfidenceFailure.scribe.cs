@@ -10,6 +10,7 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
     private static Formula V(string s) => F.Id(s);
     private static Formula Call(string s, params Formula[] xs) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
+    private static Formula Par(Formula body) => Seq(Left, Open, body, Right, Close);
     private static Formula All(string x, string type, Formula body) =>
         Seq(Forall, Sp, V(x), Colon, Sp, Call(type), Comma, Sp, body);
     private static Formula AtScale(Formula body) => All("a", "Real", All("K", "Real",
@@ -76,16 +77,16 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
                     + "not returning the true teacher has lower limit at least 1/2."),
             Node("result", "Population moments and the uniform-confidence obstruction",
                 AtScale(Seq(
-                    All("rho", "Real", Seq(D(0), Lt, V("rho"), Le,
+                    Par(All("rho", "Real", Seq(D(0), Lt, V("rho"), Le,
                         Seq(Frac, Grp(D(1)), Grp(D(8))), Implies, Sp,
-                        Call("LegalLawPointwiseDifferenceAndFiveMoments", V("rho"), V("a")))),
-                    Sp, Land, Sp, Call("limitMisorder", V("a"), V("K")), Eq, Half,
-                    Sp, Land, Sp, All("s", "SelectionFamily", Seq(
+                        Call("LegalLawPointwiseDifferenceAndFiveMoments", V("rho"), V("a"))))),
+                    Sp, Land, Sp, Par(Seq(Call("limitMisorder", V("a"), V("K")), Eq, Half)),
+                    Sp, Land, Sp, Par(All("s", "SelectionFamily", Seq(
                         Call("Maximizing", V("a"), V("K"), V("s")), Implies, Sp,
-                        Half, Le, Call("failureLiminf", V("a"), V("K"), V("s")))),
-                    Sp, Land, Sp, All("q", "SelectionKernelFamily", Seq(
+                        Half, Le, Call("failureLiminf", V("a"), V("K"), V("s"))))),
+                    Sp, Land, Sp, Par(All("q", "SelectionKernelFamily", Seq(
                         Call("NormalizedMaximizing", V("a"), V("K"), V("q")), Implies, Sp,
-                        Half, Le, Call("randomFailureLiminf", V("a"), V("K"), V("q")))))),
+                        Half, Le, Call("randomFailureLiminf", V("a"), V("K"), V("q"))))))),
                 "The combined statement includes legality for every 0<rho<=1/8, the "
                     + "pointwise difference and all five actual-law moment relations, the "
                     + "strict-misordering limit, and both deterministic and randomized "
