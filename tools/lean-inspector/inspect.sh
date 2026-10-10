@@ -83,8 +83,10 @@ trap 'exit 143' TERM
 
 # Observe only an existing output, preserving cold donor seeding.
 if [[ -f "${OUTPUT}.reuse.json" ]]; then
+  OBSERVE_ARGS=()
+  if [[ "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then OBSERVE_ARGS+=(--cache-miss-policy fetch-or-fail); fi
   python3 -B "$SCRIPT_DIR/reuse.py" observe-receipt --repository "$REPOSITORY" \
-    --report "$OUTPUT" --receipt-snapshot "$RECEIPT_SNAPSHOT"
+    --report "$OUTPUT" --receipt-snapshot "$RECEIPT_SNAPSHOT" ${OBSERVE_ARGS[@]+"${OBSERVE_ARGS[@]}"}
 fi
 
 run_phase() {

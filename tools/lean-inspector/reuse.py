@@ -657,7 +657,13 @@ def main():
         if maintenance is not None:
             print('LEAN_REPORT_BASE_MAINTENANCE ' + json.dumps(maintenance, separators=(',', ':')))
     elif args.command == 'observe-receipt':
-        observe_receipt(args.repository, args.report, args.receipt_snapshot)
+        try:
+            observe_receipt(args.repository, args.report, args.receipt_snapshot)
+        except BlockingIOError as error:
+            if args.cache_miss_policy == 'fetch-or-fail':
+                raise CacheIncompatible(seed_format(args.report)['report_format'],
+                                        'unavailable', 'cache-busy') from error
+            raise
     elif args.command == 'invalidate-receipt':
         invalidate_receipt(args.repository, args.report, args.receipt_snapshot)
     elif args.command == 'seal':
