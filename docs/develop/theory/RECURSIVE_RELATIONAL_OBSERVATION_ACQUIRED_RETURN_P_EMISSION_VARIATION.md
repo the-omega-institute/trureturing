@@ -1105,3 +1105,519 @@ The finite-graph potential, cycle deletion, conditional rounding, product telesc
 The same-source spatial programme continues to require complete ordered and symmetric mixed traces, both cross blocks, arbitrary joint correlations and actual same-inverse LINEAR compensation, together with its original source, operation, metric, acquisition, recovery, clock and resource correspondences. The common calibration and menu-closure hypotheses of [the internal three-axis interface, Section 10](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md) and the retained obligations of [GEOM, Definition 78.12] remain separate. Neither endpoint concentration, the eight-vertex proof graph nor an analysis coordinate rank supplies those correspondences or selects physical dimension three. The inequality is a necessary finite-response constraint; it supplies no unrestricted impossibility, attainment, infimum conclusion or fixed-resource improvement.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Sharp compatibility constants and a complete-law-flow diagnostic
+
+**Definition 11.1 (same-object hypotheses and notation).** Retain Definitions 1.1–1.3, including the single originally sampled positive integer $K$, the fixed finite or countable prior, both seeds, every paid rejection and partial parse, the full $m=2,d=1,\ell=2,n=4$ control $C_0$, all markers and held records, third-write-before-latch, every finite fourth-segment return, completion and its matching Stop. A regular stationary table means Definition 2.2 on positive finite supports, with its actual acquired kernels $B,A$, rows $\pi,\tau$, emissions $u,v$ and its own complete laws $Q,W$. All quantities below belong to this one table. Write
+
+$$
+\begin{gathered}
+a=\frac13,\quad b=\frac25,\quad
+\chi=\frac{1116529}{806625},\quad
+\zeta_0=-\frac{151298}{268875},\\
+T_a=\frac{16}{729},\quad q_*=\frac{1944}{390625},\quad
+f_x=Q_x(E_p),\quad h_y=W_y(E_\beta),\\
+J=\pi[(u-a)(b-u)],\qquad
+V_\pi=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}|u_x-u_{x'}|.
+\end{gathered}
+\tag{11.1}
+$$
+
+Products inside $\pi[\,\cdot\,]$ are coordinatewise. The functional $\mathcal C$ is exactly (10.1). The risk hypotheses, when imposed, are the simultaneous configuration-before-TV bounds (2.4) on these same laws and rows, with nonnegative slacks $\epsilon_p,\epsilon_\beta$ and $\epsilon=\max\{\epsilon_p,\epsilon_\beta\}$. Endpoint-only hypotheses suffice for Corollary 11.3; Proposition 11.4 and Theorem 11.5 also retain every supported-depth bound and a supported nonendpoint.
+
+The local citations **PAID42**, **CLIP42** and **PAIRED42** denote respectively [Effective paid-history certificates](https://github.com/the-omega-institute/trureturing/blob/b58f2009bfa2e7c2f5d084e7f0b5616ffa1fac08/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md), [Risk-controlled emission moment feasibility](https://github.com/the-omega-institute/trureturing/blob/b58f2009bfa2e7c2f5d084e7f0b5616ffa1fac08/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md), and [Paired calibration observability](https://github.com/the-omega-institute/trureturing/blob/b58f2009bfa2e7c2f5d084e7f0b5616ffa1fac08/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) at that fixed source. The potential, joint stationary cancellation and stopped-product restoration used below are the structure of Theorem 10.2. The following sharpening concerns their numerical estimates.
+
+### 11.1 The sharper stationary estimate
+
+**Theorem 11.2 (81 compatibility on the actual circulation).** Every regular stationary table of Definition 11.1, without a risk hypothesis, satisfies
+
+$$
+\begin{aligned}
+\pi f-\chi\tau h-\zeta_0
+\le{}&106\pi[(b-u)(Q(w_{2,1})-T_a)]\\
+&+365\pi[(u-a)(Q(w_{3,1})-q_*)]
+-\frac{J}{10}+81V_\pi.
+\end{aligned}
+\tag{11.2}
+$$
+
+Equivalently, $\mathcal C\le81V_\pi$. There is no return-conservation, reversibility, irreducibility, mixing, state-count or stationary-mass-floor assumption.
+
+Proof. Use the stationary unweighted alternating chain of Theorem 10.2,
+
+$$
+X_0\xrightarrow{B}Y_0\xrightarrow{A}X_1\xrightarrow{B}Y_1
+\xrightarrow{A}\cdots,\qquad X_0\sim\pi,
+$$
+
+and set $c_i=u_{X_i}$, $U_i=1-c_i$, $v_i=v_{Y_i}$. The two exact flow identities imply joint stationarity under one $BA$ shift. In particular,
+
+$$
+\mathbb E|c_{i+1}-c_i|=V_\pi,\qquad
+\mathbb E|c_i-c_0|\le iV_\pi.
+\tag{11.3}
+$$
+
+This is a chain of acquired kernels used to expand words. Its definition does not condition the original source on an infinite return path.
+
+For fixed $c\in[a,b]$, put $U=1-c$ and use the polynomial $f_c(z)$ of (10.8), here denoted $R(c,z)$:
+
+$$
+\begin{aligned}
+P&=U(1-z_0)+U^2z_0(1-z_1)+U^3z_0z_1(1-z_2),\\
+H&=1-z_0+Uz_0(1-z_1),\\
+T&=U^3z_0z_1(1-z_2),\qquad
+Z=U^4z_0z_1z_2(1-z_3),\\
+R(c,z)&=P-\chi H-\zeta_0
+-106(b-c)(T-T_a)-365(c-a)(Z-q_*)
++\frac{(c-a)(b-c)}{10}.
+\end{aligned}
+\tag{11.4}
+$$
+
+For endpoint tuples $z\in\{a,b\}^4$, regard $z$ as the edge from $(z_0,z_1,z_2)$ to $(z_1,z_2,z_3)$. The mean edge weight on each simple directed cycle is exactly (3.7), with $t=15(b-c)$. The complete nineteen-cycle Bernstein certificate (3.7)–(3.8) therefore gives nonpositive total weight on every such cycle, for every $c$. This identification and the path construction are the ones in (10.10)–(10.11); no classification of observer carriers is used.
+
+For each triple $s$, let $\Phi_c(s)$ be the maximum weight of a vertex-simple path starting at $s$, including the empty path and permitting every endpoint. A simple path has at most seven edges. Every closed walk decomposes into simple cycles by cutting at repeated vertices, so its weight is nonpositive. Deleting such a subwalk cannot decrease a path's weight. Prepending an edge to a maximizing path at its terminal vertex and deleting cycles consequently gives
+
+$$
+R(c,s\to s')\le\Phi_c(s)-\Phi_c(s').
+\tag{11.5}
+$$
+
+Here is a sharper parameter estimate than (10.12). On the entire box $z\in[a,b]^4$,
+
+$$
+\begin{gathered}
+|\partial_cP|\le\frac{262}{225},\quad
+|\partial_cH|=z_0(1-z_1)\le\frac4{15},\\
+0\le T\le\frac{64}{2025},\quad
+|T-T_a|\le\frac{64}{2025},\quad
+|\partial_cT|\le\frac{32}{225},\\
+0\le Z\le\frac{256}{30375},\quad
+|Z-q_*|\le\frac{256}{30375},\quad
+|\partial_cZ|\le\frac{512}{10125}.
+\end{gathered}
+\tag{11.6}
+$$
+
+For example the three differentiated terms of $P$ are bounded by $2/3$, $16/45$ and $32/225$, whose sum is $262/225$. The other bounds follow by inserting $U\le2/3$, $z_i\le2/5$ and $1-z_i\le2/3$; both fixed comparison constants lie inside the respective displayed intervals. Since $\chi<7/5$, $b-c,c-a\le1/15$, and the differentiated tent has absolute value at most $1/150$, the product rule gives
+
+$$
+\begin{aligned}
+|\partial_cR|
+&\le\frac{262}{225}+\frac{28}{75}
++\frac{6784}{2025}+\frac{3392}{3375}
++\frac{93440}{30375}+\frac{186880}{151875}
++\frac1{150}\\
+&=\frac{620033}{60750}<11.
+\end{aligned}
+\tag{11.7}
+$$
+
+The seven contributions are those of $P$, $\chi H$, the two differentiated $T$ terms, the two differentiated $Z$ terms and the tent. Each path weight is therefore $77$-Lipschitz in $c$. Taking the finite maximum preserves that bound, including at ties:
+
+$$
+|\Phi_c(s)-\Phi_d(s)|\le77|c-d|.
+\tag{11.8}
+$$
+
+Conditionally on the acquired analysis path, independently round each time-position $v_i$ to $\xi_i\in\{a,b\}$ with conditional mean $v_i$. Distinct visits to the same label use distinct proof coins. The polynomial in (11.4) is affine in each $z_i$ separately, so this rounding preserves its conditional expectation, including its correlation with $c_0$. Put $S_i=(\xi_i,\xi_{i+1},\xi_{i+2})$. The rounded joint process is stationary; applying (11.5) and then joint stationarity yields
+
+$$
+\begin{aligned}
+F^0&:=\mathbb E R(c_0,v_0,v_1,v_2,v_3)
+=\mathbb E R(c_0,S_0\to S_1)\\
+&\le\mathbb E[\Phi_{c_0}(S_0)-\Phi_{c_0}(S_1)]\\
+&=\mathbb E[\Phi_{c_1}(S_1)-\Phi_{c_0}(S_1)]
+\le77V_\pi.
+\end{aligned}
+\tag{11.9}
+$$
+
+The equality uses the identical distributions of $(c_0,S_0)$ and $(c_1,S_1)$; it assumes neither conditional stationarity given $c_0$ nor independence of the original emissions. The rounding and future-indexed triples are mathematical auxiliaries, not observer observations or a conditioning on future source events.
+
+It remains to restore the actual stopped products. The exact word expansion (10.4)–(10.5) uses
+
+$$
+t_j=\left(\prod_{i=0}^jU_i\right)
+\left(\prod_{i=0}^{j-1}v_i\right)(1-v_j),\qquad
+H^{\rm act}=1-v_0+v_0U_1(1-v_1).
+$$
+
+Its frozen counterparts are $t_j^0=U_0^{j+1}(\prod_{i=0}^{j-1}v_i)(1-v_j)$ and $H^0=1-v_0+v_0U_0(1-v_1)$. When a factor $U_i$ is changed to $U_0$, the remaining $j$ p factors, $j$ suspended-alpha factors and final suspended-beta factor bound its multiplier by $(2/3)(4/15)^j$. Telescoping and (11.3) give
+
+$$
+\mathbb E|t_j-t_j^0|
+\le\frac23\left(\frac4{15}\right)^j
+\frac{j(j+1)}2V_\pi,\qquad
+\mathbb E|H^{\rm act}-H^0|\le\frac4{15}V_\pi.
+\tag{11.10}
+$$
+
+Thus the total error for the three terms of $P$ is at most $8V_\pi/25$, that for $T$ is at most $32V_\pi/225$, and that for $Z$ is at most $256V_\pi/3375$. The root weights still use $c_0$, and are bounded by $106/15$ and $365/15$. Consequently
+
+$$
+|\mathcal C-F^0|
+\le\left(\frac8{25}+\frac{28}{75}
++\frac{3392}{3375}+\frac{93440}{50625}\right)V_\pi
+=\frac{35884}{10125}V_\pi<4V_\pi
+\tag{11.11}
+$$
+
+when $V_\pi>0$, with equality zero for the bound at $V_\pi=0$. Combining the non-strict bounds $F^0\le77V_\pi$ and $|\mathcal C-F^0|\le4V_\pi$ proves (11.2). The table's emissions, kernels, rows and complete laws have not been modified. Zero entries, reducibility, negative eigenvalues and arbitrarily small positive stationary coordinates require no separate case. $\square$
+
+**Corollary 11.3 (endpoint tent and mean rounding error).** Under the same table's two endpoint configuration-risk bounds in (2.4),
+
+$$
+J\le520\epsilon+810V_\pi,\qquad
+M:=\pi\operatorname{dist}(u,\{a,b\})
+\le15600\epsilon+24300V_\pi.
+\tag{11.12}
+$$
+
+Proof. The endpoint calibration (2.5) and $C_p-\chi C_\beta-\zeta_0=0$ imply
+$\pi f-\chi\tau h-\zeta_0\ge-\epsilon_p-\chi\epsilon_\beta$. The complete coordinate triangle identity (2.6) bounds the sum of the two positive upper-coordinate violations for $w_{2,1},w_{3,1}$ by $2\epsilon_p$. Their nonnegative weights in (11.2) are at most $365/15=73/3$. It follows that
+
+$$
+\frac{J}{10}\le\frac{149}{3}\epsilon_p+\chi\epsilon_\beta+81V_\pi
+\le52\epsilon+81V_\pi.
+\tag{11.13}
+$$
+
+Indeed $149/3+\chi<52$. For $d=\operatorname{dist}(c,\{a,b\})$, one has $0\le d\le1/30$ and $(c-a)(b-c)=d(1/15-d)\ge d/30$. Averaging gives $M\le30J$ and hence (11.12). Both calculations use TV before averaging configurations. $\square$
+
+### 11.2 The complete-loss comparison and the original necessity
+
+**Proposition 11.4 (endpoint repair with its actual mean emission error).** Suppose the regular table satisfies (2.4) for every supported depth and the prior supports a nonendpoint. Round $u_x$ to its nearest endpoint $r_x$, with a tie rounded to $a$, and let $M=\pi|u-r|$. There is one finite regular conserved-return comparison table, with at most $2|Y|$ suspended labels, whose own generated complete laws satisfy, for every complete target simultaneously,
+
+$$
+D_p\le\frac{15M+4\delta}{11},\qquad
+D_\beta\le\frac{6M+6\delta}{11},\qquad
+\delta\le15V_\pi+30M.
+\tag{11.14}
+$$
+
+Here $\delta$ is the original acquired crossing mass between the two endpoint classes, and $D_p,D_\beta$ are configurationwise complete-law comparisons on the rows specified below. In particular,
+
+$$
+\frac{2901611\epsilon+4519890V_\pi}{11}
+>g=\frac{\eta}{400000},\qquad
+\eta=\frac{14219478376}{318644812890625}.
+\tag{11.15}
+$$
+
+Proof. Let $\mathscr C$ be the occupied classes $C=\{x:r_x=a\}$ and $C=\{x:r_x=b\}$. Define
+
+$$
+\delta=\sum_{x,y,x':r_x\ne r_{x'}}\pi_xB_{xy}A_{yx'}.
+$$
+
+Since $|r_x-r_{x'}|=(1/15)\mathbf1_{\{r_x\ne r_{x'}\}}$, stationarity of the two p marginals gives
+
+$$
+\frac{\delta}{15}
+\le\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}
+\bigl(|u_x-u_{x'}|+|u_x-r_x|+|u_{x'}-r_{x'}|\bigr)
+=V_\pi+2M.
+\tag{11.16}
+$$
+
+Use exactly the directed repair of (9.7)–(9.13), now on these two classes. Retain only pairs $(y,C)$ with positive mass
+
+$$
+\tau^c_{y,C}=\sum_{x\in C}\pi_xB_{xy},\qquad
+B^c_{x,(y,C)}=\mathbf1_{\{x\in C\}}B_{xy},\qquad
+u_x^c=r_x,\quad v^c_{y,C}=v_y.
+\tag{11.17}
+$$
+
+Then $\pi B^c=\tau^c$ and $\sum_C\tau^c_{y,C}=\tau_y$. For $x'\in C$ set
+
+$$
+d^C_{x'}=\pi_{x'}-\sum_y\tau^c_{y,C}A_{yx'}\ge0,\quad
+D_C=\sum_{x'\in C}d^C_{x'},\quad
+m_{y,C}=\sum_{x'\notin C}A_{yx'}.
+$$
+
+The nonnegativity follows from $\tau^c_{y,C}\le\tau_y$ and $\tau A=\pi$. Direct summation gives
+
+$$
+D_C=\sum_y\tau^c_{y,C}m_{y,C},\qquad \sum_CD_C=\delta.
+\tag{11.18}
+$$
+
+If $D_C>0$, set $A^c_{(y,C),x'}=A_{yx'}+m_{y,C}d^C_{x'}/D_C$ for $x'\in C$, and zero outside $C$. If $D_C=0$, (11.18) gives $m_{y,C}=0$ on every retained row; keep its inside-$C$ entries without division. Every row is nonnegative and sums to one. Its incoming mass at $x'\in C$ equals the old inside-class influx plus $d^C_{x'}$, hence $\tau^cA^c=\pi$. All positive repaired returns stay in $C$ and conserve $u^c$. Moreover,
+
+$$
+\operatorname{TV}(A_{y,\cdot},A^c_{(y,C),\cdot})=m_{y,C}.
+\tag{11.19}
+$$
+
+These are balance identities, without a reversibility or mixing premise.
+
+Generate $Q_x^c,W_{y,C}^c$ from the two repaired phase equations (2.3), using exactly the repaired acquired kernels. Their return survival, like that of the old table, is at most $4/15$; their entire laws normalize with infinite outcomes retained at mass zero. Set
+
+$$
+p_x=\operatorname{TV}(Q_x,Q_x^c),\quad
+b_{y,C}=\operatorname{TV}(W_y,W_{y,C}^c),\quad
+D_p=\sum_x\pi_xp_x,\quad
+D_\beta=\sum_{y,C}\tau^c_{y,C}b_{y,C}.
+$$
+
+The same complete-law coupling as (9.14)–(9.15), retaining the actual emission error rather than a bin width, gives
+
+$$
+p_x\le|u_x-r_x|+\frac23\sum_yB_{xy}b_{y,C(x)},\qquad
+b_{y,C}\le\frac25\left(m_{y,C}+\sum_{x'}A^c_{(y,C),x'}p_{x'}\right).
+\tag{11.20}
+$$
+
+For the first inequality, couple the two Bernoulli emissions, then use their identical $B$ transitions on matched beta. For the second, the suspended emissions agree; a change of successor row costs its TV in (11.19), and a common successor costs $p_{x'}$. Convexity contracts each law mixture. The inequalities hold on finite prefixes and pass to the complete laws by the geometric survival bound, including the infinite outcome. Averaging with the exact new flows gives
+
+$$
+D_p\le M+\frac23D_\beta,\qquad
+D_\beta\le\frac25(\delta+D_p).
+$$
+
+Solving these inequalities gives (11.14). For every normalized target $T_p$ the reverse triangle inequality bounds the absolute change of its configuration loss by $D_p$. At suspension the same argument uses the split row and $\sum_C\tau^c_{y,C}=\tau_y$, giving $D_\beta$. This proves simultaneous comparison for every supported target and every posterior mixture, without replacing configuration risk by marginal-law risk.
+
+By (11.16), both law comparisons are at most $(186M+90V_\pi)/11$: the p bound is at most $(135M+60V_\pi)/11$ and the suspended bound at most $(186M+90V_\pi)/11$. The conserved comparison thus has common supported-depth slack bounded by
+
+$$
+\epsilon+\frac{186M+90V_\pi}{11}
+\le\frac{2901611\epsilon+4519890V_\pi}{11},
+\tag{11.21}
+$$
+
+where (11.12) was used in the last step. Theorem 5.1 applies to this one comparison table and requires its common slack to exceed $g$, proving (11.15). Empty endpoint classes and zero deficits were included above.
+
+The comparison is algebraic for real table data. Rational data give rational deficits, rows and repaired entries, so the finite exact-sampling convention of PAID42, Lemma 2.1.1 and Proposition 11.3, applies when a represented comparison is needed. No exact-real sampler follows from the algebraic construction. Neither a prescribed COMPLETE budget nor a hard marginalized-defect budget is preserved. $\square$
+
+**Theorem 11.5 (linear original-observer necessity).** Fix any finite or countable prior with positive masses at depths 1 and 2 and a supported depth $k\ge3$. Every original source-independent finite COMPLETE observer of Definitions 1.1–1.3 satisfies
+
+$$
+\frac{176998271}{121}e(M)+\frac{4519890}{11}\mathcal V(M)>g,
+\qquad
+1500000e(M)+411000\mathcal V(M)>\frac{\eta}{400000}.
+\tag{11.22}
+$$
+
+Here $\mathcal V(M)$ is exactly the original worst-history acquired-return statistic (9.1). Zero or unit emissions, possible noncompletion, reducible acquired kernels and all finite positive original histories remain allowed.
+
+Proof. Start from the original initialized observer, before the first paid seed Read. PAID42, Lemma 14.1, extracts common rows on the original seed-1, marker-100 fibre, using finite paid rejection histories and the fixed legal suffix $S$ of (1.5). Its histories approaching every supported depth have the same limiting private row $\lambda$ obtained from that original initialization, and appending any fixed $j$ returns gives the row $\lambda(BA)^j$. For a countable prior, the supplier bounds each relative likelihood by a fixed constant times $\mu(i)/\mu(k)$; this summable bound justifies posterior concentration. Every approximant retains all of its paid letters and original control and record updates.
+
+Let $F_x=\sum_{y,x'}B_{xy}A_{yx'}|u_x-u_{x'}|$ for the original, possibly unclipped emissions. Every positive approximating history has row applied to $F$ at most $\mathcal V(M)$ by its definition. Finite-row continuity and then the very same Cesaro subsequence used for both phase risks give
+
+$$
+\lambda(BA)^jF\le\mathcal V(M)\quad(j\ge0),\qquad
+\pi F\le\mathcal V(M).
+\tag{11.23}
+$$
+
+Thus the statistic and every supported-depth configuration-loss bound belong to the same extracted table, as in (9.19). No independently chosen row at either interface is substituted. Positive extracted labels are original reachable configurations; transient labels absent from the stationary support remain in the original suprema.
+
+Delete zero-row labels, which cannot be reached from positive-row labels by the nonnegative flow identities. Clip the two emissions to $[a,b]$ and regenerate complete laws with the same $B,A,\pi,\tau$. The initialized common-row clipping consequence (2.2), supplied by CLIP42, Theorem 3.1, gives simultaneous supported-depth slacks with $\epsilon\le61e(M)/11$. Clipping is 1-Lipschitz, so (11.23) also gives $\widehat V_\pi\le\mathcal V(M)$. Proposition 11.4 applied to this one clipped table therefore yields
+
+$$
+\frac{2901611(61e(M)/11)+4519890\mathcal V(M)}{11}>g.
+$$
+
+Since $2901611\cdot61=176998271$, this is the first inequality of (11.22). Finally $176998271<1500000\cdot121$ and $4519890<411000\cdot11$; both original quantities are nonnegative, so the second inequality follows.
+
+When an original product comparison is used, PAID42, Lemma 2.1.1, retains the full $C_0$ and performs the independent private latch sampling in the original third-completion update after its record write and latch. Both seeds, paid rejections and partial parses, every marker fibre, held registers, every finite return and the matching Stop keep their original transitions and permissions. The actual private rows after that latch are $\pi$ and $\tau^c$ by the repaired flow identities; the same $B^c,A^c$ are used synthetically. For a posterior target $\sum_k\nu_h(k)P_{s,r_k}$, countable convexity is applied inside each configuration's TV before the row average. The current-record maps $I_c$ preserve full tails, completion and Stop. This comparison changes neither the once-sampled source nor the meanings of the original $e(M)$ and $\mathcal V(M)$. It is a necessary comparison, not a construction of small excess or of a common attainer. $\square$
+
+**Corollary 11.6 (amplitude consequence and coefficient non-dominance).** For any sequence of lawful finite COMPLETE observers for one fixed prior as in Theorem 11.5, if $e(M_n)\to0$, then
+
+$$
+\liminf_n\mathcal V(M_n)\ge\frac{\eta}{164400000000}.
+\tag{11.24}
+$$
+
+An exact common conf/conf attainer, if one exists, has the strict inequality $\mathcal V(M)>\eta/164400000000$. The retained Section 9 relation is
+
+$$
+\frac{61}{11}e(M)+\frac{19}{11}\sqrt{\mathcal V(M)}>g.
+\tag{11.25}
+$$
+
+Neither numerical necessary condition uniformly implies the other on the nonnegative coordinate domain.
+
+Proof. Rearrange the second inequality of (11.22) as $\mathcal V(M_n)>(g-1500000e(M_n))/411000$ and pass to the lower limit. Set $e=0$ for an exact attainer. Equation (11.25) is Theorem 9.3 with its unchanged hypotheses and proof.
+
+For coefficient comparison alone, take $V=0$ and $e=11g/122$. The left side of (11.25) is $g/2$, whereas $1500000e>g$. Thus the larger coefficient of $e$ in (11.22) prevents uniform dominance of (11.25). Conversely take $e=0$ and $V=g/822000$. The linear left side is $g/2$, while $(19/11)\sqrt V>g$, since $0<g<1/400000<361/(121\cdot822000)$. These are comparisons of the numerical conditions, not assertions that observers realize these chosen coordinate pairs. Each valid observer must obey both conditions. Their free variation terms remain; neither condition evaluates the unrestricted risk-only infimum. $\square$
+
+### 11.3 Equal complete predictions with different actual return motion
+
+**Definition 11.7 (the two rational six-label tables).** At each phase use labels $(\sigma,i)$ with $\sigma\in\{7/20,23/60\}$ and $i\in\{0,1,2\}$. Put $\pi=\tau=(1/6,\ldots,1/6)$, $B=I$, and
+
+$$
+u_{\sigma,0}=\frac13,\quad u_{\sigma,1}=\frac{11}{30},\quad
+u_{\sigma,2}=\frac25,\qquad v_{\sigma,i}=\sigma.
+\tag{11.26}
+$$
+
+There are no cross-block transitions. Within each block choose either
+
+$$
+A_0=\begin{pmatrix}
+1/2&0&1/2\\0&1&0\\1/2&0&1/2
+\end{pmatrix},\qquad
+A_1=\begin{pmatrix}
+1/3&1/3&1/3\\1/3&1/3&1/3\\1/3&1/3&1/3
+\end{pmatrix}.
+\tag{11.27}
+$$
+
+The subscripts 0 and 1 distinguish the two tables, with the same choice in both blocks. Write $m=11/30$, $q=19/30$, $t_\sigma=q\sigma$.
+
+**Proposition 11.8 (explicit counterexample to prediction-only motion identification).** The two tables of Definition 11.7 are regular stationary and have identical complete phase laws at every corresponding label. Their common indexed paired arrays $f,h$ are both nonconstant. Nevertheless,
+
+$$
+V_\pi(A_0)=\frac1{45},\qquad V_\pi(A_1)=\frac4{135}.
+\tag{11.28}
+$$
+
+Their mean actual-return TV motion of complete p laws equals the respective quantity in (11.28), and therefore also differs.
+
+Proof. Both matrices are doubly stochastic and send $(1/3,11/30,2/5)^\mathsf T$ to $m\mathbf1$. Together with $B=I$ this proves $\pi B=\tau$, $\tau A_s=\pi$ for $s=0,1$. Define a p law $G_\sigma$ by
+
+$$
+G_\sigma(w_{j,0})=m t_\sigma^j,\qquad
+G_\sigma(w_{j,1})=q(1-\sigma)t_\sigma^j\quad(j\ge0),\qquad
+G_\sigma(\infty_p)=0.
+\tag{11.29}
+$$
+
+These nonnegative masses sum to one, since $m+q(1-\sigma)=1-t_\sigma$ and $t_\sigma<1$. Put
+
+$$
+W_\sigma=(1-\sigma)\delta_\beta+\sigma\alpha G_\sigma,\qquad
+Q_{\sigma,i}=u_i\delta_\alpha+(1-u_i)\beta W_\sigma.
+\tag{11.30}
+$$
+
+The geometric masses (11.29) give $G_\sigma=m\delta_\alpha+q\beta W_\sigma$. Since each row of either $A_s$ averages $u$ to $m$, that row's mixture of the laws $Q_{\sigma,i}$ is exactly $G_\sigma$. Equations (11.30) are consequently the two same-update phase equations for both tables, with $W_{\sigma,i}=W_\sigma$. They are their own generated full laws: finite cylinder iteration of the recursions has unique limits, since survival for $L$ returns is at most $(4/15)^L$. Infinite outcomes are retained at mass zero, without completion conditioning.
+
+For clarity the individual complete masses are
+
+$$
+\begin{aligned}
+Q_{\sigma,i}(w_{0,0})&=u_i,\\
+Q_{\sigma,i}(w_{j,0})&=(1-u_i)\sigma m t_\sigma^{j-1}\quad(j\ge1),\\
+Q_{\sigma,i}(w_{j,1})&=(1-u_i)(1-\sigma)t_\sigma^j\quad(j\ge0),\\
+W_\sigma(\beta)&=1-\sigma,\\
+W_\sigma(\alpha w_{j,0})&=\sigma m t_\sigma^j,\\
+W_\sigma(\alpha w_{j,1})&=\sigma q(1-\sigma)t_\sigma^j.
+\end{aligned}
+\tag{11.31}
+$$
+
+Thus the arrays are exactly
+
+$$
+f_{\sigma,i}=(1-u_i)(1-\sigma)(1+t_\sigma+t_\sigma^2),\qquad
+h_{\sigma,i}=(1-\sigma)(1+t_\sigma).
+\tag{11.32}
+$$
+
+Their rational values can be displayed as follows, with $f_{\sigma,i}=(1-u_i)k_\sigma$:
+
+| $\sigma$ | $t_\sigma$ | $k_\sigma$ | $h_{\sigma,i}$ |
+| --- | --- | --- | --- |
+| $7/20$ | $133/600$ | $5947357/7200000$ | $9529/12000$ |
+| $23/60$ | $437/1800$ | $156050053/194400000$ | $82769/108000$ |
+
+Within either block $f$ varies with the three distinct $u_i$. Across blocks $h$ varies: $h(\sigma)=1-m\sigma-q\sigma^2$ is strictly decreasing for positive $\sigma$. This proves nonconstancy of both full indexed arrays; it does not merely compare their means.
+
+In one block, with the conditional uniform p row, the only nonzero $A_0$ contributions to return variation are $0\to2$ and $2\to0$, each of transition probability $1/2$ and difference $1/15$. Their total is $1/45$. For $A_1$ the six ordered off-diagonal differences are $1/30,1/30,1/15$ in each direction, so their sum is $4/15$ and their uniform edge weight is $1/9$. The total is $4/135$. The two equal block masses preserve those values globally.
+
+Finally $Q_{\sigma,i}-Q_{\sigma,j}=(u_i-u_j)(\delta_\alpha-\beta W_\sigma)$. The two probability laws inside the last parentheses have disjoint supports. Hence
+
+$$
+\operatorname{TV}(Q_{\sigma,i},Q_{\sigma,j})=|u_i-u_j|.
+\tag{11.33}
+$$
+
+Every actual return remains in its block. Weighting (11.33) by $\pi B A_s$ proves the asserted full-law return motion. This equality of the two motion quantities is specific to (11.30), not a general identification of immediate-emission variation and complete-law dispersion. $\square$
+
+### 11.4 The exact two-flow comparison for this pair
+
+**Proposition 11.9 (equal two joint law flows and unequal return law measure).** Use precisely the compatible-flow definition of PAIRED42, Definition 11.2, and its finite-table map (11.24). Both tables of Definition 11.7 induce the same two joint probability measures
+
+$$
+\Gamma_B=\frac16\sum_{\sigma,i}\delta_{(Q_{\sigma,i},W_\sigma)},\qquad
+\Gamma_A=\frac16\sum_{\sigma,i}\delta_{(W_\sigma,Q_{\sigma,i})}.
+\tag{11.34}
+$$
+
+They satisfy both of that definition's full residual identities. In contrast, their three-stage actual-return law measures
+
+$$
+\Xi_s=\frac16\sum_{\sigma,i,j}(A_s)_{ij}
+\delta_{(Q_{\sigma,i},W_\sigma,Q_{\sigma,j})},\qquad s=0,1,
+\tag{11.35}
+$$
+
+are different. Thus the two-flow quotient preserves both phase-law distributions, both directional one-step law-pair distributions and all configuration losses against every complete target for this pair, but does not determine its actual return motion.
+
+Proof. The laws lie in the descriptor spaces $\mathcal K_p,\mathcal K_\beta$ of PAIRED42, (11.2): they are regular generated laws, whose complete return-tail bounds are $(4/15)^L$ at p and $(2/5)(4/15)^L$ at suspension. The finite-table map uses the unweighted flows $\pi_xB_{xy}$ and $\tau_yA_{yx}$, without synthetic continuation factors. Since $B=I$ and $W_{\sigma,i}=W_\sigma$, its first measure is the displayed $\Gamma_B$. For its second measure, aggregating the repeated input law gives, at $(W_\sigma,Q_{\sigma,j})$, the mass
+
+$$
+\sum_i\frac16(A_s)_{ij}=\frac16
+$$
+
+for each $s$, by the column sums. This proves equality of both joint measures, not merely equality of their marginals. The six p laws are distinct: $Q(\alpha)$ distinguishes $i$ within a block, and for equal $i$ in different blocks $Q(\beta\beta)=(1-u_i)(1-\sigma)$ distinguishes $\sigma$. The two suspended laws are distinguished by $W_\sigma(\beta)=1-\sigma$. Thus the atom calculation includes every identification in this quotient.
+
+The common marginals are $\nu_p=(1/6)\sum_{\sigma,i}\delta_{Q_{\sigma,i}}$ and $\nu_\beta=(1/2)\sum_\sigma\delta_{W_\sigma}$. The normalized residuals in PAIRED42, (11.3), satisfy
+
+$$
+\mathcal R_B(Q_{\sigma,i})=W_\sigma,\qquad
+\mathcal R_A(W_\sigma)=G_\sigma=\frac13\sum_iQ_{\sigma,i}.
+\tag{11.36}
+$$
+
+The first equality makes each integrand of the $B$ residual equation vanish. Conditional on $W_\sigma$, $\Gamma_A$ gives uniform mass to the three $Q_{\sigma,i}$; the second equality makes its conditional residual barycentre exactly $\mathcal R_A(W_\sigma)$. Therefore for every continuous input-descriptor test and every complete-word atom, including the infinite outcomes, both identities (11.7) of PAIRED42 hold. The condition is on the whole descriptor, as that definition requires.
+
+The measures $\Xi_s$ are the actual unweighted $\pi B A_s$ pushforwards, because $B$ carries $Q_{\sigma,i}$ to the suspended label $(\sigma,i)$ before $A_s$ is applied. Their first-two and last-two marginals are respectively (11.34). Fix either $\sigma$. At the triple $(Q_{\sigma,1},W_\sigma,Q_{\sigma,0})$ their masses are zero for $s=0$ and $1/18$ for $s=1$. Hence $\Xi_0\ne\Xi_1$, despite equality of both directional pair measures. Integrating $|u(Q)-u(Q')|$ or $\operatorname{TV}(Q,Q')$ against (11.35) gives the different values (11.28), by (11.33).
+
+For this finite pair the conditionally independent join of the two measures (11.34) is
+
+$$
+\frac1{18}\sum_{\sigma,i,j}
+\delta_{(Q_{\sigma,i},W_\sigma,Q_{\sigma,j})}=\Xi_1.
+\tag{11.37}
+$$
+
+Indeed the block has suspended mass $1/2$ and each of its incoming and outgoing conditional law distributions is uniform on three atoms. The join is not $\Xi_0$: in that table the middle suspended label retains information about the incoming p label which its repeated complete law does not distinguish. The finite law-atom realization of PAIRED42, Theorem 11.8, correspondingly has six p-law labels, two suspended-law labels, a deterministic $B$ to the appropriate suspended block, and a uniform $A$ to that block's three p laws. Its flows and laws are (11.34), and its return variation is $4/135$. It supplies the flow-preserving realization promised by that theorem, without preserving $A_0$'s hidden return coupling.
+
+For every complete target $T$, each configuration loss is an integral of $\operatorname{TV}(Q,T)$ or $\operatorname{TV}(W,T)$ against the respective phase marginal. These integrals are equal for the two tables, with TV still inside the integral. All integrals depending on either one of the two directional law pairs are also equal. The return integral depends on (11.35), whose equality was neither asserted by the quotient definition nor implied by its residual identities. This establishes the stated scope on this actual pair, without a general classification of quotient fibres. $\square$
+
+### 11.5 Original initialization, finite representation and applicability
+
+**Proposition 11.10 (the two original represented observers).** Either table of Definition 11.7 has a finite rational original-domain product realization under PAID42, Lemma 2.1.1. At every corresponding original fourth-phase history its private phase row is uniform, its label-indexed complete forecast is (11.30) rendered by the history's own $I_c$, and its configuration risk equals that of the other table. Every label is positively reachable. On the designated fibre,
+
+$$
+\mathcal V(M_0)=\frac1{45},\qquad
+\mathcal V(M_1)=\frac4{135}.
+\tag{11.38}
+$$
+
+Proof. Before the third latch retain the full original $C_0$ with fair synthesis. In its third-completion update first perform the complete original record write and latch, then independently sample the uniform six-label p row. Use $B=I$ after p-beta and the chosen $A_s$ after suspended-alpha, in both acquired and synthetic execution. Completing letters clear the private labels and enter their original matching pendingStop; only its unique Stop enters deliveredStop. The projection to $C_0$ is exactly the original update, so induction over original operations preserves both seeds, all paid equal-pair rejections and partial parses, every marker word and prefix, held $B,Q^+,Z$ fields, flags, permissions and all original event blocks. No terminal permits Read. No source reset or resampling of $K$ occurs.
+
+At the first fourth p cut the label row is uniform and independent of the acquired word. At a p-beta cut $B$ keeps it uniform; at a suspended-alpha cut either doubly stochastic $A_s$ keeps it uniform. Conditional on any fixed acquired history, the next actual source letter is independent of the private configuration: the source-independent sampler and updates use private randomness independent of the single $K$ and its letters. Thus actual letters do not reweight private labels by their synthetic emissions. Induction proves the same uniform rows after every finite legal return, on every original record fibre and for either seed. Each of the six labels consequently has probability $1/6$ at every applicable phase cut and is reachable.
+
+The same-update recursions proved in Proposition 11.8 give the raw phase laws from every such label; applying $I_c$ inserts precisely that configuration's future records, completion and Stop, and preserves TV. The original target at history $h$ remains the same posterior mixture (1.2), with its paid rejection and partial-parse counts. Uniform rows and equality of the individual laws make the two observers' configuration-averaged TV losses equal at every fourth-phase history, for any finite or countable prior. Before the latch the two products use the same fair emissions and the same latch row, followed by equal corresponding fourth-phase laws; their corresponding pre-latch decoded laws also agree. The original terminal laws agree as well.
+
+The conditional actual return probability given a designated-fibre history is $\sum_k\nu_h(k)r_k(1-r_k)>0$ and is independent of its private label. It cancels when conditioning on that return, as in Definition 9.1. The uniform p row and kernels in (11.27) therefore give the respective constant values (11.28) at every such history. Taking the full original history supremum proves (11.38), rather than replacing that supremum by an arbitrarily chosen stationary initialization.
+
+All primitive probabilities, including pre-latch fairness, the uniform latch and both stochastic updates, have denominators dividing 60. One exact sampler draws six fresh independent fair bits as a candidate integer in $\{0,\ldots,63\}$, rejects values at least 60, and assigns accepted integers by finite cumulative thresholds. Each represented row has integer counts summing to 60; this includes rows with zero entries and deterministic rows. Acceptance has probability $15/16$, so the service returns almost surely. Rejections reuse the same finite candidate storage and cursor without a persistent retry count. Use independent emission and update service bits where the synthetic joint transition requires them.
+
+The installed tables and thresholds, phase and label addresses, sampler candidate and cursor, program counter, numerical representation, workspace, event and output cursors, all service microstates and all persistent randomness belong to COMPLETE, together with $C_0$. Internal service states carry the conditional continuation of that same finite program and add no original Read cut or permission. Acquired and synthetic updates use exactly the same represented row sampler. No random tape, readable probability row, posterior, acquired-age counter, source query or external clock is supplied. Sampling work, fresh bits, synthesis, output, installed description and actual paid source Reads are all charged; arbitrarily many possible sampler rejections and actual returns give no finite worst-case work bound. This discharges the rational-sampler hypotheses without interpreting six labels as the total COMPLETE count. $\square$
+
+**Mathematical citation 11.11 (attribution and precise limits).** The sharp constants in (11.2), (11.12) and (11.22), and the exact pair in (11.26)–(11.38), are source-specific `repo-derived` ordinary mathematical consequences. Theorem 10.2 already supplies the varying-parameter potential, stationary cancellation and stopped-product restoration with $5000V_\pi$; Theorem 11.2 sharpens their estimates. Section 3 supplies the finite cycle certificate, Citation 2.3 the endpoint event and coordinate-box consequences, Section 9 the directed repair and initialized extraction of the return statistic, Theorem 5.1 the conserved-class gap, and PAID42 and CLIP42 the original product realization, common-row extraction and clipping hypotheses. Cycle deletion, finite maxima of Lipschitz functions, product telescoping, mean-preserving independent rounding, maximal coupling and the TV triangle identity are mature intermediate methods, with the bounded primary correspondence already given in Citation 10.5 and KARP there. No new general potential, realization or coupling theorem is attributed to this chapter.
+
+PAIRED42, Section 4, recovers emissions and complete laws from the indexed paired arrays when $B,A$ are prescribed and its unprojected completion equations hold. The pair above changes $A$; it is therefore consistent with that inverse. PAIRED42, Chapter 11, uses two full joint law-flow measures and conditional residual barycentres, which are stronger data than marginal law equality. Proposition 11.9 establishes equality of those stronger data directly for this pair; it also exhibits the three-stage law measure they fail to determine. Equality of marginal complete-law dispersion or event readouts alone would not have justified that conclusion. Immediate-emission variation, complete-law return motion, phase-law dispersion, event ranges and suspended-to-p descent remain distinct functionals; the special identity (11.33) does not identify them in general.
+
+The two tables are diagnostics, with nonconstant laws and arrays, and are not asserted to satisfy the common endpoint midpoint means or every full endpoint/interior risk face at zero excess. They supply no optimizer or vanishing-excess construction. The inequalities are necessary relations on the same acquired table or the same original observer; their terms have not been independently optimized. Neither $81$ nor the linear amplitude consequence removes the unconstrained return-variation term, evaluates an unrestricted risk-only separation, or establishes common attainment. Definition 9.6's finite exact attainer, unattained zero infimum and positive unrestricted gap alternatives, together with the original fixed-resource questions, remain unresolved by this chapter. Algebraic real comparison tables and finitely represented effective observers retain their separate domains and all original sampling and resource obligations.
+
+## 追加锚（本行以下为增补区）

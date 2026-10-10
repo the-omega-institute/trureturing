@@ -1,0 +1,22 @@
+### 规则二：平均更新闭合不等于输出闭合
+
+条件
+
+$$
+K_a\mathcal B\subseteq\mathcal B,
+\qquad
+K_a=\sum_oM_{a,o},
+$$
+
+只能说明所有输出分支的隐藏泄漏在求和后抵消。
+
+完整未来记录需要更强的条件：
+
+$$
+\boxed{
+M_{a,o}\mathcal B\subseteq\mathcal B
+\quad
+\text{对每一个合法 }(a,o).
+}
+$$
+

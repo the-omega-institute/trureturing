@@ -1,0 +1,17 @@
+## theorem 3.3: 分层不可压缩性与联合商
+
+**Claim status: open.**
+
+设目标未来律为
+$$
+L(\kappa,\sigma,\tau),
+\qquad \sigma=(a,A,B),
+$$
+其中 $\tau$ 是 active、pending 或 delivered 等边界义务。若固定其他坐标后，各坐标对 $L$ 分别单射，并且它们由同一联合来源和 response kernel 生成，则任何精确预测摘要都不能合并相应纤维中的不同 $\kappa$、$\sigma$ 或 $\tau$。若另有三个单射探针
+$$
+P_\kappa(L)=\phi_\kappa(\kappa),\quad
+P_\sigma(L)=\phi_\sigma(\sigma),\quad
+P_\tau(L)=\phi_\tau(\tau),
+$$
+则 $(\kappa,\sigma,\tau)$ 是完整 future law 的精确商坐标。没有共同来源和联合响应核，不能把各层最小性自动相乘。
+

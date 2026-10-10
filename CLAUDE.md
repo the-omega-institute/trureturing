@@ -36,6 +36,8 @@
 | Nyx 提问(oracle broker 单次流式调用) | `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>` |
 | 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
 
+**Nyx 调用禁令**：禁止执行旧 `nyxid oracle` CLI 及其子命令，包括脚本封装、sshx 席位和失败回退中的间接调用。独立提问统一用上述 `nyx.py ask`，sshx 的 oracle 席统一用其 broker runner；具体契约见第 5.11 条。
+
 ## 1. 权威、本体与不可逆真值 DAG
 
 ### 1.1 权威原文与守护强度
@@ -271,7 +273,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 **反驳 result 豁免**：D5 `utility` 头中 `basis=refutes` 所指的 result 定理不要求四槽逃逸登记，不计入登记完成标准，也不产生 `DTR-Unregistered`；同模块其它新增公开定理仍按原标准。SL-031 的用途准入继续核对 result 是具名 claim 的闭合否定，kernel 与公理检查不变。result 按 utility 的同一选择器解析：在指定编译模块内恰有一个 included 声明的名称末段匹配，豁免取该声明的实际全名，支持任意命名空间及无命名空间；缺失或歧义选择器不产生豁免。
 **登记完成的证据标准**:上述 delta/first-pin 选择中的 D5 源模块若声称完成登记，须有忠实的登记证据。登记完成须提交其源码所有者对应的 `Reg/D5/<镜像路径>.lean`,每条审计目标至少一条 `declared_validated` 四槽记录,并带已编译的登记证明及当前 binding evidence。D5 内容模板若本身新增公开 `theorem`/`lemma` 声明也在此范围内;`Reg`、`Interface`、`Impl` 中的 helper 声明不是 D5 源声明,不会递归产生新的 Reg/D5 审计目标,但仍执行其现有 kernel、`sorry`、axiom 检查。CI 绿、任何 `DTR-*` warning 或仅有告警收据都不能视为登记完成;登记缺失、无效或所需证明缺失即审计未完成,按下款 issue 路径继续数学开发与交付。它不是历史全库回填要求,不改变 DTR 四种 Observe 或 delta-only runtime,也不改变 judge ownership。登记证明属于审计证据,不取得数学 GID、Scribe、deposit 或 utility 义务。
 **登记受阻的交付边界**：登记缺失、无效或受阻时，须新建或复用 issue，写明原定理、具体模板缺口或失败判词与读数、缺失证据，并在交付中关联 issue、如实说明审计未完成，继续数学开发与交付。不要求穷尽编码、反复重试、另开登记修复 lane 或另行豁免；本款优先于第 5.4/5.5 条对登记问题的即时修复要求。不得为使登记通过而修改判官（E1–E8、inspector、判官 Interface/Impl 包或 `tools/**`），不得硬套错误模板、削弱原定理或新增 bind-only 包装。issue 不是证明、`declared_validated` 或新的机器状态。
-**依赖族源绑定 API**：`DependentFamily.realize` 由带类型的 `Contract.TemplateEnrollment` 登记；`Reg/Support/DependentFamily` 提供共享 enrollment。原源码镜像使用 `def x : Contract.Registration … := {…}`，以 `realization := .source …`、`readout`、`sourceSelection`、`familyRecord` 和 `continuation := .unknown` 保留源绑定证据。选择器只定位 compiler 原陈述的坐标与实际读出位置；机器核对作用域、依赖闭合、逆映射、完整陈述重构与 rigid universes，kernel 核对等价 bridge、actual 正律、全族干预、固定其它读出/锚的敏感性及 actual 观察依赖。有限角色不要求有限参数、State 或输出；退化纤维可保留。具体契约与当前限制见 spec A5.3；不能据 API 的存在冒领未编译案例。
+**依赖族源绑定 API**：`DependentFamily.realize` 由带类型的 `Contract.TemplateEnrollment` 登记；`Reg/Support/DependentFamily` 提供共享 enrollment。原源码镜像使用 `def x : Contract.Registration … := {…}`；直接 `realization := .source …` 登记必须设 `familyRecord := none`，完整的带类型 `DependentFamily.Registration` 证明保留在 `realization` 中，并提供合法的已 enroll 模板 `readout`、`sourceSelection` 和 `continuation := .unknown`。非空 `familyRecord` 仅用于 spec A5.3 明确的既有有限 catalog / `LegacyPrimitiveRealization` 适配器，须配套有限 realization bridge，不用于直接源声明。选择器只定位 compiler 原陈述的坐标与实际读出位置；机器核对作用域、依赖闭合、逆映射、完整陈述重构与 rigid universes，kernel 核对等价 bridge、actual 正律、全族干预、固定其它读出/锚的敏感性及 actual 观察依赖。有限角色不要求有限参数、State 或输出；退化纤维可保留。具体契约与当前限制见 spec A5.3；不能据 API 的存在冒领未编译案例。
 **模板归属**：优先复用合法模板；现有模板无合法归属时，由 D5 内容所有者新增有意义的参数化数学模板，在 `Reg/Support` 完成共享 enrollment 后用于对应镜像。数学所有者已冻结时仍按其 Reg 镜像登记。不要求历史回填,不设新债务账本、兼容开关或宽限期。不得为了制造审计目标新增 bind-only D5 包装;复用既有定理或模板且没有新 Lean 声明时不产生人工审计义务。
 **四槽登记的有效性标准**：**选中 D5 源模块中**相对受保护基线新作者的每条公开 `theorem`/`lemma` 声明,除指定反驳 result 豁免外，登记完成的标准是有**至少一条** `declared_validated` 四槽登记。同一定理可在多个舞台登记多条逃逸路线,不判完备性或自然性。`Reg`、`Interface`、`Impl` 的 helper 声明不属于该 D5 author target,不会递归产生 Reg/D5 审计目标,其现有 kernel、`sorry`、axiom 检查照常执行。四槽各有机器消费者:
 
@@ -482,7 +484,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **推理提示词要求**:每个 nyx oracle/GPT Pro 推理提示词(含 nyxid-oracle/ChatGPT Pro brief)必须包含原文「深入思考与推理, 如数学推理按照正式定义定理证明推理」。
 - **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/设计/研究等推理任务均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
 - **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要交它推理的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。
-- **oracle 只走 broker 路线**:`tools/scripts/agent/nyx/nyx.py` 与 sshx 的 oracle runner 同用 NyxID oracle broker——先读池列表,再发一次流式 `chat/completions` 并据流的终态判完成;不调用旧 `nyxid oracle` CLI。池按列表现选在线 worker 最多的 active 池,`nyx.py pools` 查看,`NYX_POOL` 可显式指定;不凭记忆写死 slug。
+- **禁止旧 oracle CLI，统一走 broker**：禁止执行 `nyxid oracle` 及其任何子命令，不得通过脚本封装、sshx 席位或失败回退间接调用。独立提问统一执行 `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>`；sshx 的 `nyxid-oracle` 席统一使用其 broker runner。两者均通过 `nyxid proxy request oracle …` 访问 NyxID oracle broker——先读池列表，再发一次流式 `chat/completions` 并据流的终态判完成。池按列表现选在线 worker 最多的 active 池，用 `python3 tools/scripts/agent/nyx/nyx.py pools` 查看，`NYX_POOL` 可显式指定；不凭记忆写死 slug。broker 不可用或调用失败时显式报告失败，不得回退旧 CLI。
 - **codex prompt 以文件 stdin 喂入**:`codex exec [flags] < promptfile`,不作位置参数,避免 shell 破坏美元号/反引号/尖括号/引号/换行后造成空 prompt 与无输入挂起。
 - **flight 在飞时 caller 对该 work_target 的读数不作数**:测试可能置树于瞬时变异态。要读须取 sha256 并交回后复读比对,或只读派发前 diff 快照;读数冲突先核自己的采集条件,再判对方。临时快照不按过程档案留存(第 2.10 条)。
 
