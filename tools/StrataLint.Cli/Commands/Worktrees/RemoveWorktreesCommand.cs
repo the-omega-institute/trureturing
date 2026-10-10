@@ -13,13 +13,13 @@ internal static class RemoveWorktreesCommand
         + "Names are complete final directory names of registered worktrees, matched exactly (Ordinal). "
         + "Separate names with whitespace; directory names containing whitespace are unsupported. "
         + "All names are resolved before any deletion; duplicates are removed once. "
-        + "The main checkout and locked worktrees are refused; intentional and initialization locks retain their meanings.\n"
-        + "Removal requires remote preservation, complete content/recovery inspection and continuous OS entry/cache exclusion. "
+        + "The main checkout is protected; all Git locks require at least 24 hours since lock-file modification.\n"
+        + "Removal checks target identity and lock age. Selected unlocked worktrees are disposable. "
         + "The optional CLI --force disables the default 300-second removal timeout; inventory remains bounded. "
         + "It may appear before or after --names and does not override main checkout or lock protection. "
         + "Branch refs are retained. Execution failures are reported and remaining resolved trees are attempted; no rollback.\n"
         + "CLI exits: 0 success; 64 usage; 65 not_found; 66 ambiguous; 67 main_worktree; 68 locked; "
-        + "69 inventory unavailable or empty; 73 preservation/use refusal; 74 execution failure. "
+        + "69 inventory unavailable or empty; 73 identity refusal; 74 execution failure. "
         + "GNU make returns its own 0/2; read the final WORKTREE_REMOVE_RESULT line for the classified exit.\n";
 
     internal static CommandResult Run(
@@ -95,10 +95,10 @@ internal static class RemoveWorktreesCommand
                 Outcome = "failed", Error = exception.Message, ExitCode = 74,
             }).ToArray());
         }
-        if (removal.ExitCode == 73)
-            return Complete(73, items.Select(item => item with
+        if (removal.ExitCode is 68 or 73)
+            return Complete(removal.ExitCode.Value, items.Select(item => item with
             {
-                Outcome = "preservation_refused", Error = removal.Error, ExitCode = 73,
+                Outcome = removal.ExitCode == 68 ? "locked" : "identity_refused", Error = removal.Error, ExitCode = removal.ExitCode.Value,
             }).ToArray());
         try
         {
@@ -140,8 +140,6 @@ internal static class RemoveWorktreesCommand
         {
             return new(name, match.Path, "main_worktree", "the main checkout cannot be removed", 67);
         }
-        if (match.Locked)
-            return new(name, match.Path, "locked", "intentional or initialization lock is retained", 68);
         return new(name, match.Path, "resolved", null, 0);
     }
 

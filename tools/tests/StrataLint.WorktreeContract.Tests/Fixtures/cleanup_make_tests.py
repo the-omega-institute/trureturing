@@ -35,9 +35,9 @@ class CleanupMakeTests(NativeFixture):
         print(json.dumps(dict(event="fixture_phase", phase=phase, status="started",
                               fixture_elapsed_seconds=now - self.fixture_started)), flush=True)
 
-    def run_command(self, arguments, cwd=None, input=None, phase="git"):
+    def run_command(self, arguments, cwd=None, input=None, phase="git", check=True):
         return self.run_owned_command(arguments, cwd or self.repository, input, phase,
-                                      timeout=120, env=self.environment)
+                                      timeout=120, env=self.environment, check=check)
 
     def git(self, *arguments, cwd=None, input=None):
         return self.run_command(["git", *arguments], cwd, input).stdout.strip()
@@ -99,6 +99,10 @@ class CleanupMakeTests(NativeFixture):
         (self.cache / ".lake").mkdir()
         (self.cache / ".lake/unknown").write_text("uncertified cache\n")
         self.busy = self.add_lane("busy")
+        # A current Git lock keeps the separate orphan/snapshot sweep out of
+        # host-wide temporary roots while exercising the real canonical door.
+        self.current = self.add_lane("current-lock")
+        self.git("worktree", "lock", "--reason", "fixture", self.current)
         self.mark_phase("participant-start")
         self.job = subprocess.Popen([sys.executable, "-B",
             str(self.repository / "tools/scripts/worktree/worktree_protocol.py"),
@@ -141,15 +145,17 @@ class CleanupMakeTests(NativeFixture):
     def events(result):
         return [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{"event":')]
 
-    def assert_retained(self, events):
+    def assert_disposable(self, events, preview=False):
         items = {item["path"]: item for item in events if item["event"] == "clean_lanes_item"}
         for tree in (self.dirty, self.local, self.cache, self.busy):
-            self.assertTrue(tree.exists(), str(tree))
-            self.assertEqual("skipped", items[str(tree)]["action"], items[str(tree)])
-        self.assertEqual("unpublished dirty\n", (self.dirty / "owned").read_text())
-        self.assertEqual("unpublished untracked\n", (self.dirty / "untracked").read_text())
-        self.assertEqual(self.local_head, self.git("rev-parse", "HEAD", cwd=self.local))
-        self.assertEqual("uncertified cache\n", (self.cache / ".lake/unknown").read_text())
+            self.assertEqual(preview, tree.exists(), str(tree))
+            expected = "would_remove" if preview else "partially_removed" if tree == self.local else "removed"
+            self.assertEqual(expected, items[str(tree)]["action"], items[str(tree)])
+        self.assertTrue(self.current.exists())
+        self.assertEqual("locked_recent", items[str(self.current)]["reason"])
+        if not preview:
+            self.assertEqual("branch_ref_retained", items[str(self.local)]["reason"])
+            self.assertEqual(self.local_head, self.git("rev-parse", "refs/heads/lane/governance/local"))
         self.assertIsNone(self.job.poll(), "independent participant must survive cleanup")
 
     def test_production_cleanup_entrances(self):
@@ -183,9 +189,10 @@ class CleanupMakeTests(NativeFixture):
                     item = next(item for item in preview_events if item.get("path") == str(eligible))
                     self.assertEqual("would_remove", item["action"], item)
                     self.assertTrue(eligible.exists())
-                    self.assert_retained(preview_events)
+                    self.assert_disposable(preview_events, preview=True)
                 self.mark_phase(target + ":force")
-                removed = self.run_command(arguments + ["FORCE=1"], cwd, phase=target + ":force")
+                removed = self.run_command(arguments + ["FORCE=1"], cwd, phase=target + ":force", check=False)
+                self.assertEqual(2, removed.returncode, removed.stdout + removed.stderr)
                 self.mark_phase("production-assertions")
                 events = self.events(removed)
                 item = next(item for item in events if item.get("path") == str(eligible))
@@ -195,14 +202,16 @@ class CleanupMakeTests(NativeFixture):
                                  self.git("for-each-ref", "--format=%(refname)"))
                 self.assertEqual(self.baseline, self.git("ls-remote", "origin",
                     "refs/heads/lane/governance/" + name).split()[0])
-                self.assert_retained(events)
+                self.assert_disposable(events)
                 if target == "clean-all":
                     summary = next(item for item in events if item["event"] == "host_cleanup_summary")
-                    self.assertEqual("succeeded", summary["status"])
-                    self.assertEqual(0, summary["worktree_exit"])
+                    self.assertEqual("failed", summary["status"])
+                    self.assertEqual(2, summary["worktree_exit"])
+                    self.assertIsNone(summary.get("inventory_error"))
+                    self.assertFalse(any(key.endswith(":failed") and value for key, value in summary["counts"].items()))
                 print(json.dumps(dict(entrance=target, options=list(map(str, options)),
                     source=str(self.repository), exit=removed.returncode,
-                    removed=str(eligible), retained=[str(tree) for tree in
+                    removed=[str(eligible)], disposable=[str(tree) for tree in
                         (self.dirty, self.local, self.cache, self.busy)])), flush=True)
 
 

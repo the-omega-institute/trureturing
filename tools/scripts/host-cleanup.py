@@ -338,17 +338,11 @@ def registered_worktrees(repository):
 
 
 def clean_worktrees(repository, base, delete, active_paths=()):
-    # Host activity can exceed the platform argument limit, so it travels in one private file.
-    paths = sorted({str(Path(path).resolve()) for path in active_paths})
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", prefix="trureturing-clean-activity-",
-                                     suffix=".json") as activity:
-        json.dump(paths, activity)
-        activity.flush()
-        arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
-                     "--base", base, "--lanes-only", "--active-paths-file", activity.name]
-        if delete:
-            arguments.append("--force")
-        return subprocess.run(arguments, cwd=repository, check=False).returncode
+    arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
+                 "--base", base, "--lanes-only"]
+    if delete:
+        arguments.append("--force")
+    return subprocess.run(arguments, cwd=repository).returncode
 
 
 def clean_snapshot(repository, path, base, delete):
@@ -388,7 +382,13 @@ def run_clean(options):
             raise OSError("artifact root must be a directory: " + str(root))
     roots = {path for path in roots if not any(parent in roots for parent in path.parents)}
     worktrees = registered_worktrees(options.repository)
-    active = active_paths(codex)
+    lanes_exit = clean_worktrees(options.repository, options.base, options.delete)
+    try:
+        active = active_paths(codex)
+    except OSError as error:
+        emit("host_cleanup_summary", status="failed", worktree_exit=lanes_exit,
+             inventory_error=str(error), artifact_sweep="not_started")
+        return 1
     protected = active | worktrees
     protections = {"codex": ProtectedPaths(protected), "sshx": ProtectedPaths(protected),
                    "tmp": ProtectedPaths(protected | {codex, sshx})}
@@ -396,7 +396,6 @@ def run_clean(options):
     before = shutil.disk_usage(options.repository).free
     counts, skipped = Counter(), Counter()
     apparent_bytes = 0
-    lanes_exit = clean_worktrees(options.repository, options.base, options.delete, active)
     seen = set()
     inventory_error = None
     try:

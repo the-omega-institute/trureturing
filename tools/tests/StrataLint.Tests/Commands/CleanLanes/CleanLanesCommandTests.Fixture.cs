@@ -198,8 +198,11 @@ public sealed partial class CleanLanesCommandTests
                 new UTF8Encoding(false));
         }
 
-        internal void LockLane(string path, string reason = "fixture session") =>
+        internal void LockLane(string path, string reason = "fixture session")
+        {
             Git(repository.Path, "worktree", "lock", "--reason", reason, path);
+            File.SetLastWriteTimeUtc(Path.Combine(WorktreeGitDirectory(path), "locked"), new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+        }
 
         internal string WorktreeGitDirectory(string path) =>
             Git(path, "rev-parse", "--absolute-git-dir").Trim();

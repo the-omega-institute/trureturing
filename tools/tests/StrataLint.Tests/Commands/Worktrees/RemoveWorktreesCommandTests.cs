@@ -88,14 +88,12 @@ public sealed partial class RemoveWorktreesCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void LockedWorktreeReturns68BeforeDeletingAnything(bool force)
+    public void LockedWorktreeDelegatesDurationDecision(bool force)
     {
         var runner = new InventoryRunner(Entry("/fixture/main"), Entry("/fixture/locked", locked: true));
         var result = Remove(runner, "locked", force);
-        AssertResult(result, 68, 0, 0, 1);
-        AssertItem(result, "locked", "/fixture/locked", "locked");
-        Assert.Contains("lock is retained", result.Output, StringComparison.Ordinal);
-        Assert.Empty(runner.Removals);
+        AssertResult(result, 0, 1, 0, 0);
+        Assert.Single(runner.Invocations, call => call.FileName == "python3");
     }
 
     [Fact]
@@ -138,7 +136,7 @@ public sealed partial class RemoveWorktreesCommandTests
     }
 
     [Theory]
-    [InlineData("linked locked missing same main", 68)]
+    [InlineData("linked locked missing same main", 65)]
     [InlineData("linked missing same main locked", 65)]
     [InlineData("linked same main locked missing", 66)]
     [InlineData("linked main locked missing same", 67)]
@@ -149,7 +147,7 @@ public sealed partial class RemoveWorktreesCommandTests
         var result = Remove(runner, names);
         AssertResult(result, expectedExit, 0, 0, 5);
         AssertItem(result, "linked", "/fixture/linked", "batch_refused");
-        AssertItem(result, "locked", "/fixture/locked", "locked");
+        AssertItem(result, "locked", "/fixture/locked", "batch_refused");
         AssertItem(result, "missing", null, "not_found");
         AssertItem(result, "same", null, "ambiguous");
         AssertItem(result, "main", "/fixture/main", "main_worktree");
@@ -189,7 +187,7 @@ public sealed partial class RemoveWorktreesCommandTests
     }
 
     [Fact]
-    public void SingleNameDelegatesWholeBatchPreservationQualification()
+    public void SingleNameDelegatesWholeBatchLockTimeQualification()
     {
 
         var runner = new InventoryRunner();
@@ -250,7 +248,7 @@ public sealed partial class RemoveWorktreesCommandTests
     }
 
     [Fact]
-    public void CallerDelegatesPreservationAndRetainsBranchRefs()
+    public void CallerDelegatesLockTimeAndRetainsBranchRefs()
     {
 
         var runner = new InventoryRunner();
@@ -290,27 +288,27 @@ public sealed partial class RemoveWorktreesCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void DirtyUnmergedNewWorktreeAndBranchArePreserved(bool force)
+    public void DirtyUnmergedNewWorktreeIsDisposableAndBranchIsRetained(bool force)
     {
         using var fixture = new RemovalFixture();
         var path = fixture.Add("fresh-dirty", "unmerged-branch");
         var branchHead = fixture.CommitAndDirty(path);
         var mainHead = fixture.Git(fixture.Main, "rev-parse", "HEAD").Trim();
         Assert.NotEqual(mainHead, branchHead);
-        AssertResult(fixture.Remove("fresh-dirty", force), 73, 0, 0, 1);
-        Assert.True(Directory.Exists(path));
+        AssertResult(fixture.Remove("fresh-dirty", force), 0, 1, 0, 0);
+        Assert.False(Directory.Exists(path));
         Assert.Equal(branchHead, fixture.Git(fixture.Main, "rev-parse", "refs/heads/unmerged-branch").Trim());
     }
 
     [Fact]
-    public void CallerLinkedWorktreeIsProtected()
+    public void CallerLinkedWorktreeIsDisposable()
     {
 
         using var fixture = new RemovalFixture();
         var path = fixture.Add("caller");
         var result = WorktreeCommand.Run(path, ["remove", "--names", "caller"], fixture.Runner);
-        AssertResult(result, 73, 0, 0, 1);
-        Assert.True(Directory.Exists(path));
+        AssertResult(result, 0, 1, 0, 0);
+        Assert.False(Directory.Exists(path));
     }
 
     [Fact]
@@ -334,7 +332,7 @@ public sealed partial class RemoveWorktreesCommandTests
         var locked = fixture.Add("locked");
         fixture.Git(fixture.Main, "worktree", "lock", "--reason", "fixture", locked);
         AssertResult(fixture.Remove("open locked"), 68, 0, 0, 2);
-        Assert.DoesNotContain(fixture.Runner.Invocations, IsRemoval);
+
         Assert.True(Directory.Exists(open));
         Assert.True(Directory.Exists(locked));
         fixture.Git(fixture.Main, "worktree", "unlock", locked);
@@ -346,7 +344,7 @@ public sealed partial class RemoveWorktreesCommandTests
     {
         var result = Run(new InventoryRunner(), "--help");
         Assert.True(result.Success, result.Error);
-        foreach (var text in new[] { "--names", "--force", "300", "timeout", "complete", "whitespace", "remote preservation", "content", "OS entry/cache exclusion", "0/2", "WORKTREE_REMOVE_RESULT" })
+        foreach (var text in new[] { "--names", "--force", "300", "timeout", "complete", "whitespace", "24", "lock", "identity", "0/2", "WORKTREE_REMOVE_RESULT" })
             Assert.Contains(text, result.Output, StringComparison.Ordinal);
         Assert.Contains("StrataLint worktree remove --names", WorktreeCommand.Usage, StringComparison.Ordinal);
     }

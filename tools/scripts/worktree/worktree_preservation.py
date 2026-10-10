@@ -1,4 +1,4 @@
-"""One fail-closed qualification for registered worktree destruction."""
+"""User-directed worktree removal and independent non-worktree retention policies."""
 
 from contextlib import ExitStack
 import hashlib
@@ -55,50 +55,6 @@ def reflog_oids(path):
                                       for field in fields[:2]):
             raise Refused("unknown_reflog:" + str(path))
         yield from (field.decode("ascii") for field in fields[:2])
-
-
-def recovery_objects(source, metadata, branch, head):
-    oids = {head}
-    files = {"HEAD", "index", "index.lock", "commondir", "gitdir", "locked", "ORIG_HEAD", "COMMIT_EDITMSG"}
-    directories = {"logs", "refs"}
-    for entry in metadata.iterdir():
-        if entry.is_symlink():
-            raise Refused("linked_private_metadata")
-        if entry.name in directories and entry.is_dir():
-            for parent, dirs, names in os.walk(entry, followlinks=False, onerror=unreadable):
-                for name in dirs + names:
-                    if (Path(parent) / name).is_symlink():
-                        raise Refused("linked_private_metadata")
-                for name in names:
-                    file = Path(parent) / name
-                    if entry.name == "logs":
-                        oids.update(reflog_oids(file))
-                    else:
-                        raw = file.read_text().strip()
-                        if not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", raw):
-                            raise Refused("unknown_private_ref")
-                        oids.add(raw)
-        elif entry.name not in files or not entry.is_file():
-            raise Refused("unknown_or_unfinished_metadata:" + entry.name)
-    original = metadata / "ORIG_HEAD"
-    index_lock = metadata / "index.lock"
-    if index_lock.exists() and index_lock.stat().st_size:
-        raise Refused("unfinished_index_lock")
-    if original.exists():
-        oids.add(original.read_text().strip())
-    if branch:
-        log = common(source) / "logs" / branch
-        if log.exists():
-            oids.update(reflog_oids(log))
-    message = metadata / "COMMIT_EDITMSG"
-    if message.exists():
-        actual = message.read_bytes()
-        # A checkpoint can leave the last successful native commit's message.
-        # Every candidate below must itself pass remote retention qualification.
-        if not any(actual == git(source, "cat-file", "commit", oid).stdout.partition(b"\n\n")[2]
-                   for oid in [head, *sorted(oids - {head})] if set(oid) != {"0"}):
-            raise Refused("unpublished_commit_message")
-    return oids
 
 
 def clean_content(path, metadata, head, object_source=None):
@@ -189,45 +145,27 @@ def cache_exclusion(stack, path):
         raise Refused("cache_in_use") from error
 
 
-def qualify(stack, source, path, allow_initialization=False):
+LOCK_AGE_SECONDS = 24 * 60 * 60
+
+
+def qualify(source, path):
+    """Validate identity and Git lock age, without inspecting users or contents."""
     if Path(path).is_symlink():
         raise Refused("linked_tree")
-    path = tree_scope(stack, source, path, True)
+    path = Path(path).resolve()
     item, metadata = identity(source, path)
     rows = inventory(source)
-    source_root = Path(value(source, "rev-parse", "--show-toplevel")).resolve()
-    if path == source_root or path == Path(rows[0]["worktree"]).resolve():
-        raise Refused("current_or_main_worktree")
-    if path in Path.cwd().resolve().parents or path == Path.cwd().resolve():
-        raise Refused("current_worktree")
+    if path == Path(rows[0]["worktree"]).resolve():
+        raise Refused("main_worktree")
     if any(path in Path(row["worktree"]).resolve().parents for row in rows):
         raise Refused("nested_worktree")
-    if "locked" in item and not (allow_initialization and
-            re.fullmatch(r"worktree-init:[0-9a-f]{32}", item["locked"])):
-        raise Refused("intentional_or_unknown_lock")
-    branch = item.get("branch")
-    if branch:
-        acquire(stack, source, "ref:" + branch, True)
-    cache_exclusion(stack, path)
-    head = value(path, "rev-parse", "HEAD")
-    if item.get("HEAD") != head:
-        raise Refused("head_changed")
-    clean_content(path, metadata, head)
-    roots = remote_roots(source, branch)
-    for oid in recovery_objects(source, metadata, branch, head):
-        retained(source, oid, roots)
-    # Observations detect existing nonparticipants; OS entry exclusion supplies
-    # continuity for cooperative participants, including inherited descendants.
-    sampler = Path(__file__).resolve().parents[1] / "host-cleanup.py"
-    result = subprocess.run([sys_executable(), "-B", str(sampler), "active-paths",
-                            "--scope", str(path), "--scope", str(metadata)],
-                            capture_output=True, timeout=120, check=True)
-    for active in json.loads(result.stdout):
-        active = Path(active).resolve()
-        if active == path or path in active.parents or active == metadata or metadata in active.parents:
-            raise Refused("host_activity:" + str(active))
-    if identity(source, path) != (item, metadata):
-        raise Refused("identity_changed")
+    if "locked" in item:
+        lock = metadata / "locked"
+        if lock.is_symlink() or not lock.is_file():
+            raise Refused("locked_age_unknown")
+        age = time.time() - lock.stat().st_mtime
+        if age < LOCK_AGE_SECONDS:
+            raise Refused("locked_recent")
     return item
 
 
@@ -241,6 +179,7 @@ def remove(options):
     if not names and not options.path:
         raise Refused("names_or_paths_required")
     rows = inventory(options.source)
+    source = Path(rows[0]["worktree"]).resolve()
     targets = []
     for name in names:
         matches = [row for row in rows if Path(row["worktree"]).name == name]
@@ -256,32 +195,35 @@ def remove(options):
         targets.append(Path(matches[0]["worktree"]))
     targets = list(dict.fromkeys(targets))
     outcomes = []
-    # All qualifications are held for the full batch. Refusal makes no deletions.
-    with ExitStack() as stack:
-        for target in sorted(targets):
-            item = qualify(stack, options.source, target, options.initialization)
-            for raw in options.expected:
-                expected = json.loads(raw)
-                if Path(expected["path"]).resolve() == target.resolve():
-                    if (item.get("HEAD") != expected["head"] or item.get("branch") != expected.get("branch")
-                            or "locked" in expected and item.get("locked") != expected["locked"]):
-                        raise Refused("observed_identity_changed")
-            if options.expected and not any(Path(json.loads(raw)["path"]).resolve() == target.resolve()
-                                            for raw in options.expected):
-                raise Refused("observed_path_changed")
-        for target in targets:
-            if options.preview:
-                outcomes.append(dict(path=str(target), outcome="would_remove"))
-                continue
-            try:
-                # Never unlock an intentional or initialization lock. The latter
-                # qualifies only with the explicit preserved-content path above.
-                flags = ["--force", "--force"] if options.initialization else []
-                git(options.source, "worktree", "remove", *flags, "--", target,
-                    timeout=None if options.force else 300)
-                outcomes.append(dict(path=str(target), outcome="removed"))
-            except (Refused, OSError, subprocess.SubprocessError) as error:
-                outcomes.append(dict(path=str(target), outcome="partial_or_indeterminate", error=str(error)))
+    # Resolve and preflight the entire batch before any native effects. Deletion
+    # has no participation, ref or cache-use lock: these govern other operations.
+    qualified = {}
+    for target in targets:
+        item = qualify(source, target)
+        expected_rows = [json.loads(raw) for raw in options.expected]
+        matches = [row for row in expected_rows if Path(row["path"]).resolve() == target.resolve()]
+        if expected_rows and len(matches) != 1:
+            raise Refused("observed_path_changed")
+        for expected in matches:
+            if (item.get("HEAD") != expected["head"] or item.get("branch") != expected.get("branch")
+                    or "locked" in expected and item.get("locked") != expected["locked"]):
+                raise Refused("observed_identity_changed")
+        qualified[target] = item
+    for target in targets:
+        if options.preview:
+            outcomes.append(dict(path=str(target), outcome="would_remove"))
+            continue
+        try:
+            if qualify(source, target) != qualified[target]:
+                raise Refused("observed_identity_changed")
+            # Git's force flags implement authorized disposal of dirty and elapsed
+            # locked trees; the CLI --force option controls only the timeout.
+            flags = ["--force", "--force"] if "locked" in qualified[target] else ["--force"]
+            git(source, "worktree", "remove", *flags, "--", target,
+                timeout=None if options.force else 300)
+            outcomes.append(dict(path=str(target), outcome="removed"))
+        except (Refused, OSError, subprocess.SubprocessError) as error:
+            outcomes.append(dict(path=str(target), outcome="partial_or_indeterminate", error=str(error)))
     return dict(event="worktree_removal", items=outcomes,
                 status="failed" if any(item["outcome"] == "partial_or_indeterminate" for item in outcomes) else "succeeded")
 

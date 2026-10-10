@@ -10,7 +10,7 @@ namespace StrataLint.Tests;
 public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
 {
     [Fact]
-    public void RestoreRunsLockedAndFailureRollsBack()
+    public void RestoreFailureRetainsItsLockedWorktree()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -40,14 +40,17 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
                 static call => call.FileName == "dotnet"
                 && call.Arguments.SequenceEqual(
                     ["restore", WorktreeCommand.SolutionPath, "--locked-mode"]));
-        Assert.False(Directory.Exists(target));
-        AssertBranchMissing(repository.Path, branch);
+        Assert.True(Directory.Exists(target));
+        Assert.Equal(Git(repository.Path, "rev-parse", "HEAD"), Git(repository.Path, "rev-parse", branch));
+        var metadata = Git(target, "rev-parse", "--absolute-git-dir").Trim();
+        Assert.StartsWith("worktree-init:", File.ReadAllText(Path.Combine(metadata, "locked")), StringComparison.Ordinal);
+        Assert.Contains("initialization worktree retained", result.Error, StringComparison.Ordinal);
     }
 
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void RestoreTrackingRollbackExcludesLaterCreator(bool duringWrite)
+    public void RestoreFailurePreservesTrackingAndAllowsIndependentCreator(bool duringRestore)
     {
         if (OperatingSystem.IsWindows()) return;
         using var repository = new TemporaryDirectory();
@@ -59,70 +62,36 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
         var target = Path.Combine(repository.Path, "failed-restore");
         var later = Path.Combine(repository.Path, "later-creator");
         var branch = $"{WorktreeCommand.CreationNamespace}/math/failed-restore";
-        var arguments = new[] { "--kind", "math", "--name", "failed-restore", "--path", later,
-            "--base", "origin/dev", "--skip-restore" };
         CommandResult? concurrent = null;
-        var runner = new TrackingRollbackRunner(branch, duringWrite, () =>
-        {
-            // The old owner has already observed absence, or is about to write.
-            AssertBranchMissing(repository.Path, branch);
-            Assert.Equal("origin", Git(repository.Path, "config", "--get", $"branch.{branch}.remote").Trim());
-            Assert.Equal("refs/heads/dev", Git(repository.Path, "config", "--get", $"branch.{branch}.merge").Trim());
-            var creator = Task.Run(() => WorktreeCommand.Run(repository.Path, arguments,
-                new RecordingWorktreeProcessRunner()));
-            Assert.True(creator.Wait(TimeSpan.FromSeconds(20)), "canonical creator did not settle");
-            concurrent = creator.Result;
-        });
+        void Compete() => concurrent = WorktreeCommand.Run(repository.Path,
+            ["--kind", "math", "--name", "failed-restore", "--path", later,
+                "--base", "origin/dev", "--skip-restore"], new RecordingWorktreeProcessRunner());
+        var runner = new RestoreCallbackRunner(() => { if (duringRestore) Compete(); });
         var result = WorktreeCommand.Run(repository.Path,
             ["--kind", "math", "--name", "failed-restore", "--path", target, "--base", "origin/dev"], runner);
-        output.WriteLine(result.Error);
+        if (!duringRestore) Compete();
         Assert.False(result.Success);
-        Assert.Contains("dotnet restore failed", result.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("cleanup_error\":\"", result.Error, StringComparison.Ordinal);
-        Assert.False(Directory.Exists(target));
-        AssertBranchMissing(repository.Path, branch);
-        Assert.True(runner.TrackingApplied, "origin/dev must supply non-null tracking");
+        Assert.Contains("initialization worktree retained", result.Error, StringComparison.Ordinal);
+        Assert.True(Directory.Exists(target));
         Assert.NotNull(concurrent);
         Assert.False(concurrent.Success, concurrent.Error);
-        output.WriteLine(concurrent.Error);
-        Assert.Contains("WORKTREE_FAILED", concurrent.Error, StringComparison.Ordinal);
-        foreach (var key in new[] { "remote", "merge" })
-            Assert.Equal(1, TestProcessRunner.Run("git", ["config", "--local", "--get", $"branch.{branch}.{key}"],
-                repository.Path, BoundedProcessRunner.HangDetectionBudget, 4096).ExitCode);
         Assert.False(Directory.Exists(later));
-        var retried = WorktreeCommand.Run(repository.Path, arguments, new RecordingWorktreeProcessRunner());
-        Assert.True(retried.Success, retried.Error);
-        Assert.True(Directory.Exists(later));
         Assert.Equal("origin", Git(repository.Path, "config", "--get", $"branch.{branch}.remote").Trim());
         Assert.Equal("refs/heads/dev", Git(repository.Path, "config", "--get", $"branch.{branch}.merge").Trim());
+        var alternate = WorktreeCommand.Run(repository.Path,
+            ["--kind", "math", "--name", "alternate-restore", "--path", later,
+                "--base", "origin/dev", "--skip-restore"], new RecordingWorktreeProcessRunner());
+        Assert.True(alternate.Success, alternate.Error);
+        Assert.True(Directory.Exists(later));
     }
 
-    private sealed class TrackingRollbackRunner(string branch, bool duringWrite, Action createLater)
-        : IWorktreeProcessRunner
+    private sealed class RestoreCallbackRunner(Action beforeRestore) : IWorktreeProcessRunner
     {
         private readonly RecordingWorktreeProcessRunner inner = new() { FailDotnet = true };
-        private bool interleaved;
-        internal bool TrackingApplied { get; private set; }
-
         public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout)
         {
-            var writing = fileName == "git" && arguments.SequenceEqual(
-                new[] { "config", "--local", "--unset-all", $"branch.{branch}.remote" });
-            if (duringWrite && writing && !interleaved)
-            {
-                interleaved = true;
-                createLater();
-            }
-            var result = inner.Run(fileName, arguments, workingDirectory, timeout);
-            if (fileName == "git" && arguments.Contains("--set-upstream-to=refs/remotes/origin/dev") && result.ExitCode == 0)
-                TrackingApplied = true;
-            if (!duringWrite && TrackingApplied && !interleaved && fileName == "git" && result.ExitCode == 1
-                && arguments.SequenceEqual(new[] { "show-ref", "--verify", "--quiet", $"refs/heads/{branch}" }))
-            {
-                interleaved = true;
-                createLater();
-            }
-            return result;
+            if (fileName == "dotnet" && arguments.FirstOrDefault() == "restore") beforeRestore();
+            return inner.Run(fileName, arguments, workingDirectory, timeout);
         }
     }
 
@@ -152,7 +121,7 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
         Assert.False(result.Success);
         Assert.Contains("dotnet restore failed", result.Error, StringComparison.Ordinal);
         Assert.True(Directory.Exists(target));
-        Assert.Contains(published ? "untracked_or_ignored_material" : "remote_preservation_unknown", result.Error, StringComparison.Ordinal);
+        Assert.Contains("initialization worktree retained", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, TestProcessRunner.Run("git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{WorktreeCommand.CreationNamespace}/math/failed-restore"],
             repository.Path, BoundedProcessRunner.HangDetectionBudget, 4096).ExitCode);
@@ -236,14 +205,4 @@ public sealed class WorktreeCacheStrategyTests(ITestOutputHelper output)
     private static string Git(string root, params string[] arguments) =>
         TestGit.Run(root, arguments);
 
-    private static void AssertBranchMissing(string root, string branch)
-    {
-        var lookup = TestProcessRunner.Run(
-            "git",
-            ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
-            root,
-            BoundedProcessRunner.HangDetectionBudget,
-            4096);
-        Assert.Equal(1, lookup.ExitCode);
-    }
 }

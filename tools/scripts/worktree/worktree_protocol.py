@@ -154,8 +154,8 @@ def acquire(stack, source, key, exclusive):
 
 def tree_scope(stack, source, path, exclusive=False):
     path = Path(path).resolve()
-    # Entry into a nested tree must conflict with destruction of its parent,
-    # including an initialization that starts after the final inventory read.
+    # Nested participants share ancestor entry scopes so checkout-wide
+    # operations exclude conflicting cooperative use at their affected scope.
     for parent in reversed(path.parents):
         acquire(stack, source, "tree:" + str(parent), False)
     acquire(stack, source, "tree:" + str(path), exclusive)
@@ -268,7 +268,6 @@ def main(argv=None):
     removal.add_argument("--path", action="append", type=Path, default=[])
     removal.add_argument("--force", action="store_true")
     removal.add_argument("--preview", action="store_true")
-    removal.add_argument("--initialization", action="store_true")
     removal.add_argument("--expected", action="append", default=[])
     retirement = commands.add_parser("retire-branch")
     retirement.add_argument("--branch", required=True)
@@ -327,7 +326,7 @@ def main(argv=None):
         return 0
     except (Refused, OSError, ValueError, subprocess.SubprocessError) as error:
         print("WORKTREE_RETAINED " + str(error), file=sys.stderr, flush=True)
-        return 73
+        return 68 if options.action == "remove" and str(error).startswith("locked_") else 73
 
 
 if __name__ == "__main__":

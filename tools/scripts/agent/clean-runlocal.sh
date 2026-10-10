@@ -1,7 +1,7 @@
 #!/bin/bash
 # clean-runlocal: qualify manifest-listed temporary trees through the worktree protocol.
 # usage: clean-runlocal.sh --manifest FILE [--root /tmp/ie0904] [--source REPO] [--base REV] [--min-age-min 15] [--delete]
-# Default is preview. Age and manifest membership do not establish preservation.
+# Default is preview. Registered trees use lock/time removal; other artifacts retain their policy.
 set -u
 protocol_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 manifest=""; root=/tmp/ie0904; delete=0; minage=15; source="$protocol_root"; base=origin/dev
@@ -41,7 +41,7 @@ for p in paths:
             registered=any(Path(row["worktree"]).resolve()==Path(rp) for row in inventory(source))
             if registered:
                 result=remove(argparse.Namespace(source=source,names="",path=[Path(rp)],force=False,
-                    preview=not delete,initialization=False,expected=[]))
+                    preview=not delete,expected=[]))
                 outcome=result["items"][0]["outcome"]
                 if outcome=="partial_or_indeterminate": raise OSError(str(result))
             else:

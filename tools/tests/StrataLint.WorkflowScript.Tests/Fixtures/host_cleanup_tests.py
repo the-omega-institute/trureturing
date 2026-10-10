@@ -165,26 +165,10 @@ class HostCleanupTests(unittest.TestCase):
         self.assertIn("--lanes-only", run.call_args.args[0])
         self.assertIn("--force", run.call_args.args[0])
 
-    def test_clean_lanes_receives_large_activity_through_one_file(self):
-        active = {self.root / ("active-" + str(index) + "-" + "x" * 160) for index in range(20000)}
-        observed = {}
-
-        def run(arguments, **_):
-            position = arguments.index("--active-paths-file")
-            source = Path(arguments[position + 1])
-            observed.update(arguments=arguments, source=source, paths=json.loads(source.read_text()),
-                            mode=source.stat().st_mode & 0o777)
-            return subprocess.CompletedProcess(arguments, 0)
-
-        with patch.object(cleanup.subprocess, "run", side_effect=run):
-            self.assertEqual(0, cleanup.clean_worktrees(self.root, "base", True, active))
-        self.assertNotIn("--active-path", observed["arguments"], "[FAIL] clean_lanes_activity_not_in_argv")
-        self.assertLess(sum(len(os.fsencode(argument)) + 1 for argument in observed["arguments"]), 4096,
-                        "[FAIL] clean_lanes_argv_bounded")
-        self.assertEqual(sorted(str(path.resolve()) for path in active), observed["paths"],
-                         "[FAIL] clean_lanes_activity_file_content")
-        self.assertEqual(0o600, observed["mode"], "[FAIL] clean_lanes_activity_file_private")
-        self.assertFalse(observed["source"].exists(), "[FAIL] clean_lanes_activity_file_removed")
+    def test_clean_lanes_does_not_receive_activity(self):
+        with patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0)) as run:
+            self.assertEqual(0, cleanup.clean_worktrees(self.root, "base", True, {self.root}))
+        self.assertNotIn("--active-paths-file", run.call_args.args[0])
 
     def test_invalid_age_is_rejected(self):
         for age in ("-1", "nan", "inf"):
@@ -241,17 +225,16 @@ class HostCleanupTests(unittest.TestCase):
         self.assertFalse(safe.exists())
         self.assertEqual("recovery\n", (unknown / "private").read_text())
 
-    def test_missing_active_file_inspection_refuses_cleanup(self):
+    def test_missing_artifact_inspection_does_not_block_worktree_cleanup(self):
         options = cleanup.argparse.Namespace(
             repository=self.root, base="base", codex_home=self.root / "codex",
             sshx_home=self.root / "sshx", tmp_root=[self.root / "tmp"],
             min_age_hours=1, delete=True, verbose=False)
         with patch.object(cleanup, "active_paths", side_effect=OSError("probe unavailable")), \
              patch.object(cleanup, "registered_worktrees", return_value=set()), \
-             patch.object(cleanup, "clean_worktrees") as lanes:
-            with self.assertRaises(OSError):
-                cleanup.run_clean(options)
-        lanes.assert_not_called()
+             patch.object(cleanup, "clean_worktrees", return_value=0) as lanes:
+            self.assertEqual(1, cleanup.run_clean(options))
+        lanes.assert_called_once_with(self.root, "base", True)
 
     def test_worktree_make_blocks_before_dotnet_and_forwards_explicit_override(self):
         repository = self.root / "checkout with spaces"

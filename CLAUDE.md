@@ -25,7 +25,7 @@
 | 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
 | 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
 | 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
-| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；所有候选均须通过远端保全、活动排除与连续入口互斥核验） |
+| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；自动选择保留 24 小时 Git 更新窗口及落后 BASE 300 提交条件；删除按锁时长与身份核验） |
 
 常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
 
@@ -496,7 +496,7 @@ Enter cooperative jobs through `StrataLint worktree with`, declaring overlapping
 
 Commit stable authorized units promptly with `make worktree-checkpoint PATHS=NUL_FILE MESSAGE=FILE`; preserve unrelated staging. `make worktree-publish HEAD=BRANCH` freshly confirms equality/ancestry from the actual remote tip. Failed publication preserves local material. Normal finalization follows host joining of this task's writers; other participants continue. Abnormal exit preserves dirty, untracked, staged/unmerged, local-only and unknown material. Preserve busy/incompatible trees and continue on another legal branch/directory; a confirmed remote commit can reconstruct a new tree. No automatic stash, unauthorized commits, force push or occupied-branch takeover.
 
-All worktree cleanup follows SPEC A20/A20.1: verified preservation of every discarded material, no users, continuous exclusion of entry through deletion, main/current/nested identity protection and independent cache guards. FORCE, age, clean HEAD, index.lock or an idle sample alone cannot qualify. Unknown ignored/cache/private/reflog/unfinished material remains. Automatic, named, initialization, orphan, snapshot, mirror and aggregate entrances cannot bypass common qualification. Describe installed enforcement and remaining limits accurately.
+All registered worktree cleanup follows SPEC A20/A20.1: selected unlocked trees are disposable; locked trees require at least 24 hours since the Git lock file was last modified, including manual and initialization locks. Automatic selection additionally requires 24 hours without a Git update and at least 300 commits behind BASE; named removal bypasses those automatic selectors. Keep main/nested registration and target identity protection. Activity, participating jobs, cache use, uncommitted content, private recovery history and remote confirmation do not qualify or veto worktree deletion. Remote-confirmed publication is a separate recovery mechanism. Non-worktree artifacts and local ref retirement retain their independent policies. Describe partial failures accurately.
 
 Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. Worktrees may be reused for later tasks; reclamation is separate. Independent review follows section 5.6 and integration follows sections 8.12-8.14.
 
