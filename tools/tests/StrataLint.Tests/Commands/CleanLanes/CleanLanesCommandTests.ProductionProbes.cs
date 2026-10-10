@@ -210,8 +210,8 @@ public sealed partial class CleanLanesCommandTests
         var production = new ProductionWorktreeProcessRunner();
         var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
         {
-            if (fileName != "git"
-                || !arguments.SequenceEqual(["worktree", "remove", "--force", "--", damaged]))
+            if (fileName != "python3" || !IsProtocol(arguments, "remove")
+                || ProtocolValue(arguments, "--path") != damaged)
             {
                 return null;
             }
@@ -270,11 +270,8 @@ public sealed partial class CleanLanesCommandTests
         var removed = fixture.AddLandedLane(removedBranch);
         var retainedHead = fixture.Head(partial);
         var runner = fixture.CreateRunner((fileName, arguments, _) =>
-            fileName == "git"
-            && arguments.Count > 2
-            && arguments[0] == "update-ref"
-            && arguments[1] == "-d"
-            && arguments[2] == $"refs/heads/{retainedBranch}"
+            fileName == "python3" && IsProtocol(arguments, "retire-branch")
+            && ProtocolValue(arguments, "--branch") == retainedBranch
                 ? GitFailure("synthetic branch deletion failure")
                 : null);
 
@@ -310,12 +307,9 @@ public sealed partial class CleanLanesCommandTests
         const string removedBranch = "harness/ref-delete-z-control";
         var removed = fixture.AddLandedLane(removedBranch);
         var runner = fixture.CreateRunner((fileName, arguments, _) =>
-            fileName == "git"
-            && arguments.Count > 2
-            && arguments[0] == "update-ref"
-            && arguments[1] == "-d"
+            fileName == "python3" && IsProtocol(arguments, "retire-branch")
             && partialBranches.Contains(
-                arguments[2]["refs/heads/".Length..],
+                ProtocolValue(arguments, "--branch"),
                 StringComparer.Ordinal)
                 ? GitFailure("synthetic branch deletion failure")
                 : null);
@@ -356,11 +350,8 @@ public sealed partial class CleanLanesCommandTests
         var production = new ProductionWorktreeProcessRunner();
         var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
         {
-            if (fileName != "git"
-                || arguments.Count != 5
-                || arguments[0] != "worktree"
-                || arguments[1] != "remove"
-                || !partials.Contains(arguments[^1], StringComparer.Ordinal))
+            if (fileName != "python3" || !IsProtocol(arguments, "remove")
+                || !partials.Contains(ProtocolValue(arguments, "--path"), StringComparer.Ordinal))
             {
                 return null;
             }
@@ -371,7 +362,7 @@ public sealed partial class CleanLanesCommandTests
                 workingDirectory,
                 BoundedProcessRunner.HangDetectionBudget);
             Assert.Equal(0, removal.ExitCode);
-            Assert.False(fixture.WorktreeRegistered(arguments[^1]));
+            Assert.False(fixture.WorktreeRegistered(ProtocolValue(arguments, "--path")));
             return new ProcessOutput(
                 255,
                 removal.StandardOutput,
