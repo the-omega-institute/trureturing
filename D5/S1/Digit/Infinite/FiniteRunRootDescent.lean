@@ -6,6 +6,7 @@
    utility: none
    digest: Finite high-run roots descend to the cap root, and logarithmic rates ascend to the cap rate. -/
 
+import D5.S1.Digit.Infinite.ResetCodebookModel
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Topology.Order.IntermediateValue
@@ -15,6 +16,8 @@ open Filter Finset Set
 open scoped Topology BigOperators
 
 namespace D5.S1.Digit.Infinite.FiniteRunRootDescent
+
+open D5.S1.Digit.Infinite.ResetCodebook.Transfer (gamma)
 
 private theorem geometric_crossing (a h : ℝ) (ha : 0 < a) (hh : 0 ≤ h)
     (hcross : 1 < a + h) :
@@ -230,18 +233,16 @@ private lemma roots_tendsto {k : ℕ} (hk : 2 ≤ k) {z : ℝ}
       exact hn
     exact hroot.trans (hxb.trans_le (min_le_left _ _))
 
-noncomputable def rate (x : ℝ) : ℝ := -Real.log x / Real.log 2
-
 private lemma rates_strictMono (ζ : ℕ → ℝ) (hp : ∀ n, 0 < ζ n) (ha : StrictAnti ζ) :
-    StrictMono (fun n => rate (ζ n)) := by
+    StrictMono (fun n => gamma (ζ n)) := by
   intro m n hmn
-  unfold rate
+  unfold gamma
   exact (div_lt_div_iff_of_pos_right (Real.log_pos (by norm_num : (1:ℝ) < 2))).mpr
     (neg_lt_neg (Real.log_lt_log (hp n) (ha hmn)))
 
 private lemma rates_tendsto {ζ : ℕ → ℝ} {z : ℝ} (hz : 0 < z)
     (ht : Tendsto ζ atTop (𝓝 z)) :
-    Tendsto (fun n => rate (ζ n)) atTop (𝓝 (rate z)) := by
+    Tendsto (fun n => gamma (ζ n)) atTop (𝓝 (gamma z)) := by
   exact ((Real.continuousAt_log hz.ne').tendsto.comp ht).neg.div_const (Real.log 2)
 
 def root_rate_property (k : ℕ) (z : ℝ) : Prop :=
@@ -251,8 +252,8 @@ def root_rate_property (k : ℕ) (z : ℝ) : Prop :=
       (∀ n, ζ n ∈ Ioo (0 : ℝ) 1 ∧ truncated k n (ζ n) = 1 ∧ z < ζ n ∧
         ∀ x ∈ Ioo (0 : ℝ) 1, truncated k n x = 1 → x = ζ n) ∧
       StrictAnti ζ ∧ Tendsto ζ atTop (𝓝 z) ∧
-      StrictMono (fun n => rate (ζ n)) ∧
-      Tendsto (fun n => rate (ζ n)) atTop (𝓝 (rate z))
+      StrictMono (fun n => gamma (ζ n)) ∧
+      Tendsto (fun n => gamma (ζ n)) atTop (𝓝 (gamma z))
 
 /- A full quantified result: all roots are constructed, and no root-existence,
    positivity, monotonicity or convergence premise is left to the caller. -/

@@ -16,10 +16,11 @@ internal sealed class FiniteRunRootDescentDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every integer k at least two, the finite cap function has a unique root z in "
-                    + "the interval (0,1). For every nonnegative high-run length n, the truncated cap "
+                    + "the interval (0,1). For every nonnegative index n, with maximum high-run length "
+                    + "L = n + 1, the truncated cap "
                     + "function has a unique root zeta(n) in (0,1), and z is strictly below zeta(n). "
                     + "The roots form a strictly decreasing sequence converging to z. Applying the "
-                    + "continuous logarithmic rate map -log(x)/log(2) makes the rates strictly increasing "
+                    + "continuous logarithmic rate map gamma(x) = -log(x)/log(2) makes the rates strictly increasing "
                     + "and convergent to the rate of z."))),
                 DescribeRole.Theorem)),
             Describe.Lean(
