@@ -104,4 +104,6 @@ At dimension five, epsilon=1/1000 and interval (2,3), the two bouquet dichotomie
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/RenyiSufficiencyRefutation.sigma_isDensity`
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/RenyiSufficiencyRefutation.weighted_charpoly_eq`
 - Dependency: [D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction](../../Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.md)
+- Dependency: [D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation](../CoPRelativeQuantumnessRefutation.md)
 - Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/BouquetHolonomy](BouquetHolonomy.md)
+- Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/LikelihoodSpectrum](LikelihoodSpectrum.md)

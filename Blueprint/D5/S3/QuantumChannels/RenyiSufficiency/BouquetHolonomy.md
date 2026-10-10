@@ -45,5 +45,8 @@ Unitalizing positive trace-preserving interconversion would produce a positive i
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/BouquetHolonomy.bouquet_not_interconvertible`
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/BouquetHolonomy.transpose_state_invariance`
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/BouquetHolonomy.two_triangle_holonomy_obstruction`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../../Quantum/Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ConditionalTwoPositiveSpectralBound](../../Quantum/QuantumChannels/ConditionalTwoPositiveSpectralBound.md)
+- Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/BouquetFixedPoint](BouquetFixedPoint.md)
+- Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/LikelihoodSpectrum](LikelihoodSpectrum.md)
 - Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/PositiveInverseClassification](PositiveInverseClassification.md)

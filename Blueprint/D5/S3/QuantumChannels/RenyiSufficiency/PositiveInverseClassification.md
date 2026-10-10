@@ -19,5 +19,7 @@ After aligning the diagonal projections, the Jordan identity confines each matri
 ## References
 
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/PositiveInverseClassification.unital_positive_inverse_classification`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../../Quantum/Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/BouquetFixedPoint](BouquetFixedPoint.md)
 - Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/PositiveInverseProjectionFrame](PositiveInverseProjectionFrame.md)
+- Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/PositiveMapJordanDomain](PositiveMapJordanDomain.md)

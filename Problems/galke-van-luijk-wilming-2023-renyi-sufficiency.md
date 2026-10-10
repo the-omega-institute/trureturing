@@ -46,7 +46,7 @@ Experiment entry: [numerical profile and holonomy check](https://github.com/the-
 
 The experiment checks every sign pattern for $r=2,3$, dimensions $5,7$, $\varepsilon=0.9/(2r)$ and $\alpha\in\{0.5,0.6,0.75,0.9,1,1.5,2,3,5,10\}$. Its minimum eigenvalues are $0.09937694101250946$ and $0.08616247190575878$; maximum absolute profile differences are $1.1379786002407855\cdot10^{-15}$ and $2.248201624865942\cdot10^{-15}$. For $(+,+)$ the normalized first two holonomies have product $-1$; for $(+,-)$ it is $+1$. These are finite floating-point readings at perturbations different from the Lean witness, not uniform proofs.
 
-The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9). The other 34 public theorems have an unfinished escape audit: [#14881](https://github.com/the-omega-institute/trureturing/issues/14881). Missing evidence includes whole-family variation, sensitivity and actual observational dependence; no `declared_validated` registration is claimed.
+The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9). The other 33 public theorems have an unfinished escape audit: [#14881](https://github.com/the-omega-institute/trureturing/issues/14881). Missing evidence includes whole-family variation, sensitivity and actual observational dependence; no `declared_validated` registration is claimed.
 
 ## Triage
 

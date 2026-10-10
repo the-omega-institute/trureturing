@@ -26,19 +26,19 @@ proof_shape: weightedRho_hermitian: bind-only; escape_witness=none
 escape_witness: likelihoodPolynomial_separable
 admission_basis: escape-witness
 Direct frozen dependencies:
+  D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.IsPositive
+  declaration statement_id: sha256:f17d83cade270607ed26a249661ca93167b5a57d01906f355672261f7aaa0cb6
+Same-delivery owner re-pin dependencies:
   D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.diagonalStarAlgHom
-  declaration statement_id: sha256:3da5fa3a2feed6b43a22b9342c899b6f94a1556ea1c0fb205175999a3338b7d1
-  D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsDensity
-  declaration statement_id: sha256:4ba4e6b5fd69f7af3d48c8ecc93d1d3efe0fbd32799aa8b021b502f76ad76988
+  declaration statement_id: sha256:29d9fc8170caff55b46b44d1e754079f686dada4d842c9cbbb8ae807649435e7
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14881
 -/
 
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
-import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
 
 noncomputable section
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap
-open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity)
 namespace D5.S3.QuantumChannels.RenyiSufficiency.LikelihoodSpectrum
 
 

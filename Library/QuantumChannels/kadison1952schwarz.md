@@ -7,7 +7,7 @@ doi: 10.2307/1969657
 url: https://doi.org/10.2307/1969657
 claim: "Kadison's inequality: a unital positive linear map satisfies Phi(H)^2 <= Phi(H^2) for self-adjoint H."
 strata_touched:
-  - D5/S3/QuantumChannels/RenyiSufficiency/PositiveMapKadison
+  - D5/S3/QuantumChannels/RenyiSufficiency/PositiveMapJordanDomain
 license: citation-only
 triage: anchor
 ---
@@ -25,9 +25,9 @@ the title above, and the starting page 494.
 
 ## Scope
 
-The Hermitian-matrix inequality in `PositiveMapKadison.kadison_hermitian` is the
+The Hermitian-matrix inequality in `PositiveMapJordanDomain.kadison_hermitian` is the
 finite-dimensional form of Kadison's inequality. Its proof uses spectral
 decomposition and the finite positive-weight inequality
-`PositiveMapKadison.kadison_finite_weights`. The latter is the corresponding
+`kadison_finite_weights`, a private helper of the same module. The latter is the corresponding
 matrix-valued weighted variance calculation. These are established inequalities;
 the new settlement concerns their use in the bouquet rigidity argument.

@@ -32,4 +32,5 @@ The complete parameter telescope and conclusion are displayed. Matrix products, 
 
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/PositiveInverseProjectionFrame.orthogonal_projection_frame`
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/PositiveInverseProjectionFrame.positive_inverse_projection_alignment`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../../Quantum/Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/PositiveMapJordanDomain](PositiveMapJordanDomain.md)

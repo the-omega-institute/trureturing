@@ -65,17 +65,23 @@ escape_witness: bouquet_not_interconvertible
 admission_basis: escape-witness
 The non-normalization step constructs the orthogonal projection frame and coherently phased unitary classifying the positive inverse pair; the explicit triangle gains then give a contradiction.
 Direct frozen dependencies:
-  D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.unitalized
-  D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.unitalized_one
   D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap
   declaration statement_id: sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
   D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.IsPositive
   declaration statement_id: sha256:f17d83cade270607ed26a249661ca93167b5a57d01906f355672261f7aaa0cb6
+Same-delivery owner re-pin dependencies:
+  D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.unitalized
+  declaration statement_id: sha256:b0f91075d5492cfb8031df252368ee51cde4d433dc220ed6b9e2e20edb7cc422
+  D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.unitalized_one
+  declaration statement_id: sha256:084b10c0d75e97037427c732fd1a3a0f40c5f115092fde34998ec00e290e17d9
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14881
 -/
 
-import D5.S3.QuantumChannels.RenyiSufficiency.PositiveInverseClassification
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound
+import D5.S3.QuantumChannels.RenyiSufficiency.BouquetFixedPoint
+import D5.S3.QuantumChannels.RenyiSufficiency.LikelihoodSpectrum
+import D5.S3.QuantumChannels.RenyiSufficiency.PositiveInverseClassification
 
 noncomputable section
 open D5.S3.QuantumChannels.RenyiSufficiency.LikelihoodSpectrum

@@ -69,8 +69,9 @@ Direct frozen dependencies:
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14881
 -/
 
-import D5.S3.QuantumChannels.RenyiSufficiency.PositiveMapJordanDomain
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.QuantumChannels.RenyiSufficiency.LikelihoodSpectrum
+import D5.S3.QuantumChannels.RenyiSufficiency.PositiveMapJordanDomain
 
 noncomputable section
 open D5.S3.QuantumChannels.RenyiSufficiency.LikelihoodSpectrum

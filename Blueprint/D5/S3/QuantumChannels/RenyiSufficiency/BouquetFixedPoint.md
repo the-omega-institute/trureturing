@@ -45,5 +45,6 @@ The likelihood spectral projectors force trace preservation, which fixes sigma. 
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/BouquetFixedPoint.bouquet_fixed_point_rigidity`
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/BouquetFixedPoint.jordan_projector_edge`
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/BouquetFixedPoint.mu_mul`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../../Quantum/Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/LikelihoodSpectrum](LikelihoodSpectrum.md)
 - Dependency: [D5/S3/QuantumChannels/RenyiSufficiency/PositiveMapJordanDomain](PositiveMapJordanDomain.md)

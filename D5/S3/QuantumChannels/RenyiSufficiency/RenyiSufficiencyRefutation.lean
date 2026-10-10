@@ -28,16 +28,18 @@ proof_shape: result: content; escape_witness=result
 escape_witness: result
 admission_basis: open-problem-resolution (#14827; Refuted)
 Direct frozen dependencies:
-  D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsDensity
-  declaration statement_id: sha256:4ba4e6b5fd69f7af3d48c8ecc93d1d3efe0fbd32799aa8b021b502f76ad76988
   D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Path.scaled_dominance_posDef
   declaration statement_id: sha256:7d9e0a8c810f16ac7b4672a154a2adebe215dd86737857fc62f1861e22deed95
+  D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsDensity
+  declaration statement_id: sha256:4ba4e6b5fd69f7af3d48c8ecc93d1d3efe0fbd32799aa8b021b502f76ad76988
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14881
 -/
 
-import D5.S3.QuantumChannels.RenyiSufficiency.BouquetHolonomy
 import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
+import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
+import D5.S3.QuantumChannels.RenyiSufficiency.BouquetHolonomy
+import D5.S3.QuantumChannels.RenyiSufficiency.LikelihoodSpectrum
 
 noncomputable section
 open D5.S3.QuantumChannels.RenyiSufficiency.LikelihoodSpectrum

@@ -66,7 +66,7 @@ The total logarithm extension evaluates Matrix.IsHermitian.cfc with Real.log and
 
 **Definition 1.6 (Dmin).**
 
-$$\forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix} (\operatorname{Fin} n) (\operatorname{Fin} n) \mathbb{C}), \forall (sigma: \operatorname{Matrix} (\operatorname{Fin} n) (\operatorname{Fin} n) \mathbb{C}), \forall (alpha: \mathbb{R}), \operatorname{Dmin} rho sigma alpha = (\operatorname{if} alpha = 1 \operatorname{then} (rho \times (\operatorname{matrixLog} rho - \operatorname{matrixLog} sigma)) .\operatorname{trace} .\operatorname{re} \operatorname{else} (alpha - 1)^{-1} \times \operatorname{Real}.\operatorname{log} (\operatorname{matrixPower} (\operatorname{matrixPower} sigma ((1 - alpha) / (2 \times alpha)) \times rho \times \operatorname{matrixPower} sigma ((1 - alpha) / (2 \times alpha))) alpha .\operatorname{trace} .\operatorname{re}))$$
+$$\forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix} (\operatorname{Fin} n) (\operatorname{Fin} n) \mathbb{C}), \forall (sigma: \operatorname{Matrix} (\operatorname{Fin} n) (\operatorname{Fin} n) \mathbb{C}), \forall (alpha: \mathbb{R}), \operatorname{Dmin} rho sigma alpha = (\operatorname{if} alpha = 1 \operatorname{then} (rho \times (\operatorname{matrixLog} rho - \operatorname{matrixLog} sigma)) .\operatorname{trace} .\operatorname{re} \operatorname{else} (alpha - 1)^{-1} \times \operatorname{Real}.\operatorname{log} ((\operatorname{matrixPower} (\operatorname{matrixPower} sigma ((1 - alpha) / (2 \times alpha)) \times rho \times \operatorname{matrixPower} sigma ((1 - alpha) / (2 \times alpha))) alpha) .\operatorname{trace} .\operatorname{re}))$$
 
 *Formalization.* `D5/S3/QuantumChannels/RenyiSufficiency/LikelihoodSpectrum.Dmin` (`✓ std3`).
 
@@ -267,4 +267,4 @@ The eigenvalue projection uses likelihood_hermitian, the actual proof supplied i
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/LikelihoodSpectrum.weightedRho`
 - Truth anchor: `D5/S3/QuantumChannels/RenyiSufficiency/LikelihoodSpectrum.weightedRho_hermitian`
 - Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../../Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.md)
-- Dependency: [D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation](../CoPRelativeQuantumnessRefutation.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../../Quantum/Foundation/FiniteKrausChannel.md)
