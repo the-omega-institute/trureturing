@@ -1253,3 +1253,107 @@ variable. No bound (P9), directed mean estimate, effective cutoff,
 complete signed floor (S4), or proof of RH is obtained. Qualitative
 density $o(X)$ and averages in other variables still require the
 quantitative same-source measure transport described after (P4).
+
+## A partial zero-free envelope leaves the supplied excess unpaid
+
+Keep the actual family (S2), proper GA1 and the event-free bridge above.
+Write its original oscillation exponent as $u$ and its output exponent as
+$\eta_{\rm out}=u/r\in(0,1/2)$, so that
+
+$$
+1-\Theta<u,\qquad \Theta<\sigma,\qquad
+2u<r<\frac1{2\sigma},\qquad
+X_N\ge cA^{-\eta_{\rm out}},\quad A=\log N.
+$$
+
+These are the existing source parameters, not a new choice of a smaller
+output exponent. Assume conditionally that $\Theta\le\nu<1$.
+The [already recorded complete explicit formula](../ArithSums/nicolas2025comparison.md#the-2026-signed-formula-and-the-available-absolute-error-scale)
+is directly reused, including all prime powers, actual zero multiplicities,
+the pole and trivial-zero terms, and the infinite endpoint. Its original
+coefficient is
+
+$$
+F_A(s)=\frac1s\int_A^\infty
+ t^{s-2}\frac{\log t+1}{\log^2t}\,dt.
+$$
+
+For $A\ge2$, its logarithmic Laplace representation gives
+
+$$
+F_A(\rho)=\frac{A^{\rho-1}}\rho
+\int_0^\infty\frac{(1+v)A^{-v}}{1+v-\rho}\,dv,
+\qquad
+|F_A(\rho)|\le
+\frac{A^{\Re\rho-1}}{|\rho(1-\rho)|}
+\left(\frac1{\log A}+\frac1{\log^2A}\right).
+$$
+
+Here $|1+v-\rho|\ge|1-\rho|$ on the actual critical strip.
+The finite classical weight
+$C_\zeta=\sum_\rho m_\rho/|\rho(1-\rho)|$ is already used in that
+owning note; no new zero computation or numerical value is needed.
+The complete pole/trivial-zero contribution has magnitude at most
+$\log(2\pi)/(A\log A)$. Thus the conditional supplied envelope is
+
+$$
+|I_\psi(A)|\le\mathcal E_\nu(A):=
+C_\zeta A^{\nu-1}
+\left(\frac1{\log A}+\frac1{\log^2A}\right)
++\frac{\log(2\pi)}{A\log A}.
+$$
+
+This applies the existing integrated formula, rather than introducing a
+new Chebyshev or zero-free estimate. Its upper allowance is eventually
+smaller than $cA^{-\eta_{\rm out}}$ when
+$\eta_{\rm out}\le1-\nu$, including equality because of the logarithmic
+factor. The actual supplied parameters instead satisfy
+
+$$
+\eta_{\rm out}>2\Theta(1-\Theta)>1-\Theta\ge1-\nu.
+$$
+
+In particular, the [cited seven-eighths input](../Analytic/openai2026quasirh.md)
+would give $\eta_{\rm out}>7/32$, whereas that envelope funds only
+$\eta_{\rm out}\le1/8$. The external zero-free result remains a
+conditional source input without this repository's accepted compiled
+dependency/axiom closure. Failure of the allowance to fund this family
+is not a lower bound on the actual tail or a proof that the joint
+arithmetic conditions cannot yield a stronger estimate.
+
+For the same fixed exponent, the unpaid signed part can be isolated
+without truncating the original tail. Define, over the actual distinct nontrivial zeros, with their original
+multiplicities $m_\rho$,
+
+$$
+\mathcal Z_{\eta_{\rm out}}(A)
+=\Re\sum_{1-\eta_{\rm out}<\Re\rho\le\nu}
+ m_\rho F_A(\rho).
+$$
+
+The same formula and absolute weight give the exact decomposition
+
+$$
+I_\psi(A)=-\mathcal Z_{\eta_{\rm out}}(A)+e(A),\qquad
+|e(A)|\le\mathcal E_{1-\eta_{\rm out}}(A)
+=O\!\left(\frac{A^{-\eta_{\rm out}}}{\log A}\right).
+$$
+
+All complementary zeros and the pole/trivial-zero contribution are
+inside $e(A)$. A sufficient additional joint estimate on the original
+selected family would be, for some fixed $0<\delta<c$,
+
+$$
+\mathcal Z_{\eta_{\rm out}}(A)
+\le(c-\delta)A^{-\eta_{\rm out}}
+\quad\text{eventually}.
+$$
+
+It would yield $I_\psi(A)>-cA^{-\eta_{\rm out}}$ at the same source,
+contradicting its existing negative-tail implication (O3).
+No such one-sided bound is supplied here. Keeping the full coefficient
+is essential: an unproved first-term replacement has a logarithmic
+remainder at the slower $A^{\nu-1}$ scale. This is an applicability map
+and a localization of the remaining estimate, not a new RH criterion,
+new signed gain, originality claim, or Lean certification of the
+analytic source inputs.
