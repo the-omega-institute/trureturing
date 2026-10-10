@@ -1567,3 +1567,267 @@ $$
 The integral is a linear combination of those five unchanged moment coordinates, so equals its value for the fair endpoint mixture, namely zero. Its integrand is nonnegative. Since $r h(r)>0$ and $h$ is strictly increasing on $[a,b]$, $\kappa$ is supported on $\{a,b\}$. Its unchanged $j=1$ coordinate, together with normalization, forces fair endpoint weights, contradicting the perturbed alpha mass. For $W_\pm$, the unchanged alpha-prefixed marker-0 coordinates give the same argument with $r^2h(r)$ in place of $rh(r)$; the unchanged $j=1$ coordinate fixes fair weights, contradicting the perturbed standalone beta mass. Thus this incompatibility is not an instance of an assumed native-individual-law restriction. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Quantitative endpoint-chord stability for complete configuration losses
+
+**Standing assumptions 13.1 (the same full-law pair and its four-moment defect).** Let $(\Gamma_B,\Gamma_A)$ be any compatible Borel pair of Definition 11.2, with its original common unweighted marginals $\nu_p,\nu_\beta$ and both full-descriptor conditional residual equations (11.8). Use exactly the source, installed finite or countable prior, complete countable carriers and original history domain of Standing assumptions 12.1. In particular, the actual depth $K$ is sampled once, initialization is source-independent, and both seeds, every paid rejection and partial parse, all records, permissions, third-write-before-latch, fourth completion, its matching Stop and all tails including infinite noncompletion remain in the domain. Configuration losses retain TV inside the descriptor integral, as in (11.9).
+
+Retain $m_p,m_\beta,t,q,z,J_p,J_\beta,M_B,M_A,D_B,D_A$ from (12.1), (12.2) and (12.7), and put
+
+$$
+S=D_B+D_A=2J_p+2J_\beta+M_B+M_A\ge0.
+\tag{13.1}
+$$
+
+For $s\in\{p,\beta\}$, a normalized complete probability target $T\in\mathcal P(\Omega_s)$ and $0\le\theta\le1$, define
+
+$$
+H_{s,\theta}(T)=(1-\theta)\operatorname{TV}(P_{s,a},T)
+                  +\theta\operatorname{TV}(P_{s,b},T).
+\tag{13.2}
+$$
+
+These reference laws are mathematical comparisons on the original complete carriers. They are not installed runtime states or assertions of samplers preserving COMPLETE, description size, work, random-bit use, paid Reads or any other separately charged resource. When a pair comes from a stationary original product, its acquired and synthetic kernels and actual initialization remain exactly those of Sections 2 and 11.4.
+
+**Theorem 13.2 (one endpoint weight for all complete configuration losses).** Every pair in Standing assumptions 13.1 has one common $\theta\in[0,1]$, independent of the target and of the phase, such that, for every normalized complete target at the respective phase,
+
+$$
+\left|\mathcal L_p(T)-H_{p,\theta}(T)\right|\le C_p S,
+\qquad C_p=\frac{540}{11},
+$$
+
+$$
+\left|\mathcal L_\beta(T)-H_{\beta,\theta}(T)\right|\le C_\beta S,
+\qquad C_\beta=\frac{1395}{22}.
+\tag{13.3}
+$$
+
+The targets may assign positive mass to infinite noncompletion. One admissible common weight is
+
+$$
+\theta=\nu_p\left\{Q:u(Q)>\frac{a+b}{2}\right\}.
+\tag{13.4}
+$$
+
+At $S=0$ this comparison is precisely the compatible endpoint pair (12.4)–(12.5), including the endpoint weights $0$ and $1$.
+
+**Proof.** Set $\delta=b-a=1/15$, $m=(a+b)/2$, $j(x)=(x-a)(b-x)$, and let $r(x)$ be the nearest endpoint, with a tie rounded to $a$. For $a\le x\le b$, the distance $d(x)=|x-r(x)|$ is at most $\delta/2$, so $j(x)=d(x)(\delta-d(x))\ge\delta d(x)/2$. Consequently
+
+$$
+e_p:=\int|u-r(u)|\,d\nu_p\le30J_p,
+\qquad
+e_\beta:=\int|v-r(v)|\,d\nu_\beta\le30J_\beta.
+\tag{13.5}
+$$
+
+If $r(x)\ne r(y)$, then $(x-m)(y-m)\le0$ and
+
+$$
+j(x)+j(y)+(x-y)^2
+ =\frac{\delta^2}{2}-2(x-m)(y-m)\ge\frac{\delta^2}{2}.
+$$
+
+For equal rounded endpoints the following inequality is automatic. Thus, pointwise on the whole square $[a,b]^2$,
+
+$$
+\mathbf1_{\{r(x)\ne r(y)\}}
+ \le450\bigl(j(x)+j(y)+(x-y)^2\bigr).
+$$
+
+Let $\kappa_B$ and $\kappa_A$ be the probabilities of unequal rounded endpoints under the original $\Gamma_B$ and $\Gamma_A$, respectively. Their common unweighted marginals and the residual identities (12.7) give
+
+$$
+\kappa_B\le450(J_p+J_\beta+M_B)=450D_B,
+\qquad
+\kappa_A\le450(J_p+J_\beta+M_A)=450D_A.
+\tag{13.6}
+$$
+
+These are estimates on the two given flows separately; neither flow has been replaced or weighted by a synthetic continuation probability.
+
+Write
+
+$$
+d_p=\int\operatorname{TV}(Q,P_{p,r(u(Q))})\,d\nu_p(Q),\qquad
+d_\beta=\int\operatorname{TV}(W,P_{\beta,r(v(W))})\,d\nu_\beta(W).
+$$
+
+The supplied endpoint distances are
+
+$$
+\Delta_p=\operatorname{TV}(P_{p,a},P_{p,b})=2\rho_p<\frac1{10},\qquad
+\Delta_\beta=\operatorname{TV}(P_{\beta,a},P_{\beta,b})=2\rho_\beta<\frac1{10}.
+$$
+
+Apply the normalized whole-law comparison of (11.19)–(11.20) using the native endpoint recursions in the proof of Theorem 12.2. More explicitly, (11.4), the first full-descriptor conditional identity (11.8) and TV convexity give, for $\nu_p$-almost every $Q$,
+
+$$
+\begin{aligned}
+\operatorname{TV}(Q,P_{p,r(u)})
+&\le |u-r(u)|+(1-u)\int
+       \operatorname{TV}(W,P_{\beta,r(u)})\,\Gamma_B(dW\mid Q)\\
+&\le |u-r(u)|+(1-u)\int
+ \left[\operatorname{TV}(W,P_{\beta,r(v)})
+       +\Delta_\beta\mathbf1_{\{r(u)\ne r(v)\}}\right]
+ \,\Gamma_B(dW\mid Q).
+\end{aligned}
+$$
+
+The corresponding suspended inequality conditions on the entire $W$ in the second identity (11.8), uses $v$ as its continuation coefficient, and has $\Delta_p$ in its mismatch term. Integrate these inequalities against the respective input marginals. Using $1-u\le2/3$, $v\le2/5$, (13.5) and (13.6), with the original unweighted output marginals, yields
+
+$$
+\begin{aligned}
+d_p&\le30J_p+\frac23d_\beta+30D_B,\\
+d_\beta&\le30J_\beta+\frac25d_p+18D_A.
+\end{aligned}
+\tag{13.7}
+$$
+
+The same two-phase stopping contraction as in (11.20) has denominator $1-(2/3)(2/5)=11/15$. Solving (13.7) and substituting (12.7) gives
+
+$$
+\begin{aligned}
+d_p
+&\le\frac{450J_p+300J_\beta+450D_B+180D_A}{11}\\
+&=\frac{1080J_p+930J_\beta+450M_B+180M_A}{11}
+ \le\frac{540}{11}S,\\
+d_\beta
+&\le\frac{180J_p+450J_\beta+180D_B+270D_A}{11}\\
+&=\frac{630J_p+900J_\beta+180M_B+270M_A}{11}
+ \le\frac{450}{11}S.
+\end{aligned}
+\tag{13.8}
+$$
+
+Let $\theta_p=\nu_p\{r(u)=b\}$ and $\theta_\beta=\nu_\beta\{r(v)=b\}$. On either given flow, the difference between these two event probabilities is bounded by the probability of their indicators differing. Therefore
+
+$$
+|\theta_p-\theta_\beta|
+ \le\min(\kappa_B,\kappa_A)
+ \le450\min(D_B,D_A)\le225S.
+\tag{13.9}
+$$
+
+For every complete target, the reverse triangle inequality applied to each descriptor before integration gives
+
+$$
+|\mathcal L_s(T)-H_{s,\theta_s}(T)|\le d_s.
+$$
+
+Also $|\operatorname{TV}(P_{s,a},T)-\operatorname{TV}(P_{s,b},T)|\le\Delta_s$. Choose $\theta=\theta_p$. Equations (13.8)–(13.9) prove the p estimate and bound the suspended error by
+
+$$
+d_\beta+\Delta_\beta|\theta_p-\theta_\beta|
+ \le\left(\frac{450}{11}+\frac{225}{10}\right)S
+ =\frac{1395}{22}S.
+$$
+
+All conditional equalities and comparisons here concern full normalized measures on the countable carriers. Boundedness and countable TV summation justify their integrals. The infinite outcomes remain atoms throughout; their zero descriptor masses follow from Lemma 11.1, whereas the target's infinite mass is unrestricted. No completion conditioning is used. TV has remained inside every configuration average.
+
+If $S=0$, (13.5), (13.6) and (13.8) force endpoint emissions, zero mismatch on both flows and zero distance to the corresponding native complete laws. Equation (13.9) makes their endpoint weights common. Hence both marginals and flows are exactly (12.4)–(12.5), agreeing with Theorem 12.2. $\square$
+
+**Corollary 13.3 (the same-history full-record targets and the return boundary).** Fix any positive active fourth-segment actual history $h$, at phase $s$, in the original source domain. Let $I_h=I_{C_0(h)}$ be its existing full-record renderer and
+
+$$
+T_{s,h}=\sum_{k:\mu(k)>0}\nu_h(k)P_{s,r_k},\qquad
+\nu_h(k)=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}
+ {\sum_i\mu(i)r_i^{A(h)}(1-r_i)^{B(h)}}.
+$$
+
+With the same $\theta$ of Theorem 13.2 for every such history and both phases,
+
+$$
+\begin{aligned}
+\Bigg|\int\operatorname{TV}\bigl((I_h)_*D,(I_h)_*T_{s,h}\bigr)\,d\nu_s(D)
+&-(1-\theta)\operatorname{TV}\bigl((I_h)_*P_{s,a},(I_h)_*T_{s,h}\bigr)\\
+&-\theta\operatorname{TV}\bigl((I_h)_*P_{s,b},(I_h)_*T_{s,h}\bigr)\Bigg|
+\le C_sS.
+\end{aligned}
+\tag{13.10}
+$$
+
+For the own-law pair (11.24) of an original stationary product, the integral is its original configuration loss at $h$. For a general Borel pair it is a mathematical comparison loss, with no runtime realization assertion. The two flows and these comparisons do not determine the actual three-stage return measure $\Xi$ or its actual return-variation functional $V$.
+
+**Proof.** The posterior is normalized for finite or countable support and includes all paid rejections and partial parses under the same once-sampled $K$, by (2.2). Apply (13.3) to this complete target itself. The full-record isometry of Section 2, supplied by [ST, Section 2.1], transports every law in that inequality through the same $I_h$, giving (13.10). It retains future Read blocks, all held records, permissions, completion and the matching Stop, as well as infinite noncompletion. For an original stationary product the source-independent initialization and same acquired and synthetic updates in Section 11.4 give the phase row $\nu_s$ after every such history; no synthetic-probability reweighting of the actual row occurs.
+
+For the final assertion, the two original tables in [Acquired-return variation, Proposition 11.9](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) have equal full-law flows and hence equal $S$, marginal configuration losses and the weight (13.4), while their actual $\Xi$ and $V$ differ. Their original initialization and record-preserving renderers are supplied there by Proposition 11.10. Thus all the present comparisons agree on that pair without identifying its actual return motion. No triple join has been used in deriving (13.10). $\square$
+
+**Corollary 13.4 (evaluated exclusion near the four-moment endpoint chord).** Suppose $\mu(1),\mu(2)>0$ and the original installed prior supports at least one $k\ge3$. Every compatible pair satisfies
+
+$$
+\mathcal J+\frac{540}{11}S\ge\frac\eta4
+ =\frac{3554869594}{318644812890625},\qquad
+\eta=\frac{14219478376}{318644812890625}.
+\tag{13.11}
+$$
+
+In particular there is no compatible pair with both
+
+$$
+\mathcal J<\frac{1777434797}{318644812890625},\qquad
+S<\frac{19551782767}{172068198960937500}.
+\tag{13.12}
+$$
+
+Write its four coordinates as $\mathbf c=(m_p,m_\beta,q,z)$ and let
+
+$$
+\mathbf c(\theta_0)=\left(
+ a+(b-a)\theta_0,\ a+(b-a)\theta_0,
+ (1-\theta_0)(1-a)^2+\theta_0(1-b)^2,
+ (1-\theta_0)a^2+\theta_0b^2\right).
+$$
+
+The explicitly evaluated simultaneous neighborhood
+
+$$
+\mathcal J<\frac{1777434797}{318644812890625},\qquad
+\|\mathbf c-\mathbf c(\theta_0)\|_\infty
+ <\frac{19551782767}{871812208068750000}
+ \quad\text{for some }\theta_0\in[0,1]
+\tag{13.13}
+$$
+
+contains no compatible pair's excess and coordinates. It is a nonempty neighborhood in the ambient nonnegative-excess and moment space, containing $(0,\mathbf c(\theta_0))$ for every $\theta_0$. The supported-nonendpoint hypothesis is necessary: for a prior supported only on depths $1,2$, the fair endpoint-tag pair has $\mathcal J=S=0$.
+
+**Proof.** Put $E=\mathcal J+C_pS$ and use the common $\theta$ of Theorem 13.2. The original two endpoint risk bounds in (11.9) and (13.3) imply
+
+$$
+\theta\Delta_p=H_{p,\theta}(P_{p,a})\le\rho_p+E,
+\qquad
+(1-\theta)\Delta_p=H_{p,\theta}(P_{p,b})\le\rho_p+E.
+$$
+
+Since $\Delta_p=2\rho_p$, these inequalities give $|\theta-1/2|\Delta_p\le E$. For a supported $k\ge3$, put $r=r_k$. The complete-word gap (12.10) and its coordinate-triangle consequence in Corollary 12.3 give
+
+$$
+H_{p,1/2}(P_{p,r})\ge\rho_p+\frac\eta2.
+$$
+
+The reverse triangle inequality for the two endpoint distances gives
+
+$$
+\left|H_{p,\theta}(P_{p,r})-H_{p,1/2}(P_{p,r})\right|
+ \le|\theta-1/2|\Delta_p\le E.
+$$
+
+On the other hand, the supported target's own bound in (11.9) and (13.3) give $H_{p,\theta}(P_{p,r})\le\rho_p+E$. Combining these three inequalities yields $\eta/2-E\le E$, which is (13.11). The same-history interpretation of supported pure targets retains precisely the paid-history and countable-prior hypotheses recorded in Section 11.4; it does not create a pure-source runtime query.
+
+The two thresholds in (13.12) are exactly $\eta/8$ and $\eta/(8C_p)=11\eta/4320$, so their simultaneous strict inequalities would contradict (13.11). To obtain (13.13), sum the exact identities (12.7):
+
+$$
+S=\frac{22}{15}-\frac8{15}(m_p+m_\beta)-2q-2z.
+$$
+
+This affine expression vanishes at every $\mathbf c(\theta_0)$. Hence if $\|\mathbf c-\mathbf c(\theta_0)\|_\infty<\varepsilon$, its nonnegative value satisfies
+
+$$
+0\le S<\left(\frac{16}{15}+2+2\right)\varepsilon
+       =\frac{76}{15}\varepsilon.
+$$
+
+The coordinate threshold in (13.13) is exactly $11\eta/21888$; multiplying it by $76/15$ gives $11\eta/4320$, the excluded $S$ threshold. All displayed thresholds are strictly positive, proving the asserted ambient nonemptiness and exclusion. For endpoint-only support, the fair pair (12.5) has endpoint losses $\rho_s$, endpoint emissions and no mismatch, so $\mathcal J=S=0$, as in Corollary 12.3.
+
+This argument consumes the complete-loss comparison in the joint feasibility problem of Section 11.8 and quantitatively extends Corollary 12.3's exact-fibre exclusion. Its input tools are the previously supplied residual identities, normalized whole-law stopping contraction, endpoint distances and complete-word gap; it asserts no new general TV or coupling theorem and no literature priority. The necessary relation leaves $S$ free away from the excluded neighborhood and supplies no unrestricted positive risk-only gap, evaluated optimizer, finite attainment, resource optimum or physical-space dimension. $\square$
+
+## 追加锚（本行以下为增补区）
