@@ -1,0 +1,57 @@
+**证明。**
+
+$a$ 是第一窗口要求第二窗口处于 $\mathcal C_0$ 的概率，$b$ 是第二窗口要求第一窗口处于 $\mathcal R_0$ 的概率。两种限制必须在同一个联合样本中同时满足，因此必须有足够的非冲突质量：
+
+$$
+1-a-b\ge0.
+$$
+
+反过来，当 $a+b\le1$ 时，可以构造如下联合律。令：
+
+$$
+c=1-a-b.
+$$
+
+非法块取零：
+
+$$
+P_{ij}^\star=0,
+\qquad
+i\in\mathcal R_1,\ j\in\mathcal C_1.
+$$
+
+其余四个块取：
+
+$$
+P_{ij}^\star =
+\frac{\mu_i\nu_j}{1-b},
+\qquad
+i\in\mathcal R_1,\ j\in\mathcal C_0,
+$$
+
+$$
+P_{ij}^\star =
+\frac{\mu_i\nu_j}{1-a},
+\qquad
+i\in\mathcal R_0,\ j\in\mathcal C_1,
+$$
+
+$$
+P_{ij}^\star =
+\frac{c\,\mu_i\nu_j}{(1-a)(1-b)},
+\qquad
+i\in\mathcal R_0,\ j\in\mathcal C_0.
+$$
+
+逐行逐列求和即可恢复 $\mu_i,\nu_j$。因此条件也是充分的。证毕。
+
+这说明“最大熵补全”不能简单写成两个窗口的独立乘积。独立乘积可能把质量放入非法的：
+
+$$
+\mathcal R_1\times\mathcal C_1
+$$
+
+块中。
+
+---
+

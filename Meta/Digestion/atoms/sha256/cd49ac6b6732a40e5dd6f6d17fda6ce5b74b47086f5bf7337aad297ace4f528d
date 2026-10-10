@@ -1,0 +1,1 @@
+| [NativeConditionalControl.lean，3a56aa4](https://github.com/the-omega-institute/trureturing/blob/3a56aa49697ab7641b7dbe616e0424327c69d2ca/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeConditionalControl.lean)：`jointLaw`、`posterior`、`sameK_conditional_tail`、`native_first_pending` | 既有 Lean 声明归属：正整数 Depth、共同隐藏 $K$ 的条件尾部及原 pending/Stop 合同；不提供本卷另拟的五模式—深度共同实现。 
