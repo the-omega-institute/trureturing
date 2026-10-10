@@ -4252,8 +4252,8 @@ $$
 \Delta_t\subseteq\bigcup_{K\in\mathcal R}\overline C_K\right\},
 \qquad
 d_t:=\max_{K\in\mathscr L}|\overline C_K\cap\Delta_t|,
-$$
-并约定 $\max\varnothing=0$ 且 $H_0:=0$。令
+$
+若不存在这样的 $\mathcal R$ 则置 $\sigma_t=\infty$；并约定 $\max\varnothing=0$ 且 $H_0:=0$。令
 $
 L_t:=
 \begin{cases}
