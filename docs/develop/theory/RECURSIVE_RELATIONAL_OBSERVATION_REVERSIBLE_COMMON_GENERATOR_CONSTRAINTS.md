@@ -1795,3 +1795,977 @@ $$
 三个私有标签始终不是总 COMPLETE 内存。原控制、持有记录、程序与表描述、表示和采样工作区、地址、输出索引、许可及持久随机性继续各自计入；任意长的正返回词仍合法。比较表的数学存在没有赋予在线后验、重抽 K、来源重置、免费观测、档案或时钟。获取、随机位、内部工作、合成、输出、时间及物理成本保持不同问题，本章的平方变化量不结算这些价格，也不恢复硬边缘缺陷预算。
 
 ## 追加锚（本行以下为后续增补区）
+
+# Chapter 14. Periodic full-box characterization and a rational failed bridge
+
+This chapter fixes the complete stopped carriers, the endpoint coordinates, and
+all conventions of Chapters 1--13.  It gives an exact result for one periodic
+reversible subclass and one rational table in that subclass.  Every law below
+is a complete law, so the infinite outcomes of the carriers are retained.
+The statements concern ordinary probability and finite arithmetic.  They do not
+assert a conclusion for a different update kernel, a different prior, or the
+unrestricted common-model problem.
+
+## 14.1. Common notation and the implication under test
+
+Put
+\[
+ a=\frac13,\qquad b=\frac25,\qquad r=\frac38,
+ \qquad \lambda_a=a(1-a)=\frac29,
+ \qquad \lambda_b=b(1-b)=\frac6{25},
+ \qquad t_r=r(1-r)=\frac{15}{64}.
+\]
+For
+\[
+ w_{n,0}=(\beta\alpha)^n\alpha,
+ \qquad w_{n,1}=(\beta\alpha)^n\beta\beta,
+\]
+the pure coordinates are
+\[
+ P_{p,s}(w_{n,0})=s[s(1-s)]^n,
+ \qquad P_{p,s}(w_{n,1})=(1-s)^2[s(1-s)]^n,
+\]
+\[
+ P_{\beta,s}(\beta)=1-s,
+ \qquad P_{\beta,s}(\alpha w_{n,c})=sP_{p,s}(w_{n,c}).
+\tag{14.1}
+\]
+The carriers include the infinite noncompletion outcomes.  For a table with
+\(A=I\), set
+\[
+ H=\operatorname{diag}(1-u)B\operatorname{diag}(v),
+ \qquad g=\operatorname{diag}(1-u)B(1-v),
+\]
+\[
+ Q_i(w_{n,0})=(H^nu)_i,\quad Q_i(w_{n,1})=(H^ng)_i,
+ \qquad W_i(\beta)=1-v_i,\quad
+ W_i(\alpha w_{n,c})=v_iQ_i(w_{n,c}).
+\tag{14.2}
+\]
+The actual row is unweighted: \(\pi B=\pi\), and the same acquired-letter
+kernels are used in actual and synthetic updates.  Define the indexed event
+arrays and their means by
+\[
+ f=g+Hg+H^2g,\qquad h=1-v+vg,\qquad
+ P=\pi f,\qquad S=\pi h.
+\tag{14.3}
+\]
+Thus \(f,h\) are determined by the table; they are not independent reports.
+
+Let
+\[
+ C_p=\{w_{0,1},w_{1,1},w_{2,1}\},
+ \qquad C_\beta=\{\beta,\alpha w_{0,1}\}.
+\]
+For \(X_{p,i}=Q_i\) and \(X_{\beta,i}=W_i\), define the complete positive-part
+costs
+\[
+ \mathcal E_s=\sum_i\pi_i\left[
+ \sum_{z\in C_s}(P_{s,r}(z)-X_{s,i}(z))_+
+ +\sum_{z\notin C_s}(X_{s,i}(z)-P_{s,r}(z))_+\right].
+\tag{14.4}
+\]
+For every pair of normalized laws, without assuming its event mass is a
+midpoint, the coordinate identity is
+\[
+ \sum_i\pi_i\operatorname{TV}(X_{s,i},P_{s,r})
+ =\sum_i\pi_iX_{s,i}(C_s)-P_{s,r}(C_s)+\mathcal E_s.
+\tag{14.5}
+\]
+This identity is the reason that a passing interior cost cannot be substituted
+for the missing p midpoint.
+
+## 14.2. Exact full-box criterion for the periodic subclass
+
+**Theorem 14.1 (periodic full-box criterion).**  Let
+\[
+ B=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},
+ \qquad A=I_3,\qquad \pi=(w,w,1-2w),\quad 0<w<\frac12,
+\]
+and let \(u,v\in[a,b]^3\).  Write \(c_i=1-u_i\) and
+\[
+ \alpha=c_1v_2,\qquad \beta=c_2v_1,\qquad
+ \eta=\alpha\beta,\qquad t_3=c_3v_3.
+\]
+All p and suspended endpoint coordinate boxes on the complete carriers hold if
+and only if
+\[
+ \lambda_a^2\le\eta\le\lambda_b^2,
+ \qquad \lambda_a\le t_3\le\lambda_b,
+\tag{14.6}
+\]
+\(1-v_i\in[1-b,1-a]\), and every coordinate in (14.2) with \(0\le n\le4\)
+is in its corresponding endpoint interval.
+
+**Proof.** On the swap component,
+\[
+ H_* =\begin{pmatrix}0&\alpha\\ \beta&0\end{pmatrix},
+ \qquad H_*^2=\eta I_2.
+\]
+Consequently, for either \(z=u_*\) or \(z=g_*\),
+\[
+ H_*^{2j}z=\eta^jz,
+ \qquad H_*^{2j+1}z=\eta^jH_*z.                 
+\tag{14.7}
+\]
+On the fixed label, multiplication is by \(t_3\).  Since all entries of \(u_*\),
+\(g_*\), and their positive endpoint coordinates are positive, comparison of
+the even subsequence in (14.7) with the two endpoint geometric rates forces
+\(\lambda_a^2\le\eta\le\lambda_b^2\); otherwise the quotient by one of the
+endpoint rates tends to zero or infinity.  The same comparison on the fixed
+label forces \(\lambda_a\le t_3\le\lambda_b\).  The coordinate
+\(W_i(\beta)\) gives the displayed interval for \(1-v_i\).  This proves
+necessity, including the negative eigenvalue of the swap block.
+
+For sufficiency, multiplication by \(\eta\) preserves both endpoint bounds
+when the index is increased by two.  For type 0, the seeds are the two parity
+values at \(n=0,1\).  For p type 1, direct substitution in (14.1) shows that
+the a endpoint is the upper bound at \(n=0,1,2\) and the lower bound for
+\(n\ge3\), with the reverse order for b; the finite tests through \(n=4\)
+seed both remaining parities.  For the suspended continuing type 1, a is the
+upper bound only at \(n=0\), and is the lower bound at every \(n\ge1\); the
+finite tests at \(n=1,2\) seed the two parities.  The fixed label uses the same
+argument with one-step multiplication by \(t_3\).  Hence all finite
+coordinates lie in their boxes.
+
+Finally, rowwise \(H\mathbf1\le(4/15)\mathbf1\) and
+\(u+g+H\mathbf1=\mathbf1\) give
+\[
+ \sum_{n=0}^{L-1}H^n(u+g)=\mathbf1-H^L\mathbf1,
+ \qquad 0\le H^L\mathbf1\le(4/15)^L\mathbf1.       
+\tag{14.8}
+\]
+Both Q and W therefore normalize on the complete carriers, and their infinite
+outcomes have mass zero.  The infinite coordinates are the zero endpoint
+coordinates and satisfy their boxes.  This proves the equivalence. \(\square\)
+
+## 14.3. The rational table and its complete boxes
+
+Define the rational table \(R\) by
+\[
+ w=\frac{956000000000}{2309644331783},\qquad
+ \pi=\frac{(956000000000,956000000000,397644331783)}{2309644331783},
+\]
+\[
+ B=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\quad A=I_3,\quad
+ u=\left(\frac{1941}{5000},\frac{731}{2000},\frac13\right),\quad
+ v=\left(\frac{3757}{10000},\frac{3719}{10000},\frac13\right).
+\tag{14.9}
+\]
+The two swap weights agree, so detailed balance holds, and the fixed label has
+positive mass.  Direct rational multiplication gives
+\[
+ H=\begin{pmatrix}
+ 0&11376421/50000000&0\\
+ 4767633/20000000&0&0\\
+ 0&0&2/9
+ \end{pmatrix},\qquad
+ g=\left(\frac{19213579}{50000000},
+ \frac{7922367}{20000000},\frac49\right),
+\]
+\[
+ \eta=\frac{54238600181493}{10^{15}},\qquad
+ \lambda_a^2<\eta<\lambda_b^2,\qquad
+ \eta<\left(\frac{15}{64}\right)^2.             
+\tag{14.10}
+\]
+The indexed arrays from (14.3) are
+\[
+ f=\left(
+ \frac{24762105744861880093447}{50000000000000000000000},
+ \frac{10184130961974194153931}{20000000000000000000000},
+ \frac{412}{729}\right),
+\]
+\[
+ h=\left(\frac{384335416303}{500000000000},
+ \frac{155083282873}{200000000000},\frac{22}{27}\right).
+\tag{14.11}
+\]
+Their exact means are
+\[
+ S=\pi h=\frac{5261}{6750},\qquad
+ P=\pi f=
+ \frac{21596346117609589569290488819}
+ {42093267946745175000000000000}.
+\tag{14.12}
+\]
+In particular,
+\[
+ P-M_p=-\frac{4813429587342128337389303}
+ {1559009923953525000000000000}<0,
+ \qquad M_p=\frac{11758471}{22781250},
+ \qquad S=M_\beta=\frac{5261}{6750}.       
+\tag{14.13}
+\]
+
+For a finite arithmetic certificate, let \([L,U]\), with \(L<U\), be the
+ordered endpoint interval for a swap-label coordinate \(x\).  Define its
+normalized lower and upper endpoint slacks by
+\[
+ \sigma_L(x;L,U)=\frac{x-L}{U-L},\qquad
+ \sigma_U(x;L,U)=\frac{U-x}{U-L}.
+\]
+Both slacks are nonnegative exactly when \(x\in[L,U]\).  For each displayed
+family and index n, each entry below is a lower bound for both slacks on both
+swap labels, with the displayed integer divided by 1000.  These bounds follow
+by substitution of (14.10) and (14.7) and cross multiplication of positive
+denominators:
+\[
+\begin{array}{c|cc|cc}
+ n&H^nu&H^ng&VH^nu&VH^ng\\ \hline
+0&177&287&289&89\\
+1&157&301&290&300\\
+2&301&87&350&310\\
+3&272&82&347&391\\
+4&359&263&391&381
+\end{array}
+\tag{14.14}
+\]
+The minimum of all 80 normalized swap-label endpoint slacks is
+\[
+ \frac{53836941709094477408822760489}
+ {651735040000000000000000000000}>\frac1{20}.
+\tag{14.15}
+\]
+It occurs at p type 1, \(n=3\), label 2.  The fixed label is the native
+\(a\)-law.  Theorem 14.1 now extends the finite tests to every word and both
+infinite outcomes; no finite-prefix replacement of the complete carriers is
+being made.
+
+## 14.4. Exact costs and the five passing inequalities
+
+Write \(x_n=H^nu\) and \(y_n=H^ng\).  The positive parts in (14.4) are
+exactly exhausted by \(0\le n\le11\).  More explicitly,
+\[
+\begin{aligned}
+ E_{p,12}=\sum_i\pi_i\sum_{n=0}^{11}\big[ &(x_{n,i}-rt_r^n)_+\\
+ &+\begin{cases}((1-r)^2t_r^n-y_{n,i})_+,&n<3,\\
+ (y_{n,i}-(1-r)^2t_r^n)_+,&n\ge3,
+ \end{cases}\big],
+\end{aligned}
+\tag{14.16}
+\]
+\[
+\begin{aligned}
+ E_{\beta,12}=\sum_i\pi_i\bigg[(v_i-r)_+ +\sum_{n=0}^{11}\big[ &(v_ix_{n,i}-r^2t_r^n)_+\\
+ &+\begin{cases}(r(1-r)^2-y_{0,i}v_i)_+,&n=0,\\
+ (v_iy_{n,i}-r(1-r)^2t_r^n)_+,&n\ge1
+ \end{cases}\big]\bigg].
+\end{aligned}
+\tag{14.17}
+\]
+For each of the four pair-coordinate families, the exact rational comparison at
+\(n=10,11\) puts the coordinate-to-target ratio below \(99/100\).  Increasing
+n by two multiplies the ratio by \(\eta/t_r^2<1\).  Thus no complementary
+positive part occurs after n=11.  The fixed label has the corresponding native
+signs, and its rate \(\lambda_a<t_r\) preserves them.  Equations (14.16)--
+(14.17) are therefore the complete costs, including all tails:
+\[
+ \mathcal E_p=
+ \frac{643087291979262596633580067568261899483610983055994806187133240733035867}
+ {57741108294575000000000000000000000000000000000000000000000000000000000000}
+ <\frac{149501569}{4096000000},
+\tag{14.18}
+\]
+\[
+ \mathcal E_\beta=
+ \frac{2327930565007271205997910717674300465068401622538466558333161}
+ {577411082945750000000000000000000000000000000000000000000000000}
+ <\frac{1759}{64000}.
+\tag{14.19}
+\]
+Using the actual event mass in (14.5), the two interior risks are
+\[
+ F_p(r)=P-\frac{132025}{262144}+\mathcal E_p<\rho_p,
+ \qquad
+ F_\beta(r)=M_\beta-\frac{395}{512}+\mathcal E_\beta<\rho_\beta.
+\tag{14.20}
+\]
+Each strict inequality is a rational positive-denominator comparison.  The
+full-box identity of REV, §4, gives the endpoint values
+\[
+ F_p(a)=\rho_p+(M_p-P),\qquad
+ F_p(b)=\rho_p-(M_p-P),\qquad
+ F_\beta(a)=F_\beta(b)=\rho_\beta.                 
+\tag{14.21}
+\]
+Thus the p-a inequality fails, while p-b, both suspended endpoint inequalities,
+and both interior inequalities pass.  The p midpoint is explicitly absent; the
+cost bounds do not repair it.
+
+## 14.5. The retained decline and energy necessities
+
+For the same table and the definitions in REV, §§12--13, direct substitution
+in the original forms gives
+\[
+ \delta_- =\frac{6118400000}{2309644331783},\qquad
+ T=\frac{6060753200}{6928932995349},\qquad
+ J_v=\frac{13804640}{2309644331783},\qquad
+ J_u=\frac{492617240}{2309644331783}.
+\tag{14.22}
+\]
+Because the two directed swap edges both have weight \(w\), the last quantity
+is exactly \(J_u=w(u_1-u_2)^2\), with the factor one half in the Dirichlet
+form.  With the constants of REV, §12,
+\[
+ L=\frac{3579821}{4033125},\qquad r_0=\frac{8719}{5975},\qquad
+ \gamma=\frac{7052414}{12099375},
+\]
+\[
+ L\delta_- -r_0T-\gamma J_v
+ =\frac{25055625151472}{23385148859302875}>\frac1{1000}.
+\tag{14.23}
+\]
+This is precisely the strict decline inequality after division by positive L.
+The squared-return condition retained from REV, §13, is also satisfied:
+\[
+ J_u>
+ \frac{1331}{30375}\left(
+ \frac{14219478376}{318644812890625\cdot400000}
+ \right)^3.                                      
+\tag{14.24}
+\]
+The comparison is rational.  These are necessary conditions for the relevant
+common endpoint problem; their satisfaction supplies no converse.
+
+## 14.6. The fixed-N rational bridge and its boundary
+
+Let \(N\) be the fixed comparison table from REV, §12.27:
+\[
+ \pi_N=\left(\frac{461}{2000},\frac{539}{1000},\frac{461}{2000}\right),
+ \quad v_N=\left(\frac{17}{50},\frac{39}{100},\frac{17}{50}\right),
+\]
+\[
+ u_N=\left(\frac{33999}{100000},
+ \frac{135404266789272139}{346228952419350000},
+ \frac{33999}{100000}\right),
+ \quad
+ (B_N)_{ij}=\frac{999}{1000}{\bf1}_{i=j}+\frac{\pi_{N,j}}{1000},
+ \quad A_N=I.
+\tag{14.25}
+\]
+Exact multiplication in (14.2)--(14.3) gives
+\[
+ q_-=M_p-P(N)=
+ \frac{370499271854092531370662238590884540184575294432644967493}
+ {331960119212493764912089170000000000000000000000000000000000}
+ >\frac1{1000},
+ \qquad S(N)=M_\beta.                         
+\tag{14.26}
+\]
+The first and third rows have identical emissions, so the two-state lumping
+\[
+ \pi_*=(461/1000,539/1000),\qquad
+ B_*={1\over10^6}\begin{pmatrix}999461&539\\461&999539\end{pmatrix}
+\]
+is an exact calculation of (14.25), not a new table.
+
+For completeness, the full costs of N satisfy the rational enclosures
+\[
+ \frac{24846083253}{10^{12}}<\mathcal E_p(N)<
+ \frac{24846083254}{10^{12}}<\frac{149501569}{4096000000},
+\]
+\[
+ \frac{17913722449}{10^{12}}<\mathcal E_\beta(N)<
+ \frac{17913722450}{10^{12}}<\frac{1759}{64000}.
+\tag{14.27}
+\]
+To see that these are full-law enclosures, sum (14.16)--(14.17) through n=23.
+The omitted p tail is at most
+\[
+ (6/25)^{24}=
+ \frac{4738381338321616896}{3552713678800500929355621337890625},
+\]
+and the omitted suspended tail is at most \((2/5)(6/25)^{24}\).  All terms
+are rational and nonnegative, so (14.27) follows without a truncation of the
+carrier.
+
+The algebraic fixed-N bridge is the following.  If a prospective table E has
+\(q_+=P(E)-M_p>0\) and the two tables are combined with weights proportional
+to \(q_-\) and \(q_+\), then any common budget \(B_s\) requires
+\[
+ q_-\mathcal E_s(E)+q_+\mathcal E_s(N)
+ \le(q_-+q_+)B_s,
+ \qquad s\in\{p,\beta\}.                         
+\tag{14.28}
+\]
+This is just multiplication of the two complete-law costs by the positive
+mixture weights.  Since (14.13) has \(P(R)-M_p<0\), R cannot be the positive
+side of (14.28); it is a failed sufficiency bridge, not a companion E.
+
+For the linear defect used in REV, §11, put
+\[
+ \kappa=\frac{1116529}{806625},\qquad
+ C=M_p-\kappa M_\beta=-\frac{151298}{268875},\qquad
+ D=P-\kappa S-C.                                  
+\tag{14.29}
+\]
+On the locus \(S=M_\beta\), one has exactly \(D=P-M_p=q_+\).  Therefore an
+inequality \(D\le0\) on a specified full-box class excludes a strictly positive
+fixed-N companion in that class.  Equality is not an exclusion: the native
+matched endpoint tables satisfy \(D=0\), as recorded in REV, §11.1.  Consequently
+an exact-attainment exclusion at the equality boundary would additionally have
+to verify the complete equality locus and both interior costs in (14.28).
+No such equality/interior argument is supplied by (14.13)--(14.28), and no
+stronger sign conclusion is drawn here.
+
+## 14.7. Return to the original stopped source
+
+The rational table (14.9) is an effective stationary table.  Under [PAID,
+Lemma 2.1.1] it is realized on the original stopped source with one sampled
+positive integer K, \(m=2,d=1,\ell=2,n=4\), both seeds, every marker triple,
+all held registers, permissions, paid rejections, finite returns, the
+third-write-before-latch rule, the fourth completion, the unique Stop, and the
+supplied complete full-record renderer \(I_c\).  The fixed table and program
+are preinstalled.  The source-independent private label is sampled with row
+\(\pi\) after the third record write and latch, in that same original update,
+using the same fixed row on every seed and held-record fibre.
+The actual B update and suspended I update use the same acquired-letter kernels
+as synthetic generation.
+
+Induction on every positive paid history gives row \(\pi\) at each p and
+suspended cut because \(\pi B=\pi I=\pi\).  The actual letters are not weighted
+by u or v.  The [PAID, formula (2.3)] and [CLIP, Proposition 2.3] correspondence
+therefore identifies the phase suprema with the complete-law risks in
+(14.20)--(14.21), on the installed support \(\{1,2,3\}\) and its stated
+positive endpoint masses.  TV is taken separately for each complete
+configuration before the configuration average.  All partial parses, finite
+returns, held-record fibres, legal noncompletion words, and infinite tails
+remain in the domains.
+
+Every entry in (14.9) is rational.  A finite common denominator gives an exact
+sampler using fresh fair bits, rejection of out-of-range integers, and a finite
+category map; the fixed-width candidate integer, bit cursor, thresholds,
+program state, and workspace are charged to COMPLETE.  Rejected attempts reuse
+this finite storage without retaining an unbounded retry counter.  The
+rejection terminates almost surely and introduces
+no source read or auxiliary observation.  This establishes representability of
+R, whose p-a inequality nevertheless fails.  It does not provide an effective
+sampler for arbitrary real tables, nor does it turn a stationary table into a
+free runtime oracle.  The once-sampled K is not resampled, the source is not
+reset, and no count, clock, posterior, configuration distribution, or auxiliary
+measurement is supplied to the observer.  Persistent randomness and every
+sampler state are part of COMPLETE.
+
+## 14.8. Mathematical boundary and citations
+
+The conclusion of this chapter is exactly the conjunction of Theorem 14.1 and
+the rational implications (14.13), (14.18)--(14.24), and (14.26)--(14.29).
+It proves that complete endpoint boxes, the suspended midpoint, both complete
+interior budgets, the retained decline condition, and the retained positive
+squared-return condition do not imply the complementary p event inequality.
+It also supplies the finite periodic full-tail characterization.  It does not
+prove a positive companion, a whole-domain chord inequality, exclusion of all
+reversible or nondeterministic tables, a zero or positive unrestricted
+infimum, exact attainment, or an optimum under a fixed resource budget.
+The table R is therefore a nonattainer for the six-condition common endpoint
+problem because its p-a inequality fails.
+The quantities \(J_u,J_v,T,\delta_-\), return variation, complete-law dispersion,
+and configuration risk remain distinct.
+
+The full-source realization and all-history correspondence are reused from
+[PAID, Lemma 2.1.1 and formula (2.3)] and [CLIP, Proposition 2.3].  The paired
+indexed-array and complete-law regeneration correspondence is [PAIRED, Theorem
+4.1, Corollary 4.2, and Chapter 11]; midpoint means do not replace its paired
+arrays.  The endpoint geometry, six risk identities, decline budget, and
+squared-return necessity are [REV, §§3--4, 11--13].  Complete-tail acquired
+return and common-row restrictions are [ACQUIRED-RETURN, Theorems 3.1, 9.2,
+and 9.3].  The comparisons use only detailed balance, finite parity, TV
+convexity, geometric summation, and elementary rational arithmetic in the
+stated domains.  These citations supply their own hypotheses; no conclusion is
+transported beyond them.
+
+## 15. Event-chord sign and equality on the periodic full-box class
+
+**Definition 15.1 (the periodic class and its event defect).** Let
+$a=1/3$, $b=2/5$, let $\sigma$ interchange 1 and 2 and fix 3, and take exactly
+
+$$
+A=I_3,\qquad B_{ij}=\mathbf1_{\{j=\sigma(i)\}},\qquad
+\pi=(w,w,1-2w),\quad 0<w<\tfrac12,\qquad u,v\in[a,b]^3.
+\tag{15.1}
+$$
+
+Put $c_i=1-u_i$, $H=\operatorname{diag}(c)B\operatorname{diag}(v)$ and
+$g_i=c_i(1-v_{\sigma(i)})$. The complete laws $Q_i,W_i$ are the laws
+generated by this same table in (14.2), on the carriers of Definition 2.2.
+Assume that both laws at every label satisfy every endpoint coordinate box
+(4.3), including the infinite coordinates. Theorem 14.1 supplies an equivalent
+finite characterization of this assumption; no finite prefix is substituted
+for the complete laws. With the events $C_p,C_\beta$ of (4.4), write
+
+$$
+P_i=Q_i(C_p)=g_i+(Hg)_i+(H^2g)_i,\qquad
+S_i=W_i(C_\beta)=1-v_i+v_ig_i,
+$$
+
+$$
+P=\sum_i\pi_iP_i,\qquad S_{\rm evt}=\sum_i\pi_iS_i,\qquad
+D=P-\kappa S_{\rm evt}-C,
+\quad \kappa=\frac{1116529}{806625},\quad C=-\frac{151298}{268875}.
+\tag{15.2}
+$$
+
+Thus $S_{\rm evt}$ is the suspended event mean called $S$ in Chapter 14.
+It is distinct from the nonnegative four-moment defect called $S$ in
+[PAIRED, Chapter 14](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md).
+No equality between the two swap cross-rates is assumed in Definition 15.1.
+
+**Theorem 15.2 (whole periodic-class sign and exact equality).** Every table
+in Definition 15.1 satisfies $D\le0$. Equality holds if and only if
+
+$$
+u_1=u_2=v_1=v_2=r,\qquad u_3=v_3=r',
+\qquad r,r'\in\{a,b\}.
+\tag{15.3}
+$$
+
+The sign and equality assertions are independent of the installed prior.
+
+**Proof.** First retain the complete-law and flow interfaces. The own laws
+satisfy, with prefixing of complete words understood,
+
+$$
+Q_i=u_i\delta_\alpha+c_i\,\beta W_{\sigma(i)},\qquad
+W_i=(1-v_i)\delta_\beta+v_i\,\alpha Q_i.
+\tag{15.4}
+$$
+
+By Interface 3.4, $u+g+H\mathbf1=\mathbf1$ and
+$H\mathbf1\le(4/15)\mathbf1$ normalize these laws. The infinite outcomes
+remain in their carriers and have zero mass. In the notation of
+[PAIRED, Definition 11.2 and (11.24)](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md),
+their two full-law flows are
+
+$$
+\Gamma_B=\sum_i\pi_i\delta_{(Q_i,W_{\sigma(i)})},\qquad
+\Gamma_A=\sum_i\pi_i\delta_{(W_i,Q_i)}.
+\tag{15.5}
+$$
+
+They have common unweighted phase marginals because $\pi B=\pi A=\pi$.
+Dividing (15.4) by its positive continuation probabilities gives
+$\mathcal R_B(Q_i)=W_{\sigma(i)}$ and $\mathcal R_A(W_i)=Q_i$ on every
+complete atom. Consequently both full-descriptor conditional residual
+equations hold. If two input descriptors coincide, their residual measures
+coincide as well, so pushing labels to descriptors preserves these equations.
+These are applications of the supplied interface, before any event estimate.
+
+For $i\in\{1,2\}$ put $j=3-i$ and introduce the two positive cross-rates
+
+$$
+x_i=\frac{(Hg)_j}{g_j}=\frac{v_ig_i}{1-v_i}.
+$$
+
+The actual swap recursion, without identifying $x_1$ and $x_2$, gives
+
+$$
+\begin{aligned}
+(Hg)_i&=x_jg_i,&
+x_1x_2&=c_1c_2v_1v_2,\\
+(H^2g)_i&=x_ix_jg_i,&
+(H^3g)_i&=x_ix_j^2g_i,&
+v_i&=\frac{x_i}{g_i+x_i}.
+\end{aligned}
+\tag{15.6}
+$$
+
+Let $m_i=v_ig_i$ and $n_i=v_i(Hg)_i=m_ix_j$. The two suspended
+coordinates $\alpha w_{0,1}$ and $\alpha w_{1,1}$, with their endpoint
+values from (11.4)--(11.6), imply
+
+$$
+\frac{18}{125}\le m_i\le\frac4{27},\qquad
+\frac8{243}\le n_i\le\frac{108}{3125}.
+$$
+
+Taking their ratios therefore bounds each cross-rate separately:
+
+$$
+\ell:=\frac29=\frac{8/243}{4/27}\le x_j
+\le\frac{108/3125}{18/125}=\frac6{25}=:L.
+\tag{15.7}
+$$
+
+The p coordinates $w_{0,1},w_{2,1},w_{3,1}$ also give
+
+$$
+g_i\ge G:=\frac9{25},\qquad
+x_ix_jg_i\le T:=\frac{16}{729},\qquad
+x_ix_j^2g_i\le q:=\frac{1944}{390625}.
+\tag{15.8}
+$$
+
+The last upper endpoint is the b endpoint, as in (11.25). These necessary
+inequalities all concern the same generated laws. They do not assert that an
+arbitrary choice satisfying just these inequalities satisfies all boxes.
+
+Set $t=x_1$, $s=x_2$. By (15.6), the equally weighted swap-component
+defect is the following function at its actual $g_1,g_2$:
+
+$$
+\begin{aligned}
+F(t,s;g_1,g_2)
+={}&\frac12\left[(1+ts)(g_1+g_2)+sg_1+tg_2\right.\\
+&\left.\hspace{8mm}-\kappa\left\{
+\frac{g_1(1+t)}{g_1+t}+\frac{g_2(1+s)}{g_2+s}\right\}\right]-C.
+\end{aligned}
+\tag{15.9}
+$$
+
+For $t,s\in[\ell,L]$ and $g_1,g_2\ge G$, twice either partial derivative
+with respect to a g variable is bounded below by
+
+$$
+1+\ell+\ell^2-\kappa\frac{L(1+L)}{(G+\ell)^2}
+=\frac{2341664383}{41527474875}>0.
+\tag{15.10}
+$$
+
+Indeed twice the first derivative is
+$1+ts+s-\kappa t(1+t)/(g_1+t)^2$; the other interchanges $t,s$.
+Hence (15.8) permits the strictly monotone comparison
+
+$$
+\begin{gathered}
+U_1(t,s)=\min\left\{\frac{T}{ts},\frac{q}{ts^2}\right\},\qquad
+U_2(t,s)=\min\left\{\frac{T}{ts},\frac{q}{t^2s}\right\},\\
+F(t,s;g_1,g_2)\le \overline F(t,s):=F(t,s;U_1,U_2),
+\end{gathered}
+\tag{15.11}
+$$
+
+with equality only if both $g_i=U_i$. Each comparison segment stays above
+$G$, since the actual $g_i\le U_i$. The upper envelope is an algebraic
+comparison; it need not itself be generated by a table.
+
+Here is a finite exact certificate for $\overline F$ on its entire square.
+Put
+
+$$
+e=ts,\qquad h_0=\frac qT=\frac{177147}{781250},\qquad
+h_0-\ell=\frac{31823}{7031250}>0,\qquad
+L-h_0=\frac{10353}{781250}>0.
+\tag{15.12}
+$$
+
+The following three closed rectangles and the reflection of the third cover
+$[\ell,L]^2$. In each row, $\overline F=N/d$ with the indicated positive
+denominator and with $N$ given below.
+
+$$
+\begin{array}{c|c|c|c|c|c}
+ & (t,s)\text{ rectangle}&U_1&U_2&d&\deg_{t,s}N\\ \hline
+\mathrm{LL}&[\ell,h_0]^2&T/e&T/e
+ &2e(T+te)(T+se)&(4,4)\\
+\mathrm{HH}&[h_0,L]^2&q/(ts^2)&q/(t^2s)
+ &2e^2(q+e^2)&(4,4)\\
+\mathrm{LH}&[\ell,h_0]\times[h_0,L]&q/(ts^2)&T/e
+ &2ts^2(q+e^2)(T+ts^2)&(4,6)
+\end{array}
+\tag{15.13}
+$$
+
+Substitution into (15.9) and multiplication by d give the explicit
+polynomials
+
+$$
+\begin{aligned}
+N_{\rm LL}={}&[2T(1+e)+T(t+s)-2Ce](T+te)(T+se)\\
+&-\kappa eT[(1+t)(T+se)+(1+s)(T+te)],\\
+N_{\rm HH}={}&q[(1+e)(t+s)+2e](q+e^2)
+-\kappa qe^2(2+t+s)-2Ce^2(q+e^2),\\
+N_{\rm LH}={}&[(q+Ts)(1+e)+sq+Te-2Cts^2](q+e^2)(T+ts^2)\\
+&-\kappa ts^2[q(1+t)(T+ts^2)+T(1+s)(q+e^2)].
+\end{aligned}
+\tag{15.14}
+$$
+
+For each rectangle $[A_0,A_1]\times[B_0,B_1]$ in (15.13), make the
+affine substitution $t=A_0+(A_1-A_0)X$, $s=B_0+(B_1-B_0)Y$ and write
+the resulting numerator as $\sum_{p,r}a_{pr}X^pY^r$. With the respective
+degree bounds $(n,m)$ from that table, define the exact rational numbers
+
+$$
+b_{ij}=\sum_{p=0}^i\sum_{r=0}^j
+a_{pr}\frac{\binom{i}{p}}{\binom{n}{p}}
+       \frac{\binom{j}{r}}{\binom{m}{r}},
+\qquad 0\le i\le n,\quad 0\le j\le m.
+\tag{15.15}
+$$
+
+The tensor Bernstein identity is
+
+$$
+N(t,s)=\sum_{i=0}^n\sum_{j=0}^m b_{ij}
+\binom ni X^i(1-X)^{n-i}\binom mj Y^j(1-Y)^{m-j}.
+\tag{15.16}
+$$
+
+It follows by applying in each variable the binomial identity
+$X^p=\sum_{i=p}^n\binom{i}{p}\binom{n}{p}^{-1}
+\binom ni X^i(1-X)^{n-i}$. The basis terms in (15.16) are nonnegative
+and sum to one on the closed unit square. This mature identity, coefficient
+conversion and rectangle substitution are also given by
+[Ben Sassi, Sankaranarayanan, Chen and Abraham, *Linear Relaxations of
+Polynomial Positivity for Polynomial Lyapunov Function Synthesis*,
+Section 3.1, (3.7) and Lemma 3.2](https://arxiv.org/html/1407.2952v2).
+Only those polynomial-basis facts are used here.
+
+For complete rational coefficient bounds, the following matrices have rows
+indexed by i and columns by j, starting at zero. Each entry is
+$\lceil10^{12}b_{ij}\rceil$. The marked zeros satisfy $b_{00}^{\rm LL}=0$
+and $b_{44}^{\rm HH}=0$ exactly. The matrices follow from (15.14)--(15.15)
+by rational expansion and comparison after multiplication by positive
+denominators; they bound every coefficient, including those controlling
+closed edges and the branch switches.
+
+$$
+\begin{pmatrix}
+0&-17674&-32596&-44706&-53947\\
+-17674&-33590&-46698&-56940&-64255\\
+-32596&-46698&-57938&-66254&-71586\\
+-44706&-56940&-66254&-72587&-75876\\
+-53947&-64255&-71586&-75876&-77061
+\end{pmatrix}_{\rm LL},
+\tag{15.17}
+$$
+
+$$
+\begin{pmatrix}
+-26733&-75547&-109154&-125935&-124178\\
+-75547&-114718&-137415&-141924&-126433\\
+-109154&-137415&-147846&-138635&-107863\\
+-125935&-141924&-138635&-114149&-66435\\
+-124178&-126433&-107863&-66435&0
+\end{pmatrix}_{\rm HH},
+\tag{15.18}
+$$
+
+$$
+\begin{pmatrix}
+-2773&-8701&-13898&-18296&-21825&-24407&-25961\\
+-3303&-8975&-13894&-17990&-21191&-23419&-24591\\
+-3680&-9087&-13718&-17503&-20366&-22229&-23005\\
+-3901&-9034&-13368&-16830&-19345&-20831&-21200\\
+-3962&-8812&-12838&-15969&-18124&-19221&-19172
+\end{pmatrix}_{\rm LH}.
+\tag{15.19}
+$$
+
+For example, all coefficients except $b_{00}$ in LL are at most
+$-17674/10^{12}$. Applying partition of unity gives the explicit bounds
+
+$$
+\begin{aligned}
+N_{\rm LL}&\le-\frac{17674}{10^{12}}
+ [1-(1-X)^4(1-Y)^4],\\
+N_{\rm HH}&\le-\frac{26733}{10^{12}}[1-X^4Y^4],\\
+N_{\rm LH}&\le-\frac{2773}{10^{12}}.
+\end{aligned}
+\tag{15.20}
+$$
+
+The first right side vanishes only at $(X,Y)=(0,0)$, the second only at
+$(1,1)$, and the third never vanishes. At those two corners the respective
+numerator is exactly its zero coefficient. Reflection uses
+$F(t,s;g_1,g_2)=F(s,t;g_2,g_1)$. Thus $\overline F\le0$ on the entire
+square, with equality exactly at $(t,s)=(\ell,\ell)$ or $(L,L)$.
+
+Strict increase in (15.10) now shows that the actual swap defect is zero
+only at
+
+$$
+(x_1,x_2,g_1,g_2)=(\ell,\ell,4/9,4/9)
+\quad\text{or}\quad (L,L,9/25,9/25),
+\tag{15.21}
+$$
+
+since $T/\ell^2=4/9$ and $q/L^3=9/25$. Solving (15.6) gives
+$v_1=v_2=a$ or $v_1=v_2=b$, respectively. Then
+$c_i=g_i/(1-v_j)$ gives $u_1=u_2=v_1=v_2$ at that endpoint.
+Conversely, either matched endpoint block generates the corresponding native
+complete laws and has zero defect by (11.10).
+
+For label 3, Lemma 11.4 applies directly: the fixed-label defect
+$D_3=P_3-\kappa S_3-C$ is nonpositive, with equality exactly when
+$u_3=v_3\in\{a,b\}$. Therefore
+
+$$
+D=2w F(t,s;g_1,g_2)+(1-2w)D_3\le0.
+\tag{15.22}
+$$
+
+Both component weights are strictly positive. Equality requires and is
+implied by equality on each component, which is precisely (15.3).
+The proof used no prior or supported-depth restriction. $\square$
+
+**Corollary 15.3 (fixed-N exclusion and the supported-loss consumer).** On
+the locus $S_{\rm evt}=M_\beta=5261/6750$ in Definition 15.1, one has
+$P\le M_p=11758471/22781250$. Equality occurs at exactly two tables:
+$w=1/4$, with the swap and fixed components assigned opposite matched
+endpoints in (15.3). Consequently:
+
+1. There is no strictly positive fixed-N companion in this class for
+   (14.28). A configuration mixture with positive weight on both the fixed
+   table N of (14.25) and a table E in Definition 15.1 cannot satisfy both
+   endpoint-event midpoint equations.
+2. For every fixed finite or countable installed prior with
+   $\mu(1),\mu(2)>0$ and at least one supported $k\ge3$, no table of
+   Definition 15.1 attains all original two-phase configuration-risk
+   budgets. More precisely, either of the two midpoint equality tables has,
+   for every such actually supported k,
+
+$$
+\sum_i\pi_i\operatorname{TV}(Q_i,P_{p,r_k})
+\ge\rho_p+\frac{14219478376}{637289625781250}>\rho_p.
+\tag{15.23}
+$$
+
+This numerical lower bound is asserted for the two equality tables only.
+
+**Proof.** By (14.29), $D=P-M_p$ on $S_{\rm evt}=M_\beta$.
+Theorem 15.2 gives the sign and restricts equality to (15.3).
+The distinct native suspended event masses are $22/27$ and $93/125$,
+whose midpoint is $M_\beta$. Their a-endpoint total weight must therefore
+be exactly $1/2$. If both components use the same endpoint this is
+impossible; if they use opposite endpoints it forces $2w=1/2$. This gives
+exactly the two stated tables.
+
+For the first assertion, reuse $S_{\rm evt}(N)=M_\beta$ and
+$q_-=M_p-P(N)>1/1000$ from (14.26), together with N's complete boxes and
+cost enclosures in Section 12.6 and (14.27). If the mixture puts mass
+$\theta\in(0,1)$ on E, its suspended midpoint forces
+$S_{\rm evt}(E)=M_\beta$. Its p event mean is then
+
+$$
+(1-\theta)(M_p-q_-)+\theta P(E)
+\le M_p-(1-\theta)q_-<M_p.
+\tag{15.24}
+$$
+
+These means and the complete configuration losses are linear in the
+mixture weights when the table selector is part of the configuration.
+Thus the positive side of (14.28) cannot be supplied by any such E,
+including either equality table. The obstruction precedes the interior
+cost comparisons; N's passing interior costs do not supply the missing
+event balance.
+
+For the second assertion, the four endpoint risk budgets imply both full
+coordinate boxes and both event midpoints by Interface 4.1. The preceding
+classification leaves only the two equality tables. At either table the
+distribution of p configuration laws is
+$\tfrac12\delta_{P_{p,a}}+\tfrac12\delta_{P_{p,b}}$.
+The supplied complete-coordinate triangle identity gives, for every
+normalized complete p target R,
+
+$$
+\begin{aligned}
+&\frac{\operatorname{TV}(P_{p,a},R)+\operatorname{TV}(P_{p,b},R)}2-\rho_p\\
+&\quad=\frac12\sum_{z\in\Omega_p}\operatorname{dist}
+\left(R(z),[\min\{P_{p,a}(z),P_{p,b}(z)\},
+             \max\{P_{p,a}(z),P_{p,b}(z)\}]\right).
+\end{aligned}
+\tag{15.25}
+$$
+
+This includes the infinite coordinate. For $z=w_{3,1}$ its upper endpoint
+is $q=1944/390625$. Every supported $k\ge3$ has
+$r_k\in[3/8,5/13]$ by (2.1), and the supplied native-word gap is
+
+$$
+P_{p,r_k}(w_{3,1})=r_k^3(1-r_k)^5
+\ge\frac{4096000}{815730721}
+=q+\eta_{\rm nat},\qquad
+\eta_{\rm nat}=\frac{14219478376}{318644812890625}.
+\tag{15.26}
+$$
+
+Here the derivative is $r^2(1-r)^4(3-8r)\le0$ on that interval, so its
+minimum is at $5/13$. Equations (15.25)--(15.26) are the existing native
+gap used in [Acquired-return variation, (5.3)](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md)
+and [PAIRED, Corollary 12.3 and the proof of Corollary 14.4](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md).
+Their application after the equality classification proves (15.23).
+If depth 3 itself is supported, its particular coordinate gives the stronger
+excess $(84375/16777216-q)/2=344076471/13107200000000$.
+
+Interface 3.2, supplied by [PAID, Lemma 2.1.1 and (2.3)](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)
+and [CLIP, Proposition 2.3](RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md),
+identifies these supported-target suprema with the original all-positive-history
+configuration risks whenever the table is represented on the original source.
+For countable priors the paid-history concentration uses the summable
+domination in [PAID, Lemma 14.1], as in [PAIRED, Section 11.4]. The actual
+source retains one sampled K, both seeds, every marker triple, all paid
+rejections and partial parses, every finite return, original records and
+permissions, the third write before its latch, fourth completion and matching
+Stop. Source-independent initialization samples the same row $\pi$ in the
+original latch update; the actual and synthetic acquired-letter kernels are
+the same B and I. Their unweighted invariant row is $\pi$ at every positive
+fourth-segment history. The full-record renderer $I_c$ preserves TV and
+noncompletion, with TV taken separately at each configuration before its
+average. Thus each supported k in (15.23) supplies a violated original
+phase supremum, without inserting an unsupported pure target or conditioning
+on completion. The sign already holds for real tables, so this exclusion
+does not assume that arbitrary real entries admit effective exact sampling.
+For support only at depths 1 and 2, the supplied fair native endpoint
+construction attains the two budgets; the nonendpoint hypothesis is essential.
+$\square$
+
+**Mathematical citation 15.4 (comparison with the unrestricted face).** Write
+$\Sigma=2J_p+2J_\beta+M_B+M_A$ for PAIRED's four-moment defect, retaining
+its definitions on the two full-law flows. For (15.5) these terms specialize to
+
+$$
+\begin{aligned}
+J_p&=\sum_i\pi_i(u_i-a)(b-u_i),&
+J_\beta&=\sum_i\pi_i(v_i-a)(b-v_i),\\
+M_B&=\sum_i\pi_i(u_i-v_{\sigma(i)})^2,&
+M_A&=\sum_i\pi_i(v_i-u_i)^2.
+\end{aligned}
+\tag{15.27}
+$$
+
+[PAIRED, Theorem 14.2] bounds all normalized complete-target losses by
+those of one common endpoint weight, with errors $(540/11)\Sigma$ and
+$(1395/22)\Sigma$. Its Corollary 14.4 gives
+$\mathcal J+(540/11)\Sigma\ge\eta_{\rm nat}/4$ when a nonendpoint is
+supported. It leaves $\Sigma$ free. Theorem 15.2 supplies the distinct
+implication that $D=0$ inside Definition 15.1 forces matched endpoint
+components, hence $\Sigma=0$ by (15.27). In particular, imposing both
+event midpoints in this class forces that supplied endpoint boundary.
+Corollary 15.3 consumes its existing native loss obstruction with the sharper
+fair-weight bound $\eta_{\rm nat}/2$; it does not assert that bound away
+from the two midpoint equality tables.
+
+The supplied singleton inequality is Lemma 11.4; the two-label block of
+Section 11.4 has a different kernel from (15.1). Theorem 14.1 supplies the
+complete-box characterization, and Section 14.6 supplies the fixed-N
+mixture identity. The source-specific additional inference here is the joint
+two-cross-rate interval (15.7), its monotone two-variable envelope and the
+evaluated sign and equality certificate (15.13)--(15.22), consumed by
+Corollary 15.3. The Bernstein-basis tool is attributed in the proof; no
+general polynomial-positivity or native-gap theorem is added.
+
+The coarse interface in [Acquired-kernel blind directions, Conventions
+1.1--1.2 and Theorems 5.1, 6.3](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md)
+omits B and compares finite configured transcript prefixes. Definition 15.1
+instead fixes B and uses its entire own laws in both residual equations.
+The blind-direction construction therefore supplies neither a counterexample
+to Theorem 15.2 nor a zero-level pair for the full compact domain.
+
+The unrestricted criterion remains that of [PAIRED, Definition 11.2,
+Theorem 11.5 and Section 11.8]: both full-descriptor residual equations,
+shared unweighted marginals, the original endpoint boxes and midpoint means,
+and every supported complete configuration-loss bound must hold jointly.
+The domain allows arbitrary compatible Borel pairs, with no reversibility,
+fixed label count, common geometric rate, native-mixture or zero-variation
+restriction. This chapter evaluates the sign only on (15.1), and supplies no
+value of the unrestricted $j_c$, zero-level pair, vanishing family or strict
+unrestricted separation. Finite atomicity and permitted finitely represented
+exact sampling remain separate attainment requirements, with the one-sided
+finite-support criteria retaining precisely their hypotheses in [PAIRED,
+Chapter 13]. The free return-variation term in [Acquired-return variation,
+Theorem 10.2] is not bounded here by risk alone. No hard-resource preservation
+or fixed-resource optimum follows from the original-history correspondence.
+
+## 追加锚（本行以下为后续增补区）

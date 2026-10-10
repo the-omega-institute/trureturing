@@ -36,6 +36,8 @@
 | Nyx 提问(oracle broker 单次流式调用) | `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>` |
 | 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
 
+**Nyx 调用禁令**：禁止执行旧 `nyxid oracle` CLI 及其子命令，包括脚本封装、sshx 席位和失败回退中的间接调用。独立提问统一用上述 `nyx.py ask`，sshx 的 oracle 席统一用其 broker runner；具体契约见第 5.11 条。
+
 ## 1. 权威、本体与不可逆真值 DAG
 
 ### 1.1 权威原文与守护强度
@@ -271,7 +273,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 **反驳 result 豁免**：D5 `utility` 头中 `basis=refutes` 所指的 result 定理不要求四槽逃逸登记，不计入登记完成标准，也不产生 `DTR-Unregistered`；同模块其它新增公开定理仍按原标准。SL-031 的用途准入继续核对 result 是具名 claim 的闭合否定，kernel 与公理检查不变。result 按 utility 的同一选择器解析：在指定编译模块内恰有一个 included 声明的名称末段匹配，豁免取该声明的实际全名，支持任意命名空间及无命名空间；缺失或歧义选择器不产生豁免。
 **登记完成的证据标准**:上述 delta/first-pin 选择中的 D5 源模块若声称完成登记，须有忠实的登记证据。登记完成须提交其源码所有者对应的 `Reg/D5/<镜像路径>.lean`,每条审计目标至少一条 `declared_validated` 四槽记录,并带已编译的登记证明及当前 binding evidence。D5 内容模板若本身新增公开 `theorem`/`lemma` 声明也在此范围内;`Reg`、`Interface`、`Impl` 中的 helper 声明不是 D5 源声明,不会递归产生新的 Reg/D5 审计目标,但仍执行其现有 kernel、`sorry`、axiom 检查。CI 绿、任何 `DTR-*` warning 或仅有告警收据都不能视为登记完成;登记缺失、无效或所需证明缺失即审计未完成,按下款 issue 路径继续数学开发与交付。它不是历史全库回填要求,不改变 DTR 四种 Observe 或 delta-only runtime,也不改变 judge ownership。登记证明属于审计证据,不取得数学 GID、Scribe、deposit 或 utility 义务。
 **登记受阻的交付边界**：登记缺失、无效或受阻时，须新建或复用 issue，写明原定理、具体模板缺口或失败判词与读数、缺失证据，并在交付中关联 issue、如实说明审计未完成，继续数学开发与交付。不要求穷尽编码、反复重试、另开登记修复 lane 或另行豁免；本款优先于第 5.4/5.5 条对登记问题的即时修复要求。不得为使登记通过而修改判官（E1–E8、inspector、判官 Interface/Impl 包或 `tools/**`），不得硬套错误模板、削弱原定理或新增 bind-only 包装。issue 不是证明、`declared_validated` 或新的机器状态。
-**依赖族源绑定 API**：`DependentFamily.realize` 由带类型的 `Contract.TemplateEnrollment` 登记；`Reg/Support/DependentFamily` 提供共享 enrollment。原源码镜像使用 `def x : Contract.Registration … := {…}`，以 `realization := .source …`、`readout`、`sourceSelection`、`familyRecord` 和 `continuation := .unknown` 保留源绑定证据。选择器只定位 compiler 原陈述的坐标与实际读出位置；机器核对作用域、依赖闭合、逆映射、完整陈述重构与 rigid universes，kernel 核对等价 bridge、actual 正律、全族干预、固定其它读出/锚的敏感性及 actual 观察依赖。有限角色不要求有限参数、State 或输出；退化纤维可保留。具体契约与当前限制见 spec A5.3；不能据 API 的存在冒领未编译案例。
+**依赖族源绑定 API**：`DependentFamily.realize` 由带类型的 `Contract.TemplateEnrollment` 登记；`Reg/Support/DependentFamily` 提供共享 enrollment。原源码镜像使用 `def x : Contract.Registration … := {…}`；直接 `realization := .source …` 登记必须设 `familyRecord := none`，完整的带类型 `DependentFamily.Registration` 证明保留在 `realization` 中，并提供合法的已 enroll 模板 `readout`、`sourceSelection` 和 `continuation := .unknown`。非空 `familyRecord` 仅用于 spec A5.3 明确的既有有限 catalog / `LegacyPrimitiveRealization` 适配器，须配套有限 realization bridge，不用于直接源声明。选择器只定位 compiler 原陈述的坐标与实际读出位置；机器核对作用域、依赖闭合、逆映射、完整陈述重构与 rigid universes，kernel 核对等价 bridge、actual 正律、全族干预、固定其它读出/锚的敏感性及 actual 观察依赖。有限角色不要求有限参数、State 或输出；退化纤维可保留。具体契约与当前限制见 spec A5.3；不能据 API 的存在冒领未编译案例。
 **模板归属**：优先复用合法模板；现有模板无合法归属时，由 D5 内容所有者新增有意义的参数化数学模板，在 `Reg/Support` 完成共享 enrollment 后用于对应镜像。数学所有者已冻结时仍按其 Reg 镜像登记。不要求历史回填,不设新债务账本、兼容开关或宽限期。不得为了制造审计目标新增 bind-only D5 包装;复用既有定理或模板且没有新 Lean 声明时不产生人工审计义务。
 **四槽登记的有效性标准**：**选中 D5 源模块中**相对受保护基线新作者的每条公开 `theorem`/`lemma` 声明,除指定反驳 result 豁免外，登记完成的标准是有**至少一条** `declared_validated` 四槽登记。同一定理可在多个舞台登记多条逃逸路线,不判完备性或自然性。`Reg`、`Interface`、`Impl` 的 helper 声明不属于该 D5 author target,不会递归产生 Reg/D5 审计目标,其现有 kernel、`sorry`、axiom 检查照常执行。四槽各有机器消费者:
 
@@ -482,7 +484,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **推理提示词要求**:每个 nyx oracle/GPT Pro 推理提示词(含 nyxid-oracle/ChatGPT Pro brief)必须包含原文「深入思考与推理, 如数学推理按照正式定义定理证明推理」。
 - **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/设计/研究等推理任务均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
 - **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要交它推理的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。
-- **oracle 只走 broker 路线**:`tools/scripts/agent/nyx/nyx.py` 与 sshx 的 oracle runner 同用 NyxID oracle broker——先读池列表,再发一次流式 `chat/completions` 并据流的终态判完成;不调用旧 `nyxid oracle` CLI。池按列表现选在线 worker 最多的 active 池,`nyx.py pools` 查看,`NYX_POOL` 可显式指定;不凭记忆写死 slug。
+- **禁止旧 oracle CLI，统一走 broker**：禁止执行 `nyxid oracle` 及其任何子命令，不得通过脚本封装、sshx 席位或失败回退间接调用。独立提问统一执行 `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>`；sshx 的 `nyxid-oracle` 席统一使用其 broker runner。两者均通过 `nyxid proxy request oracle …` 访问 NyxID oracle broker——先读池列表，再发一次流式 `chat/completions` 并据流的终态判完成。池按列表现选在线 worker 最多的 active 池，用 `python3 tools/scripts/agent/nyx/nyx.py pools` 查看，`NYX_POOL` 可显式指定；不凭记忆写死 slug。broker 不可用或调用失败时显式报告失败，不得回退旧 CLI。
 - **codex prompt 以文件 stdin 喂入**:`codex exec [flags] < promptfile`,不作位置参数,避免 shell 破坏美元号/反引号/尖括号/引号/换行后造成空 prompt 与无输入挂起。
 - **flight 在飞时 caller 对该 work_target 的读数不作数**:测试可能置树于瞬时变异态。要读须取 sha256 并交回后复读比对,或只读派发前 diff 快照;读数冲突先核自己的采集条件,再判对方。临时快照不按过程档案留存(第 2.10 条)。
 
@@ -672,7 +674,27 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 **先热 dev，production Release 恢复只进主检出**：production Release 恢复（`make lean-cache-from-github-without-mathlib`）与 `fetch-or-fail` 报告恢复只在 dev 主检出运行；显式选择的 verification-mode fetch 不变。linked worktree 的生产缓存只由 `make lean-cache-ensure` 从热的主检出 clonefile 播种。报告恢复的补救前提是主检出为干净的 `dev` 检出；否则 `warm-donor` 以退出码 0 和 `skipped` 收据返回，不代表 donor 已预热。补救全程用条件链：`make -C '<main checkout>' warm-donor && make -C '<main checkout>' lean-report && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure`；主检出也可在 `make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 后执行 `make lean-report`。无法判定检出类型时同样拒绝生产取回与报告恢复。linked worktree 的主检出候选取 Git worktree 列表首条，须核验其物理顶层路径及共同 Git 目录；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，并给出不含主检出路径的补救，不将 Git store 目录当作主检出。
 
-本地 `make lean-report` 显式选择 `fetch-or-fail`。主检出中报告种子缺失、不完整、损坏或收据中的报告格式标识不符时，先在私有缓存写锁内取回 dev 同分区、缓存 key 一致的 Release 快照，重新检查后仍不可用即以 `LEAN_REPORT_CACHE_INCOMPATIBLE` 非零退出，不进入 Lake 报告提取；linked worktree 在所选种子不可用时先检查工作树内的 canonical 种子 `.lake/build/stratalint/raw-lean-report.json`，相符时从它复用并发布到所请求的输出，只有该种子也不可用时才以 `reason=linked-worktree` 退出，全程不取回。相符的种子按原生增量路径处理源码、配置与执行环境差量。`make lean-report REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许完整报告构建路径；主检出的 ensure 仍可按现有主检出专用路径由归档补齐冷的项目层。`make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 显式替换已存在的私有 build。CI 和 Release publisher 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，跳过报告恢复。入口策略由参数选择，不由环境变量判断本地或 CI；直接 `inspect.sh` 默认 `reuse-or-build`，可用 `--cache-miss-policy fetch-or-fail` 选择本地守护。
+本地 `make lean-report` 显式选择 `fetch-or-fail`。主检出中报告种子缺失、不完整、损坏或收据中的报告格式标识不符时，先在私有缓存写锁内取回 dev 同分区、缓存 key 一致的 Release 快照，重新检查后仍不可用即以 `LEAN_REPORT_CACHE_INCOMPATIBLE` 非零退出，不进入 Lake 报告提取；linked worktree 在所选种子不可用时先检查工作树内的 canonical 种子 `.lake/build/stratalint/raw-lean-report.json`，相符时从它复用并发布到所请求的输出，只有该种子也不可用时才以 `reason=linked-worktree` 退出，全程不取回。
+
+dev 主检出中相符但输入已变化的种子记录在 `.lake/lean-report-seed-base.json` 的生产提交只用于选择起点；记录的 `seed_sha256` 须匹配当前 canonical 报告、全部四个 sidecar 和成功收据的实际字节，否则 base 未知。只有选中的种子为 canonical 时才进行可选刷新，自定义种子打印 `reason=non-canonical-seed` 并保留。未知 base、不干净、CI、非 dev 或 detached 检出均在列举前打印各自的 keep 收据并返回；输入已相符的种子打印 `action=keep`、`reason=seed-current`。复用阶段完成后，入口立即打印一次决策收据，再进行 provisioning、ensure 或程序构建；后续失败保留原退出码。
+
+可继续选择时，只有最新兼容 Release 的 `producer_commit_sha` 是当前 `HEAD` 的祖先且严格晚于本地记录时才取回并以 `--refresh-stale` 替换；本地记录未知、Release 历史较旧或不在当前历史上时保留本地种子；缺失对象或浅历史无法证明祖先关系的 ancestry-unprovable 收据与完整历史上已证的非祖先区分。
+
+可选取回绑定批准的 tag 和生产提交，不重新列举或向其他快照回退；替换前验证 staged 报告的格式、完整性和清单身份，build 与 base 一起提交，提交前失败恢复原种子及 base。提交后的备份清理失败保留备份并报告已安装。列举、读取清单或可选安装失败且回滚成功时保留本地种子并继续 Lake 增量路径；回滚失败单独报告 `rollback-failed` 和保留的 backup 路径，以 `reason=release-rollback-failed` 非零退出。可选刷新后重新检查种子，缺失或不兼容时拒绝进入 Lake。
+
+干净谓词包含未跟踪文件。只有干净 dev 主检出的 canonical 种子生产或安装写入可信 base，恢复取清单生产提交与安装种子的完整身份；新种子无可信 base 时先移除旧记录。
+
+canonical publication、seal 和 base 写入在同一缓存锁内完成，seal 核对 publication 返回的五件 bundle 身份，已被替换的 generation 不重封或改写 base；base 还绑定 seal 写入的成功收据，从 canonical 整份复用时更新身份并保留原生产提交，从自定义种子发布到 canonical 时 base 未知。已未知 base 的记录清理失败只报告维护诊断，不拒绝有效复用或阻断生产准备；实际替换 generation 的 provenance 写入与失效要求不变。
+
+capture 只读输入，不改 base 或成功收据，也不依赖 Release 模块。canonical 生产准备只在现有缓存锁内移除 metadata；失败清理不移除 canonical 成功收据或 base；入口未改变 canonical 报告时，包含复用后的程序构建失败，保留当前收据和 base。
+
+成功收据仅在持有现有缓存锁、即将改变报告的准备阶段移除，并在报告成功封口后写入；已准备的生产失败保持无收据，下一次入口按既有缺失种子恢复路径处理。锁忙时不改活动 generation。自定义输出的生产准备和 seal 保留 canonical base。
+
+CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原生增量路径处理源码、配置与执行环境差量。
+
+`make lean-report REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许完整报告构建路径；主检出的 ensure 仍可按现有主检出专用路径由归档补齐冷的项目层。`make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 显式替换已存在的私有 build。
+
+CI 和 Release publisher 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，跳过报告恢复。入口策略由参数选择，不由环境变量判断本地或 CI；直接 `inspect.sh` 默认 `reuse-or-build`，可用 `--cache-miss-policy fetch-or-fail` 选择本地守护。
 
 **开工先利器**:先按第 6.1 条查找并复用当前 session 的 worktree;仅首次创建时经 `make worktree` 显式指定含完整 session ID 的 `DEST`(钉版校验;创建阶段永不物化 Lean 缓存,canonical Lean wrapper 按需 ensure;`make lean-cache-ensure` 仅作可选显式预热;永不 symlink),不手搓。**Lean 构建一律走本层门(`make lean` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:ensure 的 donor clonefile 播种只在 `.lake` **不存在**时可达(`LeanCacheEnsureCommand`;`.lake` 存在而 stamp 缺失时按「missing ≠ stale」保守原地重产,永不 clonefile——该 fail-safe 是对的,不改);故冷树上第一条裸 lake 命令会创建无 stamp 的 `.lake`,**当场作废 donor 资格**,代价为内容层全量重编(2026-08-22 实测两 lane 3h+,收据 `donor:null, clonefile_attempts:0`,worker rollout 在案)。裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
 
@@ -898,7 +920,7 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
   已编 olean 的有效性受 `[[require]]` mathlib rev 与 `[leanOptions]` 影响;name/version/keywords/defaultTargets/lean_lib roots|globs 不影响已编 olean。样本仅测试 metadata-only,leanOptions/mathlib rev 改动的重编规模未测,ASSUMED-UNVERIFIED;它回答 lake 重编语义,不外推 CI 时长。全文/目录进 key 须证明相关字段,commit SHA 同样违反最小充分输入原则。
   *成熟锚*:Bazel 的 action key 只含真正的 input(而非整个 workspace)、Nix derivation 的输入闭包、增量构建的最小重算集、over-approximation 的成本 vs under-approximation 的风险、cache 不是真源。
   〔守护:**软 + 硬投影**·「某项输入是否影响产物」不可 lint,靠对手官评审与本条;硬投影有二:①凡 key 的输入含**某文件全文**,PR 说明须写明「该文件的哪些字段影响产物、哪些不影响」,写不出即判该 key 未经论证;②凡以「命中率低 / 缓存失效」为由改动缓存机制,须附**两层读数**——cache 层的命中或 key 变化,与下游增量层的重算规模(如本判例的 `Built` 计数),**只给其一者按第 2.9 条禁模糊措辞判无效**〕
-  **【永久禁令·τ=0 owner 裁决】程序字节不得作数据产物的复用条件。** 报告、种子、收据等数据产物的复用资格只由真正决定产物字节的数据输入(Lean 源、构建配置、显式执行环境)与工件格式标识决定。禁止把程序文件、程序目录或其内容哈希放进复用条件或 cache key;评审见即拒,已有者见即删。**inspector 也是程序**:`tools/lean-inspector/**` 的 Lean 判官库、Inspector 可执行、`native.py`/`publication.py`/`materials.py` 等脚本与 C# 生产者同属程序,不是数据。判官实现或规则改变不使历史报告失效；契约接口改变通过 Reg 编译依赖自动重评；声明清单、公理闭包、statement identity 等提取语义或工件格式改变时更新报告格式标识,严格读取器拒读旧报告并全部重提取。逐模块报告工件的 trace 只含该模块自身的编译闭包、utility 输入与报告格式标识,判官驱动与 inspector 可执行文件只等待其构建、不混入 trace。判官实现改动复用有效报告；Reg/D5 编译闭包不含实现包，故不因实现改动而重编。**报告复用与程序构建分责**:整份报告收据只绑定报告格式、报告模块、配置和显式执行环境。程序编译由 inspector 入口的默认目标或显式 `STRATALINT_LEAN_BUILD_TARGETS` 决定；报告命中仍执行选中的 Lake 增量构建，未命中时与 `:report` 共用一次 Lake 调用。空目标的命中路径无需恢复重缓存；无目标参数的直接入口执行 inspector 默认程序目标。选中程序编译失败必须返回非零、清除成功收据，不得被报告缓存覆盖。〔守护:**硬投影**·`test_producer_program_bytes_never_gate_reuse` 钉住收据文件全集只含报告模块与配置、生产程序字节或 mode 改动不失效、报告格式改变必失效;其余缓存键靠评审按本款拒绝,不可 lint 不豁免〕
+  **【永久禁令·τ=0 owner 裁决】程序字节不得作数据产物的复用条件。** 报告、种子、收据等数据产物的复用资格只由真正决定产物字节的数据输入(Lean 源、构建配置、显式执行环境)与工件格式标识决定。禁止把程序文件、程序目录或其内容哈希放进复用条件或 cache key;评审见即拒,已有者见即删。**inspector 也是程序**:`tools/lean-inspector/**` 的 Lean 判官库、Inspector 可执行、`native.py`/`publication.py`/`materials.py` 等脚本与 C# 生产者同属程序,不是数据。判官实现或规则改变不使历史报告失效；契约接口改变通过 Reg 编译依赖自动重评；声明清单、公理闭包、statement identity 等提取语义或工件格式改变时更新报告格式标识,严格读取器拒读旧报告并全部重提取。逐模块报告工件的 trace 只含该模块自身的编译闭包、utility 输入与报告格式标识,判官驱动与 inspector 可执行文件只等待其构建、不混入 trace。判官实现改动复用有效报告；Reg/D5 编译闭包不含实现包，故不因实现改动而重编。**报告复用与程序构建分责**:整份报告收据只绑定报告格式、报告模块、配置和显式执行环境。程序编译由 inspector 入口的默认目标或显式 `STRATALINT_LEAN_BUILD_TARGETS` 决定；报告命中仍执行选中的 Lake 增量构建，未命中时与 `:report` 共用一次 Lake 调用。空目标的命中路径无需恢复重缓存；无目标参数的直接入口执行 inspector 默认程序目标。选中程序编译失败必须返回非零，不得被报告缓存覆盖；未改变 canonical 报告时保留成功收据和 base，已准备的生产失败保持无收据。〔守护:**硬投影**·`test_producer_program_bytes_never_gate_reuse` 钉住收据文件全集只含报告模块与配置、生产程序字节或 mode 改动不失效、报告格式改变必失效;其余缓存键靠评审按本款拒绝,不可 lint 不豁免〕
 
 报告批次在评定前固定由多个目标共享且依赖闭合的导入基座，utility claim 与 enrollment 导入计入目标闭包。规划只保留自有名字与输入标志，并释放规划读取的编译区域。常量与 owner 索引使用 Lean 既有 staged map：共享基座保留哈希表，目标与伴随声明插入使用持久哈希阶段，不复制基座桶数组；模块位置与来源分类索引按依赖顺序随编译输入加载建立，评定上下文直接读取，不保存计划、判词或新鲜度状态。每个目标的其余编译区域、常量表、元数据、评定、表达式/公理缓存与报告行限于该目标作用域；材料写出确认、报告行 flush 后先析构引用，再逆序显式释放区域，下一目标开始前不保留已完成目标的非共享大对象。跨目标生成名索引须拥有名字字符串，不借用目标区域。共享基座可常驻至进程退出，profile 将其规模与逐目标释放后的根计数、RSS 分列。native 批次打包、报告聚合与聚合验证逐模块消费，只允许成员、来源摘要、材料地址与偏移等小索引累积；批大小保持 100，观测不进入报告格式或复用条件。下游 C# 准入读取器读取一份已完成的报告，并保留各模块模板载荷与材料归档对象，不在报告生产的逐目标循环范围内。
 
