@@ -1,5 +1,6 @@
 using StrataLint.Runtime;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -38,6 +39,21 @@ public sealed partial class RemoveWorktreesCommandTests
                 return InventoryFailure is null
                     ? new ProcessOutput(0, Encoding.UTF8.GetBytes(Inventory), [])
                     : new ProcessOutput(128, [], Encoding.UTF8.GetBytes(InventoryFailure));
+            if (fileName == "python3" && arguments.Contains("remove"))
+            {
+                var names = arguments[arguments.ToList().IndexOf("--names") + 1].Split(' ');
+                var paths = Inventory.Split('\0').Where(field => field.StartsWith("worktree ", StringComparison.Ordinal))
+                    .Select(field => field[9..]).ToArray();
+                var entries = names.Select(name => paths.Single(path => Path.GetFileName(path) == name))
+                    .Select(path => new
+                    {
+                        path,
+                        outcome = path == FailedRemovalPath ? "partial_or_indeterminate" : "removed",
+                        error = path == FailedRemovalPath ? RemovalError : null,
+                    }).ToArray();
+                return new ProcessOutput(entries.Any(entry => entry.error is not null) ? 74 : 0,
+                    Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { items = entries })), []);
+            }
             if (IsRemoval(call))
             {
                 if (arguments[^1] != FailedRemovalPath) return new ProcessOutput(0, [], []);
@@ -62,6 +78,10 @@ public sealed partial class RemoveWorktreesCommandTests
             File.WriteAllText(Path.Combine(Main, "tracked.txt"), "baseline\n");
             Git(Main, "add", "tracked.txt");
             Git(Main, "commit", "-m", "synthetic baseline");
+            var remote = Path.Combine(directory.Path, "remote.git");
+            Git(directory.Path, "init", "--bare", remote);
+            Git(Main, "remote", "add", "origin", remote);
+            Git(Main, "push", "origin", "dev");
             Main = Git(Main, "rev-parse", "--show-toplevel").Trim();
         }
 
