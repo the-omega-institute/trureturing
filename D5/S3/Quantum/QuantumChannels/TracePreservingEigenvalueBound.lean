@@ -813,7 +813,7 @@ private lemma theorem1_faithful [NeZero d] (Phi : (Matrix (Fin d) (Fin d) ℂ �
 end
 section
 variable {d : ℕ}
-private def depolarized (Phi : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) (ε : ℝ) : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ) :=
+def depolarized (Phi : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) (ε : ℝ) : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ) :=
   ((1-ε : ℝ) : ℂ) • Phi + ((ε / d : ℝ) : ℂ) • ((Matrix.traceLinearMap (Fin d) ℂ ℂ).smulRight (1 : Matrix (Fin d) (Fin d) ℂ))
 private lemma depolarized_twoPositive [NeZero d] (Phi : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ))
     (h2 : (KPositive 2 _ Phi)) (ε : ℝ) (hε : 0 ≤ ε) (hle : ε ≤ 1) :
