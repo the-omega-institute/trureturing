@@ -1,7 +1,109 @@
 import LeanInformationAudit.ArtifactAssessment
+import Lean.Elab.Command
 
 namespace LeanInformationAuditRegTests.CompiledCalculations
 open Lean LeanInformationAudit Contract.CompiledExpressions
+
+private def memoTableAgreement [BEq α] [Hashable α] [Inhabited α] (label : String)
+    (keys : Array α) (missing : α) : IO Unit := do
+  let mut actual : PersistentHashMap α Nat := {}
+  let mut expected : Std.HashMap α Nat := {}
+  for i in [:keys.size] do
+    actual := actual.insert keys[i]! i
+    expected := expected.insert keys[i]! i
+  let original := actual
+  for i in [:keys.size] do
+    unless actual.find? keys[i]! == expected[keys[i]!]? do
+      throw <| IO.userError s!"compiled.memo_storage:{label}:growth:{i}"
+  for i in [:keys.size] do
+    if i % 7 == 0 then
+      actual := actual.insert keys[i]! (i + keys.size)
+      expected := expected.insert keys[i]! (i + keys.size)
+  for i in [:keys.size] do
+    unless actual.find? keys[i]! == expected[keys[i]!]? &&
+        original.find? keys[i]! == some i do
+      throw <| IO.userError s!"compiled.memo_storage:{label}:replacement:{i}"
+  unless actual.find? missing == none && expected[missing]? == none do
+    throw <| IO.userError s!"compiled.memo_storage:{label}:absent"
+
+private structure CollisionKey where
+  index : Nat
+  deriving BEq, Inhabited
+
+private instance : Hashable CollisionKey := ⟨fun _ => 0⟩
+
+private def memoStorage : IO Unit := do
+  let expressions := (Array.range 2049).map fun i => ExprStructEq.mk (mkNatLit i)
+  let scopeKeys := fun i => if i % 2 == 0 then #[] else #[ExprStructEq.mk (mkConst ``Nat)]
+  memoTableAgreement "heads"
+    (expressions.mapIdx fun i e => (e, i % 3 == 0, i % 5 == 0, scopeKeys i))
+    (ExprStructEq.mk (mkNatLit 2050), false, false, #[])
+  memoTableAgreement "types"
+    (expressions.mapIdx fun i e => (e, scopeKeys i))
+    (ExprStructEq.mk (mkNatLit 2050), #[])
+  memoTableAgreement "propositions"
+    (expressions.mapIdx fun i e => (e, scopeKeys i))
+    (ExprStructEq.mk (mkNatLit 2050), #[])
+  memoTableAgreement "erased"
+    ((Array.range 2049).map fun i => (USize.ofNat i, #[USize.ofNat (i % 3)]))
+    (USize.ofNat 2050, #[])
+  memoTableAgreement "comparisons"
+    (expressions.mapIdx fun i e => (e, ExprStructEq.mk (mkNatLit (i + 1)), scopeKeys i))
+    (ExprStructEq.mk (mkNatLit 2050), ExprStructEq.mk (mkNatLit 2051), #[])
+  memoTableAgreement "full_hash_collisions"
+    ((Array.range 32).map fun i => (⟨i⟩ : CollisionKey)) ⟨32⟩
+  IO.println "[PASS] compiled.memo_storage: five exact key kinds, growth, replacement, persistence and collisions"
+
+private def memoQueryGrowth (context : Context) : IO Unit := do
+  let outerStart ← IO.getNumHeartbeats
+  let mut closed : Memo := {}
+  let mut lexical : Memo := {}
+  let mut maxRaw := 0
+  for i in [:1538] do
+    let value := mkRawNatLit i
+    let type := Expr.sort (.param (.num `memoUniverse i))
+    let action := do
+      return (← head value, ← typeShape value, ← propositionShape type,
+        ← erase value, ← sameShape value (mkRawNatLit (i + 1)))
+    let start ← IO.getNumHeartbeats
+    let ((h, t, p, e, s), _, nextClosed, nextLexical) ← runScoped
+      {context with heartbeatStart := start, heartbeatLimit := 20000} action closed lexical
+    let raw := (← IO.getNumHeartbeats) - start
+    maxRaw := max maxRaw raw
+    unless h == value && t == mkConst ``Nat && !p && e == value && !s && raw ≤ 20000 do
+      throw <| IO.userError s!"compiled.memo_query_growth:result_or_raw_budget:{i}:{raw}; \
+        head={repr h}; type={repr t}; proposition={p}; erased={repr e}; comparison={s}"
+    closed := nextClosed
+    lexical := nextLexical
+    let ((h', t', p', e', s'), reusedWork, _, _) ← runScoped
+      {context with heartbeatStart := (← IO.getNumHeartbeats), heartbeatLimit := 20000}
+      action closed lexical
+    unless h' == h && t' == t && p' == p && e' == e && s' == s && reusedWork == 5 do
+      throw <| IO.userError s!"compiled.memo_query_growth:cached_results:{i}:{reusedWork}"
+    unless (← IO.getNumHeartbeats) - outerStart ≤ 100000000 do
+      throw <| IO.userError "compiled.memo_query_growth:outer_raw_budget"
+  let id : FVarId := ⟨`memoLexical⟩
+  let natural := ({} : LocalContext).mkLocalDecl id `x (mkConst ``Nat) .default
+  let boolean := ({} : LocalContext).mkLocalDecl id `x (mkConst ``Bool) .default
+  let (naturalType, _, shared, naturalMemo) ← runScoped
+    {context with local? := natural.find?} (typeShape (mkFVar id)) closed {}
+  let (booleanType, _, _, _) ← runScoped
+    {context with local? := boolean.find?} (typeShape (mkFVar id)) shared {}
+  let (restored, restoredWork, _, _) ← runScoped
+    {context with local? := natural.find?} (typeShape (mkFVar id)) shared naturalMemo
+  unless naturalType == mkConst ``Nat && booleanType == mkConst ``Bool &&
+      restored == naturalType && restoredWork == 1 do
+    throw <| IO.userError "compiled.memo_query_growth:lexical_isolation"
+  IO.println s!"[PASS] compiled.memo_query_growth: 1538 retained queries, five caches; max_raw={maxRaw}"
+
+run_meta do
+  liftM memoStorage
+  let env ← getEnv
+  let start ← IO.getNumHeartbeats
+  liftM <| memoQueryGrowth {
+    find := env.find?
+    heartbeatStart := start
+    heartbeatLimit := 100000000 }
 
 private def decideSamePropositionDifferentInstances (context : Context) : IO Unit := do
   let proposition := mkConst ``True
