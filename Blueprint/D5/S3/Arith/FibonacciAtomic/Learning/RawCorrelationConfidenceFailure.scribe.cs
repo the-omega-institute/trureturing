@@ -22,6 +22,10 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 
+    private static DocumentBlock Consequence(string heading, Formula formula, string text) =>
+        new DocumentBlock.Section(H(heading), Blocks(
+            new DocumentBlock.DisplayFormula(formula), Paragraph(Text(text))));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Raw correlation on actual heterogeneous complete records has strict misordering "
             + "probability tending to one half at every fixed target-scale constant.",
@@ -46,14 +50,14 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
                     + "at the activation count. Every fixed-count lower tail vanishes "
                     + "and the fair-sign tie coefficient tends to zero, so this mixture "
                     + "also tends to zero as rho decreases to zero.")),
-            Node("RawLimit.raw_confidence_failure", "Strict raw misordering has a half-probability limit",
+            Node("raw_confidence_failure", "Strict raw misordering has a half-probability limit",
                 AtScale(Seq(Call("limitMisorder", V("a"), V("K")), Eq, Half)),
                 "For every fixed 0<a<=1 and K>0, the probability that the true raw score "
                     + "is strictly below the rival raw score tends to 1/2 as rho decreases "
                     + "to zero. Conditional symmetry gives (1-tie)/2. The difference "
                     + "between the conditional and original event probabilities is at "
                     + "most 1-(1-12 rho^3)^m, which tends to zero."),
-            Node("Selection.failure_liminf", "Every deterministic maximizer has failure lower limit at least one half",
+            Consequence("Every deterministic maximizer has failure lower limit at least one half",
                 AtScale(All("s", "SelectionFamily", Seq(
                     Call("Maximizing", V("a"), V("K"), V("s")), Implies, Sp,
                     Half, Le, Call("failureLiminf", V("a"), V("K"), V("s"))))),
@@ -62,7 +66,7 @@ internal sealed class RawCorrelationConfidenceFailureDocument : IScribeDocumentD
                     + "at every sample, the failure probability has lower limit at least "
                     + "1/2. Ties may be resolved arbitrarily. Strict misordering already "
                     + "excludes the true teacher from every maximum."),
-            Node("RandomSelection.failure_liminf", "The same bound holds for arbitrary randomized tie breaking",
+            Consequence("The same bound holds for arbitrary randomized tie breaking",
                 AtScale(All("q", "SelectionKernelFamily", Seq(
                     Call("NormalizedMaximizing", V("a"), V("K"), V("q")), Implies, Sp,
                     Half, Le, Call("randomFailureLiminf", V("a"), V("K"), V("q"))))),
