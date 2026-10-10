@@ -2899,7 +2899,7 @@ Fabbian 的显式 Mertens 筛以及 Broadbent--Fiori--Kadiri--Ng--Wilk 的 Merte
 
 ## 一　有限半径 Jensen 与相对熵重述
 
-[Wunderlich, arXiv:2610.10584v1](../../../Library/Analytic/wunderlich2026bsyentropy.md)
+[Wunderlich, arXiv:2610.10584v1](../../../Library/Weil/wunderlich2026bsyentropy.md)
 把已知的 Balazard--Saias--Yor 边界判据写成有限半径 Jensen 公式，并在
 $s=-1/2$ 的归一化下将平凡零点的贡献化为望远镜乘积。剩余项是映射后的非临界线
 零点的非负计数积分。其 Theorem 8.2 对
