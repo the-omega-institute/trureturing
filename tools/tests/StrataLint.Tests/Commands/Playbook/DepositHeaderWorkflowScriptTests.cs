@@ -246,12 +246,31 @@ public sealed class DepositHeaderUtilityTests
             fixture,
             "kind=numeric-reduction; "
             + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
+        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath].Replace("def goldenRing",
+            "import D5.S0.Carrier.ValuesBinding\n\ndef goldenRing", StringComparison.Ordinal);
+        fixture.Reports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath] with
+        {
+            Imports = ["D5.S0.Carrier.ValuesBinding"],
+        };
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
 
         var result = Run(fixture, source);
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(1, source.CallCount);
+    }
+
+    [Fact]
+    public void ScopedDepositRejectsUnimportedUtilityConsumerWithoutInventingEvidence()
+    {
+        var fixture = new RuleFixture();
+        AddUtility(fixture, "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
+
+        var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("target_module=D5/S0/Carrier/ValuesBinding.lean reason=current-lean-report-missing", result.Output);
     }
 
     [Fact]

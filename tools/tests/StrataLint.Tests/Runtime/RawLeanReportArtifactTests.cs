@@ -53,6 +53,7 @@ public sealed class RawLeanReportArtifactTests
     [InlineData("missing")]
     [InlineData("stale")]
     [InlineData("material")]
+    [InlineData("statement")]
     [InlineData("imports")]
     public void ScopedReportRejectsInvalidMembersSourcesMaterialsAndImports(string defect)
     {
@@ -74,6 +75,10 @@ public sealed class RawLeanReportArtifactTests
                 break;
             case "material":
                 File.WriteAllBytes(RawLeanReportArtifact.MaterialsPath(path), [0xff]);
+                break;
+            case "statement":
+                bytes = bytes.Replace("sha256:452d97f1469d85ac204ab83dbbb919e19289c28674b14ab9df96586c535b1763",
+                    "sha256:" + new string('0', 64), StringComparison.Ordinal);
                 break;
             case "imports":
                 bytes = bytes.Replace("\"imports\": [\"Init\"]", "\"imports\": [\"Init\", \"Mathlib\"]", StringComparison.Ordinal);

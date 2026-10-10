@@ -170,7 +170,21 @@ internal static class RawLeanReportArtifact
                 "Raw Lean report is missing modules: " + string.Join(", ", missing));
         }
 
-        if (validateMaterials) materialArchive!.ValidateAll();
+        if (validateMaterials)
+        {
+            materialArchive!.ValidateAll();
+            if (scope is not null)
+            {
+                foreach (var (path, report) in reports)
+                foreach (var declaration in report.Declarations)
+                {
+                    var actual = CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown(path),
+                        declaration with { PrecomputedStatementId = null });
+                    if (!string.Equals(actual, declaration.PrecomputedStatementId, StringComparison.Ordinal))
+                        throw new InvalidDataException($"Scoped Lean report statement identity does not match material: {path}:{declaration.Name}.");
+                }
+            }
+        }
         return scope is null
             ? LeanAxiomReport.Create(reports)
             : LeanAxiomReport.CreateScoped(reports);

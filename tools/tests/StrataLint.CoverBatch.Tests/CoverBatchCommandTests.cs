@@ -394,7 +394,7 @@ public sealed partial class CoverBatchCommandTests
             bool externalChild = false)
         {
             Root = Path.Combine(temporary.Path, "repo");
-            inputs = new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"] }.Materialize();
+            inputs = Canonicalize(new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"] }.Materialize());
             var document = inputs.Document.WithDigestionSources(inputs.Document.RequireDigestionSources()
                 .Select(source => source with
                 {
@@ -482,6 +482,48 @@ public sealed partial class CoverBatchCommandTests
             Report = new FakeLeanReportSource(LeanAxiomReport.Create(reports));
         }
 
+        private static CoverInputs Canonicalize(CoverInputs value)
+        {
+            var identities = new Dictionary<string, string>(StringComparer.Ordinal);
+            var reports = value.Report.Files.ToDictionary(static item => item.Key.Value, item => item.Value with
+            {
+                Declarations = item.Value.Declarations.Select(declaration =>
+                {
+                    var current = declaration with { PrecomputedStatementId = null };
+                    identities[declaration.PrecomputedStatementId!] = CanonicalStatementWriter.DeclarationStatementId(item.Key, current);
+                    return current;
+                }).ToImmutableArray(),
+            });
+            Dictionary<string, string> Rewrite(Dictionary<string, string> files)
+            {
+                var result = files.ToDictionary(static item => item.Key, item => identities.Aggregate(item.Value,
+                    static (text, identity) => text.Replace(identity.Key, identity.Value, StringComparison.Ordinal)), StringComparer.Ordinal);
+                foreach (var path in result.Keys.Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath).ToArray())
+                {
+                    using var document = JsonDocument.Parse(result[path]);
+                    var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", document.RootElement.GetProperty("payload"));
+                    result.Remove(path);
+                    result[FrozenLedgerChangeClassifier.AcceptedRoot + "/" + encoded.Hash["sha256:".Length..] + ".json"] =
+                        Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+                }
+                return result;
+            }
+            return value with
+            {
+                Report = LeanAxiomReport.Create(reports), Files = Rewrite(value.Files), Baseline = Rewrite(value.Baseline),
+                Document = value.Document.WithDigestionSources(value.Document.RequireDigestionSources().Select(source => source with
+                {
+                    Entries = source.Entries.Select(entry => entry with
+                    {
+                        Coverage = entry.Coverage.Select(edge => edge with
+                        {
+                            TargetStatementId = edge.TargetStatementId is { } id ? identities.GetValueOrDefault(id, id) : null,
+                        }).ToImmutableArray(),
+                    }).ToImmutableArray(),
+                }).ToImmutableArray()),
+            };
+        }
+
         internal CommandResult Run(string input)
         {
             var path = Path.Combine(temporary.Path, "atoms.tsv");
@@ -542,18 +584,15 @@ public sealed partial class CoverBatchCommandTests
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             TemporaryFileSystem.File.WriteAllText(path, input);
             var previousReport = Environment.GetEnvironmentVariable("STRATALINT_LEAN_REPORT");
-            var previousDonor = Environment.GetEnvironmentVariable("STRATALINT_LEAN_CACHE_DONOR_REPOSITORY");
             try
             {
                 Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", Path.Combine(Root, ".lake/build/stratalint/scoped-lean-report.json"));
-                Environment.SetEnvironmentVariable("STRATALINT_LEAN_CACHE_DONOR_REPOSITORY", TestRepositoryLayout.FindRoot());
                 return CoverBatchCommand.Run(Root, Repository, new PrecomputedLeanReportSource(Root),
                     CoverWorld.FixtureUtc, ["--atoms", path]);
             }
             finally
             {
                 Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", previousReport);
-                Environment.SetEnvironmentVariable("STRATALINT_LEAN_CACHE_DONOR_REPOSITORY", previousDonor);
             }
         }
 

@@ -106,6 +106,31 @@ internal static class ProducerInputFixture
             scoped.write_sidecars(report, scoped.capture(root, scope), origins)
             """, root, report, scope], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        // The fixture supplies the independently selected scope; native inspector
+        // tests exercise Lake discovery. Keep the actual scoped bundle validator.
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, ".fixture-report-scope.json"), scope);
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "tools/scripts/report/lean-report-input.sh"), """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            python3 -B - "$@" <<'PY'
+            import argparse, json, pathlib, sys
+            parser = argparse.ArgumentParser()
+            parser.add_argument('command', choices=['verify-scoped'])
+            parser.add_argument('--repository', type=pathlib.Path, required=True)
+            parser.add_argument('--report', type=pathlib.Path, required=True)
+            parser.add_argument('--targets', required=True)
+            args = parser.parse_args()
+            sys.path.insert(0, str(args.repository / 'tools/lean-inspector'))
+            import scoped
+            scope = json.loads((args.repository / '.fixture-report-scope.json').read_bytes())
+            scoped.check_scope(args.repository, scope, scoped.parse_targets(args.targets))
+            try:
+                scoped.validate_bundle(args.report, args.repository, scope)
+            except (ValueError, OSError) as error:
+                print(str(error), file=sys.stderr)
+                sys.exit(2)
+            PY
+            """ + "\n");
     }
 
     private static void WriteFixtureOrigins(string root, string report)
