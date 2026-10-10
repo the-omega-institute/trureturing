@@ -6,7 +6,103 @@ Integral sl₂ weights give sharp rank bounds for endomorphisms lowering the wei
 
 Let K be a field of characteristic zero and V a finite-dimensional K-vector space. The relations ef − fe = h, he − eh = 2e and hf − fh = −2f include the zero action. The space weightSpace(h,s) is the eigenspace of h at the scalar obtained from the integer s. IntegralWeights(h) means that a finite collection of integer weight spaces spans V. The spaces weightLE(h,s) and weightGE(h,s) are the sums of weights at most s and at least s, respectively. Operator powers use composition; finrank denotes dimension over K.
 
-**Theorem 1.1 (Raising shifts weights).**
+**Definition 1.1 (The sl₂ commutator relations).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (e \cdot f - f \cdot e = h) \land ((h \cdot e - e \cdot h = (2) \cdot e) \land (h \cdot f - f \cdot h = -(2) \cdot f))$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.Sl2Relations` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This declaration records the indicated sl₂ object and its defining expression.
+
+**Definition 1.2 (The integer weight space).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall s \in \mathbb{Z},\; \operatorname{weightSpace}\left(h, s\right) = \operatorname{eigenspace}\left(h, (s : K)\right)$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.weightSpace` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This declaration records the indicated sl₂ object and its defining expression.
+
+**Definition 1.3 (Finite integral weight support).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \exists S \in \operatorname{Finset}\left(\mathbb{Z}\right),\; \operatorname{iSup}\left(s, s \in S, \operatorname{weightSpace}\left(h, s\right)\right) = \operatorname{top}$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.IntegralWeights` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This declaration records the indicated sl₂ object and its defining expression.
+
+**Definition 1.4 (The lower weight filtration).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall s \in \mathbb{Z},\; \operatorname{weightLE}\left(h, s\right) = \operatorname{iSup}\left(t, t \le s, \operatorname{weightSpace}\left(h, t\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.weightLE` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This declaration records the indicated sl₂ object and its defining expression.
+
+**Definition 1.5 (The upper weight filtration).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall s \in \mathbb{Z},\; \operatorname{weightGE}\left(h, s\right) = \operatorname{iSup}\left(t, s \le t, \operatorname{weightSpace}\left(h, t\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.weightGE` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This declaration records the indicated sl₂ object and its defining expression.
+
+**Definition 1.6 (The shifted lowering map).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; \forall a \in \operatorname{Sl2Relations}\left(h, e, f\right),\; \forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; (\operatorname{type}\left(\operatorname{loweringMap}\left(a, s, r\right)\right) = \operatorname{LinearMap}\left(K, \operatorname{weightSpace}\left(h, s\right), \operatorname{weightSpace}\left(h, s - 2 \cdot (r : \mathbb{Z})\right)\right)) \land (\forall v \in \operatorname{weightSpace}\left(h, s\right),\; \operatorname{val}\left(\operatorname{loweringMap}\left(a, s, r\right)\left(v\right)\right) = (f^{r})\left(v\right))$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.loweringMap` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This declaration records the indicated sl₂ object and its defining expression.
+
+**Definition 1.7 (The shifted raising map).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; \forall a \in \operatorname{Sl2Relations}\left(h, e, f\right),\; \forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; (\operatorname{type}\left(\operatorname{raisingMap}\left(a, s, r\right)\right) = \operatorname{LinearMap}\left(K, \operatorname{weightSpace}\left(h, s\right), \operatorname{weightSpace}\left(h, s + 2 \cdot (r : \mathbb{Z})\right)\right)) \land (\forall v \in \operatorname{weightSpace}\left(h, s\right),\; \operatorname{val}\left(\operatorname{raisingMap}\left(a, s, r\right)\left(v\right)\right) = (e^{r})\left(v\right))$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.raisingMap` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This declaration records the indicated sl₂ object and its defining expression.
+
+**Theorem 1.8 (Zero kernel of a lowering power).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{Module.End}\left(K, V\right),\; \forall e \in \operatorname{Module.End}\left(K, V\right),\; \forall f \in \operatorname{Module.End}\left(K, V\right),\; [\operatorname{IsSl2Triple}\left(h, e, f\right)] \forall n \in \mathbb{N},\; \forall v \in V,\; \forall q \in \mathbb{N},\; \forall k \in \mathbb{N},\; (h\left(v\right) = (q : K) \cdot v) \Rightarrow ((k \le q) \Rightarrow (((e^{n})\left(v\right) = 0) \Rightarrow (((f^{k})\left(v\right) = 0) \Rightarrow (v = 0))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.lowering_kernel_zero` (`✓ std3`). ∎
+
+*Citation.* P. Etingof; O. Golberg; S. Hensel; T. Liu; A. Schwendner; D. Vaintrob; E. Yudovina (2011). *Introduction to representation theory*. DOI: [10.48550/arXiv.0901.0827](https://doi.org/10.48550/arXiv.0901.0827). URL: <https://arxiv.org/abs/0901.0827v5>.
+
+*Commentary.*
+
+Problem 1.55(b) gives the polynomial identity for a primitive vector, and part (f) gives the nonvanishing lowering string. The induction extends this to a vector killed by a raising power.
+
+**Theorem 1.9 (Raising shifts weights).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow (\forall s \in \mathbb{Z},\; \forall v \in V,\; (v \in \operatorname{weightSpace}\left(h, s\right)) \Rightarrow (\forall r \in \mathbb{N},\; (e^{r})\left(v\right) \in \operatorname{weightSpace}\left(h, s + 2 \cdot (r : \mathbb{Z})\right)))$$
 
@@ -18,7 +114,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 The commutator of h with e implies that the rth raising power increases weight by twice r.
 
-**Theorem 1.2 (Lowering shifts weights).**
+**Theorem 1.10 (Lowering shifts weights).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow (\forall s \in \mathbb{Z},\; \forall v \in V,\; (v \in \operatorname{weightSpace}\left(h, s\right)) \Rightarrow (\forall r \in \mathbb{N},\; (f^{r})\left(v\right) \in \operatorname{weightSpace}\left(h, s - 2 \cdot (r : \mathbb{Z})\right)))$$
 
@@ -30,7 +126,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 The commutator of h with f implies that the rth lowering power decreases weight by twice r.
 
-**Theorem 1.3 (Local raising nilpotence).**
+**Theorem 1.11 (Local raising nilpotence).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] [\operatorname{FiniteDimensional}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow (\forall s \in \mathbb{Z},\; \forall v \in V,\; (v \in \operatorname{weightSpace}\left(h, s\right)) \Rightarrow (\exists n \in \mathbb{N},\; (e^{n})\left(v\right) = 0))$$
 
@@ -42,7 +138,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 Nonzero successive raising iterates have distinct eigenvalues. An infinite sequence of such vectors would be linearly independent, contradicting finite dimensionality.
 
-**Theorem 1.4 (Local lowering nilpotence).**
+**Theorem 1.12 (Local lowering nilpotence).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] [\operatorname{FiniteDimensional}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow (\forall s \in \mathbb{Z},\; \forall v \in V,\; (v \in \operatorname{weightSpace}\left(h, s\right)) \Rightarrow (\exists n \in \mathbb{N},\; (f^{n})\left(v\right) = 0))$$
 
@@ -54,7 +150,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 Successive lowering iterates likewise have distinct weights, so every weight vector is eventually annihilated.
 
-**Theorem 1.5 (Injectivity above the exponent).**
+**Theorem 1.13 (Injectivity above the exponent).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] [\operatorname{FiniteDimensional}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow (\forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; ((r : \mathbb{Z}) \le s) \Rightarrow (\forall x \in \operatorname{weightSpace}\left(h, s\right),\; \forall y \in \operatorname{weightSpace}\left(h, s\right),\; ((f^{r})\left(x\right) = (f^{r})\left(y\right)) \Rightarrow (x = y)))$$
 
@@ -66,7 +162,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 A lowering power is injective on weights at least its exponent. Local raising nilpotence supplies the kernel criterion, including the zero representation.
 
-**Theorem 1.6 (Injectivity below the negative exponent).**
+**Theorem 1.14 (Injectivity below the negative exponent).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] [\operatorname{FiniteDimensional}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow (\forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; (s \le -(r : \mathbb{Z})) \Rightarrow (\forall x \in \operatorname{weightSpace}\left(h, s\right),\; \forall y \in \operatorname{weightSpace}\left(h, s\right),\; ((e^{r})\left(x\right) = (e^{r})\left(y\right)) \Rightarrow (x = y)))$$
 
@@ -78,7 +174,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 Interchanging e and f and replacing h by its negative gives injectivity of raising powers on sufficiently negative weights.
 
-**Theorem 1.7 (Symmetry of weight dimensions).**
+**Theorem 1.15 (Symmetry of weight dimensions).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] [\operatorname{FiniteDimensional}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow (\forall s \in \mathbb{Z},\; \operatorname{finrank}\left(K, \operatorname{weightSpace}\left(h, s\right)\right) = \operatorname{finrank}\left(K, \operatorname{weightSpace}\left(h, -s\right)\right))$$
 
@@ -90,7 +186,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 Injections in both directions between opposite weight spaces force their dimensions to agree.
 
-**Theorem 1.8 (Surjectivity onto negative weights).**
+**Theorem 1.16 (Surjectivity onto negative weights).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] [\operatorname{FiniteDimensional}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow (\forall t \in \mathbb{Z},\; \forall r \in \mathbb{N},\; (t \le -(r : \mathbb{Z})) \Rightarrow (\forall y \in V,\; (y \in \operatorname{weightSpace}\left(h, t\right)) \Rightarrow (\exists x \in V,\; (x \in \operatorname{weightSpace}\left(h, t + 2 \cdot (r : \mathbb{Z})\right)) \land ((f^{r})\left(x\right) = y))))$$
 
@@ -102,7 +198,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 Lowering from the opposite positive weight is bijective. Factoring this power gives a preimage for every smaller lowering power with sufficiently negative target.
 
-**Theorem 1.9 (Exact rank of a lowering power).**
+**Theorem 1.17 (Exact rank of a lowering power).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] [\operatorname{FiniteDimensional}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow ((\operatorname{IntegralWeights}\left(h\right)) \Rightarrow (\forall r \in \mathbb{N},\; \operatorname{finrank}\left(K, \operatorname{range}\left(f^{r}\right)\right) = \operatorname{finrank}\left(K, \operatorname{weightGE}\left(h, (r : \mathbb{Z})\right)\right) + \operatorname{finrank}\left(K, \operatorname{weightLE}\left(h, -(r : \mathbb{Z}) - 1\right)\right)))$$
 
@@ -114,9 +210,9 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 Split the representation at weight r. The lowering power is injective on the upper part and maps the lower part onto weights at most minus r minus one. The two image subspaces are disjoint.
 
-**Theorem 1.10 (Iterated filtration decrease).**
+**Theorem 1.18 (Iterated filtration decrease).**
 
-$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall F \in \mathbb{Z} \to \operatorname{Submodule}\left(K, V\right),\; \forall T \in \operatorname{End}\left(K, V\right),\; (\forall s \in \mathbb{Z},\; \operatorname{map}\left(F\left(s\right), T\right) \le F\left(s - 2\right)) \Rightarrow (\forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; \operatorname{map}\left(F\left(s\right), T^{r}\right) \le F\left(s - 2 \cdot (r : \mathbb{Z})\right))$$
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall F \in (\mathbb{Z} \to \operatorname{Submodule}\left(K, V\right)),\; \forall T \in \operatorname{End}\left(K, V\right),\; (\forall s \in \mathbb{Z},\; \operatorname{map}\left(F\left(s\right), T\right) \le F\left(s - 2\right)) \Rightarrow (\forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; \operatorname{map}\left(F\left(s\right), T^{r}\right) \le F\left(s - 2 \cdot (r : \mathbb{Z})\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.filtration_pow_map_le` (`✓ std3`). ∎
 
@@ -126,7 +222,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \for
 
 Induction on the exponent adds the two-unit filtration decrease at each application. No exhaustiveness or boundedness assumption on the filtration is required.
 
-**Theorem 1.11 (Maximal power ranks).**
+**Theorem 1.19 (Maximal power ranks).**
 
 $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] [\operatorname{FiniteDimensional}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow ((\operatorname{IntegralWeights}\left(h\right)) \Rightarrow (\forall T \in \operatorname{End}\left(K, V\right),\; (\forall s \in \mathbb{Z},\; \operatorname{map}\left(\operatorname{weightLE}\left(h, s\right), T\right) \le \operatorname{weightLE}\left(h, s - 2\right)) \Rightarrow (\forall r \in \mathbb{N},\; \operatorname{finrank}\left(K, \operatorname{range}\left(T^{r}\right)\right) \le \operatorname{finrank}\left(K, \operatorname{range}\left(f^{r}\right)\right))))$$
 
@@ -140,15 +236,22 @@ Restrict a power of T from weights at most r minus one to weights at most minus 
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.IntegralWeights`
+- Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.Sl2Relations`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.filtration_pow_map_le`
+- Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.loweringMap`
+- Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.lowering_kernel_zero`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.lowering_locally_nilpotent`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.lowering_pow_injective`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.lowering_pow_surjective`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.lowering_pow_weight`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.lowering_rank_formula`
+- Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.raisingMap`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.raising_locally_nilpotent`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.raising_pow_injective`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.raising_pow_weight`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.rank_comparison`
+- Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.weightGE`
+- Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.weightLE`
+- Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.weightSpace`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.weight_finrank_symm`
-- Dependency: [D5/S3/Quantum/SpinChains/Sl2WeightInjectivity](Sl2WeightInjectivity.md)

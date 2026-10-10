@@ -11,6 +11,15 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
         H("Weight filtration and maximal power ranks"),
         Blocks(
             Paragraph(Text("Let K be a field of characteristic zero and V a finite-dimensional K-vector space. The relations ef − fe = h, he − eh = 2e and hf − fh = −2f include the zero action. The space weightSpace(h,s) is the eigenspace of h at the scalar obtained from the integer s. IntegralWeights(h) means that a finite collection of integer weight spaces spans V. The spaces weightLE(h,s) and weightGE(h,s) are the sums of weights at most s and at least s, respectively. Operator powers use composition; finrank denotes dimension over K.")),
+            DefinitionNode("Sl2Relations", "The sl₂ commutator relations", RelationsDefinition()),
+            DefinitionNode("weightSpace", "The integer weight space", WeightSpaceDefinition()),
+            DefinitionNode("IntegralWeights", "Finite integral weight support", IntegralWeightsDefinition()),
+            DefinitionNode("weightLE", "The lower weight filtration", WeightFiltrationDefinition(false)),
+            DefinitionNode("weightGE", "The upper weight filtration", WeightFiltrationDefinition(true)),
+            DefinitionNode("loweringMap", "The shifted lowering map", PowerMapDefinition(false)),
+            DefinitionNode("raisingMap", "The shifted raising map", PowerMapDefinition(true)),
+            LiteratureNode("lowering_kernel_zero", "Zero kernel of a lowering power", KernelFormula(),
+                "Problem 1.55(b) gives the polynomial identity for a primitive vector, and part (f) gives the nonvanishing lowering string. The induction extends this to a vector killed by a raising power."),
             Node("raising_pow_weight", "Raising shifts weights", Shift(true),
                 "The commutator of h with e implies that the rth raising power increases weight by twice r."),
             Node("lowering_pow_weight", "Lowering shifts weights", Shift(false),
@@ -36,9 +45,23 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
         []));
 
     private static DocumentBlock.Describe Node(string name, string title, Formula formula, string prose) =>
-        Describe.Lean(DescribeId.Create("sl-two-filtration-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("sl-two-filtration-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Quantum/SpinChains/Sl2WeightFiltration." + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static DocumentBlock.Describe DefinitionNode(string name, string title, Formula formula) =>
+        Describe.Lean(DescribeId.Create("sl-two-filtration-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create("D5/S3/Quantum/SpinChains/Sl2WeightFiltration." + name),
+            H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("This declaration records the indicated sl₂ object and its defining expression."))),
+            DescribeRole.Definition);
+
+    private static DocumentBlock.Describe LiteratureNode(string name, string title, Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create("sl-two-filtration-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create("D5/S3/Quantum/SpinChains/Sl2WeightFiltration." + name),
+            H(title), StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/LieTheory/etingof2011introduction")),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static Formula All(string name, Formula type, Formula body) =>
@@ -71,6 +94,126 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
     private static Formula Negative(Formula x) => Seq(F.Minus, x);
     private static Formula Relations => new Formula.Apply(
         Seq(Operatorname, Grp(F.Id("Sl"), D(2), F.Id("Relations"))), [F.Id("h"), F.Id("e"), F.Id("f")]);
+
+    private static Formula CastTo(Formula x, Formula type) => Par(Seq(x, Sp, Colon, Sp, type));
+    private static Formula Sub(Formula x, Formula y) => Seq(x, Sp, F.Minus, Sp, y);
+    private static Formula Mul(Formula x, Formula y) =>
+        new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
+    private static Formula Top => Seq(Operatorname, Grp(F.Id("top")));
+    private static Formula Finset(Formula x) => Call("Finset", x);
+    private static Formula Eigenspace(Formula h, Formula value) => Call("eigenspace", h, value);
+    private static Formula Supremum(Formula index, Formula condition, Formula body) =>
+        Call("iSup", index, condition, body);
+    private static Formula LinearMap(Formula scalar, Formula source, Formula target) =>
+        Call("LinearMap", scalar, source, target);
+    private static Formula Value(Formula fn, Formula arg) => At(Call("val"), At(fn, arg));
+
+    private static Formula DefinitionEnvironment(Formula body, bool charZero)
+    {
+        body = Assumption(Call("Module", F.Id("K"), F.Id("V")), body);
+        body = Assumption(Call("AddCommGroup", F.Id("V")), body);
+        body = All("V", Call("Type"), body);
+        if (charZero) body = Assumption(Call("CharZero", F.Id("K")), body);
+        body = Assumption(Call("Field", F.Id("K")), body);
+        return All("K", Call("Type"), body);
+    }
+
+    private static Formula Endomorphism(Formula scalar) => Call("End", scalar, F.Id("V"));
+
+    private static Formula RelationsDefinition()
+    {
+        var h = F.Id("h"); var e = F.Id("e"); var f = F.Id("f");
+        var ef = Eq(Sub(Mul(e, f), Mul(f, e)), h);
+        var he = Eq(Sub(Mul(h, e), Mul(e, h)), Seq(Par(D(2)), Sp, Cdot, Sp, e));
+        var hf = Eq(Sub(Mul(h, f), Mul(f, h)), Seq(F.Minus, Par(D(2)), Sp, Cdot, Sp, f));
+        Formula body = And(ef, And(he, hf));
+        body = All("f", Endomorphism(F.Id("K")), body);
+        body = All("e", Endomorphism(F.Id("K")), body);
+        body = All("h", Endomorphism(F.Id("K")), body);
+        return DefinitionEnvironment(body, false);
+    }
+
+    private static Formula WeightSpaceDefinition()
+    {
+        var h = F.Id("h"); var s = F.Id("s");
+        Formula body = Eq(Call("weightSpace", h, s), Eigenspace(h, CastTo(s, F.Id("K"))));
+        body = All("s", Ints, body);
+        body = All("h", Endomorphism(F.Id("K")), body);
+        return DefinitionEnvironment(body, false);
+    }
+
+    private static Formula IntegralWeightsDefinition()
+    {
+        var h = F.Id("h"); var s = F.Id("s"); var set = F.Id("S");
+        Formula body = Some("S", Finset(Ints), Eq(
+            Supremum(s, Member(s, set), Call("weightSpace", h, s)), Top));
+        body = All("h", Endomorphism(F.Id("K")), body);
+        return DefinitionEnvironment(body, false);
+    }
+
+    private static Formula WeightFiltrationDefinition(bool upper)
+    {
+        var h = F.Id("h"); var s = F.Id("s"); var t = F.Id("t");
+        var condition = upper ? Le(s, t) : Le(t, s);
+        Formula body = Eq(
+            Call(upper ? "weightGE" : "weightLE", h, s),
+            Supremum(t, condition, Call("weightSpace", h, t)));
+        body = All("s", Ints, body);
+        body = All("h", Endomorphism(F.Id("K")), body);
+        return DefinitionEnvironment(body, false);
+    }
+
+    private static Formula PowerMapDefinition(bool raising)
+    {
+        var a = F.Id("a"); var h = F.Id("h"); var e = F.Id("e"); var f = F.Id("f");
+        var s = F.Id("s"); var r = F.Id("r"); var v = F.Id("v");
+        var source = Call("weightSpace", h, s);
+        var target = Call("weightSpace", h,
+            raising ? Plus(s, Twice(r)) : Minus(s, Twice(r)));
+        var map = Call(raising ? "raisingMap" : "loweringMap", a, s, r);
+        var operatorPower = Par(Pow(raising ? "e" : "f", r));
+        Formula type = Eq(Call("type", map), LinearMap(F.Id("K"), source, target));
+        Formula value = Eq(Value(map, v), At(operatorPower, v));
+        Formula body = And(type, All("v", source, value));
+        body = All("r", Nats, body);
+        body = All("s", Ints, body);
+        body = All("a", Relations, body);
+        body = All("f", Endomorphism(F.Id("K")), body);
+        body = All("e", Endomorphism(F.Id("K")), body);
+        body = All("h", Endomorphism(F.Id("K")), body);
+        return DefinitionEnvironment(body, true);
+    }
+
+    private static Formula KernelFormula()
+    {
+        var field = F.Id("K"); var space = F.Id("V");
+        var h = F.Id("h"); var e = F.Id("e"); var f = F.Id("f");
+        var n = F.Id("n"); var v = F.Id("v"); var q = F.Id("q"); var k = F.Id("k");
+        var end = new Formula.Apply(
+            Seq(Operatorname, Grp(F.Id("Module"), Dot, F.Id("End"))), [field, space]);
+        var weight = Eq(At(h, v), Seq(Par(Seq(q, Sp, Colon, Sp, field)), Sp, Cdot, Sp, v));
+        var bound = Le(k, q);
+        var raising = Eq(At(Par(new Formula.Power(e, n)), v), D(0));
+        var lowering = Eq(At(Par(new Formula.Power(f, k)), v), D(0));
+        Formula body = Imp(weight, Imp(bound, Imp(raising,
+            Imp(lowering, Eq(v, D(0))))));
+        body = All("k", Nats, body);
+        body = All("q", Nats, body);
+        body = All("v", space, body);
+        body = All("n", Nats, body);
+        body = Assumption(new Formula.Apply(
+            Seq(Operatorname, Grp(F.Id("IsSl"), D(2), F.Id("Triple"))), [h, e, f]), body);
+        body = All("f", end, body);
+        body = All("e", end, body);
+        body = All("h", end, body);
+        body = Assumption(Call("Module", field, space), body);
+        body = Assumption(Call("AddCommGroup", space), body);
+        body = All("V", Call("Type"), body);
+        body = Assumption(Call("CharZero", field), body);
+        body = Assumption(Call("Field", field), body);
+        return Disp(All("K", Call("Type"), body));
+    }
+
     private static Formula Environment(Formula body, bool finite, bool sl = true, bool integral = false)
     {
         if (integral) body = Imp(Call("IntegralWeights", F.Id("h")), body);
@@ -137,7 +280,8 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
         var s = F.Id("s"); var r = F.Id("r");
         var body = All("s", Ints, All("r", Nats,
             Le(Call("map", At(F.Id("F"), s), Pow("T", r)), At(F.Id("F"), Minus(s, Twice(r))))));
-        return Environment(All("F", Seq(Ints, Sp, To, Sp, Call("Submodule", F.Id("K"), F.Id("V"))),
+        return Environment(All("F", Seq(Open,
+                new Formula.TypeArrow(Ints, Call("Submodule", F.Id("K"), F.Id("V"))), Close),
             All("T", End, Imp(FiltrationHypothesis("F"), body))), false, sl: false);
     }
     private static Formula Comparison()

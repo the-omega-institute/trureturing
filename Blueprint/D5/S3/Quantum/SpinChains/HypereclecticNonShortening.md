@@ -102,4 +102,4 @@ The quadratic reverse-move coefficients and the diagonal inversion weight give a
 - Truth anchor: `D5/S3/Quantum/SpinChains/HypereclecticNonShortening.result`
 - Truth anchor: `D5/S3/Quantum/SpinChains/HypereclecticNonShortening.sector`
 - Dependency: [D5/S1/Words/ParityCode/OddTopWeight](../../../S1/Words/ParityCode/OddTopWeight.md)
-- Dependency: [D5/S3/Quantum/SpinChains/Sl2WeightInjectivity](Sl2WeightInjectivity.md)
+- Dependency: [D5/S3/Quantum/SpinChains/Sl2WeightFiltration](Sl2WeightFiltration.md)
