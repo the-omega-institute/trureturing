@@ -2004,3 +2004,423 @@ $$
 有限观察者应保留所引式 (59) 的几何因子；$\gamma=-1$ 时领先项为零。$\gamma=0,1$ 分别给 $2\eta,4\eta$ 的领先项，却有相同领先钟率与慢粒子落体。任意 $\gamma$ 的度规族未被声明满足同一 Einstein–物质方程。这些经典比较只列明图源、标量能量、探针相位和时空输运之间尚需供应的对象与操作；五态标签、共同场的交叉项或三均值都没有自动生成该几何。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 25. 加权五边图的共同高斯源、联合自由能与保留记忆
+
+**定义 25.1（三类载体与共同测度）。** 固定正整数 $n$，取
+$E=\mathbb R^n$，固定欧氏坐标、标准内积及这些坐标中的 Lebesgue 测度
+$d\xi=d\xi_1\cdots d\xi_n$（单位坐标立方体的测度为一）。所有模式共用
+这些坐标、测度、单位约定及一个共同的 $\vartheta>0$，不随模式重标定。
+模式变量取
+$S\in\Sigma=\{\varnothing,1,2,3,13\}$，其概率质量记为
+$p_s$。对每个模式另给对称正定算子 $K_s:E\to E$、源偏移
+$q_s\in E$ 及常数 $c_s\in\mathbb R$，定义场振幅的条件律
+$$
+E_s(\xi)=\tfrac12\langle\xi,K_s\xi\rangle
++\langle q_s,\xi\rangle+c_s,\qquad
+p(\xi\mid S=s)=Z_s^{-1}e^{-E_s(\xi)/\vartheta}.
+$$
+$S$ 的模式占据、$\xi$ 的场振幅、以及下文的带噪读数 $Y$ 是三个不同
+载体。只有在同一参考测度、单位、$\vartheta$ 及条件律已声明时，跨模式
+的平均才有意义。有限高斯积分给出
+$$
+\log Z_s=
+\tfrac n2\log(2\pi\vartheta)
+-\tfrac12\log\det K_s
++\tfrac1{2\vartheta}q_s^{\mathsf T}K_s^{-1}q_s
+-\tfrac{c_s}{\vartheta},
+$$
+故均值为 $-K_s^{-1}q_s$、协方差为
+$\vartheta K_s^{-1}$。这些是 [Rasmussen--Williams，Appendix A.2--A.3.1，
+式 (A.4)--(A.15)](../../../Library/StatisticalMechanics/rasmussenwilliams2006gaussian.md)
+的有限维中间结果；本节不把裸 FIB 语法解释成高斯律。
+
+**定义 25.2（加权五边图与模式映射）。** 取定义 25.1 中的 $n=4$，在相对于 $O$ 的坐标
+$(\xi_L,\xi_T,\xi_R,\xi_J)$ 中，给五条边
+$OL,OT,OR,LJ,RJ$ 的权满足
+$$
+g_L,g_T,g_R>0,\qquad h_L,h_R\ge0,\qquad h_L+h_R>0.
+$$
+令 $K(g,h)$ 是二次型
+$$
+\tfrac12\{g_L\xi_L^2+g_T\xi_T^2+g_R\xi_R^2
++h_L(\xi_L-\xi_J)^2+h_R(\xi_R-\xi_J)^2\}
+$$
+的矩阵。零权表示相应边缺失；$h_L=h_R=0$ 不在本应用的域内。
+给定控制 $\lambda,\nu,\mu\ge0$，定义
+$$
+K_{\varnothing}=K(g,h),\quad
+K_1=K(g_L+\lambda,g_T,g_R;h),\quad
+K_2=K(g_L,g_T+\nu,g_R;h),
+$$
+$$
+K_3=K(g_L,g_T,g_R+\mu;h),\qquad
+K_{13}=K(g_L+\lambda,g_T,g_R+\mu;h),
+$$
+并取本节应用的 $q_s=c_s=0$。这里的 $(x,z,y)$ 只记录模式占据，
+而 $\xi$ 仍是场振幅；模式映射没有把五态自动变成一个连续空间。
+
+**假设 25.3（合法域与读数）。** 所有模式共用上一条的边权、测度、
+单位和 $\vartheta$。模式律的三均值为
+$$
+X=\mathbb E_p[x],\qquad Z=\mathbb E_p[z],\qquad
+Y=\mathbb E_p[y],\qquad \kappa=\mathbb E_p[xy],
+$$
+其实际纤维满足既有五态非负性区间
+$\max(0,X+Y+Z-1)\le\kappa\le\min(X,Y)$。
+给定线性读口 $V_L,V_R$，观测噪声
+$\epsilon_L,\epsilon_R\sim\mathcal N(0,\vartheta)$
+彼此独立，且噪声向量 $(\epsilon_L,\epsilon_R)$ 独立于整个联合变量
+$(S,\xi)$。因此各模式有同一条件噪声律
+$\mathcal N(0,\vartheta I_2)$，并与该模式的场独立；在 $q_s=0$ 时
+$$
+R_L=V_L\xi+\epsilon_L,\qquad R_R=V_R\xi+\epsilon_R.
+$$
+若 $q_s\ne0$，必须先减去各模式的条件均值
+$-V K_s^{-1}q_s$；不能把有源偏移混进零均值交叉矩。
+
+**引理 25.4（路径项与控制项的精确退化）。** 令
+$$
+c=\frac{h_Lh_R}{h_L+h_R},\qquad A=g_L+c,\qquad B=g_R+c,
+$$
+对 $s,t\ge0$，令 $r(s,t)$ 表示
+$K(g_L+s,g_T,g_R+t;h)^{-1}$ 的 $LR$ 元素。则
+$$
+r(s,t)=\frac{c}{(A+s)(B+t)-c^2}.
+$$
+$K_2^{-1}$ 的 $LR$ 元素等于 $r(0,0)$。因此四角系数
+$$
+\Gamma=r(\lambda,\mu)-r(\lambda,0)-r(0,\mu)+r(0,0)
+$$
+满足
+$$
+\Gamma>0\iff h_Lh_R\lambda\mu>0.
+$$
+若 $h_L=0$ 或 $h_R=0$，路径在 $L,R$ 间断开且 $\Gamma=0$；若
+$\lambda=0$ 或 $\mu=0$，没有两个独立控制宽度且 $\Gamma=0$。
+
+**证明。** 定义 25.2 的二次型非负；若为零，三个正的接地权强制
+$\xi_L=\xi_T=\xi_R=0$，而 $h_L+h_R>0$ 再强制 $\xi_J=0$。
+故 $K(g,h)>0$，非负控制保持正定。又因 $h_L+h_R>0$，$c$ 有定义，且
+$c\ge0$，$c>0\iff h_Lh_R>0$。消去 $J$ 得到 $L,R$ 的二阶块
+$\left(\begin{smallmatrix}A+s&-c\\-c&B+t\end{smallmatrix}\right)$，
+而 $T$ 是分离的标量块。分母为
+$(g_L+s)(g_R+t)+c(g_L+s+g_R+t)>0$，其逆的非对角元即所列
+$r(s,t)$。在该控制域的开正定邻域内
+$$
+\partial_s\partial_t r(s,t)
+=\frac{c((A+s)(B+t)+c^2)}
+{((A+s)(B+t)-c^2)^3}\ge0,
+$$
+且导数严格为正当且仅当 $c>0$。由
+$\Gamma=\int_0^\lambda\int_0^\mu\partial_s\partial_t r(s,t)\,dt\,ds$
+得到所述充要条件；路径断开或任一控制宽度为零时 $\Gamma=0$。证毕。
+
+**定理 25.5（共同场的交叉矩锁定五态占位纤维）。** 令
+$r_s=(K_s^{-1})_{LR}$，并以条件律
+$\xi\mid S=s\sim\mathcal N(0,\vartheta K_s^{-1})$。
+若 $V_L,V_R$ 是 $L,R$ 坐标读口，则同一联合读数合同中的条件交叉矩为
+$$
+\mathbb E[R_LR_R\mid S=s]=\vartheta r_s.
+$$
+全体模式的联合读数为
+$$
+C_p:=\mathbb E[R_LR_R]
+=\vartheta\{r_0+X(r_1-r_0)+Y(r_3-r_0)+Z(r_2-r_0)+\kappa\Gamma\}.
+$$
+在 $\Gamma\ne0$ 时，已知共同图、控制、$\vartheta$ 及 $(X,Y,Z)$ 后，
+$C_p$ 唯一恢复同一实际律的
+$$
+\kappa=
+\frac{C_p/\vartheta-r_0-X(r_1-r_0)-Y(r_3-r_0)-Z(r_2-r_0)}
+{\Gamma}.
+$$
+这是一项应用于实际五态纤维的联合读口结论；它不声称任意样本有限时都能取得精确的 $C_p$。
+
+**证明。** 独立零均值噪声不改变交叉矩，故条件式成立。五态恒等式
+$p_0=1-X-Y-Z+\kappa$、$p_1=X-\kappa$、
+$p_3=Y-\kappa$、$p_{13}=\kappa$ 代入
+$\sum_sp_s r_s$ 即得。引理 25.4 给出 $\Gamma$ 的路径和控制边界，
+因此在合法纤维内分母非零时可反解。该图的 $\Gamma>0$ 条件与概率纤维
+非退化是两个独立条件：存在两个不同合法 $\kappa$ 还要求
+$\max(0,X+Y+Z-1)<\min(X,Y)$。等号时纤维为单点，恢复问题没有自由参数；
+在非退化纤维上，$C_p$ 随 $\kappa$ 严格变化当且仅当 $\Gamma>0$。证毕。
+
+**定理 25.6（单位特化的共同律消费者）。** 取定义 25.2 的五条边和三个
+控制都为一，并使用定理 24.3 已拥有的同一单边界矩阵与单位标定，不重新
+复制其逆矩阵。直接的标量核值为
+$$
+\det K_s=(4,7,8,7,12),\qquad
+(r_0,r_1,r_2,r_3,r_{13})=(\tfrac14,\tfrac17,\tfrac14,\tfrac17,\tfrac1{12}).
+$$
+故
+$$
+\Gamma=\tfrac1{21}.
+$$
+两份同一五态占据均值
+$(X,Y,Z)=(\tfrac12,\tfrac12,0)$ 的合法律
+$$
+p^{A}=\tfrac12\delta_{\varnothing}+\tfrac12\delta_{13},\qquad
+p^{B}=\tfrac12\delta_1+\tfrac12\delta_3
+$$
+有 $\kappa_A=\tfrac12$、$\kappa_B=0$，却给出
+$$
+C_A-C_B=\frac{\vartheta}{42}.
+$$
+因此同一共享测度、图、噪声和控制下，交叉矩是占位纤维的真实消费者；
+它不是把定理 24.3 的 singleton-boundary source-summary collision 重新声明
+为另一份矩阵定理。
+
+**证明。** 标量值由定理 24.3 的矩阵和五模式控制直接相乘得到。两律的
+$X,Y,Z$ 相同而 $\kappa$ 相差 $1/2$，定理 25.5 给
+$C_A-C_B=\vartheta\Gamma/2=\vartheta/42$。证毕。
+
+**定义 25.7（模式平均自由能与退火自由能）。** 在共同测度和单位下令
+$$
+\mathcal F_s=-\vartheta\log Z_s
+=c_s-\tfrac12q_s^{\mathsf T}K_s^{-1}q_s
++\tfrac{\vartheta}{2}\log\det K_s
+-\tfrac{n\vartheta}{2}\log(2\pi\vartheta).
+$$
+模式平均自由能为
+$\overline{\mathcal F}_p=\sum_sp_s\mathcal F_s$。若把 $S$ 当作
+同一参考测度上的额外离散变量，再定义退火量
+$$
+\mathcal F_{\rm ann}(p)
+=-\vartheta\log\sum_sp_sZ_s.
+$$
+两者有不同的量词：前者先按模式求自由能再平均，后者先对模式和场联合求和。
+
+**定理 25.8（平均与退火的边界）。** 在定义 25.7 的共同单位和正配分
+下，
+$$
+\mathcal F_{\rm ann}(p)\le\overline{\mathcal F}_p,
+$$
+且在 $p$ 的支持上严格不等的 $\mathcal F_s$ 时严格不等。相等要求
+$\mathcal F_s$ 在该支持上为常数，或 $p$ 集中在一个模式。对于
+$q_s=c_s=0$ 的单位五边图，定理 25.6 的两律虽有同一 $(X,Y,Z)$，其模式平均
+自由能差为
+$$
+\overline{\mathcal F}_{p^A}-\overline{\mathcal F}_{p^B}
+=\frac{\vartheta}{4}\log\frac{48}{49}.
+$$
+这不是 $\mathcal F_{\rm ann}$ 的陈述。
+
+**证明。** 将 $Z_s=e^{-\mathcal F_s/\vartheta}$ 代入加权
+Jensen 不等式 $\log\sum_sp_se^{-\mathcal F_s/\vartheta}
+\ge-\overline{\mathcal F}_p/\vartheta$ 即得。严格性为 Jensen 严格性。
+最后一式是四角差
+$(\mathcal F_{13}+\mathcal F_{\varnothing}
+-\mathcal F_1-\mathcal F_3)/2$。定义 25.7 中的共同归一化项在四角差中抵消，
+定理 25.6 的行列式给出比值 $12\cdot4/(7\cdot7)=48/49$，因而
+$\mathcal F_{13}-\mathcal F_1-\mathcal F_3+\mathcal F_{\varnothing}
+=\vartheta\log(48/49)/2$。证毕。
+
+**定理 25.9（五边图控制的共同基准读口）。** 在定义 25.2 的四维
+共同坐标、Lebesgue 测度、单位和 $\vartheta$ 下，令
+$K_0=K_{\varnothing}$、$a=\sqrt\lambda e_L$、$b=\sqrt\mu e_R$。
+四个成员 $K_{\varnothing},K_1,K_3,K_{13}$ 均取 $q_s=0,c_s=0$。
+取一个共同基准场 $\xi_0\sim\mathcal N(0,\vartheta K_0^{-1})$，并令
+$$
+Y_1=a^{\mathsf T}\xi_0+\epsilon_1,\qquad
+Y_3=b^{\mathsf T}\xi_0+\epsilon_3,
+$$
+其中噪声独立、各为 $\mathcal N(0,\vartheta)$，与 $\xi_0$ 独立。令
+$\alpha=a^{\mathsf T}K_0^{-1}a$、$\beta=b^{\mathsf T}K_0^{-1}b$、
+$\chi=a^{\mathsf T}K_0^{-1}b$，则
+$$
+r^2=\frac{\chi^2}{(1+\alpha)(1+\beta)},\qquad
+I(Y_1;Y_3)=-\tfrac12\log(1-r^2).
+$$
+本应用恰有 $K_1=K_0+aa^{\mathsf T}$、$K_3=K_0+bb^{\mathsf T}$、
+$K_{13}=K_0+aa^{\mathsf T}+bb^{\mathsf T}$，故其四角自由能满足
+$$
+\mathcal J_{\mathcal F}
+=\mathcal F_{13}-\mathcal F_1-\mathcal F_3+\mathcal F_{\varnothing}
+=-\vartheta I(Y_1;Y_3).
+$$
+在定理 25.6 的单位图中，$1-r^2=48/49$，所以
+$I(Y_1;Y_3)=\tfrac12\log(49/48)$，并且定理 25.8 的平均自由能差为
+$-\vartheta I(Y_1;Y_3)/2$。这里的 $I$ 只指这个单一基准高斯的互信息；
+模式混合读口的互信息未被此等式计算。若允许定义 25.1 的任意模式源或常数，
+还须保留 $c_s-\tfrac12q_s^{\mathsf T}K_s^{-1}q_s$ 的四角差，不能沿用裸等式。
+
+**证明。** 读口协方差除以 $\vartheta$ 是
+$\left(\begin{smallmatrix}1+\alpha&\chi\\
+\chi&1+\beta\end{smallmatrix}\right)$。有限正高斯的熵—行列式恒等式
+给第一式；秩一行列式引理给
+$\det K_{13}\det K_0/(\det K_1\det K_3)=1-r^2$。
+四个零源、零常数成员的共同归一化项抵消，定义 25.7 给第二式；
+定理 25.6 的行列式和定理 25.8 给单位消费者。该信息恒等式的
+经典范围见 [Lami--Hirche--Adesso--Winter，式 (1)--(3)、(8)--(10)]
+(../../../Library/StatisticalMechanics/lamihircheadessowinter2017logdet.md)。
+一般的模式混合律不必是高斯律，不能只把混合协方差代入该高斯熵公式。证毕。
+
+**数学引文 25.10（定理 25.9 的控制微分中间式）。** 对该五边图取
+$U=e_Le_L^{\mathsf T}$、$V=e_Re_R^{\mathsf T}$，在开集
+$D=\{(s,t)\in\mathbb R^2:K(s,t)=K_0+sU+tV>0\}$ 上令
+$\mathcal F(s,t)=\frac{\vartheta}{2}\log\det K(s,t)$ 加上与
+$(s,t)$ 无关的共同归一化项；源与常数仍为零，并在 $D$ 上记
+$r(s,t)=(K(s,t)^{-1})_{LR}$。所用的经典 logdet 微分式在这里给
+$$
+\partial_s\partial_t\mathcal F
+=-\frac{\vartheta}{2}\operatorname{tr}(K^{-1}UK^{-1}V)
+=-\frac{\vartheta}{2}r(s,t)^2\le0.
+$$
+在 $\xi\sim\mathcal N(0,\vartheta K(s,t)^{-1})$ 下，标准高斯四阶矩
+把同一式写成 $-\operatorname{Cov}(\xi_L^2,\xi_R^2)/(4\vartheta)$。
+引理 25.4 保证控制矩形 $[0,\lambda]\times[0,\mu]$ 包含在 $D$ 中，故
+定理 25.9 的实际四角差还可写为
+$$
+\mathcal J_{\mathcal F}
+=-\frac{\vartheta}{2}\int_0^\lambda\int_0^\mu r(s,t)^2\,dt\,ds.
+$$
+它严格为负当且仅当 $h_Lh_R\lambda\mu>0$，与同一图的路径和控制退化一致。
+
+这里引用开放正定域中的
+$d\log\det K=\operatorname{tr}(K^{-1}dK)$ 与
+$dK^{-1}=-K^{-1}(dK)K^{-1}$，见
+[Rasmussen--Williams，式 (A.14)--(A.15)](../../../Library/StatisticalMechanics/rasmussenwilliams2006gaussian.md)
+及其高斯合同。迹式也是一般正半定控制的经典矩阵形式；本处只在上述
+坐标控制应用中使用它，未另立一般 Hessian 定理。
+
+**假设 25.11（可实现的距离族）。** 令 $\alpha,\beta>0$、$c_0\ne0$，
+取固定共同源 $Z\sim\mathcal N(0,\vartheta I_2)$，并对每个
+$$
+R\ge R_{\min}:=\frac{|c_0|}{\sqrt{\alpha\beta}}
+$$
+定义
+$$
+a=(\sqrt\alpha,0),\qquad
+b(R)=\left(\frac{c_0}{\sqrt\alpha R},
+\sqrt{\beta-\frac{c_0^2}{\alpha R^2}}\right).
+$$
+读口噪声仍独立、方差为 $\vartheta$，并独立于 $Z$。本距离比较在固定
+二维欧氏坐标及 Lebesgue 测度下使用四个核
+$I_2,I_2+aa^{\mathsf T},I_2+b(R)b(R)^{\mathsf T},
+I_2+aa^{\mathsf T}+b(R)b(R)^{\mathsf T}$，全部源与常数为零；
+$J_F(R)$ 指这四个成员按定义 25.7 得到的四角差。
+这给同一 $Z$ 上全部 $R$ 的联合
+协方差，且信号协方差为 $\vartheta c_0/R$；它不是分别拼接的二元协方差族。若
+$\alpha\beta=0$，可行性强制 $c_0=0$，此距离合同退化为零交叉项。
+
+**定理 25.12（距离比较的精确域与余项）。** 在假设 25.11 外加
+$R>\sqrt{d_0}$，其中
+$d_0=c_0^2/((1+\alpha)(1+\beta))$，基准四角自由能为
+$$
+J_F(R)=\frac{\vartheta}{2}\log\left(1-\frac{d_0}{R^2}\right),
+\qquad
+-\frac{dJ_F}{dR}
+=-\frac{\vartheta d_0}{R^3(1-d_0/R^2)}.
+$$
+若 $x=d_0/R^2\le\rho<1$，则
+$$
+\left|J_F(R)+\frac{\vartheta d_0}{2R^2}\right|
+\le\frac{\vartheta d_0^2}{4(1-\rho)R^4},
+$$
+$$
+\left|-\frac{dJ_F}{dR}+\frac{\vartheta d_0}{R^3}\right|
+\le\frac{\vartheta d_0^2}{(1-\rho)R^5}.
+$$
+若 $c_0=0$，则 $d_0=0$ 且两项恒为零。负号这里只是所定义的
+$-J_F'(R)$；没有给出空间、力或重力解释。
+
+**证明。** $R_{\min}$ 使所给平方根为实，且
+$R>\sqrt{d_0}$ 使对数的自变量为正。把假设 25.11 的四个核代入
+定理 25.9 证明所引用的行列式恒等式，即得 $J_F$；对它求导得第二式。用
+$-\log(1-x)-x=\sum_{m\ge2}x^m/m$ 并以
+$\sum_{m\ge2}x^m/m\le x^2/(2(1-x))$ 控制第一余项；第二式由
+$1/(1-x)-1=x/(1-x)$ 直接得到。这里的等价阶为 $R^{-3}$，仅在
+$d_0>0$ 时是非零主项。证毕。
+
+**定义 25.13（保留内部的 OU 记忆合同）。** 对定义 25.2 的一个固定模式
+$K=K_s>0$，给定 $T>0$、确定的 $u\in C^1([0,T];\mathbb R^m)$、矩阵
+$V\in\mathbb R^{m\times4}$、$A\in\mathbb R^{m\times m}$ 及校准的 $\gamma>0$，声明
+$$
+d\xi_t=-\gamma^{-1}(K\xi_t+V^{\mathsf T}u(t))dt
++\sqrt{2\vartheta/\gamma}\,dW_t,
+\qquad
+j(t)=Au(t)+V\xi_t.
+$$
+初态取
+$$
+\xi_0\sim\mathcal N(-K^{-1}V^{\mathsf T}u(0),\vartheta K^{-1}),
+$$
+并与 $\{W_t-W_0:t\ge0\}$ 独立；$W$ 是本合同声明的标准 Wiener
+过程。若输入只有绝对连续正则性，积分式须按相应弱导数解释；没有输入、
+初态、噪声律和 $\gamma$ 的这些数据，静态 $K,\vartheta$ 不决定时间律。
+
+**数学引文 25.14（单位图消费者所用的记忆与涨落中间式）。** 在定义
+25.13 的合同下，有限线性 OU 解公式用于定理 25.15 的图读口。令
+$$
+\Lambda=A-VK^{-1}V^{\mathsf T},\qquad
+M(t)=VK^{-1}e^{-Kt/\gamma}V^{\mathsf T}\quad(t\ge0).
+$$
+以实际确定输入的均值为中心，边界响应满足
+$$
+j(t)=\Lambda u(t)+\int_0^tM(t-s)\dot u(s)\,ds+\eta(t),
+$$
+其中 $\eta$ 为零均值高斯过程，且
+$$
+\mathbb E[\eta(t)\eta(s)^{\mathsf T}]
+=\vartheta M(|t-s|).
+$$
+这些中间式使用已声明的初态、未来增量独立性及确定输入。
+
+变常数公式在此给
+$$
+\xi_t=-K^{-1}V^{\mathsf T}u(t)
++e^{-Kt/\gamma}\bigl(\xi_0+K^{-1}V^{\mathsf T}u(0)\bigr)
++\int_0^te^{-K(t-r)/\gamma}K^{-1}V^{\mathsf T}\dot u(r)\,dr
++\sqrt{2\vartheta/\gamma}\int_0^te^{-K(t-r)/\gamma}dW_r,
+$$
+其中对 $u$ 的分部积分使用 $u\in C^1$。代入 $j$ 得所列静态和记忆项。
+初态的平衡协方差与随机积分的协方差相加为
+$\vartheta K^{-1}e^{-K|t-s|/\gamma}$；左右乘 $V,V^{\mathsf T}$
+得边界式。该配对要求与
+[Ma--Li--Liu，§II，式 (4)--(10)](../../../Library/Dynamics/maliliu2017embeddedbrownian.md)
+的有限线性记忆/噪声合同一致；本式仍是本节声明模型的直接解。
+
+**定理 25.15（单位图读口的两种校准记忆）。** 取定理 25.6 的单位基准
+图 $K=K_{\varnothing}$，并在定义 25.13 中固定 $\vartheta$、同一确定输入
+$u$、同一 $A$、$V=e_J^{\mathsf T}$ 及同一初态律。取两个不同的正数
+$\gamma_1\ne\gamma_2$，则
+$Z_s$、$\mathcal F_s$、$\operatorname{Cov}(\xi_0)$ 及全部静态
+模式读数相同，而每个 $0<t\le T$ 都有
+$M_{\gamma_1}(t)\ne M_{\gamma_2}(t)$。定理 24.3 的既有单位标定给
+$V K^{-1}V^{\mathsf T}=1$，并有
+$$
+M_\gamma(0)=1,\qquad M_\gamma'(0+)=-1/\gamma.
+$$
+所以这里的同静态、异记忆是一个实际图读口消费者；静态自由能或交叉
+信息不能单独确定 $\gamma$ 或整个时间核。
+
+**证明。** $\gamma$ 不出现在静态高斯积分。由中间式 25.14，
+$M_\gamma'(0+)=-\gamma^{-1}VV^{\mathsf T}=-1/\gamma$。
+若 $\gamma_1<\gamma_2$，对 $K$ 的每个特征值 $k>0$ 和 $t>0$，有
+$k^{-1}(e^{-kt/\gamma_2}-e^{-kt/\gamma_1})>0$；谱分解后以非零
+$e_J$ 取二次型，得到 $M_{\gamma_2}(t)>M_{\gamma_1}(t)$。
+反向次序同理。$t=0$ 时两核相同；若改用零读口 $V=0$，则两核恒为零。
+因此差异结论保留非零读口与正时间条件。证毕。
+
+**定义 25.16（解释合同）。** 本节的四角差、互信息及 $-J_F'(R)$ 分别按
+定义 25.7、定理 25.9 的共同高斯读口及假设 25.11 的距离族解释。
+物理面积、力、引力、量子相干、可操作信息恢复和内禀时间的对应不属于此合同；
+采用这类解释时须另给相应对象、测量操作与桥接假设。本条是模型使用范围的约定。
+
+**数学引文 25.17（复用边界）。** 定理 24.3 的 singleton-boundary 五边
+图矩阵、单位标定和 source-summary collision 是本节的既有所有者；本节
+只消费其标量逆元和单位数据。静态 Schur/Kron 与接地正性复用
+[响应三角形卷 theorem 8.1](AURIC_FIB_ATOM_RESPONSE_TRIANGLE_AND_INTERNAL_MEMORY.md)
+及 [Dörfler--Bullo](../../../Library/GraphInvariants/dorflerbullo2013kron.md)；
+条件高斯与 logdet 导数复用
+[Rasmussen--Williams](../../../Library/StatisticalMechanics/rasmussenwilliams2006gaussian.md)；
+共同基准高斯的互信息复用
+[Lami--Hirche--Adesso--Winter](../../../Library/StatisticalMechanics/lamihircheadessowinter2017logdet.md)；
+保留线性记忆的背景合同复用
+[Ma--Li--Liu](../../../Library/Dynamics/maliliu2017embeddedbrownian.md)。
+这些引文承担经典中间步骤。本节把它们用于同一加权五边图的实际五态纤维
+和交叉矩消费者，并保留平均/退火、可实现距离族及单位图校准记忆的各自合同。
+
+## 25.99 追加锚（本行以下为增补区）
