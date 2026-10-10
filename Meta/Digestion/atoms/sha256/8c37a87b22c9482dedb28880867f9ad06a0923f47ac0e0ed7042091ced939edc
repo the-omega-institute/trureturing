@@ -1,0 +1,11 @@
+### 第三层：乘法和二阶矩
+
+PR #14919 的 moment triangle / inverse precision 方向，与上面的
+
+$$
+q^2=
+4x+25y+9z+20xy
+$$
+
+属于同一种机制：一阶响应落在 $\mathcal B$，二阶响应越过 $\mathcal B$ 并触及 seam。
+

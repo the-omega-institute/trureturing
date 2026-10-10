@@ -1,0 +1,22 @@
+\[
+\sigma(h\cdot x)
+=
+U_x(\sigma(h)).
+\]
+
+这说明 future-sufficient 摘要形成一个真正的递归闭包：
+
+\[
+\boxed{
+\text{当前摘要}
++
+\text{合法输入}
+\longrightarrow
+\text{下一摘要}.
+}
+\]
+
+这个结构与普通有限自动机相似，但这里的状态空间一般不是有限的，因为 \(A,B\) 可以无限增长。
+
+---
+

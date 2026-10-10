@@ -1,0 +1,77 @@
+### 定理 3：最小未来记忆定理
+
+在有限状态、线性观测模型中，若所有动作 \(a\) 的下一步期望都要由当前记录精确决定，则任何扩展观测空间 \(W\) 都必须满足：
+
+\[
+V\subseteq W
+\]
+
+\[
+U_aV\subseteq W
+\qquad
+\text{对所有 }a
+\]
+
+因此：
+
+\[
+\dim(W/V)
+\ge
+\dim(\mathcal C(V)/V)
+\]
+
+而取：
+
+\[
+W=\mathcal C(V)
+\]
+
+即可达到这个下界。
+
+#### 证明
+
+由于要求所有 \(f\in V\) 在所有动作 \(a\) 下都可预测，必须能够计算：
+
+\[
+\mathbb E[U_af]
+\]
+
+所以每个 \(U_af\) 都必须属于新的可观测空间 \(W\)。因此：
+
+\[
+V+\sum_a U_aV
+\subseteq W
+\]
+
+左侧正是 \(\mathcal C(V)\)，故：
+
+\[
+\mathcal C(V)\subseteq W
+\]
+
+于是：
+
+\[
+\dim W-\dim V
+\ge
+\dim\mathcal C(V)-\dim V
+\]
+
+即：
+
+\[
+\dim(W/V)
+\ge
+\dim(\mathcal C(V)/V)
+\]
+
+另一方面，直接取：
+
+\[
+W=\mathcal C(V)
+\]
+
+显然包含 \(V\) 和所有 \(U_aV\)，因此达到下界。证毕。
+
+---
+

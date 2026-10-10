@@ -1,0 +1,27 @@
+## 8. 八、静态 \(\kappa\)、动态计数与边界义务不能直接拼成一个无条件直积
+
+当前动态未来商文档在这里作了重要限定。
+
+在指定的非单例 Fibonacci 深度先验下，若：
+
+$$
+r_k=\frac{\operatorname{Fib}_{k+1}}{\operatorname{Fib}_{k+3}}
+$$
+
+$$
+s_k=\frac{\operatorname{Fib}_{k+2}}{\operatorname{Fib}_{k+3}}
+$$
+
+则历史 $h$ 的深度后验满足：
+
+$$
+\nu_h(k)
+\propto
+\mu(k)\,
+r_k^{A_h}\,
+s_k^{B_h}
+$$
+
+其中：
+
+- $A_h$ 是历史中 $\alpha$ 的取得次数；
