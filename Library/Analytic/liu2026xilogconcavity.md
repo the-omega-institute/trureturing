@@ -5,7 +5,7 @@ year: 2026
 title: Infinite log-concavity of the Taylor coefficients of the Riemann xi-function
 doi: null
 url: https://arxiv.org/abs/2610.04972v1
-claim: The preprint proves unconditional strict infinite log-concavity of the central Taylor coefficients of the Riemann xi-function; this is a necessary-condition style consequence of the Laguerre--Pólya route and does not prove RH or supply a Robin estimate.
+claim: The preprint states unconditional strict infinite log-concavity of the central Taylor coefficients of the Riemann xi-function; it does not supply the Laguerre--Pólya conclusion or a pointwise Robin estimate.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -24,7 +24,7 @@ F(x)=\xi\!\left(\tfrac12+\sqrt{x}\right)=\sum_{n\ge0}\lambda_nx^n,
 $$
 
 and let $L$ be the standard log-concavity operator,
-$ (La)_n=a_n^2-a_{n-1}a_{n+1}$. Theorem 1.1 states
+$ (La)_n=a_n^2-a_{n-1}a_{n+1}$, with $a_{-1}=0$. Theorem 1.1 states
 
 $$
 (L^m\lambda)_n>0\qquad(m,n\ge0).
@@ -34,6 +34,6 @@ The paper combines saddle estimates, a two-index recurrence for logarithmic rati
 
 ## Boundary for Robin and FIB ATOM
 
-The coefficient sequence is a central Taylor expansion of $\xi$, whereas Robin's target is a pointwise divisor-sum inequality. Unconditional positivity of all iterated log-concavity transforms therefore does not provide positivity of all Li coefficients, a zero-free half-plane, or a bound on the same integer's signed Robin tail. The five-window FIB labels also do not encode the Taylor index $n$ or a coefficient-preserving map from $N_g=1+F_rg$ to $\lambda_n$.
+The coefficient sequence is a central Taylor expansion of $\xi$, whereas Robin's target is a pointwise divisor-sum inequality. These $\lambda_n$ are not the Li coefficients. The stated result supplies no implication to positivity of all Li coefficients, a zero-free half-plane, or a bound on the same integer's signed Robin tail. Neither this source nor the five-window FIB definitions supply a coefficient-preserving map from $N_g=1+F_rg$ to the Taylor index and coefficient $\lambda_n$.
 
-This source closes a possible duplicate route—trying to infer RH from another broad family of positive finite differences—but leaves the needed bridge open. It should be reused only after a proved map preserves the actual target and its quantifiers.
+Reuse the stated coefficient property when its hypotheses and conclusion match the task; it is not a new Robin estimate. Any application to the Robin/FIB route still needs a proved map preserving the actual target and its quantifiers. The preprint does not supply that map.
