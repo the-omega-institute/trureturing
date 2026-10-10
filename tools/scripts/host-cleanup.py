@@ -169,6 +169,37 @@ def candidates(codex, sshx, tmp_roots):
             yield "tmp", path
 
 
+def linux_observation_unavailable(process, boundary, error):
+    """Only a completely observed terminal thread group has no active handles."""
+    try:
+        process.stat()
+    except (FileNotFoundError, ProcessLookupError):
+        return
+    status = {}
+    try:
+        for line in (process / "status").read_text().splitlines():
+            key, separator, value = line.partition(":")
+            if separator and key in ("State", "Threads", "Uid"):
+                status[key] = value.strip()
+        if status.get("State", "").split()[:1] in (["Z"], ["X"]):
+            # A terminal leader alone does not certify surviving threads.
+            tasks = list((process / "task").iterdir())
+            if status.get("Threads") == "1" and [task.name for task in tasks] == [process.name]:
+                observed = (tasks[0] / "status").read_text()
+                fields = dict(line.split(":", 1) for line in observed.splitlines() if ":" in line)
+                if (fields.get("State", "").split()[:1] in (["Z"], ["X"])
+                        and fields.get("Threads", "").strip() == "1"):
+                    return
+    except (OSError, ValueError):
+        # A missing status/task file is not proof of process disappearance.
+        try:
+            process.stat()
+        except (FileNotFoundError, ProcessLookupError):
+            return
+    raise OSError("linux_activity_unavailable " + json.dumps(dict(
+        process=str(process), boundary=boundary, status=status, error=str(error)))) from error
+
+
 def active_paths(codex, scopes=()):
     """Read open files/cwds and process arguments for the current user only."""
     protected = {Path.cwd().resolve(), Path(__file__).resolve()}
@@ -191,17 +222,17 @@ def active_paths(codex, scopes=()):
                 continue
             try:
                 descriptors = list((process / "fd").iterdir())
-            except (FileNotFoundError, ProcessLookupError) as error:
-                try:
-                    process.stat()
-                except (FileNotFoundError, ProcessLookupError):
-                    continue
-                raise OSError("cannot inspect live process descriptors: " + str(process)) from error
+            except (FileNotFoundError, ProcessLookupError, PermissionError) as error:
+                linux_observation_unavailable(process, "fd_inventory", error)
+                continue
             cwd = process / "cwd"
             missing_cwd = None
             for link in [cwd, *descriptors]:
                 try:
                     target = os.readlink(link).removesuffix(" (deleted)")
+                except PermissionError as error:
+                    linux_observation_unavailable(process, "cwd" if link == cwd else "fd", error)
+                    break
                 except (FileNotFoundError, ProcessLookupError) as error:
                     # Closing one handle must not hide the remaining handles.
                     if link == cwd:
@@ -210,11 +241,7 @@ def active_paths(codex, scopes=()):
                 if target.startswith("/"):
                     open_path(target)
             if missing_cwd is not None:
-                try:
-                    process.stat()
-                except (FileNotFoundError, ProcessLookupError):
-                    continue
-                raise OSError("cannot inspect live process cwd: " + str(process)) from missing_cwd
+                linux_observation_unavailable(process, "cwd", missing_cwd)
     elif sys.platform == "darwin":
         result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
                                 capture_output=True, text=True, timeout=120)

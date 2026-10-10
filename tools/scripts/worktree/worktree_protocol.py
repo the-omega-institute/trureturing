@@ -252,6 +252,7 @@ def main(argv=None):
     retirement.add_argument("--branch", required=True)
     retirement.add_argument("--commit", required=True)
     retirement.add_argument("--preview", action="store_true")
+    retirement.add_argument("--expected-reflog-sha256")
     snapshot = commands.add_parser("remove-snapshot")
     snapshot.add_argument("--path", type=Path, required=True)
     snapshot.add_argument("--base", required=True)

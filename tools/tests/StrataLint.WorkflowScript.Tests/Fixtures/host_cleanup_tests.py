@@ -211,8 +211,7 @@ class HostCleanupTests(unittest.TestCase):
         options = cleanup.argparse.Namespace(repository=repository, base="dev",
             codex_home=self.root / "codex", sshx_home=self.root / "sshx", tmp_root=[temporary],
             min_age_hours=0, delete=True, verbose=False)
-        with patch.object(cleanup, "active_paths", return_value=set()), \
-             patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(io.StringIO()):
+        with patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(0, cleanup.run_clean(options))
         self.assertFalse(safe.exists())
         self.assertEqual("recovery\n", (unknown / "private").read_text())
@@ -398,6 +397,49 @@ class HostCleanupTests(unittest.TestCase):
                      contextlib.redirect_stderr(io.StringIO()):
                     self.assertEqual(1, cleanup.main(["active-paths"]))
                 self.assertEqual("", output.getvalue())
+
+    def test_linux_terminal_group_requires_complete_single_thread_evidence(self):
+        process = self.root / "proc/123"
+        (process / "fd").mkdir(parents=True)
+        task = process / "task/123"
+        task.mkdir(parents=True)
+        target = self.old_file(self.root / "checkout/reader.txt")
+        (process / "fd/1").symlink_to(target)
+        (process / "cwd").symlink_to(self.root)
+        iterdir, readlink = Path.iterdir, os.readlink
+        def inventory(path):
+            return iter([process]) if path == Path("/proc") else iterdir(path)
+        def denied(path):
+            if path == process / "cwd":
+                raise PermissionError("cwd is unavailable")
+            return readlink(path)
+        with patch.object(cleanup.sys, "platform", "linux"), \
+             patch.object(Path, "iterdir", inventory), \
+             patch.object(cleanup.os, "readlink", denied), \
+             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")):
+            for state, threads, complete, terminal in (
+                    ("Z", "1", True, True), ("X", "1", True, True),
+                    ("S", "1", True, False), ("Z", "2", True, False),
+                    ("Z", "1", False, False)):
+                with self.subTest(state=state, threads=threads, complete=complete):
+                    (process / "status").write_text("State: " + state + "\nThreads: " + threads + "\n")
+                    if complete:
+                        (task / "status").write_text("State: " + state + "\nThreads: " + threads + "\n")
+                    else:
+                        (task / "status").unlink()
+                    if terminal:
+                        cleanup.active_paths(self.root / "codex")
+                    else:
+                        with self.assertRaisesRegex(OSError, "linux_activity_unavailable"):
+                            cleanup.active_paths(self.root / "codex")
+            # A terminal leader cannot hide a live sibling's cwd or descriptors.
+            sibling = process / "task/124"
+            sibling.mkdir()
+            (sibling / "status").write_text("State: S\nThreads: 2\n")
+            (process / "status").write_text("State: Z\nThreads: 2\n")
+            (task / "status").write_text("State: Z\nThreads: 2\n")
+            with self.assertRaisesRegex(OSError, "linux_activity_unavailable"):
+                cleanup.active_paths(self.root / "codex")
 
     def test_linux_exited_process_does_not_hide_other_process_activity(self):
         exited = self.root / "proc/122"

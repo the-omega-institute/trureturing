@@ -250,7 +250,8 @@ def remove(options):
             for raw in options.expected:
                 expected = json.loads(raw)
                 if Path(expected["path"]).resolve() == target.resolve():
-                    if item.get("HEAD") != expected["head"] or item.get("branch") != expected.get("branch"):
+                    if (item.get("HEAD") != expected["head"] or item.get("branch") != expected.get("branch")
+                            or "locked" in expected and item.get("locked") != expected["locked"]):
                         raise Refused("observed_identity_changed")
             if options.expected and not any(Path(json.loads(raw)["path"]).resolve() == target.resolve()
                                             for raw in options.expected):
@@ -287,6 +288,11 @@ def retire_branch(options):
         roots = remote_roots(options.source, reference)
         retained(options.source, current, roots)
         log = common(options.source) / "logs" / reference
+        if options.expected_reflog_sha256 is not None:
+            if (not re.fullmatch(r"[0-9a-f]{64}", options.expected_reflog_sha256)
+                    or not log.is_file() or log.is_symlink()
+                    or hashlib.sha256(log.read_bytes()).hexdigest() != options.expected_reflog_sha256):
+                raise Refused("branch_reflog_changed")
         if log.exists():
             for oid in set(reflog_oids(log)):
                 retained(options.source, oid, roots)

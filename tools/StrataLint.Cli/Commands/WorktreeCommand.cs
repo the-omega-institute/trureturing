@@ -1,6 +1,7 @@
 using StrataLint.Runtime;
 using System.Text;
 using System.Text.Json;
+using System.Security.Cryptography;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -197,8 +198,9 @@ internal static class WorktreeCommand
                 {
                     creationMetadata ??= WorktreeCreationSafety.FindCreationMetadata(options, creationLock, runner);
                     if (worktreeCreated || creationMetadata is not null)
-                        cleanup = Cleanup(options, creationLock, creationMetadata, runner);
-                    if (branchCreated && cleanup.Length == 0)
+                        cleanup = Cleanup(options, creationLock, creationMetadata, branchOid, initializationScope, runner);
+                    if (cleanup.Length == 0) branchTracking?.Rollback(options, runner);
+                    if (branchCreated && creationMetadata is null && cleanup.Length == 0)
                         cleanup = "initialization branch retained for recovery";
                 }
             }
@@ -554,10 +556,36 @@ internal static class WorktreeCommand
         WorktreeOptions options,
         string creationLock,
         string? creationMetadata,
+        string branchOid,
+        IDisposable? initializationScope,
         IWorktreeProcessRunner runner)
     {
         WorktreeCreationSafety.ValidateCleanupOwnership(options, creationLock, creationMetadata, runner);
-        return "initialization worktree retained; qualified cleanup or alternate continuation is required";
+        if (creationMetadata is null)
+            return "initialization metadata unavailable; material retained for recovery";
+        var reference = $"refs/heads/{options.Branch}";
+        var common = Path.GetFullPath(File.ReadAllText(Path.Combine(creationMetadata, "commondir")).Trim(), creationMetadata);
+        var log = Path.Combine(common, "logs", reference);
+        if (!File.Exists(log) || File.GetAttributes(log).HasFlag(FileAttributes.ReparsePoint))
+            return "initialization branch history unavailable; material retained for recovery";
+        var history = File.ReadAllBytes(log);
+        if (!Encoding.UTF8.GetString(history).Split('\n')[0].EndsWith("\t" + creationLock, StringComparison.Ordinal))
+            return "initialization branch ownership changed; material retained for recovery";
+        var historyDigest = Convert.ToHexStringLower(SHA256.HashData(history));
+        var expected = JsonSerializer.Serialize(new
+        {
+            path = options.Path, head = branchOid, branch = reference, locked = creationLock,
+        });
+        // Close only this participant's handles. Surviving descendants continue
+        // to exclude the existing qualified removal adapter automatically.
+        initializationScope?.Dispose();
+        var removed = WorktreeProtocolCommand.Run(options.Source,
+            ["remove", "--path", options.Path, "--initialization", "--expected", expected], runner);
+        if (!removed.Success) return removed.Error;
+        var retired = WorktreeProtocolCommand.Run(options.Source,
+            ["retire-branch", "--branch", options.Branch, "--commit", branchOid,
+                "--expected-reflog-sha256", historyDigest], runner);
+        return retired.Success ? string.Empty : retired.Error;
     }
 
     private static void RunRequired(

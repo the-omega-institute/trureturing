@@ -13,6 +13,10 @@ public sealed class WorktreeCacheStrategyTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
+        using var remote = new TemporaryDirectory();
+        Git(remote.Path, "init", "--bare");
+        Git(repository.Path, "remote", "add", "origin", remote.Path);
+        Git(repository.Path, "push", "origin", "dev");
         var target = Path.Combine(repository.Path, "failed-restore");
         var runner = new RecordingWorktreeProcessRunner { FailDotnet = true };
         var branch = $"{WorktreeCommand.CreationNamespace}/math/failed-restore";
@@ -36,6 +40,38 @@ public sealed class WorktreeCacheStrategyTests
                     ["restore", WorktreeCommand.SolutionPath, "--locked-mode"]));
         Assert.False(Directory.Exists(target));
         AssertBranchMissing(repository.Path, branch);
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, true)]
+    public void RestoreFailureRetainsUnconfirmedOrNewMaterial(bool published, bool newMaterial)
+    {
+        using var repository = new TemporaryDirectory();
+        using var remote = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        if (published)
+        {
+            Git(remote.Path, "init", "--bare");
+            Git(repository.Path, "remote", "add", "origin", remote.Path);
+            Git(repository.Path, "push", "origin", "dev");
+        }
+        var target = Path.Combine(repository.Path, "failed-restore");
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            FailDotnet = true,
+            AfterWorktreeAdd = newMaterial ? path => File.WriteAllText(Path.Combine(path, "recovery"), "owned bytes") : null,
+        };
+        var result = WorktreeCommand.Run(repository.Path,
+            ["--kind", "math", "--name", "failed-restore", "--path", target, "--base", "HEAD"], runner);
+        Assert.False(result.Success);
+        Assert.Contains("dotnet restore failed", result.Error, StringComparison.Ordinal);
+        Assert.True(Directory.Exists(target));
+        Assert.Contains(published ? "untracked_or_ignored_material" : "remote_preservation_unknown", result.Error, StringComparison.Ordinal);
+        Assert.Equal(0, TestProcessRunner.Run("git",
+            ["show-ref", "--verify", "--quiet", $"refs/heads/{WorktreeCommand.CreationNamespace}/math/failed-restore"],
+            repository.Path, BoundedProcessRunner.HangDetectionBudget, 4096).ExitCode);
+        if (newMaterial) Assert.Equal("owned bytes", File.ReadAllText(Path.Combine(target, "recovery")));
     }
 
     [Fact]
