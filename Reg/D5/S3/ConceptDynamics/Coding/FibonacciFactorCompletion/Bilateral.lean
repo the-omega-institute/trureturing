@@ -65,8 +65,7 @@ def parserRegistration : Registration parserArena
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨(), [], [{ m := 1, r := 1, m_pos := Nat.zero_lt_one,
-      r_pos := Nat.zero_lt_one }], ?_⟩
+    refine ⟨(), [], [(⟨1, 1, Nat.zero_lt_one, Nat.zero_lt_one⟩ : Return)], ?_⟩
     change (0 : ℕ) ≠ 26
     norm_num
 

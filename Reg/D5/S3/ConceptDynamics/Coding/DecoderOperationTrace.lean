@@ -35,24 +35,24 @@ abbrev traceSignature : Signature where
 
 def stepActual : Realization relationSignature.{u,v,w} :=
   realize relationSignature (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s)
-    (fun e => nomatch e)
+    (fun (e : Empty) _ => Empty.elim e)
 
 def traceActual : Realization traceSignature.{u,v,w} :=
   realize traceSignature (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s)
-    (fun e => nomatch e)
+    (fun (e : Empty) _ => Empty.elim e)
 
 def runActual : Realization relationSignature.{u,v,w} :=
   realize relationSignature (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
-    (fun e => nomatch e)
+    (fun (e : Empty) _ => Empty.elim e)
 
 def stepRejected : Realization relationSignature.{u,v,w} :=
-  realize relationSignature (fun _ _ _ _ => True) (fun e => nomatch e)
+  realize relationSignature (fun _ _ _ _ => True) (fun (e : Empty) _ => Empty.elim e)
 
 def traceRejected : Realization traceSignature.{u,v,w} :=
-  realize traceSignature (fun _ _ _ _ _ => True) (fun e => nomatch e)
+  realize traceSignature (fun _ _ _ _ _ => True) (fun (e : Empty) _ => Empty.elim e)
 
 def runRejected : Realization relationSignature.{u,v,w} :=
-  realize relationSignature (fun _ _ _ _ => False) (fun e => nomatch e)
+  realize relationSignature (fun _ _ _ _ => False) (fun (e : Empty) _ => Empty.elim e)
 
 abbrev stepArena : Arena where
   signature := relationSignature.{u,v,w}
@@ -141,7 +141,8 @@ theorem run_comparable_rejected_law : ¬ runComparableArena.{u,v,w}.Law runRejec
     fun _ => .acquire (fun _ => some (⟨()⟩, []))
   let input : ℕ → Option (ULift.{v} Unit) := fun _ => some ⟨()⟩
   have edge : Step action input (sampleFrame 0) (sampleFrame 1) :=
-    Step.acquire ⟨()⟩ ⟨()⟩ 0 [] [] (fun _ => some (⟨()⟩, [])) ⟨()⟩ rfl rfl rfl
+    Step.acquire (action := action) (input := input)
+      ⟨()⟩ ⟨()⟩ 0 [] [] (fun _ => some (⟨()⟩, [])) ⟨()⟩ rfl rfl rfl
   have forward : Run action input (sampleFrame 0) (sampleFrame 1) :=
     ⟨_, Trace.refl.tail edge⟩
   rcases h (action := action) (input := input)
@@ -177,7 +178,8 @@ def stepRegistration : Registration stepArena.{u,v,w}
     refine ⟨sampleParams, sampleFrame 0, sampleFrame 1, ?_⟩
     intro h
     have edge : Step idleAction.{u,v,w} (fun _ => none) (sampleFrame 0) (sampleFrame 0) :=
-      Step.internal ⟨()⟩ ⟨()⟩ 0 [] [] rfl
+      Step.internal (action := idleAction.{u,v,w}) (input := fun _ => none)
+        ⟨()⟩ ⟨()⟩ 0 [] [] rfl
     have equal : Step idleAction.{u,v,w} (fun _ => none) (sampleFrame 0) (sampleFrame 0) =
         Step idleAction.{u,v,w} (fun _ => none) (sampleFrame 1) (sampleFrame 0) :=
       congrFun h (sampleFrame 0)
@@ -254,7 +256,7 @@ def step_unique_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.step_unique.{u,v,w})
       (type_of% (realize relationSignature.{u,v,w}
-        (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))) Unit Unit where
+        (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.step_unique_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.stepRegistration
   realizationSource := none
@@ -267,7 +269,7 @@ def step_unique_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize relationSignature.{u,v,w}
-    (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))
+    (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -290,7 +292,7 @@ def trace_closure_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_closure.{u,v,w})
       (type_of% (realize traceSignature.{u,v,w}
-        (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))) Unit Unit where
+        (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_closure_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.traceRegistration
   realizationSource := none
@@ -303,7 +305,7 @@ def trace_closure_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize traceSignature.{u,v,w}
-    (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))
+    (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -327,7 +329,7 @@ def run_closure_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_closure.{u,v,w})
       (type_of% (realize relationSignature.{u,v,w}
-        (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))) Unit Unit where
+        (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_closure_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.runClosureRegistration
   realizationSource := none
@@ -340,7 +342,7 @@ def run_closure_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize relationSignature.{u,v,w}
-    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))
+    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -364,7 +366,7 @@ def run_trans_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_trans.{u,v,w})
       (type_of% (realize relationSignature.{u,v,w}
-        (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))) Unit Unit where
+        (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_trans_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.runTransRegistration
   realizationSource := none
@@ -377,7 +379,7 @@ def run_trans_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize relationSignature.{u,v,w}
-    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))
+    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -401,7 +403,7 @@ def run_comparable_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_comparable.{u,v,w})
       (type_of% (realize relationSignature.{u,v,w}
-        (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))) Unit Unit where
+        (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_comparable_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.runComparableRegistration
   realizationSource := none
@@ -414,7 +416,7 @@ def run_comparable_registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize relationSignature.{u,v,w}
-    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun e => nomatch e))
+    (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

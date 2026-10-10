@@ -23,7 +23,7 @@ abbrev windowValueSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def windowValueArena : Arena where
+abbrev windowValueArena : Arena where
   signature := windowValueSignature
   Law R := ∀ (n : ℕ) (ω : ℤ → CuLetter) (i : ℤ) (z : ℝ),
     R.readout () ⟨n, ω, i⟩ z = finitePast ω i n z
@@ -109,7 +109,7 @@ abbrev windowShiftSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def windowShiftArena : Arena where
+abbrev windowShiftArena : Arena where
   signature := windowShiftSignature
   Law R := ∀ (n : ℕ) (ω : ℤ → CuLetter) (i : ℤ),
     R.readout () ⟨n, ω⟩ i = memoryShift (memoryWindow n ω i) (ω i)
@@ -145,6 +145,7 @@ def windowShiftEvidence : Registration windowShiftArena
     intro h
     have hfirst := congrFun h (0 : Fin 1)
     norm_num [realize, memoryWindow] at hfirst
+    cases hfirst
 }
 
 def window_shift_registration :
@@ -196,7 +197,7 @@ abbrev pathMemorySignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def pathMemoryArena : Arena where
+abbrev pathMemoryArena : Arena where
   signature := pathMemorySignature
   Law R := ∀ {n : ℕ} (p : ℤ → MemoryVertex n) (ω : ℤ → CuLetter)
     (shift : ∀ i, p (i+1) = memoryShift (p i) (ω i)),
