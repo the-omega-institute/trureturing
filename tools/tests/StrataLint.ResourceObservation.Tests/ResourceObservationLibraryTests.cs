@@ -8,6 +8,56 @@ public sealed class ResourceObservationLibraryTests
 {
     private const string LibraryPath = "tools/scripts/lib/resource-observation-lib.sh";
 
+    [Fact]
+    public void DiagnosticSamplerRecordsActualPhasesAndUnavailableClockWithoutChangingExit()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var result = Run(temporary, """
+            set -euo pipefail
+            source "$1"
+            resource_observation_process_values() {
+              local receipt="" file=""
+              for file in "$COLD_COST_OBSERVATION_DIR"/shell-resource-*.metrics; do
+                IFS= read -r receipt < "$file"
+                if [[ "$receipt" == *"in_flight=1"* ]]; then
+                  printf 'DIAGNOSTIC_INFLIGHT status=matched\n' >&2
+                else
+                  printf 'DIAGNOSTIC_INFLIGHT status=missing\n' >&2
+                fi
+              done
+              printf '1\t0\tpid:1\n'
+            }
+            resource_observe_sample 0 $$ "$PWD" "$PWD" baseline || true
+            resource_observe_sample 1 $$ "$PWD" "$PWD" periodic || true
+            resource_observation_handle_signal TERM 0 $$ "$PWD" "$PWD" ""
+            resource_observe_sample 0 $$ "$PWD" "$PWD" final "" 23 TERM || true
+            exit 23
+            """, $"COLD_COST_OBSERVATION_DIR={temporary.Path}");
+        Assert.Equal(23, result.ExitCode);
+        var records = Directory.GetFiles(temporary.Path, "shell-resource-*.metrics");
+        Assert.Single(records);
+        var text = File.ReadAllText(records[0]);
+        Assert.Contains("calls=4 completed=4", text, StringComparison.Ordinal);
+        var byteMatch = System.Text.RegularExpressions.Regex.Match(text, @"completed_bytes_before=([0-9]+)");
+        Assert.True(byteMatch.Success);
+        Assert.True(long.Parse(byteMatch.Groups[1].Value, System.Globalization.CultureInfo.InvariantCulture) > 0);
+        Assert.Contains("phase=final", text, StringComparison.Ordinal);
+        Assert.Contains("in_flight=0", text, StringComparison.Ordinal);
+        Assert.Contains("identity_clock=boot-ticks", text, StringComparison.Ordinal);
+        Assert.Contains("realtime_resolution_ns=", text, StringComparison.Ordinal);
+        var diagnostic = Encoding.UTF8.GetString(result.StandardError);
+        Assert.DoesNotContain("DIAGNOSTIC_INFLIGHT status=missing", diagnostic, StringComparison.Ordinal);
+        Assert.Equal(4, diagnostic.Split("DIAGNOSTIC_INFLIGHT status=matched", StringSplitOptions.None).Length - 1);
+        var denied = Run(temporary, """
+            set -euo pipefail
+            source "$1"
+            resource_observe_sample 0 $$ "$PWD" "$PWD" baseline || true
+            exit 23
+            """, $"COLD_COST_OBSERVATION_DIR={Path.Combine(temporary.Path, "absent")}");
+        Assert.Equal(23, denied.ExitCode);
+    }
+
     [Theory]
     [InlineData("D5/Probe.lean", "D5/Probe.lean", 0)]
     [InlineData("D5/Space Name.lean", "D5/Space\\ Name.lean", 23)]

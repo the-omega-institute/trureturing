@@ -492,6 +492,7 @@ record_supervised_processes() {
 }
 
 sample_supervised_resources() {
+  if [[ -n "${COLD_COST_OBSERVATION_DIR:-}" ]]; then resource_observation_boundary supervisor "${1:-periodic}" begin || true; fi
   local pid rss fd members
   local rss_total=0
   local fd_total=0
@@ -520,6 +521,7 @@ sample_supervised_resources() {
   done < <(printf '%s\n' "$members")
   if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
   if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
+  if [[ -n "${COLD_COST_OBSERVATION_DIR:-}" ]]; then resource_observation_boundary supervisor "${1:-periodic}" end 0 || true; fi
 }
 
 signal_recorded_processes() {
@@ -574,7 +576,7 @@ finish() {
   trap - EXIT HUP INT TERM
   set +e
   if [[ -n "$PROCESS_GROUP_ID" ]]; then
-    sample_supervised_resources
+    sample_supervised_resources final
     terminate_process_group "$PROCESS_GROUP_ID"
   fi
   if [[ -n "$CHILD_PID" ]]; then

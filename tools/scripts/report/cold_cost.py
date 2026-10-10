@@ -223,13 +223,313 @@ def validate_retained_trace(path, require_healthy=True):
     return terminal
 
 
+class LinuxObservation:
+    """Bounded diagnostic snapshots, independent of the raw stream's lock/FD.
+
+    Phase spans are inclusive wall intervals, not exact CPU attribution. Proc
+    snapshots bracket reads and retain tick uncertainty; missing data stays
+    unavailable. Accepted console bytes do not certify hosted retention.
+    """
+    def __init__(self, output, interval=2.0, limit=8 * 1024 * 1024, proc=Path("/proc")):
+        self.output, self.interval, self.limit, self.proc = output, interval, limit, proc
+        self.active, self.totals, self.counters = {}, {}, {}
+        self.state_lock = threading.Lock()
+        self.done = threading.Event()
+        self.thread = None
+        self.receiver_tid = None
+        self.collector_pid = None
+        self.sink = None
+        self.pipes = {}
+        self.snapshot_sequence = self.journal_bytes = 0
+        self.journal_capped = False
+        self.persistence_error = None
+        self.observer_tid = None
+        self.started_ns = time.monotonic_ns()
+        self.last_snapshot_ns = None
+        self.max_gap_ns = 0
+        self.observation_cpu_ns = self.observation_wall_ns = 0
+        self.persist_wall_ns = 0
+        self.persisted_bytes = 0
+        self.calls = 0
+        self.owners = {}
+        self.system_forks_observed = self.fork_tracking_capped = 0
+
+    def add(self, name, value=1):
+        with self.state_lock:
+            self.counters[name] = self.counters.get(name, 0) + value
+
+    def set(self, name, value):
+        with self.state_lock:
+            self.counters[name] = value
+
+    @contextmanager
+    def span(self, phase):
+        tid, started = threading.get_native_id(), time.monotonic_ns()
+        with self.state_lock:
+            self.calls += 1
+            generation = self.calls
+            previous = self.active.get(tid)
+            self.active[tid] = {"phase": phase, "generation": generation, "start_monotonic_ns": started}
+            total = self.totals.setdefault(phase, {"calls": 0, "completed": 0, "errors": 0, "elapsed_ns": 0})
+            total["calls"] += 1
+        failed = False
+        try:
+            yield
+        except BaseException:
+            failed = True
+            raise
+        finally:
+            with self.state_lock:
+                total["errors" if failed else "completed"] += 1
+                total["elapsed_ns"] += time.monotonic_ns() - started
+                if previous is None: self.active.pop(tid, None)
+                else: self.active[tid] = previous
+
+    def register_owner(self, role, pid, start_ticks, hz):
+        key = (role, pid, start_ticks)
+        with self.state_lock:
+            if key not in self.owners:
+                if len(self.owners) >= 128:
+                    self.fork_tracking_capped += 1
+                    return
+                self.owners[key] = {"role": role, "pid": pid, "start_ticks": start_ticks,
+                    "hz": hz, "registered_monotonic_ns": time.monotonic_ns(),
+                    "direct_observed": 0, "descendant_observed": 0, "live_descendants": set()}
+
+    def observe_event(self, event):
+        if event["kind"] not in ("fork", "exit"): return
+        actor = (event["actor"]["pid"], event["actor"]["start_ns"])
+        with self.state_lock:
+            if event["kind"] == "fork": self.system_forks_observed += 1
+            for owner in self.owners.values():
+                direct = actor[0] == owner["pid"] and actor[1] * owner["hz"] // 1000000000 == owner["start_ticks"]
+                descendant = actor in owner["live_descendants"]
+                if event["kind"] == "exit":
+                    owner["live_descendants"].discard(actor)
+                elif direct or descendant:
+                    owner["direct_observed" if direct else "descendant_observed"] += 1
+                    child = (event["child"]["pid"], event["child"]["start_ns"])
+                    if len(owner["live_descendants"]) < 4096: owner["live_descendants"].add(child)
+                    else: self.fork_tracking_capped += 1
+
+    def fork_snapshot(self):
+        with self.state_lock:
+            return {"system_forks_observed": self.system_forks_observed,
+                    "tracking_capped": self.fork_tracking_capped,
+                    "scope": "since owner registration; missing/lost/earlier events are not reconstructed",
+                    "phase_attribution": "unavailable; delayed delivery and quantized owner boundaries",
+                    "identity_uncertainty": "direct matches boot-tick interval; descendants use exact kernel PID/start_ns",
+                    "owners": [{k: v for k, v in owner.items() if k != "live_descendants"}
+                               for owner in self.owners.values()]}
+
+    def task_snapshot(self, pid, tid=None):
+        started = time.monotonic_ns()
+        path = self.proc / str(pid)
+        if tid is not None: path = path / "task" / str(tid)
+        result = {"pid": pid, "tid": tid, "collection_start_monotonic_ns": started,
+                  "identity_start_clock": "boot-ticks; interval uncertainty one clock tick"}
+        try:
+            def fields():
+                text = (path / "stat").read_text()
+                return text[text.rfind(")") + 2:].split()
+            f = fields()
+            hz = os.sysconf("SC_CLK_TCK")
+            result.update(status="observed", start_ticks=int(f[19]), state=f[0], ppid=int(f[1]),
+                          user_ticks=int(f[11]), system_ticks=int(f[12]), clock_ticks_per_second=hz,
+                          start_ns_lower=int(f[19]) * 1000000000 // hz,
+                          start_uncertainty_ns=(1000000000 + hz - 1) // hz)
+            for name in ("schedstat", "io", "wchan", "status"):
+                try:
+                    raw = (path / name).read_text()
+                    if name == "schedstat":
+                        values = [int(x) for x in raw.split()[:3]]
+                        if len(values) != 3: raise ValueError("schedstat schema")
+                        result[name] = {"runtime_ns": values[0], "runqueue_wait_ns": values[1], "timeslices": values[2],
+                                        "availability": "zero counters do not establish enabled accounting"}
+                    elif name == "status":
+                        result["context_switches"] = {line.split(":", 1)[0]: int(line.split(":", 1)[1])
+                            for line in raw.splitlines() if line.startswith(("voluntary_ctxt_switches:", "nonvoluntary_ctxt_switches:"))}
+                    else: result[name] = raw.strip()
+                except (OSError, ValueError) as error:
+                    result[name] = {"status": "unavailable", "error": type(error).__name__}
+            if int(fields()[19]) != result["start_ticks"]:
+                result = {"pid": pid, "tid": tid, "status": "unavailable", "error": "identity-changed"}
+        except (OSError, ValueError, IndexError) as error:
+            result.update(status="unavailable", error=type(error).__name__)
+        result["collection_elapsed_ns"] = time.monotonic_ns() - started
+        return result
+
+    def fd_snapshot(self, fd):
+        import stat
+        result = {"fd": fd}
+        try:
+            st = os.fstat(fd)
+            kind = "pipe" if stat.S_ISFIFO(st.st_mode) else "file" if stat.S_ISREG(st.st_mode) else "other"
+            result.update(status="observed", type=kind, inode=st.st_ino, device=st.st_dev, size=st.st_size)
+            if kind == "pipe":
+                import array, fcntl, termios
+                try:
+                    count = array.array("i", [0])
+                    fcntl.ioctl(fd, termios.FIONREAD, count, True)
+                    result["unread_bytes"] = count[0]
+                except (OSError, AttributeError) as error:
+                    result["unread_bytes"] = {"status": "unavailable", "error": type(error).__name__}
+                try: result["capacity_bytes"] = fcntl.fcntl(fd, fcntl.F_GETPIPE_SZ)
+                except (OSError, AttributeError) as error:
+                    result["capacity_bytes"] = {"status": "unavailable", "error": type(error).__name__}
+        except (OSError, ValueError) as error:
+            result.update(status="unavailable", error=type(error).__name__)
+        return result
+
+    def snapshot(self):
+        begin = time.monotonic_ns()
+        row = {**stamp(), "schema": 1, "snapshot_sequence": self.snapshot_sequence,
+               "cadence_seconds": self.interval, "max_gap_ns": self.max_gap_ns,
+               "journal_limit_bytes": self.limit, "journal_bytes": self.journal_bytes,
+               "journal_capped": self.journal_capped, "persistence_error": self.persistence_error,
+               "observation_cpu_ns": self.observation_cpu_ns, "observation_wall_ns": self.observation_wall_ns,
+               "persist_wall_ns": self.persist_wall_ns, "persisted_bytes": self.persisted_bytes,
+               "new_observer_process_forks": 0, "observer_threads": 1 if self.thread else 0,
+               "fork_metric_scope": "kernel task-fork stream includes thread creation; counts below are observed",
+               "boundary_calls": self.calls, "boundary_clock_reads": 2 * self.calls,
+               "overhead_scope": "snapshot thread CPU/wall/bytes; hot-path overhead and uninstrumented counterfactual unverified",
+               "phase_attribution": "periodic inclusive spans; boundaries may miss short calls; not causal",
+               "clock_resolution_ns": {name: int(time.get_clock_info(name).resolution * 1e9)
+                                         for name in ("monotonic", "time", "thread_time")}}
+        try:
+            row["boottime_ns"] = time.clock_gettime_ns(time.CLOCK_BOOTTIME)
+            row["boottime_resolution_ns"] = int(time.clock_getres(time.CLOCK_BOOTTIME) * 1e9)
+        except (OSError, AttributeError) as error:
+            row["boottime_ns"] = {"status": "unavailable", "error": type(error).__name__}
+        with self.state_lock:
+            row.update(active={str(k): dict(v) for k, v in self.active.items()},
+                       totals={k: dict(v) for k, v in self.totals.items()}, counters=dict(self.counters))
+        row["tasks"] = {"observer": self.task_snapshot(os.getpid(), self.observer_tid),
+                        "receiver": self.task_snapshot(os.getpid(), self.receiver_tid) if self.receiver_tid else {"status": "unavailable", "error": "receiver-not-started"},
+                        "collector": self.task_snapshot(self.collector_pid) if self.collector_pid else {"status": "unavailable", "error": "collector-not-started"}}
+        row["pipes"] = {name: self.fd_snapshot(fd) for name, fd in list(self.pipes.items())}
+        for role, task in row["tasks"].items():
+            if task.get("status") == "observed":
+                self.register_owner(role, task.get("tid") or task["pid"], task["start_ticks"], task["clock_ticks_per_second"])
+        row["fork_totals"] = self.fork_snapshot()
+        row["host"] = {}
+        for name in ("stat", "loadavg", "pressure/cpu", "pressure/io"):
+            try:
+                raw = (self.proc / name).read_text()
+                row["host"][name] = {"raw": raw[:8192], "truncated": len(raw) > 8192}
+            except OSError as error: row["host"][name] = {"status": "unavailable", "error": type(error).__name__}
+        row["collector_identity_scope"] = "Popen launch PID; sudo/provider descendants are separately observed"
+        row["collector_children"] = []
+        if self.collector_pid:
+            try:
+                ids = (self.proc / str(self.collector_pid) / "task" / str(self.collector_pid) / "children").read_text().split()
+                row["collector_children"] = [self.task_snapshot(int(pid)) for pid in ids[:32]]
+                row["collector_children_omitted"] = max(0, len(ids) - 32)
+            except (OSError, ValueError) as error:
+                row["collector_children"] = {"status": "unavailable", "error": type(error).__name__}
+        shell = []
+        for path in sorted(self.output.glob("shell-*.metrics"))[:256]:
+            try:
+                raw = path.read_bytes()
+                if len(raw) > 2048 or not raw.endswith(b"\n") or raw != path.read_bytes():
+                    shell.append({"file": path.name, "status": "unavailable", "error": "partial-or-changing-receipt"})
+                else:
+                    receipt = raw.decode("ascii")
+                    shell.append({"file": path.name, "receipt": receipt})
+                    fields = dict(item.split("=", 1) for item in receipt.split() if "=" in item)
+                    if fields.get("pid", "").isdigit() and fields.get("start_ticks", "").isdigit():
+                        self.register_owner(fields["owner"], int(fields["pid"]), int(fields["start_ticks"]), os.sysconf("SC_CLK_TCK"))
+            except (OSError, UnicodeError) as error:
+                shell.append({"file": path.name, "status": "unavailable", "error": type(error).__name__})
+        # Shell receipts have their own bounded slots; journal snapshots carry
+        # at most eight receipts by slot name and explicitly count omission.
+        row["shell_receipts"] = shell[-8:]
+        row["shell_receipts_omitted"] = max(0, len(shell) - 8)
+        if self.sink:
+            row["sink"] = {"sequence": self.sink.sequence, "charged_live_bytes": self.sink.bytes,
+                           "drops": self.sink.dropped_events, "console_error": self.sink.console_error,
+                           "retention_error": self.sink.retention_error}
+            try: row["sink"]["file_bytes"] = self.sink.path.stat().st_size
+            except OSError as error: row["sink"]["file_bytes"] = {"status": "unavailable", "error": type(error).__name__}
+            try: row["console"] = self.fd_snapshot(self.sink.console.fileno())
+            except (OSError, ValueError, AttributeError) as error: row["console"] = {"status": "unavailable", "error": type(error).__name__}
+        row["collection_start_monotonic_ns"] = begin
+        row["collection_elapsed_ns"] = time.monotonic_ns() - begin
+        return row
+
+    def persist(self):
+        started, cpu = time.monotonic_ns(), time.thread_time_ns()
+        self.snapshot_sequence += 1
+        if self.last_snapshot_ns is not None:
+            self.max_gap_ns = max(self.max_gap_ns, started - self.last_snapshot_ns)
+        self.last_snapshot_ns = started
+        try:
+            data = (json.dumps(self.snapshot(), separators=(",", ":"), sort_keys=True) + "\n").encode()
+            # Latest snapshot survives the journal cap; neither path is the
+            # console or trace file under observation. Each snapshot is bounded.
+            if len(data) > 65536: raise ValueError("metrics snapshot exceeds 64KiB")
+            tmp = self.output / "observation-latest.json.tmp"
+            tmp.write_bytes(data)
+            os.replace(tmp, self.output / "observation-latest.json")
+            self.persisted_bytes += len(data)
+            if self.journal_bytes + len(data) <= self.limit:
+                with (self.output / "observation.jsonl").open("ab") as stream: stream.write(data)
+                self.journal_bytes += len(data)
+                self.persisted_bytes += len(data)
+            else: self.journal_capped = True
+        except (OSError, ValueError) as error:
+            self.persistence_error = type(error).__name__
+        finally:
+            self.observation_cpu_ns += time.thread_time_ns() - cpu
+            self.observation_wall_ns += time.monotonic_ns() - started
+            self.persist_wall_ns += time.monotonic_ns() - started
+
+    def start(self):
+        def observe():
+            self.observer_tid = threading.get_native_id()
+            while not self.done.is_set():
+                self.persist()
+                self.done.wait(self.interval)
+            self.persist()
+        self.thread = threading.Thread(target=observe, name="cold-cost-observation", daemon=True)
+        self.thread.start()
+        return self
+
+    def stop(self):
+        self.done.set()
+        if self.thread: self.thread.join(timeout=1)
+        if self.thread and self.thread.is_alive(): self.persistence_error = "metrics-thread-did-not-finish"
+        return {"persistence_error": self.persistence_error, "journal_capped": self.journal_capped,
+                "journal_bytes": self.journal_bytes, "persisted_bytes": self.persisted_bytes,
+                "observation_cpu_ns": self.observation_cpu_ns, "observation_wall_ns": self.observation_wall_ns}
+
+
+@contextmanager
+def observation_span(observation, phase):
+    if observation is None:
+        yield
+    else:
+        with observation.span(phase): yield
+
+
+def observed_phase(phase):
+    def decorate(function):
+        @functools.wraps(function)
+        def call(self, *args, **kwargs):
+            with observation_span(getattr(self, "observation", None), phase):
+                return function(self, *args, **kwargs)
+        return call
+    return decorate
+
+
 class SignalSink:
     """One bounded evidence stream, mirrored live with bounded delivery.
 
     Missing terminal record means retention is censored; after-steps are optional.
     Console delivery beyond the runner's last retained line is never certified.
     """
-    def __init__(self, path, console=None, limit=TRACE_LIMIT):
+    def __init__(self, path, console=None, limit=TRACE_LIMIT, observation=None):
+        self.observation = observation
         self.path = path
         self.stream = path.open("w", buffering=1)
         self.console = sys.stdout if console is None else console
@@ -244,6 +544,7 @@ class SignalSink:
         self.encoder = zlib.compressobj()
         self.sequence = 0
 
+    @observed_phase("encode")
     def _encode(self, event, terminal):
         raw = json.dumps(event, sort_keys=True).encode()
         encoder = self.encoder.copy()
@@ -258,6 +559,7 @@ class SignalSink:
                     retention="censored" if drops or event.get("retention") == "censored"
                     else "local-terminal-collected")
 
+    @observed_phase("console-delivery")
     def _deliver(self, text):
         # emit/finish serve the required trace-health consumer (GoalArtifact
         # canonical-report/integration evidence). Never hold its lifecycle lock
@@ -266,9 +568,11 @@ class SignalSink:
         if self.console_error is not None:
             self.dropped_events += 1
             return
+        if self.observation: self.observation.add("console_attempted_bytes", len(text.encode()))
         try:
             if isinstance(self.console, io.StringIO):
                 self.console.write(text)
+                if self.observation: self.observation.add("console_write_bytes", len(text.encode()))
                 return
             fd = self.console.fileno()
             blocking = os.get_blocking(fd)
@@ -281,13 +585,20 @@ class SignalSink:
                     if remaining <= 0:
                         raise TimeoutError("live-console-backpressure")
                     try:
-                        written = os.write(fd, data)
+                        with observation_span(self.observation, "console-write"):
+                            written = os.write(fd, data)
+                        if self.observation:
+                            self.observation.add("console_write_bytes", written)
+                            self.observation.add("console_writes")
+                            if written < len(data): self.observation.add("console_partial_writes")
                         if written == 0:
                             raise OSError("live-console-zero-write")
                         data = data[written:]
                     except BlockingIOError:
                         # select also supports redirected regular-file stdout.
-                        __import__("select").select([], [fd], [], remaining)
+                        if self.observation: self.observation.add("console_eagain")
+                        with observation_span(self.observation, "console-writability-wait"):
+                            __import__("select").select([], [fd], [], remaining)
             finally:
                 os.set_blocking(fd, blocking)
         except (OSError, ValueError, TypeError, AttributeError) as error:
@@ -295,7 +606,9 @@ class SignalSink:
             self.dropped_events += 1
 
     def emit(self, event, terminal=False):
-        with self.lock:
+        with observation_span(self.observation, "emit-lock"):
+            self.lock.acquire()
+        try:
             if self.closed:
                 return
             if terminal:
@@ -321,13 +634,24 @@ class SignalSink:
             self.encoder = encoder
             self.sequence += 1
             try:
-                self.stream.write(record)
-                self.stream.flush()
+                if self.observation: self.observation.add("trace_attempted_bytes", len(record.encode()))
+                with observation_span(self.observation, "trace-write"):
+                    written = self.stream.write(record)
+                if self.observation:
+                    if type(written) is int: self.observation.add("trace_write_bytes", written)
+                    else: self.observation.add("trace_write_count_unavailable")
+                with observation_span(self.observation, "trace-flush"):
+                    self.stream.flush()
+                if self.observation: self.observation.add("trace_flush_completed")
             except OSError as error:
                 self.dropped_events += 1
                 self.retention_error = type(error).__name__
                 return
 
+        finally:
+            self.lock.release()
+
+    @observed_phase("finish")
     def finish(self, health):
         self.emit({"kind": "trace-terminal", **health,
                    "console_retention": "only actually retained live lines are evidence"}, terminal=True)
@@ -463,7 +787,8 @@ class SignalTrace:
     external actors. Event wire contains task basenames and numeric fields;
     collector failure diagnostics retain bounded original bytes separately.
     """
-    def __init__(self, output, seconds=TRACE_SECONDS):
+    def __init__(self, output, seconds=TRACE_SECONDS, observation=None):
+        self.observation = observation
         self.output, self.seconds = output, seconds
         self.ready = threading.Event()
         self.health = {"ready": False, "lost_events": 0, "parse_errors": 0, "reader_error": None}
@@ -481,7 +806,8 @@ class SignalTrace:
         if tool is None:
             raise ValueError("bpftrace unavailable")
         prefix = [] if os.geteuid() == 0 else ["sudo", "-n"]
-        self.sink = SignalSink(self.output / "signal-trace.jsonl")
+        self.sink = SignalSink(self.output / "signal-trace.jsonl", observation=self.observation)
+        if self.observation: self.observation.sink = self.sink
         self.sink.emit({"kind": "trace-contract", "seconds": self.seconds, "limit_bytes": TRACE_LIMIT,
                        "limit_scope": "trace file/live stream; not aggregate artifacts",
                        "kernel_event_clock": "bpftrace default nsecs: CLOCK_BOOTTIME",
@@ -547,6 +873,10 @@ class SignalTrace:
                         "returncode": returncode, "outcome": outcome, **streams, **failure})
 
     def _read(self):
+        if self.observation:
+            self.observation.receiver_tid = threading.get_native_id()
+            self.observation.collector_pid = self.process.pid
+            self.observation.pipes = {"stdout": self.process.stdout.fileno(), "stderr": self.process.stderr.fileno()}
         sel = selectors.DefaultSelector()
         buffers = {}
         streams = ((self.process.stdout, "stdout"), (self.process.stderr, "stderr"))
@@ -559,8 +889,14 @@ class SignalTrace:
                 if time.monotonic() > self.deadline + 5:
                     self.health["reader_error"] = "collector-deadline"
                     self.process.kill()
-                for key, _ in sel.select(timeout=1):
-                    block = os.read(key.fileobj.fileno(), 65536)
+                with observation_span(self.observation, "selector-wait"):
+                    selected = sel.select(timeout=1)
+                for key, _ in selected:
+                    with observation_span(self.observation, "pipe-read"):
+                        block = os.read(key.fileobj.fileno(), 65536)
+                    if self.observation:
+                        self.observation.add("pipe_reads")
+                        self.observation.add("pipe_read_bytes", len(block))
                     stream, buffered, continuation = buffers[key.fileobj]
                     if not block:
                         if buffered:
@@ -571,6 +907,7 @@ class SignalTrace:
                         sel.unregister(key.fileobj)
                         continue
                     buffered += block
+                    if self.observation: self.observation.set("input_buffer_bytes", len(buffered) + sum(len(v[1]) for k, v in buffers.items() if k is not key.fileobj))
                     while b"\n" in buffered:
                         line, buffered = buffered.split(b"\n", 1)
                         if continuation:
@@ -589,6 +926,7 @@ class SignalTrace:
                         buffered = b""
                         continuation = True
                     buffers[key.fileobj] = (stream, buffered, continuation)
+                    if self.observation: self.observation.set("input_buffer_bytes", sum(len(v[1]) for v in buffers.values()))
         except BaseException as error:
             self.health["reader_error"] = type(error).__name__
         finally:
@@ -625,6 +963,7 @@ class SignalTrace:
             "collector_returncode": self.process.poll() if self.process else None,
         })
 
+    @observed_phase("line-processing")
     def _line(self, line, stream="stdout", raw=None, terminated=True):
         if stream == "stdout" and not line.strip():
             return
@@ -655,6 +994,7 @@ class SignalTrace:
                 stream, raw, reason="collector-stderr" if stream != "stdout" else "malformed-output",
                 terminated=terminated)
             return
+        if self.observation: self.observation.observe_event(event)
         if event["kind"] == "trace-ready":
             self.health["ready"] = True
             self.ready.set()
@@ -1302,10 +1642,18 @@ def observe_command(command, cwd, output, name, env, interval=2.0, canonical_res
                     break
                 if time.monotonic() >= next_sample:
                     try:
-                        sample_event = {"stage": name, **sample(child.process.pid, real_lean=env.get("COLD_COST_REAL_LEAN"),
-                                                              command_pid=child.pid)}
-                        append(output / "samples.jsonl", sample_event)
-                        if signal_sink:
+                        observation = vars(signal_trace).get("observation") if signal_trace is not None else None
+                        with observation_span(observation, "sample-collection"):
+                            sample_event = {"stage": name, **sample(child.process.pid, real_lean=env.get("COLD_COST_REAL_LEAN"),
+                                                                  command_pid=child.pid)}
+                        if observation:
+                            if "collection_elapsed_ns" in sample_event:
+                                observation.add("sample_collection_elapsed_ns", sample_event["collection_elapsed_ns"])
+                            else: observation.add("sample_collection_span_unavailable")
+                        with observation_span(observation, "sample-append"):
+                            append(output / "samples.jsonl", sample_event)
+                        with observation_span(observation, "sample-emission"):
+                          if signal_sink:
                             for row in sample_event["processes"]:
                                 signal_sink.emit({"kind": "stage-process", "stage": name, **stamp(),
                                     **{k: row.get(k) for k in ("pid", "ppid", "pgid", "sid", "start_ticks", "comm", "exe_basename", "role")}})
@@ -1377,8 +1725,56 @@ PRODUCTION_FILEMAP_SHA256 = "007bb81d1496e5c33fd34af5b5adcffe7e2776972ae0ea51f20
 DIAGNOSTIC_PATHS = ('.github/workflows/lean-cold-cost.yml', 'Meta/FILEMAP.toml', 'tools/scripts/report/cold_cost.py', 'tools/scripts/report/cold_cost_spawn.c', 'tools/scripts/report/tests/test_cold_cost.py')
 
 
-def production_binding(root):
-    listing = git(root, "ls-tree", "-r", "-z", "HEAD")
+OBSERVATION_BASE = "ed9b30f560520f7a785dc44b2cd5e0883bdea4f5"
+OBSERVATION_PATHS = frozenset((
+    "tools/scripts/report/cold_cost.py", "tools/scripts/report/report-supervisor.sh",
+    "tools/scripts/lib/resource-observation-lib.sh", "tools/scripts/report/tests/test_cold_cost.py",
+    "tools/tests/StrataLint.ReportSupervisor.Tests/ReportSupervisorScriptTests.cs",
+    "tools/tests/StrataLint.ResourceObservation.Tests/ResourceObservationLibraryTests.cs"))
+
+
+def observation_binding(root, value, source_head, merge_head):
+    """Consume an exact root-reviewed observation manifest in the PR body.
+
+    This provenance exception substitutes original blobs only to verify the
+    unchanged production/input seals. Observation hashes are never cache/report
+    reuse inputs. Event/source approval is owned outside this diagnostic worker.
+    """
+    if (not isinstance(value, dict) or set(value) != {"schema", "diagnostic_base", "source_H", "source_tree", "merge_M", "B", "production", "delta"}
+            or value["schema"] != 1 or value["diagnostic_base"] != OBSERVATION_BASE
+            or value["source_H"] != source_head or value["merge_M"] != merge_head
+            or value["B"] != PRODUCTION_B
+            or value["production"] != {"H": PRODUCTION_H, "M": PRODUCTION_M, "tree": PRODUCTION_TREE}
+            or value["source_tree"] != git(root, "rev-parse", source_head + "^{tree}").decode().strip()):
+        raise ValueError("observation source/production identity differs from reviewed binding")
+    delta = value["delta"]
+    changed = set(git(root, "diff", "--name-only", OBSERVATION_BASE, source_head, "--").decode().splitlines())
+    if not isinstance(delta, dict) or not delta or set(delta) != changed or not changed <= OBSERVATION_PATHS:
+        raise ValueError("observation delta differs from exact reviewed owner set")
+    for name, item in delta.items():
+        if (not isinstance(item, dict) or set(item) != {"before_blob", "after_blob", "sha256"}
+                or item["before_blob"] != git(root, "rev-parse", OBSERVATION_BASE + ":" + name).decode().strip()
+                or item["after_blob"] != git(root, "rev-parse", source_head + ":" + name).decode().strip()
+                or item["after_blob"] != git(root, "rev-parse", "HEAD:" + name).decode().strip()
+                or item["sha256"] != sha(root / name)):
+            raise ValueError("observation owner differs from exact reviewed bytes: " + name)
+    return value
+
+
+def sealed_listing(root, listing, observation):
+    if observation is None: return listing
+    original = git(root, "ls-tree", "-r", "-z", OBSERVATION_BASE, "--", *observation["delta"])
+    rows = {row.split(b"\t", 1)[1].decode(): row for row in original.split(b"\0") if row}
+    replaced = []
+    for row in listing.split(b"\0"):
+        if row:
+            name = row.split(b"\t", 1)[1].decode()
+            replaced.append(rows[name] if name in observation["delta"] else row)
+    return b"\0".join(replaced) + b"\0"
+
+
+def production_binding(root, observation=None):
+    listing = sealed_listing(root, git(root, "ls-tree", "-r", "-z", "HEAD"), observation)
     rows = [row for row in listing.split(b"\0") if row and row.split(b"\t", 1)[1].decode() not in DIAGNOSTIC_PATHS]
     digest = hashlib.sha256(b"\0".join(rows) + b"\0").hexdigest()
     text = (root / "Meta/FILEMAP.toml").read_text()
@@ -1410,9 +1806,19 @@ def native_binding(root, env, mode="workload"):
         raise ValueError("requires genuine labeled PR merge candidate matching the reviewed merge SHA")
     if git(root, "status", "--porcelain", "--untracked-files=all"):
         raise ValueError("source checkout must be clean")
-    production = production_binding(root)
+    observation = None
+    body = event["pull_request"].get("body") or ""
+    matches = re.findall(r"```cold-cost-observation\n(.*?)\n```", body, re.DOTALL)
+    if matches:
+        if len(matches) != 1 or parents[0] != PRODUCTION_B:
+            raise ValueError("ambiguous observation binding or changed protected base")
+        observation = observation_binding(root, json.loads(matches[0], object_pairs_hook=_unique_json_object), parents[1], head)
+    production = production_binding(root, observation) if observation is not None else production_binding(root)
     inputs = input_binding(root)
-    if inputs["git_blob_listing_sha256"] != SEALED_INPUTS_SHA256:
+    input_listing = git(root, "ls-tree", "-r", "-z", "HEAD", "--", *inputs["paths"]) if observation is not None else None
+    sealed_inputs = (hashlib.sha256(sealed_listing(root, input_listing, observation)).hexdigest()
+                     if observation is not None else inputs["git_blob_listing_sha256"])
+    if sealed_inputs != SEALED_INPUTS_SHA256:
         raise ValueError("registered source/compiler/report inputs differ from the sealed candidate")
     os_release = Path("/etc/os-release").read_text()
     if platform.system() != "Linux" or platform.machine() != "aarch64" or 'VERSION_ID="24.04"' not in os_release or 'ID=ubuntu' not in os_release:
@@ -1436,7 +1842,7 @@ def native_binding(root, env, mode="workload"):
             "protected_base": parents[0], "pr_head": parents[1], "production": production, "mode": mode,
             "run_id": int(env.get("GITHUB_RUN_ID", "0")), "run_attempt": int(env.get("GITHUB_RUN_ATTEMPT", "0")),
             "runner": {"os_release": os_release, "machine": platform.machine(), "uname": list(platform.uname())},
-            "inputs": inputs, "project_initial_state": "absent .lake", "report_guard_seconds": 7200}
+            "inputs": inputs, "observation_binding": observation, "sealed_inputs_sha256": sealed_inputs, "project_initial_state": "absent .lake", "report_guard_seconds": 7200}
 
 
 @cancellable
@@ -1456,6 +1862,9 @@ def run(root, output, mode="workload"):
     trace = None
     preflight = None
     trace_health = None
+    observation = LinuxObservation(output)
+    observation_result = None
+    env["COLD_COST_OBSERVATION_DIR"] = str(output.resolve())
 
     def result():
         return {**stamp(), "canonical_returncode": rc if observer_failure is None else None,
@@ -1463,12 +1872,15 @@ def run(root, output, mode="workload"):
                 "canonical_failure": canonical_failure, "observer_failure": observer_failure,
                 "diagnostic_only": True, "native_acceptance_or_integration_units": False,
                 "inputs_unchanged": inputs_unchanged, "mode": mode,
-                "preflight": preflight, "trace_health": trace_health}
+                "preflight": preflight, "trace_health": trace_health, "observation": observation_result}
 
     try:
         write_json(output / "source.json", binding)
         check_cancellation()
-        trace = SignalTrace(output, PREFLIGHT_SECONDS if mode == "preflight" else TRACE_SECONDS).start()
+        observation.start()
+        starting_trace = SignalTrace(output, PREFLIGHT_SECONDS if mode == "preflight" else TRACE_SECONDS)
+        starting_trace.observation = observation
+        trace = starting_trace.start()
         check_cancellation()
         emit_process_catalog(trace.sink, os.getpid())
         preflight = capability_preflight(output, trace)
@@ -1568,6 +1980,7 @@ def run(root, output, mode="workload"):
         except BaseException as error:
             collection_failed(error)
             trace_health = trace.snapshot()
+        observation_result = observation.stop()
         try:
             # Preserve genuine producer origins and receipts; copy bytes, never synthesize.
             report = ".lake/build/stratalint/raw-lean-report.json"

@@ -26,6 +26,240 @@ HEALTHY = {"ready": True, "lost_events": 0, "dropped_events": 0, "parse_errors":
            "reader_error": None, "collector_returncode": None}
 
 
+class LinuxObservationTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+
+    def test_independent_metrics_survive_sink_lock_and_report_progress(self):
+        observation = cost.LinuxObservation(self.root, interval=.02)
+        sink = cost.SignalSink(self.root / "trace", console=io.StringIO(), observation=observation)
+        observation.sink = sink
+        sink.lock.acquire()
+        emitter = threading.Thread(target=lambda: sink.emit({"kind": "metadata", "raw": -42}))
+        observation.start()
+        emitter.start()
+        try:
+            deadline = time.monotonic() + 2
+            while time.monotonic() < deadline:
+                path = self.root / "observation-latest.json"
+                if path.exists():
+                    row = json.loads(path.read_text())
+                    if any(v["phase"] == "emit-lock" for v in row["active"].values()):
+                        break
+                threading.Event().wait(.01)
+            else:
+                self.fail("independent observation must survive a contended sink")
+            self.assertEqual(row["sink"]["sequence"], 0)
+            self.assertGreater(row["snapshot_sequence"], 0)
+            self.assertIn("receiver", row["tasks"])
+        finally:
+            sink.lock.release()
+            emitter.join(2)
+            sink.finish(HEALTHY)
+            observation.stop()
+        self.assertFalse(emitter.is_alive())
+        self.assertEqual(list(cost.iter_signal_records((self.root / "trace").read_text().splitlines(True)))[0]["raw"], -42)
+        self.assertGreater(observation.counters["trace_write_bytes"], 0)
+
+    def test_partial_write_and_backpressure_metrics_preserve_trace(self):
+        observation = cost.LinuxObservation(self.root)
+        read_fd, write_fd = os.pipe()
+        console = os.fdopen(write_fd, "w")
+        sink = cost.SignalSink(self.root / "trace", console=console, observation=observation)
+        received = bytearray()
+        reader = threading.Thread(target=lambda: self.drain_pipe(read_fd, received))
+        reader.start()
+        original = os.write
+        def partial(fd, data):
+            return original(fd, data[:7]) if fd == write_fd else original(fd, data)
+        records = [{"kind": "metadata", "raw": "雪", "value": -2**80}, {"kind": "metadata", "raw": "next"}]
+        try:
+            with patch.object(cost.os, "write", side_effect=partial):
+                for record in records:
+                    sink.emit(record)
+                sink.finish(HEALTHY)
+        finally:
+            console.close()
+            reader.join(2)
+            os.close(read_fd)
+        self.assertEqual(list(cost.iter_signal_records(bytes(received).splitlines(True), live=True))[:-1], records)
+        self.assertGreater(observation.counters.get("console_partial_writes", 0), 0)
+        self.assertEqual(observation.counters["console_write_bytes"], sink.bytes)
+        # Actual full pipe, without consuming or resizing it.
+        r, w = os.pipe()
+        os.set_blocking(w, False)
+        try:
+            while True:
+                try: original(w, b"x" * 4096)
+                except BlockingIOError: break
+            stalled = cost.SignalSink(self.root / "stalled", console=os.fdopen(w, "w"), observation=observation)
+            try:
+                stalled.emit({"kind": "metadata", "raw": "blocked"})
+                self.assertEqual(stalled.console_error, "TimeoutError")
+                self.assertGreater(stalled.dropped_events, 0)
+                self.assertGreater(observation.counters["console_eagain"], 0)
+            finally:
+                stalled.finish(HEALTHY)
+                stalled.console.close()
+        finally: os.close(r)
+
+    def test_fork_totals_use_exact_kernel_descendants_and_censor_missing_history(self):
+        observation = cost.LinuxObservation(self.root)
+        observation.register_owner("supervisor", 20, 9, 100)
+        def identity(pid, start): return {"pid": pid, "start_ns": start}
+        observation.observe_event({"kind": "fork", "actor": identity(20, 90000001), "child": identity(21, 100000000)})
+        observation.observe_event({"kind": "fork", "actor": identity(21, 100000000), "child": identity(22, 110000000)})
+        observation.observe_event({"kind": "fork", "actor": identity(21, 100000001), "child": identity(23, 120000000)})
+        observation.observe_event({"kind": "exit", "actor": identity(21, 100000000)})
+        observation.observe_event({"kind": "fork", "actor": identity(21, 100000000), "child": identity(24, 130000000)})
+        counts = observation.fork_snapshot()
+        self.assertEqual(counts["owners"][0]["direct_observed"], 1)
+        self.assertEqual(counts["owners"][0]["descendant_observed"], 1)
+        self.assertEqual(counts["system_forks_observed"], 4)
+        self.assertEqual(counts["scope"], "since owner registration; missing/lost/earlier events are not reconstructed")
+
+    @staticmethod
+    def drain_pipe(fd, result):
+        while True:
+            block = os.read(fd, 4096)
+            if not block: return
+            result.extend(block)
+
+    def test_identity_disappearance_and_unsupported_evidence_are_explicit(self):
+        observation = cost.LinuxObservation(self.root, proc=self.root / "absent")
+        row = observation.snapshot()
+        self.assertEqual(row["tasks"]["observer"]["status"], "unavailable")
+        self.assertIn("error", row["tasks"]["observer"])
+        self.assertEqual(observation.fd_snapshot(-1)["status"], "unavailable")
+        self.assertEqual(observation.task_snapshot(999999999)["status"], "unavailable")
+
+    def test_owned_pipe_queue_observation_does_not_consume_bytes(self):
+        observation = cost.LinuxObservation(self.root)
+        r, w = os.pipe()
+        try:
+            os.write(w, b"queued")
+            row = observation.fd_snapshot(r)
+            self.assertEqual(row["type"], "pipe")
+            if isinstance(row["unread_bytes"], int): self.assertEqual(row["unread_bytes"], 6)
+            else: self.assertEqual(row["unread_bytes"]["status"], "unavailable")
+            self.assertEqual(os.read(r, 6), b"queued")
+            if sys.platform != "linux": self.assertEqual(row["capacity_bytes"]["status"], "unavailable")
+        finally:
+            os.close(r)
+            os.close(w)
+
+    @unittest.skipUnless(sys.platform == "linux", "native Linux task/proc/boottime capability not exercised on this host")
+    def test_native_linux_task_identity_and_scheduler_capability(self):
+        observation = cost.LinuxObservation(self.root)
+        row = observation.task_snapshot(os.getpid(), threading.get_native_id())
+        self.assertEqual(row["status"], "observed")
+        self.assertGreater(row["start_ticks"], 0)
+        self.assertIn("schedstat", row)
+        self.assertIsInstance(observation.snapshot()["boottime_ns"], int)
+
+    def test_task_identity_race_and_denied_optional_reads_remain_unavailable(self):
+        proc = self.root / "proc"
+        task = proc / "20"
+        task.mkdir(parents=True)
+        fields = ["0"] * 22
+        fields[0], fields[19] = "S", "9"
+        text = "20 (name with ) spaces) " + " ".join(fields)
+        (task / "stat").write_text(text)
+        (task / "schedstat").write_text("120 340 5")
+        (task / "status").write_text("voluntary_ctxt_switches: 12\nnonvoluntary_ctxt_switches: 34\n")
+        observation = cost.LinuxObservation(self.root, proc=proc)
+        row = observation.task_snapshot(20)
+        self.assertEqual(row["start_ticks"], 9)
+        self.assertEqual(row["schedstat"]["runqueue_wait_ns"], 340)
+        self.assertEqual(row["io"]["status"], "unavailable")
+        original = Path.read_text
+        reads = 0
+        def changing(path, *args, **kwargs):
+            nonlocal reads
+            if path == task / "stat":
+                reads += 1
+                return text if reads == 1 else text.replace(" S ", " R ").rsplit(" ", 3)[0] + " 10 0 0"
+            if path.name == "wchan": raise PermissionError("denied")
+            return original(path, *args, **kwargs)
+        with patch.object(Path, "read_text", autospec=True, side_effect=changing):
+            raced = observation.task_snapshot(20)
+        self.assertEqual(raced["status"], "unavailable")
+        self.assertEqual(raced["error"], "identity-changed")
+
+    def test_metrics_persistence_failure_and_cap_never_change_sink_health(self):
+        observation = cost.LinuxObservation(self.root, limit=1)
+        sink = cost.SignalSink(self.root / "trace", console=io.StringIO(), observation=observation)
+        observation.sink = sink
+        observation.persist()
+        self.assertTrue(observation.snapshot()["journal_capped"])
+        with patch.object(cost.os, "replace", side_effect=OSError("denied")):
+            observation.persist()
+        self.assertEqual(observation.persistence_error, "OSError")
+        sink.emit({"kind": "metadata", "v": 3})
+        sink.finish(HEALTHY)
+        cost.validate_retained_trace(self.root / "trace")
+        self.assertEqual(sink.dropped_events, 0)
+
+    def test_receiver_real_pipe_partial_lines_and_line_flush_progress(self):
+        observation = cost.LinuxObservation(self.root)
+        trace = cost.SignalTrace(self.root, observation=observation)
+        trace.sink = cost.SignalSink(self.root / "trace", console=io.StringIO(), observation=observation)
+        trace.process = subprocess.Popen([sys.executable, "-c", "import os,time;os.write(1,b'D\\tre');time.sleep(.04);os.write(1,b'ady\\n');os.write(2,b'diagnostic\\n')"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        trace.deadline = time.monotonic() + 2
+        trace._read()
+        trace.process.wait(timeout=2)
+        trace.process.stdout.close()
+        trace.process.stderr.close()
+        trace.stop()
+        self.assertTrue(trace.health["ready"])
+        self.assertGreater(observation.counters["pipe_read_bytes"], 0)
+        self.assertGreater(observation.counters["trace_flush_completed"], 0)
+        self.assertEqual(observation.counters["input_buffer_bytes"], 0)
+        self.assertIsNotNone(observation.receiver_tid)
+
+
+class ObservationBindingTests(unittest.TestCase):
+    def test_exact_observation_binding_accepts_only_reviewed_delta(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = "tools/scripts/report/report-supervisor.sh"
+            actual = root / path
+            actual.parent.mkdir(parents=True)
+            actual.write_bytes(b"reviewed observation")
+            before, after = "b" * 40, "c" * 40
+            head, tree, merge = "d" * 40, "e" * 40, "f" * 40
+            manifest = {"schema": 1, "diagnostic_base": cost.OBSERVATION_BASE,
+                        "source_H": head, "source_tree": tree, "merge_M": merge,
+                        "B": cost.PRODUCTION_B,
+                        "production": {"H": cost.PRODUCTION_H, "M": cost.PRODUCTION_M,
+                                       "tree": cost.PRODUCTION_TREE},
+                        "delta": {path: {"before_blob": before, "after_blob": after,
+                                         "sha256": hashlib.sha256(actual.read_bytes()).hexdigest()}}}
+            def git(_root, *args):
+                if args[:1] == ("diff",): return (path + "\n").encode()
+                if args == ("rev-parse", head + "^{tree}"): return tree.encode()
+                if args == ("rev-parse", cost.OBSERVATION_BASE + ":" + path): return before.encode()
+                if args == ("rev-parse", head + ":" + path): return after.encode()
+                if args == ("rev-parse", "HEAD:" + path): return after.encode()
+                self.fail("unexpected binding input " + repr(args))
+            with patch.object(cost, "git", side_effect=git):
+                bound = cost.observation_binding(root, manifest, head, merge)
+                self.assertEqual(bound["delta"][path]["sha256"], manifest["delta"][path]["sha256"])
+                actual.write_bytes(b"unreviewed drift")
+                with self.assertRaisesRegex(ValueError, "observation owner"):
+                    cost.observation_binding(root, manifest, head, merge)
+                actual.write_bytes(b"reviewed observation")
+                for field, value in (("B", "0" * 40), ("merge_M", "0" * 40), ("source_tree", "0" * 40)):
+                    changed = dict(manifest, **{field: value})
+                    with self.assertRaises(ValueError): cost.observation_binding(root, changed, head, merge)
+                changed = dict(manifest, delta={"cold_cost_spawn.c": manifest["delta"][path]})
+                with self.assertRaises(ValueError): cost.observation_binding(root, changed, head, merge)
+                with patch.object(cost, "git", side_effect=lambda root, *args: b"unauthorized\n" if args[:1] == ("diff",) else git(root, *args)):
+                    with self.assertRaises(ValueError): cost.observation_binding(root, manifest, head, merge)
+
+
 class RetentionCodecTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

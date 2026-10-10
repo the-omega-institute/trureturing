@@ -6,6 +6,29 @@ namespace StrataLint.ReportSupervisor.Tests;
 public sealed class ReportSupervisorScriptTests
 {
     [Fact]
+    public void DiagnosticSamplerBoundariesPreserveFailureAndCleanup()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var metrics = Path.Combine(fixture.Root, "metrics");
+        Directory.CreateDirectory(metrics);
+        var result = fixture.RunWithEnvironment("ingest-consumer", false, "/usr/bin/false",
+            $"COLD_COST_OBSERVATION_DIR={metrics}");
+        Assert.Equal(1, result.ExitCode);
+        Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.StateRoot, "runs")));
+        var records = Directory.GetFiles(metrics, "shell-supervisor-*.metrics");
+        Assert.NotEmpty(records);
+        var text = string.Join("\n", records.Select(File.ReadAllText));
+        Assert.Contains("phase=final", text, StringComparison.Ordinal);
+        Assert.Contains("in_flight=0", text, StringComparison.Ordinal);
+        Assert.Contains("completed=", text, StringComparison.Ordinal);
+        Assert.Contains("identity_clock=boot-ticks", text, StringComparison.Ordinal);
+        var denied = fixture.RunWithEnvironment("ingest-consumer", false, "/usr/bin/false",
+            $"COLD_COST_OBSERVATION_DIR={Path.Combine(metrics, "missing")}");
+        Assert.Equal(1, denied.ExitCode);
+        Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.StateRoot, "runs")));
+    }
+
+    [Fact]
     public void MissingReportConsumptionFailsClosedWithProducerInstruction()
     {
         using var fixture = new ReportSupervisorFixture();
