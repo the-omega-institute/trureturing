@@ -158,6 +158,21 @@ class ScopedContracts(unittest.TestCase):
                     msg='[FAIL] scoped_output_protects_full_bundle_' + suffix):
                 producer.check_destination(self.root, protected)
 
+    def test_scoped_output_preserves_full_seed_base(self):
+        producer = api(self)
+        seed_base = self.root / '.lake/lean-report-seed-base.json'
+        seed_base.parent.mkdir(parents=True)
+        with self.assertRaisesRegex(ValueError, 'canonical'):
+            producer.check_destination(self.root, seed_base)
+        seed_base.write_text('accepted full seed generation')
+        alias = self.root / 'seed-base-alias.json'
+        os.link(seed_base, alias)
+        with self.assertRaisesRegex(ValueError, 'canonical'):
+            producer.check_destination(self.root, alias)
+        with self.assertRaisesRegex(ValueError, 'canonical'):
+            producer.check_destination(self.root, self.root / '.lake/../.lake/lean-report-seed-base.json')
+        self.assertEqual(seed_base.read_text(), 'accepted full seed generation')
+
 
 class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
     def setUp(self):
@@ -230,7 +245,9 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         canonical.write_text('deliberately unreadable full report')
         receipt = publication.member(canonical, '.reuse.json')
         receipt.write_text('deliberately unreadable whole receipt')
-        before = [canonical.read_bytes(), receipt.read_bytes()]
+        seed_base = self.root / '.lake/lean-report-seed-base.json'
+        seed_base.write_text('full seed generation metadata')
+        before = [canonical.read_bytes(), receipt.read_bytes(), seed_base.read_bytes()]
         self.write('D5/A.lean', 'import D5.B\n/- import D5.Alone /- nested comment -/ -/\ndef value : Nat := D5.hidden\n')
         self.write('D5/Alone.lean', 'this sibling deliberately does not compile\n')
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = '["reg/Reg"]'
@@ -238,7 +255,8 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'}, '[FAIL] report_is_exact_import_closure')
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip').exists(),
                          '[FAIL] unrelated_module_is_never_extracted')
-        self.assertEqual(before, [canonical.read_bytes(), receipt.read_bytes()], '[FAIL] whole_report_is_untouched')
+        self.assertEqual(before, [canonical.read_bytes(), receipt.read_bytes(), seed_base.read_bytes()],
+                         '[FAIL] whole_report_and_seed_base_are_untouched')
         self.assertFalse(publication.member(self.output, '.reuse.json').exists())
         self.verify('D5.A')
         self.verify('D5.B', success=False)

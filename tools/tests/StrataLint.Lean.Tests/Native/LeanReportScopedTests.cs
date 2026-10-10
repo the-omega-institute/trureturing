@@ -11,6 +11,7 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
     [InlineData("test_scoped_bundle_checks_independent_membership_sources_and_materials")]
     [InlineData("test_scoped_inputs_exclude_siblings_and_program_bytes")]
     [InlineData("test_scoped_output_cannot_overlap_any_full_bundle_member")]
+    [InlineData("test_scoped_output_preserves_full_seed_base")]
     public void ScopedProducerContract(string scenario) => Run(scenario, native: false);
 
     [Theory]
