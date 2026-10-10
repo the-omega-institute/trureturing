@@ -244,11 +244,23 @@ class HostCleanupTests(unittest.TestCase):
         unknown.mkdir()
         (safe / "owned").write_text("retained\n")
         (unknown / "private").write_text("recovery\n")
+        for path in (safe, safe / "owned", unknown, unknown / "private"):
+            os.utime(path, (self.cutoff - 10, self.cutoff - 10))
         options = cleanup.argparse.Namespace(repository=repository, base="dev",
             codex_home=self.root / "codex", sshx_home=self.root / "sshx", tmp_root=[temporary],
             min_age_hours=0, delete=True, verbose=False)
-        with patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(io.StringIO()):
-            self.assertEqual(0, cleanup.run_clean(options))
+        output = io.StringIO()
+        with patch.object(cleanup, "active_paths", return_value=set()) as activity, \
+             patch.object(cleanup.time, "time", return_value=self.cutoff), \
+             patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(output):
+            result = cleanup.run_clean(options)
+        self.assertEqual(0, result, output.getvalue())
+        activity.assert_called_once_with(options.codex_home)
+        summary = json.loads(output.getvalue().splitlines()[-1])
+        self.assertEqual("succeeded", summary["status"])
+        self.assertEqual(0, summary["worktree_exit"])
+        self.assertIsNone(summary["inventory_error"])
+        self.assertEqual({"tmp:removed": 2}, summary["counts"])
         self.assertFalse(safe.exists())
         self.assertFalse(unknown.exists())
 
