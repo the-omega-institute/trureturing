@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:70d290fe9d9b6154af7ff778fdfa75317e16de91133a3a56f1e76fcafad62a95
+  normalized_sha256: sha256:70d290fe9d9b6154af7ff778fdfa75317e16de91133a3a56f1e76fcafad62a95
+cas_ref: sha256:70d290fe9d9b6154af7ff778fdfa75317e16de91133a3a56f1e76fcafad62a95
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The complete lemma is supplied by pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d on DihedralGroup (4*m), m>0. DihedralGroup.r_mul_r, r_mul_sr, sr_mul_r, sr_mul_sr, inv_r and inv_sr give commutator exponents 0, 2*a, -2*b and 2*(b-a) in the four constructor cases. Thus every commutator is r(2*t). DihedralGroup.r_pow gives its mth power r(2*t*m). The same multiplication equations show it commutes with every rotation; conjugation of a reflection differs by 4*t*m=0 in ZMod (4*m), supplied by ZMod.natCast_self and ring normalization. Subgroup.mem_center_iff interprets the universal commuting condition. All quantifiers range over arbitrary m>0 and arbitrary elements; no representation hypothesis is added. The existing SurfaceTwistCongruence module currently compiles the identical hcomm and hcentral applications (take n=m) with standard axioms, but these proof-local facts are not used as addressable suppliers. The suppliers here are the public upstream equations just listed, and no project GID exports this whole lemma. Authorized upstream-only settlement under CLAUDE.md 3.2; no new Lean declaration.
+    previous_atom_id: dcd1343823b465719795d28d4954472b1eeb3e49f854f427db38968ce04ad750
+    next_atom_id: e6209975f2ca866af6e309a59afec3045d89a5d5ebea9ad5f25bdf16cf40488c

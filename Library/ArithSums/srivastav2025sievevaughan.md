@@ -1972,3 +1972,993 @@ originality claim. They control onset strips only. The remaining prime
 and square samples, critical region $y\asymp V$, other finite low layers,
 same-source mean rate, remaining recovery convolutions and complete
 signed Robin tail still require estimates at the original fixed rate.
+
+## Reusing short prime intervals enlarges the paid onset range
+
+The outer integer count in (SV48) can be replaced by the existing
+[Nicolas comparison note's (GS4)](nicolas2025comparison.md#the-local-prime-input-and-its-uniform-range).
+That application supplies the uniform short-increment bound from
+Guth--Maynard Corollary 1.3, including longer intervals and the
+prime-power correction. Combining the two existing inputs keeps the
+actual source, its full drifted positive part, and the original fixed
+exponent.
+
+For $k=1,2$, put $P_k=(x/U)^{1/k}$, $A\le x\le2A$, and
+$c_k=P_k(1+\delta)^{-1/k}$. In addition to (SV47)'s conditions,
+suppose $h_k=P_k-c_k+1\ge P_k^{2/3}$ throughout this window.
+Apply (GS4) with its dummy clock $Y=P_k$, lower endpoint
+$u=c_k-1$ and interval length $h_k$. For sufficiently large $A$,
+$Y/2\le u<Y$ and $u+h_k=Y\le3Y/2$; also
+$h_k\asymp_k\delta P_k$. The onset primes lie in $[c_k,P_k)$,
+contained in $(c_k-1,P_k]$. Hence (GS4) directly gives
+
+$$
+\sum_{c_k\le p<P_k}\log p
+\le\psi(P_k)-\psi(c_k-1)\ll_k\delta P_k.
+$$
+
+The enlarged interval includes the endpoint contribution. The supplier
+is uniform at these real endpoints, and any subset of the original
+prime samples is allowed. With the unchanged $w_{N,p,k}\le\log p$,
+equation (SV47) now gives
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^k\le U(1+\delta)}
+ w_{N,p,k}E_A(x/p^k)
+\ll_k\delta^3 A^{-a_k},
+\qquad a_k=\tfrac34(1-1/k).
+\tag{SV50}
+$$
+
+For $k=1$ and every original fixed $0<\eta<1/2$, and for $k=2$
+only when the original $3/8<\eta<1/2$, choose
+
+$$
+b_k=\frac{\eta-a_k}{3}>0,\qquad
+\widehat\delta_{k,A}=\frac{A^{-b_k}}{\log L}.
+\tag{SV51}
+$$
+
+These widths satisfy all hypotheses uniformly in $A\le x\le2A$.
+Indeed $\widehat\delta_{1,A}U=A^{1/4-\eta/3}/\log L\gg U^{1/4}$;
+the square layer has a larger exponent. At the outer endpoints,
+$h_1\asymp A^{3/4-\eta/3}/\log L\gg P_1^{2/3}$ because
+$3/4-\eta/3>7/12>1/2$, and
+$h_2\asymp A^{3/8-(\eta-3/8)/3}/\log L\gg P_2^{2/3}$ because
+$3/8-(\eta-3/8)/3>1/3>1/4$.
+Both widths tend to zero. Equation (SV50) yields
+
+$$
+O_\eta\!\left(\frac{A^{-\eta}}{(\log L)^3}\right)
+=o(A^{-\eta})
+$$
+
+for the complete original response on these strips. Throughout them
+$p>y=x/p^k$, so the coprime response equals the original response,
+including its mean and drift. Deleting the square samples before
+(SV40)--(SV43) again uses those equations' existing sampled
+absolute-error bounds on the retained subset. No higher-layer adaptive
+cutoff or envelope for a new polynomial positive part is imported
+into the prime layer.
+
+This is a logarithmic enlargement at the original $o(A^{-\eta})$
+target. At (SV51)'s width, the existing integer-count bound (SV48)
+has first term $O(LA^{-\eta}/(\log L)^3)$, which does not establish
+that target. This comparison concerns sufficient upper bounds, not
+a lower bound on the actual response. The explicit widths (SV51)
+are $L/\log L$ times those in (SV46) and (SV49). When $\eta\le3/8$, the previously
+paid fixed-width square strip is likewise reused without recounting it.
+The stronger $O(A^{-\eta}/L^2)$ estimates on the narrower old strips
+remain available. The power exponent has not improved, the prime strip
+still shrinks, and the remaining samples, mean rate, critical region,
+other recovery terms and complete signed Robin tail remain unpaid.
+This is an attributed parameter application of the existing (SV47)
+and (GS4), without a historical originality or Lean-certification claim.
+
+## Signed short-interval inputs control the actual activation response
+
+The actual coefficients permit a further application of published
+Möbius estimates. Matomäki--Shao--Tao--Teräväinen,
+[*Higher uniformity of arithmetic functions in short intervals I.
+All intervals*, arXiv:2204.03754v4](https://arxiv.org/html/2204.03754v4),
+Theorem 3.1(i), supplies arbitrary fixed logarithmic savings for the
+untwisted Möbius sum at the $7/12$ length threshold. Its starred
+estimate includes the ordinary interval sum. The theorem's upper
+length cutoff is $t^{1-\varepsilon}$; longer intervals up to $t$
+are covered by equal pieces of length comparable to
+$t^{1-2\varepsilon}$, with all their lower endpoints in $[t,2t]$.
+Choose $\varepsilon$ small enough to keep these pieces above the
+lower cutoff. This yields, for fixed $\theta>7/12$ and every
+fixed $B>0$,
+
+$$
+|M(t+h)-M(t)|\ll_{\theta,B}\frac h{(\log t)^B},
+\qquad t^\theta\le h\le t,
+\qquad M(t)=\sum_{n\le t}\mu(n).
+$$
+
+For fixed $\theta>19/35$ and $0<B<1/3$, the same estimate is
+already supplied by [Matomäki--Pandey--Pliego--Teräväinen--Wang,
+arXiv:2610.09567v1, Theorem 1.4](../Analytic/shortuniformity2026robininterfaces.md#a-shorter-interval-range-with-different-quantitative-conclusions).
+Choose its parameter $\varepsilon$ smaller than both
+$\theta-19/35$ and $1/3-B$. These inputs hold at every sufficiently
+large lower endpoint. No exceptional-set avoidance or unrestricted
+nilsequence testing weight is assumed. The following is a paper-level
+application, without Lean certification or a historical novelty claim.
+
+### Preserve coprimality and all short prefixes
+
+Fix a supplied pair $1/2<\theta<1$, $B>0$, and then fix
+$0<\kappa<1-\theta$. Suppose
+
+$$
+R^{\theta-1+\kappa}\le\delta\le1/2,
+\qquad r=\log R,\quad U=R^2.
+$$
+
+For $0\le H\le\delta U$, define the actual signed prefix
+$F_R(H)=\sum_{U<n\le U+H}\mu(n)a_R(n)$. The exact identity
+$\mu(dm)\mu(d)=\mu(d)^2\mu(m)\mathbf1_{(d,m)=1}$ gives
+
+$$
+F_R(H)=\frac1r\sum_{d\le R}\mu(d)^2\log(R/d)
+ \sum_{U/d<m\le(U+H)/d}\mu(m)\mathbf1_{(m,d)=1}.
+\tag{SV52}
+$$
+
+Reuse the finite coprime convolution preceding (SV11). Its inner
+sum is exactly
+
+$$
+\sum_{\substack{a\mid d^\infty\\a\le(U+H)/d}}
+ \left[M\!\left(\frac{U+H}{da}\right)
+       -M\!\left(\frac U{da}\right)\right].
+$$
+
+Here $a\mid d^\infty$ retains all prime powers supported on $d$.
+Split this same finite sum at $Z=R^{\kappa/4}$. For $a\le Z$,
+$d\le R$ and $t=U/(da)$,
+
+$$
+R^{1-\kappa/4}\le t\le R^2,
+\qquad
+\delta t^{1-\theta}\ge R^{\kappa(3+\theta)/4}.
+$$
+
+If $0\le h\le\delta t$ is below $t^\theta$, the integer count
+$|M(t+h)-M(t)|\le h+1\le t^\theta+1$ is absorbed by
+$\delta t/r^B$ using the displayed positive power margin.
+For $h\ge t^\theta$, apply the supplied Möbius estimate. Thus
+every such prefix, including the arbitrarily short ones, satisfies
+$|M(t+h)-M(t)|\ll\delta t/r^B$.
+
+Using $\sum_{a\mid d^\infty}1/a=d/\varphi(d)$, the contribution
+with $a\le Z$ in (SV52) is at most
+
+$$
+\frac{C\delta U}{r^{B+1}}
+ \sum_{d\le R}\frac{\mu(d)^2\log(R/d)}{\varphi(d)}
+\ll\delta U r^{1-B}.
+$$
+
+The last bound uses $\sum_{d\le R}1/\varphi(d)\ll1+r$.
+The elementary divisor identity
+$d/\varphi(d)=\sum_{q\mid d}\mu(q)^2/\varphi(q)$ and the
+convergent product
+$\sum_q\mu(q)^2/(q\varphi(q))
+=\prod_p(1+1/(p(p-1)))$ directly supply it.
+
+For the complementary $a>Z$, put
+$P_d=\prod_{p\mid d}(1-p^{-1/2})^{-1}$.
+The same Rankin estimates used for the coprime convolution give
+
+$$
+\sum_{\substack{a>Z\\a\mid d^\infty}}\frac1a
+\le Z^{-1/2}P_d,
+\qquad
+\#\{a\le2U/d:a\mid d^\infty\}\le(2U/d)^{1/2}P_d.
+$$
+
+Uniformly for $d\le R$, $P_d\le\exp(C\sqrt r)$: enumerate
+its distinct prime factors and use $p_j\ge j+1$ and
+$\omega(d)\le r/\log2$ in the logarithm of the product.
+Retain the interval count $\delta U/(da)+1$ for each large $a$.
+Then this part of (SV52) is bounded by
+
+$$
+\exp(C\sqrt r)
+ \left(\delta U rZ^{-1/2}+\frac{R^{3/2}}r\right).
+$$
+
+The second term includes every unit endpoint error. Here
+$\sum_{d\le R}\log(R/d)/d\ll r^2$ and
+$\sum_{d\le R}\log(R/d)/\sqrt d\ll\sqrt R$.
+Relative to $\delta U r^{1-B}$, the two terms are at most
+
+$$
+\exp(C\sqrt r)
+ \left(r^B R^{-\kappa/8}
+       +r^{B-2}R^{1/2-\theta-\kappa}\right)=o(1).
+$$
+
+All parameters here are fixed and $\theta>1/2$. Consequently,
+with $T_R(Y)=\sum_{U<n\le Y}\mu(n)a_R(n)\log(n/U)$, Abel
+summation of the original logarithmic weight gives
+
+$$
+\begin{aligned}
+\sup_{0\le H\le\delta U}|F_R(H)|
+ &\ll\delta U r^{1-B},\\
+T_R(Y)&=F_R(Y-U)\log(Y/U)
+ -\int_U^Y F_R(t-U)\frac{dt}{t},\\
+\sup_{U<Y\le U(1+\delta)}E_A(Y)
+ &=\sup_{U<Y\le U(1+\delta)}
+   [T_R(Y)/r-1-\sigma_A Y]_+
+ \ll\frac{\delta^2U}{r^B}.
+\end{aligned}
+\tag{SV53}
+$$
+
+The complete constant and drift enter before the upper bound;
+only their already known nonnegativity is used. This is uniform
+control of the original positive part at every real endpoint, rather
+than an average taken before applying the positive part.
+
+### Wider actual prime and square strips
+
+Return to the same $R=A^{1/8}$, $r=L/8$ and actual source.
+The existing outer prime increment in (SV50), combined with (SV53),
+gives for its admissible interval lengths
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{U<x/p^k\le U(1+\delta)}
+ w_{N,p,k}E_A(x/p^k)
+\ll_{k,\theta,B,\kappa}
+ \frac{\delta^3 A^{-a_k}}{L^B}.
+\tag{SV54}
+$$
+
+For $k=1$ with the original $0<\eta<5/32$, and for $k=2$
+with the original $3/8<\eta<1/2$, every fixed $M>0$ permits
+
+$$
+\delta=A^{-(\eta-a_k)/3}L^M,
+\qquad B=3M+2.
+\tag{SV55}
+$$
+
+Indeed $8(\eta-a_k)/3<5/12$; choose $\theta>7/12$ and
+$\kappa>0$ leaving a strict power margin in
+$\delta\ge R^{\theta-1+\kappa}$. Equation (SV54) is then
+$O_{\eta,M}(A^{-\eta}/L^2)$. The outer lengths still exceed
+$P_k^{2/3}$ by a positive power, as in (SV51), and these strips
+still shrink because $M$ is fixed.
+
+For the additional prime-layer range $5/32\le\eta<6/35$, the
+newer $19/35$ supplier applies because $8\eta/3<16/35$.
+Choose fixed $0<\xi<1/9$ and $3\xi<B<1/3$, and use
+
+$$
+\delta=A^{-\eta/3}L^\xi.
+$$
+
+Equation (SV54) gives
+$O(A^{-\eta}/L^{B-3\xi})=o(A^{-\eta})$, with the same strict
+length margin. The original fixed exponent has not been replaced.
+For $\eta\ge6/35$, this signed transfer supplies no additional
+prime strip; the previous unsigned (SV51) remains available.
+The fixed-width square payment for $\eta\le3/8$ is reused.
+
+These enlarged strips retain $p>y=x/p^k$, the full coprime response,
+and the original subset and square-deletion rules in (SV50)--(SV51).
+They improve the permitted logarithmic factor in the width; they do
+not improve its power exponent. Choosing $M=M(A)$ is not allowed.
+At a fixed width the stated bounds provide only fixed logarithmic
+savings, insufficient to certify the original power target when
+$\eta>a_k$. No same-source mean rate, critical $y\asymp R^4$
+response, remaining recovery convolution or complete signed Robin
+tail has been supplied by this application.
+
+## Almost-all short sums transfer to the actual dense inner mesh
+
+The almost-all supplier is already cited in FIB §400:
+Matomäki--Radziwiłł--Shao--Tao--Teräväinen,
+[*Higher uniformity of arithmetic functions in short intervals II.
+Almost all intervals*, arXiv:2411.05770v2](https://arxiv.org/html/2411.05770v2),
+Theorem 1.1(i), with the starred norm defined in equation (1.4).
+For fixed $\varepsilon>0$ and every fixed $K>0$, it bounds the
+untwisted starred Möbius sum by $H/(\log T)^K$ for real starting
+points in $[T,2T]$, outside a set of measure
+$O_{K,\varepsilon}(T/(\log T)^K)$, whenever
+$T^{1/3+\varepsilon}\le H\le T^{1-\varepsilon}$.
+Take the testing function identically one and fix the nilsequence
+complexity parameter. The starred supremum already includes every
+initial subinterval; no new maximal-prefix theorem is required.
+
+The following application combines this cited supplier with the
+all-interval supplier used in (SV52)--(SV53). It does not assume
+that the actual sampled endpoints avoid the exceptional set.
+It has no Lean certification or historical originality claim.
+
+Fix a supplied pair $1/2<\theta<1$, $B>0$, and fix
+
+$$
+0<c<\frac{2(1-\theta)}{2-\theta},\qquad
+R^{-c}\le\delta\le R^{-c/2}.
+\tag{SV56}
+$$
+
+The all-interval input is
+$|M(t+h)-M(t)|\ll h/(\log t)^B$ for $t^\theta\le h\le t$.
+Keep the actual $r=\log R$, $U=R^2$, coefficients and signed
+prefix $F_R(H)$ of (SV52). The conclusion is
+
+$$
+\sup_{0\le H\le\delta U}|F_R(H)|
+ \ll_{c,\theta,B}\delta U r^{1-B},\qquad
+\sup_{U<Y\le U(1+\delta)}E_A(Y)
+ \ll_{c,\theta,B}\frac{\delta^2U}{r^B}.
+\tag{SV57}
+$$
+
+### The smooth-source tail retains all endpoint errors
+
+Choose fixed $0<\alpha<1-c$ and put
+
+$$
+P_d(\alpha)=\prod_{p\mid d}(1-p^{-\alpha})^{-1},\qquad
+g_\alpha(q)=\prod_{p\mid q}\frac{p^{-\alpha}}{1-p^{-\alpha}}
+\quad(q\text{ squarefree}),
+$$
+
+with $g_\alpha(1)=1$ and $g_\alpha(q)=0$ otherwise. Expanding
+the product gives $P_d(\alpha)=\sum_{q\mid d}g_\alpha(q)$, and
+
+$$
+\sum_q\frac{g_\alpha(q)}q
+=\prod_p\left(1+\frac{p^{-\alpha}}{p(1-p^{-\alpha})}\right)<\infty.
+$$
+
+The ordinary weighted harmonic sums therefore give
+
+$$
+\sum_{d\le R}\frac{\log(R/d)}dP_d(\alpha)\ll_\alpha r^2,
+\qquad
+\sum_{d\le R}\frac{\log(R/d)}{d^\alpha}P_d(\alpha)
+ \ll_\alpha R^{1-\alpha}.
+\tag{SV58}
+$$
+
+Indeed, after writing $d=qm$, the inner sums are bounded by
+$O((1+\log(R/q))^2)$ and $O_\alpha((R/q)^{1-\alpha})$,
+respectively; the remaining factor is $g_\alpha(q)/q$.
+Thus no uniform subexponential bound for $P_d$ is needed here.
+
+Set $Z=r^C$ with fixed $C>0$. In the exact coprime convolution
+of (SV52), the terms with $a>Z$, $a\mid d^\infty$, retain the
+integer interval bound $\delta U/(da)+1$. The Rankin bounds are
+
+$$
+\sum_{\substack{a>Z\\a\mid d^\infty}}\frac1a
+ \le Z^{-(1-\alpha)}P_d(\alpha),\qquad
+\#\{a\le2U/d:a\mid d^\infty\}
+ \le(2U/d)^\alpha P_d(\alpha).
+$$
+
+Together with (SV58), their total contribution to $F_R$ is at most
+
+$$
+O_\alpha\left(\delta U r Z^{-(1-\alpha)}
+                   +\frac{R^{1+\alpha}}r\right).
+\tag{SV59}
+$$
+
+The second term includes every unit endpoint error. Choose
+$C(1-\alpha)>B+1$. Both terms are then
+$o(\delta U r^{1-B})$: the second has the strict power margin
+$1-c-\alpha>0$. These choices are fixed before $R$ grows.
+
+### Sparse starts use the uniform input; dense starts use an integral
+
+Choose fixed $\omega>0$ sufficiently small that
+
+$$
+c+\omega<1,\qquad
+(2-c-2\omega)(1-\theta)>c,
+$$
+
+and put $D_0=R^{c+\omega}$. For $a\le Z$, $d\le D_0$ and
+$t=U/(da)$, eventually $t\ge R^{2-c-2\omega}$. Thus
+$\delta t^{1-\theta}$ grows by a positive power of $R$.
+The same short-prefix argument in (SV52) bounds every inner
+prefix by $O(\delta t/r^B)$, including lengths below $t^\theta$.
+Reuse $\sum_{a\mid d^\infty}1/a=d/\varphi(d)$ and the weighted
+harmonic bound there. This sparse part is
+$O(\delta U r^{1-B})$.
+
+For the remaining $d>D_0$, fix $a\le Z$ and a dyadic block
+$D<d\le2D$, padding boundary blocks only in the nonnegative envelope bound.
+The actual restored weights remain restricted to $d\le R$, so
+$\log(R/d)$ is never used at a negative value. Put
+$T=U/(2aD)$ and define the common-prefix envelope
+
+$$
+Q_T(t)=\sup_{0\le h\le2\delta T}|M(t+h)-M(t)|.
+$$
+
+The sampled starts $t_d=U/(ad)$ lie in $[T,2T]$, with separation
+comparable to $T/D$. Uniformly for these blocks,
+$T\gg R/Z$, $T\ll R^2$, and $\log T\asymp r$.
+Condition (SV56) implies $c<2/3$. Choose a fixed sufficiently
+small $\varepsilon>0$. The strict margins in
+$\delta T^{2/3-\varepsilon}\gg1$ and
+$\delta T^\varepsilon\ll1$ ensure that the almost-all supplier
+applies to length $2\delta T$, also on a fixed dyadic cover of
+$[T/2,3T]$. On the exceptional set use $Q_T\le2\delta T+1$.
+For every fixed $K>0$ it follows directly that
+
+$$
+\int_{T/2}^{3T}Q_T(t)\,dt
+ \ll_{c,C,K}\frac{\delta T^2}{r^K}.
+$$
+
+Take disjoint cells of length comparable to $T/D$ around the
+starts $t_d$. Since $|\mu(n)|\le1$, moving the start by $v$
+changes any fixed-length interval sum by at most $2|v|+2$.
+Averaging over each cell therefore gives the deterministic bound
+
+$$
+\sum_{D<d\le2D}Q_T(t_d)
+ \ll\frac{\delta DT}{r^K}+T+D.
+\tag{SV60}
+$$
+
+This uses the exceptional-set integral itself, including any
+sampled points it contains. It is valid for the actual mesh at
+every sufficiently large $R$.
+
+For an upper bound, drop $a\mid d^\infty$ and $\mu(d)^2$ only
+in this nonnegative small-$a$ sum. Restore the actual factor
+$\log(R/d)/r$ from (SV52). Summing (SV60) over the blocks and
+$a\le Z$ gives
+
+$$
+O\left(\delta U r^{1-K}\log Z
+       +\frac U{D_0}\log Z+\frac{RZ}r\right).
+$$
+
+Here $\sum_{a\le Z}1/a=O(\log Z)$,
+$\sum_D\log(R/D)=O(r^2)$,
+$\sum_D\log(R/D)/D=O(r/D_0)$, and
+$\sum_D D\log(R/D)=O(R)$. Choose $K>B+2$.
+The first term is $o(\delta U r^{1-B})$; the other two have
+the positive power margins $\omega$ and $1-c$. Combining
+this with the sparse part and (SV59) proves the prefix estimate
+in (SV57). The existing Abel-summation and full-positive-part
+argument of (SV53) supplies its second estimate. The constant
+$1$, full drift $\sigma_A Y$ and original coefficients are retained.
+
+## The mesh application enlarges the signed prime-onset range
+
+Combining (SV57) with the existing prime increment in (SV50)
+gives exactly the cost bound (SV54), now with condition (SV56).
+The supplied source and its original fixed $\eta$ are unchanged.
+
+For every original $0<\eta<15/68$ and every pre-fixed $M>0$,
+take
+
+$$
+\delta=A^{-\eta/3}L^M,\qquad B=3M+2.
+\tag{SV61}
+$$
+
+Choose $\theta>7/12$ sufficiently close to $7/12$. Since
+$c=8\eta/3<10/17=2(1-7/12)/(2-7/12)$, condition (SV56)
+holds eventually. The all-interval supplier allows this fixed
+$B$, and the almost-all supplier allows any fixed $K>B+2$.
+Thus the actual prime-onset cost is $O_{\eta,M}(A^{-\eta}/L^2)$.
+This extends the arbitrary-fixed-$M$ range of (SV55), which
+previously required $\eta<5/32$.
+
+For the additional original range $15/68\le\eta<4/17$, take
+fixed $0<\xi<1/9$ and $3\xi<B<1/3$, and set
+
+$$
+\delta=A^{-\eta/3}L^\xi.
+\tag{SV62}
+$$
+
+Choose $\theta>19/35$ close enough to leave a strict margin,
+because $c=8\eta/3<32/51=2(1-19/35)/(2-19/35)$.
+The same cost is $O(A^{-\eta}/L^{B-3\xi})=o(A^{-\eta})$.
+This extends the small-positive-logarithmic-width range of
+(SV55), which previously stopped at $\eta<6/35$.
+
+The outer prime lengths in both cases still exceed $P_1^{2/3}$
+by a positive power, as required in (SV50), and $p>y$ remains
+true. The actual weights, coprime response, full positive part
+and existing sampled deletion rules therefore retain their
+original scope. The square-layer applications of (SV55) are
+already available and are directly reused.
+
+These are still shrinking strips with the same power exponent
+in their width. No growing $M(A)$, fixed-width prime payment,
+same-source mean estimate, critical $y\asymp R^4$ estimate,
+remaining recovery convolution or complete signed Robin-tail
+estimate follows from this application. For $\eta\ge4/17$,
+the unsigned strips remain available; no enlarged signed strip
+is supplied here.
+
+## The full complementary hyperbola bounds the actual finite response
+
+The general coprime Mertens estimate preceding (SV11) also applies
+outside that equation's highest-support band. Keep all original
+coefficients and define the continuous complementary ramp
+
+$$
+\chi_R(e)=
+\begin{cases}
+0,&e\le U,\\
+\log(e/U)/r,&U<e\le U_1,\\
+1,&e>U_1.
+\end{cases}
+$$
+
+The actual difference weight satisfies
+$\theta'(e)=\mu(e)(1-\chi_R(e))$. Reuse
+$a_R(n)=\sum_{d\mid n}\lambda(d)$ and the original divisor-product
+formula for $H_A$. The classical identity $\mathbf1*\mu=
+\mathbf1_{\{1\}}$ gives, for every real $y\ge1$,
+
+$$
+H_A(y)=1-
+\sum_{\substack{me\le y\\e>U}}
+ \mu(e)\chi_R(e)a_R(me).
+\tag{SV63}
+$$
+
+This finite sum includes all $m\le y/U$ and the saturated range
+$e>U_1$. It is not restricted to the first activation or to the
+highest LCM band. The following is an application of the already
+cited classical Mertens input, without Lean certification or
+historical originality claim.
+
+For squarefree $d\le R$, let $g=(d,m)$ and $q=d/g$. Then
+$d\mid me$ is equivalent to $q\mid e$, and $(g,q)=1$.
+Writing $e=qb$ retains the exact sign identity
+
+$$
+\mu(d)\mu(qb)
+=\mu(g)\mu(q)^2\mu(b)\mathbf1_{(b,q)=1}.
+$$
+
+In particular the common-factor sign $\mu(g)$ is not assumed
+positive. Use the existing coprime bound preceding (SV11), with
+$\mathcal W(u)=u^{3/5}/(\log u)^{1/5}$,
+
+$$
+|M_q(t)|\ll
+t e^{-c_1\mathcal W(\log t)}\frac q{\varphi(q)}
++t^{3/4}\prod_{p\mid q}(1-p^{-1/2})^{-1},
+\qquad
+M_q(t)=\sum_{\substack{n\le t\\(n,q)=1}}\mu(n).
+$$
+
+The bounds already used in (SV52)--(SV53),
+$q/\varphi(q)\ll r$ and
+$\prod_{p\mid q}(1-p^{-1/2})^{-1}\le e^{C\sqrt r}$ for $q\le R$,
+therefore give, uniformly for $t\ge R$,
+
+$$
+|M_q(t)|\ll t\Xi_R,\qquad
+\Xi_R=e^{-c_2\mathcal W(r)}.
+$$
+
+The remainder divided by $t$ is at most
+$R^{-1/4}e^{C\sqrt r}$, which is absorbed into $\Xi_R$.
+For each nonempty inner interval in (SV63), put $T=y/(mq)$.
+Its lower endpoint is $U/q\ge R$. The weight
+$b\mapsto\chi_R(qb)$ is continuous, nondecreasing, bounded by
+one, has total variation at most one, and vanishes at $U/q$.
+Abel summation thus supplies
+
+$$
+\left|\sum_{U/q<b\le T}
+ \mu(b)\mathbf1_{(b,q)=1}\chi_R(qb)\right|
+ \ll T\Xi_R
+ \qquad(y>U).
+$$
+
+All real endpoints and the ramp's saturation are retained.
+Expand the actual $a_R$ in (SV63) and only then take absolute
+values. The common-factor identity gives
+
+$$
+|H_A(y)-1|
+\ll\frac{y\Xi_R}{r}
+ \sum_{d\le R}\frac{\mu(d)^2\log(R/d)}d
+ \sum_{m\le y/U}\frac{(d,m)}m.
+$$
+
+For $M\ge1$, the classical gcd-divisor identity gives
+
+$$
+\sum_{m\le M}\frac{(d,m)}m
+=\sum_{b\mid d}\frac{\varphi(b)}b
+ \sum_{j\le M/b}\frac1j
+\le(1+\log M)\tau(d).
+$$
+
+Reuse the ordinary divisor harmonic bound
+$\sum_{d\le R}\tau(d)\log(R/d)/d\ll r^3$.
+For $U<y\le2A=2R^8$, $\log(y/U)=O(r)$, so the preceding estimate is
+$O(yr^3\Xi_R)$. Absorbing these fixed logarithmic factors and
+using $r=L/8$ yields a fixed $c_0>0$ such that
+
+$$
+|H_A(y)-1|\ll y\Xi_A,\qquad
+E_A(y)\ll y\Xi_A,
+\qquad
+\Xi_A=e^{-c_0\mathcal W(L)},\quad U<y\le2A.
+\tag{SV64}
+$$
+
+The second bound concerns the complete original positive part:
+$E_A(y)=[(1-H_A(y))-1-\sigma_Ay]_+\le|1-H_A(y)|$
+because $\sigma_A\ge0$. It assumes no sign of $S_A$ and takes
+no average before the positive part. The existing two envelopes
+can be combined with this bound on its stated range by taking
+their minimum.
+
+Together with the existing $E_A(y)=0$ for $y\le U$, this bound
+covers every actual argument $x/p^k$ in the local response problem
+with $A\le x\le2A$. The existing exact
+floor correction at $y=A$, together with
+$\sum_\ell|h(\ell)|\le B_A\ll R^4/r^2$, also gives
+
+$$
+|S_A|\le\frac{|H_A(A)-1|+1+B_A}{A}
+\ll\Xi_A+\frac{1+B_A}{A}\ll\Xi_A.
+$$
+
+This is a two-sided subexponential mean envelope, not the required
+fixed-power mean estimate. For every fixed $\eta>0$,
+$\Xi_A/(A^{-\eta}/L)=L\exp(\eta L-c_0\mathcal W(L))\to\infty$;
+the stated error allowance does not pay that original rate.
+No estimate for the jointly compensated improper tail follows
+by splitting off this mean.
+
+## A critical prime strip is paid at every original fixed exponent
+
+For the same actual source, $A\le x\le2A$ and
+$0<\delta\le1/16$, retain only prime-layer samples with
+$V<x/p\le V(1+\delta)$. Put $P=x/V\asymp A^{1/2}$.
+Their primes lie in $[P/(1+\delta),P)$, which has at most
+$O(\delta P+1)$ integers. Keep the actual
+$0\le w_{N,p,1}\le\log p\ll L$ and use (SV64). This gives
+
+$$
+\sup_{A\le x\le2A}\frac1x
+ \sum_{V<x/p\le V(1+\delta)}
+ w_{N,p,1}E_A(x/p)
+ \ll L\Xi_A(\delta+A^{-1/2}).
+\tag{SV65}
+$$
+
+The second term includes the outer integer endpoint error.
+For every original fixed $0<\eta<1/2$, choose
+
+$$
+\delta_{\mathrm{crit}}
+=A^{-\eta}\exp\!\left(\frac{c_0}{2}\mathcal W(L)\right).
+\tag{SV66}
+$$
+
+This tends to zero. The first term in (SV65) is
+$L A^{-\eta}e^{-c_0\mathcal W(L)/2}
+=O(A^{-\eta}/L^2)$, and the endpoint term has the additional
+strict power margin $1/2-\eta>0$. Thus this actual critical strip
+costs $O_\eta(A^{-\eta}/L^2)$ at the original target scale.
+
+Here $p\asymp R^4>U_1$. Every nonzero original LCM coefficient
+uses $d\le R$, $e\le U_1$; its support therefore contains no such
+$p$. The original and coprime responses coincide, and no common
+sampling-prime contribution has been omitted. The previously paid
+sampled approximation and deletion rules can still be used on
+this subset.
+
+The extra width factor in (SV66) exceeds every pre-fixed power
+of $L$, but the width remains $A^{-\eta+o(1)}$ and shrinks.
+This does not improve its fixed power exponent. At fixed width,
+(SV65) gives only subexponential decay in $L$, which does not
+certify the original $A^{-\eta}$ budget. The remaining critical
+samples, same-source mean rate, other recovery terms and complete
+signed Robin tail retain their original obligations; no RH
+conclusion or estimate for an arbitrary new polynomial positive
+part is asserted.
+
+## The actual type-II coefficients have an infinite negative-part cost
+
+Fix the original actual $N$, its clock $A$, price
+$\epsilon=1/(A\log A)$, and the weights and cutoffs above. The
+following is an application of the published recovery (SV1), not
+a new recovery theorem or a Lean-certified result. It tests a
+coefficientwise payment scheme; the original joint target (SV4)
+is unchanged.
+
+To distinguish the type-II factor from the existing divisor
+response $b_A(n)$, put
+
+$$
+b_A^{\rm II}=(\mathbf1*\theta)(\mathbf1*\lambda)
+=\delta_1-\mathbf1*h.
+$$
+
+The second equality is the divisor-product identity used in the
+proof of Lemma 2.1: $(\mathbf1*\mu)(n)=\delta_1(n)$,
+$\lambda(1)=1$, and
+$(\mathbf1*\theta')(\mathbf1*\lambda)=\mathbf1*h$.
+Reuse that identity directly. For every ordinary prime $p$, let
+$a_p=v_p(N)$ and define the original increment and its complement by
+
+$$
+\begin{aligned}
+\beta_j(p)&=\log\frac{1-p^{-(j+1)}}{1-p^{-j}},\qquad j\ge1,\\
+W_N(p^k)&=w_{N,p,k}
+=\log p-\epsilon^{-1}\beta_{a_p+k}(p),\\
+\Gamma_N(p^k)&=\epsilon^{-1}\beta_{a_p+k}(p),\qquad k\ge1.
+\end{aligned}
+$$
+
+Both arithmetic functions vanish away from prime powers. They
+retain every actual multiplicity, and $W_N+\Gamma_N=\Lambda$.
+The original CA price gives $0\le W_N(p^k)\le\log p$.
+Consequently the complete type-II term splits exactly as
+
+$$
+b_A^{\rm II}*\Lambda_{>V}
+=T_N^w+T_N^g,\qquad
+T_N^w=b_A^{\rm II}*(W_N)_{>V},\quad
+T_N^g=b_A^{\rm II}*(\Gamma_N)_{>V}.
+\tag{SV67}
+$$
+
+### Actual rough multiples retain the original gains
+
+Call $n$ $V$-rough when every prime factor of $n$ exceeds $V$.
+Since $R<U_1<V$, for such $n>1$ the only divisors in the
+supports of $\lambda$ and $\theta'$ are one. Their values at
+one are both one. Hence
+
+$$
+b_A^{\rm II}(1)=0,\qquad
+b_A^{\rm II}(n)=-1\quad(n>1\text{ is }V\text{-rough}).
+$$
+
+If additionally $(n,N)=1$ and $n$ has at least two distinct
+prime factors, every prime-power divisor is proper. All the
+convolution factors $b_A^{\rm II}(n/p^k)$ are therefore $-1$,
+and $a_p=0$ on these primes. The complete layer telescoping gives
+
+$$
+T_N^w(n)=-\sum_{p^k\mid n}w_{N,p,k}
+=-\log n+\epsilon^{-1}\log Z(n).
+\tag{SV68}
+$$
+
+The same source's all-integer right-tail comparison applies to
+the actual competitor $Nn$. Multiplicativity, using $(n,N)=1$,
+gives
+
+$$
+0\le\log Z(n)
+\le\log\frac{\log(A+\log n)}{\log A}
+=o_N(\log n).
+$$
+
+Thus (SV68) is $-\log n+o_N(\log n)$ on these integers. The
+comparison is applicable but is not necessary for this asymptotic:
+the ordinary bound $Z(n)\le\sum_{d\le n}1/d\le1+\log n$
+already suffices at fixed $N$. No favorable actual source phase
+or additional prime-distribution hypothesis has been selected.
+
+### The full kernel detects divergence on one arithmetic progression
+
+Set
+
+$$
+M_N=\operatorname{lcm}\left(\operatorname{rad}(N),
+\prod_{p\le V}p\right).
+$$
+
+Choose two distinct primes $p_0,q_0>\max\{V,P^+(N)\}$ and put
+$n_j=p_0q_0(1+jM_N)$ for $j\ge0$. Euclid's theorem supplies
+these two primes; no enumeration or progression-prime theorem
+is needed. Each $n_j$ is $V$-rough, coprime to $N$, and has at
+least the two distinct prime factors $p_0,q_0$. Also
+$n_j>A$, since $p_0q_0>V^2=A$. Every $Nn_j$ is an actual
+integer covered by the original source comparison.
+
+For any fixed real $a<1$ and $b$, (SV68) gives eventually
+
+$$
+[-T_N^w(n_j)-a\log n_j-b]_+
+\ge\frac{1-a}{2}\log n_j.
+$$
+
+Retain the complete original kernel, including its logarithmic
+correction:
+
+$$
+k(t)=\frac{1+\log t}{t^2\log^2t}
+=-\frac{d}{dt}\frac1{t\log t},\qquad
+\int_n^\infty k(t)\,dt=\frac1{n\log n}\quad(n>1).
+$$
+
+Tonelli's theorem for the nonnegative integrand now gives
+
+$$
+\begin{aligned}
+\int_A^\infty\sum_{n\le t}
+[-T_N^w(n)-a\log n-b]_+\,k(t)\,dt
+&\ge\frac{1-a}{2}\sum_{j\ge j_0}\frac1{n_j}\\
+&=\infty.
+\end{aligned}
+\tag{SV69}
+$$
+
+The last series is a fixed positive multiple of
+$\sum_j(1+jM_N)^{-1}$. Fixing the original $N$ precedes
+taking the infinite integration endpoint; a large fixed modulus
+cannot make this harmonic series converge.
+
+In particular, no representation
+$T_N^w(n)+a\log n+b=Q_N(n)+E_N(n)$ with $Q_N(n)\ge0$
+can satisfy
+$\int_A^\infty\sum_{n\le t}|E_N(n)|k(t)\,dt<\infty$
+when $a<1$: at each negative coefficient,
+$|E_N(n)|\ge[-T_N^w(n)-a\log n-b]_+$.
+This excludes such coefficientwise nonnegative combinations of
+source comparison defects plus an absolutely integrable error.
+It asserts nothing for $a\ge1$ or for a joint signed estimate.
+
+## Natural centering retains the coefficientwise obstruction
+
+The divergence in (SV69) also applies after subtracting the actual
+type-II logarithmic drift and its full constant mean. Keep the same
+fixed $N$ and all the prime powers in (SV67), and put
+
+$$
+\begin{aligned}
+J_A^{\rm II}&=\sum_{\ell\le V}\frac{h(\ell)\log\ell}{\ell},
+&M_V&=\sum_{d\le V}\frac{\Lambda(d)}d,\\
+D_N^g&=\sum_{p^k>V}\frac{\Gamma_N(p^k)}{p^k},
+&c_N^{\rm II}&=1+J_A^{\rm II}+S_A(M_V+D_N^g).
+\end{aligned}
+\tag{SV70}
+$$
+
+These names distinguish the constants from the existing harmonic
+atom $J_A(m)$ and sampled correction $C_N(x)$.
+Since $0\le\beta_{a_p+k}(p)\le\beta_k(p)\le p^{-k}$,
+$D_N^g$ is absolutely convergent. More explicitly, for fixed $N$,
+
+$$
+\sum_{p^k\le x}\Gamma_N(p^k)=O_N(\log x),\qquad
+x\sum_{p^k>x}\frac{\Gamma_N(p^k)}{p^k}=O_N(1).
+$$
+
+The ordinary harmonic and square-reciprocal tails supply these
+bounds; different prime powers have different integer values.
+There is no cutoff of the infinite gain sum in (SV70).
+
+### Sum the complete recovery before centering
+
+Reuse the published PNT consequence $\psi(x)=x+o(x)$, with all
+prime powers included. A directly recorded supplier is
+[Johnston--Yang, arXiv:2204.01980v2, Theorem 1.1, equation (1.3)](../Weil/johnstonyang2022pnt.md).
+Only this asymptotic consequence is used here; its explicit error
+is not promoted to the original fixed-power Robin allowance.
+
+The finite support of $h$ and Stirling's formula give
+
+$$
+\sum_{n\le x}(h*\log)(n)
+=S_Ax\log x-(S_A+J_A^{\rm II})x+O_A(\log x).
+$$
+
+The existing full-support floor correction is
+$H_A(y)=S_Ay+O_A(1)$. Therefore the fixed low convolution and
+the gain term have the respective sums
+
+$$
+\begin{aligned}
+\sum_{n\le x}(\mathbf1*h*\Lambda_{\le V})(n)
+&=S_AM_Vx+O_A(1),\\
+\sum_{n\le x}T_N^g(n)&=-S_AD_N^g x+O_N(\log x).
+\end{aligned}
+$$
+
+For the second line, sum the exact factor
+$\sum_{m\le y}b_A^{\rm II}(m)=1-H_A(y)$ for $y\ge1$.
+The preceding harmonic and reciprocal-tail estimates pay both
+the finite convolution error and the omitted part of $D_N^g$.
+
+Now solve (SV1), with (SV67), for the sum of $T_N^w$.
+The finite $\Lambda_{\le V}$ term is retained and contributes
+$O_A(1)$ as $x\to\infty$. This gives
+
+$$
+\sum_{n\le x}T_N^w(n)
+=-S_Ax\log x+(c_N^{\rm II}+S_A)x+o_N(x).
+$$
+
+Consequently the actual centered coefficients
+
+$$
+\widetilde T_N^w(n)=T_N^w(n)+S_A\log n-c_N^{\rm II}
+$$
+
+satisfy $\sum_{n\le x}\widetilde T_N^w(n)=o_N(x)$.
+This is a fixed-$N$ asymptotic, with no claimed uniform rate as
+$N$ grows and no claim about its own signed improper integral.
+
+The accepted finite mean envelope after (SV64) already gives
+$|S_A|\to0$ along the original large sources. In particular,
+$S_A<1/2$ eventually. Use this existing consequence without
+reproving that envelope or claiming a fixed-power improvement.
+Taking $a=S_A$ and $b=-c_N^{\rm II}$ in (SV69) yields, for
+every sufficiently large original fixed source,
+
+$$
+\boxed{
+\sum_{n\le x}\widetilde T_N^w(n)=o_N(x),\qquad
+\int_A^\infty\sum_{n\le t}
+[-\widetilde T_N^w(n)]_+\,k(t)\,dt=\infty.
+}
+\tag{SV71}
+$$
+
+Thus subtraction of the logarithmic drift, constant mean and
+Euler-gain contribution does not make coefficientwise negative
+mass integrable under the original kernel.
+
+### The complete recovery still cancels on the same integers
+
+On each actual $n_j$ in (SV69), $h$ has no divisor in its
+support other than one, so $(h*\log)(n_j)=\log n_j$.
+No prime power at most $V$ divides $n_j$. Thus the other low
+terms vanish, while all the high gains satisfy
+
+$$
+T_N^w(n_j)=-\log n_j+\epsilon^{-1}\log Z(n_j),\qquad
+T_N^g(n_j)=-\epsilon^{-1}\log Z(n_j).
+$$
+
+The original complete recovery therefore gives exactly
+
+$$
+\mathcal C(n_j)=\log n_j+T_N^w(n_j)+T_N^g(n_j)
+=0=\Lambda(n_j).
+\tag{SV72}
+$$
+
+Prime powers also retain their full compensation: for $p>V$
+and $j\ge1$,
+$(b_A^{\rm II}*\Lambda_{>V})(p^j)=-(j-1)\log p$ and
+$(h*\log)(p^j)=j\log p$, leaving $\Lambda(p^j)=\log p$.
+
+The three operations
+$\sum_{n\le t}[-T_N^w(n)]_+$,
+$[-\sum_{n\le t}T_N^w(n)]_+$ and
+$[-\sum_{n\le t}\mathcal C(n)+t]_+$ are different.
+Equations (SV69)--(SV71) concern only the first and its stated
+centering. They supply no lower bound for the original sampled
+$H_A$ or $E_A$ losses, and do not assert divergence of either
+of the latter two operations. This rules out the specified
+coefficientwise payment scheme, while preserving joint arithmetic
+compensation as the route required by (SV4). The full original
+signed bound and RH remain unproved; no historical originality
+or Lean certification is claimed for this application.
