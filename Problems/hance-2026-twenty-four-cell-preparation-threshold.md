@@ -70,6 +70,24 @@ and exact statistics. The preparation mass is affine in the actual noisy
 mixture vector, so every operational equivalence is preserved without division
 by visibility.
 
+## Falsifier
+
+The iff preregistered in issue #14971 would be refuted by a model satisfying
+the stated full scenario at any $\lambda>1/2$, or by nonexistence at any
+$\lambda\in[0,1/2]$. Omitting preparations, questions, convex equivalences or
+the zero-visibility collapse, or restricting the upper argument to finite
+ontic spaces or deterministic responses, would not settle that statement.
+
+## Evidence
+
+The source locators and model conventions are in
+`Library/QuantumContext/hance2026fourquestions.md`; the known upper obstruction
+and its attribution are in `Library/QuantumContext/chailloux2016parityoblivious.md`.
+Issue #14971 records the full-scenario statement before the Lean probe.
+`D5/S3/QuantumContext/HanceTwentyFourCellThreshold.lean` proves `result` for every
+universe and every $\lambda\in[0,1]$, with the iff stated in Motivation and the
+arbitrary-space obstruction and full affine attainment described in Route.
+
 ## Triage
 
 ### What the settlement shows
@@ -85,3 +103,11 @@ The source's hexagon bound and its noiseless preparation-contextuality conclusio
 remain compatible with this sharper full-scenario result. The separate question
 of measurement contextuality remains open. Extensions to other preparation
 polytopes or measurement sets are open and are not asserted by this theorem.
+
+## ASSUMED-UNVERIFIED
+
+The scoped literature searches do not establish worldwide novelty or priority;
+the known upper obstruction is not claimed as new. The Reg audit remains
+`declared_unresolved` (`IE-C050 / unclassified_form / source.observation_data`)
+under issue #14971, with no validated certificate. Measurement contextuality
+and extensions beyond this preparation and question scenario remain open.
