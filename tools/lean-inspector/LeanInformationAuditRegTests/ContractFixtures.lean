@@ -332,8 +332,14 @@ def finiteSource : Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} end_state_omi
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause
     definition := none, coordinates := #[], readouts := #[{
-      path := #["fn", "arg"], stateBinder := 0, functionOperand := false
-      stateOperand := some #["fn", "fn", "arg"], booleanPredicate := true }] },
+      path := #["arg", "arg", "fn", "arg", "fn", "arg", "fn"], stateBinder := 0
+      functionOperand := true, stateOperand := none, booleanPredicate := false }, {
+      path := #["arg", "arg", "arg", "fn", "arg", "fn", "arg", "fn"], stateBinder := 0
+      functionOperand := true, stateOperand := none, booleanPredicate := false }, {
+      path := #["fn", "arg"], stateBinder := 0
+      functionOperand := false, stateOperand := some #["fn", "fn", "arg"], booleanPredicate := true }, {
+      path := #["arg", "fn", "arg"], stateBinder := 0
+      functionOperand := false, stateOperand := some #["fn", "fn", "arg"], booleanPredicate := true }] },
   continuation := .unknown,
   familyRecord := some ⟨_, ⟨_root_.Reg.Support.LegacyRelations.Preemption.registration⟩⟩,
   options := #[] }
