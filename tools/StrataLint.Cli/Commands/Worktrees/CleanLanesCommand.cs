@@ -26,20 +26,27 @@ internal static partial class CleanLanesCommand
     internal static CommandResult Run(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
-        DateTimeOffset now) =>
-        Run(
-            repositoryRoot,
-            arguments,
-            new ProductionWorktreeProcessRunner(),
-            DefaultTempRoots(),
-            now);
+        DateTimeOffset now)
+    {
+        var caller = Directory.GetCurrentDirectory();
+        try
+        {
+            return Run(repositoryRoot, arguments, new ProductionWorktreeProcessRunner(),
+                DefaultTempRoots(), now, Directory.SetCurrentDirectory);
+        }
+        finally
+        {
+            if (Directory.Exists(caller)) Directory.SetCurrentDirectory(caller);
+        }
+    }
 
     internal static CommandResult Run(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
         IReadOnlyList<string> tempRoots,
-        DateTimeOffset now)
+        DateTimeOffset now,
+        Action<string>? anchorProcess = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(arguments);
@@ -53,6 +60,9 @@ internal static partial class CleanLanesCommand
             var commonGitDirectory = ResolveCommonGitDirectory(root, runner);
             var inventory = ReadWorktrees(root, runner);
             root = inventory[0].Path; // Keep Git commands usable when the invoking linked tree is selected.
+            // Native process startup can read the parent's cwd even when a
+            // child's working directory is explicit. Inputs are resolved above.
+            anchorProcess?.Invoke(root);
             var events = new List<CleanLaneEvent>();
             var activeBranches = inventory
                 .Where(static item => item.Branch is not null)
