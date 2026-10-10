@@ -139,3 +139,4 @@ exec {shlex.quote(native)} "$@"
             self.assertFalse(target.exists())
             self.assertEqual(target.name + " tracked\n", (recovered / "owned").read_text())
             self.assertEqual(target.name + " untracked\n", (recovered / "untracked").read_text())
+# C7_ANCHOR_POSITIVE_6ACAC960
