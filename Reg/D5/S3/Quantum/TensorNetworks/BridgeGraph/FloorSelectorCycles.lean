@@ -2,6 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles
 import Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
 import Reg.Support.BridgeGraphRelations
+import Reg.Support.BridgeGraphCycleLaws
 
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles
@@ -276,25 +277,6 @@ noncomputable def forwardHalf_applyRegistration : Contract.Registration.{_,_,_,0
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-@[reducible] def index_val_intArena : Arena where
-  signature := integerSignature
-  Law R := ∀ (N : ℕ) (hN : 0 < N) (s : ℤ),
-    R.readout () () (((index N hN s).val : ℤ)) (s % N)
-theorem index_val_intPositive : index_val_intArena.Law integerActual := @D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_val_int
-theorem index_val_intNegative : ¬ index_val_intArena.Law integerRejected := by
-  intro h
-  exact h 1 (by norm_num) 0
-
-def index_val_intEvidence : Registration index_val_intArena
-    (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_val_int)) where
-  actual := integerActual
-  bridge := Iff.rfl
-  variation := ⟨index_val_intPositive, integerRejected, index_val_intNegative⟩
-  sensitivity := ⟨fun i => ⟨integerRejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, index_val_intNegative⟩,
-    fun i => nomatch i⟩
-  dependence := integerDependence
-
 noncomputable def index_val_intRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_val_int)
     (type_of% (realize integerSignature (fun _ _ a b => a = b) (fun e => nomatch e))) Unit Unit := {
@@ -325,24 +307,41 @@ noncomputable def index_val_intRegistration : Contract.Registration.{_,_,_,0,0,0
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-@[reducible] def index_add_oneArena : Arena where
-  signature := natSignature
-  Law R := ∀ (N : ℕ) (hN : 0 < N) (s : ℤ),
-    R.readout () () ((index N hN (s + 1)).val) (((index N hN s).val + 1) % N)
-theorem index_add_onePositive : index_add_oneArena.Law eqActual := @D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_add_one
-theorem index_add_oneNegative : ¬ index_add_oneArena.Law natRejected := by
-  intro h
-  exact h 1 (by norm_num) 0
+noncomputable def index_natRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_nat)
+    (type_of% (realize finEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_nat
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_natArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_natEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨index_natArena⟩, objectArena := .source ⟨index_natArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source index_natArena ⟨index_natEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize finEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles, definition := none,
+    coordinates := #[0], readouts := #[{
+      path := #["body", "body", "body", "fn", "fn"],
+      stateBinder := 0, functionOperand := true,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
 
-def index_add_oneEvidence : Registration index_add_oneArena
-    (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_add_one)) where
-  actual := eqActual
-  bridge := Iff.rfl
-  variation := ⟨index_add_onePositive, natRejected, index_add_oneNegative⟩
-  sensitivity := ⟨fun i => ⟨natRejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, index_add_oneNegative⟩,
-    fun i => nomatch i⟩
-  dependence := eqDependence
+#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_nat
+#print axioms index_natPositive
+#print axioms index_natNegative
+#print axioms index_natEvidence
+#print axioms index_natRegistration
+
 
 noncomputable def index_add_oneRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_add_one)
@@ -374,24 +373,41 @@ noncomputable def index_add_oneRegistration : Contract.Registration.{_,_,_,0,0,0
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-@[reducible] def index_sub_oneArena : Arena where
-  signature := natSignature
-  Law R := ∀ (N : ℕ) (hN : 0 < N) (s : ℤ),
-    R.readout () () ((index N hN (s - 1)).val) (((index N hN s).val + N - 1) % N)
-theorem index_sub_onePositive : index_sub_oneArena.Law eqActual := @D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_sub_one
-theorem index_sub_oneNegative : ¬ index_sub_oneArena.Law natRejected := by
-  intro h
-  exact h 1 (by norm_num) 0
+noncomputable def index_add_multipleRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_add_multiple)
+    (type_of% (realize finEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_add_multiple
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_add_multipleArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_add_multipleEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨index_add_multipleArena⟩, objectArena := .source ⟨index_add_multipleArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source index_add_multipleArena ⟨index_add_multipleEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize finEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles, definition := none,
+    coordinates := #[0], readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0, functionOperand := true,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
 
-def index_sub_oneEvidence : Registration index_sub_oneArena
-    (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_sub_one)) where
-  actual := eqActual
-  bridge := Iff.rfl
-  variation := ⟨index_sub_onePositive, natRejected, index_sub_oneNegative⟩
-  sensitivity := ⟨fun i => ⟨natRejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, index_sub_oneNegative⟩,
-    fun i => nomatch i⟩
-  dependence := eqDependence
+#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_add_multiple
+#print axioms index_add_multiplePositive
+#print axioms index_add_multipleNegative
+#print axioms index_add_multipleEvidence
+#print axioms index_add_multipleRegistration
+
 
 noncomputable def index_sub_oneRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.index_sub_one)
@@ -423,26 +439,6 @@ noncomputable def index_sub_oneRegistration : Contract.Registration.{_,_,_,0,0,0
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 
-@[reducible] def tensor_mulVec_orbitArena : Arena where
-  signature := rationalSignature
-  Law R := ∀ (A G : ℕ) (hA : 0 < A) (hG : 0 < G)
-    (z : Fin A × Fin G → ℚ) (a b s : ℤ),
-    R.readout () () ((kronecker (backward A) (forwardHalf G)).mulVec z (orbit A G hA hG a b s)) (edge G hG (b + s) * z (orbit A G hA hG a b (s - 1)))
-theorem tensor_mulVec_orbitPositive : tensor_mulVec_orbitArena.Law rationalActual := @D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.tensor_mulVec_orbit
-theorem tensor_mulVec_orbitNegative : ¬ tensor_mulVec_orbitArena.Law rationalRejected := by
-  intro h
-  exact h 1 1 (by norm_num) (by norm_num) (fun _ => 0) 0 0 0
-
-def tensor_mulVec_orbitEvidence : Registration tensor_mulVec_orbitArena
-    (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.tensor_mulVec_orbit)) where
-  actual := rationalActual
-  bridge := Iff.rfl
-  variation := ⟨tensor_mulVec_orbitPositive, rationalRejected, tensor_mulVec_orbitNegative⟩
-  sensitivity := ⟨fun i => ⟨rationalRejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, tensor_mulVec_orbitNegative⟩,
-    fun i => nomatch i⟩
-  dependence := rationalDependence
-
 noncomputable def tensor_mulVec_orbitRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.tensor_mulVec_orbit)
     (type_of% (realize rationalSignature (fun _ _ a b => a = b) (fun e => nomatch e))) Unit Unit := {
@@ -471,6 +467,42 @@ noncomputable def tensor_mulVec_orbitRegistration : Contract.Registration.{_,_,_
     { name := `maxSynthPendingDepth, value := .nat 3 },
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
+
+
+noncomputable def orbit_periodRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.orbit_period)
+    (type_of% (realize orbitEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.orbit_period
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.orbit_periodArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.orbit_periodEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨orbit_periodArena⟩, objectArena := .source ⟨orbit_periodArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source orbit_periodArena ⟨orbit_periodEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize orbitEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles, definition := none,
+    coordinates := #[0, 1], readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0, functionOperand := true,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.orbit_period
+#print axioms orbit_periodPositive
+#print axioms orbit_periodNegative
+#print axioms orbit_periodEvidence
+#print axioms orbit_periodRegistration
 
 
 @[reducible] def whole_tensor_excessArena : Arena where
@@ -523,25 +555,6 @@ noncomputable def whole_tensor_excessRegistration : Contract.Registration.{_,_,_
     { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-
-@[reducible] def jump_indexArena : Arena where
-  signature := integerSignature
-  Law R := ∀ (A B : ℕ) (hA : 0 < A) (s : ℤ),
-    R.readout () () (jump ((B : ℚ) / A) (index A hA s).val) (jump ((B : ℚ) / A) s)
-theorem jump_indexPositive : jump_indexArena.Law integerActual := @D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.jump_index
-theorem jump_indexNegative : ¬ jump_indexArena.Law integerRejected := by
-  intro h
-  exact h 1 0 (by norm_num) 0
-
-def jump_indexEvidence : Registration jump_indexArena
-    (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.jump_index)) where
-  actual := integerActual
-  bridge := Iff.rfl
-  variation := ⟨jump_indexPositive, integerRejected, jump_indexNegative⟩
-  sensitivity := ⟨fun i => ⟨integerRejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, jump_indexNegative⟩,
-    fun i => nomatch i⟩
-  dependence := integerDependence
 
 noncomputable def jump_indexRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.FloorSelectorCycles.jump_index)
