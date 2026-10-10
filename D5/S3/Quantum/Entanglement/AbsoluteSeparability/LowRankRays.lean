@@ -335,11 +335,12 @@ private lemma complement_psd {J : Type*} [Fintype J] [DecidableEq J] (v : J → 
     (1 - vecMulVec v (star v)).PosSemidef := by
   simpa [hv] using rank_one_upper v
 
-private lemma supported_bound {I J : Type*} [Fintype I] [Fintype J] [DecidableEq J]
+private lemma supported_bound {I J : Type*} [Fintype I] [Fintype J]
     (d : I → J → ℂ) (Q : Matrix J J ℂ) (hQ : Q.IsHermitian)
     (hQQ : Q * Q = Q) (hd : ∀ i, Q *ᵥ d i = d i) :
     (((∑ i, ∑ j, ‖d i j‖ ^ 2 : ℝ) : ℂ) • Q -
       ∑ i, vecMulVec (d i) (star (d i))).PosSemidef := by
+  classical
   have hs : ∀ i, star (d i) ᵥ* Q = star (d i) := by
     intro i
     rw [← hQ.eq, ← star_mulVec, hd i]
@@ -391,12 +392,13 @@ private lemma gram_upper_of_bound {I J : Type*} [Fintype I] [Fintype J] [Decidab
   rw [heq]
   exact Complex.zero_le_real.mpr (sub_nonneg.mpr (hb x))
 
-private lemma correction_psd {J : Type*} [Fintype J] [DecidableEq J]
+private lemma correction_psd {J : Type*}
     (V Q rho : Matrix J J ℂ) (l : ℝ)
     (hV : V.PosSemidef) (hQ : Q.PosSemidef) (hl : 1 / 2 ≤ l)
     (hK : (((1 - l : ℝ) : ℂ) • Q - rho).PosSemidef) :
     (Q - (2 : ℂ) • rho).PosSemidef ∧
     (V + Q - ((4 * l : ℝ) : ℂ) • rho).PosSemidef := by
+  classical
   have h1 : 0 ≤ 2 * l - 1 := by linarith
   have h4 : 0 ≤ 4 * l := by linarith
   have heq1 : Q - (2 : ℂ) • rho = ((2 * l - 1 : ℝ) : ℂ) • Q +
@@ -418,10 +420,11 @@ private lemma correction_psd {J : Type*} [Fintype J] [DecidableEq J]
     (hV.add (hQ.smul (Complex.zero_le_real.mpr (sq_nonneg (2 * l - 1))))).add
       (hK.smul (Complex.zero_le_real.mpr h4))⟩
 
-private lemma small_correction_psd {J : Type*} [Fintype J] [DecidableEq J]
+private lemma small_correction_psd {J : Type*} [DecidableEq J]
     (rho : Matrix J J ℂ) (l : ℝ) (hl : l ≤ 1 / 2)
     (hR : ((l : ℂ) • (1 : Matrix J J ℂ) - rho).PosSemidef) :
     (1 - (2 : ℂ) • rho).PosSemidef := by
+  classical
   have h1 : 0 ≤ 1 - 2 * l := by linarith
   have heq : (1 : Matrix J J ℂ) - (2 : ℂ) • rho =
       (2 : ℂ) • ((l : ℂ) • (1 : Matrix J J ℂ) - rho) +
@@ -458,7 +461,9 @@ theorem separableCone_one_add_two_rankOne {m n : ℕ} (ψ : Fin m × Fin n → �
   let rho := reduced ψ
   have hrho : rho = ∑ i, vecMulVec (fun j => ψ (i,j)) (star (fun j => ψ (i,j))) := by
     ext j l
-    simp [rho, reduced, vecMulVec_apply]
+    dsimp [rho, reduced]
+    rw [Matrix.sum_apply]
+    rfl
   by_cases hl : a ^ 2 ≤ 1 / 2
   · have hR : (((a ^ 2 : ℝ) : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ) - rho).PosSemidef := by
       rw [hrho]
@@ -499,7 +504,16 @@ theorem separableCone_one_add_two_rankOne {m n : ℕ} (ψ : Fin m × Fin n → �
       have h := residual_bound (fun i j => χ (i,j)) v hv hχrows
       have hn : (∑ i, ∑ j, ‖χ (i,j)‖ ^ 2) = 1 - a ^ 2 := by
         simpa only [Fintype.sum_prod_type] using hχnorm
-      simpa [hn, Q, V, ρ, reduced, Matrix.sum_apply, vecMulVec_apply] using h
+      have hsum : (∑ i, vecMulVec (fun j => χ (i,j)) (star (fun j => χ (i,j)))) =
+          reduced χ := by
+        ext j l
+        dsimp [reduced]
+        rw [Matrix.sum_apply]
+        rfl
+      change ((((1 - a ^ 2 : ℝ) : ℂ) •
+        (1 - vecMulVec v (star v)) - reduced χ).PosSemidef)
+      rw [← hsum, ← hn]
+      exact h
     obtain ⟨hcQ,hcU⟩ := correction_psd V Q ρ (a ^ 2) hV hQ hl' hK
     have hPsupport : ∀ j, P *ᵥ (fun i => χ (i,j)) = fun i => χ (i,j) := by
       intro j
