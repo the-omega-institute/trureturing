@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ae298d41003f048e648a3e17ac48657669146495719de36d895916e2e064ed17
+  normalized_sha256: sha256:ae298d41003f048e648a3e17ac48657669146495719de36d895916e2e064ed17
+cas_ref: sha256:ae298d41003f048e648a3e17ac48657669146495719de36d895916e2e064ed17
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Dyadic/WhiteboxThreeBatchPhase.result
+    target_statement_id: sha256:5a0f8d289704664f61d4686c8a6777b9ccb3ae495bbbd10bc09c32c3d76d3a77
+receipts:
+  unresolved_subitems: []

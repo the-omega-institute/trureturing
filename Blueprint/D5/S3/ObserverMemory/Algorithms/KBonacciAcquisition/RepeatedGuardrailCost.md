@@ -29,5 +29,5 @@ The selector receives the free initial value and the chronological archive of co
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/RepeatedGuardrailCost.original_repeated_guardrail_cost`
-- Dependency: [D5/S3/Observer/Budget/WorstCaseDepthInformationLowerBound](../../../Observer/Budget/WorstCaseDepthInformationLowerBound.md)
+- Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalCommonTailCompression](OriginalCommonTailCompression.md)
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalNarrowCost](OriginalNarrowCost.md)
