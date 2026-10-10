@@ -52,7 +52,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have nn : 0 ≤ pathCost γ := by
     apply tsum_nonneg
     intro d
-    exact div_nonneg (Int.cast_nonneg.mpr (hγ.2 d).1.1.1) (by positivity)
+    exact div_nonneg (by exact_mod_cast (hγ.2 d).1.1.1) (by positivity)
   change pathCost γ = -1 at hc
   linarith
 
@@ -124,6 +124,5 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   familyRecord := none
   options := #[]
 
-#print axioms proof_record
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.CarryGraph.CanonicalEmbedding

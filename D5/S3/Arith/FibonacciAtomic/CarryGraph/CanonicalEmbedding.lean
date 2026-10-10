@@ -7,7 +7,7 @@
    digest: Positive real laws embed with exact anchors, costs and floor layers. -/
 
 import D5.S3.Arith.FibonacciAtomic.CarryGraphEmbedding
-import Mathlib.Tactic
+import D5.S3.Arith.FibonacciAtomic.OptimalLawStrictSlope
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -41,6 +41,7 @@ noncomputable def canonicalAction {m : ℕ} (p : Fin m → ℝ) (k : Fin m) (d :
 noncomputable def canonicalPath {m : ℕ} (p : Fin m → ℝ) (k : Fin m) : Path :=
   ⟨canonicalState p k, canonicalAction p k⟩
 
+/-- Floor division makes every next digit zero or one. -/
 private theorem bit_bounds {m : ℕ} (p : Fin m → ℝ) (d : ℕ) (i : Fin m) :
     0 ≤ bit p d i ∧ bit p d i ≤ 1 := by
   have divs : pref p (d+1) i / 2 = pref p d i := by
@@ -52,11 +53,13 @@ private theorem bit_bounds {m : ℕ} (p : Fin m → ℝ) (d : ℕ) (i : Fin m) :
   dsimp only at *
   omega
 
-private theorem pref_min {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
+/-- A least real coordinate remains least after each floor observation. -/
+private theorem prefix_min {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hk : ∀ i, p k ≤ p i) (d : ℕ) (i : Fin m) : pref p d k ≤ pref p d i := by
   exact Int.floor_mono (mul_le_mul_of_nonneg_left (hk i) (by positivity))
 
-private theorem pref_lt_one {m : ℕ} (hm : 2 ≤ m) (p : Fin m → ℝ)
+/-- Every coordinate of a positive multi-label normalized law is below one. -/
+private theorem coordinate_lt_one {m : ℕ} (hm : 2 ≤ m) (p : Fin m → ℝ)
     (hp : ∀ i, 0 < p i) (hs : ∑ i, p i = 1) (i : Fin m) : p i < 1 := by
   classical
   have : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
@@ -65,20 +68,19 @@ private theorem pref_lt_one {m : ℕ} (hm : 2 ≤ m) (p : Fin m → ℝ)
   exact Finset.single_lt_sum hji (Finset.mem_univ i) (Finset.mem_univ j)
     (hp j) (fun k _ _ => (hp k).le)
 
-private theorem resid_bounds {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
+/-- The integer residual lies in the original state interval. -/
+private theorem residual_bounds {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hs : ∑ i, p i = 1) (d : ℕ) : 0 ≤ resid p d ∧ resid p d ≤ (m : ℤ)-1 := by
   have scaled : ∑ i, (2 : ℝ)^d * p i = (2 : ℝ)^d := by
     rw [← Finset.mul_sum, hs, mul_one]
-  have lo := Finset.sum_le_sum (s := Finset.univ)
-    (fun i _ => Int.floor_le ((2 : ℝ)^d * p i))
   have hi := Finset.sum_lt_sum_of_nonempty (s := Finset.univ) ⟨k, by simp⟩
     (fun i _ => Int.lt_floor_add_one ((2 : ℝ)^d * p i))
-  rw [scaled] at lo hi
+  rw [scaled] at hi
   simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
     Fintype.card_fin, nsmul_eq_mul, mul_one] at hi
   have lo' : (0 : ℝ) ≤ (resid p d : ℝ) := by
-    simp only [Int.cast_sub, Int.cast_pow, Int.cast_ofNat, Int.cast_sum]
-    linarith
+    simpa only [DyadicSupportLines.residual, Int.cast_sum, Int.cast_sub,
+      Int.cast_pow, Int.cast_ofNat] using (OptimalLawStrictSlope.law_data m p hs).1 d |>.1
   have hi' : (resid p d : ℝ) < (m : ℝ) := by
     simp only [Int.cast_sub, Int.cast_pow, Int.cast_ofNat, Int.cast_sum]
     linarith
@@ -86,6 +88,7 @@ private theorem resid_bounds {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
   have H : resid p d < m := by exact_mod_cast hi'
   exact ⟨L, by omega⟩
 
+/-- The equality group contains its anchor and at most all labels. -/
 private theorem count_bounds {m : ℕ} (p : Fin m → ℝ) (k : Fin m) (d : ℕ) :
     1 ≤ eqCount p k d ∧ eqCount p k d ≤ m := by
   classical
@@ -97,20 +100,22 @@ private theorem count_bounds {m : ℕ} (p : Fin m → ℝ) (k : Fin m) (d : ℕ)
     (g := fun _ => (1 : ℤ)) (by intro i _; split_ifs <;> norm_num)
   simpa [] using And.intro L H
 
+/-- The floor state satisfies both carry-state bounds. -/
 private theorem state_valid {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hs : ∑ i, p i = 1) (d : ℕ) : IsState m (canonicalState p k d) :=
-  ⟨(resid_bounds p k hs d).1, (resid_bounds p k hs d).2,
+  ⟨(residual_bounds p k hs d).1, (residual_bounds p k hs d).2,
     (count_bounds p k d).1, (count_bounds p k d).2⟩
 
+/-- At depth zero all prefixes vanish, giving the original root. -/
 private theorem root_eq {m : ℕ} (hm : 2 ≤ m) (p : Fin m → ℝ) (k : Fin m)
     (hp : ∀ i, 0 < p i) (hs : ∑ i, p i = 1) : canonicalState p k 0 = root m := by
   have N (i : Fin m) : ⌊p i⌋ = 0 := by
     apply Int.floor_eq_iff.mpr
     simp only [Int.cast_zero, zero_add]
-    exact ⟨(hp i).le, pref_lt_one hm p hp hs i⟩
+    exact ⟨(hp i).le, coordinate_lt_one hm p hp hs i⟩
   simp [canonicalState, N, root]
 
-
+/-- The equality indicator drops exactly when an equal label departs. -/
 private theorem indicator_step {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hk : ∀ i, p k ≤ p i) (d : ℕ) (i : Fin m) :
     (if pref p (d+1) i = pref p (d+1) k then (1 : ℤ) else 0) =
@@ -118,20 +123,22 @@ private theorem indicator_step {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
       (if bit p d k = 1 then 0 else ite (pref p d i = pref p d k) (bit p d i) 0) := by
   have B := bit_bounds p d i
   have K := bit_bounds p d k
-  have M := pref_min p k hk d i
-  have M' := pref_min p k hk (d+1) i
+  have M := prefix_min p k hk d i
+  have M' := prefix_min p k hk (d+1) i
   dsimp only at *
   split_ifs <;> omega
 
+/-- An anchor one forces every still-equal label to have digit one. -/
 private theorem equal_digit {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hk : ∀ i, p k ≤ p i) (d : ℕ) (i : Fin m)
     (hi : pref p d i = pref p d k) (hb : bit p d k = 1) : bit p d i = 1 := by
   have B := bit_bounds p d i
-  have M := pref_min p k hk (d+1) i
+  have M := prefix_min p k hk (d+1) i
   dsimp only at *
   omega
 
-private theorem eqCount_step {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
+/-- The same-law equality count decreases by the departure coordinate. -/
+private theorem equality_count_step {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hk : ∀ i, p k ≤ p i) (d : ℕ) :
     eqCount p k (d+1) = eqCount p k d - (canonicalAction p k d).h := by
   classical
@@ -142,6 +149,7 @@ private theorem eqCount_step {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
   · simp [canonicalAction, hb]
   · simp [canonicalAction, hb]
 
+/-- The complete next-digit column has the original action count. -/
 private theorem column_total {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hk : ∀ i, p k ≤ p i) (d : ℕ) :
     (∑ i, bit p d i) = ones (canonicalState p k d) (canonicalAction p k d) := by
@@ -165,20 +173,23 @@ private theorem column_total {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     · simp [hi]
   · simp [hb]
 
-private theorem resid_step {m : ℕ} (p : Fin m → ℝ) (d : ℕ) :
+/-- The floor residual satisfies the doubled-column recurrence. -/
+private theorem residual_step {m : ℕ} (p : Fin m → ℝ) (d : ℕ) :
     resid p (d+1) = 2*resid p d - ∑ i, bit p d i := by
   dsimp only
   rw [Finset.sum_sub_distrib, ← Finset.mul_sum, pow_succ]
   ring
 
+/-- Both coordinates advance through the original successor. -/
 private theorem canonical_successor {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hk : ∀ i, p k ≤ p i) (d : ℕ) :
     canonicalState p k (d+1) = successor (canonicalState p k d) (canonicalAction p k d) := by
   change State.mk _ _ = State.mk _ _
   congr 1
-  · exact (resid_step p d).trans (by rw [column_total p k hk d]; rfl)
-  · exact eqCount_step p k hk d
+  · exact (residual_step p d).trans (by rw [column_total p k hk d]; rfl)
+  · exact equality_count_step p k hk d
 
+/-- The canonical digits satisfy exactly one of the two action rows. -/
 private theorem action_rows {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hk : ∀ i, p k ≤ p i) (d : ℕ) :
     ((canonicalAction p k d).b = 1 ∧ (canonicalAction p k d).h = 0 ∧
@@ -208,7 +219,7 @@ private theorem action_rows {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     · exact (bit_bounds p d i).1
     · exact le_rfl
   have H1 := (count_bounds p k (d+1)).1
-  rw [eqCount_step p k hk d] at H1
+  rw [equality_count_step p k hk d] at H1
   have B := bit_bounds p d k
   by_cases hb : bit p d k = 1
   · exact Or.inl ⟨hb, by simp [canonicalAction, hb], C0, C1⟩
@@ -217,8 +228,10 @@ private theorem action_rows {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
       simpa only [canonicalAction, hb0, Int.zero_ne_one, ite_false] using H1
     have Hbound : equalOnes p k d ≤ eqCount p k d - 1 := by omega
     exact Or.inr ⟨hb0, by simpa [canonicalAction, hb0] using H0,
-      by simpa only [canonicalAction, canonicalState, hb0, Int.zero_ne_one, ite_false] using Hbound, C0, C1⟩
+      by simpa only [canonicalAction, canonicalState, hb0, Int.zero_ne_one, ite_false]
+        using Hbound, C0, C1⟩
 
+/-- The same-law action connects two legal carry states. -/
 private theorem canonical_legal {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
     (hs : ∑ i, p i = 1) (hk : ∀ i, p k ≤ p i) (d : ℕ) :
     Legal m (canonicalState p k d) (canonicalAction p k d) := by
@@ -226,12 +239,13 @@ private theorem canonical_legal {m : ℕ} (p : Fin m → ℝ) (k : Fin m)
   rw [← canonical_successor p k hk d]
   exact state_valid p k hs (d+1)
 
+/-- A least label supplies a legal canonical path from the root. -/
 private theorem canonical_root_path {m : ℕ} (hm : 2 ≤ m) (p : Fin m → ℝ) (k : Fin m)
     (hp : ∀ i, 0 < p i) (hs : ∑ i, p i = 1) (hk : ∀ i, p k ≤ p i) :
     IsRootPath m (canonicalPath p k) :=
   ⟨root_eq hm p k hp hs, fun d => ⟨canonical_legal p k hs hk d, canonical_successor p k hk d⟩⟩
 
-
+/-- For nonnegative coordinates the floor difference is the canonical binary digit. -/
 private theorem bit_eq_digits {m : ℕ} (p : Fin m → ℝ) (hp : ∀ i, 0 ≤ p i)
     (d : ℕ) (i : Fin m) : bit p d i = ((Real.digits (p i) 2 d).val : ℤ) := by
   have divs : pref p (d+1) i / 2 = pref p d i := by
@@ -251,11 +265,12 @@ private theorem bit_eq_digits {m : ℕ} (p : Fin m → ℝ) (hp : ∀ i, 0 ≤ p
   dsimp only at *
   omega
 
+/-- The anchor series is the original real coordinate. -/
 private theorem canonical_anchor {m : ℕ} (hm : 2 ≤ m) (p : Fin m → ℝ) (k : Fin m)
     (hp : ∀ i, 0 < p i) (hs : ∑ i, p i = 1) :
     anchorValue (canonicalPath p k) = p k := by
   rw [← Real.ofDigits_digits (b := 2) (by norm_num)
-    ⟨(hp k).le, pref_lt_one hm p hp hs k⟩]
+    ⟨(hp k).le, coordinate_lt_one hm p hp hs k⟩]
   unfold anchorValue Real.ofDigits
   apply tsum_congr
   intro d
@@ -263,6 +278,7 @@ private theorem canonical_anchor {m : ℕ} (hm : 2 ≤ m) (p : Fin m → ℝ) (k
   rw [bit_eq_digits p (fun i => (hp i).le)]
   simp [Real.ofDigitsTerm, div_eq_mul_inv]
 
+/-- The path residual series equals the original dyadic cost term by term. -/
 private theorem canonical_cost {m : ℕ} (p : Fin m → ℝ) (k : Fin m) :
     pathCost (canonicalPath p k) = DyadicSupportLines.cost p := by
   unfold pathCost DyadicSupportLines.cost
@@ -270,7 +286,6 @@ private theorem canonical_cost {m : ℕ} (p : Fin m → ℝ) (k : Fin m) :
   intro d
   congr 1
   simp [canonicalPath, canonicalState, DyadicSupportLines.residual]
-
 
 /-- Every carry state admits an action; the zero-residual boundary is absorbing,
 and singleton equality groups never lose their anchor. Every strictly positive
@@ -340,5 +355,4 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
   push_cast
   rfl
 
-#print axioms result
 end D5.S3.Arith.FibonacciAtomic.CarryGraph.CanonicalEmbedding
