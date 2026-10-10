@@ -146,29 +146,20 @@ require_cover_batch_arguments() {
     echo "usage: playbook-workflows.sh cover-batch ATOMS_FILE" >&2
     return 2
   fi
-  # Resolve every requested module before any report or coverage write.
-  LEAN_TARGETS="$(python3 - "$atoms_file" <<'PY'
-import pathlib, re, sys
-modules = set()
-for number, line in enumerate(pathlib.Path(sys.argv[1]).read_text(encoding='utf-8').splitlines(), 1):
-    fields = line.split('\t')
-    if len(fields) != 2 or not re.fullmatch(r'[a-z0-9-]+', fields[0]):
-        raise SystemExit(f'PLAYBOOK_INVALID line {number} must be ATOM_ID<TAB>DECL_GID')
-    gid = fields[1]
-    document, separator, declaration = gid.rpartition('.')
-    path = pathlib.Path(document + '.lean')
-    if (not separator or not re.fullmatch(r'D5/(?:[A-Za-z0-9_]+/)*[A-Za-z0-9_]+', document)
-            or not re.fullmatch(r'[A-Za-z0-9_]+', declaration) or not path.is_file()):
-        raise SystemExit(f'PLAYBOOK_INVALID GID does not resolve to a Lean module: {gid}')
-    modules.add(document.replace('/', '.'))
-if not modules:
-    raise SystemExit('PLAYBOOK_INVALID cover-batch scope is empty')
-print(' '.join(sorted(modules)))
-PY
-  )"
+  LEAN_TARGETS="$(run_cli cover-batch --lean-inputs --atoms "$atoms_file")"
+}
+
+prepare_cover_report() {
+  local selected
+  selected="$(run_cli cover-atom --lean-inputs --cover-atom "$ATOM_ID" --gid "$GID")"
+  if [[ "$COMMAND" != deposit || "$selected" != "${LEAN_TARGETS:-}" ]]; then
+    LEAN_TARGETS="$selected"
+    build_scoped_report
+  fi
 }
 
 build_scoped_report() {
+  [[ -n "$LEAN_TARGETS" ]] || { echo 'PLAYBOOK_INVALID cover report scope is empty' >&2; return 2; }
   REPORT=".lake/build/stratalint/delivery-lean-report.json"
   export STRATALINT_LEAN_REPORT="$ROOT/$REPORT"
   step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS" "LEAN_REPORT=$ROOT/$REPORT"
@@ -367,6 +358,7 @@ case "$COMMAND" in
   deposit)
     require_transaction_arguments
     deposit_module
+    prepare_cover_report
     cover_row || {
       status=$?
       printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=%s gid=%s reason=%s\n' \
@@ -386,8 +378,7 @@ case "$COMMAND" in
     ;;
   cover)
     require_transaction_arguments
-    LEAN_TARGETS="${DOCUMENT_GID//\//.}"
-    build_scoped_report
+    prepare_cover_report
     cover_row
     ;;
   cover-batch)

@@ -121,6 +121,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
                 "dotnet:ledger-frozen",
+                "dotnet:cover-atom --lean-inputs",
                 "dotnet:cover-atom",
             ],
             fixture.CallKinds());
@@ -151,6 +152,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:deposit-header-check",
                 "make:emit",
                 "dotnet:ledger-frozen",
+                "dotnet:cover-atom --lean-inputs",
                 "dotnet:cover-atom",
             ],
             fixture.CallKinds());
@@ -178,6 +180,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
                 "dotnet:ledger-frozen",
+                "dotnet:cover-atom --lean-inputs",
                 "dotnet:cover-atom",
             ],
             fixture.CallKinds());
@@ -205,7 +208,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var depositCase = script[depositStart..coverStart];
         Assert.Contains("\n    cover_row || {\n", depositCase, StringComparison.Ordinal);
         Assert.DoesNotContain("coverage_gids", script, StringComparison.Ordinal);
-        Assert.Single(Regex.Matches(script, @"run_cli\s+cover-atom\b").Cast<Match>());
+        Assert.Single(Regex.Matches(script, @"run_cli\s+cover-atom\s+--cover-atom\b").Cast<Match>());
     }
 
     [Fact]
@@ -303,6 +306,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before, fixture.CommitCount());
         Assert.Equal(
             [
+                "dotnet:cover-atom --lean-inputs",
                 "make:lean-report-scoped",
                 "dotnet:cover-atom",
             ],
@@ -327,7 +331,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             StringComparison.Ordinal);
         Assert.Equal(before, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal(["make:lean-report-scoped", "dotnet:cover-atom"], fixture.CallKinds());
+        Assert.Equal(["dotnet:cover-atom --lean-inputs", "make:lean-report-scoped", "dotnet:cover-atom"], fixture.CallKinds());
         Assert.NotEmpty(fixture.Status());
     }
 

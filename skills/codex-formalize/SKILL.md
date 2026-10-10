@@ -194,7 +194,7 @@ needed). Targets must be explicit and nonempty; the scope includes their named u
 compilation. Run `make emit PATHS=<NUL-separated selected Lean/Scribe paths>` to generate the
 canonical projections; it builds only the selected Scribe Lean inputs, their named utility inputs and imports. Never hand-write
 a mirror or placeholder. `deposit`/`deposit-uncovered`/`cover` derive their scope from the GID, and
-`cover-batch` from all batch GIDs. These local doors require no full report or full build. CI and
+`cover-batch` from all batch GIDs. Coverage also selects existing targets of those atoms and their transitive chain atoms, checking current identities before writing. These local doors require no full report or full build. CI and
 explicit whole-repository verification retain `make lean-report`, `make test` and `make gate`.
 
 Scoped deposit retains SL-031's compiled utility checks. A target's named utility references

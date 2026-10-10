@@ -6,6 +6,31 @@ public sealed class ScopedFormalizationWorkflowTests
 {
     [Theory]
     [InlineData("deposit")]
+    [InlineData("cover")]
+    [InlineData("cover-batch")]
+    public void CoverReportUsesSelectedCoverageInputsBeforeWriting(string command)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.AddSecondaryFormalization();
+        fixture.SelectCoverageInputs("D5.S0.Carrier.Probe D5.S3.Observer.WindowRegisterCRT");
+
+        var result = command == "cover-batch"
+            ? fixture.RunBatch(fixture.WriteBatchFile($"{AtomId}\t{Gid}\n"))
+            : fixture.Run(command);
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        var calls = fixture.Calls();
+        var query = Array.FindIndex(calls, call => call.Contains(" --lean-inputs ", StringComparison.Ordinal));
+        var build = Array.FindIndex(calls, call => call.StartsWith(
+            "make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.Probe D5.S3.Observer.WindowRegisterCRT LEAN_REPORT=", StringComparison.Ordinal));
+        var write = Array.FindLastIndex(calls, call => call.StartsWith("dotnet:cover-", StringComparison.Ordinal));
+        Assert.True(query >= 0 && build > query && write > build, string.Join('\n', calls));
+        Assert.DoesNotContain("make:lean-report", fixture.CallKinds());
+    }
+
+    [Theory]
+    [InlineData("deposit")]
     [InlineData("deposit-uncovered")]
     public void CrossClosureScribeEmissionPreservesTheFreezeReport(string command)
     {
@@ -52,7 +77,7 @@ public sealed class ScopedFormalizationWorkflowTests
         var result = fixture.RunBatch(fixture.WriteBatchFile(contents));
 
         Assert.NotEqual(0, result.ExitCode);
-        Assert.Empty(fixture.CallKinds());
+        Assert.Equal(["dotnet:cover-batch --lean-inputs"], fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
 

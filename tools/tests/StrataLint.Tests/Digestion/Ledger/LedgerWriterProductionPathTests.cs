@@ -107,7 +107,7 @@ public sealed partial class LedgerWriterProductionPathTests
             while [[ $# -gt 0 && $1 != -- ]]; do shift; done
             [[ $# -gt 0 ]] || exit 96
             shift
-            if [[ ${1:-} != cover-atom ]]; then
+            if [[ ${1:-} != cover-atom || ${2:-} == --lean-inputs ]]; then
               exec "$(dirname "$0")/dotnet-stub" "${original[@]}"
             fi
             printf 'dotnet:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
@@ -124,7 +124,7 @@ public sealed partial class LedgerWriterProductionPathTests
 
         Assert.Equal(
             [TransactionFixture.SecondaryGid, TransactionFixture.Gid],
-            fixture.Calls().Where(static call => call.StartsWith("dotnet:cover-atom ", StringComparison.Ordinal))
+            fixture.Calls().Where(static call => call.StartsWith("dotnet:cover-atom --cover-atom ", StringComparison.Ordinal))
                 .Select(static call => call.Split(' ')[4]));
         var atomPath = Assert.Single(TemporaryFileSystem.Directory.EnumerateFiles(
             Path.Combine(fixture.Root, BackfillInventoryLoader.RootPath),

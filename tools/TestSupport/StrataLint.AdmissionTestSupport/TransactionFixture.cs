@@ -211,10 +211,13 @@ internal sealed partial class TransactionFixture : IDisposable
             var prefix = call[..(call.IndexOf(':') + 1)];
             var command = call[prefix.Length..];
             var separator = command.IndexOf(' ');
-            return prefix + (separator < 0 ? command : command[..separator]);
+            return prefix + (separator < 0 ? command : command[..separator])
+                + (command.Contains(" --lean-inputs ", StringComparison.Ordinal) ? " --lean-inputs" : string.Empty);
         }).ToArray();
 
     internal string[] Calls() => File.Exists(callsPath) ? File.ReadAllLines(callsPath) : [];
+
+    internal void SelectCoverageInputs(string modules) => WriteFile(".cover-inputs", modules + "\n");
 
     internal void ClearCalls()
     {
@@ -347,6 +350,24 @@ internal sealed partial class TransactionFixture
         command=${args##* -- }
         printf 'dotnet:%s\n' "$command" >> "$PLAYBOOK_TEST_CALLS"
         read -r -a parts <<< "$command"
+        if [[ ${parts[1]:-} == --lean-inputs ]]; then
+          if [[ -f .cover-inputs ]]; then cat .cover-inputs; exit 0; fi
+          if [[ ${parts[0]} == cover-atom ]]; then
+            module=${parts[5]%.*}
+            [[ -f "$module.lean" ]] || exit 2
+            printf '%s\n' "${module//\//.}"
+          else
+            modules=()
+            while IFS=$'\t' read -r atom gid; do
+              module=${gid%.*}
+              [[ -n $atom && $gid == D5/*.* && -f "$module.lean" ]] || exit 2
+              modules+=("${module//\//.}")
+            done < "${parts[3]}"
+            [[ ${#modules[@]} -gt 0 ]] || exit 2
+            printf '%s\n' "${modules[@]}" | sort -u | paste -sd' ' -
+          fi
+          exit 0
+        fi
         case "${parts[0]:-}" in
           deposit-header-check)
             if [[ ${parts[1]:-} != --target \
