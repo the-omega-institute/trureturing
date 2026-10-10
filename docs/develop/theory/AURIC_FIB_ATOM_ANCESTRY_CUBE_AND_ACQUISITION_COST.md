@@ -785,3 +785,223 @@ $$
 **因此，真正内生的观察边界不能只保存一个漂亮的几何点或短公式。它还必须说明：这个点由哪些真实证据支持，哪些来源尚未被排除，以及下一次读取究竟能够排除哪一部分。**
 
 ## 追加锚（本行以下为增补区）
+
+## 13. 完整五叶同词域：精确缓存观察者的最小状态数为五
+
+Claim status: open.
+
+本章在同一个原始逐地址接口上讨论完整 $W_4$，而不是只讨论独立缺陷子族 $\mathcal C_4$。下面给出普通数学的匹配上下界：共同空缓存起点、完整有限控制器、精确有序原始缓存、每个实际来源上的有限正确停止，以及全部历史上的粗动作因子化同时保留时，最小完整状态数恰为五。本章及其证明仍属于本卷开放参考内容，不宣告 Lean 核验或冻结真值。
+
+### 13.1 来源、目标与完整观察者合同
+
+**定义 13.1（完整 $W_4$ 与原 Boolean 目标）。** 来源是非空有序满二叉树
+
+$$
+\mathbb T::=\alpha\mid\beta\mid\langle\mathbb T,\mathbb T\rangle,
+\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\quad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+
+令 $w$ 为从左到右的叶词，定义
+
+$$
+\begin{aligned}
+T_4&=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                   \langle\beta,\alpha\rangle\rangle=\rho^4\alpha,\\
+W_4&=\{U\in\mathbb T:w(U)=\beta\alpha\beta\beta\alpha\},\\
+\operatorname{Pos}(U)&\Longleftrightarrow
+            \exists S\in\mathbb T,\ U=\rho^3(S).
+\end{aligned}
+$$
+
+固定叶词时，叶标签已定，来源数只由全部有序括号决定。若 $c_m$ 是 $m$ 叶括号数，则 $c_1=1$、$c_m=\sum_{i=1}^{m-1}c_i c_{m-i}$，从而 $c_2=1,c_3=2,c_4=5,c_5=14$。因此这里确实包含全部十四棵同词树；它既不是两棵树的 $\mathcal C_4$，也不是所有叶数至多五的来源。
+
+**定义 13.2（原始地址、首次缓存与费用）。** 地址为任意有限 $L,R$ 字串，空串是根。$r_U(q)$ 在 $q$ 指向叶时返回其标签 $\alpha$ 或 $\beta$，在配对节点返回 $\mathrm{br}$，在不存在的地址返回 $\mathrm{abs}$。根、深地址和缺席地址均可直接查询，不要求此前查询祖先。
+
+缓存 $C$ 是地址无重复的有序列表 $[(q_1,y_1),\ldots,(q_k,y_k)]$，四值回复保持原样。查询命中时使用已经保存的原始回复，缓存不变，新增费用为零；未命中时才读同一不可变来源并在末尾追加 $(q,r_U(q))$，新增费用为一。记该追加规则为 $\operatorname{upd}(C,q,y)$。对时序历史 $h$，$\operatorname{paid}(h)$ 只去重其中实际请求的字面地址，费用为 $|\operatorname{paid}(h)|$。时序历史保留每次重复请求，但不是额外可读存储。不得删除、覆盖、推断缓存条目，亦无外部档案、控制时钟或来源相关初态。本章没有费用上限假设。
+
+**定义 13.3（完整有限控制器与全历史动作）。** 一个控制器 $M$ 给定非空有限载体 $E$、共同初态 $e_0$，以及全定义的
+
+$$
+\begin{aligned}
+a&:E\longrightarrow \operatorname{Address}\sqcup\{\mathrm{False},\mathrm{True}\},\\
+\delta&:E\times\{\alpha,\beta,\mathrm{br},\mathrm{abs}\}\longrightarrow E,\\
+D&:E\longrightarrow \operatorname{RawCache}.
+\end{aligned}
+$$
+
+地址动作表示查询，Boolean 动作表示停止。每个名义状态的 $D(e)$ 都必须地址无重复，且 $D(e_0)=[]$。在来源 $U$ 上，从 $e_0$ 出发的每个实际前缀，$D(e)$ 必须恰为此前真实回复的首次出现缓存：命中不变，未命中按 $\operatorname{upd}$ 追加；下一状态为 $\delta(e,y)$，其中 $y$ 是命中回复或真实来源回复。状态、其固定动作及解码缓存就是全部动态存储。对每个 $U\in W_4$，这条实际运行必须有限停止，返回 $b=\mathrm{True}$ 当且仅当 $\operatorname{Pos}(U)$。允许重复查询、循环和不同运行共享状态；不预先把控制器改成决策树。
+
+全历史条件另行定义，不能只在实际运行上检查。令
+
+$$
+\kappa(\alpha)=\alpha,\quad \kappa(\beta)=\beta,
+\quad \kappa(\mathrm{br})=\kappa(\mathrm{abs})=\star.
+$$
+
+$\kappa_{\mathrm{hist}}$ 逐条应用 $\kappa$，保留地址标签、顺序及重复。反事实步 $\bar\delta(e,y)$ 在查询行取 $\delta(e,y)$，在停止行取 $e$；$\operatorname{historyState}(h)$ 从 $e_0$ 折叠历史的回复分量，忽略所报告的地址标签，$\operatorname{historyAction}(h)=a(\operatorname{historyState}(h))$。要求
+
+$$
+\forall h,h'\in\operatorname{RawHistory},\quad
+\kappa_{\mathrm{hist}}(h)=\kappa_{\mathrm{hist}}(h')
+\ \Longrightarrow\
+\operatorname{historyAction}(h)=\operatorname{historyAction}(h').
+$$
+
+这里的量词包含不可能的回复、与当前查询不符的标签、重复历史及停止后的历史。实际缓存真值和精确追加只约束实际前缀；名义地址无重复和上述全历史条件则没有实际可达性豁免。粗化只限制动作，不把 $D$ 改成粗缓存。
+
+此普通合同对应固定修订 `6bedaa66dbcb3b2b02f0d3514ce81f1e5d94ee97` 中的 [`ActualFiniteObserverAbsentElimination`](https://github.com/the-omega-institute/trureturing/blob/6bedaa66dbcb3b2b02f0d3514ce81f1e5d94ee97/D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.lean) 的 `Observer`、`queryReply`、`cacheUpdate`、`Legal` 和 `historyAction`。原生地址以 `false/true` 编码 $L/R$，叶以 `true/false` 编码 $\alpha/\beta$，两者不可混用。其 `Admissible(N,M)` 的合法性和正确性域是所有叶数至多 $N$ 的来源；本章仅把这两项量词明确限制到 $W_4$，保留其他执行和全历史合同。因此本章的达到构造不宣称满足更大域的 `Admissible(5,M)`。
+
+### 13.2 第三次替换像在完整域中只有一个正例
+
+**引理 13.4（唯一正例）。** 对每个 $U\in W_4$，
+
+$$
+\operatorname{Pos}(U)\Longleftrightarrow U=T_4.
+$$
+
+**证明。** 直接展开有
+
+$$
+\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\qquad
+\rho^3(\beta)=T_4,
+$$
+
+分别含三叶、五叶。替换保持原有配对结构，故原树每片叶的第三次像作为一个子树保留，叶数相加。任何至少两叶的前像在第三次替换后至少有六叶。五叶正例的前像只能是单叶 $\beta$，其像恰是 $T_4$；反向由该展开成立。证毕。
+
+这里的字面树判定与 Boolean 成员判定等价，是这个五叶完整域的特定结论；不把完整 $W_n$ 的成员判定普遍改读为准确 $\nu$、$Q$ 或原树恢复。
+
+### 13.3 五个完整名义状态达到
+
+**命题 13.5（完整五行构造）。** 满足定义 13.1–13.3 的五状态控制器如下。表中 $D$ 是原始有序缓存，末四列是全部名义回复的 $\delta$，不是仅列可发生的回复。
+
+| 状态 | $D(e)$ | 动作 $a(e)$ | $\alpha$ | $\beta$ | $\mathrm{br}$ | $\mathrm{abs}$ |
+|---|---|---|---|---|---|---|
+| $e_0$ | $[]$ | 查询 $R$ | $n_1$ | $n_1$ | $p_1$ | $p_1$ |
+| $n_1$ | $[(R,\alpha)]$ | 停止 False | $n_1$ | $n_1$ | $n_1$ | $n_1$ |
+| $p_1$ | $[(R,\mathrm{br})]$ | 查询 $LLL$ | $n_2$ | $p_2$ | $n_2$ | $n_2$ |
+| $n_2$ | $[(R,\mathrm{br}),(LLL,\mathrm{abs})]$ | 停止 False | $n_2$ | $n_2$ | $n_2$ | $n_2$ |
+| $p_2$ | $[(R,\mathrm{br}),(LLL,\beta)]$ | 停止 True | $p_2$ | $p_2$ | $p_2$ | $p_2$ |
+
+共同初态为 $e_0$。五行都保留，全部停止行吸收每个回复。
+
+**证明：实际合法性与有限正确性。** 每个来源都是五叶配对树。若 $R$ 为叶，其标签只能是叶词最后的 $\alpha$；该运行到 $n_1$ 停止。这样的来源有五棵，其左子树是前四片叶的任意括号，都不是 $T_4$。
+
+若 $R$ 为分支，右子树至少占两叶，左子树至多占三叶。此时 $LLL$ 若存在，表示左子树的左左孩子，迫使左子树至少三叶。五叶总数于是迫使左、右子树分别恰有三叶和两叶。三叶左子树中存在左左孩子的括号只能是 $\langle\langle\beta,\alpha\rangle,\beta\rangle$，而两叶右子树只能是 $\langle\beta,\alpha\rangle$；因此来源恰为 $T_4$，且 $LLL$ 回复 $\beta$。其余 $R$ 为分支的来源，$LLL$ 都回复 $\mathrm{abs}$。
+
+于是十四棵实际来源分为三个完整运行形式：
+
+| 来源数 | 实际时序历史 | 终态 | Boolean |
+|---:|---|---|---|
+| 5 | $[(R,\alpha)]$ | $n_1$ | False |
+| 8 | $[(R,\mathrm{br}),(LLL,\mathrm{abs})]$ | $n_2$ | False |
+| 1 | $[(R,\mathrm{br}),(LLL,\beta)]$ | $p_2$ | True |
+
+每个实际查询都是未命中的字面地址；实际回复被逐项、原样、按首次出现顺序追加，表中的后继解码缓存恰为该追加结果。初态缓存为空，全部名义缓存地址无重复，停止状态保留已得缓存。每条运行至多两次查询便停止，结合引理 13.4 得到全部 $W_4$ 上的正确性。五个名义状态均由实际前缀实现。此构造的实际费用为一或二；这里只陈述其费用，不另宣称费用最优。
+
+**证明：全部历史上的粗动作因子化。** 在每一行，包括三个停止行，$\mathrm{br}$ 和 $\mathrm{abs}$ 都转向同一状态。若 $\kappa(y)=\kappa(y')$，则 $y=y'$ 或二者是 $\mathrm{br},\mathrm{abs}$，故
+
+$$
+\bar\delta(e,y)=\bar\delta(e,y')\qquad\text{对全部名义 }e\text{ 成立}.
+$$
+
+对任意两条粗化相同的有限历史作长度归纳：起点都是 $e_0$，同一位置的回复粗化相同，因此逐步得到相同状态，最后动作也相同。该证明涵盖不可能历史、任意标签和停止后历史，不以实际可达性代替全量词。
+
+例如 $e_0$ 上不可能的 $\beta$ 仍指定到 $n_1$，不可能的 $\mathrm{abs}$ 仍指定到 $p_1$；它们的后继解码无需成为该反事实历史的真实缓存，但每个解码仍须地址无重复，相关动作仍须满足全历史粗条件。$p_1$ 的四个名义口也同样完整。实际 $\mathrm{br}$ 和 $\mathrm{abs}$ 的原始区别继续留在 $D$ 中，未被上述动作证明抹去。证毕。
+
+### 13.4 任意单个地址都给正例留下真实负例
+
+**引理 13.6（全地址原始回复孪生）。** 对每个 $q\in\{L,R\}^{*}$，存在真实来源 $X_q\in W_4$ 满足
+
+$$
+\neg\operatorname{Pos}(X_q),\qquad r_{X_q}(q)=r_{T_4}(q).
+$$
+
+**证明。** 取以下三棵同叶词负例：
+
+$$
+\begin{aligned}
+U&=\langle\langle\beta,\langle\alpha,\beta\rangle\rangle,
+                  \langle\beta,\alpha\rangle\rangle,\\
+V&=\langle\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,\beta\rangle,
+                  \alpha\rangle,\\
+Z&=\langle\langle\langle\beta,\alpha\rangle,\langle\beta,\beta\rangle\rangle,
+                  \alpha\rangle.
+\end{aligned}
+$$
+
+它们全部具有叶词 $\beta\alpha\beta\beta\alpha$。$U$ 含有左孩子为单叶 $\alpha$ 的配对节点，由 §2 的一次像障碍得 $U\notin\rho[\mathbb T]$。$V,Z$ 的根都是左孩子为分支、右孩子为 $\alpha$ 的配对。这也不属于一次像：替换所新生的右 $\alpha$ 只能来自 $\beta\mapsto\langle\beta,\alpha\rangle$，其左孩子必为单叶 $\beta$；原有配对的右孩子则是整棵子树的 $\rho$ 像，不可能成为单叶 $\alpha$。三者均非一次像，因而均非第三次像。
+
+$T_4$ 与 $U$ 只在左侧三叶括号不同。它们的完整原始回复差异支持恰为
+
+$$
+S=\{LL,LR,LLL,LLR,LRL,LRR\}.
+$$
+
+这是 §7 的六地址支持在 $p=L$ 的已有实例，不是重新发现独立支持下界。六处取值及可用孪生如下：
+
+| 地址 $q$ | $r_{T_4}(q)$ | $r_U(q)$ | 可用负例 | 该负例的 $q$ 回复 |
+|---|---|---|---|---|
+| $LL$ | $\mathrm{br}$ | $\beta$ | $V$ | $\mathrm{br}$ |
+| $LR$ | $\beta$ | $\mathrm{br}$ | $V$ | $\beta$ |
+| $LLL$ | $\beta$ | $\mathrm{abs}$ | $Z$ | $\beta$ |
+| $LLR$ | $\alpha$ | $\mathrm{abs}$ | $Z$ | $\alpha$ |
+| $LRL$ | $\mathrm{abs}$ | $\alpha$ | $V$ | $\mathrm{abs}$ |
+| $LRR$ | $\mathrm{abs}$ | $\beta$ | $V$ | $\mathrm{abs}$ |
+
+对 $q\notin S$ 直接取 $X_q=U$。精确支持覆盖无限地址域：根和 $L$ 都是分支；右子树及其全部地址相同；左三叶块在表中六处以外的后代均缺席。因此任意更深地址、任意其他缺席地址也已覆盖，不是由一个有限深度枚举猜测全地址结论。证毕。
+
+### 13.5 两次实际回复分裂迫使五个完整状态
+
+**定理 13.7（完整 $W_4$ 的精确最小状态数）。** 对每个有限载体 $E$ 上满足定义 13.1–13.3 的控制器 $M$，都有 $|E|\ge5$；命题 13.5 的控制器达到等号。因此
+
+$$
+\boxed{\min\{|E|:M\text{ 满足完整 }W_4\text{ 合同}\}=5.}
+$$
+
+**证明：第一处分裂。** 同时考虑同一控制器从共同 $e_0$ 在全部十四棵来源上的实际运行。在 $T_4$ 停止以前，必有第一次查询，其原始回复在 $W_4$ 上不恒定；否则全部来源每一步都返回同一回复，确定性转移给出同一状态和动作，它们将与 $T_4$ 一同停止并返回 True，违反真实负例上的正确性。
+
+设此前共同实际缓存为 $C$，该首次分裂地址为 $q$，$T_4$ 回复为 $y$。由于此前每一回复都在全部来源上相同，它们确实达到相同当前状态及同一个精确缓存。$q$ 必是未命中：共同缓存命中只能返回共同的已存回复，不能分裂。另取一个实际来源在 $q$ 回复 $z\ne y$。两个直接后继状态 $s_y,s_z$ 分别解码为
+
+$$
+C\mathbin{+\!+}[(q,y)],\qquad C\mathbin{+\!+}[(q,z)].
+$$
+
+二者不同，长度都为 $|C|+1$，故 $s_y\ne s_z$。
+
+**证明：第二处分裂。** 引理 13.6 供应负例 $X_q$，它在此地址恰有 $T_4$ 的回复 $y$。此前回复在整个 $W_4$ 上恒定，故它从共同初态逐步重放到相同查询，并与 $T_4$ 一起到达 $s_y$ 和同一缓存。两者所需 Boolean 不同。沿 $T_4$ 的有限停止运行，此后必有第一次二者回复不同的查询；否则二者持续同态、同动作，并同停输出 True。
+
+设该第二处分裂以前共同缓存为 $D$，查询地址为 $r$。它也只能是未命中。首次分裂条目 $(q,y)$ 从未被删除或覆盖，故 $|D|\ge|C|+1$。二者在 $r$ 的不同真实回复产生两个直接后继状态 $t_+,t_-$，其解码分别为
+
+$$
+D\mathbin{+\!+}[(r,r_{T_4}(r))],\qquad
+D\mathbin{+\!+}[(r,r_{X_q}(r))].
+$$
+
+这两个缓存不同，长度均为 $|D|+1\ge|C|+2$。所以 $t_+,t_-$ 互异，并且都不同于长度为 $|C|+1$ 的 $s_y,s_z$。四个状态的缓存均非空，故都不同于空缓存的 $e_0$。功能性的精确解码器 $D:E\to\operatorname{RawCache}$ 不可能把不同缓存赋给同一状态，于是得到五个两两不同的实际状态。
+
+该论证对所有许可控制器量化，不限制首个地址、查询深度、跨深度复用、循环、重复读取、分支共享或总费用。重复读取只会延长共同段，不能制造缓存命中的回复分裂；额外首次读取只会增加缓存长度，不能让后继缓存倒退。有限正确停止保证两处分裂存在，精确有序缓存保证上述状态不可合并。下界甚至不使用全历史粗动作条件，而五行上界同时满足它，故增加该条件仍给同一个精确最小值。证毕。
+
+### 13.6 相同 False、不同缓存，以及三状态结果的正确归属
+
+五行构造中的 $n_1,n_2$ 都停止并返回 False，但分别保存 $[(R,\alpha)]$ 和 $[(R,\mathrm{br}),(LLL,\mathrm{abs})]$。若把它们合成一个 False 状态，就没有一个来源无关的解码器能同时给出两个实际精确缓存。输出字母表只有两种，并不使完整控制器只有两种终态；状态承担输出之外的真实证据保管。
+
+§3 的 $P_4=\{L\}$ 给出 $\mathcal C_4=\{T_4,U\}$。供应的未发表受限缺陷族材料在此受限域给出并达到最小状态数三：查询 $LL$，实际 $\mathrm{br}$ 接受、实际 $\beta$ 拒绝，分别保留空缓存和这两个不同的单条原始缓存；全部名义回复和全历史粗动作亦有完整定义。其更一般的 $2|P_n|+1$ 受限达到及完整域前缀下界不在本章重新证明。
+
+同一未发表受限缺陷族材料给出的完整域警示由本章负例 $V$ 直接体现：$T_4$ 与 $V$ 在 $LL$ 都回复 $\mathrm{br}$，产生相同单条缓存，但 $V$ 必须拒绝。三状态扫描器在自己的 $\mathcal C_4$ 合同内仍然正确；扩大到 $W_4$ 就误接受 $V$。定理 13.7 进一步说明，任何其他三状态或四状态控制器也不能在完整 $W_4$ 合同下成功。这里改变的是来源域与匹配最小值，不撤销受限结果，也不把“全部已构造缺陷支持已命中”升级为完整域上的充分证书。
+
+### 13.7 来源、成熟方法与结论边界
+
+本章复用的供应材料是未发表的普通数学材料，未附可核对的作者署名或出版信息。完整五叶域的构造与下界材料提供 §13.3 的五行控制器、§13.4 的三棵全地址孪生负例及 §13.5 的两次分裂下界；完整五叶域的来源与执行材料提供十四来源、唯一正例、§13.3 的 $5+8+1$ 实际运行分组，以及精确原始缓存、全部名义回复和全历史动作的论证。受限缺陷族材料提供 §13.6 的三状态达到、更一般的 $2|P_n|+1$ 受限达到与完整域前缀下界，以及扩大来源域后的反例。来源域与执行合同材料提供受限族与完整域的区分、§13.1 的固定原生合同对应和更大的 `Admissible` 域限制。本章自足陈述所用论证；这些供应材料的数学贡献在此保留归属，不作为本章的重新发现。独立三叶支持和已有取得下界归于本卷所引[《联合矩纤维》固定源 §§52–55](https://github.com/the-omega-institute/trureturing/blob/1609ebb0100696981666e4548a39ebb295380db8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md)。
+
+有限自动机的状态区分有成熟原始文献：E. F. Moore，*Gedanken-experiments on sequential machines*，载 Shannon 与 McCarthy 编 *Automata Studies*，Annals of Mathematics Studies 34，Princeton University Press，1956，129–153；A. Nerode，[*Linear automaton transformations*](https://doi.org/10.1090/S0002-9939-1958-0135681-9)，*Proceedings of the American Mathematical Society* 9，1958，541–544。这些工作提供由可观察行为区分状态的经典方法背景。本章额外固定每个完整状态必须解码已取得的原始缓存，所以即使未来 Boolean 行为相同，缓存不同也已足以区分状态；不把经典语言识别最小化定理直接当作此缓存合同的五状态数值结论。
+
+证书与查询的区别沿用 H. Buhrman 与 R. de Wolf，[*Complexity measures and decision tree complexity: a survey*](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf)，*Theoretical Computer Science* 288，2002，21–43。确定性重放、保留证据的不可合并性、对有限历史的归纳与由不同解码值得到状态注入，都是成熟方法。精确数值五是这些方法在本仓明确来源与缓存合同中的推导，不作全球新颖性声明，也不以有界决策树计数或策略搜索替代对全部有限控制器的下界证明。
+
+结论限定于这个完整固定叶词 $W_4$ 的 Boolean $\operatorname{Pos}$ 任务和完整名义载体。一般 $W_n$ 的匹配上界与最优状态数、全域准确 $\nu/Q$ 的消费者、所有叶词的有界来源域、费用最优性，以及到物理内存、位数、编码字长、时间或实际装置的运输，均没有由本章取得。代码定义的对应只是合同定位；本文没有 Lean 证明、编译或公理闭包核验。本卷总体 `Claim status: open` 继续覆盖本章。
+
+## 追加锚（本行以下为增补区）
