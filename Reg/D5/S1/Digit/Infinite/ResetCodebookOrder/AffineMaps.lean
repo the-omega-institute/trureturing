@@ -81,17 +81,17 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x => 236067/1000000 < x) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x y => x < y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := 236067/1000000 < g ∧ g < 236068/1000000
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () () g ∧ g < 236068/1000000
+  Law R := R.readout () () (236067/1000000) g ∧ g < 236068/1000000
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   exact hh.1
@@ -108,13 +108,13 @@ def registration : Registration arena sourceStatement where
     · intro e; exact nomatch e
   dependence := by
     intro i
-    refine ⟨(),(1 : ℝ),(0 : ℝ),?_⟩
+    refine ⟨(),(0 : ℝ),(1 : ℝ),?_⟩
     intro he
-    have hb := Eq.mp he (show actual.readout i () 1 from by norm_num [actual,realize])
-    norm_num [actual,realize] at hb
+    have bad : (1 : ℝ) < 1 := Eq.mp (congrFun he 1) (by change (0 : ℝ) < 1; norm_num)
+    exact (lt_irrefl (1 : ℝ)) bad
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.g_tight)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x => 236067/1000000 < x) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x y => x < y) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.g_tight.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookOrder.GTight.registration,
   realizationSource := none, generated := false,
@@ -123,13 +123,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x => 236067/1000000 < x) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x y => x < y) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookOrder, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["fn", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+      path := #["fn", "arg", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },

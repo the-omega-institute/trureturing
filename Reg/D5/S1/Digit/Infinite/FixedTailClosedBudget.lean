@@ -178,22 +178,22 @@ end Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.prefix_scalar
 
 namespace Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.path_append
 abbrev signature : Signature where
-  Params := Σ _ : Bool, Σ _ : List Label, List Label
+  Params := Unit
   State _ := Bool
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := List Label → Bool → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ p s => SourcePath p.1 (p.2.1 ++ p.2.2) s) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ s w t => SourcePath s w t) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ {s s' s'' : Bool} {u v : List Label}, SourcePath s u s' → SourcePath s' v s'' → SourcePath s (u ++ v) s''
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {s s' s'' : Bool} {u v : List Label}, SourcePath s u s' → SourcePath s' v s'' → R.readout () ⟨s,u,v⟩ s''
+  Law R := ∀ {s s' s'' : Bool} {u v : List Label}, SourcePath s u s' → SourcePath s' v s'' → R.readout () () s (u ++ v) s''
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   exact hh (SourcePath.nil false) (SourcePath.nil false)
@@ -205,13 +205,14 @@ def registration : Registration arena sourceStatement where
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨⟨false,[],[]⟩,false,true,?_⟩
+    refine ⟨(),false,true,?_⟩
     intro he
-    have hp : SourcePath false [] true := Eq.mp he (SourcePath.nil false)
+    have hp : SourcePath true [] false :=
+      Eq.mp (congrFun (congrFun he []) false) (SourcePath.nil false)
     cases hp
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.FixedTailClosedBudget.path_append)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ p s => SourcePath p.1 (p.2.1 ++ p.2.2) s) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ s w t => SourcePath s w t) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.FixedTailClosedBudget.path_append.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.path_append.registration,
   realizationSource := none, generated := false,
@@ -220,13 +221,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ p s => SourcePath p.1 (p.2.1 ++ p.2.2) s) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ s w t => SourcePath s w t) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[0, 3, 4],
+    owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body"], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.path_append

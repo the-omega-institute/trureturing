@@ -74,17 +74,17 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ z => 0 ≤ z) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ (w : ℤ → Bool) (i : ℤ), 0 ≤ stateRec w i ∧ stateRec w i ≤ h false
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (w : ℤ → Bool) (i : ℤ), R.readout () () (stateRec w i) ∧ stateRec w i ≤ h false
+  Law R := ∀ (w : ℤ → Bool) (i : ℤ), R.readout () () 0 (stateRec w i) ∧ stateRec w i ≤ h false
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   exact (hh (fun _ => false) 0).1
@@ -96,12 +96,13 @@ def registration : Registration arena sourceStatement where
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨(),(0 : ℝ),(-1 : ℝ),?_⟩
-    change (0 ≤ (0 : ℝ)) ≠ (0 ≤ (-1 : ℝ))
-    simp
+    refine ⟨(),(0 : ℝ),(1 : ℝ),?_⟩
+    intro he
+    have bad : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he 0) le_rfl
+    norm_num at bad
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.stateRec_interval)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ z => 0 ≤ z) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.stateRec_interval.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookIndexed.stateRec_interval.registration,
   realizationSource := none, generated := false,
@@ -110,12 +111,12 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ _ z => 0 ≤ z) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "fn", "arg", "fn"], stateBinder := 0,
+      path := #["body", "body", "fn", "arg", "fn", "fn"], stateBinder := 0,
       functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
@@ -233,22 +234,22 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookIndexed.past_eq_pastRec
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookIndexed.state_eq_stateRec
 abbrev signature : Signature where
-  Params := Σ _ : (ℤ → Bool), ℤ
+  Params := Unit
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ p z => Statement.state p.1 p.2 = z) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x y => x = y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ (w : ℤ → Bool) (i : ℤ), Statement.state w i = stateRec w i
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (w : ℤ → Bool) (i : ℤ), R.readout () ⟨w,i⟩ (stateRec w i)
+  Law R := ∀ (w : ℤ → Bool) (i : ℤ), R.readout () () (Statement.state w i) (stateRec w i)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   exact hh (fun _ => false) 0
@@ -260,13 +261,13 @@ def registration : Registration arena sourceStatement where
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨⟨(fun _ => false),0⟩,Statement.state (fun _ => false) 0,
-      Statement.state (fun _ => false) 0+1,?_⟩
-    change (_ = _) ≠ (_ = _)
-    simp
+    refine ⟨(),(0 : ℝ),(1 : ℝ),?_⟩
+    intro he
+    have bad : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
+    norm_num at bad
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.Coding.state_eq_stateRec)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ p z => Statement.state p.1 p.2 = z) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x y => x = y) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.Coding.state_eq_stateRec.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookIndexed.state_eq_stateRec.registration,
   realizationSource := none, generated := false,
@@ -275,13 +276,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ p z => Statement.state p.1 p.2 = z) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x y => x = y) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[0, 1],
+    owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body"], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+      path := #["body", "body", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.ResetCodebookIndexed.state_eq_stateRec
@@ -343,22 +344,22 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookIndexed.letters_end_false
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookIndexed.aux_mem_XMinus
 abbrev signature : Signature where
-  Params := Σ _ : ℕ, Σ _ : ℕ, ℝ
-  State _ := ℤ → Bool
+  Params := Unit
+  State _ := Set (ℤ → Bool)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := (ℤ → Bool) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ p w => w ∈ XMinus p.1 p.2.1 p.2.2) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ s w => w ∈ s) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ (K n : ℕ) (tau eps : ℝ) (w : ℤ → Bool), Statement.cap K w → (∀ i, Statement.high K w i → tau + eps ≤ stateRec w i) → 0 < eps → h false*rho^n < eps → w ∈ XMinus K n tau
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (K n : ℕ) (tau eps : ℝ) (w : ℤ → Bool), Statement.cap K w → (∀ i, Statement.high K w i → tau + eps ≤ stateRec w i) → 0 < eps → h false*rho^n < eps → R.readout () ⟨K,n,tau⟩ w
+  Law R := ∀ (K n : ℕ) (tau eps : ℝ) (w : ℤ → Bool), Statement.cap K w → (∀ i, Statement.high K w i → tau + eps ≤ stateRec w i) → 0 < eps → h false*rho^n < eps → R.readout () () (XMinus K n tau) w
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   apply hh 2 0 0 (h false+1) (fun _ => false)
@@ -378,21 +379,14 @@ def registration : Registration arena sourceStatement where
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨⟨2,0,0⟩,(fun _ => false),(fun _ => true),?_⟩
+    refine ⟨(),Set.univ,∅,?_⟩
     intro he
-    have hf : (fun _ : ℤ => false) ∈ XMinus 2 0 0 := by
-      constructor
-      · intro j hj
-        have := hj 0 (by omega)
-        simp at this
-      · intro j hj
-        have := hj 0 (by omega)
-        simp at this
-    have ht : (fun _ : ℤ => true) ∈ XMinus 2 0 0 := Eq.mp he hf
-    exact ht.1 0 (by intro j hj; rfl)
+    have bad : (fun _ : ℤ => false) ∈ (∅ : Set (ℤ → Bool)) :=
+      Eq.mp (congrFun he (fun _ => false)) (Set.mem_univ _)
+    exact bad
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.Coding.aux_mem_XMinus)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ p w => w ∈ XMinus p.1 p.2.1 p.2.2) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ s w => w ∈ s) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.Coding.aux_mem_XMinus.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookIndexed.aux_mem_XMinus.registration,
   realizationSource := none, generated := false,
@@ -401,13 +395,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ p w => w ∈ XMinus p.1 p.2.1 p.2.2) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ s w => w ∈ s) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[0, 1, 2],
+    owner := `D5.S1.Digit.Infinite.ResetCodebookIndexed, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body"], stateBinder := 4,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.ResetCodebookIndexed.aux_mem_XMinus

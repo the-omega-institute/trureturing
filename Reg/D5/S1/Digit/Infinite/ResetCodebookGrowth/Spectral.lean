@@ -134,22 +134,22 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookGrowth.Spectral.radius_sq
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookGrowth.Spectral.row_lower_radius
 abbrev signature : Signature where
-  Params := ℝ
+  Params := Unit
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ r x => r ≤ x) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι] [Nonempty ι] (A : Matrix ι ι ℝ), (∀ i j, 0 ≤ A i j) → ∀ r : ℝ, 0 ≤ r → (∀ i, r ≤ ∑ j, A i j) → r ≤ radius A
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι] [Nonempty ι] (A : Matrix ι ι ℝ), (∀ i j, 0 ≤ A i j) → ∀ r : ℝ, 0 ≤ r → (∀ i, r ≤ ∑ j, A i j) → R.readout () r (radius A)
+  Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι] [Nonempty ι] (A : Matrix ι ι ℝ), (∀ i j, 0 ≤ A i j) → ∀ r : ℝ, 0 ≤ r → (∀ i, r ≤ ∑ j, A i j) → R.readout () () r (radius A)
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro hh
   exact hh (ι := ULift.{u} Unit) 0 (by simp) 0 le_rfl (by simp)
@@ -161,12 +161,13 @@ def registration : Registration arena.{u} sourceStatement.{u} where
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨0,(0 : ℝ),(-1 : ℝ),?_⟩
-    change (0 ≤ (0 : ℝ)) ≠ (0 ≤ (-1 : ℝ))
-    simp
+    refine ⟨(),(0 : ℝ),(1 : ℝ),?_⟩
+    intro he
+    have bad : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he 0) le_rfl
+    norm_num at bad
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.Spectral.row_lower_radius.{u})
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ r x => r ≤ x) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.Spectral.row_lower_radius.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookGrowth.Spectral.row_lower_radius.registration,
   realizationSource := none, generated := false,
@@ -175,13 +176,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨registration.{u}⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ r x => r ≤ x) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S1.Digit.Infinite.ResetCodebookGrowth, definition := none, coordinates := #[6],
+    owner := `D5.S1.Digit.Infinite.ResetCodebookGrowth, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body"], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.ResetCodebookGrowth.Spectral.row_lower_radius

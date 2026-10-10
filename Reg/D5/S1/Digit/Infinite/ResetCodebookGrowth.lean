@@ -88,7 +88,7 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x => lambda-x) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ (x : ℝ) => lambda-x) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 def sourceStatement : Prop := 0 < lambda-rho
@@ -117,7 +117,7 @@ def registration : Registration arena sourceStatement where
     linarith
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.auto_positive)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x => lambda-x) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ (x : ℝ) => lambda-x) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.auto_positive.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookGrowth.AutoPositive.registration,
   realizationSource := none, generated := false,
@@ -126,7 +126,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x => lambda-x) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ (x : ℝ) => lambda-x) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookGrowth, definition := none, coordinates := #[],

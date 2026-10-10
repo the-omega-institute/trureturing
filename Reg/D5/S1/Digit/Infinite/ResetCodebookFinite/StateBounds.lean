@@ -362,25 +362,25 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.ResetLifts
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakRun
 abbrev signature : Signature where
-  Params := Σ _ : ℕ, Σ _ : ℝ, Σ _ : Return, List Return
-  State _ := ℝ
+  Params := Unit
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → List Return → ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ p D => Statement.weak p.1 p.2.1 (p.2.2.1::p.2.2.2) D) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ K d as z => Statement.weak K d as z) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ (K : ℕ) (d : ℝ) (a : Return) (as : List Return) (D : ℝ),
   Statement.weak K d (a::as) D ↔
     a.val.2 ≤ K ∧ (a.val.2=K → d ≤ D) ∧ Statement.weak K d as (run false a D)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (K : ℕ) (d : ℝ) (a : Return) (as : List Return) (D : ℝ),
-  R.readout () ⟨K,d,a,as⟩ D ↔
+  R.readout () () K d (a::as) D ↔
     a.val.2 ≤ K ∧ (a.val.2=K → d ≤ D) ∧ Statement.weak K d as (run false a D)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
@@ -400,17 +400,15 @@ def registration : Registration arena sourceStatement where
   dependence := by
     intro i
     let a : Return := ⟨⟨1,1⟩,by decide⟩
-    refine ⟨⟨1,0,a,[]⟩,(0 : ℝ),(-1 : ℝ),?_⟩
+    refine ⟨(),1,0,?_⟩
     intro he
-    have hp : actual.readout i ⟨1,0,a,[]⟩ 0 := by
-      change Statement.weak 1 0 [a] 0
-      simp [Statement.weak,a]
-    have hb := Eq.mp he hp
-    change Statement.weak 1 0 [a] (-1) at hb
+    have hp : Statement.weak 1 0 [a] 0 := by norm_num [Statement.weak,a]
+    have hb : Statement.weak 0 0 [a] 0 :=
+      Eq.mp (congrFun (congrFun (congrFun he 0) [a]) 0) hp
     norm_num [Statement.weak,a] at hb
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.weak_run)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ p D => Statement.weak p.1 p.2.1 (p.2.2.1::p.2.2.2) D) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ K d as z => Statement.weak K d as z) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.weak_run.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakRun.registration,
   realizationSource := none, generated := false,
@@ -419,13 +417,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ p D => Statement.weak p.1 p.2.1 (p.2.2.1::p.2.2.2) D) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ K d as z => Statement.weak K d as z) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[0, 1, 2, 3],
+    owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 4,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "fn", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },

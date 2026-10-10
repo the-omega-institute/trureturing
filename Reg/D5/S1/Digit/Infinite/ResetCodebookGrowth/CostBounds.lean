@@ -140,17 +140,17 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x => x ≤ lambda-rho) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ z : ℝ, |z-c0| ≤ 1/4 → wordCost C twentyColor z ≤ lambda-rho
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ z : ℝ, |z-c0| ≤ 1/4 → R.readout () () (wordCost C twentyColor z)
+  Law R := ∀ z : ℝ, |z-c0| ≤ 1/4 → R.readout () () (wordCost C twentyColor z) (lambda-rho)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   exact hh c0 (by simp)
@@ -162,12 +162,13 @@ def registration : Registration arena sourceStatement where
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro i
-    refine ⟨(),lambda-rho,lambda-rho+1,?_⟩
-    change ((lambda-rho) ≤ lambda-rho) ≠ ((lambda-rho+1) ≤ lambda-rho)
-    simp
+    refine ⟨(),(0 : ℝ),(1 : ℝ),?_⟩
+    intro he
+    have bad : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he 0) le_rfl
+    norm_num at bad
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.C_cost)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x => x ≤ lambda-rho) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.C_cost.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookGrowth.CostBounds.C_cost.registration,
   realizationSource := none, generated := false,
@@ -176,13 +177,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x => x ≤ lambda-rho) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S1.Digit.Infinite.ResetCodebookGrowth, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body"], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
+      path := #["body", "body", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.ResetCodebookGrowth.CostBounds.C_cost

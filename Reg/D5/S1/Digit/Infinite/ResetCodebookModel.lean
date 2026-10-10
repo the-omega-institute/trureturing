@@ -152,18 +152,18 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookModel.LiteralTail
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookModel.ActualPair
 abbrev signature : Signature where
-  Params := Σ _ : Bool, Σ _ : List Return, Bool
-  State _ := LegalDigits
+  Params := Unit
+  State _ := List Label
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := LegalDigits → LegalDigits → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ p x => addressPrefix (sourcePrefix p.2.2 p.1 p.2.1) x (literalTail p.2.2)) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ w x y => addressPrefix w x y) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ (anchor : Bool) (exec : List Return), ∃ src : Bool → LegalDigits, ∀ low,
   stateAddress false (src low) ∧ finiteTail (src low) ∧
   addressPrefix (sourcePrefix low anchor exec) (src low) (literalTail low) ∧
@@ -172,7 +172,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (anchor : Bool) (exec : List Return), ∃ src : Bool → LegalDigits, ∀ low,
   stateAddress false (src low) ∧ finiteTail (src low) ∧
-  R.readout () ⟨anchor,exec,low⟩ (src low) ∧
+  R.readout () () (sourcePrefix low anchor exec) (src low) (literalTail low) ∧
   kappa (src low) = wordScalar (sourcePrefix low anchor exec) (kappa (literalTail low))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -191,18 +191,17 @@ def registration : Registration arena sourceStatement where
     · intro e; exact nomatch e
   dependence := by
     intro i
-    obtain ⟨src,hs⟩ := actual_pair false []
-    refine ⟨⟨false,[],false⟩,src false,zeroAddress,?_⟩
+    refine ⟨(),[],sourcePrefix false false [],?_⟩
     intro he
-    have hp : addressPrefix (sourcePrefix false false []) zeroAddress (literalTail false) :=
-      Eq.mp he (hs false).2.2.1
+    have hp : addressPrefix (sourcePrefix false false []) zeroAddress zeroAddress :=
+      Eq.mp (congrFun (congrFun he zeroAddress) zeroAddress) rfl
     have hw : window zeroAddress 0 = fiveLabel := hp.1
     have hh := congrArg (fun l : Label => l.val ⟨2,by decide⟩) hw
     change false = true at hh
     cases hh
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.actual_pair)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ p x => addressPrefix (sourcePrefix p.2.2 p.1 p.2.1) x (literalTail p.2.2)) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ w x y => addressPrefix w x y) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.actual_pair.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookModel.ActualPair.registration,
   realizationSource := none, generated := false,
@@ -211,13 +210,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ p x => addressPrefix (sourcePrefix p.2.2 p.1 p.2.1) x (literalTail p.2.2)) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ w x y => addressPrefix w x y) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S1.Digit.Infinite.ResetCodebookModel, definition := none, coordinates := #[0, 1, 3],
+    owner := `D5.S1.Digit.Infinite.ResetCodebookModel, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "arg", "body", "body", "arg", "arg", "fn", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
+      path := #["body", "body", "arg", "body", "body", "arg", "arg", "fn", "arg", "fn", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },

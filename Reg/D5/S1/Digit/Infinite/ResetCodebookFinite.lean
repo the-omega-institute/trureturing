@@ -81,18 +81,18 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.Memory
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakGain
 abbrev signature : Signature where
-  Params := Σ _ : ℕ, Σ _ : ℝ, Σ _ : ℝ, List Return
-  State _ := ℝ
+  Params := Unit
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → List Return → ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ p y => Statement.weak p.1 (p.2.1+p.2.2.1*g^(Statement.weight p.2.2.2)) p.2.2.2 y) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ K d as z => Statement.weak K d as z) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ (K : ℕ) (d delta x y : ℝ) (as : List Return),
   0 < delta → x+delta ≤ y → Statement.weak K d as x →
   Statement.weak K (d+delta*g^(Statement.weight as)) as y
@@ -100,7 +100,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (K : ℕ) (d delta x y : ℝ) (as : List Return),
   0 < delta → x+delta ≤ y → Statement.weak K d as x →
-  R.readout () ⟨K,d,delta,as⟩ y
+  R.readout () () K (d+delta*g^(Statement.weight as)) as y
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h 0 0 1 0 1 [] (by norm_num) (by norm_num) trivial
@@ -118,19 +118,15 @@ def registration : Registration arena sourceStatement where
   dependence := by
     intro i
     let a : Return := ⟨⟨1,1⟩,by decide⟩
-    let q : ℝ := g^(Statement.weight [a])
-    refine ⟨⟨1,0,1,[a]⟩,q,q-1,?_⟩
+    refine ⟨(),1,0,?_⟩
     intro he
-    have hp : actual.readout i ⟨1,0,1,[a]⟩ q := by
-      change Statement.weak 1 (0+1*q) [a] q
-      simp [Statement.weak,a]
-    have hb := Eq.mp he hp
-    change Statement.weak 1 (0+1*q) [a] (q-1) at hb
-    have hle : q ≤ q-1 := by simpa [Statement.weak,a] using hb
-    linarith
+    have hp : Statement.weak 1 0 [a] 0 := by norm_num [Statement.weak,a]
+    have hb : Statement.weak 0 0 [a] 0 :=
+      Eq.mp (congrFun (congrFun (congrFun he 0) [a]) 0) hp
+    norm_num [Statement.weak,a] at hb
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.weak_gain)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ p y => Statement.weak p.1 (p.2.1+p.2.2.1*g^(Statement.weight p.2.2.2)) p.2.2.2 y) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ K d as z => Statement.weak K d as z) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.weak_gain.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakGain.registration,
   realizationSource := none, generated := false,
@@ -139,13 +135,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ p y => Statement.weak p.1 (p.2.1+p.2.2.1*g^(Statement.weight p.2.2.2)) p.2.2.2 y) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ K d as z => Statement.weak K d as z) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[0, 1, 2, 5],
+    owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body"], stateBinder := 4,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },
@@ -157,18 +153,18 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakGain
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakAppend
 abbrev signature : Signature where
-  Params := Σ _ : ℕ, Σ _ : ℝ, ℝ
-  State _ := List Return
+  Params := Unit
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → List Return → ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ p as => Statement.weak p.1 p.2.1 as p.2.2) (fun e => nomatch e)
+def actual : Realization signature := realize.{0,0,0,0,0} signature (fun _ _ K d as z => Statement.weak K d as z) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ _ _ => False) (fun e => nomatch e)
 def sourceStatement : Prop := ∀ (K : ℕ) (q : ℝ) (as bs : List Return) (z : ℝ),
   Statement.weak K q as z → Statement.weak K q bs (execute false as z) →
   Statement.weak K q (as++bs) z
@@ -176,7 +172,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (K : ℕ) (q : ℝ) (as bs : List Return) (z : ℝ),
   Statement.weak K q as z → Statement.weak K q bs (execute false as z) →
-  R.readout () ⟨K,q,z⟩ (as++bs)
+  R.readout () () K q (as++bs) z
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h 0 0 [] [] 0 trivial trivial
@@ -194,14 +190,15 @@ def registration : Registration arena sourceStatement where
   dependence := by
     intro i
     let a : Return := ⟨⟨1,1⟩,by decide⟩
-    refine ⟨⟨0,0,0⟩,[],[a],?_⟩
+    refine ⟨(),1,0,?_⟩
     intro he
-    have hb := Eq.mp he (show actual.readout i ⟨0,0,0⟩ [] from trivial)
-    change Statement.weak 0 0 [a] 0 at hb
+    have hp : Statement.weak 1 0 [a] 0 := by norm_num [Statement.weak,a]
+    have hb : Statement.weak 0 0 [a] 0 :=
+      Eq.mp (congrFun (congrFun (congrFun he 0) [a]) 0) hp
     norm_num [Statement.weak,a] at hb
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.weak_append)
-    (type_of% (realize.{0,0,0,0,0} signature (fun _ p as => Statement.weak p.1 p.2.1 as p.2.2) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ _ K d as z => Statement.weak K d as z) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.Infinite.ResetCodebook.weak_append.__information_unit,
   realizationName := `Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakAppend.registration,
   realizationSource := none, generated := false,
@@ -210,13 +207,13 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{0,0,0,0,0} signature (fun _ p as => Statement.weak p.1 p.2.1 as p.2.2) (fun e => nomatch e)),
+  readout := some (realize.{0,0,0,0,0} signature (fun _ _ K d as z => Statement.weak K d as z) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[0, 1, 4],
+    owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body"], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn", "fn", "fn"], stateBinder := 0,
+      functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },
