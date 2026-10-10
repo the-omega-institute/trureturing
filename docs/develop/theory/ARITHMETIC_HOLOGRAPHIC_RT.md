@@ -3232,7 +3232,7 @@ $$
 $$
 T_\varepsilon=\{\eta\in\widehat A\setminus\{1\}:|h_\eta|>\varepsilon\}.
 $$
-给定有限允许层族 $\mathscr L$（每个 $K\in\mathscr L$ 都在同一 $A$、同一 Fourier 基上施加 $\mathcal D_K$）。从 $U_0=T_\varepsilon$ 开始，若存在 $K_j\in\mathscr L$ 使
+由于 $\widehat A$ 有限，$T_\varepsilon$ 有限。给定允许层族 $\mathscr L$，其中每个 $K\in\mathscr L$ 是 $A$ 的子群，并在同一 $A$、同一 Fourier 基上施加 $\mathcal D_K$；stack 只由这些层组成，允许重复选择，且层间无其他映射或 Schur mixing。从 $U_0=T_\varepsilon$ 开始；若 $U_0=\varnothing$ 则立即停止。否则若存在可重复选择的 $K_j\in\mathscr L$ 使
 $$
 U_j:=U_{j-1}\cap K_j^\perp
 $$
@@ -3240,7 +3240,7 @@ $$
 $$
 \max\mathsf S_j\le\varepsilon.
 $$
-若在某一步 $U_{j-1}\ne\varnothing$ 且对所有 $K\in\mathscr L$ 都有 $U_{j-1}\cap K^\perp=U_{j-1}$，则任何由 $\mathscr L$ 组成的后续有限 stack 都不能使该证书族达到阈值 $\varepsilon$。
+若在某一步 $U_{j-1}\ne\varnothing$ 且对所有 $K\in\mathscr L$ 都有 $U_{j-1}\cap K^\perp=U_{j-1}$，则任何由 $\mathscr L$ 组成、允许重复层的后续有限 stack 都不能使该证书族达到阈值 $\varepsilon$。
 
 **证明。** §44.1 给出每层把残余角色集合与 $K^\perp$ 相交，因此算法维护的 $U_j$ 正是尚未被删除的超阈值角色。若某层严格缩小，有限性保证至少删除一个元素，故至多 $|T_\varepsilon|$ 次达到空集；§45.1 随即给出证书最大值不超过 $\varepsilon$。若算法停滞，则当前 $U$ 被每个允许层逐点保留；任意后续层仍与 $U$ 相交得到 $U$，归纳可知所有有限序列都保留 $U\ne\varnothing$，其中至少一个 $|h_\eta|>\varepsilon$，所以该证书族不可能达到阈值。证毕。
 
