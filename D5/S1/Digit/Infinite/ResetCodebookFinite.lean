@@ -521,7 +521,6 @@ theorem finite_reset_weak_state
   | nil => trivial
   | cons v vs ih =>
       have hv := hvs v (by simp)
-      have hr := run_bounds false (Statement.reset M hM) z (hA.trans hz) hh
       have hresetz : Statement.B M ≤ run false (Statement.reset M hM) z := by
         rw [run_closed]
         exact reset_lifts M z hz
