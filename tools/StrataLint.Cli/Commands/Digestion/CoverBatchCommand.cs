@@ -16,16 +16,17 @@ internal static partial class CoverBatchCommand
         IReadOnlyList<string> arguments)
     {
         BatchArguments options;
+        var leanInputs = arguments.Count > 0 && arguments[0] == "--lean-inputs";
         try
         {
-            options = Parse(repositoryRoot, arguments);
+            options = Parse(repositoryRoot, leanInputs ? arguments.Skip(1).ToArray() : arguments);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             return new(false, string.Empty, $"COVER_BATCH_INPUT_INVALID {exception.Message}\n", 2);
         }
 
-        using var reportBundle = (leanReportSource as PrecomputedLeanReportSource)?.Capture();
+        using var reportBundle = leanInputs ? null : (leanReportSource as PrecomputedLeanReportSource)?.Capture();
         CoverAtomCommand.Session session;
         BatchPlan plan;
         try
@@ -37,6 +38,8 @@ internal static partial class CoverBatchCommand
                     : throw new BatchInputException($"invalid coverage GID: {gid}"))
                 .Distinct()
                 .ToArray();
+            if (leanInputs) return CoverAtomCommand.Session.LeanInputs(repository,
+                options.Items.Select(static item => item.AtomId).ToArray(), reportTargets);
             session = new CoverAtomCommand.Session(repositoryRoot, repository, reportBundle is null ? leanReportSource : reportBundle,
                 recordedAtUtc, options.Items[0].Gids[0], options.Items.Select(static item => item.AtomId).ToArray(), reportTargets);
             plan = Plan(options.Items, session.Document);

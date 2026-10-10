@@ -26,13 +26,15 @@ internal static partial class CoverAtomCommand
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
-            var options = ParseArguments(arguments);
+            var leanInputs = arguments.Count > 0 && arguments[0] == "--lean-inputs";
+            var options = ParseArguments(leanInputs ? arguments.Skip(1).ToArray() : arguments);
             var reportTargets = options.Gids
                 .Select(gid => Gid.TryParse(gid, out var parsed)
                     ? parsed!.Path
                     : throw new InvalidOperationException($"cover GID is not canonical: {gid}"))
                 .Distinct()
                 .ToArray();
+            if (leanInputs) return Session.LeanInputs(repository, [options.AtomId], reportTargets);
             var session = new Session(repositoryRoot, repository, leanReportSource,
                 recordedAtUtc, options.Gids[0], [options.AtomId], reportTargets);
             return Apply(session, options, allowAlreadyApplied: false);
@@ -441,7 +443,7 @@ internal static partial class CoverAtomCommand
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...]");
+        "USAGE: StrataLint cover-atom [--lean-inputs] --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...]");
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         IngestCommand.LoadDocument(snapshot);

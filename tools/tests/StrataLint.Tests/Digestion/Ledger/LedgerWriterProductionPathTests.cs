@@ -224,8 +224,7 @@ public sealed partial class LedgerWriterProductionPathTests
         var report = LeanAxiomReport.CreateScoped(world.Report.Files
             .Where(pair => pair.Key.Value == "D5/S0/Carrier/Alpha.lean")
             .ToDictionary(pair => pair.Key.Value, pair => pair.Value));
-        var index = FrozenStatementIndex.Create(FrozenStateCatalog.Load(snapshot), report,
-            FrozenLedgerBaseViewReader.Read(snapshot));
+        var index = FrozenStatementIndex.Create(FrozenStateCatalog.Load(snapshot), report);
 
         var edge = CurrentEdgeValidator.Validate(moduleTarget ? "D5/S0/Carrier/Zeta" : ZetaGid,
             snapshot, report, new Dictionary<RepoPath, TruthState>(), index);

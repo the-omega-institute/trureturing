@@ -60,9 +60,7 @@ internal static class CurrentEdgeValidator
 
         var state = truthStates.TryGetValue(target.Path, out var resolvedState)
             ? resolvedState
-            : report.IsScoped && !report.Files.ContainsKey(target.Path)
-                ? TruthState.Closed
-                : TruthState.Semantic;
+            : TruthState.Semantic;
         var isClosed = state == TruthState.Closed;
         var code = isClosed ? null : $"lean-state-{state.ToString().ToLowerInvariant()}";
         return new CurrentEdgeValidation(
