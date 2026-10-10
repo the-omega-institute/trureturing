@@ -112,11 +112,15 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
                     Paths(Equal(E(Call("bill", Call("fromPath", m, path))), Call("ofReal", Call("pathCost", path)))),
                     "The observer stops at the unique labelled leaf contained in its finite prefix. "
                     + "The public carry-tree stopping-word contract gives its first stopping length "
-                    + "and almost-sure return, so its expected charge equals the path cost."),
+                    + "and almost-sure return, so its expected charge equals the path cost. "
+                    + "The canonical path_expectation selector resolves to the unique Lean constant "
+                    + "D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail.Paths.path_expectation."),
                 Thm("Paths.path_law", "The finite observer preserves the digit law",
                     Paths(All(i, fin, Equal(Call("law", Call("fromPath", m, path), i),
                         Call("ofDigits", Call("labelDigit", path, i))))),
                     "The observer emits i exactly on the public carry-tree event of a finite return with label i. "
-                    + "Its probability is the fixed-label binary digit series."))));
+                    + "Its probability is the fixed-label binary digit series. "
+                    + "The canonical path_law selector resolves to the unique Lean constant "
+                    + "D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail.Paths.path_law."))));
     }
 }
