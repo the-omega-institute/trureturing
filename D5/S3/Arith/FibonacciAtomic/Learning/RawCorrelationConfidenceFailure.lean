@@ -22,11 +22,24 @@ noncomputable section
 open Filter
 open scoped BigOperators Topology
 
-namespace D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.ScoreBridge
-local instance (p : Prop) : Decidable p := Classical.propDecidable p
-open D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law
+open _root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities
 
-def delta (b : Fin 3) : ℤ := (b.val:ℤ)-1
+namespace D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure
+open _root_.D5.S3.Arith.FibonacciAtomic
+open Law
+local notation "trueClass" =>
+  (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
+    ![w.1, w.2.2.1, w.2.2.2.1])
+local notation "rivalClass" =>
+  (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
+    ![w.2.1, w.2.2.1, w.2.2.2.1])
+
+
+namespace ScoreBridge
+local instance (p : Prop) : Decidable p := Classical.propDecidable p
+open Law
+
+def delta (b : Fin 3) : ℤ := (b.val : ℤ) - 1
 def category (w : Record) : Fin 3 := if score w = -1 then 0 else if score w = 0 then 1 else 2
 
 theorem category_score (w : Record) : delta (category w) = score w := by
@@ -42,34 +55,34 @@ theorem category_iff (w : Record) (b : Fin 3) : category w = b ↔ score w = del
     apply Fin.ext
     omega
 
-def lazyMass (p : ℝ) (b : Fin 3) : ℝ := if b = 1 then 1-p else p/2
+def lazyMass (p : ℝ) (b : Fin 3) : ℝ := if b = 1 then 1 - p else p / 2
 
-theorem clean_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8) (b : Fin 3) :
-    lazyMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a) b =
+theorem clean_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (b : Fin 3) :
+    lazyMass (Scale.activeProbability rho a) b =
       ∑ w, if category w = b then cleanRecordMass rho a w else 0 := by
   simp_rw [category_iff]
-  change lazyMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a) b = cleanScore rho a (delta b)
+  change lazyMass (Scale.activeProbability rho a) b = cleanScore rho a (delta b)
   fin_cases b
-  · simpa [lazyMass, delta, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability] using (cleanScore_signs rho a).2.symm
+  · simpa [lazyMass, delta, Scale.activeProbability] using (cleanScore_signs rho a).2.symm
   · have ht := cleanScore_partition rho a
     rw [cleanRecordMass_total rho a hr hr8, (cleanScore_signs rho a).1,
       (cleanScore_signs rho a).2] at ht
     simp [lazyMass, delta]
-    unfold D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability
+    unfold Scale.activeProbability
     linarith
-  · simpa [lazyMass, delta, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability] using (cleanScore_signs rho a).1.symm
+  · simpa [lazyMass, delta, Scale.activeProbability] using (cleanScore_signs rho a).1.symm
 
-theorem sample_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
+theorem sample_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (m : ℕ) (F : ℤ → ℝ) :
     (∑ w : Fin m → Record, F (∑ i, score (w i)) * ∏ i, cleanRecordMass rho a (w i)) =
       ∑ v : Fin m → Fin 3, F (∑ i, delta (v i)) *
-        ∏ i, lazyMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a) (v i) := by
-  have h := D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Pushforward.product_pushforward category (cleanRecordMass rho a)
-    (lazyMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a)) (clean_pushforward rho a hr hr8)
+        ∏ i, lazyMass (Scale.activeProbability rho a) (v i) := by
+  have h := Pushforward.product_pushforward category (cleanRecordMass rho a)
+    (lazyMass (Scale.activeProbability rho a)) (clean_pushforward rho a hr hr8)
     m (fun v => F (∑ i, delta (v i)))
   simpa only [category_score] using h
 
-def bernoulliMass (p : ℝ) (b : Bool) : ℝ := if b then p else 1-p
+def bernoulliMass (p : ℝ) (b : Bool) : ℝ := if b then p else 1 - p
 def pairCategory (x : Bool × Bool) : Fin 3 := if x.1 then if x.2 then 2 else 0 else 1
 def pairMass (p : ℝ) (x : Bool × Bool) : ℝ := bernoulliMass p x.1 / 2
 
@@ -80,13 +93,13 @@ theorem pair_pushforward (p : ℝ) (b : Fin 3) :
 theorem lazy_pair_pushforward (p : ℝ) (m : ℕ) (F : ℤ → ℝ) :
     (∑ x : Fin m → Bool × Bool, F (∑ i, delta (pairCategory (x i))) * ∏ i, pairMass p (x i)) =
       ∑ v : Fin m → Fin 3, F (∑ i, delta (v i)) * ∏ i, lazyMass p (v i) :=
-  D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Pushforward.product_pushforward pairCategory (pairMass p) (lazyMass p)
+  Pushforward.product_pushforward pairCategory (pairMass p) (lazyMass p)
     (pair_pushforward p) m (fun v => F (∑ i, delta (v i)))
 
 def activity (w : Record) : Bool := decide (score w ≠ 0)
 
-theorem activity_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8) (b : Bool) :
-    bernoulliMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a) b =
+theorem activity_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (b : Bool) :
+    bernoulliMass (Scale.activeProbability rho a) b =
       ∑ w, if activity w = b then cleanRecordMass rho a w else 0 := by
   cases b
   · have hz := cleanScore_partition rho a
@@ -103,27 +116,27 @@ theorem activity_pushforward (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8) (b
     linarith
   · simpa [bernoulliMass, activity] using (clean_active_mass rho a).symm
 
-theorem actual_tail_eq_bernoulli (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8) (m N : ℕ) :
-    D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.tail (cleanRecordMass rho a) nonzero m N =
-      D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.tail (bernoulliMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a))
+theorem actual_tail_eq_bernoulli (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (m N : ℕ) :
+    FiniteTail.tail (cleanRecordMass rho a) nonzero m N =
+      FiniteTail.tail (bernoulliMass (Scale.activeProbability rho a))
         (fun b => if b then 1 else 0) m N := by
-  have h := D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Pushforward.product_pushforward activity (cleanRecordMass rho a)
-    (bernoulliMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a)) (activity_pushforward rho a hr hr8)
-    m (fun v => if (∑ i, if v i then (1:ℕ) else 0) ≤ N then (1:ℝ) else 0)
-  have ht (w : Record) : (if activity w then (1:ℕ) else 0) = nonzero w := by
+  have h := Pushforward.product_pushforward activity (cleanRecordMass rho a)
+    (bernoulliMass (Scale.activeProbability rho a)) (activity_pushforward rho a hr hr8)
+    m (fun v => if (∑ i, if v i then (1 : ℕ) else 0) ≤ N then (1 : ℝ) else 0)
+  have ht (w : Record) : (if activity w then (1 : ℕ) else 0) = nonzero w := by
     by_cases h : score w = 0 <;> simp [activity,nonzero,h]
-  simp only [ht, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.tail, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.count, ite_mul, one_mul, zero_mul] at h ⊢
+  simp only [ht, FiniteTail.tail, FiniteTail.count, ite_mul, one_mul, zero_mul] at h ⊢
   convert h using 1 <;> (
     apply Finset.sum_congr
     · ext w; simp
     · intro w hw
       congr 1)
 
-end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.ScoreBridge
+end ScoreBridge
 
-namespace D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry
+namespace LazySymmetry
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
-open D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.ScoreBridge
+open ScoreBridge
 
 def totalScore {m : ℕ} (v : Fin m → Fin 3) : ℤ := ∑ i, delta (v i)
 def sampleMass (p : ℝ) {m : ℕ} (v : Fin m → Fin 3) : ℝ := ∏ i, lazyMass p (v i)
@@ -159,7 +172,7 @@ theorem neg_eq_pos (p : ℝ) (m : ℕ) : negative p m = positive p m := by
   rw [← e.sum_comp]
   simp_rw [hs, hm, neg_lt_zero]
 
-theorem negative_eq_half (p : ℝ) (m : ℕ) : negative p m = (1-tie p m)/2 := by
+theorem negative_eq_half (p : ℝ) (m : ℕ) : negative p m = (1 - tie p m) / 2 := by
   have hsplit : negative p m + tie p m + positive p m = 1 := by
     unfold negative tie positive
     rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib, ← total_mass p m]
@@ -176,29 +189,30 @@ theorem negative_eq_half (p : ℝ) (m : ℕ) : negative p m = (1-tie p m)/2 := b
   rw [← neg_eq_pos] at hsplit
   linarith
 
-end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry
+end LazySymmetry
 
-namespace D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazyLimit
+namespace LazyLimit
+local notation "walkSign" => (fun b : Bool => D5.S3.Arith.GoldenPell.signedInt (!b) 1)
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
-open D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.ScoreBridge D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law
+open ScoreBridge Law
 
 def bit (b : Bool) : ℕ := if b then 1 else 0
 
 theorem pair_delta (b : Bool × Bool) : delta (pairCategory b) =
-    if b.1 then D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FairWalk.sign b.2 else 0 := by
+    if b.1 then walkSign b.2 else 0 := by
   rcases b with ⟨a,u⟩
-  cases a <;> cases u <;> norm_num [delta, pairCategory, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FairWalk.sign]
+  cases a <;> cases u <;> norm_num [delta, pairCategory, D5.S3.Arith.GoldenPell.signedInt]
 
 theorem tie_mixture (p : ℝ) (m : ℕ) :
-    D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.tie p m = D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.expectation (bernoulliMass p) bit m
-      D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Binomial.fairTie := by
+    LazySymmetry.tie p m = FiniteTail.expectation (bernoulliMass p) bit m
+      Binomial.fairTie := by
   classical
-  have hc := lazy_pair_pushforward p m (fun s => if s = 0 then (1:ℝ) else 0)
-  have hp : D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.tie p m =
+  have hc := lazy_pair_pushforward p m (fun s => if s = 0 then (1 : ℝ) else 0)
+  have hp : LazySymmetry.tie p m =
       ∑ x : Fin m → Bool × Bool,
         if (∑ i, delta (pairCategory (x i))) = 0 then ∏ i, pairMass p (x i) else 0 := by
-    simp only [D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.tie, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.totalScore,
-      D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.sampleMass, ite_mul, one_mul, zero_mul] at hc ⊢
+    simp only [LazySymmetry.tie, LazySymmetry.totalScore,
+      LazySymmetry.sampleMass, ite_mul, one_mul, zero_mul] at hc ⊢
     convert hc.symm using 1 <;> (
       apply Finset.sum_congr
       · ext v; simp
@@ -208,31 +222,31 @@ theorem tie_mixture (p : ℝ) (m : ℕ) :
   rw [← e.symm.sum_comp, Fintype.sum_prod_type]
   have mass (a u : Fin m → Bool) :
       (∏ i, pairMass p (e.symm (a,u) i)) =
-        (∏ i, bernoulliMass p (a i)) * (1/2:ℝ)^m := by
-    change (∏ i, bernoulliMass p (a i)/2) = _
+        (∏ i, bernoulliMass p (a i)) * (1 / 2 : ℝ) ^ m := by
+    change (∏ i, bernoulliMass p (a i) / 2) = _
     rw [Finset.prod_div_distrib]
     simp [div_pow, div_eq_mul_inv]
   have vals (a u : Fin m → Bool) :
       (∑ i, delta (pairCategory (e.symm (a,u) i))) =
-        ∑ i, if a i then D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FairWalk.sign (u i) else 0 := by
+        ∑ i, if a i then walkSign (u i) else 0 := by
     change (∑ i, delta (pairCategory (a i,u i))) = _
     simp_rw [pair_delta]
   simp_rw [vals, mass]
-  unfold D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.expectation
+  unfold FiniteTail.expectation
   apply Finset.sum_congr rfl
   intro a ha
   have hterm (u : Fin m → Bool) :
-      (if (∑ i, if a i then D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FairWalk.sign (u i) else 0) = 0 then
-        (∏ i, bernoulliMass p (a i)) * (1/2:ℝ)^m else 0) =
+      (if (∑ i, if a i then walkSign (u i) else 0) = 0 then
+        (∏ i, bernoulliMass p (a i)) * (1 / 2 : ℝ) ^ m else 0) =
       (∏ i, bernoulliMass p (a i)) *
-        (if (∑ i, if a i then D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FairWalk.sign (u i) else 0) = 0 then (1/2:ℝ)^m else 0) := by
+        (if (∑ i, if a i then walkSign (u i) else 0) = 0 then (1 / 2 : ℝ) ^ m else 0) := by
     split_ifs <;> simp
   simp_rw [hterm]
   rw [← Finset.mul_sum]
-  have hf := D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.ActiveFair.active_fairTie a
-  have hj : Fintype.card {i : Fin m // a i = true} = D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.count bit a := by
+  have hf := ActiveFair.active_fairTie a
+  have hj : Fintype.card {i : Fin m // a i = true} = FiniteTail.count bit a := by
     rw [Fintype.card_subtype]
-    simpa only [D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.count, bit] using
+    simpa only [FiniteTail.count, bit] using
       (Finset.card_filter (fun i : Fin m => a i = true) Finset.univ)
   have hf' := congrArg ((∏ i, bernoulliMass p (a i)) * ·) hf
   simp only [Fintype.card_fin, hj] at hf'
@@ -242,9 +256,9 @@ theorem tie_mixture (p : ℝ) (m : ℕ) :
   · ext u; simp
   · intro u hu; rfl
 
-theorem activeProbability_mem (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
+theorem activeProbability_mem (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) :
-    0 ≤ D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a ∧ D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a ≤ 1 := by
+    0 ≤ Scale.activeProbability rho a ∧ Scale.activeProbability rho a ≤ 1 := by
   rw [← clean_active_mass]
   constructor
   · apply Finset.sum_nonneg
@@ -259,43 +273,43 @@ theorem activeProbability_mem (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
     · exact le_rfl
     · exact cleanRecordMass_nonneg rho a hr hr8 ha ha1 w
 
-theorem fairTie_le_one (j : ℕ) : D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Binomial.fairTie j ≤ 1 := by
-  have h := D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Binomial.fairTie_square_bound j
-  have hb : 1/((j:ℝ)+1) ≤ 1 := by
+theorem fairTie_le_one (j : ℕ) : Binomial.fairTie j ≤ 1 := by
+  have h := Binomial.fairTie_square_bound j
+  have hb : 1 / ((j : ℝ) + 1) ≤ 1 := by
     rw [div_le_one (by positivity)]
-    have hj : (0:ℝ) ≤ j := Nat.cast_nonneg j
+    have hj : (0 : ℝ) ≤ j := Nat.cast_nonneg j
     linarith
-  nlinarith [D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Binomial.fairTie_nonneg j]
+  nlinarith [Binomial.fairTie_nonneg j]
 
 theorem tie_vanishes (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
-    Tendsto (fun rho => D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.tie (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a)
-      (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K)) (𝓝[>] (0:ℝ)) (𝓝 0) := by
-  have small : ∀ᶠ rho : ℝ in 𝓝[>] (0:ℝ), 0 < rho ∧ rho ≤ 1/8 := by
+    Tendsto (fun rho => LazySymmetry.tie (Scale.activeProbability rho a)
+      (Scale.sampleLength rho a K)) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have small : ∀ᶠ rho : ℝ in 𝓝[>] (0 : ℝ), 0 < rho ∧ rho ≤ 1 / 8 := by
     filter_upwards [self_mem_nhdsWithin,
-      (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x:ℝ => x) (𝓝[>] (0:ℝ)) (𝓝 0)).eventually
-        (gt_mem_nhds (by norm_num : (0:ℝ)<1/8))] with rho hr hr8
+      (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x : ℝ => x) (𝓝[>] (0 : ℝ)) (𝓝 0)).eventually
+        (gt_mem_nhds (by norm_num : (0 : ℝ)<1 / 8))] with rho hr hr8
     exact ⟨hr, hr8.le⟩
-  have hq : ∀ᶠ rho : ℝ in 𝓝[>] (0:ℝ), ∀ b,
-      0 ≤ bernoulliMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a) b := by
+  have hq : ∀ᶠ rho : ℝ in 𝓝[>] (0 : ℝ), ∀ b,
+      0 ≤ bernoulliMass (Scale.activeProbability rho a) b := by
     filter_upwards [small] with rho hr b
     have hp := activeProbability_mem rho a hr.1 hr.2 ha ha1
     cases b <;> simp [bernoulliMass] <;> linarith
-  have ht (N : ℕ) : Tendsto (fun rho => D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.tail
-      (bernoulliMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a)) bit
-      (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) N) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+  have ht (N : ℕ) : Tendsto (fun rho => FiniteTail.tail
+      (bernoulliMass (Scale.activeProbability rho a)) bit
+      (Scale.sampleLength rho a K) N) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
     apply (nonzero_count_diverges a K ha ha1 hK N).congr'
     filter_upwards [small] with rho hr
     exact actual_tail_eq_bernoulli rho a hr.1 hr.2 _ N
-  have hv := D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.FiniteTail.expectation_vanishes (𝓝[>] (0:ℝ))
-    (fun rho => bernoulliMass (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a)) bit
-    (fun rho => D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Binomial.fairTie hq
+  have hv := FiniteTail.expectation_vanishes (𝓝[>] (0 : ℝ))
+    (fun rho => bernoulliMass (Scale.activeProbability rho a)) bit
+    (fun rho => Scale.sampleLength rho a K) Binomial.fairTie hq
     (Filter.Eventually.of_forall (fun rho => by simp [bernoulliMass]))
-    D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Binomial.fairTie_nonneg fairTie_le_one D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Binomial.fairTie_vanishes ht
+    Binomial.fairTie_nonneg fairTie_le_one Binomial.fairTie_vanishes ht
   simpa only [tie_mixture] using hv
 
-end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazyLimit
+end LazyLimit
 
-namespace D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning
+namespace Conditioning
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
 
 def eventMass {α : Type*} [Fintype α] (p : α → ℝ) (E : α → Prop) : ℝ :=
@@ -329,7 +343,7 @@ theorem eventMass_compl {α : Type*} [Fintype α] (p : α → ℝ) (E : α → P
 theorem conditioning_bound {α : Type*} [Fintype α] (p : α → ℝ)
     (hp : ∀ x, 0 ≤ p x) (hprob : ∑ x, p x = 1) (E A : α → Prop)
     (hE : 0 < eventMass p E) :
-    |eventMass p A - eventMass p (fun x => E x ∧ A x)/eventMass p E| ≤ 1-eventMass p E := by
+    |eventMass p A - eventMass p (fun x => E x ∧ A x) / eventMass p E| ≤ 1 - eventMass p E := by
   let c := eventMass p E
   let x := eventMass p (fun x => E x ∧ A x)
   let y := eventMass p (fun x => ¬ E x ∧ A x)
@@ -343,64 +357,64 @@ theorem conditioning_bound {α : Type*} [Fintype α] (p : α → ℝ)
   have hx0 : 0 ≤ x := eventMass_nonneg p hp _
   have hy0 : 0 ≤ y := eventMass_nonneg p hp _
   have hx : x ≤ c := eventMass_mono p hp _ E (fun z hz => hz.1)
-  have hy : y ≤ 1-c := by
+  have hy : y ≤ 1 - c := by
     have h := eventMass_mono p hp (fun z => ¬ E z ∧ A z) (fun z => ¬ E z) (fun z hz => hz.1)
     have hh := eventMass_compl p E
     rw [hprob] at hh
     dsimp [y,c] at *
     linarith
-  have hxy : eventMass p A = x+y := by
+  have hxy : eventMass p A = x + y := by
     dsimp [x,y,eventMass]
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro z hz
     by_cases he : E z <;> by_cases ha : A z <;> simp [he,ha]
-  have hd0 : 0 ≤ x/c := div_nonneg hx0 hc.le
-  have hd1 : x/c ≤ 1 := (div_le_one hc).mpr hx
+  have hd0 : 0 ≤ x / c := div_nonneg hx0 hc.le
+  have hd1 : x / c ≤ 1 := (div_le_one hc).mpr hx
   have hmul0 := mul_nonneg (sub_nonneg.mpr hc1) hd0
   have hmul1 := mul_le_mul_of_nonneg_left hd1 (sub_nonneg.mpr hc1)
-  have heq : x+y-x/c = y-(1-c)*(x/c) := by field_simp <;> ring
-  change |eventMass p A-x/c| ≤ 1-c
+  have heq : x + y - x / c = y - (1 - c) * (x / c) := by field_simp <;> ring
+  change |eventMass p A - x / c| ≤ 1 - c
   rw [hxy,heq]
   exact abs_le.2 ⟨by nlinarith,by nlinarith⟩
 
-end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning
+end Conditioning
 
-namespace D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.RawLimit
+namespace RawLimit
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
-open D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law
+open Law
 
 def cleanNegative (rho a : ℝ) (m : ℕ) : ℝ :=
   ∑ w : Fin m → Record, if (∑ i, score (w i)) < 0 then
     ∏ i, cleanRecordMass rho a (w i) else 0
 
-theorem cleanNegative_eq (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8) (m : ℕ) :
-    cleanNegative rho a m = D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.negative (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a) m := by
-  have h := D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.ScoreBridge.sample_pushforward rho a hr hr8 m
-    (fun s => if s < 0 then (1:ℝ) else 0)
-  simp only [cleanNegative, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.negative, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.totalScore,
-    D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.sampleMass, ite_mul, one_mul, zero_mul] at h ⊢
+theorem cleanNegative_eq (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (m : ℕ) :
+    cleanNegative rho a m = LazySymmetry.negative (Scale.activeProbability rho a) m := by
+  have h := ScoreBridge.sample_pushforward rho a hr hr8 m
+    (fun s => if s < 0 then (1 : ℝ) else 0)
+  simp only [cleanNegative, LazySymmetry.negative, LazySymmetry.totalScore,
+    LazySymmetry.sampleMass, ite_mul, one_mul, zero_mul] at h ⊢
   convert h using 1 <;> (
     apply Finset.sum_congr
     · ext w; simp
     · intro w hw; rfl)
 
 theorem cleanNegative_limit (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
-    Tendsto (fun rho => cleanNegative rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K))
-      (𝓝[>] (0:ℝ)) (𝓝 (1/2:ℝ)) := by
-  have ht := D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazyLimit.tie_vanishes a K ha ha1 hK
-  have hc : Tendsto (fun rho => (1-D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.tie (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.activeProbability rho a)
-      (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K))/2) (𝓝[>] (0:ℝ)) (𝓝 (1/2:ℝ)) := by
-    simpa using ((tendsto_const_nhds (x := (1:ℝ))).sub ht).div_const (2:ℝ)
+    Tendsto (fun rho => cleanNegative rho a (Scale.sampleLength rho a K))
+      (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2 : ℝ)) := by
+  have ht := LazyLimit.tie_vanishes a K ha ha1 hK
+  have hc : Tendsto (fun rho => (1 - LazySymmetry.tie (Scale.activeProbability rho a)
+      (Scale.sampleLength rho a K)) / 2) (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2 : ℝ)) := by
+    simpa using ((tendsto_const_nhds (x := (1 : ℝ))).sub ht).div_const (2 : ℝ)
   apply hc.congr'
   filter_upwards [self_mem_nhdsWithin,
-    (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x:ℝ => x) (𝓝[>] (0:ℝ)) (𝓝 0)).eventually
-      (gt_mem_nhds (by norm_num : (0:ℝ)<1/8))] with rho hr hr8
-  rw [cleanNegative_eq rho a hr hr8.le, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.LazySymmetry.negative_eq_half]
+    (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x : ℝ => x) (𝓝[>] (0 : ℝ)) (𝓝 0)).eventually
+      (gt_mem_nhds (by norm_num : (0 : ℝ)<1 / 8))] with rho hr hr8
+  rw [cleanNegative_eq rho a hr hr8.le, LazySymmetry.negative_eq_half]
 
-theorem raw_clean_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
+theorem raw_clean_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (m : ℕ) :
-    |misorder rho a m-cleanNegative rho a m| ≤ 1-(1-12*rho^3)^m := by
+    |misorder rho a m - cleanNegative rho a m| ≤ 1 - (1 - 12 * rho ^ 3) ^ m := by
   let p : (Fin m → Record) → ℝ := fun w => ∏ i, recordMass rho a (w i)
   let E : (Fin m → Record) → Prop := fun w => ∀ i, ¬ reverse (w i)
   let A : (Fin m → Record) → Prop := fun w => (∑ i, score (w i)) < 0
@@ -409,32 +423,32 @@ theorem raw_clean_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
   have hprob : ∑ w, p w = 1 := by
     dsimp [p]
     rw [← Fintype.sum_pow, total_mass, one_pow]
-  have hE : D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning.eventMass p E = (1-12*rho^3)^m := by
-    unfold D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning.eventMass
+  have hE : Conditioning.eventMass p E = (1 - 12 * rho ^ 3) ^ m := by
+    unfold Conditioning.eventMass
     dsimp [p,E]
     convert all_clean_mass rho a m using 1
     apply Finset.sum_congr
     · ext w; simp
     · intro w hw
       by_cases he : ∀ i, ¬ reverse (w i) <;> simp [he]
-  have hc : 0 < D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning.eventMass p E := by
+  have hc : 0 < Conditioning.eventMass p E := by
     rw [hE]
     exact pow_pos (clean_denominator_pos rho hr hr8) m
-  have h := D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning.conditioning_bound p hp hprob E A hc
+  have h := Conditioning.conditioning_bound p hp hprob E A hc
   have hcond : cleanNegative rho a m =
-      D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning.eventMass p (fun w => E w ∧ A w)/D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning.eventMass p E := by
+      Conditioning.eventMass p (fun w => E w ∧ A w) / Conditioning.eventMass p E := by
     rw [hE]
     unfold cleanNegative
     simp_rw [← clean_sample_factor]
-    unfold D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning.eventMass cleanSampleMass
+    unfold Conditioning.eventMass cleanSampleMass
     rw [Finset.sum_div]
     apply Finset.sum_congr rfl
     intro w hw
     by_cases he : ∀ i, ¬ reverse (w i)
     <;> by_cases hn : (∑ i, score (w i)) < 0
     <;> simp [E,A,p,he,hn]
-  have hA : D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning.eventMass p A = misorder rho a m := by
-    unfold D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Conditioning.eventMass misorder
+  have hA : Conditioning.eventMass p A = misorder rho a m := by
+    unfold Conditioning.eventMass misorder
     dsimp [p,A]
     apply Finset.sum_congr
     · ext w; simp
@@ -444,22 +458,22 @@ theorem raw_clean_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
   exact h
 
 theorem raw_confidence_failure (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
-    Tendsto (fun rho => misorder rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K))
-      (𝓝[>] (0:ℝ)) (𝓝 (1/2:ℝ)) := by
+    Tendsto (fun rho => misorder rho a (Scale.sampleLength rho a K))
+      (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2 : ℝ)) := by
   have hn := cleanNegative_limit a K ha ha1 hK
-  have hc := D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law.all_clean_limit a K ha hK
-  simp only [D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law.all_clean_mass] at hc
-  have hb : ∀ᶠ rho : ℝ in 𝓝[>] (0:ℝ),
-      |misorder rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K)-
-        cleanNegative rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K)| ≤
-      1-(1-12*rho^3)^(D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) := by
+  have hc := Law.all_clean_limit a K ha hK
+  simp only [Law.all_clean_mass] at hc
+  have hb : ∀ᶠ rho : ℝ in 𝓝[>] (0 : ℝ),
+      |misorder rho a (Scale.sampleLength rho a K)-
+        cleanNegative rho a (Scale.sampleLength rho a K)| ≤
+      1 - (1 - 12 * rho ^ 3) ^ (Scale.sampleLength rho a K) := by
     filter_upwards [self_mem_nhdsWithin,
-      (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x:ℝ => x) (𝓝[>] (0:ℝ)) (𝓝 0)).eventually
-        (gt_mem_nhds (by norm_num : (0:ℝ)<1/8))] with rho hr hr8
+      (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x : ℝ => x) (𝓝[>] (0 : ℝ)) (𝓝 0)).eventually
+        (gt_mem_nhds (by norm_num : (0 : ℝ)<1 / 8))] with rho hr hr8
     exact raw_clean_bound rho a hr hr8.le ha ha1 _
-  have hbad : Tendsto (fun rho => 1-(1-12*rho^3)^(D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K))
-      (𝓝[>] (0:ℝ)) (𝓝 (0:ℝ)) := by
-    simpa using (tendsto_const_nhds (x := (1:ℝ))).sub hc
+  have hbad : Tendsto (fun rho => 1 - (1 - 12 * rho ^ 3) ^ (Scale.sampleLength rho a K))
+      (𝓝[>] (0 : ℝ)) (𝓝 (0 : ℝ)) := by
+    simpa using (tendsto_const_nhds (x := (1 : ℝ))).sub hc
   apply tendsto_of_tendsto_of_tendsto_of_le_of_le' (by simpa using hn.sub hbad)
     (by simpa using hn.add hbad)
   · filter_upwards [hb] with rho h
@@ -469,11 +483,11 @@ theorem raw_confidence_failure (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 
     have hhigh := (abs_le.mp h).2
     linarith
 
-end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.RawLimit
+end RawLimit
 
-namespace D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Selection
+namespace Selection
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
-open D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law D5.S3.Arith.FibonacciAtomic
+open Law D5.S3.Arith.FibonacciAtomic
 
 def candidateClass (c : Fin 4) (w : Record) : Fin 3 :=
   if c = 0 then GarbledPosteriorRootGap.teacher (m := 0) ![w.1,w.2.1,w.2.2.1]
@@ -481,10 +495,10 @@ def candidateClass (c : Fin 4) (w : Record) : Fin 3 :=
   else if c = 2 then trueClass w else rivalClass w
 
 def candidateScore {m : ℕ} (c : Fin 4) (w : Fin m → Record) : ℤ :=
-  ∑ i, (((w i).2.2.2.2.val:ℤ)-1) * ((candidateClass c (w i)).val:ℤ)
+  ∑ i, (((w i).2.2.2.2.val : ℤ) - 1) * ((candidateClass c (w i)).val : ℤ)
 
 theorem score_gap (m : ℕ) (w : Fin m → Record) :
-    candidateScore 2 w-candidateScore 3 w = ∑ i, score (w i) := by
+    candidateScore 2 w - candidateScore 3 w = ∑ i, score (w i) := by
   unfold candidateScore score
   rw [← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
@@ -495,7 +509,7 @@ theorem score_gap (m : ℕ) (w : Fin m → Record) :
 def failureMass (rho a : ℝ) (m : ℕ) (select : (Fin m → Record) → Fin 4) : ℝ :=
   ∑ w : Fin m → Record, if select w ≠ 2 then ∏ i, recordMass rho a (w i) else 0
 
-theorem argmax_failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
+theorem argmax_failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (m : ℕ) (select : (Fin m → Record) → Fin 4)
     (hmax : ∀ w c, candidateScore c w ≤ candidateScore (select w) w) :
     misorder rho a m ≤ failureMass rho a m select := by
@@ -515,13 +529,13 @@ theorem argmax_failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
     · exact Finset.prod_nonneg (fun i hi => recordMass_nonneg rho a hr hr8 ha ha1 _)
     · exact le_rfl
 
-theorem failureMass_bounds (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
+theorem failureMass_bounds (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (m : ℕ) (select : (Fin m → Record) → Fin 4) :
     0 ≤ failureMass rho a m select ∧ failureMass rho a m select ≤ 1 := by
   have hp : ∀ w : Fin m → Record, 0 ≤ ∏ i, recordMass rho a (w i) := fun w =>
     Finset.prod_nonneg (fun i hi => recordMass_nonneg rho a hr hr8 ha ha1 _)
   have hprob : (∑ w : Fin m → Record, ∏ i, recordMass rho a (w i)) = 1 := by
-    rw [← Fintype.sum_pow, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law.total_mass, one_pow]
+    rw [← Fintype.sum_pow, Law.total_mass, one_pow]
   constructor
   · unfold failureMass
     apply Finset.sum_nonneg
@@ -537,39 +551,39 @@ theorem failureMass_bounds (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
     · exact hp w
 
 theorem failure_liminf (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K)
-    (select : (rho : ℝ) → (Fin (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) → Record) → Fin 4)
-    (hmax : ∀ rho, 0 < rho → rho ≤ 1/8 → ∀ w c, candidateScore c w ≤ candidateScore (select rho w) w) :
-    (1/2:ℝ) ≤ liminf (fun rho => failureMass rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) (select rho))
-      (𝓝[>] (0:ℝ)) := by
-  have small : ∀ᶠ rho : ℝ in 𝓝[>] (0:ℝ), 0 < rho ∧ rho ≤ 1/8 := by
+    (select : (rho : ℝ) → (Fin (Scale.sampleLength rho a K) → Record) → Fin 4)
+    (hmax : ∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c, candidateScore c w ≤ candidateScore (select rho w) w) :
+    (1 / 2 : ℝ) ≤ liminf (fun rho => failureMass rho a (Scale.sampleLength rho a K) (select rho))
+      (𝓝[>] (0 : ℝ)) := by
+  have small : ∀ᶠ rho : ℝ in 𝓝[>] (0 : ℝ), 0 < rho ∧ rho ≤ 1 / 8 := by
     filter_upwards [self_mem_nhdsWithin,
-      (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x:ℝ => x) (𝓝[>] (0:ℝ)) (𝓝 0)).eventually
-        (gt_mem_nhds (by norm_num : (0:ℝ)<1/8))] with rho hr hr8
+      (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x : ℝ => x) (𝓝[>] (0 : ℝ)) (𝓝 0)).eventually
+        (gt_mem_nhds (by norm_num : (0 : ℝ)<1 / 8))] with rho hr hr8
     exact ⟨hr, hr8.le⟩
-  have hupper : ∀ᶠ rho : ℝ in 𝓝[>] (0:ℝ),
-      failureMass rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) (select rho) ≤ 1 := by
+  have hupper : ∀ᶠ rho : ℝ in 𝓝[>] (0 : ℝ),
+      failureMass rho a (Scale.sampleLength rho a K) (select rho) ≤ 1 := by
     filter_upwards [small] with rho hr
     exact (failureMass_bounds rho a hr.1 hr.2 ha ha1 _ _).2
-  have hlower : ∀ᶠ rho : ℝ in 𝓝[>] (0:ℝ),
-      0 ≤ failureMass rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) (select rho) := by
+  have hlower : ∀ᶠ rho : ℝ in 𝓝[>] (0 : ℝ),
+      0 ≤ failureMass rho a (Scale.sampleLength rho a K) (select rho) := by
     filter_upwards [small] with rho hr
     exact (failureMass_bounds rho a hr.1 hr.2 ha ha1 _ _).1
-  apply (le_liminf_iff (isCoboundedUnder_ge_of_eventually_le (𝓝[>] (0:ℝ)) hupper) ⟨0,hlower⟩).mpr
+  apply (le_liminf_iff (isCoboundedUnder_ge_of_eventually_le (𝓝[>] (0 : ℝ)) hupper) ⟨0,hlower⟩).mpr
   intro z hz
-  filter_upwards [small, (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.RawLimit.raw_confidence_failure a K ha ha1 hK).eventually
+  filter_upwards [small, (RawLimit.raw_confidence_failure a K ha ha1 hK).eventually
     (lt_mem_nhds hz)] with rho hr hprob
   exact hprob.trans_le (argmax_failure_bound rho a hr.1 hr.2 ha ha1 _ (select rho) (hmax rho hr.1 hr.2))
 
-end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Selection
+end Selection
 
-namespace D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.RandomSelection
+namespace RandomSelection
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
-open D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.Selection
+open Law Selection
 
 def failureMass (rho a : ℝ) (m : ℕ) (q : (Fin m → Record) → Fin 4 → ℝ) : ℝ :=
-  ∑ w : Fin m → Record, (∏ i, recordMass rho a (w i)) * (1-q w 2)
+  ∑ w : Fin m → Record, (∏ i, recordMass rho a (w i)) * (1 - q w 2)
 
-theorem failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
+theorem failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (ha : 0 < a) (ha1 : a ≤ 1) (m : ℕ) (q : (Fin m → Record) → Fin 4 → ℝ)
     (hq : ∀ w c, 0 ≤ q w c) (hnorm : ∀ w, ∑ c, q w c = 1)
     (hsupport : ∀ w c, 0 < q w c → ∀ d, candidateScore d w ≤ candidateScore c w) :
@@ -594,29 +608,29 @@ theorem failure_bound (rho a : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1/8)
     exact mul_nonneg hp (sub_nonneg.mpr hq1)
 
 theorem failure_liminf (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K)
-    (q : (rho : ℝ) → (Fin (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) → Record) → Fin 4 → ℝ)
-    (hq : ∀ rho, 0 < rho → rho ≤ 1/8 → ∀ w c, 0 ≤ q rho w c)
-    (hnorm : ∀ rho, 0 < rho → rho ≤ 1/8 → ∀ w, ∑ c, q rho w c = 1)
-    (hsupport : ∀ rho, 0 < rho → rho ≤ 1/8 → ∀ w c, 0 < q rho w c →
+    (q : (rho : ℝ) → (Fin (Scale.sampleLength rho a K) → Record) → Fin 4 → ℝ)
+    (hq : ∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c, 0 ≤ q rho w c)
+    (hnorm : ∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w, ∑ c, q rho w c = 1)
+    (hsupport : ∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c, 0 < q rho w c →
       ∀ d, candidateScore d w ≤ candidateScore c w) :
-    (1/2:ℝ) ≤ liminf (fun rho => failureMass rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) (q rho))
-      (𝓝[>] (0:ℝ)) := by
-  have small : ∀ᶠ rho : ℝ in 𝓝[>] (0:ℝ), 0 < rho ∧ rho ≤ 1/8 := by
+    (1 / 2 : ℝ) ≤ liminf (fun rho => failureMass rho a (Scale.sampleLength rho a K) (q rho))
+      (𝓝[>] (0 : ℝ)) := by
+  have small : ∀ᶠ rho : ℝ in 𝓝[>] (0 : ℝ), 0 < rho ∧ rho ≤ 1 / 8 := by
     filter_upwards [self_mem_nhdsWithin,
-      (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x:ℝ => x) (𝓝[>] (0:ℝ)) (𝓝 0)).eventually
-        (gt_mem_nhds (by norm_num : (0:ℝ)<1/8))] with rho hr hr8
+      (tendsto_id.mono_left nhdsWithin_le_nhds : Tendsto (fun x : ℝ => x) (𝓝[>] (0 : ℝ)) (𝓝 0)).eventually
+        (gt_mem_nhds (by norm_num : (0 : ℝ)<1 / 8))] with rho hr hr8
     exact ⟨hr, hr8.le⟩
-  have hprob (rho : ℝ) : (∑ w : Fin (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) → Record,
+  have hprob (rho : ℝ) : (∑ w : Fin (Scale.sampleLength rho a K) → Record,
       ∏ i, recordMass rho a (w i)) = 1 := by
-    rw [← Fintype.sum_pow, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law.total_mass, one_pow]
-  have bounds : ∀ᶠ rho : ℝ in 𝓝[>] (0:ℝ),
-      0 ≤ failureMass rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) (q rho) ∧
-      failureMass rho a (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) (q rho) ≤ 1 := by
+    rw [← Fintype.sum_pow, Law.total_mass, one_pow]
+  have bounds : ∀ᶠ rho : ℝ in 𝓝[>] (0 : ℝ),
+      0 ≤ failureMass rho a (Scale.sampleLength rho a K) (q rho) ∧
+      failureMass rho a (Scale.sampleLength rho a K) (q rho) ≤ 1 := by
     filter_upwards [small] with rho hr
     have hq1 (w) : q rho w 2 ≤ 1 := by
       rw [← hnorm rho hr.1 hr.2 w]
       exact Finset.single_le_sum (fun c hc => hq rho hr.1 hr.2 w c) (Finset.mem_univ 2)
-    have hp (w : Fin (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Scale.sampleLength rho a K) → Record) :
+    have hp (w : Fin (Scale.sampleLength rho a K) → Record) :
         0 ≤ ∏ i, recordMass rho a (w i) :=
       Finset.prod_nonneg (fun i hi => recordMass_nonneg rho a hr.1 hr.2 ha ha1 _)
     constructor
@@ -627,12 +641,69 @@ theorem failure_liminf (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K)
       have h := hq rho hr.1 hr.2 w 2
       nlinarith [hp w]
   apply (le_liminf_iff
-    (isCoboundedUnder_ge_of_eventually_le (𝓝[>] (0:ℝ)) (bounds.mono fun rho hr => hr.2))
+    (isCoboundedUnder_ge_of_eventually_le (𝓝[>] (0 : ℝ)) (bounds.mono fun rho hr => hr.2))
     ⟨0,bounds.mono fun rho hr => hr.1⟩).mpr
   intro z hz
-  filter_upwards [small, (D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.RawLimit.raw_confidence_failure a K ha ha1 hK).eventually
+  filter_upwards [small, (RawLimit.raw_confidence_failure a K ha ha1 hK).eventually
     (lt_mem_nhds hz)] with rho hr hprob
   exact hprob.trans_le (failure_bound rho a hr.1 hr.2 ha ha1 _ (q rho)
     (hq rho hr.1 hr.2) (hnorm rho hr.1 hr.2) (hsupport rho hr.1 hr.2))
 
-end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.RandomSelection
+end RandomSelection
+
+end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure
+
+namespace D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure
+open _root_.D5.S3.Arith.FibonacciAtomic
+open _root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities
+open Law
+local notation "trueClass" =>
+  (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
+    ![w.1, w.2.2.1, w.2.2.2.1])
+local notation "rivalClass" =>
+  (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
+    ![w.2.1, w.2.2.1, w.2.2.2.1])
+
+/-- The legal actual-record family has the exact moments and half-probability
+misordering limit; every maximum-score rule has failure lower limit at least one half. -/
+theorem result (a K : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) (hK : 0 < K) :
+    (∀ rho : ℝ, 0 < rho → rho ≤ 1 / 8 →
+      HeterogeneousTeacherSeparation.Admissible rho (positionLaw rho) ∧
+      (∀ w : Record, difference w =
+        (HeterogeneousTeacherSeparation.highIndicator w.1 -
+          HeterogeneousTeacherSeparation.highIndicator w.2.1) *
+        HeterogeneousTeacherSeparation.lowIndicator w.2.2.1 *
+        (1 - 2 * HeterogeneousTeacherSeparation.highIndicator w.2.2.1 *
+          HeterogeneousTeacherSeparation.lowIndicator w.2.2.2.1)) ∧
+      (expectation rho a (fun w => difference w ^ 2) = 2 * rho * (1 - 5 * rho + 12 * rho ^ 2) ∧
+        expectation rho a (fun w => (((trueClass w).val : ℝ) - 1) ^ 2 -
+          (((rivalClass w).val : ℝ) - 1) ^ 2) = -2 * rho + 10 * rho ^ 2 ∧
+        expectation rho a (fun w => (score w : ℝ)) = 3 * a * rho ^ 3 ∧
+        variance rho a = (8 + a) / 12 * (2 * rho * (1 - 5 * rho + 12 * rho ^ 2)) -
+          9 * a ^ 2 * rho ^ 6 ∧
+        0 < expectation rho a (fun w => (score w : ℝ)))) ∧
+    Tendsto (fun rho => misorder rho a (Scale.sampleLength rho a K))
+      (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2 : ℝ)) ∧
+    (∀ select : (rho : ℝ) → (Fin (Scale.sampleLength rho a K) → Record) → Fin 4,
+      (∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c,
+        Selection.candidateScore c w ≤ Selection.candidateScore (select rho w) w) →
+      (1 / 2 : ℝ) ≤ liminf
+        (fun rho => Selection.failureMass rho a (Scale.sampleLength rho a K) (select rho))
+        (𝓝[>] (0 : ℝ))) ∧
+    (∀ q : (rho : ℝ) → (Fin (Scale.sampleLength rho a K) → Record) → Fin 4 → ℝ,
+      (∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c, 0 ≤ q rho w c) →
+      (∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w, ∑ c, q rho w c = 1) →
+      (∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c, 0 < q rho w c →
+        ∀ d, Selection.candidateScore d w ≤ Selection.candidateScore c w) →
+      (1 / 2 : ℝ) ≤ liminf
+        (fun rho => RandomSelection.failureMass rho a (Scale.sampleLength rho a K) (q rho))
+        (𝓝[>] (0 : ℝ))) := by
+  refine ⟨?_, RawLimit.raw_confidence_failure a K ha ha1 hK, ?_, ?_⟩
+  · intro rho hr hr8
+    exact ⟨positionLaw_admissible rho hr hr8, difference_formula, actual_moments rho a hr ha⟩
+  · intro select hmax
+    exact Selection.failure_liminf a K ha ha1 hK select hmax
+  · intro q hq hnorm hsupport
+    exact RandomSelection.failure_liminf a K ha ha1 hK q hq hnorm hsupport
+
+end D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure
