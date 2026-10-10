@@ -3247,3 +3247,166 @@ $$
 **范围。** 这是给定有限允许层族与固定入口系数时的证书族停止算法；达到阈值只说明 §45 的指定 Fourier 二维下界不超过 $\varepsilon$，不是整个钻石范数的上界，也不优化任意 LOSR 层。
 
 ## 追加锚（本行以下为增补区）
+
+## 47. 允许子群菜单的可行性与停滞
+
+**替代关系。** 定理 46.1 中“至多 $|T_\varepsilon|$ 步达到
+$\max\mathsf S_j\le\varepsilon$”，以及其证明中“至多 $|T_\varepsilon|$
+次达到空集”，由定理 47.2 替代：无条件结论是至多这么多次严格缩小后达到空集或停滞；
+保证达到阈值须加上精确的允许子群可行性条件 (47.1)。
+定理 46.1 的非空停滞阻碍后续有限 stack 的断言保留，并在下面给出其精确集合形式。
+
+**定义 47.1（固定菜单与不可删除证书）。** 沿用 §43–46 的模型：
+$A$ 为有限阿贝尔群，$\widehat A$ 为其角色群；对每个非平凡 $\eta$，
+固定入口 Fourier 标签对 $(\chi_\eta,\psi_\eta)$，
+$\eta=\chi_\eta\psi_\eta^{-1}$，及其入口矩阵单位系数 $h_\eta$。
+阈值 $\varepsilon\ge0$，允许菜单 $\mathscr L$ 是 $A$ 的子群族，
+在整段 stack 中固定，允许重复选层。每层仅施加同一 Fourier 基上的均匀
+Schur 平均 $\mathcal D_K$，层间没有其他映射或矩阵单位混合：
+
+$$
+\begin{aligned}
+\mathcal D_K(E_{\chi,\psi})
+ &=m_K(\chi\psi^{-1})E_{\chi,\psi},\\
+m_K(\eta)&=\frac1{|K|}\sum_{u\in K}\eta(u),\\
+K^\perp&=\{\eta\in\widehat A:\eta(u)=1\ \text{对全部 }u\in K\}.
+\end{aligned}
+$$
+
+定义
+
+$$
+\begin{aligned}
+T_\varepsilon&=\{\eta\in\widehat A\setminus\{1\}:|h_\eta|>\varepsilon\},\\
+B_{\mathscr L}&=\bigcap_{K\in\mathscr L}K^\perp,\\
+F_\varepsilon&=T_\varepsilon\cap B_{\mathscr L}.
+\end{aligned}
+$$
+
+空菜单时取 $B_{\varnothing}=\widehat A$，允许空 stack。
+称该证书任务可行，是指存在一个有限允许 stack，使 §45 的全部指定二维
+残余下界证书均不超过 $\varepsilon$；这不是整个钻石范数不超过
+$\varepsilon$ 的定义。
+
+**定理 47.2（可行性、严格步数与终端停滞）。** 在定义 47.1 的全部条件下，
+证书任务可行当且仅当
+
+$$
+\boxed{
+F_\varepsilon
+=T_\varepsilon\cap\bigcap_{K\in\mathscr L}K^\perp
+=\varnothing.
+}
+\tag{47.1}
+$$
+
+从 $U_0=T_\varepsilon$ 开始，每次仅在存在 $K\in\mathscr L$ 使
+$U\cap K^\perp\subsetneq U$ 时选取这样的层，并以 $U\cap K^\perp$ 更新 $U$；
+在 $U=\varnothing$ 或不存在这样的层时停止。
+不论怎样选择严格缩小层，至多 $|T_\varepsilon|$ 次严格选层后停止，
+终端集合恰为 $F_\varepsilon$。
+因此 (47.1) 成立时达到 $\max\mathsf S_j\le\varepsilon$；
+不成立时在非空集合 $F_\varepsilon$ 上停滞，
+任何后续有限允许 stack 都保留其中每一个超阈值证书。
+
+**证明。** 若 $\eta$ 在 $K$ 上恒为一，则 $m_K(\eta)=1$。
+否则选 $u_0\in K$ 使 $\eta(u_0)\ne1$。
+平移 $u\mapsto u+u_0$ 置换 $K$，故
+
+$$
+\sum_{u\in K}\eta(u)
+=\eta(u_0)\sum_{u\in K}\eta(u),
+$$
+
+迫使该和为零。因此 $m_K(\eta)=\mathbf1_{K^\perp}(\eta)$。
+对已选的 $K_1,\ldots,K_j$，置
+$W_j=\bigcap_{i=1}^jK_i^\perp$，$W_0=\widehat A$。
+固定入口和无混合条件给出出口系数
+
+$$
+h_\eta\prod_{i=1}^jm_{K_i}(\eta)
+=h_\eta\mathbf1_{W_j}(\eta).
+$$
+
+于是 §45 的残余谱和算法集合正是
+
+$$
+\mathsf S_j=\{|h_\eta|:\eta\in W_j\setminus\{1\}\},
+\qquad U_j=T_\varepsilon\cap W_j,
+$$
+
+且 $U_{j+1}=U_j\cap K_{j+1}^\perp$。
+按 §45 的空集最大值为零的约定，$\varepsilon\ge0$ 保证
+
+$$
+\max\mathsf S_j\le\varepsilon
+\quad\Longleftrightarrow\quad U_j=\varnothing.
+$$
+
+这里每个存活的 $|h_\eta|$ 仍是 §43–45 的二维归一化输入给出的钻石距离
+下界：该 Schur 模型的差在相应二维支持上有非对角系数
+$h_\eta/2$ 及其共轭，本征值为 $\pm|h_\eta|/2$。
+这些下界全部不超过阈值不产生钻石范数的上界。
+
+若 $\eta\in F_\varepsilon$，它在每个允许子群上恒为一，
+所以在任何有限选层序列中都存活。特别地 $F_\varepsilon\subseteq U_j$，
+非空 $F_\varepsilon$ 阻碍达到阈值，证明 (47.1) 的必要性。
+反之，若 $F_\varepsilon=\varnothing$，则对每个 $\eta\in T_\varepsilon$
+存在 $K_\eta\in\mathscr L$ 使 $\eta\notin K_\eta^\perp$。
+$T_\varepsilon$ 有限，逐个取这些允许层组成长度至多
+$|T_\varepsilon|$ 的 stack，就删除全部 $T_\varepsilon$。
+若 $T_\varepsilon$ 为空，空 stack 即可。
+该构造只选取菜单中的层，不要求这些子群的和也在菜单中，证明充分性。
+
+对于定理中的严格选层规则，每步至少删除一个角色且不能加入角色，
+所以严格步数至多 $|T_\varepsilon|$。
+若终端 $U$ 为空，由 $F_\varepsilon\subseteq U$ 得二者均为空。
+若终端 $U$ 非空，则不存在严格缩小层等价于
+
+$$
+\forall K\in\mathscr L,\quad U\cap K^\perp=U
+\quad\Longleftrightarrow\quad U\subseteq B_{\mathscr L}.
+$$
+
+又因 $U\subseteq T_\varepsilon$，得到 $U\subseteq F_\varepsilon$；
+和始终成立的反向包含合起来，终端 $U=F_\varepsilon$。
+此集合与每个允许 $K^\perp$ 相交都不变，归纳可知任意后续有限
+stack 仍保留它及其固定的超阈值系数。证毕。
+
+当菜单为空时，$F_\varepsilon=T_\varepsilon$；
+故仅在入口证书已达阈值时可行，否则零次严格选层就停滞。
+等于阈值的系数不属于 $T_\varepsilon$。
+步数界只数上述严格选层；任意插入不缩小集合的重复层，
+不受这个层数界约束，也不改变可行性条件。
+
+**反例 47.3（合法菜单中的立即停滞）。** 取
+$A=\mathbb Z/2\mathbb Z$，$\widehat A=\{1,\eta\}$，
+$\eta(1)=-1$。入口通道为恒等，固定标签对为 $(\eta,1)$，
+故 $h_\eta=1$；取 $\varepsilon=1/2$。
+允许菜单只有平凡子群：$\mathscr L=\{\{0\}\}$。
+此时
+
+$$
+\mathcal D_{\{0\}}=\mathrm{id},\qquad
+T_\varepsilon=F_\varepsilon=\{\eta\},\qquad
+B_{\mathscr L}=\widehat A.
+$$
+
+每个有限允许 stack 都是恒等通道，$U_0$ 非空且不能严格缩小。
+对 $|v\rangle=(|1\rangle+|\eta\rangle)/\sqrt2$，
+恒等输出与理想 $\mathcal D_A$ 输出之差为
+
+$$
+\frac12\bigl(|1\rangle\langle\eta|+|\eta\rangle\langle1|\bigr).
+$$
+
+它的本征值为 $\pm1/2$，迹范数为一；
+所以证书 $1>\varepsilon$ 始终存在。
+所有层仍是均匀允许子群平均，固定入口、固定 Fourier 基、无层间映射和无混合
+条件全部满足，却不能在 $|T_\varepsilon|=1$ 步内达到阈值。
+
+本节仅限定 §46.1 的成功条件并明确其停滞集合，使用 §43–45 的固定入口乘子
+与下界证书；不优化层的搜索成本、整个钻石误差或任意 LOSR 操作。
+证书的删除不提供读数取得、已填充全载体上的物理操作、物理钟或寿命结论。
+
+## 追加锚（本行以下为增补区）
