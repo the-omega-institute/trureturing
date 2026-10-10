@@ -945,3 +945,31 @@ at its self-price, namely the actual prefix $C_A$ in the
 Consequently $\Phi_{\rm CA}(A)=\log C_A=\log N=A$ and the return is
 regular. This reuses the source's strict-minimum and activation interfaces;
 it introduces no new general regularity theorem or Lean wrapper.
+
+### Restrict the unpaid signed estimate to this joint source class
+
+The selected family lies in $\mathscr S_{\rm reg}$ and retains (S2).
+Therefore (O3) still forces $T I_\psi(A)\to-\infty$ on that same
+unbounded family if RH fails. It suffices to establish
+
+$$
+\exists M\ge0,\ A_0\quad
+\forall N\in\mathscr S_{\rm reg},\ A=\log N\ge A_0:\quad
+\sqrt A\log A\, I_\psi(A)\ge-M.
+\tag{S4}
+$$
+
+This is the complete original signed integral, with every prime-power
+layer and explicit-formula term retained. The
+[existing regular-return endpoint application](../ArithSums/nicolas2025comparison.md#the-endpoint-condition-at-actual-self-tangent-sources)
+now applies to this same family: it already gives
+$A-\vartheta(A)=\sqrt{2A}(1+o(1))$ and a negligible squared endpoint
+penalty at the actual primorial cutoff. Its proof and the archived
+packet and cone results are reused rather than repeated.
+
+No bound in (S4) follows from those endpoint identities. The added
+interface is joint selection of proper GA1 regular sources with the
+same quantified excess, not a proof that every member of
+$\mathscr S_*$ is GA1. The full signed estimate and RH remain unproved;
+this application is not Lean certified and claims no mathematical
+originality.
