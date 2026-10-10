@@ -456,9 +456,13 @@ private lemma lower_row_le_norm (K n k : ℕ) (d z : ℝ) (hz : 0≤z)
     _ = ∑ u, ‖(lowerComplexMatrix K n d z ^ k) v u‖ := by simp_rw [hentry]
     _ = ((∑ u, ‖(lowerComplexMatrix K n d z ^ k) v u‖₊):ℝ) := by simp
     _ ≤ (((Finset.univ.sup fun i => ∑ u, ‖(lowerComplexMatrix K n d z ^ k) i u‖₊):ℝ≥0):ℝ) := by
-      exact_mod_cast (Finset.le_sup
-        (f := fun i : Vertex (Statement.lowerLanguage K n d) n =>
-          ∑ u, ‖(lowerComplexMatrix K n d z ^ k) i u‖₊) (Finset.mem_univ v))
+      have hNN :
+          (∑ u, ‖(lowerComplexMatrix K n d z ^ k) v u‖₊) ≤
+            Finset.univ.sup (fun i : Vertex (Statement.lowerLanguage K n d) n =>
+              ∑ u, ‖(lowerComplexMatrix K n d z ^ k) i u‖₊) :=
+        Finset.le_sup (f := fun i : Vertex (Statement.lowerLanguage K n d) n =>
+          ∑ u, ‖(lowerComplexMatrix K n d z ^ k) i u‖₊) (Finset.mem_univ v)
+      simpa only [NNReal.coe_sum] using (NNReal.coe_le_coe.mpr hNN)
     _ = _ := (Matrix.linfty_opNorm_def _).symm
 private lemma lower_factor_mass_le_norm_powers (K n N : ℕ) (d z : ℝ) (hz : 0≤z) :
     (Statement.factorCount (Statement.lowerLanguage K n d) N:ℝ)*z^N ≤

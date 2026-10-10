@@ -260,6 +260,8 @@ private theorem weighted_factor_count
     (k : ℕ) :
     (Nat.card (Words V))^k ≤ Statement.factorCount lang (k*L) := by
   letI : Finite (Words V) := hV.to_subtype
+  letI : Finite (Factors lang (k*L)) :=
+    ((finite_letter_weight (k*L)).subset (by intro w hw; exact hw.1)).to_subtype
   let enc : (Fin k → Words V) → Factors lang (k*L) := fun f =>
     ⟨(List.ofFn (fun i => (f i).val)).flatten,
       concatenated_weight V L k hweight f, hext k f⟩
