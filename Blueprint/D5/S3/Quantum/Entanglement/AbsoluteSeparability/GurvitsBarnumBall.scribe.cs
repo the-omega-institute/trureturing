@@ -15,17 +15,17 @@ internal sealed class GurvitsBarnumBallDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula p, Formula q) => Seq(Par(p), Rightarrow, Sp, q);
     private static Formula And(Formula p, Formula q) => Seq(Par(p), Land, Sp, Par(q));
     private static Formula Eq(Formula p, Formula q) => Seq(p, F.Eq, q);
-    private static Formula Le(Formula p, Formula q) => Seq(p, Leq, q);
+    private static Formula Le(Formula p, Formula q) => Seq(p, Leq, Sp, q);
     private static Formula Sum(string n, Formula t, Formula body) =>
         Seq(new Formula.Subscript(F.Sum, Seq(F.Id(n), Colon, t)), Sp, body);
-    private static Formula Arrow(Formula p, Formula q) => Seq(p, To, q);
-    private static Formula Mul(Formula p, Formula q) => Seq(p, Cdot, q);
+    private static Formula Arrow(Formula p, Formula q) => Seq(p, To, Sp, q);
+    private static Formula Mul(Formula p, Formula q) => Seq(p, Cdot, Sp, q);
     private static Formula Pow2(Formula x) => new Formula.Power(x, D(2));
     private static Formula Norm(Formula x) => new Formula.Norm(x);
     private static Formula C => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula R => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula N => Seq(Mathbb, Grp(F.Id("N")));
-    private static Formula Index => Seq(Call("Fin", F.Id("m")), Times, Call("Fin", F.Id("n")));
+    private static Formula Index => Seq(Call("Fin", F.Id("m")), Times, Sp, Call("Fin", F.Id("n")));
     private static Formula Vector => Arrow(Index, C);
     private static Formula Matrix => Arrow(Index, Arrow(Index, C));
     private static Formula Identity => F.Id("I");

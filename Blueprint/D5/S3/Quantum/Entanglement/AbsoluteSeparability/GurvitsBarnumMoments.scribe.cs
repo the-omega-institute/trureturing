@@ -12,11 +12,11 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, Par(Seq(F.Id(n), Colon, t)), Comma, Sp, body);
     private static Formula Imp(Formula p, Formula q) => Seq(Par(p), Rightarrow, Sp, q);
     private static Formula Eq(Formula p, Formula q) => Seq(p, F.Eq, q);
-    private static Formula Le(Formula p, Formula q) => Seq(p, Leq, q);
+    private static Formula Le(Formula p, Formula q) => Seq(p, Leq, Sp, q);
     private static Formula Sum(string n, Formula t, Formula body) =>
         Seq(new Formula.Subscript(F.Sum, Seq(F.Id(n), Colon, t)), Sp, body);
-    private static Formula Arrow(Formula p, Formula q) => Seq(p, To, q);
-    private static Formula Mul(Formula p, Formula q) => Seq(p, Cdot, q);
+    private static Formula Arrow(Formula p, Formula q) => Seq(p, To, Sp, q);
+    private static Formula Mul(Formula p, Formula q) => Seq(p, Cdot, Sp, q);
     private static Formula C => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula N => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Dim => F.Id("d");
@@ -27,7 +27,7 @@ internal sealed class GurvitsBarnumMomentsDocument : IScribeDocumentDefinition
     private static Formula Re(Formula f) => Call("Re", f);
     private static Formula Q(Formula t, Formula z) => Call("q", t, z);
     private static Formula Lam(string n, Formula body) =>
-        Seq(Lambda, F.Id(n), Comma, Sp, body);
+        Seq(Lambda, Sp, F.Id(n), Comma, Sp, body);
     private static Formula Power(Formula b, Formula e) => new Formula.Power(b, e);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
