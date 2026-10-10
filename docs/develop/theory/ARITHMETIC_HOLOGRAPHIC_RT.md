@@ -2962,6 +2962,106 @@ append-only/all-or-none 前缀上的抽象加权预算恢复结果。它不推�
 \(\delta_t=X_t\setminus X_{t-1}\)。
 
 
+
+## 54. 调和预算门槛的尖锐性
+
+**定理 54.1（证书族内的精确 \(H_d\) witness）。** 对任意整数
+\(d\ge2\)，令 \(A=(\mathbb Z/2\mathbb Z)^d\)，取标准基 \(e_i\) 及对偶坐标字符
+\(\eta_i(x)=(-1)^{x_i}\)，并令残差
+\[
+R=T:=\{\eta_1,\ldots,\eta_d\}.
+\]
+菜单恰为 \(\{K_0,K_1,\ldots,K_d\}\)，其中 \(K_0=A\) 及
+\(K_i=\langle e_i\rangle\)（\(1\le i\le d\)）。
+则
+\[
+\overline C_{K_0}\cap T=T,\qquad
+\overline C_{K_i}\cap T=\{\eta_i\}.
+\]
+令 \(L=d!\)、\(r_i=d-i+1\)，并赋正整数成本
+\[
+c(K_0)=L,\qquad c(K_i)=L/r_i.
+\]
+这些成本均为整数。当前覆盖的加权最优值唯一为
+\(\sigma^c=L\)，因为 \(K_0\) 单独覆盖 \(T\)，而所有单例层的总成本为
+\[
+\sum_{i=1}^d L/r_i=L H_d>L.
+\]
+初始 \(d_t=d\)。在每一轮，若尚未选取 \(K_1,\ldots,K_{j-1}\)，则残差大小为
+\(r_j\)，且 \(K_j\) 与 \(K_0\) 的 gain/cost 比值都为 \(r_j/L\)，其余单例层
+比值更小。允许的 tie-break 依次选择 \(K_1,\ldots,K_d\) 时，完整贪心成本为
+\[
+w=L\sum_{j=1}^d\frac1j=L H_d=H_{d_t}\sigma^c.
+\]
+因此在同一个 certificate family 内，\(\beta<H_{d_t}\sigma^c\)（即使
+\(\beta\ge\sigma^c\)）可因合法 tie-break 而回滚；\(\beta\ge H_{d_t}\sigma^c\)
+的充分门槛不能统一降低。
+
+**唯一比值版本。** 取 \(B=M d!\)，其中整数 \(M\ge2\) 足够大，并令
+\[
+c(K_0)=B,\qquad c(K_i)=B/r_i-1.
+\]
+则每个单例成本为正整数。残差大小为 \(r\) 时，未选取的当前单例比值
+\(1/(B/r-1)=r/(B-r)\) 严格大于 \(K_0\) 的 \(r/B\)，且随 \(r\) 严格增大；
+故贪心顺序 \(K_1,\ldots,K_d\) 唯一。若
+\(B(H_d-1)>d\)，所有单例总成本 \(B H_d-d>B\)，所以 \(K_0\) 仍是唯一最优覆盖，
+而
+\[
+\sigma^c=B,\qquad w=B H_d-d,\qquad
+\frac{w}{\sigma^c}=H_d-\frac dB\longrightarrow H_d.
+\]
+对任意 \(1\le\alpha<H_d\)，取 \(B\) 足够大使
+\(B(H_d-\alpha)>d\)，并令 \(\beta=\lfloor\alpha B\rfloor\)。则
+\(\beta\ge\sigma^c\) 而 \(\beta\le B H_d-d-1=w-1\)，故存在可行最优覆盖但
+唯一 ratio-greedy 仍超预算。于是任何统一的 slack factor
+\(\alpha<H_d\) 都不能保证预算提交；\(\alpha<1\) 则已被必要条件
+\(\beta\ge\sigma^c\) 排除。所有成本保持有限正整数，位长由 \(B\) 显式给出。
+
+**证明。** 对 \(K_S=\langle e_i:i\in S\rangle\)，有
+\(\eta_j|_{K_S}\) 非平凡当且仅当 \(j\in S\)，故上述覆盖交集是逐项精确的。
+在不含 \(K_0\) 的菜单层中，\(\eta_i\) 只被 \(K_i\) 覆盖，所以任何不含
+\(K_0\) 的覆盖必须包含全部单例层；
+其成本严格大于 \(K_0\)（在两种成本赋值下分别为 \(L H_d>L\) 和
+\(B H_d-d>B\)），给出唯一最优值。比值比较和剩余大小直接给出所述贪心序列；
+取整不等式来自 \(B(H_d-\alpha)>d\)。这只是有限集合覆盖 charging 的尖锐性，
+不调用物理层数、资源、LOSR/CPTP 或 full-diamond 结论。
+
+**推论 54.2（任意有限集合系统的证书嵌入）。** 令 \(U=[n]\) 且
+\(\mathcal F\subseteq2^U\) 是任意有限、去重的菜单（重复集合按菜单语义先合并，
+保留其最低成本）。取
+\(A=(\mathbb Z/2\mathbb Z)^n\)、\(T=\{\eta_1,\ldots,\eta_n\}\)，并以
+\(K_S=\langle e_i:i\in S\rangle\) 表示每个 \(S\in\mathcal F\)。则
+\[
+\overline C_{K_S}\cap T=\{\eta_i:i\in S\}.
+\]
+因此任意有限（加权）set-cover 实例及其 \(\sigma^c,d\)、所有 gain/cost
+比较和 tie-breaking，都可在该 certificate family 中逐项复现；这里的嵌入是代数菜单
+构造，需这些 \(K_S\) 确实列入允许菜单；在此范围内 \(H_d\) 的一般 set-cover
+常数没有额外的集合结构改进。
+
+**最小菜单扩张实例（\(C_2^4\)）。** 取
+\(T=\{\eta_1,\eta_2,\eta_3,\eta_4\}\) 和
+\[
+K_1=\langle e_1,e_2\rangle,\quad
+K_2=\langle e_3,e_4\rangle,\quad
+K_G=\langle e_1,e_3\rangle.
+\]
+它们在 \(T\) 上覆盖 \(12,34,13\)。令
+\(c(K_1)=c(K_2)=M\)、\(c(K_G)=M-1\)（\(M\ge2\)）。旧菜单
+\(\{K_1,K_2\}\) 的成本为 \(\sigma^c=2M\)（\(\eta_2\) 只由 \(K_1\)、\(\eta_4\) 只由
+\(K_2\) 覆盖），而扩张菜单的唯一首选为 \(K_G\)，
+随后必须取 \(K_1,K_2\)，故 \(d_t=2\)、\(w=3M-1\)、\(H_2\sigma^c=3M\)。
+预算 \(\beta=3M-2\)（特别是 \(\beta=\sigma^c=2M\)）满足
+\(\sigma^c\le\beta<H_2\sigma^c\) 却回滚；旧菜单在同一预算下成功。若三层成本
+都取 \(M\) 并规定 tie-break 先取 \(K_G\)，则 \(w=3M=H_2\sigma^c\) 精确达到
+\(H_2\)；唯一比值的 \(M-1\) 版本则给出不依赖 tie 的逼近。
+
+**范围。** 定理 54.1 和推论 54.2 只讨论固定 Fourier 二维证书族中的有限
+set-cover、加权贪心及预算 all-or-none 语义；它们不宣称物理层数/资源下界、
+全局最短 stack、LOSR/CPTP、完整钻石范数或任意全局优化近似。阈值更新、菜单
+收缩/扩张和失败待办仍按 §51--53 的 append-only 语义处理。
+
+
 ## 追加锚（本行以下为增补区）
 
 ### 36.5 有限单纯形变分支配：既有证明的完整应用
