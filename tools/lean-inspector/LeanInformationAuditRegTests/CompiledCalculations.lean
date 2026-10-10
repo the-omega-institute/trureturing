@@ -35,6 +35,137 @@ private def otherInstanceArgumentsRemainSignificant (context : Context) : IO Uni
   unless !same do throw <| IO.userError "compiled.other_instance_arguments_remain_significant"
   IO.println "[PASS] compiled.other_instance_arguments_remain_significant"
 
+private def sourceOccurrencePaths (context : TemplateAudit.CompiledEnrollment.Context) : IO Unit := do
+  let action : CompiledSourceScope.M Unit := do
+    let natural := mkConst ``Nat
+    let untouched := mkApp2 (mkConst ``Nat.add) (.bvar 0) (.bvar 1)
+    let occurrence := mkApp (mkConst ``Not) (.bvar 0)
+    let replacement := mkApp2 (mkConst ``Eq [1]) (.bvar 1) occurrence
+    let metadata : MData := ⟨[(`source, .ofNat 17)]⟩
+    let cases : Array (String × (Expr → Expr) × String × Nat) := #[
+      ("app_fn", fun e => .app e untouched, "fn", 1),
+      ("app_arg", fun e => .app untouched e, "arg", 1),
+      ("forall_domain", fun e => .forallE `x e untouched .implicit, "domain", 1),
+      ("forall_body", fun e => .forallE `x (.bvar 0) e .instImplicit, "body", 2),
+      ("lambda_domain", fun e => .lam `x e untouched .strictImplicit, "domain", 1),
+      ("lambda_body", fun e => .lam `x (.bvar 0) e .default, "body", 2),
+      ("let_type", fun e => .letE `x e untouched untouched true, "type", 1),
+      ("let_value", fun e => .letE `x (.bvar 0) e untouched false, "value", 1),
+      ("let_body", fun e => .letE `x (.bvar 0) untouched e false, "body", 2),
+      ("projection", fun e => .proj `Prod 1 e, "body", 1),
+      ("metadata", fun e => .mdata metadata e, "body", 1)]
+    for (label, wrap, step, size) in cases do
+      let source := Expr.forallE `outer natural (wrap occurrence) .default
+      let path := #["body", step]
+      let (scope, selected) ← CompiledSourceScope.atPath source path
+      unless scope.size == size && selected.equal occurrence do
+        throw <| IO.userError s!"compiled.source_paths:{label}:selection"
+      let changed ← CompiledSourceScope.replaceSourceAt source path.toList replacement
+      unless reprStr changed == reprStr (Expr.forallE `outer natural (wrap replacement) .default) do
+        throw <| IO.userError s!"compiled.source_paths:{label}:raw_context"
+      let restored ← CompiledSourceScope.replaceSourceAt changed path.toList occurrence
+      unless reprStr restored == reprStr source do
+        throw <| IO.userError s!"compiled.source_paths:{label}:untouched_fields"
+      if step != "fn" && step != "arg" then
+        let rejected ← try
+          discard <| CompiledSourceScope.replaceAt (wrap occurrence) [step] replacement
+          pure false
+        catch error => pure (error.toString == "unclassified_form:source.state_operand_path")
+        unless rejected do throw <| IO.userError s!"compiled.source_paths:{label}:operand_grammar"
+    let sibling := Expr.lam `same natural (.bvar 0) .implicit
+    let source := Expr.app sibling sibling
+    let (left, _) ← CompiledSourceScope.atPath source #["fn", "body"]
+    let (right, _) ← CompiledSourceScope.atPath source #["arg", "body"]
+    unless left[0]!.path != right[0]!.path do
+      throw <| IO.userError "compiled.source_paths:sibling_ancestry"
+    let changed ← CompiledSourceScope.replaceSourceAt source ["fn", "body"] replacement
+    unless changed.equal (.app (.lam `same natural replacement .implicit) sibling) do
+      throw <| IO.userError "compiled.source_paths:sibling_preservation"
+    let some owner := context.provenance.view.ownerOf ``Nat.add
+      | throw <| IO.userError "compiled.source_paths:fixture_owner"
+    let proposition := mkApp3 (mkConst ``Eq [1]) natural
+      (mkApp2 (mkConst ``Fin.val) (.bvar 2) (.bvar 0)) (mkNatLit 0)
+    let quantify := fun e => Expr.forallE `n natural
+      (.forallE `h (mkConst ``True)
+        (.forallE `w (mkApp (mkConst ``Fin) (.bvar 1)) e .default) .implicit) .default
+    let quantified := ConstantInfo.thmInfo {
+      name := ``Nat.add, levelParams := [],
+      type := quantify proposition, value := mkConst ``True.intro}
+    let scope ← CompiledSourceScope.resolve quantified {
+      owner, coordinates := #[0],
+      readouts := #[{
+        path := #["body", "body", "body"],
+        stateOperand := some #["fn", "arg", "arg"], booleanPredicate := true}]}
+    let decision := mkApp2 (mkConst ``Decidable.decide) proposition
+      (mkApp (mkConst ``Classical.propDecidable) proposition)
+    let expected := quantify (mkApp3 (mkConst ``Eq [1]) (mkConst ``Bool)
+      decision (mkConst ``Bool.true))
+    let some readout := scope.readouts[0]?
+      | throw <| IO.userError "compiled.source_paths:quantified_readout_missing"
+    unless scope.source.equal quantified.type && scope.expanded.equal expected &&
+        scope.telescope.size == 3 && readout.rawObservation.equal proposition do
+      throw <| IO.userError "compiled.source_paths:quantified_boolean_reconstruction"
+    let inside := Expr.lam `internal natural
+      (mkApp3 (mkConst ``Eq [1]) natural (.bvar 0) (.bvar 0)) .default
+    let internal := ConstantInfo.thmInfo {
+      name := ``Nat.add, levelParams := [],
+      type := .forallE `outer natural inside .default, value := mkConst ``True.intro}
+    let internalRejected ← try
+      discard <| CompiledSourceScope.resolve internal {
+        owner, coordinates := #[],
+        readouts := #[{
+          path := #["body"], stateOperand := some #["body", "arg"],
+          booleanPredicate := true}]}
+      pure false
+    catch error => pure (error.toString == "unclassified_form:source.state_operand_scope")
+    unless internalRejected do throw <| IO.userError "compiled.source_paths:internal_operand_binder"
+    let info := ConstantInfo.thmInfo {
+      name := ``Nat.add, levelParams := [],
+      type := source, value := mkConst ``True.intro}
+    let captured ← try
+      discard <| CompiledSourceScope.resolve info {
+        owner, coordinates := #[0],
+        readouts := #[{path := #["fn", "body"], stateBinder := 0},
+          {path := #["arg", "body"], stateBinder := 0}]}
+      pure false
+    catch error => pure (error.toString == "unclassified_form:source.captured_coordinate")
+    unless captured do throw <| IO.userError "compiled.source_paths:captured_coordinate"
+    for path in #[#["domain"], #["arg", "value"], #["fn", "body", "body"]] do
+      let selected ← try
+        discard <| CompiledSourceScope.atPath source path
+        pure false
+      catch error => pure (error.toString == "unclassified_form:source.absent_occurrence")
+      let replaced ← try
+        discard <| CompiledSourceScope.replaceSourceAt source path.toList replacement
+        pure false
+      catch error => pure (error.toString == "unclassified_form:source.absent_occurrence")
+      unless selected && replaced do throw <| IO.userError "compiled.source_paths:malformed"
+    let binders : Array SourceBinder := #[{name := `n, info := .default, domain := natural},
+      {name := `x, info := .default, domain := mkApp (mkConst ``Fin) (.bvar 0)}]
+    let dependent := Expr.lam `internal (.bvar 1) (mkApp (.bvar 2) (.bvar 0)) .default
+    let transported ← CompiledSourceScope.transport binders #[0] dependent
+    unless transported.equal (.lam `internal (.bvar 0) (mkApp (.bvar 1) (.bvar 0)) .default) do
+      throw <| IO.userError "compiled.source_paths:dependent_internal_references"
+    let missing ← try
+      discard <| CompiledSourceScope.transport (binders.extract 0 1) #[] binders[1]!.domain
+      pure false
+    catch error => pure (error.toString.startsWith "unclassified_form:source.coordinate_dependency:")
+    unless missing do throw <| IO.userError "compiled.source_paths:missing_dependency"
+    let deep := (List.range 257).foldl (fun e _ => Expr.mdata metadata e) occurrence
+    let bounded ← try
+      discard <| CompiledSourceScope.replaceSourceAt deep (List.replicate 257 "body") replacement
+      pure false
+    catch error => pure (error.toString == "incomplete_closure:E8.source_path")
+    unless bounded do throw <| IO.userError "compiled.source_paths:path_limit"
+  discard <| (action.run 524288).run context
+  let exhausted ← try
+    discard <| ((CompiledSourceScope.replaceSourceAt (mkConst ``True) []
+      (mkConst ``False)).run 0).run context
+    pure false
+  catch error => pure (error.toString == "incomplete_closure:E8.source_work")
+  unless exhausted do throw <| IO.userError "compiled.source_paths:work_limit"
+  IO.println "[PASS] compiled.source_paths: all raw constructors, lexical references and rejection guards"
+
 unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
   RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
   let store ← reader.get
@@ -138,6 +269,7 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
     throw <| IO.userError "compiled.identity:depth_limit"
   let enrollment ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store
     `LeanInformationAudit.TemplateEnrollment {} {}
+  sourceOccurrencePaths enrollment
   let query := fun locals =>
     (RegistrationGates.compiledQueryWork (typeShape (mkFVar id))).run
       { enrollment.provenance with locals }
