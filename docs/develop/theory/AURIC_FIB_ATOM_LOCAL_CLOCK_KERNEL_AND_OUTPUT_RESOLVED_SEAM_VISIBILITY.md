@@ -1627,3 +1627,375 @@ M_0(i,j)=(1-h(i))\mathbf1_{\{j=s_0\}}.
 供文所引三个公开理论文件保留各自开放输入与适用边界；固定核反演与省略取得核反演不是同一问题。有限维观察与 belief 最大不动点是既有数学方法；这份来源特异综合可作为应用／提案保存，不能仅据类比、重述或链接宣称数学优先权、新一般证明、物理实现或生物认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 十三、校准的共同等待解析实际五模式可行纤维
+
+### 定义17（五模式来源与可行纤维）
+
+沿用本卷 Q1 及 [隐藏 seam 卷，第二节定理一、Q1](AURIC_FIB_ATOM_HIDDEN_SEAM_CAUSAL_READOUT_CLOSURE.md) 的归一化五模式载体：
+
+~~~math
+\Sigma=\{s_0,s_1,s_2,s_3,s_{13}\}
+=\{F[\varnothing],F[1],F[2],F[3],F[1,3]\}.
+~~~
+
+令 $x,y,z$ 分别指示位置 $1,3,2$。给定已知实数 $X,Y,Z\ge0$，要求
+
+~~~math
+I_{X,Y,Z}=\bigl[\max(0,X+Y+Z-1),\ \min(X,Y)\bigr]\ne\varnothing.
+~~~
+
+在顺序 $(s_0,s_1,s_2,s_3,s_{13})$ 下，以这三项边缘为均值的全部概率律为
+
+~~~math
+p_\kappa=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad \kappa\in I_{X,Y,Z}.
+~~~
+
+端点允许零质量；区间为单点时没有待识别的方向。上述条件保证每项非负且总和为一。既有纤维与四角泛函在这里的参数对应为
+
+~~~math
+p_\kappa-p_{\kappa'}=(\kappa-\kappa')d,
+\qquad d=(1,-1,0,-1,1),\qquad J(f)=d\cdot f.
+~~~
+
+### 假设18（一个完整运行的校准相位探针合同）
+
+取已校准的两种等待时长 $a,b>0$、实数 $\Omega _2$，置
+
+~~~math
+\Omega _1=\frac{2\pi}{a},\qquad \Omega _3=\frac{2\pi}{b},
+\qquad
+\omega(s)=\Omega _1x(s)+\Omega _2z(s)+\Omega _3y(s).
+~~~
+
+每次完整运行从固定的 $p_\kappa$ 抽取一个模式 $s$，在该次运行的全部等待阶段保持这个 $s$。探针为有固定校准基 $|0\rangle,|1\rangle$ 的量子比特，每次运行与来源无初始关联，并重新制备为
+
+~~~math
+|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2}.
+~~~
+
+对每个 $t\ge0$，实际供应的条件相对相位操作及状态为
+
+~~~math
+V_s(t)=|0\rangle\langle0|+e^{-i\omega(s)t}|1\rangle\langle1|,
+\qquad
+|\psi_s(t)\rangle=V_s(t)|+\rangle
+=\frac{|0\rangle+e^{-i\omega(s)t}|1\rangle}{\sqrt2}.
+~~~
+
+同一模式上的等待满足 $V_s(t_2)V_s(t_1)=V_s(t_1+t_2)$。这些操作由同一对角生成元产生并彼此交换；有序 FIB 树的其他非交换表示不由此实现。这里测量的是两基矢之间相对于校准参照的相位，整体相位不产生该读数。重复运行按同一来源律作独立同分布准备；一个未知模式永久固定于所有运行是另一统计实验。
+
+使用标准矩阵
+
+~~~math
+X_{\rm P}=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+Y_{\rm P}=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+Z_{\rm P}=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+~~~
+
+允许的仪器是运行末端的二值测量，$\theta\in\mathbb R$ 为校准方向：
+
+~~~math
+M_\theta=\cos\theta\,X_{\rm P}+\sin\theta\,Y_{\rm P}
+=\begin{pmatrix}0&e^{-i\theta}\\e^{i\theta}&0\end{pmatrix},
+\qquad E_{\theta,\pm}=\frac{I\pm M_\theta}{2}.
+~~~
+
+输出标记为 $\pm1$。分别准备的 $\theta=0,\pi/2$ 试验用于取得两项期望；一次输出不直接给出精确复数。中途测量、反馈、重置、动态切换及任意中间仪器均须另供合同。本卷 Q2、Q9–Q10 及 [输出仪器卷 Q2–Q4、Q13](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md) 在此分别约束共同来源、菜单和概率取得。下文的重抽及环境重置仅是显式声明的比较协议。
+
+### 定理19（实际终端密度矩阵及其纤维响应）
+
+在假设18下，对每个 $t\ge0$，平均探针态及复读数为
+
+~~~math
+\varrho_\kappa(t)=\sum_s p_\kappa(s)|\psi_s(t)\rangle\langle\psi_s(t)|
+=\frac12\begin{pmatrix}1&\overline{C_\kappa(t)}\\C_\kappa(t)&1\end{pmatrix},
+\qquad C_\kappa(t)=\sum_s p_\kappa(s)e^{-i\omega(s)t}=B(t)+\kappa J(t),
+~~~
+
+其中
+
+~~~math
+B(t)=1-X-Y-Z+X e^{-i\Omega _1t}+Z e^{-i\Omega _2t}+Y e^{-i\Omega _3t},
+\qquad
+J(t)=\bigl(1-e^{-i\Omega _1t}\bigr)\bigl(1-e^{-i\Omega _3t}\bigr).
+~~~
+
+$B(t)$ 为本卷 Q3 意义的代数基线，$\kappa=0$ 可以不可行。实际输出律为
+
+~~~math
+\mathbb E[M_\theta]=\operatorname{Tr}(\varrho_\kappa M_\theta)
+=\operatorname{Re}\!\bigl(e^{-i\theta}C_\kappa(t)\bigr),
+\qquad
+\Pr(\pm\mid\theta,t)=\frac{1\pm\operatorname{Re}(e^{-i\theta}C_\kappa(t))}{2}.
+~~~
+
+**证明。** 条件纯态的外积是 $\frac12\left(\begin{smallmatrix}1&e^{i\omega(s)t}\\e^{-i\omega(s)t}&1\end{smallmatrix}\right)$；按概率平均给出所示密度矩阵，且 $|C_\kappa|\le1$。五个相位依次是 $1,e^{-i\Omega _1t},e^{-i\Omega _2t},e^{-i\Omega _3t},e^{-i(\Omega _1+\Omega _3)t}$。代入定义17，$\kappa$ 的系数为 $1-e^{-i\Omega _1t}-e^{-i\Omega _3t}+e^{-i(\Omega _1+\Omega _3)t}$，即既有四角泛函在这个实际条件响应上的因子式。最后直接乘矩阵取迹，两个对角项之和是 $\operatorname{Re}(e^{-i\theta}C_\kappa)$；$M_\theta^2=I$ 给出相应二值概率。若改从 $|0\rangle$ 开始，操作保持 $|0\rangle$，所有这些赤道期望为零，故上述制备是必要的实验前提。证毕。
+
+### 定理20（单时钟整纤维盲性与共同混合等待的分离）
+
+对所有 $m,n\in\mathbb Z_{\ge0}$，
+
+~~~math
+J(ma)=J(nb)=0.
+~~~
+
+所以单独 $a$-时钟或 $b$-时钟在所有非负整数刻度的终端密度矩阵和所供二值律均与 $\kappa$ 无关。该密度矩阵相等也使任何另行供应的同一终端 POVM 律相等，但不确定任意多时刻仪器记录。
+
+对 $t\ge0$，$J(t)\ne0$ 当且仅当 $t/a,t/b$ 都不是整数。特别地，
+
+~~~math
+J(a+b)=\bigl(1-e^{-2\pi i b/a}\bigr)\bigl(1-e^{-2\pi i a/b}\bigr)\ne0
+\quad\Longleftrightarrow\quad b/a\notin\mathbb Z\ \text{且}\ a/b\notin\mathbb Z.
+~~~
+
+若 $b/a=p/q$ 为既约正整数比，则条件等价于 $p,q>1$，例如 $3/2$ 已足够；无理比不是此处必要条件。对一般 $t=ma+nb$，判据为 $nb/a,ma/b$ 都不是整数。若 $p=1$ 或 $q=1$，每个这种混合等待仍盲。对含至少两个点的可行区间，在任一 $J(t)\ne0$ 处，每对 $\kappa\ne\kappa'$ 都满足
+
+~~~math
+C_\kappa(t)-C_{\kappa'}(t)=(\kappa-\kappa')J(t)\ne0.
+~~~
+
+**证明。** 第一时钟的因子在 $ma$ 为零，第二时钟的因子在 $nb$ 为零；其余判据来自 $e^{-2\pi i u}=1\iff u\in\mathbb Z$。定理19把这些等式落实为实际密度矩阵及概率律的等式；非零响应则至少被一个所供赤道方向检测。
+
+为解释这条纤维为何不能靠增加同种刻度解除盲性，在本证明中消费既有单时钟所有者 [事件采样卷定理11.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 和 [有限 Vandermonde 所有者](../../../D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean) 的 finite_moment_readout_injective、finite_moments_eq_iff。取任一固定步长 $h>0$（本应用取 $a$ 或 $b$），将实际频率测度 $\mu_\kappa=\sum_s p_\kappa(s)\delta_{\omega(s)}$ 中相同节点 $z=e^{-i\omega h}$ 合并，删去零质量，得到 $q$ 个不同节点及正质量 $P_j$。两份有限测度的全部单时钟响应相等，恰等于每个相位类的总质量相等：在两者节点的并集上，最初若干矩给出上述所有者的单射映射。这里的别名关系是 $(\omega-\omega')h\in2\pi\mathbb Z$，并非模式标签相等。
+
+同一正质量分解给出本实际来源的记录矩阵
+
+~~~math
+G^{(h)}_\ell=\bigl[C_\kappa((n-m)h)\bigr]_{m,n=0}^{\ell},\qquad
+G_{mn}=\sum_{j=1}^q P_j\overline{z_j^m}z_j^n,
+\qquad G^{(h)}_\ell\succeq0,\quad
+\operatorname{rank}G^{(h)}_\ell=\min(\ell+1,q).
+~~~
+
+这是特征列 $(\sqrt{P_j}z_j^n)_j$ 的 Gram 矩阵；秩等式直接消费同一所有者的 vandermonde_det_ne_zero_of_injective，正质量不改变特征矩阵的秩。负参数项仅由 $C(-t)=\overline{C(t)}$ 填入，实际等待仍为非负。故无限多同刻度记录和有限 Gram 秩都只描述采样相位类，不能超出定理的盲性边界。
+
+此机制不应转给前述实衰减模型：若另有 $M(t)=\sum_{j=1}^q w_j e^{-\lambda_jt}$，$w_j>0$、互异 $\lambda_j>0$，则 $x_j=e^{-\lambda_jh}$ 互异。对 $R,C\ge1$，从零开始的矩形 Hankel 块为
+
+~~~math
+H_{mn}=M((m+n)h),\quad 0\le m<R,\ 0\le n<C,
+\qquad \operatorname{rank}H=\min(R,C,q).
+~~~
+
+应用同一 Vandermonde 所有者于实节点，分解 $H=V_R\operatorname{diag}(w)V_C^T$ 给秩上界；令 $d=\min(R,C,q)$，左上 $d\times d$ 块是正权 Gram 矩阵，$V_d$ 行满秩给下界。全秩 $q$ 需要两边尺寸都至少 $q$。实指数单射排除周期性精确别名，不能排除有限精度病态。
+
+经典采样边界的文献定位为 [Yue、Thunberg、Goncalves，arXiv:1605.06973v1，§II.A 定理1、定义5及§III.A](../../../Library/Dynamics/yue2016systemaliasing.md)。其主对数使用严格开条带 $-\pi<\operatorname{Im}z<\pi$；对采样矩阵 $e^{hA}$ 使用时，生成元的对应条件是 $-\pi<h\operatorname{Im}\lambda(A)<\pi$。本文不导入端点唯一性，也不由该引用取得本五模式实验的实现。证毕。
+
+### 定理21（一个实际混合终端读数的整纤维逆式与目标边界）
+
+在假设18下，已知 $X,Y,Z$ 且校准的 $t\ge0$ 满足 $J(t)\ne0$ 时，
+
+~~~math
+\kappa=\frac{\operatorname{Re}\!\left(\overline{J(t)}[C_\kappa(t)-B(t)]\right)}{|J(t)|^2}
+=\frac{\mathbb E[M_{\arg J(t)}]-\operatorname{Re}(e^{-i\arg J(t)}B(t))}{|J(t)|}.
+~~~
+
+这是整个闭可行区间上的逆式，随后定义17逐项恢复全部五个质量。任取可行 $\kappa_0$，也可用 $C_\kappa-C_{\kappa_0}=(\kappa-\kappa_0)J$ 作为概率来源之间的比较。若复响应误差至多 $\varepsilon$，上述线性逆式的误差至多 $\varepsilon/|J(t)|$；若对齐二值的正输出概率误差至多 $\varepsilon$，则相应误差至多 $2\varepsilon/|J(t)|$。这里固定精确占据及校准，有限样本如何达到给定概率误差另需取得合同。
+
+**证明。** 在定理19的 $C_\kappa-B=\kappa J$ 两边乘 $\overline J$ 取实部，或直接令 $\theta=\arg J$，即得斜率 $|J|$。复误差的实投影不超过其模；概率与期望相差因子二。这是本卷第五节定理二及 Q1–Q4 的既有纤维逆式在假设18所供事件上的具体应用。
+
+准确描述这一恢复的范围，可对任一实际实验族定义 $\mu\sim_{\mathscr E}\nu$ 为每个 $e\in\mathscr E$ 的结果律均相等。若 $\mathscr E\subseteq\mathscr E'$，增加等式条件给出 $\sim_{\mathscr E'}\subseteq\sim_{\mathscr E}$。定理20的两个单时钟终端族之并把整条纤维合为一类；加入一个同源混合等待及其对齐测量，逆式使本纤维上的类成为单点。这一新增操作不是旧边缘律的后处理；合法菜单及实际可行增量的所有者为 [输出仪器卷 Q1–Q4、Q7–Q8](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)。单点纤维则无需任何新增读数。
+
+本逆式也不是未知频谱恢复。为限定两者的关系，在此消费 [Kunis 等，arXiv:1506.00450v1，§2、定理3.1](../../../Library/Analytic/kunis2015multivariateprony.md) 的有限节点插值方法：若另把来源类改为至多 $r\ge1$ 个未知实频率，仍供应同源等待及假设18的探针，并要求 $b/a\notin\mathbb Q$，则相位对 $\omega\mapsto(z,w)=(e^{-i\omega a},e^{-i\omega b})$ 单射。因为相同相位对给 $(\omega-\omega')a=2\pi k$、$(\omega-\omega')b=2\pi l$，非零差会使 $b/a=l/k$。相反，对约分有理比 $p/q$，频率差 $2\pi q/a$ 给完全相同的相位对，所以无界实频率上全局单射需要无理比；这比定理20的已知模式纤维目标更强。
+
+这里所需的三角形取样界由如下普通分离步骤给出，不冒称是该文矩形取样定理的逐字结论。两份至多 $r$ 点测度的相位对并集有 $q\le2r$ 个不同点 $\zeta_j=(z_j,w_j)$。对每个 $k\ne j$ 选一个能区分两点的坐标函数 $u_{jk}\in\{z,w\}$，置
+
+~~~math
+P_j(z,w)=\prod_{k\ne j}
+\frac{u_{jk}(z,w)-u_{jk}(\zeta_k)}{u_{jk}(\zeta_j)-u_{jk}(\zeta_k)}.
+~~~
+
+分母非零，$P_j(\zeta_k)=\delta_{jk}$，总次数 $q-1\le2r-1$。故若两测度的同源混合矩
+
+~~~math
+c_{mn}=C(ma+nb)=\sum_j p_j z_j^m w_j^n,
+\qquad m,n\in\mathbb Z_{\ge0},\quad m+n\le2r-1
+~~~
+
+相同，则积分每个 $P_j$ 得各点质量相同，再由相位对单射得频率测度相同。取样数量为 $\sum_{d=0}^{2r-1}(d+1)=r(2r+1)$，含已知的 $c_{00}=1$，只为充分数量，不声称最少。没有预给 $r$ 时，全部混合矩也通过任意两份有限测度的有限并集给唯一性。
+
+这段插值用于界定本纤维应用的外推范围：它仅是另一个目标的精确唯一性，不能替代这里的一次对齐期望，也不提供无界频率的统一有限精度反演。该文定义3.6、定理3.7另有节点分离和系数比条件；多原子支撑合并、权重趋零及校准误差仍需额外限制。即使完整频率测度可知，若 $\Omega _2$ 与其他模式频率相撞，频率测度也不分辨相撞的模式标签；本定理依靠另已知的 $X,Y,Z$ 仍可由非零 $J$ 恢复 $p_\kappa$。
+
+最后，正单位变换 $t'=ct,\ a'=ca,\ b'=cb,\ \omega'=\omega/c$（$c>0$）保持每个相位和时长比，属于 [事件采样卷定理11.5](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 的已知单位运输在此处的应用。它不供应漂移、时钟噪声、空间运输或相位控制模型，也不把局部校准提升为绝对物理时间。证毕。
+
+### 定理22（同源接续、独立重抽与历史闭包的边界）
+
+在假设18的实验中，同一模式贯穿两次等待给 $C_\kappa(a+b)$。作为比较协议，若第一等待后保持同一探针，但第二等待的模式按同一 $p_\kappa$ 独立重抽，则终端相干为 $C_\kappa(a)C_\kappa(b)$，在本纤维上不含 $\kappa$。若来源重抽时还将探针重新制备为 $|+\rangle$，最后仅得到 $C_\kappa(b)$；分别在两次完整运行末端读出才构成两次独立的单时钟实验。它们均不代替定理21所用的保留来源、保留探针的接续。
+
+**证明。** 保留模式 $s$ 时，实际终态为
+
+~~~math
+V_s(b)V_s(a)|+\rangle
+=\frac{|0\rangle+e^{-i\omega(s)(a+b)}|1\rangle}{\sqrt2}.
+~~~
+
+按 $p_\kappa(s)$ 平均后得到 $\varrho(C_\kappa(a+b))$，其中 $\varrho(C)=\frac12\left(\begin{smallmatrix}1&\overline C\\C&1\end{smallmatrix}\right)$。独立重抽时，实际终态条件于 $(s,s')$ 的下分量是 $e^{-i\omega(s)a}e^{-i\omega(s')b}/\sqrt2$，联合权重是 $p_\kappa(s)p_\kappa(s')$，所以
+
+~~~math
+\sum_{s,s'}p_\kappa(s)p_\kappa(s')e^{-i\omega(s)a}e^{-i\omega(s')b}
+=C_\kappa(a)C_\kappa(b).
+~~~
+
+等价地，对保留的已平均探针施加第二次随机相位通道，将其下非对角元乘 $C_\kappa(b)$。定理20给 $J(a)=J(b)=0$，故乘积不含 $\kappa$；探针制备映射则直接删除第一段相干，仅留下第二段。这证明两种实际终端律不同的来源，并落实本卷 Q2、Q6、Q9–Q10 的同源与历史合同。
+
+要解释本结论为何不等于整个观察空间的闭包，可在此消费既有 [AnalyticFlowGeneration](../../../D5/S3/Quantum/Dynamics/AnalyticFlowGeneration.lean) 的 analytic_flow_generates_commutator_closure（复观察空间），连同其中已有的 flow_span_eq_power_orbit、hasDerivAt_heisenbergFlow。它们与这里的实 Hermitian 表述有如下明确桥梁：另供有限维 Hermitian 生成元 $\Omega$ 和含 $I$ 的实 Hermitian 子空间 $\mathcal V$，令 $\mathcal A_t(F)=e^{i\Omega t}Fe^{-i\Omega t}$。复化 $\mathcal V_{\mathbb C}=\mathcal V+i\mathcal V$ 满足 $\mathcal V_{\mathbb C}\cap\mathrm{Herm}=\mathcal V$，因为 $A+iB$（$A,B\in\mathcal V$）为 Hermitian 迫使 $B=0$。因此该既有复流结论不能直接省略实载体的条件。
+
+对上述另供空间，$b/a$ 无理时的适用判据为
+
+~~~math
+\bigl[\mathcal A_a\mathcal V\subseteq\mathcal V\ \text{且}\ \mathcal A_b\mathcal V\subseteq\mathcal V\bigr]
+\quad\Longleftrightarrow\quad
+\bigl[\mathcal A_t\mathcal V\subseteq\mathcal V\ (t\in\mathbb R)\bigr]
+\quad\Longleftrightarrow\quad
+\bigl[i[\Omega,F]\in\mathcal V\ (F\in\mathcal V)\bigr].
+~~~
+
+在本证明中使用的稠密子群步骤为：有限维单射使两次包含成为等号，从而其数学逆及所有整数复合 $ma+nb$ 保持 $\mathcal V$。鸽巢原理作用于 $jb/a$ 的小数部分给任意小的非零整数线性组合；取其整数倍逼近任意实数，故该群稠密。连续共轭与有限维子空间的闭性将不变性延至所有 $t$；在零点求导给 $i[\Omega,F]$。反向用保 $\mathcal V$ 的实线性算子 $L(F)=i[\Omega,F]$ 及 $e^{tL}=\mathcal A_t$。同类稠密性已有 [SparseWindowMutualDetermination 的 natural_phase_visit](../../../D5/S1/Digit/Infinite/SparseWindowMutualDetermination.lean)，其调用 AddCircle.denseRange_zsmul_coe_iff；这里的两时判据只作为所需量词的中间说明。数学逆不供应倒放仪器，且它量化整个 $\mathcal V$，比本定理两来源终端律的比较更强。
+
+这个区别在 $\Omega=\pi Z_{\rm P}/a$、$\mathcal V=\operatorname{span}_{\mathbb R}\{I,X_{\rm P}\}$ 处可直接看出：整数 $a$ 刻度的酉为标量，但 $\mathcal A_{a/4}(X_{\rm P})=-Y_{\rm P}\notin\mathcal V$。这套另外供应的观察空间不是从五模式实验推得的共同历史。
+
+同样，为限定“局部消失后返回”的量子读法，消费 [二阶关系卷命题110.4、假设111.1与定理111.2、命题115.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) 的保留环境与新环境区分。其连续参数示例采用 [Ziman 等，Quantum homogenization，arXiv:quant-ph/0110164v1，§II 式(2.1)–(2.7)](../../../Library/Quantum/ziman2001quantumhomogenization.md) 的标准部分交换：另给系统比特 $S$、环境比特 $E$、$g>0$、初态 $\rho\otimes I/2$，令
+
+~~~math
+U_t=\cos(gt)I-i\sin(gt)\mathsf S,\qquad \mathsf S^2=I.
+~~~
+
+该文约定 $P(\eta)=\cos\eta I+i\sin\eta\mathsf S$，此处 $\eta=-gt$；原文每个 reservoir 粒子至多交互一次，给的是新环境标准模型，不能把其递推当作保留同一个 $E$ 的返回证明。这里直接展开同一个联合态：令 $c=\cos(gt),s=\sin(gt)$，则
+
+~~~math
+U_t(\rho\otimes I/2)U_t^\dagger
+=c^2(\rho\otimes I/2)+s^2(I/2\otimes\rho)
++ics\bigl[(\rho\otimes I/2)\mathsf S-\mathsf S(\rho\otimes I/2)\bigr].
+~~~
+
+交叉项的环境偏迹为 $ics[\rho,I/2]=0$，故
+
+~~~math
+\Phi_t(\rho)=\operatorname{Tr}_E[U_t(\rho\otimes I/2)U_t^\dagger]
+=c^2\rho+s^2 I/2,\qquad \mathbf r(t)=c^2\mathbf r(0).
+~~~
+
+每个时刻三方向等缩放，且对任意系统酉 $W$ 有 $\Phi_t(W\rho W^\dagger)=W\Phi_t(\rho)W^\dagger$。令本量子示例的刻度为 $h_Q=\pi/g$，在 $n h_Q$（$n\ge0$ 为整数）有 $U_{n h_Q}=(-1)^nI$。半刻度 $U_{h_Q/2}=-i\mathsf S$，给出的实际两段历史为
+
+~~~math
+\rho\otimes I/2
+\ \longmapsto\ I/2\otimes\rho
+\ \xrightarrow{\text{同一 }E}\ \rho\otimes I/2,
+~~~
+
+而在半刻度另行丢弃 $E$ 并放入新 $I/2$ 后，联合态变为 $I/2\otimes I/2$，第二次交换仍是它。对 $\rho=|0\rangle\langle0|$，末端 $Z_{\rm P}$ 的正输出概率分别为 $1$ 和 $1/2$。各向同性与粗刻度返回因而没有确定中间的局部信息或替换环境后的历史。
+
+这个联合态计算只消费已有模型来限定本五模式结论的外推；它不是该五模式的量子实现，也没有增加假设18的干预菜单。[Pollock 等，arXiv:1801.09811v1，第2页过程张量及第3页定义、定理与引理](../../../Library/Quantum/pollock2018operationalmarkov.md) 要求以明确控制序列及因果断裂讨论过程记忆。若另供半刻度系统替换 $\mathcal R_\sigma(A)=\operatorname{Tr}(A)\sigma$，则两初始准备 $\rho,\rho'$ 在该时刻分别变为 $\sigma\otimes\rho,\sigma\otimes\rho'$，末次交换给不同系统态 $\rho,\rho'$；这才是相同系统再准备后的记忆见证，且使用了额外控制。本应用仅以已写出的保留/重置对照说明限制，不从 $\Phi_t$ 或 $C_\kappa(t)$ 单独推断完整过程张量。证毕。
+
+### 定义23（原树上的辅助黄金时长选择）
+
+采用 [FIBONACCI_ATOMIC_RELATION_GENERATION，定义2.1、3.1、3.3及定理2.2、3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的有序原树、替换 $\rho$ 与组成列向量 $c(u)=(c_\alpha(u),c_\beta(u))^T$：$\rho(\alpha)=\beta$、$\rho(\beta)=\langle\beta,\alpha\rangle$。对 $\Delta>0$，另赋辅助时长
+
+~~~math
+\varphi=\frac{1+\sqrt5}{2},\qquad
+ d(u)=\Delta\,[c_\alpha(u)+\varphi c_\beta(u)].
+~~~
+
+由此 $d(\alpha)=\Delta$、$d(\beta)=\varphi\Delta$、$d(\langle u,v\rangle)=d(u)+d(v)$。其在假设18中的用途仅是选择 $a=\Delta,b=\varphi\Delta$。这份加法解释忘掉树的次序和括号，不改原数量映射，也不认证原生时钟、物理黄金时长或其他非交换表示。
+
+### 定理24（黄金等待的实际边界辨别值与校准限制）
+
+在假设18及定义23下，取边界来源
+
+~~~math
+p_+=\tfrac12\delta_{s_0}+\tfrac12\delta_{s_{13}},\qquad
+p_-=\tfrac12\delta_{s_1}+\tfrac12\delta_{s_3}.
+~~~
+
+它们同属 $(X,Y,Z)=(1/2,1/2,0)$ 的纤维，$\kappa_+=1/2,\kappa_-=0$。在有序树 $\rho(\beta)$ 所赋的共同等待 $t=a+b=\varphi^2\Delta$ 处，令 $z=e^{-2\pi i\varphi}$，有
+
+~~~math
+\delta C=C_+(t)-C_-(t)=\frac12(1-z)^2,\qquad
+D_{\rm tr}(\varrho_+(t),\varrho_-(t))=\sin^2(\pi\varphi).
+~~~
+
+所供菜单中的 $M_{\arg\delta C}$ 已达到等先验二值分类成功率
+
+~~~math
+P_{\rm succ}=\frac{1+D_{\rm tr}}2.
+~~~
+
+模型值分别约为 $0.8686844390$ 和 $0.9343422195$。它们描述两种规定来源的单次概率分类；定理21对整条连续纤维的恢复仍以精确律或所声明的概率误差为输入。黄金时长在此供应一个非零响应的选择，不供应未知频谱的统一有限精度恢复。
+
+**证明。** 原树组成传输 $c(\rho u)=Mc(u)$、$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$ 的精确所有者是上述定理3.4，以及 [GeometryEntranceRatio 中已有的 private composition_transport](../../../D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.lean)。在这个应用中 $(1,\varphi)M=\varphi(1,\varphi)$，故 $d(\rho u)=\varphi d(u)$，尤其 $d(\rho\beta)=(1+\varphi)\Delta=\varphi^2\Delta$。这只应用既有组成传输，不另立时长递推定理。
+
+由 $\varphi^{-1}=\varphi-1$，$t/a=1+\varphi$、$t/b=1+\varphi^{-1}=\varphi$ 的两个相位均为 $z$，定理19给 $\delta C=(1-z)^2/2$。平均探针态一般是混合态；直接计算它们之差
+
+~~~math
+D=\varrho_+-\varrho_-
+=\frac12\begin{pmatrix}0&\overline{\delta C}\\\delta C&0\end{pmatrix},
+\qquad \operatorname{spec}(D)=\{+|\delta C|/2,-|\delta C|/2\}.
+~~~
+
+因此 $D_{\rm tr}=\tfrac12\|D\|_1=|\delta C|/2=|1-z|^2/4=\sin^2(\pi\varphi)$。设 $\theta=\arg\delta C$，则 $D=(|\delta C|/2)M_\theta$；允许的 $E_{\theta,+}$ 正是正特征空间投影。以正输出判 $p_+$，其等先验成功率为
+
+~~~math
+\tfrac12\operatorname{Tr}(E_{\theta,+}\varrho_+)
++\tfrac12\operatorname{Tr}((I-E_{\theta,+})\varrho_-)
+=\tfrac12+\tfrac12\operatorname{Tr}(E_{\theta,+}D)
+=\tfrac12+\tfrac14|\delta C|.
+~~~
+
+任意二值效应 $0\le E\le I$ 在 $D$ 的两个特征方向上的对角元均在 $[0,1]$，故 $\operatorname{Tr}(ED)\le|\delta C|/2$；上述菜单已达到上界，不借用未供应的测量。
+
+为限定这一黄金参数选择的校准含义，先按 [事件采样卷定理11.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 复用整数刻度别名：若 $\omega'-\omega=2\pi k/\Delta$，$k\in\mathbb Z$，则对任意非负整数序列 $n_j$ 有 $e^{-i\omega'n_j\Delta}=e^{-i\omega n_j\Delta}$，取 $n_j=F_j$ 仍成立。代数等式也适用于负整数，但本等待合同不使用它们。Fibonacci 采样索引并未提供第二种黄金时长。
+
+取 $F_0=0,F_1=1$。精确残差直接采用 [FibonacciErrorRatio 的 fibonacci_golden_residual](../../../D5/S1/Scale/FibonacciErrorRatio.lean)：
+
+~~~math
+F_n\varphi-F_{n+1}=(-1)^{n+1}\varphi^{-n}\quad(n\ge0).
+~~~
+
+把它用在定理21所区分的未知频率目标，令 $\omega_n=2\pi F_n/\Delta$。与零频率相比，第一时钟完全别名；第二时钟的弦长和有界混合等待误差为
+
+~~~math
+\bigl|e^{-i\omega_n\varphi\Delta}-1\bigr|=2\bigl|\sin(\pi\varphi^{-n})\bigr|,
+\qquad
+\bigl|e^{-i\omega_n(m\Delta+k\varphi\Delta)}-1\bigr|
+\le2\pi L\varphi^{-n},
+\quad m,k,L\in\mathbb Z_{\ge0},\quad 0\le k\le L.
+~~~
+
+这是将残差代入相位后用 $|e^{iu}-1|\le|u|$ 得到的消费步骤。残差式在 $n=0$ 仍成立，此时 $\omega_0=0$ 不是不同来源；非零频率比较和以下有理比需要 $n\ge1$。频率从 $n\ge2$ 起严格增加；把 $\varphi^{-n}$ 称为最近整数距离也必须 $n\ge2$，因为 $n=1$ 的残差为 $\varphi^{-1}>1/2$。该有限深度上界趋零，限制的是任意固定相位精度及第二时钟深度的统一分离，不否定无限精度唯一性或另供更多资源的估计。
+
+若实际校准改为 $\varphi_n=F_{n+1}/F_n$（$n\ge1$），同一残差所有者及其中 private fibonacci_convergent_error_eq 的指标平移给
+
+~~~math
+|\varphi-\varphi_n|=\frac{\varphi^{-n}}{F_n},\qquad
+\omega_n\Delta=2\pi F_n,\quad
+\omega_n\varphi_n\Delta=2\pi F_{n+1}.
+~~~
+
+两个采样相位此时完全重合，说明理想无理比不能由有限校准精度代替。此处比较的是零频率与 $\omega_n$ 的未知频谱目标，不将校准改变后的信号误作原固定五模式合同的结果。
+
+反向分离下界也须保留其准确前提。对非零整数第一时钟别名编号 $k$，选最近整数 $\ell$，置 $\delta=\ell-\varphi k$，故 $|\delta|\le1/2$。其二次范数机制来自 [GoldenHurwitzBound 的 private golden_form_ne_zero 及 golden_hurwitz_bound](../../../D5/S1/Depth/GoldenHurwitzBound.lean)；后者逐字给的是有理数 $q$ 的 $1/(\sqrt5\operatorname{den}(q)^2+\operatorname{den}(q))<|\varphi-q|$，不是下面的更强最近整数分母。此处所需的有域估计为
+
+~~~math
+N=\ell^2-k\ell-k^2
+=(\ell-\varphi k)(\ell+\varphi^{-1}k)
+=\delta(\sqrt5 k+\delta)\in\mathbb Z\setminus\{0\}.
+~~~
+
+非零性因为 $k\ne0$ 且两个根 $\varphi,-\varphi^{-1}$ 都无理；于是
+
+~~~math
+1\le|N|\le|\delta|(\sqrt5|k|+1/2),\qquad
+\operatorname{dist}(\varphi k,\mathbb Z)=|\delta|
+\ge\frac1{\sqrt5|k|+1/2}.
+~~~
+
+对 $0\le d\le1/2$，正弦在 $[0,\pi/2]$ 上的凹性给 $\sin(\pi d)\ge2d$，从而同一编号的第二时钟弦长满足
+
+~~~math
+|1-e^{-2\pi i\varphi k}|\ge\frac4{\sqrt5|k|+1/2}.
+~~~
+
+这只控制已限制别名编号的频率差，不是有界频率区间内任意不同频率的统一正分离；后者仍可任意接近。多原子权重趋零、支撑合并和时长/参照误差也不由该下界消除。因此黄金模型的边界分类值、已校准纤维逆式和未知频谱的有限精度问题各保留其来源、量词和资源条件。证毕。
+
+## 追加锚（本行以下为增补区）
