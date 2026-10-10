@@ -71,7 +71,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := (h (m := 1) (n := 1) 0 (by simp) (by
     intro a b
-    simp [blockPositive])).1
+    simp)).1
   norm_num [rejected, realize] at he
 
 def family : Registration arena (type_of% @frobSq_le_trace_sq_of_blockPositive) where

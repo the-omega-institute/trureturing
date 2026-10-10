@@ -43,7 +43,7 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have he := h (d := 0) (ι := ULift.{u} Empty) (fun a => nomatch a.down)
-  simpa [rejected, realize] using he
+  simp [rejected, realize] at he
 
 def family : Registration arena.{u} (type_of% @designSum_sum.{u}) where
   actual := actual

@@ -203,37 +203,39 @@ namespace SeparableSum
 universe u
 
 abbrev signature : Signature where
-  Params := Σ _m : ℕ, ℕ
-  State p := Matrix (Fin p.1 × Fin p.2) (Fin p.1 × Fin p.2) ℂ
+  Params := Σ _m : ℕ, Σ _n : ℕ, Type u
+  State p := p.2.2 → Matrix (Fin p.1 × Fin p.2.1) (Fin p.1 × Fin p.2.1) ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ p := p.2.2 → Matrix (Fin p.1 × Fin p.2.1) (Fin p.1 × Fin p.2.1) ℂ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ S => @decide (separableCone S) (Classical.propDecidable _))
-    (fun e => nomatch e)
+  realize signature (fun _ _ f => f) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => -1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {m n : ℕ} {ι : Type u} [Fintype ι]
     (f : ι → Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ),
-    (∀ i, separableCone (f i)) → R.readout () ⟨m, n⟩ (∑ i, f i) = true
+    (∀ i, separableCone (f i)) → separableCone (∑ i, R.readout () ⟨m, n, ι⟩ f i)
 
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have he := h (m := 1) (n := 1) (ι := ULift.{u} Empty)
-    (fun i => nomatch i.down) (fun i => nomatch i.down)
-  simp [rejected, realize] at he
+  have hs := h (m := 1) (n := 1) (ι := ULift.{u} (Fin 1)) (fun _ => 0)
+    (fun _ => _root_.D5.S3.Resource.EntanglementWitness.separableCone_zero)
+  have hn : separableCone (-1 : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ) := by
+    simpa [rejected, realize] using hs
+  have hd := (separable_isPosSemidef hn).diag_nonneg (i := (0, 0))
+  norm_num [Matrix.neg_apply, Matrix.one_apply, Complex.le_def] at hd
 
 def family : Registration arena.{u} (type_of% @separableCone_sum.{u}) where
   actual := actual
-  bridge := by simp [actual, realize]
+  bridge := Iff.rfl
   variation := ⟨by simpa [arena, actual, realize] using @separableCone_sum.{u},
     rejected, rejected_law⟩
   sensitivity := by
@@ -246,16 +248,12 @@ def family : Registration arena.{u} (type_of% @separableCone_sum.{u}) where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨1, 1⟩, 0, -1, ?_⟩
-    have hz : separableCone (0 : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ) :=
-      _root_.D5.S3.Resource.EntanglementWitness.separableCone_zero
-    have hn : ¬ separableCone (-1 : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ) := by
-      intro hs
-      have hd := (separable_isPosSemidef hs).diag_nonneg (i := (0, 0))
-      norm_num [Matrix.neg_apply, Matrix.one_apply, Complex.le_def] at hd
-    simp [actual, realize, hz, hn]
+    refine ⟨⟨1, 1, ULift.{u} (Fin 1)⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+    intro h
+    have he := congrFun (congrFun (congrFun h ⟨0⟩) (0, 0)) (0, 0)
+    norm_num [actual, realize, Matrix.one_apply] at he
 
-def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
     (@separableCone_sum.{u}) (Realization signature) Unit Unit := {
   unitName :=
     `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks.SeparableSum.unit
@@ -278,13 +276,13 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.ContractionBlocks
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0, 1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 4
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }]
+      stateOperand := none
+      booleanPredicate := false }]
   }
   continuation := .unknown
   familyRecord := none

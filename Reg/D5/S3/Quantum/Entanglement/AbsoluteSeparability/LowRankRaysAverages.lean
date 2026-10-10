@@ -161,7 +161,9 @@ def family : Registration arena (type_of% @separable_rankOne_add_reduced) where
           (star (fun _ : Fin 1 × Fin 1 => (1 : ℂ))) +
         (1 : Matrix (Fin 1) (Fin 1) ℂ) ⊗ₖ reduced (fun _ : Fin 1 × Fin 1 => (1 : ℂ))) (0, 0) (0, 0)
           at he
-    norm_num [reduced, Matrix.add_apply, Matrix.one_apply, Matrix.kroneckerMap_apply,
+    norm_num [reduced,
+      _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft,
+      Matrix.add_apply, Matrix.one_apply, Matrix.kroneckerMap_apply,
       Matrix.vecMulVec_apply, Pi.star_apply] at he
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -270,7 +272,9 @@ def family : Registration arena (type_of% @separable_projected_rankOne) where
     change
       reduced (fun _ : Fin 1 × Fin 1 => (0 : ℂ)) 0 0 =
       reduced (fun _ : Fin 1 × Fin 1 => (1 : ℂ)) 0 0 at he
-    norm_num [reduced] at he
+    norm_num [reduced,
+      _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft,
+      Matrix.vecMulVec_apply, Pi.star_apply] at he
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@separable_projected_rankOne) (Realization signature) Unit Unit := {
