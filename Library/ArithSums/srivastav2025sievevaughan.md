@@ -1016,3 +1016,185 @@ budget. It is a classical application, not a new divisor estimate or a
 Lean-certified result. It controls neither near-jump errors nor the
 signed-error/negative-margin coupling, mean, low-layer residuals, general
 prime-layer cost, recovery terms or complete signed Robin tail.
+
+## A common large truncation pays the higher-power approximation error
+
+Keep the original sawtooth representative and actual coefficients. Put
+$M_J=J+1$ and retain every layer in
+
+$$
+\mathcal T^{(\ge2)}_{N,J}(x)
+=\frac1x\sum_{\substack{p,\ k\ge2\\p^k<x/U}}
+ w_{N,p,k}\sum_{\ell\le V}|h(\ell)|D_J(x/(p^k\ell)).
+$$
+
+For each fixed auxiliary $0<\nu<1$, the existing Nicolas reference at
+exponent $\nu/4$ gives $\tau(n)^2\log n\ll_\nu n^\nu$.
+The actual weights and the LCM definition therefore give the aggregate
+mass at any positive integer jump $n$:
+
+$$
+\begin{aligned}
+\sum_{\substack{p,\ k\ge2,\ \ell\\p^k\ell\mid n}}
+ w_{N,p,k}|h(\ell)|
+&\le\tau(n)^2
+ \sum_{\substack{p,\ k\ge2\\p^k\mid n}}\log p\\
+&\le\tau(n)^2\log n\ll_\nu n^\nu.
+\end{aligned}
+\tag{SV21}
+$$
+
+Indeed $\sum_{\ell\mid n}|h(\ell)|\le\tau(n)^2$ follows by taking
+absolute values before the LCM sum, using $|\lambda|,|\theta'|\le1$.
+The divisor-growth input is reused, rather than reproved.
+
+The Fejér formula gives
+$D_J(t)\le\min(1/2,(8M_J^2\|t\|^2)^{-1})$, with its original value
+$1/2$ at integers. For $q=p^k\ell\le2x$, assign the summand to
+$n=q\lfloor x/q+1/2\rfloor$. Then $1\le n\le2x$, $q\mid n$ and
+$\|x/q\|=|x-n|/q$. Consequently
+
+$$
+D_J(x/q)\le\tfrac12
+ \min\left(1,\frac{(x/M_J)^2}{|x-n|^2}\right).
+\tag{SV22}
+$$
+
+At $x=n$ the minimum means one. For every real $x$ and $a>0$,
+$\sum_{n\in\mathbb Z}\min(1,a^2/|x-n|^2)\ll1+a$: retain the
+nearest integers, count those within distance $a$, and sum the
+square-reciprocal tail. Grouping (SV22) by $n$ and using (SV21) thus
+bounds all $q\le2x$ contributions, uniformly for $A\le x\le2A$, by
+$O_\nu(A^\nu(A^{-1}+M_J^{-1}))$.
+
+For $q>2x$, use $D_J(x/q)\le q^2/(8M_J^2x^2)$. No part of the
+support $\ell>x/p^k$ is discarded. The existing
+$\Gamma_2(z)\ll\sqrt z$ and $B_1\le B_A\ll V/L^2$ give
+
+$$
+\begin{aligned}
+\mathcal T_{q>2x}
+&\le\frac{B_AV^2}{8M_J^2x^3}
+ \left(\frac xU\right)^2\Gamma_2(x/U)\\
+&\ll\frac{A^{3/8}}{M_J^2L^2}.
+\end{aligned}
+\tag{SV23}
+$$
+
+Together these bounds yield the actual, all-layer sampling estimate
+
+$$
+\sup_{A\le x\le2A}\mathcal T^{(\ge2)}_{N,J}(x)
+\ll_\nu A^\nu(A^{-1}+M_J^{-1})
+ +\frac{A^{3/8}}{M_J^2L^2}.
+\tag{SV24}
+$$
+
+Choose the same $J=\lceil V\rceil$ for every sample and layer. With
+$\nu=(1/2-\eta)/2$, the original fixed $0<\eta<1/2$ is unchanged and
+
+$$
+\sup_{A\le x\le2A}\mathcal T^{(\ge2)}_{N,J}(x)
+\ll_\nu A^{-1/2+\nu}+A^{-5/8}L^{-2}
+=o(A^{-\eta}/L).
+\tag{SV25}
+$$
+
+This estimates the full real-variable envelope directly at a larger
+$J$. It leaves (SV15) intact and does not bound the two Fourier
+upper-budget terms in (SV16) separately.
+
+To return to the original response, retain all frequency bands jointly:
+$Z_{{\rm all},J}(y)=c_A+g_{A,J}(y)-y(S_A)_+$.
+Then $|E_A(y)-[Z_{{\rm all},J}(y)]_+|\le r_{A,J}(y)$.
+Let $\mathcal R^{\rm poly}_{N,\eta,J}$ be the residual (SV10) with
+$E_A$ replaced by $[Z_{{\rm all},J}]_+$, restricted to the same active
+samples $p^k<x/U$ and $2\le k<m_\eta$. Since $E_A(y)=0$ for $y\le U$,
+(SV25) and the Lipschitz property give
+
+$$
+|\mathcal R_{N,\eta}-\mathcal R^{\rm poly}_{N,\eta,J}|
+=o(A^{-\eta}/L),\qquad J=\lceil V\rceil.
+\tag{SV26}
+$$
+
+Likewise the positive signed error exceeding the negative margin is
+bounded by $r_{A,J}$, so its higher-power sampled cost is paid by
+(SV25). The remaining polynomial positive part is not bounded by
+this argument. The constants, drift and lowest frequency band must
+still be estimated jointly. This is an application of existing
+Fejér, divisor-growth and prime-power inputs, without a claim of
+original number theory or Lean certification. The mean, general
+prime layer, recovery terms and complete signed Robin tail remain open.
+
+## A classical high-harmonic supplier on critical rectangular blocks
+
+Directly reuse [Liu–Wu–Yang, Proposition 3.1, equation
+(3.2)](liuwuyang2021variant.md), retaining all four terms of that
+published estimate. Write $e(t)=e^{2\pi it}$ and, for an actual rectangle
+$P<p\le2P$, $D<\ell\le2D$, $H<j\le2H$, put $Y=x/P^k$ and
+
+$$
+B_{D,H,J}(y)=\sum_{D<\ell\le2D}h(\ell)
+ \sum_{\substack{H<j\le2H\\j\le J}}
+ \widehat P_J(j)e(jy/\ell).
+$$
+
+Here $P,D,H\ge1$, $k\ge2$ is fixed, $A\le x\le2A$ and
+$H\le J=\lceil V\rceil$. Set the source parameters to
+
+$$
+(\alpha,\beta,\gamma,\delta)=(1,k,1,0),\qquad
+(M_{\rm src},N_{\rm src},X_{\rm src})=(P,D,HY/D).
+$$
+
+Its remaining hypothesis is $H\le P^{k-1}D$. The actual prime and
+active-sample indicators, $w_{N,p,k}$, $H\widehat P_J(j)$ and any
+test values $|u_p|\le1$ enter $a_{j,p}$; $h(\ell)$ enters $b_\ell$.
+Normalize the coefficients using $w\le\log(2P)$,
+$|\widehat P_J(j)|\ll H^{-1}$ and
+$|h(\ell)|\le\tau(\ell)^2$. The existing Nicolas input absorbs this
+divisor factor into an arbitrarily small fixed power of $A$.
+The source theorem is uniform in these coefficients, so choosing
+$u_p$ as the complex sign of the actual block sum gives
+
+$$
+\begin{aligned}
+\frac1x\sum_{\substack{P<p\le2P\\p^k<x/U}}
+ w_{N,p,k}|B_{D,H,J}(x/p^k)|
+\ll_{k,\nu}\frac{A^\nu}{x}\bigg[&
+ \sqrt{xP^{1-k}}+D\sqrt{P/H}\\
+ &+P\sqrt D+PD\sqrt{D/(HY)}\bigg].
+\end{aligned}
+\tag{SV27}
+$$
+
+The source $X_{\rm src}^{\varepsilon}$, coefficient logarithms and
+dyadic summation losses are absorbed by choosing smaller auxiliary
+exponents before the prescribed $\nu>0$. No independence of the
+test values from the actual coefficients is required. The same bound
+handles conjugate frequencies and actual positive-part indicators.
+
+On $D\asymp Y\asymp V$, $P\asymp A^{1/(2k)}$, (SV27) reduces to
+
+$$
+\ll_{k,\nu} A^\nu
+ \left(A^{-3/4+1/(2k)}+A^{-\gamma_k}H^{-1/2}\right),
+\qquad \gamma_k=\frac{k-1}{2k}.
+\tag{SV28}
+$$
+
+For an unpaid fixed layer $2\le k<m_\eta$, choose a fixed $d>0$
+small enough that $2(\eta-\gamma_k)+d<1/2$, and set
+$H_0=A^{2(\eta-\gamma_k)+d}$. Taking
+$0<\nu<\min(d/2,3/4-1/(2k)-\eta)$ pays the dyadic blocks
+$H\ge H_0$ in this critical region to $o(A^{-\eta})$.
+The source condition holds throughout these blocks for large $A$,
+since $J\asymp A^{1/2}$ and $P^{k-1}D\asymp A^{1-1/(2k)}$.
+
+This supplies only the indicated high harmonics on critical
+rectangles. Low harmonics, other rectangles, the joint drifted
+positive part and the complete original budget remain unestimated.
+It is a direct application of an existing exponential-sum theorem,
+not a new prime-distribution result or an identification of its
+frequencies with FIB composition rotations.
