@@ -4577,3 +4577,396 @@ $$
 真实 $h$ 是从认证 $t$ 开始的替换次数，$\nu(x)=\nu(t)+h$ 是当前最大可解析深度；二者不能互换。所恢复的 $(t,h)$ 不包括绝对纪元、物理时长、节点出生时刻或任意事件时序，这些仍依自己的同源字段与合法操作合同。因而本章推进的是完整当前空间加认证初始化记录恢复实际起点和经过次数的有效条件，空间、时间、边界和记忆的整体互恢复目标保持开放。
 
 ## 追加锚（本行以下为增补区）
+
+## 66. 原始全分支条件祖先纤维、原始续行与粗动作的分离
+
+本章的 $h_n^{\mathrm{raw}}$ 是固定叶词域的地址历史；第65章的 $(t,h)$ 是真实入口及替换次数，二者各依自己的来源与操作合同。
+
+本节沿用第52–60章的不可变有序满二叉 α/β 树、
+$\rho(\alpha)=\beta$、$\rho(\beta)=(\beta,\alpha)$、$\rho(s,t)=(\rho s,\rho t)$ 及
+$T_n=\rho^n\alpha$。$I_1=\rho[\mathcal T]$，$r$ 是原四值读数，$\kappa$ 将
+`alpha`、`beta` 分别记为 `some true`、`some false`，将 `branch`、`absent` 都记为
+`none`。$W_n$ 是完整精确叶词 $w(T_n)$ 的整个原树纤维；所有字面地址仍可任意查询，
+缺席、重复和 truthful cache hit 都保留。$\operatorname{Pos}$ 仍是第三像成员位，
+$Q$ 是独立的深度／原始端点任务。把 Fibonacci 数写作 $F(k)$。本章的全分支原始 shortlex 前缀、地址集和纤维分别记为 $h_n^{\mathrm{raw}}$、$J_n^{\mathrm{raw}}$ 和 $F_n^{\mathrm{raw}}$。
+
+第57章的全词静态证书和第58章的 $L_n$ 是本节前置。本节的分支前缀既非（JM.181）的
+$\alpha$ 前缀，也非（JM.183）的 $LL,RR$ 双读前缀。以下保留同一实际分支前缀的整个
+原始纤维刚性、准确原始续读及全递归粗动作下界。
+
+### 66.1 整个分支纤维的几何
+
+沿用（JM.151）–（JM.152）的 $P_n$、$B=T_3$ 和 $W_n$，固定 $n\ge4$，置
+
+$$
+\begin{gathered}
+J_n^{\mathrm{raw}}=\{pL:p\in P_n\},\qquad h_n^{\mathrm{raw}}=((pL,\mathsf{br}):p\in P_n),\\
+F_n^{\mathrm{raw}}=\{U\in W_n:\forall q\in J_n^{\mathrm{raw}},\ r(q,U)=\mathsf{br}\}.
+\end{gathered}
+\tag{JM.214}
+$$
+
+其中 $h_n^{\mathrm{raw}}$ 按 shortlex 从共同空初始 decoder 实际发出；$\operatorname{Pref}$ 包括地址自身。
+取 $F(0)=0,F(1)=1$，并令 $N=F(n+1)$、$a=F(n-1)$、$b=F(n)$、
+$j=F(n-2)$、$d=F(n-3)$。实际三叶位置的反链及递推精确复用（JM.153）、（JM.156）：
+
+$$
+P_3=\{\varepsilon\},\quad P_2=\varnothing,\quad
+P_n=LP_{n-1}\mathbin{\dot\cup}RP_{n-2},\quad |P_n|=F(n-2)\quad(n\ge4).
+\tag{JM.215}
+$$
+
+取定义56.1在 $S=T_{n-3}$ 上的带标签叶反链 $E_a,E_b$。以下块是已供应块的精确别名：
+
+$$
+B=X=T_3,\qquad C_0=Y=T_4,\qquad C_1=Y_2,
+\tag{JM.216}
+$$
+
+右端 $X,Y,Y_2$ 精确取（JM.166）–（JM.167），不另供应其支持或禁形证明。
+置 $K_n^{\mathrm{raw}}=P_{n-1}$、$D_n^{\mathrm{raw}}=\{qR:q\in K_n^{\mathrm{raw}}\}$、$A_n^{\mathrm{raw}}=\operatorname{Pref}(J_n^{\mathrm{raw}})$。
+$D_n^{\mathrm{raw}}$ 是本节终端分支集合，不是（JM.179）的支持并集 $\mathsf D_n$。
+准确有 $K_n^{\mathrm{raw}}=E_b$：在 $n=4$ 两边都是 $\{\varepsilon\}$，在 $n=5$ 两边都是 $\{L\}$，
+以后两边都按 $T_n=(T_{n-1},T_{n-2})$ 的左右分解递推。这逐规模给相等，故每个
+$q\in K_n^{\mathrm{raw}}$ 都是第三像分块的 $Y=C_0$ 根，且锥的不交来自原叶反链。
+$K_4^{\mathrm{raw}}=\{\varepsilon\}$，$K_n^{\mathrm{raw}}=LK_{n-1}^{\mathrm{raw}}\mathbin{\dot\cup}RK_{n-2}^{\mathrm{raw}}$（$n\ge5$）。
+由（JM.178），在一个 $C_0$ 锥内 $J_n^{\mathrm{raw}}$ 的唯一实际请求是 $qLL$；$qL$ 只是共同的分支祖先。
+
+引理56.2已给 $C_0,C_1$ 的同词 $babba$、$C_1\notin I_1$ 和完整原始／粗支持：
+
+$$
+\{u:r(u,C_0)\ne r(u,C_1)\}
+=\{u:\kappa r(u,C_0)\ne\kappa r(u,C_1)\}=H_2.
+\tag{JM.217}
+$$
+
+这里 $H_2$ 精确取（JM.168）的六地址集合，包含 $LRL,LRR$，未缩成四叶支持。
+
+每个 $T_m$ 的内部子树是某个 $T_k$（$k\ge2$）。终端 $T_2$ 的全部根恰为
+$J_n^{\mathrm{raw}}\mathbin{\dot\cup}D_n^{\mathrm{raw}}$：若它是左孩子，其父为 $T_3$，若为右孩子，其父为 $T_4$；
+递推没有其他父形。每个非终端 $T_k$（$k\ge3$）都含有 $B$，其锥因而含 $J_n^{\mathrm{raw}}$ 地址。
+终端 $J_n^{\mathrm{raw}}$ 本身也在该前缀闭包中，终端 $D_n^{\mathrm{raw}}$ 则无 $J_n^{\mathrm{raw}}$ 后代。因此
+
+$$
+A_n^{\mathrm{raw}}=\operatorname{Int}(T_n)\setminus D_n^{\mathrm{raw}},\qquad
+|A_n^{\mathrm{raw}}|=N-1-d=b+j-1,\qquad
+A_n^{\mathrm{raw}}\setminus J_n^{\mathrm{raw}}=\operatorname{Int}(T_{n-1}).
+\tag{JM.218}
+$$
+
+最后一式也可直接由 $T_n=\rho(T_{n-1})$ 得到：替换保持原内部地址，只在 $\beta$ 叶处
+新增终端 $T_2$ 根 $J_n^{\mathrm{raw}}\sqcup D_n^{\mathrm{raw}}$。这些是整个递归类的地址等式。
+
+对任意 $H\subseteq K_n^{\mathrm{raw}}$，在每个 $q\in H$ 处把完整 $C_0$ 换成 $C_1$，所得不可变比较来源
+记为 $U_H$。引理56.2给同词、原始性及完整支持的前缀运输，故替换保持词及每个 $J_n^{\mathrm{raw}}$ 的
+`branch` 回复。锥不交使各选择同时实现，$qR$ 检出每个不同选择。
+一阶像对内部／非叶子树封闭；特殊终端 $(\beta,\alpha)$ 的叶孩子不承担此闭合性。
+非空替换留下内部 $C_1\notin I_1$，因而排除整树属于 $I_1$。于是
+
+$$
+U_H\in F_n^{\mathrm{raw}},\quad |\{U_H:H\subseteq K_n^{\mathrm{raw}}\}|=2^d,\quad
+H\ne\varnothing\Longrightarrow U_H\notin I_1.
+\tag{JM.219}
+$$
+
+原始射线分解给 $Q(U_\varnothing)=(n,1)$，非空 $H$ 给 $Q(U_H)=(0,0)$，因为原始端点
+有 $N\ge5$ 个叶，不可能是单叶 $\alpha$。这给 $|F_n^{\mathrm{raw}}|\ge2^{F(n-3)}$ 及两个 $Q$ 值的实现。
+
+还须对整个 $F_n^{\mathrm{raw}}$ 做一阶像刚性。设 $U=\rho(V)\in F_n^{\mathrm{raw}}$。固定组成使 $V$ 有 $b$ 个叶、
+$b-1$ 个原内部节点，并有 $a=j+d$ 个由 $\beta\mapsto(\beta,\alpha)$ 产生的特异终端块。
+每个 $J_n^{\mathrm{raw}}$ 都是分支，故其祖先 $A_n^{\mathrm{raw}}$ 全部是分支。$A_n^{\mathrm{raw}}$ 中的特异终端只能在 $J_n^{\mathrm{raw}}$：
+若它严格高于某个 $J_n^{\mathrm{raw}}$，两叶终端不可能再有分支后代。因此 $A_n^{\mathrm{raw}}$ 中至多 $j$ 个地址
+是特异终端，至多 $b-1$ 个地址是 $V$ 的原内部节点；两类互斥且穷尽 $U$ 的分支地址。
+（JM.218）的容量恰为 $b+j-1$，所以两种容量同时饱和：$J_n^{\mathrm{raw}}$ 全为特异终端，且
+$\operatorname{Int}(V)=A_n^{\mathrm{raw}}\setminus J_n^{\mathrm{raw}}=\operatorname{Int}(T_{n-1})$。
+替换码 $\alpha\mapsto\beta,\beta\mapsto\beta\alpha$ 的逆贪心唯一：每个 `alpha` 和紧前的
+`beta` 配对，其余 `beta` 单独解码。因此 $w(V)=w(T_{n-1})$；同一内部地址集和同一叶标记
+强制 $V=T_{n-1}$，从而 $U=T_n$。于是
+
+$$
+F_n^{\mathrm{raw}}\cap I_1=\{T_n\},\qquad Q(F_n^{\mathrm{raw}})=\{(0,0),(n,1)\}\qquad(n\ge4).
+\tag{JM.220}
+$$
+
+$I_1$ 外的来源准确深度为零且多于一叶，故 $Q=(0,0)$；这排除了整个 $F_n^{\mathrm{raw}}$ 的第三个 $Q$ 值。
+（JM.219）的实现子族只供应下界，不是整个纤维的分类。
+
+### 66.2 原始续行的精确费用与原生接口
+
+令 $\mathsf{RawOpt}_n$ 是来源无关、对整个 $W_n$ Legal、有限终止且 Boolean `Pos` 正确，
+并有独立总 bit/raw-cache $Q$ 消费者的原始读者，在 $T_n$ 的实际 $h_n^{\mathrm{raw}}$ 之后支付的
+新增 distinct 字面地址数下确界。每个读者必须从共同空缓存实际产生同一个 shortlex $h_n^{\mathrm{raw}}$。
+
+下界直接消费定理58.2。由（JM.178）及 $K_n^{\mathrm{raw}}=E_b$，
+$J_n^{\mathrm{raw}}=\{pL:p\in E_a\}\sqcup\{pLL:p\in E_b\}$。
+在 $X$ 块旧地址 $pL$ 命中 $pH_X$；在 $Y$ 块旧地址 $pLL$ 命中且只命中三个支持中的 $pH_1$。
+其他块的旧地址不能进入该块锥，故定义58.1准确给
+
+$$
+ d_X(p,J_n^{\mathrm{raw}})=0\ (p\in E_a),\qquad
+ \mathcal U_q(J_n^{\mathrm{raw}})=\{2,3\},\quad d_Y(q,J_n^{\mathrm{raw}})=1\ (q\in E_b),\qquad
+ L_n(J_n^{\mathrm{raw}})=|E_b|=d.
+\tag{JM.221}
+$$
+
+定理58.2的参数在这里是 $h_0=h_n^{\mathrm{raw}},J_0=J_n^{\mathrm{raw}}$，任务为原 Boolean $\operatorname{Pos}$ 或
+另配独立消费者的 $Q$。其全 $W_n$ 正确性、共同空态、完整缓存、缺席、重复及动作权限
+逐项就是本节合同；没有缩成缺陷族。由（JM.177）直接得
+
+$$
+\mathsf{RawOpt}_n\ge L_n(J_n^{\mathrm{raw}})=F(n-3).
+\tag{JM.222}
+$$
+
+这是定理58.2在上述参数下的应用，支持命中和缓存重放证明均由该定理给出。
+$J_n^{\mathrm{raw}}$ 在 $Y$ 块包含非叶 $qLL\in\mathsf D_n\setminus\mathsf A_n$，所以不满足58.3的
+$\alpha$-hit 前提；这里没有从该尖锐类搬运原始最优值，下面另证达到者。
+
+若 $U\in F_n^{\mathrm{raw}}$ 在所有 $D_n^{\mathrm{raw}}$ 地址也给 `branch`，（JM.218）迫使它在
+$\operatorname{Int}(T_n)$ 的每个地址均为分支。$U,T_n$ 都有 $N$ 个叶及 $N-1$ 个内部地址，
+故地址包含关系饱和；内部形状和固定叶词共同强制 $U=T_n$。这给全域分支证书。
+
+达到者属于原 `ActualFiniteObserverAbsentElimination.Observer`。
+$E$ 是有限完整名义配置集，$e_0$ 解码空缓存，`action` 先按 $h_n^{\mathrm{raw}}$ 的 shortlex 顺序请求 $J_n^{\mathrm{raw}}$。
+$J_n^{\mathrm{raw}}$ 阶段第一次非 `branch` 进入有限回退扫描；若 $J_n^{\mathrm{raw}}$ 全为 `branch`，按固定顺序请求 $D_n^{\mathrm{raw}}$。
+$D_n^{\mathrm{raw}}$ 全为 `branch` 时停在 `Pos=true`；$D_n^{\mathrm{raw}}$ 阶段第一次非 `branch` 时停在 `Pos=false`。
+后一分支的相容来源属于 $F_n^{\mathrm{raw}}\setminus\{T_n\}$，由（JM.220）都不在一阶像，故确实非正。
+
+回退取 $N=F(n+1)$，按固定 shortlex 请求（JM.173）的全部 $\mathsf B_N$，保留与旧查询重复的
+请求、缺席和原始命中。57.2的同一个 $N$ 叶高度界保证全部叶都在窗内，其完整前沿重建
+给唯一来源；然后调用原 `ActualTreeReadoutAcquisition.finiteDecision`。
+完整名义载体取上述有界四分支决策树的全部节点，每个查询行及四回复子行都保留，包括
+不一致、在重复请求上冲突及不可实现的回复词。节点标签保留沿该路径控制器所选的地址和
+完整四值回复；decoder 从空表逐条作原 `cacheUpdate`，不把有重复的响应词直接当缓存。
+扫描终端若响应词匹配唯一 $U\in W_n$，停在 `finiteDecision U`，否则停在 `false`。
+停止行 transition 自环，查询行 transition 到对应四值子行。每个名义 decoder 都地址 `Nodup`，
+只在首次出现追加，命中不覆盖、不删除、不推断。实际输入上 `queryReply_eq_readout` 与
+该 fold 逐步给缓存 truth 及原 `Legal` 的精确更新律。每条路径长至多
+$|J_n^{\mathrm{raw}}|+|D_n^{\mathrm{raw}}|+|\mathsf B_N|$，故对每个 $W_n$ 有限终止。
+完整扫描终端的实际相容集是单点，`acquisition_foundation` 给
+`finiteDecision U = true ↔ Positive U`；两条快速停止分支已由（JM.220）及分支证书判定。
+在 $T_n$ 上回退不触发，新增地址恰为 $D_n^{\mathrm{raw}}$，与 $J_n^{\mathrm{raw}}$ 不交。
+
+独立总 $Q$ 消费者定义在整个 bit/raw-cache 域上。对任意 `Bool` $b$ 和任意有限原始缓存 $c$，
+包括不一致、冲突及重复输入，置
+
+$$
+H_n^{\mathrm{raw}}(c)=\{U\in W_n:\forall(q,y)\in c,\ y=r(q,U)\}.
+$$
+
+令 $\Delta_n^{\mathrm{raw},Q}(b,c)$ 在 $H_n^{\mathrm{raw}}(c)\ne\varnothing$ 且 $Q$ 在其上为常值时返回该常值，否则返回 $(0,0)$。
+$W_n$ 有限，所以这是整个输入域上的有限、来源无关总函数。成功的 $J_n^{\mathrm{raw}}+D_n^{\mathrm{raw}}$ 终端有
+$H_n^{\mathrm{raw}}(c)=\{T_n\}$；第一次 $D_n^{\mathrm{raw}}$ 偏离的终端有 $H_n^{\mathrm{raw}}(c)\subseteq F_n^{\mathrm{raw}}\setminus\{T_n\}$，
+由（JM.220）其 $Q$ 恒为 $(0,0)$；回退扫描终端有单点相容集。
+故 $\Delta_n^{\mathrm{raw},Q}$ 在每个 $W_n$ 实际终端准确输出 $Q$，与 Boolean halt 分离。于是
+
+$$
+\mathsf{RawOpt}_n=|D_n^{\mathrm{raw}}|=|K_n^{\mathrm{raw}}|=F(n-3)\qquad(n\ge4).
+\tag{JM.223}
+$$
+
+该数只计 $h_n^{\mathrm{raw}}$ 之后的新增 distinct 地址；命中、重复、名义行、缓存、地址长度、计算、
+通信、安装和保持费用仍按原合同分别计费。
+
+### 66.3 ALL-HISTORY 粗动作的全递归覆盖
+
+对 $V,T\in W_n$ 定义完整粗支持
+
+$$
+E^{\mathrm{raw}}(V,T)=\{u:\kappa(r(u,V))\ne\kappa(r(u,T))\}.
+\tag{JM.224}
+$$
+
+对任意不在两树叶地址集并集中的地址，两棵树的粗回复都为 `none`：原始回复可以是
+`branch` 或 `absent`。因此该集合正是有限叶前沿的标记差异集，同地址的不同叶标签也计入。
+先给两个种子，其中四阶支持精确复用引理56.2。$T_4=C_0$、$J_4^{\mathrm{raw}}=\{LL\}$，$\mathcal V_4^{\mathrm{raw}}=\{C_1\}$，并且
+
+$$
+E^{\mathrm{raw}}(C_1,T_4)=H_2.
+\tag{JM.225}
+$$
+
+令 $T_5=(C_0,B)$，$J_5^{\mathrm{raw}}=\{LLL,RL\}$。取（JM.184）的原始五叶 $Z$，定义
+
+$$
+\begin{aligned}
+V_5^L&=(Z,B),\\
+V_5^R&=((B,(\beta,(\alpha,(\beta,\alpha)))),\beta).
+\end{aligned}
+$$
+
+$Z$ 的同词 $babba$ 和原始性由59.1供应，$B$ 的词为 $bab$；$V_5^R$ 按叶序也给
+同一个八叶词 $babbabab=w(T_5)$。其子树 $(\alpha,(\beta,\alpha))$ 有左孩子叶 $\alpha$，
+按36.2的禁形不在一阶像内。两者都在 $W_5$、都不在 $I_1$，且在 $J_5^{\mathrm{raw}}$ 上分别为
+(`absent`,`branch`) 与 (`branch`,`absent`)；它们的粗历史都等于
+$\kappa_{\rm hist}(h_5^{\mathrm{raw}})$。相对 $T_5$ 的完整粗支持分别为
+
+$$
+\begin{aligned}
+E^{\mathrm{raw}}(V_5^L,T_5)&=\{LL,LLLL,LLLR,LLR,LRL,LRLL,LRLRL,LRLRR\},\\
+E^{\mathrm{raw}}(V_5^R,T_5)&=\{R,LRR,RLL,RLR,RR,LRRL,LRRRL,LRRRR\}.
+\end{aligned}
+\tag{JM.226}
+$$
+
+完整支持可由三个带标签前沿逐列核对：$T_5$ 的 $\beta$ 叶为
+$LLLL,LLR,LRL,RLL,RR$，$\alpha$ 叶为 $LLLR,LRR,RLR$；
+$V_5^L$ 的 $\beta$ 叶为 $LL,LRLRL,LRLRR,RLL,RR$，$\alpha$ 叶为 $LRLL,LRR,RLR$；
+$V_5^R$ 的 $\beta$ 叶为 $LLLL,LLR,LRL,LRRRL,R$，$\alpha$ 叶为 $LLLR,LRRL,LRRRR$。
+删除同地址同标签叶，其余前沿差异恰为（JM.226）；前沿并集之外两边都为 `none`，
+即使原始 `branch`、`absent` 不同。因而支持覆盖整个无限地址域。
+这两组非空、互不相交且避开 $J_5^{\mathrm{raw}}$；$T_5$ 的 `Pos` 为真，而 $V_5^L,V_5^R$ 的 `Pos` 为假。
+这里只把它们分别和共同正树比较，不对 $V_5^L,V_5^R$ 的 Boolean 值作互相分离。
+
+令 $\mathcal V_4^{\mathrm{raw}}=\{C_1\}$、$\mathcal V_5^{\mathrm{raw}}=\{V_5^L,V_5^R\}$，并对 $n\ge6$ 定义
+
+$$
+\mathcal V_n^{\mathrm{raw}}=
+\{(V,T_{n-2}):V\in\mathcal V_{n-1}^{\mathrm{raw}}\}
+\mathbin{\dot\cup}
+\{(T_{n-1},V):V\in\mathcal V_{n-2}^{\mathrm{raw}}\}.
+\tag{JM.227}
+$$
+
+一阶像语法对内部子树封闭：像树的分支或为特异终端 $(\beta,\alpha)$，或其两个
+子树都在 $I_1$；特异终端的两个子树都是叶。这里每个竞争者 $V\in\mathcal V_m^{\mathrm{raw}}$
+（$m\ge4$）至少有五个叶，因而是非叶。若这样的 $V\notin I_1$，则对任意树 $S$，
+$(V,S)$ 和 $(S,V)$ 都不在 $I_1$：它们不是特异终端，而普通像分支要求 $V\in I_1$。
+递推的叶词给 $\mathcal V_n^{\mathrm{raw}}\subseteq W_n$，而
+$J_n^{\mathrm{raw}}=LJ_{n-1}^{\mathrm{raw}}\mathbin{\dot\cup}RJ_{n-2}^{\mathrm{raw}}$，所以所有成员在 $J_n^{\mathrm{raw}}$ 上都和 $T_n$
+有相同粗历史。其支持是左侧的 $LE(V,T_{n-1})$ 或右侧的
+$RE(V,T_{n-2})$；同侧继承不交性，异侧由首字母 $L/R$ 不交。于是这些支持成一族
+两两不交、非空、避开 $J_n^{\mathrm{raw}}$ 的见证，数目 $c_4=1,c_5=2$、
+$c_n=c_{n-1}+c_{n-2}$，即
+
+$$
+ c_n=F(n-2)\qquad(n\ge4).
+\tag{JM.228}
+$$
+
+这里的不交性是该递归族实际产生的证明工具，不是原问题对方法的限制。
+取任意在 $T_n$ 上从共同空缓存实际产生（JM.214）所定 $h_n^{\mathrm{raw}}$ 的原 `Observer` $M$，
+其 `Legal` 在每个 $W_n$ 上成立，对每个 $W_n$ 从共同初态有限终止，Boolean `Pos` 在每个
+$W_n$ 上正确，且 `historyAction M` 在**所有有限历史**上通过
+`ActualCoarseReadoutHistory.kappa_hist` 因子化。以 $\mathsf{CoarseLB}_n$ 记此类读者在
+$T_n$ 的实际 $h_n^{\mathrm{raw}}$ 后新增 distinct 地址费用的下确界；下面另给同前缀有限满足者。
+考虑 $T_n$ 的实际终止运行；若它的
+$h_n^{\mathrm{raw}}$ 后 paid 地址漏掉某个支持 $E^{\mathrm{raw}}(V,T_n)$，则从共同空初始行同时重放 $T_n$ 与 $V$。
+两边可以有不同的 raw state、不同的 cache 和不同的命中记录；
+种子的 `branch`／`absent` 就已在前缀处不同。`Legal` 与
+`actualPrefix_semantics` 只说明各自状态忠实于各自历史，而粗历史逐步相等时，
+ALL-HISTORY 因子化强制 `historyAction` 和当前动作相等。遗漏支持保证每次查询的粗回复
+也相等，重复查询仍由各自 truthful cache 命中，故最终 Boolean halt 相等；这与一边
+`Pos=true`、另一边 `Pos=false` 矛盾。每个见证支持必须被命中，且支持之间及其与 $J_n^{\mathrm{raw}}$
+不交，所以
+
+$$
+\mathsf{CoarseLB}_n\ge c_n=F(n-2)\qquad(n\ge5).
+\tag{JM.229}
+$$
+
+原始粗动作类有沿同一实际 $h_n^{\mathrm{raw}}$ 运行的有限满足者。固定 $n\ge4$ 和
+$N=F(n+1)$，令 $s_n=(q_1,\ldots,q_\ell)$ 先按原 shortlex 顺序列出 $J_n^{\mathrm{raw}}$，
+再按 shortlex 列出全部 $|q|\le N-1$ 地址；第二段保留和第一段重复的请求。
+这里有限的是固定请求表及其长度 $\ell$；有限地址字母表本身允许任意长历史。
+取有限配置集
+
+$$
+E_n^{\mathrm{raw}}=\mathbin{\dot\bigcup}_{i=0}^{\ell}\mathsf{Reply}^{i}.
+$$
+
+每个长 $i$ 的四值回复词 $y=(y_1,\ldots,y_i)$ 都是一行，包含不一致、重复请求
+上的冲突回复及不可实现的名义行。回复词是配置的有限标签，控制器不接收外部历史。
+初始行为 $i=0$ 的唯一空词；decoder 从空缓存起，对 $(q_1,y_1),\ldots,(q_i,y_i)$
+依次作原 `cacheUpdate`。因此每个名义 decoder 都是地址 `Nodup` 的首次出现原始缓存，
+命中不覆盖、不删除，也不推断条目。$i<\ell$ 时 action 查询 $q_{i+1}$，收到任意
+原始回复 $z$ 后 transition 到 $y z$；$i=\ell$ 时停机且 transition 自环。
+这给出原 `Observer` 的完整有限行与四回复转移。
+
+终端位只依赖 $(\kappa y_1,\ldots,\kappa y_\ell)$。令其相容集为
+
+$$
+\{U\in W_n:\forall 1\le t\le\ell,\ \kappa(r(q_t,U))=\kappa y_t\}.
+$$
+
+若该集恰为单点 $\{U\}$，返回 `finiteDecision U`；否则返回 `false`。这是每个
+终端名义行上的总 Boolean 函数，包括粗回复冲突的行。对任意实际 $U\in W_n$，
+原 `queryReply_eq_readout` 与缓存更新逐步给出缓存 truth 和精确更新律，故 `Legal`
+成立，并在恰 $\ell$ 次请求后停机。$U$ 的全部叶地址长至多 $N-1$，所以第二段
+粗读数给出完整标记叶前沿。完整带标签前沿的唯一重建直接复用57.2，
+参数仍是同一个 $N=F(n+1)$ 叶的完整 $W_n$，故实际终端相容集恰为 $\{U\}$。由 `acquisition_foundation`
+所得的原 Boolean 位满足 `true ↔ Positive U`。该终端的 raw cache 同时包含第二段
+每个地址的真实原始值，故原独立总消费者 $\Delta_n^{\mathrm{raw},Q}$ 也准确返回 $Q(U)$。
+在 $T_n$ 上，第一段所有回复均为 `branch`，所以从共同空缓存实际发出的前缀正是
+（JM.214）的 $h_n^{\mathrm{raw}}$；该见证没有更换词域、初始 decoder 或前缀。
+
+ALL-HISTORY 性质另外在所有名义历史上证明。按原 `historyState` 的定义，外部历史
+的地址标记不参与回复折叠；前 $\min(\ell,|h|)$ 个原始回复确定上述有限行，超过
+$\ell$ 的回复被 halt 吸收。若 $\kappa_{\rm hist}(h)=\kappa_{\rm hist}(h')$，则
+两历史等长且对应回复的粗值相同。未到终端时两行发出同一固定地址；到终端时相容集
+及 Boolean 位相同；后续任意回复仍保持该停机动作。因此 `historyAction` 在所有有限
+历史上通过原 `kappa_hist` 因子化，包括错误地址标记、不一致、重复及 post-halt 历史。
+这一证明允许不同 raw 行和缓存，不以 sourcewise 正确性替代 ALL-HISTORY 条件。
+
+`ActualPureAcquisitionCompiler` 的原生 `coarsePrefixes N` 是所有
+`Allowed N` 来源的 `acquisitionTrace [] U` 粗历史的全部前缀；`PureRow N` 是这些
+前缀的全部 `CompatCache` 原始提升，`PureState N` 另含 absorbing false sink。
+`trace_addresses` 给出原节点 preorder，`pure_actual_prefix_cache` 保证实际历史是
+该 acquisition trace 的前缀，`pure_all_history_factorization` 则覆盖其 observer 的
+所有有限反事实历史。它的有限载体并非全部粗历史的集合。这些原生事实适用于该
+acquisition observer；本节同 $h_n^{\mathrm{raw}}$ 的满足者由上述有限行、前沿重建及全历史折叠
+证明承担，不把请求重排归入该定理。该见证只说明原接口有满足者，不声称
+（JM.229）的上界、粗费用最优或全局发现最优。
+
+### 66.4 所用定义与适用边界
+
+几何部分复用 `GenealogicalFiberTransport` 的来源／替换／叶词表示；读数、`Positive`、
+`finiteDecision`、`source_foundation`、`acquisition_foundation` 复用
+`ActualTreeReadoutAcquisition`；`Observer`、`Legal`、`ActualPrefix`、`Run`、
+`historyState`、`historyAction`、`actualPrefix_semantics`、`run_from_actualPrefix`、
+`run_deterministic` 和 `subtree_leaf_count` 复用
+`ActualFiniteObserverAbsentElimination`；粗投影复用 `ActualCoarseReadoutHistory`，
+原生 acquisition 载体的定义与适用范围来自 `ActualPureAcquisitionCompiler`，同一
+$h_n^{\mathrm{raw}}$ 的全历史满足者由本节的有限行构造给出。确定性支持命中使用经典证书必须击中
+每个不交敏感块的原则（Buhrman--de Wolf, *Complexity Measures and Decision Tree
+Complexity: A Survey*, §4.2, Definition 2 and Proposition 1）；该文献的 Boolean
+坐标不替代这里的原树可实现性、缓存或动作合同。一般支持命中、既有五叶六地址表、全词静态证书、有限窗重建和原生取得保持原归属。
+同一实际分支前缀下的整个原始纤维刚性、原始续读达到者、全递归粗竞争支持与
+同前缀全历史满足者分别由本节的饱和论证、分支证书、支持递推与有限行构造给出。
+
+（JM.219）、（JM.220）、（JM.223）和（JM.229）均是对原始 $W_n$、实际 $h_n^{\mathrm{raw}}$、
+任意地址、缺席、重复、raw cache 及名义反事实行的证明；不把仅在 $W_n$ 上的
+正确性提升为 `Admissible(N)` 的全 `Allowed(N)` 正确性，也不把 Boolean halt 读作
+$Q$。
+
+**数学引文 66.6（通用有限载体的供应条件）。** [ActualExactTraceCompiler](https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.lean) 的 `exactObserver`、`firstRaw` 和 `exact_all_history_factorization`
+与这里的有限粗控制、原始首次出现缓存及停止吸收构造有通用重叠：该接口取含空历史的有限粗历史集和粗策略，
+全历史因子化属于该构造；同一个 shortlex 前缀上的 $W_n$ 有限行、实际缓存真值和前沿重建仍由57.2及66.3供应。
+[ActualObserverFiniteTable.bounded_table_representation](https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.lean) 对一个已给完整有限原 `Observer`，
+要求每个名义行的全部请求及解码缓存地址均在 $Q_N$，然后按整个载体的双射给忠实表；不要求正确性或来源终止，也不产生实际可达性。
+`ActualExactTraceCompiler.strategy_exact_run`、`strategy_admissible` 仍要求原 `Strategy` 对所有原来源全局正确并有限终止、$1\le N$、原策略的全历史粗因子化；运行对应的来源仍须满足 `Allowed N`。
+[ActualExactSupportPruning.exact_competitor_table_coverage](https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.lean) 仍以原 `Admissible N` 和 `ExactTraces N` 为前提，保留整个 `Allowed N` 域与完整名义载体。
+[ActualCompletionPhaseReplay.phase_replay_contract](https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionPhaseReplay.lean) 仍要求原 `Strategy`、$1\le N$ 及准确的 `compileRaw`／`controllerPolicy` 策略等式，实际前缀结论限于 `Allowed N`。
+这些供应不把仅在 $W_n$ 上的合同提升为较大域准入，不供应这里的字面行容量或观察者取得；本章普通数学推导的形式化状态仍为 OPEN。
+
+### 66.5 同一分支前缀的供应对应与区别
+
+| 所需关系 | 精确前置、参数与消费者 | 本节仍需的关系 |
+| --- | --- | --- |
+| 全部实际三叶位置与固定词纤维 | （JM.151）–（JM.156）的 $\rho,T_n,P_n,W_n$ 原样；（JM.178）取 $S=T_{n-3}$ 的 $E_a,E_b$，给 $P_n=E_a\sqcup\{pL:p\in E_b\}$ | $K_n^{\mathrm{raw}}=E_b$、$J_n^{\mathrm{raw}}=\{pL:p\in E_a\}\sqcup\{pLL:p\in E_b\}$ 是同一实际地址对应，不是词字段或另一个前缀 |
+| 五叶比较块、完整六地址支持与原始性 | （JM.166）–（JM.169）取 $C_0=Y,C_1=Y_2$，块根 $q\in E_b$；支持准确为 $qH_2$，供（JM.219）的独立实现 | 整个 $F_n^{\mathrm{raw}}$ 的一阶像饱和与唯一逆给（JM.220）；单块禁形不供应整纤维分类 |
+| 原始新增地址下界 | 定理58.2取 $h_0=h_n^{\mathrm{raw}},J_0=J_n^{\mathrm{raw}}$；每个 $X$ 已命中，每个 $Y$ 只排除 $Y_1$，故 $L_n(J_n^{\mathrm{raw}})=F(n-3)$ | （JM.218）、（JM.220）给分支饱和证书、第一次 $D_n^{\mathrm{raw}}$ 偏离的负位与常 $Q$；原始达到者及总消费者给（JM.223）的准确值 |
+| 有限扫描、成员位及只读消费者 | （JM.173）及57.2的 $N=F(n+1)$ 高度／完整前沿重建；原 `finiteDecision` 的位仍是第三像成员 | 扫描接在同一个实际 shortlex $J_n^{\mathrm{raw}}$ 后；名义重复按首次出现 fold，不把57.2的 $\alpha$ 快速前缀当作 $h_n^{\mathrm{raw}}$ |
+| 四阶分支／缺席竞争 | 59.1的 $Z$ 原始性和词供 $V_5^L=(Z,B)$ 的一个种子 | （JM.226）给两个八叶种子的完整不交粗支持，递推（JM.227）–（JM.228）给所有规模；（JM.183）的 $LL,RR$ 前缀不供该全递归结论 |
+| 原 ALL-HISTORY 有限接口 | 原 `historyState` 忽略外部地址标签，`barStep` 在 halt 吸收；缓存 truth 只在实际前缀要求 | 同 $h_n^{\mathrm{raw}}$ 的完整四值行构造及全反事实 fold 给满足者；原生 preorder acquisition observer 不直接供应 shortlex 前缀 |
+
+因此，在同一个 $h_n^{\mathrm{raw}}$、同一个完整 $W_n$ 和同一个 Boolean 任务下，原始最小新增费为
+$F(n-3)$，而每个全历史粗动作正确读者在 $n\ge5$ 至少需 $F(n-2)$ 个新增地址。
+二者差至少为 $F(n-4)>0$。粗竞争者可以在 $J_n^{\mathrm{raw}}$ 给 `absent` 而非 `branch`，因而
+不属于原始纤维 $F_n^{\mathrm{raw}}$，却有同一粗历史。这正是原始祖先刚性与粗动作停止约束不能互换的
+关系；已有原始充分缓存也不替代全历史动作因子化。
+第57章的 $F(n-1)$ 是空缓存全词静态证书／构造取得，第58章的 $\alpha$-hit 类是另一类前缀；
+二者没有被改读成这里的分支前缀最优。原始等式没有给粗费用上界或最优值，有限满足者也
+没有给名义载体最小值、全域发现最优或物理资源界。
+
+## 追加锚（本行以下为增补区）
