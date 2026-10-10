@@ -2576,3 +2576,1081 @@ This is a failure of the selected event-output bridge, even though the pair has 
 The realization theorem of Chapter 11 applies only after all complete-coordinate barycentre equations hold for common unweighted marginals. Thus its regeneration, rational approximation, finite atomicity, and all-shape infimum conclusions are not invoked for this pair. The original prior, source, paid histories, records, completion, Stop, zero and unit emissions, and possible noncompletion remain exactly those of the standing hypotheses. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 16. Joint mismatch necessity and the fixed full-residual certificate
+
+Fix the installed finite or countable prior $\mu$, with $\mu(1),\mu(2)>0$, and choose symbolically one supported $k_\star\ge3$, so $\mu(k_\star)>0$.  Put
+
+$$
+a=\frac13,
+\qquad b=\frac25,
+\qquad r_\star=\frac{F_{k_\star+1}}{F_{k_\star+3}}\in\left[\frac38,\frac5{13}\right],
+\qquad
+\rho_p=\frac{1116529}{22781250},
+\qquad
+\rho_\beta=\frac{239}{6750}.
+$$
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},
+\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\},
+\qquad
+C=\frac{11758471}{22781250},
+\qquad
+H=\frac{5261}{6750}.
+$$
+
+$$
+\eta=\frac{14219478376}{318644812890625},
+\qquad g=\frac{\eta}{400000}.
+$$
+
+The depth $K$ is the one positive integer sampled once by the original source.  All statements below retain the original $m=2,d=1,\ell=2,n=4$ control, both seeds, every paid rejection and finite return, all marker triples and held registers, the third write-before-latch, completion and matching Stop.  Complete carriers include every infinite noncompletion outcome.  The same acquired-letter kernels are used by actual and synthetic updates, and configuration TV is taken before its configuration average.
+
+The full source and observer contract is Section 2. In particular, the full-record renderer $I_{C_0(h)}$ is the same measurable bijection on every actual record fibre, including each future operation block and the matching Stop. No future conditioning, reset, extra Read or measurement, count, clock, posterior, configuration-distribution input or exact-real port is available. Zero and unit emissions and positive noncompletion mass remain allowed in the original unrestricted class; regularity below concerns the compatible-law representation and its approximants. The program, installed numerics, sampler microstates, workspace, output indices and every persistent random choice belong to COMPLETE.
+
+### 16.1 Compatible full-law pairs
+
+Let $\Omega_p,\Omega_\beta$ be the complete raw carriers, including their infinity cells, and let
+
+$$
+\mathcal K_p=\{Q\in\mathcal P(\Omega_p):a\le Q(\alpha)\le b,\ Q(T_p(j))\le(4/15)^j\ \forall j\ge0\},
+$$
+
+$$
+\mathcal K_\beta=\{W\in\mathcal P(\Omega_\beta):a\le1-W(\beta)\le b,\ W(T_\beta(j))\le b(4/15)^j\ \forall j\ge0\},
+$$
+
+where the tail sets contain all words of return depth at least $j$ and the corresponding infinity cell, for every $j\ge0$.  Write
+
+$$
+u(Q)=Q(\alpha),\quad U(Q)=1-u(Q),\quad v(W)=1-W(\beta),
+$$
+
+$$
+\mathcal R_B(Q)(E)=\frac{Q(\beta E)}{U(Q)},
+\qquad
+\mathcal R_A(W)(F)=\frac{W(\alpha F)}{v(W)}.
+$$
+
+The denominators obey $U\ge3/5$ and $v\ge1/3$.  A compatible pair is a pair of Borel probability measures
+
+$$
+\Gamma_B\ \,\text{on }\mathcal K_p\times\mathcal K_\beta,
+\qquad
+\Gamma_A\ \,\text{on }\mathcal K_\beta\times\mathcal K_p
+$$
+
+with common unweighted marginals
+
+$$
+(\Gamma_B)_1=(\Gamma_A)_2=\nu_p,
+\qquad
+(\Gamma_B)_2=(\Gamma_A)_1=\nu_\beta,
+\tag{16.1}
+$$
+
+and, for every continuous input test and every complete atom (including infinity),
+
+$$
+\int \phi(Q)\,[\mathcal R_B(Q)(\eta)-W(\eta)]\,d\Gamma_B=0,
+\qquad
+\int \psi(W)\,[\mathcal R_A(W)(\omega)-Q(\omega)]\,d\Gamma_A=0.
+\tag{16.2}
+$$
+
+The continuous-test form extends to bounded Borel input tests by the compact-metric signed-measure argument following Definition 11.2. Atomwise identities also extend to every complete event by countable summation and dominated convergence; bounded tests and normalized residual laws supply domination, including for each tail with its infinite outcome.  Thus (16.2) is a full-descriptor conditional equation, not an equation conditioned only on a residual value.
+
+Define
+
+$$
+\begin{aligned}
+J_p&=\int (u-a)(b-u)\,d\nu_p,\\
+J_\beta&=\int (v-a)(b-v)\,d\nu_\beta,\\
+M_B&=\int (u(Q)-v(W))^2\,d\Gamma_B(Q,W),\\
+M_A&=\int (v(W)-u(Q))^2\,d\Gamma_A(W,Q).
+\end{aligned}
+\tag{16.3}
+$$
+
+For each supported depth $k$, put $r_k=F_{k+1}/F_{k+3}$.  Define
+
+$$
+\mathcal J(\Gamma_B,\Gamma_A)=\max\left\{
+\sup_{k:\mu(k)>0}\int\operatorname{TV}(Q,P_{p,r_k})\,d\nu_p(Q)-\rho_p,
+\quad
+\sup_{k:\mu(k)>0}\int\operatorname{TV}(W,P_{\beta,r_k})\,d\nu_\beta(W)-\rho_\beta
+\right\}.
+$$
+
+This is the maximum of the two supported-depth suprema; neither supremum is assumed to be attained at a supported depth.  It is the compatible-pair functional of the full original target, with TV inside the configuration integral.
+
+### 16.2 Finite same-object mismatch estimate
+
+**Lemma 16.1 (same-table mismatch control).** The actual return variation of any finite regular stationary table is at most the sum of the square roots of its two directional mismatch energies, as in (16.5).
+
+**Proof.** Consider first one finite regular same-update table with p labels $i$, suspended labels $j$, rows $\pi,\tau$, kernels $B,A$, and emissions $u_i,v_j\in[a,b]$, satisfying
+
+$$
+\pi B=\tau,
+\qquad \tau A=\pi.
+\tag{16.4}
+$$
+
+Its actual three-stage return distribution is the single probability law
+
+$$
+\Xi(i,j,i')=\pi_iB_{ij}A_{ji'}.
+$$
+
+The two directional edge laws are the marginals of this same object:
+
+$$
+\Gamma_B^{\rm fin}(i,j)=\pi_iB_{ij},
+\qquad
+\Gamma_A^{\rm fin}(j,i')=\tau_jA_{ji'}.
+$$
+
+Consequently, pointwise on every triple,
+
+$$
+|u_i-u_{i'}|
+\le |u_i-v_j|+|v_j-u_{i'}|.
+$$
+
+Taking expectation under $\Xi$, then using (16.4), gives
+
+$$
+V_\pi:=\sum_{i,j,i'}\pi_iB_{ij}A_{ji'}|u_i-u_{i'}|
+\le \int|u-v|\,d\Gamma_B^{\rm fin}
+   +\int|v-u|\,d\Gamma_A^{\rm fin}.
+$$
+
+Both edge measures are probability measures.  Cauchy–Schwarz therefore yields the same-table estimate
+
+$$
+V_\pi\le \sqrt{M_B^{\rm fin}}+\sqrt{M_A^{\rm fin}}.
+\tag{16.5}
+$$
+
+No independently selected edge distributions occur in (16.5): the first marginal is $\pi B=\tau$, and the second is $\tau A=\pi$, exactly as required by the actual triple. $\square$
+
+### 16.3 Passage from an arbitrary compatible Borel pair
+
+**Theorem 16.2 (joint necessity on arbitrary compatible Borel flows).** Every compatible pair in Section 16.1 obeys (16.10), for the fixed installed prior with positive endpoint masses and a supported nonendpoint.
+
+**Proof.** Take any compatible pair (16.1)–(16.2).  Apply the supplied joint finite-flow regeneration to obtain, for $\varepsilon_n\to0$, one finite regular table at each stage whose two own-law flow measures converge jointly to $\Gamma_B$ and $\Gamma_A$.  Its two exact flow identities are (16.4), and its configuration losses against every complete target differ from the compatible-pair losses by a quantity $\delta_n\to0$.  Apply the supplied rationalization to that same table, choosing the rational approximation error to tend to zero as well.  The resulting single rational table still has both exact flows and one pair of own generated full laws.  This is the PAIRED regeneration/rationalization result; no new compactness or one-sided quadrature is being inserted.
+
+Theorem 11.4 gives phase loss errors at most $81\varepsilon_n/44$ and $61\varepsilon_n/44$ on the upper side, uniformly over complete targets, together with joint convergence of its two own-law flows. For each such finite shape, Lemma 11.6 makes the rational flow masses and their own generated law atoms converge. Choose its maximal law displacement and the sum of the absolute flow-weight errors in each direction at most $1/n$. This preserves the joint weak limit: for a bounded continuous test, uniform continuity controls displacement of each law pair, and the sum of the absolute changes of its finitely many flow weights controls the remaining integral. This is a diagonal choice of the supplied two-flow approximation, not a limit assertion about conditional kernels.
+
+For each rational table, use the original-domain product realization.  In the original third-completion update, the complete record is written and latched before the source-independent private row is sampled.  The row is exactly $\pi_n$ at every positive fourth-segment p history and exactly $\tau_n$ after a p-beta return; a suspended-alpha return returns it to $\pi_n$.  The same $(B_n,A_n)$ are used on acquired and synthetic updates.  The installed program, numerical table, sampler states, workspace and persistent randomness are charged to COMPLETE.  The original $C_0$, both seeds, marker and held records, paid histories, every finite fourth return, completion and Stop remain in the product.  The once-sampled $K$ is never resampled.  The decoder laws retain their infinity cells; the geometric $4/15$ bound proves their zero mass without conditioning on completion.
+
+Every rational table has finite nonempty phase label sets, positive probability rows, stochastic $B_n,A_n$, regular emissions and both identities (16.4). These are all the table hypotheses of [PAID, Definition 2.1 and Lemma 2.1.1], with observer period one. Before the latch, retain original control with fair synthesis; completing letters clear the private label and retain the original pendingStop and delivery transitions. A fixed rational categorical sampler uses fresh independent fair bits, finite rational thresholds and reusable finite rejection workspace, as in Corollary 11.7. The identical represented sampler implements actual and synthetic updates. Its internal service adds no source query; its almost-sure termination gives no finite worst-case bit or time bound. Source-independent initial sampling is not a runtime oracle. Neither the Borel flows nor their disintegrations, barycentres or analysis rows are installed as continuous registers.
+
+At every positive fourth-segment history $h$, the target remains $\sum_k\nu_h(k)P_{s,r_k}$ for the same once-sampled $K$. Apply convexity to the target separately inside each configuration's TV, then average and apply the common renderer. The finite paid-history witnesses and the summable likelihood-ratio domination of [PAID, Lemma 14.1] retain every supported depth under a countable prior. They do not require a maximizing depth or a pure-source runtime experiment. Here $e(M)$ is exactly (1.2), and $V(M)$ denotes the unweighted acquired-return statistic $\mathcal V(M)$ of [RETURN9, Definition 9.1] on the seed-1, marker-100 fibre. That fibre is used for a necessary statistic; all other original histories remain in the risks.
+
+PAID initialization and countable-prior domination, together with the configurationwise TV comparison, give an original observer $M_n$ with
+
+$$
+e(M_n)\le \mathcal J(\Gamma_B,\Gamma_A)+\delta_n,
+\qquad \delta_n\longrightarrow0,
+\tag{16.6}
+$$
+
+where $e(M_n)$ is its maximum of the two original configuration excesses.  The actual-return statistic on the designated positive-history fibre is exactly $V_{\pi_n}$, because every positive history has the same source-independent stationary row.  Applying (16.5) to that same table gives
+
+$$
+V(M_n)=V_{\pi_n}
+\le \sqrt{M_{B,n}}+\sqrt{M_{A,n}}.
+\tag{16.7}
+$$
+
+The functions $(Q,W)\mapsto(u(Q)-v(W))^2$ are bounded continuous on the compact descriptor products.  Joint weak convergence of the two own-law flows therefore gives
+
+$$
+M_{B,n}\to M_B,
+\qquad M_{A,n}\to M_A.
+\tag{16.8}
+$$
+
+No convergence of a composed disintegration or of a Markov product is used.
+
+The supplied original risk–return theorem applies to each $M_n$ and gives the strict finite inequality
+
+$$
+g<\frac{61}{11}e(M_n)+\frac{19}{11}\sqrt{V(M_n)}.
+\tag{16.9}
+$$
+
+Insert (16.6) and (16.7), then pass to the limit using (16.8).  The strict sign is thereby correctly weakened to a non-strict sign:
+
+$$
+\boxed{
+\frac{61}{11}\mathcal J(\Gamma_B,\Gamma_A)
+ +\frac{19}{11}\sqrt{\,\sqrt{M_B}+\sqrt{M_A}\,}
+\ge g.}
+\tag{16.10}
+$$
+
+This holds for every compatible Borel pair on the unchanged original domain. $\square$
+
+### 16.4 Edge-mismatch floor at zero excess
+
+**Corollary 16.3 (necessary mismatch floor at zero excess).** On the same compatible pair, $\mathcal J=0$ implies (16.16); the two energies are not optimized separately.
+
+**Proof.** Put
+
+$$
+m_p=\int u\,d\nu_p,
+\quad m_\beta=\int v\,d\nu_\beta,
+\quad t=m_p+m_\beta,
+$$
+
+$$
+q=\int Q(\beta\beta)\,d\nu_p,
+\qquad
+z=\int W(\alpha\alpha)\,d\nu_\beta.
+$$
+
+Testing the first residual equation with $1-u(Q)$ and the atom $\beta$, and the second with $v(W)$ and the atom $\alpha$, gives the exact identities
+
+$$
+q=\int(1-u)(1-v)\,d\Gamma_B,
+\qquad
+z=\int vu\,d\Gamma_A.
+\tag{16.11}
+$$
+
+For $x\in[a,b]$,
+
+$$
+x^2=(a+b)x-ab-(x-a)(b-x).
+$$
+
+Expanding $(u-v)^2$, using the common unweighted marginals in both directional flows, and then using (16.11), gives the supplied exact quartet identities
+
+$$
+D_B:=\frac{26}{15}-\frac{19}{15}t-2q
+   =J_p+J_\beta+M_B,
+\tag{16.12}
+$$
+
+$$
+D_A:=\frac{11}{15}t-\frac4{15}-2z
+   =J_p+J_\beta+M_A.
+\tag{16.13}
+$$
+
+Thus
+
+$$
+E:=D_A+D_B
+ =\frac{22}{15}-\frac8{15}t-2(q+z)
+ =2(J_p+J_\beta)+M_A+M_B
+ \ge M_A+M_B.
+\tag{16.14}
+$$
+
+Since
+
+$$
+\sqrt{M_B}+\sqrt{M_A}
+\le\sqrt{2(M_A+M_B)}
+\le\sqrt{2E},
+$$
+
+(16.10) also implies
+
+$$
+\frac{61}{11}\mathcal J
+ +\frac{19}{11}(2E)^{1/4}\ge g.
+\tag{16.15}
+$$
+
+At $\mathcal J=0$, apply $\sqrt{M_B}+\sqrt{M_A}\le\sqrt{2(M_A+M_B)}$ directly in (16.10). Since all terms are nonnegative, raising the resulting inequality $(2(M_A+M_B))^{1/4}\ge11g/19$ to the fourth power gives the explicit necessary floor
+
+$$
+\boxed{
+M_A+M_B\ge\kappa,
+\qquad
+\kappa=\frac12\left(\frac{11g}{19}\right)^4
+ =\frac12\left(\frac{11\eta}{7\,600\,000}\right)^4>0.}
+\tag{16.16}
+$$
+
+Equivalently, the exact rational value is
+
+$$
+\kappa=
+\frac{146132042055060050874608124299926801811521}
+{16793910307653031964936642766121613852796435821801424026489257812500000000000000000}.
+$$
+
+This is a joint same-pair necessity.  It does not lower-bound $\mathcal J$ by itself and does not imply that the two mismatch energies can be attained independently.  It also does not force the synchronized endpoint chord of the four-coordinate theorem. $\square$
+
+### 16.5 Exact fixed finite full-residual template
+
+Let $\pi_5$ retain the complete coordinates
+
+$$
+Q(\alpha),\quad Q(w_{j,i}),\quad W(\beta),\quad W(\alpha w_{j,i})
+\quad(0\le j<5,\ i\in\{0,1\}),
+$$
+
+the residual cells $Q(T_p(5))$ and $W(T_\beta(5))$, each containing every longer word and its infinity outcome.  Let $Z_p$ and $Z_\beta$ be the outer domains of these projected coordinates subject to normalization, nonnegativity, the endpoint boxes (11.29), $a\le u\le b$, $a\le v\le b$, and all inherited tail inequalities from (11.2).  They are outer domains: every full zero-face descriptor projects into them, but a point of either domain is not asserted to extend to a full law or a compatible flow.  Explicitly, for every retained level-five cell $c$ at phase $s$, impose
+
+$$
+\min\{P_{s,a}(c),P_{s,b}(c)\}\le D(c)\le
+\max\{P_{s,a}(c),P_{s,b}(c)\},
+$$
+
+together with nonnegative cell masses summing to one and the level-five tail inequalities (including the infinity mass) inherited from (11.2).
+
+Here $\alpha=w_{0,0}$ is one p atom, even where its coordinate is displayed twice. Normalization counts each distinct cell once. For $0\le j\le5$, the retained p tail mass is
+
+$$
+\sum_{n=j}^{4}\sum_{i=0}^{1}Q(w_{n,i})+Q(T_p(5)),
+$$
+
+and the suspended tail mass is the corresponding sum of $W(\alpha w_{n,i})$ plus $W(T_\beta(5))$. Their bounds are $(4/15)^j$ and $b(4/15)^j$, respectively; an empty sum is zero. Every longer word and the infinite outcome stays inside the retained tail cell. Its endpoint interval follows from (11.29): for $n\ge5$, the endpoint ratios from Section 2 have fixed order on both branches, so summing the atomwise bounds gives precisely the two native tail endpoints. These finite constraints do not assert a completion of an outer-domain point to a full descriptor.
+
+Use the complete level-four partitions
+
+$$
+\mathscr F_p=\{\{\alpha\}\}\cup
+ \{\{w_{j,i}\}:0\le j<4,\ i\in\{0,1\}\}\cup\{T_p(4)\},
+$$
+
+$$
+\mathscr F_\beta=\{\{\beta\}\}\cup
+ \{\{\alpha w_{j,i}\}:0\le j<4, i\in\{0,1\}\}\cup\{T_\beta(4)\}.
+$$
+
+The tail cells include the entire infinity outcome.  For $E\in\mathscr F_\beta$ and $F\in\mathscr F_p$, define the full-event residual coordinates
+
+$$
+b_E(Q,W)=Q(\beta E)-(1-u(Q))W(E),
+\qquad
+a_F(W,Q)=W(\alpha F)-v(W)Q(F).
+\tag{16.17}
+$$
+
+All coordinates in (16.17) are determined by the level-five projection. Indeed, $\beta\{\beta\}=\{w_{0,1}\}$, $\beta\{\alpha w_{j,i}\}=\{w_{j+1,i}\}$, $\beta T_\beta(4)=T_p(5)$, $\alpha\{w_{j,i}\}=\{\alpha w_{j,i}\}$ and $\alpha T_p(4)=T_\beta(4)$, including the respective infinite outcomes. Thus the two pointwise expressions below are functions of the displayed outer coordinates.
+
+These are exact residual equalities in the input-conditioned integral sense: compatible flows annihilate them against the permitted input multipliers, without pointwise vanishing on arbitrary outer-domain pairs.  For example, the $b_E$ term is annihilated by (16.2) with the bounded input test $(1-u)\chi_E$; $a_F$ is annihilated with $v\xi_F$.  The positive original denominators are retained inside these multipliers and are never replaced by an unnormalized or future-conditioned equation.
+
+Set
+
+$$
+f=Q(E_p),\quad h=W(E_\beta),\quad q=Q(\beta\beta),\quad z=W(\alpha\alpha).
+$$
+
+The fixed potential and multiplier spaces are exactly the following.  Every $\chi_E$ is in $\mathcal P$, and every $\xi_F$ is in $\mathcal S$:
+
+$$
+\mathcal P=\operatorname{span}\{1,u,u^2,f,uf,q,Q(w_{3,1})\},
+$$
+
+$$
+\mathcal S=\operatorname{span}\{1,v,v^2,h,vh,z,W(\alpha w_{3,1})\}.
+\tag{16.18}
+$$
+
+For $r\in\{a,b,r_\star\}$, put
+
+$$
+\ell_{p,r}(Q)=\operatorname{TV}(\pi_4Q,\pi_4P_{p,r})-\rho_p,
+\qquad
+\ell_{\beta,r}(W)=\operatorname{TV}(\pi_4W,\pi_4P_{\beta,r})-\rho_\beta.
+\tag{16.19}
+$$
+
+The template asks for potentials $P\in\mathcal P$, $S\in\mathcal S$ and input multipliers $\chi_E\in\mathcal P$ for every $E\in\mathscr F_\beta$, $\xi_F\in\mathcal S$ for every $F\in\mathscr F_p$, all with rational coefficients in the respective seven-dimensional bases (16.18).  The event coefficients satisfy $\alpha_0,\beta_0\in\mathbb Q$.  The risk coefficients satisfy
+
+$$
+\lambda_{s,r}\in\mathbb Q_{\ge0}
+\qquad\text{for every }s\in\{p,\beta\}
+\text{ and }r\in\{a,b,r_\star\}.
+$$
+
+The thresholds satisfy $\delta_B,\delta_A\in\mathbb Q$ and $\delta_B+\delta_A>0$.  The $\ell^1$ norm of all scalar coefficients in these expansions is at most one; it includes both potential expansions, every input-multiplier expansion, both event coefficients and all six phase-indexed risk coefficients $\lambda_{s,r}$.  There are ten suspended partition cells and nine p partition cells, since $\{\alpha\}=\{w_{0,0}\}$. Hence the normed rational coefficient vector has exactly
+
+$$
+2\cdot7+(10+9)\cdot7+2+6=155
+$$
+
+entries. The two rational thresholds are additional variables and are not included in that norm. Coefficients of either potential, every input multiplier and the two event terms may have either sign; only the six risk weights must be nonnegative.
+
+Define
+
+$$
+\begin{aligned}
+G_B(Q,W)={}&P(Q)-S(W)+\sum_{E\in\mathscr F_\beta}\chi_E(Q)b_E(Q,W)\\
+&+\alpha_0(f-C)+\sum_{r\in\{a,b,r_\star\}}\lambda_{p,r}\ell_{p,r}(Q),
+\\[2mm]
+G_A(W,Q)={}&S(W)-P(Q)+\sum_{F\in\mathscr F_p}\xi_F(W)a_F(W,Q)\\
+&+\beta_0(h-H)+\sum_{r\in\{a,b,r_\star\}}\lambda_{\beta,r}\ell_{\beta,r}(W).
+\end{aligned}
+\tag{16.20}
+$$
+
+The exact certificate system is
+
+$$
+G_B(Q,W)\ge\delta_B\quad\text{for every }(Q,W)\in Z_p\times Z_\beta,
+\tag{16.21}
+$$
+
+$$
+G_A(W,Q)\ge\delta_A\quad\text{for every }(W,Q)\in Z_\beta\times Z_p,
+\tag{16.22}
+$$
+
+with (16.21)–(16.22) checked on every absolute-value sign cell of the projected TVs in (16.19), including the residual and infinity cells.  Clearing a denominator is lawful only after retaining $U\ge3/5$ and $v\ge1/3$; the displayed form (16.17) already avoids that loss.
+
+#### 16.5.1 Conditional sufficiency of the certificate
+
+**Proposition 16.4 (conditional full-residual separator).** If the rational coefficient system (16.18)–(16.22) has a solution on the stated outer domains, no compatible full-law pair has $\mathcal J=0$.
+
+**Proof.** Suppose a compatible pair had $\mathcal J=0$ and that a coefficient tuple satisfying (16.21)–(16.22) existed.  The zero-face endpoint geometry supplies
+
+$$
+\int f\,d\nu_p=C,
+\qquad
+\int h\,d\nu_\beta=H.
+\tag{16.23}
+$$
+
+Integrate (16.21) against $\Gamma_B$ and (16.22) against $\Gamma_A$.  The two potential differences cancel by the common marginals (16.1).  Every residual term vanishes by (16.2), with the input-conditioned multipliers described after (16.17).  The event terms vanish by (16.23).  All three targets $a,b,r_\star$ come from actually supported depths of the installed prior.  For every $r\in\{a,b,r_\star\}$, contraction of TV under the complete projection $\pi_4$, followed by the corresponding supported-depth supremum bound at $\mathcal J=0$, gives
+
+$$
+\int\ell_{p,r}(Q)\,d\nu_p(Q)
+\le\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p(Q)-\rho_p\le0,
+$$
+
+$$
+\int\ell_{\beta,r}(W)\,d\nu_\beta(W)
+\le\int\operatorname{TV}(W,P_{\beta,r})\,d\nu_\beta(W)-\rho_\beta\le0.
+$$
+
+All six $\lambda_{s,r}$ coefficients are nonnegative, and (16.1) identifies these phase integrals with their corresponding flow integrals.  Thus all six weighted risk terms have nonpositive integrals.  This uses no maximizing supported depth.  Hence
+
+$$
+\int G_B\,d\Gamma_B+\int G_A\,d\Gamma_A\le0,
+$$
+
+whereas (16.21)–(16.22) force this same sum to be at least
+$\delta_B+\delta_A>0$, a contradiction.
+
+This argument uses both full residual flows, both common unweighted marginals, and the entire level-four tail; it does not use a finite-shape or native-mixture restriction. $\square$
+
+#### 16.5.2 The unresolved rational coefficient problem
+
+**Open problem 16.5 (the fixed rational coefficient boundary).** For the symbolic $r_\star$ above, no rational coefficient tuple satisfying the global system (16.21)–(16.22) has been established, and no exact proof that this fixed ansatz is infeasible has been established.  The exact unresolved statement is therefore
+
+$$
+\exists\,(P,S,\chi,\xi,\alpha_0,\beta_0,\lambda,\delta_B,\delta_A)
+\quad\text{over the stated rational coefficient domain such that (16.18)–(16.22) hold globally.}
+\tag{16.24}
+$$
+
+The universal quantifiers in (16.21)–(16.22) range over the full outer projections and every TV sign cell.  A violating projected descriptor would refute a proposed tuple; a projected feasible point, or failure to find a tuple, would neither provide a compatible full-law pair nor prove the original zero face empty.  Thus (16.24) is a bounded null boundary for this particular degree and event basis, not a substitute for the unrestricted same-prior alternative.
+
+The [sparse-literal-history transport results, Chapters 20–24](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md), concern exact finite literal-tree capacity and replay.  They supply no stochastic full-flow/configuration-TV correspondence, so they do not decide (16.24) or the zero-face question.
+
+### 16.6 Attribution and applicability limits
+
+The mismatch theorem uses Theorem 11.4, Lemma 11.6 and Corollary 11.7, [PAID, Lemmas 2.1.1 and 14.1], and [RETURN9, Theorems 9.2 and 9.3], with equation (12.7) supplying the quartet identities.  The necessary floor is compatible with an off-chord zero pair, an unattained zero infimum, or a positive unrestricted gap.  The synchronized endpoint-chord rigidity and its supported-nonendpoint exclusion remain conditional on that chord; the event means in (16.23) are not equations prescribing the immediate-emission means $m_p,m_\beta$.  No universal formal verification, global novelty, finite exact attainment or resource optimum follows from (16.10), (16.16), or the unresolved certificate system (16.24).
+
+The finite template restricts the certificate search alone. It restricts neither the complete descriptor marginals nor the finite observer shapes in the original problem, and assumes no reversibility, $A=I$, native mixture, constant emission, mixing, private-kernel contraction, conservation, positivity margin, resource or defect budget. Small actual-return variation, complete-law dispersion, suspended-to-p mismatch and paired event ranges remain different quantities attached to one observer. No product of independently attainable values is used. The event constraints in (16.23) are expectations of complete semantic events. They are not runtime observations; the indexed paired arrays determine emissions only on known common $B,A$ under Theorem 4.1 and the projected-fixed-point plus unprojected-equation test of Corollary 4.2.
+
+Theorem 13.2 supplies an exact one-sided finite-support construction under its additional hypothesis, but it may change both joint flows. It cannot replace the prescribed two-flow convergence used in Theorem 16.2. Chapter 15 excludes a specified event-output separator class with a full-law pair that fails a full residual coordinate; that pair is not a compatible witness for (16.1)–(16.2), and its obstruction does not decide (16.24). The synchronized chord remains the conditional fibre of Theorem 12.2 and Corollary 12.3. In particular, the four coordinates $11/30,11/30,181/450,61/450$ at $\theta=1/2$ have no unconditional zero-face forcing assertion here.
+
+The direct tools are the finite triple triangle inequality, Cauchy–Schwarz, continuity of bounded squared emission differences, and integration of the two full residual equations. The compact law spaces, common-flow regeneration and rationalization belong to Chapter 11; the directed crossing-flow repair and its simultaneous configuration-loss comparison belong to [RETURN9, Section 9](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md); the initialized full-source realization and countable-prior witnesses belong to [PAID, Lemmas 2.1.1 and 14.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md). These are ordinary source-specific mathematical deductions, with no additional compactness, coupling-existence or rounding theorem claimed.
+
+The applicable distinctions in the primary literature are those of Sections 9 and 11.8: positive realization through invariant cones [Monras–Winter, Definition 5 and Theorem 6](https://arxiv.org/html/1412.3634v1) and positive Markov-form realization [Taghavian–Sjolund, Sections I–III](https://arxiv.org/html/2502.21102v3) concern prescribed output processes or transfer functions; [Leskela–Vihola, Theorems 1.2–1.3](https://arxiv.org/html/1404.0999v3) concerns finite-dimensional integrable laws and conditional martingale couplings. Those results do not supply the two original unweighted full-descriptor residual flows with configuration-before-TV control. No implication from controlled state-identification experiments or an approximate output-law comparison is used to add an observation to this source.
+
+The exact remaining finite mathematical task is the rational existence question (16.24), with every outer-domain sign cell retained. A separator must satisfy both global inequalities with their common coefficients and positive threshold sum; an infeasibility conclusion must concern that entire coefficient domain. Neither outcome by itself constructs an original observer, and failure of this finite ansatz supplies no unrestricted zero witness. The alternatives of exact finite common attainment, an unattained zero infimum and a positive unrestricted gap retain Theorems 11.5 and 11.8 and their exact sampler hypotheses. The two-endpoint-only attainer and the strictly positive-excess rational witness keep their separate prior and risk scopes. No coefficient tuple, exact infeasibility proof, evaluated compact minimum, resource optimum or universal formal application is supplied; these boundaries remain open.
+
+## 追加锚（本行以下为增补区）
+
+## 17. A six-cell complete-residual test for the full-vector certificate
+
+### 17.1. Definitions and scope
+
+Fix the installed finite or countable prior $\mu$, with
+$\mu(1),\mu(2)>0$, and choose an actually supported
+$k_\star\ge3$. Throughout,
+$$
+a=\frac13,\quad b=\frac25,\quad
+r_\star=\frac{F_{k_\star+1}}{F_{k_\star+3}}\in[3/8,5/13],
+$$
+$$
+\rho_p=\frac{1116529}{22781250},\quad
+\rho_\beta=\frac{239}{6750},\quad
+C=\frac{11758471}{22781250},\quad H=\frac{5261}{6750}.
+$$
+Use exactly the level-five outer domains $Z_p,Z_\beta$, level-four
+complete output partitions, seven-term input and potential bases, and
+coefficient norm of Section 16.5. In particular, all six risk
+coefficients are nonnegative and count in that norm. The atom
+$w_{0,0}=\alpha$ occurs once, so the output partitions have nine p cells
+and ten suspended cells. All tail cells retain infinity.
+
+Write $w_{n,0}=(\beta\alpha)^n\alpha$,
+$w_{n,1}=(\beta\alpha)^n\beta\beta$, and $t_r=r(1-r)$. The native laws are
+$$
+P_{p,r}(w_{n,0})=rt_r^n,\qquad
+P_{p,r}(w_{n,1})=(1-r)^2t_r^n,
+$$
+$$
+P_{\beta,r}(\beta)=1-r,\qquad
+P_{\beta,r}(\alpha w_{n,i})=rP_{p,r}(w_{n,i}).                 \tag{17.1}
+$$
+Their infinite masses are zero. Denote the complete depth-at-least-$j$
+tails by $T_p(j),T_\beta(j)$, with infinity included.
+
+The original source is unchanged: one positive integer $K$ is sampled
+once; $m=2,d=1,\ell=2,n=4$, both seeds, all marker triples and held
+registers, all paid rejections and finite returns, the third write before
+the latch, fourth completion, and matching Stop remain present. The
+full-record renderer is the original $I_{C_0(h)}$, and configuration TV
+precedes averaging. No source reset, future conditioning, additional
+Read, clock, posterior, configuration-distribution input, or numerical
+oracle is introduced.
+The original acquired-letter stochastic kernels must be identical in
+actual and synthetic updates; no count input or auxiliary measurement is
+available. The original COMPLETE carrier includes control, installed
+program and numerics, workspace, represented sampler states and every
+persistent random choice. Source-independent initialization does not
+provide an exact-real runtime port.
+
+The objects below are complete probability laws and their projected
+Dirac edge measures. They are not asserted to be an initialized observer.
+Their complete A residual vanishes; their complete B residual does not.
+This gives a test of arbitrary proposed coefficients, not a null for the
+full ansatz.
+
+### 17.2. A rational complete-law pair
+
+Define the following positive rational constants:
+$$
+c=\frac{467}{2000},\qquad
+v=\frac{c(1+cH)}{C+c}=\frac{201200388183}{546492572000},
+$$
+$$
+u=1-\frac cv=\frac{157589663}{430835949},\qquad U=1-u,
+\qquad q=1-\frac{1-H}{v}=\frac{2177500722109}{5432410480941},
+$$
+$$
+d_0=q-U(1-v)=\frac{1212298469447}{10864820961882000},\qquad
+s=cq-d_0=\frac{21160011224072}{226350436705875},
+$$
+$$
+\varepsilon=sc^2-\frac{1944}{390625}
+=\frac{29150733012563}{242345221312500000}.
+                                                               \tag{17.2}
+$$
+Here $c$ is a law-construction parameter, unrelated to the source
+parameters or an acquired counter. In particular,
+$$
+a<u,v<b,\quad \frac29<c<\frac6{25}<\frac4{15},\quad
+0<d_0<\varepsilon.
+                                                               \tag{17.3}
+$$
+First define an auxiliary law vector by
+$$
+Q^0(w_{n,0})=uc^n\quad(n\ge0),\qquad
+Q^0(w_{0,1})=q,\qquad
+Q^0(w_{n,1})=sc^{n-1}\quad(n\ge1).
+$$
+Set
+$$
+Q=Q^0+\varepsilon(\delta_{w_{3,0}}-\delta_{w_{3,1}}),
+\qquad W=(1-v)\delta_\beta+v\alpha Q,
+\qquad Q(\infty_p)=W(\infty_\beta)=0.                       \tag{17.4}
+$$
+The prefix $\alpha Q$ includes the corresponding infinite outcome.
+
+**Proposition 17.1.** The laws in (17.4) are normalized and lie in their full
+endpoint coordinate boxes and in $\mathcal K_p,\mathcal K_\beta$ of
+[PAIRED, (11.2)]. Their level-five projections lie in the exact prescribed
+outer domains. They have
+$$
+Q(E_p)=C,\qquad W(E_\beta)=H,\qquad
+Q(w_{3,1})=P_{p,b}(w_{3,1})=\frac{1944}{390625}.              \tag{17.5}
+$$
+
+**Proof.** The definitions imply
+$$
+Uv=c,\qquad
+d_0=u+q-1+c,\qquad
+u+q+\frac{uc+s}{1-c}=1.
+$$
+Thus $Q^0$ sums to one, and the modification in (17.4) preserves that sum.
+Also
+$$
+s=-1+\frac{1-H+cH}{v},\qquad
+q+s(1+c)=-c+\frac{c(1+cH)}v=C.
+$$
+The modification is outside $E_p$, and
+$1-v+vq=H$; this proves the two means in (17.5). The remaining equality
+in (17.5) follows from (17.2).
+
+Here are finite rational bounds proving all exceptional endpoint-box
+comparisons. For a phase and atom let $l,h$ be its smaller and larger
+native endpoint masses and let $x$ be its mass in (17.4). Each table entry
+$(L,R)$ asserts $10^{12}(x-l)\ge L$ and
+$10^{12}(h-x)\ge R$; the p upper margin at $(3,1)$ is exactly zero.
+Every entry follows by substitution in (17.1)--(17.4) and cross multiplication.
+
+| $(n,i)$ | p lower and upper bounds | suspended lower and upper bounds |
+|---|---:|---:|
+| $(0,0)$ | $(32443160865,34223505801)$ | $(23555628002,25333260886)$ |
+| $(0,1)$ | $(40835085962,43609358482)$ | $(3574146520,574001627)$ |
+| $(1,1)$ | $(7083412411,5282019687)$ | $(1495672409,142516891)$ |
+| $(2,1)$ | $(1092376798,119497001)$ | $(720524372,257917694)$ |
+| $(3,0)$ | $(1118987582,752633450)$ | $(539393875,453119802)$ |
+| $(3,1)$ | $(99334711,0)$ | $(206464890,158422679)$ |
+| $(4,1)$ | $(106286597,4261383)$ | $(76885224,39590342)$ |
+
+On marker zero the larger endpoint is b for every $n$; on p marker one
+it is b for $n\ge3$; on suspended marker one it is b for $n\ge1$.
+These orders follow from the endpoint ratios in [CLIP, Section 6].
+On every unmodified geometric range, increasing $n$ multiplies the
+candidate mass by $c$, the lower endpoint by $2/9$, and the upper
+endpoint by $6/25$. By (17.3), a valid comparison propagates to all larger
+$n$. Use the $(0,0)$ base for both zero branches except their modified
+$n=3$, the three separate small one-branch checks, and the $(4,1)$
+base for the remaining one branches. The table therefore proves every
+finite coordinate inequality and nonnegativity. The standalone suspended
+beta lies in its box since $a<v<b$; infinity lies in its zero endpoint box.
+
+The modification exchanges mass within one return depth. Consequently
+$$
+Q(T_p(0))=1,\qquad
+Q(T_p(j))=T_1c^{j-1}\ (j\ge1),\qquad
+T_1=1-u-q=\frac{1267861698065}{5432410480941}<\frac4{15},
+                                                               \tag{17.6}
+$$
+and $W(T_\beta(j))=vQ(T_p(j))$. Equations (17.3) and (17.6) prove every
+original tail bound. They prove vanishing mass at infinity without
+conditioning on completion. For the level-five tail endpoint box, every
+constituent finite coordinate has the same endpoint order; sum the full
+coordinate inequalities, including infinity. Thus all projected
+normalization, box, emission and retained tail constraints hold. $\square$
+
+### 17.3. All supported losses and the exact full residual vector
+
+**Proposition 17.2.** The four complete endpoint losses of (17.4) equal their
+respective radii, as do the level-four endpoint losses. Uniformly for
+every $r\in[3/8,5/13]$,
+$$
+\operatorname{TV}(Q,P_{p,r})<\frac3{100},\qquad
+\operatorname{TV}(W,P_{\beta,r})<\frac1{50}.                 \tag{17.7}
+$$
+In particular all six selected projected losses are nonpositive, with
+strict nonendpoint slack greater than
+$$
+\sigma_p:=\rho_p-\frac3{100}=\frac{866183}{45562500},\qquad
+\sigma_\beta:=\rho_\beta-\frac1{50}=\frac{52}{3375}.          \tag{17.8}
+$$
+The statement retains every actually supported nonendpoint, without
+assuming $\mu(3)>0$.
+
+**Proof.** Inside the complete endpoint boxes, the endpoint TV identities
+are the signed event differences of [CLIP, Theorem 6.2; PAIRED, (11.30)].
+Equation (17.5) makes all four distances equal their radii. Grouping at level
+four loses no endpoint TV because every grouped tail atom has the same
+endpoint sign and both positive-difference events are retained.
+
+For a direct complete-tail proof of (17.7), put $l=3/8$, $h=5/13$,
+$F_p=\{w_{n,i}:n<4\}$, and $F_\beta=\{\beta\}\cup\alpha F_p$.
+Every native coordinate in these finite sets is monotone on $[l,h]$.
+The derivative signs, after positive factors are removed, are
+$(n+1)-(2n+1)r$ and $n-(2n+2)r$ at p, and
+$(n+2)-(2n+2)r$ and $(n+1)-(2n+3)r$ at suspension.
+For $n<4$ none changes sign in the interval's interior. The standalone
+beta decreases. The native tails
+$H_p(r)=t_r^4$, $H_\beta(r)=rt_r^4$ increase there. Therefore, for
+$D_p=Q,D_\beta=W$, the complete TV is bounded by
+$$
+B_s=\frac12\sum_{\omega\in F_s}
+ \max\{|D_s(\omega)-P_{s,l}(\omega)|,
+        |D_s(\omega)-P_{s,h}(\omega)|\}
+ +\frac12\{D_s(T_s(4))+H_s(h)\}.                            \tag{17.9}
+$$
+The last summand bounds the entire infinite complement, not just its
+partition mass difference. Exact substitution gives
+$$
+B_p=\frac{1226181607265976508493031867683}
+ {41458271175237999801139200000000}<\frac3{100},
+$$
+$$
+B_\beta=\frac{56912033286509571087020539}
+ {2921887678112582400000000000}<\frac1{50}.
+$$
+Projection contracts TV configurationwise, proving (17.8) and the projected
+claims. $\square$
+
+Let $b_E=Q(\beta E)-UW(E)$ and
+$a_F=W(\alpha F)-vQ(F)$, with the original positive denominators
+$U\ge3/5$, $v\ge1/3$ retained in the normalized residuals.
+
+**Proposition 17.3.** As signed measures on the entire suspended carrier,
+$$
+U\{\mathcal R_B(Q)-W\}
+=d_0(\delta_\beta-\delta_{\alpha w_{0,1}})
+ +\varepsilon(\delta_{\alpha w_{2,0}}-\delta_{\alpha w_{2,1}})
+ -c\varepsilon(\delta_{\alpha w_{3,0}}-\delta_{\alpha w_{3,1}}),
+                                                               \tag{17.10}
+$$
+whereas $\mathcal R_A(W)=Q$ on the entire p carrier. Thus every A
+residual and both level-four tail residuals are zero. The ten B output
+residuals, ordered as beta, then $\alpha w_{n,i}$ for $n<4$, then tail,
+are exactly
+$$
+(d_0,0,-d_0,0,0,\varepsilon,-\varepsilon,
+  -c\varepsilon,c\varepsilon,0).                            \tag{17.11}
+$$
+For all seven basis inputs their B moment matrix is the outer product
+$$
+\left(1,u,u^2,C,uC,q,\frac{1944}{390625}\right)^{\!T}
+\left(d_0,0,-d_0,0,0,\varepsilon,-\varepsilon,
+  -c\varepsilon,c\varepsilon,0\right),                     \tag{17.12}
+$$
+and their A moment matrix is zero.
+
+**Proof.** The beta residual is $q-U(1-v)=d_0$. Every other finite
+residual is $Q(w_{n+1,i})-cQ(w_{n,i})$. Before the modification, the
+only nonzero such residual is $s-cq=-d_0$ at $(n,i)=(0,1)$.
+The depth-three exchange creates the four other terms in (17.10) and no
+others. Equation (17.6) gives
+$Q(T_p(5))-cQ(T_p(4))=0$. Infinity has zero residual. Definition (17.4)
+gives the full A equation directly. Evaluating the prescribed input
+basis gives (17.12), so no multiplier or output coordinate is omitted.
+In particular,
+$$
+\operatorname{TV}(\mathcal R_B(Q),W)
+=\frac{d_0+(1+c)\varepsilon}{U}
+=\frac{176521370877569582321}{430670302521750000000000}>0.
+                                                               \tag{17.13}
+$$
+The unique coupling of the Dirac marginals therefore fails the constant
+B-beta residual test. $\square$
+
+### 17.4. A coefficient-specific falsifier and a margin ceiling
+
+For an arbitrary tuple in the original allowed coefficient domain, set
+$\delta=\delta_B+\delta_A$, $L_p=\lambda_{p,r_\star}$,
+$L_\beta=\lambda_{\beta,r_\star}$. Evaluate all multipliers at the single
+law Q of (17.4), and define the rational linear functional
+$$
+\begin{aligned}
+\Phi(\chi)={}&d_0(\chi_{\{\beta\}}(Q)-\chi_{\{\alpha w_{0,1}\}}(Q))\\
+&+\varepsilon[\chi_{\{\alpha w_{2,0}\}}(Q)
+ -\chi_{\{\alpha w_{2,1}\}}(Q)
+ -c\chi_{\{\alpha w_{3,0}\}}(Q)
+ +c\chi_{\{\alpha w_{3,1}\}}(Q)].
+\end{aligned}                                                   \tag{17.14}
+$$
+For $s=p,\beta$, let
+$\tau_s(r)=\rho_s-\operatorname{TV}(\pi_4D_s,\pi_4P_{s,r})$.
+These are exact finite absolute-value expressions, with their complete
+tail cell, and are rational at the symbolic supported rational
+$r=r_\star$.
+
+**Theorem 17.4.** Any tuple satisfying both original global inequalities
+must satisfy
+$$
+\delta\le\Phi(\chi)-L_p\tau_p(r_\star)
+                         -L_\beta\tau_\beta(r_\star).       \tag{17.15}
+$$
+Consequently a tuple violating (17.15) has an explicit violating point in
+one of its original outer products. In particular, no positive tuple
+can have
+$$
+\Phi(\chi)\le\sigma_pL_p+\sigma_\beta L_\beta.               \tag{17.16}
+$$
+This is a constraint on all seven input coefficients of the six named
+B output multipliers. It imposes no condition on possible observer
+shapes or full-law marginals.
+
+**Proof.** Evaluate $G_B$ at $(\pi_5Q,\pi_5W)$ and $G_A$ at its
+reverse. Proposition 17.1 proves these points belong to the full original
+domains, including their boundary face $Q(w_{3,1})=P_{p,b}(w_{3,1})$.
+The potentials cancel exactly. Both centered events vanish. Proposition
+17.3 evaluates every residual term, including tails, to (17.14). Proposition
+17.2 makes all four endpoint loss terms zero. Hence the sum of the two
+evaluations is exactly the right side of (17.15). If that sum is less than
+$\delta_B+\delta_A$, at least one of the two required bounds fails at
+the displayed point. Finally $\tau_s(r_\star)>\sigma_s>0$, proving (17.16).
+This argument evaluates absolute values themselves; it assumes no
+sampled or omitted TV sign regions. $\square$
+
+**Corollary 17.5.** Write
+$$
+\Delta(r)=r^3(1-r)^5-\frac{1944}{390625},\qquad D(r)=\Delta(r)/2.
+$$
+Every positive globally valid tuple in the original coefficient norm
+satisfies $L_p>0$ and
+$$
+0<\delta\le
+\frac{\varepsilon D(r_\star)}{D(r_\star)+\varepsilon+\sigma_p}
+\le\frac{970653033099278294049}{5888989627122173078237500000}
+<\frac1{6000000}.                                          \tag{17.17}
+$$
+If $N_B$ is the sum of the absolute values of all original B multiplier
+coefficients, then also
+$$
+\varepsilon N_B\ge\delta+\sigma_pL_p+\sigma_\beta L_\beta,
+\qquad
+0<L_p<\frac{\varepsilon}{\varepsilon+\sigma_p}.              \tag{17.18}
+$$
+All six risk weights, both potential expansions, all A and B multiplier
+expansions, and both event coefficients remain charged in these bounds.
+
+**Proof.** Use the fair native endpoint edge measures
+$$
+\Gamma_B^e=\tfrac12\delta_{(P_{p,a},P_{\beta,a})}
+           +\tfrac12\delta_{(P_{p,b},P_{\beta,b})},
+\qquad \Gamma_A^e=\text{their reversed pairs}.
+$$
+They have common unweighted marginals, and (17.1) verifies both entire
+residual equations. Their full geometric tails put every projected node
+in the original domains. Their event means are C,H. On the complete
+level-four partition, the only native p target coordinate outside its
+endpoint interval for $r\in[3/8,5/13]$ is $w_{3,1}$, with excess
+$\Delta(r)>0$. To verify this, the marker-zero coordinates and grouped
+tail increase on $[a,b]$; the marker-one coordinates for $n=0,1,2$
+decrease there. For $n=3$, the derivative sign is $3-8r$, and its
+value at $5/13$ exceeds its larger endpoint value. Every suspended
+coordinate, including its grouped tail, lies between its endpoints:
+standalone beta and its $n=0$ one-branch decrease, and its other
+retained coordinates increase.
+
+The coordinate triangle identity consequently makes the integrated
+p nonendpoint excess exactly $D(r)$, the suspended nonendpoint excess
+zero, and all four endpoint excesses zero. Integrating the two proposed
+bounds against this same native pair gives
+$$
+\delta\le L_pD(r_\star).                                   \tag{17.19}
+$$
+This is the native endpoint-tag comparison of (12.4)--(12.5), with
+its projected-tail and sign premises proved above. It tests the proposed
+certificate without restricting the original unknown pair.
+
+Every entry of the input vector in (17.12) belongs to $[0,1]$.
+By (17.3) and (17.11), every absolute raw residual is at most
+$\varepsilon$, so $\Phi(\chi)\le\varepsilon N_B$.
+Equation (17.15) and (17.8) prove the first inequality in (17.18).
+The original full coefficient budget implies
+$N_B+L_p+L_\beta\le1$; all omitted budget terms are nonnegative
+absolute values. Therefore
+$$
+\delta\le\varepsilon-(\varepsilon+\sigma_p)L_p
+                     -(\varepsilon+\sigma_\beta)L_\beta.
+$$
+For $\delta>0$, (17.19) forces $L_p>0$ and
+$L_p\ge\delta/D(r_\star)$. Substitution, and $L_\beta\ge0$, prove
+the first bound of (17.17) and the second of (17.18). No coefficient has been
+removed or renormalized. Finally,
+$$
+0<\Delta(r_\star)\le\Delta(3/8)
+=\frac{344076471}{6553600000000},
+$$
+because the derivative of $r^3(1-r)^5$ is nonpositive on this interval.
+The function $x\mapsto\varepsilon x/(x+\varepsilon+\sigma_p)$
+increases for $x>0$. Exact substitution proves both remaining rational
+comparisons in (17.17). $\square$
+
+### 17.5. Applicability limits and the unpaid relation
+
+The directional Dirac measures of (17.4) are normalized nonnegative measures
+with common full marginals, both exact centered events, all selected
+nonpositive losses, and every A input-output residual moment zero. Their
+B moment matrix is exactly (17.12), not zero. They are thus neither a
+projected null nor a common full-law zero witness. The existing
+Chapter 15 object likewise fails a B coordinate, with its different
+normalized defect $-97339/246148875$. Its event-output exclusion is
+reused only within its published scope. Equations (17.10)--(17.18) give an
+explicit sparse full-vector evaluation and coefficient bound for a
+different law pair; no event-only exclusion is promoted to full-vector
+infeasibility.
+
+The exact fixed-template question remains whether some rational tuple in
+the original spaces, with all six required weight signs and full norm
+bound, satisfies both inequalities on the entirety of
+$Z_p\times Z_\beta$ and its reversal. Equivalently for an exact null
+assignment, the two normalized projected edge measures must match every
+potential moment, annihilate all seven-input-times-output residual
+moments in both directions, center both events, and have all six loss
+integrals nonpositive. No such evaluated tuple or null is furnished by
+(17.4). The strictly positive upper bound (17.17) does not prove that no
+positive tuple exists, and failing (17.15) refutes only the specified tuple.
+
+For the original unrestricted question the simultaneous relation still
+unpaid is
+$$
+\mathcal R_B(Q)=\mathbb E[W\mid Q],\qquad
+\mathcal R_A(W)=\mathbb E[Q\mid W],                         \tag{17.20}
+$$
+conditioned on the entire descriptors, with common unweighted full
+marginals, every complete endpoint box, the mean constraints
+$\int f=C,\int h=H$, and both supported-depth suprema of complete
+configuration losses at most their radii. The two suprema need not have
+maximizing depths. Finite projected moment agreement is weaker than
+(17.20), even when actual representing measures are supplied. Neither
+the event means nor (17.17) identifies the immediate-emission means or
+forces the synchronized endpoint chord of [PAIRED, (12.3)].
+
+The supplied identities and necessities remain jointly scoped to one
+compatible pair:
+$$
+S=2(J_p+J_\beta)+M_A+M_B,\qquad
+\mathcal J+\frac{540}{11}S\ge\frac\eta4,
+$$
+$$
+\frac{61}{11}\mathcal J+
+\frac{19}{11}\sqrt{\sqrt{M_B}+\sqrt{M_A}}\ge\frac\eta{400000}.
+$$
+They leave S and the mismatches free at zero excess. Return variation,
+complete-law dispersion, suspended-to-p mismatch and paired-event
+ranges are different quantities; none is multiplied by an independently
+attained bound or eliminated here. Sections 16.2--16.4 already derive
+the mismatch necessity from the joint own-law regeneration of
+[PAIRED, Chapter 11] and the directed crossing-flow repair of [RETURN,
+Section 9]; those arguments are not replaced by a new compactness or
+rounding principle.
+
+An original-domain realization would require both full residual equations
+and a single finite same-update table, or the complete hypotheses of
+[PAIRED, Theorems 11.4--11.8 or 13.2]. [PAID, Lemma 2.1.1] then puts its
+private row after the original third write and latch; [PAID, Lemma 14.1]
+supplies initialized paid-history rows and countable-prior domination.
+Acquired kernel rows can contain zeros and ones. Arbitrary original
+emissions can also be zero or one, with their kernels defined and their
+possible noncompletion retained; clipping to regular emissions is the
+separate comparison in [CLIP, Theorem 3.1], not a premise silently imposed
+on the full problem. Rational samplers, all installed program and numeric
+data, workspace, sampler states and persistent randomness must be charged
+to COMPLETE. A mathematical law or finite atomic measure is not an
+exact-real runtime port. Proposition 17.3 prevents invoking any of these
+realization conclusions for (17.4).
+
+The finite next exact assignment is to evaluate the original coefficient
+system subject to the necessary tests (17.15), (17.17), and (17.18), retaining all
+its domains and coefficients, or to give representing measures satisfying
+its entire projected null system. These extra tests remove no valid
+positive certificate and impose no observer restriction. A successful
+positive tuple still requires a proof on every nonempty closed TV sign
+region and every boundary; a representation-order non-hit proves nothing
+about existence. An exact projected null would settle only this ansatz;
+full-law extension, common full marginals, all supported losses and
+original realization would still be required for a zero witness.
+Exact finite common attainment, an unattained zero infimum, a positive
+unrestricted gap, and fixed-resource optima remain distinct and unresolved.
+
+### 17.6. Citations and mathematical correspondence
+
+- **FULL:** Chapter 16, especially (16.17)--(16.22), supplies the exact
+  full-residual coefficient spaces, all six nonnegative risk weights,
+  the 155-entry norm and both universal inequalities. Sections 16.1--16.4
+  supply the joint mismatch necessity with its original-source hypotheses.
+- **PAIRED:** Sections 2--4 and Chapters 11--15 of this volume supply the
+  complete-law domain, native recursions, endpoint geometry, joint
+  regeneration, one-sided realization limits and event counterobject.
+  Their conclusions retain their stated scopes.
+- **CLIP:** [Risk-controlled emission moment feasibility](RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md),
+  Sections 1--6. Proposition 17.2 uses its endpoint-box TV identity;
+  (17.9) is the elementary complete-tail bound of (12.13), evaluated at
+  the laws (17.4).
+- **PAID:** [Effective paid-history certificates](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md),
+  Definitions 1.1--2.1, Lemmas 2.1.1, 2.2, 14.1 and Corollary 2.3.
+- **RETURN:** [Acquired-return p-emission variation](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md),
+  Theorems 9.2--9.3. Their necessity is reused through Chapter 16;
+  it is not a risk-only lower bound.
+- **Endpoint-tag coefficient test:** The complete native laws (2.1),
+  their compatible endpoint flows (12.5), and the coordinate triangle
+  identity (5.7) give (17.19) by the full projected sign argument in
+  Corollary 17.5. Conditional finite-feature tests, elimination of
+  redundant terms and polynomial validation provide no evaluated
+  separator or projected null without their own full hypotheses.
+
+The complete-law formulation in [PAID, Chapters 16--17](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)
+uses the same normalized compact law spaces and two separately normalized
+unweighted flows. Its second flow is written in the reversed coordinate
+order: $\gamma=\Gamma_B$ and $\zeta=\mathrm{swap}_*\Gamma_A$,
+where $\mathrm{swap}(W,Q)=(Q,W)$. Its raw residual equations
+are equivalent to (16.2): multiply input tests by $U$ or $v$ in one
+direction, and by $1/U$ or $1/v$ in the other. All these multipliers are
+bounded continuous because $U\ge3/5$ and $v\ge1/3$. The complete
+atom equations include infinity and extend to complete events as in
+Section 16.1. The supremum over the closure of the supported parameters
+has the same value as the supported-depth supremum: the complete-target
+TV estimates of [CLIP, Proposition 5.3] give continuity in the parameter,
+uniformly in the descriptor. No maximizing supported depth is required.
+Thus PAID's compactness, finite regeneration, endpoint boxes and zero-value
+alternatives are covered by Chapters 11--13 with these exact conventions.
+They are reused mathematical supplies, not further compactness results.
+Finite abstract realization still requires the represented exact-sampler
+conditions of Theorem 11.8 for an effective observer.
+
+[PAID, Theorems 18.1--18.2](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)
+supply conditional existence of finite strict whole-product certificates
+and rational finite-coordinate verification when the compact value is
+positive. Their tests, polynomial degrees, partitions and supported target
+menus are not fixed to Section 16.5. Their exact projection polytopes also
+differ from its endpoint-box outer domains, and their loss weights have a
+joint sum-one normalization rather than this full 155-coefficient norm.
+Consequently they supply neither coefficients for (16.24) nor a null for
+that fixed system. Proposition 16.4 reuses cancellation of common marginal
+potentials and annihilation of conditional residuals; (17.10)--(17.19)
+retain the specific sparse full-vector evaluation and coefficient ceiling.
+A pointwise falsifier of one tuple is not a universal certificate.
+
+[Suspended-emission heterogeneity, Section 8](RECURSIVE_RELATIONAL_OBSERVATION_SUSPENDED_EMISSION_HETEROGENEITY.md)
+supplies a joint necessary modulus for original excess and suspended
+emission oscillation on the reachable held-record fibre, conditional on
+its common-row, clipping, endpoint and full-record suppliers. It uses one
+dependent acquired path and a convex tangent comparison; it assumes no
+independence of path coordinates or private-kernel mixing. That oscillation
+remains free and is distinct from both residual mismatch energies here.
+Its necessity evaluates neither (16.24) nor the unrestricted infimum and
+is not applied as an observer theorem to the incompatible laws (17.4).
+
+Positive realization by invariant pointed polyhedral cones concerns a
+specified quasi-realization and compatible word maps [Monras--Winter,
+Definition 5 and Theorem 6, arXiv:1412.3634v1]. Conditional convex-order
+coupling concerns integrable finite-dimensional vectors or kernels
+[Leskela--Vihola, Theorems 1.2--1.3, arXiv:1404.0999v3]. Neither theorem
+provides the missing two full-descriptor equations (17.20) for these laws.
+Approximate policy refinement for general Markov decision processes
+[Haesaert--Soudjani--Abate, arXiv:1605.09557] and optimal transition
+couplings of prescribed stationary finite Markov chains
+[O'Connor--McGoff--Nobel, arXiv:2006.07998] address different constraints
+and losses; no complete stopped-law or initialization correspondence is
+asserted. Legal adaptive tests of suspension automata
+[van den Bos--Vaandrager, Definitions 7--11, arXiv:1907.11034v2] grant no
+extra source observation here. Pointwise martingale-duality failures
+[Beiglbock--Nutz--Touzi, Section 8, arXiv:1507.00671v3] preclude borrowing
+unqualified dual attainment. Strict polynomial positivity under an
+Archimedean quadratic module [Helton--Putinar, Theorem 3.9,
+arXiv:math/0612103v1] supplies no separator coefficients or fixed order.
+None of these external results is a premise of Propositions 17.1--17.3 or
+Theorem 17.4; Corollary 17.5 uses only the displayed native-law comparison.
+
+The native actual-prefix marking and rigidity statements require their
+prescribed literal source, complete nominal carrier, exact traces and
+truthful cache. The k-bonacci donor, internal-zero and own-path statements
+require their literal executor, actual calendar and phase-label
+hypotheses. Their variables and costs have not been identified with the
+two stochastic complete-law flows. The Robin signed-band decomposition
+likewise concerns arithmetic zeros and its fixed exponent, not these
+probability residuals. These are qualified contextual analogies only.
+The assertions here are ordinary mathematical statements. Universal
+formal applications, worldwide novelty, exact common attainment, the
+unrestricted zero-versus-positive alternative and fixed-resource optima
+remain unestablished.
+
+## 追加锚（本行以下为增补区）
