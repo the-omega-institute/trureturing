@@ -23,11 +23,12 @@ internal static class BoundedProcessRunner
         IReadOnlyDictionary<string, string>? environment = null,
         Stream? standardOutput = null,
         Stream? standardError = null,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        Action<Process>? interruptBeforeKill = null)
     {
         var result = RunStreaming(fileName, arguments, workingDirectory, timeout, maximumOutputBytes,
             (stream, cancellation) => ReadLimitedAsync(stream, maximumOutputBytes, cancellation, standardOutput),
-            standardInput, environment, standardError, cancellationToken);
+            standardInput, environment, standardError, cancellationToken, interruptBeforeKill);
         return new ProcessOutput(result.ExitCode, result.StandardOutput, result.StandardError);
     }
 
@@ -41,7 +42,8 @@ internal static class BoundedProcessRunner
         ReadOnlyMemory<byte> standardInput = default,
         IReadOnlyDictionary<string, string>? environment = null,
         Stream? standardError = null,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        Action<Process>? interruptBeforeKill = null)
     {
         cancellationToken.ThrowIfCancellationRequested();
         var startInfo = new ProcessStartInfo
@@ -75,21 +77,29 @@ internal static class BoundedProcessRunner
 
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         cancellation.CancelAfter(timeout);
+        using var drain = new CancellationTokenSource();
+        var ioCancellation = interruptBeforeKill is null ? cancellation.Token : drain.Token;
+        Task? stdout = null;
+        Task? stderr = null;
+        Task? stdin = null;
+        Exception? interruptionFailure = null;
         try
         {
-            var stdout = readStandardOutput(
+            var output = readStandardOutput(
                 process.StandardOutput.BaseStream,
-                cancellation.Token);
-            var stderr = ReadLimitedAsync(
+                ioCancellation);
+            stdout = output;
+            var errors = ReadLimitedAsync(
                 process.StandardError.BaseStream,
                 maximumErrorBytes,
-                cancellation.Token, standardError);
-            var stdin = standardInput.IsEmpty
+                ioCancellation, standardError);
+            stderr = errors;
+            stdin = standardInput.IsEmpty
                 ? Task.CompletedTask
                 : WriteInputAsync(
                     process.StandardInput.BaseStream,
                     standardInput,
-                    cancellation.Token);
+                    ioCancellation);
             // A failed reader no longer drains its pipe. Observe its failure
             // while the child is running, before a blocked writer can turn an
             // output/parse error into a misleading process timeout.
@@ -99,7 +109,7 @@ internal static class BoundedProcessRunner
             };
             while (pending.Count != 0)
             {
-                var completed = Task.WhenAny(pending).GetAwaiter().GetResult();
+                var completed = Task.WhenAny(pending).WaitAsync(cancellation.Token).GetAwaiter().GetResult();
                 completed.GetAwaiter().GetResult();
                 pending.Remove(completed);
             }
@@ -113,19 +123,43 @@ internal static class BoundedProcessRunner
             }
             return new StreamedProcessOutput<T>(
                 process.ExitCode,
-                stdout.GetAwaiter().GetResult(),
-                stderr.GetAwaiter().GetResult());
+                output.GetAwaiter().GetResult(),
+                errors.GetAwaiter().GetResult());
         }
         catch (OperationCanceledException exception)
         {
-            TryKill(process);
+            InterruptAndKill();
             if (cancellationToken.IsCancellationRequested) throw;
-            throw new TimeoutException($"{fileName} timed out after {timeout.TotalSeconds:0} seconds", exception);
+            var settlement = interruptionFailure is null ? string.Empty
+                : $"; native settlement unresolved: {interruptionFailure.Message}";
+            throw new TimeoutException($"{fileName} timed out after {timeout.TotalSeconds:0} seconds{settlement}", exception);
         }
         catch
         {
-            TryKill(process);
+            InterruptAndKill();
             throw;
+        }
+        finally
+        {
+            // Destinations cannot outlive their consumer. In particular, the
+            // fixture's settlement output must be drained before its sinks close.
+            if (interruptBeforeKill is not null) drain.CancelAfter(TimeSpan.FromSeconds(5));
+            else drain.Cancel();
+            foreach (var task in new[] { stdout, stderr, stdin })
+            {
+                try { task?.GetAwaiter().GetResult(); }
+                catch (Exception) { /* Preserve the original process/reader failure. */ }
+            }
+        }
+
+        void InterruptAndKill()
+        {
+            try
+            {
+                if (!process.HasExited) interruptBeforeKill?.Invoke(process);
+            }
+            catch (Exception exception) { interruptionFailure = exception; }
+            finally { TryKill(process); }
         }
     }
 
