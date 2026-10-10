@@ -84,7 +84,31 @@ $$\forall r:unitInterval, (\forall s:ActivePhase, (\operatorname{mass}(\operator
 
 A surviving p execution must repeatedly read beta-alpha. A surviving beta execution must first read alpha, then follow the same returns. Their noncompletion events lie in every such finite prefix cylinder, whose masses are A^j and R A^j. Since A is at most one quarter, these upper bounds tend to zero. This proof includes r=0 and r=1; it retains none in the carrier and does not condition on completion.
 
-**Theorem 1.7 (The actual full stopped-word law).**
+**Theorem 1.7 (Bernoulli mass of each p completion word).**
+
+$$\forall r:unitInterval, (\forall j:Nat, (\forall b:Letter, (\operatorname{wordMass}(r,\operatorname{pWord}(j,b))=\operatorname{if}(b=0,\operatorname{alphaMass}(r),\operatorname{power}(\operatorname{betaMass}(r),2))\times\operatorname{power}(\operatorname{alphaMass}(r)\times\operatorname{betaMass}(r),j))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.p_word_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each return contributes one alpha and one beta factor. The final marker contributes alpha for bit zero and two beta factors for bit one. This coefficient identity is consumed both by the complete-law identification and by finite endpoint event calculations.
+
+**Theorem 1.8 (All finite singleton masses).**
+
+$$\forall s:ActivePhase, (\forall r:unitInterval, (\forall w:\operatorname{List}(Letter), (\operatorname{mass}(\operatorname{explicitStoppedWordLaw}(s,r),\{\operatorname{some}(w)\})=\operatorname{if}(\exists b:Letter,\operatorname{WordFamily}(s,b,w),\operatorname{wordMass}(r,w),0))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.explicit_finite_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A valid completion word has its Bernoulli product mass, and every other finite word has zero mass. The disjoint completion-word families identify the unique indexed atom; no renormalization or finite truncation is used.
+
+**Theorem 1.9 (The actual full stopped-word law).**
 
 $$\forall r:unitInterval, (\forall s:ActivePhase, (\operatorname{Measurable}(\operatorname{stoppedReadWord}(s))\land\operatorname{map}(\operatorname{rawReadLaw}(r),\operatorname{stoppedReadWord}(s))=\operatorname{explicitStoppedWordLaw}(s,r)))$$
 
@@ -102,9 +126,11 @@ This is the fixed-parameter raw fourth-segment projection. For a fixed source de
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.actual_fourth_segment_stopped_word_law`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.actual_noncompletion_mass_zero`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.explicit_finite_mass`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.first_completion_normal_form`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.measurable_stopped_read_word`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.noncompletion_fiber`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.p_word_mass`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.parses_normal_form`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.stopped_word_fiber`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/TriangularSharedImplementation](../../../Arith/FibonacciAtomic/TriangularSharedImplementation.md)

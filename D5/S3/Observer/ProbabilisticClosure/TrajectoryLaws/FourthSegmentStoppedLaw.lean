@@ -353,7 +353,7 @@ private theorem loop_mass (r : unitInterval) (j : ℕ) :
   simp [wordMass, loopWord, List.map_flatten, List.prod_flatten,
     bernoulli_alpha, alphaMass, betaMass, mul_comm]
 
-private theorem p_word_mass (r : unitInterval) (j : ℕ) (b : Letter) :
+theorem p_word_mass (r : unitInterval) (j : ℕ) (b : Letter) :
     wordMass r (pWord j b) =
       (if b = 0 then alphaMass r else betaMass r ^ 2) *
         (alphaMass r * betaMass r) ^ j := by
@@ -570,7 +570,7 @@ private theorem p_word_injective (i j : ℕ) (a b : Letter) :
     fin_cases a <;> fin_cases b <;> simp at hl ⊢ <;> omega
   · rintro ⟨rfl, rfl⟩; rfl
 
-private theorem explicit_finite_mass (s : ActivePhase) (r : unitInterval) (w : List Letter) :
+theorem explicit_finite_mass (s : ActivePhase) (r : unitInterval) (w : List Letter) :
     explicitStoppedWordLaw s r {some w} =
       if ∃ b, WordFamily s b w then wordMass r w else 0 := by
   classical
