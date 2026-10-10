@@ -5,7 +5,7 @@ year: 2004
 title: The distribution of the summatory function of the Möbius function
 doi: 10.1112/S0024611504014741
 url: https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf
-claim: The source records the classical unconditional Mertens estimate used here to bound the complete odd-Möbius cutoff remainder; the corrected finite head still requires the signed Robin estimate.
+claim: The source records classical unconditional Mertens decay; its application and the existing Lee–Leong explicit input pay the complete odd-Möbius remainder and boundary at a sufficient joint cutoff, leaving the finite head's signed estimate unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -150,7 +150,72 @@ $$
 $$
 
 All terms use the full actual odd prefix. The $O(N)$ boundary is not the
-prime-panel count; (N6) does not replace it by that count or discard it.
+prime-panel count. Equations (N1)–(N2) also bound that same boundary by
+$C_d e^{-dV(\log N)}/\ell$, after enlarging $C_d$ and $N_0$.
+Thus at (N5) it can be removed with its own error bound, giving
+$I_\psi(x)=\mathscr F_x(N(x))+o(1/(\sqrt x\log x))$.
+This does not replace the boundary by the panel count.
+
+## A concrete cutoff coefficient from the existing explicit supplier
+
+The [Lee–Leong v5 manuscript](https://arxiv.org/pdf/2208.06141v5),
+*New explicit bounds for Mertens function and the reciprocal of the Riemann
+zeta function*, 9 September 2026, is already used in FIB §409 and the
+[complete rough-row tail application](alladi1982roughmobius.md#a-critical-scale-bound-for-the-complete-upper-row-tail).
+The retrieved version has 25 pages and SHA-256
+`76e61bb702beecade0deca82896d5125043cd747c694986ec7e732d13be54ad1`.
+Theorem 1.1, PDF p.3, equation (11), gives the further unconditional input
+
+$$
+|M(y)|<25.85y\log y\,
+\exp\left[-a_0
+\left(1-\frac{\log53.99}{\log\log y}\right)^{-1/5}
+V(\log y)\right]
+\quad\left(y\ge\exp(e^{10.01})\right),
+\qquad a_0=\left(\frac5{3(53.99)^3}\right)^{1/5}.
+\tag{N7}
+$$
+
+The versioned theorem statement was inspected. Its full proof and finite
+verified-zero inputs were not independently audited or rerun. The paper is
+a preprint input; no new Mertens result is attributed to this application.
+
+To preserve any fixed exponent constant $0<b<a_0$ in the odd prefix,
+choose a fixed $0<\theta<1$ close enough to one that
+$b<a_0\theta^{3/5}$. Split the existing dyadic inverse at arguments
+$y/2^a\ge y^\theta$. The corresponding $V$-values have ratio at least
+$\theta^{3/5}+o(1)$ to $V(\log y)$; summing $2^{-a}$ costs at most two.
+The prefactor $\log y$ is absorbed by the strict exponent slack.
+The remaining geometric part is at most $2y^\theta$ and is also absorbed.
+Thus $|O(y)|\ll_b ye^{-bV(\log y)}$ eventually. Using a second slack
+$0<c<b<a_0$ in the Abel integral proves
+
+$$
+|\mathscr R_x(N)|+|O(N)\mathscr D_x(N+1)|
+\ll_c\frac{e^{-cV(\log N)}}{\log x}
+\quad\left(x\ge e,\ N\ge\lceil8x\rceil,
+\ N\text{ sufficiently large}\right).
+\tag{N8}
+$$
+
+Every fixed $K>53.99/2^{5/3}$ allows
+$c<a_0$ with $cK^{3/5}(3/5)^{1/5}>1/2$. Hence the same cutoff (N5)
+pays both terms in (N8) at $o(1/(\sqrt x\log x))$. For example $K=18$
+satisfies the strict inequality: $53.99<54=3\cdot18$ and
+$2^{5/3}>3$, because $32>27$. In particular the existing full-source
+identity gives the asymptotic finite reading
+
+$$
+\boxed{I_\psi(x)=\mathscr F_x\!\left(
+\left\lceil e^{18(\log x)^{5/3}(\log\log x)^{1/3}}\right\rceil
+\right)+o\!\left(\frac1{\sqrt x\log x}\right).}
+\tag{N9}
+$$
+
+The coefficient is concrete, while the application has not certified a
+numerical uniform error constant or starting $x$. This is a sufficient
+asymptotic cutoff, not an effective finite certificate or a proof of
+necessity or optimality.
 
 ## Remaining signed estimate and comparison with the existing cutoff
 
@@ -161,14 +226,14 @@ $\log H_z=1024(\log z)^2$. It is reused as precedent, not rederived here.
 Equations (N3)–(N6) specify the natural odd-atom cutoff and its exact
 full-prefix boundary instead. The Vinogradov–Korobov input yields a
 smaller asymptotic logarithmic cutoff order, but its constants and starting
-point are not numerically certified here. No effective improvement over
+point in the joint application are not numerically certified here. No effective improvement over
 that existing bound is claimed.
 
 This is an application of existing summatory and kernel estimates, not a
 new analytic theorem or RH criterion. It pays the omitted natural-source
 remainder at an expensive superpolynomial sufficient cutoff; necessity or
 optimality of that cutoff is not asserted. It supplies no signed
-lower bound for the corrected finite head in (N6), no inexpensive
+lower bound for the actual finite sum in (N9), no inexpensive
 evaluation of that head, no new Robin-safe integer range, and no RH proof.
 The finite head's same-source critical lower estimate remains unproved.
 The parameter application is a paper derivation, without Lean verification.
