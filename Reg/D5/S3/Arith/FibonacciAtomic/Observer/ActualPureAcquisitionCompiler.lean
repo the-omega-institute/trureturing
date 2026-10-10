@@ -201,7 +201,6 @@ theorem observer_no_dependence : ¬ ObservationalDependence observerSignature ob
 #print axioms price_bridge
 #print axioms observer_no_dependence
 
-
 private theorem nominal_positive (N : Nat) : 0 < nominalCard N := by
   unfold nominalCard
   omega
@@ -491,8 +490,6 @@ noncomputable def priceProof : Registration priceArena (type_of% (@pure_joint_pr
 #print axioms feeProof
 #print axioms priceProof
 
-
-
 abbrev quotientSignature : Signature where
   Params := Unit
   State _ := RawHistory
@@ -631,22 +628,6 @@ noncomputable def nominalPriceProof : Registration nominalPriceArena (type_of% (
 #print axioms nodeProof
 #print axioms nominalPriceProof
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 noncomputable def pureState_card_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pureState_card) (Realization countArena.signature) Unit Unit where
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pureState_card
@@ -675,7 +656,6 @@ noncomputable def pureState_card_registration : LeanInformationAudit.Contract.Re
   options := #[]
 
 #print axioms pureState_card_registration
-
 
 noncomputable def trace_addresses_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.trace_addresses) (Realization traceArena.signature) Unit Unit where
@@ -706,7 +686,6 @@ noncomputable def trace_addresses_registration : LeanInformationAudit.Contract.R
 
 #print axioms trace_addresses_registration
 
-
 noncomputable def pure_all_history_factorization_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_all_history_factorization) (Realization quotientArena.signature) Unit Unit where
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_all_history_factorization
@@ -736,7 +715,6 @@ noncomputable def pure_all_history_factorization_registration : LeanInformationA
 
 #print axioms pure_all_history_factorization_registration
 
-
 noncomputable def pure_acquisition_run_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_acquisition_run) (Realization runArena.signature) Unit Unit where
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_acquisition_run
@@ -765,7 +743,6 @@ noncomputable def pure_acquisition_run_registration : LeanInformationAudit.Contr
   options := #[]
 
 #print axioms pure_acquisition_run_registration
-
 
 private abbrev cacheTraceArena : Arena where
   signature := runSignature
@@ -828,7 +805,6 @@ noncomputable def pure_actual_prefix_cache_registration : LeanInformationAudit.C
 
 #print axioms pure_actual_prefix_cache_registration
 
-
 noncomputable def pure_admissible_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_admissible) (Realization admissibleArena.signature) Unit Unit where
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_admissible
@@ -857,7 +833,6 @@ noncomputable def pure_admissible_registration : LeanInformationAudit.Contract.R
   options := #[]
 
 #print axioms pure_admissible_registration
-
 
 noncomputable def pure_node_fee_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_node_fee) (Realization nodeArena.signature) Unit Unit where
@@ -888,7 +863,6 @@ noncomputable def pure_node_fee_registration : LeanInformationAudit.Contract.Reg
 
 #print axioms pure_node_fee_registration
 
-
 noncomputable def pure_joint_price_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_joint_price) (Realization nominalPriceArena.signature) Unit Unit where
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_joint_price
@@ -917,5 +891,102 @@ noncomputable def pure_joint_price_registration : LeanInformationAudit.Contract.
   options := #[]
 
 #print axioms pure_joint_price_registration
+
+namespace NodeDepth
+
+abbrev signature : Signature where
+  Params := Source
+  State _ := Address
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Nat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+noncomputable def actual : Realization signature :=
+  realize signature (fun _ _ q => q.length) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (U : Source) (q : Address), q ∈ nodes U →
+    R.readout () U q + 1 ≤ U.length
+
+theorem bridge : (type_of% (@nodes_length)) ↔ arena.Law actual := Iff.rfl
+
+theorem actual_law : arena.Law actual := nodes_length
+
+noncomputable def bad : Realization signature :=
+  realize signature (fun _ U _ => U.length) (fun e => nomatch e)
+
+theorem bad_law : ¬ arena.Law bad := by
+  intro law
+  have impossible := law (.of true) [] (by simp [nodes])
+  exact (by decide : ¬ ((1 : Nat) + 1 ≤ 1)) impossible
+
+theorem variation : Variation arena actual := ⟨actual_law, bad, bad_law⟩
+
+theorem sensitivity : Sensitivity arena actual := by
+  constructor
+  · intro i
+    refine ⟨bad, ?_, ?_, bad_law⟩
+    · intro j different
+      exact (different (Subsingleton.elim j i)).elim
+    · funext e
+      cases e
+  · intro e
+    cases e
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨.mul (.of true) (.of false), [], [false], ?_⟩
+  change (0 : Nat) ≠ 1
+  decide
+
+noncomputable def family : Registration arena (type_of% (@nodes_length)) where
+  actual := actual
+  bridge := bridge
+  variation := variation
+  sensitivity := sensitivity
+  dependence := dependence
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, _, _,
+    0, 0, 0, 0, 0, 0, 0, 0, 0} (@nodes_length) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.NodeDepth.unit
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.NodeDepth.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := true
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(True.intro : True)⟩ True.intro
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .evidence ⟨(True.intro : True)⟩ True.intro
+  sensitivity := .evidence ⟨(True.intro : True)⟩ True.intro
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms family
+#print axioms registration
+
+end NodeDepth
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
