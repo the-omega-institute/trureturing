@@ -67,7 +67,7 @@ public sealed class CliVerbLinkageTests
             // 一致,漂移时两侧必有一红。
             [CommandProgram.Scribe] = new HashSet<string>(StringComparer.Ordinal)
             {
-                "content-check", "emit", "emit-values", "filemap", "describe-report", "markdown-check",
+                "content-check", "emit", "emit-values", "filemap", "describe-report", "lean-inputs", "markdown-check",
                 "projections", "resources", "resources release", "resources verify-release", "scripts",
             },
         };
@@ -137,7 +137,7 @@ public sealed class CliVerbLinkageTests
         RegexOptions.CultureInvariant);
 
     private static readonly Regex VariableVerbForwarder = new(
-        @"--\s+""\$(?<variable>[1-9][0-9]*)""",
+        @"(?:--|""\$SCRIBE_DLL"")\s+""\$(?<variable>[1-9][0-9]*)""",
         RegexOptions.CultureInvariant);
 
     private static readonly Regex CaseForwarder = new(
@@ -169,6 +169,7 @@ public sealed class CliVerbLinkageTests
                     || text.Contains("$CLI_PROJECT", StringComparison.Ordinal)
                     || text.Contains("$JUDGE_DLL", StringComparison.Ordinal);
                 var namesScribe = text.Contains("StrataLint.Scribe.csproj", StringComparison.Ordinal)
+                    || text.Contains("$SCRIBE_DLL", StringComparison.Ordinal)
                     || (projectIsScribe
                         && text.Contains("$PROJECT", StringComparison.Ordinal));
 
@@ -274,7 +275,8 @@ public sealed class CliVerbLinkageTests
         }
 
         return lines
-            .Where(line => line.Contains("$PROJECT", StringComparison.Ordinal))
+            .Where(line => line.Contains("$PROJECT", StringComparison.Ordinal)
+                || line.Contains("$SCRIBE_DLL", StringComparison.Ordinal))
             .Select(line => VariableVerbForwarder.Match(line))
             .Where(static match => match.Success)
             .Select(match => match.Groups["variable"].Value)

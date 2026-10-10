@@ -440,7 +440,8 @@ public sealed partial class MakeWorkflowTests
         var rootOutput = System.Text.Encoding.UTF8.GetString(rootResult.StandardOutput);
         Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
-        Assert.Contains("make lean-report [REBUILD_REPORT_CACHE=1]  Fetch compatible local seed or fail; explicitly rebuild when requested", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make lean-report [REBUILD_REPORT_CACHE=1]  Full repository report for CI or explicit full verification", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make lean-report-scoped LEAN_TARGETS=", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make scribe-release  Rebuild and verify local Scribe release assets", rootOutput, StringComparison.Ordinal);
