@@ -11,117 +11,99 @@ open LeanInformationAudit
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-universe u v w x y
+universe u
 
-/-- The carriers, decision dictionaries, compiler, key and digest functions, the
-reader snapshot and the lookup schedule. The writers and both hypotheses stay in
-the law. -/
-structure Params : Type (max (u + 1) (v + 1) (w + 1) (x + 1) (y + 1)) where
-  Node : Type u
-  Src : Type v
-  Art : Type w
-  Dig : Type x
-  Key : Type y
-  instArt : DecidableEq Art
-  instDig : DecidableEq Dig
-  compile : Src → Finset Art → Art
-  hash : Src → Finset Dig → Key
-  digest : Art → Dig
-  instKey : DecidableEq Key
-  T : Snapshot Node Src
-  schedule : Node → List (Op Node Src)
-
-/-- Reader soundness: the observed state is the module; the readout is the reader
+/-- Reader soundness. The parameters are the build system, the reader snapshot and
+the lookup schedule; the observed state is the module and the readout is the reader
 build artifact. -/
 abbrev soundnessSignature : Signature where
-  Params := Params.{u,v,w,x,y}
-  State p := p.Node
+  Params := Σ (B : BuildSystem.{u}), Σ (_ : Snapshot B.Node B.Src), B.Node → List (Op B.Node B.Src)
+  State p := p.1.Node
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := p.Art
+  Output _ p := p.1.Art
   Anchor := Empty
   finiteAnchor := inferInstance
 
 /-- Replace only the reader build application. The writers, the collision
 hypothesis and the writer-only hypothesis remain in the law. -/
 def soundnessArena : Arena where
-  signature := soundnessSignature.{u,v,w,x,y}
-  Law r := ∀ {Node : Type u} {Src : Type v} {Art : Type w} {Dig : Type x} {Key : Type y}
-    [instArt : DecidableEq Art] [instDig : DecidableEq Dig]
-    (compile : Src → Finset Art → Art) (hash : Src → Finset Dig → Key) (digest : Art → Dig)
-    [instKey : DecidableEq Key] (writers : Set (Snapshot Node Src)) (T : Snapshot Node Src)
-    (_ : NoCollision compile hash digest (insert T writers))
-    (schedule : Node → List (Op Node Src))
-    (_ : ∀ (n : Node) (W : Snapshot Node Src) (m : Node), Op.store W m ∈ schedule n → W ∈ writers)
-    (n : Node),
-    r.readout () ⟨Node, Src, Art, Dig, Key, instArt, instDig, compile, hash, digest, instKey,
-      T, schedule⟩ n = build compile T n
+  signature := soundnessSignature.{u}
+  Law r := ∀ (B : BuildSystem.{u}) (writers : Set (Snapshot B.Node B.Src))
+    (T : Snapshot B.Node B.Src) (_ : NoCollision B (insert T writers))
+    (schedule : B.Node → List (Op B.Node B.Src))
+    (_ : ∀ (n : B.Node) (W : Snapshot B.Node B.Src) (m : B.Node),
+      Op.store W m ∈ schedule n → W ∈ writers)
+    (n : B.Node), r.readout () ⟨B, T, schedule⟩ n = build B T n
 
-def soundnessActual : Realization soundnessSignature.{u,v,w,x,y} :=
-  realize soundnessSignature (fun _ p n => @cachedBuild p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile p.hash
-    p.digest (fun n => @run p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile p.hash
-      p.digest p.instKey (p.schedule n)) p.T n) (fun e => nomatch e)
+noncomputable def soundnessActual : Realization soundnessSignature.{u} :=
+  realize soundnessSignature (fun _ p n => cachedBuild p.1 (fun n => run p.1 (p.2.2 n)) p.2.1 n)
+    (fun e => nomatch e)
 
 /-- Compile a source against the singleton of its own empty-input artifact. -/
-def extraInput {Src : Type v} {Art : Type w} (compile : Src → Finset Art → Art) (s : Src) : Art :=
-  compile s {compile s ∅}
+def extraInput (B : BuildSystem.{u}) (s : B.Src) : B.Art := B.compile s {B.compile s ∅}
 
-/-- Compile against one extra artifact: it changes the artifact count. -/
-def soundnessRejected : Realization soundnessSignature.{u,v,w,x,y} :=
-  realize soundnessSignature (fun _ p n =>
-    extraInput p.compile (p.T.src n)) (fun e => nomatch e)
+def soundnessRejected : Realization soundnessSignature.{u} :=
+  realize soundnessSignature (fun _ p n => extraInput p.1 (p.2.1.src n)) (fun e => nomatch e)
 
-/-- One module without dependencies, compiled to its dependency count. -/
-def single : Snapshot PUnit.{u + 1} (ULift.{v} ℕ) :=
+open Classical in
+/-- A compiler that separates the empty dependency set from every nonempty one. -/
+noncomputable def emptinessCompile : ULift.{u} ℕ → Set (ULift.{u} ℕ) → ULift.{u} ℕ :=
+  fun _ A => if A = ∅ then ⟨0⟩ else ⟨1⟩
+
+/-- One module with no dependencies. -/
+def single : Snapshot PUnit.{u + 1} (ULift.{u} ℕ) :=
   { src := fun _ => ⟨0⟩, deps := fun _ => ∅, rank := fun _ => 0,
     rank_lt := fun _ _ h => absurd h (Finset.notMem_empty _) }
 
-def countCompile : ULift.{v} ℕ → Finset (ULift.{w} ℕ) → ULift.{w} ℕ :=
-  fun _ A => ⟨A.card⟩
+noncomputable def singleSystem : BuildSystem.{u} :=
+  ⟨PUnit, ULift ℕ, ULift ℕ, ULift ℕ, ULift ℕ, emptinessCompile, fun _ _ => ⟨0⟩, fun a => a⟩
 
-theorem single_noCollision (hash : ULift.{v} ℕ → Finset (ULift.{x} ℕ) → ULift.{y} ℕ)
-    (digest : ULift.{w} ℕ → ULift.{x} ℕ) :
-    NoCollision countCompile hash digest (insert single.{u,v} ∅) := by
+theorem single_noCollision (writers : Set (Snapshot PUnit.{u + 1} (ULift.{u} ℕ)))
+    (only : ∀ W ∈ writers, W = single) : NoCollision singleSystem (insert single writers) := by
   intro X hX Y hY m n _
-  rw [Set.mem_insert_iff] at hX hY
-  rcases hX with rfl | hX
-  · rcases hY with rfl | hY
-    · exact ⟨rfl, rfl⟩
-    · exact absurd hY (Set.notMem_empty _)
-  · exact absurd hX (Set.notMem_empty _)
+  have hx : X = single := by
+    rcases Set.mem_insert_iff.mp hX with h | h
+    · exact h
+    · exact only X h
+  have hy : Y = single := by
+    rcases Set.mem_insert_iff.mp hY with h | h
+    · exact h
+    · exact only Y h
+  subst hx hy
+  exact ⟨rfl, rfl⟩
 
-theorem single_build :
-    build countCompile.{v,w} single.{u,v} PUnit.unit = (⟨0⟩ : ULift.{w} ℕ) := by
-  rw [build]
-  rfl
+theorem single_build : build singleSystem.{u} single PUnit.unit = ⟨0⟩ := by
+  rw [build.eq_1 singleSystem single PUnit.unit]
+  simp [singleSystem, emptinessCompile, single]
+  exact fun x => Finset.notMem_empty x
 
-theorem soundness_rejected_law : ¬ soundnessArena.{u,v,w,x,y}.Law soundnessRejected := by
+theorem soundness_rejected_law : ¬ soundnessArena.{u}.Law soundnessRejected := by
   intro h
-  have hl := h (Node := PUnit.{u + 1}) (Src := ULift.{v} ℕ) (Art := ULift.{w} ℕ)
-    (Dig := ULift.{x} ℕ) (Key := ULift.{y} ℕ) countCompile (fun _ _ => ⟨0⟩)
-    (fun a => ⟨a.down⟩) ∅ single (single_noCollision _ _) (fun _ => [])
-    (fun _ _ _ hm => absurd hm (List.not_mem_nil)) PUnit.unit
+  have hl := h singleSystem ∅ single
+    (single_noCollision ∅ (fun _ hW => absurd hW (Set.notMem_empty _)))
+    (fun _ => []) (fun _ _ _ hm => absurd hm List.not_mem_nil) PUnit.unit
   rw [single_build] at hl
-  change (⟨({(⟨0⟩ : ULift.{w} ℕ)} : Finset (ULift.{w} ℕ)).card⟩ : ULift.{w} ℕ) = ⟨0⟩ at hl
-  simp at hl
+  change emptinessCompile (single.src PUnit.unit) {emptinessCompile (single.src PUnit.unit) ∅} =
+    (⟨0⟩ : ULift.{u} ℕ) at hl
+  simp [emptinessCompile] at hl
 
 /-- Two dependency-free modules compiled to their own Boolean source. -/
-def pair : Snapshot (ULift.{u} Bool) (ULift.{v} Bool) :=
-  { src := fun b => ⟨b.down⟩, deps := fun _ => ∅, rank := fun _ => 0,
+def pair : Snapshot (ULift.{u} Bool) (ULift.{u} Bool) :=
+  { src := fun b => b, deps := fun _ => ∅, rank := fun _ => 0,
     rank_lt := fun _ _ h => absurd h (Finset.notMem_empty _) }
 
-def bitCompile : ULift.{v} Bool → Finset (ULift.{w} ℕ) → ULift.{w} ℕ :=
-  fun s _ => ⟨if s.down then 1 else 0⟩
+def pairSystem : BuildSystem.{u} :=
+  ⟨ULift Bool, ULift Bool, ULift ℕ, ULift ℕ, ULift Bool,
+    fun s _ => ⟨if s.down then 1 else 0⟩, fun s _ => s, fun a => a⟩
 
-def soundnessRegistration : Registration soundnessArena.{u,v,w,x,y}
-    (soundnessArena.Law soundnessActual) where
+noncomputable def soundnessRegistration : Registration soundnessArena.{u} (soundnessArena.Law soundnessActual) where
   actual := soundnessActual
   bridge := Iff.rfl
   variation := ⟨by
-      intro Node Src Art Dig Key _ _ compile hash digest _ writers T noCollision schedule
-        writerOnly n
-      exact cachedBuild_eq_build compile hash digest writers T noCollision schedule writerOnly n,
+      intro B writers T noCollision schedule writerOnly n
+      exact cachedBuild_eq_build B writers T noCollision schedule writerOnly n,
     soundnessRejected, soundness_rejected_law⟩
   sensitivity := by
     constructor
@@ -133,194 +115,121 @@ def soundnessRegistration : Registration soundnessArena.{u,v,w,x,y}
       exact nomatch i
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} Bool, ULift.{v} Bool, ULift.{w} ℕ, ULift.{x} ℕ, ULift.{y} ℕ,
-      inferInstance, inferInstance, bitCompile, fun _ _ => ⟨0⟩, fun a => ⟨a.down⟩,
-      inferInstance, pair, fun _ => []⟩, ⟨true⟩, ⟨false⟩, ?_⟩
-    change cachedBuild bitCompile (fun _ _ => (⟨0⟩ : ULift.{y} ℕ))
-        (fun a : ULift.{w} ℕ => (⟨a.down⟩ : ULift.{x} ℕ))
-        (fun n => run bitCompile (fun _ _ => (⟨0⟩ : ULift.{y} ℕ))
-          (fun a : ULift.{w} ℕ => (⟨a.down⟩ : ULift.{x} ℕ)) ([] : List (Op _ _)))
-        pair ⟨true⟩ ≠
-      cachedBuild bitCompile (fun _ _ => (⟨0⟩ : ULift.{y} ℕ))
-        (fun a : ULift.{w} ℕ => (⟨a.down⟩ : ULift.{x} ℕ))
-        (fun n => run bitCompile (fun _ _ => (⟨0⟩ : ULift.{y} ℕ))
-          (fun a : ULift.{w} ℕ => (⟨a.down⟩ : ULift.{x} ℕ)) ([] : List (Op _ _)))
-        pair ⟨false⟩
-    rw [cachedBuild, cachedBuild]
-    simp [run, pair, bitCompile]
+    refine ⟨⟨pairSystem, pair, fun _ => []⟩, ⟨true⟩, ⟨false⟩, ?_⟩
+    change cachedBuild pairSystem (fun n => run pairSystem ([] : List (Op _ _))) pair ⟨true⟩ ≠
+      cachedBuild pairSystem (fun n => run pairSystem ([] : List (Op _ _))) pair ⟨false⟩
+    rw [cachedBuild.eq_1 pairSystem _ pair ⟨true⟩, cachedBuild.eq_1 pairSystem _ pair ⟨false⟩]
+    simp [run, pairSystem, pair]
 
-/-- Restoration: the observed state is the module; the readout is the proposition
-that the reader restores it. -/
-abbrev restoreSignature : Signature where
-  Params := Params.{u,v,w,x,y}
-  State p := p.Node
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := Prop
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-/-- Replace only the restoration proposition. The writers, both hypotheses, the
-writer snapshot, unaffectedness and the present entry remain in the law. -/
+/-- Restoration. Replace only the reader build application; the writers, both
+hypotheses, the writer snapshot, unaffectedness and the stored entry remain in the
+law. -/
 def restoreArena : Arena where
-  signature := restoreSignature.{u,v,w,x,y}
-  Law r := ∀ {Node : Type u} {Src : Type v} {Art : Type w} {Dig : Type x} {Key : Type y}
-    [instArt : DecidableEq Art] [instDig : DecidableEq Dig]
-    (compile : Src → Finset Art → Art) (hash : Src → Finset Dig → Key) (digest : Art → Dig)
-    [instKey : DecidableEq Key] (writers : Set (Snapshot Node Src)) (T : Snapshot Node Src)
-    (_ : NoCollision compile hash digest (insert T writers))
-    (schedule : Node → List (Op Node Src))
-    (_ : ∀ (n : Node) (W : Snapshot Node Src) (m : Node), Op.store W m ∈ schedule n → W ∈ writers)
-    (S : Snapshot Node Src) (n : Node) (_ : Unaffected S T n)
-    (_ : ∃ a, run compile hash digest (schedule n) (traceKey compile hash digest S n) = some a),
-    r.readout () ⟨Node, Src, Art, Dig, Key, instArt, instDig, compile, hash, digest, instKey,
-      T, schedule⟩ n
+  signature := soundnessSignature.{u}
+  Law r := ∀ (B : BuildSystem.{u}) (writers : Set (Snapshot B.Node B.Src))
+    (T : Snapshot B.Node B.Src) (_ : NoCollision B (insert T writers))
+    (schedule : B.Node → List (Op B.Node B.Src))
+    (_ : ∀ (n : B.Node) (W : Snapshot B.Node B.Src) (m : B.Node),
+      Op.store W m ∈ schedule n → W ∈ writers)
+    (S : Snapshot B.Node B.Src) (n : B.Node) (_ : Unaffected S T n) (a : B.Art)
+    (_ : run B (schedule n) (traceKey B S n) = some a),
+    r.readout () ⟨B, T, schedule⟩ n = a
 
-def restoreActual : Realization restoreSignature.{u,v,w,x,y} :=
-  realize restoreSignature (fun _ p n => @Restores p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile p.hash
-    p.digest (fun n => @run p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile p.hash
-      p.digest p.instKey (p.schedule n)) p.T n) (fun e => nomatch e)
-
-def restoreRejected : Realization restoreSignature.{u,v,w,x,y} :=
-  realize restoreSignature (fun _ _ _ => False) (fun e => nomatch e)
-
-theorem single_unaffected : Unaffected single.{u,v} single PUnit.unit :=
+theorem single_unaffected : Unaffected single.{u} single PUnit.unit :=
   Unaffected.intro _ rfl rfl fun _ h => absurd h (Finset.notMem_empty _)
 
-theorem restore_rejected_law : ¬ restoreArena.{u,v,w,x,y}.Law restoreRejected := by
+theorem restore_rejected_law : ¬ restoreArena.{u}.Law soundnessRejected := by
   intro h
-  exact h (Node := PUnit.{u + 1}) (Src := ULift.{v} ℕ) (Art := ULift.{w} ℕ)
-    (Dig := ULift.{x} ℕ) (Key := ULift.{y} ℕ) countCompile (fun _ _ => ⟨0⟩)
-    (fun a => ⟨a.down⟩) {single} single (by
-      rw [Set.insert_eq_of_mem (Set.mem_singleton _)]
-      intro X hX Y hY m n _
-      rw [Set.mem_singleton_iff] at hX hY
-      subst hX hY
-      exact ⟨rfl, rfl⟩)
+  have hl := h singleSystem {single} single
+    (single_noCollision {single} (fun _ hW => hW))
     (fun _ => [Op.store single PUnit.unit])
     (fun _ W _ hm => by
       rw [List.mem_singleton] at hm
       cases hm
       exact Set.mem_singleton _)
-    single PUnit.unit single_unaffected
-    ⟨_, by
-      simp only [run, List.foldl_cons, List.foldl_nil, Op.apply, Function.update_self]
-      rfl⟩
+    single PUnit.unit single_unaffected (build singleSystem single PUnit.unit) (by
+      classical
+      simp only [run, List.foldl_cons, List.foldl_nil, Op.apply, Function.update_self])
+  rw [single_build] at hl
+  change emptinessCompile (single.src PUnit.unit) {emptinessCompile (single.src PUnit.unit) ∅} =
+    (⟨0⟩ : ULift.{u} ℕ) at hl
+  simp [emptinessCompile] at hl
 
-def restoreRegistration : Registration restoreArena.{u,v,w,x,y}
-    (restoreArena.Law restoreActual) where
-  actual := restoreActual
+noncomputable def restoreRegistration : Registration restoreArena.{u}
+    (restoreArena.Law soundnessActual) where
+  actual := soundnessActual
   bridge := Iff.rfl
   variation := ⟨by
-      intro Node Src Art Dig Key _ _ compile hash digest _ writers T noCollision schedule
-        writerOnly S n unaffected present
-      exact cachedBuild_restores_unaffected compile hash digest writers T noCollision schedule
-        writerOnly S n unaffected present,
-    restoreRejected, restore_rejected_law⟩
+      intro B writers T noCollision schedule writerOnly S n unaffected a present
+      exact cachedBuild_restores_unaffected B writers T noCollision schedule writerOnly S n
+        unaffected a present,
+    soundnessRejected, restore_rejected_law⟩
   sensitivity := by
     constructor
     · intro i
-      refine ⟨restoreRejected, ?_, rfl, restore_rejected_law⟩
+      refine ⟨soundnessRejected, ?_, rfl, restore_rejected_law⟩
       intro j h
       exact False.elim (h (@Subsingleton.elim Unit _ j i))
     · intro i
       exact nomatch i
-  dependence := by
-    intro i
-    refine ⟨⟨ULift.{u} Bool, ULift.{v} Bool, ULift.{w} ℕ, ULift.{x} ℕ, ULift.{y} Bool,
-      inferInstance, inferInstance, bitCompile, fun s _ => ⟨s.down⟩, fun a => ⟨a.down⟩,
-      inferInstance, pair, fun _ => [Op.store pair ⟨true⟩]⟩, ⟨true⟩, ⟨false⟩, ?_⟩
-    intro h
-    have restored : Restores bitCompile (fun s (_ : Finset (ULift.{x} ℕ)) => (⟨s.down⟩ : ULift.{y} Bool))
-        (fun a : ULift.{w} ℕ => (⟨a.down⟩ : ULift.{x} ℕ))
-        (fun _ => run bitCompile (fun s (_ : Finset (ULift.{x} ℕ)) => (⟨s.down⟩ : ULift.{y} Bool))
-          (fun a : ULift.{w} ℕ => (⟨a.down⟩ : ULift.{x} ℕ)) [Op.store pair ⟨true⟩])
-        pair ⟨true⟩ :=
-      ⟨_, by
-        simp only [run, List.foldl_cons, List.foldl_nil, Op.apply]
-        rw [show (⟨(pair.{u,v}.src ⟨true⟩).down⟩ : ULift.{y} Bool) = traceKey bitCompile
-            (fun s (_ : Finset (ULift.{x} ℕ)) => (⟨s.down⟩ : ULift.{y} Bool))
-            (fun a : ULift.{w} ℕ => (⟨a.down⟩ : ULift.{x} ℕ)) pair ⟨true⟩ from rfl]
-        exact Function.update_self _ _ _⟩
-    have notRestored : ¬ Restores bitCompile.{v,w} (fun (s : ULift.{v} Bool) (_ : Finset (ULift.{x} ℕ)) => (⟨s.down⟩ : ULift.{y} Bool))
-        (fun a : ULift.{w} ℕ => (⟨a.down⟩ : ULift.{x} ℕ))
-        (fun (_ : ULift.{u} Bool) => run bitCompile.{v,w} (fun (s : ULift.{v} Bool) (_ : Finset (ULift.{x} ℕ)) => (⟨s.down⟩ : ULift.{y} Bool))
-          (fun a : ULift.{w} ℕ => (⟨a.down⟩ : ULift.{x} ℕ)) [Op.store pair.{u,v} (⟨true⟩ : ULift.{u} Bool)])
-        pair.{u,v} (⟨false⟩ : ULift.{u} Bool) := by
-      rintro ⟨a, ha⟩
-      simp [run, Op.apply, traceKey, pair] at ha
-    exact notRestored (cast h restored)
-
+  dependence := soundnessRegistration.dependence
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness.cachedBuild_eq_build.{u,v,w,x,y})
-    (type_of% (realize.{max (u + 1) (v + 1) (w + 1) (x + 1) (y + 1), u, 0, w, 0} soundnessSignature.{u,v,w,x,y}
-    (fun (_ : Unit) (p : soundnessSignature.{u,v,w,x,y}.Params)
-      (n : soundnessSignature.{u,v,w,x,y}.State p) =>
-      @cachedBuild p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile p.hash
-        p.digest (fun n => @run p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile
-          p.hash p.digest p.instKey (p.schedule n)) p.T n)
+    (@_root_.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness.cachedBuild_eq_build.{u})
+    (type_of% (realize.{u + 1, u, 0, u, 0} soundnessSignature.{u}
+    (fun (_ : Unit) (p : soundnessSignature.{u}.Params) (n : soundnessSignature.{u}.State p) =>
+      cachedBuild p.1 (fun n => run p.1 (p.2.2 n)) p.2.1 n)
     (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.anonymous) "D5") "S3") "ConceptDynamics") "Governance") "TraceKeyedArtifactCacheSoundness") "cachedBuild_eq_build") "Reg.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness/Reg.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness.soundnessArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness.soundnessRegistration,
   realizationSource := none,
   generated := false,
-  arena := .source ⟨(soundnessArena.{u,v,w,x,y})⟩,
-  objectArena := .source ⟨(soundnessArena.{u,v,w,x,y})⟩,
+  arena := .source ⟨(soundnessArena.{u})⟩,
+  objectArena := .source ⟨(soundnessArena.{u})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source (soundnessArena.{u,v,w,x,y}) ⟨(soundnessRegistration.{u,v,w,x,y})⟩,
+  realization := .source (soundnessArena.{u}) ⟨(soundnessRegistration.{u})⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{max (u + 1) (v + 1) (w + 1) (x + 1) (y + 1), u, 0, w, 0} soundnessSignature.{u,v,w,x,y}
-    (fun (_ : Unit) (p : soundnessSignature.{u,v,w,x,y}.Params)
-      (n : soundnessSignature.{u,v,w,x,y}.State p) =>
-      @cachedBuild p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile p.hash
-        p.digest (fun n => @run p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile
-          p.hash p.digest p.instKey (p.schedule n)) p.T n)
+  readout := some (realize.{u + 1, u, 0, u, 0} soundnessSignature.{u}
+    (fun (_ : Unit) (p : soundnessSignature.{u}.Params) (n : soundnessSignature.{u}.State p) =>
+      cachedBuild p.1 (fun n => run p.1 (p.2.2 n)) p.2.1 n)
     (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
   escapeFrom := none,
-  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness, definition := none, coordinates := #[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 16, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness, definition := none, coordinates := #[0, 2, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
 noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness.cachedBuild_restores_unaffected.{u,v,w,x,y})
-    (type_of% (realize.{max (u + 1) (v + 1) (w + 1) (x + 1) (y + 1), u, 0, 0, 0} restoreSignature.{u,v,w,x,y}
-    (fun (_ : Unit) (p : restoreSignature.{u,v,w,x,y}.Params)
-      (n : restoreSignature.{u,v,w,x,y}.State p) =>
-      @Restores p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile p.hash
-        p.digest (fun n => @run p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile
-          p.hash p.digest p.instKey (p.schedule n)) p.T n)
+    (@_root_.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness.cachedBuild_restores_unaffected.{u})
+    (type_of% (realize.{u + 1, u, 0, u, 0} soundnessSignature.{u}
+    (fun (_ : Unit) (p : soundnessSignature.{u}.Params) (n : soundnessSignature.{u}.State p) =>
+      cachedBuild p.1 (fun n => run p.1 (p.2.2 n)) p.2.1 n)
     (fun e => nomatch e))) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.anonymous) "D5") "S3") "ConceptDynamics") "Governance") "TraceKeyedArtifactCacheSoundness") "cachedBuild_restores_unaffected") "Reg.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness/Reg.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness.restoreArena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness.restoreRegistration,
   realizationSource := none,
   generated := false,
-  arena := .source ⟨(restoreArena.{u,v,w,x,y})⟩,
-  objectArena := .source ⟨(restoreArena.{u,v,w,x,y})⟩,
+  arena := .source ⟨(restoreArena.{u})⟩,
+  objectArena := .source ⟨(restoreArena.{u})⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source (restoreArena.{u,v,w,x,y}) ⟨(restoreRegistration.{u,v,w,x,y})⟩,
+  realization := .source (restoreArena.{u}) ⟨(restoreRegistration.{u})⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize.{max (u + 1) (v + 1) (w + 1) (x + 1) (y + 1), u, 0, 0, 0} restoreSignature.{u,v,w,x,y}
-    (fun (_ : Unit) (p : restoreSignature.{u,v,w,x,y}.Params)
-      (n : restoreSignature.{u,v,w,x,y}.State p) =>
-      @Restores p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile p.hash
-        p.digest (fun n => @run p.Node p.Src p.Art p.Dig p.Key p.instArt p.instDig p.compile
-          p.hash p.digest p.instKey (p.schedule n)) p.T n)
+  readout := some (realize.{u + 1, u, 0, u, 0} soundnessSignature.{u}
+    (fun (_ : Unit) (p : soundnessSignature.{u}.Params) (n : soundnessSignature.{u}.State p) =>
+      cachedBuild p.1 (fun n => run p.1 (p.2.2 n)) p.2.1 n)
     (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
   escapeFrom := none,
-  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness, definition := none, coordinates := #[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body"], stateBinder := 17, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness, definition := none, coordinates := #[0, 2, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }

@@ -23,7 +23,10 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "A snapshot assigns every module a source and the finite set of modules "
+                        "A build system B bundles types of modules, sources, artifacts, digests "
+                            + "and keys with a compiler from a source and a set of artifacts, a key "
+                            + "function from a source and a set of digests, and an artifact digest. "
+                            + "A snapshot assigns every module a source and the finite set of modules "
                             + "whose artifacts its build reads; a natural-number rank decreases "
                             + "along these dependencies. build compiles a module's source against "
                             + "the set of its dependencies' artifacts. traceKey hashes the source "
@@ -67,8 +70,9 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
                         "By the previous theorem the reader's dependency artifacts are the "
                             + "from-scratch artifacts of T, which coincide with those of S on the "
                             + "dependencies of an unaffected module. The key the reader computes "
-                            + "for n is therefore the key of n in S, and an entry under that key "
-                            + "makes the reader restore n instead of compiling it.")),
+                            + "for n is therefore the key of n in S, so the lookup returns the "
+                            + "stored artifact a and the reader's artifact for n is a: n is "
+                            + "restored, not compiled.")),
                     Paragraph(Text(
                         "Consequently a module the reader compiles is affected, meaning a "
                             + "source or dependency change occurs in its dependency closure, or "
@@ -78,32 +82,17 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
     private static Formula Arrow(Formula source, Formula target) =>
         Seq(source, Sp, To, Sp, target);
 
-    private static Formula Instance(Formula type) =>
-        Seq(OpenBracket, Call("DecidableEq", type), CloseBracket);
+    private static Formula Field(string name) => Seq(F.Id("B"), Dot, F.Id(name));
 
-    private static Formula Binders()
-    {
-        Formula node = F.Id("Node");
-        Formula source = F.Id("Src");
-        Formula artifact = F.Id("Art");
-        Formula digestType = F.Id("Dig");
-        Formula key = F.Id("Key");
-        Formula snapshot = Call("Snapshot", node, source);
-        return Seq(
-            Forall, Sp, node, Comma, Sp, source, Comma, Sp, artifact, Comma, Sp,
-            digestType, Comma, Sp, key, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
-            Instance(artifact), Comma, Sp, Instance(digestType), Comma, Sp, Instance(key),
-            Comma, RowBreak, Grp(),
-            F.Id("compile"), Colon, Sp,
-            Arrow(source, Arrow(Call("Finset", artifact), artifact)), Comma, Sp,
-            F.Id("hash"), Colon, Sp,
-            Arrow(source, Arrow(Call("Finset", digestType), key)), Comma, Sp,
-            F.Id("digest"), Colon, Sp, Arrow(artifact, digestType), Comma, RowBreak, Grp(),
-            F.Id("writers"), Colon, Sp, Call("Set", snapshot), Comma, Sp,
-            F.Id("T"), Colon, Sp, snapshot, Comma, Sp,
-            F.Id("schedule"), Colon, Sp, Arrow(node, Call("List", Call("Op", node, source))),
-            Comma, RowBreak, Grp());
-    }
+    private static Formula SnapshotType() => Call("Snapshot", Field("Node"), Field("Src"));
+
+    private static Formula Binders() => Seq(
+        Forall, Sp, F.Id("B"), Colon, Sp, Operatorname, Grp(F.Id("BuildSystem")), Comma, Sp,
+        F.Id("writers"), Colon, Sp, Call("Set", SnapshotType()), Comma, Sp,
+        F.Id("T"), Colon, Sp, SnapshotType(), Comma, RowBreak, Grp(),
+        F.Id("schedule"), Colon, Sp,
+        Arrow(Field("Node"), Call("List", Call("Op", Field("Node"), Field("Src")))), Comma,
+        RowBreak, Grp());
 
     private static Formula Hypotheses()
     {
@@ -111,8 +100,8 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
         Formula w = F.Id("W");
         Formula m = F.Id("m");
         return Seq(
-            Call("NoCollision", F.Id("compile"), F.Id("hash"), F.Id("digest"),
-                Call("insert", F.Id("T"), F.Id("writers"))), Sp, Rightarrow, RowBreak, Grp(),
+            Call("NoCollision", F.Id("B"), Call("insert", F.Id("T"), F.Id("writers"))), Sp,
+            Rightarrow, RowBreak, Grp(),
             Open, Forall, Sp, n, Comma, Sp, w, Comma, Sp, m, Comma, Sp,
             Call("store", w, m), Sp, InMacro, Sp, Call("schedule", n), Sp, Rightarrow, Sp,
             w, Sp, InMacro, Sp, F.Id("writers"), Close, Sp, Rightarrow, RowBreak, Grp());
@@ -121,9 +110,7 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
     private static Formula Look()
     {
         Formula n = F.Id("n");
-        return Seq(
-            LambdaLower, Sp, n, Sp, Mapsto, Sp,
-            Call("run", F.Id("compile"), F.Id("hash"), F.Id("digest"), Call("schedule", n)));
+        return Seq(LambdaLower, Sp, n, Sp, Mapsto, Sp, Call("run", F.Id("B"), Call("schedule", n)));
     }
 
     private static Formula SoundnessFormula()
@@ -133,10 +120,9 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
             Begin, Grp(F.Id("gathered")),
             Binders(),
             Hypotheses(),
-            Forall, Sp, n, Colon, Sp, F.Id("Node"), Comma, Sp,
-            Call("cachedBuild", F.Id("compile"), F.Id("hash"), F.Id("digest"), Look(),
-                F.Id("T"), n), Sp, Eq, Sp,
-            Call("build", F.Id("compile"), F.Id("T"), n), Dot,
+            Forall, Sp, n, Colon, Sp, Field("Node"), Comma, Sp,
+            Call("cachedBuild", F.Id("B"), Look(), F.Id("T"), n), Sp, Eq, Sp,
+            Call("build", F.Id("B"), F.Id("T"), n), Dot,
             End, Grp(F.Id("gathered"))));
     }
 
@@ -149,15 +135,14 @@ internal sealed class TraceKeyedArtifactCacheSoundnessDocument
             Begin, Grp(F.Id("gathered")),
             Binders(),
             Hypotheses(),
-            Forall, Sp, s, Colon, Sp, Call("Snapshot", F.Id("Node"), F.Id("Src")), Comma, Sp,
-            n, Colon, Sp, F.Id("Node"), Comma, Sp,
-            Call("Unaffected", s, F.Id("T"), n), Sp, Rightarrow, RowBreak, Grp(),
-            Open, Exists, Sp, a, Comma, Sp,
-            Call("run", F.Id("compile"), F.Id("hash"), F.Id("digest"), Call("schedule", n)),
-            Open, Call("traceKey", F.Id("compile"), F.Id("hash"), F.Id("digest"), s, n), Close,
-            Sp, Eq, Sp, Call("some", a), Close, Sp, Rightarrow, RowBreak, Grp(),
-            Call("Restores", F.Id("compile"), F.Id("hash"), F.Id("digest"), Look(),
-                F.Id("T"), n), Dot,
+            Forall, Sp, s, Colon, Sp, SnapshotType(), Comma, Sp,
+            n, Colon, Sp, Field("Node"), Comma, Sp,
+            Call("Unaffected", s, F.Id("T"), n), Sp, Rightarrow, Sp,
+            Forall, Sp, a, Colon, Sp, Field("Art"), Comma, RowBreak, Grp(),
+            Call("run", F.Id("B"), Call("schedule", n)),
+            Open, Call("traceKey", F.Id("B"), s, n), Close,
+            Sp, Eq, Sp, Call("some", a), Sp, Rightarrow, RowBreak, Grp(),
+            Call("cachedBuild", F.Id("B"), Look(), F.Id("T"), n), Sp, Eq, Sp, a, Dot,
             End, Grp(F.Id("gathered"))));
     }
 }
