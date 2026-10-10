@@ -33,10 +33,15 @@ internal sealed class InvariantSafetyDocument : IScribeDocumentDefinition
                             + "The conclusion concerns each finite path; it asserts no fairness "
                             + "or eventual completion."))),
                 DescribeRole.Theorem),
-            new DocumentBlock.Section(H("Scoped material preservation"), Blocks(
+            new DocumentBlock.Section(H("A stronger conditional material-preservation model"), Blocks(
                 Paragraph(Text(
-                    "A reusable collaborative Git worktree illustrates how to obtain the one-step premise "
-                        + "from effects rather than assuming safety of each successor. Let M, P "
+                    "Material-preserving operations illustrate how to obtain the one-step premise "
+                        + "from effects rather than assuming safety of each successor. The following "
+                        + "seven-effect model requires exhaustive preservation, absence of active "
+                        + "users at a discarded location and continuous exclusion. These are "
+                        + "stronger conditional premises, not eligibility requirements for "
+                        + "worktree cleanup. Branch-backed deletion need not be a transition of this "
+                        + "stronger relation, which requires remote support for every discarded pair. Let M, P "
                         + "and J be arbitrary types of immutable material versions, recovery "
                         + "locations and actual jobs. A state has required material R, confirmed "
                         + "remote material D, local support L in M times P, active use U in J "
@@ -50,7 +55,7 @@ internal sealed class InvariantSafetyDocument : IScribeDocumentDefinition
                         + "job has active use there. This checks all discarded support, including "
                         + "support for items outside R. The stronger invariant combines safety "
                         + "with qualification of every held location. Locations may denote a "
-                        + "directory, a private recovery reference or another affected resource; "
+                        + "directory, a branch/object store or another affected resource; "
                         + "they are not necessarily whole trees. The material relation represents "
                         + "protected obligations and recovery effects; it does not make every "
                         + "intermediate keystroke a permanently required historical version. "
@@ -83,10 +88,10 @@ internal sealed class InvariantSafetyDocument : IScribeDocumentDefinition
                         + "support set, so every surviving held location stays qualified. "
                         + "Applying invariant_safety to this relation, with the stronger "
                         + "invariant as both J and S, proves preservation through every finite "
-                        + "cooperative interleaving, including a prefix interrupted between "
+                        + "interleaving of these seven effects, including a prefix interrupted between "
                         + "destructive effects.")),
                 Paragraph(Text(
-                    "Exclusion is continuous in this argument. While any holder at p survives, "
+                    "Exclusion is continuous in this stronger argument. While any holder at p survives, "
                         + "new entry and new material production at p are disabled, and confirmed "
                         + "retention is unchanged or enlarged. After the last holder exits, "
                         + "further destruction requires a fresh acquisition and qualification. "
@@ -103,58 +108,43 @@ internal sealed class InvariantSafetyDocument : IScribeDocumentDefinition
                         + "the parent's exit and perform the destructive effect. Its later exit "
                         + "releases the last holder. Thus preservation permits concurrent work, "
                         + "recovery and actual disposal; it does not require permanent refusal.")))),
-            new DocumentBlock.Section(H("Attributed checkpoints with independent editing"), Blocks(
+            new DocumentBlock.Section(H("Ordinary snapshots and branch-backed recovery"), Blocks(
                 Paragraph(Text(
-                    "For a checkpoint, fix an authorized set A of file coordinates, a "
-                        + "protected set K containing A, and a stable snapshot v. Represent "
-                        + "working bytes by w and the shared index's "
-                        + "change unit relative to a fixed agreed base by a function k taking "
-                        + "either no change entry or a value. At the start of "
-                        + "the attributed operation, w agrees with v on K, and each index entry "
-                        + "is either absent or is exactly v at a coordinate in A. Existing "
-                        + "unrelated staged entries therefore prevent this operation from "
-                        + "starting until their ownership is resolved.")),
+                    "An ordinary Git checkpoint stages the current working snapshot with git add -A "
+                        + "and commits it on the current branch. Tracked files and ordinary untracked "
+                        + "files follow native Git ignore rules. Pre-existing staged versions are "
+                        + "replaced by current working values; ignored files and intermediate staged "
+                        + "versions are not preservation obligations. Unmerged entries and unfinished "
+                        + "operations are refused before staging. A clean snapshot needs no empty commit. "
+                        + "Native hooks, index locks and ref updates retain their normal failure semantics.")),
                 Paragraph(Text(
-                    "During the operation an independent edit replaces w at a coordinate "
-                        + "outside K. A staging step replaces k at a coordinate of A with its "
-                        + "current working value. Other index insertion and changes to protected "
-                        + "working coordinates are excluded throughout the operation. Function "
-                        + "update laws prove that working stability and exact index attribution "
-                        + "are preserved by these two effects; invariant_safety extends this "
-                        + "to an arbitrary finite staging/editing path. If every coordinate of "
-                        + "A is staged at the end, an entry equals the snapshot value precisely "
-                        + "when its coordinate belongs to A. Under the exact-index consumption "
-                        + "premise for commit, the committed change unit therefore contains "
-                        + "only the stable authorized changes.")),
+                    "For removal, the required material is the successful commit's tracked snapshot "
+                        + "and reachable history. Its local support is the surviving branch reference "
+                        + "together with the common repository's reachable Git objects, outside the "
+                        + "removed checkout. Removing only the checkout does not remove that support. "
+                        + "This is the surviving-witness case of the inductive-invariant argument: "
+                        + "each permitted deletion retains a support witness for every required item. "
+                        + "The same cleanup invocation must exclude that branch from orphan retirement. "
+                        + "Native git worktree add on the retained branch reconstructs its tracked "
+                        + "snapshot, subject to intact objects and normal checkout semantics. "
+                        + "Neither a remote nor publication confirmation is needed for this local route. "
+                        + "A failed checkpoint or absence of a usable current branch retains the tree. "
+                        + "Later deletion of the branch or object store is outside this guarantee.")),
                 Paragraph(Text(
-                    "The boundary includes a countermodel: insert an unrelated entry into k "
-                        + "between staging and commit. Individual index updates can each be "
-                        + "mutually exclusive, yet the final index violates attribution. "
-                        + "Exclusion must span initial index inspection, snapshot stabilization, "
-                        + "staging, exact-diff inspection and commit consumption. Working bytes "
-                        + "outside the protected footprint may still change. Deletion entries "
-                        + "can be represented by a value in the value type; absence from the "
-                        + "change unit is a separate index option. Unmerged stages and a changing "
-                        + "base require additional representation and coordination; they cannot "
-                        + "silently be collapsed into this function.")),
-                Paragraph(Text(
-                    "Semantic authorization can read other coordinates. K must contain "
-                        + "the target and both states' actual read "
-                        + "sets. "),
+                    "Cooperative workers may edit one checkout concurrently. Snapshot claims require "
+                        + "coordination while Git consumes the working files, index and current branch; "
+                        + "operation scopes end with OS descriptor lifetime. They impose no session-long "
+                        + "writer lease. Changes made after staging belong to a later snapshot. "
+                        + "Disjoint writes alone do not imply semantic independence: "),
                     Ref("D5/S3/ConceptDynamics/Governance/TwoStateLocalityIncrementalPreservation.two_state_locality_yields_incremental_preservation"),
-                    Text(" supplies equivalence of such a local property under independent "
-                        + "editing: equality to the same snapshot gives endpoint byte equality "
-                        + "on K, hence an unchanged target and no changed dependency there. "
-                        + "The protected set can be strictly larger than the staged set while "
-                        + "a third coordinate changes. Disjoint file names alone do not establish independence "
-                        + "of read-sensitive operations. "),
+                    Text(" applies only when the target and both actual read sets remain equal. "),
                     Ref("D5/S0/Rewriting/HindleyRosen.reflTransGen_commute_of_strong_commute"),
-                    Text(" lifts the commuting squares of unconditional disjoint-coordinate "
-                        + "writes to arbitrary finite write blocks. Neither result supplies "
-                        + "a merge procedure for overlapping edits.")))),
+                    Text(" concerns finite blocks with commuting squares, not a merge procedure "
+                        + "for overlapping edits. Native fixtures establish the Git correspondence; "
+                        + "the abstract invariant theorem does not verify Git or OS behavior.")))),
             new DocumentBlock.Section(H("Exit, durability and the realization boundary"), Blocks(
                 Paragraph(Text(
-                    "For distinct jobs j and k, exit of j leaves every active-use and holder "
+                    "In the conditional model, for distinct jobs j and k, exit of j leaves every active-use and holder "
                         + "pair labelled k unchanged. An inherited descriptor is represented "
                         + "by a holder pair for the child, rather than by the parent's continued "
                         + "existence. Exit also leaves R, D and L unchanged. Even an exit leaving "
@@ -169,46 +159,52 @@ internal sealed class InvariantSafetyDocument : IScribeDocumentDefinition
                         + "Its insufficiency direction exhibits nonempty loss. In this "
                         + "application local Git commits belong to local support until "
                         + "confirmation, even though they are persistent on local disk. A "
-                        + "single participant's exit does not perform this erasure.")),
+                        + "single participant's exit does not perform this erasure. For the "
+                        + "actual recovery guarantee, R can be the authorized commit units whose "
+                        + "remote retention has been confirmed. Then R is contained in D, so loss "
+                        + "of all local support leaves those units recoverable. If R also includes "
+                        + "local-only items, the complete-local-loss conclusion need not hold. "
+                        + "Removing a checkout while retaining its branch and objects is not complete local loss.")),
                 Paragraph(Text(
-                    "The substitution into Git and host operations has explicit obligations. "
-                        + "Material versions must include working and staged bytes, untracked "
-                        + "or unknown ignored content, private refs and reflogs, unfinished "
-                        + "operation data, and any other recovery handle removed by the actual "
-                        + "effect. Actual use must be represented at every exclusion scope that "
-                        + "it intersects. Child paths, common Git state and private references "
-                        + "cannot be treated as independent coordinates when an operation's "
-                        + "effects overlap them. A support pair means a genuine reconstruction route, including "
-                        + "required metadata and object dependencies. Confirmation means that "
-                        + "a fresh remote observation establishes retention of the required "
-                        + "exact commit and material; a successful process exit, push invocation "
-                        + "or stale tracking ref is insufficient. Retention must remain valid "
-                        + "through each effect relying on it. A published commit supplies a "
-                        + "rebuild source only if its complete reconstruction relation and "
-                        + "toolchain premises also hold.")),
+                    "Remote support means a genuine reconstruction route, including required "
+                        + "metadata and object dependencies. Publication resolves the named "
+                        + "remote's push destination; push and fresh confirmation refer to the "
+                        + "same endpoint. Multiple push destinations are refused before writing. "
+                        + "Confirmation observes a remote branch tip and establishes that the "
+                        + "required exact commit is that tip or an ancestor of it. A successful "
+                        + "process exit, push invocation or stale tracking ref is insufficient. "
+                        + "Retention must remain valid through each recovery relying on it. "
+                        + "Rebuilding additionally depends on the complete reconstruction "
+                        + "relation and the required toolchain; confirmation alone promises "
+                        + "neither future remote availability nor reconstruction progress.")),
                 Paragraph(Text(
-                    "Job identities and descriptor inheritance must match actual surviving "
-                        + "processes across hosts. Exclusion must cover every conflicting edit, "
-                        + "Git-state mutation and new entrant through the final destructive "
-                        + "effect, including children that outlive a parent. Normal task "
-                        + "finalization closes admission of its new writers and gathers its "
-                        + "existing writers before taking a stable authorized snapshot; other "
-                        + "participants remain represented. Abnormal exit changes no "
-                        + "publication fact and requires fresh observation before another "
-                        + "destructive operation. These are realization premises, not "
-                        + "consequences of the abstract theorem.")),
+                    "Cooperative editing protects overlapping writes and actual semantic "
+                        + "reads; compound Git operations coordinate their affected index and "
+                        + "ref scopes. Disjoint editing remains concurrent. OS descriptor "
+                        + "lifetime releases operation exclusion without an LLM unlock; children "
+                        + "that continue a protected operation must retain its descriptors or "
+                        + "enter the protocol themselves. Normal finalization follows host "
+                        + "joining of this task's writers, checkpoints the ordinary working snapshot "
+                        + "and confirms publication. Other participants can continue. Abnormal "
+                        + "exit and lock release establish no publication fact. These scoped "
+                        + "coordination premises do not create a session-long writer lease or "
+                        + "a deletion-exclusion requirement.")),
                 Paragraph(Text(
-                    "Identity checks, current and main checkout protection, retained nested "
-                        + "registrations, intentional locks and independent cache-use guards "
-                        + "are additional conjuncts of engineering eligibility. They cannot "
-                        + "be inferred from material safety or exclusion alone. Unknown "
-                        + "inventory, activity or remote retention supplies no qualification "
-                        + "proof; leaving it in place and using a compatible alternative "
-                        + "workspace preserves the unresolved support. Cleanup of local refs, "
-                        + "orphan branches and temporary directories has the same material "
-                        + "obligation at its own affected scope. This application asserts "
-                        + "neither universal Git/OS correctness nor remote availability, "
-                        + "eventual publication, reconstruction progress or fairness.")))))));
+                    "Actual worktree disposal uses user-directed selection and the Git lock/time "
+                        + "rule: a selected unlocked tree may be removed; a locked tree requires "
+                        + "the existing 24-hour lock duration. Automatic selection has its own "
+                        + "Git-update age and behind-count conditions, which named removal bypasses. "
+                        + "Target identity, main-tree protection, nested registration checks and "
+                        + "accurate partial-failure reporting remain. Active programs, cwd, open "
+                        + "resources, protocol participation, cache use and remote confirmation "
+                        + "do not qualify or veto deletion. Eligible registered trees first commit "
+                        + "outstanding ordinary changes to their current branch; only successful "
+                        + "checkpointing permits deletion. The recovery branch survives the entire "
+                        + "invocation. Ordinary non-worktree artifacts retain their independent policy. "
+                        + "The stronger seven-effect argument does not certify this eligibility rule; "
+                        + "local branch recovery and remote-confirmed durability have distinct premises. "
+                        + "No mathematical statement here verifies the Git/OS realization, "
+                        + "eventual publication or fairness.")))))));
 
     private static Formula Member(Formula value, Formula set) =>
         Seq(value, Sp, InMacro, Sp, set);

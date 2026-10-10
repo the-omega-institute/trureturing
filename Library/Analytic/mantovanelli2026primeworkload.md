@@ -638,3 +638,688 @@ upper estimate on $P_I(t)$ or its positive-part moments is supplied.
 This is a paper-level application of the layer geometry and existing
 charging, not a new prime theorem, originality claim, Lean
 certification, complete signed Robin estimate or RH proof.
+
+## Project supplement: finite rough-shift covariance tail for the actual sample
+
+This supplement is a project derivation attached to the first-prime sampling
+material above. It uses the complete largest optimizer, including all tied
+layers, and keeps the optimizer clock $A_p=\log N_p$ distinct from the event
+price $b_p=\tau_{(p,1)}$. The existing Mantovanelli manuscript (Marco
+Mantovanelli, *Colossally Abundant Numbers, Robin's Inequality, and an Exact
+Prime-Layer Workload*, Zenodo record 22014299, version 1.0.0) supplies the
+packet/workload identity and the actual-clock asymptotic used below. The
+Caveney--Nicolas--Sondow source, as recorded in the project's
+[`caveney2012sacaga.md`](../Arith/caveney2012sacaga.md), and the project's CA
+layer bookkeeping supply the largest-optimizer and first-layer facts. The rough Fourier estimates are
+named premises from OpenAI/math at commit
+[`adc7f1241b42e322a6451854ab7e4b4c146bf78a`](https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a),
+specifically the pinned
+[`analytic-transfer.tex`](https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Ordinary-two-point-correlations-of-multiplicative-functions-September-24-2026/build/qualitative/analytic-transfer.tex).
+The short-interval input is the named theorem of Matomäki--Radziwiłł--Tao,
+[arXiv:1503.05121v3](https://arxiv.org/pdf/1503.05121v3), Definition 1.6,
+Theorem 1.7 and (1.12). The project locators and their exact text are taken
+at trureturing commit `8e70a655ae3dc1965637bfc070169d7405526887`.
+
+These external results are used as ordinary theorem premises. Their full
+primary proofs are not reproduced or kernel-certified here. The new content
+is the finite endpoint calculation, the relative-clock coefficient budget,
+and its application to the existing complete statistic. No priority claim,
+Lean claim, official acceptance, Robin theorem, or RH conclusion is made.
+
+### Actual sample and finite support
+
+Let $I=[u,v]\subset[X,3X]$, and use the same half-open first-prime sample as
+in LS1--LS4:
+
+$$
+ P_I=\{p\ {\rm prime}:u\le b_p=\tau_{(p,1)}<v\},\qquad m=|P_I|.
+$$
+
+The case $m=0$ is settled before taking any minimum or maximum: every sample
+sum and covariance budget below is then zero. For $m>0$, let $N_p=C_{b_p}$ be the actual largest
+full optimizer, with every equality layer retained, and put
+
+$$
+ A_p=\log N_p,\qquad a=\min_{p\in P_I}A_p,\qquad
+ b=\max_{p\in P_I}A_p,\qquad T=\left\lfloor\frac b2\right\rfloor .
+$$
+
+For the large-$X$ range used here, $A_p>1$ is an actual consequence of the
+unrestricted optimizer.  Indeed, with
+$J_b(n)=\log(\sigma(n)/n)-g(b)\log n$, the elementary estimates
+$J_b(4)-J_b(2)=\log(7/6)-g(b)\log2>0$ and
+$J_b(4)>3/7-1/32>J_b(1)=0$ show that $N_p$ is neither $1$ nor $2$.
+Thus $a\ge\log3>1$ before the relative-clock definitions below.
+
+Thus $A_p$ is a clock for the optimizer and $b_p$ is a price/event
+parameter; no equality $A_p=b_p$ is used. For $A>1$ and $x\ge1$, write
+
+$$
+ g(t)=\frac1{t\log t},\qquad
+ W_A(x)=\sum_{k=2}^{\lfloor A\rfloor}
+       (\log k)\,[g(kx)-g(A)]_+ .
+$$
+
+If $x\ge A/2$, then every $k\ge2$ has $kx\ge A$, so each positive
+part vanishes. Hence $W_A(x)=0$ for $x\ge A/2$, and in particular
+
+$$
+ \Gamma(d,e)=\sum_{p\in P_I}
+ (W_{A_p}(d)-\overline W(d))(W_{A_p}(e)-\overline W(e)),\qquad
+ \Gamma_z(r)=\Gamma(r,r+z)
+$$
+
+has $\Gamma_z(T+1)=0$ for every $z\ge1$, where
+$\overline W(x)=m^{-1}\sum_pW_{A_p}(x)$. The finite support statement is
+about the actual $A_p$, not about the event values $b_p$.
+
+### Named rough Fourier and MRT suppliers
+
+Fix $C_0\ge1$, $1<\tau<2$, and $\varepsilon=1/10000$. For a large
+parameter $B$, set
+
+$$
+ P_0=\exp(B^{1-\varepsilon}),\qquad
+ P_0/\tau\le M\le\exp(C_0B),\qquad D=\lceil M\rceil .
+$$
+
+An integer is $P_0$-rough when no prime $q<P_0$ divides it. Let $Z$ be any
+finite set of $P_0$-rough integers in $(M,\tau M]$. Then
+$D\le z<2D$ for $z\in Z$, and
+
+$$
+ h_Z=\sum_{z\in Z}\frac1z\le1.
+$$
+
+If $Z=\varnothing$, all $Z$-indexed sums, blocks, selectors and corresponding
+budgets below are zero, including $h_Z,Q,E_r,F_B,\omega_r,\kappa_L,J,B_Z$
+and the tail and sparse allowances. No maximum over $Z$ is taken;
+definitions for a nonempty rough set apply only when $Z\ne\varnothing$.
+
+For coefficients fixed before the $w$-average, with $|c(z)|\le1$, put
+
+$$
+ Q(\alpha)=\sum_{z\in Z}\frac{c(z)}z\,e(z\alpha),\qquad
+ e(t)=e^{2\pi i t}.
+$$
+
+The pinned OpenAI/math supplier is the following uniform premise: after one
+fixed $B_{\rm rough}=B_{\rm rough}(C_0,\tau)$, there are fixed constants
+$C_Q,C_4$ such that
+
+$$
+ \|Q\|_\infty\le C_Q B^{-1+\varepsilon}\log B,\qquad
+ \int_{\mathbb T}|Q(\alpha)|^4\,d\alpha
+ \le C_4M^{-1}B^{-4+4\varepsilon}(\log B)^6 .
+ \tag{FQ}
+$$
+
+This is the rough-multiplier lemma with arbitrary $z$-only coefficients;
+it is not a correlation estimate in disguise.
+
+For the second supplier, define the exact MRT distance
+
+$$
+ \mathcal M_\mu(r,Q)=
+ \inf_{\substack{|t|\le r,\;q\le Q\\ \chi\ ({\rm mod}\ q)}}
+ \sum_{\substack{\ell\ {\rm prime}\\ \ell\le r}}
+ \frac{1-\Re(\mu(\ell)\overline{\chi(\ell)\ell^{it}})}\ell .
+$$
+
+The cutoff in the prime sum and the height bound are both $r$. For a
+window $H\le r$, use
+
+$$
+ Q_H(r)=\min((\log r)^{1/125},(\log H)^5),\qquad
+ \ell(H)=\frac{\log\log H}{\log H}.
+$$
+
+Theorem 1.7 of the MRT primary, with its frequency supremum outside the
+$y$-integral, gives for every fixed frequency $\alpha$, $r\ge H\ge10$,
+
+$$
+ \int_0^r\left|\sum_{y<n\le y+H}\mu(n)e(\alpha n)\right|dy
+ \le C_{\rm MRT}Hr\left(e^{-\mathcal M_\mu(r,Q_H(r))/20}
+ +\ell(H)+(\log r)^{-1/700}\right).
+ \tag{MRT}
+$$
+
+For every prime $\ell$, $\mu(\ell)=\lambda(\ell)=-1$, so the prime-distance
+infimum for $\mu$ equals the corresponding Liouville infimum exactly. The
+quantitative statement (1.12), applied with its fixed small parameter, gives
+fixed $K_\mu$ and $r_0\ge10$ such that
+
+$$
+ \mathcal M_\mu(r,Q)\ge\tfrac14\log\log r-K_\mu
+ \quad(r\ge r_0, Q\le(\log r)^{1/125}).
+$$
+
+Thus the exponential term in (MRT) is at most
+$C_\mu(\log r)^{-1/80}$ for $r\ge r_0$. Enlarging one fixed constant to
+$\widetilde C_\mu$ pays the finite range $10\le r<r_0$; no numerical value
+of $r_0$ or of a global $B_0$ is asserted.
+
+### Exact finite $D/3D$ reduction
+
+For $r\ge0$, let
+
+$$
+ S_r(z)=\sum_{1\le w\le r}\mu(w)\mu(w+z),\qquad S_0(z)=0.
+$$
+
+For $r\ge3D$, define
+
+$$
+ A_y(\alpha)=\sum_{y<n\le y+D}\mu(n)e(\alpha n),\qquad
+ B_y(-\alpha)=\sum_{y<m\le y+3D}\mu(m)e(-\alpha m).
+$$
+
+Since $D\le z<2D$, the first window is contained in the translated second
+window after imposing $m=n+z$. Integrating over $0\le y\le r$, the exact
+overlap for a fixed $n$ is
+
+$$
+ L_{D,r}(n)=\operatorname{length}([0,r]\cap[n-D,n))
+ =\max(0,\min(r,n)-\max(0,n-D)).
+$$
+
+For integer $r\ge D$, this is $D$ only on $D\le n\le r$. The early
+$n<D$ correction and late triangular tail are retained in the exact identity
+
+$$
+ L_{D,r}(n)=D\mathbf1_{\{1\le n\le r\}}+e_{D,r}(n),\qquad
+ e_{D,r}(n)=
+ \begin{cases}
+ n-D,&1\le n<D,\\
+ r+D-n,&r<n<r+D,\\
+ 0,&\text{otherwise}.
+ \end{cases}
+$$
+
+The two triangular tails have total absolute mass exactly
+
+$$
+ \sum_{n\ge1}|e_{D,r}(n)|=D(D-1).
+$$
+
+Fourier orthogonality therefore gives the finite identity
+
+$$
+ \sum_{z\in Z}\frac{c(z)}zS_r(z)
+ =\frac1D\int_0^r\!\int_{\mathbb T}
+ Q(\alpha)A_y(\alpha)B_y(-\alpha)\,d\alpha\,dy-E_r,
+ \tag{D3}
+$$
+
+where
+
+$$
+ E_r=\frac1D\sum_{z\in Z}\frac{c(z)}z
+ \sum_{n\ge1}\mu(n)\mu(n+z)e_{D,r}(n),\qquad
+ |E_r|\le(D-1)h_Z.
+$$
+
+The factor $D(D-1)$, rather than twice that number, is the complete
+endpoint cost. For $1\le r<3D$ we retain the elementary bound
+
+$$
+ \left|\sum_{z\in Z}\frac{c(z)}zS_r(z)\right|\le r h_Z;
+ \tag{small-r}
+$$
+
+the exact overlap is still available when $D\le r<3D$, but no MRT window is
+silently invoked there.
+
+For $r\ge3D$, split at $t_B=B^{-1-\varepsilon}$, with
+$E_B=\{\alpha:|Q(\alpha)|>t_B\}$. From (FQ),
+
+$$
+ |E_B|\le C_4M^{-1}B^{8\varepsilon}(\log B)^6.
+$$
+
+Parseval and Cauchy--Schwarz on $\mathbb T\setminus E_B$, where the two
+window lengths are $D$ and $3D$, give the first contribution
+$\sqrt3\,rB^{-1-\varepsilon}$. On $E_B$, use
+
+$$
+ |A_y|\,|B_y|\le\frac{3D|A_y|+D|B_y|}{2},
+$$
+
+then apply Fubini and (MRT) separately at $H=D$ and $H=3D$. The
+frequency is fixed before each $y$-average; no supremum over $\alpha$ is
+moved inside that integral. For $H\in\{D,3D\}$, the prescribed $M$-range
+gives $\log H\gg B^{1-\varepsilon}$ and
+
+$$
+ \ell(H)\le K_\ell B^{-1+\varepsilon}\log B,
+ \qquad K_\ell=2(1+\log(C_0+2)).
+$$
+
+Combining the small-frequency term, the fourth-moment measure, the fixed
+supremum in (FQ), the two $\ell(H)$ terms, the $(\log r)^{-1/700}$
+terms, and the exact tails in (D3), gives one fixed $C_{20}$ such that
+
+$$
+ \left|\sum_{z\in Z}\frac{c(z)}zS_r(z)\right|
+ \le C_{20}r\left[B^{-1-\varepsilon}
+ +B^{-2+10\varepsilon}(\log B)^8
+ +B^{-1+9\varepsilon}(\log B)^7(\log r)^{-1/700}\right]
+ +(D-1)h_Z .
+ \tag{finite-MRT}
+$$
+
+For example, after increasing constants harmlessly one may take
+
+$$
+ C_{20}=\max\{\sqrt3,\;6C_{\rm MRT}C_QC_4K_\ell,\;
+ 6C_{\rm MRT}C_QC_4(1+\widetilde C_\mu)\}.
+$$
+
+The three bracketed terms respectively record the small-frequency estimate,
+the fourth-moment times the short-window $\ell(H)$ allowance, and the
+fourth-moment times the quantitative MRT decay. The final term is the exact
+triangular endpoint mass.
+
+Choose a fixed $B_0$ large enough to include the rough supplier, $D\ge10$,
+and the scalar inequalities
+
+$$
+ B^{-1+11\varepsilon}(\log B)^8\le1,\qquad
+ B^{-(1/700-10\varepsilon)}(\log B)^7\le1.
+$$
+
+Here $1-11\varepsilon>0$ and
+$1/700-10\varepsilon=3/7000>0$. With the corrected rounding
+
+$$
+ R_B=\left\lceil\max(\exp B,DB^2)\right\rceil,
+ \tag{RB}
+$$
+
+every $r\ge R_B$ has $r\ge3D$ and $\log r\ge B$. Also
+$(D-1)h_Z\le D\le rB^{-2}\le rB^{-1-\varepsilon}$. Therefore, for a
+fixed $C_{22}=3C_{20}+1$,
+
+$$
+ \left|\sum_{z\in Z}\frac{c(z)}zS_r(z)\right|
+ \le C_{22}rB^{-1-\varepsilon}\qquad(r\ge R_B).
+ \tag{Corr}
+$$
+
+The start $B_0$ exists from the displayed scalar gaps and the named
+supplier constants; no numerical $B_0$ is claimed. In particular, (RB) is
+$\lceil\max(\exp B,DB^2)\rceil$, never $\lceil MB^2\rceil$.
+
+For use at every finite row, define
+
+$$
+ F_B(0)=0,\qquad F_B(r)=rh_Z\ (1\le r<3D),\qquad
+ F_B(r)=\text{the right side of (finite-MRT)}\ (r\ge3D).
+ \tag{FB}
+$$
+
+Then (FB) bounds the inner sum for every $r\ge0$, including the rows below
+the corrected supplier range.
+
+### Relative clocks and the actual coefficient mass
+
+Put
+
+$$
+ \ell=\log(b/a),\qquad D_a=1+\frac1{\log a},\qquad
+ K=\ell+\log\frac{\log b}{\log a},\qquad
+ C=D_a\left(\ell+\frac12\right).
+$$
+
+When $a=b$, set $K=C=\ell=0$, so every centered covariance below is
+exactly zero. For $a\le A'\le A\le b$, let
+$U_{A,A'}(x)=W_A(x)-W_{A'}(x)$. With
+
+$$
+ Q_{A,A'}(s)=\sum_{2\le k\le s}\log k,
+$$
+
+the floor endpoints are harmless because every activation term is zero at
+its endpoint, and direct integration gives
+
+$$
+ U_{A,A'}(x)=\int_{A'}^A(-g'(t))
+ Q_{A,A'}(t/x)\,dt .
+ \tag{U-int}
+$$
+
+Consequently $U\ge0$, $U$ is decreasing and locally absolutely
+continuous, and
+
+$$
+ 0\le U_{A,A'}(x)\le\frac Kx.
+ \tag{U-size}
+$$
+
+For the bound, use $Q_{A,A'}(t/x)\le(t/x)\log t$ and
+$-g'(t)=(\log t+1)/(t^2(\log t)^2)$; after multiplying by $x$ the
+integral is at most
+$\int_{A'}^A(1/t+1/(t\log t))\,dt=K$.
+
+For almost every $x$, activation values cancel at their endpoints and
+
+$$
+ -U'_{A,A'}(x)=
+ \sum_{\substack{k\ge2\\ A'<kx<A}}
+ (\log k)k[-g'(kx)].
+$$
+
+Since $kx\ge a$, each summand is at most $D_a/(x^2k)$. The active
+shell obeys
+
+$$
+ \sum_{\substack{k\ge2\\ A'/x<k<A/x}}\frac1k
+ \le\frac12+\log\frac AA'\le\frac12+\ell,
+$$
+
+so
+
+$$
+ 0\le-U'_{A,A'}(x)\le\frac C{x^2},\qquad
+ 0\le U_{A,A'}(x)-U_{A,A'}(y)
+ \le C\left(\frac1x-\frac1y\right)\quad(1\le x\le y).
+ \tag{U-var}
+$$
+
+This is an activation-shell and variation estimate; no convexity of $U$ is
+claimed. It also covers $A<2$, empty shells, nonintegral clocks and all
+floor boundaries.
+
+For $F_r(p)=W_{A_p}(r)$ and $H_r(p)=F_r(p)-F_{r+1}(p)$, both are increasing
+functions of the same clock $A_p$, since (U-var) gives
+$H_r(A)-H_r(A')=U(r)-U(r+1)\ge0$. The unnormalized covariance identity and
+Popoviciu's range bound therefore give
+
+$$
+ 0\le\Gamma_z(r)\le\frac{mK^2}{4r(r+z)},
+ \tag{G-size}
+$$
+
+and, writing $h_z(r)=1/[r(r+z)]$,
+
+$$
+ 0\le\Delta\Gamma_z(r):=\Gamma_z(r)-\Gamma_z(r+1)
+ \le\frac{mKC}{4}\,[h_z(r)-h_z(r+1)].
+ \tag{G-var}
+$$
+
+Indeed,
+
+$$
+ \Delta\Gamma_z(r)=\operatorname{Cov}_m(H_r,F_{r+z})
+ +\operatorname{Cov}_m(F_{r+1},H_{r+z}),
+$$
+
+where $\operatorname{Cov}_m$ is the unnormalized centered sum. Each term
+is nonnegative by the common-clock ordering, and the range products are
+$mKC/4$ times
+
+$$
+ \frac1{r(r+1)(r+z)}
+ +\frac1{(r+1)(r+z)(r+z+1)}=h_z(r)-h_z(r+1).
+$$
+
+This explicitly supplies the factor $m/4$ and does not use a false
+monotonicity assertion for a separate $z$-indexed sequence.
+
+### Finite Abel identity and coefficient budget
+
+For an integer $L\ge1$, first settle $T<L$: the block $O_Z^{\ge L}$ and
+every corresponding sum, selector and budget (including the lower anchor,
+$J$, and the tail and sparse allowances) are zero. No maximum, selector
+quotient or logarithmic budget expression is evaluated for an empty block.
+For the remaining block definitions and formulas, assume $Z\ne\varnothing$
+and $1\le L\le T$, and put
+
+$$
+ \omega_r=\max_{z\in Z}z\,\Delta\Gamma_z(r),\qquad
+ c_r(z)=\begin{cases}
+ z\Delta\Gamma_z(r)/\omega_r,&\omega_r>0,\\
+ 0,&\omega_r=0,
+ \end{cases}
+$$
+
+and, for the lower anchor,
+
+$$
+ \kappa_L=\max_{z\in Z}z\Gamma_z(L),\qquad
+ d_L(z)=\begin{cases}
+ z\Gamma_z(L)/\kappa_L,&\kappa_L>0,\\
+ 0,&\kappa_L=0.
+ \end{cases}
+$$
+
+The set $Z$, every $c_r$, and $d_L$ are fixed before the inner $w$-sum;
+they depend on $z$ only, and all nonzero selectors lie in $[0,1]$. For the
+exact rough-shift block,
+
+$$
+ O_Z^{\ge L}=\sum_{z\in Z}\sum_{w=L}^T
+ \mu(w)\mu(w+z)\Gamma_z(w),
+$$
+
+finite summation by parts and $\Gamma_z(T+1)=0$ give
+
+$$
+ O_Z^{\ge L}=\sum_{r=L}^T\omega_r
+ \sum_{z\in Z}\frac{c_r(z)}zS_r(z)
+ -\sum_{z\in Z}\Gamma_z(L)S_{L-1}(z).
+ \tag{Abel}
+$$
+
+The lower term is exactly
+$\kappa_L\sum_z d_L(z)S_{L-1}(z)/z$, with its minus sign retained.
+
+Let $z_+=\max Z$ when $Z\ne\varnothing$. Since
+
+$$
+ z\,[h_z(r)-h_z(r+1)]
+ =\frac1{r(r+1)}-\frac1{(r+z)(r+z+1)},
+$$
+
+the maximum direction is increasing in $z$. From (G-size)--(G-var),
+
+$$
+ \begin{aligned}
+ J&:=\sum_{r=L}^T r\omega_r+(L-1)\kappa_L\\
+ &\le\frac m4\left[KC\,A_{L,T}(z_+)
+ +K^2\frac{(L-1)z_+}{L(L+z_+)}\right],
+ \end{aligned}
+ \tag{J}
+$$
+
+where the finite top term is kept in the exact identity
+
+$$
+ A_{L,T}(z)=z\left[Lh_z(L)+\sum_{r=L+1}^T h_z(r)-T h_z(T+1)\right]
+$$
+
+and then bounded by
+
+$$
+ A_{L,T}(z)\le\frac z{L+z}+\log\left(1+\frac zL\right)
+ \le\frac{2z}{L}.
+$$
+
+This proves the deterministic mass estimate, including the negative finite
+top term. If $Z=\varnothing$, or if $m=1$, or if $a=b$, or if all maxima
+vanish, the corresponding block is exactly zero.
+
+When $L-1\ge R_B$, apply (Corr) to every $r\ge L$ and to the lower row
+$r=L-1$. For $Z\subset(M,\tau M]$, (J) gives the conditional finite
+tail bound
+
+$$
+ |O_Z^{\ge L}|
+ \le\frac{C_{22}\tau mM}{4LB^{1+\varepsilon}}
+       (2KC+K^2).
+ \tag{tail}
+$$
+
+The same block always has the direct sparse-set companion (for $L\ge2$)
+
+$$
+ |O_Z^{\ge L}|
+ \le\frac{mK^2}{4}\sum_{z\in Z}
+ \frac{\log(1+z/(L-1))}{z}
+ \le\frac{mK^2|Z|}{4(L-1)}.
+ \tag{sparse}
+$$
+
+The usable allowance is the smaller of (tail) and (sparse). The correlation
+gain is not uniform for sparse $Z$, and as $b/a\downarrow1$ the direct
+quadratic $K^2$ allowance can beat the conditional linear-in-$K$ bound.
+
+### Complete-CA clock and a nonvacuous range
+
+The exact first-layer statements used here are $q\le p$ for the occupied
+first layers of $C_{b_p}$, including equality, and
+
+$$
+ p<b_p=\tau_{(p,1)}<p+1.
+$$
+
+Every occupied layer $q^j$ with $b_p\le3X$ satisfies
+
+$$
+ q^j<Q_X:=\frac{3X\log(3X)}{\log2}.
+$$
+
+The first layers contribute $\vartheta(p)$. Counting each prime with a
+higher layer once, at its highest occupied layer, gives
+
+$$
+ A_p=\vartheta(p)+H_p,\qquad
+ 0\le H_p\le\lfloor\sqrt{Q_X}\rfloor\log Q_X.
+ \tag{clock}
+$$
+
+No tied layer or high layer is discarded in (clock). The ordinary PNT and
+the existing $A^+(t)=t+o(t)$ workload clock therefore give, uniformly for
+large $X$, $a\gg X$, $b\ll X$, and $b/a=O(1)$. If the Dusart input
+$|\vartheta(y)-y|<0.2y/\log^2y$ for
+$y\ge3{,}594{,}641$ is retained, then with
+$\delta_X=0.2/\log^2(X-1)$,
+
+$$
+ a\ge(X-1)(1-\delta_X),\qquad
+ b\le3X(1+\delta_X)+\sqrt{Q_X}\log Q_X.
+$$
+
+For $X\ge e^{16}$, these elementary bounds give $a>0.98X$,
+$b<3.28X$, hence $b/a<4$. This is a clock threshold only; it is not a
+numerical value for the correlation threshold $B_0$.
+
+The corrected growth example is
+
+$$
+ B=\tfrac12\log X,\qquad M=\sqrt X=e^B,\qquad D=\lceil M\rceil,\qquad
+ L=\lceil2DB^2\rceil.
+ \tag{growth}
+$$
+
+For $B$ large, $P_0/\tau\le M\le e^{C_0B}$. Since $DB^2\ge1$,
+$L-1\ge DB^2\ge e^B$, so $L-1\ge R_B$ with the corrected (RB), not
+with the old $\lceil MB^2\rceil$ rounding. The full CA clock, rather than
+the false identity $A_p=b_p$, gives $A_p=b_p+o(b_p)$. Thus for a nonempty
+sample $A_p\ge b_p/2\ge X/2$ eventually, hence $a\ge X/2$, so
+
+$$
+ T\ge X/4-1,\qquad L+\lceil\tau M\rceil=O(\sqrt X(\log X)^2)=o(X).
+$$
+
+Consequently $L+\lceil\tau M\rceil<a/2\le b/2$ eventually. This strict
+sufficient condition avoids the zero activation at $b/2$ and also implies
+$L+\lceil\tau M\rceil\le T$, so the band has genuine support for every
+shift in $Z$. A nonempty rough set or a nonzero
+covariance is not inferred merely from support.
+
+With $b/a<4$, $D_a\le2$, and
+
+$$
+ K\le D_a\ell,\qquad 2KC+K^2\le D_a^2(3\ell^2+\ell),
+$$
+
+(tail) under the named (Corr) premise becomes
+
+$$
+ |O_Z^{\ge L}|=O_{C_0,\tau,\text{named suppliers}}
+ \left(\frac{m}{B^{3+\varepsilon}}\right)
+ =O\left(\frac{m}{(\log X)^{3+\varepsilon}}\right).
+$$
+
+This is a conditional estimate for the displayed rough shifted band. For
+the complete finite band, use (FB) in (Abel), retaining all $w<L$ rows and
+the exact lower anchor. With $L=1$, $S_0=0$ and the whole-band interface
+is simply
+
+$$
+ |O_Z|\le B_Z:=\sum_{r=1}^T\omega_rF_B(r).
+ \tag{whole-band}
+$$
+
+### Complete Robin consumer and unpaid terms
+
+The existing exact source identity uses
+
+$$
+ R(N_p)=a_p+\sum_{d=1}^{T}\mu(d)W_{A_p}(d),\qquad
+ a_p=-\gamma-\log\log A_p+\frac1{\log A_p}-E_p,
+$$
+
+where $E_p$ retains the actual reserve and the general defect
+$d_{A_p}(N_p)$. Put
+
+$$
+ \bar a=\frac1m\sum_pa_p,\quad
+ V_a=\sum_p(a_p-\bar a)^2,\quad
+ \beta(d)=\sum_p(a_p-\bar a)(W_{A_p}(d)-\overline W(d)),
+$$
+
+and
+
+$$
+ D_{\rm sf}=\sum_{d=1}^{T}\mu(d)^2\Gamma(d,d).
+$$
+
+The exact signed quadratic expansion is
+
+$$
+ \begin{aligned}
+ \sum_{p\in P_I}R(N_p)^2
+ &=m\,\overline R^{\,2}+V_a
+ +2\sum_{d=1}^{T}\mu(d)\beta(d)+D_{\rm sf}\\
+ &\quad+2\sum_{z=1}^{T-1}\sum_{w=1}^{T-z}
+ \mu(w)\mu(w+z)\Gamma_z(w).
+ \end{aligned}
+ \tag{Robin-quad}
+$$
+
+Here $\overline R=m^{-1}\sum_{p\in P_I}R(N_p)$.  There is no additional
+$\beta^2$ term: $V_a$ is the complete centered
+constant contribution. Splitting the final line into the selected
+$z\in Z,w\ge L$ block and its complement replaces only that selected block
+by $2|O_Z^{\ge L}|$, or by $2B_Z$ for (whole-band). The mean term,
+$V_a$ and its full reserve/defect, the signed $\beta$-cross term, the
+squarefree diagonal, the unit row $d=1$, every $w<L$ row, and every shift
+outside $Z$ remain in the consumer.
+
+For the existing sign sample $P_I(t)$, Markov gives the exact majorization
+
+$$
+ P_I(t)\le\min\left(m,\frac1{t^2}\sum_{p\in P_I}R(N_p)^2\right)\qquad(t>0),
+$$
+
+with (Robin-quad) used on the right. The selected tail therefore contributes
+only its displayed finite allowance to this majorization; it does not supply
+
+the missing signed Robin margin or a complete positive-part rate. The
+special $4.03\times10^{46}$ zero-defect statement applies only to the
+correctly selected global $N$, and is not applied to event samples $N_p$.
+Accordingly, this supplement controls one conditional finite covariance band
+while the full signed RH/Robin objective remains open.

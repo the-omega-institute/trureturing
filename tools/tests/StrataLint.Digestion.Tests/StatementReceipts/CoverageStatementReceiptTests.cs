@@ -16,13 +16,16 @@ public sealed class CoverageStatementReceiptTests
         "sha256:3550644baaf9611be033c032903cdd16576de334d42f76ee9a3d673ad7e336f0";
 
     [Fact]
-    public void ModuleGidResolutionTracksFrozenStatePin()
+    public void ModuleGidResolutionTracksFrozenStatePinWithCurrentReport()
     {
         var firstPin = FrozenStatementReceiptTestData.Id('1');
         var secondPin = FrozenStatementReceiptTestData.Id('2');
         Assert.True(Gid.TryParse(ModuleGid, out var gid));
         var report = LeanAxiomReport.Create(
-            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
+            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            {
+                [ModulePath] = new LeanFileReport([], []),
+            });
 
         var first = FrozenStatementIndex.Create(
             FrozenStateCatalog.Load(StateSnapshot(firstPin)),
@@ -60,7 +63,10 @@ public sealed class CoverageStatementReceiptTests
         var present = FrozenStatementIndex.Create(state, report);
         var missing = FrozenStatementIndex.Create(
             state,
-            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)));
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            {
+                [ModulePath] = new LeanFileReport([], []),
+            }));
 
         Assert.True(present.TryResolve(gid, out var statementId, out var message), message);
         Assert.Equal(ExpectedDeclarationStatementPin, statementId!.Value);

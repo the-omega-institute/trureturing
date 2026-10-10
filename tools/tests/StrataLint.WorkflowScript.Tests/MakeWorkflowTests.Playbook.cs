@@ -34,8 +34,9 @@ public sealed partial class MakeWorkflowTests
             script,
             StringComparison.Ordinal);
         Assert.Contains(
-            "align_args+=(--candidate-lean-report \"$REPORT\")",
+            "run_cli \"${align_args[@]}\" --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json",
             script,
             StringComparison.Ordinal);
+        Assert.Contains("run_cli ledger-align --candidate-lean-report \"$REPORT\"", script, StringComparison.Ordinal);
     }
 }

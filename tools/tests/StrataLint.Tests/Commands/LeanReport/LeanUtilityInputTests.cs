@@ -8,6 +8,43 @@ namespace StrataLint.Tests;
 public sealed class LeanUtilityInputTests
 {
     [Fact]
+    public void SelectedUtilityReaderIgnoresUnrelatedDanglingClaimAndRejectsSelectedClaim()
+    {
+        var fixture = UtilityAdmissionTestSupport.RefutationFixture();
+        var files = new Dictionary<string, string>(fixture.Files)
+        {
+            ["D5/S0/Carrier/Unfinished.lean"] = fixture.Files[RuleFixture.RingPath]
+                .Replace(UtilityAdmissionTestSupport.Claim, "D5/S0/Carrier/Missing.proposed_law", StringComparison.Ordinal),
+        };
+        var selected = LeanUtilityInputCommand.Run(() => UtilityAdmissionTestSupport.Raw(files),
+            ["--targets", "D5.S0.Carrier.Ring"]);
+        Assert.Equal(0, selected.ExitCode);
+        Assert.Single(JsonDocument.Parse(selected.Output).RootElement.EnumerateArray());
+        var bad = LeanUtilityInputCommand.Run(() => UtilityAdmissionTestSupport.Raw(files),
+            ["--targets", "D5.S0.Carrier.Unfinished"]);
+        Assert.Equal(2, bad.ExitCode);
+        Assert.Contains("D5/S0/Carrier/Missing.lean", bad.Error, StringComparison.Ordinal);
+        Assert.Equal(2, LeanUtilityInputCommand.Run(() => UtilityAdmissionTestSupport.Raw(files), []).ExitCode);
+    }
+
+    [Fact]
+    public void ScopeInputListsEveryCompiledUtilityReferenceWithoutRefutationEvidence()
+    {
+        var fixture = UtilityAdmissionTestSupport.InstanceFixture(
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; "
+            + "premises=D5/S0/Carrier/Ring.goldenRing");
+        var result = LeanUtilityInputCommand.Run(() => UtilityAdmissionTestSupport.Raw(fixture.Files), ["--scope"]);
+
+        Assert.Equal(0, result.ExitCode);
+        using var json = JsonDocument.Parse(result.Output);
+        var owner = Assert.Single(json.RootElement.EnumerateArray());
+        Assert.Equal(RuleFixture.RingPath, owner.GetProperty("modulePath").GetString());
+        Assert.Equal(new[] { "D5.S0.Carrier.Ring", "D5.S0.Carrier.ValuesBinding" },
+            owner.GetProperty("inputModules").EnumerateArray().Select(item => item.GetString()));
+        Assert.DoesNotContain("claimSourceSha256", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ProducerUsesCanonicalUtilityParserToCreateStructuredObligations()
     {
         var fixture = UtilityAdmissionTestSupport.RefutationFixture();

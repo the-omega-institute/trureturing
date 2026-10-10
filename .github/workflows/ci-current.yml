@@ -619,6 +619,13 @@ jobs:
             [tests-cover-batch]
             # ProducerInputFixture copies registered inspector/dependency sources.
             tools/lean-inspector/*.lean
+            tools/lean-inspector/build_work.py
+            tools/lean-inspector/materials.py
+            tools/lean-inspector/native.py
+            tools/lean-inspector/publication.py
+            tools/lean-inspector/reuse.py
+            tools/lean-inspector/scoped.py
+            tools/scripts/report/lean-report-scoped.sh
             tools/lean-inspector/native_image.c
             tools/lean-inspector/inspect.sh
             lakefile.lean
@@ -934,6 +941,7 @@ jobs:
             tools/scripts/report/lean-report-input.sh
             tools/scripts/report/lean-report-selection.py
             tools/scripts/report/lean-report.sh
+            tools/scripts/report/lean-report-scoped.sh
             tools/scripts/report/report-supervisor.sh
             tools/scripts/workflow/install-lean-toolchain.sh
             tools/scripts/worktree/*
