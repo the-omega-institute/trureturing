@@ -980,6 +980,12 @@ signed-tail bound, an originality claim, or Lean certification. The
 [existing quadratic tail interpolation](../Analytic/guthmaynard2024largevalues.md#finite-interpolation-without-assuming-a-prime-error-bound)
 already supplies the $A^{3/4}$ bounded-loss scale for a different
 comparison. That interpolation and the tangent minimum are reused.
+The tangent gap $R(A,b)$ below is also the existing $c_A(b)$ in
+the [Nicolas pressure application](../ArithSums/nicolas2025comparison.md),
+equation (PH1). Its global Robin maximum hypothesis is not imported
+here: the comparison uses the original source's right-tail maximality
+only at $C_b\ge N$ and retains actual Gronwall values, rather than
+identifying them with pressure away from a self-clock point.
 
 Fix the same $N\in\mathscr S_{\rm reg}$, put $A=\log N>1$,
 $L=\log A$, $T=\sqrt A L$, and retain
