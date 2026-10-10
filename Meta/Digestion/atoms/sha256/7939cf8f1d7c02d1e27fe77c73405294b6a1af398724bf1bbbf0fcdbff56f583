@@ -1,0 +1,55 @@
+### 16. 四、新的谱读出定理：额外一个二阶量即可恢复 $\kappa$
+
+Claim status: open.（供文 II 原第 4 节全文。）
+
+
+仅有：
+
+$$
+(X,Y,Z)
+$$
+
+不能恢复：
+
+$$
+\kappa.
+$$
+
+但如果增加一个由五态关系构造出的谱量，则可以恢复它。
+
+定义矩阵：
+
+$$
+C(p)=
+\begin{pmatrix}
+1&X&Y\\
+X&1&Z+\kappa\\
+Y&Z+\kappa&1
+\end{pmatrix}.
+$$
+
+其中：
+
+$$
+Z+\kappa =
+\mathbb E[z+xy] =
+\mathbb E[c].
+$$
+
+定义：
+
+$$
+M_2=\operatorname{tr}\left(C(p)^2\right).
+$$
+
+直接计算：
+
+$$
+\boxed{
+M_2 =
+3+2\left(
+X^2+Y^2+(Z+\kappa)^2
+\right).
+}
+$$
+
