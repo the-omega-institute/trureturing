@@ -74,6 +74,22 @@ with information lost into \(\kappa\), higher moments, or an inflation lift. A t
 - Gitton and Renner (2025) prove the exact noiseless EJM distribution non-classical with symmetry-reduced inflation and an exact integer certificate. Their purified affine visibility proxy has \(3/7\le v_*<383/512\), with the EJM point at \(v=3/4\). This proxy is not the independent-source Werner path.
 - Boreiri, Ulu, Brunner, and Sekatski (2025) give rigorous sufficient noisy regions for a specified TBSM family: roughly \(0.544\%\) independent source white noise, roughly \(80\%\) dephasing, and a total-variation nonlocal ball of roughly \(0.24\%\). These are certificate regions, not exact transitions and not automatically the RGB4 maximally-entangled point.
 
+
+
+## Exact EJM three-dimensional encoding
+
+For regular tetrahedron vectors \(t_0,\ldots,t_3\in\mathbb R^3\), let \(d_{ij}=t_i\cdot t_j\), \(S=d_{ab}+d_{bc}+d_{ca}\), and \(R=d_{ab}d_{bc}+d_{bc}d_{ca}+d_{ca}d_{ab}\). The EJM table has the exact symmetric form
+
+\[
+P_{\mathrm{EJM}}(a,b,c)=\frac{4+S+6R}{256}.
+\]
+
+The values are \(25/256\) for all equal, \(1/256\) for exactly two equal, and \(5/256\) for all distinct. This is an exact tetrahedral Gram identity, not an identification of source edges with physical spatial axes. The \(R\) term is a cycle-sensitive invariant that a one-coordinate or single-pair quotient can erase.
+
+## Global gluing warning
+
+The repository's D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean proves a finite three-cycle example where pairwise local laws have compatible one-coordinate marginals but no common global state. It is not a triangle-locality criterion, but it captures why a product-source lift must be checked globally rather than reconstructed from pairwise projections.
+
 ## Repository anchor
 
 The finite predicate IsTriangleLocal is already present in D5/S3/Quantum/Entanglement/TriangleSymmetricLocalRefutation.lean. It formalizes the triple integral over independent uniform edge variables and two-edge response functions. TriangleInequalityL1Refutation.lean reuses it to refute a proposed inequality using an explicit local model. These modules establish the classical source-product layer. They do not formalize EJM, Fritz, Renou noise, inflation certificates, or physical quantum source noise.
