@@ -12,6 +12,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 import zipfile
 from fractions import Fraction
 
@@ -26,10 +27,22 @@ SOURCE_MODULE = 'Reg.Support.AuricFibCompiledSource'
 PREFIX = 'LeanInformationAuditRegTests.AuricFib.CompiledFixture.'
 TEMPLATE = ROOT / 'tools/lean-inspector/LeanInformationAuditRegTests/AuricFib/CompiledFixture.lean'
 STATE = ROOT / '.lake/build/lean-inspector'
+DIAGNOSTICS = None
 
 
 def q(value):
     return Fraction(int(value['numerator']), int(value['denominator']))
+
+
+def observe_fib(label, payload):
+    try:
+        if DIAGNOSTICS:
+            with (DIAGNOSTICS / 'phases').open('a', encoding='utf-8') as target:
+                target.write(json.dumps(dict(observation=label, **payload)) + '\n')
+        else:
+            print(label + ' ' + json.dumps(payload), flush=True)
+    except (OSError, ValueError):
+        pass
 
 
 class CompiledFibIntegration(unittest.TestCase):
@@ -58,6 +71,10 @@ class CompiledFibIntegration(unittest.TestCase):
         self.addCleanup(self.work.cleanup)
         self.activity = Path(self.work.name) / 'activity.jsonl'
         self.env['STRATALINT_INSPECTOR_ACTIVITY'] = str(self.activity)
+        self.env['STRATALINT_INSPECTOR_PROFILE'] = '1'
+        for name, variable in [('phases', 'STRATALINT_INSPECTOR_PHASES'),
+                ('stdout', 'STRATALINT_INSPECTOR_CHILD_STDOUT'), ('stderr', 'STRATALINT_INSPECTOR_CHILD_STDERR')]:
+            self.env[variable] = str((DIAGNOSTICS or Path(self.work.name)) / name)
         self.first = self.build()
 
     def cleanup(self):
@@ -72,8 +89,28 @@ class CompiledFibIntegration(unittest.TestCase):
         started = time.monotonic()
         self.activity.unlink(missing_ok=True)
         env = dict(self.env, LAKE_ARTIFACT_CACHE="false") if full else self.env
-        result = subprocess.run(args, cwd=ROOT, env=env, text=True,
-                                capture_output=True, check=False)
+        paths = {name: Path(env[variable]) for name, variable in
+            [('phases', 'STRATALINT_INSPECTOR_PHASES'), ('stdout', 'STRATALINT_INSPECTOR_CHILD_STDOUT'),
+             ('stderr', 'STRATALINT_INSPECTOR_CHILD_STDERR')] if env.get(variable)}
+        paths.update({name + '-cache': Path(str(path) + '.cache')
+                      for name, path in list(paths.items()) if name in ('stdout', 'stderr')})
+        for path in paths.values():
+            try:
+                path.write_bytes(b'')
+            except OSError as error:
+                observe_fib('FIB_COMPILED_DIAGNOSTIC_UNAVAILABLE', dict(path=str(path), error=str(error)))
+        self.command_sequence = getattr(self, 'command_sequence', 0) + 1
+        sequence = self.command_sequence
+        observe_fib('FIB_COMPILED_STAGE', dict(stage='command', boundary='start', sequence=sequence,
+            command=args, full=full))
+        result = None
+        try:
+            result = subprocess.run(args, cwd=ROOT, env=env, text=True,
+                                    capture_output=True, check=False)
+        finally:
+            observe_fib('FIB_COMPILED_STAGE', dict(stage='command', boundary='finish', sequence=sequence,
+                raw_exit=result.returncode if result is not None else None,
+                elapsed_seconds=time.monotonic()-started))
         self.assertEqual(result.returncode, expected, result.stdout + result.stderr)
         self.work_counts = {}
         for event in (self.activity.read_text().splitlines() if self.activity.exists() else []):
@@ -91,6 +128,8 @@ class CompiledFibIntegration(unittest.TestCase):
             Path(str(artifact) + ".trace").unlink(missing_ok=True)
         result = self.command(['bash', 'tools/scripts/worktree/lean-cache-run.sh',
             'lake', '-d', 'tools/lean-inspector-reg', 'build', MODULE + ':report'], full=full)
+        observe_fib('FIB_COMPILED_STAGE', dict(stage='artifact-consumer', boundary='start',
+            sequence=self.command_sequence, artifact=str(artifact)))
         self.artifact = artifact
         self.assertFalse(Path(str(artifact) + '.fib-previous').exists())
         with zipfile.ZipFile(artifact) as bundle:
@@ -106,6 +145,8 @@ class CompiledFibIntegration(unittest.TestCase):
             self.assertGreater(self.work_counts.get('fib-generated', 0), 0)
             self.assertEqual(self.work_counts.get('fib-reused', 0), 0)
         self.output = result.stdout
+        observe_fib('FIB_COMPILED_STAGE', dict(stage='artifact-consumer', boundary='finish',
+            sequence=self.command_sequence, applications=len(records)))
         return records
 
     def test_positive_source_native_macro_and_boundaries(self):
@@ -245,5 +286,58 @@ class CompiledFibIntegration(unittest.TestCase):
         self.assertEqual(target, self.build(full=True))
 
 
+class CompiledFibObservationTests(unittest.TestCase):
+    def test_live_native_output_precedes_exit_and_preserves_raw_failure(self):
+        import native
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {name: root / name for name in ('phases', 'stdout', 'stderr')}
+            env = dict(os.environ, STRATALINT_INSPECTOR_PHASES=str(paths['phases']),
+                STRATALINT_INSPECTOR_CHILD_STDOUT=str(paths['stdout']),
+                STRATALINT_INSPECTOR_CHILD_STDERR=str(paths['stderr']))
+            child = root / 'child'
+            child.write_text(f'#!{sys.executable}\n' + '''import os, sys
+from pathlib import Path
+print('native stdout before exit', flush=True)
+print('native stderr before exit', file=sys.stderr, flush=True)
+assert Path(os.environ['STRATALINT_INSPECTOR_CHILD_STDOUT']).read_text() == 'native stdout before exit\\n'
+assert Path(os.environ['STRATALINT_INSPECTOR_CHILD_STDERR']).read_text() == 'native stderr before exit\\n'
+raise SystemExit(37)
+''')
+            child.chmod(0o755)
+            out, err = io.StringIO(), io.StringIO()
+            with patch.dict(os.environ, env), patch('sys.stdout', out), patch('sys.stderr', err):
+                with self.assertRaisesRegex(ValueError, 'raw.reader_failed:exit=37') as raised:
+                    native.run_inspector(root, child, [])
+            self.assertEqual(raised.exception.__cause__.returncode, 37)
+            self.assertEqual(out.getvalue(), 'native stdout before exit\n')
+            self.assertEqual(err.getvalue(), 'native stderr before exit\n')
+            self.assertEqual(paths['stdout'].read_text(), out.getvalue())
+            self.assertEqual(paths['stderr'].read_text(), err.getvalue())
+
+    def test_diagnostic_sink_failure_preserves_command_result_and_exception(self):
+        fixture = CompiledFibIntegration()
+        with tempfile.TemporaryDirectory() as directory:
+            fixture.work = type('Work', (), {'name': directory})()
+            fixture.activity = Path(directory) / 'activity'
+            fixture.env = dict(os.environ)
+            blocked = Path(directory) / 'blocked'
+            blocked.write_text('regular file')
+            # Diagnostic output is optional; captured assertion input is not.
+            with patch.object(sys.modules[__name__], 'DIAGNOSTICS', blocked):
+                result = fixture.command([sys.executable, '-c',
+                    "import sys; print('out'); print('err', file=sys.stderr); sys.exit(19)"], expected=19)
+                self.assertEqual((result.returncode, result.stdout, result.stderr), (19, 'out\n', 'err\n'))
+                failure = subprocess.TimeoutExpired(['original'], 300, output='raw', stderr='error')
+                with patch.object(subprocess, 'run', side_effect=failure):
+                    with self.assertRaises(subprocess.TimeoutExpired) as raised:
+                        fixture.command(['original'])
+                self.assertIs(raised.exception, failure)
+
 if __name__ == '__main__':
+    if len(sys.argv) > 2 and sys.argv[1] == '--diagnostics':
+        DIAGNOSTICS = Path(sys.argv[2])
+        if not DIAGNOSTICS.is_absolute() or not DIAGNOSTICS.is_dir():
+            raise SystemExit('FIB diagnostics require an existing absolute directory')
+        del sys.argv[1:3]
     unittest.main()

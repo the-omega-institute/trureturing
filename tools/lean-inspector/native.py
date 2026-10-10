@@ -230,10 +230,48 @@ def input_projection(root, name):
     return projection
 
 
+@contextmanager
+def inspector_child_output():
+    """Retain this native child's bytes while Lake buffers its process output."""
+    streams, options = [], {}
+    for channel, variable in [('stdout', 'STRATALINT_INSPECTOR_CHILD_STDOUT'),
+                              ('stderr', 'STRATALINT_INSPECTOR_CHILD_STDERR')]:
+        path = os.environ.get(variable)
+        if path:
+            try:
+                target = Path(path).open('a+b')
+                start = target.tell()
+                streams.append((channel, target, start))
+                options[channel] = target
+            except OSError as error:
+                diagnostic_failure('native child ' + channel, error)
+    try:
+        yield options
+    finally:
+        for channel, target, start in streams:
+            try:
+                target.seek(start)
+                output = getattr(sys, channel)
+                while data := target.read(65536):
+                    if hasattr(output, 'buffer'):
+                        output.buffer.write(data)
+                    else:
+                        output.write(data.decode('utf-8', 'replace'))
+                output.flush()
+            except (OSError, ValueError) as error:
+                diagnostic_failure('native child forwarding ' + channel, error)
+            finally:
+                try:
+                    target.close()
+                except OSError as error:
+                    diagnostic_failure('native child close ' + channel, error)
+
+
 def run_inspector(root, executable, arguments, request_file=None):
     try:
         command = ['--request-file', str(request_file)] if request_file else arguments
-        subprocess.run([str(executable), *command], cwd=root, check=True)
+        with inspector_child_output() as output:
+            subprocess.run([str(executable), *command], cwd=root, check=True, **output)
     except subprocess.CalledProcessError as error:
         raise ValueError(f'raw.reader_failed:exit={error.returncode}') from error
 
@@ -277,18 +315,22 @@ def module(root, name, source, utility_path, executable, output, analyzer="", pr
         capture = retain_request(root, executable, arguments, record['utilities'])
         with phase('native-inspect', request_capture=capture):
             run_inspector(root, executable, arguments)
-        compiled = public.read_json((directory / 'spool.json').read_bytes())
-        for row in compiled['modules']:
-            produce_fib(row, output, analyzer, previous)
-        (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
-        materials.compact(directory / 'spool.json', spool, report)
-        public.write_origin(report, name, public.production_origin(root, executable), input_projection(root, name))
+        with phase('native-fib', module=name):
+            compiled = public.read_json((directory / 'spool.json').read_bytes())
+            for row in compiled['modules']:
+                produce_fib(row, output, analyzer, previous)
+        with phase('native-materials', module=name):
+            (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
+            materials.compact(directory / 'spool.json', spool, report)
+            public.write_origin(report, name, public.production_origin(root, executable), input_projection(root, name))
         # Like an olean, an artifact is validated once, when it is produced;
         # Lake's trace alone decides later reuse.
-        rows, _ = validate_module(report, root, name, utility_path)
-        artifact = directory / 'module.zip'
-        public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
-        os.replace(artifact, output)
+        with phase('native-validation', module=name):
+            rows, _ = validate_module(report, root, name, utility_path)
+        with phase('native-package', module=name):
+            artifact = directory / 'module.zip'
+            public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
+            os.replace(artifact, output)
         if any(x['type'] != 'LeanInformationAudit.AuricFib.Contract.Application'
                for x in input_projection(root, name)['inputs']):
             print('LEAN_INSPECTOR_ASSESS module=' + name)
