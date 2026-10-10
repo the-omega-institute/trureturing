@@ -72,4 +72,21 @@ The project has the character in the orientation $\chi_p(a)$, while the theorem 
 
 The theorem is an $L^2$ operator bound with a coefficient vector in the inner variable. The native packet additionally contains the original Möbius coefficients, moving masks, common smooth profiles, and a complete signed pair of parent columns. It is necessary to prove that these weights can be fixed or decomposed without a new polynomial loss, and that polarization or an equivalent argument preserves the complete signed restoration.
 
+There is also a direction-of-use constraint. The existing sextic packet invokes a fixed-$d$ estimate of the shape
+
+$$
+\sum_{Nn\le M}\gamma(n)\overline{\chi_n(d)}
+\ll M^{2/3+\varepsilon}N(d)^{1/6+\varepsilon}
+       +M^{6/7+\varepsilon}N(d)^{1/14+\varepsilon}.
+$$
+
+Theorem 1.1 does not imply this pointwise estimate by substitution. At most, after a valid reciprocity and duality step, it gives a bound of the form
+
+$$
+\left|\sum_{Nn\le M}\gamma(n)\chi_n(d)\right|^2
+\le \Theta_6(M,N(d))\sum_{Nn\le M}|\gamma(n)|^2,
+$$
+
+with the complete inner range and its sixth-power-free support included. A proof using de Faveri must therefore keep the whole compatible $d$-family (or pay and record the reduction to it); it cannot silently replace the fixed-$d$ input in the existing row estimate.
+
 Finally, the frozen carrier sums must be performed on the same actual realization. Independent optimization of the five carrier boxes would not establish a bound for the jointly constrained source. Until these reciprocity, sixth-power-free, profile, restoration, and joint-count steps are supplied, the $19/36$ figure is only a conditional interface calculation. It does not prove the native Robin estimate, Robin's inequality, or the Riemann hypothesis.
