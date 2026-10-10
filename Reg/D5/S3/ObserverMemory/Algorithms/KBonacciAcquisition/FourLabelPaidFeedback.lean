@@ -139,5 +139,65 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
 
 #print axioms evidence
 #print axioms registration
+namespace Coprimality
+
+@[reducible] def signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ _ m => m) (fun e => nomatch e)
+def oracle : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ (m : ℕ) (hm : 5 ≤ m), Nat.gcd (R.readout () () m) (2 * m - 2 + 1) = 1
+private theorem positive : arena.Law actual := coprime
+private theorem negative : ¬ arena.Law oracle := by
+  intro law
+  have bad := law 5 (by omega)
+  norm_num [oracle, realize] at bad
+
+def evidence : Registration arena (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.FourLabelPaidFeedback.coprime)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, oracle, negative⟩
+  sensitivity := ⟨fun i => ⟨oracle, fun j h => (h (Subsingleton.elim j i)).elim, rfl, negative⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    cases i
+    exact ⟨(), 0, 1, by decide⟩
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.FourLabelPaidFeedback.coprime)
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.FourLabelPaidFeedback.Coprimality.coprime,
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.FourLabelPaidFeedback.Coprimality.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨evidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.FourLabelPaidFeedback, definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn", "arg"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms evidence
+#print axioms registration
+end Coprimality
+
 end
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.FourLabelPaidFeedback

@@ -196,6 +196,18 @@ For each original history the theorem supplies an actual stopped PaidTrace retur
 
 This is a repository-derived synthesis of original KBonacci execution, first-window capacity and literal charge parity, for this four-label table and the family k=2m-2. It makes no external priority claim and supplies no exact fee for arbitrary multi-label or tail-sensitive targets, other widths or the uniform all-k/all-m acquisition problem.
 
+**Theorem 1.16 (Every near-critical phase is actual).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.coprime`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.coprime` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m>=5, gcd(m,2m-2+1)=1. A common divisor divides 2m and 2m-1 and therefore one. Combined with the existing joint-history realization, this arithmetic admits all near-critical INITIAL phases, without revealing INITIAL history length to a controller.
+
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.FiberPresetPrice`
@@ -205,6 +217,7 @@ This is a repository-derived synthesis of original KBonacci execution, first-win
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.adaptiveSelector`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.commonStop`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.commonStream`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.coprime`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.lastWord`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.leftWord`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.original_four_label_paid_feedback`
