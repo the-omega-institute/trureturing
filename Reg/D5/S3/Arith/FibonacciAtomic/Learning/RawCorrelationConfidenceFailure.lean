@@ -11,7 +11,7 @@ open scoped Topology
 noncomputable section
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure
 
-@[reducible] def rawSignature : Signature where
+@[reducible] def rawSignature : Signature.{0, 0, 0, 0, 0} where
   Params := ℝ × ℝ
   State _ := ℝ
   Role := Unit
@@ -31,7 +31,7 @@ def rejected : Realization rawSignature :=
     (fun _ p rho => Law.misorder rho p.1 (Scale.sampleLength rho p.1 p.2) + 1)
     (fun e => nomatch e)
 
-def arena : Arena where
+def arena : Arena.{0, 0, 0, 0, 0} where
   signature := rawSignature
   Law R := ∀ a K : ℝ, 0 < a → a ≤ 1 → 0 < K →
     Tendsto (fun rho => R.readout () (a, K) rho) (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2 : ℝ))
@@ -82,11 +82,9 @@ def registration : Registration arena (arena.Law actual) where
       exact nomatch i
   dependence := dependence_proof
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.RawLimit.raw_confidence_failure)
-    (type_of% (realize rawSignature
-      (fun _ p rho => Law.misorder rho p.1 (Scale.sampleLength rho p.1 p.2))
-      (fun e => nomatch e))) Unit Unit := {
+    (Realization rawSignature) Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.rawLimitUnit,
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.registration,
   realizationSource := none,
@@ -114,5 +112,107 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration
   continuation := .unknown,
   familyRecord := none,
   options := #[] }
+
+namespace MainResult
+open _root_.D5.S3.Arith.FibonacciAtomic
+open Law
+open scoped BigOperators
+
+set_option quotPrecheck false in
+local notation "trueClass" =>
+  (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
+    ![w.1, w.2.2.1, w.2.2.2.1])
+set_option quotPrecheck false in
+local notation "rivalClass" =>
+  (fun w : Record => GarbledPosteriorRootGap.teacher (m := 0)
+    ![w.2.1, w.2.2.1, w.2.2.2.1])
+
+def arena : Arena.{0, 0, 0, 0, 0} where
+  signature := rawSignature
+  Law R := ∀ (a K : ℝ), 0 < a → a ≤ 1 → 0 < K →
+    (∀ rho : ℝ, 0 < rho → rho ≤ 1 / 8 →
+      HeterogeneousTeacherSeparation.Admissible rho (positionLaw rho) ∧
+      (∀ w : Record, difference w =
+        (HeterogeneousTeacherSeparation.highIndicator w.1 -
+          HeterogeneousTeacherSeparation.highIndicator w.2.1) *
+        HeterogeneousTeacherSeparation.lowIndicator w.2.2.1 *
+        (1 - 2 * HeterogeneousTeacherSeparation.highIndicator w.2.2.1 *
+          HeterogeneousTeacherSeparation.lowIndicator w.2.2.2.1)) ∧
+      (expectation rho a (fun w => difference w ^ 2) = 2 * rho * (1 - 5 * rho + 12 * rho ^ 2) ∧
+        expectation rho a (fun w => (((trueClass w).val : ℝ) - 1) ^ 2 -
+          (((rivalClass w).val : ℝ) - 1) ^ 2) = -2 * rho + 10 * rho ^ 2 ∧
+        expectation rho a (fun w => (score w : ℝ)) = 3 * a * rho ^ 3 ∧
+        variance rho a = (8 + a) / 12 * (2 * rho * (1 - 5 * rho + 12 * rho ^ 2)) -
+          9 * a ^ 2 * rho ^ 6 ∧
+        0 < expectation rho a (fun w => (score w : ℝ)))) ∧
+    Tendsto (fun rho => R.readout () (a, K) rho)
+      (𝓝[>] (0 : ℝ)) (𝓝 (1 / 2 : ℝ)) ∧
+    (∀ select : (rho : ℝ) → (Fin (Scale.sampleLength rho a K) → Record) → Fin 4,
+      (∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c,
+        Selection.candidateScore c w ≤ Selection.candidateScore (select rho w) w) →
+      (1 / 2 : ℝ) ≤ liminf
+        (fun rho => Selection.failureMass rho a (Scale.sampleLength rho a K) (select rho))
+        (𝓝[>] (0 : ℝ))) ∧
+    (∀ q : (rho : ℝ) → (Fin (Scale.sampleLength rho a K) → Record) → Fin 4 → ℝ,
+      (∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c, 0 ≤ q rho w c) →
+      (∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w, ∑ c, q rho w c = 1) →
+      (∀ rho, 0 < rho → rho ≤ 1 / 8 → ∀ w c, 0 < q rho w c →
+        ∀ d, Selection.candidateScore d w ≤ Selection.candidateScore c w) →
+      (1 / 2 : ℝ) ≤ liminf
+        (fun rho => RandomSelection.failureMass rho a (Scale.sampleLength rho a K) (q rho))
+        (𝓝[>] (0 : ℝ)))
+
+theorem actual_law : arena.Law actual := by
+  intro a K ha ha1 hK
+  exact _root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.result a K ha ha1 hK
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact _root_.Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.rejected_law
+    (fun a K ha ha1 hK => (h a K ha ha1 hK).2.1)
+
+def proof_record : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    haveI : Subsingleton arena.signature.Role := inferInstanceAs (Subsingleton Unit)
+    exact ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
+      rfl, rejected_law⟩, fun i => nomatch i⟩
+  dependence := dependence_proof
+
+noncomputable def registration_result : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.result)
+    (Realization rawSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.resultUnit,
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.MainResult.proof_record,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨proof_record⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize rawSignature
+    (fun _ p rho => Law.misorder rho p.1 (Scale.sampleLength rho p.1 p.2))
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure,
+    definition := none, coordinates := #[0, 1],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "fn", "arg", "body"],
+      stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+
+end MainResult
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure

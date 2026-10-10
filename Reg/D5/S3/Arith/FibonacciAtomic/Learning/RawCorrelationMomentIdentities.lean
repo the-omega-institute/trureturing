@@ -10,7 +10,7 @@ open scoped Topology
 noncomputable section
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities
 
-@[reducible] def countSignature : Signature where
+@[reducible] def countSignature : Signature.{0, 0, 0, 0, 0} where
   Params := ℝ × ℝ × ℕ
   State _ := ℝ
   Role := Unit
@@ -30,7 +30,7 @@ def rejected : Realization countSignature :=
     (fun _ p rho => FiniteTail.tail (Law.cleanRecordMass rho p.1) Law.nonzero (Scale.sampleLength rho p.1 p.2.1) p.2.2 + 1)
     (fun e => nomatch e)
 
-def arena : Arena where
+def arena : Arena.{0, 0, 0, 0, 0} where
   signature := countSignature
   Law R := ∀ a K : ℝ, 0 < a → a ≤ 1 → 0 < K → ∀ N : ℕ,
     Tendsto (fun rho => R.readout () (a, K, N) rho) (𝓝[>] (0 : ℝ)) (𝓝 (0 : ℝ))
@@ -83,11 +83,9 @@ def registration : Registration arena (arena.Law actual) where
       exact nomatch i
   dependence := dependence_proof
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.Law.nonzero_count_diverges)
-    (type_of% (realize countSignature
-      (fun _ p rho => FiniteTail.tail (Law.cleanRecordMass rho p.1) Law.nonzero (Scale.sampleLength rho p.1 p.2.1) p.2.2)
-      (fun e => nomatch e))) Unit Unit := {
+    (Realization countSignature) Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.countLimitUnit,
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationMomentIdentities.registration,
   realizationSource := none,
