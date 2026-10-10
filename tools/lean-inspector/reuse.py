@@ -364,8 +364,7 @@ def _ancestry(repository, ancestor, descendant):
     return False
 
 
-def _seed_mismatch(repository, report):
-    captured = capture(repository)
+def _seed_mismatch(report, captured):
     try:
         read_receipt(report, captured)
     except InputMismatch as error:
@@ -384,7 +383,11 @@ def _refresh_stale_seed(repository, report):
     if report.resolve() != canonical_seed(repository).resolve():
         _seed_decision('keep', 'non-canonical-seed')
         return report
-    mismatch = _seed_mismatch(repository, report)
+    captured = capture(repository)
+    if not captured['eligible']:
+        _seed_decision('keep', captured['reason'])
+        return report
+    mismatch = _seed_mismatch(report, captured)
     if mismatch is None:
         _seed_decision('keep', 'seed-current')
         return report

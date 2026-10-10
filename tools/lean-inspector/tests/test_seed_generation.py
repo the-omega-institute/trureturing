@@ -296,3 +296,87 @@ else:
                       '[FAIL] missing_local_base_has_unprovable_reason')
         self.assertEqual(before, self.seed_bytes())
         self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+
+    def assert_ineligible_entry_keeps_seed(self, reason):
+        before = self.seed_bytes()
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertIn('"action":"keep"', result.stdout, '[FAIL] ineligible_capture_prints_keep')
+        self.assertIn('"reason":"' + reason + '"', result.stdout)
+        self.assertEqual(23, result.returncode, '[FAIL] ineligible_capture_reaches_lake: ' + result.stderr)
+        self.assertEqual('ensure', self.calls[0])
+        self.assertTrue(self.calls[1].startswith('lake '), '[FAIL] ineligible_capture_uses_lake_path')
+        self.assertFalse((self.root / 'releases/calls.jsonl').exists(), '[FAIL] ineligible_capture_never_lists')
+        # Capture clears the receipt before a new production, leaving the seed bytes intact.
+        for path, data in before.items():
+            if not path.endswith(self.api.SUFFIX):
+                self.assertEqual(data, self.seed_bytes()[path])
+        print('CASE ' + self._testMethodName + '\n' + result.stdout, flush=True)
+
+    def test_external_lean_options_keep_seed_and_reach_lake(self):
+        self.canonical_release_fixture()
+        self.environment['LEAN_OPTS'] = '-DmaxRecDepth=2048'
+        self.assert_ineligible_entry_keeps_seed('external-semantic-environment')
+
+    def test_external_lean_path_keeps_seed_and_reaches_lake(self):
+        self.canonical_release_fixture()
+        self.environment['LEAN_PATH'] = str(self.root / 'external')
+        self.assert_ineligible_entry_keeps_seed('external-semantic-environment')
+
+    def test_absent_execution_registration_keeps_seed_and_reaches_lake(self):
+        self.canonical_release_fixture()
+        del self.fixture.policy['report_execution']
+        self.fixture.write_policy()
+        subprocess.run(['git', '-C', str(self.root), 'add', 'lean-report-inputs.json'], check=True)
+        self.git_commit('absent execution fixture', empty=True)
+        self.assert_ineligible_entry_keeps_seed('execution-not-registered')
+
+    def test_malformed_execution_registration_stays_fatal_at_entry(self):
+        self.canonical_release_fixture()
+        self.fixture.policy['report_execution']['tools'] = ['lake', 'shell']
+        self.fixture.write_policy()
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertNotEqual(0, result.returncode, '[FAIL] malformed_registration_is_fatal')
+        self.assertIn('report_execution', result.stderr)
+        self.assertNotIn('LEAN_REPORT_SEED_DECISION', result.stdout)
+        self.assertEqual([], self.calls, '[FAIL] malformed_registration_never_reaches_lake')
+
+    def test_manifest_read_failure_keeps_seed_and_continues_at_entry(self):
+        self.canonical_release_fixture()
+        gh = self.root / 'bin/gh'
+        original = gh.read_text()
+        gh.write_text(original.replace('exec ',
+            'if [ "$1" = api ]; then echo fixture-manifest-read-failed >&2; exit 71; fi\nexec ', 1))
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        refreshed = self.refresh_canonical()
+        self.assertIn('fixture-manifest-read-failed', refreshed.stdout, '[FAIL] manifest_failure_has_receipt')
+        self.assertEqual(before, self.seed_bytes(), '[FAIL] manifest_failure_preserves_seed')
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(23, result.returncode, '[FAIL] manifest_failure_reaches_lake')
+        self.assertEqual('ensure', self.calls[0])
+        self.assertTrue(self.calls[1].startswith('lake '))
+        self.assertIn('"reason":"release-manifest-unavailable"', result.stdout)
+
+    def test_shallow_unprovable_release_ancestry_keeps_seed(self):
+        local, _, _ = self.canonical_release_fixture()
+        head = subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'], text=True).strip()
+        (self.root / '.git/shallow').write_text(head + '\n')
+        self.assertEqual('true', subprocess.check_output(
+            ['git', '-C', str(self.root), 'rev-parse', '--is-shallow-repository'], text=True).strip())
+        before, base = self.seed_bytes(), (self.root / self.api.BASE_RECORD).read_bytes()
+        result = self.refresh_canonical()
+        self.assertIn('"reason":"release-head-ancestry-unprovable"', result.stdout,
+                      '[FAIL] shallow_negative_keeps_seed')
+        self.assertEqual(before, self.seed_bytes())
+        self.assertEqual(base, (self.root / self.api.BASE_RECORD).read_bytes())
+        self.assertEqual(local, self.api.read_seed_base(self.root))
+
+    def test_shallow_provable_release_ancestry_installs_newer_seed(self):
+        local, producer, _ = self.canonical_release_fixture()
+        (self.root / '.git/shallow').write_text(local + '\n')
+        self.assertEqual('true', subprocess.check_output(
+            ['git', '-C', str(self.root), 'rev-parse', '--is-shallow-repository'], text=True).strip())
+        result = self.refresh_canonical()
+        self.assertIn('"action":"fetch"', result.stdout, '[FAIL] shallow_positive_installs_seed')
+        self.assertEqual(producer, self.api.read_seed_base(self.root))
+        self.assertEqual(producer, (self.root / '.lake/build/producer.txt').read_text())

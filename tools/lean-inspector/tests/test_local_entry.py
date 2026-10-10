@@ -58,7 +58,7 @@ class LocalEntryTests(SeedGenerationTests, unittest.TestCase):
                     'printf "lake %s\\n" "$*" >> calls\nexit 23\n')
         producer = self.root / 'producer.dll'
         producer.touch()
-        self.environment = dict(os.environ, LAKE_BIN=str(self.fixture.lake),
+        self.environment = dict(os.environ, GITHUB_ACTIONS='false', LAKE_BIN=str(self.fixture.lake),
             PATH=str(Path(sys.executable).parent) + os.pathsep + os.environ['PATH'],
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.seed), STRATALINT_LEAN_BUILD_TARGETS='[]',

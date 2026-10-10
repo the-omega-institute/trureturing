@@ -227,6 +227,33 @@ class ReuseTests(unittest.TestCase):
         self.assertEqual(base, api.read_seed_base(self.root),
                          '[FAIL] canonical_reuse_preserves_original_producer')
 
+    def test_canonical_reuse_is_independent_of_base_record_failures(self):
+        api = self.dev_repository()
+        path = self.root / api.BASE_RECORD
+        read_bytes = Path.read_bytes
+        for failure in ('missing', 'malformed', 'unreadable', 'write-failed'):
+            with self.subTest(failure=failure):
+                self.assertTrue(api.record_seed_base(self.root))
+                self.assertIsNotNone(api.read_seed_base(self.root))
+                if failure == 'missing':
+                    path.unlink()
+                elif failure == 'malformed':
+                    path.write_text('{invalid')
+                def read(source, *args, **kwargs):
+                    if source == path and failure == 'unreadable':
+                        raise OSError('injected base read failure')
+                    return read_bytes(source, *args, **kwargs)
+                with patch.object(Path, 'read_bytes', read), patch.object(api, 'record_seed_base',
+                        wraps=api.record_seed_base) as record:
+                    if failure == 'write-failed':
+                        record.return_value = False
+                    result = api.reuse(self.root, self.report, self.report)
+                self.assertFalse(result['needs_lake'], '[FAIL] base_failure_does_not_block_canonical_reuse')
+                self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
+                self.assertTrue(api.seed_format(self.report)['compatible'])
+                api.read_receipt(self.report, api.capture(self.root))
+                self.assertFalse(path.exists(), '[FAIL] canonical_reuse_invalidates_untrusted_base')
+
     def test_custom_source_reuse_does_not_inherit_canonical_producer(self):
         api = self.dev_repository()
         canonical, base = self.report, api.read_seed_base(self.root)
