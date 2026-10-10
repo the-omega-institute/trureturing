@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -161,6 +162,61 @@ public sealed partial class LedgerWriterProductionPathTests
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Contains($"COVER atom_id={atomId} gid={gid} ledger_changed=true",
             Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ExistingCoverageIdentityDriftHasSameScopedAndFullVerdict(bool changeIdentity)
+    {
+        var spec = MaterializeSpec() with
+        {
+            InitialCoverage = [ZetaGid], Migration = "absorbed", Truth = "closed",
+            BaselineTargetIdentical = true,
+        };
+        var world = spec.Materialize();
+        const string zeta = "D5/S0/Carrier/Zeta.lean";
+        var reports = world.Report.Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value);
+        if (changeIdentity)
+        {
+            world.Files[zeta] += "\ntheorem zeta : True ∧ True := ⟨True.intro, True.intro⟩\n";
+            reports[zeta] = reports[zeta] with
+            {
+                Declarations = reports[zeta].Declarations.Select(declaration => declaration with
+                {
+                    Axioms = [], TypeRepresentation = "True ∧ True", PrecomputedStatementId = null,
+                }).ToImmutableArray(),
+            };
+        }
+        world = world with { Report = LeanAxiomReport.Create(reports) };
+        using var scopedRoot = new TemporaryDirectory();
+        using var fullRoot = new TemporaryDirectory();
+        var scoped = Environment(scopedRoot, world, world.Document, world.Document);
+        DirectoryLedgerTestSupport.Write(fullRoot.Path, world.Files);
+        var full = new ProductionCliEnvironment(fullRoot.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create([]), CoverWorld.Raw(world.Files), CoverWorld.Raw(world.Baseline)),
+            new FullCurrentReport(world.Report), new FakeScribeEmissionVerifier(world.VerifiedEmissions),
+            CoverWorld.TimeProvider);
+        var before = ReadAtomBytes(scopedRoot, spec.AtomId);
+
+        var narrow = scoped.CoverAtom(["--cover-atom", spec.AtomId, "--gid", AlphaGid]);
+        var broad = full.CoverAtom(["--cover-atom", spec.AtomId, "--gid", AlphaGid]);
+
+        Assert.Equal(!changeIdentity, broad.Success);
+        Assert.True(narrow.Success == broad.Success,
+            $"scoped success={narrow.Success} error={narrow.Error}; full success={broad.Success} error={broad.Error}");
+        Assert.Equal(ReadAtomBytes(fullRoot, spec.AtomId), ReadAtomBytes(scopedRoot, spec.AtomId));
+        if (changeIdentity)
+        {
+            Assert.Contains("coverage-target-mismatch", narrow.Error, StringComparison.Ordinal);
+            Assert.Equal(before, ReadAtomBytes(scopedRoot, spec.AtomId));
+        }
+    }
+
+    private sealed class FullCurrentReport(LeanAxiomReport report) : ILeanReportSource
+    {
+        public LeanAxiomReport Load(RepositorySnapshot snapshot) => report;
+        public LeanAxiomReport Load(LeanReportScope scope) => report;
     }
 
     private static CoverSpec MaterializeSpec() => new()
