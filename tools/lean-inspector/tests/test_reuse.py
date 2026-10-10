@@ -325,6 +325,17 @@ class ReuseTests(unittest.TestCase):
         api.invalidate_receipt(self.root, self.report, snapshot)
         self.assertEqual(competing, receipt.read_bytes(), '[FAIL] no_observed_receipt_means_no_cleanup')
 
+    def test_cleanup_snapshot_write_failure_preserves_accepted_receipt(self):
+        api = self.dev_repository()
+        snapshot = self.root / '.lake/cleanup-directory'
+        snapshot.mkdir()
+        with self.assertRaises(OSError, msg='[FAIL] snapshot_writer_error_stays_outside_seed_rejection'):
+            api.reuse(self.root, self.report, self.report, receipt_snapshot=snapshot)
+        self.assertFalse(api.probe(self.root, self.report)['needs_lake'],
+                         '[FAIL] snapshot_writer_error_preserves_accepted_receipt')
+        self.assertTrue(api.seed_format(self.report)['compatible'])
+        self.assertIsNotNone(api.read_seed_base(self.root))
+
     def test_custom_source_reuse_does_not_inherit_canonical_producer(self):
         api = self.dev_repository()
         canonical, base = self.report, api.read_seed_base(self.root)

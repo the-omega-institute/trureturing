@@ -333,11 +333,11 @@ def _reuse(repository, report, output, receipt_snapshot=None):
         write_receipt(output, captured)
         if canonical and base is not None and not record_seed_base(repository, base):
             invalidate_seed_base(repository)
-        if receipt_snapshot is not None:
-            receipt_snapshot.write_text(publication.digest(publication.member(output, SUFFIX)) + '\n')
     except INVALID_SEED as error:
         publication.member(output, SUFFIX).unlink(missing_ok=True)
         return miss('seed-rejected', error)
+    if receipt_snapshot is not None:
+        receipt_snapshot.write_text(publication.digest(publication.member(output, SUFFIX)) + '\n')
     result = dict(needs_lake=False, reason='complete-entry-reused')
     if maintenance is not None:
         result['base_maintenance'] = maintenance
