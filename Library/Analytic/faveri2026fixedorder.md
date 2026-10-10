@@ -36,6 +36,13 @@ $$
 a=A_1R_2^2R_3^3R_4^4R_5^5.
 $$
 
+The existing [sextic packet analysis](openai2026quasirh.md) already records the primary-generator choice, the unit and modulus-36 finite Fourier factors, the root-number transport, and the source decomposition
+$$
+u=\epsilon_u n b_2^2b_3^3b_4^4b_5^5.
+$$
+\]
+Those results are the reusable local input for this interface. They do not yet identify the project's transported character, with all its zero extensions and masks, with the particular ray-data family $\chi_a$ fixed in de Faveri's definition, so the reciprocity step remains an interface obligation rather than a second derivation of the local formulas.
+
 If the five radicals are actual pairwise-coprime squarefree ideals, then every prime valuation of $a$ is in ${0,1,2,3,4,5}$, so $a$ is sixth-power-free. Freezing $R_2,R_3,R_4,R_5$ and applying the theorem in the $A_1$ direction gives the four formal output scales
 
 $$
