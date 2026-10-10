@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import unittest
 from unittest.mock import patch
@@ -41,8 +42,146 @@ def observe_fib(label, payload):
                 target.write(json.dumps(dict(observation=label, **payload)) + '\n')
         else:
             print(label + ' ' + json.dumps(payload), flush=True)
+        return True
     except (OSError, ValueError):
-        pass
+        return False
+
+
+def report_programs_unfinished(path):
+    with path.open('rb') as source:
+        source.seek(max(0, source.seek(0, 2) - 32768))
+        lines = source.read().splitlines()
+    for line in reversed(lines):
+        try:
+            event = json.loads(line)
+        except (ValueError, UnicodeError):
+            continue
+        if event.get('phase') == 'lake-report-programs':
+            return event.get('boundary') == 'start'
+    return False
+
+
+def linux_process_identity(pid):
+    # starttime disambiguates PID reuse; comm may itself contain parentheses.
+    fields = Path(f'/proc/{pid}/stat').read_text().rsplit(')', 1)[1].split()
+    return int(fields[1]), fields[19]
+
+
+def linux_report_processes(pid, lake_args):
+    identities, lakes = {}, []
+    pending = [(pid, None)]
+    while pending:
+        current, parent = pending.pop()
+        identity = linux_process_identity(current)
+        if parent is not None and identity[0] != parent:
+            raise ValueError('process ancestry changed')
+        identities[current] = identity
+        if current != pid:
+            command = Path(f'/proc/{current}/cmdline').read_bytes().rstrip(b'\0').split(b'\0')
+            if (Path(os.fsdecode(command[0])).name == 'lake'
+                    and command[1:] == [os.fsencode(arg) for arg in lake_args]):
+                lakes.append(current)
+        # A .NET worker thread may have spawned Lake, so include every task's children.
+        for task in Path(f'/proc/{current}/task').iterdir():
+            children = (task / 'children').read_text().split()
+            pending.extend((int(child), current) for child in children if int(child) not in identities)
+    if len(lakes) != 1:
+        raise ValueError('unique invocation Lake PID unavailable')
+    return identities, lakes[0]
+
+
+def observe_report_process(process, phases, lake_args, sequence, stopped):
+    payload = dict(sequence=sequence, invocation_pid=process.pid, lake_pid=None,
+        status='inconclusive', reason='report boundary absent or command finished',
+        limitation='One instantaneous process view; not a critical path, deadlock or speedup proof. '
+                   'Phase and process reads are not atomic; exited or reparented children may be missed.')
+    try:
+        if sys.platform != 'linux':
+            payload.update(status='unavailable', reason='Linux process snapshot only')
+            return
+        if phases is None:
+            payload.update(status='unavailable', reason='fresh invocation phase channel unavailable')
+            return
+        while not stopped.is_set():
+            try:
+                unfinished = report_programs_unfinished(phases)
+            except FileNotFoundError:
+                unfinished = False
+            if unfinished:
+                break
+            stopped.wait(0.05)
+        else:
+            return
+        identities, lake_pid = linux_report_processes(process.pid, lake_args)
+        payload['lake_pid'] = lake_pid
+        if stopped.is_set() or process.poll() is not None or not report_programs_unfinished(phases):
+            payload['reason'] = 'command or boundary ended before snapshot'
+            return
+        # Enumerate only this spawned invocation via /proc. ps is read once,
+        # with explicit descendant PIDs; unrelated session arguments are never requested.
+        selected = set(identities) - {process.pid}
+        payload.update(reason='ps pending; no completed snapshot yet', monotonic_ns=time.monotonic_ns())
+        observe_fib('FIB_COMPILED_PROCESS_SNAPSHOT_PENDING', payload)
+        snapshot = subprocess.run(['ps', '-p', ','.join(map(str, sorted(selected))), '-o',
+            'pid=,ppid=,etimes=,time=,stat=,wchan:32=,args='],
+            text=True, capture_output=True, check=False)
+        if snapshot.returncode:
+            payload.update(status='unavailable', reason='ps failed', ps_exit=snapshot.returncode)
+            return
+        if (stopped.is_set() or process.poll() is not None or not report_programs_unfinished(phases)
+                or any(linux_process_identity(pid) != identity for pid, identity in identities.items())):
+            payload['reason'] = 'process identity or boundary raced snapshot'
+            return
+        rows, omitted = [], 0
+        for line in snapshot.stdout.splitlines():
+            fields = line.split(None, 6)
+            if len(fields) != 7:
+                continue
+            pid, parent = int(fields[0]), int(fields[1])
+            if pid not in selected or parent != identities[pid][0]:
+                continue
+            row = dict(pid=pid, ppid=parent, elapsed_seconds=fields[2], cpu_time=fields[3],
+                state=fields[4], wait_channel=fields[5], command=fields[6][:512],
+                command_truncated=len(fields[6]) > 512)
+            if len(json.dumps(rows + [row]).encode()) <= 8192:
+                rows.append(row)
+            else:
+                omitted += 1
+        payload.update(status='observed' if any(row['pid'] == lake_pid for row in rows) else 'inconclusive',
+            reason='unfinished boundary bracketed the single ps read', rows=rows, omitted_rows=omitted)
+    except Exception as error:
+        # Observation failures must not replace the real command outcome.
+        payload.update(status='unavailable' if isinstance(error, OSError) else 'inconclusive',
+            reason=type(error).__name__)
+    finally:
+        if not observe_fib('FIB_COMPILED_PROCESS_SNAPSHOT', payload):
+            try:
+                print('FIB_COMPILED_PROCESS_SNAPSHOT ' + json.dumps(dict(sequence=sequence,
+                    invocation_pid=process.pid, status='unavailable', reason='diagnostic sink unwritable')),
+                    file=sys.stderr, flush=True)
+            except (OSError, ValueError):
+                pass
+
+
+def run_with_report_snapshot(args, env, phases, sequence):
+    with subprocess.Popen(args, cwd=ROOT, env=env, text=True,
+                          stdout=subprocess.PIPE, stderr=subprocess.PIPE) as process:
+        stopped = threading.Event()
+        observer = None
+        try:
+            observer = threading.Thread(target=observe_report_process,
+                args=(process, phases, args[3:], sequence, stopped), daemon=True)
+            observer.start()
+        except Exception:
+            observe_fib('FIB_COMPILED_PROCESS_SNAPSHOT', dict(status='unavailable', reason='observer start failed'))
+        try:
+            stdout, stderr = process.communicate()
+        finally:
+            stopped.set()
+            if observer is not None and observer.ident is not None:
+                # A stuck ps cannot delay the original result or send signals.
+                observer.join(timeout=0.1)
+        return subprocess.CompletedProcess(args, process.returncode, stdout, stderr)
 
 
 class CompiledFibIntegration(unittest.TestCase):
@@ -94,10 +233,13 @@ class CompiledFibIntegration(unittest.TestCase):
              ('stderr', 'STRATALINT_INSPECTOR_CHILD_STDERR')] if env.get(variable)}
         paths.update({name + '-cache': Path(str(path) + '.cache')
                       for name, path in list(paths.items()) if name in ('stdout', 'stderr')})
+        snapshot_phases = paths.get('phases')
         for path in paths.values():
             try:
                 path.write_bytes(b'')
             except OSError as error:
+                if path == snapshot_phases:
+                    snapshot_phases = None
                 observe_fib('FIB_COMPILED_DIAGNOSTIC_UNAVAILABLE', dict(path=str(path), error=str(error)))
         self.command_sequence = getattr(self, 'command_sequence', 0) + 1
         sequence = self.command_sequence
@@ -105,8 +247,11 @@ class CompiledFibIntegration(unittest.TestCase):
             command=args, full=full))
         result = None
         try:
-            result = subprocess.run(args, cwd=ROOT, env=env, text=True,
-                                    capture_output=True, check=False)
+            if getattr(self, 'observe_processes', False) and sequence == 1:
+                result = run_with_report_snapshot(args, env, snapshot_phases, sequence)
+            else:
+                result = subprocess.run(args, cwd=ROOT, env=env, text=True,
+                                        capture_output=True, check=False)
         finally:
             observe_fib('FIB_COMPILED_STAGE', dict(stage='command', boundary='finish', sequence=sequence,
                 raw_exit=result.returncode if result is not None else None,
@@ -293,6 +438,7 @@ class CompiledFibProgramTests(unittest.TestCase):
         metadata = config.stat()
         self.assertEqual(before.count(b'name = "auricFibAnalysis"'), 1)
         fixture = CompiledFibIntegration()
+        fixture.observe_processes = True
         try:
             # Remove the executable target, retaining the actual analyzer module
             # and every source/contract dependency in the production workspace.
@@ -323,6 +469,157 @@ class CompiledFibProgramTests(unittest.TestCase):
 
 
 class CompiledFibObservationTests(unittest.TestCase):
+    def test_unreset_phase_channel_cannot_bind_stale_boundary(self):
+        fixture = CompiledFibIntegration()
+        fixture.observe_processes = True
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            phases = root / 'phases'
+            phases.write_text('{"phase":"lake-report-programs","boundary":"start"}\n')
+            fixture.activity = root / 'activity'
+            fixture.env = dict(os.environ, STRATALINT_INSPECTOR_PHASES=str(phases))
+            with (patch.object(sys.modules[__name__], 'DIAGNOSTICS', root),
+                  patch.object(sys, 'platform', 'linux'),
+                  patch.object(Path, 'write_bytes', side_effect=PermissionError('phase reset refused')),
+                  patch.object(subprocess, 'run') as ps):
+                result = fixture.command([sys.executable, '-c',
+                    "import sys; print('out'); print('err', file=sys.stderr); sys.exit(19)"], expected=19)
+            ps.assert_not_called()
+            self.assertEqual((result.returncode, result.stdout, result.stderr), (19, 'out\n', 'err\n'))
+            snapshots = [json.loads(line) for line in phases.read_text().splitlines()
+                if '"observation": "FIB_COMPILED_PROCESS_SNAPSHOT"' in line]
+            self.assertEqual(len(snapshots), 1)
+            self.assertEqual(snapshots[0]['status'], 'unavailable')
+            self.assertEqual(snapshots[0]['reason'], 'fresh invocation phase channel unavailable')
+
+    def test_linux_tree_binds_exact_lake_child_in_worker_thread(self):
+        args = ['-d', 'project', 'build', 'fixture:report']
+        parents = {100: 1, 101: 100, 102: 101}
+        children = {'/proc/100/task/100/children': '', '/proc/100/task/107/children': '101',
+                    '/proc/101/task/101/children': '102', '/proc/102/task/102/children': ''}
+        def read_text(path):
+            if path.name == 'stat':
+                pid = int(path.parent.name)
+                return f'{pid} (process ) name) S {parents[pid]} ' + '0 ' * 17 + str(pid * 10)
+            return children[str(path)]
+        def tasks(path):
+            pid = int(path.parent.name)
+            return [path / str(task) for task in ([100, 107] if pid == 100 else [pid])]
+        def command(path):
+            pid = int(path.parent.name)
+            return b'\0'.join(os.fsencode(arg) for arg in
+                (['/toolchain/bin/lake'] + args if pid == 102 else ['dotnet', 'producer.dll'])) + b'\0'
+        with (patch.object(Path, 'read_text', autospec=True, side_effect=read_text),
+              patch.object(Path, 'read_bytes', autospec=True, side_effect=command) as reads,
+              patch.object(Path, 'iterdir', autospec=True, side_effect=tasks)):
+            identities, lake = linux_report_processes(100, args)
+            self.assertEqual(lake, 102)
+            self.assertEqual(identities, {pid: (parent, str(pid * 10)) for pid, parent in parents.items()})
+            self.assertEqual([call.args[0] for call in reads.call_args_list],
+                [Path('/proc/101/cmdline'), Path('/proc/102/cmdline')])
+            with self.assertRaisesRegex(ValueError, 'unique invocation Lake PID'):
+                linux_report_processes(100, ['wrong', 'report'])
+
+    def test_snapshot_filters_descendants_and_bounds_commands_with_one_ps(self):
+        process = type('Process', (), {'pid': 100, 'poll': lambda self: None})()
+        identities = {100: (1, '10'), 101: (100, '11'), 102: (101, '12')}
+        with tempfile.TemporaryDirectory() as directory:
+            phases = Path(directory) / 'phases'
+            phases.write_text('{"phase":"lake-report-programs","boundary":"start"}\n')
+            output = '101 100 5 00:00:01 Sl futex lake -d project build fixture:report\n'
+            output += '102 101 4 00:00:02 R - lean ' + 'x' * 20000 + '\n'
+            output += '999 1 9 00:00:09 S wait PRIVATE_OTHER_SESSION\n'
+            with (patch.object(sys.modules[__name__], 'DIAGNOSTICS', Path(directory)),
+                  patch.object(sys, 'platform', 'linux'),
+                  patch(__name__ + '.linux_report_processes', return_value=(identities, 101)),
+                  patch(__name__ + '.linux_process_identity', side_effect=identities.__getitem__),
+                  patch.object(subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, output, '')) as ps):
+                observe_report_process(process, phases, ['-d', 'project'], 1, threading.Event())
+            ps.assert_called_once()
+            self.assertEqual(ps.call_args.args[0][0:3], ['ps', '-p', '101,102'])
+            events = [json.loads(line) for line in phases.read_text().splitlines()]
+            snapshot = events[-1]
+            self.assertEqual(snapshot['status'], 'observed')
+            self.assertEqual((snapshot['invocation_pid'], snapshot['lake_pid']), (100, 101))
+            self.assertEqual([row['pid'] for row in snapshot['rows']], [101, 102])
+            self.assertTrue(snapshot['rows'][1]['command_truncated'])
+            self.assertLessEqual(len(json.dumps(snapshot['rows']).encode()), 8192)
+            self.assertNotIn('PRIVATE_OTHER_SESSION', phases.read_text())
+
+    def test_snapshot_unavailable_and_races_do_not_retry_or_claim_observation(self):
+        process = type('Process', (), {'pid': 100, 'poll': lambda self: None})()
+        identities = {100: (1, '10'), 101: (100, '11')}
+        for case in ('missing-ps', 'failed-ps', 'missing-child', 'pid-reused', 'phase-finished', 'no-phase'):
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as directory:
+                phases = Path(directory) / 'phases'
+                phases.write_text('{"phase":"lake-report-programs","boundary":"start"}\n')
+                stop = threading.Event()
+                if case == 'no-phase':
+                    phases.write_text('')
+                    stop.set()
+                def ps_result(*args, **kwargs):
+                    if case == 'missing-ps':
+                        raise FileNotFoundError('ps')
+                    if case == 'phase-finished':
+                        with phases.open('a') as target:
+                            target.write('{"phase":"lake-report-programs","boundary":"finish"}\n')
+                    return subprocess.CompletedProcess([], 1 if case == 'failed-ps' else 0,
+                        '101 100 5 00:00:01 S wait lake\n', '')
+                with (patch.object(sys.modules[__name__], 'DIAGNOSTICS', Path(directory)),
+                      patch.object(sys, 'platform', 'linux'),
+                      patch(__name__ + '.linux_report_processes',
+                          side_effect=ValueError('no Lake') if case == 'missing-child' else None,
+                          return_value=(identities, 101)),
+                      patch(__name__ + '.linux_process_identity',
+                          side_effect=lambda pid: (1, 'reused') if case == 'pid-reused' else identities[pid]),
+                      patch.object(subprocess, 'run', side_effect=ps_result) as ps):
+                    observe_report_process(process, phases, [], 1, stop)
+                self.assertEqual(ps.call_count, 0 if case in ('missing-child', 'no-phase') else 1)
+                snapshot = json.loads(phases.read_text().splitlines()[-1])
+                self.assertIn(snapshot['status'], ('unavailable', 'inconclusive'))
+                self.assertNotIn('rows', snapshot)
+
+    def test_observed_small_child_preserves_streams_and_exit_with_failed_diagnostics(self):
+        for exit_code, blocked in ((0, False), (19, False), (37, True)):
+            with self.subTest(exit_code=exit_code), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                phases = root / 'phases'
+                if blocked:
+                    phases.mkdir()
+                script = '''import sys, time
+from pathlib import Path
+path = Path(sys.argv[1])
+if not path.is_dir():
+    path.write_text('{"phase":"lake-report-programs","boundary":"start"}\\n')
+    deadline = time.monotonic() + 2
+    while '"observation": "FIB_COMPILED_PROCESS_SNAPSHOT"' not in path.read_text():
+        assert time.monotonic() < deadline, 'observer did not settle'
+        time.sleep(0.01)
+print('original out')
+print('original err', file=sys.stderr)
+sys.exit(int(sys.argv[2]))
+'''
+                identities = {}
+                def process_tree(pid, args):
+                    identities.update({pid: (1, 'a'), pid + 1: (pid, 'b')})
+                    return identities, pid + 1
+                def ps_result(*args, **kwargs):
+                    if exit_code != 0:
+                        raise FileNotFoundError('ps')
+                    pid = max(identities)
+                    return subprocess.CompletedProcess([], 0,
+                        f'{pid} {pid-1} 1 00:00:00 S wait lake\n', '')
+                with (patch.object(sys.modules[__name__], 'DIAGNOSTICS', root),
+                      patch.object(sys, 'platform', 'linux'),
+                      patch(__name__ + '.linux_report_processes', side_effect=process_tree),
+                      patch(__name__ + '.linux_process_identity', side_effect=identities.__getitem__),
+                      patch.object(subprocess, 'run', side_effect=ps_result) as ps):
+                    result = run_with_report_snapshot([sys.executable, '-c', script, str(phases), str(exit_code)],
+                        dict(os.environ), phases, 1)
+                self.assertEqual((result.returncode, result.stdout, result.stderr),
+                    (exit_code, 'original out\n', 'original err\n'))
+                self.assertEqual(ps.call_count, 0 if blocked else 1)
+
     def test_live_native_output_precedes_exit_and_preserves_raw_failure(self):
         import native
         with tempfile.TemporaryDirectory() as directory:
