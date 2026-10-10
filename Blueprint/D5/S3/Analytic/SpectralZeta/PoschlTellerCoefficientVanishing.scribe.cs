@@ -53,16 +53,19 @@ internal sealed class PoschlTellerCoefficientVanishingDocument : IScribeDocument
             Node("claim", "The nonvanishing conjecture", ClaimFormula(),
                 "The formula encodes p,q as naturals with 0 < p < q and Nat.Coprime(p,q), beta in the open interval (0,pi) excluding pi/2, and the nonempty index set with j <= order(p,q,m). This includes m = q, j = 1 also in the source's sum restricted to positive denominator degree.", quote: ClaimQuote()),
             Node("result", "Refutation by reflection", new Formula.Not(Call("claim")),
-                "Take (p,q,beta,m,j) = (2,3,pi/4,3,1). The index is admissible and 1 <= order(2,3,3). In degree 5 of the formal logarithm, the linear term is Omega_1; the square and all higher powers contribute zero. Since G_0 = 1, the coefficient of T in P_1(y) is E_1(y)/2. The identity E_1(1-y) = E_1(y) exchanges (1+nu)/2 and (1-nu)/2, so this coefficient cancels in Omega_1. Consequently g(2,3,beta,3,1) = 0 for every real beta, including pi/4. The result concerns formal coefficients; it does not assert a theorem about spectral analytic continuation or the all-coprime-parameter family.", false, DescribeRole.Theorem)),
+                "Take (p,q,beta,m,j) = (2,3,pi/4,3,1). The index is admissible and 1 <= order(2,3,3). In degree 5 of the formal logarithm, the linear term is Omega_1; the square and all higher powers contribute zero. Since G_0 = 1, the coefficient of T in P_1(y) is E_1(y)/2. The identity E_1(1-y) = E_1(y) exchanges (1+nu)/2 and (1-nu)/2, so this coefficient cancels in Omega_1. Consequently g(2,3,beta,3,1) = 0 for every real beta, including pi/4. The result concerns formal coefficients; it does not assert a theorem about spectral analytic continuation or the all-coprime-parameter family.", false, DescribeRole.Theorem, resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fucci-stanfill-2024-poschl-teller-coefficients"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool literature = true, DescribeRole role = DescribeRole.Definition, DocumentBlock? quote = null) => Describe.Lean(
+        bool literature = true, DescribeRole role = DescribeRole.Definition, DocumentBlock? quote = null,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("poschl-teller-" + (name == "G" ? "generalized-g" : name.ToLowerInvariant())),
         DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(Disp(formula)),
         literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        quote is null ? Blocks(Paragraph(Text(prose))) : Blocks(quote, Paragraph(Text(prose))), role);
+        quote is null ? Blocks(Paragraph(Text(prose))) : Blocks(quote, Paragraph(Text(prose))), role, resolution);
 
     private static DocumentBlock ClaimQuote() => Paragraph(
         Text("Remark B.3, printed page 31: “From calculations performed for particular choices of "),

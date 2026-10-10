@@ -244,6 +244,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/SpectralZeta/PoschlTellerCoefficientVanishing.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fucci-stanfill-2024-poschl-teller-coefficients` (refuted) by `D5/S3/Analytic/SpectralZeta/PoschlTellerCoefficientVanishing.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fucci-stanfill-2024-poschl-teller-coefficients","declaration_gid":"D5/S3/Analytic/SpectralZeta/PoschlTellerCoefficientVanishing.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Guglielmo Fucci; Jonathan Stanfill (2024). *The exotic structure of the spectral ζ-function for the Schrödinger operator with Pöschl–Teller potential*. DOI: [10.1007/s00023-025-01587-7](https://doi.org/10.1007/s00023-025-01587-7). URL: <https://arxiv.org/abs/2411.17860v1>.
