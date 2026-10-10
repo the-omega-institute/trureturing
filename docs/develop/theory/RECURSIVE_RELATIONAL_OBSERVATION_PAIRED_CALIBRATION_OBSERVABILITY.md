@@ -3871,3 +3871,120 @@ unrestricted zero-versus-positive alternative and fixed-resource optima
 remain unestablished.
 
 ## 追加锚（本行以下为增补区）
+## 18. Same-flow fibers and control-memory non-equivalence
+
+### 18.1. Three distinct layers of a returned relation
+
+The latest same-flow analysis in [ACQUIRED-RETURN, Section 14](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) supplies a concrete control-memory test for the present paired-calibration domain. Fix the complete laws, the two directional joint flows and one reachable returned control/record value $c$ used there. A whole returned relation is a probability law
+
+$$
+\Xi(Q,W,Q')
+$$
+
+on the incoming p descriptor, the suspended descriptor and the outgoing p descriptor. Its scalar motion readout is
+
+$$
+\eta_{\mathrm{motion}}(\Xi)=(V_u(\Xi),V_Q(\Xi)),
+$$
+
+where $V_u$ is the actual integral of $|u(Q)-u(Q')|$ and $V_Q$ is the corresponding complete-law variation. The returned-cut memory cost is $N(\Xi;c)$, the minimum number of COMPLETE configurations at the counted suspended cuts needed to realize that prescribed whole relation, with the complete laws and both directional flows fixed.
+
+These objects have different semantic types:
+
+$$
+\boxed{
+\text{law marginals and two edge flows}
+\;\longrightarrow\;
+\text{whole triple }\Xi
+\;\longrightarrow\;
+\text{returned control memory}.
+}
+$$
+
+The arrows cannot be reversed from a scalar motion value alone.
+
+### 18.2. Same motion, same risks, different exact memory
+
+**Proposition 18.1 (motion does not determine prescribed-triple memory).** In the fixed complete-law fiber of [ACQUIRED-RETURN, Section 14], there are three lawful whole triples with
+
+$$
+V_u=V_Q=\frac4{135},
+$$
+
+but with prescribed-triple minima
+
+$$
+N(\Xi;c)=2,\qquad 3,\qquad 4.
+$$
+
+Moreover, the corresponding installations have the same complete configuration-risk expressions at every original fourth-phase history.
+
+**Proof.** The source theorem parameterizes every lawful triple by two block vectors $s^-,s^+$ and gives
+
+$$
+N(\Xi;c)=2+\mathbf 1_{\{s^-\ne C\}}+\mathbf 1_{\{s^+\ne C\}},
+$$
+
+while
+
+$$
+V_u=V_Q=\frac1{45}+\frac{s^-_1+s^+_1}{90},
+\qquad
+C=\left(\frac13,\frac13,\frac13\right).
+$$
+
+Taking $(s^-,s^+)=(C,C),(C,D),(D,D)$ with $D=(1/2,1/3,1/6)$ gives the same value $4/135$ and the three costs $2,3,4$. The source theorem also preserves the six p-law masses, the two suspended-law masses and the complete configuration-loss expressions under these installations. \(\square\)
+
+This is stronger than equality of a posterior target or a scalar risk: the complete generated laws and the two acquired edge flows are held fixed, while the prescribed three-stage successor relation changes.
+
+### 18.3. The control-safe quotient criterion
+
+Let $H$ be a finite family of already acquired histories, and let $\eta:H\to M$ be a proposed memory encoding. For a history $h$, let $B_h$ be its target--state candidate relation, and let $\mathcal W_n$ be the finite $n$-step acquisition domain. The encoding is safe for an $n$-step task exactly when
+
+$$
+\boxed{
+\bigcup_{h:\eta(h)=m}B_h\in\mathcal W_n
+\quad\text{for every }m\in\eta(H).
+}
+$$
+
+This is the finite-history form of the control-fiber condition: one memory value must admit one common continuation policy. The condition is stronger than equality of the target candidate set, the best remaining step count, a complete-law marginal, or a motion scalar.
+
+For an exact prescribed-triple task, the memory observation must additionally retain enough of the successor relation to determine the allowed continuation kernels. A sufficient control-complete observation therefore has the form
+
+$$
+\eta_{\mathrm{ctrl}}(h)=
+\bigl(
+\text{target--state candidates},
+\text{legal actions and responses},
+\text{full-law residual cells},
+\text{joint successor relation},
+\text{remaining certificate rank}
+\bigr),
+$$
+
+with the last four components interpreted relative to the declared task contract. Identifying two histories is sound only after all permitted actions have matching legality, response and successor behavior on their entire candidate fibers.
+
+### 18.4. Consequence for the paired-calibration certificates
+
+The two-flow residual equations in Sections 16--17 are necessary for complete-law compatibility and for the conditional full-vector separator. They do not identify the actual three-stage law $\Xi$. The explicit same-flow family above shows why: equal edge flows can support different successor couplings, and those couplings can have different exact memory minima.
+
+Thus the next FIB refinement is not another scalar defect. It is a higher-order relation layer:
+
+$$
+\boxed{
+\text{two directional residual flows}
+\;+
+\text{one compatible successor coupling }\Xi
+\;+
+\text{legal update and cost data}.
+}
+$$
+
+Only after this layer is fixed does a finite controller search have the right object to minimize. The scalar return-weight dispersion $D$, the four-moment defect $S$ and the mismatch energies $M_A,M_B$ remain useful necessary coordinates, but none is a substitute for $\Xi$ or for the controller's successor map.
+
+### 18.5. Remaining boundary
+
+Proposition 18.1 is a fixed-fiber memory separation. It does not give the unrestricted minimum COMPLETE size, a global risk gap, a finite exact attainer for the original zero face or a native FIB encoding theorem. Rational exact services and almost-sure returned-cut realization are available in the cited fixed fiber; bounded worst-case service cost and unrestricted resource optimality remain separate questions. All statements in this appended section are ordinary mathematical consequences of the cited `dev` results; no new Lean or kernel verification is asserted.
+
+## 追加锚（本行以下为增补区）
