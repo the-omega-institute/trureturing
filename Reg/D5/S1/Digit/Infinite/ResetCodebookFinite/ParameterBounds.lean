@@ -120,7 +120,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S1.Digit.Infinite.ResetCodebookFinite, definition := none, coordinates := #[],
     readouts := #[{
       path := #[], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }] },
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.ParameterBounds.A_nonneg
