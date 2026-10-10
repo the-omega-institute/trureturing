@@ -2,6 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur
 import Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
 import Reg.Support.BridgeGraphRelations
+import Reg.Support.BridgeGraphOriginalLaws
 import Reg.Support.BridgeGraphEqualityFamilies
 
 open _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
@@ -651,5 +652,81 @@ noncomputable def sourceSL_kernelEmbeddingRegistration : Contract.Registration.{
 #print axioms sourceSL_kernelEmbeddingNegative
 #print axioms sourceSL_kernelEmbeddingEvidence
 #print axioms sourceSL_kernelEmbeddingRegistration
+
+open Reg.Support.BridgeGraphOriginalLaws
+
+noncomputable def kernelEmbedding_injectiveRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective)
+    (type_of% (realize kernelFunctionSignature (fun _ _ f => @Decidable.decide (Function.Injective f)
+      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injectiveArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injectiveEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨kernelEmbedding_injectiveArena⟩,
+  objectArena := .source ⟨kernelEmbedding_injectiveArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source kernelEmbedding_injectiveArena ⟨kernelEmbedding_injectiveEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize kernelFunctionSignature (fun _ _ f => @Decidable.decide (Function.Injective f)
+      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur, definition := none,
+    coordinates := #[0, 1, 2, 3, 4], readouts := #[{
+      path := #["body", "body", "body", "body", "body"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := some #["arg"], booleanPredicate := true }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
+#print axioms kernelEmbedding_injectivePositive
+#print axioms kernelEmbedding_injectiveNegative
+#print axioms kernelEmbedding_injectiveEvidence
+#print axioms kernelEmbedding_injectiveRegistration
+
+noncomputable def kernel_coordinatesRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernel_coordinates)
+    (type_of% (realize sourceVectorEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernel_coordinates
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernel_coordinatesArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernel_coordinatesEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨kernel_coordinatesArena⟩,
+  objectArena := .source ⟨kernel_coordinatesArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source kernel_coordinatesArena ⟨kernel_coordinatesEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize sourceVectorEqualitySignature (fun _ _ x y => x = y) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur, definition := none,
+    coordinates := #[0, 1, 2, 3, 4], readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "fn"],
+      stateBinder := 0, functionOperand := true,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernel_coordinates
+#print axioms kernel_coordinatesPositive
+#print axioms kernel_coordinatesNegative
+#print axioms kernel_coordinatesEvidence
+#print axioms kernel_coordinatesRegistration
 
 end Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur
