@@ -98,12 +98,14 @@ theorem first_layer_between_prices {p : ℕ} (hp : p.Prime) :
   have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
   have hlogp : 0 < Real.log (p : ℝ) := Real.log_pos hp1
   have hy : 0 < (1 + 1 / (p : ℝ)) := by positivity
-  have hupper := Real.log_lt_sub_one_of_pos hy
-    (ne_of_gt (by have : (1 : ℝ) < 1 + 1 / (p : ℝ) := by positivity; exact this))
+  have hgt : (1 : ℝ) < 1 + 1 / (p : ℝ) := by
+    have hpPos : (0 : ℝ) < p := by exact_mod_cast hp.pos
+    have hinvPos : 0 < 1 / (p : ℝ) := one_div_pos.mpr hpPos
+    linarith
+  have hupper := Real.log_lt_sub_one_of_pos hy (ne_of_gt hgt)
   have hinv : 0 < (1 + 1 / (p : ℝ))⁻¹ := inv_pos.mpr hy
   have hneq : (1 + 1 / (p : ℝ))⁻¹ ≠ 1 := by
     intro h
-    have hgt : (1 : ℝ) < 1 + 1 / (p : ℝ) := by positivity
     have hle := (inv_lt_one₀ hy).mpr hgt
     linarith
   have hlow' := Real.log_lt_sub_one_of_pos hinv hneq
@@ -117,8 +119,9 @@ theorem first_layer_between_prices {p : ℕ} (hp : p.Prime) :
       _ < Real.log (1 + 1 / (p : ℝ)) := by linarith
   have hMarg := golden_layer_marginal_one_eq_log_one_add_inv hp
   have hlogp1 : Real.log (p : ℝ) < Real.log ((p : ℝ) + 1) := by
-    exact Real.strictMonoOn_log (by exact_mod_cast hp.pos)
-      (by have : (0 : ℝ) < (p : ℝ) + 1 := by positivity; exact this)
+    exact Real.strictMonoOn_log
+      (by change (0 : ℝ) < p; exact_mod_cast hp.pos)
+      (by change (0 : ℝ) < (p : ℝ) + 1; positivity)
       (by exact_mod_cast (show p < p + 1 by omega))
   have hprod : ((p : ℝ) + 1) * Real.log p <
       ((p : ℝ) + 1) * Real.log ((p : ℝ) + 1) := by
@@ -165,7 +168,7 @@ private theorem forward_prime_absent {b x : ℝ} (hb : 1 < b) (hbx : b < x)
   have hdec : goldenLayerMarginal p (n.factorization p) ≤
       goldenLayerMarginal p 1 := by
     rcases eq_or_lt_of_le hpos with heq | hltk
-    · simp only [heq]
+    · rw [← heq]
     · exact (golden_layer_strict_decrease hp (by omega) hltk).le
   have hdiv : p ∣ n := by
     apply Nat.dvd_of_mem_primeFactors
