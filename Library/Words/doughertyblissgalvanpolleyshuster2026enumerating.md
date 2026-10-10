@@ -62,3 +62,46 @@ transfer remain needed.
 - arXiv: https://arxiv.org/abs/2608.27583v1
 - HTML: https://arxiv.org/html/2608.27583v1, Theorems 1, 10, 12, 13 and Conjecture 15
 - Submitted August 27, 2026 (version v1)
+
+## Actual occupation comparison
+
+For positive length, let `M_n(e)` count actual sum-indecomposable avoiders
+with at least one point on displacement diagonal `e`, once per permutation.
+With `b=sqrt(2)-1`, `rho=b^2` and `a=1-b`, the raw mass is
+`C(e)=sum_(n>=1)rho^n M_n(e)`, while `O(e)=(2/a)C(e)` is its normalized
+version. The source diagonal counts are at-least-one events, rather than
+expected numbers of points.
+
+`OccupiedComparison.actual_occupation_subsolution_comparison` proves
+summability of the actual shape weights, their total `b`, critical kernel
+mass `1/2`, convergence of every occupied-count series, and the raw mass box
+`0<=C(e)<=a/2` without additional premises. The native Schroder recurrence,
+a uniform bound on nonnegative partial sums, and the Cauchy product supply
+the critical analytic facts; the singleton correction is retained.
+
+The theorem also supplies the two actual finite occupied-count recurrences
+through the minimum-cut equivalence. The direct recurrence counts
+left-hit/right-no-hit and right-hit, and the skew recurrence adds disjoint
+factor events shifted by the opposite block lengths. These count each shape
+once, including all natural lengths and integer displacements. Splitting the
+actual hit fiber by the proper-cut predicate gives the full/indecomposable/
+decomposable count partition. The native opposite-sign law identifies the
+decomposable hit counts with opposite-orientation indecomposable hit counts
+at lengths at least two. The actual singleton hit count is one on diagonal
+zero and zero elsewhere in either orientation.
+
+Inversion preserves the avoidance pair and both proper-cut classes and
+negates every hit displacement, giving reflection of actual occupied
+counts. The absolutely convergent joint sums transport the finite
+recurrences with their actual shifts and intersection correction. Writing
+T for full occupied mass, P for direct-decomposable occupied mass and
+V(x)=x squared/(h+x), the direct recurrence gives T=2C-2V(C) and
+P=C-2V(C). Substitution in the skew recurrence and averaging its reflected
+version establishes the literal nonlinear occupation equation, including
+the forcing and singleton correction. Global comparison therefore has no
+actual fixed-point premise.
+
+The required positive logarithmic subsolution is not constructed. The
+uniform all-integer lower bound registered in
+[issue 15063](https://github.com/the-omega-institute/trureturing/issues/15063)
+and the source Conjecture 15 remain unproved by this result.
