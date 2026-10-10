@@ -70,7 +70,7 @@ internal static class DepositHeaderCheckCommand
                     targetFile.Path,
                     header.Utility,
                     current,
-                    () => leanReportSource.Load(current));
+                    () => LeanReportSourceScope.Load(leanReportSource, current, [targetFile.Path]));
                 if (!validation.IsAccepted)
                 {
                     return UtilityFailure(target, validation);

@@ -39,11 +39,13 @@ public sealed partial class MakeWorkflowTests
         WriteExecutable(Path.Combine(bin, "dotnet"), """
             #!/bin/bash
             printf '%s\n' "$*" >> "$SCRIBE_LOG"
+            if [[ "$*" == *' lean-inputs '* ]]; then printf 'D5.Changed\n'; fi
             while [[ "$#" -gt 0 ]]; do
               if [[ "$1" == --paths-from ]]; then cat "$2" > "$SELECTED_LOG"; break; fi
               shift
             done
             """);
+        WriteExecutable(Path.Combine(bin, "make"), "#!/bin/bash\nprintf 'make:%s\\n' \"$*\" >> \"$SCRIBE_LOG\"\n");
         var manifest = Path.Combine(root, "caller paths");
         File.WriteAllText(manifest, "Blueprint/D5/Explicit.scribe.cs\0");
         var result = TestProcessRunner.Run("/usr/bin/env",
@@ -52,10 +54,13 @@ public sealed partial class MakeWorkflowTests
              "/bin/bash", script, "emit"], temporary.Path, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         var invocations = File.ReadAllLines(calls);
-        Assert.Equal(2, invocations.Length);
-        Assert.All(invocations, call => Assert.Contains("tools/StrataLint.Scribe/StrataLint.Scribe.csproj", call, StringComparison.Ordinal));
-        Assert.Contains("emit --paths-from", invocations[0], StringComparison.Ordinal);
-        Assert.Contains("-- emit-values", invocations[1], StringComparison.Ordinal);
+        Assert.Equal(5, invocations.Length);
+        Assert.Contains("tools/StrataLint.Scribe/StrataLint.Scribe.csproj", invocations[0], StringComparison.Ordinal);
+        Assert.Contains("lean-inputs --paths-from", invocations[1], StringComparison.Ordinal);
+        Assert.Equal("make:lean-report-scoped LEAN_TARGETS=D5.Changed", invocations[2]);
+        Assert.Contains("emit --paths-from", invocations[3], StringComparison.Ordinal);
+        Assert.Contains("--scoped", invocations[3], StringComparison.Ordinal);
+        Assert.EndsWith("emit-values", invocations[4], StringComparison.Ordinal);
         Assert.Equal(explicitPaths ? new[] { "Blueprint/D5/Explicit.scribe.cs" }
             : new[] { "Blueprint/D5/Changed.scribe.cs", "Blueprint/D5/New file.scribe.cs" },
             File.ReadAllText(selected).Split('\0', StringSplitOptions.RemoveEmptyEntries));

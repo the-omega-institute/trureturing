@@ -257,4 +257,100 @@ noncomputable def membershipRegistration : LeanInformationAudit.Contract.Registr
 
 #print axioms membershipRegistration
 
+abbrev projectionSignature : Signature where
+  Params := Unit
+  State _ := CoarseHistory
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := CoarseHistory
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+noncomputable def projectionActual : Realization projectionSignature :=
+  realize projectionSignature
+    (fun _ _ g => kappa_hist
+      (_root_.D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutCompletion.encodeHistory g))
+    (fun e => nomatch e)
+
+abbrev projectionArena : Arena where
+  signature := projectionSignature
+  Law R := ∀ g : CoarseHistory, R.readout () () g = g
+
+theorem projection_bridge : (type_of% (@encode_projection)) ↔
+    projectionArena.Law projectionActual := Iff.rfl
+
+theorem projection_law : projectionArena.Law projectionActual := encode_projection
+
+noncomputable def projectionBad : Realization projectionSignature :=
+  realize projectionSignature (fun _ _ _ => []) (fun e => nomatch e)
+
+theorem projection_bad : ¬ projectionArena.Law projectionBad := by
+  intro law
+  have impossible := law [⟨[], none⟩]
+  change ([] : CoarseHistory) = [⟨[], none⟩] at impossible
+  cases impossible
+
+theorem projection_variation : Variation projectionArena projectionActual :=
+  ⟨projection_law, projectionBad, projection_bad⟩
+
+theorem projection_sensitivity : Sensitivity projectionArena projectionActual := by
+  constructor
+  · intro i
+    refine ⟨projectionBad, ?_, ?_, projection_bad⟩
+    · intro j different
+      exact (different (Subsingleton.elim j i)).elim
+    · funext e
+      cases e
+  · intro e
+    cases e
+
+theorem projection_dependence : ObservationalDependence projectionSignature projectionActual := by
+  intro i
+  refine ⟨(), [], [⟨[], none⟩], ?_⟩
+  simp only [projectionActual, realize, encode_projection]
+  simp
+
+noncomputable def projectionFamily : Registration projectionArena (type_of% (@encode_projection)) where
+  actual := projectionActual
+  bridge := projection_bridge
+  variation := projection_variation
+  sensitivity := projection_sensitivity
+  dependence := projection_dependence
+
+noncomputable def projectionRegistration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@encode_projection) (Realization projectionSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactTraceCompiler.projectionUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactTraceCompiler.projectionFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨projectionArena⟩
+  objectArena := .source ⟨projectionArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := true
+  realization := .source projectionArena ⟨projectionFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(True.intro : True)⟩ True.intro
+  readout := some (realize projectionSignature projectionActual.readout projectionActual.anchor)
+  variation := .evidence ⟨(True.intro : True)⟩ True.intro
+  sensitivity := .evidence ⟨(True.intro : True)⟩ True.intro
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualExactTraceCompiler
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms projectionFamily
+#print axioms projectionRegistration
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualExactTraceCompiler

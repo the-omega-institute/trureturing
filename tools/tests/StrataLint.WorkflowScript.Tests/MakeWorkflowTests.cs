@@ -46,6 +46,7 @@ public sealed partial class MakeWorkflowTests
         "warm-donor",
         "lean",
         "lean-report",
+        "lean-report-scoped",
         "build",
         "emit",
         "dag",
@@ -264,7 +265,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void ScribeWrapperConsumesOnlyAPrecomputedLeanReport()
+    public void ScribeWrapperBuildsAndConsumesOnlyItsSelectedLeanInputs()
     {
         var root = TestRepositoryLayout.FindRoot();
         var script = File.ReadAllText(Path.Combine(root, ScribeScriptPath));
@@ -273,7 +274,9 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("SCRIBE_USE_EXISTING_REPORT", script, StringComparison.Ordinal);
         Assert.Contains(ReportConsumerScriptPath, script, StringComparison.Ordinal);
         Assert.Contains("scribe-consumer", script, StringComparison.Ordinal);
-        Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
+        Assert.Contains(".lake/build/stratalint/scoped-lean-report.json", script, StringComparison.Ordinal);
+        Assert.Contains("lean-inputs --paths-from", script, StringComparison.Ordinal);
+        Assert.Contains("make lean-report-scoped", script, StringComparison.Ordinal);
         Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
         Assert.Contains("emit|emit-values) run_scribe \"$1\"", script, StringComparison.Ordinal);
         Assert.Contains("generators=(emit emit-values)", script, StringComparison.Ordinal);
