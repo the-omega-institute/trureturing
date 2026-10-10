@@ -232,3 +232,4 @@ class NativeFixture(unittest.TestCase):
         result = subprocess.CompletedProcess(arguments, process.returncode, output, errors)
         result.lifetime = evidence
         return result
+# C7_NATIVE_POSITIVE_6ACAC960
