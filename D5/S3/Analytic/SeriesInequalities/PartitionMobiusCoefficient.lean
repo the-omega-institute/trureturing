@@ -58,9 +58,7 @@ private lemma block_union_injective (P : Finpartition s) {U V : Finset (Finset �
 
 private lemma block_union_nonempty (P : Finpartition s) {U : Finset (Finset α)}
     (hU : U ⊆ P.parts) (hne : U.Nonempty) : (blockUnion U).Nonempty := by
-  obtain ⟨b, hb⟩ := hne
-  obtain ⟨x, hx⟩ := P.nonempty_of_mem_parts (hU hb)
-  exact ⟨x, mem_biUnion.mpr ⟨b, hb, hx⟩⟩
+  exact hne.biUnion fun b hb => P.nonempty_of_mem_parts (hU hb)
 
 /-- Flatten a partition of the actual blocks into a coarsening of the original partition. -/
 private def coarsen (P : Finpartition s) (Q : Finpartition P.parts) : Finpartition s := by
@@ -124,11 +122,6 @@ private lemma block_union_group (P R : Finpartition s) (hPR : P ≤ R)
     obtain ⟨d, hd, hcd⟩ := hPR hc
     have hdb : d = b := R.eq_of_mem_parts hd hb (hcd hxc) hx
     exact mem_biUnion.mpr ⟨c, mem_filter.mpr ⟨hc, hdb ▸ hcd⟩, hxc⟩
-
-private lemma block_group_injective (P R : Finpartition s) (hPR : P ≤ R)
-    {a b : Finset α} (ha : a ∈ R.parts) (hb : b ∈ R.parts)
-    (h : blockGroup P a = blockGroup P b) : a = b := by
-  rw [← block_union_group P R hPR ha, ← block_union_group P R hPR hb, h]
 
 private lemma block_group_nonempty (P R : Finpartition s) (hPR : P ≤ R)
     {b : Finset α} (hb : b ∈ R.parts) : (blockGroup P b).Nonempty := by
@@ -250,21 +243,21 @@ private lemma insert_point_part (P : Finpartition s) (ha : a ∉ s)
     (insertPoint P ha b hb).part a = insert a b := by
   exact (insertPoint P ha b hb).part_eq_of_mem (mem_insert_self _ _) (mem_insert_self _ _)
 
-private def erasePoint (R : Finpartition (insert a s)) (ha : a ∉ s) : Finpartition s :=
-  (R.avoid {a}).copy (by
-    change (insert a s) \ {a} = s
-    rw [sdiff_singleton_eq_erase, erase_insert ha])
+local notation "erasePoint" =>
+  (fun {s : Finset α} {a : α} (R : Finpartition (insert a s)) (ha : a ∉ s) =>
+    Finpartition.copy (Finpartition.avoid R (Singleton.singleton a))
+      (Eq.trans (sdiff_singleton_eq_erase a (insert a s)) (erase_insert ha)))
 
 @[simp] private lemma erase_point_parts (R : Finpartition (insert a s)) (ha : a ∉ s) :
     (erasePoint R ha).parts = (R.parts.image (fun b => b.erase a)).erase ∅ := by
-  simp [erasePoint, Finpartition.avoid, Finpartition.ofErase, Finpartition.copy,
+  simp [Finpartition.avoid, Finpartition.ofErase, Finpartition.copy,
     sdiff_singleton_eq_erase]
 
-private lemma erase_point_insertPoint (P : Finpartition s) (ha : a ∉ s)
+private lemma erase_point_insert_point (P : Finpartition s) (ha : a ∉ s)
     (b : Finset α) (hb : b ∈ insert ∅ P.parts) :
     erasePoint (insertPoint P ha b hb) ha = P := by
   apply Finpartition.ext
-  rw [erase_point_parts, insert_point_parts, image_insert]
+  rw [erase_point_parts _ ha, insert_point_parts, image_insert]
   have hab : a ∉ b := fun h => ha (choice_subset P hb h)
   rw [erase_insert hab]
   have himage : (P.parts.erase b).image (fun c => c.erase a) = P.parts.erase b := by
@@ -282,14 +275,14 @@ private lemma erased_part_choice (R : Finpartition (insert a s)) (ha : a ∉ s) 
   by_cases hzero : (R.part a).erase a = ∅
   · exact mem_insert.mpr (Or.inl hzero)
   · apply mem_insert_of_mem
-    rw [erase_point_parts]
+    rw [erase_point_parts R ha]
     exact mem_erase.mpr ⟨hzero, mem_image.mpr
       ⟨R.part a, R.part_mem.mpr (mem_insert_self _ _), rfl⟩⟩
 
-private lemma insert_point_erasePoint (R : Finpartition (insert a s)) (ha : a ∉ s) :
+private lemma insert_point_erase_point (R : Finpartition (insert a s)) (ha : a ∉ s) :
     insertPoint (erasePoint R ha) ha ((R.part a).erase a) (erased_part_choice R ha) = R := by
   apply Finpartition.ext
-  rw [insert_point_parts, erase_point_parts,
+  rw [insert_point_parts, erase_point_parts R ha,
     insert_erase (R.mem_part_self.mpr (mem_insert_self _ _))]
   have hpart : R.part a ∈ R.parts := R.part_mem.mpr (mem_insert_self _ _)
   have haP : a ∈ R.part a := R.mem_part_self.mpr (mem_insert_self _ _)
@@ -328,15 +321,15 @@ private def insertionEquiv (s : Finset α) (a : α) (ha : a ∉ s) :
     rcases C with ⟨P, b, hb⟩
     dsimp only
     have hab : a ∉ b := fun h => ha (choice_subset P hb h)
-    apply Sigma.ext (erase_point_insertPoint P ha b hb)
+    apply Sigma.ext (erase_point_insert_point P ha b hb)
     apply (Subtype.heq_iff_coe_eq (by
       intro x
       change x ∈ insert ∅ (erasePoint (insertPoint P ha b hb) ha).parts ↔
         x ∈ insert ∅ P.parts
-      rw [erase_point_insertPoint])).mpr
+      rw [erase_point_insert_point])).mpr
     change ((insertPoint P ha b hb).part a).erase a = b
     rw [insert_point_part, erase_insert hab]
-  right_inv R := insert_point_erasePoint R ha
+  right_inv R := insert_point_erase_point R ha
 
 private lemma insert_point_card (P : Finpartition s) (ha : a ∉ s)
     (b : Finset α) (hb : b ∈ insert ∅ P.parts) :
@@ -355,7 +348,7 @@ private lemma weight_cancel (k : ℕ) (hk : 0 < k) :
     weight (k + 1) + k * weight k = 0 := by
   obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hk)
   simp only [Nat.succ_sub_succ_eq_sub, Nat.sub_zero,
-    Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, Nat.cast_succ, pow_succ]
+    Nat.factorial_succ, Nat.cast_mul, Nat.cast_succ, pow_succ]
   ring
 
 private theorem partition_sum_insert (s : Finset α) (a : α) (ha : a ∉ s) (w : ℕ → ℤ) :
@@ -388,7 +381,7 @@ private theorem partition_weight_sum_zero (s : Finset α) (a : α)
 
 private lemma partition_weight_sum_singleton (a : α) :
     (∑ Q : Finpartition ({a} : Finset α), weight Q.parts.card) = 1 := by
-  letI := (isAtom_singleton a).uniqueFinpartition (P := (⊤ : Finpartition ({a} : Finset α)))
+  let := (isAtom_singleton a).uniqueFinpartition (P := (⊤ : Finpartition ({a} : Finset α)))
   have hp (P : Finpartition ({a} : Finset α)) : P.parts.card = 1 := by
     have hlo : 0 < P.parts.card := card_pos.mpr
       (P.parts_nonempty (singleton_nonempty a).ne_empty)
@@ -452,7 +445,7 @@ theorem partition_mobius_coefficient (s : Finset α) (hs : s.Nonempty)
   have hsum (Q : Finpartition s) :
       (if Q = ⊤ then (1 : R) else 0) =
         ∑ T ∈ Ici Q, (-1 : R) ^ (T.parts.card - 1) * ((T.parts.card - 1).factorial : R) := by
-    rw [sum_subtype (Ici Q) (fun _ => mem_Ici)]
+    rw [sum_subtype (p := fun T : Finpartition s => Q ≤ T) (Ici Q) (fun _ => mem_Ici)]
     have h := congrArg (Int.castRingHom R) (weighted_coarsening_cancellation s hs Q)
     simpa using h.symm
   have h := IncidenceAlgebra.moebius_inversion_top
