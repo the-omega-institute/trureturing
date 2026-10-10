@@ -549,7 +549,6 @@ private lemma finite_reset_weak_state
     (z : ℝ) (hz : A false ≤ z) (hh : z ≤ h false) :
     Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
       ((vs.map (fun v => Statement.reset M hM::v)).flatten) z := by
-  have he : Statement.B M=Statement.B M := by simp [Statement.B,Statement.B,closedRun]
   have hp := parameters false
   have hA := A_nonneg
   induction vs generalizing z with
@@ -558,7 +557,7 @@ private lemma finite_reset_weak_state
       have hv := hvs v (by simp)
       have hr := run_bounds false (Statement.reset M hM) z (hA.trans hz) hh
       have hresetz : Statement.B M  ≤  run false (Statement.reset M hM) z := by
-        rw [he,run_closed]
+        rw [run_closed]
         exact reset_lifts M z hz
       have hweak := weak_gain K d (Statement.B M-initial false anchor)
         (initial false anchor) (run false (Statement.reset M hM) z) v

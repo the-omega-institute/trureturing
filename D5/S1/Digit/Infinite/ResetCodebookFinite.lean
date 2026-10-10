@@ -687,9 +687,7 @@ theorem reset_actual_family (anchor : Bool) (K M N : ℕ) (b d : ℝ)
   have hbeq : b=lambda-g^2*chi^K*d := by
     have hdeq := (eq_div_iff (ne_of_gt hfac)).mp hd
     nlinarith
-  have hb0 : Statement.B M=resetFloor M := by simp [Statement.B,resetFloor,closedRun]
   have hinit : initial false anchor < resetFloor M := by
-    rw [hb0] at hreset
     cases anchor
     · exact (le_max_left _ _).trans_lt hreset
     · exact (le_max_right _ _).trans_lt hreset
@@ -698,7 +696,7 @@ theorem reset_actual_family (anchor : Bool) (K M N : ℕ) (b d : ℝ)
   have hauto : Statement.autoCost K < b := (automatic_strict K hK).trans hb
   let eps := Statement.actualEps anchor K M N b
   have hepsEq : eps=min (b-Statement.autoCost K) (g^2*chi^K*gain)/2 := by
-    simp only [eps,Statement.actualEps,hb0,gain,initial]
+    simp only [eps,Statement.actualEps,gain,initial]
     ring
   have hgp : 0 < g^2*chi^K*gain := mul_pos hfac hgain
   have he : 0 < eps := by rw [hepsEq]; exact div_pos (lt_min (sub_pos.mpr hauto) hgp) (by norm_num)
@@ -720,7 +718,7 @@ theorem reset_actual_family (anchor : Bool) (K M N : ℕ) (b d : ℝ)
     apply max_le <;> linarith
   obtain ⟨src,hs⟩ := actual_all_slots anchor exec
   have hw' : Statement.weak K (d+(Statement.B M-initial false anchor)*g^N) exec (initial false anchor) := by
-    simpa only [hb0,gain] using hw
+    simpa only [gain] using hw
   refine ⟨hw',src,?_⟩
   intro low
   have hc := ((hs low).2.2.2.2).trans (hbud low)

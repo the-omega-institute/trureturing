@@ -458,14 +458,12 @@ private theorem reset_weak_at_cut
     Statement.weak K (d+(Statement.B M-initial false anchor)*g^N)
       v (run false (Statement.reset M hM) (stateRec w p)) := by
   have hh := (stateRec_interval w p).2
-  have hb : Statement.B M = Statement.B M := by
-    simp [Statement.B, Statement.B, closedRun]
   have hz : Statement.B M ≤ run false (Statement.reset M hM) (stateRec w p) := by
     rw [run_closed]
     exact reset_lifts M _ hfloor
   have hg := weak_gain K d (Statement.B M-initial false anchor)
     (initial false anchor) (run false (Statement.reset M hM) (stateRec w p)) v
-    (sub_pos.mpr hreset) (by rw [hb]; linarith) hv.2
+    (sub_pos.mpr hreset) (by linarith) hv.2
   have hweight : Statement.weight v = N := hv.1
   simpa only [hweight] using hg
 end D5.S1.Digit.Infinite.ResetCodebook.Coding
