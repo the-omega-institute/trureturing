@@ -87,7 +87,7 @@ theorem positive_map_hermitian
     PositiveLinearMap.mk₀ Phi (fun X h => (hPhi X h.posSemidef).nonneg)
   exact hH.isSelfAdjoint.map' F
 
-theorem kadison_finite_weights
+private theorem kadison_finite_weights
     {k : Type*} [Fintype k] (A : k → Matrix (Fin m) (Fin m) ℂ)
     (lambda : k → ℝ) (hA : ∀ i, (A i).PosSemidef) (h1 : ∑ i, A i = 1) :
     (∑ i, (lambda i : ℂ) • A i) * (∑ i, (lambda i : ℂ) • A i) ≤
