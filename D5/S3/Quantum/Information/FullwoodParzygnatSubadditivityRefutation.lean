@@ -186,12 +186,7 @@ private theorem entropy_eq_trace {n : Type} [Fintype n] [DecidableEq n]
     D5.S3.Quantum.Information.PartialTraceMutualInformation.spectralEntropy h else 0) = _
   by_cases h : X.IsHermitian
   · rw [dif_pos h]
-    run_tac
-      let owner := `D5.S3.Quantum.Information.PartialTraceMutualInformation
-      let traceIdentity := Lean.mkIdent
-        ((Lean.Name.num (`_private ++ owner) 0) ++ owner ++ `re_trace_cfc)
-      let hermitian := Lean.mkIdent `h
-      Lean.Elab.Tactic.evalTactic (← `(tactic| rw [$traceIdentity:ident $hermitian:ident]))
+    rw [D5.S3.Quantum.Information.PartialTraceMutualInformation.re_trace_cfc h]
     change (∑ i, Real.negMulLog (h.eigenvalues i)) =
       ∑ i, -h.eigenvalues i * Real.log |h.eigenvalues i|
     apply Finset.sum_congr rfl

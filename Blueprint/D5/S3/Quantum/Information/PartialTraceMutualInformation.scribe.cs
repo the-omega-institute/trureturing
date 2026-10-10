@@ -37,6 +37,13 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                 "The right partial trace preserves trace",
                 "Together with positivity, trace preservation gives a normalized marginal.",
                 TraceFormula("partialTraceRight")),
+            Result("functional-calculus-trace", "re_trace_cfc",
+                "Functional calculus traces sum over eigenvalues",
+                "For a Hermitian matrix on a finite carrier and any real function f, "
+                    + "the real part of the trace of cfc f A is the sum of f over its "
+                    + "eigenvalues. Unitary conjugation preserves trace, reducing the "
+                    + "identity to the diagonal matrix of eigenvalue images.",
+                FunctionalCalculusTraceFormula()),
             Describe.Lean(
                 DescribeId.Create("spectral-entropy"),
                 DeclarationHandle.Create(Module + "spectralEntropy"),
@@ -107,6 +114,30 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
         Forall, Sp, F.Id("M"), Comma, Sp,
         Call("trace", Call(partialTrace, F.Id("M"))), Sp, Eq, Sp,
         Call("trace", F.Id("M"))));
+
+    private static Formula FunctionalCalculusTraceFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("A"), h = F.Id("h"), f = F.Id("f"), i = F.Id("i");
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula matrix = Call("Matrix", n, n, Seq(Mathbb, Grp(F.Id("C"))));
+        Formula hermitian = Seq(Operatorname,
+            Grp(F.Id("Matrix"), Dot, F.Id("IsHermitian")));
+        Formula eigenvalues = Seq(Operatorname,
+            Grp(F.Id("Matrix"), Dot, F.Id("IsHermitian"), Dot, F.Id("eigenvalues")));
+        Formula body = Seq(Call("re", Call("trace", Call("cfc", f, a))), Sp, Eq, Sp,
+            Sum, Underscore, Grp(i, Colon, n), Sp,
+            new Formula.Apply(f, [new Formula.Apply(eigenvalues, [h, i])]));
+        body = new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("f"), Seq(real, Sp, Rightarrow, Sp, real), body);
+        body = new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("h"), new Formula.Apply(hermitian, [a]), body);
+        body = new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("A"), matrix, body);
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("n"), Seq(Operatorname, Grp(F.Id("Type"))),
+            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, body)));
+    }
 
     private static Formula MutualInformationFormula() => Disp(Seq(
         Call("quantumMutualInformation", Rho), Sp, Eq, Sp,
