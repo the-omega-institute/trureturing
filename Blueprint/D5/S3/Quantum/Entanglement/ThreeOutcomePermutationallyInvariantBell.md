@@ -130,6 +130,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ThreeOutcomePermutationallyInvariantBell.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/aloy-mullerrigat-tura-fadel-2024-three-outcome-pibi-validity` (proved) by `D5/S3/Quantum/Entanglement/ThreeOutcomePermutationallyInvariantBell.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"aloy-mullerrigat-tura-fadel-2024-three-outcome-pibi-validity","declaration_gid":"D5/S3/Quantum/Entanglement/ThreeOutcomePermutationallyInvariantBell.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Aloy; G. Müller-Rigat; J. Tura; M. Fadel (2024). *Deriving three-outcome permutationally invariant Bell inequalities*. DOI: [10.3390/e26100816](https://doi.org/10.3390/e26100816). URL: <https://arxiv.org/abs/2406.11792v1>.

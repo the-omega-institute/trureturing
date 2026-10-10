@@ -57,7 +57,10 @@ internal sealed class ThreeOutcomePermutationallyInvariantBellDocument : IScribe
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "All five Bell inequalities are valid", Disp(Call("claim")),
                 "Every normalized finite local hidden-variable model satisfies all five inequalities. Independent local choices at both inputs give a distribution on deterministic strategies. The one-party and distinct-party two-party moments reproduce the responses, so the Bell expression is their weighted average. At a deterministic strategy, the nine outcome-pair counts give the Table II formulas. Row 2 is a square plus twice the joint count K. Row 3 separates the small marginal-count cases from a sum of squares and nonnegative products. Rows 4 and 5 reduce to a quadratic G on three natural numbers, nonnegative by the cases k = 0, k = 1 and k >= 2. The argument for the finite local model uses no lower bound on N; in particular it applies for every N >= 1. Validity alone asserts neither that these inequalities are facets nor that quantum correlations violate them.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("aloy-mullerrigat-tura-fadel-2024-three-outcome-pibi-validity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
