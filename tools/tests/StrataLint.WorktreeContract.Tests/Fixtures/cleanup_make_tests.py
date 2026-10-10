@@ -1,5 +1,6 @@
 """Canonical cleanup Make entrances with current production CLI, Git and OS."""
 
+import codecs
 import json
 import os
 from pathlib import Path
@@ -19,11 +20,28 @@ INVOCATION = sys.argv.pop(1)
 
 
 class CleanupMakeTests(unittest.TestCase):
+    def mark_phase(self, phase):
+        now = time.monotonic()
+        if hasattr(self, "phase_started"):
+            print(json.dumps(dict(event="fixture_phase", phase=self.active_phase,
+                                  elapsed_seconds=now - self.phase_started,
+                                  fixture_elapsed_seconds=now - self.fixture_started,
+                                  commands=self.phase_commands)), flush=True)
+        self.active_phase = phase
+        self.phase_started = now
+        self.phase_commands = []
+        print(json.dumps(dict(event="fixture_phase", phase=phase, status="started",
+                              fixture_elapsed_seconds=now - self.fixture_started)), flush=True)
+
     def dispose_workspace(self):
+        self.mark_phase("dispose")
         if self.commands_settled:
             shutil.rmtree(self.root)
         else:
             print(json.dumps(dict(event="fixture_inputs_retained", path=str(self.root))), flush=True)
+        print(json.dumps(dict(event="fixture_phase", phase="dispose",
+                              elapsed_seconds=time.monotonic() - self.phase_started,
+                              fixture_elapsed_seconds=time.monotonic() - self.fixture_started)), flush=True)
 
     @staticmethod
     def group_snapshot(group):
@@ -48,20 +66,52 @@ class CleanupMakeTests(unittest.TestCase):
                                        stdin=stdin, stdout=stdout, stderr=stderr,
                                        start_new_session=True)
             evidence = dict(event="fixture_command", phase=phase, command=arguments, cwd=cwd,
-                            pid=process.pid, guard_seconds=120)
-            if phase != "git":
-                print(json.dumps(dict(evidence, status="started")), flush=True)
+                            pid=process.pid, guard_seconds=120,
+                            fixture_elapsed_seconds=started - self.fixture_started)
+            print(json.dumps(dict(evidence, status="started")), flush=True)
             expired = False
             interrupted = None
             before = []
             settlement_error = None
+            offsets = [0, 0]
+            decoders = [codecs.getincrementaldecoder("utf-8")(errors="replace") for _ in offsets]
+            def emit_partial(final=False):
+                for index, (stream, name) in enumerate(((stdout, "stdout"), (stderr, "stderr"))):
+                    data = os.pread(stream.fileno(), os.fstat(stream.fileno()).st_size - offsets[index],
+                                    offsets[index])
+                    offsets[index] += len(data)
+                    text = decoders[index].decode(data, final=final)
+                    if text:
+                        print(json.dumps(dict(event="fixture_command_output", phase=phase,
+                                              command=arguments, pid=process.pid, stream=name,
+                                              output=text, byte_offset=offsets[index],
+                                              fixture_elapsed_seconds=time.monotonic() - self.fixture_started)),
+                              flush=True)
             try:
-                process.wait(timeout=120)
-            except subprocess.TimeoutExpired:
-                expired = True
+                deadline = started + 120
+                last_snapshot = 0
+                while process.poll() is None:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        expired = True
+                        break
+                    try:
+                        process.wait(timeout=min(1, remaining))
+                    except subprocess.TimeoutExpired:
+                        pass
+                    emit_partial()
+                    now = time.monotonic()
+                    if process.poll() is None and now - self.fixture_started >= 165 and now - last_snapshot >= 5:
+                        print(json.dumps(dict(evidence, event="fixture_native_wait", status="running",
+                                              elapsed_seconds=now - started,
+                                              fixture_elapsed_seconds=now - self.fixture_started,
+                                              native=self.group_snapshot(process.pid))), flush=True)
+                        last_snapshot = now
             except BaseException as error:
                 interrupted = error
             finally:
+                execution_elapsed = time.monotonic() - started
+                snapshot_started = time.monotonic()
                 # Only this newly created process group is signalled. Other participants
                 # and reused external services have independent OS lifetimes.
                 try:
@@ -69,6 +119,7 @@ class CleanupMakeTests(unittest.TestCase):
                         before = self.group_snapshot(process.pid)
                     except (OSError, subprocess.SubprocessError) as error:
                         evidence["snapshot_error"] = repr(error)
+                    snapshot_elapsed = time.monotonic() - snapshot_started
                     for signum in (signal.SIGTERM, signal.SIGKILL):
                         try:
                             os.killpg(process.pid, signum)
@@ -95,15 +146,23 @@ class CleanupMakeTests(unittest.TestCase):
                 except BaseException as error:
                     self.commands_settled = False
                     settlement_error = repr(error)
+            settlement_elapsed = time.monotonic() - started - execution_elapsed
+            emit_partial(final=True)
             stdout.seek(0)
             stderr.seek(0)
             output, errors = stdout.read(), stderr.read()
         evidence.update(status="deadline" if expired else "exited", returncode=process.returncode,
-                        elapsed_seconds=time.monotonic() - started, native_before=before)
+                        elapsed_seconds=time.monotonic() - started, native_before=before,
+                        execution_seconds=execution_elapsed, settlement_seconds=settlement_elapsed,
+                        snapshot_seconds=time.monotonic() - snapshot_started if settlement_error else snapshot_elapsed)
+        self.phase_commands.append(dict(phase=phase, command=arguments,
+                                        elapsed_seconds=evidence["elapsed_seconds"],
+                                        execution_seconds=execution_elapsed,
+                                        settlement_seconds=settlement_elapsed,
+                                        snapshot_seconds=evidence["snapshot_seconds"]))
         if settlement_error is not None:
             evidence.update(status="unsettled", error=settlement_error, inputs_retained=str(self.root))
-        if phase != "git" or expired or process.returncode != 0 or settlement_error is not None:
-            print(json.dumps(evidence), flush=True)
+        print(json.dumps(evidence), flush=True)
         if settlement_error is not None or expired or process.returncode != 0:
             self.fail(json.dumps(dict(evidence, stdout=output, stderr=errors)))
         if interrupted is not None:
@@ -116,6 +175,8 @@ class CleanupMakeTests(unittest.TestCase):
         return self.run_command(["git", *arguments], cwd, input).stdout.strip()
 
     def setUp(self):
+        self.fixture_started = time.monotonic()
+        self.mark_phase("initialize")
         self.commands_settled = True
         self.root = Path(tempfile.mkdtemp(prefix="cleanup-make-")).resolve()
         self.addCleanup(self.dispose_workspace)
@@ -146,6 +207,7 @@ class CleanupMakeTests(unittest.TestCase):
         self.git("fast-import", "--quiet", input="".join(history))
         self.git("reset", "--hard", "dev")
         self.git("push", "origin", "dev")
+        self.mark_phase("source-copy")
         # Copy current build inputs, not another revision or an installed CLI substitute.
         files = subprocess.check_output(["git", "ls-files", "-z", "tools"], cwd=SOURCE).split(b"\0")
         paths = [Path(os.fsdecode(name)) for name in files if name]
@@ -154,8 +216,10 @@ class CleanupMakeTests(unittest.TestCase):
             target = self.repository / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(SOURCE / relative, target)
+        self.mark_phase("canonical-build")
         self.run_command(["make", "--no-print-directory", "-C", self.repository / "tools", "dotnet",
                           "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], phase="canonical-build")
+        self.mark_phase("preservation-lanes")
         self.dirty = self.add_lane("dirty")
         (self.dirty / "owned").write_text("unpublished dirty\n")
         (self.dirty / "untracked").write_text("unpublished untracked\n")
@@ -168,6 +232,7 @@ class CleanupMakeTests(unittest.TestCase):
         (self.cache / ".lake").mkdir()
         (self.cache / ".lake/unknown").write_text("uncertified cache\n")
         self.busy = self.add_lane("busy")
+        self.mark_phase("participant-start")
         self.job = subprocess.Popen([sys.executable, "-B",
             str(self.repository / "tools/scripts/worktree/worktree_protocol.py"),
             "--source", str(self.repository), "with", "--path", str(self.busy), "--",
@@ -179,6 +244,7 @@ class CleanupMakeTests(unittest.TestCase):
         self.assertEqual("ready\n", self.job.stdout.readline())
 
     def stop_job(self):
+        self.mark_phase("participant-stop")
         if self.job.poll() is None:
             self.job.stdin.write("finish\n")
             self.job.stdin.flush()
@@ -234,6 +300,7 @@ class CleanupMakeTests(unittest.TestCase):
         for index, (options, target, cwd) in enumerate(entrances):
             with self.subTest(target=target, options=list(map(str, options))):
                 name = "eligible-" + str(index)
+                self.mark_phase("eligible-lane")
                 eligible = self.add_lane(name)
                 arguments = ["make", "--no-print-directory", *options, target, "BASE=dev"]
                 if target == "clean-all":
@@ -241,13 +308,16 @@ class CleanupMakeTests(unittest.TestCase):
                                   "CLEAN_SSHX_HOME=" + str(self.root / "sshx"),
                                   "CLEAN_TMP_ROOT=" + self.environment["TMPDIR"], "VERBOSE=1"]
                 if target != "worktree-clean":
+                    self.mark_phase(target + ":preview")
                     preview = self.run_command(arguments, cwd, phase=target + ":preview")
                     preview_events = self.events(preview)
                     item = next(item for item in preview_events if item.get("path") == str(eligible))
                     self.assertEqual("would_remove", item["action"], item)
                     self.assertTrue(eligible.exists())
                     self.assert_retained(preview_events)
+                self.mark_phase(target + ":force")
                 removed = self.run_command(arguments + ["FORCE=1"], cwd, phase=target + ":force")
+                self.mark_phase("production-assertions")
                 events = self.events(removed)
                 item = next(item for item in events if item.get("path") == str(eligible))
                 self.assertEqual("removed", item["action"], item)
@@ -270,10 +340,13 @@ class CleanupMakeTests(unittest.TestCase):
 class CommandLifetimeTests(unittest.TestCase):
     # Exercise the exact cleanup-fixture consumer, without copying/building another CLI.
     run_command = CleanupMakeTests.run_command
+    mark_phase = CleanupMakeTests.mark_phase
     group_snapshot = staticmethod(CleanupMakeTests.group_snapshot)
     dispose_workspace = CleanupMakeTests.dispose_workspace
 
     def setUp(self):
+        self.fixture_started = time.monotonic()
+        self.mark_phase("native-lifetime")
         self.commands_settled = True
         self.root = Path(tempfile.mkdtemp(prefix="cleanup-lifetime-")).resolve()
         self.repository = self.root

@@ -2,6 +2,7 @@ using System.Text;
 using Xunit.Abstractions;
 using StrataLint.Runtime;
 using StrataLint.Engine;
+using Xunit;
 
 namespace StrataLint.WorktreeContract.Tests;
 
@@ -20,13 +21,12 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
-        var result = TestProcessRunner.Run("python3",
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
                 root, sourcePath, entrance, invocation, "CleanupMakeTests"],
-            root, TimeSpan.FromSeconds(180), 1024 * 1024);
-        output.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
-        output.WriteLine(Encoding.UTF8.GetString(result.StandardError));
+            root, TimeSpan.FromSeconds(180), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
@@ -40,15 +40,60 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
-        var result = TestProcessRunner.Run("python3",
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
                 root, "plain", "clean-lanes", "directory", "CommandLifetimeTests.test_" + mode],
-            root, TimeSpan.FromSeconds(180), 1024 * 1024);
-        output.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
-        output.WriteLine(Encoding.UTF8.GetString(result.StandardError));
+            root, TimeSpan.FromSeconds(180), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr), output.WriteLine);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    private static ProcessOutput CaptureCleanupOutput(
+        Func<Stream, Stream, ProcessOutput> run, Action<string> publish)
+    {
+        using var stdout = new MemoryStream();
+        using var stderr = new MemoryStream();
+        using var stdoutSink = Stream.Synchronized(stdout);
+        using var stderrSink = Stream.Synchronized(stderr);
+        try
+        {
+            return run(stdoutSink, stderrSink);
+        }
+        finally
+        {
+            // The runner can throw before returning its buffered ProcessOutput.
+            // Its existing destinations preserve bytes already read on every exit path.
+            lock (stdout) publish(Encoding.UTF8.GetString(stdout.ToArray()));
+            lock (stderr) publish(Encoding.UTF8.GetString(stderr.ToArray()));
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CleanupFixturePublishesEvidenceBeforeOuterGuardReturns(bool deadline)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var captured = new List<string>();
+        var root = TestRepositoryLayout.FindRoot();
+        ProcessOutput Run(Stream stdout, Stream stderr) => TestProcessRunner.Run("/bin/sh",
+            ["-c", "printf 'phase=owned-command partial-output\\n'; " +
+                "printf 'partial-error\\n' >&2; " + (deadline ? "exec sleep 600" : "exit 7")],
+            root, TimeSpan.FromSeconds(1), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr);
+        if (deadline)
+        {
+            var failure = Assert.Throws<SkipException>(() => CaptureCleanupOutput(Run, captured.Add));
+            Assert.StartsWith(InfrastructureHangGuard.SkipReasonPrefix, failure.Message);
+        }
+        else
+        {
+            Assert.Equal(7, CaptureCleanupOutput(Run, captured.Add).ExitCode);
+        }
+        Assert.Equal(["phase=owned-command partial-output\n", "partial-error\n"], captured);
+        foreach (var item in captured) output.WriteLine(item);
     }
 
     [Theory]
