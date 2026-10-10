@@ -1,3 +1,4 @@
+import Reg.D5.S1.Digit.Infinite.ResetCodebookModel.TransferBounds
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.Infinite.ResetCodebookModel
 import Reg.Support.DependentFamily
@@ -151,7 +152,7 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookModel.LiteralTail
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookModel.ActualPair
 abbrev signature : Signature where
-  Params := Bool × List Return × Bool
+  Params := Σ _ : Bool, Σ _ : List Return, Bool
   State _ := LegalDigits
   Role := Unit
   finiteRole := inferInstance
@@ -171,7 +172,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (anchor : Bool) (exec : List Return), ∃ src : Bool → LegalDigits, ∀ low,
   stateAddress false (src low) ∧ finiteTail (src low) ∧
-  R.readout () (anchor,exec,low) (src low) ∧
+  R.readout () ⟨anchor,exec,low⟩ (src low) ∧
   kappa (src low) = wordScalar (sourcePrefix low anchor exec) (kappa (literalTail low))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -191,7 +192,7 @@ def registration : Registration arena sourceStatement where
   dependence := by
     intro i
     obtain ⟨src,hs⟩ := actual_pair false []
-    refine ⟨(false,[],false),src false,zeroAddress,?_⟩
+    refine ⟨⟨false,[],false⟩,src false,zeroAddress,?_⟩
     intro he
     have hp : addressPrefix (sourcePrefix false false []) zeroAddress (literalTail false) :=
       Eq.mp he (hs false).2.2.1

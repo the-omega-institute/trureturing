@@ -1,3 +1,5 @@
+import Reg.D5.S1.Digit.Infinite.ResetCodebookGrowth.Spectral
+import Reg.D5.S1.Digit.Infinite.ResetCodebookGrowth.CostBounds
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.Infinite.ResetCodebookGrowth
 import Reg.Support.DependentFamily

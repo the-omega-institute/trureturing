@@ -1,3 +1,4 @@
+import Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.ParameterBounds
 import Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.StateBounds
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.Infinite.ResetCodebookFinite
@@ -80,7 +81,7 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.Memory
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakGain
 abbrev signature : Signature where
-  Params := ℕ × ℝ × ℝ × List Return
+  Params := Σ _ : ℕ, Σ _ : ℝ, Σ _ : ℝ, List Return
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -99,7 +100,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (K : ℕ) (d delta x y : ℝ) (as : List Return),
   0 < delta → x+delta ≤ y → Statement.weak K d as x →
-  R.readout () (K,d,delta,as) y
+  R.readout () ⟨K,d,delta,as⟩ y
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h 0 0 1 0 1 [] (by norm_num) (by norm_num) trivial
@@ -116,11 +117,11 @@ def registration : Registration arena sourceStatement where
     · intro e; exact nomatch e
   dependence := by
     intro i
-    let a : Return := ⟨(1,1),by decide⟩
+    let a : Return := ⟨⟨1,1⟩,by decide⟩
     let q : ℝ := g^(Statement.weight [a])
-    refine ⟨(1,0,1,[a]),q,q-1,?_⟩
+    refine ⟨⟨1,0,1,[a]⟩,q,q-1,?_⟩
     intro he
-    have hp : actual.readout i (1,0,1,[a]) q := by
+    have hp : actual.readout i ⟨1,0,1,[a]⟩ q := by
       change Statement.weak 1 (0+1*q) [a] q
       simp [Statement.weak,a]
     have hb := Eq.mp he hp
@@ -156,7 +157,7 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakGain
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakAppend
 abbrev signature : Signature where
-  Params := ℕ × ℝ × ℝ
+  Params := Σ _ : ℕ, Σ _ : ℝ, ℝ
   State _ := List Return
   Role := Unit
   finiteRole := inferInstance
@@ -175,7 +176,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (K : ℕ) (q : ℝ) (as bs : List Return) (z : ℝ),
   Statement.weak K q as z → Statement.weak K q bs (execute false as z) →
-  R.readout () (K,q,z) (as++bs)
+  R.readout () ⟨K,q,z⟩ (as++bs)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h 0 0 [] [] 0 trivial trivial
@@ -192,10 +193,10 @@ def registration : Registration arena sourceStatement where
     · intro e; exact nomatch e
   dependence := by
     intro i
-    let a : Return := ⟨(1,1),by decide⟩
-    refine ⟨(0,0,0),[],[a],?_⟩
+    let a : Return := ⟨⟨1,1⟩,by decide⟩
+    refine ⟨⟨0,0,0⟩,[],[a],?_⟩
     intro he
-    have hb := Eq.mp he (show actual.readout i (0,0,0) [] from trivial)
+    have hb := Eq.mp he (show actual.readout i ⟨0,0,0⟩ [] from trivial)
     change Statement.weak 0 0 [a] 0 at hb
     norm_num [Statement.weak,a] at hb
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

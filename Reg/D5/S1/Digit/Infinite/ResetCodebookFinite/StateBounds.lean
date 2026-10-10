@@ -12,7 +12,7 @@ noncomputable section
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.execute_bounds
 abbrev signature : Signature where
-  Params := Bool × List Return
+  Params := Σ _ : Bool, List Return
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -29,7 +29,7 @@ def sourceStatement : Prop := ∀ (low : Bool) (as : List Return) (D : ℝ),
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (low : Bool) (as : List Return) (D : ℝ),
-  0 ≤ D → D ≤ h low → 0 ≤ R.readout () (low,as) D ∧ execute low as D ≤ h low
+  0 ≤ D → D ≤ h low → 0 ≤ R.readout () ⟨low,as⟩ D ∧ execute low as D ≤ h low
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   have hb := (hh false [] 0 le_rfl (parameters false).2.2.2.2.1.le).1
@@ -48,7 +48,7 @@ def registration : Registration arena sourceStatement where
     · intro e; exact nomatch e
   dependence := by
     intro i
-    refine ⟨(false,[]),(0 : ℝ),(1 : ℝ),?_⟩
+    refine ⟨⟨false,[]⟩,(0 : ℝ),(1 : ℝ),?_⟩
     norm_num [actual,realize,execute]
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.execute_bounds)
@@ -79,7 +79,7 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.execute_bounds
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.execute_floor
 abbrev signature : Signature where
-  Params := Bool × List Return
+  Params := Σ _ : Bool, List Return
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -96,7 +96,7 @@ def sourceStatement : Prop := ∀ (low : Bool) (as : List Return) (D : ℝ),
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (low : Bool) (as : List Return) (D : ℝ),
-  A low ≤ D → D ≤ h low → A low ≤ R.readout () (low,as) D
+  A low ≤ D → D ≤ h low → A low ≤ R.readout () ⟨low,as⟩ D
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
   have hp := parameters false
@@ -119,7 +119,7 @@ def registration : Registration arena sourceStatement where
     · intro e; exact nomatch e
   dependence := by
     intro i
-    refine ⟨(false,[]),(0 : ℝ),(1 : ℝ),?_⟩
+    refine ⟨⟨false,[]⟩,(0 : ℝ),(1 : ℝ),?_⟩
     norm_num [actual,realize,execute]
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.Infinite.ResetCodebook.execute_floor)
@@ -150,7 +150,7 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.execute_floor
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.run_bounds
 abbrev signature : Signature where
-  Params := Bool × Return
+  Params := Σ _ : Bool, Return
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -167,10 +167,10 @@ def sourceStatement : Prop := ∀ (low : Bool) (a : Return) (D : ℝ), 0 ≤ D �
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (low : Bool) (a : Return) (D : ℝ), 0 ≤ D → D ≤ h low →
-  0 ≤ R.readout () (low,a) D ∧ run low a D ≤ h low
+  0 ≤ R.readout () ⟨low,a⟩ D ∧ run low a D ≤ h low
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
-  have hb := (hh false ⟨(1,1),by decide⟩ 0 le_rfl (parameters false).2.2.2.2.1.le).1
+  have hb := (hh false ⟨⟨1,1⟩,by decide⟩ 0 le_rfl (parameters false).2.2.2.2.1.le).1
   change (0 : ℝ) ≤ -1 at hb
   norm_num at hb
 def registration : Registration arena sourceStatement where
@@ -186,8 +186,8 @@ def registration : Registration arena sourceStatement where
     · intro e; exact nomatch e
   dependence := by
     intro i
-    refine ⟨(false,⟨(1,1),by decide⟩),(0 : ℝ),(1 : ℝ),?_⟩
-    change run false ⟨(1,1),by decide⟩ 0 ≠ run false ⟨(1,1),by decide⟩ 1
+    refine ⟨⟨false,⟨⟨1,1⟩,by decide⟩⟩,(0 : ℝ),(1 : ℝ),?_⟩
+    change run false ⟨⟨1,1⟩,by decide⟩ 0 ≠ run false ⟨⟨1,1⟩,by decide⟩ 1
     simp only [run,Function.iterate_one,pow_one,step,mul_zero,add_zero,mul_one]
     have hp := mul_pos (parameters false).1 (parameters false).2.2.1
     intro he
@@ -221,7 +221,7 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.run_bounds
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.run_closed
 abbrev signature : Signature where
-  Params := Bool × Return
+  Params := Σ _ : Bool, Return
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -238,13 +238,13 @@ def sourceStatement : Prop := ∀ (low : Bool) (a : Return) (D : ℝ),
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (low : Bool) (a : Return) (D : ℝ),
-  R.readout () (low,a) D = closedRun low a.val.1 a.val.2 D
+  R.readout () ⟨low,a⟩ D = closedRun low a.val.1 a.val.2 D
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
-  have hb := hh false ⟨(1,1),by decide⟩ 0
-  change run false ⟨(1,1),by decide⟩ 0 + 1 = _ at hb
+  have hb := hh false ⟨⟨1,1⟩,by decide⟩ 0
+  change run false ⟨⟨1,1⟩,by decide⟩ 0 + 1 = _ at hb
   have hrun := _root_.D5.S1.Digit.Infinite.ResetCodebook.run_closed
-    false (⟨(1,1),by decide⟩ : Return) 0
+    false (⟨⟨1,1⟩,by decide⟩ : Return) 0
   rw [hrun] at hb
   linarith
 def registration : Registration arena sourceStatement where
@@ -260,8 +260,8 @@ def registration : Registration arena sourceStatement where
     · intro e; exact nomatch e
   dependence := by
     intro i
-    refine ⟨(false,⟨(1,1),by decide⟩),(0 : ℝ),(1 : ℝ),?_⟩
-    change run false ⟨(1,1),by decide⟩ 0 ≠ run false ⟨(1,1),by decide⟩ 1
+    refine ⟨⟨false,⟨⟨1,1⟩,by decide⟩⟩,(0 : ℝ),(1 : ℝ),?_⟩
+    change run false ⟨⟨1,1⟩,by decide⟩ 0 ≠ run false ⟨⟨1,1⟩,by decide⟩ 1
     simp only [run,Function.iterate_one,pow_one,step,mul_zero,add_zero,mul_one]
     have hp := mul_pos (parameters false).1 (parameters false).2.2.1
     intro he
@@ -362,7 +362,7 @@ end Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.ResetLifts
 
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookFinite.WeakRun
 abbrev signature : Signature where
-  Params := ℕ × ℝ × Return × List Return
+  Params := Σ _ : ℕ, Σ _ : ℝ, Σ _ : Return, List Return
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -380,11 +380,11 @@ def sourceStatement : Prop := ∀ (K : ℕ) (d : ℝ) (a : Return) (as : List Re
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (K : ℕ) (d : ℝ) (a : Return) (as : List Return) (D : ℝ),
-  R.readout () (K,d,a,as) D ↔
+  R.readout () ⟨K,d,a,as⟩ D ↔
     a.val.2 ≤ K ∧ (a.val.2=K → d ≤ D) ∧ Statement.weak K d as (run false a D)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hh
-  apply (hh 1 0 ⟨(1,1),by decide⟩ [] 0).mpr
+  apply (hh 1 0 ⟨⟨1,1⟩,by decide⟩ [] 0).mpr
   exact ⟨le_rfl,fun _ => le_rfl,trivial⟩
 def registration : Registration arena sourceStatement where
   actual := actual
@@ -399,10 +399,10 @@ def registration : Registration arena sourceStatement where
     · intro e; exact nomatch e
   dependence := by
     intro i
-    let a : Return := ⟨(1,1),by decide⟩
-    refine ⟨(1,0,a,[]),(0 : ℝ),(-1 : ℝ),?_⟩
+    let a : Return := ⟨⟨1,1⟩,by decide⟩
+    refine ⟨⟨1,0,a,[]⟩,(0 : ℝ),(-1 : ℝ),?_⟩
     intro he
-    have hp : actual.readout i (1,0,a,[]) 0 := by
+    have hp : actual.readout i ⟨1,0,a,[]⟩ 0 := by
       change Statement.weak 1 0 [a] 0
       simp [Statement.weak,a]
     have hb := Eq.mp he hp

@@ -11,7 +11,7 @@ noncomputable section
 namespace Reg.D5.S1.Digit.Infinite.ResetCodebookTarget.OriginalRoot
 
 abbrev signature : Signature where
-  Params := ℕ × ℕ × ℝ
+  Params := Σ _ : ℕ, Σ _ : ℕ, ℝ
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -31,7 +31,7 @@ def sourceStatement : Prop := ∀ (K n : ℕ) (d : ℝ), 2 ≤ K → K ≤ n →
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (K n : ℕ) (d : ℝ), 2 ≤ K → K ≤ n →
-    ∃! z : ℝ, R.readout () (K,n,d) z
+    ∃! z : ℝ, R.readout () ⟨K,n,d⟩ z
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -52,7 +52,7 @@ def registration : Registration arena sourceStatement where
   dependence := by
     intro i
     obtain ⟨z,hz,_⟩ := Spectral.original_root_exists_unique 2 2 0 (by omega) (by omega)
-    refine ⟨(2,2,0),z,(0 : ℝ),?_⟩
+    refine ⟨⟨2,2,0⟩,z,(0 : ℝ),?_⟩
     intro he
     have hzero : OriginalSpectralRoot 2 2 0 0 := Eq.mp he hz
     exact (lt_irrefl (0 : ℝ)) hzero.1
