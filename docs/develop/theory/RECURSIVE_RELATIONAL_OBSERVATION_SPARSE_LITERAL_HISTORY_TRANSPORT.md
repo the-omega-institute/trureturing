@@ -2402,7 +2402,7 @@ $$
 对单地址（包括根），
 
 $$
-|\operatorname{ran}\operatorname{Can}_{(q)}|=2|q|+3;qquad
+|\operatorname{ran}\operatorname{Can}_{(q)}|=2|q|+3\qquad
 |\operatorname{ran}\sigma_q|=
 \begin{cases}3&q=\varepsilon,\\w(q^-)+5&q\ne\varepsilon.\end{cases}
 \tag{SLH.43.4}
