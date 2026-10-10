@@ -5,9 +5,10 @@ year: 2020
 title: "Matrix Product Density Operators: when do they have a local parent Hamiltonian?"
 doi: null
 url: https://arxiv.org/abs/2010.14682v3
-claim: "Conjecture III.1 asserts a uniform completely contractive data-processing bound for conditional mutual information under every channel with scalar whole-space correctable algebra."
+claim: "Conjecture III.1 asserts a uniform completely contractive data-processing bound for conditional mutual information under every channel with scalar whole-space correctable algebra. Conjecture III.2 asserts the analogous uniform bound for the trace-norm CMI of Definition 2 under every channel with local trace-norm contraction ratio below one."
 strata_touched:
   - D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation
+  - D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation
 license: citation-only
 triage: anchor
 ---
@@ -51,6 +52,21 @@ Section I, PDF p. 3, equation (1) reads:
 > $I(A:C|B)_\rho=S(AB)_\rho+S(BC)_\rho-S(B)_\rho-S(ABC)_\rho$,
 > where $S(A)_\rho=-\mathrm{tr}\rho_A\log_2\rho_A$ is the von Neumann entropy of
 > the reduced state on $A$.
+
+Definition 2 (Section III.A.1, PDF p. 14) reads:
+
+> $I_1(A:C|B) := \lVert \rho_{ABC} -\rho_{A}\otimes\rho_{BC} \rVert_1 -\lVert \rho_{AB} -\rho_{A}\otimes\rho_{B} \rVert_1$
+
+Conjecture III.2 (Section III.C, PDF p. 17) reads:
+
+> For any channel $\mathcal E: C \rightarrow C'$ with local contraction ratio
+> $\eta_{1,C}:=\sup_{\rho_C,\rho'_C}\frac{\lVert\mathcal E_C[\rho_{C}]-\mathcal E_C[\rho'_{C}]\rVert_1 }{\lVert\rho_{C}-\rho'_{C}\rVert_1} <1$
+> There exists a global constant $\eta < 1$ such that for any tripartite system $ABC$
+> and any state $\rho_{ABC}$, it holds that
+> $I_1(A:C'|B)_{\mathcal E(\rho)} \le \eta I_1(A:C|B)_\rho$.
+
+It is followed by: "We do not know if extra constants or factor of dimension $d_C$ should
+be present between $\eta_{1,C}$ and $\eta$ like the crude bound in Theorem III.2."
 
 The source's Proposition III.4 is conditional on Conjecture III.1. A
 refutation of that conjecture removes this route to unconditional decay;
