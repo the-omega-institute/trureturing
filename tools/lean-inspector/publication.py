@@ -563,6 +563,18 @@ def publish(report, destination, expected, repository=None, *, mode=None, expect
                 else:
                     member(destination, suffix).unlink()
             raise
+    return hashlib.sha256(materials.canonical_json(accepted)).hexdigest()
+
+
+def bundle_identity(report, suffixes=SUFFIXES):
+    """Identify every byte of a complete generation, including selected sidecars."""
+    hashes = {}
+    for suffix in suffixes:
+        path = member(report, suffix)
+        if path.is_symlink() or not path.is_file():
+            raise ValueError('bundle member is absent or nonregular: ' + suffix)
+        hashes[suffix] = digest(path)
+    return hashlib.sha256(materials.canonical_json(hashes)).hexdigest()
 
 
 def main():
