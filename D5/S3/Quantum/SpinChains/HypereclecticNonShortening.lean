@@ -9,8 +9,8 @@
 /-
 result:
   proof_shape: content
-  escape_witness: lowering_kernel_zero_aux proves sharp weight-space injectivity
-    by induction on the remaining raising length, with the dual giving surjectivity.
+  escape_witness: sharp weight-space injectivity from Sl2WeightInjectivity,
+    with the dual giving surjectivity.
   admission_basis: open-problem-resolution (#12310; Proved)
 Direct frozen dependencies:
   D5/S1/Words/ParityCode/OddTopWeight.ones
@@ -19,17 +19,16 @@ Private theorem classification:
   weight_eq_level: content; inversion-count induction on the bin length.
   localR_localH_commute, positional_telescope and wordSl2: bind-only;
     inlined as local facts in their consuming proofs.
-  lowering_kernel_zero_aux: content; induction on the raising length, using
-    the primitive-vector chain nonvanishing theorem at the terminal vector.
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
 import D5.S1.Words.ParityCode.OddTopWeight
-import Mathlib.Algebra.Lie.Sl2
+import D5.S3.Quantum.SpinChains.Sl2WeightInjectivity
 
 set_option backward.isDefEq.respectTransparency false
 set_option linter.unusedSimpArgs false
 set_option linter.unnecessarySeqFocus false
+set_option linter.style.longLine false
 
 open scoped BigOperators
 open Module
@@ -225,66 +224,6 @@ private def projectToW (L M S : ℕ) : ((Fin (L - 1) → Bool) → ℚ) →ₗ[�
   exact
     ((LinearMap.mulLeft ℚ (fun w : Fin (L - 1) → Bool => if ones w = M - 1 ∧ level w = S then 1 else 0))).codRestrict (W L M S) (projectW_mem L M S)
 
-
-private theorem lowering_kernel_zero_aux {V : Type} [AddCommGroup V] [Module ℚ V]
-    {g r h : Module.End ℚ V} (t : IsSl2Triple g r h) (n : ℕ) :
-    ∀ (v : V) (q k : ℕ), g v = (q : ℚ) • v → k ≤ q →
-      (r ^ n) v = 0 → (h ^ k) v = 0 → v = 0 := by
-  have lower_pow_raise {V : Type} [AddCommGroup V] [Module ℚ V]
-      {g r h : Module.End ℚ V} (t : IsSl2Triple g r h) {v : V} {μ : ℚ}
-      (hv : g v = μ • v) (k : ℕ) :
-      (h ^ (k + 1)) (r v) = r ((h ^ (k + 1)) v) -
-        (((k + 1 : ℕ) : ℚ) * (μ - k)) • ((h ^ k) v) := by
-    induction k with
-    | zero =>
-      have ht := congrArg (fun f : Module.End ℚ V => f v) t.lie_e_f
-      simp only [Ring.lie_def, LinearMap.sub_apply, Module.End.mul_apply] at ht
-      simp only [zero_add, pow_one, pow_zero, Module.End.one_apply, Nat.cast_one,
-        Nat.cast_zero, sub_zero, one_mul]
-      rw [hv] at ht
-      apply (eq_sub_iff_add_eq).mpr
-      simpa [add_comm] using ((sub_eq_iff_eq_add).mp ht).symm
-    | succ k ih =>
-      have hg : g ((h ^ (k + 1)) v) = (μ - 2 * (k + 1 : ℕ)) • ((h ^ (k + 1)) v) := by
-        have hv' : ⁅-g, v⁆ = (-μ) • v := by simpa using congrArg Neg.neg hv
-        have z := t.symm.lie_h_pow_toEnd_e hv' (k + 1)
-        have z' : -(g ((h ^ (k + 1)) v)) =
-            (-μ + 2 * (k + 1 : ℕ)) • ((h ^ (k + 1)) v) := by
-          simpa [LieModule.toEnd_module_end] using z
-        rw [neg_eq_iff_eq_neg, ← neg_smul] at z'
-        convert z' using 1 <;> congr 1 <;> ring
-      have ht := congrArg (fun f : Module.End ℚ V => f ((h ^ (k + 1)) v)) t.lie_e_f
-      simp only [Ring.lie_def, LinearMap.sub_apply, Module.End.mul_apply] at ht
-      rw [hg] at ht
-      rw [pow_succ', Module.End.mul_apply, ih, map_sub, map_smul]
-      rw [show h (r ((h ^ (k + 1)) v)) =
-        r (h ((h ^ (k + 1)) v)) - (μ - 2 * (k + 1 : ℕ)) • ((h ^ (k + 1)) v) by
-          apply (eq_sub_iff_add_eq).mpr
-          simpa [add_comm] using ((sub_eq_iff_eq_add).mp ht).symm]
-      simp only [← Module.End.mul_apply, ← pow_succ', Nat.cast_add, Nat.cast_one]
-      module
-  induction n with
-  | zero =>
-    intro v q k hv hk hn hz
-    simpa using hn
-  | succ n ih =>
-    intro v q k hv hk hn hz
-    have hrv : g (r v) = ((q + 2 : ℕ) : ℚ) • (r v) := by
-      simpa [LieModule.toEnd_module_end] using t.lie_h_pow_toEnd_e hv 1
-    have hrn : (r ^ n) (r v) = 0 := by
-      simpa [pow_succ, Module.End.mul_apply] using hn
-    have hnext : (h ^ (k + 1)) v = 0 := by
-      rw [pow_succ', Module.End.mul_apply, hz, map_zero]
-    have hrh : (h ^ (k + 1)) (r v) = 0 := by
-      rw [lower_pow_raise t hv, hnext, hz]
-      simp
-    have hrzero : r v = 0 := ih (r v) (q + 2) (k + 1) hrv (by omega) hrn hrh
-    by_contra hvzero
-    have P : t.HasPrimitiveVectorWith v (q : ℚ) :=
-      { ne_zero := hvzero, lie_h := hv, lie_e := hrzero }
-    have hne := P.pow_toEnd_f_ne_zero_of_eq_nat rfl hk
-    apply hne
-    simpa [LieModule.toEnd_module_end] using hz
 
 /-- Equation (A.4) for the rational K = 1 static sector. -/
 theorem result : claim := by
@@ -618,7 +557,7 @@ theorem result : claim := by
       (t : IsSl2Triple g r h) {v : V} {q k : ℕ}
       (hv : g v = (q : ℚ) • v) (hk : k ≤ q) (hz : (h ^ k) v = 0) : v = 0 := by
     obtain ⟨n, hn⟩ := raising_eventually_zero t hv
-    exact lowering_kernel_zero_aux t n v q k hv hk hn hz
+    exact Sl2WeightInjectivity.lowering_kernel_zero (K := ℚ) t n v q k hv hk hn hz
   have restrict_injective (L M S k : ℕ) (hM : 1 ≤ M) (hML : M ≤ L)
       (hN : 2 ≤ L - 1) (hμ : (M - 1) * (L - M) + k ≤ 2 * S) :
       Function.Injective (restrict L M S k) := by
