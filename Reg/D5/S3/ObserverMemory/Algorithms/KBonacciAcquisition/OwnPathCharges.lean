@@ -166,6 +166,7 @@ def oracle : Realization signature.{u} := realize signature
       some (f (some ⟨v, phase, s⟩), c)
 private theorem positive : arena.{u}.Law actual := native_fiber
 private theorem negative : ¬ arena.{u}.Law oracle := by
+  classical
   intro law
   have bad := law 2 1 (by omega) (by omega) false
     (fun _ => (ULift.up false : ULift.{u} Bool)) 0 0 (fun _ _ => .inl ⟨false⟩)
@@ -226,4 +227,85 @@ end
 end NativeFiberAudit
 #print axioms _root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OwnPathCharges.native_fiber
 
+noncomputable section
+universe u
+namespace Separation
+
+@[reducible] def signature : Signature where
+  Params := Type u
+  State Y := Y
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ Y := Y
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ _ x => x) (fun e => nomatch e)
+def oracle : Realization signature := by
+  classical
+  exact realize signature
+    (fun _ Y x => if e : ∃ y : Y, y ≠ x then Classical.choose e else x)
+    (fun e => nomatch e)
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
+    (pi : NarrowWindowCost.Selector m Y) (b : ℕ)
+    (z : ZMod 2) (p q : ZMod (k + 1)) (s : ℕ), s < k →
+    ∀ (free : Option (ZMod 2)) (archive : NarrowWindowCost.Archive m)
+      (x y : Y) (cx cy : ℕ),
+    OriginalExecutionBridge.NativeExecute pi b (some ⟨z, p, s⟩) free archive = some (x, cx) →
+    OriginalExecutionBridge.NativeExecute pi b (some ⟨z, q, s⟩) free archive = some (y, cy) →
+    (∀ t < b, ownCharge pi b z p s free archive t = ownCharge pi b z q s free archive t) →
+    R.readout () Y x = y
+private theorem positive : arena.{u}.Law actual := charge_separates
+private theorem negative : ¬ arena.{u}.Law oracle := by
+  classical
+  intro law
+  let pi : NarrowWindowCost.Selector 1 (ULift.{u} Bool) := fun _ _ => .inl ⟨true⟩
+  have bad := law 2 1 (by omega) pi 0 0 0 0 0 (by omega) none []
+    (ULift.up true) (ULift.up true) 0 0 rfl rfl (by intro t ht; omega)
+  have other : ∃ y : ULift.{u} Bool, y ≠ ULift.up true := ⟨⟨false⟩, by decide⟩
+  simp only [oracle, realize, dif_pos other] at bad
+  exact Classical.choose_spec other bad
+
+def evidence : Registration arena.{u}
+    (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OwnPathCharges.charge_separates.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, oracle, negative⟩
+  sensitivity := ⟨fun i => ⟨oracle, fun j h => (h (Subsingleton.elim j i)).elim, rfl, negative⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    cases i
+    exact ⟨ULift.{u} Bool, ULift.up false, ULift.up true, by decide⟩
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OwnPathCharges.charge_separates.{u})
+    (type_of% (realize signature.{u} actual.{u}.readout actual.{u}.anchor)) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OwnPathCharges.Separation.charge_separates,
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OwnPathCharges.Separation.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena.{u} ⟨evidence.{u}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature.{u} actual.{u}.readout actual.{u}.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OwnPathCharges, definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"],
+      stateBinder := 13, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms evidence
+#print axioms registration
+end Separation
+
+end
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OwnPathCharges
