@@ -1,0 +1,2 @@
+**Q4 (Part I §7; Part II §§2, 7–8):** Combining static $\kappa$ with a depth posterior requires a shared source, joint law, and response kernel. The displayed $(\kappa,a,A,B,\tau)$ is a conditional synthesis, not a universally proved joint minimum, and it cannot reconstruct arbitrary static $p$ without visible coordinates. For $\chi=z+xy$, $E[\chi]=Z+\kappa$; statewise identities and expectation identities must not be interchanged. Spectral $M_2$ is an additional readout with its stated nonnegative-root domain.
+- 

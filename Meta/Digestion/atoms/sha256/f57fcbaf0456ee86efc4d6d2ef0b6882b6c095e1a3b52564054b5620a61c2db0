@@ -1,0 +1,30 @@
+- 单窗口 $\kappa$。
+
+要恢复祖先，需要新的读口，例如祖先面积向量：
+
+$$
+\mathcal A(t) =
+(\mathcal A_1(t),\ldots,\mathcal A_{m-1}(t)).
+$$
+
+最新祖先卷给出：
+
+$$
+\mathcal A(V_A)-\mathcal A(T_n) =
+\sum_{p\in A}
+(e_{i_p}-e_{i_p+1}),
+$$
+
+并且：
+
+$$
+\left\|
+\mathcal A(V_A)-\mathcal A(V_{A'})
+\right\|_2^2 =
+2|A\triangle A'|.
+$$
+
+这形成了一个真正的祖先关系立方体。
+
+---
+

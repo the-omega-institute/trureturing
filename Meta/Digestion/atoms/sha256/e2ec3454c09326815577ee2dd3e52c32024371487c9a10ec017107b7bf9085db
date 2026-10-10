@@ -1,0 +1,30 @@
+**证明。** 用齐次坐标组成五阶矩阵，其行分别为 $1,x,y,z,f$。从最后一行减去 theorem 3 中的前四项，最后一行只剩 $J_fxy$。
+
+直接计算基础矩阵：
+
+$$
+\det\begin{pmatrix}1\\x\\y\\z\\xy\end{pmatrix}=-1.
+$$
+
+所以提升行列式为 $-J_f$。四维单纯形体积是其绝对值除以 $4!=24$。证毕。
+
+现在不再用实概率，而用整数模式计数：
+
+$$
+n=(n_{\varnothing},n_1,n_2,n_3,n_{13})\in\mathbb Z^5.
+$$
+
+保留：
+
+$$
+N=\sum_sn_s,\quad A=\sum_sx(s)n_s,\quad B=\sum_sy(s)n_s,\quad C=\sum_sz(s)n_s,
+$$
+
+以及 $F=\sum_sf_sn_s$。完整边界映射记为 $B_f:n\mapsto(N,A,B,C,F)$；这里的整数定义域是全部 $\mathbb Z^5$，不预设非负性。
+
+由 theorem 3：
+
+$$
+\boxed{F-f_{\varnothing}N-(f_1-f_{\varnothing})A-(f_3-f_{\varnothing})B-(f_2-f_{\varnothing})C=J_fn_{13}.}
+$$
+

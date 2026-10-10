@@ -1,0 +1,6 @@
+**证明。** 按上一证明构造 $m\times2$ 的 $V,W$ 及 $B$。在 $\ker V^{\mathsf T}$ 上，$B$ 的二次型为零；该核的余维至多二，因此 $B$ 的严格正谱子空间维数至多二。否则正谱子空间与该核有非零交，产生矛盾。由 $\operatorname{tr}B=m$，所有正特征值之和至少为 $m$；对至多两个正特征值使用 Cauchy–Schwarz，得到
+$$
+\operatorname{tr}B^2\ge\frac{m^2}{2}.
+$$
+而 $\operatorname{tr}B^2=m+2\sum_{i<j}F_{a,\omega}(x_i-x_j)^2$，得到 (21.2)。
+

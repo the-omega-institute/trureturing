@@ -1,0 +1,27 @@
+**定理 20.2（局部精确最小值及全轮乘积）。** 对定义 20.1 的每个 $H,W$，
+$$
+\sigma_{\min}(\mathcal C_{H,W})
+=\prod_{\substack{q\mid W\\q\ge5}}\alpha_q,\qquad
+\sigma_{\max}(\mathcal C_{H,W})=|R_{H,W}|,
+\tag{20.2}
+$$
+空积为一。因此
+$$
+\kappa_2(\mathcal C_{H,W})
+=\frac{\prod_{q\mid W}(q-\nu_H(q))}
+       {\prod_{q\mid W,\ q\ge5}\alpha_q},
+\qquad
+\kappa_2(\mathcal G_{H,W})
+=\kappa_2(\mathcal C_{H,W})^2.
+\tag{20.3}
+$$
+两种 $H$ 的这些数逐项相同。局部常数满足
+$$
+\alpha^2\le\alpha_q^2
+\le\alpha^2+\frac{14\pi^2}{q^2},\qquad
+\alpha_5=\frac{\sqrt5-1}{2},\qquad
+\alpha_7=\sqrt2.
+\tag{20.4}
+$$
+特别是 $\alpha>0$，式 (20.2) 给出定理 16.2 在这两种三胞胎上的定量下界。
+

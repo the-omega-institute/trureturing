@@ -1,0 +1,40 @@
+- 处于 $D$ 使用 $R$。
+
+两个状态都可维护。
+
+但在只知道 $x=1$ 的合并 belief：
+
+$$
+B=\{A,D\}
+$$
+
+安全动作集合分别为：
+
+$$
+\operatorname{Safe}(A)=\{L\}
+$$
+
+$$
+\operatorname{Safe}(D)=\{R\}
+$$
+
+所以：
+
+$$
+\operatorname{Safe}(A)\cap\operatorname{Safe}(D)=\varnothing
+$$
+
+合并之后没有共同安全动作，维护失败。
+
+这说明：
+
+$$
+\boxed{
+\text{可以安全遗忘的条件不是“未来状态看起来相似”，而是共享动作且后继 belief 仍处于最大安全不动点。}
+}
+$$
+
+这个动作系统是用于说明逻辑差异的抽象 FIB 控制模型，不是仓库已经证明的 native FIB 动力学。
+
+---
+

@@ -28,7 +28,21 @@ $$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)], [\operatorname{D
 
 Perfect state transfer from vertex a to vertex b at time t means |e_a^T exp(i t H) e_b|^2 = 1, where exp is the matrix exponential and normSq is the squared modulus of a complex number. The formal statement writes exp(i t H) as the repository propagator hamiltonianPropagator H s = exp(-i s H) at s = -t.
 
-**Theorem 1.3 (Transfer from the first vertex forces mirror-symmetric weights).**
+**Theorem 1.3 (Reversal form of a unitary sending the first vertex to the last).**
+
+$$\forall m \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall q \in \operatorname{Fin}\left(m + 1\right) \to \mathbb{R},\; (\forall t \in \operatorname{Fin}\left(m\right),\; 0 < r\left(t\right)) \Rightarrow (\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(m + 1\right), \operatorname{Fin}\left(m + 1\right), \mathbb{C}\right),\; U^{*} \cdot U = 1 \Rightarrow (U \cdot \operatorname{pathHamiltonian}\left(r, q\right) = \operatorname{pathHamiltonian}\left(r, q\right) \cdot U \Rightarrow (\forall gamma \in \mathbb{C},\; \operatorname{normSq}\left(gamma\right) = 1 \Rightarrow ((\forall x \in \operatorname{Fin}\left(m + 1\right),\; U\left(x, 0\right) = \text{if} x = \operatorname{last}\left(m\right) \text{then} gamma \text{else} 0) \Rightarrow ((\forall i \in \operatorname{Fin}\left(m + 1\right),\; \forall x \in \operatorname{Fin}\left(m + 1\right),\; U\left(x, i\right) = \text{if} x = \operatorname{rev}\left(i\right) \text{then} gamma \text{else} 0) \land (\forall t \in \operatorname{Fin}\left(m\right),\; r\left(t\right) = r\left(\operatorname{rev}\left(t\right)\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.reversal_columns` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. Kirkland, D. McLaren, R. Pereira, S. Plosker and X. Zhang (2019). *Perfect quantum state transfer in weighted paths with potentials (loops) using orthogonal polynomials*. DOI: [10.1080/03081087.2018.1442810](https://doi.org/10.1080/03081087.2018.1442810). URL: <https://arxiv.org/abs/1708.03283v2>.
+
+*Commentary.*
+
+Let U be unitary, commute with the path Hamiltonian H, and send the first basis vector to gamma times the last one, with |gamma| = 1. By induction on j, U e_j = gamma e_(m - j) and r t = r (m - 1 - t) for t < j. Indeed r_j U e_(j+1) = U(H e_j - q_j e_j - r_(j-1) e_(j-1)) = gamma (H e_(m-j) - q_j e_(m-j) - r_(j-1) e_(m-j+1)); by the induction hypothesis only the components at m - j - 1 and m - j remain, orthogonality of the columns j and j + 1 of U removes the second one, and the unit norm of column j + 1 together with the positivity of the weights gives r j = r (m - 1 - j). Here rev i is the mirror vertex m - i of the vertex i, rev t is the mirror index m - 1 - t of the edge t, and last(m) is the vertex m. The source records the underlying fact as known, citing Kay: a symmetric tridiagonal Hamiltonian with perfect state transfer between its end vertices is persymmetric. The statement here is its form for an arbitrary unitary commuting with the path Hamiltonian: every column of U is gamma times a basis vector, and the edge weights are mirror symmetric.
+
+**Theorem 1.4 (Transfer from the first vertex forces mirror-symmetric weights).**
 
 $$\forall m \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall q \in \operatorname{Fin}\left(m + 1\right) \to \mathbb{R},\; (\forall t \in \operatorname{Fin}\left(m\right),\; 0 < r\left(t\right)) \Rightarrow (\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(m + 1\right), \operatorname{Fin}\left(m + 1\right), \mathbb{C}\right),\; U^{*} \cdot U = 1 \Rightarrow (U \cdot \operatorname{pathHamiltonian}\left(r, q\right) = \operatorname{pathHamiltonian}\left(r, q\right) \cdot U \Rightarrow (\forall gamma \in \mathbb{C},\; \operatorname{normSq}\left(gamma\right) = 1 \Rightarrow ((\forall x \in \operatorname{Fin}\left(m + 1\right),\; U\left(x, 0\right) = \text{if} x = \operatorname{last}\left(m\right) \text{then} gamma \text{else} 0) \Rightarrow (\forall t \in \operatorname{Fin}\left(m\right),\; r\left(t\right) = r\left(\operatorname{rev}\left(t\right)\right))))))$$
 
@@ -40,9 +54,9 @@ $$\forall m \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(m\right) \to
 
 *Commentary.*
 
-Let U be unitary, commute with the path Hamiltonian H, and send the first basis vector to gamma times the last one, with |gamma| = 1. By induction on j, U e_j = gamma e_(m - j) and r t = r (m - 1 - t) for t < j. Indeed r_j U e_(j+1) = U(H e_j - q_j e_j - r_(j-1) e_(j-1)) = gamma (H e_(m-j) - q_j e_(m-j) - r_(j-1) e_(m-j+1)); by the induction hypothesis only the components at m - j - 1 and m - j remain, orthogonality of the columns j and j + 1 of U removes the second one, and the unit norm of column j + 1 together with the positivity of the weights gives r j = r (m - 1 - j). Here rev t is the mirror index m - 1 - t of the edge t, and last(m) is the vertex m. The source records the underlying fact as known, citing Kay: a symmetric tridiagonal Hamiltonian with perfect state transfer between its end vertices is persymmetric. The statement here is its form for an arbitrary unitary commuting with the path Hamiltonian, restricted to the edge weights.
+This is the second conclusion of the reversal form of a unitary sending the first vertex to the last: if U is unitary, commutes with the path Hamiltonian and sends the first basis vector to gamma times the last one, with |gamma| = 1, then r t = r (m - 1 - t) for every edge t. Here rev t is the mirror index m - 1 - t of the edge t, and last(m) is the vertex m. The source records the underlying fact as known, citing Kay: a symmetric tridiagonal Hamiltonian with perfect state transfer between its end vertices is persymmetric. The statement here is its form for an arbitrary unitary commuting with the path Hamiltonian, restricted to the edge weights.
 
-**Theorem 1.4 (Spectral parity classes of a transfer at time pi).**
+**Theorem 1.5 (Spectral parity classes of a transfer at time pi).**
 
 $$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)], [\operatorname{DecidableEq}\left(V\right)], \forall H \in \operatorname{Matrix}\left(V, V, \mathbb{C}\right),\; \operatorname{IsHermitian}\left(H\right) \Rightarrow (\forall a \in V,\; \forall b \in V,\; a \ne b \Rightarrow (\forall m \in \mathbb{N},\; \operatorname{card}\left(V\right) = m + 1 \Rightarrow (\forall P \in \mathbb{R},\; P \ne 0 \Rightarrow ((\forall p \in \mathbb{N},\; p \le m \Rightarrow (\left(H^{p}\right)\left(a, b\right) = \text{if} p = m \text{then} P \text{else} 0)) \Rightarrow (\operatorname{HasPST}\left(H, \pi, a, b\right) \Rightarrow (\exists z \in V \to \mathbb{Z},\; \exists A \in \operatorname{Finset}\left(V\right),\; \operatorname{Injective}\left(z\right) \land \left(\operatorname{Nonempty}\left(A\right) \land \left(A \ne \operatorname{univ} \land \left(\left(\forall i \in A,\; \operatorname{Even}\left(z\left(i\right)\right)\right) \land \left(\left(\forall i \in V,\; \left(\neg (i \in A)\right) \Rightarrow (\operatorname{Odd}\left(z\left(i\right)\right))\right) \land P \cdot \sum_{i \in A} (\prod_{j \in \operatorname{erase}\left(\operatorname{univ}, i\right)} ((z\left(i\right) - z\left(j\right) : \mathbb{Z}) : \mathbb{R}))^{-1} = \frac{1}{2}\right)\right)\right)\right)))))))$$
 
@@ -56,7 +70,7 @@ $$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)], [\operatorname{D
 
 Let c k = W a k conj(W b k) for the orthonormal eigenvectors W of H with eigenvalues lambda k. The hypotheses on the powers of H give sum_k c k lambda_k^p = 0 for p < m and = P for p = m; evaluating sum_k c k f(lambda k) on the monic polynomial f = prod_{l != k} (X - lambda l) gives c k prod_{l != k} (lambda k - lambda l) = P, so the eigenvalues are distinct and every c k is a nonzero real number. Transfer at time pi forces exp(i pi lambda_k) conj(W b k) = gamma conj(W a k) with gamma = exp(i pi H)(a, b), since the sum of the squared moduli of their differences vanishes. Hence |c k| = |W a k|^2, whose sum is 1, while sum_k c k = 0. The class A of indices with c k > 0 has sum_{k in A} c k = 1/2, and exp(i pi lambda_k) equals gamma on A and -gamma off A. Shifting the eigenvalues by an eigenvalue of the class A gives integers z, even on A and odd off A, with lambda k - lambda l = z k - z l. The source records as known that, after a common shift, the eigenvalues of a path with perfect state transfer at time pi between its end vertices are integers that alternate between even and odd. The identity P sum_{i in A} 1 / prod_{j != i} (z i - z j) = 1/2, stated for a general Hermitian matrix with the given moment data, is derived here.
 
-**Definition 1.5 (The rational weights statement on 2^k + 1 vertices).**
+**Definition 1.6 (The rational weights statement on 2^k + 1 vertices).**
 
 $$claim \Leftrightarrow (\forall k \in \mathbb{N},\; 1 \le k \Rightarrow (\forall r \in \operatorname{Fin}\left(2^{k}\right) \to \mathbb{R},\; \forall q \in \operatorname{Fin}\left(2^{k} + 1\right) \to \mathbb{R},\; (\forall j \in \operatorname{Fin}\left(2^{k}\right),\; \exists x \in \mathbb{Q},\; r\left(j\right) = x) \Rightarrow ((\forall j \in \operatorname{Fin}\left(2^{k}\right),\; 0 < r\left(j\right)) \Rightarrow (\left(\neg \operatorname{HasPST}\left(\operatorname{pathHamiltonian}\left(r, q\right), \pi, 0, \operatorname{last}\left(2^{k}\right)\right)\right) \land \left(\neg \operatorname{HasPST}\left(\operatorname{pathHamiltonian}\left(r, q\right), \pi, \operatorname{last}\left(2^{k}\right), 0\right)\right)))))$$
 
@@ -70,7 +84,7 @@ $$claim \Leftrightarrow (\forall k \in \mathbb{N},\; 1 \le k \Rightarrow (\foral
 
 For k >= 1 and the path on n = 2^k + 1 vertices with edge weights r in Fin(2^k) -> R and potentials q in Fin(2^k + 1) -> R: if every weight is rational and positive, there is no perfect state transfer at time pi from the first vertex 0 to the last vertex 2^k, nor from the last vertex to the first. The rationality hypothesis is written as the existence of a rational number equal to each weight. The source states its conjecture for all n >= 4 and does not single out this family; the statement is the restriction of that conjecture to the sizes n = 2^k + 1, with k = 1 added.
 
-**Theorem 1.6 (Rational paths on 2^k + 1 vertices have no transfer at time pi).**
+**Theorem 1.7 (Rational paths on 2^k + 1 vertices have no transfer at time pi).**
 
 $$claim$$
 
@@ -92,5 +106,6 @@ The propagator exp(i pi H) is symmetric, so both directions reduce to transfer f
 - Truth anchor: `D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.persymmetric_weights`
 - Truth anchor: `D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pst_parity_classes`
 - Truth anchor: `D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.result`
+- Truth anchor: `D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.reversal_columns`
 - Dependency: [D5/S3/Quantum/Dynamics/ParityNodeDividedDifference](ParityNodeDividedDifference.md)
 - Dependency: [D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow](ProjectionProbabilityFlow.md)

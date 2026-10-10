@@ -1,0 +1,14 @@
+**定义 5.4（严格正律的四参数读出）。** 对 $`a,b,c,\eta>0`$，置
+
+```math
+\mathcal Z(a,b,c;\eta)=1+a+b+c+\eta ac,
+\qquad p=\frac{(1,a,b,c,\eta ac)}{\mathcal Z},
+```
+
+其中概率次序为 $`0,2,3,5,25`$。该参数化的逆式为
+
+```math
+a=p_2/p_0,\qquad b=p_3/p_0,\qquad c=p_5/p_0,
+\qquad\eta=p_0p_{25}/(p_2p_5).
+```
+

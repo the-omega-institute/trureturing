@@ -1,0 +1,32 @@
+## 6. 六、一步闭包不是无限未来闭包
+
+给定动作词 $w=a_1a_2\cdots a_k$，定义：
+
+$$
+U_w=U_{a_1}\cdots U_{a_k}
+$$
+
+对于时间范围 $T$，定义未来观测空间：
+
+$$
+\mathcal O_T=
+\operatorname{span}
+\left\{
+U_wf:
+f\in V,\ |w|\le T
+\right\}
+$$
+
+定义观测矩阵 $M_T$，其行由 $(w,f)$ 标记，列由五个状态标记：
+
+$$
+(M_T)_{(w,f),s}=
+f(T_w(s))
+$$
+
+则：
+
+$$
+\operatorname{row}(M_T)=\mathcal O_T
+$$
+

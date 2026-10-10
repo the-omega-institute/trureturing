@@ -1,0 +1,12 @@
+**证明。** 当 $x=1$ 时，排斥迫使 $z=0$，且 $\Pr(y=1\mid x=1)=\mathbb E[xy]/\mathbb E[x]$。当 $x=0$ 时，$\Pr(y=1,x=0)=Y-\kappa$，而 $z=1$ 已保证 $x=0$。证毕。
+
+两个均值相同的来源
+
+$$
+p^{(A)}=\tfrac12\delta_{\varnothing}+\tfrac12\delta_{13},
+\qquad
+p^{(B)}=\tfrac12\delta_1+\tfrac12\delta_3
+$$
+
+都给出 $(X,Y,Z)=(1/2,1/2,0)$。读取 $x$ 的结果概率相同，但结果为一后分别变为 $\delta_{13}$ 与 $\delta_1$，结果为零后分别变为 $\delta_{\varnothing}$ 与 $\delta_3$。同一读口和同一结果概率不保证同一后继来源。
+

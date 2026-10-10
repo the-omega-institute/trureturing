@@ -50,15 +50,17 @@ def transport_inspector(source):
     compiled-discovery and compiled-seal fixtures.
     """
     source = source.replace('import LeanInformationAudit.ArtifactAssessment\n', '')
-    start = source.index('  if !statementOnly && inputs.any')
+    start = source.index('  if !statementOnly && RawArtifacts.hasTypedInputs')
     end = source.index('  let store ← state.get', start)
     source = source[:start] + source[end:]
-    start = source.index('      let (current, generatedNames, binding, enrollmentErrors) ←')
-    end = source.index('      let row ← inspectData', start)
-    source = source[:start] + ('      let current := store\n'
-        '      let generatedNames : Array Name := #[]\n'
-        '      let binding := empty\n'
-        '      let enrollmentErrors : Array String := #[]\n') + source[end:]
+    start = source.index('  let (current, generatedNames, binding, enrollmentErrors) ←')
+    end = source.index('  let row ← inspectData', start)
+    source = source[:start] + ('  let current := store\n'
+        '  let generatedNames : Array Name := #[]\n'
+        '  let binding := empty\n'
+        '  let enrollmentErrors : Array String := #[]\n') + source[end:]
+    source = source.replace('RawArtifacts.sharedModules targets statementOnly',
+        'RawArtifacts.sharedModules targets true')
     return source
 
 
@@ -223,6 +225,7 @@ defaultFacets = ["static"]
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                      'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache.py',
                      'tools/scripts/worktree/cache_material.py',
+                     'tools/scripts/worktree/lean_cache_release.py',
                      'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
                      'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',
@@ -254,7 +257,9 @@ defaultFacets = ["static"]
                 'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
-        self.env = dict(os.environ, PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'], LAKE_BIN=self.lake,
+        # Make's cache wrapper and direct fixture calls use the same resolved Lake.
+        self.env = dict(os.environ, PATH=os.pathsep.join([
+            str(self.root / 'bin'), str(Path(self.lake).parent), os.environ['PATH']]), LAKE_BIN=self.lake,
             STRATALINT_LEAN_BUILD_TARGETS='[]',
             LAKE_CACHE_DIR=str(self.root / '.lake/artifact-cache'), LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true',
             STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / '.lake/input-memo'),
@@ -544,7 +549,8 @@ defaultFacets = ["static"]
     def report(self):
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             report = publication.unpack(self.root / '.lake/build/lean-inspector/report.zip', directory)
-            rows = publication.validate_bundle(report)
+            publication.validate_bundle(report)
+            rows = list(publication.report_rows(report, materials.REPORT_SCHEMA))
             return rows, report.read_bytes(), publication.member(report, '.materials.zip').read_bytes()
     def origins(self):
         with zipfile.ZipFile(self.root / '.lake/build/lean-inspector/report.zip') as archive:

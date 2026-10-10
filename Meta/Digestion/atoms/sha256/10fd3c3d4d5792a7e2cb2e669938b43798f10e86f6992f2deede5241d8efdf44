@@ -1,0 +1,9 @@
+**Claim status: open.** 对 $C=\operatorname{Cov}(b_1,\ldots,b_N)$，有
+
+$$
+\boxed{
+\det C=\frac{\prod_{i=1}^{N}u_i}{\mathcal Z_N}
+=P_u^*(0,\ldots,0)\prod_{i=1}^{N}u_i.
+}
+$$
+

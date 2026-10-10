@@ -1,0 +1,8 @@
+## 20. New deduction: window parity controls center-only recovery
+
+The candidate `GoldenMagnusParityRecovery.center_recovers_fixed_length_iff_even` states:
+
+```text
+m restricted to W_n is injective  iff  n is even.
+```
+

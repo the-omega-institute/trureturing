@@ -85,7 +85,7 @@ theorem golden_relations :
   · nlinarith
 
 /-- Membership in the root image supplied by the frozen realization theorem. -/
-private theorem root_bounds (x : LegalDigits) :
+theorem root_bounds (x : LegalDigits) :
     kappa x ∈ Set.Icc
       (if (window x 0).val 1 then -1 else if (window x 0).val 0 then
         (if (window x 0).val 2 then 2 * t else t) else
@@ -100,6 +100,53 @@ private theorem root_bounds (x : LegalDigits) :
   apply (hrange (outgoing (window x 0))).subset
   exact ⟨originalT x, (hrec x).2.1, rfl⟩
 
+/-- The lower current branch admitted by each closed color below the critical budget. -/
+@[simp] def lowLabel (c : Fin 6) : Label :=
+  if c.val ≤ 1 then threeLabel else if c.val = 2 then nullLabel else
+    if c.val = 3 then fiveLabel else twoLabel
+
+/-- The upper current branch admitted by each closed color below the critical budget. -/
+@[simp] def highLabel (c : Fin 6) : Label :=
+  if c.val ≤ 1 then nullLabel else if c.val = 2 then fiveLabel else
+    if c.val = 3 then twoLabel else twoFiveLabel
+
+theorem label_cases (l : Label) : l = nullLabel ∨ l = threeLabel ∨ l = fiveLabel ∨
+    l = twoLabel ∨ l = twoFiveLabel := by
+  have h0 := l.property 0 (by decide)
+  have h1 := l.property 1 (by decide)
+  have hext (p q : Label) : p = q ↔ ∀ i, p.val i = q.val i := by
+    exact Subtype.ext_iff.trans funext_iff
+  rw [hext l nullLabel, hext l threeLabel, hext l fiveLabel,
+    hext l twoLabel, hext l twoFiveLabel]
+  clear hext
+  simp only [Fin.forall_fin_succ,
+    Fin.forall_fin_zero, nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel]
+  cases ha : l.val 0 <;> cases hb : l.val 1 <;> cases hc : l.val 2 <;>
+    simp_all
+
+/-- The two fixed branch labels allowed by a common closed color. -/
+theorem color_labels (β : ℝ) (hb : β < lambda) (c : Fin 6) :
+    ∀ x : LegalDigits, kappa x ∈ observation β c →
+      window x 0 = lowLabel c ∨ window x 0 = highLabel c := by
+  obtain ⟨ht, ht1, ht2, hg, hhalf⟩ := golden_relations
+  intro x hx
+  have hr := root_bounds x
+  have hL := (le_max_right (-1 : ℝ) (cellLower c - β)).trans hx.1
+  have hR := hx.2.trans (min_le_right (1 + t) (cellUpper c + β))
+  rcases label_cases (window x 0) with h | h | h | h | h
+  all_goals rw [h] at hr ⊢
+  all_goals fin_cases c
+  all_goals dsimp [lowLabel, highLabel] at *
+  all_goals norm_num at *
+  all_goals try (first | exact Or.inl rfl | exact Or.inr rfl)
+  all_goals
+    exfalso
+    dsimp [nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel,
+      cellLower, cellUpper, cuts, lambda] at hr hL hR hb
+    norm_num at hr hL hR hb
+    simp only [ht2, hg] at hr hL hR hb
+    linarith only [ht, ht1, hhalf, hr.1, hr.2, hL, hR, hb]
+
 /-- At most two adjacent roots meet a color; its width is below their translation gap. -/
 private theorem color_geometry (β : ℝ) (hb : β < lambda) (c : Fin 6) :
     ∃ lo hi : Label,
@@ -110,32 +157,13 @@ private theorem color_geometry (β : ℝ) (hb : β < lambda) (c : Fin 6) :
         window x 0 = lo ∨ window x 0 = hi) ∧
       (∀ x y : LegalDigits, window x 0 = lo → window y 0 = hi → kappa x ≤ kappa y) := by
   obtain ⟨ht, ht1, ht2, hg, hhalf⟩ := golden_relations
-  let low (c : Fin 6) : Label :=
-    if c.val ≤ 1 then threeLabel else if c.val = 2 then nullLabel else
-      if c.val = 3 then fiveLabel else twoLabel
-  let high (c : Fin 6) : Label :=
-    if c.val ≤ 1 then nullLabel else if c.val = 2 then fiveLabel else
-      if c.val = 3 then twoLabel else twoFiveLabel
-  have labels (l : Label) : l = nullLabel ∨ l = threeLabel ∨ l = fiveLabel ∨
-      l = twoLabel ∨ l = twoFiveLabel := by
-    have h0 := l.property 0 (by decide)
-    have h1 := l.property 1 (by decide)
-    have hext (p q : Label) : p = q ↔ ∀ i, p.val i = q.val i := by
-      exact Subtype.ext_iff.trans funext_iff
-    rw [hext l nullLabel, hext l threeLabel, hext l fiveLabel,
-      hext l twoLabel, hext l twoFiveLabel]
-    clear hext
-    simp only [Fin.forall_fin_succ,
-      Fin.forall_fin_zero, nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel]
-    cases ha : l.val 0 <;> cases hb : l.val 1 <;> cases hc : l.val 2 <;>
-      simp_all
   classical
-  refine ⟨low c, high c, ?_, ?_, ?_, ?_⟩
-  · fin_cases c <;> dsimp [low, high, offset, nullLabel, threeLabel,
+  refine ⟨lowLabel c, highLabel c, ?_, ?_, ?_, ?_⟩
+  · fin_cases c <;> dsimp [lowLabel, highLabel, offset, nullLabel, threeLabel,
       fiveLabel, twoLabel, twoFiveLabel] <;>
       norm_num <;> (try simp only [abs_of_pos ht]) <;> nlinarith
   · fin_cases c
-    all_goals dsimp [low, high, offset, nullLabel, threeLabel,
+    all_goals dsimp [lowLabel, highLabel, offset, nullLabel, threeLabel,
       fiveLabel, twoLabel, twoFiveLabel, cellUpper, cellLower, cuts] at *
     all_goals norm_num at *
     all_goals dsimp [lambda] at *
@@ -149,29 +177,13 @@ private theorem color_geometry (β : ℝ) (hb : β < lambda) (c : Fin 6) :
           (sub_le_sub (min_le_right _ _) (le_max_right _ _)) (by linarith)
       | exact lt_of_le_of_lt
           (sub_le_sub (min_le_left _ _) (le_max_right _ _)) (by linarith)
-  · intro x hx
-    have hr := root_bounds x
-    have hL := (le_max_right (-1 : ℝ) (cellLower c - β)).trans hx.1
-    have hR := hx.2.trans (min_le_right (1 + t) (cellUpper c + β))
-    rcases labels (window x 0) with h | h | h | h | h
-    all_goals rw [h] at hr ⊢
-    all_goals fin_cases c
-    all_goals dsimp [low, high] at *
-    all_goals norm_num at *
-    all_goals try (first | exact Or.inl rfl | exact Or.inr rfl)
-    all_goals
-      exfalso
-      dsimp [nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel,
-        cellLower, cellUpper, cuts, lambda] at hr hL hR hb
-      norm_num at hr hL hR hb
-      simp only [ht2, hg] at hr hL hR hb
-      linarith only [ht, ht1, hhalf, hr.1, hr.2, hL, hR, hb]
+  · exact color_labels β hb c
   · intro x y hx hy
     have hX := root_bounds x
     have hY := root_bounds y
     rw [hx] at hX
     rw [hy] at hY
-    fin_cases c <;> dsimp [low, high, nullLabel, threeLabel, fiveLabel,
+    fin_cases c <;> dsimp [lowLabel, highLabel, nullLabel, threeLabel, fiveLabel,
       twoLabel, twoFiveLabel] at hX hY
     all_goals norm_num at hX hY
     all_goals try simp only [ht2, hg] at hX hY

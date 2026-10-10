@@ -120,7 +120,7 @@ private lemma highKernel_physical (r y : ℝ) :
   rw [highKernel, scaleWeight_eq]
   ring
 
-private lemma highKernel_formula {r y : ℝ} (hr : 0 < r) (hy : 1 < y) :
+lemma highKernel_formula {r y : ℝ} (hr : 0 < r) (hy : 1 < y) :
     highKernel r y = ((r + Real.log y)⁻¹ + (r + Real.log y)⁻¹ ^ 2) / y ^ 2 := by
   have hypos : 0 < y := by linarith
   have hden : 0 < r + Real.log y := by positivity [Real.log_pos hy]

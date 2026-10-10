@@ -70,7 +70,7 @@ The positive zero-tail decomposition used in Section 4.9 assumes RH.
 Numerical agreement at selected parameters is not that transfer
 estimate. The paper explicitly claims no proof of RH.
 
-The [original theta variance metric](../../docs/reports/theta-mixed-matrix/weighted-window-metric.md)
+The [original theta variance metric](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/weighted-window-metric.md)
 is another concrete relative-estimate target. Its ground, measure,
 odd derivative space and metric $B_L$ are independently fixed by the
 original form. No parameter map identifying Shi's contrast metric or

@@ -1,0 +1,21 @@
+### 假设与条件推论 19.3：同一窗函数的实际零点接口
+
+设 $S_T$ 为 $(T,2T]$ 内简单临界线零点数，$N_T$ 为同区间全部非平凡零点按重数计数。假设同一窗函数的实际零点 Gram 满足
+$$
+ S_T\ge H_{\mathrm{cert}}N_T+\operatorname{tr}\Psi(M_T)-o(N_T),
+ \tag{19.7}
+$$
+其中 $H_{\mathrm{cert}}>0$，$M_T$ 是同一个实际全局正半定 Gram；保留点列对应于其中同一组实际向量的一个主子矩阵。保留点列的点数为 $S_T-o(N_T)$、归一化总跨度至多 $N_T+o(N_T)$，固定大小且有限跨度的主块 Gram 在紧集上一致趋于 (19.1) 的核 $K$。谱迹 pinching 给出 $\operatorname{tr}\Psi(M_T)\ge\operatorname{tr}\Psi(M_T[\mathrm{retained}])$。这些是引用解析方法的外部输入。由 (19.7)、$\Psi\ge0$ 及 $H_{\mathrm{cert}}>0$，保留点数最终大于固定 $m$。
+
+紧集接口已足够：每个主块的每个相邻间隙至少被一个局部窗口覆盖，故 $P_B\ge p\,\operatorname{span}(B)$。若 $P_B\ge A$，则非负谱缺陷加压力给出 $D_B+\eta P_B\ge R$；否则 $\operatorname{span}(B)<A/p$，因此紧集上一致逼近给出一致的单块 $o(1)$ 误差。固定 $m$ 时，谱连续性亦容许实际对角为 $1+o(1)$。全部块的总误差为 $o(N_T)$。
+
+若 $m>R$，由 (19.4) 与 (19.7) 得
+$$
+ \boxed{
+ \liminf_{T\to\infty}\frac{S_T}{N_T}
+ \ge\frac{mH_{\mathrm{cert}}-\eta(m-q)qp}{m-R}
+ =\frac{mH_{\mathrm{cert}}-(qp/\varepsilon)R}{m-R}.}
+ \tag{19.8}
+$$
+这是以局部证书及同一窗函数的解析接口为前提的比例推论；有限矩阵式 (19.4) 对满足定义 19.1 的任意输入成立。
+

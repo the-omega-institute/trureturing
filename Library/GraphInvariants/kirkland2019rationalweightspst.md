@@ -8,6 +8,8 @@ url: https://arxiv.org/abs/1708.03283v2
 claim: "Rational weights conjecture: a weighted path on at least four vertices, with or without potentials, whose edge weights are all rational has no adjacency matrix perfect state transfer between its end vertices at readout time π. Proposition prop:rat proves it for n = 4 and for n ≥ 5 with n ≡ 3 or 5 (mod 8)."
 strata_touched:
   - D5/S3/Quantum/Dynamics/RationalWeightPathTransfer
+  - D5/S3/Quantum/Dynamics/PathMiddleVertexMoments
+  - D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer
 license: citation-only
 triage: anchor
 ---
@@ -61,6 +63,24 @@ commuting with the path Hamiltonian, and derives from the second the identity
 $P\sum_{i\in A} 1/\prod_{j\ne i}(z_i - z_j) = 1/2$ for the spectral class $A$
 of a Hermitian matrix; the 2-adic valuation of that sum is the module's own
 step.
+
+The module `D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer`, with the
+spectral weights and integer moments at the middle vertex of
+`D5/S3/Quantum/Dynamics/PathMiddleVertexMoments`, proves the statement of the
+conjecture for every odd $n = 2m + 1 \ge 3$, in both directions between the
+end vertices and with arbitrary real potentials: $n = 3$ lies below the
+conjecture's range, the sizes $n \equiv 3, 5 \pmod 8$ are the cases of
+Proposition `prop:rat`, and the sizes $n \equiv 1, 7 \pmod 8$ lie outside
+those cases. The even sizes $n \ge 6$ are not settled by the source or these
+modules. The source obtains its odd cases from the weight next to the middle
+vertex: with $S_1=\sum_{r=1}^n(-1)^{r+n}\alpha_r$ and
+$S_2=\sum_{r=1}^n(-1)^{r+n}\alpha_r^2$ for the ordered eigenvalues
+$\alpha_r$, its Corollary `cor:middle` gives, for $n$ odd,
+$r_{\frac{n-1}2}=\frac{\sqrt{S_2-S_1^2}}2$ and $q_{\frac{n+1}2}=S_1$; it also
+recalls, citing Cantoni and Butler, that the eigenvectors of a mirror-symmetric
+Hamiltonian are symmetric or antisymmetric. The modules use the diagonal
+entries of all the powers of the Hamiltonian at the middle vertex and the
+Hankel determinants of these moments of every size up to $m + 1$.
 
 ## Verified locator
 
