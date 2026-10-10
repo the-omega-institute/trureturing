@@ -27,7 +27,6 @@ def nu : ℝ := 3 - 2 * s
 private lemma s_pos : 0 < s := Real.sqrt_pos.2 (by norm_num)
 private lemma s_sq : s ^ 2 = 2 := Real.sq_sqrt (by norm_num)
 private lemma s_gt_one : 1 < s := by nlinarith [s_sq, s_pos]
-private lemma s_lt_two : s < 2 := by nlinarith [s_sq, s_pos]
 private lemma nu_pos : 0 < nu := by
   have h : (s-1)^2 > 0 := sq_pos_of_pos (by linarith [s_gt_one])
   dsimp [nu]; nlinarith [s_sq]
@@ -119,20 +118,27 @@ private lemma reverse_square (a z : ℂ) (hz : ‖z‖=1) : (‖a‖-1)^2 ≤ �
   have hh' := (sq_le_sq₀ (abs_nonneg _) (norm_nonneg _)).2 hh
   simpa using hh'
 
+private lemma A_sq (z : Fin 4 → ℂ) (hz : z ∈ torus) : ‖A z‖^2=1+(z 0*conj (z 1)).re := by
+  have hn (i : Fin 4) : normSq (z i)=1 := by rw [normSq_eq_norm_sq,hz i]; norm_num
+  have hs : s*s=2 := by nlinarith only [s_sq]
+  rw [← normSq_eq_norm_sq]
+  simp only [A,normSq_div,normSq_add,hn,normSq_ofReal,hs]
+  ring
+private lemma D_sq (z : Fin 4 → ℂ) (hz : z ∈ torus) : ‖D z‖^2=1+(z 0*conj (z 1)).im := by
+  have hn (i : Fin 4) : normSq (z i)=1 := by rw [normSq_eq_norm_sq,hz i]; norm_num
+  have hs : s*s=2 := by nlinarith only [s_sq]
+  rw [← normSq_eq_norm_sq]
+  simp only [D,normSq_div,normSq_add,hn,normSq_ofReal,hs,normSq_mul,normSq_I]
+  simp [Complex.mul_re,Complex.mul_im]; ring
+
 private lemma phase_data (z : Fin 4 → ℂ) (hz : z ∈ torus) :
     0 ≤ ‖A z‖ ∧ 0 ≤ ‖D z‖ ∧ ‖A z‖ ≤ s ∧ ‖D z‖ ≤ s ∧
     ((‖A z‖^2-1)^2+(‖D z‖^2-1)^2=1) ∧
     (‖A z‖-1)^2 ≤ ‖y z 0‖^2 ∧ (‖D z‖-1)^2 ≤ ‖y z 1‖^2 := by
   have hn (i : Fin 4) : normSq (z i)=1 := by rw [normSq_eq_norm_sq, hz i]; norm_num
   have hs : s*s=2 := by nlinarith only [s_sq]
-  have ha : ‖A z‖^2=1+(z 0*conj (z 1)).re := by
-    rw [← normSq_eq_norm_sq]
-    simp only [A,normSq_div,normSq_add,hn,normSq_ofReal,hs]
-    ring
-  have hd : ‖D z‖^2=1+(z 0*conj (z 1)).im := by
-    rw [← normSq_eq_norm_sq]
-    simp only [D,normSq_div,normSq_add,hn,normSq_ofReal,hs,normSq_mul,normSq_I]
-    simp [Complex.mul_re, Complex.mul_im]; ring
+  have ha := A_sq z hz
+  have hd := D_sq z hz
   have hw : normSq (z 0*conj (z 1))=1 := by simp [normSq_mul, normSq_conj, hn]
   have hwr : (z 0*conj (z 1)).re^2+(z 0*conj (z 1)).im^2=1 := by
     simpa only [normSq_apply,pow_two] using hw
@@ -148,16 +154,6 @@ private lemma phase_data (z : Fin 4 → ℂ) (hz : z ∈ torus) :
 private lemma energy_lower (z : Fin 4 → ℂ) (hz : z ∈ torus) : nu ≤ energy z := by
   rcases phase_data z hz with ⟨hu,hv,hus,hvs,hc,he,hf⟩
   exact scalar_bound _ _ _ _ hu hv hus hvs hc he hf
-
-private lemma equality_axes (z : Fin 4 → ℂ) (hz : z ∈ torus) (heq : energy z=nu) :
-    y z 0=0 ∨ y z 1=0 := by
-  rcases phase_data z hz with ⟨hu,hv,hus,hvs,hc,he,hf⟩
-  rcases scalar_equality _ _ _ _ hu hv hus hvs hc he hf heq with h | h
-  · right; exact norm_eq_zero.mp (sq_eq_zero_iff.mp h.2.2)
-  · left; exact norm_eq_zero.mp (sq_eq_zero_iff.mp h.2.2)
-
-private lemma equality_cross_zero (z : Fin 4 → ℂ) (hz : z ∈ torus) (heq : energy z=nu) : cross z=0 := by
-  rcases equality_axes z hz heq with h | h <;> simp [cross,h]
 
 private lemma torus_compact : IsCompact torus := by
   have hh := isCompact_univ_pi (fun _ : Fin 4 => isCompact_sphere (0:ℂ) 1)
@@ -177,19 +173,6 @@ open scoped ComplexConjugate
 set_option linter.style.whitespace false
 set_option linter.style.longLine false
 set_option linter.unusedSimpArgs false
-
-private lemma A_sq (z : Fin 4 → ℂ) (hz : z ∈ torus) : ‖A z‖^2=1+(z 0*conj (z 1)).re := by
-  have hn (i : Fin 4) : normSq (z i)=1 := by rw [normSq_eq_norm_sq,hz i]; norm_num
-  have hs : s*s=2 := by nlinarith only [s_sq]
-  rw [← normSq_eq_norm_sq]
-  simp only [A,normSq_div,normSq_add,hn,normSq_ofReal,hs]
-  ring
-private lemma D_sq (z : Fin 4 → ℂ) (hz : z ∈ torus) : ‖D z‖^2=1+(z 0*conj (z 1)).im := by
-  have hn (i : Fin 4) : normSq (z i)=1 := by rw [normSq_eq_norm_sq,hz i]; norm_num
-  have hs : s*s=2 := by nlinarith only [s_sq]
-  rw [← normSq_eq_norm_sq]
-  simp only [D,normSq_div,normSq_add,hn,normSq_ofReal,hs,normSq_mul,normSq_I]
-  simp [Complex.mul_re,Complex.mul_im]; ring
 
 private lemma unit_scaled (a b : ℂ) (ha : ‖a‖=1) (hb : ‖b‖=1)
     (h : normSq (b-(s:ℂ)*a)=nu) : b=a := by
@@ -291,6 +274,17 @@ open scoped ComplexConjugate ComplexOrder
 set_option linter.style.whitespace false
 set_option linter.style.longLine false
 set_option linter.unusedSimpArgs false
+
+private lemma equality_cross_zero (z : Fin 4 → ℂ) (hz : z ∈ torus) (heq : energy z=nu) : cross z=0 := by
+  rcases (equality_classification z hz).mp heq with h | h
+  · have hy := (q_images (z 0)).1
+    unfold cross
+    rw [h, hy]
+    simp
+  · have hy := (q_images (z 0)).2
+    unfold cross
+    rw [h, hy]
+    simp
 
 private lemma compact_tilt : ∃ a : ℝ, 0<a ∧ a≤1 ∧
     ∀ z ∈ torus, nu-a*(nu/16) ≤ energy z-a*cross z := by
@@ -449,5 +443,109 @@ def phaseMasses (C : Matrix (Fin 4) (Fin 4) ℂ) : Set ℝ :=
     t = ∑ j, p j}
 
 def eta (C : Matrix (Fin 4) (Fin 4) ℂ) : ℝ := sSup (phaseMasses C)
+
+private lemma B_R0 : B * R0 = 0 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [B, R0, Matrix.mul_apply, Fin.sum_univ_succ]
+
+private lemma compressed_noisy (epsilon : ℝ) :
+    B * noisyCorrelation epsilon * Bᴴ = epsilon • M := by
+  simp only [noisyCorrelation, Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul,
+    Matrix.smul_mul, Matrix.mul_one, C0, ← Matrix.mul_assoc, B_R0,
+    Matrix.zero_mul, smul_zero, zero_add, M]
+
+private lemma compressed_family {m : ℕ} (p : Fin m → ℝ) (z : Fin m → Fin 4 → ℂ) :
+    B * (∑ j, p j • Matrix.vecMulVec (z j) (star (z j))) * Bᴴ = gram p z := by
+  rw [gram_original]
+  simp only [Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul,
+    Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, ← Matrix.star_mulVec]
+
+private lemma compressed_feasible {m : ℕ} (epsilon : ℝ) (p : Fin m → ℝ)
+    (z : Fin m → Fin 4 → ℂ)
+    (hP : (noisyCorrelation epsilon -
+      ∑ j, p j • Matrix.vecMulVec (z j) (star (z j))).PosSemidef) :
+    (epsilon • M - gram p z).PosSemidef := by
+  have h := hP.mul_mul_conjTranspose_same B
+  simpa only [Matrix.mul_sub, Matrix.sub_mul, compressed_noisy, compressed_family] using h
+
+private lemma gram_scale {m : ℕ} (p : Fin m → ℝ) (z : Fin m → Fin 4 → ℂ) (r : ℝ) :
+    gram (fun j => r * p j) z = r • gram p z := by
+  simp only [gram_original, mul_smul, Finset.smul_sum]
+
+private lemma zero_budget_mass {m : ℕ} (p : Fin m → ℝ) (z : Fin m → Fin 4 → ℂ)
+    (hp : ∀ j, 0 ≤ p j) (hz : ∀ j, z j ∈ torus)
+    (hP : (-gram p z).PosSemidef) : (∑ j, p j) ≤ 0 := by
+  have hd (i : Fin 2) := (Complex.nonneg_iff.mp (hP.diag_nonneg (i := i))).1
+  have hdiag (i : Fin 2) : (gram p z i i).re = ∑ j, p j * ‖y (z j) i‖^2 := by
+    simp only [gram, Complex.re_sum, ← normSq_eq_norm_sq, normSq_apply,
+      Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im,
+      Complex.ofReal_re, Complex.ofReal_im]
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have htrace : (∑ j, p j * energy (z j)) ≤ 0 := by
+    have h0 := hd 0
+    have h1 := hd 1
+    simp only [Matrix.neg_apply, Complex.neg_re, hdiag] at h0 h1
+    simp only [energy, mul_add, Finset.sum_add_distrib]
+    linarith only [h0, h1]
+  have hlower : nu * (∑ j, p j) ≤ ∑ j, p j * energy (z j) := by
+    rw [Finset.mul_sum]
+    exact Finset.sum_le_sum fun j _ => by
+      simpa only [mul_comm] using mul_le_mul_of_nonneg_left (energy_lower (z j) (hz j)) (hp j)
+  nlinarith only [nu_pos, hlower, htrace]
+
+private lemma scaled_mass_bound (gamma : ℝ)
+    (hgap : ∀ (m : ℕ) (_ : 1 ≤ m) (p : Fin m → ℝ) (z : Fin m → Fin 4 → ℂ),
+      (∀ j, 0 ≤ p j) → (∀ j k, ‖z j k‖ = 1) →
+      (M - ∑ j, p j • Matrix.vecMulVec (B.mulVec (z j))
+        (star (B.mulVec (z j)))).PosSemidef → (∑ j, p j) ≤ 4/nu-gamma)
+    (epsilon : ℝ) (he : 0 ≤ epsilon) (t : ℝ) (ht : t ∈ phaseMasses (noisyCorrelation epsilon)) :
+    t ≤ (4/nu-gamma)*epsilon := by
+  rcases ht with ⟨m,hm,p,z,hp,hz,hP,rfl⟩
+  have hc := compressed_feasible epsilon p z hP
+  rcases he.eq_or_lt with he | he
+  · subst epsilon
+    simp only [zero_smul, zero_sub] at hc
+    simpa using zero_budget_mass p z hp hz hc
+  · have hn : (M - gram (fun j => epsilon⁻¹*p j) z).PosSemidef := by
+      have hh := hc.smul (inv_nonneg.mpr he.le)
+      simpa only [smul_sub, smul_smul, inv_mul_cancel₀ he.ne', one_smul,
+        ← gram_scale] using hh
+    rw [gram_original] at hn
+    have hb := hgap m hm (fun j => epsilon⁻¹*p j) z
+      (fun j => mul_nonneg (inv_nonneg.mpr he.le) (hp j)) hz hn
+    rw [← Finset.mul_sum] at hb
+    calc
+      (∑ j, p j) = (epsilon⁻¹ * ∑ j, p j) * epsilon := by field_simp
+      _ ≤ (4/nu-gamma)*epsilon := mul_le_mul_of_nonneg_right hb he.le
+
+/-- A common strict improvement of the phase-cone coefficient, including the zero-noise endpoint.
+The supremum is over all positive finite branch counts and nonnegative weights. -/
+theorem eta_strict_improvement : ∃ gamma : ℝ, 0 < gamma ∧
+    ∀ epsilon : ℝ, 0 ≤ epsilon → epsilon ≤ 1 →
+      0 ∈ phaseMasses (noisyCorrelation epsilon) ∧
+      BddAbove (phaseMasses (noisyCorrelation epsilon)) ∧
+      IsLUB (phaseMasses (noisyCorrelation epsilon)) (eta (noisyCorrelation epsilon)) ∧
+      0 ≤ eta (noisyCorrelation epsilon) ∧
+      eta (noisyCorrelation epsilon) ≤ (4/(3-2*Real.sqrt 2)-gamma)*epsilon := by
+  obtain ⟨gamma,hgamma,hgap⟩ := first_hop_original
+  refine ⟨gamma,hgamma,?_⟩
+  intro epsilon he he1
+  have hC : (noisyCorrelation epsilon).PosSemidef :=
+    ((Matrix.posSemidef_self_mul_conjTranspose R0).smul (sub_nonneg.mpr he1)).add
+      (Matrix.PosSemidef.one.smul he)
+  have hzero : 0 ∈ phaseMasses (noisyCorrelation epsilon) := by
+    refine ⟨1,le_rfl,(fun _ => 0),(fun _ _ => 1),?_,?_,?_,?_⟩
+    · simp
+    · simp
+    · simpa using hC
+    · simp
+  have hbound : ∀ t ∈ phaseMasses (noisyCorrelation epsilon),
+      t ≤ (4/nu-gamma)*epsilon := scaled_mass_bound gamma hgap epsilon he
+  have hbounded : BddAbove (phaseMasses (noisyCorrelation epsilon)) := ⟨_,hbound⟩
+  exact ⟨hzero,hbounded,isLUB_csSup ⟨0,hzero⟩ hbounded,
+    le_csSup hbounded hzero,csSup_le ⟨0,hzero⟩ hbound⟩
 
 end D5.S3.Quantum.Recovery.SharedPhaseBudgetGap
