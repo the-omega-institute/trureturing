@@ -1,0 +1,39 @@
+**Claim status: open.**
+
+静态条件
+$$
+J_f=0
+$$
+只说明当前读数 $E[f]$ 对 $\kappa$ 不敏感。完整未来的判据是词级 pullback
+$$
+dM_\omega g\ne0.
+$$
+若观测商满足
+$$
+s\sim s'\Longrightarrow T_a(s)\sim T_a(s')
+$$
+对所有动作成立，则它是动态同余，可以作为安全状态商；否则当前合并会在未来被输出分支重新分离。
+
+更一般地，对确定动作 $T_a:S\to S$ 和
+$$
+U_af=f\circ T_a,
+$$
+若对所有 $a$ 和 $f\in\mathcal B$ 有
+$$
+J(U_af)=0,
+$$
+则一步未来仍由 $(X,Y,Z)$ 决定；若存在 $a,f$ 使
+$$
+J(U_af)\ne0,
+$$
+则同一三均值纤维中存在不同的一步未来输出。有限词 $w$ 的未来观测空间为
+$$
+\mathcal O_T=
+\operatorname{span}\{U_wf:f\in\mathcal B,\ |w|\le T\},
+$$
+新增观测维数为
+$$
+d_T=\dim\frac{\mathcal O_T+\mathcal B}{\mathcal B}.
+$$
+单窗口五态模型的静态缺口至多一维；这不自动等于双窗、$N=6$ 或完整 Fibonacci 计数系统的动态记忆维数。
+
