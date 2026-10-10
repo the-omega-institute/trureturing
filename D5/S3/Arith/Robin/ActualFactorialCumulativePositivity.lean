@@ -251,7 +251,7 @@ private lemma triangle_left {r z : ℝ} (hz : 1 < z) :
     ← intervalIntegral.integral_of_le hz.le]
   rfl
 
-private lemma positive_representation_y {r : ℝ} (hr : 0 < r) :
+lemma positive_representation_y {r : ℝ} (hr : 0 < r) :
     highRemainder r = ∫ y in Ioi (1 : ℝ), cumulative y * tailKernel r y := by
   have hswap := integral_integral_swap (f := fun y z => triangle r (y, z))
     (triangle_integrable hr)

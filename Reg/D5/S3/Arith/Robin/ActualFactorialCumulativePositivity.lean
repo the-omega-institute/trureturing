@@ -108,6 +108,59 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := some ⟨arena, ⟨family⟩⟩
   options := #[]
 
+/-- Source-level audit attempt for the original representation exposed to its
+actual high-weight consumer. Source selection and binding evidence remain open. -/
+abbrev yArena : Arena where
+  signature := signature
+  Law R := ∀ r : ℝ, 0 < r →
+    highRemainder r = ∫ y in Ioi (1 : ℝ), R.readout () () y * tailKernel r y
+
+theorem rejected_y_law : ¬ yArena.Law rejected := by
+  intro h
+  have hz : highRemainder 1 = 0 := by
+    simpa [rejected, realize] using h 1 (by norm_num)
+  have hl := (result.2.2.2.2.2.2 1 (by norm_num)).2.2.1
+  have hk := result.2.2.2.2.2.1
+  have hc : 0 < 1 + Real.log (2 : ℝ) := by positivity
+  rw [hz] at hl
+  have hp : 0 < kappa * ((1 + Real.log 2)⁻¹ + (1 + Real.log 2)⁻¹ ^ 2) := by positivity
+  linarith
+
+def yFamily : Registration yArena (type_of% (@positive_representation_y)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@positive_representation_y, rejected, rejected_y_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl, rejected_y_law⟩, fun e => nomatch e⟩
+  dependence := family.dependence
+
+def yRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@positive_representation_y) (type_of% (realize signature actual.readout actual.anchor))
+    (ℝ → ℝ) Unit where
+  unitName := `D5.S3.Arith.Robin.ActualFactorialCumulativePositivity.positive_representation_y.__information_unit
+  realizationName := `Reg.D5.S3.Arith.Robin.ActualFactorialCumulativePositivity.yFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨yArena⟩
+  objectArena := .source ⟨yArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source yArena ⟨yFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some cumulative
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms yFamily
+#print axioms yRegistration
+
 #print axioms registration
 
 end
