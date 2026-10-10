@@ -22,9 +22,9 @@ upperCol_range: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Co
 mergeRect_top_row: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_isASR
 mergeRect_lower_row: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_isASR
 mergeRect_pivot_row_function: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_pivot_row
-mergeRect_pivot_row: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SignLines.minus_between_ones
-correctedColumn_zero: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SignLines.minus_between_ones
-correctedColumn_line: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SignLines.minus_between_ones
+mergeRect_pivot_row: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_isASR
+correctedColumn_zero: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_end_column
+correctedColumn_line: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_end_column
 mergeRect_interior_column: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_isASR
 mergeRect_right_column: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_isASR
 mergeRect_end_column_function: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_colSum, D5.S3.Combinatorics.AlternatingSignRectangles.SquareMergeConstruction.mergeRect_end_column

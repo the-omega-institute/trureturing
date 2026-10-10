@@ -18,7 +18,7 @@ line_tail_zero_after_complete: proof_shape: content; escape_witness: D5.S3.Combi
 residualRect_first_col_line: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareFirstColumnDecomposition.residualRect_first_col_line
 residualRect_top_row: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareFirstColumnDecomposition.residualRect_top_row
 residualRect_lower_row: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SignLines.alternating_line_state
-residualRect_right_col: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SignLines.one_before_minus
+residualRect_right_col: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquarePrefixGeometry.prefix_one_column_bound
 residualRect_isASR: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareFirstColumnDecomposition.residualRect_first_col_line
 sum_cut: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareFirstColumnDecomposition.residualRect_colSum
 residualRect_colSum: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SignLines.alternating_line_state

@@ -20,13 +20,13 @@ topLeft_first_colSum: proof_shape: bind-only; escape_witness: none; consumer: D5
 topLeft_nonemptyRows: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SignLines.alternating_line_state
 topLeft_one_noncorner: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.topLeft_extAvoids
 topLeft_extAvoids: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.topLeft_extAvoids
-topLeft_reconstruct: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SignLines.minus_between_ones
+topLeft_reconstruct: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.extractTopLeft, D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.topLeftFibreEquiv
 topLeft_isASR_inv: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.extractTopLeft
 topLeft_extAvoids_inv: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.topLeft_extAvoids_inv
 topLeftFibre_card: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.topLeft_extAvoids_inv
 asmZeroFibre_card: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.topLeft_extAvoids_inv
 asmPivot_spec: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.asmPivot_fibre_iff
-asmPivot_fibre_iff: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SignLines.minus_between_ones
+asmPivot_fibre_iff: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.asmPivotEquiv
 asm_succ_card: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.topLeft_extAvoids_inv
 avoidingASM_card_schroder: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.avoidingASM_card_schroder
 S_diagonal_nat: proof_shape: content; escape_witness: D5.S3.Combinatorics.AlternatingSignRectangles.SquareASMDecomposition.avoidingASM_card_schroder
