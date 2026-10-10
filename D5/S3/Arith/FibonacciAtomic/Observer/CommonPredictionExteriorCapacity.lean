@@ -36,7 +36,7 @@ def bLabel (h : Bool) (r v : W) : Fin 3 :=
 /-- Integer zero-one classification loss. -/
 def err (a c : Fin 3) : ℤ := if a = c then 0 else 1
 /-- Signed difference of left and right classification losses at one high bit. -/
-def ld (h : Bool) (q r v : W) (c : Fin 3) : ℤ :=
+private def ld (h : Bool) (q r v : W) (c : Fin 3) : ℤ :=
   err (aLabel h q r) c - err (bLabel h r v) c
 /-- Total teacher votes when k of the m prefix high bits are true. -/
 def vt (m k : ℕ) (q r v : W) (c : Fin 3) : ℕ :=
@@ -684,7 +684,8 @@ private lemma slices_sum (n m : ℕ) (hnm : n ≤ m) :
   have huniv : (∑ p : Fin n → W, X ^ rareN p) = (2 + 3 * X) ^ n := by
     have hp := congrArg (Polynomial.map (Nat.castRingHom ℤ))
       (ReservoirWords.prefix_generating n)
-    simpa only [map_sum, map_pow, map_natCast, map_ofNat, map_X,
+    simpa only [Polynomial.map_sum, Polynomial.map_pow, Polynomial.map_add,
+      Polynomial.map_mul, Polynomial.map_natCast, Polynomial.map_ofNat, Polynomial.map_X,
       Nat.coe_castRingHom] using hp
   unfold slice
   rw [Finset.sum_comm, ← huniv]
@@ -750,7 +751,6 @@ private lemma actual_exterior_identity (m : ℕ) (hm : 0 < m) (i : Fin m) :
     rw [← Finset.mul_sum, Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum,
       low_slices, WordCounts.positive_slices_sum m hm]
     unfold Eformula
-    skip
     ring
   exact mul_left_cancel₀ (by norm_num : (2:P) ≠ 0) hp
 end
@@ -765,11 +765,12 @@ namespace ExteriorCounts
 noncomputable section
 /-- Actual exterior left-teacher errors minus right-teacher errors in a rare-count class. -/
 def Ez (m z : ℕ) (i : Fin m) : ℤ := by
-  classical exact ∑ x : Input (m + 3), if ¬ReservoirWords.isReservoir x
-    ∧ WordCounts.rareN x = z then
-    MajorityGeometry.err (teacher (TeacherLabels.leftRoles i) x)
-      (exteriorSelector x) -
-      MajorityGeometry.err (teacher (TeacherLabels.rightRoles i) x) (exteriorSelector x) else 0
+  classical
+  exact ∑ x : Input (m + 3),
+    if ¬ReservoirWords.isReservoir x ∧ WordCounts.rareN x = z then
+      MajorityGeometry.err (teacher (TeacherLabels.leftRoles i) x) (exteriorSelector x) -
+        MajorityGeometry.err (teacher (TeacherLabels.rightRoles i) x) (exteriorSelector x)
+    else 0
 /-- The actual exterior discrepancy is the z coefficient of the explicit exterior polynomial. -/
 lemma actual_ez_identity (m z : ℕ) (hm : 0 < m) (i : Fin m) :
     Ez m z i = (Eformula m).coeff z := by
