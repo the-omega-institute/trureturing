@@ -343,4 +343,59 @@ theorem lowering_rank_formula [FiniteDimensional K V]
   rw [hAC.eq_bot, finrank_bot, add_zero, ← hrange, hA] at z
   exact z
 
+omit [CharZero K] in
+/-- Iterating a filtration-lowering endomorphism lowers by twice the exponent. -/
+theorem filtration_pow_map_le (F : ℤ → Submodule K V) (T : Module.End K V)
+    (hT : ∀ s : ℤ, (F s).map T ≤ F (s - 2)) (s : ℤ) (r : ℕ) :
+    (F s).map (T ^ r) ≤ F (s - 2 * (r : ℤ)) := by
+  induction r generalizing s with
+  | zero => simp only [pow_zero, Module.End.one_eq_id, Submodule.map_id,
+      Nat.cast_zero, mul_zero, sub_zero, le_refl]
+  | succ r ih =>
+    rw [pow_succ', Module.End.mul_eq_comp, Submodule.map_comp]
+    have z := (Submodule.map_mono (ih s)).trans (hT (s - 2 * (r : ℤ)))
+    have label : s - 2 * (r : ℤ) - 2 = s - 2 * ((r + 1 : ℕ) : ℤ) := by omega
+    simpa only [label] using z
+
+omit [CharZero K] in
+private theorem filtration_kernel_bound [FiniteDimensional K V]
+    (F : ℤ → Submodule K V) (T : Module.End K V)
+    (hT : ∀ s : ℤ, (F s).map T ≤ F (s - 2)) (r : ℕ) :
+    finrank K (F ((r : ℤ) - 1)) ≤
+      finrank K (LinearMap.ker (T ^ r)) + finrank K (F (-(r : ℤ) - 1)) := by
+  let B := F ((r : ℤ) - 1)
+  let C := F (-(r : ℤ) - 1)
+  let L := (T ^ r).domRestrict B
+  have image : LinearMap.range L ≤ C := by
+    rw [LinearMap.range_domRestrict]
+    have z := filtration_pow_map_le F T hT ((r : ℤ) - 1) r
+    have label : (r : ℤ) - 1 - 2 * (r : ℤ) = -(r : ℤ) - 1 := by omega
+    simpa only [label] using z
+  have kernel : finrank K (LinearMap.ker L) ≤ finrank K (LinearMap.ker (T ^ r)) := by
+    have eqmap : (LinearMap.ker L).map B.subtype = B ⊓ LinearMap.ker (T ^ r) := by
+      rw [LinearMap.ker_domRestrict, Submodule.map_comap_subtype]
+    have z := Submodule.finrank_mono
+      (inf_le_right : B ⊓ LinearMap.ker (T ^ r) ≤ LinearMap.ker (T ^ r))
+    rw [← eqmap, Submodule.finrank_map_subtype_eq] at z
+    exact z
+  have range := Submodule.finrank_mono image
+  have dims := L.finrank_range_add_finrank_ker
+  change finrank K B ≤ finrank K (LinearMap.ker (T ^ r)) + finrank K C
+  omega
+
+/-- Among endomorphisms lowering the integral weight filtration by two, the sl₂ lowering
+operator has maximal rank at every natural power. -/
+theorem rank_comparison [FiniteDimensional K V]
+    {h e f : Module.End K V} (a : Sl2Relations h e f) (hw : IntegralWeights h)
+    (T : Module.End K V) (hT : ∀ s : ℤ, (weightLE h s).map T ≤ weightLE h (s - 2))
+    (r : ℕ) : finrank K (LinearMap.range (T ^ r)) ≤ finrank K (LinearMap.range (f ^ r)) := by
+  have bound := filtration_kernel_bound (weightLE h) T hT r
+  have rank := lowering_rank_formula a hw r
+  have split := Submodule.finrank_sup_add_finrank_inf_eq
+    (weightGE h (r : ℤ)) (weightLE h ((r : ℤ) - 1))
+  rw [(weight_cuts_disjoint h (r : ℤ)).eq_bot, finrank_bot, add_zero,
+    weight_cuts_sup hw (r : ℤ), finrank_top] at split
+  have nullity := (T ^ r).finrank_range_add_finrank_ker
+  omega
+
 end D5.S3.Quantum.SpinChains.Sl2WeightFiltration
