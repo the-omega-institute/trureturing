@@ -676,7 +676,7 @@ $$
 $$
 
 The case $m=0$ is settled before taking any minimum or maximum: every sample
-sum below is then zero. For $m>0$, let $N_p=C_{b_p}$ be the actual largest
+sum and covariance budget below is then zero. For $m>0$, let $N_p=C_{b_p}$ be the actual largest
 full optimizer, with every equality layer retained, and put
 
 $$
@@ -730,6 +730,11 @@ $D\le z<2D$ for $z\in Z$, and
 $$
  h_Z=\sum_{z\in Z}\frac1z\le1.
 $$
+
+If $Z=\varnothing$, all $Z$-indexed sums, blocks, selectors and corresponding
+budgets below are zero, including $h_Z,Q,E_r,F_B,\omega_r,\kappa_L,J,B_Z$
+and the tail and sparse allowances. No maximum over $Z$ is taken;
+definitions for a nonempty rough set apply only when $Z\ne\varnothing$.
 
 For coefficients fixed before the $w$-average, with $|c(z)|\le1$, put
 
@@ -818,10 +823,11 @@ $$
  =\max(0,\min(r,n)-\max(0,n-D)).
 $$
 
-For integer $r\ge D$, this is $D$ on $1\le n\le r$, with the only
-remaining pieces
+For integer $r\ge D$, this is $D$ only on $D\le n\le r$. The early
+$n<D$ correction and late triangular tail are retained in the exact identity
 
 $$
+ L_{D,r}(n)=D\mathbf1_{\{1\le n\le r\}}+e_{D,r}(n),\qquad
  e_{D,r}(n)=
  \begin{cases}
  n-D,&1\le n<D,\\
@@ -849,7 +855,7 @@ where
 
 $$
  E_r=\frac1D\sum_{z\in Z}\frac{c(z)}z
- \sum_{n\ge1}\mu(n)\mu(n+z)e_{D,r}(n),qquad
+ \sum_{n\ge1}\mu(n)\mu(n+z)e_{D,r}(n),\qquad
  |E_r|\le(D-1)h_Z.
 $$
 
@@ -918,7 +924,7 @@ Choose a fixed $B_0$ large enough to include the rough supplier, $D\ge10$,
 and the scalar inequalities
 
 $$
- B^{-1+11\varepsilon}(\log B)^8\le1,qquad
+ B^{-1+11\varepsilon}(\log B)^8\le1,\qquad
  B^{-(1/700-10\varepsilon)}(\log B)^7\le1.
 $$
 
@@ -1007,7 +1013,7 @@ Since $kx\ge a$, each summand is at most $D_a/(x^2k)$. The active
 shell obeys
 
 $$
- \sum_{A'/x<k<A/x}\frac1k
+ \sum_{\substack{k\ge2\\ A'/x<k<A/x}}\frac1k
  \le\frac12+\log\frac AA'\le\frac12+\ell,
 $$
 
@@ -1063,7 +1069,12 @@ monotonicity assertion for a separate $z$-indexed sequence.
 
 ### Finite Abel identity and coefficient budget
 
-For $1\le L\le T$, put
+For an integer $L\ge1$, first settle $T<L$: the block $O_Z^{\ge L}$ and
+every corresponding sum, selector and budget (including the lower anchor,
+$J$, and the tail and sparse allowances) are zero. No maximum, selector
+quotient or logarithmic budget expression is evaluated for an empty block.
+For the remaining block definitions and formulas, assume $Z\ne\varnothing$
+and $1\le L\le T$, and put
 
 $$
  \omega_r=\max_{z\in Z}z\,\Delta\Gamma_z(r),\qquad
@@ -1183,7 +1194,7 @@ The first layers contribute $\vartheta(p)$. Counting each prime with a
 higher layer once, at its highest occupied layer, gives
 
 $$
- A_p=\vartheta(p)+H_p,qquad
+ A_p=\vartheta(p)+H_p,\qquad
  0\le H_p\le\lfloor\sqrt{Q_X}\rfloor\log Q_X.
  \tag{clock}
 $$
@@ -1216,14 +1227,16 @@ For $B$ large, $P_0/\tau\le M\le e^{C_0B}$. Since $DB^2\ge1$,
 $L-1\ge DB^2\ge e^B$, so $L-1\ge R_B$ with the corrected (RB), not
 with the old $\lceil MB^2\rceil$ rounding. The full CA clock, rather than
 the false identity $A_p=b_p$, gives $A_p=b_p+o(b_p)$. Thus for a nonempty
-sample $A_p\ge b_p/2\ge X/2$ eventually, so
+sample $A_p\ge b_p/2\ge X/2$ eventually, hence $a\ge X/2$, so
 
 $$
  T\ge X/4-1,\qquad L+\lceil\tau M\rceil=O(\sqrt X(\log X)^2)=o(X).
 $$
 
-Consequently $L+\lceil\tau M\rceil\le T$ eventually, and the band has
-genuine support for every shift in $Z$. A nonempty rough set or a nonzero
+Consequently $L+\lceil\tau M\rceil<a/2\le b/2$ eventually. This strict
+sufficient condition avoids the zero activation at $b/2$ and also implies
+$L+\lceil\tau M\rceil\le T$, so the band has genuine support for every
+shift in $Z$. A nonempty rough set or a nonzero
 covariance is not inferred merely from support.
 
 With $b/a<4$, $D_a\le2$, and
