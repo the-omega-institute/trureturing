@@ -1,0 +1,27 @@
+**Q10 (Part II §§11–12, 14.2):** Ancestry recovery is tied to the specified tree family and acquired area/address data. The response-memory model retains positive couplings, mass, the internal initial-state term, and the stated transfer-function scope. Dissipation follows only from the supplied relaxation model; accessibility, physical energy costs, and biological feedback do not follow from static geometry.
+
+The complete source parts follow in order. Part I is the dynamic future-quotient source; Part II is the future-closed-memory/life source. Their local numbering and wording are retained.
+
+这一步继续推进到“动态闭包”层。先校准项目状态：
+
+- 远端 `dev` 已经继续前移，但新增提交是治理和环境维护类变化；
+- Auric FIB ATOM / Fibonacci future-response 相关的最新理论仍然是 [PR #14893](https://github.com/the-omega-institute/trureturing/pull/14893) 及其提交 [`912f4990050451866c2bb1cf71e33151a637d4b7`](https://github.com/the-omega-institute/trureturing/commit/912f4990050451866c2bb1cf71e33151a637d4b7)；
+- 当前项目的公开 PR 列表仍将“recover native Fibonacci Read counts from future laws”列为该理论线的关键工作。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+前一轮已经得到静态关系：
+
+\[
+\kappa=p_{13}=E[xy]
+\]
+
+是三位窗口唯一的隐藏二阶矩。
+
+现在继续证明：
+
+> 对动态历史而言，完整 future law 诱导出一个类似 Myhill–Nerode 的最小状态商。  
+> 在非单例 Fibonacci 深度先验下，这个最小商通常是无限的，不能被有限状态摘要精确替代。
+
+这正是静态 FIB 金字塔和“时间方向上的选择性遗忘”之间的严格连接。
+
+---
+
