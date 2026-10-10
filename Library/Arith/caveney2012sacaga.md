@@ -915,3 +915,33 @@ every multiplicity. The defining maximum over integers at least $D$
 therefore supplies $G(N/q)\le G(N)$ for every such $q$.
 Eventually $p\ge5$, so $\Omega(N)\ge\Omega(H)\ge3$; this is proper GA1
 in the source's exact sense. The power excess (S2) holds on this same $N$.
+
+### The self-price has no activation tie
+
+Define the narrower class
+
+$$
+\mathscr S_{\rm reg}=\mathscr S_*\cap\{N:N\text{ is proper GA1}\}.
+$$
+
+Every member has an event-free self-price. Indeed Lemma 6 puts the
+unique strict minimum of $g_{\epsilon_N}$ at $N$. If
+$F(q,k)=\epsilon_N$, equation (11) gives $v_q(N)=k$ or $k-1$.
+When layer $k$ is included, $M=N/q$ is another optimizer at the same
+price; when it is excluded, $M=Nq$ is another such optimizer. In either
+case the common objective gives the exact comparison
+
+$$
+\frac{G(M)}{G(N)}
+=\exp\bigl(g_{\epsilon_N}(M)-g_{\epsilon_N}(N)\bigr)>1.
+$$
+
+In the deletion case, properness gives $M\ge4>e$ and GA1 contradicts
+this strict gain. In the insertion case, $M>N$ and the defining right-tail
+comparison contradicts it. Thus there is no tied layer at any prime or
+depth. Equation (10) identifies $N$ as the unique global CA optimizer
+at its self-price, namely the actual prefix $C_A$ in the
+[existing workload parameter map](../Analytic/mantovanelli2026primeworkload.md#parameters-and-the-actual-packet).
+Consequently $\Phi_{\rm CA}(A)=\log C_A=\log N=A$ and the return is
+regular. This reuses the source's strict-minimum and activation interfaces;
+it introduces no new general regularity theorem or Lean wrapper.
