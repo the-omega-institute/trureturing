@@ -90,7 +90,7 @@ internal sealed class RawCorrelationMomentIdentitiesDocument : IScribeDocumentDe
                 "Fix 0<a<=1 and K>0. Condition each complete record on avoiding the reverse "
                     + "event, and let Jm count records with nonzero score. For every natural "
                     + "cutoff N, P(Jm<=N) tends to zero as rho decreases to zero. The "
-                    + "conditional nonzero mass is p=kappa(a) 2 rho(1-3 rho)(1-2 rho)/" 
+                    + "conditional nonzero mass is p=kappa(a) 2 rho(1-3 rho)(1-2 rho)/"
                     + "(1-12 rho^3), and m p tends to infinity. The finite-product "
                     + "Laplace transform gives the bound exp(N) exp(-(1-exp(-1)) m p)."),
             Paragraph(Text("Finite sums and product factorization are standard probability "
