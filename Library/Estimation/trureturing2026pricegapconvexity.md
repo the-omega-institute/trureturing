@@ -604,8 +604,9 @@ $$
 
 Thus fixed cofinal normalized height, strict tail records and complete
 nonlinear-envelope dominance alone do not force favorable stock sign.
-The actual prime/divisor and full-Q interfaces absent from this model
-remain necessary inputs to any proposed proof of PG15. CR1--CR10 are
+This model establishes only the insufficiency of the stated
+height-and-envelope abstraction; the actual arithmetic interfaces and global
+labelled-competitor H2 remain outside its scope. CR1--CR10 are
 supplier-relative paper deductions, with no Lean verification or priority
 claim; the independent signed finite head, PG15 and RH remain unresolved.
 ## A positive atomic reference can also retain the numerical full-Q estimate
