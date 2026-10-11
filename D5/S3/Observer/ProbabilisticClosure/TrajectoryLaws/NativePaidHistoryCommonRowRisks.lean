@@ -74,7 +74,7 @@ theorem event_gap {A : Type*} [MeasurableSpace A] (P Q : Measure A)
     rw [abs_of_nonpos (sub_nonpos.mpr hr), neg_sub]
     exact (le_max_right _ _).trans h
 
-private theorem risk_finite (M : Observer Z) (e : InstalledEmitter M)
+theorem risk_finite (M : Observer Z) (e : InstalledEmitter M)
     (μ : PMF Depth) (s : ActivePhase) : installedRisk M e μ s ≠ ∞ := by
   apply ne_top_of_le_ne_top ENNReal.one_ne_top
   refine iSup_le fun H => ?_
