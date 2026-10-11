@@ -570,12 +570,8 @@ theorem result (k B : ℕ) (hk : 1 ≤ k) (hB : 2 ≤ B) :
           _ ≤ ((D k + 1 : ℝ) / m N) * Λ := mul_le_mul_of_nonneg_left hdist (by positivity)
           _ = _ := by ring
     have hmTop : Filter.Tendsto m Filter.atTop Filter.atTop := by
-      apply Filter.tendsto_atTop_atTop.mpr
-      intro C
-      refine ⟨C, fun N hN => ?_⟩
-      have hmul : N ≤ Λ * N := by nlinarith
-      dsimp [m]
-      omega
+      simpa only [m, Function.comp_def, id_eq, Nat.add_comm] using
+        (Filter.tendsto_add_atTop_nat m₀).comp (Filter.tendsto_id.const_mul_atTop' hΛ)
     have hmReal : Filter.Tendsto (fun N => (m N : ℝ)) Filter.atTop Filter.atTop :=
       tendsto_natCast_atTop_atTop.comp hmTop
     have hinv := tendsto_inv_atTop_zero.comp hmReal
