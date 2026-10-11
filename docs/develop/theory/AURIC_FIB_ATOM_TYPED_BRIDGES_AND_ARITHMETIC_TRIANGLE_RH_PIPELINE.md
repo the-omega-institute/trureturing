@@ -4054,6 +4054,89 @@ c_n=\rho n\,h_n+O(h_n).
 该推论只涉及 Fibonacci cube 的有限计数和图循环空间。它不表示循环自由度都是概率上可执行的正流；参考定向下的非负可执行性还需另行检查。
 
 
+
+
+### 推论 22.13（五态边界的 signed lift 与非负流分离）
+
+在第 6 节的五态图上，取
+
+\[
+d=(1,-1,0,-1,1),\qquad
+c=(1,1,1,1,0),
+\]
+
+并使用边空间的标准 Euclidean 内积。则
+
+\[
+f_{\mathrm{sgn}}
+=
+\left(-\frac12,\frac12,-\frac12,\frac12,0\right)
+\]
+
+满足
+
+\[
+Bf_{\mathrm{sgn}}=d,\qquad
+f_{\mathrm{sgn}}\perp c,\qquad
+\|f_{\mathrm{sgn}}\|^2=1.
+\]
+
+它是同一 seam \(d\) 的唯一最小 signed lift。所有 signed lifts 都是
+
+\[
+f_{\mathrm{sgn}}+\gamma c.
+\]
+
+若额外要求参考定向下的边流逐项非负，则必须有 \(\gamma\ge\frac12\)，最小非负 lift 为
+
+\[
+f_{\mathrm{nonneg}}
+=
+(0,1,0,1,0),
+\qquad
+\|f_{\mathrm{nonneg}}\|^2=2.
+\]
+
+#### 证明
+
+直接代入第 6 节的边界公式：
+
+\[
+B(a,b,c,d,e)=(-a+d-e,\ a-b,\ e,\ c-d,\ b-c)
+\]
+
+得到
+
+\[
+Bf_{\mathrm{sgn}}=(1,-1,0,-1,1)=d.
+\]
+
+又因为
+
+\[
+f_{\mathrm{sgn}}\cdot c=0,
+\]
+
+且 \(\ker B=\mathbb Rc\)，故正交补中的该提升是唯一最小范数提升。所有其他提升与它之差属于 \(\ker B\)，所以恰为 \(f_{\mathrm{sgn}}+\gamma c\)。
+
+其五个分量逐项非负当且仅当
+
+\[
+-\frac12+\gamma\ge0,
+\]
+
+其余不等式更弱，故 \(\gamma\ge\frac12\)。在边界值 \(\gamma=\frac12\) 处得到 \(f_{\mathrm{nonneg}}\)，范数平方为 \(2\)。证毕。
+
+这个计算把两个不同的问题分开：
+
+\[
+\text{商空间的 canonical signed representative}
+\neq
+\text{参考定向下的非负可执行流的最小代表}.
+\]
+
+后者还需要非负性、容量和守恒等额外条件，不能由线性 seam 商同构自动推出。
+
 ## 23. 仿射 FIB 纤维的逆极限刚性
 
 第 20 节给出了紧凸相容载体的逆极限非空性。非空性不等于唯一性。本节给出一条只使用闭区间和一维仿射映射的充分条件。它可以用于判断多层可见数据是否把隐藏 \(\kappa\) 轨道唯一固定。
