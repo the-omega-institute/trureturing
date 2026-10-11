@@ -1319,3 +1319,11 @@ of (J) would still need the detector's actual length coverage and the
 final signed Robin restoration; neither follows from residue cancellation
 alone. Until those steps are proved, the Robin and Riemann-hypothesis
 conclusions remain open.
+
+The later de Faveri--Dunn--Hoffstein paper records the relevant obstruction
+from the other side: its cubic and quartic lower bounds show that the
+corresponding character families are not perfectly orthogonal, and its
+fixed-order conjecture predicts the $K^{7/6+o(1)}$ balanced scale for order
+six. See the separate [non-orthogonality card](faveridunnhoffstein2026nonorthogonality.md).
+Those results do not estimate (J), but they rule out replacing its complete
+signed kernel by a diagonal orthogonality heuristic.
