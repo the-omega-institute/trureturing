@@ -15,6 +15,8 @@ import Mathlib.Analysis.Complex.LocallyUniformLimit
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import Mathlib.Analysis.Complex.RemovableSingularity
 import Mathlib.Analysis.Normed.Module.Ball.Pointwise
+import Mathlib.Analysis.Analytic.Binomial
+import Mathlib.Analysis.Analytic.Uniqueness
 
 set_option autoImplicit false
 
@@ -35,7 +37,6 @@ noncomputable def generating (t : ℝ) (z : ℂ) : ℂ :=
 /-- The numerator obtained from the multiplicative last letters. -/
 noncomputable def numerator (t : ℝ) (z : ℂ) : ℂ :=
   z + (t : ℂ) * ∑' q : ℕ, if q.Prime then generating t (z ^ q) else 0
-
 private theorem length_lt_endpoint (n : ℕ) (hn : 0 < n)
     (w : List PrimeLetter) (hw : endpoint w = n) : w.length < n := by
   by_cases he : w = []
@@ -43,7 +44,6 @@ private theorem length_lt_endpoint (n : ℕ) (hn : 0 < n)
   · have hb := sharp_length_bound w he
     rw [hw] at hb
     omega
-
 private theorem weighted_length_sum (t : ℝ) (n N : ℕ) (hn : 0 < n) (hN : n ≤ N) :
     weightedCount t n = ∑ k ∈ Finset.range N, (lengthCount k n : ℝ) * t ^ k := by
   classical
@@ -69,7 +69,6 @@ private theorem weighted_length_sum (t : ℝ) (n N : ℕ) (hn : 0 < n) (hN : n �
           intro w hw
           rw [(Finset.mem_filter.mp hw).2]
     _ = _ := by simp [hc]
-
 private theorem weighted_nonneg (t : ℝ) (ht : 0 ≤ t) (n : ℕ) :
     0 ≤ weightedCount t n := by
   classical
@@ -77,15 +76,12 @@ private theorem weighted_nonneg (t : ℝ) (ht : 0 ≤ t) (n : ℕ) :
   split_ifs
   · exact Finset.sum_nonneg (fun _ _ => pow_nonneg ht _)
   · exact le_rfl
-
 private theorem weighted_zero (t : ℝ) : weightedCount t 0 = 0 := by
   simp [weightedCount]
-
 private theorem weighted_one (t : ℝ) : weightedCount t 1 = 1 := by
   rw [weighted_length_sum t 1 1 (by omega) le_rfl]
   have h := mixed_coefficient 1 0 1 (by omega) le_rfl
   simpa [mixedPolynomial] using congrArg (fun x : ℕ => (x : ℝ)) h.symm
-
 private theorem weighted_recurrence (t : ℝ) (n : ℕ) (hn : 2 ≤ n) :
     weightedCount t n = t *
       ((∑ q ∈ (Finset.range n).filter Nat.Prime, weightedCount t (n - q)) +
@@ -125,7 +121,6 @@ private theorem weighted_recurrence (t : ℝ) (n : ℕ) (hn : 2 ≤ n) :
     apply Finset.sum_congr rfl
     intro k hk
     ring
-
 private theorem prime_summable (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1) :
     Summable (fun q : ℕ => if q.Prime then r ^ q else 0) := by
   apply Summable.of_nonneg_of_le
@@ -241,7 +236,6 @@ theorem subcritical_bound (t r : ℝ) (ht : 0 < t) (hr : 0 < r) (hr1 : r < 1)
         _ ≤ B * 1 := mul_le_mul_of_nonneg_left
           (hN n (le_trans (le_max_left N 2) (Nat.le_of_not_gt hsmall))).le hB.le
         _ = B := mul_one B
-
 private theorem norm_term_bound (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B) (z : ℂ) (n : ℕ) :
     ‖(weightedCount t n : ℂ) * z ^ n‖ ≤ B * (‖z‖ / r) ^ n := by
@@ -252,7 +246,6 @@ private theorem norm_term_bound (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
         (weightedCount t n * r ^ n) * (‖z‖ / r) ^ n := by
           rw [mul_assoc, ← mul_pow, mul_div_cancel₀ _ hr.ne']
     _ ≤ _ := mul_le_mul_of_nonneg_right (hB n) (pow_nonneg (by positivity) _)
-
 private theorem norm_summable (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B) (z : ℂ) (hz : ‖z‖ < r) :
     Summable (fun n : ℕ => ‖(weightedCount t n : ℂ) * z ^ n‖) :=
@@ -260,7 +253,6 @@ private theorem norm_summable (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (norm_term_bound t r B ht hr hB z)
     ((summable_geometric_of_lt_one (by positivity : 0 ≤ ‖z‖ / r)
       ((div_lt_one hr).mpr hz)).mul_left B)
-
 private theorem generating_analytic_of_bound (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B) :
     AnalyticOnNhd ℂ (generating t) (Metric.ball 0 r) := by
@@ -279,7 +271,6 @@ private theorem generating_analytic_of_bound (t r B : ℝ) (ht : 0 ≤ t) (hr : 
     (fun n => (weightedCount t n : ℂ))) z at ha
   change AnalyticAt ℂ (fun x : ℂ => ∑' n : ℕ, (weightedCount t n : ℂ) * x ^ n) z
   simpa only [FormalMultilinearSeries.ofScalarsSum_eq_tsum, smul_eq_mul] using ha
-
 private theorem norm_sum_le (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B) (z : ℂ) (hz : ‖z‖ < r) :
     (∑' n : ℕ, ‖(weightedCount t n : ℂ) * z ^ n‖) ≤ B * ‖z‖ / (r - ‖z‖) := by
@@ -300,13 +291,11 @@ private theorem norm_sum_le (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
       simp_rw [pow_succ, ← mul_assoc]
       rw [tsum_mul_right, tsum_mul_left, tsum_geometric_of_lt_one hu0 hu1]
       field_simp
-
 private theorem generating_norm_le (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B) (z : ℂ) (hz : ‖z‖ < r) :
     ‖generating t z‖ ≤ B * ‖z‖ / (r - ‖z‖) :=
   (norm_tsum_le_tsum_norm (norm_summable t r B ht hr hB z hz)).trans
     (norm_sum_le t r B ht hr hB z hz)
-
 private theorem prime_power_norm (r a : ℝ) (hr1 : r < 1) (ha : 0 ≤ a) (har : a ^ 2 < r)
     (q : ℕ) (hq : q.Prime) (z : ℂ) (hz : ‖z‖ ≤ a) :
     ‖z ^ q‖ ≤ a ^ q ∧ a ^ q ≤ a ^ 2 ∧ ‖z ^ q‖ < r := by
@@ -314,7 +303,6 @@ private theorem prime_power_norm (r a : ℝ) (hr1 : r < 1) (ha : 0 ≤ a) (har :
   have h1 : ‖z ^ q‖ ≤ a ^ q := by rw [norm_pow]; exact pow_le_pow_left₀ (norm_nonneg _) hz _
   have h2 := pow_le_pow_of_le_one ha ha1 hq.two_le
   exact ⟨h1, h2, lt_of_le_of_lt (h1.trans h2) har⟩
-
 private theorem composition_norm_bound (t r B a : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (hr1 : r < 1) (hB0 : 0 ≤ B) (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B)
     (ha : 0 ≤ a) (har : a ^ 2 < r) (q : ℕ) (hq : q.Prime)
@@ -324,7 +312,6 @@ private theorem composition_norm_bound (t r B a : ℝ) (ht : 0 ≤ t) (hr : 0 < 
   exact (generating_norm_le t r B ht hr hB _ hp.2.2).trans
     (div_le_div₀ (mul_nonneg hB0 (pow_nonneg ha _))
       (mul_le_mul_of_nonneg_left hp.1 hB0) (sub_pos.mpr har) (by linarith [hp.1, hp.2.1]))
-
 private theorem numerator_analytic_of_bound (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (hr1 : r < 1) (hB0 : 0 ≤ B) (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B) :
     AnalyticOnNhd ℂ (numerator t) (Metric.ball 0 (Real.sqrt r)) := by
@@ -442,14 +429,12 @@ private theorem multiplicative_series (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
   change HasSum (fun n : ℕ => ∑' q : ℕ, D q n) (∑' n : ℕ, ∑' q : ℕ, D q n) at hh
   rw [hval] at hh
   simpa only [hcoeff] using hh
-
 private theorem prime_norm_summable (z : ℂ) (hz : ‖z‖ < 1) :
     Summable (fun q : ℕ => ‖if q.Prime then z ^ q else 0‖) := by
   apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _) (f := fun q => ‖z‖ ^ q)
   · intro q
     split_ifs <;> simp [norm_pow]
   · exact summable_geometric_of_lt_one (norm_nonneg _) hz
-
 private theorem additive_series (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (hr1 : r < 1) (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B)
     (z : ℂ) (hz : ‖z‖ < r) :
@@ -507,7 +492,6 @@ theorem subcritical_functional_equation (t r : ℝ) (ht : 0 < t) (hr : 0 < r)
   change generating t z = _ at hf
   unfold numerator
   linear_combination hf
-
 private theorem prime_zero : primeSeries (0 : ℝ) = 0 := by
   calc
     _ = ∑' _q : ℕ, (0 : ℝ) := by
@@ -517,7 +501,6 @@ private theorem prime_zero : primeSeries (0 : ℝ) = 0 := by
       · simp [hq, zero_pow hq.ne_zero]
       · simp [hq]
     _ = 0 := tsum_zero
-
 private theorem prime_continuous (a : ℝ) (ha : 0 ≤ a) (ha1 : a < 1) :
     ContinuousOn (primeSeries (𝕜 := ℝ)) (Set.Icc 0 a) := by
   classical
@@ -533,7 +516,6 @@ private theorem prime_continuous (a : ℝ) (ha : 0 ≤ a) (ha1 : a < 1) :
       exact pow_le_pow_left₀ hx.1 hx.2 _
     · simp only [if_neg hq, norm_zero]
       exact pow_nonneg ha _
-
 private theorem prime_strict (x y : ℝ) (hx : 0 ≤ x) (hxy : x < y) (hy : y < 1) :
     primeSeries x < primeSeries y := by
   apply Summable.tsum_lt_tsum (i := 2)
@@ -546,7 +528,6 @@ private theorem prime_strict (x y : ℝ) (hx : 0 ≤ x) (hxy : x < y) (hy : y < 
     nlinarith
   · exact prime_summable x hx (hxy.trans hy)
   · exact prime_summable y (hx.trans hxy.le) hy
-
 private theorem prime_crosses (t : ℝ) (ht : 0 < t) :
     ∃ a : ℝ, 0 < a ∧ a < 1 ∧ 1 < t * primeSeries a := by
   classical
@@ -576,7 +557,6 @@ private theorem prime_crosses (t : ℝ) (ht : 0 < t) :
       _ ≤ _ := Summable.sum_le_tsum S (fun q _ => by split_ifs <;> positivity)
         (prime_summable _ ha0.le ha1)
   exact hlarge.trans_le (mul_le_mul_of_nonneg_left hsum ht.le)
-
 private theorem unique_critical_root (t : ℝ) (ht : 0 < t) :
     ∃! ρ : ℝ, 0 < ρ ∧ ρ < 1 ∧ t * primeSeries ρ = 1 := by
   obtain ⟨a, ha0, ha1, hat⟩ := prime_crosses t ht
@@ -601,7 +581,6 @@ private theorem unique_critical_root (t : ℝ) (ht : 0 < t) :
     have hx := mul_lt_mul_of_pos_left (prime_strict σ ρ hσ.1.le (lt_of_not_ge h) hρ1) ht
     rw [hρ, hσ.2.2] at hx
     exact (lt_irrefl _ hx)
-
 private theorem prime_derivative_positive (ρ : ℝ) (hρ0 : 0 < ρ) (hρ1 : ρ < 1) :
     ∃ d : ℝ, 0 < d ∧ HasDerivAt (primeSeries (𝕜 := ℂ)) (d : ℂ) (ρ : ℂ) := by
   classical
@@ -757,7 +736,6 @@ theorem critical_control (t : ℝ) (ht : 0 < t) :
     obtain ⟨r, har, hrρ⟩ := exists_between haρ
     obtain ⟨B, hB0, hB, _, hcomp, _⟩ := control r ((sq_nonneg _).trans_lt har) hrρ
     exact ⟨r, har, hrρ, B, hB0, hB, hcomp a ha har⟩
-
 private theorem prime_analytic :
     AnalyticOnNhd ℂ (primeSeries (𝕜 := ℂ)) (Metric.ball 0 1) := by
   intro z hz
@@ -775,14 +753,12 @@ private theorem prime_analytic :
       · simp only [if_neg hq, norm_zero]
         exact pow_nonneg ((norm_nonneg z).trans hza.le) _
   exact hdiff.analyticAt (Metric.isOpen_ball.mem_nhds (by simpa using hza))
-
 private theorem prime_ofReal (x : ℝ) : primeSeries (x : ℂ) = ((primeSeries x : ℝ) : ℂ) := by
   unfold primeSeries
   rw [Complex.ofReal_tsum]
   apply tsum_congr
   intro q
   split_ifs <;> simp
-
 private theorem numerator_positive (t ρ : ℝ) (ht : 0 < t) (hρ : 0 < ρ) :
     ∃ b : ℝ, 0 < b ∧ numerator t (ρ : ℂ) = (b : ℂ) := by
   let f (x : ℝ) := ∑' n : ℕ, weightedCount t n * x ^ n
@@ -899,5 +875,65 @@ theorem pole_decomposition (t : ℝ) (ht : 0 < t) :
     rw [mul_add, he, hfg]
     field_simp
     <;> ring
+
+/-- A single exponential error bound holds for every coefficient of the actual history series. -/
+theorem coefficient_asymptotics (t : ℝ) (ht : 0 < t) :
+    ∃ ρ C R K : ℝ, 0 < ρ ∧ ρ < R ∧ R < 1 ∧ 0 < C ∧ 0 < K ∧
+      t * primeSeries ρ = 1 ∧ ∀ n : ℕ,
+        |weightedCount t n - C / ρ ^ n| ≤ K / R ^ n := by
+  obtain ⟨ρ, C, R, hρ, hρR, hR1, hC, hroot, E, hE, hFE⟩ := pole_decomposition t ht
+  obtain ⟨σ, _, huniq, hbound, _⟩ := critical_control t ht
+  have hσ : ρ = σ := huniq ρ hρ (hρR.trans hR1) hroot
+  subst σ
+  obtain ⟨B, _, hB⟩ := hbound (ρ / 2) (by positivity) (by linarith)
+  let r : ℝ≥0 := ⟨ρ / 2, by positivity⟩
+  let p := FormalMultilinearSeries.ofScalars ℂ (fun n => (weightedCount t n : ℂ))
+  have hr : 0 < r := by change 0 < ρ / 2; positivity
+  have hpr : (r : ℝ≥0∞) ≤ p.radius := p.le_radius_of_bound B (fun n => by
+    change ‖p n‖ * (ρ / 2) ^ n ≤ B
+    simpa [p, FormalMultilinearSeries.ofScalars_norm, Complex.norm_real,
+      Real.norm_eq_abs, abs_of_nonneg (weighted_nonneg t ht.le n)] using hB n)
+  have hp := (p.hasFPowerSeriesOnBall ((by exact_mod_cast hr : (0 : ℝ≥0∞) < r).trans_le hpr)).hasFPowerSeriesAt
+  have hpsum : p.sum = generating t := by
+    change FormalMultilinearSeries.ofScalarsSum _ = _
+    simp only [FormalMultilinearSeries.ofScalarsSum_eq_tsum, smul_eq_mul]
+    rfl
+  rw [hpsum] at hp
+  have hρne : (ρ : ℂ) ≠ 0 := by exact_mod_cast hρ.ne'
+  have hgeom := (Complex.one_div_sub_hasFPowerSeriesOnBall_zero hρne).hasFPowerSeriesAt.const_smul (c := (C : ℂ) * ρ)
+  obtain ⟨S, hρS, hSR⟩ := exists_between hρR
+  let sn : ℝ≥0 := ⟨S, (hρ.trans hρS).le⟩
+  have hES := (hE.differentiableOn.mono
+    (Metric.closedBall_subset_ball (show (sn : ℝ) < R from hSR))).hasFPowerSeriesOnBall (show 0 < sn from hρ.trans hρS)
+  have heq : p - ((C : ℂ) * ρ) •
+      FormalMultilinearSeries.ofScalars ℂ (fun n => ((ρ : ℂ) ^ (n + 1))⁻¹) =
+      cauchyPowerSeries E 0 sn := by
+    apply (hp.sub hgeom).eq_formalMultilinearSeries_of_eventually hES.hasFPowerSeriesAt
+    filter_upwards [Metric.ball_mem_nhds (0 : ℂ) hρ] with z hz
+    change generating t z - ((C : ℂ) * ρ) * (1 / (ρ - z)) = E z
+    rw [hFE z (by simpa using hz)]
+    have he : (1 : ℂ) - z / ρ = (ρ - z) / ρ := by field_simp
+    rw [he, div_div_eq_mul_div]
+    ring
+  obtain ⟨T, hρT, hTS⟩ := exists_between hρS
+  let tn : ℝ≥0 := ⟨T, (hρ.trans hρT).le⟩
+  have hrad : (tn : ℝ≥0∞) < (cauchyPowerSeries E 0 sn).radius :=
+    (show (tn : ℝ≥0∞) < sn by exact_mod_cast hTS).trans_le hES.r_le
+  obtain ⟨K, hK, hcoef⟩ := (cauchyPowerSeries E 0 sn).norm_le_div_pow_of_pos_of_lt_radius (show 0 < tn from hρ.trans hρT) hrad
+  refine ⟨ρ, C, T, K, hρ, hρT, (hTS.trans hSR).trans hR1, hC, hK, hroot, ?_⟩
+  intro n
+  have hcoeff : (cauchyPowerSeries E 0 sn).coeff n =
+      ((weightedCount t n - C / ρ ^ n : ℝ) : ℂ) := by
+    rw [← heq]
+    simp only [p, ← FormalMultilinearSeries.ofScalars_smul,
+      ← FormalMultilinearSeries.ofScalars_sub, FormalMultilinearSeries.coeff_ofScalars,
+      Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
+    push_cast
+    rw [pow_succ]
+    field_simp
+  have h := hcoef n
+  rw [FormalMultilinearSeries.norm_apply_eq_norm_coef, hcoeff,
+    Complex.norm_real, Real.norm_eq_abs] at h
+  exact h
 
 end D5.S3.Factorization.Combinatorics.MixedPrimeHistoryAsymptotics

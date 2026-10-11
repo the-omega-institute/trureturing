@@ -106,5 +106,20 @@ internal sealed class MixedPrimeHistoryAsymptoticsDocument : IScribeDocumentDefi
                     + "the divided difference nonzero. The numerator at rho is a positive "
                     + "real number b, and C = b/(t rho P'(rho)). A second divided difference "
                     + "constructs the analytic remainder, including its value at rho."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mixedprimehistoryasymptotics-coefficient-asymptotics"),
+                DeclarationHandle.Create("D5/S3/Factorization/Combinatorics/MixedPrimeHistoryAsymptotics.coefficient_asymptotics"),
+                H("A uniform exponential coefficient error"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive t there are positive rho, C and K and a real R with "
+                    + "rho less than R less than one, and t P(rho) = 1, such that every natural "
+                    + "n satisfies abs(w_t(n) - C/rho^n) at most K/R^n. The bound includes "
+                    + "endpoint zero. The actual generating series and the positive principal "
+                    + "part have their coefficient series at zero; uniqueness identifies "
+                    + "their difference with the Cauchy series of the analytic remainder. "
+                    + "A strictly smaller intermediate radius supplies a common positive K."))),
                 DescribeRole.Theorem))));
 }
