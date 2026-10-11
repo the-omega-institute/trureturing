@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits
    mirror-E: none(waiver:arbitrary-right-action-corner-orbit-characterization)
-   anchors: [D5/S3/Geometry/Hyperideal/ActualCornerTransport]
+   anchors: []
    utility: none
    digest: Actual corner relations equal the prescribed nonnormal subgroup orbits. -/
 
