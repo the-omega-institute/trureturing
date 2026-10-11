@@ -363,16 +363,16 @@ private lemma central_quartic (n : V) (hn : ‖n‖ = 1) (a : Fin 2 → V)
       ((project_norm n (a 1) hn).trans (ha 1)), quartic_identity _ _ _ hn]
 
 private lemma incompatible_parameters (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
-    (hi : Incompatible a) : K (a 0) (a 1) < 0 ∧ ⟪a 0, a 1⟫_ℝ ^ 2 < 1 ∧
+    (hi : Incompatible a) : K (a 0) (a 1) < 0 ∧
       0 < ‖a 0‖ ^ 2 * ‖a 1‖ ^ 2 - ⟪a 0, a 1⟫_ℝ ^ 2 := by
   change ¬ SCompatible Set.univ a at hi
   rw [compatible_univ, joint_criterion, criterion_K _ _ (ha 0) (ha 1)] at hi
   have hk := lt_of_not_ge hi
   have hA : ‖a 0‖ ^ 2 ≤ 1 := by nlinarith [ha 0, norm_nonneg (a 0)]
   have hB : ‖a 1‖ ^ 2 ≤ 1 := by nlinarith [ha 1, norm_nonneg (a 1)]
-  refine ⟨hk, ?_, ?_⟩ <;> dsimp only [K] at hk
-  · linarith
-  · nlinarith [mul_nonneg (sub_nonneg.mpr hA) (sub_nonneg.mpr hB)]
+  refine ⟨hk, ?_⟩
+  dsimp only [K] at hk
+  nlinarith [mul_nonneg (sub_nonneg.mpr hA) (sub_nonneg.mpr hB)]
 
 private abbrev cross (a b : V) : V :=
   WithLp.toLp 2 (crossProduct (WithLp.ofLp a) (WithLp.ofLp b))
@@ -414,8 +414,7 @@ private lemma normal_exists (a b : V)
     nlinarith [hg]
 private lemma radial_root (k M L : ℝ) (hk : k < 0) (hM : 0 < M) (hL : 0 ≤ L)
     (h1 : 0 ≤ k + M + L) :
-    ∃ R : ℝ, R = -2 * k / (M + Real.sqrt (M ^ 2 - 4 * L * k)) ∧
-      0 < R ∧ R ≤ 1 ∧ k + M * R + L * R ^ 2 = 0 ∧
+    ∃ R : ℝ, 0 < R ∧ R ≤ 1 ∧ k + M * R + L * R ^ 2 = 0 ∧
       ∀ z : ℝ, 0 ≤ z → (0 ≤ k + M * z + L * z ^ 2 ↔ R ≤ z) := by
   let s := Real.sqrt (M ^ 2 - 4 * L * k)
   have hs : s ^ 2 = M ^ 2 - 4 * L * k := Real.sq_sqrt (by nlinarith)
@@ -431,7 +430,7 @@ private lemma radial_root (k M L : ℝ) (hk : k < 0) (hM : 0 < M) (hL : 0 ≤ L)
     have hf : k + M * z + L * z ^ 2 = (z - R) * (M + L * (z + R)) := by
       linear_combination he
     rw [hf, mul_nonneg_iff_of_pos_right hp, sub_nonneg]
-  exact ⟨R, rfl, hR, (ht 1 (by norm_num)).mp (by simpa using h1), he, ht⟩
+  exact ⟨R, hR, (ht 1 (by norm_num)).mp (by simpa using h1), he, ht⟩
 private def radialM (a b e : V) : ℝ :=
   ⟪e, a⟫_ℝ ^ 2 + ⟪e, b⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪e, a⟫_ℝ * ⟪e, b⟫_ℝ
 private def radialL (a b e : V) : ℝ := ⟪e, a⟫_ℝ ^ 2 * ⟪e, b⟫_ℝ ^ 2
@@ -491,8 +490,8 @@ private lemma coplanarity (a b : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
     (heq : ∀ n : V, ‖n‖ = 1 →
       (0 ≤ quartic (a 0) (a 1) n ↔ 0 ≤ quartic (b 0) (b 1) n)) :
     ∃ m : V, ‖m‖ = 1 ∧ (∀ i, ⟪m, a i⟫_ℝ = 0) ∧ (∀ i, ⟪m, b i⟫_ℝ = 0) := by
-  obtain ⟨hka, _, hDa⟩ := incompatible_parameters a ha hia
-  obtain ⟨_, _, hDb⟩ := incompatible_parameters b hb hib
+  obtain ⟨hka, hDa⟩ := incompatible_parameters a ha hia
+  obtain ⟨_, hDb⟩ := incompatible_parameters b hb hib
   obtain ⟨m, hm, hma, hma', hGa⟩ := normal_exists (a 0) (a 1) hDa
   obtain ⟨m', hm', hmb, hmb', hGb⟩ := normal_exists (b 0) (b 1) hDb
   refine ⟨m, hm, (by intro i; fin_cases i <;> assumption), ?_⟩
@@ -536,7 +535,7 @@ private lemma coplanarity (a b : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
   have hLb : 0 ≤ radialL (b 0) (b 1) e' := mul_nonneg (sq_nonneg _) (sq_nonneg _)
   have h1 : 0 ≤ K (a 0) (a 1) + radialM (a 0) (a 1) e + radialL (a 0) (a 1) e := by
     convert hFa using 1; dsimp only [quartic, radialM, radialL]; ring
-  obtain ⟨R, _, hR, hR1, hroot, hthreshold⟩ :=
+  obtain ⟨R, hR, hR1, hroot, hthreshold⟩ :=
     radial_root _ _ _ hka hMa hLa h1
   have hRt : R ≤ t ^ 2 := by
     apply (hthreshold (t ^ 2) (sq_nonneg t)).mp
@@ -616,15 +615,14 @@ private lemma common_boundary_zero (a b c d m : V) (hm : ‖m‖ = 1)
     (hk : K a b < 0) (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2)
     (heq : ∀ n : V, ‖n‖ = 1 → (0 ≤ quartic a b n ↔ 0 ≤ quartic c d n))
     (x y : ℝ) (hz : curve (K a b) ⟪a, b⟫_ℝ x y = 0) :
-    ∃ n : V, ‖n‖ = 1 ∧ ⟪n, a⟫_ℝ = x ∧ ⟪n, b⟫_ℝ = y ∧ quartic c d n = 0 := by
+    ∃ n : V, ⟪n, a⟫_ℝ = x ∧ ⟪n, b⟫_ℝ = y ∧ quartic c d n = 0 := by
   obtain ⟨p, hp, hpm, hpa, hpb⟩ := feasible_zero a b m ha hb hma hmb hD x y hz
   have hxy : ⟪cap m p 1, a⟫_ℝ = x ∧ ⟪cap m p 1, b⟫_ℝ = y := by
     simp [cap, inner_add_left, real_inner_smul_left, hma, hmb, hpa, hpb]
   have hzero : quartic a b (cap m p 1) = 0 := by
     dsimp only [quartic]; rw [hxy.1, hxy.2]
     dsimp only [curve] at hz; linarith only [hz]
-  exact ⟨cap m p 1, (by simpa only [cap, one_smul] using
-    D5.S3.Arith.Lattices.Klartag.norm_padUnit hp hm hpm), hxy.1, hxy.2,
+  exact ⟨cap m p 1, hxy.1, hxy.2,
     boundary_transfer a b c d m p hm hp hpm hma hmb hk heq hzero⟩
 private def delta (a b : V) (x : ℝ) : ℝ :=
   -x ^ 4 + (‖a‖ ^ 2 + ‖b‖ ^ 2 - 2) * x ^ 2 - K a b
@@ -633,8 +631,7 @@ private def branch (a b : V) (x s : ℝ) : ℝ :=
 private lemma boundary_branches (a b : V) (hk : K a b < 0) :
     ∃ ε : ℝ, 0 < ε ∧ ∀ x ∈ Set.Ioo 0 ε, 0 < delta a b x ∧
       curve (K a b) ⟪a, b⟫_ℝ x (branch a b x 1) = 0 ∧
-      curve (K a b) ⟪a, b⟫_ℝ x (branch a b x (-1)) = 0 ∧
-      branch a b x 1 ≠ branch a b x (-1) := by
+      curve (K a b) ⟪a, b⟫_ℝ x (branch a b x (-1)) = 0 := by
   have hc : Continuous (delta a b) := by
     change Continuous (fun x => delta a b x)
     simp only [delta.eq_1]; fun_prop
@@ -651,12 +648,8 @@ private lemma boundary_branches (a b : V) (hk : K a b < 0) :
     dsimp only [delta, K] at hs
     linear_combination (1 + x ^ 2) * hs
   have hs' : (-Real.sqrt (delta a b x)) ^ 2 = delta a b x := by simpa using hs
-  refine ⟨hd, (by simpa [branch.eq_1] using hz _ hs),
-    (by simpa [branch.eq_1] using hz _ hs'), ?_⟩
-  intro he
-  have he' := (div_left_inj' hH).mp he
-  have hpos := Real.sqrt_pos.mpr hd
-  nlinarith
+  exact ⟨hd, (by simpa [branch.eq_1] using hz _ hs),
+    (by simpa [branch.eq_1] using hz _ hs')⟩
 open Polynomial
 private lemma two_root_elimination (a b : V) (hk : K a b < 0) (u v w z d l : ℝ)
     (hg : ∀ x y, curve (K a b) ⟪a, b⟫_ℝ x y = 0 →
@@ -674,7 +667,7 @@ private lemma two_root_elimination (a b : V) (hk : K a b < 0) (u v w z d l : ℝ
     apply eq_zero_of_infinite_isRoot
     apply (Set.Ioo_infinite hε).mono
     intro x hx
-    obtain ⟨hd, hp, hn, _⟩ := hbr x hx
+    obtain ⟨hd, hp, hn⟩ := hbr x hx
     have hp := hg x _ hp
     have hn := hg x _ hn
     have hs := Real.sq_sqrt hd.le
@@ -701,7 +694,7 @@ private lemma two_root_elimination (a b : V) (hk : K a b < 0) (u v w z d l : ℝ
   nlinarith only [hc]
 private lemma quadratic_residue (a b : V) (hk : K a b < 0) (U V W : ℝ)
     (hg : ∀ x y, curve (K a b) ⟪a, b⟫_ℝ x y = 0 → U * x ^ 2 + V * y ^ 2 + W = 0) :
-    U = 0 ∧ V = 0 ∧ W = 0 := by
+    U = 0 ∧ V = 0 := by
   let J : ℝ[X] := C U * X ^ 6 + C (2 * U + W - V) * X ^ 4 +
     C (U + 2 * W + V * (2 * ⟪a, b⟫_ℝ ^ 2 - 1 - K a b)) * X ^ 2 + C (W - V * K a b)
   obtain ⟨ε, hε, hbr⟩ := boundary_branches a b hk
@@ -709,7 +702,7 @@ private lemma quadratic_residue (a b : V) (hk : K a b < 0) (U V W : ℝ)
     apply eq_zero_of_infinite_isRoot
     apply (Set.Ioo_infinite hε).mono
     intro x hx
-    obtain ⟨hd, hp, hn, _⟩ := hbr x hx
+    obtain ⟨hd, hp, hn⟩ := hbr x hx
     have hp := hg x _ hp
     have hn := hg x _ hn
     have hs := Real.sq_sqrt hd.le
@@ -729,12 +722,12 @@ private lemma quadratic_residue (a b : V) (hk : K a b < 0) (U V W : ℝ)
   norm_num at h6 h4 h0
   have hv : V * (1 - K a b) = 0 := by linarith only [h6, h4, h0]
   have hV := (mul_eq_zero.mp hv).resolve_right (by linarith : 1 - K a b ≠ 0)
-  exact ⟨h6, hV, by linarith only [h6, h4, hV]⟩
+  exact ⟨h6, hV⟩
 private lemma scale_signs (a b : V) (hk : K a b < 0) (p q : ℝ) (hp : p ≠ 0) (hq : q ≠ 0)
     (hg : ∀ x y, curve (K a b) ⟪a, b⟫_ℝ x y = 0 →
       curve (K (p • a) (q • b)) ⟪p • a, q • b⟫_ℝ (p * x) (q * y) = 0) :
     (p = 1 ∨ p = -1) ∧ (q = 1 ∨ q = -1) := by
-  obtain ⟨hU, hV, _⟩ := quadratic_residue a b hk (p ^ 2 * (1 - q ^ 2))
+  obtain ⟨hU, hV⟩ := quadratic_residue a b hk (p ^ 2 * (1 - q ^ 2))
     (q ^ 2 * (1 - p ^ 2)) (K (p • a) (q • b) - p ^ 2 * q ^ 2 * K a b) (by
       intro x y hz
       have hg := hg x y hz
@@ -789,7 +782,7 @@ private lemma plane_coordinates (a b m c : V) (hm : ‖m‖ = 1)
 private lemma incompatible_nonzero (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
     (hi : Incompatible a) (i : Fin 2) : a i ≠ 0 := by
   intro hzero
-  have hD := (incompatible_parameters a ha hi).2.2
+  have hD := (incompatible_parameters a ha hi).2
   fin_cases i
   · change a 0 = 0 at hzero
     simp [hzero] at hD
@@ -883,12 +876,12 @@ theorem result : claim := by
       rw [← central_quartic n hn a ha, ← central_quartic n hn b hb]
       exact hS (central n)
     obtain ⟨m, hm, hma, hmb⟩ := coplanarity a b ha hb hia hib heq
-    obtain ⟨hk, _, hD⟩ := incompatible_parameters a ha hia
+    obtain ⟨hk, hD⟩ := incompatible_parameters a ha hia
     obtain ⟨u, v, hc⟩ := plane_coordinates (a 0) (a 1) m (b 0) hm (hma 0) (hma 1) (hmb 0) hD
     obtain ⟨w, z, hd⟩ := plane_coordinates (a 0) (a 1) m (b 1) hm (hma 0) (hma 1) (hmb 1) hD
     have hg (x y : ℝ) (hz : curve (K (a 0) (a 1)) ⟪a 0, a 1⟫_ℝ x y = 0) :
         curve (K (b 0) (b 1)) ⟪b 0, b 1⟫_ℝ (u*x+v*y) (w*x+z*y) = 0 := by
-      obtain ⟨n, _, hx, hy, hn⟩ := common_boundary_zero (a 0) (a 1) (b 0) (b 1) m hm
+      obtain ⟨n, hx, hy, hn⟩ := common_boundary_zero (a 0) (a 1) (b 0) (b 1) m hm
         (ha 0) (ha 1) (hma 0) (hma 1) hk hD heq x y hz
       have hx' : ⟪n, b 0⟫_ℝ = u*x+v*y := by
         rw [hc]; simp [inner_add_right, inner_smul_right, hx, hy]
