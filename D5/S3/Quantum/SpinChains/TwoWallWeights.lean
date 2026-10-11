@@ -222,7 +222,7 @@ private theorem F3_move {a b : ℕ} (w : Word a b) (p : Pos a b)
   exact_mod_cast he''
 
 /-- Each enabled 21 to 12 bond drops weight by two; F3 lowers the filtration and dies by ab+1. -/
-theorem F3_weight_control (a b : ℕ) :
+private theorem F3_weight_control (a b : ℕ) :
     (∀ (w : Word a b) (p : Pos a b), Allowed 2 w p →
       wordWeight (swapWord p w) = wordWeight w - 2) ∧
     (∀ s : ℤ, (weightLE (h K a b) s).map (F3 K a b) ≤
@@ -317,26 +317,32 @@ private theorem ones_snoc {m : ℕ} (u : Fin m → Bool) (d : Bool) :
   rfl
 
 private def firstSource {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
-    (v : Fin n → Bool) (hl : m + 1 + n = a + b)
-    (hf : 1 + ones u + ones v = b) : Coordinates a b :=
-  ⟨p, m + 1, n, Fin.cons true u, v, hl, by simpa only [ones_cons, if_true] using hf⟩
+    (v : Fin n → Bool) (s : Bool) (hl : m + 1 + n = a + b)
+    (hf : (if s then 1 else 0) + ones u + ones v = b) : Coordinates a b :=
+  ⟨p, m + 1, n, Fin.cons s u, v, hl, by simpa only [ones_cons] using hf⟩
 
 private def firstTarget {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
-    (v : Fin n → Bool) (hl : m + 1 + n = a + b)
-    (hf : 1 + ones u + ones v = b) : Coordinates a b :=
-  ⟨p + 1, m, n + 1, u, Fin.snoc v true, by omega,
-    by rw [ones_snoc]; simp only [if_true]; omega⟩
+    (v : Fin n → Bool) (s : Bool) (hl : m + 1 + n = a + b)
+    (hf : (if s then 1 else 0) + ones u + ones v = b) : Coordinates a b :=
+  ⟨p + 1, m, n + 1, u, Fin.snoc v s, by omega,
+    by rw [ones_snoc]; omega⟩
 
 private theorem first_weight {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
-    (v : Fin n → Bool) (hl : m + 1 + n = a + b)
-    (hf : 1 + ones u + ones v = b) :
-    integerWeight (firstTarget p u v hl hf) =
-      integerWeight (firstSource p u v hl hf) - a := by
-  change chi u + chi (Fin.snoc v true) = chi (Fin.cons true u) + chi v - a
-  rw [(chi_boundaries u).1, (chi_boundaries v).2.1]
+    (v : Fin n → Bool) (s : Bool) (hl : m + 1 + n = a + b)
+    (hf : (if s then 1 else 0) + ones u + ones v = b) :
+    integerWeight (firstTarget p u v s hl hf) =
+      integerWeight (firstSource p u v s hl hf) + (if s then -(a : ℤ) else b) := by
+  change chi u + chi (Fin.snoc v s) = chi (Fin.cons s u) + chi v + _
   have hli : (m : ℤ) + 1 + n = (a : ℤ) + b := by exact_mod_cast hl
-  have hfi : 1 + (ones u : ℤ) + ones v = (b : ℤ) := by exact_mod_cast hf
-  omega
+  cases s
+  · rw [(chi_boundaries u).2.2.1, (chi_boundaries v).2.2.2]
+    simp only [Bool.false_eq_true, if_false, zero_add] at hf ⊢
+    have hfi : (ones u : ℤ) + ones v = (b : ℤ) := by exact_mod_cast hf
+    omega
+  · rw [(chi_boundaries u).1, (chi_boundaries v).2.1]
+    simp only [if_true] at hf ⊢
+    have hfi : 1 + (ones u : ℤ) + ones v = (b : ℤ) := by exact_mod_cast hf
+    omega
 
 private theorem offset_injective {a b : ℕ} (p : Pos a b)
     {i j : ℕ} (hi : i < a + b + 2) (hj : j < a + b + 2)
@@ -345,12 +351,12 @@ private theorem offset_injective {a b : ℕ} (p : Pos a b)
   simpa only [ZMod.val_natCast_of_lt hi, ZMod.val_natCast_of_lt hj] using hh
 
 private theorem first_encode {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
-    (v : Fin n → Bool) (hl : m + 1 + n = a + b)
-    (hf : 1 + ones u + ones v = b) :
-    (encode (firstTarget p u v hl hf)).1.1 =
-      swapWord p (encode (firstSource p u v hl hf)).1.1 := by
-  let c := firstSource p u v hl hf
-  let d := firstTarget p u v hl hf
+    (v : Fin n → Bool) (s : Bool) (hl : m + 1 + n = a + b)
+    (hf : (if s then 1 else 0) + ones u + ones v = b) :
+    (encode (firstTarget p u v s hl hf)).1.1 =
+      swapWord p (encode (firstSource p u v s hl hf)).1.1 := by
+  let c := firstSource p u v s hl hf
+  let d := firstTarget p u v s hl hf
   have hc := (marked_coordinates a b).2.2.2.1 c
   have hd := (marked_coordinates a b).2.2.2.1 d
   dsimp only [c, d, firstSource, firstTarget] at hc hd
@@ -373,8 +379,8 @@ private theorem first_encode {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
         ← Nat.cast_add, show 1 + (m + 2 + n) = a + b + 2 by omega,
         ZMod.natCast_self, add_zero]
     have hs := hc.2.2.1 (0 : Fin (m + 1))
-    simp only [Fin.val_last, Fin.snoc_last, if_true, hp] at ht
-    simp only [Fin.val_zero, zero_add, Nat.cast_one, Fin.cons_zero, if_true] at hs
+    simp only [Fin.val_last, Fin.snoc_last, hp] at ht
+    simp only [Fin.val_zero, zero_add, Nat.cast_one, Fin.cons_zero] at hs
     exact ht.trans hs.symm
   by_cases h1 : i = 1
   · rw [h1, Nat.cast_one, Equiv.swap_apply_right]
@@ -422,10 +428,9 @@ private theorem first_encode {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
     rw [hq] at hs
     exact ht.trans hs.symm
 
-private theorem F1_move {a b : ℕ} (w : Word a b) (p : Pos a b)
-    (hp : Allowed 0 w p) : wordWeight (swapWord p w) = wordWeight w - a := by
-  have hp0 : w.1 p = wall := hp.1
-  have hp1 : w.1 (p + 1) = two := hp.2
+private theorem wall_move {a b : ℕ} (w : Word a b) (p : Pos a b) (s : Bool)
+    (hp0 : w.1 p = wall) (hp1 : w.1 (p + 1) = if s then two else one) :
+    wordWeight (swapWord p w) = wordWeight w + (if s then -(a : ℤ) else b) := by
   let x : MarkedWord a b := ⟨(w,p), hp0⟩
   let c := decode x
   have he : encode c = x := (marked_coordinates a b).2.1 x
@@ -439,23 +444,54 @@ private theorem F1_move {a b : ℕ} (w : Word a b) (p : Pos a b)
   | zero =>
     have hs := lay.2.1
     simp only [Nat.zero_add, Nat.cast_one, hw] at hs
-    exact (by decide : wall ≠ two) (hs.symm.trans hp1) |>.elim
+    cases s <;> simp_all [wall, one, two]
   | succ m =>
     have hs := lay.2.2.1 (0 : Fin (m + 1))
     simp only [Fin.val_zero, zero_add, Nat.cast_one, hw] at hs
-    have hu : u 0 = true := by
-      cases hh : u 0
-      · simp only [hh, Bool.false_eq_true, if_false] at hs
-        exact (by decide : one ≠ two) (hs.symm.trans hp1) |>.elim
-      · rfl
-    have hu' : u = Fin.cons true (Fin.tail u) := by
+    have hu : u 0 = s := by
+      cases s <;> cases hh : u 0 <;> simp_all [one, two]
+    have hu' : u = Fin.cons s (Fin.tail u) := by
       rw [← hu, Fin.cons_self_tail]
-    have hf' : 1 + ones (Fin.tail u) + ones v = b := by
+    have hf' : (if s then 1 else 0) + ones (Fin.tail u) + ones v = b := by
       rw [hu', ones_cons] at hf
-      simpa only [if_true] using hf
-    have hw' : (encode (firstSource p (Fin.tail u) v hl hf')).1.1 = w := by
+      exact hf
+    have hw' : (encode (firstSource p (Fin.tail u) v s hl hf')).1.1 = w := by
       simpa only [firstSource, ← hu'] using hw
-    rw [← hw', ← first_encode p (Fin.tail u) v hl hf', weight_eq, weight_eq]
-    exact first_weight p (Fin.tail u) v hl hf'
+    rw [← hw', ← first_encode p (Fin.tail u) v s hl hf', weight_eq, weight_eq]
+    exact first_weight p (Fin.tail u) v s hl hf'
+
+private theorem F1_move {a b : ℕ} (w : Word a b) (p : Pos a b)
+    (hp : Allowed 0 w p) : wordWeight (swapWord p w) = wordWeight w - a := by
+  simpa only [if_true, sub_eq_add_neg] using wall_move w p true hp.1 hp.2
+
+private theorem F2_move {a b : ℕ} (w : Word a b) (p : Pos a b)
+    (hp : Allowed 1 w p) : wordWeight (swapWord p w) = wordWeight w - b := by
+  have hp0 : (swapWord p w).1 p = wall := by
+    change w.1 (Equiv.swap p (p + 1) p) = wall
+    rw [Equiv.swap_apply_left]
+    exact hp.2
+  have hp1 : (swapWord p w).1 (p + 1) = one := by
+    change w.1 (Equiv.swap p (p + 1) (p + 1)) = one
+    rw [Equiv.swap_apply_right]
+    exact hp.1
+  have hh := wall_move (swapWord p w) p false hp0 hp1
+  have hi : swapWord p (swapWord p w) = w := by
+    apply Subtype.ext
+    funext r
+    simp [swapWord, permute]
+  rw [hi] at hh
+  simpa only [Bool.false_eq_true, if_false] using (eq_sub_iff_add_eq.mpr hh.symm)
+
+/-- The three oriented moves have exact integer weight drops a, b and two. -/
+private theorem exact_weight_drops (a b : ℕ) :
+    (∀ (w : Word a b) (p : Pos a b), Allowed 0 w p →
+      wordWeight (swapWord p w) = wordWeight w - a) ∧
+    (∀ (w : Word a b) (p : Pos a b), Allowed 1 w p →
+      wordWeight (swapWord p w) = wordWeight w - b) ∧
+    (∀ (w : Word a b) (p : Pos a b), Allowed 2 w p →
+      wordWeight (swapWord p w) = wordWeight w - 2) :=
+  ⟨F1_move, F2_move, F3_move⟩
+
+#print axioms exact_weight_drops
 
 end D5.S3.Quantum.SpinChains.TwoWallWeights
