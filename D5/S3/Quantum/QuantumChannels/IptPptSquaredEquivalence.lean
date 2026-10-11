@@ -12,6 +12,7 @@ result
   escape_witness: none
   admission_basis: open-problem-resolution (#15391; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15525
+DTR at the delivered head: DTR-Unregistered (Observe); no faithful enrolled template is available for this positive result.
 Direct frozen dependencies (declaration statement_id, not module pins):
 F0: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap; sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
 F1: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.IsCompletelyPositive; sha256:39e2682fd93035c705a08181bb7fdfb77067eba43afcc98c200c30543b913ed4

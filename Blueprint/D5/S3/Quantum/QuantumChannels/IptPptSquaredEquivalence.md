@@ -156,6 +156,10 @@ $$(PPT2C \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{C}\right))) \land (\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chiribella-davidson-paulsen-rahaman-2023-ppt-ipt-squared-equivalence` (proved) by `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chiribella-davidson-paulsen-rahaman-2023-ppt-ipt-squared-equivalence","declaration_gid":"D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Giulio Chiribella; Kenneth R. Davidson; Vern I. Paulsen; Mizanur Rahaman (2023). *Positive maps and entanglement in real Hilbert spaces*. DOI: [10.1007/s00023-023-01325-x](https://doi.org/10.1007/s00023-023-01325-x). URL: <https://arxiv.org/abs/2207.02510v2>.
