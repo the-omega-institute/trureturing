@@ -87,7 +87,7 @@ private theorem weights_dbonacci (k : ℕ) : U hm k = dbonacci m (k + 2) := by
       intro i _
       exact ih (k - m + i.val) (by have := i.isLt; omega)
 
-private theorem sentinel_sum (k : ℕ) :
+theorem sentinel_sum (k : ℕ) :
     (((T hm)^[k]) ([] : List (Fin m))).length + 1 = S hm k := by
   have hstep : ∀ k : ℕ, ((T hm)^[k + 1]) ([] : List (Fin m)) =
       image (phi hm) k (zero hm) ++ ((T hm)^[k]) [] := by
@@ -185,7 +185,7 @@ def fullGreedy (n : ℕ) : List ℕ :=
 def periodicDigits (k : ℕ) : List ℕ :=
   (List.range (k + 1)).map (fun i => if i % m = 0 then 1 else 0)
 
-private theorem scan_length (count r : ℕ) : (greedyScan hm count r).length = count := by
+theorem scan_length (count r : ℕ) : (greedyScan hm count r).length = count := by
   induction count generalizing r with
   | zero => rfl
   | succ count ih => simp [greedyScan, ih]
@@ -207,7 +207,7 @@ private theorem scan_zero_block (h z r : ℕ) (hr : r < U hm h) :
         Nat.div_eq_of_lt ht, Nat.mod_eq_of_lt ht, ih]
       simp [List.replicate_succ]
 
-private theorem sentinel_top (k : ℕ) : topIndex hm (S hm k) = k := by
+theorem sentinel_top (k : ℕ) : topIndex hm (S hm k) = k := by
   apply Nat.findGreatest_eq_iff.mpr
   refine ⟨?_, fun _ => (scanner_bounds hm k).1, ?_⟩
   · have hb : k + 1 ≤ U hm k := by
@@ -282,7 +282,7 @@ private theorem long_period (k : ℕ) (hk : m ≤ k) :
   intro i _
   simp
 
-private theorem scan_sentinel (k : ℕ) :
+theorem scan_sentinel (k : ℕ) :
     greedyScan hm (k + 1) (S hm k) = periodicDigits (m := m) k := by
   induction k using Nat.strong_induction_on with
   | h k ih =>

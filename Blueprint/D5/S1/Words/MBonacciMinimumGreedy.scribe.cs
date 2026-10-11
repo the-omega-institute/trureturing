@@ -10,6 +10,34 @@ internal sealed class MBonacciMinimumGreedyDocument : IScribeDocumentDefinition
         "Minimum complete Parikh cardinality implies a full periodic greedy expansion in actual m-bonacci weights.",
         H("Actual Weights and Full Greedy Necessity"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("sentinel-sum"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciMinimumGreedy.sentinel_sum"),
+                H("Sentinel length in actual image weights"), StatementSource.FromAuthor(ConverseStatement("sentinel_sum")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every order m at least two and every k, the length of the original T iterate on the empty list, plus one, equals S(k). Image-add decomposition identifies each increment with U(k). This is the length supplier used to identify the exact all-start Parikh range in MBonacciParikhStarConverse."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("scan-length"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciMinimumGreedy.scan_length"),
+                H("Length of the complete scan"), StatementSource.FromAuthor(ConverseStatement("scan_length")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all natural count and remainder r, greedyScan(count,r) has exactly count entries. In particular every zero remainder retains all subsequent zero entries. Equality with a complete periodic list therefore determines the top index without dropping trailing zeros or a last partial period."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sentinel-top"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciMinimumGreedy.sentinel_top"),
+                H("Actual greatest fitting sentinel weight"), StatementSource.FromAuthor(ConverseStatement("sentinel_top")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every k, topIndex(S(k)) equals k. The original inequalities U(k) at most S(k), S(k) less than U(k+1), strict weight growth and the finite exhaustive bound establish this result. The converse compares complete scans at this original top index."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("scan-sentinel"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciMinimumGreedy.scan_sentinel"),
+                H("Complete sentinel scan"), StatementSource.FromAuthor(ConverseStatement("scan_sentinel")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every k, scanning exactly k plus one weights at remainder S(k) gives the literal periodicDigits(k). The original short and long scanner recurrences include k equal to zero, k below m, k equal to m and every later k. This is used as the canonical comparison scan in the inverse."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "Let m be at least five and let the alphabet be Fin m. The literal substitution phi "
                 + "sends a below m minus one to the list [zero, a plus one], and the terminal letter "
@@ -88,4 +116,53 @@ internal sealed class MBonacciMinimumGreedyDocument : IScribeDocumentDefinition
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+
+    private static Formula ConverseStatement(string name)
+    {
+        var m = F.Id("m"); var n = F.Id("n"); var k = F.Id("k");
+        var q = F.Id("q"); var i = F.Id("i"); var t = F.Id("t");
+        var r = F.Id("r"); var s = F.Id("s"); var a = F.Id("a");
+        var x = F.Id("x"); var count = F.Id("count");
+        Formula ns = CFCall("S", m, k);
+        Formula si = CFCall("sentinelIter", m, k);
+        Formula rho = CFCall("ncard", CFCall("parikhImage", m, n));
+        Formula minimum = CFEq(rho, m);
+        Formula sentinel = CFEx("k", CFN(), CFEq(n, ns));
+        Formula periodic = CFEx("k", CFN(), CFEq(CFCall("fullGreedy", m, n),
+            CFCall("periodicDigits", m, k)));
+        Formula body = name switch
+        {
+            "sentinel_sum" => CFAll("k", CFN(), CFEq(CFAdd(CFCall("length",
+                CFCall("iterate", CFCall("T", m), k, CFCall("nil"))), F.D(1)), ns)),
+            "scan_length" => CFAll("count", CFN(), CFAll("r", CFN(),
+                CFEq(CFCall("length", CFCall("greedyScan", m, count, r)), count))),
+            "sentinel_top" => CFAll("k", CFN(), CFEq(CFCall("topIndex", m, ns), k)),
+            "scan_sentinel" => CFAll("k", CFN(),
+                CFEq(CFCall("greedyScan", m, CFAdd(k, F.D(1)), ns),
+                    CFCall("periodicDigits", m, k))),
+            _ => throw new ArgumentOutOfRangeException(nameof(name)),
+        };
+        Formula bound = name == "uniform_minimum_characterization"
+            ? CFAnd(CFLe(F.D(2), m), CFLe(F.D(5), m)) : CFLe(F.D(2), m);
+        bool unrestricted = name is "star" or "star_injective" or "factor_add";
+        return F.Disp(CFAll("m", CFN(), unrestricted ? body : CFImp(bound, body)));
+    }
+
+    private static Formula CFN() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    private static Formula CFCall(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula CFAll(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
+    private static Formula CFEx(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(x), domain, body);
+    private static Formula CFEq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula CFLe(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula CFAdd(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula CFAnd(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula CFImp(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
 }
