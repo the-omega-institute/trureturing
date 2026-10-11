@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known suppliers pay its lower-order blocks and a fixed-ray angular theta transform improves an unbalanced coprime squarefree packet, while the actual-order-six residual and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic estimates also pay a classwise squarefree-column pole sector with shared gcds at specified lengths, while the complete actual-order-six residual and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -464,6 +464,167 @@ $$
 $$
 
 Its $z=1/6$ residue cancels the extracted sixth-power residue for that pair. This prevents treating a uniform sixth-power extraction over all nonprincipal pairs as an uncancellable contribution. Restricting to actual order six removes that specific lower-order cancellation; it does not exclude cancellation by other dual terms or solve the remaining estimate. De Faveri's Lemma 3.3 also retains coupled cross phases for nonsquarefree columns under its stated coprimality and finite-class hypotheses. It does not replace the general $\epsilon(\xi_{h,k})$ above by a separable squarefree Gauss vector. This application remains source-conditional and has no complete local Lean certification or signed Robin consequence.
+
+#### A classwise squarefree-column pole consumer with shared gcds
+
+The original convolution permits a further application of the existing cubic sieve. This application retains every common gcd, but first splits the complete positive moment by squarefree status and a fixed ray class. It does not bound an arbitrary divisor-bounded coefficient vector or compare signed contractions under that split.
+
+Use the pinned detector's multiplicative primary class $t(h)=h\bmod36\mathcal O$ in its fixed finite group $\mathcal T$. Write $c_j(h)=\omega_j(h)B_{D,N}(h)$, with the original fixed multiplicative twists and zero masks in $\omega_j$. For $a\in\mathcal T$, let
+
+$$
+\widetilde T^{\rm sf}_{j,a}
+=\sum_{v\ {\rm good\ sixth\ power\ free}}W(q_v/U_j)
+\left|\sum_{\substack{h\ {\rm squarefree}\\t(h)=a}}
+c_j(h)\chi_h^{\rm raw}(v)^{\varepsilon_\chi}\right|^2,
+$$
+
+and define $\widetilde T^{\rm nsf}_{j,a}$ using the complementary column set. Finite Cauchy gives
+
+$$
+\widetilde T_j\le2|\mathcal T|\sum_{a\in\mathcal T}
+\left(\widetilde T^{\rm sf}_{j,a}+\widetilde T^{\rm nsf}_{j,a}\right).
+$$
+
+Define $\mathcal C^{\rm sf,a}_{6,L}[c_j]$ by the same pure-power pole extraction inside $\widetilde T^{\rm sf}_{j,a}$. Thus both columns are squarefree and have class $a$, and the principal diagonal is excluded. This is a new classwise contraction, not a restriction whose bound is asserted to dominate the earlier signed $\mathcal C_{6,L}$.
+
+Work in positive orientation; conjugate the entire family and coefficient vector for negative orientation. Write $h=gx,k=gy$ with $g,x,y$ squarefree and pairwise coprime. Then $t(x)=t(y)=a/t(g)$, every $x\ne y$ has actual ratio order six, and
+
+$$
+\mathfrak f_{h,k}=xy,\qquad R_{h,k}=\operatorname{rad}(gS).
+$$
+
+The original manuscript's `eq:sextic-sieve-pair-gauss` and `eq:sextic-sieve-pair-poisson` give
+
+$$
+\epsilon(\xi_{h,k})
+=\eta_{a/t(g)}\gamma_1(x)\gamma_{-1}(y),
+\qquad
+\gamma_{-1}(y)=\chi_y(-1)\overline{\gamma_1(y)}.
+$$
+
+Both $\eta_{a/t(g)}$ and $\chi_y(-1)$ are constant on the retained class. The latter sign is retained. The normalization agrees with the earlier $H_W$: for the detector's additive character and measure, the radial transform is
+
+$$
+\mathscr W(s)=\frac{2\pi}{\sqrt3}\int_0^\infty
+W(t)J_0\!\left(\frac{4\pi\sqrt{ts}}{\sqrt3}\right)dt,
+\qquad \mathcal M\mathscr W(z)=H_W(z).
+$$
+
+Consequently the pair-Gauss factor is the primitive root number in this extraction, with no omitted ramified factor in the equal-class squarefree ratio. This uses the source formulas and their Fourier convention, not an assumed identification of de Faveri's general $\beta_h$ with $\gamma_1(h)$.
+
+Expand the original $R$-product over $r\mid\operatorname{rad}(gS)$ and $M_{P,L}(5)$ over $\ell$ with $(\ell,gS)=1$. Their character factors separate into functions of $x$ and $y$; their other conditions are $(x,\ell)=(y,\ell)=1$. Moreover,
+
+$$
+\sum_{r\mid\operatorname{rad}(gS)}q_r^{-5/6}\ll_{S,\varepsilon}q_g^\varepsilon,
+\qquad \sum_{q_\ell\le L}q_\ell^{-5}\le\zeta_F(5).
+$$
+
+All masks remain in the separated coefficient vectors. Also $\vartheta(xy)=\vartheta(x)\vartheta(y)$ and $q_{xy}^{-1/3}=q_x^{-1/3}q_y^{-1/3}$. Detect $(x,y)=1$ by $\sum_{e\mid x,y}\mu(e)$. After the original pair formula has been used on its coprime nonprincipal locus, this is only a separable algebraic extension to other pairs. No actual conductor or root-number identity is asserted for the added noncoprime pairs.
+
+For each $e$, a separated scalar sum has the coefficients $c_j(gx)\gamma_1(x)\vartheta(x)q_x^{-1/3}$, the fixed $r,\ell$ twists, and the conditions that $x$ is squarefree, $e\mid x$, $(x,g\ell)=1$ and $t(x)=a/t(g)$. Put $X=K/q_g$. In the actual convolution $dn=gx$, distribute the prime factors of $g$ and $e$ between the two factors:
+
+$$
+g=g_dg_n,\quad e=e_de_n,\quad
+d=g_de_dd',\quad n=g_ne_nn',\quad x=ed'n'.
+$$
+
+The unfixed $d',n'$ are squarefree and coprime. Their two lengths are
+
+$$
+D'=D/(q_{g_d}q_{e_d}),\qquad
+N'=N/(q_{g_n}q_{e_n}),\qquad D'N'=X/q_e.
+$$
+
+Gauss CRT leaves the cubic kernel $\kappa_{d'}(n')$ with its zero extension. All interactions with the fixed $g,e,r,\ell$ and physical labels, as well as $\vartheta$ and the norm weights, are functions of one variable and enter its coefficients. The class constraint has a finite character expansion. Thus the existing cubic operator estimate applies with actual fixed coefficient vectors and gives, after squaring and Cauchy over the divisors of $e$,
+
+$$
+|H_{g,e}^{g_d,g_n}|^2
+\ll_{\mathcal A,\varepsilon}
+K^\varepsilon X^{1/3}q_e^{-1}
+\left\{\frac D{q_{g_d}}+\frac N{q_{g_n}}
++(X/q_e)^{2/3}\right\}.
+$$
+
+Empty ranges contribute zero; a bounded dyadic shell contributes only to the displayed lower-order terms. Summing $e$ uses a logarithmic bound for $\sum_{q_e\ll X}q_e^{-1}$ and convergence of $\sum_e q_e^{-5/3}$. For each distribution of $g$, the result is
+
+$$
+\ll_{\mathcal A,\varepsilon}K^\varepsilon
+\left\{X+X^{1/3}\left(D/q_{g_d}+N/q_{g_n}\right)\right\}.
+$$
+
+Cauchy over the divisors of $g$ costs only $K^\varepsilon$. Summing all $g_d,g_n$ retains their original bounds $q_{g_d}\ll D,q_{g_n}\ll N$. In particular,
+
+$$
+DK^{1/3}\sum_{g_d}q_{g_d}^{-4/3}
+\sum_{q_{g_n}\ll N}q_{g_n}^{-1/3}
+\ll DK^{1/3}N^{2/3}=KD^{1/3},
+$$
+
+with the symmetric bound $KN^{1/3}$ for the other term and $K^{1+\varepsilon}$ for the $X$ term. Subtract the artificially included $x=y=1$ principal diagonal separately at cost $K^{1+\varepsilon}$. The resulting consumer is
+
+$$
+\boxed{\left|\mathcal C^{\rm sf,a}_{6,L}[c_j]\right|
+\ll_{\mathcal A,\varepsilon}
+K^{1+\varepsilon}\left(1+D^{1/3}+N^{1/3}\right)
+\|W_M\|_\infty^2\|W_S\|_\infty^2.}
+$$
+
+The bound is uniform in $L$. At $D\asymp N\asymp K^{1/2}$ it is $K^{7/6+\varepsilon}$, which pays this classwise pole at scale $U_jK$ when $U_j\asymp K$. More generally, $U_j\ge1$ and $\max(D,N)^2\le U_j$ are sufficient. The same original shared-height accounting applies to the profile and transform costs; no extra independent height budget is introduced.
+
+This is an application of the source Gauss/Poisson identities and the known cubic sieve to the actual convolution. The new positive-moment partition avoids needing cross-class terms in that majorant; it does not estimate the earlier cross-class signed contraction. The nonsquarefree and mixed column sectors, shifted integral, other dual terms and full signed Robin restoration remain open. There is no complete analytic Lean certification or new sieve claim.
+
+#### Why the remaining pole estimate must use the actual convolution
+
+The proposed $U_j^{1/6}K$ pole scale cannot hold uniformly for arbitrary bounded coefficient vectors. The source pair-Gauss formula supplies an obstruction that retains nonsquarefree columns, a shared prime and every natural mask. This concerns the isolated pole contraction; it is not a counterexample to the original mixed moment or Robin inequality.
+
+Fix a good prime ideal $\mathfrak t$, put $a_0=\mathfrak t^2$, $Q=K/q_{a_0}$ and $P_0=\operatorname{rad}(a_0S)$. Use good primes $p$ in the identity primary class modulo $36\mathcal O$ with $Q/2<q_p\le Q$. Their number is $\gg Q/\log Q$. For this input reuse Wataru Kai, [*Notes on Mitsui's Prime Number Theorem with Siegel zeros*, arXiv:2209.11816v3, Theorem 3.1.1](https://arxiv.org/html/2209.11816v3#S3.SS1.SSS1): take a fixed positive-area convex rectangle inside the norm annulus and scale it by $\sqrt Q$, with fixed modulus $36\mathcal O$ and identity residue. The fixed-modulus exceptional-zero integral is $O(Q^\beta)=o(Q)$ with $\beta<1$. Passing from prime elements to primary prime ideals loses at most the six units.
+
+Partition these primes by the finite tuple of values $\chi_p(r)$ for primes $r\mid P_0$ and by the original physical row-label values. One cell $\mathscr P$ still has $M=|\mathscr P|\gg Q/\log Q$. For distinct $p,q\in\mathscr P$, take $h=a_0p,k=a_0q$. The common $a_0$ cancels in the primitive ratio, while its original zeros remain. The exact data are
+
+$$
+\mathfrak f_{h,k}=pq,\quad R_{h,k}=P_0,\quad
+\xi_{h,k}(r)=1\ (r\mid P_0),\quad
+\epsilon(\xi_{h,k})=\gamma_1(p)\overline{\gamma_1(q)}.
+$$
+
+Indeed the identity class makes the pair reciprocity factor and $\chi_q(-1)$ equal to one. Every distinct supported pair has actual order six. For any $1\le L<Q/2$, the finite cutoff also gives the exact equality $M_{P_0pq,L}(5)=M_{P_0,L}(5)$.
+
+Choose $c(a_0p)=\overline{\gamma_1(p)}$ for $p\in\mathscr P$ and zero elsewhere. Thus $|c(h)|\le1$, all supported columns are nonsquarefree, and all off-diagonal phases in the complete pole summand align. Put
+
+$$
+w_p=q_p^{-1/3}(1-q_p^{-1}),\qquad
+A_{P_0,L}=M_{P_0,L}(5)\prod_{r\mid P_0}(1-q_r^{-5/6}).
+$$
+
+The complete specified contraction is exactly
+
+$$
+\mathcal C_{6,L}[c]
+=A_{P_0,L}\left\{\left(\sum_{p\in\mathscr P}w_p\right)^2
+-\sum_{p\in\mathscr P}w_p^2\right\}.
+$$
+
+The truncated Möbius factor is uniformly positive:
+
+$$
+M_{P_0,L}(5)\ge2-\zeta_F(5)
+\ge2-\zeta(5)^2>7/16,
+$$
+
+where $\zeta(5)<1+\int_1^\infty x^{-5}dx=5/4$. Therefore
+
+$$
+\mathcal C_{6,L}[c]\gg_{a_0,S}Q^{-2/3}M(M-1)
+\gg_{a_0,S}\frac{K^{4/3}}{(\log K)^2}.
+$$
+
+The fixed physical labels multiply the chosen vector by one common unit, leaving its contraction unchanged. Negative orientation uses the conjugated family and vector. At $U_j\asymp K$ the prescribed $L=(b_WU_j)^{1/6}$ obeys the cutoff condition for large $K$, and this excludes a uniform arbitrary-vector $K^{7/6+\varepsilon}$ bound for $0<\varepsilon<1/6$. With the original $(U_jK)^\varepsilon$ notation, $U_j=K^\theta$, $0<\theta<2$, contradicts that bound whenever
+
+$$
+0<\varepsilon<\frac{2-\theta}{6(1+\theta)}.
+$$
+
+These vectors are not the actual annular convolution. In every factorization $dn=a_0p$, one factor contains $p$ and the other divides fixed $a_0$. When both actual annular lengths $D,N$ tend to infinity, $B_{D,N}(a_0p)$ is consequently zero for every such prime, once both lower support endpoints exceed $q_{a_0}$. If one length stays bounded, its coefficients are still prescribed by the Möbius and profile factors; the aligned vector above has not been realized by that convolution. Thus a remaining pole estimate must use its coefficient structure, or combine the pole with the other dual terms. Divisor bounds alone cannot supply it. This obstruction and the preceding consumer are applications of the cited sources, without complete analytic Lean certification or an originality claim.
 
 ## Known estimates for the squarefree Gauss pairing
 
