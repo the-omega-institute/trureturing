@@ -988,3 +988,95 @@ finite-head upper condition, cofinal joint upper condition, original
 PG15 exterior sign, boundary $\kappa=1$ and RH remain unproved. No
 literature originality, new pressure decomposition or Lean verification
 is claimed.
+
+## A legal integer competitor leaves a strict curvature shortfall
+
+Keep the original sources, labels and maximizing ties from CR1--CR4,
+with $N=pu$, $A=B+t$, $B=\log u$, $t=\log p$ and
+$u=N_A^{\rm str}$. Enlarge the common source start so that $B>11$.
+Use the existing strict inventory and unrestricted own-price defect,
+including the integer $1$ in its pressure domain. Put
+
+$$
+C=N_B^{\rm str},\qquad k=K(B)=\log C,\qquad Y=t+k,
+\qquad L_{p,u}=F(N)-F(pC).
+$$
+
+Strict inventory nesting gives $C\mid u$. The original activation
+calculation at clocks above $11$ gives $5040\mid C$, and $p\nmid u$
+also gives $p\nmid C$. Thus $pC$ is a literal competitor in the
+original complete domain of multiples of $5040p$, so $L_{p,u}\ge0$.
+This uses the [original domain and strict-prefix
+suppliers](../ArithSums/trureturing2026extrawindowpairing.md), N1/N4,
+and PG1; neither CA adjacency nor GA1 is required.
+
+Reuse PG2's concavity cost
+$C_B(y)=f(B)+\lambda(B)(y-B)-f(y)$. The pressure optimizer at
+$\lambda(B)$ is $C$, so the existing defect definition reads
+
+$$
+d_B(u)=W(C)-\lambda(B)k-W(u)+\lambda(B)B.
+$$
+
+Multiplication by the same absent prime adds $c_p=\log(1+1/p)$
+to both divisor responses. Substitution into the actual competitor
+loss therefore gives the exact same-source account
+
+$$
+t\lambda(B)-D_t(B)-d_B(u)=L_{p,u}+C_B(Y).
+\tag{CR25}
+$$
+
+Its strictness has an integer witness. Write $r=u/C\in\mathbb N_{>0}$.
+Because $p\nmid u$, $r\ne p$, and
+
+$$
+Y-B=\log(p/r),\qquad
+|\log(p/r)|\ge\log(1+1/p)=c_p.
+$$
+
+For $r\ge p+1$ this follows directly; for $r\le p-1$ the stronger
+bound is $\log(p/(p-1))>c_p$. Both $B$ and $Y$ are greater than $1$
+and at most $A$, since $k\le B$. Integrating the decreasing curvature
+$w=-\lambda'$ on the interval between $B$ and $Y$ gives
+$C_B(Y)\ge w(A)(Y-B)^2/2$. Consequently every original label and tie
+satisfies
+
+$$
+\boxed{
+d_B(u)\le t\lambda(B)-D_t(B)-\frac{w(A)}2c_p^2
+<t\lambda(B)-D_t(B).}
+\tag{CR26}
+$$
+
+Even when $pC$ is another maximizing tie and $L_{p,u}=0$, the integer
+gap remains strictly positive. The same original positive weights give
+
+$$
+\sum_{i<m}\delta_i s_{B_i}
+\bigl[d_{B_i}(u_i)-t_i\lambda(B_i)+D_{t_i}(B_i)\bigr]
+=-\sum_{i<m}\delta_i s_{B_i}
+\bigl[L_{p_i,u_i}+C_{B_i}(Y_i)\bigr]<0.
+$$
+
+Thus the defect alone cannot supply the proposed lower bound
+$d_B(u)\ge t\lambda(B)-D_t(B)$, even after full-window averaging.
+This excludes that particular supply condition; it does not exclude a
+comparison using the original height, reserve or another joint relation.
+In the complete unrestricted same-core identity, CR25 instead gives
+
+$$
+\boxed{
+-s_BI_\psi(B)=\frac t{\sqrt B}
++s_B\left[F(N)-\gamma+R_{\rm pp}(B)
+-L_{p,u}-C_B(Y)-c_p\right].}
+\tag{CR27}
+$$
+
+The original height occurs once. A coefficient-one comparison would
+still have to pay $L_{p,u}+C_B(Y)+c_p$ from that height, the reserve or
+a proved same-source signed estimate. CR26's strict gap has no fixed
+normalized positive lower bound asserted here. The complete
+coefficient-one condition, CR21/CR23, PG15/J and RH remain unproved.
+This is an application of the named suppliers, without a new generic
+pressure theorem, literature originality claim or Lean verification.
