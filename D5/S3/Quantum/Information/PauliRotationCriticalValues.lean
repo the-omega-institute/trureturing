@@ -65,30 +65,32 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ qubit_weyl_star)
 
 private theorem pauli_square (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := by
+  dsimp only [pauliMatrix]
   obtain ⟨_, _, _, hx, hz⟩ := qubit_weyl_star
   cases p
   · exact mul_one _
   · exact (pow_two _).symm.trans hx
   · ext i j
-    fin_cases i <;> fin_cases j <;> simp [pauliMatrix, qubitX, qubitZ, mul_apply]
+    fin_cases i <;> fin_cases j <;> simp -implicitDefEqProofs [qubitX, qubitZ, mul_apply]
   · exact (pow_two _).symm.trans hz
 private theorem pauli_star (p : Pauli) : star (pauliMatrix p) = pauliMatrix p := by
+  dsimp only [pauliMatrix]
   obtain ⟨_, hx, hz, _, _⟩ := qubit_weyl_star
   cases p
   · exact star_one _
   · exact hx
   · ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [pauliMatrix, qubitX, qubitZ, star_apply]
+      simp -implicitDefEqProofs [qubitX, qubitZ, star_apply]
   · exact hz
 private theorem tensor_identity : tensorOp (fun _ : Fin 2 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by
   ext x y
-  simp only [tensorOp, of_apply, one_apply]
+  simp -implicitDefEqProofs only [tensorOp, of_apply, one_apply]
   by_cases h : x = y
-  · subst y; simp
+  · subst y; simp -implicitDefEqProofs
   · obtain ⟨i, hi⟩ : ∃ i, x i ≠ y i := Function.ne_iff.mp h
     rw [if_neg h]
-    exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [hi])
+    exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp -implicitDefEqProofs [hi])
 private theorem word_square (p : Fin 2 → Pauli) : wordOp p * wordOp p = (1 : Mat) := by
   unfold wordOp
   rw [tensor_mul]
@@ -96,14 +98,15 @@ private theorem word_square (p : Fin 2 → Pauli) : wordOp p * wordOp p = (1 : M
   exact tensor_identity
 private theorem word_star (p : Fin 2 → Pauli) : star (wordOp p) = wordOp p := by
   ext x y
-  simp only [wordOp, tensorOp, star_apply, of_apply, star_prod]
+  simp -implicitDefEqProofs only [wordOp, tensorOp, star_apply, of_apply, star_prod]
   apply Finset.prod_congr rfl
   intro i _
   exact congrFun (congrFun (pauli_star (p i)) (x i)) (y i)
 private theorem pauli_trace_mul (p q : Pauli) :
     trace (pauliMatrix p * pauliMatrix q) = if p = q then (2 : ℂ) else 0 := by
+  dsimp only [pauliMatrix]
   cases p <;> cases q <;>
-    simp [pauliMatrix, qubitX, qubitZ, trace, Fin.sum_univ_two] <;> norm_num
+    simp -implicitDefEqProofs [qubitX, qubitZ, trace, Fin.sum_univ_two] <;> norm_num
 private theorem word_trace_mul (p q : Fin 2 → Pauli) :
     trace (wordOp p * wordOp q) = if p = q then (4 : ℂ) else 0 := by
   unfold wordOp
@@ -116,7 +119,7 @@ private theorem word_trace_mul (p q : Fin 2 → Pauli) :
   · subst q; norm_num
   · rw [if_neg h]
     obtain ⟨i, hi⟩ : ∃ i, p i ≠ q i := Function.ne_iff.mp h
-    exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [hi])
+    exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp -implicitDefEqProofs [hi])
 private def labels : Fin 15 → Fin 2 → Pauli :=
   ![![.I,.X], ![.I,.Y], ![.I,.Z], ![.X,.I], ![.X,.X], ![.X,.Y], ![.X,.Z],
     ![.Y,.I], ![.Y,.X], ![.Y,.Y], ![.Y,.Z], ![.Z,.I], ![.Z,.X], ![.Z,.Y], ![.Z,.Z]]
@@ -128,34 +131,35 @@ private noncomputable def rho : Mat →L[ℝ] Param :=
     toFun := fun M i => (trace (wordOp (labels i) * M)).re / 4
     map_add' := by
       intro A B; funext i
-      simp [mul_add, trace_add, add_div]
+      simp -implicitDefEqProofs [mul_add, trace_add, add_div]
     map_smul' := by
       intro c A; funext i
-      simp [trace_smul, smul_eq_mul, Complex.mul_re, mul_div_assoc] }
+      simp -implicitDefEqProofs [trace_smul, smul_eq_mul, Complex.mul_re, mul_div_assoc] }
 private theorem rho_E (x : Param) : rho (E x) = x := by
   ext i
   change (trace (wordOp (labels i) * ∑ j, x j • wordOp (labels j))).re / 4 = x i
-  simp only [Finset.mul_sum, Matrix.mul_smul, trace_sum, trace_smul]
+  simp -implicitDefEqProofs only [Finset.mul_sum, Matrix.mul_smul, trace_sum, trace_smul]
   simp_rw [word_trace_mul, labels_injective.eq_iff]
-  simp
+  simp -implicitDefEqProofs
 private theorem E_injective : Function.Injective E :=
   Function.LeftInverse.injective rho_E
 private theorem sum_states {A : Type*} [AddCommMonoid A] (f : BasisState → A) :
     ∑ x, f x = f ![0,0] + f ![0,1] + f ![1,0] + f ![1,1] := by
   rw [← Equiv.sum_comp (finTwoArrowEquiv (Fin 2)).symm]
-  simp [Fintype.sum_prod_type, Fin.sum_univ_two, finTwoArrowEquiv, add_assoc]
+  simp -implicitDefEqProofs [Fintype.sum_prod_type, Fin.sum_univ_two, finTwoArrowEquiv, add_assoc]
 set_option maxHeartbeats 2000000 in
 -- The finite reconstruction expands sixteen matrix entries in the fifteen Pauli coordinates.
 private theorem pauli_expansion (M : Mat) :
     (∑ i, (trace (wordOp (labels i) * M) / 4) • wordOp (labels i)) +
       (trace M / 4) • (1 : Mat) = M := by
+  dsimp only [wordOp, tensorOp, pauliMatrix]
   ext x y
   obtain ⟨⟨a,b⟩, rfl⟩ := (finTwoArrowEquiv (Fin 2)).symm.surjective x
   obtain ⟨⟨c,d⟩, rfl⟩ := (finTwoArrowEquiv (Fin 2)).symm.surjective y
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    simp [finTwoArrowEquiv, labels, wordOp, tensorOp, pauliMatrix, qubitX, qubitZ, trace, diag,
+    simp -implicitDefEqProofs [finTwoArrowEquiv, labels, qubitX, qubitZ, trace, diag,
       Matrix.mul_apply, Matrix.one_apply, sum_states, Fin.prod_univ_two, smul_eq_mul,
-      Fin.sum_univ_succ] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
+      Fin.sum_univ_succ] <;> ring_nf <;> simp -implicitDefEqProofs [Complex.I_sq] <;> ring
 private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M) = M := by
   have hr (i : Fin 15) : ((trace (wordOp (labels i) * M)).re : ℂ) =
       trace (wordOp (labels i) * M) := by
@@ -164,7 +168,7 @@ private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M)
     rw [← trace_conjTranspose, conjTranspose_mul]
     change trace (star M * star (wordOp (labels i))) = _
     rw [hs, word_star, trace_mul_comm]
-  apply Eq.trans ?_ (by simpa [ht] using pauli_expansion M)
+  apply Eq.trans ?_ (by simpa -implicitDefEqProofs [ht] using pauli_expansion M)
   change (∑ i, rho M i • wordOp (labels i)) = _
   apply Finset.sum_congr rfl
   intro i _
@@ -177,22 +181,22 @@ private theorem rotation_complex (p : NonIdentityPauli) (a : ℝ) :
     rotation p a = (Real.cos (a / 2) : ℂ) • (1 : Mat) -
       ((Real.sin (a / 2) : ℂ) * Complex.I) • wordOp p.val := by
   ext x y
-  simp [rotation, smul_eq_mul, Complex.real_smul, mul_assoc]
+  simp -implicitDefEqProofs [rotation, smul_eq_mul, Complex.real_smul, mul_assoc]
 private theorem rotation_unitary (p : NonIdentityPauli) (a : ℝ) :
     rotation p a ∈ unitary Mat := by
   have hc : (Real.cos (a / 2) : ℂ) ^ 2 + (Real.sin (a / 2) : ℂ) ^ 2 = 1 := by
     exact_mod_cast (by nlinarith [Real.sin_sq_add_cos_sq (a / 2)] :
       Real.cos (a / 2) ^ 2 + Real.sin (a / 2) ^ 2 = 1)
   rw [Unitary.mem_iff, rotation_complex]
-  simp only [star_sub, star_smul, star_one, star_mul, Complex.star_def,
+  simp -implicitDefEqProofs only [star_sub, star_smul, star_one, star_mul, Complex.star_def,
     Complex.conj_ofReal, Complex.conj_I, word_star]
   constructor <;>
-    simp only [mul_sub, sub_mul, Matrix.smul_mul, Matrix.mul_smul, one_mul, mul_one,
+    simp -implicitDefEqProofs only [mul_sub, sub_mul, Matrix.smul_mul, Matrix.mul_smul, one_mul, mul_one,
       word_square, smul_smul] <;>
     calc _ = ((Real.cos (a / 2) : ℂ) ^ 2 + (Real.sin (a / 2) : ℂ) ^ 2) • (1 : Mat) := by
           match_scalars
           all_goals ring_nf
-          all_goals simp only [Complex.I_sq]
+          all_goals simp -implicitDefEqProofs only [Complex.I_sq]
           all_goals ring
          _ = 1 := by rw [hc, one_smul]
 private noncomputable def listCircuit (P : Fin 15 → NonIdentityPauli)
@@ -226,29 +230,29 @@ private theorem gate_deriv (P : Fin 15 → NonIdentityPauli) (α : Param) (j : F
     HasStrictFDerivAt (fun β : Param => rotation (P j) (β j)) (gateD P α j) α := by
   let d := (1 / 2 : ℝ) • (ContinuousLinearMap.proj j : Param →L[ℝ] ℝ)
   have hd : HasStrictFDerivAt (fun β : Param => β j / 2) d α := by
-    simpa [d, div_eq_mul_inv, mul_comm] using
+    simpa -implicitDefEqProofs [d, div_eq_mul_inv, mul_comm] using
       (ContinuousLinearMap.proj j : Param →L[ℝ] ℝ).hasStrictFDerivAt.const_mul (1 / 2)
   apply (hd.cos.smul_const (1 : Mat) |>.sub
     (hd.sin.smul_const (Complex.I • wordOp (P j).val))).congr_fderiv
   ext1 h
-  simp only [gateD, d, _root_.sub_apply, ContinuousLinearMap.smulRight_apply,
+  simp -implicitDefEqProofs only [gateD, d, _root_.sub_apply, ContinuousLinearMap.smulRight_apply,
     _root_.smul_apply, ContinuousLinearMap.proj_apply, rotation_complex, mul_sub, Matrix.mul_smul,
     mul_one, word_square, smul_smul]
   ext x y
-  simp only [Matrix.sub_apply, Matrix.smul_apply, Complex.real_smul, smul_eq_mul,
+  simp -implicitDefEqProofs only [Matrix.sub_apply, Matrix.smul_apply, Complex.real_smul, smul_eq_mul,
     Complex.ofReal_mul, Complex.ofReal_neg, Complex.ofReal_div, Complex.ofReal_ofNat]
   ring_nf
-  all_goals simp [Complex.I_sq]
+  all_goals simp -implicitDefEqProofs [Complex.I_sq]
   all_goals ring
 
 private theorem list_split (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15))
     (α : Param) (i : Fin l.length) :
     listCircuit P (l.take i) α * rotation (P l[i]) (α l[i]) *
       listCircuit P (l.drop (i.val + 1)) α = listCircuit P l α := by
-  have hi : i.val < (l.map (fun j => rotation (P j) (α j))).length := by simp
+  have hi : i.val < (l.map (fun j => rotation (P j) (α j))).length := by simp -implicitDefEqProofs
   have hh := List.prod_take_mul_prod_drop (l.map (fun j => rotation (P j) (α j))) (i.val + 1)
   rw [List.prod_take_succ _ _ hi] at hh
-  simpa [listCircuit, List.map_take, List.map_drop] using hh
+  simpa -implicitDefEqProofs [listCircuit, List.map_take, List.map_drop] using hh
 
 private noncomputable def listD (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15))
     (α : Param) : Param →L[ℝ] Mat :=
@@ -260,16 +264,16 @@ private theorem list_deriv (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15))
     HasStrictFDerivAt (listCircuit P l) (listD P l α) α := by
   apply (HasStrictFDerivAt.list_prod' (l := l) (fun j _ => gate_deriv P α j)).congr_fderiv
   ext1 h
-  simp only [listD, _root_.sum_apply, ContinuousLinearMap.smulRight_apply]
+  simp -implicitDefEqProofs only [listD, _root_.sum_apply, ContinuousLinearMap.smulRight_apply]
   apply Finset.sum_congr rfl
   intro i _
-  simp only [_root_.smul_apply, op_smul_eq_mul, smul_eq_mul, gateD,
+  simp -implicitDefEqProofs only [_root_.smul_apply, op_smul_eq_mul, smul_eq_mul, gateD,
     ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply]
   change listCircuit P (l.take i) α *
       ((h l[i] • ((-Complex.I / 2) • (wordOp (P l[i]).val * rotation (P l[i]) (α l[i])))) *
       listCircuit P (l.drop (i.val + 1)) α) = _
   rw [← list_split P l α i]
-  simp only [Matrix.mul_smul, Matrix.smul_mul, mul_assoc]
+  simp -implicitDefEqProofs only [Matrix.mul_smul, Matrix.smul_mul, mul_assoc]
   rw [← mul_assoc (star (listCircuit P (l.take i) α)) (listCircuit P (l.take i) α),
     Unitary.star_mul_self_of_mem (list_unitary P (l.take i) α), one_mul]
 
@@ -286,13 +290,13 @@ private noncomputable def J_H (P : Fin 15 → NonIdentityPauli) (α : Param) :
 
 private theorem H_star (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     star (H P α j) = H P α j := by
-  simp only [H, star_mul, star_star, word_star, mul_assoc]
+  simp -implicitDefEqProofs only [H, star_mul, star_star, word_star, mul_assoc]
 
 private theorem H_trace (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     trace (H P α j) = 0 := by
   have hI : wordOp (fun _ : Fin 2 => Pauli.I) = (1 : Mat) := tensor_identity
   have hz : trace (wordOp (P j).val) = 0 := by
-    simpa only [hI, mul_one, if_neg (P j).property] using
+    simpa -implicitDefEqProofs only [hI, mul_one, if_neg (P j).property] using
       word_trace_mul (P j).val (fun _ => Pauli.I)
   rw [H, trace_mul_cycle, Unitary.star_mul_self_of_mem (prefix_unitary P α j.val), one_mul, hz]
 
@@ -300,15 +304,15 @@ private theorem E_J_mulVec (P : Fin 15 → NonIdentityPauli) (α h : Param) :
     E ((J_H P α : Matrix (Fin 15) (Fin 15) ℝ) *ᵥ h) = ∑ j, h j • H P α j := by
   have hv : (J_H P α : Matrix (Fin 15) (Fin 15) ℝ) *ᵥ h = ∑ j, h j • rho (H P α j) := by
     ext i
-    simp [J_H, Matrix.mulVec, dotProduct, mul_comm]
+    simp -implicitDefEqProofs [J_H, Matrix.mulVec, dotProduct, mul_comm]
   rw [hv, map_sum]
-  simp only [map_smul, E_rho _ (H_star P α _) (H_trace P α _)]
+  simp -implicitDefEqProofs only [map_smul, E_rho _ (H_star P α _) (H_trace P α _)]
 
 private theorem circuit_fderiv (P : Fin 15 → NonIdentityPauli) (α h : Param) :
     fderiv ℝ (circuit P) α h = (-Complex.I / 2) •
       (E ((J_H P α : Matrix (Fin 15) (Fin 15) ℝ) *ᵥ h) * circuit P α) := by
   rw [(circuit_strict P α).hasFDerivAt.fderiv, E_J_mulVec]
-  simp only [listD, _root_.sum_apply,
+  simp -implicitDefEqProofs only [listD, _root_.sum_apply,
     ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply]
   change (∑ j, h j • ((-Complex.I / 2) • (H P α j * circuit P α))) = _
   simp_rw [smul_comm (h _) (-Complex.I / 2), ← Matrix.smul_mul]
@@ -323,12 +327,12 @@ private theorem circuit_ker (P : Fin 15 → NonIdentityPauli) (α : Param) :
   constructor
   · intro hh
     have hz := congrArg (fun M : Mat => M * star (circuit P α)) hh
-    simp only [Matrix.smul_mul, mul_assoc,
+    simp -implicitDefEqProofs only [Matrix.smul_mul, mul_assoc,
       Unitary.mul_star_self_of_mem (circuit_unitary P α), mul_one, zero_mul] at hz
     have hc : (-Complex.I / 2 : ℂ) ≠ 0 :=
       div_ne_zero (neg_ne_zero.mpr Complex.I_ne_zero) (by norm_num)
-    exact E_injective (by simpa using (smul_eq_zero.mp hz).resolve_left hc)
-  · intro hh; simp [hh]
+    exact E_injective (by simpa -implicitDefEqProofs using (smul_eq_zero.mp hz).resolve_left hc)
+  · intro hh; simp -implicitDefEqProofs [hh]
 
 private theorem derivative_rank (P : Fin 15 → NonIdentityPauli) (α : Param) :
     derivativeRank P α = Matrix.rank (J_H P α) := by
@@ -346,17 +350,17 @@ private theorem critical_eq_det_zero (P : Fin 15 → NonIdentityPauli) :
   · intro hh
     by_contra hd
     have hr := Matrix.rank_of_det_ne_zero hd
-    simp only [Fintype.card_fin] at hr
+    simp -implicitDefEqProofs only [Fintype.card_fin] at hr
     omega
   · intro hd
     obtain ⟨v, hv, hz⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hd
     have hk : LinearMap.ker (Matrix.mulVecLin (J_H P α)) ≠ ⊥ := by
       intro he
-      exact hv (by simpa only [he, Submodule.mem_bot] using
+      exact hv (by simpa -implicitDefEqProofs only [he, Submodule.mem_bot] using
         (show v ∈ LinearMap.ker (Matrix.mulVecLin (J_H P α)) from hz))
     have hp := Submodule.one_le_finrank_iff.mpr hk
     have hr := (Matrix.mulVecLin (J_H P α)).finrank_range_add_finrank_ker
-    simp only [Module.finrank_pi, Fintype.card_fin] at hr
+    simp -implicitDefEqProofs only [Module.finrank_pi, Fintype.card_fin] at hr
     change Matrix.rank (J_H P α) + _ = 15 at hr
     omega
 
@@ -372,15 +376,15 @@ private theorem prefix_strict (P : Fin 15 → NonIdentityPauli) (α : Param) (j 
         ((-Complex.I / 2) • prefixG P α j)) α := by
   apply (list_deriv P ((List.finRange 15).take j.val) α).congr_fderiv
   ext1 h
-  simp only [listD, prefixG,
+  simp -implicitDefEqProofs only [listD, prefixG,
     _root_.sum_apply, ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply,
     ContinuousLinearMap.comp_apply, ContinuousLinearMap.flip_apply,
     ContinuousLinearMap.mul_apply', _root_.smul_apply, Matrix.smul_mul, Finset.sum_mul,
     Finset.smul_sum]
-  apply Finset.sum_equiv (finCongr (by simp)) (by simp)
+  apply Finset.sum_equiv (finCongr (by simp -implicitDefEqProofs)) (by simp -implicitDefEqProofs)
   intro k _
-  have hk : k.val ≤ j.val := by have := k.isLt; simp only [List.length_take] at this; omega
-  simp [List.take_take, Nat.min_eq_left hk, H, prefixOp, smul_comm (h _) (-Complex.I / 2)]
+  have hk : k.val ≤ j.val := by have := k.isLt; simp -implicitDefEqProofs only [List.length_take] at this; omega
+  simp -implicitDefEqProofs [List.take_take, Nat.min_eq_left hk, H, prefixOp, smul_comm (h _) (-Complex.I / 2)]
 
 private noncomputable def H_D (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     Param →L[ℝ] Mat := (-Complex.I / 2) •
@@ -392,14 +396,14 @@ private theorem H_deriv (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 
   have hp := prefix_strict P α j
   apply ((hp.mul_const' (wordOp (P j).val)).mul' hp.star).congr_fderiv
   ext1 h
-  simp only [H_D, _root_.add_apply, _root_.sub_apply, _root_.smul_apply,
+  simp -implicitDefEqProofs only [H_D, _root_.add_apply, _root_.sub_apply, _root_.smul_apply,
     ContinuousLinearMap.comp_apply, ContinuousLinearMap.flip_apply,
     ContinuousLinearMap.mul_apply', ContinuousLinearEquiv.coe_coe,
     starL'_apply, op_smul_eq_mul, smul_eq_mul, Matrix.smul_mul]
   have hg : star (prefixG P α j h) = prefixG P α j h := by
-    simp [prefixG, star_sum, star_smul, H_star]
-  have hc : star (-Complex.I / 2 : ℂ) = -(-Complex.I / 2) := by simp; ring
-  simp only [star_smul, star_mul, hg, hc, H, Matrix.mul_smul,
+    simp -implicitDefEqProofs [prefixG, star_sum, star_smul, H_star]
+  have hc : star (-Complex.I / 2 : ℂ) = -(-Complex.I / 2) := by simp -implicitDefEqProofs; ring
+  simp -implicitDefEqProofs only [star_smul, star_mul, hg, hc, H, Matrix.mul_smul,
     mul_assoc, smul_sub, neg_smul, mul_neg]
   module
 
@@ -441,17 +445,17 @@ private theorem rotation_conjugation (p : NonIdentityPauli) (a : ℝ) (Q : Mat) 
       (Real.sin (a / 2) : ℂ) * (Real.cos (a / 2) : ℂ) := by
     exact_mod_cast (by linarith : Real.sin a / 2 = Real.sin (a / 2) * Real.cos (a / 2))
   rw [conjStep, hc', hs', ht', rotation_complex]
-  simp only [star_sub, star_smul, star_one, star_mul, Complex.star_def,
+  simp -implicitDefEqProofs only [star_sub, star_smul, star_one, star_mul, Complex.star_def,
     Complex.conj_ofReal, Complex.conj_I, word_star, mul_sub, sub_mul,
     Matrix.smul_mul, Matrix.mul_smul, one_mul, mul_one, smul_smul, smul_sub, mul_assoc]
   match_scalars <;> ring_nf
-  all_goals simp [Complex.I_sq]
+  all_goals simp -implicitDefEqProofs [Complex.I_sq]
 private theorem conjStep_comm (p : NonIdentityPauli) (a : ℝ) (Q : Mat)
     (hq : wordOp p.val * Q = Q * wordOp p.val) : conjStep p a Q = Q := by
   have hh : wordOp p.val * Q * wordOp p.val = Q := by
     rw [hq, mul_assoc, word_square, mul_one]
   rw [conjStep, hh, hq]
-  simp only [sub_self, smul_zero, sub_zero]
+  simp -implicitDefEqProofs only [sub_self, smul_zero, sub_zero]
   module
 private theorem conjStep_anticomm (p : NonIdentityPauli) (a : ℝ) (Q : Mat)
     (hq : wordOp p.val * Q = -(Q * wordOp p.val)) :
@@ -460,20 +464,20 @@ private theorem conjStep_anticomm (p : NonIdentityPauli) (a : ℝ) (Q : Mat)
   have hh : wordOp p.val * Q * wordOp p.val = -Q := by
     rw [hq, neg_mul, mul_assoc, word_square, mul_one]
   have hqp : Q * wordOp p.val = -(wordOp p.val * Q) := by rw [hq, neg_neg]
-  simp only [conjStep, hh, hqp, smul_neg, sub_neg_eq_add, smul_add]
+  simp -implicitDefEqProofs only [conjStep, hh, hqp, smul_neg, sub_neg_eq_add, smul_add]
   module
 private theorem list_conjugation (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15))
     (α : Param) (Q : Mat) : listCircuit P l α * Q * star (listCircuit P l α) =
       l.foldr (fun k M => conjStep (P k) (α k) M) Q := by
   induction l with
-  | nil => simp [listCircuit]
+  | nil => simp -implicitDefEqProofs [listCircuit]
   | cons k l ih =>
     rw [List.foldr_cons, ← rotation_conjugation, ← ih]
-    simp only [listCircuit, List.map_cons, List.prod_cons, star_mul, mul_assoc]
+    simp -implicitDefEqProofs only [listCircuit, List.map_cons, List.prod_cons, star_mul, mul_assoc]
 private theorem J_recurrence (P : Fin 15 → NonIdentityPauli) (α : Param) (i j : Fin 15) :
     J_H P α i j = rho (((List.finRange 15).take j.val).foldr
       (fun k M => conjStep (P k) (α k) M) (wordOp (P j).val)) i := by
-  simp only [J_H, H, prefixOp, list_conjugation]
+  simp -implicitDefEqProofs only [J_H, H, prefixOp, list_conjugation]
 
 -- Rational row and column coordinates; the exceptional parameter index is 12.
 private abbrev RatMat := Matrix (Fin 15) (Fin 15) ℚ
@@ -528,9 +532,9 @@ private theorem scaling_inverse : Ri * R = 1 ∧ Si * S = 1 := by
   have hs : Real.sqrt 2 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
   constructor
   · rw [Ri, R, diagonal_mul_diagonal]; apply diagonal_eq_one.mpr
-    ext i; simp only [rowScale]; split_ifs <;> simp [hs]
+    ext i; simp -implicitDefEqProofs only [rowScale]; split_ifs <;> simp -implicitDefEqProofs [hs]
   · rw [Si, S, diagonal_mul_diagonal]; apply diagonal_eq_one.mpr
-    ext i; simp only [colScale]; split_ifs <;> simp [hs]
+    ext i; simp -implicitDefEqProofs only [colScale]; split_ifs <;> simp -implicitDefEqProofs [hs]
 private noncomputable def B : Matrix (Fin 15) (Fin 15) ℝ := ratReal certK * Ri
 private noncomputable def U : Matrix (Fin 15) (Fin 15) ℝ := S * ratReal certN
 private noncomputable def D : Matrix (Fin 15) (Fin 15) ℝ := ratReal certD
@@ -541,34 +545,31 @@ private theorem coordinate_inverse :
   have hS := scaling_inverse.2
   have hS' : S * Si = 1 := mul_eq_one_comm.mp hS
   constructor
-  · simp only [B, mul_assoc, ← mul_assoc Ri R, hR, one_mul, ← map_mul,
+  · simp -implicitDefEqProofs only [B, mul_assoc, ← mul_assoc Ri R, hR, one_mul, ← map_mul,
       rational_certificate.2.2.1, map_one]
-  · simp only [U, mul_assoc, ← mul_assoc (ratReal certN) (ratReal certNi),
+  · simp -implicitDefEqProofs only [U, mul_assoc, ← mul_assoc (ratReal certN) (ratReal certNi),
       ← map_mul, rational_certificate.2.2.2.1, map_one, one_mul, hS']
-private def pauliProd : Pauli → Pauli → Pauli
-  | .I, q => q | p, .I => p
-  | .X, .X => .I | .Y, .Y => .I | .Z, .Z => .I
-  | .X, .Y => .Z | .Y, .X => .Z
-  | .Y, .Z => .X | .Z, .Y => .X
-  | .Z, .X => .Y | .X, .Z => .Y
-private noncomputable def pauliPhase : Pauli → Pauli → ℂ
-  | .X, .Y | .Y, .Z | .Z, .X => Complex.I
-  | .Y, .X | .Z, .Y | .X, .Z => -Complex.I
-  | _, _ => 1
+private noncomputable def pauliProd (p q : Pauli) : Pauli :=
+  Pauli.rec q (Pauli.rec .X .I .Z .Y q) (Pauli.rec .Y .Z .I .X q)
+    (Pauli.rec .Z .Y .X .I q) p
+private noncomputable def pauliPhase (p q : Pauli) : ℂ :=
+  Pauli.rec 1 (Pauli.rec 1 1 Complex.I (-Complex.I) q)
+    (Pauli.rec 1 (-Complex.I) 1 Complex.I q) (Pauli.rec 1 Complex.I (-Complex.I) 1 q) p
 private theorem pauli_product (p q : Pauli) :
     pauliMatrix p * pauliMatrix q = pauliPhase p q • pauliMatrix (pauliProd p q) := by
+  dsimp only [pauliMatrix]
   cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-    simp [pauliMatrix, qubitX, qubitZ, pauliProd, pauliPhase, mul_apply, smul_eq_mul]
+    simp -implicitDefEqProofs [qubitX, qubitZ, pauliProd, pauliPhase, mul_apply, smul_eq_mul]
 private theorem word_product (p q : Fin 2 → Pauli) :
     wordOp p * wordOp q = (∏ i, pauliPhase (p i) (q i)) •
       wordOp ![pauliProd (p 0) (q 0), pauliProd (p 1) (q 1)] := by
   unfold wordOp; rw [tensor_mul]
   ext x y
-  simp [tensorOp, pauli_product, Fin.prod_univ_two, smul_eq_mul]; ring
+  simp -implicitDefEqProofs [tensorOp, pauli_product, Fin.prod_univ_two, smul_eq_mul]; ring
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (sgn anticomm)
 private theorem pauli_commutation (p q : Pauli) :
     pauliMatrix p * pauliMatrix q = (sgn p q : ℂ) • (pauliMatrix q * pauliMatrix p) := by
-  cases p <;> cases q <;> simp [pauli_product, sgn, anticomm,
+  cases p <;> cases q <;> simp -implicitDefEqProofs [pauli_product, sgn, anticomm,
     pauliProd, pauliPhase, smul_smul, smul_neg, neg_smul]
 private theorem word_commutation (p q : Fin 2 → Pauli) :
     wordOp p * wordOp q = (∏ i, (sgn (p i) (q i) : ℂ)) • (wordOp q * wordOp p) := by
@@ -576,7 +577,7 @@ private theorem word_commutation (p q : Fin 2 → Pauli) :
   calc tensorOp (fun i => pauliMatrix (p i) * pauliMatrix (q i)) =
       tensorOp (fun i => (sgn (p i) (q i) : ℂ) • (pauliMatrix (q i) * pauliMatrix (p i))) :=
         congrArg tensorOp (funext fun i => pauli_commutation (p i) (q i))
-       _ = _ := by ext x y; simp [tensorOp, Finset.prod_mul_distrib, smul_eq_mul]
+       _ = _ := by ext x y; simp -implicitDefEqProofs [tensorOp, Finset.prod_mul_distrib, smul_eq_mul]
 private theorem conjStep_word (p : NonIdentityPauli) (a : ℝ) (q : Fin 2 → Pauli) :
     conjStep p a (wordOp q) =
       if sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = -1 then
@@ -584,25 +585,25 @@ private theorem conjStep_word (p : NonIdentityPauli) (a : ℝ) (q : Fin 2 → Pa
           (∏ i, pauliPhase (p.val i) (q i))) • wordOp ![pauliProd (p.val 0) (q 0), pauliProd (p.val 1) (q 1)]
       else wordOp q := by
   have hh := word_commutation p.val q
-  simp only [Fin.prod_univ_two, ← Int.cast_mul] at hh
+  simp -implicitDefEqProofs only [Fin.prod_univ_two, ← Int.cast_mul] at hh
   have hs : sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = 1 ∨
       sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = -1 := by
     unfold sgn; split_ifs <;> norm_num
   split_ifs with h
   · rw [h] at hh
-    simpa [word_product, smul_smul, mul_assoc] using
-      conjStep_anticomm p a (wordOp q) (by simpa using hh)
+    simpa -implicitDefEqProofs [word_product, smul_smul, mul_assoc] using
+      conjStep_anticomm p a (wordOp q) (by simpa -implicitDefEqProofs using hh)
   · rw [hs.resolve_right h] at hh
-    exact conjStep_comm p a (wordOp q) (by simpa using hh)
+    exact conjStep_comm p a (wordOp q) (by simpa -implicitDefEqProofs using hh)
 private theorem conjStep_add (p : NonIdentityPauli) (a : ℝ) (M N : Mat) :
     conjStep p a (M + N) = conjStep p a M + conjStep p a N := by
-  simp only [conjStep, mul_add, add_mul, smul_add]; module
+  simp -implicitDefEqProofs only [conjStep, mul_add, add_mul, smul_add]; module
 private theorem conjStep_sub (p : NonIdentityPauli) (a : ℝ) (M N : Mat) :
     conjStep p a (M - N) = conjStep p a M - conjStep p a N := by
-  simp only [conjStep, mul_sub, sub_mul, smul_sub]; module
+  simp -implicitDefEqProofs only [conjStep, mul_sub, sub_mul, smul_sub]; module
 private theorem conjStep_smul (p : NonIdentityPauli) (a : ℝ) (c : ℂ) (M : Mat) :
     conjStep p a (c • M) = c • conjStep p a M := by
-  simp only [conjStep, Matrix.mul_smul, Matrix.smul_mul, smul_sub, smul_add, smul_smul]; module
+  simp -implicitDefEqProofs only [conjStep, Matrix.mul_smul, Matrix.smul_mul, smul_sub, smul_add, smul_smul]; module
 private def gateOrder : Fin 15 → Fin 15 := ![9,1,4,13,12,2,5,10,0,6,11,7,8,3,14]
 private def witnessP : Fin 15 → NonIdentityPauli := fun j =>
   ⟨labels (gateOrder j), by fin_cases j <;> decide +kernel⟩
@@ -612,10 +613,10 @@ set_option maxHeartbeats 2000000 in
 private theorem witness_columns (j : Fin 15) :
     colScale j • H witnessP point j = E (fun i => rowScale i * (certA i j : ℝ)) := by
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
-  have hc : Real.sqrt 2 ^ 3 = 2 * Real.sqrt 2 := by simp [pow_succ, hs]
+  have hc : Real.sqrt 2 ^ 3 = 2 * Real.sqrt 2 := by simp -implicitDefEqProofs [pow_succ, hs]
   rw [H, prefixOp, list_conjugation]
   fin_cases j <;>
-    simp only [colScale, Fin.isValue, Fin.zero_eta, Finset.mem_insert, zero_ne_one, Fin.reduceEq, Finset.mem_singleton, or_self, or_false, ↓reduceIte, witnessP, ne_eq, labels,
+    simp -implicitDefEqProofs only [colScale, Fin.isValue, Fin.zero_eta, Finset.mem_insert, zero_ne_one, Fin.reduceEq, Finset.mem_singleton, or_self, or_false, ↓reduceIte, witnessP, ne_eq, labels,
       gateOrder, point, cons_val_zero, cons_val, List.take, List.foldr_nil, E, Fin.sum_univ_succ, cons_val_succ, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Fin.reduceSucc,
       Finset.univ_unique, Fin.default_eq_zero, cons_val_fin_one, Finset.sum_singleton, rowScale, certA, one_div, transpose_apply, cons_val', ite_mul, one_mul, _root_.add_apply,
       ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply, Rat.cast_zero, mul_zero, zero_smul, one_ne_zero, or_true, cons_val_one, Rat.cast_one, mul_one, add_zero,
@@ -627,34 +628,34 @@ private theorem witness_columns (j : Fin 15) :
   all_goals
     apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im, Complex.div_re,
       Complex.div_im, Complex.normSq, Complex.inv_re, Complex.inv_im]
-    all_goals ring_nf <;> simp only [hs, hc] <;> ring
+    all_goals ring_nf <;> simp -implicitDefEqProofs only [hs, hc] <;> ring
 private theorem J_witness : (J_H witnessP point : Matrix (Fin 15) (Fin 15) ℝ) =
     R * ratReal certA * Si := by
   have hs : ∀ j, colScale j ≠ 0 := by
-    intro j; simp only [colScale]; split_ifs <;> positivity
+    intro j; simp -implicitDefEqProofs only [colScale]; split_ifs <;> positivity
   ext i j
   have hh := congrArg (fun M => rho M i) (witness_columns j)
-  simp only [map_smul, rho_E] at hh
+  simp -implicitDefEqProofs only [map_smul, rho_E] at hh
   change colScale j * J_H witnessP point i j = rowScale i * (certA i j : ℝ) at hh
-  simp only [R, Si, diagonal_mul, mul_diagonal, ratReal, RingHom.mapMatrix_apply,
+  simp -implicitDefEqProofs only [R, Si, diagonal_mul, mul_diagonal, ratReal, RingHom.mapMatrix_apply,
     map_apply, Rat.coe_castHom]
   change J_H witnessP point i j = rowScale i * (certA i j : ℝ) * (colScale j)⁻¹
-  exact (eq_div_iff (hs j)).mpr (by simpa [mul_comm] using hh)
+  exact (eq_div_iff (hs j)).mpr (by simpa -implicitDefEqProofs [mul_comm] using hh)
 private theorem normalized_witness : B * Matrix.of (J_H witnessP point) * U = D := by
   rw [show Matrix.of (J_H witnessP point) = R * ratReal certA * Si from J_witness]
   calc _ = ratReal certK * (Ri * R) * ratReal certA * (Si * S) * ratReal certN := by
-             simp only [B, U, mul_assoc]
+             simp -implicitDefEqProofs only [B, U, mul_assoc]
        _ = D := by rw [scaling_inverse.1, scaling_inverse.2]
-                   simp only [mul_one, ← map_mul, rational_certificate.2.2.2.2, D]
+                   simp -implicitDefEqProofs only [mul_one, ← map_mul, rational_certificate.2.2.2.2, D]
 private theorem sqrt_inverse : (Real.sqrt 2)⁻¹ = Real.sqrt 2 / 2 := by
   have hs : Real.sqrt 2 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
   field_simp; nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]
 private theorem H_witness (j : Fin 15) : H witnessP point j =
     (colScale j)⁻¹ • E (fun i => rowScale i * (certA i j : ℝ)) := by
-  have hs : colScale j ≠ 0 := by simp only [colScale]; split_ifs <;> positivity
+  have hs : colScale j ≠ 0 := by simp -implicitDefEqProofs only [colScale]; split_ifs <;> positivity
   rw [← witness_columns, smul_smul, inv_mul_cancel₀ hs, one_smul]
 private theorem B_row (i : Fin 15) : B 12 i = (certz i : ℝ) / rowScale i := by
-  fin_cases i <;> simp [B, Ri, mul_diagonal, ratReal, certK, certL, certe, certz, div_eq_mul_inv,
+  fin_cases i <;> simp -implicitDefEqProofs [B, Ri, mul_diagonal, ratReal, certK, certL, certe, certz, div_eq_mul_inv,
     rowScale, sqrt_inverse]
 set_option maxHeartbeats 2000000 in
 -- Only the four left-kernel coordinates contribute to this commutator contraction.
@@ -664,36 +665,36 @@ private theorem contracted_derivative :
   have h6 : Real.sqrt 2 ^ 6 = 8 := by
     calc _ = (Real.sqrt 2 ^ 2) ^ 3 := by ring
          _ = 8 := by rw [hs]; norm_num
-  simp only [mulVec, dotProduct, B_row, Matrix.of_apply, Fin.sum_univ_succ]
-  simp only [certz, cons_val_zero, cons_val_succ, cons_val_fin_one, Rat.cast_zero, Rat.cast_one,
+  simp -implicitDefEqProofs only [mulVec, dotProduct, B_row, Matrix.of_apply, Fin.sum_univ_succ]
+  simp -implicitDefEqProofs only [certz, cons_val_zero, cons_val_succ, cons_val_fin_one, Rat.cast_zero, Rat.cast_one,
     Rat.cast_neg, Rat.cast_ofNat, zero_div, zero_mul, zero_add]
-  simp only [v, S, mulVec_diagonal, certu, colScale, rowScale, Finset.mem_insert, Finset.mem_singleton,
+  simp -implicitDefEqProofs only [v, S, mulVec_diagonal, certu, colScale, rowScale, Finset.mem_insert, Finset.mem_singleton,
     cons_val_zero, cons_val_succ, cons_val_fin_one, Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat,
     Rat.cast_zero, Rat.cast_one, Fin.reduceEq, or_false, ↓reduceIte, mul_zero, zero_add]
-  simp only [J_D, H_D, H_witness, colScale, Fin.isValue, Finset.mem_insert, Finset.mem_singleton, E, Fin.sum_univ_succ, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Fin.reduceSucc, Finset.univ_unique, Fin.default_eq_zero,
+  simp -implicitDefEqProofs only [J_D, H_D, H_witness, colScale, Fin.isValue, Finset.mem_insert, Finset.mem_singleton, E, Fin.sum_univ_succ, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Fin.reduceSucc, Finset.univ_unique, Fin.default_eq_zero,
     Finset.sum_singleton, rowScale, certA, one_div, transpose_apply, cons_val', cons_val_fin_one, ite_mul, one_mul, _root_.add_apply, ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply, zero_ne_one, Fin.reduceEq, or_self,
     or_false, ↓reduceIte, cons_val_zero, one_ne_zero, or_true, cons_val_one, cons_val, smul_add, map_add, map_smul, prefixG, Fin.mk_eq_zero, Fin.mk_eq_one, ContinuousLinearMap.add_comp, ContinuousLinearMap.smul_comp,
     ContinuousLinearMap.coe_pi', sqrt_inverse, Rat.cast_zero, mul_zero, Fin.coe_ofNat_eq_mod, Nat.zero_mod, Finset.univ_eq_empty, Finset.sum_empty, ContinuousLinearMap.comp_zero, smul_zero, Rat.cast_one, mul_one, add_zero, sub_self,
     _root_.zero_apply, zero_mul, Nat.reduceMod, Fin.val_eq_zero, Fin.zero_eta, zero_smul, zero_add, Finset.sum_const, Finset.card_singleton, one_smul, ContinuousLinearMap.comp_apply, _root_.smul_apply, _root_.sub_apply, mulVec_diagonal,
     Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat, ContinuousLinearMap.flip_apply, ContinuousLinearMap.mul_apply', Fin.val_eq_zero_iff, Fin.val_succ, Fin.mk_one, Fin.succ_ne_zero, ContinuousLinearMap.comp_add, inv_one, Nat.add_eq_right,
     false_or, cons_val_succ', Nat.reduceAdd, Fin.reduceFinMk, Rat.cast_inv, map_zero, ne_eq, not_false_eq_true, div_self]
-  simp only [mul_add, word_product, Fin.prod_univ_two, pauliProd, pauliPhase,
+  simp -implicitDefEqProofs only [mul_add, word_product, Fin.prod_univ_two, pauliProd, pauliPhase,
     labels, cons_val_zero, cons_val_one, smul_smul, mul_one, one_mul, mul_neg]
-  simp only [rho, labels, Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue, cons_val', cons_val_zero, cons_val_fin_one, cons_val, cons_val_one, mul_one, one_smul, sub_self, smul_zero, LinearMap.coe_toContinuousLinearMap', LinearMap.coe_mk,
+  simp -implicitDefEqProofs only [rho, labels, Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue, cons_val', cons_val_zero, cons_val_fin_one, cons_val, cons_val_one, mul_one, one_smul, sub_self, smul_zero, LinearMap.coe_toContinuousLinearMap', LinearMap.coe_mk,
     AddHom.coe_mk, mul_zero, trace_zero, Complex.zero_re, zero_div, zero_mul, mul_neg, neg_mul, Complex.I_mul_I, neg_neg, neg_smul, smul_neg, one_mul, add_sub_add_left_eq_sub, Algebra.mul_smul_comm, mul_sub, trace_smul, trace_sub,
     trace_neg, word_trace_mul, vecCons_inj, reduceCtorEq, and_true, and_self, ↓reduceIte, smul_eq_mul, neg_zero, mul_add, trace_add, Complex.real_smul, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_neg, Complex.ofReal_one,
     Complex.ofReal_ofNat, add_zero, zero_add, sub_neg_eq_add, Complex.add_re, Complex.mul_re, Complex.div_ofNat_re, Complex.neg_re, Complex.I_re, Complex.ofReal_re, Complex.one_re, Complex.ofReal_im, Complex.div_ofNat_im, Complex.neg_im,
     Complex.one_im, sub_zero, Complex.mul_im, Complex.re_ofNat, Complex.I_im, Complex.im_ofNat, zero_sub, and_false, Complex.ofReal_inv, Complex.sub_re, Complex.inv_re, Complex.normSq_ofNat, div_self_mul_self', Complex.inv_im]
-  ring_nf; simp only [h6, sqrt_inverse]; nlinarith [hs]
+  ring_nf; simp -implicitDefEqProofs only [h6, sqrt_inverse]; nlinarith [hs]
 private theorem coordinate_det : det B ≠ 0 ∧ det U ≠ 0 := by
   constructor
-  · intro h; have hh := congrArg det coordinate_inverse.1; simp [det_mul, h] at hh
-  · intro h; have hh := congrArg det coordinate_inverse.2; simp [det_mul, h] at hh
-private theorem D_eq : D = diagonal (fun i : Fin 15 => if i = 12 then (0 : ℝ) else 1) := by ext i j; simp [D, certD, ratReal, diagonal]; split_ifs <;> simp
+  · intro h; have hh := congrArg det coordinate_inverse.1; simp -implicitDefEqProofs [det_mul, h] at hh
+  · intro h; have hh := congrArg det coordinate_inverse.2; simp -implicitDefEqProofs [det_mul, h] at hh
+private theorem D_eq : D = diagonal (fun i : Fin 15 => if i = 12 then (0 : ℝ) else 1) := by ext i j; simp -implicitDefEqProofs [D, certD, ratReal, diagonal]; split_ifs <;> simp -implicitDefEqProofs
 private noncomputable def normalize : (Fin 15 → Fin 15 → ℝ) →L[ℝ] (Fin 15 → Fin 15 → ℝ) :=
   LinearMap.toContinuousLinearMap {
     toFun := fun M => B * Matrix.of M * U
-    map_add' := by intro M N; ext i j; simp [mul_apply, add_mul, mul_add, Finset.sum_add_distrib]
+    map_add' := by intro M N; ext i j; simp -implicitDefEqProofs [mul_apply, add_mul, mul_add, Finset.sum_add_distrib]
     map_smul' := by
       intro c M; change B * (c • Matrix.of M) * U = _
       rw [Matrix.mul_smul, Matrix.smul_mul]; rfl }
@@ -707,34 +708,36 @@ private noncomputable def detDiff {n : Type*} [Fintype n] [DecidableEq n] (M : n
     (n → n → ℝ) →L[ℝ] ℝ := (detForm (n := n)).1.linearDeriv M
 private theorem detForm_deriv {n : Type*} [Fintype n] [DecidableEq n] (M T : n → n → ℝ) :
     detDiff M T = ∑ i, det (Matrix.of (Function.update M i (T i))) := by
-  simp only [detDiff, ContinuousMultilinearMap.linearDeriv_apply, detForm_apply]
+  simp -implicitDefEqProofs only [detDiff, ContinuousMultilinearMap.linearDeriv_apply, detForm_apply]
 private theorem det_comp_strict {n : Type*} [Fintype n] [DecidableEq n]
     {f : Param → (n → n → ℝ)} {fD : Param →L[ℝ] (n → n → ℝ)} {a : Param}
     (hf : HasStrictFDerivAt f fD a) :
     HasStrictFDerivAt (fun x => det (Matrix.of (f x))) ((detDiff (f a)).comp fD) a := by
-  simpa only [detDiff, Function.comp_def, detForm_apply] using ((detForm (n := n)).1.hasStrictFDerivAt _).comp a hf
+  simpa -implicitDefEqProofs only [detDiff, Function.comp_def, detForm_apply] using ((detForm (n := n)).1.hasStrictFDerivAt _).comp a hf
 private theorem detDiff_comp_apply {n : Type*} [Fintype n] [DecidableEq n] (M : n → n → ℝ) (L : Param →L[ℝ] (n → n → ℝ)) (h : Param) :
     ((detDiff M).comp L) h = detDiff M (L h) := by rw [ContinuousLinearMap.comp_apply]
 private noncomputable def g (α : Param) : ℝ := det (Matrix.of (normalize (J_H witnessP α)))
 private noncomputable def gD (α : Param) : Param →L[ℝ] ℝ :=
-  (detDiff (normalize (J_H witnessP α))).comp (normalize.comp (J_D witnessP α))
-private theorem g_strict (α : Param) : HasStrictFDerivAt g (gD α) α :=
-  det_comp_strict (normalize.hasStrictFDerivAt.comp α (J_strict witnessP α))
+  (detDiff (normalize (J_H witnessP α))).comp (normalize.comp (fderiv ℝ (J_H witnessP) α))
+private theorem g_strict (α : Param) : HasStrictFDerivAt g (gD α) α := by
+  unfold gD
+  rw [(J_strict witnessP α).hasFDerivAt.fderiv]
+  exact det_comp_strict (normalize.hasStrictFDerivAt.comp α (J_strict witnessP α))
 private theorem g_zero_iff (α : Param) : g α = 0 ↔ det (J_H witnessP α) = 0 := by
   change det (B * Matrix.of (J_H witnessP α) * U) = 0 ↔ det (Matrix.of (J_H witnessP α)) = 0
-  simp [det_mul, coordinate_det.1, coordinate_det.2]
+  simp -implicitDefEqProofs [det_mul, coordinate_det.1, coordinate_det.2]
 private theorem g_point : g point = 0 := by
   change det (B * Matrix.of (J_H witnessP point) * U) = 0
-  rw [normalized_witness]; exact det_eq_zero_of_row_eq_zero 12 (by intro j; simp [D_eq, diagonal])
+  rw [normalized_witness]; exact det_eq_zero_of_row_eq_zero 12 (by intro j; simp -implicitDefEqProofs [D_eq, diagonal])
 private theorem det_derivative_D (T : Fin 15 → Fin 15 → ℝ) : detDiff D T = T 12 12 := by
   rw [detForm_deriv]
   change (∑ i, det (D.updateRow i (T i))) = T 12 12
   rw [Finset.sum_eq_single 12]
   · have hh : D.updateRow 12 (T 12) = (1 : Matrix (Fin 15) (Fin 15) ℝ).updateRow 12 (T 12) := by
-      ext i j; by_cases h : i = 12 <;> simp [D_eq, updateRow_apply, diagonal, one_apply, h]
+      ext i j; by_cases h : i = 12 <;> simp -implicitDefEqProofs [D_eq, updateRow_apply, diagonal, one_apply, h]
     rw [hh, ← cramer_transpose_apply, transpose_one, cramer_one]; rfl
-  · intro i _ hi; exact det_eq_zero_of_row_eq_zero 12 (by intro j; simp [D_eq, updateRow_apply, Ne.symm hi, diagonal])
-  · intro h; simp at h
+  · intro i _ hi; exact det_eq_zero_of_row_eq_zero 12 (by intro j; simp -implicitDefEqProofs [D_eq, updateRow_apply, Ne.symm hi, diagonal])
+  · intro h; simp -implicitDefEqProofs at h
 private theorem U_pivot : U *ᵥ Pi.single 12 1 = v := by
   unfold U v; rw [← mulVec_mulVec]; congr 1; ext i
   rw [mulVec_single_one]
@@ -751,6 +754,10 @@ set_option maxRecDepth 2000 in
 set_option backward.isDefEq.respectTransparency true in
 private theorem gD_eval (α h : Param) : gD α h = detDiff (normalize (J_H witnessP α)) (normalize (J_D witnessP α h)) := by
   unfold gD; rw [detDiff_comp_apply, ContinuousLinearMap.comp_apply]
+  apply congrArg (fun M : Fin 15 → Fin 15 → ℝ =>
+    detDiff (normalize (J_H witnessP α)) (normalize M))
+  ext i j
+  exact J_fderiv witnessP α h i j
 set_option backward.isDefEq.respectTransparency true in
 private theorem gD_direction : gD point v = -1 := by
   have hn : normalize (J_H witnessP point) = D := by rw [normalize_apply]; exact normalized_witness
@@ -763,15 +770,17 @@ private noncomputable def Q : Mat →L[ℝ] (Fin 14 → ℝ) :=
         (rho.comp ((2 * Complex.I) • (ContinuousLinearMap.mul ℝ Mat).flip (star (circuit witnessP point)))))
 private theorem Q_DF (x : Param) :
     Q (fderiv ℝ (circuit witnessP) point (U *ᵥ x)) = Fin.removeNth 12 x := by
+  have hn (i : Fin 14) : (12 : Fin 15).succAbove i ≠ 12 := Fin.succAbove_ne _ _
   have hc : (2 * Complex.I) * (-Complex.I / 2) = 1 := by norm_num [Complex.ext_iff, Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im, Complex.normSq]
   change Fin.removeNth 12 (B *ᵥ rho ((2 * Complex.I) • (fderiv ℝ (circuit witnessP) point (U *ᵥ x) * star (circuit witnessP point)))) = _
   rw [circuit_fderiv, Matrix.smul_mul, mul_assoc,
     Unitary.mul_star_self_of_mem (circuit_unitary witnessP point), mul_one,
     smul_smul, hc, one_smul, rho_E, mulVec_mulVec, mulVec_mulVec]
   change Fin.removeNth 12 ((B * Matrix.of (J_H witnessP point) * U) *ᵥ x) = _; rw [normalized_witness]
-  ext i; simp [D_eq, mulVec_diagonal, Fin.removeNth, Fin.succAbove_ne]
+  ext i; simp -implicitDefEqProofs [D_eq, mulVec_diagonal, Fin.removeNth, hn]
 private theorem Q_kernel : Q (fderiv ℝ (circuit witnessP) point v) = 0 := by
-  rw [← U_pivot, Q_DF]; ext i; simp [Fin.removeNth, Fin.succAbove_ne]
+  have hn (i : Fin 14) : (12 : Fin 15).succAbove i ≠ 12 := Fin.succAbove_ne _ _
+  rw [← U_pivot, Q_DF]; ext i; simp -implicitDefEqProofs [Fin.removeNth, hn]
 
 private theorem critical_dim_lower :
     (14 : ℝ≥0∞) ≤ dimH (circuit witnessP '' critical witnessP) := by
@@ -791,37 +800,38 @@ private theorem critical_dim_lower :
     refine ⟨x + (gD point x - t) • v, ?_⟩
     apply Prod.ext
     · change L (x + (gD point x - t) • v) = y
-      simp only [map_add, map_smul, L, ContinuousLinearMap.comp_apply, Q_kernel,
+      simp -implicitDefEqProofs only [map_add, map_smul, L, ContinuousLinearMap.comp_apply, Q_kernel,
         smul_zero, add_zero]
       exact (Q_DF _).trans (Fin.removeNth_insertNth _ _ _)
     · change gD point (x + (gD point x - t) • v) = t
-      rw [map_add, map_smul, gD_direction]; simp only [smul_eq_mul]; ring
+      rw [map_add, map_smul, gD_direction]; simp -implicitDefEqProofs only [smul_eq_mul]; ring
   have hr : Set.range T ∈ nhds (T point) := by
     rw [← hT.map_nhds_eq_of_surj hA]
-    simpa only [Set.image_univ] using
+    simpa -implicitDefEqProofs only [Set.image_univ] using
       (Filter.image_mem_map (m := T) (Filter.univ_mem (f := nhds point)))
   have ho : {y : Fin 14 → ℝ | (y,0) ∈ Set.range T} ∈
       nhds (Q (circuit witnessP point)) := by
     have hc : Continuous (fun y : Fin 14 → ℝ => (y,(0 : ℝ))) :=
       continuous_id.prodMk continuous_const
-    exact hc.continuousAt.preimage_mem_nhds (by simpa only [T, g_point] using hr)
+    exact hc.continuousAt.preimage_mem_nhds (by simpa -implicitDefEqProofs only [T, g_point] using hr)
   have hs : {y : Fin 14 → ℝ | (y,0) ∈ Set.range T} ⊆
       Q '' (circuit witnessP '' critical witnessP) := by
     rintro y ⟨α,hα⟩
     refine ⟨circuit witnessP α, ⟨α, ?_, rfl⟩, congrArg Prod.fst hα⟩
     rw [critical_eq_det_zero]
     exact (g_zero_iff α).mp (congrArg Prod.snd hα)
-  have hd := Real.dimH_of_mem_nhds ho
-  simp only [Module.finrank_pi, Fintype.card_fin,
+  obtain ⟨O,hO,hopen,hpoint⟩ := mem_nhds_iff.mp ho
+  have hd := Real.dimH_of_mem_nhds (hopen.mem_nhds hpoint)
+  simp -implicitDefEqProofs only [Module.finrank_pi, Fintype.card_fin,
     Nat.cast_ofNat] at hd
-  exact hd.symm.le.trans ((dimH_mono hs).trans (Q.lipschitz.dimH_image_le _))
+  exact hd.symm.le.trans ((dimH_mono (hO.trans hs)).trans (Q.lipschitz.dimH_image_le _))
 private theorem ae_ne_zero_of_analytic {n : ℕ} {f : (Fin n → ℝ) → ℝ}
     (hf : AnalyticOnNhd ℝ f Set.univ) {a : Fin n → ℝ} (ha : f a ≠ 0) :
     ∀ᵐ x ∂(volume : Measure (Fin n → ℝ)), f x ≠ 0 := by
   classical
   have hR (u : ℝ → ℝ) (hu : AnalyticOnNhd ℝ u Set.univ)
       (b : ℝ) (hb : u b ≠ 0) : ∀ᵐ t ∂volume, u t ≠ 0 := by
-    simp only [ae_iff, ne_eq, not_not]
+    simp -implicitDefEqProofs only [ae_iff, ne_eq, not_not]
     by_contra hz
     obtain ⟨z, hz⟩ := exists_accPt_of_nullSingletonClass (pos_iff_ne_zero.mpr hz)
     exact hb (hu.eqOn_zero_of_preconnected_of_frequently_eq_zero
@@ -838,9 +848,9 @@ private theorem ae_ne_zero_of_analytic {n : ℕ} {f : (Fin n → ℝ) → ℝ}
       apply AnalyticAt.pi
       intro j
       cases j using Fin.cases with
-      | zero => simpa only [Fin.insertNth_zero', Fin.cons_zero] using
+      | zero => simpa -implicitDefEqProofs only [Fin.insertNth_zero', Fin.cons_zero] using
           (analyticAt_fst (𝕜 := ℝ) (p := z))
-      | succ j => simpa only [Fin.insertNth_zero', Fin.cons_succ, Function.comp_def,
+      | succ j => simpa -implicitDefEqProofs only [Fin.insertNth_zero', Fin.cons_succ, Function.comp_def,
           ContinuousLinearMap.proj_apply] using
           ((ContinuousLinearMap.proj (R := ℝ) j).analyticAt z.2).comp analyticAt_snd
     have hF : AnalyticOnNhd ℝ
@@ -851,7 +861,7 @@ private theorem ae_ne_zero_of_analytic {n : ℕ} {f : (Fin n → ℝ) → ℝ}
       ih (fun x _ => (hF (a 0, x) (Set.mem_univ _)).comp
         (f := fun y : Fin n → ℝ => (a 0, y))
         (analyticAt_const.prod analyticAt_id))
-        (a := Fin.removeNth 0 a) (by simpa only [Fin.insertNth_self_removeNth] using ha)
+        (a := Fin.removeNth 0 a) (by simpa -implicitDefEqProofs only [Fin.insertNth_self_removeNth] using ha)
     have hi' : ∀ᵐ x ∂(volume : Measure (Fin n → ℝ)),
         ∀ᵐ t ∂volume, f (Fin.insertNth 0 t x) ≠ 0 := by
       filter_upwards [hi] with x hx
@@ -862,14 +872,14 @@ private theorem ae_ne_zero_of_analytic {n : ℕ} {f : (Fin n → ℝ) → ℝ}
         f (Fin.insertNth 0 z.1 z.2) ≠ 0} :=
       hF.continuous.measurable ((measurableSet_singleton (0 : ℝ)).compl)
     have hp := (Measure.ae_prod_iff_ae_ae hm).2 ((Measure.ae_ae_comm hm).2 hi')
-    simpa [MeasurableEquiv.piFinSuccAbove, Fin.insertNthEquiv,
+    simpa -implicitDefEqProofs [MeasurableEquiv.piFinSuccAbove, Fin.insertNthEquiv,
       Fin.insertNth_self_removeNth] using
       (volume_preserving_piFinSuccAbove (fun _ : Fin (n + 1) => ℝ) 0).quasiMeasurePreserving.ae hp
 
 private theorem det_comp_analytic {n : Type*} [Fintype n] [DecidableEq n]
     {f : Param → (n → n → ℝ)} {a : Param} (hf : AnalyticAt ℝ f a) :
     AnalyticAt ℝ (fun x => det (Matrix.of (f x))) a := by
-  simpa only [Function.comp_def, detForm_apply] using
+  simpa -implicitDefEqProofs only [Function.comp_def, detForm_apply] using
     ((detForm (n := n)).1.analyticAt).comp hf
 
 private theorem g_analytic : AnalyticOnNhd ℝ g Set.univ := by
@@ -885,7 +895,7 @@ private theorem g_analytic : AnalyticOnNhd ℝ g Set.univ := by
       have hs : AnalyticAt ℝ (fun α : Param => (Real.sin (α k) : ℂ)) a :=
         (Complex.ofRealCLM.analyticAt _).comp
           (Real.analyticAt_sin.comp ((ContinuousLinearMap.proj k : Param →L[ℝ] ℝ).analyticAt a))
-      simp only [List.foldr_cons, conjStep]
+      simp -implicitDefEqProofs only [List.foldr_cons, conjStep]
       exact (((analyticAt_const.add hc).div analyticAt_const (by norm_num)).smul ih |>.add
         (((analyticAt_const.sub hc).div analyticAt_const (by norm_num)).smul
           ((analyticAt_const.mul ih).mul analyticAt_const))).sub
@@ -912,7 +922,7 @@ private theorem full_rank_ae :
   obtain ⟨a,ha⟩ := hn
   filter_upwards [ae_ne_zero_of_analytic g_analytic ha] with α hα
   rw [derivative_rank]
-  simpa only [Fintype.card_fin] using
+  simpa -implicitDefEqProofs only [Fintype.card_fin] using
     Matrix.rank_of_det_ne_zero (mt (g_zero_iff α).mpr hα)
 
 theorem result : ¬ claim := by
