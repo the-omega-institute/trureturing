@@ -148,7 +148,7 @@ $$\forall length, start1, start2\in\mathbb{N}, \operatorname{ReducedAbelianEquiv
 
 *Commentary.*
 
-The coordinate sum recovers the run count. With equal run counts, the two alternating Parikh vectors agree automatically in the even case and agree exactly when their initial letters agree in the odd case. This is the preregistered class-code equivalence.
+The coordinate sum recovers the run count. With equal run counts, the two alternating Parikh vectors agree automatically in the even case and agree exactly when their initial letters agree in the odd case. This is the class-code equivalence.
 
 **Definition 1.13 (Reduced abelian classes over all natural starts).**
 

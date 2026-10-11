@@ -135,7 +135,7 @@ internal sealed class ThueMorseReducedAbelianOddDocument : IScribeDocumentDefini
                     "The coordinate sum recovers the run count. With equal run counts, the two "
                         + "alternating Parikh vectors agree automatically in the even case and "
                         + "agree exactly when their initial letters agree in the odd case. This "
-                        + "is the preregistered class-code equivalence."))),
+                        + "is the class-code equivalence."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("all-start-reduced-abelian-classes"),
