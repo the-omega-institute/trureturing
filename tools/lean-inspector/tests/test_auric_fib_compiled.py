@@ -35,6 +35,55 @@ def q(value):
     return Fraction(int(value['numerator']), int(value['denominator']))
 
 
+def assert_native_replay(test, request, raw, produced):
+    if produced['disposition']['status'] == 'refuted':
+        test.assertEqual(raw, produced)
+        return
+    test.assertEqual(set(raw), set(produced))
+    for field in set(produced) - {'source_contract', 'disposition'}:
+        test.assertEqual(raw[field], produced[field], field)
+    source, acquired = raw['source_contract'], produced['source_contract']
+    test.assertIsNone(source['binding'])
+    test.assertEqual(source['supplied_binding'], request['binding'])
+    test.assertEqual(acquired['binding'], request['binding'])
+    test.assertIsNone(source['law_acquisition'])
+    test.assertEqual(source['supplied_law_acquisition'], request.get('law_acquisition'))
+    test.assertEqual(acquired['law_acquisition'], request.get('law_acquisition'))
+    test.assertNotIn('supplied_binding', acquired)
+    test.assertNotIn('supplied_law_acquisition', acquired)
+    provenance = {'binding', 'supplied_binding', 'law_acquisition', 'supplied_law_acquisition'}
+    test.assertEqual({k: v for k, v in source.items() if k not in provenance},
+                     {k: v for k, v in acquired.items() if k not in provenance})
+    raw_disposition, compiled_disposition = raw['disposition'], produced['disposition']
+    test.assertIn('unverified', raw_disposition['reason'])
+    test.assertNotEqual(raw_disposition['reason'], compiled_disposition['reason'])
+    test.assertEqual({k: v for k, v in raw_disposition.items() if k not in {'reason', 'readings'}},
+                     {k: v for k, v in compiled_disposition.items() if k not in {'reason', 'readings'}})
+    explanations, compiled_explanations = raw_disposition['readings'], compiled_disposition['readings']
+    test.assertEqual(set(explanations), set(compiled_explanations))
+    test.assertEqual(explanations['source_contract']['kind'], 'unavailable')
+    test.assertIn('unverified', explanations['source_contract']['reason'])
+    test.assertEqual(compiled_explanations['source_contract'], dict(kind='available',
+        reason='compiled native adapter with explicit initialized specialization'))
+    law_fields = {'pyramid_coordinates', 'association_coordinate', 'residuals', 'conditional_reply_law'}
+    for field in set(explanations) - law_fields - {'source_contract'}:
+        test.assertEqual(explanations[field], compiled_explanations[field], field)
+    for field in law_fields:
+        if source['pushforward_law'] is None:
+            test.assertEqual(explanations[field]['kind'], 'unknown')
+            test.assertEqual(compiled_explanations[field], request.get('law_acquisition', explanations[field]))
+        else:
+            test.assertEqual(explanations[field]['kind'], compiled_explanations[field]['kind'])
+            if explanations[field]['kind'] == 'available':
+                test.assertIn('supplied', explanations[field]['reason'])
+                test.assertNotEqual(explanations[field]['reason'], compiled_explanations[field]['reason'])
+            else:
+                test.assertEqual(explanations[field], compiled_explanations[field])
+    test.assertFalse(raw_disposition['is_lean_proof'])
+    test.assertFalse(compiled_disposition['is_lean_proof'])
+    test.assertNotEqual(raw, produced)
+
+
 def observe_fib(label, payload):
     try:
         if DIAGNOSTICS:
@@ -368,6 +417,16 @@ class CompiledFibIntegration(unittest.TestCase):
         self.assertEqual(q(self.first['apex']['reading']['residuals']['R_guard']['value']), 0)
         zero = self.first['zeroCondition']['reading']['continuation_target']
         self.assertIsNone(zero['conditional_reply_law'])
+        records = [x for x in self.first.values() if x['request'] is not None]
+        replay = subprocess.run(['bash', 'tools/scripts/auric-fib-analysis.sh', '--batch'],
+            cwd=ROOT, env=self.env, input=json.dumps([x['request'] for x in records]),
+            text=True, capture_output=True, check=False)
+        self.assertEqual(replay.returncode, 2, replay.stdout + replay.stderr)
+        raw = json.loads(replay.stdout)
+        self.assertEqual(len(raw), len(records))
+        for record, reading in zip(records, raw):
+            with self.subTest(application=record['application']):
+                assert_native_replay(self, record['request'], reading, record['reading'])
         self.source = self.source.replace('acquiredNullMass : Nat := 1', 'acquiredNullMass : Nat := 2')
         self.source = self.source.replace('acquiredSourceDenominator : Nat := 5',
                                          'acquiredSourceDenominator : Nat := 6')
@@ -490,10 +549,15 @@ class CompiledFibProgramTests(unittest.TestCase):
                 cwd=ROOT, env=fixture.env, input=json.dumps(requests),
                 text=True, capture_output=True, check=False)
             self.assertEqual(standalone.returncode, 2, standalone.stdout + standalone.stderr)
-            self.assertEqual(json.loads(standalone.stdout), [x['reading'] for x in
-                publication.validate_rows(Path(fixture.work.name) / 'raw-lean-report.json',
-                    Path(fixture.work.name) / 'raw-lean-report.json.materials.zip')[0]
-                ['fib_analysis']['applications'] if x['request'] is not None])
+            records = [x for x in publication.validate_rows(
+                Path(fixture.work.name) / 'raw-lean-report.json',
+                Path(fixture.work.name) / 'raw-lean-report.json.materials.zip')[0]
+                ['fib_analysis']['applications'] if x['request'] is not None]
+            raw = json.loads(standalone.stdout)
+            self.assertEqual(len(raw), len(records))
+            for record, reading in zip(records, raw):
+                with self.subTest(application=record['application']):
+                    assert_native_replay(self, record['request'], reading, record['reading'])
         finally:
             fixture.doCleanups()
             config.write_bytes(before)
@@ -732,45 +796,89 @@ class CompiledFibObservationTests(unittest.TestCase):
                 self.assertNotIn('rows', snapshot)
 
     def test_observed_small_child_preserves_streams_and_exit_with_failed_diagnostics(self):
-        for exit_code, blocked in ((0, False), (19, False), (37, True)):
-            with self.subTest(exit_code=exit_code), tempfile.TemporaryDirectory() as directory:
-                root = Path(directory)
-                phases = root / 'phases'
-                if blocked:
-                    phases.mkdir()
-                script = '''import sys, time
+        for schedule in ('normal', 'deferred', 'restored'):
+            for exit_code, blocked in ((0, False), (19, False), (37, True)):
+                with (self.subTest(schedule=schedule, exit_code=exit_code),
+                      tempfile.TemporaryDirectory() as directory):
+                    root = Path(directory)
+                    phases, ready, proceed = (root / name for name in ('phases', 'ready', 'proceed'))
+                    os.mkfifo(ready)
+                    os.mkfifo(proceed)
+                    if blocked:
+                        phases.mkdir()
+                    script = '''import sys
 from pathlib import Path
 path = Path(sys.argv[1])
 if not path.is_dir():
     path.write_text(sys.argv[3])
-    deadline = time.monotonic() + 2
-    while '"observation": "FIB_COMPILED_PROCESS_SNAPSHOT"' not in path.read_text():
-        assert time.monotonic() < deadline, 'observer did not settle'
-        time.sleep(0.01)
+Path(sys.argv[4]).write_text('ready')
+assert Path(sys.argv[5]).read_text() == 'observed'
 print('original out')
 print('original err', file=sys.stderr)
 sys.exit(int(sys.argv[2]))
 '''
-                identities = {}
-                def process_tree(pid, args):
-                    identities.update({pid: (1, 'a'), pid + 1: (pid, 'b')})
-                    return identities, pid + 1
-                def ps_result(*args, **kwargs):
-                    if exit_code != 0:
-                        raise FileNotFoundError('ps')
-                    pid = max(identities)
-                    return subprocess.CompletedProcess([], 0,
-                        f'{pid} {pid-1} 1 00:00:00 S wait lake\n', '')
-                with (patch.object(sys.modules[__name__], 'DIAGNOSTICS', root),
-                      patch.object(sys, 'platform', 'linux'),
-                      patch(__name__ + '.linux_report_processes', side_effect=process_tree),
-                      patch(__name__ + '.linux_process_identity', side_effect=identities.__getitem__),
-                      patch.object(subprocess, 'run', side_effect=ps_result) as ps):
-                    result = run_with_report_snapshot([sys.executable, '-c', script, str(phases), str(exit_code), self.await_start],
-                        dict(os.environ), phases, 1)
-                self.assertEqual((result.returncode, result.stdout, result.stderr),
-                    (exit_code, 'original out\n', 'original err\n'))
-                self.assertEqual(ps.call_count, 0 if blocked else 1)
+                    identities, observers, children = {}, [], []
+                    scheduled, settled = threading.Event(), threading.Event()
+                    if schedule != 'deferred':
+                        scheduled.set()
+                    original_observer = observe_report_process
+                    original_communicate = subprocess.Popen.communicate
+                    def process_tree(pid, args):
+                        identities.update({pid: (1, 'a'), pid + 1: (pid, 'b')})
+                        return identities, pid + 1
+                    def ps_result(*args, **kwargs):
+                        if exit_code != 0:
+                            raise FileNotFoundError('ps')
+                        pid = max(identities)
+                        return subprocess.CompletedProcess([], 0,
+                            f'{pid} {pid-1} 1 00:00:00 S wait lake\n', '')
+                    def observer(*args):
+                        observers.append(threading.current_thread())
+                        scheduled.wait()
+                        try:
+                            original_observer(*args)
+                        finally:
+                            settled.set()
+                            # Acknowledge completion even when the diagnostic sink fails.
+                            proceed.write_text('observed')
+                    def communicate(process, *args, **kwargs):
+                        children.append(process)
+                        try:
+                            self.assertEqual(ready.read_text(), 'ready')
+                            if schedule == 'deferred':
+                                self.assertFalse(settled.is_set())
+                                self.assertEqual(ps.call_count, 0)
+                        finally:
+                            scheduled.set()
+                        return original_communicate(process, *args, **kwargs)
+                    try:
+                        with (patch.object(sys.modules[__name__], 'DIAGNOSTICS', root),
+                              patch.object(sys, 'platform', 'linux'),
+                              patch(__name__ + '.linux_report_processes', side_effect=process_tree),
+                              patch(__name__ + '.linux_process_identity', side_effect=identities.__getitem__),
+                              patch.object(subprocess, 'run', side_effect=ps_result) as ps,
+                              patch(__name__ + '.observe_report_process', side_effect=observer),
+                              patch.object(subprocess.Popen, 'communicate', communicate)):
+                            result = run_with_report_snapshot([sys.executable, '-c', script,
+                                str(phases), str(exit_code), self.await_start, str(ready), str(proceed)],
+                                dict(os.environ), phases, 1)
+                    finally:
+                        scheduled.set()
+                        for thread in observers:
+                            thread.join()
+                    self.assertEqual((result.returncode, result.stdout, result.stderr),
+                        (exit_code, 'original out\n', 'original err\n'))
+                    self.assertEqual(ps.call_count, 0 if blocked else 1)
+                    self.assertTrue(settled.is_set())
+                    self.assertEqual(len(observers), 1)
+                    self.assertTrue(all(not thread.is_alive() for thread in observers))
+                    self.assertEqual(len(children), 1)
+                    self.assertEqual(children[0].poll(), exit_code)
+                    if not blocked:
+                        snapshot = json.loads(phases.read_text().splitlines()[-1])
+                        self.assertEqual(snapshot['status'], 'observed' if exit_code == 0 else 'unavailable')
+                        if exit_code != 0:
+                            self.assertEqual(snapshot['reason'], 'FileNotFoundError')
 
     def test_live_native_output_precedes_exit_and_preserves_raw_failure(self):
         import native

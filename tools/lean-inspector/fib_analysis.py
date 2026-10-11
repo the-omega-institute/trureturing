@@ -75,19 +75,39 @@ def _qualify_compiled(request, reading):
     """Describe evidence already acquired by FibApplications in this producer.
 
     The arithmetic subprocess has no compiler custody and always returns raw
-    table scope. This function is internal to production artifact creation;
+    input scope. This function is internal to production artifact creation;
     neither the standalone JSON command nor consume promotes decoded requests.
     """
-    if request.get("arena") != "typed-source" or reading["disposition"]["status"] == "refuted":
+    if reading["disposition"]["status"] == "refuted":
+        return reading
+    disposition = reading["disposition"]
+    readings = disposition["readings"]
+    def evidence(field, kind, reason):
+        readings[field] = dict(kind=kind, reason=reason)
+    if request.get("arena", "native-single-window") == "native-single-window":
+        source = reading["source_contract"]
+        source.pop("supplied_binding")
+        source.pop("supplied_law_acquisition")
+        source.update(binding=request["binding"], law_acquisition=request.get("law_acquisition"))
+        evidence("source_contract", "available", "compiled native adapter with explicit initialized specialization")
+        has_law = source["pushforward_law"] is not None
+        disposition["reason"] = ("exact finite execution report; not a Lean proof or a certified physical law"
+            if has_law else "finite micro analysis computed; source-law acquisition contract or nonempty archive is missing")
+        if has_law:
+            for field in ("pyramid_coordinates", "association_coordinate", "residuals"):
+                evidence(field, "available", "exact declared or empirical law; physical law and IID unverified")
+            if reading["continuation_target"]["conditional_reply_law"] is not None:
+                evidence("conditional_reply_law", "available", "positive conditioning mass; apex handled without division by r")
+        elif source["law_acquisition"] is not None:
+            for field in ("pyramid_coordinates", "association_coordinate", "residuals", "conditional_reply_law"):
+                readings[field] = dict(source["law_acquisition"])
+        return reading
+    if request.get("arena") != "typed-source":
         return reading
     acquisition = request["acquisition"]
     kind, reason = acquisition["kind"], acquisition["reason"]
     finite = kind == "finite"
-    disposition = reading["disposition"]
     disposition["reason"] = "source-bound downstream analysis; ordinary audit obligations remain independent"
-    readings = disposition["readings"]
-    def evidence(field, kind, reason):
-        readings[field] = dict(kind=kind, reason=reason)
     evidence("arena", "available" if finite or kind == "infinite" else "unavailable", reason)
     evidence("source_contract", "available", "full compiled source correspondence; probability law unknown")
     evidence("continuation_target", "available", "same-source total task; numerical outputs require acquired presentation")
