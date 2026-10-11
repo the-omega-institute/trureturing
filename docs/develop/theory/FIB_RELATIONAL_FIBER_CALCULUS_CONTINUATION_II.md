@@ -4140,7 +4140,7 @@ D=\operatorname{Labels}(2)=(\mathbb Z/2\mathbb Z)^2,
 \qquad q(a)=\operatorname{sourceCarry}(2,2,1,a).
 $$
 
-这里的标签与动作逐字采用 [FibonacciOutputAlgebra](../../../D5/S3/Quantum/Algebra/CarryTransport/FibonacciOutputAlgebra.lean) 的 `Labels`、`fibonacci`，端点读数采用 [FibonacciEndpointAlgebra](../../../D5/S3/Quantum/Algebra/CarryTransport/FibonacciEndpointAlgebra.lean) 的 `integerEvolution`、`sourceCarry`，低轨道采用 [FibonacciPrefix](../../../D5/S3/Quantum/Transport/FibonacciPrefix.lean) 的 `lowTrajectory`。本节的参数对应固定在参照提交 `7f52221f2e23da81475058d5b5b6620e68709401`；最初提出该四态检查时使用的 `d12ea0c9e91cb72daf50da31d1f61b8d284bce38` 中这些定义未发生变化。设 $u_i\in\{0,1\}$ 是 $a_i$ 的规范整数代表；整数一步为 $(u_1,u_0+u_1)$，低轨道一步取其逐坐标模二代表，故原整数商定义给出
+这里的标签与动作逐字采用 [FibonacciOutputAlgebra](../../../D5/S3/Quantum/Algebra/CarryTransport/FibonacciOutputAlgebra.lean) 的 `Labels`、`fibonacci`，端点读数采用 [FibonacciEndpointAlgebra](../../../D5/S3/Quantum/Algebra/CarryTransport/FibonacciEndpointAlgebra.lean) 的 `integerEvolution`、`sourceCarry`，低轨道采用 [FibonacciPrefix](../../../D5/S3/Quantum/Transport/FibonacciPrefix.lean) 的 `lowTrajectory`。本节的参数对应固定参照提交 `7f52221f2e23da81475058d5b5b6620e68709401`。设 $u_i\in\{0,1\}$ 是 $a_i$ 的规范整数代表；整数一步为 $(u_1,u_0+u_1)$，低轨道一步取其逐坐标模二代表，故原整数商定义给出
 
 $$
 q(a)=\left(0,\left\lfloor\frac{u_0+u_1}{2}\right\rfloor\bmod2\right).
@@ -4202,14 +4202,14 @@ $$
 
 $$
 K=(C,\pi,H,N,S),\qquad
-\mathcal U_K=\mathcal U_{(C,\pi)}(H),\qquad
+\mathcal U_K=\{u\in\mathcal U_{(C,\pi)}(H):\operatorname{Cons}_K(u)\},\qquad
 \Gamma_K=\{(u,\rho^N u):u\in\mathcal U_K\}.
 \tag{40.1}
 $$
 
-$C$ 保留原孔地址、孔外树和存在守卫；$\pi$ 是全部原孔值的完整相等分区，含类间不等；$H$ 只收接管以后实际读事件的认证纪元、地址和回复；$N$ 是同一寄存器已实际执行的替换次数。$S$ 收全部其余可访问状态，包括共同任务输入、控制位置、权限、带版本的缓存、派生输出、停止标志和可访问的事件次序或长度。被接管条件排除的旧遍历记录不重新加入 $H$ 或 $S$。若保留历史价值，其数学坐标与取得它的当前 raw 读坐标分别记录。
+$C$ 保留原孔地址、孔外树和存在守卫；$\pi$ 是全部原孔值的完整相等分区，含类间不等；$H$ 只收接管以后实际读事件的认证纪元、地址和回复；$N$ 是同一寄存器已实际执行的替换次数。$S$ 收全部其余可访问状态，包括共同任务输入、控制位置、权限、带版本的缓存、派生输出、停止标志和可访问的事件次序或长度。令 $\operatorname{Cons}_K(u)$ 表示：按声明的同一安装、权限和接管规则，把来源 $u$ 与当前版本 $\rho^N u$ 重放到该切点时，得到的全部这些 $S$ 字段逐项等于 $S$。被接管条件排除的旧遍历记录不重新加入 $H$ 或 $S$。若保留历史价值，其数学坐标与取得它的当前 raw 读坐标分别记录。
 
-这里只取通过该卷定理62.2控制重放条件的切点：$S$ 从共同入口和实际继续记录确定，不再秘密筛去 $\mathcal U_K$ 中的来源。若另有来源相关输入，必须将相应约束计入准确来源族后才可使用（40.1）。于是 $\Gamma_K$ 保留同一原来源与其当前版本的配对；它不是两个边缘的笛卡尔积。相等 $K$ 指在同一安装、权限语义及规范编码下逐字段相等，不要求两次被遗忘的生产者运行具有相同历史。
+这里只取通过该卷定理62.2控制重放条件的切点：$S$ 从共同入口和实际继续记录确定，所有来源相关的 $S$ 字段通过 $\operatorname{Cons}_K$ 显式进入准确来源族；不再秘密筛去 $\mathcal U_K$ 中的来源。若另有来源相关输入，也必须将相应约束写入 $\operatorname{Cons}_K$ 后才可使用（40.1）。于是 $\Gamma_K$ 保留同一原来源与其当前版本的配对；它不是两个边缘的笛卡尔积。相等 $K$ 指在同一安装、权限语义及规范编码下逐字段相等，不要求两次被遗忘的生产者运行具有相同历史。
 
 **假设 40.2（按载体下降的一步接口）。** 在所考虑的全部可达切点上，要求以下三项同时成立。
 
@@ -4231,7 +4231,9 @@ $$
 
 后继没有换源或另选耦合。停止分支只保留终端载体，不供应新的接管入口。这些是完整接口条件；仅有当前答案集相等不提供（40.3）。
 
-在第59—62节的声明合同中，raw 动作 $\mathsf{Read}(p)$ 在当前 $N$ 给 $c=r_{\rho^N u}(p)$，令 $H'=H\mathbin{\|}((N,p,c))$，保留 $C,\pi,N$ 并按真实事件更新 $S$，即得到（40.2）—（40.3）。$\mathsf{ApplyRho}$ 保留原坐标的 $C,\pi,H$，把实际当前树更新为 $\rho^{N+1}u$，认证 $N'=N+1$；$S'$ 不把旧版本缓存当成新版本回复。共同确定的局部计算按其规则更新 $S$；若它宣告某个来源目标的值，则须已由整个 $\mathcal U_K$ 推出共同值。该卷定理61.1、62.3为有限字面价值任务供应准确联合范围及其单元素判据；派生输出不向 $H$ 添加未发生的 raw 读。未来任务须先作相应真实更新，历史恢复实际取得的证据仍绑定当前版本。动作权限和这些 $S$ 更新的完整性仍是所声明接口的前提。
+由于 $\mathcal U_{K'}$ 已包含 $\operatorname{Cons}_{K'}$，式（40.3）还要求每个 $u\in E(K,a,o)$ 都满足后继状态 $S'$ 的来源一致性；这项条件必须由同一来源重放和声明的权限规则给出，不能从事件标签相等自动推出。
+
+在第59—62节的声明合同中，raw 动作 $\mathsf{Read}(p)$ 在当前 $N$ 给 $c=r_{\rho^N u}(p)$，令 $H'=H\mathbin{\|}((N,p,c))$，保留 $C,\pi,N$ 并按真实事件更新 $S$；新的 $S'$ 以及其 $\operatorname{Cons}_{K'}$ 由同一来源重放定义，即得到（40.2）—（40.3）。$\mathsf{ApplyRho}$ 保留原坐标的 $C,\pi,H$，把实际当前树更新为 $\rho^{N+1}u$，认证 $N'=N+1$；$S'$ 不把旧版本缓存当成新版本回复。共同确定的局部计算按其规则更新 $S$；若它宣告某个来源目标的值，则须已由整个 $\mathcal U_K$ 推出共同值。该卷定理61.1、62.3为有限字面价值任务供应准确联合范围及其单元素判据；派生输出不向 $H$ 添加未发生的 raw 读。未来任务须先作相应真实更新，历史恢复实际取得的证据仍绑定当前版本。动作权限和这些 $S$ 更新的完整性仍是所声明接口的前提。
 
 **命题 40.3（完整载体上的有限自适应菜单对应）。** 在定义40.1和假设40.2下，固定同一个有限深度的确定菜单树；每个节点按已有事件选择一个共同合法动作，叶上输出只依已有事件和保留状态。把其在所有 $u\in\mathcal U_K$ 上实际产生的有限事件—输出记录集合记为 $\mathcal R_\Pi(K)$。相等载体上的两个可达切点给相同的 $\mathcal R_\Pi(K)$；更强地，每份对应记录由同一棵原来源见证。有限菜单允许依先前回复改变读地址和更新次数，但每条所计分支必须符合实际控制与版本条件。
 
