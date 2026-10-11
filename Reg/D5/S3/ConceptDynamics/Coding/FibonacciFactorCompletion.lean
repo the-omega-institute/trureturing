@@ -195,3 +195,96 @@ def actual_capped_strict_supply_of_high_costs_registration :
 #print axioms actual_capped_strict_supply_of_high_costs_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal27
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal26
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := ℕ
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ K x => x - g ^ 2 * chi ^ K * hSide .high) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => actualAutomaticCost 2) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (K : ℕ) (hK : 2 ≤ K),
+    actualAutomaticCost K < r.readout () K lam ∧
+    lam - rho ≤ actualAutomaticCost K ∧
+    lam - g ^ 2 * chi * xSide .high ≤ actualAutomaticCost K ∧
+    (∀ D : ℝ, aSide .high < D →
+      lam - g ^ 2 * chi * D < actualAutomaticCost K) ∧
+    (∀ (n : ℕ) (D : ℝ), n < K → aSide .high < D →
+      lam - g ^ 2 * chi ^ n * D < actualAutomaticCost K)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  exact (lt_irrefl (actualAutomaticCost 2)) (h 2 (by decide)).1
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_automatic_cost_envelope) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_automatic_cost_envelope, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨2, 0, 1, ?_⟩
+    change (0 : ℝ) - _ ≠ 1 - _
+    intro h
+    linarith
+
+def actual_automatic_cost_envelope_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_automatic_cost_envelope)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ K x => x - g ^ 2 * chi ^ K * hSide .high) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal26.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal26.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ K x => x - g ^ 2 * chi ^ K * hSide .high) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms actual_automatic_cost_envelope_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal26
