@@ -700,3 +700,167 @@ c(\rho)=\frac{\rho-1}{\rho}.
 15. RHBridgeAxiom。
 
 前十二项是有限维代数、凸几何、信息几何和图论命题。第十三至十五项是桥接接口，需要新的具体构造才能升级为定理。
+
+
+---
+
+## 12. Lean 形状的形式化契约
+
+本节给出直接进入 Lean 文件时应采用的类型边界。以下代码是接口草图，不宣称已经编译。每个定理的数学内容已经在前文证明或由前文的有限维计算给出。
+
+~~~lean
+namespace AuricFIB
+
+inductive Mode
+| zero | two | three | five | twentyFive
+deriving DecidableEq, Fintype
+
+abbrev Law := Mode → ℝ
+
+def IsProbability (p : Law) : Prop :=
+  (∀ s, 0 ≤ p s) ∧ (∑ s, p s = 1)
+
+def x : Mode → ℝ
+  | .two | .twentyFive => 1
+  | _ => 0
+
+def y : Mode → ℝ
+  | .five | .twentyFive => 1
+  | _ => 0
+
+def z : Mode → ℝ
+  | .three => 1
+  | _ => 0
+
+def visible (p : Law) : ℝ × ℝ × ℝ :=
+  (∑ s, p s * x s, ∑ s, p s * y s, ∑ s, p s * z s)
+
+def kappa (p : Law) : ℝ :=
+  p .twentyFive
+
+def seam : Law :=
+  fun s =>
+    match s with
+    | .zero => 1
+    | .two => -1
+    | .three => 0
+    | .five => -1
+    | .twentyFive => 1
+
+def reconstruct (X Y Z κ : ℝ) : Law :=
+  fun s =>
+    match s with
+    | .zero => 1 - X - Y - Z + κ
+    | .two => X - κ
+    | .three => Z
+    | .five => Y - κ
+    | .twentyFive => κ
+
+def Fiber (X Y Z : ℝ) : Set Law :=
+  {p | IsProbability p ∧ visible p = (X, Y, Z)}
+
+theorem reconstruct_visible
+    (hX : 0 ≤ X) (hY : 0 ≤ Y) (hZ : 0 ≤ Z)
+    (hXZ : X + Z ≤ 1) (hYZ : Y + Z ≤ 1)
+    (hκ : max 0 (X + Y - (1 - Z)) ≤ κ)
+    (hκ' : κ ≤ min X Y) :
+    IsProbability (reconstruct X Y Z κ) := by
+  sorry
+
+theorem fiber_parametric
+    (p : Law) (hp : IsProbability p) :
+    p ∈ Fiber X Y Z ↔
+      ∃ κ, p = reconstruct X Y Z κ := by
+  sorry
+
+def fourCorner (f : Mode → ℝ) : ℝ :=
+  f .twentyFive - f .two - f .five + f .zero
+
+theorem expectation_decomposition
+    (p : Law) (hp : IsProbability p) (f : Mode → ℝ) :
+    (∑ s, p s * f s)
+      =
+      f .zero
+      + (f .two - f .zero) * (visible p).1
+      + (f .five - f .zero) * (visible p).2.1
+      + (f .three - f .zero) * (visible p).2.2
+      + fourCorner f * kappa p := by
+  sorry
+
+def numeric (s : Mode) : ℝ :=
+  match s with
+  | .zero => 0
+  | .two => 2
+  | .three => 3
+  | .five => 5
+  | .twentyFive => 7
+
+theorem second_moment_recovers_kappa
+    (p : Law) (hp : IsProbability p) :
+    kappa p =
+      ((∑ s, p s * (numeric s)^2)
+       - (∑ s, p s * numeric s)^2
+       + (2 * (visible p).1 + 3 * (visible p).2.2
+          + 5 * (visible p).2.1)^2
+       - 4 * (visible p).1
+       - 9 * (visible p).2.2
+       - 25 * (visible p).2.1) / 20 := by
+  sorry
+
+def delta (p : Law) : ℝ :=
+  (1 - (visible p).2.2) * kappa p
+    - (visible p).1 * (visible p).2.1
+
+theorem determinant_defect
+    (p : Law) (hp : IsProbability p) :
+    p .zero * p .twentyFive - p .two * p .five = delta p := by
+  sorry
+
+structure ArithmeticBridge (C : Type) where
+  encode : C → Law
+  preserves_probability : ∀ c, IsProbability (encode c)
+  driver : C → Type
+
+structure TriangleLift (Λα Λβ Λγ : Type) where
+  source_product :
+    Measure Λα → Measure Λβ → Measure Λγ → Measure (Λα × Λβ × Λγ)
+  response :
+    Λβ × Λγ → Measure Bool
+  local_pushforward :
+    Law → Prop
+
+structure RHBridge (C : Type) where
+  zeroSpace : Type
+  mapToZero : C → zeroSpace
+  fibDefect : C → ℝ
+  cayleyDefect : zeroSpace → ℝ
+  defect_transport :
+    ∀ c, fibDefect c = cayleyDefect (mapToZero c)
+
+end AuricFIB
+~~~
+
+其中 ArithmeticBridge、TriangleLift 和 RHBridge 的目的不同：
+
+- ArithmeticBridge 负责把素数窗口、模类或 Fibonacci 支持编码成合法概率律；
+- TriangleLift 负责证明该律来自三个独立源和两边响应；
+- RHBridge 才有资格讨论 FIB 缺陷是否能被传送为 Cayley 缺陷。
+
+如果没有 encode、local_pushforward 或 defect_transport 的具体构造，后续结论只能停留在接口层。
+
+## 13. 形式化依赖顺序
+
+建议按以下顺序实现：
+
+1. 枚举 Mode，证明 Fintype 和有限求和化简；
+2. 定义 Law、IsProbability、visible 和 kappa；
+3. 证明 reconstruct_visible；
+4. 证明 fiber_parametric；
+5. 定义 fourCorner，证明 expectation_decomposition；
+6. 定义 numeric，证明 second_moment_recovers_kappa；
+7. 定义 delta，证明 determinant_defect；
+8. 在正内部条件下定义 Fisher 线元；
+9. 单独定义有限状态边图和短正合列；
+10. 再定义算术编码、三角提升和 RH 缺陷传送。
+
+这样可以把有限五态代数与尚未完成的外部桥接分开，避免 bridge-only 定义污染基础定理。
