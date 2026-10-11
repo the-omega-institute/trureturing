@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Observer/ProbabilisticClosure/ConditionalClockMomentComparison
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Analysis/Convex/SpecificFunctions/Basic]
+   anchors: [mathlib/module/Mathlib.Analysis.Convex.SpecificFunctions.Basic]
    utility: none
    digest: Conditional positive clock drift controls adaptive acquisition tails. -/
 
@@ -165,7 +165,7 @@ private theorem low_clock_tail
   simp_rw [he] at h
   convert h.trans (mul_le_mul_of_nonneg_left
     (adaptive_laplace_decay κ π c hμ hμC hc hd n) (Real.exp_pos _).le) using 1 <;>
-    (congr 2; ring)
+    congr 2 <;> ring
 
 /-- Uniform geometric low-clock tails for arbitrary history-dependent source
 laws and arbitrary randomized forced query tables. No topology on worlds is used. -/
@@ -195,7 +195,7 @@ theorem adaptive_clock_tail
     congr 1
     rw [← Real.exp_log hr0, ← Real.exp_add]
     convert Real.exp_half (Real.log (rate μ C)) using 1 <;>
-      (simp [tailRate, Real.exp_log hr0]; ring)
+      simp [tailRate, Real.exp_log hr0] <;> ring
   exact he ▸ low_clock_tail κ π c hμ hμC hc hd n (slope μ C * n)
 
 /-- Replace the return decision by a fixed next query, preserving all query mass. -/
