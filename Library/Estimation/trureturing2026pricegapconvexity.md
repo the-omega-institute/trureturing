@@ -1451,3 +1451,88 @@ for separate pointwise applications, and do not prove CR21/CR23,
 PG15/J or RH. This is a supplier-relative application of the cited
 truncation theorem and existing J4, without a literature-originality
 claim, a repeated generic tail theorem or Lean verification.
+
+## The existing full-real normal form pays the stock term
+
+Keep all original fixed $b,d$, qualifying witnesses, full windows,
+positive weights, final boundary labels and maximizing ties from
+CR17--CR36. The [archived workload supplier's full-real normal form
+and strict-endpoint transfer](../Analytic/mantovanelli2026primeworkload.md#the-full-real-normal-form-also-controls-strict-inventory-at-events)
+apply to the identical actual inventory $K$, weak $\psi$ and price.
+Reuse that statement directly:
+
+$$
+Q(x)=K(x)-\psi(x)=(\sqrt2-1)\sqrt x+o(\sqrt x).
+$$
+
+This holds through activation events; no regular-return membership is
+asserted for the original $A_i$ or $B_i$. CR17 and uniform source escape
+therefore give, for every original label and tie,
+
+$$
+\frac{Q(A_i)}{\sqrt{B_i}}
+=\frac{Q(A_i)}{\sqrt{A_i}}\sqrt{\frac{A_i}{B_i}}
+=\sqrt2-1+o_X(1).
+\tag{CR37}
+$$
+
+The real start in the supplier and the original source start are both
+existential. Uniformity here follows from a full-real asymptotic and
+uniform $A_i/B_i\to1$; no distribution of the selected clocks or
+exceptional-center exclusion is needed.
+
+The [existing elementary bound](../ArithSums/nicolas2025comparison.md#paying-the-thresholds-and-retaining-the-signed-obligation)
+gives $0<r_{B_i}\le\log(2\pi)/\sqrt{B_i}=o_X(1)$.
+CR34 retains $\mu_{B_i}(\tau_i)\ge0$ and its uniform $o_X(1)$
+bound at the CR32-selected individual cutoffs. Thus for every fixed
+$0\le\kappa<1$, the full deterministic term in CR36 is paid:
+
+$$
+\boxed{
+\sum_{i<m}\delta_i
+\left[r_{B_i}+\frac{\kappa Q(A_i)}{\sqrt{B_i}}
+-\mu_{B_i}(\tau_i)\right]
+=\left[\kappa(\sqrt2-1)+o_X(1)\right]L_X.}
+\tag{CR38}
+$$
+
+This includes the actual signed stock, all higher layers and endpoint
+ties; it does not replace them by separately attainable optimizers.
+The positive weights sum to $L_X$, so there is no cost proportional to
+the number of labels.
+
+Together with CR36's complete suffix contract, this supplies the
+one-sided enclosure
+
+$$
+\boxed{
+\sum_{i<m}\delta_i\left[-s_{B_i}I_\psi(B_i)
+-\frac{\kappa t_i}{\sqrt{B_i}}\right]
+\le\mathcal H_{X,\kappa}(\boldsymbol\tau)
++\left[\kappa(79.24+\sqrt2-1)+o_X(1)\right]L_X.}
+\tag{CR39}
+$$
+
+Each suffix error is paid once and the favorable $-\mu$ is retained.
+Exact coefficients create no numerical enclosure error; if the head
+is numerically enclosed, every such error must be added separately.
+CR39 pays the deterministic term that was still retained in CR36;
+it supplies no favorable sign of the head.
+
+For the same fixed $\kappa$, an eventual cofinal-full-window upper
+bound $\mathcal H_{X,\kappa}(\boldsymbol\tau)\le M_H L_X$,
+with one fixed finite $M_H$, every allowed tie assignment and cutoffs
+satisfying the complete CR32--CR34 contracts, would now pay CR23
+with a fixed enlarged constant. This is only the unpaid consumer of
+CR39, not a new RH criterion or an established head estimate.
+The head and tail must use the same individually selected cutoff for
+each label, with every maximizing tie retained; independently favorable
+choices do not supply those contracts.
+
+The full-real normal form is existing arithmetic, directly credited
+to the archived primary and its historical references. This addition
+only pays its actual CR36 consumer after the explicit strict-endpoint
+and same-clock correspondence; it does not reprove that normal form,
+claim literature originality or supply Lean verification. The
+complete signed head upper estimate, CR21/CR23, PG15/J and RH remain
+unproved.
