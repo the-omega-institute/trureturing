@@ -42,7 +42,10 @@ internal sealed class SudoQMinimumCluesDocument : IScribeDocumentDefinition
                     + "outside the rectangle retain their original vectors literally, "
                     + "so every prescribed clue is preserved. The argument applies "
                     + "to arbitrary clue vectors and also excludes unique solvability "
-                    + "when there is no completion."))), DescribeRole.Theorem))));
+                    + "when there is no completion."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("paczos-et-al-2021-sudoq-three-clues"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);

@@ -22,6 +22,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/LatinSquares/SudoQMinimumClues.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/paczos-et-al-2021-sudoq-three-clues` (proved) by `D5/S3/Quantum/LatinSquares/SudoQMinimumClues.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"paczos-et-al-2021-sudoq-three-clues","declaration_gid":"D5/S3/Quantum/LatinSquares/SudoQMinimumClues.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Paczos, M. Wierzbiński, G. Rajchel-Mieldzioć, A. Burchardt, K. Życzkowski (2021). *Genuinely quantum SudoQ and its cardinality*. DOI: [10.1103/PhysRevA.104.042423](https://doi.org/10.1103/PhysRevA.104.042423). URL: <https://arxiv.org/abs/2106.02967v2>.

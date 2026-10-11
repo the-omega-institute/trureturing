@@ -7,7 +7,8 @@ doi: 10.1103/PhysRevA.104.042423
 url: https://arxiv.org/abs/2106.02967v2
 claim: "Section III.A conjectures that no 4×4 SudoQ with three clues is uniquely solvable; Theorem 13 gives uniquely solvable grids with four clues."
 strata_touched:
-  - D5/S3/Quantum/LatinSquares
+  - D5/S3/Quantum/LatinSquares/SudoQClueGeometry
+  - D5/S3/Quantum/LatinSquares/SudoQMinimumClues
 license: citation-only
 triage: anchor
 ---
