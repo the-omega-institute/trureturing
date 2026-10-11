@@ -5577,9 +5577,9 @@ P(a,b,c)
 \mu_{AB}(\alpha)
 \mu_{BC}(\beta)
 \mu_{CA}(\gamma)
-A(a\mid\beta,\gamma)
-B(b\mid\gamma,\alpha)
-C(c\mid\alpha,\beta).
+A(a\mid\gamma,\alpha)
+B(b\mid\alpha,\beta)
+C(c\mid\beta,\gamma).
 \]
 
 #### 证明
