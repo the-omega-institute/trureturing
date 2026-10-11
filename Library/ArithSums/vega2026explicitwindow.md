@@ -17,7 +17,7 @@ The inspected source is Frank Vega, [version 13 of the preprint](https://www.pre
 
 ## The explicit window
 
-Let (n>5040) be a colossally abundant number violating Robin's inequality, and let (p_k) be its largest prime factor. For (p_k>7{,}232{,}121{,}212), Theorem 1 states that, with
+Let \(n>5040\) be a colossally abundant number violating Robin's inequality, and let \(p_k\) be its largest prime factor. For \(p_k>7{,}232{,}121{,}212\), Theorem 1 states that, with
 
 $$
 N_k=\prod_{i=1}^{k}p_i,
@@ -29,12 +29,26 @@ $$
 N_k\le n<N_k^{Y_k}.
 $$
 
-The source gives (Y_k	o1^+) and records (Y_k-1<0.00021) once
-(p_k>e^{31.018189471}). Its Theorem 2 turns this into an equivalent RH test restricted to CA integers in these windows, using Robin's theorem that a false RH would yield infinitely many CA counterexamples.
+The source gives \(Y_k\to1^+\) and records \(Y_k-1<0.00021\) once
+\(p_k>e^{31.018189471}\). Its Theorem 2 turns this into an equivalent RH test restricted to CA integers in these windows, using Robin's theorem that a false RH would yield infinitely many CA counterexamples.
+
+The explicit constant is
+
+$$
+Y_k=\frac{\exp\!\bigl(0.2/(\log p_k)^2\bigr)}
+ {1-0.01/(\log p_k)^3}.
+$$
+
+Consequently,
+
+$$
+(Y_k-1)\vartheta(p_k)
+=\left(0.2+o(1)\right)\frac{p_k}{(\log p_k)^2}.
+$$
 
 ## The remaining obstruction in the source
 
-The Alaoglu--Erdős exponent formula writes the exponent of a prime (qle p_k) in a CA integer with parameter (arepsilon) as a floor of a smooth quantity (x_q(arepsilon)). Consequently the logarithmic size has the decomposition
+The Alaoglu--Erdős exponent formula writes the exponent of a prime \(q\le p_k\) in a CA integer with parameter \(\varepsilon\) as a floor of a smooth quantity \(x_q(\varepsilon)\). Consequently the logarithmic size has the decomposition
 
 $$
 \log n
@@ -43,7 +57,7 @@ $$
 F(\varepsilon)=\sum_{q\le p_k}\{x_q(\varepsilon)\}\log q.
 $$
 
-The source states that explicit Chebyshev and Mertens estimates control (S(arepsilon)) at the required scale, while the universal bound (0le F(arepsilon)<\vartheta(p_k)) is too weak by a factor of order (log^2 p_k). A uniform estimate for this joint fractional-part sum is left open. Thus the window theorem narrows the possible source but does not determine the Robin sign inside it.
+The source states that explicit Chebyshev and Mertens estimates control \(S(\varepsilon)\) at the required scale, while the universal bound \(0\le F(\varepsilon)<\vartheta(p_k)\) is too weak by a factor of order \((\log p_k)^2\). A uniform estimate for this joint fractional-part sum is left open. Thus the window theorem narrows the possible source but does not determine the Robin sign inside it.
 
 ## Interface with the FIB inventory
 
@@ -70,4 +84,6 @@ $$
 =1+\frac{\sqrt2+o(1)}{\sqrt t}.
 $$
 
-When a strict-inventory point is also a CA point, this is the project's primorial-window coordinate. Consuming Vega's theorem would require comparing this exponent with the explicit (Y_k), matching (p_k) with the actual largest support prime, and transporting the residual (F(arepsilon)) to the same FIB source. The preprint supplies none of those FIB identifications. Its fractional-part obstruction is therefore a useful external description of the same signed-tail gap, not a proof of Robin or RH for the FIB family.
+Since \(\sqrt t=o(t/(\log t)^2)\), the repeated-layer excess of the strict inventory is asymptotically smaller than Vega's window width. Thus the window does not exclude the strict-inventory scale; it places it inside the same primorial neighborhood at the level of these known asymptotics.
+
+When a strict-inventory point is also a CA point, this is the project's primorial-window coordinate. Consuming Vega's theorem would require comparing this exponent with the explicit \(Y_k\), matching \(p_k\) with the actual largest support prime, and transporting the residual \(F(\varepsilon)\) to the same FIB source. The preprint supplies none of those FIB identifications. Its fractional-part obstruction is therefore a useful external description of the same signed-tail gap, not a proof of Robin or RH for the FIB family.
