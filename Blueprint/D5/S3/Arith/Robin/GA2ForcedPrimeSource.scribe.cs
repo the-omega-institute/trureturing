@@ -99,9 +99,9 @@ internal sealed class GA2ForcedPrimeSourceDocument : IScribeDocumentDefinition
                         + "compilation using only propext, Classical.choice and Quot.sound. "
                         + "The Reg mirror supplies the complete law equivalence, variation, "
                         + "whole-family sensitivity and observational dependence proofs. "
-                        + "Raw source-occurrence binding is explicitly unfinished and linked "
-                        + "to existing owner issue 5214; no declared_validated registration "
-                        + "is claimed. These checks cover this increment and its imports, "
+                        + "Raw source-occurrence binding is explicitly unfinished; no "
+                        + "declared_validated registration is claimed. These checks cover "
+                        + "this increment and its imports, "
                         + "not the whole repository or the full RH goal."))),
                 DescribeRole.Theorem))));
 
