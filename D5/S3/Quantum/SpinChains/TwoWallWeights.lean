@@ -230,7 +230,6 @@ private theorem F3_weight_control (a b : ℕ) :
     F3 K a b ^ (a * b + 1) = 0 :=
   ⟨F3_move, F3_map K a b, nilpotent_of_filtration K a b _ (F3_map K a b)⟩
 
-#print axioms F3_weight_control
 
 private theorem weight_cons {m : ℕ} (u : Fin m → Bool) (d : Bool) :
     HypereclecticNonShortening.weight (Fin.cons d u) =
@@ -492,6 +491,71 @@ private theorem exact_weight_drops (a b : ℕ) :
       wordWeight (swapWord p w) = wordWeight w - 2) :=
   ⟨F1_move, F2_move, F3_move⟩
 
-#print axioms exact_weight_drops
+
+private theorem F_map (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (i : Fin 3) (s : ℤ) :
+    (weightLE (h K a b) s).map (F K a b i) ≤ weightLE (h K a b) (s - 2) := by
+  classical
+  rw [weightLE_eq_supported, weightLE_eq_supported, Finsupp.supported_eq_span_single]
+  apply Submodule.map_le_iff_le_comap.mpr
+  apply Submodule.span_le.mpr
+  rintro _ ⟨w, hw, rfl⟩
+  change F K a b i (delta K w) ∈
+    Finsupp.supported K K {v : Word a b | wordWeight v ≤ s - 2}
+  rw [(cyclic_action K a b).2.2.2.1]
+  apply Submodule.sum_mem
+  intro p _
+  by_cases hp : Allowed i w p
+  · rw [bond, if_pos hp]
+    apply Finsupp.single_mem_supported K 1
+    change wordWeight (swapWord p w) ≤ s - 2
+    have hd := exact_weight_drops a b
+    fin_cases i
+    · rw [hd.1 w p hp]
+      change wordWeight w ≤ s at hw
+      omega
+    · rw [hd.2.1 w p hp]
+      change wordWeight w ≤ s at hw
+      omega
+    · rw [hd.2.2 w p hp]
+      change wordWeight w ≤ s at hw
+      omega
+  · rw [bond, if_neg hp]
+    exact Submodule.zero_mem _
+
+private theorem T_map (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
+    (ξ : Fin 3 → K) (s : ℤ) :
+    (weightLE (h K a b) s).map (T K a b ξ) ≤ weightLE (h K a b) (s - 2) := by
+  apply Submodule.map_le_iff_le_comap.mpr
+  intro x hx
+  change T K a b ξ x ∈ weightLE (h K a b) (s - 2)
+  simp only [T, LinearMap.add_apply, LinearMap.smul_apply]
+  apply Submodule.add_mem
+  · apply Submodule.add_mem
+    · exact Submodule.smul_mem _ _ (F_map K a b ha hb 0 s (Submodule.mem_map_of_mem hx))
+    · exact Submodule.smul_mem _ _ (F_map K a b ha hb 1 s (Submodule.mem_map_of_mem hx))
+  · exact Submodule.smul_mem _ _ (F_map K a b ha hb 2 s (Submodule.mem_map_of_mem hx))
+
+/-- Exact local drops give strict filtration descent and the uniform nilpotence exponent. -/
+theorem weight_control (a b : ℕ) :
+    (∀ (w : Word a b) (p : Pos a b), Allowed 0 w p →
+      wordWeight (swapWord p w) = wordWeight w - a) ∧
+    (∀ (w : Word a b) (p : Pos a b), Allowed 1 w p →
+      wordWeight (swapWord p w) = wordWeight w - b) ∧
+    (∀ (w : Word a b) (p : Pos a b), Allowed 2 w p →
+      wordWeight (swapWord p w) = wordWeight w - 2) ∧
+    (2 ≤ a → 2 ≤ b →
+      (∀ (i : Fin 3) (s : ℤ), (weightLE (h K a b) s).map (F K a b i) ≤
+        weightLE (h K a b) (s - 2)) ∧
+      (∀ (ξ : Fin 3 → K) (s : ℤ), (weightLE (h K a b) s).map (T K a b ξ) ≤
+        weightLE (h K a b) (s - 2)) ∧
+      (∀ ξ : Fin 3 → K, T K a b ξ ^ (a * b + 1) = 0)) ∧
+    F3 K a b ^ (a * b + 1) = 0 := by
+  have hd := exact_weight_drops a b
+  refine ⟨hd.1, hd.2.1, hd.2.2, ?_, (F3_weight_control K a b).2.2⟩
+  intro ha hb
+  exact ⟨F_map K a b ha hb, T_map K a b ha hb,
+    fun ξ => nilpotent_of_filtration K a b _ (T_map K a b ha hb ξ)⟩
+
+#print axioms weight_control
 
 end D5.S3.Quantum.SpinChains.TwoWallWeights
