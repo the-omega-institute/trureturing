@@ -39,6 +39,37 @@ $\operatorname{dist}(T_\tau h_k,\mathcal N)$. The contradiction under
 invariance is an infinite vertical progression of zeros, excluded by a
 zero-density estimate.
 
+## Finite-order obstruction for a direct FIB identification
+
+The FIB composition operator
+
+$$
+C=MJ=\begin{pmatrix}0&-1\\1&0\end{pmatrix}
+$$
+
+has $C^4=I$. The Hardy operator in the source has, with
+$\Delta=I-S^*$,
+
+$$
+\Delta T_\tau=D_\tau\Delta,\qquad
+D_\tau e_j=(j+1)^{i\tau}e_j.
+$$
+
+For $\tau\ne0$, $T_\tau$ has no finite period. Indeed, if
+$T_\tau^m=I$ for a positive integer $m$, then
+$D_{m\tau}\Delta=\Delta$. Applying this to $e_1$ and $e_2$ gives
+
+$$
+2^{im\tau}=1,\qquad 3^{im\tau}=1.
+$$
+
+If $m\tau\ne0$, these equalities make $\log 2/\log 3$ rational, which
+would imply an impossible equality of powers of $2$ and $3$. Hence
+$m\tau=0$, a contradiction. Consequently no nonzero-$\tau$ $T_\tau$ can
+be the image of $C$ under a surjective intertwiner or a unitary
+equivalence. This does not rule out a proper invariant-subspace model;
+such a model would be a separate construction and proof obligation.
+
 ## Boundary for the FIB route
 
 This result is a sharp example of a dynamical closure condition whose failure
