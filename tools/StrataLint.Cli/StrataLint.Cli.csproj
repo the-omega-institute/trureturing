@@ -6,6 +6,8 @@
   </PropertyGroup>
   <ItemGroup>
     <RuntimeHostConfigurationOption Include="System.GC.ConserveMemory" Value="9" />
+    <EmbeddedResource Include="../scripts/worktree/worktree_*.py"
+                      LogicalName="WorktreeProtocol.%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../StrataLint.Runtime/StrataLint.Runtime.csproj" />
