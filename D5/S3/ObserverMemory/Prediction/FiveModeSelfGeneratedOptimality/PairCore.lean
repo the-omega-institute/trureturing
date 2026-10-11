@@ -275,7 +275,7 @@ private lemma tv_lower (C : PairClass p q r O) (hp : admissible p q r)
 
 /-- A deficient recurrent class becomes perfectly distinguishable in the limit of finite
 visible-word horizons, with the original observer law, including its extra support. -/
-theorem tv_tendsto_one (C : PairClass p q r O) (hp : admissible p q r)
+private theorem tv_tendsto_one (C : PairClass p q r O) (hp : admissible p q r)
     (hirr : ∀ t u, Relation.ReflTransGen C.Edge t u)
     (hbad : ∃ t : C.carrier, O.row t.val.2 ≠ pureRow p q r t.val.1) (t : C.carrier) :
     Filter.Tendsto (fun H => totalVariation (pureLaw p q r t.val.1 H)
@@ -305,7 +305,7 @@ theorem tv_tendsto_one (C : PairClass p q r O) (hp : admissible p q r)
 
 /-- Uniform all-horizon error below one forces every row in each actual irreducible closed
 pair class to be exact. The approximation tolerance is not required to be small. -/
-theorem rows_exact (C : PairClass p q r O) (hp : admissible p q r)
+private theorem rows_exact (C : PairClass p q r O) (hp : admissible p q r)
     (hirr : ∀ t u, Relation.ReflTransGen C.Edge t u) {ε : ℝ} (hε : ε < 1)
     (hacc : ∀ t : C.carrier, ∀ H,
       totalVariation (pureLaw p q r t.val.1 H)
@@ -338,7 +338,7 @@ end PairClass
 
 open Classical in
 /-- Actual synchronized pairs are witnessed by positive finite histories and a pure source tag. -/
-def synchronizedPairs {Z : Type*} [Fintype Z] (p q r : ℝ) (O : GeneratedObserver Z) :
+private def synchronizedPairs {Z : Type*} [Fintype Z] (p q r : ℝ) (O : GeneratedObserver Z) :
     Finset (State × Z) :=
   Finset.univ.filter fun t => ∃ h : List Visible, h ≠ [] ∧ 0 < historyMass p q r h ∧
     sourceRun h = .pure t.1 ∧ O.toObserver.run h = t.2
@@ -372,11 +372,12 @@ private lemma synchronized_closed {Z : Type*} [Fintype Z] {p q r : ℝ}
     change O.update (O.toObserver.run h) y = O.update t.2 y
     rw [hr]
 
-private lemma terminal_subset {T : Type*} [Fintype T] [Nonempty T]
+private lemma terminal_subset {T : Type*} [Finite T] [Nonempty T]
     (R : T → T → Prop) :
     ∃ s : Finset T, s.Nonempty ∧ (∀ i ∈ s, ∀ j, R i j → j ∈ s) ∧
       (∀ i ∈ s, ∀ j ∈ s, Relation.ReflTransGen R i j) := by
   classical
+  let := Fintype.ofFinite T
   let reach (i : T) := Finset.univ.filter (Relation.ReflTransGen R i)
   have hsub {i j : T} (h : Relation.ReflTransGen R i j) : reach j ⊆ reach i := by
     intro k hk
@@ -499,7 +500,7 @@ private lemma covers_modes {Z : Type*} {p q r : ℝ} {O : GeneratedObserver Z}
 
 /-- Every accurate finite generated observer has an actually reachable, B-closed exact core
 covering all five source modes. Additional generated-only states remain in the carrier. -/
-theorem exact_core_exists {Z : Type*} [Fintype Z] {p q r ε : ℝ}
+theorem exact_core_exists {Z : Type*} [Finite Z] {p q r ε : ℝ}
     (O : GeneratedObserver Z) (hp : admissible p q r) (hε : ε < 1)
     (hacc : O.toObserver.Accurate p q r ε true) :
     ∃ core : Finset Z, 5 ≤ core.card ∧
@@ -508,6 +509,7 @@ theorem exact_core_exists {Z : Type*} [Fintype Z] {p q r ε : ℝ}
       (∀ i : State, ∃ z ∈ core, O.toObserver.decoder z = pureLaw p q r i) ∧
       (∀ z ∈ core, z ∈ O.toObserver.Reached p q r) := by
   classical
+  let := Fintype.ofFinite Z
   obtain ⟨C, hn, hsub, hirr⟩ := recurrent_class_exists O hp
   have hrows := C.rows_exact hp hirr hε (class_accuracy C hsub hacc)
   have hlaws (t : C.carrier) : O.toObserver.decoder t.val.2 = pureLaw p q r t.val.1 := by
