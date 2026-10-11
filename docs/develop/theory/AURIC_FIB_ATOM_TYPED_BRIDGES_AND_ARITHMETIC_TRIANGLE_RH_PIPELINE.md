@@ -940,16 +940,5 @@ structure ArithmeticEncoding (C : Type) where
 
 再研究 \(q\) 的 \((X,Y,Z,\kappa)\) 坐标。若要研究非二值输出，只需把 Bool 替换为有限输出类型。
 
-对素数驱动，同样优先使用有限版本：
-
-~~~lean
-structure ArithmeticEncoding (C : Type) where
-  encode : C → Law
-  valid : ∀ c, IsProbability (encode c)
-  visible_driver : C → ℝ × ℝ × ℝ
-  visible_correct :
-    ∀ c, visible (encode c) = visible_driver c
-~~~
-
-这样可以把“算术输入改变哪一个 FIB 模式质量”作为一个可计算函数，而不是用模式名称相似性代替编码定义。
+对素数驱动，直接使用上面的 ArithmeticEncoding。这样可以把“算术输入改变哪一个 FIB 模式质量”作为一个可计算函数，而不是用模式名称相似性代替编码定义。
 
