@@ -6507,7 +6507,7 @@ R_\mu(u,v)
 \langle b_{uv},A^\dagger b_{uv}\rangle_\mu,
 \]
 
-其中 \(A^\dagger\) 是 Moore–Penrose 伪逆。若 \(CD_G(K,\infty)\) 且 \(K>0\)，则
+其中 \(A^\dagger\) 表示相对于 \(\langle\cdot,\cdot\rangle_\mu\) 的谱伪逆：它在 \(\mathbf1^\perp_\mu\) 上等于 \(A^{-1}\)，在常数方向上为零。若 \(CD_G(K,\infty)\) 且 \(K>0\)，则
 
 \[
 \boxed{
