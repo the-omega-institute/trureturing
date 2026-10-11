@@ -68563,3 +68563,133 @@ $$
 
 本节是对两个已冻结接口的条件性组合，不重述其 Euler 价格估计、库存证明或
 Fibonacci 强整除证明；若删除任一来源假设，445.1--445.5 不再成立。
+
+## 446. 高阶库存对 Fibonacci 指数的 Wall--Sun--Sun 二择一
+
+§445 只使用了高阶库存的素因子结论 \(q\mid F_m\)。但在平方层上，库存给出
+\(q^2\mid F_m\)，所以还可以调用已有的 Fibonacci \(q\)-进赋值公式。这个接口
+把严格 Euler 库存的短区间约束，转成 Fibonacci 索引本身的乘法约束；它仍然是
+在附加 \(U=F_m\) 假设下的条件结论。
+
+固定
+
+$$
+ B=t+t^{4/5},\qquad
+ \mathcal I_t=\{q:\ q\text{ 为素数},\ t<q^2\le B\}.
+$$
+
+当 \(t\ge243\) 时，\(\mathcal I_t\) 中的素数都大于 \(5\)。对每个这样的 \(q\)，
+记 \(z(q)\) 为首次 Fibonacci 零指标，并记
+
+$$
+ e_q=v_q(F_{z(q)}).
+$$
+
+定义高首次深度集合
+
+$$
+ \mathcal W_t=\{q\in\mathcal I_t:e_q\ge2\},\qquad
+ P_t=\prod_{q\in\mathcal I_t\setminus\mathcal W_t}q,
+$$
+
+空积取 \(1\)。
+
+### 命题 446.1（平方库存的指数二择一）
+
+令 \(U=F_m>0\) 满足命题 445.1 的严格库存律。则
+
+$$
+ \boxed{P_t\mid m.}
+ \tag{446.1}
+$$
+
+从而有精确的对数账本
+
+$$
+ \boxed{
+ \log m\ge
+ \sum_{q\in\mathcal I_t\setminus\mathcal W_t}\log q
+ =\theta(\sqrt B)-\theta(\sqrt t)
+  -\sum_{q\in\mathcal W_t}\log q .
+ }
+ \tag{446.2}
+$$
+
+这里 \(\theta(x)=\sum_{q\le x}\log q\)；端点可取任一与
+\(t<q^2\le B\) 一致的整数约定。
+
+**证明。** 对 \(q\in\mathcal I_t\)，取 \(k=2\) 应用严格库存，得到
+
+$$
+ q^2\mid U=F_m.
+$$
+
+特别地 \(q\mid F_m\)，由 Fibonacci 入口判据得 \(z(q)\mid m\)。已有的
+Fibonacci 赋值提升公式给出
+
+$$
+ v_q(F_m)=e_q+v_q\!\left(m/z(q)\right)
+ \qquad(z(q)\mid m).
+$$
+
+又有秩界 \(z(q)\mid q-(5/q)\) 或 \(z(q)\mid q+(5/q)\)，故
+\(q\nmid z(q)\)。若 \(q\notin\mathcal W_t\)，则 \(e_q=1\)；而
+\(q^2\mid F_m\) 要求右端至少为 \(2\)，于是
+\(q\mid m/z(q)\)，进而 \(q\mid m\)。不同 \(q\) 互异，故其乘积 \(P_t\mid m\)。
+
+最后，\(\mathcal I_t\) 正好是素数区间
+\((\sqrt t,\sqrt B]\)，对数求和给出（446.2）。\(\square\)
+
+### 推论 446.2（短区间的 WSS 质量或指数膨胀）
+
+由素数定理，沿 \(t\to\infty\)，
+
+$$
+ \theta(\sqrt B)-\theta(\sqrt t)
+ =\left(\frac12+o(1)\right)t^{3/10}.
+ \tag{446.3}
+$$
+
+因此命题 446.1 给出以下互补结论：
+
+$$
+ \boxed{
+ \log m=o(t^{3/10})\ \Longrightarrow\
+ \sum_{q\in\mathcal W_t}\log q
+ \ge\left(\frac12-o(1)\right)t^{3/10}.
+ }
+ \tag{446.4}
+$$
+
+以及
+
+$$
+ \boxed{
+ \sum_{q\in\mathcal W_t}\log q=o(t^{3/10})\ \Longrightarrow\
+ m\ge\exp\!\left(\left(\frac12-o(1)\right)t^{3/10}\right).
+ }
+ \tag{446.5}
+$$
+
+特别地，若该短区间没有 \(e_q\ge2\) 的素数，便直接得到（446.5）。这里
+\(e_q\ge2\) 正是 Fibonacci 版本的高首次赋值（通常称为
+Wall--Sun--Sun 型）条件；本节不假设这类素数不存在，也不把该开放问题改写成
+已知定理。
+
+**证明。** 将（446.3）代入（446.2）即可得到（446.4）；移项并取指数得到
+（446.5）。\(\square\)
+
+这个二择一比（445.5）的秩最小公倍数账本更强：它使用了平方库存的第二层，
+直接迫使非高首次深度的素数进入同一个索引 \(m\)。但它仍不能单独完成
+Robin 估计。要把它接回实际来源，至少还需二者之一：
+
+1. 从严格库存或来源最大性证明一个索引尺度，例如
+   \(m\le t^A\)（固定 \(A\)），使（446.4）迫使短区间承载几乎全部
+   \(t^{3/10}/2\) 的高首次深度素数质量；或
+2. 在这些平方层上取得 \(\mathcal W_t\) 的独立上界，足以使（446.5) 与来源
+   给出的 \(m\) 尺度冲突。
+
+当前仓内结果没有支付其中任一项；特别是 \(U\) 未被无条件识别为某个
+Fibonacci 数，\(m\) 与 Euler 时钟 \(t\) 的统一尺度也未建立。因此，
+446.1--446.5 是新的 FIB--Euler 联合必要条件，不是 Robin 不等式或 RH 的证明，
+也不重复 §445 的单纯 rank-divisibility 结论。
