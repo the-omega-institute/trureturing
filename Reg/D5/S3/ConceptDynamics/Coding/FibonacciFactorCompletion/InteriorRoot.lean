@@ -1285,3 +1285,194 @@ def original_memory_envelopes_registration :
 #print axioms original_memory_envelopes_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal87
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal86
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := ℤ → Bool
+  State := fun _ => ℤ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => CuLetter
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ choices i => lowSequence choices i) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => CuLetter.u) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (choices : ℤ → Bool) (K : ℕ) (hK : 2 ≤ K),
+    (∀ (j : ℤ) (k : Fin 5),
+      r.readout () choices (5*j+(k : ℕ)) = (lowBlock (choices j))[k]'(by cases choices j <;> simpa [lowBlock] using k.isLt)) ∧
+    lowSequence choices ∈ LowCapLanguage K
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := (h (fun _ => false) 2 le_rfl).1 0 ⟨0, by decide⟩
+  change CuLetter.u = CuLetter.c at impossible
+  cases impossible
+
+def evidence : Registration sourceArena
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.literal_bilateral_low_codebook)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.literal_bilateral_low_codebook, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(fun _ => false), 0, 1, ?_⟩
+    change lowSequence (fun _ => false) 0 ≠ lowSequence (fun _ => false) 1
+    decide
+
+def literal_bilateral_low_codebook_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.literal_bilateral_low_codebook)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ choices i => lowSequence choices i) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal86.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal86.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature (fun _ choices i => lowSequence choices i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms literal_bilateral_low_codebook_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal86
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal90
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ _ : MemorySide, Σ _ : ℕ, Σ _ : ℕ, ℝ
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ p q => factorCount (MemoryLanguage p.1 p.2.1 p.2.2.1 p.2.2.2) (q*58)) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (side : MemorySide) (n K : ℕ) (d : ℝ) (hK : 2 ≤ K) (q : ℕ),
+    (2 : ℕ)^q ≤ r.readout () ⟨side, n, K, d⟩ q
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := h .lower 0 2 0 le_rfl 0
+  exact (by decide : ¬ (2^0 ≤ (0 : ℕ))) impossible
+
+def evidence : Registration sourceArena
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_literal_codebook_growth)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_literal_codebook_growth, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨MemorySide.lower, 0, 2, 0⟩, 0, 1, ?_⟩
+    change factorCount (MemoryLanguage .lower 0 2 0) (0*58) ≠
+      factorCount (MemoryLanguage .lower 0 2 0) (1*58)
+    have zero : factorCount (MemoryLanguage .lower 0 2 0) 0 = 1 := by
+      change Nat.card (FactorDictionary (MemoryLanguage .lower 0 2 0) 0) = 1
+      apply Nat.card_eq_one_iff_exists.mpr
+      refine ⟨⟨[], ⟨?_, rfl⟩⟩, ?_⟩
+      · refine ⟨lowSequence (fun _ => false), ?_, 0, ?_⟩
+        · exact original_low_cap_inclusion .lower 0 2 0 (by decide)
+            (literal_bilateral_low_codebook (fun _ => false) 2 le_rfl).2
+        · intro k
+          exact Fin.elim0 k
+      · intro w
+        apply Subtype.ext
+        exact word_weight_geometry.2.2 w.val w.property.2
+    have positive := original_literal_codebook_growth .lower 0 2 0 le_rfl 1
+    norm_num only [Nat.zero_mul, Nat.one_mul, pow_one] at positive ⊢
+    rw [zero]
+    omega
+
+def original_literal_codebook_growth_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_literal_codebook_growth)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ p q => factorCount (MemoryLanguage p.1 p.2.1 p.2.2.1 p.2.2.2) (q*58)) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal90.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal90.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature (fun _ p q => factorCount (MemoryLanguage p.1 p.2.1 p.2.2.1 p.2.2.2) (q*58)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot
+    definition := none
+    coordinates := #[0, 1, 2, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_literal_codebook_growth_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal90
