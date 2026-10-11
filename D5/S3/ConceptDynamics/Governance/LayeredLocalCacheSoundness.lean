@@ -7,6 +7,8 @@
    digest: Persistent cache layers preserve builds and admit an exact readiness probe. -/
 import D5.S3.ConceptDynamics.Governance.TraceKeyedArtifactCacheSoundness
 import Mathlib.Data.List.Nodup
+import Mathlib.Data.Finset.Max
+import Mathlib.Data.Finset.Union
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -113,6 +115,111 @@ structure Plan (S : Snapshot B.Node B.Src) where
   nodup : nodes.Nodup
   ordered : Ordered B S ∅ nodes
   exactDemand : ∀ n, n ∈ nodes ↔ Demand B S roots n
+
+open Classical in
+/-- K1/K2: the finite transitive dependency support of one root. -/
+noncomputable def support (S : Snapshot B.Node B.Src) (n : B.Node) : Finset B.Node :=
+  insert n ((S.deps n).attach.biUnion fun d => support S d.1)
+termination_by S.rank n
+decreasing_by exact S.rank_lt n d.1 d.2
+
+private theorem support_closed (S : Snapshot B.Node B.Src) (n : B.Node) :
+    n ∈ support B S n ∧
+    ∀ m ∈ support B S n, ∀ d ∈ S.deps m, d ∈ support B S n := by
+  classical
+  induction h : S.rank n using Nat.strong_induction_on generalizing n with
+  | _ r ih =>
+    have child := fun d hd => ih (S.rank d) (h ▸ S.rank_lt n d hd) d rfl
+    constructor
+    · rw [support]; exact Finset.mem_insert_self _ _
+    · intro m hm d hd
+      rw [support] at hm ⊢
+      rcases Finset.mem_insert.mp hm with rfl | hm
+      · exact Finset.mem_insert_of_mem (Finset.mem_biUnion.mpr
+          ⟨⟨d,hd⟩,Finset.mem_attach _ _,(child d hd).1⟩)
+      · obtain ⟨j,hj,hm⟩ := Finset.mem_biUnion.mp hm
+        exact Finset.mem_insert_of_mem (Finset.mem_biUnion.mpr
+          ⟨j,hj,(child j.1 j.2).2 m hm d hd⟩)
+
+private theorem support_least (S : Snapshot B.Node B.Src) (Q : Set B.Node)
+    (closed : ∀ n ∈ Q, ∀ d ∈ S.deps n, d ∈ Q) (n : B.Node) (hn : n ∈ Q) :
+    ∀ m ∈ support B S n, m ∈ Q := by
+  classical
+  induction h : S.rank n using Nat.strong_induction_on generalizing n with
+  | _ r ih =>
+    intro m hm
+    rw [support] at hm
+    rcases Finset.mem_insert.mp hm with rfl | hm
+    · exact hn
+    · obtain ⟨d,_,hm⟩ := Finset.mem_biUnion.mp hm
+      exact ih (S.rank d.1) (h ▸ S.rank_lt n d.1 d.2) d.1
+        (closed n hn d.1 d.2) rfl m hm
+
+private theorem ordered_enumeration (S : Snapshot B.Node B.Src) (Q : Finset B.Node)
+    (done : Set B.Node)
+    (closed : ∀ n ∈ Q, ∀ d ∈ S.deps n, d ∈ done ∨ d ∈ Q) :
+    ∃ xs : List B.Node, xs.Nodup ∧ (∀ n, n ∈ xs ↔ n ∈ Q) ∧ Ordered B S done xs := by
+  classical
+  induction Q using Finset.strongInductionOn generalizing done with
+  | _ Q ih =>
+    by_cases hQ : Q.Nonempty
+    · obtain ⟨n,hn,minimal⟩ := Finset.exists_min_image Q S.rank hQ
+      have pre : ∀ d ∈ S.deps n, d ∈ done := by
+        intro d hd
+        rcases closed n hn d hd with h | h
+        · exact h
+        · exact False.elim ((Nat.not_lt_of_ge (minimal d h)) (S.rank_lt n d hd))
+      have remain : ∀ m ∈ Q.erase n, ∀ d ∈ S.deps m,
+          d ∈ insert n done ∨ d ∈ Q.erase n := by
+        intro m hm d hd
+        rcases closed m (Finset.mem_of_mem_erase hm) d hd with h | h
+        · exact Or.inl (Set.mem_insert_of_mem n h)
+        · by_cases e : d = n
+          · exact Or.inl (Set.mem_insert_iff.mpr (Or.inl e))
+          · exact Or.inr (Finset.mem_erase.mpr ⟨e,h⟩)
+      obtain ⟨xs,hxs,mem,order⟩ := ih (Q.erase n) (Finset.erase_ssubset hn)
+        (insert n done) remain
+      refine ⟨n :: xs, ?_, ?_, ⟨pre,order⟩⟩
+      · exact List.nodup_cons.mpr ⟨fun h => Finset.notMem_erase n Q ((mem n).mp h),hxs⟩
+      · intro m
+        simp only [List.mem_cons, mem, Finset.mem_erase]
+        constructor
+        · rintro (rfl | ⟨_,h⟩)
+          · exact hn
+          · exact h
+        · intro h
+          by_cases e : m = n
+          · exact Or.inl e
+          · exact Or.inr ⟨e,h⟩
+    · have empty : Q = ∅ := Finset.not_nonempty_iff_eq_empty.mp hQ
+      subst Q
+      exact ⟨[],by simp,by simp,trivial⟩
+
+private theorem plan_exists (S : Snapshot B.Node B.Src) (roots : Finset B.Node) :
+    ∃ p : Plan B S, p.roots = roots := by
+  classical
+  let Q := roots.biUnion (support B S)
+  have mem : ∀ n, n ∈ Q ↔ Demand B S roots n := by
+    intro n
+    constructor
+    · intro hn
+      obtain ⟨r,hr,hn⟩ := Finset.mem_biUnion.mp hn
+      exact support_least B S {n | Demand B S roots n}
+        (fun _ h _ hd => Demand.dep h hd) r (Demand.root hr) n hn
+    · intro hn
+      induction hn with
+      | root hr => exact Finset.mem_biUnion.mpr ⟨_,hr,(support_closed B S _).1⟩
+      | dep _ hd ih =>
+        obtain ⟨r,hr,hm⟩ := Finset.mem_biUnion.mp ih
+        exact Finset.mem_biUnion.mpr ⟨r,hr,(support_closed B S r).2 _ hm _ hd⟩
+  obtain ⟨xs,nd,hxs,order⟩ := ordered_enumeration B S Q ∅ (by
+    intro n hn d hd
+    exact Or.inr ((mem d).mpr (Demand.dep ((mem n).mp hn) hd)))
+  exact ⟨⟨roots,xs,nd,order,fun n => (hxs n).trans (mem n)⟩,rfl⟩
+
+/-- K1/K2: every finite root request has a certified finite dependency plan. -/
+noncomputable def planFor (S : Snapshot B.Node B.Src) (roots : Finset B.Node) : Plan B S :=
+  Classical.choose (plan_exists B S roots)
 
 variable (M : Model.{u})
 
@@ -380,7 +487,7 @@ structure Guarantees (S : Snapshot M.B.Node M.B.Src)
 /-- A reachable persistent layer can be reused by every valid demand plan. The
 trace records exactly its demand and compiles exactly at double misses; probing
 from the same state is ready exactly when that trace contains no compilation. -/
-theorem layered_cache_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
+private theorem plan_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
     (hS : S ∈ M.snapshots) (schedule : M.B.Node → List (Op M.B.Node M.B.Src))
     (writers : ∀ n W m, Op.store W m ∈ schedule n → W ∈ M.snapshots)
     (L : Local M.B) (hL : Reachable M L) (p : Plan M.B S) :
@@ -437,6 +544,18 @@ theorem layered_cache_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
       exact ⟨e,he,by rw [(hr e he).1,hen]; exact Set.mem_insert _ _⟩
   · intro n hn
     exact (work n).mp (hp.2 n hn)
+
+/-- Every finite root request admits a dependency plan, and ordinary execution
+from any reachable local layer satisfies correctness, locality and readiness. -/
+theorem layered_cache_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
+    (hS : S ∈ M.snapshots) (schedule : M.B.Node → List (Op M.B.Node M.B.Src))
+    (writers : ∀ n W m, Op.store W m ∈ schedule n → W ∈ M.snapshots)
+    (L : Local M.B) (hL : Reachable M L) (roots : Finset M.B.Node) :
+    (planFor M.B S roots).roots = roots ∧
+    Guarantees M S schedule L (planFor M.B S roots)
+      (execute M.B S schedule L (planFor M.B S roots).nodes) := by
+  exact ⟨Classical.choose_spec (plan_exists M.B S roots),
+    plan_contract M S hS schedule writers L hL (planFor M.B S roots)⟩
 
 #print axioms layered_cache_contract
 
