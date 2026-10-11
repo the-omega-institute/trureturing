@@ -346,7 +346,7 @@ native history law. The enumeration is explicit; assigning its first two
 blocks to the positive and negative departure positions is a separate native
 readout obligation. Existing frozen word-sector counting supplies the
 multinomial factors. -/
-theorem native_multinomial_label_blocks {M q s : ℕ} (S : Support M q)
+private theorem native_multinomial_label_blocks {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
     (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
@@ -491,18 +491,19 @@ private def signedBlockSiteEquiv {M q s : ℕ} (S : Support M q) (e : Experiment
       right_inv := ?_ }
   · rintro ((k | k) | k)
     · have hk : isSignedDeparture S e o 1 k.val := by
-        simpa [signedDepartureBlocks] using k.property
+        exact (mem_filter.mp k.property).2
       simp [hk]
     · have hk : isSignedDeparture S e o (-1) k.val := by
-        simpa [signedDepartureBlocks] using k.property
+        exact (mem_filter.mp k.property).2
       have hp : ¬ isSignedDeparture S e o 1 k.val :=
         fun hp => signed_departure_disjoint S e o k.val ⟨hp, hk⟩
       simp [hp, hk]
     · have hk : ¬ isSignedDeparture S e o 1 k.val ∧
           ¬ isSignedDeparture S e o (-1) k.val := by
-        simpa [signedDepartureBlocks] using k.property
+        exact (mem_filter.mp k.property).2
       simp [hk.1, hk.2]
   · intro k
+    dsimp only
     split_ifs <;> rfl
 
 /-- A canonical finite enumeration of the actual two departure blocks and
@@ -520,9 +521,47 @@ def nativeDepartureEnumeration {M q s : ℕ} (S : Support M q) (e : Experiment)
         (Fintype.equivFinOfCardEq (Fintype.card_coe _)))
       (Fintype.equivFinOfCardEq (Fintype.card_coe _)))
 
+
+private theorem word_occupation_count {α : Type*} [DecidableEq α] {n : ℕ}
+    (w : Fin n → α) (i : α) :
+    (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation w).count i =
+      (univ.filter fun k => i = w k).card := by
+  unfold D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation
+  rw [List.ofFn_eq_map, ← Multiset.map_coe, Multiset.count_map,
+    ← Finset.val_univ_fin, ← Finset.filter_val]
+  rfl
+
+private theorem signed_block_count {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) [Fintype (Sites s e)]
+    (g : SignalSites S e o → {i : Fin M // i ∈ S.val}) (i : {i : Fin M // i ∈ S.val})
+    (z : ℝ) (B : Finset (SignalSites S e o))
+    (hB : ∀ k, k ∈ B ↔ isSignedDeparture S e o z k)
+    (E : Fin B.card ≃ {k // k ∈ B}) :
+    (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation
+      (fun k => g (E k).val)).count i = departureLabelCount S e o g i.val z := by
+  classical
+  letI : Fintype (SignalSites S e o) := by unfold SignalSites; infer_instance
+  rw [word_occupation_count]
+  let C := univ.filter fun k : SignalSites S e o => (g k).val = i.val ∧
+    isSignedDeparture S e o z k
+  let D := univ.filter fun k : Fin B.card => i = g (E k).val
+  have hc : {k // k ∈ D} ≃ {k // k ∈ C} :=
+    { toFun := fun k => ⟨(E k.val).val, mem_filter.mpr ⟨mem_univ _,
+        congrArg Subtype.val ((mem_filter.mp k.property).2.symm),
+        (hB _).mp (E k.val).property⟩⟩
+      invFun := fun k => ⟨E.symm ⟨k.val, (hB _).mpr (mem_filter.mp k.property).2.2⟩,
+        mem_filter.mpr ⟨mem_univ _, by
+          simp only [E.apply_symm_apply]
+          apply Subtype.ext
+          exact (mem_filter.mp k.property).2.1.symm⟩⟩
+      left_inv := by intro k; apply Subtype.ext; simp
+      right_inv := by intro k; apply Subtype.ext; simp }
+  simpa only [Fintype.card_coe, D, C, departureLabelCount, isSignedDeparture]
+    using Fintype.card_congr hc
+
 /-- The two occupation words are obtained from the actual positive and
 negative departure sites of the native history. -/
-theorem native_signed_departure_occupation_law {M q s : ℕ} (S : Support M q)
+private theorem native_signed_departure_occupation_law {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
     (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
@@ -542,6 +581,83 @@ theorem native_signed_departure_occupation_law {M q s : ℕ} (S : Support M q)
         (q : ℝ) ^ (kp + km) := by
   exact native_multinomial_label_blocks S r e o hq hqm hr hr1 ha ha1 _ _ _
     (nativeDepartureEnumeration S e o) ap am hap ham
+
+/-- Both occupation words retain the exact native positive and negative row
+counts, including adjacent path departures. -/
+private theorem native_departure_word_counts {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (y : Fiber S e o)
+    (i : {i : Fin M // i ∈ S.val}) :
+    let J := nativeDepartureEnumeration S e o
+    let W := labelBlockEquiv S e o _ _ _ J (fiberLabelEquiv S e o y)
+    count e y.val i.val 1 =
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation W.1.1).count i ∧
+    count e y.val i.val (-1) =
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation W.1.2).count i := by
+  classical
+  dsimp only
+  rw [native_departure_label_count S e o y i.val i.property 1,
+    native_departure_label_count S e o y i.val i.property (-1)]
+  constructor
+  · exact (signed_block_count S e o (fiberLabelEquiv S e o y) i 1
+      (signedDepartureBlocks S e o 0) (fun k => by simp only [signedDepartureBlocks,
+        Matrix.cons_val_zero, mem_filter, mem_univ, true_and])
+      (Fintype.equivFinOfCardEq (Fintype.card_coe _)).symm).symm
+  · exact (signed_block_count S e o (fiberLabelEquiv S e o y) i (-1)
+      (signedDepartureBlocks S e o 1) (fun k => by simp [signedDepartureBlocks])
+      (Fintype.equivFinOfCardEq (Fintype.card_coe _)).symm).symm
+
+/-- The event specifies the entire labelled joint histogram of signal-row
+positive and negative departures, under the original pair or path law. -/
+def jointRowHistogramEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (ap am : Multiset {i : Fin M // i ∈ S.val}) :
+    Finset (Fiber S e o) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  exact univ.filter fun y => ∀ i : {i : Fin M // i ∈ S.val},
+    count e y.val i.val 1 = ap.count i ∧ count e y.val i.val (-1) = am.count i
+
+/-- The exact pushforward of the native history law to the complete labelled
+joint signal-row histogram. Both arrays share the same history realization. -/
+theorem native_joint_row_histogram_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (ap am : Multiset {i : Fin M // i ∈ S.val})
+    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
+    (ham : am.card = (signedDepartureBlocks S e o 1).card) :
+    conditionalFiberMass S r e o (jointRowHistogramEvent S e o ap am) =
+      ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ am.count : ℝ)) /
+        (q : ℝ) ^ ((signedDepartureBlocks S e o 0).card +
+          (signedDepartureBlocks S e o 1).card) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  let kp := (signedDepartureBlocks S e o 0).card
+  let km := (signedDepartureBlocks S e o 1).card
+  let kr := (signedDepartureBlocks S e o 2).card
+  let A := ((D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords kp ap) ×ˢ
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords km am)) ×ˢ
+        (univ : Finset (Fin kr → {i : Fin M // i ∈ S.val}))
+  have he : jointRowHistogramEvent S e o ap am =
+      ((A.map (labelBlockEquiv S e o kp km kr (nativeDepartureEnumeration S e o)).symm.toEmbedding).map
+        (fiberLabelEquiv S e o).symm.toEmbedding) := by
+    ext y
+    simp only [jointRowHistogramEvent, mem_filter, mem_univ, true_and,
+      mem_map_equiv, Equiv.symm_symm, A, mem_product,
+      D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords]
+    constructor
+    · intro hy
+      refine ⟨⟨?_, ?_⟩, trivial⟩
+      · apply Multiset.ext
+        intro i
+        exact (native_departure_word_counts S e o y i).1.symm.trans (hy i).1
+      · apply Multiset.ext
+        intro i
+        exact (native_departure_word_counts S e o y i).2.symm.trans (hy i).2
+    · rintro ⟨⟨hp, hm⟩, _⟩ i
+      exact ⟨(native_departure_word_counts S e o y i).1.trans (congrArg (Multiset.count i) hp),
+        (native_departure_word_counts S e o y i).2.trans (congrArg (Multiset.count i) hm)⟩
+  rw [he]
+  exact native_signed_departure_occupation_law S r e o hq hqm hr hr1 ha ha1 ap am hap ham
 
 end
 end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
