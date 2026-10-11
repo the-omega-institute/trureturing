@@ -224,10 +224,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
   rw [zero_mul] at bad
   have entry := congrFun (congrFun bad (fun i => Fin.elim0 i)) (fun i => Fin.elim0 i)
   change (0 : ℂ) = _ at entry
-  have bad' : (0 : ℂ) = 1 := by
-    simpa [rejected, realize, wordOp, tensorOp, Matrix.trace, Matrix.diag,
-      Matrix.mul_apply, letterPhase, letterProduct] using entry
-  exact zero_ne_one bad'
+  simp [wordOp, tensorOp,
+    letterPhase, letterProduct] at entry
 
 def family : Registration arena (type_of% @word_mul) where
   actual := actual
@@ -271,7 +269,7 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 1
@@ -312,10 +310,8 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have bad := h 0 (fun i => Fin.elim0 i) (fun i => Fin.elim0 i)
-  have bad' : (0 : ℂ) = 1 := by
-    simpa [rejected, realize, wordOp, tensorOp, Matrix.trace, Matrix.diag,
-      Matrix.mul_apply, letterPhase, letterProduct] using bad
-  exact zero_ne_one bad'
+  simp [rejected, realize, wordOp, tensorOp, Matrix.trace, Matrix.diag,
+    Matrix.mul_apply] at bad
 
 def family : Registration arena (type_of% @word_trace_pair) where
   actual := actual
@@ -359,7 +355,7 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg", "arg", "fn", "arg"]
       stateBinder := 1
@@ -404,10 +400,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
   rw [zero_mul] at bad
   have entry := congrFun (congrFun bad (fun i => Fin.elim0 i)) (fun i => Fin.elim0 i)
   change (0 : ℂ) = _ at entry
-  have bad' : (0 : ℂ) = 1 := by
-    simpa [rejected, realize, wordOp, tensorOp, Matrix.trace, Matrix.diag,
-      Matrix.mul_apply, letterPhase, letterProduct] using entry
-  exact zero_ne_one bad'
+  simp [wordOp, tensorOp,
+    Matrix.mul_apply] at entry
 
 def family : Registration arena (type_of% @word_comm_sign) where
   actual := actual
@@ -451,7 +445,7 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 1
