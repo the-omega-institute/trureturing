@@ -11,7 +11,7 @@ import D5.S3.Arith.Lattices.Klartag.State.PaddingMap
 noncomputable section
 open D5.S3.Quantum.FiniteDimensional
 open scoped ComplexOrder
-namespace D5.S3.Quantum.ToriiTakakuraImamuraRigidity
+namespace D5.S3.Quantum.Measurement.QubitIncompatibilityRigidity
 abbrev V := EuclideanSpace ℝ (Fin 3)
 abbrev Density := {ρ : QubitMatrix // ρ.PosSemidef ∧ Matrix.trace ρ = 1}
 def pauliY : QubitMatrix := !![0, -Complex.I; Complex.I, 0]
@@ -947,4 +947,4 @@ theorem result : claim := by
     · have hp' : π 1 = 0 := (hcases (π 1)).resolve_right (by intro h; apply hne; rw [h, hp])
       convert compat_exchange S a using 2
       funext i; fin_cases i <;> simp [hp, hp']
-end D5.S3.Quantum.ToriiTakakuraImamuraRigidity
+end D5.S3.Quantum.Measurement.QubitIncompatibilityRigidity
