@@ -65,7 +65,7 @@ def markedLaw (M : Observer Z) (e : InstalledEmitter M) (w : Marked Z) :
 instance (M : Observer Z) (e : InstalledEmitter M) (w : Marked Z) :
     IsProbabilityMeasure (markedLaw M e w) := by unfold markedLaw; infer_instance
 
-private theorem prefix_mass (M : Observer Z) (e : InstalledEmitter M)
+theorem prefix_mass (M : Observer Z) (e : InstalledEmitter M)
     (w : Marked Z) (n : ℕ) (v : Fin (n+1) → Marked Z) :
     ((markedLaw M e w).map (fun x i => x (i : Fin (n+1)))) {v} =
       (if v 0 = w then 1 else 0) *
@@ -77,7 +77,7 @@ private theorem prefix_mass (M : Observer Z) (e : InstalledEmitter M)
   simp only [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _)]
   simp [Measure.dirac_apply', Pi.single_apply, eq_comm]
 
-private theorem path_ext {A : Type*} [MeasurableSpace A] [Fintype A]
+theorem path_ext {A : Type*} [MeasurableSpace A] [Fintype A]
     [MeasurableSingletonClass A] (μ ν : Measure (ℕ → A)) [IsFiniteMeasure μ]
     (h : ∀ n : ℕ, μ.map (fun x i => x (i : Fin (n+1))) =
       ν.map (fun x i => x (i : Fin (n+1)))) : μ = ν := by
