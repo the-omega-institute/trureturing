@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 import D5.S3.Arith.Lattices.Klartag.State.PaddingMap
-import D5.S3.Quantum.Foundation.FiniteStateChannel
 noncomputable section
 open D5.S3.Quantum.FiniteDimensional
 open D5.S3.Quantum.Foundation
