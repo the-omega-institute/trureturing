@@ -2796,3 +2796,203 @@ $\|H_\varepsilon(\varphi)-H_\varepsilon(\psi)\|/
 **证明边界。** 本章六条引理、定理、推论或命题均以其正文假设给出纸面证明，不具有新增 Lean 证明身份。精确谱匹配不等于数值近匹配，有限时间预算不等于真实耗热，允许任意 CPTP 恢复不等于免费物理实施。尚未闭合的是一般非对易多标签的共同动态最优值、一般模型的有限窗口完整 Pareto 前沿，以及实际能量守恒实现的工作和参考系成本。
 
 ## 追加锚（本行以下为增补区）
+
+## 61. 空设计的预算边界与稳定秩缺口下的临界风险
+
+**定义 61.1（可选权重下的预算风险）。** 沿用定义 53.1 的实际六维传感器 $H_\varepsilon$、圆周状态 $x(\varphi)$ 及定理 54.1 的等先验已知两候选 $\varphi_0=0$、$\varphi_1=2\pi/3$。固定 $0<\varepsilon\le1/2$、$\sigma>0$、任意有限指标集 $J$（允许为空）和任意已知实延迟 $t=(t_j)_{j\in J}$。对任意实权重 $w=(w_j)_{j\in J}$，观测为
+
+$$
+Y_j=w_jH_\varepsilon(\varphi_i-t_j)+\xi_j,
+\qquad \xi_j\ \text{独立 }\mathcal N(0,\sigma^2I_6),
+\qquad E(w)=\sum_{j\in J}w_j^2.
+$$
+
+噪声在乘以信号权重之后加入，其每个坐标的方差始终为 $\sigma^2$。$E(w)$ 是实际总平方信号增益；预算上界并不自动成为实际增益。记条件观测法则为 $P_i^{w,t}$，对全部可测判别器 $\delta:(\mathbb R^6)^J\to\{0,1\}$ 定义
+
+$$
+\mathcal R_\varepsilon(w,t,\delta)
+=\frac12P_0^{w,t}(\delta(Y)=1)
+ +\frac12P_1^{w,t}(\delta(Y)=0),
+\qquad
+\mathcal P_{J,t}(E_0,\varepsilon,\sigma)
+=\inf_{\substack{w\in\mathbb R^J,\ E(w)\le E_0\\
+                  \delta:(\mathbb R^6)^J\to\{0,1\}\ \text{可测}}}
+  \mathcal R_\varepsilon(w,t,\delta),
+\quad E_0\ge0.
+$$
+
+这里的可测结构是有限维 Euclidean 空间的 Borel 结构及有限标签集的离散结构。延迟可预先任意固定；权重允许为负、为零或为正。以下优化的对象包括全部可测判别器，没有预先限制为线性或阈值规则。
+
+**命题 61.2（空设计修正与精确受限最优值）。** 在定义 61.1 的所有前件下，下确界均能达到，而且
+
+$$
+\boxed{
+\mathcal P_{J,t}(E_0,\varepsilon,\sigma)=
+\begin{cases}
+\displaystyle
+\Phi\!\left(-\frac{\sqrt{3E_0}\,l_\varepsilon}{2\sigma}\right),
+   & J\ne\varnothing,\\[4pt]
+\displaystyle \frac12, & J=\varnothing,
+\end{cases}
+\qquad
+l_\varepsilon=\sqrt{\frac{2\varepsilon}{9+20\varepsilon}}>0.
+}
+$$
+
+当且仅当 $J\ne\varnothing$ 或 $E_0=0$ 时，存在权重使 $E(w)=E_0$。因此，定理 54.1 证明末段的“若约束 $\sum_jw_j^2\le E_0$，用满预算时最优值为上式的 $E_0$ 版本”，作为约束最优值的断言，应加上预算可花满的条件 $J\ne\varnothing$ 或 $E_0=0$。若 $J=\varnothing$ 且 $E_0>0$，正确的最优值是 $1/2$，而非严格小于 $1/2$ 的 $E_0$ 曲线值。定理 54.1 以实际 $E=\sum_jw_j^2$ 表述的风险公式仍适用。
+
+**证明。** 先设 $J\ne\varnothing$。复用定理 54.1 对全部可测判别器的纸面 Bayes 最优风险公式：对于每个固定 $w,t$，堆叠均值 $\mu_0,\mu_1$ 满足
+
+$$
+\|\mu_1-\mu_0\|^2
+=\sum_{j\in J}w_j^2
+  \|H_\varepsilon(2\pi/3-t_j)-H_\varepsilon(-t_j)\|^2
+=3E(w)l_\varepsilon^2,
+$$
+
+且共同噪声协方差为 $\sigma^2 I_{6|J|}$。此式对任意实延迟和任意符号的权重成立，因为共同延迟只对各谐波平面作旋转，权重在平方范数中以 $w_j^2$ 出现。为明确所复用的最优性范围，若 $f_0,f_1$ 是这两个 Gaussian 法则的密度，则任意可测 $\delta$ 都满足
+
+$$
+\mathcal R_\varepsilon(w,t,\delta)
+=\frac12\int
+ \bigl(\mathbf 1_{\{\delta=1\}}f_0
+       +\mathbf 1_{\{\delta=0\}}f_1\bigr)\,dy
+\ \ge\ \frac12\int\min\{f_0,f_1\}\,dy.
+$$
+
+取 $\delta=1$ 当且仅当 $f_1\ge f_0$ 即逐点达到下界；该集合可测。若 $d=\mu_1-\mu_0\ne0$，密度比较等价于 $\langle d,y-(\mu_0+\mu_1)/2\rangle\ge0$，其在两个假设下的均值分别为 $-\|d\|^2/2$、$\|d\|^2/2$，方差均为 $\sigma^2\|d\|^2$。故各自的错误率都是 $\Phi(-\|d\|/(2\sigma))$。若 $d=0$，两法则相同，任意判别器的等先验风险都是 $1/2=\Phi(0)$。由此得到定理 54.1 的同一公式，并且阈值规则的最优性是对全部可测规则比较所得。
+
+因 $l_\varepsilon>0$、$\sigma>0$，函数 $E\mapsto\Phi(-\sqrt{3E}\,l_\varepsilon/(2\sigma))$ 在 $E\ge0$ 上递减，所以 $E(w)\le E_0$ 给出所列 $E_0$ 曲线作为风险下界。任选 $j_0\in J$，取
+
+$$
+w_{j_0}=\sqrt{E_0},\qquad w_j=0\quad(j\ne j_0).
+$$
+
+则 $E(w)=E_0$，配以上述 Bayes 判别器达到下界。这一构造包括 $E_0=0$，不需要改变已给延迟，也不要求原来的允许权重全部非负。
+
+若 $J=\varnothing$，权重族唯一，空和 $E(w)=0$，观测空间 $(\mathbb R^6)^\varnothing$ 是单点。两个假设的观测法则都是该点的单位质量，任意判别器均有风险 $1/2$。即便允许独立随机化，在该点以概率 $r$ 输出标签一，其风险仍为 $(r+(1-r))/2=1/2$。只有 $E_0=0$ 能在空设计上花满预算。对于任意 $J$，$E_0=0$ 迫使每个权重为零，两观测法则相同，故此时两分支都等于 $1/2$。最后，在空设计且 $E_0>0$ 时，$\sqrt{3E_0}\,l_\varepsilon/(2\sigma)>0$，而 $\Phi$ 严格递增，故形式上的 $E_0$ 曲线值确实严格小于可达风险。证毕。
+
+**定理 61.3（可选预算的临界风险极限）。** 令
+
+$$
+g(\varepsilon)=2-R_{H_\varepsilon},\qquad 0<\varepsilon\le1/2,
+$$
+
+其中 $R_{H_\varepsilon}$ 仍是定义 52.1 中、固定二延迟间隔 $\pi/6$ 的实际稳定秩；$l_\varepsilon$ 仍是定义 53.1 对全部不同物理圆周状态所取的下弦增益。固定任意非空有限 $J$、任意实延迟 $t_j$ 和 $\sigma>0$。对于每个函数 $b:(0,1/2]\to\mathbb R$，只要求它最终非负，即存在 $\varepsilon_b>0$ 使 $0<\varepsilon<\varepsilon_b$ 时 $b(\varepsilon)\ge0$；不要求 $b$ 连续或可测。$g(\varepsilon)$ 在充分小的正 $\varepsilon$ 上严格为正。以下均沿 $\varepsilon\to0^+$ 取极限，预算风险只需在 $b\ge0$ 的这一尾段定义。
+
+对于任意有限 $L\in[0,\infty)$，有
+
+$$
+\boxed{
+b(\varepsilon)g(\varepsilon)^2\longrightarrow L
+\quad\Longrightarrow\quad
+\mathcal P_{J,t}(b(\varepsilon),\varepsilon,\sigma)
+\longrightarrow
+\Phi\!\left(-\frac{\sqrt{L/3}}{\sigma}\right).
+}
+$$
+
+特别地，$L=0$ 给风险极限 $1/2$，而 $0<L<\infty$ 给严格介于零与 $1/2$ 之间的极限。此外，
+
+$$
+\boxed{
+b(\varepsilon)g(\varepsilon)^2\longrightarrow+\infty
+\quad\Longrightarrow\quad
+\mathcal P_{J,t}(b(\varepsilon),\varepsilon,\sigma)
+\longrightarrow0.
+}
+$$
+
+如果改为 $J=\varnothing$，则无论预算如何变化，只要最终非负，风险都恒为 $1/2$；上述有限 $L>0$ 或无穷大时的改善结论不适用于空设计。
+
+**证明。** 定理 53.2 给出
+
+$$
+l_\varepsilon^2=\frac{2\varepsilon}{9+20\varepsilon}>0,
+\qquad
+\frac{g(\varepsilon)}{l_\varepsilon}\longrightarrow\frac32.
+$$
+
+每个物理弦长比非负，故其下确界 $l_\varepsilon\ge0$；结合严格正的平方得到 $l_\varepsilon>0$ 及上述正平方根表示。置 $a(\varepsilon)=g(\varepsilon)/l_\varepsilon$。由 $a\to3/2$，最终有 $1<a(\varepsilon)<2$，因此 $g(\varepsilon)=a(\varepsilon)l_\varepsilon>0$。又 $l_\varepsilon\to0$，故 $g(\varepsilon)\to0$。在这一正尾段可以取倒数，并且
+
+$$
+\left|\frac{l_\varepsilon}{g(\varepsilon)}-\frac23\right|
+=\frac{2}{3a(\varepsilon)}
+  \left|a(\varepsilon)-\frac32\right|
+\le\frac23\left|a(\varepsilon)-\frac32\right|
+\longrightarrow0.
+$$
+
+这显式地从原定理的 $g/l\to3/2$ 推出同一实际下弦增益的 $l/g\to2/3$，并给出所有分母的正性；因而 $(l_\varepsilon/g(\varepsilon))^2\to4/9$。
+
+对于有限 $L\ge0$，由假设和乘积极限律，
+
+$$
+b(\varepsilon)l_\varepsilon^2
+=\bigl(b(\varepsilon)g(\varepsilon)^2\bigr)
+ \left(\frac{l_\varepsilon}{g(\varepsilon)}\right)^2
+\longrightarrow\frac{4L}{9}.
+$$
+
+在 $b\ge0$ 的尾段定义非负信噪比
+
+$$
+s(\varepsilon)=\frac{\sqrt{3b(\varepsilon)}\,l_\varepsilon}{2\sigma}.
+$$
+
+其平方趋于 $L/(3\sigma^2)$，故由平方根在整个 $[0,\infty)$ 上的连续性，包括零点，
+
+$$
+s(\varepsilon)\longrightarrow\frac{\sqrt{L/3}}{\sigma}.
+$$
+
+命题 61.2 对每个参数值都给出可达的风险 $\Phi(-s(\varepsilon))$；再用 $\Phi$ 的连续性即得有限 $L$ 的结论。这里既未除以 $b$ 或 $L$，也未要求它们严格为正，特别在 $L=0$ 时，$b$ 可在趋零的任意多个参数值上等于零，仍无需额外条件。$L>0$ 时极限自变量是有限负数，正态密度处处正给出所述严格风险区间。
+
+对于发散情形，$l_\varepsilon/g(\varepsilon)\to2/3$ 意味着它最终至少为 $1/3$，于是
+
+$$
+s(\varepsilon)^2
+=\frac{3}{4\sigma^2}
+  b(\varepsilon)g(\varepsilon)^2
+  \left(\frac{l_\varepsilon}{g(\varepsilon)}\right)^2
+\ge\frac{b(\varepsilon)g(\varepsilon)^2}{12\sigma^2}
+\longrightarrow+\infty.
+$$
+
+因此 $s(\varepsilon)\to+\infty$。对任意 $s>0$，
+
+$$
+0\le\Phi(-s)
+=\frac1{\sqrt{2\pi}}\int_s^\infty e^{-u^2/2}\,du
+\le\frac1{s\sqrt{2\pi}}\int_s^\infty u e^{-u^2/2}\,du
+=\frac{e^{-s^2/2}}{s\sqrt{2\pi}},
+$$
+
+故风险趋零。整个推导只使用函数在各参数值的等式、不等式及已有极限；对每个 $\varepsilon$ 单独选择一个权重为 $\sqrt{b(\varepsilon)}$ 即可达到相应最优值，不涉及跨参数的随机化或积分，因而不需要预算函数或参数化选择的连续性、可测性。空指标集的结论直接由命题 61.2。证毕。
+
+**推论 61.4（与最小预算渐近的对应）。** 固定非空有限 $J$、任意实延迟 $t_j$、$\sigma>0$ 及 $0<\alpha<1/2$，令 $z_\alpha=\Phi^{-1}(1-\alpha)>0$。达到风险至多 $\alpha$ 的最小预算为
+
+$$
+E_{\min}(\varepsilon,\alpha,\sigma)
+=\frac{4\sigma^2z_\alpha^2}{3l_\varepsilon^2},
+\qquad
+E_{\min}(\varepsilon,\alpha,\sigma)g(\varepsilon)^2
+\longrightarrow3\sigma^2z_\alpha^2.
+$$
+
+所以临界预算尺度为 $g(\varepsilon)^{-2}$：对最终非负的 $b$，若 $b=o(g^{-2})$，风险趋于 $1/2$；若 $b\sim c g^{-2}$，$c>0$，风险趋于 $\Phi(-\sqrt{c/3}/\sigma)$；若 $b/g^{-2}\to+\infty$，风险趋零。常数 $c=3\sigma^2z_\alpha^2$ 恰给极限风险 $\alpha$。对于空 $J$，没有任何有限预算能够达到 $\alpha<1/2$，最小预算若在扩充实数中记值即为 $+\infty$。
+
+**证明。** 由命题 61.2、$\Phi$ 的严格递增及对称性 $\Phi(-z_\alpha)=\alpha$，非空设计下风险至多 $\alpha$ 等价于 $\sqrt{3E_0}\,l_\varepsilon/(2\sigma)\ge z_\alpha$。两端非负且 $l_\varepsilon,\sigma>0$，平方反解给所列最小预算，等号时实际达到。再由定理 53.2 的 $g/l\to3/2$，
+
+$$
+E_{\min}g^2
+=\frac{4\sigma^2z_\alpha^2}{3}
+ \left(\frac{g}{l_\varepsilon}\right)^2
+\longrightarrow3\sigma^2z_\alpha^2.
+$$
+
+这正是定理 54.1 的最小预算渐近，在可花满预算的非空设计上的表达。三个尺度结论分别将 $bg^2$ 的极限零、$c$、无穷大代入定理 61.3；代入临界常数得到 $\Phi(-z_\alpha)=\alpha$。临界尺度只给渐近风险，未单独保证每个正 $\varepsilon$ 都满足目标不等式；逐参数保证仍须满足精确阈值 $b(\varepsilon)\ge E_{\min}(\varepsilon,\alpha,\sigma)$。空设计结论由恒定风险 $1/2$ 得出。证毕。
+
+本节直接应用第 53 节的实际几何增益与稳定秩缺口，以及第 54 节对全部可测判别器的纸面 Gaussian Bayes 风险公式；预算边界修正与临界极限均由这些结果推导，不作优先权主张。固定实际 $E$ 下的延迟与权重分配不变性仅关乎这两个已知候选和固定独立各向同性噪声；本节没有把它扩展为未知连续相位的总体 minimax 恢复定理，也没有扩大到任意光滑传感器类。
+
+## 追加锚（本行以下为增补区）
