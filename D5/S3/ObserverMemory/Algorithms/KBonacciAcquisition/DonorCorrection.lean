@@ -826,13 +826,13 @@ preset interface and a single literal stream shared by all free values. -/
 def GlobalPresetPrice {Y : Type*} (k m : ℕ) (hk : 0 < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) : ℕ∞ :=
   FullPositiveWindowPrice.BudgetPrice (OriginalPresetFeasible k m hk alphabet f)
 
-private theorem preset_inclusion {Y : Type*} (k m : ℕ) (hk : 0 < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) (d : ℕ)
+theorem preset_inclusion {Y : Type*} (k m : ℕ) (hk : 0 < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) (d : ℕ)
     (feasible : OriginalPresetFeasible k m hk alphabet f d) :
     OriginalAdaptiveFeasible k m hk alphabet f d := by
   obtain ⟨stream, stop, legal, bottom, correct⟩ := feasible
   refine ⟨presetSelector stream stop, legal, ?_, correct⟩
   simp only [presetSelector, bottom]
-private theorem preset_monotone {Y : Type*} (k m : ℕ) (hk : 2 ≤ k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) (a b : ℕ) (le : a ≤ b)
+theorem preset_monotone {Y : Type*} (k m : ℕ) (hk : 2 ≤ k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) (a b : ℕ) (le : a ≤ b)
     (feasible : OriginalPresetFeasible k m (by omega) alphabet f a) :
     OriginalPresetFeasible k m (by omega) alphabet f b := by
   obtain ⟨stream, stop, legal, bottom, correct⟩ := feasible
