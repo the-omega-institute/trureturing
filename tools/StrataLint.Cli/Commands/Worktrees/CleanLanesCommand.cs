@@ -123,6 +123,8 @@ internal static partial class CleanLanesCommand
                     head = item.Head,
                     action = item.Action,
                     reason = item.Reason,
+                    recovery_branch = item.RecoveryBranch,
+                    recovery_branch_candidate = item.RecoveryBranchCandidate,
                 }));
                 output.Append('\n');
             }
@@ -582,5 +584,7 @@ internal static partial class CleanLanesCommand
         string? Branch,
         string? Head,
         string Action,
-        string Reason);
+        string Reason,
+        string? RecoveryBranch = null,
+        string? RecoveryBranchCandidate = null);
 }
