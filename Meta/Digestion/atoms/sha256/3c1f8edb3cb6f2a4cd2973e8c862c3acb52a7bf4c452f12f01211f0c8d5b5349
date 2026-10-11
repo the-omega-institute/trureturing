@@ -1,0 +1,19 @@
+**Corollary 35.3 (No finite upper certificate on a probe fibre).** For every finite $S\subset\mathbb P$ and every $b\in\{0,1\}^{S}$, the fibre $W_{S,b}$ is nonempty and
+
+$$
+\sup_{n\in W_{S,b}}\rho_S(n)
+=\sup_{n\in W_{S,b}}\omega(n)=+\infty.
+\tag{35.10}
+$$
+
+Let $U:\{0,1\}^{S}\to\mathbb R\cup\{+\infty\}$ be a sound upper certificate, meaning that $\omega(n)\le U(d_S(n))$ for every $n\in W$. Then $U(b)=+\infty$ for every pattern $b$. The same conclusion holds for a sound upper certificate for $\rho_S$.
+
+**Proof.** For every integer $K\ge1$, choose a prime $r\ge R(S,K)$ and apply Theorem 35.2 to the fixed pattern $b$. Primes are unbounded, so such an index exists. On this fibre,
+
+$$
+\omega(n)=\rho_S(n)+\sum_{p\in S}b_p.
+\tag{35.11}
+$$
+
+The second term is fixed and finite, which proves both suprema. A finite $U(b)$ would bound the corresponding unbounded fibre, a contradiction. Consequently no rule using only these bits can soundly certify $\omega(n)\le B$ at any pattern for finite $B$. Positive bits can give lower bounds; the assertion concerns upper certificates.
+
