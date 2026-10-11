@@ -37,8 +37,8 @@ def expansionProof : Registration expansionArena (expansionArena.Law expansionAc
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ expansion_rejected
   dependence := by
     intro role
-    refine ⟨⟨1, 0⟩, 0, 1, ?_⟩
-    change H 1 0 0 ≠ H 1 0 1
+    refine ⟨⟨1, 0⟩, 2, 3, ?_⟩
+    change H 1 0 2 ≠ H 1 0 3
     norm_num [H, rising, a, b, n, E, A, D, L, Nat.fib, Finset.prod_range_succ]
 
 def rootActual : Realization signature :=
@@ -67,8 +67,8 @@ def rootProof : Registration rootArena (rootArena.Law rootActual) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ root_rejected
   dependence := by
     intro role
-    refine ⟨⟨0, 1⟩, 0, 1, ?_⟩
-    change q 1 0 0 ≠ q 1 0 1
+    refine ⟨⟨0, 1⟩, 2, 3, ?_⟩
+    change q 1 0 2 ≠ q 1 0 3
     norm_num [q, H, rising, a, b, n, E, A, D, L, Nat.fib, Finset.prod_range_succ]
 
 noncomputable def expansionRegistration :
