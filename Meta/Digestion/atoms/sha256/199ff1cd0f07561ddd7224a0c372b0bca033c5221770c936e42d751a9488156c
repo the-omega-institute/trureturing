@@ -1,0 +1,46 @@
+**Definition 33.1 (Arbitrary joined labels on a delayed interior interval).** Retain the original integer weights, matched scalar reader and complete full-INITIAL source of Definitions 30.1 and 31.1, with the observation and fee contract of [INITIAL target-cost theory, Definitions 1.1–1.3 and Interface 1.4](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee). Fix integers
+
+$$
+ m\ge5,\qquad 3\le d\le m-2,\qquad
+ k=2m-2,\qquad T=2m-1,\qquad P=\mathbb Z/T\mathbb Z,
+ \qquad J=\{d,d+1,\ldots,m-1\},\qquad O=P\setminus J.
+\tag{33.1}
+$$
+
+Represent $j=-\theta_{\rm INITIAL}$ by $0\le j<T$. For a label set $Y$, take tail-independent tables $\lambda_0,\lambda_1:P\to Y$ and define the immutable target and its ordered value join by
+
+$$
+\begin{aligned}
+ f_\lambda(v,-j,s)&=\lambda_v(j)
+ &&(v\in\mathbb F_2,\ j\in P,\ 0\le s<k),\\
+ f_\lambda(\bot)&=y_\bot,\qquad
+ \Lambda(j)=(\lambda_0(j),\lambda_1(j)),\qquad
+ R=\Lambda[J],\qquad r=|R|.
+\end{aligned}
+\tag{33.2}
+$$
+
+Assume only the following exterior and cardinality conditions:
+
+$$
+ \Lambda(j)=o\quad(j\in O),\qquad
+ o\in Y\times Y,\qquad 2^{d-1}<r\le2^d.
+\tag{33.3}
+$$
+
+The two tables may differ. The outside pair $o$ may also occur in $J$; no condition on label multiplicities or zero-sum coding is imposed. The independently observed initial-bottom label $y_\bot$ is arbitrary, including coincidences with live labels.
+
+All finite actual complete-block histories remain sources, including all rejected histories. In particular every value, phase and legal inherited tail is jointly actual. To recall the supplied witness (31.4), write $c_i=\mathbf1_{\{0,T-1\}}(i\bmod T)$ and choose
+
+$$
+ \ell\equiv0\pmod m,\qquad \ell\equiv-j\pmod T,\qquad
+ \ell\ge s+2,\qquad
+ \rho=\bigoplus_{i=\ell-s}^{\ell-1}c_i,\qquad
+ w=(v\oplus\rho)0^{\ell-s-1}1^s.
+\tag{33.4}
+$$
+
+Since $\gcd(m,T)=1$, compatible lengths exist. The separating zero makes $w$ legal and its entire record is $(v,-j,s)$. The actual history $1^{2m}$ realizes bottom. These histories have lengths divisible by $m$; their histories and lengths are unobserved, and their lengths need not agree. Neither $J$ nor any chosen tail narrows the source prior.
+
+Both original alphabets are retained: all literal length-$m$ words and all internally legal length-$m$ words coincide because $m<k$. The prohibition on $1^k$ still applies across seams, and rejection is absorbing. Only the INITIAL scalar value or bottom is free. Every later observation is the endpoint of an actually issued complete length-$m$ block; every issued block costs one, including waits, clearing, padding and the remainder of a block after interior rejection. GLOBAL requires one preselected literal stream at each emitted block index, shared by both values and every live archive. Stopping and decoding may use that source's own acquired archive. There is no reset, copy, interior observation, hidden INITIAL clock, borrowed record or unpaid preparation. Offline selection and storage are outside this block fee.
+

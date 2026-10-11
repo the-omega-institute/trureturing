@@ -993,3 +993,7 @@ to the unproved PT8.
 The completed far tails, existing source construction, and FIB fiber
 transport are reused unchanged. Neither PT8 nor the original signed
 finite-head lower bound nor RH is proved by this application.
+
+The [actual price-gap application](../Estimation/trureturing2026pricegapconvexity.md)
+retains whole-switch moments, the original tent gap response and the exact
+exterior-flux debt, with both original terminal costs separate.
