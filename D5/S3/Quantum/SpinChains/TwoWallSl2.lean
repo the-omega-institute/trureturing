@@ -7,8 +7,6 @@
    digest: The two binary arcs of a marked cyclic word carry a translation invariant sl₂ action. -/
 
 import D5.S3.Quantum.SpinChains.TwoWallWords
-import Mathlib.LinearAlgebra.TensorProduct.Basis
-import Mathlib.LinearAlgebra.DFinsupp
 
 open scoped BigOperators TensorProduct
 
