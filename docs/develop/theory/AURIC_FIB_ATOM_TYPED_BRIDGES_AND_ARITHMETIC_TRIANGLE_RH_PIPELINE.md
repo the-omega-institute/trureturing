@@ -1520,7 +1520,7 @@ p_{v,0}^{-1}+p_{v,2}^{-1}
 \[
 M^+\models T.
 \]
-若 \(T\) 只含 \(\mathsf L_0\) 语言且不使用 \(\mathsf H\)，则它对所有 \(\mathsf L_0\) 模型成立；Bridge 层不能把一个未证明的 Primitive 命题变成定理。反之，若 \(T\) 含 \(E_s,J,M_{\mathrm{mob}},V_{\mathrm{bridge}}\) 或 RH 映射，则必须在定理陈述中逐项列出相应 \(\mathsf H\)。
+若 \(T\) 只含 \(\mathsf L_0\) 语言且不使用 \(\mathsf H\)，则它对所有 \(\mathsf L_0\) 模型成立；Bridge 层不能把一个未证明的 Primitive 命题变成定理。若不存在满足 \(\mathsf H\) 的模型扩张，条件结论只是空真，因此 Bridge 的一致性与扩张存在性本身也属于待证明义务。反之，若 \(T\) 含 \(E_s,J,M_{\mathrm{mob}},V_{\mathrm{bridge}}\) 或 RH 映射，则必须在定理陈述中逐项列出相应 \(\mathsf H\)。
 
 证明：第一句是形式证明在模型解释下的保真性。第二句是定义扩张的保守性：Derived 符号可逐项展开回 \(\mathsf L_0\)，而未列入 \(\mathsf H\) 的 Bridge 符号不存在解释义务。故任何遗漏的物理或 RH 假设都不能由语法推导出来。证毕。
 
