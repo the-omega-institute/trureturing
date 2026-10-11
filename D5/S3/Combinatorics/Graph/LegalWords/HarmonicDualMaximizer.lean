@@ -28,11 +28,11 @@ private noncomputable def flipTerm (ν : Finset V → ℝ) (S : Finset V) (j : V
 noncomputable def coordinateLoad (ν : Finset V → ℝ) (S : Finset V) : ℝ :=
   ∑ j : V, flipTerm H ν S j
 
-/-- Each independent-set edge is counted once, from its endpoint lacking the added vertex. -/
+/-- Half the directed legal-flip sum counts each independent-set edge once. -/
 noncomputable def harmonicDual (ν : Finset V → ℝ) : ℝ :=
-  ∑ S ∈ configurations H univ, ∑ i : V,
-    if i ∉ S ∧ H.IsIndepSet (↑(insert i S) : Set V) then
-      ν S * ν (insert i S) / (ν S + ν (insert i S)) else 0
+  (∑ S ∈ configurations H univ, ∑ i : V,
+    if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+      ν S * ν (S ∆ {i}) / (ν S + ν (S ∆ {i})) else 0) / 2
 
 /-- Square-root regularization on the actual independent configurations. -/
 noncomputable def regularizedDual (ε : ℝ) (ν : Finset V → ℝ) : ℝ :=
@@ -124,7 +124,7 @@ private theorem load_difference (ν : Finset V → ℝ)
     have hden : ν S + ν (insert i S) ≠ 0 := ne_of_gt (add_pos (hp S hbase.1) (hp _ hS))
     rw [add_comm (ν (insert i S))]
     field_simp
-    <;> ring
+    ring
   unfold coordinateLoad
   rw [← sum_sub_distrib, ← sum_erase_add _ _ (mem_univ i), he]
   exact add_comm _ _
@@ -149,7 +149,8 @@ private theorem maximum_ratio_le_one (ν : Finset V → ℝ) {ε τ : ℝ} (hε 
     (i : V) : ∀ S : Finset V, i ∉ S → H.IsIndepSet (↑(insert i S) : Set V) →
       ν (insert i S) ≤ ν S := by
   classical
-  let D := (univ : Finset (Finset V)).filter fun S : Finset V => i ∉ S ∧ H.IsIndepSet (↑(insert i S) : Set V)
+  let D := (univ : Finset (Finset V)).filter fun S : Finset V =>
+    i ∉ S ∧ H.IsIndepSet (↑(insert i S) : Set V)
   have hD : D.Nonempty := ⟨∅, by simp [D, SimpleGraph.IsIndepSet, Set.Pairwise]⟩
   obtain ⟨S, hSD, hmax⟩ := D.exists_max_image (fun S => ν (insert i S) / ν S) hD
   have hSi := (mem_filter.mp hSD).2
@@ -201,7 +202,8 @@ theorem stationary_ratio_bounds (ν : Finset V → ℝ) {ε τ : ℝ} (hε : 0 �
   have hmono := maximum_ratio_le_one H ν hε hp hs
   have hTb := (independent_insert H T i).mp hT
   refine ⟨?_, (div_le_one (hp _ hTb.1)).mpr (hmono i T hi hT)⟩
-  let D := (univ : Finset (Finset V)).filter fun S : Finset V => i ∉ S ∧ H.IsIndepSet (↑(insert i S) : Set V)
+  let D := (univ : Finset (Finset V)).filter fun S : Finset V =>
+    i ∉ S ∧ H.IsIndepSet (↑(insert i S) : Set V)
   have hTD : T ∈ D := mem_filter.mpr ⟨mem_univ _, hi, hT⟩
   obtain ⟨S, hSD, hmin⟩ := D.exists_min_image (fun S => ν (insert i S) / ν S) ⟨T, hTD⟩
   have hSi := (mem_filter.mp hSD).2
@@ -237,7 +239,7 @@ theorem stationary_ratio_bounds (ν : Finset V → ℝ) {ε τ : ℝ} (hε : 0 �
           have hjind : H.IsIndepSet (↑(insert j S) : Set V) := by
             rwa [flip_absent S hjS] at ht
           have hq := share_quarter (hp _ hbase.1) (hp _ hjind) (hmono j S hjS hjind)
-          simp only [flipTerm, if_neg hc, if_pos ht, if_pos hn, zero_sub,
+          simp only [flipTerm, if_neg hc, if_pos hn, zero_sub,
             flip_absent S hjS, if_pos hjind]
           linarith
         · simp only [flipTerm, if_neg hc, if_neg ht, sub_self]
@@ -248,7 +250,7 @@ theorem stationary_ratio_bounds (ν : Finset V → ℝ) {ε τ : ℝ} (hε : 0 �
       rw [sum_neg_distrib, sum_erase_eq_sub (mem_univ i), hz, sub_zero]
       rw [← sum_filter]
       simp [← H.neighborFinset_eq_filter, H.card_neighborFinset_eq_degree]
-      <;> ring
+      ring
     rw [← he]
     exact sum_le_sum hpoint
   have hd := load_difference H ν hp S i hSi.1 hSi.2
@@ -266,6 +268,311 @@ theorem stationary_ratio_bounds (ν : Finset V → ℝ) {ε τ : ℝ} (hε : 0 �
     nlinarith
   exact hbound.trans (hmin T hTD)
 
+/-- Probability vectors extended by zero outside the independent configurations. -/
+def probabilities : Set (Finset V → ℝ) :=
+  {ν | ν ∈ stdSimplex ℝ (Finset V) ∧
+    ∀ S : Finset V, ¬ H.IsIndepSet (S : Set V) → ν S = 0}
+
+private theorem harmonic_le_left {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) :
+    a*b/(a+b) ≤ a := by
+  by_cases hd : a+b = 0
+  · simpa [hd] using ha
+  · apply (div_le_iff₀ (lt_of_le_of_ne (add_nonneg ha hb) (Ne.symm hd))).mpr
+    nlinarith [sq_nonneg a]
+
+omit [Fintype V] [DecidableEq V] in
+private theorem harmonic_continuous (S T : Finset V) :
+    ContinuousOn (fun ν : Finset V → ℝ => ν S * ν T / (ν S + ν T))
+      {ν | ∀ U, 0 ≤ ν U} := by
+  intro ν hν
+  by_cases hd : ν S + ν T = 0
+  · have hS : ν S = 0 := by have := hν S; have := hν T; linarith
+    change Filter.Tendsto _ _ (nhds (ν S * ν T / (ν S + ν T)))
+    simp only [hS, zero_mul, zero_div]
+    apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
+      (show Filter.Tendsto (fun μ : Finset V → ℝ => μ S) _ (nhds 0) from
+        hS ▸ (continuous_apply S).continuousWithinAt)
+    · filter_upwards [self_mem_nhdsWithin] with μ hμ
+      exact div_nonneg (mul_nonneg (hμ S) (hμ T)) (add_nonneg (hμ S) (hμ T))
+    · filter_upwards [self_mem_nhdsWithin] with μ hμ
+      exact harmonic_le_left (hμ S) (hμ T)
+  · exact ((continuous_apply S).mul (continuous_apply T)).continuousWithinAt.div
+      ((continuous_apply S).add (continuous_apply T)).continuousWithinAt hd
+
+private theorem harmonic_mono_left {a b c : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
+    (hc : a ≤ c) : a*b/(a+b) ≤ c*b/(c+b) := by
+  obtain rfl | hb := hb.eq_or_lt
+  · simp
+  apply (div_le_div_iff₀ (by positivity : 0 < a+b) (by linarith : 0 < c+b)).mpr
+  nlinarith [mul_nonneg (sub_nonneg.mpr hc) (sq_nonneg b)]
+
+private theorem harmonic_scale (a b c : ℝ) :
+    (c*a)*(c*b)/(c*a+c*b) = c*(a*b/(a+b)) := by
+  by_cases hc : c = 0
+  · simp [hc]
+  by_cases hab : a+b = 0
+  · simp [← mul_add, hab]
+  rw [← mul_add]
+  field_simp
+
+private theorem regularized_continuous (ε : ℝ) :
+    ContinuousOn (regularizedDual H ε) (probabilities H) := by
+  apply ContinuousOn.add
+  · apply ContinuousOn.div_const
+    apply continuousOn_finsetSum
+    intro S hS
+    apply continuousOn_finsetSum
+    intro i hi
+    by_cases h : H.IsIndepSet (↑(S ∆ {i}) : Set V)
+    · simpa only [if_pos h] using (harmonic_continuous S (S ∆ {i})).mono
+        (fun ν hν => hν.1.1)
+    · simpa only [if_neg h] using (continuousOn_const : ContinuousOn
+        (fun _ : Finset V → ℝ => (0:ℝ)) (probabilities H))
+  · exact continuousOn_const.mul (continuousOn_finsetSum _ fun S _ =>
+      (Real.continuous_sqrt.comp (continuous_apply S)).continuousOn)
+
+omit [DecidableEq V] [DecidableRel H.Adj] in
+private theorem probabilities_compact : IsCompact (probabilities H) := by
+  have hz : IsClosed {ν : Finset V → ℝ | ∀ S : Finset V,
+      ¬ H.IsIndepSet (S : Set V) → ν S = 0} := by
+    simp_rw [Set.ofPred_forall]
+    exact isClosed_iInter fun S => isClosed_iInter fun _ =>
+      isClosed_eq (continuous_apply S) continuous_const
+  exact (isCompact_stdSimplex ℝ (Finset V)).inter_right hz
+
+omit [DecidableEq V] [DecidableRel H.Adj] in
+private theorem probabilities_nonempty : (probabilities H).Nonempty := by
+  classical
+  refine ⟨Pi.single ∅ 1, single_mem_stdSimplex ℝ ∅, ?_⟩
+  intro S hS
+  have hn : S ≠ ∅ := by
+    intro he
+    subst S
+    exact hS (by simp [SimpleGraph.IsIndepSet, Set.Pairwise])
+  simp [Ne.symm hn]
+
+private theorem dual_scale_lower (ν μ : Finset V → ℝ) (c : ℝ)
+    (hν : ∀ S, 0 ≤ ν S) (hμ : ∀ S, c * ν S ≤ μ S) (hc : 0 ≤ c) :
+    c * harmonicDual H ν ≤ harmonicDual H μ := by
+  unfold harmonicDual
+  rw [← mul_div_assoc]
+  apply div_le_div_of_nonneg_right _ (by norm_num)
+  rw [mul_sum]
+  apply sum_le_sum
+  intro S hS
+  rw [mul_sum]
+  apply sum_le_sum
+  intro j hj
+  by_cases h : H.IsIndepSet (↑(S ∆ {j}) : Set V)
+  · simp only [if_pos h]
+    rw [← harmonic_scale]
+    have hpS := mul_nonneg hc (hν S)
+    have hpT := mul_nonneg hc (hν (S ∆ {j}))
+    calc
+      _ ≤ μ S * (c * ν (S ∆ {j})) / (μ S + c * ν (S ∆ {j})) :=
+        harmonic_mono_left hpS hpT (hμ S)
+      _ ≤ _ := by
+        simpa only [mul_comm, add_comm] using
+          harmonic_mono_left hpT (hpS.trans (hμ S)) (hμ (S ∆ {j}))
+  · simp only [if_neg h, mul_zero, le_refl]
+
+private theorem regularized_maximum_positive (ε : ℝ) (hε : 0 < ε)
+    (ν : Finset V → ℝ) (hν : ν ∈ probabilities H)
+    (hmax : IsMaxOn (regularizedDual H ε) (probabilities H) ν) :
+    ∀ A : Finset V, H.IsIndepSet (A : Set V) → 0 < ν A := by
+  intro A hA
+  by_contra hn
+  have hz : ν A = 0 := le_antisymm (le_of_not_gt hn) (hν.1.1 A)
+  obtain ⟨r, hr, hrJ⟩ := exists_pos_mul_lt hε (|regularizedDual H ε ν| + ε + 1)
+  have hr1 : r < 1 := by
+    have : ε*r < ε := by nlinarith [abs_nonneg (regularizedDual H ε ν)]
+    nlinarith
+  have hrJ' : regularizedDual H ε ν * r < ε := by
+    have := le_abs_self (regularizedDual H ε ν)
+    nlinarith
+  let t := r^2
+  have ht : 0 < t := sq_pos_of_pos hr
+  have ht1 : t < 1 := by dsimp [t]; nlinarith
+  let μ : Finset V → ℝ := fun S => (1-t)*ν S + if S = A then t else 0
+  have hμ : μ ∈ probabilities H := by
+    refine ⟨⟨fun S => add_nonneg (mul_nonneg (by linarith) (hν.1.1 S))
+      (by split <;> positivity), ?_⟩, ?_⟩
+    · dsimp [μ]
+      rw [sum_add_distrib, ← mul_sum, hν.1.2]
+      simp
+    · intro S hS
+      have hne : S ≠ A := fun he => hS (he ▸ hA)
+      simp [μ, hν.2 S hS, hne]
+  have hμlower (S : Finset V) : (1-t)*ν S ≤ μ S := by
+    dsimp [μ]
+    split <;> linarith
+  have hφ := dual_scale_lower H ν μ (1-t) hν.1.1 hμlower (by linarith)
+  have hroot : (1-t) * (∑ S ∈ configurations H univ, Real.sqrt (ν S)) + r ≤
+      ∑ S ∈ configurations H univ, Real.sqrt (μ S) := by
+    have hAK : A ∈ configurations H univ := by simp [configurations, hA]
+    rw [← sum_erase_add _ (fun S => Real.sqrt (μ S)) hAK,
+      ← sum_erase_add _ (fun S => Real.sqrt (ν S)) hAK]
+    have hμA : μ A = t := by simp [μ, hz]
+    rw [hμA, hz, Real.sqrt_zero, add_zero]
+    have hrt : Real.sqrt t = r := by simpa [t] using Real.sqrt_sq hr.le
+    rw [hrt, mul_sum]
+    apply add_le_add _ le_rfl
+    apply sum_le_sum
+    intro S hS
+    have hne := (mem_erase.mp hS).1
+    have hscale_root : 1-t ≤ Real.sqrt (1-t) := by
+      apply (Real.le_sqrt (by linarith) (by linarith)).mpr
+      nlinarith
+    calc
+      _ ≤ Real.sqrt (1-t) * Real.sqrt (ν S) :=
+        mul_le_mul_of_nonneg_right hscale_root (Real.sqrt_nonneg _)
+      _ = _ := by simp [μ, hne, Real.sqrt_mul (by linarith : 0 ≤ 1-t)]
+  have hJ : (1-t) * regularizedDual H ε ν + ε*r ≤ regularizedDual H ε μ := by
+    unfold regularizedDual
+    nlinarith [mul_le_mul_of_nonneg_left hroot hε.le]
+  have hm : regularizedDual H ε μ ≤ regularizedDual H ε ν := hmax hμ
+  have hstrict : regularizedDual H ε ν < (1-t)*regularizedDual H ε ν + ε*r := by
+    have := mul_pos hr (sub_pos.mpr hrJ')
+    dsimp [t]
+    nlinarith
+  linarith
+
+private theorem flip_sum (f : Finset V → Finset V → ℝ) (i : V) :
+    (∑ S ∈ configurations H univ, if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+      f S (S ∆ {i}) else 0) =
+    ∑ S ∈ configurations H univ, if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+      f (S ∆ {i}) S else 0 := by
+  classical
+  rw [← sum_filter, ← sum_filter]
+  have hm (S : Finset V) :
+      S ∈ (configurations H univ).filter (fun S : Finset V => H.IsIndepSet (↑(S ∆ {i}) : Set V)) ↔
+        H.IsIndepSet (S : Set V) ∧ H.IsIndepSet (↑(S ∆ {i}) : Set V) := by
+    simp [configurations]
+  refine sum_bij (fun S _ => S ∆ {i}) ?_ ?_ ?_ ?_
+  · intro S hS
+    rw [hm, symmDiff_symmDiff_cancel_right]
+    exact (hm S).mp hS |>.symm
+  · intro S hS T hT he
+    simpa only [symmDiff_symmDiff_cancel_right] using congrArg (fun U => U ∆ {i}) he
+  · intro S hS
+    refine ⟨S ∆ {i}, ?_, symmDiff_symmDiff_cancel_right _ _⟩
+    rw [hm, symmDiff_symmDiff_cancel_right]
+    exact (hm S).mp hS |>.symm
+  · intro S hS
+    simp only [symmDiff_symmDiff_cancel_right]
+
+private theorem regularized_derivative (ε : ℝ) (ν w : Finset V → ℝ)
+    (hp : ∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S) :
+    HasDerivAt (fun t : ℝ => regularizedDual H ε (fun S => ν S + t*w S))
+      (∑ S ∈ configurations H univ,
+        w S * (coordinateLoad H ν S + ε / (2 * Real.sqrt (ν S)))) 0 := by
+  have hd (S : Finset V) : HasDerivAt (fun t : ℝ => ν S + t*w S) (w S) 0 := by
+    simpa using ((hasDerivAt_id (0:ℝ)).mul_const (w S)).const_add (ν S)
+  have hterm (S : Finset V) (hS : S ∈ configurations H univ) (j : V) :
+      HasDerivAt (fun t : ℝ => if H.IsIndepSet (↑(S ∆ {j}) : Set V) then
+        (ν S+t*w S)*(ν (S ∆ {j})+t*w (S ∆ {j})) /
+        (ν S+t*w S+(ν (S ∆ {j})+t*w (S ∆ {j}))) else 0)
+      (if H.IsIndepSet (↑(S ∆ {j}) : Set V) then
+        w S * (ν (S ∆ {j}) / (ν S + ν (S ∆ {j})))^2 +
+        w (S ∆ {j}) * (ν S / (ν S + ν (S ∆ {j})))^2 else 0) 0 := by
+    have hSi : H.IsIndepSet (S : Set V) := by simpa [configurations] using hS
+    by_cases hT : H.IsIndepSet (↑(S ∆ {j}) : Set V)
+    · simp only [if_pos hT]
+      have hz : ν S + ν (S ∆ {j}) ≠ 0 := ne_of_gt (add_pos (hp _ hSi) (hp _ hT))
+      apply (((hd S).mul (hd (S ∆ {j}))).div
+        ((hd S).add (hd (S ∆ {j}))) (by simpa using hz)).congr_deriv
+      simp only [Pi.add_apply, Pi.mul_apply, zero_mul, add_zero, div_pow]
+      field_simp [hz]
+      ring
+    · simpa only [if_neg hT] using hasDerivAt_const (0:ℝ) (0:ℝ)
+  have hφ := (HasDerivAt.sum (u := configurations H univ) fun S hS =>
+    HasDerivAt.sum (u := (univ : Finset V)) fun j _ => hterm S hS j).div_const 2
+  have hR := HasDerivAt.sum (u := configurations H univ) (fun S hS => (hd S).sqrt (by
+    have hSi : H.IsIndepSet (S : Set V) := by simpa [configurations] using hS
+    simpa using ne_of_gt (hp S hSi)))
+  have hsflip : (∑ S ∈ configurations H univ, ∑ j : V,
+      if H.IsIndepSet (↑(S ∆ {j}) : Set V) then
+        w (S ∆ {j}) * (ν S / (ν S + ν (S ∆ {j})))^2 else 0) =
+      ∑ S ∈ configurations H univ, w S * coordinateLoad H ν S := by
+    simp_rw [coordinateLoad, mul_sum, flipTerm, mul_ite, mul_zero]
+    conv_lhs => rw [sum_comm]
+    conv_rhs => rw [sum_comm]
+    apply sum_congr rfl
+    intro j _
+    convert flip_sum H (fun S T => w T * (ν S / (ν S + ν T))^2) j using 1
+    apply sum_congr rfl
+    intro S hS
+    rw [add_comm (ν (S ∆ {j}))]
+  convert hφ.add (hR.const_mul ε) using 1
+  · ext t
+    simp only [regularizedDual, harmonicDual, Pi.add_apply, Finset.sum_apply]
+  · simp only [zero_mul, add_zero]
+    have hsplit (S : Finset V) (j : V) :
+        (if H.IsIndepSet (↑(S ∆ {j}) : Set V) then
+          w S * (ν (S ∆ {j}) / (ν S + ν (S ∆ {j})))^2 +
+          w (S ∆ {j}) * (ν S / (ν S + ν (S ∆ {j})))^2 else 0) =
+        w S * flipTerm H ν S j +
+          (if H.IsIndepSet (↑(S ∆ {j}) : Set V) then
+            w (S ∆ {j}) * (ν S / (ν S + ν (S ∆ {j})))^2 else 0) := by
+      unfold flipTerm
+      split <;> simp_all
+    simp_rw [hsplit, sum_add_distrib]
+    rw [hsflip]
+    simp_rw [coordinateLoad, mul_add, mul_div_assoc, mul_sum]
+    rw [← mul_sum]
+    ring
+
+private theorem regularized_stationary (ε : ℝ) (ν : Finset V → ℝ)
+    (hν : ν ∈ probabilities H)
+    (hp : ∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S)
+    (hmax : IsMaxOn (regularizedDual H ε) (probabilities H) ν) :
+    ∃ τ : ℝ, ∀ S : Finset V, H.IsIndepSet (S : Set V) →
+      coordinateLoad H ν S + ε / (2 * Real.sqrt (ν S)) = τ := by
+  classical
+  refine ⟨coordinateLoad H ν ∅ + ε / (2 * Real.sqrt (ν ∅)), ?_⟩
+  intro A hA
+  let w : Finset V → ℝ := fun S => (if S = A then 1 else 0) - (if S = ∅ then 1 else 0)
+  have hwsum : ∑ S, w S = 0 := by simp [w, sum_sub_distrib]
+  have hw (S : Finset V) (hS : ¬ H.IsIndepSet (S : Set V)) : w S = 0 := by
+    have hne : S ≠ A := fun he => hS (he ▸ hA)
+    have hne' : S ≠ ∅ := by
+      intro he; subst S; exact hS (by simp [SimpleGraph.IsIndepSet, Set.Pairwise])
+    simp [w, hne, hne']
+  have hevent : ∀ᶠ t : ℝ in nhds 0, (fun S => ν S+t*w S) ∈ probabilities H := by
+    have he : ∀ S, ∀ᶠ t : ℝ in nhds 0, 0 ≤ ν S+t*w S := by
+      intro S
+      by_cases hS : H.IsIndepSet (S : Set V)
+      · have hc : ContinuousAt (fun t : ℝ => ν S+t*w S) 0 := by fun_prop
+        exact (continuousAt_const.eventually_lt hc (by simpa using hp S hS)).mono (fun _ h => h.le)
+      · exact Filter.Eventually.of_forall fun t => by simp [hν.2 S hS, hw S hS]
+    filter_upwards [Filter.eventually_all.mpr he] with t ht
+    refine ⟨⟨ht, ?_⟩, ?_⟩
+    · simp only [sum_add_distrib, ← mul_sum, hν.1.2, hwsum, mul_zero, add_zero]
+    · intro S hS; simp [hν.2 S hS, hw S hS]
+  have hlocal : IsLocalMax (fun t : ℝ => regularizedDual H ε (fun S => ν S+t*w S)) 0 := by
+    filter_upwards [hevent] with t ht
+    simpa using hmax ht
+  have hz := hlocal.hasDerivAt_eq_zero (regularized_derivative H ε ν w hp)
+  have hAK : A ∈ configurations H univ := by simp [configurations, hA]
+  have hEK : (∅ : Finset V) ∈ configurations H univ := by
+    simp [configurations, SimpleGraph.IsIndepSet, Set.Pairwise]
+  simpa [w, sub_mul, sum_sub_distrib, hAK, hEK, sub_eq_zero] using hz
+
+/-- A square-root regularized harmonic dual has a positive maximizing probability vector,
+and all its legal addition ratios satisfy the base-degree bounds. -/
+theorem regularized_maximum (ε : ℝ) (hε : 0 < ε) :
+    ∃ ν ∈ probabilities H, IsMaxOn (regularizedDual H ε) (probabilities H) ν ∧
+      (∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S) ∧
+      ∀ (i : V) (S : Finset V), i ∉ S → H.IsIndepSet (↑(insert i S) : Set V) →
+        (4 - (H.degree i : ℝ)) / (4 + (H.degree i : ℝ)) ≤ ν (insert i S) / ν S ∧
+        ν (insert i S) / ν S ≤ 1 := by
+  obtain ⟨ν, hν, hmax⟩ := (probabilities_compact H).exists_isMaxOn
+    (probabilities_nonempty H) (regularized_continuous H ε)
+  have hp := regularized_maximum_positive H ε hε ν hν hmax
+  obtain ⟨τ, hs⟩ := regularized_stationary H ε ν hν hp hmax
+  exact ⟨ν, hν, hmax, hp, fun i S hi hS => stationary_ratio_bounds H ν hε.le hp hs i S hi hS⟩
+
 #print axioms stationary_ratio_bounds
+#print axioms regularized_maximum
 
 end D5.S3.Combinatorics.Graph.LegalWords.HarmonicDualMaximizer
