@@ -4683,4 +4683,318 @@ The owning [PAIRED source](https://github.com/the-omega-institute/trureturing/bl
 
 For the original fixed prior, the unrestricted common-zero problem still asks for entire marginals satisfying (20.13)--(20.15) and both sets of tests (20.5) simultaneously. No such general zero-level pair, unrestricted positive value of $j_c$, original 155-coefficient tuple or full-system infeasibility certificate is supplied. The early witness is a necessary consumer for finite exact-attainment candidates; it is not an existence theorem for them. Finite exact attainment still requires the atomic realization conditions of Sections 11.7 and 13, and effective attainment additionally requires permitted exact samplers with their numerical descriptions and workspace charged. No total COMPLETE, worst-case execution, physical-resource optimum or preservation of an earlier observer follows. Both results concern ordinary complete-law mathematics on the original source and retain every supported configuration-TV budget, both full flows, noncompletion and matching Stop.
 
+## 21. Same-flow fibers and control-memory non-equivalence
+
+### 21.1. Three distinct layers of a returned relation
+
+The latest same-flow analysis in [ACQUIRED-RETURN, Section 14](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md) supplies a concrete control-memory test for the present paired-calibration domain. Fix the complete laws, the two directional joint flows and one reachable returned control/record value $c$ used there. A whole returned relation is a probability law
+
+$$
+\Xi(Q,W,Q')
+$$
+
+on the incoming p descriptor, the suspended descriptor and the outgoing p descriptor. Its scalar motion readout is
+
+$$
+\eta_{\mathrm{motion}}(\Xi)=(V_u(\Xi),V_Q(\Xi)),
+$$
+
+where $V_u$ is the actual integral of $|u(Q)-u(Q')|$ and $V_Q$ is the corresponding complete-law variation. The returned-cut memory cost is $N(\Xi;c)$, the minimum number of COMPLETE configurations at the counted suspended cuts needed to realize that prescribed whole relation, with the complete laws and both directional flows fixed.
+These objects have different semantic types:
+
+$$
+\boxed{
+\text{law marginals and two edge flows}
+\;\longrightarrow\;
+\text{whole triple }\Xi
+\;\longrightarrow\;
+\text{returned control memory}.
+}
+$$
+
+The arrows cannot be reversed from a scalar motion value alone.
+
+### 21.2. Same motion, same risks, different exact memory
+
+**Proposition 21.1 (motion does not determine prescribed-triple memory).** In the fixed complete-law fiber of [ACQUIRED-RETURN, Section 14], there are three lawful whole triples with
+
+$$
+V_u=V_Q=\frac4{135},
+$$
+
+but with prescribed-triple minima
+
+$$
+N(\Xi;c)=2,\qquad 3,\qquad 4.
+$$
+
+Moreover, the corresponding installations have the same complete configuration-risk expressions at every original fourth-phase history.
+**Proof.** The source theorem parameterizes every lawful triple by two block vectors $s^-,s^+$ and gives
+
+$$
+N(\Xi;c)=2+\mathbf 1_{\{s^-\ne C\}}+\mathbf 1_{\{s^+\ne C\}},
+$$
+
+while
+
+$$
+V_u=V_Q=\frac1{45}+\frac{s^-_1+s^+_1}{90},
+\qquad
+C=\left(\frac13,\frac13,\frac13\right).
+$$
+
+Taking $(s^-,s^+)=(C,C),(C,D),(D,D)$ with $D=(1/2,1/3,1/6)$ gives the same value $4/135$ and the three costs $2,3,4$. The source theorem also preserves the six p-law masses, the two suspended-law masses and the complete configuration-loss expressions under these installations. \(\square\)
+This is stronger than equality of a posterior target or a scalar risk: the complete generated laws and the two acquired edge flows are held fixed, while the prescribed three-stage successor relation changes.
+
+### 21.3. The control-safe quotient criterion
+
+Let $H$ be a finite family of already acquired histories, and let $\eta:H\to M$ be a proposed memory encoding. For a history $h$, let $B_h$ be its target--state candidate relation, and let $\mathcal W_n$ be the depth-$n$ acquisition domain (its candidate
+classes need not be finite). The encoding is safe for an $n$-step task exactly when
+
+$$
+\boxed{
+\bigcup_{h:\eta(h)=m}B_h\in\mathcal W_n
+\quad\text{for every }m\in\eta(H).
+}
+$$
+
+This is the finite-history form of the control-fiber condition: one memory value must admit one common continuation policy. It is a **one-time cut compression** criterion; it does not by itself provide a fixed finite-state controller for later updates. The condition is stronger than equality of the target candidate set, the best remaining step count, a complete-law marginal, or a motion scalar.
+For an exact prescribed-triple task, the memory observation must additionally retain enough of the successor relation to determine the allowed continuation kernels. A sufficient control-complete observation therefore has the form
+
+$$
+\eta_{\mathrm{ctrl}}(h)=
+\bigl(
+\text{target--state candidates},
+\text{legal actions and responses},
+\text{full-law residual cells},
+\text{joint successor relation},
+\text{remaining certificate rank}
+\bigr),
+$$
+
+with the last four components interpreted relative to the declared task contract. There are two contracts. **(a)** A full permitted-action behavioral quotient requires legality, responses and successors to descend and repeated finite-memory updates to close. **(b)** The fixed depth-$n$ cut requires only the displayed common-policy condition; a repeated controller additionally needs policy-relative update closure and a terminating rank. An executable controller must still check $\Xi$, legality, responses, rank and cost explicitly.
+
+### 21.4. Consequence for the paired-calibration certificates
+
+The two-flow residual equations in Sections 16--17 are necessary for complete-law compatibility and for the conditional full-vector separator. They do not identify the actual three-stage law $\Xi$. The explicit same-flow family above shows why: equal edge flows can support different successor couplings, and those couplings can have different exact memory minima.
+Thus the next FIB refinement is not another scalar defect. It is a higher-order relation layer:
+
+$$
+\boxed{
+\text{two directional residual flows}
+\;+
+\text{one compatible successor coupling }\Xi
+\;+
+\text{legal update and cost data}.
+}
+$$
+
+Only after this layer is fixed does a finite controller search have the right object to minimize. The scalar return-weight dispersion $D$, the four-moment defect $S$ and the mismatch energies $M_A,M_B$ remain useful necessary coordinates, but none is a substitute for $\Xi$ or for the controller's successor map.
+
+### 21.5. Remaining boundary
+
+Proposition 21.1 is a fixed-fiber memory separation. It does not give the unrestricted minimum COMPLETE size, a global risk gap, a finite exact attainer for the original zero face or a native FIB encoding theorem. Rational exact services and almost-sure returned-cut realization are available in the cited fixed fiber; bounded worst-case service cost and unrestricted resource optimality remain separate questions. All statements in this appended section are ordinary mathematical consequences of the cited `dev` results; no new Lean or kernel verification is asserted.
+
+### 21.6. The dynamics-stable common-prediction bridge
+
+The current `dev` line also supplies a precise semantic bridge for the
+behavioral part of this control-fiber distinction. Given an update map
+$u:Y\to Y$ and two readouts $q_1,q_2$, form the complete-future itinerary
+kernels of the two readouts. Let $R_{\mathrm{cp}}$ be the least equivalence
+relation that contains both kernels and is preserved by $u$. Then the quotient
+$Y/R_{\mathrm{cp}}$ is a canonical common prediction quotient: every
+surjective factor $r:Y\to W$ that is computed from both complete-itinerary
+quotients and intertwines $u$ with an update on $W$ factors uniquely through
+$Y/R_{\mathrm{cp}}$.
+This is the universal property recorded by the frozen
+`CommonPredictionFactor.common_prediction_factor_universal_property` result
+in the current project. It identifies the smallest required behavioral
+identifications for the two complete readouts. It does not identify the
+finite task quotient in (21.3): the latter must still preserve one common
+continuation policy on each memory fiber. In particular, the universal
+behavior quotient does not by itself preserve action legality, response
+labels, the prescribed successor coupling $\Xi$, completion rank, risk
+thresholds or resource costs. Those data must be shown to descend separately
+before the quotient can serve as an executable controller state.
+More precisely, the factor in that theorem must be surjective, semiconjugate
+to the source update, and computed from both complete-itinerary quotients by
+maps out of their quotient types. The relation is the least update-stable
+equivalence containing the two itinerary kernels. It is therefore not a
+greatest invariant subrelation of a preselected relation, and it is not a
+task controller or a proof that a controller can implement every legal
+continuation on its fibers. Under contract (a), it becomes a full permitted-action behavioral quotient
+only when legality, responses, successors, $\Xi$, completion rank and cost
+descend and the repeated finite-memory update is closed. Under contract (b),
+the fixed depth-$n$ continuation needs only the common-policy condition in
+(21.3); a repeated controller additionally needs policy-relative update
+closure and a terminating rank. The remaining $\Xi$, legality, response,
+rank and cost checks stay separate.
+
+### 21.7. Certificate search is a third resource
+
+The latest [ARITHMETIC_HOLOGRAPHIC_RT.md §48](ARITHMETIC_HOLOGRAPHIC_RT.md)
+analysis gives a separate
+finite-search analogue of this distinction. It fixes one finite target role
+set, one Fourier basis and coefficient family, and one finite explicitly
+enumerated menu $\mathscr L$ of allowed layers. An already selected stack
+prefix is an immutable sequence $\mathcal Q=(K_1,\ldots,K_\ell)$; repeated
+layers are deduplicated for coverage but remain present in the physical
+prefix length. Let $T$ be the fixed finite target-role set and, in RT §48 notation, let
+
+$$
+\overline C_K:=\{\eta\in\widehat A\setminus\{1\}:\eta\notin K^\perp\},
+\qquad C_K(X):=X\cap\overline C_K.
+$$
+
+If a layer $K$ resolves exactly the roles in $C_K(T)$,
+then a selected stack resolves the declared certificate precisely when its
+coverage sets have union $T$. With
+
+$$
+V_{\mathcal Q}=\bigcup_{K\in\underline{\mathcal Q}}\overline C_K,
+\qquad
+\Delta_{\mathcal Q}(X)=X\setminus V_{\mathcal Q},
+$$
+
+the fixed-prefix extension cost is
+
+$$
+\tau_{\rm ext}(\mathcal Q;X,\mathscr L)=
+\min\left\{|\mathcal R|:\mathcal R\subseteq\mathscr L,
+\ \Delta_{\mathcal Q}(X)\subseteq
+\bigcup_{K\in\mathcal R}\overline C_K\right\},
+$$
+
+with value $0$ when the residual is empty, value $\infty$ when the
+nonempty residual is not coverable by the fixed menu, and the displayed
+minimum otherwise. For an enlarged finite threshold set $X^-=X^+\setminus\delta$,
+the residual is maintained by
+
+$$
+\Delta_{\mathcal Q}(X^+)
+=\Delta_{\mathcal Q}(X^-)
+ \cup(\delta\setminus V_{\mathcal Q}).
+\tag{21.23}
+$$
+
+In the nonempty coverable branch write $m=|\Delta_{\mathcal Q}(X^+)|$ and
+$d=\max_{K\in\mathscr L}|\overline C_K\cap\Delta_{\mathcal Q}(X^+)|>0$;
+the maximum-gain greedy extension has $s$ layers with
+
+$$
+\left\lceil\frac md\right\rceil
+\le\tau_{\rm ext}
+\le s
+\le H_d\,\tau_{\rm ext}
+\le H_m\,\tau_{\rm ext}
+\le(1+\log m)\tau_{\rm ext}.
+\tag{21.24}
+$$
+
+The bound is relative to the fixed-prefix optimum; it is not a global
+shortest-stack comparison. The following complexity expressions are
+**unit-cost membership-check counts**, under the explicit maintenance
+condition that the previous residual is already maintained and $\delta$ is
+supplied: incremental membership checks cost
+$O(|\delta|\ell(\mathcal Q))$, precomputing menu intersections costs
+$O(m|\mathscr L|)$, and naive repeated-gain search costs
+$O(m^2|\mathscr L|)$. Rebuilding the residual from scratch replaces the
+incremental term by $O(|X^+|\ell(\mathcal Q))$, with the same unit-cost
+membership convention. If $\delta$ or the new threshold roles must instead
+be discovered by scanning the character universe $\widehat A$, add
+$O(|\widehat A|)$ role-enumeration work plus the cost of the threshold
+decisions themselves. These are offline/search or residual-maintenance
+counts only; they are not bounds on bit length, wall-clock time, memory, or
+physical cost. Empty residuals add no layer; an uncoverable residual is a
+typed failure of this certificate family.
+This is an **offline certificate-search and online maintenance** result for
+the fixed menu, prefix, Fourier basis and coefficients. It does not prove a
+global shortest stack, arbitrary protocol synthesis, a CPTP/LOSR statement,
+or a diamond-norm bound.
+
+### 21.8. Common source, provenance and joint attainable images
+
+The acquisition-side bridge has the same coupling requirement. In the
+source-faithful result
+`D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut`,
+`actualRoute` is followed by a verifier segment `v` and an ordered same-source
+acquisition suffix `a`. In an acquisition cut, `RouteExit` has two cases: if the decoder
+returns `none` on `kappa_hist (actualRoute p U)`, then `v = []` and acquisition
+may begin immediately after the route without a mismatch. If the decoder
+selects a prototype with `some i`, then `v` ends at the first literal mismatch
+report against `F i`, and acquisition starts immediately afterward. In both
+cases, `h = actualRoute p U ++ v ++ a`, with `a` a prefix of
+`acquisitionTrace [] U`. The `acquisition_provenance_contract`
+only applies to an actual terminal prefix satisfying the declared policy and,
+for the completed observer, to every positive $N$ with $1\le N$ and
+`Allowed N U`; it carries the exact route, the selected prototype's first
+mismatch when applicable, continuation policy, terminal prefix and ordered
+foldl cache update over `a` seeded by `firstRaw (actualRoute p U ++ v)`.
+A malformed phase, counterfactual word, or arbitrary history is not provenance.
+The companion
+`ActualAcquisitionCacheFiber` result identifies the **nominal coarse-history
+raw-lift fiber** (including impossible branch/absent choices and absent lifts);
+it does not filter actual sources or replace raw replies by independently
+selected coarse lifts.
+In the notation of Sparse Literal §1.2 and §3.1, fix a certified finite
+history $w$, an epoch $M\ge N(w)$, and a finite address support
+$S\subseteq\mathcal P$; the common source domain is $u\in\mathcal T$,
+with replacement $\rho$ and literal readout $r_y(p)$. The same-source image is
+
+$$
+J_{M,S}:=\{(r_{\rho^M u}(p))_{p\in S}:u\in\mathcal T\}\subseteq\mathcal A^S.
+\tag{21.25}
+$$
+
+The sparse-literal transport theorem uses this same-source set and its
+continuation intersection, rather than a product of coordinate images. The
+factorization result
+`D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage` makes the
+finite analogue explicit: two residue marginals form a joint point exactly
+when they agree after reduction to the common gcd modulus. Thus surjective
+local readouts, or two separately attainable FIB fibers, never justify
+multiplying marginal attainable sets; a common source or compatibility
+coupling is required.
+
+### 21.9. Native legal-word counts and the typed FIB bridge
+
+`D5/S3/Combinatorics/Graph/LegalWords/EdgeCount.edge_count` counts only the
+native legal-word graph: its unordered edge finset equals total occupation,
+which equals the occupation-size-fiber sum. This is a combinatorial identity
+on the declared legal-word carrier. It supplies no controller, no successor
+policy, no online-memory minimum and no physical-cost optimum.
+
+The resulting typed bridge keeps the objects that cannot be collapsed:
+
+$$
+\boxed{
+\begin{gathered}
+J_{\mathrm{common}}\ ;\quad
+\text{raw provenance and ordered cache prefix}\ ;\quad
+\Xi(Q,W,Q')\ ;\\
+\text{action legality, response and continuation}\ ;\quad
+(\mathcal Q,\Delta_{\mathcal Q},\tau_{\rm ext})\ ;\\
+R(\Pi,U;T)=
+\bigl(D_{\rm on},K_{\rm nom},B_{\rm peak};
+ W_{\rm joint}^{\rm off},W_{\rm cert}^{\rm off},W_{\rm check}^{\rm off};\\
+ \sum_t(W_{\rm joint}^{\rm on},W_{\rm cert}^{\rm on},W_{\rm check}^{\rm on});
+ L_{\rm exec},C_{\rm phys}\bigr).
+\end{gathered}}
+\tag{21.26}
+$$
+
+Here $D_{\rm on}$ is online acquisition depth, $K_{\rm nom}$ is named
+control memory, and $B_{\rm peak}$ is peak retained bits. The three offline
+work coordinates cover joint-image construction, certificate search and
+static checking; the summed online coordinates cover their per-update
+maintenance. $L_{\rm exec}$ counts selected execution layers and
+$C_{\rm phys}$ is physical cost. EdgeCount constrains a native combinatorial
+count at most as an offline structural input, while RT §48 constrains the
+fixed-menu certificate and its incremental search/maintenance coordinates;
+neither result determines the other coordinates. The reset/codebook,
+raw-correlation, Mellin/Robin and sparse-literal results already cited in
+this volume remain source- and task-specific bridges with their own actual
+history, basis and arithmetic hypotheses; none is a generic controller
+theorem or a resource-preservation theorem.
+
 ## 追加锚（本行以下为增补区）

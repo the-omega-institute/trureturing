@@ -255,7 +255,7 @@ private lemma weighted_correction (r : A → ℂ) (p : A → ℝ) (q e : ℝ)
 
 end Characters
 
-private lemma unit_mul_conj (z : ℂ) (hz : ‖z‖ = 1) : z * conj z = 1 := by
+lemma unit_mul_conj (z : ℂ) (hz : ‖z‖ = 1) : z * conj z = 1 := by
   rw [mul_comm, ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, hz]
   norm_num
 
@@ -450,7 +450,7 @@ section Cyclic
 
 variable {N : ℕ} [NeZero N]
 
-private lemma cyclic_parseval (f : ZMod N → ℂ) :
+lemma cyclic_parseval (f : ZMod N → ℂ) :
     ∑ x, ‖f x‖ ^ 2 = 𝔼 k, ‖ZMod.dft f k‖ ^ 2 := by
   classical
   let E := FinitePoisson.characterEquiv (m := N)
@@ -476,7 +476,7 @@ private lemma cyclic_parseval (f : ZMod N → ℂ) :
   field_simp at hp ⊢
   nlinarith
 
-private lemma dft_translation (f : ZMod N → ℂ) (t k : ZMod N) :
+lemma dft_translation (f : ZMod N → ℂ) (t k : ZMod N) :
     ZMod.dft (fun x => f (x - t)) k =
       ZMod.stdAddChar (-(k * t)) * ZMod.dft f k := by
   classical
