@@ -68,7 +68,65 @@ internal sealed class MultivariateWeylRectanglesDocument : IScribeDocumentDefini
                         + "all nonzero characters. Fourier density and uniformly bounded "
                         + "averaging operators extend convergence to every continuous observable. "
                         + "No condition requiring the coordinate monomials to occur is needed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("monomial-curve-equidistribution"),
+                DeclarationHandle.Create(
+                    "D5/S1/Phase/MultivariateWeylRectangles.monomial_curve_equidistribution"),
+                H("A common integer parameter for all input coordinates"),
+                StatementSource.FromAuthor(CurveLimit()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For the same irrational alpha and injective nonzero exponent family, "
+                        + "let B >= 2 be strictly larger than every exponent digit e(j)(i). "
+                        + "Set n(t)(i) = t^(B^i), using i = 0,...,d-1. The averages for "
+                        + "t = 1,...,L of every continuous complex observable converge to "
+                        + "normalized Haar measure.")),
+                    Paragraph(Text(
+                        "The degree assigned to e(j) is the finite sum of e(j)(i) B^i. "
+                        + "Uniqueness of fixed-length base-B expansions makes these degrees "
+                        + "distinct, and nonzero exponent vectors make them positive. "
+                        + "Evaluating every input monomial on n(t) gives exactly t to this "
+                        + "encoded degree. The one-dimensional shifted rectangle conclusion "
+                        + "then supplies sampling from one instead of zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("monomial-curve-visits"),
+                DeclarationHandle.Create(
+                    "D5/S1/Phase/MultivariateWeylRectangles.monomial_curve_visits"),
+                H("Open-set visits beyond every input threshold"),
+                StatementSource.FromAuthor(Visit()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Assume d > 0 and that every input monomial occurs in the exponent "
+                        + "family. A base larger than all digits is then at least two. For "
+                        + "every nonempty open U in the torus and every natural T, there is "
+                        + "t >= max(T,1) such that x(n(t)) belongs to U and all n(t)(i) >= T.")),
+                    Paragraph(Text(
+                        "A nonnegative continuous function supported in U and positive at one "
+                        + "point has positive Haar integral. If a tail of the curve avoided U, "
+                        + "its Cesaro averages would instead converge to zero, contradicting "
+                        + "the preceding limit. Positive integer weights imply t^(B^i) >= t "
+                        + "for t >= 1, giving all coordinate bounds at the same visit."))),
                 DescribeRole.Theorem))));
+
+    private static Formula CurveLimit() => F.Disp(F.Seq(
+        F.Lim, F.Underscore, F.Grp(F.Id("L"), F.To, F.Infty), F.Sp,
+        new Formula.Fraction(F.Seq(F.Sum, F.Underscore,
+            F.Grp(F.Id("t"), F.Eq, F.D(1)), F.Caret, F.Grp(F.Id("L")), F.Sp,
+            F.Id("F"), F.Open, F.Id("x"), F.Open, F.Id("n"), F.Open,
+            F.Id("t"), F.Close, F.Close, F.Close), F.Id("L")),
+        F.Eq, F.Int, F.Sp, F.Id("F"), F.Sp, F.Id("d"), F.Mu));
+
+    private static Formula Visit() => F.Disp(F.Seq(
+        F.Forall, F.Sp, F.Id("T"), F.Comma, F.Sp, F.Exists, F.Sp,
+        F.Id("t"), F.Geq, F.Id("max"), F.Open, F.Id("T"), F.Comma, F.D(1), F.Close,
+        F.Comma, F.Sp, F.Id("x"), F.Open, F.Id("n"), F.Open, F.Id("t"), F.Close, F.Close,
+        F.InMacro, F.Id("U"), F.Comma, F.Sp, F.Forall, F.Sp, F.Id("i"), F.Comma, F.Sp,
+        F.Id("n"), F.Open, F.Id("t"), F.Close, F.Underscore, F.Grp(F.Id("i")),
+        F.Geq, F.Id("T")));
 
     private static Formula Cancellation() => F.Disp(F.Seq(
         F.Forall, F.Sp, F.Id("epsilon"), F.Gt, F.D(0), F.Comma, F.Sp,

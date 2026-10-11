@@ -14,6 +14,10 @@ import Mathlib.RingTheory.MvPolynomial.EulerIdentity
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.Analysis.Fourier.AddCircleMulti
 import Mathlib.Topology.UniformSpace.Equicontinuity
+import Mathlib.Data.Nat.Digits.Lemmas
+import Mathlib.Data.List.Indexes
+import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+import Mathlib.Topology.UrysohnsLemma
 
 noncomputable section
 
@@ -27,11 +31,6 @@ def polynomialPhase {d : ℕ} (α : ℝ) (Q : MvPolynomial (Fin d) ℤ)
     (n : Fin d → ℕ) : ℂ :=
   Complex.exp (2 * Real.pi * Complex.I * α *
     (MvPolynomial.eval (fun i => (n i : ℤ)) Q : ℂ))
-
-/-- Cancellation over every sufficiently large rectangle, with a common side threshold. -/
-def RectangularCancellation {d : ℕ} (f : (Fin d → ℕ) → ℂ) : Prop :=
-  ∀ ε : ℝ, 0 < ε → ∃ R : ℕ, 1 ≤ R ∧ ∀ N : Fin d → ℕ,
-    (∀ i, R ≤ N i) → ‖𝔼 n ∈ Fintype.piFinset (fun i => range (N i)), f n‖ < ε
 
 private theorem norm_expect_sq_le {ι : Type*} (s : Finset ι) (f : ι → ℂ) :
     ‖𝔼 n ∈ s, f n‖ ^ 2 ≤ 𝔼 n ∈ s, ‖f n‖ ^ 2 := by
@@ -243,10 +242,9 @@ variable {d : ℕ}
 local notation:max "low" n:arg =>
   (MvPolynomial.restrictSupport ℤ (Set.ofPred (fun v : Fin d →₀ ℕ => Finsupp.degree v < n)))
 
-/-- Translation in one coordinate as an algebra endomorphism. -/
-def coordinateTranslation (i : Fin d) (h : ℤ) :
-    MvPolynomial (Fin d) ℤ →ₐ[ℤ] MvPolynomial (Fin d) ℤ :=
-  MvPolynomial.aeval (fun j => X j + C (if j = i then h else 0))
+local notation:max "coordinateTranslation" i:arg h:arg =>
+  (MvPolynomial.aeval (fun j : Fin d => X j + C (ite (j = i) h 0)) :
+    MvPolynomial (Fin d) ℤ →ₐ[ℤ] MvPolynomial (Fin d) ℤ)
 
 private theorem low_mono {p : MvPolynomial (Fin d) ℤ} {m n : ℕ}
     (h : p ∈ low m) (hmn : m ≤ n) : p ∈ low n :=
@@ -285,8 +283,8 @@ private theorem translation_jet_monomial (i : Fin d) (h : ℤ)
     constructor
     · have hc : monomial (0 : Fin d →₀ ℕ) a ∈ low 1 :=
         (monomial_mem_restrictSupport (R := ℤ)).mpr (Or.inl (by change Finsupp.degree (0 : Fin d →₀ ℕ) < 1; simp))
-      simpa only [coordinateTranslation, aeval_C, algebraMap_eq, monomial_zero'] using hc
-    · simp [coordinateTranslation]
+      simpa only [aeval_C, algebraMap_eq, monomial_zero'] using hc
+    · simp
   have hstep (p : MvPolynomial (Fin d) ℤ) (n : ℕ) (j : Fin d)
       (hp : coordinateTranslation i h p ∈ low (n + 1) ∧
         coordinateTranslation i h p - p ∈ low n ∧
@@ -296,7 +294,7 @@ private theorem translation_jet_monomial (i : Fin d) (h : ℤ)
       coordinateTranslation i h (p * X j) - p * X j - C h * pderiv i (p * X j)
         ∈ low n := by
     have hx : coordinateTranslation i h (X j) = X j + C (if j = i then h else 0) := by
-      simp [coordinateTranslation]
+      simp
     rw [map_mul, hx]
     constructor
     · rw [mul_add]
@@ -442,7 +440,7 @@ private theorem eval_coordinateTranslation (Q : MvPolynomial (Fin d) ℤ)
   have he : (eval n).comp (coordinateTranslation i h).toRingHom =
       eval (Function.update n i (n i + h)) := by
     apply MvPolynomial.ringHom_ext
-    · intro a; simp [coordinateTranslation, MvPolynomial.algebraMap_eq]
+    · intro a; simp
     intro j
     change eval n (MvPolynomial.aeval (fun j => X j + C (if j = i then h else 0)) (X j)) =
       eval (Function.update n i (n i + h)) (X j)
@@ -497,9 +495,9 @@ private theorem degree_one_cancellation (α : ℝ) (hα : Irrational α)
   have hev (y : {j : Fin d // j ≠ i} → ℕ) (x : ℕ) :
       eval (fun j => (((Equiv.funSplitAt i ℕ).symm (x, y)) j : ℤ)) Q =
       eval (fun j => (((Equiv.funSplitAt i ℕ).symm (0, y)) j : ℤ)) Q + (x : ℤ) * a := by
-    have hj := low_zero (by simpa [hD] using (translation_jet i (x : ℤ) Q).2.2)
+    have hj := low_zero (by simpa only [hD, Nat.sub_self] using (translation_jet i (x : ℤ) Q).2.2)
     have he := congrArg (eval (fun j => (((Equiv.funSplitAt i ℕ).symm (0, y)) j : ℤ))) hj
-    rw [map_sub, map_sub, map_mul, map_natCast, haeq, eval_C, map_zero,
+    rw [map_sub, map_sub, map_mul, eval_C, haeq, eval_C, map_zero,
       eval_coordinateTranslation] at he
     have heval : Function.update (fun j => (((Equiv.funSplitAt i ℕ).symm (0, y)) j : ℤ)) i
         ((((Equiv.funSplitAt i ℕ).symm (0, y)) i : ℤ) + (x : ℤ)) =
@@ -562,7 +560,9 @@ private theorem polynomial_rectangular_tendsto (α : ℝ) (hα : Irrational α)
 /-- A single threshold works for every rectangle with every side above that threshold. -/
 theorem polynomial_rectangular_cancellation (α : ℝ) (hα : Irrational α)
     (Q : MvPolynomial (Fin d) ℤ) (hQ : 0 < Q.totalDegree) :
-    RectangularCancellation (polynomialPhase α Q) := by
+    ∀ ε : ℝ, 0 < ε → ∃ R : ℕ, 1 ≤ R ∧ ∀ N : Fin d → ℕ,
+      (∀ i, R ≤ N i) →
+      ‖𝔼 n ∈ Fintype.piFinset (fun i => range (N i)), polynomialPhase α Q n‖ < ε := by
   intro ε hε
   have ht := Metric.tendsto_nhds.mp (polynomial_rectangular_tendsto α hα Q hQ) ε hε
   obtain ⟨N₀, hN₀⟩ := eventually_atTop.mp ht
@@ -578,6 +578,8 @@ section ContinuousObservables
 open MeasureTheory
 
 local instance : MeasureSpace UnitAddCircle := ⟨AddCircle.haarAddCircle⟩
+local instance : Measure.IsAddHaarMeasure (volume : Measure UnitAddCircle) :=
+  inferInstanceAs (Measure.IsAddHaarMeasure AddCircle.haarAddCircle)
 local instance : IsProbabilityMeasure (volume : Measure UnitAddCircle) :=
   inferInstanceAs (IsProbabilityMeasure AddCircle.haarAddCircle)
 
@@ -714,9 +716,11 @@ theorem monomial_rectangular_equidistribution {d : ℕ} (α : ℝ) (hα : Irrati
       nonempty_range_iff.mpr (Nat.ne_of_gt (lt_of_lt_of_le Nat.zero_lt_one (hN i))))
   intro k hk
   simp_rw [character_monomialOrbit]
-  suffices hcancel : RectangularCancellation (polynomialPhase α
-      (MvPolynomial.aeval (fun i => MvPolynomial.X i + MvPolynomial.C (a i : ℤ))
-        (∑ j, MvPolynomial.monomial (e j) (k j)))) by
+  suffices hcancel : ∀ ε : ℝ, 0 < ε → ∃ R : ℕ, 1 ≤ R ∧ ∀ N : Fin d → ℕ,
+      (∀ i, R ≤ N i) → ‖𝔼 n ∈ Fintype.piFinset (fun i => range (N i)),
+        polynomialPhase α (MvPolynomial.aeval
+          (fun i => MvPolynomial.X i + MvPolynomial.C (a i : ℤ))
+          (∑ j, MvPolynomial.monomial (e j) (k j))) n‖ < ε by
     apply Metric.tendsto_nhds.mpr
     intro ε hε
     obtain ⟨R, _, hR⟩ := hcancel ε hε
@@ -733,6 +737,123 @@ theorem monomial_rectangular_equidistribution {d : ℕ} (α : ℝ) (hα : Irrati
     simp [he.eq_iff]
   rw [hcoeff, MvPolynomial.coeff_C_of_ne_zero (hzero j)] at hc
   exact hj hc
+
+private theorem one_dimensional_average (N : ℕ) (f : (Fin 1 → ℕ) → ℂ) :
+    (𝔼 n ∈ Fintype.piFinset (fun _ : Fin 1 => range N), f n) =
+      𝔼 t ∈ range N, f (fun _ => t) := by
+  apply expect_equiv (Equiv.funUnique (Fin 1) ℕ)
+  · intro n
+    simp only [Fintype.mem_piFinset, Equiv.funUnique_apply]
+    exact ⟨fun h => h default, fun h i => by simpa only [Subsingleton.elim i default] using h⟩
+  · intro n _
+    congr 1
+    funext i
+    exact congrArg n (Subsingleton.elim i 0)
+
+/-- Along the common curve n(i) = t^(B^i), sampling begins at t = 1. -/
+theorem monomial_curve_equidistribution {d : ℕ} (α : ℝ) (hα : Irrational α)
+    (e : κ → (Fin d →₀ ℕ)) (he : Function.Injective e) (hzero : ∀ j, e j ≠ 0)
+    (B : ℕ) (hB : 2 ≤ B) (hdigit : ∀ j i, e j i < B)
+    (F : C(UnitAddTorus κ, ℂ)) :
+    Tendsto (fun L : ℕ => 𝔼 t ∈ range L,
+      F (monomialOrbit α e 0 (fun i => (t + 1) ^ (B ^ i.val))))
+      atTop (𝓝 (∫ z, F z)) := by
+  classical
+  let c (j : κ) := Nat.ofDigits B (List.ofFn (e j))
+  have hc (j : κ) : c j = ∑ i : Fin d, e j i * B ^ i.val := by
+    simp [c, Nat.ofDigits_eq_sum_mapIdx, List.mapIdx_eq_ofFn, List.sum_ofFn]
+  have hinj : Function.Injective c := by
+    intro j k hjk
+    apply he
+    apply Finsupp.ext
+    exact congrFun (List.ofFn_inj.mp (Nat.ofDigits_inj_of_len_eq (by omega)
+      (by simp) (by simpa using hdigit j) (by simpa using hdigit k) hjk))
+  have hpos (j : κ) : c j ≠ 0 := by
+    intro hz
+    apply hzero j
+    ext i
+    have hi : e j i * B ^ i.val = 0 :=
+      (Finset.sum_eq_zero_iff_of_nonneg (fun _ _ => Nat.zero_le _)).mp ((hc j).symm.trans hz)
+        i (mem_univ i)
+    exact (mul_eq_zero.mp hi).resolve_right (pow_ne_zero _ (by omega))
+  let e' (j : κ) : Fin 1 →₀ ℕ := Finsupp.single 0 (c j)
+  have horbit (t : ℕ) : monomialOrbit α e' (fun _ => 1) (fun _ => t) =
+      monomialOrbit α e 0 (fun i => (t + 1) ^ (B ^ i.val)) := by
+    ext j
+    apply congrArg (fun x : ℝ => (x : UnitAddCircle))
+    congr 1
+    simp only [monomialOrbit, MvPolynomial.eval_monomial, one_mul]
+    simp only [e', Finsupp.prod_single_index, pow_zero]
+    rw [Finsupp.prod_pow, hc]
+    push_cast
+    rw [← Finset.prod_pow_eq_pow_sum]
+    apply prod_congr rfl
+    intro i _
+    simp only [Pi.zero_apply, Nat.cast_zero, add_zero, ← pow_mul, mul_comm]
+  have h := monomial_rectangular_equidistribution α hα e'
+    (fun j k h => hinj (Finsupp.single_injective 0 h))
+    (fun j => Finsupp.single_ne_zero.mpr (hpos j))
+    (fun _ => 1) F
+  have ht : Tendsto (fun L : ℕ => (fun _ : Fin 1 => L)) atTop atTop := by
+    apply tendsto_atTop.mpr
+    intro N
+    exact (eventually_ge_atTop (N 0)).mono fun L hL i =>
+      by simpa only [Subsingleton.elim i 0] using hL
+  have hh := h.comp ht
+  simpa only [Function.comp_def, one_dimensional_average, horbit] using hh
+
+/-- Every nonempty open set is attained arbitrarily far out along the same curve,
+with every input coordinate above the prescribed threshold. -/
+theorem monomial_curve_visits {d : ℕ} (hd : 0 < d) (α : ℝ) (hα : Irrational α)
+    (e : κ → (Fin d →₀ ℕ)) (he : Function.Injective e) (hzero : ∀ j, e j ≠ 0)
+    (hinput : ∀ i : Fin d, ∃ j, e j = Finsupp.single i 1)
+    (B : ℕ) (hdigit : ∀ j i, e j i < B)
+    (U : Set (UnitAddTorus κ)) (hU : IsOpen U) (hUne : U.Nonempty) (T : ℕ) :
+    ∃ t : ℕ, max T 1 ≤ t ∧
+      monomialOrbit α e 0 (fun i => t ^ (B ^ i.val)) ∈ U ∧
+      ∀ i : Fin d, T ≤ t ^ (B ^ i.val) := by
+  classical
+  have hB : 2 ≤ B := by
+    obtain ⟨j, hj⟩ := hinput ⟨0, hd⟩
+    have hb := hdigit j ⟨0, hd⟩
+    simp only [hj, Finsupp.single_eq_same] at hb
+    omega
+  suffices hv : ∃ t : ℕ, max T 1 ≤ t ∧
+      monomialOrbit α e 0 (fun i => t ^ (B ^ i.val)) ∈ U by
+    obtain ⟨t, ht, hu⟩ := hv
+    exact ⟨t, ht, hu, fun i => (le_max_left T 1).trans (ht.trans
+      (le_self_pow ((le_max_right T 1).trans ht) (pow_ne_zero _ (by omega))))⟩
+  by_contra hn
+  push Not at hn
+  obtain ⟨y, hy⟩ := hUne
+  obtain ⟨f, hf1, hfc, hfs, hf01⟩ :=
+    exists_continuousMap_one_of_isCompact_subset_isOpen isCompact_singleton hU
+      (Set.singleton_subset_iff.mpr hy)
+  have hpos : 0 < ∫ z, f z := integral_pos_of_integrable_nonneg_nonzero (x := y)
+    f.continuous (f.continuous.integrable_of_hasCompactSupport hfc)
+    (fun z => (hf01 z).1) (by simpa only [hf1 (Set.mem_singleton y), Pi.one_apply] using (one_ne_zero : (1 : ℝ) ≠ 0))
+  let F : C(UnitAddTorus κ, ℂ) := ⟨fun z => (f z : ℂ), Complex.continuous_ofReal.comp f.continuous⟩
+  have hzeroTail : ∀ᶠ t : ℕ in atTop,
+      F (monomialOrbit α e 0 (fun i => (t + 1) ^ (B ^ i.val))) = 0 := by
+    filter_upwards [eventually_ge_atTop (max T 1)] with t ht
+    have hout := hn (t + 1) (by omega)
+    have hz : f (monomialOrbit α e 0 (fun i => (t + 1) ^ (B ^ i.val))) = 0 := by
+      by_contra hz
+      exact hout (hfs (subset_closure hz))
+    simp only [F, ContinuousMap.coe_mk, hz, Complex.ofReal_zero]
+  have hseq : Tendsto (fun t : ℕ =>
+      F (monomialOrbit α e 0 (fun i => (t + 1) ^ (B ^ i.val)))) atTop (𝓝 (0 : ℂ)) :=
+    tendsto_const_nhds.congr' (hzeroTail.mono fun _ h => h.symm)
+  have hlim0 := hseq.cesaro_smul
+  have hlim := monomial_curve_equidistribution α hα e he hzero B hB hdigit F
+  have hlim0' : Tendsto (fun L : ℕ => 𝔼 t ∈ range L,
+      F (monomialOrbit α e 0 (fun i => (t + 1) ^ (B ^ i.val)))) atTop (𝓝 0) := by
+    simpa only [expect_eq_sum_div_card, card_range, Complex.real_smul,
+      Complex.ofReal_inv, Complex.ofReal_natCast, div_eq_mul_inv, mul_comm] using hlim0
+  have heq := tendsto_nhds_unique hlim hlim0'
+  change (∫ z, (f z : ℂ)) = 0 at heq
+  rw [integral_complex_ofReal, Complex.ofReal_eq_zero] at heq
+  exact hpos.ne' heq
 
 end ContinuousObservables
 
