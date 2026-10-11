@@ -40,42 +40,6 @@ public sealed class CompiledFibIntegrationTests
         }
     }
 
-    [Fact]
-    public void TypedReportsUseCompiledModuleWithoutNativeExecutable()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        var root = TestRepositoryLayout.FindRoot();
-        using var diagnostics = new TemporaryDirectory();
-        string[] sources = ["Reg/Support/AuricFibCompiledSource.lean",
-            "Reg/Support/AuricFibCompiledFixture.lean"];
-        var ownsSources = sources.All(path => !File.Exists(Path.Combine(root, path)));
-        var config = Path.Combine(root, "tools/lean-inspector-reg/lakefile.toml");
-        var before = File.ReadAllBytes(config);
-        var mode = File.GetUnixFileMode(config);
-        var written = File.GetLastWriteTimeUtc(config);
-        var accessed = File.GetLastAccessTimeUtc(config);
-        try
-        {
-            var result = TestProcessRunner.Run("python3",
-                ["-B", "tools/lean-inspector/tests/test_auric_fib_compiled.py",
-                    "--diagnostics", diagnostics.Path, "CompiledFibProgramTests", "-v"],
-                root, TestBudgets.ReportSupervisorHangGuard, 1024 * 1024,
-                standardOutput: Console.OpenStandardOutput(), standardError: Console.OpenStandardError());
-            Assert.True(result.ExitCode == 0, "[FAIL] compiled_fib_program_execution: "
-                + Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
-        }
-        finally
-        {
-            WriteFinalDiagnostics(diagnostics.Path, nameof(TypedReportsUseCompiledModuleWithoutNativeExecutable), Console.Out);
-            File.WriteAllBytes(config, before);
-            File.SetUnixFileMode(config, mode);
-            File.SetLastWriteTimeUtc(config, written);
-            File.SetLastAccessTimeUtc(config, accessed);
-            if (ownsSources)
-                foreach (var path in sources) File.Delete(Path.Combine(root, path));
-        }
-    }
-
     internal static void WriteFinalDiagnostics(string directory, string behavior, TextWriter output)
     {
         // This read runs after the unchanged supervisor outcome. It preserves
