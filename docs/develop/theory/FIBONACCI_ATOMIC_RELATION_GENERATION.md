@@ -70409,3 +70409,71 @@ $$
 Broadbent 表格常用的 \(x_0=e^{20}\) 区域，故（459.1）不能被倒用于这个样本。
 这说明该结果是无界路线的解析输入接口，不是对有限样本的自动证书。它也没有
 证明（459.4）对所有自匹配根成立，更没有证明 Robin 不等式或 RH。
+
+## 460. Young 格分对角的最新分级与 FIB 的真实接口
+
+Gómez-Aíza 的 [arXiv:2608.22561v1](../../../Library/ArithSums/gomezaiza2026younglattice.md)
+把 Espinosa--Segovia 的分支再作一次正系数分级。该来源已在仓内的 Segovia
+卡片之后独立核对；这里不重复首支证明、钩形常数或 CA cutoff 的有限证据。
+
+对
+
+$$
+E_{i,j}(n)=
+\sum_{\substack{\mu\vdash j\\\ell(\mu)=i}}
+\frac{m_\mu(1,1/2,\ldots,1/n)}{\mu_1!\cdots\mu_i!},
+$$
+
+固定分支的真正索引是 excess
+
+$$
+j-i=r-1,
+$$
+
+而不是 Fibonacci 秩。其有限生成函数满足
+
+$$
+[u^jv^i]
+\prod_{q=1}^n\left(1+v\frac{e^{u/q}-1}{u}\right)=E_{i,j}(n).
+$$
+
+再以 \(v=z/u\) 并取 \(u^{r-1}\) 系数，得到整条 Young 对角，而不是逐个挑选
+钩形。极限产品的系数 \(C_r\) 给出固定 \(r\) 的
+
+$$
+A_r(n)\sim C_r n\log\log n,
+$$
+
+并可用第二变量 \(y\) 记录非单位行数 \(d\)，得到 \(C_{r,d}\)。在正系数
+假设与 Abel 端点处理下，行和与列和只是同一质量的两种求和次序；它们组织
+
+$$
+e^\gamma=1+\sum_{r\ge2}\sum_{d<r}C_{r,d}.
+$$
+
+这给当前 FIB 研究一个可复用但有限的预算接口。若某个新的来源映射把 FIB
+地址送到同一整数 \(N\) 的 branch cutoff \(D_r(N)\)，则按有序约数分解有精确
+恒等式
+
+$$
+Z(N)=
+\underbrace{\sum_{d\mid N,\ d\le D_r(N)}\frac1d}_{\text{已实现的分支前缀}}
++
+\underbrace{\sum_{d\mid N,\ d>D_r(N)}\frac1d}_{\text{未实现的正尾项}}.
+$$
+
+所以要由这条分拆路线推出 Robin，除了分支常数的渐近和，还必须在同一个
+FIB 来源上控制第二项；正的 \(C_{r,d}\) 分解本身没有提供该点值尾项的上界。
+它也不恢复 §459 的加权 floor residual
+\(\mathcal L_P\)，因为两者分别按分拆深度与素数幂取整组织。
+
+因此本节只新增一个去重后的接口判据：
+
+$$
+\text{FIB 地址}
+\Longrightarrow
+\text{同一 }N\text{ 的 branch cutoff 与尾项控制}
+$$
+
+仍是未解决桥梁。继续重写 \(C_r\)、MZV 深度或 Segovia 的钩形极限不会
+缩小该量词缺口，也不构成 Robin 或 RH 的证明。
