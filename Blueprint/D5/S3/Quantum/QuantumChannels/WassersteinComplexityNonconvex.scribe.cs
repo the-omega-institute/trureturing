@@ -17,7 +17,8 @@ internal sealed class WassersteinComplexityNonconvexDocument : IScribeDocumentDe
             Node("Phi", Disp(All("e", Real(), All("rho", Mat(D(2)), Eqn(C("Phi", V("e"), V("rho")), Evolution(C("phaseU", V("e")), V("rho")))))), "Phi e is the complex-linear conjugation map by phaseU e; the endpoints have e=1 and e=-1.", AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
             Node("AdZ", Disp(All("rho", Mat(D(2)), Eqn(C("AdZ", V("rho")), Mul(Mul(QC("FiniteDimensional", "qubitZ"), V("rho")), QC("FiniteDimensional", "qubitZ"))))), "AdZ is the complex-linear conjugation map by the frozen qubitZ.", AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
             Node("Psi", Disp(Eqn(C("Psi"), Add(Smul(Div(D(3), D(4)), QC("LinearMap", "id")), Smul(Div(D(1), D(4)), C("AdZ"))))), "Psi is the identity/dephasing mixture with t=1/4. The endpoint channel mixture weight is s=1/2.", AssessedProvenance.FromRepo(Source), DescribeRole.Definition),
-            Node("result", Disp(NotF(C("claim"))), "For the channels Φ₊ and Φ₋ at t=1/4 and their midpoint Ψ at s=1/2, the endpoint bound is C_W(Φ₊), C_W(Φ₋) ≤ √2 while C_W(Ψ) ≥ √(1+√3), with √(1+√3) > √2, so the midpoint value is strictly larger than the endpoint bound.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+            Node("result", Disp(NotF(C("claim"))), "For the channels Φ₊ and Φ₋ at t=1/4 and their midpoint Ψ at s=1/2, the endpoint bound is C_W(Φ₊), C_W(Φ₋) ≤ √2 while C_W(Ψ) ≥ √(1+√3), with √(1+√3) > √2, so the midpoint value is strictly larger than the endpoint bound.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bunth-pitrik-titkos-virosztek-2024-wasserstein-complexity-convexity"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role,
