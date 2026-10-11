@@ -539,7 +539,6 @@ private theorem coordinate_inverse :
       rational_certificate.2.2.1, map_one]
   · simp only [U, mul_assoc, ← mul_assoc (ratReal certN) (ratReal certNi),
       ← map_mul, rational_certificate.2.2.2.1, map_one, one_mul, hS']
-
 private def pauliProd : Pauli → Pauli → Pauli
   | .I, q => q | p, .I => p
   | .X, .X => .I | .Y, .Y => .I | .Z, .Z => .I
@@ -601,9 +600,7 @@ private theorem conjStep_smul (p : NonIdentityPauli) (a : ℝ) (c : ℂ) (M : Ma
 private def gateOrder : Fin 15 → Fin 15 := ![9,1,4,13,12,2,5,10,0,6,11,7,8,3,14]
 private def witnessP : Fin 15 → NonIdentityPauli := fun j =>
   ⟨labels (gateOrder j), by fin_cases j <;> decide +kernel⟩
-private noncomputable def point : Param := fun i =>
-  if i ∈ ({5,6,7,10} : Finset (Fin 15)) then Real.pi / 4 else 0
-
+private noncomputable def point : Param := fun i => if i ∈ ({5,6,7,10} : Finset (Fin 15)) then Real.pi / 4 else 0
 set_option maxHeartbeats 2000000 in
 -- Each column uses at most four sparse double-angle conjugations.
 private theorem witness_columns (j : Fin 15) :
@@ -643,7 +640,6 @@ private theorem normalized_witness : B * Matrix.of (J_H witnessP point) * U = D 
              simp only [B, U, mul_assoc]
        _ = D := by rw [scaling_inverse.1, scaling_inverse.2]
                    simp only [mul_one, ← map_mul, rational_certificate.2.2.2.2, D]
-
 private theorem sqrt_inverse : (Real.sqrt 2)⁻¹ = Real.sqrt 2 / 2 := by
   have hs : Real.sqrt 2 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
   field_simp; nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]
@@ -683,13 +679,11 @@ private theorem contracted_derivative :
     Complex.ofReal_ofNat, add_zero, zero_add, sub_neg_eq_add, Complex.add_re, Complex.mul_re, Complex.div_ofNat_re, Complex.neg_re, Complex.I_re, Complex.ofReal_re, Complex.one_re, Complex.ofReal_im, Complex.div_ofNat_im, Complex.neg_im,
     Complex.one_im, sub_zero, Complex.mul_im, Complex.re_ofNat, Complex.I_im, Complex.im_ofNat, zero_sub, and_false, Complex.ofReal_inv, Complex.sub_re, Complex.inv_re, Complex.normSq_ofNat, div_self_mul_self', Complex.inv_im]
   ring_nf; simp only [h6, sqrt_inverse]; nlinarith [hs]
-
 private theorem coordinate_det : det B ≠ 0 ∧ det U ≠ 0 := by
   constructor
   · intro h; have hh := congrArg det coordinate_inverse.1; simp [det_mul, h] at hh
   · intro h; have hh := congrArg det coordinate_inverse.2; simp [det_mul, h] at hh
-private theorem D_eq : D = diagonal (fun i : Fin 15 => if i = 12 then (0 : ℝ) else 1) := by
-  ext i j; simp [D, certD, ratReal, diagonal]; split_ifs <;> simp
+private theorem D_eq : D = diagonal (fun i : Fin 15 => if i = 12 then (0 : ℝ) else 1) := by ext i j; simp [D, certD, ratReal, diagonal]; split_ifs <;> simp
 private noncomputable def normalize : (Fin 15 → Fin 15 → ℝ) →L[ℝ] (Fin 15 → Fin 15 → ℝ) :=
   LinearMap.toContinuousLinearMap {
     toFun := fun M => B * Matrix.of M * U
@@ -697,6 +691,7 @@ private noncomputable def normalize : (Fin 15 → Fin 15 → ℝ) →L[ℝ] (Fin
     map_smul' := by
       intro c M; change B * (c • Matrix.of M) * U = _
       rw [Matrix.mul_smul, Matrix.smul_mul]; rfl }
+private theorem normalize_apply (T : Fin 15 → Fin 15 → ℝ) : normalize T = B * Matrix.of T * U := rfl
 private noncomputable def detForm {n : Type*} [Fintype n] [DecidableEq n] :
     (n → ℝ) [⋀^n]→L[ℝ] ℝ :=
   { (detRowAlternating : (n → ℝ) [⋀^n]→ₗ[ℝ] ℝ) with cont := continuous_id.matrix_det }
@@ -712,6 +707,8 @@ private theorem det_comp_strict {n : Type*} [Fintype n] [DecidableEq n]
     (hf : HasStrictFDerivAt f fD a) :
     HasStrictFDerivAt (fun x => det (Matrix.of (f x))) ((detDiff (f a)).comp fD) a := by
   simpa only [detDiff, Function.comp_def, detForm_apply] using ((detForm (n := n)).1.hasStrictFDerivAt _).comp a hf
+private theorem detDiff_comp_apply {n : Type*} [Fintype n] [DecidableEq n] (M : n → n → ℝ) (L : Param →L[ℝ] (n → n → ℝ)) (h : Param) :
+    ((detDiff M).comp L) h = detDiff M (L h) := by rw [ContinuousLinearMap.comp_apply]
 private noncomputable def g (α : Param) : ℝ := det (Matrix.of (normalize (J_H witnessP α)))
 private noncomputable def gD (α : Param) : Param →L[ℝ] ℝ :=
   (detDiff (normalize (J_H witnessP α))).comp (normalize.comp (J_D witnessP α))
@@ -738,14 +735,35 @@ private theorem U_pivot : U *ᵥ Pi.single 12 1 = v := by
   change (certN i 12 : ℝ) = (certu i : ℝ)
   exact_mod_cast (show certN i 12 = certu i from
     (show ∀ k, certN k 12 = certu k by decide +kernel) i)
-set_option maxRecDepth 2000 in
-private theorem gD_direction : gD point v = -1 := by
-  have hn : normalize (J_H witnessP point) = D := normalized_witness
-  simp only [gD, hn, ContinuousLinearMap.comp_apply, det_derivative_D]
-  change (B * Matrix.of (J_D witnessP point v) * U) 12 12 = -1
-  have hh := congrFun (mulVec_single_one (B * Matrix.of (J_D witnessP point v) * U) 12) 12
-  change ((B * Matrix.of (J_D witnessP point v) * U) *ᵥ Pi.single 12 1) 12 = (B * Matrix.of (J_D witnessP point v) * U) 12 12 at hh
+private theorem normalized_pivot (T : Fin 15 → Fin 15 → ℝ) :
+    normalize T 12 12 = (B *ᵥ (Matrix.of T *ᵥ v)) 12 := by
+  rw [normalize_apply]
+  have hh := congrFun (mulVec_single_one (B * Matrix.of T * U) 12) 12
+  change ((B * Matrix.of T * U) *ᵥ Pi.single 12 1) 12 = (B * Matrix.of T * U) 12 12 at hh
   rw [← hh, ← mulVec_mulVec, ← mulVec_mulVec, U_pivot]
+set_option maxRecDepth 2000 in
+set_option backward.isDefEq.respectTransparency true in
+private theorem gD_eval (α h : Param) : gD α h = detDiff (normalize (J_H witnessP α)) (normalize (J_D witnessP α h)) := by
+  unfold gD; rw [detDiff_comp_apply, ContinuousLinearMap.comp_apply]
+set_option backward.isDefEq.respectTransparency true in
+private theorem gD_direction : gD point v = -1 := by
+  have hn : normalize (J_H witnessP point) = D := by rw [normalize_apply]; exact normalized_witness
+  rw [gD_eval, hn, det_derivative_D, normalized_pivot]
   exact contracted_derivative
-
+private noncomputable def Q : Mat →L[ℝ] (Fin 14 → ℝ) :=
+  ContinuousLinearMap.pi fun i =>
+    (ContinuousLinearMap.proj ((12 : Fin 15).succAbove i)).comp
+      ((Matrix.mulVecLin B).toContinuousLinearMap.comp
+        (rho.comp ((2 * Complex.I) • (ContinuousLinearMap.mul ℝ Mat).flip (star (circuit witnessP point)))))
+private theorem Q_DF (x : Param) :
+    Q (fderiv ℝ (circuit witnessP) point (U *ᵥ x)) = Fin.removeNth 12 x := by
+  have hc : (2 * Complex.I) * (-Complex.I / 2) = 1 := by norm_num [Complex.ext_iff, Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im, Complex.normSq]
+  change Fin.removeNth 12 (B *ᵥ rho ((2 * Complex.I) • (fderiv ℝ (circuit witnessP) point (U *ᵥ x) * star (circuit witnessP point)))) = _
+  rw [circuit_fderiv, Matrix.smul_mul, mul_assoc,
+    Unitary.mul_star_self_of_mem (circuit_unitary witnessP point), mul_one,
+    smul_smul, hc, one_smul, rho_E, mulVec_mulVec, mulVec_mulVec]
+  change Fin.removeNth 12 ((B * Matrix.of (J_H witnessP point) * U) *ᵥ x) = _; rw [normalized_witness]
+  ext i; simp [D_eq, mulVec_diagonal, Fin.removeNth, Fin.succAbove_ne]
+private theorem Q_kernel : Q (fderiv ℝ (circuit witnessP) point v) = 0 := by
+  rw [← U_pivot, Q_DF]; ext i; simp [Fin.removeNth, Fin.succAbove_ne]
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
