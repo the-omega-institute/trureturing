@@ -366,3 +366,191 @@ def factor_dictionary_bound_registration :
 #print axioms factor_dictionary_bound_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal138
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal141
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := ℤ → CuLetter
+  State := fun _ => ℤ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => CuLetter
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature (fun _ ω x => ω x) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => .c) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (W : ℤ → List CuLetter) (positive : ∀ j, 0 < (W j).length) (ω : ℤ → CuLetter)
+    (tiles : ∀ j (k : Fin (W j).length), ω (blockCut W j + (k : ℕ)) = (W j)[k])
+    (a : ℤ) (q : ℕ), ∀ k : Fin (blockWindow W a q).length,
+    r.readout () ω (blockCut W a + (k : ℕ)) = (blockWindow W a q)[k]
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have tiles : ∀ j (k : Fin ([CuLetter.u] : List CuLetter).length),
+      (fun _ : ℤ => CuLetter.u) (blockCut (fun _ => [.u]) j + (k : ℕ)) =
+        ([CuLetter.u] : List CuLetter)[k] := by
+    intro j k
+    have hk : k.val = 0 := congrArg Fin.val (Fin.eq_zero k)
+    simp [hk]
+  have impossible := h (fun _ => [.u]) (by intro j; simp) (fun _ => .u) tiles 0 1
+    ⟨0, by simp [blockWindow]⟩
+  simp [rejected, realize, blockWindow] at impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.tiled_window_occurs) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.tiled_window_occurs, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(fun x => if x = 0 then .u else .c), 0, 1, ?_⟩
+    simp [actual, realize]
+
+def tiled_window_occurs_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.tiled_window_occurs)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ ω x => ω x) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal141.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal141.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature (fun _ ω x => ω x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms tiled_window_occurs_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal141
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal142
+noncomputable section
+universe u_1
+abbrev observationSignature : Signature.{u_1+1,0,0,u_1,0} where
+  Params := Σ (V : Type u_1), Σ _ : ℤ → V, ℤ
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun p => List p.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature.{u_1} := realize.{u_1+1,0,0,u_1,0} observationSignature (fun _ p q => @choiceWindow p.1 p.2.1 p.2.2 q) (fun e => nomatch e)
+def rejected : Realization observationSignature.{u_1} :=
+  realize observationSignature (fun _ _ _ => []) (fun e => nomatch e)
+abbrev sourceArena : Arena.{u_1+1,0,0,u_1,0} where
+  signature := observationSignature
+  Law r := ∀ {V : Type u_1} (choices : ℤ → V) (a : ℤ) (q : ℕ),
+    r.readout () ⟨V, ⟨choices, a⟩⟩ q = List.ofFn (fun i : Fin q => choices (a+(i : ℕ)))
+
+theorem rejected_law : ¬ sourceArena.{u_1}.Law rejected := by
+  intro h
+  have impossible := h (V := PUnit.{u_1+1}) (fun _ => PUnit.unit) 0 1
+  have lengths := congrArg List.length impossible
+  simpa [rejected, realize] using lengths
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.choice_window_ofFn.{u_1}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.choice_window_ofFn.{u_1}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨PUnit.{u_1+1}, ⟨(fun _ => PUnit.unit), 0⟩⟩, 0, 1, ?_⟩
+    simp [actual, realize, choiceWindow]
+
+def choice_window_ofFn_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,u_1+1,0,0,u_1,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.choice_window_ofFn.{u_1})
+      (type_of% (realize.{u_1+1,0,0,u_1,0} observationSignature (fun _ p q => @choiceWindow p.1 p.2.1 p.2.2 q) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal142.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal142.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{u_1+1,0,0,u_1,0} observationSignature (fun _ p q => @choiceWindow p.1 p.2.1 p.2.2 q) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+    definition := none
+    coordinates := #[0, 1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms choice_window_ofFn_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal142
