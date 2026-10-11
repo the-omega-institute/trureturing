@@ -4777,3 +4777,117 @@ The stated partial procedure is sound by the definition of the zero cell; on the
 Finally, every $\Omega(x)$ is a finite integer, so $\gamma(x)$ is a finite word over the one-letter alphabet and its length is exactly the target. Equation (37.1) for $S=\varnothing$ makes these lengths unbounded, hence the attained range of $\gamma$ is infinite. Reading the supplied word and returning its length terminates at each source, but the finite-range hypothesis of Theorem 37.2 fails. This is a distinction between finite attained range and pointwise finite strings of unbounded possible lengths, not a way to obtain the advice from the prime-query transcript.
 
 ## 追加锚（本行以下为增补区）
+
+## 38. Randomized upper proposals under a uniform error budget
+
+**Definition 38.1 (Common tapes and the finite upper-output task).** Retain exactly $X,N,\Omega$ from (36.1), and $\beta:X\to E$, its finite attained range $E_0$, $J_\beta$ and $B_\beta$ from Definition 37.1. Fix one probability space $(\Theta,\mathcal F,\mu)$ common to every source. A tape $\theta\in\Theta$ fixes a deterministic procedure whose only source inputs are $\beta(x)$ and Boolean answers to prime-divisibility queries $p\mid N(x)$. Its next action, stopping decision and output depend only on that tape, the advice, its preceding execution and fixed parameters shared by all sources. No distribution on $X$ is imposed; source independence means that the tape law and these rules are the same for every fixed $x$.
+
+For each $x$, let $L_x\subseteq\Theta$ be the event of literal termination after finite execution, and let $H_x\subseteq L_x$ be the event that this termination outputs a finite real number $C_x(\theta)$ as a proposed upper bound. A finite proposal may be correct or false. Other terminal outcomes, including unknown, abort and $+\infty$, belong to $L_x\setminus H_x$. There is one terminal outcome per run; intermediate numerical values are not upper outputs. On $H_x$, write $\tau_x(\theta)\in\mathbb N_0$ for its finite execution length and $Q_x(\theta)$ for the finite set of primes queried on that execution, including the empty set when no query occurs.
+
+Measurability is part of the contract: for every fixed $x$, all finite execution records and terminal outcomes are measurable in $\theta$, with discrete query, answer and status fields and Borel real-output fields. In particular $L_x,H_x\in\mathcal F$, and the restricted maps $\tau_x$, $Q_x$ and $C_x$ on $H_x$ are measurable, where finite prime sets carry their countable discrete sigma algebra. Thus the truncation events below and the false-output event are measurable. No regularity of $\beta$ on $X$ is required. Define
+
+$$
+\begin{aligned}
+F_x&=\{\theta\in H_x:C_x(\theta)<\Omega(x)\},&
+S_x&=H_x\setminus F_x,\\
+U_x&=\Theta\setminus H_x,&
+D_x&=\Theta\setminus L_x.
+\end{aligned}
+\tag{38.1}
+$$
+
+Here $S_x$ is finite successful output, meaning correctness at the actual source; it does not assert soundness on the whole observation cell. $U_x$ is operational uncertainty for this task: no finite upper proposal is returned. It includes unknown/abort and infinite outputs as well as literal nontermination $D_x$. It is neither posterior uncertainty nor the event of an incorrect proposal. The latter is $F_x$; failure to obtain a correct finite output is $U_x\cup F_x=\Theta\setminus S_x$.
+
+The common-tape convention follows the distribution-over-deterministic-procedures convention in [Magniez et al., *Improved bounds for the randomized decision tree complexity of recursive majority*, p. 2](https://arxiv.org/pdf/1309.7565v1), also recorded in [the existing source note](../../../Library/ConceptDynamics/magniez2013randomized.md). Its finite Boolean input domain and depth bounds are not hypotheses here. The distinction between one input-independent law, sourcewise probabilistic correctness and every-tape correctness is already present in [ExactRealProbeCosts](../../../D5/S3/ConceptDynamics/Decision/ExactRealProbeCosts.lean); those exact-real probes do not replace the prime queries in this definition.
+
+**Theorem 38.2 (Uniform false-output control bounds finite output on $B_\beta$).** For every procedure satisfying Definition 38.1 and every common $\delta\in[0,1]$, suppose
+
+$$
+\mu(F_y)\le\delta\qquad\text{for every }y\in X.
+\tag{38.2}
+$$
+
+Then, for every $x\in B_\beta$,
+
+$$
+\mu(H_x)\le\delta,\qquad
+\mu(U_x)\ge1-\delta,\qquad
+\mu(S_x)\le\delta-\mu(F_x)\le\delta.
+\tag{38.3}
+$$
+
+There is no uniform query-depth or execution-horizon assumption. At $\delta=0$, (38.3) asserts almost-sure absence of finite output at each obstructed source, without asserting absence on every declared tape. In particular, for $\delta<1$ no such procedure returns a finite upper proposal almost surely at every source. The obstructing set is the same procedure-independent $B_\beta$ as in Section 37, which has unbounded target in every finite probe cylinder by Theorem 37.2.
+
+**Proof.** Fix $x\in B_\beta$. Enumerate all primes increasingly as $p_1,p_2,\ldots$ and put $P_m=\{p_1,\ldots,p_m\}$ for $m\ge1$. On the common tape space define
+
+$$
+A_m=\{\theta\in H_x:\tau_x(\theta)\le m,\ Q_x(\theta)\subseteq P_m,\ C_x(\theta)\le m\}.
+\tag{38.4}
+$$
+
+These are measurable increasing events and $\bigcup_{m\ge1}A_m=H_x$: each execution producing a finite proposal has finite length, finitely many queried primes and a finite real output. This exhaustion does not bound these quantities uniformly over tapes or sources.
+
+For each $m$, persistent unboundedness gives one source
+
+$$
+y_m\in J_\beta(x,P_m),\qquad \Omega(y_m)>m.
+\tag{38.5}
+$$
+
+This $y_m$ depends on $x,m$ but not on the tape. For every $\theta\in A_m$, run both sources with that very same tape. They have the same advice, and every prime queried along the run at $x$ lies in $P_m$, on which their answers agree. The deterministic finite-execution transport used in Corollary 37.3 therefore makes the run at $y_m$ terminate with exactly $C_x(\theta)\le m<\Omega(y_m)$. This is the same-history transport of [PassivePolicyNormalization, `execute_transfer`](../../../D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.lean), with tape and advice fixed; no new generic transport assertion is needed. Consequently
+
+$$
+A_m\subseteq F_{y_m},\qquad
+\mu(A_m)\le\mu(F_{y_m})\le\delta.
+\tag{38.6}
+$$
+
+Continuity from below now yields $\mu(H_x)=\lim_m\mu(A_m)\le\delta$. Taking complements and using $H_x=S_x\sqcup F_x$ proves (38.3). The proof selects one actual source for the entire event $A_m$, not a different source for each tape. Both inclusion and probability comparison use the common law $\mu$; merely finding a bad source separately for each tape would not establish (38.6).
+
+The source-specific probability bridge is a `repo-derived` deduction from persistent unboundedness and finite-path transport, with ordinary probability continuity. The every-pattern arithmetic supplier remains Theorem 35.2 through Sections 36–37. No Lean/kernel verification or literature priority is claimed. Established confidence-impossibility background includes the Gleser–Hwang theorem as presented by [Moss, *Infinite Diameter Confidence Sets in Hedges' Publication Bias Model*, Theorem 4](https://arxiv.org/pdf/1912.09180v3), and [Bertanha–Moreira, *Impossible Inference in Econometrics: Theory and Applications*, Theorem 3](https://arxiv.org/pdf/1612.02024v5). Moss assumes pointwise convergence of dominated densities to a density, support inclusion and diverging parameter size; Bertanha–Moreira use a common weak limit of convex mixtures from each parameter class and specified boundary-continuity conditions. Those hypotheses are not imported here. These results provide context; (38.4)–(38.6) supply the prime-query argument.
+
+**Proposition 38.3 (Sharpness, coverage and termination).** Write $h_x=\mu(H_x)$, $e_x=\mu(F_x)$ and $s_x=\mu(S_x)$. Under (38.2), at every $x\in B_\beta$,
+
+$$
+0\le s_x=h_x-e_x\le\delta-e_x,\qquad
+\mu(\Theta\setminus S_x)=1-h_x+e_x\ge1-\delta+e_x.
+\tag{38.7}
+$$
+
+When $h_x>0$, coverage conditional on a finite proposal is
+
+$$
+\mu(S_x\mid H_x)=1-\frac{e_x}{h_x}.
+\tag{38.8}
+$$
+
+The unconditional error guarantee $e_x\le\delta$ alone does not give conditional coverage $1-\delta$. The bound $h_x\le\delta$ is sharp; for $0<\delta<1$, conditional coverage can be either zero or one within the same admissible procedure. Moreover (38.3) gives no lower bound $1-\delta$ on literal nontermination unless every allowed terminal outcome is a finite upper proposal.
+
+**Proof.** Equations (38.7)–(38.8) follow from the disjoint decomposition $H_x=S_x\sqcup F_x$. For the assertions of attainability, take constant $\beta$, so $B_\beta=X$ by (37.1). Use a Bernoulli tape of success probability $\delta$: on success output the upper proposal $1$ without queries, and otherwise halt with unknown. Then for every $x$,
+
+$$
+h_x=\delta,\qquad
+e_x=\delta\,\mathbf1_{\{\Omega(x)>1\}},\qquad
+s_x=\delta\,\mathbf1_{\{\Omega(x)\le1\}},\qquad
+\mu(D_x)=0.
+\tag{38.9}
+$$
+
+The labeled sources $(7,2)$ and $(13,26)$ have target values $1$ and $2$, respectively, as supplied by Proposition 37.4. For $\delta>0$ their conditional coverages are one and zero. Thus all probabilities in (38.9) meet the common error budget, attain $h_x=\delta$, and separate conditional coverage from unconditional successful-output probability. For $\delta=0$ the finite-proposal probability is zero and conditional coverage is undefined. If every halt must instead be a finite upper proposal, then $L_x=H_x$, hence $D_x=U_x$ and (38.3) does yield $\mu(D_x)\ge1-\delta$.
+
+**Proposition 38.4 (Pointwise budgets without a common gap from one).** Replacing the single bound $\delta<1$ by merely a source-dependent bound $\delta_x<1$ does not preclude finite upper output with probability one, even with constant advice and no queries.
+
+**Proof.** On the same source $X$, draw an integer $K\ge1$ from the source-independent law $\mu(K=k)=2^{-k}$ and immediately output $K$. Every tape in this discrete probability space gives a finite output. For $m=\Omega(x)\ge1$, the geometric sum gives
+
+$$
+h_x=1,\qquad
+e_x=\mu(K<m)=1-2^{-(m-1)}<1,\qquad
+s_x=2^{-(m-1)}>0.
+\tag{38.10}
+$$
+
+Here $\Omega(x)\ge1$ because every source has $N(x)>1$. Taking $\delta_x=e_x$ proves the assertion. Unboundedness of $\Omega$ gives $\sup_x\delta_x=1$, so this example supplies no common budget smaller than one and does not contradict Theorem 38.2. A source-dependent budget with a common upper bound below one is still covered by that theorem.
+
+The calibration meaning of Theorem 38.2 is task-relative: on the intrinsic obstruction $B_\beta$, uniformly limiting false finite upper proposals to $\delta$ also limits the probability of obtaining any finite proposal to $\delta$. Randomization alone leaves at least $1-\delta$ probability without such a proposal; counting actual incorrect proposals as unresolved increases the failure probability as in (38.7). The local upper endpoint (37.7) remains infinite at each finite prime transcript. The claim does not rule out bounded advice cells or the explicit index, magnitude and complete-support promises of Proposition 36.4. Source-correlated random tapes, hidden source inputs and arbitrary non-prime probes fall outside Definition 38.1; no factoring-efficiency, uniform resource or physical conclusion follows.
+
+## 追加锚（本行以下为增补区）
