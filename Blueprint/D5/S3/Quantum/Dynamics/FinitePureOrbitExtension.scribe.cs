@@ -49,7 +49,7 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
                         "For a quantum channel, applying this result requires an invariant "
                         + "cyclic tail with invertible induced motion and a decomposition whose "
                         + "members are exactly its pure-input directions. The present theorem "
-                        + "establishes the word-space extension after those data are supplied.")))),
+                        + "establishes the word-space extension after those data are supplied."))),
                 DescribeRole.Theorem))));
 
     private static Formula Formula()
