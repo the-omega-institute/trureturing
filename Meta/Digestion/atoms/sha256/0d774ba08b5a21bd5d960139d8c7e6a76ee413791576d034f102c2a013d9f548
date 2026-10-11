@@ -1,0 +1,33 @@
+**命题 68.15（同时取得粗 $R,W$ 的实际控制器）。** 以下只使用 68.3 的真实地址列，将 $\mathrm{br},\bot$ 都改为 $\nu$。三种其他槽扫描的所有未列回复均回退：
+
+| 扫描 | 当前槽的完整规则 |
+|---|---|
+| $a$ 二超额 | $v:\nu\mapsto e,\beta\mapsto u$；$e:\beta\mapsto y,\nu\mapsto a$；$u:\nu\mapsto h,\beta\mapsto t$；$t:\nu\mapsto z,\beta\mapsto$ 下一槽 |
+| $y$ 二超额 | $v:\nu\mapsto s_0,\beta\mapsto u$；$s_0:\beta\mapsto a,\nu\mapsto y$；$u:\nu\mapsto h,\beta\mapsto t$；$t:\nu\mapsto z,\beta\mapsto$ 下一槽 |
+| $z$ 二超额 | $t:\nu\mapsto s_0,\beta\mapsto v$；$s_0:\beta\mapsto a,\nu\mapsto z$；$v:\nu\mapsto y,\beta\mapsto u$；$u:\nu\mapsto h,\beta\mapsto$ 下一槽 |
+
+各列地址在本槽均带 $p_i$，对应的实际非叶集为：
+
+| 扫描 | $X_{a_i}$ | $X_{y_i}$ | $X_{h_i}$ | $X_{z_i}$ |
+|---|---|---|---|---|
+| $a$ 二 | $\{v,e\}$ | $\{v\}$ | $\{u\}$ | $\{t\}$ |
+| $y$ 二 | $\{v\}$ | $\{v,s_0\}$ | $\{u\}$ | $\{t\}$ |
+| $z$ 二 | $\{t\}$ | $\{v\}$ | $\{u\}$ | $\{t,s_0\}$ |
+
+输入前选一个槽 $j$，按固定次序用这些扫描遍历其他槽；继续的行在这些槽全是 $B$，只请求自己的叶。未退出时，剩余五行用下述尾段之一；活动字母带 $p_j$：
+
+| 尾段 | 完整规则 | 超额 $(0,a_j,y_j,h_j,z_j)$ |
+|---|---|---|
+| $A$ | $x_q:\nu\mapsto e,\alpha\mapsto g_q$；$e:\beta\mapsto y,\nu\mapsto h$；$g_q:\nu\mapsto z,\beta\mapsto r_q$；$r_q:\nu\mapsto0,\beta\mapsto a$ | $(1,0,1,2,1)$ |
+| $B$ | $v:\nu\mapsto s_0,\beta\mapsto t$；$s_0:\beta\mapsto a,\nu\mapsto y$；$t:\nu\mapsto z,\beta\mapsto d$；$d:\nu\mapsto0,\beta\mapsto h$ | $(1,1,2,0,1)$ |
+| $C$ | $t:\nu\mapsto f,\beta\mapsto d$；$f:\beta\mapsto z,\nu\mapsto a$；$d:\nu\mapsto0,\beta\mapsto e$；$e:\nu\mapsto h,\beta\mapsto y$ | $(1,2,0,1,1)$ |
+
+它们的确切非叶集为：
+
+| 尾段 | $X_0$ | $X_{a_j}$ | $X_{y_j}$ | $X_{h_j}$ | $X_{z_j}$ |
+|---|---|---|---|---|---|
+| $A$ | $\{r_q\}$ | $\varnothing$ | $\{x_q\}$ | $\{x_q,e\}$ | $\{g_q\}$ |
+| $B$ | $\{d\}$ | $\{v\}$ | $\{v,s_0\}$ | $\varnothing$ | $\{t\}$ |
+| $C$ | $\{d\}$ | $\{t,f\}$ | $\varnothing$ | $\{e\}$ | $\{t\}$ |
+
+每个叶选择都接同一个完整叶核验器，每个未列回复都接同一个已知存在根回退。每条路径地址互异，真实缓存只合并路线与核验器实际重复请求的叶。

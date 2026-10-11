@@ -11,6 +11,14 @@ internal sealed class CountableGaussianQuadraticFourthMomentDocument : IScribeDo
         "Square-summable centered Gaussian quadratic series converge in L4 with exact second and fourth moments.",
         H("Countable Gaussian Quadratic Fourth Moment"),
         Blocks(Describe.Lean(
+            DescribeId.Create("scalar-gaussian-central-even-moment"),
+            DeclarationHandle.Create(Module + "centralMoment_two_mul"),
+            H("Scalar central even moments"),
+            StatementSource.FromAuthor(CentralMomentFormula()),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
+            Blocks(Paragraph(Text("For every real mean mu, nonnegative standard deviation sigma and natural n, the Gaussian central moment of order 2n is sigma^(2n)(2n-1)!!. This includes n=0 and sigma=0. The countable quadratic-series moments and the same-noise centered-square construction use this scalar formula.")),
+                Paragraph(Text("The scalar proof is ported from RemyDegenne/brownian-motion, BrownianMotion/Gaussian/Moment.lean, centralMoment_two_mul_gaussianReal, commit 0d5b6eb928e616d3b1f774ad7d233c167d9f42c9, under Apache 2.0."))),
+            DescribeRole.Theorem), Describe.Lean(
             DescribeId.Create("countable-gaussian-quadratic-fourth-moment"),
             DeclarationHandle.Create(Module + "result"),
             H("Actual infinite sums and their moments"),
@@ -37,6 +45,17 @@ internal sealed class CountableGaussianQuadraticFourthMomentDocument : IScribeDo
         F.Seq(f, F.Open, F.Seq(args.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { F.Comma, x }).ToArray()), F.Close);
     private static Formula Pow(Formula x, byte n) => new Formula.Power(x, F.D(n));
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
+
+    private static Formula CentralMomentFormula()
+    {
+        Formula mu = F.Id("mu"), sigma = F.Id("sigma"), n = F.Id("n");
+        Formula twice = Multiply(F.D(2), n);
+        Formula lhs = Call("centralMoment", F.Id("id"), twice,
+            Call("gaussianReal", mu, Pow(sigma, 2)));
+        Formula rhs = Multiply(new Formula.Power(sigma, twice),
+            Call("doubleFactorial", F.Grp(F.Seq(twice, F.Minus, F.D(1)))));
+        return F.Disp(All("mu", R, All("sigma", F.Id("NNReal"), All("n", N, Eq(lhs, rhs)))));
+    }
 
     private static Formula TheoremFormula()
     {

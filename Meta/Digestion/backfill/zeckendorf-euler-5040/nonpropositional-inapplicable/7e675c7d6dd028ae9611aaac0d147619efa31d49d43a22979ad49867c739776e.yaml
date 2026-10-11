@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e675c7d6dd028ae9611aaac0d147619efa31d49d43a22979ad49867c739776e
+  normalized_sha256: sha256:7e675c7d6dd028ae9611aaac0d147619efa31d49d43a22979ad49867c739776e
+cas_ref: sha256:7e675c7d6dd028ae9611aaac0d147619efa31d49d43a22979ad49867c739776e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅由钉版 Mathlib 上游闭合，仓内无对应的可用公开 GID（现有 lcm_factorization_eq/score_lcm 为私有，不作为供应声明）。直接使用 Nat.factorization_lcmUpto (5^69) hp，再使用 Nat.log_eq_of_pow_le_of_lt_pow，参数 (p,e)=(2,160),(3,101),(5,69),(7,57),(11,46),(13,43),(17,39),(19,37),(23,35),(29,32),(31,32),(37,30)。hp 为这些具体素数的决定性判定；每项前提 p^e≤5^69<p^(e+1) 为闭整数幂比较的规范化。完整十二项及两个幂界在现有 PrefixLcmNotFactorialPrimorial 源码中直接应用上游声明得到；此收据不调用私有引理作为公开覆盖，不引入新 Lean 声明。
+    previous_atom_id: 638c1f3cacb1a798c6856ec22f34d15d6220871af9edc99c7c8171d4e4718c43
+    next_atom_id: eec72387f13ace5a31ea4ca6e30e360555d8bed13d7aa1772d54810c29adb1c8

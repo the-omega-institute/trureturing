@@ -1,0 +1,110 @@
+**引理 40.3（置换容量迫使的缺陷总量）。** 设 $0<t<1$、$c\in\mathbb R$、$r\in\mathbb Z$，$A$ 是含 $p\ge1$ 个不同整数的有限集，$f:A\to\mathbb Z$，并令
+
+$$
+g(z)=\lfloor tz+c\rfloor,\qquad f(z)\ge g(z),\qquad
+\sigma(z)=r-f(z).
+$$
+
+假设这个实际给定的 $\sigma$ 是 $A$ 的置换。将 $A$ 排为 $z_1<\cdots<z_p$，置 $\gamma=1-t$、$m=\lfloor p/2\rfloor$、$S=\sum_{z\in A}(f(z)-g(z))$。则每个秩都满足
+
+$$
+z_{p+1-i}+g(z_i)\le r\qquad(1\le i\le p),
+\tag{40.3}
+$$
+
+并且
+
+$$
+\begin{aligned}
+S&\ge\sum_{i=1}^{m}\left\lfloor\gamma(z_{p+1-i}-z_i)\right\rfloor\\
+ &\ge B_t(p):=\sum_{i=1}^{m}\lfloor\gamma(p+1-2i)\rfloor\\
+ &\ge\gamma\left\lfloor\frac{p^2}{4}\right\rfloor-m
+ \ge\frac{\gamma p^2}{4}-\frac p2.
+\end{aligned}
+\tag{40.4}
+$$
+
+空求和取零。这里不要求 $f$ 单调，也不要求置换把原点按反序映到像点。
+
+证明。因为 $t>0$，$g$ 非减。固定 $i$，后缀 $z_i,\ldots,z_p$ 的 $p-i+1$ 个像彼此不同，且
+
+$$
+\sigma(z_k)=r-f(z_k)\le r-g(z_k)\le r-g(z_i)
+\qquad(k\ge i).
+$$
+
+若 $r-g(z_i)<z_{p+1-i}$，这些像只能落在 $A$ 的前 $p-i$ 个点中，违反其不同性。这证明全部 (40.3)，使用的是每个后缀的容量，而非未知 $f$ 的次序性质。
+
+定义非负的虚拟容量余量
+
+$$
+s_i=r-g(z_i)-z_{p+1-i}\ge0.
+$$
+
+置换保留全体点的和，故有全局恒等式
+
+$$
+\begin{aligned}
+\sum_{i=1}^p\sigma(z_i)&=\sum_{i=1}^p z_i,\\
+S&=pr-\sum_{i=1}^p z_i-\sum_{i=1}^p g(z_i)
+  =\sum_{i=1}^p s_i.
+\end{aligned}
+\tag{40.5}
+$$
+
+单个 $s_i$ 不必等于 $f(z_i)-g(z_i)$：其反序目标 $z_{p+1-i}$ 不必是实际像 $\sigma(z_i)$。同样，下面的虚拟成对项 $s_i+s_{p+1-i}$ 不被认作两个端点的实际缺陷和；只有 (40.5) 的整体重组成立。
+
+先明确取整增量。对任意实数 $u$ 和 $v\ge0$，有
+
+$$
+\lfloor u+v\rfloor-\lfloor u\rfloor
+=\lfloor\{u\}+v\rfloor
+\in\{\lfloor v\rfloor,\lceil v\rceil\}.
+\tag{40.6}
+$$
+
+下界来自 $\{u\}\ge0$；上界来自 $\{u\}+v<1+\lceil v\rceil$。若 $v$ 为整数，两值相同；否则两值相邻，故所列集合穷尽可能值。对 $1\le i\le m$，令 $j=p+1-i$、$D=z_j-z_i\in\mathbb Z_{>0}$。代入 $u=tz_i+c$、$v=tD$，并用整数平移的 floor/ceil 恒等式，得到
+
+$$
+\begin{aligned}
+g(z_j)-g(z_i)&\le\lceil tD\rceil,\\
+D-\lceil tD\rceil&=\lfloor(1-t)D\rfloor,\\
+D-\lfloor tD\rfloor&=\lceil(1-t)D\rceil,\\
+s_j-s_i&=D-[g(z_j)-g(z_i)]
+\in\{\lfloor\gamma D\rfloor,\lceil\gamma D\rceil\}.
+\end{aligned}
+\tag{40.7}
+$$
+
+这里 $\lceil D-w\rceil=D-\lfloor w\rfloor$，取 $w=(1-t)D$ 即给第二行；第三行同理。因此
+
+$$
+s_i+s_j=2s_i+(s_j-s_i)\ge\lfloor\gamma D\rfloor.
+\tag{40.8}
+$$
+
+这些反序秩对彼此不交。$p=2m$ 时，(40.5) 恰为它们的和；$p=2m+1$ 时，还剩中心项
+
+$$
+s_{m+1}=r-z_{m+1}-g(z_{m+1})\ge0,
+$$
+
+其非负性来自中心秩的 (40.3)。相加得到 (40.4) 的第一步。不同整数的相邻间隔至少为一，故 $D\ge j-i=p+1-2i$；$\gamma>0$ 与 floor 非减给第二步。
+
+秩间距的和为
+
+$$
+\sum_{i=1}^{m}(p+1-2i)=m(p-m)
+=\left\lfloor\frac{p^2}{4}\right\rfloor.
+\tag{40.9}
+$$
+
+逐项使用 $\lfloor w\rfloor\ge w-1$ 给第三步。若 $p=2m$，第三步右侧恰为 $\gamma p^2/4-p/2$；若 $p=2m+1$，它等于
+
+$$
+\frac{\gamma p^2}{4}-\frac p2+\frac12-\frac\gamma4
+>\frac{\gamma p^2}{4}-\frac p2,
+$$
+
+因为 $0<\gamma<1$。这也包含 $p=1$ 的空秩对和非负中心项。$p=2$ 时 $B_t(2)=\lfloor\gamma\rfloor=0$。全部结论成立。$\square$
+

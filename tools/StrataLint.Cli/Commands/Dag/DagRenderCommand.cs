@@ -65,10 +65,19 @@ internal static class DagRenderCommand
             return new CommandResult(false, string.Empty, $"dag-render: {exception.Message}\n");
         }
 
+        var contentHashes = new Dictionary<string, ReadOnlyMemory<byte>>(StringComparer.Ordinal);
         TruthContext truth;
         try
         {
-            truth = DagLedgerCommandPreparation.BuildTruth(repository, leanReportSource);
+            var raw = DagLedgerCommandPreparation.Ask(() => repository.ReadCurrentProjection(
+                TruthReleaseCommand.IsReleaseInput, (path, hash) => contentHashes.Add(path, hash)));
+            var snapshot = SnapshotDecoder.Decode(raw) switch
+            {
+                SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+                SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(failure.Message),
+            };
+            try { truth = DagLedgerCommandPreparation.BuildTruth(snapshot, leanReportSource.Load(snapshot)); }
+            catch (Exception exception) { throw new DagLedgerCommandPreparation.LeanReportUnusableException(exception); }
         }
         catch (DagLedgerCommandPreparation.RepositoryUnavailableException exception)
         {
@@ -83,7 +92,7 @@ internal static class DagRenderCommand
             return Failure("truth DAG could not be built", exception);
         }
 
-        return Run(repositoryRoot, truth, check, definitions);
+        return RunCore(repositoryRoot, truth, check, definitions, contentHashes);
     }
 
     internal static CommandResult Run(
@@ -96,7 +105,8 @@ internal static class DagRenderCommand
         string repositoryRoot,
         TruthContext truth,
         bool check,
-        IEnumerable<DocumentDefinition> definitions)
+        IEnumerable<DocumentDefinition> definitions,
+        IReadOnlyDictionary<string, ReadOnlyMemory<byte>>? contentHashes = null)
     {
         var output = new StringWriter();
         var error = new StringWriter();
@@ -130,9 +140,11 @@ internal static class DagRenderCommand
             return Failure("document graph could not be built", exception);
         }
         var provenance = new TruthGraphProvenance(
-            SnapshotContentDigest.Compute(
-                truth.Snapshot,
-                documentProjection.Documents.Nodes.Select(static node => node.RepoPath)),
+            contentHashes is null
+                ? SnapshotContentDigest.Compute(truth.Snapshot,
+                    documentProjection.Documents.Nodes.Select(static node => node.RepoPath))
+                : SnapshotContentDigest.ComputeContentHashes(contentHashes,
+                    documentProjection.Documents.Nodes.Select(static node => node.RepoPath)),
             leanReportDigest);
         var exit = DagEmitter.Emit(
             repositoryRoot,

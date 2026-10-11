@@ -41,7 +41,7 @@ public sealed class AtomContextCommandTests
         Assert.True(result.Success, result.Error);
         Assert.Empty(result.Error);
         Assert.Equal(
-            $"ATOM_CONTEXT atom_id={Id(claims[1])} source_id=source source_path=docs/source.md atomizer=generic-v1 index=2/3\n"
+            $"ATOM_CONTEXT atom_id={Id(claims[1])} source_id=source source_path=docs/source.md atomizer=generic-v1\n"
             + $"PREVIOUS atom_id={Id(claims[0])} state=residual-open\n"
             + $"CURRENT atom_id={Id(claims[1])} state=residual-open\n"
             + $"NEXT atom_id={Id(claims[2])} state=residual-open\n"
@@ -73,8 +73,8 @@ public sealed class AtomContextCommandTests
         Assert.True(result.Success, result.Error);
         Assert.Contains("occurrences=2\n", result.Output, StringComparison.Ordinal);
         Assert.Equal(2, result.Output.Split("OCCURRENCE index=", StringSplitOptions.None).Length - 1);
-        Assert.Contains("OCCURRENCE index=1 stream_index=2/6 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
-        Assert.Contains("OCCURRENCE index=2 stream_index=5/6 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
+        Assert.Contains("OCCURRENCE index=1 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
+        Assert.Contains("OCCURRENCE index=2 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]

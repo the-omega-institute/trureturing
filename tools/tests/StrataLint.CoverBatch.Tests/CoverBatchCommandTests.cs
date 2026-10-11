@@ -70,7 +70,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, result.ExitCode);
         Assert.Equal(0, world.Repository.ReadCount);
         Assert.Equal(0, world.Report.CallCount);
-        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, result.Output, StringComparison.Ordinal);
         Assert.Equal(before, world.LedgerImage());
     }
 
@@ -94,7 +94,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Repository.ReadChangesCalls);
         Assert.Equal(1, world.Report.CallCount);
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -109,7 +109,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -200,7 +200,7 @@ public sealed partial class CoverBatchCommandTests
     {
         using var world = new BatchWorld();
         var session = new CoverAtomCommand.Session(world.Root, world.Repository, world.Report,
-            CoverWorld.FixtureUtc, Gid);
+            CoverWorld.FixtureUtc, Gid, [First]);
         Assert.True(session.Apply(First, [Gid]).Success);
         Assert.True(session.Apply(First, [OtherGid]).Success);
 
@@ -211,20 +211,23 @@ public sealed partial class CoverBatchCommandTests
     }
 
     [Fact]
-    public void TerminalFailureDispositionAdvancesSessionAndDoesNotPreventIndependentWrite()
+    public void FailedCoverLeavesAtomBytesUnchangedAndDoesNotPreventIndependentWrite()
     {
         using var world = new BatchWorld(entry => entry.AtomId == First
             ? entry with { Receipts = entry.Receipts with { UnresolvedSubitems = ["remaining clause"] } }
             : entry);
 
+        var failedPath = world.LedgerPaths().Single(path => path.EndsWith(First + ".yaml", StringComparison.Ordinal));
+        var failedBytes = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, failedPath));
         var result = world.Run(Row(First, Gid) + Row(Second, Gid));
 
         Assert.Equal(["failed", "applied"], Results(result).Select(item => item.Status).ToArray());
-        Assert.NotNull(world.Entry(First).Receipts.CoverDisposition);
+        Assert.Null(world.Entry(First).Receipts.CoverDisposition);
+        Assert.Equal(failedBytes, TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, failedPath)));
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -243,6 +246,35 @@ public sealed partial class CoverBatchCommandTests
         Assert.DoesNotContain(world.LedgerPaths(), path => path.Contains("residual-open", StringComparison.Ordinal));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ParentCoverageLoadsCrossSourceDescendantsAndChecksTheirCas(bool corruptChild)
+    {
+        using var world = new BatchWorld(chain: true, externalChild: true);
+        Assert.True(world.Run(Row(world.ChildIds[0], Gid) + Row(world.ChildIds[1], OtherGid)).Success);
+        if (corruptChild)
+            File.WriteAllText(Path.Combine(world.Root, DigestionCasStore.RootPath + world.ChildIds[1]), "changed\n");
+        var before = world.LedgerImage();
+
+        var result = world.Run(Row(world.ParentId!, OtherGid));
+
+        Assert.Equal(!corruptChild, result.Success);
+        if (corruptChild)
+        {
+            Assert.Equal("failed", Assert.Single(Results(result)).Status);
+            Assert.Contains("clause chain", Results(result)[0].Reason, StringComparison.Ordinal);
+            Assert.Equal(before, world.LedgerImage());
+        }
+        else
+        {
+            Assert.Equal(DigestionMigrationState.Absorbed, world.Entry(world.ParentId!).ProjectedStatus.Migration);
+            Assert.Equal("external-child", world.Entry(world.ChildIds[1]).SourceId);
+        }
+        Assert.DoesNotContain(world.Repository.ScopedCurrentReads.SelectMany(static paths => paths),
+            path => path == BackfillInventoryLoader.RootPath.TrimEnd('/'));
+    }
+
     [Fact]
     public void DependencyFailureBlocksParent()
     {
@@ -257,7 +289,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Null(world.Entry(First).Receipts.CoverDisposition);
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -274,7 +306,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("cycle", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Equal(before, world.LedgerImage());
-        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -291,7 +323,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(["already_applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Equal(appliedBytes, TemporaryFileSystem.File.ReadAllBytes(appliedPath));
         Assert.Single(result.Output.Split('\n'), line =>
-            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
+            line.Contains(StrataLint.Engine.GeneratedArtifactInventory.Values.Path, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -309,18 +341,22 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal("failed", Assert.Single(Results(result)).Status);
     }
 
-    [Fact]
-    public void IndependentUnrequestedLedgerBytesRemainUnchanged()
+    [Theory]
+    [InlineData("# preserved unrelated annotation\n")]
+    [InlineData("malformed: [\n")]
+    public void IndependentUnrequestedLedgerBytesRemainUnchanged(string suffix)
     {
         using var world = new BatchWorld();
         var path = world.LedgerPaths().Single(path => path.EndsWith(Second + ".yaml", StringComparison.Ordinal));
-        File.AppendAllText(path, "# preserved unrelated annotation\n");
+        File.AppendAllText(path, suffix);
         var before = TemporaryFileSystem.File.ReadAllBytes(path);
 
         var result = world.Run(Row(First, Gid));
 
         Assert.True(result.Success, result.Error + result.Output);
         Assert.Equal(before, TemporaryFileSystem.File.ReadAllBytes(path));
+        Assert.DoesNotContain(world.Repository.ScopedCurrentReads.SelectMany(static paths => paths),
+            selected => selected == BackfillInventoryLoader.RootPath.TrimEnd('/'));
     }
 
     private const string Gid = "D5/S0/Carrier/Probe.probe";
@@ -354,10 +390,16 @@ public sealed partial class CoverBatchCommandTests
         internal string? ParentId { get; }
         internal ImmutableArray<string> ChildIds { get; } = [];
 
-        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false)
+        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false,
+            bool externalChild = false, bool secondaryTarget = false)
         {
             Root = Path.Combine(temporary.Path, "repo");
-            inputs = new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"] }.Materialize();
+            var materialized = new CoverSpec
+            {
+                OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"],
+                SecondaryTarget = secondaryTarget ? ("D5/S0/Carrier/Zeta", "zeta") : null,
+            }.Materialize();
+            inputs = secondaryTarget ? materialized : Canonicalize(materialized);
             var document = inputs.Document.WithDigestionSources(inputs.Document.RequireDigestionSources()
                 .Select(source => source with
                 {
@@ -399,12 +441,24 @@ public sealed partial class CoverBatchCommandTests
                     Coverage = [],
                     Receipts = new([], [], null),
                     ProjectedStatus = new(DigestionMigrationState.Residual, DigestionTruthState.Open),
-                });
-                document = document.WithDigestionSources([source with
+                }).ToImmutableArray();
+                var parentSource = source with
                 {
                     Atomizer = AtomizerRegistry.PzgId,
-                    Entries = [parentEntry, .. childEntries],
-                }]);
+                    Entries = [parentEntry, .. externalChild ? childEntries.Take(1) : childEntries],
+                };
+                document = document.WithDigestionSources(externalChild
+                    ? [parentSource, parentSource with
+                    {
+                        SourceId = "external-child",
+                        SourcePath = "docs/COVER_EXTERNAL.md",
+                        Entries = [childEntries[1] with
+                        {
+                            SourceId = "external-child", SourcePath = "docs/COVER_EXTERNAL.md",
+                        }],
+                    }]
+                    : [parentSource]);
+                if (externalChild) inputs.Files["docs/COVER_EXTERNAL.md"] = sourceText;
                 inputs.Files[source.SourcePath] = sourceText;
                 foreach (var atom in children.Prepend(parent))
                 {
@@ -433,12 +487,54 @@ public sealed partial class CoverBatchCommandTests
             Report = new FakeLeanReportSource(LeanAxiomReport.Create(reports));
         }
 
-        internal CommandResult Run(string input)
+        private static CoverInputs Canonicalize(CoverInputs value)
+        {
+            var identities = new Dictionary<string, string>(StringComparer.Ordinal);
+            var reports = value.Report.Files.ToDictionary(static item => item.Key.Value, item => item.Value with
+            {
+                Declarations = item.Value.Declarations.Select(declaration =>
+                {
+                    var current = declaration with { PrecomputedStatementId = null };
+                    identities[declaration.PrecomputedStatementId!] = CanonicalStatementWriter.DeclarationStatementId(item.Key, current);
+                    return current;
+                }).ToImmutableArray(),
+            });
+            Dictionary<string, string> Rewrite(Dictionary<string, string> files)
+            {
+                var result = files.ToDictionary(static item => item.Key, item => identities.Aggregate(item.Value,
+                    static (text, identity) => text.Replace(identity.Key, identity.Value, StringComparison.Ordinal)), StringComparer.Ordinal);
+                foreach (var path in result.Keys.Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath).ToArray())
+                {
+                    using var document = JsonDocument.Parse(result[path]);
+                    var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", document.RootElement.GetProperty("payload"));
+                    result.Remove(path);
+                    result[FrozenLedgerChangeClassifier.AcceptedRoot + "/" + encoded.Hash["sha256:".Length..] + ".json"] =
+                        Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+                }
+                return result;
+            }
+            return value with
+            {
+                Report = LeanAxiomReport.Create(reports), Files = Rewrite(value.Files), Baseline = Rewrite(value.Baseline),
+                Document = value.Document.WithDigestionSources(value.Document.RequireDigestionSources().Select(source => source with
+                {
+                    Entries = source.Entries.Select(entry => entry with
+                    {
+                        Coverage = entry.Coverage.Select(edge => edge with
+                        {
+                            TargetStatementId = edge.TargetStatementId is { } id ? identities.GetValueOrDefault(id, id) : null,
+                        }).ToImmutableArray(),
+                    }).ToImmutableArray(),
+                }).ToImmutableArray()),
+            };
+        }
+
+        internal CommandResult Run(string input, ILeanReportSource? report = null, bool leanInputs = false)
         {
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             File.WriteAllText(path, input);
-            return CoverBatchCommand.Run(Root, Repository, Report,
-                CoverWorld.FixtureUtc, ["--atoms", path]);
+            return CoverBatchCommand.Run(Root, Repository, report ?? Report,
+                CoverWorld.FixtureUtc, leanInputs ? ["--lean-inputs", "--atoms", path] : ["--atoms", path]);
         }
 
         internal void RunSingles()
@@ -463,16 +559,46 @@ public sealed partial class CoverBatchCommandTests
                 reports.TryAdd(path.Value, new LeanFileReport([], []));
             var reportPath = RawLeanReportArtifact.DefaultPath(Root);
             RawLeanReportArtifact.WriteFile(reportPath, snapshot, LeanAxiomReport.Create(reports));
-            ProducerInputFixture.AttestBatchReport(Root, reportPath);
-            return reportPath;
+            var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown("D5/S0/Carrier/Probe.lean")]);
+            var selected = RepositorySnapshot.Create(snapshot.Files.Where(item => scope.Paths.Contains(item.Key))
+                .ToImmutableDictionary());
+            var selectedReports = LeanAxiomReport.Create(reports.Where(item => scope.Paths.Contains(RepoPath.CreateKnown(item.Key)))
+                .ToDictionary(static item => item.Key, item => item.Value with
+                {
+                    Imports = LeanSourceCatalog.ParseFileImports(snapshot.Files[RepoPath.CreateKnown(item.Key)], includeImplicitInit: true),
+                }));
+            var scopedPath = Path.Combine(Root, ".lake/build/stratalint/scoped-lean-report.json");
+            RawLeanReportArtifact.WriteFile(scopedPath, selected, selectedReports);
+            File.WriteAllText(scopedPath, File.ReadAllText(scopedPath).Replace(RawLeanReportArtifact.Schema,
+                RawLeanReportArtifact.ScopedSchema, StringComparison.Ordinal));
+            var rows = scope.Paths.OrderBy(static path => path.Value, StringComparer.Ordinal).Select(path => new
+            {
+                module = path.Value[..^5].Replace('/', '.'), source_path = path.Value,
+                imports = selectedReports.Files[path].Imports,
+            }).OrderBy(static row => row.module, StringComparer.Ordinal).ToArray();
+            ProducerInputFixture.AttestBatchReport(Root, scopedPath, JsonSerializer.Serialize(new
+            {
+                roots = scope.Targets.Select(static path => path.Value[..^5].Replace('/', '.')).ToArray(),
+                modules = rows, dependencies = rows,
+            }));
+            return scopedPath;
         }
 
         internal CommandResult RunProducers(string input)
         {
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             TemporaryFileSystem.File.WriteAllText(path, input);
-            return CoverBatchCommand.Run(Root, Repository, new PrecomputedLeanReportSource(Root),
-                CoverWorld.FixtureUtc, ["--atoms", path]);
+            var previousReport = Environment.GetEnvironmentVariable("STRATALINT_LEAN_REPORT");
+            try
+            {
+                Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", Path.Combine(Root, ".lake/build/stratalint/scoped-lean-report.json"));
+                return CoverBatchCommand.Run(Root, Repository, new PrecomputedLeanReportSource(Root),
+                    CoverWorld.FixtureUtc, ["--atoms", path]);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", previousReport);
+            }
         }
 
         private RawRepositorySnapshot ReadFiles() => RawRepositorySnapshot.Create(

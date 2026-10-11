@@ -6,14 +6,9 @@
    utility: none
    digest: Private leading-block norm closure for the actual positive-composition branch. -/
 
-import D5.S3.AnalyticClosure.Polylogarithm.CompositionBoundary
-import D5.S3.AnalyticClosure.Polylogarithm.CompositionContinuation
-import D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksIntegralControl
+import D5.S3.AnalyticClosure.ComplexPowerDifference
 import D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksLeadingTransport
-import D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksSourceInduction
-import Mathlib.Analysis.Calculus.Deriv.Polynomial
 import Mathlib.Analysis.Polynomial.Basic
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.Topology.Algebra.Polynomial
 
 set_option autoImplicit false
@@ -26,6 +21,7 @@ namespace D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksLeadingClosure
 
 open D5.S3.AnalyticClosure.Polylogarithm
 open CompositionBoundary CompositionContinuation
+open D5.S3.AnalyticClosure.ComplexPowerDifference
 
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
 open private inner_arc_decay from
@@ -262,30 +258,6 @@ private theorem leading_one_upper_boundary_remainder_of_extension
     exact (heq ⟨hwball, by simpa using hw⟩).symm
   exact leading_one_upper_boundary_remainder_of_limit q suffix ρ C M P t
     (extension (1 + (t : ℂ))) ht htρ hbound (hextensionLimit.congr' hagree.symm)
-
-private theorem norm_pow_sub_pow_le (a b : ℂ) (ell : ℕ) (H : ℝ)
-    (hH : 0 ≤ H) (ha : ‖a‖ ≤ H) (hb : ‖b‖ ≤ H) :
-    ‖a ^ ell - b ^ ell‖ ≤ ell * ‖a - b‖ * H ^ (ell - 1) := by
-  rw [← (Commute.all a b).mul_geom_sum₂ ell, norm_mul]
-  calc
-    ‖a - b‖ * ‖∑ i ∈ Finset.range ell, a ^ i * b ^ (ell - 1 - i)‖ ≤
-        ‖a - b‖ * ∑ i ∈ Finset.range ell,
-          ‖a ^ i * b ^ (ell - 1 - i)‖ := by
-      gcongr
-      exact norm_sum_le _ _
-    _ ≤ ‖a - b‖ * ∑ _i ∈ Finset.range ell, H ^ (ell - 1) := by
-      gcongr with i hi
-      have hiell : i < ell := Finset.mem_range.mp hi
-      rw [norm_mul, norm_pow, norm_pow]
-      calc
-        ‖a‖ ^ i * ‖b‖ ^ (ell - 1 - i) ≤
-            H ^ i * H ^ (ell - 1 - i) := by gcongr
-        _ = H ^ (ell - 1) := by
-          rw [← pow_add]
-          congr 1
-          omega
-    _ = ell * ‖a - b‖ * H ^ (ell - 1) := by
-      simp [mul_assoc, mul_left_comm]
 
 private theorem leading_one_upper_boundary_pow_remainder_of_extension
     (q : ℕ) (suffix : List ℕ+) (ell : ℕ) (ρ C : ℝ) (M : ℕ)

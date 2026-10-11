@@ -58,7 +58,7 @@ public sealed class DigestionEvaluationScopeTests
     }
 
     [Fact]
-    public void ExplicitFullScanStillValidatesCasIntegrity()
+    public void FullScanLeavesCasIntegrityToTheAtomCommand()
     {
         var changes = RawChangeSet.Create(
             ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]);
@@ -80,7 +80,7 @@ public sealed class DigestionEvaluationScopeTests
             AcceptedLean(Array.Empty<string>()),
             changes: changes);
 
-        Assert.Contains(
+        Assert.DoesNotContain(
             evaluation.Findings,
             finding => finding.Contains("CAS blob hash mismatch", StringComparison.Ordinal));
     }
@@ -96,7 +96,7 @@ public sealed class DigestionEvaluationScopeTests
             DigestionTruthState.Open,
             includeCoverageGid: false);
         var snapshot = Snapshot(("docs/source.md", sourceBytes), CasFile(atom));
-        var fullScanCas = DigestionCasStore.Evaluate(document, snapshot);
+        var fullScanCas = DigestionCasStore.EvaluateLedgerReferences(document, snapshot);
         var changes = RawChangeSet.Create(["notes/r17-unrelated-scope.txt"]);
 
         var exception = Assert.Throws<ArgumentException>(() =>

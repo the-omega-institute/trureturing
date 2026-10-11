@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Linear.GradedCongruenceSpectrum
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Order.Star.Real
@@ -208,21 +209,7 @@ def registration : Registration arena (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-register_information_theorem graded_congruence_spectrum in arena
-  readout via (realize signature
-    (fun _ p s =>
-      (p.hGpos s.1.1 s.1.2).isHermitian.eigenvalues₀
-        ((Fin.castOrderIso (Fintype.card_fin p.n)).symm s.2))
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.Linear.GradedCongruenceSpectrum
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+
 
 #print axioms registration
 

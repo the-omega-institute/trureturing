@@ -34,9 +34,8 @@ and this file is the bug.
 - `make help` - owns the live catalogue of canonical doors.
 - `tools/StrataLint.Engine/Digestion/DigestionIngestor.cs` - owns default source
   discovery and source-id derivation.
-- `tools/StrataLint.Engine/Digestion/Atomizers/GenericAtomizer.cs` and
-  `tools/StrataLint.Cli/Commands/DigestStatusCommand.cs` - own generic claim
-  recognition and formalization-candidate eligibility.
+- `tools/StrataLint.Engine/Digestion/Atomizers/GenericAtomizer.cs` - owns generic claim recognition.
+- `tools/StrataLint.Cli/Commands/Digestion/SearchAtomsCommand.cs` - searches stored ATOM paths and text within selected sources.
 
 ## State machine
 
@@ -201,10 +200,9 @@ Apply this authoring contract:
   **Claim status: open.** <the claim, with its domains, hypotheses, and conclusion>
   ```
 
-  `generic-v1` preserves the kind token verbatim, while
-  `digest-status --formalize-candidates` accepts exactly those four lowercase
-  tokens. Uppercase or translated kinds still digest, but do not enter that
-  queue.
+  `generic-v1` preserves the kind token verbatim. Search returns stored ATOM
+  paths within the selected source; AI reads their text and chooses the next
+  claim to process.
 - Give unverified claims explicit `open` or `conjecture` language. A source may
   faithfully say that it contains a paper argument, but it must not say
   `Lean-verified`, `closed`, `frozen`, or equivalent unless the current ledger
@@ -223,88 +221,33 @@ eligible numbered lowercase heading.
 
 ### 3. Ingest and verify the new atoms
 
-Record `git status --short`, then run the canonical writer:
+Run the canonical writer for the requested volume:
 
 ```sh
-make ingest
+make ingest SOURCE=<source-id-or-volume-path>
 ```
 
-Require exit 0, `coarse_fallbacks=0`, `ledger_changed=true`, and
-`residual_open_added` greater than zero. There is one named recovery. If, and
-only if, `make ingest` exits 2 and at least one complete output line matches one
-of these owner-stage predicates, treat it as a report prerequisite:
-
-- it starts `report-consumer: raw Lean report is missing at ` and ends
-  `; run make lean-report first`;
-- it starts `report-consumer: raw Lean report bundle is incomplete at ` and ends
-  `; run make lean-report first`;
-- it starts `lean-report-input: ` and ends `; run make lean-report first`.
-
-The later supervisor line `report-consumer: consumption failed; the raw Lean
-report may be stale, run make lean-report first` never satisfies this predicate,
-even when the overall exit is 2.
-
-This predicate comes from the current owners: `report-consumer.sh:16-18` owns
-missing reports, `report-consumer.sh:33-36` owns incomplete bundles,
-`lean-report-input.sh:343-398` owns SHA, attestation, and repository-input
-freshness, while `report-consumer.sh:45-46` appends the excluded generic line
-after every nonzero supervised command. `CliApplication.cs:289-294` maps every
-failed `CommandResult`, including semantic ingest failures, to exit 2. The
-2026-08-17 owner-output probes were:
-
-- report temporarily absent, `make ingest` exit 2:
-  `report-consumer: raw Lean report is missing at /Users/auric/trureturing-theorygen-intake/.lake/build/stratalint/raw-lean-report.json; run make lean-report first`;
-- provenance member temporarily absent, `make ingest` exit 2:
-  `report-consumer: raw Lean report bundle is incomplete at /Users/auric/trureturing-theorygen-intake/.lake/build/stratalint/raw-lean-report.json.provenance.json; run make lean-report first`;
-- SHA member replaced by an invalid fixture, `make ingest` exit 2:
-  `lean-report-input: raw Lean report SHA is stale; run make lean-report first`;
-- valid bundle with a supervised `/bin/bash -c 'exit 2'`, exit 2:
-  `report-consumer: consumption failed; the raw Lean report may be stale, run make lean-report first`.
-
-run `make lean-report` exactly once, require exit 0, then retry `make ingest`
-exactly once. The retry must itself exit 0 and satisfy every ingest postcondition
-above. A nonzero `make lean-report`, any failed retry, or an exit 2 without one of
-the three diagnostics takes the global `open` transition. Never treat an
-arbitrary exit 2 as a report prerequisite and never attempt a second recovery.
+An explicit source is required. Multiple sources may be supplied together.
+Require exit 0 and `coarse_fallbacks=0`. Ingest does not consume a Lean report
+or Scribe verification. A failed ingest must be resolved from its actual
+`INGEST_INVALID` diagnostic; generating a Lean report is not a recovery step.
 
 Do not create or edit any `Meta/Digestion/**` file yourself. Locate the one
 generated `Meta/Digestion/backfill/<source_id>/source.toml` whose `path` equals
-the new volume, and require its `atomizer` to be `generic-v1`. Locate at least
-one generated `residual-open/*.yaml` whose `ast_path` begins with an eligible
-kind, derive its atom id from the filename, then run:
+the new volume, and require its `atomizer` to be `generic-v1`. Search the generated records in that source and read a matching ATOM:
 
 ```sh
-make show-atom ATOM_ID=<atom-id>
+make search-atoms SOURCE=<source-id> TEXT=<source-claim-keyword>
+make show-atom SOURCE=<source-id> ATOM_ID=<atom-id>
 ```
 
-Require exit 0, `HASH_VERIFY ... status=match`, the expected source path and
-source id, and raw text faithful to the corresponding source claim.
-
-Use the live CLI to verify both the ledger and downstream queue:
-
-```sh
-theory_ingest_tmp="$(mktemp -d)"
-dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
-  --configuration Release -- digest-status --json \
-  > "$theory_ingest_tmp/status.json"
-dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
-  --configuration Release -- digest-status --formalize-candidates \
-  > "$theory_ingest_tmp/candidates.json"
-jq -e --arg source_id '<source-id>' \
-  '[.entries[] | select(.source_id == $source_id and .migration == "residual" and .truth == "open")] | length > 0' \
-  "$theory_ingest_tmp/status.json"
-jq -e --arg source_id '<source-id>' --arg atom_id '<atom-id>' \
-  '[.candidates[] | select(.source_id == $source_id and .atom_id == $atom_id)] | length == 1' \
-  "$theory_ingest_tmp/candidates.json"
-```
-
-Every command must exit 0. The filtered residual count is the source-scoped
-residual increment; record it and the candidate atom ids rather than counting or
-editing ledger entries by hand.
+Require exit 0, the expected source path and source id, and raw text faithful
+to the corresponding source claim. Search reads stored paths, not a global
+status evaluation, and emits neither a ledger digest nor total counts.
 
 Postcondition: canonical ingest created the source record and CAS-backed atoms,
-`show-atom` reads at least one eligible claim back with matching hashes, and the
-same atom appears exactly once in the formalization-candidate output.
+`show-atom` reads at least one eligible claim back with the expected source
+identity and faithful raw text.
 
 ### 4. Preflight, publish, and wait for the machine verdict
 
@@ -312,9 +255,9 @@ Review `git diff` and require every `Meta/Digestion/**` change to be an output o
 the successful Step 3 writer. Prepare a pull-request body that records:
 
 - provenance and the new volume path;
-- source id, residual increment, and eligible atom ids;
-- every verification command and exit code, including any report-prerequisite recovery;
-- the exact `show-atom` hash-match evidence.
+- source id and selected atom ids;
+- every verification command and exit code;
+- the selected `show-atom` identity and text check.
 
 Commit the theory volume and writer-produced digestion data, then run:
 

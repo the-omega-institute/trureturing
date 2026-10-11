@@ -307,18 +307,18 @@ private theorem weighted_prime_laplace_first_mertens {z v : ℝ} (hz : 2 ≤ z) 
         mul_le_mul_of_nonneg_left hbound (one_div_nonneg.mpr hL.le)
     _ = (Real.log 4 + 4) / Real.log z := by ring
 
-private def localFactor (p : ℕ) (s : ℝ) : ℝ := 1 - (p : ℝ) ^ (-s)
+def localFactor (p : ℕ) (s : ℝ) : ℝ := 1 - (p : ℝ) ^ (-s)
 
-private def eulerProduct (S : Finset ℕ) (s : ℝ) : ℝ :=
+def eulerProduct (S : Finset ℕ) (s : ℝ) : ℝ :=
   ∏ p ∈ S, localFactor p s
 
-private def eulerSlope (S : Finset ℕ) (s : ℝ) : ℝ :=
+def eulerSlope (S : Finset ℕ) (s : ℝ) : ℝ :=
   ∑ p ∈ S, Real.log (p : ℝ) / ((p : ℝ) ^ s - 1)
 
-private def scaledRatio (S : Finset ℕ) (L v : ℝ) : ℝ :=
+def scaledRatio (S : Finset ℕ) (L v : ℝ) : ℝ :=
   eulerProduct S (1 + v / L) / eulerProduct S 1
 
-private def scaledSlope (S : Finset ℕ) (L v : ℝ) : ℝ :=
+def scaledSlope (S : Finset ℕ) (L v : ℝ) : ℝ :=
   eulerSlope S (1 + v / L) / L
 
 private def reciprocalSlope (S : Finset ℕ) (L v : ℝ) : ℝ :=

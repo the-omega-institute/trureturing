@@ -1,4 +1,6 @@
+using StrataLint.Runtime;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -37,6 +39,21 @@ public sealed partial class RemoveWorktreesCommandTests
                 return InventoryFailure is null
                     ? new ProcessOutput(0, Encoding.UTF8.GetBytes(Inventory), [])
                     : new ProcessOutput(128, [], Encoding.UTF8.GetBytes(InventoryFailure));
+            if (fileName == "python3" && arguments.Contains("remove"))
+            {
+                var names = arguments[arguments.ToList().IndexOf("--names") + 1].Split(' ');
+                var paths = Inventory.Split('\0').Where(field => field.StartsWith("worktree ", StringComparison.Ordinal))
+                    .Select(field => field[9..]).ToArray();
+                var entries = names.Select(name => paths.Single(path => Path.GetFileName(path) == name))
+                    .Select(path => new
+                    {
+                        path,
+                        outcome = path == FailedRemovalPath ? "partial_or_indeterminate" : "removed",
+                        error = path == FailedRemovalPath ? RemovalError : null,
+                    }).ToArray();
+                return new ProcessOutput(entries.Any(entry => entry.error is not null) ? 74 : 0,
+                    Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { items = entries })), []);
+            }
             if (IsRemoval(call))
             {
                 if (arguments[^1] != FailedRemovalPath) return new ProcessOutput(0, [], []);
@@ -61,6 +78,10 @@ public sealed partial class RemoveWorktreesCommandTests
             File.WriteAllText(Path.Combine(Main, "tracked.txt"), "baseline\n");
             Git(Main, "add", "tracked.txt");
             Git(Main, "commit", "-m", "synthetic baseline");
+            var remote = Path.Combine(directory.Path, "remote.git");
+            Git(directory.Path, "init", "--bare", remote);
+            Git(Main, "remote", "add", "origin", remote);
+            Git(Main, "push", "origin", "dev");
             Main = Git(Main, "rev-parse", "--show-toplevel").Trim();
         }
 
@@ -71,7 +92,7 @@ public sealed partial class RemoveWorktreesCommandTests
         internal string Add(string name, string? branch = null)
         {
             var path = Path.Combine(directory.Path, name);
-            if (branch is null) Git(Main, "worktree", "add", "--detach", path, "HEAD");
+            if (branch is null) Git(Main, "worktree", "add", "-b", "recovery/" + name, path, "HEAD");
             else Git(Main, "worktree", "add", "-b", branch, path, "HEAD");
             return Git(path, "rev-parse", "--show-toplevel").Trim();
         }
@@ -92,8 +113,9 @@ public sealed partial class RemoveWorktreesCommandTests
         internal string UnregisteredDirectory(string name) =>
             Directory.CreateDirectory(Path.Combine(directory.Path, name)).FullName;
 
-        internal CommandResult Remove(string names) =>
-            WorktreeCommand.Run(Main, ["remove", "--names", names], Runner);
+        internal CommandResult Remove(string names, bool force = false) =>
+            WorktreeCommand.Run(Main, force ? ["remove", "--names", names, "--force"]
+                : ["remove", "--names", names], Runner);
 
         internal string Git(string root, params string[] arguments) =>
             TestGit.Run(root, arguments);

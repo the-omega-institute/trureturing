@@ -55,7 +55,7 @@ The focused literature search has not established global priority for this combi
 
 ## Executed diagnostics and limits
 
-`docs/reports/monster-twisted-pair-selection/twisted_pair_checks.py` uses only integer and Fraction arithmetic. It was run and rerun with byte-identical JSON. It verifies truncated character/theta identities through the stated degree, finite sign systems, the explicit nine-equation dependency, cyclic restrictions and cocycle equations, and low-dimensional blocking examples. Those overlapping finite checks are not a count of independent theorems.
+`https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/monster-twisted-pair-selection/twisted_pair_checks.py` uses only integer and Fraction arithmetic. It was run and rerun with byte-identical JSON. It verifies truncated character/theta identities through the stated degree, finite sign systems, the explicit nine-equation dependency, cyclic restrictions and cocycle equations, and low-dimensional blocking examples. Those overlapping finite checks are not a count of independent theorems.
 
 Checker Git blob: `c9cef300312b370be0751bc4312060181d0ac629`.
 Result Git blob: `4e2270c3ce81230d0fa7d074a16c11b5b06ca66b`.

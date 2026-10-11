@@ -1,0 +1,137 @@
+**Proof.** Index labels modulo 3, and take
+
+$$
+\begin{gathered}
+\pi=\tau=(1/3,1/3,1/3),\qquad A=I_3,\qquad
+B_{ij}=\mathbf1_{\{j=i+1\}},\qquad g=81/200,\\
+(x_0,x_1,x_2)=(229,230,231)/1000,\\
+v_i=\frac{x_i}{g+x_i},\qquad u_i=1-g-x_{i+1},\\
+v=(229/634,46/127,77/212),\qquad
+u=(73/200,91/250,183/500).
+\end{gathered}
+\tag{16.35}
+$$
+
+All emissions lie strictly in $(a,b)$. Direct identities give
+$(1-u_i)(1-v_{i+1})=g$ and $(1-u_i)v_{i+1}=x_{i+1}$.
+Consequently the own laws, for every $n\ge0$, are
+
+$$
+\begin{aligned}
+Q_i(w_{n,0})&=u_{i+n}\prod_{j=1}^n x_{i+j},&
+Q_i(w_{n,1})&=g\prod_{j=1}^n x_{i+j},\\
+W_i(\beta)&=1-v_i,& W_i(\alpha w_{n,c})&=v_iQ_i(w_{n,c}).
+\end{aligned}
+\tag{16.36}
+$$
+
+They obey $Q_i=u_i\delta_\alpha+(1-u_i)\beta W_{i+1}$ and
+$W_i=(1-v_i)\delta_\beta+v_i\alpha Q_i$.
+Survival per return is $x_{i+1}\le L<4/15$, so finite masses normalize
+and infinite masses are zero. Uniform rows satisfy both unweighted balances.
+Their complete-law flows therefore belong to $\mathfrak C_{\rm det}$.
+
+Here is an all-coordinate proof of the boxes. For marker 0,
+$u_i,v_i\in[a,b]$ and $x_i\in[\ell,L]$ directly give
+
+$$
+a\ell^n\le Q_i(w_{n,0})\le bL^n,\qquad
+a^2\ell^n\le W_i(\alpha w_{n,0})\le b^2L^n.
+$$
+
+These are the native endpoint bounds. The p marker-1 base values have the
+following exact ranges, each contained between its two native endpoints:
+
+$$
+\begin{array}{c|c|c|c|c}
+n&\min\{P_{p,a},P_{p,b}\}(w_{n,1})
+ &\min_iQ_i(w_{n,1})&\max_iQ_i(w_{n,1})
+ &\max\{P_{p,a},P_{p,b}\}(w_{n,1})\\\hline
+0&9/25&81/200&81/200&4/9\\
+1&54/625&18549/200000&18711/200000&8/81\\
+2&324/15625&426627/20000000&430353/20000000&16/729\\
+3&32/6561&98550837/20000000000&98550837/20000000000&1944/390625
+\end{array}
+\tag{16.37}
+$$
+
+For $n\ge3$ the p marker-1 endpoint ordering is fixed: the a endpoint is
+lower, since the b/a ratio is $(81/100)(27/25)^n>1$.
+Each step in (16.36) multiplies the actual mass by some $x_{i+n+1}$ in
+$[\ell,L]$, while the lower and upper endpoints multiply by $\ell,L$.
+Induction from $n=3$ proves every remaining p box.
+
+At suspension, set $m_i=v_ig$. Rational comparison gives
+
+$$
+\frac{18}{125}<\frac{73}{500}\le m_i\le\frac{37}{250}<\frac4{27},
+$$
+
+$$
+\frac8{243}<\frac{16717}{500000}
+ \le m_ix_{i+1}\le\frac{8547}{250000}<\frac{108}{3125}.
+\tag{16.38}
+$$
+
+These prove the marker-1 boxes for $n=0,1$. Their endpoint ordering is
+fixed for $n\ge1$, since the b/a ratio is $(243/250)(27/25)^n>1$.
+The same one-step induction proves all later suspended boxes. The completing
+beta box follows from $v_i\in[a,b]$; the infinite boxes hold by the proved
+normalization. Thus no finite-prefix substitute for (16.6) has been used.
+
+The return chain is the forward cycle, so it is nonreversible under the
+uniform row. All three $Q_i$ are distinct on alpha and all three $W_i$ are
+distinct on beta; this nonreversibility remains after passage to complete
+law descriptors. The two directional law flows are not reversals of one
+another. In particular this is outside Definition 15.1's swap-plus-singleton
+class. Its p-emission return motion and event defect are exactly
+
+$$
+\frac13\sum_i|u_{i+1}-u_i|=\frac1{750},\qquad
+D=-\frac{3310225965435679}{917929355400000000}<0.
+\tag{16.39}
+$$
+
+The latter follows by substituting (16.35) into
+$\frac13\sum_i[g(1+x_{i+1}+x_{i+1}x_{i+2})
+-\kappa g(1+x_i)/(g+x_i)-\zeta]$.
+A positive Borel native mixture has marker-1 masses
+$h_n=\int(1-r)^2[r(1-r)]^n\,d\xi(r)$; Cauchy--Schwarz gives
+$h_{n+1}^2\le h_nh_{n+2}$, so its positive consecutive mass ratios are
+nondecreasing. Each law in (16.36) has the nonconstant cyclic ratio sequence
+$x_{i+1},x_{i+2},x_i,\ldots$, with a strict descent. It is therefore not
+such a mixture, even allowing all $r\in[a,b]$. No midpoint equality or
+all-supported attainment is asserted for this witness. Its role is to
+separate the theorem's domain from native mixtures, reversible finite tables
+and zero return motion, and to show why the equality hypothesis matters.
+
+For necessity of the boxes, the deterministic singleton $A=B=I$ with
+$u=a$, $v=b$ belongs to $\mathfrak C_{\rm det}$, but has
+$g=2/5$, $x=4/15$ and
+
+$$
+D=g(1+x+x^2)-\kappa(1-v+vg)-\zeta
+ =\frac{924149}{20165625}>0.
+\tag{16.40}
+$$
+
+It is outside (16.6), as also follows from its rate exceeding $L$.
+The native deterministic singleton $u=v=3/8$ is another member of the
+minimum domain (16.8) outside the box domain: its p coordinate satisfies
+
+$$
+P_{p,3/8}(w_{3,1})-q
+ =\frac{344076471}{6553600000000}>0.
+\tag{16.41}
+$$
+
+Thus membership in $\mathfrak C_{\rm det}$ is not asserted to imply boxes.
+For a prior supported only at depths 1 and 2, the fair native pair (16.9)
+has $\mathcal J=0$. The supplied source-independent persistent endpoint tag
+of [Randomized stopped-tail minimax, Section 2.4](RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md)
+realizes it with deterministic acquired updates and finite rational
+sampling. Hence $j_{\rm det}=0$ in this endpoint-only case, and the
+nonendpoint hypothesis of Corollary 16.3 and Theorem 16.4 is essential.
+$\square$
+
+

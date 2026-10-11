@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.VertexAlgebra.MonsterFanoReconstruction
 import Reg.Support.DependentFamily
 
@@ -78,18 +79,30 @@ def registration : Registration arena (arena.Law actual) where
     rw [heq] at hzero
     simp [mem_symmDiff] at hzero
 
-register_information_theorem
-  _root_.D5.S3.VertexAlgebra.MonsterFanoReconstruction.complement_symmDiff_mem in arena
-  readout via (realize signature (fun _ block other => univ \ (block ∆ other))
-    (fun empty => nomatch empty))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction
-    coordinates := #[3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.VertexAlgebra.MonsterFanoReconstruction.complement_symmDiff_mem) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ block other => univ.{0} \ (block ∆ other))
+    (fun empty => nomatch empty))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "VertexAlgebra") "MonsterFanoReconstruction") "complement_symmDiff_mem") "Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction/Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ block other => univ.{0} \ (block ∆ other))
+    (fun empty => nomatch empty)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, definition := none, coordinates := #[3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -152,18 +165,30 @@ def registration : Registration arena (arena.Law actual) where
       (({0} : Finset (Fin 7)) ∩ {0}).card
     simp
 
-register_information_theorem
-  _root_.D5.S3.VertexAlgebra.MonsterFanoReconstruction.block_intersection_le_one in arena
-  readout via (realize signature (fun _ block other => (block ∩ other).card)
-    (fun empty => nomatch empty))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction
-    coordinates := #[2]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 3 }] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.VertexAlgebra.MonsterFanoReconstruction.block_intersection_le_one) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ block other => (block ∩ other).card.{0})
+    (fun empty => nomatch empty))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "VertexAlgebra") "MonsterFanoReconstruction") "block_intersection_le_one") "Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction/Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ block other => (block ∩ other).card.{0})
+    (fun empty => nomatch empty)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, definition := none, coordinates := #[2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:264a6b25c1636acf85c5378cc71d0bfd1ed80b2ced59930e823325ea25dd5fb5
+  normalized_sha256: sha256:264a6b25c1636acf85c5378cc71d0bfd1ed80b2ced59930e823325ea25dd5fb5
+cas_ref: sha256:264a6b25c1636acf85c5378cc71d0bfd1ed80b2ced59930e823325ea25dd5fb5
+coverage_gids:
+  - gid: D5/S0/Tower/DBonacci/Names.bounded_run_name_card_succ
+    target_statement_id: sha256:a52875528a74bc822df7d1cbe64ee6102b12668822f8a23eb0313a9d8cf6f670
+  - gid: D5/S0/Tower/DBonacci/Names.bounded_run_name_card_zero
+    target_statement_id: sha256:1d8640fe9bbeac267aa95a8ef89990324394fa51d516e1a404acb98bda7bf9af
+  - gid: D5/S0/Tower/DBonacci/Names.dbonacci_name_card_eq_bounded
+    target_statement_id: sha256:cea18fdcdf1c9b5670efafb39c3d2f45fa68d534d6c8b9fede9462b64ce4cdef
+  - gid: D5/S3/TotalVariation/ParryResetLaw.parry_stationary_law
+    target_statement_id: sha256:90b4d4e6ecbb3d5b38c2c901b47af7fcf0c9583e85c188df7c2a609ae93dc6bf
+receipts:
+  unresolved_subitems: []

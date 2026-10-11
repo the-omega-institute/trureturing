@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.MatrixUnitDecoder
 import Reg.Support.DependentFamily
 
@@ -80,19 +81,28 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     have he := congrArg (fun F => F (ULift.up 0) (ULift.up 0) (ULift.up 0) (ULift.up 0)) h
     exact zero_ne_one he
 
-set_option trace.InformationRegistration.check true in
-register_information_theorem _root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_kraus_gram
-  in arena
-  readout via (realize signature.{u, v} (fun _ _ x => x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_kraus_gram.{u_1, u_2}) (type_of% (realize.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} signature.{u_1, u_2} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "decoder_kraus_gram") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} signature.{u_1, u_2} (fun _ _ x => x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+
 
 #print axioms registration
 
@@ -173,19 +183,28 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     · intro i; exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
-register_information_theorem _root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_trace_pairing
-  in arena
-  readout via (realize signature.{v} (fun _ _ x => x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder
-    coordinates := #[1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "arg", "arg", "arg"]
-      stateBinder := 10 }] })
-  escape continues (open)
+noncomputable def registration_2.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_trace_pairing.{u_1, u_2}) (type_of% (realize.{u_2 + 1, u_2, 0, u_2, 0} signature.{u_2} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "decoder_trace_pairing") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_2 + 1, u_2, 0, u_2, 0} signature.{u_2} (fun _ _ x => x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"], stateBinder := 10, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+
 
 #print axioms registration
 end Pairing
@@ -233,19 +252,28 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     · intro i; exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
-register_information_theorem _root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.represented_matrix_mul
-  in arena
-  readout via (realize signature.{u} (fun _ _ x => x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "fn", "arg"]
-      stateBinder := 8 }] })
-  escape continues (open)
+noncomputable def registration_3.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.represented_matrix_mul.{u_1, u_2}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "represented_matrix_mul") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ x => x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+
 
 #print axioms registration
 end Multiplication
@@ -297,19 +325,28 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     · intro i; exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
-register_information_theorem _root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.matrix_unit_decoder_channel
-  in arena
-  readout via (realize signature.{v} (fun _ _ x => x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder
-    coordinates := #[1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "body", "body", "body", "fn", "arg", "fn", "fn", "arg", "arg", "arg"]
-      stateBinder := 11 }] })
-  escape continues (open)
+noncomputable def registration_4.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.matrix_unit_decoder_channel.{u_1, u_2}) (type_of% (realize.{u_2 + 1, u_2, 0, u_2, 0} signature.{u_2} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "matrix_unit_decoder_channel") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_2 + 1, u_2, 0, u_2, 0} signature.{u_2} (fun _ _ x => x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "fn", "arg", "fn", "fn", "arg", "arg", "arg"], stateBinder := 11, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+
 
 #print axioms registration
 end Channel
@@ -366,19 +403,28 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     · intro i; exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
-register_information_theorem _root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_recovers_commutant_weight
-  in arena
-  readout via (realize signature.{u} (fun _ _ x => x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg", "body", "body", "arg"]
-      stateBinder := 15 }] })
-  escape continues (open)
+noncomputable def registration_5.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_recovers_commutant_weight.{u_1, u_2}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "decoder_recovers_commutant_weight") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ x => x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "arg"], stateBinder := 15, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+
 
 #print axioms registration
 end Recovery

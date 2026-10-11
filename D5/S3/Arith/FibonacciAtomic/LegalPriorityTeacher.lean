@@ -43,11 +43,9 @@ def teacher {n : ℕ} (t : Roles n) (x : Input n) : Fin 3 :=
 def probe {n : ℕ} (i j : Fin n) : Input n :=
   fun a => if a = i then .high else if a = j then .low else .zero
 
-/-- Equality on the complete legal input language is exactly equality of the
-two ordered effective edges, including their separate absent values. -/
-theorem result {n : ℕ} (t u : Roles n) :
-    (∀ x : Input n, Legal x → teacher t x = teacher u x) ↔
-      signature t = signature u := by
+/-- Flattened-bit legality is exactly the absence of occupied adjacent seams. -/
+theorem legal_iff {n : ℕ} (x : Input n) : Legal x ↔
+      ∀ i j : Fin n, i.val + 1 = j.val → ¬ (last (x i) = true ∧ first (x j) = true) := by
   have legal_list (w : List Window) (s : Bool) :
       legal s (flatten w) ↔
         (∀ b ∈ w.head?, ¬ (s = true ∧ first b = true)) ∧
@@ -61,17 +59,21 @@ theorem result {n : ℕ} (t u : Roles n) :
       change legal s (bits a ++ flatten w) ↔ _
       rw [ha, ih]
       cases w <;> simp [List.isChain_cons]
-  have legal_iff (x : Input n) : Legal x ↔
-      ∀ i j : Fin n, i.val + 1 = j.val → ¬ (last (x i) = true ∧ first (x j) = true) := by
-    rw [Legal, legal_list]
-    simp only [Bool.false_eq_true, false_and, not_false_eq_true, implies_true,
-      true_and, List.isChain_ofFn]
-    constructor
-    · intro h i j hij
-      have hj : i.val + 1 < n := hij ▸ j.isLt
-      simpa only [Fin.eta, Fin.ext_iff, hij] using h i.val hj
-    · intro h i hi
-      exact h ⟨i, by omega⟩ ⟨i + 1, hi⟩ rfl
+  rw [Legal, legal_list]
+  simp only [Bool.false_eq_true, false_and, not_false_eq_true, implies_true,
+    true_and, List.isChain_ofFn]
+  constructor
+  · intro h i j hij
+    have hj : i.val + 1 < n := hij ▸ j.isLt
+    simpa only [Fin.eta, Fin.ext_iff, hij] using h i.val hj
+  · intro h i hi
+    exact h ⟨i, by omega⟩ ⟨i + 1, hi⟩ rfl
+
+/-- Equality on the complete legal input language is exactly equality of the
+two ordered effective edges, including their separate absent values. -/
+theorem result {n : ℕ} (t u : Roles n) :
+    (∀ x : Input n, Legal x → teacher t x = teacher u x) ↔
+      signature t = signature u := by
   have probe_legal (i j : Fin n) (hij : i.val + 1 < j.val) : Legal (probe i j) := by
     have hji : j ≠ i := by intro h; have := congrArg Fin.val h; omega
     apply (legal_iff _).2
@@ -161,7 +163,5 @@ theorem result {n : ℕ} (t u : Roles n) :
     have hp := gate_eq t.p t.q u.p u.q t.pq u.pq (congrArg Prod.fst h)
     have hq := gate_eq t.q t.r u.q u.r t.qr u.qr (congrArg Prod.snd h)
     simp only [teacher, hp, hq]
-
-#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher

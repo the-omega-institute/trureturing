@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Text;
 using StrataLint.Engine;
 
@@ -118,6 +119,7 @@ internal sealed class WorktreeBranchTracking
     internal void Rollback(WorktreeOptions options, IWorktreeProcessRunner runner)
     {
         if (stage == WriteStage.NotStarted) return;
+        using var referenceScope = WorktreeInitializationScope.AcquireReference(options.Source, options.Branch);
         var branch = Run(options, runner,
             ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"], missing: 1);
         if (branch.ExitCode == 0) return;

@@ -419,3 +419,152 @@ $$
 $$
 
 Dropping the last two terms preserves an upper bound. Equations (14)–(15) hold at paper level for every $g\in C_c^\infty(\mathbb R;\mathbb C)$, with no fixed support, parity, mean or frequency restriction. They strengthen only the upper budget; the two-sided derivative estimate is still available independently. They do not supply the remaining signed primary-prime/pole comparison, an all-test positivity result, Robin's inequality or RH. The parameter application has not been compiled in Lean and is not presented as a new formal declaration.
+
+## Squarefree prime-shift geometry: two printed obstruction gaps
+
+Luca Eliseo Pavesi's sixth-revision preprint, *Prime-shift operators on
+Björner's complex of squarefree integers: an exact decomposition of the
+Mertens invariant, exact kernel asymptotics, rigorous recovery bounds for
+the Guinand–Weil pipeline, and a structural obstruction to the spectral
+modification*, is identified by [Zenodo record 22831623](https://doi.org/10.5281/zenodo.22831623),
+published 18 September 2026. The inspected PDF has 22 pages, SHA-256
+`d08f8f9855ebe3c2a2b1995bc2ff0d6b74a79c42b976d52f54e987dbb8ed5f9c`,
+and MD5 matching the publisher record. The locators below use printed
+pages. The inspected interfaces are the unsigned shifts in §2.1, p.4;
+Proposition 3.4 and Remark 3.5, p.6; the kernel representation in §5.1,
+pp.9–10; and the two advertised spectral obstructions in §7, pp.13–14.
+No whole-paper proof audit, reproduction of rank or zero computations,
+peer-review claim, or Lean verification is supplied.
+
+### The uniform norm premise has a smaller valid range
+
+The source's carrier has orthonormal basis $e_m$ indexed by squarefree
+$m\le n$, including $e_1$. Its actual unsigned operations are
+
+$$
+T_pe_m=\begin{cases}e_{pm},&p\nmid m,\ pm\le n,\\0,&\text{otherwise},\end{cases}
+\qquad
+T_p^*e_m=\begin{cases}e_{m/p},&p\mid m,\\0,&\text{otherwise}.\end{cases}
+$$
+
+Write $H_n^{\rm sf}=\sum_{p\le n}p^{-s}(T_p+T_p^*)$ for $s>0$.
+Proposition 7.1, printed p.13, claims for **$s>1/2$** that
+
+$$
+\|H_n^{\rm sf}\|_{\rm op}\le2P(s),\qquad P(s)=\sum_p p^{-s}<\infty.
+\tag{S1}
+$$
+
+The prime series is finite only for $s>1$. The source's own
+Proposition 3.4 uses that correct range; Remark 3.5 explicitly states
+$P(s)=\infty$ when $s\le1$. Thus the compact-support argument cannot
+use (S1) as a finite uniform budget throughout its printed range.
+
+There is also an actual operator lower bound, rather than merely a
+vacuous upper bound. Let $Q_k=\prod_{j=1}^k p_j$ and, for every
+$n\ge Q_k$, take the unit vector
+
+$$
+u_k=2^{-k/2}\sum_{d\mid Q_k}e_d.
+$$
+
+For each $p\mid Q_k$, the operator $T_p+T_p^*$ pairs the divisors
+containing $p$ with those not containing it, wholly inside the cutoff.
+Its compression to this divisor span fixes $u_k$. For $p\nmid Q_k$,
+all nonzero images leave that span and have zero inner product with
+$u_k$. Consequently
+
+$$
+\langle u_k,H_n^{\rm sf}u_k\rangle
+=\sum_{j=1}^k p_j^{-s},\qquad
+\|H_n^{\rm sf}\|_{\rm op}\ge\sum_{j=1}^k p_j^{-s}
+\quad(n\ge Q_k).
+\tag{S2}
+$$
+
+Classical divergence of $\sum_p1/p$, and $p^{-s}\ge p^{-1}$ for
+$0<s\le1$, show that, for every fixed $0<s\le1$, these norms tend to infinity
+as $n\to\infty$. In particular, the claimed uniform norm budget fails
+for $1/2<s\le1$. This calculation does not simultaneously diagonalize
+the truncated prime shifts; it uses only one supported vector and a
+Rayleigh quotient.
+
+For $s>1$, the source's already supplied finite bound remains applicable.
+Divergence of the norms for $s\le1$ does **not** decide the support of
+a weak limiting empirical measure: a small mass of escaping eigenvalues
+can coexist with a compactly supported weak limit. Neither spectral
+convergence to zeta zeros nor its general impossibility follows from
+(S2).
+
+The projection in the source's (30) is specifically onto
+$\ker H_n^{\rm sf}$. Self-adjointness gives $H_n^{\rm sf}P_n=P_nH_n^{\rm sf}=0$,
+so $(I-P_n)H_n^{\rm sf}(I-P_n)=H_n^{\rm sf}$. Removing the zero
+subspace changes the carrier or the normalization of a spectral measure,
+but this displayed compression leaves every nonzero eigenvalue unchanged.
+That is different from constructing a new spectral operator.
+
+### The displayed Gaussian prime term vanishes at small width
+
+Proposition 7.4, printed p.13, asserts that the displayed contribution
+
+$$
+S(\sigma)=\frac1{8\sigma^5\sqrt\pi}
+\sum_{m\ge2}\frac{\Lambda(m)}{\sqrt m}(\log m)^2
+\exp\!\left[-\frac{(\log m)^2}{4\sigma^2}\right]
+\tag{S3}
+$$
+
+is asymptotic to $1/(8\sigma^3)$ as $\sigma\to0$. This claimed
+divergence is incompatible with (S3), including all its prime powers.
+
+For $0<\sigma\le1/4$, split the Gaussian into two equal exponent factors.
+The first is at most $\exp[-(\log2)^2/(8\sigma^2)]$; the second is
+at most $\exp[-2(\log m)^2]$. The constant
+
+$$
+K=\frac1{8\sqrt\pi}\sum_{m\ge2}
+\frac{\Lambda(m)}{\sqrt m}(\log m)^2e^{-2(\log m)^2}
+$$
+
+is finite. Indeed $\Lambda(m)\le\log m$, and for $m\ge3$,
+$\log m>1$ implies $e^{-2(\log m)^2}\le m^{-2}$; the resulting
+$(\log m)^3m^{-5/2}$ series converges. Hence the entire positive sum obeys
+
+$$
+0\le S(\sigma)\le K\sigma^{-5}
+\exp\!\left[-\frac{(\log2)^2}{8\sigma^2}\right]
+\longrightarrow0.
+\tag{S4}
+$$
+
+No numerical prime truncation or PNT estimate is needed for this bound.
+The statement that the sum is dominated by $\log m\lesssim\sigma$
+does not provide an asymptotic density near zero: once
+$\sigma<\log2$, there is no integer $m\ge2$ in that interval.
+Other terms of the explicit formula are separate contributions and
+cannot supply the claimed divergence of the particular prime sum (S3).
+Thus the printed second-moment obstruction cannot be imported through
+its asserted small-width asymptotic. This assessment does not certify
+or reject every other possible spectral comparison for these operators.
+
+### What remains to connect this geometry to the Robin source
+
+The source's $M(n)=\sum_{m\le n}\mu(m)$ and its squarefree-chain
+residual are different arithmetic quantities from
+$\psi(x)=\sum_{m\le x}\Lambda(m)$ and the
+[same-source Robin integral](../Analytic/polak2026finiterobinca.md).
+Its Proposition 5.1 labels its zero expansion formal and displays both
+the critical-line parametrization $\rho=1/2+i\gamma$ and weights
+$1/\zeta'(\rho)$. Those passages supply no replacement for the already
+available actual all-strip, multiplicity-preserving logarithmic-derivative
+formula. A uniform extension to all actual zeros, treatment of possible
+multiple zeros, and a quantitative transport to the Robin kernel would
+be additional obligations.
+
+The first-175-zero exponent fits in the source are reported observations,
+not a uniform $n^{-1/2}$ bound over all heights and all zeros. None of
+the two corrected obstruction interfaces above supplies a lower bound
+for $\sqrt A\log A\,I_\psi(A)$ at the selected integer. The original
+signed estimate and RH remain unproved. This is a paper-level source
+scope assessment and elementary counterestimate, not an originality
+claim or a new Hilbert–Pólya criterion.

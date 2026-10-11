@@ -73,7 +73,8 @@ internal sealed class ThueMorseMapFirstStartDocument : IScribeDocumentDefinition
                         + "q-1 with even e, and q for q-1 with odd e. These maxima "
                         + "and the block-recognition principle are due to Aedo, "
                         + "Grimm, Nagai and Staynova, as cited by Joshi and Rust. "
-                        + "Their required binary statements are proved inside this "
+                        + "The dyadic block and top parity identities are supplied by "
+                        + "ThueMorseDyadic; the remaining required binary statements are proved inside this "
                         + "argument using the existing Thue-Morse word.")),
                     Paragraph(Text(
                         "Write a start as aq+b with 0<=b<q. Binary block parity "

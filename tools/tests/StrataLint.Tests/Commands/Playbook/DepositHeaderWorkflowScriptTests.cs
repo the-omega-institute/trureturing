@@ -1,4 +1,5 @@
 using static StrataLint.TestSupport.TransactionFixture;
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -78,6 +79,66 @@ public sealed class DepositHeaderCommandTests
 
 public sealed class DepositHeaderUtilityTests
 {
+    [Theory]
+    [InlineData("none")]
+    [InlineData("atom")]
+    [InlineData("task")]
+    public void DepositReadsOnlyRelevantLeanPolicyBaselineAndUtilityTarget(string kind)
+    {
+        var fixture = new RuleFixture();
+        var utility = kind switch
+        {
+            "atom" => UtilityAdmissionTestSupport.AddRefutationEvidence(fixture,
+                $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"),
+            "task" => "kind=checker; basis=terminal=task:D5-T0098; instance=D5/S0/Carrier/Ring.goldenRing",
+            _ => "none",
+        };
+        if (kind == "task") fixture.AddSyntheticUnregisteredFrontierTask("D5-T0098");
+        AddUtility(fixture, utility);
+        fixture.Files[BackfillInventoryLoader.RootPath + "unrelated/source.toml"] = "invalid TOML [\n";
+        fixture.Files[BackfillInventoryLoader.RootPath + "unrelated/residual-open/" + new string('f', 64) + ".yaml"] = "invalid: [\n";
+        fixture.Files[DigestionCasStore.RootPath + new string('f', 64)] = "unrelated CAS\n";
+        fixture.Files["docs/develop/theory/unrelated.md"] = "unrelated theory\n";
+        var raw = UtilityAdmissionTestSupport.Raw(fixture.Files);
+        var repository = new FakeRepositoryGateway(RawChangeSet.Create([RuleFixture.RingPath]), raw,
+            UtilityAdmissionTestSupport.Raw(fixture.Baseline));
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+
+        var result = DepositHeaderCheckCommand.Run(repository, source,
+            ["--target", RuleFixture.RingPath, "--protected-base", new string('b', 40)]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(1, source.CallCount);
+        Assert.Equal(0, repository.WholeTreeReadCount);
+        Assert.Equal(0, repository.PrepareCount);
+        Assert.Equal(new[] { ":(literal)" + RuleFixture.RingPath,
+                ":(literal)" + FrozenStatePath.FromModulePath(RepoPath.CreateKnown(RuleFixture.RingPath)).Value },
+            Assert.Single(repository.ScopedRevisionReads).Paths);
+        Assert.DoesNotContain(repository.ScopedCurrentReads.SelectMany(paths => paths),
+            path => path == BackfillInventoryLoader.RootPath.TrimEnd('/') || path == BackfillInventoryLoader.RelativePath
+                || path == "Meta" || path == "Golden/Frozen/state" || path == DigestionCasStore.RootPath.TrimEnd('/'));
+        Assert.DoesNotContain(repository.ScopedCurrentReads.SelectMany(paths => paths),
+            path => path == "docs/develop/theory" || path == "docs/develop/theory/unrelated.md");
+        if (kind != "atom") Assert.Empty(repository.CurrentPathSearches);
+    }
+
+    [Fact]
+    public void MissingUtilityAtomIsDanglingWhenThereIsNoDigestionLedger()
+    {
+        var fixture = new RuleFixture();
+        AddUtility(fixture, UtilityAdmissionTestSupport.AddRefutationEvidence(fixture,
+            $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
+        foreach (var path in fixture.Files.Keys.Where(path => path == BackfillInventoryLoader.RelativePath
+                     || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)).ToArray())
+            fixture.Files.Remove(path);
+
+        var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("DEPOSIT_HEADER_UTILITY_TARGET_DANGLING", result.Output, StringComparison.Ordinal);
+        Assert.Contains("target=atom:" + RuleFixture.FixtureAtomId, result.Output, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void DepositHeaderCheckRequiresUtilityForUnfrozenTarget()
     {
@@ -186,12 +247,118 @@ public sealed class DepositHeaderUtilityTests
             fixture,
             "kind=numeric-reduction; "
             + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
+        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath].Replace("def goldenRing",
+            "import D5.S0.Carrier.ValuesBinding\n\ndef goldenRing", StringComparison.Ordinal);
+        fixture.Reports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath] with
+        {
+            Imports = ["D5.S0.Carrier.ValuesBinding"],
+        };
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
 
         var result = Run(fixture, source);
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(1, source.CallCount);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ScopedDepositChecksCurrentSourceOfUnimportedUtilityConsumer(bool changed)
+    {
+        var fixture = new RuleFixture();
+        AddUtility(fixture, "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            UtilityAdmissionTestSupport.Raw(fixture.Files))).Snapshot;
+        var scope = LeanReportScope.Create(snapshot, [RepoPath.CreateKnown(RuleFixture.RingPath)]);
+        var selected = RepositorySnapshot.Create(snapshot.Files.Where(pair => scope.Paths.Contains(pair.Key))
+            .ToImmutableDictionary());
+        var report = LeanAxiomReport.Create(fixture.Reports.Where(pair => scope.Paths.Contains(RepoPath.CreateKnown(pair.Key)))
+            .ToDictionary(pair => pair.Key, pair => pair.Value with
+            {
+                Imports = LeanSourceCatalog.ParseFileImports(snapshot.Files[RepoPath.CreateKnown(pair.Key)], includeImplicitInit: true),
+            }));
+        using var root = new TemporaryDirectory();
+        var path = Path.Combine(root.Path, "report.json");
+        RawLeanReportArtifact.WriteFile(path, selected, report);
+        File.WriteAllText(path, File.ReadAllText(path).Replace(
+            RawLeanReportArtifact.Schema, RawLeanReportArtifact.ScopedSchema, StringComparison.Ordinal));
+        if (changed) fixture.Files[RuleFixture.ValuesBindingPath] += "\ndef changedIdentity : Nat := 0\n";
+
+        var result = Run(fixture, new DagLedgerCommandPreparation.FileLeanReportSource(path));
+
+        Assert.Equal(changed ? 1 : 0, result.ExitCode);
+        if (changed) Assert.Contains("DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ScopedDepositIncludesUnimportedUtilityConsumerWithoutInventingEvidence()
+    {
+        var fixture = new RuleFixture();
+        AddUtility(fixture, "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
+
+        var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+
+        Assert.Equal(0, result.ExitCode);
+    }
+
+    [Fact]
+    public void ScopedDepositRejectsMissingUnimportedUtilityConsumerEvidence()
+    {
+        var fixture = new RuleFixture();
+        AddUtility(fixture, "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
+        fixture.Reports.Remove("D5/S0/Carrier/ValuesBinding.lean");
+
+        var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+
+        Assert.NotEqual(0, result.ExitCode);
+    }
+
+    [Fact]
+    public void ScopedDepositRejectsUnimportedUtilityConsumerWithMissingDeclaration()
+    {
+        var fixture = new RuleFixture();
+        AddUtility(fixture, "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.absent; premises=D5/S0/Carrier/Ring.goldenRing");
+
+        var result = Run(fixture, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)));
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("target=D5/S0/Carrier/ValuesBinding.absent", result.Output);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ScopedFirstFreezePreservesConsumerReachability(bool reachable)
+    {
+        var fixture = new RuleFixture();
+        const string utility = "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing";
+        AddUtility(fixture, utility);
+        if (reachable)
+        {
+            fixture.Files[RuleFixture.ValuesBindingPath] = fixture.Files[RuleFixture.ValuesBindingPath]
+                .Replace("def fixtureValue", "import D5.S0.Carrier.Ring\n\ndef fixtureValue", StringComparison.Ordinal);
+            fixture.Reports[RuleFixture.ValuesBindingPath] = fixture.Reports[RuleFixture.ValuesBindingPath] with
+            {
+                Imports = ["D5.S0.Carrier.Ring"],
+            };
+        }
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            UtilityAdmissionTestSupport.Raw(fixture.Files))).Snapshot;
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+
+        var result = UtilityDeclarationValidator.Validate(UtilityValidationPhase.FirstFreeze,
+            RepoPath.CreateKnown(RuleFixture.RingPath), utility, snapshot,
+            () => LeanReportSourceScope.Load(source, snapshot, [RepoPath.CreateKnown(RuleFixture.RingPath)]));
+
+        Assert.Equal(reachable, result.IsAccepted);
+        Assert.Equal(reachable ? UtilityValidationFailure.None : UtilityValidationFailure.ConsumerUnreachable,
+            result.Failure);
     }
 
     [Fact]

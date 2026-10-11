@@ -1,0 +1,17 @@
+**定理 35.2（十七叶实际五族与全部子集的相容复形）。** 定义 35.1 的五个 $Q_i$ 是两两不同的完整前像，并且
+
+$$
+\begin{gathered}
+\rho^3(Q_i)=P_i\in\mathcal I_3(17),\qquad
+c(Q_i)=(4,1)^{\mathsf T},\qquad
+c(P_i)=(6,11)^{\mathsf T},\qquad n(P_i)=17
+\quad(1\le i\le5),\\
+|F|=5,\qquad
+\operatorname{NC}(P_i,P_j)\quad(1\le i<j\le5),\qquad
+K(F)=K_\circ(F).
+\end{gathered}
+\tag{35.3}
+$$
+
+最后一个等式确定每个子集的共同叶最优取得性，不只是整个 $F$ 的不相容性。
+

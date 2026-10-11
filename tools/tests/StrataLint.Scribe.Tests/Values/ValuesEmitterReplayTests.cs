@@ -1,5 +1,7 @@
 using System.Text;
 
+using StrataLint.Engine;
+
 namespace StrataLint.Scribe.Tests;
 
 public sealed class ValuesEmitterReplayTests
@@ -23,7 +25,7 @@ public sealed class ValuesEmitterReplayTests
                     new UTF8Encoding(false, true));
             }
 
-            var projection = Path.Combine(temporary.FullName, CanonicalValuesWriter.RelativePath);
+            var projection = Path.Combine(temporary.FullName, GeneratedArtifactInventory.Values.Path);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(projection)!);
             TemporaryFileSystem.File.WriteAllText(projection, "stale\n", new UTF8Encoding(false, true));
             var output = new StringWriter();

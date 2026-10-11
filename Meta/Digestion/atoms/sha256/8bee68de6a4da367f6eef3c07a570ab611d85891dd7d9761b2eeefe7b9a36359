@@ -1,0 +1,20 @@
+# Auric FIB ATOM：输出分辨的未来观察商与可维护性
+
+**Reference input: open.** 本卷保存一份用户供文，继续既有的五态 FIB、静态隐藏纤维和动态未来商理论，新增输出分辨 instrument、平均核反例、Bayes 可辨识性以及部分观测可维护性。文中的“定理”“证明”和物理、生命解释均是开放参考输入；Lean 声明、证明项及其公理闭包才承载本库形式系统内的数学真值。本文不认证物理定律、生物学定理、Lean/Frozen 状态或理论优先权。
+
+**Provenance.** Author kind: mixed user-supplied material; original author and model are unknown. Receipt date: 2026-10-10. The supplied state correction reports remote dev at `ae4f135cebf29ea39c8253bf1c21016cf7cb7cfb`, timestamp 2026-10-10 15:37:42 +08:00; this revision was independently observed before authoring. Historical references to `912f499`, `3a56aa4`, and the cited PRs remain attributed source statements. The earlier static and dynamic volumes remain separate reference inputs; this volume does not edit them.
+
+**Scope qualifications.** The finite five-state linear algebra, finite instrument closure, counterexample, Bayes likelihood calculation, and graph facts are mathematical claims in explicitly declared finite models and remain open until separately formalized. The Fibonacci future quotient requires its declared active domain, shared source, response kernel, and non-singleton depth prior. The paired-calibration and acquired-return documents are cited as structural analogies or repository reference inputs, not silently identified with the FIB instrument. Life, inverse-decay, gravity, and physical-time language remains a model proposal.
+
+**Fixed notation.** Throughout:
+$$
+F[\mathrm{null}]=\mathrm{null},\quad
+F[1]=[2],\quad
+F[2]=[3],\quad
+F[3]=[5],\quad
+F[1,3]=[2,5].
+$$
+The five states are the independent sets of the path $P_3$. The symbols $x,y,z$ indicate positions $1,3,2$, respectively. A probability law, a statewise function, an instrument kernel, a dynamic history, and a physical interpretation are different objects unless a section explicitly identifies them.
+
+**Source boundary.** The supplied continuation is preserved in normalized theorem headings below. Structural normalization adds provenance and claim-status labels; it does not promote the claims to Lean/Frozen truth or silently repair their hypotheses.
+

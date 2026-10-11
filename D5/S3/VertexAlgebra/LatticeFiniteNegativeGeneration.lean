@@ -108,7 +108,7 @@ private theorem bilinear_unit (D : LatticeData) (i : Fin D.rank) (α : Charge D)
   classical
   simp [bilinear, unitCharge]
 
-private theorem bilinear_symmetric (D : LatticeData) (α β : Charge D) :
+theorem bilinear_symmetric (D : LatticeData) (α β : Charge D) :
     bilinear D α β = bilinear D β α := by
   rw [bilinear, bilinear, Finset.sum_comm]
   apply Finset.sum_congr rfl
@@ -126,7 +126,7 @@ private theorem bilinear_sub_right (D : LatticeData) (α β γ : Charge D) :
     bilinear D α (β - γ) = bilinear D α β - bilinear D α γ := by
   simp [bilinear, mul_sub, Finset.sum_sub_distrib]
 
-private theorem norm_positive (D : LatticeData)
+theorem norm_positive (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (α : Charge D) (hα : α ≠ 0) :
     0 < bilinear D α α := by
   have hr : (fun i => (α i : ℝ)) ≠ 0 := by
@@ -182,11 +182,11 @@ private theorem smallCharges_finite (D : LatticeData)
   exact abs_lt.mp (hα i)
 
 
-private theorem bilinear_neg_left (D : LatticeData) (α β : Charge D) :
+theorem bilinear_neg_left (D : LatticeData) (α β : Charge D) :
     bilinear D (-α) β = -bilinear D α β := by
   simp [bilinear, Finset.sum_neg_distrib]
 
-private theorem bilinear_neg_right (D : LatticeData) (α β : Charge D) :
+theorem bilinear_neg_right (D : LatticeData) (α β : Charge D) :
     bilinear D α (-β) = -bilinear D α β := by
   simp [bilinear, Finset.sum_neg_distrib]
 

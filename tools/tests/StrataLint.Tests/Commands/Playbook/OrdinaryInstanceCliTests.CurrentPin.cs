@@ -24,6 +24,6 @@ public sealed partial class OrdinaryInstanceCliTests
 
         Assert.Equal(1, exit);
         Assert.Contains("DEPOSIT_HEADER_UTILITY_ORDINARY_INSTANCE_BANNED", console.Output, StringComparison.Ordinal);
-        Assert.Equal(["baseline"], repository.ReadRevisionCalls);
+        Assert.Equal([new string('b', 40)], repository.ReadRevisionCalls);
     }
 }

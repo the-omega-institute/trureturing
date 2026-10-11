@@ -11,7 +11,8 @@ def isInspectorModule (name : Lean.Name) : Bool :=
 this source directory. These are library namespaces, not individual module pins. -/
 def isImplementationSourceModule (name : Lean.Name) : Bool :=
   #[`LeanInformationAudit, `LeanInformationAuditAnalysis,
-    `LeanInformationAuditRegTests, `LeanInformationAuditRegAnalysis].contains name.getRoot
+    `LeanInformationAuditRegTests,
+    `LeanInformationAuditRegAnalysis].contains name.getRoot
 
 /-- Local data/type bodies include registration support; external libraries remain
 opaque. This classifies a supplied owner, without enumerating loaded modules. -/

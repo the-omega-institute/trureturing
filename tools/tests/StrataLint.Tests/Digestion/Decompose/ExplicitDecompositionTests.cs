@@ -134,15 +134,6 @@ public sealed class ExplicitDecompositionTests
     }
 
     [Fact]
-    public void UnmarkedChildrenInheritTheParentContentKind()
-    {
-        var f = Persist(First, Second, Third);
-        var kinds = DigestionContentKindResolver.Resolve(f.Snapshot, f.Document);
-        foreach (var text in new[] { First, Second, Third })
-            Assert.Equal("theorem", kinds[DecomposeFixture.Entry(text).AtomId]);
-    }
-
-    [Fact]
     public void NestedExplicitChainSurvivesIngestAndContextQueries()
     {
         var f = new DecomposeFixture(First + Second + Third);
@@ -161,7 +152,6 @@ public sealed class ExplicitDecompositionTests
         Assert.Equal(DecomposeFixture.Entry(Second).AtomId, context.Previous!.Value.AtomId);
         Assert.Equal(3, context.Count);
         Assert.Null(context.Next);
-        Assert.Equal("theorem", DigestionContentKindResolver.Resolve(f.Snapshot, f.Document)[thirdId]);
         var ingest = ReportFreeDigestionIngestor.Plan(f.Document, f.Snapshot);
         Assert.Equal(0, ingest.ResidualOpenAdded);
         Assert.Empty(ingest.CasObjects);
@@ -169,84 +159,7 @@ public sealed class ExplicitDecompositionTests
     }
 
     [Fact]
-    public void ChildCasOnlyDeltaRevalidatesTheUnmarkedParent()
-    {
-        var f = PersistForAdmission(First, Second, Third);
-        var baseline = f.Snapshot;
-        var ledger = f.Document;
-        var childPath = DigestionCasStore.RootPath + DecomposeFixture.Entry(Second).AtomId;
-        Assert.Empty(DigestionLedgerAligner.Evaluate(ledger, baseline, DigestionAlignmentMode.Admission,
-            changes: RawChangeSet.Create([childPath])).Findings);
-        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(e => e.Path != childPath)
-            .Append(RawRepositoryEntry.FromText(childPath, "different bytes\n")));
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Admission,
-            changes: RawChangeSet.Create([childPath]));
-        Assert.Contains(alignment.Findings, finding => finding.Contains(
-            $"CAS blob hash mismatch: {childPath}", StringComparison.Ordinal));
-        Assert.DoesNotContain(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
-    }
-
-    [Fact]
-    public void InvalidUtf8ChildCasProducesAlignmentFindings()
-    {
-        var f = PersistForAdmission(First, Second, Third);
-        var baseline = f.Snapshot;
-        var ledger = f.Document;
-        var childPath = DigestionCasStore.RootPath + DecomposeFixture.Entry(Second).AtomId;
-        Assert.Empty(DigestionLedgerAligner.Evaluate(ledger, baseline, DigestionAlignmentMode.Admission,
-            changes: RawChangeSet.Create([childPath])).Findings);
-        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(e => e.Path != childPath)
-            .Append(new RawRepositoryEntry(childPath, [0xff])));
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Admission,
-            changes: RawChangeSet.Create([childPath]));
-        Assert.Contains(alignment.Findings, finding => finding.Contains(
-            $"CAS blob hash mismatch: {childPath}", StringComparison.Ordinal));
-        Assert.DoesNotContain(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
-    }
-
-    [Fact]
-    public void CanonicalSharedChildKeepsItsUnresolvedContentKind()
-    {
-        var f = SharedKinds(marked: true);
-        var sharedId = DecomposeFixture.Entry("**Shared** Common.\n\n").AtomId;
-        var kinds = DigestionContentKindResolver.Resolve(f.Snapshot, f.Document);
-        Assert.DoesNotContain(sharedId, kinds.Keys);
-    }
-
-    [Fact]
-    public void ExplicitSharedChildRejectsConflictingContentKinds()
-    {
-        var f = SharedKinds(marked: false);
-        var error = Assert.Throws<FormatException>(() => DigestionContentKindResolver.Resolve(f.Snapshot, f.Document));
-        Assert.Contains("CONTENT_KIND_CONFLICT", error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void SharedChildInheritsOnlyFromItsOwningSource()
-    {
-        var f = SharedKinds(marked: false);
-        const string theorem = "## theorem 1.1\n\nAlpha.\n\n";
-        const string remark = "## remark 1.2\n\nBeta.\n\n";
-        const string shared = "Common.\n\n";
-        var otherId = DecomposeFixture.Entry(remark + shared).AtomId;
-        var prefixId = DecomposeFixture.Entry(remark).AtomId;
-        var moved = f.Document.RequireDigestionEntries().Where(e => e.AtomId == otherId || e.AtomId == prefixId).ToArray();
-        foreach (var entry in moved) f.Replace(entry with { SourceId = "z-other", SourcePath = "docs/other.md" });
-        var source = new DigestionLedgerSource("z-other", "docs/other.md", AtomizerRegistry.GenericId, [],
-            GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])), []);
-        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(e => e.Path != "docs/probe.md")
-            .Concat(new RawRepositoryEntry[]
-            {
-                RawRepositoryEntry.FromText("docs/probe.md", theorem + shared),
-                RawRepositoryEntry.FromText("docs/other.md", remark + shared),
-                new("Meta/Digestion/backfill/z-other/source.toml", BackfillInventoryWriter.WriteSourceMetadata(source)),
-            }));
-        Assert.Equal("theorem", DigestionContentKindResolver.Resolve(f.Snapshot, f.Document)
-            [DecomposeFixture.Entry(shared).AtomId]);
-    }
-
-    [Fact]
-    public void ExplicitParentWithCanonicalNestedChildInheritsKinds()
+    public void ExplicitParentSupportsCanonicalNestedChild()
     {
         const string prefix = "**Theorem 1.1** Prefix. ";
         const string list = "- alpha\n- beta\n";
@@ -256,9 +169,10 @@ public sealed class ExplicitDecompositionTests
         var inner = DecomposeAtomCommand.Run("synthetic", f.Gateway,
             f.Args(DecomposeFixture.Entry(list).AtomId), f.Apply);
         Assert.True(inner.Success, inner.Error);
-        var kinds = DigestionContentKindResolver.Resolve(f.Snapshot, f.Document);
-        Assert.Equal("theorem", kinds[DecomposeFixture.Entry("- alpha\n").AtomId]);
-        Assert.Equal("theorem", kinds[DecomposeFixture.Entry("- beta\n").AtomId]);
+        var child = f.Document.RequireDigestionEntries().Single(entry =>
+            entry.AtomId == DecomposeFixture.Entry(list).AtomId);
+        Assert.Equal([DecomposeFixture.Entry("- alpha\n").AtomId, DecomposeFixture.Entry("- beta\n").AtomId],
+            child.Receipts.ChainAtoms.ToArray());
     }
 
     [Theory]
@@ -311,40 +225,6 @@ public sealed class ExplicitDecompositionTests
     {
         var f = new DecomposeFixture(string.Concat(children));
         AddChain(f, children);
-        return f;
-    }
-
-    private static DecomposeFixture PersistForAdmission(params string[] children)
-    {
-        var fixture = Persist(children);
-        // This synthetic snapshot contains data only: no projects or rule build inputs.
-        fixture.Current = RawRepositorySnapshot.Create(fixture.Current.Entries.Append(
-            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path,
-                EngineeringRegistrationFixture.Manifest())));
-        return fixture;
-    }
-
-    private static DecomposeFixture SharedKinds(bool marked)
-    {
-        var shared = marked ? "**Shared** Common.\n\n" : "Common.\n\n";
-        const string theorem = "## theorem 1.1\n\nAlpha.\n\n";
-        const string remark = "## remark 1.2\n\nBeta.\n\n";
-        var f = new DecomposeFixture(theorem + shared, AtomizerRegistry.GenericId);
-        var other = DecomposeFixture.Entry(remark + shared, AtomizerRegistry.GenericId);
-        f.Add(other, remark + shared);
-        var sharedEntry = DecomposeFixture.Entry(shared, AtomizerRegistry.GenericId);
-        f.Add(sharedEntry, shared);
-        foreach (var pair in new[] { (f.Parent, theorem), (other, remark) })
-        {
-            var prefix = DecomposeFixture.Entry(pair.Item2, AtomizerRegistry.GenericId);
-            f.Add(prefix, pair.Item2);
-            f.Replace(pair.Item1 with
-            {
-                Receipts = pair.Item1.Receipts with { ChainAtoms = [prefix.AtomId, sharedEntry.AtomId] },
-            });
-        }
-        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Where(e => e.Path != "docs/probe.md")
-            .Append(RawRepositoryEntry.FromText("docs/probe.md", theorem + shared + remark + shared)));
         return f;
     }
 

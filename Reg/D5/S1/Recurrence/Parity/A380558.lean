@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Recurrence.Parity.A380558
 import Reg.Support.DependentFamily
 
@@ -80,16 +81,28 @@ def registration : Registration arena
     rw [← h] at hodd
     norm_num at hodd
 
-register_information_theorem _root_.D5.S1.Recurrence.Parity.A380558.result in arena
-  readout via (realize signature (fun _ _ n => coeff n generatingSeries) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Recurrence.Parity.A380558
-    coordinates := #[]
-    readouts := #[{
-      path := #["arg", "arg", "arg", "arg", "body", "fn", "arg", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Recurrence.Parity.A380558.result) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => coeff.{0} n generatingSeries) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Recurrence") "Parity") "A380558") "result") "Reg.D5.S1.Recurrence.Parity.A380558/Reg.D5.S1.Recurrence.Parity.A380558.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Recurrence.Parity.A380558.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => coeff.{0} n generatingSeries) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Recurrence.Parity.A380558, definition := none, coordinates := #[], readouts := #[{ path := #["arg", "arg", "arg", "arg", "body", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

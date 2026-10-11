@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -61,8 +62,43 @@ public sealed class WarmDonorScriptTests
         Assert.EndsWith(" lean", calls[3], StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void CleanDevPullsFetchesAStaleReportSeedBeforeBuild()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var run = Run("dev", "", pullExit: 0, leanExit: 0, staleSeed: true);
+
+        Assert.Equal(0, run.Process.ExitCode);
+        AssertReceipt(run.Process, "warmed", "complete", null);
+        var calls = ScriptHarnessScratch.ReadScratchLines(run.Calls);
+        Assert.Equal("git pull --ff-only origin dev", calls[2]);
+        Assert.Contains("python3 -B", calls[3], StringComparison.Ordinal);
+        Assert.Contains(" refresh-stale-seed --repository ", calls[3], StringComparison.Ordinal);
+        Assert.EndsWith(" lean", calls[4], StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(4)]
+    [InlineData(73)]
+    public void RefreshFailurePropagatesExitAndStopsBeforeBuild(int refreshExit)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var run = Run("dev", "", pullExit: 0, leanExit: 0,
+            staleSeed: true, refreshExit: refreshExit);
+
+        Assert.True(run.Process.ExitCode == refreshExit, "[FAIL] refresh_failure_propagates_helper_exit");
+        AssertReceipt(run.Process, "failed", "refresh", "stale seed refresh failed");
+        Assert.Equal(4, run.CallLines.Length);
+        Assert.Equal("git pull --ff-only origin dev", run.CallLines[2]);
+        Assert.Contains(" refresh-stale-seed --repository ", run.CallLines[3], StringComparison.Ordinal);
+        Assert.DoesNotContain("make ", run.CallsText, StringComparison.Ordinal);
+    }
+
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static ScriptRun Run(string branch, string status, int pullExit, int leanExit)
+    private static ScriptRun Run(string branch, string status, int pullExit, int leanExit,
+        bool staleSeed = false, int refreshExit = 0)
     {
         var fixture = new TemporaryDirectory();
         var repository = Path.Combine(fixture.Path, "repository");
@@ -70,6 +106,12 @@ public sealed class WarmDonorScriptTests
         var bin = Path.Combine(fixture.Path, "bin");
         var calls = Path.Combine(fixture.Path, "calls");
         ScriptHarnessScratch.EnsureDirectory(bin);
+        if (staleSeed)
+        {
+            var seed = Path.Combine(repository, ".lake", "build", "stratalint", "raw-lean-report.json");
+            ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(seed)!);
+            File.WriteAllText(seed, "seed");
+        }
         ScriptHarnessScratch.CopyScriptInto(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/warm-donor.sh"),
             script);
@@ -84,11 +126,14 @@ public sealed class WarmDonorScriptTests
         WriteExecutable(
             Path.Combine(bin, "make"),
             "printf 'make %s\\n' \"$*\" >> \"$WARM_CALLS\"\nexit \"$WARM_LEAN_EXIT\"");
+        WriteExecutable(
+            Path.Combine(bin, "python3"),
+            "printf 'python3 %s\\n' \"$*\" >> \"$WARM_CALLS\"\nexit \"$WARM_REFRESH_EXIT\"");
         var process = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" WARM_CALLS=\"$2\" WARM_BRANCH=\"$3\" WARM_STATUS=\"$4\" WARM_PULL_EXIT=\"$5\" WARM_LEAN_EXIT=\"$6\" exec /bin/bash \"$7\"",
+                "PATH=\"$1:$PATH\" WARM_CALLS=\"$2\" WARM_BRANCH=\"$3\" WARM_STATUS=\"$4\" WARM_PULL_EXIT=\"$5\" WARM_LEAN_EXIT=\"$6\" WARM_REFRESH_EXIT=\"$7\" exec /bin/bash \"$8\"",
                 "warm-donor-test",
                 bin,
                 calls,
@@ -96,6 +141,7 @@ public sealed class WarmDonorScriptTests
                 status,
                 pullExit.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 leanExit.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                refreshExit.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 script,
             ],
             repository,

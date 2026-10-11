@@ -99,14 +99,6 @@ internal static partial class RepositoryRules
                 typeof(RepositoryRules),
                 AllArtifacts)),
         Register(
-            16,
-            "Digestion ledger",
-            new RepositoryRule(
-                BackfillScoped,
-                null,
-                BackfillInventoryRule.IsAffectedBy,
-                BackfillInventoryRule.EvaluateCandidateDelta)),
-        Register(
             17,
             "Typed anchor membership",
             new RepositoryRule(

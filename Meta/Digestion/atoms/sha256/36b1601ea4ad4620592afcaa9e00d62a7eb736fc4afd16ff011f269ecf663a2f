@@ -1,0 +1,12 @@
+## 10. 更新核与动态函数边界
+
+设结果 $o$ 的未归一化更新由非负核 $K_o$ 给出：
+
+$$
+\widetilde p^{\,o}=K_op,
+\qquad q_o=\mathbf1^{\mathsf T}K_op,
+\qquad p^{\,o}=K_op/q_o.
+$$
+
+静态只读模型是 $K_o=\operatorname{diag}(\ell_o)$。
+

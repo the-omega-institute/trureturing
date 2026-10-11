@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.FiniteSectorSchurUpper
 import D5.S3.Quantum.Entanglement.FiniteSectorPhysicalConstruction
 import Reg.Support.DependentFamily
@@ -80,15 +81,28 @@ def registration : Registration arena.{u} (arena.Law actual) where
 
 #print axioms registration
 
-register_information_theorem schur_upper in arena
-  readout via (realize signature.{u} (fun _ _ x => (x : ℂ)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Entanglement.FiniteSectorSchurUpper
-    coordinates := #[]
-    readouts := #[{path := #[ "body", "body", "body", "body", "body", "body", "body", "fn",
-        "arg", "fn", "arg", "arg", "arg", "body", "body" ], stateOperand := some #["arg"]}] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.schur_upper.{u}) (type_of% (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => (x : ℂ)) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Entanglement") "FiniteSectorChannelOptimality") "schur_upper") "Reg.D5.S3.Quantum.Entanglement.FiniteSectorSchurUpper/Reg.D5.S3.Quantum.Entanglement.FiniteSectorSchurUpper.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorSchurUpper.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u})⟩,
+  objectArena := .source ⟨(arena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u}) ⟨(registration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => (x : ℂ)) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.FiniteSectorSchurUpper, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg", "arg", "body", "body"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 
 end Reg.D5.S3.Quantum.Entanglement.FiniteSectorSchurUpper

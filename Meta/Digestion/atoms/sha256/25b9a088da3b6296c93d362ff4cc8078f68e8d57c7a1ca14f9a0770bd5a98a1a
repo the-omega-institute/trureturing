@@ -1,0 +1,88 @@
+**证明。** [母卷定义 3.1 的二叉同态替换](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)把式（35.2）每个 $Q_i$ 中的 $\alpha$、$\beta$、$\langle\beta,\alpha\rangle$ 分别送到 $A,C,B$，保留所有括号与左右次序，逐行得到 $\rho^3(Q_i)=P_i$。五个 $Q_i$ 的字面括号或叶位置不同。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的既有树替换单射性复合三次，直接给五个像的不同性与这些前像的唯一性。每个所列 $Q_i$ 恰有四片 $\alpha$、一片 $\beta$。母卷定义 3.3、定理 3.4 的组成作用给
+
+$$
+c(P_i)=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}
+\begin{pmatrix}4\\1\end{pmatrix}
+=\begin{pmatrix}6\\11\end{pmatrix},
+\qquad n(P_i)=6+11=17.
+\tag{35.4}
+$$
+
+这只是已指定完整树的组成计算，不给未知输入任何免费组成报告。
+
+为证明全部十对非冲突，先展开式（35.1）的完整带标签前沿：
+
+$$
+\begin{aligned}
+\mathcal F(A)=\{& (\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(C)=\{& (\mathtt{LLL},\beta),(\mathtt{LLR},\alpha),(\mathtt{LR},\beta),
+(\mathtt{RL},\beta),(\mathtt{RR},\alpha)\},\\
+\mathcal F(B)=\{& (\mathtt{LLLL},\beta),(\mathtt{LLLR},\alpha),(\mathtt{LLR},\beta),
+(\mathtt{LRL},\beta),(\mathtt{LRR},\alpha),\\
+& (\mathtt{RLL},\beta),(\mathtt{RLR},\alpha),(\mathtt{RR},\beta)\}.
+\end{aligned}
+\tag{35.5}
+$$
+
+这些局部展开是既有 $A,C,B$ 在当前构造中的代入。令 $S_i$ 为第 $i$ 棵树中所列 $A$ 块的根，$v_i$ 为剩余块的根，$T_i$ 为该剩余块。式（35.2）保留的全部块根精确为
+
+$$
+\begin{array}{c|c|c|c}
+i&S_i&v_i&T_i\\ \hline
+1&\{\mathtt L,\mathtt{RL},\mathtt{RRL}\}&\mathtt{RRR}&B\\
+2&\{\mathtt L,\mathtt{RL},\mathtt{RRR}\}&\mathtt{RRL}&B\\
+3&\{\mathtt L,\mathtt{RRL},\mathtt{RRR}\}&\mathtt{RL}&B\\
+4&\{\mathtt{RL},\mathtt{RRL},\mathtt{RRR}\}&\mathtt L&B\\
+5&\{\mathtt{LLL},\mathtt{LLRL},\mathtt{LLRR},\mathtt{LR}\}&\mathtt R&C
+\end{array}
+\tag{35.6}
+$$
+
+每一行的块根构成该树全部终端块的前缀自由集合。因此，没有遗漏的叶，且
+
+$$
+\mathcal F(P_i)=
+\left(\bigsqcup_{w\in S_i}w\mathcal F(A)\right)
+\sqcup v_i\mathcal F(T_i).
+\tag{35.7}
+$$
+
+把式（35.5）的每个地址按式（35.6）逐项加前缀，取任意两行的地址交集，得到下表的 $U_{ij}$。表的含义同时包括地址和标签的完整等式：
+
+$$
+\begin{aligned}
+V_{ij}:=L(P_i)\cap L(P_j)
+ &=\bigsqcup_{w\in U_{ij}}wL(A),\\
+\mathcal F(P_i)|_{V_{ij}}
+ &=\mathcal F(P_j)|_{V_{ij}}
+ =\bigsqcup_{w\in U_{ij}}w\mathcal F(A).
+\end{aligned}
+\tag{35.8}
+$$
+
+$$
+\begin{array}{c|c|c}
+(i,j)&U_{ij}&|V_{ij}|\\ \hline
+(1,2)&\{\mathtt L,\mathtt{RL}\}&6\\
+(1,3)&\{\mathtt L,\mathtt{RRL}\}&6\\
+(1,4)&\{\mathtt{RL},\mathtt{RRL}\}&6\\
+(1,5)&\{\mathtt{RL}\}&3\\
+(2,3)&\{\mathtt L,\mathtt{RRR}\}&6\\
+(2,4)&\{\mathtt{RL},\mathtt{RRR}\}&6\\
+(2,5)&\{\mathtt{RL}\}&3\\
+(3,4)&\{\mathtt{RRL},\mathtt{RRR}\}&6\\
+(3,5)&\varnothing&0\\
+(4,5)&\{\mathtt{LLL},\mathtt{LR},\mathtt{RL}\}&9
+\end{array}
+\tag{35.9}
+$$
+
+为逐类核对这些等式，前四行来源在四个互不为前缀的槽位 $\mathtt L,\mathtt{RL},\mathtt{RRL},\mathtt{RRR}$ 中各放三个 $A$ 和一个 $B$。式（35.5）给 $L(A)\cap L(B)=\varnothing$；两个不同来源的 $B$ 位不同，因而它们只有剩下两个共同 $A$ 位的叶能重合，恰给表中六个 $i,j\le4$ 的交集和相同标签。
+
+与 $P_5$ 比较时，先按式（35.5）展开右侧 $C$：它在 $\mathtt{RL}$ 下恰为 $A$，在 $\mathtt{RR}$ 下为 $E$。$P_1,P_2,P_4$ 在 $\mathtt{RL}$ 下也恰为 $A$，$P_3$ 在该处为 $B$ 而无共同叶。在 $\mathtt{RR}$ 下，前三棵来源 $P_1,P_2,P_3$ 的子树分别是 $\langle A,B\rangle,\langle B,A\rangle,\langle A,A\rangle$，$P_4$ 的子树也是 $\langle A,A\rangle$。其根的两个孩子都为分支，而 $E$ 的两个孩子是叶，故这里没有重合叶。
+
+$P_5$ 的左子树是 $\langle\langle A,\langle A,A\rangle\rangle,A\rangle$。它在左子树内部的 $\mathtt{LL},\mathtt{LR},\mathtt R$ 三个 $A$ 叶地址上都为分支，所以与 $P_1,P_2,P_3$ 的左块 $A$ 没有共同叶。与 $P_4$ 的左块 $B=\langle C,A\rangle$ 比较，右孩子都是 $A$，给全树地址前缀 $\mathtt{LR}$ 的共同前沿；左孩子分别为 $\langle A,\langle A,A\rangle\rangle$ 和 $C=\langle A,E\rangle$，它们的左孩子都是 $A$，给前缀 $\mathtt{LLL}$ 的共同前沿。其右孩子 $\langle A,A\rangle$ 与 $E$ 没有共同叶，因为前者在 $\mathtt L,\mathtt R$ 处为分支，后者在这两个地址为叶。加上右侧已核对的前缀 $\mathtt{RL}$，恰给最后一行三个带相同标签的 $A$ 前沿。这核对了与 $P_5$ 的全部四对及其余位置无共同叶，故式（35.8）不是只比较共享叶数量，也没有漏查相反标签。每对的带标签限制相同，遂有全部十个 $\operatorname{NC}(P_i,P_j)$。
+
+最后对每个 $S\subseteq F$ 直接应用[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)。若 $|S|\ge2$，取其中两个不同成员 $P_i,P_j$；式（35.8）使 $\Delta(\{P_i,P_j\})=\varnothing$。因 $\{P_i,P_j\}\subseteq S$，原定理对 $S$ 的遗传条件在这个二元素子集处失败，故 $S\notin K(F)$。空集及每个单点的遗传条件为空，原定理与既有单原型完整叶测试供应其相容性。因此所有子集的成员身份均已确定，得到 $K(F)=K_\circ(F)$。证毕。
+

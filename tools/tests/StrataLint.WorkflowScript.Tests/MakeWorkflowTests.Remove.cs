@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Text;
 using StrataLint.Engine;
 
@@ -5,17 +6,26 @@ namespace StrataLint.WorkflowScript.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
-    [Fact]
-    public void WorktreeRemoveUsesOneRecipeAndPassesNamesAsLiteralBytes()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("0")]
+    [InlineData("")]
+    [InlineData("1")]
+    [InlineData("true")]
+    [InlineData("1 0")]
+    [InlineData("0 1")]
+    public void WorktreeRemoveUsesOneRecipeAndPassesNamesAsLiteralBytes(string? force)
     {
         var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
         Assert.Equal(1, RecipeCount(makefile, "worktree-remove"));
         using var fixture = new TemporaryDirectory();
         var names = "trureturing-one\tcustom-two $(shell touch make-expanded) `touch shell-expanded` $(touch shell-substitution) \"quoted\" 'literal';\nlast";
-        var result = RunRemoveMake(fixture.Path, makefile, names, 0);
+        var result = RunRemoveMake(fixture.Path, makefile, names, 0, force is null ? [] : [$"FORCE={force}"]);
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(new[] { "run", "--project", "tools/StrataLint.Cli/StrataLint.Cli.csproj", "--configuration", "Release", "--",
-            "worktree", "remove", "--names", names, "" }, Encoding.UTF8.GetString(result.StandardOutput).Split('\0'));
+        string[] expected = ["run", "--project", "tools/StrataLint.Cli/StrataLint.Cli.csproj", "--configuration", "Release", "--",
+            "worktree", "remove", "--names", names];
+        if (force == "1") expected = [.. expected, "--force"];
+        Assert.Equal([.. expected, ""], Encoding.UTF8.GetString(result.StandardOutput).Split('\0'));
         Assert.False(RemoveMakeMarkerExists(fixture.Path));
     }
 
@@ -64,7 +74,8 @@ public sealed partial class MakeWorkflowTests
             + $"exit {cliExit}\n");
         if (!OperatingSystem.IsWindows())
             File.SetUnixFileMode(dotnet, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        return TestProcessRunner.Run("/usr/bin/env", [$"PATH={path}:/usr/bin:/bin", "make", "--no-print-directory", "worktree-remove", $"NAMES={names}", .. makeArguments],
+        // An inherited FORCE must not opt the caller into unlimited deletion.
+        return TestProcessRunner.Run("/usr/bin/env", [$"PATH={path}:/usr/bin:/bin", "FORCE=1", "make", "--no-print-directory", "worktree-remove", $"NAMES={names}", .. makeArguments],
             path, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
     }
 }

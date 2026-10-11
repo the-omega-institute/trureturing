@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Text;
 
 namespace StrataLint.Engine;

@@ -37,7 +37,7 @@ internal static partial class DigestionStatusEvaluator
                 nameof(casEvaluation));
         }
 
-        casEvaluation ??= DigestionCasStore.Evaluate(
+        casEvaluation ??= DigestionCasStore.EvaluateLedgerReferences(
             document,
             snapshot,
             casChanges,

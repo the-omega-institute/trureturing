@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:d6933655719631bac256dabf02e49b3cddfdcff75da5bab555a79ee62c07a920
+  normalized_sha256: sha256:d6933655719631bac256dabf02e49b3cddfdcff75da5bab555a79ee62c07a920
+cas_ref: sha256:d6933655719631bac256dabf02e49b3cddfdcff75da5bab555a79ee62c07a920
+coverage_gids:
+  - gid: D5/S3/Analytic/Knapsack/IntegerRankCapacityDefect.integer_rank_capacity_defect
+    target_statement_id: sha256:a0a6bc9c3c91bd4ce4b6c0af0d0198405c1b504c0e41386015f666dded60af1f
+  - gid: D5/S3/Arith/FibonacciAtomic/TimeSampling.prime_zero_rank_facts
+    target_statement_id: sha256:9abb2390abb56faf4c6d65cee8b83e7d10788bca72e9b91f7538a0b4c80c2d37
+  - gid: D5/S3/Arith/Robin/FibonacciRankEulerTail.fibonacci_lt_two_pow
+    target_statement_id: sha256:2835718d067d9b38ca9dfa060154e3b36ce20703edae81a26cf193d5999f926a
+  - gid: D5/S3/Arith/Robin/FibonacciRankEulerTail.rank_bucket_product_dvd
+    target_statement_id: sha256:c5ec616915a242202a37e542f77ba5305efaf604f2ee7fb5954f0c7da0ede869
+  - gid: D5/S3/Arith/Robin/FibonacciRankWeightedPrimeTail.result
+    target_statement_id: sha256:445339f32f18f8a43cc916342e34848444732ae1122e33cbe456a1dbba56574c
+receipts:
+  unresolved_subitems: []

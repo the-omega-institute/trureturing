@@ -11,6 +11,7 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [Theory]
     [InlineData("test_streaming")]
     [InlineData("test_reuse")]
+    [InlineData("test_local_entry")]
     [InlineData("test_guarded_command.GuardedCommandTests")]
     [InlineData("test_native.NativeTests.test_coordinates_use_private_temporary_memo_and_clean_up_failures")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
@@ -18,6 +19,10 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [Fact]
     public void PublicationConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
         "test_native.NativePublicationTests");
+
+    [Fact]
+    public void LocalRestoredSeedKeepsNativeIncrementalExtraction() => InspectorNativeTestRunner.Run(compiler,
+        "test_native.NativeLocalReportTests");
 
     [Fact]
     public void ReportConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
@@ -33,7 +38,8 @@ internal static class InspectorNativeTestRunner
         var clock = TimeProvider.System;
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "start", suite, utc = clock.GetUtcNow() }));
         var prepared = clock.GetTimestamp();
-        string[] environment = suite.StartsWith("test_native.", StringComparison.Ordinal)
+        var needsCompiler = suite.StartsWith("test_native.", StringComparison.Ordinal);
+        string[] environment = needsCompiler
             ? [$"STRATALINT_NATIVE_COMPILER_SEED={compiler.Path}"] : [];
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "compiler-ready", suite,
             utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(prepared).TotalMilliseconds }));

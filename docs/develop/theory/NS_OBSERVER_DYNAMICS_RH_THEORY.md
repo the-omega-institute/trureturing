@@ -2706,3 +2706,133 @@ G_r(\alpha,x)-\alpha
 [22-D] Michel Laurent and Arnaldo Nogueira. *Rotation number of contracted rotations*. Journal of Modern Dynamics 12, 175--191, 2018. DOI: 10.3934/jmd.2018007. https://www.aimsciences.org/article/doi/10.3934/jmd.2018007 . 使用 Hecke--Mahler 级数研究收缩旋转的参数与旋转数关系。相关的取整级数与阶梯现象属于已有研究；本节对指定实际机械读出、任意固定相位和所给误差泛函逐项证明，没有把不同参数映射直接识别。
 
 [22-E] DoYong Kwon. *A devil's staircase from rotations and irrationality measures for Liouville numbers*. arXiv:0709.1642, 2007. https://arxiv.org/abs/0709.1642 . 研究由机械词构造的另一阶梯函数及其连续性和单侧极限。其目标映射与本节的几何加权相位函数不同；本节不把无理连续、有理跳变的一般现象宣称为首次发现。
+
+## 23. 第 22.5 节的一致精度范围更正
+
+第 22.5 节“这个起始精度依赖相位，不能取为一个统一的有限值”的断言，在该节无理斜率的假设下应限定于非空前缀 $n\geq1$。空前缀 $n=0$ 有一致起始精度；每个固定相位、每个固定有限长度的上方逼近最终正确性仍成立，包括整数命中相位。本节更正这一量词边界，并给出原斜率域内的实际首位反例。所用取整界、二进制舍入及有限前缀的单侧稳定性是普通取整论证；连续数据表示与相关机械词阶梯函数的背景沿用 [22-A,22-B,22-D,22-E]。
+
+### 23.1 空前缀的一致起始精度
+
+长度为零的词没有任何坐标。因此，对任意 $0\leq\alpha<1$、$x\in[0,1)$ 和 $p\in\mathbb N$，
+
+$$
+O_0(\alpha_p^+,x)=O_0(\alpha,x)=().
+$$
+
+故 $n=0$ 时，对所有相位一致有效的起始精度可取 $p_0=0$。这里以及下文若 $\alpha_p^+=1$，将 $s_k(1,x)$ 和 $O_n(1,x)$ 按第 22.1 节的同一取整公式延伸定义：
+
+$$
+s_k(1,x)=\lfloor x+k+1\rfloor-\lfloor x+k\rfloor=1.
+$$
+
+这个端点约定保留实际取整读出；下文的非一致结论还将完全在原斜率域 $[0,1)$ 内证明。
+
+### 23.2 每个精度的实际反例与原斜率域内的非一致性
+
+固定无理 $\alpha\in(0,1)$ 和长度 $n\geq1$。对每个整数精度 $p\geq0$，令
+
+$$
+b_p=\alpha_p^+=2^{-p}\lceil2^p\alpha\rceil,
+\qquad x_p=1-b_p.
+$$
+
+$2^p\alpha$ 不是整数，且 $2^p$ 是正整数。由 $2^p\alpha<2^p$ 和取整界，得到
+
+$$
+\alpha<b_p\leq1,\qquad 0<b_p-\alpha<2^{-p}.
+$$
+
+因此 $x_p\in[0,1)$，且 $0<x_p+\alpha<1$、$x_p+b_p=1$。代入实际首位公式，
+
+$$
+\begin{aligned}
+s_0(b_p,x_p)&=\lfloor1\rfloor-\lfloor x_p\rfloor=1,\\
+s_0(\alpha,x_p)&=\lfloor1-b_p+\alpha\rfloor-\lfloor x_p\rfloor=0.
+\end{aligned}
+$$
+
+每个非空前缀都包含首位，故对每个 $p\in\mathbb N$，
+
+$$
+O_n(b_p,x_p)\neq O_n(\alpha,x_p).
+$$
+
+这也包括 $p=0$ 时 $b_0=1$、$x_0=0$ 的延伸端点。对单个精度，这个首位计算只需要 $0<\alpha<b_p\leq1$；无理性保证它在每个精度成立。
+
+为在原斜率域内排除一致起始精度，取 $P\in\mathbb N$ 满足
+
+$$
+2^{-P}<1-\alpha.
+$$
+
+对任意提出的 $p_0\in\mathbb N$，取 $p=\max(p_0,P)$。则 $p\geq p_0$ 且
+
+$$
+0<b_p-\alpha<2^{-p}\leq2^{-P}<1-\alpha,
+\qquad \alpha<b_p<1,
+\qquad 0<x_p<1.
+$$
+
+所以两个斜率和反例相位都在第 22.1 节的原定义域内，且上述实际首位仍分别为 $1$ 与 $0$。特别地，
+
+$$
+\forall p_0\in\mathbb N\;\exists p\geq p_0\;\exists x\in[0,1),\quad
+\alpha<\alpha_p^+<1\ \land\ O_n(\alpha_p^+,x)\neq O_n(\alpha,x).
+$$
+
+因此，对 $n\geq1$，即使只要求精度所对应的上方斜率严格小于 $1$，也没有对全部相位一致有效的有限起始精度。使用上述端点延伸时，同样得到
+
+$$
+\neg\exists p_0\in\mathbb N\;\forall p\geq p_0\;\forall x\in[0,1),\quad
+O_n(\alpha_p^+,x)=O_n(\alpha,x).
+$$
+
+原斜率域内的反例已经证明非一致性，故该结论不依赖斜率 $1$ 的延伸。
+
+### 23.3 二进制有理斜率的例外
+
+若 $\alpha=a/2^q\in[0,1)$，其中 $a\in\mathbb Z$、$q\in\mathbb N$，则对每个 $p\geq q$，$2^p\alpha=a2^{p-q}$ 是整数，所以
+
+$$
+\alpha_p^+=\alpha_p^-=\alpha.
+$$
+
+因此，对任意固定长度 $n$，起始精度 $q$ 对所有相位一致有效；事实上同一个 $q$ 也适用于所有长度。第 23.2 节不能去掉无理假设而改成对全部有理斜率的非一致断言。
+
+### 23.4 固定相位、每个有限长度的最终正确性
+
+对每个固定 $0\leq\alpha<1$、$x\in[0,1)$，有
+
+$$
+\forall n\in\mathbb N\;\exists p_0\in\mathbb N\;\forall p\geq p_0,\quad
+O_n(\alpha_p^+,x)=O_n(\alpha,x).
+$$
+
+这里 $p_0$ 可依赖 $\alpha,x,n$，没有把它放到长度或相位的全称量词之前。
+
+**证明。** 固定 $n$，对 $0\leq k\leq n$ 令 $t_k=x+k\alpha$，并取
+
+$$
+m=\min_{0\leq k\leq n}\bigl(\lfloor t_k\rfloor+1-t_k\bigr)>0.
+$$
+
+该最小值来自一个非空有限集；每项由 $t_k<\lfloor t_k\rfloor+1$ 严格为正。如果 $t_k$ 命中整数，对应项恰为 $1$，所以整数命中不需要排除。对一般的 $0\leq\alpha<1$，上方舍入满足
+
+$$
+0\leq\alpha_p^+-\alpha<2^{-p}.
+$$
+
+选择 $p_0$ 使 $2^{-p_0}<m/(n+1)$。对所有 $p\geq p_0$ 和 $0\leq k\leq n$，
+
+$$
+0\leq k(\alpha_p^+-\alpha)<m,
+\qquad
+\lfloor t_k\rfloor\leq t_k\leq x+k\alpha_p^+
+<\lfloor t_k\rfloor+1.
+$$
+
+因此全部累计取整相同，相邻取整之差给出每个 $0\leq j<n$ 的实际前缀位相同，证明所述有限词相等。这也覆盖 $n=0$。若同时要求上方斜率留在原域，可进一步增大 $p_0$，使 $2^{-p_0}<1-\alpha$，于是所有 $p\geq p_0$ 都有 $\alpha_p^+<1$。
+
+第 23.2 节的反例相位 $x_p$ 随精度改变，故与固定相位的最终正确性相容。更正后的非一致精度断言只针对无理斜率的非空前缀；第 22.5 节其余定向逼近、非整数命中稳定性、下方边界反例及周期性陈述保留原有范围。
+
+## 追加锚（本行以下为增补区）

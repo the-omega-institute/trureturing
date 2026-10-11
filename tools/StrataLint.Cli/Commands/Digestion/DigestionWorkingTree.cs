@@ -2,65 +2,70 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-// What a digestion command reads from the working tree. Every command reads
-// these families: the ledger with its CAS, atomizer and registry documents, the
-// Lean sources the report is bound to, and the frozen state. The ledger names
-// the rest: source documents, non-Lean coverage targets, tail authorizations
-// and the registered build inputs.
+// Loads explicit source, CAS, and Lean inputs for a selected mutation.
 internal static class DigestionWorkingTree
 {
-    private static readonly string[] Scope =
-        ["Meta", "D5", "Reg", "Trureturing.lean", "Golden/Frozen/state"];
-
-    internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) Read(
+    internal static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) Extend(
         IRepositoryGateway repository,
+        (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) current,
         Func<RawRepositorySnapshot, RepositorySnapshot> decode,
-        Func<RepositorySnapshot, BackfillInventoryDocument> load,
         params string[] additional)
     {
-        var scopedRaw = repository.ReadCurrent([.. Scope, .. additional]);
-        var scoped = decode(scopedRaw);
-        var document = load(scoped);
-        var declared = DeclaredPaths(document).Concat(RegisteredBuildInputs(scoped))
-            .Where(static path => RepoPath.TryCreate(path, out _)
-                && !Scope.Any(root => path == root || path.StartsWith(root + "/", StringComparison.Ordinal)))
+        ArgumentNullException.ThrowIfNull(current.Raw);
+        var present = current.Raw.Entries
+            .Select(static entry => entry.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        var missing = additional
+            .Where(path => !present.Contains(path))
             .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
             .ToArray();
-        if (declared.Length == 0)
+        if (missing.Length == 0)
         {
-            return (scopedRaw, scoped, document);
+            return current;
         }
 
-        var raw = RawRepositorySnapshot.Create(scopedRaw.Entries.Concat(repository.ReadCurrent(declared).Entries)
+        var extra = repository.ReadCurrent(missing);
+        if (extra.Entries.Any(static entry => BackfillInventoryLoader.IsCanonicalPath(entry.Path)
+                || entry.Path == BackfillInventoryLoader.RelativePath))
+            throw new InvalidOperationException("digestion input extension must not add ledger files");
+        var merged = RawRepositorySnapshot.Create(current.Raw.Entries
+            .Concat(extra.Entries)
             .DistinctBy(static entry => entry.Path, StringComparer.Ordinal)
             .OrderBy(static entry => entry.Path, StringComparer.Ordinal));
-        return (raw, decode(raw), document);
+        var decoded = decode(merged);
+        return (merged, decoded, current.Document);
     }
 
-    private static IEnumerable<string> DeclaredPaths(BackfillInventoryDocument document) =>
-        document.RequireDigestionSources().SelectMany(static source => source.Entries
-            .SelectMany(static entry => entry.CoverageGids
-                .Select(static gid => Gid.TryParse(gid, out var parsed) ? parsed.Path.Value : null)
-                .Append(entry.Receipts.TailAuthorization?.Path))
-            .Append(source.SourcePath))
-        .OfType<string>();
-
-    // A command that consumes the registry reports its defects itself.
-    private static string[] RegisteredBuildInputs(RepositorySnapshot snapshot)
+    // A source context only needs CAS objects reachable through persisted chains.
+    // Leaf atoms are reconstructed from the source atomizer and do not need their
+    // duplicated CAS bytes in the query snapshot.
+    internal static string[] ChainCasPaths(
+        BackfillInventoryDocument document,
+        IEnumerable<string> roots)
     {
-        if (!snapshot.TryGetFile(EngineeringProjectRegistry.ManifestPath, out var manifest))
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(roots);
+        // Keep malformed duplicate identities in the ledger for the command's
+        // domain validation.  They must not escape as a generic Dictionary
+        // exception before the caller can report the expected occurrence error.
+        var entries = document.RequireDigestionEntries()
+            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
+            .Where(static group => group.Count() == 1)
+            .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
+        var ids = new HashSet<string>(StringComparer.Ordinal);
+        var pending = new Queue<string>(roots);
+        while (pending.TryDequeue(out var id))
         {
-            return [];
+            if (!DigestionNonpropositional.IsAtomId(id) || !ids.Add(id)) continue;
+            if (!entries.TryGetValue(id, out var entry)) continue;
+            foreach (var childId in entry.Receipts.ChainAtoms)
+                pending.Enqueue(childId);
         }
 
-        try
-        {
-            return EngineeringProjectRegistry.Parse(manifest.Text).RuleBuildInputs;
-        }
-        catch (InvalidDataException)
-        {
-            return [];
-        }
+        return ids
+            .Select(static id => DigestionCasStore.RootPath + id)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
     }
+
 }

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8cec4d7579dfb75e00b6d85e7287ed9792e356c84e104a354a3e68158eaefec9
+  normalized_sha256: sha256:8cec4d7579dfb75e00b6d85e7287ed9792e356c84e104a354a3e68158eaefec9
+cas_ref: sha256:8cec4d7579dfb75e00b6d85e7287ed9792e356c84e104a354a3e68158eaefec9
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.sparse_window_fiber_geometry
+    target_statement_id: sha256:69abd2b951bd45918383d4b21732555dc2c70347447046477924f87d3eb5b1ad
+receipts:
+  unresolved_subitems: []

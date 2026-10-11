@@ -1,0 +1,16 @@
+## 1. 五模式的动作边、混合棱与响应边
+
+记
+
+$$
+O=\mathsf F[\varnothing],\quad L=\mathsf F[1],\quad T=\mathsf F[2],\quad R=\mathsf F[3],\quad J=\mathsf F[1,3].
+$$
+
+占位规则为 $xz=yz=0$。若额外规定一步只翻转一个占位且结果合法，则动作图的边是
+
+$$
+\boxed{O-L,\quad L-J,\quad J-R,\quad R-O,\quad O-T.}
+$$
+
+这是正方形加一条支边。它不同于金字塔凸包的八条几何棱，也不同于原生高到低读者的窗口输入。
+

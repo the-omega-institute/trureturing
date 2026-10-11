@@ -1,0 +1,4 @@
+- pending0、pending1、delivered 都可能有剩余 Read 数 $0$，但未来义务分别是 Stop0、Stop1 和空转录。
+
+---
+

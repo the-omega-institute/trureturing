@@ -92,3 +92,37 @@ same-source series before using
 The classical norm theorem and its Mellin formulation are not new
 FIB results; the manuscript application remains without a complete
 Lean verification or an RH/Robin conclusion.
+
+## The exact endpoint already has a simplicity consequence
+
+The additional inspected original TeX scope is Theorem 4.1, labeled
+rhs, and its stated hypotheses and conclusion. In the paper's
+notation, RHS means RH together with simple nontrivial zeros.
+The theorem assumes a Mellin-proper test $\phi$, an extension
+$\phi^\wedge\in A_c[-1/2,1]$, and nonvanishing on the boundary line
+$\Re s=-1/2$. It concludes
+
+$$
+G_\phi(y)=O(y^{-1/2})\quad(y\to\infty)
+\quad\Longrightarrow\quad
+\text{RH and simple nontrivial zeros}.
+$$
+
+The [Liflandsky v4 source note](liflandsky2026mobiuslaplace.md) records
+its §8.2 specialization with
+$h(u)=u^{-1}e^{-1/u}$ and $\phi(u)=u h'(u)$:
+$G_\phi(y)=y^{-1}\Phi_\mu(1/y)$ and
+$\phi^\wedge(s)=s\Gamma(s+1)$.
+That source supplies the test's required Mellin hypotheses. The
+original theorem's complete proof is not independently certified here.
+The original proof writes $\phi(s)$ in its nonvanishing step, then
+$x^{\sigma-3/2}$ and $1/(\sigma-1/2)$ in its final estimate while
+taking $\sigma\downarrow-1/2$. These notation and sign issues do not
+match that stated boundary limit. The theorem statement is cited as
+written; no silent correction or certification of that argument is claimed.
+
+This exact endpoint has a stronger conclusion than the
+$y^{-1/2+\varepsilon}$ RH criterion with a loss for every
+$\varepsilon>0$. Removing that loss is an additional mathematical
+obligation; it is not achieved by renaming the existing FIB
+convolution or dilation filter.

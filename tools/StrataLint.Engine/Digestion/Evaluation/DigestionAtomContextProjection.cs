@@ -47,7 +47,7 @@ internal static class DigestionAtomContextProjection
     }
 
     internal static ImmutableArray<DigestionAtomContext> ResolveOccurrences(
-        RepositorySnapshot snapshot, BackfillInventoryDocument ledger, string atomId)
+        RepositorySnapshot snapshot, BackfillInventoryDocument ledger, string atomId, AtomizedTheoryDocument? sourceDocument = null)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(ledger);
@@ -55,7 +55,7 @@ internal static class DigestionAtomContextProjection
         var target = RequireTarget(ledger.RequireDigestionEntries(), atomId);
         try
         {
-            return MaterializeSource(snapshot, ledger, target.SourceId).ResolveOccurrences(atomId);
+            return MaterializeSource(snapshot, ledger, target.SourceId, sourceDocument).ResolveOccurrences(atomId);
         }
         catch (DigestionAtomContextException error) when (error.Code == DigestionAtomContextError.SOURCE_MISSING)
         {
@@ -84,7 +84,7 @@ internal static class DigestionAtomContextProjection
 
     /// <summary>Materializes a source once; callers retain the immutable result for membership and context queries.</summary>
     internal static SourceStream MaterializeSource(
-        RepositorySnapshot snapshot, BackfillInventoryDocument ledger, string sourceId)
+        RepositorySnapshot snapshot, BackfillInventoryDocument ledger, string sourceId, AtomizedTheoryDocument? sourceDocument = null)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(ledger);
@@ -103,7 +103,7 @@ internal static class DigestionAtomContextProjection
         {
             var rules = TheoryAtomizerDataLoader.Load(snapshot);
             var atomizer = AtomizerRegistry.Require(source.Atomizer).Atomize;
-            var document = atomizer(file.RawBytes.AsSpan(), rules);
+            var document = sourceDocument ?? atomizer(file.RawBytes.AsSpan(), rules);
             var entries = ledger.RequireDigestionEntries();
             var byHash = entries.ToLookup(static entry => entry.Fingerprints.RawSha256, StringComparer.Ordinal);
             var byAtomId = entries.ToLookup(static entry => entry.AtomId, StringComparer.Ordinal);

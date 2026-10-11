@@ -255,7 +255,7 @@ public sealed partial class DigestionLedgerTests
             (targetPath, target),
             (ScribeEmissionAttestation.DefinitionPath(gid), definition),
             (ScribeEmissionAttestation.EmissionPath(gid), emission),
-            (ScribeEmissionAttestation.RelativePath, attestation),
+            (GeneratedArtifactInventory.ScribeAttestation.Path, attestation),
             (authorizationPath, authorization),
             .. FrozenLedgerFiles(targetPath, "tailProbe"),
         ]);

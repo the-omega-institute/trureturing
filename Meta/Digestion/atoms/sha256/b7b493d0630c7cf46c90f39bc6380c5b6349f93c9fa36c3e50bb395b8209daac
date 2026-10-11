@@ -1,0 +1,18 @@
+**证明。** 变换后 $(C+ms)y(s)=c^{\mathsf T}u(s)$，代回边界响应。证毕。
+
+所以所有频率响应共享同一松弛时间 $m/C$ 和同一秩一方向 $cc^{\mathsf T}$；不满足者不能由一个这样的内部节点解释。
+
+暂态守恒为
+
+$$
+\boxed{\sum_i j_i=m\dot y,}
+$$
+
+平衡时才恢复静态的零和。并且
+
+$$
+\boxed{\frac{d\mathcal E}{dt}=\sum_i j_i\dot u_i-\frac1m\left(Cy-\sum_i c_i u_i\right)^2.}
+$$
+
+耗散来自新声明的松弛方程，不是静态几何自动证明的时间箭头。
+

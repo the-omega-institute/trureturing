@@ -1,0 +1,9 @@
+### 定义 2：叶词读出
+
+$$
+w(\alpha)=\alpha,\qquad w(\beta)=\beta,
+\qquad w(\langle s,t\rangle)=w(s)w(t).
+$$
+
+这份读出保留全部原子次序，但忘掉括号。
+

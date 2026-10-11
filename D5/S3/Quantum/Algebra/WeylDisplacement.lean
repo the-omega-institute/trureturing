@@ -71,7 +71,7 @@ theorem shiftMatrix_pow_mod (n : ℕ) :
   rw [pow_add, pow_mul, shiftMatrix_pow_card, one_pow, one_mul]
 
 /-- The clock only sees its exponent modulo the window cardinality. -/
-private theorem clockMatrix_pow_mod (n : ℕ) :
+theorem clockMatrix_pow_mod (n : ℕ) :
     clockMatrix M ^ (n % M) = clockMatrix M ^ n := by
   conv_rhs => rw [← Nat.div_add_mod n M]
   rw [pow_add, pow_mul, clockMatrix_pow_card, one_pow, one_mul]

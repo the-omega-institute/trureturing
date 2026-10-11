@@ -249,7 +249,6 @@ internal static partial class RepositoryRules
         if (malformedAnomalyRecord
             || (AnomalyBearingPattern.IsMatch(unescaped)
                 && slot != AddressSlot.WorkflowStepScalar
-                && !IsDeclarationGidResidueAtDeclaredSlot(path, slot, unescaped)
                 )
             || Regex.IsMatch(unescaped, "\\\"(?:kind|type|category|record_type)\\\"\\s*:"))
         {
@@ -279,18 +278,6 @@ internal static partial class RepositoryRules
         AddressSlot.WorkflowSteps when elementKind == JsonValueKind.Object => AddressSlot.WorkflowStep,
         _ => AddressSlot.None,
     };
-
-    private static bool IsDeclarationGidResidueAtDeclaredSlot(
-        string path,
-        AddressSlot slot,
-        string residue)
-    {
-        var declared = slot is AddressSlot.CoverageEntry or AddressSlot.CoverageGid or AddressSlot.ReceiptGid
-            && BackfillInventoryLoader.IsCanonicalPath(path);
-        return declared
-            && Gid.TryParse(residue, out var gid)
-            && gid.ToTarget() is Target.Formal { Declaration: not null };
-    }
 
     private static bool CanStartNonemptyJsonContainer(ReadOnlySpan<byte> value, int start)
     {

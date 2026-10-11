@@ -125,12 +125,12 @@ private def N : Mat 2 := pauli (1/2) (Real.sqrt 3/2)
 private def B : Mat 2 := pauli (-1/2) (Real.sqrt 3/2)
 private def r (x : ℝ) : ℝ := (x-1)/(x+1)
 private def state (x : ℝ) (H : Mat 2) : Mat 2 := (1/2 : ℝ) • 1 + (r x/2) • H
-private theorem dephase_apply (A : Mat 2) :
+theorem dephase_apply (A : Mat 2) :
     pinchingEnd A = Matrix.diagonal ![A 0 0, A 1 1] := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [pinchingEnd, pinching_apply, Matrix.diagonal]
 
-private theorem pinching_kraus :
+theorem pinching_kraus :
     (pinchingEnd : MatrixMap (Fin 2) (Fin 2) ℂ) =
       MatrixMap.of_kraus (fun k : Fin 2 => Matrix.single k k (1 : ℂ))
         (fun k : Fin 2 => Matrix.single k k (1 : ℂ)) := by

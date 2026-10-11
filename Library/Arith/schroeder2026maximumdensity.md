@@ -138,7 +138,7 @@ Hence U>0 for every finite member of this family, for all original phases.
 Choosing a residue for modulus 3 covers one
 fibre; an optimizer places the other classes in the two remaining fibres.
 CRT proves MD3 and realizes every bipartition. The repository's existing
-[incidence-forest result](../../docs/reports/erdos7-odd-covering/problem-details/48-incidence-forests-with-arbitrary-original-heights.md)
+[incidence-forest result](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/problem-details/48-incidence-forests-with-arbitrary-original-heights.md)
 already includes this noncoverage geometry with wider height/support
 allowances. It is not a new noncoverage case; the relevant addition is its
 separation from exact threshold optimization complexity.
@@ -216,7 +216,7 @@ Those comparisons and unrestricted Erdős #7 remain unresolved.
 ## Reproducible parity and threshold controls
 
 The original research program
-[odd_star_threshold_bridge.py](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/odd-star-threshold-bridge/odd_star_threshold_bridge.py)
+[odd_star_threshold_bridge.py](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/odd-star-threshold-bridge/odd_star_threshold_bridge.py)
 implements MD3–MD5 with exact integers and fractions. It constructs instances
 from supplied positive weights and independently tests the source subset-sum
 answer against the target star minimum. The default run checks 462 inputs:

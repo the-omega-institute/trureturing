@@ -26,38 +26,6 @@ internal static partial class DigestionLedgerAligner
         return null;
     }
 
-    private static string? ClausePlanCasAuthorityFailure(
-        DigestionLedgerSource source,
-        DigestionAtom plannedParent,
-        IReadOnlySet<string> validAtomIds,
-        RepositorySnapshot snapshot)
-    {
-        var ledgerParents = source.Entries.Where(entry =>
-                FingerprintsMatch(entry.Fingerprints, plannedParent.Fingerprints))
-            .ToArray();
-        if (ledgerParents.Length != 1)
-        {
-            return null;
-        }
-
-        var ledgerParent = ledgerParents[0];
-        if (!validAtomIds.Contains(ledgerParent.AtomId))
-        {
-            return $"entry {ledgerParent.AtomId} clause plan parent CAS proof is invalid";
-        }
-
-        var parentPath = DigestionCasStore.RootPath + ledgerParent.CasRef["sha256:".Length..];
-        if (!snapshot.TryGetFile(parentPath, out var parentBlob))
-        {
-            return $"entry {ledgerParent.AtomId} clause plan parent CAS blob is missing: {parentPath}";
-        }
-
-        return parentBlob.RawBytes.AsSpan().SequenceEqual(plannedParent.RawBytes.AsSpan())
-            ? null
-            : $"entry {ledgerParent.AtomId} clause plan parent CAS bytes differ from "
-                + $"recomputed source span at byte {plannedParent.StartByte}";
-    }
-
     private static void AlignNestedChildren(
         DigestionLedgerSource source,
         IReadOnlySet<string> validAtomIds,

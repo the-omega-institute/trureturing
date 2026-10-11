@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition
 import Reg.Support.DependentFamily
 
@@ -61,20 +62,34 @@ def registration : Registration arena (∀ {c t : ℝ}, 0 < c →
     have harg := Real.exp_injective h
     norm_num at harg
 
-register_information_theorem
-    _root_.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.integral_exp_neg_mul_cos in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.integral_exp_neg_mul_cos) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun (_ : Unit) (p : (_ : ℝ) × ℝ) (x : ℝ) =>
       Real.exp (-p.1 * x) * Real.cos (p.2 * x))
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "fn", "arg", "arg", "body"]
-      stateBinder := 3 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Weil") "ZetaGamma") "ArchimedeanJumpDecomposition") "integral_exp_neg_mul_cos") "Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition/Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun (_ : Unit) (p : (_ : ℝ) × ℝ) (x : ℝ) =>
+      Real.exp (-p.1 * x) * Real.cos (p.2 * x))
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg", "body"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end

@@ -64,14 +64,13 @@ internal static partial class DigestionLedgerAligner
         left.RawSha256 == right.RawSha256
         || left.NormalizedSha256 == right.NormalizedSha256;
 
-    // Atomizer data and implementation reach every source at once.
-    private static bool AtomizerInputsChanged(RawChangeSet changes, RepositorySnapshot snapshot)
-    {
-        var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(snapshot);
-        return changes.Paths.Any(path =>
+    // Atomizer data and implementations reach every source at once.  The
+    // digestion path has its own stable input boundary; it does not consult
+    // the engineering project registry to discover build inputs.
+    private static bool AtomizerInputsChanged(RawChangeSet changes) =>
+        changes.Paths.Any(path =>
             path.Value == TheoryAtomizerDataLoader.DataPath
-            || IsAtomizerImplementationPath(path.Value, registeredInputs));
-    }
+            || path.Value.StartsWith("tools/StrataLint.Engine/Digestion/", StringComparison.Ordinal));
 
     private static bool SourceChanged(DigestionLedgerSource source, RawChangeSet changes)
     {

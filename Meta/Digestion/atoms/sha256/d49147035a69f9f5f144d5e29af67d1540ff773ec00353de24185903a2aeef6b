@@ -1,0 +1,23 @@
+**推导 5.2（沿空模式至联合模式的底面对角线）。** 有
+
+$$
+\mathcal P=T^+_2\cup T^+_5,\qquad
+T^+_2=\operatorname{conv}\{v_0,v_2,v_{25},v_3\},\quad
+T^+_5=\operatorname{conv}\{v_0,v_5,v_{25},v_3\}.
+$$
+
+证明。在 $X\ge Y$ 时 $\kappa_{\max}=Y$，其非零候选概率为
+
+$$
+(p_0,p_2,p_{25},p_3)=(1-X-Z,X-Y,Y,Z),
+$$
+
+全非负，故属于 $T^+_2$。$X\le Y$ 时用 $(p_0,p_5,p_{25},p_3)=(1-Y-Z,Y-X,X,Z)$。反向，每个所列四面体的顶点在 $\mathcal P$ 内，且前者 $X\ge Y$、后者 $X\le Y$，由线性保持性得完整覆盖及精确划分。交界为
+
+$$
+T^+_2\cap T^+_5=\mathcal P\cap\{X=Y\}
+=\operatorname{conv}\{v_0,v_{25},v_3\}.
+$$
+
+界上两个被删除概率同时为零，两侧的提升相同。
+

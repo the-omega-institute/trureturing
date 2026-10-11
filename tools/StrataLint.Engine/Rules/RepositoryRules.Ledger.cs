@@ -22,6 +22,7 @@ internal static partial class RepositoryRules
         HashSet<string>? tasks = null;
         foreach (var (path, file) in context.Current.Files)
         {
+            if (DigestionOpaquePathPolicy.IsAuxiliaryData(path)) continue;
             var governed = IsGovernedStructured(path, context.Policy);
             if (governed)
             {

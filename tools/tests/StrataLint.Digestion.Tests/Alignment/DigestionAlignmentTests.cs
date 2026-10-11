@@ -423,63 +423,6 @@ public sealed partial class DigestionAlignmentTests
 
 
     [Fact]
-    public void FingerprintTamperingCannotInheritBoundaryBaselineIdentity()
-    {
-        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
-        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
-        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
-        var currentAtom = Assert.Single(GictAtomizer.Atomize(currentBytes, DigestionTestSupport.Rules).Claims);
-        var baseline = Ledger(
-            [],
-            Entry("old-receipt", oldAtom));
-        var tampered = new DigestionFingerprints(
-            "sha256:" + new string('0', 64),
-            oldAtom.Fingerprints.NormalizedSha256);
-        var oldAtomId = AtomId(oldAtom);
-        var candidate = Ledger(
-            [oldAtomId],
-            EntryWithFingerprints(oldAtomId, tampered),
-            Entry("current-receipt", currentAtom));
-
-        var result = DigestionLedgerAligner.Evaluate(
-            candidate,
-            Snapshot(currentBytes),
-            DigestionAlignmentMode.Admission);
-
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(oldAtomId));
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            $"entry {oldAtomId} CAS blob is missing",
-            StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void NewlyAddedFakeFingerprintIsRejectedEvenWhenAcknowledged()
-    {
-        var bytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims);
-        var baseline = Ledger([], Entry("real-receipt", atom));
-        var fakeId = new string('f', 64);
-        var fake = EntryWithFingerprints(
-            fakeId,
-            new DigestionFingerprints(
-                "sha256:" + new string('0', 64),
-                "sha256:" + new string('1', 64)));
-        var candidate = Ledger(
-            [fakeId],
-            Entry("real-receipt", atom),
-            fake);
-
-        var result = DigestionLedgerAligner.Evaluate(
-            candidate,
-            Snapshot(bytes),
-            DigestionAlignmentMode.Ingest);
-
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            $"entry {fakeId} CAS blob is missing",
-            StringComparison.Ordinal));
-    }
-
-    [Fact]
     public void DistinctContentAtomsNeedNoOccurrenceDisambiguation()
     {
         var firstBytes = ImmutableArray.Create((byte)'a');

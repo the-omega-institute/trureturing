@@ -1,0 +1,6 @@
+**Claim status: open.** 设先验是 $d$ 个独立 Bernoulli 变量，均值为 $u_i$；候选后验也都是乘积律，均值为 $u_i(o)$。它们能由某个有限随机读口从原先验产生，当且仅当对每个子集 $A\subseteq\{1,\ldots,d\}$ 都有
+
+$$
+\boxed{\sum_oq_o\prod_{i\in A}u_i(o)=\prod_{i\in A}u_i.}
+$$
+

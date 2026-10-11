@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9fc95a6a56fc5642425991b078ab0ec6f67c7ce1c091af6d0afff8ca65eb092
+  normalized_sha256: sha256:c9fc95a6a56fc5642425991b078ab0ec6f67c7ce1c091af6d0afff8ca65eb092
+cas_ref: sha256:c9fc95a6a56fc5642425991b078ab0ec6f67c7ce1c091af6d0afff8ca65eb092
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题仅由钉版 mathlib 闭合，仓内没有覆盖完整关系的冻结 GID。任意类型 X,Y；原三个双射作为 T:Perm X、S:Perm Y、h:X≃Y；a,b:ℕ 包含零。令 F=h.permCongrHom.toMonoidHom，U=F(T):Perm Y；只使用同一 h。原两条 hT^a=S^a h、hT^b=S^b h，经 h 的逆和 Equiv.permCongr_apply 及 MonoidHom.map_pow 得 U^a=S^a、U^b=S^b；没有 T/S 之间的交换前提。Nat.gcd_eq_gcd_ab(a,b) 给 (gcd a b:ℤ)=a*gcdA a b+b*gcdB a b。将 U^(gcd a b) 用 zpow_natCast、zpow_add、zpow_mul 展开为 (U^a)^gcdA*(U^b)^gcdB，代入两条已给等式，再反向用同样幂法则合回 S^(gcd a b)。MonoidHom.map_pow、Equiv.permCongr_apply 把它回接为 hT^d=S^d h。 d=1 时仅用 pow_one；a=b=0 时 d=0，pow_zero 同样有效。 所用上游声明：Nat.gcd_eq_gcd_ab、zpow_add、zpow_mul、zpow_natCast、MonoidHom.map_pow、Equiv.permCongr_apply、Equiv.permCongrHom、pow_one/pow_zero；全部前提来自原三个双射及两时间等式。
+    previous_atom_id: 2a69f157657aacdd25a9ef556cd7ded3c47f9b994ca751bf6ed7c4186ca42251
+    next_atom_id: 02a087c8b46e6b8cd7f6eed65d1e96cb58bfd27e78922f5143cf61e28a329074

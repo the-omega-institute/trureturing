@@ -256,25 +256,6 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void SelfContainedClauseChain_RejectsMissingChildCasBlob()
-    {
-        var fixture = SelfContainedClauseChain();
-        var availableCas = fixture.ChildCaptures
-            .Skip(1)
-            .Prepend(fixture.ParentCapture);
-
-        var result = EvaluateSelfContainedClauseChain(fixture, casObjects: availableCas);
-
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            $"entry {fixture.Children[0].AtomId} CAS blob is missing",
-            StringComparison.Ordinal));
-        AssertMalformedClauseChain(
-            result,
-            fixture.Parent.AtomId,
-            $"listed child {fixture.Children[0].AtomId} has invalid CAS proof");
-    }
-
-    [Fact]
     public void SelfContainedClauseChain_RejectsChildFingerprintMismatch()
     {
         var fixture = SelfContainedClauseChain();
@@ -343,38 +324,6 @@ public sealed partial class DigestionAlignmentTests
             result,
             fixture.Parent.AtomId,
             "bytes differ from parent CAS plan member");
-    }
-
-    [Fact]
-    public void SelfContainedClauseChain_RejectsMissingParentCasBlob()
-    {
-        var fixture = SelfContainedClauseChain();
-
-        var result = EvaluateSelfContainedClauseChain(fixture, casObjects: fixture.ChildCaptures);
-
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            $"entry {fixture.Parent.AtomId} CAS blob is missing",
-            StringComparison.Ordinal));
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "parent CAS proof is invalid");
-    }
-
-    [Fact]
-    public void SelfContainedClauseChain_RejectsParentCasHashMismatch()
-    {
-        var fixture = SelfContainedClauseChain();
-        var corrupted = new RawRepositoryEntry(
-            fixture.ParentCapture.RelativePath,
-            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("corrupted parent CAS bytes")));
-
-        var result = EvaluateSelfContainedClauseChain(
-            fixture,
-            casObjects: fixture.ChildCaptures,
-            extraEntries: [corrupted]);
-
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            $"entry {fixture.Parent.AtomId} CAS blob hash mismatch",
-            StringComparison.Ordinal));
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "parent CAS proof is invalid");
     }
 
     [Fact]

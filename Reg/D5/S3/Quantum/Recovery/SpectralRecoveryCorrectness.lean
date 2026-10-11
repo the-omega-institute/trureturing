@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness
 import Reg.Support.DependentFamily
 
@@ -89,18 +90,28 @@ def registration : Registration arena.{u,v,w,z} (arena.Law actual) where
     intro h
     exact zero_ne_one (congrFun (congrFun h (ULift.up 0)) (ULift.up 0))
 
-register_information_theorem computed_recovery_of_kraus_left_inverse in arena
-  readout via (realize signature.{z} (fun _ _ x => x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness
-    coordinates := #[3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg"]
-      stateBinder := 17 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.computed_recovery_of_kraus_left_inverse.{u_1, u_2, u_3, u_4}) (type_of% (realize.{u_4 + 1, u_4, 0, u_4, 0} signature.{u_4} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "SpectralRecoveryCorrectness") "computed_recovery_of_kraus_left_inverse") "Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness/Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2, u_3, u_4})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_3, u_4})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3, u_4}) ⟨(registration.{u_1, u_2, u_3, u_4})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_4 + 1, u_4, 0, u_4, 0} signature.{u_4} (fun _ _ x => x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, definition := none, coordinates := #[3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 17, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

@@ -177,7 +177,7 @@ theorem table_trace_realization {r : I → ℝ} (p : Flow (X := X) r)
       rw [heh, nodes]
     · simp [e, hv]
 
-private theorem unread_lt {k : ℕ} (h : History X k) (i : Unread h) :
+theorem unread_lt {k : ℕ} (h : History X k) (i : Unread h) :
     k < Fintype.card I := by
   have hc := Fintype.card_le_of_injective (fun j => ((append h i
     (Classical.choice (inferInstance : Nonempty (X i.val)))).val j).1)
@@ -202,7 +202,7 @@ local instance stepMeasurableSingleton (k : ℕ) :
 /-- Forget the just-obtained result, retaining the actual history and selected coordinate. -/
 def forgetResult {k : ℕ} (e : Step (X := X) k) : Selection (X := X) k := ⟨e.1, e.2.1⟩
 
-private theorem selection_fiber {k : ℕ} (e : Step (X := X) k)
+theorem selection_fiber {k : ℕ} (e : Step (X := X) k)
     (h : History X k) (i : Unread h) :
     forgetResult e = ⟨h, i⟩ ↔ ∃ x, e = ⟨h, i, x⟩ := by
   rcases e with ⟨g, j, y⟩
@@ -417,7 +417,7 @@ def scheduleArchive (k : ℕ) (hk : k < Fintype.card I) :
   MeasurableSpace.comap
     (fun ω => (beforeTables k (Nat.le_of_lt hk) ω, (currentBlock k hk ω).1)) inferInstance
 
-private theorem next_block_integral {r : I → ℝ} (p : Flow (X := X) r)
+theorem next_block_integral {r : I → ℝ} (p : Flow (X := X) r)
     (hr : ∀ i, 1 / (Fintype.card (X i) : ℝ) ≤ r i)
     (k : ℕ) (hk : k < Fintype.card I)
     (f : TableTrace (X := X) k → ScheduleTable (X := X) k →

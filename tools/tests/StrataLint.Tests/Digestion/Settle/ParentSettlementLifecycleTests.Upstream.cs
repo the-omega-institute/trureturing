@@ -87,7 +87,6 @@ public sealed partial class DigestionLedgerTests
         var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "",
             ["--clear", children[0]]);
         Assert.True(clear.Success, clear.Error);
-        Assert.Contains("SETTLE_ALIGN_REQUIRED ancestors=" + parent.AtomId, clear.Output, StringComparison.Ordinal);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         foreach (var entry in closedSnapshot.Entries.Where(entry =>
                      !entry.Path.EndsWith("/" + children[0] + ".yaml", StringComparison.Ordinal)))

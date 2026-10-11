@@ -1,0 +1,25 @@
+### 推论 21.2：任意点数的范围、锐性及非负权
+
+对整数 $m\ge2$ 和任意实数 $x_1,\ldots,x_m$，同一函数满足
+$$
+\sum_{i<j}F_{a,\omega}(x_i-x_j)^2\ge\frac{m(m-2)}4.
+\tag{21.2}
+$$
+在允许任意实参数 $a,\omega$ 的这个一般类中，常数为锐界。
+
+**证明。** 按上一证明构造 $m\times2$ 的 $V,W$ 及 $B$。在 $\ker V^{\mathsf T}$ 上，$B$ 的二次型为零；该核的余维至多二，因此 $B$ 的严格正谱子空间维数至多二。否则正谱子空间与该核有非零交，产生矛盾。由 $\operatorname{tr}B=m$，所有正特征值之和至少为 $m$；对至多两个正特征值使用 Cauchy–Schwarz，得到
+$$
+\operatorname{tr}B^2\ge\frac{m^2}{2}.
+$$
+而 $\operatorname{tr}B^2=m+2\sum_{i<j}F_{a,\omega}(x_i-x_j)^2$，得到 (21.2)。
+
+对 $m\ge3$，取 $a=0,\omega=1$、$x_j=2\pi j/m$，则 $W=0$、$V^{\mathsf T}V=(m/2)I_2$，达到等号。三点可取 $0,2\pi/3,4\pi/3$，三个分子均为 $1/2$。$m=2$ 取 $a=0,\omega=1$ 及两点 $0,\pi/2$，同样达到等号。该锐性不宣称固定 Montgomery–Taylor 参数也达到等号。证毕。
+
+若另给非负权 $w_i$，将 $B$ 左右乘 $\operatorname{diag}(\sqrt{w_i})$，同一正惯性与迹证明给
+$$
+\sum_{i<j}w_iw_jF_{a,\omega}(x_i-x_j)^2
+\ge\frac{(\sum_iw_i)^2-2\sum_iw_i^2}{4}.
+\tag{21.3}
+$$
+权重全零时两边为零；右侧为负时另可使用平方和非负。
+

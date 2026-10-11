@@ -1,0 +1,8 @@
+For every odd n the frozen palindromic-factor complexity theorem gives two distinct legal palindromes. Reversal exchanges the two orientations of unlike-letter pairs, so
+
+```text
+m(reverse(w)) = -m(w).
+```
+
+Each palindrome has m=0. Thus the two distinct legal palindromes certify a collision at every odd length.
+

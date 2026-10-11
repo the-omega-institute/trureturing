@@ -66,12 +66,11 @@ public sealed class TruthReleaseVerificationTests
         string tree,
         string truthGraphDigest,
         string rawLeanReportDigest,
-        string residualFrontierDigest,
         string declarationsDigest,
         string frozenLedgerHeadDigest) =>
         Utf8.GetBytes($$"""
             {
-              "schema": "source-snapshot.v1",
+              "schema": "source-snapshot.v2",
               "source_repo": "the-omega-institute/trureturing",
               "source_commit": "{{commit}}",
               "source_tree": "{{tree}}",
@@ -81,7 +80,6 @@ public sealed class TruthReleaseVerificationTests
               "truth_graph_sha256": "{{truthGraphDigest}}",
               "raw_lean_report_sha256": "{{rawLeanReportDigest}}",
               "dag_md_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
-              "residual_frontier_sha256": "{{residualFrontierDigest}}",
               "declarations_sha256": "{{declarationsDigest}}",
               "frozen_ledger_head_hash": "{{frozenLedgerHeadDigest}}",
               "frozen_ledger_sequence": 42
@@ -103,14 +101,12 @@ public sealed class TruthReleaseVerificationTests
         truthGraph ??= MinimalTruthGraphBytes();
         truthExport ??= TruthExportBytes(exportCommit, exportTree);
         var rawLeanReport = Utf8.GetBytes("raw_lean_report");
-        var residualFrontier = Utf8.GetBytes("residual_frontier");
         var frozenLedgerHead = Utf8.GetBytes("frozen_ledger_head");
         var sourceSnapshot = SourceSnapshotBytes(
             snapshotCommit,
             snapshotTree,
             snapshotTruthGraphDigest ?? Digest(truthGraph),
             Digest(rawLeanReport),
-            Digest(residualFrontier),
             Digest(truthExport),
             Digest(frozenLedgerHead));
         var artifacts = new (string Key, string File, byte[] Bytes)[]
@@ -121,7 +117,6 @@ public sealed class TruthReleaseVerificationTests
             ("truth_export", "truth-export.v1.json", truthExport),
             ("blueprint_index", "blueprint-index.v1.json", Utf8.GetBytes("blueprint_index")),
             ("frozen_ledger_head", "frozen-ledger-head.json", frozenLedgerHead),
-            ("residual_frontier", "echo-residual-summary.md", residualFrontier),
         };
 
         var sums = string.Concat(artifacts
@@ -132,7 +127,7 @@ public sealed class TruthReleaseVerificationTests
             $"    \"{artifact.Key}\": {{ \"file\": \"{artifact.File}\", \"sha256\": \"{Digest(artifact.Bytes)}\" }}"));
         var manifest = $$"""
             {
-              "schema": "truth-release.v1",
+              "schema": "truth-release.v2",
               "source": {
                 "source_repo": "{{manifestRepo}}",
                 "source_commit": "{{manifestCommit}}",

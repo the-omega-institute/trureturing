@@ -58,7 +58,7 @@ $$\forall e \in \mathbb{N},\; 2 \le e \Rightarrow \left(FirstLongest\left(2^{e} 
 
 *Commentary.*
 
-The positive maximum lengths are q+2 for q+1, q+4 for q-1 with even e, and q for q-1 with odd e. These maxima and the block-recognition principle are due to Aedo, Grimm, Nagai and Staynova, as cited by Joshi and Rust. Their required binary statements are proved inside this argument using the existing Thue-Morse word.
+The positive maximum lengths are q+2 for q+1, q+4 for q-1 with even e, and q for q-1 with odd e. These maxima and the block-recognition principle are due to Aedo, Grimm, Nagai and Staynova, as cited by Joshi and Rust. The dyadic block and top parity identities are supplied by ThueMorseDyadic; the remaining required binary statements are proved inside this argument using the existing Thue-Morse word.
 
 Write a start as aq+b with 0<=b<q. Binary block parity gives t(aq+r)=t(a) xor t(r), and complementary residues control the carries and borrows. A length q+2 progression at difference q+1 forces s+q+1=kq^2 with k>=3; its next letter is opposite. For even e, a length q+4 progression at difference q-1 forces s+q=kq^2+1 with k>=3 and also has an opposite next letter. Block recognition excludes the half-block alternatives, including the boundary e=2. Explicit progressions at k=3 attain the claimed lengths. These facts prove the global bounds and exclude all earlier starts, for either letter.
 
@@ -70,4 +70,4 @@ For odd e, let b=s mod q. The letters at progression indices b and b+1 are oppos
 - Truth anchor: `D5/S1/Words/ThueMorseMapFirstStart.MAP`
 - Truth anchor: `D5/S1/Words/ThueMorseMapFirstStart.claim`
 - Truth anchor: `D5/S1/Words/ThueMorseMapFirstStart.result`
-- Dependency: [D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd](Complexity/ThueMorseReducedAbelianOdd.md)
+- Dependency: [D5/S1/Words/ThueMorseDyadic](ThueMorseDyadic.md)

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:a68abc678838c0b3da012fc731d479d71e4b744e9a2cb35b0aee0a84818825a5
+  normalized_sha256: sha256:a68abc678838c0b3da012fc731d479d71e4b744e9a2cb35b0aee0a84818825a5
+cas_ref: sha256:a68abc678838c0b3da012fc731d479d71e4b744e9a2cb35b0aee0a84818825a5
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.full_active_row
+    target_statement_id: sha256:21408697871992677b7a162edf218da10bb7e84f69a253bd22c0b75012d2d5bb
+  - gid: D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.full_terminal_row
+    target_statement_id: sha256:6f186e48ea0bf180cf7e8a66e58a2ccaca2bda3bcbdc4ee4c4da53ebe29b6763
+  - gid: D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_component_card
+    target_statement_id: sha256:ce22af653ee838d808f56f9512679a36815da30febd5f51a7c9e8ad3558545c3
+  - gid: D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_native_bridge
+    target_statement_id: sha256:6a43a04e9dbb4d2439e2a754e44e49d53001c24c29bdb2b00e01f5640dec4628
+  - gid: D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_row_descends
+    target_statement_id: sha256:f5ee8e91b6788bdb2a48a49f59385656f86c257f558373ebf2f887695171ea88
+receipts:
+  unresolved_subitems: []

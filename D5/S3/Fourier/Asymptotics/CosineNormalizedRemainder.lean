@@ -28,243 +28,9 @@ namespace D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder
 
 open D5.S3.Fourier.Asymptotics.CosineIntegralLattice (cosineIntegral)
 
-theorem result : ∃ C : ℝ, 0 < C ∧ ∀ θ : ℝ, 0 < θ → θ ≤ 1 → ∀ N : ℕ, 1 ≤ N →
-    |(∑ k ∈ Finset.Icc 1 N, Real.cos ((k : ℝ) * θ) / (k : ℝ)) -
-      (-Real.log θ + cosineIntegral ((N : ℝ) * θ))| ≤
-      C * (1 / (N : ℝ) + θ * (1 + max 0 (Real.log ((N : ℝ) * θ)))) := by
-  refine ⟨6, by norm_num, ?_⟩
-  intro θ hθ hθone N hN
-  have hmain :
-      |(∑ k ∈ Finset.Icc 1 N, Real.cos ((k : ℝ) * θ) / (k : ℝ)) -
-        (Real.eulerMascheroniConstant + Real.log (N : ℝ) +
-          ∫ t in (0 : ℝ)..((N : ℝ) * θ), (Real.cos t - 1) / t)| ≤
-        6 * (1 / (N : ℝ) + θ * (1 + max 0 (Real.log ((N : ℝ) * θ)))) := by
-    have hquad :
-        |(∑ k ∈ Finset.Icc 1 N, (Real.cos (θ * (k : ℝ)) - 1) / (k : ℝ)) -
-          ∫ t in (0 : ℝ)..(N : ℝ), (Real.cos (θ * t) - 1) / t| ≤
-            5 * θ * (1 + max 0 (Real.log ((N : ℝ) * θ))) := by
-      let g : ℝ → ℝ := fun t => (Real.cos (θ * t) - 1) / t
-      let d : ℝ → ℝ := fun t => -θ * Real.sin (θ * t) / t -
-        (Real.cos (θ * t) - 1) / t ^ 2
-      have hn : (1 : ℝ) ≤ N := by exact_mod_cast hN
-      have hn0 : (0 : ℝ) < N := by linarith
-      have hgcont : Continuous g := by
-        have heq : g = fun t => -θ * Real.sin (θ * t / 2) * Real.sinc (θ * t / 2) := by
-          funext t
-          by_cases ht : t = 0
-          · simp [g, ht]
-          · rw [Real.sinc_of_ne_zero (by positivity : θ * t / 2 ≠ 0)]
-            have hc := Real.cos_two_mul_eq_one_sub (θ * t / 2)
-            rw [show 2 * (θ * t / 2) = θ * t by ring] at hc
-            dsimp [g]
-            rw [hc]
-            field_simp
-            ring
-        rw [heq]
-        fun_prop
-      have hd (t : ℝ) (ht : 0 < t) : HasDerivAt g (d t) t := by
-        have hh := (((Real.hasDerivAt_cos (θ * t)).comp t
-          ((hasDerivAt_id t).const_mul θ)).sub_const 1).div (hasDerivAt_id t) ht.ne'
-        apply hh.congr_deriv
-        dsimp [d]
-        field_simp
-      have hdcont : ContinuousOn (deriv g) (Set.uIcc 1 (N : ℝ)) := by
-        rw [Set.uIcc_of_le hn]
-        have hdc : ContinuousOn d (Set.Icc 1 (N : ℝ)) := by
-          intro t ht
-          have ht0 : 0 < t := by linarith [ht.1]
-          apply ContinuousAt.continuousWithinAt
-          dsimp [d]
-          fun_prop (disch := positivity)
-        exact hdc.congr (fun t ht => (hd t (by linarith [ht.1])).deriv)
-      have hgsmall (t : ℝ) : |g t| ≤ θ := by
-        by_cases ht : t = 0
-        · simp [g, ht, hθ.le]
-        · have hc := Real.abs_cos_sub_cos_le (θ * t) 0
-          simp only [Real.cos_zero, sub_zero, abs_mul, abs_of_pos hθ] at hc
-          dsimp [g]
-          rw [abs_div]
-          exact (div_le_iff₀ (abs_pos.mpr ht)).mpr hc
-      have hdmajor (t : ℝ) (ht : 0 < t) : |d t| ≤ 6 * θ ^ 2 / (1 + θ * t) := by
-        have hz : 0 < θ * t := mul_pos hθ ht
-        have hden : 0 < 1 + θ * t := by positivity
-        have hab : |d t| ≤ θ * |Real.sin (θ * t)| / t +
-            (1 - Real.cos (θ * t)) / t ^ 2 := by
-          calc
-            |d t| ≤ |-θ * Real.sin (θ * t) / t| +
-                |(Real.cos (θ * t) - 1) / t ^ 2| := abs_sub _ _
-            _ = _ := by
-              rw [abs_div, abs_div, abs_mul, abs_neg, abs_of_pos hθ, abs_of_pos ht,
-                abs_of_nonneg (sq_nonneg t), abs_of_nonpos (sub_nonpos.mpr (Real.cos_le_one _))]
-              ring
-        by_cases hz1 : θ * t ≤ 1
-        · have hs : |Real.sin (θ * t)| ≤ θ * t := by
-            simpa [abs_of_pos hz] using (Real.abs_sin_le_abs (x := θ * t))
-          have hc : 1 - Real.cos (θ * t) ≤ (θ * t) ^ 2 / 2 := by
-            linarith [Real.one_sub_sq_div_two_le_cos (x := θ * t)]
-          have hbound : |d t| ≤ 3 * θ ^ 2 / 2 := by
-            calc
-              |d t| ≤ θ * (θ * t) / t + ((θ * t) ^ 2 / 2) / t ^ 2 :=
-                hab.trans (add_le_add (div_le_div_of_nonneg_right
-                  (mul_le_mul_of_nonneg_left hs hθ.le) ht.le)
-                  (div_le_div_of_nonneg_right hc (sq_nonneg t)))
-              _ = 3 * θ ^ 2 / 2 := by field_simp; ring
-          apply hbound.trans
-          rw [le_div_iff₀ hden]
-          nlinarith [sq_nonneg θ, mul_le_mul_of_nonneg_left hz1 (sq_nonneg θ)]
-        · have hz1' : 1 ≤ θ * t := le_of_not_ge hz1
-          have hs := Real.abs_sin_le_one (θ * t)
-          have hc : 1 - Real.cos (θ * t) ≤ 2 := by linarith [Real.neg_one_le_cos (θ * t)]
-          have hbound : |d t| ≤ θ / t + 2 / t ^ 2 := by
-            calc
-              |d t| ≤ θ * 1 / t + 2 / t ^ 2 :=
-                hab.trans (add_le_add (div_le_div_of_nonneg_right
-                  (mul_le_mul_of_nonneg_left hs hθ.le) ht.le)
-                  (div_le_div_of_nonneg_right hc (sq_nonneg t)))
-              _ = _ := by ring
-          apply hbound.trans
-          apply (le_div_iff₀ hden).mpr
-          field_simp
-          nlinarith [sq_nonneg (θ * t - 1)]
-      have hformula := sum_eq_integral_add_integral_deriv (f := g)
-        (a := 1) (b := N) (by norm_num) hn
-        (fun t ht => (hd t (by linarith [ht.1])).differentiableAt) hdcont
-      have hbern : ∀ t : ℝ, 0 ≤ t → |B1 t| ≤ 1 / 2 := fun _ ht => abs_B1_le_half ht
-      have hweightcont : ContinuousOn (fun t : ℝ => 3 * θ ^ 2 / (1 + θ * t))
-          (Set.uIcc 1 (N : ℝ)) := by
-        rw [Set.uIcc_of_le hn]
-        intro t ht
-        have ht0 : 0 < t := by linarith [ht.1]
-        apply ContinuousAt.continuousWithinAt
-        fun_prop (disch := positivity)
-      have hderivint : |∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t| ≤
-          ∫ t in (1 : ℝ)..(N : ℝ), 3 * θ ^ 2 / (1 + θ * t) := by
-        rw [← Real.norm_eq_abs]
-        apply intervalIntegral.norm_integral_le_of_norm_le hn
-        · apply Filter.Eventually.of_forall
-          intro t ht
-          have ht0 : 0 < t := by linarith [ht.1]
-          rw [(hd t ht0).deriv, Real.norm_eq_abs, abs_mul]
-          calc
-            |d t| * |B1 t| ≤ (6 * θ ^ 2 / (1 + θ * t)) * (1 / 2) :=
-              mul_le_mul (hdmajor t ht0) (hbern t ht0.le) (abs_nonneg _)
-                (by positivity)
-            _ = 3 * θ ^ 2 / (1 + θ * t) := by ring
-        · exact hweightcont.intervalIntegrable
-      have hweight : (∫ t in (1 : ℝ)..(N : ℝ), 3 * θ ^ 2 / (1 + θ * t)) =
-          3 * θ * (Real.log (1 + θ * N) - Real.log (1 + θ)) := by
-        have hdlog (t : ℝ) (ht : t ∈ Set.uIcc 1 (N : ℝ)) :
-            HasDerivAt (fun u : ℝ => 3 * θ * Real.log (1 + θ * u))
-              (3 * θ ^ 2 / (1 + θ * t)) t := by
-          rw [Set.uIcc_of_le hn] at ht
-          have ht0 : 0 < t := by linarith [ht.1]
-          have hp : 0 < 1 + θ * t := by positivity
-          apply (((((hasDerivAt_id t).const_mul θ).const_add 1).log hp.ne').const_mul (3 * θ)).congr_deriv
-          simp only [id_eq]
-          ring
-        rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hdlog hweightcont.intervalIntegrable]
-        simp only [mul_one]
-        ring
-      have hlog (x : ℝ) (hx : 0 < x) : Real.log (1 + x) ≤ 1 + max 0 (Real.log x) := by
-        by_cases hx1 : x ≤ 1
-        · have hb := Real.log_le_sub_one_of_pos (show 0 < 1 + x by positivity)
-          have hm := le_max_left 0 (Real.log x)
-          linarith
-        · have h1x : 1 ≤ x := le_of_not_ge hx1
-          have hb := Real.log_le_log (show 0 < 1 + x by positivity) (show 1 + x ≤ 2 * x by linarith)
-          rw [Real.log_mul (by norm_num) hx.ne'] at hb
-          have h2 := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
-          have hm := le_max_right 0 (Real.log x)
-          linarith
-      have herror : |∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t| ≤
-          3 * θ * (1 + max 0 (Real.log ((N : ℝ) * θ))) := by
-        rw [hweight] at hderivint
-        have hpos := Real.log_nonneg (show 1 ≤ 1 + θ by linarith)
-        have hb := hlog (θ * N) (mul_pos hθ hn0)
-        rw [mul_comm θ (N : ℝ)] at hb hderivint
-        nlinarith
-      have hfirst : |∫ t in (0 : ℝ)..1, g t| ≤ θ := by
-        have hb := intervalIntegral.norm_integral_le_of_norm_le_const
-          (a := (0 : ℝ)) (b := 1) (C := θ) (f := g)
-          (fun t _ => by simpa [Real.norm_eq_abs] using hgsmall t)
-        simpa [Real.norm_eq_abs] using hb
-      have hsum : (∑ k ∈ Finset.Icc 1 N, g k) = g 1 + ∑ k ∈ Finset.Ioc 1 N, g k := by
-        rw [Finset.Icc_eq_cons_Ioc hN, Finset.sum_cons, Nat.cast_one]
-      have hB (k : ℕ) : B1 k = -(1 / 2 : ℝ) := by simp [B1]
-      simp only [Nat.floor_one, Nat.floor_natCast, RCLike.ofReal_real_eq_id, id_eq] at hformula
-      have hsplit : (∫ t in (0 : ℝ)..1, g t) + (∫ t in (1 : ℝ)..(N : ℝ), g t) =
-          ∫ t in (0 : ℝ)..(N : ℝ), g t :=
-        intervalIntegral.integral_add_adjacent_intervals
-          (hgcont.intervalIntegrable 0 1) (hgcont.intervalIntegrable 1 (N : ℝ))
-      have heq : (∑ k ∈ Finset.Icc 1 N, g k) - ∫ t in (0 : ℝ)..(N : ℝ), g t =
-          g 1 / 2 + g N / 2 + (∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t) -
-            ∫ t in (0 : ℝ)..1, g t := by
-        rw [hsum, hformula, show B1 1 = -(1 / 2 : ℝ) by norm_num [B1], hB,
-          ← hsplit]
-        ring
-      change |(∑ k ∈ Finset.Icc 1 N, g k) - ∫ t in (0 : ℝ)..(N : ℝ), g t| ≤ _
-      rw [heq]
-      have hg1 := hgsmall 1
-      have hgN := hgsmall N
-      have hm := le_max_left 0 (Real.log ((N : ℝ) * θ))
-      calc
-        _ ≤ |g 1 / 2 + g N / 2 + ∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t| +
-            |∫ t in (0 : ℝ)..1, g t| := abs_sub _ _
-        _ ≤ |g 1 / 2| + |g N / 2| + |∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t| +
-            |∫ t in (0 : ℝ)..1, g t| := by
-          gcongr
-          exact (abs_add_le _ _).trans (add_le_add (abs_add_le _ _) le_rfl)
-        _ ≤ 5 * θ * (1 + max 0 (Real.log ((N : ℝ) * θ))) := by
-          simp only [abs_div, abs_two]
-          nlinarith
-  
-    have hn0 : (0 : ℝ) < N := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hN)
-    have hscale : (∫ t in (0 : ℝ)..(N : ℝ), (Real.cos (θ * t) - 1) / t) =
-        ∫ t in (0 : ℝ)..((N : ℝ) * θ), (Real.cos t - 1) / t := by
-      have heq : (fun t : ℝ => (Real.cos (θ * t) - 1) / t) =
-          fun t => θ * ((Real.cos (θ * t) - 1) / (θ * t)) := by
-        funext t
-        by_cases ht : t = 0
-        · simp [ht]
-        · field_simp
-      rw [heq, intervalIntegral.integral_const_mul,
-        intervalIntegral.integral_comp_mul_left (fun t : ℝ => (Real.cos t - 1) / t) hθ.ne']
-      simp [smul_eq_mul, hθ.ne', mul_comm θ (N : ℝ)]
-    rw [hscale] at hquad
-    have hsum : (∑ k ∈ Finset.Icc 1 N, Real.cos ((k : ℝ) * θ) / (k : ℝ)) =
-        (harmonic N : ℝ) +
-          ∑ k ∈ Finset.Icc 1 N, (Real.cos (θ * (k : ℝ)) - 1) / (k : ℝ) := by
-      rw [harmonic_eq_sum_Icc, Rat.cast_sum, ← Finset.sum_add_distrib]
-      apply Finset.sum_congr rfl
-      intro k hk
-      simp only [Rat.cast_inv, Rat.cast_natCast, mul_comm θ (k : ℝ)]
-      ring
-    have hhar := D5.S3.Arith.GoldenResource.RobinRationalBasis.eulerMascheroni_remainder_bounds N hN
-    have hrem : |(harmonic N : ℝ) - Real.log (N : ℝ) - Real.eulerMascheroniConstant| ≤
-        1 / (2 * (N : ℝ)) := by
-      have hpos : 0 ≤ (harmonic N : ℝ) - Real.log (N : ℝ) - Real.eulerMascheroniConstant :=
-        le_trans (by positivity) hhar.1.le
-      rw [abs_of_nonneg hpos]
-      exact hhar.2.le
-    calc
-      _ = |((∑ k ∈ Finset.Icc 1 N, (Real.cos (θ * (k : ℝ)) - 1) / (k : ℝ)) -
-          ∫ t in (0 : ℝ)..((N : ℝ) * θ), (Real.cos t - 1) / t) +
-            ((harmonic N : ℝ) - Real.log (N : ℝ) - Real.eulerMascheroniConstant)| := by
-        rw [hsum]
-        congr 1
-        ring
-      _ ≤ |(∑ k ∈ Finset.Icc 1 N, (Real.cos (θ * (k : ℝ)) - 1) / (k : ℝ)) -
-          ∫ t in (0 : ℝ)..((N : ℝ) * θ), (Real.cos t - 1) / t| +
-            |(harmonic N : ℝ) - Real.log (N : ℝ) - Real.eulerMascheroniConstant| := abs_add_le _ _
-      _ ≤ 5 * θ * (1 + max 0 (Real.log ((N : ℝ) * θ))) + 1 / (2 * (N : ℝ)) :=
-        add_le_add hquad hrem
-      _ ≤ 6 * (1 / (N : ℝ) + θ * (1 + max 0 (Real.log ((N : ℝ) * θ)))) := by
-        have hlog := le_max_left 0 (Real.log ((N : ℝ) * θ))
-        have hinv : 0 < 1 / (N : ℝ) := by positivity
-        have heq : 1 / (2 * (N : ℝ)) = (1 / (N : ℝ)) / 2 := by ring
-        rw [heq]
-        nlinarith
-
+theorem positive_normalization (x : ℝ) (hx : 0 < x) :
+    cosineIntegral x = Real.eulerMascheroniConstant + Real.log x +
+      ∫ t in (0 : ℝ)..x, (Real.cos t - 1) / t := by
   let q : ℝ → ℝ := fun t => (Real.cos t - 1) / t
   have hqint (a b : ℝ) : IntervalIntegrable q volume a b := by
     refine (intervalIntegrable_const (c := (1 : ℝ))).mono_fun' ?_ ?_
@@ -714,13 +480,254 @@ theorem result : ∃ C : ℝ, 0 < C ∧ ∀ θ : ℝ, 0 < θ → θ ≤ 1 → �
     have hz := tendsto_nhds_unique hlim hlim2
     change cosineIntegral 1 = Real.eulerMascheroniConstant + Q 1
     linarith
-  have hn0 : (0 : ℝ) < N := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hN)
-  rw [hCi ((N : ℝ) * θ) (mul_pos hn0 hθ), hnorm, Real.log_mul hn0.ne' hθ.ne']
-  rw [Real.log_mul hn0.ne' hθ.ne'] at hmain
-  convert hmain using 1
-  congr 1
+  rw [hCi x hx, hnorm]
   dsimp [q]
   ring
 
+theorem result : ∃ C : ℝ, 0 < C ∧ ∀ θ : ℝ, 0 < θ → θ ≤ 1 → ∀ N : ℕ, 1 ≤ N →
+    |(∑ k ∈ Finset.Icc 1 N, Real.cos ((k : ℝ) * θ) / (k : ℝ)) -
+      (-Real.log θ + cosineIntegral ((N : ℝ) * θ))| ≤
+      C * (1 / (N : ℝ) + θ * (1 + max 0 (Real.log ((N : ℝ) * θ)))) := by
+  refine ⟨6, by norm_num, ?_⟩
+  intro θ hθ hθone N hN
+  have hmain :
+      |(∑ k ∈ Finset.Icc 1 N, Real.cos ((k : ℝ) * θ) / (k : ℝ)) -
+        (Real.eulerMascheroniConstant + Real.log (N : ℝ) +
+          ∫ t in (0 : ℝ)..((N : ℝ) * θ), (Real.cos t - 1) / t)| ≤
+        6 * (1 / (N : ℝ) + θ * (1 + max 0 (Real.log ((N : ℝ) * θ)))) := by
+    have hquad :
+        |(∑ k ∈ Finset.Icc 1 N, (Real.cos (θ * (k : ℝ)) - 1) / (k : ℝ)) -
+          ∫ t in (0 : ℝ)..(N : ℝ), (Real.cos (θ * t) - 1) / t| ≤
+            5 * θ * (1 + max 0 (Real.log ((N : ℝ) * θ))) := by
+      let g : ℝ → ℝ := fun t => (Real.cos (θ * t) - 1) / t
+      let d : ℝ → ℝ := fun t => -θ * Real.sin (θ * t) / t -
+        (Real.cos (θ * t) - 1) / t ^ 2
+      have hn : (1 : ℝ) ≤ N := by exact_mod_cast hN
+      have hn0 : (0 : ℝ) < N := by linarith
+      have hgcont : Continuous g := by
+        have heq : g = fun t => -θ * Real.sin (θ * t / 2) * Real.sinc (θ * t / 2) := by
+          funext t
+          by_cases ht : t = 0
+          · simp [g, ht]
+          · rw [Real.sinc_of_ne_zero (by positivity : θ * t / 2 ≠ 0)]
+            have hc := Real.cos_two_mul_eq_one_sub (θ * t / 2)
+            rw [show 2 * (θ * t / 2) = θ * t by ring] at hc
+            dsimp [g]
+            rw [hc]
+            field_simp
+            ring
+        rw [heq]
+        fun_prop
+      have hd (t : ℝ) (ht : 0 < t) : HasDerivAt g (d t) t := by
+        have hh := (((Real.hasDerivAt_cos (θ * t)).comp t
+          ((hasDerivAt_id t).const_mul θ)).sub_const 1).div (hasDerivAt_id t) ht.ne'
+        apply hh.congr_deriv
+        dsimp [d]
+        field_simp
+      have hdcont : ContinuousOn (deriv g) (Set.uIcc 1 (N : ℝ)) := by
+        rw [Set.uIcc_of_le hn]
+        have hdc : ContinuousOn d (Set.Icc 1 (N : ℝ)) := by
+          intro t ht
+          have ht0 : 0 < t := by linarith [ht.1]
+          apply ContinuousAt.continuousWithinAt
+          dsimp [d]
+          fun_prop (disch := positivity)
+        exact hdc.congr (fun t ht => (hd t (by linarith [ht.1])).deriv)
+      have hgsmall (t : ℝ) : |g t| ≤ θ := by
+        by_cases ht : t = 0
+        · simp [g, ht, hθ.le]
+        · have hc := Real.abs_cos_sub_cos_le (θ * t) 0
+          simp only [Real.cos_zero, sub_zero, abs_mul, abs_of_pos hθ] at hc
+          dsimp [g]
+          rw [abs_div]
+          exact (div_le_iff₀ (abs_pos.mpr ht)).mpr hc
+      have hdmajor (t : ℝ) (ht : 0 < t) : |d t| ≤ 6 * θ ^ 2 / (1 + θ * t) := by
+        have hz : 0 < θ * t := mul_pos hθ ht
+        have hden : 0 < 1 + θ * t := by positivity
+        have hab : |d t| ≤ θ * |Real.sin (θ * t)| / t +
+            (1 - Real.cos (θ * t)) / t ^ 2 := by
+          calc
+            |d t| ≤ |-θ * Real.sin (θ * t) / t| +
+                |(Real.cos (θ * t) - 1) / t ^ 2| := abs_sub _ _
+            _ = _ := by
+              rw [abs_div, abs_div, abs_mul, abs_neg, abs_of_pos hθ, abs_of_pos ht,
+                abs_of_nonneg (sq_nonneg t), abs_of_nonpos (sub_nonpos.mpr (Real.cos_le_one _))]
+              ring
+        by_cases hz1 : θ * t ≤ 1
+        · have hs : |Real.sin (θ * t)| ≤ θ * t := by
+            simpa [abs_of_pos hz] using (Real.abs_sin_le_abs (x := θ * t))
+          have hc : 1 - Real.cos (θ * t) ≤ (θ * t) ^ 2 / 2 := by
+            linarith [Real.one_sub_sq_div_two_le_cos (x := θ * t)]
+          have hbound : |d t| ≤ 3 * θ ^ 2 / 2 := by
+            calc
+              |d t| ≤ θ * (θ * t) / t + ((θ * t) ^ 2 / 2) / t ^ 2 :=
+                hab.trans (add_le_add (div_le_div_of_nonneg_right
+                  (mul_le_mul_of_nonneg_left hs hθ.le) ht.le)
+                  (div_le_div_of_nonneg_right hc (sq_nonneg t)))
+              _ = 3 * θ ^ 2 / 2 := by field_simp; ring
+          apply hbound.trans
+          rw [le_div_iff₀ hden]
+          nlinarith [sq_nonneg θ, mul_le_mul_of_nonneg_left hz1 (sq_nonneg θ)]
+        · have hz1' : 1 ≤ θ * t := le_of_not_ge hz1
+          have hs := Real.abs_sin_le_one (θ * t)
+          have hc : 1 - Real.cos (θ * t) ≤ 2 := by linarith [Real.neg_one_le_cos (θ * t)]
+          have hbound : |d t| ≤ θ / t + 2 / t ^ 2 := by
+            calc
+              |d t| ≤ θ * 1 / t + 2 / t ^ 2 :=
+                hab.trans (add_le_add (div_le_div_of_nonneg_right
+                  (mul_le_mul_of_nonneg_left hs hθ.le) ht.le)
+                  (div_le_div_of_nonneg_right hc (sq_nonneg t)))
+              _ = _ := by ring
+          apply hbound.trans
+          apply (le_div_iff₀ hden).mpr
+          field_simp
+          nlinarith [sq_nonneg (θ * t - 1)]
+      have hformula := sum_eq_integral_add_integral_deriv (f := g)
+        (a := 1) (b := N) (by norm_num) hn
+        (fun t ht => (hd t (by linarith [ht.1])).differentiableAt) hdcont
+      have hbern : ∀ t : ℝ, 0 ≤ t → |B1 t| ≤ 1 / 2 := fun _ ht => abs_B1_le_half ht
+      have hweightcont : ContinuousOn (fun t : ℝ => 3 * θ ^ 2 / (1 + θ * t))
+          (Set.uIcc 1 (N : ℝ)) := by
+        rw [Set.uIcc_of_le hn]
+        intro t ht
+        have ht0 : 0 < t := by linarith [ht.1]
+        apply ContinuousAt.continuousWithinAt
+        fun_prop (disch := positivity)
+      have hderivint : |∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t| ≤
+          ∫ t in (1 : ℝ)..(N : ℝ), 3 * θ ^ 2 / (1 + θ * t) := by
+        rw [← Real.norm_eq_abs]
+        apply intervalIntegral.norm_integral_le_of_norm_le hn
+        · apply Filter.Eventually.of_forall
+          intro t ht
+          have ht0 : 0 < t := by linarith [ht.1]
+          rw [(hd t ht0).deriv, Real.norm_eq_abs, abs_mul]
+          calc
+            |d t| * |B1 t| ≤ (6 * θ ^ 2 / (1 + θ * t)) * (1 / 2) :=
+              mul_le_mul (hdmajor t ht0) (hbern t ht0.le) (abs_nonneg _)
+                (by positivity)
+            _ = 3 * θ ^ 2 / (1 + θ * t) := by ring
+        · exact hweightcont.intervalIntegrable
+      have hweight : (∫ t in (1 : ℝ)..(N : ℝ), 3 * θ ^ 2 / (1 + θ * t)) =
+          3 * θ * (Real.log (1 + θ * N) - Real.log (1 + θ)) := by
+        have hdlog (t : ℝ) (ht : t ∈ Set.uIcc 1 (N : ℝ)) :
+            HasDerivAt (fun u : ℝ => 3 * θ * Real.log (1 + θ * u))
+              (3 * θ ^ 2 / (1 + θ * t)) t := by
+          rw [Set.uIcc_of_le hn] at ht
+          have ht0 : 0 < t := by linarith [ht.1]
+          have hp : 0 < 1 + θ * t := by positivity
+          apply (((((hasDerivAt_id t).const_mul θ).const_add 1).log hp.ne').const_mul (3 * θ)).congr_deriv
+          simp only [id_eq]
+          ring
+        rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hdlog hweightcont.intervalIntegrable]
+        simp only [mul_one]
+        ring
+      have hlog (x : ℝ) (hx : 0 < x) : Real.log (1 + x) ≤ 1 + max 0 (Real.log x) := by
+        by_cases hx1 : x ≤ 1
+        · have hb := Real.log_le_sub_one_of_pos (show 0 < 1 + x by positivity)
+          have hm := le_max_left 0 (Real.log x)
+          linarith
+        · have h1x : 1 ≤ x := le_of_not_ge hx1
+          have hb := Real.log_le_log (show 0 < 1 + x by positivity) (show 1 + x ≤ 2 * x by linarith)
+          rw [Real.log_mul (by norm_num) hx.ne'] at hb
+          have h2 := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+          have hm := le_max_right 0 (Real.log x)
+          linarith
+      have herror : |∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t| ≤
+          3 * θ * (1 + max 0 (Real.log ((N : ℝ) * θ))) := by
+        rw [hweight] at hderivint
+        have hpos := Real.log_nonneg (show 1 ≤ 1 + θ by linarith)
+        have hb := hlog (θ * N) (mul_pos hθ hn0)
+        rw [mul_comm θ (N : ℝ)] at hb hderivint
+        nlinarith
+      have hfirst : |∫ t in (0 : ℝ)..1, g t| ≤ θ := by
+        have hb := intervalIntegral.norm_integral_le_of_norm_le_const
+          (a := (0 : ℝ)) (b := 1) (C := θ) (f := g)
+          (fun t _ => by simpa [Real.norm_eq_abs] using hgsmall t)
+        simpa [Real.norm_eq_abs] using hb
+      have hsum : (∑ k ∈ Finset.Icc 1 N, g k) = g 1 + ∑ k ∈ Finset.Ioc 1 N, g k := by
+        rw [Finset.Icc_eq_cons_Ioc hN, Finset.sum_cons, Nat.cast_one]
+      have hB (k : ℕ) : B1 k = -(1 / 2 : ℝ) := by simp [B1]
+      simp only [Nat.floor_one, Nat.floor_natCast, RCLike.ofReal_real_eq_id, id_eq] at hformula
+      have hsplit : (∫ t in (0 : ℝ)..1, g t) + (∫ t in (1 : ℝ)..(N : ℝ), g t) =
+          ∫ t in (0 : ℝ)..(N : ℝ), g t :=
+        intervalIntegral.integral_add_adjacent_intervals
+          (hgcont.intervalIntegrable 0 1) (hgcont.intervalIntegrable 1 (N : ℝ))
+      have heq : (∑ k ∈ Finset.Icc 1 N, g k) - ∫ t in (0 : ℝ)..(N : ℝ), g t =
+          g 1 / 2 + g N / 2 + (∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t) -
+            ∫ t in (0 : ℝ)..1, g t := by
+        rw [hsum, hformula, show B1 1 = -(1 / 2 : ℝ) by norm_num [B1], hB,
+          ← hsplit]
+        ring
+      change |(∑ k ∈ Finset.Icc 1 N, g k) - ∫ t in (0 : ℝ)..(N : ℝ), g t| ≤ _
+      rw [heq]
+      have hg1 := hgsmall 1
+      have hgN := hgsmall N
+      have hm := le_max_left 0 (Real.log ((N : ℝ) * θ))
+      calc
+        _ ≤ |g 1 / 2 + g N / 2 + ∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t| +
+            |∫ t in (0 : ℝ)..1, g t| := abs_sub _ _
+        _ ≤ |g 1 / 2| + |g N / 2| + |∫ t in (1 : ℝ)..(N : ℝ), deriv g t * B1 t| +
+            |∫ t in (0 : ℝ)..1, g t| := by
+          gcongr
+          exact (abs_add_le _ _).trans (add_le_add (abs_add_le _ _) le_rfl)
+        _ ≤ 5 * θ * (1 + max 0 (Real.log ((N : ℝ) * θ))) := by
+          simp only [abs_div, abs_two]
+          nlinarith
+
+    have hn0 : (0 : ℝ) < N := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hN)
+    have hscale : (∫ t in (0 : ℝ)..(N : ℝ), (Real.cos (θ * t) - 1) / t) =
+        ∫ t in (0 : ℝ)..((N : ℝ) * θ), (Real.cos t - 1) / t := by
+      have heq : (fun t : ℝ => (Real.cos (θ * t) - 1) / t) =
+          fun t => θ * ((Real.cos (θ * t) - 1) / (θ * t)) := by
+        funext t
+        by_cases ht : t = 0
+        · simp [ht]
+        · field_simp
+      rw [heq, intervalIntegral.integral_const_mul,
+        intervalIntegral.integral_comp_mul_left (fun t : ℝ => (Real.cos t - 1) / t) hθ.ne']
+      simp [smul_eq_mul, hθ.ne', mul_comm θ (N : ℝ)]
+    rw [hscale] at hquad
+    have hsum : (∑ k ∈ Finset.Icc 1 N, Real.cos ((k : ℝ) * θ) / (k : ℝ)) =
+        (harmonic N : ℝ) +
+          ∑ k ∈ Finset.Icc 1 N, (Real.cos (θ * (k : ℝ)) - 1) / (k : ℝ) := by
+      rw [harmonic_eq_sum_Icc, Rat.cast_sum, ← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro k hk
+      simp only [Rat.cast_inv, Rat.cast_natCast, mul_comm θ (k : ℝ)]
+      ring
+    have hhar := D5.S3.Arith.GoldenResource.RobinRationalBasis.eulerMascheroni_remainder_bounds N hN
+    have hrem : |(harmonic N : ℝ) - Real.log (N : ℝ) - Real.eulerMascheroniConstant| ≤
+        1 / (2 * (N : ℝ)) := by
+      have hpos : 0 ≤ (harmonic N : ℝ) - Real.log (N : ℝ) - Real.eulerMascheroniConstant :=
+        le_trans (by positivity) hhar.1.le
+      rw [abs_of_nonneg hpos]
+      exact hhar.2.le
+    calc
+      _ = |((∑ k ∈ Finset.Icc 1 N, (Real.cos (θ * (k : ℝ)) - 1) / (k : ℝ)) -
+          ∫ t in (0 : ℝ)..((N : ℝ) * θ), (Real.cos t - 1) / t) +
+            ((harmonic N : ℝ) - Real.log (N : ℝ) - Real.eulerMascheroniConstant)| := by
+        rw [hsum]
+        congr 1
+        ring
+      _ ≤ |(∑ k ∈ Finset.Icc 1 N, (Real.cos (θ * (k : ℝ)) - 1) / (k : ℝ)) -
+          ∫ t in (0 : ℝ)..((N : ℝ) * θ), (Real.cos t - 1) / t| +
+            |(harmonic N : ℝ) - Real.log (N : ℝ) - Real.eulerMascheroniConstant| := abs_add_le _ _
+      _ ≤ 5 * θ * (1 + max 0 (Real.log ((N : ℝ) * θ))) + 1 / (2 * (N : ℝ)) :=
+        add_le_add hquad hrem
+      _ ≤ 6 * (1 / (N : ℝ) + θ * (1 + max 0 (Real.log ((N : ℝ) * θ)))) := by
+        have hlog := le_max_left 0 (Real.log ((N : ℝ) * θ))
+        have hinv : 0 < 1 / (N : ℝ) := by positivity
+        have heq : 1 / (2 * (N : ℝ)) = (1 / (N : ℝ)) / 2 := by ring
+        rw [heq]
+        nlinarith
+
+  have hn0 : (0 : ℝ) < N := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hN)
+  rw [positive_normalization ((N : ℝ) * θ) (mul_pos hn0 hθ), Real.log_mul hn0.ne' hθ.ne']
+  rw [Real.log_mul hn0.ne' hθ.ne'] at hmain
+  convert hmain using 1
+  congr 1
+  ring
+
+#print axioms positive_normalization
 #print axioms result
 end D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder

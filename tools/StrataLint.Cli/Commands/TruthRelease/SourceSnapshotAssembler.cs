@@ -15,7 +15,6 @@ internal static class SourceSnapshotAssembler
         ImmutableArray<byte> truthGraphBytes,
         ImmutableArray<byte> rawLeanReportBytes,
         ImmutableArray<byte> dagMarkdownBytes,
-        ImmutableArray<byte> residualFrontierBytes,
         ImmutableArray<byte> truthExportBytes,
         ImmutableArray<byte> frozenLedgerHeadBytes,
         int frozenLedgerSequence)
@@ -26,7 +25,7 @@ internal static class SourceSnapshotAssembler
         ArgumentException.ThrowIfNullOrWhiteSpace(producerPackageCommit);
 
         return new SourceSnapshotModel(
-            "source-snapshot.v1",
+            "source-snapshot.v2",
             sourceRepository,
             identity.Revision,
             Bare(identity.TreeOid),
@@ -36,7 +35,6 @@ internal static class SourceSnapshotAssembler
             Digest(truthGraphBytes),
             Digest(rawLeanReportBytes),
             Digest(dagMarkdownBytes),
-            Digest(residualFrontierBytes),
             Digest(truthExportBytes),
             Digest(frozenLedgerHeadBytes),
             frozenLedgerSequence);

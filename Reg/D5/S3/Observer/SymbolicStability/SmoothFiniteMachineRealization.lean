@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.NormNum
@@ -82,24 +83,28 @@ def registration : Registration arena.{u,v,w} (arena.Law actual) where
     · intro e; exact nomatch e
   dependence := dependence
 
-register_information_theorem
-  _root_.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.smooth_finite_machine_realization
-  in arena
-  readout via (realize signature (fun _ _ x => ‖x‖) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization
-    coordinates := #[5]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "body", "arg", "body",
-        "arg", "arg", "arg", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 0
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.smooth_finite_machine_realization.{u_1, u_2, u_3}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => ‖x‖) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "SymbolicStability") "SmoothFiniteMachineRealization") "smooth_finite_machine_realization") "Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization/Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => ‖x‖) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization, definition := none, coordinates := #[5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Reg.D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization

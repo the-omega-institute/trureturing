@@ -112,7 +112,7 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void DeclaredDialectUnregisteredGenreResolvesAndProjectsAsNotFormalizable()
+    public void DeclaredDialectUnregisteredGenreResolvesAsNotFormalizable()
     {
         var bytes = Encoding.UTF8.GetBytes("# QDO\n\n# 未登记体 1.1\n\nclaim。\n");
         var kinds = AtomizerRegistry.ResolveContentKinds("dialect:qdo", bytes, DispositionRules);
@@ -122,27 +122,7 @@ public sealed partial class TheoryAtomizerTests
         Assert.Equal(
             (DigestionContentRole.NotFormalizable, "unregistered:未登记体"),
             DigestionContentDisposition.Resolve(kind));
-        var atom = Assert.Single(AtomizerRegistry.Atomize("dialect:qdo", bytes, DispositionRules).Claims);
-        var entry = DigestionTestSupport.Entry(atom, "declared-unregistered", "dialect:qdo");
-        var evaluation = new DigestionLedgerEvaluation(
-            [new DigestionEntryEvaluation(
-                entry,
-                DigestionReceiptAlignment.Seen,
-                atom,
-                entry.ProjectedStatus,
-                false,
-                [])],
-            []);
-        var projection = DigestionFrontierTestProjection.Create(
-            evaluation,
-            new Dictionary<string, string>(StringComparer.Ordinal)
-            {
-                [entry.AtomId] = kind,
-            });
 
-        var projected = Assert.Single(projection.Entries);
-        Assert.Equal(DigestionFrontierDisposition.NotFormalizable, projected.PrimaryDisposition);
-        Assert.Equal("unregistered:未登记体", projected.PrimaryDetail);
     }
 
     private static void AssertEveryEmittedKindResolves(

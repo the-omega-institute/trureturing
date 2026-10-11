@@ -28,7 +28,7 @@ internal static partial class DigestionStatusEvaluator
             document,
             snapshot,
             DigestionAlignmentMode.Projection,
-            casEvaluation: DigestionCasStore.Evaluate(document, snapshot, casChanges),
+            casEvaluation: DigestionCasStore.EvaluateLedgerReferences(document, snapshot, casChanges),
             changes: changes,
             casChanges: casChanges);
         findings.AddRange(alignment.Findings);

@@ -44,7 +44,7 @@ private def emission (W : Matrix (B × R) A ℂ) : Matrix A A ℂ →ₗ[ℂ] Ma
     simp [partialTraceFirst, Matrix.mul_smul, Matrix.smul_mul, Finset.mul_sum]
 
 omit [DecidableEq A] in
-private theorem pure_trace (x : EuclideanSpace ℂ A) :
+theorem pure_trace (x : EuclideanSpace ℂ A) :
     Matrix.trace (Matrix.vecMulVec (⇑x) (star (⇑x))) = (‖x‖ : ℂ)^2 := by
   rw [Matrix.trace_vecMulVec]
   exact (EuclideanSpace.inner_eq_star_dotProduct x x).symm.trans

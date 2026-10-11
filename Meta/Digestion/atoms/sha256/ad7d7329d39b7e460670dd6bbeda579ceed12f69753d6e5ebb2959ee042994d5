@@ -1,0 +1,20 @@
+## 命题 A：`FutureQuotientMinimal`
+
+定义
+
+\[
+h\sim h'
+\Longleftrightarrow
+\mathscr L_h=\mathscr L_{h'}.
+\]
+
+形式化证明：
+
+\[
+h\sim h'
+\Longleftrightarrow
+\sigma(h)=\sigma(h')
+\]
+
+在已声明的活动历史域和固定非单例先验下成立。
+

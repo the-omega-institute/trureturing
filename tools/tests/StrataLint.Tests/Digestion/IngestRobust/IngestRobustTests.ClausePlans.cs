@@ -21,7 +21,7 @@ public sealed partial class IngestRobustTests
         var result = Environment(
             fixture,
             temporary,
-            RawChangeSet.Create([AlphaPath, BetaPath])).Ingest(Arguments());
+            RawChangeSet.Create([AlphaPath, BetaPath])).Ingest(Arguments("alpha", "beta"));
 
         Assert.True(result.Success, result.Error);
         var after = DirectoryLedgerTestSupport.ReadRepository(temporary);

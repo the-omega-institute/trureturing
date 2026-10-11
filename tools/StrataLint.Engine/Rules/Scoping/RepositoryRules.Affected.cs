@@ -10,7 +10,7 @@ internal static partial class RepositoryRules
         || Changed(context, path => IsLeanReportProducerInput(path, context.RegisteredRuleBuildInputs));
 
     private static bool CapacityAffected(DeltaRuleContext context) =>
-        Changed(context, static path => !IsCapacityExcluded(path));
+        Changed(context, static path => IsTheoryDocument(path) || !IsCapacityExcluded(path));
 
     private static bool HeartsAffected(DeltaRuleContext context) =>
         Changed(context, static path =>

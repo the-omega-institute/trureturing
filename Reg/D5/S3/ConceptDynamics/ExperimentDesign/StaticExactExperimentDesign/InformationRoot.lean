@@ -1,5 +1,5 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.LegacyStaticDesign
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -10,17 +10,7 @@ import D5.S3.ConceptDynamics.InformationEscapeHierarchy.LayeredCapture
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.RefinementMatrix
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.InformationRoot
-  expected := #[
-    { objectArenaName := `Reg.Support.LegacyStaticDesign.arena, theoremName := `D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design,
-      statementIdentity := "sha256:408742a2c71557575944155350def43ed8f9f37ec3a19fe75f721e084dfe939a",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.InformationRoot }]
-  source := #[
-    { objectArenaName := `Reg.Support.LegacyStaticDesign.arena, theoremName := `D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design,
-      statementIdentity := "sha256:408742a2c71557575944155350def43ed8f9f37ec3a19fe75f721e084dfe939a",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.InformationRoot }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.InformationRoot }
+
 
 
 namespace Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.InformationRoot
@@ -28,12 +18,27 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape
 open _root_.Reg.Support.LegacyFiniteTransport
 open _root_.Reg.Support.LegacyStaticDesign
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design in arena
-  readout via (RegistrationTemplates.binaryFamilyRealization (fun i s => readouts i s))
-  primitives actual.toPrimitiveBundle
-  realization bridge
-  variation variation
-  sensitivity sensitivity
-  escape from (Fin 3) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design) (type_of% (RegistrationTemplates.binaryFamilyRealization (fun i s => readouts i s))) (type_of% (Fin 3)) (Unit) := {
+  unitName := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.InformationRoot.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design.__information_unit,
+  realizationName := `Reg.Support.LegacyStaticDesign.bridge,
+  realizationSource := none,
+  generated := false,
+  arena := .object ⟨(arena)⟩,
+  objectArena := .object ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} Reg.Support.LegacyStaticDesign.arena) (Reg.Support.LegacyStaticDesign.actual) (actual.toPrimitiveBundle) ⟨(bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (bridge) (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((actual.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (RegistrationTemplates.binaryFamilyRealization (fun i s => readouts i s)),
+  variation := .evidence ⟨(variation)⟩ (by first | exact (variation) | exact ⟨_, _, (variation)⟩),
+  sensitivity := .evidence ⟨(sensitivity)⟩ (by exact (sensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (Fin 3),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.InformationRoot

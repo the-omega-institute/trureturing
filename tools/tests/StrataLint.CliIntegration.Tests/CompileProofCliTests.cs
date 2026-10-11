@@ -16,6 +16,7 @@ public sealed class CompileProofCliTests
     [InlineData("capability-proof", "restore-failed", 2)]
     [InlineData("banned-api-proof", "restore-failed", 2)]
     [InlineData("capability-proof", "infrastructure", 2)]
+    [InlineData("capability-proof", "prerequisite-failed", 2)]
     [InlineData("banned-api-proof", "missing-source", 2)]
     [InlineData("unknown", "matched", 2)]
     public void CompileProofRunsWithoutStagesAndRequiresTheExpectedRejection(string proof, string scenario, int expectedExit)
@@ -39,6 +40,10 @@ public sealed class CompileProofCliTests
             fi
             [[ "$1" == build ]] || exit 127
             [[ "$PROOF_SCENARIO" != infrastructure ]] || exit 127
+            if [[ "$2" == tools/StrataLint.Engine/StrataLint.Engine.csproj ]]; then
+              [[ "$PROOF_SCENARIO" != prerequisite-failed ]] || exit 1
+              exit 0
+            fi
             [[ "$PROOF_SCENARIO" != successful-build ]] || exit 0
             if [[ "$PROOF_KIND" == capability-proof ]]; then
               if [[ "$PROOF_SCENARIO" == wrong-diagnostic ]]; then
@@ -66,11 +71,16 @@ public sealed class CompileProofCliTests
             Assert.Contains("EXPECTED_DIAGNOSTIC", output, StringComparison.Ordinal);
             Assert.Contains("\"status\":\"matched\"", output, StringComparison.Ordinal);
             var commands = File.ReadAllLines(log);
-            Assert.Equal(2, commands.Length);
+            Assert.Equal(proof == "capability-proof" ? 3 : 2, commands.Length);
             Assert.StartsWith("restore ", commands[0], StringComparison.Ordinal);
             Assert.Contains("--locked-mode -nr:false", commands[0], StringComparison.Ordinal);
-            Assert.StartsWith("build ", commands[1], StringComparison.Ordinal);
-            Assert.Contains("--no-restore --no-dependencies --configuration Release -nr:false", commands[1], StringComparison.Ordinal);
+            if (proof == "capability-proof")
+            {
+                Assert.StartsWith("build tools/StrataLint.Engine/StrataLint.Engine.csproj --no-restore --configuration Release", commands[1], StringComparison.Ordinal);
+                Assert.DoesNotContain("--no-dependencies", commands[1], StringComparison.Ordinal);
+            }
+            Assert.StartsWith("build ", commands[^1], StringComparison.Ordinal);
+            Assert.Contains("--no-restore --no-dependencies --configuration Release -nr:false", commands[^1], StringComparison.Ordinal);
         }
         else Assert.DoesNotContain("EXPECTED_DIAGNOSTIC", output, StringComparison.Ordinal);
     }

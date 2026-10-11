@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2afac05692bae97964168157ab06488dd97f208797e00df02b48f19351b01475
+  normalized_sha256: sha256:2afac05692bae97964168157ab06488dd97f208797e00df02b48f19351b01475
+cas_ref: sha256:2afac05692bae97964168157ab06488dd97f208797e00df02b48f19351b01475
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/CalibrationHistoryCoarsestQuotient.result
+    target_statement_id: sha256:01de7008086302c50d95eddf615257fb41df0794e9416a90206d9f29febd73ea
+receipts:
+  unresolved_subitems: []

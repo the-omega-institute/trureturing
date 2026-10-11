@@ -252,12 +252,10 @@ public sealed partial class DigestionAlignmentTests
             DigestionReceiptAlignment.Seen,
             result.AlignmentFor(childCapture.Reference["sha256:".Length..]));
         Assert.Empty(result.VerifiedClausePlanParents);
-        Assert.Equal(
-            0,
-            DigestionCasStore.Evaluate(
-                candidate,
-                Snapshot(sourceBytes, [parentCapture, childCapture]),
-                changes).RehashedObjectCount);
+        Assert.Empty(DigestionCasStore.EvaluateLedgerReferences(
+            candidate,
+            Snapshot(sourceBytes, [parentCapture, childCapture]),
+            changes).Findings);
     }
 
     [Fact]

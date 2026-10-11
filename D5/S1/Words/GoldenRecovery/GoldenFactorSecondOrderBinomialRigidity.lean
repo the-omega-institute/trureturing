@@ -3,17 +3,18 @@
    mirror-B: none(waiver:new-cross-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=certified-instance; basis=terminal=gid:D5/S1/Words/GoldenRecovery/GoldenFactorSecondOrderBinomialRigidity.legal_golden_first_order_collision
+   utility: none
    digest: True count and scattered true-false count recover a consecutive golden factor. -/
 
 import D5.S1.Words.GoldenFactorComplexity
+import D5.S1.Words.Mechanical.FloorFractShift
+import D5.S1.Words.ReturnWords.GoldenWindowCounts
 import Mathlib.Tactic
 
 /-!
 # Second-order recovery of consecutive golden factors
 
-Recovered from the unmerged PR #5014 candidate, with the intercept inequality
-repair. No frozen declaration is edited. Rigo and Salimov, TCS 601 (2015),
+Rigo and Salimov, TCS 601 (2015),
 47-57, DOI 10.1016/j.tcs.2015.07.025, established the general Sturmian result.
 The proof below specializes it using the existing Beatty count owner.
 
@@ -21,9 +22,6 @@ Intercept order makes all prefix counts comparable. Equality of their sum
 forces equality of each prefix and hence of each letter. The prefix sum is
 recoverable from the true count and scattered true-false count.
 
-Library search: `GoldenFactorComplexity` and `GoldenBalance` are the existing
-factor and window-count owners. The former's corresponding helpers are
-private; no public second-order recovery theorem is on the pinned dev base.
 The recovered state is a word, not its absolute occurrence position.
 -/
 
@@ -49,14 +47,8 @@ def goldenBinomialProfile (n i : Nat) : Nat × Nat :=
   (goldenWindowTrueCount i n, goldenTrueFalseCount i n)
 
 private theorem floor_add_sub_floor (x t : Real) :
-    ⌊x + t⌋ - ⌊x⌋ = ⌊Int.fract x + t⌋ := by
-  have hx : (⌊x⌋ : Real) + (Int.fract x + t) = x + t := by
-    calc
-      (⌊x⌋ : Real) + (Int.fract x + t) =
-          ((⌊x⌋ : Real) + Int.fract x) + t := by ring
-      _ = x + t := by rw [Int.floor_add_fract]
-  rw [← hx, Int.floor_intCast_add]
-  omega
+    ⌊x + t⌋ - ⌊x⌋ = ⌊Int.fract x + t⌋ :=
+  D5.S1.Words.Mechanical.FloorFractShift.floor_add_sub_floor x t
 
 private theorem count_eq_floor_fract (i m : Nat) :
     (goldenWindowTrueCount i m : Int) =
@@ -93,10 +85,8 @@ theorem golden_prefix_counts_comparable (i j : Nat) :
 
 private theorem count_succ (i m : Nat) :
     goldenWindowTrueCount i (m + 1) = goldenWindowTrueCount i m +
-      if goldenWord (i + m) = true then 1 else 0 := by
-  classical
-  by_cases h : goldenWord (i + m) = true <;>
-    simp [goldenWindowTrueCount, Finset.range_add_one, Finset.filter_insert, h]
+      if goldenWord (i + m) = true then 1 else 0 :=
+  D5.S1.Words.ReturnWords.GoldenWindowCounts.window_count_succ goldenWord i m
 
 private theorem factor_eq_of_prefix_counts_eq (n i j : Nat)
     (hcounts : ∀ m ≤ n, goldenWindowTrueCount i m = goldenWindowTrueCount j m) :
@@ -165,22 +155,9 @@ theorem golden_factor_eq_of_second_order_counts (n i j : Nat)
 
 private theorem prefix_counts_eq_of_factor_eq (n i j : Nat)
     (hfactor : goldenFactor n i = goldenFactor n j) {m : Nat} (hm : m ≤ n) :
-    goldenWindowTrueCount i m = goldenWindowTrueCount j m := by
-  have hletters : (fun k : Fin n => goldenWord (i + k)) =
-      fun k : Fin n => goldenWord (j + k) := List.ofFn_inj.mp hfactor
-  unfold goldenWindowTrueCount
-  congr 1
-  ext k
-  simp only [Finset.mem_filter, Finset.mem_range]
-  constructor
-  · rintro ⟨hk, hw⟩
-    refine ⟨hk, ?_⟩
-    rw [← congrFun hletters ⟨k, hk.trans_le hm⟩]
-    exact hw
-  · rintro ⟨hk, hw⟩
-    refine ⟨hk, ?_⟩
-    rw [congrFun hletters ⟨k, hk.trans_le hm⟩]
-    exact hw
+    goldenWindowTrueCount i m = goldenWindowTrueCount j m :=
+  D5.S1.Words.ReturnWords.GoldenWindowCounts.window_counts_eq_of_factor_eq
+    goldenWord hm hfactor
 
 /-- The reduced profile and the full word induce the same kernel. -/
 theorem golden_factor_eq_iff_second_order_profile_eq (n i j : Nat) :
@@ -205,15 +182,7 @@ theorem golden_factor_eq_iff_second_order_profile_eq (n i j : Nat) :
     exact golden_factor_eq_of_second_order_counts n i j
       (congrArg Prod.fst hprofile) (congrArg Prod.snd hprofile)
 
-/-- First-order counting really loses information on legal length-two factors. -/
-theorem legal_golden_first_order_collision :
-    goldenWindowTrueCount 0 2 = goldenWindowTrueCount 1 2 ∧
-      goldenFactor 2 0 ≠ goldenFactor 2 1 ∧
-      goldenTrueFalseCount 0 2 = 1 ∧ goldenTrueFalseCount 1 2 = 0 := by
-  decide
-
 #print axioms golden_factor_eq_of_second_order_counts
 #print axioms golden_factor_eq_iff_second_order_profile_eq
-#print axioms legal_golden_first_order_collision
 
 end D5.S1.Words.GoldenRecovery.GoldenFactorSecondOrderBinomialRigidity

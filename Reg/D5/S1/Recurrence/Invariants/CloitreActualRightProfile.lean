@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Recurrence.Invariants.CloitreActualRightProfile
 import Reg.Support.DependentFamily
 
@@ -56,15 +57,28 @@ def registration : Registration arena
     change C 1 ≠ C 4
     decide
 
-register_information_theorem actual_foundations
-  in arena
-  readout via (realize signature (fun _ _ n => C n) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Recurrence.Invariants.CloitreActualRightProfile
-    coordinates := #[]
-    readouts := #[{ path := #["arg", "body", "body", "fn", "arg"], stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.actual_foundations) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => C n) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Recurrence") "Invariants") "CloitreActualRightProfile") "actual_foundations") "Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile/Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Recurrence.Invariants.CloitreActualRightProfile.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => C n) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Recurrence.Invariants.CloitreActualRightProfile, definition := none, coordinates := #[], readouts := #[{ path := #["arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

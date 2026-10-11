@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 
 public sealed partial class ProductionEnvironmentTests
 {
-    private static readonly string[] ReportInputUnchangedArguments = [];
+    private static readonly string[] ReportInputUnchangedArguments = ["--source", "fixture-source"];
 
     [Fact]
     public void IngestUncoveredOnlyDoesNotLoadLeanOrVerifyScribe()
@@ -487,7 +487,7 @@ public sealed partial class ProductionEnvironmentTests
             reportSource,
             new FakeScribeEmissionVerifier(verification: null));
 
-        var result = environment.Ingest(ReportInputUnchangedArguments);
+        var result = environment.Ingest(["--source", "INVALID"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, reportSource.CallCount);

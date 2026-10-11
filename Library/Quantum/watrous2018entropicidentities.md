@@ -20,6 +20,8 @@ triage: anchor
 
 ## Verified locator
 
+DOI: null
+
 The exact upstream locator is:
 https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf
 

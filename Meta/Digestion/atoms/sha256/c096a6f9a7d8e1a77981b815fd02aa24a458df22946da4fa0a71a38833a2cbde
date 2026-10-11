@@ -1,0 +1,80 @@
+**证明。** 唯一实际前像与解析直接取自[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)。按引理 30.3 比较此前像，每孔大小差非零，等规模使这些差之和为零，故至少有两个孔且有相反朝向。引理 30.2 给每孔两侧总叶数至少十一，因而
+
+$$
+2n=2h_0+\sum_{w\in\mathcal H}\bigl(n(P|_w)+n(Q|_w)\bigr)
+\ge2h_0+11|\mathcal H|,\qquad 2n\le32<33.
+\tag{34.8}
+$$
+
+故恰有两个反向孔，$h_0\le n-11\le5$。每个相同终端像至少三叶，两个会贡献至少六叶；非空共同部分因此只能是一个三叶 $A$ 或五叶 $C$。$h_0=0$ 时上下文只有两个孔，必为根的左右孩子，全部边必且只可能形如
+
+$$
+\{\langle a,Z\rangle,\langle Z',b\rangle\},\quad
+a,b\in\{A,C\},\quad n(Z)=n-n(a),\quad n(Z')=n-n(b),
+\quad\operatorname{NC}(a,Z'),\quad\operatorname{NC}(b,Z).
+\tag{34.9}
+$$
+
+左右孩子的共享叶地址不交，故两个局部条件也充分。$h_0>0$ 时，三个终端只有 $J_{\mathrm R},J_{\mathrm L}$ 两种有序括号。按顺序仅保留两孔，得到一个 $h_0=0$、两侧规模为 $n-h_0$ 的根比较；反向把固定块插回任一槽，也恢复合法比较。这覆盖全部三个共同块位置，不要求两孔互为兄弟。
+
+复用[式（33.6）](#33-十四叶实际像的非冲突族分类与一次超额锐容量)的小规模根解析，得到
+
+$$
+\begin{aligned}
+\mathcal I_3(10)&=\{G\},&\mathcal I_3(12)&=\mathcal W_{12},&
+\mathcal I_3(13)&=\mathcal W_{13},\\
+\mathcal I_3(15)&=\{\ell(Z),r(Z):Z\in\mathcal W_{12}\}
+\cup\{\langle C,G\rangle,\langle G,C\rangle\}
+\cup\{\langle H,Z\rangle,\langle Z,H\rangle:Z\in\{S,R\}\}.
+\end{aligned}
+\tag{34.10}
+$$
+
+十叶根只有 $5+5$；十二叶是 $3+9,9+3,6+6$；十三叶是 $3+10,10+3,5+8,8+5$；十五叶是 $3+12,12+3,5+10,10+5,6+9,9+6$。这些分拆由[推论 30.8](#30-实际三步像的分歧前沿七叶分离与有限容量)的可行叶数集穷尽，且均非原子。代入更小规模的唯一根语法逐项给式（34.10），所以列的是完整来源，不是数值计数或响应诊断。将每个 $A,C$ 换成 $\alpha,\beta$ 给实际前像，由替换同态规则及既有单射性得到实际实现与不同性。母卷定理 3.4 给 $n=3a+5b$：十二、十三叶前像组成分别只有 $(4,0),(1,2)$；十五叶的 $(5,0),(0,3)$ 都在式（34.10）中，未作同组成删选。
+
+引理 30.2 给全部所需筛选：
+
+$$
+\begin{array}{c|c|c}
+Z\text{ 的全集}&\operatorname{NC}(A,Z)\text{ 的成员}&\operatorname{NC}(C,Z)\text{ 的成员}\\ \hline
+\{S,R\}&\{R\}&\{S\}\\
+\{G\}&\{G\}&\varnothing\\
+\mathcal W_{12}&\mathcal Q&\mathcal D\\
+\mathcal W_{13}&\mathcal A_{13}&\mathcal C_{13}
+\end{array}
+\tag{34.11}
+$$
+
+九叶筛选直接复用式（33.10）。$G$ 左孩子为 $C$，故与 $A$ 非冲突，但与 $C$ 比较的左孩子条件失败。十二叶中仅 $D_S,D_R$ 左孩子为 $A$，给 $A$ 列；与 $C$ 比较时，这两者左孩子为 $A$、右孩子非 $A$，其余两棵 $\langle S,A\rangle,\langle R,A\rangle$ 右孩子为 $A$，$\langle H,H\rangle$ 的左孩子 $H$ 又以 $A$ 为左孩子，均排除。十三叶中仅 $U_0$ 左孩子为 $A$，给 $A$ 列；$C$ 列保留 $U_0$ 及左孩子为 $B=\langle C,A\rangle$、右孩子为 $C$ 的 $W_1$。$U_1$ 右孩子为 $A$，$W_0,X$ 左孩子为原子 $C$，$Y$ 左孩子为 $T=\langle A,C\rangle$，分别违反引理 30.2 的条件。这说明每个保留与排除。
+
+$n=12,13$ 时式（34.8）迫使 $h_0=0$。逐个取式（34.9）的 $AA,AC,CA,CC$：十二叶 $AA$ 只保留九叶块 $R$，含 $C$ 就需要不可行的七叶孩子，故只有式（34.6）。十三叶 $AA$ 只用十叶块 $G$，$CC$ 的八叶块只保留 $T$，给式（34.7）；$AC,CA$ 均要求已排除的 $\operatorname{NC}(C,G)$。第二条边正是[式（30.6）](#30-实际三步像的分歧前沿七叶分离与有限容量)的已有来源对，不另建该构造。
+
+$n=15$ 时 $h_0\in\{0,3\}$。零共同部分的全部根边为
+
+$$
+\begin{aligned}
+\mathscr E_{15}^{(0)}={}&\{\{\ell(Z),r(Z')\}:Z,Z'\in\mathcal Q\}\\
+&\cup\{\{\ell(D),\langle G,C\rangle\},\{r(D),\langle C,G\rangle\}:D\in\mathcal D\}.
+\end{aligned}
+\tag{34.12}
+$$
+
+两行分别是 $AA$ 及 $AC,CA$，$CC$ 仍因 $\operatorname{NC}(C,G)$ 失败而排除。$h_0=3$ 时固定块为 $A$，去掉它后恰为式（34.6）的十二叶比较。插回两个三槽括号的全部三个位置，得到全部其余边
+
+$$
+\mathscr E_{15}^{(3)}=\binom{\mathcal F_{\mathrm R}(R)}2\cup\binom{\mathcal F_{\mathrm L}(R)}2.
+\tag{34.13}
+$$
+
+每对在两槽比较 $A,R$，其余槽相同，故这些局部比较充分；式（34.8）排除其他共同部分。
+
+根两侧均非原子的四个 $H/Z$ 顶点中，$\langle R,H\rangle,\langle H,R\rangle$ 各只在对应的三槽族中有两个邻点，$\langle S,H\rangle,\langle H,S\rangle$ 无边。两个 $C/G$ 顶点也各只有式（34.12）的两个邻点。因此四元完全子图不能含这些点。余下只有 $\ell(\mathcal W_{12}),r(\mathcal W_{12})$。每侧内部仅有一条边：
+
+$$
+\{\ell(\langle R,A\rangle),\ell(D_R)\},\qquad
+\{r(\langle R,A\rangle),r(D_R)\}.
+\tag{34.14}
+$$
+
+跨侧边只在 $\mathcal Q$ 与 $\mathcal Q$ 之间，$D_R\notin\mathcal Q$。每侧最多选两个相邻点；四元完全子图必须每侧选两个，必含式（34.14）的 $D_R$ 端点，因而缺少跨侧边，矛盾。这一排除覆盖全部根解析、组成与孔上下文。证毕。
+

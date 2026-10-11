@@ -4,7 +4,19 @@
 
 A uniform finite cosine-sum error estimate uses the actual cosine-integral tail and its Euler constant normalization.
 
-**Theorem 1.1 (One error constant for all positive frequencies and truncations).**
+**Theorem 1.1 (Positive cosine-integral normalization).**
+
+$$\forall x \in \mathbb{R},\; 0 < x \Rightarrow \operatorname{Ci}\left(x\right) = \gamma + \operatorname{log}\left(x\right) + \int_{0}^{x} \frac{\operatorname{cos}\left(t\right) - 1}{t} dt$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CosineNormalizedRemainder.positive_normalization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every x>0, the absolutely convergent sine-tail definition of Ci equals Euler's constant plus log(x) and the integral of (cos(t)-1)/t from zero to x. The same normalization identifies the center of the finite cosine sum.
+
+**Theorem 1.2 (One error constant for all positive frequencies and truncations).**
 
 $$\exists C \in \mathbb{R},\; 0 < C \land \left(\forall \theta \in \mathbb{R}, \left(0 < \theta \land \theta \le 1\right) \Rightarrow \left(\forall N \in \mathbb{N},\; 1 \le N \Rightarrow \left|\sum_{k=1}^{N} \frac{\operatorname{cos}\left(k \cdot \theta\right)}{k} - \left(-\operatorname{log}\left(\theta\right) + \operatorname{Ci}\left(N \cdot \theta\right)\right)\right| \le C \cdot \left(\frac{1}{N} + \theta \cdot \left(1 + \operatorname{max}\left(0, \operatorname{log}\left(N \cdot \theta\right)\right)\right)\right)\right)\right)$$
 
@@ -54,6 +66,7 @@ Substitute x=N theta and use log(N theta)=log(N)+log(theta). The quadrature erro
 
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineIntegralLattice.cosineIntegral`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineIntegralLattice.result`
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CosineNormalizedRemainder.positive_normalization`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CosineNormalizedRemainder.result`
 - Dependency: [D5/S3/Arith/GoldenResource/RobinRationalBasis](../../Arith/GoldenResource/RobinRationalBasis.md)
 - Dependency: [D5/S3/Fourier/Asymptotics/CosineIntegralLattice](CosineIntegralLattice.md)

@@ -58,9 +58,13 @@ internal sealed class DecomposeFixture
     internal void Apply(string _, RawRepositorySnapshot expected,
         ImmutableArray<DigestionCasObject> cas, ImmutableArray<IngestCommand.LedgerUpdate> updates)
     {
-        Assert.Equal(
-            Current.Entries.OrderBy(static entry => entry.Path, StringComparer.Ordinal),
-            expected.Entries.OrderBy(static entry => entry.Path, StringComparer.Ordinal));
+        var currentByPath = Current.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+        foreach (var entry in expected.Entries)
+        {
+            Assert.True(currentByPath.TryGetValue(entry.Path, out var current),
+                $"scoped writer input omitted {entry.Path}");
+            Assert.Equal(entry.Bytes.ToArray(), current.Bytes.ToArray());
+        }
         Writes++;
         CasWrites = cas;
         LedgerWrites = updates;

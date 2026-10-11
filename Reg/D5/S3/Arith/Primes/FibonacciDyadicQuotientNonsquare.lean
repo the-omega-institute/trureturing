@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare
 import Reg.Support.DependentFamily
 
@@ -60,19 +61,31 @@ def registration : Registration arena
       Nat.fib (2 ^ (2 + 1)) / Nat.fib (2 ^ 2)
     norm_num
 
-register_information_theorem
-  _root_.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.fibonacci_dyadic_quotient_nonsquare
-  in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.fibonacci_dyadic_quotient_nonsquare) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ _ k => Nat.fib (2 ^ (k + 1)) / Nat.fib (2 ^ k))
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "value"]
-      stateBinder := 0 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Primes") "FibonacciDyadicQuotientNonsquare") "fibonacci_dyadic_quotient_nonsquare") "Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare/Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ k => Nat.fib (2 ^ (k + 1)) / Nat.fib (2 ^ k))
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "value"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Arith.Primes.FibonacciDyadicQuotientNonsquare

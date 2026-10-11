@@ -18,6 +18,14 @@ open ActualTreeReadoutAcquisition (Address Reply readout leaves Positive)
 open ActualImageSevenLeafSeparation (thirdImage E A C leafAddresses leafLabel)
 open ActualLeafHistoryRigidity
 
+/-- Filling a literal output context adds the filled tree's leaves to the outside leaves. -/
+theorem context_length (K : OutputContext) (Z : Source) :
+    (K.plug Z).length = K.outsideLeaves + Z.length := by
+  induction K with
+  | hole => simp [OutputContext.plug, OutputContext.outsideLeaves]
+  | left K R ih => simp [OutputContext.plug, OutputContext.outsideLeaves, FreeMagma.length, ih]; omega
+  | right L K ih => simp [OutputContext.plug, OutputContext.outsideLeaves, FreeMagma.length, ih, Nat.add_assoc]
+
 set_option maxHeartbeats 1000000 in
 -- Native canonical blocks and both literal-hole cases share the proof budget.
 /-- Complete leaf-history rigidity, with a size-free common literal output context. -/
@@ -235,14 +243,8 @@ theorem complete_history_rigidity (H : LeafHistory) (P : Source) (hP : Compatibl
   · have hone : (uncovered H P).card = 1 := by omega
     obtain ⟨J, h, X, _hj, hX, _hat, hp, _hd, competitors⟩ := singletonResult hone
     obtain ⟨Y, hy, hpy⟩ := (competitors P' hP').2
-    have contextLength (K : OutputContext) (Z : Source) :
-        (K.plug Z).length = K.outsideLeaves + Z.length := by
-      induction K with
-      | hole => simp [OutputContext.plug, OutputContext.outsideLeaves]
-      | left K R ih => simp [OutputContext.plug, OutputContext.outsideLeaves, FreeMagma.length, ih]; omega
-      | right L K ih => simp [OutputContext.plug, OutputContext.outsideLeaves, FreeMagma.length, ih, Nat.add_assoc]
     have hlength : Y.length = X.length := by
-      rw [← hp, ← hpy, contextLength, contextLength] at hn
+      rw [← hp, ← hpy, context_length, context_length] at hn
       omega
     have hYX : Y = X := by
       rcases hX with rfl | rfl

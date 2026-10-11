@@ -1,3 +1,4 @@
+using StrataLint.Engineering;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -29,7 +30,7 @@ internal sealed record ReportProducerScope(string Schema, string Registration, s
                 || producer.Scope is not ("lean-report" or "scribe-content") || producer.Registration != InputManifest)
                 throw new InvalidDataException($"invalid producer registration: {path}");
             var inputs = producer.Projects.Append(producer.Registration).ToArray();
-            EngineeringProjectRegistry.ValidateInputPaths(inputs, path);
+            EngineeringProjectSchema.ValidateInputPaths(inputs, path);
             if (producer.Projects.Any(project => !project.EndsWith(".csproj", StringComparison.Ordinal)))
                 throw new InvalidDataException($"invalid producer project registration: {path}");
             foreach (var input in inputs)
@@ -57,7 +58,7 @@ internal sealed record ReportProducerScope(string Schema, string Registration, s
             selections.Add(inspector);
             var current = snapshot.Files.Keys.Select(file => file.Value).ToArray();
             var possible = current.Concat(changes.Paths.Select(file => file.Value)).Distinct(StringComparer.Ordinal).ToArray();
-            var inputs = new HashSet<string>(StringComparer.Ordinal) { path, InputManifest, EngineeringProjectRegistry.ManifestPath };
+            var inputs = new HashSet<string>(StringComparer.Ordinal) { path, InputManifest, EngineeringProjectSchema.ManifestPath };
             foreach (var selection in selections)
             {
                 var set = selection.Deserialize<PathSet>(Options);

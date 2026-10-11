@@ -151,7 +151,7 @@ internal static partial class DigestionLedgerAligner
                 nameof(casEvaluation));
         }
 
-        var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
+        var cas = casEvaluation ?? DigestionCasStore.EvaluateLedgerReferences(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
         foreach (var (source, entry) in sources
                      .SelectMany(source =>
@@ -183,7 +183,7 @@ internal static partial class DigestionLedgerAligner
             .ToHashSet(StringComparer.Ordinal);
 
         var atomizerInputsChanged = new Lazy<bool>(() =>
-            changes is not null && AtomizerInputsChanged(changes, snapshot));
+            changes is not null && AtomizerInputsChanged(changes));
         foreach (var source in sources)
         {
             if (conflictedSources.Contains(source.SourceId))
@@ -353,17 +353,6 @@ internal static partial class DigestionLedgerAligner
                          .GroupBy(static plan => plan.Parent.Fingerprints.RawSha256, StringComparer.Ordinal)
                          .Select(static group => group.First()))
             {
-                var authorityFailure = ClausePlanCasAuthorityFailure(
-                    source,
-                    plan.Parent,
-                    cas.ValidAtomIds,
-                    snapshot);
-                if (authorityFailure is not null)
-                {
-                    findings.Add(authorityFailure);
-                    continue;
-                }
-
                 clausePlans.Add(new DigestionSourceClausePlan(source.SourceId, plan.Parent, plan));
             }
 
