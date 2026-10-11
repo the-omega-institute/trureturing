@@ -1,3 +1,5 @@
+import Reg.Support.SingleDependentReadout
+import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
@@ -233,3 +235,314 @@ def pressure_mono_registration :
 #print axioms pressure_mono_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal117
+
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.SetWitness
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
+
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open Bilateral ResetFactors ResetCodebook MemoryGraph SpectralBoundary InteriorRoot WordWeightRegrouping
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Filter Topology
+open scoped ENNReal NNReal
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal115
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => List CuLetter
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => Set (ℤ → CuLetter)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature (fun _ _ w => anchoredCylinder w) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => ∅) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (Y : ℕ → Set (ℤ → CuLetter))
+    (compact : ∀ j, IsCompact (Y j)) (decreasing : Antitone Y)
+    (shift : ∀ j (ω : ℤ → CuLetter), ω ∈ Y j → ∀ a : ℤ,
+      (fun i => ω (i + a)) ∈ Y j) (w : List CuLetter) (persistent : ∀ j, ∃ ω ∈ Y j, Occurs ω w),
+    ∃ ω ∈ ⋂ j, Y j, ω ∈ r.readout () () w
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  let Y : ℕ → Set (ℤ → CuLetter) := fun _ => {fun _ => CuLetter.u}
+  have compact : ∀ j, IsCompact (Y j) := fun _ => isCompact_singleton
+  have decreasing : Antitone Y := fun _ _ _ => Set.Subset.rfl
+  have shift : ∀ j (ω : ℤ → CuLetter), ω ∈ Y j → ∀ a : ℤ,
+      (fun i => ω (i + a)) ∈ Y j := by
+    intro j ω hω a
+    change ω = (fun _ => CuLetter.u) at hω
+    subst ω
+    rfl
+  have persistent : ∀ j, ∃ ω ∈ Y j, Occurs ω [] := by
+    intro j
+    exact ⟨fun _ => CuLetter.u, rfl, 0, fun k => Fin.elim0 k⟩
+  obtain ⟨ω, _, impossible⟩ := h Y compact decreasing shift [] persistent
+  exact impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.persistent_word_intersection) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.persistent_word_intersection, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), [], [CuLetter.c], ?_⟩
+    change anchoredCylinder [] ≠ anchoredCylinder [CuLetter.c]
+    have yes : (fun _ : ℤ => CuLetter.u) ∈ anchoredCylinder [] := fun k => Fin.elim0 k
+    intro eq
+    have bad := (eq ▸ yes) ⟨0, by norm_num⟩
+    cases bad
+
+def persistent_word_intersection_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.persistent_word_intersection)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ _ w => anchoredCylinder w) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal115.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal115.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature (fun _ _ w => anchoredCylinder w) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms persistent_word_intersection_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal115
+
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open Bilateral ResetFactors ResetCodebook MemoryGraph SpectralBoundary InteriorRoot WordWeightRegrouping
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Filter Topology
+open scoped ENNReal NNReal
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal116
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := ℕ → Set (ℤ → CuLetter)
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => Set (ℤ → CuLetter)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature (fun _ Y j => Y j) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => ∅) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (Y : ℕ → Set (ℤ → CuLetter))
+    (compact : ∀ j, IsCompact (Y j)) (decreasing : Antitone Y)
+    (shift : ∀ j (ω : ℤ → CuLetter), ω ∈ Y j → ∀ a : ℤ,
+      (fun i => ω (i + a)) ∈ Y j) (k : ℕ), ∃ J : ℕ, ∀ j ≥ J, ∀ w : List CuLetter, w.length = k →
+    ((∃ ω ∈ r.readout () Y j, Occurs ω w) ↔ (∃ ω ∈ ⋂ m, Y m, Occurs ω w))
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  let Y : ℕ → Set (ℤ → CuLetter) := fun _ => {fun _ => CuLetter.u}
+  have compact : ∀ j, IsCompact (Y j) := fun _ => isCompact_singleton
+  have decreasing : Antitone Y := fun _ _ _ => Set.Subset.rfl
+  have shift : ∀ j (ω : ℤ → CuLetter), ω ∈ Y j → ∀ a : ℤ,
+      (fun i => ω (i + a)) ∈ Y j := by
+    intro j ω hω a
+    change ω = (fun _ => CuLetter.u) at hω
+    subst ω
+    rfl
+  obtain ⟨J, eventual⟩ := h Y compact decreasing shift 0
+  have yes : ∃ ω ∈ ⋂ m, Y m, Occurs ω [] :=
+    ⟨fun _ => CuLetter.u, Set.mem_iInter.mpr (fun _ => rfl), 0, fun k => Fin.elim0 k⟩
+  obtain ⟨ω, impossible, _⟩ := (eventual J le_rfl [] rfl).mpr yes
+  exact impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.nested_language_stabilization) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.nested_language_stabilization, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(fun j => if j = 0 then {fun _ : ℤ => CuLetter.u} else ∅), 0, 1, ?_⟩
+    simp [actual, realize]
+
+def nested_language_stabilization_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.nested_language_stabilization)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ Y j => Y j) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal116.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal116.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature (fun _ Y j => Y j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms nested_language_stabilization_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal116
+
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open Bilateral ResetFactors ResetCodebook MemoryGraph SpectralBoundary InteriorRoot WordWeightRegrouping
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Filter Topology
+open scoped ENNReal NNReal
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal120
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ _ : ℕ, ℝ
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => Set (ℤ → CuLetter)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature (fun _ p K => MemoryLanguage .upper p.1 K p.2) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => ∅) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (n K : ℕ) (d : ℝ) (positive : 1 ≤ K),
+    (r.readout () ⟨n,d⟩ K).Nonempty ∧
+    IsClosed (MemoryLanguage .upper n K d) ∧
+    IsCompact (MemoryLanguage .upper n K d) ∧
+    (∀ (ω : ℤ → CuLetter), ω ∈ MemoryLanguage .upper n K d → ∀ a : ℤ,
+      (fun i => ω (i+a)) ∈ MemoryLanguage .upper n K d)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨ω, impossible⟩ := (h 0 1 0 le_rfl).1
+  exact impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.upper_memory_subshift) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.upper_memory_subshift, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    exact ⟨⟨0, hSide .high + 1⟩, 1, 2, upper_separation⟩
+
+def upper_memory_subshift_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.upper_memory_subshift)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ p K => MemoryLanguage .upper p.1 K p.2) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal120.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal120.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature (fun _ p K => MemoryLanguage .upper p.1 K p.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms upper_memory_subshift_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal120

@@ -1,3 +1,5 @@
+import Reg.Support.SingleDependentReadout
+import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
 import Reg.Support.DependentFamily
@@ -279,3 +281,183 @@ def block_window_positions_registration :
 #print axioms block_window_positions_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal134
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open Bilateral ResetFactors ResetCodebook MemoryGraph SpectralBoundary InteriorRoot WordWeightRegrouping
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Filter Topology
+open scoped ENNReal NNReal
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.SetWitness
+noncomputable section
+
+def spike (i : ℤ) : CuLetter := if i = 0 then .c else .u
+
+theorem spike_eq_c (i : ℤ) : spike i = .c ↔ i = 0 := by
+  by_cases h : i = 0 <;> simp [spike, h]
+
+theorem spike_forward (i : ℤ) (m : ℕ) (hm : 2 ≤ m) :
+    ¬ ∀ k : Fin m, spike (i + (k : ℕ)) = .c := by
+  intro h
+  have h0 := (spike_eq_c _).mp (h ⟨0, by omega⟩)
+  have h1 := (spike_eq_c _).mp (h ⟨1, by omega⟩)
+  simp only [Nat.cast_zero, Nat.cast_one, add_zero] at h0 h1
+  omega
+
+theorem spike_backward (i : ℤ) :
+    ¬ ∀ k : Fin 2, spike (i - (k : ℕ)) = .c := by
+  intro h
+  have h0 := (spike_eq_c _).mp (h ⟨0, by omega⟩)
+  have h1 := (spike_eq_c _).mp (h ⟨1, by omega⟩)
+  simp only [Nat.cast_zero, Nat.cast_one, sub_zero] at h0 h1
+  omega
+
+theorem spike_low_two : spike ∈ LowCapLanguage 2 :=
+  fun i => spike_forward i 2 le_rfl
+
+theorem spike_not_low_one : spike ∉ LowCapLanguage 1 := by
+  intro h
+  apply h 0
+  intro k
+  have hk : k.val = 0 := by omega
+  simp [spike, hk]
+
+theorem all_u_memory (side : MemorySide) (n K : ℕ) (d : ℝ) (positive : 0 < K) :
+    (fun _ : ℤ => CuLetter.u) ∈ MemoryLanguage side n K d := by
+  apply original_low_cap_inclusion side n K d positive
+  intro i h
+  have bad := h ⟨0, positive⟩
+  cases bad
+
+theorem upper_separation :
+    MemoryLanguage .upper 0 1 (hSide .high + 1) ≠
+      MemoryLanguage .upper 0 2 (hSide .high + 1) := by
+  have yes : spike ∈ MemoryLanguage .upper 0 2 (hSide .high + 1) :=
+    ⟨fun i => spike_forward i 3 (by omega), fun i h => (spike_backward i h).elim⟩
+  have no : spike ∉ MemoryLanguage .upper 0 1 (hSide .high + 1) := by
+    intro h
+    have run : ∀ k : Fin 1, spike (0 - (k : ℕ)) = .c := by
+      intro k
+      have hk : k.val = 0 := by omega
+      simp [spike, hk]
+    have bad := h.2 0 run
+    norm_num [finitePast] at bad
+  intro h
+  exact no (h ▸ yes)
+
+theorem lower_separation : LowerMemoryLanguage 0 1 0 ≠ LowerMemoryLanguage 0 2 0 := by
+  have yes : spike ∈ LowerMemoryLanguage 0 2 0 :=
+    ⟨fun i => spike_forward i 3 (by omega), fun i h => (spike_backward i h).elim⟩
+  have no : spike ∉ LowerMemoryLanguage 0 1 0 := by
+    intro h
+    have run : ∀ k : Fin 1, spike (0 - (k : ℕ)) = .c := by
+      intro k
+      have hk : k.val = 0 := by omega
+      simp [spike, hk]
+    have bad := h.2 0 run
+    norm_num [finitePast] at bad
+  intro h
+  exact no (h ▸ yes)
+
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.SetWitness
+
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.SetWitness
+
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open Bilateral ResetFactors ResetCodebook MemoryGraph SpectralBoundary InteriorRoot WordWeightRegrouping
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Filter Topology
+open scoped ENNReal NNReal
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal136
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ _ : ℕ, ℝ
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => Set (ℤ → CuLetter)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature (fun _ p K => LowerMemoryLanguage p.1 K p.2) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => ∅) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (ω : ℤ → CuLetter) (n K : ℕ) (d gamma : ℝ)
+    (guard : ω ∈ AuxiliaryLanguage K (d+gamma))
+    (small : hSide .high*rho^n < chi^(K-1)*gamma), ω ∈ r.readout () ⟨n,d⟩ K
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have guard : (fun _ : ℤ => CuLetter.u) ∈ AuxiliaryLanguage 1 (0 + (hSide .high + 1)) := by
+    constructor
+    · intro i run
+      have bad := run ⟨0, by norm_num⟩
+      cases bad
+    · intro i run
+      have bad := run ⟨0, by norm_num⟩
+      cases bad
+  exact h (fun _ => CuLetter.u) 0 1 0 (hSide .high + 1) guard (by simp)
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.uniform_guard_lower_memory) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.uniform_guard_lower_memory, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    exact ⟨⟨0, 0⟩, 1, 2, lower_separation⟩
+
+def uniform_guard_lower_memory_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.uniform_guard_lower_memory)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ p K => LowerMemoryLanguage p.1 K p.2) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal136.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal136.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature (fun _ p K => LowerMemoryLanguage p.1 K p.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
+    definition := none
+    coordinates := #[1, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms uniform_guard_lower_memory_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal136

@@ -1,3 +1,5 @@
+import Reg.Support.SingleDependentReadout
+import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
 import Reg.Support.DependentFamily
@@ -554,3 +556,118 @@ def choice_window_ofFn_registration :
 #print axioms choice_window_ofFn_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal142
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open Bilateral ResetFactors ResetCodebook MemoryGraph SpectralBoundary InteriorRoot WordWeightRegrouping
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Filter Topology
+open scoped ENNReal NNReal
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.RateWitness
+noncomputable section
+
+theorem actual_rate_separation :
+    weightedFactorRate (MemoryLanguage .lower 1 1 (oneStepCeiling + 1)) ≠
+      weightedFactorRate (MemoryLanguage .lower 0 2 0) := by
+  have zero := (original_closed_root_boundary .lower (oneStepCeiling + 1)
+    (lt_add_one _)).2.2.2
+  have positive := original_positive_weighted_rate .lower 0 2 0 (by norm_num)
+  rw [zero]
+  intro equal
+  rw [← equal] at positive
+  norm_num at positive
+
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.RateWitness
+
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open Bilateral ResetFactors ResetCodebook MemoryGraph SpectralBoundary InteriorRoot WordWeightRegrouping
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Filter Topology
+open scoped ENNReal NNReal
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal143
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => Set (ℤ → CuLetter)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature (fun _ _ X => weightedFactorRate X) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => -1) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (a L : ℕ) (positive : 0 < L) (counts : ∀ q, a^q ≤ factorCount X (q*L)), Real.logb 2 ((max 1 a : ℕ) : ℝ) / (L : ℝ) ≤ r.readout () () X
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := h (MemoryLanguage .lower 0 2 0) 2 58 (by norm_num)
+    (original_literal_codebook_growth .lower 0 2 0 (by norm_num))
+  norm_num [rejected, realize, Real.logb_self_eq_one] at impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.factor_rate_of_power_count) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.factor_rate_of_power_count, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), MemoryLanguage .lower 1 1 (oneStepCeiling + 1),
+      MemoryLanguage .lower 0 2 0, ?_⟩
+    exact Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.RateWitness.actual_rate_separation
+
+def factor_rate_of_power_count_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.factor_rate_of_power_count)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ _ X => weightedFactorRate X) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal143.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal143.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature (fun _ _ X => weightedFactorRate X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms factor_rate_of_power_count_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal143
