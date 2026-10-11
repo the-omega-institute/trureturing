@@ -389,3 +389,89 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
 #print axioms evidence
 #print axioms registration
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualPositiveCoordinatesAudit
+
+namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveAppendAudit
+open Reg.Support.KBonacciAcquisition.ActualPositiveCoordinates
+
+abbrev signature : Signature where
+  Params := Σ m : ℕ, NarrowWindowCost.Archive m
+  State p := NarrowWindowCost.Archive p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := NarrowWindowCost.Archive p.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature
+  (fun _ p rest => p.2 ++ rest) (fun e => nomatch e)
+
+def rejected : Realization signature := realize signature
+  (fun _ p _ => [(fun _ : Fin p.1 => true, (none : Option (ZMod 2)))])
+  (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (k : ℕ) (hk : 0 < k)
+    (w : List Bool) (first rest : NarrowWindowCost.Archive m),
+    ActualArchive k hk w (R.readout () ⟨m, first⟩ rest) ↔
+      ActualArchive k hk w first ∧
+        ActualArchive k hk (w ++ archiveWords first) rest
+
+private theorem positive : arena.Law actual := @actual_archive_append
+
+private theorem negative : ¬ arena.Law rejected := by
+  intro law
+  obtain ⟨initial, current, member, _⟩ := support_member true
+  obtain ⟨history, _, matched, _, _⟩ := member
+  let w := history.flatMap (fun action => List.ofFn action.val)
+  have bad : ActualArchive 3 (by decide) w [(parent, none)] :=
+    (law 3 (by decide) w acquired []).mpr ⟨matched, trivial⟩
+  change NarrowWindowCost.output 3 (by decide) (w ++ List.ofFn parent) = none ∧ True at bad
+  change NarrowWindowCost.output 3 (by decide) (w ++ List.ofFn parent) =
+    some ((0 : ZMod 2) + 1) ∧ True at matched
+  have impossible := matched.1.symm.trans bad.1
+  cases impossible
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1, []⟩, [], acquired, ?_⟩
+  simp [actual, realize, acquired]
+
+def evidence : Registration arena (type_of%
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.actual_archive_append)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, rejected, negative⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected negative
+  dependence := dependence
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.actual_archive_append)
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str
+    (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str
+      (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Algorithms")
+      "KBonacciAcquisition") "OriginalAcquiredTrace") "actual_archive_append")
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveAppendAudit/Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveAppendAudit.arena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveAppendAudit.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨evidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace,
+    definition := none, coordinates := #[0, 4],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg"],
+      stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+#print axioms evidence
+#print axioms registration
+end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveAppendAudit
