@@ -69039,3 +69039,35 @@ lcm 来源之外。它仍不排除一般仿射来源 \(1+F_rg\)、乘积来源�
 素数幂赋值的 FIB 构造；也不提供这些来源的 Robin 点值上界。因此，下一条真正
 未覆盖的桥仍是把仿射/乘积 FIB 地址与同一 CA/SA 价格源连接起来，而不是继续
 加强已经被（447.2）和（448.3）排除的 Fibonacci lcm 识别。
+
+## 449. 2026 年 10 月前沿更新与去重边界
+
+本节只记录上一轮前沿表之后的新来源及其实际接口，不重复 Robin 等价式、CA
+约化、有限安全族或（447.2）--（448.3）的来源排除。
+
+| 来源 | 已有结果 | 对 FIB 主线仍缺什么 |
+| --- | --- | --- |
+| Wunderlich, [arXiv:2610.10584v1](../../../Library/Weil/wunderlich2026bsyentropy.md) | 将 Balazard--Saias--Yor 型判据写成有限半径 Jensen 与相对熵饱和条件，并明确声明不是 RH 新证明。 | 对象是 \(\zeta\) 的零点计数与 \(\Xi\) 的积分，不给出 \(\sigma(N)/N\) 的点值预算，也没有 FIB 来源映射。 |
+| Liu--Mao, [arXiv:2610.04972v1](../../../Library/Analytic/liu2026xilogconcavity.md) | 证明 \(\Xi\) Taylor 系数的严格无限对数凹性，完成一个系数侧 RH 必要条件的猜想。 | 系数序列的全局正性不提供 Euler 库存的逐素数幂赋值，更不识别 \(1+F_rg\) 为 CA/SA。 |
+| Musin, [arXiv:2609.33794v1](../../../Library/Analytic/musin2026higherorder.md) | 用支撑线坐标构造高阶 CA 层，并给出在同一极值来源上保持 Robin 判据的条件。 | §441--§442 已记录固定秩的模障碍与变化秩的固定因子逃逸；其定理没有给变化 \(F_r\) 的统一接触桥。 |
+| Mishra--Sarkar, [arXiv:2609.26787v1](../../../Library/ArithSums/mishra2026finiterobin.md) | 给出按 \(\omega(N)\) 截断的有限 Robin 形式，并覆盖 \(\omega\le6\)、primorial、奇数和平方自由类。 | FIB 地址没有统一的 \(\omega(1+F_rg)\) 上界；把该定理应用到 FIB 仍需先证明实际整数落入其覆盖类。 |
+| Fan--Kobayashi--Molnar, [arXiv:2511.02106v1](../../../Library/ArithSums/fankobayashimolnar2025family.md) | 研究一族多重约数和的 Robin 类判据，属于已登记的广义判据路线。 | 广义约数和的参数不是 FIB 的五窗来源；没有给出普通 \(\sigma(N)/N\) 的来源保持。 |
+
+截至 2026-10-12，按“Fibonacci/Zeckendorf/Lucas”与“Robin/\(\sigma(n)\)/
+superabundant/colossally abundant”组合检索的公开记录中，没有发现同时满足下列三项的来源：
+
+1. 把一个实际 FIB 地址（特别是 \(N_g=1+F_rg\)）识别为 CA、SA 或最小 Robin 检验点；
+2. 在同一个 \(N_g\) 上逐项匹配 Euler 价格、完整约数响应与 FIB 接缝；
+3. 给出足以控制 Robin 点值的有符号尾项或统一余量。
+
+因此，以下路线不再作为新增工作：重述 Robin/Lagarias 等价式，重复 CA 支撑线，
+或继续加强已经被（447.2）和（448.3）排除的 Fibonacci 单项与有限 lcm 来源。
+当前唯一保留的来源缺口是：在严格库存的完整赋值约束下，分析一般仿射族
+
+$$
+N_g=1+F_rg,\qquad g\ge1,
+$$
+
+并决定它是否能与同一 CA/SA 价格源共同实现；若不能，则构造同一 FIB 观察而有
+不同 \(\sigma(N_g)/N_g\) 的成对实例，证明当前观察切面不足。这个缺口仍然是
+Robin 点值问题，不能由上述判据的形式等价或平均估计替代。
