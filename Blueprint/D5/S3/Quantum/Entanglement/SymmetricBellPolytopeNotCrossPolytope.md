@@ -190,6 +190,10 @@ $$\neg (\operatorname{claim})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricBellPolytopeNotCrossPolytope.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/designolle-vertesi-pokutta-2023-symmetric-bell-cross-polytope` (refuted) by `D5/S3/Quantum/Entanglement/SymmetricBellPolytopeNotCrossPolytope.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"designolle-vertesi-pokutta-2023-symmetric-bell-cross-polytope","declaration_gid":"D5/S3/Quantum/Entanglement/SymmetricBellPolytopeNotCrossPolytope.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sébastien Designolle, Tamás Vértesi, Sebastian Pokutta (2023). *Symmetric multipartite Bell inequalities via Frank-Wolfe algorithms*. DOI: [10.1103/PhysRevA.109.022205](https://doi.org/10.1103/PhysRevA.109.022205). URL: <https://arxiv.org/abs/2310.20677v3>.
