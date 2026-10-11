@@ -158,7 +158,7 @@ private theorem identity_domain {r : ℕ} (G : SimpleGraph (Fin r)) (hr : 3 ≤ 
     · have hcard' := edge_prefix_card (by omega : 1 ≤ i.val + 1) hir ht
       simpa [syndrome, initialSyndrome, coefficient, hcard'] using
         CharTwo.add_self_eq_zero (halfLength r : ZMod 2)
-    · simpa [Nat.add_assoc] using edge_cut_wait i ht
+    · simpa [Nat.add_assoc] using edge_cut_wait i
         (by dsimp [identityEnd]; omega : initialLength r + i.val + 1 ≤ identityEnd r)
         (by omega : identityEnd r < identityEnd r + (t.val + 1))
   · intro w hw hwp

@@ -814,6 +814,12 @@ theorem schedule_first_freeze {r : ℕ} (G : SimpleGraph (Fin r)) (hr : 3 ≤ r)
       exact hs.2 _ (by omega) (Nat.find_spec hex)
     · exact Nat.find_min' hex hs.1
 
+theorem selection_before_end {r c : ℕ} (G : SimpleGraph (Fin r))
+    (hr : 3 ≤ r) (w : Finset ℕ) (hs : FirstSelected r G c w) : c < wordLength r := by
+  obtain ⟨d, hd, _⟩ := schedule_first_freeze G hr w
+  by_contra hn
+  exact hs.2 d (by omega) ((first_selected_at_cut G w).mp hd.2).1
+
 def markerInput (r : ℕ) (rho : Bool) (w : Finset ℕ) (c : ℕ) : MarkerInput :=
   ⟨rho, bareAddress r rho c (atCut w c),
     bareAddress r rho (c + 1) (atCut w (c + 1)), decide (c + 1 ∈ w), .p⟩
@@ -955,10 +961,7 @@ theorem c7_delayed_latch {r i j D : ℕ} (G : SimpleGraph (Fin r))
   have hcard := edge_prefix_card hi hir hj
   have hfirst : FirstSelected r G c w :=
     (delayed_selected_support G hr hi hir hj hjQ hret w hcard).mpr rfl
-  have hbefore : c < wordLength r := by
-    obtain ⟨a, ha, _⟩ := schedule_first_freeze G hr w
-    by_contra hn
-    exact hfirst.2 a (by omega) ((first_selected_at_cut G w).mp ha.2).1
+  have hbefore := selection_before_end G hr w hfirst
   obtain ⟨k, hk⟩ : ∃ k, c = k + 1 := ⟨c - 1, by dsimp [c]; omega⟩
   have hcut (d : ℕ) (hjd : identityEnd r + j ≤ d) : atCut w d = w := by
     apply filter_eq_self.mpr

@@ -51,7 +51,7 @@ private theorem marker_input_consistent (r : ℕ) (rho : Bool) (w : Finset ℕ) 
   · simp [hc, hn, syndrome, add_comm, add_left_comm, add_assoc]
   · simp [hc]
 
-theorem edge_cut_wait {r j d : ℕ} (i : Fin r) (_hj : 1 ≤ j)
+theorem edge_cut_wait {r j d : ℕ} (i : Fin r)
     (hd : initialLength r + i.val + 1 ≤ d) (hdj : d < identityEnd r + j) :
     atCut (edgePrefix r (i.val + 1) j) d =
       insert (initialLength r + i.val + 1) (Icc 1 (initialLength r)) := by
@@ -104,7 +104,7 @@ private theorem early_color_wait {r j D : ℕ} (G : SimpleGraph (Fin r))
       simp only [w, edgePrefix, mem_insert, mem_Icc]
       omega
     have hv := marker_input_consistent r rho w d
-    have hc := edge_cut_wait i hj hdi (by omega : d < identityEnd r + j)
+    have hc := edge_cut_wait i hdi (by omega : d < identityEnd r + j)
     have hcard : (atCut w d).card = halfLength r - 1 := by
       rw [hc, card_insert_of_notMem (by simp : initialLength r + i.val + 1 ∉ Icc 1 (initialLength r))]
       simp [Nat.card_Icc, halfLength]
@@ -203,7 +203,7 @@ theorem c7_early_latch {r j D : ℕ} (G : SimpleGraph (Fin r))
   have hB : ¬ k + 1 ≤ initialLength r := by dsimp [c, identityEnd] at hk; omega
   have hE : ¬ k + 1 ≤ identityEnd r := by dsimp [c] at hk; omega
   have hidx : k + 1 - identityEnd r = j := by dsimp [c] at hk; omega
-  have hc := edge_cut_wait i hj
+  have hc := edge_cut_wait i
     (by dsimp [c, identityEnd] at hk; omega : initialLength r + i.val + 1 ≤ k)
     (by dsimp [c] at hk; omega : k < identityEnd r + j)
   have hcard : (atCut w k).card = halfLength r - 1 := by
@@ -227,12 +227,6 @@ theorem c7_early_latch {r j D : ℕ} (G : SimpleGraph (Fin r))
     simp [coloringPreProgram, markerInput, bareAddress, hv.1, hv.2, hbit,
       hB, hE, hidx, he, hG, hcard, hcolor]
     split <;> rfl
-
-theorem selection_before_end {r c : ℕ} (G : SimpleGraph (Fin r))
-    (hr : 3 ≤ r) (w : Finset ℕ) (hs : FirstSelected r G c w) : c < wordLength r := by
-  obtain ⟨d, hd, _⟩ := schedule_first_freeze G hr w
-  by_contra hn
-  exact hs.2 d (by omega) ((first_selected_at_cut G w).mp hd.2).1
 
 /-- The same pre-decision program is correct for both seeds and every accepted
 word, with its integer output measured in the full unpruned selected dictionary. -/
@@ -303,12 +297,10 @@ theorem pre_capacity_le_chromatic {r : ℕ} (G : SimpleGraph (Fin r))
   obtain ⟨color⟩ := G.colorable_chromaticNumber_of_fintype
   have hD : 2 ≤ G.chromaticNumber.toNat := by
     obtain ⟨u, v, hadj⟩ := hedge
-    by_contra hn
-    apply color.valid hadj
-    apply Fin.ext
-    have := (color u).isLt
-    have := (color v).isLt
-    omega
+    have hbound := (SimpleGraph.two_le_chromaticNumber_of_adj hadj).trans
+      (SimpleGraph.Colorable.chromaticNumber_le
+        (show G.Colorable G.chromaticNumber.toNat from ⟨color⟩))
+    exact_mod_cast hbound
   calc
     preCapacity r G ≤ (G.chromaticNumber.toNat : ℕ∞) :=
       iInf_le (fun D : {D : ℕ // ∃ P : PreProgram (Fin D), CorrectBlind r G D (asBlind P)} =>
@@ -324,8 +316,8 @@ private theorem edge_inputs_eq {r j d : ℕ} (i a : Fin r) (hj : 1 ≤ j)
       (atCut (edgePrefix r (i.val + 1) j) t).card =
         (atCut (edgePrefix r (a.val + 1) j) t).card := by
     by_cases hlt : t < identityEnd r + j
-    · have hi := edge_cut_wait i hj (by have := i.isLt; dsimp [identityEnd] at ht; omega) hlt
-      have ha := edge_cut_wait a hj (by have := a.isLt; dsimp [identityEnd] at ht; omega) hlt
+    · have hi := edge_cut_wait i (by have := i.isLt; dsimp [identityEnd] at ht; omega) hlt
+      have ha := edge_cut_wait a (by have := a.isLt; dsimp [identityEnd] at ht; omega) hlt
       rw [hi, ha]
       simp [card_insert_of_notMem, Nat.card_Icc]
     · have he : t = identityEnd r + j := by omega
