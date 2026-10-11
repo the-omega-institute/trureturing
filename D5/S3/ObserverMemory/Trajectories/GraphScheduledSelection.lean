@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Causal graph schedules and their complete early selected fibers. -/
+   digest: Causal graph schedules, early and delayed fibers, and delayed register clearing. -/
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FourthSegmentStoppedLaw
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
@@ -69,8 +69,8 @@ private theorem delayed_target_bounds {r i j : ℕ} (hr : 3 ≤ r)
       j + 1 < delayedTarget r i j ∧ delayedTarget r i j ≤ lastTarget r := by
   have hm : (i - 1) * (pairCount r + r) ≤ (r - 1) * (pairCount r + r) :=
     Nat.mul_le_mul_right _ (by omega)
-  have hi' : i - 1 + 1 = i := by omega
-  have hr' : r - 1 + 1 = r := by omega
+  have hi' : i - 1 + 1 = i := Nat.sub_add_cancel hi
+  have hr' : r - 1 + 1 = r := Nat.sub_add_cancel (by omega)
   dsimp [delayedTarget, lastTarget]
   constructor
   · omega
@@ -87,10 +87,10 @@ private theorem delayed_target_injective {r i j a b : ℕ}
     by_contra hn
     rcases lt_or_gt_of_ne hn with h | h
     · have hm := Nat.mul_le_mul_right (pairCount r + r) (show i ≤ a - 1 by omega)
-      have hi' : i - 1 + 1 = i := by omega
+      have hi' : i - 1 + 1 = i := Nat.sub_add_cancel hi
       nlinarith
     · have hm := Nat.mul_le_mul_right (pairCount r + r) (show a ≤ i - 1 by omega)
-      have ha' : a - 1 + 1 = a := by omega
+      have ha' : a - 1 + 1 = a := Nat.sub_add_cancel ha
       nlinarith
   exact ⟨hia, by simpa [hia] using he⟩
 
@@ -937,7 +937,8 @@ theorem c7_delayed_latch {r i j D : ℕ} (G : SimpleGraph (Fin r))
     let c := identityEnd r + delayedTarget r i j
     let b := bareAddress r rho c w
     let s := runBlind r G (asBlind (coloringPreProgram G color hD)) rho w c
-    s.snapshot = some b ∧ (s.value : ℕ) = colexRank (selectedFiber r G rho b) w ∧
+    c < wordLength r ∧ s.snapshot = some b ∧
+      (s.value : ℕ) = colexRank (selectedFiber r G rho b) w ∧
       ∀ d, identityEnd r + j < d → d ≤ c →
         ((runBlind r G (asBlind (coloringPreProgram G color hD)) rho w d).value : ℕ) = 0 := by
   dsimp only
@@ -947,6 +948,10 @@ theorem c7_delayed_latch {r i j D : ℕ} (G : SimpleGraph (Fin r))
   have hcard := edge_prefix_card hi hir hj
   have hfirst : FirstSelected r G c w :=
     (delayed_selected_support G hr hi hir hj hjQ hret w hcard).mpr rfl
+  have hbefore : c < wordLength r := by
+    obtain ⟨a, ha, _⟩ := schedule_first_freeze G hr w
+    by_contra hn
+    exact hfirst.2 a (by omega) ((first_selected_at_cut G w).mp ha.2).1
   obtain ⟨k, hk⟩ : ∃ k, c = k + 1 := ⟨c - 1, by dsimp [c]; omega⟩
   have hcut (d : ℕ) (hjd : identityEnd r + j ≤ d) : atCut w d = w := by
     apply filter_eq_self.mpr
@@ -970,7 +975,7 @@ theorem c7_delayed_latch {r i j D : ℕ} (G : SimpleGraph (Fin r))
     (fun d hdk => hfirst.2 d (by omega))
   have hsel : FirstSelected r G (k + 1) (atCut w (k + 1)) := by simpa [hc, hk] using hfirst
   have hrank := (delayed_selected_fiber_and_rank G hr hi hir hj hjQ hret rho).2
-  refine ⟨?_, (hclear c (by dsimp [c]; omega) le_rfl).trans hrank.symm, hclear⟩
+  refine ⟨hbefore, ?_, (hclear c (by dsimp [c]; omega) le_rfl).trans hrank.symm, hclear⟩
   change (runBlind r G (asBlind (coloringPreProgram G color hD)) rho w c).snapshot = _
   rw [hk, runBlind]
   simp only [writeThenLatch, hnone, Option.isSome_none, Bool.false_eq_true, ↓reduceIte,
