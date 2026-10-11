@@ -23,6 +23,36 @@ public sealed class FrozenStateContractTests
     }
 
     [Theory]
+    [InlineData("axiom")]
+    [InlineData("constructor")]
+    [InlineData("def")]
+    [InlineData("inductive")]
+    [InlineData("opaque")]
+    [InlineData("quotient")]
+    [InlineData("recursor")]
+    [InlineData("theorem")]
+    public void StrictStateSchemaAcceptsEveryProducerDeclarationKind(string kind)
+    {
+        var text = $"{{\"statement_id\":\"{Pin}\",\"declarations\":[{{\"declaration_name_key\":\"ns(n0,5:probe)\",\"kind\":\"{kind}\"}}]}}\n";
+
+        var record = FrozenStateRecordLoader.Load(File(text));
+
+        Assert.Equal(new FrozenDeclaration("ns(n0,5:probe)", kind), Assert.Single(record.Declarations));
+        Assert.Equal(Encoding.UTF8.GetBytes(text), FrozenStateRecord.Encode(record.StatementId, record.Declarations).ToArray());
+    }
+
+    [Theory]
+    [InlineData("quot")]
+    [InlineData("definition")]
+    [InlineData("unknown")]
+    public void StrictStateSchemaRejectsUnsupportedDeclarationKind(string kind)
+    {
+        var text = $"{{\"statement_id\":\"{Pin}\",\"declarations\":[{{\"declaration_name_key\":\"ns(n0,5:probe)\",\"kind\":\"{kind}\"}}]}}\n";
+
+        Assert.Throws<FormatException>(() => FrozenStateRecordLoader.Load(File(text)));
+    }
+
+    [Theory]
     [InlineData("[{\"declaration_name_key\":\"ns(n0,1:b)\",\"kind\":\"theorem\"},{\"declaration_name_key\":\"ns(n0,1:a)\",\"kind\":\"theorem\"}]")]
     [InlineData("[{\"declaration_name_key\":\"ns(n0,1:a)\",\"kind\":\"theorem\"},{\"declaration_name_key\":\"ns(n0,1:a)\",\"kind\":\"theorem\"}]")]
     [InlineData("[{\"declaration_name_key\":\"ns(n0,1:a)\",\"kind\":\"theorem\",\"statement_id\":\"unused\"}]")]

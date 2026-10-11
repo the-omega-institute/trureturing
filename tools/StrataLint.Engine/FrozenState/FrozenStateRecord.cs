@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Trureturing.Truth;
 
 namespace StrataLint.Engine;
 
@@ -38,7 +39,7 @@ internal sealed record FrozenStateRecord(StatementId StatementId, ImmutableArray
         foreach (var declaration in declarations)
         {
             if (!IsCanonicalNameKey(declaration.DeclarationNameKey)
-                || declaration.Kind is not ("theorem" or "axiom" or "def" or "opaque" or "inductive" or "constructor" or "recursor" or "quot"))
+                || !TruthExportValidation.DeclarationKinds.Contains(declaration.Kind))
                 throw new FormatException("declarations must contain canonical declaration_name_key and report kind");
             if (previous is not null)
             {
