@@ -94,7 +94,7 @@ read_verdicts() {
     --json name,state,bucket,link,workflow,event,startedAt,completedAt || rc=$?
   # gh returns 1 for failed checks and 8 for pending checks even with --json.
   case $rc in 0|1|8) ;; *) return 1 ;; esac
-  parsed=$(jq -ce 'select(type == "array")' <<<"$output" 2>/dev/null) || return 1
+  parsed=$(jq -cse 'select(length == 1 and (.[0] | type == "array")) | .[0]' <<<"$output" 2>/dev/null) || return 1
   verdicts=$parsed
 }
 terminal_verdict() {
