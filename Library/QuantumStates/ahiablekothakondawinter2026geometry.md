@@ -5,10 +5,11 @@ year: 2026
 title: "The geometry of absolute separability and other convex matrix properties from spectrum"
 doi: 10.48550/arXiv.2608.03390
 url: https://arxiv.org/abs/2608.03390v2
-claim: "Conjecture 6.7 states equality of APPT maximum purity and the inscribed polytope maximum, with the spectra of equation (44)."
+claim: "Conjecture 6.7 states equality of APPT maximum purity and the inscribed polytope maximum, with the spectra of equation (44). Theorem 6.2 proves that the linear condition (31) implies absolute PPT; Section 7 asks to show that (31) is sufficient for absolute separability."
 strata_touched:
   - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment
   - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritQuditMaximumPurity
+  - D5/S3/Quantum/Entanglement/AbsoluteSeparability/AhiableKothakondaWinterEq31
 license: citation-only
 triage: anchor
 ---
@@ -60,6 +61,24 @@ where the block size $t = \left\lceil \frac{(m-1)n}{2} \right\rceil$, and the ei
 $$
     a = \frac{m+1}{2t + mn(m-1)} \quad \text{and} \quad b = \frac{m-1}{2t + mn(m-1)}.
 $$
+
+## Theorem 6.2 and the Section 7 question
+
+Theorem 6.2, page 23, verbatim:
+
+> Given a mixed state $\rho \in \mathcal M_m \otimes \mathcal M_n$ with a decreasingly ordered eigenvalue spectrum $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_{mn}\geq 0$, if the following linear inequality holds:
+> $$2\lambda_{mn} + \sum_{k=1}^{m-1} \lambda_{mn-k} \ge \sum_{k=1}^{m-1} \lambda_k \qquad (31)$$
+> then the spectrum lies within $\mathcal{P}_{m,n}$, and $\rho$ is absolutely PPT.
+
+Section 7 (Conclusion), page 39:
+
+> Thus, another matter of interest is to resolve Conjecture 6.7 in the positive, and to show that the linear condition in Eq. (31) is sufficient for absolute separability: because then the maximum purity over all three sets must coincide.
+
+## Absolute separability convention
+
+Page 2:
+
+> Within this class of states lies a convex and compact subset of separable states that remain separable after the transformation $U\rho U^\dagger$ under all global unitaries $U$ in the unitary group $\mathcal{U}(mn)$, widely referred to as absolutely separable states.
 
 ## Partial transpose convention
 
