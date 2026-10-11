@@ -4,7 +4,19 @@
 
 The log-determinant divergence has matching path, spectral, geometric-kernel, and classical forms.
 
-**Theorem 1.1 (The log-det divergence has path, spectral, kernel, and classical forms).**
+**Theorem 1.1 (The trace of functional calculus is the eigenvalue sum).**
+
+$$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \forall h \in \operatorname{IsHermitian}\left(A\right),\; \forall f \in (\mathbb{R} \to \mathbb{R}),\; \operatorname{re}\left(\operatorname{trace}\left(\operatorname{cfc}\left(f, A\right)\right)\right) = \sum_{i:n} f\left(\operatorname{eigenvalues}\left(h, i\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Resource/LogDet/PathSpectralClassical.trace_cfc_eq_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a Hermitian complex matrix on any finite carrier and any real-valued function, the real part of the trace of its Hermitian functional calculus is the sum of the function over the matrix eigenvalues. Unitary diagonalization and cyclicity of trace give the identity.
+
+**Theorem 1.2 (The log-det divergence has path, spectral, kernel, and classical forms).**
 
 $$\begin{gathered}n \in \mathbb{N},\quad\rho, \sigma \in M_{n}(\mathbb{C}), \operatorname{PosDef}(\rho) \land \operatorname{PosDef}(\sigma) \longrightarrow \\ (\operatorname{logDetDivergence}(\rho, \sigma) = \int_{0}^{1}(1-s) \Re{\operatorname{tr}((m_{s}^{-1} \Delta)^{2})} ds, m_{s} = (1-s)\sigma + s\rho, \Delta = \rho - \sigma) \land \\ (\operatorname{logDetDivergence}(\rho, \sigma) = \sum_{i} h(\Lambda_{i}), (\Lambda_{i})_{i} = \operatorname{spec}(\sigma^{-\frac{1}{2}} \rho \sigma^{-\frac{1}{2}}), h(t) = t - \operatorname{log}(t) - 1) \land \\ (\forall a, b > 0,\quad\frac{1}{ab} = (\frac{k_{G}(a, b)}{2})^{2}, k_{G}(a, b) = \frac{2}{\sqrt{ab}}) \land \\ (\forall p, q \in \mathbb{R}^{n},\quad(\forall i, 0 < p_{i} \land 0 < q_{i}) \longrightarrow \operatorname{logDetDivergence}(\operatorname{diag}(p), \operatorname{diag}(q)) = \sum_{i}(\frac{p_{i}}{q_{i}} - \operatorname{log}(\frac{p_{i}}{q_{i}}) - 1)) \end{gathered}$$
 
@@ -23,4 +35,5 @@ The proof derives the scalar integral by an explicit antiderivative, uses Hermit
 ## References
 
 - Truth anchor: `D5/S3/Resource/LogDet/PathSpectralClassical.log_det_path_spectral_classical`
+- Truth anchor: `D5/S3/Resource/LogDet/PathSpectralClassical.trace_cfc_eq_sum`
 - Dependency: [D5/S3/Resource/LogDetDivergence](../LogDetDivergence.md)

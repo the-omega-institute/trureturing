@@ -64,5 +64,43 @@ internal sealed class FullBispectrumStabilityDocument : IScribeDocumentDefinitio
                         + "phase anchor to identify its absolute origin. "
                         + "The arithmetic amplitude bounds, acquisition costs, prime-correlation errors, "
                         + "and analytic claims about primes are separate inputs."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("cyclic-counting-parseval"),
+                DeclarationHandle.Create("D5/S3/Fourier/FullBispectrumStability.cyclic_parseval"),
+                H("Counting Parseval for the unnormalized cyclic transform"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive order N and complex signal f on ZMod N, sum_x |f(x)|^2 "
+                    + "equals the average over frequencies of |ZMod.dft f(k)|^2. Thus one Fourier "
+                    + "coefficient contributes its squared magnitude divided by N to a lower "
+                    + "bound on counting squared signal norm. The transform has a negative "
+                    + "exponent and no forward normalization. The same original proof is consumed "
+                    + "by both full-bispectrum stability and the order-nine generator obstruction."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("cyclic-dft-translation"),
+                DeclarationHandle.Create("D5/S3/Fourier/FullBispectrumStability.dft_translation"),
+                H("The phase of an actual cyclic translation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The transform of x mapped to f(x-t) at frequency k equals "
+                    + "ZMod.stdAddChar(-(k*t)) times ZMod.dft f(k). This fixes the sign convention "
+                    + "for every t and k in ZMod N. The public API retains the original proof "
+                    + "used in the full-bispectrum estimate and is directly reused by the "
+                    + "positive real order-nine family."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("unit-phase-conjugate-product"),
+                DeclarationHandle.Create("D5/S3/Fourier/FullBispectrumStability.unit_mul_conj"),
+                H("Unit phase and its conjugate"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every complex z of norm 1, z times its conjugate equals 1. "
+                    + "This original identity supplies phase cancellation both in full-bispectrum "
+                    + "stability and in the exact zero and generator rows of the order-nine family."))),
                 DescribeRole.Theorem))));
 }

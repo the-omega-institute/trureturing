@@ -1,0 +1,15 @@
+**Proof (adaptive fee and one-support cases).** Here
+
+$$
+\gcd(m,T)=\gcd(m,2m-1)=1,
+ \qquad 2m>T,
+ \qquad 3\le m<k.
+\tag{28.7}
+$$
+
+The pinned [PREFIX_DEADLINE_AND_WRAP_COST, Theorem 6.1](KBONACCI_PREFIX_DEADLINE_AND_WRAP_COST.md#6-上半窄宽度的全部二标签分类) therefore applies to each fixed free-value fibre. Its binary table is independent of INITIAL tail and its hypotheses are exactly (28.1): an empty support costs zero, a nonempty even support costs one, and every other nonempty support costs two. The theorem supplies the literal blocks, all original tails, both original alphabets and the all-action lower bound. The freely observed INITIAL value selects the corresponding fibre protocol, so the maximum in (28.4) is both attainable and necessary. This is credited reuse of the complete individual-fibre law, not a new single-fibre theorem.
+
+If $D=\varnothing$, both fibres stop at their free values and the bottom stops at its independent free observation. If $D=\{H\}$, the two fibres use the same supplied stream for the common support $H$, remembering their own value to choose $A_v$ or $B_v$. This gives the first three lines of (28.5), including their lower bounds from (28.4).
+
+It remains to treat two distinct nonempty supports. The following proof constructs one common stream for the three-block upper bound, then proves the two-block compatibility boundary.
+
