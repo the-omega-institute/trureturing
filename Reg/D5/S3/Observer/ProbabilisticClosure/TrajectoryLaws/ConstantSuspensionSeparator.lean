@@ -266,4 +266,82 @@ noncomputable def registration_1 :
 #print axioms registration_1
 
 end
+
+namespace PeriodicReuse
+noncomputable section
+abbrev endpointSignature : Signature where
+  Params := unitInterval
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def endpointActual : Realization endpointSignature :=
+  realize endpointSignature (fun _ r j => (explicitStoppedWordLaw .p r).real {some (pWord j 1)})
+    (fun e => nomatch e)
+def endpointRejected : Realization endpointSignature :=
+  realize endpointSignature (fun _ _ _ => 0) (fun e => nomatch e)
+def endpointArena : Arena where
+  signature := endpointSignature
+  Law R := ∀ (r : unitInterval) (j : ℕ),
+    R.readout () r j = (1-(r:ℝ))^2*((r:ℝ)*(1-r))^j
+private theorem rejected_endpoint : ¬ endpointArena.Law endpointRejected := by
+  intro law
+  have he := law endpointA 0
+  norm_num [endpointRejected,realize,endpointA] at he
+private theorem endpoint_dependence : ObservationalDependence endpointSignature endpointActual := by
+  intro role
+  refine ⟨endpointA,0,1,?_⟩
+  change (explicitStoppedWordLaw .p endpointA).real {some (pWord 0 1)} ≠
+    (explicitStoppedWordLaw .p endpointA).real {some (pWord 1 1)}
+  rw [endpoint_p_word,endpoint_p_word]
+  norm_num [endpointA]
+def endpointRecord : Registration endpointArena (type_of% (@endpoint_p_word)) where
+  actual := endpointActual
+  bridge := Iff.rfl
+  variation := ⟨endpoint_p_word,endpointRejected,rejected_endpoint⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨endpointRejected,?_,rfl,rejected_endpoint⟩
+      intro j hj; exact False.elim (hj (@Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := endpoint_dependence
+
+def endpointRegistration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@endpoint_p_word) (type_of% (realize endpointSignature
+      (fun _ r j => (explicitStoppedWordLaw .p r).real {some (pWord j 1)})
+      (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator.PeriodicReuse.endpoint,
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator.PeriodicReuse.endpointRecord,
+  realizationSource := none, generated := false,
+  arena := .source ⟨endpointArena⟩, objectArena := .source ⟨endpointArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source endpointArena ⟨endpointRecord⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize endpointSignature
+    (fun _ r j => (explicitStoppedWordLaw .p r).real {some (pWord j 1)})
+    (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator,
+    definition := none, coordinates := #[0],
+    readouts := #[{
+        path := #["body", "body", "fn", "arg"], stateBinder := 1, functionOperand := false,
+        stateOperand := none, booleanPredicate := false }] }, continuation := .unknown, familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `autoImplicit, value := .bool false },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+#print axioms endpointRecord
+end
+end PeriodicReuse
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator

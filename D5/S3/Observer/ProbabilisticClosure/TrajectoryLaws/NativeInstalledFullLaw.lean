@@ -101,7 +101,7 @@ private theorem path_ext {A : Type*} [MeasurableSpace A] [Fintype A]
     exact hm.symm
   exact (show IsProjectiveLimit (α := fun _ => A) μ P from fun _ => rfl).unique hn
 
-private def prepend {A : Type*} (a : A) (x : ℕ → A) : ℕ → A
+def prepend {A : Type*} (a : A) (x : ℕ → A) : ℕ → A
   | 0 => a
   | n+1 => x n
 
@@ -113,7 +113,7 @@ private def prepend {A : Type*} (a : A) (x : ℕ → A) : ℕ → A
   | zero => exact measurable_const
   | succ n => exact measurable_pi_apply n
 
-private theorem marked_regenerate (M : Observer Z) (e : InstalledEmitter M)
+theorem marked_regenerate (M : Observer Z) (e : InstalledEmitter M)
     (w : Marked Z) :
     markedLaw M e w = ∑ v : Marked Z, markedRow M e w v •
       (markedLaw M e v).map (fun x => prepend w x) := by
@@ -258,7 +258,7 @@ def decode (M : Observer Z) (z : Z) (x : ℕ → Marked Z) : FullTranscript :=
 private def nativeLaw (M : Observer Z) (e : InstalledEmitter M) (z : Z) : Measure FullTranscript :=
   (markedLaw M e (z, none)).map (decode M z)
 
-private theorem marked_head (M : Observer Z) (e : InstalledEmitter M) (w : Marked Z) :
+theorem marked_head (M : Observer Z) (e : InstalledEmitter M) (w : Marked Z) :
     ∀ᵐ x ∂markedLaw M e w, x 0 = w := by
   have h := prefix_mass M e w 0 (fun _ : Fin 1 => w)
   have he : (fun x : ℕ → Marked Z => fun i : Fin 1 => x i) ⁻¹' {fun _ => w} =
@@ -491,7 +491,7 @@ private theorem fullLaw_native (M : Observer Z) (e : InstalledEmitter M) (z : Z)
   filter_upwards [marked_head M e (z,none),marked_edges M e (z,none)] with x h0 hx
   exact marked_native_realization M x hx _ (by simp [representative,h0])
 
-private def tailValue (s : ActivePhase) (ω : Stream) : ValidTail s :=
+def tailValue (s : ActivePhase) (ω : Stream) : ValidTail s :=
   ⟨stoppedReadWord s ω, by
     cases h : stoppedReadWord s ω with
     | none => trivial

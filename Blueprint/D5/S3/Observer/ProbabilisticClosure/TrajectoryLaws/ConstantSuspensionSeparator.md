@@ -12,7 +12,19 @@ Write Qbar and Wbar for the pi and tau averages. FullTVBound(mean,P,radius) mean
 
 In the displayed theorem, ep and eb denote epsilon_p and epsilon_beta, and inRegularInterval(s) means 1/3<=s<=2/5. constantOnPositiveSupport(R,s) means v(y)=s whenever tau(y)>0; values at zero-weight labels need not equal s. completeEndpointBounds requires FullTVBound for Qbar against both p endpoint laws, each with radius 1116529/22781250+epsilon_p, and for Wbar against both beta endpoint laws, each with radius 239/6750+epsilon_beta. The two endpoint alpha probabilities are exactly 1/3 and 2/5.
 
-**Theorem 1.1 (Uniform strict separation over every finite regular table).**
+**Theorem 1.1 (Every pure p type-one word has its exact singleton mass).**
+
+$$\forall r \in unitInterval,\; \forall j \in Nat,\; \operatorname{realMass}\left(\operatorname{explicitStoppedWordLaw}\left(p, r\right), \operatorname{some}\left(\operatorname{pWord}\left(j, 1\right)\right)\right)=\operatorname{endpointTypeOne}\left(r, j\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.endpoint_p_word` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+realMass(mu,x)=mu.real({x}). For every r in the full closed unit interval and j natural, endpointTypeOne(r,j)=(1-r)^2[r(1-r)]^j is the mass of the original pWord(j,1)=(beta alpha)^j beta beta. The complete law and its infinite outcome are retained, including r=0 and r=1.
+
+**Theorem 1.2 (Uniform strict separation over every finite regular table).**
 
 $$\forall X \in FiniteType,\; \forall Y \in FiniteType,\; \forall R \in \operatorname{RegularTable}\left(X, Y\right),\; \forall s \in Real,\; \forall ep \in Real,\; \forall eb \in Real,\; (\operatorname{inRegularInterval}\left(s\right)\land\operatorname{constantOnPositiveSupport}\left(R, s\right)\land0\le ep\land0\le eb\land\operatorname{completeEndpointBounds}\left(R, ep, eb\right))\Rightarrow\frac{1}{35200}<\operatorname{max}\left(ep, eb\right)$$
 
@@ -37,5 +49,6 @@ This theorem concerns the stated regular finite table and its complete laws. It 
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.constant_suspension_separator`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.endpoint_p_word`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw](FourthSegmentStoppedLaw.md)
 - Narrative reference: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw](FourthSegmentStoppedLaw.md)

@@ -1,0 +1,20 @@
+**接口 3.4（完整归一化，复用生存界）。** 在式（3.5）下有
+
+$$
+ad\le H\mathbf1\le bd\le\frac4{15}\mathbf1,
+\qquad \frac9{25}\le g_i\le\frac49,
+\qquad u+g+H\mathbf1=\mathbf1.
+\tag{3.10}
+$$
+
+第一式把 $H_{ij}/v_j$ 看作和为 $d_i$ 的非负权，使用 $a\le v_j\le b$；其余由 $g=d-H\mathbf1$ 得到。对每个 $L\ge1$，望远镜恒等式为
+
+$$
+\sum_{n=0}^{L-1}H^n(u+g)=\mathbf1-H^L\mathbf1,
+\qquad
+0\le H^L\mathbf1\le(4/15)^L\mathbf1.
+\tag{3.11}
+$$
+
+故各 $Q_i$ 总质量为一，无限词质量为零。各 $W_i$ 的质量为 $(1-v_i)+v_i=1$，其初始 $\alpha$ 后 $L$ 次返回的质量至多 $v_i(4/15)^L$。这正是 CLIP 命题3.2和 PAID 引理2.1.1的完整生存接口；没有删除无限结果或重新条件化。
+

@@ -417,4 +417,188 @@ def fullRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0
 #print axioms identityRecord
 #print axioms recursionRecord
 #print axioms fullRecord
+
+namespace PeriodicReuse
+noncomputable section
+abbrev markedSignature : Signature where
+  Params := Installed.{u}
+  State C := Marked C.complete.Z
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ C := Measure (ℕ → Marked C.complete.Z)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def markedActual : Realization markedSignature :=
+  realize markedSignature (fun _ C w => markedLaw C.complete.observer C.emitter w)
+    (fun e => nomatch e)
+def regenerationRejected : Realization markedSignature :=
+  realize markedSignature (fun _ _ _ => 0) (fun e => nomatch e)
+def headRejected : Realization markedSignature :=
+  realize markedSignature (fun _ C w => markedLaw C.complete.observer C.emitter
+    (w.1,some (.read 0)))
+    (fun e => nomatch e)
+def regenerationArena : Arena where
+  signature := markedSignature
+  Law R := ∀ (C : Installed.{u}) (w : Marked C.complete.Z),
+    R.readout () C w = ∑ v : Marked C.complete.Z,
+      markedRow C.complete.observer C.emitter w v •
+        (markedLaw C.complete.observer C.emitter v).map (fun x => prepend w x)
+def headArena : Arena where
+  signature := markedSignature
+  Law R := ∀ (C : Installed.{u}) (w : Marked C.complete.Z),
+    ∀ᵐ x ∂R.readout () C w, x 0 = w
+private def wnone : Marked base.Z := (ULift.up initial.source.finiteFields,none)
+private def wread : Marked base.Z := (ULift.up initial.source.finiteFields,some (.read 0))
+
+private theorem marked_distinct (C : Installed.{u}) (z : C.complete.Z) :
+    markedLaw C.complete.observer C.emitter (z,none) ≠
+      markedLaw C.complete.observer C.emitter (z,some (.read 0)) := by
+  intro he
+  have h0 := marked_head C.complete.observer C.emitter (z,none)
+  have h1 := marked_head C.complete.observer C.emitter (z,some (.read 0))
+  rw [← he] at h1
+  obtain ⟨x,hx0,hx1⟩ := (h0.and h1).exists
+  have hm : (z,(none : Option Operation)) = (z,some (Operation.read 0)) := hx0.symm.trans hx1
+  have hn := congrArg Prod.snd hm
+  cases hn
+
+private theorem marked_dependence : ObservationalDependence markedSignature.{u} markedActual := by
+  intro role
+  refine ⟨installedBase,wnone,wread,?_⟩
+  exact marked_distinct installedBase (ULift.up initial.source.finiteFields)
+
+private theorem rejected_regeneration : ¬ regenerationArena.{u}.Law regenerationRejected := by
+  intro law
+  have impossible (C : Installed.{u}) (w : Marked C.complete.Z) : False := by
+    have he : (0 : Measure (ℕ → Marked C.complete.Z)) =
+        markedLaw C.complete.observer C.emitter w :=
+      (law C w).trans (marked_regenerate C.complete.observer C.emitter w).symm
+    have hm := congrArg (fun μ : Measure (ℕ → Marked C.complete.Z) => μ Set.univ) he
+    simp only [Measure.coe_zero,Pi.zero_apply,measure_univ] at hm
+    exact zero_ne_one hm
+  exact impossible installedBase wnone
+
+private theorem rejected_head : ¬ headArena.{u}.Law headRejected := by
+  intro law
+  have impossible (C : Installed.{u}) (z : C.complete.Z) : False := by
+    have he := law C (z,none)
+    have hh := marked_head C.complete.observer C.emitter (z,some (.read 0))
+    change ∀ᵐ x ∂markedLaw C.complete.observer C.emitter (z,some (.read 0)),
+      x 0 = (z,none) at he
+    obtain ⟨x,hx0,hx1⟩ := (he.and hh).exists
+    have hm : (z,(none : Option Operation)) = (z,some (Operation.read 0)) := hx0.symm.trans hx1
+    have hn := congrArg Prod.snd hm
+    cases hn
+  exact impossible installedBase (ULift.up initial.source.finiteFields)
+
+def regenerationRecord : Registration regenerationArena.{u} (type_of% (@marked_regenerate.{u})) where
+  actual := markedActual
+  bridge := by
+    constructor
+    · intro T C w; exact T C.complete.observer C.emitter w
+    · intro T Z finite measurable singleton M e w
+      exact T ⟨⟨Z,finite,measurable,singleton,M⟩,e⟩ w
+  variation := ⟨(fun C w => marked_regenerate C.complete.observer C.emitter w),
+    regenerationRejected,rejected_regeneration⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨regenerationRejected,?_,rfl,rejected_regeneration⟩
+      intro j hj; exact False.elim (hj (@Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := marked_dependence
+
+private theorem head_bridge : (type_of% (@marked_head.{u})) ↔ headArena.{u}.Law markedActual := by
+  constructor
+  · intro T C w; exact T C.complete.observer C.emitter w
+  · intro T Z finite measurable singleton M e w
+    exact T ⟨⟨Z,finite,measurable,singleton,M⟩,e⟩ w
+private theorem head_positive : headArena.{u}.Law markedActual :=
+  fun C w => marked_head C.complete.observer C.emitter w
+private theorem singleton_sensitivity (A : Arena) (actual bad : Realization A.signature)
+    [Subsingleton A.signature.Role] [IsEmpty A.signature.Anchor] (hbad : ¬ A.Law bad) :
+    Sensitivity A actual := by
+  constructor
+  · intro i
+    refine ⟨bad,?_,?_,hbad⟩
+    · intro j hj; exact False.elim (hj (Subsingleton.elim j i))
+    · funext a; exact isEmptyElim a
+  · intro a; exact isEmptyElim a
+private theorem head_sensitivity : Sensitivity headArena.{u} markedActual := by
+  letI : Subsingleton headArena.signature.Role := (inferInstance : Subsingleton Unit)
+  letI : IsEmpty headArena.signature.Anchor := (inferInstance : IsEmpty Empty)
+  exact singleton_sensitivity headArena markedActual headRejected rejected_head
+
+def headRecord : Registration headArena.{u} (type_of% (@marked_head.{u})) where
+  actual := markedActual
+  bridge := head_bridge
+  variation := ⟨head_positive,headRejected,rejected_head⟩
+  sensitivity := head_sensitivity
+  dependence := marked_dependence
+
+
+def regenerationRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@marked_regenerate.{u}) (type_of% (realize markedSignature.{u}
+      (fun _ C w => markedLaw C.complete.observer C.emitter w) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeInstalledFullLaw.PeriodicReuse.regeneration,
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeInstalledFullLaw.PeriodicReuse.regenerationRecord,
+  realizationSource := none, generated := false,
+  arena := .source ⟨regenerationArena⟩, objectArena := .source ⟨regenerationArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source regenerationArena ⟨regenerationRecord⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize markedSignature.{u}
+    (fun _ C w => markedLaw C.complete.observer C.emitter w) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeInstalledFullLaw,
+    definition := none, coordinates := #[0, 4, 5],
+    readouts := #[{
+        path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false,
+        stateOperand := some #["arg"], booleanPredicate := false }] }, continuation := .unknown, familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `autoImplicit, value := .bool false },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+#print axioms regenerationRecord
+
+
+def headRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@marked_head.{u}) (type_of% (realize markedSignature.{u}
+      (fun _ C w => markedLaw C.complete.observer C.emitter w) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeInstalledFullLaw.PeriodicReuse.head,
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeInstalledFullLaw.PeriodicReuse.headRecord,
+  realizationSource := none, generated := false,
+  arena := .source ⟨headArena⟩, objectArena := .source ⟨headArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source headArena ⟨headRecord⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize markedSignature.{u}
+    (fun _ C w => markedLaw C.complete.observer C.emitter w) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeInstalledFullLaw,
+    definition := none, coordinates := #[0, 4, 5],
+    readouts := #[{
+        path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 0, functionOperand := false,
+        stateOperand := some #["arg"], booleanPredicate := false }] }, continuation := .unknown, familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `autoImplicit, value := .bool false },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+#print axioms headRecord
+
+end
+end PeriodicReuse
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeInstalledFullLaw
