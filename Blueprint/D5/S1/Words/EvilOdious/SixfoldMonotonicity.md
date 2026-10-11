@@ -64,6 +64,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/EvilOdious/SixfoldMonotonicity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/allouche-shallit-2021-sixfold-evil-odious` (proved) by `D5/S1/Words/EvilOdious/SixfoldMonotonicity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"allouche-shallit-2021-sixfold-evil-odious","declaration_gid":"D5/S1/Words/EvilOdious/SixfoldMonotonicity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jean-Paul Allouche and Jeffrey Shallit (2021). *Additive properties of the evil and odious numbers and similar sequences*. DOI: [10.7169/facm/2108](https://doi.org/10.7169/facm/2108). URL: <https://arxiv.org/abs/2112.13627v3>.
