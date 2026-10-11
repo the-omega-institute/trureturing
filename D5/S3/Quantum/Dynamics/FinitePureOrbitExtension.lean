@@ -16,7 +16,7 @@ import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic
 import D5.S3.Quantum.Foundation.FiniteDiamondDistance
-import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import Mathlib.Algebra.Module.Submodule.Union
 import Mathlib.LinearAlgebra.Matrix.Dual
 
@@ -82,19 +82,22 @@ private theorem unit_of_state_eq {a : Type*} [Fintype a] [DecidableEq a]
   exact (dotProduct_comm _ _).trans ((trace_vecMulVec _ _).symm.trans ht)
 
 /-- Pure channel output supplies normalized coefficients for the same Kraus table. -/
-private theorem kraus_collinear_of_pure_output {d : ℕ}
+private theorem kraus_collinear_of_pure_output {d : ℕ} {κ : Type*} [Fintype κ]
     (channel : QuantumChannel (Fin d) (Fin d))
+    (K : κ → Matrix (Fin d) (Fin d) ℂ)
+    (hK : ∀ X : Matrix (Fin d) (Fin d) ℂ,
+      CStarMatrix.ofMatrix.symm (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
+        ∑ u, K u * X * (K u).conjTranspose)
     (ψ φ : Fin d → ℂ) (hψ : star ψ ⬝ᵥ ψ = 1)
     (hout : (channel.mapState (pureState ψ hψ)).1 =
       CStarMatrix.ofMatrix (vecMulVec φ (star φ))) :
-    ∃ c : Fin d × Fin d → ℂ,
-      (∀ u, ((krausRepresentation channel.toCompletelyPositiveMap).1 u) *ᵥ ψ = c u • φ) ∧
+    ∃ c : κ → ℂ,
+      (∀ u, (K u) *ᵥ ψ = c u • φ) ∧
       ∑ u, star (c u) * c u = 1 := by
   have hφ := unit_of_state_eq _ φ hout
-  let K := (krausRepresentation channel.toCompletelyPositiveMap).1
   have hsum : ∑ u, vecMulVec (K u *ᵥ ψ) (star (K u *ᵥ ψ)) =
       vecMulVec φ (star φ) := by
-    have h := (krausRepresentation channel.toCompletelyPositiveMap).2 (vecMulVec ψ (star ψ))
+    have h := hK (vecMulVec ψ (star ψ))
     have ho := congrArg CStarMatrix.ofMatrix.symm hout
     change CStarMatrix.ofMatrix.symm
       (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix (vecMulVec ψ (star ψ)))) =
@@ -149,17 +152,20 @@ private theorem directionState_value {a : Type*} [Fintype a] [DecidableEq a]
 
 /-- Collinear Kraus images give an exact transition between normalized directions.
 Trace preservation supplies the scale; the linear motion need not preserve norms. -/
-theorem map_directionState_of_collinear {d : ℕ}
+theorem map_directionState_of_collinear {d : ℕ} {κ : Type*} [Fintype κ]
     (channel : QuantumChannel (Fin d) (Fin d))
+    (K : κ → Matrix (Fin d) (Fin d) ℂ)
+    (hK : ∀ X : Matrix (Fin d) (Fin d) ℂ,
+      CStarMatrix.ofMatrix.symm (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
+        ∑ u, K u * X * (K u).conjTranspose)
     (v w : Fin d → ℂ) (hv : v ≠ 0) (hw : w ≠ 0)
-    (μ : Fin d × Fin d → ℂ)
-    (hcol : ∀ u, (krausRepresentation channel.toCompletelyPositiveMap).1 u *ᵥ v = μ u • w) :
+    (μ : κ → ℂ)
+    (hcol : ∀ u, K u *ᵥ v = μ u • w) :
     channel.mapState (directionState v hv) = directionState w hw := by
-  let K := (krausRepresentation channel.toCompletelyPositiveMap).1
   let a : ℂ := ∑ u, μ u * star (μ u)
   have hraw : channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix (vecMulVec v (star v))) =
       a • CStarMatrix.ofMatrix (vecMulVec w (star w)) := by
-    have h := (krausRepresentation channel.toCompletelyPositiveMap).2 (vecMulVec v (star v))
+    have h := hK (vecMulVec v (star v))
     apply CStarMatrix.ofMatrix.symm.injective
     change CStarMatrix.ofMatrix.symm
       (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix (vecMulVec v (star v)))) =
@@ -186,15 +192,19 @@ theorem map_directionState_of_collinear {d : ℕ}
 
 /-- A finite pure history admits one linear orbit with the same Kraus directions.
 The coefficients selecting the linear map work simultaneously at every prefix time. -/
-theorem linear_lift_of_pure_prefix {d N : ℕ}
-    (channel : QuantumChannel (Fin d) (Fin d)) (ρ : ℕ → DensityState (Fin d))
+theorem linear_lift_of_pure_prefix {d N : ℕ} {κ : Type*} [Fintype κ]
+    (channel : QuantumChannel (Fin d) (Fin d))
+    (K : κ → Matrix (Fin d) (Fin d) ℂ)
+    (hK : ∀ X : Matrix (Fin d) (Fin d) ℂ,
+      CStarMatrix.ofMatrix.symm (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
+        ∑ u, K u * X * (K u).conjTranspose) (ρ : ℕ → DensityState (Fin d))
     (hstep : ∀ n < N, ρ (n + 1) = channel.mapState (ρ n))
     (hpure : ∀ n ≤ N, IsPure (ρ n)) :
     ∃ (A : Module.End ℂ (Fin d → ℂ)) (x : Fin d → ℂ),
       (∃ hx : x ≠ 0, directionState x hx = ρ 0) ∧
       (∀ n ≤ N, (A ^ n) x ≠ 0) ∧
-      ∀ n < N, ∃ μ : Fin d × Fin d → ℂ,
-        ∀ u, (krausRepresentation channel.toCompletelyPositiveMap).1 u *ᵥ ((A ^ n) x) =
+      ∀ n < N, ∃ μ : κ → ℂ,
+        ∀ u, K u *ᵥ ((A ^ n) x) =
           μ u • ((A ^ (n + 1)) x) := by
   classical
   let ψ (n : ℕ) : Fin d → ℂ := if h : n ≤ N then (hpure n h).choose else 0
@@ -206,24 +216,24 @@ theorem linear_lift_of_pure_prefix {d N : ℕ}
   have hnz (n : ℕ) (hn : n ≤ N) : ψ n ≠ 0 := by
     intro hz
     simpa [hz] using hu n hn
-  have hc (n : Fin N) : ∃ c : Fin d × Fin d → ℂ,
-      (∀ u, (krausRepresentation channel.toCompletelyPositiveMap).1 u *ᵥ ψ n =
+  have hc (n : Fin N) : ∃ c : κ → ℂ,
+      (∀ u, K u *ᵥ ψ n =
         c u • ψ (n + 1)) ∧ ∑ u, star (c u) * c u = 1 := by
-    apply kraus_collinear_of_pure_output channel _ _ (hu n n.isLt.le)
+    apply kraus_collinear_of_pure_output channel K hK _ _ (hu n n.isLt.le)
     have heq : pureState (ψ n) (hu n n.isLt.le) = ρ n :=
       Subtype.ext (hψ n n.isLt.le).symm
     rw [heq, ← hstep n n.isLt]
     exact hψ (n + 1) n.isLt
   choose c hcol hweight using hc
   obtain ⟨h, hh⟩ := Module.Dual.exists_forall_ne_zero_of_forall_exists
-    (fun n : Fin N => dotProductEquiv ℂ (Fin d × Fin d) (c n)) (by
+    (fun n : Fin N => dotProductEquiv ℂ (κ) (c n)) (by
       intro n
       refine ⟨star (c n), ?_⟩
       change c n ⬝ᵥ star (c n) ≠ 0
       rw [dotProduct_comm]
       exact (hweight n).trans_ne one_ne_zero)
   let A : Module.End ℂ (Fin d → ℂ) :=
-    ∑ u, h u • ((krausRepresentation channel.toCompletelyPositiveMap).1 u).mulVecLin
+    ∑ u, h u • (K u).mulVecLin
   have hact (n : Fin N) : A (ψ n) = (c n ⬝ᵥ h) • ψ (n + 1) := by
     simp only [A, LinearMap.sum_apply, LinearMap.smul_apply, Matrix.mulVecLin_apply, hcol,
       smul_smul]
@@ -789,12 +799,15 @@ private theorem collinear_orbit_extension {κ : Type*}
     rw [heq]
     exact ⟨hnonzero _, htail _⟩
 
-/-- For an arbitrary CPTP channel on a d-dimensional complex space, purity at
+/-- For the channel supplied by any complete finite Kraus family, purity at
 times zero through 2d-1 forces purity at every time. -/
-theorem finite_pure_prefix_extension {d : ℕ}
-    (channel : QuantumChannel (Fin d) (Fin d)) (ρ : DensityState (Fin d))
-    (hpure : ∀ n < 2 * d, IsPure ((channel.mapState)^[n] ρ)) :
-    ∀ n : ℕ, IsPure ((channel.mapState)^[n] ρ) := by
+theorem finite_pure_prefix_extension {d : ℕ} {κ : Type*} [Fintype κ]
+    (K : κ → Matrix (Fin d) (Fin d) ℂ)
+    (hK : ∑ u, (K u).conjTranspose * K u = 1) (ρ : DensityState (Fin d))
+    (hpure : ∀ n < 2 * d, IsPure (((finite_kraus_quantum_channel K hK).choose.mapState)^[n] ρ)) :
+    ∀ n : ℕ, IsPure (((finite_kraus_quantum_channel K hK).choose.mapState)^[n] ρ) := by
+  let channel := (finite_kraus_quantum_channel K hK).choose
+  have hchannel := (finite_kraus_quantum_channel K hK).choose_spec
   have hd : 0 < d := by
     by_contra h
     have hd : d = 0 := by omega
@@ -802,14 +815,13 @@ theorem finite_pure_prefix_extension {d : ℕ}
     have h := ρ.2.2
     simp [Matrix.trace] at h
   obtain ⟨A, x, ⟨hx, hinit⟩, hnz, hcol⟩ :=
-    linear_lift_of_pure_prefix (N := 2 * d - 1) channel
+    linear_lift_of_pure_prefix (N := 2 * d - 1) channel K hchannel
       (fun n => (channel.mapState)^[n] ρ)
       (fun n _ => Function.iterate_succ_apply' ..)
       (fun n hn => hpure n (by omega))
-  let T (u : Fin d × Fin d) :=
-    ((krausRepresentation channel.toCompletelyPositiveMap).1 u).mulVecLin
+  let T (u : κ) := (K u).mulVecLin
   have hall : ∀ n : ℕ, (A ^ n) x ≠ 0 ∧
-      ∃ μ : Fin d × Fin d → ℂ, ∀ u, T u ((A ^ n) x) = μ u • ((A ^ (n + 1)) x) := by
+      ∃ μ : κ → ℂ, ∀ u, T u ((A ^ n) x) = μ u • ((A ^ (n + 1)) x) := by
     apply collinear_orbit_extension A T x
     · simpa only [Module.finrank_pi, Module.finrank_self, Fintype.card_fin, mul_one] using hnz
     · simpa only [Module.finrank_pi, Module.finrank_self, Fintype.card_fin, mul_one,
@@ -820,7 +832,7 @@ theorem finite_pure_prefix_extension {d : ℕ}
     | succ n ih =>
       rw [Function.iterate_succ_apply', ih]
       obtain ⟨μ, hμ⟩ := (hall n).2
-      exact map_directionState_of_collinear channel _ _ (hall n).1 (hall (n + 1)).1 μ hμ
+      exact map_directionState_of_collinear channel K hchannel _ _ (hall n).1 (hall (n + 1)).1 μ hμ
   intro n
   rw [hactual]
   exact ⟨_, rfl⟩
