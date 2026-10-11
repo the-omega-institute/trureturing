@@ -16,8 +16,8 @@ internal sealed class ThueMorseReducedAbelianOddDocument : IScribeDocumentDefini
                     + "one-bits of s, and therefore equals the paper's one-based letter "
                     + "t_(s+1). Campbell, Currie, and Rampersad stated the odd-index equality "
                     + "as an apparent pattern in arXiv:2509.16034v1, Section 3, without a proof. "
-                    + "Every result below is derived in this repository; the paper is context, "
-                    + "not a source of any assumed theorem.")),
+                    + "The complexity identities are proved here; the Thue-Morse recursion "
+                    + "uses the source convention.")),
             Describe.Lean(
                 DescribeId.Create("zero-indexed-thue-morse-word"),
                 DeclarationHandle.Create(
@@ -31,6 +31,9 @@ internal sealed class ThueMorseReducedAbelianOddDocument : IScribeDocumentDefini
                         + "exactly binary popcount parity, not a sampled finite prefix. "
                         + "The middle argument is ignored, as in Lean's anonymous binder."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("thue-morse-zero"), DeclarationHandle.Create("D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_zero"), H("thueMorse zero"), StatementSource.FromAuthor(Disp(Seq(Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, D(0), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("false")))))), AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Words/allouche2021evilodious")), Blocks(Paragraph(Text("Page 2 defines the Thue-Morse sequence by t₀ = 0, t₂ₙ = tₙ, and t₂ₙ₊₁ = 1 − tₙ for n ≥ 0. Boolean false and true encode zero and one."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("thue-morse-two-mul"), DeclarationHandle.Create("D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_two_mul"), H("thueMorse two mul"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, Parenthesized(Seq(D(2), Sp, Cdot, Sp, F.Id("n"))), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, F.Id("n")))), AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Words/allouche2021evilodious")), Blocks(Paragraph(Text("Page 2 defines the Thue-Morse sequence by t₀ = 0, t₂ₙ = tₙ, and t₂ₙ₊₁ = 1 − tₙ for n ≥ 0. Boolean false and true encode zero and one."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("thue-morse-two-mul-add-one"), DeclarationHandle.Create("D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_two_mul_add_one"), H("thueMorse two mul add one"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, Parenthesized(Seq(D(2), Sp, Cdot, Sp, F.Id("n"), Sp, Plus, Sp, D(1))), Sp, Eq, Sp, Seq(Seq(Operatorname, Grp(F.Id("Bool"))), Dot, Seq(Operatorname, Grp(F.Id("not")))), Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, F.Id("n")))))), AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Words/allouche2021evilodious")), Blocks(Paragraph(Text("Page 2 defines the Thue-Morse sequence by t₀ = 0, t₂ₙ = tₙ, and t₂ₙ₊₁ = 1 − tₙ for n ≥ 0. Boolean false and true encode zero and one."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("literal-thue-morse-factor"),
                 DeclarationHandle.Create(
@@ -132,7 +135,7 @@ internal sealed class ThueMorseReducedAbelianOddDocument : IScribeDocumentDefini
                     "The coordinate sum recovers the run count. With equal run counts, the two "
                         + "alternating Parikh vectors agree automatically in the even case and "
                         + "agree exactly when their initial letters agree in the odd case. This "
-                        + "is the preregistered class-code equivalence."))),
+                        + "is the class-code equivalence."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("all-start-reduced-abelian-classes"),
