@@ -54,7 +54,7 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
                             All("i", Fin(2), Equal(At(X("b"), X("i")),
                                 Smul(At(X("eps"), X("i")), At(X("a"), At(X("pi"), X("i"))))))))))))),
             Node("claim", "Rigidity statement", "In §IV.A, Proposition 7 of Torii, Takakura and Imamura states: “Let A_ub = {A^{a_1}_ub, A^{a_2}_ub} and B_ub = {A^{b_1}_ub, A^{b_2}_ub} be pairs of unbiased qubit observables satisfying |a_1|=|a_2|=t, |b_1|=|b_2|=u for some t,u ∈ (1/√2,1]. If A_ub ∼_inc B_ub, then either (b_1,b_2) = (±a_1,±a_2) or (b_1,b_2) = (±a_2,±a_1) holds.” The statement here allows arbitrary individual lengths at most one and assumes that each pair is incompatible.",
-                DescribeRole.Definition, Equivalence(X("claim"), Claim()), AssessedProvenance.FromRepo(Source)),
+                DescribeRole.Definition, Equivalence(X("claim"), Claim()), AssessedProvenance.FromLiterature(Source)),
             Node("result", "Rigidity without equal-length constraints", "In §V, the authors ask: “Future work will also address the generalization of Proposition 7, as it remains an open problem whether the result holds without the constraints of |a_1|=|a_2| and |b_1|=|b_2|.” For incompatible pairs, equality of compatibility on every state set determines the two Bloch vectors up to independent signs and exchange. Central Bloch disks determine a quartic boundary. Equality of these boundaries forces a common plane, and polynomial identities force the coordinate change to be a signed permutation. Conversely, outcome relabelling and exchange preserve compatibility on every state set.",
                 DescribeRole.Theorem, X("claim"), AssessedProvenance.FromRepo(Source))
         ), []));

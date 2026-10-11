@@ -82,9 +82,7 @@ $$(claim) \Leftrightarrow (\forall a \in \operatorname{Fin}\left(2\right) \to \o
 
 *Formalization.* `D5/S3/Quantum/Measurement/QubitIncompatibilityRigidity.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* K. Torii; R. Takakura; R. Imamura (2025). *Comparing quantum incompatibility of device sets from an operational perspective*. DOI: [10.1103/s6mc-lnvl](https://doi.org/10.1103/s6mc-lnvl). URL: <https://arxiv.org/abs/2509.08284v2>.
+*Citation.* K. Torii; R. Takakura; R. Imamura (2025). *Comparing quantum incompatibility of device sets from an operational perspective*. DOI: [10.1103/s6mc-lnvl](https://doi.org/10.1103/s6mc-lnvl). URL: <https://arxiv.org/abs/2509.08284v2>.
 
 *Commentary.*
 
