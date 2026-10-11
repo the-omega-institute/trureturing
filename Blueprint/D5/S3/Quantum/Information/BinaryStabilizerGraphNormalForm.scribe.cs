@@ -17,6 +17,9 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             Entry("sign-representative", "complex_sign_val", "The sign of the binary representative", SignRepresentative(),
                 "The complexSign value is −1 raised to the natural representative of a binary residue.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Entry("tensor-one", "tensor_one", "The tensor product of identity matrices", TensorOne(),
+                "For every number of qubits, the tensor operator formed from identity factors is the identity on the computational basis.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("amplitude", "graphAmp", "The binary graph amplitude", Amplitude(),
                 "Each edge contributes its binary quadratic monomial. The ordered upper-triangular sum is normalExponent; graphAmp is the complexSign value of that exponent, equivalently −1 raised to its natural representative. This definition accepts every binary matrix, without a symmetry or diagonal hypothesis.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(GraphStates)),
@@ -27,6 +30,12 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
     private static Formula SignRepresentative() => All(V("a"), Binary,
         Equal(Call("complexSign", V("a")),
             Pow(Typed(Seq(Minus, D(1)), Complex), Property(V("a"), "val"))));
+
+    private static Formula TensorOne() => All(V("N"), Nat,
+        Equal(Call("tensorOp", Seq(Operatorname, Grp(V("fun")), Sp,
+            Typed(Underscore, Fin(V("N"))), Sp, Mapsto, Sp,
+            Typed(D(1), Matrix(Fin(D(2)), Complex)))),
+            Typed(D(1), Matrix(Arrow(Fin(V("N")), Fin(D(2))), Complex))));
 
     private static Formula Amplitude() => All(V("N"), Nat,
         All(Gamma, Matrix(Fin(V("N")), Binary), All(V("x"), Arrow(Fin(V("N")), Fin(D(2))),
