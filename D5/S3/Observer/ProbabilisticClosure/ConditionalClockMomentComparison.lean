@@ -723,7 +723,7 @@ private theorem exists_stopped_execution
     simp only [Set.indicator_apply, Set.mem_ofPred_eq, Pi.one_apply]
     rw [trajectory_step_integral (X := fun n => Option (Record A Y n)) K x₀ n
       (fun x z => if z = some (h, a, y) ∧ x ≠ some h then 1 else 0)]
-    apply lintegral_eq_zero_of_ae
+    apply lintegral_eq_zero_of_ae_eq_zero
     filter_upwards with ω
     change (∫⁻ z, (if z = some (h, a, y) ∧ ω n ≠ some h then 1 else 0)
       ∂(stoppedStep κ σ n (ω n)).toMeasure) = 0
@@ -735,7 +735,7 @@ private theorem exists_stopped_execution
       · subst q; simp
       · simp [stoppedStep, PMF.bind_apply, PMF.map_apply, PMF.pure_apply,
           PMF.toMeasure_apply_singleton, tsum_fintype, Fintype.sum_option,
-          hq, Prod.mk.injEq, ite_and, Finset.sum_ite_irrel, mul_ite]
+          hq, Ne.symm hq, Prod.mk.injEq, ite_and, Finset.sum_ite_irrel, mul_ite]
   have hV : ∀ᵐ ω ∂ν, ω ∈ V := by
     apply hroot.and
     simp only [ae_all_iff]
@@ -763,7 +763,7 @@ private theorem exists_stopped_execution
     rw [himage, Set.inter_comm _ V, Measure.measure_inter_eq_of_ae hV,
       hprob n (fun z => ∃ h, z = some h ∧ P h)]
     simp only [Fintype.sum_option]
-    simp only [Option.some.injEq, exists_eq_right, reduceCtorEq, false_and,
+    simp only [Option.some.injEq, reduceCtorEq, false_and,
       exists_false, if_false, zero_add]
     rw [ENNReal.ofReal_sum_of_nonneg (fun h _ => by
       split_ifs
@@ -771,6 +771,11 @@ private theorem exists_stopped_execution
       · exact le_rfl)]
     apply Finset.sum_congr rfl
     intro h _
+    have he : (∃ q, h = q ∧ P q) ↔ P h := by
+      constructor
+      · rintro ⟨q, rfl, hp⟩; exact hp
+      · intro hp; exact ⟨h, rfl, hp⟩
+    simp only [he]
     split_ifs <;> simp [stopped_law_some κ σ a₀]
 
 /-- Arbitrary families of actual worlds and requests obey the same two moment
