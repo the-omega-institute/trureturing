@@ -12,6 +12,8 @@ import Mathlib.Analysis.RCLike.Basic
 import Mathlib.Algebra.MvPolynomial.PDeriv
 import Mathlib.RingTheory.MvPolynomial.EulerIdentity
 import Mathlib.RingTheory.MvPolynomial.Basic
+import Mathlib.Analysis.Fourier.AddCircleMulti
+import Mathlib.Topology.UniformSpace.Equicontinuity
 
 noncomputable section
 
@@ -537,7 +539,7 @@ private theorem degree_one_cancellation (α : ℝ) (hα : Irrational α)
 
 /-- Every nonconstant integer polynomial with an irrational common coefficient has
 vanishing phase average as all rectangular side lengths tend independently to infinity. -/
-theorem polynomial_rectangular_tendsto (α : ℝ) (hα : Irrational α)
+private theorem polynomial_rectangular_tendsto (α : ℝ) (hα : Irrational α)
     (Q : MvPolynomial (Fin d) ℤ) (hQ : 0 < Q.totalDegree) :
     Tendsto (fun N : Fin d → ℕ =>
       𝔼 n ∈ Fintype.piFinset (fun j => range (N j)), polynomialPhase α Q n) atTop (𝓝 0) := by
@@ -570,5 +572,168 @@ theorem polynomial_rectangular_cancellation (α : ℝ) (hα : Irrational α)
 
 
 end PolynomialDifference
+
+section ContinuousObservables
+
+open MeasureTheory
+
+local instance : MeasureSpace UnitAddCircle := ⟨AddCircle.haarAddCircle⟩
+local instance : IsProbabilityMeasure (volume : Measure UnitAddCircle) :=
+  inferInstanceAs (IsProbabilityMeasure AddCircle.haarAddCircle)
+
+variable {κ : Type*} [Fintype κ]
+
+private theorem integral_character (k : κ → ℤ) :
+    (∫ x : UnitAddTorus κ, UnitAddTorus.mFourier k x) = if k = 0 then 1 else 0 := by
+  have h := (orthonormal_iff_ite.mp (UnitAddTorus.orthonormal_mFourier (d := κ))) 0 k
+  simpa only [ContinuousMap.inner_toLp, ← UnitAddTorus.mFourier_neg,
+    ← UnitAddTorus.mFourier_add, neg_zero, add_zero, eq_comm] using h
+
+private theorem continuous_of_characters {ι β : Type*} (l : Filter β)
+    (s : β → Finset ι) (x : ι → UnitAddTorus κ)
+    (hne : ∀ᶠ b in l, (s b).Nonempty)
+    (hchar : ∀ k : κ → ℤ, k ≠ 0 →
+      Tendsto (fun b => 𝔼 n ∈ s b, UnitAddTorus.mFourier k (x n)) l (𝓝 0))
+    (F : C(UnitAddTorus κ, ℂ)) :
+    Tendsto (fun b => 𝔼 n ∈ s b, F (x n)) l (𝓝 (∫ z, F z)) := by
+  classical
+  let A (b : β) : C(UnitAddTorus κ, ℂ) →L[ℂ] ℂ :=
+    ((s b).card : ℂ)⁻¹ • ∑ n ∈ s b, ContinuousMap.evalCLM ℂ (x n)
+  have hA (b : β) (f : C(UnitAddTorus κ, ℂ)) : A b f = 𝔼 n ∈ s b, f (x n) := by
+    simp [A, expect_eq_sum_div_card, div_eq_mul_inv, mul_comm]
+  have hbound (b : β) (f : C(UnitAddTorus κ, ℂ)) : ‖A b f‖ ≤ ‖f‖ := by
+    rw [hA]
+    rcases (s b).eq_empty_or_nonempty with hb | hb
+    · simp [hb]
+    exact (RCLike.norm_expect_le (K := ℂ)).trans
+      (expect_le hb (fun n _ => f.norm_coe_le_norm (x n)))
+  let J : C(UnitAddTorus κ, ℂ) →L[ℂ] ℂ :=
+    (L1.integralCLM' ℂ).comp (ContinuousMap.toLp 1 volume ℂ)
+  have hJ (f : C(UnitAddTorus κ, ℂ)) : J f = ∫ z, f z := by
+    change L1.integralCLM' ℂ (ContinuousMap.toLp 1 volume ℂ f) = _
+    rw [← L1.integral_eq' ℂ, L1.integral_eq_integral]
+    exact integral_congr_ae (ContinuousMap.coeFn_toLp volume f)
+  let S : Submodule ℂ C(UnitAddTorus κ, ℂ) :=
+    { carrier := {f | Tendsto (fun b => A b f) l (𝓝 (J f))}
+      zero_mem' := by simpa using (tendsto_const_nhds (x := (0 : ℂ)) : Tendsto (fun _ : β => (0 : ℂ)) l (𝓝 0))
+      add_mem' := by intro f g hf hg; simpa only [Set.mem_ofPred_eq, map_add] using hf.add hg
+      smul_mem' := by
+        intro c f hf
+        simpa only [Set.mem_ofPred_eq, map_smul] using hf.const_smul c }
+  have hclosed : IsClosed (S : Set C(UnitAddTorus κ, ℂ)) := by
+    apply Equicontinuous.isClosed_setOfPred_tendsto _ J.continuous
+    apply (LipschitzWith.uniformEquicontinuous _ 1 _).equicontinuous
+    intro b
+    apply LipschitzWith.of_dist_le_mul
+    intro f g
+    simpa only [NNReal.coe_one, one_mul, dist_eq_norm, ← map_sub] using hbound b (f - g)
+  have hspan : Submodule.span ℂ (Set.range (UnitAddTorus.mFourier (d := κ))) ≤ S := by
+    apply Submodule.span_le.mpr
+    rintro _ ⟨k, rfl⟩
+    change Tendsto _ _ _
+    simp only [hA, hJ, integral_character]
+    split_ifs with hk
+    · subst k
+      simp only [UnitAddTorus.mFourier_zero, ContinuousMap.one_apply]
+      exact tendsto_const_nhds.congr' (hne.mono fun b hb => (expect_const hb 1).symm)
+    · exact hchar k hk
+  have htop : (⊤ : Submodule ℂ C(UnitAddTorus κ, ℂ)) ≤ S := by
+    rw [← UnitAddTorus.span_mFourier_closure_eq_top]
+    exact Submodule.topologicalClosure_minimal _ hspan hclosed
+  have hF : Tendsto (fun b => A b F) l (𝓝 (J F)) := htop (Submodule.mem_top (x := F))
+  simpa only [hA, hJ] using hF
+
+private theorem shifted_polynomial (Q : MvPolynomial (Fin d) ℤ)
+    (a : Fin d → ℤ) (hQ : 0 < Q.totalDegree) :
+    0 < (MvPolynomial.aeval (fun i => MvPolynomial.X i + MvPolynomial.C (a i)) Q).totalDegree := by
+  let T (a : Fin d → ℤ) : MvPolynomial (Fin d) ℤ →ₐ[ℤ] MvPolynomial (Fin d) ℤ :=
+    MvPolynomial.aeval
+    (fun i => MvPolynomial.X i + MvPolynomial.C (a i))
+  have hinv : (T (-a)).comp (T a) = AlgHom.id ℤ (MvPolynomial (Fin d) ℤ) := by
+    apply MvPolynomial.algHom_ext
+    intro i
+    simp [T]
+  by_contra hn
+  have hC := MvPolynomial.totalDegree_eq_zero_iff_eq_C.mp (Nat.eq_zero_of_not_pos hn)
+  have he := congrArg (T (-a)) hC
+  change T (-a) (T a Q) = _ at he
+  rw [← AlgHom.comp_apply, hinv] at he
+  have hc : Q = MvPolynomial.C
+      (MvPolynomial.coeff 0 (T a Q)) := by simpa [T] using he
+  rw [hc, MvPolynomial.totalDegree_C] at hQ
+  omega
+
+/-- Distinct nonconstant integer monomials, evaluated after a fixed nonnegative shift. -/
+def monomialOrbit {d : ℕ} (α : ℝ) (e : κ → (Fin d →₀ ℕ))
+    (a n : Fin d → ℕ) : UnitAddTorus κ :=
+  fun j => ((α * (MvPolynomial.eval (fun i => ((n i + a i : ℕ) : ℤ))
+    (MvPolynomial.monomial (e j) 1) : ℝ)) : UnitAddCircle)
+
+private theorem character_monomialOrbit {d : ℕ} (α : ℝ)
+    (e : κ → (Fin d →₀ ℕ)) (a n : Fin d → ℕ) (k : κ → ℤ) :
+    UnitAddTorus.mFourier k (monomialOrbit α e a n) =
+      polynomialPhase α
+        (MvPolynomial.aeval (fun i => MvPolynomial.X i + MvPolynomial.C (a i : ℤ))
+          (∑ j, MvPolynomial.monomial (e j) (k j))) n := by
+  classical
+  have he (Q : MvPolynomial (Fin d) ℤ) :
+      MvPolynomial.eval (fun i => (n i : ℤ))
+        (MvPolynomial.aeval (fun i => MvPolynomial.X i + MvPolynomial.C (a i : ℤ)) Q) =
+      MvPolynomial.eval (fun i => ((n i + a i : ℕ) : ℤ)) Q := by
+    apply MvPolynomial.induction_on Q
+    · intro c; simp
+    · intro p q hp hq; simp only [map_add, hp, hq]
+    · intro p i hp
+      simp only [map_mul, hp, MvPolynomial.aeval_X, map_add,
+        MvPolynomial.eval_X, MvPolynomial.eval_C, Nat.cast_add]
+  simp only [UnitAddTorus.mFourier, ContinuousMap.coe_mk, monomialOrbit, fourier_coe_apply,
+    polynomialPhase, he]
+  rw [← Complex.exp_sum]
+  congr 1
+  simp only [map_sum, MvPolynomial.eval_monomial]
+  push_cast
+  simp only [one_mul, Complex.ofReal_one, div_one, Finset.mul_sum]
+  apply sum_congr rfl
+  intro j _
+  simp only [Finsupp.prod]
+  push_cast
+  ring
+
+/-- Every continuous complex observable has its Haar average along unrestricted
+rectangles of any finite family of distinct nonconstant monomials, with any fixed shift. -/
+theorem monomial_rectangular_equidistribution {d : ℕ} (α : ℝ) (hα : Irrational α)
+    (e : κ → (Fin d →₀ ℕ)) (he : Function.Injective e) (hzero : ∀ j, e j ≠ 0)
+    (a : Fin d → ℕ) (F : C(UnitAddTorus κ, ℂ)) :
+    Tendsto (fun N : Fin d → ℕ =>
+      𝔼 n ∈ Fintype.piFinset (fun i => range (N i)), F (monomialOrbit α e a n))
+      atTop (𝓝 (∫ z, F z)) := by
+  classical
+  apply continuous_of_characters
+  · filter_upwards [eventually_ge_atTop (fun _ : Fin d => 1)] with N hN
+    exact Fintype.piFinset_nonempty.mpr (fun i =>
+      nonempty_range_iff.mpr (Nat.ne_of_gt (lt_of_lt_of_le Nat.zero_lt_one (hN i))))
+  intro k hk
+  simp_rw [character_monomialOrbit]
+  suffices hcancel : RectangularCancellation (polynomialPhase α
+      (MvPolynomial.aeval (fun i => MvPolynomial.X i + MvPolynomial.C (a i : ℤ))
+        (∑ j, MvPolynomial.monomial (e j) (k j)))) by
+    apply Metric.tendsto_nhds.mpr
+    intro ε hε
+    obtain ⟨R, _, hR⟩ := hcancel ε hε
+    filter_upwards [eventually_ge_atTop (fun _ : Fin d => R)] with N hN
+    simpa only [dist_zero_right] using hR N hN
+  apply polynomial_rectangular_cancellation α hα
+  apply shifted_polynomial
+  by_contra hn
+  have hC := MvPolynomial.totalDegree_eq_zero_iff_eq_C.mp (Nat.eq_zero_of_not_pos hn)
+  obtain ⟨j, hj⟩ := Function.ne_iff.mp hk
+  have hc := congrArg (MvPolynomial.coeff (e j)) hC
+  simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial] at hc
+  have hcoeff : (∑ i : κ, if e i = e j then k i else 0) = k j := by
+    simp [he.eq_iff]
+  rw [hcoeff, MvPolynomial.coeff_C_of_ne_zero (hzero j)] at hc
+  exact hj hc
+
+end ContinuousObservables
 
 end D5.S1.Phase.MultivariateWeylRectangles
