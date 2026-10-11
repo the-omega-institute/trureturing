@@ -47,8 +47,11 @@ and the mutually unbiased case (Theorem 1), and leaves arbitrary lengths open. T
 3. Tests with sets of states on central planes turn the region of compatible planes into the negative set
    of a quartic $f(x,y)$; equality of the regions makes every boundary zero of $f$ a zero of the second
    quartic $g$, at infinitely many points.
-4. An elimination of the two roots in $y$ at each such $x$ forces $g=\lambda f$; comparing the
-   coefficients of degree four, two and zero gives $\lambda=1$ and a signed permutation.
+4. Write $b_1=u\,a_1+v\,a_2$ and $b_2=w\,a_1+z\,a_2$ in the common plane. Eliminating the two roots in
+   $y$ at each such $x$ gives a polynomial in $x$ that vanishes identically; its coefficient of degree 12
+   is $(uw)^2$, and the same elimination with $a_1,a_2$ exchanged gives $vz=0$. Each $b_i$ is therefore a
+   multiple of a different $a_j$. A second residue, compared in degrees 6, 4 and 0, forces both
+   multipliers to be $\pm1$, which is a signed permutation.
 5. Relabelling outcomes and exchanging the two observables preserve $S$-compatibility for every $S$.
 
 ## Falsifier
