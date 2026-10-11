@@ -58,6 +58,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang` (refuted) by `D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang","declaration_gid":"D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* B. Fiol; J. Martínez-Montoya; A. Rios Fukelman (2020). *The planar limit of N=2 superconformal quiver theories*. DOI: [10.1007/JHEP08(2020)161](https://doi.org/10.1007/JHEP08(2020)161). URL: <https://arxiv.org/abs/2006.06379v2>.

@@ -68,7 +68,9 @@ internal sealed class QuiverTreeIsingRefutationDocument : IScribeDocumentDefinit
             theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(DefinitionDsl.Text(prose))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition,
-            null);
+            theorem ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula Id(string value) => F.Id(value);
     private static Formula Op(string name) => Seq(Operatorname, Grp(Id(name)));
