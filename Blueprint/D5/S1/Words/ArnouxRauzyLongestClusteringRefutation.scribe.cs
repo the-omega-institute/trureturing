@@ -57,7 +57,10 @@ internal sealed class ArnouxRauzyLongestClusteringRefutationDocument : IScribeDo
                     + "word. The Proposition 14 word has length 40. Its BWT is b¹²c⁷a²⁴ for a<c<b, "
                     + "so this witness refutes the asserted longest-word bound. The mechanism and the "
                     + "general value of the longest clustering word remain open."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ferenczi-zamboni-2023-arnoux-rauzy-longest-clustering"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string title, string name, Formula formula,
         string prose, LibraryNoteRef source) => Describe.Lean(

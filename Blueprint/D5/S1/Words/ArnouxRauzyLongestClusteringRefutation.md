@@ -130,6 +130,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/ArnouxRauzyLongestClusteringRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ferenczi-zamboni-2023-arnoux-rauzy-longest-clustering` (refuted) by `D5/S1/Words/ArnouxRauzyLongestClusteringRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ferenczi-zamboni-2023-arnoux-rauzy-longest-clustering","declaration_gid":"D5/S1/Words/ArnouxRauzyLongestClusteringRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sebastien Ferenczi; Luca Q. Zamboni (2024). *Clustering and Arnoux-Rauzy words*. DOI: [10.1016/j.aam.2023.102621](https://doi.org/10.1016/j.aam.2023.102621). URL: <https://arxiv.org/abs/2305.18986v1>.
