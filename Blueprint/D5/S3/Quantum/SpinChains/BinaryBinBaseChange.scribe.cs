@@ -76,10 +76,10 @@ internal sealed class BinaryBinBaseChangeDocument : IScribeDocumentDefinition
         Seq(Operatorname, Grp(F.Id("Sl"), D(2), F.Id("Relations"))), [h, e, f]);
     private static Formula End(Formula scalar, Formula space) => Call("End", scalar, space);
 
-    private static Formula Environment(Formula body) => All("K", Call("Type"),
-        Assumption(Call("Field", Scalar), Assumption(Call("CharZero", Scalar), body)));
-    private static Formula Bins(Formula body, bool two) => Environment(All("m", Nats,
-        two ? All("n", Nats, body) : body));
+    private static Formula Environment(Formula body, bool charZero = true) => All("K", Call("Type"),
+        Assumption(Call("Field", Scalar), charZero ? Assumption(Call("CharZero", Scalar), body) : body));
+    private static Formula Bins(Formula body, bool two, bool charZero = true) => Environment(All("m", Nats,
+        two ? All("n", Nats, body) : body), charZero);
 
     private static Formula Extension()
     {
@@ -97,7 +97,7 @@ internal sealed class BinaryBinBaseChangeDocument : IScribeDocumentDefinition
         var expression = source == "weight"
             ? Call("mulLeft", Scalar, Lambda("w", Words(m), Cast(Weight(w))))
             : Call("extend", Scalar, Call(source, m));
-        return Bins(Eq(Op(name, m), expression), false);
+        return Bins(Eq(Op(name, m), expression), false, source != "weight");
     }
 
     private static Formula TwoDefinition(string name, string source)
@@ -105,7 +105,7 @@ internal sealed class BinaryBinBaseChangeDocument : IScribeDocumentDefinition
         var m = F.Id("m"); var n = F.Id("n");
         return Bins(Eq(Two(name), PlusOf(
             Call("rTensor", Op(source, m), Space(n)),
-            Call("lTensor", Op(source, n), Space(m)))), true);
+            Call("lTensor", Op(source, n), Space(m)))), true, source != "binWeight");
     }
 
     private static Formula RationalImage(string source, Formula m, Formula w, Formula u) =>
