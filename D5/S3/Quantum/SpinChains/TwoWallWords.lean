@@ -8,6 +8,7 @@
 
 import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+import Mathlib.LinearAlgebra.Finsupp.VectorSpace
 import Mathlib.Algebra.BigOperators.Group.Finset.Pi
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Tactic.Abel
@@ -35,8 +36,6 @@ def count {a b : ℕ} (c : Letter) (w : Pos a b → Letter) : ℕ :=
 /-- Literal words, retaining the positions and both walls. -/
 abbrev Word (a b : ℕ) :=
   {w : Pos a b → Letter // count one w = a ∧ count two w = b ∧ count wall w = 2}
-
-instance wordFintype (a b : ℕ) : Fintype (Word a b) := inferInstance
 
 /-- Push a word forward along a permutation of its sites. -/
 def permute {a b : ℕ} (e : Equiv.Perm (Pos a b)) : Equiv.Perm (Word a b) where
@@ -72,9 +71,13 @@ instance allowedDecidable {a b : ℕ} (i : Fin 3) (w : Word a b) (p : Pos a b) :
 /-- Finite linear combinations of the literal words. -/
 abbrev Space (K : Type*) [Zero K] (a b : ℕ) := Word a b →₀ K
 
+/-- The canonical basis indexed by the literal counted words. -/
+noncomputable def basis (K : Type*) [Field K] (a b : ℕ) :
+    Module.Basis (Word a b) K (Space K a b) := Finsupp.basisSingleOne
+
 /-- The delta basis vector. -/
 noncomputable def delta (K : Type*) [Field K] {a b : ℕ} (w : Word a b) : Space K a b :=
-  Finsupp.single w 1
+  basis K a b w
 
 /-- One local transition; disallowed input pairs are annihilated. -/
 noncomputable def bond (K : Type*) [Field K] {a b : ℕ}
@@ -109,6 +112,7 @@ theorem cyclic_action (K : Type*) [Field K] (a b : ℕ) :
       count c (fun q => w (Equiv.swap p (p + 1) q)) = count c w) ∧
     (∀ (t : Pos a b) (w : Word a b),
       translation K t (delta K w) = delta K (rotate t w)) ∧
+    (∀ w : Word a b, U K a b (delta K w) = delta K (rotate 1 w)) ∧
     (∀ (i : Fin 3) (w : Word a b),
       F K a b i (delta K w) = ∑ p, bond K i p w) ∧
     U K a b ^ (a + b + 2) = 1 ∧
@@ -169,7 +173,7 @@ theorem cyclic_action (K : Type*) [Field K] (a b : ℕ) :
       translation K t (bond K i p w) = bond K i (p + t) (rotate t w) := by
     have hat : Allowed i (rotate t w) (p + t) ↔ Allowed i w p := ha i t p w
     by_cases h : Allowed i w p
-    · simp [bond, h, hat.mpr h, delta, ht, hswap]
+    · simp [bond, h, hat.mpr h, delta, basis, Finsupp.coe_basisSingleOne, ht, hswap]
     · have hn : ¬ Allowed i (rotate t w) (p + t) := fun h' => h (hat.mp h')
       simp [bond, h, hn]
   have hc (i : Fin 3) (t : Pos a b) :
@@ -180,15 +184,20 @@ theorem cyclic_action (K : Type*) [Field K] (a b : ℕ) :
     simp only [Module.End.mul_apply, hf, ht, map_smul, map_sum, hb]
     exact congrArg (fun v => z • v)
       (Equiv.sum_comp (Equiv.addRight t) (fun p => bond K i p (rotate t w)))
-  refine ⟨hcount, ?_, ?_, ?_, (fun i => hc i 1), ?_⟩
+  refine ⟨hcount, ?_, ?_, ?_, ?_, (fun i => hc i 1), ?_⟩
   · intro t w
-    exact ht t w 1
+    simpa [delta, basis, Finsupp.coe_basisSingleOne] using ht t w 1
+  · intro w
+    simpa [U, delta, basis, Finsupp.coe_basisSingleOne] using ht 1 w 1
   · intro i w
-    simpa [delta] using hf i w 1
+    simpa [delta, basis, Finsupp.coe_basisSingleOne] using hf i w 1
   · rw [hpow, ZMod.natCast_self, hzero]
   · intro ξ
     change U K a b * T K a b ξ = T K a b ξ * U K a b
     simp only [T, F1, F2, F3, U, mul_add, add_mul, mul_smul_comm, smul_mul_assoc]
     rw [(hc 0 1).eq, (hc 1 1).eq, (hc 2 1).eq]
+
+#check (fun a b : ℕ => (inferInstance : Fintype (Word a b)))
+#print axioms cyclic_action
 
 end D5.S3.Quantum.SpinChains.TwoWallWords

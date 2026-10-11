@@ -37,10 +37,7 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             Node("count", "Counting a letter", CountFormula(), true,
                 "Each site contributes one exactly when its letter equals c."),
             Node("Word", "Counted literal words", WordFormula(), true,
-                "The subtype retains exactly a ones, b twos and two walls. The three count certificates restrict the complete function space."),
-            Node("wordFintype", "Finite enumeration of counted words", AB(Eq(Call("wordFintype", A, B),
-                Call("inferInstance", Call("Fintype", Words)))), true,
-                "The ambient function space is finite, and the count predicates are decidable. The subtype therefore has its induced finite enumeration."),
+                "The subtype retains exactly a ones, b twos and two walls. The three count certificates restrict the complete function space. The finite ambient function type and decidable count predicates give Word its inherited Fintype instance."),
             Node("permute", "Transport along a site permutation", PermuteFormula(), true,
                 "The forward map composes a word with the inverse site permutation; the inverse map composes with the permutation itself. Reindexing the finite count sum preserves every letter count, so both maps land in the counted subtype."),
             Node("rotate", "Right rotation", AB(All("t", Sites, Eq(Call("rotate", F.Id("t")),
@@ -52,7 +49,7 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             Node("inputPair", "Oriented allowed inputs", Eq(Call("inputPair"), Call("vector3",
                 Pair(Call("wall"), Call("two")), Pair(Call("one"), Call("wall")),
                 Pair(Call("two"), Call("one")))), true,
-                "In arXiv:2112.04506v1, Section 2.1, Eqs. (2.2)–(2.5), the three transitions are 32 to 23, 13 to 31, and 21 to 12. Every other input pair is annihilated.", true),
+                "In arXiv:2112.04506v1, Section 2.1, Eq. (2.3), the three transitions are 32 to 23, 13 to 31, and 21 to 12. Every other input pair is annihilated.", true),
             Node("Allowed", "The input-pair predicate", AllowedFormula(), true,
                 "The test reads the ordered pair at p and p+1 before exchanging the sites.", true),
             Node("allowedDecidable", "Decidable input test", AB(All("i", Call("Fin", D(3)),
@@ -62,13 +59,16 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             Node("Space", "The word vector space", AB(All("K", Call("Type"),
                 Assumption(Call("Zero", K), Eq(Vectors, Call("Finsupp", Words, K))))), true,
                 "Finsupp consists of functions with finite support. Since the word type is finite, every coefficient function has finite support."),
+            Node("basis", "The canonical word basis", FieldAB(Eq(Call("basis", K, A, B),
+                Call("FinsuppBasisSingleOne", K, Words))), true,
+                "The standard finitely supported function basis is indexed by all counted words. Its coordinates give unique expansions into delta vectors."),
             Node("delta", "Delta vectors", FieldAB(All("w", Words,
-                Eq(Delta(F.Id("w")), Call("FinsuppSingle", F.Id("w"), D(1))))), true,
+                Eq(Delta(F.Id("w")), At(Call("basis", K, A, B), F.Id("w"))))), true,
                 "Delta vectors are the canonical basis of the finitely supported function space."),
             Node("bond", "One local transition", BondFormula(), true,
-                "The local action is the delta vector at the exchanged word when the input test succeeds, and zero otherwise. This is the action in Eqs. (2.2)–(2.5), restricted to words with two walls.", true),
+                "The local action is the delta vector at the exchanged word when the input test succeeds, and zero otherwise. This is the action in Eq. (2.3), restricted to words with two walls.", true),
             Node("F", "The bond sum", FFormula(), true,
-                "LinearCombination extends the displayed image of each delta vector linearly. The sum runs over all positions, as in Eqs. (2.6)–(2.8); different bonds leading to the same word contribute separately.", true),
+                "LinearCombination extends the displayed image of each delta vector linearly. The sum runs over all positions, as in Eq. (2.2); different bonds leading to the same word contribute separately.", true),
             Node("F1", "The first bond operator", FieldAB(Eq(Op("F1"), Call("F", K, A, B, D(0)))), true,
                 "F1 sums the transitions 32 to 23.", true),
             Node("F2", "The second bond operator", FieldAB(Eq(Op("F2"), Call("F", K, A, B, D(1)))), true,
@@ -76,12 +76,12 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             Node("F3", "The third bond operator", FieldAB(Eq(Op("F3"), Call("F", K, A, B, D(2)))), true,
                 "F3 sums the transitions 21 to 12.", true),
             Node("T", "The coupled eclectic operator", TFormula(), true,
-                "The three couplings multiply the three bond sums, as in Eqs. (2.2)–(2.8). No nonzero-coupling or characteristic-zero assumption is needed for this action.", true),
+                "The three couplings multiply the three bond sums, as in Eq. (2.2). No nonzero-coupling or characteristic-zero assumption is needed for this action.", true),
             Node("translation", "Linear translation", FieldAB(All("t", Sites,
                 Eq(Call("translation", K, F.Id("t")), Call("lmapDomain", K, K, Call("rotate", F.Id("t")))))), true,
                 "The map pushes each basis label forward by right rotation."),
             Node("U", "The one-site right shift", FieldAB(Eq(Op("U"), Call("translation", K, D(1)))), true,
-                "Section 2.2, Eqs. (2.9)–(2.10), uses U on the elementary state j1…jL to give jL j1…j(L−1). This is rotation by one in the literal word coordinates.", true),
+                "Section 2.2, Eq. (2.9), uses U on the elementary state j1…jL to give jL j1…j(L−1). This is rotation by one in the literal word coordinates.", true),
             Node("cyclic_action", "Count preservation, delta actions and translation symmetry", ActionFormula(), false,
                 "A swap is a permutation of sites, so finite-sum reindexing preserves every count. Translation carries the bond at p to the bond at p+t, with the same oriented input test and exchanged output. Reindexing the complete bond sum therefore gives commutation. Repeated right shifts add their displacements in ZMod(L); displacement L is zero. The coupling formula inherits commutation by linearity.")),
         []));
@@ -102,11 +102,10 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name),
             type is Formula.TypeArrow ? Parenthesized(type) : type, body);
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
-    private static Formula Iff(Formula x, Formula y) => new Formula.Relation(Parenthesized(x), FormulaRelationOperator.Iff, Parenthesized(y));
+    private static Formula Iff(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.Iff, Parenthesized(y));
     private static Formula And(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.And, Parenthesized(y));
     private static Formula Not(Formula x) => Seq(Neg, Parenthesized(x));
     private static Formula PlusOf(Formula x, Formula y) => Seq(x, Sp, Plus, Sp, y);
-    private static Formula SubOf(Formula x, Formula y) => Seq(x, Sp, Minus, Sp, y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula Smul(Formula x, Formula y) => Seq(x, Sp, Cdot, Sp, y);
     private static Formula Pair(Formula x, Formula y) => Parenthesized(Seq(x, Comma, Sp, y));
@@ -176,12 +175,13 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             Eq(Count(c, Lambda("q", Sites, At(w, At(Call("swap", p, PlusOf(p, D(1))), F.Id("q"))))), Count(c, w)))));
         var translation = All("t", Sites, All("w", Words,
             Eq(At(Call("translation", K, t), Delta(w)), Delta(At(Call("rotate", t), w)))));
+        var shift = All("w", Words, Eq(At(Op("U"), Delta(w)), Delta(At(Call("rotate", D(1)), w))));
         var bonds = All("i", Call("Fin", D(3)), All("w", Words,
             Eq(At(Call("F", K, A, B, i), Delta(w)), Sum("p", Sites, Call("bond", K, i, p, w)))));
         var periodic = Eq(new Formula.Power(Op("U"), Length), D(1));
         var commute = All("i", Call("Fin", D(3)), Commuting(Op("U"), Call("F", K, A, B, i)));
         var coupled = All("xi", new Formula.TypeArrow(Call("Fin", D(3)), K),
             Commuting(Op("U"), Call("T", K, A, B, xi)));
-        return FieldAB(And(counts, And(translation, And(bonds, And(periodic, And(commute, coupled))))));
+        return FieldAB(And(counts, And(translation, And(shift, And(bonds, And(periodic, And(commute, coupled)))))));
     }
 }
