@@ -3377,3 +3377,7 @@ $$\chi(\partial N_n)=8n-36n+24n=-4n,\qquad
 原 §19 的平均残差构造因此有真实的普通覆盖族和精确的 $|E_n|=4n$ 输入。在已证明的基盒内部零曲率解及统一正 Hessian 常数条件下，提升该解并扰动一条八度提升边，仍使用已有 §19 的单坐标估计与至多四十八条受影响边的证明；本节不另包装这些分析推论为新 Lean 声明，也不将这些静态长度向量称为流轨道。
 
 原 §124 的中心提升改变边圈周期：六度变十二度，对应原角的 $4\pi$ 累积。本节四条整边圈电压均为零，局部星逐片覆盖，恰是排除该分歧缺陷所需的条件。对偶图的覆盖或边界圈的覆盖都不能替代 (28.8)。
+
+### Cyclic triangle disk supplier (2026-10-12)
+
+The companion Lean unit D5/S3/Geometry/Gluing/CyclicTriangleDisk.lean supplies the closed cyclic triangle fan disk: it uses the original directed seam and EqvGen quotient, an explicit radial map, and proves normal-form exactness, exact fibers, continuity, surjectivity, and a homeomorphism for every positive n. The auxiliary angle convention has the zero-radius apex value at 0 and the positive-radius sector formula. This supplier is intentionally limited to the disk construction; the original link-3r orbit, saturated open chart, marked CFMP closure, and full geometric integration remain outside its scope.
