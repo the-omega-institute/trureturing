@@ -7,7 +7,6 @@
    digest: Restricted-state compatibility determines incompatible unbiased qubit pairs. -/
 
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
-import Mathlib.LinearAlgebra.CrossProduct
 import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Order.Interval.Set.Infinite
 import Mathlib.Tactic.ComputeDegree
