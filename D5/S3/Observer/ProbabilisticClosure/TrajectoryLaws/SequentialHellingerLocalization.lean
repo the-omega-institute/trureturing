@@ -439,7 +439,8 @@ private lemma next_condexp {A : Type*} [Fintype A] [Nonempty A]
     (measurable_of_countable _).stronglyMeasurable
     ((finite_readout_memLp (ν := P) (s := 2) (fun z : (Iic n → A) × A => g z.1 z.2)
       (fun x => (frestrictLe n x, x (n + 1))) (by fun_prop)).integrable (by norm_num))
-  have hk := Kernel.condDistrib_trajMeasure (X := fun _ => A) (μ₀ := (row []).toMeasure) (κ := κ) (a := n)
+  have hk := Kernel.condDistrib_trajMeasure (X := fun _ => A)
+    (μ₀ := (row []).toMeasure) (κ := κ) (a := n)
   have hk' : ∀ᵐ x ∂P, condDistrib (fun x : ℕ → A => x (n + 1)) (frestrictLe n) P
       (frestrictLe n x) = κ n (frestrictLe n x) :=
     ae_of_ae_map (measurable_frestrictLe n).aemeasurable hk
@@ -455,7 +456,8 @@ private lemma prefix_readout_stronglyMeasurable {A : Type*} [Fintype A]
     [MeasurableSpace A] [MeasurableSingletonClass A] (n : ℕ) (g : (Iic n → A) → ℝ) :
     StronglyMeasurable[Filtration.piLE n] (fun x : ℕ → A => g (frestrictLe n x)) := by
   rw [Filtration.piLE_eq_comap_frestrictLe]
-  exact (measurable_of_countable g).stronglyMeasurable.comp_measurable (Measurable.of_comap_le le_rfl)
+  exact (measurable_of_countable g).stronglyMeasurable.comp_measurable
+    (Measurable.of_comap_le le_rfl)
 
 private lemma row_root_moments {A : Type*} [Fintype A] (p q : A → ℝ)
     (hp : ∀ a, 0 < p a) (hq : ∀ a, 0 < q a)
@@ -542,7 +544,8 @@ theorem trajectory_hellinger_likelihood_limits
     rw [hx]
     exact (row_root_moments (p (H (n + 1) x)) (q (H (n + 1) x))
       (hp0 _) (hq0 _) (hp.2 _) (hq.2 _)).2.le
-  have hlim := finite_energy_positive_product (μ := P) (ℱ := F) e r he he0 he1 hr hr2 hr0 hrmean hrsq
+  have hlim := finite_energy_positive_product (μ := P) (ℱ := F)
+    e r he he0 he1 hr hr2 hr0 hrmean hrsq
   let ρ n x := 1 - e n x
   let W n x := r n x / ρ n x
   let Z n x := ∏ i ∈ range n, W i x
@@ -639,7 +642,7 @@ private lemma trajectory_prefix_mass {A : Type*} [Fintype A] [Nonempty A]
   let w := List.ofFn (fun i : Fin (n + 1) => x i)
   have hc : (fun y : ℕ → A => frestrictLe n y) ⁻¹' {frestrictLe n x} = wordCylinder w := by
     ext y
-    simp only [Set.mem_preimage, Set.mem_singleton_iff, wordCylinder, Set.mem_setOf_eq]
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, wordCylinder, Set.mem_ofPred_eq]
     constructor
     · intro hy i
       have hval := congrFun hy ⟨i, mem_Iic.mpr (by have hi := i.2; simpa [w] using hi)⟩
@@ -703,7 +706,8 @@ private lemma full_prefix_filtration {A : Type*} [MeasurableSpace A] :
     have hc : Measurable[Filtration.piLE (X := fun _ : ℕ => A) n]
         (fun x : ℕ → A => x n) := by
       rw [Filtration.piLE_eq_comap_frestrictLe]
-      exact (measurable_pi_apply (X := fun _ : Iic n => A) ⟨n, mem_Iic.mpr le_rfl⟩).comp (Measurable.of_comap_le le_rfl)
+      exact (measurable_pi_apply (X := fun _ : Iic n => A) ⟨n, mem_Iic.mpr le_rfl⟩).comp
+        (Measurable.of_comap_le le_rfl)
     exact hc.mono (le_iSup (fun n => (Filtration.piLE (X := fun _ : ℕ => A)) n) n) le_rfl
   simpa only [MeasurableSpace.comap_id] using hi.comap_le
 
