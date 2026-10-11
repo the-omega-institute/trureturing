@@ -14,7 +14,7 @@ $$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\
 
 *Commentary.*
 
-For a Hermitian complex matrix on any finite carrier and any real-valued function, the real part of the trace of its continuous functional calculus is the sum of the function over the matrix eigenvalues. Unitary diagonalization and cyclicity of trace give the identity.
+For a Hermitian complex matrix on any finite carrier and any real-valued function, the real part of the trace of its Hermitian functional calculus is the sum of the function over the matrix eigenvalues. Unitary diagonalization and cyclicity of trace give the identity.
 
 **Theorem 1.2 (The log-det divergence has path, spectral, kernel, and classical forms).**
 

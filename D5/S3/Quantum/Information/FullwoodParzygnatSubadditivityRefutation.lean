@@ -6,13 +6,10 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.claim; result=D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.result; claim=D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.claim
    digest: The Werner–Holevo channel on the maximally mixed five-level state violates PDM subadditivity. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation
 import D5.S3.Quantum.QuantumChannels.ProductUnitaryChoiSpectrum
 import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
 import D5.S3.Resource.LogDet.PathSpectralClassical
-import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 set_option linter.style.longLine false
 set_option autoImplicit false

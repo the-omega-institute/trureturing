@@ -19,7 +19,7 @@ internal sealed class PathSpectralClassicalDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For a Hermitian complex matrix on any finite carrier and any real-valued "
-                        + "function, the real part of the trace of its continuous functional "
+                        + "function, the real part of the trace of its Hermitian functional "
                         + "calculus is the sum of the function over the matrix eigenvalues. "
                         + "Unitary diagonalization and cyclicity of trace give the identity."))),
                 DescribeRole.Theorem),
