@@ -243,7 +243,7 @@ public sealed class CoverageStatementReceiptTests
     }
 
     [Fact]
-    public void FrozenStateChangeRechecksStatementReceipt()
+    public void FrozenStateChangeRechecksReceiptWithoutReplayingUnchangedStatus()
     {
         var previousStatementId = FrozenStatementReceiptTestData.Id('4');
         var evaluation = Evaluate(
@@ -257,7 +257,7 @@ public sealed class CoverageStatementReceiptTests
         Assert.Contains(
             evaluation.Entries.Single().Gaps,
             static gap => gap.Code == "coverage-target-mismatch");
-        Assert.Contains(
+        Assert.DoesNotContain(
             evaluation.Findings,
             static finding => finding.Contains(
                 "handwritten status",
