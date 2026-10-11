@@ -597,3 +597,102 @@ def odd_actual_counts_registration :
 #print axioms odd_actual_counts_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal62
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal63
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ T => T) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K * (aSide .high / (1 - rho * chi ^ K)))
+    (T : ℕ) (even : Even T) (large : 78 ≤ T) ,
+    listWeight (lowFiller T) = r.readout () () T ∧
+    (∀ (model : Model) (contract : Contract),
+      ActualPairSupply model o b contract (lowFiller T) ∧
+      0 < contractCount model o b contract T) ∧
+    (∀ (model : Model) (strict : Bool),
+      0 < actualCount model K ((lam - b) / g ^ 2 / chi ^ K) strict T ∧
+      actualLogRate model K ((lam - b) / g ^ 2 / chi ^ K) strict T =
+        Real.logb 2 (actualCount model K ((lam - b) / g ^ 2 / chi ^ K) strict T : ℝ) / (T : ℝ))
+
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have weight := (low_filler_geometry 78 ⟨39, by decide⟩ (by decide)).2.2.2.2.2.2.2.1
+  have impossible := (h (fun _ => false) budget 2 (by decide)
+    budget_interval.1 budget_interval.2 78 ⟨39, by decide⟩ (by decide)).1
+  change listWeight (lowFiller 78) = 0 at impossible
+  omega
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.even_actual_positivity) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.even_actual_positivity, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
+
+def even_actual_positivity_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.even_actual_positivity)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ T => T) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal63.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal63.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ T => T) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms even_actual_positivity_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal63
