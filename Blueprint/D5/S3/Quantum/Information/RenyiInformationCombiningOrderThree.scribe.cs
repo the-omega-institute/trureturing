@@ -92,7 +92,10 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
         Describe.Lean(DescribeId.Create("renyi-three-" + id),
             DeclarationHandle.Create(Module + name), H(title), StatementSource.FromAuthor(formula),
             derived ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            derived ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("hirche-guan-tomamichel-2023-renyi-order-three-equality"),
+                ResolutionKind.Proved) : null);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Q(string owner, string name) =>
