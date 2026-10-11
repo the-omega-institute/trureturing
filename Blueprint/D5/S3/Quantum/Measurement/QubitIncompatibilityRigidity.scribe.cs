@@ -18,7 +18,7 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
                     Seq(OpenBrace, Typed(X("rho"), X("QubitMatrix")), Sp, Bar, Sp,
                         And(At(Qualified("Matrix", "PosSemidef"), X("rho")),
                             Equal(At(Qualified("Matrix", "trace"), X("rho")), Typed(Num(1), Complexes()))), CloseBrace))),
-            Node("effect", "Unbiased effects", "Outcome zero uses the positive Pauli expansion; outcome one uses its negative. One half is a complex scalar.",
+            Node("effect", "Unbiased effects", "FourQubitParentConstruction.B expands a Bloch vector in the three Pauli matrices. Outcome zero uses that expansion and outcome one uses its negative. One half is a complex scalar.",
                 DescribeRole.Definition, All("v", BlochSpace(), All("s", Fin(2),
                     Equal(Call("effect", X("v"), X("s")),
                         Smul(Typed(Fraction(Num(1), Num(2)), Complexes()), Add(
@@ -32,7 +32,7 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
                         Call("ite", Equal(X("i"), Typed(Num(0), Fin(2))),
                             SumOver("t", Fin(2), At(X("G"), Pair(X("s"), X("t")))),
                             SumOver("t", Fin(2), At(X("G"), Pair(X("t"), X("s")))))))))),
-            Node("SCompatible", "Compatibility on a state set", "A joint POVM reproduces both observable distributions on every density matrix in the given state set. bornProbability is the complex trace of the matrix product.",
+            Node("SCompatible", "Compatibility on a state set", "ConcealmentKernelNecessityRefutation.IsPOVM requires positive semidefinite effects summing to the identity. A joint POVM reproduces both observable distributions on every density matrix in the given state set. bornProbability is the complex trace of the matrix product.",
                 DescribeRole.Definition, All("S", StateSets(), All("a", Vectors(),
                     Equivalence(Call("SCompatible", X("S"), X("a")), Ex("G", Parents(), And(
                         At(Qualified("ConcealmentKernelNecessityRefutation", "IsPOVM"), X("G")), All("rho", X("Density"), Implication(
