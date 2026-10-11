@@ -107,13 +107,6 @@ internal sealed class UnitaryWidthLeviGeometryDocument : IScribeDocumentDefiniti
                 Blocks(Paragraph(Text("The parameterized centralEmbed statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("unitary-unitarywidthlevigeometry-centralembed-entry"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthLeviGeometry.centralEmbed_entry"),
-                H("centralEmbed entry"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized centralEmbed entry statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("unitary-unitarywidthlevigeometry-slcentral-endpoints"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthLeviGeometry.slCentral_endpoints"),
                 H("slCentral endpoints"), StatementSource.WithoutFormula(),

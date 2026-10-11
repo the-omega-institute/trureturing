@@ -49,35 +49,4 @@ theorem five_factor (hinv : Function.Involutive ι) (hne : ι≠RingEquiv.refl F
         exact five_factor_absorb (ih (k+2) (by omega) B) h0 h1 h2 h3 h4
   exact hall n g
 
-/-- Literal ordered-factor endpoint, with five genuine alternating SU factors. -/
-theorem alternating_five (hinv : Function.Involutive ι) (hne : ι≠RingEquiv.refl F)
-    (n : ℕ) (g : specialUnitary n ι) :
-    ∃ a : Fin 5 → specialUnitary n ι,
-      (∀ j, if j.val % 2=0 then
-        ∀ r c : Fin n, c.val < r.val+1 → ((a j).val.val-1) r c=0
-      else ∀ r c : Fin n, r.val < c.val+1 → ((a j).val.val-1) r c=0) ∧
-      (List.ofFn a).prod=g := by
-  obtain ⟨a,b,c,d,e,ha,hb,hc,hd,he,hprod⟩ := five_factor hinv hne n g
-  let f : Fin 5 → specialUnitary n ι := ![a,b,c,d,e]
-  refine ⟨f,?_,?_⟩
-  · intro j
-    fin_cases j
-    all_goals first | exact ha | exact hb | exact hc | exact hd | exact he
-  · simpa [f,List.ofFn_succ,mul_assoc] using hprod
-
-/-- ONE positive absolute length BEFORE every field, rank, involution and target.
-All factors belong to the SAME literal determinant-one Hermitian SU carrier. -/
-theorem exists_absolute_unitriangular_width :
-    ∃ K : ℕ, 0 < K ∧ ∀ (F : Type u) [Field F] [Finite F], ∀ n : ℕ,
-      ∀ (ι : RingAut F), Function.Involutive ι → ι≠RingEquiv.refl F →
-      ∀ g : specialUnitary n ι,
-      ∃ a : Fin K → specialUnitary n ι,
-        (∀ j, if j.val % 2=0 then
-          ∀ r c : Fin n, c.val < r.val+1 → ((a j).val.val-1) r c=0
-        else ∀ r c : Fin n, r.val < c.val+1 → ((a j).val.val-1) r c=0) ∧
-        (List.ofFn a).prod=g := by
-  refine ⟨5,by decide,?_⟩
-  intro F _ _ n ι hinv hne g
-  exact alternating_five hinv hne n g
-
 end NikolovSegal.UnitaryWholeGroupWidth

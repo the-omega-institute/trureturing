@@ -108,12 +108,6 @@ def centralEmbed : specialUnitary n ι →* specialUnitary (n+2) ι where
   map_one' := Subtype.ext (map_one _)
   map_mul' g h := Subtype.ext (map_mul _ _ _)
 
-theorem centralEmbed_entry (g : specialUnitary n ι)
-    (i j : Fin 1 ⊕ (Fin n ⊕ Fin 1)) :
-    (centralEmbed g).val.val ((centralKernel% indexEquiv) i) ((centralKernel% indexEquiv) j)=
-      fromBlocks (1:Matrix (Fin 1) (Fin 1) F) 0 0 (fromBlocks g.val.val 0 0 (1:Matrix (Fin 1) (Fin 1) F)) i j :=
-  (centralKernel% entry) g.val i j
-
 theorem slCentral_endpoints (g : SpecialLinearGroup (Fin n) F) :
     Endpoints (PartIICentralLevi.embed g) := by
   have h1 : ∀ i : Fin 1, i=0 := fun i => Subsingleton.elim _ _
