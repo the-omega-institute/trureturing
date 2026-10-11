@@ -30,5 +30,22 @@ internal sealed class MixedPrimeHistoryAsymptoticsDocument : IScribeDocumentDefi
                     + "the nth power of the square root of r. This tends to zero, leaving a "
                     + "strict contraction beyond a fixed threshold. A single finite initial "
                     + "sum supplies B, and strong induction propagates it to every endpoint."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mixedprimehistoryasymptotics-subcritical-analytic-control"),
+                DeclarationHandle.Create("D5/S3/Factorization/Combinatorics/MixedPrimeHistoryAsymptotics.subcritical_analytic_control"),
+                H("Analyticity and common control of prime compositions"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Under the same positive t, zero less than r less than one, and t P(r) "
+                    + "less than one hypotheses, choose B once. It bounds every normalized "
+                    + "endpoint weight. The actual generating function F is analytic on the "
+                    + "open disk of radius r. For every nonnegative a with a squared less "
+                    + "than r, every prime q, and every complex z of modulus at most a, "
+                    + "the modulus of F(z to the power q) is at most B times a to the power q "
+                    + "divided by r minus a squared. The numerator z plus t times the sum "
+                    + "of these prime compositions is analytic on the open disk of radius "
+                    + "the square root of r. B is chosen before a, q, and z."))),
                 DescribeRole.Theorem))));
 }
