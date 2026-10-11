@@ -129,6 +129,13 @@ class MirrorCases:
                 invalid = self.g(self.main, "commit-tree", tree, *parents, "-m",
                     message + "\n\nOriginal-Dev-Commit: " + original).strip()
                 validate(invalid, expected=73)
+                branch = "mirror/invalid-" + fault
+                self.g(self.main, "update-ref", "refs/heads/" + branch, invalid)
+                self.run_protocol("prepare-mirror", "--path", self.root / ("invalid-" + fault),
+                    "--branch", branch, "--base", self.base, "--merge", landing,
+                    "--message", message, expect=73)
+                self.assertEqual("", self.g(self.remote, "for-each-ref", "refs/heads/" + branch))
+                self.assertEqual(invalid, self.g(self.main, "rev-parse", branch).strip())
 
     def test_mirror_retained_commit_reused_on_descendant_integration_base(self):
         landing = self.mirror_landing("feature", "feature", "feature (#11)", squash=True)

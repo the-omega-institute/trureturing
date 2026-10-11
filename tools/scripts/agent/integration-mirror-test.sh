@@ -150,6 +150,7 @@ elif a[:2] == ['pr', 'checks']:
         sys.exit(0)
     if mode == 'malformed': print('not json'); sys.exit(1)
     if mode == 'wrong-shape': emit({'checks': []}); sys.exit(1)
+    if mode == 'multiple-json': emit([]); emit([]); sys.exit(1)
     if mode == 'missing' or mode in ('late', 'transport') and clock < 36000:
         emit([]); sys.exit(1)
     bucket = {'fail': 'fail', 'cancel': 'cancel', 'pending-terminal': 'pending'}.get(mode, 'pass')
@@ -202,10 +203,10 @@ lifecycle() {
 }
 assert_case() {
   local name=$1; shift
-  if "$@"; then echo "PASS $name"; passed=$((passed + 1))
+  if "$@" >/dev/null; then echo "PASS $name"; passed=$((passed + 1))
   else echo "FAIL $name"; failures=$((failures + 1)); fi
 }
-for mode in late transport malformed wrong-shape fail cancel missing pending-terminal; do
+for mode in late transport malformed wrong-shape multiple-json fail cancel missing pending-terminal; do
   new_case "$mode"
   want=69 status=incomplete
   case "$mode" in late|transport) want=0 status=merged ;; fail|cancel) want=66 status=red ;; esac
@@ -220,12 +221,17 @@ for mode in late transport malformed wrong-shape fail cancel missing pending-ter
   fi
 done
 
-new_case resume
-lifecycle fail --since "$TIP"; check resume-first-red 66
-lifecycle pass; check resume-retries-red 0 'MIRROR_RESULT mirrored=1 pending=0 exit=0'
-lifecycle pass; check resume-skips-completed 0 'MIRROR_RESULT mirrored=0 pending=0 exit=0'
-assert_case resume-single-pr jq -se '[.[] | select(.[0:2] == ["pr","create"])] | length == 1' "$CASE/calls"
-assert_case resume-state jq -se --arg sha "$LANDING" 'map(.status) == ["red","merged"] and all(.[]; .merge == $sha)' "$CASE/state.jsonl"
+for failure in fail malformed; do
+  new_case "resume-$failure"
+  if [[ $failure == fail ]]; then first_status=red first_rc=66
+  else first_status=incomplete first_rc=69; fi
+  lifecycle "$failure" --since "$TIP"; check "resume-first-$failure" "$first_rc"
+  lifecycle pass; check "resume-retries-$failure" 0 'MIRROR_RESULT mirrored=1 pending=0 exit=0'
+  lifecycle pass; check "resume-skips-completed-$failure" 0 'MIRROR_RESULT mirrored=0 pending=0 exit=0'
+  assert_case "resume-single-pr-$failure" jq -se '[.[] | select(.[0:2] == ["pr","create"])] | length == 1' "$CASE/calls"
+  assert_case "resume-state-$failure" jq -se --arg sha "$LANDING" --arg status "$first_status" \
+    'map(.status) == [$status,"merged"] and all(.[]; .merge == $sha)' "$CASE/state.jsonl"
+done
 
 for mode in reuse-branch reuse-open reuse-merged; do
   new_case "$mode"
@@ -243,11 +249,20 @@ for mode in reuse-branch reuse-open reuse-merged; do
   fi
 done
 
+new_case reject-two-parent
+OLD_HEAD=$(git -C "$CASE/lane" commit-tree "$LANDING^{tree}" -p "$TIP" -p "$LANDING" \
+  -m 'mirror: #11 Merge pull request #11 from o/feature')
+git -C "$CASE/lane" push -q origin "$OLD_HEAD:refs/heads/mirror/integration-x/11"
+lifecycle pass --since "$TIP"
+check reject-two-parent 69 'mirror_requires_single_parent'
+assert_case reject-two-parent-preserves-head test "$OLD_HEAD" = "$(git -C "$CASE/origin.git" rev-parse refs/heads/mirror/integration-x/11)"
+assert_case reject-two-parent-no-pr test ! -e "$CASE/created"
+
 # Squash subjects supply candidates when the association endpoint is empty.
 git -C "$WORK/src" switch -q dev
 printf 'squash\n' >"$WORK/src/squash"
 git -C "$WORK/src" add squash
-git -C "$WORK/src" commit -qm 'squashed feature (#12)'
+git -C "$WORK/src" commit -qm 'squashed fix for #404 (#12)'
 SQUASH=$(git -C "$WORK/src" rev-parse HEAD)
 git -C "$WORK/src" switch -q -c custom
 printf 'custom\n' >"$WORK/src/custom"
@@ -280,7 +295,7 @@ for invalid in unmerged wrong-base wrong-commit wrong-repository ambiguous; do
   jq "$filter" "$CASE/saved.json" >"$CASE/prs.json"
   lifecycle pass --since "$TIP"
   check "identification-$invalid" 64 "$CUSTOM"
-  assert_case "$invalid-no-publication" test ! -e "$CASE/created"
+  assert_case "$invalid-no-publication" test -z "$(git -C "$CASE/origin.git" for-each-ref refs/heads/mirror/)"
   mv "$CASE/saved.json" "$CASE/prs.json"
 done
 git -C "$WORK/src" commit -q --allow-empty -m 'no associated PR'
