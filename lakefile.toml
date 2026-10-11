@@ -3,6 +3,11 @@ version = "0.1.0"
 keywords = ["mathematics", "formalization"]
 defaultTargets = ["Trureturing"]
 
+# Keep canonical Lean compiler processes single-threaded. Lake documents
+# weakLeanArgs as execution-only arguments excluded from build traces; -j1 is
+# forwarded by Lean/Shell to ShellOptions.numThreads.
+weakLeanArgs = ["-j1"]
+
 [leanOptions]
 pp.unicode.fun = true
 relaxedAutoImplicit = false

@@ -8239,6 +8239,248 @@ scalar budgets; to retain signed identities until a directed bound
 permits absolute values; and to distinguish an ordinary conditional
 deduction from independent certification of primary analytics.
 
+## Project application: complete event cells sample the own-size clock
+
+Keep (ASC1)–(ASC7), the actual first-prime sample $\mathcal P_X$,
+its inclusive largest optimizers $N_p=C_{b_p}$ and their own clocks
+$A_p=\log N_p$. The full event construction in the
+[Mantovanelli interface](../Analytic/mantovanelli2026primeworkload.md#actual-sample-and-finite-support)
+supplies the underlying states. The application below uses ordinary
+bounded-variation endpoint quadrature; it is not a new quadrature,
+zero-density or prime-distribution theorem. It is a conditional
+project deduction, without Lean certification or a historical
+originality claim.
+
+Put $L=\log X$, $H=X^{3/10}$ and $J_X=[X/2,4X]$. For each fixed
+$X$, keep $H$ fixed while varying $A\in J_X$, and define
+
+$$
+V_X(A)=\sqrt A\log A\sum_{|\operatorname{Im}\rho|\le H}
+ m_\rho F_A(\rho)+r_A,
+\qquad f_X(A)=(V_X(A)-1/2)_+^2.
+\tag{OCQ1}
+$$
+
+Here $F_A$ is the complete coefficient (M1), and $r_A$ is the complete
+elementary correction after (G9). All distinct actual zeros retain
+their multiplicities and real parts; both ordinate signs and every
+zero exactly at $H$ remain in the head. Conjugate pairing makes $V_X$
+real. At each actual sample, $V_X(A_p)=V_p(H)$ from (ASC3).
+
+### Use every activation layer in the size partition
+
+If there are no layer events in $[X,3X)$, the selected sample sum
+is zero and the inequality is immediate. Otherwise enumerate all
+distinct event prices $e_1<\cdots<e_k$ in this band. Let $B_i=\log C_{e_i}$ be the post-event size after all
+ties, and let $B_0$ be the size immediately before $e_1$. Local
+finiteness and the complete activation rule give
+
+$$
+B_i-B_{i-1}=\sum_{\tau_{p,j}=e_i}\log p=:h_i>0.
+\tag{OCQ2}
+$$
+
+Thus $B_0<\cdots<B_k$ is a partition in the actual size coordinate,
+even though the prices need not be equally spaced. If $X$ itself
+is an event, its whole jump belongs to the first cell. An event at
+$3X$ is excluded. Higher-layer events and every tied layer stay in
+this partition.
+
+For a first-prime event at $e_i=b_p$, the existing calibration
+$p<b_p<p+1$ gives $p\ge X-1\ge X/2$ eventually. Hence
+
+$$
+h_i\ge\log p\ge L-\log2.
+\tag{OCQ3}
+$$
+
+First-prime event prices are strictly increasing in $p$, so at most
+one selected sample uses a given cell. The $j$th layer price is also
+strictly increasing in its prime, so a tied event has at most one
+prime for each fixed $j$.
+
+Reuse the activation cutoff from
+[FIB Proposition 420.2](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#420-既有大间隙链的实际素层隔离与根位置的联合缺口):
+every layer at a price below $3X$ has
+$p^j<Q_X=3X\log(3X)/\log2$. In particular
+$j\le d_X=\lfloor\log Q_X/\log2\rfloor$. For the complete tied jump,
+
+$$
+\mu_X:=\max_i h_i
+\le\log Q_X\sum_{j=1}^{d_X}\frac1j
+=O(L\log L)=O(L^2).
+\tag{OCQ4}
+$$
+
+The existing full-clock estimate
+$\log C_b=\psi(b)+O(\sqrt b[\log(2b)]^{5/2})$ and PNT give
+$\log C_b=b+o(b)$ uniformly for $b\in[X,3X]$.
+Together with (OCQ4), they put $B_0$ and every $B_i$ inside $J_X$
+eventually. This uses the entire optimizer clock, not just (ASC2)'s
+first-prime endpoints, and makes no substitution $A_p=b_p$.
+
+For quadrature, directly reuse S. S. Dragomir, *The Ostrowski integral
+inequality for mappings of bounded variation*, *Bulletin of the
+Australian Mathematical Society* **60** (1999), 495–508,
+[DOI 10.1017/S0004972700036662](https://doi.org/10.1017/S0004972700036662),
+Corollary 7, equations (5.16)–(5.17), printed p. 507. Its arbitrary
+partition is $(B_i)_{i=0}^k$, its sample in the $i$th cell is the
+right endpoint $B_i$, and its mesh is $\mu_X$. The published error
+bound is mesh times total variation; for absolutely continuous $f$,
+that variation is $\int|f'|$. No generic quadrature proof is repeated.
+
+For any nonnegative absolutely continuous $f$ on $J_X$, this supplier
+and (OCQ3) give
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal P_X}f(A_p)
+&\le\frac1{L-\log2}\sum_{i=1}^k h_i f(B_i)\\
+&\le\frac1{L-\log2}\left(
+ \int_{B_0}^{B_k}f(A)\,dA+
+ \mu_X\int_{B_0}^{B_k}|f'(A)|\,dA\right)\\
+&\le\frac1{L-\log2}\left(
+ \int_{J_X}f(A)\,dA+
+ \mu_X\int_{J_X}|f'(A)|\,dA\right).
+\end{aligned}
+\tag{OCQ5}
+$$
+
+Both enlarged integrands are nonnegative. An empty selected sample
+has left side zero; if there are no events, no partition is needed.
+This estimate uses no prime-gap bound, sampling independence or
+separate supremum payment for higher-layer mass: those layers supply
+cells in the same partition.
+
+### The complete moving coefficient pays the mesh error
+
+The finite head in (OCQ1) has a fixed zero set at each $X$. Differentiating
+the full (M1) integral with respect to its lower endpoint gives
+
+$$
+\partial_A F_A(\rho)
+=-\frac{A^{\rho-2}(1+\log A)}{\rho\log^2A}.
+\tag{OCQ6}
+$$
+
+Under the named ceiling (ASC1), directly reuse the complete
+coefficient bound (GH2), the finite reciprocal-square
+mass $\mathcal C_\zeta$ in (GE1), and the classical zero count
+$\sum_{|\gamma|\le H}m_\rho/|\rho|=O(\log^2(2H))$. They give,
+uniformly on $J_X$,
+
+$$
+|V_X(A)|=O(X^{3/8}),\qquad
+|V_X'(A)|=O(X^{-5/8}L^2).
+\tag{OCQ7}
+$$
+
+The full elementary response remains in this differentiation.
+Its exact formula after (G9) gives
+$r_A=O(A^{-1/2})$ and $r_A'=O(A^{-3/2})$, including the
+trivial-zero integral. These contributions fit (OCQ7).
+The positive-part square is $C^1$, including at $V_X=1/2$, with
+$f_X'=2(V_X-1/2)_+V_X'$. Thus
+
+$$
+\int_{J_X}|f_X'(A)|\,dA=O(X^{3/4}L^2).
+\tag{OCQ8}
+$$
+
+Substituting into (OCQ5) gives the own-clock sampling interface
+
+$$
+\boxed{\sum_{p\in\mathcal P_X}(V_p(H)-1/2)_+^2
+\le\frac1{L-\log2}\int_{J_X}(V_X(A)-1/2)_+^2\,dA
+ +O(X^{3/4}L^3).}
+\tag{OCQ9}
+$$
+
+The coarse error is sufficient: relative to (ASC6)'s unchanged
+$Q(X)$, its quotient is
+$O(L^5e^{-L^{1/4}/2})\to0$. No refinement of the generic quadrature
+theorem or new tail calculation is needed for this rate.
+
+### The original fixed-exponent consumer and its remaining signed input
+
+The proposed sufficient analytic input is still
+
+$$
+\int_{J_X}(V_X(A)-1/2)_+^2\,dA=o(LQ(X)).
+\tag{OCQ10}
+$$
+
+This input is required along all sufficiently large scales carrying
+the original source; a bound only on an unrelated subsequence does
+not supply that quantifier. It is not established by (OCQ7), the zero ceiling, finite zero
+verification, PNT or quadrature. Indeed, the unsigned bound (OCQ7)
+only gives $O(X^{7/4})$ for this integral, which does not pay
+(OCQ10). This route still lacks a sufficient directed estimate of the same
+actual zero response; no independent phase or modified arithmetic source is
+introduced.
+
+If (OCQ10) were supplied, (OCQ9) and the already paid head-tail
+norm transfer (ASC7) would give
+
+$$
+\sum_{p\in\mathcal P_X}(U_p-1/2)_+^2=o(Q(X)).
+\tag{OCQ11}
+$$
+
+To identify its actual-source consumer, keep the original particular
+fixed $0<\eta<1/2$ and power surplus supplied by the
+[Caveney persistence application](../Arith/caveney2012sacaga.md#a-wider-actual-price-interval-for-the-same-supplied-power-excess),
+where that exponent is denoted $\eta'$. Reuse the actual first-prime
+count (R6) in the
+[Stadlmann interface](../Analytic/stadlmann2022meansquaregaps.md#the-existing-uniform-prime-count-gives-a-stronger-source-specific-count).
+On every scale carrying the same selected source, there are
+
+$$
+\gg\frac{X^{1-\eta/2}e^{L^{1/4}/2}}{L}
+\tag{OCQ12}
+$$
+
+samples in $\mathcal P_X$ whose same actual $N_p=C_{b_p}$ satisfies
+$\log G(N_p)-\gamma>\delta X^{-\eta}$, for the fixed positive
+$\delta$ in that persistence application. The original exponent is
+not decreased or reselected.
+
+The argument does not transfer the original selected integer's
+event-free, own-price, zero-defect properties to these post-event
+integers. Instead consume
+the already preserved unrestricted integer identity
+
+$$
+\Delta(n)=I_\psi(\log n)+R(\log n)+d_n,
+\qquad d_n\ge0,
+\qquad \Delta(n)=\gamma-\log G(n).
+\tag{OCQ13}
+$$
+
+At $n=N_p$, its own clock and the unrestricted sufficiently large
+reserve $R(A_p)>0$ supplied in (GAI3)–(GAI4) give
+
+$$
+U_p=T(A_p)\bigl(\log G(N_p)-\gamma+R(A_p)+d_{N_p}\bigr)
+\ge T(A_p)\bigl(\log G(N_p)-\gamma\bigr).
+\tag{OCQ14}
+$$
+
+Keep $d_{N_p}$; it is not set to zero. By (ASC2), each sample in
+(OCQ12) has $U_p\gg X^{1/2-\eta}L\to\infty$ and hence $U_p\ge1$
+eventually. Each contributes at least $1/4$ to (OCQ11). The ratio of
+the lower count (OCQ12) to $Q(X)$ is
+$\gg X^{1/4-\eta/2}L\to\infty$, contradicting (OCQ11) on the
+same unbounded source scales.
+
+Thus the displayed implication retains the original fixed-exponent
+source and all post-event layers. It does not obtain (OCQ10), the
+original one-sided $I_\psi$ estimate or RH. Standard quadrature and
+the existing persistence count supply interfaces, not the missing
+continuous signed-head bound. No new generic theorem, repeated
+prime-count proof, parameter optimization or numerical replay is
+claimed as mathematical progress.
+
 
 ## Project application: actual monotone layers at a shorter successor
 
