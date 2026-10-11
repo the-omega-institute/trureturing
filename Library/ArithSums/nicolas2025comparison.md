@@ -11096,3 +11096,662 @@ $C_B(A+D_i)$ and a strict coefficient gain beyond the critical $c_Q$.
 Formal analytic suppliers and their dependency verification are separate
 from this ordinary exposition. No estimate here proves the full
 every-$n>5040$ signed target (AVB02), which remains active and unproved.
+## Project application: forced windows and exact pairing of actual maximizing multiples
+
+Use the strict inventories, Euler layers, \(f,\lambda,w,K,\psi,Q\),
+\(T_\psi,S_Q,V_N\) and concavity cost \(C_t\) of QH1–QH13 and
+QG1–QG8. Write \(N_t^{\rm str}\) for that section's strict actual
+integer \(N_t\), to distinguish it from a maximizing multiple. Thus
+\(K(t)=\log N_t^{\rm str}\), actual equality layers are excluded, and
+the reference \(\psi(t)=\sum_{q^k\le t}\log q\) is weak and includes
+every prime power. All compact positive-price intervals have one common
+finite layer support, including actual ties and reference atoms.
+
+For \(n\ge3\), put \(F(n)=\log G(n)=W(n)-f(\log n)\). For an ordinary
+prime \(p\ge29\), let
+\[
+\mathscr M_p=\mathop{\rm argmax}_{5040p\mid n,\ n\in\mathbb N_{>0}}F(n),
+\quad v(p)=\max_{5040p\mid n}F(n),\quad
+N_p^{\rm mult}=\min\mathscr M_p,\quad A_p^{\rm mult}=\log N_p^{\rm mult}.
+\]
+These are maxima of the **actual Robin ratio over the entire multiples
+class**. They are distinct from the earlier event-indexed fixed-price
+integers \(N_p=C_{b_p}\).
+
+The completed all-branch deductions supply the following intermediate
+inputs: actual attainment under RH failure; for every maximizing tie
+over multiples of \(m\ge3\), with clock \(A\),
+\[
+N=\operatorname{lcm}(m,N_A^{\rm str});
+\]
+the strict activation of all 5040 layers when \(m=5040p,\ p\ge29\);
+and consequently
+\[
+N=\operatorname{lcm}(p,N_A^{\rm str}),\qquad
+E_N\subseteq\{(p,1)\}.
+\]
+They also supply the global clock/value ordering of the **least**
+sources, their finite constant-integer blocks, and the last-label bounds
+used below. These all-branch and E1–E8 inputs are reused as recorded in
+the [completed forced-window proof, §§2, 8–9](quantitative-extra-window-pairing-audit.md).
+Global least-source ordering does not assert global ordering of arbitrary
+ties. The finite positive-prefix optimizer at an arbitrary positive price
+is the existing
+[golden_future_extension_maximum_attained](../../D5/S3/Arith/GoldenFutureExtensionMaximum.lean);
+its private prefix construction realizes
+\(\operatorname{lcm}(N,N_t^{\rm str})\) at price \(\lambda(t)\).
+[GoldenColossalClosure](../../D5/S3/Arith/GoldenResource/GoldenColossalClosure.lean)
+also has the exponent-max construction, at its base threshold. Neither
+fixed-price result is substituted for actual-\(G\) attainment.
+
+### Fixed ordinary suppliers and the forced window
+
+Assume RH is false. The CNS oscillation input on CA integers, with
+\(\Theta=\sup_{\rho\text{ a nontrivial zero of }\zeta}\Re\rho\),
+supplies **one fixed**
+\[
+1-\Theta<b<\tfrac12,\qquad d>0,
+\]
+and arbitrarily large actual integer witnesses \(m\), with \(X=\log m\),
+such that \(F(m)\ge\gamma+dX^{-b}\). Here \(0<b<1/2\), since
+\(\Theta\le1\). This is the log-converted form of CNS
+[arXiv:1112.6010v2](https://arxiv.org/abs/1112.6010v2), printed p.15,
+whose underlying oscillation citation is **Robin 1983, [15], p.241**,
+not the separate Robin 1984 criterion.
+
+CNS equation (2), printed p.2, supplies the positive upper envelope.
+Using the upper rounding \(0.6483\) also printed on p.15, let
+\(K_R=0.6483e^{-\gamma}>0\). For every \(n\ge3\), \(A=\log n>1\),
+\[
+F(n)-\gamma\le\frac{K_R}{(\log A)^2}.
+\]
+This is an upper envelope with a positive error. Both published inputs
+are ordinary suppliers; their underlying analytic proofs are not
+reproved here.
+
+Use QGM with its fixed \(\epsilon_{\rm GM}=1/60\) and
+\(\beta=7/12\), for all real starts and only lengths
+\(y^\beta\le h\le y^{99/100}\). Enlarge its unknown common start so
+that its relative counting error is at most \(1/2\). Then every permitted
+interval contains a prime, and eventually the next ordinary prime after
+\(p\) is at most \(p+p^\beta\). This remains a label-spacing input.
+
+For each qualifying witness \(X\), define
+\[
+\ell_X=\frac d8X^{1-b}\log X,\qquad
+R_X=\exp\!\left(\sqrt{\frac{2K_R}{d}}X^{b/2}\right),\qquad
+\mathcal P_X=\{p\text{ prime}:e^{\ell_X}\le p\le e^{2\ell_X}\}.
+\tag{FW0}
+\]
+\(R_X\) is the **window clock ceiling**, distinct from the original
+Robin residual \(R(t)\). In the local proofs abbreviate
+\(\ell=\ell_X,\ R=R_X\).
+
+**Theorem N1 (uniform full-domain confinement and label uniqueness).**
+There is an unknown witness start \(X_0\) such that for every qualifying
+\(X\ge X_0\), every \(p\in\mathcal P_X\), and **every**
+\(N\in\mathscr M_p\), with \(A=\log N\),
+\[
+v(p)\ge\gamma+\frac d2X^{-b},\qquad
+\ell\le A\le R,\qquad
+N=pN_A^{\rm str},\qquad E_N=\{(p,1)\},\qquad P^+(N)=p.
+\tag{FW1}
+\]
+The same actual integer cannot be a maximizing tie for a different
+ordinary label \(q\ge29\), including a label outside this window.
+For each fixed \(M>0\),
+\[
+\frac{e^\ell}{R^M}\longrightarrow\infty
+\tag{FW2}
+\]
+along the witnesses; its eventual start is independent of \(p\) and tie.
+
+*Proof.* Set \(m_0=\operatorname{lcm}(5040,m)\),
+\(d_0=\log(m_0/m)\in[0,\log5040]\), and take the literal integer
+\(D_p=pm_0\). This is a legal multiple of \(5040p\), even when \(p\)
+already divides \(m_0\). With \(k=v_p(m_0)\), exact Euler telescoping gives
+\[
+F(D_p)-F(m)=W(m_0)-W(m)+\ell_{k+1}(p)
+ -[f(X+d_0+\log p)-f(X)].
+\]
+The two Euler increments are nonnegative. Since \(\lambda\) decreases,
+the last cost is at most
+\[
+\frac{d_0+\log p}{X\log X}
+\le\frac d4X^{-b}+\frac{\log5040}{X\log X}
+\le\frac d2X^{-b}
+\]
+eventually, uniformly over the window. Thus \(F(D_p)\) has the required
+floor. This uses the \((k+1)\)-st layer, not an absent-prime assumption.
+
+For any integer with clock \(A>R\), the upper envelope is strictly below
+that floor, since \(K_R/(\log R)^2=(d/2)X^{-b}\). In particular \(D_p\)
+has clock at most \(R\). The nonempty finite set of multiples of
+\(5040p\) with clock at most \(R\) therefore attains the entire
+infinite-domain maximum, and contains all its ties. The lower clock
+bound follows from \(N\ge5040p\); equality at the upper bound is retained.
+
+Write \(a_R=\sqrt{2K_R/d}\). Then
+\[
+\frac{\ell}{\log R}
+=\frac d{8a_R}X^{1-3b/2}\log X\longrightarrow\infty.
+\]
+Hence \(\ell-M\log R\to\infty\) for every fixed \(M\), proving FW2.
+In particular \(p>2R\) eventually. For any tie, \(A\le R<p\), so
+\(r_1(p)<\lambda(p)<\lambda(A)\). The reused strict 5040 activation
+and all-branch characterization give \(N=pN_A^{\rm str}\), with exactly
+one strictly inactive occupied extra. Every prime of \(N_A^{\rm str}\)
+is \(<A\le R\), so \(P^+(N)=p\). If the same integer maximized another
+label \(q\), its same own-clock nonempty extra set would be contained
+in both \(\{(p,1)\}\) and \(\{(q,1)\}\), forcing \(q=p\). ∎
+
+### One finite literal core and all choices of window ties
+
+Define the common finite set and its real-parameter envelope by
+\[
+\mathcal C_X=\{u\in\mathbb N_{>0}:5040\mid u,\ \log u\le R,\
+       \forall q\text{ prime},\ q\mid u\Rightarrow q\le R\},
+\qquad
+\mathcal V_X(h)=\max_{u\in\mathcal C_X}\{W(u)-f(\log u+h)\}
+\quad(\ell\le h\le2\ell).
+\tag{FW3}
+\]
+The set is nonempty eventually, since it contains 5040.
+
+**Theorem N2 (exact envelope and all-choice ordering).**
+For every sufficiently large qualifying witness and every
+\(p\in\mathcal P_X\),
+\[
+v(p)=c_p+\mathcal V_X(\log p),\qquad c_p=\ell_1(p).
+\tag{FW4}
+\]
+Multiplication by \(p\) is a bijection from **all** active cores at
+\(\log p\) to \(\mathscr M_p\), preserving leastness.
+The envelope is strictly decreasing and convex. If \(h_1<h_2\), every
+active core clock at \(h_1\) is at most every active core clock at \(h_2\).
+In particular, for any choices
+\(N=pU\in\mathscr M_p,\ N'=rV\in\mathscr M_r\) at \(p<r\) in the window,
+\[
+A=\log N<C=\log N',\qquad U\mid V,\qquad
+C-A=\log(V/U)+\log(r/p).
+\tag{FW5}
+\]
+At a real \(h\), if active core clocks have extrema \(a_{\min},a_{\max}\),
+the left/right derivatives and subgradient interval are
+\[
+\mathcal V'_{X,-}(h)=-\lambda(h+a_{\min}),\qquad
+\mathcal V'_{X,+}(h)=-\lambda(h+a_{\max}),\qquad
+\partial\mathcal V_X(h)=
+[-\lambda(h+a_{\min}),-\lambda(h+a_{\max})].
+\tag{FW6}
+\]
+
+*Proof.* FW1 puts every full-domain tie in the form
+\(pN_A^{\rm str}\), whose core lies in \(\mathcal C_X\), including all
+5040 layers. Conversely every \(u\in\mathcal C_X\) makes \(pu\) legal;
+\(p>R\) makes \(p\) absent from that core, so its Euler factor is exactly
+\(c_p\). Taking maxima proves both the identity and the full tie
+bijection, rather than replacing the multiples domain by a restriction.
+
+Each summand of FW3 has derivative \(-\lambda(\log u+h)<0\) and
+second derivative \(w(\log u+h)>0\). Its finite maximum is convex and
+strictly decreasing. If \(\log u>\log v\), the derivative of the
+\(u\)-summand minus the \(v\)-summand is
+\(\lambda(\log v+h)-\lambda(\log u+h)>0\). If \(u\) is active at
+\(h_1\), that difference is strictly positive at \(h_2>h_1\);
+\(v\) cannot be active there. This proves the all-choice order.
+At actual labels, \(C>A\) follows after adding the strictly larger
+label clock. Since \(U=N_A^{\rm str}\) and \(V=N_C^{\rm str}\),
+monotonicity of strict inventories gives \(U\mid V\) and FW5.
+
+The one-sided derivatives of a finite convex maximum are respectively
+the minimum and maximum active derivatives, giving FW6. Actual active
+cores remain a finite set of literal integers; intermediate subgradients
+need not be clocks of integer cores. No assertion identifying different
+ties at one parameter is used. ∎
+
+### Literal replacements and their arriving-scale deficiencies
+
+Let \(p<r\) be consecutive ordinary primes, both in \(\mathcal P_X\),
+and choose any of their maximizing ties. Use
+\[
+N=pU,\quad N'=rV,\quad A=\log N,\quad C=\log N',\quad
+\delta=\log(r/p)>0,\quad D=\log(V/U)\ge0,
+\]
+\[
+Z=pV,\quad z=\log Z=A+D=C-\delta,\quad
+\varepsilon=F(N)-F(Z),\quad
+\varepsilon_r=F(N')-F(rU).
+\tag{FW7}
+\]
+\(Z\) is a literal multiple of the **same original** \(N\).
+
+**Theorem N3 (rectangle identity and uniform arrival errors).**
+The sources \(N,N'\) are distinct and neither divides the other.
+Both deficiencies in FW7 are nonnegative, and
+\[
+\varepsilon+\varepsilon_r
+=\int_0^\delta\int_0^D w(A+s+t)\,dt\,ds
+\le\delta\lambda(A).
+\tag{FW8}
+\]
+Their cross-label value drop satisfies
+\[
+0<v(p)-v(r)\le\delta[1/p+\lambda(A)].
+\tag{FW9}
+\]
+Put \(E_X=e^{-5\ell/12}\). Uniformly over these pairs and all tie choices,
+\[
+0<\delta\le E_X,\qquad
+0\le\varepsilon\le\frac{E_X}{\ell\log\ell},
+\tag{FW10}
+\]
+\[
+\frac{\varepsilon}{w(C)},\ \frac{\varepsilon}{w(z)}
+\le\frac{E_XR^2\log R}{\ell\log\ell}\longrightarrow0,
+\qquad
+\frac{\varepsilon}{w(C)C^{11/10}},\
+\frac{\varepsilon}{w(z)z^{11/10}}
+\le\frac{E_XR^{9/10}\log R}{\ell\log\ell}\longrightarrow0.
+\tag{FW11}
+\]
+For each fixed \(M>0\), \(\delta R^M\) and \(\varepsilon R^M\)
+tend uniformly to zero. No hypothesis controlling \(C/A\) is needed.
+
+*Proof.* Both cores have primes at most \(R<p<r\), so each source
+lacks the other's label prime. FW5 gives \(U\mid V\), making \(Z=pV\)
+legal in \(N\)'s multiples class, and \(rU\) legal in the \(r\)-class.
+Actual maximality gives the nonnegative deficiencies. The two label Euler
+factors cancel in their sum, leaving
+\[
+f(A+D)-f(A)-f(A+D+\delta)+f(A+\delta).
+\]
+Twice integrating \(f''=-w\) gives FW8; integrating the inner curvature
+over its full half-line bounds it by
+\(\int_0^\delta\lambda(A+s)\,ds\le\delta\lambda(A)\).
+Also
+\[
+F(pV)-F(rV)=c_p-c_r+f(C)-f(C-\delta)>0.
+\]
+Comparing with the legal \(rU\) bounds the drop by
+\(c_p-c_r+f(A+\delta)-f(A)\).
+The exact identity
+\[
+c_p-c_r=\int_{\log p}^{\log r}\frac{du}{e^u+1}\le\delta/p
+\]
+proves FW9.
+
+GM is applied at length \(p^\beta\), inside its permitted range; thus
+\(r\le p+p^\beta\) and
+\(\delta\le p^{-5/12}\le E_X\). This gives FW10. For every
+\(t\in[\ell,R]\),
+\[
+w(t)\ge\frac1{R^2\log R},\qquad
+w(t)t^{11/10}\ge\frac1{R^{9/10}\log R}.
+\]
+Together with \(A\le z<C\le R\), these give the explicitly expanded
+arrival estimates FW11. All their ceilings vanish because
+\(\log R=o(\ell)\), as do the fixed-\(M\) bounds. The cross-label
+drop itself has normalized bound
+\[
+\frac{v(p)-v(r)}{w(C)C^{11/10}}
+\le E_XR^{9/10}\log R
+       \left[e^{-\ell}+\frac1{\ell\log\ell}\right]\longrightarrow0.
+\]
+Thus its strictness supplies no fixed normalized gain. If \(D=0\),
+\(Z=N\) and both deficiencies vanish. When \(D>0\),
+\(\varepsilon=0\) may still be a same-domain tie; choosing the least
+arrival gives \(\varepsilon_r>0\), without a quantitative margin. ∎
+
+### Exact integer rigidity and the signed compensated contact
+
+**Theorem N4 (literal pairing without clock-ratio control).**
+For every sufficiently large qualifying window and every FW7 pair,
+\[
+M_z=\operatorname{lcm}(N,N_z^{\rm str})=Z,\qquad
+\log M_z=z,\qquad
+N_t^{\rm str}=V\quad(z\le t\le C).
+\tag{FW12}
+\]
+In particular the original arriving clock \(C\) is exactly
+\(\delta\) after this optimizer clock. \(Z\) need not be GA2 or a
+canonical maximizing source.
+
+For the **canonical least sources**, let \(p=p_j\) be the departure's
+last label and reuse the E1–E8 right-continuous arriving-clock sum
+\[
+J_p(t)=\sum_{\substack{i\ge j\\ A_{p_{i+1}}^{\rm mult}\le t}}
+             \log(p_{i+1}/p_i),
+\]
+where \(p_i\) run through successive ordinary prime labels. Then
+\[
+J_p(t)=0\quad(A\le t<C),\qquad J_p(C)=\delta.
+\tag{FW13}
+\]
+With \(Y_N(t)=\log\operatorname{lcm}(N,N_t^{\rm str})\), the compensated
+endpoint and the preceding integral are exactly
+\[
+Y_N(C)-C+J_p(C)=0,\qquad
+\int_z^C[Y_N(t)-t+J_p(t)]w(t)\,dt=-C_C(z)<0.
+\tag{FW14}
+\]
+
+*Proof.* Monotonicity and FW5 give
+\(U\mid N_z^{\rm str}\mid V\). The label \(p>C\) is absent from these
+cores. Thus \(M_z=pN_z^{\rm str}\mid Z=pV\), and its clock \(y\)
+satisfies \(A\le y\le z\).
+
+Reuse the literal finite positive-prefix optimizer at price \(\lambda(z)\).
+Its deficiency against this same \(Z\) is
+\[
+\Delta_z=[W(M_z)-\lambda(z)y]-[W(Z)-\lambda(z)z]\ge0.
+\]
+Directly at these integers, with
+\(C_z(y)=f(z)+\lambda(z)(y-z)-f(y)\), one obtains
+\[
+\varepsilon=[F(N)-F(M_z)]+C_z(y)+\Delta_z.
+\tag{FW15}
+\]
+All three terms are nonnegative: \(M_z\) is an actual multiple of the
+actual-GA2 integer \(N\), the cost is concave-tangent cost, and the last
+term is fixed-price deficiency. For \(y\le z\),
+\[
+C_z(y)=\int_y^z(t-y)w(t)\,dt\ge\tfrac12w(z)(z-y)^2.
+\]
+Consequently the *actual common ceiling* in FW11 gives
+\[
+(z-y)^2\le
+\frac{2E_XR^2\log R}{\ell\log\ell}\longrightarrow0.
+\tag{FW16}
+\]
+Eventually \(z-y<\log2\), uniformly. Since \(Z/M_z\) is a positive
+integer, any failure of equality would give \(Z/M_z\ge2\), contradicting
+FW16. Therefore \(M_z=Z\) exactly. Cancelling the literal common factor
+\(p\) gives \(N_z^{\rm str}=N_C^{\rm str}=V\).
+Monotonicity gives equality on the **closed** interval \([z,C]\).
+A missing equality layer at \(z\) would become strictly active before
+\(C\), contradicting it. A missing tie at \(C\) remains excluded and has
+zero terminal pressure.
+
+For canonical sources, FW1 makes both label blocks singletons, including
+possible labels outside the window. Their global least-source clock
+order, and consecutiveness of \(p,r\), give no arriving-clock atom in
+\([A,C)\) and exactly the mass \(\delta\) at \(C\). A later label at
+the same clock would produce the same integer as \(N'\), contradicting
+FW1's label uniqueness. This proves FW13 with weak arrival indexing;
+no general plateau masses are omitted.
+
+On \([z,C]\), \(Y_N(t)=z\). Before \(C\) the compensated integrand is
+\(z-t\), and at \(C\) it jumps to \(z-C+\delta=0\). Its integral is
+\(-\int_z^C(t-z)w(t)\,dt=-C_C(z)<0\).
+The single endpoint atom has zero ordinary integration measure.
+The uncorrected envelope integrals from \(A\) to \(z\) and to \(C\),
+using the existing finite lcm identity, are respectively
+\(-\varepsilon\) and \(-\varepsilon-C_C(z)\).
+No divergent tail integrals are subtracted.
+
+The small retained cost also satisfies
+\[
+0<C_C(z)\le\tfrac12w(z)\delta^2,\qquad
+\frac{w(z)}{w(C)}\le e^{4\delta/z}\longrightarrow1.
+\]
+Here the bound \(|w'/w|\le4/t\) applies once \(t\ge e\). Hence eventually
+\[
+\frac{C_C(z)}{w(C)C^{11/10}}
+\le\frac{\delta^2}{C^{11/10}}\longrightarrow0,
+\qquad C_C(z)\le\tfrac12w(\ell)E_X^2.
+\]
+These uniform estimates retain the negative sign in FW14. ∎
+
+### Cofinal literal forward successors and real-base transport
+
+**Theorem N5 (cofinal exact pairing and a nontrivial forward integer).**
+For every finite common start \(T\), and every finite collection of
+supplier or tolerance starts, there is a sufficiently large qualifying
+window and a canonical FW7 pair with \(A,z,C\) beyond all these starts.
+For each such pair put
+\[
+h=z^{4/5},\quad B_z=z+h,\quad
+L=pN_{B_z}^{\rm str},\quad Y=\log L.
+\]
+Then, eventually and uniformly,
+\[
+N\mid Z\mid L,\qquad L>Z\ge N,\qquad
+V_Z(z,z^{4/5})=0,\qquad V_{N'}(C,C^{4/5})=0.
+\tag{FW17}
+\]
+Applying the existing exact QG accounting at this same \(Z\), and then
+subtracting its deficiency against this same original \(N\), gives
+\[
+F(L)-F(N)
+=w(z)[T_\psi(z,z^{4/5})+S_Q(z,z^{4/5})]
+       +C_{B_z}(Y)-\varepsilon.
+\tag{FW18}
+\]
+The actual terminal clock \(Y\) and its full nonnegative cost are retained.
+At the arriving original source \(N'\), its own literal successor is
+\(rN_{C+C^{4/5}}^{\rm str}\).
+
+*Proof.* GM at the real start \(e^\ell\), length \(e^{\beta\ell}\),
+gives a prime \(p\) just above \(e^\ell\); GM at \(p\) gives its next
+prime \(r\). Eventually \(r<4e^\ell<e^{2\ell}\), so both belong to
+\(\mathcal P_X\). Since \(A,z,C\ge\ell\to\infty\), the unbounded
+actual witness clocks pass any finite collection of starts together.
+These are the original canonical maximizing integers, not the oscillation
+seed \(m\) or its padded comparator \(D_p\). FW1 supplies cofinal
+extra-bearing canonical source blocks.
+
+FW12 gives \(N_z^{\rm str}=V\), so \(Z=pV\) divides \(L\).
+Since \(p>2R\) and \(B_z<2z\le2R\), its unique occupied extra remains
+strictly below the price throughout \([z,B_z]\). Thus its entire
+preoccupied loss is exactly zero. The same argument with \(r,C\) proves
+the arriving source's zero loss. The finite QG2–QG3 accounting only
+requires \(N_z^{\rm str}\mid Z\), the strict initial core and the actual
+literal successors; GA2 of \(Z\) is not needed. It therefore gives FW18.
+All initial \(K(z)\) terms cancel as in QG3; \(K(z)=z\) is not assumed.
+
+For strict nontriviality apply GM at the real start \(z+h/3\) with length
+\(h/3\). Its permitted-length inequalities hold eventually because
+\(7/12<4/5<99/100\). There is a prime
+\[
+z+h/3<q\le z+2h/3.
+\]
+Its first layer is absent from \(N_z^{\rm str}\), since \(q>z\).
+Eventually \(q<B_z-1<q_1(B_z)\), by MS2's strict first cutoff enclosure,
+so that layer belongs to \(N_{B_z}^{\rm str}\). Also \(q<p\).
+Thus \(q\mid L/Z\), proving \(L>Z\) independently of any favorable sign.
+This does not imply \(Z>N\), a positive \(D\), or GA2 of either forward
+integer.
+
+The Lambda term in FW18 is precisely QG7 evaluated at \((z,h)\):
+it sums **every** prime power in \((z,B_z]\), with weight
+\(\Lambda(n)[\lambda(n)-\lambda(B_z)]\), and subtracts
+\(f(B_z)-f(z)-h\lambda(B_z)\). Its initial atom is excluded and its
+terminal atom has zero weight. No prime-only or balanced-tent replacement
+is made. If terminal equality layers of mass \(J\) are deliberately
+installed, their Euler reward is \(\lambda(B_z)J\), the pressure integral
+is unchanged, and the cost becomes \(C_{B_z}(Y+J)\). FW18 consistently
+uses the strict successor with its original \(Y\). ∎
+
+The completed real-base \(C_0=120\) estimate applies to **every real**
+\(x\ge1024\), centers \(a,c\in[x,2x]\), and
+\(|c-a|\le x^{4/5}/2\):
+\[
+|T_\psi(c,c^{4/5})-T_\psi(a,a^{4/5})|
+\le120x^{4/5}(|c-a|+1)\log x.
+\]
+Reuse this estimate with the **actual real base** \(x=z\), \(a=z\),
+\(c=C=z+\delta\). Eventually all its comparable-base hypotheses hold,
+since \(\delta\le E_X\le1\). It yields the new uniform partner transfer
+\[
+\frac{|T_\psi(C,C^{4/5})-T_\psi(z,z^{4/5})|}{C^{11/10}}
+\le240z^{-3/10}\log z
+\le240\ell^{-3/10}\log\ell\longrightarrow0,\qquad
+\frac{C^{11/10}}{z^{11/10}}\longrightarrow1.
+\tag{FW19}
+\]
+The moving upper endpoint, weight normalization and initial prime-power
+jumps are included in the reused estimate. Its indispensable \(+1\)
+is retained even when \(\delta\) is tiny; \(\log Z\) is not assumed to
+be a power of two. This applies to the full discontinuous \(\psi\),
+not a Lipschitz surrogate.
+
+### Consuming the cofinal extras at every fixed ratio
+
+Enumerate the distinct canonical source blocks in label order as
+\(\mathcal N_j\), with clocks \(\mathcal A_j\), last labels
+\(p_j=P^+(\mathcal N_j)\), and next ordinary primes \(r_j\).
+Let \(\mathcal C_j=A_{r_j}^{\rm mult}=\mathcal A_{j+1}\).
+The reused all-branch replacement is the same-source literal integer
+\[
+\mathcal Z_j=\operatorname{lcm}(\mathcal N_j,N_{\mathcal C_j}^{\rm str}),
+\qquad
+\mathcal A_j\le\mathcal z_j=\log\mathcal Z_j\le\mathcal C_j.
+\]
+This definition preserves all branches, including zero-extra blocks.
+Finite blocks and unbounded labels give
+\(\mathcal A_j,p_j\to\infty\). The reused **departure last-label**
+bounds are
+\[
+\mathcal A_j<3p_j,\qquad
+E_{\mathcal N_j}=\varnothing\ \Longrightarrow\ p_j<\mathcal A_j.
+\]
+They are not applied at a small arrival label inside a zero-extra plateau.
+
+**Theorem (cofinal geometry consumed from N1 and N5).**
+Under the same ordinary RH-false suppliers,
+\[
+\forall q>1\ \forall T\
+\exists j:\quad
+T\le\mathcal A_j<\mathcal C_j\le q\mathcal A_j,\qquad
+\mathcal A_j\le\mathcal z_j\le\mathcal C_j.
+\tag{FW20}
+\]
+Here \(q\) is fixed first; starts may depend on it. Moreover every
+sufficiently large qualifying witness window contains a canonical FW7
+pair with \(C\le qA\).
+
+*Proof.* Fix \(q>1\), and choose \(\rho=(1+q)/2\in(1,q)\).
+If a zero-extra departure is followed by an extra arrival, that arrival
+has the unique label \(r_j\). Its extra first layer cannot have
+\(r_j\le\mathcal C_j-1\), by the strict first cutoff enclosure.
+Consequently \(\mathcal C_j<r_j+1\). Label spacing and the zero-extra
+departure's **last** label give
+\[
+\mathcal C_j<r_j+1\le p_j+p_j^\beta+1
+ <\mathcal A_j+\mathcal A_j^\beta+1<q\mathcal A_j
+\]
+eventually.
+
+Suppose the edges in FW20 were not cofinal. In a tail every
+\(\mathcal C_j>q\mathcal A_j\), so no zero-extra block there can be
+followed by an extra block. A zero-extra block would therefore force all
+subsequent blocks to have zero extra, contrary to N5's cofinal extras.
+This tail must consist wholly of extra blocks. Each arrival then has a
+unique label, so \(p_{j+1}=r_j\) are consecutive ordinary primes.
+Enlarge the tail until \(p_{j+1}\le\rho p_j\).
+For all \(k\ge1\), iteration and the last-label bound would give
+\[
+q^k\mathcal A_j<\mathcal A_{j+k}<3p_{j+k}\le3\rho^kp_j,
+\]
+impossible since \(q/\rho>1\). This proves the cofinal assertion.
+
+For the window assertion take
+\[
+k_X=\left\lfloor\frac{\log(R/\ell)}{\log q}\right\rfloor+1,
+\qquad q^{k_X}\ell>R.
+\]
+The initial \(p_0\) constructed in N5 has
+\(\log p_0\le\ell+\log2\). Its actual successive primes satisfy
+\[
+\log p_i\le\ell+\log2+iE_X<2\ell
+\qquad(0\le i\le k_X)
+\]
+by induction using GM at each permitted label and \(k_XE_X\to0\).
+The inequality simultaneously justifies their window membership.
+FW1 gives \(k_X+1\) distinct canonical clocks in \([\ell,R]\).
+If all their consecutive edges had \(C>qA\), the last clock would exceed
+\(q^{k_X}\ell>R\). At least one edge has \(C\le qA\), and \(A\ge\ell\)
+makes these edges cofinal. N4's ratio-free rigidity did not require this
+additional geometry. ∎
+
+In particular FW20 with \(q=2\) pays the premise of the completed
+two-price cofinal geometry consumer recorded in the ordinary proof §8.
+Its existing all-branch projection
+\(\mathcal y_j=\log\operatorname{lcm}(\mathcal N_j,N_{\mathcal z_j}^{\rm str})\)
+therefore obeys, cofinally,
+\[
+0\le\mathcal C_j-\mathcal y_j
+\le8\,3^{5/24}\mathcal A_j^{7/24}\sqrt{\log\mathcal A_j}
+      +\log(8\mathcal A_j)
+=o\!\left(\frac{\mathcal A_j^{3/10}}{\log\mathcal A_j}\right).
+\tag{FW21}
+\]
+Here \(\mathcal A_j\le\mathcal y_j\le\mathcal z_j\le\mathcal C_j
+\le2\mathcal A_j\), so its real comparable base is
+\(x=\mathcal y_j\). The same \(C_0=120\) estimate gives transfer
+\(o(\mathcal C_j^{11/10})\). This consumes the existing conditional
+consumer; its projection estimate is not reproved as a new theorem.
+It is separate from the exact, ratio-free window pairing FW12.
+FW20 is a fixed-ratio cofinal statement, not convergence on every edge
+or a shrinking-rate mesh.
+
+### The remaining full signed obligation
+
+QQE/QQD, with all seven errors and their one unknown all-real tolerance
+start, apply at the cofinal clocks just constructed:
+\[
+S_Q(z,z^{4/5})=(c_Q+o(1))z^{11/10},\qquad
+c_Q=(\sqrt2-1)/4.
+\]
+This is reused FullQ, with both actual and reference higher powers and
+the reference square subtraction intact. FW11 pays the same original
+source's deficiency at the **arriving** scale, FW17 pays the occupied
+loss exactly, and FW19 pays transport without discarding its atom cost.
+Actual GA2 of \(N\), however, makes FW18 only the necessary **upper**
+comparison
+\[
+w(z)[T_\psi(z,z^{4/5})+S_Q(z,z^{4/5})]
+\le\varepsilon-C_{B_z}(Y).
+\tag{FW22}
+\]
+No favorable lower coefficient follows.
+
+The unchanged selected-source debt is one fixed \(\kappa<c_Q\) such that,
+beyond **every** required common start \(T\), some original canonical
+\(N_p^{\rm mult}\) has \(A_p^{\rm mult}\ge T\) and
+\(T_\psi(A_p^{\rm mult},(A_p^{\rm mult})^{4/5})
+\ge-\kappa(A_p^{\rm mult})^{11/10}\).
+For this route its support may be confined to the proved cofinal window
+sources; that favorable estimate on them is still unpaid. Alternatively
+one owes a fixed positive normalized lower margin for the complete
+\(w(z)(T_\psi+S_Q)-\varepsilon\) on cofinal proved partners.
+FW19 would transport a supplied fixed favorable partner coefficient with
+strict slack to the arriving original source; it supplies no such sign.
+
+The existing E1–E8 last-label error budgets \(9/A\) and \(13/A\),
+their already proved convergence, and the complete compensation are
+unchanged. In particular the corrected E7 identity is reused:
+\[
+w(A)T_\psi=I_\psi(A)-I_\psi(B)
+-(\psi(A)-A)[\lambda(A)-\lambda(B)].
+\]
+Its necessary comparison and the compensation do not make FW14's
+negative local integral positive. No favorable finite nonzero
+same-family weighted Lambda/tent average or positive localized
+Tauberian estimate is obtained. Neither cofinal \(D>0\) or \(Z>N\),
+nor the balanced-left placement \(z-z^{4/5}\ge A\), is supplied.
+When a tent extends left of \(A\), its whole occupied crossing sum
+remains; FW18 uses the valid forward interval instead.
+
+All analytic starts here remain unknown; the source's separate
+conditional finite interval through \(8\cdot10^{46}\) cannot pay them.
+The literal sources, endpoint costs and full Lambda sign have not been
+replaced by relaxed cores or different integers. The deductions above
+are ordinary supplier-relative mathematics and carry no priority claim.
+The full signed target
+\[
+\forall n\in\mathbb N,\quad n>5040\ \Longrightarrow\
+I_\psi(\log n)+R(\log n)+d_{\log n}(n)>0
+\]
+remains **ACTIVE_UNPROVED**.
