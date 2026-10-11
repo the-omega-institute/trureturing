@@ -134,16 +134,11 @@ watch_checks() {
   done
 }
 validate_head() {
-  # Recover only a merge produced for this exact original merge, never an
-  # unrelated branch that happens to occupy the deterministic branch name.
-  local parents subject
-  parents=$(git show -s --format=%P "$head")
-  subject=$(git show -s --format=%s "$head")
-  base=${parents%% *}
-  [[ "$parents" == "$base $merge" && "$subject" == "mirror: #$original_pr $original_subject" ]] \
-    || die 69 "existing mirror head has unexpected parents or subject"
-  git merge-base --is-ancestor "$base" "$integration_tip" \
-    || die 69 "existing mirror base is outside integration history"
+  run validate-mirror python3 -B "$PROTOCOL" --source "$root" validate-mirror \
+    --commit "$head" --base "$integration_tip" --merge "$merge" \
+    --message "mirror: #$original_pr $original_subject" \
+    || die 69 "existing mirror head violates the producer contract"
+  base=$(jq -er '.base' <<<"$output") || die 69 "missing validated mirror base"
 }
 
 while (( $# )); do
