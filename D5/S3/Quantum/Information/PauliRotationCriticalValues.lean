@@ -374,8 +374,71 @@ private theorem critical_eq_det_zero (P : Fin 15 → NonIdentityPauli) :
         (show v ∈ LinearMap.ker (Matrix.mulVecLin (J_H P α)) from hz))
     have hp := Submodule.one_le_finrank_iff.mpr hk
     have hr := (Matrix.mulVecLin (J_H P α)).finrank_range_add_finrank_ker
-    simp only [Module.finrank_pi, Module.finrank_self, Fintype.card_fin, mul_one] at hr
+    simp only [Module.finrank_pi, Fintype.card_fin] at hr
     change Matrix.rank (J_H P α) + _ = 15 at hr
     omega
+
+private noncomputable def prefixG (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
+    Param →L[ℝ] Mat :=
+  ∑ k : Fin j.val,
+    (ContinuousLinearMap.proj (⟨k.val, lt_trans k.isLt j.isLt⟩ : Fin 15) : Param →L[ℝ] ℝ).smulRight
+      (H P α ⟨k.val, lt_trans k.isLt j.isLt⟩)
+
+private theorem prefix_strict (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
+    HasStrictFDerivAt (fun β => prefixOp P β j.val)
+      (((ContinuousLinearMap.mul ℝ Mat).flip (prefixOp P α j.val)).comp
+        ((-Complex.I / 2) • prefixG P α j)) α := by
+  apply (list_deriv P ((List.finRange 15).take j.val) α).congr_fderiv
+  ext1 h
+  simp only [listD, prefixG,
+    _root_.sum_apply, ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply,
+    ContinuousLinearMap.comp_apply, ContinuousLinearMap.flip_apply,
+    ContinuousLinearMap.mul_apply', _root_.smul_apply, Matrix.smul_mul, Finset.sum_mul,
+    Finset.smul_sum]
+  apply Finset.sum_equiv (finCongr (by simp)) (by simp)
+  intro k _
+  have hk : k.val ≤ j.val := by have := k.isLt; simp only [List.length_take] at this; omega
+  simp [List.take_take, Nat.min_eq_left hk, H, prefixOp, smul_comm (h _) (-Complex.I / 2)]
+
+private noncomputable def H_D (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
+    Param →L[ℝ] Mat := (-Complex.I / 2) •
+  (((ContinuousLinearMap.mul ℝ Mat).flip (H P α j)).comp (prefixG P α j) -
+    ((ContinuousLinearMap.mul ℝ Mat) (H P α j)).comp (prefixG P α j))
+
+private theorem H_deriv (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
+    HasStrictFDerivAt (fun β => H P β j) (H_D P α j) α := by
+  have hp := prefix_strict P α j
+  apply ((hp.mul_const' (wordOp (P j).val)).mul' hp.star).congr_fderiv
+  ext1 h
+  simp only [H_D, _root_.add_apply, _root_.sub_apply, _root_.smul_apply,
+    ContinuousLinearMap.comp_apply, ContinuousLinearMap.flip_apply,
+    ContinuousLinearMap.mul_apply', ContinuousLinearEquiv.coe_coe,
+    starL'_apply, op_smul_eq_mul, smul_eq_mul, Matrix.smul_mul]
+  have hg : star (prefixG P α j h) = prefixG P α j h := by
+    simp [prefixG, star_sum, star_smul, H_star]
+  have hc : star (-Complex.I / 2 : ℂ) = -(-Complex.I / 2) := by simp; ring
+  simp only [star_smul, star_mul, hg, hc, H, Matrix.mul_smul,
+    mul_assoc, smul_sub, neg_smul, mul_neg]
+  module
+
+private noncomputable def J_D (P : Fin 15 → NonIdentityPauli) (α : Param) :
+    Param →L[ℝ] (Fin 15 → Fin 15 → ℝ) :=
+  ContinuousLinearMap.pi fun i => ContinuousLinearMap.pi fun j =>
+    (ContinuousLinearMap.proj i : Param →L[ℝ] ℝ).comp (rho.comp (H_D P α j))
+
+private theorem J_strict (P : Fin 15 → NonIdentityPauli) (α : Param) :
+    HasStrictFDerivAt (J_H P) (J_D P α) α := by
+  apply hasStrictFDerivAt_pi.mpr
+  intro i
+  apply hasStrictFDerivAt_pi.mpr
+  intro j
+  exact (ContinuousLinearMap.proj i : Param →L[ℝ] ℝ).hasStrictFDerivAt.comp α
+    (rho.hasStrictFDerivAt.comp α (H_deriv P α j))
+
+private theorem J_fderiv (P : Fin 15 → NonIdentityPauli) (α h : Param) (i j : Fin 15) :
+    fderiv ℝ (J_H P) α h i j = rho ((-Complex.I / 2) •
+      (prefixG P α j h * H P α j - H P α j * prefixG P α j h)) i := by
+  rw [(J_strict P α).hasFDerivAt.fderiv]
+  rfl
 
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
