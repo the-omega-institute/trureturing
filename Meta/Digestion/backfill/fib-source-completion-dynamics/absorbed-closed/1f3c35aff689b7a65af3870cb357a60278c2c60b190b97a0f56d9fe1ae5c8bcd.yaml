@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f3c35aff689b7a65af3870cb357a60278c2c60b190b97a0f56d9fe1ae5c8bcd
+  normalized_sha256: sha256:1f3c35aff689b7a65af3870cb357a60278c2c60b190b97a0f56d9fe1ae5c8bcd
+cas_ref: sha256:1f3c35aff689b7a65af3870cb357a60278c2c60b190b97a0f56d9fe1ae5c8bcd
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FixedGraphMargin.fixed_lower_graph_actual_margin
+    target_statement_id: sha256:a8f515797e605ebfa077c7e8ee7d9b4c8f91f67cf6d22c2a5e53964930546bd8
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FixedGraphMargin.graph_gap_minimum
+    target_statement_id: sha256:ea47eeac0caf897e53496623b0662033d225c0eea473f8bca0be1fe0974beef7
+receipts:
+  unresolved_subitems: []

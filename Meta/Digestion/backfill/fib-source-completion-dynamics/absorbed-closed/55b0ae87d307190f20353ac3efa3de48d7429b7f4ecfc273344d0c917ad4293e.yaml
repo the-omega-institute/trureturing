@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:55b0ae87d307190f20353ac3efa3de48d7429b7f4ecfc273344d0c917ad4293e
   normalized_sha256: sha256:55b0ae87d307190f20353ac3efa3de48d7429b7f4ecfc273344d0c917ad4293e
 cas_ref: sha256:55b0ae87d307190f20353ac3efa3de48d7429b7f4ecfc273344d0c917ad4293e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/LowerRateLimit.original_lower_rate_limit
+    target_statement_id: sha256:98114f1645b4eaa6b3208c0be3f3493fe20a851fbd75b200ca262efc648e97fc
 receipts:
   unresolved_subitems: []
