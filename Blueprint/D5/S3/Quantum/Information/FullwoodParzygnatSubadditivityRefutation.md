@@ -56,7 +56,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-Let rho be the identity divided by five and use the ten Kraus operators (E_ij - E_ji)/2, one for each i < j. Their adjoint products sum to the identity. Their channel action is (trace(X) I - transpose(X))/4 and fixes rho. Let Omega have entry one exactly on equal input and output indices, and let P be its outer product divided by five. P is a Hermitian idempotent of trace one. The Jamiołkowski matrix is (I - 5P)/4, and the two-time matrix is (I - 5P)/20. Its eigenvalues are -1/5 once and 1/20 twenty-four times. Apply CumulantRenyiDataProcessingRefutation.two_point_cfc to the self-adjoint involution H = 2P - I with a = -3/40 and b = -1/8. This evaluates the signed entropy ChenKatoBrandaoCMIRefutation.entropy through PartialTraceMutualInformation.re_trace_cfc and gives log 5 + (6/5) log 4. Each marginal entropy is log 5. The excess is (1/5) log(4096/3125), which is strictly positive because 4096 > 3125. This contradicts the universal subadditivity bound.
+Let rho be the identity divided by five and use the ten Kraus operators (E_ij - E_ji)/2, one for each i < j. Their adjoint products sum to the identity. Their channel action is (trace(X) I - transpose(X))/4 and fixes rho. Use ProductUnitaryChoiSpectrum.omega 5, whose entries are one exactly on equal input and output indices, and let P be its outer product divided by five. ProductUnitaryChoiSpectrum.omega_dot_omega gives squared norm five; complex conjugation fixes this vector. P is a Hermitian idempotent of trace one. The Jamiołkowski matrix is (I - 5P)/4, and the two-time matrix is (I - 5P)/20. Its eigenvalues are -1/5 once and 1/20 twenty-four times. Apply CumulantRenyiDataProcessingRefutation.two_point_cfc to the self-adjoint involution H = 2P - I with a = -3/40 and b = -1/8. This evaluates the signed entropy ChenKatoBrandaoCMIRefutation.entropy through PartialTraceMutualInformation.re_trace_cfc and gives log 5 + (6/5) log 4. Each marginal entropy is log 5. The excess is (1/5) log(4096/3125), which is strictly positive because 4096 > 3125. This contradicts the universal subadditivity bound.
 
 ## References
 
@@ -66,4 +66,5 @@ Let rho be the identity divided by five and use the ten Kraus operators (E_ij - 
 - Truth anchor: `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.result`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation](ChenKatoBrandaoCMIRefutation.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum](../QuantumChannels/ProductUnitaryChoiSpectrum.md)
 - Dependency: [D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation](../../QuantumChannels/CumulantRenyiDataProcessingRefutation.md)

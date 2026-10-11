@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation
+import D5.S3.Quantum.QuantumChannels.ProductUnitaryChoiSpectrum
 import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
@@ -20,6 +21,7 @@ open Matrix
 open scoped BigOperators Kronecker ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap
 open D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation (entropy)
+open D5.S3.Quantum.QuantumChannels
 
 noncomputable section
 namespace D5.S3.Quantum.Information.FullwoodParzygnatSubadditivityRefutation
@@ -53,10 +55,9 @@ private def K (k : Fin 10) : Matrix (Fin 5) (Fin 5) ℂ :=
 
 private def ρ : Matrix (Fin 5) (Fin 5) ℂ := (1 / 5 : ℝ) • 1
 
-private def Ω (p : Fin 5 × Fin 5) : ℂ := if p.1 = p.2 then 1 else 0
-
 private def P : Matrix (Fin 5 × Fin 5) (Fin 5 × Fin 5) ℂ :=
-  (1 / 5 : ℝ) • vecMulVec Ω (star Ω)
+  (1 / 5 : ℝ) • vecMulVec (ProductUnitaryChoiSpectrum.omega 5)
+    (star (ProductUnitaryChoiSpectrum.omega 5))
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 4000000 in
@@ -93,13 +94,17 @@ private theorem jamio_apply {n m : ℕ}
 
 
 private theorem P_hermitian : P.IsHermitian := by
-  exact (Matrix.posSemidef_vecMulVec_self_star Ω).isHermitian.smul
+  exact (Matrix.posSemidef_vecMulVec_self_star (ProductUnitaryChoiSpectrum.omega 5)).isHermitian.smul
     (isSelfAdjoint_iff.mpr (by simp) : IsSelfAdjoint (1 / 5 : ℝ))
 
 private theorem P_idempotent : P * P = P := by
-  have hdot : star Ω ⬝ᵥ Ω = (5 : ℂ) := by
-    unfold Ω
-    simp [dotProduct, Fintype.sum_prod_type]
+  have hdot : star (ProductUnitaryChoiSpectrum.omega 5) ⬝ᵥ
+      ProductUnitaryChoiSpectrum.omega 5 = (5 : ℂ) := by
+    rw [show star (ProductUnitaryChoiSpectrum.omega 5) =
+      ProductUnitaryChoiSpectrum.omega 5 by
+        ext p
+        simp [ProductUnitaryChoiSpectrum.omega]]
+    exact ProductUnitaryChoiSpectrum.omega_dot_omega 5
   unfold P
   rw [Matrix.smul_mul, Matrix.mul_smul, Matrix.vecMulVec_mul_vecMulVec, hdot]
   ext i j
@@ -109,7 +114,7 @@ private theorem P_idempotent : P * P = P := by
   ring
 
 private theorem P_trace : trace P = 1 := by
-  unfold P Ω
+  unfold P ProductUnitaryChoiSpectrum.omega
   simp [Matrix.trace, Matrix.vecMulVec_apply, Fintype.sum_prod_type]
 
 set_option maxRecDepth 100000 in
@@ -123,7 +128,7 @@ private theorem jamio_eq : jamio (of_kraus K K) =
     · simp [trace_single_eq_of_ne c a (1 : ℂ) h, h]
   rw [ht]
   clear ht
-  unfold P Ω
+  unfold P ProductUnitaryChoiSpectrum.omega
   simp [Matrix.single, Matrix.one_apply, Matrix.vecMulVec_apply, Prod.ext_iff]
   split_ifs <;> simp_all only [Matrix.one_apply, and_self, true_and,
     not_true_eq_false, false_and, and_false, not_false_eq_true] <;> norm_num
