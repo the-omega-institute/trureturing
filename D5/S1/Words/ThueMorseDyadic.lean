@@ -12,8 +12,7 @@ import Mathlib.Tactic.Ring
 namespace D5.S1.Words.ThueMorseDyadic
 
 open D5.S1.Words.Complexity
-open private thueMorse_zero thueMorse_two_mul thueMorse_two_mul_add_one
-  thueMorse_two_pow_add
+open private thueMorse_two_pow_add
   from D5.S1.Words.Complexity.ThueMorseReducedAbelianOdd
 
 /-- Binary digit parity splits at any dyadic block boundary. -/
