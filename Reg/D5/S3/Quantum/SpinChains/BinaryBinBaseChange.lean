@@ -10,6 +10,8 @@ open _root_.D5.S3.Quantum.SpinChains.HypereclecticNonShortening
 open _root_.D5.S3.Quantum.SpinChains.Sl2WeightFiltration
 open scoped TensorProduct
 
+attribute [local instance] LieRing.ofAssociativeRing
+
 namespace Reg.D5.S3.Quantum.SpinChains.BinaryBinBaseChange
 universe u
 
