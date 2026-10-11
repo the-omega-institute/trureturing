@@ -92,7 +92,8 @@ private lemma tomography (M N : QubitMatrix) (hM : M.IsHermitian)
       bornProbability (CStarMatrix.ofMatrix.symm ρ.1) M =
         bornProbability (CStarMatrix.ofMatrix.symm ρ.1) N) : M = N := by
   have h0 := h (state 0 (by simp))
-  simp only [state, Equiv.symm_apply_apply] at h0
+  dsimp only [state] at h0
+  simp only [Equiv.symm_apply_apply] at h0
   rw [B_rep M hM, B_rep N hN, B_born, B_born] at h0
   have ht : (Matrix.trace M).re = (Matrix.trace N).re := by
     have hr := congrArg Complex.re h0
@@ -101,7 +102,8 @@ private lemma tomography (M N : QubitMatrix) (hM : M.IsHermitian)
   have hv : bloch M = bloch N := by
     ext i
     have he := h (state (EuclideanSpace.single i 1) (by simp))
-    simp only [state, Equiv.symm_apply_apply] at he
+    dsimp only [state] at he
+    simp only [Equiv.symm_apply_apply] at he
     rw [B_rep M hM, B_rep N hN, B_born, B_born] at he
     have he' := congrArg Complex.re he
     simp [ht, PiLp.inner_apply] at he'
@@ -326,7 +328,8 @@ private lemma central_criterion (n : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ =
     have he (i : Fin 2) (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) (hnr : ⟪n, r⟫_ℝ = 0) :
         (Matrix.trace (marginal G i 0)).re + ⟪r, u i⟫_ℝ = 1 + ⟪r, a i⟫_ℝ := by
       have hz := h (state r hr) ⟨r, hr, hnr, rfl⟩ i 0
-      simp only [state, Equiv.symm_apply_apply] at hz
+      dsimp only [state] at hz
+      simp only [Equiv.symm_apply_apply] at hz
       rw [B_rep _ (marginal_psd hG i 0).isHermitian, effect_B] at hz
       simp only [ite_true, one_smul] at hz
       rw [B_born, B_born] at hz
@@ -356,7 +359,8 @@ private lemma central_criterion (n : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ =
     refine ⟨G, hG, fun ρ hρ i s => ?_⟩
     obtain ⟨r, hr, hnr, rfl⟩ := hρ
     rw [hm _ (Set.mem_univ _) i s]
-    simp only [state, Equiv.symm_apply_apply]
+    dsimp only [state]
+    simp only [Equiv.symm_apply_apply]
     rw [effect_B, effect_B, B_born, B_born]
     fin_cases s <;>
       simp [project, inner_smul_right, inner_sub_right, real_inner_comm n r, hnr]
