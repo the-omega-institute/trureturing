@@ -274,16 +274,16 @@ private lemma defect_free_frs (h3 : 3 ≤ m) (r : List (Fin m))
       refine ⟨k + 1, ?_⟩
       rw [hs.1, hk, Function.iterate_succ_apply']
 
-private def star (r : List (Fin m)) (a : Fin m) : Fin m → ℕ :=
+def star (r : List (Fin m)) (a : Fin m) : Fin m → ℕ :=
   fun i => letterCount r i + if i = a then 1 else 0
 
-private lemma star_injective (r : List (Fin m)) : Function.Injective (star r) := by
+lemma star_injective (r : List (Fin m)) : Function.Injective (star r) := by
   intro a b h
   by_contra hab
   have hi := congrFun h a
   simp [star, hab] at hi
 
-private lemma star_subset (r : List (Fin m)) (hf : FRS hm r) :
+lemma star_subset (r : List (Fin m)) (hf : FRS hm r) :
     Set.range (star r) ⊆ parikhImage hm (r.length + 1) := by
   rintro x ⟨a, rfl⟩
   obtain ⟨q, hq⟩ := hf a
