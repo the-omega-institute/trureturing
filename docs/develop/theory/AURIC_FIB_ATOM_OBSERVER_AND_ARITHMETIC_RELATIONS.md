@@ -1125,3 +1125,219 @@ I0^j\longrightarrow V_j\longrightarrow\text{迹、秩、差异纤维}
 | A-L7 | Mateus Araújo、Adrien Feix、Fabio Costa、Časlav Brukner，*Quantum circuits cannot control unknown operations*，arXiv:1309.7976，2014-02-03 修订正文，[论文](https://arxiv.org/abs/1309.7976v2)，New Journal of Physics 16, 093026 (2014), [DOI](https://doi.org/10.1088/1367-2630/16/9/093026) | 任意未知酉在标准黑盒电路内的一次调用不能普遍构造受控酉；物理子空间实现可给额外信息，未禁止本卷已供应比较门 |
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 吸收秩父图的定量世代
+
+**定义 A-24.1（秩父图与吸收根）。** 对素数 $p$，以 $z(p)$ 表示第九节的首次秩 $r_p$。原秩父图以全体素数为顶点，边 $p\to q$ 当且仅当 $q$ 为 $z(p)$ 的素因子。令 $B=\{2,3,5\}$；删除所有起点属于 $B$ 的边，所得有向图称为吸收秩父图。路径长度为边数，$g(p)$ 为从 $p$ 出发的有向路径的最大长度。第十二节已给有限秩闭包，此处的 $g$ 只度量该依赖关系的高度。素因子父关系有 Luca–Tron §4 的 Pratt–Fibonacci trees 先例，见[文献注](../../../Library/Factorization/lucatron2015selffibonacci.md)；本定义按素数值识别重复节点并吸收 $B$，不把该父关系作为新构造。
+
+**定理 A-24.2（世代的对数界；`repo-derived`）。** 吸收秩父图无有向环，每个顶点的后继闭包有限，$g$ 良定义且满足
+
+```math
+g(p)=0\quad(p\in B),\qquad
+g(p)=1+\max_{q\mid z(p),\ q\ {\rm prime}}g(q)\quad(p>5),
+```
+
+```math
+2^{g(p)}\le p-1,\qquad
+g(p)\le\lfloor\log_2(p-1)\rfloor.
+```
+
+原秩父图的简单有向环只有 $2\to3\to2$ 和 $5\to5$。该图容许一个顶点有多个父点，故一般不是树。
+
+**证明。** 所用经典秩整除关系为本卷 A-8.2、A-9.2 的
+
+```math
+z(p)\mid p-\varepsilon_p,\qquad
+\varepsilon_p=(p/5)\in\{-1,1\}\qquad(p\ne2,5),
+```
+
+这里 $(p/5)$ 为 Legendre 符号；其文献背景见 A-L3、A-L4。Luca–Tron Theorem 2.2 的证明也已使用大于 $5$ 的最大素因子严格下降；本条的新增结论是吸收图的定量高度界。
+
+若 $p>5$，则 $p-\varepsilon_p$ 是大于 $2$ 的偶数。因此其任一素因子 $q$ 至多为 $(p-\varepsilon_p)/2$，从而
+
+```math
+q\mid z(p)\quad\Longrightarrow\quad
+q\le\frac{p+1}{2}<p,
+\qquad q-1\le\frac{p-1}{2}.
+```
+
+在非根点出发的每条边上，素数严格减小。每个点只有有限多个父点，且所有后继都不大于起点，所以后继闭包有限，吸收图无环，最大路径长度存在。$z(p)>1$，故 $p>5$ 时父点集合非空，最大路径长度满足所述递推式。
+
+对素数的大小作强归纳。根点处 $2^{g(p)}=1\le p-1$。非根点选取达到最大世代的父点 $q$，则
+
+```math
+2^{g(p)}=2\,2^{g(q)}\le2(q-1)\le p-1.
+```
+
+取以 $2$ 为底的对数，得到整数高度界。
+
+最后，A-9.4 给出 $z(2)=3$、$z(3)=4$、$z(5)=5$。原图中根点只能在 $B$ 内转移，所有其余边严格下降，因此没有别的简单有向环。又由同表 $z(11)=10$、$z(31)=30$，$11$ 与 $31$ 都有父点 $2$ 和 $5$。吸收图的底层无向图因而含有圈 $2-11-5-31-2$，所以它也不是无向树；有向图本身仍无环。证毕。
+
+## 25. 首次秩的 AURIC 纤维与模五限制
+
+**定义 A-25.1（秩坐标）。** 对每个素数 $p$，唯一分解
+
+```math
+z(p)=2^{a_2(p)}3^{a_3(p)}5^{a_5(p)}7^{a_7(p)}E(p),
+\qquad \gcd(E(p),210)=1,
+```
+
+其中各 $a_r(p)$ 为非负整数，$E(p)$ 为正整数。定义
+
+```math
+X(p)=a_2(p)+a_7(p),\qquad
+Y(p)=a_5(p)+a_7(p),\qquad
+Z(p)=a_3(p),\qquad \kappa(p)=a_7(p).
+```
+
+此处的 $(X,Y,Z)$ 对应[《Robin 约数尺度几何》§6](https://github.com/the-omega-institute/trureturing/blob/53e40fe0314f4d531ab10a37f3e30b859034b2cb/docs/develop/theory/AURIC_FIB_ROBIN_DIVISOR_SCALE_GEOMETRY.md)的 $(u,w,v)$，采用低位、高位、中位的次序。纤维指保持 $(X,Y,Z)$ 相同的素数集合；不要求 $E$ 相同，也不由这些坐标恢复 $E$。
+
+**命题 A-25.2（纤维较低隐坐标的剩余类；`repo-derived`）。** 若素数 $p_1,p_2$ 的 $(X,Y,Z)$ 相同，而 $\kappa(p_1)<\kappa(p_2)$，则
+
+```math
+a_5(p_1)\ge1,\qquad p_1\equiv1\pmod5.
+```
+
+该结论按 $\kappa$ 排序，不要求 $p_1<p_2$。
+
+**证明。** 由定义，对于任一实际坐标，
+
+```math
+0\le\kappa\le\min(X,Y),\qquad
+a_2=X-\kappa,\quad a_5=Y-\kappa,\quad a_3=Z.
+```
+
+故
+
+```math
+a_5(p_1)=Y-\kappa(p_1)
+\ge\kappa(p_2)-\kappa(p_1)\ge1.
+```
+
+若 $p_1=2$，则 $z(2)=3$，与 $5\mid z(p_1)$ 矛盾。若 $p_1=5$，则 $z(5)=5$，于是 $X=0$，迫使同纤维全部 $\kappa=0$，仍矛盾。因此可应用 A-8.2 的经典秩整除关系，得
+
+```math
+5\mid z(p_1)\mid p_1-(p_1/5).
+```
+
+若 $(p_1/5)=-1$，则 $p_1\equiv-1\equiv4\pmod5$；但 $4$ 是模 $5$ 的非零平方，要求 $(p_1/5)=1$，矛盾。所以 $(p_1/5)=1$，且 $p_1\equiv1\pmod5$。
+
+以下只以具体参数说明本命题的条件与结论方向。A-9.4 的既有秩表中，$(11,13)$ 和 $(41,29)$ 分别给出同一纤维 $(X,Y,Z)=(1,1,0)$ 和 $(2,1,0)$，两对均为 $\kappa=0,1$；这些是该表在 A-25.1 下的直接代入。两对的素数大小次序相反，因而 $\kappa$ 的次序不能改写成素数的大小次序。
+
+同一命题也有两个隐坐标均非零的实例：$71,97$ 的秩分别为 $70,49$，均落在 $(X,Y,Z)=(2,2,0)$，而 $\kappa=1,2$。所需的具体秩在此作为本命题的中间步骤证明。$71,97$ 都不被不超过其平方根的素数 $2,3,5,7$ 整除，所以均为素数。Fibonacci 递推及加倍恒等式给出以下整数余数：
+
+| 模数 | $F_7$ | $F_{10}$ | $F_{14}$ | $F_{24}$ | $F_{25}$ | $F_{35}$ | $F_{36}$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $71$ | $13$ | $55$ | $22$ | $5$ | $49$ | $21$ | $46$ |
+| $97$ | $13$ | $55$ | $86$ | $2$ | $44$ | $49$ | $15$ |
+
+具体地，$F_7=13$、$F_{10}=55$、$F_{14}=377$、$F_{24}=46368$、$F_{25}=75025$、$F_{35}=9227465$、$F_{36}=14930352$；这些整数由 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$ 给出。于是
+
+```math
+F_{70}=F_{35}(2F_{36}-F_{35})
+\equiv21(2\cdot46-21)=21\cdot71\equiv0\pmod{71},
+```
+
+```math
+F_{49}=F_{25}^2+F_{24}^2
+\equiv44^2+2^2=20\cdot97\equiv0\pmod{97}.
+```
+
+由 A-9.2，$z(71)\mid70$。若不等于 $70$，它必整除 $70/\ell$，其中某个素数 $\ell\mid70$。但 $F_{35},F_{14},F_{10}$ 模 $71$ 均非零，排除 $\ell=2,5,7$。故 $z(71)=70$。由已证的 $F_{49}\equiv0\pmod{97}$ 及 A-9.2，$z(97)\mid49$，而 $F_7\not\equiv0\pmod{97}$，故 $z(97)=49$。
+
+分解 $70=2\cdot5\cdot7$、$49=7^2$ 并代入 A-25.1，即得所述共同坐标及两个 $\kappa$。证毕。
+
+## 26. 固定秩素因子支撑的计数界
+
+**定义 A-26.1（固定支撑的秩族）。** 固定非空有限素数集 $S$，记 $s=|S|$，并令
+
+```math
+\mathcal H_S=\left\{\prod_{r\in S}r^{e_r}:e_r\in\mathbb Z_{\ge0}\right\},
+\qquad
+N_S(x)=\#\{p\le x:p\text{ 为素数且 }z(p)\in\mathcal H_S\}.
+```
+
+等价地，$N_S(x)$ 要求 $\operatorname{supp}z(p)\subseteq S$；$1\in\mathcal H_S$。以下 $\log$ 为自然对数，$O_S$ 的常数只依赖固定的 $S$。
+
+**定理 A-26.2（固定秩支撑的平方根计数界；`repo-derived`）。** 当 $x\to\infty$ 时，
+
+```math
+N_S(x)=O_S\!\left(\sqrt{x}(\log x)^{s-1}\right).
+```
+
+因此此素数集合在全部素数中具有相对自然密度零，即 $N_S(x)/\pi(x)\to0$。
+
+**证明。** 先估计本定义中的指数格点。固定 $r_0\in S$。若 $d\in\mathcal H_S\cap(t,2t]$，$t\ge1$，则除 $r_0$ 外每个指数均有 $O_S(1+\log t)$ 种选择。固定这些指数后，$e_{r_0}\log r_0$ 落在长度 $\log2$ 的区间内，故剩余指数只有有界多个选择。因此
+
+```math
+\#(\mathcal H_S\cap(t,2t])
+=O_S((1+\log t)^{s-1}).\tag{26.1}
+```
+
+该论证也包括 $s=1$：此时不需要预先选择任何指数。按二进区间求和，得到对 $y\ge2$ 的三个界
+
+```math
+\sum_{\substack{d\le y\\d\in\mathcal H_S}}d
+=O_S(y(1+\log y)^{s-1}),\tag{26.2}
+```
+
+```math
+\sum_{\substack{d>y\\d\in\mathcal H_S}}\frac1d
+=O_S\!\left(\frac{(1+\log y)^{s-1}}y\right),\tag{26.3}
+```
+
+```math
+\#(\mathcal H_S\cap[1,y])=O_S((1+\log y)^s).\tag{26.4}
+```
+
+为明确求和方向，(26.2) 在 $(y/2^{j+1},y/2^j]$ 上用 $d\le y/2^j$ 与 (26.1)，再单独计入 $d=1$；所得几何级数收敛。(26.3) 在 $(2^jy,2^{j+1}y]$ 上用 $1/d\le2^{-j}/y$；其总和由
+
+```math
+\frac{(1+\log y)^{s-1}}y
+\sum_{j\ge0}2^{-j}(1+j\log2)^{s-1}
+```
+
+的常数倍控制。(26.4) 也可由每个指数至多 $\log y/\log r$ 直接得到。
+
+现在固定 $2\le y\le x$，按 $z(p)\le y$ 和 $z(p)>y$ 分开计数。小秩部分中的每个不同素数都整除正整数
+
+```math
+P_S(y)=\prod_{\substack{d\le y\\d\in\mathcal H_S}}F_d.
+```
+
+因为 $F_d\le2^d$（由递推归纳即得），一个有 $k$ 个不同素因子的正整数至少为 $2^k$，所以小秩素数的数目不超过
+
+```math
+\frac{\log P_S(y)}{\log2}
+\le\sum_{\substack{d\le y\\d\in\mathcal H_S}}d
+=O_S(y(1+\log y)^{s-1}).\tag{26.5}
+```
+
+若乘积等于 $1$，其素因子集合为空，同一不等式仍成立。
+
+大秩部分先单独计入至多两个例外素数 $2,5$。对其余素数，A-8.2 的经典整除关系给出
+
+```math
+d=z(p)\mid p-(p/5),\qquad d\le x+1,\qquad p\equiv1\text{ 或 }-1\pmod d.
+```
+
+每个固定 $d$ 的这两个整数剩余类在 $[1,x]$ 内至多有 $2x/d+2$ 个元素；以整数总数上界素数数目，利用 (26.3)–(26.4)，大秩部分至多为
+
+```math
+2+\sum_{\substack{y<d\le x+1\\d\in\mathcal H_S}}
+\left(\frac{2x}{d}+2\right)
+=O_S\!\left(\frac{x}{y}(1+\log y)^{s-1}+(1+\log x)^s\right).\tag{26.6}
+```
+
+合并 (26.5)–(26.6)，取 $y=\sqrt x$，并用 $\log x=O(\sqrt x)$，即得所述计数界。这里没有把不同秩的可达性当作共同可达，也没有使用等差数列素数渐近。
+
+最后引用经典的 $\pi(x)>x/\log x$（$x\ge17$），来源为 Rosser–Schoenfeld，*Approximate formulas for some functions of prime numbers*，Corollary 1、式 (3.5)，见[文献注](https://github.com/the-omega-institute/trureturing/blob/53e40fe0314f4d531ab10a37f3e30b859034b2cb/Library/Arith/rosser1962approximate.md)。于是
+
+```math
+0\le\frac{N_S(x)}{\pi(x)}
+=O_S\!\left(\frac{(\log x)^s}{\sqrt x}\right)\longrightarrow0.
+```
+
+该经典素数下界仅用于相对密度的最后一步；平方根计数界由上述秩分桶与固定支撑指数格点估计给出。证毕。
+
+## 追加锚（本行以下为增补区）
