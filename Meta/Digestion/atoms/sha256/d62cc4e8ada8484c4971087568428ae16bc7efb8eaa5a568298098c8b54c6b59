@@ -1,0 +1,58 @@
+**Proof (a common three-block stream).** For a path index $t$ and an even set $E$ contained in its physical path, use the supplied consecutive-edge inverse
+
+$$
+ \mathcal I_t(E)_i
+   =\bigoplus_{h=0}^{i}\mathbf 1_E(tm+h\pmod T),
+ \qquad 0\le i<m.
+\tag{28.8}
+$$
+
+This is the literal path inverse of Interface 1.4 and (27.5), applied to the actual word, not an abstract parity query. Put
+
+$$
+ E_0=H_0\cup
+ \begin{cases}\{m\},&|H_0|\text{ odd},\\\varnothing,&|H_0|\text{ even},\end{cases}
+ \qquad
+ E_1=H_1\cup
+ \begin{cases}\{m+1\},&|H_1|\text{ odd},\\\varnothing,&|H_1|\text{ even}.
+ \end{cases}
+\tag{28.9}
+$$
+
+Both sets are even. They lie respectively in $W_0=\{0,\ldots,m\}$ and $W_2=\{1,\ldots,m+1\}$, and neither contains phase one. Let
+
+$$
+ L=10^{m-1}.
+\tag{28.10}
+$$
+
+The one fixed stream is
+
+$$
+ \mathcal I_0(E_0)\ \mid\ L\ \mid\ \mathcal I_2(E_1),
+\tag{28.11}
+$$
+
+with an arbitrary fixed zero extension that no source needs to execute. Directly from the matched coefficient cycle $c_i=\mathbf 1_{\{0,-1\}}(i\bmod T)$, the three successful charge supports are
+
+$$
+ \operatorname{supp}q_0=E_0,
+ \qquad
+ \operatorname{supp}q_1=\{m,m+1\},
+ \qquad
+ \operatorname{supp}q_2=E_1.
+\tag{28.12}
+$$
+
+On $U$, the observed difference triple is therefore
+
+$$
+ (q_0(j),q_1(j),q_2(j))
+   =\bigl(\mathbf 1_{H_0}(j),0,\mathbf 1_{H_1}(j)\bigr).
+\tag{28.13}
+$$
+
+Outside $U$, the middle coordinate is one exactly at $m,m+1$. The first coordinate can additionally be one at $m$ when $|H_0|$ is odd, and the last can additionally be one at $m+1$ when $|H_1|$ is odd; all other outside phases have the zero triple. Thus the triple determines the membership pair $(\mathbf 1_{H_0},\mathbf 1_{H_1})$, up to the harmless identification of outside phases with the same target pair $(0,0)$. A source remembers its own free value and returns $B_v$ exactly when the relevant component is one.
+
+The first word in (28.11) starts with zero because phase zero is absent from $E_0$, and its internal runs have length at most $m-1$. It clears every inherited tail. Its terminal run is at most $m-1$, so the single leading one of $L$ creates a run of at most $m<k$. The word $L$ ends in zero. The third word also starts with zero because phase one is absent from $E_1$, and every internal run has length at most $m<k$. Consequently every displayed block succeeds from every inherited tail, every crossed seam is legal, and every emitted block is charged. This proves $C_{\rm pre}(f)\le3$ for all distinct nonempty supports. It also gives a lawful own-archive decoder: a source may stop after any prefix whose acquired code already determines its component, or every source may run the full three-block prefix.
+
