@@ -8,7 +8,7 @@ Work over the complex numbers. A filling contains a letters 1, b letters 2 and t
 
 **Definition 1.1 (Cyclicity eigenvalue).**
 
-$$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; \forall k \in \operatorname{Fin}\left(a + b + 2\right),\; \operatorname{eigenvalue}\left(a, b, k\right) = \operatorname{exp}\left(\frac{2 \cdot \pi \cdot i \cdot \operatorname{val}\left(k\right)}{a + b + 2}\right)$$
+$$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; \forall k \in \operatorname{Fin}\left(a + b + 2\right),\; \operatorname{eigenvalue}\left(a, b, k\right) = \operatorname{exp}\left(\frac{2 \cdot \pi \cdot \operatorname{ComplexI} \cdot \operatorname{val}\left(k\right)}{a + b + 2}\right)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/EclecticTwoWallUniversality.eigenvalue` (`✓ std3`).
 
@@ -16,7 +16,7 @@ $$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; \forall k \in \operato
 
 *Commentary.*
 
-The symbol i in the exponential is the imaginary unit. Natural and real scalars in this expression are cast into the complex numbers.
+ComplexI is the imaginary unit. Natural and real scalars in this expression are cast into the complex numbers.
 
 **Definition 1.2 (The cyclicity class).**
 
@@ -64,12 +64,25 @@ $$(\operatorname{claim}) \Leftrightarrow (\forall a \in \mathbb{N},\; \forall b 
 
 *Commentary.*
 
-§5, Eq. (5.1), arXiv:2112.04506v1: "we claim a universality hypothesis: The Jordan block spectrum of the eclectic model for generic couplings ξ1, ξ2, ξ3 is identical to that of the hypereclectic model, provided L, M, K satisfy L1 = L−M ≥ K, M1 = M−K ≥ K. (5.1)" Here K = 2, L = a+b+2 and M = b+2, so the two inequalities become a,b at least two. The statement is the power-rank form: all couplings satisfy an upper bound, and a single polynomial for the filling certifies equality simultaneously in every cyclicity class and every natural power. Normalization at the hypereclectic point implies that this polynomial is nonzero.
+§5, Eq. (5.1), arXiv:2112.04506v1: "However, we claim a universality hypothesis: The Jordan block spectrum of the eclectic model for generic couplings ξ1, ξ2, ξ3 is identical to that of the hypereclectic model, provided L, M, K satisfy L1 = L−M ≥ K, M1 = M−K ≥ K. (5.1)" Here K = 2, L = a+b+2 and M = b+2, so the two inequalities become a,b at least two. The statement is the power-rank form: all couplings satisfy an upper bound, and a single polynomial for the filling certifies equality simultaneously in every cyclicity class and every natural power. Normalization at the hypereclectic point implies that this polynomial is nonzero.
+
+**Theorem 1.6 (The two-wall universality theorem).**
+
+$$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; (2 \le a) \Rightarrow ((2 \le b) \Rightarrow ((\forall xi \in (\operatorname{Fin}\left(3\right) \to \mathbb{C}),\; \forall k \in \operatorname{Fin}\left(a + b + 2\right),\; \forall r \in \mathbb{N},\; \operatorname{finrank}\left(\mathbb{C}, \operatorname{range}\left((\operatorname{sectorT}\left(a, b, k, xi\right))^{r}\right)\right) \le \operatorname{finrank}\left(\mathbb{C}, \operatorname{range}\left((\operatorname{sectorF}\left(a, b, k, 2\right))^{r}\right)\right)) \land (\exists P \in \operatorname{MvPolynomial}\left(\operatorname{Fin}\left(3\right), \mathbb{C}\right),\; (\operatorname{eval}\left(\operatorname{vector3}\left(0, 0, 1\right), P\right) = 1) \land (\forall xi \in (\operatorname{Fin}\left(3\right) \to \mathbb{C}),\; (\operatorname{eval}\left(xi, P\right) \ne 0) \Rightarrow (\forall k \in \operatorname{Fin}\left(a + b + 2\right),\; \forall r \in \mathbb{N},\; \operatorname{finrank}\left(\mathbb{C}, \operatorname{range}\left((\operatorname{sectorT}\left(a, b, k, xi\right))^{r}\right)\right) = \operatorname{finrank}\left(\mathbb{C}, \operatorname{range}\left((\operatorname{sectorF}\left(a, b, k, 2\right))^{r}\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/EclecticTwoWallUniversality.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The literal two-wall sl2 action has lowering operator F3 and commutes with the shift. Its integral weight decomposition restricts to every cyclicity class. When a,b are at least two, each term of T lowers the weight filtration by at least two, so the eigenspace rank comparison gives the upper bound for every coupling and every power. Choose any complex basis of each class and express the three restricted bond sums as matrices. The matrix with entries X0 C(A1(i,j)) + X1 C(A2(i,j)) + X2 C(A3(i,j)) evaluates to the matrix of the restricted T. At vector3(0,0,1) it is the matrix of F3. Matrix rank equals the dimension of the operator range, and the basis map preserves powers. The weight bound gives F3^(ab+1) = 0, also on each restricted space. The polynomial power-rank certificate with this cutoff therefore supplies a polynomial for each class, normalized to one at the hypereclectic point. Their finite product over Fin(L) has the same normalization, and a nonzero product makes every factor nonzero, giving all equalities simultaneously. Empty bases and zero ranks are included. This theorem states power ranks; a chain-basis interpretation of Jordan block multiplicities is a separate statement.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/SpinChains/EclecticTwoWallUniversality.claim`
 - Truth anchor: `D5/S3/Quantum/SpinChains/EclecticTwoWallUniversality.eigenvalue`
+- Truth anchor: `D5/S3/Quantum/SpinChains/EclecticTwoWallUniversality.result`
 - Truth anchor: `D5/S3/Quantum/SpinChains/EclecticTwoWallUniversality.sector`
 - Truth anchor: `D5/S3/Quantum/SpinChains/EclecticTwoWallUniversality.sectorF`
 - Truth anchor: `D5/S3/Quantum/SpinChains/EclecticTwoWallUniversality.sectorT`
