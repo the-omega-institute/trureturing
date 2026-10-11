@@ -15,6 +15,11 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Topology.MetricSpace.HausdorffDimension
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
+import Mathlib.Analysis.Analytic.IsolatedZeros
+import Mathlib.Analysis.Analytic.CPolynomial
+import Mathlib.MeasureTheory.Constructions.Pi
+import Mathlib.MeasureTheory.Measure.Prod
+import Mathlib.MeasureTheory.Measure.Typeclasses.NullSingletonClass
 
 set_option linter.style.longLine false
 set_option backward.isDefEq.respectTransparency false
@@ -810,4 +815,110 @@ private theorem critical_dim_lower :
   simp only [Module.finrank_pi, Fintype.card_fin,
     Nat.cast_ofNat] at hd
   exact hd.symm.le.trans ((dimH_mono hs).trans (Q.lipschitz.dimH_image_le _))
+private theorem ae_ne_zero_of_analytic {n : ℕ} {f : (Fin n → ℝ) → ℝ}
+    (hf : AnalyticOnNhd ℝ f Set.univ) {a : Fin n → ℝ} (ha : f a ≠ 0) :
+    ∀ᵐ x ∂(volume : Measure (Fin n → ℝ)), f x ≠ 0 := by
+  classical
+  have hR (u : ℝ → ℝ) (hu : AnalyticOnNhd ℝ u Set.univ)
+      (b : ℝ) (hb : u b ≠ 0) : ∀ᵐ t ∂volume, u t ≠ 0 := by
+    simp only [ae_iff, ne_eq, not_not]
+    by_contra hz
+    obtain ⟨z, hz⟩ := exists_accPt_of_nullSingletonClass (pos_iff_ne_zero.mpr hz)
+    exact hb (hu.eqOn_zero_of_preconnected_of_frequently_eq_zero
+      isPreconnected_univ (Set.mem_univ z)
+      (accPt_iff_frequently_nhdsNE.mp hz) (Set.mem_univ b))
+  induction n with
+  | zero =>
+    exact Filter.Eventually.of_forall fun x => by
+      rw [Subsingleton.elim x a]; exact ha
+  | succ n ih =>
+    have hc (z : ℝ × (Fin n → ℝ)) :
+        AnalyticAt ℝ (fun y : ℝ × (Fin n → ℝ) =>
+          (Fin.insertNth 0 y.1 y.2 : Fin (n + 1) → ℝ)) z := by
+      apply AnalyticAt.pi
+      intro j
+      cases j using Fin.cases with
+      | zero => simpa only [Fin.insertNth_zero', Fin.cons_zero] using
+          (analyticAt_fst (𝕜 := ℝ) (p := z))
+      | succ j => simpa only [Fin.insertNth_zero', Fin.cons_succ, Function.comp_def,
+          ContinuousLinearMap.proj_apply] using
+          ((ContinuousLinearMap.proj (R := ℝ) j).analyticAt z.2).comp analyticAt_snd
+    have hF : AnalyticOnNhd ℝ
+        (fun z : ℝ × (Fin n → ℝ) => f (Fin.insertNth 0 z.1 z.2)) Set.univ :=
+      fun z _ => (hf _ (Set.mem_univ _)).comp (hc z)
+    have hi : ∀ᵐ x ∂(volume : Measure (Fin n → ℝ)),
+        f (Fin.insertNth 0 (a 0) x) ≠ 0 :=
+      ih (fun x _ => (hF (a 0, x) (Set.mem_univ _)).comp
+        (f := fun y : Fin n → ℝ => (a 0, y))
+        (analyticAt_const.prod analyticAt_id))
+        (a := Fin.removeNth 0 a) (by simpa only [Fin.insertNth_self_removeNth] using ha)
+    have hi' : ∀ᵐ x ∂(volume : Measure (Fin n → ℝ)),
+        ∀ᵐ t ∂volume, f (Fin.insertNth 0 t x) ≠ 0 := by
+      filter_upwards [hi] with x hx
+      exact hR _ (fun t _ => (hF (t, x) (Set.mem_univ _)).comp
+        (f := fun s : ℝ => (s, x))
+        (analyticAt_id.prod analyticAt_const)) (a 0) hx
+    have hm : MeasurableSet {z : ℝ × (Fin n → ℝ) |
+        f (Fin.insertNth 0 z.1 z.2) ≠ 0} :=
+      hF.continuous.measurable ((measurableSet_singleton (0 : ℝ)).compl)
+    have hp := (Measure.ae_prod_iff_ae_ae hm).2 ((Measure.ae_ae_comm hm).2 hi')
+    simpa [MeasurableEquiv.piFinSuccAbove, Fin.insertNthEquiv,
+      Fin.insertNth_self_removeNth] using
+      (volume_preserving_piFinSuccAbove (fun _ : Fin (n + 1) => ℝ) 0).quasiMeasurePreserving.ae hp
+
+private theorem det_comp_analytic {n : Type*} [Fintype n] [DecidableEq n]
+    {f : Param → (n → n → ℝ)} {a : Param} (hf : AnalyticAt ℝ f a) :
+    AnalyticAt ℝ (fun x => det (Matrix.of (f x))) a := by
+  simpa only [Function.comp_def, detForm_apply] using
+    ((detForm (n := n)).1.analyticAt).comp hf
+
+private theorem g_analytic : AnalyticOnNhd ℝ g Set.univ := by
+  intro a _
+  have hh (l : List (Fin 15)) (M : Mat) : AnalyticAt ℝ
+      (fun α : Param => l.foldr (fun k N => conjStep (witnessP k) (α k) N) M) a := by
+    induction l with
+    | nil => exact analyticAt_const
+    | cons k l ih =>
+      have hc : AnalyticAt ℝ (fun α : Param => (Real.cos (α k) : ℂ)) a :=
+        (Complex.ofRealCLM.analyticAt _).comp
+          (Real.analyticAt_cos.comp ((ContinuousLinearMap.proj k : Param →L[ℝ] ℝ).analyticAt a))
+      have hs : AnalyticAt ℝ (fun α : Param => (Real.sin (α k) : ℂ)) a :=
+        (Complex.ofRealCLM.analyticAt _).comp
+          (Real.analyticAt_sin.comp ((ContinuousLinearMap.proj k : Param →L[ℝ] ℝ).analyticAt a))
+      simp only [List.foldr_cons, conjStep]
+      exact (((analyticAt_const.add hc).div analyticAt_const (by norm_num)).smul ih |>.add
+        (((analyticAt_const.sub hc).div analyticAt_const (by norm_num)).smul
+          ((analyticAt_const.mul ih).mul analyticAt_const))).sub
+        (((hs.div analyticAt_const (by norm_num)).mul analyticAt_const).smul
+          ((analyticAt_const.mul ih).sub (ih.mul analyticAt_const)))
+  have hj : AnalyticAt ℝ (J_H witnessP) a := by
+    apply AnalyticAt.pi; intro i
+    apply AnalyticAt.pi; intro j
+    simp_rw [J_recurrence]
+    exact ((ContinuousLinearMap.proj i : Param →L[ℝ] ℝ).analyticAt _).comp
+      ((rho.analyticAt _).comp (hh _ _))
+  exact det_comp_analytic ((normalize.analyticAt _).comp hj)
+
+private theorem full_rank_ae :
+    ∀ᵐ α ∂(volume : Measure Param), derivativeRank witnessP α = 15 := by
+  have hn : ∃ a, g a ≠ 0 := by
+    by_contra! h
+    have he : g = fun _ => 0 := funext h
+    have hd : gD point = 0 := (g_strict point).hasFDerivAt.unique
+      (by rw [he]; exact hasFDerivAt_const (0 : ℝ) point)
+    have hv := congrArg (fun L : Param →L[ℝ] ℝ => L v) hd
+    rw [gD_direction] at hv
+    norm_num at hv
+  obtain ⟨a,ha⟩ := hn
+  filter_upwards [ae_ne_zero_of_analytic g_analytic ha] with α hα
+  rw [derivative_rank]
+  simpa only [Fintype.card_fin] using
+    Matrix.rank_of_det_ne_zero (mt (g_zero_iff α).mpr hα)
+
+theorem result : ¬ claim := by
+  intro h
+  have hu := h witnessP full_rank_ae
+  have hb := critical_dim_lower.trans hu
+  norm_num at hb
+
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
