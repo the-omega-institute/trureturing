@@ -481,12 +481,12 @@ project 恢复在 current 与 Lean build 单元中优先请求读者基线分支
 
 **正确性与验证边界。** 以下断言只在列明的模型和前提下成立；旧定理的边界保留。
 
-- 对共享缓存的正确性，已冻结 `D5/S3/ConceptDynamics/Governance/TraceKeyedArtifactCacheSoundness.cachedBuild_eq_build` 承担「写者存入从零构建产物、任意 clean/读者查找交错仍得到从零构建结果」；`cachedBuild_restores_unaffected` 承担「写者与读者快照在模块源码和递归依赖上不变且键命中时恢复该缓存产物」。模型把每次查找视为原子读取，命中分支的“恢复而不编译”是模型求值结论，模型不计编译次数；Lake 路径解析、硬链接/复制和其中的文件系统失败仍由清理段说明，不由定理覆盖。
+- 对共享缓存的正确性，已冻结 `D5/S3/ConceptDynamics/Governance/TraceKeyedArtifactCacheSoundness.cachedBuild_eq_build` 承担「写者存入从零构建产物、任意 clean/读者查找交错仍得到从零构建结果」；`cachedBuild_restores_unaffected` 承担「写者与读者快照在模块源码和递归依赖上不变且键命中时恢复该缓存产物」。模型把每次查找视为原子读取，命中分支的“恢复而不编译”是模型求值结论，模型不计编译次数；定理不要求读者只读，写入者只要写入从零构建产物，读者结果仍正确，本仓库的只读约束只为使写入和清理由主检出独占；Lake 路径解析、硬链接/复制和其中的文件系统失败仍由清理段说明，不由定理覆盖。
 - 对任意可达本地层（空层、跨会话保留层或 donor 拷贝层），已冻结 `D5/S3/ConceptDynamics/Governance/LayeredLocalCacheSoundness.layered_cache_contract` 的 `Reachable` 前提与 `Guarantees.reusable`、`Guarantees.locality` 承担 K1：产物可复用，需求层结果独立于需求外记录，且每个 worktree 保留自己的需求外记录；`Guarantees.roots` 与 `planFor` 的根集等式承担请求根不被改变。
 - 对 K2，`layered_cache_contract` 的 `Guarantees.visits` 承担计划访问集，`Guarantees.reads` 承担读集合恰为依赖闭包，`Guarantees.outside` 承担闭包外记录既不影响执行也不被修改，`Guarantees.workload` 承担编译集恰为需求内本地命中缺失且共享命中缺失的双未命中。故定向操作不需要整份 clonefile；其访问范围是目标、utility 输入及 import 闭包。
 - 对 K3，`layered_cache_contract` 的 `Guarantees.ready` 承担「探测成功当且仅当执行轨迹没有编译事件」，即就绪当且仅当零编译；`Guarantees.needs` 承担探测报错节点必是需求内双未命中。该模型结论对应 Lake 原生不编译探测，但 Lake 的失败不都属于双未命中，映射本身是未经机器验证的前提。
 
-上述模型与 Lake 的对应还要求以下未经机器验证的前提：Lake 输入哈希与模型 `src`/`deps` 对应（源码、选项、模块名、平台、工具链、import/传递 trace、额外目标和插件均已计入）；Lake 的 mtime 判定以及缺产物或归档修复分支不在模型内；记录级写入具有原子性；模块之间被中断的构建按依赖闭合前缀的完整执行解释，这只是解释，不是另一条定理；Lake 调度对应按依赖顺序、每模块一次的执行器；模型探测器对应 Lake 原生不编译探测；`NoCollision` 覆盖共享同一工具链缓存的所有项目；donor 与旧本地层确实由模型允许的快照、执行、删除、清空或拷贝来源生成；写者增量构建等于从零构建。模型不证明报告 bundle、依赖物化、pin 检查或文件系统恢复策略。
+上述模型与 Lake 的对应还要求以下未经机器验证的前提：Lake 输入哈希与模型 `src`/`deps` 对应（源码、选项、模块名、平台、工具链、import/传递 trace、额外目标和插件均已计入）；`BuildSystem.compile` 是确定性的，`hash` 与 `digest` 合成的 `traceKey` 对应 Lake 输入哈希；Lake 的 mtime 判定以及缺产物或归档修复分支不在模型内；记录级写入具有原子性；模块之间被中断的构建按依赖闭合前缀的完整执行解释，这只是解释，不是另一条定理；Lake 调度对应按依赖顺序、每模块一次的执行器；模型探测器对应 Lake 原生不编译探测；`NoCollision` 覆盖共享同一工具链缓存的所有项目，且 Lake hash 不是密码学哈希；donor 与旧本地层确实由模型允许的快照、执行、删除、清空或拷贝来源生成；写者增量构建等于从零构建。模型不证明报告 bundle、依赖物化、pin 检查或文件系统恢复策略。
 
 **现行入口。** `tools/StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs` 第 283–405 行及 `LeanCacheProvisioner.cs` 是现行 ensure：worktree 无 `.lake` 时不分目标从主检出整份 clonefile；linked worktree 的 stamp 不匹配时整份重播并替换，stamp 缺失时若项目层冷且 build 目录为空只从主检出播种 build 层，否则整份重播，stamp 匹配但项目层冷时拒绝并要求重播；主检出 stamp 缺失时原地重产，不 clonefile。定向报告入口已上线。默认不 clonefile、显式 clonefile 选择、linked 种子复制和 A23 写者调整均由 #15158 跟踪。A20 只在 worktree 复用边界处引用，本节不再把入口归于 A20 的 clonefile 流程。
 
