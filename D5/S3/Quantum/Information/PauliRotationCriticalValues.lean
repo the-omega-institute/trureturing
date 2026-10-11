@@ -533,11 +533,20 @@ private theorem word_product (p q : Fin 2 → Pauli) :
   unfold wordOp; rw [tensor_mul]
   ext x y
   simp -implicitDefEqProofs [tensorOp, letter_mul, Fin.prod_univ_two, smul_eq_mul]; ring
+private theorem letterProduct_rec (p q : Pauli) :
+    letterProduct p q = Pauli.rec q (Pauli.rec .X .I .Z .Y q)
+      (Pauli.rec .Y .Z .I .X q) (Pauli.rec .Z .Y .X .I q) p := by
+  cases p <;> cases q <;> rfl
+private theorem letterPhase_rec (p q : Pauli) :
+    letterPhase p q = Pauli.rec 1 (Pauli.rec 1 1 Complex.I (-Complex.I) q)
+      (Pauli.rec 1 (-Complex.I) 1 Complex.I q)
+      (Pauli.rec 1 Complex.I (-Complex.I) 1 q) p := by
+  cases p <;> cases q <;> rfl
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (sgn anticomm)
 private theorem pauli_commutation (p q : Pauli) :
     pauliMatrix p * pauliMatrix q = (sgn p q : ℂ) • (pauliMatrix q * pauliMatrix p) := by
   cases p <;> cases q <;> simp -implicitDefEqProofs [letter_mul, sgn, anticomm,
-    letterProduct, letterPhase, smul_smul, smul_neg, neg_smul]
+    letterProduct_rec, letterPhase_rec, smul_smul, smul_neg, neg_smul]
 private theorem word_commutation (p q : Fin 2 → Pauli) :
     wordOp p * wordOp q = (∏ i, (sgn (p i) (q i) : ℂ)) • (wordOp q * wordOp p) := by
   unfold wordOp; rw [tensor_mul, tensor_mul]
@@ -595,7 +604,7 @@ private theorem witness_columns (j : Fin 15) :
       ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply, Rat.cast_zero, mul_zero, zero_smul, one_ne_zero, or_true, cons_val_one, Rat.cast_one, mul_one, add_zero,
       zero_add, Fin.mk_one, List.finRange, List.ofFn_succ, List.ofFn_zero, List.take_succ_cons, List.foldr_cons, List.foldr, conjStep_word, sgn, anticomm, Bool.false_eq_true,
       bne_self_eq_false, Int.reduceNeg, reduceCtorEq, Fin.reduceFinMk, bne_iff_ne, not_false_eq_true, mul_neg, Nat.succ_eq_add_one, Nat.reduceAdd, Real.cos_zero,
-      Complex.ofReal_one, one_smul, Real.sin_zero, Complex.ofReal_zero, zero_mul, letterPhase, Fin.prod_univ_two, neg_zero, letterProduct, sub_zero, neg_neg, Real.cos_pi_div_four,
+      Complex.ofReal_one, one_smul, Real.sin_zero, Complex.ofReal_zero, zero_mul, letterPhase_rec, Fin.prod_univ_two, neg_zero, letterProduct_rec, sub_zero, neg_neg, Real.cos_pi_div_four,
       Complex.ofReal_div, Complex.ofReal_ofNat, Real.sin_pi_div_four, neg_smul, sub_neg_eq_add, conjStep_add, conjStep_smul, smul_add, Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat,
       Rat.cast_inv, conjStep_sub] <;> match_scalars
   all_goals
@@ -648,7 +657,7 @@ private theorem contracted_derivative :
     _root_.zero_apply, zero_mul, Nat.reduceMod, Fin.val_eq_zero, Fin.zero_eta, zero_smul, zero_add, Finset.sum_const, Finset.card_singleton, one_smul, ContinuousLinearMap.comp_apply, _root_.smul_apply, _root_.sub_apply, mulVec_diagonal,
     Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat, ContinuousLinearMap.flip_apply, ContinuousLinearMap.mul_apply', Fin.val_eq_zero_iff, Fin.val_succ, Fin.mk_one, Fin.succ_ne_zero, ContinuousLinearMap.comp_add, inv_one, Nat.add_eq_right,
     false_or, cons_val_succ', Nat.reduceAdd, Fin.reduceFinMk, Rat.cast_inv, map_zero, ne_eq, not_false_eq_true, div_self]
-  simp -implicitDefEqProofs only [mul_add, word_product, Fin.prod_univ_two, letterProduct, letterPhase,
+  simp -implicitDefEqProofs only [mul_add, word_product, Fin.prod_univ_two, letterProduct_rec, letterPhase_rec,
     labels_unfold, cons_val_zero, cons_val_one, smul_smul, mul_one, one_mul, mul_neg]
   simp -implicitDefEqProofs only [rho_unfold, labels_unfold, Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue, cons_val', cons_val_zero, cons_val_fin_one, cons_val, cons_val_one, mul_one, one_smul, sub_self, smul_zero, mul_zero, trace_zero, Complex.zero_re, zero_div, zero_mul, mul_neg, neg_mul, Complex.I_mul_I, neg_neg, neg_smul, smul_neg, one_mul, add_sub_add_left_eq_sub, Algebra.mul_smul_comm, mul_sub, trace_smul, trace_sub,
     trace_neg, word_trace_mul, vecCons_inj, reduceCtorEq, and_true, and_self, ↓reduceIte, smul_eq_mul, neg_zero, mul_add, trace_add, Complex.real_smul, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_neg, Complex.ofReal_one,
