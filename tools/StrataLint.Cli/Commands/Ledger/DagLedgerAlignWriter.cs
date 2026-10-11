@@ -21,16 +21,6 @@ internal static class DagLedgerAlignWriter
                     .Order(StringComparer.Ordinal)) + "\n", string.Empty);
             }
             var selected = options.Selectors.Concat(options.Adds).Distinct().OrderBy(static path => path.Value, StringComparer.Ordinal).ToArray();
-            if (selected.Length == 0 && options.Retirements.IsEmpty)
-            {
-                var stateRoot = Path.Combine(root, FrozenStatePath.Root);
-                selected = Directory.Exists(stateRoot) ? Directory.EnumerateFiles(stateRoot, "*", SearchOption.AllDirectories)
-                    .Select(path => FrozenStatePath.TryToModulePath(Path.GetRelativePath(root, path).Replace('\\', '/'), out var module)
-                        ? module : throw new FormatException("invalid frozen state path: " + path))
-                    .OrderBy(static path => path.Value, StringComparer.Ordinal).ToArray() : [];
-            }
-            if (selected.Length == 0 && options.Retirements.IsEmpty)
-                return new(true, Summary(0, 0, 0, 0), string.Empty);
             var truth = selected.Length > 0
                 ? DagLedgerCommandPreparation.BuildTruthScoped(repository, source, selected)
                 : DagLedgerCommandPreparation.BuildTruth(repository, source);
@@ -122,7 +112,8 @@ internal static class DagLedgerAlignWriter
                 case "--list-closed" when !list: list = true; break;
                 default: throw Usage();
             }
-        if (string.IsNullOrWhiteSpace(report) || list && selectors.Count + adds.Count + retirements.Count != 0) throw Usage();
+        var selectionCount = selectors.Count + adds.Count + retirements.Count;
+        if (string.IsNullOrWhiteSpace(report) || (list ? selectionCount != 0 : selectionCount == 0)) throw Usage();
         if (selectors.Concat(adds).Concat(retirements).GroupBy(static path => path).Any(static group => group.Count() != 1))
             throw new InvalidOperationException("duplicate or conflicting module selector");
         return new(report, selectors.ToImmutable(), adds.ToImmutable(), retirements.ToImmutable(), list);
@@ -135,7 +126,7 @@ internal static class DagLedgerAlignWriter
         return path;
     }
     private static InvalidOperationException Usage() => new("USAGE: StrataLint ledger-align --candidate-lean-report FILE "
-        + "[--selector MODULE]... [--add MODULE]... [--retire-registration MODULE]... [--list-closed]");
+        + "(--list-closed | (--selector MODULE | --add MODULE | --retire-registration MODULE)...)");
     private static string Summary(int considered, int changed, int added, int unchanged, int conflicts = 0) =>
         $"LEDGER_ALIGN selectors_considered={considered} changed={changed} added={added} unchanged={unchanged} conflicts={conflicts}\n";
     private sealed record AlignOptions(string ReportPath, ImmutableArray<RepoPath> Selectors,

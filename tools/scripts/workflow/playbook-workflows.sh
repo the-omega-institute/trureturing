@@ -56,7 +56,6 @@ align_delivery_ledger() {
     step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$targets"
     run_cli "${align_args[@]}" --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json
   fi
-  run_cli ledger-align --candidate-lean-report "$REPORT"
 }
 
 

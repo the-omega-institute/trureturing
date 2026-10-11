@@ -25,7 +25,6 @@ public sealed class PlaybookWorkflowScriptTests
                 "make:lean-report",
                 "make:emit",
                 "dotnet:ledger-align --list-closed --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
-                "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 $"make:gate BASE=synthetic-base",
             ],
             fixture.Calls());
@@ -47,7 +46,7 @@ public sealed class PlaybookWorkflowScriptTests
             $"dotnet:ledger-align --add {module} --candidate-lean-report "
                 + ".lake/build/stratalint/scoped-lean-report.json",
             fixture.Calls());
-        Assert.Contains("dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json", fixture.Calls());
+        Assert.DoesNotContain("dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json", fixture.Calls());
         Assert.True(StateFragmentExists(fixture, module));
     }
 
@@ -63,6 +62,8 @@ public sealed class PlaybookWorkflowScriptTests
         ScriptHarnessScratch.WriteScratchText(Path.Combine(fixture.Temporary.Path,
             "Golden/Frozen/state/" + frozen + ".json"),
             "{\"statement_id\":\"sha256:" + new string('1', 64) + "\",\"declarations\":[]}\n");
+        var frozenPath = Path.Combine(fixture.Temporary.Path, "Golden/Frozen/state/" + frozen + ".json");
+        var frozenBytes = File.ReadAllBytes(frozenPath);
 
         var result = fixture.Run("deliver-check", "synthetic-base");
 
@@ -70,6 +71,13 @@ public sealed class PlaybookWorkflowScriptTests
         Assert.Contains("make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.B", fixture.Calls());
         Assert.Contains($"dotnet:ledger-align --add {uncommitted} --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json", fixture.Calls());
         Assert.DoesNotContain(fixture.Calls(), call => call.Contains($"--add {frozen}", StringComparison.Ordinal));
+        Assert.Equal(
+            [
+                "dotnet:ledger-align --list-closed --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
+                $"dotnet:ledger-align --add {uncommitted} --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json",
+            ],
+            fixture.Calls().Where(call => call.StartsWith("dotnet:ledger-align", StringComparison.Ordinal)));
+        Assert.Equal(frozenBytes, File.ReadAllBytes(frozenPath));
     }
 
     [Fact]

@@ -8,6 +8,24 @@ namespace StrataLint.Tests;
 
 public sealed class LedgerAlignWriterTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MissingExplicitModuleSelectionIsRejectedWithoutReadsOrWrites(bool hasFrozenMembers)
+    {
+        var original = Module("A");
+        using var fixture = new AlignFixture(original with { StatementMaterial = "A changed" });
+        if (hasFrozenMembers) fixture.Install(BuildCatalog(original));
+        var before = fixture.Image();
+
+        var result = fixture.Align();
+
+        Assert.False(result.Success);
+        Assert.Contains("USAGE", result.Error, StringComparison.Ordinal);
+        Assert.Equal(0, fixture.Repository.ReadCount);
+        Assert.Equal(before, fixture.Image());
+    }
+
     [Fact]
     public void RepinWritesOnlyTargetWithFrozenDownstreamAndIdenticalRetryWritesNothing()
     {
