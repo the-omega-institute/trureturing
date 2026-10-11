@@ -267,7 +267,7 @@ private theorem common_measure_tv {X : Type*} [MeasurableSpace X]
       (Q-C) E.val+C E.val ≤ (1-C Set.univ)+C E.val :=
         add_le_add ((measure_mono (Set.subset_univ _)).trans_eq hmassQ) le_rfl
       _ ≤ (1-C Set.univ)+((P-C) E.val+C E.val) := by gcongr; exact le_add_left le_rfl
-private theorem subtype_tv (s : ActivePhase) (P Q : Measure (ValidTail s)) :
+theorem subtype_tv (s : ActivePhase) (P Q : Measure (ValidTail s)) :
     measurableTotalVariation (P.map Subtype.val) (Q.map Subtype.val) =
       measurableTotalVariation P Q := by
   refine le_antisymm
