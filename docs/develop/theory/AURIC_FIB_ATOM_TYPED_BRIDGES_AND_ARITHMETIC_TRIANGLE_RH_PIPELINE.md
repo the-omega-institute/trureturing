@@ -895,13 +895,14 @@ structure TriangleLiftFinite
   C : LocalKernel (Λα × Λβ) Bool
 
 def triangleObserved
-    (T : TriangleLiftFinite Λα Λβ Λγ)
-    (a b c : Bool) : ℝ :=
-  ∑ α, ∑ β, ∑ γ,
-    T.μα α * T.μβ β * T.μγ γ
-      * T.A.prob (β, γ) a
-      * T.B.prob (γ, α) b
-      * T.C.prob (α, β) c
+    (T : TriangleLiftFinite Λα Λβ Λγ) :
+    Bool × Bool × Bool → ℝ
+  | (a, b, c) =>
+    ∑ α, ∑ β, ∑ γ,
+      T.μα α * T.μβ β * T.μγ γ
+        * T.A.prob (β, γ) a
+        * T.B.prob (γ, α) b
+        * T.C.prob (α, β) c
 
 theorem triangleObserved_probability
     (T : TriangleLiftFinite Λα Λβ Λγ)
@@ -914,6 +915,13 @@ def LocalPushforward
   ∃ f : Bool × Bool × Bool → Mode,
     q = fun s =>
       ∑ abc, if f abc = s then triangleObserved T abc else 0
+
+structure ArithmeticEncoding (C : Type) where
+  encode : C → Law
+  valid : ∀ c, IsProbability (encode c)
+  visible_driver : C → ℝ × ℝ × ℝ
+  visible_correct :
+    ∀ c, visible (encode c) = visible_driver c
 ~~~
 
 这个有限版本把三件事分开：
