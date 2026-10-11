@@ -201,6 +201,103 @@ theorem marked_descent (K : Type*) [Field K] (a b : ℕ) :
     intro x z
     simp [LinearMap.comp_apply, hQ, S_single, Jstar]
 
+
+open D5.S1.Words.ParityCode.OddTopWeight (ones)
+
+/-- Two ordered binary arcs. The redundant length n is uniquely determined by m. -/
+structure Coordinates (a b : ℕ) where
+  p : Pos a b
+  m : ℕ
+  n : ℕ
+  u : Fin m → Bool
+  v : Fin n → Bool
+  length : m + n = a + b
+  filling : ones u + ones v = b
+
+private def arcLetter (s : Bool) : Letter := if s then two else one
+
+private def arcVector (m n : ℕ) (u : Fin m → Bool) (v : Fin n → Bool) :
+    Fin ((m + 1) + (n + 1)) → Letter :=
+  Fin.append (Fin.cons wall (fun i => arcLetter (u i)))
+    (Fin.cons wall (fun i => arcLetter (v i)))
+
+private def siteEquiv {a b : ℕ} (p : Pos a b) (m n : ℕ) (h : m + n = a + b) :
+    Fin ((m + 1) + (n + 1)) ≃ Pos a b :=
+  (finCongr (by omega)).trans ((ZMod.finEquiv (a + b + 2)).toEquiv.trans (Equiv.addRight p))
+
+private theorem siteEquiv_apply {a b : ℕ} (p : Pos a b) (m n : ℕ)
+    (h : m + n = a + b) (i : Fin ((m + 1) + (n + 1))) :
+    siteEquiv p m n h i = p + (i.val : Pos a b) := by
+  change (ZMod.finEquiv (a + b + 2)) (Fin.cast (by omega) i) + p = _
+  have hcast : (ZMod.finEquiv (a + b + 2)) (Fin.cast (by omega) i) =
+      (i.val : Pos a b) := by
+    apply ZMod.val_injective
+    rw [ZMod.val_natCast_of_lt (by omega)]
+    rfl
+  exact (congrArg (fun z : Pos a b => z + p) hcast).trans (add_comm _ _)
+
+private def rawEncode {a b : ℕ} (p : Pos a b) (m n : ℕ) (h : m + n = a + b)
+    (u : Fin m → Bool) (v : Fin n → Bool) : Pos a b → Letter :=
+  fun r => arcVector m n u v ((siteEquiv p m n h).symm r)
+
+private theorem raw_at {a b : ℕ} (p : Pos a b) (m n : ℕ) (h : m + n = a + b)
+    (u : Fin m → Bool) (v : Fin n → Bool) (i : Fin ((m + 1) + (n + 1))) :
+    rawEncode p m n h u v (p + (i.val : Pos a b)) = arcVector m n u v i := by
+  rw [← siteEquiv_apply p m n h i]
+  simp [rawEncode]
+
+private theorem raw_count {a b : ℕ} (p : Pos a b) (m n : ℕ) (h : m + n = a + b)
+    (u : Fin m → Bool) (v : Fin n → Bool) (c : Letter) :
+    count c (rawEncode p m n h u v) =
+      (if wall = c then 1 else 0) + (∑ i, if arcLetter (u i) = c then 1 else 0) +
+      ((if wall = c then 1 else 0) + ∑ i, if arcLetter (v i) = c then 1 else 0) := by
+  rw [count]
+  change (∑ r, (fun i => if arcVector m n u v i = c then 1 else 0)
+    ((siteEquiv p m n h).symm r)) = _
+  rw [(siteEquiv p m n h).symm.sum_comp
+    (fun i => if arcVector m n u v i = c then 1 else 0), Fin.sum_univ_add]
+  simp only [arcVector, Fin.append_left, Fin.append_right, Fin.sum_univ_succ,
+    Fin.cons_zero, Fin.cons_succ]
+
+private theorem arc_counts (m : ℕ) (u : Fin m → Bool) :
+    (∑ i, if arcLetter (u i) = wall then 1 else 0 : ℕ) = 0 ∧
+    (∑ i, if arcLetter (u i) = two then 1 else 0 : ℕ) = ones u ∧
+    (∑ i, if arcLetter (u i) = one then 1 else 0 : ℕ) + ones u = m := by
+  have hw (i : Fin m) : (if arcLetter (u i) = wall then 1 else 0 : ℕ) = 0 := by
+    cases u i <;> decide
+  have ht (i : Fin m) : (if arcLetter (u i) = two then 1 else 0 : ℕ) =
+      (if u i then 1 else 0) := by cases u i <;> decide
+  have hs (i : Fin m) : (if arcLetter (u i) = one then 1 else 0 : ℕ) +
+      (if u i then 1 else 0) = 1 := by cases u i <;> decide
+  refine ⟨by simp_rw [hw]; simp, by simp_rw [ht]; rfl, ?_⟩
+  rw [ones, ← Finset.sum_add_distrib]
+  simp_rw [hs]
+  simp
+
+private theorem raw_counts {a b : ℕ} (p : Pos a b) (m n : ℕ) (h : m + n = a + b)
+    (u : Fin m → Bool) (v : Fin n → Bool) :
+    count wall (rawEncode p m n h u v) = 2 ∧
+    count two (rawEncode p m n h u v) = ones u + ones v ∧
+    count one (rawEncode p m n h u v) + (ones u + ones v) = a + b := by
+  have hu := arc_counts m u
+  have hv := arc_counts n v
+  refine ⟨?_, ?_, ?_⟩
+  · simp [raw_count, hu.1, hv.1]
+  · simp only [raw_count, show wall ≠ two by decide, if_false, zero_add, hu.2.1, hv.2.1]
+  · simp only [raw_count, show wall ≠ one by decide, if_false, zero_add]
+    omega
+
+/-- Place wall,u,wall,v at their consecutive offsets from p. -/
+def encode {a b : ℕ} (c : Coordinates a b) : MarkedWord a b :=
+  ⟨(⟨rawEncode c.p c.m c.n c.length c.u c.v, by
+      have hc := raw_counts c.p c.m c.n c.length c.u c.v
+      refine ⟨?_, by simpa only [c.filling] using hc.2.1, hc.1⟩
+      rw [c.filling] at hc
+      omega⟩, c.p), by
+    have h := raw_at c.p c.m c.n c.length c.u c.v
+      ((0 : Fin (c.m + 1)).castAdd (c.n + 1))
+    simpa [arcVector] using h⟩
+
 #print axioms marked_descent
 
 end D5.S3.Quantum.SpinChains.TwoWallMarked
