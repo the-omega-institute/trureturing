@@ -74,29 +74,29 @@ def artifact (S : Snapshot B.Node B.Src) (L : Local B) (n : B.Node) :
 /-- K1/K2: the ordinary executor computes keys from dependency records, reuses the
 first hit, and compiles only on a double miss. Shared histories may differ per node. -/
 noncomputable def execute (S : Snapshot B.Node B.Src)
-    (schedule : B.Node → List (Op B.Node B.Src)) (L : Local B) : List B.Node → Result B
+    (shared : B.Node → B.Key → Option B.Art) (L : Local B) : List B.Node → Result B
   | [] => ⟨L, []⟩
   | n :: ns =>
       let A := inputs B S L n
       let k := B.hash (S.src n) (B.digest '' A)
       let l := localHit B L n k
-      let c := if l.isSome then none else run B (schedule n) k
-      let hit := lookup B (run B (schedule n)) L n k
+      let c := if l.isSome then none else shared n k
+      let hit := lookup B (shared n) L n k
       let a := artifact B S L n hit
-      let tail := execute S schedule (put B L n k a) ns
+      let tail := execute S shared (put B L n k a) ns
       ⟨tail.layer, ⟨n, k, l, c, hit.isNone, insert n ↑(S.deps n)⟩ :: tail.events⟩
 
 /-- K3: the probe returns the first double miss, or a layer restored entirely by
 hits. Its definition contains no compiler and no from-scratch build. -/
 noncomputable def probe (S : Snapshot B.Node B.Src)
-    (schedule : B.Node → List (Op B.Node B.Src)) (L : Local B) :
+    (shared : B.Node → B.Key → Option B.Art) (L : Local B) :
     List B.Node → Except B.Node (Local B)
   | [] => .ok L
   | n :: ns =>
       let k := B.hash (S.src n) (B.digest '' inputs B S L n)
-      match lookup B (run B (schedule n)) L n k with
+      match lookup B (shared n) L n k with
       | none => .error n
-      | some a => probe S schedule (put B L n k a) ns
+      | some a => probe S shared (put B L n k a) ns
 
 /-- K2: the least dependency-closed set containing the requested roots. -/
 inductive Demand (S : Snapshot B.Node B.Src) (roots : Finset B.Node) : B.Node → Prop
@@ -238,7 +238,7 @@ inductive Reachable : Local M.B → Prop
   | execute {L} (S : Snapshot M.B.Node M.B.Src) (hS : S ∈ M.snapshots)
       (p : Plan M.B S) (schedule : M.B.Node → List (Op M.B.Node M.B.Src))
       (writers : ∀ n W m, Op.store W m ∈ schedule n → W ∈ M.snapshots) :
-      Reachable L → Reachable (execute M.B S schedule L p.nodes).layer
+      Reachable L → Reachable (execute M.B S (fun n => run M.B (schedule n)) L p.nodes).layer
   | delete {L} : Reachable L → (n : M.B.Node) →
       Reachable (fun m => if m = n then none else L m)
   | clear {L} : Reachable L → Reachable (fun _ => none)
@@ -341,9 +341,10 @@ private theorem execute_sound (S : Snapshot M.B.Node M.B.Src) (hS : S ∈ M.snap
     (xs : List M.B.Node) (done : Set M.B.Node) (L : Local M.B)
     (hL : Provenance M L) (hc : CorrectOn M.B S L done)
     (ho : Ordered M.B S done xs) :
-    Provenance M (execute M.B S schedule L xs).layer ∧
-    CorrectOn M.B S (execute M.B S schedule L xs).layer (done ∪ {n | n ∈ xs}) ∧
-    (∀ e ∈ (execute M.B S schedule L xs).events,
+    Provenance M (execute M.B S (fun n => run M.B (schedule n)) L xs).layer ∧
+    CorrectOn M.B S (execute M.B S (fun n => run M.B (schedule n)) L xs).layer
+      (done ∪ {n | n ∈ xs}) ∧
+    (∀ e ∈ (execute M.B S (fun n => run M.B (schedule n)) L xs).events,
       e.key = traceKey M.B S e.node ∧
       (e.compiled = true ↔ e.localRead = none ∧ e.sharedRead = none)) := by
   induction xs generalizing done L with
@@ -397,9 +398,9 @@ private theorem reachable_provenance {L : Local M.B} (h : Reachable M L) : Prove
   | copy h hd ih ihd => exact ihd
 
 private theorem execute_frame (S : Snapshot B.Node B.Src)
-    (schedule : B.Node → List (Op B.Node B.Src)) (xs : List B.Node) (L : Local B) :
-    ((execute B S schedule L xs).events.map Event.node = xs) ∧
-    (∀ n, n ∉ xs → (execute B S schedule L xs).layer n = L n) := by
+    (shared : B.Node → B.Key → Option B.Art) (xs : List B.Node) (L : Local B) :
+    ((execute B S shared L xs).events.map Event.node = xs) ∧
+    (∀ n, n ∉ xs → (execute B S shared L xs).layer n = L n) := by
   classical
   induction xs generalizing L with
   | nil => simp [execute]
@@ -413,11 +414,11 @@ private theorem execute_frame (S : Snapshot B.Node B.Src)
         Function.update_of_ne (fun h => hn (List.mem_cons.mpr (Or.inl h)))]
 
 private theorem execute_reads (S : Snapshot B.Node B.Src)
-    (schedule : B.Node → List (Op B.Node B.Src)) (xs : List B.Node) (hn : xs.Nodup)
-    (L : Local B) : ∀ e ∈ (execute B S schedule L xs).events,
+    (shared : B.Node → B.Key → Option B.Art) (xs : List B.Node) (hn : xs.Nodup)
+    (L : Local B) : ∀ e ∈ (execute B S shared L xs).events,
     e.reads = insert e.node (↑(S.deps e.node) : Set B.Node) ∧
     e.localRead = localHit B L e.node e.key ∧
-    e.sharedRead = (if e.localRead.isSome then none else run B (schedule e.node) e.key) := by
+    e.sharedRead = (if e.localRead.isSome then none else shared e.node e.key) := by
   classical
   induction xs generalizing L with
   | nil => simp [execute]
@@ -429,7 +430,7 @@ private theorem execute_reads (S : Snapshot B.Node B.Src)
     · exact ⟨rfl,rfl,rfl⟩
     · have htail := ih (List.nodup_cons.mp hn).2 _ e he
       have mem : e.node ∈ ns := by
-        rw [← (execute_frame B S schedule ns _).1]
+        rw [← (execute_frame B S shared ns _).1]
         exact List.mem_map.mpr ⟨e,he,rfl⟩
       have ne : e.node ≠ n := by
         intro eq
@@ -438,17 +439,17 @@ private theorem execute_reads (S : Snapshot B.Node B.Src)
       simpa only [localHit, put, Function.update_of_ne ne] using htail.2.1
 
 private theorem probe_spec (S : Snapshot B.Node B.Src)
-    (schedule : B.Node → List (Op B.Node B.Src)) (xs : List B.Node) (L : Local B) :
-    ((∃ L', probe B S schedule L xs = .ok L') ↔
-      ∀ e ∈ (execute B S schedule L xs).events, e.compiled = false) ∧
-    (∀ n, probe B S schedule L xs = .error n →
-      ∃ e ∈ (execute B S schedule L xs).events, e.node = n ∧ e.compiled = true) := by
+    (shared : B.Node → B.Key → Option B.Art) (xs : List B.Node) (L : Local B) :
+    ((∃ L', probe B S shared L xs = .ok L') ↔
+      ∀ e ∈ (execute B S shared L xs).events, e.compiled = false) ∧
+    (∀ n, probe B S shared L xs = .error n →
+      ∃ e ∈ (execute B S shared L xs).events, e.node = n ∧ e.compiled = true) := by
   induction xs generalizing L with
   | nil => simp [probe, execute]
   | cons m ms ih =>
     rw [probe, execute]
     dsimp only
-    cases h : lookup B (run B (schedule m)) L m
+    cases h : lookup B (shared m) L m
         (B.hash (S.src m) (B.digest '' inputs B S L m)) with
     | none =>
       simp only [Option.isNone_none, artifact]
@@ -478,9 +479,9 @@ structure Guarantees (S : Snapshot M.B.Node M.B.Src)
   workload : ∀ n, (∃ e ∈ r.events, e.node = n ∧ e.compiled = true) ↔
     Demand M.B S p.roots n ∧ localHit M.B L n (traceKey M.B S n) = none ∧
       run M.B (schedule n) (traceKey M.B S n) = none
-  ready : (∃ L', probe M.B S schedule L p.nodes = .ok L') ↔
+  ready : (∃ L', probe M.B S (fun n => run M.B (schedule n)) L p.nodes = .ok L') ↔
     ∀ e ∈ r.events, e.compiled = false
-  needs : ∀ n, probe M.B S schedule L p.nodes = .error n →
+  needs : ∀ n, probe M.B S (fun n => run M.B (schedule n)) L p.nodes = .error n →
     Demand M.B S p.roots n ∧ localHit M.B L n (traceKey M.B S n) = none ∧
       run M.B (schedule n) (traceKey M.B S n) = none
 
@@ -491,19 +492,19 @@ private theorem plan_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
     (hS : S ∈ M.snapshots) (schedule : M.B.Node → List (Op M.B.Node M.B.Src))
     (writers : ∀ n W m, Op.store W m ∈ schedule n → W ∈ M.snapshots)
     (L : Local M.B) (hL : Reachable M L) (p : Plan M.B S) :
-    Guarantees M S schedule L p (execute M.B S schedule L p.nodes) := by
+    Guarantees M S schedule L p (execute M.B S (fun n => run M.B (schedule n)) L p.nodes) := by
   have hs := execute_sound M S hS schedule writers p.nodes ∅ L
     (reachable_provenance M hL) (by intro n hn; contradiction) p.ordered
-  have hf := execute_frame M.B S schedule p.nodes L
-  have hr := execute_reads M.B S schedule p.nodes p.nodup L
-  have hp := probe_spec M.B S schedule p.nodes L
-  have event_mem : ∀ e ∈ (execute M.B S schedule L p.nodes).events,
+  have hf := execute_frame M.B S (fun n => run M.B (schedule n)) p.nodes L
+  have hr := execute_reads M.B S (fun n => run M.B (schedule n)) p.nodes p.nodup L
+  have hp := probe_spec M.B S (fun n => run M.B (schedule n)) p.nodes L
+  have event_mem : ∀ e ∈ (execute M.B S (fun n => run M.B (schedule n)) L p.nodes).events,
       Demand M.B S p.roots e.node := by
     intro e he
     apply (p.exactDemand e.node).mp
     rw [← hf.1]
     exact List.mem_map.mpr ⟨e,he,rfl⟩
-  have work : ∀ n, (∃ e ∈ (execute M.B S schedule L p.nodes).events,
+  have work : ∀ n, (∃ e ∈ (execute M.B S (fun n => run M.B (schedule n)) L p.nodes).events,
       e.node = n ∧ e.compiled = true) ↔
       Demand M.B S p.roots n ∧ localHit M.B L n (traceKey M.B S n) = none ∧
         run M.B (schedule n) (traceKey M.B S n) = none := by
@@ -517,7 +518,8 @@ private theorem plan_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
       · simpa [re.2.1,se.1] using hl
       · simpa [re.2.2,hl,se.1] using hc'
     · rintro ⟨hn,hl,hc⟩
-      have mem : n ∈ (execute M.B S schedule L p.nodes).events.map Event.node := by
+      have mem : n ∈
+          (execute M.B S (fun n => run M.B (schedule n)) L p.nodes).events.map Event.node := by
         rw [hf.1]; exact (p.exactDemand n).mpr hn
       obtain ⟨e,he,hen⟩ := List.mem_map.mp mem
       have se := hs.2.2 e he
@@ -538,7 +540,8 @@ private theorem plan_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
       · exact event_mem e he
       · exact Demand.dep (event_mem e he) hn
     · intro hn
-      have mem : n ∈ (execute M.B S schedule L p.nodes).events.map Event.node := by
+      have mem : n ∈
+          (execute M.B S (fun n => run M.B (schedule n)) L p.nodes).events.map Event.node := by
         rw [hf.1]; exact (p.exactDemand n).mpr hn
       obtain ⟨e,he,hen⟩ := List.mem_map.mp mem
       exact ⟨e,he,by rw [(hr e he).1,hen]; exact Set.mem_insert _ _⟩
@@ -553,7 +556,7 @@ theorem layered_cache_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
     (L : Local M.B) (hL : Reachable M L) (roots : Finset M.B.Node) :
     (planFor M.B S roots).roots = roots ∧
     Guarantees M S schedule L (planFor M.B S roots)
-      (execute M.B S schedule L (planFor M.B S roots).nodes) := by
+      (execute M.B S (fun n => run M.B (schedule n)) L (planFor M.B S roots).nodes) := by
   exact ⟨Classical.choose_spec (plan_exists M.B S roots),
     plan_contract M S hS schedule writers L hL (planFor M.B S roots)⟩
 

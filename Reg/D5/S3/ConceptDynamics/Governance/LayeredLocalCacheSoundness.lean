@@ -36,7 +36,8 @@ abbrev arena : Arena where
       (r.readout () ⟨M,S,schedule,L⟩ roots)
 
 noncomputable def actual : Realization signature.{u} :=
-  realize signature (fun _ p q => execute p.1.B p.2.1 p.2.2.1 p.2.2.2 (planFor p.1.B p.2.1 q).nodes)
+  realize signature (fun _ p q => execute p.1.B p.2.1
+    (fun n => run p.1.B (p.2.2.1 n)) p.2.2.2 (planFor p.1.B p.2.1 q).nodes)
     (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
@@ -89,7 +90,8 @@ noncomputable def registration : Registration arena.{u} (arena.Law actual) where
       exact nomatch i
   dependence := by
     intro i
-    refine ⟨⟨tinyModel,tinySnapshot,fun _ => [],fun _ => none⟩,({PUnit.unit} : Finset tinySystem.Node),(∅ : Finset tinySystem.Node),?_⟩
+    refine ⟨⟨tinyModel,tinySnapshot,fun _ => [],fun _ => none⟩,
+      ({PUnit.unit} : Finset tinySystem.Node),(∅ : Finset tinySystem.Node),?_⟩
     intro h
     have full := layered_cache_contract tinyModel tinySnapshot (Set.mem_singleton _)
       (fun _ => []) (by intro n W m hm; simp at hm) (fun _ => none) Reachable.empty {PUnit.unit}
@@ -101,9 +103,10 @@ noncomputable def registration : Registration arena.{u} (arena.Law actual) where
       rw [full.1]
       exact Finset.mem_singleton_self _
     have eq := congrArg (fun r : Result tinySystem => r.events.map Event.node) h
-    change (execute tinySystem tinySnapshot (fun _ => []) (fun _ => none)
+    change (execute tinySystem tinySnapshot
+      (fun n => run tinySystem ((fun _ => []) n)) (fun _ => none)
       (planFor tinySystem tinySnapshot {PUnit.unit}).nodes).events.map Event.node =
-      (execute tinySystem tinySnapshot (fun _ => []) (fun _ => none)
+      (execute tinySystem tinySnapshot (fun n => run tinySystem ((fun _ => []) n)) (fun _ => none)
       (planFor tinySystem tinySnapshot ∅).nodes).events.map Event.node at eq
     rw [full.2.visits,empty.2.visits] at eq
     rw [eq] at mem
@@ -119,7 +122,8 @@ noncomputable def registration : Registration arena.{u} (arena.Law actual) where
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@layered_cache_contract.{u})
     (type_of% (realize.{u + 1,u,0,u,0} signature.{u}
-      (fun _ p q => execute p.1.B p.2.1 p.2.2.1 p.2.2.2 (planFor p.1.B p.2.1 q).nodes)
+      (fun _ p q => execute p.1.B p.2.1
+        (fun n => run p.1.B (p.2.2.1 n)) p.2.2.2 (planFor p.1.B p.2.1 q).nodes)
       (fun e => nomatch e))) Unit Unit where
   unitName :=
     `D5.S3.ConceptDynamics.Governance.LayeredLocalCacheSoundness.layered_cache_contract.audit
@@ -134,7 +138,8 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize.{u + 1,u,0,u,0} signature.{u}
-    (fun _ p q => execute p.1.B p.2.1 p.2.2.1 p.2.2.2 (planFor p.1.B p.2.1 q).nodes)
+    (fun _ p q => execute p.1.B p.2.1
+      (fun n => run p.1.B (p.2.2.1 n)) p.2.2.2 (planFor p.1.B p.2.1 q).nodes)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
