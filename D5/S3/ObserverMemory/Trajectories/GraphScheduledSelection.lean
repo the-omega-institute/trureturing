@@ -234,6 +234,22 @@ private theorem edge_prefix_subset {r i j : ℕ} (hi : 1 ≤ i) (hir : i ≤ r)
   dsimp [identityEnd] at hk ⊢
   omega
 
+private theorem initial_support {r c : ℕ} {G : SimpleGraph (Fin r)} {w : Finset ℕ}
+    (hc : initialLength r < c) (hprev : ∀ d, d < c → ¬ Trigger r G d w) :
+    Icc 1 (initialLength r) ⊆ w := by
+  intro k hk
+  simp only [mem_Icc] at hk
+  by_contra hn
+  exact hprev k (by omega) (Or.inl ⟨hk.1, hk.2, hn⟩)
+
+private theorem edge_prefix_tail_unique {r i j k : ℕ} (hir : i ≤ r)
+    (hk : FirstTailOne r (edgePrefix r i j) k) : k = j := by
+  have hmem := hk.2.1
+  simp only [edgePrefix, mem_insert, mem_Icc] at hmem
+  dsimp [identityEnd] at hmem
+  have := hk.1
+  omega
+
 /-- Every early first selection, over the whole prefix space, has exactly one
 identity one and its first tail one at the current edge position. -/
 theorem early_first_selection_support {r j : ℕ} (G : SimpleGraph (Fin r))
@@ -244,11 +260,7 @@ theorem early_first_selection_support {r j : ℕ} (G : SimpleGraph (Fin r))
   constructor
   · rintro ⟨ht, hprev⟩
     obtain ⟨i, hi, hir, hid, hf, he⟩ := (trigger_early hr hj hjQ w).mp ht
-    have hbase : Icc 1 (initialLength r) ⊆ w := by
-      intro k hk
-      simp only [mem_Icc] at hk
-      by_contra hn
-      exact hprev k (by dsimp [identityEnd]; omega) (Or.inl ⟨hk.1, hk.2, hn⟩)
+    have hbase := initial_support (by dsimp [identityEnd]; omega) hprev
     refine ⟨i, he, ?_⟩
     ext k
     constructor
@@ -296,12 +308,7 @@ theorem early_first_selection_support {r j : ℕ} (G : SimpleGraph (Fin r))
       · have hai' : a = i := by simpa [hid] using hai.symm
         subst a
         obtain ⟨k, hk, _, _, h | h⟩ := h
-        · have hki : k = j := by
-            have hmem := hk.2.1
-            simp only [edgePrefix, mem_insert, mem_Icc] at hmem
-            dsimp [identityEnd] at hmem
-            have := hk.1
-            omega
+        · have hki := edge_prefix_tail_unique hir hk
           omega
         · have heq := h.2
           dsimp [delayedTarget] at heq
@@ -521,11 +528,7 @@ theorem delayed_selected_support {r i j : ℕ} (G : SimpleGraph (Fin r))
   have hd := delayed_target_bounds hr hi hir hj (by omega)
   constructor
   · rintro ⟨ht, hprev⟩
-    have hbase : Icc 1 (initialLength r) ⊆ w := by
-      intro k hk
-      have hkb := mem_Icc.mp hk
-      by_contra hn
-      exact hprev k (by dsimp [identityEnd]; omega) (Or.inl ⟨hkb.1, hkb.2, hn⟩)
+    have hbase := initial_support (by dsimp [identityEnd]; omega) hprev
     rcases ht with ht | ht | ht | ht
     · dsimp [identityEnd] at ht; omega
     · omega
@@ -563,12 +566,7 @@ theorem delayed_selected_support {r i j : ℕ} (G : SimpleGraph (Fin r))
       subst a
       rcases ht with ht | ht
       · obtain ⟨b, hb, _, _, ht⟩ := ht
-        have hbj : b = j := by
-          have hm := hb.2.1
-          simp only [edgePrefix, mem_insert, mem_Icc] at hm
-          have := hb.1
-          dsimp [identityEnd] at hm
-          omega
+        have hbj := edge_prefix_tail_unique hir hb
         subst b
         rcases ht with ⟨he, _⟩ | ⟨_, he⟩
         · exact hret he
@@ -824,6 +822,19 @@ def runBlind {Z : Type} (r : ℕ) (G : SimpleGraph (Fin r))
     let freeze := decide (FirstSelected r G (c + 1) (atCut w (c + 1)))
     writeThenLatch s input.new freeze (P.update input freeze s.value)
 
+private theorem run_snapshot_none {Z : Type} {r : ℕ} (G : SimpleGraph (Fin r))
+    (P : BlindProgram Z) (rho : Bool) (w : Finset ℕ) (c : ℕ)
+    (h : ∀ d, d ≤ c → ¬ Trigger r G d w) :
+    (runBlind r G P rho w c).snapshot = none := by
+  induction c with
+  | zero => rfl
+  | succ c ih =>
+      have hp := ih (fun d hd => h d (by omega))
+      have hn : ¬ FirstSelected r G (c + 1) (atCut w (c + 1)) := by
+        intro hs
+        exact h _ le_rfl ((first_selected_at_cut G w).mp hs).1
+      simp [runBlind, writeThenLatch, hp, hn]
+
 def asBlind {Z : Type} (P : PreProgram Z) : BlindProgram Z :=
   ⟨P.initial, fun input _ z => P.update input z⟩
 
@@ -905,5 +916,67 @@ def coloringPreProgram {r D : ℕ} (G : SimpleGraph (Fin r))
         if G.Adj u v ∧ (input.seed = true ∨ (u.val + 1 ≠ 3 ∧ v.val + 1 ≠ 3)) ∧
             z = color v then one else zero
     else if pairCount r < input.new.count - identityEnd r then zero else z
+
+private theorem coloring_update_full {r D : ℕ} (G : SimpleGraph (Fin r))
+    (color : G.Coloring (Fin D)) (hD : 2 ≤ D) (input : MarkerInput) (z : Fin D)
+    (ht : identityEnd r < input.new.count) (hw : input.old.weight = halfLength r) :
+    ((coloringPreProgram G color hD).update input z : ℕ) = 0 := by
+  have hB : ¬ input.new.count ≤ initialLength r := by dsimp [identityEnd] at ht; omega
+  have hE : ¬ input.new.count ≤ identityEnd r := by omega
+  have hW : input.old.weight ≠ halfLength r - 1 := by rw [hw]; dsimp [halfLength]; omega
+  simp [coloringPreProgram, hB, hE, hW]
+
+/-- A nonretained first tail one may write a provisional color-dependent value.
+At its actual delayed latch the same pre-decision program writes canonical zero,
+for either seed and independently of every earlier register value. -/
+theorem c7_delayed_latch {r i j D : ℕ} (G : SimpleGraph (Fin r))
+    (hr : 3 ≤ r) (hi : 1 ≤ i) (hir : i ≤ r) (hj : 1 ≤ j)
+    (hjQ : j ≤ pairCount r + i) (hret : ¬ Retained r G j i) (rho : Bool)
+    (color : G.Coloring (Fin D)) (hD : 2 ≤ D) :
+    let w := edgePrefix r i j
+    let c := identityEnd r + delayedTarget r i j
+    let b := bareAddress r rho c w
+    let s := runBlind r G (asBlind (coloringPreProgram G color hD)) rho w c
+    s.snapshot = some b ∧ (s.value : ℕ) = colexRank (selectedFiber r G rho b) w ∧
+      ∀ d, identityEnd r + j < d → d ≤ c →
+        ((runBlind r G (asBlind (coloringPreProgram G color hD)) rho w d).value : ℕ) = 0 := by
+  dsimp only
+  let w := edgePrefix r i j
+  let c := identityEnd r + delayedTarget r i j
+  have hd := delayed_target_bounds hr hi hir hj (by omega)
+  have hcard := edge_prefix_card hi hir hj
+  have hfirst : FirstSelected r G c w :=
+    (delayed_selected_support G hr hi hir hj hjQ hret w hcard).mpr rfl
+  obtain ⟨k, hk⟩ : ∃ k, c = k + 1 := ⟨c - 1, by dsimp [c]; omega⟩
+  have hcut (d : ℕ) (hjd : identityEnd r + j ≤ d) : atCut w d = w := by
+    apply filter_eq_self.mpr
+    intro a ha
+    exact ((mem_Icc.mp (edge_prefix_subset hi hir hj ha)).2).trans hjd
+  have hclear : ∀ d, identityEnd r + j < d → d ≤ c →
+      ((runBlind r G (asBlind (coloringPreProgram G color hD)) rho w d).value : ℕ) = 0 := by
+    intro d hjd hdc
+    obtain ⟨a, rfl⟩ : ∃ a, d = a + 1 := ⟨d - 1, by omega⟩
+    have hn := run_snapshot_none G (asBlind (coloringPreProgram G color hD)) rho w a
+      (fun e hea => hfirst.2 e (by omega))
+    have hz := coloring_update_full G color hD (markerInput r rho w a)
+      (runBlind r G (asBlind (coloringPreProgram G color hD)) rho w a).value
+      (by change identityEnd r < a + 1; omega)
+      (by change (atCut w a).card = halfLength r; rw [hcut a (by omega)]; exact hcard)
+    rw [runBlind]
+    simp only [writeThenLatch, hn, Option.isSome_none, Bool.false_eq_true, ↓reduceIte]
+    exact hz
+  have hc := hcut (k + 1) (by dsimp [c] at hk; omega)
+  have hnone := run_snapshot_none G (asBlind (coloringPreProgram G color hD)) rho w k
+    (fun d hdk => hfirst.2 d (by omega))
+  have hsel : FirstSelected r G (k + 1) (atCut w (k + 1)) := by simpa [hc, hk] using hfirst
+  have hrank := (delayed_selected_fiber_and_rank G hr hi hir hj hjQ hret rho).2
+  refine ⟨?_, (hclear c (by dsimp [c]; omega) le_rfl).trans hrank.symm, hclear⟩
+  change (runBlind r G (asBlind (coloringPreProgram G color hD)) rho w c).snapshot = _
+  rw [hk, runBlind]
+  simp only [writeThenLatch, hnone, Option.isSome_none, Bool.false_eq_true, ↓reduceIte,
+    hsel, decide_true]
+  congr 1
+  change bareAddress r rho (k + 1) (atCut w (k + 1)) = bareAddress r rho c w
+  rw [hc, ← hk]
 
 end D5.S3.ObserverMemory.Trajectories.GraphScheduledSelection
