@@ -1,0 +1,21 @@
+**Definition 17.1 (unchanged compatible domain and branching costs).**
+Retain Definition 16.1, including both full-descriptor residual equations,
+the shared unweighted marginals, the complete carriers and the fixed finite
+or countable installed prior. In particular, $\mathfrak C$, $d_B,d_A$,
+$\mathfrak C_{\rm det}$, $\mathcal J$ and $j_{\rm det}$ have exactly the
+meanings (16.1)--(16.8). The input below is any pair in $\mathfrak C$;
+no endpoint boxes, native representation, reversibility, finite support,
+common rate or return-motion restriction is imposed. Set
+
+$$
+c_p=\frac{10d_B+4d_A}{11},\qquad
+c_\beta=\frac{4d_B+6d_A}{11},\qquad
+c_* =\max\{c_p,c_\beta\}.
+\tag{17.1}
+$$
+
+For a complete probability target $T$ on the indicated phase, write
+$\mathcal L_p(T)=\int\operatorname{TV}(Q,T)\,d\nu_p$ and
+$\mathcal L_\beta(T)=\int\operatorname{TV}(W,T)\,d\nu_\beta$.
+The TV convention is half the complete countable $\ell^1$ distance.
+

@@ -1,0 +1,49 @@
+### 11.5 双点块的严格弦缺陷
+
+按刚证的分量平稳行平均式（11.7），得
+
+$$
+\begin{aligned}
+P_{\rm pair}&=\frac{c(1-x)+cm+cn+2((m+n)/x+c_xn)}3,\\
+S_{\rm pair}&=\frac{c+rc(1-x)+2(1-x+m)}3.
+\end{aligned}
+\tag{11.17}
+$$
+
+由式（11.10），$\mathfrak D_{\rm pair}=P_{\rm pair}-P_r-\kappa(S_{\rm pair}-S_r)$。代入 $c_x$、通分，得到精确恒等式
+
+$$
+3\mathfrak D_{\rm pair}=(x-r)[\kappa(2+\lambda)-A_r(x)],
+\quad
+A_r(x)=c+\frac{2c^2(1+\lambda)}x
++\frac{2cn(2c-x)}{x(1+c-x)}.
+\tag{11.18}
+$$
+
+所有分母严格正。对 $c\in\{2/3,3/5\}$、$x\in[a,b]$，有 $2c-x\ge4/5>0$，且 $[x(1+c-x)]'=1+c-2x\ge4/5>0$。最后一项的正分子严格递减、正分母严格递增；中间的正倒数项也严格递减，所以 $A_r$ 在整个 $[a,b]$ 严格递减。
+
+r=a 时，直接有理通分给出
+
+$$
+A_a(b)-\kappa(2+\lambda_a)=\frac{32076038}{82759725}>0.
+\tag{11.19}
+$$
+
+故 $A_a(x)>\kappa(2+\lambda_a)$，而 $x-a>0$，式（11.18）使 $\mathfrak D_{\rm pair}<0$。r=b 时，端点行的完整悬置盒还要求
+
+$$
+v_bg_b=\lambda_b(1-x)\le m_a,
+\qquad x\ge1-\frac{m_a}{\lambda_b}=\frac{31}{81}.
+\tag{11.20}
+$$
+
+这里 $31/81-a=4/81>0$，$b-31/81=7/405>0$。在包含等号的必要范围 $x\ge31/81$ 内，
+
+$$
+A_b(31/81)-\kappa(2+\lambda_b)
+=-\frac{146467737601}{1540956234375}<0.
+\tag{11.21}
+$$
+
+严格递减性使括号 $\kappa(2+\lambda_b)-A_b(x)$ 严格正，而 $x-b<0$，仍有 $\mathfrak D_{\rm pair}<0$。另一个孤立端点由引理11.3有 $u=v=r'$，其整个律为原生端点且 $\mathfrak D=0$。双点分量总平稳权严格正，所以 $\pi\mathfrak D<0$，与式（11.9）矛盾。两个有理差、递减性与 $x-r$ 的方向共同承担严格号，未使用浮点近似。
+

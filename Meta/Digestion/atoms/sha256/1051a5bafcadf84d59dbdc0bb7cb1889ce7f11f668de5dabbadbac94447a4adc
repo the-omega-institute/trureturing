@@ -1,0 +1,30 @@
+### 11.4 被迫的端点—内部双点块
+
+设双点分量为 $(r,x)$，$r\in\{a,b\}$，$x\ne r$。引理11.3使 $B_{rr}=0,B_{rx}=1$。记 $z=B_{xr}>0$、$c=1-r$、$\lambda=rc$、$m=rc^2$、$n=\lambda m$、$c_x=1-u_x>0$。局部迫使给出 $xg_x=m,xf_x=n$，而同一生成表给出
+
+$$
+\begin{aligned}
+g_r&=c(1-x),&f_r&=cm,&t_r&=cn,\\
+g_x&=c_x[z(1-r)+(1-z)(1-x)],\\
+f_x&=c_x[zrc(1-x)+(1-z)m].
+\end{aligned}
+\tag{11.14}
+$$
+
+由于 $f_x/g_x=n/m=\lambda$，展开并合并得到
+
+$$
+0=f_x-\lambda g_x=c_x\lambda(x-r)(1-2z).
+\tag{11.15}
+$$
+
+前两因子严格正且 $x-r\ne0$，故
+
+$$
+B_{xr}=B_{xx}=\frac12,\qquad
+c_x=\frac{2m}{x(2-r-x)},\qquad t_x=c_xn.
+\tag{11.16}
+$$
+
+详细平衡 $\pi_rB_{rx}=\pi_xB_{xr}$ 使 $\pi_r=\pi_x/2$。因此**该分量内归一化的观察者平稳行**为 $(1/3,2/3)$。它与式（11.1）的**来源深度先验** $(1/3,1/3,1/3)$ 是不同对象；没有更改来源或引入免费后验。
+
