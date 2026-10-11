@@ -67,15 +67,19 @@ internal sealed class VertexPositionRatioRefutationDocument : IScribeDocumentDef
                     + "real C. This contradicts claim. The lower bound, rather than an exact value of either "
                     + "invariant on the family, suffices. The source's separate degree, eccentricity and "
                     + "graph-class results are not assertions of boundedness and retain their stated scopes.", false,
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("thankachy-et-al-2024-vertex-position-ratio"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, bool literature, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        string prose, bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note))
                 : AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula GeodesicFormula()
     {

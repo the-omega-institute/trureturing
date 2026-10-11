@@ -82,6 +82,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/thankachy-et-al-2024-vertex-position-ratio` (refuted) by `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"thankachy-et-al-2024-vertex-position-ratio","declaration_gid":"D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Thankachy, E. J. Thomas, U. Chandran, J. Tuite, G. Di Stefano, G. Erskine (2024). *On the Vertex Position Number of Graphs*. DOI: [10.7151/dmgt.2491](https://doi.org/10.7151/dmgt.2491). URL: <https://arxiv.org/abs/2209.00359v2>.
