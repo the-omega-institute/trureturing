@@ -63,6 +63,16 @@ internal sealed class NativePeriodicWordLawDocument : IScribeDocumentDefinition
                 Node("native-periodic-full-box", "native_full_box_criterion",
                     "Complete native endpoint boxes are equivalent to the finite criterion", criterion,
                     "The swap component satisfies H_*^2=eta I, and the fixed label multiplies by t. Necessity compares the strictly positive type-0 even subsequences with both endpoint rates; a rate outside either closed interval contradicts the unbounded powers of a quotient greater than one. The immediate suspended word supplies its bound, and restriction supplies every seed. For sufficiency, the two-step recurrence preserves ordered endpoint bounds. The type-0 order never switches, p type-1 switches at n=3, and suspended continuing type-1 switches at n=1. Tests through n=4 seed every required parity after the switch; strong induction supplies all n. Noncompletion has mass zero at both endpoints and for every emission table, independently of the rate and seed tests. The renderer transports every finite and both phase-specific infinite coordinates to the complete native transcript. Equality at the rate endpoints is included."),
+                Node("endpoint-coordinates", "endpoint_coordinates", "Every pure endpoint word coordinate",
+                    All(Equal(Call("realMass", Call("explicitStoppedWordLaw", F.Id("s"), F.Id("r")),
+                        Call("some", Call("typeWord", F.Id("s"), F.Id("n"), F.Id("b")))),
+                        Call("pureCoord", F.Id("r"), F.Id("s"), F.Id("n"), F.Id("b"))),
+                        ("r", "unitInterval"), ("s", "ActivePhase"), ("n", "Nat"), ("b", "Letter")),
+                    "For every r in the closed unit interval, both active phases, every natural n and both letters b, the pure stopped-word singleton mass is pureCoord(r,s,n,b). For p it is r[r(1-r)]^n when b=0 and (1-r)^2[r(1-r)]^n when b=1; suspension multiplies either continuing mass by r. This statement is independent of the periodic installed parameter family."),
+                Node("endpoint-immediate", "endpoint_immediate", "Every pure suspended immediate mass",
+                    All(Equal(Call("realMass", Call("explicitStoppedWordLaw", F.Id("beta"), F.Id("r")),
+                        Call("singletonWord", D(1))), Seq(D(1), Minus, F.Id("r"))), ("r", "unitInterval")),
+                    "For every r in the closed unit interval, the complete pure suspended law assigns mass 1-r to the singleton word [beta]. The endpoints r=0 and r=1 are included."),
                 Paragraph(Text("These statements concern the periodic source-specific reversible common generator and its full native laws. They give neither an event-midpoint identity nor a total-variation attainment conclusion. The prior and update kernels remain those in the parameterized construction.")))));
     }
 
