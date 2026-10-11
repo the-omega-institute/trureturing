@@ -66,5 +66,39 @@ internal sealed class MovingSupportKLTransportDocument : IScribeDocumentDefiniti
                         "losses, rather than a uniform deterministic bound on each loss. " +
                         "The quantitative tail estimate supplies the uniform-integrability " +
                         "hypothesis of the L1 convergence theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("moving-support-posterior-limit"),
+                DeclarationHandle.Create(Owner + "moving_support_posterior_limit"),
+                H("Posterior coordinate limits across disappearing supports"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Keep the common finite-record model and prior density bound of the " +
+                        "preceding theorem. Let a and b be real coordinate families on Omega " +
+                        "times J, and let t be a real function on Omega. Almost everywhere, " +
+                        "assume that all actual finite records have positive mass, that " +
+                        "D(n)/Q(n) tends to the positive number t, and that the actual and " +
+                        "reference posterior coordinates tend respectively to a and b, " +
+                        "simultaneously for every hidden state.")),
+                    Paragraph(Text(
+                        "The posterior loss then tends almost everywhere to " +
+                        "KL(a,b)-KL(r_*a,r_*b). The losses are uniformly integrable; " +
+                        "this limit is integrable; convergence holds in L1; and the " +
+                        "expectations converge to the expectation of this limit. " +
+                        "No coordinate of b, or of its coarse pushforward, is required " +
+                        "to be positive.")),
+                    Paragraph(Text(
+                        "Along each such path the posterior density ratio is eventually " +
+                        "bounded by 2M/t. If a reference coordinate tends to zero, its " +
+                        "KL summand equals that reference coordinate times x log(x), " +
+                        "with x in a bounded nonnegative interval. Continuity of " +
+                        "x log(x), including its zero value, makes this summand vanish. " +
+                        "The same argument applies after grouping coordinates into " +
+                        "coarse fibers. Finite summation gives the almost everywhere " +
+                        "loss limit, and common-record tail transport upgrades it to L1. " +
+                        "Identifying a and b with the conditional priors of an iid " +
+                        "observation-row class remains a separate hypothesis-supplying step."))),
                 DescribeRole.Theorem))));
 }
