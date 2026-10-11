@@ -1,3 +1,14 @@
+---
+bibkey: trureturing2026extrawindowpairing
+authors: trureturing research (derived proof; original supplier attributions in body)
+year: 2026
+title: Ordinary supplier-relative forced-window, core and forward deductions
+doi: null
+claim: Ordinary supplier-relative forced-window, core and forward deductions under the hypotheses and scope stated in the body; no Lean verification, RH resolution, novelty or official acceptance is asserted.
+strata_touched: []
+license: Apache-2.0
+triage: anchor
+---
 Verdict: **comment**. N1–N5 are valid ordinary deductions with the supplier,
 tie and real-base qualifications below. The supplied answer is advisory data,
 not verification. This audit additionally consumes the completed two-price

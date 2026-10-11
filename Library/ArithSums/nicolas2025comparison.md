@@ -11133,7 +11133,7 @@ E_N\subseteq\{(p,1)\}.
 They also supply the global clock/value ordering of the **least**
 sources, their finite constant-integer blocks, and the last-label bounds
 used below. These all-branch and E1–E8 inputs are reused as recorded in
-the [completed forced-window proof, §§2, 8–9](quantitative-extra-window-pairing-audit.md).
+the [completed forced-window proof, §§2, 8–9](trureturing2026extrawindowpairing.md).
 Global least-source ordering does not assert global ordering of arbitrary
 ties. The finite positive-prefix optimizer at an arbitrary positive price
 is the existing
