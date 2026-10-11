@@ -4,11 +4,11 @@
 
 Integral sl₂ weights give sharp rank bounds for endomorphisms lowering the weight filtration.
 
-Let K be a field of characteristic zero and V a finite-dimensional K-vector space. The relations ef − fe = h, he − eh = 2e and hf − fh = −2f include the zero action. The space weightSpace(h,s) is the eigenspace of h at the scalar obtained from the integer s. IntegralWeights(h) means that a finite collection of integer weight spaces spans V. The spaces weightLE(h,s) and weightGE(h,s) are the sums of weights at most s and at least s, respectively. Operator powers use composition; finrank denotes dimension over K.
+Let K be a field of characteristic zero and V a finite-dimensional K-vector space. The relations ef − fe = h, he − eh = 2e and hf − fh = −2f include the zero action. The space weightSpace(h,s) is the eigenspace of h at the scalar obtained from the integer s. IntegralWeights(h) means that a finite collection of integer weight spaces spans V. The spaces weightLE(h,s) and weightGE(h,s) are the sums of weights at most s and at least s, respectively. An inner iSup over a proposition is the indicated subspace when that proposition holds, and the zero subspace otherwise. Operator powers use composition; finrank denotes dimension over K.
 
 **Definition 1.1 (The sl₂ commutator relations).**
 
-$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (e \cdot f - f \cdot e = h) \land ((h \cdot e - e \cdot h = (2) \cdot e) \land (h \cdot f - f \cdot h = -(2) \cdot f))$$
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Leftrightarrow ((e \cdot f - f \cdot e = h) \land ((h \cdot e - e \cdot h = (2 : K) \cdot e) \land (h \cdot f - f \cdot h = -(2 : K) \cdot f)))$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.Sl2Relations` (`✓ std3`).
 
@@ -32,7 +32,7 @@ This declaration records the indicated sl₂ object and its defining expression.
 
 **Definition 1.3 (Finite integral weight support).**
 
-$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \exists S \in \operatorname{Finset}\left(\mathbb{Z}\right),\; \operatorname{iSup}\left(s, s \in S, \operatorname{weightSpace}\left(h, s\right)\right) = \operatorname{top}$$
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; (\operatorname{IntegralWeights}\left(h\right)) \Leftrightarrow (\exists S \in \operatorname{Finset}\left(\mathbb{Z}\right),\; \operatorname{iSup}\left((s : \mathbb{Z} \mapsto \operatorname{iSup}\left(s \in S, \operatorname{weightSpace}\left(h, s\right)\right))\right) = \operatorname{top})$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.IntegralWeights` (`✓ std3`).
 
@@ -44,7 +44,7 @@ This declaration records the indicated sl₂ object and its defining expression.
 
 **Definition 1.4 (The lower weight filtration).**
 
-$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall s \in \mathbb{Z},\; \operatorname{weightLE}\left(h, s\right) = \operatorname{iSup}\left(t, t \le s, \operatorname{weightSpace}\left(h, t\right)\right)$$
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall s \in \mathbb{Z},\; \operatorname{weightLE}\left(h, s\right) = \operatorname{iSup}\left((t : \mathbb{Z} \mapsto \operatorname{iSup}\left(t \le s, \operatorname{weightSpace}\left(h, t\right)\right))\right)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.weightLE` (`✓ std3`).
 
@@ -56,7 +56,7 @@ This declaration records the indicated sl₂ object and its defining expression.
 
 **Definition 1.5 (The upper weight filtration).**
 
-$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall s \in \mathbb{Z},\; \operatorname{weightGE}\left(h, s\right) = \operatorname{iSup}\left(t, s \le t, \operatorname{weightSpace}\left(h, t\right)\right)$$
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall s \in \mathbb{Z},\; \operatorname{weightGE}\left(h, s\right) = \operatorname{iSup}\left((t : \mathbb{Z} \mapsto \operatorname{iSup}\left(s \le t, \operatorname{weightSpace}\left(h, t\right)\right))\right)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.weightGE` (`✓ std3`).
 
@@ -68,7 +68,7 @@ This declaration records the indicated sl₂ object and its defining expression.
 
 **Definition 1.6 (The shifted lowering map).**
 
-$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; \forall a \in \operatorname{Sl2Relations}\left(h, e, f\right),\; \forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; (\operatorname{type}\left(\operatorname{loweringMap}\left(a, s, r\right)\right) = \operatorname{LinearMap}\left(K, \operatorname{weightSpace}\left(h, s\right), \operatorname{weightSpace}\left(h, s - 2 \cdot (r : \mathbb{Z})\right)\right)) \land (\forall v \in \operatorname{weightSpace}\left(h, s\right),\; \operatorname{val}\left(\operatorname{loweringMap}\left(a, s, r\right)\left(v\right)\right) = (f^{r})\left(v\right))$$
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; \forall a \in \operatorname{Sl2Relations}\left(h, e, f\right),\; \forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; (\operatorname{type}\left(\operatorname{loweringMap}\left(a, s, r\right)\right) = \operatorname{LinearMap}\left(K, \operatorname{weightSpace}\left(h, s\right), \operatorname{weightSpace}\left(h, s - 2 \cdot (r : \mathbb{Z})\right)\right)) \land (\forall v \in \operatorname{weightSpace}\left(h, s\right),\; \operatorname{val}\left(\operatorname{loweringMap}\left(a, s, r\right)\left(v\right)\right) = (f^{r})\left(\operatorname{val}\left(v\right)\right))$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.loweringMap` (`✓ std3`).
 
@@ -80,7 +80,7 @@ This declaration records the indicated sl₂ object and its defining expression.
 
 **Definition 1.7 (The shifted raising map).**
 
-$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; \forall a \in \operatorname{Sl2Relations}\left(h, e, f\right),\; \forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; (\operatorname{type}\left(\operatorname{raisingMap}\left(a, s, r\right)\right) = \operatorname{LinearMap}\left(K, \operatorname{weightSpace}\left(h, s\right), \operatorname{weightSpace}\left(h, s + 2 \cdot (r : \mathbb{Z})\right)\right)) \land (\forall v \in \operatorname{weightSpace}\left(h, s\right),\; \operatorname{val}\left(\operatorname{raisingMap}\left(a, s, r\right)\left(v\right)\right) = (e^{r})\left(v\right))$$
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; \forall a \in \operatorname{Sl2Relations}\left(h, e, f\right),\; \forall s \in \mathbb{Z},\; \forall r \in \mathbb{N},\; (\operatorname{type}\left(\operatorname{raisingMap}\left(a, s, r\right)\right) = \operatorname{LinearMap}\left(K, \operatorname{weightSpace}\left(h, s\right), \operatorname{weightSpace}\left(h, s + 2 \cdot (r : \mathbb{Z})\right)\right)) \land (\forall v \in \operatorname{weightSpace}\left(h, s\right),\; \operatorname{val}\left(\operatorname{raisingMap}\left(a, s, r\right)\left(v\right)\right) = (e^{r})\left(\operatorname{val}\left(v\right)\right))$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.raisingMap` (`✓ std3`).
 

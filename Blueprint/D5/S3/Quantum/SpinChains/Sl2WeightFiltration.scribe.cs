@@ -10,7 +10,7 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
         "Integral sl₂ weights give sharp rank bounds for endomorphisms lowering the weight filtration.",
         H("Weight filtration and maximal power ranks"),
         Blocks(
-            Paragraph(Text("Let K be a field of characteristic zero and V a finite-dimensional K-vector space. The relations ef − fe = h, he − eh = 2e and hf − fh = −2f include the zero action. The space weightSpace(h,s) is the eigenspace of h at the scalar obtained from the integer s. IntegralWeights(h) means that a finite collection of integer weight spaces spans V. The spaces weightLE(h,s) and weightGE(h,s) are the sums of weights at most s and at least s, respectively. Operator powers use composition; finrank denotes dimension over K.")),
+            Paragraph(Text("Let K be a field of characteristic zero and V a finite-dimensional K-vector space. The relations ef − fe = h, he − eh = 2e and hf − fh = −2f include the zero action. The space weightSpace(h,s) is the eigenspace of h at the scalar obtained from the integer s. IntegralWeights(h) means that a finite collection of integer weight spaces spans V. The spaces weightLE(h,s) and weightGE(h,s) are the sums of weights at most s and at least s, respectively. An inner iSup over a proposition is the indicated subspace when that proposition holds, and the zero subspace otherwise. Operator powers use composition; finrank denotes dimension over K.")),
             DefinitionNode("Sl2Relations", "The sl₂ commutator relations", RelationsDefinition()),
             DefinitionNode("weightSpace", "The integer weight space", WeightSpaceDefinition()),
             DefinitionNode("IntegralWeights", "Finite integral weight support", IntegralWeightsDefinition()),
@@ -78,6 +78,7 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
     private static Formula Member(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.MemberOf, y);
     private static Formula Imp(Formula x, Formula y) => new Formula.Logic(Par(x), FormulaLogicOperator.Implies, Par(y));
     private static Formula And(Formula x, Formula y) => new Formula.Logic(Par(x), FormulaLogicOperator.And, Par(y));
+    private static Formula Iff(Formula x, Formula y) => new Formula.Logic(Par(x), FormulaLogicOperator.Iff, Par(y));
     private static Formula Assumption(Formula x, Formula body) => Seq(OpenBracket, x, CloseBracket, Sp, body);
     private static Formula Nats => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Ints => Seq(Mathbb, Grp(F.Id("Z")));
@@ -103,10 +104,11 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
     private static Formula Finset(Formula x) => Call("Finset", x);
     private static Formula Eigenspace(Formula h, Formula value) => Call("eigenspace", h, value);
     private static Formula Supremum(Formula index, Formula condition, Formula body) =>
-        Call("iSup", index, condition, body);
+        Call("iSup", Par(Seq(index, Sp, Colon, Sp, Ints, Sp, Mapsto, Sp,
+            Call("iSup", condition, body))));
     private static Formula LinearMap(Formula scalar, Formula source, Formula target) =>
         Call("LinearMap", scalar, source, target);
-    private static Formula Value(Formula fn, Formula arg) => At(Call("val"), At(fn, arg));
+    private static Formula Value(Formula fn, Formula arg) => Call("val", At(fn, arg));
 
     private static Formula DefinitionEnvironment(Formula body, bool charZero)
     {
@@ -124,9 +126,9 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
     {
         var h = F.Id("h"); var e = F.Id("e"); var f = F.Id("f");
         var ef = Eq(Sub(Mul(e, f), Mul(f, e)), h);
-        var he = Eq(Sub(Mul(h, e), Mul(e, h)), Seq(Par(D(2)), Sp, Cdot, Sp, e));
-        var hf = Eq(Sub(Mul(h, f), Mul(f, h)), Seq(F.Minus, Par(D(2)), Sp, Cdot, Sp, f));
-        Formula body = And(ef, And(he, hf));
+        var he = Eq(Sub(Mul(h, e), Mul(e, h)), Seq(CastTo(D(2), F.Id("K")), Sp, Cdot, Sp, e));
+        var hf = Eq(Sub(Mul(h, f), Mul(f, h)), Seq(F.Minus, CastTo(D(2), F.Id("K")), Sp, Cdot, Sp, f));
+        Formula body = Iff(Relations, And(ef, And(he, hf)));
         body = All("f", Endomorphism(F.Id("K")), body);
         body = All("e", Endomorphism(F.Id("K")), body);
         body = All("h", Endomorphism(F.Id("K")), body);
@@ -145,8 +147,8 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
     private static Formula IntegralWeightsDefinition()
     {
         var h = F.Id("h"); var s = F.Id("s"); var set = F.Id("S");
-        Formula body = Some("S", Finset(Ints), Eq(
-            Supremum(s, Member(s, set), Call("weightSpace", h, s)), Top));
+        Formula body = Iff(Call("IntegralWeights", h), Some("S", Finset(Ints), Eq(
+            Supremum(s, Member(s, set), Call("weightSpace", h, s)), Top)));
         body = All("h", Endomorphism(F.Id("K")), body);
         return DefinitionEnvironment(body, false);
     }
@@ -173,7 +175,7 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
         var map = Call(raising ? "raisingMap" : "loweringMap", a, s, r);
         var operatorPower = Par(Pow(raising ? "e" : "f", r));
         Formula type = Eq(Call("type", map), LinearMap(F.Id("K"), source, target));
-        Formula value = Eq(Value(map, v), At(operatorPower, v));
+        Formula value = Eq(Value(map, v), At(operatorPower, Call("val", v)));
         Formula body = And(type, All("v", source, value));
         body = All("r", Nats, body);
         body = All("s", Ints, body);
