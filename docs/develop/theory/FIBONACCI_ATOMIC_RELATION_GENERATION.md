@@ -70277,3 +70277,133 @@ $$
 
 本节是 §457 的代数重排；它没有提供 \(\mathfrak m(P)\) 的新全局界，
 没有证明（458.3）对所有自匹配根成立，也没有证明 Robin 不等式或 RH。
+
+## 459. 把最新有限 Mertens 乘积界接入同一预算
+
+§458 的左侧偏差并不是一个没有现成解析输入的抽象量。Broadbent--Fiori--Kadiri--Ng--Wilk，
+[arXiv:2608.01498v1](../../../Library/Weil/broadbent2026mertens.md)，其逆素数乘积定理
+（源文件显示为式 (bnd:prod3)--(bnd:prod4)），由第一 Mertens 和的显式界推出：对
+\(\ell\in\{1,2,3,4,5\}\) 及 \(P\ge x_0\ge2\)，存在其文中定义的正数
+\(\mathcal D_\ell(x_0),\mathcal D'_\ell(x_0)\)，使
+
+$$
+e^\gamma\log P\left(1-\frac{\mathcal D_\ell(x_0)}{(\log P)^\ell}\right)
+\le \mathcal M(P)
+\le
+e^\gamma\log P\left(1+\frac{\mathcal D'_\ell(x_0)}{(\log P)^\ell}\right).
+\tag{459.1}
+$$
+
+下界只在左侧因子为正时使用；上界无需这一附加条件。这里复用的是该文的
+有限乘积定理及其适用范围，不把文中的数值表当作本项目重新认证的计算。
+
+### 命题 459.1（有限 Mertens 偏差的显式包络）
+
+令
+
+$$
+\delta_+(P;x_0,\ell)=
+\frac{\mathcal D'_\ell(x_0)}{(\log P)^\ell},
+\qquad
+\delta_-(P;x_0,\ell)=
+\frac{\mathcal D_\ell(x_0)}{(\log P)^\ell}.
+$$
+
+则由（459.1）直接得到
+
+$$
+\boxed{
+\log(1-\delta_-)
+\le \mathfrak m(P)
+\le \log(1+\delta_+)
+}
+\tag{459.2}
+$$
+
+其中左侧要求 \(0<\delta_-<1\)。特别地，
+
+$$
+0\le \mathfrak m(P)\le\log(1+\delta_+)
+$$
+
+只有在额外知道 \(\mathcal M(P)\ge e^\gamma\log P\) 时才成立；一般不能把
+有限 Mertens 偏差预先当成非负量。
+
+**证明。** 将（459.1）除以 \(e^\gamma\log P\)，再使用对数函数在正数上的
+严格单调性即可。上界中的 \(1+\delta_+\) 始终为正；下界需要
+\(1-\delta_->0\)。\(\square\)
+
+### 推论 459.2（Robin 三项账本的可检验充分条件）
+
+在 §458 的严格自匹配根上，若 \(P\ge x_0\)，则
+
+$$
+\boxed{
+\Delta_{\rm Robin}
+\ge
+\log\frac{\log t}{\log P}
+-\log(1+\delta_+)
++\mathcal A_P(\varepsilon_*)
++\mathcal L_P(\varepsilon_*).
+}
+\tag{459.3}
+$$
+
+因此定义所需的剩余阈值
+
+$$
+\Theta_+(P,t;x_0,\ell)
+=
+\max\!\left\{0,
+\log\frac{(1+\delta_+(P;x_0,\ell))\log P}{\log t}
+\right\},
+$$
+
+则下面的联合条件足以推出严格 Robin 不等式：
+
+$$
+\boxed{
+\mathcal A_P(\varepsilon_*)+\mathcal L_P(\varepsilon_*)
+>\Theta_+(P,t;x_0,\ell).
+}
+\tag{459.4}
+$$
+
+还可以丢弃连续价格衰减这一非负项，得到较强但更直接的 floor 证书：
+
+$$
+\boxed{
+\mathcal L_P(\varepsilon_*)
+>\Theta_+(P,t;x_0,\ell)
+\quad\Longrightarrow\quad
+\Delta_{\rm Robin}>0.
+}
+\tag{459.5}
+$$
+
+由（457.4），一个完全逐素数、可由 FIB 观察继续攻击的充分条件是
+
+$$
+\boxed{
+\sum_{p\le P}
+\frac{p^{-Y_p(\varepsilon_*)}}{1-p^{-Y_p(\varepsilon_*)}}
+\{Y_p(\varepsilon_*)\}\log p
+>
+\Theta_+(P,t;x_0,\ell).
+}
+\tag{459.6}
+$$
+
+**证明。** 将（459.2）的上界代入（458.2），并用
+\(\mathcal A_P\ge0\)、（457.4）的取整损失下界，即得（459.3）--（459.6）。
+\(\square\)
+
+式（459.4）是一个真正的有限尺度判据：它把最新的 Mertens 乘积误差压成
+显式的 \(O((\log P)^{-\ell})\) 项，但没有消除 FIB 侧的加权分数部义务。若
+只知道地址、\(N\equiv1\pmod{F_r}\)、支撑 \(P\) 或 CA 指数向量，而不能恢复
+（459.6）中的同一批 \(\{Y_p\}\)，仍然无法应用该判据。
+
+在已核对的有限校准 \(N_*\) 上，\(P=67\) 而 \(\log N_*>\!67\)；该点低于
+Broadbent 表格常用的 \(x_0=e^{20}\) 区域，故（459.1）不能被倒用于这个样本。
+这说明该结果是无界路线的解析输入接口，不是对有限样本的自动证书。它也没有
+证明（459.4）对所有自匹配根成立，更没有证明 Robin 不等式或 RH。
