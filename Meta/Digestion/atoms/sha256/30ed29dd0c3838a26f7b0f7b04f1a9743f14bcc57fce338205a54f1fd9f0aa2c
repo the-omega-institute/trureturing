@@ -1,0 +1,31 @@
+**Definition 17.5 (preservation boundary and falsification domain).**
+The conditional identities (17.3) preserve both complete mean laws, hence
+both endpoint-event midpoint means whenever the input has them. They do
+not place every sampled comparison law in its endpoint box: a conditional
+mean constraint is not a pointwise constraint. The comparison's two
+residual equations and new shared marginals are exact, but the original
+phase distributions, prescribed actual return triples and supported loss
+budgets need not be preserved. Its Markov joining is an analysis choice,
+not a claim that an original observer's projected descriptor process has
+that joining. In particular the comparison trajectory is not a permitted
+uncounted persistent random tape or a finite installed apparatus.
+
+A falsifier for Theorem 17.2 is an input satisfying both full conditional
+equations and both unweighted balances for which the construction
+(17.6)--(17.8) violates either conditional complete barycentre identity
+or one inequality of (17.4) for a normalized complete target. A falsifier
+for (17.13) is such an input, for one fixed endpoint-positive prior with
+a supported nonendpoint, having $\mathcal J+c_*<j_{\rm det}$.
+Selected-event compatibility, synthetic-weighted stationarity or a
+finite-prefix loss violation alone does not meet these hypotheses.
+
+The unrestricted objective remains $j_c=\min_{\mathfrak C}\mathcal J$.
+Its zero-versus-positive alternative and the value of $j_{\rm det}$ are
+not evaluated by (17.13). A zero pair, if it exists, must jointly meet the
+original endpoint boxes, midpoint calibration, every supported loss budget
+and both residual equations; (17.14) adds a necessary branching floor.
+It supplies neither such a pair nor a vanishing family. Finite atomicity
+under PAIRED Theorem 11.8 and permitted finitely represented exact sampling
+remain separate obligations for finite exact and effective attainment.
+No hard COMPLETE-resource or hard marginalized-defect preservation follows.
+

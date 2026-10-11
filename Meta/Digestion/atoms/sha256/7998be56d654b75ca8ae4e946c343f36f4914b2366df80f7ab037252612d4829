@@ -1,0 +1,14 @@
+**Corollary 16.3 (all-supported exclusion and the minimum on all residual graphs).**
+Fix any allowed installed prior with at least one supported $k\ge3$.
+Then no pair in $\mathfrak C_{\rm det}$ has $\mathcal J=0$, and
+
+$$
+j_{\rm det}=\min_{\mathfrak C_{\rm det}}\mathcal J>0.
+\tag{16.28}
+$$
+
+The minimum includes nonatomic graph flows and has no endpoint-box constraint.
+It is uniform over label count for this fixed prior. No numerical value is
+asserted. Consequently every zero-level pair in the unrestricted
+$\mathfrak C$, if one exists for this prior, must have $d_A+d_B>0$.
+

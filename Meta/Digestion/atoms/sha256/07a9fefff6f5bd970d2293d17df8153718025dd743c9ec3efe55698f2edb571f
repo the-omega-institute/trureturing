@@ -1,0 +1,16 @@
+**引理 11.3（悬置端点的局部饱和）。** 若 $v_i=r\in\{a,b\}$，则
+
+$$
+u_i=r,\qquad f_i=F_r,\qquad t_i=T_r,
+\qquad B_{ij}>0\Longrightarrow v_jg_j=m_r, v_jf_j=n_r.
+\tag{11.11}
+$$
+
+若 i 有任何 $v_j\ne r$ 的正邻居，则 $B_{ii}=0$。
+
+证明：当 $v_i=a$，式（11.5）的 $v_if_i\ge aF_a$ 与 $f_i\le F_a$ 迫使 $f_i=F_a$；$v_it_i\ge aT_a$ 与 $t_i\le T_a$ 同样迫使 $t_i=T_a$。当 $v_i=b$，使用相反的上界 $v_if_i\le bF_b$、$v_it_i\le bT_b$ 与 p 相下界，得到 $f_i=F_b,t_i=T_b$。
+
+由同一 H，$f_i=d_i\sum_jB_{ij}v_jg_j$。在 a 情形，$d_i\le2/3$ 且每个 $v_jg_j\le m_a$，因此 $f_i\le(2/3)m_a=F_a$；已知等号迫使 $d_i=2/3$，每个正邻居的 $v_jg_j=m_a$。在 b 情形，$d_i\ge3/5$ 且 $v_jg_j\ge m_b$，因此 $f_i\ge(3/5)m_b=F_b$，等号迫使 $d_i=3/5$ 和逐邻居的 $v_jg_j=m_b$。再用 $t_i=(1-r)\sum_jB_{ij}v_jf_j$ 及式（11.5）的 $n_a\le v_jf_j\le n_b$，分别在下端、上端取得等号，即得所有 $v_jf_j=n_r$。
+
+最后 $g_i=(1-r)\sum_jB_{ij}(1-v_j)$。a 情形所有 $v_j\ge a$，若至少一个正邻居严格较大，则 $g_i<G_a$；b 情形同理有 $g_i>G_b$。如果同时 $B_{ii}>0$，刚证的邻居等式又使 $r g_i=m_r$，即 $g_i=G_r$，矛盾。这里邻居等式也包含自环，不曾假定自环为零。$\square$
+
