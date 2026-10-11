@@ -48,6 +48,52 @@ def pairList (r : ℕ) : List (Fin r × Fin r) :=
 
 def edgeAt (r j : ℕ) : Option (Fin r × Fin r) := (pairList r)[j - 1]?
 
+private theorem pair_list_length (r : ℕ) : (pairList r).length = pairCount r := by
+  simp only [pairList, List.length_map, length_sort]
+  rw [card_image_of_injective _ toLex.injective, card_product_filter_lt]
+  simp [pairCount]
+
+private theorem mem_pair_list {r : ℕ} (u v : Fin r) :
+    (u, v) ∈ pairList r ↔ u < v := by
+  simp [pairList]
+
+private theorem edge_at_complete {r : ℕ} (u v : Fin r) (huv : u < v) :
+    ∃ j, 1 ≤ j ∧ j ≤ pairCount r ∧ edgeAt r j = some (u, v) := by
+  obtain ⟨k, hk, he⟩ := List.mem_iff_getElem.mp ((mem_pair_list u v).mpr huv)
+  refine ⟨k + 1, by omega, by rw [pair_list_length] at hk; omega, ?_⟩
+  simpa [edgeAt] using (List.getElem?_eq_some_iff.mpr ⟨hk, he⟩)
+
+private theorem delayed_target_bounds {r i j : ℕ} (hr : 3 ≤ r)
+    (hi : 1 ≤ i) (hir : i ≤ r) (hj : 1 ≤ j) (hjr : j ≤ pairCount r + r) :
+    2 * pairCount r + r < delayedTarget r i j ∧
+      j + 1 < delayedTarget r i j ∧ delayedTarget r i j ≤ lastTarget r := by
+  have hm : (i - 1) * (pairCount r + r) ≤ (r - 1) * (pairCount r + r) :=
+    Nat.mul_le_mul_right _ (by omega)
+  have hi' : i - 1 + 1 = i := by omega
+  have hr' : r - 1 + 1 = r := by omega
+  dsimp [delayedTarget, lastTarget]
+  constructor
+  · omega
+  constructor
+  · omega
+  · nlinarith
+
+private theorem delayed_target_injective {r i j a b : ℕ}
+    (hi : 1 ≤ i) (ha : 1 ≤ a) (hj : 1 ≤ j) (hb : 1 ≤ b)
+    (hjM : j ≤ pairCount r + r) (hbM : b ≤ pairCount r + r)
+    (he : delayedTarget r i j = delayedTarget r a b) : i = a ∧ j = b := by
+  dsimp [delayedTarget] at he
+  have hia : i = a := by
+    by_contra hn
+    rcases lt_or_gt_of_ne hn with h | h
+    · have hm := Nat.mul_le_mul_right (pairCount r + r) (show i ≤ a - 1 by omega)
+      have hi' : i - 1 + 1 = i := by omega
+      nlinarith
+    · have hm := Nat.mul_le_mul_right (pairCount r + r) (show a ≤ i - 1 by omega)
+      have ha' : a - 1 + 1 = a := by omega
+      nlinarith
+  exact ⟨hia, by simpa [hia] using he⟩
+
 /-- Only the early trigger is removed when an edge is absent. -/
 def Retained (r : ℕ) (G : SimpleGraph (Fin r)) (j i : ℕ) : Prop :=
   1 ≤ j ∧ j ≤ pairCount r ∧ ∃ u v, edgeAt r j = some (u, v) ∧
@@ -548,6 +594,132 @@ def writeThenLatch {Z : Type} (s : LatchedRegister Z) (b : BareAddress)
     ⟨value, if freeze then some b else none⟩
 
 def atCut (w : Finset ℕ) (c : ℕ) : Finset ℕ := w.filter (· ≤ c)
+
+private theorem trigger_congr {r c : ℕ} (G : SimpleGraph (Fin r))
+    (w v : Finset ℕ) (h : ∀ k, k ≤ c → (k ∈ w ↔ k ∈ v)) :
+    Trigger r G c w ↔ Trigger r G c v := by
+  have forward : ∀ (x y : Finset ℕ),
+      (∀ k, k ≤ c → (k ∈ x ↔ k ∈ y)) → Trigger r G c x → Trigger r G c y := by
+    intro x y hxy ht
+    have hid (hc : identityEnd r ≤ c) : identities r x = identities r y := by
+      ext i
+      simp only [identities, mem_filter]
+      apply and_congr_right
+      intro hi
+      exact hxy _ (by have := (mem_Icc.mp hi).2; dsimp [identityEnd] at hc; omega)
+    have hf (j : ℕ) (hc : identityEnd r + j ≤ c)
+        (hx : FirstTailOne r x j) : FirstTailOne r y j := by
+      refine ⟨hx.1, (hxy _ hc).mp hx.2.1, ?_⟩
+      intro k hk hkj hmem
+      exact hx.2.2 k hk hkj ((hxy _ (by omega)).mpr hmem)
+    rcases ht with ht | ht | ht | ht
+    · exact Or.inl ⟨ht.1, ht.2.1, fun hy => ht.2.2 ((hxy c le_rfl).mpr hy)⟩
+    · exact Or.inr (Or.inl ⟨ht.1, (hid (by omega)).symm.trans ht.2⟩)
+    · obtain ⟨t, u, v, ht, htQ, he, hs, hc⟩ := ht
+      exact Or.inr (Or.inr (Or.inl ⟨t, u, v, ht, htQ, he,
+        by rwa [← hid (by omega)], hc⟩))
+    · obtain ⟨i, hi, hir, hs, ht⟩ := ht
+      have hc : identityEnd r ≤ c := by
+        rcases ht with ⟨j, _, _, hj, _⟩ | ⟨hc, _⟩ <;> omega
+      refine Or.inr (Or.inr (Or.inr ⟨i, hi, hir, (hid hc).symm.trans hs, ?_⟩))
+      rcases ht with ⟨j, hj, hjQ, hjc, he⟩ | ⟨he, hz⟩
+      · exact Or.inl ⟨j, hf j hjc hj, hjQ, hjc, he⟩
+      · refine Or.inr ⟨he, ?_⟩
+        intro k hk hkQ hmem
+        exact hz k hk hkQ ((hxy _ (by omega)).mpr hmem)
+  exact ⟨forward w v h, forward v w (fun k hk => (h k hk).symm)⟩
+
+private theorem first_selected_at_cut {r c : ℕ} (G : SimpleGraph (Fin r))
+    (w : Finset ℕ) : FirstSelected r G c (atCut w c) ↔ FirstSelected r G c w := by
+  have ht (d : ℕ) (hd : d ≤ c) : Trigger r G d (atCut w c) ↔ Trigger r G d w :=
+    trigger_congr G _ _ (fun k hk => by simp [atCut, show k ≤ c by omega])
+  simp only [FirstSelected, ht c le_rfl]
+  exact and_congr_right fun _ => forall_congr' fun d =>
+    imp_congr_right fun hd => not_congr (ht d (by omega))
+
+private theorem exists_trigger_before_end {r : ℕ} (G : SimpleGraph (Fin r))
+    (hr : 3 ≤ r) (w : Finset ℕ) :
+    ∃ c, c < wordLength r ∧ Trigger r G c w := by
+  have hgeom := geometry hr
+  have htail : identityEnd r + lastTarget r < wordLength r := by
+    dsimp [identityEnd, wordLength, halfLength, initialLength, lastTarget] at *
+    omega
+  have hQ : 2 * pairCount r + r ≤ lastTarget r := by
+    dsimp [lastTarget]
+    nlinarith
+  cases hl : (identities r w).sort (· ≤ ·) with
+  | nil =>
+      have he : identities r w = ∅ := by
+        simpa using congrArg List.toFinset hl
+      exact ⟨identityEnd r, by omega, Or.inr (Or.inl ⟨rfl, he⟩)⟩
+  | cons i rest =>
+    cases rest with
+    | nil =>
+      have he : identities r w = {i} := by
+        simpa using congrArg List.toFinset hl
+      have hib : 1 ≤ i ∧ i ≤ r := by
+        have hm : i ∈ identities r w := by simp [he]
+        exact mem_Icc.mp (mem_filter.mp hm).1
+      by_cases hex : ∃ j, 1 ≤ j ∧ j ≤ pairCount r + i ∧ identityEnd r + j ∈ w
+      · let j := Nat.find hex
+        have hj := Nat.find_spec hex
+        have hf : FirstTailOne r w j := by
+          refine ⟨hj.1, hj.2.2, ?_⟩
+          intro k hk hkj hmem
+          exact Nat.find_min hex hkj ⟨hk, by omega, hmem⟩
+        by_cases hret : Retained r G j i
+        · refine ⟨identityEnd r + j, by omega, ?_⟩
+          exact Or.inr (Or.inr (Or.inr ⟨i, hib.1, hib.2, he,
+            Or.inl ⟨j, hf, hj.2.1, le_rfl, Or.inl ⟨hret, rfl⟩⟩⟩))
+        · have hd := delayed_target_bounds (j := j) hr hib.1 hib.2 hf.1 (by dsimp [j]; omega)
+          refine ⟨identityEnd r + delayedTarget r i j, by omega, ?_⟩
+          exact Or.inr (Or.inr (Or.inr ⟨i, hib.1, hib.2, he,
+            Or.inl ⟨j, hf, hj.2.1, by omega, Or.inr ⟨hret, rfl⟩⟩⟩))
+      · refine ⟨identityEnd r + pairCount r + i, by omega, ?_⟩
+        exact Or.inr (Or.inr (Or.inr ⟨i, hib.1, hib.2, he,
+          Or.inr ⟨rfl, fun k hk hkQ hm => hex ⟨k, hk, hkQ, hm⟩⟩⟩))
+    | cons a rest =>
+      have hi : i ∈ identities r w := by
+        rw [← mem_sort (r := (· ≤ ·)), hl]; simp
+      have ha : a ∈ identities r w := by
+        rw [← mem_sort (r := (· ≤ ·)), hl]; simp
+      have hib := mem_Icc.mp (mem_filter.mp hi).1
+      have hab := mem_Icc.mp (mem_filter.mp ha).1
+      have hsort := (identities r w).pairwise_sort (· ≤ ·)
+      have hnodup := (identities r w).sort_nodup (· ≤ ·)
+      rw [hl, List.pairwise_cons] at hsort
+      rw [hl, List.nodup_cons] at hnodup
+      have hia : i < a := by
+        have hle := hsort.1 a (by simp)
+        have hne : i ≠ a := by intro h; exact hnodup.1 (by simp [h])
+        omega
+      let u : Fin r := ⟨i - 1, by omega⟩
+      let v : Fin r := ⟨a - 1, by omega⟩
+      obtain ⟨t, ht, htQ, htuv⟩ := edge_at_complete u v
+        (by change i - 1 < a - 1; omega)
+      refine ⟨identityEnd r + pairCount r + r + t, by omega, ?_⟩
+      refine Or.inr (Or.inr (Or.inl ⟨t, u, v, ht, htQ, htuv, ?_, rfl⟩))
+      simp only [hl, List.take_succ_cons, List.take_zero, u, v]
+      congr 2 <;> omega
+
+/-- Every full marker word has a unique first latch strictly before Stop.
+The dictionary is not restricted to accepted words. -/
+theorem schedule_first_freeze {r : ℕ} (G : SimpleGraph (Fin r)) (hr : 3 ≤ r)
+    (w : Finset ℕ) : ∃! c, c < wordLength r ∧ FirstSelected r G c (atCut w c) := by
+  have hex : ∃ c, Trigger r G c w := by
+    obtain ⟨c, _, hc⟩ := exists_trigger_before_end G hr w
+    exact ⟨c, hc⟩
+  refine ⟨Nat.find hex, ?_, ?_⟩
+  · obtain ⟨d, hd, ht⟩ := exists_trigger_before_end G hr w
+    refine ⟨lt_of_le_of_lt (Nat.find_min' hex ht) hd,
+      (first_selected_at_cut G w).mpr ⟨Nat.find_spec hex, ?_⟩⟩
+    exact fun c hc => Nat.find_min hex hc
+  · intro c hc
+    have hs := (first_selected_at_cut G w).mp hc.2
+    apply Nat.le_antisymm
+    · by_contra hn
+      exact hs.2 _ (by omega) (Nat.find_spec hex)
+    · exact Nat.find_min' hex hs.1
 
 def markerInput (r : ℕ) (rho : Bool) (w : Finset ℕ) (c : ℕ) : MarkerInput :=
   ⟨rho, bareAddress r rho c (atCut w c),
