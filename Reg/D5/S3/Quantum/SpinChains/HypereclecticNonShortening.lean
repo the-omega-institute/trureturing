@@ -155,7 +155,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 end binSl2Triple
 
 namespace lowering_kernel_zero
-universe u_3 u_4
+universe u_1 u_2 u_3 u_4
 
 abbrev signature : Signature where
   Params := Type u_4
@@ -265,22 +265,22 @@ def family : Registration arena.{u_3, u_4} (type_of% @lowering_kernel_zero.{u_3,
     have impossible : (ULift.up true : ULift.{u_4} Bool) = ULift.up false := hp ▸ rfl
     cases impossible
 
-def registration : Contract.Registration.{_, _, _, 0, 0, 0, u_4 + 1, u_4, 0, u_4, 0, 0}
-    (@lowering_kernel_zero.{u_3, u_4}) (Realization signature.{u_4}) Unit Unit := {
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, u_2 + 1, u_2, 0, u_2, 0, 0}
+    (@lowering_kernel_zero.{u_1, u_2}) (Realization signature.{u_2}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.SpinChains.HypereclecticNonShortening.lowering_kernel_zero.unit
   realizationName := .str
     `Reg.D5.S3.Quantum.SpinChains.HypereclecticNonShortening.lowering_kernel_zero
     "family"
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u_3, u_4}⟩
-  objectArena := .source ⟨arena.{u_3, u_4}⟩
+  arena := .source ⟨arena.{u_1, u_2}⟩
+  objectArena := .source ⟨arena.{u_1, u_2}⟩
   catalog := Lean.Name.anonymous
   localNames := true
-  realization := .source arena.{u_3, u_4} ⟨family.{u_3, u_4}⟩
+  realization := .source arena.{u_1, u_2} ⟨family.{u_1, u_2}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨True.intro⟩ True.intro
-  readout := some (realize signature.{u_4} actual.readout actual.anchor)
+  readout := some (realize signature.{u_2} actual.readout actual.anchor)
   variation := .evidence ⟨True.intro⟩ True.intro
   sensitivity := .evidence ⟨True.intro⟩ True.intro
   partialSensitivity := none
