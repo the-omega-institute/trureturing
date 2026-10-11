@@ -13,6 +13,8 @@ import Mathlib.Tactic
 import Mathlib.Algebra.Group.MinimalAxioms
 import Mathlib.Topology.Algebra.Group.Basic
 import Mathlib.Data.ENat.Basic
+import Mathlib.Algebra.Group.Idempotent
+import Mathlib.Topology.Algebra.Ring.Basic
 
 open Set Topology
 
@@ -200,6 +202,7 @@ theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n • a) :
 
 #print axioms core_group_retraction
 
+omit [ContinuousAdd M] [CompactSpace M] in
 private theorem prefix_or_tail (a : M) (hd : DenseRange fun n : ℕ => n • a)
     (N : ℕ) (x : M) :
     x ∈ (fun n : ℕ => n • a) '' Iio N ∪ tail a N := by
@@ -211,6 +214,7 @@ private theorem prefix_or_tail (a : M) (hd : DenseRange fun n : ℕ => n • a)
     · right
       exact subset_closure ⟨n - N, by dsimp; congr 1; omega⟩
 
+omit [ContinuousAdd M] [CompactSpace M] in
 private theorem outside_isolated_orbit (a : M) (hd : DenseRange fun n : ℕ => n • a)
     {x : M} (hx : x ∉ core a) :
     (∃ n : ℕ, x = n • a) ∧ IsOpen ({x} : Set M) := by
@@ -236,6 +240,7 @@ private theorem outside_isolated_orbit (a : M) (hd : DenseRange fun n : ℕ => n
     rw [heq]
     exact (isClosed_closure.union hP.sdiff.isClosed).isOpen_compl
 
+omit [ContinuousAdd M] [CompactSpace M] [T2Space M] in
 private theorem collision_mem_core (a : M) {n m : ℕ}
     (hnm : n < m) (heq : n • a = m • a) : n • a ∈ core a := by
   let p := m - n
@@ -337,5 +342,118 @@ theorem core_ideal_and_threshold (a : M) (hd : DenseRange fun n : ℕ => n • a
       exact (outside_isolated_orbit a hd ((ht n).mpr hn)).2
 
 #print axioms core_ideal_and_threshold
+
+section Semiring
+
+variable {S : Type*} [Semiring S] [TopologicalSpace S]
+  [ContinuousAdd S] [ContinuousMul S] [CompactSpace S] [T2Space S]
+
+/-- Dense natural arithmetic forces commutative multiplication and gives the tail
+an internal compact topological ring. The projection preserves both units. -/
+theorem core_ring_retraction (hd : DenseRange fun n : ℕ => n • (1 : S)) :
+    (∀ x y : S, x * y = y * x) ∧
+    ∃ ring : CommRing (core (1 : S)),
+      let := ring
+      (∀ x y : core (1 : S), ((x + y : core (1 : S)) : S) = (x : S) + (y : S)) ∧
+      (∀ x y : core (1 : S), ((x * y : core (1 : S)) : S) = (x : S) * (y : S)) ∧
+      IsTopologicalRing (core (1 : S)) ∧ CompactSpace (core (1 : S)) ∧
+      ((1 : core (1 : S)) : S) = 1 + ((0 : core (1 : S)) : S) ∧
+      ∃ r : S →+* core (1 : S), Continuous r ∧ Function.Surjective r ∧
+        (∀ x : S, (r x : S) = x + ((0 : core (1 : S)) : S)) ∧
+        (∀ x : core (1 : S), r (x : S) = x) ∧
+        DenseRange (fun n : ℕ => n • (1 : core (1 : S))) := by
+  classical
+  have hcomm : ∀ x y : S, x * y = y * x := by
+    intro x y
+    refine hd.induction_on₂ (p := fun x y => x * y = y * x) ?_ ?_ x y
+    · exact isClosed_eq (continuous_fst.mul continuous_snd)
+        (continuous_snd.mul continuous_fst)
+    · intro n m
+      simp only [nsmul_one]
+      exact Nat.cast_comm n (m : S)
+  refine ⟨hcomm, ?_⟩
+  obtain ⟨group, hadd, htop, r, hrcont, hr, hfix, hdense⟩ := core_group_retraction (1 : S) hd
+  let H := core (1 : S)
+  let := group
+  have := htop
+  let e : S := ((0 : H) : S)
+  have he : e ∈ core (1 : S) := (0 : H).property
+  have hid (x : H) : (x : S) + e = x := by
+    rw [← hadd]
+    exact congrArg Subtype.val (add_zero x)
+  have hee : e + e = e := hid 0
+  have hpositive (n : ℕ) : (n + 1) • e = e :=
+    @IsIdempotentElem.pow_succ_eq (Multiplicative S) _ (Multiplicative.ofAdd e) n hee
+  have habsorb (x : H) : e * (x : S) = e := by
+    have hc : IsClosed {y : S | e * y = e} :=
+      isClosed_eq (continuous_const.mul continuous_id) continuous_const
+    apply closure_minimal (t := {y : S | e * y = e}) ?_ hc
+      (mem_iInter.mp x.property 1)
+    rintro _ ⟨n, rfl⟩
+    change e * ((1 + n) • (1 : S)) = e
+    rw [nsmul_one, hcomm, ← nsmul_eq_mul, Nat.add_comm]
+    exact hpositive n
+  have habsorb_all (x : S) : e * x + e = e := by
+    apply hd.induction_on (p := fun x => e * x + e = e) x
+    · exact isClosed_eq ((continuous_const.mul continuous_id).add continuous_const)
+        continuous_const
+    · intro n
+      rw [nsmul_one, hcomm, ← nsmul_eq_mul, ← succ_nsmul]
+      exact hpositive n
+  have hmulmem (x y : H) : (x : S) * (y : S) ∈ core (1 : S) := by
+    have heq : (x : S) * (y : S) + e = (x : S) * (y : S) := by
+      calc
+        (x : S) * (y : S) + e = (x : S) * (y : S) + e * (y : S) := by rw [habsorb]
+        _ = ((x : S) + e) * (y : S) := (add_mul _ _ _).symm
+        _ = (x : S) * (y : S) := by rw [hid]
+    rw [← heq]
+    exact add_mem_core (1 : S) hd _ he
+  let : Mul H := ⟨fun x y => ⟨(x : S) * (y : S), hmulmem x y⟩⟩
+  let : One H := ⟨r 1⟩
+  have hmul (x y : H) : ((x * y : H) : S) = (x : S) * (y : S) := rfl
+  have hone : ((1 : H) : S) = 1 + e := hr 1
+  let ring : CommRing H :=
+    { group with
+      mul := (· * ·)
+      one := 1
+      mul_assoc := fun x y z => Subtype.ext (mul_assoc x.1 y.1 z.1)
+      one_mul := fun x => Subtype.ext (by
+        rw [hmul, hone, add_mul, one_mul, habsorb, hid])
+      mul_one := fun x => Subtype.ext (by
+        rw [hmul, hone, mul_add, mul_one, hcomm x.1 e, habsorb, hid])
+      left_distrib := fun x y z => Subtype.ext (by
+        rw [hmul, hadd, hadd, hmul, hmul, mul_add])
+      right_distrib := fun x y z => Subtype.ext (by
+        rw [hmul, hadd, hadd, hmul, hmul, add_mul])
+      zero_mul := fun x => Subtype.ext (habsorb x)
+      mul_zero := fun x => Subtype.ext (by rw [hmul, hcomm]; exact habsorb x)
+      mul_comm := fun x y => Subtype.ext (hcomm x.1 y.1) }
+  let := ring
+  have : ContinuousMul H := ⟨
+    ((continuous_subtype_val.comp continuous_fst).mul
+      (continuous_subtype_val.comp continuous_snd)).subtype_mk _⟩
+  have : IsTopologicalRing H := { }
+  have : CompactSpace H := isCompact_iff_compactSpace.mp (core_closed (1 : S)).isCompact
+  let R : S →+* H :=
+    { r with
+      map_one' := rfl
+      map_mul' := fun x y => Subtype.ext (by
+        change ((r (x * y) : H) : S) = ((r x * r y : H) : S)
+        rw [hr, hmul, hr, hr]
+        change x * y + e = (x + e) * (y + e)
+        have hesq : e * e = e := habsorb 0
+        calc
+          x * y + e = x * y + (e * y + (e * x + e)) := by
+            rw [habsorb_all, habsorb_all]
+          _ = (x + e) * (y + e) := by
+            rw [add_mul, mul_add, mul_add, hesq, hcomm x e]
+            ac_rfl) }
+  refine ⟨ring, hadd, hmul, inferInstance, inferInstance, hone, R, hrcont,
+    (fun x => ⟨x.1, hfix x⟩), hr, hfix, ?_⟩
+  exact hdense
+
+#print axioms core_ring_retraction
+
+end Semiring
 
 end D5.S3.Observer.Completion.MonotheticCompactMonoid
