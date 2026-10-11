@@ -22,7 +22,7 @@ private theorem dirac_law {g : ℝ} (hg : g ∈ Icc 0 1) :
       subst x
       have hmem := Measure.support_mem_ae (μ := Measure.dirac g)
       simpa using hmem
-    · exact Measure.support_subset_of_isClosed isClosed_singleton (by simp)
+    · exact Measure.support_subset_of_isClosed (by simpa using (isClosed_singleton : IsClosed ({g} : Set ℝ))) (by simp)
   · intro x hx
     have hxg : x = g := by simpa using hx
     subst x
@@ -42,7 +42,9 @@ private theorem curveDependence : ObservationalDependence curveSignature curveAc
   intro i
   refine ⟨Measure.dirac 1, 0, 1, ?_⟩
   change measureCurve (Measure.dirac 1) 0 ≠ measureCurve (Measure.dirac 1) 1
-  simp [measureCurve, Real.exp_eq_one_iff]
+  have hn : (1 : ℝ) ≠ Real.exp (-1) :=
+    ne_of_gt (Real.exp_lt_one_iff.mpr (by norm_num))
+  simpa [measureCurve] using hn
 
 def representationArena : Arena where
   signature := curveSignature
@@ -95,14 +97,26 @@ def estimatorArena : Arena where
       (∀ t : Icc 0 T, |Y t - measureCurve μ t| ≤ ε) →
       |R.readout () ⟨T, G⟩ Y - g| ≤ (1024 * E / η ^ 2) * rateWindow d ε (E * T)
 
+private theorem rate_all_one (ε : ℝ) : rateAll 1 ε = ε := by
+  unfold rateAll
+  rw [Set.Icc_self, Set.image_singleton, csSup_singleton]
+  norm_num
+
+private theorem rate_window_one (ε : ℝ) (hε : ε ≤ 1) : rateWindow 1 ε 1 = ε := by
+  unfold rateWindow
+  rw [Set.Icc_self, Set.image_singleton, csSup_singleton]
+  norm_num [min_eq_right hε]
+
 private theorem estimator_rejected : ¬ estimatorArena.Law estimatorRejected := by
   intro h
   obtain ⟨G, hG⟩ := h 0 1 (1/2) 1 (1/32768) 1
     (by norm_num) (by norm_num) (by norm_num) (by norm_num)
     (by norm_num) (by norm_num) (by norm_num)
   have hh := hG (Measure.dirac 0) 0 (dirac_law (by norm_num)) (fun _ => 1)
-    (by intro t; simp [measureCurve]; norm_num)
-  norm_num [estimatorRejected, realize, rateWindow] at hh
+    (by intro t; norm_num [measureCurve])
+  norm_num only [estimatorRejected, realize, sub_zero, mul_one] at hh
+  rw [rate_window_one _ (by norm_num)] at hh
+  norm_num at hh
 
 def estimatorEvidence : Registration estimatorArena (estimatorArena.Law estimatorActual) where
   actual := estimatorActual
@@ -124,8 +138,8 @@ private theorem ambiguous_lower (D : Set ℝ) (hD : D ⊆ Ici 0) :
   have hY1 : ∀ t : D, |Y t - measureCurve (Measure.dirac 1) t| ≤ 1 := by
     intro t
     have hexp : Real.exp (-t.val) ≤ 1 := Real.exp_le_one_iff.mpr (by
-      have := hD t.property
-      simpa using neg_nonpos.mpr this)
+      have ht : 0 ≤ t.val := hD t.property
+      exact neg_nonpos.mpr ht)
     have hpos := Real.exp_pos (-t.val)
     simp only [Y, measureCurve, integral_dirac, mul_one]
     exact abs_le.mpr ⟨by linarith, by linarith⟩
@@ -133,16 +147,20 @@ private theorem ambiguous_lower (D : Set ℝ) (hD : D ⊆ Ici 0) :
       ⨆ μ : Measure ℝ, ⨆ g : ℝ, ⨆ (_ : AtomicLaw 0 1 (1/2) 1 μ g),
         ⨆ Z : D → ℝ, ⨆ (_ : ∀ t : D, |Z t - measureCurve μ t| ≤ 1),
           ENNReal.ofReal |G Z - g| := by
-    simpa using le_iSup_of_le (Measure.dirac 0) (le_iSup_of_le 0
-      (le_iSup_of_le (dirac_law (g := 0) (by norm_num))
-        (le_iSup_of_le Y (le_iSup_of_le hY0 le_rfl))))
+    apply le_iSup_of_le (Measure.dirac 0)
+    apply le_iSup_of_le (0 : ℝ)
+    apply le_iSup_of_le (dirac_law (g := 0) (by norm_num))
+    apply le_iSup_of_le Y
+    exact le_iSup_of_le hY0 (by simp)
   have h1 : ENNReal.ofReal |G Y - 1| ≤
       ⨆ μ : Measure ℝ, ⨆ g : ℝ, ⨆ (_ : AtomicLaw 0 1 (1/2) 1 μ g),
         ⨆ Z : D → ℝ, ⨆ (_ : ∀ t : D, |Z t - measureCurve μ t| ≤ 1),
           ENNReal.ofReal |G Z - g| := by
-    exact le_iSup_of_le (Measure.dirac 1) (le_iSup_of_le 1
-      (le_iSup_of_le (dirac_law (g := 1) (by norm_num))
-        (le_iSup_of_le Y (le_iSup_of_le hY1 le_rfl))))
+    apply le_iSup_of_le (Measure.dirac 1)
+    apply le_iSup_of_le (1 : ℝ)
+    apply le_iSup_of_le (dirac_law (g := 1) (by norm_num))
+    apply le_iSup_of_le Y
+    exact le_iSup_of_le hY1 le_rfl
   by_cases hg : (1/2 : ℝ) ≤ |G Y|
   · exact (ENNReal.ofReal_le_ofReal hg).trans h0
   · have htri := abs_sub_le (0 : ℝ) (G Y) 1
@@ -181,7 +199,8 @@ private theorem allDependence : ObservationalDependence allSignature allActual :
   have hu := minimax_all_upper 0 1 (1/2) (1/32768) 1
     (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
   have hl := ambiguous_lower (Ici 0) (fun _ h => h)
-  norm_num [rateAll] at hu
+  rw [rate_all_one] at hu
+  norm_num at hu
   intro heq
   rw [heq] at hu
   have hh := hl.trans hu
@@ -195,7 +214,9 @@ private theorem windowDependence : ObservationalDependence windowSignature windo
     (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
     (by norm_num) (by norm_num)
   have hl := ambiguous_lower (Icc 0 1) (fun _ h => h.1)
-  norm_num [rateWindow] at hu
+  norm_num only [mul_one] at hu
+  rw [rate_window_one _ (by norm_num)] at hu
+  norm_num at hu
   intro heq
   rw [heq] at hu
   have hh := hl.trans hu
@@ -211,7 +232,8 @@ def allArena : Arena where
 private theorem all_rejected : ¬ allArena.Law allRejected := by
   intro h
   have hh := h 0 1 (1/2) (1/32768) 1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  simpa [allRejected, realize] using hh
+  change (⊤ : ℝ≥0∞) ≤ ENNReal.ofReal _ at hh
+  exact (not_le_of_gt ENNReal.ofReal_lt_top) hh
 
 def allEvidence : Registration allArena (allArena.Law allActual) where
   actual := allActual
@@ -232,7 +254,8 @@ def windowArena : Arena where
 private theorem window_rejected : ¬ windowArena.Law windowRejected := by
   intro h
   have hh := h 0 1 (1/2) 1 (1/32768) 1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  simpa [windowRejected, realize] using hh
+  change (⊤ : ℝ≥0∞) ≤ ENNReal.ofReal _ at hh
+  exact (not_le_of_gt ENNReal.ofReal_lt_top) hh
 
 def windowEvidence : Registration windowArena (windowArena.Law windowActual) where
   actual := windowActual
@@ -267,7 +290,7 @@ noncomputable def atomic_law_representationRegistration :
     definition := none
     coordinates := #[4]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -301,7 +324,7 @@ noncomputable def exists_window_estimatorRegistration :
     definition := none
     coordinates := #[3, 13]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -335,7 +358,7 @@ noncomputable def minimax_all_upperRegistration :
     definition := none
     coordinates := #[0, 1, 2, 4]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -369,7 +392,7 @@ noncomputable def minimax_window_upperRegistration :
     definition := none
     coordinates := #[0, 1, 2, 3, 5]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

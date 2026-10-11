@@ -5,6 +5,7 @@ import Reg.Support.SingleDependentReadout
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open SincSquareDerivativeBudget LeanInformationAudit
+open scoped Nat
 
 noncomputable section
 namespace Reg.D5.S3.Analytic.SincSquareDerivativeBudget
@@ -52,7 +53,7 @@ def evidence : Registration arena (arena.Law actual) where
 
 noncomputable def registration_1 :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@SincSquareDerivativeBudget.endpoint_budget)
+    (@_root_.SincSquareDerivativeBudget.endpoint_budget)
     (type_of% (realize signature (fun _ η t => endpoint η t) (fun e => nomatch e)))
     Unit Unit := {
   unitName := `Reg.D5.S3.Analytic.SincSquareDerivativeBudget.endpoint_normalization_unit
@@ -84,3 +85,5 @@ noncomputable def registration_1 :
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+end Reg.D5.S3.Analytic.SincSquareDerivativeBudget

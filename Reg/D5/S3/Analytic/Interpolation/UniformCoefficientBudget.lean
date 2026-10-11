@@ -22,8 +22,9 @@ def normRejected (v : ℝ) : Realization normSignature :=
 
 private theorem normDependence : ObservationalDependence normSignature normActual := by
   intro i
-  refine ⟨(), 0, C 1, ?_⟩
-  change coeffL1 0 ≠ coeffL1 (C 1)
+  refine ⟨(), 0, X - C 0, ?_⟩
+  change coeffL1 0 ≠ coeffL1 (X - C 0)
+  rw [coeffL1_X_sub_C]
   simp [coeffL1]
 
 def coeffL1_add_leArena : Arena where
@@ -33,7 +34,8 @@ def coeffL1_add_leArena : Arena where
 private theorem coeffL1_add_le_rejected : ¬ coeffL1_add_leArena.Law (normRejected 1) := by
   intro h
   have hh := h 0 0
-  norm_num [normRejected, realize, coeffL1] at hh
+  change (1 : ℝ) ≤ _ at hh
+  norm_num [coeffL1] at hh
 
 def coeffL1_add_leEvidence : Registration coeffL1_add_leArena (coeffL1_add_leArena.Law normActual) where
   actual := normActual
@@ -69,7 +71,7 @@ noncomputable def coeffL1_add_leRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -85,7 +87,8 @@ def coeffL1_mul_leArena : Arena where
 private theorem coeffL1_mul_le_rejected : ¬ coeffL1_mul_leArena.Law (normRejected 1) := by
   intro h
   have hh := h 0 0
-  norm_num [normRejected, realize, coeffL1] at hh
+  change (1 : ℝ) ≤ _ at hh
+  norm_num [coeffL1] at hh
 
 def coeffL1_mul_leEvidence : Registration coeffL1_mul_leArena (coeffL1_mul_leArena.Law normActual) where
   actual := normActual
@@ -121,7 +124,7 @@ noncomputable def coeffL1_mul_leRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -173,7 +176,7 @@ noncomputable def coeffL1_C_mulRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -225,7 +228,7 @@ noncomputable def coeffL1_X_sub_CRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[]
+      path := #["body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -248,9 +251,10 @@ def interpolate_coeffL1_leArena : Arena where
 private theorem interpolate_coeffL1_le_rejected : ¬ interpolate_coeffL1_leArena.Law (normRejected 1) := by
   intro h
   have hh := h ∅ 0 0 (fun _ => 0) (fun _ => 0)
-    (by simp) (by simp) (by simp)
+    (by simp) (by simp) (by intro x _; exact contDiffAt_const)
     (by simp) (by simp)
-  norm_num [normRejected, realize] at hh
+  change (1 : ℝ) ≤ _ at hh
+  norm_num at hh
 
 def interpolate_coeffL1_leEvidence : Registration interpolate_coeffL1_leArena (interpolate_coeffL1_leArena.Law normActual) where
   actual := normActual
@@ -286,7 +290,7 @@ noncomputable def interpolate_coeffL1_leRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -320,7 +324,8 @@ private theorem atomic_endpoint_certificate_rejected : ¬ atomic_endpoint_certif
     (by intro x hx; simp at hx; subst x; norm_num)
     (by intro x hx; simp at hx; subst x; norm_num)
     (by simp)
-  norm_num [normRejected, realize, Finset.sum_range_succ] at hh
+  change (19 : ℝ) ≤ _ at hh
+  norm_num [Finset.sum_range_succ] at hh
 
 def atomic_endpoint_certificateEvidence : Registration atomic_endpoint_certificateArena (atomic_endpoint_certificateArena.Law normActual) where
   actual := normActual
@@ -356,7 +361,7 @@ noncomputable def atomic_endpoint_certificateRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -379,7 +384,9 @@ private theorem laplaceDependence : ObservationalDependence laplaceSignature lap
   intro i
   refine ⟨⟨Finsupp.single 1 1, 0⟩, 0, 1, ?_⟩
   change atomicLaplace (Finsupp.single 1 1) 0 ≠ atomicLaplace (Finsupp.single 1 1) 1
-  simp [atomicLaplace, Real.exp_eq_one_iff]
+  have hn : (1 : ℝ) ≠ Real.exp (-1) :=
+    ne_of_gt (Real.exp_lt_one_iff.mpr (by norm_num))
+  simpa [atomicLaplace] using hn
 
 private theorem single_nonneg (g x : ℝ) :
     0 ≤ (Finsupp.single g 1 : ℝ →₀ ℝ) x := by
@@ -414,7 +421,8 @@ private theorem sparse_endpoint_coefficient_certificate_rejected : ¬ sparse_end
     (single_nonneg 1) (single_nonneg 0) (by simp)
     (by intro x hx; rw [single_support 1 x hx]; norm_num)
     (by intro x hx; rw [single_support 0 x hx]; norm_num) (by simp)
-  norm_num [normRejected, realize] at hh
+  change (100 : ℝ) ≤ _ at hh
+  norm_num at hh
   have he := Real.exp_one_lt_three
   linarith
 
@@ -451,7 +459,7 @@ noncomputable def sparse_endpoint_coefficient_certificateRegistration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -520,7 +528,7 @@ noncomputable def sparse_laplace_grid_certificateRegistration :
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "arg", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -595,7 +603,7 @@ noncomputable def sparse_laplace_window_certificateRegistration :
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg", "arg", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -670,7 +678,7 @@ noncomputable def ordered_laplace_joint_certificateRegistration :
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "body", "arg", "fn", "arg", "arg", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -751,7 +759,7 @@ noncomputable def laplace_joint_certificatesRegistration :
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg", "arg", "body", "fn", "arg", "arg", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
