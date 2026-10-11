@@ -2786,3 +2786,128 @@ u_j\rightharpoonup u
 
 若要继续向黎曼几何推进，必须在定理 20.8 之后额外证明极限二次型来自某个度量测度空间。若要继续向光滑流形推进，还要补充维数、非塌缩、Ricci 下界、注入半径和光滑重构条件。若要继续向物理解释推进，则必须另建桥接结构，不能由本节反向补定义。
 
+
+
+### 定理 20.10（Fisher–Dirichlet 的纯数学联合稳定量）
+
+在定理 20.4 和定理 20.6 的假设下，取任意 \(\tau\ge0\)，定义
+
+\[
+\mathcal S_j^{(\tau)}(f,p;u)
+=
+\mathcal Q_j(f)
++
+\tau\,\mathcal I_j(p;u).
+\]
+
+若
+
+\[
+f_j=R_jf_{j+1},
+\qquad
+p_j=q_jp_{j+1},
+\qquad
+u_j=Dq_j\,u_{j+1},
+\]
+
+则
+
+\[
+\boxed{
+\mathcal S_j^{(\tau)}(f_j,p_j;u_j)
+\le
+\mathcal S_{j+1}^{(\tau)}(f_{j+1},p_{j+1};u_{j+1}).
+}
+\]
+
+#### 证明
+
+由定理 20.4，
+
+\[
+\mathcal I_j(p_j;u_j)
+\le
+\mathcal I_{j+1}(p_{j+1};u_{j+1}),
+\]
+
+由定理 20.6，
+
+\[
+\mathcal Q_j(f_j)
+\le
+\mathcal Q_{j+1}(f_{j+1}).
+\]
+
+将第二个不等式乘以 \(1\)，将第一个不等式乘以 \(\tau\ge0\)，相加即得结论。证毕。
+
+因此，一个纯数学的联合稳定量可以定义为
+
+\[
+\mathcal S_\infty^{(\tau)}
+=
+\sup_j
+\mathcal S_j^{(\tau)}
+\in[0,+\infty].
+\]
+
+若该上确界有限，则沿任意相容族有极限
+
+\[
+\lim_{j\to\infty}
+\mathcal S_j^{(\tau)}
+=
+\mathcal S_\infty^{(\tau)}.
+\]
+
+这里 \(\tau\) 只是两个二次型之间的数学权重。只有在额外指定单位和动力学结构后，才可赋予它物理解释。
+
+### 推论 20.11（联合有限层稳定证书）
+
+假设存在 \(\lambda_j^{\mathrm{graph}},\lambda_j^{\mathrm{FIB}}\ge0\)，使得在指定子空间上
+
+\[
+\mathcal Q_j(f)
+\ge
+\lambda_j^{\mathrm{graph}}\|f\|_{\mu_j}^{\,2},
+\]
+
+\[
+\mathcal I_j(p;u)
+\ge
+\lambda_j^{\mathrm{FIB}}\|u\|_{\mu_j,\mathrm{E}}^{\,2},
+\]
+
+其中 \(\|\cdot\|_{\mu_j,\mathrm E}\) 是节点和状态上的普通加权 Euclidean 范数。则
+
+\[
+\mathcal S_j^{(\tau)}(f,p;u)
+\ge
+\min\left\{
+\lambda_j^{\mathrm{graph}},
+\tau\lambda_j^{\mathrm{FIB}}
+\right\}
+\left(
+\|f\|_{\mu_j}^{\,2}
++
+\|u\|_{\mu_j,\mathrm E}^{\,2}
+\right)
+\]
+
+对 \(\tau>0\) 成立。
+
+#### 证明
+
+分别使用两个下界：
+
+\[
+\mathcal S_j^{(\tau)}
+\ge
+\lambda_j^{\mathrm{graph}}\|f\|^2
++
+\tau\lambda_j^{\mathrm{FIB}}\|u\|^2.
+\]
+
+右侧至少为最小系数乘以两个范数平方之和。证毕。
+
+该推论给出一个不依赖物理解释的稳定性判据。若图 sector 和 FIB sector 的有限层下界在相容细化中保持正，则其直和载体具有统一的正稳定下界。若某个 sector 的下界趋于零，必须记录为该 sector 的数学软化或退化，不能用另一个 sector 的正下界掩盖它。
+
