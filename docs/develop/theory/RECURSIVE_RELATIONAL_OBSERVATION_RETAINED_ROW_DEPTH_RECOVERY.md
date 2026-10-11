@@ -19,12 +19,16 @@ $$
 
 Put $I_n=\rho^n[\mathcal T]$ and $\nu(t)=\max\{n:t\in I_n\}$. Thus $\nu$ is maximal inverse-generation depth of the current tree. It is not an entrance count, an elapsed time, or a clock reading. A legal request is any finite absolute word $q\in\{L,R\}^*$, including a word that skips an ancestor. Its reply is one of $\alpha,\beta,\mathsf{br},\mathsf{abs}$ according to the static tree, with absent replies below leaves.
 
-**假设 1.2（实际取得的完整 row handoff）。** A single common producer starts from the prescribed source-independent initial condition, fully acquires one current source $u$, and hands off a public finite prefix-free cut $P$. The producer computes the exterior shape $C$ and the complete equality partition $\pi$ of the cut values. Repeated classes receive one common value and distinct classes receive unequal values. At handoff every accessible source-dependent field, including handles, lengths, control positions, old archives and timing, factors through
+**假设 1.2（实际取得的完整 row handoff）。** A single common producer starts from the prescribed source-independent initial condition, fully acquires one current source $u$, and hands off a public finite prefix-free cut $P$. The producer computes the exterior shape $C$ and the complete equality partition $\pi$ of the cut values. Repeated classes receive one common value and distinct classes receive unequal values. For the row-only handoff used in §§3–5, every accessible source-dependent
+field, including handles, lengths, control positions, old archives and
+timing, factors through
 
 $$
 R=(C,\pi).
 $$
 
+Section 6 declares a separate refined handoff when an additional code is
+paid for; there the complete boundary is $(R,E)$, rather than $R$ alone.
 The source is stationary after handoff. The row is an actual image of this producer; it is not a combination of observations obtained from different sources. The row-only fiber is
 
 $$
@@ -90,19 +94,75 @@ Then $\Sigma_R$ is nonempty and $\Sigma_R\subseteq\{0,\ldots,K\}$. The finite sp
 
 **证明。** In the leafless case choose distinct nonleaf all-$\alpha$ primitive seeds for the classes, fill $C$, and apply the same $\rho^n$ to every class value. Since $C$ contains only pair constructors and holes, all class disequalities persist and the filled tree is primitive; its depth is exactly $n$. For a concrete leaf, the leaf has depth $0$ for $\alpha$ and $1$ for $\beta$, while every pair edge can increase $\nu$ by at most $2$ under (RDR.2). Following that leaf gives $\nu(u)\le K_q$, hence the minimum bound. Nonemptiness is supplied by the attained row itself. The example $C=(\square,\alpha)$ with one class has spectrum $\{0,2\}$, so bounded does not mean interval. $\square$
 
-**定义 3.2（finite anchored state model）。** Assume $K<\infty$. Use states
+**定义 3.2（finite anchored state model）。** Assume $C$ has a concrete
+leaf, so $K<\infty$; call such a row *anchored*. Use states
 
 $$
 A_j\ (0\le j\le K),\qquad D_j\ (0\le j<K),\qquad H.
 $$
 
-$A_j$ means exactly $T_j$; $D_j$ means $\nu=j$ and the tree is not $T_j$; $H$ means a non-atomic tree of depth at least $K$ (it may also represent an atomic $T_j$ with $j>K$ inside an internal computation). Give $A_j,D_j$ level $j$ and $H$ level $K$. Concrete $\alpha$ is $A_0$ and concrete $\beta$ is $A_1$.
+Give the states the following total denotation:
+\[
+\begin{aligned}
+\llbracket A_j\rrbracket&=\{T_j\},\\
+\llbracket D_j\rrbracket&=\{t:\nu(t)=j\text{ and }t\ne T_j\},\\
+\llbracket H\rrbracket&=\{t:\nu(t)\ge K\text{ and }t\notin\{T_0,\ldots,T_K\}\}
+                       \cup\{T_j:j>K\}.
+\end{aligned}
+\]
+Thus every actual tree has exactly one state: low atomic values are $A_j$,
+low non-atomic values are $D_j$, and $H$ contains both all non-atomic
+values of depth at least $K$ and every high atomic value. Give $A_j,D_j$
+level $j$ and $H$ level $K$. Concrete $\alpha$ is $A_0$; concrete $\beta$
+is $A_1$ only when $K\ge1$, and is $H$ when $K=0$.
 
-Define the finite transition $\otimes_K$ as follows. For $A_i,A_j$ with $i=j+1$, return $A_{j+2}$ when $j+2\le K$ and return $H$ otherwise. In all other cases return $D_m$ when $m=\min(\ell(x),\ell(y))<K$, and return $H$ when $m=K$, where $\ell$ is the state level. Evaluate $C$ with one shared state per class.
+Define $\otimes_K$ on these states. For $A_i,A_j$ with $i=j+1$, return
+$A_{j+2}$ when $j+2\le K$ and return $H$ otherwise. In every other
+case return $D_m$ when $m=\min(\ell(x),\ell(y))<K$, and return $H$ when
+$m=K$, where $\ell$ is the state level. In particular
+$H\otimes_K A_K=H$ and $H\otimes_K H=H$; these cases include the
+exceptional pairs $(T_{K+1},T_K)$ and all higher exceptional pairs.
+Evaluate $C$ with one shared state per equality class.
 
-**定理 3.3（有限 anchored spectrum procedure）。** The levels of the finite-state evaluation of $C$ are exactly $\Sigma_R$. Thus enumerating the finitely many legal class-state assignments (different classes may not both receive the same $A_j$) is a complete effective procedure for computing the anchored spectrum and an attaining class assignment.
+**定理 3.3（有限 anchored spectrum procedure）。** The levels of the
+finite-state evaluation of $C$ are exactly $\Sigma_R$. Thus enumerating
+the finitely many legal class-state assignments (different classes may
+not both receive the same $A_j$) is a complete effective procedure for
+computing the anchored spectrum and an attaining class assignment.
 
-**证明。** Map every actual class value to its state. The exceptional branch of (RDR.2) is preserved whenever its two atomic indices can affect a root of level at most $K$; an atomic index above $K$ cannot be adjacent to a represented index below $K$, and every remaining use is the minimum branch, which is represented by the state levels. Since (RDR.5) bounds the root, the projected root level is its exact depth. Conversely, realize $A_j$ by $T_j$, realize $D_j$ by $\rho^j(p_b)$, and realize $H$ by $\rho^K(p_b)$, choosing distinct nonleaf all-$\alpha$ primitive seeds whenever classes are different. The realization lemma (Theorem 2.2) supplies one actual source with all equalities and disequalities and the row correspondence. The finite evaluation therefore gives both inclusions. $\square$
+**证明。** Let $\sigma_K(t)$ be the unique state whose denotation contains
+$t$. The pair law (RDR.2) is compatible with $\otimes_K$:
+two $A$ states use its exceptional branch exactly when their indices have
+the form $i=j+1$; the result is $A_{j+2}$ below the cutoff and $H$
+above it. If an input is $D_j$, the inputs are not both atomic, so the
+minimum branch gives the corresponding $D_m$ or $H$. If one input is $H$
+and the other is $A_i$ with $i<K$, an exceptional pair is impossible
+because $H$ contains no $T_{i+1}$; the result is $D_i$. With $A_K$,
+$H$ may contain $T_{K+1}$, whose exceptional result is high atomic, or a
+non-atomic value of depth at least $K$; both project to $H$. Two $H$
+inputs likewise project to $H$, whether their depths are merely at least
+$K$ or an exceptional high atomic pair. These cases prove
+\[
+\sigma_K((s,t))=\sigma_K(s)\otimes_K\sigma_K(t)
+\]
+for every pair, including $K=0$. The phrase “high atomic inside an
+internal computation” is therefore a denotation, not an exception to the
+projection.
+
+For the forward inclusion, map every actual class value by $\sigma_K$ and
+use compatibility bottom-up. The concrete-leaf bound (RDR.5) makes the
+root depth at most $K$, so a root state has level exactly its actual depth,
+even when that state is $H$. For the reverse inclusion, realize $A_j$ by
+$T_j$ and $D_j$ by $\rho^j(p_b)$, where the $p_b$ are pairwise distinct
+non-atomic primitive all-$\alpha$ seeds of depth zero. Realize each $H$
+class by $\rho^K(p_b)$; high atomic representatives are allowed but are
+not required. The seeds can be chosen with arbitrarily large minimum leaf
+depth, and distinct seeds keep all cross-class values distinct after the
+finite powers of $\rho$. Theorem 2.2 then supplies one actual source with
+the shared classes and every required disequality. Compatibility gives the
+same root level, so every enumerated level is attained. The $K=0$ case has
+$C=\alpha$, hence no holes and the empty assignment has root level zero.
+Therefore the two sets coincide. $\square$
 
 ## 4. Native acquisition of the missing finite pattern
 
@@ -125,23 +185,44 @@ V_R(\theta)=\{\nu(u):u\in U_R,\ \theta_R(u)=\theta\}.
 \tag{RDR.6}
 $$
 
-Moreover $\theta_R(u)$ is acquired by reading, for each class representative address $p_b$, every suffix $w$ with $|w|\le K$. There are at most
+Moreover $\theta_R(u)$ is acquired by reading, for each class representative
+address $p_b$, every suffix $w$ with $|w|\le K$. Empty sums and maxima
+are defined as zero when $B=\varnothing$. There are at most
 
 $$
 |B|(2^{K+1}-1)
 \tag{RDR.7}
 $$
 
-calls, maximum absolute word length at most $\max_b|p_b|+K$, and total submitted literal length at most
+calls, maximum absolute word length at most
+$\max_b|p_b|+K$ (zero when $B=\varnothing$), and total submitted
+literal length exactly
 
 $$
-(2^{K+1}-1)\sum_b|p_b|+|B|K2^K.
+(2^{K+1}-1)\sum_b|p_b|
+ + |B|\sum_{t=0}^{K}t2^t
+=
+(2^{K+1}-1)\sum_b|p_b|
+ + |B|\bigl((K-1)2^{K+1}+2\bigr).
 \tag{RDR.8}
 $$
 
-These are sufficient row-specific bounds, not optimal prices.
+The second equality also gives zero when $K=0$; these are sufficient
+row-specific bounds, not optimal prices.
 
-**证明。** The finite-state realization in Theorem 3.3 proves (RDR.6). A template $T_j$ has height at most $j\le K$. The complete four-reply table below depth $K$ therefore matches the table of $T_j$ exactly only when the source value itself is $T_j$: a matching branch has all the required children, and a matching template leaf has no child, so no extra descendant can remain. Comparing the representative table with the finitely many templates decides whether its class is $j$ or $*$. Repeated classes need one representative only. Summing the finite menu gives (RDR.7) and (RDR.8). $\square$
+**证明。** The finite-state realization in Theorem 3.3 proves (RDR.6).
+A template $T_j$ has height at most $j\le K$. Its complete four-reply
+table through depth $K$ can agree with the table of a source only when
+that source is $T_j$: a mismatch in an internal constructor or label is
+seen at its address, and a matching template leaf has reply
+$\mathsf{abs}$ below it, so an extra descendant is also seen. Comparing
+the representative table with the finitely many templates decides
+whether its class is $j$ or $*$. Repeated classes need one representative
+only. There are $2^t$ suffixes of length $t$, so their submitted suffix
+letters sum to $\sum_{t=0}^K t2^t=(K-1)2^{K+1}+2$ for every $K\ge0$.
+Adding the repeated prefix lengths gives (RDR.7) and (RDR.8). If
+$K=0$, an anchored row is the concrete root $\alpha$, so $B=\varnothing$
+and the menu is empty. $\square$
 
 ## 5. The exact row-uniform service criterion
 
@@ -161,7 +242,24 @@ $$
 
 These are different conditions. A collection of rows has a service on every attained row exactly when (RDR.9) holds for each row in that collection; the theorem does not assert one bound uniform across infinitely many different rows.
 
-**证明。** Sufficiency is the explicit finite menu. For necessity, suppose a bounded service has bound $K'$. Across its finitely many reply histories there are finitely many addresses; let $d$ be their maximum length. If some legal $\theta$ has two values in $V_R(\theta)$, use the finite lifting from Theorem 3.3 with primitive seeds whose every leaf is deeper than $d$ at each $*$ class. A state $D_j$ is realized by $\rho^j(p)$ and $H$ by $\rho^K(p)$; seeds can be chosen with arbitrarily large height and distinct shapes. Keep all integer-labelled classes fixed. The resulting two finite actual sources have the same row and the same replies at every address of length at most $d$, but different root depths. The bounded consumer follows the same run and is wrong on one source. The same construction rules out a service restricted to any fixed address radius, even if it may repeat calls without a call bound. No infinite source is used. $\square$
+**证明。** Sufficiency is the explicit finite menu. For necessity, suppose a
+bounded service has bound $K'$. Across its finitely many reply histories
+there are finitely many addresses; let $d$ be their maximum length. If
+some legal $\theta$ has two values in $V_R(\theta)$, use the following
+deep form of the finite lifting in Theorem 3.3. Keep every integer-labelled
+class fixed. For every $*$ class choose the required $D_j$ or $H$
+representative from a pairwise distinct non-atomic primitive all-$\alpha$
+seed whose minimum leaf depth is greater than $d+K$; after the finite
+powers of $\rho$, the representative still has no leaf at an address of
+length at most $d$. The same choice is made simultaneously for all
+classes in each profile, so it preserves every cross-class disequality.
+The two selected profiles therefore give finite sources with the same
+row and identical four replies at every address of length at most $d$, but
+different root depths. The bounded consumer follows the same run and is
+wrong on one source. The same construction rules out a service restricted
+to any fixed address radius, even if it may repeat calls without a call
+bound. No infinite source is used; the witnesses have arbitrarily large
+minimum leaf depth in every varied class. $\square$
 
 ## 6. Minimum additional retained alphabet
 
@@ -172,19 +270,72 @@ M_R=\max_{\theta}|V_R(\theta)|.
 \tag{RDR.11}
 $$
 
-This is finite because the pattern set and the finite state model are finite. An additional producer-retained code is a finite message $E(u)$ computed from the actually acquired source before the row handoff; its alphabet is counted conditional on the already retained $R$.
+This is finite because the pattern set and the finite state model are
+finite. A *refined code handoff* is a separate producer contract:
+the same full-acquisition producer computes a finite complete field
+$E(u)$ before handoff and exposes $(R,E(u))$. For the fixed row $R$,
+the set of complete field values
+\[
+\mathcal E_R=\{E(u):u\in U_R\}
+\]
+is finite, and its cardinality is the conditional code size; an
+arbitrary unbounded string is not a finite alphabet. Every
+source-dependent field accessible to the code-assisted consumer factors
+through $(R,E)$, including handles, lengths, control positions, archives
+and timing. There is no hidden old tree, reference, source label or other
+source-dependent selector. The consumer receives $(R,E)$ and common
+installed data, and may make the same static native reads as in
+Definition 1.3. A code-assisted row-uniform service has one deterministic
+entry and one finite bound $K_R^E$ such that it halts for every
+$u\in U_R$ and makes at most $K_R^E$ new reads. Thus the code is a
+recoverable declaration from the same acquired source, not evidence
+silently borrowed from another source or from the old row-only state.
 
-**定理 6.2（最小 extra alphabet）。** If $C$ has a concrete leaf, the least finite alphabet cardinality of an additional producer-acquired code that permits some row-uniform exact root-depth service is exactly $M_R$. Equivalently, a fixed-width field needs $\lceil\log_2 M_R\rceil$ conditional bits. A realizing producer retains
+**定理 6.2（最小 extra alphabet）。** If $C$ has a concrete leaf, the least
+conditional cardinality $|\mathcal E_R|$ of a finite refined code handoff
+that permits some code-assisted row-uniform exact root-depth service is
+exactly $M_R$. Equivalently, a fixed-width field needs
+$\lceil\log_2 M_R\rceil$ conditional bits. A realizing producer retains
 
 $$
 E(u)=r_R(u),
 $$
 
-the zero-based rank of $\nu(u)$ in the increasing list $V_R(\theta_R(u))$. The later consumer acquires $\theta_R(u)$ by Theorem 4.2 and selects that rank. Both pieces of information refer to the same actual source.
+the zero-based rank of $\nu(u)$ in the increasing list
+$V_R(\theta_R(u))$. The later consumer acquires $\theta_R(u)$ by
+Theorem 4.2 and selects that rank. Both pieces of information are
+computed from and refer to the same actual source, and the refined
+handoff exposes no other source-dependent field.
 
-**证明。** The rank code has $M_R$ values and gives an actual finite-call consumer. Conversely let a code have $m<M_R$ values and suppose a bounded service exists. Choose $\theta$ with $|V_R(\theta)|=M_R$. The service has a finite address menu over the $m$ code values and finitely many reply histories; let $d$ bound its addresses. For each of the $M_R$ distinct root values, the finite lifting constructs a finite same-row source with pattern $\theta$ whose $*$ values have no leaves within depth $d$. All these sources agree on the entire menu. Two receive the same code by pigeonhole, so the consumer makes the same requests and returns the same value on two different depths, a contradiction. The lower bound applies to arbitrary source-dependent encodings, not only rank labels. $\square$
+**证明。** The rank code has exactly $M_R$ complete values: a pattern
+attaining the maximum realizes every rank from $0$ through $M_R-1$.
+Together with the finite menu it gives a code-assisted service with a
+uniform bound. Conversely let a complete refined handoff have
+$m=|\mathcal E_R|<M_R$ values and suppose a bounded service exists.
+Choose $\theta$ with $|V_R(\theta)|=M_R$. The service has a finite
+address menu over the $m$ code values and finitely many reply histories;
+let $d$ bound its addresses. For each of the $M_R$ distinct root values,
+the deep finite lifting constructs a finite same-row source with pattern
+$\theta$ whose every varied class is represented by a non-atomic
+primitive seed of minimum leaf depth greater than $d+K$. All these
+sources agree on the entire possible read menu, while the pigeonhole
+principle gives two with the same complete code value. The deterministic
+service makes the same requests and returns the same value on two
+different depths, a contradiction. The lower bound applies to every
+source-dependent encoding satisfying the refined complete-handoff
+contract, not only to rank labels. $\square$
 
-**推论 6.3（leafless obstruction）。** If $C$ has no concrete leaf, no finite additional alphabet together with a finite uniform read bound can recover exact $\nu$ on $U_R$. A code with $m$ values and a $K'$-read four-reply consumer has at most $m4^{K'}$ reply/code terminal combinations, while Theorem 3.1 supplies infinitely many attainable depths. An unbounded integer retained by the producer or sourcewise unbounded reacquisition is a different contract.
+**推论 6.3（leafless obstruction）。** If $C$ has no concrete leaf, no finite
+refined code handoff together with a finite uniform read bound can recover
+exact $\nu$ on $U_R$. A deterministic consumer with one of $m$ code
+values has, for each fixed code, a prefix-free set of terminal reply words:
+if one run stops after a word $w$, no longer run with the same code can
+have $w$ as a prefix. With at most $K'$ reads, Kraft's inequality over
+the four-reply alphabet gives at most $4^{K'}$ terminal words per code
+(the bound also covers $K'=0$). Hence there are at most $m4^{K'}$
+code/transcript outcomes, whereas Theorem 3.1 supplies infinitely many
+attainable depths. An unbounded integer retained by the producer or
+sourcewise unbounded reacquisition is a different contract.
 
 ## 7. Two source-specific separations
 
@@ -198,15 +349,37 @@ but every exact source-total row-only service has unbounded new calls, unbounded
 
 **证明。** Formula (RDR.2) gives depth $2$ when the hole value is $\alpha$, and otherwise $\min(1,\nu(z))$, so the three values occur. Let $z_h$ be the perfect height-$h$ all-$\beta$ tree, $h\ge1$. It is $\rho$ of a perfect all-$\alpha$ primitive tree and has depth $1$. For each of its $2^{h-1}$ left-child leaf addresses $w$, make a separate comparison source by changing only that leaf from $\beta$ to $\alpha$. The changed source has depth $0$ because a left child equal to $\alpha$ violates the first-image grammar. A leaf-label change changes only the reply at that exact address. On $(\beta,z_h)$, a terminating exact run must therefore query every $Rw$ or it returns the same answer on the corresponding comparison source. Each such word has length $h+1$, so the run uses at least $2^{h-1}$ calls and has total length at least $(h+1)2^{h-1}$. As $h$ grows, all four coordinates are unbounded. Repeated calls and arbitrarily deep or absent probes do not see a skipped leaf label. $\square$
 
-**命题 7.2（genuinely acquired one-bit, one-read repair）。** Let $C=(\square,\beta)$ with one class and cut $P=\{L\}$. The same full-acquisition producer additionally computes and retains
+**命题 7.2（genuinely acquired one-bit, one-read repair）。** Let
+$C=(\square,\beta)$ with one class and cut $P=\{L\}$ at the hole. Use
+the refined handoff of Definition 6.1: the same full-acquisition producer
+additionally computes and retains
 
 $$
 \eta=\mathbf 1_{I_1}(x),
 $$
 
-where $x$ fills the hole. The grammar $I_1::=\beta\mid(\beta,\alpha)\mid(I_1,I_1)$ is a supplied finite image test. The consumer returns $0$ when $\eta=0$; when $\eta=1$, it reads the absolute address $LR$ and returns $3$ exactly on reply $\alpha$, and $1$ otherwise. This is exact on the same actual row fiber, uses at most one new read of length $2$, and one bit is necessary for any uniformly bounded service on this row.
+where $x$ fills the hole, and all source-dependent fields exposed to this
+consumer factor through $(R,\eta)$ with no hidden archive, length, timing
+or source label. The grammar
+$I_1::=\beta\mid(\beta,\alpha)\mid(I_1,I_1)$ is a supplied finite image
+test. The code-assisted consumer returns $0$ when $\eta=0$; when
+$\eta=1$, it reads the absolute address $LR$ and returns $3$ exactly on
+reply $\alpha$, and $1$ otherwise. This is exact on the same actual row
+fiber, uses at most one new read of length $2$, and one bit is necessary
+for any uniformly bounded service on this row.
 
-**证明。** Here the spectrum is $\{0,1,3\}$. If $x\notin I_1$, the pair has depth $0$. If $x\in I_1$, its only exceptional member with right child $\alpha$ is $T_2=(\beta,\alpha)$; the address $LR$ returns $\alpha$ exactly for $T_2$, while $x=\beta$ or a composite $I_1$ value returns $\mathsf{abs}$, $\beta$ or $\mathsf{br}$ and hence depth $1$. The finite state model gives $M_R=2$: the non-atomic pattern $*$ has possible depths $0$ and $1$, while each atomic pattern is single-valued. Theorem 6.2 proves the one-bit lower bound, and the displayed producer/consumer attains it. Retaining $\nu$ itself would use three conditional values and zero reads; retaining root $Q$ supports the separate construction-context family but is stronger than this root-only field. $\square$
+**证明。** Here the spectrum is $\{0,1,3\}$. If $x\notin I_1$, the
+pair has depth $0$. If $x\in I_1$, its only exceptional member with
+right child $\alpha$ is $T_2=(\beta,\alpha)$; the address $LR$ returns
+$\alpha$ exactly for $T_2$, while $x=\beta$ or a composite $I_1$ value
+returns $\mathsf{abs}$, $\beta$ or $\mathsf{br}$ and hence depth $1$.
+The finite state model gives $M_R=2$: the non-atomic pattern $*$ has
+possible depths $0$ and $1$, while each atomic pattern is single-valued.
+Theorem 6.2 proves the one-bit lower bound under the complete $(R,\eta)$
+handoff, and the displayed producer/consumer attains it. Retaining $\nu$
+itself would use three conditional values and zero reads; retaining root
+$Q$ supports the separate construction-context family but is stronger
+than this root-only field. $\square$
 
 ## 8. Resource and ownership boundaries
 
@@ -215,7 +388,12 @@ where $x$ fills the hole. The grammar $I_1::=\beta\mid(\beta,\alpha)\mid(I_1,I_1
 - The target spectrum is (RDR.4), with all naturals exactly in the leafless case and possible gaps in the anchored case.
 - Zero-read identifiability is (RDR.10). Sourcewise finite termination is available from complete representative-class traversal and finite parsing, but its call count depends on the actual finite values; it is not a uniform bound.
 - A call bound, maximum literal length, total literal length and number of phase-distinct addresses are separate quantities. Proposition 7.1 gives simultaneous lower growth without identifying calls with word length.
-- The conditional alphabet in Theorem 6.2 excludes the cost of $R$, installation, handoff, physical storage, producer computation, encoding time and lifetime retention. It is a task-relative message count, not a physical-memory theorem. Internal $Q$ evaluation, state enumeration and parsing are finite local computations and are separately charged.
+- The conditional alphabet in Theorem 6.2 counts complete refined field
+  values conditional on $R$; it excludes the cost of $R$, installation,
+  handoff, physical storage, producer computation, encoding time and
+  lifetime retention. It is a task-relative message count, not a
+  physical-memory theorem. Internal $Q$ evaluation, state enumeration and
+  parsing are finite local computations and are separately charged.
 - $\nu$ and the retained row do not recover actual entrance, old event order, elapsed time, or arbitrary future native replies. A complete retained tree gives a stronger zero-read future interface, and retaining root $\nu$ or root $Q$ serves named root/context tasks under their own handoff contracts. None of these baselines is the new row-only criterion.
 - Every post-handoff read is a new call even if the producer queried the same address during full acquisition. A lower bound on phase-distinct addresses is not a lower bound on lifetime-new addresses.
 
