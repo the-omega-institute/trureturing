@@ -63,7 +63,7 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
         Formula j = F.Id("j");
         Formula k = F.Id("k");
         return Disp(Seq(
-            Open, F.Id("x"), Ne, D(0), Sp, Land, Sp,
+            Open, F.Id("x"), Neq, D(0), Sp, Land, Sp,
             Forall, Sp, j, Lt, bound, Comma, Sp, member(j), Close,
             Sp, Rightarrow, RowBreak, Grp(),
             Open, Exists, Sp, length, Comma, Sp, D(1), Le, length, Lt, bound, Sp, Land, Sp,
