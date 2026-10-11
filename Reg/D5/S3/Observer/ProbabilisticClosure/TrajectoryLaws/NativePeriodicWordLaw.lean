@@ -247,4 +247,53 @@ def criterionRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _,
     { name := `relaxedAutoImplicit, value := .bool false }] }
 #print axioms criterionRecord
 
+abbrev endpointSignature : Signature where
+  Params := unitInterval
+  State _ := ActivePhase × ℕ × Letter
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def endpointActual : Realization endpointSignature := realize endpointSignature
+  (fun _ r snb => (explicitStoppedWordLaw snb.1 r).real
+    {some (typeWord snb.1 snb.2.1 snb.2.2)}) (fun e => nomatch e)
+
+def endpointArena : Arena where
+  signature := endpointSignature
+  Law R := ∀ r s n b, R.readout () r (s,n,b) = pureCoord (r:ℝ) s n b
+
+theorem endpointBridge : (type_of% (@endpoint_coordinates)) ↔
+    endpointArena.Law endpointActual := by
+  constructor <;> intro h r s n b <;> exact h r s n b
+
+theorem endpointActualLaw : endpointArena.Law endpointActual :=
+  endpointBridge.mp (@endpoint_coordinates)
+
+abbrev immediateSignature : Signature where
+  Params := unitInterval
+  State _ := Unit
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def immediateActual : Realization immediateSignature := realize immediateSignature
+  (fun _ r _ => (explicitStoppedWordLaw .beta r).real {some [1]}) (fun e => nomatch e)
+
+def immediateArena : Arena where
+  signature := immediateSignature
+  Law R := ∀ r, R.readout () r () = 1-(r:ℝ)
+
+theorem immediateBridge : (type_of% (@endpoint_immediate)) ↔
+    immediateArena.Law immediateActual := by
+  constructor <;> intro h r <;> exact h r
+
+theorem immediateActualLaw : immediateArena.Law immediateActual :=
+  immediateBridge.mp (@endpoint_immediate)
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativePeriodicWordLaw
