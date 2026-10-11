@@ -13,31 +13,19 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Restricted-state compatibility determines incompatible unbiased qubit pairs.",
         H("Qubit Incompatibility Rigidity"), Blocks(
-            Node("V", "Bloch vector space", "The Bloch vectors form real Euclidean three-space.",
-                DescribeRole.Definition, Equal(Typed(X("V"), X("Type")),
-                    Call("EuclideanSpace", Reals(), Fin(3)))),
             Node("Density", "Density matrices", "A density matrix is positive semidefinite and has complex trace one. The subtype projection val returns its matrix.",
                 DescribeRole.Definition, Equal(Typed(X("Density"), X("Type")),
                     Seq(OpenBrace, Typed(X("rho"), X("QubitMatrix")), Sp, Bar, Sp,
                         And(At(Qualified("Matrix", "PosSemidef"), X("rho")),
                             Equal(At(Qualified("Matrix", "trace"), X("rho")), Typed(Num(1), Complexes()))), CloseBrace))),
-            Node("pauliY", "The second Pauli matrix", "The off-diagonal entries are minus i and i.",
-                DescribeRole.Definition, Equal(Typed(X("pauliY"), X("QubitMatrix")),
-                    Mat(Num(0), Negate(Qualified("Complex", "I")), Qualified("Complex", "I"), Num(0)))),
-            Node("pauli", "Pauli expansion", "The three real coordinates are coerced to complex scalars acting on the Pauli matrices.",
-                DescribeRole.Definition, All("v", X("V"),
-                    Equal(Call("pauli", X("v")), Add(Add(
-                        Smul(Typed(At(X("v"), Num(0)), Complexes()), X("qubitX")),
-                        Smul(Typed(At(X("v"), Num(1)), Complexes()), X("pauliY"))),
-                        Smul(Typed(At(X("v"), Num(2)), Complexes()), X("qubitZ")))))),
             Node("effect", "Unbiased effects", "Outcome zero uses the positive Pauli expansion; outcome one uses its negative. One half is a complex scalar.",
-                DescribeRole.Definition, All("v", X("V"), All("s", Fin(2),
+                DescribeRole.Definition, All("v", BlochSpace(), All("s", Fin(2),
                     Equal(Call("effect", X("v"), X("s")),
                         Smul(Typed(Fraction(Num(1), Num(2)), Complexes()), Add(
                             Typed(Num(1), X("QubitMatrix")), Smul(
                                 Call("ite", Equal(X("s"), Typed(Num(0), Fin(2))),
                                     Typed(Num(1), Complexes()), Typed(Negate(Num(1)), Complexes())),
-                                Call("pauli", X("v"))))))))),
+                                At(Qualified("FourQubitParentConstruction", "B"), X("v"))))))))),
             Node("IsPOVM", "A joint POVM", "The four positive effects sum to the identity matrix.",
                 DescribeRole.Definition, All("G", Parents(),
                     Equivalence(Call("IsPOVM", X("G")), And(
@@ -100,7 +88,8 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Outcomes() => Seq(Fin(2), Sp, Times, Sp, Fin(2));
     private static Formula Parents() => Arrow(Parenthesized(Outcomes()), X("QubitMatrix"));
-    private static Formula Vectors() => Arrow(Fin(2), X("V"));
+    private static Formula BlochSpace() => Call("EuclideanSpace", Reals(), Fin(3));
+    private static Formula Vectors() => Arrow(Fin(2), BlochSpace());
     private static Formula StateSets() => Call("Set", X("Density"));
     private static Formula At(Formula fn, params Formula[] args) => new Formula.Apply(fn, [.. args]);
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
@@ -120,6 +109,4 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
     private static Formula Equivalence(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
     private static Formula SumOver(string v, Formula domain, Formula body) =>
         Seq(new Formula.Subscript(Sum, Typed(X(v), domain)), Sp, Parenthesized(body));
-    private static Formula Mat(Formula a, Formula b, Formula c, Formula d) =>
-        Seq(Begin, Grp(X("pmatrix")), a, Amp, b, RowBreak, c, Amp, d, End, Grp(X("pmatrix")));
 }

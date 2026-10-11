@@ -12,25 +12,23 @@ noncomputable section
 open D5.S3.Quantum.FiniteDimensional
 open scoped ComplexOrder
 namespace D5.S3.Quantum.Measurement.QubitIncompatibilityRigidity
-abbrev V := EuclideanSpace ℝ (Fin 3)
 abbrev Density := {ρ : QubitMatrix // ρ.PosSemidef ∧ Matrix.trace ρ = 1}
-def pauliY : QubitMatrix := !![0, -Complex.I; Complex.I, 0]
-def pauli (v : V) : QubitMatrix := (v 0 : ℂ) • qubitX + (v 1 : ℂ) • pauliY + (v 2 : ℂ) • qubitZ
-def effect (v : V) (s : Fin 2) : QubitMatrix :=
-  (1 / 2 : ℂ) • ((1 : QubitMatrix) + (if s = 0 then (1 : ℂ) else -1) • pauli v)
+def effect (v : EuclideanSpace ℝ (Fin 3)) (s : Fin 2) : QubitMatrix :=
+  (1 / 2 : ℂ) • ((1 : QubitMatrix) + (if s = 0 then (1 : ℂ) else -1) •
+    D5.S3.Quantum.Measurement.FourQubitParentConstruction.B v)
 def IsPOVM (G : Fin 2 × Fin 2 → QubitMatrix) : Prop :=
   (∀ q, (G q).PosSemidef) ∧ (∑ s : Fin 2, ∑ t : Fin 2, G (s, t)) = 1
 def marginal (G : Fin 2 × Fin 2 → QubitMatrix) (i s : Fin 2) : QubitMatrix :=
   if i = 0 then ∑ t : Fin 2, G (s, t) else ∑ t : Fin 2, G (t, s)
-def SCompatible (S : Set Density) (a : Fin 2 → V) : Prop :=
+def SCompatible (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop :=
   ∃ G : Fin 2 × Fin 2 → QubitMatrix, IsPOVM G ∧ ∀ ρ ∈ S, ∀ i s : Fin 2,
     bornProbability ρ.1 (marginal G i s) = bornProbability ρ.1 (effect (a i) s)
-def Incompatible (a : Fin 2 → V) : Prop := ¬ SCompatible Set.univ a
-def SignedPermutation (a b : Fin 2 → V) : Prop :=
+def Incompatible (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop := ¬ SCompatible Set.univ a
+def SignedPermutation (a b : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop :=
   ∃ (π : Equiv.Perm (Fin 2)) (ε : Fin 2 → ℝ),
     (∀ i, ε i = 1 ∨ ε i = -1) ∧ ∀ i, b i = ε i • a (π i)
 def claim : Prop :=
-  ∀ a b : Fin 2 → V,
+  ∀ a b : Fin 2 → EuclideanSpace ℝ (Fin 3),
     (∀ i, ‖a i‖ ≤ 1) →
     (∀ i, ‖b i‖ ≤ 1) →
     Incompatible a →
@@ -40,32 +38,24 @@ def claim : Prop :=
 
 
 open scoped InnerProductSpace
-private abbrev B (t : ℝ) (v : V) : QubitMatrix :=
+private abbrev B (t : ℝ) (v : EuclideanSpace ℝ (Fin 3)) : QubitMatrix :=
   (1 / 2 : ℂ) • D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB t v
-
-private lemma pauli_eq (v : V) :
-    pauli v = D5.S3.Quantum.Measurement.FourQubitParentConstruction.B v := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [pauli.eq_1, pauliY.eq_1, qubitX, qubitZ,
-      D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula] <;> ring
-
 
 open D5.S3.Quantum.Measurement.FourQubitParentConstruction
   (scalarB_hermitian half_scalarB_posSemidef_iff
     hermitian_decomposition half_scalarB_double half_scalarB_complement trace_B_mul)
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch)
 
-private lemma B_hermitian (t : ℝ) (v : V) : (B t v).IsHermitian :=
+private lemma B_hermitian (t : ℝ) (v : EuclideanSpace ℝ (Fin 3)) : (B t v).IsHermitian :=
   (scalarB_hermitian t v).smul (by simp [IsSelfAdjoint])
 
-private lemma B_trace (t : ℝ) (v : V) : Matrix.trace (B t v) = (t : ℂ) := by
+private lemma B_trace (t : ℝ) (v : EuclideanSpace ℝ (Fin 3)) : Matrix.trace (B t v) = (t : ℂ) := by
   simp [B, D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
     D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula,
     Matrix.trace, Fin.sum_univ_two]
   ring
 
-private lemma B_psd (t : ℝ) (v : V) : (B t v).PosSemidef ↔ ‖v‖ ≤ t :=
+private lemma B_psd (t : ℝ) (v : EuclideanSpace ℝ (Fin 3)) : (B t v).PosSemidef ↔ ‖v‖ ≤ t :=
   half_scalarB_posSemidef_iff t v
 
 private lemma B_rep (M : QubitMatrix) (h : M.IsHermitian) :
@@ -74,7 +64,7 @@ private lemma B_rep (M : QubitMatrix) (h : M.IsHermitian) :
   rw [← half_scalarB_double] at he
   simpa [B, mul_div_cancel₀] using he
 
-private lemma B_born (s t : ℝ) (w v : V) :
+private lemma B_born (s t : ℝ) (w v : EuclideanSpace ℝ (Fin 3)) :
     bornProbability (B s w) (B t v) = ((s * t + ⟪w, v⟫_ℝ) / 2 : ℝ) := by
   simp only [B, bornProbability,
     D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
@@ -84,12 +74,12 @@ private lemma B_born (s t : ℝ) (w v : V) :
     Matrix.trace, Fin.sum_univ_two]
   ring
 
-private lemma effect_B (v : V) (s : Fin 2) :
+private lemma effect_B (v : EuclideanSpace ℝ (Fin 3)) (s : Fin 2) :
     effect v s = B 1 ((if s = 0 then (1 : ℝ) else -1) • v) := by
-  rw [effect, pauli_eq]
+  rw [effect]
   fin_cases s <;> simp [B, D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB]
 
-private def state (r : V) (h : ‖r‖ ≤ 1) : Density :=
+private def state (r : EuclideanSpace ℝ (Fin 3)) (h : ‖r‖ ≤ 1) : Density :=
   ⟨B 1 r, (B_psd 1 r).mpr h, B_trace 1 r⟩
 
 private lemma tomography (M N : QubitMatrix) (hM : M.IsHermitian)
@@ -112,7 +102,8 @@ private lemma tomography (M N : QubitMatrix) (hM : M.IsHermitian)
     linarith
   rw [B_rep M hM, B_rep N hN, ht, hv]
 
-private lemma B_sub (s t : ℝ) (v w : V) : B (s - t) (v - w) = B s v - B t w := by
+private lemma B_sub (s t : ℝ) (v w : EuclideanSpace ℝ (Fin 3)) :
+    B (s - t) (v - w) = B s v - B t w := by
   have h : D5.S3.Quantum.Measurement.FourQubitParentConstruction.B (v - w) =
       D5.S3.Quantum.Measurement.FourQubitParentConstruction.B v -
         D5.S3.Quantum.Measurement.FourQubitParentConstruction.B w := by
@@ -121,7 +112,7 @@ private lemma B_sub (s t : ℝ) (v w : V) : B (s - t) (v - w) = B s v - B t w :=
     h, Complex.ofReal_sub, sub_smul, smul_add, smul_sub]
   abel
 
-private lemma B_complement (t : ℝ) (v : V) : B (2 - t) (-v) = 1 - B t v :=
+private lemma B_complement (t : ℝ) (v : EuclideanSpace ℝ (Fin 3)) : B (2 - t) (-v) = 1 - B t v :=
   half_scalarB_complement t v
 
 
@@ -136,11 +127,11 @@ private lemma marginal_sum {G : Fin 2 × Fin 2 → QubitMatrix} (hG : IsPOVM G)
   fin_cases i <;> simpa [marginal, Fin.sum_univ_two, add_assoc, add_comm, add_left_comm]
     using hG.2
 
-private def Joint (a b : V) : Prop :=
+private def Joint (a b : EuclideanSpace ℝ (Fin 3)) : Prop :=
   ∃ G : Fin 2 × Fin 2 → QubitMatrix, IsPOVM G ∧
     marginal G 0 0 = B 1 a ∧ marginal G 1 0 = B 1 b
 
-private lemma joint_margins {a b : V} {G : Fin 2 × Fin 2 → QubitMatrix}
+private lemma joint_margins {a b : EuclideanSpace ℝ (Fin 3)} {G : Fin 2 × Fin 2 → QubitMatrix}
     (hG : IsPOVM G) (hm : marginal G 0 0 = B 1 a ∧ marginal G 1 0 = B 1 b) :
     ∀ i s, marginal G i s = effect (![a, b] i) s := by
   intro i s
@@ -159,7 +150,7 @@ private lemma joint_margins {a b : V} {G : Fin 2 × Fin 2 → QubitMatrix}
     simpa [effect_B] using he
 
 
-private lemma compatible_univ (a : Fin 2 → V) :
+private lemma compatible_univ (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible Set.univ a ↔ Joint (a 0) (a 1) := by
   constructor
   · rintro ⟨G, hG, h⟩
@@ -178,7 +169,8 @@ private lemma compatible_univ (a : Fin 2 → V) :
     rw [ha] at he
     rw [he]
 
-private lemma joint_criterion (a b : V) : Joint a b ↔ ‖a + b‖ + ‖a - b‖ ≤ 2 := by
+private lemma joint_criterion (a b : EuclideanSpace ℝ (Fin 3)) :
+    Joint a b ↔ ‖a + b‖ + ‖a - b‖ ≤ 2 := by
   constructor
   · rintro ⟨G, hG, hA, hB⟩
     let γ := (Matrix.trace (G (0, 0))).re
@@ -233,9 +225,9 @@ private lemma joint_criterion (a b : V) : Joint a b ↔ ‖a + b‖ + ‖a - b�
           D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
           D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula] <;> ring
 
-private def K (a b : V) : ℝ := 1 - ‖a‖ ^ 2 - ‖b‖ ^ 2 + ⟪a, b⟫_ℝ ^ 2
+private def K (a b : EuclideanSpace ℝ (Fin 3)) : ℝ := 1 - ‖a‖ ^ 2 - ‖b‖ ^ 2 + ⟪a, b⟫_ℝ ^ 2
 
-private lemma criterion_K (a b : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) :
+private lemma criterion_K (a b : EuclideanSpace ℝ (Fin 3)) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) :
     ‖a + b‖ + ‖a - b‖ ≤ 2 ↔ 0 ≤ K a b := by
   have hp := norm_nonneg (a + b)
   have hq := norm_nonneg (a - b)
@@ -256,32 +248,36 @@ private lemma criterion_K (a b : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) :
     have hbound : ‖a + b‖ * ‖a - b‖ ≤ 2 - ‖a‖ ^ 2 - ‖b‖ ^ 2 := by nlinarith
     nlinarith [sq_nonneg (‖a + b‖ + ‖a - b‖ - 2)]
 
-private def project (n v : V) : V := v - ⟪n, v⟫_ℝ • n
+private def project (n v : EuclideanSpace ℝ (Fin 3)) : EuclideanSpace ℝ (Fin 3) := v - ⟪n, v⟫_ℝ • n
 
-private lemma project_add (n v w : V) : project n (v + w) = project n v + project n w := by
+private lemma project_add (n v w : EuclideanSpace ℝ (Fin 3)) :
+    project n (v + w) = project n v + project n w := by
   simp only [project.eq_1, inner_add_right]
   module
 
-private lemma project_sub (n v w : V) : project n (v - w) = project n v - project n w := by
+private lemma project_sub (n v w : EuclideanSpace ℝ (Fin 3)) :
+    project n (v - w) = project n v - project n w := by
   simp only [project, inner_sub_right]
   module
 
-private lemma project_orth (n v : V) (hn : ‖n‖ = 1) : ⟪n, project n v⟫_ℝ = 0 := by
+private lemma project_orth (n v : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ = 1) :
+    ⟪n, project n v⟫_ℝ = 0 := by
   simp [project, inner_sub_right, inner_smul_right, hn]
 
-private lemma project_inner (n v w : V) (hn : ‖n‖ = 1) :
+private lemma project_inner (n v w : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ = 1) :
     ⟪project n v, project n w⟫_ℝ = ⟪v, w⟫_ℝ - ⟪n, v⟫_ℝ * ⟪n, w⟫_ℝ := by
   simp only [project, inner_sub_left, inner_sub_right, real_inner_smul_left,
     inner_smul_right, real_inner_self_eq_norm_sq, hn, one_pow, mul_one,
     real_inner_comm n v]
   ring
 
-private lemma project_sq (n v : V) (hn : ‖n‖ = 1) :
+private lemma project_sq (n v : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ = 1) :
     ‖project n v‖ ^ 2 = ‖v‖ ^ 2 - ⟪n, v⟫_ℝ ^ 2 := by
   rw [← real_inner_self_eq_norm_sq, project_inner n v v hn, real_inner_self_eq_norm_sq]
   ring
 
-private lemma project_norm (n v : V) (hn : ‖n‖ = 1) : ‖project n v‖ ≤ ‖v‖ := by
+private lemma project_norm (n v : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ = 1) :
+    ‖project n v‖ ≤ ‖v‖ := by
   have he : project n v = (ℝ ∙ n)ᗮ.starProjection v := by
     rw [Submodule.starProjection_orthogonal_val,
       Submodule.starProjection_unit_singleton ℝ hn]
@@ -289,8 +285,8 @@ private lemma project_norm (n v : V) (hn : ‖n‖ = 1) : ‖project n v‖ ≤ 
   rw [he]
   exact Submodule.norm_starProjection_apply_le _ _
 
-private lemma plane_separation (n u v : V) (hn : ‖n‖ = 1)
-    (h : ∀ r : V, ‖r‖ ≤ 1 → ⟪n, r⟫_ℝ = 0 → ⟪r, u⟫_ℝ = ⟪r, v⟫_ℝ) :
+private lemma plane_separation (n u v : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ = 1)
+    (h : ∀ r : EuclideanSpace ℝ (Fin 3), ‖r‖ ≤ 1 → ⟪n, r⟫_ℝ = 0 → ⟪r, u⟫_ℝ = ⟪r, v⟫_ℝ) :
     project n u = project n v := by
   ext i
   have hi := h (project n (EuclideanSpace.single i 1))
@@ -300,25 +296,26 @@ private lemma plane_separation (n u v : V) (hn : ‖n‖ = 1)
     conj_trivial, one_mul] at hi
   simpa [project, mul_comm] using hi
 
-private def central (n : V) : Set Density :=
-  {ρ | ∃ (r : V) (h : ‖r‖ ≤ 1), ⟪n, r⟫_ℝ = 0 ∧ ρ = state r h}
+private def central (n : EuclideanSpace ℝ (Fin 3)) : Set Density :=
+  {ρ | ∃ (r : EuclideanSpace ℝ (Fin 3)) (h : ‖r‖ ≤ 1), ⟪n, r⟫_ℝ = 0 ∧ ρ = state r h}
 
-private def quartic (a b n : V) : ℝ :=
+private def quartic (a b n : EuclideanSpace ℝ (Fin 3)) : ℝ :=
   K a b + ⟪n, a⟫_ℝ ^ 2 + ⟪n, b⟫_ℝ ^ 2 -
     2 * ⟪a, b⟫_ℝ * ⟪n, a⟫_ℝ * ⟪n, b⟫_ℝ + ⟪n, a⟫_ℝ ^ 2 * ⟪n, b⟫_ℝ ^ 2
 
-private lemma quartic_identity (a b n : V) (hn : ‖n‖ = 1) :
+private lemma quartic_identity (a b n : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ = 1) :
     K (project n a) (project n b) = quartic a b n := by
   simp only [K.eq_1, quartic.eq_1, project_sq n a hn, project_sq n b hn, project_inner n a b hn]
   ring
 
-private lemma central_criterion (n : V) (hn : ‖n‖ = 1) (a : Fin 2 → V) :
+private lemma central_criterion (n : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ = 1)
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible (central n) a ↔
       ‖project n (a 0) + project n (a 1)‖ + ‖project n (a 0) - project n (a 1)‖ ≤ 2 := by
   constructor
   · rintro ⟨G, hG, h⟩
-    let u : Fin 2 → V := fun i => bloch (marginal G i 0)
-    have he (i : Fin 2) (r : V) (hr : ‖r‖ ≤ 1) (hnr : ⟪n, r⟫_ℝ = 0) :
+    let u : Fin 2 → EuclideanSpace ℝ (Fin 3) := fun i => bloch (marginal G i 0)
+    have he (i : Fin 2) (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) (hnr : ⟪n, r⟫_ℝ = 0) :
         (Matrix.trace (marginal G i 0)).re + ⟪r, u i⟫_ℝ = 1 + ⟪r, a i⟫_ℝ := by
       have hz := h (state r hr) ⟨r, hr, hnr, rfl⟩ i 0
       dsimp only [state] at hz
@@ -356,13 +353,14 @@ private lemma central_criterion (n : V) (hn : ‖n‖ = 1) (a : Fin 2 → V) :
     fin_cases s <;>
       simp [project, inner_smul_right, inner_sub_right, real_inner_comm n r, hnr]
 
-private lemma central_quartic (n : V) (hn : ‖n‖ = 1) (a : Fin 2 → V)
+private lemma central_quartic (n : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ = 1)
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3))
     (ha : ∀ i, ‖a i‖ ≤ 1) : SCompatible (central n) a ↔ 0 ≤ quartic (a 0) (a 1) n := by
   rw [central_criterion n hn a,
     criterion_K _ _ ((project_norm n (a 0) hn).trans (ha 0))
       ((project_norm n (a 1) hn).trans (ha 1)), quartic_identity _ _ _ hn]
 
-private lemma incompatible_parameters (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
+private lemma incompatible_parameters (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) (ha : ∀ i, ‖a i‖ ≤ 1)
     (hi : Incompatible a) : K (a 0) (a 1) < 0 ∧
       0 < ‖a 0‖ ^ 2 * ‖a 1‖ ^ 2 - ⟪a 0, a 1⟫_ℝ ^ 2 := by
   change ¬ SCompatible Set.univ a at hi
@@ -374,29 +372,29 @@ private lemma incompatible_parameters (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ �
   dsimp only [K] at hk
   nlinarith [mul_nonneg (sub_nonneg.mpr hA) (sub_nonneg.mpr hB)]
 
-private abbrev cross (a b : V) : V :=
+private abbrev cross (a b : EuclideanSpace ℝ (Fin 3)) : EuclideanSpace ℝ (Fin 3) :=
   WithLp.toLp 2 (crossProduct (WithLp.ofLp a) (WithLp.ofLp b))
-private lemma cross_geometry (a b : V) :
+private lemma cross_geometry (a b : EuclideanSpace ℝ (Fin 3)) :
     ⟪a, cross a b⟫_ℝ = 0 ∧ ⟪b, cross a b⟫_ℝ = 0 ∧
       ‖cross a b‖ ^ 2 = ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2 := by
-  have hd (v w : V) : ⟪v, w⟫_ℝ = WithLp.ofLp v ⬝ᵥ WithLp.ofLp w := by
+  have hd (v w : EuclideanSpace ℝ (Fin 3)) : ⟪v, w⟫_ℝ = WithLp.ofLp v ⬝ᵥ WithLp.ofLp w := by
     simp [PiLp.inner_apply, dotProduct, mul_comm]
   rw [← real_inner_self_eq_norm_sq]
   simp only [hd, cross]
   rw [dot_self_cross, dot_cross_self, cross_dot_cross]
   simp only [← hd, real_inner_self_eq_norm_sq, real_inner_comm b a, pow_two]
   trivial
-private lemma gram_complete (a b r : V) :
+private lemma gram_complete (a b r : EuclideanSpace ℝ (Fin 3)) :
     (‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) * ‖r‖ ^ 2 =
       ‖b‖ ^ 2 * ⟪r, a⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪r, a⟫_ℝ * ⟪r, b⟫_ℝ +
       ‖a‖ ^ 2 * ⟪r, b⟫_ℝ ^ 2 + ⟪r, cross a b⟫_ℝ ^ 2 := by
   simp [EuclideanSpace.real_norm_sq_eq, PiLp.inner_apply, Fin.sum_univ_succ,
     cross, cross_apply]
   ring
-private lemma normal_exists (a b : V)
+private lemma normal_exists (a b : EuclideanSpace ℝ (Fin 3))
     (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) :
-    ∃ m : V, ‖m‖ = 1 ∧ ⟪m, a⟫_ℝ = 0 ∧ ⟪m, b⟫_ℝ = 0 ∧
-      ∀ r : V, (‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) *
+    ∃ m : EuclideanSpace ℝ (Fin 3), ‖m‖ = 1 ∧ ⟪m, a⟫_ℝ = 0 ∧ ⟪m, b⟫_ℝ = 0 ∧
+      ∀ r : EuclideanSpace ℝ (Fin 3), (‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) *
         (‖r‖ ^ 2 - ⟪r, m⟫_ℝ ^ 2) =
         ‖b‖ ^ 2 * ⟪r, a⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪r, a⟫_ℝ * ⟪r, b⟫_ℝ +
         ‖a‖ ^ 2 * ⟪r, b⟫_ℝ ^ 2 := by
@@ -431,16 +429,16 @@ private lemma radial_root (k M L : ℝ) (hk : k < 0) (hM : 0 < M) (hL : 0 ≤ L)
       linear_combination he
     rw [hf, mul_nonneg_iff_of_pos_right hp, sub_nonneg]
   exact ⟨R, hR, (ht 1 (by norm_num)).mp (by simpa using h1), he, ht⟩
-private def radialM (a b e : V) : ℝ :=
+private def radialM (a b e : EuclideanSpace ℝ (Fin 3)) : ℝ :=
   ⟪e, a⟫_ℝ ^ 2 + ⟪e, b⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪e, a⟫_ℝ * ⟪e, b⟫_ℝ
-private def radialL (a b e : V) : ℝ := ⟪e, a⟫_ℝ ^ 2 * ⟪e, b⟫_ℝ ^ 2
-private lemma meridian_formula (a b m e : V) (hma : ⟪m, a⟫_ℝ = 0)
+private def radialL (a b e : EuclideanSpace ℝ (Fin 3)) : ℝ := ⟪e, a⟫_ℝ ^ 2 * ⟪e, b⟫_ℝ ^ 2
+private lemma meridian_formula (a b m e : EuclideanSpace ℝ (Fin 3)) (hma : ⟪m, a⟫_ℝ = 0)
     (hmb : ⟪m, b⟫_ℝ = 0) (u v : ℝ) :
     quartic a b (u • m + v • e) = K a b + v ^ 2 * radialM a b e +
       v ^ 4 * radialL a b e := by
   simp only [quartic, radialM.eq_1, radialL.eq_1, inner_add_left, real_inner_smul_left, hma, hmb]
   ring
-private lemma meridian_positive (a b e : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)
+private lemma meridian_positive (a b e : EuclideanSpace ℝ (Fin 3)) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)
     (hE : ‖b‖ ^ 2 * ⟪e, a⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪e, a⟫_ℝ * ⟪e, b⟫_ℝ +
       ‖a‖ ^ 2 * ⟪e, b⟫_ℝ ^ 2 = ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2)
     (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) :
@@ -455,12 +453,12 @@ private lemma meridian_positive (a b e : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ �
       (by nlinarith : 0 ≤ 1 - ‖b‖ ^ 2 + ⟪e, b⟫_ℝ ^ 2)
     dsimp only [quartic, K]
     nlinarith [hE]
-private def cap (m p : V) (t : ℝ) : V :=
+private def cap (m p : EuclideanSpace ℝ (Fin 3)) (t : ℝ) : EuclideanSpace ℝ (Fin 3) :=
   t • p + Real.sqrt (1 - ‖t • p‖ ^ 2) • m
-private lemma boundary_transfer (a b c d m p : V) (hm : ‖m‖ = 1)
+private lemma boundary_transfer (a b c d m p : EuclideanSpace ℝ (Fin 3)) (hm : ‖m‖ = 1)
     (hp : ‖p‖ ≤ 1) (hpm : ⟪p, m⟫_ℝ = 0)
     (hma : ⟪m, a⟫_ℝ = 0) (hmb : ⟪m, b⟫_ℝ = 0) (hk : K a b < 0)
-    (heq : ∀ n : V, ‖n‖ = 1 → (0 ≤ quartic a b n ↔ 0 ≤ quartic c d n))
+    (heq : ∀ n : EuclideanSpace ℝ (Fin 3), ‖n‖ = 1 → (0 ≤ quartic a b n ↔ 0 ≤ quartic c d n))
     (hz : quartic a b (cap m p 1) = 0) : quartic c d (cap m p 1) = 0 := by
   have hu (t : ℝ) (ht : t ∈ Set.Icc 0 1) : ‖cap m p t‖ = 1 := by
     refine D5.S3.Arith.Lattices.Klartag.norm_padUnit ?_ hm ?_
@@ -485,11 +483,11 @@ private lemma boundary_transfer (a b c d m p : V) (hm : ‖m‖ = 1)
     (show (1 : ℝ) ∈ closure (Set.Ioo (0 : ℝ) 1) by
       rw [closure_Ioo zero_ne_one]; exact ⟨zero_le_one, le_rfl⟩)
   exact le_antisymm hl ((heq _ (hu 1 ⟨zero_le_one, le_rfl⟩)).mp (by rw [hz]))
-private lemma coplanarity (a b : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
+private lemma coplanarity (a b : Fin 2 → EuclideanSpace ℝ (Fin 3)) (ha : ∀ i, ‖a i‖ ≤ 1)
     (hb : ∀ i, ‖b i‖ ≤ 1) (hia : Incompatible a) (hib : Incompatible b)
-    (heq : ∀ n : V, ‖n‖ = 1 →
+    (heq : ∀ n : EuclideanSpace ℝ (Fin 3), ‖n‖ = 1 →
       (0 ≤ quartic (a 0) (a 1) n ↔ 0 ≤ quartic (b 0) (b 1) n)) :
-    ∃ m : V, ‖m‖ = 1 ∧ (∀ i, ⟪m, a i⟫_ℝ = 0) ∧ (∀ i, ⟪m, b i⟫_ℝ = 0) := by
+    ∃ m : EuclideanSpace ℝ (Fin 3), ‖m‖ = 1 ∧ (∀ i, ⟪m, a i⟫_ℝ = 0) ∧ (∀ i, ⟪m, b i⟫_ℝ = 0) := by
   obtain ⟨hka, hDa⟩ := incompatible_parameters a ha hia
   obtain ⟨_, hDb⟩ := incompatible_parameters b hb hib
   obtain ⟨m, hm, hma, hma', hGa⟩ := normal_exists (a 0) (a 1) hDa
@@ -582,11 +580,11 @@ private lemma coplanarity (a b : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
   rw [ht] at hRt
   nlinarith only [hRt, hR]
 private def curve (k c x y : ℝ) : ℝ := x ^ 2 * y ^ 2 + x ^ 2 + y ^ 2 - 2 * c * x * y + k
-private lemma feasible_zero (a b m : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)
+private lemma feasible_zero (a b m : EuclideanSpace ℝ (Fin 3)) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)
     (hma : ⟪m, a⟫_ℝ = 0) (hmb : ⟪m, b⟫_ℝ = 0)
     (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) (x y : ℝ)
     (hz : curve (K a b) ⟪a, b⟫_ℝ x y = 0) :
-    ∃ p : V, ‖p‖ ≤ 1 ∧ ⟪p, m⟫_ℝ = 0 ∧ ⟪p, a⟫_ℝ = x ∧ ⟪p, b⟫_ℝ = y := by
+    ∃ p : EuclideanSpace ℝ (Fin 3), ‖p‖ ≤ 1 ∧ ⟪p, m⟫_ℝ = 0 ∧ ⟪p, a⟫_ℝ = x ∧ ⟪p, b⟫_ℝ = y := by
   let D := ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2
   let p := D⁻¹ • ((‖b‖ ^ 2 * x - ⟪a, b⟫_ℝ * y) • a +
     (‖a‖ ^ 2 * y - ⟪a, b⟫_ℝ * x) • b)
@@ -610,12 +608,12 @@ private lemma feasible_zero (a b m : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1
   refine ⟨p, (by nlinarith [norm_nonneg p]), ?_, hxy⟩
   simp only [p, inner_add_left, real_inner_smul_left,
     real_inner_comm m a, real_inner_comm m b, hma, hmb, mul_zero, add_zero]
-private lemma common_boundary_zero (a b c d m : V) (hm : ‖m‖ = 1)
+private lemma common_boundary_zero (a b c d m : EuclideanSpace ℝ (Fin 3)) (hm : ‖m‖ = 1)
     (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) (hma : ⟪m, a⟫_ℝ = 0) (hmb : ⟪m, b⟫_ℝ = 0)
     (hk : K a b < 0) (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2)
-    (heq : ∀ n : V, ‖n‖ = 1 → (0 ≤ quartic a b n ↔ 0 ≤ quartic c d n))
+    (heq : ∀ n : EuclideanSpace ℝ (Fin 3), ‖n‖ = 1 → (0 ≤ quartic a b n ↔ 0 ≤ quartic c d n))
     (x y : ℝ) (hz : curve (K a b) ⟪a, b⟫_ℝ x y = 0) :
-    ∃ n : V, ⟪n, a⟫_ℝ = x ∧ ⟪n, b⟫_ℝ = y ∧ quartic c d n = 0 := by
+    ∃ n : EuclideanSpace ℝ (Fin 3), ⟪n, a⟫_ℝ = x ∧ ⟪n, b⟫_ℝ = y ∧ quartic c d n = 0 := by
   obtain ⟨p, hp, hpm, hpa, hpb⟩ := feasible_zero a b m ha hb hma hmb hD x y hz
   have hxy : ⟪cap m p 1, a⟫_ℝ = x ∧ ⟪cap m p 1, b⟫_ℝ = y := by
     simp [cap, inner_add_left, real_inner_smul_left, hma, hmb, hpa, hpb]
@@ -624,11 +622,11 @@ private lemma common_boundary_zero (a b c d m : V) (hm : ‖m‖ = 1)
     dsimp only [curve] at hz; linarith only [hz]
   exact ⟨cap m p 1, hxy.1, hxy.2,
     boundary_transfer a b c d m p hm hp hpm hma hmb hk heq hzero⟩
-private def delta (a b : V) (x : ℝ) : ℝ :=
+private def delta (a b : EuclideanSpace ℝ (Fin 3)) (x : ℝ) : ℝ :=
   -x ^ 4 + (‖a‖ ^ 2 + ‖b‖ ^ 2 - 2) * x ^ 2 - K a b
-private def branch (a b : V) (x s : ℝ) : ℝ :=
+private def branch (a b : EuclideanSpace ℝ (Fin 3)) (x s : ℝ) : ℝ :=
   (⟪a, b⟫_ℝ * x + s * Real.sqrt (delta a b x)) / (1 + x ^ 2)
-private lemma boundary_branches (a b : V) (hk : K a b < 0) :
+private lemma boundary_branches (a b : EuclideanSpace ℝ (Fin 3)) (hk : K a b < 0) :
     ∃ ε : ℝ, 0 < ε ∧ ∀ x ∈ Set.Ioo 0 ε, 0 < delta a b x ∧
       curve (K a b) ⟪a, b⟫_ℝ x (branch a b x 1) = 0 ∧
       curve (K a b) ⟪a, b⟫_ℝ x (branch a b x (-1)) = 0 := by
@@ -651,7 +649,8 @@ private lemma boundary_branches (a b : V) (hk : K a b < 0) :
   exact ⟨hd, (by simpa [branch.eq_1] using hz _ hs),
     (by simpa [branch.eq_1] using hz _ hs')⟩
 open Polynomial
-private lemma two_root_elimination (a b : V) (hk : K a b < 0) (u v w z d l : ℝ)
+private lemma two_root_elimination (a b : EuclideanSpace ℝ (Fin 3)) (hk : K a b < 0)
+    (u v w z d l : ℝ)
     (hg : ∀ x y, curve (K a b) ⟪a, b⟫_ℝ x y = 0 →
       curve l d (u * x + v * y) (w * x + z * y) = 0) : u * w = 0 := by
   let H : ℝ[X] := 1 + X ^ 2
@@ -692,7 +691,7 @@ private lemma two_root_elimination (a b : V) (hk : K a b < 0) (u v w z d l : ℝ
     compute_degree!
   rw [hN, coeff_zero] at hc
   nlinarith only [hc]
-private lemma quadratic_residue (a b : V) (hk : K a b < 0) (U V W : ℝ)
+private lemma quadratic_residue (a b : EuclideanSpace ℝ (Fin 3)) (hk : K a b < 0) (U V W : ℝ)
     (hg : ∀ x y, curve (K a b) ⟪a, b⟫_ℝ x y = 0 → U * x ^ 2 + V * y ^ 2 + W = 0) :
     U = 0 ∧ V = 0 := by
   let J : ℝ[X] := C U * X ^ 6 + C (2 * U + W - V) * X ^ 4 +
@@ -723,7 +722,8 @@ private lemma quadratic_residue (a b : V) (hk : K a b < 0) (U V W : ℝ)
   have hv : V * (1 - K a b) = 0 := by linarith only [h6, h4, h0]
   have hV := (mul_eq_zero.mp hv).resolve_right (by linarith : 1 - K a b ≠ 0)
   exact ⟨h6, hV⟩
-private lemma scale_signs (a b : V) (hk : K a b < 0) (p q : ℝ) (hp : p ≠ 0) (hq : q ≠ 0)
+private lemma scale_signs (a b : EuclideanSpace ℝ (Fin 3)) (hk : K a b < 0) (p q : ℝ)
+    (hp : p ≠ 0) (hq : q ≠ 0)
     (hg : ∀ x y, curve (K a b) ⟪a, b⟫_ℝ x y = 0 →
       curve (K (p • a) (q • b)) ⟪p • a, q • b⟫_ℝ (p * x) (q * y) = 0) :
     (p = 1 ∨ p = -1) ∧ (q = 1 ∨ q = -1) := by
@@ -737,7 +737,7 @@ private lemma scale_signs (a b : V) (hk : K a b < 0) (p q : ℝ) (hp : p ≠ 0) 
   constructor <;> apply sq_eq_one_iff.mp
   · have h := (mul_eq_zero.mp hV).resolve_left (pow_ne_zero 2 hq); linarith
   · have h := (mul_eq_zero.mp hU).resolve_left (pow_ne_zero 2 hp); linarith
-private lemma plane_coordinates (a b m c : V) (hm : ‖m‖ = 1)
+private lemma plane_coordinates (a b m c : EuclideanSpace ℝ (Fin 3)) (hm : ‖m‖ = 1)
     (hma : ⟪m, a⟫_ℝ = 0) (hmb : ⟪m, b⟫_ℝ = 0) (hmc : ⟪m, c⟫_ℝ = 0)
     (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) : ∃ u v : ℝ, c = u • a + v • b := by
   let D := ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2
@@ -779,7 +779,7 @@ private lemma plane_coordinates (a b m c : V) (hm : ‖m‖ = 1)
   have hz' : ‖r‖ = 0 := by nlinarith [hrnorm, norm_nonneg r]
   have hz : r = 0 := norm_eq_zero.mp hz'
   exact ⟨u, v, sub_eq_zero.mp hz⟩
-private lemma incompatible_nonzero (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
+private lemma incompatible_nonzero (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) (ha : ∀ i, ‖a i‖ ≤ 1)
     (hi : Incompatible a) (i : Fin 2) : a i ≠ 0 := by
   intro hzero
   have hD := (incompatible_parameters a ha hi).2
@@ -788,11 +788,11 @@ private lemma incompatible_nonzero (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 
     simp [hzero] at hD
   · change a 1 = 0 at hzero
     simp [hzero] at hD
-private lemma effect_neg (v : V) (s : Fin 2) :
+private lemma effect_neg (v : EuclideanSpace ℝ (Fin 3)) (s : Fin 2) :
     effect (-v) s = effect v (if s = 0 then 1 else 0) := by
-  fin_cases s <;> simp [effect, pauli, neg_smul]
+  fin_cases s <;> simp [effect, neg_smul]
 private def flip (s : Fin 2) : Fin 2 := if s = 0 then 1 else 0
-private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → V) :
+private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a → SCompatible S (fun i => if i = 0 then -a i else a i) := by
   rintro ⟨G, hG, h⟩
   rw [IsPOVM.eq_1] at hG
@@ -806,7 +806,7 @@ private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → V) :
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 0
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 0
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 1
-private lemma compat_flip_first (S : Set Density) (a : Fin 2 → V) :
+private lemma compat_flip_first (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a ↔ SCompatible S (fun i => if i = 0 then -a i else a i) := by
   constructor
   · exact compat_flip_first_mp S a
@@ -814,7 +814,7 @@ private lemma compat_flip_first (S : Set Density) (a : Fin 2 → V) :
     have h' := compat_flip_first_mp S (fun i => if i = 0 then -a i else a i) h
     convert h' using 1
     funext i; fin_cases i <;> simp
-private lemma compat_flip_second_mp (S : Set Density) (a : Fin 2 → V) :
+private lemma compat_flip_second_mp (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a → SCompatible S (fun i => if i = 1 then -a i else a i) := by
   rintro ⟨G, hG, h⟩
   refine ⟨(fun q => G (q.1, flip q.2)), ?_, ?_⟩
@@ -826,7 +826,7 @@ private lemma compat_flip_second_mp (S : Set Density) (a : Fin 2 → V) :
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 1
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 1
     · simpa [marginal, flip, effect_neg] using h ρ hρ 1 0
-private lemma compat_flip_second (S : Set Density) (a : Fin 2 → V) :
+private lemma compat_flip_second (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a ↔ SCompatible S (fun i => if i = 1 then -a i else a i) := by
   constructor
   · exact compat_flip_second_mp S a
@@ -834,7 +834,7 @@ private lemma compat_flip_second (S : Set Density) (a : Fin 2 → V) :
     have h' := compat_flip_second_mp S (fun i => if i = 1 then -a i else a i) h
     convert h' using 1
     funext i; fin_cases i <;> simp
-private lemma compat_exchange_mp (S : Set Density) (a : Fin 2 → V) :
+private lemma compat_exchange_mp (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a → SCompatible S (fun i => a (if i = 0 then 1 else 0)) := by
   rintro ⟨G, hG, h⟩
   refine ⟨(fun q => G (q.2, q.1)), ?_, ?_⟩
@@ -846,7 +846,7 @@ private lemma compat_exchange_mp (S : Set Density) (a : Fin 2 → V) :
     · simpa [marginal] using h ρ hρ 1 1
     · simpa [marginal] using h ρ hρ 0 0
     · simpa [marginal] using h ρ hρ 0 1
-private lemma compat_exchange (S : Set Density) (a : Fin 2 → V) :
+private lemma compat_exchange (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a ↔ SCompatible S (fun i => a (if i = 0 then 1 else 0)) := by
   constructor
   · exact compat_exchange_mp S a
@@ -854,7 +854,7 @@ private lemma compat_exchange (S : Set Density) (a : Fin 2 → V) :
     have h' := compat_exchange_mp S (fun i => a (if i = 0 then 1 else 0)) h
     convert h' using 1
     funext i; fin_cases i <;> simp
-private lemma compat_signs (S : Set Density) (a : Fin 2 → V) (ε : Fin 2 → ℝ)
+private lemma compat_signs (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) (ε : Fin 2 → ℝ)
     (hε : ∀ i, ε i = 1 ∨ ε i = -1) :
     SCompatible S a ↔ SCompatible S (fun i => ε i • a i) := by
   rcases hε 0 with h0 | h0 <;> rcases hε 1 with h1 | h1
@@ -871,7 +871,7 @@ theorem result : claim := by
   intro a b ha hb hia hib
   constructor
   · intro hS
-    have heq (n : V) (hn : ‖n‖ = 1) :
+    have heq (n : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ = 1) :
         0 ≤ quartic (a 0) (a 1) n ↔ 0 ≤ quartic (b 0) (b 1) n := by
       rw [← central_quartic n hn a ha, ← central_quartic n hn b hb]
       exact hS (central n)
