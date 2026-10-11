@@ -114,7 +114,19 @@ $$\operatorname{claim} \Leftrightarrow (\forall (P : \operatorname{Fin}\left(15\
 
 Wierichs, Kottmann and Killoran, Conjecture 3, §V, p. 9: "The critical values F(C) of a PQC that has full rank almost everywhere in T^d form an at most (d−2)-dimensional subset of G." Here d = 15 and G is SU(4), represented by its complex matrices. The displayed proposition quantifies over every sequence of fifteen nonidentity two-qubit Pauli words. Its premise uses Lebesgue volume on Param, and its conclusion uses the Hausdorff dimension dimH of the actual matrix image. The measure beneath the almost-everywhere quantifier is explicit; this is Lean's notation ∀ᵐ with volume. Real angles give the periodic lift of the circuit parameters. Each Pauli-word rotation is a Clifford conjugate of a single-qubit Pauli rotation, so the ordered product is a parametrized quantum circuit with fifteen independent inputs.
 
-**Theorem 1.10 (The critical-value bound fails).**
+**Remark 1.10 (A nonzero real-analytic function has a null zero set).**
+
+$$
+\forall (n : \mathbb{N}), \forall (f : \left(\operatorname{Fin}\left(n\right) \to \mathbb{R}\right) \to \mathbb{R}), \forall (a : \operatorname{Fin}\left(n\right) \to \mathbb{R}), (\operatorname{AnalyticOnNhd}\left(\mathbb{R}, f, \operatorname{Set.univ}\right) \land f\left(a\right) \ne 0) \Rightarrow \left(\forall^{\mathrm{m}}\right)_{(\operatorname{volume} : \operatorname{Measure}\left(\operatorname{Fin}\left(n\right) \to \mathbb{R}\right))} (x : \operatorname{Fin}\left(n\right) \to \mathbb{R}), f\left(x\right) \ne 0
+$$
+
+*Citation.* B. S. Mityagin (2015). *The zero set of a real analytic function*. DOI: [10.48550/arXiv.1512.07276](https://doi.org/10.48550/arXiv.1512.07276). URL: <https://arxiv.org/abs/1512.07276v1>.
+
+*Commentary.*
+
+Mityagin, Proposition 0, p. 1: the zero set of a real-analytic function that is not identically zero on a connected open real domain has Lebesgue measure zero. Here the domain is the whole finite-dimensional real coordinate space. AnalyticOnNhd supplies real analyticity everywhere, and a point a with f(a) nonzero supplies nontriviality. The conclusion says f(x) is nonzero for volume-almost every x. It holds also in dimension zero.
+
+**Theorem 1.11 (The critical-value bound fails).**
 
 $$\neg \operatorname{claim}$$
 
@@ -123,8 +135,6 @@ $$\neg \operatorname{claim}$$
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. Wierichs; K. Kottmann; N. Killoran (2025). *Unitary synthesis with optimal brick wall circuits*. DOI: [10.48550/arXiv.2511.16736](https://doi.org/10.48550/arXiv.2511.16736). URL: <https://arxiv.org/abs/2511.16736v1>.
-
-*Acknowledgement.* B. S. Mityagin (2015). *The zero set of a real analytic function*. DOI: [10.48550/arXiv.1512.07276](https://doi.org/10.48550/arXiv.1512.07276). URL: <https://arxiv.org/abs/1512.07276v1>.
 
 *Commentary.*
 

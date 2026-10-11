@@ -42,7 +42,7 @@ Derives positive definiteness, self-adjointness and the exact square identity fo
 
 **Theorem 1.4 (Inverse diagonal square-root scalings).**
 
-Lean statement: `D5/S3/Observer/Hankel/PositiveGramianBalancing.diagonal_scalings`
+$$\forall (iota: \operatorname{Type}), [\operatorname{Fintype}\left(iota\right)] [\operatorname{DecidableEq}\left(iota\right)], \forall (w: iota \to \mathbb{R}), (\forall (i: iota), 0 < w\left(i\right)) \Rightarrow \operatorname{let} D=\operatorname{diagonal}\left(w\right), \operatorname{let} H=\operatorname{diagonal}\left(\lambda (i: iota), \operatorname{Real.sqrt}\left(w\left(i\right)\right)\right), \operatorname{let} I=\operatorname{diagonal}\left(\lambda (i: iota), (\operatorname{Real.sqrt}\left(w\left(i\right)\right))^{-1}\right), (H \cdot I = 1) \land ((I \cdot H = 1) \land ((I \cdot D \cdot I = 1) \land (I \cdot \operatorname{diagonal}\left(\lambda (i: iota), w\left(i\right)^{2}\right) \cdot I = D)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Hankel/PositiveGramianBalancing.diagonal_scalings` (`✓ std3`). ∎
 
