@@ -50,7 +50,7 @@ $$\forall N \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall x \in \operato
 
 *Commentary.*
 
-Equation (23): g1 swaps the first two parties. For N <= 1 the total Lean definition is the identity. Fin.mk suppresses the index-bound proofs supplied by 1 < N.
+Equation (25): g1 swaps the first two parties. For N <= 1 the total Lean definition is the identity. Fin.mk suppresses the index-bound proofs supplied by 1 < N.
 
 **Definition 1.5 (Cycle the parties).**
 
@@ -62,7 +62,7 @@ $$\forall N \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall x \in \operato
 
 *Commentary.*
 
-Equation (23): g2 cycles the parties. Subtraction in this index is natural subtraction; the index-bound proof is suppressed.
+Equation (25): g2 cycles the parties. Subtraction in this index is natural subtraction; the index-bound proof is suppressed.
 
 **Definition 1.6 (Opposite shifts of the first two inputs).**
 
@@ -74,7 +74,7 @@ $$\forall N \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall x \in \operato
 
 *Commentary.*
 
-Equation (23): g3 shifts party zero by +1 and party one by -1, leaving all other inputs fixed. Reduction applies the antiperiodic sign.
+Equation (25): g3 shifts party zero by +1 and party one by -1, leaving all other inputs fixed. Reduction applies the antiperiodic sign.
 
 **Definition 1.7 (The opposite-shift generator).**
 
@@ -86,7 +86,7 @@ $$\forall N \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall x \in \operato
 
 *Commentary.*
 
-Equation (23): the product collects the local antiperiodic signs of the opposite shifts.
+Equation (25): the product collects the local antiperiodic signs of the opposite shifts.
 
 **Definition 1.8 (The reflection generator).**
 
@@ -98,7 +98,7 @@ $$\forall N \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall x \in \operato
 
 *Commentary.*
 
-Equation (23): reflection sends each input to m-x, with one additional minus sign per party, followed by antiperiodic reduction.
+Equation (25): reflection sends each input to m-x, with one additional minus sign per party, followed by antiperiodic reduction.
 
 **Definition 1.9 (The four generators).**
 
@@ -134,7 +134,7 @@ $$\forall N \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall p \in \operato
 
 *Commentary.*
 
-The defining carrier consists of tensors fixed by every generator in Eq. (23). Linearity makes this carrier a real submodule.
+The defining carrier consists of tensors fixed by every generator in Eq. (25). Linearity makes this carrier a real submodule.
 
 **Definition 1.12 (Orthogonal projection onto symmetric tensors).**
 
@@ -146,7 +146,7 @@ $$\forall N \in \mathbb{N},\; \forall m \in \mathbb{N},\; \operatorname{Gamma}\l
 
 *Commentary.*
 
-Equation (27) defines the Reynolds average over the generated group. Gamma uses the permitted orthogonal-projection convention for the same common fixed subspace. Equality with the literal finite-group average is not a separately kernel-checked statement here. Equation (28) gives the signed total-residue coordinates.
+Equation (26) defines the Reynolds average over the generated group. Gamma uses the permitted orthogonal-projection convention for the same common fixed subspace. Equality with the literal finite-group average is not a separately kernel-checked statement here. Equation (27) gives the signed total-residue coordinates.
 
 **Definition 1.13 (The full local deterministic polytope).**
 
@@ -189,6 +189,10 @@ Section V, p. 4: "This seems to indicate that the symmetric polytope is affinely
 $$\neg (\operatorname{claim})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricBellPolytopeNotCrossPolytope.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/designolle-vertesi-pokutta-2023-symmetric-bell-cross-polytope` (refuted) by `D5/S3/Quantum/Entanglement/SymmetricBellPolytopeNotCrossPolytope.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"designolle-vertesi-pokutta-2023-symmetric-bell-cross-polytope","declaration_gid":"D5/S3/Quantum/Entanglement/SymmetricBellPolytopeNotCrossPolytope.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
