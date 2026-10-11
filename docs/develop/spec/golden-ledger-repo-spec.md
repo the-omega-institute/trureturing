@@ -488,11 +488,9 @@ project 恢复在 current 与 Lean build 单元中优先请求读者基线分支
 
 上述模型与 Lake 的对应还要求以下未经机器验证的前提：Lake 输入哈希与模型 `src`/`deps` 对应（源码、选项、模块名、平台、工具链、import/传递 trace、额外目标和插件均已计入）；`BuildSystem.compile` 是确定性的，`hash` 与 `digest` 合成的 `traceKey` 对应 Lake 输入哈希；Lake 的 mtime 判定以及缺产物或归档修复分支不在模型内；记录级写入具有原子性；模块之间被中断的构建按依赖闭合前缀的完整执行解释，这只是解释，不是另一条定理；Lake 调度对应按依赖顺序、每模块一次的执行器；模型探测器对应 Lake 原生不编译探测；`NoCollision` 覆盖共享同一工具链缓存的所有项目，且 Lake hash 不是密码学哈希；donor 与旧本地层确实由模型允许的快照、执行、删除、清空或拷贝来源生成；写者增量构建等于从零构建。模型不证明报告 bundle、依赖物化、pin 检查或文件系统恢复策略。
 
-**现行入口。** `tools/StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs` 的 `EnsureLocked` 分支与 `LeanCacheProvisioner.cs` 共同决定现行 ensure。`.lake` 不存在时，linked worktree 由 `ProvisionLinkedFromMain` 调用 `GitWorktreeInventory.SelectMainDonor`，只从兼容的主检出 donor 播种；主检出或独立 worktree 由 `GitWorktreeInventory.SelectDonor` 从兼容的登记 donor 中选择，随后由 `LeanCacheProvisioner` 播种，找不到 donor 时走既有 cache-get 路径。
+**现行入口。** `LeanCacheEnsureCommand.EnsureLocked` 在 `.lake` 不存在时可自动整份 clonefile 播种，stamp 不匹配时可移除已有私有 `.lake` 后整份重播。已有私有 `.lake` 的 stamp 缺失、项目层冷且 `build` 路径不存在时，可通过 `LeanMissingBuildProvisioner.TryProvision` 自动 clonefile 播种 build 层；linked worktree 的其余 stamp 缺失或损坏情形可触发整份重播。linked worktree 通过 `GitWorktreeInventory.SelectMainDonor` 只取兼容且项目层温热的主检出 donor；主检出或独立 worktree 通过 `GitWorktreeInventory.SelectDonor` 从兼容的登记 donor 中选择，build 层播种还要求 donor 项目层温热。主检出上述 build 层路径未选到 donor，或 `TryProvision` 正常返回空结果时，可继续由 `LeanCacheProvisioner.ReproduceExisting` 原地重产。整份或 build 层 clonefile 硬失败、发布异常均返回失败，不转入原地重产。
 
-linked worktree 的 stamp 不匹配时，`ProvisionLinkedFromMain` 替换现有 `.lake`，从主检出整份重播。stamp 缺失时，若项目层冷且 `LeanCacheStateProbe.cs` 中的 `FileSystemLeanCacheStateProbe.InspectContentRoot` 判定 `build` 路径不存在，`ProvisionLinkedBuildFromMain` 通过 `LeanMissingBuildProvisioner` 只从主检出播种 build 层；`InspectContentRoot` 把已经存在的空目录也判为路径存在，因此此条件不是“目录为空”，条件不满足时改走 `ProvisionLinkedFromMain` 的整份重播。stamp 匹配但项目层冷时，现行入口由 `SelectMainDonor` 核验主检出；没有合格 donor 时失败，有合格 donor 时也返回要求移除该 linked `.lake` 后重播。
-
-主检出 stamp 缺失且项目层冷时，`EnsureLocked` 先用 `FileSystemLeanCacheStateProbe.InspectContentRoot` 检查 `build` 路径；路径不存在则经 `GitWorktreeInventory.SelectDonor` 选择兼容且项目层温热的 donor，并由 `LeanMissingBuildProvisioner` 尝试播种 build 层，尝试没有取得结果后由 `LeanCacheProvisioner.ReproduceExisting` 原地重产。build 路径已经存在，或项目层不是冷态时，直接走原地重产。定向报告入口已上线。默认不 clonefile、显式 clonefile 选择、linked 种子复制和 A23 写者调整均由 #15158 跟踪。
+定向报告入口已上线。默认不 clonefile、显式 clonefile 选择、linked 种子复制和 A23 写者调整均由 #15158 跟踪。
 
 ---
 
