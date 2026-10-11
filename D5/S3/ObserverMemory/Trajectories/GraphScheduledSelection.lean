@@ -53,17 +53,17 @@ private theorem pair_list_length (r : ℕ) : (pairList r).length = pairCount r :
   rw [card_image_of_injective _ toLex.injective, card_product_filter_lt]
   simp [pairCount]
 
-private theorem mem_pair_list {r : ℕ} (u v : Fin r) :
+theorem mem_pair_list {r : ℕ} (u v : Fin r) :
     (u, v) ∈ pairList r ↔ u < v := by
   simp [pairList]
 
-private theorem edge_at_complete {r : ℕ} (u v : Fin r) (huv : u < v) :
+theorem edge_at_complete {r : ℕ} (u v : Fin r) (huv : u < v) :
     ∃ j, 1 ≤ j ∧ j ≤ pairCount r ∧ edgeAt r j = some (u, v) := by
   obtain ⟨k, hk, he⟩ := List.mem_iff_getElem.mp ((mem_pair_list u v).mpr huv)
   refine ⟨k + 1, by omega, by rw [pair_list_length] at hk; omega, ?_⟩
   simpa [edgeAt] using (List.getElem?_eq_some_iff.mpr ⟨hk, he⟩)
 
-private theorem delayed_target_bounds {r i j : ℕ} (hr : 3 ≤ r)
+theorem delayed_target_bounds {r i j : ℕ} (hr : 3 ≤ r)
     (hi : 1 ≤ i) (hir : i ≤ r) (hj : 1 ≤ j) (hjr : j ≤ pairCount r + r) :
     2 * pairCount r + r < delayedTarget r i j ∧
       j + 1 < delayedTarget r i j ∧ delayedTarget r i j ≤ lastTarget r := by
@@ -212,7 +212,7 @@ private theorem trigger_early {r j : ℕ} {G : SimpleGraph (Fin r)}
     exact Or.inr (Or.inr (Or.inr ⟨i, hi, hir, hid,
       Or.inl ⟨j, hf, by omega, le_rfl, Or.inl ⟨he, rfl⟩⟩⟩))
 
-private theorem edge_prefix_identities {r i j : ℕ} (hi : 1 ≤ i) (hir : i ≤ r)
+theorem edge_prefix_identities {r i j : ℕ} (hi : 1 ≤ i) (hir : i ≤ r)
     (hj : 1 ≤ j) : identities r (edgePrefix r i j) = {i} := by
   ext k
   simp only [identities, mem_filter, mem_Icc, edgePrefix, mem_insert, mem_singleton]
@@ -227,14 +227,14 @@ private theorem edge_prefix_first_one {r i j : ℕ} (hir : i ≤ r) (hj : 1 ≤ 
   dsimp [identityEnd]
   omega
 
-private theorem edge_prefix_subset {r i j : ℕ} (hi : 1 ≤ i) (hir : i ≤ r)
+theorem edge_prefix_subset {r i j : ℕ} (hi : 1 ≤ i) (hir : i ≤ r)
     (hj : 1 ≤ j) : IsPrefix (identityEnd r + j) (edgePrefix r i j) := by
   intro k hk
   simp only [edgePrefix, mem_insert, mem_Icc] at hk ⊢
   dsimp [identityEnd] at hk ⊢
   omega
 
-private theorem initial_support {r c : ℕ} {G : SimpleGraph (Fin r)} {w : Finset ℕ}
+theorem initial_support {r c : ℕ} {G : SimpleGraph (Fin r)} {w : Finset ℕ}
     (hc : initialLength r < c) (hprev : ∀ d, d < c → ¬ Trigger r G d w) :
     Icc 1 (initialLength r) ⊆ w := by
   intro k hk
@@ -316,7 +316,6 @@ theorem early_first_selection_support {r j : ℕ} (G : SimpleGraph (Fin r))
           omega
       · omega
 
-
 private theorem geometry {r : ℕ} (hr : 3 ≤ r) :
     1 ≤ initialLength r ∧ r + pairCount r ≤ initialLength r := by
   have hsq : 3 ≤ r * r := by nlinarith
@@ -324,7 +323,7 @@ private theorem geometry {r : ℕ} (hr : 3 ≤ r) :
   dsimp [initialLength, lastTarget]
   omega
 
-private theorem edge_prefix_card {r i j : ℕ}
+theorem edge_prefix_card {r i j : ℕ}
     (hi : 1 ≤ i) (hir : i ≤ r) (hj : 1 ≤ j) :
     (edgePrefix r i j).card = halfLength r := by
   have hb : initialLength r + i ∉ Icc 1 (initialLength r) := by simp; omega
@@ -365,7 +364,7 @@ private theorem coefficient_zero_sum {r t : ℕ} (ht : 1 ≤ t) (htl : t ≤ hal
     simp [hne, hne2]
   · simp [ht]
 
-private theorem edge_prefix_syndrome {r i j : ℕ} (hr : 3 ≤ r)
+theorem edge_prefix_syndrome {r i j : ℕ} (hr : 3 ≤ r)
     (hi : 1 ≤ i) (hir : i ≤ r) (hj : 1 ≤ j) (hjQ : j ≤ pairCount r)
     (rho : Bool) :
     syndrome r rho (edgePrefix r i j) = if rho = false ∧ i = 3 then 1 else 0 := by
@@ -517,6 +516,21 @@ theorem c4_edge_fiber_and_ranks {r j : ℕ} (G : SimpleGraph (Fin r)) (hr : 3 �
   have hb := mem_Icc.mp (mem_filter.mp (hid.symm ▸ hi)).1
   rw [c4_colex_rank G hr hj hjQ rho hb.1 hb.2, hid]
 
+theorem edge_prefix_eq_of_support {r i j : ℕ} {w : Finset ℕ}
+    (hi : 1 ≤ i) (hir : i ≤ r) (hj : 1 ≤ j)
+    (hbase : Icc 1 (initialLength r) ⊆ w)
+    (hid : initialLength r + i ∈ w) (htail : identityEnd r + j ∈ w)
+    (hcard : w.card ≤ halfLength r) : w = edgePrefix r i j := by
+  apply (eq_of_subset_of_card_le (s := edgePrefix r i j) ?_ ?_).symm
+  · intro k hk
+    simp only [edgePrefix, mem_insert] at hk
+    rcases hk with rfl | rfl | hk
+    · exact htail
+    · exact hid
+    · exact hbase hk
+  · rw [edge_prefix_card hi hir hj]
+    exact hcard
+
 /-- A delayed address recovers its unique identity and first tail one from the
 whole selected dictionary at balanced weight. -/
 theorem delayed_selected_support {r i j : ℕ} (G : SimpleGraph (Fin r))
@@ -539,15 +553,8 @@ theorem delayed_selected_support {r i j : ℕ} (G : SimpleGraph (Fin r))
         · have he := delayed_target_injective hi ha hj hf.1 (by omega) (by omega)
             (Nat.add_left_cancel ht.2)
           obtain ⟨rfl, rfl⟩ := he
-          apply (eq_of_subset_of_card_le (s := edgePrefix r i j) ?_ ?_).symm
-          · intro k hk
-            simp only [edgePrefix, mem_insert] at hk
-            rcases hk with rfl | rfl | hk
-            · exact hf.2.1
-            · have hm : i ∈ identities r w := by simp [hid]
-              exact (mem_filter.mp hm).2
-            · exact hbase hk
-          · rw [hcard, edge_prefix_card hi hir hj]
+          have hm : i ∈ identities r w := by simp [hid]
+          exact edge_prefix_eq_of_support hi hir hj hbase (mem_filter.mp hm).2 hf.2.1 hcard.le
       · omega
   · rintro rfl
     have hid := edge_prefix_identities hi hir hj
@@ -681,7 +688,7 @@ def writeThenLatch {Z : Type} (s : LatchedRegister Z) (b : BareAddress)
 
 def atCut (w : Finset ℕ) (c : ℕ) : Finset ℕ := w.filter (· ≤ c)
 
-private theorem trigger_congr {r c : ℕ} (G : SimpleGraph (Fin r))
+theorem trigger_congr {r c : ℕ} (G : SimpleGraph (Fin r))
     (w v : Finset ℕ) (h : ∀ k, k ≤ c → (k ∈ w ↔ k ∈ v)) :
     Trigger r G c w ↔ Trigger r G c v := by
   have forward : ∀ (x y : Finset ℕ),
@@ -715,7 +722,7 @@ private theorem trigger_congr {r c : ℕ} (G : SimpleGraph (Fin r))
         exact hz k hk hkQ ((hxy _ (by omega)).mpr hmem)
   exact ⟨forward w v h, forward v w (fun k hk => (h k hk).symm)⟩
 
-private theorem first_selected_at_cut {r c : ℕ} (G : SimpleGraph (Fin r))
+theorem first_selected_at_cut {r c : ℕ} (G : SimpleGraph (Fin r))
     (w : Finset ℕ) : FirstSelected r G c (atCut w c) ↔ FirstSelected r G c w := by
   have ht (d : ℕ) (hd : d ≤ c) : Trigger r G d (atCut w c) ↔ Trigger r G d w :=
     trigger_congr G _ _ (fun k hk => by simp [atCut, show k ≤ c by omega])
@@ -822,7 +829,7 @@ def runBlind {Z : Type} (r : ℕ) (G : SimpleGraph (Fin r))
     let freeze := decide (FirstSelected r G (c + 1) (atCut w (c + 1)))
     writeThenLatch s input.new freeze (P.update input freeze s.value)
 
-private theorem run_snapshot_none {Z : Type} {r : ℕ} (G : SimpleGraph (Fin r))
+theorem run_snapshot_none {Z : Type} {r : ℕ} (G : SimpleGraph (Fin r))
     (P : BlindProgram Z) (rho : Bool) (w : Finset ℕ) (c : ℕ)
     (h : ∀ d, d ≤ c → ¬ Trigger r G d w) :
     (runBlind r G P rho w c).snapshot = none := by
@@ -917,7 +924,7 @@ def coloringPreProgram {r D : ℕ} (G : SimpleGraph (Fin r))
             z = color v then one else zero
     else if pairCount r < input.new.count - identityEnd r then zero else z
 
-private theorem coloring_update_full {r D : ℕ} (G : SimpleGraph (Fin r))
+theorem coloring_update_full {r D : ℕ} (G : SimpleGraph (Fin r))
     (color : G.Coloring (Fin D)) (hD : 2 ≤ D) (input : MarkerInput) (z : Fin D)
     (ht : identityEnd r < input.new.count) (hw : input.old.weight = halfLength r) :
     ((coloringPreProgram G color hD).update input z : ℕ) = 0 := by
