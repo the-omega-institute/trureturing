@@ -1546,3 +1546,644 @@ M^+\models T.
 6. 量子化规则与能级解释。
 
 在 L1+ 中任何一项尚未构造时，只能把相应结论写成条件命题，不能把它当作 L0 的推论。这个分层也规定了本卷“统一场”的严格含义：基础是相容有限静态记录的逆极限，连续物理场和 RH 谱识别是待证明的扩展。
+
+---
+
+## 17. 外部数学锚点与桥接账本
+
+本节只引入可以明确写出假设、结论和输入输出类型的外部数学结果。引用外部研究的作用是限定可采用的桥接形式，不是把外部模型自动等同于 Auric FIB。每个结果都分为四项记录：假设、结论、可用接口和不能推出的内容。
+
+### 17.1 图 Dirichlet 形式、Mosco 收敛与几何极限
+
+#### 17.1.1 Mosco 型桥接的标准记账
+
+令每一层图场空间经过线性嵌入进入共同 Hilbert 空间 \(\mathcal H\)，记嵌入后的能量为
+
+\[
+\mathcal Q_j:\mathcal H\to(-\infty,+\infty].
+\]
+
+称 \(\mathcal Q_j\) Mosco 收敛到 \(\mathcal Q\)，如果满足：
+
+1. 弱下极限条件。若 \(u_j\rightharpoonup u\) 弱收敛，则
+   \[
+   \mathcal Q(u)\leq \liminf_{j\to\infty}\mathcal Q_j(u_j).
+   \]
+
+2. 强恢复条件。对每个 \(u\in\mathcal H\)，存在 \(u_j\to u\) 强收敛，使
+   \[
+   \limsup_{j\to\infty}\mathcal Q_j(u_j)\leq \mathcal Q(u).
+   \]
+
+如果各 \(\mathcal Q_j\) 是闭、非负、二次型，则极限 \(\mathcal Q\) 可以成为闭 Dirichlet 形式。这里需要共同 Hilbert 空间、下半连续性、恢复序列和等度量紧性。有限层逆极限本身不提供这些条件。
+
+#### 17.1.2 Gigli–Mondino–Savaré
+
+Gigli、Mondino 和 Savaré 的论文 [Convergence of pointed non-compact metric measure spaces and stability of Ricci curvature bounds and heat flows](https://arxiv.org/abs/1311.4907) 在 pointed metric-measure 收敛框架中证明了 RCD 类型曲率条件、热流和 Cheeger 能量的稳定性。对于满足适当紧性、有界性或正的 RCD 曲率下界的空间，Cheeger energies 以适配的 \(\Gamma\)-Mosco 方式收敛，相关 Laplacian 谱也具有稳定性。
+
+可接入 trureturing 的接口是：
+
+\[
+\mathrm{GraphEnergySequence}
+\longrightarrow
+\mathrm{CommonL2Embedding}
+\longrightarrow
+\mathrm{MoscoLimit}
+\longrightarrow
+\mathrm{DirichletForm}.
+\]
+
+它允许把
+
+\[
+Q_j(\phi)=\langle\phi,L_j\phi\rangle
+\]
+
+提升为极限 Dirichlet 形式。它没有直接证明极限是光滑黎曼流形，最自然的极限对象可能只是 metric-measure space 或 RCD space。
+
+#### 17.1.3 Ambrosio–Honda
+
+Ambrosio 和 Honda 的 [New stability results for sequences of metric measure spaces with uniform Ricci bounds from below](https://arxiv.org/abs/1605.07908) 采用 extrinsic common-host 方法处理 measured-Gromov–Hausdorff 收敛。在统一 Ricci 下界等条件下，他们证明 Cheeger energies 的 Mosco 收敛，并建立 Sobolev、Hessian、\(W^{2,2}\) 和 Bakry–Émery/Ricci 条件的稳定性。
+
+对本项目的精确启发是：若要把有限层 Fibonacci 图的场推进到几何极限，必须在桥接对象中显式加入：
+
+\[
+\iota_j:\Phi_j\hookrightarrow \mathcal H,
+\]
+
+\[
+\text{uniform coercivity},
+\qquad
+\text{equicoercivity},
+\qquad
+\text{compactness},
+\qquad
+\text{Mosco liminf/recovery}.
+\]
+
+逆极限的相容性只负责记录层间投影，不能替代 common-host 分析。
+
+#### 17.1.4 Korevaar–Schoen 能量
+
+Alonso Ruiz 和 Baudoin 的 [Dirichlet forms on metric measure spaces as Mosco limits of Korevaar–Schoen energies](https://arxiv.org/abs/2301.08273) 给出 Korevaar–Schoen 型非局部能量的 Mosco 极限充分条件，并使用 Rellich–Kondrachov 型紧性。该结果适用于 Cheeger spaces，也包括部分 fractal-like metric-measure spaces。
+
+因此，trureturing 可以先定义非局部图能量
+
+\[
+\mathcal Q_{j,\varepsilon}(u)
+=
+\frac{1}{\varepsilon^{m+2}}
+\sum_{v,w}
+\eta\!\left(\frac{d_j(v,w)}{\varepsilon}\right)
+|u_v-u_w|^2\mu_j(v)\mu_j(w),
+\]
+
+然后把 Mosco 收敛作为显式证明目标。该路线不预设极限必须是流形。若最终需要黎曼流形，仍要增加一个独立的光滑化或流形识别定理。
+
+#### 17.1.5 随机几何图谱收敛
+
+García Trillos、Gerlach、Hein 和 Slepčev 的 [Error estimates for spectral convergence of the graph Laplacian on random geometric graphs towards the Laplace–Beltrami operator](https://arxiv.org/abs/1801.10108) 假设样本独立同分布于 \(M\subset\mathbb R^d\) 的 \(m\) 维光滑子流形，邻域带宽趋于零并满足样本规模和带宽的尺度关系。在这些条件下，图 Laplacian 的特征值和特征函数以显式速率逼近加权 Laplace–Beltrami 算子。
+
+接口必须写成条件形式：
+
+\[
+\mathrm{SampledManifold}(M,g,\mu)
++
+\mathrm{BandwidthScaling}(n,h)
+\Longrightarrow
+\mathrm{GraphSpectrum}\to\mathrm{LB\ Spectrum}.
+\]
+
+因此 Whole-rho 图若要获得 Riemannian 解释，必须先提供节点采样、距离、权重和尺度参数。仅有一个抽象图和一个 Poisson 型函数 \(\phi(p)=2^{-|p|}\) 不足以得到 Laplace–Beltrami 算子。
+
+#### 17.1.6 最新的 Ricci-limit 与不同维度结果
+
+Inagaki 的 [Spectral convergence of graph Laplacians with Ricci curvature bounds and in non-collapsed Ricci limit spaces](https://arxiv.org/abs/2506.07427) 在闭 \(m\) 维流形上假设
+
+\[
+\operatorname{Ric}_g\ge -(m-1)K,
+\]
+
+正的体积下界和有界直径，并对 \(\varepsilon\)-邻域图给出特征值与特征函数的高概率误差界。该框架还推广到 non-collapsed Ricci-limit spaces，因此极限允许出现非光滑点。
+
+Bungert 和 Slepčev 的 [Convergence of graph Dirichlet energies and graph Laplacians on intersecting manifolds of varying dimensions](https://arxiv.org/abs/2509.24458) 研究不同内维流形相交的情形。其结论显示，非归一化图能量可能只看见最高维 sector，归一化能量才得到适应多个维度的 tensorized Dirichlet energy。
+
+这直接对应金字塔层级的一个形式化义务：
+
+\[
+\mathrm{LayerNormalization}
+\]
+
+必须成为类型参数或定理假设。否则不同层的维数变化可能导致低维隐藏 sector 在极限中被系统性丢弃。
+
+#### 17.1.7 图离散化的几何假设
+
+Bhattacharya 和 Maity 的 [Graph discretization of Laplacian on Riemannian manifolds with bounds on Ricci curvature](https://arxiv.org/abs/2501.18323) 在紧致无边界流形上使用 Ricci 下界、injectivity radius 下界、直径上界和小球体积条件，证明图方法对 Laplace–Beltrami 特征值的逼近。
+
+因此应将
+
+\[
+\mathrm{DirichletToGeometry}
+\]
+
+拆成两个不同输出：
+
+1. 弱输出：
+   \[
+   \mathrm{DirichletForm}
+   \longrightarrow
+   \mathrm{MetricMeasure/RCD\ Limit}.
+   \]
+
+2. 强输出：
+   \[
+   \mathrm{DirichletForm}
+   +
+   \mathrm{RicciBound}
+   +
+   \mathrm{InjectivityRadius}
+   +
+   \mathrm{Regularity}
+   \longrightarrow
+   \mathrm{SmoothRiemannianRealization}.
+   \]
+
+第二个输出不能从第一个输出自动得到。
+
+### 17.2 Fisher 几何、熵 Hessian 与有限状态梯度流
+
+#### 17.2.1 Fisher Hessian 的原生层
+
+在内部概率单纯形
+
+\[
+\Delta(\Sigma)^\circ
+=
+\{p_s>0:\sum_sp_s=1\}
+\]
+
+上，负 Shannon 熵
+
+\[
+\mathcal V(p)=\sum_sp_s\log p_s
+\]
+
+的 Hessian 是
+
+\[
+D^2\mathcal V(p)[u,u]
+=
+\sum_s\frac{u_s^2}{p_s}.
+\]
+
+这是 FIB 文档中 \(\mathcal I(\kappa)\) 的数学来源。它不需要状态能量、温度或物理时间。
+
+需要分开记录三种结构：
+
+\[
+D^2\mathcal V
+\quad\text{是静态 Fisher 曲率},
+\]
+
+\[
+\mathsf M D^2\mathcal V
+\quad\text{是声明 mobility 后的耗散生成元},
+\]
+
+\[
+J D^2\mathcal V
+\quad\text{是声明辛结构后的线性 Hamiltonian 生成元}.
+\]
+
+#### 17.2.2 Maas 的有限 Markov 链梯度流
+
+Maas 的 [Gradient flows of the entropy for finite Markov chains](https://arxiv.org/abs/1102.5238) 假设有限状态空间上的 Markov kernel 不可约且可逆。论文构造离散 Benamou–Brenier 型度量，使连续时间 Markov 链的概率律成为相对于平稳分布的相对熵梯度流。
+
+因此要把
+
+\[
+\dot\kappa=-\gamma\Delta
+\]
+
+称为熵梯度流，必须提供：
+
+\[
+K_{st}\ge0,
+\qquad
+\sum_tK_{st}=1,
+\]
+
+\[
+\pi_sK_{st}=\pi_tK_{ts},
+\]
+
+以及与 \(K\) 兼容的 mobility。仅仅写出一个衰减方程，不足以获得 Maas 意义下的梯度流结构。
+
+#### 17.2.3 Erbar–Maas 的离散 Ricci 曲率
+
+Erbar 和 Maas 的 [Ricci curvature of finite Markov chains via convexity of the entropy](https://arxiv.org/abs/1111.2687) 用 entropy 在离散 Wasserstein 型度量下的 geodesic convexity 定义有限 Markov 链的 Ricci 曲率，并证明离散 Bakry–Émery、Otto–Villani 类结果和 tensorisation。
+
+对每个 FIB 节点，可定义一个有限状态 Markov kernel；但只有在给出可逆性、平稳分布和离散 transport metric 后，才可以使用离散 Ricci 语言。Fisher 曲率和 Erbar–Maas Ricci 曲率属于不同层次的对象，不能直接写成同一个符号。
+
+#### 17.2.4 图上的信息 Hessian
+
+Li 和 Lu 的 [Mean field information Hessian matrices on graphs](https://arxiv.org/abs/2203.06307) 在有限图概率单纯形上，对熵、线性能量和相互作用能量推导 mean-field information Hessian，并以最小特征值定义图上的离散曲率下界。
+
+这为本项目提供一个类型正确的有限层对象：
+
+\[
+\Pi_j=(\Delta(\Sigma))^{V_j},
+\]
+
+\[
+\mathcal V_j(p)
+=
+\sum_{v,s}p_{v,s}\log p_{v,s}
++
+\mathcal U_j(p),
+\]
+
+\[
+K_j=D^2\mathcal V_j.
+\]
+
+其中 \(\mathcal U_j\) 若包含边相互作用，必须显式给出。\(K_j\) 的最小特征值可以作为有限层静态稳定证书。它只有在另加物理单位和动力学结构后才可被解释为物理能量或时间尺度。
+
+#### 17.2.5 Fisher 与 Wasserstein 的区分
+
+Amari、Karakida 和 Oizumi 的 [Information Geometry Connecting Wasserstein Distance and Kullback–Leibler Divergence via the Entropy-Relaxed Transportation Problem](https://arxiv.org/abs/1709.10219) 在离散概率单纯形上区分 Fisher 几何、Wasserstein transport 和 KL divergence，并通过 entropy-relaxed transport 建立它们之间的关系。
+
+对 trureturing 的直接约束是：
+
+\[
+g_F
+\neq
+g_{\mathrm{transport}}
+\]
+
+在没有 comparison theorem 时不能把两者识别。FIB 的 \(\mathcal I(\kappa)\) 是概率单纯形上的 Fisher 线元；图边界 \(B_j\) 产生的是流和 transport 结构。若要把两者组合为统一度量，需要证明一个明确的 comparison map 或 block metric。
+
+### 17.3 Triangle-local 与 inflation 约束
+
+#### 17.3.1 经典 triangle-local 的精确定义
+
+官方 [Fast Inflation repository](https://github.com/vgitton/fast-inflation) 将 classical triangle-local 分布定义为
+
+\[
+p(a,b,c)
+=
+\int
+d\alpha\,d\beta\,d\gamma\,
+p_A(a\mid\beta,\gamma)
+p_B(b\mid\gamma,\alpha)
+p_C(c\mid\alpha,\beta),
+\]
+
+其中三个源变量独立。该集合非凸，因此单一 Bell 不等式框架不够。
+
+FIB 推前最多提供
+
+\[
+Q_*p(a,b,c)\in\Delta(\Sigma),
+\]
+
+它是 triangle-local 模型的局部边缘。反向的 lift 需要单独证明。
+
+#### 17.3.2 Inflation 的有限证书
+
+Wolfe、Spekkens 和 Fritz 的 [The Inflation Technique for Causal Inference with Latent Variables](https://arxiv.org/abs/1609.00672) 通过复制潜变量因果结构，要求 inflated distribution 的某些 marginal 和 symmetry 满足线性约束。若目标分布无法扩张到某一级 inflation，则可以证明其与指定因果结构不相容。
+
+Navascués 和 Wolfe 的 [The Inflation Technique Completely Solves the Causal Compatibility Problem](https://arxiv.org/abs/1707.06476) 证明 inflation 层级 asymptotically tight。通过第 \(n\) 阶检验的分布距离 causal-compatible set 为
+
+\[
+O(n^{-1/2})
+\]
+
+量级，且某些因果结构在低阶就已经精确。
+
+这要求我们把
+
+\[
+\mathrm{TriangleLift}(p)
+\]
+
+从一个存在性占位符细分为：
+
+\[
+\mathrm{InflationFeasible}(p,N,q),
+\]
+
+其中：
+
+- \(N\) 是有限 inflation 图；
+- \(q\) 是 inflated output law；
+- \(q\) 满足非负性和归一化；
+- \(q\) 满足所有 marginal constraints；
+- \(q\) 满足所有 source-induced symmetry constraints。
+
+有限 infeasibility 是严格的非局部证书。有限 feasibility 只说明通过了该级松弛，不能推出真正 triangle-local。
+
+#### 17.3.3 EJM 的最新精确结果
+
+Gitton 和 Renner 的 [The Elegant Joint Measurement is Non-Classical in the Triangle Network](https://arxiv.org/abs/2510.15143) 给出了 EJM 分布在 triangle network 中 classical-incompatible 的首个证明。该工作结合 inflation、对称约化、Frank–Wolfe 和 exact arithmetic。配套 [Fast Inflation code](https://github.com/vgitton/fast-inflation) 明确区分：
+
+- exact rational separating hyperplane certificate，可证明非局部；
+- floating-point feasible inflation law，只能作为数值候选，不能证明兼容性；
+- inflation size 增大时外逼近收紧，但变量规模大约按 \(n_o^N\) 增长。
+
+这为本项目的 Lean 接口提供了一个清晰对象：
+
+\[
+\mathrm{TriangleInflationCertificate}
+=
+(p,N,q,\Lambda),
+\]
+
+其中 \(\Lambda\) 是精确有理分离超平面，并验证
+
+\[
+\Lambda(q)\ge0
+\quad\text{对所有 inflation-feasible }q,
+\]
+
+\[
+\Lambda(p)<0.
+\]
+
+#### 17.3.4 Fully quantum inflation
+
+Smith、Wolfe 和 Spekkens 的 [Fully quantum inflation: quantum marginal problem constraints in the service of causal inference](https://arxiv.org/abs/2501.12320)，已在 2026 年发表为 PRX Quantum 相关成果。该方法把 inflation 推广到 quantum marginal problem，并对纯三量子比特态给出 triangle compatibility 的完整分类。
+
+若要接入量子 triangle，trureturing 必须把 classical probability carrier 扩展为：
+
+\[
+\rho\succeq0,
+\qquad
+\operatorname{Tr}\rho=1,
+\]
+
+并把 marginal consistency 写成 partial trace 方程。五态 FIB 概率律不能自动承载 density operator、正半定性和量子边缘约束。
+
+### 17.4 RH 与自伴谱桥
+
+#### 17.4.1 Hilbert–Pólya 只是谱目标
+
+Berry 和 Keating 的 [The Riemann zeros and eigenvalue asymptotics](https://epubs.siam.org/doi/10.1137/S0036144598347497) 提出零点虚部的计数函数与某个未知 Hermitian operator 的半经典能级计数具有相似性。这是谱启发和渐近证据，论文没有构造满足零点完整谱的自伴算子。
+
+Connes 的 [Trace formula in noncommutative geometry and the zeros of the Riemann zeta function](https://arxiv.org/abs/math/9811068) 给出临界零点的谱解释和显式公式的 trace-formula 解释。对本项目而言，任何声称统一场产生 RH 谱的构造至少要记录一个 trace identity 或等价的正规化行列式关系。
+
+#### 17.4.2 已有算子构造的边界
+
+Bender、Brody 和 Müller 的 [Hamiltonian for the zeros of the Riemann zeta function](https://arxiv.org/abs/1608.03679) 构造了形式 Hamiltonian，并通过边界条件使其特征值对应 zeta 零点。作者明确指出该算子并非通常意义下的 Hermitian，若能严格证明其自伴性，才会得到 RH。
+
+Li 的 [On the spectrum of a differential operator on a Hilbert–Pólya space](https://arxiv.org/abs/2404.11902) 在特定测试函数商空间上构造微分算子，并陈述零点与特征值之间的等价。该结果把“谱实现”与“自伴性”分开，不能单独推出 RH。
+
+因此本项目必须分开记录：
+
+\[
+\mathrm{ZeroSpectrumRealization}
+\]
+
+和
+
+\[
+\mathrm{SelfAdjointness}.
+\]
+
+前者只说明零点被表示为谱，后者才控制谱是否位于实轴。
+
+#### 17.4.3 Cayley 变换
+
+对稠密定义、闭的算子 \(H\)，在适当 resolvent/domain 条件下定义 Cayley 变换
+
+\[
+U=(H-iI)(H+iI)^{-1}.
+\]
+
+标准 Cayley 定理给出：
+
+\[
+H=H^*
+\iff
+U\text{ unitary}.
+\]
+
+谱通过 Möbius 变换对应。可参考 [Encyclopedia of Mathematics: Cayley transform](https://encyclopediaofmath.org/index.php?title=Cayley_transform) 和仓库中的 [ZeroHilbertCayleyUnitarity.lean](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/Midline/Cayley/ZeroHilbertCayleyUnitarity.lean)。
+
+该定理的可形式化接口必须包含：
+
+- Hilbert space；
+- operator domain；
+- closedness；
+- resolvent existence；
+- exact Cayley map；
+- unitary proof。
+
+仅在有限对角矩阵上验证模长为一，不足以处理无界算子或零点重数。
+
+## 18. Typed bridge ledger
+
+下面的五个桥接类型是本卷后续扩展的统一记账格式。每个类型都规定输入、额外假设、输出和失败边界。
+
+### 18.1 GraphToDirichletLimit
+
+输入：
+
+\[
+(V_j,E_j,\mu_j,B_j,Q_j)_{j\ge0}.
+\]
+
+必需假设：
+
+1. 每个 \(Q_j\) 是闭、非负二次型；
+2. 存在共同 Hilbert 宿主空间 \(\mathcal H\) 及嵌入 \(\iota_j\)；
+3. 满足 Mosco liminf；
+4. 对每个候选 \(u\) 存在强恢复序列；
+5. 满足等度量紧性或等价的 compactness 条件；
+6. 若声称谱收敛，还需 compact resolvent、统一有界性或 RCD 正曲率等谱紧性条件。
+
+输出：
+
+\[
+\mathrm{DirichletFormLimit}(\mathcal Q,\mathcal H),
+\]
+
+并可进一步输出热半群或 resolvent 收敛。
+
+不能推出：
+
+- 不自动得到连续坐标；
+- 不自动得到黎曼流形；
+- 不自动得到物理时间；
+- 不自动得到量子 Hamiltonian。
+
+### 18.2 DirichletToGeometry
+
+输入：
+
+\[
+(\mathcal X,d,\mu,\mathcal Q).
+\]
+
+弱输出需要证明 \(\mathcal X\) 是合适的 metric-measure space，并满足 RCD 或同类综合曲率条件。强输出若要成为光滑黎曼流形，还需增加：
+
+\[
+\text{finite-dimensional regularity},
+\quad
+\text{non-collapsing},
+\quad
+\text{injectivity/coordinate regularity},
+\quad
+\text{smooth convergence or reconstruction theorem}.
+\]
+
+输出可以是：
+
+\[
+\mathrm{RCDLimitSpace}
+\]
+
+或在更强假设下：
+
+\[
+\mathrm{SmoothRiemannianManifold}(M,g).
+\]
+
+不能推出：
+
+\[
+\mathrm{DirichletForm}
+\not\Rightarrow
+\mathrm{SmoothRiemannianManifold}
+\]
+
+除非额外 regularity 定理已经证明。
+
+### 18.3 FIBEntropyFlow
+
+输入：
+
+\[
+\Delta(\Sigma),\quad
+\mathcal V_{\mathrm{ent}},\quad
+K,\quad
+\pi,\quad
+\mathsf M.
+\]
+
+必需假设：
+
+1. \(K\) 是有限状态 Markov generator；
+2. 存在严格正平稳分布 \(\pi\)；
+3. detailed balance：
+   \[
+   \pi_sK_{st}=\pi_tK_{ts};
+   \]
+4. mobility \(\mathsf M\) 非负，并与 generator 的边流一致；
+5. vector field 保持概率单纯形；
+6. 边界退化时，需单独证明解仍存在或将系统限制到内部。
+
+输出：
+
+\[
+\dot p=-\mathsf M(p)\nabla_{\mathrm{F}} \mathcal V(p),
+\]
+
+或在 FIB 一维纤维上：
+
+\[
+\dot\kappa=-\gamma\Delta.
+\]
+
+不能推出：
+
+- \(\gamma\) 的数值；
+- 物理质量；
+- Hamiltonian 频率；
+- 量子能级；
+- 真实时空。
+
+### 18.4 TriangleInflationCertificate
+
+输入：
+
+\[
+p\in\Delta(\mathcal A\times\mathcal B\times\mathcal C),
+\]
+
+有限 inflation 图 \(N\)，以及源复制关系。
+
+必需假设：
+
+1. \(p\) 的坐标属于可验证的有理域，或误差界已显式给出；
+2. inflated law \(q\) 的坐标非负且归一化；
+3. all required marginals equal the target distribution；
+4. source-induced symmetries are satisfied；
+5. separating functional \(\Lambda\) 的所有系数属于可检查域。
+
+输出：
+
+\[
+\Lambda(p)<0
+\Longrightarrow
+p\text{ is not triangle-local}.
+\]
+
+通过某一级 inflation 只能输出有限级必要条件。真正 compatibility 需要 asymptotic hierarchy 或显式 local model。
+
+### 18.5 SpectralBridgeRH
+
+输入：
+
+\[
+\mathcal H_{\mathrm{field}},
+\quad
+H_{\mathrm{field}},
+\quad
+D(H_{\mathrm{field}}),
+\quad
+\mathcal Z.
+\]
+
+必需假设：
+
+1. \(H_{\mathrm{field}}\) 在显式 domain 上自伴；
+2. 存在零点索引和重数保持的谱映射；
+3. 零点没有被遗漏，也没有引入额外谱；
+4. 存在 secular determinant、trace formula 或等价的完整谱身份；
+5. 若使用 Cayley 形式，还需证明 resolvent/domain 条件；
+6. 若使用正则化行列式，还需给出正则化方案、收敛域和 continuation。
+
+输出：
+
+\[
+H_{\mathrm{field}}\text{ self-adjoint}
++
+\mathrm{Spec}(H_{\mathrm{field}})
+\cong
+\{\operatorname{Im}\rho\}
+\Longrightarrow
+\mathrm{RH}.
+\]
+
+不能推出：
+
+- 仅有数值零点拟合；
+- 仅有形式 Hamiltonian；
+- 仅有非自伴谱实现；
+- 仅有 Cayley 系数有限截面酉性。
+
+## 19. 最低一致性检查
+
+把外部研究接入本卷后，每个新增命题必须通过以下检查：
+
+1. **类型检查。** 输入对象的载体是否正确，例如逐节点 \((\Delta(\Sigma))^{V_j}\) 与全局单纯形不能混写。
+2. **来源检查。** 每个符号是否属于 Primitive、Derived 或 Bridge 层。
+3. **假设检查。** 外部定理的紧性、可逆性、曲率、边界或域条件是否逐项出现。
+4. **输出检查。** 结论是 Dirichlet form、RCD space、梯度流、有限证书还是自伴算子，不能混用。
+5. **反向性检查。** 一个推前存在性结果不能被反向使用为 lift 存在性。
+6. **有限与无限检查。** 有限图谱结论不能未经 compact-resolvent 或本质谱分析推广到无限树。
+7. **数值与精确检查。** 浮点可行性不能替代有理证书、形式证明或算子恒等式。
+8. **物理语义检查。** 任何能量、质量、时间和量子化术语都必须绑定到新增的数学结构。
+
+本账本将外部研究转化为可追踪的形式化义务。它不增加未证明的统一场结论，而是规定从 Auric FIB 有限结构走向 Dirichlet 极限、信息梯度流、triangle inflation 和 RH 自伴谱时，每一步必须补充什么。
