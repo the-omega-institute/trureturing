@@ -280,3 +280,47 @@ limit cannot replace it.
 These are literature applications with pinned hypotheses. They
 supply no all-degree actual zero-shift estimate, signed Robin-tail
 budget, new mathematical declaration or Lean certification.
+
+## Known finite-degree coverage from verified zero height
+
+Let $\mathrm{RH}_0(T)$ mean that every zero $\rho$ of $\xi$ with
+$|\operatorname{Im}\rho|\le T$ lies on the critical line. This requires
+complete zero counting, not only a list of zeros found on that line.
+Griffin, Ono, Rolen, Thorner, Tripp and Wagner,
+[*Jensen polynomials for the Riemann xi-function*, arXiv:1910.01227v3](https://arxiv.org/abs/1910.01227v3),
+submitted 17 December 2020, use exactly $\gamma(j)=\Gamma_j$ in
+equations (1.1)–(1.2). Their Theorem 1.2 at $m=0$ gives
+
+$$
+\mathrm{RH}_0(T)\quad\Longrightarrow\quad
+J^{d,n}\text{ is hyperbolic for every }n\ge0
+\text{ and }1\le d\le\lfloor T\rfloor^2.
+\tag{VH}
+$$
+
+The source identifies this specialization as Chasse's Theorem 1.8.
+Its Lemmas 5.1–5.2 supply differentiation closure of the canonical
+sector class and the finite-degree sector implication; no new
+zero-pair preserver proof is needed for (VH).
+
+Platt–Trudgian's
+[*The Riemann hypothesis is true up to $3\cdot10^{12}$*, arXiv:2004.09765v1](https://arxiv.org/abs/2004.09765v1),
+submitted 21 April 2020, Theorem 1 supplies a rigorous complete
+interval-arithmetic verification through a height exceeding the conservative bound
+$T=3\cdot10^{12}$. Applying (VH) and the existing implication (FW)
+therefore covers both actual families:
+
+$$
+J^{d,n}\text{ and }\mathcal H_{d,n}\text{ are hyperbolic}
+\qquad(n\ge0,\ 1\le d\le9\cdot10^{24}).
+\tag{FC}
+$$
+
+O'Sullivan explicitly reports this extension in introductory footnote 1.
+Griffin et al.'s printed Corollary 1.3 instead has the older bound
+$9.36\cdot10^{20}$; (FC) uses their theorem with the later verification.
+This is direct reuse of established coverage, not a new estimate or
+a replay of the numerical certificate. For the zero-shift criterion
+(ZF), degrees above $9\cdot10^{24}$ remain outside this finite input.
+It supplies no all-degree conclusion, signed Robin-tail budget or
+local Lean certification.
