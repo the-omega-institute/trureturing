@@ -5,7 +5,7 @@ year: 2024
 title: Associated Mersenne graphs
 doi: 10.48550/arXiv.2407.08237
 url: https://arxiv.org/abs/2407.08237v1
-claim: Question 6.2 asks for the number of vertices of each degree in each Associated Mersenne graph.
+claim: Questions 6.2 and 6.3 concern degree counts and cube polynomials of the Associated Mersenne graphs.
 strata_touched:
   - D5/S1/Words/AssociatedMersenne/CircularWords
   - D5/S1/Words/AssociatedMersenne/RunTupleBijection
@@ -15,6 +15,8 @@ strata_touched:
   - D5/S1/Words/AssociatedMersenne/TransferTuples
   - D5/S1/Words/AssociatedMersenne/TransferResolvent
   - D5/S1/Words/AssociatedMersenne/DegreeGeneratingFunction
+  - D5/S3/Combinatorics/Hamming/InducedSubcubes
+  - D5/S3/Combinatorics/Hamming/AssociatedMersenneCubePolynomial
 license: citation-only
 triage: anchor
 ---
@@ -50,6 +52,14 @@ On page 18 the source states:
 The formal answer uses the degree series with coefficients in `Polynomial ℤ`: its coefficient of `x^n y^k` counts degree-`k` vertices. The equality `degSeries * DEN = NUM` uses explicit polynomial coefficients and includes lengths zero, one and two.
 
 The marked run decomposition gives ordered tuples `(r_i,s_i)` of positive run lengths and nonnegative slack, with total length `Σ(2r_i+1+s_i)`. Periodic words remain included. The transfer trace uses an exact singleton correction: for `[(r,1)]`, the provisional degree is `min r 2 + 1`, whereas the tuple degree is `min r 2`. The correction is `X * (1 - Y) * Rser` before marking and `X * derivative (X * (1 - Y) * Rser)` after marking.
+
+## Question 6.3
+
+On page 18 the source states:
+
+> **Question 6.3.** What is cube polynomial for Associated Mersenne graph $\mathcal{M}_n$?
+
+The settlement gives the cleared-denominator generating function for the cube polynomials, with the endpoint-removal and marked-block argument recorded in the corresponding D5 modules.
 
 ## Boundaries
 

@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 import subprocess
 import time
+import uuid
 
 from worktree_protocol import (Refused, git, value, common, inventory, identity,
                                acquire, git_scope, remote_endpoint)
@@ -115,6 +116,8 @@ def remove(options):
             outcomes.append(dict(path=str(target), outcome="would_remove"))
             continue
         checkpoint = None
+        recovery_branch = None
+        recovery_branch_candidate = None
         removing = False
         try:
             with ExitStack() as stack:
@@ -127,6 +130,16 @@ def remove(options):
                 from worktree_publication import commit_snapshot
                 checkpoint = commit_snapshot(target, metadata, branch,
                     b"Checkpoint working tree before recycling\n")
+                if branch.startswith("refs/heads/"):
+                    recovery_branch = branch
+                else:
+                    # Keep detached HEAD/index coordination until removal. Native
+                    # branch creation never replaces an existing ref, even on collision.
+                    recovery_branch_candidate = "refs/heads/lane/governance/recovery-" + uuid.uuid4().hex
+                    acquire(stack, source, "ref:" + recovery_branch_candidate, True)
+                    git(target, "branch", "--", recovery_branch_candidate.removeprefix("refs/heads/"),
+                        checkpoint["commit"])
+                    recovery_branch = recovery_branch_candidate
                 refreshed = qualify(source, target)
                 expected = dict(qualified[target], HEAD=checkpoint["commit"])
                 if refreshed != expected:
@@ -140,11 +153,12 @@ def remove(options):
                 git(source, "worktree", "remove", *flags, "--", target,
                     timeout=None if options.force else 300)
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
-                                     recovery_branch=branch))
+                                     recovery_branch=recovery_branch))
         except (Refused, OSError, subprocess.SubprocessError) as error:
             outcomes.append(dict(path=str(target),
                 outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
-                error=str(error), checkpoint=checkpoint))
+                error=str(error), checkpoint=checkpoint, recovery_branch=recovery_branch,
+                recovery_branch_candidate=recovery_branch_candidate))
 
     return dict(event="worktree_removal", items=outcomes,
                 status="failed" if any(item["outcome"] not in ("removed", "would_remove") for item in outcomes) else "succeeded")
