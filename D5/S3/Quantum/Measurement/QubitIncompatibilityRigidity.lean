@@ -24,7 +24,8 @@ def SCompatible (S : Set (FiniteStateChannel.DensityState (Fin 2)))
   ∃ G : Fin 2 × Fin 2 → QubitMatrix, IsPOVM G ∧ ∀ ρ ∈ S, ∀ i s : Fin 2,
     bornProbability (CStarMatrix.ofMatrix.symm ρ.1) (marginal G i s) =
       bornProbability (CStarMatrix.ofMatrix.symm ρ.1) (effect (a i) s)
-def Incompatible (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop := ¬ SCompatible Set.univ a
+def Incompatible (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop :=
+  ¬ SCompatible (Set.univ : Set (FiniteStateChannel.DensityState (Fin 2))) a
 def SignedPermutation (a b : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop :=
   ∃ (π : Equiv.Perm (Fin 2)) (ε : Fin 2 → ℝ),
     (∀ i, ε i = 1 ∨ ε i = -1) ∧ ∀ i, b i = ε i • a (π i)
