@@ -46,10 +46,12 @@ public sealed class PlaybookWorkflowScriptTests
         var result = fixture.Run("deliver-check", "synthetic-base");
 
         Assert.Equal(0, result.ExitCode);
+        Assert.Contains("make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.NewClosed", fixture.Calls());
         Assert.Contains(
             $"dotnet:ledger-align --add {module} --candidate-lean-report "
-                + ".lake/build/stratalint/raw-lean-report.json",
+                + ".lake/build/stratalint/scoped-lean-report.json",
             fixture.Calls());
+        Assert.Contains("dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json", fixture.Calls());
         Assert.True(StateFragmentExists(fixture, module));
         Assert.True(AcceptedEventMentions(fixture, module));
     }
@@ -72,7 +74,8 @@ public sealed class PlaybookWorkflowScriptTests
         var result = fixture.Run("deliver-check", "synthetic-base");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Contains($"dotnet:ledger-align --add {uncommitted} --candidate-lean-report .lake/build/stratalint/raw-lean-report.json", fixture.Calls());
+        Assert.Contains("make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.B", fixture.Calls());
+        Assert.Contains($"dotnet:ledger-align --add {uncommitted} --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json", fixture.Calls());
         Assert.DoesNotContain(fixture.Calls(), call => call.Contains($"--add {frozen}", StringComparison.Ordinal));
     }
 

@@ -1,0 +1,66 @@
+**Proof.** Suppose first that a pair in $\mathfrak C_{\rm det}$ has
+$\mathcal J=0$. Both endpoint configuration losses at each phase are at most
+its radius, and their sum is at least twice that radius by the triangle
+inequality. The coordinate triangle identity, integrated before any
+marginalization of TV, therefore gives (16.6), exactly as in PAIRED
+Section 11.8. The countable complete carriers allow all coordinates to hold
+on one full-measure set. The same zero-level argument supplies both means
+
+$$
+\int Q(E_p)\,d\nu_p=M_p=\frac{11758471}{22781250},\qquad
+\int W(E_\beta)\,d\nu_\beta=M_\beta=\frac{5261}{6750}.
+\tag{16.29}
+$$
+
+Since $M_p=\kappa M_\beta+\zeta$, one has $D=0$. Theorem 16.2 now
+forces (16.9) with weight $1/2$.
+For each actually supported $k\ge3$, $r_k\in[3/8,5/13]$ and the
+complete-word triangle gap (15.25)--(15.26) gives
+
+$$
+\begin{aligned}
+\int\operatorname{TV}(Q,P_{p,r_k})\,d\nu_p
+ &=\tfrac12\operatorname{TV}(P_{p,a},P_{p,r_k})
+   +\tfrac12\operatorname{TV}(P_{p,b},P_{p,r_k})\\
+ &\ge\rho_p+\frac{\eta_{\rm nat}}2>\rho_p,\qquad
+\eta_{\rm nat}=\frac{14219478376}{318644812890625}.
+\end{aligned}
+\tag{16.30}
+$$
+
+That gap uses the single complete coordinate $w_{3,1}$, whose target mass
+is at least $4096000/815730721=q+\eta_{\rm nat}$. Thus every supported
+nonendpoint supplies a violated budget. Depth 3 itself need not be supported;
+no new target is inserted. This proves the zero-set exclusion.
+
+By PAIRED Lemma 11.1, complete-law TV and both normalized residual maps
+are continuous on their respective compact descriptor spaces. In particular,
+
+$$
+\left|\operatorname{TV}(W,\mathcal R_B(Q))
+ -\operatorname{TV}(W',\mathcal R_B(Q'))\right|
+\le\operatorname{TV}(W,W')+
+   \operatorname{TV}(\mathcal R_B(Q),\mathcal R_B(Q')),
+$$
+
+and the analogous inequality holds at A. Hence the two integrands in (16.5)
+are bounded continuous on the compact products, even where a residual is
+outside the opposite descriptor space. Their integrals are continuous under
+weak convergence of the flows. It follows that $\mathfrak C_{\rm det}$ is
+closed in PAIRED's compact $\mathfrak C$. It is nonempty: the matching native
+singleton at $a$ is a member. The objective in (16.8) is nonnegative and
+lower semicontinuous, because each fixed-target configuration integral is
+continuous and an arbitrary countable supremum is lower semicontinuous.
+It attains a minimum on this nonempty compact set. The zero-set exclusion
+makes that attained minimum strictly positive, proving (16.28).
+
+Only a hypothetical zero minimizer invoked (16.6); no positive-loss point
+was assumed to satisfy exact boxes. Compactness is used after the new
+zero-set exclusion, not as a substitute for it. Finally a compatible pair
+with $d_A+d_B=0$ belongs to $\mathfrak C_{\rm det}$ by nonnegativity.
+This proves the stated branching necessity. It requires variation among
+genuinely different complete successor laws at at least one interface.
+Random transitions exclusively among copies of one successor law still
+have zero corresponding dispersion. No assertion that both interfaces must
+branch follows. $\square$
+

@@ -219,8 +219,9 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, ToolsMakefilePath));
 
         Assert.Contains(".DEFAULT_GOAL := help", makefile, StringComparison.Ordinal);
+        Assert.Contains("""tools_makefile_hash := \#""", makefile, StringComparison.Ordinal);
         Assert.Contains(
-            "HERE := $(shell cd \"$$(dirname \"$(MAKEFILE_LIST)\")\" && pwd -P)",
+            """HERE := $(shell tools_makefile="$(MAKEFILE_LIST)"; cd "$$(dirname "$${tools_makefile$(tools_makefile_hash) }")" && pwd -P)""",
             makefile,
             StringComparison.Ordinal);
         var phony = Assert.Single(
@@ -440,7 +441,8 @@ public sealed partial class MakeWorkflowTests
         var rootOutput = System.Text.Encoding.UTF8.GetString(rootResult.StandardOutput);
         Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
-        Assert.Contains("make lean-report [REBUILD_REPORT_CACHE=1]  Fetch compatible local seed or fail; explicitly rebuild when requested", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make lean-report [REBUILD_REPORT_CACHE=1]  Full repository report for CI or explicit full verification", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make lean-report-scoped LEAN_TARGETS=", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make scribe-release  Rebuild and verify local Scribe release assets", rootOutput, StringComparison.Ordinal);

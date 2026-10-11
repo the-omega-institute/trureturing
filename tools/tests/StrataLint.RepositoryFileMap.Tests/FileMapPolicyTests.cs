@@ -8,6 +8,18 @@ namespace StrataLint.RepositoryFileMap.Tests;
 public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
 {
     [Theory]
+    [InlineData("tools/lean-inspector/scoped.py")]
+    [InlineData("tools/scripts/report/lean-report-scoped.sh")]
+    [InlineData("tools/tests/StrataLint.Lean.Tests/Native/lean_report_scoped_fixture.py")]
+    public void ScopedReportProgramsHaveCanonicalFileMapEntries(string path)
+    {
+        var manifest = FileMapLoader.LoadRepository(TestRepositoryLayout.FindRoot());
+        var entry = Assert.Single(manifest.Match(path));
+        Assert.Equal(FileMapKind.Program, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+    }
+
+    [Theory]
     [InlineData("lean-report-inputs.json", "LeanReportSelection")]
     [InlineData("Meta/ci-cache-paths.json", "NativeArchivePaths")]
     public void RuntimeManifestIsAdmittedWithItsRuntimeVerifier(string path, string verifier)

@@ -48,7 +48,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(backfillBefore, fixture.BackfillContents());
         Assert.Equal(
             [
-                "make:lean-report",
+                "make:lean-report-scoped",
                 "dotnet:deposit-header-check",
                 "make:emit",
                 "dotnet:ledger-frozen",
@@ -115,12 +115,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEmpty(fixture.Status());
         Assert.Equal(
             [
-                "make:lean-report",
+                "make:lean-report-scoped",
                 "dotnet:deposit-header-check",
                 "make:emit",
                 "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
                 "dotnet:ledger-frozen",
+                "dotnet:cover-atom --lean-inputs",
                 "dotnet:cover-atom",
             ],
             fixture.CallKinds());
@@ -147,10 +148,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(backfillBefore, fixture.BackfillContents());
         Assert.Equal(
             [
-                "make:lean-report",
+                "make:lean-report-scoped",
                 "dotnet:deposit-header-check",
                 "make:emit",
                 "dotnet:ledger-frozen",
+                "dotnet:cover-atom --lean-inputs",
                 "dotnet:cover-atom",
             ],
             fixture.CallKinds());
@@ -172,12 +174,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(1, fixture.FreezeCount());
         Assert.Equal(
             [
-                "make:lean-report",
+                "make:lean-report-scoped",
                 "dotnet:deposit-header-check",
                 "make:emit",
                 "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
                 "dotnet:ledger-frozen",
+                "dotnet:cover-atom --lean-inputs",
                 "dotnet:cover-atom",
             ],
             fixture.CallKinds());
@@ -205,7 +208,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var depositCase = script[depositStart..coverStart];
         Assert.Contains("\n    cover_row || {\n", depositCase, StringComparison.Ordinal);
         Assert.DoesNotContain("coverage_gids", script, StringComparison.Ordinal);
-        Assert.Single(Regex.Matches(script, @"run_cli\s+cover-atom\b").Cast<Match>());
+        Assert.Single(Regex.Matches(script, @"run_cli\s+cover-atom\s+--cover-atom\b").Cast<Match>());
     }
 
     [Fact]
@@ -252,6 +255,21 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
+    [Fact]
+    public void DepositRejectsFrozenQueryLauncherFailureBeforeWriting()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.FailFrozenLauncher();
+
+        var result = fixture.Run("deposit-uncovered", atomId: null);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("synthetic launcher failure", Encoding.UTF8.GetString(result.StandardError));
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
+        Assert.Equal(0, fixture.FreezeCount());
+    }
+
     [Theory]
     [InlineData("deposit")]
     [InlineData("deposit-uncovered")]
@@ -266,7 +284,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
         Assert.Equal(
-            ["make:lean-report", "dotnet:deposit-header-check", "make:emit"],
+            ["make:lean-report-scoped", "dotnet:deposit-header-check", "make:emit"],
             fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
@@ -288,7 +306,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before, fixture.CommitCount());
         Assert.Equal(
             [
-                "make:lean-report",
+                "dotnet:cover-atom --lean-inputs",
+                "make:lean-report-scoped",
                 "dotnet:cover-atom",
             ],
             fixture.CallKinds());
@@ -312,7 +331,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             StringComparison.Ordinal);
         Assert.Equal(before, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
+        Assert.Equal(["dotnet:cover-atom --lean-inputs", "make:lean-report-scoped", "dotnet:cover-atom"], fixture.CallKinds());
         Assert.NotEmpty(fixture.Status());
     }
 
