@@ -2,13 +2,13 @@
 bibkey: trureturing2026pricegapconvexity
 authors: trureturing research synthesis
 year: 2026
-title: Actual price-gap moments and the complete selected-source response
+title: Actual Robin price gaps, forced-core tail records and the selected-sign boundary
 doi: null
 url: https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b460e31a72cc1ebfc3433b/Library/ArithSums/trureturing2026extrawindowpairing.md
-claim: Under the supplied original source-window hypotheses, actual envelope gaps have zero mass and price moments and a convex-order constraint. The original discrete prime response splits into exterior stock flux minus selected occupancy, gap costs and the complete Q term. The favorable exterior lower estimate remains unproved.
+claim: Under the original source-window hypotheses, the complete selected response retains actual price-gap costs; every inactive-forced-prime core is a strict all-integer right-tail record with original-exponent own-size excess. A synthetic positive-reference model excludes height-and-envelope plus numerical full-Q reasoning alone. Actual favorable slack and RH remain unproved.
 strata_touched: []
 license: Apache-2.0
-triage: frontier
+triage: anchor
 ---
 
 # Actual price gaps and the same-source signed estimate
@@ -332,3 +332,659 @@ endpoint prices are $\lambda(\alpha)>\lambda(\beta)$; adjacency of
 these cores in the classical CA sequence has not been proved. Classical
 neighboring-CA restrictions therefore cannot bound this $V/U$ without
 that additional correspondence.
+
+## The actual inactive-forced-prime core is a strict right-tail record
+
+Keep the original fixed $b,d$, qualifying witness $X$, every original
+prime label $p$, and every maximizing tie $N=pu$ supplied by N1. Put
+$t=\log p$, $B=\log u$, $A=B+t$, and $c_p=\log(1+1/p)$.
+The actual $p$ is absent from $u$ and strictly inactive:
+$c_p<t\lambda(A)$. Keep $F(n)=W(n)-f(\log n)$ and define
+
+$$
+D_t(y)=f(y+t)-f(y),\qquad a_p=D_t(B)-c_p.
+$$
+
+Uniformly over all these labels and ties, $B\to\infty$ as $X\to\infty$.
+Otherwise a bounded sequence of cores has bounded $W(u)$, while
+$A\ge\ell\to\infty$ and $c_p\le e^{-\ell}$, forcing
+$F(N)=W(u)+c_p-f(A)\to-\infty$. This contradicts N1's positive height.
+Enlarge only the common start until $B>11$.
+
+Strictly decreasing $\lambda=f'$ gives
+$D_t(B)>t\lambda(B+t)>c_p$. Absent-prime multiplicativity therefore gives
+
+$$
+a_p>0,\qquad F(u)=F(N)+a_p,
+\tag{CR1}
+$$
+
+and the following actual all-integer comparison holds for every $v>u$:
+
+$$
+\boxed{
+F(u)-F(v)\ge
+\begin{cases}
+a_p,&p\mid v,\\
+D_t(B)-D_t(\log v),&p\nmid v.
+\end{cases}}
+\tag{CR2}
+$$
+
+Both lower bounds are strictly positive. To prove CR2 first suppose
+$5040\mid v$. If $p\mid v$, full-domain maximality of $N$ gives
+$F(v)\le F(N)$. Otherwise $pv$ is in that same maximization domain and
+$F(pv)=F(v)+c_p-D_t(\log v)$. Comparing $pv$ with $pu$ proves the
+second branch. It is positive because
+$D_t'(y)=\lambda(y+t)-\lambda(y)<0$.
+
+For arbitrary $v>u$, use the actual integer
+$v^*=\operatorname{lcm}(5040,v)$. At clocks above $11$ every missing
+mandatory 5040 layer has reward per logarithmic mass strictly above the
+current $\lambda$; its finite $f$-increment per mass is strictly below
+that price. Inserting all missing mandatory layers gives
+$F(v^*)\ge F(v)$. Since $p\ge29$, $p\mid v^*$ iff $p\mid v$.
+Also $v^*\ge v>u$ and
+$D_t(B)-D_t(\log v^*)\ge D_t(B)-D_t(\log v)$.
+The already proved comparisons at $v^*$ therefore give CR2.
+
+Consequently the same actual core is the unique maximizer of $F$ on
+all integers $v\ge u$. This compares every larger integer, not merely
+multiples of $u$. It is a consequence for **every original core**;
+the [existing CNS tail-selection mechanism](../Arith/caveney2012sacaga.md)
+is reused and is not reconstructed as a new source family. CR2 does not
+make nonlinear switch cores adjacent in the classical CA sequence.
+
+## The original power excess transfers without losing its exponent
+
+The same cores retain, with the original fixed $b,d$, the own-size bound
+
+$$
+\boxed{F(u)-\gamma\ge\frac d{64}B^{-b},\qquad B=\log u.}
+\tag{CR3}
+$$
+
+The common eventual start can depend on $b,d$ but not on the label or tie.
+Indeed CR1 and the original source height give
+
+$$
+F(u)-\gamma\ge\frac d2X^{-b}+D_t(B)-c_p.
+\tag{CR4}
+$$
+
+If $B\ge X$, CR1 immediately gives the stronger $dB^{-b}/2$.
+If $B<X$ and $B\ge t$, then $A\le2B$, eventually
+$\log A\le2\log B$, and the original
+$\ell=(d/8)X^{1-b}\log X$ gives
+
+$$
+D_t(B)\ge\frac{t}{A\log A}
+\ge\frac{\ell}{4B\log B}
+=\frac d{32}B^{-b}
+ \left(\frac XB\right)^{1-b}\frac{\log X}{\log B}
+\ge\frac d{32}B^{-b}.
+$$
+
+If $B<X$ and $B<t$, monotonicity in $t$ instead gives
+
+$$
+D_t(B)\ge f(2B)-f(B)
+=\log\left(1+\frac{\log2}{\log B}\right)
+\ge\frac{\log2}{2\log B}\ge\frac d{32}B^{-b}
+$$
+
+eventually, since the original $b>0$ is fixed. Finally,
+$c_pB^b\le e^{-\ell}R^b\to0$, using $B\le R$ and
+$\log R=o(\ell)$. Thus $c_p\le dB^{-b}/64$ uniformly and CR4 proves CR3.
+No new zero-abscissa hypothesis or output exponent is substituted.
+CR3 constrains the actual value at the actual core; it gives no favorable
+sign for PG15's compactly supported response.
+
+## Maximum-preserving contact recursion is stationary on these tails
+
+For any such core $u$, any nonincreasing functions $q_k$ on
+$\{n\in\mathbb N:n\ge u\}$, any $s_k>0$ and any $a\ge0$, CR2 directly
+implies that
+
+$$
+n\longmapsto e^{s_kF(n)}+a q_k(n)
+\tag{CR5}
+$$
+
+has unique maximum $u$. For every $n>u$ its first term is strictly smaller
+and its second term is no larger. This elementary implication is an
+application, not a new generic contact theorem. Restriction to any subset
+containing $u$ leaves the conclusion unchanged; no CA membership is inferred
+from the restriction itself.
+
+The [existing Musin contact source](../Analytic/musin2026higherorder.md),
+Theorem 4.1, concerns a specified classical CA domain and reference,
+positive decreasing $q_k$, coordinate-transition conditions and a
+normalization limit. Its reference convention is not transplanted to $u$.
+CR5 supplies a concrete stationary-tail consequence for the actual cores.
+A FIB encoding of these same maximum-preserving contacts inherits it;
+other recursions remain outside this assertion. Cofinal later witnesses
+can have smaller positive excesses, so cofinality does not force escape
+from one fixed strict tail maximum.
+
+## Height and full-envelope geometry alone do not supply PG15
+
+The following synthetic atomic construction tests only a proposed
+height-plus-envelope abstraction. It is not actual divisor arithmetic:
+its rewards are not prime-layer rewards, it has no actual $\psi$ or
+actual prime-power full-Q supplier, and its model clocks do not replace the original $A_i$.
+It gives no counterexample to RH or to implication from the full actual
+RH-failure hypotheses to PG15.
+
+Fix the same $0<b<1/2$, $d>0$, set $c=2bd$, and put
+
+$$
+h(x)=x+cx^{1-b}\log x,\qquad z_j=h(j).
+$$
+
+Choose a fixed sufficiently large integer $j_0\ge3$. Use states
+$j\ge j_0-1$, with clocks $j$, and the strict inventory
+
+$$
+K_*(v)=j_0-1+\sum_{j\ge j_0}\mathbf1_{\{z_j<v\}}.
+$$
+
+Realize the initial mass $j_0-1$, if an all-positive-tail measure is needed,
+by $j_0-1$ fixed unit atoms strictly between $1$ and $h(j_0-1)$.
+All tested tents eventually have $A-A^{4/5}>h(j_0-1)$; define
+$\kappa=h^{-1}$ only on that tail. A precise reward normalization is
+
+$$
+\mathcal W_j=f(j)+\gamma+
+\sum_{r=j+1}^{\infty}\bigl(f(r)-f(r-1)-\lambda(h(r))\bigr).
+$$
+
+It gives $\mathcal W_j-\mathcal W_{j-1}=\lambda(z_j)$ and
+$\mathcal W_j-f(j)\to\gamma$. The series converges because
+
+$$
+\lambda(z_j)-[f(j)-f(j-1)]
+=-c j^{-b-1}(1+o(1))
+$$
+
+is absolutely summable. Its tail gives
+
+$$
+\mathcal W_j-f(j)-\gamma
+=(c/b+o(1))j^{-b}=(2d+o(1))j^{-b}.
+\tag{CR6}
+$$
+
+These values are eventually strictly decreasing, so all sufficiently
+large states are strict right-tail records. They also satisfy the
+numerical H2 upper envelope eventually, because
+$j^{-b}=o((\log j)^{-2})$.
+
+For $t\ge0$ use the complete state envelope
+$V_*(t)=\max_{j\ge j_0-1}[\mathcal W_j-f(t+j)]$.
+The adjacent tie is the unique $s_j$ satisfying
+
+$$
+f(s_j+j)-f(s_j+j-1)=\lambda(z_j),\qquad
+s_j=z_j-j+\tfrac12+O(j^{-1}).
+\tag{CR7}
+$$
+
+The $s_j$ are eventually strictly increasing: their leading difference
+is $c(1-b)j^{-b}\log j$, which dominates the displayed remainder.
+The adjacent objective difference is strictly increasing in $t$.
+Thus for $s_j<t<s_{j+1}$ it is positive through state $j$ and negative
+afterward, so $j$ dominates **every** state. The finitely many initial
+states are irrelevant for sufficiently large $t$. For each fixed $t\ge0$, the limiting state objective is $\gamma$ and
+its excess is eventually positive, since
+$f(j+t)-f(j)=O_t((j\log j)^{-1})=o(j^{-b})$.
+Together with the ordered switches this pays attainment at an actual state.
+At the active clock $A=t+j$ one has
+$z_j<A<z_{j+1}$ and $K_*(A)=j=A-t$. Every switch gap has length one,
+contains exactly its full unit activation atom, and has zero total and
+price moment by CR7. Its endpoints do not activate. Full dominance
+supplies the same nonnegative prefix cost as PG2, with the model rewards.
+
+For every integer $X\to\infty$, retain every ordinary prime label in
+$[e^{\ell_X},e^{2\ell_X}]$, with the original numerical
+$\ell_X=(d/8)X^{1-b}\log X$. The candidate state $j=X$ gives uniformly
+for $t\in[\ell_X,2\ell_X]$
+
+$$
+f(X+t)-f(X)\le t\lambda(X)\le\frac d4X^{-b},\qquad
+V_*(t)-\gamma\ge(7d/4+o(1))X^{-b}\ge\frac d2X^{-b}.
+\tag{CR8}
+$$
+
+For $t=\theta\ell_X$, $1\le\theta\le2$, CR7 more precisely gives
+$j/X=(\theta/(16b))^{1/(1-b)}(1+o(1))$ and $A\sim j$, uniformly
+including ties. Thus $j\asymp X$ and $A\asymp X$ for every active state
+on these whole windows, with constants depending only on $b,d$.
+Their original numerical bounds $\ell_X\le A\le R_X$ hold eventually.
+Their selected excesses are $O(X^{-b})$, so the numerical H2 bound holds
+there as well. Adding the unchanged label reward $c_p$ leaves the model
+optimizer unchanged and only increases its height. This label use does not turn a state into an actual integer core or its
+reward into a divisor sum. The H2 scope is only the own-state and selected-clock
+numerical bounds just proved. For a fixed label $p$ and $j\to\infty$,
+$\mathcal W_j+c_p-f(j+\log p)\to\gamma+c_p>\gamma$; the model therefore
+does **not** satisfy global arithmetic H2 over all labelled competitors.
+
+Let $\kappa=h^{-1}$ on the sufficiently large real tail. Then
+$|K_*(v)-\kappa(v)|\le1$ and
+
+$$
+\kappa'(v)-1=-c(1-b)v^{-b}\log v\,(1+o(1)).
+$$
+
+Use exactly the original price tent $k_A$ and width $A^{4/5}$.
+Its existing area asymptotic and $\int|k_A'|=2$ are reused.
+Finite Stieltjes integration by parts bounds the response from
+$K_*-\kappa$ by $2$, since the tent vanishes at both support endpoints.
+Uniformity on that support consequently gives
+
+$$
+\boxed{
+A^{-3/10}\int k_A(v)[dK_*(v)-dv]
+=-c(1-b)A^{1/2-b}\log A\,(1+o(1))\longrightarrow-\infty.}
+\tag{CR9}
+$$
+
+Retain all labels, least active states and original positive coefficients
+in the corresponding model weight
+$W_X^*(v)=\sum_i\delta_i(A_i^*)^{-3/10}k_{A_i^*}(v)$.
+Because $A_i^*\asymp X$ uniformly, CR9 gives
+
+$$
+\frac1{L_X}\int W_X^*(v)[dK_*(v)-dv]\longrightarrow-\infty,
+\qquad
+\frac{\mathsf E_X^*-\mathsf S_X^*-\mathsf G_X^*}{L_X}
+\longrightarrow-\infty.
+\tag{CR10}
+$$
+
+Thus fixed cofinal normalized height, strict tail records and complete
+nonlinear-envelope dominance alone do not force favorable stock sign.
+This model establishes only the insufficiency of the stated
+height-and-envelope abstraction; the actual arithmetic interfaces and global
+labelled-competitor H2 remain outside its scope. CR1--CR10 are
+supplier-relative paper deductions, with no Lean verification or priority
+claim; the independent signed finite head, PG15 and RH remain unresolved.
+## A positive atomic reference can also retain the numerical full-Q estimate
+
+Keep the preceding synthetic model, whose actual-source implications are
+not used here. It can be equipped with a positive weak reference inventory
+having the same pointwise full-Q asymptotic form as the reused PT3
+supplier; PG14 is its weighted consequence. This remains a
+synthetic model: none of its reference atoms is identified with an actual
+prime power, and no actual $\Lambda$, Euler product or zeta explicit formula
+is supplied.
+
+Set $a_* =\sqrt2-1=2d_0$ and $T(v)=v-a_*\sqrt v$ on a sufficiently
+large real tail. The map is strictly increasing there. At each model
+activation $z_j$, let $\tau_j$ be the unique later clock satisfying
+$T(\tau_j)=z_j$ and define the positive right-continuous reference
+
+$$
+\Psi_*(v)=j_0-1+\sum_{j\ge j_0}\mathbf1_{\{\tau_j\le v\}},
+\qquad Q_*(v)=K_*(v)-\Psi_*(v),\quad dQ_*=dK_*-d\Psi_*.
+$$
+
+All reference atoms have positive unit mass and are retained. The baseline
+constant affects no tested tail measure and can be realized by the same
+fixed lower positive atoms as the original synthetic stock. No common
+half-open increment convention is assigned to the mixed function $Q_*$. For sufficiently large $v$, the existing
+inverse clock $\kappa=h^{-1}$ gives
+
+$$
+Q_*(v)=q(v)+O(1),\qquad
+q(v)=\kappa(v)-\kappa(T(v)),
+\tag{CR11}
+$$
+
+with a uniform bounded discrepancy, regardless of strict/weak endpoint
+contacts. Differentiating the smooth inverse, not an infinite zero series,
+gives $\kappa'(v)=1+O(v^{-b}\log v)$ and
+$\kappa''(v)=O(v^{-b-1}\log v)$. Therefore
+
+$$
+q'(v)=\kappa'(v)-\kappa'(T(v))
+     +\frac{a_*}{2\sqrt v}\kappa'(T(v))
+=\frac{d_0}{\sqrt v}+O(v^{-b-1/2}\log v).
+\tag{CR12}
+$$
+
+For the original $h_A=A^{4/5}$, $a=A-h_A$, $b_A=A+h_A$, integrate this
+identity and retain the bounded discrepancy at both endpoints. Uniformly
+for $a\le t\le b_A$,
+
+$$
+Q_*(t)-Q_*(a)=\frac{d_0}{\sqrt A}(t-a)
++O\left(\frac{h_A^2}{A^{3/2}}
+ +h_A A^{-b-1/2}\log A+1\right).
+\tag{CR13}
+$$
+
+Relative to $h_A/\sqrt A$ this error is
+$O(A^{-1/5}+A^{-b}\log A+A^{-3/10})=o(1)$.
+For the original fixed $b>0$, $A^{-b}\log A=o(1/\log A)$;
+thus the error is also bounded by a fixed multiple of the existing
+seven-term $\mathcal F_Q(A)$ after a common start. This compares the
+numerical error form; it does not realize the actual prime-power supplier.
+
+The original tent's area and variation then give, by finite integration
+by parts with the same signed event measure,
+
+$$
+A^{-3/10}\int k_A(v)dQ_*(v)=d_0+o(1).
+\tag{CR14}
+$$
+
+Uniformly over the complete model label window,
+$\int W_X^*dQ_*=(d_0+o(1))L_X$.
+CR9--CR10 remain unchanged, and the reference response is exactly
+
+$$
+\int W_X^*(v)[d\Psi_*(v)-dv]
+=\mathsf E_X^*-\mathsf S_X^*-\mathsf G_X^*
+ -\int W_X^*(v)dQ_*(v).
+\tag{CR15}
+$$
+
+Its ratio to $L_X$ still tends to $-\infty$. Hence even adding a positive
+atomic reference and the numerical full-Q response to the retained height
+and envelope abstraction does not supply PG15. The actual prime/divisor coefficients, integer-source realization and
+global H2 over all labelled competitors remain absent, with the H2 scope
+fixed above. Nonnegativity of the reference measure and that asymptotic
+coefficient alone therefore do not pay the missing comparison. This conclusion does not establish nonimplication from the full
+actual RH-failure hypotheses, refute RH or prove the actual estimate.
+
+## The complete signed-tail consumer remains at the core's own clock
+
+For each original core $u$ in CR1--CR3 put $B=\log u$,
+$L_B=\log B$ and $T_B=\sqrt B\,L_B$. Its strict all-integer right-tail
+property gives the existing GA2 condition by taking $v=au$ for each
+integer $a\ge2$; $a=1$ is equality. Uniform $B\to\infty$ permits one
+common source start after which
+
+$$
+B\ge\max\{\log N^{(0)},e^{26}\},
+$$
+
+so the supplier thresholds $u\ge N^{(0)}$ and $L_B\ge26$ both hold.
+There is no numeric value supplied for that common witness start. Apply of the [existing complete GA2 core identity
+and effective allowance](../ArithSums/nicolas2025comparison.md#the-same-effective-allowance-on-actual-ga2-cores),
+A3--A5, after one common start. Keep its entire original improper integral
+
+$$
+I_\psi(B)=\int_B^\infty(\psi(v)-v)
+\frac{1+\log v}{v^2\log^2v}\,dv,
+\qquad \gamma-F(u)=I_\psi(B)+K_u(B),
+\qquad T_B K_u(B)>\mathcal E(L_B).
+$$
+
+Here $K_u(B)$ is the supplier's extended arithmetic core, distinct from
+PG1's strict inventory clock $K(v)$. Every extra support term, prime power,
+elementary correction and infinite endpoint in that supplier remains.
+CR3 gives the instantiated all-original-core upper comparison
+
+$$
+\boxed{
+T_B I_\psi(B)<-\mathcal E(L_B)
+-\frac d{64}B^{1/2-b}\log B.}
+\tag{CR16}
+$$
+
+The existing allowance is $\mathcal E(L_B)>0.65$ for $L_B\ge26$,
+and the original $0<b<1/2$ and $d>0$ are fixed. Thus, for every fixed $M\ge0$, one common sufficiently
+large witness start makes $T_B I_\psi(B)<-M$ for **every** original label
+and maximizing tie. This is uniform on the entire original family, with
+no clock comparison between $B$ and $X$ required.
+
+This uses the [existing CNS oscillation/tail consumer](../Arith/caveney2012sacaga.md#inherited-oscillation-relaxes-the-eventual-signed-target)
+with CR3's newly paid original-core scope and exponent; it does not repeat
+that consumer as a new analytic theorem or introduce a different kernel.
+The integral is evaluated at $B=\log u$, not at the forced integer clock
+$A=\log(pu)$, an auxiliary prime or a freely selected real center. A lower
+bound at one of those other clocks cannot be transported here without its
+own estimate. CR16 supplies no lower bound at $B$, no PG15 exterior slack,
+and no estimate for the independent fixed-source finite head. Those
+obligations and RH remain unproved. This is a paper application only,
+with no Lean verification or originality claim.
+
+## The full removal gain pays a linear complete-head allowance
+
+Keep the original fixed $b,d$, witness $X$, every label $p$ and every
+maximizing tie $N=pu$ from CR1--CR4. Write $t=\log p$,
+$B=\log u$, $A=B+t$, $s_B=\sqrt B\log B$, and
+$v_{p,u}=t/\sqrt B$. The same actual core is $u=N_A^{\rm str}$,
+so $K(A)=B$.
+
+The [existing full-real-clock activation correction](../ArithSums/nicolas2025comparison.md#the-arithmetic-correction-vanishes-at-the-paid-heat-scale)
+is valid for the strict prefix. It gives
+$K(x)=\psi(x)+O(\sqrt x[\log(2x)]^{5/2})$ for every real $x>1$.
+Reuse its unconditional PNT input and the original uniform escape of the
+source clocks. Then, uniformly over all original labels and ties,
+
+$$
+K(A)=A+o(A),\qquad A/B\longrightarrow1,\qquad t/B\longrightarrow0.
+\tag{CR17}
+$$
+
+This uses no short-interval estimate, no own-clock optimum at $B$, and
+no comparison $B\ge X$.
+
+### The retained height increment supplies its own coefficient
+
+CR4 retains the full same-source height
+
+$$
+F(u)-\gamma\ge\frac d2X^{-b}+D_t(B)-c_p,
+\qquad c_p=\log(1+1/p)\le e^{-\ell}.
+$$
+
+The strictly decreasing price gives
+$t/(A\log A)\le D_t(B)\le t/(B\log B)$. Define the normalized
+removal coefficient
+
+$$
+\chi_{p,u}=\frac{B\log B}{t}[D_t(B)-c_p].
+$$
+
+Using the original $t\ge\ell$, $A\le R$ and $\log R=o(\ell)$,
+
+$$
+\frac{B\log B}{A\log A}
+-\frac{R\log R}{\ell}e^{-\ell}
+\le\chi_{p,u}\le1.
+\tag{CR18}
+$$
+
+The lower correction tends to zero, while CR17 sends the first term to
+one. Consequently $\chi_{p,u}\to1$ uniformly on the entire original
+family. Both the original constants and all ties remain; the common
+analytic/source start is existential, with no numeric value supplied.
+In particular
+
+$$
+s_B[D_t(B)-c_p]=\chi_{p,u}v_{p,u}.
+$$
+
+Reuse the [existing unrestricted integer identity OCQ13](../ArithSums/nicolas2025comparison.md)
+at this same core clock. Let $R_{\rm pp}(B)$ denote its original
+unrestricted prime-power reserve and $d_B(u)$ its actual own-price
+defect. They are distinct from the source-window ceiling $R$, strict
+stock $K(v)$ and extended GA2 core $K_u(B)$ in CR16. The supplier keeps
+all positive integers, including one, and gives
+
+$$
+-s_B I_\psi(B)
+=s_B(F(u)-\gamma)+s_B R_{\rm pp}(B)+s_Bd_B(u),
+\qquad R_{\rm pp}(B)\ge0,\quad d_B(u)\ge0.
+$$
+
+Thus the unabridged height, rather than a second use of CR3's partly
+height-derived bound, supplies
+
+$$
+-s_B I_\psi(B)\ge
+\frac d2\sqrt B\log B\,X^{-b}+\chi_{p,u}v_{p,u}.
+\tag{CR19}
+$$
+
+No positive contribution is counted twice.
+
+### The residual margin keeps the original witness scale
+
+Fix $0\le\kappa<1$ once. Uniform convergence in CR18 permits one
+common start with $\chi_{p,u}\ge(1+\kappa)/2$. If $B\ge X$, the first
+term of CR19 is at least $(d/2)X^{1/2-b}\log X$. If $B<X$, then
+
+$$
+v_{p,u}\ge\frac\ell{\sqrt X}
+=\frac d8X^{1/2-b}\log X,
+$$
+
+and the remaining $(\chi_{p,u}-\kappa)v_{p,u}$ is at least
+$d(1-\kappa)X^{1/2-b}\log X/16$. Both branches retain nonnegative
+other terms. Therefore every original label and maximizing tie satisfies
+
+$$
+\boxed{
+-s_BI_\psi(B)\ge
+\kappa\frac{\log p}{\sqrt B}
++\frac{d(1-\kappa)}{16}X^{1/2-b}\log X.}
+\tag{CR20}
+$$
+
+The last term tends to infinity uniformly because the original
+$b<1/2$ is fixed. In particular $\kappa=1/2$ leaves the coefficient
+$d/32$. The boundary $\kappa=1$ is not established by this argument.
+Neither $v_{p,u}$ alone nor a different source clock is required to
+have a diverging lower bound.
+
+These are paper applications of the named suppliers, without Lean
+verification or a claim of literature originality.
+
+## The complete original-window head may carry the removal allowance
+
+Keep the entire improper integral in CR16 and all its original zero
+coefficients, actual real parts, multiplicities, elementary correction
+and endpoint conventions. For an admissible moving-clock cutoff write
+a complete finite-head upper enclosure as
+
+$$
+\begin{aligned}
+U(B,T)={}&s_B\left[
+2\operatorname{Re}\sum_{0<\operatorname{Im}\rho\le T}
+ m_\rho F_B(\rho)+R_{\rm elem}(B)\right]
++E_{\rm full}(B,T),\\
+-s_BI_\psi(B)&\le U(B,T).
+\end{aligned}
+$$
+
+Here $F_B$ is the [supplier's original coefficient (M1)](../ArithSums/nicolas2025comparison.md#a-fixed-positive-scale-mixture-cannot-remove-the-functional-equation-weight)
+with its variable $A$ set to this same $B$, and $R_{\rm elem}(B)$ is
+that supplier's pole-and-trivial-zero correction, with its positive
+normalized sign retained. The [existing signed suffix contract
+(J1)--(J6)](../ArithSums/nicolas2025comparison.md#a-signed-infinite-height-allowance-from-the-existing-landau-formula)
+applies for $B\ge e^2$ and $T\ge8$. Its signed prime-power main term
+keeps its displayed sign. The [moving cut $T=B^{1/4}\log B$](../ArithSums/nicolas2025comparison.md#a-moving-cut-makes-this-signed-suffix-allowance-tend-to-zero)
+pays an asymptotically vanishing suffix allowance; it does not bound
+the remaining head. The complete $E_{\rm full}$ must pay every omitted suffix, coefficient
+approximation and enclosure error exactly once in the supplier's actual
+domain. Exact coefficients introduce no coefficient-approximation
+error. A symbolic remainder or a finite verified zero range does not
+establish this upper-enclosure contract at arbitrary moving clocks.
+
+CR20 now allows the still-unproved pointwise upper target
+
+$$
+U(B,T)\le M+\kappa\frac{\log p}{\sqrt B}
+\tag{CR21}
+$$
+
+with one fixed finite $M\ge0$ and $0\le\kappa<1$. It is also sufficient to
+control one complete original window jointly. Keep $p_0<\cdots<p_m$,
+$\delta_i=\log p_{i+1}-\log p_i>0$ for $0\le i<m$, and
+$L_X=\sum_{i=0}^{m-1}\delta_i$. The final label $p_m$ remains the
+original window boundary. For each allowed assignment of maximizing
+ties define
+
+$$
+V_X^{\rm lag}=\sum_{i=0}^{m-1}\delta_i
+\frac{\log p_i}{\sqrt{B_i}},\qquad B_i=\log u_i.
+$$
+
+The same positive weights applied to CR20 give
+
+$$
+\sum_{i=0}^{m-1}\delta_i[-s_{B_i}I_\psi(B_i)]
+\ge\kappa V_X^{\rm lag}
++\frac{d(1-\kappa)}{16}X^{1/2-b}\log X\,L_X.
+\tag{CR22}
+$$
+
+A sufficient obligation is: for fixed finite $M\ge0$ and
+$0\le\kappa<1$, beyond every common
+analytic/source start, some original qualifying **full** window has the
+following property. Every allowed assignment of maximizing ties admits
+admissible cutoffs $T_i$, with complete remainder contracts at those same
+cores, satisfying
+
+$$
+\boxed{
+\sum_{i=0}^{m-1}\delta_iU(B_i,T_i)
+\le ML_X+\kappa V_X^{\rm lag}.}
+\tag{CR23}
+$$
+
+The quantifier order is
+
+$$
+\begin{gathered}
+\exists\,M\ge0,\ \kappa\in[0,1)\quad
+\forall\,\text{common finite starts}\quad
+\exists\,\text{qualifying original full window}\quad\\
+\forall\,\text{allowed maximizing-tie assignments}\quad
+\exists\,\text{admissible cutoffs and complete contracts}.
+\end{gathered}
+$$
+
+The starts do not depend on individual labels or
+ties. CR22--CR23 would imply
+
+$$
+\left[\frac{d(1-\kappa)}{16}X^{1/2-b}\log X-M\right]L_X\le0,
+$$
+
+contradicting the original $X\to\infty$ and $L_X>0$. No thinning,
+free-center mean or favorable tie selection enters the comparison.
+CR21 and CR23 are sufficient conditions, not necessary ones; neither
+has been proved.
+
+### Any fixed quadratic lag is already absorbed by this height gain
+
+For the same original sources put $z_{p,u}=t^2/B^{3/2}$. The exact
+relation
+
+$$
+z_{p,u}=\frac tBv_{p,u}
+\tag{CR24}
+$$
+
+and CR17 show that, for every fixed finite $C\ge0$ and fixed
+$0<\kappa<1$, one common eventual start makes
+$Cz_{p,u}\le\kappa v_{p,u}$ for every original label and tie. The same
+comparison holds after applying the original positive window weights.
+Thus the original full-height gain already permits any fixed quadratic
+coefficient in the head upper target, including $1/2$ and larger
+constants. No estimate of the own-price defect is needed for that
+consumer. This is a relative comparison; it asserts no divergence of
+either lag allowance.
+
+The linear allowance is a supplier-relative application of the original
+removal height and actual stock/PNT correspondence. The complete moving
+finite-head upper condition, cofinal joint upper condition, original
+PG15 exterior sign, boundary $\kappa=1$ and RH remain unproved. No
+literature originality, new pressure decomposition or Lean verification
+is claimed.
