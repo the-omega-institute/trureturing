@@ -31,9 +31,6 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             Node("wall", "The wall", Eq(Call("wall"), D(2)), true, "The third encoding denotes the wall 3."),
             Node("Pos", "Cyclic positions", AB(Eq(Sites, Call("ZMod", Length))), true,
                 "Addition of positions is taken modulo L, so the last and first positions are adjacent."),
-            Node("lengthNeZero", "Positive cyclic length", AB(Eq(Call("lengthNeZero", A, B),
-                Call("NeZeroMk", Call("proofOf", Not(Eq(Length, D(0))))))), true,
-                "The sum a+b+2 is nonzero. NeZeroMk packages this proof and supplies the finite enumeration of cyclic positions."),
             Node("count", "Counting a letter", CountFormula(), true,
                 "Each site contributes one exactly when its letter equals c."),
             Node("Word", "Counted literal words", WordFormula(), true,
@@ -105,7 +102,6 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
     private static Formula Iff(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.Iff, Parenthesized(y));
     private static Formula And(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.And, Parenthesized(y));
-    private static Formula Not(Formula x) => Seq(Neg, Parenthesized(x));
     private static Formula PlusOf(Formula x, Formula y) => Seq(x, Sp, Plus, Sp, y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula Smul(Formula x, Formula y) => Seq(x, Sp, Cdot, Sp, y);

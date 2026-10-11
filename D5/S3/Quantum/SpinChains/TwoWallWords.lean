@@ -29,8 +29,6 @@ def wall : Letter := 2
 /-- Cyclic sites; the length is always at least two. -/
 abbrev Pos (a b : ℕ) := ZMod (a + b + 2)
 
-instance lengthNeZero (a b : ℕ) : NeZero (a + b + 2) := ⟨by omega⟩
-
 /-- Number of occurrences of a letter. -/
 def count {a b : ℕ} (c : Letter) (w : Pos a b → Letter) : ℕ :=
   ∑ p, if w p = c then 1 else 0
