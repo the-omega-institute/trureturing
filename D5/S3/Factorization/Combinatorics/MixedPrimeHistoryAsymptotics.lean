@@ -441,18 +441,20 @@ private theorem multiplicative_series (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
   rw [hval] at hh
   simpa only [hcoeff] using hh
 
+private theorem prime_norm_summable (z : ℂ) (hz : ‖z‖ < 1) :
+    Summable (fun q : ℕ => ‖if q.Prime then z ^ q else 0‖) := by
+  apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _) (f := fun q => ‖z‖ ^ q)
+  · intro q
+    split_ifs <;> simp [norm_pow]
+  · exact summable_geometric_of_lt_one (norm_nonneg _) hz
+
 private theorem additive_series (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
     (hr1 : r < 1) (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B)
     (z : ℂ) (hz : ‖z‖ < r) :
     HasSum (fun n : ℕ => ∑ q ∈ (Finset.range n).filter Nat.Prime,
       (weightedCount t (n - q) : ℂ) * z ^ n) (primeSeries z * generating t z) := by
   classical
-  have hp : Summable (fun q : ℕ => ‖if q.Prime then z ^ q else 0‖) := by
-    apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _)
-      (f := fun q => ‖z‖ ^ q)
-    · intro q
-      split_ifs <;> simp [norm_pow]
-    · exact summable_geometric_of_lt_one (norm_nonneg _) (hz.trans hr1)
+  have hp := prime_norm_summable z (hz.trans hr1)
   have h := hasSum_sum_range_mul_of_summable_norm hp (norm_summable t r B ht hr hB z hz)
   have hc (n : ℕ) :
       (∑ q ∈ Finset.range (n + 1), (if q.Prime then z ^ q else 0) *
@@ -598,6 +600,114 @@ private theorem unique_critical_root (t : ℝ) (ht : 0 < t) :
     rw [hρ, hσ.2.2] at hx
     exact (lt_irrefl _ hx)
 
+private theorem prime_derivative_positive (ρ : ℝ) (hρ0 : 0 < ρ) (hρ1 : ρ < 1) :
+    ∃ d : ℝ, 0 < d ∧ HasDerivAt (primeSeries (𝕜 := ℂ)) (d : ℂ) (ρ : ℂ) := by
+  classical
+  obtain ⟨a, hρa, ha1⟩ := exists_between hρ1
+  have ha0 : 0 ≤ a := (hρ0.trans hρa).le
+  have hf (q : ℕ) : DifferentiableOn ℂ (fun z : ℂ => if q.Prime then z ^ q else 0)
+      (Metric.ball 0 a) := by
+    by_cases hq : q.Prime <;> simp only [hq, if_true, if_false] <;> fun_prop
+  have hnorm (q : ℕ) (z : ℂ) (hz : z ∈ Metric.ball 0 a) :
+      ‖if q.Prime then z ^ q else 0‖ ≤ a ^ q := by
+    by_cases hq : q.Prime
+    · simp only [if_pos hq, norm_pow]
+      exact pow_le_pow_left₀ (norm_nonneg z) (by simpa using (Metric.mem_ball.mp hz).le) _
+    · simp only [if_neg hq, norm_zero]
+      exact pow_nonneg ha0 _
+  have hs := Complex.hasSum_deriv_of_summable_norm
+    (summable_geometric_of_lt_one ha0 ha1) hf Metric.isOpen_ball hnorm
+    (show (ρ : ℂ) ∈ Metric.ball 0 a by simpa [abs_of_pos hρ0] using hρa)
+  have hr : HasSum (fun q : ℕ => if q.Prime then (q : ℝ) * ρ ^ (q - 1) else 0)
+      (deriv (primeSeries (𝕜 := ℂ)) (ρ : ℂ)).re := by
+    have h := Complex.hasSum_re hs
+    change HasSum _ (deriv (primeSeries (𝕜 := ℂ)) (ρ : ℂ)).re at h
+    apply h.congr_fun
+    intro q
+    by_cases hq : q.Prime <;> simp [hq, deriv_pow_field, ← Complex.ofReal_pow]
+  have hi : (deriv (primeSeries (𝕜 := ℂ)) (ρ : ℂ)).im = 0 := by
+    have h := Complex.hasSum_im hs
+    have he : (fun q : ℕ => (deriv (fun z : ℂ => if q.Prime then z ^ q else 0) (ρ : ℂ)).im) =
+        fun _ => (0 : ℝ) := by
+      funext q
+      by_cases hq : q.Prime <;> simp [hq, deriv_pow_field, ← Complex.ofReal_pow]
+    rw [he] at h
+    exact h.unique hasSum_zero
+  have hp : 0 < (deriv (primeSeries (𝕜 := ℂ)) (ρ : ℂ)).re := by
+    rw [← hr.tsum_eq]
+    apply hr.summable.tsum_pos (fun q => by split_ifs <;> positivity) 2
+    simp only [Nat.prime_two, if_true]
+    positivity
+  refine ⟨_, hp, ?_⟩
+  have hd := (Complex.differentiableOn_tsum_of_summable_norm
+    (summable_geometric_of_lt_one ha0 ha1) hf Metric.isOpen_ball hnorm).differentiableAt
+    (Metric.isOpen_ball.mem_nhds (show (ρ : ℂ) ∈ Metric.ball 0 a by
+      simpa [abs_of_pos hρ0] using hρa))
+  have he : ((deriv (primeSeries (𝕜 := ℂ)) (ρ : ℂ)).re : ℂ) =
+      deriv (primeSeries (𝕜 := ℂ)) (ρ : ℂ) := by
+    apply Complex.ext <;> simp [hi]
+  rw [he]
+  exact hd.hasDerivAt
+
+set_option maxHeartbeats 800000 in
+-- Nonnegative prime deficits identify two separate complex powers before cancellation.
+private theorem critical_zero_unique (t ρ : ℝ) (ht : 0 < t) (hρ0 : 0 < ρ)
+    (hρ1 : ρ < 1) (hroot : t * primeSeries ρ = 1) (z : ℂ) (hz : ‖z‖ ≤ ρ)
+    (hzero : 1 - (t : ℂ) * primeSeries z = 0) : z = (ρ : ℂ) := by
+  classical
+  have hp := prime_norm_summable z (hz.trans_lt hρ1)
+  have hn : ‖primeSeries z‖ ≤ primeSeries ‖z‖ := by
+    have h := norm_tsum_le_tsum_norm hp
+    simpa only [primeSeries, apply_ite norm, norm_pow, norm_zero] using h
+  have hprod : (t : ℂ) * primeSeries z = 1 := (sub_eq_zero.mp hzero).symm
+  have hnorm : ‖z‖ = ρ := by
+    apply le_antisymm hz
+    by_contra hh
+    have hl := mul_lt_mul_of_pos_left
+      (prime_strict ‖z‖ ρ (norm_nonneg z) (lt_of_not_ge hh) hρ1) ht
+    have hb := mul_le_mul_of_nonneg_left hn ht.le
+    have he := congrArg norm hprod
+    simp only [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos ht, norm_one] at he
+    rw [hroot] at hl
+    linarith
+  have hreal : (primeSeries z).re = primeSeries ρ := by
+    have h := congrArg Complex.re hprod
+    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero,
+      Complex.one_re] at h
+    nlinarith [hroot]
+  let e (q : ℕ) : ℝ := if q.Prime then ρ ^ q - (z ^ q).re else 0
+  have he0 (q : ℕ) : 0 ≤ e q := by
+    by_cases hq : q.Prime
+    · have h := Complex.re_le_norm (z ^ q)
+      rw [norm_pow, hnorm] at h
+      simpa [e, hq] using sub_nonneg.mpr h
+    · simp [e, hq]
+  have hs : HasSum e 0 := by
+    have h := (prime_summable ρ hρ0.le hρ1).hasSum.sub (Complex.hasSum_re hp.of_norm.hasSum)
+    have hc (q : ℕ) :
+        (if q.Prime then ρ ^ q else 0) - (if q.Prime then z ^ q else 0).re = e q := by
+      by_cases hq : q.Prime <;> simp [e, hq]
+    change HasSum _ (primeSeries ρ - (primeSeries z).re) at h
+    rw [hreal, sub_self] at h
+    exact h.congr_fun (fun q => (hc q).symm)
+  have he (q : ℕ) : e q = 0 := by
+    apply le_antisymm _ (he0 q)
+    have h := hs.summable.le_tsum q (fun j _ => he0 j)
+    rwa [hs.tsum_eq] at h
+  have hpower (q : ℕ) (hq : q.Prime) : z ^ q = (ρ : ℂ) ^ q := by
+    have hre : (z ^ q).re = ρ ^ q := by have h := he q; simp [e, hq] at h; linarith
+    have him : (z ^ q).im = 0 := Complex.abs_re_eq_norm.mp (by
+      rw [hre, norm_pow, hnorm, abs_of_nonneg (pow_nonneg hρ0.le _)])
+    apply Complex.ext <;> simp [hre, him, ← Complex.ofReal_pow]
+  have h2 := hpower 2 Nat.prime_two
+  have h3 := hpower 3 Nat.prime_three
+  have hx : (ρ : ℂ) ^ 2 * z = (ρ : ℂ) ^ 2 * (ρ : ℂ) := by
+    calc
+      _ = z ^ 2 * z := by rw [h2]
+      _ = z ^ 3 := (pow_succ z 2).symm
+      _ = _ := h3.trans (pow_succ (ρ : ℂ) 2)
+  exact mul_left_cancel₀ (pow_ne_zero 2 (by exact_mod_cast hρ0.ne')) hx
+
 /-- The unique critical radius supports the common endpoint and prime-composition bounds. -/
 theorem critical_control (t : ℝ) (ht : 0 < t) :
     ∃ ρ : ℝ, (0 < ρ ∧ ρ < 1 ∧ t * primeSeries ρ = 1) ∧
@@ -611,7 +721,9 @@ theorem critical_control (t : ℝ) (ht : 0 < t) :
       (∀ a : ℝ, 0 ≤ a → a ^ 2 < ρ → ∃ r : ℝ, a ^ 2 < r ∧ r < ρ ∧
         ∃ B : ℝ, 0 < B ∧ (∀ n : ℕ, weightedCount t n * r ^ n ≤ B) ∧
           ∀ q : ℕ, q.Prime → ∀ z : ℂ, ‖z‖ ≤ a →
-            ‖generating t (z ^ q)‖ ≤ B * a ^ q / (r - a ^ 2)) := by
+            ‖generating t (z ^ q)‖ ≤ B * a ^ q / (r - a ^ 2)) ∧
+      (∃ d : ℝ, 0 < d ∧ HasDerivAt (primeSeries (𝕜 := ℂ)) (d : ℂ) (ρ : ℂ)) ∧
+      (∀ z : ℂ, ‖z‖ ≤ ρ → 1 - (t : ℂ) * primeSeries z = 0 → z = (ρ : ℂ)) := by
   obtain ⟨ρ, hρ, huniq⟩ := unique_critical_root t ht
   have hsub (r : ℝ) (hr : 0 < r) (hrρ : r < ρ) : t * primeSeries r < 1 := by
     rw [← hρ.2.2]
@@ -619,7 +731,9 @@ theorem critical_control (t : ℝ) (ht : 0 < t) :
   have control (r : ℝ) (hr : 0 < r) (hrρ : r < ρ) :=
     subcritical_analytic_control t r ht hr (hrρ.trans hρ.2.1) (hsub r hr hrρ)
   refine ⟨ρ, hρ, fun σ hσ0 hσ1 hσ => huniq σ ⟨hσ0, hσ1, hσ⟩,
-    fun r hr hrρ => subcritical_bound t r ht hr (hrρ.trans hρ.2.1) (hsub r hr hrρ), ?_, ?_, ?_, ?_⟩
+    fun r hr hrρ => subcritical_bound t r ht hr (hrρ.trans hρ.2.1) (hsub r hr hrρ),
+    ?_, ?_, ?_, ?_, prime_derivative_positive ρ hρ.1 hρ.2.1,
+    critical_zero_unique t ρ ht hρ.1 hρ.2.1 hρ.2.2⟩
   · intro z hz
     obtain ⟨r, hzr, hrρ⟩ := exists_between (show ‖z‖ < ρ by simpa using hz)
     obtain ⟨B, _, _, ha, _⟩ := control r ((norm_nonneg z).trans_lt hzr) hrρ

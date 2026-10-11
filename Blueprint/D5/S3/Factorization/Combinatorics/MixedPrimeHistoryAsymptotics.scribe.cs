@@ -79,7 +79,10 @@ internal sealed class MixedPrimeHistoryAsymptoticsDocument : IScribeDocumentDefi
                     + "For every nonnegative a with a squared less than rho, one can choose "
                     + "r strictly between a squared and rho and then one positive B that "
                     + "controls all endpoint weights and all prime compositions on the "
-                    + "closed a disk. The choices precede the prime and complex-point quantifiers.")),
+                    + "closed a disk. The choices precede the prime and complex-point quantifiers. "
+                    + "The complex derivative of P at rho is a positive real number. "
+                    + "The only zero of 1 - t P(z) in the closed rho disk is rho itself; "
+                    + "the prime two and prime three terms determine this boundary equality.")),
                     Paragraph(Text(
                     "Strict increase follows already from the prime two term. Arbitrarily "
                     + "large finite sets of primes force P to cross every fixed positive "
