@@ -14,7 +14,9 @@ triage: anchor
 # A multiplicative Colombeau formulation of Nyman--Beurling
 
 The inspected source is [arXiv:2606.22562v3](https://arxiv.org/pdf/2606.22562v3),
-updated 29 September 2026. The paper was first posted in 2025. Its theorem
+updated 29 September 2026 and first posted on 21 June 2026, according to the
+versioned arXiv metadata. The manuscript heading says May 2025; that is not
+the arXiv posting date. Its theorem
 statements are recorded as literature input; the proof was not independently
 audited here, and no Lean verification is claimed.
 
