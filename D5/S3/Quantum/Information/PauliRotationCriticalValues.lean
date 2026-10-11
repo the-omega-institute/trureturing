@@ -517,12 +517,14 @@ private theorem coordinate_inverse :
   have hR : Ri * R = 1 := by
     have hp (i : Fin 15) : 0 < rowScale i := by
       simp -implicitDefEqProofs only [rowScale_unfold]; split_ifs <;> positivity
-    simpa only [Ri, R, Real.sqrt_sq (le_of_lt (hp _))] using
+    rw [Ri, R]
+    simpa -implicitDefEqProofs only [Real.sqrt_sq (le_of_lt (hp _))] using
       (diagonal_scalings (fun i => rowScale i ^ 2) (fun i => pow_pos (hp i) 2)).2.1
   have hS : Si * S = 1 := by
     have hp (i : Fin 15) : 0 < colScale i := by
       simp -implicitDefEqProofs only [colScale_unfold]; split_ifs <;> positivity
-    simpa only [Si, S, Real.sqrt_sq (le_of_lt (hp _))] using
+    rw [Si, S]
+    simpa -implicitDefEqProofs only [Real.sqrt_sq (le_of_lt (hp _))] using
       (diagonal_scalings (fun i => colScale i ^ 2) (fun i => pow_pos (hp i) 2)).2.1
   have hS' : S * Si = 1 := mul_eq_one_comm.mp hS
   constructor
@@ -630,12 +632,12 @@ private theorem normalized_witness : B * Matrix.of (J_H witnessP point) * U = D 
   have hR : Ri * R = 1 := by
     have hp (i : Fin 15) : 0 < rowScale i := by
       simp -implicitDefEqProofs only [rowScale_unfold]; split_ifs <;> positivity
-    simpa only [Ri, R, Real.sqrt_sq (le_of_lt (hp _))] using
+    simpa -implicitDefEqProofs only [Ri, R, Real.sqrt_sq (le_of_lt (hp _))] using
       (diagonal_scalings (fun i => rowScale i ^ 2) (fun i => pow_pos (hp i) 2)).2.1
   have hS : Si * S = 1 := by
     have hp (i : Fin 15) : 0 < colScale i := by
       simp -implicitDefEqProofs only [colScale_unfold]; split_ifs <;> positivity
-    simpa only [Si, S, Real.sqrt_sq (le_of_lt (hp _))] using
+    simpa -implicitDefEqProofs only [Si, S, Real.sqrt_sq (le_of_lt (hp _))] using
       (diagonal_scalings (fun i => colScale i ^ 2) (fun i => pow_pos (hp i) 2)).2.1
   rw [show Matrix.of (J_H witnessP point) = R * ratReal certA * Si from J_witness]
   calc _ = ratReal certK * (Ri * R) * ratReal certA * (Si * S) * ratReal certN := by
