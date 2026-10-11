@@ -7,7 +7,6 @@
    digest: Restricted-state compatibility determines incompatible unbiased qubit pairs. -/
 
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
-import Mathlib.Tactic.ComputeDegree
 import D5.S3.Arith.Lattices.Klartag.State.PaddingMap
 noncomputable section
 open D5.S3.Quantum.FiniteDimensional
