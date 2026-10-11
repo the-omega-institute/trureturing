@@ -135,7 +135,7 @@ def iidLaw (R : Realization signature.{u, v, w}) : Prop :=
     Tendsto (fun n => ∫ ω, f n ω ∂μ) atTop (𝓝 (∫ ω, g ω ∂μ))
 
 theorem iidLaw_actual : iidLaw actual.{u, v, w} := by
-  exact @iid_moving_support_posterior_limit.{u, v, w}
+  exact @iid_moving_support_posterior_limit_of_coordinates.{u, v, w}
 
 theorem transportLaw_rejected : ¬ transportLaw.{u, v, w, o} rejected := by
   intro h
@@ -258,7 +258,7 @@ def iidArena : Arena where
   signature := signature.{u, v, w}
   Law := iidLaw.{u, v, w}
 
-def iidEvidence : Registration iidArena.{u, v, w} (type_of% (@_root_.D5.S3.DivergenceSupport.MovingSupportKLTransport.iid_moving_support_posterior_limit.{u, v, w})) where
+def iidEvidence : Registration iidArena.{u, v, w} (type_of% (@_root_.D5.S3.DivergenceSupport.MovingSupportKLTransport.iid_moving_support_posterior_limit_of_coordinates.{u, v, w})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨iidLaw_actual, rejected, iidLaw_rejected⟩
@@ -271,6 +271,86 @@ def iidEvidence : Registration iidArena.{u, v, w} (type_of% (@_root_.D5.S3.Diver
     · intro i; exact nomatch i
   dependence := actual_dependence
 
+
+def transportRegistration : Contract.Registration
+    (@_root_.D5.S3.DivergenceSupport.MovingSupportKLTransport.posterior_defect_l1_of_ae_tendsto)
+    (Realization signature) Unit Unit where
+  unitName := `D5.S3.DivergenceSupport.MovingSupportKLTransport.posterior_defect_l1_of_ae_tendsto.__information_unit
+  realizationName := `Reg.D5.S3.DivergenceSupport.MovingSupportKLTransport.transportEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨transportArena⟩
+  objectArena := .source ⟨transportArena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source transportArena ⟨transportEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p h =>
+    @posteriorDefect p.J p.I p.H p.finiteJ p.finiteI p.d p.q p.W p.r h)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+def limitRegistration : Contract.Registration
+    (@_root_.D5.S3.DivergenceSupport.MovingSupportKLTransport.moving_support_posterior_limit)
+    (Realization signature) Unit Unit where
+  unitName := `D5.S3.DivergenceSupport.MovingSupportKLTransport.moving_support_posterior_limit.__information_unit
+  realizationName := `Reg.D5.S3.DivergenceSupport.MovingSupportKLTransport.limitEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨limitArena⟩
+  objectArena := .source ⟨limitArena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source limitArena ⟨limitEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p h =>
+    @posteriorDefect p.J p.I p.H p.finiteJ p.finiteI p.d p.q p.W p.r h)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+def iidRegistration : Contract.Registration
+    (@_root_.D5.S3.DivergenceSupport.MovingSupportKLTransport.iid_moving_support_posterior_limit_of_coordinates)
+    (Realization signature) Unit Unit where
+  unitName := `D5.S3.DivergenceSupport.MovingSupportKLTransport.iid_moving_support_posterior_limit_of_coordinates.__information_unit
+  realizationName := `Reg.D5.S3.DivergenceSupport.MovingSupportKLTransport.iidEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨iidArena⟩
+  objectArena := .source ⟨iidArena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source iidArena ⟨iidEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p h =>
+    @posteriorDefect p.J p.I p.H p.finiteJ p.finiteI p.d p.q p.W p.r h)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
 end
 end Reg.D5.S3.DivergenceSupport.MovingSupportKLTransport

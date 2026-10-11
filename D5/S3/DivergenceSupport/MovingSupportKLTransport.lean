@@ -5,24 +5,23 @@
    anchors: []
    utility: none
    digest: Common-record likelihood ratios give moving-support KL tail bounds and L1 limits. -/
-
 import D5.S3.DivergenceSupport.Garbling.DeterministicGarbling
 import D5.S3.Observer.ProductMeasures.FinitePmfLikelihood
 import Mathlib.MeasureTheory.Function.UniformIntegrable
-
+import D5.S3.Divergence.GibbsEquality
+import D5.S3.Entropy.Forgetting.CompletionEntropyMinimality
+import D5.S3.Entropy.Forgetting.PushforwardComposition
+import Mathlib.Probability.StrongLaw
+import Mathlib.Probability.Independence.InfinitePi
 open Filter MeasureTheory Set
 open scoped BigOperators ENNReal NNReal Topology
-
 noncomputable section
-
 namespace D5.S3.DivergenceSupport.MovingSupportKLTransport
-
 open D5.S3.Divergence.ClassicalDPI
 open D5.S3.Divergence.GrandmotherTheorem
 open D5.S3.DivergenceSupport.ZeroSupportDPI
 open D5.S3.DivergenceSupport.Garbling.DeterministicGarbling
 open D5.S3.Entropy.Forgetting.CapacityMonotone
-
 /-- The scalar posterior KL loss, set to zero on actual null records. Posterior vectors
 are used only in the positive-evidence branch. -/
 def posteriorDefect {J I H : Type*} [Fintype J] [Fintype I]
@@ -32,18 +31,6 @@ def posteriorDefect {J I H : Type*} [Fintype J] [Fintype I]
       klDivergence (pushforward r (posterior W d h))
         (pushforward r (posterior W q h))
   else 0
-
-private lemma pushforward_mass {J I : Type*} [Fintype J] [Fintype I]
-    (r : J → I) (p : J → ℝ) (hp : (∀ j, 0 ≤ p j) ∧ ∑ j, p j = 1) :
-    (∀ i, 0 ≤ pushforward r p i) ∧ ∑ i, pushforward r p i = 1 := by
-  classical
-  constructor
-  · intro i
-    exact Finset.sum_nonneg fun j _ => by
-      split_ifs <;> simp_all only [le_refl]
-  · simp only [pushforward, Finset.sum_comm (f := fun i j => if r j = i then p j else 0)]
-    simpa using hp.2
-
 private lemma posterior_defect_bounds {J I H : Type*} [Fintype J] [Fintype I]
     (d q : J → ℝ) (W : J → H → ℝ) (r : J → I)
     (hd : (∀ j, 0 ≤ d j) ∧ ∑ j, d j = 1)
@@ -86,8 +73,8 @@ private lemma posterior_defect_bounds {J I H : Type*} [Fintype J] [Fintype I]
     split_ifs with he
     · exact hac j (by simpa [he] using hz j hj)
     · rfl
-  have hcoarse := kl_divergence_nonneg _ _ (pushforward_mass r _ hpd)
-    (pushforward_mass r _ hpq) hpushac
+  have hcoarse := kl_divergence_nonneg _ _ (D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law _ r hpd)
+    (D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law _ r hpq) hpushac
   have hkl : klDivergence (posterior W d h) (posterior W q h) ≤
       Real.log (M / (channelOutput W d h / channelOutput W q h)) := by
     calc
@@ -113,7 +100,6 @@ private lemma posterior_defect_bounds {J I H : Type*} [Fintype J] [Fintype I]
   rw [posteriorDefect, if_pos hD]
   exact ⟨hQ, deterministic_forgetting_kl_loss_nonnegative _ _ r hpd hpq hac,
     (sub_le_self _ hcoarse).trans hkl⟩
-
 private lemma posterior_density_bound {J H : Type*} [Fintype J]
     (d q : J → ℝ) (W : J → H → ℝ) {M : ℝ}
     (hdom : ∀ j, d j ≤ M * q j) (hW : ∀ j h, 0 ≤ W j h)
@@ -126,7 +112,6 @@ private lemma posterior_density_bound {J H : Type*} [Fintype J]
       div_le_div_of_nonneg_right
         (mul_le_mul_of_nonneg_right (hdom j) (hW j h)) hD.le
     _ = _ := by field_simp [hD.ne', hQ.ne']
-
 private lemma likelihood_weighted_tail {D Q M f R : ℝ}
     (hD : 0 < D) (hQ : 0 < Q) (hM : 0 < M)
     (hR : 0 ≤ R) (hfR : R ≤ f) (hf : f ≤ Real.log (M / (D / Q))) :
@@ -151,7 +136,6 @@ private lemma likelihood_weighted_tail {D Q M f R : ℝ}
           mul_le_mul_of_nonneg_right hscalar (Real.exp_pos _).le
         _ = _ := by rw [mul_assoc, ← Real.exp_add]; congr 2; ring
     _ = _ := by ring
-
 private lemma finite_record_integral {Ω H : Type*} [MeasurableSpace Ω]
     [Fintype H] [MeasurableSpace H] [MeasurableSingletonClass H]
     (μ : Measure Ω) [IsFiniteMeasure μ] (record : Ω → H) (hr : Measurable record)
@@ -162,7 +146,6 @@ private lemma finite_record_integral {Ω H : Type*} [MeasurableSpace Ω]
   apply Finset.sum_congr rfl
   intro h _
   rw [map_measureReal_apply hr (measurableSet_singleton h), hmass, smul_eq_mul]
-
 private lemma finite_record_tail {Ω H : Type*} [MeasurableSpace Ω]
     [Fintype H] [MeasurableSpace H] [MeasurableSingletonClass H]
     (μ : Measure Ω) [IsFiniteMeasure μ] (record : Ω → H) (hr : Measurable record)
@@ -191,7 +174,6 @@ private lemma finite_record_tail {Ω H : Type*} [MeasurableSpace Ω]
         rw [hz, zero_mul]
         exact mul_nonneg (hQ h) (by positivity)
     _ = _ := by rw [← Finset.sum_mul, hQsum, one_mul]
-
 private lemma finite_record_log_tail {Ω H : Type*} [MeasurableSpace Ω]
     [Fintype H] [MeasurableSpace H] [MeasurableSingletonClass H]
     (μ : Measure Ω) [IsFiniteMeasure μ] (record : Ω → H) (hr : Measurable record)
@@ -229,7 +211,6 @@ private lemma finite_record_log_tail {Ω H : Type*} [MeasurableSpace Ω]
       · rw [if_neg hu, mul_zero]
         exact mul_nonneg (hQ h) (mul_nonneg hM.le (Real.exp_pos _).le)
     _ = _ := by rw [← Finset.sum_mul, hQsum, one_mul]
-
 /-- A single actual law realizes all finite records. A fixed prior density bound gives
 a uniform exponential tail bound for the moving-support KL defects. Consequently
 every almost-sure limit is an L1 limit and its expectation is the limit of expectations.
@@ -334,7 +315,6 @@ theorem posterior_defect_l1_of_ae_tendsto
   intro v hv n
   exact finite_record_log_tail μ (record n) (hr n) _ _ (hmass n)
     (hQnn n) (hQsum n) (fun h hh => (hb n h hh).1) hM hv
-
 private lemma tendsto_mul_log_ratio {a b : ℕ → ℝ} {A B C : ℝ}
     (ha : ∀ n, 0 ≤ a n) (hb : ∀ n, 0 ≤ b n)
     (hbound : ∀ᶠ n in atTop, a n ≤ C * b n)
@@ -378,7 +358,6 @@ private lemma tendsto_mul_log_ratio {a b : ℕ → ℝ} {A B C : ℝ}
     apply ht.congr'
     filter_upwards [htb.eventually (Ioi_mem_nhds hBpos)] with n hn
     exact (hident (ne_of_gt hn)).symm
-
 private lemma kl_tendsto_of_dominated {J : Type*} [Fintype J]
     {a b : ℕ → J → ℝ} {A B : J → ℝ} {C : ℝ}
     (ha : ∀ n j, 0 ≤ a n j) (hb : ∀ n j, 0 ≤ b n j)
@@ -390,7 +369,6 @@ private lemma kl_tendsto_of_dominated {J : Type*} [Fintype J]
   intro j _
   exact tendsto_mul_log_ratio (fun n => ha n j) (fun n => hb n j)
     (hbound.mono fun _ hn => hn j) (hta j) (htb j)
-
 /-- Coordinate limits of both posteriors and a positive limiting evidence ratio suffice
 at every support boundary. The resulting KL-loss limit also holds in L1 under the
 same actual law. The finite-class identification of the coordinate limits is separate. -/
@@ -484,13 +462,209 @@ theorem moving_support_posterior_limit
   have h := posterior_defect_l1_of_ae_tendsto μ record hr d q W r hd hq hW hmass
     hM hdom g hae
   exact ⟨hae, h.2.2⟩
-
 open ProbabilityTheory D5.S3.Observer.ProductMeasures.FinitePmfLikelihood
-
+private lemma iid_average {Z : Type*} [Fintype Z]
+    [MeasurableSpace Z] [MeasurableSingletonClass Z] (p : PMF Z) (g : Z → ℝ) :
+    ∀ᵐ x ∂productLaw (fun _ : ℕ => p),
+      Tendsto (fun n : ℕ => (∑ k ∈ Finset.range n, g (x k)) / n) atTop
+        (𝓝 (∑ z, (p z).toReal * g z)) := by
+  let μ := productLaw (fun _ : ℕ => p)
+  have hid (n : ℕ) : IdentDistrib (fun x : ℕ → Z => x n) id μ p.toMeasure :=
+    ⟨(measurable_pi_apply n).aemeasurable, measurable_id.aemeasurable,
+      by simp [μ, productLaw, Measure.infinitePi_map_eval]⟩
+  have hg := fun n => (hid n).comp (measurable_of_countable g)
+  have hi : Integrable (fun x : ℕ → Z => g (x 0)) μ :=
+    (hg 0).integrable_iff.mpr Integrable.of_finite
+  have hind := iIndepFun_infinitePi (P := fun _ : ℕ => p.toMeasure)
+    (X := fun _ : ℕ => g) (fun _ => measurable_of_countable g)
+  have h := strong_law_ae_real (fun n (x : ℕ → Z) => g (x n)) hi
+    (fun _ _ hne => hind.indepFun hne) (fun n => (hg n).trans (hg 0).symm)
+  have he : (∫ x, g (x 0) ∂μ) = ∑ z, (p z).toReal * g z := by
+    calc
+      _ = ∫ z, g z ∂p.toMeasure := (hg 0).integral_eq
+      _ = _ := by
+        rw [integral_fintype Integrable.of_finite]
+        apply Finset.sum_congr rfl
+        intro z _
+        rw [Measure.real, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _), smul_eq_mul]
+  simpa only [he] using h
+private lemma iid_positive {Z : Type*} [Fintype Z]
+    [MeasurableSpace Z] [MeasurableSingletonClass Z] (p : PMF Z) :
+    ∀ᵐ x ∂productLaw (fun _ : ℕ => p), ∀ k, 0 < (p (x k)).toReal := by
+  let μ := productLaw (fun _ : ℕ => p)
+  rw [ae_all_iff]
+  intro k
+  apply ae_of_ae_map (μ := μ) (p := fun z => 0 < (p z).toReal)
+    (measurable_pi_apply k).aemeasurable
+  rw [show μ.map (fun x => x k) = p.toMeasure from
+    Measure.infinitePi_map_eval (fun _ : ℕ => p.toMeasure) k]
+  apply ae_iff_of_countable.mpr
+  intro z hz
+  exact ENNReal.toReal_pos (by simpa using hz) (PMF.apply_ne_top p z)
+private lemma iid_likelihood_ratio {Z : Type*} [Fintype Z]
+    [MeasurableSpace Z] [MeasurableSingletonClass Z] (p q : PMF Z) (hne : p ≠ q) :
+    ∀ᵐ x ∂productLaw (fun _ : ℕ => p),
+      (∀ n, 0 < ∏ k : Fin n, (p (x k)).toReal) ∧
+      Tendsto (fun n => (∏ k : Fin n, (q (x k)).toReal) /
+        (∏ k : Fin n, (p (x k)).toReal)) atTop (𝓝 0) := by
+  classical
+  let μ := productLaw (fun _ : ℕ => p)
+  have hpos := iid_positive p
+  by_cases hac : ∀ z, (q z).toReal = 0 → (p z).toReal = 0
+  · have hp : (∀ z, 0 ≤ (p z).toReal) ∧ ∑ z, (p z).toReal = 1 :=
+      ⟨fun _ => ENNReal.toReal_nonneg, pmfRealMass_sum (Output := fun _ : ℕ => Z) (i := 0) p⟩
+    have hq : (∀ z, 0 ≤ (q z).toReal) ∧ ∑ z, (q z).toReal = 1 :=
+      ⟨fun _ => ENNReal.toReal_nonneg, pmfRealMass_sum (Output := fun _ : ℕ => Z) (i := 0) q⟩
+    have hkl : 0 < klDivergence (fun z => (p z).toReal) (fun z => (q z).toReal) := by
+      apply lt_of_le_of_ne (kl_divergence_nonneg _ _ hp hq hac)
+      intro hzero
+      have he := (D5.S3.Divergence.GibbsEquality.kl_divergence_eq_zero_iff _ _ hp hq hac).mp hzero.symm
+      apply hne
+      ext z
+      exact (ENNReal.toReal_eq_toReal_iff' (PMF.apply_ne_top p z) (PMF.apply_ne_top q z)).mp (congrFun he z)
+    have hm := iid_average p (fun z => Real.log ((q z).toReal / (p z).toReal))
+    have he : (∑ z, (p z).toReal * Real.log ((q z).toReal / (p z).toReal)) =
+        -klDivergence (fun z => (p z).toReal) (fun z => (q z).toReal) := by
+      simp only [klDivergence, ← Finset.sum_neg_distrib]
+      apply Finset.sum_congr rfl
+      intro z _
+      by_cases hz : (p z).toReal = 0
+      · simp [hz]
+      · have hqz : (q z).toReal ≠ 0 := mt (hac z) hz
+        rw [Real.log_div hqz hz, Real.log_div hz hqz]
+        ring
+    rw [he] at hm
+    filter_upwards [hpos, hm] with x hx hmean
+    have hqpos k : 0 < (q (x k)).toReal :=
+      lt_of_le_of_ne ENNReal.toReal_nonneg (Ne.symm (mt (hac _) (hx k).ne'))
+    refine ⟨fun n => Finset.prod_pos (fun _ _ => hx _), ?_⟩
+    have hs : Tendsto (fun n => ∑ k ∈ Finset.range n,
+        Real.log ((q (x k)).toReal / (p (x k)).toReal)) atTop atBot := by
+      have ht := hmean.neg_mul_atTop (neg_neg_of_pos hkl) tendsto_natCast_atTop_atTop
+      apply ht.congr'
+      filter_upwards [eventually_gt_atTop 0] with n hn
+      simp [ne_of_gt hn]
+    have hh := Real.tendsto_exp_atBot.comp hs
+    apply hh.congr
+    intro n
+    simp only [Function.comp_apply]
+    rw [Real.exp_sum, ← Finset.prod_div_distrib, ← Fin.prod_univ_eq_prod_range]
+    apply Finset.prod_congr rfl
+    intro k _
+    exact Real.exp_log (div_pos (hqpos k) (hx k))
+  · push_neg at hac
+    obtain ⟨z, hqz, hpz⟩ := hac
+    have hm := iid_average p (fun y => if y = z then (1 : ℝ) else 0)
+    simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at hm
+    filter_upwards [hpos, hm] with x hx hmean
+    have hex : ∃ k, x k = z := by
+      by_contra hn
+      push_neg at hn
+      simp only [hn, if_false, Finset.sum_const_zero, zero_div] at hmean
+      exact hpz (tendsto_nhds_unique hmean tendsto_const_nhds)
+    obtain ⟨k, hk⟩ := hex
+    refine ⟨fun n => Finset.prod_pos (fun _ _ => hx _), ?_⟩
+    apply tendsto_const_nhds.congr'
+    filter_upwards [eventually_gt_atTop k] with n hn
+    have hz : (∏ i : Fin n, (q (x i)).toReal) = 0 :=
+      Finset.prod_eq_zero (Finset.mem_univ ⟨k, hn⟩) (by simpa [hk] using hqz)
+    simp [hz]
+private lemma iid_class_ratios {J S Z : Type*} [DecidableEq S] [Fintype J] [Fintype Z]
+    [MeasurableSpace Z] [MeasurableSingletonClass Z]
+    (K : J → PMF Z) (s : J → S) (hs : ∀ j k, s j = s k ↔ K j = K k) (k : J) :
+    ∀ᵐ x ∂productLaw (fun _ : ℕ => K k),
+      (∀ n, 0 < ∏ i : Fin n, (K k (x i)).toReal) ∧
+      ∀ j, Tendsto (fun n => (∏ i : Fin n, (K j (x i)).toReal) /
+        (∏ i : Fin n, (K k (x i)).toReal)) atTop (𝓝 (if s j = s k then 1 else 0)) := by
+  classical
+  have hpos := iid_positive (K k)
+  have hrat : ∀ j, ∀ᵐ x ∂productLaw (fun _ : ℕ => K k),
+      Tendsto (fun n => (∏ i : Fin n, (K j (x i)).toReal) /
+        (∏ i : Fin n, (K k (x i)).toReal)) atTop (𝓝 (if s j = s k then 1 else 0)) := by
+    intro j
+    by_cases hj : s j = s k
+    · filter_upwards [hpos] with x hx
+      have he := (hs j k).mp hj
+      rw [if_pos hj]
+      apply tendsto_const_nhds.congr
+      intro n
+      rw [he]
+      exact (div_self (Finset.prod_pos (fun (i : Fin n) _ => hx i)).ne').symm
+    · simpa only [if_neg hj] using
+        (iid_likelihood_ratio (K k) (K j) (fun he => hj ((hs j k).mpr he.symm))).mono
+          (fun _ h => h.2)
+  filter_upwards [hpos, ae_all_iff.mpr hrat] with x hx hr
+  exact ⟨fun n => Finset.prod_pos (fun i _ => hx i), hr⟩
+private lemma class_posterior_limit {J S : Type*} [DecidableEq S] [Fintype J]
+    (p : J → ℝ) (s : J → S) (k : J) (L : ℕ → J → ℝ)
+    (hL : ∀ n, 0 < L n k)
+    (hlim : ∀ j, Tendsto (fun n => L n j / L n k) atTop
+      (𝓝 (if s j = s k then 1 else 0)))
+    (hp : channelOutput (fun j c => if s j = c then 1 else 0) p (s k) ≠ 0) :
+    Tendsto (fun n => (∑ j, p j * L n j) / L n k) atTop
+      (𝓝 (channelOutput (fun j c => if s j = c then 1 else 0) p (s k))) ∧
+    ∀ j, Tendsto (fun n => p j * L n j / (∑ i, p i * L n i)) atTop
+      (𝓝 (posterior (fun j c => if s j = c then 1 else 0) p (s k) j)) := by
+  classical
+  have ht := tendsto_finsetSum Finset.univ (fun j _ => (hlim j).const_mul (p j))
+  have hsum : Tendsto (fun n => (∑ j, p j * L n j) / L n k) atTop
+      (𝓝 (channelOutput (fun j c => if s j = c then 1 else 0) p (s k))) := by
+    simpa only [channelOutput, Finset.sum_div, mul_div_assoc] using ht
+  refine ⟨hsum, fun j => ?_⟩
+  have hh := ((hlim j).const_mul (p j)).div hsum hp
+  convert hh using 1
+  · ext n
+    change p j * L n j / (∑ x, p x * L n x) =
+      (p j * (L n j / L n k)) / ((∑ x, p x * L n x) / L n k)
+    rw [← mul_div_assoc, div_div_div_cancel_right₀ (hL n).ne']
+  · rfl
+private lemma iid_class_decoder {J S Z : Type*} [Fintype J] [Nonempty J]
+    [Fintype Z] [MeasurableSpace Z] [MeasurableSingletonClass Z]
+    [MeasurableSpace S] (K : J → PMF Z) (s : J → S)
+    (hs : ∀ j k, s j = s k ↔ K j = K k) :
+    ∃ dec : (ℕ → Z) → S, Measurable dec ∧
+      ∀ k, ∀ᵐ x ∂productLaw (fun _ : ℕ => K k), dec x = s k := by
+  classical
+  let freq := fun n (x : ℕ → Z) z =>
+    (∑ i ∈ Finset.range n, if x i = z then (1 : ℝ) else 0) / n
+  let good := fun j x => ∀ z, Tendsto (fun n => freq n x z) atTop (𝓝 (K j z).toReal)
+  have hgood j : MeasurableSet {x | good j x} := by
+    simp only [good, setOf_forall]
+    apply MeasurableSet.iInter
+    intro z
+    apply measurableSet_tendsto_fun _ measurable_const
+    intro n
+    exact (Finset.measurable_sum _ (fun i _ =>
+      (measurable_of_countable (fun y : Z => if y = z then (1 : ℝ) else 0)).comp
+        (measurable_pi_apply i))).div_const _
+  let code : (ℕ → Z) → (J → Bool) := fun x j => decide (good j x)
+  have hcode : Measurable code := by
+    apply measurable_pi_lambda
+    intro j
+    apply measurable_to_bool
+    simpa only [code, preimage, mem_singleton_iff, decide_eq_true_eq] using hgood j
+  let pick : (J → Bool) → J := fun b =>
+    if h : ∃ j, b j = true then h.choose else Classical.choice inferInstance
+  refine ⟨fun x => s (pick (code x)), (measurable_of_countable (s ∘ pick)).comp hcode, ?_⟩
+  intro k
+  have hfreq : ∀ᵐ x ∂productLaw (fun _ : ℕ => K k), good k x := by
+    rw [ae_all_iff]
+    intro z
+    simpa only [freq, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
+      Finset.mem_univ, if_true] using iid_average (K k) (fun y => if y = z then (1 : ℝ) else 0)
+  filter_upwards [hfreq] with x hx
+  have hex : ∃ j, code x j = true := ⟨k, by simp [code, hx]⟩
+  have hpick : good (pick (code x)) x := by
+    have hh := hex.choose_spec
+    simpa only [pick, dif_pos hex, code, decide_eq_true_eq] using hh
+  apply (hs _ _).mpr
+  ext z
+  apply (ENNReal.toReal_eq_toReal_iff' (PMF.apply_ne_top _ _) (PMF.apply_ne_top _ _)).mp
+  exact tendsto_nhds_unique (hpick z) (hx z)
 /-- The finite-record bridge for a latent state drawn once and a conditionally iid
 record is obtained from the product measure. Given the posterior coordinate limits,
 the common-record KL limit holds under the actual joint law, including zero priors. -/
-theorem iid_moving_support_posterior_limit
+theorem iid_moving_support_posterior_limit_of_coordinates
     {J I Z : Type*} [Fintype J] [Fintype I] [Fintype Z]
     [MeasurableSpace J] [MeasurableSingletonClass J]
     [MeasurableSpace Z] [MeasurableSingletonClass Z]
@@ -578,6 +752,215 @@ theorem iid_moving_support_posterior_limit
   intro hpath
   exact moving_support_posterior_limit μ record hr d q W r hd hq hW hmass
     hM hdom a b t hpath
-
-
+private lemma fiber_recovery_identity {J I : Type*} [Fintype J] [Fintype I]
+    (p q : J → ℝ) (r : J → I)
+    (hp : (∀ j, 0 ≤ p j) ∧ ∑ j, p j = 1)
+    (hq : (∀ j, 0 ≤ q j) ∧ ∑ j, q j = 1)
+    (hac : ∀ j, q j = 0 → p j = 0) :
+    let e := fun j => q j * (pushforward r p (r j) / pushforward r q (r j))
+    klDivergence p e = klDivergence p q - klDivergence (pushforward r p) (pushforward r q) ∧
+    (klDivergence p q - klDivergence (pushforward r p) (pushforward r q) = 0 ↔ p = e) := by
+  classical
+  let P := pushforward r p
+  let Q := pushforward r q
+  let e := fun j => q j * (P (r j) / Q (r j))
+  have hP := D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law p r hp
+  have hQ := D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law q r hq
+  have hsum (v : J → ℝ) (f : I → ℝ) :
+      ∑ i, pushforward r v i * f i = ∑ j, v j * f (r j) := by
+    simp only [pushforward, Finset.sum_mul]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [Finset.sum_eq_single (r j)] <;> simp_all
+  have hle (v : J → ℝ) (hv : ∀ j, 0 ≤ v j) j : v j ≤ pushforward r v (r j) := by
+    simpa only [pushforward, if_true] using
+      (Finset.single_le_sum (f := fun k => if r k = r j then v k else 0)
+        (fun k _ => by split_ifs <;> simp_all only [le_refl]) (Finset.mem_univ j))
+  have hQzero i (hi : Q i = 0) : P i = 0 := by
+    have hh := channel_output_absolute_continuity p q
+      (fun j i => if r j = i then (1 : ℝ) else 0) hq.1 hac
+      (fun j i => by split_ifs <;> norm_num) i
+    simpa [channelOutput, pushforward, P, Q] using hh (by simpa [channelOutput, Q, pushforward] using hi)
+  have heq : klDivergence p e = klDivergence p q - klDivergence P Q := by
+    change (∑ j, p j * Real.log (p j / e j)) =
+      (∑ j, p j * Real.log (p j / q j)) - ∑ i, P i * Real.log (P i / Q i)
+    rw [hsum p (fun i => Real.log (P i / Q i)), ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro j _
+    by_cases hj : p j = 0
+    · simp [hj]
+    have hpj := lt_of_le_of_ne (hp.1 j) (Ne.symm hj)
+    have hqj : q j ≠ 0 := mt (hac j) hj
+    have hPj : P (r j) ≠ 0 := (hpj.trans_le (hle p hp.1 j)).ne'
+    have hQj : Q (r j) ≠ 0 := mt (hQzero _) hPj
+    dsimp only [e]
+    rw [Real.log_div hj (mul_ne_zero hqj (div_ne_zero hPj hQj)),
+      Real.log_mul hqj (div_ne_zero hPj hQj), Real.log_div hj hqj]
+    ring
+  have he : (∀ j, 0 ≤ e j) ∧ ∑ j, e j = 1 := by
+    refine ⟨fun j => mul_nonneg (hq.1 j) (div_nonneg (hP.1 _) (hQ.1 _)), ?_⟩
+    rw [show (∑ j, e j) = ∑ i, Q i * (P i / Q i) from (hsum q (fun i => P i / Q i)).symm]
+    convert hP.2 using 1
+    apply Finset.sum_congr rfl
+    intro i _
+    by_cases hi : Q i = 0
+    · simp [hi, hQzero i hi]
+    · field_simp
+  have heac j (hj : e j = 0) : p j = 0 := by
+    by_contra hn
+    have hpj := lt_of_le_of_ne (hp.1 j) (Ne.symm hn)
+    have hPj : P (r j) ≠ 0 := (hpj.trans_le (hle p hp.1 j)).ne'
+    exact (mul_ne_zero (mt (hac j) hn) (div_ne_zero hPj (mt (hQzero _) hPj))) hj
+  exact ⟨heq, heq ▸ D5.S3.Divergence.GibbsEquality.kl_divergence_eq_zero_iff p e hp he heac⟩
+private lemma class_mean_identity {J I S : Type*} [Fintype J] [Fintype I]
+    [Fintype S] [DecidableEq S] (d q : J → ℝ) (r : J → I) (s : J → S)
+    (hd : (∀ j, 0 ≤ d j) ∧ ∑ j, d j = 1)
+    (hq : (∀ j, 0 < q j) ∧ ∑ j, q j = 1) :
+    let C := fun j c => if s j = c then (1 : ℝ) else 0
+    let u := fun j => (r j, s j)
+    (∑ c, channelOutput C d c *
+      (klDivergence (posterior C d c) (posterior C q c) -
+        klDivergence (pushforward r (posterior C d c)) (pushforward r (posterior C q c)))) =
+      klDivergence d (fun j => q j * (pushforward u d (u j) / pushforward u q (u j))) := by
+  classical
+  let C := fun j c => if s j = c then (1 : ℝ) else 0
+  let u := fun j => (r j, s j)
+  let V := fun (v : I × S) c => if v.2 = c then (1 : ℝ) else 0
+  have hout (p : J → ℝ) : channelOutput V (pushforward u p) = channelOutput C p := by
+    have hh := D5.S3.Entropy.Forgetting.PushforwardComposition.pushforward_comp p u Prod.snd
+    simpa [channelOutput, pushforward, V, C, Function.comp_def, u] using hh
+  have hcoarse (p : J → ℝ) c i : pushforward r (posterior C p c) i =
+      pushforward u p (i,c) / channelOutput C p c := by
+    simp only [pushforward, posterior, Finset.sum_div, u, Prod.mk.injEq, C]
+    apply Finset.sum_congr rfl
+    intro j _
+    by_cases hj : r j = i <;> by_cases hc : s j = c <;> simp [hj, hc]
+  have hpost (p : J → ℝ) c i b : posterior V (pushforward u p) c (i,b) =
+      if b = c then pushforward r (posterior C p c) i else 0 := by
+    simp only [posterior, hout, V]
+    split_ifs with hb
+    · subst b
+      rw [mul_one, hcoarse]
+    · simp
+  have hkl c : klDivergence (posterior V (pushforward u d) c)
+      (posterior V (pushforward u q) c) =
+      klDivergence (pushforward r (posterior C d c)) (pushforward r (posterior C q c)) := by
+    simp only [klDivergence, Fintype.sum_prod_type, hpost]
+    apply Finset.sum_congr rfl
+    intro i _
+    simp
+  have hac j (hj : q j = 0) : d j = 0 := False.elim ((hq.1 j).ne' hj)
+  have hc : (∀ j c, 0 ≤ C j c) ∧ ∀ j, ∑ c, C j c = 1 := by
+    constructor
+    · intro j c; dsimp [C]; split_ifs <;> norm_num
+    · intro j; simp [C]
+  have hv : (∀ v c, 0 ≤ V v c) ∧ ∀ v, ∑ c, V v c = 1 := by
+    constructor
+    · intro v c; dsimp [V]; split_ifs <;> norm_num
+    · intro v; simp [V]
+  have hp := D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law d u hd
+  have hq' := D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law
+    q u ⟨fun j => (hq.1 j).le, hq.2⟩
+  have hac' v : pushforward u q v = 0 → pushforward u d v = 0 := by
+    simpa [channelOutput, pushforward] using channel_output_absolute_continuity d q
+      (fun j v => if u j = v then (1 : ℝ) else 0) (fun j => (hq.1 j).le) hac
+      (fun j v => by split_ifs <;> norm_num) v
+  have h1 := classical_dpi_identity_zero_support d q C hd ⟨fun j => (hq.1 j).le, hq.2⟩ hac hc
+  have h2 := classical_dpi_identity_zero_support (pushforward u d) (pushforward u q)
+    V hp hq' hac' hv
+  simp only [hout, hkl] at h2
+  have he := (fiber_recovery_identity d q u hd ⟨fun j => (hq.1 j).le, hq.2⟩ hac).1
+  dsimp only
+  simp only [mul_sub, Finset.sum_sub_distrib]
+  linarith
+/-- In the finite latent iid model the row class is decoded from the record under both
+priors, both posteriors converge to the class-conditioned priors, and KL loss converges
+almost surely and in L1. The coordinate limits and positive evidence-ratio limit are
+conclusions of the actual model, with no convergence hypotheses. -/
+theorem iid_moving_support_posterior_limit
+    {J I Z S : Type*} [Fintype J] [Nonempty J] [Fintype I] [Fintype Z]
+    [Fintype S] [DecidableEq S] [MeasurableSpace J] [MeasurableSingletonClass J]
+    [MeasurableSpace Z] [MeasurableSingletonClass Z]
+    [MeasurableSpace S] [MeasurableSingletonClass S]
+    (d q : J → ℝ) (K : J → PMF Z) (r : J → I) (s : J → S)
+    (hd : (∀ j, 0 ≤ d j) ∧ ∑ j, d j = 1)
+    (hq : (∀ j, 0 < q j) ∧ ∑ j, q j = 1)
+    (hs : ∀ j k, s j = s k ↔ K j = K k) :
+    let μ := fun p : J → ℝ => ∑ j, ENNReal.ofReal (p j) •
+      (productLaw (fun _ : ℕ => K j)).map (fun x => (j, x))
+    let C := fun j c => if s j = c then (1 : ℝ) else 0
+    let W := fun n j (h : Fin n → Z) => ∏ k, (K j (h k)).toReal
+    let f := fun n (ω : J × (ℕ → Z)) => posteriorDefect d q (W n) r (fun k => ω.2 k)
+    let a := fun (ω : J × (ℕ → Z)) => posterior C d (s ω.1)
+    let b := fun (ω : J × (ℕ → Z)) => posterior C q (s ω.1)
+    let g := fun ω => klDivergence (a ω) (b ω) -
+      klDivergence (pushforward r (a ω)) (pushforward r (b ω))
+    (∃ dec : (ℕ → Z) → S, Measurable dec ∧
+      (∀ᵐ ω ∂μ d, dec ω.2 = s ω.1) ∧ (∀ᵐ ω ∂μ q, dec ω.2 = s ω.1)) ∧
+    (∀ᵐ ω ∂μ d, 0 < channelOutput C d (s ω.1) ∧
+      (∀ j, Tendsto (fun n => posterior (W n) d (fun k => ω.2 k) j) atTop (𝓝 (a ω j))) ∧
+      (∀ j, Tendsto (fun n => posterior (W n) q (fun k => ω.2 k) j) atTop (𝓝 (b ω j)))) ∧
+    (∀ᵐ ω ∂μ d, Tendsto (fun n => f n ω) atTop (𝓝 (g ω))) ∧
+    UniformIntegrable f 1 (μ d) ∧ Integrable g (μ d) ∧
+    Tendsto (fun n => eLpNorm (f n - g) 1 (μ d)) atTop (𝓝 0) ∧
+    Tendsto (fun n => ∫ ω, f n ω ∂μ d) atTop (𝓝 (∫ ω, g ω ∂μ d)) := by
+  classical
+  dsimp only
+  let μ := fun p : J → ℝ => ∑ j, ENNReal.ofReal (p j) •
+    (productLaw (fun _ : ℕ => K j)).map (fun x => (j, x))
+  let C := fun j c => if s j = c then (1 : ℝ) else 0
+  let W := fun n j (h : Fin n → Z) => ∏ k, (K j (h k)).toReal
+  let a := fun (ω : J × (ℕ → Z)) => posterior C d (s ω.1)
+  let b := fun (ω : J × (ℕ → Z)) => posterior C q (s ω.1)
+  let t := fun (ω : J × (ℕ → Z)) =>
+    channelOutput C d (s ω.1) / channelOutput C q (s ω.1)
+  have hc (p : J → ℝ) (hp : ∀ j, 0 ≤ p j) (k : J) (hk : 0 < p k) :
+      0 < channelOutput C p (s k) := by
+    apply hk.trans_le
+    simpa only [C, channelOutput, if_true, mul_one] using
+      (Finset.single_le_sum (f := fun j => p j * C j (s k))
+        (fun j _ => mul_nonneg (hp j) (by dsimp [C]; split_ifs <;> norm_num))
+        (Finset.mem_univ k))
+  have hpath : ∀ᵐ ω ∂μ d, 0 < channelOutput C d (s ω.1) ∧ 0 < t ω ∧
+      Tendsto (fun n => channelOutput (W n) d (fun k => ω.2 k) /
+        channelOutput (W n) q (fun k => ω.2 k)) atTop (𝓝 (t ω)) ∧
+      (∀ j, Tendsto (fun n => posterior (W n) d (fun k => ω.2 k) j) atTop (𝓝 (a ω j))) ∧
+      (∀ j, Tendsto (fun n => posterior (W n) q (fun k => ω.2 k) j) atTop (𝓝 (b ω j))) := by
+    rw [ae_finsetSum_measure_iff]
+    intro k _
+    by_cases hk : 0 < d k
+    · apply Measure.ae_smul_measure
+      rw [(measurableEmbedding_prodMk_left k).ae_map_iff]
+      filter_upwards [iid_class_ratios K s hs k] with x hx
+      have hdc := hc d hd.1 k hk
+      have hqc := hc q (fun j => (hq.1 j).le) k (hq.1 k)
+      have hdl := class_posterior_limit d s k (fun n j => W n j (fun i => x i))
+        hx.1 hx.2 hdc.ne'
+      have hql := class_posterior_limit q s k (fun n j => W n j (fun i => x i))
+        hx.1 hx.2 hqc.ne'
+      refine ⟨hdc, div_pos hdc hqc, ?_, hdl.2, hql.2⟩
+      convert hdl.1.div hql.1 hqc.ne' using 1
+      ext n
+      exact (div_div_div_cancel_right₀ (hx.1 n).ne' _ _).symm
+    · have hz : ENNReal.ofReal (d k) = 0 := ENNReal.ofReal_eq_zero.mpr (le_of_not_gt hk)
+      simp [hz]
+  obtain ⟨dec, hdec, hdecrow⟩ := iid_class_decoder K s hs
+  have hdecode (p : J → ℝ) : ∀ᵐ ω ∂μ p, dec ω.2 = s ω.1 := by
+    rw [ae_finsetSum_measure_iff]
+    intro k _
+    apply Measure.ae_smul_measure
+    rw [(measurableEmbedding_prodMk_left k).ae_map_iff]
+    exact hdecrow k
+  let M := 1 + ∑ j, d j / q j
+  have hM : 0 < M := lt_of_lt_of_le zero_lt_one
+    (le_add_of_nonneg_right (Finset.sum_nonneg fun j _ => div_nonneg (hd.1 j) (hq.1 j).le))
+  have hdom j : d j ≤ M * q j := by
+    rw [← div_le_iff₀ (hq.1 j)]
+    exact (Finset.single_le_sum (fun i _ => div_nonneg (hd.1 i) (hq.1 i).le)
+      (Finset.mem_univ j)).trans (le_add_of_nonneg_left zero_le_one)
+  have h := iid_moving_support_posterior_limit_of_coordinates d q K r hd hq hM hdom a b t
+    (hpath.mono fun _ h => h.2)
+  exact ⟨⟨dec, hdec, hdecode d, hdecode q⟩,
+    hpath.mono (fun _ h => ⟨h.1, h.2.2.2⟩), h⟩
 end D5.S3.DivergenceSupport.MovingSupportKLTransport
