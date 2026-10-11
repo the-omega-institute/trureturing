@@ -7282,3 +7282,1201 @@ No growing event-dependent selector is inserted into a fixed-parameter
 OpenAI correlation theorem. No numerical common starting $X$, transfer
 of the $4.03\cdot10^{46}$ global-maximizer bound, least-counterexample
 bound, full Robin/RH proof, or official acceptance is supplied.
+
+## Project application: the same actual reserve extends the clock to 4.23
+
+The global complete-response estimates (GK6) and (GJ2), together with
+the actual effective reserve (GAI3)–(GAI4), extend the all-integer
+interval (GAI1). This is a conditional ordinary application of the same
+project sources, without a new zero computation, external zero ceiling,
+numerical reserve-asymptotic start or Lean certification.
+
+Let $n$ be any integer with its own clock
+
+$$
+\frac72\,10^{46}<A=\log n\le\frac{423}{100}\,10^{46},
+\qquad L=\log A,\qquad T=\sqrt A L.
+\tag{GAJ1}
+$$
+
+Retain all the analytic premises of the preceding effective-reserve
+application: unrestricted pressure and tail identities, the full
+classical explicit formula, endpoint-inclusive Stieltjes conventions,
+convergence and PNT inputs, the complete Gamma product and whole-law
+moments, and all elementary responses, including scales with $cA<1$.
+The exact Dusart v1 Theorem 5.2 rows remain
+$(2,0.01,7713133853)$ for the global error and
+$(2,1/5,3594641)$ for the reserve, with Proposition 3.2's full
+higher-prime-power correction and the coarse $k=0$ bound.
+Keep criticality through $H=3\cdot10^{12}$, the positive reciprocal
+identity $c_0<0.05$ and the complete $S_2(H)<1.48\cdot10^{-12}$.
+The actual reserve remains the unrestricted one over all positive
+integers, including one, from FIB §§249–250 and its finite §93.2
+anchor. These source proofs and computations remain named analytic
+premises; their complete primary certification is not supplied here.
+
+### Evaluate the global formulas at the larger endpoint
+
+Keep the identical noninteger shape and rate
+
+$$
+\alpha=\frac{292000000000000000000001}{2},\qquad
+C\sim\operatorname{Gamma}(\text{shape }\alpha,\text{rate }\alpha).
+$$
+
+Set $r=(2057/1000)10^{23}$. Exact squaring gives
+$r^2=4.231249\cdot10^{46}>4.23\cdot10^{46}$, so
+$\sqrt A<r$ even at the included upper endpoint of (GAJ1).
+The lower endpoint still gives $L>107$ and $\sqrt A>10^{23}$.
+Thus the global domain $A\ge e^{78}$, noninteger $\alpha\ge4$ of
+(GK6), and $L>78$ of the full-coefficient (GJ2), both apply.
+The interval subsequently used to illustrate (GJ2) does not restrict
+its global proof. In particular, the old interval estimate (GM4) is
+not being extrapolated.
+
+The unchanged shape, height and lower endpoint retain
+
+$$
+M_1<\frac{10001}{10000},\qquad
+\frac{H^2}{2(\alpha+H)}>\frac{1541}{50},\qquad
+\eta_0(A)<10^{-6}.
+$$
+
+Here (GM3)'s proof uses the stronger Dusart row for every $t\ge A$
+and only the lower clock endpoint; it therefore remains uniform on
+(GAJ1). Reuse the positive exponential-series enclosures
+$e^{1541/50}>(121/50)10^{13}$ and
+$e^{\alpha/60000}>10^{53}$. Inserting these into the actual global
+formulas gives the complete five allowances:
+
+| Contribution | Exact rational upper allowance |
+|---|---:|
+| Verified head, full coefficient | $(10001/10000)(108/107)(1.054)(0.05)$ |
+| All tail heights, both signs | $2(10001/10000)^2(108/107)r(1.48\cdot10^{-12})/[(121/50)10^{13}]$ |
+| Centered regular and signed local payment | $(0.520002)r/\alpha$ |
+| Every outside Gamma scale | $400r/10^{53}$ |
+| Full elementary response, including $cA<1$ | $5(10001/10000)/10^{23}$ |
+
+Every terminating decimal denotes an exact rational. Let $U_{423}$
+be their sum. All actual tail-zero real parts, multiplicities, heights
+and ordinate signs remain, as do the coefficient remainder, endpoint
+atoms and centering before the whole Gamma law is split. Consequently
+
+$$
+-T I_\psi(A)<U_{423}\quad\text{throughout (GAJ1)}.
+\tag{GAJ2}
+$$
+
+### Pay the same integer with its actual reserve and defect
+
+The unchanged (GAI4), anchored by the finite reserve bound and valid
+for $L>107$, gives
+
+$$
+T R(A)>Q_R+\frac{L}{(L+2)^3},\qquad
+Q_R=\frac{67838284064811}{83593750000000}.
+$$
+
+Exact subtraction of the complete five-row sum yields
+
+$$
+Q_R-U_{423}
+=\frac{22837901643254399996290102708491463199999986623442401}
+ {78110000000000000000000267500000000000000000000000000000}
+>\frac1{4000}.
+\tag{GAJ3}
+$$
+
+Use the same-clock identity
+$\Delta(n)=I_\psi(A)+R(A)+d_A(n)$, with its actual
+$d_A(n)\ge0$. Equations (GAJ2)–(GAJ3) therefore give
+
+$$
+\boxed{T\Delta(n)>\frac1{4000}
+ +\frac{L}{(L+2)^3}+T d_A(n)>0}
+\quad\text{for every integer in (GAJ1)}.
+\tag{GAJ4}
+$$
+
+No CA selection, zero-defect transfer or finite sweep is needed for
+this interval consequence. Under the additional unchanged original
+source-selection and lower-clock chain that gives
+$\log N>4.03\cdot10^{46}$ for the same least global maximizer of
+$G(n)=\sigma(n)/(n\log\log n)$ over $n>5040$ under Robin failure,
+(GAJ4) excludes its remaining interval up to $4.23\cdot10^{46}$.
+Thus that same conditional selected restriction improves to
+
+$$
+\log N>4.23\cdot10^{46}.
+\tag{GAJ5}
+$$
+
+The CNS/properness, exact-price CA, SevenSmooth, Kalyabin eligible
+endpoint, Axler finite-stop, Nicolas $6.78$ and original lower-clock
+ladder premises retain their original role in that preceding chain.
+This is not a least-counterexample bound or all-integer verification
+below the interval. The unbounded signed Robin/RH target remains unproved. This application
+supplies no new Lean/kernel or complete formal analytic verification.
+
+## Project application: bounded log-uniform smoothing reaches 7.2
+
+This project derivation combines the original complete Robin response and
+its deterministic centered kernels with a finite positive law built from
+the existing uniform/sinc library. It extends the same all-integer clock
+interval while preserving the actual unrestricted FIB reserve and each
+integer's defect. It is a conditional ordinary proof, with the primary
+analytic suppliers retained below; no Lean/kernel or full RH proof is
+claimed. This supplement is project work, not an additional result
+attributed to Nicolas's manuscript.
+
+In this section **NC** denotes the preceding material in this source,
+**FIB** denotes `docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md`,
+and **PK** denotes `Library/Analytic/polak2026finiterobinca.md`. The
+original sources and cited Fourier declarations used for this derivation
+were read at project revision
+`7f52221f2e23da81475058d5b5b6620e68709401`; the present supplement
+reuses their definitions and conventions.
+
+### 1. Exact theorem and premises
+
+Write `g` for Euler's constant, to distinguish it from zero ordinates. Put
+
+\[
+ A_-=\tfrac72 10^{46},\quad A_+=\tfrac{36}{5}10^{46},\quad
+ H=3\cdot10^{12},\quad k=23,\quad a=\frac5{2H}=\frac1{1200000000000}.
+\]
+
+For every real \(A_-<A\le A_+\), put \(L=\log A\), \(T=\sqrt A L\).
+Under the premises below the complete signed integral satisfies
+
+\[
+ -T I_\psi(A)<U<Q_R-\frac3{1000},\qquad
+ Q_R=\frac{67838284064811}{83593750000000}.
+\tag{GAK1}
+\]
+
+For **each** integer \(n\) whose own clock \(A=\log n\) lies in that
+interval, at its own price \(\lambda=1/(AL)\),
+
+\[
+ T\left[g+\log L-\log\frac{\sigma(n)}n\right]
+ >\frac3{1000}+\frac{L}{(L+2)^3}+T d_A(n)>0.
+\tag{GAK2}
+\]
+
+The required primary analytic inputs remain conditional in this conditional derivation:
+
+1. The classical zeta explicit formula, in its endpoint-inclusive
+   Stieltjes/half-value convention, and the integration and limiting
+   conventions used in NC (GR5)–(GR8). Its constant term is \(-\log(2\pi)\)
+   and its trivial-zero term is \(-\tfrac12\log(1-x^{-2})\). The exponential
+   integral has the horizontal-from-left-infinity convention described in
+   NC's Akatsuka Proposition 4.4 application. No lateral \(i\pi\) is added.
+2. Effective unconditional PNT/Mertens convergence supplying the exact
+   tail identity and an absolute constant \(C_\psi\) with
+   \(|\psi(x)-x|\le C_\psi x/\log^2(2+x)\) for all \(x>0\), as in NC (GR3).
+   These are logarithmic-error inputs, not a square-root error or an
+   inferred short-interval theorem.
+3. The actual nontrivial zero multiset \(\rho=\beta+i\gamma\),
+   \(0<\beta<1\), with multiplicities \(m_\rho\), conjugation symmetry,
+   the classical convergent zero count and identity
+   \(\sum_\rho m_\rho/[\rho(1-\rho)]=c_0=2+g-\log(4\pi)<1/20\).
+4. Platt–Trudgian's finite verification (through height 3000175332800)
+   supplying \(\beta=1/2\) only for \(|\gamma|\le H\), and the full positive-
+   ordinate bound
+   \(S_2(H)=\sum_{\gamma>H}m_\rho/\gamma^2<1.48\cdot10^{-12}\).
+   PK (F3), (Z4) identify the Hasanalizade–Shen–Wong zero-count supplier.
+   Neither computation nor the complete primary proof is rerun here.
+5. Dusart arXiv:1002.0442v1, Theorem 5.2, the exact rows
+   \((2,0.01,7713133853)\) and \((2,1/5,3594641)\), and Proposition 3.2
+   \(0\le\psi(t)-\vartheta(t)<1.00007\sqrt t+1.78t^{1/3}\).
+   The classical Chebyshev estimate \(\vartheta(y)\le2y\) is also used;
+   NC supplies it from the same source's \(k=0\) row. Finite computations
+   underlying these sources remain external premises.
+
+The complete coefficient bounds and the deterministic transport below are
+derived, rather than assumed as law-general versions of Gamma results.
+The reserve's numerical start and infinity anchor are also traced and
+derived below. The all-integer theorem needs no CA, CNS, properness,
+SevenSmooth, Kalyabin, Axler finite Robin stop or Nicolas effective
+envelope premise. Those are extra conditions solely for the final
+same-global-maximizer corollary in section 10.
+
+### 2. Construct the entire positive law and compute exact moments
+
+Use the finite product probability space of \(k\) copies of the uniform
+law on \([-a,a]\). Let \(U_j\) be its coordinate variables, let
+\(Y=\sum_{j=1}^k U_j\), and write
+
+\[
+ S(z)=\begin{cases}\sinh z/z&z\ne0,\\1&z=0,\end{cases}\quad
+ d=k\log S(a),\quad C=e^{Y-d}.
+\]
+
+The original project uniform interval density is nonnegative, integrable
+and of integral one. Its transform convention is
+\(\int f(x)e^{izx}\,dx\). The existing theorem
+`InfiniteSincProduct.uniformIntervalFourierLaplace_eq_complexSinc`
+at frequency \(-iz\) gives
+
+\[
+ \mathbb E e^{zU_j}=\operatorname{complexSinc}(-iaz)=S(az).
+\]
+
+Alternatively the integral is \((2a)^{-1}\int_{-a}^a e^{zx}dx\), with
+the removable value at \(z=0\). For each complex \(z\), its absolute
+value is bounded on the finite product domain. Finite-product Fubini
+and independence therefore give \(\mathbb E e^{zY}=S(az)^k\).
+There is no infinite-product limit in this construction.
+
+For \(C^z=e^{z\log C}\), with the real logarithm of \(C>0\),
+
+\[
+ H_C(s):=\mathbb E C^{s-1}
+ =S(a(s-1))^k e^{-(s-1)d}.
+\tag{GAK3}
+\]
+
+Every complex moment exists, and this is an entire function. In particular
+
+\[
+ \mathbb EC=1,\quad \mathbb EC^{-1}=S(a)^{2k},\quad
+ \operatorname{Var} C=\mathbb E(C-1)^2
+ =\frac{S(2a)^k}{S(a)^{2k}}-1=(a\coth a)^k-1.
+\tag{GAK4}
+\]
+
+The last equality uses \(S(2a)=S(a)\cosh a\). The mean is exactly one
+on the **whole** law, before any restriction to scales.
+
+Let \(x=a^2\in(0,1)\). Positive series give
+
+\[
+ 1\le S(a)=\sum_{n\ge0}\frac{x^n}{(2n+1)!}\le\frac1{1-x}.
+\]
+
+The coefficients in
+
+\[
+ \cosh a-S(a)=\frac{a\cosh a-\sinh a}{a}
+ =\sum_{n\ge1}\frac{2n}{(2n+1)!}x^n
+\]
+
+start at \(1/3\). The ratio of coefficient \(n+1\) to coefficient
+\(n\) is exactly \(1/[2n(2n+3)]\le1/10\). Thus all coefficients
+are at most \(1/3\), and division by \(S(a)\ge1\) gives
+
+\[
+ 0\le a\coth a-1\le\frac{x}{3(1-x)}=:b.
+\]
+
+For a nonnegative number \(b\) with \(kb<1\),
+\((1+b)^k=\sum_{j=0}^k\binom kj b^j\le\sum_{j\ge0}(kb)^j\),
+since \(\binom kj\le k^j\). Consequently
+
+\[
+ \operatorname{Var}C\le V_*:=\frac{kx}{3-(k+3)x},\qquad
+ \mathbb EC^{-1}\le (1-x)^{-2k}\le M_*:=\frac1{1-2kx}.
+\tag{GAK5}
+\]
+
+The inverse bound follows from \((1-x)^{2k}\ge1-2kx>0\), so
+reciprocals have the displayed direction. All denominators are positive.
+
+Furthermore \(0\le d\le kx/(1-x)\), because
+\(-\log(1-x)=\log(1+x/(1-x))\le x/(1-x)\). Every point in the
+support obeys
+
+\[
+ |\log C|\le\epsilon:=ka+\frac{kx}{1-x}<\frac1{1000}.
+\]
+
+The elementary inequalities \(e^{-\epsilon}\ge1-\epsilon\) and
+\(e^\epsilon\le(1-\epsilon)^{-1}\), the latter by positive series,
+give the stronger exact rational comparisons
+
+\[
+ \frac{99}{100}<1-\epsilon\le C\le\frac1{1-\epsilon}<\frac{101}{100}.
+\tag{GAK6}
+\]
+
+These are support bounds, not high-probability bounds. No outside-law
+event exists; in particular \(CA>1\) on the entire interval.
+
+### 3. All-frequency sine bound and actual complex normalization
+
+For all real \(v\) with \(|v|\ge5/2\),
+
+\[
+ \frac{|\sin v|}{|v|}\le\frac14.
+\tag{GAK7}
+\]
+
+To prove it on \([5/2,\pi]\), \(\sin v/v\) is decreasing on
+\((0,\pi)\): the numerator \(v\cos v-\sin v\) of its derivative
+vanishes at zero and has derivative \(-v\sin v<0\). At \(5/2\),
+the sine Taylor prefix through degree nine is
+\(P_9=\sum_{j=0}^4(-1)^j(5/2)^{2j+1}/(2j+1)!<5/8\).
+The omitted alternating tail starts negative and its terms decrease:
+already the ratio from degree nine to degree eleven is
+\((5/2)^2/(10\cdot11)<1\), and later ratios are smaller. This
+justifies the upper bound even though the very first Taylor terms need
+not decrease. On \([\pi,4]\),
+\(|\sin v|\le v-\pi<v-3\le v/4\), by the derivative bound
+\(|\cos v|\le1\), \(\pi>3\), and \(v\le4\). For \(v\ge4\)
+use \(|\sin v|\le1\). Reflection proves the negative axis. The
+classical \(3<\pi<4\) fixes these adjoining bands.
+
+Now take the **actual** \(u=\beta-1\in(-1,0)\) and \(|\gamma|\ge H\).
+The identity
+
+\[
+ |\sinh(a(u+i\gamma))|^2=\sinh^2(au)+\sin^2(a\gamma)
+\]
+
+and \(|a(u+i\gamma)|\ge|a\gamma|\ge5/2\) imply
+
+\[
+ |S(a(u+i\gamma))|
+ \le\frac14+\frac25\sinh a
+ \le\frac14+\frac25\frac{a}{1-x}.
+\]
+
+Here \(\sqrt{b^2+c^2}\le|b|+|c|\), \(|u|<1\), and the positive
+hyperbolic series were used. The normalization is retained:
+\(e^{-ud/k}=S(a)^{-u}\le S(a)\le(1-x)^{-1}\). Therefore (GAK3) gives
+
+\[
+ |H_C(\beta+i\gamma)|\le q_*^k<q^k,\quad
+ q_*:=\frac{1/4+(2/5)a/(1-x)}{1-x}<q:=\frac{2501}{10000}.
+\tag{GAK8}
+\]
+
+This is uniform for **all** \(0<\beta<1\) and every ordinate in the
+tail, both signs. It does not substitute \(u=-1/2\).
+For every zero, including the head, let \(\theta=1-\beta\in(0,1)\).
+Positivity and concavity of \(t^\theta\) give
+
+\[
+ |H_C(\rho)|\le\mathbb EC^{-\theta}
+ \le(\mathbb EC^{-1})^\theta\le M_*.
+\tag{GAK9}
+\]
+
+This bound needs no head criticality. Criticality will be used separately
+only to bound the head coefficient.
+
+### 4. Consume the original complete coefficient and deterministic dilations
+
+Retain
+
+\[
+ D(t)=\psi(t)-t,\quad k_0(t)=\frac{1+\log t}{t^2\log^2t},\quad
+ w(t)=\frac{1+\log t}{\log^2t},\quad
+ F_A(s)=\frac1s\int_A^\infty t^{s-2}w(t)dt.
+\tag{GAK10}
+\]
+
+Thus \(F_A=A^{s-1}/(sL)-\operatorname{Ei}((s-1)L)\) in the source
+convention. No replacement by just its leading term is made. For
+\(h(t)=tw'(t)=-(\log t+2)/\log^3t\), two integrations by parts give
+NC (H1), independently:
+
+\[
+ F_A(s)=\frac{w(A)A^{s-1}}{s(1-s)}
+ +\frac{h(A)A^{s-1}+\int_A^\infty t^{s-1}h'(t)dt}{s(1-s)^2}.
+\tag{GAK11}
+\]
+
+All boundary terms at infinity vanish for \(0<\Re s<1\),
+\(h'(t)=2(\log t+3)/(t\log^4t)>0\), and
+\(\int_A^\infty h'(t)dt=-h(A)\). The numerator of the second term
+is consequently at most \(2|h(A)|A^{\beta-1}\) in modulus. This yields
+the complete NC (GJ1) estimate
+
+\[
+ T|F_A(\beta+i\gamma)|
+ \le(1+1/L)\frac{A^{\beta-1/2}}{|\rho||1-\rho|}
+ \left(1+\frac{2(L+2)}{L(L+1)|1-\rho|}\right).
+\tag{GAK12}
+\]
+
+NC (H5) is a compatible derived \(\gamma^{-2}\) leading-plus-error
+envelope; it need not be assumed instead of (GAK11). For finite endpoints
+\(R\ge A\), integration by parts using \(w'\le0\) gives
+
+\[
+ |F_{A,R}(s)|\le\frac{2w(A)A^{\beta-1}}{|s||1-s|}.
+\tag{GAK13}
+\]
+
+This is NC (U2), uniform in \(R\), with the complete finite coefficient.
+For \(|\gamma|\ge4\), it is at most \(2w(A)/\gamma^2\).
+
+For a deterministic \(c>0\), define exactly the NC (GR5)–(GR7) objects
+
+\[
+ J_c(A)=-\frac1c\int_A^\infty D(cu)k_0(u)du,\quad
+ Z_c(A)=\sum_\rho m_\rho c^{\rho-1}F_A(\rho),\quad r_c=J_c-Z_c.
+\tag{GAK14}
+\]
+
+On our whole support, \(c\ge.99\) and \(cA>1\). The PNT premise
+gives a constant independent of \(c\) with
+\(|D(cu)|/c\le K u/\log^2u\) for \(u\ge A\). This follows directly
+from \(\log(2+cu)\ge\log u+\log(.99)\ge\tfrac12\log u\).
+After multiplication by \(k_0(u)\), the majorant is a constant times
+\(1/[u\log^3u]\), which is integrable. Hence absolute Fubini proves
+\(J_\mu:=\mathbb EJ_C\) exists and may be averaged inside its integral.
+
+The entire **integrated coefficient** series can also be averaged
+absolutely. Indeed (GAK13) bounds its high part uniformly by
+\(2w(A)\gamma^{-2}\), since
+\(c^{\beta-1}A^{\beta-1}=(cA)^{\beta-1}\le1\). The finitely many
+lower zeros are uniformly bounded on the compact scale support. The
+zero count supplies summability. Thus
+
+\[
+ Z_\mu:=\mathbb EZ_C
+ =\sum_\rho m_\rho H_C(\rho)F_A(\rho),\quad
+ J_\mu=Z_\mu+r_\mu,\quad r_\mu=\mathbb Er_C.
+\tag{GAK15}
+\]
+
+This absolute exchange is for the integrated \(F_A\) series. It is
+**not** an absolute interchange of the unsmoothed \(x^\rho/\rho\)
+explicit-formula series with an infinite integral. For (GAK14)'s explicit
+formula, take the source's finite-endpoint/truncated formula first,
+then its integrated convergence and (GAK13); the uniform summable bound
+pays the scale-endpoint limit, exactly as in GR7. The half-value change
+at prime powers affects no Lebesgue integral. This analytic limiting
+input remains one of the named premises in section 1.
+
+Substitution \(x=cu\) in the full explicit formula gives the exact
+elementary response for \(cA\ge1\):
+
+\[
+ r_c(A)=\frac{\log(2\pi)}{cAL}
+ +\frac12\int_{cA}^\infty\log(1-x^{-2})
+       \frac{1+\log(x/c)}{x^2\log^2(x/c)}dx.
+\tag{GAK16}
+\]
+
+The second term is nonpositive and integrable. In fact our support has
+\(cA\gg1\), so there is no logarithmic endpoint singularity; the
+source also treats the integrable endpoint \(cA=1\). Since
+\(\log(2\pi)<2\), this gives
+
+\[
+ T r_\mu\le\frac{2\mathbb EC^{-1}}{\sqrt A}
+ \le\frac{5M_*}{\sqrt A}.
+\tag{GAK17}
+\]
+
+The last relaxed allowance agrees with the candidate. It is directed,
+not an absolute bound. The full pole/constant and trivial-zero terms
+have been retained in (GAK16). NC (GE2) proves the bound for all \(c>0\),
+including its separate \(cA<1\) branch using \(D(x)=-x\), GR6 and U2;
+our law assigns that branch zero probability by (GAK6). GR8's unquantified
+absolute constant is not used for the numerical budget.
+
+Conjugation of actual zeros and (GAK3), (GAK10) shows \(Z_\mu\) is real.
+The signed equality at \(c=1\) is \(J_1=-I_\psi(A)\), including its
+original full elementary correction. The transport next compares this
+entire \(J_1\) with \(J_\mu\); one must not drop or separately
+double-count \(r_1\).
+
+### 5. Derive law-centered transport, preserving all atoms
+
+Set
+
+\[
+ h_A(t)=\frac1{\max(A,t)\log\max(A,t)},\quad
+ w_c(t)=c^{-1}h_A(t/c),\quad
+ a_A(t)=\begin{cases}-1/(AL)&0<t\le A,\\1/(t\log^2t)&t>A.\end{cases}
+\]
+
+NC (GP4)'s deterministic estimates give
+\(\int|w_c-h_A|(d\psi+dt)\le K(c+c^{-1})/L\). For completeness,
+below \(A\max(1,c)\) bound the two weights by their constants and
+use \(\psi(t)\ll t\); above that point their absolute difference is
+
+\[
+ \frac{|\log c|}{t\log t\log(t/c)}
+ \le\frac{|\log c|(1+|\log c|/L)}{t\log^2t}.
+\]
+
+Partial summation with \(\psi(t)\ll t\) makes the latter summable.
+The constants are uniform on \([.99,1.01]\). Also
+\(\int a_A dt=0\), and \(\int|a_A|(d\psi+dt)<\infty\).
+Changing variables in finite integrals shows
+\(\int(w_c-h_A)dt=0\); its upper endpoint difference is
+\(\log\log(R/c)-\log\log R\to0\).
+
+Integration by parts, with the PNT boundary at infinity and \(D(t)=-t\)
+below 1, gives the deterministic GP5 identity
+
+\[
+ J_1-J_c=\int(w_c-h_A)d\psi=\int(w_c-h_A)dD.
+\]
+
+Only absolutely convergent differences are used. Define
+\(B_c=w_c-h_A-(c-1)a_A\). Absolute Fubini and the exact **whole-law**
+mean \(\mathbb E(C-1)=0\) give
+
+\[
+ J_1-J_\mu=\mathbb E\int B_C(t)dD(t).
+\tag{GAK18}
+\]
+
+This is the law-general version of NC (GS6), derived before splitting.
+It requires no Gamma identity.
+
+For \(.99\le c\le1.01\), let \(e=c-1\), and split \(B_c=b_c+v_c\):
+
+\[
+ b_c(t)=\begin{cases}
+ e^2/(cAL),&0<t\le A,\\
+ [t(\log t-\log c)]^{-1}-(t\log t)^{-1}-e/(t\log^2t),&t>A.
+ \end{cases}
+\tag{GAK19}
+\]
+
+For \(t>A\), let \(v=\log t\), \(r=v-\log c\). The second
+dilation derivative of \(1/[t(v-\log c)]\) and its \(t\)-derivative are
+
+\[
+ \frac{2-r}{tc^2r^3},\qquad \frac{r^2-6}{t^2c^2r^4}.
+\]
+
+Throughout the segment from 1 to \(c\), \(c\ge.99\),
+\(r\ge v-.01\ge.999v\), and \(r>2\), \(r^2>6\), since
+\(L>107>78\). Their moduli are at most
+\(1.024/(t v^2)\) and \(1.024/(t^2v^2)\), respectively.
+Taylor's integral remainder, whose weight integrates to \(e^2/2\),
+therefore proves the deterministic GK2 bounds
+
+\[
+ |b_c(t)|\le\frac{.512e^2}{t\log^2t},\qquad
+ |b'_c(t)|\le\frac{.512e^2}{t^2\log^2t}.
+\]
+
+Use the actual right-continuous \(D(A)\), including its atom. Partial
+summation with the change of formula at \(A\) gives
+
+\[
+ \int b_c dD=
+ [e^2/(cAL)-b_c(A+)]D(A)-\int_A^\infty D(t)b'_c(t)dt.
+\]
+
+The upper boundary vanishes. With
+\(\eta_0(A)=\sup_{t\ge A}|D(t)|/t\), the three contributions give
+
+\[
+ \left|\int b_c dD\right|
+ \le\frac{\eta_0(A)e^2}{L}
+ [100/99+.512+.512/L]\le\frac{2\eta_0(A)e^2}{L}.
+\tag{GAK20}
+\]
+
+Only values \(t\ge A\) of the global error were used. The contribution
+below \(A\) is the constant part integrated exactly to \(D(A)\).
+
+The residual \(v_c\) vanishes off the cutoff interval. Its exact values
+are those of \(B_c-b_c\), not an arbitrary almost-everywhere version:
+
+* For \(c>1\), on \(A<t<cA\) it equals
+  \(1/(cAL)-1/[t\log(t/c)]\), and \(v_c(A)=v_c(cA)=0\).
+* For \(c<1\), on \(cA<t\le A\) it equals
+  \(1/[t\log(t/c)]-1/(cAL)\), and \(v_c(cA)=0\).
+* For \(c=1\), it is zero everywhere.
+
+The function \(1/[t\log(t/c)]\) decreases throughout these intervals,
+so \(v_c\le0\), including its actual endpoint values. Thus the
+nonnegative atomic measure \(d\psi\) gives
+
+\[
+ \int v_c dD=\int v_c d\psi-\int v_cdt\le-\int v_cdt.
+\]
+
+This retains an atom at \(A\) for \(c<1\) with its nonpositive sign;
+an atom at \(cA\) has zero coefficient. For \(c>1\), the possibly
+discontinuous right limit at \(A\) does not change the actual atom
+value zero. There is no replacement of \(d\psi\) by a density.
+
+On the whole cutoff interval \(t\ge.99A\),
+\(\log(t/c)\ge L-.01\). Hence
+
+\[
+ \left|\frac{d}{dt}\frac1{t\log(t/c)}\right|
+ \le\frac{1.034}{A^2L}.
+\]
+
+The worst ratio is bounded at \(L=78\) by
+\(.99^{-2}[78/(78-.01)][1+1/(78-.01)]<1.034\); both logarithmic
+factors decrease with \(L\). Since \(v_c(cA)=0\), a triangular
+Lebesgue-area bound proves the deterministic GK4 inequality
+
+\[
+ \int v_c dD\le\frac{1.034(A|e|)^2}{2A^2L}<\frac{.52 e^2}{L}
+\tag{GAK21}
+\]
+
+when \(e\ne0\); the non-strict form holds also at zero.
+NC (GS9)'s bounded variation ensures the local integrals exist, but
+its short-interval error bound is not used. In particular no error
+estimate below \(A\) is needed to pay the \(c<1\) residual.
+
+Averaging (GAK20)–(GAK21) in (GAK18), using the entire support and (GAK4), yields
+
+\[
+ T(J_1-J_\mu)\le(.52+2\eta_0(A))\sqrt A\operatorname{Var}C.
+\tag{GAK22}
+\]
+
+There is no outside-scale cost and no conditional mean. We have thus
+rederived the necessary GK3/GK4 averaging; NC's Gamma-specific GK1 or
+GK6 is not an assumption. Combining (GAK15), (GAK17), (GAK22), and \(J_1=-I_\psi\),
+
+\[
+ -T I_\psi(A)\le T|Z_\mu(A)|
+ +(.52+2\eta_0(A))\sqrt A V_*+\frac{5M_*}{\sqrt A}.
+\tag{GAK23}
+\]
+
+### 6. Pay the entire actual zero spectrum and full remainder
+
+For every zero,
+
+\[
+ \Re\frac1{\rho(1-\rho)}
+ =\frac{\gamma^2+\beta(1-\beta)}{|\rho(1-\rho)|^2}>0.
+\]
+
+On the verified head it is the positive real weight
+\(1/(\gamma^2+1/4)\). The classical identity for \(c_0\) therefore
+bounds the head sum of absolute weights by \(c_0\); its tail cannot
+cancel a positive head contribution. On the unverified tail,
+\(|\rho||1-\rho|\ge\gamma^2\), so the complete tail weight is at
+most \(2S_2(H)\). The factor two counts the negative ordinates by
+conjugation with the same multiplicities, rather than creating another
+zero population.
+
+For \(L>78\), (GAK12)'s full remainder factor on the head is below 1.054,
+since \(|1-\rho|\ge1/2\) and
+\(4(L+2)/(L(L+1))\le4\cdot80/(78\cdot79)<.054\).
+On the tail \(|1-\rho|\ge|\gamma|>H\), so the factor is below 1.0001.
+The rational function \((L+2)/(L(L+1))\) decreases for positive \(L\).
+Equations (GAK8), (GAK9), (GAK12) thus give, for the **complete** series,
+
+\[
+ T|Z_\mu(A)|<(1+1/L)
+ [1.054 M_*c_0+2(1.0001)\sqrt A S_2(H)q^{23}].
+\tag{GAK24}
+\]
+
+The head uses \(A^{\beta-1/2}=1\). Only there is criticality assumed.
+The tail retains its actual \(\beta\), before the valid upper bound
+\(A^{\beta-1/2}\le\sqrt A\). Its \(q^{23}\) already includes the
+actual-real-part normalization, so no additional \(M_*\) factor is
+required in that tail term. All heights through infinity are included.
+This derives the replacement for the Gamma damping in GJ2; neither
+GJ2 nor a Gamma moment law is invoked.
+
+### 7. Uniform rational budget for every real clock
+
+Use exact integer fractions throughout. For
+transcendental enclosures use, for \(1\le y\le2\) and
+\(z=(y-1)/(y+1)\),
+
+\[
+ q_m(y)=2\sum_{j=0}^{m-1}\frac{z^{2j+1}}{2j+1},\quad
+ 0\le\log y-q_m(y)
+ \le\frac{2z^{2m+1}}{(2m+1)(1-z^2)}.
+\tag{GAK25}
+\]
+
+This follows by integrating the geometric series for \((1-z^2)^{-1}\)
+and bounding every omitted denominator by \(2m+1\). Divide a rational
+\(y\ge1\) by powers of two to reach \([1,2)\), and add its multiple
+of the enclosure for \(\log2\). At \(m=64\), the exact fractions give
+\(\log10>2.3\) and \(\log(7/2)>1.25\). Thus on the **whole** interval,
+
+\[
+ L>46(2.3)+1.25=107.05>107,\quad \sqrt A>10^{23},\quad
+ A^{2/3}>10^{30}.
+\]
+
+The stronger Dusart row applies to **every** \(t\ge A\), because even
+the lower endpoint exceeds 7713133853. Proposition 3.2 and the decreasing
+error functions give, independently of the upper endpoint,
+
+\[
+ \eta_0(A)\le\frac{.01}{L^2}+1.00007A^{-1/2}+1.78A^{-2/3}
+ <\frac{.01}{107^2}+\frac{1.00007}{10^{23}}+
+   \frac{1.78}{10^{30}}<10^{-6}.
+\tag{GAK26}
+\]
+
+This is NC (GM3)'s lower-clock argument, not a restriction to its old
+Gamma upper endpoint. Set \(r=(671/250)10^{23}=2.684\cdot10^{23}\).
+Its square is \(7.203856\cdot10^{46}>A_+\). Hence
+\(\sqrt A<r\) even at the included upper endpoint.
+
+Define the following exact positive rational numbers:
+
+\[
+\begin{split}
+ U_h&=\frac{108}{107}\frac{527}{500}\frac1{20}M_*,\\
+ U_t&=2\frac{108}{107}\frac{10001}{10000}r
+                \frac{37}{25\cdot10^{12}}\left(\frac{2501}{10000}\right)^{23},\\
+ U_v&=\frac{260001}{500000}rV_*,\qquad
+ U_e=\frac{5M_*}{10^{23}},\qquad U=U_h+U_t+U_v+U_e.
+\end{split}
+\tag{GAK27}
+\]
+
+Each replacement in (GAK23)–(GAK24) increases a positive allowance. All bounds
+are uniform for real \(A\), not values sampled at endpoints. Exact rational substitution proves
+
+\[
+ U_h<.053193,\quad U_t<.011502,\quad U_v<.743074,\quad U_e<6\cdot10^{-23},
+\]
+
+and, using the full fractions rather than these rounded displays,
+
+\[
+ .003755<Q_R-U<.003756,
+ \qquad Q_R-U>\frac3{1000}.
+\tag{GAK28}
+\]
+
+The displayed allowances are exact rational definitions, so the final
+comparison is an integer cross-multiplication. Positive-series enclosures
+justify the logarithmic constants before this subtraction; they do not
+certify the primary analytic suppliers.
+
+### 8. Reuse the same effective unrestricted reserve
+
+Use exactly the unrestricted pressure, including the integer one,
+\[
+ M(\lambda)=\max_{m\ge1}[\log(\sigma(m)/m)-\lambda\log m],
+ \qquad R(x)=P_{\rm pp}(x)-\frac{\psi(x)}{x\log x}
+              -M(1/(x\log x)).
+\tag{GAK29}
+\]
+FIB §§87/98/111 provide the finite prime-prefix maximization, all ties,
+and the nonnegative reserve. Its finite §93.2 bound and (250.3) give
+\[
+ 0\le R(x)\le5x^{-2/3}+2/x+1/[2(\sqrt x-1)]\longrightarrow0.
+\]
+The event-safe argument in FIB §§249–250, already consumed in NC
+(GAI3)–(GAI4), uses the exact Dusart reserve row
+$(2,1/5,3594641)$, higher reference layers, paired left/right states,
+and this zero-at-infinity anchor. Its explicit start is $x\ge e^{100}$;
+it does not differentiate a reserve asymptotic or transfer the finite
+Robin value at 5040. Reuse its complete conclusion (250.6):
+\[
+ R(x)>\frac{c_R+c_2/\log x}{\sqrt x\log x}
+             +\frac1{\sqrt x(\log x+2)^3},
+ \quad c_R=2(\sqrt2-1),\quad
+ c_2=-2(\sqrt2-1)-\sqrt2\log2.
+\tag{GAK36}
+\]
+At the present $x=A$, $L>107$ pays that start. Exact squaring and
+(GAK25)'s positive log series certify
+\[
+ \rho_-=2828427/2000000<\sqrt2<\rho_+=1767767/1250000,
+ \qquad \log2<\ell_+=2166085/3125000.
+\]
+Use the lower root in the positive term and upper root/logarithm in
+the subtracted term, and then $L>107$. Thus the same actual reserve gives
+\[
+ TR(A)>Q_R+\frac{L}{(L+2)^3},\qquad
+ Q_R=2(\rho_--1)-\frac{2(\rho_+-1)+\rho_+\ell_+}{107}
+ =\frac{67838284064811}{83593750000000}.
+\tag{GAK37}
+\]
+This is reuse of the paid lower-clock reserve, with its original full
+assumptions and event conventions, rather than a new reserve theorem.
+
+### 9. Keep each integer's actual defect
+
+The PNT/Mertens tail identity, FIB 87.3 and NC's full-response formula,
+is
+
+\[
+ I_\psi(A)=g+\log L-\frac1L-P_{\rm pp}(A)+\lambda\psi(A).
+\tag{GAK38}
+\]
+
+It also follows by differentiating this continuous finite expression:
+its derivative is \(-D(A)k_0(A)\), its prime-power jumps cancel,
+and its limit is zero by the named PNT/Mertens input.
+Define the actual nonnegative price defect
+
+\[
+ d_A(n)=M(\lambda)-W(n)+\lambda\log n\ge0.
+\]
+
+For \(A=\log n\), adding (GAK29), (GAK38) and this defect, with
+\(\lambda A=1/L\), proves exactly
+
+\[
+ \Delta(n):=g+\log L-W(n)=I_\psi(A)+R(A)+d_A(n).
+\tag{GAK39}
+\]
+
+The pressure and \(R(A)\) have not been replaced by a different
+optimizer or a restricted maximum. Equations (GAK23)–(GAK28), (GAK37), (GAK39)
+prove (GAK2), for every integer in the stated interval, including its
+upper endpoint. Since \(T>0\), \(\Delta(n)>0\) is precisely
+\(\sigma(n)<e^g n\log\log n\). No defect was set to zero, including
+for a non-CA integer. There is no inference for every smaller integer
+or for an unbounded clock interval.
+
+### 10. Same least global maximizer corollary and remaining boundaries
+
+For this separate corollary retain **all** original selection and
+lower-clock suppliers, as spelled out in NC's section beginning at
+line 6743 and its earlier G1–G9, GH/GL finite ladder:
+
+* Under a Robin violation, CNS Theorems 4(ii), 5(iii) select the same
+  least integer \(N>5040\) attaining the **global maximum** of
+  \(G(n)=\sigma(n)/(n\log\log n)\), at level at least \(e^g\).
+* CNS Fact 1 and GA2 give properness and \(N/p\ge4>e\) for deletion.
+  Mantovanelli's archived direct tangent bridge supplies regular CA
+  optimality at the exact price \(1/(A\log A)\). A support-based
+  CA-family price is not substituted.
+* The unrestricted-exponent SevenSmooth exclusion removes support
+  index at most four. Kalyabin's stated endpoint hypotheses then give
+  \(P=P^+(N)<A=\log N<P^+\), with exponent one at \(P\).
+  This fixes the actual full-support minimization, \(d_A(N)=0\), and
+  its core identity. None of these zero-defect statements are moved to
+  arbitrary integers.
+* Axler's cited finite stop through the \(K\)th primorial,
+  \(K=999999476056\), supplies the initial clock. The exact Nicolas
+  \(N^{(0)}\) threshold is paid by
+  \(\log N^{(0)}<66(1000000007)<K/2<A\), so the effective
+  6.78 branch is retained. GA2 pays the absent-prime suffix while
+  keeping the primorial cutoff, support endpoint and clock distinct.
+* The original Nicolas/Dusart core and finite signed-response ladder,
+  including the original finite-height, density and zero-free suppliers
+  where used, puts this **same** selected \(A\) above
+  \((7/2)10^{46}\). Their source proofs, finite computations and
+  preprint/archive statuses are unchanged conditional suppliers.
+
+If that same \(N\) also had \(A\le7.2\cdot10^{46}\), (GAK2) would give
+\(\Delta(N)>0\), contradicting its global counterexample level.
+Therefore, with this complete unchanged extra chain,
+\(\log N>7.2\cdot10^{46}\). This is **not** a least-counterexample
+bound. The new all-integer interval argument itself does not require
+this extra chain, and does not independently audit all its primary proofs.
+
+For fixed \(a,k\), \(V_*>0\) and \(q^k>0\). Both the transport
+and unverified-tail allowances grow with \(\sqrt A\). Thus the
+fixed-law construction gives no unbounded signed Robin estimate,
+full RH proof or official acceptance.
+
+### 11. Library reuse and actual missing formal content
+
+The immutable project toolchain is 4.33.0; its manifest pins Mathlib to
+`db584cd6d46c92f209a44c0f1c829460d327499d`. Source inspection was of
+the original three entire Lean modules, the related DyadicComplexDecay
+module, and their complete Blueprints,
+not their runtime evidence. The Blueprints' existing machine-check
+claims are source descriptions, not new certifications by this derivation.
+
+The reusable project declarations are:
+
+* `InfiniteSincProduct.uniformIntervalDensity`, its nonnegativity,
+  integrability and integral-one facts, and
+  `uniformIntervalFourierLaplace_eq_complexSinc`, for the one-factor
+  complex identity at frequency \(-iz\).
+* `DyadicConvolutionDensity.dyadic_partial_convolution_fourierLaplace`
+  and its tilt/convolution proof pattern, with actual nonnegativity,
+  mass-one and compact-support results. The public finite theorem
+  specifically uses dyadic widths and \(n+1\) factors; it is not already
+  the 23 equal-width law. Its finite induction/Fubini machinery can be
+  reused or factored through a general finite-width bridge. One must
+  not silently instantiate equal widths in a dyadic-only signature.
+* `DyadicTransformDecay.sinc_product_decay_bound` and
+  `dyadic_density_transform_decay` concern the infinite dyadic density
+  on **real frequencies**. They provide the existing finite-prefix
+  norm argument and real sinc bounds, but do not directly prove the
+  normalized finite-law bound for all actual \(\beta-1+i\gamma\).
+* The related `DyadicComplexDecay.dyadic_transform_explicit_strip_decay`
+  already proves explicit inverse-power decay for the infinite dyadic
+  density at all complex frequencies. Its proof supplies the existing
+  uniform-factor exponential/inverse bounds and the normalized-prefix
+  argument. That general dyadic strip theorem should also be reused;
+  its signature and constants do not themselves give the equal-width,
+  mean-one law's sharper normalized factor \(.2501\) above \(H\).
+
+Neither infinite dyadic nonvanishing nor all-order real decay is needed
+as a premise of the present finite law. Do not duplicate these existing
+uniform/sinc facts, or introduce an independent complex-sinc definition.
+
+The genuinely missing consumed formal bridge comprises the finite
+equal-width law and its pushforward by \(e^{Y}/S(a)^{23}\), its exact
+whole-law centering and moments, the normalized complex-strip tail
+bound, and the endpoint-inclusive deterministic centered transport
+with absolute Fubini for the **full** \(F_A\) series and exact elementary
+response. The unrestricted-pressure identity, event-safe reserve
+start/infinity anchor, actual per-integer defect and conditional primary
+supplier interfaces must accompany that bridge for the complete theorem.
+A scalar wrapper of (GAK28), or an unproved law-general invocation of
+Gamma GK6/GJ2, would not consume those obligations.
+
+The OpenAI/math checkout at
+`adc7f1241b42e322a6451854ab7e4b4c146bf78a`, toolchain 4.34.1, is not a
+premise of this derivation. Its differently pinned closure is not claimed
+to have compiled against this project toolchain.
+
+The reasoning discipline was to check the positive law, complete
+deterministic response and same actual reserve before combining their
+scalar budgets; to retain signed identities until a directed bound
+permits absolute values; and to distinguish an ordinary conditional
+deduction from independent certification of primary analytics.
+
+## Project application: complete event cells sample the own-size clock
+
+Keep (ASC1)–(ASC7), the actual first-prime sample $\mathcal P_X$,
+its inclusive largest optimizers $N_p=C_{b_p}$ and their own clocks
+$A_p=\log N_p$. The full event construction in the
+[Mantovanelli interface](../Analytic/mantovanelli2026primeworkload.md#actual-sample-and-finite-support)
+supplies the underlying states. The application below uses ordinary
+bounded-variation endpoint quadrature; it is not a new quadrature,
+zero-density or prime-distribution theorem. It is a conditional
+project deduction, without Lean certification or a historical
+originality claim.
+
+Put $L=\log X$, $H=X^{3/10}$ and $J_X=[X/2,4X]$. For each fixed
+$X$, keep $H$ fixed while varying $A\in J_X$, and define
+
+$$
+V_X(A)=\sqrt A\log A\sum_{|\operatorname{Im}\rho|\le H}
+ m_\rho F_A(\rho)+r_A,
+\qquad f_X(A)=(V_X(A)-1/2)_+^2.
+\tag{OCQ1}
+$$
+
+Here $F_A$ is the complete coefficient (M1), and $r_A$ is the complete
+elementary correction after (G9). All distinct actual zeros retain
+their multiplicities and real parts; both ordinate signs and every
+zero exactly at $H$ remain in the head. Conjugate pairing makes $V_X$
+real. At each actual sample, $V_X(A_p)=V_p(H)$ from (ASC3).
+
+### Use every activation layer in the size partition
+
+If there are no layer events in $[X,3X)$, the selected sample sum
+is zero and the inequality is immediate. Otherwise enumerate all
+distinct event prices $e_1<\cdots<e_k$ in this band. Let $B_i=\log C_{e_i}$ be the post-event size after all
+ties, and let $B_0$ be the size immediately before $e_1$. Local
+finiteness and the complete activation rule give
+
+$$
+B_i-B_{i-1}=\sum_{\tau_{p,j}=e_i}\log p=:h_i>0.
+\tag{OCQ2}
+$$
+
+Thus $B_0<\cdots<B_k$ is a partition in the actual size coordinate,
+even though the prices need not be equally spaced. If $X$ itself
+is an event, its whole jump belongs to the first cell. An event at
+$3X$ is excluded. Higher-layer events and every tied layer stay in
+this partition.
+
+For a first-prime event at $e_i=b_p$, the existing calibration
+$p<b_p<p+1$ gives $p\ge X-1\ge X/2$ eventually. Hence
+
+$$
+h_i\ge\log p\ge L-\log2.
+\tag{OCQ3}
+$$
+
+First-prime event prices are strictly increasing in $p$, so at most
+one selected sample uses a given cell. The $j$th layer price is also
+strictly increasing in its prime, so a tied event has at most one
+prime for each fixed $j$.
+
+Reuse the activation cutoff from
+[FIB Proposition 420.2](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#420-既有大间隙链的实际素层隔离与根位置的联合缺口):
+every layer at a price below $3X$ has
+$p^j<Q_X=3X\log(3X)/\log2$. In particular
+$j\le d_X=\lfloor\log Q_X/\log2\rfloor$. For the complete tied jump,
+
+$$
+\mu_X:=\max_i h_i
+\le\log Q_X\sum_{j=1}^{d_X}\frac1j
+=O(L\log L)=O(L^2).
+\tag{OCQ4}
+$$
+
+The existing full-clock estimate
+$\log C_b=\psi(b)+O(\sqrt b[\log(2b)]^{5/2})$ and PNT give
+$\log C_b=b+o(b)$ uniformly for $b\in[X,3X]$.
+Together with (OCQ4), they put $B_0$ and every $B_i$ inside $J_X$
+eventually. This uses the entire optimizer clock, not just (ASC2)'s
+first-prime endpoints, and makes no substitution $A_p=b_p$.
+
+For quadrature, directly reuse S. S. Dragomir, *The Ostrowski integral
+inequality for mappings of bounded variation*, *Bulletin of the
+Australian Mathematical Society* **60** (1999), 495–508,
+[DOI 10.1017/S0004972700036662](https://doi.org/10.1017/S0004972700036662),
+Corollary 7, equations (5.16)–(5.17), printed p. 507. Its arbitrary
+partition is $(B_i)_{i=0}^k$, its sample in the $i$th cell is the
+right endpoint $B_i$, and its mesh is $\mu_X$. The published error
+bound is mesh times total variation; for absolutely continuous $f$,
+that variation is $\int|f'|$. No generic quadrature proof is repeated.
+
+For any nonnegative absolutely continuous $f$ on $J_X$, this supplier
+and (OCQ3) give
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal P_X}f(A_p)
+&\le\frac1{L-\log2}\sum_{i=1}^k h_i f(B_i)\\
+&\le\frac1{L-\log2}\left(
+ \int_{B_0}^{B_k}f(A)\,dA+
+ \mu_X\int_{B_0}^{B_k}|f'(A)|\,dA\right)\\
+&\le\frac1{L-\log2}\left(
+ \int_{J_X}f(A)\,dA+
+ \mu_X\int_{J_X}|f'(A)|\,dA\right).
+\end{aligned}
+\tag{OCQ5}
+$$
+
+Both enlarged integrands are nonnegative. An empty selected sample
+has left side zero; if there are no events, no partition is needed.
+This estimate uses no prime-gap bound, sampling independence or
+separate supremum payment for higher-layer mass: those layers supply
+cells in the same partition.
+
+### The complete moving coefficient pays the mesh error
+
+The finite head in (OCQ1) has a fixed zero set at each $X$. Differentiating
+the full (M1) integral with respect to its lower endpoint gives
+
+$$
+\partial_A F_A(\rho)
+=-\frac{A^{\rho-2}(1+\log A)}{\rho\log^2A}.
+\tag{OCQ6}
+$$
+
+Under the named ceiling (ASC1), directly reuse the complete
+coefficient bound (GH2), the finite reciprocal-square
+mass $\mathcal C_\zeta$ in (GE1), and the classical zero count
+$\sum_{|\gamma|\le H}m_\rho/|\rho|=O(\log^2(2H))$. They give,
+uniformly on $J_X$,
+
+$$
+|V_X(A)|=O(X^{3/8}),\qquad
+|V_X'(A)|=O(X^{-5/8}L^2).
+\tag{OCQ7}
+$$
+
+The full elementary response remains in this differentiation.
+Its exact formula after (G9) gives
+$r_A=O(A^{-1/2})$ and $r_A'=O(A^{-3/2})$, including the
+trivial-zero integral. These contributions fit (OCQ7).
+The positive-part square is $C^1$, including at $V_X=1/2$, with
+$f_X'=2(V_X-1/2)_+V_X'$. Thus
+
+$$
+\int_{J_X}|f_X'(A)|\,dA=O(X^{3/4}L^2).
+\tag{OCQ8}
+$$
+
+Substituting into (OCQ5) gives the own-clock sampling interface
+
+$$
+\boxed{\sum_{p\in\mathcal P_X}(V_p(H)-1/2)_+^2
+\le\frac1{L-\log2}\int_{J_X}(V_X(A)-1/2)_+^2\,dA
+ +O(X^{3/4}L^3).}
+\tag{OCQ9}
+$$
+
+The coarse error is sufficient: relative to (ASC6)'s unchanged
+$Q(X)$, its quotient is
+$O(L^5e^{-L^{1/4}/2})\to0$. No refinement of the generic quadrature
+theorem or new tail calculation is needed for this rate.
+
+### The original fixed-exponent consumer and its remaining signed input
+
+The proposed sufficient analytic input is still
+
+$$
+\int_{J_X}(V_X(A)-1/2)_+^2\,dA=o(LQ(X)).
+\tag{OCQ10}
+$$
+
+This input is required along all sufficiently large scales carrying
+the original source; a bound only on an unrelated subsequence does
+not supply that quantifier. It is not established by (OCQ7), the zero ceiling, finite zero
+verification, PNT or quadrature. Indeed, the unsigned bound (OCQ7)
+only gives $O(X^{7/4})$ for this integral, which does not pay
+(OCQ10). This route still lacks a sufficient directed estimate of the same
+actual zero response; no independent phase or modified arithmetic source is
+introduced.
+
+If (OCQ10) were supplied, (OCQ9) and the already paid head-tail
+norm transfer (ASC7) would give
+
+$$
+\sum_{p\in\mathcal P_X}(U_p-1/2)_+^2=o(Q(X)).
+\tag{OCQ11}
+$$
+
+To identify its actual-source consumer, keep the original particular
+fixed $0<\eta<1/2$ and power surplus supplied by the
+[Caveney persistence application](../Arith/caveney2012sacaga.md#a-wider-actual-price-interval-for-the-same-supplied-power-excess),
+where that exponent is denoted $\eta'$. Reuse the actual first-prime
+count (R6) in the
+[Stadlmann interface](../Analytic/stadlmann2022meansquaregaps.md#the-existing-uniform-prime-count-gives-a-stronger-source-specific-count).
+On every scale carrying the same selected source, there are
+
+$$
+\gg\frac{X^{1-\eta/2}e^{L^{1/4}/2}}{L}
+\tag{OCQ12}
+$$
+
+samples in $\mathcal P_X$ whose same actual $N_p=C_{b_p}$ satisfies
+$\log G(N_p)-\gamma>\delta X^{-\eta}$, for the fixed positive
+$\delta$ in that persistence application. The original exponent is
+not decreased or reselected.
+
+The argument does not transfer the original selected integer's
+event-free, own-price, zero-defect properties to these post-event
+integers. Instead consume
+the already preserved unrestricted integer identity
+
+$$
+\Delta(n)=I_\psi(\log n)+R(\log n)+d_n,
+\qquad d_n\ge0,
+\qquad \Delta(n)=\gamma-\log G(n).
+\tag{OCQ13}
+$$
+
+At $n=N_p$, its own clock and the unrestricted sufficiently large
+reserve $R(A_p)>0$ supplied in (GAI3)–(GAI4) give
+
+$$
+U_p=T(A_p)\bigl(\log G(N_p)-\gamma+R(A_p)+d_{N_p}\bigr)
+\ge T(A_p)\bigl(\log G(N_p)-\gamma\bigr).
+\tag{OCQ14}
+$$
+
+Keep $d_{N_p}$; it is not set to zero. By (ASC2), each sample in
+(OCQ12) has $U_p\gg X^{1/2-\eta}L\to\infty$ and hence $U_p\ge1$
+eventually. Each contributes at least $1/4$ to (OCQ11). The ratio of
+the lower count (OCQ12) to $Q(X)$ is
+$\gg X^{1/4-\eta/2}L\to\infty$, contradicting (OCQ11) on the
+same unbounded source scales.
+
+Thus the displayed implication retains the original fixed-exponent
+source and all post-event layers. It does not obtain (OCQ10), the
+original one-sided $I_\psi$ estimate or RH. Standard quadrature and
+the existing persistence count supply interfaces, not the missing
+continuous signed-head bound. No new generic theorem, repeated
+prime-count proof, parameter optimization or numerical replay is
+claimed as mathematical progress.

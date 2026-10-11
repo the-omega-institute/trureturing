@@ -196,3 +196,131 @@ $x^{d-2r}$. Equation (3.6) supplies the intended Hermite identity;
 the inconsistent intermediate powers are not used. This observation
 concerns the HTML display and does not identify an error in the
 journal text or establish a PDF comparison.
+
+## Scope of the finite Hermite and Appell suppliers
+
+Antonio J. Durán's *Zeros of Linear Combinations of Orthogonal
+Polynomials*, *Mediterranean Journal of Mathematics* **23**, article
+**148**, published 18 June 2026, DOI
+[10.1007/s00009-026-03145-9](https://doi.org/10.1007/s00009-026-03145-9),
+gives a finite-band supplier in Corollary 4.1 and section 4.1, Remark 1.
+For fixed $K\ge2$, real coefficients $c_0=1$, $c_K\ne0$, and
+$C_K=\max_{2\le j\le K}|c_j|$, the combination
+
+$$
+U_m(X)=\sum_{j=0}^Kc_jH_{m-j}(X)
+$$
+
+has real simple zeros interlacing those of $H_{m-1}$ under
+
+$$
+m\ge\max\{2K,(2^{K-1}-1)^2\,4^{K-1}C_K^2\}.
+\tag{DB}
+$$
+
+The separate Hermite preprint, *Zeros of linear combinations of
+Hermite polynomials*,
+[arXiv:2505.15330v1](https://arxiv.org/abs/2505.15330v1), submitted
+21 May 2025, states the smaller coefficient factor
+$(K-1)^2 4^{K-2}$ in Corollary 1.1. These explicit bounds have different
+factors and both require $m\ge2K$; they are not interchangeable versions
+of the same numerical estimate.
+
+Matching the full actual unnormalized family requires
+
+$$
+m=K=d,\qquad c_j=\binom dj\frac{\Gamma_j}{\Gamma_0}.
+\tag{DM}
+$$
+
+Since $\Gamma_d>0$, the last Hermite coefficient cannot be dropped.
+The condition $m\ge2K$ therefore excludes every target diagonal
+$d\ge2$. This excludes these sufficient bounds, not real-rootedness
+of the actual family.
+
+The Hermite preprint's Theorem 1.2 also has a stronger branch: if
+$P_K(X)=\sum_{j=0}^Kc_jX^{K-j}$ already has only real zeros, the
+polynomials $U_m$ have real simple zeros for $m\ge K$, and the zeros
+of $U_{m+1}$ interlace those of $U_m$. At (DM), the coefficient polynomial
+is $X^dJ^{d,0}(1/X)/\Gamma_0$. Thus that branch consumes ordinary
+Jensen real-rootedness; it does not bypass the actual zero-shift sign
+obligation. Its other branch gives an eventual threshold depending on
+one fixed coefficient polynomial and supplies no uniform threshold
+along the changing actual diagonal.
+
+Theorem 1.3 of the same preprint instead uses
+$h_m=H_m/(2^m m!)$ and one fixed finite coefficient polynomial. Exact
+normalization of the actual family gives
+
+$$
+\frac{\mathcal H_{d,0}(X)}{\Gamma_0\,2^d d!}
+=\sum_{j=0}^d\frac{a_j}{2^j}h_{d-j}(X),
+\qquad
+R(z)=\sum_{j\ge0}\frac{a_j}{2^j}z^j
+=\frac{\Theta(z/2)}{\Gamma_0}.
+\tag{DA}
+$$
+
+Here the coefficients are fixed but the actual generating factor
+$R$ is infinite. A fixed finite truncation changes the source; taking
+$K=d$ restores each individual polynomial without supplying a
+degree-uniform threshold. Local uniform convergence of truncations
+alone does not bound the omitted coefficients against all moving
+root or critical-value margins. No such actual-source tail estimate
+is supplied by this finite-polynomial theorem.
+
+Durán's *Brenke polynomials with real zeros and the Riemann Hypothesis*,
+[arXiv:2405.18940v1](https://arxiv.org/abs/2405.18940v1), supplies the
+established Appell–Laguerre–Pólya equivalence in Theorem A. Its
+Theorem 1.4 explicitly assumes $B\in\mathrm{LP\,I}$ in addition to a
+coefficient-ratio limit. When $B$ is the normalized actual theta
+source, that LP hypothesis retains an RH-linked obligation; the ratio
+limit cannot replace it.
+
+These are literature applications with pinned hypotheses. They
+supply no all-degree actual zero-shift estimate, signed Robin-tail
+budget, new mathematical declaration or Lean certification.
+
+## Known finite-degree coverage from verified zero height
+
+Let $\mathrm{RH}_0(T)$ mean that every zero $\rho$ of $\xi$ with
+$|\operatorname{Im}\rho|\le T$ lies on the critical line. This requires
+complete zero counting, not only a list of zeros found on that line.
+Griffin, Ono, Rolen, Thorner, Tripp and Wagner,
+[*Jensen polynomials for the Riemann xi-function*, arXiv:1910.01227v3](https://arxiv.org/abs/1910.01227v3),
+submitted 17 December 2020, use exactly $\gamma(j)=\Gamma_j$ in
+equations (1.1)–(1.2). Their Theorem 1.2 at $m=0$ gives
+
+$$
+\mathrm{RH}_0(T)\quad\Longrightarrow\quad
+J^{d,n}\text{ is hyperbolic for every }n\ge0
+\text{ and }1\le d\le\lfloor T\rfloor^2.
+\tag{VH}
+$$
+
+The source identifies this specialization as Chasse's Theorem 1.8.
+Its Lemmas 5.1–5.2 supply differentiation closure of the canonical
+sector class and the finite-degree sector implication; no new
+zero-pair preserver proof is needed for (VH).
+
+Platt–Trudgian's
+[*The Riemann hypothesis is true up to $3\cdot10^{12}$*, arXiv:2004.09765v1](https://arxiv.org/abs/2004.09765v1),
+submitted 21 April 2020, Theorem 1 supplies a rigorous complete
+interval-arithmetic verification through a height exceeding the conservative bound
+$T=3\cdot10^{12}$. Applying (VH) and the existing implication (FW)
+therefore covers both actual families:
+
+$$
+J^{d,n}\text{ and }\mathcal H_{d,n}\text{ are hyperbolic}
+\qquad(n\ge0,\ 1\le d\le9\cdot10^{24}).
+\tag{FC}
+$$
+
+O'Sullivan explicitly reports this extension in introductory footnote 1.
+Griffin et al.'s printed Corollary 1.3 instead has the older bound
+$9.36\cdot10^{20}$; (FC) uses their theorem with the later verification.
+This is direct reuse of established coverage, not a new estimate or
+a replay of the numerical certificate. For the zero-shift criterion
+(ZF), degrees above $9\cdot10^{24}$ remain outside this finite input.
+It supplies no all-degree conclusion, signed Robin-tail budget or
+local Lean certification.
