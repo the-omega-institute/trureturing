@@ -99,6 +99,7 @@ noncomputable def twoLowering (m n : ℕ) :
   (binLowering K m).rTensor ((Fin n → Bool) → K) +
     (binLowering K n).lTensor ((Fin m → Bool) → K)
 
+omit [CharZero K] in
 private theorem tensor_commutator {V W : Type*}
     [AddCommGroup V] [Module K V] [AddCommGroup W] [Module K W]
     (a c : Module.End K V) (b d : Module.End K W) :
@@ -114,6 +115,7 @@ private theorem tensor_commutator {V W : Type*}
   rw [cross a d, cross c b]
   abel
 
+omit [CharZero K] in
 private theorem tensor_relations {V W : Type*}
     [AddCommGroup V] [Module K V] [AddCommGroup W] [Module K W]
     {h e f : Module.End K V} {h' e' f' : Module.End K W}
@@ -157,5 +159,13 @@ theorem two_bin_action (m n : ℕ) :
   simp only [twoWeight, twoRaising, twoLowering, LinearMap.add_apply,
     LinearMap.rTensor_tmul, LinearMap.lTensor_tmul, hw, he, hf,
     TensorProduct.smul_tmul, TensorProduct.tmul_smul, add_smul, and_self]
+
+/-- The concrete triple together with its relation certificate. -/
+noncomputable def twoBinRepresentation (m n : ℕ) :
+    {a : Module.End K (((Fin m → Bool) → K) ⊗[K] ((Fin n → Bool) → K)) ×
+      Module.End K (((Fin m → Bool) → K) ⊗[K] ((Fin n → Bool) → K)) ×
+      Module.End K (((Fin m → Bool) → K) ⊗[K] ((Fin n → Bool) → K)) //
+      Sl2Relations a.1 a.2.1 a.2.2} :=
+  ⟨(twoWeight K m n, twoRaising K m n, twoLowering K m n), (two_bin_action K m n).1⟩
 
 end D5.S3.Quantum.SpinChains.BinaryBinBaseChange
