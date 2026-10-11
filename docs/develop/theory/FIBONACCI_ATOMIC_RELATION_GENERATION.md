@@ -69052,6 +69052,8 @@ lcm 来源之外。它仍不排除一般仿射来源 \(1+F_rg\)、乘积来源�
 | Musin, [arXiv:2609.33794v1](../../../Library/Analytic/musin2026higherorder.md) | 用支撑线坐标构造高阶 CA 层，并给出在同一极值来源上保持 Robin 判据的条件。 | §441--§442 已记录固定秩的模障碍与变化秩的固定因子逃逸；其定理没有给变化 \(F_r\) 的统一接触桥。 |
 | Mishra--Sarkar, [arXiv:2609.26787v1](../../../Library/ArithSums/mishra2026finiterobin.md) | 给出按 \(\omega(N)\) 截断的有限 Robin 形式，并覆盖 \(\omega\le6\)、primorial、奇数和平方自由类。 | FIB 地址没有统一的 \(\omega(1+F_rg)\) 上界；把该定理应用到 FIB 仍需先证明实际整数落入其覆盖类。 |
 | Fan--Kobayashi--Molnar, [arXiv:2511.02106v1](../../../Library/ArithSums/fankobayashimolnar2025family.md) | 研究一族多重约数和的 Robin 类判据，属于已登记的广义判据路线。 | 广义约数和的参数不是 FIB 的五窗来源；没有给出普通 \(\sigma(N)/N\) 的来源保持。 |
+| Broadbent--Fiori--Kadiri--Ng--Wilk, [arXiv:2608.01498v1](../../../Library/Weil/broadbent2026mertens.md) | 给出有限 Mertens 和及逆素数乘积的显式误差包络；§459 将其写成 \(\mathfrak m(P)\) 的可代入上界。 | 该界只支付有限支撑的解析误差，不能控制同一自匹配根上的加权 floor residual \(\mathcal L_P\)，也不提供 FIB 地址到该 residual 的恢复。 |
+
 
 截至 2026-10-12，按“Fibonacci/Zeckendorf/Lucas”与“Robin/\(\sigma(n)\)/
 superabundant/colossally abundant”组合检索的公开记录中，没有发现同时满足下列三项的来源：
