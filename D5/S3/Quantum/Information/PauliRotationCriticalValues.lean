@@ -7,6 +7,7 @@
    digest: Two-qubit Pauli rotation circuits and their critical-value Hausdorff dimension. -/
 
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+import D5.S3.Observer.Hankel.PositiveGramianBalancing
 
 set_option linter.style.longLine false
 set_option backward.isDefEq.respectTransparency false
@@ -46,6 +47,7 @@ def claim : Prop :=
     (∀ᵐ α ∂(volume : Measure Param), derivativeRank P α = 15) →
       dimH (circuit P '' critical P) ≤ (13 : ℝ≥0∞)
 
+open D5.S3.Observer.Hankel.PositiveGramianBalancing (diagonal_scalings)
 open Matrix
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (pauliMatrix tensorOp tensor_mul)
@@ -498,13 +500,6 @@ private noncomputable def R : Matrix (Fin 15) (Fin 15) ℝ := diagonal rowScale
 private noncomputable def Ri : Matrix (Fin 15) (Fin 15) ℝ := diagonal (fun i => (rowScale i)⁻¹)
 private noncomputable def S : Matrix (Fin 15) (Fin 15) ℝ := diagonal colScale
 private noncomputable def Si : Matrix (Fin 15) (Fin 15) ℝ := diagonal (fun i => (colScale i)⁻¹)
-private theorem scaling_inverse : Ri * R = 1 ∧ Si * S = 1 := by
-  have hs : Real.sqrt 2 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
-  constructor
-  · rw [Ri, R, diagonal_mul_diagonal]; apply diagonal_eq_one.mpr
-    ext i; simp -implicitDefEqProofs only [rowScale_unfold]; split_ifs <;> simp -implicitDefEqProofs [hs]
-  · rw [Si, S, diagonal_mul_diagonal]; apply diagonal_eq_one.mpr
-    ext i; simp -implicitDefEqProofs only [colScale_unfold]; split_ifs <;> simp -implicitDefEqProofs [hs]
 private noncomputable def B : Matrix (Fin 15) (Fin 15) ℝ := ratReal certK * Ri
 private theorem B_unfold : B = ratReal certK * Ri := rfl
 
@@ -519,8 +514,16 @@ private theorem v_unfold : v = S *ᵥ (fun i => (certu i : ℝ)) := rfl
 
 private theorem coordinate_inverse :
     B * (R * ratReal certKi) = 1 ∧ U * (ratReal certNi * Si) = 1 := by
-  have hR := scaling_inverse.1
-  have hS := scaling_inverse.2
+  have hR : Ri * R = 1 := by
+    have hp (i : Fin 15) : 0 < rowScale i := by
+      simp -implicitDefEqProofs only [rowScale_unfold]; split_ifs <;> positivity
+    simpa only [Ri, R, Real.sqrt_sq (le_of_lt (hp _))] using
+      (diagonal_scalings (fun i => rowScale i ^ 2) (fun i => pow_pos (hp i) 2)).2.1
+  have hS : Si * S = 1 := by
+    have hp (i : Fin 15) : 0 < colScale i := by
+      simp -implicitDefEqProofs only [colScale_unfold]; split_ifs <;> positivity
+    simpa only [Si, S, Real.sqrt_sq (le_of_lt (hp _))] using
+      (diagonal_scalings (fun i => colScale i ^ 2) (fun i => pow_pos (hp i) 2)).2.1
   have hS' : S * Si = 1 := mul_eq_one_comm.mp hS
   constructor
   · simp -implicitDefEqProofs only [B_unfold, mul_assoc, ← mul_assoc Ri R, hR, one_mul, ← map_mul,
@@ -624,10 +627,20 @@ private theorem J_witness : (J_H witnessP point : Matrix (Fin 15) (Fin 15) ℝ) 
   change J_H witnessP point i j = rowScale i * (certA i j : ℝ) * (colScale j)⁻¹
   exact (eq_div_iff (hs j)).mpr (by simpa -implicitDefEqProofs [mul_comm] using hh)
 private theorem normalized_witness : B * Matrix.of (J_H witnessP point) * U = D := by
+  have hR : Ri * R = 1 := by
+    have hp (i : Fin 15) : 0 < rowScale i := by
+      simp -implicitDefEqProofs only [rowScale_unfold]; split_ifs <;> positivity
+    simpa only [Ri, R, Real.sqrt_sq (le_of_lt (hp _))] using
+      (diagonal_scalings (fun i => rowScale i ^ 2) (fun i => pow_pos (hp i) 2)).2.1
+  have hS : Si * S = 1 := by
+    have hp (i : Fin 15) : 0 < colScale i := by
+      simp -implicitDefEqProofs only [colScale_unfold]; split_ifs <;> positivity
+    simpa only [Si, S, Real.sqrt_sq (le_of_lt (hp _))] using
+      (diagonal_scalings (fun i => colScale i ^ 2) (fun i => pow_pos (hp i) 2)).2.1
   rw [show Matrix.of (J_H witnessP point) = R * ratReal certA * Si from J_witness]
   calc _ = ratReal certK * (Ri * R) * ratReal certA * (Si * S) * ratReal certN := by
              simp -implicitDefEqProofs only [B_unfold, U_unfold, mul_assoc]
-       _ = D := by rw [scaling_inverse.1, scaling_inverse.2]
+       _ = D := by rw [hR, hS]
                    simp -implicitDefEqProofs only [mul_one, ← map_mul, rational_certificate.2.2.2.2, D_unfold]
 private theorem H_witness (j : Fin 15) : H witnessP point j =
     (colScale j)⁻¹ • E (fun i => rowScale i * (certA i j : ℝ)) := by

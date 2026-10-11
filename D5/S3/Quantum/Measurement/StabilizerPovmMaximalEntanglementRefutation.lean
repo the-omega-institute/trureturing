@@ -44,7 +44,6 @@ Information-escape registration is paused under CLAUDE.md §3.9.
 import D5.S3.Quantum.Information.SignedPauliSumNormRefutation
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Reduction.IsometricCompression
-import Mathlib.LinearAlgebra.Matrix.Bilinear
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.unusedSimpArgs false
@@ -66,19 +65,17 @@ abbrev State (n : ℕ) := (Fin n → Fin 2) → ℂ
 abbrev Operator (n : ℕ) := Matrix ((Fin n → Fin 2)) ((Fin n → Fin 2)) ℂ
 def Phase (c : ℂ) : Prop := c = 1 ∨ c = -1 ∨ c = Complex.I ∨ c = -Complex.I
 def letterProduct : Pauli → Pauli → Pauli
-  | .I, q => q | p, .I => p
-  | .X, .X => .I | .Y, .Y => .I | .Z, .Z => .I
-  | .X, .Y => .Z | .Y, .X => .Z | .X, .Z => .Y
-  | .Z, .X => .Y | .Y, .Z => .X | .Z, .Y => .X
+  | .I, q => q | p, .I => p | .X, .X => .I | .Y, .Y => .I | .Z, .Z => .I
+  | .X, .Y => .Z | .Y, .X => .Z | .X, .Z => .Y | .Z, .X => .Y | .Y, .Z => .X
+  | .Z, .Y => .X
 def letterPhase : Pauli → Pauli → ℂ
   | .X, .Y => Complex.I | .Y, .Z => Complex.I | .Z, .X => Complex.I
   | .Y, .X => -Complex.I | .Z, .Y => -Complex.I | .X, .Z => -Complex.I
   | _, _ => 1
-lemma letter_mul (p q : Pauli) :
-    pauliMatrix p * pauliMatrix q = letterPhase p q • pauliMatrix (letterProduct p q) := by
-  cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-    simp [letterPhase, letterProduct, pauliMatrix, qubitX, qubitZ,
-      Matrix.mul_apply, Fin.sum_univ_two]
+lemma letter_mul (p q : Pauli) : pauliMatrix p * pauliMatrix q =
+    letterPhase p q • pauliMatrix (letterProduct p q) := by
+  cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [letterPhase,
+    letterProduct, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two]
 lemma tensor_one {n : ℕ} : tensorOp (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by classical
   ext x y; simp only [tensorOp, Matrix.of_apply, Matrix.one_apply, Fintype.prod_boole, ← funext_iff]
 def wordUnit {n : ℕ} (w : (Fin n → Pauli)) : (Operator n)ˣ := by
@@ -152,8 +149,7 @@ private lemma maximal_word {n : ℕ} (S : StabilizerGroup n) (w : (Fin n → Pau
   have word_sq {n : ℕ} (w : (Fin n → Pauli)) : wordOp w * wordOp w = 1 := (by unfold wordOp; rw [tensor_mul]; simp_rw [pauli_sq]; exact tensor_one)
   have neg_identity_comm {n : ℕ} (u : (Operator n)ˣ) : (-1 : (Operator n)ˣ) * u = u * (-1 : (Operator n)ˣ) := (by apply Units.ext; simp [ Algebra.algebraMap_eq_smul_one])
   classical
-  by_contra h
-  have hn := not_or.mp h
+  by_contra h; have hn := not_or.mp h
   let t := wordUnit w
   have ht : t*t = 1 := Units.ext (word_sq w)
   let T := Subgroup.closure ((S.subgroup : Set _) ∪ {t})
@@ -276,8 +272,7 @@ private lemma projector_in_group_span {n : ℕ} (S : StabilizerGroup n) (v : Sta
     have stabilizer_involution {n : ℕ} (S : StabilizerGroup n) {u : (Operator n)ˣ} (hu : u ∈ S.subgroup) : u*u = 1 := (by obtain ⟨c, hc, w, hw⟩ := S.pauli hu; obtain h | h := stabilizer_real_phase S hu hc hw; all_goals apply Units.ext; simp [hw, h, word_sq])
     have stabilizer_hermitian {n : ℕ} (S : StabilizerGroup n) {u : (Operator n)ˣ} (hu : u ∈ S.subgroup) : (u : Operator n).conjTranspose = (u : Operator n) := (by obtain ⟨c, hc, w, hw⟩ := S.pauli hu; obtain h | h := stabilizer_real_phase S hu hc hw; all_goals simp [hw, h, word_hermitian])
     classical
-    intro u hu
-    obtain ⟨c, hc⟩ := he u hu
+    intro u hu; obtain ⟨c, hc⟩ := he u hu
     have hsq : (u : Operator n)*(u : Operator n) = 1 := congrArg Units.val (stabilizer_involution S hu)
     have hcc : c*c = 1 := (by have ht : (c*c) • v = (1 : ℂ) • v := (by rw [one_smul, ← smul_smul, ← hc, ← Matrix.mulVec_smul, ← hc, Matrix.mulVec_mulVec, hsq, Matrix.one_mulVec]); exact (smul_left_injective ℂ hv) ht)
     have hreal : star c = c := (by have h : c = 1 ∨ c = -1 := (by rw [← pow_two] at hcc; exact sq_eq_one_iff.mp hcc); rcases h with rfl | rfl <;> simp)
@@ -380,8 +375,7 @@ def entanglementP {n m : ℕ} (S : StabilizerGroup (n+m)) : ℚ := ((n : ℚ)+(m
 def MaximallyEntangled {n m : ℕ} (B : StabilizerBasis n m) : Prop := entanglementP B.group = ((min n m : ℕ) : ℚ)
 def claim : Prop := ∀ (n m : ℕ) (ψ : UnitState m), ∃ B : StabilizerBasis n m, MaximallyEntangled B ∧ ∀ B' : StabilizerBasis n m, smu ψ B' ≤ smu ψ B
 private lemma ancilla_injective {n : ℕ} (S : StabilizerGroup (n+n)) (hmax : entanglementP S = n) : Function.Injective (fun u : S.subgroup => restrictAncilla (representation u.val (S.pauli u.property)).word) := by
-  letI (k : ℕ) : Finite (pauliGroup k) := by
-    classical
+  letI (k : ℕ) : Finite (pauliGroup k) := by classical
     have hf (c : ℂ) := Set.finite_range (fun w : Fin k → Pauli => c • wordOp w)
     apply (Set.finite_range_iff (show Function.Injective (fun u : pauliGroup k => (u.val : Operator k)) from fun _ _ h => Subtype.ext (Units.ext h))).mp
     exact (((hf 1).union (hf (-1))).union ((hf Complex.I).union (hf (-Complex.I)))).subset (by rintro _ ⟨u,rfl⟩; dsimp only; obtain ⟨c,hc,w,hw⟩ := u.property; rcases hc with rfl | rfl | rfl | rfl <;> rw [hw] <;> simp only [Set.mem_union, Set.mem_range] <;> aesop)
@@ -460,8 +454,7 @@ private def compressLinear {n m : ℕ} (ψ : UnitState m) : Operator (n+m) →�
   { (_root_.mulRightLinearMap (Fin n → Fin 2) ℂ (ancillaEmbedding ψ)).comp
       (_root_.mulLeftLinearMap (Fin (n+m) → Fin 2) ℂ (ancillaEmbedding ψ).conjTranspose) with toFun := fun A => IsometricCompression.compress (ancillaEmbedding ψ) A }
 private lemma maximal_entangled_support_bound {n : ℕ} (ψ : UnitState n) (B : StabilizerBasis n n) (hmax : MaximallyEntangled B) : smu ψ B ≤ Nat.card {w : (Fin n → Pauli) // expectation w ψ ≠ 0} := by
-  letI (k : ℕ) : Finite (pauliGroup k) := by
-    classical
+  letI (k : ℕ) : Finite (pauliGroup k) := by classical
     have hf (c : ℂ) := Set.finite_range (fun w : Fin k → Pauli => c • wordOp w)
     apply (Set.finite_range_iff (show Function.Injective (fun u : pauliGroup k => (u.val : Operator k)) from fun _ _ h => Subtype.ext (Units.ext h))).mp
     exact (((hf 1).union (hf (-1))).union ((hf Complex.I).union (hf (-Complex.I)))).subset (by rintro _ ⟨u,rfl⟩; dsimp only; obtain ⟨c,hc,w,hw⟩ := u.property; rcases hc with rfl | rfl | rfl | rfl <;> rw [hw] <;> simp only [Set.mem_union, Set.mem_range] <;> aesop)
@@ -622,8 +615,7 @@ private def standardStabilizer (n : ℕ) : StabilizerGroup n := by
   have standard_excludes_neg (n : ℕ) : (-1 : (Operator n)ˣ) ∉ standardSubgroup n := (by rintro ⟨a,ha⟩; have ht := congrArg (fun u : (Operator n)ˣ => (u : Operator n) 0 0) ha; norm_num [ Algebra.algebraMap_eq_smul_one, wordUnit, z_word_origin] at ht)
   exact ⟨standardSubgroup n,standard_pauli n,standard_abelian n,standard_excludes_neg n,standard_maximal n⟩
 private def conjugatedStabilizer {n : ℕ} (S : StabilizerGroup n) (U : (Operator n)ˣ) (hU : ∀ u ∈ pauliGroup n, (MulAut.conj U) u ∈ pauliGroup n) : StabilizerGroup n := by
-  letI (k : ℕ) : Finite (pauliGroup k) := by
-    classical
+  letI (k : ℕ) : Finite (pauliGroup k) := by classical
     have hf (c : ℂ) := Set.finite_range (fun w : Fin k → Pauli => c • wordOp w)
     apply (Set.finite_range_iff (show Function.Injective (fun u : pauliGroup k => (u.val : Operator k)) from fun _ _ h => Subtype.ext (Units.ext h))).mp
     exact (((hf 1).union (hf (-1))).union ((hf Complex.I).union (hf (-Complex.I)))).subset (by rintro _ ⟨u,rfl⟩; dsimp only; obtain ⟨c,hc,w,hw⟩ := u.property; rcases hc with rfl | rfl | rfl | rfl <;> rw [hw] <;> simp only [Set.mem_union, Set.mem_range] <;> aesop)
@@ -982,8 +974,7 @@ private lemma explicit_lower_bound : 32 ≤ smu witness explicitBasis := by
     classical
     unfold wordOp; rw [tensor_mul, tensor_trace]; simp_rw [pauli_trace_pair]
     simp only [Fintype.prod_ite_zero, ← funext_iff, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-  have word_linearIndependent (n : ℕ) : LinearIndependent ℂ (@wordOp n) := by
-    classical
+  have word_linearIndependent (n : ℕ) : LinearIndependent ℂ (@wordOp n) := by classical
     apply linearIndependent_iff'.2; intro s c h v hv; have ht := congrArg (fun A : Operator n => Matrix.trace (wordOp v * A)) h; simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul, smul_eq_mul, word_trace_pair, mul_ite, mul_zero, Matrix.mul_zero, Matrix.trace_zero] at ht; rw [Finset.sum_ite_eq s v] at ht; simp only [hv, if_true] at ht; exact (mul_eq_zero.mp ht).resolve_right (pow_ne_zero _ (by norm_num))
   have append_z_injective : Function.Injective (fun x : (Fin 2 → Pauli) × Fin 2 => (Fin.snoc x.1 (zLetter x.2) : Fin 3 → Pauli)) := (by intro x y h; have hp : x.1 = y.1 := (by funext i; have hh := congrFun h (Fin.castSucc i); simpa only [Fin.snoc_castSucc] using hh); have hz : zLetter x.2 = zLetter y.2 := (by simpa only [Fin.snoc_last] using congrFun h (Fin.last 2)); have hd : x.2 = y.2 := (by rcases x with ⟨p,d⟩; rcases y with ⟨q,a⟩; fin_cases d <;> fin_cases a <;> simp_all [zLetter]); exact Prod.ext hp hd); let f : (Fin 2 → Pauli) × Fin 2 → Operator 3 := fun x => wordOp (Fin.snoc x.1 (zLetter x.2)); have hli : LinearIndependent ℂ f := (word_linearIndependent 3).comp _ append_z_injective; have hcard : Fintype.card ((Fin 2 → Pauli) × Fin 2) = 32 := (by decide); have hdim : Module.finrank ℂ (Submodule.span ℂ (Set.range f)) = 32 := (by rw [finrank_span_eq_card hli,hcard]); have hspan : Submodule.span ℂ (Set.range f) ≤ Submodule.span ℂ (Set.range (fun b => mu witness (explicitBasis.vectors b))) := (by apply Submodule.span_le.mpr; rintro A ⟨⟨p,d⟩,rfl⟩; exact thirtytwo_in_span p d); rw [← hdim]; exact Submodule.finrank_mono hspan
 theorem result : ¬ claim := by

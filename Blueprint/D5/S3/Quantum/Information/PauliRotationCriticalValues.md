@@ -142,4 +142,5 @@ In increasing input order choose the words YY, IY, XX, ZY, ZX, IZ, XY, YZ, IX, X
 - Truth anchor: `D5/S3/Quantum/Information/PauliRotationCriticalValues.derivativeRank`
 - Truth anchor: `D5/S3/Quantum/Information/PauliRotationCriticalValues.result`
 - Truth anchor: `D5/S3/Quantum/Information/PauliRotationCriticalValues.rotation`
+- Dependency: [D5/S3/Observer/Hankel/PositiveGramianBalancing](../../Observer/Hankel/PositiveGramianBalancing.md)
 - Dependency: [D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation](../Measurement/StabilizerPovmMaximalEntanglementRefutation.md)
