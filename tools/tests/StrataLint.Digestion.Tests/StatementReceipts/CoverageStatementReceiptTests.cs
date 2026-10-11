@@ -243,7 +243,7 @@ public sealed class CoverageStatementReceiptTests
     }
 
     [Fact]
-    public void FrozenLedgerChangeRechecksStatementReceipt()
+    public void FrozenStateChangeRechecksStatementReceipt()
     {
         var previousStatementId = FrozenStatementReceiptTestData.Id('4');
         var evaluation = Evaluate(
@@ -252,7 +252,7 @@ public sealed class CoverageStatementReceiptTests
             FrozenStatementReceiptTestData.Id('5'),
             FrozenStatementReceiptTestData.Id('2'),
             TargetSource("by trivial"),
-            FrozenStatePath.Root + "/D5/S0/Carrier/Target.lean.json");
+            FrozenStatePath.FromModulePath(RepoPath.CreateKnown(ModulePath)).Value);
 
         Assert.Contains(
             evaluation.Entries.Single().Gaps,

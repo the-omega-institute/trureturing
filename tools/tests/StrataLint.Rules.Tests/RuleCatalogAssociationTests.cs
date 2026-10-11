@@ -291,8 +291,6 @@ public sealed class RuleCatalogAssociationTests
     [Theory]
     [InlineData("tools/StrataLint.Engine/Rules/RepositoryRules.cs")]
     [InlineData("tools/StrataLint.Engine/Rules/FutureSharedRule.cs")]
-    [InlineData("tools/StrataLint.Engine/Ledger/FrozenAcceptedEventLoader.cs")]
-    [InlineData("tools/StrataLint.Engine/Revocation/TrustedRevocationReceipts.cs")]
     [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
     public void SharedRuleImplementationChangesRespectDeltaOnlyRuleScoping(string changedPath)
     {
@@ -418,7 +416,7 @@ public sealed class RuleCatalogAssociationTests
     public void DefaultCatalogRootMatchesCharacterizedRegressionValue()
     {
         Assert.Equal(
-            "sha256:09f8bf89469a864d5ddaa1cbd4191c46031fac663818d6fe36b750d190f9a032",
+            "sha256:e1a347dfa781a9f7fb646c80aa1055703f64709275d2965b6238a61542b6906e",
             RuleCatalog.Default.RootSha256);
     }
 

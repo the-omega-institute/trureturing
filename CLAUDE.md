@@ -365,7 +365,7 @@ Blueprint/D5/<同一 GID 路径>.scribe.cs
   ▼
 Blueprint/D5/<同一 GID 路径>.md              投影·禁手改
   │ make deposit ATOM_ID=x GID=g(无 atom:make deposit-uncovered GID=g,止于冻结)
-  └─► Golden/Frozen/state/<GID 路径>.lean.json            冻结成员状态片·`{statement_id}`·当前态
+  └─► Golden/Frozen/state/<模块路径>.lean.json            冻结成员状态片·`{statement_id, declarations}`·当前态
   │ make cover / cover-batch
   ▼
 backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
@@ -382,18 +382,17 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 **coverage 边当前 contract**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;账本 loader 只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`cover-atom` 在写入前按当前 report 与冻结账本解析本次 GID，未解析即失败；任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移只属已完成的 contract 判例,不构成现役迁移流程或兼容机制;当前没有 alias、双读或第二 canonical 格式。
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
 
-- **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;**永不解冻**是第 1.3 条冻结律的数学规范。SL-008 判当前态 C1–C5 与当前树一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
-**旧事件格式边界**:commit `572cd43587f120a379cf83871b68c249be36cd5e` 中 Freeze/schema 5 payload 的 `statement_id`、`declaration_statement_ids`、`descriptor_selector`(Lean 路径)、`prerequisite_frozen_node_ids` 为承重数据,末项是真值 DAG 的边;此历史格式不取代当前 state 成员判据。
+- **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;**永不解冻**是第 1.3 条冻结律的数学规范。SL-008 检查状态片路径、闭键 schema、模块存在与 Closed、pin 和声明清单同当前报告一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
 
 - **消化态(账目侧)**：`residual-open` 表示尚无 GID 覆盖，`partial-closed` 表示部分子项覆盖，`absorbed-closed` 表示本项与子链满足覆盖条件，`nonpropositional-inapplicable` 表示无需项目覆盖的终结：非命题，或命题仅由钉版上游闭合而仓内无 GID。第四态由 `receipts.nonpropositional` 的 justification 与真实邻居经目标处理命令派生，不由 atom 字节或 kind 自动判定。唯一写者是 `settle-atom`（`make settle` / `make settle-clear`）；写前以 `make atom-context ATOM_ID=x` 连读前后 atom，writer 复算邻接不等即拒，`--clear` 删除目标收据并退回 `residual-open`。目标 writer 拒绝所处理记录的非法字段共存与坏形；无关账目的目录或收据偏差不触发准入审计。链闭合要求父项自身完成且全部子项为 Absorbed 或 Nonpropositional；该状态对 Lean 真值零主张、不计入可形式化分母、`Deletable` 不因它为真。`section/*` 等仍走查询时 `not-formalizable(kind)` 投影。
-- **bind-only atom 的结算**:全 bind-only 的命题 atom 按第 3.2 条直接走既有覆盖与子句链闭合,到达 `absorbed-closed` 即处理完成;不产生新的 Lean 声明或冻结事件。仅由钉版上游闭合而无项目 GID 者按第 3.2 条以 `settle-atom` 的 justification 收据终结,不手写已完成。
+- **bind-only atom 的结算**:全 bind-only 的命题 atom 按第 3.2 条直接走既有覆盖与子句链闭合,到达 `absorbed-closed` 即处理完成;不产生新的 Lean 声明或冻结登记。仅由钉版上游闭合而无项目 GID 者按第 3.2 条以 `settle-atom` 的 justification 收据终结,不手写已完成。
 - **文献已发表、仓内无冻结 GID 覆盖的命题 atom**:能由钉版上游闭合者按第 3.2 条以 `settle-atom` 收据终结;其余留 `residual-open`(无 GID 不满足 `absorbed-closed`)。历史账目可以携带 `receipts.quarantine` 或 `receipts.cover_disposition`，loader 保留其结构并将其作为当前一致性输入；现役流程不再提供独立 quarantine 管理或 cover disposition 重试命令，cover 失败直接返回给 AI 修正后重新调用。
 - **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids[].gid` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 2.4 条冒领。
-**含消化或冻结工件的理论 PR 说明须写清三项(承第 5.2 条产地,不另立格式)**:①**形态**(deposit / deposit-uncovered / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID,无 atom 时写明无 atom 及冻结的 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。纯理论正文 PR 不要求这三项，只需明确其未进入消化链。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
+**含消化或冻结工件的理论 PR 说明须写清三项(承第 5.2 条产地,不另立格式)**:①**形态**(deposit / deposit-uncovered / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID,无 atom 时写明无 atom 及冻结的 GID;③**落地后的状态**——模块状态片路径与 `statement_id`(deposit),或 atom 由哪态迁到哪态(cover)。纯理论正文 PR 不要求这三项，只需明确其未进入消化链。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
 **反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 4.2 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第 1.2 条总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit。
 **多驱动者并行不必分配领域**:GID 代数定地址(第 4.2 条);两人重证同命题却不会使机器红,故开工前、开 PR 前各查本仓声明(第 3.1 条)。
-*成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、事件溯源之"事件是真源、读模型可重建"、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
-〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;SL-008 判冻结成员当前态 C1–C5 与当前树一致,pin 变化为 `FROZEN_PIN_CHANGE` Observe,历史归 git;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门判；新增形式化的精确 ATOM 覆盖依据由 SL-031 按交付目标检查，不做全账一致性审计。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 5.2 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 7.10 条),靠对手官评审与第 5.10 条反思。按第 8.5 条,"不可 lint"不构成豁免〕
+*成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、按实体分区的状态表、git 历史、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
+〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;SL-008 检查冻结成员路径、闭键 schema、模块存在与 Closed、pin 和声明清单同当前报告一致,pin 变化为 `FROZEN_PIN_CHANGE` Observe,历史归 git;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门判；新增形式化的精确 ATOM 覆盖依据由 SL-031 按交付目标检查，不做全账一致性审计。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 5.2 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 7.10 条),靠对手官评审与第 5.10 条反思。按第 8.5 条,"不可 lint"不构成豁免〕
 
 ### 4.8 生长、抽象与容量压力
 
@@ -932,7 +931,7 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
 ### 10.5 git 已入账事实与重放禁令
 
 **已入 git 的信息完全信任,禁止为验证它而重算/重放/重建**:OID 已定字节,再证明仍是原值零信息。
-①冻结成员身份取 `Golden/Frozen/state/<module>.lean.json` 的存在；状态片仅存 `statement_id` 与有序唯一的声明名称键/种类清单。SL-008 与覆盖核对把该 pin 和清单同当前范围报告比较；这是当前树一致性检查，不是重建旧环境。②OID 存在/类型验证只做 base→candidate 增量，base 已验者跳过。③纯判词 f(账本)按内容地址记忆，不全量重放。④依赖由当前 Lean 源码 import 解析，不持久化到状态片。⑤升级后不得 build 旧版本取事实；旧侧声明根取受保护基线状态片，新侧取候选范围报告，不存或比较旧公理闭包。
+①冻结成员身份取 `Golden/Frozen/state/<module>.lean.json` 的存在；状态片仅存 `statement_id` 与有序唯一的声明名称键/种类清单。SL-008 将 pin 与声明清单同当前报告比较；覆盖核对将模块 pin 同当前报告重算的模块陈述摘要比较，声明解析使用当前报告。这是当前树一致性检查，不是重建旧环境。②OID 存在/类型验证只做 base→candidate 增量，base 已验者跳过。③纯判词 f(账本)按内容地址记忆，不全量重放。④依赖由当前 Lean 源码 import 解析，不持久化到状态片。⑤升级后不得 build 旧版本取事实；旧侧声明根取受保护基线状态片，新侧取候选范围报告，不存或比较旧公理闭包。
 *成熟锚*:git/Merkle、引用透明、增量构建、既判力。〔守护:**软+硬投影**·重放识别靠评审；状态 schema 与当前范围报告一致性由现役读取器和 SL-008 检查〕
 
 ### 10.6 重放验证与必要查询

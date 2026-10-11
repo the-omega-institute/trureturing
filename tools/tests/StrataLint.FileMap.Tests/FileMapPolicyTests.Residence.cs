@@ -8,7 +8,10 @@ public sealed partial class FileMapPolicyTests
     public void AcceptedPathIsRejectedByCanonicalFileMapCoverage()
     {
         var root = TestRepositoryLayout.FindRoot();
-        var manifest = FileMapLoader.Parse(System.IO.File.ReadAllBytes(System.IO.Path.Combine(root, "Meta/FILEMAP.toml")), "Meta/FILEMAP.toml");
+        var manifest = FileMapLoader.Parse(
+            System.IO.File.ReadAllBytes(System.IO.Path.Combine(root, "Meta/FILEMAP.toml")),
+            "Meta/FILEMAP.toml",
+            relative => System.IO.File.ReadAllBytes(System.IO.Path.Combine(root, relative)));
         const string retired = "Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json";
         var finding = Assert.Single(FileMapPolicy.InspectCoverage(manifest, [retired]));
         Assert.Equal("FILEMAP-UNCLASSIFIED", finding.Code);
