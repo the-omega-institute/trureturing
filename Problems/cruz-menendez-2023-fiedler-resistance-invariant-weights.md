@@ -75,7 +75,9 @@ The settling node carries `OpenProblemResolutionClaim(Refuted)` for issue #15242
 
 ### What survives
 
-- **Source path results (proved by the source).** The equal-weight constrained optima for $P_3$ and $P_4$ remain valid; the refutation concerns the graph-wide conjecture.
+- **Source path results (proved by the source).** For $P_3$, Theorem 5.1 assumes $1/c_1+1/c_2=2$ and proves $\lambda_2(P_3;\omega)\le 1$, with equality iff $c_1=c_2=1$. For $P_4$, Theorem 5.5 assumes $3/c_1+4/c_2+3/c_3=10$ and proves $\lambda_2(P_4;\omega)\le 2-4\sqrt3/5$, with equality iff the automorphism-invariant weights are
+  $$d_1=d_3=\frac{13\sqrt3}{5(\sqrt3-1)},\qquad d_2=\frac5{26}\left(6-(\sqrt3-1)\right).$$
+  Thus the two end edges have equal weight and the middle edge has a different weight; the refutation concerns the graph-wide conjecture.
 - **Complete graphs (proved by the follow-up).** Menéndez-Conde's follow-up proves that constant weights solve the corresponding constrained problem for complete graphs. This is a neighbouring graph class and is not a theorem of the Lean module.
 
 ### Open
