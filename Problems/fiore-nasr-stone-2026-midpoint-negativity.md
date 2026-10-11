@@ -96,8 +96,6 @@ existing suppliers, logical composition and normalization give the
 counterinstance. No escape witness or new general positivity result is
 claimed. Certified-instance utility is the actual `refutes` edge from
 result to claim. The Scribe attaches the Refuted claim to this sole result.
-The unit is unfrozen; independent source fidelity and pre-freeze review,
-deposit, complete publication checks and publication remain pending.
 
 ### What the settlement shows
 
@@ -121,8 +119,7 @@ counterexample.
 
 ## ASSUMED-UNVERIFIED
 
-The source-to-whole implication is explicit above; its independent fidelity
-review is pending. The complete remaining-case assertion is not encoded.
+The complete remaining-case assertion is not encoded.
 Literature coverage is bounded, with OpenAlex/Semantic Scholar rate limits
 and unavailable endpoints. Physical dice realization, exhaustive priority
 and a classification of other cases are outside the formal statement.
