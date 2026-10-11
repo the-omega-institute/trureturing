@@ -83,11 +83,17 @@ noncomputable def registration : Registration arena.{u} (arena.{u}.Law actual) w
       exact nomatch i
   dependence := dependence_proof
 
-noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+noncomputable def registration_1.{u_1} :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Information.PartialTraceMutualInformation.density_posSemidef.{u_1})
     (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1}
       (fun _ _ X => CStarMatrix.ofMatrix.symm X) (fun e => nomatch e))) (Unit) (Unit) := {
-  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Information") "PartialTraceMutualInformation") "density_posSemidef") "Reg.D5.S3.Quantum.Information.PartialTraceMutualInformation/Reg.D5.S3.Quantum.Information.PartialTraceMutualInformation.arena/[anonymous]") "__information_unit"),
+  unitName := Lean.Name.str
+    (Lean.Name.str
+      `D5.S3.Quantum.Information.PartialTraceMutualInformation.density_posSemidef
+      "Reg.D5.S3.Quantum.Information.PartialTraceMutualInformation/\
+        Reg.D5.S3.Quantum.Information.PartialTraceMutualInformation.arena/[anonymous]")
+    "__information_unit",
   realizationName := `Reg.D5.S3.Quantum.Information.PartialTraceMutualInformation.registration,
   realizationSource := none,
   generated := false,
@@ -104,7 +110,16 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sensitivity := .absent,
   partialSensitivity := none,
   escapeFrom := none,
-  sourceSelection := some { owner := `D5.S3.Quantum.Information.PartialTraceMutualInformation, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.PartialTraceMutualInformation,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"],
+      stateBinder := 3,
+      functionOperand := false,
+      stateOperand := none,
+      booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
@@ -115,5 +130,101 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 #print axioms registration_1
+
+namespace TraceReadout
+
+open scoped BigOperators
+
+abbrev signature : Signature where
+  Params := ℝ → ℝ
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ f x => f x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    {A : Matrix n n ℂ} (hA : A.IsHermitian) (f : ℝ → ℝ),
+    (cfc f A).trace.re = ∑ i, R.readout () f (hA.eigenvalues i)
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let n := ULift.{u} Unit
+  have hA : (0 : Matrix n n ℂ).IsHermitian := by simp
+  have bad := h hA (fun _ => 1)
+  have good := re_trace_cfc hA (fun _ => 1)
+  have contradiction := good.symm.trans bad
+  norm_num [rejected, realize] at contradiction
+
+def registration : Registration arena.{u} (type_of% (@re_trace_cfc.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@re_trace_cfc.{u}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro i
+      exact nomatch i
+  dependence := by
+    intro i
+    refine ⟨id, 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+end TraceReadout
+
+noncomputable def registration_2 :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Information.PartialTraceMutualInformation.re_trace_cfc.{u})
+      (type_of% (realize TraceReadout.signature
+        (fun _ f x => f x) (fun e => nomatch e))) Unit Unit := {
+  unitName :=
+    `D5.S3.Quantum.Information.PartialTraceMutualInformation.re_trace_cfc.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Information.PartialTraceMutualInformation.TraceReadout.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨TraceReadout.arena.{u}⟩
+  objectArena := .source ⟨TraceReadout.arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source TraceReadout.arena.{u} ⟨TraceReadout.registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize TraceReadout.signature
+    (fun _ f x => f x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.PartialTraceMutualInformation
+    definition := none
+    coordinates := #[5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms TraceReadout.registration
+#print axioms registration_2
+#print axioms _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation.re_trace_cfc
 
 end Reg.D5.S3.Quantum.Information.PartialTraceMutualInformation
