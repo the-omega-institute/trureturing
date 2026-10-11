@@ -30,7 +30,46 @@ The estimate uses all pairs of frequencies; it does not assert this bound from a
 
 For a wheel signal with an established minimum Fourier amplitude m_W and exact calibrated mass, two residual bounds of eta give R=4 eta/m_W^2 when eta<=m_W^3/8. A nontrivial translation orbit needs an additional phase anchor to identify its absolute origin. The arithmetic amplitude bounds, acquisition costs, prime-correlation errors, and analytic claims about primes are separate inputs.
 
+**Theorem 1.2 (Counting Parseval for the unnormalized cyclic transform).**
+
+Lean statement: `D5/S3/Fourier/FullBispectrumStability.cyclic_parseval`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/FullBispectrumStability.cyclic_parseval` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive order N and complex signal f on ZMod N, sum_x |f(x)|^2 equals the average over frequencies of |ZMod.dft f(k)|^2. Thus one Fourier coefficient contributes its squared magnitude divided by N to a lower bound on counting squared signal norm. The transform has a negative exponent and no forward normalization. The same original proof is consumed by both full-bispectrum stability and the order-nine generator obstruction.
+
+**Theorem 1.3 (The phase of an actual cyclic translation).**
+
+Lean statement: `D5/S3/Fourier/FullBispectrumStability.dft_translation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/FullBispectrumStability.dft_translation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The transform of x mapped to f(x-t) at frequency k equals ZMod.stdAddChar(-(k*t)) times ZMod.dft f(k). This fixes the sign convention for every t and k in ZMod N. The public API retains the original proof used in the full-bispectrum estimate and is directly reused by the positive real order-nine family.
+
+**Theorem 1.4 (Unit phase and its conjugate).**
+
+Lean statement: `D5/S3/Fourier/FullBispectrumStability.unit_mul_conj`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/FullBispectrumStability.unit_mul_conj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complex z of norm 1, z times its conjugate equals 1. This original identity supplies phase cancellation both in full-bispectrum stability and in the exact zero and generator rows of the order-nine family.
+
 ## References
 
+- Truth anchor: `D5/S3/Fourier/FullBispectrumStability.cyclic_parseval`
+- Truth anchor: `D5/S3/Fourier/FullBispectrumStability.dft_translation`
 - Truth anchor: `D5/S3/Fourier/FullBispectrumStability.full_bispectrum_stability`
+- Truth anchor: `D5/S3/Fourier/FullBispectrumStability.unit_mul_conj`
 - Dependency: [D5/S3/Fourier/FinitePoisson](FinitePoisson.md)

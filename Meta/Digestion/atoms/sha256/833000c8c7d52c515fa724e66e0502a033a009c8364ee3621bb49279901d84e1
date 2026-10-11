@@ -1,0 +1,40 @@
+**定理 25.2（Root-conditioned target-image capacity lower relation）。** Under the full source and contract of Definition 25.1, for either original alphabet and every $0\le q\le m-2$, if some free value $v$ satisfies
+
+$$
+|I_{v,q}|>2^q,
+\tag{25.5}
+$$
+
+then
+
+$$
+\boxed{C_{\rm ad}(f)\ge2q+2,\qquad C_{\rm pre}(f)\ge2q+2.}
+\tag{25.6}
+$$
+
+The bound allows every original literal action, arbitrary early stopping and absorbing rejection. It concerns the full INITIAL prior, not a promise restricting it to $J_q^{\star}$ or to tail zero.
+
+Proof. Fix a value $v$ satisfying (25.5). At least two labels occur in this fibre, so its free reading cannot be a stopping archive. Before restricting any sources, consider its actual INITIAL terminal tails $(v,-j,k-1)$ for all $j\in P$, supplied jointly by (25.3). A root whose first bit is one immediately rejects every one of these sources. They then have the same complete endpoint $\bot$, the same inputs and outputs forever, and unequal required INITIAL labels. No stopping decision or later input can recover those labels. Consequently every successful controller on the original full source must begin its root with zero. This root condition holds even when the controller adapts to the free value. It does not follow from the tail-zero subset alone.
+
+Now retain the actual histories (25.3) with $s=0$ and $j\in J_q^{\star}$ in this one fixed-value fibre. On any common reached archive they have traversed identical literal inputs and have identical current tails. Tail updates and rejection depend only on that tail and the literal bits, independently of phase and scalar value. A next word therefore either rejects all candidates in this archive or succeeds on all. Common rejection gives one absorbing child, never a third distinguishing outcome; it cannot complete an archive with unequal labels. Common early stopping likewise returns just one label.
+
+Index actually emitted blocks by $t=0,1,\ldots$. The supplied full literal charge path is
+
+$$
+W_t=tm+\{0,1,\ldots,m\}\pmod T.
+\tag{25.7}
+$$
+
+For a successful literal word $B=B_0\cdots B_{m-1}$ its increment is $R_t(j)=\bigoplus_{i=0}^{m-1}B_i c_{-j+tm+i}$. This is zero outside $W_t$; at its first endpoint $j=tm\pmod T$ it equals $B_0$. These statements retain both endpoints and follow from the original coefficient cycle, as in (22.11) and [the INITIAL target-cost volume, Interface 1.4](https://github.com/the-omega-institute/trureturing/blob/0b2f4d2c858c1769b94a7808f6c37684a973dfa8/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md). They do not prescribe a safe subalphabet for later actions.
+
+Since $2m\equiv1\pmod T$, for every even action index $t=2h$, $0\le h\le q$,
+
+$$
+W_{2h}=\{h,h+1,\ldots,h+m\}.
+\tag{25.8}
+$$
+
+There is no wrap: $h+m\le m+q\le2m-2=T-1$. The high interval in (25.4) misses every one of these even paths. Phase zero also misses them for $h\ge1$. At $h=0$, its only possibly charged bit is $B_0$, which is zero by the full-source root condition. Thus all retained candidates have zero successful increment at every even action index through $2q$. Each such action has at most one reached child on a common archive, whether it succeeds or uniformly rejects. At an odd action index, a successful word has at most the two scalar endpoint children; a rejecting word has only the common absorbing child.
+
+Suppose the worst fee were at most $2q+1$. Among the action indices $0,\ldots,2q$, only the $q$ odd indices can branch on the retained sources. The elementary binary-leaf induction of Corollary 19.3, now with these even levels unary, bounds the number of nonempty stopping leaves by $2^q$. Replacing a subtree by an earlier stopping leaf does not increase that bound; a common rejection also contributes at most one leaf. Every such leaf must be homogeneous for the original labels $\lambda_v(j)$, so the number of distinct labels in $I_{v,q}$ is at most $2^q$, contradicting (25.5). Every action counted in the induction is an actually emitted complete block. There are no free waiting slots. This proves the adaptive lower bound, and the GLOBAL restriction gives the preset lower bound. $\square$
+
