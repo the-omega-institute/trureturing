@@ -103,7 +103,7 @@ internal sealed class MovingSupportKLTransportDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("iid-moving-support-posterior-limit"),
-                DeclarationHandle.Create(Owner + "iid_moving_support_posterior_limit"),
+                DeclarationHandle.Create(Owner + "iid_moving_support_posterior_limit_of_coordinates"),
                 H("Conditional iid records under one latent-state draw"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -130,5 +130,38 @@ internal sealed class MovingSupportKLTransportDocument : IScribeDocumentDefiniti
                         "sums. These discharge the measure interface of the preceding theorem. " +
                         "Row-class decoding, posterior consistency, and identification of the " +
                         "limiting average with joint-label recovery are separate conclusions."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("iid-row-class-posterior-limit"),
+                DeclarationHandle.Create(Owner + "iid_moving_support_posterior_limit"),
+                H("Row-class decoding and actual-model posterior convergence"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For finite nonempty J, finite I, Z and S, normalized actual prior d " +
+                    "with zero coordinates allowed, strictly positive normalized reference " +
+                    "prior q, and PMF rows K(j), let s identify exactly equal rows: " +
+                    "s(j)=s(k) if and only if K(j)=K(k). The class channel C(j,c) is " +
+                    "one when s(j)=c and zero otherwise. The actual and reference laws " +
+                    "draw the latent state once and then draw the entire record iid from its row. " +
+                    "One measurable decoder of the infinite record recovers s(X) almost surely " +
+                    "under both laws. Under the actual law, the true class has positive actual " +
+                    "mass, and all coordinates of both posteriors converge simultaneously to " +
+                    "posterior(C,d,s(X)) and posterior(C,q,s(X)), their class-conditioned priors " +
+                    "extended by zero outside the class. The posterior KL loss converges " +
+                    "almost surely and in L1 to the loss between these two conditional priors; " +
+                    "the losses are uniformly integrable, the limit is integrable and their " +
+                    "expectations converge. No posterior-coordinate or evidence-ratio " +
+                    "convergence is assumed. The proof derives these limits by finite-row " +
+                    "likelihood separation, Gibbs equality and the iid strong law, and uses " +
+                    "the common-record tail estimate for the L1 conclusion. The expected limit " +
+                    "equals the finite sum over row classes of actual class mass times class " +
+                    "loss, and equals KL(d,E(q,(r,s),d)). Here E at state j is q(j) times " +
+                    "the ratio of actual and reference masses of the joint-label cell " +
+                    "(r(j),s(j)). Zero actual class masses contribute zero. For every class " +
+                    "with positive actual mass, its loss is zero exactly when its actual " +
+                    "conditional prior equals reference-fiber recovery under r. Thus a " +
+                    "class containing several latent states need not leave a positive loss; " +
+                    "in particular equal conditional priors have zero loss."))),
                 DescribeRole.Theorem))));
 }
