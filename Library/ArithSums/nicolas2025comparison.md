@@ -7149,3 +7149,271 @@ neither a least-counterexample bound nor an all-integer verification
 below the interval; Polak's separate huge finite sweep is not used.
 The full signed all-integer target beyond this finite interval, its
 formal analytic suppliers and RH remain unproved.
+
+## Project application: a seven-eighths ceiling lowers the actual-sample cut
+
+The original full coefficient (M1), estimate (H5) and
+“A smaller moving cut from joint density and zero-free support” can be
+consumed on the actual first-prime event samples. With the additional
+seven-eighths ceiling recorded in the
+[OpenAI source interface](../Analytic/openai2026quasirh.md), this gives a
+smaller complete remainder at the detector's sample-moment scale. It is a
+conditional ordinary application of existing sources, with no new
+zero-free theorem or Lean certification.
+
+The extra premise is precisely
+
+$$
+\beta\le\frac78\quad\text{for every actual nontrivial zeta zero}.
+\tag{ASC1}
+$$
+
+Equality remains allowed. The pinned upstream declaration is
+[`OAI.riemannZeta_ne_zero_of_seven_eighths_lt_re`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/DirichletL/Nonvanishing.lean).
+Its conclusion is used as an external analytic input; its complete
+transitive proof closure has not been compiled or independently certified
+here. Project Lean 4.33.0 and upstream Lean 4.34.1 remain distinct. The
+stronger conditional completed-probe ceiling in the linked project note
+is not used.
+
+### Every event retains its own clock and complete response
+
+Let $\mathcal P_X$ consist of the first-prime events $p$ with
+$X\le b_p<3X$, using the largest inclusive optimizer $C_{b_p}$.
+Put $A_p=\log C_{b_p}$, $L=\log X$ and $T(x)=\sqrt x\log x$.
+The original full-layer and PNT suppliers, as used in the
+[event-state construction](../Analytic/mantovanelli2026primeworkload.md),
+give, for sufficiently large $X$,
+
+$$
+A_p\in[X/2,4X],\qquad m=|\mathcal P_X|\ll X/L.
+\tag{ASC2}
+$$
+
+All higher and simultaneous layers remain in $C_{b_p}$; $A_p$ is not
+identified with the event price $b_p$. Keep the original complete formula
+$U_p=-T(A_p)I_\psi(A_p)$ and its elementary correction $r_{A_p}$.
+For $H=X^{3/10}$ use the exact split
+
+$$
+U_p=V_p(H)+e_p(H),\quad
+V_p(H)=T(A_p)\sum_{|\gamma|\le H}m_\rho F_{A_p}(\rho)+r_{A_p},\quad
+e_p(H)=T(A_p)\sum_{|\gamma|>H}m_\rho F_{A_p}(\rho).
+\tag{ASC3}
+$$
+
+These sums range over distinct actual zeros with multiplicity $m_\rho$
+exactly once. Both ordinate signs and all actual real parts are retained.
+Every zero exactly at $H$ stays in the head. The full pole and trivial-zero
+correction stays in $r_{A_p}$.
+
+### Consume the existing density layer at its new endpoint
+
+For $5/8\le\sigma\le7/8$, reuse the existing
+Chourasiya–Simonič density supplier with
+$d(\sigma)=3(1-\sigma)/(2-\sigma)$. Its inclusive count and exclusive
+suffix give
+
+$$
+\sum_{\gamma>H,\,\beta\ge\sigma}\frac{m_\rho}{\gamma^2}
+\ll H^{d(\sigma)-2}(\log H)^3,
+\quad H\ge3\cdot10^{12}.
+$$
+
+Under (ASC1), the original layer decomposition, including the full-count
+base layer, therefore gives, uniformly for $x\in[X/2,4X]$,
+
+$$
+\sum_{|\gamma|>H}\frac{m_\rho x^{\beta-1/2}}{\gamma^2}
+\ll \frac{x^{1/8}\log H}{H}
++\log x(\log H)^3\int_{5/8}^{7/8}
+ x^{\sigma-1/2}H^{d(\sigma)-2}\,d\sigma.
+\tag{ASC4}
+$$
+
+Set $f(\sigma)=(\sigma-1/2)\log x+(d(\sigma)-2)\log H$.
+Since $d'(\sigma)=-3/(2-\sigma)^2$, $H=X^{3/10}$ gives
+$f'(\sigma)\ge(13/45)L+O(1)$ throughout this interval.
+For sufficiently large $X$ it is at least $(13/90)L$.
+The integral in (ASC4) is thus at most
+$90e^{f(7/8)}/(13L)$. Here $d(7/8)=1/3$, so
+$e^{f(7/8)}\ll X^{3/8}H^{-5/3}=X^{-1/8}$.
+This cancels the displayed outer logarithm. The original complete
+coefficient bound (H5), with its remainder retained, yields
+
+$$
+|e_p(H)|\ll X^{-7/40}L+X^{-1/8}L^3
+\quad\text{for every actual sample }p\in\mathcal P_X.
+\tag{ASC5}
+$$
+
+### The full sample remainder pays the detector scale
+
+Using (ASC2) and $(a+b)^2\le2a^2+2b^2$ gives
+
+$$
+\sum_{p\in\mathcal P_X}|e_p(H)|^2
+\ll X^{13/20}L+X^{3/4}L^5
+=o\!\left(Q(X)\right),\qquad
+Q(X)=\frac{X^{3/4}e^{L^{1/4}/2}}{L^2}.
+\tag{ASC6}
+$$
+
+Indeed, the quotient is bounded by
+$O(X^{-1/10}L^3e^{-L^{1/4}/2}+L^7e^{-L^{1/4}/2})\to0$.
+For this exact split, the $1$-Lipschitz map $z\mapsto(z-1/2)_+$ gives
+
+$$
+\left|\|(U_p-1/2)_+\|_2-\|(V_p(H)-1/2)_+\|_2\right|
+\le\|e(H)\|_2=o(\sqrt{Q(X)}).
+\tag{ASC7}
+$$
+
+Thus all head-tail cross effects are paid at the norm level, without
+decorrelation. Also $\#\{p:|e_p(H)|>\eta\}=o(Q(X))$ for each fixed
+$\eta>0$. The new cut is smaller than $X^{5/16}$ by the factor
+$X^{-1/80}\to0$, under the additional premise (ASC1).
+
+The complete signed head and a sufficient one-sided actual-sample
+occupancy or positive-excess bound remain unpaid. The original signed
+Landau suffix (J4) is retained; its stated errors alone do not furnish
+this sample-square estimate at $H=X^{3/10}$.
+No growing event-dependent selector is inserted into a fixed-parameter
+OpenAI correlation theorem. No numerical common starting $X$, transfer
+of the $4.03\cdot10^{46}$ global-maximizer bound, least-counterexample
+bound, full Robin/RH proof, or official acceptance is supplied.
+
+## Project application: the same actual reserve extends the clock to 4.23
+
+The global complete-response estimates (GK6) and (GJ2), together with
+the actual effective reserve (GAI3)–(GAI4), extend the all-integer
+interval (GAI1). This is a conditional ordinary application of the same
+project sources, without a new zero computation, external zero ceiling,
+numerical reserve-asymptotic start or Lean certification.
+
+Let $n$ be any integer with its own clock
+
+$$
+\frac72\,10^{46}<A=\log n\le\frac{423}{100}\,10^{46},
+\qquad L=\log A,\qquad T=\sqrt A L.
+\tag{GAJ1}
+$$
+
+Retain all the analytic premises of the preceding effective-reserve
+application: unrestricted pressure and tail identities, the full
+classical explicit formula, endpoint-inclusive Stieltjes conventions,
+convergence and PNT inputs, the complete Gamma product and whole-law
+moments, and all elementary responses, including scales with $cA<1$.
+The exact Dusart v1 Theorem 5.2 rows remain
+$(2,0.01,7713133853)$ for the global error and
+$(2,1/5,3594641)$ for the reserve, with Proposition 3.2's full
+higher-prime-power correction and the coarse $k=0$ bound.
+Keep criticality through $H=3\cdot10^{12}$, the positive reciprocal
+identity $c_0<0.05$ and the complete $S_2(H)<1.48\cdot10^{-12}$.
+The actual reserve remains the unrestricted one over all positive
+integers, including one, from FIB §§249–250 and its finite §93.2
+anchor. These source proofs and computations remain named analytic
+premises; their complete primary certification is not supplied here.
+
+### Evaluate the global formulas at the larger endpoint
+
+Keep the identical noninteger shape and rate
+
+$$
+\alpha=\frac{292000000000000000000001}{2},\qquad
+C\sim\operatorname{Gamma}(\text{shape }\alpha,\text{rate }\alpha).
+$$
+
+Set $r=(2057/1000)10^{23}$. Exact squaring gives
+$r^2=4.231249\cdot10^{46}>4.23\cdot10^{46}$, so
+$\sqrt A<r$ even at the included upper endpoint of (GAJ1).
+The lower endpoint still gives $L>107$ and $\sqrt A>10^{23}$.
+Thus the global domain $A\ge e^{78}$, noninteger $\alpha\ge4$ of
+(GK6), and $L>78$ of the full-coefficient (GJ2), both apply.
+The interval subsequently used to illustrate (GJ2) does not restrict
+its global proof. In particular, the old interval estimate (GM4) is
+not being extrapolated.
+
+The unchanged shape, height and lower endpoint retain
+
+$$
+M_1<\frac{10001}{10000},\qquad
+\frac{H^2}{2(\alpha+H)}>\frac{1541}{50},\qquad
+\eta_0(A)<10^{-6}.
+$$
+
+Here (GM3)'s proof uses the stronger Dusart row for every $t\ge A$
+and only the lower clock endpoint; it therefore remains uniform on
+(GAJ1). Reuse the positive exponential-series enclosures
+$e^{1541/50}>(121/50)10^{13}$ and
+$e^{\alpha/60000}>10^{53}$. Inserting these into the actual global
+formulas gives the complete five allowances:
+
+| Contribution | Exact rational upper allowance |
+|---|---:|
+| Verified head, full coefficient | $(10001/10000)(108/107)(1.054)(0.05)$ |
+| All tail heights, both signs | $2(10001/10000)^2(108/107)r(1.48\cdot10^{-12})/[(121/50)10^{13}]$ |
+| Centered regular and signed local payment | $(0.520002)r/\alpha$ |
+| Every outside Gamma scale | $400r/10^{53}$ |
+| Full elementary response, including $cA<1$ | $5(10001/10000)/10^{23}$ |
+
+Every terminating decimal denotes an exact rational. Let $U_{423}$
+be their sum. All actual tail-zero real parts, multiplicities, heights
+and ordinate signs remain, as do the coefficient remainder, endpoint
+atoms and centering before the whole Gamma law is split. Consequently
+
+$$
+-T I_\psi(A)<U_{423}\quad\text{throughout (GAJ1)}.
+\tag{GAJ2}
+$$
+
+### Pay the same integer with its actual reserve and defect
+
+The unchanged (GAI4), anchored by the finite reserve bound and valid
+for $L>107$, gives
+
+$$
+T R(A)>Q_R+\frac{L}{(L+2)^3},\qquad
+Q_R=\frac{67838284064811}{83593750000000}.
+$$
+
+Exact subtraction of the complete five-row sum yields
+
+$$
+Q_R-U_{423}
+=\frac{22837901643254399996290102708491463199999986623442401}
+ {78110000000000000000000267500000000000000000000000000000}
+>\frac1{4000}.
+\tag{GAJ3}
+$$
+
+Use the same-clock identity
+$\Delta(n)=I_\psi(A)+R(A)+d_A(n)$, with its actual
+$d_A(n)\ge0$. Equations (GAJ2)–(GAJ3) therefore give
+
+$$
+\boxed{T\Delta(n)>\frac1{4000}
+ +\frac{L}{(L+2)^3}+T d_A(n)>0}
+\quad\text{for every integer in (GAJ1)}.
+\tag{GAJ4}
+$$
+
+No CA selection, zero-defect transfer or finite sweep is needed for
+this interval consequence. Under the additional unchanged original
+source-selection and lower-clock chain that gives
+$\log N>4.03\cdot10^{46}$ for the same least global maximizer of
+$G(n)=\sigma(n)/(n\log\log n)$ over $n>5040$ under Robin failure,
+(GAJ4) excludes its remaining interval up to $4.23\cdot10^{46}$.
+Thus that same conditional selected restriction improves to
+
+$$
+\log N>4.23\cdot10^{46}.
+\tag{GAJ5}
+$$
+
+The CNS/properness, exact-price CA, SevenSmooth, Kalyabin eligible
+endpoint, Axler finite-stop, Nicolas $6.78$ and original lower-clock
+ladder premises retain their original role in that preceding chain.
+This is not a least-counterexample bound or all-integer verification
+below the interval. The unbounded signed Robin/RH target remains unproved. This application
+supplies no new Lean/kernel or complete formal analytic verification.
