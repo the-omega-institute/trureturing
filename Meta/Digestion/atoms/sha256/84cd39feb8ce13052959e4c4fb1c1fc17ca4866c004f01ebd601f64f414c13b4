@@ -1,0 +1,15 @@
+**文献表态 9.1（成熟供应与仓内推导）。**
+
+| 分类与来源 | 精确使用范围 |
+| --- | --- |
+| `literature-attested`：[MI] Laurent Miclo, *On absorption times and Dirichlet eigenvalues*, ESAIM: Probability and Statistics 14 (2010), 117–150，[DOI 10.1051/ps:2008037](https://doi.org/10.1051/ps:2008037)，[原文 PDF](https://www.numdam.org/item/10.1051/ps:2008037.pdf) | §3，定理3.1，印刷页125–126（PDF第9–10页），及定理后正对角相似段落，支持式（7.2）的谱多项式逐项正性。其定理1.1的不可约、瞬态与 Dirichlet 谱条件不作为本卷标记全律实现的替代 |
+| `literature-attested`，通过 [MI] 归属：C. A. Micchelli and R. A. Willoughby, *On functions which preserve the class of Stieltjes matrices*, Linear Algebra and its Applications 23 (1979), 141–156，[DOI](https://doi.org/10.1016/0024-3795(79)90098-3) | Miclo §3开头与参考文献[21]把上述线性代数定理归给此文。本卷据 Miclo 的可读定理文本应用，不声称直接核对了1979年原文 |
+| `literature-attested`：[WW] Geoffrey Wolfer and Shun Watanabe, *Information Geometry of Reversible Markov Chains*，[出版页](https://link.springer.com/article/10.1007/s41884-021-00061-7)，[作者文本 arXiv:2106.05669](https://arxiv.org/pdf/2106.05669) | §2.2（PDF第4–5页）的详细平衡、对称平稳边测度与自伴性；定义4.1和引理4.2的不可约非负核语境（PDF第11–13页）。这是成熟背景，不替代式（3.5）的源特定重构，亦不把其不可约 PF 论证直接用于可约 B |
+| `repo-derived`：ST、CLIP、PAID、INTERIOR、HET | 精确复用范围见引用1.1。原词律、端点盒、中点半径、全历史桥、生存界与两深度达到均是供应内容 |
+| `repo-derived`：定理5.1、推论5.2 | 本卷的实质新增：完整端点行集合对正 B 后继闭合，及可逆分量上的两相传播；连通、保留端点行的扩张受阻。只作相对于所引仓内来源的新增说明 |
+| `repo-derived`：接口3.3、3.5、4.2、6.1、7.1 | 去权重重构、实际流全 n 守恒、内部全律预算、循环 PSD 和共同奇偶表示是显式相容接口。代数、TV 和成熟谱工具承担推导；不视为新的普遍实现或独立 minimax 理论 |
+
+本卷没有以不可读的正实现定理或未核对的多输入多输出推广为证明前提。即使取得一般正实现结果，仍需证明其状态变换保留所有实际流、发射、标记、记录与资源接口；仅保持一个传递函数不足。
+
+定理5.1的全称量词由完整法则和逐坐标凸组合证明承担；式（3.12）的全 n 量词由有限行恒等式承担；重根 resolvent 由 Cayley–Hamilton 承担。有限数值诊断不替代这些证明。本卷没有机器形式化状态、全族可行性证书或独立出版审查结论。
+

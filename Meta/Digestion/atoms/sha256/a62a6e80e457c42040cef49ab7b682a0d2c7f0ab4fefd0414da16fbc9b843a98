@@ -1,0 +1,218 @@
+**Theorem 18.2 (original paired-history branching necessity).** For every
+$M$ of Definition 18.1, with exactly the symbolic minimum $j_{\rm det}(\mu)$
+of (16.8) and Corollary 16.3,
+
+$$
+1911e(M)+110\operatorname{Br}_{\rm orig}(M)
+ \ge121j_{\rm det}(\mu)>0.
+\tag{18.3}
+$$
+
+Consequently, if a sequence of original finite observers for this same
+fixed prior, source and interface satisfies $e(M_n)\to0$, then
+
+$$
+\liminf_n\operatorname{Br}_{\rm orig}(M_n)
+ \ge\frac{11}{10}j_{\rm det}(\mu).
+\tag{18.4}
+$$
+
+The sequence assertion is conditional on existence of such a sequence.
+
+**Proof.** Apply the supplied support-closed extraction of PAID Lemma 14.1
+and PAIRED Section 6 once. It supplies rows $\pi,\tau$ with
+$\pi B=\tau$, $\tau A=\pi$, retaining the actual kernels and original own
+complete laws on their positive supports. Each supported pure-target
+configuration loss is bounded by the corresponding original risk in
+(18.1). These are the same rows for every supported depth, including a
+countable support, by that lemma's summable likelihood-ratio domination
+along positive finite paid histories. Its deletion of zero-row labels
+changes no positive-row law or positive outgoing edge. These suppliers
+require no restriction on original emissions or noncompletion mass.
+
+To transport the particular diagnostic, apply PAIRED Section 6's bounded
+state-statistic conclusion to the one original p statistic
+
+$$
+H(x)=b_B(x)+\sum_yB_{xy}b_A(y).
+$$
+
+It is fixed by the original installed data, nonnegative and bounded by two.
+At every actual $h\in\mathcal H_p^{100,1}$, the append identity gives
+$\rho_hH=\rho_hb_B+\rho_{h\beta}b_A$, exactly the summand in (18.2).
+The supplied finite-row limits and Cesaro averaging preserve this linear
+inequality. With $\delta_B=\pi b_B$ and $\delta_A=\tau b_A$, it follows that
+
+$$
+\delta_B+\delta_A=\pi H\le\operatorname{Br}_{\rm orig}(M).
+\tag{18.5}
+$$
+
+This uses one paired-history statistic, not a sum of separately maximized
+phase statistics. Reachability and support closure are those of the
+supplied extraction; no stationary replacement of the actual source is
+made.
+
+Now use the supplied same-row clipping and full-law regeneration in
+PAIRED (6.2), which specializes CLIP Theorem 3.1, (3.7)--(3.10).
+Keep this very $B,A,\pi,\tau$, clip emissions to $[1/3,2/5]$, and denote
+the resulting own complete laws by $\widehat Q_x,\widehat W_y$. Write
+$\widehat e$ for their two-phase maximum of all supported pure-target
+configuration excesses. With $e=e(M)$ the supplied estimates are
+
+$$
+\begin{aligned}
+\Delta_Q&=\sum_x\pi_x\operatorname{TV}(Q_x,\widehat Q_x)
+ \le\frac{50}{11}e,\\
+\Delta_W&=\sum_y\tau_y\operatorname{TV}(W_y,\widehat W_y)
+ \le\frac{42}{11}e,\qquad
+\widehat e\le\frac{61}{11}e.
+\end{aligned}
+\tag{18.6}
+$$
+
+These estimates include all old noncompletion mass; the new laws are
+regenerated laws, not coordinatewise clipped probability vectors. No
+small-excess premise used for the separate marginal-defect bound in CLIP
+is needed for (18.6).
+
+For a fixed stochastic row $q_i$ and two families of complete laws
+$P_i,P'_i$ on the same carrier, put $\bar P=\sum_iq_iP_i$ and
+$\bar P'=\sum_iq_iP'_i$. The reverse triangle inequality and mixture
+convexity give
+
+$$
+\begin{aligned}
+\left|\sum_iq_i\operatorname{TV}(P'_i,\bar P')
+      -\sum_iq_i\operatorname{TV}(P_i,\bar P)\right|
+&\le\sum_iq_i\operatorname{TV}(P'_i,P_i)
+      +\operatorname{TV}(\bar P',\bar P)\\
+&\le2\sum_iq_i\operatorname{TV}(P'_i,P_i).
+\end{aligned}
+\tag{18.7}
+$$
+
+All distances include infinity. This elementary norm estimate does not
+normalize a residual or require a positive synthetic emission. Apply it
+to every retained B row and average under $\pi$, then to every A row and
+average under $\tau$. The unweighted balances give
+
+$$
+\pi\widehat b_B\le\delta_B+2\Delta_W
+ \le\delta_B+\frac{84}{11}e,\qquad
+\tau\widehat b_A\le\delta_A+2\Delta_Q
+ \le\delta_A+\frac{100}{11}e.
+\tag{18.8}
+$$
+
+Here $\widehat b_B,\widehat b_A$ mean (18.2)'s row formula using the new
+laws and unchanged acquired rows.
+
+Use exactly PAIRED (11.24) to push these two finite flows to descriptors:
+
+$$
+\widehat\Gamma_B=\sum_{x,y}\pi_xB_{xy}
+ \delta_{(\widehat Q_x,\widehat W_y)},\qquad
+\widehat\Gamma_A=\sum_{y,x}\tau_yA_{yx}
+ \delta_{(\widehat W_y,\widehat Q_x)}.
+\tag{18.9}
+$$
+
+For completeness of the statistic correspondence, the regular survival
+bounds put the regenerated laws in (16.1). Their same-update full
+recursions give
+
+$$
+\mathcal R_B(\widehat Q_x)=\sum_yB_{xy}\widehat W_y,
+\qquad
+\mathcal R_A(\widehat W_y)=\sum_xA_{yx}\widehat Q_x.
+\tag{18.10}
+$$
+
+Only here are continuation probabilities divided out: they are at least
+$3/5$ and $1/3$. Hence (18.9) has both shared unweighted marginals and both
+full input-conditioned residual equations, including infinity, so it is
+in $\mathfrak C$. If input labels have the same complete law, (18.10)
+gives the same unique residual barycentre; merging their descriptors
+changes none of the following integrals. Exactly, in the notation (16.5),
+
+$$
+\widehat d_B=\pi\widehat b_B,\qquad
+\widehat d_A=\tau\widehat b_A,\qquad
+\mathcal J(\widehat\Gamma_B,\widehat\Gamma_A)=\widehat e.
+\tag{18.11}
+$$
+
+The last equality preserves each configuration-TV integral for every
+supported target. The original all-history interpretation uses PAIRED
+Section 11.4 and CLIP Proposition 2.3 with PAID Lemma 14.1's countable-prior
+domination: posterior-mixture convexity is applied at each configuration,
+and concentrating finite paid histories supply the converse. No target,
+phase or history selects a different comparison object.
+
+Apply the already supplied Corollary 17.3 to this one regular pair.
+By (18.8)--(18.11),
+
+$$
+\begin{aligned}
+j_{\rm det}(\mu)
+&\le\widehat e+
+ \frac1{11}\max\{10\widehat d_B+4\widehat d_A,
+                   4\widehat d_B+6\widehat d_A\}\\
+&\le\frac{61}{11}e+
+ \frac1{11}\max\left\{10\delta_B+4\delta_A+\frac{1240}{11}e,
+                       4\delta_B+6\delta_A+\frac{936}{11}e\right\}\\
+&\le\frac{1911}{121}e+\frac{10}{11}(\delta_B+\delta_A)\\
+&\le\frac{1911}{121}e+\frac{10}{11}\operatorname{Br}_{\rm orig}(M).
+\end{aligned}
+\tag{18.12}
+$$
+
+The arithmetic is $1240=10\cdot84+4\cdot100$,
+$936=4\cdot84+6\cdot100$ and $1911=11\cdot61+1240$;
+$e,\delta_B,\delta_A$ are nonnegative. Multiplication by 121 proves
+(18.3), with strict positivity supplied solely by Corollary 16.3.
+Rearranging gives
+$\operatorname{Br}_{\rm orig}(M)\ge11j_{\rm det}(\mu)/10-1911e(M)/110$.
+The same $j_{\rm det}(\mu)$ applies to every member of the proposed
+sequence, so taking a lower limit proves (18.4). $\square$
+
+**Mathematical citation 18.3 (coverage and applicability).** PAID Lemma
+14.1 already supplies original-law support-closed extraction; PAIRED
+Section 6 supplies bounded-statistic transport and same-row clipping;
+PAIRED (11.24) supplies the compatible-flow pushforward. Corollary 16.3
+supplies the symbolic positive deterministic-domain minimum, and Theorem
+17.2 and Corollary 17.3 supply the regular-domain deterministic comparison
+and branching floor. None is reproved here. The additional consumer is
+(18.5), (18.7)--(18.11) and their composition (18.12), which makes the
+floor a necessity for the original paired-history quantity (18.2).
+Theorem 16.4 already covers deterministic acquired updates. PAID Theorem
+13.1 controls variation of row barycentres across inputs, and its Theorem
+14.2 controls a whole reachable-law diameter. PAIRED's event-readout,
+mismatch and complete-marginal results use different statistics;
+[return-survival dispersion, Definition 2.3 and Section 6](RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md)
+uses a return-weight dispersion and an explicitly clipped edge span.
+Those statements do not already give (18.3) on arbitrary original laws.
+
+The bounded primary comparison is Abate, Redig and Tkachev,
+[*On the effect of perturbation of conditional probabilities in total
+variation*, Proposition 2, Theorems 1--2 and Section 3](https://arxiv.org/html/1311.3066v1).
+Its kernel extension and coupling methods are suppliers already used by
+CLIP and Section 17. Its perturbation constants are uniform kernel-TV
+errors, with TV norm twice the convention here; they are not the
+acquired-row complete-output-law dispersions in (18.2). The elementary
+mixture estimate (18.7) is not claimed as a new general TV theorem, and
+no global priority assertion is made.
+
+This is an ordinary mathematical result with a source-specific necessary
+relation. It does not evaluate $j_{\rm det}$ or unrestricted $j_c$, assert
+sharp constants, construct a vanishing sequence or a common zero pair,
+produce an original155 certificate, or prove an unrestricted risk-only
+positive gap. A supremum bound on paired histories is not a lower bound
+at every history or at each interface separately. The comparison can
+change laws, marginals and losses at the later deterministic-comparison
+stage; it preserves no prescribed actual return triple, hard defect or
+COMPLETE/resource budget. No finite exact or effective attainment,
+executable sampler, native Gram/dynamic/physical bridge, or termination
+of the sustained research objective follows.
+

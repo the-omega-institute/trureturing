@@ -1,0 +1,25 @@
+**Proof.** Corollary 16.3 supplies $j_{\rm det}>0$ on *all* residual
+graphs, including those outside the endpoint boxes. Theorem 17.2 supplies
+one such graph pair with $j_{\rm det}\le\widehat{\mathcal J}
+\le\mathcal J+c_*$. This proves (17.13) without placing the comparison
+inside the boxes. Setting $\mathcal J=0$ gives the first inequality in
+(17.14). Since $c_*\le10(d_A+d_B)/11$, (17.13) also gives
+$d_A+d_B\ge(11/10)(j_{\rm det}-\mathcal J)$, proving the remaining
+claims and the sequence assertion.
+
+For the original-source consumer, a finite regular stationary observer
+pushes forward to exactly $\mathfrak C$ by PAIRED (11.24); its two
+configuration risks are the supported-target suprema in $\mathcal J$.
+Thus (17.13) applies to all such original observers, without a label bound.
+For any original positive paid history at either active fourth-phase cut,
+its raw target is the normalized posterior mixture from the same
+once-sampled $K$. Equation (17.4) applies to this target as well.
+Pushing all laws through that history's common
+$I_c$ preserves TV and the original full records, completion and matching
+Stop. Both seeds, paid rejections, partial parses and every finite return
+remain in the history domain, as in PAIRED Section 11.4.
+For arbitrary finite COMPLETE observers, the extraction and clipping
+suppliers remain necessary before applying this regular-domain inequality;
+no bound on their unclipped branching is inferred.
+$\square$
+

@@ -4,13 +4,61 @@
 
 Complete stopped Read words from the fourth payload segment.
 
+**Theorem 1.1 (A prefix separates its head).**
+
+$$\forall x:Stream, (\forall n:Nat, (\operatorname{readPrefix}(x,n+1)=\operatorname{cons}(\operatorname{head}(x),\operatorname{readPrefix}(\operatorname{shift}(x),n))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.prefix_succ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+head(x)=x(0) and shift(x)(i)=x(i+1). For every infinite Read stream and natural n, its n+1 prefix is the head consed onto the n prefix of the shifted stream.
+
+**Theorem 1.2 (Every nonstopping p stream contains every loop prefix).**
+
+$$\forall x:Stream, (\operatorname{Nonstop}(totalRead,pendingColor,\operatorname{active}(p),x)\Rightarrow\forall n:Nat, (\operatorname{Prefix}(x,\operatorname{loopWord}(n))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.nonstop_p_prefix` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Nonstop means that no finite trace has a pending completion. loopWord(n)=(beta alpha)^n. This implication retains every natural n and applies to the original totalized Read table.
+
+**Theorem 1.3 (A nonstopping suspended stream begins with alpha).**
+
+$$\forall x:Stream, (\operatorname{Nonstop}(totalRead,pendingColor,\operatorname{active}(beta),x)\Rightarrow(\operatorname{head}(x)=0\land\operatorname{Nonstop}(totalRead,pendingColor,\operatorname{active}(p),\operatorname{shift}(x))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.nonstop_beta_return` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Its head must be alpha=0, and its shifted tail is nonstopping from p under the same totalRead and pendingColor. The two conclusions refer to one stream.
+
+**Theorem 1.4 (Both original alternating infinite tails do not complete).**
+
+$$\forall s:ActivePhase, (\operatorname{Nonstop}(totalRead,pendingColor,\operatorname{active}(s),\operatorname{infiniteTail}(s)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.infinite_tail_nonstop` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+infiniteTail(p) alternates beta,alpha and infiniteTail(beta) alternates alpha,beta. Every finite trace remains active in the appropriate alternating phase; the original noncompletion outcomes remain in scope.
+
 Letters 0 and 1 represent alpha and beta. The two active phases are p and beta. At p, alpha completes bit 0 and beta suspends the parser; at beta, alpha returns to p and beta completes bit 1. Completion reaches pending b. Its sole legal operation is Stop b, leading to delivered. Neither terminal phase permits Read. A state-preserving totalization is used only to evaluate mathematical traces beyond a terminal prefix.
 
 The output is the entire prefix consumed through the least trace index reaching pending. It is some word for finite first completion and none for infinite noncompletion. The alphabet stream has a product measurable structure; the ambient output carrier Option (List (Fin 2)) has the discrete measurable structure. The output definition uses the execution trace, independently of the following word families.
 
 Write L(j) for j repetitions of beta-alpha. At p, the complete words are L(j)-alpha for bit 0 and L(j)-beta-beta for bit 1, for every natural j. At beta, they are the one-letter beta for bit 1, or alpha prepended to a p word. The beta already acquired before the beta-phase cut is absent from the future word.
 
-**Theorem 1.1 (The exact completion language).**
+**Theorem 1.5 (The exact completion language).**
 
 $$\forall s:ActivePhase, (\forall w:\operatorname{List}(Letter), (\forall b:Letter, (\operatorname{Parses}(\operatorname{active}(s),w,b)\Leftrightarrow\operatorname{WordFamily}(s,b,w))))$$
 
@@ -22,7 +70,7 @@ $$\forall s:ActivePhase, (\forall w:\operatorname{List}(Letter), (\forall b:Lett
 
 Induction on the finite input word follows the actual Read table. A completing letter permits no additional word suffix. A beta-alpha return restores p without completing. These cases give both directions of the language characterization, including arbitrary return lengths.
 
-**Theorem 1.2 (First completion and its full prefix).**
+**Theorem 1.6 (First completion and its full prefix).**
 
 $$\forall s:ActivePhase, (\forall x:Stream, (\forall b:Letter, (\forall n:Nat, (\operatorname{FirstStop}(totalRead,pendingColor,\operatorname{active}(s),x,b,n)\Leftrightarrow\exists w:\operatorname{List}(Letter), \operatorname{length}(w)=n\land\operatorname{Prefix}(x,w)\land\operatorname{WordFamily}(s,b,w)))))$$
 
@@ -34,7 +82,7 @@ $$\forall s:ActivePhase, (\forall x:Stream, (\forall b:Letter, (\forall n:Nat, (
 
 FirstStop is the chronological trace condition: the terminal color is some b at length n and none at every smaller index. Finite parsing is equivalent to that condition on the length-n stream prefix. Thus every actual first completion is exactly a family word, and every matching family prefix is an actual first completion.
 
-**Theorem 1.3 (Finite output fibers).**
+**Theorem 1.7 (Finite output fibers).**
 
 $$\forall s:ActivePhase, (\forall x:Stream, (\forall w:\operatorname{List}(Letter), (\operatorname{stoppedReadWord}(s,x)=\operatorname{some}(w)\Leftrightarrow\operatorname{Prefix}(x,w)\land(\exists b:Letter, \operatorname{WordFamily}(s,b,w)))))$$
 
@@ -46,7 +94,7 @@ $$\forall s:ActivePhase, (\forall x:Stream, (\forall w:\operatorname{List}(Lette
 
 A finite output fiber is its entire chronological prefix cylinder when the word belongs to the completion language, and is empty otherwise. Letters after first completion are not consumed and add no likelihood factors.
 
-**Theorem 1.4 (Measurability of first-completion output).**
+**Theorem 1.8 (Measurability of first-completion output).**
 
 $$\forall s:ActivePhase, (\operatorname{Measurable}(\operatorname{stoppedReadWord}(s)))$$
 
@@ -60,7 +108,7 @@ Each finite fiber is a measurable prefix cylinder or the empty set. The noncompl
 
 For an arbitrary closed-unit-interval parameter r, rawReadLaw is the homogeneous trajectory law with initial Bernoulli alpha probability r and the same constant Bernoulli transition kernel at every coordinate. Set R=r, S=1-r and A=RS, interpreted as nonnegative extended-real weights. The explicit p law is the sum over all natural j of R A^j times the Dirac measure at some pWord(j,0), plus S^2 A^j times the Dirac measure at some pWord(j,1). The explicit beta law has an S Dirac atom at some [1], followed by atoms of weights R^2 A^j and R S^2 A^j at alpha prepended to the respective p words. There is no Dirac term at none or any invalid finite word.
 
-**Theorem 1.5 (The unique infinite continuation).**
+**Theorem 1.9 (The unique infinite continuation).**
 
 $$\forall s:ActivePhase, (\forall x:Stream, (\operatorname{stoppedReadWord}(s,x)=none\Leftrightarrow x=\operatorname{infiniteTail}(s)))$$
 
@@ -72,7 +120,7 @@ $$\forall s:ActivePhase, (\forall x:Stream, (\operatorname{stoppedReadWord}(s,x)
 
 None occurs precisely on beta-alpha repeated forever from p, or alpha followed by that sequence from beta. The alternating stream remains active at every finite trace index and never delivers Stop. All other streams complete at a finite first index.
 
-**Theorem 1.6 (Zero actual mass of infinite noncompletion).**
+**Theorem 1.10 (Zero actual mass of infinite noncompletion).**
 
 $$\forall r:unitInterval, (\forall s:ActivePhase, (\operatorname{mass}(\operatorname{rawReadLaw}(r),\{x:Stream\Vert \operatorname{stoppedReadWord}(s,x)=none\})=0))$$
 
@@ -84,7 +132,7 @@ $$\forall r:unitInterval, (\forall s:ActivePhase, (\operatorname{mass}(\operator
 
 A surviving p execution must repeatedly read beta-alpha. A surviving beta execution must first read alpha, then follow the same returns. Their noncompletion events lie in every such finite prefix cylinder, whose masses are A^j and R A^j. Since A is at most one quarter, these upper bounds tend to zero. This proof includes r=0 and r=1; it retains none in the carrier and does not condition on completion.
 
-**Theorem 1.7 (Bernoulli mass of each p completion word).**
+**Theorem 1.11 (Bernoulli mass of each p completion word).**
 
 $$\forall r:unitInterval, (\forall j:Nat, (\forall b:Letter, (\operatorname{wordMass}(r,\operatorname{pWord}(j,b))=\operatorname{if}(b=0,\operatorname{alphaMass}(r),\operatorname{power}(\operatorname{betaMass}(r),2))\times\operatorname{power}(\operatorname{alphaMass}(r)\times\operatorname{betaMass}(r),j))))$$
 
@@ -96,7 +144,7 @@ $$\forall r:unitInterval, (\forall j:Nat, (\forall b:Letter, (\operatorname{word
 
 Each return contributes one alpha and one beta factor. The final marker contributes alpha for bit zero and two beta factors for bit one. This coefficient identity is consumed both by the complete-law identification and by finite endpoint event calculations.
 
-**Theorem 1.8 (All finite singleton masses).**
+**Theorem 1.12 (All finite singleton masses).**
 
 $$\forall s:ActivePhase, (\forall r:unitInterval, (\forall w:\operatorname{List}(Letter), (\operatorname{mass}(\operatorname{explicitStoppedWordLaw}(s,r),\{\operatorname{some}(w)\})=\operatorname{if}(\exists b:Letter,\operatorname{WordFamily}(s,b,w),\operatorname{wordMass}(r,w),0))))$$
 
@@ -108,7 +156,7 @@ $$\forall s:ActivePhase, (\forall r:unitInterval, (\forall w:\operatorname{List}
 
 A valid completion word has its Bernoulli product mass, and every other finite word has zero mass. The disjoint completion-word families identify the unique indexed atom; no renormalization or finite truncation is used.
 
-**Theorem 1.9 (The actual full stopped-word law).**
+**Theorem 1.13 (The actual full stopped-word law).**
 
 $$\forall r:unitInterval, (\forall s:ActivePhase, (\operatorname{Measurable}(\operatorname{stoppedReadWord}(s))\land\operatorname{map}(\operatorname{rawReadLaw}(r),\operatorname{stoppedReadWord}(s))=\operatorname{explicitStoppedWordLaw}(s,r)))$$
 
@@ -128,10 +176,14 @@ This is the fixed-parameter raw fourth-segment projection. For a fixed source de
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.actual_noncompletion_mass_zero`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.explicit_finite_mass`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.first_completion_normal_form`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.infinite_tail_nonstop`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.measurable_stopped_read_word`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.noncompletion_fiber`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.nonstop_beta_return`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.nonstop_p_prefix`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.p_word_mass`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.parses_normal_form`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.prefix_succ`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.stopped_word_fiber`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/TriangularSharedImplementation](../../../Arith/FibonacciAtomic/TriangularSharedImplementation.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkovPrefixMass](MarkovPrefixMass.md)
