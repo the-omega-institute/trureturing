@@ -3,6 +3,7 @@ bibkey: bertsekas2015terminaldp
 authors: Dimitri P. Bertsekas
 year: 2015
 title: Dynamic Programming and Stochastic Control, Lecture 10
+doi: null
 url: https://ocw.mit.edu/courses/6-231-dynamic-programming-and-stochastic-control-fall-2015/resources/mit6_231f15_lec10/
 claim: "Infinite-horizon Bellman problems require a specified cost and termination or discount contract; the finite stochastic shortest-path theorem in Lecture 10 assumes all-policy termination."
 strata_touched: []
