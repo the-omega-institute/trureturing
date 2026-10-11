@@ -101,11 +101,11 @@ theorem path_ext {A : Type*} [MeasurableSpace A] [Fintype A]
     exact hm.symm
   exact (show IsProjectiveLimit (α := fun _ => A) μ P from fun _ => rfl).unique hn
 
-private def prepend {A : Type*} (a : A) (x : ℕ → A) : ℕ → A
+def prepend {A : Type*} (a : A) (x : ℕ → A) : ℕ → A
   | 0 => a
   | n+1 => x n
 
-@[fun_prop] private theorem measurable_prepend {A : Type*} [MeasurableSpace A] (a : A) :
+@[fun_prop] theorem measurable_prepend {A : Type*} [MeasurableSpace A] (a : A) :
     Measurable (prepend a) := by
   apply measurable_pi_lambda
   intro n
@@ -113,7 +113,7 @@ private def prepend {A : Type*} (a : A) (x : ℕ → A) : ℕ → A
   | zero => exact measurable_const
   | succ n => exact measurable_pi_apply n
 
-private theorem marked_regenerate (M : Observer Z) (e : InstalledEmitter M)
+theorem marked_regenerate (M : Observer Z) (e : InstalledEmitter M)
     (w : Marked Z) :
     markedLaw M e w = ∑ v : Marked Z, markedRow M e w v •
       (markedLaw M e v).map (fun x => prepend w x) := by
@@ -231,7 +231,7 @@ def rawFrom (x : ℕ → Marked Z) : Stream := fun n =>
   | some (.read b) => b
   | _ => 0
 
-@[fun_prop] private theorem rawFrom_measurable : Measurable (rawFrom (Z := Z)) := by
+@[fun_prop] theorem rawFrom_measurable : Measurable (rawFrom (Z := Z)) := by
   apply measurable_pi_lambda
   intro n
   change Measurable (fun x : ℕ → Marked Z => match (x (n+1)).2 with
@@ -258,7 +258,7 @@ def decode (M : Observer Z) (z : Z) (x : ℕ → Marked Z) : FullTranscript :=
 private def nativeLaw (M : Observer Z) (e : InstalledEmitter M) (z : Z) : Measure FullTranscript :=
   (markedLaw M e (z, none)).map (decode M z)
 
-private theorem marked_head (M : Observer Z) (e : InstalledEmitter M) (w : Marked Z) :
+theorem marked_head (M : Observer Z) (e : InstalledEmitter M) (w : Marked Z) :
     ∀ᵐ x ∂markedLaw M e w, x 0 = w := by
   have h := prefix_mass M e w 0 (fun _ : Fin 1 => w)
   have he : (fun x : ℕ → Marked Z => fun i : Fin 1 => x i) ⁻¹' {fun _ => w} =
@@ -561,7 +561,7 @@ private theorem decode_first (M : Observer Z) (z : Z) (y : Marked Z) (q : Operat
     | stop b =>
       exact delivered_stream_eq _ (stop_delivered _ _ b hf) _ _
 
-private theorem marked_some_mass (M : Observer Z) (e : InstalledEmitter M)
+theorem marked_some_mass (M : Observer Z) (e : InstalledEmitter M)
     (z z' : Z) (op : Operation) :
     markedRow M e (z,none) (z',some op) = e.emit z (some op) * M.update op z z' := by
   classical

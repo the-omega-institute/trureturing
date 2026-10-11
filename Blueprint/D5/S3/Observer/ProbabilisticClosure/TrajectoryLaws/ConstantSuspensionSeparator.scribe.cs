@@ -52,7 +52,15 @@ internal sealed class ConstantSuspensionSeparatorDocument : IScribeDocumentDefin
                                 F.Id("phase"), F.Id("r"))))))),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("This is the probability normalization of the existing actual fourth-segment pushforward for either active phase and every unit-interval parameter. The infinite return outcome remains in the carrier. The absolute-risk estimates consume this original supplier directly."))),
-                    DescribeRole.Theorem))));
+                    DescribeRole.Theorem),
+                Describe.Lean(DescribeId.Create("endpoint-p-event"),
+                    DeclarationHandle.Create(Prefix + "endpoint_p_event"), H("The source p witness event mass"),
+                    StatementSource.FromAuthor(Disp(All("r", F.Id("unitInterval"), Call("EndpointPEvent", F.Id("r"))))),
+                    AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every Bernoulli alpha rate r in [0,1], the real mass of RegularTable.pEvent under explicitStoppedWordLaw(p,r) is (1-r)^2 times (1+r(1-r)+(r(1-r))^2). The event consists of pWord(0,1), pWord(1,1) and pWord(2,1)."))), DescribeRole.Theorem),
+                Describe.Lean(DescribeId.Create("endpoint-beta-event"),
+                    DeclarationHandle.Create(Prefix + "endpoint_beta_event"), H("The source suspended witness event mass"),
+                    StatementSource.FromAuthor(Disp(All("r", F.Id("unitInterval"), Call("EndpointBetaEvent", F.Id("r"))))),
+                    AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every Bernoulli alpha rate r in [0,1], the real mass of RegularTable.betaEvent under explicitStoppedWordLaw(beta,r) is 1-r+r(1-r)^2. Its immediate completion singleton some[1] is contained in this event."))), DescribeRole.Theorem))));
     }
 
     private static Formula Seq(params Formula[] parts) => F.Seq(parts);

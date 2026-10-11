@@ -28,7 +28,7 @@ universe u
 variable {Z : Type u} [Fintype Z] [MeasurableSpace Z] [MeasurableSingletonClass Z]
 local instance : DecidableEq Z := Classical.decEq Z
 
-private theorem probability_tv_le_one {A : Type*} [MeasurableSpace A]
+theorem probability_tv_le_one {A : Type*} [MeasurableSpace A]
     (P Q : Measure A) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] :
     measurableTotalVariation P Q ≤ 1 := by
   unfold measurableTotalVariation
@@ -36,7 +36,7 @@ private theorem probability_tv_le_one {A : Type*} [MeasurableSpace A]
   · exact tsub_le_self.trans ((measure_mono (Set.subset_univ _)).trans_eq measure_univ)
   · exact tsub_le_self.trans ((measure_mono (Set.subset_univ _)).trans_eq measure_univ)
 
-private theorem probability_tv_finite {A : Type*} [MeasurableSpace A]
+theorem probability_tv_finite {A : Type*} [MeasurableSpace A]
     (P Q : Measure A) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] :
     measurableTotalVariation P Q ≠ ∞ :=
   ne_top_of_le_ne_top ENNReal.one_ne_top (probability_tv_le_one P Q)
@@ -52,7 +52,7 @@ private theorem real_tv_triangle {A : Type*} [MeasurableSpace A]
   simpa only [ENNReal.toReal_add (probability_tv_finite P Q)
     (probability_tv_finite Q T)] using h
 
-private theorem event_gap {A : Type*} [MeasurableSpace A] (P Q : Measure A)
+theorem event_gap {A : Type*} [MeasurableSpace A] (P Q : Measure A)
     [IsProbabilityMeasure P] [IsProbabilityMeasure Q]
     (E : Set A) (hE : MeasurableSet E) :
     |(P E).toReal-(Q E).toReal| ≤ (measurableTotalVariation P Q).toReal := by
@@ -74,7 +74,7 @@ private theorem event_gap {A : Type*} [MeasurableSpace A] (P Q : Measure A)
     rw [abs_of_nonpos (sub_nonpos.mpr hr), neg_sub]
     exact (le_max_right _ _).trans h
 
-private theorem risk_finite (M : Observer Z) (e : InstalledEmitter M)
+theorem risk_finite (M : Observer Z) (e : InstalledEmitter M)
     (μ : PMF Depth) (s : ActivePhase) : installedRisk M e μ s ≠ ∞ := by
   apply ne_top_of_le_ne_top ENNReal.one_ne_top
   refine iSup_le fun H => ?_

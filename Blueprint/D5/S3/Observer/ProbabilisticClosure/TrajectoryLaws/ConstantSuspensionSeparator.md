@@ -46,9 +46,35 @@ $$\forall phase \in \operatorname{ActivePhase}\left(\right),\; \forall r \in \op
 
 This is the probability normalization of the existing actual fourth-segment pushforward for either active phase and every unit-interval parameter. The infinite return outcome remains in the carrier. The absolute-risk estimates consume this original supplier directly.
 
+**Theorem 1.3 (The source p witness event mass).**
+
+$$\forall r \in unitInterval,\; \operatorname{EndpointPEvent}\left(r\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.endpoint_p_event` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every Bernoulli alpha rate r in [0,1], the real mass of RegularTable.pEvent under explicitStoppedWordLaw(p,r) is (1-r)^2 times (1+r(1-r)+(r(1-r))^2). The event consists of pWord(0,1), pWord(1,1) and pWord(2,1).
+
+**Theorem 1.4 (The source suspended witness event mass).**
+
+$$\forall r \in unitInterval,\; \operatorname{EndpointBetaEvent}\left(r\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.endpoint_beta_event` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every Bernoulli alpha rate r in [0,1], the real mass of RegularTable.betaEvent under explicitStoppedWordLaw(beta,r) is 1-r+r(1-r)^2. Its immediate completion singleton some[1] is contained in this event.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.constant_suspension_separator`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.endpoint_beta_event`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.endpoint_p_event`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.endpoint_probability`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw](FourthSegmentStoppedLaw.md)
 - Narrative reference: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw](FourthSegmentStoppedLaw.md)

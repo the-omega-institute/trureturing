@@ -607,8 +607,8 @@ end RegularTable
 
 
 
-private def endpointA : unitInterval := ⟨1/3, by norm_num⟩
-private def endpointB : unitInterval := ⟨2/5, by norm_num⟩
+def endpointA : unitInterval := ⟨1/3, by norm_num⟩
+def endpointB : unitInterval := ⟨2/5, by norm_num⟩
 
 lemma endpoint_probability (phase : ActivePhase) (r : unitInterval) :
     IsProbabilityMeasure (explicitStoppedWordLaw phase r) := by
@@ -622,7 +622,7 @@ private lemma endpoint_p_word (r : unitInterval) (j : ℕ) :
   rw [Measure.real, explicit_finite_mass, if_pos (show ∃ b, WordFamily .p b (pWord j 1) from ⟨1,j,rfl⟩), p_word_mass]
   simp [alphaMass, betaMass, ENNReal.toReal_mul, ENNReal.toReal_pow, unitInterval.coe_symm_eq]
 
-private lemma endpoint_p_event (r : unitInterval) :
+lemma endpoint_p_event (r : unitInterval) :
     (explicitStoppedWordLaw .p r).real RegularTable.pEvent =
       (1-(r:ℝ))^2*(1+(r:ℝ)*(1-r)+((r:ℝ)*(1-r))^2) := by
   haveI := endpoint_probability .p r
@@ -635,7 +635,7 @@ private lemma endpoint_p_event (r : unitInterval) :
   rw [endpoint_p_word, endpoint_p_word, endpoint_p_word]
   ring
 
-private lemma endpoint_beta_event (r : unitInterval) :
+lemma endpoint_beta_event (r : unitInterval) :
     (explicitStoppedWordLaw .beta r).real RegularTable.betaEvent =
       1-(r:ℝ)+(r:ℝ)*(1-r)^2 := by
   haveI := endpoint_probability .beta r

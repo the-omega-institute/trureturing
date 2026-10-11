@@ -72,11 +72,76 @@ Definitions 1.1 and 1.2 supply the same-depth source, complete original fields a
 
 The original strict bound e(M)>1/195200 is not a conclusion of these statements. Its remaining connections are bounded ENNReal-to-real risk and excess conversion, extraction of common actual stationary rows for countable priors, normalized clipping with its distortion bound, and application of ConstantSuspensionSeparator on the resulting regular table. The constant-emission condition must be transported on the designated reachable fibre. No unrestricted-observer gap or free exact-real sampling assertion follows.
 
+**Theorem 1.5 (Prepending a marked head is measurable).**
+
+$$\forall A:MeasurableType, (\forall a:A, (\operatorname{MeasurablePrepend}(a)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.measurable_prepend` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every measurable carrier A and a in A, prepend(a) on infinite A paths is measurable. Its zero coordinate is constant and each successor coordinate is the corresponding original path coordinate.
+
+**Theorem 1.6 (The original complete marked regeneration law).**
+
+$$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, (\forall w:MarkedZ, (\operatorname{MarkedRegenerate}(M, e, w))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_regenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original finite measurable singleton carrier Z, observer M, lawful InstalledEmitter e and incoming marked state w, markedLaw(M,e,w) equals the finite sum over v of markedRow(M,e,w,v) times the pushforward of markedLaw(M,e,v) under prepend(w). This is an equality of complete infinite-path measures. The original singleton-prefix calculation and projective uniqueness provide it without completion or positive-emission assumptions.
+
+**Theorem 1.7 (The marked read projection is measurable).**
+
+$$\forall Z:FiniteMeasurableSingletonType, (\operatorname{RawFromMeasurable}(Z))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.rawFrom_measurable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The map rawFrom from infinite marked Z paths to binary streams is measurable on the original finite measurable singleton carrier. Coordinate n reads the incoming mark at n+1 and uses zero for marks that are not Reads.
+
+**Theorem 1.8 (The marked initial head holds almost surely).**
+
+$$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, (\forall w:MarkedZ, (\operatorname{MarkedHead}(M, e, w))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_head` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every M, lawful e and marked initial state w, almost every path under markedLaw(M,e,w) has coordinate zero equal to w. Incoming-mark invariance and prefixed read pushforwards use this actual path identity.
+
+**Theorem 1.9 (The marked acquired operation uses the original kernel).**
+
+$$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, (\forall z:Z, (\forall zprime:Z, (\forall op:Operation, (\operatorname{MarkedSomeMass}(M, e, z, zprime, op))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_some_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original configurations z,zprime and operation op, markedRow(M,e,(z,none),(zprime,some(op))) equals e.emit(z)(some(op)) times M.update(op,z)(zprime). The original update is used even when the emission has zero mass.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.installed_configuration_identity`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.installed_first_block_recursion`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.installed_full_law`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_head`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_native_realization`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_regenerate`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_some_mass`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.measurable_prepend`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.rawFrom_measurable`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkovPrefixMass](MarkovPrefixMass.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw](NativeObserverJointLaw.md)
