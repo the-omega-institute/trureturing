@@ -1,0 +1,55 @@
+### 12.4 回到实际 u 的单侧下降预算
+
+保持 $\pi,B,v$ 固定，将 $c=\mathbf1-u\in[3/5,2/3]^3$ 视为变量，记 $\mathfrak D(c)=P(c)-kS(c)-C$。在以 $\pi$ 为初始行、转移核为原 B 的平稳路径 $X_0,X_1,\ldots$ 上，标记1的第 n 项为
+
+$$
+\pi H^ng
+=\mathbb E\left[
+ \left(\prod_{j=0}^nc(X_j)\right)
+ \left(\prod_{j=1}^nv(X_j)\right)
+ (1-v(X_{n+1}))\right],\qquad n=0,1,2.
+\tag{12.18}
+$$
+
+空积取1，每个 $X_j$ 的边缘行都是 $\pi$。对 $c_i$ 微分时，n+1 个出现位置各贡献一项；同一路径重复访问 i 仍按出现次数求导。所有项非负，使用 $c\le2/3$、$v\le2/5$、$1-v\le2/3$ 可得
+
+$$
+0\le\frac1{\pi_i}\frac{\partial P}{\partial c_i}
+\le\frac23+2\left(\frac23\right)^2\frac25
+ +3\left(\frac23\right)^3\left(\frac25\right)^2
+=\frac{262}{225}.
+\tag{12.19}
+$$
+
+悬置事件的一阶导数为
+
+$$
+\frac1{\pi_i}\frac{\partial S}{\partial c_i}
+=v_i[B(\mathbf1-v)]_i\ge\frac15.
+\tag{12.20}
+$$
+
+P 的 n=0 项与 $-kS$ 的导数合起来为
+$\pi_i(1-kv_i)[B(\mathbf1-v)]_i$；P 的另两项导数非负。因此在整个变量盒上
+
+$$
+0<\frac{1800067}{6721875}
+=(1-kb)\frac35
+\le\frac1{\pi_i}\frac{\partial\mathfrak D}{\partial c_i}
+\le\frac{262}{225}-\frac k5=L.
+\tag{12.21}
+$$
+
+令 $c_i^+=\max\{c_i,1-v_i\}$。单调性先给 $\mathfrak D(c)\le\mathfrak D(c^+)$；再从 $\mathbf1-v$ 到 $c^+$ 逐坐标积分上界，得到
+
+$$
+\begin{aligned}
+\mathfrak D(c)
+&\le\mathfrak D(\mathbf1-v)+L\sum_i\pi_i(c_i-(1-v_i))_+\\
+&=P_0-kS_0-C+L\delta_-.
+\end{aligned}
+\tag{12.22}
+$$
+
+两个比较向量都仍在原变量盒内。结合式（12.17）即证定理12.1。整个路径保留原 B 与同一个无权 $\pi$；比较值只进入证明，不进入实际来源、后验或运行观察者。$\square$
+

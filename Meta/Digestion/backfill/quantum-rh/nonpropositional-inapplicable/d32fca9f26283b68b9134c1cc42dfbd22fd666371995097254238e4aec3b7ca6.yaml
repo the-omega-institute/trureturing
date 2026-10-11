@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d32fca9f26283b68b9134c1cc42dfbd22fd666371995097254238e4aec3b7ca6
+  normalized_sha256: sha256:d32fca9f26283b68b9134c1cc42dfbd22fd666371995097254238e4aec3b7ca6
+cas_ref: sha256:d32fca9f26283b68b9134c1cc42dfbd22fd666371995097254238e4aec3b7ca6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Every quantitative clause of this proof is supplied by pinned Mathlib under the surrounding analytic boundary hypotheses a>0, F analytic on a neighborhood of the closed disk, F(0)=1, and f(t)=Re F(a*exp(it))>=0. Polynomial.leadingCoeff_le_mahlerMeasure, Polynomial.logMahlerMeasure_eq_log_MahlerMeasure and Real.log_nonneg give average(log norm P)>=0 for every monic complex P. MeromorphicOn.intervalIntegrable_log, Polynomial.intervalIntegrable_mahlerMeasure, AnalyticOnNhd.eqOn_zero_or_eventually_ne_zero_of_preconnected and ae_restrict_le_codiscreteWithin supply the log integrability and a.e. positivity needed by ConvexOn.map_average_le at exp, applied to log f + 2*log norm P. Nonzero f follows from AnalyticAt.harmonicAt_re and InnerProductSpace.HarmonicOnNhd.circleAverage_eq with F(0)=1. Average linearity, Real.exp_add, Real.exp_log and Real.exp_le_exp give both displayed inequalities. Polynomial.monic_X_pow_sub and le_csInf then give the common lower bound for the infimum for every N, including N=0; Function.Periodic.intervalIntegral_add_eq and Function.Periodic.intervalIntegrable₀ give the same normalized result on [-pi,pi]. No project GID supplies this analytic chain (仓内无 GID). This proof receipt asserts the displayed infimum argument, not attainment of the minimum in the preceding definition and not a proof of RH.
+    previous_atom_id: 2fbed82e07d243d1005a8a1c09923c3aaa3d8b0a414ff7a9210cd5c6f2ed26e2
+    next_atom_id: 8402c9e74cb9a893b819e81e0265f9fce3572fc78a3b4ebc29c922273e08933c

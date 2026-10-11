@@ -1,0 +1,40 @@
+**接口 6.1（端点盒的谱必要条件）。** 在定义3.1及 p 相完整端点盒下，令 $\lambda=6/25$。式（2.3）的0型端点比为
+
+$$
+\frac{P_{p,b}(w_{n,0})}{P_{p,a}(w_{n,0})}
+=\frac65\left(\frac{27}{25}\right)^n>1.
+$$
+
+故对所有 $n\ge0$，$H^nu\le b\lambda^n\mathbf1$。由 $u\ge a\mathbf1$、$H\ge0$ 得
+
+$$
+H^n\mathbf1\le\frac ba\lambda^n\mathbf1,
+\qquad \|H^n\|_\infty\le\frac ba\lambda^n,
+\qquad \rho(H)\le\lambda.
+\tag{6.1}
+$$
+
+最后一步可由任意特征值 $\theta$ 的 $|\theta|^n\le\|H^n\|_\infty$ 取 n 次根得到，不要求不可约性。只有所有 n 的完整盒才供应这个界；它不是有限个词拟合后的谱结论。
+
+令 $m_i=\pi_iv_i/d_i$、$M=\operatorname{diag}(m)$，精确对称化为
+
+$$
+S=M^{1/2}HM^{-1/2},\qquad
+C=\operatorname{diag}(\pi)B,\qquad
+L=\operatorname{diag}\left(\sqrt{\frac{\pi_i}{d_iv_i}}\right).
+\tag{6.2}
+$$
+
+$S$ 对称且逐项非负，$C$ 是实际平稳边循环的对称矩阵，直接逐项相乘得
+
+$$
+C=LSL,\qquad
+\lambda\operatorname{diag}\left(\frac{\pi_i}{d_iv_i}\right)-C
+=L(\lambda I-S)L\succeq0.
+\tag{6.3}
+$$
+
+这里 Perron–Frobenius 的非负矩阵谱事实给出 $S$ 的最大实特征值等于 $\rho(H)$，所以在定义3.1的可逆类中，式（6.3）的 PSD 条件与 $\rho(H)\le\lambda$ 等价。详细平衡与边测度的关系属成熟理论；[WW] §2.2说明其不可约语境，本卷通过式（3.7）和（6.2）直接处理可约情形。
+
+式（6.3）是非严格必要条件。$\rho(H)=\lambda$ 时此矩阵奇异；只有 $\rho(H)<\lambda$ 才等价于此矩阵正定。负特征值，包括 $-\lambda$，可以存在；$H$ 或 $S$ 无须 PSD。单独的式（6.3）既不能恢复完整盒，也不能供应式（4.7）或（4.10）。
+

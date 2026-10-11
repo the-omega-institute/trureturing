@@ -1,0 +1,81 @@
+## 14.6. The fixed-N rational bridge and its boundary
+
+Let \(N\) be the fixed comparison table from REV, §12.27:
+\[
+ \pi_N=\left(\frac{461}{2000},\frac{539}{1000},\frac{461}{2000}\right),
+ \quad v_N=\left(\frac{17}{50},\frac{39}{100},\frac{17}{50}\right),
+\]
+\[
+ u_N=\left(\frac{33999}{100000},
+ \frac{135404266789272139}{346228952419350000},
+ \frac{33999}{100000}\right),
+ \quad
+ (B_N)_{ij}=\frac{999}{1000}{\bf1}_{i=j}+\frac{\pi_{N,j}}{1000},
+ \quad A_N=I.
+\tag{14.25}
+\]
+Exact multiplication in (14.2)--(14.3) gives
+\[
+ q_-=M_p-P(N)=
+ \frac{370499271854092531370662238590884540184575294432644967493}
+ {331960119212493764912089170000000000000000000000000000000000}
+ >\frac1{1000},
+ \qquad S(N)=M_\beta.                         
+\tag{14.26}
+\]
+The first and third rows have identical emissions, so the two-state lumping
+\[
+ \pi_*=(461/1000,539/1000),\qquad
+ B_*={1\over10^6}\begin{pmatrix}999461&539\\461&999539\end{pmatrix}
+\]
+is an exact calculation of (14.25), not a new table.
+
+For completeness, the full costs of N satisfy the rational enclosures
+\[
+ \frac{24846083253}{10^{12}}<\mathcal E_p(N)<
+ \frac{24846083254}{10^{12}}<\frac{149501569}{4096000000},
+\]
+\[
+ \frac{17913722449}{10^{12}}<\mathcal E_\beta(N)<
+ \frac{17913722450}{10^{12}}<\frac{1759}{64000}.
+\tag{14.27}
+\]
+To see that these are full-law enclosures, sum (14.16)--(14.17) through n=23.
+The omitted p tail is at most
+\[
+ (6/25)^{24}=
+ \frac{4738381338321616896}{3552713678800500929355621337890625},
+\]
+and the omitted suspended tail is at most \((2/5)(6/25)^{24}\).  All terms
+are rational and nonnegative, so (14.27) follows without a truncation of the
+carrier.
+
+The algebraic fixed-N bridge is the following.  If a prospective table E has
+\(q_+=P(E)-M_p>0\) and the two tables are combined with weights proportional
+to \(q_-\) and \(q_+\), then any common budget \(B_s\) requires
+\[
+ q_-\mathcal E_s(E)+q_+\mathcal E_s(N)
+ \le(q_-+q_+)B_s,
+ \qquad s\in\{p,\beta\}.                         
+\tag{14.28}
+\]
+This is just multiplication of the two complete-law costs by the positive
+mixture weights.  Since (14.13) has \(P(R)-M_p<0\), R cannot be the positive
+side of (14.28); it is a failed sufficiency bridge, not a companion E.
+
+For the linear defect used in REV, §11, put
+\[
+ \kappa=\frac{1116529}{806625},\qquad
+ C=M_p-\kappa M_\beta=-\frac{151298}{268875},\qquad
+ D=P-\kappa S-C.                                  
+\tag{14.29}
+\]
+On the locus \(S=M_\beta\), one has exactly \(D=P-M_p=q_+\).  Therefore an
+inequality \(D\le0\) on a specified full-box class excludes a strictly positive
+fixed-N companion in that class.  Equality is not an exclusion: the native
+matched endpoint tables satisfy \(D=0\), as recorded in REV, §11.1.  Consequently
+an exact-attainment exclusion at the equality boundary would additionally have
+to verify the complete equality locus and both interior costs in (14.28).
+No such equality/interior argument is supplied by (14.13)--(14.28), and no
+stronger sign conclusion is drawn here.
+
