@@ -41,7 +41,7 @@ internal sealed class TracePreservingEigenvalueBoundDocument : IScribeDocumentDe
             Node("depolarized", "depolarized", "depolarized",
                 Disp(Seq(Forall, Sp, Parenthesized(Seq(Named("d"), Sp, Colon, Sp, NatType())), Sp, Comma,
                     Forall, Sp, Parenthesized(Seq(Named("Phi"), Sp, Colon, Sp, LinearMapType(Named("d")))), Sp, Comma,
-                    Parenthesized(Seq(Varepsilon, Sp, Colon, Sp, RealType())), Sp, Comma,
+                    Forall, Sp, Parenthesized(Seq(Varepsilon, Sp, Colon, Sp, RealType())), Sp, Comma,
                     Named("depolarized"), Sp, Named("Phi"), Sp, Varepsilon, Sp, Eq, Sp,
                     Smul(Cast(Cast(Subtract(D(1), Varepsilon), RealType()), ComplexType()), Named("Phi")), Sp, Plus, Sp,
                     Smul(Cast(Cast(Divide(Varepsilon, Named("d")), RealType()), ComplexType()), TraceIdentity(Named("d"))))),
