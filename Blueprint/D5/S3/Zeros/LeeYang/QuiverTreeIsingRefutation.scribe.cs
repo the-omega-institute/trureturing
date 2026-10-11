@@ -20,7 +20,7 @@ internal sealed class QuiverTreeIsingRefutationDocument : IScribeDocumentDefinit
         Blocks(
             Node("IsOrientedTree", "An oriented list of tree edges", TreeFormula(),
                 "Section 2.2, printed p. 13 (PDF p. 14): “Take the graph G to be a tree T,”. "
-                + "Issue #15357 fixes finite types V and E, no loops, injectivity of the "
+                + "The finite-type convention uses V and E, no loops, injectivity of the "
                 + "unordered edge map, and SimpleGraph.IsTree for its support. The notation "
                 + "s(a,b) is Lean's unordered pair, and the orientation records which endpoint "
                 + "receives the split parameter."),
@@ -47,7 +47,7 @@ internal sealed class QuiverTreeIsingRefutationDocument : IScribeDocumentDefinit
                 + "and true means spin up. The weight rho depends jointly on the whole split."),
             Node("claim", "Conjecture 1 with its binding conventions", ClaimFormula(),
                 "Section 2.2, Conjecture 1, printed p. 14 (PDF p. 15): “" + Conjecture + "” "
-                + "Issue #15357 fixes n i ≥ 2, excluding the empty split sum at n i = 1, "
+                + "The convention uses n i ≥ 2, excluding the empty split sum at n i = 1, "
                 + "and τ ∈ Set.Icc (−1) 1. The source's one-edge argument uses |τ| ≤ 1. "
                 + "Every allowed joint weight is strictly positive. Polynomial.map along "
                 + "algebraMap ℝ ℂ is the complex coefficient polynomial; IsRoot means its "
@@ -73,7 +73,10 @@ internal sealed class QuiverTreeIsingRefutationDocument : IScribeDocumentDefinit
             StatementSource.FromAuthor(Disp(formula)),
             theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(DefinitionDsl.Text(prose))),
-            theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+            theorem ? DescribeRole.Theorem : DescribeRole.Definition,
+            theorem ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula Id(string value) => F.Id(value);
     private static Formula Op(string name) => Seq(Operatorname, Grp(Id(name)));

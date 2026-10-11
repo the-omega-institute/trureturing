@@ -14,7 +14,7 @@ $$\forall (V:\operatorname{Type})(E:\operatorname{Type})[\operatorname{Fintype}\
 
 *Commentary.*
 
-Section 2.2, printed p. 13 (PDF p. 14): “Take the graph G to be a tree T,”. Issue #15357 fixes finite types V and E, no loops, injectivity of the unordered edge map, and SimpleGraph.IsTree for its support. The notation s(a,b) is Lean's unordered pair, and the orientation records which endpoint receives the split parameter.
+Section 2.2, printed p. 13 (PDF p. 14): “Take the graph G to be a tree T,”. The finite-type convention uses V and E, no loops, injectivity of the unordered edge map, and SimpleGraph.IsTree for its support. The notation s(a,b) is Lean's unordered pair, and the orientation records which endpoint receives the split parameter.
 
 **Definition 1.2 (The positive edge splits).**
 
@@ -62,13 +62,17 @@ $$\operatorname{claim} = (\forall (V:\operatorname{Type})(E:\operatorname{Type})
 
 *Commentary.*
 
-Section 2.2, Conjecture 1, printed p. 14 (PDF p. 15): “For any tree with e edges, any fixed positive integers n₁,…,nₑ and arbitrary ρ(kᵢ,nᵢ)>0 the polynomials P(τ,x, n₁,…,nₑ) have all their x roots on the unit circle.” Issue #15357 fixes n i ≥ 2, excluding the empty split sum at n i = 1, and τ ∈ Set.Icc (−1) 1. The source's one-edge argument uses |τ| ≤ 1. Every allowed joint weight is strictly positive. Polynomial.map along algebraMap ℝ ℂ is the complex coefficient polynomial; IsRoot means its evaluation is zero. The conclusion is the complex norm ‖z‖ = 1.
+Section 2.2, Conjecture 1, printed p. 14 (PDF p. 15): “For any tree with e edges, any fixed positive integers n₁,…,nₑ and arbitrary ρ(kᵢ,nᵢ)>0 the polynomials P(τ,x, n₁,…,nₑ) have all their x roots on the unit circle.” The convention uses n i ≥ 2, excluding the empty split sum at n i = 1, and τ ∈ Set.Icc (−1) 1. The source's one-edge argument uses |τ| ≤ 1. Every allowed joint weight is strictly positive. Polynomial.map along algebraMap ℝ ℂ is the complex coefficient polynomial; IsRoot means its evaluation is zero. The conclusion is the complex norm ‖z‖ = 1.
 
 **Theorem 1.6 (Conjecture 1 is refuted for joint weights).**
 
 $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang` (refuted) by `D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang","declaration_gid":"D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
