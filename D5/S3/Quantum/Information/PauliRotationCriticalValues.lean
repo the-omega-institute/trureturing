@@ -151,8 +151,8 @@ private theorem sum_states {A : Type*} [AddCommMonoid A] (f : BasisState → A) 
   rw [← Equiv.sum_comp (finTwoArrowEquiv (Fin 2)).symm]
   simp [Fintype.sum_prod_type, Fin.sum_univ_two, finTwoArrowEquiv, add_assoc]
 
--- The finite reconstruction expands sixteen matrix entries in the fifteen Pauli coordinates.
 set_option maxHeartbeats 2000000 in
+-- The finite reconstruction expands sixteen matrix entries in the fifteen Pauli coordinates.
 private theorem pauli_expansion (M : Mat) :
     (∑ i, (trace (wordOp (labels i) * M) / 4) • wordOp (labels i)) +
       (trace M / 4) • (1 : Mat) = M := by
@@ -181,5 +181,67 @@ private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M)
   change (((trace (wordOp (labels i) * M)).re / 4 : ℝ) : ℂ) * _ = _
   rw [Complex.ofReal_div, Complex.ofReal_ofNat, hr]
   rfl
+
+private theorem rotation_complex (p : NonIdentityPauli) (a : ℝ) :
+    rotation p a = (Real.cos (a / 2) : ℂ) • (1 : Mat) -
+      ((Real.sin (a / 2) : ℂ) * Complex.I) • wordOp p.val := by
+  ext x y
+  simp [rotation, smul_eq_mul, Complex.real_smul, mul_assoc]
+
+private theorem rotation_unitary (p : NonIdentityPauli) (a : ℝ) :
+    rotation p a ∈ unitary Mat := by
+  have hc : (Real.cos (a / 2) : ℂ) ^ 2 + (Real.sin (a / 2) : ℂ) ^ 2 = 1 := by
+    exact_mod_cast (by nlinarith [Real.sin_sq_add_cos_sq (a / 2)] :
+      Real.cos (a / 2) ^ 2 + Real.sin (a / 2) ^ 2 = 1)
+  rw [Unitary.mem_iff, rotation_complex]
+  simp only [star_sub, star_smul, star_one, star_mul, Complex.star_def,
+    Complex.conj_ofReal, Complex.conj_I, word_star]
+  constructor <;>
+    simp only [mul_sub, sub_mul, Matrix.smul_mul, Matrix.mul_smul, one_mul, mul_one,
+      word_square, smul_smul] <;>
+    calc _ = ((Real.cos (a / 2) : ℂ) ^ 2 + (Real.sin (a / 2) : ℂ) ^ 2) • (1 : Mat) := by
+          match_scalars
+          all_goals ring_nf
+          all_goals simp only [Complex.I_sq]
+          all_goals ring
+         _ = 1 := by rw [hc, one_smul]
+
+private noncomputable def prefixOp (P : Fin 15 → NonIdentityPauli) (α : Param) (n : ℕ) : Mat :=
+  ((List.ofFn (fun j => rotation (P j) (α j))).take n).prod
+
+private theorem prefix_unitary (P : Fin 15 → NonIdentityPauli) (α : Param) (n : ℕ) :
+    prefixOp P α n ∈ unitary Mat := by
+  apply (unitary Mat).list_prod_mem
+  intro M hM
+  obtain ⟨j, rfl⟩ := List.mem_ofFn.mp (List.mem_of_mem_take hM)
+  exact rotation_unitary (P j) (α j)
+
+private theorem circuit_unitary (P : Fin 15 → NonIdentityPauli) (α : Param) :
+    circuit P α ∈ unitary Mat := by
+  simpa [prefixOp, circuit] using prefix_unitary P α 15
+
+private noncomputable def gateD (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
+    Param →L[ℝ] Mat :=
+  (ContinuousLinearMap.proj j : Param →L[ℝ] ℝ).smulRight
+    ((-Complex.I / 2) • (wordOp (P j).val * rotation (P j) (α j)))
+
+private theorem gate_deriv (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
+    HasStrictFDerivAt (fun β : Param => rotation (P j) (β j)) (gateD P α j) α := by
+  let d := (1 / 2 : ℝ) • (ContinuousLinearMap.proj j : Param →L[ℝ] ℝ)
+  have hd : HasStrictFDerivAt (fun β : Param => β j / 2) d α := by
+    simpa [d, div_eq_mul_inv, mul_comm] using
+      (ContinuousLinearMap.proj j : Param →L[ℝ] ℝ).hasStrictFDerivAt.const_mul (1 / 2)
+  apply (hd.cos.smul_const (1 : Mat) |>.sub
+    (hd.sin.smul_const (Complex.I • wordOp (P j).val))).congr_fderiv
+  ext1 h
+  simp only [gateD, d, _root_.sub_apply, ContinuousLinearMap.smulRight_apply,
+    _root_.smul_apply, ContinuousLinearMap.proj_apply, rotation_complex, mul_sub, Matrix.mul_smul,
+    mul_one, word_square, smul_smul]
+  ext x y
+  simp only [Matrix.sub_apply, Matrix.smul_apply, Complex.real_smul, smul_eq_mul,
+    Complex.ofReal_mul, Complex.ofReal_neg, Complex.ofReal_div, Complex.ofReal_ofNat]
+  ring_nf
+  all_goals simp [Complex.I_sq]
+  all_goals ring
 
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
