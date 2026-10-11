@@ -176,7 +176,7 @@ private theorem raw_right_delete_legal {n : Nat} (w : Fin n → Bool) (i : Fin n
       rawWord_cons, set_first_right_endpoint r z (rawWord t) (by omega)]
     simp only [rawWord_cons]
 
-private theorem raw_coordinate_sum {M : Type*} [AddCommMonoid M]
+theorem raw_coordinate_sum {M : Type*} [AddCommMonoid M]
     (t : List (Nat × Nat)) (f : Nat → M) :
     (∑ j ∈ Finset.range (rawWord t).length, f j) =
       ∑ p : Fin t.length, ∑ j ∈ Finset.range (t[p.val].1+t[p.val].2),
@@ -360,7 +360,7 @@ private theorem raw_left_insert_iff {n : Nat} (w : Fin n → Bool) (i : Fin n)
     · exact h.2
     · exact (hp b hb).2
 
-private lemma run_endpoint_sum (r : Nat) (hr : 0 < r) :
+lemma run_endpoint_sum (r : Nat) (hr : 0 < r) :
     (∑ j ∈ Finset.range r, if j=0 ∨ j+1=r then (1:Nat) else 0) = min r 2 := by
   have he : (Finset.range r).filter (fun j => j=0 ∨ j+1=r) = {0,r-1} := by
     ext j
@@ -427,7 +427,7 @@ private theorem local_zero_flip_sum (r s u a : Nat) (hr : 0 < r) (hu : 0 < u) :
       dsimp [z]
       split_ifs <;> omega
 
-private theorem linearize_at_pair {n : Nat} (w : Fin n → Bool) (i : Fin n)
+theorem linearize_at_pair {n : Nat} (w : Fin n → Bool) (i : Fin n)
     (t : List (Nat × Nat)) (he : linearize w i = rawWord t) (p : Fin t.length) :
     linearize w (cycAdd i (pairPrefix t p.val)) = rawWord (t.rotate p.val) := by
   have hd : rawWord t = rawWord (t.take p.val) ++ rawWord (t.drop p.val) := by
@@ -578,7 +578,7 @@ private lemma raw_first_valid_start {n : Nat} (w : Fin n → Bool) (i : Fin n)
   exact first_raw_run_start (r := r) (z := z) w i hr (by omega) (rawWord t) hm
     (by simpa [rawWord_cons] using he)
 
-private theorem raw_one_delete_iff {n : Nat} (w : Fin n → Bool) (i : Fin n)
+theorem raw_one_delete_iff {n : Nat} (w : Fin n → Bool) (i : Fin n)
     (r z p : Nat) (t : List (Nat × Nat)) (hr : 0 < r) (hz : r < z) (hp : p < r)
     (ht : ∀ b ∈ t, 0 < b.1 ∧ b.1 < b.2)
     (he : linearize w i = rawWord ((r,z)::t)) :
