@@ -31,7 +31,10 @@ internal sealed class CCZMagicCapacityThresholdDocument : IScribeDocumentDefinit
                 H("The one-third capacity conjecture is false"), StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("At lambda = 1/2, use the pure stabilizer input Omega = 8^(-1/2) sum_x |x,x>. Restricting any stabilizer amplitude to the diagonal produces either zero or a scalar multiple of a three-qubit stabilizer normal form. The binary phase vector becomes b_A + b_B, and the quadratic phase acquires the carry term sum_i b_A(i)b_B(i)x_i^2. The squared overlap with CCZ|+++> is at most 9/16: proper affine supports have at most four points, and the full-support bound follows from the exact finite phase sum. Consequently the separating matrix has nonnegative trace pairing with every stabilizer mixture. Its trace pairing with chan (1/2) applied to the Omega density matrix is exactly -7/1024, contradicting the first conjunct of claim. This proves the refutation at one half; it does not determine the exact threshold."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wei-liu-2024-ccz-magic-capacity-threshold"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("ccz-" + declaration.ToLowerInvariant()), DeclarationHandle.Create(Prefix + declaration), H(title),
@@ -39,6 +42,13 @@ internal sealed class CCZMagicCapacityThresholdDocument : IScribeDocumentDefinit
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Qualified(params string[] parts)
+    {
+        Formula value = F.Id(parts[0]);
+        for (int i = 1; i < parts.Length; i++)
+            value = Seq(value, Dot, F.Id(parts[i]));
+        return Seq(Operatorname, Grp(value));
+    }
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
     private static Formula App(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
@@ -115,8 +125,12 @@ internal sealed class CCZMagicCapacityThresholdDocument : IScribeDocumentDefinit
     {
         Formula lam = F.Id("lam"), rho = F.Id("rho");
         Formula matrix = Call("Matrix", F.Id("Bool"), F.Id("Bool"), ComplexType());
-        Formula rhs = Add(App(Q("SMul", "smul"), Parenthesized(Subtract(D(1), lam)), rho), App(Q("SMul", "smul"), Parenthesized(new Formula.Fraction(lam, D(2))), App(Q("SMul", "smul"), App(Q("Matrix", "trace"), rho), Cast(D(1), matrix))));
-        return All("lam", RealType(), All("rho", matrix, Equal(Call("depol", lam, rho), rhs)));
+        Formula e = F.Id("finTwoEquiv");
+        Formula es = App(Q("Equiv", "symm"), e);
+        Formula source = App(Qualified("D5", "S3", "Quantum", "QuantumChannels", "TracePreservingEigenvalueBound", "depolarized"),
+            Q("LinearMap", "id"), lam, App(Q("Matrix", "reindex"), es, es, rho));
+        Formula body = App(Q("Matrix", "reindex"), e, e, source);
+        return All("lam", RealType(), All("rho", matrix, Equal(Call("depol", lam, rho), body)));
     }
 
     private static Formula DepolarizingAtFormula()

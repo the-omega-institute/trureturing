@@ -66,7 +66,7 @@ Printed page 2, Section II: "Let STABₙ denote the set of all n-qubit stabilize
 
 **Definition 1.6 (Single-qubit depolarizing noise).**
 
-$$\forall lam \in \mathbb{R},\; \forall rho \in \operatorname{Matrix}\left(Bool, Bool, \mathbb{C}\right),\; \operatorname{depol}\left(lam, rho\right) = \operatorname{SMul}.\operatorname{smul}\left((1 - lam), rho\right) + \operatorname{SMul}.\operatorname{smul}\left((\frac{lam}{2}), \operatorname{SMul}.\operatorname{smul}\left(\operatorname{Matrix}.\operatorname{trace}\left(rho\right), (1:\operatorname{Matrix}\left(Bool, Bool, \mathbb{C}\right))\right)\right)$$
+$$\forall lam \in \mathbb{R},\; \forall rho \in \operatorname{Matrix}\left(Bool, Bool, \mathbb{C}\right),\; \operatorname{depol}\left(lam, rho\right) = \operatorname{Matrix}.\operatorname{reindex}\left(finTwoEquiv, finTwoEquiv, \operatorname{D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.depolarized}\left(\operatorname{LinearMap}.\operatorname{id}, lam, \operatorname{Matrix}.\operatorname{reindex}\left(\operatorname{Equiv}.\operatorname{symm}\left(finTwoEquiv\right), \operatorname{Equiv}.\operatorname{symm}\left(finTwoEquiv\right), rho\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/CCZMagicCapacityThreshold.depol` (`✓ std3`).
 
@@ -153,6 +153,10 @@ Printed page 6, Section VII: "We conjecture that the magic capacity threshold fo
 $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CCZMagicCapacityThreshold.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/wei-liu-2024-ccz-magic-capacity-threshold` (refuted) by `D5/S3/Quantum/Information/CCZMagicCapacityThreshold.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wei-liu-2024-ccz-magic-capacity-threshold","declaration_gid":"D5/S3/Quantum/Information/CCZMagicCapacityThreshold.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
