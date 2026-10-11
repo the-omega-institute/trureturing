@@ -10,7 +10,7 @@ $$\forall K: Type, [\operatorname{Field}\left(K\right)], \operatorname{conjectur
 
 *Formalization.* `D5/S3/Quantum/Algebra/HeibBruschiHiddenCenterRefutation.conjecture80Over` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* T. Heib; D. E. Bruschi (2026). *On the structural properties of Lie algebras via associated labeled directed graphs*. DOI: [10.48550/arXiv.2601.16161](https://doi.org/10.48550/arXiv.2601.16161). URL: <https://arxiv.org/abs/2601.16161v1>.
 
 *Commentary.*
 
@@ -35,6 +35,8 @@ $$\neg claim$$
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/HeibBruschiHiddenCenterRefutation.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* T. Heib; D. E. Bruschi (2026). *On the structural properties of Lie algebras via associated labeled directed graphs*. DOI: [10.48550/arXiv.2601.16161](https://doi.org/10.48550/arXiv.2601.16161). URL: <https://arxiv.org/abs/2601.16161v1>.
 
 *Commentary.*
 
