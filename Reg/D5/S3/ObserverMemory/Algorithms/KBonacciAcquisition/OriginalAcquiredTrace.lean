@@ -1,3 +1,4 @@
+import Reg.Support.KBonacciAcquisition.ExecutionSource
 import Reg.Support.KBonacciAcquisition.ActualPositiveCoordinates
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace
@@ -475,3 +476,142 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
 #print axioms evidence
 #print axioms registration
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ActualArchiveAppendAudit
+
+namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.AcquiredExecutionTraceAudit
+universe z
+open Reg.Support.KBonacciAcquisition.ExecutionSource.AcquiredExecutionTrace Reg.Support.KBonacciAcquisition.ExecutionSource.SelectorObservation
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{z+1,0,1,0,0,0,z+1,z,0,z,0,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.acquired_execution_trace.{z})
+    (type_of% (realize signature.{z} actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.acquired_execution_trace
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.AcquiredExecutionTraceAudit/Reg.Support.KBonacciAcquisition.ExecutionSource.AcquiredExecutionTrace.arena/[anonymous]") "__information_unit",
+  realizationName := `Reg.Support.KBonacciAcquisition.ExecutionSource.AcquiredExecutionTrace.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena.{z}⟩, objectArena := .source ⟨arena.{z}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena.{z} ⟨evidence.{z}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature.{z} actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace,
+    definition := none, coordinates := #[0, 2],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "fn", "fn", "fn", "arg"],
+      stateBinder := 11, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms registration
+end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.AcquiredExecutionTraceAudit
+
+namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ExecutePaidTraceAudit
+universe z
+open Reg.Support.KBonacciAcquisition.ExecutionSource.ExecutePaidTrace Reg.Support.KBonacciAcquisition.ExecutionSource.SelectorObservation
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{z+1,0,1,0,0,0,z+1,z,0,z,0,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.execute_paid_trace.{z})
+    (type_of% (realize signature.{z} actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.execute_paid_trace
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ExecutePaidTraceAudit/Reg.Support.KBonacciAcquisition.ExecutionSource.ExecutePaidTrace.arena/[anonymous]") "__information_unit",
+  realizationName := `Reg.Support.KBonacciAcquisition.ExecutionSource.ExecutePaidTrace.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena.{z}⟩, objectArena := .source ⟨arena.{z}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena.{z} ⟨evidence.{z}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature.{z} actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace,
+    definition := none, coordinates := #[0, 2],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "fn", "fn", "fn", "arg"],
+      stateBinder := 4, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms registration
+end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.ExecutePaidTraceAudit
+
+namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.FullPositiveParentAudit
+open Reg.Support.KBonacciAcquisition.ExecutionSource.FullPositiveParent Reg.Support.KBonacciAcquisition.ExecutionSource.WindowObservation
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.full_positive_parent)
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.full_positive_parent
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.FullPositiveParentAudit/Reg.Support.KBonacciAcquisition.ExecutionSource.FullPositiveParent.arena/[anonymous]") "__information_unit",
+  realizationName := `Reg.Support.KBonacciAcquisition.ExecutionSource.FullPositiveParent.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨evidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace,
+    definition := none, coordinates := #[0, 1],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "domain", "arg"],
+      stateBinder := 8, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms registration
+end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.FullPositiveParentAudit
+
+namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.FullPositiveHistoryTraceAudit
+universe z
+open Reg.Support.KBonacciAcquisition.ExecutionSource.FullPositiveHistoryTrace Reg.Support.KBonacciAcquisition.ExecutionSource.WindowObservation
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.full_positive_history_trace.{z})
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.full_positive_history_trace
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.FullPositiveHistoryTraceAudit/Reg.Support.KBonacciAcquisition.ExecutionSource.FullPositiveHistoryTrace.arena/[anonymous]") "__information_unit",
+  realizationName := `Reg.Support.KBonacciAcquisition.ExecutionSource.FullPositiveHistoryTrace.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena.{z}⟩, objectArena := .source ⟨arena.{z}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena.{z} ⟨evidence.{z}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace,
+    definition := none, coordinates := #[1, 2],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "domain", "arg"],
+      stateBinder := 9, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms registration
+end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.FullPositiveHistoryTraceAudit
+
+namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.NativeExecutePaidTraceAudit
+universe z
+open Reg.Support.KBonacciAcquisition.ExecutionSource.NativeExecutePaidTrace Reg.Support.KBonacciAcquisition.ExecutionSource.SelectorObservation
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{z+1,0,1,0,0,0,z+1,z,0,z,0,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.native_execute_paid_trace.{z})
+    (type_of% (realize signature.{z} actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.native_execute_paid_trace
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.NativeExecutePaidTraceAudit/Reg.Support.KBonacciAcquisition.ExecutionSource.NativeExecutePaidTrace.arena/[anonymous]") "__information_unit",
+  realizationName := `Reg.Support.KBonacciAcquisition.ExecutionSource.NativeExecutePaidTrace.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena.{z}⟩, objectArena := .source ⟨arena.{z}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena.{z} ⟨evidence.{z}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature.{z} actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace,
+    definition := none, coordinates := #[0, 2],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "fn", "fn", "fn", "arg"],
+      stateBinder := 3, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms registration
+end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalAcquiredTrace.NativeExecutePaidTraceAudit

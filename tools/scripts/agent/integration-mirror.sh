@@ -19,18 +19,18 @@
 # ("no checks reported") and on transient API errors (HTTP 5xx); the follower
 # re-enters it, bounded by attempts, until any check is red or all passed.
 # Existing mirror PRs/branches are reused, never force-pushed or recreated.
-# Run one follower per integration branch from a dedicated worktree. A local
-# mkdir lock refuses concurrent invocations; after SIGKILL remove the stale lock
-# only after confirming its recorded PID is no longer running on this host.
+# One OS-held operation scope per integration follower; descendants inherit it.
 # Example: tools/scripts/agent/integration-mirror.sh \
 #   --integration integration-regprog-0912 --since 748360e3dd32 --dry-run
 # This transport does not certify workflow versions, performance, push runs or
 # a stability count; those analyses and delivery to dev belong to the caller.
 set -Eeuo pipefail
 
-VERSION=5
+VERSION=6
+PROTOCOL="$(cd "$(dirname "${BASH_SOURCE[0]}")/../worktree" && pwd -P)/worktree_protocol.py"
 # Watcher re-entry bound: GitHub registration latency and transient API errors.
 WATCH_ATTEMPTS=30 WATCH_INTERVAL=15
+original_arguments=("$@")
 integration='' since='' state='' max=0 dry_run=0 checks_under_test=''
 mirrored=0 pending=0 scratch='' worktree='' lock=''
 merge='' original_pr=0 mirror_pr=0 head='' base='' verdicts='[]'
@@ -40,7 +40,7 @@ log() { printf '%s merge=%s head=%s base=%s %s\n' "$(date -u +%FT%TZ)" "${merge:
 die() { log "ERROR $2" >&2; exit "$1"; }
 remove_worktree() {
   if [[ -n "$worktree" ]]; then
-    git worktree remove --force "$worktree" >/dev/null 2>&1 || return 1
+    python3 -B "$PROTOCOL" --source "$root" remove --path "$worktree" || return 1
     worktree=''
   fi
 }
@@ -52,11 +52,8 @@ cleanup() {
     log "ERROR temporary worktree cleanup failed: $worktree" >&2
     rc=69
   elif [[ -n "$scratch" ]]; then
-    rm -rf "$scratch" || rc=69
-  fi
-  if [[ -n "$lock" ]]; then
-    rm -f "$lock/pid"
-    rmdir "$lock" || rc=69
+    rm -f "$scratch/command.log" "$scratch/first-parent" "$scratch/merges" "$scratch/plan" || rc=69
+    rmdir "$scratch" 2>/dev/null || log "retained additional scratch material: $scratch"
   fi
   printf 'MIRROR_RESULT mirrored=%s pending=%s exit=%s\n' "$mirrored" "$pending" "$rc"
   exit "$rc"
@@ -168,13 +165,17 @@ state=${state:-"$common/integration-mirror/$branch_key.jsonl"}
 if [[ -e "$state" ]]; then
   [[ -f "$state" && -r "$state" && -w "$state" ]] || die 64 "state must be a readable, writable regular file"
 fi
+if (( dry_run == 0 )); then
+  if [[ -z "${MIRROR_OPERATION_HELD:-}" ]]; then
+    exec python3 -B "$PROTOCOL" --source "$root" with --path "$root" \
+      --operation "integration-mirror:$integration" -- env MIRROR_OPERATION_HELD=1 \
+      /bin/bash "${BASH_SOURCE[0]}" "${original_arguments[@]}"
+  fi
+fi
 scratch=$(mktemp -d "${TMPDIR:-/tmp}/integration-mirror.XXXXXX") || die 64 "cannot create temporary directory"
 if (( dry_run == 0 )); then
   mkdir -p "$common/integration-mirror" || die 64 "cannot create local state directory"
-  lock_path="$common/integration-mirror/$branch_key.lock"
-  mkdir "$lock_path" 2>/dev/null || die 64 "follower already running or stale lock: $lock_path"
-  lock=$lock_path
-  printf '%s\n' "$$" >"$lock/pid"
+
 fi
 [[ -d "${state%/*}" && -w "${state%/*}" ]] \
   || { (( dry_run )) && [[ "$state" == "$common/integration-mirror/$branch_key.jsonl" ]]; } \
@@ -303,24 +304,19 @@ while read -r merge original_pr; do
       if git show-ref --verify --quiet "refs/heads/$branch"; then
         head=$(git rev-parse "refs/heads/$branch")
         if [[ "$head" != "$base" ]]; then validate_head; fi
-        run worktree git worktree add "$worktree" "$branch" || die 69 "cannot reuse local mirror branch"
-      else
-        run worktree git worktree add -b "$branch" "$worktree" "origin/$integration" || die 69 "cannot create mirror worktree"
       fi
-      if [[ -z "$head" || "$head" == "$base" ]]; then
-        if ! run merge git -C "$worktree" merge --no-ff -m "mirror: #$original_pr $original_subject" "$merge"; then
-          conflicts=$(git -C "$worktree" diff --name-only --diff-filter=U -z | jq -Rsc 'split("\u0000") | map(select(length > 0))')
-          if [[ "$conflicts" != '[]' ]]; then
-            git -C "$worktree" merge --abort || die 69 "cannot abort conflicted merge"
-            record conflict '' "$conflicts"
-            die 65 "merge conflict paths=$conflicts"
-          fi
-          die 69 "git merge failed without conflict paths"
+      if ! run worktree python3 -B "$PROTOCOL" --source "$root" prepare-mirror \
+        --path "$worktree" --branch "$branch" --base "$base" --merge "$merge" \
+        --message "mirror: #$original_pr $original_subject"; then
+        conflicts=$(git -C "$worktree" diff --name-only --diff-filter=U -z 2>/dev/null | jq -Rsc 'split("\u0000") | map(select(length > 0))') || conflicts='[]'
+        if [[ "$conflicts" != '[]' ]]; then
+          record conflict '' "$conflicts"
+          die 65 "merge conflict paths=$conflicts; checkout retained"
         fi
-        head=$(git -C "$worktree" rev-parse HEAD)
-        validate_head
+        die 69 "mirror creation/publication failed; checkout retained"
       fi
-      run push git push origin "$head:refs/heads/$branch" || die 69 "cannot push mirror branch"
+      head=$(jq -er '.commit' <<<"$output") || die 69 "missing confirmed mirror commit"
+      validate_head
       remove_worktree || die 69 "cannot remove mirror worktree"
     fi
     run original gh pr view "$original_pr" --repo "$repo" --json title,url || die 69 "cannot read original PR"

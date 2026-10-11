@@ -1,0 +1,25 @@
+### 12.1 同一表上的量与定理范围
+
+本章固定§11的周期1、三私有标签共同生成器与式（11.1）的来源先验。为标识下面证书的中间标签，将私有标签重命名为 $J=\{0,1,2\}$；这不改变来源深度 $K\in\{1,2,3\}$。始终有 $A=I_3$、$\pi=\tau>0$、$\pi\mathbf1=1$，$B$ 非负行随机且满足详细平衡，$u,v\in[a,b]^3$。$H=\operatorname{diag}(\mathbf1-u)B\operatorname{diag}(v)$、$g=\operatorname{diag}(\mathbf1-u)B(\mathbf1-v)$ 与式（3.3）的完整 $Q,W$ 都来自这一份表。
+
+沿用接口3.2–3.4、4.1–4.2及§11.1；不另定义来源、归一化或风险。记同一正差事件的加权质量为
+
+$$
+P=\pi(g+Hg+H^2g)=\sum_i\pi_iQ_i(C_p),\qquad
+S=\sum_i\pi_i(1-v_i+v_ig_i)=\sum_i\pi_iW_i(C_\beta).
+\tag{12.1}
+$$
+
+令 $k=\kappa=1116529/806625$、$C=M_p-kM_\beta=-151298/268875$，并定义
+
+$$
+\begin{aligned}
+\delta_-&=\sum_i\pi_i(v_i-u_i)_+,\\
+T&=\sum_i\pi_i(v_i-a)(b-v_i),\\
+J=J_v&=\frac12\sum_{i,j}\pi_iB_{ij}(v_i-v_j)^2.
+\end{aligned}
+\tag{12.2}
+$$
+
+实际悬置-$\alpha$ 更新是 $A=I$，所以悬置标签 i 的下一 p 发射从 $v_i$ 变为 $u_i$。$\delta_-$ 是按实际无权悬置行 $\pi$ 平均的正部下降；这里没有按合成 $\alpha$ 的概率重新条件化。T 度量悬置发射离两端的乘积；J 是同一实际 B 边测度下的 Dirichlet 二次量。J 不是物理能量、作用量或操作价格，T 也不是配置风险。三个量均来自原表，而非分别优化的实现。
+

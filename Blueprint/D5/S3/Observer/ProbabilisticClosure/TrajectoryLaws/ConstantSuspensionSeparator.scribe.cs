@@ -30,6 +30,17 @@ internal sealed class ConstantSuspensionSeparatorDocument : IScribeDocumentDefin
                 Paragraph(Text("Write Qbar and Wbar for the pi and tau averages. FullTVBound(mean,P,radius) means that the absolute difference between mean(E) and P(E) is at most radius for every complete event E. This is the event-supremum total variation convention. P is the existing Bernoulli stopped-word law, identified with the actual first-completion process by "),
                     Ref("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw"), Text(".")),
                 Paragraph(Text("In the displayed theorem, ep and eb denote epsilon_p and epsilon_beta, and inRegularInterval(s) means 1/3<=s<=2/5. constantOnPositiveSupport(R,s) means v(y)=s whenever tau(y)>0; values at zero-weight labels need not equal s. completeEndpointBounds requires FullTVBound for Qbar against both p endpoint laws, each with radius 1116529/22781250+epsilon_p, and for Wbar against both beta endpoint laws, each with radius 239/6750+epsilon_beta. The two endpoint alpha probabilities are exactly 1/3 and 2/5.")),
+                Describe.Lean(DescribeId.Create("constant-suspension-endpoint-word"),
+                    DeclarationHandle.Create(Prefix + "endpoint_p_word"),
+                    H("Every pure p type-one word has its exact singleton mass"),
+                    StatementSource.FromAuthor(Disp(All("r", F.Id("unitInterval"),
+                        All("j", F.Id("Nat"), Seq(
+                            Call("realMass", Call("explicitStoppedWordLaw", F.Id("p"), F.Id("r")),
+                                Call("some", Call("pWord", F.Id("j"), D(1)))), Eq,
+                            Call("endpointTypeOne", F.Id("r"), F.Id("j"))))))),
+                    AssessedProvenance.FromRepo(), Blocks(
+                        Paragraph(Text("realMass(mu,x)=mu.real({x}). For every r in the full closed unit interval and j natural, endpointTypeOne(r,j)=(1-r)^2[r(1-r)]^j is the mass of the original pWord(j,1)=(beta alpha)^j beta beta. The complete law and its infinite outcome are retained, including r=0 and r=1."))),
+                    DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("constant-suspension-separator"),
                     DeclarationHandle.Create(Prefix + "constant_suspension_separator"),
                     H("Uniform strict separation over every finite regular table"),
