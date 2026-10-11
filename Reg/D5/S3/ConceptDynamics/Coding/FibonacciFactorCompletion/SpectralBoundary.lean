@@ -312,3 +312,105 @@ def original_weighted_series_boundary_registration :
 #print axioms original_weighted_series_boundary_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.SpectralBoundary.ExactOriginal147
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.SpectralBoundary.ExactOriginal146
+noncomputable section
+open scoped Matrix.Norms.Operator
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ _ : MemorySide, Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℝ, ℝ
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ p k => pathMass p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 k) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (side : MemorySide) (n K : ℕ) (d z : ℝ)
+    (nonnegative : 0 ≤ z) (k : ℕ) ,
+    0 ≤ r.readout () ⟨side, n, K, d, z⟩ k ∧
+    ‖complexAdjacency side n K d z ^ k‖ ≤ pathMass side n K d z k ∧
+    pathMass side n K d z k ≤
+      Fintype.card (CoreVertex side n K d) * ‖complexAdjacency side n K d z ^ k‖
+
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := (h .lower 1 1 0 0 (by norm_num) 0).1
+  norm_num [rejected, realize] at impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.SpectralBoundary.path_mass_norm_bounds) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.SpectralBoundary.path_mass_norm_bounds, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨.lower, 1, 1, 0, 0⟩, 0, 1, ?_⟩
+    change pathMass .lower 1 1 0 0 0 ≠ pathMass .lower 1 1 0 0 1
+    have transport (k : ℕ) : pathMass .lower 1 1 0 0 k =
+        ∑ v : CoreVertex .lower 1 1 0,
+          ∑ choices : Fin k → CuLetter × CoreVertex .lower 1 1 0,
+            coreMonomial .lower 1 0 0 k v choices := by
+      unfold pathMass
+      apply Finset.sum_congr rfl
+      intro v _
+      exact (original_weighted_adjacency_paths .lower 1 1 0 0).2 k v
+    rw [transport, transport]
+    exact SeriesWitness.core_zero_one_separation
+
+def path_mass_norm_bounds_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.SpectralBoundary.path_mass_norm_bounds)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ p k => pathMass p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 k) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.SpectralBoundary.ExactOriginal146.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.SpectralBoundary.ExactOriginal146.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ p k => pathMass p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 k) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.SpectralBoundary
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms path_mass_norm_bounds_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.SpectralBoundary.ExactOriginal146

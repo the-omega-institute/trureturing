@@ -636,3 +636,140 @@ def original_actual_count_rate_bridge_registration :
 #print axioms original_actual_count_rate_bridge_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal40
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal30
+noncomputable section
+
+/-- The state is the exact type of the literal original data operand. -/
+abbrev FunctionState := type_of% @actualToFactor
+abbrev Parameters := Σ _ : Model, Σ _ : ℕ, Σ _ : ℝ, Σ _ : Bool, ℕ
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature Parameters (fun _ => FunctionState)
+    (fun p => ∀ (_ : 1 ≤ p.2.1),
+      ActualDictionary p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 →
+        FactorDictionary (AuxiliaryLanguage p.2.1 p.2.2.1) p.2.2.2.2)
+
+def actual : Realization observationSignature :=
+  realize observationSignature
+    (fun _ p f => f p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2)
+    (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (model : Model) (K : ℕ) (d : ℝ) (strict : Bool) (N : ℕ)
+    (hK : 1 ≤ K),
+    Function.Injective ((r.readout () ⟨model, K, d, strict, N⟩ actualToFactor) hK)
+
+private def smallReturn : Return := ⟨1, 1, by decide, by decide⟩
+private def largeReturn : Return := ⟨2, 2, by decide, by decide⟩
+
+/-- The two lists inhabit the complete dictionary for every threshold and model. -/
+private def doubleDictionary (model : Model) (d : ℝ) (strict : Bool) :
+    ActualDictionary model 3 d strict 52 :=
+  ⟨[smallReturn, smallReturn], by
+    constructor
+    · simp [GuardTrace, smallReturn]
+    · norm_num [listWeight, smallReturn]⟩
+
+private def singleDictionary (model : Model) (d : ℝ) (strict : Bool) :
+    ActualDictionary model 3 d strict 52 :=
+  ⟨[largeReturn], by
+    constructor
+    · simp [GuardTrace, largeReturn]
+    · norm_num [listWeight, largeReturn]⟩
+
+private theorem dictionaries_distinct (model : Model) (d : ℝ) (strict : Bool) :
+    doubleDictionary model d strict ≠ singleDictionary model d strict := by
+  intro h
+  have lengths := congrArg (fun x : ActualDictionary model 3 d strict 52 => x.val.length) h
+  norm_num [doubleDictionary, singleDictionary] at lengths
+
+/-- Collapse only an explicitly inhabited fiber; identity handles every other fiber. -/
+private def collapse (model : Model) (K : ℕ) (d : ℝ) (strict : Bool) (N : ℕ)
+    (x : ActualDictionary model K d strict N) : ActualDictionary model K d strict N :=
+  if hK : K = 3 then
+    if hN : N = 52 then by
+      subst K N
+      exact doubleDictionary model d strict
+    else x
+  else x
+
+private def collapsedFunction : FunctionState :=
+  fun model K d strict N hK x =>
+    actualToFactor model K d strict N hK (collapse model K d strict N x)
+
+private def rejected : Realization observationSignature :=
+  realize observationSignature
+    (fun _ p _ => collapsedFunction p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2)
+    (fun e => nomatch e)
+
+private theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have inj := h .original 3 0 false 52 (by decide)
+  apply dictionaries_distinct .original 0 false
+  apply inj
+  simp [rejected, realize, collapsedFunction, collapse]
+
+private theorem dependence : ObservationalDependence observationSignature actual := by
+  intro i
+  refine ⟨⟨.original, 3, 0, false, 52⟩, actualToFactor, collapsedFunction, ?_⟩
+  intro h
+  have eq := congrFun (congrFun h (by decide : 1 ≤ 3))
+    (singleDictionary .original 0 false)
+  change actualToFactor .original 3 0 false 52 (by decide) (singleDictionary .original 0 false) =
+    actualToFactor .original 3 0 false 52 (by decide)
+      (collapse .original 3 0 false 52 (singleDictionary .original 0 false)) at eq
+  have same := actual_to_factor_injective .original 3 0 false 52 (by decide) eq
+  simp only [collapse, dif_pos rfl] at same
+  exact dictionaries_distinct .original 0 false same.symm
+
+def evidence : Registration sourceArena (type_of% @actual_to_factor_injective) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@actual_to_factor_injective, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  dependence := dependence
+
+def actual_to_factor_injective_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.actual_to_factor_injective)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ p f => f p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2)
+        (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal30.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal30.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ p f => f p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "fn", "fn", "fn", "fn"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms actual_to_factor_injective_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal30
