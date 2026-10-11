@@ -510,6 +510,94 @@ theorem c4_edge_fiber_and_ranks {r j : ℕ} (G : SimpleGraph (Fin r)) (hr : 3 �
   have hb := mem_Icc.mp (mem_filter.mp (hid.symm ▸ hi)).1
   rw [c4_colex_rank G hr hj hjQ rho hb.1 hb.2, hid]
 
+/-- A delayed address recovers its unique identity and first tail one from the
+whole selected dictionary at balanced weight. -/
+theorem delayed_selected_support {r i j : ℕ} (G : SimpleGraph (Fin r))
+    (hr : 3 ≤ r) (hi : 1 ≤ i) (hir : i ≤ r) (hj : 1 ≤ j)
+    (hjQ : j ≤ pairCount r + i) (hret : ¬ Retained r G j i)
+    (w : Finset ℕ) (hcard : w.card = halfLength r) :
+    FirstSelected r G (identityEnd r + delayedTarget r i j) w ↔
+      w = edgePrefix r i j := by
+  have hd := delayed_target_bounds hr hi hir hj (by omega)
+  constructor
+  · rintro ⟨ht, hprev⟩
+    have hbase : Icc 1 (initialLength r) ⊆ w := by
+      intro k hk
+      have hkb := mem_Icc.mp hk
+      by_contra hn
+      exact hprev k (by dsimp [identityEnd]; omega) (Or.inl ⟨hkb.1, hkb.2, hn⟩)
+    rcases ht with ht | ht | ht | ht
+    · dsimp [identityEnd] at ht; omega
+    · omega
+    · obtain ⟨t, u, v, _, htQ, _, _, he⟩ := ht; omega
+    · obtain ⟨a, ha, har, hid, ht | ht⟩ := ht
+      · obtain ⟨b, hf, hbQ, _, ht | ht⟩ := ht
+        · have hb := ht.1.2.1; omega
+        · have he := delayed_target_injective hi ha hj hf.1 (by omega) (by omega)
+            (Nat.add_left_cancel ht.2)
+          obtain ⟨rfl, rfl⟩ := he
+          apply (eq_of_subset_of_card_le (s := edgePrefix r i j) ?_ ?_).symm
+          · intro k hk
+            simp only [edgePrefix, mem_insert] at hk
+            rcases hk with rfl | rfl | hk
+            · exact hf.2.1
+            · have hm : i ∈ identities r w := by simp [hid]
+              exact (mem_filter.mp hm).2
+            · exact hbase hk
+          · rw [hcard, edge_prefix_card hi hir hj]
+      · omega
+  · rintro rfl
+    have hid := edge_prefix_identities hi hir hj
+    have hf := edge_prefix_first_one hir hj
+    refine ⟨Or.inr (Or.inr (Or.inr ⟨i, hi, hir, hid,
+      Or.inl ⟨j, hf, hjQ, by omega, Or.inr ⟨hret, rfl⟩⟩⟩)), ?_⟩
+    intro d hdc ht
+    rcases ht with ht | ht | ht | ht
+    · exact ht.2.2 (by simp [edgePrefix, mem_Icc, ht.1, ht.2.1])
+    · exact singleton_ne_empty i (hid.symm.trans ht.2)
+    · obtain ⟨t, u, v, _, _, _, hs, _⟩ := ht
+      have := congrArg List.length hs
+      simp [hid] at this
+    · obtain ⟨a, ha, har, hai, ht⟩ := ht
+      have hai' : a = i := by simpa [hid] using hai.symm
+      subst a
+      rcases ht with ht | ht
+      · obtain ⟨b, hb, _, _, ht⟩ := ht
+        have hbj : b = j := by
+          have hm := hb.2.1
+          simp only [edgePrefix, mem_insert, mem_Icc] at hm
+          have := hb.1
+          dsimp [identityEnd] at hm
+          omega
+        subst b
+        rcases ht with ⟨he, _⟩ | ⟨_, he⟩
+        · exact hret he
+        · omega
+      · exact ht.2 j hj hjQ hf.2.1
+
+/-- Delayed recovery uses integer code zero, with no accepting-word filter. -/
+theorem delayed_selected_fiber_and_rank {r i j : ℕ} (G : SimpleGraph (Fin r))
+    (hr : 3 ≤ r) (hi : 1 ≤ i) (hir : i ≤ r) (hj : 1 ≤ j)
+    (hjQ : j ≤ pairCount r + i) (hret : ¬ Retained r G j i) (rho : Bool) :
+    let w := edgePrefix r i j
+    let b := bareAddress r rho (identityEnd r + delayedTarget r i j) w
+    selectedFiber r G rho b = {w} ∧ colexRank (selectedFiber r G rho b) w = 0 := by
+  dsimp only
+  have hc := edge_prefix_card hi hir hj
+  have hd := delayed_target_bounds hr hi hir hj (by omega)
+  have hs : selectedFiber r G rho
+      (bareAddress r rho (identityEnd r + delayedTarget r i j) (edgePrefix r i j)) =
+      {edgePrefix r i j} := by
+    ext v
+    simp only [selectedFiber, bareAddress, mem_filter, mem_powerset, mem_singleton, hc]
+    constructor
+    · rintro ⟨_, hv, hvc, _⟩
+      exact (delayed_selected_support G hr hi hir hj hjQ hret v hvc).mp hv
+    · rintro rfl
+      refine ⟨?_, (delayed_selected_support G hr hi hir hj hjQ hret _ hc).mpr rfl, hc, rfl⟩
+      exact (edge_prefix_subset hi hir hj).trans (Icc_subset_Icc_right (by omega))
+  exact ⟨hs, by rw [hs]; simp [colexRank]⟩
+
 /-! The source port supplies actual parser completions. Seed acquisition, paid
 restoration and retries remain source-owned; no conditional sampling operation
 is included in this interface. -/
