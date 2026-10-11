@@ -6582,13 +6582,13 @@ K_j^{\mathrm{BE}}
 \right).
 \]
 
-令 \(\mathcal L:\mathsf L(H)\to\mathsf L(H)\) 是有限维 CPTP 半群 \(T_t=e^{t\mathcal L}\) 的生成元，满足
+令 \(T_t=e^{t\mathcal L}\) 是有限维 Heisenberg 量子 Markov 半群，其中每个 \(T_t\) 首一完全正，\(\mathcal L(I)=0\)，其 Schrödinger 伴随保持 \(\sigma\)：
 
 \[
-\mathcal L^\ast(\sigma)=0
+\mathcal L^\ast(\sigma)=0.
 \]
 
-以及 GNS detailed balance
+并假设 \(-\mathcal L\) 在 GNS 内积下非负。进一步要求 GNS detailed balance
 
 \[
 \langle A,\mathcal L B\rangle_\sigma
