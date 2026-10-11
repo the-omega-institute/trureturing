@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:53edade9fe1811834df95bdc241f762f2a1bb3fc26a50069d452020cfa918c9e
+  normalized_sha256: sha256:53edade9fe1811834df95bdc241f762f2a1bb3fc26a50069d452020cfa918c9e
+cas_ref: sha256:53edade9fe1811834df95bdc241f762f2a1bb3fc26a50069d452020cfa918c9e
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/NativeAncestorUniqueness.native_ancestor_uniqueness
+    target_statement_id: sha256:fb792d518ed1128839a17615dcfd4b856e999295e9fbd0c2ebf0153823a9e1bc
+receipts:
+  unresolved_subitems: []
