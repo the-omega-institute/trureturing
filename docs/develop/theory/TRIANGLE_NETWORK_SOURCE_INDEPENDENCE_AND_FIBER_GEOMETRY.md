@@ -1,6 +1,6 @@
 # Triangle Network Source Independence as a Fibered Three-Geometry
 
-**Status.** This is a theory supplement for the Auric FIB geometry and the quantum interface. It records ordinary mathematical definitions and proofs, together with explicit boundaries between inherited results, new interfaces, and open obligations. It does not claim that the triangle network is a physical three-dimensional space, and it does not claim a Lean admission. The target is a common formal carrier for three independent sources, two-source local responses, the trureturing three-coordinate quotient, and noise certificates.
+**Status.** This is a theory supplement for the Auric FIB geometry and the quantum interface. It records ordinary mathematical definitions and proofs, together with explicit boundaries between inherited results, new interfaces, and open obligations. It does not claim that the triangle network is a physical three-dimensional space, and it does not claim a Lean admission. The target is a common formal carrier for three independent sources, two-source local responses, the trureturing three-coordinate quotient, and noise certificates. The finite rational EJM and source-noise identities are kernel-checked in D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.lean; the full causal and inflation bridge remains a separate target.
 
 ## 0. Main statement
 
@@ -631,7 +631,7 @@ The repository already contains a finite classical interface in D5/S3/Quantum/En
 
 The repository also has a reusable product-source skeleton in D5/S3/ConceptDynamics/PartialIdentification/FiniteIndependentSourceGrouping.lean and the associated response-factorization modules. It proves normalization, pushforward regrouping and restriction, and factorization for disjoint readouts. A triangle is the first overlapping case: the three readouts have supports \(\{\beta,\gamma\}\), \(\{\gamma,\alpha\}\), and \(\{\alpha,\beta\}\), so pairwise output independence is false in general even though the source law is a product. The missing theorem is a single three-output pushforward formula with these overlapping supports, followed by a typed FIB readout map.
  
-Those modules certify explicit **local** models and refute two proposed global bounds. They do not formalize the EJM distribution, Fritz embedding, the Renou parameter family, inflation certificates, quantum sources, or a physical noise threshold. This separation is useful: the finite Lean carrier is the correct base for the source-product layer, while the FIB documents supply a separate readout and hidden-fiber layer. The present document defines the bridge but does not claim that bridge is already kernel-checked.
+Those modules certify explicit **local** models and refute two proposed global bounds. The new TriangleEJMGramInterface module now formalizes the finite EJM Gram table, its exact mass and nonnegativity, and the eight-term independent-source visibility map over rational tables. It does not formalize the EJM quantum realization, Fritz embedding, the Renou parameter family, inflation certificates, or a physical noise threshold. The finite identities are therefore admitted without promoting them to a locality or nonlocality theorem.
 
 A second repository warning is already machine-checked in D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean: pairwise local laws can have all one-coordinate marginals compatible and still admit no common global state around a three-cycle. This is not a triangle-locality criterion, but it is the exact finite analogue of why local marginal compatibility is weaker than a product-source global lift. The later inflation layer must therefore carry the common lifted state, not only its pairwise projections.
 
@@ -680,7 +680,24 @@ Use three separate structures:
 - IndependentSourceNoise with the eight tables \(P_S\);
 - LocalOutputChannel with stochastic matrices.
 
-The post-processing monotonicity theorem is the easiest first admission. The multi-affine source expansion (6.2) and certificate evaluation (6.5) follow by finite distributivity.
+The post-processing monotonicity theorem is the next admission. The finite multi-affine source expansion (6.2) is already kernel-checked as independentSourceNoise_eight_terms, with coefficient normalization sourceNoiseWeight_mass and edge-wise affinity independentSourceNoise_affine_alpha. Certificate evaluation (6.5), and the map from the quantum tensor-product construction to the eight rational component tables, remain open.
+
+### 8.5 Implemented finite interface
+
+The companion Lean file
+D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.lean
+imports the existing IsTriangleLocal anchor and the repository's Erdos7.FiniteLaw carrier. It proves, over (mathbb Q):
+
+- the exact regular-tetrahedron Gram formula (P=(4+S+6R)/256);
+- the table (25/256), (1/256), (5/256) for the equal, two-equal and all-distinct output classes;
+- nonnegativity and total mass one for the 64-entry EJM table;
+- the eight-term independent-source noise polynomial and the normalization of its eight coefficients;
+- affinity in each source visibility, shown explicitly for the alpha edge.
+
+These declarations are probability identities. They do not prove (P_{mathrm{EJM}}inmathcal L_	riangle), do not prove (P_{mathrm{EJM}}
+otinmathcal L_	riangle), and do not instantiate an inflation certificate. In particular, the eight component tables are typed placeholders for the eight ideal/maximally-mixed source choices. Connecting them to a Born-rule construction is a later quantum formalization obligation.
+
+For inflation, the useful finite-dimensional consequence is now precise: any exact linear functional evaluated on a source-typed noisy table is a multi-affine polynomial in ((w_alpha,w_eta,w_gamma)). A future inflation certificate can therefore be checked by substituting its rational values into this polynomial. This provides a finite constraint interface and supports exact outer bounds, but it is not itself an outer certificate. A genuine nonlocality theorem still requires a separately proved soundness implication from the inflation relaxation to exclusion from (mathcal L_	riangle).
 
 ## 9. Boundary and conclusion
 
