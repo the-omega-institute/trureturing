@@ -230,6 +230,54 @@ def nativeRectangleConditionalMass {M q s : ℕ} (S : Support M q) (r : ℝ)
     conditionalFiberMass S r e o
       (nativeRectangleEvent S e o ap V outside l (V.powersetCard U))
 
+private theorem native_rectangle_event_mass {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (ap : Multiset {i : Fin M // i ∈ S.val})
+    (V : Finset {i : Fin M // i ∈ S.val})
+    (outside : {i : Fin M // i ∈ S.val} → ℕ) (l U : ℕ)
+    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
+    (hneg : (∑ i ∈ univ \ V, outside i) + U * l + (V.card - U) * (l + 1) =
+      (signedDepartureBlocks S e o 1).card)
+    (B0 : Finset {i : Fin M // i ∈ S.val}) (hB0 : B0 ∈ V.powersetCard U)
+    (Bs : Finset (Finset {i : Fin M // i ∈ S.val})) (hBs : Bs ⊆ V.powersetCard U) :
+    conditionalFiberMass S r e o (nativeRectangleEvent S e o ap V outside l Bs) =
+      (Bs.card : ℝ) * (((Nat.multinomial univ ap.count : ℝ) *
+        (Nat.multinomial univ (rectangleNegativeCounts V B0 outside l) : ℝ)) /
+      (q : ℝ) ^ ((signedDepartureBlocks S e o 0).card + (signedDepartureBlocks S e o 1).card)) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  let c : ℝ := ((Nat.multinomial univ ap.count : ℝ) *
+      (Nat.multinomial univ (rectangleNegativeCounts V B0 outside l) : ℝ)) /
+    (q : ℝ) ^ ((signedDepartureBlocks S e o 0).card + (signedDepartureBlocks S e o 1).card)
+  have hmass (B : Finset {i : Fin M // i ∈ S.val}) (hB : B ∈ V.powersetCard U) :
+      conditionalFiberMass S r e o (jointRowHistogramEvent S e o ap
+        (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset) = c := by
+    have hcard : (Finsupp.equivFunOnFinite.symm
+        (rectangleNegativeCounts V B outside l)).toMultiset.card =
+          (signedDepartureBlocks S e o 1).card := by
+      rw [Finsupp.card_toMultiset, Finsupp.sum_fintype]
+      · exact (rectangle_counts_sum V B outside l U hB).trans hneg
+      · intro; rfl
+    rw [native_joint_row_histogram_law S r e o hq hqm hr hr1 ha ha1 _ _ hap hcard]
+    simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm]
+    rw [rectangle_multinomial_constant V B B0 outside l U hB hB0]
+
+
+  have hd : Set.PairwiseDisjoint (↑Bs)
+      (fun B => jointRowHistogramEvent S e o ap
+        (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset) := by
+    intro B hB C hC hBC
+    exact rectangle_histogram_disjoint S e o ap V outside l U (hBs hB) (hBs hC) hBC
+  unfold conditionalFiberMass nativeRectangleEvent
+  rw [sum_biUnion hd, sum_div]
+  change (∑ B ∈ Bs, conditionalFiberMass S r e o (jointRowHistogramEvent S e o ap
+    (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset)) = _
+  rw [sum_congr rfl (fun B hB => hmass B (hBs hB))]
+  simp only [sum_const, nsmul_eq_mul]
+  rfl
+
 /-- Exact pair/path conditional hypergeometric law obtained from the
 native joint-row histogram pushforward. No independent-row assumption is used. -/
 theorem native_rectangle_hypergeometric_law {M q s : ℕ} (S : Support M q)
@@ -257,33 +305,12 @@ theorem native_rectangle_hypergeometric_law {M q s : ℕ} (S : Support M q)
     apply div_pos
     · apply mul_pos <;> exact_mod_cast Nat.multinomial_pos _ _
     · exact pow_pos (by exact_mod_cast (by omega : 0 < q)) _
-  have hmass (B : Finset {i : Fin M // i ∈ S.val}) (hB : B ∈ V.powersetCard U) :
-      conditionalFiberMass S r e o (jointRowHistogramEvent S e o ap
-        (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset) = c := by
-    have hcard : (Finsupp.equivFunOnFinite.symm
-        (rectangleNegativeCounts V B outside l)).toMultiset.card =
-          (signedDepartureBlocks S e o 1).card := by
-      rw [Finsupp.card_toMultiset, Finsupp.sum_fintype]
-      · exact (rectangle_counts_sum V B outside l U hB).trans hneg
-      · intro; rfl
-    rw [native_joint_row_histogram_law S r e o hq hqm hr hr1 ha ha1 _ _ hap hcard]
-    simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm]
-    rw [rectangle_multinomial_constant V B B0 outside l U hB hB0]
   have hsum (Bs : Finset (Finset {i : Fin M // i ∈ S.val}))
       (hBs : Bs ⊆ V.powersetCard U) :
       conditionalFiberMass S r e o (nativeRectangleEvent S e o ap V outside l Bs) =
-        (Bs.card : ℝ) * c := by
-    have hd : Set.PairwiseDisjoint (↑Bs)
-        (fun B => jointRowHistogramEvent S e o ap
-          (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset) := by
-      intro B hB C hC hBC
-      exact rectangle_histogram_disjoint S e o ap V outside l U (hBs hB) (hBs hC) hBC
-    unfold conditionalFiberMass nativeRectangleEvent
-    rw [sum_biUnion hd, sum_div]
-    change (∑ B ∈ Bs, conditionalFiberMass S r e o (jointRowHistogramEvent S e o ap
-      (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset)) = _
-    rw [sum_congr rfl (fun B hB => hmass B (hBs hB))]
-    simp only [sum_const, nsmul_eq_mul]
+        (Bs.card : ℝ) * c :=
+    native_rectangle_event_mass S r e o hq hqm hr hr1 ha ha1 ap V outside l U
+      hap hneg B0 hB0 Bs hBs
   unfold nativeRectangleConditionalMass
   rw [hsum (intersectionEvent V R U t) (filter_subset _ _),
     hsum (V.powersetCard U) (Subset.refl _)]
@@ -508,6 +535,323 @@ theorem native_conditioned_four_cell_law {M q s : ℕ} (S : Support M q)
       native_a_event_eq S e o ap V outside k l U t hout]
     exact native_rectangle_hypergeometric_law S r e o hq hqm hr hr1 ha ha1 ap V _ outside l U t
       hap hneg hU (filter_subset _ _) ht
+  · intro A
+    exact ⟨fun ⟨B, _, hB⟩ => ⟨B, hB⟩,
+      fun ⟨B, hB⟩ => ⟨B, MeasurableSpace.measurableSet_top, hB⟩⟩
+
+/-- Both labelled margins are allowed to vary while their sizes and all
+outside-row counts are fixed. This is a union of native history events. -/
+def nativeMarginRectangleEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (V : Finset {i : Fin M // i ∈ S.val})
+    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U : ℕ)
+    (test : Finset {i : Fin M // i ∈ S.val} → Finset (Finset {i : Fin M // i ∈ S.val})) :
+    Finset (Fiber S e o) := by
+  classical
+  exact (V.powersetCard R).biUnion fun A => nativeRectangleEvent S e o
+    (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
+    V outsideM l (test A)
+
+private theorem native_margin_events_disjoint {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) (V : Finset {i : Fin M // i ∈ S.val})
+    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U : ℕ)
+    (test : Finset {i : Fin M // i ∈ S.val} → Finset (Finset {i : Fin M // i ∈ S.val})) :
+    Set.PairwiseDisjoint (↑(V.powersetCard R)) (fun A => nativeRectangleEvent S e o
+      (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
+      V outsideM l (test A)) := by
+  classical
+  intro A hA B hB hAB
+  apply disjoint_left.mpr
+  intro y hyA hyB
+  obtain ⟨DA, _, hyDA⟩ := mem_biUnion.mp hyA
+  obtain ⟨DB, _, hyDB⟩ := mem_biUnion.mp hyB
+  have hy (C D : Finset {i : Fin M // i ∈ S.val})
+      (h : y ∈ jointRowHistogramEvent S e o
+        (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V C outsideP k)).toMultiset
+        (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V D outsideM l)).toMultiset)
+      (i : {i : Fin M // i ∈ S.val}) :
+      count e y.val i.val 1 = rectangleNegativeCounts V C outsideP k i := by
+    have hd := ((mem_filter.mp h).2 i).1
+    simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm] using hd
+  apply hAB
+  ext i
+  by_cases hiV : i ∈ V
+  · have hi := (hy A DA hyDA i).symm.trans (hy B DB hyDB i)
+    simp only [rectangleNegativeCounts, if_pos hiV] at hi
+    by_cases hiA : i ∈ A <;> by_cases hiB : i ∈ B <;>
+      simp only [hiA, hiB, if_true, if_false] at hi ⊢ <;> omega
+  · exact ⟨fun hi => False.elim (hiV ((mem_powersetCard.mp hA).1 hi)),
+      fun hi => False.elim (hiV ((mem_powersetCard.mp hB).1 hi))⟩
+
+/-- Exact native hypergeometric mass with only the two numerical rectangle
+margins fixed. The labelled positive margin is summed out, retaining the same
+pair/path histories and complete labelled outside counts. -/
+theorem native_margin_rectangle_hypergeometric_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (V : Finset {i : Fin M // i ∈ S.val})
+    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U t : ℕ)
+    (hpos : (∑ i ∈ univ \ V, outsideP i) + R * k + (V.card - R) * (k + 1) =
+      (signedDepartureBlocks S e o 0).card)
+    (hneg : (∑ i ∈ univ \ V, outsideM i) + U * l + (V.card - U) * (l + 1) =
+      (signedDepartureBlocks S e o 1).card)
+    (hR : R ≤ V.card) (hU : U ≤ V.card) (ht : t ≤ U) :
+    conditionalFiberMass S r e o (nativeMarginRectangleEvent S e o V outsideP outsideM k l R U
+        (fun A => intersectionEvent V A U t)) /
+      conditionalFiberMass S r e o (nativeMarginRectangleEvent S e o V outsideP outsideM k l R U
+        (fun _ => V.powersetCard U)) =
+      ((R.choose t : ℝ) * ((V.card - R).choose (U - t) : ℝ)) /
+        (V.card.choose U : ℝ) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  obtain ⟨A0, hA0⟩ := powersetCard_nonempty.mpr hR
+  obtain ⟨B0, hB0⟩ := powersetCard_nonempty.mpr hU
+  let c : ℝ := ((Nat.multinomial univ (rectangleNegativeCounts V A0 outsideP k) : ℝ) *
+    (Nat.multinomial univ (rectangleNegativeCounts V B0 outsideM l) : ℝ)) /
+      (q : ℝ) ^ ((signedDepartureBlocks S e o 0).card + (signedDepartureBlocks S e o 1).card)
+  have hc : 0 < c := by
+    dsimp [c]
+    apply div_pos
+    · apply mul_pos <;> exact_mod_cast Nat.multinomial_pos _ _
+    · exact pow_pos (by exact_mod_cast (by omega : 0 < q)) _
+  have hmass (A : Finset {i : Fin M // i ∈ S.val}) (hA : A ∈ V.powersetCard R)
+      (Bs : Finset (Finset {i : Fin M // i ∈ S.val})) (hBs : Bs ⊆ V.powersetCard U) :
+      conditionalFiberMass S r e o (nativeRectangleEvent S e o
+        (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
+        V outsideM l Bs) = (Bs.card : ℝ) * c := by
+    have hcard : (Finsupp.equivFunOnFinite.symm
+        (rectangleNegativeCounts V A outsideP k)).toMultiset.card =
+          (signedDepartureBlocks S e o 0).card := by
+      rw [Finsupp.card_toMultiset, Finsupp.sum_fintype]
+      · exact (rectangle_counts_sum V A outsideP k R hA).trans hpos
+      · intro; rfl
+    rw [native_rectangle_event_mass S r e o hq hqm hr hr1 ha ha1 _ V outsideM l U
+      hcard hneg B0 hB0 Bs hBs]
+    simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm]
+    rw [rectangle_multinomial_constant V A A0 outsideP k R hA hA0]
+  have hsum (test : Finset {i : Fin M // i ∈ S.val} →
+      Finset (Finset {i : Fin M // i ∈ S.val})) :
+      conditionalFiberMass S r e o
+        (nativeMarginRectangleEvent S e o V outsideP outsideM k l R U test) =
+        ∑ A ∈ V.powersetCard R, conditionalFiberMass S r e o (nativeRectangleEvent S e o
+          (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
+          V outsideM l (test A)) := by
+    unfold conditionalFiberMass nativeMarginRectangleEvent
+    rw [sum_biUnion (native_margin_events_disjoint S e o V outsideP outsideM k l R U test), sum_div]
+  rw [hsum, hsum]
+  have hhit : (∑ A ∈ V.powersetCard R, conditionalFiberMass S r e o (nativeRectangleEvent S e o
+      (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
+      V outsideM l (intersectionEvent V A U t))) =
+      ((V.powersetCard R).card : ℝ) *
+        ((R.choose t : ℝ) * ((V.card - R).choose (U - t) : ℝ)) * c := by
+    calc
+      _ = ∑ A ∈ V.powersetCard R,
+          ((R.choose t : ℝ) * ((V.card - R).choose (U - t) : ℝ)) * c := by
+        apply sum_congr rfl
+        intro A hA
+        rw [hmass A hA (intersectionEvent V A U t) (filter_subset _ _),
+          rectangle_intersection_card V A U t (mem_powersetCard.mp hA).1 ht,
+          (mem_powersetCard.mp hA).2, Nat.cast_mul]
+      _ = _ := by simp only [sum_const, nsmul_eq_mul]; ring
+  have hall : (∑ A ∈ V.powersetCard R, conditionalFiberMass S r e o (nativeRectangleEvent S e o
+      (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
+      V outsideM l (V.powersetCard U))) =
+      ((V.powersetCard R).card : ℝ) * ((V.powersetCard U).card : ℝ) * c := by
+    rw [sum_congr rfl (fun A hA => hmass A hA _ (Subset.refl _))]
+    simp only [sum_const, nsmul_eq_mul]
+    ring
+  rw [hhit, hall, mul_div_mul_right _ _ (ne_of_gt hc)]
+  have hcardR : ((V.powersetCard R).card : ℝ) ≠ 0 := by
+    exact_mod_cast (powersetCard_nonempty.mpr hR).card_ne_zero
+  rw [mul_div_mul_left _ _ hcardR, card_powersetCard]
+
+/-- The rectangle conditioning records its members, both labelled outside
+count arrays, and the two numerical margins, without retaining an interior
+labelled margin. -/
+def nativeMarginRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (k l : ℕ) (y : Fiber S e o) :
+    Finset {i : Fin M // i ∈ S.val} × ({i : Fin M // i ∈ S.val} → Option (ℕ × ℕ)) × ℕ × ℕ := by
+  classical
+  let V := nativeRectangleRows S e o k l y
+  exact (V, (fun i => if i ∈ V then none
+    else some (count e y.val i.val 1, count e y.val i.val (-1))),
+    (V.filter fun i => count e y.val i.val 1 = k).card,
+    (V.filter fun i => count e y.val i.val (-1) = l).card)
+
+def nativeMarginRectangleSigma {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (k l : ℕ) : MeasurableSpace (Fiber S e o) :=
+  MeasurableSpace.comap (nativeMarginRectangleReadout S e o k l) ⊤
+
+private theorem rectangle_low_rows {α : Type*} [Fintype α] [DecidableEq α]
+    (V A : Finset α) (outside : α → ℕ) (k : ℕ) (hA : A ⊆ V) :
+    (V.filter fun i => rectangleNegativeCounts V A outside k i = k) = A := by
+  ext i
+  by_cases hi : i ∈ V
+  · by_cases hiA : i ∈ A <;> simp [rectangleNegativeCounts, hi, hiA]
+  · have hiA : i ∉ A := fun h => hi (hA h)
+    simp [hi, hiA]
+
+/-- The union over labelled margins is exactly the fiber of the coarser
+native conditioning readout. -/
+theorem native_margin_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) [Fintype (Fiber S e o)]
+    (V : Finset {i : Fin M // i ∈ S.val})
+    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U : ℕ)
+    (hout : ∀ i ∉ V, ¬ ((outsideP i = k ∨ outsideP i = k + 1) ∧
+      (outsideM i = l ∨ outsideM i = l + 1))) :
+    nativeMarginRectangleEvent S e o V outsideP outsideM k l R U (fun _ => V.powersetCard U) =
+      (univ.filter fun y : Fiber S e o => nativeMarginRectangleReadout S e o k l y =
+        (V, (fun i => if i ∈ V then none else some (outsideP i, outsideM i)), R, U)) := by
+  classical
+  have hin (A : Finset {i : Fin M // i ∈ S.val}) (i : {i : Fin M // i ∈ S.val}) (hi : i ∈ V) :
+      (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k ∨
+      (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k + 1 := by
+    simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm,
+      rectangleNegativeCounts, if_pos hi]
+    split_ifs <;> simp
+  have houtA (A : Finset {i : Fin M // i ∈ S.val}) (i : {i : Fin M // i ∈ S.val}) (hi : i ∉ V) :
+      ¬ (((Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k ∨
+      (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k + 1) ∧
+        (outsideM i = l ∨ outsideM i = l + 1)) := by
+    simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm,
+      rectangleNegativeCounts, if_neg hi] using hout i hi
+  ext y
+  constructor
+  · intro hy
+    obtain ⟨A, hA, hyA⟩ := mem_biUnion.mp hy
+    have hfull := (mem_filter.mp ((native_rectangle_readout_fiber S e o _ V outsideM k l U
+      (hin A) (houtA A)) ▸ hyA)).2
+    have hV : nativeRectangleRows S e o k l y = V := congrArg (fun x => x.2.1) hfull
+    have hp (i : {i : Fin M // i ∈ S.val}) :
+        count e y.val i.val 1 = rectangleNegativeCounts V A outsideP k i := by
+      have h := congrFun (congrArg Prod.fst hfull) i
+      change count e y.val i.val 1 =
+        (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i at h
+      simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm] using h
+    have hm (i : {i : Fin M // i ∈ S.val}) (hi : i ∉ V) :
+        count e y.val i.val (-1) = outsideM i := by
+      have h := congrFun (congrArg (fun x => x.2.2.1) hfull) i
+      change (if i ∈ nativeRectangleRows S e o k l y then none
+        else some (count e y.val i.val (-1))) = if i ∈ V then none else some (outsideM i) at h
+      simpa only [hV, if_neg hi, Option.some.injEq] using h
+    refine mem_filter.mpr ⟨mem_univ _, ?_⟩
+    apply Prod.ext hV
+    apply Prod.ext
+    · funext i
+      change (if i ∈ nativeRectangleRows S e o k l y then none
+        else some (count e y.val i.val 1, count e y.val i.val (-1))) =
+          if i ∈ V then none else some (outsideP i, outsideM i)
+      rw [hV]
+      by_cases hi : i ∈ V
+      · simp [hi]
+      · simp [hi, hp i, hm i hi, rectangleNegativeCounts]
+    · apply Prod.ext
+      · change ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val 1 = k).card = R
+        simp only [hV, hp, rectangle_low_rows V A outsideP k (mem_powersetCard.mp hA).1,
+          (mem_powersetCard.mp hA).2]
+      · exact congrArg (fun x => x.2.2.2) hfull
+  · intro hy
+    have he := (mem_filter.mp hy).2
+    have hV : nativeRectangleRows S e o k l y = V := congrArg Prod.fst he
+    have ho (i : {i : Fin M // i ∈ S.val}) (hi : i ∉ V) :
+        count e y.val i.val 1 = outsideP i ∧ count e y.val i.val (-1) = outsideM i := by
+      have h := congrFun (congrArg (fun x => x.2.1) he) i
+      change (if i ∈ nativeRectangleRows S e o k l y then none
+        else some (count e y.val i.val 1, count e y.val i.val (-1))) =
+          if i ∈ V then none else some (outsideP i, outsideM i) at h
+      have hp : (count e y.val i.val 1, count e y.val i.val (-1)) = (outsideP i, outsideM i) := by
+        simpa only [hV, if_neg hi, Option.some.injEq] using h
+      exact Prod.mk.inj hp
+    let A := V.filter fun i => count e y.val i.val 1 = k
+    have hA : A ∈ V.powersetCard R := mem_powersetCard.mpr ⟨filter_subset _ _, by
+      have hu := congrArg (fun x => x.2.2.1) he
+      change ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val 1 = k).card = R at hu
+      simpa only [hV] using hu⟩
+    refine mem_biUnion.mpr ⟨A, hA, ?_⟩
+    rw [native_rectangle_readout_fiber S e o _ V outsideM k l U (hin A) (houtA A)]
+    refine mem_filter.mpr ⟨mem_univ _, ?_⟩
+    apply Prod.ext
+    · funext i
+      change count e y.val i.val 1 =
+        (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i
+      simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm]
+      by_cases hi : i ∈ V
+      · have hc := (mem_filter.mp (hV.symm ▸ hi)).2.1
+        simp only [rectangleNegativeCounts, if_pos hi]
+        by_cases hiA : i ∈ A
+        · simp only [if_pos hiA]; exact (mem_filter.mp hiA).2
+        · simp only [if_neg hiA]
+          exact hc.resolve_left fun h => hiA (mem_filter.mpr ⟨hi, h⟩)
+      · simp only [rectangleNegativeCounts, if_neg hi]; exact (ho i hi).1
+    · apply Prod.ext hV
+      apply Prod.ext
+      · funext i
+        change (if i ∈ nativeRectangleRows S e o k l y then none
+          else some (count e y.val i.val (-1))) = if i ∈ V then none else some (outsideM i)
+        rw [hV]
+        by_cases hi : i ∈ V
+        · simp [hi]
+        · simp [hi, (ho i hi).2]
+      · exact congrArg (fun x => x.2.2.2) he
+
+private theorem native_margin_a_event_eq {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) (V : Finset {i : Fin M // i ∈ S.val})
+    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U t : ℕ)
+    (hout : ∀ i ∉ V, ¬ ((outsideP i = k ∨ outsideP i = k + 1) ∧
+      (outsideM i = l ∨ outsideM i = l + 1))) :
+    (nativeMarginRectangleEvent S e o V outsideP outsideM k l R U
+      (fun _ => V.powersetCard U)).filter (fun y => nativeRectangleACount S e o k l y = t) =
+    nativeMarginRectangleEvent S e o V outsideP outsideM k l R U
+      (fun A => intersectionEvent V A U t) := by
+  classical
+  unfold nativeMarginRectangleEvent
+  rw [filter_biUnion]
+  apply biUnion_congr rfl
+  intro A hA
+  have houtA (i : {i : Fin M // i ∈ S.val}) (hi : i ∉ V) :
+      ¬ (((Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k ∨
+      (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k + 1) ∧
+        (outsideM i = l ∨ outsideM i = l + 1)) := by
+    simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm,
+      rectangleNegativeCounts, if_neg hi] using hout i hi
+  rw [native_a_event_eq S e o _ V outsideM k l U t houtA]
+  simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm,
+    rectangle_low_rows V A outsideP k (mem_powersetCard.mp hA).1]
+
+/-- The A-cell count has the exact native hypergeometric law conditioned
+only on rectangle membership, complete outside-row count pairs, and the two
+numerical margins. This includes the full continuous-path experiment. -/
+theorem native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (V : Finset {i : Fin M // i ∈ S.val})
+    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U t : ℕ)
+    (hpos : (∑ i ∈ univ \ V, outsideP i) + R * k + (V.card - R) * (k + 1) =
+      (signedDepartureBlocks S e o 0).card)
+    (hneg : (∑ i ∈ univ \ V, outsideM i) + U * l + (V.card - U) * (l + 1) =
+      (signedDepartureBlocks S e o 1).card)
+    (hR : R ≤ V.card) (hU : U ≤ V.card) (ht : t ≤ U)
+    (hout : ∀ i ∉ V, ¬ ((outsideP i = k ∨ outsideP i = k + 1) ∧
+      (outsideM i = l ∨ outsideM i = l + 1))) :
+    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+    let Env := univ.filter fun y : Fiber S e o => nativeMarginRectangleReadout S e o k l y =
+      (V, (fun i => if i ∈ V then none else some (outsideP i, outsideM i)), R, U)
+    conditionalFiberMass S r e o (Env.filter fun y => nativeRectangleACount S e o k l y = t) /
+      conditionalFiberMass S r e o Env =
+      ((R.choose t : ℝ) * ((V.card - R).choose (U - t) : ℝ)) /
+        (V.card.choose U : ℝ) ∧
+    (∀ A : Set (Fiber S e o), @MeasurableSet (Fiber S e o)
+      (nativeMarginRectangleSigma S e o k l) A ↔
+        ∃ B, (nativeMarginRectangleReadout S e o k l) ⁻¹' B = A) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  dsimp only
+  constructor
+  · rw [← native_margin_rectangle_readout_fiber S e o V outsideP outsideM k l R U hout,
+      native_margin_a_event_eq S e o V outsideP outsideM k l R U t hout]
+    exact native_margin_rectangle_hypergeometric_law S r e o hq hqm hr hr1 ha ha1
+      V outsideP outsideM k l R U t hpos hneg hR hU ht
   · intro A
     exact ⟨fun ⟨B, _, hB⟩ => ⟨B, hB⟩,
       fun ⟨B, hB⟩ => ⟨B, MeasurableSpace.measurableSet_top, hB⟩⟩
