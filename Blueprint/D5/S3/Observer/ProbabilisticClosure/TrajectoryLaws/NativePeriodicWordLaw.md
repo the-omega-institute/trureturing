@@ -54,10 +54,36 @@ $$\forall T:Parameters, (((\forall c:AcquiredNativeState, (\forall s:ActivePhase
 
 The swap component satisfies H_*^2=eta I, and the fixed label multiplies by t. Necessity compares the strictly positive type-0 even subsequences with both endpoint rates; a rate outside either closed interval contradicts the unbounded powers of a quotient greater than one. The immediate suspended word supplies its bound, and restriction supplies every seed. For sufficiency, the two-step recurrence preserves ordered endpoint bounds. The type-0 order never switches, p type-1 switches at n=3, and suspended continuing type-1 switches at n=1. Tests through n=4 seed every required parity after the switch; strong induction supplies all n. Noncompletion has mass zero at both endpoints and for every emission table, independently of the rate and seed tests. The renderer transports every finite and both phase-specific infinite coordinates to the complete native transcript. Equality at the rate endpoints is included.
 
+**Theorem 1.4 (Every pure endpoint word coordinate).**
+
+$$\forall r:unitInterval, (\forall s:ActivePhase, (\forall n:Nat, (\forall b:Letter, (\operatorname{realMass}\left(\operatorname{explicitStoppedWordLaw}\left(s, r\right), \operatorname{some}\left(\operatorname{typeWord}\left(s, n, b\right)\right)\right)=\operatorname{pureCoord}\left(r, s, n, b\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.endpoint_coordinates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every r in the closed unit interval, both active phases, every natural n and both letters b, the pure stopped-word singleton mass is pureCoord(r,s,n,b). For p it is r[r(1-r)]^n when b=0 and (1-r)^2[r(1-r)]^n when b=1; suspension multiplies either continuing mass by r. This statement is independent of the periodic installed parameter family.
+
+**Theorem 1.5 (Every pure suspended immediate mass).**
+
+$$\forall r:unitInterval, (\operatorname{realMass}\left(\operatorname{explicitStoppedWordLaw}\left(beta, r\right), \operatorname{singletonWord}\left(1\right)\right)=1-r)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.endpoint_immediate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every r in the closed unit interval, the complete pure suspended law assigns mass 1-r to the singleton word [beta]. The endpoints r=0 and r=1 are included.
+
 These statements concern the periodic source-specific reversible common generator and its full native laws. They give neither an event-midpoint identity nor a total-variation attainment conclusion. The prior and update kernels remain those in the parameterized construction.
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.endpoint_coordinates`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.endpoint_immediate`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.native_full_box_criterion`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.native_noncompletion`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.native_word_identification`
