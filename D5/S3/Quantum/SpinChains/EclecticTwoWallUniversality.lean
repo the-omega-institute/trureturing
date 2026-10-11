@@ -8,9 +8,7 @@
 
 import D5.S3.Quantum.SpinChains.TwoWallWeights
 import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.Algebra.MvPolynomial.Eval
 import D5.S1.Eigenstructure.NilpotentJordanChains
-import Mathlib.Analysis.Complex.Exponential
 
 open scoped BigOperators
 
