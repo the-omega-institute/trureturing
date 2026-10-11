@@ -90,6 +90,28 @@ def finalize(options):
     return publish(options)
 
 
+def validate_mirror(root, head, integration_tip, landing, message):
+    """Check the producer's identity, parent and net-patch contract for any head."""
+    head = value(root, "rev-parse", "--verify", head + "^{commit}")
+    landing = value(root, "rev-parse", "--verify", landing + "^{commit}")
+    parents = value(root, "show", "-s", "--format=%P", head).split()
+    if len(parents) != 1:
+        raise Refused("mirror_requires_single_parent:" + head)
+    original = value(root, "show", "-s", "--format=%(trailers:key=Original-Dev-Commit,valueonly)", head)
+    if original != landing or value(root, "show", "-s", "--format=%s", head) != message:
+        raise Refused("mirror_identity_changed:" + head)
+    if git(root, "merge-base", "--is-ancestor", parents[0], integration_tip, check=False).returncode:
+        raise Refused("mirror_base_outside_integration:" + head)
+
+    def patch_id(parent, commit):
+        patch = git(root, "diff", "--no-ext-diff", "--no-textconv", "--binary", parent, commit).stdout
+        return git(root, "patch-id", "--stable", input=patch).stdout.split()[:1]
+
+    if patch_id(parents[0], head) != patch_id(landing + "^1", landing):
+        raise Refused("mirror_patch_mismatch:" + head)
+    return dict(commit=head, base=parents[0], original_commit=landing)
+
+
 def prepare_mirror(options):
     """Producer-owned temporary checkout operation; failure leaves its source."""
     import uuid
@@ -108,14 +130,15 @@ def prepare_mirror(options):
             *args, path, options.branch if not args else options.base)
         _, metadata = identity(options.source, path)
         acquire(stack, options.source, "index:" + str(metadata), True)
+        landing = value(path, "rev-parse", "--verify", options.merge + "^{commit}")
         if value(path, "rev-parse", "HEAD") == value(options.source, "rev-parse", options.base):
-            git(path, "merge", "--no-ff", "-m", options.message, options.merge)
+            parents = value(path, "show", "-s", "--format=%P", landing).split()
+            mainline = ["--mainline", "1"] if len(parents) > 1 else []
+            git(path, "cherry-pick", "--no-commit", *mainline, landing)
+            git(path, "commit", "--allow-empty", "-m", options.message +
+                "\n\nOriginal-Dev-Commit: " + landing)
         head = value(path, "rev-parse", "HEAD")
-        parents = value(path, "show", "-s", "--format=%P", head).split()
-        if len(parents) != 2 or parents[1] != options.merge or value(path, "show", "-s", "--format=%s", head) != options.message:
-            raise Refused("mirror_identity_changed")
-        if git(path, "merge-base", "--is-ancestor", parents[0], options.base, check=False).returncode:
-            raise Refused("mirror_base_outside_integration")
+        validate_mirror(path, head, options.base, landing, options.message)
         git(path, "push", "--", endpoint, head + ":" + reference)
         evidence = confirm(path, options.remote, options.branch, head, endpoint)
         if (metadata / "locked").read_text().strip() != token:
