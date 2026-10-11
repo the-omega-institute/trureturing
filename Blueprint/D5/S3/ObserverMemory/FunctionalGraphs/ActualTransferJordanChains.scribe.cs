@@ -18,12 +18,12 @@ internal sealed class ActualTransferJordanChainsDocument : IScribeDocumentDefini
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("For every finite Y and arbitrary self-map tau, work over the "
-                    + "complex numbers and put n=card(Y). Positions(I,s) is the dependent sum "
-                    + "of Fin(s(i)) over the finite type I, with s(i) positive. Sizes(I,s) is the "
-                    + "multiset mapping s over all of I, retaining multiplicities. The basis "
+                    + "complex numbers and put n=Nat.card(Y). The basis index is the dependent sum "
+                    + "of Fin(val(s(i))) over the finite type I, with s(i) positive. The lengths form the "
+                    + "multiset mapping s over Finset.univ.val, retaining multiplicities. The basis "
                     + "belongs to transientSubspace(tau,n), the generalized zero-eigenspace. "
                     + "The conditional basis vector is used only when its index is in range. "
-                    + "natSub means truncated natural subtraction and pred is the natural predecessor.")),
+                    + "Subtraction of natural numbers is truncated; Nat.pred is the natural predecessor.")),
                 Paragraph(Text("The general nilpotent chain theorem supplies the actual basis "
                     + "and iterate ranks. Rank-nullity computes its kernel tower; the existing "
                     + "finite tower uniqueness theorem identifies its positive size multiset "
@@ -33,54 +33,68 @@ internal sealed class ActualTransferJordanChainsDocument : IScribeDocumentDefini
                     + "positive loss layers, as defined by the existing finite-map theory."))),
             DescribeRole.Theorem))));
 
-    private static Formula Call(string name, params Formula[] args) =>
-        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula.BoundVariable Bound(string name, Formula domain) =>
-        new(FormulaIdentifier.Create(name), domain);
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var symbol = Seq(Operatorname, Grp(name.Split('.').SelectMany((part, i) =>
+            i == 0 ? new[] { F.Id(part) } : new[] { Dot, F.Id(part) }).ToArray()));
+        return args.Length == 0 ? symbol : new Formula.Apply(symbol, [.. args]);
+    }
+    private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
+    private static Formula Assumption(Formula x, Formula body) =>
+        Seq(OpenBracket, x, CloseBracket, Sp, body);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name),
+            type is Formula.TypeArrow ? Parenthesized(type) : type, body);
+    private static Formula Some(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name),
+            type is Formula.TypeArrow ? Parenthesized(type) : type, body);
     private static Formula Eqn(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
-    private static Formula All(params Formula[] clauses)
-    {
-        Formula result = clauses[^1];
-        for (var i = clauses.Length - 2; i >= 0; i--)
-            result = new Formula.Logic(clauses[i], FormulaLogicOperator.And, result);
-        return result;
-    }
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
+    private static Formula At(Formula f, Formula x) => new Formula.Apply(f, [x]);
+    private static Formula Pair(Formula x, Formula y) => Seq(Langle, x, Comma, Sp, y, Rangle);
+    private static Formula Nats => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Complexes => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula Power(Formula f, Formula m) => new Formula.Power(Parenthesized(f), m);
+    private static Formula Sub(Formula x, Formula y) =>
+        new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
 
     private static Formula TheoremFormula()
     {
-        Formula y = F.Id("Y"), tau = F.Id("tau"), index = F.Id("I"), s = F.Id("s");
-        Formula m = F.Id("m"), i = F.Id("i"), j = F.Id("j"), k = F.Id("k");
-        Formula n = Call("card", y), size = Call("s", i), next = Call("add", j, m);
-        Formula blocks = Call("Sizes", index, s), complex = Call("Complex");
-        Formula transient = Call("transientTransfer", tau, n);
-        Formula action = new Formula.BindMany(FormulaQuantifier.ForAll,
-            [Bound("m", Call("Nat")), Bound("i", index), Bound("j", Call("Fin", size))],
-            Eqn(Call("apply", Call("pow", transient, m), Call("b", i, j)),
+        var y = F.Id("Y"); var tau = F.Id("tau"); var index = F.Id("I"); var s = F.Id("s");
+        var m = F.Id("m"); var i = F.Id("i"); var j = F.Id("j"); var k = F.Id("k");
+        var n = Call("Nat.card", y);
+        var size = Call("val", At(s, i));
+        var next = Seq(Call("val", j), Sp, Plus, Sp, m);
+        var positions = Parenthesized(Seq(Sigma, Sp,
+            Parenthesized(Seq(i, Sp, Colon, Sp, index)), Comma, Sp, Call("Fin", size)));
+        var nextIndex = Parenthesized(Seq(Call("Fin.mk", next), Sp, Colon, Sp, Call("Fin", size)));
+        var blocks = Call("Multiset.map", s, Call("val", Parenthesized(Seq(
+            Call("Finset.univ"), Sp, Colon, Sp, Call("Finset", index)))));
+        var transient = Call("transientTransfer", tau, n);
+        var action = All("m", Nats, All("i", index, All("j", Call("Fin", size),
+            Eqn(At(Power(transient, m), At(F.Id("b"), Pair(i, j))),
                 Call("ite", new Formula.Relation(next, FormulaRelationOperator.LessThan, size),
-                    Call("b", i, next), D(0))));
-        Formula rank(Formula exponent) =>
-            Call("finrank", complex, Call("range", Call("pow", Call("transferOperator", tau), exponent)));
-        Formula loss(Formula exponent) => Call("informationLossLayer", tau, exponent);
-        Formula counts = new Formula.BindMany(FormulaQuantifier.ForAll,
-            [Bound("k", Call("Nat"))],
-            new Formula.Logic(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, k),
-                FormulaLogicOperator.Implies,
-                All(All(Eqn(loss(k), Call("natSub", rank(Call("pred", k)), rank(k))),
-                        Eqn(loss(k), Call("blockCountAtLeast", blocks, k))),
-                    Eqn(Call("blockCountExactly", blocks, k),
-                        Call("natSub", loss(k), loss(Call("add", k, D(1))))),
-                    Eqn(Call("totalInformationLoss", tau),
-                        Call("natSub", n, Call("card", Call("PeriodicCore", tau)))))));
-        Formula conclusion = new Formula.BindMany(FormulaQuantifier.Exists,
-            [Bound("I", F.Id("Type")), Bound("hI", Call("Fintype", index)),
-             Bound("s", Call("Function", index, Call("PNat"))),
-             Bound("b", Call("Basis", Call("Positions", index, s), complex,
-                Call("transientSubspace", tau, n)))],
-            All(action,
-                Eqn(blocks, Call("transferZeroBlocks", tau)), counts));
-        return Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
-            [Bound("Y", F.Id("Type")), Bound("tau", Call("Function", y, y))],
-            new Formula.Logic(Call("Finite", y), FormulaLogicOperator.Implies, conclusion)));
+                    At(F.Id("b"), Pair(i, nextIndex)), D(0))))));
+        Formula Rank(Formula exponent) => Call("Module.finrank", Complexes,
+            Call("LinearMap.range", Power(Call("transferOperator", tau), exponent)));
+        Formula Loss(Formula exponent) => Call("informationLossLayer", tau, exponent);
+        var counts = All("k", Nats,
+            Implies(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, k),
+                And(And(Eqn(Loss(k), Sub(Rank(Call("Nat.pred", k)), Rank(k))),
+                        Eqn(Loss(k), Call("blockCountAtLeast", blocks, k))),
+                    And(Eqn(Call("blockCountExactly", blocks, k),
+                            Sub(Loss(k), Loss(Seq(k, Sp, Plus, Sp, D(1))))),
+                        Eqn(Call("totalInformationLoss", tau),
+                            Sub(n, Call("Nat.card", Call("PeriodicCore", tau))))))));
+        var conclusion = Some("I", Call("Type"), Assumption(Call("Fintype", index),
+            Some("s", new Formula.TypeArrow(index, Call("PNat")),
+                Some("b", Call("Basis", positions, Complexes, Call("transientSubspace", tau, n)),
+                    And(action, And(Eqn(blocks, Call("transferZeroBlocks", tau)), counts))))));
+        return Disp(All("Y", Call("Type"), Assumption(Call("Finite", y),
+            All("tau", new Formula.TypeArrow(y, y), conclusion))));
     }
 }
