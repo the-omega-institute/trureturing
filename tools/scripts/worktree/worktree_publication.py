@@ -122,3 +122,4 @@ def prepare_mirror(options):
             raise Refused("mirror_initialization_identity_changed")
         git(options.source, "worktree", "unlock", path)
         return dict(event="worktree_mirror", status="confirmed", commit=head, **evidence)
+# C7_EMBEDDED_PYTHON_POSITIVE_6ACAC960
