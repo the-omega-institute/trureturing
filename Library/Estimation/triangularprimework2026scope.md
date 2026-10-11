@@ -8,7 +8,7 @@ url: https://doi.org/10.2298/PIM0476081K
 claim: A paper application of the classical explicit formula and positive Gaussian testing, conditional on RH, rules out an eventual finite lower bound for the actual triangular work normalized by h squared over square root A at all real centers; it does not decide the selected-source lower estimate.
 strata_touched: []
 license: citation-only
-triage: frontier
+triage: anchor
 ---
 
 # Conditional scope of a uniform triangular-work lower estimate
