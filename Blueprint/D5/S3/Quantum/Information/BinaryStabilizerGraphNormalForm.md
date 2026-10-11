@@ -16,7 +16,19 @@ $$\forall (a : \operatorname{ZMod}\left(2\right)), \operatorname{complexSign}\le
 
 The complexSign value is −1 raised to the natural representative of a binary residue.
 
-**Definition 1.2 (The binary graph amplitude).**
+**Lemma 1.2 (The tensor product of identity matrices).**
+
+$$\forall (N : \mathbb{N}), \operatorname{tensorOp}\left(Function.\operatorname{const}\left(\operatorname{Fin}\left(N\right), (1 : \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))\right)\right) = (1 : \operatorname{Matrix}\left((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)), \mathbb{C}\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every number of qubits, the tensor operator formed from identity factors is the identity on the computational basis.
+
+**Definition 1.3 (The binary graph amplitude).**
 
 $$\forall (N : \mathbb{N}), \forall (\Gamma : \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \operatorname{ZMod}\left(2\right)\right)), \forall (x : (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right))), \operatorname{graphAmp}\left(\Gamma, x\right) = (-1 : \mathbb{C})^{(\operatorname{normalExponent}\left(\Gamma, (x : (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(2\right)))\right)).val}$$
 
@@ -28,7 +40,7 @@ $$\forall (N : \mathbb{N}), \forall (\Gamma : \operatorname{Matrix}\left(\operat
 
 Each edge contributes its binary quadratic monomial. The ordered upper-triangular sum is normalExponent; graphAmp is the complexSign value of that exponent, equivalently −1 raised to its natural representative. This definition accepts every binary matrix, without a symmetry or diagonal hypothesis.
 
-**Theorem 1.3 (A graph amplitude for every stabilizer line).**
+**Theorem 1.4 (A graph amplitude for every stabilizer line).**
 
 $$\forall (N : \mathbb{N}), \forall (\psi : ((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)) \to \mathbb{C})), \operatorname{StabilizedBy}\left(pauliSet, \psi\right) \Rightarrow (\exists (U : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), \exists (\Gamma : \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \operatorname{ZMod}\left(2\right)\right)), \exists (c : \mathbb{C}), (\forall (i : \operatorname{Fin}\left(N\right)), \operatorname{U}\left(i\right) \in \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)) \land ((\Gamma).IsSymm \land ((\forall (i : \operatorname{Fin}\left(N\right)), \Gamma(i, i) = 0) \land (\psi = SMul.\operatorname{smul}\left(c, (\operatorname{tensorOp}\left(U\right) *_{v} \operatorname{graphAmp}\left(\Gamma\right))\right)))))$$
 
@@ -45,6 +57,7 @@ The Pauli stabilizers of a nonzero common eigenline span a binary Lagrangian sub
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.complex_sign_val`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.graphAmp`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.stabilizer_graph_normal_form`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_one`
 - Dependency: [D5/S3/Quantum/Information/BinaryLagrangianGraphForm](BinaryLagrangianGraphForm.md)
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence](BinaryStabilizerLocalInequivalence.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](../../VertexAlgebra/LatticeTwistedGroundRealization.md)

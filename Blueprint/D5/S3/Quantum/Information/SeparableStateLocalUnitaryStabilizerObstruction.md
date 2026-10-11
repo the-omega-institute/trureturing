@@ -28,7 +28,43 @@ $$\forall P \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \ti
 
 The Pauli labels and literal matrices are those of StabilizerPairLocalUnitaryInequivalence: I, X, Y = i X Z, and Z. Only the real signs plus and minus are allowed, so these operators are Hermitian. The Kronecker product acts on the same two computational indices.
 
-**Definition 1.3 (Two independent commuting generators).**
+**Theorem 1.3 (Pauli matrices square to the identity).**
+
+$$\forall p \in \operatorname{Pauli},\; \operatorname{pauliMatrix}\left(p\right) \cdot \operatorname{pauliMatrix}\left(p\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_square` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each of the four single-qubit Pauli matrices is an involution.
+
+**Theorem 1.4 (Pauli matrices are Hermitian).**
+
+$$\forall p \in \operatorname{Pauli},\; \operatorname{conjTranspose}\left(\operatorname{pauliMatrix}\left(p\right)\right) = \operatorname{pauliMatrix}\left(p\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_hermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The adjoint of each single-qubit Pauli matrix is itself.
+
+**Theorem 1.5 (Pauli matrices are trace-orthogonal).**
+
+$$\forall p \in \operatorname{Pauli},\; \forall q \in \operatorname{Pauli},\; \operatorname{Matrix.trace}\left(\operatorname{pauliMatrix}\left(p\right) \cdot \operatorname{pauliMatrix}\left(q\right)\right) = \operatorname{ite}\left(p = q, 2, 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_trace_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The trace of the product is two for equal Pauli labels and zero for distinct labels.
+
+**Definition 1.6 (Two independent commuting generators).**
 
 $$\forall psi \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \to \mathbb{C},\; (\operatorname{PureStabilizer}\left(psi\right)) \Leftrightarrow ((\operatorname{unitVector}\left(psi\right)) \land (\exists P \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; \exists Q \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{IsHermitianPauli}\left(P\right)) \land ((\operatorname{IsHermitianPauli}\left(Q\right)) \land ((P \ne 1) \land ((P \ne -(1)) \land ((Q \ne 1) \land ((Q \ne -(1)) \land ((Q \ne P) \land ((Q \ne -(P)) \land ((P \cdot Q = Q \cdot P) \land ((\operatorname{Matrix.mulVec}\left(P, psi\right) = psi) \land (\operatorname{Matrix.mulVec}\left(Q, psi\right) = psi))))))))))))$$
 
@@ -40,7 +76,7 @@ $$\forall psi \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\le
 
 A two-qubit pure stabilizer vector is normalized and fixed by two commuting signed Hermitian Pauli matrices. Each generator differs from both signs of the identity, and the second differs from both signs of the first. These conditions express two independent nontrivial stabilizer generators.
 
-**Definition 1.4 (The full convex stabilizer hull).**
+**Definition 1.7 (The full convex stabilizer hull).**
 
 $$\operatorname{STAB} = \operatorname{convexHull}\left(\mathbb{R}, \{A:\operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right) \mid \exists psi \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \to \mathbb{C},\; (\operatorname{PureStabilizer}\left(psi\right)) \land (A = \operatorname{rankOneDensity}\left(psi\right))\}\right)$$
 
@@ -52,7 +88,7 @@ $$\operatorname{STAB} = \operatorname{convexHull}\left(\mathbb{R}, \{A:\operator
 
 Appendix F, PDF p. 8, preceding equation (F2), verbatim: “while STAB is defined as the convex hull of pure stabilizer states:” The equation is STAB := {ρ | ρ = ∑ᵢ pᵢ |ψᵢ⟩⟨ψᵢ|}, followed by “where ψᵢ are pure stabilizer states.” convexHull over the real numbers encodes all finite probability mixtures. PureStateHandshake.rankOneDensity is literally Matrix.vecMulVec(psi,star(psi)). STAB includes mixtures drawn from different stabilizer bases.
 
-**Definition 1.5 (The common product unitary).**
+**Definition 1.8 (The common product unitary).**
 
 $$\forall UA \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall UB \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{localMatrix}\left(UA, UB\right) = \operatorname{Matrix.kronecker}\left(\operatorname{val}\left(UA\right), \operatorname{val}\left(UB\right)\right)$$
 
@@ -64,7 +100,7 @@ $$\forall UA \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left
 
 The two matrices belong to Matrix.unitaryGroup(Fin(2),C). val exposes their matrices, and their Kronecker product is the unitary on the joint system.
 
-**Definition 1.6 (Local-unitary conjugation).**
+**Definition 1.9 (Local-unitary conjugation).**
 
 $$\forall UA \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall UB \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; \operatorname{localAction}\left(UA, UB, rho\right) = \operatorname{localMatrix}\left(UA, UB\right) \cdot rho \cdot \operatorname{conjTranspose}\left(\operatorname{localMatrix}\left(UA, UB\right)\right)$$
 
@@ -76,7 +112,7 @@ $$\forall UA \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left
 
 The same pair of local unitaries acts on the entire density matrix. conjTranspose is the complex matrix adjoint.
 
-**Definition 1.7 (Pure product-state projectors).**
+**Definition 1.10 (Pure product-state projectors).**
 
 $$\operatorname{ProductPureProjectors} = \{A:\operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right) \mid \exists a \in \operatorname{Fin}\left(2\right) \to \mathbb{C},\; \exists b \in \operatorname{Fin}\left(2\right) \to \mathbb{C},\; (\operatorname{unitVector}\left(a\right)) \land ((\operatorname{unitVector}\left(b\right)) \land (A = \operatorname{rankOneDensity}\left(\operatorname{productVector}\left(a, b\right)\right)))\}$$
 
@@ -88,7 +124,7 @@ $$\operatorname{ProductPureProjectors} = \{A:\operatorname{Matrix}\left((\operat
 
 Both local vectors are normalized. FiniteLocalLatitudeGeometry.productVector supplies their literal product amplitude a(i) b(j), which is projected by the existing rankOneDensity construction, giving the tensor product of the two local rank-one density matrices.
 
-**Definition 1.8 (Separable mixed states).**
+**Definition 1.11 (Separable mixed states).**
 
 $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{Separable}\left(rho\right)) \Leftrightarrow (rho \in \operatorname{convexHull}\left(\mathbb{R}, \operatorname{ProductPureProjectors}\right))$$
 
@@ -100,7 +136,7 @@ $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \
 
 Appendix F, PDF p. 8, preceding equation (F1), verbatim: “A separable state is defined as the convex hull of pure product states [1]:” The real convex hull allows every finite ensemble of normalized product-state projectors.
 
-**Definition 1.9 (Qian–Wang's separable-state conjecture).**
+**Definition 1.12 (Qian–Wang's separable-state conjecture).**
 
 $$(\operatorname{claim}) \Leftrightarrow (\exists rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{IsDensity}\left(rho\right)) \land ((\operatorname{Separable}\left(rho\right)) \land (\forall UA \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall UB \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \neg (\operatorname{localAction}\left(UA, UB, rho\right) \in \operatorname{STAB}))))$$
 
@@ -112,7 +148,7 @@ $$(\operatorname{claim}) \Leftrightarrow (\exists rho \in \operatorname{Matrix}\
 
 Appendix F, PDF p. 8, verbatim: “However, we are unaware of any proof guaranteeing that every separable multi-qubit state can be transformed into a state belonging to STAB using only local unitary transformations, and we conjecture that this is not the case.” The existential two-qubit density matrix rho is positive semidefinite with trace one, as expressed by StructuredNegativityCoincidenceRefutation.IsDensity. Its separability is the literal convex-product-ensemble condition. The universal quantifier ranges independently over all pairs of single-qubit unitaries. A two-qubit example proves the source's existential multi-qubit assertion.
 
-**Theorem 1.10 (The reduced projector is an amplitude Gram matrix).**
+**Theorem 1.13 (The reduced projector is an amplitude Gram matrix).**
 
 $$\forall psi \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \to \mathbb{C},\; \operatorname{partialTraceRight}\left(\operatorname{rankOneDensity}\left(psi\right)\right) = \operatorname{Matrix.of}\left(\operatorname{Function.curry}\left(psi\right)\right) \cdot \operatorname{conjTranspose}\left(\operatorname{Matrix.of}\left(\operatorname{Function.curry}\left(psi\right)\right)\right)$$
 
@@ -126,7 +162,7 @@ $$\forall psi \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\le
 
 For a two-qubit vector, curry arranges its amplitudes into a two-by-two matrix. Tracing the right subsystem of its rank-one projector gives that matrix times its adjoint.
 
-**Theorem 1.11 (Zero quadratic form constrains every positive-weight vector).**
+**Theorem 1.14 (Zero quadratic form constrains every positive-weight vector).**
 
 $$\forall n \in \operatorname{Type},\; \forall iota \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{Fintype}\left(iota\right)] \forall psi \in iota \to \left(n \to \mathbb{C}\right),\; \forall w \in iota \to \mathbb{R},\; \forall z \in n \to \mathbb{C},\; (\forall i \in iota,\; 0\le \operatorname{w}\left(i\right)) \land (\operatorname{dotProduct}\left(\operatorname{star}\left(z\right), \operatorname{Matrix.mulVec}\left(\sum_{i\in iota} (\operatorname{w}\left(i\right)\cdot \operatorname{rankOneDensity}\left(\operatorname{psi}\left(i\right)\right)), z\right)\right) = 0)\longrightarrow \forall i \in iota,\; 0<\operatorname{w}\left(i\right)\longrightarrow \operatorname{dotProduct}\left(\operatorname{star}\left(z\right), \operatorname{psi}\left(i\right)\right) = 0$$
 
@@ -140,7 +176,7 @@ $$\forall n \in \operatorname{Type},\; \forall iota \in \operatorname{Type},\; [
 
 Let psi be a finite family of complex vectors with nonnegative real weights w. If the quadratic form of their weighted rank-one projector sum vanishes at z, then every positive-weight vector is orthogonal to z. Positivity of the weighted squared overlaps prevents cancellation.
 
-**Theorem 1.12 (An infinite family proves the conjecture).**
+**Theorem 1.15 (An infinite family proves the conjecture).**
 
 $$\operatorname{claim}$$
 
@@ -170,6 +206,9 @@ For every real p,c,s with 0 < p < 1, c > 0, s > 0, c² + s² = 1 and c² ≠ 1/2
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.localAction`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.localMatrix`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.marginal_amplitude`
+- Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_hermitian`
+- Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_square`
+- Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.pauli_trace_pair`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.result`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.unitVector`
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Entanglement/StructuredNegativityCoincidenceRefutation.md)
