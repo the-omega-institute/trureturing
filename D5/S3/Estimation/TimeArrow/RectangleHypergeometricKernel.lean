@@ -100,10 +100,3 @@ theorem rectangle_hypergeometric_mass {α : Type*} [DecidableEq α]
 
 end
 end D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
-
--- Temporary closure probes.
-#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.intersectionEvent
-#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.intersectionSplit
-#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.rectangle_intersection_card
-#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.rectangleMass
-#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.rectangle_hypergeometric_mass

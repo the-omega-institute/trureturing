@@ -449,26 +449,3 @@ theorem native_departure_label_count {M q s : ℕ} (S : Support M q) (e : Experi
 
 end
 end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
-
--- Temporary closure probes.
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.collapseVertex
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.Sites
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.siteEquiv
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.collapsedObs
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.collapsedSigma
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.Fiber
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.SignalSites
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.signalVertexEquiv
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.fiberSiteEquiv
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.conditionalFiberMass
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.siteCylinder
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_conditional_site_law
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.departureSite
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.successorSite
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_fiber_departure_counts
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.fiberLabelEquiv
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_signal_assignment_law
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.labelBlockEquiv
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_multinomial_label_blocks
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.departureLabelCount
-#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_departure_label_count

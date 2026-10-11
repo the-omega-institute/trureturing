@@ -258,12 +258,3 @@ theorem shared_calibration_small_ball {ι : Type*} [Fintype ι] (outside : ι �
 
 end
 end D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
-
--- Temporary closure probes.
-#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.eventMass
-#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.latticeBand
-#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.arithmeticEvent
-#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.arithmetic_central_mass_bound
-#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.integerTargets
-#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.moving_center_small_ball
-#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.shared_calibration_small_ball

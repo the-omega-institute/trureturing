@@ -393,17 +393,3 @@ theorem positive_feedback_germ {ι : Type*} [Fintype ι] (outside : ι → ℝ)
 
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-
--- Temporary closure probes.
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.offsets
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.checkerboard
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.cellCounts
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedMean
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedVariance
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.moving_calibration_deriv
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.shared_root_response
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.exists_shared_calibration_root
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.compensated_group_deriv
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.checkerboard_negative_neighborhood
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.shared_calibration_curve
-#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.positive_feedback_germ
