@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:3eca75ca31d83b5e5893f3bf8fbcbb74667b7f5f556db46f055be9dd61597138
   normalized_sha256: sha256:3eca75ca31d83b5e5893f3bf8fbcbb74667b7f5f556db46f055be9dd61597138
 cas_ref: sha256:3eca75ca31d83b5e5893f3bf8fbcbb74667b7f5f556db46f055be9dd61597138
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.native_full_box_criterion
+    target_statement_id: sha256:dbe4512ddd27e7c6c131c281a7d5f2b184a6c6555d91305ba2b229589b356555
 receipts:
   unresolved_subitems: []
