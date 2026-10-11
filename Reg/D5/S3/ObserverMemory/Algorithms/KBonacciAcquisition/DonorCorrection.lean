@@ -474,5 +474,232 @@ def priceRegistration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,
 #print axioms priceEvidence
 #print axioms priceRegistration
 
+namespace Calendar
+
+@[reducible] def signature : Signature where
+  Params := ℕ × ℕ × ℕ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ _ i => i) (fun e => nomatch e)
+def oracle : Realization signature := realize signature (fun _ _ i => i + 1) (fun e => nomatch e)
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ (m : ℕ) (hm : 5 ≤ m) (h eps i : ℕ),
+    (((2 * h + eps) * m + R.readout () (m, h, eps) i : ℕ) : ZMod (2 * m - 2 + 1)) =
+      ((h + eps * m + i : ℕ) : ZMod (2 * m - 2 + 1))
+private theorem positive : arena.Law actual := calendar
+private theorem negative : ¬ arena.Law oracle := by
+  intro law
+  have bad := law 5 (by omega) 0 0 0
+  change (1 : ZMod 9) = 0 at bad
+  exact (by decide : (1 : ZMod 9) ≠ 0) bad
+
+def evidence : Registration arena (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.calendar)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, oracle, negative⟩
+  sensitivity := ⟨fun i => ⟨oracle, fun j h => (h (Subsingleton.elim j i)).elim, rfl, negative⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    cases i
+    exact ⟨(5, 0, 0), 0, 1, by decide⟩
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.calendar)
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.Calendar.calendar,
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.Calendar.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨evidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection, definition := none,
+    coordinates := #[0, 2, 3],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "arg"],
+      stateBinder := 4, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms evidence
+#print axioms registration
+end Calendar
+
+namespace RowReadings
+
+@[reducible] def signature : Signature where
+  Params := ℕ × ℕ × List (ℕ → ZMod 2) × ℕ
+  State p := ZMod (p.1 + 1)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Option (Option (ZMod 2))
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature
+  (fun _ p j => (PhysicalWindowDecoder.rowReadings p.1 p.2.1 p.2.2.1 j)[p.2.2.2]?)
+  (fun e => nomatch e)
+def oracle : Realization signature := realize signature (fun _ _ _ => none) (fun e => nomatch e)
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ (k m : ℕ) (rows : List (ℕ → ZMod 2)) (j : ZMod (k + 1)) (t : ℕ),
+    R.readout () (k, m, rows, t) j =
+      (rows[t]?).map (fun row => some (windowCharge k m row (j - ((t * m : ℕ) : ZMod (k + 1)))))
+private theorem positive : arena.Law actual := row_readings_index
+private theorem negative : ¬ arena.Law oracle := by
+  intro law
+  have bad := law 3 1 [fun _ => 0] 0 0
+  norm_num [oracle, realize, windowCharge] at bad
+  cases bad
+
+def evidence : Registration arena (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.row_readings_index)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, oracle, negative⟩
+  sensitivity := ⟨fun i => ⟨oracle, fun j h => (h (Subsingleton.elim j i)).elim, rfl, negative⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    cases i
+    refine ⟨(3, 1, [fun n => if n = 0 then 0 else 1], 0), 0, 1, ?_⟩
+    decide
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.row_readings_index)
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.RowReadings.row_readings_index,
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.RowReadings.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨evidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection, definition := none,
+    coordinates := #[0, 1, 2, 4],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"],
+      stateBinder := 3, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms evidence
+#print axioms registration
+end RowReadings
+
+end
+noncomputable section
+universe u
+namespace ScriptPreset
+
+@[reducible] def signature : Signature where
+  Params := ℕ
+  State m := List (Fin m → Bool)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ _ words => words.length) (fun e => nomatch e)
+def oracle : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (short : m < k) (alphabet : Bool)
+    (f : Option (LiveRecord k) → Y) (words : List (Fin m → Bool))
+    (decode : ZMod 2 → NarrowWindowCost.Archive m → Y)
+    (decoded : ∀ (v : ZMod 2) (phase : ZMod (k + 1)) (s : ℕ), s < k →
+      decode v (PhysicalWindowDecoder.scriptArchive words (some ⟨v, phase, s⟩)) = f (some ⟨v, phase, s⟩)),
+    OriginalPresetFeasible k m (by omega) alphabet f (R.readout () m words)
+private theorem positive : arena.{u}.Law actual := script_global_preset
+
+def word : Fin 2 → Bool := fun i => decide (i.val = 1)
+def sample : Option (LiveRecord 3) → ULift.{u} (ZMod 2)
+  | none => ⟨0⟩
+  | some q => ⟨q.value + LiteralModel.wordIncrement 3 q.phase word⟩
+def decode (v : ZMod 2) (ar : NarrowWindowCost.Archive 2) : ULift.{u} (ZMod 2) :=
+  ⟨(ar[0]?).map Prod.snd |>.join.getD v⟩
+private theorem decoded : ∀ (v : ZMod 2) (phase : ZMod 4) (s : ℕ), s < 3 →
+    decode v (PhysicalWindowDecoder.scriptArchive [word] (some ⟨v, phase, s⟩)) =
+    sample (some ⟨v, phase, s⟩) := by
+  intro v phase s hs
+  have step := short_safe_execution 3 (by omega) 2 (by omega) (by omega) word v phase s hs
+    (Or.inr (by decide : word 0 = false))
+  simp [PhysicalWindowDecoder.scriptArchive, step.1, decode, sample, endpointReading]
+private theorem negative : ¬ arena.{u}.Law oracle := by
+  intro law
+  have bad := law 3 2 (by omega) (by omega) false sample [word] decode decoded
+  change OriginalPresetFeasible 3 2 (by omega) false sample 0 at bad
+  obtain ⟨stream, stop, legal, bottom, correct⟩ := bad
+  have ex (phase : ZMod 4) (reachable : 2 ∣ phase.val) := OwnPathCharges.native_fiber 3 2 (by omega) (by omega)
+    false sample 0 0 (presetSelector stream stop)
+    (fun history readout => by simpa only [readout] using correct history)
+    phase 0 (by omega) (by simpa using reachable)
+  obtain ⟨c, _, left⟩ := ex 0 (by decide)
+  obtain ⟨c', _, right⟩ := ex 2 (by decide)
+  have same : OriginalExecutionBridge.NativeExecute (presetSelector stream stop) 0
+      (some ⟨0, (0 : ZMod 4), 0⟩) (some 0) [] =
+      OriginalExecutionBridge.NativeExecute (presetSelector stream stop) 0
+      (some ⟨0, (2 : ZMod 4), 0⟩) (some 0) [] := rfl
+  rw [left, right] at same
+  have different : sample.{u} (some ⟨0, (0 : ZMod 4), 0⟩) ≠
+      sample.{u} (some ⟨0, (2 : ZMod 4), 0⟩) := by decide
+  exact different (Prod.mk.inj (Option.some.inj same)).1
+
+def evidence : Registration arena.{u}
+    (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.script_global_preset.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, oracle, negative⟩
+  sensitivity := ⟨fun i => ⟨oracle, fun j h => (h (Subsingleton.elim j i)).elim, rfl, negative⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    cases i
+    exact ⟨1, [], [fun _ => false], by decide⟩
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.script_global_preset.{u})
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.ScriptPreset.script_global_preset,
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.ScriptPreset.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena.{u} ⟨evidence.{u}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection, definition := none,
+    coordinates := #[2],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"],
+      stateBinder := 7, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms evidence
+#print axioms registration
+end ScriptPreset
+
 end
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection

@@ -58,8 +58,21 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OwnPathChar
 
 For arbitrary k>=2, m>=1, either original alphabet, target f, saved value v, budget d and selector, suppose the selector returns the INITIAL target within d paid complete words on every original history whose free scalar is v. For every phase with gcd(m,k+1) dividing its representative and every inherited legal tail s<k, NativeExecute from (v,phase,s) returns f of that INITIAL record with some fee c<=d. Actual-history realization and scanner agreement transfer correctness without supplying the controller a history, phase, tail or clock.
 
+**Theorem 1.5 (Equal own arrays force equal labels).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OwnPathCharges.charge_separates`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OwnPathCharges.charge_separates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any label universe Y, k>=2, word length m, original selector pi and remaining budget b, take the same current scalar z, legal tail s<k, saved free output and own archive, and two phases p and q. If NativeExecute succeeds at these two records with labels x and y and possibly different paid counts, and their ownCharge arrays agree at every coordinate t<b, then x=y. Induction follows only their own executed actions. Equal successful increments produce equal acquired endpoints and tails; stops and simultaneous rejection have identical continuing archives. The statement permits arbitrary depth, stops and rejecting actions and imposes no schedule or phase-support assumption.
+
 ## References
 
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OwnPathCharges.charge_separates`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OwnPathCharges.native_fiber`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OwnPathCharges.original_adaptive_charge_array`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OwnPathCharges.ownCharge`
