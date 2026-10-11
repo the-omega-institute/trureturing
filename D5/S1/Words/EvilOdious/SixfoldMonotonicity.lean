@@ -19,149 +19,149 @@ T2 = D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_two_mul_add_one
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15228.
 Declaration rows: name | proof_shape | frozen dependencies | escape_witness | consumers.
 Definitions carry bind-only as an organization label; no proof content is claimed for them.
-initialr_0 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_1 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_2 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_3 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_4 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_5 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_6 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_7 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_8 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_9 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_10 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_11 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_12 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_13 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_14 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_15 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_16 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_17 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_18 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_19 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_20 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_21 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_22 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_23 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_24 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_25 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_26 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_27 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_28 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_29 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_30 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_31 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_32 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_33 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_34 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_35 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_36 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_37 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_38 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_39 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_40 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_41 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_42 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_43 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_44 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_45 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_46 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_47 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_48 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_49 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_50 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_51 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_52 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_53 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_54 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_55 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_56 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_57 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_58 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_59 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_60 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_61 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_62 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_63 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
-initialr_checked | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initial_r
-initials_0 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_1 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_2 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_3 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_4 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_5 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_6 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_7 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_8 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_9 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_10 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_11 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_12 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_13 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_14 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_15 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_16 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_17 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_18 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_19 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_20 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_21 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_22 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_23 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_24 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_25 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_26 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_27 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_28 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_29 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_30 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_31 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_32 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_33 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_34 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_35 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_36 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_37 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_38 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_39 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_40 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_41 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_42 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_43 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_44 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_45 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_46 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_47 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_48 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_49 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_50 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_51 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_52 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_53 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_54 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_55 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_56 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_57 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_58 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_59 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_60 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_61 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_62 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_63 | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
-initials_checked | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initial_s
-prefix_certificate | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_positive
-initial_r | proof_shape: content | frozen: T0,T1,T2 | escape_witness: none | consumers: SixfoldMonotonicity.r_strict
-initial_s | proof_shape: content | frozen: T0,T1,T2 | escape_witness: none | consumers: SixfoldMonotonicity.s_strict
-choose_lower | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_domination
-prefix_exists | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_positive
-prefix_scale_lower | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_positive
-tail_domination | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_positive
-error_prefix | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_positive
-tail_positive | proof_shape: content | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.r_strict, SixfoldMonotonicity.s_strict
-r_strict | proof_shape: content | frozen: T0,T1,T2 | escape_witness: none | consumers: SixfoldMonotonicity.result
-s_strict | proof_shape: content | frozen: T0,T1,T2 | escape_witness: none | consumers: SixfoldMonotonicity.result
+initialr_0 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_1 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_2 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_3 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_4 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_5 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_6 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_7 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_8 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_9 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_10 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_11 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_12 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_13 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_14 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_15 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_16 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_17 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_18 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_19 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_20 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_21 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_22 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_23 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_24 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_25 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_26 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_27 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_28 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_29 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_30 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_31 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_32 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_33 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_34 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_35 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_36 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_37 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_38 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_39 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_40 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_41 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_42 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_43 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_44 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_45 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_46 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_47 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_48 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_49 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_50 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_51 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_52 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_53 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_54 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_55 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_56 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_57 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_58 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_59 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_60 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_61 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_62 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_63 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initialr_checked
+initialr_checked | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initial_r
+initials_0 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_1 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_2 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_3 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_4 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_5 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_6 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_7 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_8 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_9 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_10 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_11 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_12 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_13 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_14 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_15 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_16 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_17 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_18 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_19 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_20 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_21 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_22 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_23 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_24 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_25 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_26 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_27 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_28 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_29 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_30 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_31 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_32 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_33 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_34 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_35 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_36 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_37 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_38 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_39 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_40 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_41 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_42 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_43 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_44 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_45 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_46 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_47 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_48 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_49 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_50 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_51 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_52 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_53 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_54 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_55 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_56 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_57 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_58 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_59 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_60 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_61 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_62 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_63 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initials_checked
+initials_checked | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.initial_s
+prefix_certificate | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_positive
+initial_r | proof_shape: content | frozen: T0,T1,T2 | escape_witness: SequenceCoefficients.recur_eq_coeff | consumers: SixfoldMonotonicity.r_strict
+initial_s | proof_shape: content | frozen: T0,T1,T2 | escape_witness: SequenceCoefficients.recur_eq_coeff | consumers: SixfoldMonotonicity.s_strict
+choose_lower | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_domination
+prefix_exists | proof_shape: content | frozen: none | escape_witness: prefix_exists | consumers: SixfoldMonotonicity.tail_positive
+prefix_scale_lower | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_positive
+tail_domination | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SixfoldMonotonicity.tail_positive
+error_prefix | proof_shape: content | frozen: none | escape_witness: MatrixBounds.c_word_bound | consumers: SixfoldMonotonicity.tail_positive
+tail_positive | proof_shape: content | frozen: none | escape_witness: MatrixBounds.c_word_bound | consumers: SixfoldMonotonicity.r_strict, SixfoldMonotonicity.s_strict
+r_strict | proof_shape: content | frozen: T0,T1,T2 | escape_witness: MatrixBounds.c_word_bound | consumers: SixfoldMonotonicity.result
+s_strict | proof_shape: content | frozen: T0,T1,T2 | escape_witness: MatrixBounds.c_word_bound | consumers: SixfoldMonotonicity.result
 claim | proof_shape: bind-only | frozen: T0 | escape_witness: none | consumers: none
-result | proof_shape: content | frozen: T0,T1,T2 | escape_witness: none | consumers: none
+result | proof_shape: content | frozen: T0,T1,T2 | escape_witness: MatrixBounds.c_word_bound | consumers: none
 Utility checker: all certificates are kernel-checked and used by the named consumer.
 -/
 
@@ -178,197 +178,69 @@ open D5.S1.Words.EvilOdious.DyadicPrefixBounds
 set_option autoImplicit false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 8000000
-set_option profiler true in
-set_option profiler.threshold 10 in
 theorem initialr_0 : initialChunk 1 38 0 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 theorem initialr_1 : initialChunk 1 38 32 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_2 : initialChunk 1 38 64 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_3 : initialChunk 1 38 96 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_4 : initialChunk 1 38 128 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_5 : initialChunk 1 38 160 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_6 : initialChunk 1 38 192 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_7 : initialChunk 1 38 224 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_8 : initialChunk 1 38 256 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_9 : initialChunk 1 38 288 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_10 : initialChunk 1 38 320 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_11 : initialChunk 1 38 352 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_12 : initialChunk 1 38 384 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_13 : initialChunk 1 38 416 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_14 : initialChunk 1 38 448 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_15 : initialChunk 1 38 480 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_16 : initialChunk 1 38 512 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_17 : initialChunk 1 38 544 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_18 : initialChunk 1 38 576 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_19 : initialChunk 1 38 608 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_20 : initialChunk 1 38 640 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_21 : initialChunk 1 38 672 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_22 : initialChunk 1 38 704 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_23 : initialChunk 1 38 736 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_24 : initialChunk 1 38 768 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_25 : initialChunk 1 38 800 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_26 : initialChunk 1 38 832 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_27 : initialChunk 1 38 864 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_28 : initialChunk 1 38 896 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_29 : initialChunk 1 38 928 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_30 : initialChunk 1 38 960 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_31 : initialChunk 1 38 992 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_32 : initialChunk 1 38 1024 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_33 : initialChunk 1 38 1056 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_34 : initialChunk 1 38 1088 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_35 : initialChunk 1 38 1120 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_36 : initialChunk 1 38 1152 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_37 : initialChunk 1 38 1184 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_38 : initialChunk 1 38 1216 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_39 : initialChunk 1 38 1248 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_40 : initialChunk 1 38 1280 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_41 : initialChunk 1 38 1312 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_42 : initialChunk 1 38 1344 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_43 : initialChunk 1 38 1376 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_44 : initialChunk 1 38 1408 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_45 : initialChunk 1 38 1440 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_46 : initialChunk 1 38 1472 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_47 : initialChunk 1 38 1504 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_48 : initialChunk 1 38 1536 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_49 : initialChunk 1 38 1568 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_50 : initialChunk 1 38 1600 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_51 : initialChunk 1 38 1632 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_52 : initialChunk 1 38 1664 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_53 : initialChunk 1 38 1696 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_54 : initialChunk 1 38 1728 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_55 : initialChunk 1 38 1760 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_56 : initialChunk 1 38 1792 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_57 : initialChunk 1 38 1824 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_58 : initialChunk 1 38 1856 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_59 : initialChunk 1 38 1888 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_60 : initialChunk 1 38 1920 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_61 : initialChunk 1 38 1952 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_62 : initialChunk 1 38 1984 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initialr_63 : initialChunk 1 38 2016 32 = true := by decide +kernel
 private theorem initialr_checked (block : Fin 64) : initialChunk 1 38 (32 * block.val) 32 = true := by
   fin_cases block
@@ -442,197 +314,69 @@ private theorem initialr_checked (block : Fin 64) : initialChunk 1 38 (32 * bloc
 set_option autoImplicit false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 8000000
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_0 : initialChunk (-1) 6 0 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_1 : initialChunk (-1) 6 32 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_2 : initialChunk (-1) 6 64 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_3 : initialChunk (-1) 6 96 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_4 : initialChunk (-1) 6 128 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_5 : initialChunk (-1) 6 160 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_6 : initialChunk (-1) 6 192 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_7 : initialChunk (-1) 6 224 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_8 : initialChunk (-1) 6 256 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_9 : initialChunk (-1) 6 288 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_10 : initialChunk (-1) 6 320 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_11 : initialChunk (-1) 6 352 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_12 : initialChunk (-1) 6 384 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_13 : initialChunk (-1) 6 416 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_14 : initialChunk (-1) 6 448 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_15 : initialChunk (-1) 6 480 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_16 : initialChunk (-1) 6 512 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_17 : initialChunk (-1) 6 544 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_18 : initialChunk (-1) 6 576 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_19 : initialChunk (-1) 6 608 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_20 : initialChunk (-1) 6 640 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_21 : initialChunk (-1) 6 672 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_22 : initialChunk (-1) 6 704 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_23 : initialChunk (-1) 6 736 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_24 : initialChunk (-1) 6 768 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_25 : initialChunk (-1) 6 800 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_26 : initialChunk (-1) 6 832 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_27 : initialChunk (-1) 6 864 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_28 : initialChunk (-1) 6 896 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_29 : initialChunk (-1) 6 928 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_30 : initialChunk (-1) 6 960 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_31 : initialChunk (-1) 6 992 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_32 : initialChunk (-1) 6 1024 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_33 : initialChunk (-1) 6 1056 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_34 : initialChunk (-1) 6 1088 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_35 : initialChunk (-1) 6 1120 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_36 : initialChunk (-1) 6 1152 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_37 : initialChunk (-1) 6 1184 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_38 : initialChunk (-1) 6 1216 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_39 : initialChunk (-1) 6 1248 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_40 : initialChunk (-1) 6 1280 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_41 : initialChunk (-1) 6 1312 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_42 : initialChunk (-1) 6 1344 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_43 : initialChunk (-1) 6 1376 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_44 : initialChunk (-1) 6 1408 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_45 : initialChunk (-1) 6 1440 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_46 : initialChunk (-1) 6 1472 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_47 : initialChunk (-1) 6 1504 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_48 : initialChunk (-1) 6 1536 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_49 : initialChunk (-1) 6 1568 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_50 : initialChunk (-1) 6 1600 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_51 : initialChunk (-1) 6 1632 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_52 : initialChunk (-1) 6 1664 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_53 : initialChunk (-1) 6 1696 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_54 : initialChunk (-1) 6 1728 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_55 : initialChunk (-1) 6 1760 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_56 : initialChunk (-1) 6 1792 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_57 : initialChunk (-1) 6 1824 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_58 : initialChunk (-1) 6 1856 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_59 : initialChunk (-1) 6 1888 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_60 : initialChunk (-1) 6 1920 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_61 : initialChunk (-1) 6 1952 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_62 : initialChunk (-1) 6 1984 32 = true := by decide +kernel
-set_option profiler true in
-set_option profiler.threshold 10 in
 private theorem initials_63 : initialChunk (-1) 6 2016 32 = true := by decide +kernel
 private theorem initials_checked (block : Fin 64) : initialChunk (-1) 6 (32 * block.val) 32 = true := by
   fin_cases block
@@ -746,13 +490,13 @@ private theorem initial_s (n : ℕ) (hl : 6 ≤ n) (hu : n < 2048) : s 6 (n-1) <
 set_option autoImplicit false
 
 private theorem choose_lower (n : ℕ) : n ^ 4 ≤ 24 * (n+4).choose 4 := by
-  have hh := Nat.descFactorial_eq_factorial_mul_choose (n+4) 4
-  norm_num [Nat.descFactorial, Nat.factorial] at hh
-  rw [show n+4-3 = n+1 by omega, show n+4-2 = n+2 by omega] at hh
-  calc
-    n ^ 4 = n * n * n * n := by ring
-    _ ≤ (n+4)*(n+3)*(n+2)*(n+1) := by gcongr <;> omega
-    _ = 24 * (n+4).choose 4 := by nlinarith [hh]
+  have h := Nat.pow_le_choose (α := ℚ) 4 (n + 4)
+  rw [show n + 4 + 1 - 4 = n + 1 by omega] at h
+  norm_num only [Nat.factorial] at h
+  push_cast at h
+  have hp : (n : ℚ) ^ 4 ≤ (n + 1 : ℚ) ^ 4 := by gcongr; norm_num
+  exact_mod_cast (show (n : ℚ) ^ 4 ≤ 24 * ((n + 4).choose 4 : ℚ) by linarith)
+
 
 private theorem prefix_exists (n : ℕ) (hn : 2048 ≤ n) :
     ∃ p : ℕ, ∃ w : List Bool, 2048 ≤ p ∧ p < 4096 ∧ n = appendValue p w := by

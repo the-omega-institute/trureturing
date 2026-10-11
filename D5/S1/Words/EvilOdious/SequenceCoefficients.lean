@@ -8,7 +8,7 @@
 
 /-
 admission_basis: escape-witness
-Module escape_witness: r_difference
+Module escape_witness: recur_eq_coeff
 Direct frozen dependencies: aliases below denote declaration identities, not module pins.
 T0 = D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse
   statement_id: sha256:64e3518f7565865a40ea42fed02d3ec99a43a5957584903476dff7ab488bd8b0
@@ -44,15 +44,15 @@ recur | proof_shape: bind-only | frozen: none | escape_witness: none | consumers
 zrecur | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.c_prefix, DyadicPrefixBounds.h_prefix, DyadicStatesFirstThree.stateZ, DyadicStatesLastThree.state_dyadic_bound
 polyseries | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SequenceCoefficients.c_eq_coeff, SequenceCoefficients.h_eq_coeff, SequenceCoefficients.p_C, SequenceCoefficients.p_H, SequenceCoefficients.polyseries_mul_coeff, SequenceCoefficients.recur_eq_coeff
 polyseries_mul_coeff | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SequenceCoefficients.recur_eq_coeff
-recur_eq_coeff | proof_shape: content | frozen: none | escape_witness: none | consumers: SequenceCoefficients.c_eq_coeff, SequenceCoefficients.h_eq_coeff
+recur_eq_coeff | proof_shape: content | frozen: none | escape_witness: recur_eq_coeff | consumers: SequenceCoefficients.c_eq_coeff, SequenceCoefficients.h_eq_coeff
 p | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: CoefficientTableChecker.table1_checked, CoefficientTableChecker.table1_sound, CoefficientTableChecker.table2_checked, CoefficientTableChecker.table2_sound, CoefficientTableChecker.table3_checked, CoefficientTableChecker.table3_sound, CoefficientTableChecker.table4_checked, CoefficientTableChecker.table4_sound, CoefficientTableChecker.table5_checked, CoefficientTableChecker.table5_sound, CoefficientTableChecker.table6_checked, CoefficientTableChecker.table6_sound, DyadicPrefixBounds.c_dyadic, DyadicPrefixBounds.c_prefix, DyadicPrefixBounds.c_seed, DyadicPrefixBounds.h_dyadic, DyadicPrefixBounds.h_prefix, DyadicPrefixBounds.h_seed, DyadicPrefixBounds.h_state_step, DyadicPrefixBounds.h_step_norm, DyadicPrefixBounds.seedC_exact, DyadicPrefixBounds.seedH_exact, DyadicPrefixBounds.tableError_sound, DyadicPrefixBounds.tableH_sound, DyadicStatesFirstThree.stateZ_step_1, DyadicStatesFirstThree.stateZ_step_2, DyadicStatesFirstThree.stateZ_step_3, DyadicStatesFirstThree.state_step_1, DyadicStatesFirstThree.state_step_2, DyadicStatesFirstThree.state_step_3, DyadicStatesLastThree.stateZ_step_4, DyadicStatesLastThree.stateZ_step_5, DyadicStatesLastThree.stateZ_step_6, DyadicStatesLastThree.state_step_4, DyadicStatesLastThree.state_step_5, DyadicStatesLastThree.state_step_6, MatrixBounds.c_five_bound, MatrixBounds.c_short_bound, MatrixBounds.c_word_bound, MatrixBounds.h_matrix_bound, MatrixBounds.wordsCheck, SequenceCoefficients.c_eq_coeff, SequenceCoefficients.errorTerm, SequenceCoefficients.h_eq_coeff, SequenceCoefficients.p_C, SequenceCoefficients.p_H, SequenceCoefficients.r_difference, SequenceCoefficients.s_difference, SixfoldMonotonicity.error_prefix
 p_H | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SequenceCoefficients.h_eq_coeff
 p_C | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: SequenceCoefficients.c_eq_coeff
-h_eq_coeff | proof_shape: content | frozen: T0,T1,T2 | escape_witness: none | consumers: SequenceCoefficients.r_difference, SequenceCoefficients.s_difference
-c_eq_coeff | proof_shape: content | frozen: T0,T1,T2 | escape_witness: none | consumers: SequenceCoefficients.r_difference, SequenceCoefficients.s_difference
+h_eq_coeff | proof_shape: content | frozen: T0,T1,T2 | escape_witness: recur_eq_coeff | consumers: SequenceCoefficients.r_difference, SequenceCoefficients.s_difference
+c_eq_coeff | proof_shape: content | frozen: T0,T1,T2 | escape_witness: recur_eq_coeff | consumers: SequenceCoefficients.r_difference, SequenceCoefficients.s_difference
 errorTerm | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.tableError_sound, SequenceCoefficients.r_difference, SequenceCoefficients.s_difference, SixfoldMonotonicity.initial_r, SixfoldMonotonicity.initial_s, SixfoldMonotonicity.r_strict, SixfoldMonotonicity.s_strict, SixfoldMonotonicity.tail_positive
-r_difference | proof_shape: content | frozen: T0,T1,T2 | escape_witness: r_difference | consumers: SixfoldMonotonicity.initial_r, SixfoldMonotonicity.r_strict
-s_difference | proof_shape: content | frozen: T0,T1,T2 | escape_witness: none | consumers: SixfoldMonotonicity.initial_s, SixfoldMonotonicity.s_strict
+r_difference | proof_shape: content | frozen: T0,T1,T2 | escape_witness: recur_eq_coeff | consumers: SixfoldMonotonicity.initial_r, SixfoldMonotonicity.r_strict
+s_difference | proof_shape: content | frozen: T0,T1,T2 | escape_witness: recur_eq_coeff | consumers: SixfoldMonotonicity.initial_s, SixfoldMonotonicity.s_strict
 Content reason: r_difference uses the strong induction in recur_eq_coeff to identify recurrence and power-series coefficients.
 The signed expansion then connects those coefficients to the actual sixfold tuple counts.
 Utility none: these symbolic identities and estimates quantify over arbitrary indices.

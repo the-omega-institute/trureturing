@@ -27,12 +27,12 @@ mem_words | proof_shape: bind-only | frozen: none | escape_witness: none | consu
 wordMatrix | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.h_prefix, DyadicPrefixBounds.word_bound_of_step, DyadicStatesFirstThree.state_word, DyadicStatesFirstThree.vector_prefix_bound, DyadicStatesLastThree.state_dyadic_bound, MatrixBounds.c_five_bound, MatrixBounds.c_short_bound, MatrixBounds.c_word_bound, MatrixBounds.wordMatrix_append, MatrixBounds.wordsCheck
 wordMatrix_append | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: MatrixBounds.c_word_bound
 instDecidableMatrixBound | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: MatrixBounds.c_five_bound, MatrixBounds.c_short_bound, MatrixBounds.h_matrix_bound, MatrixBounds.wordsCheck
-h_matrix_bound | proof_shape: content | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.h_step_norm
+h_matrix_bound | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.h_step_norm
 wordsCheck | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: MatrixBounds.c_five_checked, MatrixBounds.c_short_bound, MatrixBounds.c_short_checked
-c_five_checked | proof_shape: content | frozen: none | escape_witness: none | consumers: MatrixBounds.c_five_bound
-c_short_checked | proof_shape: content | frozen: none | escape_witness: none | consumers: MatrixBounds.c_short_bound
-c_five_bound | proof_shape: content | frozen: none | escape_witness: none | consumers: MatrixBounds.c_word_bound
-c_short_bound | proof_shape: content | frozen: none | escape_witness: none | consumers: MatrixBounds.c_word_bound
+c_five_checked | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: MatrixBounds.c_five_bound
+c_short_checked | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: MatrixBounds.c_short_bound
+c_five_bound | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: MatrixBounds.c_word_bound
+c_short_bound | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: MatrixBounds.c_word_bound
 c_word_bound | proof_shape: content | frozen: none | escape_witness: c_word_bound | consumers: DyadicPrefixBounds.c_prefix
 Utility checker: all certificates are kernel-checked and used by the named consumer.
 -/

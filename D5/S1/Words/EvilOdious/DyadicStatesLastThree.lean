@@ -22,10 +22,10 @@ stateZ_step_5 | proof_shape: bind-only | frozen: none | escape_witness: none | c
 stateZ_step_6 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.c_prefix
 appendValue_decompose | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.c_dyadic, DyadicPrefixBounds.c_prefix, DyadicPrefixBounds.h_dyadic, DyadicPrefixBounds.h_prefix, DyadicStatesLastThree.state_dyadic_bound, SixfoldMonotonicity.error_prefix
 lowWord_bound | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.c_prefix, DyadicPrefixBounds.h_prefix, SixfoldMonotonicity.error_prefix
-word_for_low | proof_shape: content | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.c_dyadic, DyadicPrefixBounds.h_dyadic, DyadicStatesLastThree.state_dyadic_bound
-state_dyadic_bound | proof_shape: content | frozen: none | escape_witness: state_dyadic_bound | consumers: DyadicPrefixBounds.c_prefix, DyadicPrefixBounds.h_prefix
-Content reason: word_for_low constructs every prescribed binary low part by length induction.
-state_dyadic_bound uses that construction and the matrix estimate to control every dyadic extension.
+word_for_low | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.c_dyadic, DyadicPrefixBounds.h_dyadic, DyadicStatesLastThree.state_dyadic_bound
+state_dyadic_bound | proof_shape: content | frozen: none | escape_witness: DyadicStatesFirstThree.state_word | consumers: DyadicPrefixBounds.c_prefix, DyadicPrefixBounds.h_prefix
+Content reason: state_dyadic_bound uses state_word on its live path to control every dyadic extension.
+word_for_low specializes Nat.digitsAppend with its length and inverse lemmas.
 Utility none: these symbolic identities and estimates quantify over arbitrary indices.
 -/
 
@@ -879,18 +879,18 @@ theorem lowWord_bound (w : List Bool) : appendValue 0 w < 2 ^ w.length := by
 
 theorem word_for_low (m low : ℕ) (hlow : low < 2 ^ m) :
     ∃ w : List Bool, w.length = m ∧ appendValue 0 w = low := by
-  induction m generalizing low with
-  | zero => exact ⟨[],rfl,by simpa [appendValue] using (show low = 0 by simpa using hlow).symm⟩
-  | succ m ih =>
-    have hh : low/2 < 2^m := by simp only [Nat.pow_succ] at hlow; omega
-    obtain ⟨w,hw,hv⟩ := ih (low/2) hh
-    rcases Nat.mod_two_eq_zero_or_one low with hb | hb
-    · refine ⟨false::w, by simp [hw], ?_⟩
-      simp only [appendValue_cons, Bool.false_eq_true, if_false, Nat.add_zero, hv]
-      omega
-    · refine ⟨true::w, by simp [hw], ?_⟩
-      simp only [appendValue_cons, if_true, hv]
-      omega
+  refine ⟨(Nat.digitsAppend 2 m low).map (fun d => decide (d = 1)), ?_, ?_⟩
+  · simpa only [List.length_map] using Nat.length_digitsAppend (by decide : 1 < 2) m hlow
+  · simp only [appendValue, Nat.ofDigits_append_zero, List.map_map, Function.comp_def]
+    have hd : (Nat.digitsAppend 2 m low).map (fun d => (decide (d = 1)).toNat) =
+        Nat.digitsAppend 2 m low := by
+      conv_rhs => rw [← List.map_id (Nat.digitsAppend 2 m low)]
+      apply List.map_congr_left
+      intro d hd
+      have := Nat.lt_of_mem_digitsAppend (by decide : 1 < 2) m d hd
+      interval_cases d <;> rfl
+    rw [hd]
+    exact (Nat.setInvOn_digitsAppend_ofDigits (by decide : 1 < 2) m).2 hlow
 
 
 theorem state_dyadic_bound {d : ℕ} (q : List ℤ) (M : Bool → Matrix (Fin d) (Fin d) ℤ)

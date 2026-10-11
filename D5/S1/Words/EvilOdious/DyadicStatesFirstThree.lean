@@ -25,9 +25,9 @@ stateZ_step_1 | proof_shape: bind-only | frozen: none | escape_witness: none | c
 stateZ_step_2 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.h_state_step
 stateZ_step_3 | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.h_state_step
 appendValue | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.appendValue_ge, DyadicPrefixBounds.c_dyadic, DyadicPrefixBounds.c_prefix, DyadicPrefixBounds.h_dyadic, DyadicPrefixBounds.h_prefix, DyadicStatesFirstThree.appendValue_cons, DyadicStatesFirstThree.state_word, DyadicStatesFirstThree.vector_prefix_bound, DyadicStatesLastThree.appendValue_decompose, DyadicStatesLastThree.lowWord_bound, DyadicStatesLastThree.state_dyadic_bound, DyadicStatesLastThree.word_for_low, SixfoldMonotonicity.error_prefix, SixfoldMonotonicity.prefix_exists, SixfoldMonotonicity.prefix_scale_lower, SixfoldMonotonicity.tail_positive
-appendValue_cons | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.appendValue_ge, DyadicStatesFirstThree.state_word, DyadicStatesLastThree.word_for_low, SixfoldMonotonicity.prefix_exists, SixfoldMonotonicity.prefix_scale_lower
+appendValue_cons | proof_shape: bind-only | frozen: none | escape_witness: none | consumers: DyadicPrefixBounds.appendValue_ge, DyadicStatesFirstThree.state_word, SixfoldMonotonicity.prefix_exists, SixfoldMonotonicity.prefix_scale_lower
 state_word | proof_shape: content | frozen: none | escape_witness: state_word | consumers: DyadicStatesFirstThree.vector_prefix_bound
-vector_prefix_bound | proof_shape: content | frozen: none | escape_witness: none | consumers: DyadicStatesLastThree.state_dyadic_bound
+vector_prefix_bound | proof_shape: content | frozen: none | escape_witness: state_word | consumers: DyadicStatesLastThree.state_dyadic_bound
 Content reason: state_word proves by word induction that one-bit transitions compose into a matrix product.
 It supplies vector_prefix_bound and state_dyadic_bound; unfolding one transition does not prove an arbitrary word.
 Utility none: these symbolic identities and estimates quantify over arbitrary indices.
