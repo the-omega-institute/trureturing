@@ -1,0 +1,107 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Hyperideal;
+
+internal sealed class NoncommutativeCornerOrbitsDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The actual corner relation of the noncommutative face pairing is the specified subgroup orbit relation.",
+        H("Noncommutative actual corner orbits"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-act"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.act"),
+                H("Right action convention"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any group G, type Omega and left action of the opposite group on Omega, act(x,g) is op(g) acting on x. Thus it represents the right action of G on Omega."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-act-one"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.act_one"),
+                H("Identity acts trivially"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every x in Omega, act(x,1)=x."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-act-mul"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.act_mul"),
+                H("Composition of right actions"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every x in Omega and g,h in G, act(act(x,g),h)=act(x,g*h). The multiplication order is that of a right action."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-facepair"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.facePair"),
+                H("The actual whole-face pairing"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary u,v in G, the face pairing sends (x,0) to (act(x,u),3), (x,1) to (act(x,v),2), (x,2) to (act(x,v inverse),1), and (x,3) to (act(x,u inverse),0)."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-slotmap"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.slotMap"),
+                H("The actual corner slot maps"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For omitted faces 0,1,2,3, respectively, the permutations of the three increasing corner slots are [0,1,2], [2,0,1], [1,2,0], and [0,1,2]. The displayed nonidentity maps are inverse to one another."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-pairing"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.pairing"),
+                H("A whole-face Pairing in the existing interface"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any u,v in G, the whole-face table and slot maps form ActualCornerTransport.Pairing Omega. The face involution is fixed point free because the omitted-face labels change. Its corner-slot maps obey the required inverse compatibility. No freeness, finiteness, transitivity or generation assumption is required."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-normalize"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.normalize"),
+                H("The representative sheet of a corner"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For u in G and an actual corner c=(x,j), normalize(u,c)=act(x,u to the natural power j.val). This is a sheet in Omega, not a new definition of the actual corner equivalence relation."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-sword"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.sWord"),
+                H("The first boundary return word"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For u,v in G, sWord(u,v)=(u squared) inverse times v."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-tword"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.tWord"),
+                H("The second boundary return word"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For u,v in G, tWord(u,v)=(u cubed) inverse times v times u, in this order."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-kword"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.kWord"),
+                H("The third boundary return word"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For u,v in G, kWord(u,v)=v times u cubed."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-boundarygroup"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.boundaryGroup"),
+                H("The subgroup generated by the three return words"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For u,v in G, boundaryGroup(u,v) is Subgroup.closure of the set containing sWord(u,v), tWord(u,v) and kWord(u,v). It is the subgroup generated by these words, with no normal-closure operation."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("noncommutative-corner-actual-corner-orbit-iff"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.actual_corner_orbit_iff"),
+                H("Actual corner equivalence is exactly the subgroup orbit relation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every group G, arbitrary type Omega with an action of the opposite group, u,v in G and actual corners c,d in Omega times Fin(4), the equivalence closure of ActualCornerTransport.cornerRel for pairing(u,v) relates c and d if and only if there exists g in boundaryGroup(u,v) with act(normalize(u,c),g)=normalize(u,d). The proof constructs actual face-slot paths from each corner to its normalized corner at vertex zero, constructs actual paths for the three subgroup generators, extends those paths over subgroup products and inverses, and proves that every original face-slot generator preserves the specified orbit relation. Empty Omega, infinite groups, nonfaithful actions and stabilizers are included. This statement supplies the corner-relation characterization only; it does not assert edge periods, Euler characteristic, surface links, manifold charts or a geometric metric."))),
+                DescribeRole.Theorem))));
+}
