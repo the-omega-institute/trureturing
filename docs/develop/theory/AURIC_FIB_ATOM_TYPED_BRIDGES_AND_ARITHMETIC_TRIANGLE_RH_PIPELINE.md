@@ -6838,3 +6838,255 @@ QCD(K)
 \]
 
 两条路线的共同输入是有限 Markov/Dirichlet 数据。它们的极限识别、相互等价及其与物理引力的关系，都必须另行证明。
+
+
+## 39. FIB Fisher 结构作为量子 Fisher 几何的精确对角限制
+
+前文已经把五态概率律嵌入对角密度矩阵。本节证明一个可以直接形式化的精确桥接：在可交换的对角扇区，量子 SLD Fisher 信息恰好等于 FIB 的经典 Fisher 信息。因此这里的“量子几何”不是类比，而是同一有限矩阵计算在两个记号系统中的相等。
+
+### 定义 39.1（SLD 与量子 Fisher 型）
+
+令 \(\rho_\theta\) 是有限维严格正定密度矩阵族，令
+
+\[
+\dot\rho_\theta
+=
+\frac{d}{d\theta}\rho_\theta.
+\]
+
+定义对称对数导数 \(L_\theta\) 为满足
+
+\[
+\dot\rho_\theta
+=
+\frac12\left(
+\rho_\theta L_\theta+L_\theta\rho_\theta
+\right)
+\]
+
+的 Hermitian 矩阵。定义 SLD 量子 Fisher 信息
+
+\[
+F_Q(\rho_\theta)
+=
+\operatorname{tr}
+\left(
+\rho_\theta L_\theta^2
+\right).
+\]
+
+在本节中只处理严格正定有限维状态，避免支撑变化带来的额外伪逆条件。
+
+### 定理 39.2（对角量子 Fisher 等于 FIB Fisher）
+
+令
+
+\[
+\rho_\kappa
+=
+\iota_\Sigma(p_\kappa)
+=
+\sum_{s\in\Sigma}p_{\kappa,s}|s\rangle\langle s|,
+\]
+
+并假设 \(\kappa\) 位于纤维内部，使得 \(p_{\kappa,s}>0\) 对所有 \(s\in\Sigma\)。令
+
+\[
+d=(1,-1,0,-1,1),
+\qquad
+\partial_\kappa p_\kappa=d.
+\]
+
+则
+
+\[
+L_\kappa
+=
+\operatorname{diag}
+\left(
+\frac{d_s}{p_{\kappa,s}}
+\right)_{s\in\Sigma},
+\]
+
+且
+
+\[
+\boxed{
+F_Q(\rho_\kappa)
+=
+\sum_{s\in\Sigma}
+\frac{d_s^2}{p_{\kappa,s}}
+=
+\mathcal I(\kappa).
+}
+\]
+
+因此 Bures 线元（取标准约定 \(ds_B^2=\tfrac14F_Q\,d\kappa^2\)）满足
+
+\[
+\boxed{
+ds_B^2
+=
+\frac14\mathcal I(\kappa)\,d\kappa^2.
+}
+\]
+
+#### 证明
+
+\(\rho_\kappa\) 和 \(\partial_\kappa\rho_\kappa\) 都是对角矩阵，因此 SLD 方程逐个对角元化为
+
+\[
+d_s=p_{\kappa,s}(L_\kappa)_{ss}.
+\]
+
+故
+
+\[
+(L_\kappa)_{ss}
+=
+\frac{d_s}{p_{\kappa,s}}.
+\]
+
+代入量子 Fisher 定义得到
+
+\[
+\begin{aligned}
+F_Q(\rho_\kappa)
+&=
+\sum_s p_{\kappa,s}
+\left(\frac{d_s}{p_{\kappa,s}}\right)^2\\
+&=
+\sum_s\frac{d_s^2}{p_{\kappa,s}}
+=
+\frac1{p_0}
++\frac1{p_2}
++\frac1{p_5}
++\frac1{p_{25}}
+=
+\mathcal I(\kappa).
+\end{aligned}
+\]
+
+Bures 线元的公式直接给出第二项。证毕。
+
+该定理说明：FIB 的隐藏 seam 并不是一个凭空增加的“量子变量”。它在对角量子态流形中对应一个严格定义的 Hermitian 切向扰动。若要研究真正的量子相干，还必须允许非对角密度矩阵并给出额外的非交换动力学。
+
+### 定理 39.3（节点乘积场的 Fisher 可加性）
+
+令 \(V\) 为有限图顶点集。每个顶点有严格正定 FIB 对角态
+
+\[
+\rho_{v,\kappa_v}
+=
+\iota_\Sigma(p_{\kappa_v}),
+\]
+
+并定义乘积状态
+
+\[
+\rho_{\boldsymbol\kappa}
+=
+\bigotimes_{v\in V}\rho_{v,\kappa_v}.
+\]
+
+令 \(u_v=\partial_{\kappa_v}p_{\kappa_v}=d\)。则对任意向量 \(\dot{\boldsymbol\kappa}=(\dot\kappa_v)_v\)，有
+
+\[
+\boxed{
+F_Q(\rho_{\boldsymbol\kappa};\dot{\boldsymbol\kappa})
+=
+\sum_{v\in V}
+\dot\kappa_v^{\,2}\mathcal I_v(\kappa_v).
+}
+\]
+
+#### 证明
+
+乘积状态的导数为
+
+\[
+\dot\rho
+=
+\sum_{v\in V}
+\dot\kappa_v
+\left(
+\bigotimes_{w<v}\rho_w
+\right)
+\otimes
+\dot\rho_v
+\otimes
+\left(
+\bigotimes_{w>v}\rho_w
+\right).
+\]
+
+每个局部 SLD 为
+
+\[
+L_v=\operatorname{diag}(d_s/p_{v,s}),
+\qquad
+\operatorname{tr}(\rho_vL_v)=\operatorname{tr}(\dot\rho_v)=0.
+\]
+
+因此全局 SLD 为
+
+\[
+L
+=
+\sum_{v\in V}
+\dot\kappa_v
+\,
+I\otimes\cdots\otimes L_v\otimes\cdots\otimes I.
+\]
+
+计算 \(\operatorname{tr}(\rho L^2)\) 时，交叉项 \(v\ne w\) 含有因子
+
+\[
+\operatorname{tr}(\rho_vL_v)
+\operatorname{tr}(\rho_wL_w)=0.
+\]
+
+剩余对角项为
+
+\[
+\sum_v\dot\kappa_v^{\,2}
+\operatorname{tr}(\rho_vL_v^2)
+=
+\sum_v\dot\kappa_v^{\,2}\mathcal I_v(\kappa_v).
+\]
+
+证毕。
+
+### 推论 39.4（层级 FIB Fisher 能量的量子解释）
+
+如果第 \(j\) 层场在每个节点使用独立乘积态，并将节点权重吸收到参数速度中，则
+
+\[
+\mathcal I_j(p;u)
+=
+F_Q(\rho_j;\dot{\boldsymbol\kappa})
+\]
+
+是该层乘积量子态沿 FIB seam 方向的 SLD Fisher 信息。由前文定理 20.4 的随机粗粒化收缩，
+
+\[
+F_Q(\mathcal E_j(\rho_j);\dot{\mathcal E}_j)
+\le
+F_Q(\rho_j;\dot{\rho}_j)
+\]
+
+在对角随机读出层上成立。
+
+因此当前架构可以严格写成：
+
+\[
+\text{FIB 隐藏 seam}
+\longrightarrow
+\text{对角密度矩阵切向量}
+\longrightarrow
+\text{SLD Fisher 几何}
+\longrightarrow
+\text{CPTP 粗粒化收缩}.
+\]
+
+这条链条仍然只使用有限概率、有限矩阵和 CPTP 映射。它还没有给出引力，也没有把 FIB 的五态载体识别成物理量子系统。
