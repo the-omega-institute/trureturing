@@ -437,9 +437,7 @@ private lemma iid_average {Z : Type*} [Fintype Z]
   have he : (∫ x, g (x 0) ∂μ) = ∑ z, (p z).toReal * g z := by
     calc
       _ = ∫ z, g z ∂p.toMeasure := (hg 0).integral_eq
-      _ = _ := by
-        rw [integral_fintype Integrable.of_finite]
-        apply Finset.sum_congr rfl; intro z _; rw [Measure.real, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _), smul_eq_mul]
+      _ = _ := by simpa only [smul_eq_mul] using PMF.integral_eq_sum p g
   simpa only [he] using h
 private lemma iid_positive {Z : Type*} [Fintype Z]
     [MeasurableSpace Z] [MeasurableSingletonClass Z] (p : PMF Z) :
@@ -458,7 +456,6 @@ private lemma iid_likelihood_ratio {Z : Type*} [Fintype Z]
       (∀ n, 0 < ∏ k : Fin n, (p (x k)).toReal) ∧
       Tendsto (fun n => (∏ k : Fin n, (q (x k)).toReal) /
         (∏ k : Fin n, (p (x k)).toReal)) atTop (𝓝 0) := by classical
-  let μ := productLaw (fun _ : ℕ => p)
   have hpos := iid_positive p
   by_cases hac : ∀ z, (q z).toReal = 0 → (p z).toReal = 0
   · have hp : (∀ z, 0 ≤ (p z).toReal) ∧ ∑ z, (p z).toReal = 1 :=
@@ -685,12 +682,8 @@ private lemma fiber_recovery_identity {J I : Type*} [Fintype J] [Fintype I]
   have hQ := D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law q r hq
   have hsum (v : J → ℝ) (f : I → ℝ) :
       ∑ i, pushforward r v i * f i = ∑ j, v j * f (r j) := by
-    simp only [pushforward, Finset.sum_mul]
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl; intro j _; rw [Finset.sum_eq_single (r j)]
-    · simp
-    · intro b _ hb; simp [Ne.symm hb]
-    · simp
+    simpa +contextual [pushforward, Finset.sum_mul, Finset.sum_filter, ite_mul] using
+      (Finset.sum_fiberwise (Finset.univ : Finset J) r (fun j => v j * f (r j)))
   have hle (v : J → ℝ) (hv : ∀ j, 0 ≤ v j) j : v j ≤ pushforward r v (r j) := by
     simpa only [pushforward, if_true] using
       (Finset.single_le_sum (f := fun k => if r k = r j then v k else 0)
@@ -813,12 +806,10 @@ private lemma iid_class_integral {J S Z : Type*} [Fintype J] [Fintype S]
     rw [integral_smul_measure, ENNReal.toReal_ofReal (hd j),
       (measurableEmbedding_prodMk_left j).integral_map]
     simp
-  simp only [hm, pushforward, Finset.sum_mul]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl; intro j _; rw [Finset.sum_eq_single (s j)]
-  · simp
-  · intro c _ hc; simp [Ne.symm hc]
-  · simp
+  simp only [hm]
+  symm
+  simpa +contextual [pushforward, Finset.sum_mul, Finset.sum_filter, ite_mul] using
+    (Finset.sum_fiberwise (Finset.univ : Finset J) s (fun j => d j * g (s j)))
 /-- In the finite latent iid model the row class is decoded from the record under both
 priors, both posteriors converge to the class-conditioned priors, and KL loss converges
 almost surely and in L1. The coordinate limits and positive evidence-ratio limit are

@@ -352,5 +352,109 @@ def iidRegistration : Contract.Registration
   familyRecord := none
   options := #[]
 
+def modelLaw (R : Realization signature.{u,v,w}) : Prop :=
+  ∀
+    {J : Type u} {I : Type v} {Z : Type w} {S : Type o} [Fintype J] [Nonempty J] [Fintype I] [Fintype Z]
+    [Fintype S] [DecidableEq S] [MeasurableSpace J] [MeasurableSingletonClass J]
+    [MeasurableSpace Z] [MeasurableSingletonClass Z]
+    [MeasurableSpace S] [MeasurableSingletonClass S]
+    (d q : J → ℝ) (K : J → PMF Z) (r : J → I) (s : J → S)
+    (hd : (∀ j, 0 ≤ d j) ∧ ∑ j, d j = 1)
+    (hq : (∀ j, 0 < q j) ∧ ∑ j, q j = 1)
+    (hs : ∀ j k, s j = s k ↔ K j = K k),
+    let μ := fun p : J → ℝ => ∑ j, ENNReal.ofReal (p j) •
+      (productLaw (fun _ : ℕ => K j)).map (fun x => (j, x))
+    let C := fun j c => if s j = c then (1 : ℝ) else 0
+    let W := fun n j (h : Fin n → Z) => ∏ k, (K j (h k)).toReal
+    let f := fun n (ω : J × (ℕ → Z)) => loss R d q (W n) r (fun k => ω.2 k)
+    let a := fun (ω : J × (ℕ → Z)) => posterior C d (s ω.1)
+    let b := fun (ω : J × (ℕ → Z)) => posterior C q (s ω.1)
+    let g := fun ω => klDivergence (a ω) (b ω) -
+      klDivergence (pushforward r (a ω)) (pushforward r (b ω))
+    (∃ dec : (ℕ → Z) → S, Measurable dec ∧
+      (∀ᵐ ω ∂μ d, dec ω.2 = s ω.1) ∧ (∀ᵐ ω ∂μ q, dec ω.2 = s ω.1)) ∧
+    (∀ᵐ ω ∂μ d, 0 < channelOutput C d (s ω.1) ∧
+      (∀ j, Tendsto (fun n => posterior (W n) d (fun k => ω.2 k) j) atTop (𝓝 (a ω j))) ∧
+      (∀ j, Tendsto (fun n => posterior (W n) q (fun k => ω.2 k) j) atTop (𝓝 (b ω j)))) ∧
+    (∀ᵐ ω ∂μ d, Tendsto (fun n => f n ω) atTop (𝓝 (g ω))) ∧
+    UniformIntegrable f 1 (μ d) ∧ Integrable g (μ d) ∧
+    Tendsto (fun n => eLpNorm (f n - g) 1 (μ d)) atTop (𝓝 0) ∧
+    Tendsto (fun n => ∫ ω, f n ω ∂μ d) atTop (𝓝 (∫ ω, g ω ∂μ d)) ∧
+    (∫ ω, g ω ∂μ d) = ∑ c, channelOutput C d c *
+      (klDivergence (posterior C d c) (posterior C q c) -
+        klDivergence (pushforward r (posterior C d c)) (pushforward r (posterior C q c))) ∧
+    (∫ ω, g ω ∂μ d) = klDivergence d (fun j => q j *
+      (pushforward (fun j => (r j,s j)) d (r j,s j) /
+        pushforward (fun j => (r j,s j)) q (r j,s j))) ∧
+    ∀ c, 0 < channelOutput C d c →
+      (klDivergence (posterior C d c) (posterior C q c) -
+        klDivergence (pushforward r (posterior C d c)) (pushforward r (posterior C q c)) = 0 ↔
+        posterior C d c = fun j => posterior C q c j *
+          (pushforward r (posterior C d c) (r j) / pushforward r (posterior C q c) (r j)))
+
+theorem modelLaw_actual : modelLaw.{u,v,w,o} actual := by
+  exact @iid_moving_support_posterior_limit.{u,v,w,o}
+theorem modelLaw_rejected : ¬ modelLaw.{u,v,w,o} rejected := by
+  intro h
+  let K : PUnit.{u+1} → PMF PUnit.{w+1} := fun _ => PMF.pure PUnit.unit
+  let μ : Measure (PUnit.{u+1} × (ℕ → PUnit.{w+1})) :=
+    (productLaw (fun _ : ℕ => PMF.pure PUnit.unit)).map (fun x => (PUnit.unit,x))
+  haveI : IsProbabilityMeasure μ := by
+    dsimp only [μ, productLaw]
+    exact Measure.isProbabilityMeasure_map (by fun_prop)
+  have hh := h (I := PUnit.{v+1}) (S := PUnit.{o+1})
+    (fun _ : PUnit.{u+1} => 1) (fun _ => 1) K (fun _ => PUnit.unit) (fun _ => PUnit.unit)
+    (by simp) (by simp) (by intro j k; simp [K])
+  have ht := hh.2.2.1
+  simp only [loss, rejected, realize, posterior, channelOutput, Fintype.sum_unique,
+    ↓reduceIte, mul_one, div_one, klDivergence, pushforward,
+    one_div_one, Real.log_one, mul_zero, sub_self, ENNReal.ofReal_one, one_smul] at ht
+  have hl : ∀ᵐ ω ∂μ, Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 0) := ht
+  obtain ⟨ω, hω⟩ := hl.exists
+  have he : (1 : ℝ) = 0 := tendsto_nhds_unique tendsto_const_nhds hω
+  norm_num at he
+def modelArena : Arena where
+  signature := signature.{u,v,w}
+  Law := modelLaw.{u,v,w,o}
+def modelEvidence : Registration modelArena.{u,v,w,o}
+    (type_of% (@_root_.D5.S3.DivergenceSupport.MovingSupportKLTransport.iid_moving_support_posterior_limit.{u,v,w,o})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨modelLaw_actual, rejected, modelLaw_rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, modelLaw_rejected⟩
+      intro j hj
+      exact False.elim (hj (@Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := actual_dependence
+
+def modelRegistration : Contract.Registration
+    (@_root_.D5.S3.DivergenceSupport.MovingSupportKLTransport.iid_moving_support_posterior_limit)
+    (Realization signature) Unit Unit where
+  unitName := `D5.S3.DivergenceSupport.MovingSupportKLTransport.iid_moving_support_posterior_limit.__information_unit
+  realizationName := `Reg.D5.S3.DivergenceSupport.MovingSupportKLTransport.modelEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨modelArena⟩
+  objectArena := .source ⟨modelArena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source modelArena ⟨modelEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p h =>
+    @posteriorDefect p.J p.I p.H p.finiteJ p.finiteI p.d p.q p.W p.r h)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S3.DivergenceSupport.MovingSupportKLTransport

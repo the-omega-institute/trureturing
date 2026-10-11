@@ -99,7 +99,7 @@ internal sealed class MovingSupportKLTransportDocument : IScribeDocumentDefiniti
                         "coarse fibers. Finite summation gives the almost everywhere " +
                         "loss limit, and common-record tail transport upgrades it to L1. " +
                         "Identifying a and b with the conditional priors of an iid " +
-                        "observation-row class remains a separate hypothesis-supplying step."))),
+                        "observation-row class is supplied by the actual-model theorem below."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("iid-moving-support-posterior-limit"),
@@ -129,7 +129,7 @@ internal sealed class MovingSupportKLTransportDocument : IScribeDocumentDefiniti
                         "record mass formula; finite product normalization proves the row " +
                         "sums. These discharge the measure interface of the preceding theorem. " +
                         "Row-class decoding, posterior consistency, and identification of the " +
-                        "limiting average with joint-label recovery are separate conclusions."))),
+                        "limiting average with joint-label recovery are supplied below."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("iid-row-class-posterior-limit"),
@@ -140,7 +140,8 @@ internal sealed class MovingSupportKLTransportDocument : IScribeDocumentDefiniti
                 Blocks(Paragraph(Text(
                     "For finite nonempty J, finite I, Z and S, normalized actual prior d " +
                     "with zero coordinates allowed, strictly positive normalized reference " +
-                    "prior q, and PMF rows K(j), let s identify exactly equal rows: " +
+                    "prior q, and PMF rows K(j), take arbitrary r from J to I and measurable " +
+                    "singletons on J, Z and S. Let s identify exactly equal rows: " +
                     "s(j)=s(k) if and only if K(j)=K(k). The class channel C(j,c) is " +
                     "one when s(j)=c and zero otherwise. The actual and reference laws " +
                     "draw the latent state once and then draw the entire record iid from its row. " +
