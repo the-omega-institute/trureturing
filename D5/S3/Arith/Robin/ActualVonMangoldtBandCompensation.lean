@@ -244,7 +244,7 @@ private theorem bandDerivative_continuous {a b c : ℝ} (hc : 0 < c) (ha : 0 < a
   have ht0 : 0 < t := ha.trans_le ht.1
   have hl := Real.continuousAt_log (div_ne_zero ht0.ne' hc.ne')
   have hlog : ContinuousAt (fun s : ℝ => Real.log (s / c)) t :=
-    hl.comp' (f := fun s : ℝ => s / c) (continuousAt_id.div_const c)
+    hl.comp' (f := fun s : ℝ => s / c) (x := t) (continuousAt_id.div_const c)
   exact ((hlog.add_const 1).div
     ((continuousAt_id.pow 2).mul (hlog.pow 2))
     (by have := hz t ht; positivity)).continuousWithinAt
