@@ -4891,3 +4891,101 @@ Here $\Omega(x)\ge1$ because every source has $N(x)>1$. Taking $\delta_x=e_x$ pr
 The calibration meaning of Theorem 38.2 is task-relative: on the intrinsic obstruction $B_\beta$, uniformly limiting false finite upper proposals to $\delta$ also limits the probability of obtaining any finite proposal to $\delta$. Randomization alone leaves at least $1-\delta$ probability without such a proposal; counting actual incorrect proposals as unresolved increases the failure probability as in (38.7). The local upper endpoint (37.7) remains infinite at each finite prime transcript. The claim does not rule out bounded advice cells or the explicit index, magnitude and complete-support promises of Proposition 36.4. Source-correlated random tapes, hidden source inputs and arbitrary non-prime probes fall outside Definition 38.1; no factoring-efficiency, uniform resource or physical conclusion follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 39. Output-conditioned error and the literal-divergence tradeoff
+
+**Definition 39.1 (Uniform conditional error).** Retain the source, advice, common tape, finite records and events of Definition 38.1. Fix one $\delta\in[0,1]$ and replace (38.2) by
+
+$$
+e_y\le\delta h_y\qquad(y\in X).
+\tag{39.1}
+$$
+
+Here $h_y=\mu(H_y)$ and $e_y=\mu(F_y)$. This is the sourcewise conditional false-output bound $\mu(F_y\mid H_y)\le\delta$ whenever $h_y>0$, with the zero-proposal case read as $e_y=0$ and no conditional probability assigned. Put $d_y=\mu(D_y)$ for literal nontermination. Unknown, abort and $+\infty$ remain finite terminal outcomes outside $H_y$ and are not counted as $D_y$. Conditioning an error guarantee on selection is standard; see [Fithian, Sun and Taylor, *Optimal Inference After Model Selection*, arXiv:1410.2597v4, §§2.2 and 2.4, equations (9) and (14)](https://arxiv.org/html/1410.2597v4). Here the selected event is finite output in Definition 38.1; no statistical sampling model from that reference is assumed.
+
+**Corollary 39.2 (Persistent sources force a proposal--divergence tradeoff).** Under Definition 39.1, every $x\in B_\beta$ satisfies
+
+$$
+(1-\delta)h_x\le\delta d_x.
+\tag{39.2}
+$$
+
+Equivalently, for $0<\delta<1$, $d_x\ge(1-\delta)h_x/\delta$. At $\delta=0$ one has $h_x=0$; at $\delta=1$ the inequality is the tautology $0\le d_x$.
+
+**Proof.** Reuse Theorem 38.2 on the product tape space $(\Theta^{\mathbb N},\mathcal F^{\otimes\mathbb N},\mu^{\otimes\mathbb N})$. Run the original procedure on a fresh coordinate, retain a finite proposal, and restart after every finite terminal record outside $H_y$; a coordinate in $D_y$ leaves the restarted run divergent. Each restart is an execution transition. Infinitely many immediate unknown outcomes therefore constitute an infinite execution, not a finite output. The product law and restart rule are common to all sources.
+
+Put $R_y=L_y\setminus H_y$ and $r_y=\mu(R_y)=1-h_y-d_y$. Proposal on attempt $n\ge1$ is the cylinder $R_y^{n-1}\times H_y\times\Theta^{\mathbb N}$, with false-output counterpart obtained by replacing $H_y$ by $F_y$. These events are disjoint across $n$ and have probabilities $r_y^{n-1}h_y$ and $r_y^{n-1}e_y$. Summing gives
+
+$$
+\widetilde h_y=\frac{h_y}{h_y+d_y},\qquad
+\widetilde e_y=\frac{e_y}{h_y+d_y}
+\tag{39.3}
+$$
+
+when $h_y+d_y>0$, and both are $0$ otherwise: in the latter case $h_y=e_y=0$, so every term of both sums is zero. Each finite restarted record comprises finitely many finite executions and restart transitions. Its events, including Borel restrictions on the final real output, are measurable by Definition 38.1 and countable unions over attempt counts and discrete finite histories. No countability of real outputs or uniform horizon is needed. Equation (39.1) gives $\widetilde e_y\le\delta h_y/(h_y+d_y)\le\delta$ when the denominator is positive, and the zero case also satisfies this bound.
+
+Explicitly, use (38.4) for the restarted procedure: the event $\widetilde A_m$ bounds its total execution length by $m$, all queried primes by $P_m=\{p_1,\ldots,p_m\}$, and its final output by $m$. For $x\in B_\beta$, choose one actual $y_m\in J_\beta(x,P_m)$ with $\Omega(y_m)>m$ before quantifying over tapes. Every tape in $\widetilde A_m$ follows the same complete execution at $y_m$, including all failed attempts and restart transitions; all its prime answers agree. Thus the whole event lies in $\widetilde F_{y_m}$ and has product measure at most $\delta$. Overlapping menus and repeated queries use this same source and tape. These increasing events exhaust $\widetilde H_x$, so $\widetilde h_x\le\delta$ by continuity from below, exactly as in Theorem 38.2. Multiplying (39.3) by $h_x+d_x>0$ proves (39.2); if this denominator is zero, both sides of (39.2) are zero. The endpoint conclusions follow directly. $\square$
+
+**Proposition 39.3 (Attainment at a persistent arithmetic source).** There is a supplied numerical advice map $\beta_*:X\to\{0,1\}$ with both values attained, independent of $\delta$, such that $x_*=(7,2)\in B_{\beta_*}$. For every $\delta\in[0,1]$ there is one procedure satisfying Definition 39.1 on all of the unchanged $X$, with $h_{x_*}=\delta$, $e_{x_*}=0$ and $d_{x_*}=1-\delta$. Its deterministic parameters have a finite description, and every individual search used to generate them terminates.
+
+**Proof.** The arithmetic supplier is Theorem 35.2, with the labeled source of (36.1). Proposition 35.5 gives $F_7=13$, $I_7=\{2\}$ and $N(x_*)=27=3^3$, hence $\Omega(x_*)=1$. For an integer $M\ge2$, put $P(M)=\{p\in\mathbb P:p\le M\}$. Define $n_0=27$. Inductively enumerate prime indices $r$ increasingly and, for each $r$, the finite set $I_r$ increasingly. Select the first labeled source $z_j=(r_j,g_j)$ whose value $n_j=N(z_j)$ satisfies
+
+$$
+S_j=P(n_{j-1}),\qquad d_{S_j}(n_j)=d_{S_j}(27),\qquad
+\rho_{S_j}(n_j)\ge j\qquad(j\ge1).
+\tag{39.4}
+$$
+
+Theorem 35.2 supplies such a source for every finite $S_j$ and integer $j\ge1$. The enumeration reaches any given source after finitely many candidates; the Fibonacci recurrence, finite prime tests and trial division decide each candidate condition in finite time. Thus the first selection terminates, and induction proves termination of every individual selection. This is one fixed construction on $X$, with no access to the unknown source of a later run.
+
+Since $3\in S_j$, equation (39.4) gives $3\mid n_j$ and no other divisor in $S_j$. At least one prime outside $S_j$ divides $n_j$, so $n_j>n_{j-1}$. Put $c_j=\omega(n_j)\ge j+1$ and let $q_j$ be the least prime divisor of $n_j$ other than $3$; finite trial division computes both. Then
+
+$$
+q_j>n_{j-1},\qquad q_j\nmid27,\qquad
+q_j\mid n_i\ \Longleftrightarrow\ i=j\qquad(i,j\ge1).
+\tag{39.5}
+$$
+
+Indeed, for $i<j$ one has $n_i\le n_{j-1}<q_j$. For $i>j$, the set $S_i$ contains $q_j\le n_j\le n_{i-1}$, and (39.4) forces its bit to be that of $27$, namely zero. The case $i=j$ holds by definition. This also shows that the primes $q_j$ are distinct.
+
+Define the numerical set and its pulled-back advice by
+
+$$
+V=\{27\}\cup\{n_j:j\ge1\},\qquad
+\beta_*(y)=\begin{cases}0,&N(y)\in V,\\1,&N(y)\notin V.\end{cases}
+\tag{39.6}
+$$
+
+All labels with the same numerical value have the same advice. Both values occur: $x_*$ has value zero, while $(5,1)\in X$ has $N(5,1)=6$ and value one, since every $n_j$ is odd by its bit at $2\in S_j$. Membership in $V$, if the integer itself is supplied, is decidable by generating the strictly increasing unbounded sequence until it reaches or passes that integer (and separately checking $27$). Each stage terminates by the preceding argument. The query procedure below receives only the supplied advice, not that integer or its label; this decidability statement does not supply an acquisition operation for advice.
+
+To prove persistence, fix any finite prime menu $T$ and any finite real $K$. Since $n_j$ is strictly increasing, choose $j$ with $T\subseteq P(n_{j-1})$ and $j+1>K$; the empty menu imposes no first restriction. The single actual source $z_j$ then satisfies
+
+$$
+\beta_*(z_j)=\beta_*(x_*)=0,\qquad
+d_T(N(z_j))=d_T(27),\qquad \Omega(z_j)=c_j\ge j+1>K.
+\tag{39.7}
+$$
+
+This proves $x_*\in B_{\beta_*}$ by (37.2). The argument works also for the union of any finitely many finite menus, so their shared coordinates and overlaps are realized simultaneously. Numerical duplicates of $27$ or $n_j$ in other windows change neither advice, target nor any prime answer. In contrast, within advice zero the positive answer at $q_j$ identifies the numerical value $n_j$ by (39.5), even when its generating label is not unique.
+
+For fixed $\delta$, take the common tape space $\Theta=\{0,1\}$ with its full sigma algebra and law $\mu(\{1\})=\delta$, $\mu(\{0\})=1-\delta$. On advice one, halt with unknown. On advice zero and tape one, output the finite proposal $1$. On advice zero and tape zero, generate $(q_j,c_j)$ in order, query each $q_j\mid N(y)$, and at the first positive answer output $c_j$; otherwise continue to the next index. These are the entire rules for every source. All generation steps use the same fixed arithmetic searches, and every source observation in this branch is the stated prime query.
+
+At $N(y)=27$, tape zero receives only negative answers and makes infinitely many queries, hence literally never terminates; tape one gives the correct output $1$. At $N(y)=n_j$, tape zero reaches its first positive answer exactly at $q_j$ after finitely many terminating searches and queries, and returns $c_j=\Omega(y)$; tape one returns the false proposal $1<c_j$. Every remaining source has advice one and terminates with unknown. Therefore the complete probability rows for this one procedure are
+
+| Source class | $h_y$ | $e_y$ | $d_y$ | $\mu(L_y\setminus H_y)$ |
+| --- | --- | --- | --- | --- |
+| $N(y)=27$ | $\delta$ | $0$ | $1-\delta$ | $0$ |
+| $N(y)=n_j$ for some $j\ge1$ | $1$ | $\delta$ | $0$ | $0$ |
+| $N(y)\notin V$ | $0$ | $0$ | $0$ | $1$ |
+
+Every finite record and terminal restriction is measurable on this two-point tape space. The rows exhaust $X$ and show $e_y\le\delta h_y$ everywhere, including every zero denominator. At $x_*$ they give
+
+$$
+(h_{x_*},e_{x_*},d_{x_*})=(\delta,0,1-\delta),\qquad
+(1-\delta)h_{x_*}=\delta d_{x_*}=\delta(1-\delta).
+\tag{39.8}
+$$
+
+The endpoint laws $\delta=0,1$ give respectively $(0,0,1)$ and $(1,0,0)$ at $x_*$. Conditional error is asserted only when $h_y>0$; (39.1) itself holds at both endpoints. The Bernoulli law is stipulated for each real $\delta$ and is independent of the source; no effective exact sampler for an arbitrary real parameter is assumed. The arithmetic generation has a finite description with pointwise terminating searches, without a uniform bound on search time or query length. All uses of $V$ are through the supplied numerical advice, and all further source access consists of prime queries. $\square$
+
+## 追加锚（本行以下为增补区）
