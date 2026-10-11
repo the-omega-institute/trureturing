@@ -11,21 +11,24 @@ private def disposition (status reason : String) : Json := Json.mkObj [
   ("multiwindow_continuation", toJson "unknown; no multiwindow joint contract"),
   ("cost_and_research_value", toJson "not assessed; no aggregate score")]
 
-private def readingReasons (hasLaw : Bool) (continuation request : Json) : Json := Id.run do
+private def readingReasons (hasLaw : Bool) (continuation : Json) : Json := Id.run do
   let available := fun reason => Json.mkObj [("kind", toJson "available"), ("reason", toJson reason)]
   let unknown := Json.mkObj [("kind", toJson "unknown"),
     ("reason", toJson "single-window source law unacquired; finite state counts do not supply it")]
-  let unknown := (request.getObjVal? "law_acquisition").toOption.getD unknown
-  let law := if hasLaw then available "exact declared or empirical law; physical law and IID unverified" else unknown
+  let law := if hasLaw then
+    available "exact supplied law or archive; source acquisition, physical law and IID unverified"
+    else unknown
   let conditional := if !hasLaw then unknown else
     if (continuation.getObjVal? "conditional_reply_law").toOption == some Json.null then
       Json.mkObj [("kind", toJson "not-applicable"), ("reason", toJson "conditioning event has zero mass")]
-    else available "positive conditioning mass; apex handled without division by r"
+    else available "positive supplied conditioning mass; apex handled without division by r"
   return Json.mkObj [
     ("arena",
       available "complete five-state Window domain, including rejected and zero-mass states"),
     ("source_contract",
-      available "compiled native adapter with explicit initialized specialization"),
+      Json.mkObj [("kind", toJson "unavailable"),
+        ("reason", toJson "supplied data only; compiled native source correspondence \
+          and acquisition unverified")]),
     ("atom_readout", available "complete native mode order null,2,5,25,3"),
     ("seam_readout", available "actual high-to-low native reader"),
     ("kernel", available "actual source readouts; bidirectional finite kernel"),
@@ -102,8 +105,11 @@ def analyze (request : Json) : Except String Json := do
       ("pair_measure",
         toJson "uniform ordered off-diagonal state pairs; independent of the source-law masses")]),
     ("source_contract", Json.mkObj ((sourceJson input).getObj?.toOption.get!.toArray.toList ++
-      [("binding", (request.getObjVal? "binding").toOption.getD Json.null),
-       ("law_acquisition", (request.getObjVal? "law_acquisition").toOption.getD Json.null)])),
+      [("binding", Json.null),
+       ("supplied_binding", (request.getObjVal? "binding").toOption.getD Json.null),
+       ("law_acquisition", Json.null),
+       ("supplied_law_acquisition",
+         (request.getObjVal? "law_acquisition").toOption.getD Json.null)])),
     ("atom_readout", Json.mkObj [("mode_order", toJson ["null", "2", "5", "25", "3"]),
       ("positions", toJson ["x=low 2", "y=high 5", "z=middle 3"]), ("states", nativeRows)]),
     ("seam_readout", Json.mkObj [("direction", toJson "high-to-low"),
@@ -118,9 +124,11 @@ def analyze (request : Json) : Except String Json := do
     ("residuals", macroResult.map (·.residuals) |>.getD Json.null),
     ("disposition", Json.mkObj (((disposition (if input.law.isSome then "deferred" else "open")
       (if input.law.isSome then
-        "exact finite execution report; not a Lean proof or a certified physical law"
+        "unverified source; exact supplied native law arithmetic; \
+          not a Lean proof or a certified physical law"
       else
-        "finite micro analysis computed; source-law acquisition contract or nonempty archive is missing")).getObj?.toOption.get!.toArray.toList) ++
-      [("readings", readingReasons input.law.isSome continuation request)]))]
+        "unverified source; finite native micro analysis computed; \
+          source law or nonempty archive is missing")).getObj?.toOption.get!.toArray.toList) ++
+      [("readings", readingReasons input.law.isSome continuation)]))]
 
 end LeanInformationAudit.AuricFib

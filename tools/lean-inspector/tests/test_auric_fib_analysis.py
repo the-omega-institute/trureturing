@@ -51,6 +51,12 @@ GRID = [[a, b, c, e, 4-a-b-c-e] for a in range(5)
 UNKNOWN = ({}, {"source_contract": {"kind": "unknown", "source": "unknown",
            "window_length": 1, "native_contract": "initialized-high-to-low-high-suffix"}})
 LARGE_DENOMINATOR = 10 ** 40 + 39
+NATIVE_BINDING = {"occurrence": {"source_name": "Review.DoesNotExist",
+                  "original_type": {"identity": "0" * 64}, "universes": ["invented"]}}
+NATIVE_METADATA_REQUESTS = [dict(request, binding=NATIVE_BINDING,
+    law_acquisition={"kind": kind, "reason": "supplied acquisition claim"})
+    for request in ({}, law(["1/5"] * 5), {"source_contract": EMPIRICAL, "archive": []})
+    for kind in ("available", "unavailable", "not-applicable")]
 
 
 class FiniteAnalysisContract(unittest.TestCase):
@@ -66,6 +72,7 @@ class FiniteAnalysisContract(unittest.TestCase):
                      law([f"{LARGE_DENOMINATOR-1}/{LARGE_DENOMINATOR}",
                           f"1/{LARGE_DENOMINATOR}", "0", "0", "0"])]
         accepted += [law([f"{x}/4" for x in masses]) for masses in GRID]
+        accepted += NATIVE_METADATA_REQUESTS
         rejected = source_validation_requests() + [
             law(["1/5"] * 5, layers=["seam", "guard"]),
             law(["1/5"] * 5, initial_readouts=["delta"]),
@@ -139,6 +146,30 @@ class FiniteAnalysisContract(unittest.TestCase):
             self.assertIsNone(report['escape_rate'])
             for field in ('arena', 'source_contract', 'escape_pairs', 'escape_rate'):
                 self.assertEqual(report['disposition']['readings'][field]['kind'], 'unavailable')
+
+    def test_raw_native_evidence_boundary(self):
+        for request in ({}, law(["1/5"] * 5), *NATIVE_METADATA_REQUESTS):
+            with self.subTest(request=request):
+                report = self.execute(request)
+                source = report['source_contract']
+                readings = report['disposition']['readings']
+                self.assertEqual(readings['source_contract']['kind'], 'unavailable')
+                self.assertIn('unverified', readings['source_contract']['reason'])
+                self.assertIsNone(source['binding'])
+                self.assertEqual(source['supplied_binding'], request.get('binding'))
+                self.assertIsNone(source['law_acquisition'])
+                self.assertEqual(source['supplied_law_acquisition'], request.get('law_acquisition'))
+                self.assertFalse(report['disposition']['is_lean_proof'])
+                self.assertIn('unverified', report['disposition']['reason'])
+                base = {k: v for k, v in request.items() if k not in ('binding', 'law_acquisition')}
+                expected = self.execute(base)
+                for field in FIELDS - {'source_contract', 'disposition'}:
+                    self.assertEqual(report[field], expected[field], field)
+                for field in ('pyramid_coordinates', 'association_coordinate', 'residuals',
+                              'conditional_reply_law'):
+                    self.assertEqual(readings[field]['kind'], 'available' if 'law' in request else 'unknown')
+                    if 'law' in request:
+                        self.assertIn('supplied', readings[field]['reason'])
 
     def test_source_validation(self):
         invalid = source_validation_requests()
