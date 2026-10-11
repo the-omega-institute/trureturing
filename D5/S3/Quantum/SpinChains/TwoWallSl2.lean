@@ -347,6 +347,245 @@ theorem marked_relations (a b : ℕ) :
     Sl2Relations (markedH K a b) (markedE K a b) (markedF K a b) :=
   conjugate_relations K (coordinateLinear K a b) (coordinate_relations K a b)
 
+omit [CharZero K] in
+private theorem commute_basis {a b : ℕ} (A B : Module.End K (CoordinateSpace K a b))
+    (hh : ∀ c, A (B (Finsupp.single c 1)) = B (A (Finsupp.single c 1))) :
+    Commute A B := by
+  change A * B = B * A
+  apply (Finsupp.basisSingleOne : Module.Basis (Coordinates a b) K _).ext
+  exact hh
+
+omit [CharZero K] in
+private theorem swap_h (a b : ℕ) :
+    Commute (Finsupp.lmapDomain K K coordinateSwap) (coordinateH K a b) := by
+  apply commute_basis K
+  intro c
+  simp [coordinateH, coordinateSwap, add_comm, Finsupp.mapDomain_add]
+
+omit [CharZero K] in
+private theorem swap_e (a b : ℕ) :
+    Commute (Finsupp.lmapDomain K K coordinateSwap) (coordinateE K a b) := by
+  classical
+  apply commute_basis K
+  intro c
+  simp only [coordinateE, Finsupp.linearCombination_single, one_smul, map_add, map_sum,
+    Finsupp.lmapDomain_apply, Finsupp.mapDomain_single]
+  rw [add_comm]
+  congr 1 <;> apply Finset.sum_congr rfl <;> intro j _ <;>
+    split_ifs <;> simp_all [coordinateSwap, leftMove, rightMove]
+
+omit [CharZero K] in
+private theorem swap_f (a b : ℕ) :
+    Commute (Finsupp.lmapDomain K K coordinateSwap) (coordinateF K a b) := by
+  classical
+  apply commute_basis K
+  intro c
+  simp only [coordinateF, Finsupp.linearCombination_single, one_smul, map_add, map_sum,
+    Finsupp.lmapDomain_apply, Finsupp.mapDomain_single]
+  rw [add_comm]
+  congr 1 <;> apply Finset.sum_congr rfl <;> intro j _ <;>
+    split_ifs <;> simp_all [coordinateSwap, leftMove, rightMove]
+
+omit [CharZero K] in
+private theorem rotate_h {a b : ℕ} (t : Pos a b) :
+    Commute (Finsupp.lmapDomain K K (coordinateRotate t)) (coordinateH K a b) := by
+  apply commute_basis K
+  intro c
+  simp [coordinateH, coordinateRotate, Finsupp.mapDomain_add]
+
+omit [CharZero K] in
+private theorem rotate_e {a b : ℕ} (t : Pos a b) :
+    Commute (Finsupp.lmapDomain K K (coordinateRotate t)) (coordinateE K a b) := by
+  classical
+  apply commute_basis K
+  intro c
+  simp only [coordinateE, Finsupp.linearCombination_single, one_smul, map_add, map_sum,
+    Finsupp.lmapDomain_apply, Finsupp.mapDomain_single]
+  congr 1 <;> apply Finset.sum_congr rfl <;> intro j _ <;>
+    split_ifs <;> simp_all [coordinateRotate, leftMove, rightMove]
+
+omit [CharZero K] in
+private theorem rotate_f {a b : ℕ} (t : Pos a b) :
+    Commute (Finsupp.lmapDomain K K (coordinateRotate t)) (coordinateF K a b) := by
+  classical
+  apply commute_basis K
+  intro c
+  simp only [coordinateF, Finsupp.linearCombination_single, one_smul, map_add, map_sum,
+    Finsupp.lmapDomain_apply, Finsupp.mapDomain_single]
+  congr 1 <;> apply Finset.sum_congr rfl <;> intro j _ <;>
+    split_ifs <;> simp_all [coordinateRotate, leftMove, rightMove]
+
+omit [CharZero K] in
+private theorem coordinateLinear_single {a b : ℕ} (c : Coordinates a b) :
+    coordinateLinear K a b (Finsupp.single c 1) = markedDelta K (encode c) := by
+  simp [coordinateLinear, Finsupp.lcongr_single, coordinateEquiv, markedDelta]
+
+omit [CharZero K] in
+private theorem conjugate_domain (a b : ℕ) (g : Coordinates a b → Coordinates a b)
+    (G : MarkedWord a b → MarkedWord a b) (hh : ∀ c, encode (g c) = G (encode c)) :
+    (coordinateLinear K a b).conjRingEquiv (Finsupp.lmapDomain K K g) =
+      Finsupp.lmapDomain K K G := by
+  apply (Finsupp.basisSingleOne : Module.Basis (MarkedWord a b) K _).ext
+  intro x
+  obtain ⟨c,rfl⟩ := (coordinateEquiv a b).surjective x
+  change coordinateLinear K a b (Finsupp.lmapDomain K K g
+    ((coordinateLinear K a b).symm (Finsupp.single (encode c) 1))) = _
+  have hc : (coordinateLinear K a b).symm (Finsupp.single (encode c) 1) =
+      Finsupp.single c 1 := by
+    apply (coordinateLinear K a b).injective
+    simp only [LinearEquiv.apply_symm_apply, coordinateLinear_single, markedDelta]
+  rw [hc]
+  simp only [Finsupp.lmapDomain_apply, Finsupp.mapDomain_single, coordinateLinear_single,
+    markedDelta, Finsupp.coe_basisSingleOne, hh]
+  rfl
+
+omit [CharZero K] in
+/-- Mark exchange and every cyclic translation commute with the marked action. -/
+theorem marked_symmetries (a b : ℕ) :
+    Commute (Jstar K a b) (markedH K a b) ∧
+    Commute (Jstar K a b) (markedE K a b) ∧
+    Commute (Jstar K a b) (markedF K a b) ∧
+    ∀ t : Pos a b,
+      Commute (markedTranslation K t) (markedH K a b) ∧
+      Commute (markedTranslation K t) (markedE K a b) ∧
+      Commute (markedTranslation K t) (markedF K a b) := by
+  have hs : (coordinateLinear K a b).conjRingEquiv
+      (Finsupp.lmapDomain K K coordinateSwap) = Jstar K a b :=
+    conjugate_domain K a b coordinateSwap J (marked_coordinates a b).2.2.2.2.1
+  have hr (t : Pos a b) : (coordinateLinear K a b).conjRingEquiv
+      (Finsupp.lmapDomain K K (coordinateRotate t)) = markedTranslation K t :=
+    conjugate_domain K a b (coordinateRotate t) (markedRotate t)
+      ((marked_coordinates a b).2.2.2.2.2.2.2.1 t)
+  refine ⟨?_, ?_, ?_, fun t => ⟨?_, ?_, ?_⟩⟩
+  · change _ * markedH K a b = markedH K a b * _
+    simpa only [map_mul, hs, markedH, markedE, markedF] using
+      congrArg (coordinateLinear K a b).conjRingEquiv (swap_h K a b).eq
+  · change _ * markedE K a b = markedE K a b * _
+    simpa only [map_mul, hs, markedH, markedE, markedF] using
+      congrArg (coordinateLinear K a b).conjRingEquiv (swap_e K a b).eq
+  · change _ * markedF K a b = markedF K a b * _
+    simpa only [map_mul, hs, markedH, markedE, markedF] using
+      congrArg (coordinateLinear K a b).conjRingEquiv (swap_f K a b).eq
+  · change _ * markedH K a b = markedH K a b * _
+    simpa only [map_mul, hr, markedH, markedE, markedF] using
+      congrArg (coordinateLinear K a b).conjRingEquiv (rotate_h K t).eq
+  · change _ * markedE K a b = markedE K a b * _
+    simpa only [map_mul, hr, markedH, markedE, markedF] using
+      congrArg (coordinateLinear K a b).conjRingEquiv (rotate_e K t).eq
+  · change _ * markedF K a b = markedF K a b * _
+    simpa only [map_mul, hr, markedH, markedE, markedF] using
+      congrArg (coordinateLinear K a b).conjRingEquiv (rotate_f K t).eq
+
 #print axioms marked_relations
+private noncomputable def descend (a b : ℕ) (A : Module.End K (MarkedSpace K a b)) :
+    Module.End K (Space K a b) :=
+  (2 : K)⁻¹ • (Q K a b).comp (A.comp (S K a b))
+
+/-- The literal-word weight action obtained by forgetting the two marked lifts. -/
+noncomputable def h (a b : ℕ) : Module.End K (Space K a b) :=
+  descend K a b (markedH K a b)
+
+/-- The literal-word raising action obtained from the marked cover. -/
+noncomputable def e (a b : ℕ) : Module.End K (Space K a b) :=
+  descend K a b (markedE K a b)
+
+/-- The literal-word lowering action obtained from the marked cover. -/
+noncomputable def f (a b : ℕ) : Module.End K (Space K a b) :=
+  descend K a b (markedF K a b)
+
+private theorem S_injective (a b : ℕ) : Function.Injective (S K a b) := by
+  intro x y hh
+  have he := congrArg (Q K a b) hh
+  have hs := (marked_descent K a b).2.2.2.1
+  have hx := LinearMap.congr_fun hs x
+  have hy := LinearMap.congr_fun hs y
+  simp only [LinearMap.comp_apply, LinearMap.smul_apply, LinearMap.id_apply] at hx hy
+  rw [hx, hy] at he
+  have hh := congrArg (fun z : Space K a b => (2 : K)⁻¹ • z) he
+  simpa only [smul_smul, inv_mul_cancel₀ (by norm_num : (2 : K) ≠ 0), one_smul] using hh
+
+omit [CharZero K] in
+private theorem JS (a b : ℕ) (x : Space K a b) :
+    Jstar K a b (S K a b x) = S K a b x := by
+  have qs := (marked_descent K a b).2.2.2.1
+  have sq := (marked_descent K a b).2.2.2.2.1
+  have hqs := LinearMap.congr_fun qs x
+  have hsq := LinearMap.congr_fun sq (S K a b x)
+  simp only [LinearMap.comp_apply, LinearMap.smul_apply, LinearMap.id_apply,
+    LinearMap.add_apply] at hqs hsq
+  rw [hqs, map_smul, two_smul] at hsq
+  exact (add_left_cancel hsq).symm
+
+private theorem S_descend (a b : ℕ) (A : Module.End K (MarkedSpace K a b))
+    (hh : Commute (Jstar K a b) A) (x : Space K a b) :
+    S K a b (descend K a b A x) = A (S K a b x) := by
+  have sq := LinearMap.congr_fun (marked_descent K a b).2.2.2.2.1 (A (S K a b x))
+  simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.id_apply] at sq
+  have hc := LinearMap.congr_fun hh.eq (S K a b x)
+  change Jstar K a b (A (S K a b x)) = A (Jstar K a b (S K a b x)) at hc
+  rw [JS] at hc
+  simp only [descend, LinearMap.smul_apply, LinearMap.comp_apply, map_smul]
+  rw [sq, hc]
+  rw [← two_smul K (A (S K a b x))]
+  rw [smul_smul, inv_mul_cancel₀ (by norm_num : (2 : K) ≠ 0), one_smul]
+
+/-- The descended endomorphisms satisfy the sl₂ relations on literal cyclic words. -/
+theorem literal_relations (a b : ℕ) : Sl2Relations (h K a b) (e K a b) (f K a b) := by
+  have sy := marked_symmetries K a b
+  have sh := S_descend K a b (markedH K a b) sy.1
+  have se := S_descend K a b (markedE K a b) sy.2.1
+  have sf := S_descend K a b (markedF K a b) sy.2.2.1
+  have aa := marked_relations K a b
+  constructor
+  · apply LinearMap.ext
+    intro x
+    apply S_injective K a b
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, map_sub, h, e, f, sh, se, sf]
+    exact LinearMap.congr_fun aa.ef (S K a b x)
+  · apply LinearMap.ext
+    intro x
+    apply S_injective K a b
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.smul_apply,
+      map_sub, map_smul, h, e, sh, se]
+    exact LinearMap.congr_fun aa.he (S K a b x)
+  · apply LinearMap.ext
+    intro x
+    apply S_injective K a b
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.smul_apply,
+      map_sub, map_smul, h, f, sh, sf]
+    exact LinearMap.congr_fun aa.hf (S K a b x)
+
+private theorem descend_translation (a b : ℕ) (A : Module.End K (MarkedSpace K a b))
+    (hj : Commute (Jstar K a b) A) (t : Pos a b)
+    (ht : Commute (markedTranslation K t) A) :
+    Commute (translation K t) (descend K a b A) := by
+  change translation K t * descend K a b A = descend K a b A * translation K t
+  apply LinearMap.ext
+  intro x
+  apply S_injective K a b
+  have hs (y) := LinearMap.congr_fun ((marked_descent K a b).2.2.2.2.2.1 t) y
+  dsimp only [LinearMap.comp_apply] at hs
+  simp only [Module.End.mul_apply]
+  rw [← hs, S_descend K a b A hj, S_descend K a b A hj, ← hs]
+  exact LinearMap.congr_fun ht.eq (S K a b x)
+
+/-- Every cyclic translation, and hence U, commutes with all three literal operators. -/
+theorem literal_translation (a b : ℕ) :
+    (∀ t : Pos a b, Commute (translation K t) (h K a b) ∧
+      Commute (translation K t) (e K a b) ∧ Commute (translation K t) (f K a b)) ∧
+    Commute (U K a b) (h K a b) ∧ Commute (U K a b) (e K a b) ∧
+    Commute (U K a b) (f K a b) := by
+  have sy := marked_symmetries K a b
+  have all (t : Pos a b) : Commute (translation K t) (h K a b) ∧
+      Commute (translation K t) (e K a b) ∧ Commute (translation K t) (f K a b) :=
+    ⟨descend_translation K a b _ sy.1 t (sy.2.2.2 t).1,
+      descend_translation K a b _ sy.2.1 t (sy.2.2.2 t).2.1,
+      descend_translation K a b _ sy.2.2.1 t (sy.2.2.2 t).2.2⟩
+  exact ⟨all, all 1⟩
+
+#print axioms marked_relations
+#print axioms marked_symmetries
+#print axioms literal_relations
+#print axioms literal_translation
 
 end D5.S3.Quantum.SpinChains.TwoWallSl2
