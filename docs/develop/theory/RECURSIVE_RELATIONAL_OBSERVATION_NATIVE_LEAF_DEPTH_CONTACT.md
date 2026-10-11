@@ -1124,3 +1124,356 @@ observation mechanism or source-size promise accompanies the results.
 [CL]: https://perso.ens-lyon.fr/pierre.lescanne/PUBLICATIONS/jsc-diseq.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 11. A prescribed row pair with no ordinary regular common limit
+
+**Definition 11.1 (shifted input and ordinary regular trees).** The symbols
+$D,U,K,r_i$ in §§11–12 are local to these sections. Retain the native
+laws (NLC.1), the inclusive four-reply prefixes of Definition 5.1, and
+Assumption 1.2 with an authentic common handoff $N\ge1$. Take the old
+cut $P=\{\varepsilon\}$ and its complete row: one reached hole, exterior
+$\square_1$ and singleton partition. The entire retained history is
+
+$$
+\begin{aligned}
+H_0={}&\{(0,\varepsilon,\mathsf{branch}),
+ (0,R,\mathsf{branch}),(0,RR,\mathsf{branch}),(0,RRL,\alpha)\},\\
+H_{\rm rel}={}&\{(0,RRR,1,RL,=)\}.
+\end{aligned}
+\tag{NLC.32}
+$$
+
+Both endpoints of the positive record must be reached. There are no
+further records in this instance. Let $D$ be the entire fiber (NLC.4)
+of these data, and put
+
+$$
+G(y)=\langle\alpha,\rho(y)\rangle,\qquad
+U(x,y)=\langle x,\langle y,G(y)\rangle\rangle,\qquad
+Q=\{L,RL,RR\}.
+\tag{NLC.33}
+$$
+
+Use that order for the target holes. The full labels $r_0,r_1,r_2$ all
+have reached set $Q$ and numbered exterior
+$\langle\square_1,\langle\square_2,\square_3\rangle\rangle$; their
+partitions are respectively
+
+$$
+\{\{1,2\},\{3\}\},\qquad
+\{\{1,3\},\{2\}\},\qquad
+\{\{1\},\{2\},\{3\}\}.
+\tag{NLC.34}
+$$
+
+Write $D_i=\{u\in D:R_Q(u)=r_i\}$, retaining every field of the row.
+
+An ordinary regular, or rational, tree is a finite-or-infinite ordered
+tree over the ranked signature $\alpha:0,\beta:0,\langle\, ,\,\rangle:2$
+having only finitely many distinct rooted subtrees. This is the
+literature-attested definition in [Comon–Lescanne, §2.1, pp. 4–5][CL],
+with their child positions $1,2$ identified with $L,R$, and with no
+variables. A missing position supplies the reply $\mathsf{absent}$;
+it is not another constructor. Equality retains both labels and order.
+Equivalently such a tree unfolds a finite rooted constructor graph:
+each graph vertex supplies at most one subtree, and conversely the
+finitely many subtree types supply vertices with their actual ordered
+child edges. This representation does not add $\rho$ as a free
+constructor.
+
+**Theorem 11.2 (the entire shifted fiber and all three exact strata).**
+The data (NLC.32) have precisely the source fiber and row strata
+
+$$
+\begin{aligned}
+D&=\{U(x,y):x,y\in\mathcal T\},\\
+D_0&=\{U(y,y):y\in\mathcal T\},\\
+D_1&=\{U(G(y),y):y\in\mathcal T\},\\
+D_2&=\{U(x,y):x,y\in\mathcal T,\ x\ne y,\ x\ne G(y)\}.
+\end{aligned}
+\tag{NLC.35}
+$$
+
+All three rows are attained, and these are the entire row image.
+
+Proof. The four literals decompose each source uniquely as
+$u=\langle x,\langle y,\langle\alpha,z\rangle\rangle\rangle$.
+Its original subtree at $RRR$ is $z$. The actual leaf and pair laws give
+
+$$
+\rho(u)=
+ \langle\rho(x),\langle\rho(y),\langle\beta,\rho(z)\rangle\rangle\rangle.
+\tag{NLC.36}
+$$
+
+Thus the epoch-one subtree at $RL$ is $\rho(y)$, and both compared
+endpoints are reached. The retained whole-subtree equality is exactly
+$z=\rho(y)$, proving the forward inclusion in (NLC.35). Conversely every
+finite $U(x,y)$ has the complete old root row, the four stated literal
+replies and both reached equal endpoints. Recovering $x=u|_L$ and
+$y=u|_{RL}$ is inverse to this parameterization. It is a mathematical
+inverse, not an observer operation. No finite source satisfying the
+original input has been omitted.
+
+Let $\ell(t)$ count leaves and $b(t)$ count $\beta$ leaves. The native
+laws give $\ell(\rho(t))=\ell(t)+b(t)$ by induction. Consequently
+
+$$
+\ell(G(y))=1+\ell(y)+b(y)>\ell(y),\qquad y\ne G(y)
+ \quad(y\in\mathcal T).
+\tag{NLC.37}
+$$
+
+The entire target values are $(x,y,G(y))$. Their fixed geometry and
+(NLC.37) give exactly the three alternatives in (NLC.35), including
+every cross-class inequality. The first two rows are attained for
+every finite $y$; $U(\alpha,\beta)$ attains the third. In particular
+$D$ is nonempty and is not replaced by $D_0\cup D_1$.
+
+The acquisition correspondence is [ARH, Proposition 2.1][ARH] applied
+to exactly these coordinates: acquire the epoch-zero data and the
+whole $RRR$ description by paid finite traversal, advance the same
+register, acquire the epoch-one $RL$ description, compare the paid
+descriptions, and continue to the common $N$. Under the complete cut
+of Assumption 1.2, the successful retained output has exactly the
+fiber just calculated, in both directions. Source-dependent traversal,
+timing, cache and control information is subject to that same cut;
+the calculation does not establish physical erasure or free equality.
+$\square$
+
+**Theorem 11.3 (native prefix bridge and the shifted fixed tree).**
+On the finite-or-infinite trees of Definition 5.1, interpreted $\rho$
+has a unique extension by its actual leaf replacements and pair law.
+For inclusive depths $h\ge0$ it satisfies
+
+$$
+s\equiv_h t\ \Longrightarrow\
+ \rho(s)\equiv_h\rho(t)
+ \quad\hbox{and}\quad
+ G(s)\equiv_{h+1}G(t).
+\tag{NLC.38}
+$$
+
+There is exactly one tree $K$ with $K=G(K)$. Writing
+$T_j=\rho^j\alpha$, its right spine and complete left subtrees satisfy
+
+$$
+K|_{R^j}=\rho^j(K),\qquad K|_{R^jL}=T_j
+ \quad(j\ge0).
+\tag{NLC.39}
+$$
+
+This $K$ is infinite and is not ordinary regular.
+
+Proof. At a finite address in the image, follow the address through
+original pairs until the first original leaf, if any. Thereafter the
+reply is determined inside that leaf's specified finite image. If no
+leaf occurs along the address, the image node is a pair. This defines
+every reply consistently with the constructor arities and gives the
+unique extension. It also proves that the image reply uses only
+original replies at prefixes of the requested address. Matched leaves
+produce the same born positions and the same absent replies; absence
+at one epoch is not assumed to persist at the next. Equivalently,
+induction on $h$ treats equal root leaves by their identical entire
+images and equal pairs by their two children. This proves the first
+part of (NLC.38), and the added pair in $G$ proves the second.
+On finite sources this is the locality argument of
+[ARH, Lemma 19.2][ARH]; the address argument here also covers infinite
+branches.
+
+Use the atomic identities and index injectivity of [ABC, Definition
+1.3][ABC]. Define $K$ by a branch at every $R^j$ and the entire finite
+subtree $T_j$ at $R^jL$. The tooth addresses are prefix-free.
+Every finite word is either $R^j$ or $R^jLw$, so this definition fixes
+all four replies, including absent suffixes inside a tooth.
+Applying $\rho$ shifts each tooth to $T_{j+1}$; hence the right tail
+is $\rho(K)$ and $K=\langle\alpha,\rho(K)\rangle$.
+
+For any fixed tree $J=G(J)$, the native pair law gives
+$\rho^j(J)=\langle T_j,\rho^{j+1}(J)\rangle$. Induction down its
+right spine forces (NLC.39) with $J$ in place of $K$. The same
+finite-word decomposition then forces $J=K$. Formula (NLC.37)
+excludes a finite fixed tree. Finally the actual subtrees $T_j$ at
+$R^jL$ are pairwise distinct by atomic index injectivity. Thus $K$
+has infinitely many distinct constructor subtrees. Its right-spine
+subtrees are also pairwise distinct, since their left children differ.
+This uses the original constructor signature throughout. $\square$
+
+**Theorem 11.4 (singleton nonregular contact for the prescribed pair).**
+For the entire input (NLC.32), put $L=\langle K,\langle K,K\rangle\rangle$.
+Then
+
+$$
+\overline{D_0}\cap\overline{D_1}=\{L\},\qquad
+L\ \hbox{is not ordinary regular}.
+\tag{NLC.40}
+$$
+
+For every inclusive depth $h$ there are actual finite sources
+$u_h^0\in D_0$ and $u_h^1\in D_1$ with
+$u_h^0\equiv_h L\equiv_h u_h^1$. Consequently the assertion that
+every prescribed pair of distinct attained full rows with finite
+same-prefix witnesses at all depths has an ordinary regular common
+limit is false.
+
+Proof. First prove that any common closure point is $L$, using the
+architecture of Theorem 8.4. A closure point retains the finite
+outer skeleton forced by (NLC.32). Equality of two subtrees at fixed
+reached positions is closed under original prefixes: a failed
+equality has a finite-address distinguishing reply. The graph of
+$\rho$, and therefore that of $G$, is also closed by (NLC.38).
+Indeed any difference at depth $d$ can be checked from finitely many
+argument and output replies through depth $d$; choosing an original
+prefix deeper by the fixed coordinate lengths tests those replies.
+
+Every point in either closure therefore has the form $U(x,y)$ with
+finite-or-infinite $x,y$. Membership in $\overline{D_0}$ forces $x=y$;
+membership in $\overline{D_1}$ forces $x=G(y)$. A common point has
+$y=G(y)$, so Theorem 11.3 forces $x=y=K$ and the point is $L$.
+Only equalities were passed to the limit, not the finite disequalities
+or their partition.
+
+For the reverse inclusion and finite productivity, set
+
+$$
+y_0=\beta,\qquad y_{n+1}=G(y_n),\qquad
+u_h^0=U(y_n,y_n),\qquad u_h^1=U(y_{n+1},y_n),
+ \quad n=h+1.
+\tag{NLC.41}
+$$
+
+Induction using the actual pair law shows that $y_n$ has teeth
+$T_0,\ldots,T_{n-1}$ at $L,RL,\ldots,R^{n-1}L$ and terminal subtree
+$\rho^n\beta=T_{n+1}$ at $R^n$. For any word of length less than $n$,
+either it remains on the shared branch spine, or it first enters one
+of the identical complete teeth. In the latter case its remaining
+reply, whether leaf, branch or absent, is identical. Such a word
+does not reach the terminal subtree. Thus $y_n\equiv_h K$ and
+$y_{n+1}\equiv_h K$ when $n=h+1$. Constructors and (NLC.38) now give
+both displayed sources' agreement with $L$ through $h$.
+
+All these trees are finite. Theorem 11.2 places the two sources in
+the entire original $D$, with every literal, both reach guards and
+the mixed-epoch equality, and gives exactly the distinct full rows
+$r_0,r_1$. In particular $y_n\ne G(y_n)$ retains every required
+finite inequality. This proves membership of $L$ in both closures.
+Since $L|_L=K$, Theorem 11.3 makes $L$ nonregular and excludes every
+ordinary regular common-contact tree for this prescribed pair.
+
+The three ideal subtrees at $Q$ in $L$ coincide. Their one-class
+partition is neither finite label in (NLC.41), and cannot replace
+those labels. Also $\mu(y_n)=1$ for $n\ge1$: this approximation is
+not an assertion of growing minimum leaf depth. $\square$
+
+## 12. Other-pair contact, finite descriptions and the exact boundary
+
+**Proposition 12.1 (an ordinary context contact on the same entire fiber).**
+The pair $(r_0,r_2)$ of Definition 11.1 has the regular common limit
+
+$$
+M=\langle\Omega,\langle\Omega,\langle\alpha,\Omega\rangle\rangle\rangle
+  =C^\dagger[\Omega,\Omega,\Omega],
+\tag{NLC.42}
+$$
+
+where $C^\dagger$ is the finite context (NLC.29).
+
+Proof. For $m\ge4$ take $a_m=U(T_m,T_m)$ and
+$b_m=U(T_{m+1},T_m)$. The first has row $r_0$.
+For the second, $T_{m+1}\ne T_m$ by index injectivity, and
+$T_{m+1}=\langle T_m,T_{m-1}\rangle$ has a branch as left child,
+whereas $G(T_m)=\langle\alpha,T_{m+1}\rangle$ has an $\alpha$ leaf.
+Thus the second has exactly $r_2$. Both belong to the same entire
+$D$, retaining the original guarded link.
+
+Their fillings of $C^\dagger$ are respectively
+$(T_m,T_m,T_{m+1})$ and $(T_{m+1},T_m,T_{m+1})$.
+By Lemma 3.1, $\mu(T_j)=\lfloor j/2\rfloor$; for any $h$, choosing
+$m\ge2h+4$ makes every displayed filling agree with $\Omega$ through
+$h$. Lemma 5.3 then gives $a_m\equiv_h M\equiv_h b_m$.
+The tree $\Omega$ has one subtree type and a finite constructor
+context adds only finitely many more, so $M$ is ordinary regular.
+The third row has not been discarded. Theorem 11.4 therefore refutes
+completeness required for every prescribed pair; it does not refute
+a method permitted to choose another opposite pair in this fiber.
+$\square$
+
+**Proposition 12.2 (finite interpreted and parameterized descriptions).**
+The nonregular $K$ still has its finite interpreted specification
+$K=\langle\alpha,\rho(K)\rangle$. It also has the finite parameterized
+constructor specification
+
+$$
+H(a,b)=\langle a,H(b,\langle b,a\rangle)\rangle,\qquad
+K=H(\alpha,\beta).
+\tag{NLC.43}
+$$
+
+Proof. For any finite trees $a,b$, let $A_0=a$, $A_1=b$ and
+$A_{j+2}=\langle A_{j+1},A_j\rangle$. Define $H(a,b)$ to be the
+right-infinite spine with entire left subtree $A_j$ at $R^jL$.
+This defines all finite-address replies and satisfies the displayed
+recursion. Conversely each right step in that recursion fixes the
+next pair of parameters and the next complete tooth, so it uniquely
+specifies that tree. For $(a,b)=(\alpha,\beta)$, the atomic recurrence
+gives $A_j=T_j$ for every $j$; hence its output is exactly the $K$
+of (NLC.39), including absent replies below teeth. Its infinitely many
+different actual parameter values distinguish this specification
+from a finite system of nullary constructor-graph states. The first
+specification has the existence and uniqueness proof in Theorem 11.3.
+$\square$
+
+**Convention 12.3 (sources, consumed boundary and residual question).**
+The ordinary repo-derived result in Theorem 11.4 concerns the proposed
+regular-limit language for the prescribed-pair finite-approximability
+question in Open problem 9.2. Theorem 8.4 supplies its source/stratum,
+closed-equality and finite-approximation architecture. Its unshifted
+comb has only itself and $\alpha$ as subtrees and is regular; allowing
+ordinary regular limits covers that earlier pair. Here the different
+acquired mixed-epoch link forces the interpreted shift and all distinct
+$T_j$ teeth. This is the additional representation boundary.
+
+Atomic recurrence and index injectivity are reused from ABC, native
+finite locality and acquisition from ARH, and exact finite feasibility,
+guarded compilation and supplied-depth decisions from
+[NSF, Theorems 4.3, 5.2 and 6.1][NSF]. These finite decisions are not
+a stopping rule for their outer existential. NSF §§9–10 retain their
+closure and chart-invariance hypotheses: this $D$ is not globally
+forward-closed, since its required $RRL$ leaf changes from $\alpha$
+to $\beta$. In the direct constructor chart
+$\langle x,\langle y,\langle\alpha,z\rangle\rangle\rangle$ with
+$z=\rho(y)$, simultaneous residual $\rho$ preserves that equation
+but not the target bit $x=\langle\alpha,z\rangle$: its true left side
+becomes $\langle\beta,\rho(z)\rangle$. Eliminating $z=\rho(y)$ also
+does not by itself supply ARH's synchronous target comparisons;
+$x=G(y)$ still compares a variable with a nonground pair. The retained
+record is not a whole-root/proper-descendant certificate, and ARH's
+separate one-parameter graph $\langle\rho(y),y\rangle$ is not this
+two-parameter fiber. These observations assert no failure of every
+alternative chart or recognizer.
+
+Comon–Lescanne supplies the ordinary rational-tree definition and the
+free-constructor setting, not the native bridge (NLC.38), finite
+signed approximants or a theorem about interpreted $\rho$ equations.
+The source comparison is bounded to the cited suppliers and that
+primary definition; no literature-wide novelty or priority is asserted.
+
+Excluding ordinary finite constructor graphs at the contact point
+does not exclude finite recursive, transducer or indexed certificates,
+regular tree languages, effective search or all finite formalisms.
+Every finite approximant here is itself regular, and (NLC.43) is a
+finite richer description of the nonregular limit. Such a description
+does not establish a generally complete or decidable certificate
+language. Infinite trees remain auxiliary prefix-completion points,
+never admissible native sources or physical registers.
+
+Open problem 9.2, including the general arbitrary-signed
+$\exists h\,\operatorname{PrefDet}(D,Q,h)$ decision and its negative
+stopping obligation, remains unresolved by this increment. Additional
+retained constraints would define another fiber and require their
+own approximation proof. No undecidability result or additional
+observer reset, equality, selector or cost port follows. All statements
+retain the ordinary mathematical and handoff boundaries of
+Definitions 1.1–1.3 and Convention 10.3.
+
+## 追加锚（本行以下为增补区）
