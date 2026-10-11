@@ -200,6 +200,30 @@ class ReportLifetimeTests(unittest.TestCase):
 
 
 class StreamingTests(unittest.TestCase):
+    def test_compiler_digest_frames_preserve_material_sequence(self):
+        payload = bytes(range(256)) * 513
+        frames = (b'sha256 0\n' + f'sha256 {len(payload)}\n'.encode() + payload
+                  + b'chunks\n3\nabc0\nsha256 3\nabc' + b'done\n')
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run([sys.executable, '-I', materials.__file__,
+                                     'stream', directory], input=frames, capture_output=True,
+                                    check=False, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout.decode().splitlines(), [
+                hashlib.sha256(b'').hexdigest(), hashlib.sha256(payload).hexdigest(),
+                'ok', hashlib.sha256(b'abc').hexdigest(), 'done'])
+            self.assertEqual(sorted(p.name for p in Path(directory).iterdir()), ['0.statement.gz'])
+            self.assertEqual(materials.read_material(Path(directory) / '0.statement.gz'), b'abc')
+
+    def test_truncated_compiler_digest_frame_fails_without_material(self):
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run([sys.executable, '-I', materials.__file__,
+                                     'stream', directory], input=b'sha256 4\nabc',
+                                    capture_output=True, check=False, timeout=30)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(b'truncated compiler digest frame', result.stderr)
+            self.assertEqual(list(Path(directory).iterdir()), [])
+
     def test_chunked_spool_preserves_material_bytes(self):
         data = ('λ😀' * 40000).encode()
         chunks = [data[i:i + materials.BUFFER_BYTES] for i in range(0, len(data), materials.BUFFER_BYTES)]

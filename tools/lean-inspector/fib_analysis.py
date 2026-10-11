@@ -40,6 +40,15 @@ def validate(value, *, complete=True):
                 or (row["request"] is not None and not isinstance(row["request"], dict))
                 or (previous is not None and row["application"] <= previous)):
             raise ValueError("fib.invalid_binding")
+        request = row["request"]
+        if request is not None and "binding" in request:
+            source = request["binding"]
+            binding = source.get("occurrence") if isinstance(source, dict) else None
+            original = binding.get("original_type") if isinstance(binding, dict) else None
+            if (not isinstance(binding, dict) or not isinstance(original, dict)
+                    or binding.get("source_name") != row["target"]
+                    or original.get("identity") != row["target_type_identity"]):
+                raise ValueError("fib.source_binding_mismatch")
         previous = row["application"]
         reading = row["reading"]
         if reading is None and not complete:
@@ -56,7 +65,9 @@ def unavailable(reason):
     reading = dict.fromkeys(FIELDS)
     reading["disposition"] = {"status": "open", "reason": reason,
                               "is_lean_proof": False,
-                              "proof_escape": "unchanged; downstream analysis only"}
+                              "proof_escape": "unchanged; downstream analysis only",
+                              "readings": {key: {"kind": "unavailable", "reason": reason}
+                                           for key in sorted(FIELDS - {"disposition"})}}
     return reading
 
 

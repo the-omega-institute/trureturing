@@ -241,6 +241,19 @@ elab "informationMaterialWriterProgram" : term => do
 abbrev MaterialWriter := IO.Process.Child {
   stdin := .piped, stdout := .piped, stderr := .inherit }
 
+/-- Hash exact compiler bytes through the existing material writer. Digest
+frames create no material, alter no statement index and carry no authority. -/
+def digestBytes (writer : MaterialWriter) (bytes : ByteArray) : IO String := do
+  writer.stdin.putStr s!"sha256 {bytes.size}\n"
+  writer.stdin.write bytes
+  writer.stdin.flush
+  let line ← writer.stdout.getLine
+  let digest := line.trimAscii.toString
+  unless digest.length == 64 && digest.toList.all (fun c =>
+      ('0' ≤ c && c ≤ '9') || ('a' ≤ c && c ≤ 'f')) do
+    throw <| IO.userError "material writer returned an invalid compiler digest"
+  return digest
+
 def writeMaterial (writer : MaterialWriter) (info : ConstantInfo) : IO Unit := do
   writer.stdin.putStr "chunks\n"
   let stream : IO.FS.Stream := { (default : IO.FS.Stream) with
@@ -448,7 +461,9 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
   let target := input.moduleName.toName
   RawArtifacts.loadModule target state
   for utility in utilities do RawArtifacts.loadModule utility.claimModule.toName state
-  if !statementOnly && RawArtifacts.hasTypedInputs (← (← state.get).getModule target) then
+  let targetData ← (← state.get).getModule target
+  if !statementOnly && (RawArtifacts.hasTypedInputs targetData ||
+      targetData.constants.any FibApplications.isInput) then
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment state
   let store ← state.get
   RawArtifacts.checkBatchConstants base store seen
@@ -490,7 +505,7 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
       (current.constants.find?) input)
     cache writer counter utilities generatedNames binding input
   let fib ← if statementOnly then pure Json.null else
-    FibApplications.extract target data.constants (current.constants.find?) (current.owners.find?)
+    FibApplications.extract target data.constants current (digestBytes writer)
   let row := { row with
     fibApplications := fib
     informationRegistrationErrors := sortedUnique (row.informationRegistrationErrors ++ enrollmentErrors) }

@@ -171,6 +171,17 @@ def stream_spool(spool: pathlib.Path) -> None:
         if header == b"done\n":
             print("done", flush=True)
             return
+        if re.fullmatch(rb"sha256 (?:0|[1-9][0-9]*)\n", header):
+            remaining = int(header[7:])
+            digest = hashlib.sha256()
+            while remaining:
+                block = sys.stdin.buffer.read(min(remaining, BUFFER_BYTES))
+                if not block:
+                    raise ValueError("truncated compiler digest frame")
+                digest.update(block)
+                remaining -= len(block)
+            print(digest.hexdigest(), flush=True)
+            continue
         chunked = header == b"chunks\n"
         if not chunked and not re.fullmatch(rb"[1-9][0-9]*\n", header):
             raise ValueError("invalid or missing material frame length")
