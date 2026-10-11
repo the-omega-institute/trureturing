@@ -115,10 +115,10 @@ The histogram of (good,bad,regular) over the 1024 outcomes is:
 
 Independent implementations agree separately on all 1024 outcomes:
 
-1. [enumerate_signed_rotations.py](../../../experiments/facial-random-embeddings/enumerate_signed_rotations.py), using the doubled permutation face cycles
-2. [verify_ribbon_boundaries.mjs](../../../experiments/facial-random-embeddings/verify_ribbon_boundaries.mjs), independently counting each physical ribbon boundary once
+1. [enumerate_signed_rotations.py](https://github.com/the-omega-institute/trureturing-experiments/blob/471d22e6b425bb7b810c697122060294b8bd90c5/experiments/facial-random-embeddings/enumerate_signed_rotations.py), using the doubled permutation face cycles
+2. [verify_ribbon_boundaries.mjs](https://github.com/the-omega-institute/trureturing-experiments/blob/471d22e6b425bb7b810c697122060294b8bd90c5/experiments/facial-random-embeddings/verify_ribbon_boundaries.mjs), independently counting each physical ribbon boundary once
 
-The full [integer certificate](../../reports/facial-random-embeddings/k4_uniform_certificate.json) lists all 64 fixed-rotation representatives, the checks, and pinned source identifiers. [Reproduction instructions](../../reports/facial-random-embeddings/README.md) give the exact commands.
+The full [integer certificate](https://github.com/the-omega-institute/trureturing-experiments/blob/471d22e6b425bb7b810c697122060294b8bd90c5/docs/reports/facial-random-embeddings/k4_uniform_certificate.json) lists all 64 fixed-rotation representatives, the checks, and pinned source identifiers. [Reproduction instructions](https://github.com/the-omega-institute/trureturing-experiments/blob/471d22e6b425bb7b810c697122060294b8bd90c5/docs/reports/facial-random-embeddings/README.md) give the exact commands.
 
 Both classify repeated oriented traversals and count each graph edge once. Neither requires SageMath, floating-point arithmetic, network access, or random sampling. The general proof in Section 4 remains independent of these finite calculations.
 
