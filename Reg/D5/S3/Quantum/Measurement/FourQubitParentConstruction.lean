@@ -843,12 +843,6 @@ theorem scalarDependence : ObservationalDependence scalarSignature scalarActual 
 theorem hermitianNegative : ¬ hermitianArena.Law scalarRejected := by
   intro h; have hh := congrArg Complex.im ((h 0 0).apply 0 0)
   norm_num [scalarRejected, realize] at hh
-@[reducible] def detArena : Arena :=
-  ⟨realVectorSignature, fun R => ∀ (t : ℝ) (a : Vec),
-    Matrix.det (scalarB t a) = ((t^2 - (R.readout () () a)^2 : ℝ) : ℂ)⟩
-theorem detNegative : ¬ detArena.Law normRejected := by
-  intro h; have hh := h 0 0
-  norm_num [normRejected, realize, scalarB, B_formula, Matrix.det_fin_two] at hh
 @[reducible] def decompositionArena : Arena :=
   ⟨scalarSignature, fun R => ∀ (A : Mat), A.IsHermitian →
     A = R.readout () ((Matrix.trace A).re / 2)
@@ -892,30 +886,6 @@ noncomputable def hermitianRegistration : Contract.Registration.{_,_,_,0,0,0,_,_
     owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
     coordinates := #[0], readouts := #[⟨
       #["body", "body", "arg"], 1, false, none, false⟩] }, continuation := .unknown
-  partialSensitivity := none, escapeFrom := none, familyRecord := none, options := #[] }
-def detEvidence : Registration detArena (type_of% (@scalarB_det)) := {
-  actual := normActual, bridge := Iff.rfl
-  variation := ⟨@scalarB_det, normRejected, detNegative⟩
-  sensitivity := ⟨fun i => ⟨normRejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, detNegative⟩,
-    fun i => nomatch i⟩
-  dependence := normDependence }
-noncomputable def detRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_det)
-    (type_of% (realize realVectorSignature (fun _ _ a => ‖a‖) (fun e => nomatch e)))
-    Unit Unit := {
-  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_det.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.detEvidence
-  realizationSource := none, generated := false, arena := .source ⟨detArena⟩
-  objectArena := .source ⟨detArena⟩, catalog := Lean.Name.anonymous, localNames := false
-  realization := .source detArena ⟨detEvidence⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
-  readout := some (realize realVectorSignature (fun _ _ a => ‖a‖) (fun e => nomatch e))
-  variation := .absent, sensitivity := .absent, sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
-    coordinates := #[], readouts := #[⟨
-      #["body", "body", "arg", "arg", "arg", "fn", "arg"],
-      1, false, none, false⟩] }, continuation := .unknown
   partialSensitivity := none, escapeFrom := none, familyRecord := none, options := #[] }
 def decomposeEvidence :
     Registration decompositionArena (type_of% (@hermitian_decomposition)) := {

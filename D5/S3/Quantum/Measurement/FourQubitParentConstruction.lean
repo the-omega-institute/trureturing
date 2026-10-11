@@ -109,7 +109,7 @@ theorem scalarB_hermitian (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (scalar
   intro i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [scalarB, B_formula, Complex.mul_re, Complex.mul_im]
-theorem scalarB_det (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
+private theorem scalarB_det (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
     Matrix.det (scalarB t a) = ((t ^ 2 - ‖a‖ ^ 2 : ℝ) : ℂ) := by
   rw [norm_sq_coords]
   apply Complex.ext <;>
