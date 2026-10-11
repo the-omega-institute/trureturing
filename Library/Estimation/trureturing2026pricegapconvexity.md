@@ -1162,7 +1162,7 @@ For every fixed nonzero real $\xi$, its exponential character test at
 frequency $|\xi|/(2\pi)$ gives
 
 $$
-\sum_{0<\tau\le T}m_\rho e^{i\xi\tau}=O_\xi(T)=o(N(T)),
+\sum_{0<\tau\le T}m_\rho e^{i\xi\tau}=o(N(T)),
 \qquad N(T)\sim\frac{T\log T}{2\pi}.
 $$
 
