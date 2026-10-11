@@ -99,10 +99,10 @@ private theorem response_dependence : ObservationalDependence responseSignature 
   have hq : 0 < 1 / (4 * Real.log 2) := by positivity
   linarith
 
-def identityFamily : Registration identityArena (type_of% finite_signed_response_identity) where
+def identityFamily : Registration identityArena (type_of% (@finite_signed_response_identity)) where
   actual := responseActual
   bridge := Iff.rfl
-  variation := ⟨finite_signed_response_identity, responseRejected, identity_rejected⟩
+  variation := ⟨@finite_signed_response_identity, responseRejected, identity_rejected⟩
   sensitivity := by
     constructor
     · intro i
@@ -114,7 +114,7 @@ def identityFamily : Registration identityArena (type_of% finite_signed_response
   dependence := response_dependence
 
 def identityRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    finite_signed_response_identity (type_of% (realize responseSignature responseActual.readout responseActual.anchor))
+    (@finite_signed_response_identity) (type_of% (realize responseSignature responseActual.readout responseActual.anchor))
     Type Unit where
   unitName := `D5.S3.Arith.Robin.ActualVonMangoldtBandCompensation.finite_signed_response_identity.__information_unit
   realizationName := `Reg.D5.S3.Arith.Robin.ActualVonMangoldtBandCompensation.identityFamily
@@ -204,12 +204,13 @@ private theorem compensation_rejected : ¬ compensationArena.Law compensationRej
     le_rfl (by norm_num) (by norm_num) (by positivity) le_rfl (by norm_num) (wide_theta _ large_A)
   change _ ≤ (-1 : ℝ) at ht
   simp [unit_volume, shortAllowance, min_eq_right (sq_nonneg _)] at ht
+  norm_num at ht
 
 def compensationFamily : Registration compensationArena
-    (type_of% actual_vonMangoldt_band_compensation_of_theta_increment_lower) where
+    (type_of% (@actual_vonMangoldt_band_compensation_of_theta_increment_lower)) where
   actual := compensationActual
   bridge := Iff.rfl
-  variation := ⟨actual_vonMangoldt_band_compensation_of_theta_increment_lower,
+  variation := ⟨@actual_vonMangoldt_band_compensation_of_theta_increment_lower,
     compensationRejected, compensation_rejected⟩
   sensitivity := by
     constructor
@@ -227,7 +228,7 @@ def compensationFamily : Registration compensationArena
     exact (ne_of_gt compensation_two_positive).symm
 
 def compensationRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    actual_vonMangoldt_band_compensation_of_theta_increment_lower
+    (@actual_vonMangoldt_band_compensation_of_theta_increment_lower)
     (type_of% (realize compensationSignature compensationActual.readout compensationActual.anchor)) Type Unit where
   unitName := `D5.S3.Arith.Robin.ActualVonMangoldtBandCompensation.actual_vonMangoldt_band_compensation_of_theta_increment_lower.__information_unit
   realizationName := `Reg.D5.S3.Arith.Robin.ActualVonMangoldtBandCompensation.compensationFamily
@@ -292,12 +293,13 @@ private theorem consumer_rejected : ¬ consumerArena.Law consumerRejected := by
     le_rfl (by norm_num) (wide_theta _ large_A)
   change (1 : ℝ) ≤ _ at ht
   simp [unit_boundary, unit_volume, shortAllowance, min_eq_right (sq_nonneg _)] at ht
+  norm_num at ht
 
 def consumerFamily : Registration consumerArena
-    (type_of% finite_signed_response_upper_of_theta_increment_lower) where
+    (type_of% (@finite_signed_response_upper_of_theta_increment_lower)) where
   actual := consumerActual
   bridge := Iff.rfl
-  variation := ⟨finite_signed_response_upper_of_theta_increment_lower, consumerRejected, consumer_rejected⟩
+  variation := ⟨@finite_signed_response_upper_of_theta_increment_lower, consumerRejected, consumer_rejected⟩
   sensitivity := by
     constructor
     · intro i
@@ -316,7 +318,7 @@ def consumerFamily : Registration consumerArena
     linarith
 
 def consumerRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    finite_signed_response_upper_of_theta_increment_lower
+    (@finite_signed_response_upper_of_theta_increment_lower)
     (type_of% (realize consumerSignature consumerActual.readout consumerActual.anchor)) Type Unit where
   unitName := `D5.S3.Arith.Robin.ActualVonMangoldtBandCompensation.finite_signed_response_upper_of_theta_increment_lower.__information_unit
   realizationName := `Reg.D5.S3.Arith.Robin.ActualVonMangoldtBandCompensation.consumerFamily
