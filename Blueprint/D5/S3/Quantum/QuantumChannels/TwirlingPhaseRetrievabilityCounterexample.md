@@ -132,6 +132,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/TwirlingPhaseRetrievabilityCounterexample.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/han-liu-2023-twirling-phase-retrievability` (refuted) by `D5/S3/Quantum/QuantumChannels/TwirlingPhaseRetrievabilityCounterexample.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"han-liu-2023-twirling-phase-retrievability","declaration_gid":"D5/S3/Quantum/QuantumChannels/TwirlingPhaseRetrievabilityCounterexample.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Deguang Han and Kai Liu (2023). *Zero-Error Correctibility and Phase Retrievability for Twirling Channels*. DOI: [10.1016/S0034-4877(24)00012-0](https://doi.org/10.1016/S0034-4877(24)00012-0). URL: <https://arxiv.org/abs/2311.16349v1>.

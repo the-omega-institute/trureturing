@@ -115,14 +115,18 @@ internal sealed class TwirlingPhaseRetrievabilityCounterexampleDocument : IScrib
                 + "The rectangular matrix uses Matrix.conjTranspose, while square matrices "
                 + "use star. The multiplicity-one character case is compatible with this "
                 + "counterexample, as are the source's code formula and lower bounds.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("han-liu-2023-twirling-phase-retrievability"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("hl-twirling-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
