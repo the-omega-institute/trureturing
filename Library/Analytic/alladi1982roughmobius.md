@@ -324,7 +324,7 @@ formula, new sieve theorem, numerical experiment, effective starting
 threshold for Alladi's theorem, or Lean result is asserted.
 
 The ordinary input is Lee–Leong,
-[arXiv:2208.06141v5, Theorem 1.1, (10)](https://arxiv.org/html/2208.06141v5#S1.Thmtheorem1):
+[arXiv:2208.06141v5, Theorem 1.1, (9)](https://arxiv.org/html/2208.06141v5#S1.Thmtheorem1):
 
 $$
 |M(t)|<33.56t\log t\exp\!\left(-\sqrt{\log t/5.56}\right)
@@ -705,3 +705,232 @@ signs for the retained sum nor a practical algorithm, a new finite Robin
 verification range or RH. The tilted products and moments are classical
 inputs applied to the actual existing kernel, with no originality or
 Lean-certification claim.
+
+## Uniform asymptotic far tails for a polynomially growing filter
+
+This application uses the same actual $P_z,M_z,\eta_z,w$ and
+$J_x^{\eta_z}$ as (CP.1)–(CP.3) of
+[FIB §428](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+It reuses the complete fiber budget in §424 and the smooth-semigroup
+identity (T3). The ordinary Mertens supplier is the stronger
+Vinogradov–Korobov estimate in Lee–Leong
+[arXiv:2208.06141v5, Theorem 1.1, (11)](https://arxiv.org/pdf/2208.06141v5),
+already recorded with its threshold and constants in
+[the Ng note, (N7)](ng2004summatorymobius.md#a-concrete-cutoff-coefficient-from-the-existing-explicit-supplier).
+No new ordinary or rough Mertens theorem is supplied.
+
+Write $\Lambda(u)=1+\log u$ for $u\ge1$ and define the actual
+row norm with absolute values inside the integral by
+
+$$
+Q_{x,z}(n)=\int_x^\infty
+|\eta_z(t/n)-\eta_z(t/(n+1))|w(t)\,dt.
+$$
+
+Here the absolute value is inside the integral. The complete
+$\beta$-fiber norm, retaining every positive divisor order, is
+
+$$
+\mathcal B_{x,z}(n)=
+\sum_{j\ge1}|\theta_{z,j}|
+\sum_{m=jn}^{j(n+1)-1}Q_x(m),\qquad
+\theta_z=\kappa_z*\beta.
+$$
+
+$Q_x$ denotes the original $R$-kernel norm in §424, not an
+unfiltered factorial norm. The existing transport gives
+$|J_x^{\eta_z}(n)|\le Q_{x,z}(n)\le\mathcal B_{x,z}(n)$.
+
+Fix $A,b>0$ and $\kappa>A$. For sufficiently large $x$, put
+$L=\log x$ and
+
+$$
+T_x=\left\lceil\exp\left(\frac{\kappa bL^2}{\log L}\right)
+\right\rceil.
+\tag{U1}
+$$
+
+The following asymptotic application is uniform on $2\le z\le x^b$:
+
+$$
+\boxed{
+\sum_{n>T_x}|M_z(n)|\mathcal B_{x,z}(n)
+\ll_{A,b,\kappa}x^{-A}.}
+\tag{U2}
+$$
+
+Consequently it also bounds the tail with $Q_{x,z}(n)$ or
+$|J_x^{\eta_z}(n)|$ in place of $\mathcal B_{x,z}(n)$. Constants
+may depend on the fixed original $R,\beta$; the actual filter and
+all its fibers are retained. A proof on paper follows; there is no
+Lean verification or numerical starting threshold for this application.
+
+### Reused complete kernel budget
+
+Fix the lower integration limit at $e$. Nonnegativity gives
+$Q_x(m)\le Q_e(m)$ for every $x\ge e$. Thus §424.3, §424.12
+and (CP.3), with the same fixed finite $C_e$ and $A_{\beta,2}$, give
+
+$$
+\mathcal B_{x,z}(n)
+\le C_ec_0^2A_{\beta,2}\frac{\Lambda(n)^2}{n^2}
+\sum_{d\mid P_z}\frac{\Lambda(d)^2}{d}
+\ll\frac{\Lambda(n)^2}{n^2}\log^3(2z).
+\tag{U3}
+$$
+
+The last bound reuses the full divisor moments (T8). Their stated
+range $\log z\ge25$ supplies the asymptotic bound; the bounded
+range $2\le z\le e^{25}$ is absorbed into the fixed constant.
+No divisor or jump endpoint is removed, and no $x$-dependent kernel
+constant is treated as uniform.
+
+### Ordinary cancellation and a moving smooth-semigroup tilt
+
+Let $V(u)=u^{3/5}/(\log u)^{1/5}$ for $u>1$. The existing
+Lee–Leong input, after absorbing its $\log v$ prefactor with
+strict exponent slack, gives fixed $c,C>0$ with
+$|M(v)|\le Cv e^{-cV(\log v)}$ for sufficiently large $v$.
+Choose once and for all $A/\kappa<\vartheta<1$.
+
+Split the exact identity (T3) at smooth integers $a\le y^\vartheta$.
+In that range $y/a\ge y^{1-\vartheta}$, so the ordinary input and
+the complete smooth harmonic mass in (T4) give an upper bound
+$\ll_\vartheta y\log(2z)e^{-c_\vartheta V(\log y)}$.
+For the complementary range, use $|M(y/a)|\le y/a$ and Rankin's
+inequality. Uniformly in $z\ge2$ and $0<\delta\le1/4$, this yields
+
+$$
+\frac{|M_z(y)|}{y}
+\ll_\vartheta \log(2z)e^{-c_\vartheta V(\log y)}
++y^{-\vartheta\delta}\mathcal E_z(\delta),\qquad
+\mathcal E_z(\delta)=\prod_{p\le z}(1-p^{-1+\delta})^{-1},
+\tag{U4}
+$$
+
+for all sufficiently large $y$, with the threshold independent of
+$z,\delta$. This is the same semigroup/Rankin mechanism as (T6),
+with the stronger ordinary input and a different parameter choice.
+
+Now take
+
+$$
+\delta_x=\frac{\log L}{bL}.
+\tag{U5}
+$$
+
+Eventually $0<\delta_x\le1/4$, and $z\le x^b$ implies
+$\delta_x\log z\le\log L$. The higher prime-power terms in the
+logarithm of the Euler product are uniformly summable, giving
+
+$$
+\log\mathcal E_z(\delta_x)
+=\sum_{p\le z}p^{-1+\delta_x}+O(1).
+$$
+
+To keep the moving-parameter cost explicit, use the classical
+first-Mertens identity $\sum_{p\le e^v}\log p/p=v+O(1)$,
+already used in the semigroup budgets above. Put
+$h_\delta(v)=(e^{\delta v}-1)/v$, a positive increasing function.
+Partial summation gives
+
+$$
+\sum_{p\le z}\frac{e^{\delta\log p}-1}{p}
+=\int_{\log2}^{\log z}h_\delta(v)\,dv
++O\bigl(h_\delta(\log z)+h_\delta(\log2)\bigr).
+$$
+
+For the common range in (U5),
+$h_{\delta_x}(\log z)\le h_{\delta_x}(bL)=(L-1)/(bL)$ and
+
+$$
+\int_0^{\log L}\frac{e^u-1}{u}\,du\ll\frac L{\log L}.
+$$
+
+Together with the classical prime harmonic sum this proves
+
+$$
+\log\mathcal E_z(\delta_x)
+\ll_b \log L+\frac L{\log L}=o(L),
+\qquad 2\le z\le x^b.
+\tag{U6}
+$$
+
+### Sum the complete far tail
+
+Multiplying (U3) and (U4), and summing all $n>T_x$, bounds the
+left side of (U2) by a fixed constant times
+
+$$
+\begin{aligned}
+&\log^4(2z)\sum_{n>T_x}\frac{\Lambda(n)^2}{n}
+ e^{-c_\vartheta V(\log n)}\\
+&\quad+\log^3(2z)\mathcal E_z(\delta_x)
+ \sum_{n>T_x}\frac{\Lambda(n)^2}{n^{1+\vartheta\delta_x}}.
+\end{aligned}
+\tag{U7}
+$$
+
+For the first term, integral comparison with $u=\log t$ and
+strict exponent slack absorb the polynomial factor. At the chosen
+cutoff,
+
+$$
+V(\log T_x)\asymp_{b,\kappa}
+\frac{L^{6/5}}{(\log L)^{4/5}},\qquad
+\frac{V(\log T_x)}L\longrightarrow\infty.
+$$
+
+Hence that whole term is $O(x^{-D})$ for any fixed $D>0$.
+For the second term, decreasing integral comparison gives, uniformly
+for $0<a\le1/4$ and sufficiently large $T$,
+
+$$
+\sum_{n>T}\frac{\Lambda(n)^2}{n^{1+a}}
+\ll T^{-a}\left(
+\frac{\Lambda(T)^2}{a}+\frac{\Lambda(T)}{a^2}+\frac1{a^3}
+\right).
+$$
+
+Taking $a=\vartheta\delta_x$, the exponent is
+$a\log T_x=\vartheta\kappa L+o(1)$. By (U6), all remaining
+Euler and polynomial costs are
+$\exp[O_b(L/\log L)+O_{b,\kappa,\vartheta}(\log L)]$.
+Thus the second term is $x^{-\vartheta\kappa+o(1)}=O(x^{-A})$,
+since $\vartheta\kappa>A$. This establishes (U2) with constants
+independent of every allowed $z$.
+
+### Exact scope of the improvement and the unpaid finite head
+
+The existing full identity (CP.2) and (U2) give
+
+$$
+I_\psi(x)=\sum_{1\le n\le T_x}M_z(n)J_x^{\eta_z}(n)
++O_{A,b,\kappa}(x^{-A}),\qquad 2\le z\le x^b.
+\tag{U8}
+$$
+
+The filter may be any function $z=z(x)$ in this range, including
+at prime jumps. For example $b=\kappa=1$, $A=3/4$ gives a
+tail $O(x^{-3/4})$, below $1/(\sqrt x\log^2x)$ asymptotically,
+while keeping all rows from the unit through $T_x$ and every
+positive divisor order inside each retained row.
+
+| Existing or current application | Source and scope | Cutoff and evidence |
+|---|---|---|
+| (T2) | Actual growing primorial, $z\le x\le2z$ | $\log H_z=1024\log^2z$; explicit normalized error $<2^{-80}$ for $\log z\ge25$ |
+| Ng (N9) | Actual odd-source pairing and its boundary | $\log N\sim18(\log x)^{5/3}(\log\log x)^{1/3}$; asymptotic critical error |
+| (U2) | Actual primorial, uniformly $2\le z\le x^b$, with the complete fiber budget before integration | $\log T_x\sim\kappa b(\log x)^2/\log\log x$; asymptotic $O(x^{-A})$ |
+
+For $z$ comparable to $x$, (U2) has a smaller asymptotic logarithmic
+cutoff than (T2). The odd-source cutoff (N9) is smaller still, but
+does not supply this growing-filter, complete fiber norm. Neither
+comparison certifies a numerical improvement at (T2)'s finite
+starting point. No optimal cutoff or practical computation is claimed.
+
+This is a combined application of existing cancellation, kernel and
+Euler-product inputs; no general literature-novelty claim is made.
+The full signed finite head in (U8) still has no required one-sided
+Robin estimate. In particular the far-tail budget supplies no sign
+for that head, no square-root Möbius bound, no new Robin-safe integer
+range and no RH proof.

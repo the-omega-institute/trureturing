@@ -1,0 +1,33 @@
+**Definition 35.1 (Windows, probes and the unobserved prime support).** Let $\mathbb P$ denote the positive primes and let
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{j+2}=F_{j+1}+F_j.
+$$
+
+For $r\in\mathbb P$, define
+
+$$
+\begin{aligned}
+L_r&=\left\lceil F_r/10\right\rceil,&
+U_r&=\left\lfloor F_r/5\right\rfloor,\\
+I_r&=[L_r,U_r]\cap\mathbb Z,&
+W_r&=\{1+F_rg:g\in I_r\},\qquad
+W=\bigcup_{r\in\mathbb P}W_r.
+\end{aligned}
+\tag{35.1}
+$$
+
+Each $I_r$, and hence each $W_r$, is finite; an interval with $L_r>U_r$ is empty. For a positive integer $n$, let $\omega(n)=\#\{p\in\mathbb P:p\mid n\}$ count distinct prime divisors, with $\omega(1)=0$. For a finite set $S\subset\mathbb P$ of distinct probes, put
+
+$$
+\begin{aligned}
+d_S(n)&=(\mathbf 1_{p\mid n})_{p\in S}\in\{0,1\}^{S},\\
+\rho_S(n)&=\omega(n)-\sum_{p\in S}\mathbf 1_{p\mid n}
+          =\#\{p\in\mathbb P\setminus S:p\mid n\},\\
+W_{S,b}&=\{n\in W:d_S(n)=b\}\qquad(b\in\{0,1\}^{S}).
+\end{aligned}
+\tag{35.2}
+$$
+
+Thus the observer knows membership in the whole family $W$ and the indicated bits. The numerical value of $n$, its generating index $r$, a magnitude bound and additional arithmetic observations are not part of $d_S$. The prime-index variable here is local to (35.1), not a phase or an endpoint fee from Sections 33–34. Repeated queries to the same prime give one coordinate of $S$. For $S=\varnothing$, the bit space has one empty pattern, the sum is zero and $\rho_\varnothing=\omega$.
+
