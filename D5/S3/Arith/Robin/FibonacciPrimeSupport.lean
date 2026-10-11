@@ -7,6 +7,7 @@
    digest: Integers built from Fibonacci primes have sigma(n)/n below 241/50 and satisfy Robin. -/
 
 import D5.S3.Arith.Robin.FewDistinctPrimes
+import Mathlib.Data.Nat.Fib.Basic
 
 /-! A prime Fibonacci number is `2`, `3`, `5` or `F_k` with `k ≥ 7`. For `k ≥ 7` the growth
 `2 (F_{k+1} - 1) ≥ 3 (F_k - 1)` telescopes the reciprocals `1 / (F_k - 1)` to at most `1/4`, so
@@ -61,7 +62,8 @@ private theorem fib_prime_cases {p k : ℕ} (hp : p.Prime) (hk : Nat.fib k = p) 
   rw [not_or, not_le, not_le] at h
   obtain ⟨h5, hk7⟩ := h
   rw [← hk] at hp h5
-  interval_cases k <;> norm_num [Nat.fib_add_two] at hp h5
+  revert hp h5
+  interval_cases k <;> decide
 
 private theorem three_mul_fib_le (j : ℕ) : 3 * Nat.fib (j + 2) ≤ 2 * Nat.fib (j + 3) := by
   have h1 : Nat.fib (j + 3) = Nat.fib (j + 1) + Nat.fib (j + 2) := Nat.fib_add_two
@@ -127,13 +129,13 @@ private theorem big_part_le (S : Finset ℕ)
     intro p hp
     have h6 : (6 : ℝ) ≤ p := by exact_mod_cast (hS p hp).2.1
     exact div_nonneg (by linarith) (by linarith)
-  set M := S.sup id + 2 with hM
+  set M := S.sup id + 9 with hM
   have hsub : S ⊆ (Ico 7 M).image Nat.fib := by
     intro p hp
     obtain ⟨hprime, h5, k, hk⟩ := hS p hp
     have hk7 : 7 ≤ k := (fib_prime_cases hprime hk).resolve_left (by omega)
     have hkp : k ≤ p + 1 := hk ▸ Nat.le_fib_add_one k
-    have hpM : p ≤ S.sup id := Finset.le_sup (f := id) hp
+    have hpM : p ≤ S.sup id := by simpa using Finset.le_sup (f := id) hp
     exact Finset.mem_image.mpr ⟨k, Finset.mem_Ico.mpr ⟨hk7, by omega⟩, hk⟩
   have hinj : Set.InjOn Nat.fib (Ico 7 M : Set ℕ) := by
     intro a ha b hb hab
@@ -145,7 +147,8 @@ private theorem big_part_le (S : Finset ℕ)
         exact hab)
     omega
   have hsum : ∑ p ∈ S, 1 / ((p : ℝ) - 1) ≤ 1 / 4 := by
-    have hnn : ∀ p ∈ (Ico 7 M).image Nat.fib, p ∉ S → (0 : ℝ) ≤ 1 / ((p : ℝ) - 1) := by
+    have hnn : ∀ p ∈ (Ico 7 M).image Nat.fib, p ∉ S →
+        (0 : ℝ) ≤ 1 / ((p : ℝ) - 1) := by
       intro p hp _
       obtain ⟨k, hk, rfl⟩ := Finset.mem_image.mp hp
       have := fib_ge_thirteen (Finset.mem_Ico.mp hk).1
@@ -172,7 +175,8 @@ private theorem small_part_le (T : Finset ℕ) (hT : ∀ p ∈ T, p.Prime ∧ p 
     intro p hp
     obtain ⟨hprime, h5⟩ := hT p hp
     have h2 := hprime.two_le
-    interval_cases p <;> simp_all <;> norm_num at hprime
+    simp only [Finset.mem_insert, Finset.mem_singleton]
+    interval_cases p <;> first | decide | (exfalso; norm_num at hprime)
   have hone : ∀ i ∈ ({2, 3, 5} : Finset ℕ), (1 : ℝ) ≤ (i : ℝ) / ((i : ℝ) - 1) := by
     intro i hi
     simp only [Finset.mem_insert, Finset.mem_singleton] at hi
