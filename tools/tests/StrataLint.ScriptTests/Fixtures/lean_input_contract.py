@@ -144,6 +144,26 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
             self.assertFalse(keys["save_allowed"])
             self.assertFalse(keys["project_save_allowed"])
 
+    def test_pr_producer_can_publish_only_in_a_pull_request_merge_ref(self):
+        spec = importlib.util.spec_from_file_location("lean_actions", ROOT / "tools/scripts/worktree/lean_actions.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        environment = dict(os.environ, GITHUB_RUN_ID="18", GITHUB_RUN_ATTEMPT="1",
+                           GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/42/merge",
+                           STRATALINT_CACHE_WRITES="true", STRATALINT_REPORT_SUCCEEDED="true",
+                           STRATALINT_CHECK_SUCCEEDED="true", STRATALINT_CACHE_PR_PRODUCER="true")
+        with mock.patch.dict(os.environ, environment, clear=True):
+            self.assertTrue(module.actions_keys(self.root)["project_save_allowed"])
+        for defect in ({"STRATALINT_CACHE_PR_PRODUCER": "false"},
+                       {"STRATALINT_REPORT_SUCCEEDED": "false"},
+                       {"STRATALINT_CACHE_WRITES": "false"},
+                       {"GITHUB_REF": "refs/pull/42/head"},
+                       {"GITHUB_REF": "refs/pull/0/merge"},
+                       {"GITHUB_REF": "refs/heads/dev"},
+                       {"GITHUB_EVENT_NAME": "pull_request_target"}):
+            with self.subTest(defect=defect), mock.patch.dict(os.environ, dict(environment, **defect), clear=True):
+                self.assertFalse(module.actions_keys(self.root)["project_save_allowed"])
+
 
 
 if __name__ == "__main__":
