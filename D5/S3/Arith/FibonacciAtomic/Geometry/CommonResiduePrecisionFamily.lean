@@ -292,7 +292,7 @@ private theorem right_grid_point (t₀ Λ : ℕ) (hΛ : 0 < Λ) (τ : ℝ) (hτ 
 
 /-- A single residue class has legal points immediately to the right of every moving root,
 while preserving the exact denominator valuation at every prime of the chosen modulus. -/
-theorem common_residue_family (k B : ℕ) (hk : 1 ≤ k) (hB : 2 ≤ B) :
+private theorem common_residue_family (k B : ℕ) (hk : 1 ≤ k) (hB : 2 ≤ B) :
     ∃ t₀ m₀ Λ : ℕ, ∃ t : ℕ → ℕ, ∃ τ : ℕ → ℝ,
       1 ≤ t₀ ∧ 1 ≤ m₀ ∧ 0 < denominator k t₀ m₀ ∧
       (Λ : ℤ) = B * denominator k t₀ m₀ ∧ 0 < Λ ∧
@@ -353,5 +353,245 @@ theorem common_residue_family (k B : ℕ) (hk : 1 ≤ k) (hB : 2 ≤ B) :
         (denominator_positive k hk _ _ (by exact_mod_cast ((hm N).trans (hlegal N)))
           (by exact_mod_cast hm N))
         (hseed p hp hpB) (hΛcast ▸ htcong N) (hΛcast ▸ hmcong N)
+
+/-- Rational adjacent ratio; its tree interpretation is restricted to `1 ≤ m ≤ t`. -/
+def ratio (k t m : ℕ) : ℚ := (numerator k t m : ℚ) / denominator k t m
+
+private theorem ratio_cast (k t m : ℕ) (hm : 1 ≤ m) :
+    (ratio k t m : ℝ) = q k (m - 1) t := by
+  have hmcast : ((m - 1 : ℕ) : ℝ) = (m : ℝ) - 1 := by
+    rw [Nat.cast_sub hm, Nat.cast_one]
+  have reverse_block (n : ℕ) (x : ℝ) :
+      (∏ r ∈ Finset.range n, (x + n - r)) = rising (x + 1) n := by
+    rw [← Finset.prod_range_reflect (fun r : ℕ => x + n - r) n]
+    unfold rising
+    apply Finset.prod_congr rfl
+    intro r hr
+    have h := Finset.mem_range.mp hr
+    rw [Nat.cast_sub (by omega), Nat.cast_sub (by omega), Nat.cast_one]
+    ring
+  have hnum : (numerator k t m : ℝ) =
+      ((t : ℝ) - (m - 1 : ℕ)) * rising (a k (m - 1) t + 1) (E k) *
+        rising (b k (m - 1) t + 1) (A k) := by
+    unfold numerator
+    push_cast
+    rw [hmcast]
+    have hfirst : (∏ r ∈ Finset.range (E k),
+        ((A k : ℝ) * t + E k * m - r)) = rising (a k (m - 1) t + 1) (E k) := by
+      rw [← reverse_block]
+      apply Finset.prod_congr rfl
+      intro r _
+      dsimp [a]
+      rw [hmcast]
+      ring
+    have hsecond : (∏ r ∈ Finset.range (A k),
+        ((D k : ℝ) * t + A k * m - r)) = rising (b k (m - 1) t + 1) (A k) := by
+      rw [← reverse_block]
+      apply Finset.prod_congr rfl
+      intro r _
+      dsimp [b]
+      rw [hmcast]
+      ring
+    rw [hfirst, hsecond]
+    ring
+  have hden : (denominator k t m : ℝ) =
+      (4 : ℝ) ^ D k * m * rising (n k (m - 1) t - 1 / 2) (D k) := by
+    unfold denominator
+    push_cast
+    have hprod : (∏ h ∈ Finset.range (D k),
+        (2 * (L k : ℝ) * t + 2 * D k * m - 2 * D k + 2 * h - 1)) =
+        (2 : ℝ) ^ D k * rising (n k (m - 1) t - 1 / 2) (D k) := by
+      calc
+        _ = ∏ h ∈ Finset.range (D k), 2 * (n k (m - 1) t - 1 / 2 + h) := by
+          apply Finset.prod_congr rfl
+          intro h _
+          dsimp [n]
+          rw [hmcast]
+          ring
+        _ = _ := by rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_range]; rfl
+    rw [hprod]
+    have hp : (2 : ℝ) ^ D k * 2 ^ D k = 4 ^ D k := by rw [← mul_pow]; norm_num
+    calc
+      _ = ((2 : ℝ) ^ D k * 2 ^ D k) * m * rising (n k (m - 1) t - 1 / 2) (D k) := by ring
+      _ = _ := by rw [hp]
+  simp only [ratio, Rat.cast_div, Rat.cast_intCast, hnum, hden, q, H]
+  rw [hmcast]
+  simp only [sub_add_cancel]
+  ring
+
+private theorem logarithmic_upper (k m : ℕ) (hk : 1 ≤ k) (hm : 1 ≤ m)
+    (x : ℝ) (hx : 2 * (m : ℝ) - 1 < x) : g k (m - 1) x ≤ (D k + 1 : ℝ) / m := by
+  obtain ⟨he, ha, hd, hl, hsum, _⟩ := lengths k hk
+  have hmpos : (0 : ℝ) < m := by exact_mod_cast hm
+  have hj : (0 : ℝ) ≤ (m - 1 : ℕ) := Nat.cast_nonneg _
+  have hmcast : ((m - 1 : ℕ) : ℝ) = (m : ℝ) - 1 := by
+    rw [Nat.cast_sub hm, Nat.cast_one]
+  have hxm : (m : ℝ) ≤ x := by
+    have : (1 : ℝ) ≤ m := by exact_mod_cast hm
+    linarith
+  have hxpos : 0 < x := hmpos.trans_le hxm
+  have hA : (0 : ℝ) < A k := by exact_mod_cast ha
+  have hD : (0 : ℝ) < D k := by exact_mod_cast hd
+  have hL : (0 : ℝ) < L k := by exact_mod_cast hl
+  have first : 1 / (x - (m - 1 : ℕ)) ≤ 1 / (m : ℝ) := by
+    rw [hmcast]
+    apply one_div_le_one_div_of_le hmpos
+    linarith
+  have block (c e : ℝ) (hc : 0 < c) (he : 0 ≤ e) (r : ℕ) :
+      c * (∑ i ∈ Finset.range r, 1 / (c * x + e * (m - 1 : ℕ) + 1 + i)) ≤
+        (r : ℝ) / m := by
+    rw [Finset.mul_sum]
+    calc
+      _ ≤ ∑ _i ∈ Finset.range r, 1 / (m : ℝ) := by
+        apply Finset.sum_le_sum
+        intro i _
+        rw [mul_one_div]
+        apply (div_le_div_iff₀ (by positivity : 0 < c * x + e * (m - 1 : ℕ) + 1 + i) hmpos).mpr
+        have := mul_le_mul_of_nonneg_left hxm hc.le
+        have := mul_nonneg he hj
+        have := (Nat.cast_nonneg i : (0 : ℝ) ≤ i)
+        nlinarith
+      _ = _ := by simp [div_eq_mul_inv]
+  have hfirst := block (A k) (E k) hA (Nat.cast_nonneg _) (E k)
+  have hsecond := block (D k) (A k) hD hA.le (A k)
+  have hnegative : 0 ≤ (L k : ℝ) *
+      ∑ i ∈ Finset.range (D k), 1 / (n k (m - 1) x - 1 / 2 + i) := by
+    apply mul_nonneg hL.le
+    apply Finset.sum_nonneg
+    intro i _
+    apply one_div_nonneg.mpr
+    dsimp [n]
+    have hL1 : (1 : ℝ) ≤ L k := by exact_mod_cast hl
+    have hm1 : (1 : ℝ) ≤ m := by exact_mod_cast hm
+    have := mul_le_mul_of_nonneg_left hxm hL.le
+    have := mul_nonneg hD.le hj
+    have := (Nat.cast_nonneg i : (0 : ℝ) ≤ i)
+    nlinarith
+  have hsumcast : (D k : ℝ) = E k + A k := by exact_mod_cast hsum
+  dsimp [g, a, b]
+  conv_rhs => rw [hsumcast, add_div, add_div]
+  linarith
+
+private theorem log_grid_bound (k m : ℕ) (hk : 1 ≤ k) (hm : 1 ≤ m)
+    (τ y : ℝ) (hroot : q k (m - 1) τ = 1)
+    (hτ : 2 * (m : ℝ) - 1 < τ) (hy : τ ≤ y) :
+    Real.log (q k (m - 1) y) ≤ ((D k + 1 : ℝ) / m) * (y - τ) := by
+  have hmcast : ((m - 1 : ℕ) : ℝ) + 1 = m := by exact_mod_cast Nat.sub_add_cancel hm
+  have hτm : (m : ℝ) ≤ τ := by
+    have : (1 : ℝ) ≤ m := by exact_mod_cast hm
+    linarith
+  have hd (x : ℝ) (hx : τ ≤ x) :
+      HasDerivAt (fun z : ℝ => Real.log (q k (m - 1) z)) (g k (m - 1) x) x :=
+    ((SourceDensityCrossing.result k hk (m - 1)).2.1 x (by rw [hmcast]; linarith)).2.1
+  have h := (convex_Icc τ y).image_sub_le_mul_sub_of_deriv_le
+    (fun x hx => (hd x hx.1).continuousAt.continuousWithinAt)
+    (fun x hx => (hd x (interior_subset hx).1).differentiableAt.differentiableWithinAt)
+    (C := (D k + 1 : ℝ) / m)
+    (fun x hx => by
+      rw [(hd x (interior_subset hx).1).deriv]
+      exact logarithmic_upper k m hk hm x (hτ.trans_le (interior_subset hx).1))
+    τ ⟨le_rfl, hy⟩ y ⟨hy, le_rfl⟩ hy
+  simpa only [hroot, Real.log_one, sub_zero] using h
+
+/-- One injective legal integer family realizes strict real approach to one and every
+prime precision prescribed by the same fixed modulus. -/
+theorem result (k B : ℕ) (hk : 1 ≤ k) (hB : 2 ≤ B) :
+    ∃ t j : ℕ → ℕ,
+      Function.Injective (fun N => (t N, j N)) ∧
+      (∀ N : ℕ, 1 ≤ t N ∧ j N < t N ∧ 1 < ratio k (t N) (j N + 1) ∧
+        (ratio k (t N) (j N + 1) : ℝ) =
+          SourceDensityCrossing.sourceDensity k (t N) (j N + 1) /
+            SourceDensityCrossing.sourceDensity k (t N) (j N) ∧
+        ∀ p : ℕ, p.Prime → p ∣ B →
+          (padicValNat p B : ℤ) ≤ padicValRat p (ratio k (t N) (j N + 1) - 1)) ∧
+      Filter.Tendsto (fun N => (ratio k (t N) (j N + 1) : ℝ)) Filter.atTop (nhds 1) := by
+  obtain ⟨t₀, m₀, Λ, t, τ, ht₀, hm₀, hb₀, hΛcast, hΛ, hinj, hfamily⟩ :=
+    common_residue_family k B hk hB
+  let m : ℕ → ℕ := fun N => m₀ + Λ * N
+  have hm (N : ℕ) : 1 ≤ m N := by dsimp [m]; omega
+  have hsuccess (N : ℕ) := hfamily N
+  change ∀ N, m N ≤ t N ∧ _ at hsuccess
+  have hj (N : ℕ) : m N - 1 + 1 = m N := Nat.sub_add_cancel (hm N)
+  have hq (N : ℕ) : 1 < (ratio k (t N) (m N) : ℝ) := by
+    rw [ratio_cast k _ _ (hm N)]
+    exact (hsuccess N).2.2.2.2.2.2.2.1
+  refine ⟨t, (fun N => m N - 1), hinj, ?_, ?_⟩
+  · intro N
+    dsimp only
+    rw [hj]
+    refine ⟨(hm N).trans (hsuccess N).1, by have := (hsuccess N).1; have := hm N; omega,
+      by exact_mod_cast hq N, ?_, ?_⟩
+    · rw [ratio_cast k _ _ (hm N)]
+      convert (SourceDensityCrossing.result k hk (m N - 1)).2.2.2.2.2.2 (t N)
+        (by rw [hj]; exact (hsuccess N).1) using 1
+      rw [hj]
+    · intro p hp hpB
+      letI : Fact p.Prime := ⟨hp⟩
+      have hden := denominator_positive k hk (t N) (m N)
+        (by exact_mod_cast ((hm N).trans (hsuccess N).1)) (by exact_mod_cast hm N)
+      have hdenq : (denominator k (t N) (m N) : ℚ) ≠ 0 := by exact_mod_cast hden.ne'
+      have hnum : numerator k (t N) (m N) - denominator k (t N) (m N) ≠ 0 := by
+        intro hz
+        have he : ratio k (t N) (m N) = 1 := by
+          simp only [ratio, sub_eq_zero.mp hz, div_self hdenq]
+        have := hq N
+        simp only [he, Rat.cast_one, lt_self_iff_false] at this
+      have hdiv := ((hsuccess N).2.2.2.2.2.2.2.2 p hp hpB).2
+      have hval := ((padicValInt_dvd_iff _ _).mp hdiv).resolve_left hnum
+      change padicValInt p (denominator k (t N) (m N)) + padicValNat p B ≤
+        padicValInt p (numerator k (t N) (m N) - denominator k (t N) (m N)) at hval
+      have hrat : ratio k (t N) (m N) - 1 =
+          ((numerator k (t N) (m N) - denominator k (t N) (m N) : ℤ) : ℚ) /
+            denominator k (t N) (m N) := by
+        simp only [ratio, Int.cast_sub]
+        field_simp
+      rw [hrat, padicValRat.div (by exact_mod_cast hnum) hdenq,
+        padicValRat.of_int, padicValRat.of_int]
+      omega
+  · have hlogbound (N : ℕ) :
+        0 ≤ Real.log (ratio k (t N) (m N) : ℝ) ∧
+        Real.log (ratio k (t N) (m N) : ℝ) ≤ ((D k + 1 : ℝ) * Λ) / m N := by
+      constructor
+      · exact Real.log_nonneg (hq N).le
+      · rw [ratio_cast k _ _ (hm N)]
+        have hr := hsuccess N
+        have hτ : 2 * (m N : ℝ) - 1 < τ N := by
+          have hh := hr.2.2.1
+          have hcast : ((m N - 1 : ℕ) : ℝ) = (m N : ℝ) - 1 := by
+            rw [Nat.cast_sub (hm N), Nat.cast_one]
+          push_cast at hh
+          rw [hcast] at hh
+          linarith
+        have hbound := log_grid_bound k (m N) hk (hm N) (τ N) (t N)
+          hr.2.1 hτ hr.2.2.2.1.le
+        have hdist : (t N : ℝ) - τ N ≤ Λ := by linarith [hr.2.2.2.2.1]
+        calc
+          _ ≤ ((D k + 1 : ℝ) / m N) * ((t N : ℝ) - τ N) := hbound
+          _ ≤ ((D k + 1 : ℝ) / m N) * Λ := mul_le_mul_of_nonneg_left hdist (by positivity)
+          _ = _ := by ring
+    have hmTop : Filter.Tendsto m Filter.atTop Filter.atTop := by
+      apply Filter.tendsto_atTop_atTop.mpr
+      intro C
+      refine ⟨C, fun N hN => ?_⟩
+      have hmul : N ≤ Λ * N := by nlinarith
+      dsimp [m]
+      omega
+    have hmReal : Filter.Tendsto (fun N => (m N : ℝ)) Filter.atTop Filter.atTop :=
+      tendsto_natCast_atTop_atTop.comp hmTop
+    have hinv := tendsto_inv_atTop_zero.comp hmReal
+    have hupper : Filter.Tendsto (fun N => ((D k + 1 : ℝ) * Λ) / m N)
+        Filter.atTop (nhds 0) := by
+      simpa only [div_eq_mul_inv, mul_zero, Function.comp_apply] using
+        (Filter.Tendsto.const_mul ((D k + 1 : ℝ) * Λ) hinv)
+    have hlog : Filter.Tendsto (fun N => Real.log (ratio k (t N) (m N) : ℝ))
+        Filter.atTop (nhds 0) :=
+      squeeze_zero (fun N => (hlogbound N).1) (fun N => (hlogbound N).2) hupper
+    have hexp := Real.continuous_exp.continuousAt.tendsto.comp hlog
+    have heq : (Real.exp ∘ fun N => Real.log (ratio k (t N) (m N) : ℝ)) =
+        (fun N => (ratio k (t N) (m N) : ℝ)) :=
+      funext fun N => Real.exp_log (lt_trans zero_lt_one (hq N))
+    rw [heq, Real.exp_zero] at hexp
+    simpa only [hj] using hexp
+
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.CommonResiduePrecisionFamily
