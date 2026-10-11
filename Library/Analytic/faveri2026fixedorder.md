@@ -1319,3 +1319,25 @@ of (J) would still need the detector's actual length coverage and the
 final signed Robin restoration; neither follows from residue cancellation
 alone. Until those steps are proved, the Robin and Riemann-hypothesis
 conclusions remain open.
+
+The later de Faveri--Dunn--Hoffstein paper records the relevant obstruction
+from the other side: its cubic and quartic lower bounds show that the
+corresponding character families are not perfectly orthogonal, and its
+fixed-order conjecture predicts the $K^{7/6+o(1)}$ balanced scale for order
+six. See the separate [non-orthogonality card](faveridunnhoffstein2026nonorthogonality.md).
+Those results do not estimate (J), but they rule out replacing its complete
+signed kernel by a diagonal orthogonality heuristic.
+
+A closer lower-order precedent is Hamdar's cubic first-moment calculation:
+at the cubic transition point, the principal cube term and infinitely many
+dual cubic-Gauss residues cancel only after the two meromorphic pieces are
+matched. See the separate [cubic cancellation card](hamdar2025cubicawaycentral.md).
+That source also records why the transfer is currently blocked at order six:
+the required higher-order Gauss-series residue formulas are not available.
+
+The sextic-twist literature adds a second boundary condition: the full
+composite-even family can mix unitary and orthogonal sectors, with a slower
+Gauss-sum equidistribution rate than the totally sextic subfamily. See the
+[sextic mixed-family card](bergryanyoung2023sextictwists.md). Thus a
+quadratic--cubic factorization of (J) needs cross-sector estimates rather
+than an independence assumption.
