@@ -1,3 +1,5 @@
+using F = StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
 internal sealed class ActualCutPartitionRecoveryDocument : IScribeDocumentDefinition
@@ -69,6 +71,9 @@ internal sealed class ActualCutPartitionRecoveryDocument : IScribeDocumentDefini
                 "Let t = H_s alpha and z = mul t beta. Fill one Q-prefix trie with t; in the other, fill q with H_s z exactly when q ++ s belongs to P. All alpha-valued old holes change together to the fresh z. All other actual values, absent cuts, exterior syntax, and class disequalities remain."),
             Theorem("nonuniform_failure_pair", "Nonuniform source separation",
                 "If x ++ s belongs to P and y ++ s does not, the two actual sources have equal complete P rows. Their Q subtrees at x and y were equal and become different. Native subtree leaf-count bounds prove z is fresh, without requiring all P addresses to be reached."),
+            Describe.Lean(DescribeId.Create("actualcutpartitionrecovery-classvalue-at"),
+                DeclarationHandle.Create(Prefix + "classValue_at"), H("Actual present class value"), Statement("classValue_at"),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("At an originally reached cut, the canonical class valuation equals its actual native subtree. The prefix-free and original-presence premises are retained. The same supplier supports reconstruction and all-class injectivity."))), DescribeRole.Theorem),
             Paragraph(Text("The source domain is every finite nonempty ordered Boolean-leaf tree, and the cuts have no depth or common-shape restriction. The later decoder and classification consume these actual source pairs. This mathematical record makes no physical acquisition or resource-cost assertion."))
         )));
 
@@ -84,4 +89,18 @@ internal sealed class ActualCutPartitionRecoveryDocument : IScribeDocumentDefini
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))),
         DescribeRole.Theorem);
 
+    private static StatementSource Statement(string n) => n switch
+    {
+        "classValue_at" => StatementSource.FromAuthor(Disp(All("P", V("CutSet"), All("u", V("Source"), All("p", V("Address"), All("t", V("Source"), Imp(And(Call("CutPrefixFree", V("P")), Mem(V("p"), V("P")), EqOf(Call("subtree", V("p"), V("u")), Call("some", V("t")))), EqOf(Call("classValue", V("P"), V("u"), Call("classOrdinal", V("P"), V("u"), V("p"))), V("t"))))))))),
+        _ => StatementSource.WithoutFormula()
+    };
+    private static Formula V(string n) => F.Id(n);
+    private static Formula Par(Formula f) => Seq(Open, f, Close);
+    private static Formula Call(string n, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(n))), [.. args]);
+    private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula And(params Formula[] fs) => Seq(fs.Select((f, i) => i == 0 ? Par(f) : Seq(Sp, Land, Sp, Par(f))).ToArray());
+    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
+    private static Formula Mem(Formula a, Formula b) => Seq(a, Sp, InMacro, Sp, b);
+    private static Formula All(string ns, Formula t, Formula b) => Seq(Forall, Sp,
+        Seq(ns.Split(',').Select((n, i) => i == 0 ? V(n) : Seq(Comma, Sp, V(n))).ToArray()), Colon, Sp, t, Comma, Sp, Par(b));
 }
