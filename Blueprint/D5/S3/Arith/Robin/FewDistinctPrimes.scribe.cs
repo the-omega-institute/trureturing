@@ -6,7 +6,7 @@ internal sealed class FewDistinctPrimesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Robin/FewDistinctPrimes.";
     private static readonly LibraryNoteRef Elima =
-        LibraryNoteRef.Create("D5/L/ArithSums/elima2022robin");
+        LibraryNoteRef.Create("D5/L/Weil/elima2022robin");
     private static readonly LibraryNoteRef Hertlein =
         LibraryNoteRef.Create("D5/L/hertlein2018robin");
 

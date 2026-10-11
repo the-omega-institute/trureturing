@@ -13,8 +13,6 @@ triage: anchor
 
 # On Robin's inequality for positive integers and related bounds
 
-The source is EasyChair Preprint No. 9446, dated 11 December 2022, at
-[easychair.org/publications/preprint/xW8q](https://easychair.org/publications/preprint/xW8q).
 It is a preprint; this card records the stated interfaces and does not audit the proofs.
 
 Write $\omega(n)=k$ for the number of distinct prime divisors of $n$.
@@ -31,3 +29,9 @@ Write $\omega(n)=k$ for the number of distinct prime divisors of $n$.
 
 The bounded-$\omega$ statement therefore rests on the cited 21-free theorem and on the
 author's calculation; neither is a Lean verification.
+
+## Verified locator
+
+- URL: https://easychair.org/publications/preprint/xW8q
+- Version and location: EasyChair Preprint No. 9446, dated 11 December 2022; Lemma 1.4,
+  Theorem 1.2 and Theorem 1.3.
