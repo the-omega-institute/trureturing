@@ -1376,3 +1376,124 @@ Post–Zimmer, [arXiv:2202.03234v1](https://arxiv.org/html/2202.03234v1), Defini
 Every original label, order, occurrence, optional earlier history and immutable INITIAL, cap equality, source-independent actor initialization, source/control right, Read, refusal, Stop, chronological record, copy and COMPLETE condition remains that of55.1,60.1–60.3 and66.1. The complete common and killed inverses and their actual diagonal compensation remain separate, with both quadratures, all three modes, the reference and every auxiliary correlation. The parameter $\delta$ indexes mathematical commissions; neither it nor the auxiliary $t$ in(80.27) is an executed switching law. Source-compatible physical ingress, full operational implementation, metric and clock conversion, finite precision and finite execution, acquisition and lifetime-resource accounting remain unpaid. The original nonrecurrent common-zero, $j_c$,155, attainment and sustained programme are not settled. The finite-tree retained-record developments supply no automatic interface, domain, norm, operation or resource identification here. The one-way, nonadditive/coupled-reserve and geometric alternatives keep their own evidence requirements.
 
 ## 78.99 追加锚（本行以下为增补区）
+
+## 81. Source-matched coarse growth and exact Markov-factor obstructions
+
+**Definition 81.1 (the whole-rho occurrence metric).** Use the whole-rho contract of §55.1–§55.2, and write
+
+$$
+\mathcal P=\{L,R\}^{*},\qquad
+p\sim pL,\quad p\sim pR,
+$$
+
+with one unit-length, unit-conductance seam for each displayed parent–child pair, counting measure $\mu(\{p\})=1$, and graph distance $d_{\mathcal P}$. The root is $o=\varepsilon$. Throughout the packing argument, $R\in\mathbb N_0=\{0,1,2,\ldots\}$ is a nonnegative integer graph radius. Thus
+
+$$
+B_{\mathcal P}(o,R)=\{p:|p|\le R\},\qquad
+|B_{\mathcal P}(o,R)|=\sum_{k=0}^{R}2^k=2^{R+1}-1.
+\tag{81.1}
+$$
+
+This is the complete occurrence graph in the explicit §55 realization. It is not the one-spine direct-limit graph used by §52.1–§52.4, and neither graph distance nor the cardinality in (81.1) is a physical spatial radius or a dimension assignment.
+
+**Proposition 81.2 (bounded-density coarse-Euclidean obstruction).** There is no map $F:\mathcal P\to\mathbb R^3$ and real constants $A\ge1$, $B\ge0$, $0\le M<\infty$ such that
+
+$$
+\|F(p)-F(q)\|_2\le A d_{\mathcal P}(p,q)+B
+\tag{81.2}
+$$
+
+for all $p,q$, and, for the one fixed standard tiling $Q_z=z+[0,1)^3$, $z\in\mathbb Z^3$, every tile contains at most $M$ image points counted with their occurrence multiplicity:
+
+$$
+\#\{p\in\mathcal P:F(p)\in Q_z\}\le M\qquad(z\in\mathbb Z^3).
+\tag{81.3}
+$$
+
+Proof. By (81.2), $F(B_{\mathcal P}(o,R))$ lies in the Euclidean ball of radius $AR+B$ about $F(o)$. Each coordinate projection of this ball has length $2(AR+B)$ and meets at most $2AR+2B+3$ intervals of the fixed tiling by $[m,m+1)$, $m\in\mathbb Z$. Thus the ball meets at most $(2AR+2B+5)^3$ tiles $Q_z$. Hence (81.1) and (81.3) would give
+
+$$
+2^{R+1}-1\le M(2AR+2B+5)^3
+\tag{81.4}
+$$
+
+for every $R\in\mathbb N_0$. The left side eventually exceeds every cubic polynomial, which is a contradiction. $\square$
+
+The proposition rules out the stated globally bounded-density, coarse-Lipschitz realization of the §55 unit-seam occurrence metric. The same packing argument applies to every fixed finite-dimensional Euclidean target $\mathbb R^d$, $d\ge1$: replace the fixed tiles by $z+[0,1)^d$, $z\in\mathbb Z^d$, and the exponent $3$ in (81.4) by $d$. The zero-dimensional target has one tile and already violates (81.3). Changing conductances alone leaves this metric/counting obstruction intact. A finite cutoff, unbounded tile occupancy, failure of (81.2), a changed metric or counting convention, or a target with different volume growth changes a stated hypothesis; none of these changes by itself supplies an escape construction. A quotient followed by a map still satisfies the obstruction if occupancy counts all original occurrences as in (81.3); counting quotient classes instead changes the measure. No physical impossibility theorem or dimension inference from vertex degree follows.
+
+**Definition 81.3 (the §52 exact Markov-factor contract).** Now use the distinct §52.1–§52.4 graph $\Gamma_{52}$: its direct limit retains the finite INITIAL tree $t$, one infinite spine $r_0,r_1,\ldots$, and the finite $T_j$ branches attached along that spine. Use its common infinite operator without finite-domain killing, its unit seam conductances and counting measure. Let
+
+$$
+L_{52}=L_\infty,\qquad P_{52}=I-L_{52}/3,
+\tag{81.5}
+$$
+
+as in (52.3)–(52.4). An exact representative-independent factor consists of a surjection $\pi:\Gamma_{52}\to\mathcal B$ onto a nonempty countable state space and a stochastic kernel $\overline P$ satisfying
+
+$$
+\sum_{\pi(z)=b}P_{52}(x,z)
+ =\overline P(\pi(x),b)
+\qquad(x\in\Gamma_{52},\ b\in\mathcal B),
+\tag{81.6}
+$$
+
+where the right side is independent of the representative $x$ in its fibre. Under (81.6), $Y_n=\pi(X_n)$ is a Markov chain in the same discrete step clock whenever $X_n$ has transition kernel $P_{52}$.
+
+**Theorem 81.4 (the §52 same-clock Markov-factor obstruction).** Under (81.6), every factor state is recurrent. In particular its return probabilities cannot satisfy a summable $O((n+1)^{-3/2})$ bound in the same discrete clock.
+
+Proof. First establish recurrence of the source chain, as an intermediate step. Each spine edge $\{r_k,r_{k+1}\}$ is a one-edge cutset separating $r_0$ from infinity: the component containing $r_0$ consists of the finite INITIAL tree and finitely many finite attached branches. These cutsets are pairwise edge-disjoint. With counting reversible measure, each nonloop edge has conductance $1/3$ for $P_{52}$, so each cutset has reciprocal total conductance $3$. Apply the classical [Nash–Williams Criterion (2.14), Lyons–Peres, *Probability on Trees and Networks*, Chapter 2, §5](https://rdlyons.pages.iu.edu/prbtree/book_online.pdf): the divergent sum of reciprocal cutset conductances implies recurrence. Holding does not affect escape or return recurrence here: the embedded jump chain uses the same nonloop conductances, and at each vertex the probability of a jump is $\deg(x)/3>0$. Connectedness makes $P_{52}$ irreducible, so recurrence holds at every vertex, equivalently
+
+$$
+\sum_{n\ge0}P_{52}^{\,n}(x,x)=\infty.
+\tag{81.7}
+$$
+
+This use of the classical recurrence criterion is an intermediate deduction for the particular §52 source, not a new general recurrence theorem. Exact lumpability (81.6), iterated in the same step clock, now gives, for $b=\pi(x)$,
+
+$$
+\overline P^{\,n}(b,b)
+ =\mathbb P_x(\pi(X_n)=b)
+ =\sum_{\pi(y)=b}P_{52}^{\,n}(x,y)
+ \ge P_{52}^{\,n}(x,x).
+\tag{81.8}
+$$
+
+Summing proves recurrence at $b$; surjectivity covers every factor state. If a finite constant $C\ge0$ satisfied
+
+$$
+\overline P^{\,n}(b,b)\le C(n+1)^{-3/2},
+\tag{81.9}
+$$
+
+for all sufficiently large integers $n$, its summable right side and the finitely many earlier probabilities would contradict (81.8). $\square$
+
+This conclusion uses the exact factor law and the §52 chain and clock. It does not apply the one-spine proof to the whole-rho graph of §55. A non-Markov projection, representative-dependent transition data, changed rates, or a clock conversion would require a separately stated model and analysis; naming such a change proves neither transience nor (81.9). In particular any changed chain that remains recurrent has the same obstruction for its exact same-clock factors.
+
+**Specification 81.5 (a conditional source-to-spatial bridge).** The native ordered source supplies its binary parent–child relation. Separately, [Process44, Definition 44.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) stipulates an oriented three-component Euclidean cross-product interface: $q(\alpha)=a$, $q(\beta)=b$, $q(\langle s,t\rangle)=q(s)\times q(t)$, with $a=e_1$, $b=e_2$, $k=b\times a=-e_3$ and readout in $\{0,\pm a,\pm b,\pm k\}$. Zero is an allowed reply and is not a direction of unit length. This interface does not derive the dimension of an ambient propagation space.
+
+A proposed spatial interpretation must declare which source carrier, actual version and boundary convention it uses. The common whole-rho carrier $\mathcal P$, its actual finite domains $D_j(t)$ with the §55 missing-child killing, and the §52 common graph or its finite N/D conventions are different choices. A mathematical infinite carrier does not add an event or a Read after an infinite prefix or after Stop. The joint object's source projection must retain immutable INITIAL, source-independent initialization, labels, brackets, left/right order and distinct occurrences, actual versions, legal operations and whole-candidate guards, each acceptance and refusal, original Reads, chronological history, Stop, and the original acquisition, record and copy permissions and charges. A geometric quotient does not erase those coordinates from that projection or grant access to them.
+
+For the chosen carrier $X$, supply an actual map $F:X\to M$, or a declared quotient and placement $X\xrightarrow{\pi}\mathcal B\xrightarrow{\iota}M$ with $F=\iota\circ\pi$, its fibres and legal identifications, and the target metric and measure. State how occurrence lengths, counting weights, adjacency and conductances correspond, including boundary or killing terms. The operator correspondence must be induced by this same map and these choices, with its function spaces, measure convention, variance and domains specified; an unrelated operator, in particular a zero intertwiner, is not a realization.
+
+For example, in precisely the exact §52 quotient of (81.6), use complex bounded functions with supremum norm on the two countable state spaces, counting measure on each, and kernels acting on observables by $(Pf)(x)=\sum_yP(x,y)f(y)$. The actual map induces the pullback
+
+$$
+\begin{aligned}
+U_\pi &: \ell^\infty(\mathcal B)\longrightarrow\ell^\infty(\Gamma_{52}),
+& (U_\pi f)(x)&=f(\pi(x)),\\
+P_{52}U_\pi&=U_\pi\overline P,
+& L_{52}U_\pi&=U_\pi\overline L,
+\qquad \overline L=3(I-\overline P).
+\end{aligned}
+\tag{81.10}
+$$
+
+All operators here are bounded on their displayed spaces; the identities hold on all of $\ell^\infty(\mathcal B)$ and use the same clock. The first identity is exactly (81.6), tested on state indicators and extended by absolutely convergent stochastic sums; the second follows from (81.5). Surjectivity makes $U_\pi$ an isometry and $U_\pi1=1$, excluding the zero map. This is pullback of observables, not pushforward of states. It makes no counting-measure $\ell^2$ assertion: if a fibre is infinite, the indicator of its target state has finite $\ell^2(\mathcal B)$ norm but its pullback has infinite $\ell^2(\Gamma_{52})$ norm. A Hilbert-space correspondence therefore needs its own measures, domain and boundedness proof. A continuous target operator likewise needs its own domain and boundary correspondence; (81.10) supplies none by itself.
+
+The field and potential must correspond under the same map and boundary convention as the kinetic law. In an exact scalar quotient, descent of a source field means equality to a target field composed with $\pi$, and thus requires constancy on each fibre; the source term, exterior data and potential multiplier must also be matched. Choosing the §52 screened distributed field or the §55 isolated unscreened field is part of the model, not an implicit substitution. Supply any claimed conversion among propagation, source-event, apparatus and physical clocks, and any causal or finite-speed condition separately.
+
+If the particular claimed Euclidean model requires cubic volume growth or a three-dimensional resistance/return estimate, specify its metric balls, measure, scales, constants, clock and return normalization and establish those controls for that model. They are not automatic properties of an arbitrary three-dimensional manifold, nor do those controls together constitute a sufficient dimension theorem. The foregoing items specify conditional correspondence obligations; neither their minimality nor their sufficiency for a spatial realization is proved here.
+
+The resulting source-matched exclusions are precisely (81.4) for the §55 unit-seam metric with bounded occurrence occupancy, and (81.8)–(81.9) for the §52 exact same-clock factor. The source-to-spatial construction remains open. The proofs are mathematical deductions under the displayed contracts, with no claim of literature novelty; Lean formalization remains open. The stipulated local three-component readout supplies no physical dimension theorem.
+
+## 78.99 追加锚（本行以下为增补区）
