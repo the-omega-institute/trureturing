@@ -300,7 +300,7 @@ private theorem eraseClasses_literal (P : CutSet) (root : Source) (a : Address) 
   | mul l r ihl ihr =>
       by_cases ha : a ∈ P <;> simp [literalRow, eraseClasses, cutExterior, ha, ihl, ihr]
 
-private theorem exteriorHoles_cut (P : CutSet) (a : Address) (t : Source) :
+theorem exteriorHoles_cut (P : CutSet) (a : Address) (t : Source) :
     exteriorHoles a (cutExterior P a t) = reachedHoles P a t := by
   induction t generalizing a with
   | of b => by_cases ha : a ∈ P <;> simp [cutExterior, exteriorHoles, reachedHoles, ha]

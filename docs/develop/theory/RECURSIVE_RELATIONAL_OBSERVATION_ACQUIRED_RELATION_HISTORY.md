@@ -3875,3 +3875,788 @@ task only. They prove neither general impossibility nor undecidability.
 General mixed-history minimum prices, joint resource optima and the
 stochastic targets listed in §25 are unchanged. No new formal or kernel
 result, implementation, independent approval or publication is claimed.
+
+## 追加锚（本行以下为增补区）
+
+## 27. The entire acquired graph with arbitrary retained literals and cuts
+
+The result in §§27–31 is a total decision for the graph input (ARH.8.5),
+with every finite mixed literal history retained and with an arbitrary
+finite prefix-free original target cut. There is no target-eligibility
+test. Its additional ingredient is a classification of comparisons
+between holes whose underlying positions in the graph parameter are
+nested. Comparisons at incomparable positions use the existing
+synchronous finite-prefix decision. These two uses are joined on the
+entire original source fiber, including the concrete exterior.
+
+The symbols and graph input of §§27–32 are local to those sections.
+Section 26 concerns the different old cut $P=\{L,RL,RR\}$ and record
+$(1,L,0,R,=)$ of (CS.26.1), whose fiber is its exchanged atomic orbit.
+Here the old cut is $P=\{L,R\}$ and the record is $(0,L,1,R,=)$:
+the parameter $y$ ranges over every finite tree consistent with $H_0$.
+Neither section's source promise is substituted for the other's.
+
+**Definition 27.1 (graph input and prefix convention).** Keep
+$P=\{L,R\}$, $C=\langle\square_1,\square_2\rangle$, the two distinct old
+classes, and the retained guarded record $(0,L,1,R,=)$ exactly as in
+(ARH.8.5). Let $H_0$ be any finite list of literal records, with their
+epochs, repetitions and absent replies. Let $Q$ be any finite prefix-free
+set of original addresses. Use Assumption 1.3, in particular the complete
+accessible input and the same actual original-root register at certified
+
+$$
+N\ge\max\bigl(\{1\}\cup\operatorname{epochs}(H_0)\bigr).
+\tag{ARH.27.1}
+$$
+
+The entire source parameterization is the supplier Theorem 8.2, not an
+additional assumption or a new parameterization theorem:
+
+$$
+F(y)=\langle\rho(y),y\rangle,\qquad
+V=\{y\in\mathcal T:
+       r_{\rho^a F(y)}(p)=c\ \text{for every }(a,p,c)\in H_0\},
+\qquad U=F[V].
+\tag{ARH.27.2}
+$$
+
+Here $y$ ranges over all finite nonempty free ordered trees satisfying the
+displayed conjunction. The old inequality holds at every such value by
+$\kappa(\rho(y))=\kappa(y)+1$; both endpoints of the retained equality
+exist. These are consequences already used in (ARH.8.5), not permissions
+to discard a possibly false old constraint. The inverse parameter is the
+mathematical original subtree $u|_R$. It is not freely accessible data.
+
+Write $s\equiv_h t$ for agreement of all original replies at addresses of
+length strictly less than $h$, as in Definition 19.1. Thus agreement
+through inclusive depth $b$ is $\equiv_{b+1}$. Put
+
+$$
+d=1+\max\bigl(\{0\}\cup\{|p|:(a,p,c)\in H_0\}
+                         \cup\{|q|:q\in Q\}\bigr).
+\tag{ARH.27.3}
+$$
+
+A depth-$d$ pattern records every constructor at depth less than $d$,
+stops at each concrete leaf, and places a distinct variable at every
+reached depth-$d$ position. Its variables occur once in the pattern.
+They range independently over all of $\mathcal T$. For a pattern $t$,
+write $\mathcal C(t)$ for its set of finite fillings.
+
+**Proposition 27.2 (literal cylinders with both source inclusions).**
+There is an effective finite list $\mathcal L$ of depth-$d$ patterns
+such that
+
+$$
+V=\coprod_{t\in\mathcal L}\mathcal C(t),\qquad
+U=\coprod_{t\in\mathcal L}\{F(t[v]):v:X_t\to\mathcal T\}.
+\tag{ARH.27.4}
+$$
+
+Every listed pattern has all its finite fillings, without residual
+constraints. The displayed maps are bijective when the pattern and its
+frontier valuation are included. In particular $U$ is empty exactly when
+$\mathcal L$ is empty. Pattern identity has a bounded original-prefix
+selector.
+
+Proof. The finite depth-pattern construction is the one in Definition
+74.2 of [SLH][SLH], applied to the single parameter tree. Enumerate all its
+patterns and, in each, fill every frontier variable by $\alpha$ to get a
+finite test tree. Keep the pattern if and only if this test tree, after
+applying $F$, satisfies every literal in $H_0$.
+
+This finite test is exact on the whole cylinder. Two fillings of the same
+pattern are $\equiv_d$. Lemma 19.2 gives the same agreement after $F$.
+The address-locality statement (SLH.74.7) then makes their replies at each
+specified epoch and address identical, since $|p|<d$. In particular
+arbitrarily large retained epochs do not require deeper original
+patterns. The known finite iterates used in the test include all
+leaf-sector reach guards. Each occurrence in the history list is tested,
+so a repeated incompatible record rejects the pattern and an absent
+reply retains its exact meaning.
+
+Every finite $y$ has a unique depth-$d$ pattern and unique frontier
+subtrees. If $y\in V$, the test tree of that pattern has the same retained
+replies, so the pattern is listed. Conversely every filling of a listed
+pattern has all the required replies. This proves both inclusions for
+$V$. Apply the supplied bijection (ARH.27.2) to get both inclusions for
+$U$, with its complete old row and guarded relation. Recovering $y$ at
+original $R$ and its frontier subtrees proves uniqueness. Every pattern
+has a finite filling, including the empty valuation of a ground pattern;
+therefore the emptiness assertion follows.
+
+The selector consists only of the original replies of $y$ at $|s|<d$,
+which are original replies of $u$ at $Rs$. They have physical original
+length at most $d$. At a current epoch these are decoded by the paid
+literal supplier, not obtained by inspecting a hidden parameter. Distinct
+patterns differ at one such reply. This also rules out an unobserved
+semantic branch between the cylinders. $\square$
+
+**Definition 27.3 (target descriptions in a cylinder).** If
+$Q=\{\varepsilon\}$, its full row is the constant single root-hole row;
+this case needs no hole comparison. Otherwise every cut is nonroot.
+For each $t\in\mathcal L$, form the normalized source template
+
+$$
+F_t=\langle\rho(t),t\rangle
+\tag{ARH.27.5}
+$$
+
+by distributing $\rho$ through explicit pairs and evaluating its
+concrete leaves. Residual occurrences are $x$ or $\rho(x)$ and have
+original source depth $d+1$, greater than every cut length. Navigate the
+original $Q$, retaining absent cuts as absent, and mask the reached
+subtrees in their original lexicographic order. This computes the
+reached set $J_t$, a normalized exterior $E_t$ with numbered hole
+symbols, and every entire hole value.
+
+Each hole value has one of two descriptions: a known ground tree $g$,
+or a tag $(a,s)$ denoting
+
+$$
+\rho^a(y|_s),\qquad a\in\{0,1\},
+\tag{ARH.27.6}
+$$
+
+where $s$ is reached in every $y\in\mathcal C(t)$. For a cut $Rs$, use
+$a=0$; for a cut $Ls$ with $s$ originally reached in $y$, use $a=1$.
+A ground subpattern is evaluated and described as ground. If navigation
+in the left copy passes an original leaf of $y$, the rest is navigation
+in that leaf's known one-step image: it either yields a ground hole
+value or makes the cut absent. Such a reached position is an original
+position of $u=F(y)$, even though it was created in forming the left
+copy from $y$. It is never confused with a position born after the
+physical entry epoch.
+
+These descriptions are exhaustive because $\rho$ preserves pairing and
+acts only on leaves. No navigation can encounter an unresolved
+depth-$d$ variable before a cut ends. Thus throughout this cylinder,
+
+$$
+\begin{aligned}
+I_Q(F(y))&=J_t,&
+C_Q(F(t[v]))&=E_t[v],\\
+q\sim r&\Longleftrightarrow
+        \text{the two described whole hole values are equal}.
+\end{aligned}
+\tag{ARH.27.7}
+$$
+
+Let $O_t$ be the set of frontier variables actually occurring in $E_t$,
+including decorated occurrences. The supplied template injectivity of
+Lemma 19.2, with the fixed numbered holes treated as constants, gives
+
+$$
+E_t[v]=E_t[w]\quad\Longleftrightarrow\quad
+v(x)=w(x)\quad\text{for every }x\in O_t.
+\tag{ARH.27.8}
+$$
+
+Consequently two full rows in one cylinder differ exactly when an
+exterior coordinate in (ARH.27.8) differs or one unordered pair of
+reached holes changes equality status. This is the entire-row
+disagreement equivalence used below. A chosen pair is only a witness
+of disagreement, not a replacement target.
+
+## 28. Incomparable underlying positions and the exact finite-pair interface
+
+**Lemma 28.1 (independent subtrees within this full cylinder).** Fix a
+listed pattern $t$ and two incomparable reached positions $s,r$ in $y$,
+both of length less than $d$. Let $t_s,t_r$ be the subpatterns rooted at
+those positions. The possible pairs $(y|_s,y|_r)$, as $y$ ranges over
+$\mathcal C(t)$, are exactly
+
+$$
+\mathcal C(t_s)\times\mathcal C(t_r).
+\tag{ARH.28.1}
+$$
+
+Every such pair has an effective finite completion to $\mathcal C(t)$.
+Moreover two pairs $(z,w),(z',w')$ with $z\equiv_j z'$ and
+$w\equiv_j w'$ admit completions $y,y'$ satisfying $y\equiv_j y'$.
+
+Proof. A subtree of a filling necessarily fills its subpattern. In the
+other direction remove the two disjoint subpatterns from $t$, leaving a
+context with two distinguished placeholders. Fill its other frontier
+variables by $\alpha$, and insert $z,w$ at the placeholders. Since
+$s,r$ are incomparable, their frontier variable sets are disjoint, and
+this operation gives precisely the specified subtrees and a filling of
+$t$. It is finite and effective. Apply the same context and the same
+other fillings to $z',w'$. Any original address either stays in the fixed
+context or enters one placeholder and uses a suffix no longer than the
+whole address. Agreement at relative lengths less than $j$ therefore
+gives $y\equiv_j y'$, including absence below a leaf. $\square$
+
+This product statement is confined to disjoint original subtrees of the
+single linear pattern. The old pair $(\rho(y),y)$ remains coupled
+throughout. In particular (ARH.28.1) is not a product approximation of
+that acquired graph.
+
+**Proposition 28.2 (complete local test from the synchronous supplier).**
+For fixed $a,b\in\{0,1\}$ and the positions of Lemma 28.1, there is a
+terminating exact decision of finite-prefix determination, on
+$\mathcal C(t)$, of the bit
+
+$$
+e(y)=[\rho^a(y|_s)=\rho^b(y|_r)].
+\tag{ARH.28.2}
+$$
+
+A positive answer supplies an integer $h$ such that
+$y\equiv_h y'$ implies $e(y)=e(y')$ throughout the cylinder. A negative
+answer supplies, for every requested $j$, finite $y,y'\in\mathcal C(t)$
+with $y\equiv_j y'$ and opposite values of $e$.
+
+Proof. This is an application of Lemma 21.1 and Theorem 13.1 to the
+following exact four-coordinate relation, not a new automata closure:
+
+$$
+\begin{aligned}
+\mathcal B_{s,r}=\{(z,w,z',w'):\;&
+ z,z'\in\mathcal C(t_s),\quad w,w'\in\mathcal C(t_r),\\
+&[\rho^a z=\rho^b w]\mathbin{\mathsf{xor}}
+ [\rho^a z'=\rho^b w']\}.
+\end{aligned}
+\tag{ARH.28.3}
+$$
+
+A cylinder is specified by finitely many coordinate-prefix replies.
+The two equality atoms are exactly fixed-power aligned atoms of
+(CE.20.3). Thus Lemma 21.1 constructs a finite bottom-up automaton on
+valid padded convolutions of four nonempty finite trees for precisely
+(ARH.28.3). Complement and xor are relative to valid finite coordinates.
+There is no shifted-constructor graph inside this automaton.
+
+Use Theorem 13.1 with $k=2$, pairing the first two coordinates with the
+last two. It computes its productive diagonal-prefix fixed set. If the
+accepting intersection is empty, it supplies a finite $j_0$ for which
+no member of (ARH.28.3) has both paired agreements $\equiv_{j_0}$.
+Set
+
+$$
+h=\max(|s|,|r|)+j_0.
+\tag{ARH.28.4}
+$$
+
+Agreement $y\equiv_h y'$ restricts to those two agreements, so their
+equality statuses coincide. This proves the positive claim.
+
+If the accepting intersection is nonempty, the same supplier constructs,
+for each $j$, a member of (ARH.28.3) with the two paired agreements
+$\equiv_j$. All four coordinates are finite productive witnesses.
+Complete them by Lemma 28.1, using the same other fillings. The resulting
+$y,y'$ have the required agreement and opposite statuses. Conversely,
+any two cylinder trees with opposite statuses project to (ARH.28.3).
+The product correspondence proves that no spurious local negative
+witness was introduced by this projection.
+
+The state set is finite and the supplied decreasing sequence stabilizes;
+each requested witness is a finite productive completion. Hence this
+test stops in both cases. Neither testing a fixed depth nor admitting an
+infinite solution has replaced the negative stopping argument. $\square$
+
+## 29. Nested comparisons and finite atomic witnesses
+
+**Lemma 29.1 (the exact nested comparison).** Let $z\in\mathcal T$,
+let $p\ne\varepsilon$ be originally reached in $z$, and let
+$a,b\in\{0,1\}$. Then
+
+$$
+\rho^a(z)=\rho^b(z|_p)
+\quad\Longleftrightarrow\quad
+a=0,\ b=1,\ p=L,\quad z=T_k\text{ for some }k\ge2.
+\tag{ARH.29.1}
+$$
+
+Proof. If $a=b$, injectivity reduces the equation to equality of a finite
+tree and its proper subtree, which finite node count excludes. If
+$a=1,b=0$, the number of nodes of $\rho(z)$ is at least the number of
+nodes of $z$, while a proper subtree has fewer. This excludes that case.
+Node monotonicity follows directly from the two actual leaf images and
+preservation of pairing.
+
+It remains to consider $z=\rho(z|_p)$. Because $p$ is an original reached
+position, original-address transport gives
+
+$$
+(\rho z)|_p=\rho(z|_p)=z.
+\tag{ARH.29.2}
+$$
+
+Both endpoints of the predicate $(0,\varepsilon,1,p,=)$ on this very
+finite tree $z$ therefore exist. Apply the source classification in
+Theorem 4.2 to precisely this predicate: it forces $1=w(p)$ and
+$z=T_k$ with $k\ge1$. Positive letter weights give $p=L$. Original
+reach of $L$ in $z$, an additional hypothesis retained here, then gives
+$k\ge2$. Conversely, for $k\ge2$, $T_k|_L=T_{k-1}$, and
+$\rho(T_{k-1})=T_k$. This proves the converse with the original guard.
+
+The application of Theorem 4.2 has been supplied with its whole-root,
+proper-descendant equality (ARH.29.2), derived under the target equality
+being classified. It is not applied to the old-child record of
+(ARH.8.5), and does not assert that all sources in that graph have a
+root certificate. Using $z$ as a mathematical argument neither reroots
+the physical register nor acquires a comparison. $\square$
+
+**Proposition 29.2 (exact cylinder decision for the remaining nested bit).**
+Let $s$ be a reached position of a depth-$d$ pattern $t$, with
+$m=d-|s|\ge1$, and suppose $sL$ is reached throughout $\mathcal C(t)$.
+On this cylinder consider
+
+$$
+e_s(y)=[y|_s=\rho(y|_{sL})].
+\tag{ARH.29.3}
+$$
+
+If the subpattern $t_s$ contains a concrete leaf, $e_s$ has an effective
+finite-prefix bound. If it contains no concrete leaf, $e_s$ has finite
+positive and negative witnesses agreeing to every requested finite
+depth in the whole cylinder. Both alternatives are decidable.
+
+Proof. Lemma 29.1 identifies the positive values of $z=y|_s$ exactly as
+$T_k$, $k\ge2$, that fill $t_s$. The subpattern records every relative
+level below $m$ and has variables only at level $m$.
+
+For $k\ge2m+2$, every relative address of length less than $m$ in $T_k$
+is reached and has reply branch. Indeed its weight is at most
+$2(m-1)$, and the guarded formula (ARH.4.3) gives reach and residual index
+at least two. If $t_s$ contains a concrete leaf, no such $T_k$ can fill
+it. Compute the finite set
+
+$$
+A_s=\{T_k:2\le k<2m+2,\ T_k\in\mathcal C(t_s)\}.
+\tag{ARH.29.4}
+$$
+
+Membership in this set is exactly the bit in question on the cylinder.
+Matching all replies of a given finite tree $g$ through its height
+forces the whole tree, by its concrete leaves and pairing. Thus, if
+$A_s\ne\varnothing$, the effective choice
+
+$$
+h_s=|s|+1+\max_{g\in A_s}\operatorname{ht}(g)
+\tag{ARH.29.5}
+$$
+
+makes $y\equiv_{h_s}y'$ preserve membership in $A_s$. If $A_s$ is empty
+the bit is constantly false and take $h_s=0$. This proves the first
+alternative without bounding other subtrees of $y$.
+
+If $t_s$ has no concrete leaf, it is the complete pairing pattern to
+depth $m$, with distinct free frontier variables. Fix any requested
+inclusive depth $b$ and set
+
+$$
+K=2(d+b+3),\qquad z=T_K.
+\tag{ARH.29.6}
+$$
+
+The tree $z$ fills $t_s$. Its rightmost leaf, at $R^{K/2}$, is $\alpha$,
+by (ARH.4.3); this depth is greater than both $m$ and $b$. Change only
+that leaf to $\beta$, giving a different finite tree $z'$. It still
+fills $t_s$, and $z\equiv_{b+1}z'$. Its whole left child is unchanged,
+so
+
+$$
+\rho(z'|_L)=\rho(z|_L)=z\ne z'.
+\tag{ARH.29.7}
+$$
+
+Consequently $z$ has positive status and $z'$ negative status. Fill the
+rest of $t$ identically by $\alpha$ at the frontier variables outside
+$s$, and insert $z,z'$ respectively at $s$. The same context argument
+as in Lemma 28.1 gives two finite cylinder trees with agreement through
+depth $b$ and opposite bits. Every $b$ has such a construction; it uses
+finite trees, not the infinite all-branch limit. $\square$
+
+**Definition 29.3 (the total hole-pair test).** For any two reached holes
+in a cylinder, use their ground values or tags from Definition 27.3.
+The following finite cases decide their equality-bit determination.
+
+1. Two ground values have constant status. For one ground $g$ and one
+   tag $(a,s)$, apply the supplied partial inverse $\delta^a$ to $g$.
+   Failure makes equality constantly false. Success gives a finite $c$
+   and exactly $y|_s=c$, determined by
+   $h=|s|+\operatorname{ht}(c)+1$.
+2. For two tags $(a,s),(b,r)$ with $s=r$, equality is constant: true
+   if $a=b$, false otherwise by the clock.
+3. For incomparable $s,r$, use Proposition 28.2.
+4. Otherwise orient the positions as $r=sp$ with
+   $p\ne\varepsilon$, interchanging the two tags if necessary. The
+   equation has precisely the form of Lemma 29.1. It is constantly
+   false unless $a=0,b=1,p=L$. In that one case use Proposition 29.2.
+
+Return the displayed bound in a positive case and bound zero for a
+constant status. In a negative case retain the effective finite-witness
+construction. Ground matching in item 1 requires no assumption that the
+ground value is feasible; if it is infeasible the same bound still
+suffices. In item 4 the original reach of $p$ follows from the two tags
+and is not dropped. Every pair of finite words is equal, incomparable,
+or properly nested in one orientation, so these cases exhaust every
+original hole pair. There is no unsupported result.
+
+## 30. The terminating full-domain criterion
+
+**Definition 30.1 (graph-row decision).** Compute $\mathcal L$ and every
+target description of §27. If the list is empty, return YES with an
+explicit empty-domain flag. If $Q=\{\varepsilon\}$, return YES with
+inclusive original bound $H=0$. Otherwise require, on every listed
+pattern, both of the following:
+
+- $O_t=\varnothing$.
+- Every unordered pair of reached holes passes the positive branch of
+  Definition 29.3.
+
+If either requirement fails, return NO, retaining that pattern and its
+failed exterior or hole-pair witness data. If all pass, let $h_{t,qr}$
+be the positive bounds from Definition 29.3 and return YES with
+
+$$
+H=\max\bigl(\{d\}\cup
+     \{h_{t,qr}:t\in\mathcal L,\ \{q,r\}\subseteq J_t,\ q\ne r\}\bigr).
+\tag{ARH.30.1}
+$$
+
+An empty set of hole pairs contributes no bound. This definition is a
+finite algorithm on the original common input, not a source-size cutoff.
+
+**Theorem 30.2 (complete arbitrary-cut decision on the entire graph).**
+For every finite $H_0$ and every finite prefix-free original $Q$ in
+Definition 27.1, the algorithm of Definition 30.1 terminates. Its answer
+is YES if and only if
+
+$$
+\exists H\ge0\ \ \forall u,u'\in U,\quad
+ \bigl[\forall p,\ |p|\le H\Longrightarrow r_u(p)=r_{u'}(p)\bigr]
+ \Longrightarrow R_Q(u)=R_Q(u').
+\tag{ARH.30.2}
+$$
+
+For nonempty $U$, YES supplies the computed sufficient original prefix.
+NO supplies, for every requested inclusive original depth $b$, an
+effective pair of finite sources in that same entire retained fiber
+which agree at every original address of length at most $b$ and have
+different entire original $Q$ rows. All original repetitions, absences,
+old distinctness, endpoint guards and coupling are preserved. No
+eligibility restriction on $Q$ is imposed.
+
+Proof. The pattern list is finite. Ground evaluation, finite partial
+inversion, word-prefix comparisons and the finite enumeration (ARH.29.4)
+terminate. The only saturation is the finite-state terminating
+Theorem 13.1 application in Proposition 28.2. Proposition 29.2 has a
+finite syntactic branch test. Thus every branch of the decision
+terminates, independently of the size of any unknown source.
+
+Suppose the answer is YES and $U$ is nonempty. The root-cut case is
+immediate from the definition of a whole row. In the other cases take
+$u=F(y),u'=F(y')$ satisfying the antecedent of (ARH.30.2) with the
+computed $H$. Every relative address $s$ of length less than $H$ has
+original address $Rs$ of length at most $H$. Hence $y\equiv_H y'$.
+Since $H\ge d$, Proposition 27.2 puts them in the same listed pattern
+$t$, with their own finite valuations $v,w$.
+
+Its reached set and numbering agree by (ARH.27.7). Its exterior is
+constant since $O_t$ is empty. For every hole pair,
+$H\ge h_{t,qr}$, so the exact pair test proves equal equality status on
+$y,y'$. Agreement of all those statuses is exactly agreement of the
+whole partition on the fixed finite reached set. The entire rows are
+therefore equal. This is a simultaneous statement about the two actual
+sources; separately chosen equality witnesses have not been assembled
+into a fictitious partition. It proves YES implies (ARH.30.2).
+
+Now suppose a listed pattern fails the exterior requirement. Choose
+$x\in O_t$. For any supplied $b$, let $z$ be the perfect finite binary
+tree of height $b+1$ with all leaves $\alpha$, and let $z'$ change one
+depth-$b+1$ leaf to $\beta$. They are distinct and agree at every
+relative address of length at most $b$. Use $z,z'$ for $x$ in two
+valuations, and the same $\alpha$ for every other frontier variable.
+All valuations are permitted by (ARH.27.4). Filling the fixed pattern
+preserves $\equiv_{b+1}$, and Lemma 19.2 preserves it after $F$.
+The two resulting finite original sources thus agree through depth
+$b$. Their exteriors differ by (ARH.27.8), because $\rho$ is injective
+as well as a bare variable being injective. Their entire rows differ.
+
+The remaining negative case is a failed pair test. A ground comparison,
+an equal-position comparison and a constantly false nested comparison
+cannot fail. For a failed incomparable comparison, apply Proposition
+28.2 with $j=b+1$ and use its two finite full-cylinder completions.
+For the exceptional failed nested comparison, use the explicit
+construction (ARH.29.6)–(ARH.29.7). In both cases this gives finite
+$y,y'\in\mathcal C(t)$ with $y\equiv_{b+1}y'$ and opposite truth values
+for the chosen complete-hole equality. Apply $F$ to both. Locality gives
+original agreement through depth $b$, while (ARH.27.7) makes the two
+entire partitions, and hence entire rows, different.
+
+Every constructed source belongs to the same $U$ by both inclusions
+of (ARH.27.4). In particular the left component is recomputed as
+$\rho(y)$ after each change; it is never varied independently or kept
+as an incompatible old value. The clock preserves distinct old
+children for every new $y$. Literal repetitions and all original
+guards have already been imposed on the whole cylinder. Finite
+completion cannot invalidate them. These constructions are effective
+for every requested finite $b$ and disprove (ARH.30.2) at every bound.
+
+The two negative cases exhaust every way the algorithm returns NO,
+so they prove (ARH.30.2) implies YES as well. With $\mathcal L$ empty,
+Proposition 27.2 proves logical emptiness and (ARH.30.2) is vacuously
+true. Reporting that flag does not claim a nonempty acquired entry.
+One may take $H=0$ in this case. $\square$
+
+For $Q=\varnothing$, the exterior is all of $F_t$; every free frontier
+variable is visible. The decision is consequently YES exactly when
+every listed pattern is ground, equivalently when $U$ is finite.
+This conclusion includes the empty logical fiber. For a root cut the
+row is constant even on an infinite fiber. Cuts that are absent in one
+pattern and reached in another are distinguished by the finite selector;
+an absent cut creates no hole in its own pattern. These conclusions
+use the original cuts, without replacing them by a level cut.
+
+## 31. The inherited paid consumer and the retained resource boundary
+
+**Corollary 31.1 (lawful static whole-row recovery at every allowed epoch).**
+On every nonempty acquired input of Definition 27.1, the following
+conditions are equivalent:
+
+1. The algorithm of Theorem 30.2 returns YES.
+2. For every permitted certified $N$, there exist a deterministic
+   effective source-total static full-row service $A_N$ and an integer
+   $K_N<\infty$ such that $A_N$ uses at most $K_N$ new raw reads on
+   every $u\in U$.
+3. For some permitted certified $N$, there exist a deterministic
+   effective source-total serial full-row service $A$ and an integer
+   $K<\infty$ such that $A$ uses at most $K$ new raw reads on every
+   $u\in U$, allowing real forward updates on the same register.
+
+Each service and its bound use only the common retained input and task;
+the bound in each predicate is uniform over the entire $U$. Moreover,
+on YES the static services can be constructed effectively from the
+computed sufficient inclusive original depth $H$, with one raw bound
+$K_0$ valid simultaneously for every permitted $N$:
+
+$$
+K_0=2(2^{H+1}-1),\qquad
+\max|p_{\mathrm{physical}}|\le H+\lceil N/2\rceil.
+\tag{ARH.31.1}
+$$
+
+The bound on raw calls is independent of $N$. A root-cut input can
+instead halt with its known row and zero new reads. A NO answer excludes
+a uniform finite raw bound for every permitted static or serial service.
+
+Proof. Apply the existing bridge (ARH.2.3) to the exact $U$ of
+(ARH.27.2). Its common complete state, decidable finite-candidate
+membership, four literal replies, original-address locality and
+source-totality hypotheses are precisely those of Definition 27.1
+and Assumption 1.3. Theorem 30.2 supplies the previously missing
+effective bound or all-depth obstruction; the bridge itself is reused.
+
+Explicitly, at the actual static epoch $N$, use [SLH, Theorem 2.2][SLH]
+to recover all original replies at $|p|\le H$. This gives (ARH.31.1).
+Each decoder request is an actual original-root address, and every
+actual repeated call is paid. The acquired evidence is the actual
+$N$-epoch address/reply list, not fabricated old events.
+
+Enumerate finite original trees in an effective size-and-encoding order.
+Test each candidate against the complete old row, every retained literal,
+both relation guards, the complete acquired equality and the recovered
+original prefix. All these tests on a supplied finite candidate are
+decidable. The actual source guarantees a successful candidate, so this
+local search terminates on every admitted source. Compute its entire
+original $R_Q$ and output it, then enter absorbing Halt. Theorem 30.2
+makes the output common to the whole prefix-conditioned fiber; the
+candidate is not claimed to be the actual source. The consumer neither
+queries an unknown equality nor reads an unobserved chart or code.
+
+The bridge's converse covers all allowed effective serial services,
+including reply-dependent finite updates and unbounded a priori physical
+addresses. Its finite reachable reply tree under a uniform raw bound,
+together with original-address locality, would give a finite determining
+original prefix. The NO witnesses contradict that conclusion. This
+reuse establishes equivalence of uniformly raw-bounded service existence,
+not equality of minimum raw prices. $\square$
+
+Source-totality without a uniform read bound has a different meaning.
+The paid original-tree traversal used in [SCR, Theorem 6.1][GRAPH-SCR]
+works on every finite source: at the fixed actual epoch $N$, decode the
+original root reply with [SLH, Theorem 2.2][SLH], and decode both original
+children only after a decoded branch. Each original node costs at most
+two actual current-register reads. The original tree is finite, so this
+procedure terminates, reconstructs it, computes the entire $R_Q$, and
+enters absorbing Halt. It uses at most $2|\operatorname{Pos}(u)|$ new
+reads on that source, with no uniform bound asserted over $U$.
+Restricting this all-tree procedure to the present acquired fiber is
+lawful and preserves every retained predicate; it adds no inverse,
+reroot, equality, identity or timing port.
+
+For example, with $H_0=\varnothing$ and $Q=\varnothing$, the full graph
+has no determining finite prefix by Theorem 30.2: its concrete exterior
+contains the entire source and its cylinder list has a nonground pattern.
+Explicitly, for each inclusive $b$, take a perfect all-$\alpha$ tree
+$y$ of height $b+1$ and change one deepest leaf to $\beta$ to obtain
+$y'$. The finite sources $F(y),F(y')$ lie in that same full fiber, agree
+through $b$ by Lemma 19.2, and have different empty-cut rows. Nevertheless
+the preceding source-total static traversal works at every permitted
+$N$. Thus NO rules out exactly the uniformly raw-bounded service classes
+in items 2–3; it does not rule out source-total recovery with an unbounded
+source-dependent read count. This distinction uses the existing traversal
+and prefix suppliers and adds no minimum-price or new traversal theorem.
+
+The empty-domain flag has only a logical interpretation: immediate
+output of any fixed row, for example $R_Q(\alpha)$, has vacuous
+correctness with zero calls. It is not an actual acquired-state
+realization.
+
+The computation of patterns, automata, finite trees and installed
+consumer code is effective ordinary mathematics. It supplies no
+implemented solver, practical complexity estimate, uniform running-time
+guarantee or physical acquisition procedure beyond the existing
+conditional producer contract. Semantic projections to $y$ and its
+subtrees are not reset, reroot, clone, inverse, identity, equality or
+code-inspection operations. Only paid literal reads occur in the
+positive consumer; no new update is needed.
+
+Raw calls, actual updates, physical address length and radius, address
+generation and transmission, certified versions, working storage,
+retention, local work, labels, bits, fees, installation, acquisition,
+entry, archives, output, clocks, precision, field and reference resources,
+and total physical resources remain separate obligations. For the
+displayed consumer the actual post-entry update count is zero and the
+address-length sum is at most $K_0(H+\lceil N/2\rceil)$; these are
+sufficient bounds, not joint optima or prices for the other coordinates.
+
+In particular outputting $r=R_Q(u)$ does not erase the old relation,
+$H_0$, the actual new replies or other accessible fields. A separately
+supplied complete-successor retention operation, with its own payment
+and state correspondence, is still necessary. If its whole accessible
+source-bearing content is exactly a recoverable encoding of $r$ and
+common data, the conditional new fiber is $U\cap R_Q^{-1}(r)$, by the
+existing complete-cut contract. Remaining accessible information imposes
+its further intersections. Absorbing Halt does not supply another entry.
+
+## 32. Exact reuse, ordinary authorship and the unresolved larger domains
+
+The source-relative mathematical increment is Theorem 30.2 on every
+literal refinement of (ARH.8.5) and every original finite prefix-free
+$Q$. It uses the independent-subtree extension in §28 and the exhaustive
+nested comparison in §29 to discharge every target comparison without
+a family-recognition failure. The source, full exterior and full
+partition correspondences, positive bound and finite all-depth negative
+constructions are part of that result. Graph parameterization, aligned
+automata, the productive-prefix test and the general operational bridge
+are expressly reused and receive no new-theorem credit here.
+
+The overlap and hypothesis boundaries are the following.
+
+- Sections 1–3 and Theorem 8.2 of this volume supply the acquired graph,
+  complete access contract and inherited service equivalence. Sections
+  4–6 classify their actual root-to-proper-descendant certificate
+  fragment. Lemma 29.1 applies that classification only after deriving
+  its exact guarded predicate on the finite tree being compared.
+  It does not give the full graph an unretained root certificate.
+- Sections 10–18 decide the synchronous family with both domain and
+  target eligibility. In particular Proposition 15.1 already covers the
+  present old cut and equality record when $Q$ is on one level, with
+  arbitrary $H_0$. Sections 19–25 additionally cover each entire
+  presentation accepted by the constructor-elimination recognizer,
+  again including its target requirement. Those admitted cases are
+  existing supply. Rejection by either recognizer is never used here
+  as NO. Definition 29.3 instead exhausts every pair of actual underlying
+  positions, and Theorem 30.2 has no recognizer premise.
+- [SLH, §§74–75][SLH] supplies the full literal-only old-row problem,
+  the finite pattern method and the address-locality/paid-decoder
+  interfaces. [SCR, §§1–10][GRAPH-SCR] supplies its literal-only exact
+  complete-row prices and sharp common-epoch normalization.
+  [JRF, §§1–10][GRAPH-JRF] supplies its own literal-only joint frontier
+  and separate same-run weighted prices. Their exact optimization
+  conclusions are not imported after discarding the acquired graph
+  relation. This appendix computes a sufficient raw bound and makes
+  no new minimum-price claim.
+- [AtomicBlockConjugacy, §§2–6][GRAPH-ABC] supplies canonical codes,
+  source and whole-row correspondences, and opaque-port semantics.
+  Its §§7–8 distinguish a uniform normal-domain interpretation from
+  a fixed-prefix decision and from unbounded-prefix stopping.
+  [AtomicTermPowerObstruction, Definition 1.2, Corollaries 4.2–4.4
+  and Proposition 5.2][GRAPH-TPO] supplies a language-specific exclusion
+  of that all-shape normal-domain formula and the total ambient
+  canonicalization graph. Its stated language has four sorts, pointwise
+  inner base formulas and no arbitrary leaf-address rank selector.
+  That exclusion does not supply a native same-fiber counterpair or
+  a native service-impossibility theorem. Neither the excluded premise
+  nor any ambient term-power decision or hidden code access is used
+  in Theorem 30.2; the present automata run on actual finite trees.
+- [AcquiredOrbitResourceFrontier, Assumption 1.1 and §§2–5][GRAPH-AOF]
+  requires a recognized acquired whole-root/proper-descendant
+  certificate. Its finite/cofinite orbit domain and attained resource
+  optima do not apply to the arbitrary old-child graph in (ARH.27.2).
+  Its source-specific resource theorem is not duplicated.
+- Section 26, Applications 26.1–26.9, supplies only its stated
+  three-hole feedback application of the orbit results. Its exact
+  record (CS.26.1), whole-source correspondence (CS.26.3), and
+  uniformly bounded consumer in Application 26.8 retain their scopes.
+  This reuse-only source does not replace the two-hole graph input
+  of Definition 27.1 or contribute a new theorem to it.
+- The finite ranked-tree automata background is
+  literature-attested in [TATA, Theorems 1.3.1 and 1.7.4][GRAPH-TATA]:
+  effective Boolean closure on finite ranked alphabets and
+  productive-state emptiness. The exact interpreted fixed-power
+  graphs, valid padding, coordinate-prefix restrictions and
+  all-depth diagonal stopping rule used here are the already supplied
+  Lemma 21.1 and Theorem 13.1. None of these is a new general automata
+  theorem in this appendix.
+- [Kuncak–Rinard, Theorem 56, Corollary 57, Theorem 58 and §6.6][KR-GRAPH]
+  decides its specified term-power language over a decidable base,
+  with the semantics of Figures 9–11. Its element-selection discussion
+  separates a stronger language. Neither is invoked as a decision of
+  normal-code membership or of the unbounded original-prefix question.
+  The present finite-pair proof does not require such an interpretation.
+
+The bounded project comparison uses the full source contracts
+ARH §§1–25, SLH §§74–75, SCR, JRF, AtomicBlockConjugacy and
+AcquiredOrbitResourceFrontier in the immutable catalogue at revision
+[ae1314adbd58cecf7e0c2f29cd08bd5e552276fb][GRAPH-PIN]. Those ARH
+§§1–25 also agree with the target revision
+[fee3e2b8ff28d5048af2e03cfd83ef522a30365b][GRAPH-BASE].
+The comparison includes the independent Section 26 at
+[28cc5e33857d4969363b213e6f8c4269fd012972][GRAPH-PUBLIC]
+and the stated AtomicTermPowerObstruction interface. The primary
+comparison is limited to the stated TATA results and the stated
+Kuncak–Rinard language and decision boundaries. No exact full-graph,
+arbitrary-$H_0,Q$ decision is supplied by those inspected interfaces.
+This bounded source comparison is not a global nonexistence, novelty
+or priority claim.
+
+**Provenance and evidence boundary.** This appendix is independently
+authored ordinary pure theory by one external CLI scientific author,
+with repository priors exposed. The author chooses and is responsible
+for the displayed mathematical construction and proofs; supplied source
+texts are fallible theorem suppliers. There is no claim that their
+publication or formal metadata freshly certifies this application.
+The formal-thinking and theory-volume-template conventions are used
+within the pure-theory scope. No delegated author, Oracle call,
+same-round peer result or independent scientific review supplies these
+proofs. This manuscript is not self-approval. There is no new Lean,
+kernel, Reg, Blueprint, implementation or physical validation claim.
+
+Theorem 30.2 settles the stated ordinary decision problem only on the
+entire one-step graph with arbitrary mixed literal refinement. General
+guarded coupled relation histories remain outside its conclusion.
+Minimum raw prices on these relational domains, joint optima,
+complete-successor retention, physical realization, uniform time,
+source acquisition and stochastic $j_c$ are not established here.
+The original source/history/control/native/continuum/quantum/field/
+reference/resource and sustained programme obligations remain active.
+Neither this mathematical handoff nor later local acceptance completes
+that whole objective.
+
+[GRAPH-SCR]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_COMPLETE_ROW_PRICE.md
+[GRAPH-JRF]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[GRAPH-ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[GRAPH-AOF]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+[GRAPH-TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[GRAPH-PUBLIC]: https://github.com/the-omega-institute/trureturing/blob/28cc5e33857d4969363b213e6f8c4269fd012972/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[GRAPH-TATA]: https://inria.hal.science/hal-03367725v1/document
+[KR-GRAPH]: https://arxiv.org/html/cs/0408015v1
+[GRAPH-PIN]: https://github.com/the-omega-institute/trureturing/tree/ae1314adbd58cecf7e0c2f29cd08bd5e552276fb
+[GRAPH-BASE]: https://github.com/the-omega-institute/trureturing/tree/fee3e2b8ff28d5048af2e03cfd83ef522a30365b
+
+## 追加锚（本行以下为增补区）
