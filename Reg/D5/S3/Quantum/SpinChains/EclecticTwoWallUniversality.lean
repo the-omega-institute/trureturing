@@ -33,14 +33,38 @@ abbrev arena : Arena where
         finrank ℂ (LinearMap.range (sectorF a b k 2 ^ r))) ∧
     (∃ P : MvPolynomial (Fin 3) ℂ, MvPolynomial.eval ![0, 0, 1] P = 1 ∧
       ∀ ξ : Fin 3 → ℂ, MvPolynomial.eval ξ P ≠ 0 →
-        ∀ (k : Fin (a + b + 2)) (r : ℕ),
-          R.readout () () (finrank ℂ (LinearMap.range (sectorT a b k ξ ^ r)))
-            (finrank ℂ (LinearMap.range (sectorF a b k 2 ^ r))))
+        ∀ k : Fin (a + b + 2),
+          (∀ r : ℕ,
+            R.readout () () (finrank ℂ (LinearMap.range (sectorT a b k ξ ^ r)))
+              (finrank ℂ (LinearMap.range (sectorF a b k 2 ^ r)))) ∧
+          IsNilpotent (sectorT a b k ξ) ∧ IsNilpotent (sectorF a b k 2) ∧
+          (∃ (ι : Type) (_ : Fintype ι) (s : ι → ℕ+)
+            (bt : Basis (Σ i, Fin (s i)) ℂ (sector a b k)),
+            ∀ (m : ℕ) (i : ι) (j : Fin (s i)),
+              (sectorT a b k ξ ^ m) (bt ⟨i, j⟩) =
+                if h : j.val + m < s i then bt ⟨i, ⟨j.val + m, h⟩⟩ else 0) ∧
+          (∃ (ι' : Type) (_ : Fintype ι') (s' : ι' → ℕ+)
+            (bf : Basis (Σ i, Fin (s' i)) ℂ (sector a b k)),
+            ∀ (m : ℕ) (i : ι') (j : Fin (s' i)),
+              (sectorF a b k 2 ^ m) (bf ⟨i, j⟩) =
+                if h : j.val + m < s' i then bf ⟨i, ⟨j.val + m, h⟩⟩ else 0) ∧
+          (∀ (ι ι' : Type) [Fintype ι] [Fintype ι'] (s : ι → ℕ+) (s' : ι' → ℕ+)
+            (bt : Basis (Σ i, Fin (s i)) ℂ (sector a b k))
+            (bf : Basis (Σ i, Fin (s' i)) ℂ (sector a b k)),
+            (∀ (m : ℕ) (i : ι) (j : Fin (s i)),
+              (sectorT a b k ξ ^ m) (bt ⟨i, j⟩) =
+                if h : j.val + m < s i then bt ⟨i, ⟨j.val + m, h⟩⟩ else 0) →
+            (∀ (m : ℕ) (i : ι') (j : Fin (s' i)),
+              (sectorF a b k 2 ^ m) (bf ⟨i, j⟩) =
+                if h : j.val + m < s' i then bf ⟨i, ⟨j.val + m, h⟩⟩ else 0) →
+            ∀ j : ℕ,
+              (Finset.univ.filter (fun i => (s i : ℕ) = j)).card =
+                (Finset.univ.filter (fun i => (s' i : ℕ) = j)).card))
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro law
   obtain ⟨P, hP, h⟩ := (law 2 2 (by decide) (by decide)).2
-  exact h ![0, 0, 1] (by rw [hP]; exact one_ne_zero) 0 0
+  exact (h ![0, 0, 1] (by rw [hP]; exact one_ne_zero) 0).1 0
 
 theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
@@ -91,7 +115,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "arg", "arg", "body", "arg",
-        "body", "body", "body", "body", "fn", "fn"]
+        "body", "body", "body", "fn", "arg", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

@@ -23,7 +23,7 @@ internal sealed class EclecticTwoWallUniversalityDocument : IScribeDocumentDefin
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every two-wall cyclicity class has maximal hypereclectic power ranks, attained generically by the eclectic operator.",
-        H("Two-wall universality in power-rank form"),
+        H("Two-wall universality of Jordan block spectra"),
         Blocks(
             Paragraph(Text("Work over the complex numbers. A filling contains a letters 1, b letters 2 and two walls 3, so L = a+b+2. Cyclicity indices k range over Fin(L), with val(k) in {0,...,L−1}. The space retains literal periodic words; its cyclicity class is the eigenspace of the one-site right shift. The three coupling coordinates xi(0), xi(1), xi(2) multiply F1, F2, F3, respectively. Thus vector3(0,0,1) is the hypereclectic point with coefficient one on F3.")),
             Node("eigenvalue", "Cyclicity eigenvalue", ABK(Eq(Eigenvalue,
@@ -43,9 +43,9 @@ internal sealed class EclecticTwoWallUniversalityDocument : IScribeDocumentDefin
                 "The coupled operator also commutes with U. Its restriction is the same linear combination of the three restricted bond sums."),
             Node("claim", "Universality for every filling with a,b at least two",
                 Iff(Call("claim"), Universality()), true,
-                "§5, Eq. (5.1), arXiv:2112.04506v1: \"However, we claim a universality hypothesis: The Jordan block spectrum of the eclectic model for generic couplings ξ1, ξ2, ξ3 is identical to that of the hypereclectic model, provided L, M, K satisfy L1 = L−M ≥ K, M1 = M−K ≥ K. (5.1)\" Here K = 2, L = a+b+2 and M = b+2, so the two inequalities become a,b at least two. The statement is the power-rank form: all couplings satisfy an upper bound, and a single polynomial for the filling certifies equality simultaneously in every cyclicity class and every natural power. Normalization at the hypereclectic point implies that this polynomial is nonzero.", true),
+                "§5, Eq. (5.1), arXiv:2112.04506v1: \"However, we claim a universality hypothesis: The Jordan block spectrum of the eclectic model for generic couplings ξ1, ξ2, ξ3 is identical to that of the hypereclectic model, provided L, M, K satisfy L1 = L−M ≥ K, M1 = M−K ≥ K. (5.1)\" Here K = 2, L = a+b+2 and M = b+2, so the two inequalities become a,b at least two. All couplings satisfy the power-rank upper bound. A single polynomial for the filling certifies equality of every power rank and every Jordan block multiplicity in every cyclicity class. Both restricted operators are nilpotent and admit positive-length chain bases; these bases are their Jordan block decompositions. The multiplicity equality holds for every pair of such bases. Positions(I,s) denotes the dependent sum of Fin(s(i)), and the conditional basis entry is used only when the new position is below s(i). Normalization at the hypereclectic point implies that this polynomial is nonzero.", true),
             Node("result", "The two-wall universality theorem", Universality(), false,
-                "The literal two-wall sl2 action has lowering operator F3 and commutes with the shift. Its integral weight decomposition restricts to every cyclicity class. When a,b are at least two, each term of T lowers the weight filtration by at least two, so the eigenspace rank comparison gives the upper bound for every coupling and every power. Choose any complex basis of each class and express the three restricted bond sums as matrices. The matrix with entries X0 C(A1(i,j)) + X1 C(A2(i,j)) + X2 C(A3(i,j)) evaluates to the matrix of the restricted T. At vector3(0,0,1) it is the matrix of F3. Matrix rank equals the dimension of the operator range, and the basis map preserves powers. The weight bound gives F3^(ab+1) = 0, also on each restricted space. The polynomial power-rank certificate with this cutoff therefore supplies a polynomial for each class, normalized to one at the hypereclectic point. Their finite product over Fin(L) has the same normalization, and a nonzero product makes every factor nonzero, giving all equalities simultaneously. Empty bases and zero ranks are included. This theorem states power ranks; a chain-basis interpretation of Jordan block multiplicities is a separate statement.")),
+                "The literal two-wall sl2 action has lowering operator F3 and commutes with the shift. Its integral weight decomposition restricts to every cyclicity class. When a,b are at least two, each term of T lowers the weight filtration by at least two, so the eigenspace rank comparison gives the upper bound for every coupling and every power. Choose any complex basis of each class and express the three restricted bond sums as matrices. The matrix with entries X0 C(A1(i,j)) + X1 C(A2(i,j)) + X2 C(A3(i,j)) evaluates to the matrix of the restricted T. At vector3(0,0,1) it is the matrix of F3. Matrix rank equals the dimension of the operator range, and the basis map preserves powers. The weight bound gives F3^(ab+1) = 0, also on each restricted space. The polynomial power-rank certificate with this cutoff therefore supplies a polynomial for each class, normalized to one at the hypereclectic point. Their finite product over Fin(L) has the same normalization, and a nonzero product makes every factor nonzero, giving all equalities simultaneously. Empty bases and zero ranks are included. The weight filtration also makes T^(ab+1) zero, so both restricted operators are nilpotent. The nilpotent chain theorem supplies their Jordan block decompositions. For any such basis with lengths s(i), the rank of the m-th power is the sum of natSub(s(i),m). For each positive j, the integer second difference rho(j-1) - 2 rho(j) + rho(j+1) counts chains of length j. Thus equality of all power ranks gives equality of all Jordan block multiplicities, independently of either choice of chain basis. At j=0 both counts vanish because every chain length is positive.")),
         []));
 
     private static DocumentBlock.Describe Node(string name, string title, Formula formula,
@@ -64,7 +64,8 @@ internal sealed class EclecticTwoWallUniversalityDocument : IScribeDocumentDefin
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name),
             type is Formula.TypeArrow ? Parenthesized(type) : type, body);
     private static Formula Some(string name, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name),
+            type is Formula.TypeArrow ? Parenthesized(type) : type, body);
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
     private static Formula Le(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
     private static Formula Ne(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.NotEqual, y);
@@ -77,16 +78,55 @@ internal sealed class EclecticTwoWallUniversalityDocument : IScribeDocumentDefin
     private static Formula ABK(Formula body) => AB(All("k", Classes, body));
     private static Formula Rank(Formula op) => Call("finrank", Complexes,
         Call("range", new Formula.Power(Parenthesized(op), F.Id("r"))));
+    private static Formula ChainAction(Formula op, string indexName, string lengthName, string basisName)
+    {
+        var i = F.Id("i");
+        var t = F.Id("t");
+        var m = F.Id("m");
+        var size = Call(lengthName, i);
+        var next = PlusOf(Call("val", t), m);
+        return All("m", Nats, All("i", F.Id(indexName), All("t", Call("Fin", size),
+            Eq(Call("apply", new Formula.Power(Parenthesized(op), m), Call(basisName, i, t)),
+                Call("ite", new Formula.Relation(next, FormulaRelationOperator.LessThan, size),
+                    Call(basisName, i, next), D(0))))));
+    }
+    private static Formula ChainBasisType(string indexName, string lengthName) =>
+        Call("Basis", Call("Positions", F.Id(indexName), F.Id(lengthName)), Complexes, Sector);
+    private static Formula ChainsExist(Formula op, string indexName, string lengthName, string basisName) =>
+        Some(indexName, F.Id("Type"),
+            Some("h" + indexName, Call("Fintype", F.Id(indexName)),
+                Some(lengthName, new Formula.TypeArrow(F.Id(indexName), Call("PNat")),
+                    Some(basisName, ChainBasisType(indexName, lengthName),
+                        ChainAction(op, indexName, lengthName, basisName)))));
+    private static Formula BlockCount(string indexName, string lengthName) =>
+        Call("card", new Formula.SetBuilder(F.Id("i"), F.Id("i"),
+            Seq(F.Id(indexName), Sp, Land, Sp, Eq(Call("nat", Call(lengthName, F.Id("i"))), F.Id("j")))));
+    private static Formula EqualBlockCounts(Formula top, Formula fop)
+    {
+        var counts = All("j", Nats, Eq(BlockCount("I", "s"), BlockCount("J", "q")));
+        var shifts = Implies(ChainAction(top, "I", "s", "bt"),
+            Implies(ChainAction(fop, "J", "q", "bf"), counts));
+        var bases = All("bt", ChainBasisType("I", "s"), All("bf", ChainBasisType("J", "q"), shifts));
+        var sizes = All("s", new Formula.TypeArrow(F.Id("I"), Call("PNat")),
+            All("q", new Formula.TypeArrow(F.Id("J"), Call("PNat")), bases));
+        return All("I", F.Id("Type"), All("J", F.Id("Type"),
+            All("hI", Call("Fintype", F.Id("I")), All("hJ", Call("Fintype", F.Id("J")), sizes))));
+    }
     private static Formula Universality()
     {
-        var t = Rank(Call("sectorT", A, B, K, Xi));
-        var f = Rank(Call("sectorF", A, B, K, D(2)));
+        var top = Call("sectorT", A, B, K, Xi);
+        var fop = Call("sectorF", A, B, K, D(2));
+        var t = Rank(top);
+        var f = Rank(fop);
         var upper = All("xi", Couplings, All("k", Classes, All("r", Nats, Le(t, f))));
         var p = F.Id("P");
+        var jordan = And(All("r", Nats, Eq(t, f)),
+            And(Call("IsNilpotent", top), And(Call("IsNilpotent", fop),
+                And(ChainsExist(top, "I", "s", "bt"),
+                    And(ChainsExist(fop, "J", "q", "bf"), EqualBlockCounts(top, fop))))));
         var generic = Some("P", Call("MvPolynomial", Call("Fin", D(3)), Complexes),
             And(Eq(Call("eval", X0, p), D(1)), All("xi", Couplings,
-                Implies(Ne(Call("eval", Xi, p), D(0)),
-                    All("k", Classes, All("r", Nats, Eq(t, f)))))));
+                Implies(Ne(Call("eval", Xi, p), D(0)), All("k", Classes, jordan)))));
         return AB(Implies(Le(D(2), A), Implies(Le(D(2), B), And(upper, generic))));
     }
 }
