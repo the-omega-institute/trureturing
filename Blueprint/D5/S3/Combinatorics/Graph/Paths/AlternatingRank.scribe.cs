@@ -53,10 +53,13 @@ internal sealed class AlternatingRankDocument : IScribeDocumentDefinition
     private static Formula Words(Formula n) => new Formula.TypeArrow(Fin(n), Name("Bool"));
     private static Formula Colours(Formula n, Formula a) => new Formula.TypeArrow(Fin(Add(n, D(1))), a);
 
-    private static Formula AdjacencyFormula() => Disp(All("n", Nats(), All("w", Words(F.Id("n")),
-        All("i", Fin(Add(F.Id("n"), D(1))), All("j", Fin(Add(F.Id("n"), D(1))),
-            Eq(Call("adjacency", F.Id("w"), F.Id("i"), F.Id("j")),
-                Call("indicator", Call("e", F.Id("w"), F.Id("i"), F.Id("j"))))))));
+    private static Formula AdjacencyFormula()
+    {
+        var n = F.Id("n"); var w = F.Id("w"); var i = F.Id("i"); var j = F.Id("j");
+        var entries = Eq(Call("adjacency", w, i, j), Call("indicator", Call("e", w, i, j)));
+        return Disp(All("n", Nats(), All("w", Words(n),
+            All("i", Fin(Add(n, D(1))), All("j", Fin(Add(n, D(1))), entries)))));
+    }
 
     private static Formula AlternatingFormula() => Disp(All("n", Nats(),
         Eq(Call("alternatingRank", F.Id("n")), SumOver("w", Words(F.Id("n")),
@@ -70,11 +73,16 @@ internal sealed class AlternatingRankDocument : IScribeDocumentDefinition
         F.Id("c"), F.Id("A"), F.Id("i"), F.Id("j")), Call("if", Call("sigma", Call("c", F.Id("i")),
             Call("c", F.Id("j"))), D(0), Call("A", F.Id("i"), F.Id("j")))));
 
-    private static Formula SeparatorFormula() => Disp(All("alpha", Name("FiniteType"),
-        All("pi", Call("Setoid", F.Id("alpha")), Implies(Call("proper", F.Id("pi")),
-            Ex("n", Nats(), And(Lt(D(0), F.Id("n")), Ex("c", Colours(F.Id("n"), F.Id("alpha")),
-                All("sigma", Call("Setoid", F.Id("alpha")), Eq(Call("L", F.Id("n"), F.Id("c"), F.Id("sigma")),
-                    Call("if", Le(F.Id("sigma"), F.Id("pi")), NegTwo(), D(0))))))))));
+    private static Formula SeparatorFormula()
+    {
+        var alpha = F.Id("alpha"); var pi = F.Id("pi"); var sigma = F.Id("sigma");
+        var n = F.Id("n"); var c = F.Id("c");
+        var separation = Eq(Call("L", n, c, sigma), Call("if", Le(sigma, pi), NegTwo(), D(0)));
+        var commonWord = Ex("n", Nats(), And(Lt(D(0), n),
+            Ex("c", Colours(n, alpha), All("sigma", Call("Setoid", alpha), separation))));
+        return Disp(All("alpha", Name("FiniteType"),
+            All("pi", Call("Setoid", alpha), Implies(Call("proper", pi), commonWord))));
+    }
 
     private static Formula VanishingFormula()
     {
