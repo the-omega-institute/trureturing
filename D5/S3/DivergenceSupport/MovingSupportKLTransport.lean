@@ -1,5 +1,5 @@
 /- GID: D5/S3/DivergenceSupport/MovingSupportKLTransport
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/DivergenceSupport/MovingSupportKLTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,6 +7,7 @@
    digest: Common-record likelihood ratios give moving-support KL tail bounds and L1 limits. -/
 
 import D5.S3.DivergenceSupport.Garbling.DeterministicGarbling
+import D5.S3.Observer.ProductMeasures.FinitePmfLikelihood
 import Mathlib.MeasureTheory.Function.UniformIntegrable
 
 open Filter MeasureTheory Set
@@ -484,7 +485,99 @@ theorem moving_support_posterior_limit
     hM hdom g hae
   exact ⟨hae, h.2.2⟩
 
-#print axioms posterior_defect_l1_of_ae_tendsto
-#print axioms moving_support_posterior_limit
+open ProbabilityTheory D5.S3.Observer.ProductMeasures.FinitePmfLikelihood
+
+/-- The finite-record bridge for a latent state drawn once and a conditionally iid
+record is obtained from the product measure. Given the posterior coordinate limits,
+the common-record KL limit holds under the actual joint law, including zero priors. -/
+theorem iid_moving_support_posterior_limit
+    {J I Z : Type*} [Fintype J] [Fintype I] [Fintype Z]
+    [MeasurableSpace J] [MeasurableSingletonClass J]
+    [MeasurableSpace Z] [MeasurableSingletonClass Z]
+    (d q : J → ℝ) (K : J → PMF Z) (r : J → I)
+    (hd : (∀ j, 0 ≤ d j) ∧ ∑ j, d j = 1)
+    (hq : (∀ j, 0 < q j) ∧ ∑ j, q j = 1)
+    {M : ℝ} (hM : 0 < M) (hdom : ∀ j, d j ≤ M * q j)
+    (a b : (J × (ℕ → Z)) → J → ℝ) (t : (J × (ℕ → Z)) → ℝ) :
+    let μ : Measure (J × (ℕ → Z)) := ∑ j, ENNReal.ofReal (d j) •
+      (productLaw (fun _ : ℕ => K j)).map (fun x => (j, x))
+    let W := fun n j (h : Fin n → Z) =>
+      ∏ k, pmfRealMass (Output := fun _ : ℕ => Z) (i := 0) (K j) (h k)
+    let record := fun n (ω : J × (ℕ → Z)) (k : Fin n) => ω.2 k
+    let f := fun n ω => posteriorDefect d q (W n) r (record n ω)
+    let g := fun ω => klDivergence (a ω) (b ω) -
+      klDivergence (pushforward r (a ω)) (pushforward r (b ω))
+    (∀ᵐ ω ∂μ, 0 < t ω ∧
+      Tendsto (fun n => channelOutput (W n) d (record n ω) /
+        channelOutput (W n) q (record n ω)) atTop (𝓝 (t ω)) ∧
+      (∀ j, Tendsto (fun n => posterior (W n) d (record n ω) j) atTop (𝓝 (a ω j))) ∧
+      (∀ j, Tendsto (fun n => posterior (W n) q (record n ω) j) atTop (𝓝 (b ω j)))) →
+    (∀ᵐ ω ∂μ, Tendsto (fun n => f n ω) atTop (𝓝 (g ω))) ∧
+    UniformIntegrable f 1 μ ∧ Integrable g μ ∧
+    Tendsto (fun n => eLpNorm (f n - g) 1 μ) atTop (𝓝 0) ∧
+    Tendsto (fun n => ∫ ω, f n ω ∂μ) atTop (𝓝 (∫ ω, g ω ∂μ)) := by
+  classical
+  dsimp only
+  let μ : Measure (J × (ℕ → Z)) := ∑ j, ENNReal.ofReal (d j) •
+    (productLaw (fun _ : ℕ => K j)).map (fun x => (j, x))
+  let W := fun n j (h : Fin n → Z) =>
+      ∏ k, pmfRealMass (Output := fun _ : ℕ => Z) (i := 0) (K j) (h k)
+  let record := fun n (ω : J × (ℕ → Z)) (k : Fin n) => ω.2 k
+  have hp j : IsProbabilityMeasure (productLaw (fun _ : ℕ => K j)) := by
+    dsimp only [productLaw]
+    infer_instance
+  have hmj j : ((productLaw (fun _ : ℕ => K j)).map
+      (fun x => (j, x))) univ = 1 := by
+    rw [Measure.map_apply (by fun_prop) MeasurableSet.univ, preimage_univ]
+    exact measure_univ
+  have hμ : IsProbabilityMeasure μ := by
+    constructor
+    simp only [μ, Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply,
+      hmj, smul_eq_mul, mul_one]
+    rw [← ENNReal.ofReal_sum_of_nonneg (fun j _ => hd.1 j), hd.2, ENNReal.ofReal_one]
+  letI := hμ
+  have hr n : Measurable (record n) := by fun_prop
+  have hrow j n :
+      (productLaw (fun _ : ℕ => K j)).map (fun x (k : Fin n) => x k) =
+        Measure.pi (fun _ : Fin n => (K j).toMeasure) := by
+    exact (Measure.map_infinitePi_infinitePi_of_inj
+      (P := fun _ : ℕ => (K j).toMeasure) (f := fun k : Fin n => k.val)
+      Fin.val_injective).trans (Measure.infinitePi_eq_pi _)
+  have hprefix j n (h : Fin n → Z) :
+      (productLaw (fun _ : ℕ => K j)) {x | (fun k : Fin n => x k) = h} =
+        ∏ k, K j (h k) := by
+    change (productLaw (fun _ : ℕ => K j))
+      ((fun x : ℕ → Z => fun k : Fin n => x k) ⁻¹' {h}) = _
+    rw [← Measure.map_apply (by fun_prop :
+      Measurable (fun x : ℕ → Z => fun k : Fin n => x k)) (measurableSet_singleton h),
+      hrow, Measure.pi_singleton]
+    simp [PMF.toMeasure_apply_singleton]
+  have hW : ∀ n, (∀ j h, 0 ≤ W n j h) ∧ ∀ j, ∑ h, W n j h = 1 := by
+    intro n
+    constructor
+    · intro j h
+      exact Finset.prod_nonneg fun _ _ => ENNReal.toReal_nonneg
+    · intro j
+      rw [show (∑ h, W n j h) =
+          ∏ k : Fin n, ∑ z, pmfRealMass (Output := fun _ : ℕ => Z) (i := 0) (K j) z from
+        (Fintype.prod_sum _).symm]
+      simp only [pmfRealMass_sum (Output := fun _ : ℕ => Z) (i := 0), Finset.prod_const_one]
+  have hmass n (h : Fin n → Z) : μ.real (record n ⁻¹' {h}) =
+      channelOutput (W n) d h := by
+    have he : μ (record n ⁻¹' {h}) = ∑ j, ENNReal.ofReal (d j) * ∏ k, K j (h k) := by
+      simp only [μ, Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply,
+        smul_eq_mul]
+      apply Finset.sum_congr rfl
+      intro j _
+      rw [Measure.map_apply (by fun_prop) ((measurableSet_singleton h).preimage (hr n))]
+      exact congrArg (ENNReal.ofReal (d j) * ·) (hprefix j n h)
+    rw [Measure.real, he, ENNReal.toReal_sum (fun j _ => ENNReal.mul_ne_top
+      ENNReal.ofReal_ne_top (ENNReal.prod_ne_top (fun _ _ => PMF.apply_ne_top _ _)))]
+    simp only [ENNReal.toReal_mul, ENNReal.toReal_ofReal (hd.1 _), ENNReal.toReal_prod,
+      channelOutput, W, pmfRealMass]
+  intro hpath
+  exact moving_support_posterior_limit μ record hr d q W r hd hq hW hmass
+    hM hdom a b t hpath
+
 
 end D5.S3.DivergenceSupport.MovingSupportKLTransport

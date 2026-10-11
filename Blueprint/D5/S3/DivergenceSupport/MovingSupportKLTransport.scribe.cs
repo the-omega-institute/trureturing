@@ -100,5 +100,35 @@ internal sealed class MovingSupportKLTransportDocument : IScribeDocumentDefiniti
                         "loss limit, and common-record tail transport upgrades it to L1. " +
                         "Identifying a and b with the conditional priors of an iid " +
                         "observation-row class remains a separate hypothesis-supplying step."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("iid-moving-support-posterior-limit"),
+                DeclarationHandle.Create(Owner + "iid_moving_support_posterior_limit"),
+                H("Conditional iid records under one latent-state draw"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let J, I and Z be finite, with measurable singletons on J and Z. " +
+                        "For each hidden state j let K(j) be a probability mass function on Z. " +
+                        "On J times Z to the natural numbers, the actual law is the sum over j " +
+                        "of d(j) times the image of the infinite product of K(j) under " +
+                        "x mapped to (j,x). The hidden state is drawn once. The length-n " +
+                        "record channel is the product of the n coordinate masses of K(j).")),
+                    Paragraph(Text(
+                        "For nonnegative normalized d, strictly positive normalized q, an " +
+                        "arbitrary coarse map r, and a positive bound d(j) <= M q(j), " +
+                        "assume that D(n)/Q(n) tends almost everywhere to a positive function t " +
+                        "and that both posterior coordinate families tend to a and b. " +
+                        "Then the posterior losses converge almost everywhere and in L1 " +
+                        "to KL(a,b)-KL(r_*a,r_*b), the losses are uniformly integrable, " +
+                        "the limit is integrable, and expectations converge.")),
+                    Paragraph(Text(
+                        "The product-measure restriction theorem gives each prefix singleton " +
+                        "mass. Mixing over the same latent state proves the required actual " +
+                        "record mass formula; finite product normalization proves the row " +
+                        "sums. These discharge the measure interface of the preceding theorem. " +
+                        "Row-class decoding, posterior consistency, and identification of the " +
+                        "limiting average with joint-label recovery are separate conclusions."))),
                 DescribeRole.Theorem))));
 }
