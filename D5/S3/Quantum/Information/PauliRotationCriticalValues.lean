@@ -65,7 +65,6 @@ private theorem pauli_square (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := 
   · ext i j
     fin_cases i <;> fin_cases j <;> simp [pauliMatrix, qubitX, qubitZ, mul_apply]
   · exact (pow_two _).symm.trans hz
-
 private theorem pauli_star (p : Pauli) : star (pauliMatrix p) = pauliMatrix p := by
   obtain ⟨_, hx, hz, _, _⟩ := qubit_weyl_star
   cases p
@@ -75,7 +74,6 @@ private theorem pauli_star (p : Pauli) : star (pauliMatrix p) = pauliMatrix p :=
     fin_cases i <;> fin_cases j <;>
       simp [pauliMatrix, qubitX, qubitZ, star_apply]
   · exact hz
-
 private theorem tensor_identity : tensorOp (fun _ : Fin 2 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by
   ext x y
   simp only [tensorOp, of_apply, one_apply]
@@ -84,25 +82,21 @@ private theorem tensor_identity : tensorOp (fun _ : Fin 2 => (1 : Matrix (Fin 2)
   · obtain ⟨i, hi⟩ : ∃ i, x i ≠ y i := Function.ne_iff.mp h
     rw [if_neg h]
     exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [hi])
-
 private theorem word_square (p : Fin 2 → Pauli) : wordOp p * wordOp p = (1 : Mat) := by
   unfold wordOp
   rw [tensor_mul]
   simp_rw [pauli_square]
   exact tensor_identity
-
 private theorem word_star (p : Fin 2 → Pauli) : star (wordOp p) = wordOp p := by
   ext x y
   simp only [wordOp, tensorOp, star_apply, of_apply, star_prod]
   apply Finset.prod_congr rfl
   intro i _
   exact congrFun (congrFun (pauli_star (p i)) (x i)) (y i)
-
 private theorem pauli_trace_mul (p q : Pauli) :
     trace (pauliMatrix p * pauliMatrix q) = if p = q then (2 : ℂ) else 0 := by
   cases p <;> cases q <;>
     simp [pauliMatrix, qubitX, qubitZ, trace, Fin.sum_univ_two] <;> norm_num
-
 private theorem word_trace_mul (p q : Fin 2 → Pauli) :
     trace (wordOp p * wordOp q) = if p = q then (4 : ℂ) else 0 := by
   unfold wordOp
@@ -116,16 +110,12 @@ private theorem word_trace_mul (p q : Fin 2 → Pauli) :
   · rw [if_neg h]
     obtain ⟨i, hi⟩ : ∃ i, p i ≠ q i := Function.ne_iff.mp h
     exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [hi])
-
 private def labels : Fin 15 → Fin 2 → Pauli :=
   ![![.I,.X], ![.I,.Y], ![.I,.Z], ![.X,.I], ![.X,.X], ![.X,.Y], ![.X,.Z],
     ![.Y,.I], ![.Y,.X], ![.Y,.Y], ![.Y,.Z], ![.Z,.I], ![.Z,.X], ![.Z,.Y], ![.Z,.Z]]
-
 private theorem labels_injective : Function.Injective labels := by decide
-
 private noncomputable def E : Param →L[ℝ] Mat :=
   ∑ i : Fin 15, (ContinuousLinearMap.proj i : Param →L[ℝ] ℝ).smulRight (wordOp (labels i))
-
 private noncomputable def rho : Mat →L[ℝ] Param :=
   LinearMap.toContinuousLinearMap {
     toFun := fun M i => (trace (wordOp (labels i) * M)).re / 4
@@ -135,22 +125,18 @@ private noncomputable def rho : Mat →L[ℝ] Param :=
     map_smul' := by
       intro c A; funext i
       simp [trace_smul, smul_eq_mul, Complex.mul_re, mul_div_assoc] }
-
 private theorem rho_E (x : Param) : rho (E x) = x := by
   ext i
   change (trace (wordOp (labels i) * ∑ j, x j • wordOp (labels j))).re / 4 = x i
   simp only [Finset.mul_sum, Matrix.mul_smul, trace_sum, trace_smul]
   simp_rw [word_trace_mul, labels_injective.eq_iff]
   simp
-
 private theorem E_injective : Function.Injective E :=
   Function.LeftInverse.injective rho_E
-
 private theorem sum_states {A : Type*} [AddCommMonoid A] (f : BasisState → A) :
     ∑ x, f x = f ![0,0] + f ![0,1] + f ![1,0] + f ![1,1] := by
   rw [← Equiv.sum_comp (finTwoArrowEquiv (Fin 2)).symm]
   simp [Fintype.sum_prod_type, Fin.sum_univ_two, finTwoArrowEquiv, add_assoc]
-
 set_option maxHeartbeats 2000000 in
 -- The finite reconstruction expands sixteen matrix entries in the fifteen Pauli coordinates.
 private theorem pauli_expansion (M : Mat) :
@@ -163,7 +149,6 @@ private theorem pauli_expansion (M : Mat) :
     simp [finTwoArrowEquiv, labels, wordOp, tensorOp, pauliMatrix, qubitX, qubitZ, trace, diag,
       Matrix.mul_apply, Matrix.one_apply, sum_states, Fin.prod_univ_two, smul_eq_mul,
       Fin.sum_univ_succ] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
-
 private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M) = M := by
   have hr (i : Fin 15) : ((trace (wordOp (labels i) * M)).re : ℂ) =
       trace (wordOp (labels i) * M) := by
@@ -181,13 +166,11 @@ private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M)
   change (((trace (wordOp (labels i) * M)).re / 4 : ℝ) : ℂ) * _ = _
   rw [Complex.ofReal_div, Complex.ofReal_ofNat, hr]
   rfl
-
 private theorem rotation_complex (p : NonIdentityPauli) (a : ℝ) :
     rotation p a = (Real.cos (a / 2) : ℂ) • (1 : Mat) -
       ((Real.sin (a / 2) : ℂ) * Complex.I) • wordOp p.val := by
   ext x y
   simp [rotation, smul_eq_mul, Complex.real_smul, mul_assoc]
-
 private theorem rotation_unitary (p : NonIdentityPauli) (a : ℝ) :
     rotation p a ∈ unitary Mat := by
   have hc : (Real.cos (a / 2) : ℂ) ^ 2 + (Real.sin (a / 2) : ℂ) ^ 2 = 1 := by
@@ -205,41 +188,33 @@ private theorem rotation_unitary (p : NonIdentityPauli) (a : ℝ) :
           all_goals simp only [Complex.I_sq]
           all_goals ring
          _ = 1 := by rw [hc, one_smul]
-
 private noncomputable def listCircuit (P : Fin 15 → NonIdentityPauli)
     (l : List (Fin 15)) (α : Param) : Mat :=
   (l.map (fun j => rotation (P j) (α j))).prod
-
 private theorem list_unitary (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15)) (α : Param) :
     listCircuit P l α ∈ unitary Mat := by
   apply (unitary Mat).list_prod_mem
   intro M hM
   obtain ⟨j, _, rfl⟩ := List.mem_map.mp hM
   exact rotation_unitary (P j) (α j)
-
 private noncomputable def prefixOp (P : Fin 15 → NonIdentityPauli) (α : Param) (n : ℕ) : Mat :=
   listCircuit P ((List.finRange 15).take n) α
-
 private theorem prefix_unitary (P : Fin 15 → NonIdentityPauli) (α : Param) (n : ℕ) :
     prefixOp P α n ∈ unitary Mat := by
   exact list_unitary P ((List.finRange 15).take n) α
-
 private theorem circuit_eq_list (P : Fin 15 → NonIdentityPauli) :
     circuit P = listCircuit P (List.finRange 15) := by
   funext α
   unfold circuit listCircuit
   rw [List.ofFn_eq_map]
-
 private theorem circuit_unitary (P : Fin 15 → NonIdentityPauli) (α : Param) :
     circuit P α ∈ unitary Mat := by
   rw [circuit_eq_list]
   exact list_unitary P (List.finRange 15) α
-
 private noncomputable def gateD (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     Param →L[ℝ] Mat :=
   (ContinuousLinearMap.proj j : Param →L[ℝ] ℝ).smulRight
     ((-Complex.I / 2) • (wordOp (P j).val * rotation (P j) (α j)))
-
 private theorem gate_deriv (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     HasStrictFDerivAt (fun β : Param => rotation (P j) (β j)) (gateD P α j) α := by
   let d := (1 / 2 : ℝ) • (ContinuousLinearMap.proj j : Param →L[ℝ] ℝ)
@@ -440,5 +415,57 @@ private theorem J_fderiv (P : Fin 15 → NonIdentityPauli) (α h : Param) (i j :
       (prefixG P α j h * H P α j - H P α j * prefixG P α j h)) i := by
   rw [(J_strict P α).hasFDerivAt.fderiv]
   rfl
+
+private noncomputable def conjStep (p : NonIdentityPauli) (a : ℝ) (Q : Mat) : Mat :=
+  ((1 + (Real.cos a : ℂ)) / 2) • Q +
+    ((1 - (Real.cos a : ℂ)) / 2) • (wordOp p.val * Q * wordOp p.val) -
+      (((Real.sin a : ℂ) / 2) * Complex.I) • (wordOp p.val * Q - Q * wordOp p.val)
+private theorem rotation_conjugation (p : NonIdentityPauli) (a : ℝ) (Q : Mat) :
+    rotation p a * Q * star (rotation p a) = conjStep p a Q := by
+  have ha : 2 * (a / 2) = a := by ring
+  have hc := Real.cos_two_mul (a / 2); rw [ha] at hc
+  have hs := Real.cos_two_mul_eq_one_sub (a / 2); rw [ha] at hs
+  have ht := Real.sin_two_mul (a / 2); rw [ha] at ht
+  have hc' : (1 + (Real.cos a : ℂ)) / 2 = (Real.cos (a / 2) : ℂ) ^ 2 := by
+    exact_mod_cast (by linarith : (1 + Real.cos a) / 2 = Real.cos (a / 2) ^ 2)
+  have hs' : (1 - (Real.cos a : ℂ)) / 2 = (Real.sin (a / 2) : ℂ) ^ 2 := by
+    exact_mod_cast (by linarith : (1 - Real.cos a) / 2 = Real.sin (a / 2) ^ 2)
+  have ht' : (Real.sin a : ℂ) / 2 =
+      (Real.sin (a / 2) : ℂ) * (Real.cos (a / 2) : ℂ) := by
+    exact_mod_cast (by linarith : Real.sin a / 2 = Real.sin (a / 2) * Real.cos (a / 2))
+  rw [conjStep, hc', hs', ht', rotation_complex]
+  simp only [star_sub, star_smul, star_one, star_mul, Complex.star_def,
+    Complex.conj_ofReal, Complex.conj_I, word_star, mul_sub, sub_mul,
+    Matrix.smul_mul, Matrix.mul_smul, one_mul, mul_one, smul_smul, smul_sub, mul_assoc]
+  match_scalars <;> ring_nf
+  all_goals simp [Complex.I_sq]
+private theorem conjStep_comm (p : NonIdentityPauli) (a : ℝ) (Q : Mat)
+    (hq : wordOp p.val * Q = Q * wordOp p.val) : conjStep p a Q = Q := by
+  have hh : wordOp p.val * Q * wordOp p.val = Q := by
+    rw [hq, mul_assoc, word_square, mul_one]
+  rw [conjStep, hh, hq]
+  simp only [sub_self, smul_zero, sub_zero]
+  module
+private theorem conjStep_anticomm (p : NonIdentityPauli) (a : ℝ) (Q : Mat)
+    (hq : wordOp p.val * Q = -(Q * wordOp p.val)) :
+    conjStep p a Q = (Real.cos a : ℂ) • Q -
+      ((Real.sin a : ℂ) * Complex.I) • (wordOp p.val * Q) := by
+  have hh : wordOp p.val * Q * wordOp p.val = -Q := by
+    rw [hq, neg_mul, mul_assoc, word_square, mul_one]
+  have hqp : Q * wordOp p.val = -(wordOp p.val * Q) := by rw [hq, neg_neg]
+  simp only [conjStep, hh, hqp, smul_neg, sub_neg_eq_add, smul_add]
+  module
+private theorem list_conjugation (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15))
+    (α : Param) (Q : Mat) : listCircuit P l α * Q * star (listCircuit P l α) =
+      l.foldr (fun k M => conjStep (P k) (α k) M) Q := by
+  induction l with
+  | nil => simp [listCircuit]
+  | cons k l ih =>
+    rw [List.foldr_cons, ← rotation_conjugation, ← ih]
+    simp only [listCircuit, List.map_cons, List.prod_cons, star_mul, mul_assoc]
+private theorem J_recurrence (P : Fin 15 → NonIdentityPauli) (α : Param) (i j : Fin 15) :
+    J_H P α i j = rho (((List.finRange 15).take j.val).foldr
+      (fun k M => conjStep (P k) (α k) M) (wordOp (P j).val)) i := by
+  simp only [J_H, H, prefixOp, list_conjugation]
 
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
