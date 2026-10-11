@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic estimates also pay its classwise all-column pure-sixth-power pole at specified lengths, while the complete actual-order-six residual and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic estimates pay its specified classwise all-column pure-dual-sixth-power subterm, including pole and shifted integral, when max(D,N)^2 is at most the row scale, while other dual terms and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, a complementary fixed-ray angular theta application on the coprime squarefree packet, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, a classwise all-column pure-dual-power application under a specified length condition, a complementary fixed-ray angular theta application on the coprime squarefree packet, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -403,7 +403,7 @@ q_{\mathfrak f_{h,k}}^{-1/3}\vartheta(\mathfrak f_{h,k})
 M_{P_{h,k},L_j}(5).
 $$
 
-This is a substitution and residue calculation from the existing Poisson formula. It identifies a subterm, not the full contraction $\widetilde E_{6,j}$, a nonnegative resonance, or a certified spectral projection. A sufficient bound for its pole contribution is $\Re\mathcal C_{6,L_j}[c_j]\ll_\varepsilon(U_jK)^\varepsilon U_j^{1/6}K$; the shifted integral and all other dual ideals still require a joint upper bound at scale $U_jK$. The classwise applications below control the pole under an additional length condition, after partitioning the complete positive moment. They do not estimate this earlier cross-class signed contraction.
+This is a substitution and residue calculation from the existing Poisson formula. It identifies a subterm, not the full contraction $\widetilde E_{6,j}$, a nonnegative resonance, or a certified spectral projection. A sufficient bound for its pole contribution is $\Re\mathcal C_{6,L_j}[c_j]\ll_\varepsilon(U_jK)^\varepsilon U_j^{1/6}K$; the shifted integral and all other dual ideals require a joint upper bound at scale $U_jK$. The classwise applications below control this specified pure-power subterm, including its shifted integral, under an additional length condition, after partitioning the complete positive moment. They do not estimate this earlier cross-class signed contraction or the other dual ideals.
 
 For comparison, absolute values and divisor bounds give only $|\mathcal C_{6,L_j}[c_j]|\ll_\varepsilon K^{4/3+\varepsilon}$. Write $h=gx,k=gy$ with $(x,y)=1$. The good conductor weight is at most $w(x)w(y)$, where $w(x)=\prod_{6\nmid v_{\mathfrak p}(x)}q_{\mathfrak p}^{-1/3}$. Its Dirichlet series converges for $\Re s>2/3$, so $\sum_{q_x\le X}w(x)\ll_\varepsilon X^{2/3+\varepsilon}$. Summing the two cofactors and then $g$ gives $K^{4/3+\varepsilon}$; the finite local products and divisor-bounded coefficients cost only $K^\varepsilon$. At $K\asymp U_j$, the desired pole-contraction scale is instead $K^{7/6+\varepsilon}$, leaving a $K^{1/6}$ saving to obtain. The row Möbius factor $M_{P,L_j}(5)$ is distinct from the original column coefficient $\mu(d)$; it does not establish cancellation of that coefficient contraction.
 
@@ -710,7 +710,99 @@ K^{1+\varepsilon}(1+D^{1/3}+N^{1/3})
 \|W_M\|_\infty^2\|W_S\|_\infty^2.}
 $$
 
-This is uniform in $L$ and includes mixed column statuses. The condition $U_j\ge1$, $\max(D,N)^2\le U_j$ pays this pole at scale $U_jK$, including $D\asymp N\asymp K^{1/2}$, $U_j\asymp K$. It is not promised by the original witness theorem. The shifted integral, other dual ideals, unrestricted actual witness lengths and signed Robin restoration remain separate obligations. This source-conditional application has no complete analytical Lean certification and makes no originality claim for its suppliers.
+This is uniform in $L$ and includes mixed column statuses. The condition $U_j\ge1$, $\max(D,N)^2\le U_j$ pays this pole at scale $U_jK$, including $D\asymp N\asymp K^{1/2}$, $U_j\asymp K$. It is not promised by the original witness theorem. The next application treats the same pure-power subterm's shifted integral. Other dual ideals, unrestricted actual witness lengths and signed Robin restoration remain separate obligations. This source-conditional application has no complete analytical Lean certification and makes no originality claim for its suppliers.
+
+#### Paying the shifted integral of the same pure-power subterm
+
+Keep the all-column classwise moment and its actual coefficients. Define the finite kernel $\mathcal C^{a,\rm all}_{6,L}(z)$ by summing over its actual-order-six pairs the coefficient $c_j(h)\overline{c_j(k)}$ times
+
+$$
+\epsilon(\xi_{h,k})q_{\mathfrak f}^{z-1/2}
+\prod_{\mathfrak p\mid\mathfrak f}(1-q_{\mathfrak p}^{-6z})
+\prod_{\mathfrak p\mid R}(1-\xi_{h,k}(\mathfrak p)q_{\mathfrak p}^{z-1})
+M_{P,L}(6-6z).
+$$
+
+At $z=1/6$ this is exactly $\mathcal C^{a,\rm all}_{6,L}[c_j]$. Fix $0<\sigma<1/6$ and, in this subsection, write $\tau=1/2-\sigma\in(1/3,1/2)$. The same fixed-core proof supplies the bound, uniformly for $t\in\mathbb R$,
+
+$$
+\boxed{|\mathcal C^{a,\rm all}_{6,L}(\sigma+it)|
+\ll_{\mathcal A,\sigma,\varepsilon}
+K^{1+\varepsilon}(1+D^{2\sigma}+N^{2\sigma})
+\|W_M\|_\infty^2\|W_S\|_\infty^2.}
+$$
+
+Here are the changes needed from the pole application. The norm phases $q_{\mathfrak f}^{it}$ separate into the two bulk coefficient vectors at fixed cores. The conductor Euler factors are multiplicative and have modulus at most $2^{\omega(\mathfrak f)}\ll_\varepsilon K^\varepsilon$, uniformly in $t$. The $R$ expansion costs $\sum_{r\mid R}q_r^{\sigma-1}\ll_\varepsilon K^\varepsilon$ and the row-Möbius expansion costs at most $\zeta_F(6-6\sigma)$. These factors and all masks remain in the coefficient vectors before applying the cubic supplier.
+
+The conductor core weight becomes
+
+$$
+w_\tau(c)=\prod_{6\nmid v_{\mathfrak p}(c)}q_{\mathfrak p}^{-\tau}.
+$$
+
+For $m=gcs_0$, $X=K/q_m$, the squared scalar input is now
+
+$$
+\sum_e|H_{m,e}^{a,b}(\sigma+it)|^2
+\ll_{\mathcal A,\sigma,\varepsilon}K^\varepsilon
+\left\{X^{2\sigma+2/3}
++X^{2\sigma}(D/q_a+N/q_b)\right\}.
+$$
+
+In particular its first term is $X^{2\sigma+2/3}$, reducing to $X$ only at the pole. The three core moments are
+
+$$
+\begin{aligned}
+F_{0,\sigma}&=\sum_{c\ {\rm powerful}}
+w_\tau(c)q_c^{-\sigma-1/3}\tau(c)<\infty,\\
+F_{D,\sigma}(V)&=\sum_{\substack{c\ {\rm powerful},\ a_c\mid\operatorname{rad}c\\
+b_c=c/a_c,\ q_{b_c}\le V}}
+w_\tau(c)q_c^{-\sigma}q_{a_c}^{-1/2}
+\ll_{\sigma,\varepsilon}V^{\tau/2+\varepsilon},\\
+F_{N,\sigma}&=\sum_{\substack{c\ {\rm powerful}\\a_c\mid\operatorname{rad}c}}
+w_\tau(c)q_c^{-\sigma}q_{b_c}^{-1/2}<\infty.
+\end{aligned}
+$$
+
+For the first and third moments the minimum local prime exponents are $7/6+\sigma$ and $1+\sigma$. For the second, the Rankin parameter $s>\tau/2$ gives local exponent $\tau+r\sigma+\delta/2+(r-\delta)s>1$ when $6\nmid r$, $r\ge2$, $\delta\in\{0,1\}$; when $6\mid r$, omit $\tau$ and use $r\ge6$. Thus these are the same positive Euler-product applications with their changed exponents. Likewise $\sum_{q_c\le V}w_\tau(c)\ll_{\sigma,\varepsilon}V^{(1-\tau)/2+\varepsilon}$ controls the both-bulks-unit sectors.
+
+After fixed-pair Cauchy and the uniform sieve, sum cores and then gcds in the same order as above. Since $2\sigma+2/3<1$, the first contribution is $\ll K^\varepsilon\sum_{q_g\ll K}(K/q_g)^{2\sigma+2/3}\ll K^{1+\varepsilon}$. The other two are bounded by
+
+$$
+\begin{aligned}
+K^{2\sigma}DN^\tau
+\sum_{q_{a_g}\ll D}q_{a_g}^{-(1+2\sigma)}
+\sum_{q_{b_g}\ll N}q_{b_g}^{-(1-\tau)}
+&\ll K^{2\sigma}DN^{2\tau}=KD^{2\sigma},\\
+K^{2\sigma}N
+\sum_{q_{a_g}\ll D}q_{a_g}^{-2\sigma}
+\sum_{b_g}q_{b_g}^{-(1+2\sigma)}
+&\ll K^{2\sigma}ND^{2\tau}=KN^{2\sigma}.
+\end{aligned}
+$$
+
+This proves the displayed source-conditional finite-kernel estimate without assuming any simultaneous realization of the opposite-core-dependent coefficient vectors.
+
+The shifted integral for this classwise extraction is
+
+$$
+\mathcal I^{a,\rm all}_{6,j}
+=\frac1{2\pi i}\int_{\Re z=\sigma}
+H_W(z)\zeta_F(6z)U_j^{1-z}
+\mathcal C^{a,\rm all}_{6,L_j}(z)\,dz.
+$$
+
+On this fixed line, $H_W(z)\zeta_F(6z)$ is absolutely integrable: the smooth annular Mellin transform decays faster than any power, whereas the Gamma quotient and zeta factor have polynomial vertical growth. A fixed finite seminorm of $W$ therefore gives
+
+$$
+|\mathcal I^{a,\rm all}_{6,j}|
+\ll_{\mathcal A,\sigma,\varepsilon}
+U_j^{1-\sigma}K^{1+\varepsilon}
+(1+D^{2\sigma}+N^{2\sigma})
+\|W_M\|_\infty^2\|W_S\|_\infty^2.
+$$
+
+At $\sigma=1/12$, this is $U_j^{11/12}K^{1+\varepsilon}(1+D^{1/6}+N^{1/6})$. If $U_j\ge1$ and $\max(D,N)^2\le U_j$, then $1,D^{2\sigma},N^{2\sigma}\le U_j^\sigma$. Thus both this integral and the pole are $\ll_{\mathcal A,\varepsilon}(U_jK)^\varepsilon U_jK$. This pays the complete specified pure-dual-sixth-power subterm of the classwise all-column moment, with the original shared-height accounting and fixed transform seminorms. It does not pay the other dual ideals, guarantee the required length condition for the actual witnesses, bound the earlier cross-class signed contraction, or restore the original signed Robin target. The application remains source-conditional and has no complete analytical Lean certification.
 
 #### Why the remaining pole estimate must use the actual convolution
 
