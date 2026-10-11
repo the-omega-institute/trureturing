@@ -28,9 +28,7 @@ internal sealed class BinaryBinBaseChangeDocument : IScribeDocumentDefinition
             Node("twoLowering", "Two-bin lowering", TwoDefinition("twoLowering", "binLowering"), true,
                 "Lowering acts in either bin, leaving the other factor fixed."),
             Node("two_bin_action", "Two-bin relations and delta tensors", TwoAction(), false,
-                "Operators on different tensor factors commute. Expanding each commutator therefore leaves the sum of the two one-bin commutators. Delta tensors have total weight equal to the sum of the two bin weights; raising and lowering replace either delta factor by its coefficientwise extended image."),
-            Node("twoBinRepresentation", "The certified concrete triple", Representation(), true,
-                "SubtypeMk constructs the triple with its relation certificate. The certificate is the first projection of the theorem two_bin_action, denoted twoBinAction in this defining expression. The three data components are the concrete weight, raising and lowering operators.")),
+                "Operators on different tensor factors commute. Expanding each commutator therefore leaves the sum of the two one-bin commutators. Delta tensors have total weight equal to the sum of the two bin weights; raising and lowering replace either delta factor by its coefficientwise extended image.")),
         []));
 
     private static DocumentBlock.Describe Node(string name, string title, Formula formula,
@@ -136,13 +134,5 @@ internal sealed class BinaryBinBaseChangeDocument : IScribeDocumentDefinition
             And(move("twoRaising", "Rbin"), move("twoLowering", "Hbin")));
         return Bins(And(Relations(Two("twoWeight"), Two("twoRaising"), Two("twoLowering")),
             All("w", Words(m), All("v", Words(n), coefficients))), true);
-    }
-
-    private static Formula Representation()
-    {
-        var triple = Parenthesized(Seq(Two("twoWeight"), Comma, Sp,
-            Two("twoRaising"), Comma, Sp, Two("twoLowering")));
-        return Bins(Eq(Two("twoBinRepresentation"), Call("SubtypeMk", triple,
-            Call("first", Two("twoBinAction")))), true);
     }
 }

@@ -24,7 +24,7 @@ internal sealed class EclecticTwoWallUniversalityDocument : IScribeDocumentDefin
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every two-wall cyclicity class has maximal hypereclectic power ranks, attained generically by the eclectic operator.",
         H("Two-wall universality of Jordan block spectra"),
-        Blocks(
+        Blocks([
             Paragraph(Text("Work over the complex numbers. A filling contains a letters 1, b letters 2 and two walls 3, so L = a+b+2. Cyclicity indices k range over Fin(L), with val(k) in {0,...,L−1}. The space retains literal periodic words; its cyclicity class is the eigenspace of the one-site right shift. The three coupling coordinates xi(0), xi(1), xi(2) multiply F1, F2, F3, respectively. Thus vector3(0,0,1) is the hypereclectic point with coefficient one on F3.")),
             Node("eigenvalue", "Cyclicity eigenvalue", ABK(Eq(Eigenvalue,
                 Call("exp", new Formula.Fraction(Mul(Mul(Mul(D(2), F.Pi), Call("ComplexI")),
@@ -44,8 +44,9 @@ internal sealed class EclecticTwoWallUniversalityDocument : IScribeDocumentDefin
             Node("claim", "Universality for every filling with a,b at least two",
                 Iff(Call("claim"), Universality()), true,
                 "§5, Eq. (5.1), arXiv:2112.04506v1: \"However, we claim a universality hypothesis: The Jordan block spectrum of the eclectic model for generic couplings ξ1, ξ2, ξ3 is identical to that of the hypereclectic model, provided L, M, K satisfy L1 = L−M ≥ K, M1 = M−K ≥ K. (5.1)\" Here K = 2, L = a+b+2 and M = b+2, so the two inequalities become a,b at least two. All couplings satisfy the power-rank upper bound. A single polynomial for the filling certifies equality of every power rank and every Jordan block multiplicity in every cyclicity class. Both restricted operators are nilpotent and admit positive-length chain bases; these bases are their Jordan block decompositions. The multiplicity equality holds for every pair of such bases. Positions(I,s) denotes the dependent sum of Fin(s(i)), and the conditional basis entry is used only when the new position is below s(i). Normalization at the hypereclectic point implies that this polynomial is nonzero.", true),
+            ..CertificateContent(),
             Node("result", "The two-wall universality theorem", Universality(), false,
-                "The literal two-wall sl2 action has lowering operator F3 and commutes with the shift. Its integral weight decomposition restricts to every cyclicity class. When a,b are at least two, each term of T lowers the weight filtration by at least two, so the eigenspace rank comparison gives the upper bound for every coupling and every power. Choose any complex basis of each class and express the three restricted bond sums as matrices. The matrix with entries X0 C(A1(i,j)) + X1 C(A2(i,j)) + X2 C(A3(i,j)) evaluates to the matrix of the restricted T. At vector3(0,0,1) it is the matrix of F3. Matrix rank equals the dimension of the operator range, and the basis map preserves powers. The weight bound gives F3^(ab+1) = 0, also on each restricted space. The polynomial power-rank certificate with this cutoff therefore supplies a polynomial for each class, normalized to one at the hypereclectic point. Their finite product over Fin(L) has the same normalization, and a nonzero product makes every factor nonzero, giving all equalities simultaneously. Empty bases and zero ranks are included. The weight filtration also makes T^(ab+1) zero, so both restricted operators are nilpotent. The nilpotent chain theorem supplies their Jordan block decompositions. For any such basis with lengths s(i), the rank of the m-th power is the sum of natSub(s(i),m). For each positive j, the integer second difference rho(j-1) - 2 rho(j) + rho(j+1) counts chains of length j. Thus equality of all power ranks gives equality of all Jordan block multiplicities, independently of either choice of chain basis. At j=0 both counts vanish because every chain length is positive.")),
+                "The literal two-wall sl2 action has lowering operator F3 and commutes with the shift. Its integral weight decomposition restricts to every cyclicity class. When a,b are at least two, each term of T lowers the weight filtration by at least two, so the eigenspace rank comparison gives the upper bound for every coupling and every power. Choose any complex basis of each class and express the three restricted bond sums as matrices. The matrix with entries X0 C(A1(i,j)) + X1 C(A2(i,j)) + X2 C(A3(i,j)) evaluates to the matrix of the restricted T. At vector3(0,0,1) it is the matrix of F3. Matrix rank equals the dimension of the operator range, and the basis map preserves powers. The weight bound gives F3^(ab+1) = 0, also on each restricted space. The polynomial power-rank certificate with this cutoff therefore supplies a polynomial for each class, normalized to one at the hypereclectic point. Their finite product over Fin(L) has the same normalization, and a nonzero product makes every factor nonzero, giving all equalities simultaneously. Empty bases and zero ranks are included. The weight filtration also makes T^(ab+1) zero, so both restricted operators are nilpotent. The nilpotent chain theorem supplies their Jordan block decompositions. For any such basis with lengths s(i), the rank of the m-th power is the sum of natSub(s(i),m). For each positive j, the integer second difference rho(j-1) - 2 rho(j) + rho(j+1) counts chains of length j. Thus equality of all power ranks gives equality of all Jordan block multiplicities, independently of either choice of chain basis. At j=0 both counts vanish because every chain length is positive.")]),
         []));
 
     private static DocumentBlock.Describe Node(string name, string title, Formula formula,
@@ -128,5 +129,64 @@ internal sealed class EclecticTwoWallUniversalityDocument : IScribeDocumentDefin
             And(Eq(Call("eval", X0, p), D(1)), All("xi", Couplings,
                 Implies(Ne(Call("eval", Xi, p), D(0)), All("k", Classes, jordan)))));
         return AB(Implies(Le(D(2), A), Implies(Le(D(2), B), And(upper, generic))));
+    }
+
+    private static DocumentBlock[] CertificateContent() => [
+            Paragraph(Text("Let K be any field, I a finite matrix index type with decidable equality, and S any type of variables. For a polynomial matrix A and a point x : S → K, write A(x) for the matrix obtained by evaluating every entry at x. No characteristic assumption or finiteness assumption on S is needed.")),
+            Describe.Lean(
+                DescribeId.Create("polynomial-power-ranks-certificate"),
+                DeclarationHandle.Create("D5/S3/Quantum/SpinChains/EclecticTwoWallUniversality.exists_polynomial_power_rank_certificate"),
+                H("One polynomial certifies all powers"),
+                StatementSource.FromAuthor(Disp(CertificateStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Suppose the specialization at z is nilpotent with cutoff H and dominates the rank of every power at every point. There is a polynomial P whose value at z is one. At every point where P is nonzero, all power ranks agree with their values at z.")),
+                    Paragraph(Text("For each r below H, put d equal to the rank of A(z) raised to r. Choose constant left and right matrices taking this power to rank normal form, with an identity block of size d. Lift their entries to constant polynomials and take the determinant of the corresponding block of the transformed polynomial power. Evaluation commutes with multiplication, powers, and determinants, so this determinant evaluates to one at z. A nonzero value gives a full-rank block, and the submatrix and product rank inequalities force rank at least d.")),
+                    Paragraph(Text("The finite product of these determinants is P. Its value at z is one, and a nonzero product forces every factor to be nonzero. The assumed rank bound supplies the opposite inequality. For powers at least H, nilpotence makes the reference power zero, and the same bound forces rank zero at every point. Empty blocks have determinant one, so zero ranks and empty matrix index types are included."))),
+                DescribeRole.Theorem)];
+
+    private static Formula CertificateAll(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula CertificateSome(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula CertificateCall(string name, params Formula[] args) =>
+        args.Length == 0 ? Seq(Operatorname, Grp(F.Id(name))) :
+            new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+    private static Formula CertificateParenthesized(Formula x) => Seq(Open, x, Close);
+    private static Formula CertificateEq(Formula x, Formula y) =>
+        new Formula.Relation(x, FormulaRelationOperator.Equal, y);
+    private static Formula CertificateLe(Formula x, Formula y) =>
+        new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
+    private static Formula CertificateNe(Formula x, Formula y) =>
+        new Formula.Relation(x, FormulaRelationOperator.NotEqual, y);
+    private static Formula CertificateAnd(Formula x, Formula y) =>
+        new Formula.Logic(CertificateParenthesized(x), FormulaLogicOperator.And, CertificateParenthesized(y));
+    private static Formula CertificateImplies(Formula x, Formula y) =>
+        new Formula.Logic(CertificateParenthesized(x), FormulaLogicOperator.Implies, CertificateParenthesized(y));
+    private static Formula CertificateAssumption(Formula x, Formula body) =>
+        Seq(OpenBracket, x, CloseBracket, Sp, body);
+    private static Formula CertificateArrow(Formula x, Formula y) => new Formula.TypeArrow(x, y);
+    private static Formula CertificatePower(Formula x, Formula r) => new Formula.Power(CertificateParenthesized(x), r);
+
+    private static Formula CertificateStatement()
+    {
+        var k = F.Id("K"); var i = F.Id("I"); var s = F.Id("S");
+        var a = F.Id("A"); var z = F.Id("z"); var h = F.Id("H");
+        var x = F.Id("x"); var r = F.Id("r"); var p = F.Id("P");
+        var type = CertificateCall("Type");
+        var nats = Seq(Mathbb, Grp(F.Id("N")));
+        var polynomial = CertificateCall("MvPolynomial", s, k);
+        var point = CertificateArrow(s, k);
+        Formula MatrixAt(Formula t) => CertificateCall("map", a, CertificateCall("eval", t));
+        Formula RankAt(Formula t) => CertificateCall("rank", CertificatePower(MatrixAt(t), r));
+        var bounded = CertificateAll("x", point, CertificateAll("r", nats, CertificateLe(RankAt(x), RankAt(z))));
+        var ranks = CertificateAll("r", nats, CertificateEq(RankAt(x), RankAt(z)));
+        var locus = CertificateAll("x", point, CertificateImplies(CertificateNe(CertificateCall("eval", x, p), D(0)), ranks));
+        var conclusion = CertificateSome("P", polynomial, CertificateAnd(CertificateEq(CertificateCall("eval", z, p), D(1)), locus));
+        var claim = CertificateImplies(CertificateAnd(CertificateEq(CertificatePower(MatrixAt(z), h), D(0)), bounded), conclusion);
+        var data = CertificateAll("A", CertificateCall("Matrix", i, i, polynomial), CertificateAll("z", point, CertificateAll("H", nats, claim)));
+        var instances = CertificateAssumption(CertificateCall("Field", k),
+            CertificateAssumption(CertificateCall("Fintype", i), CertificateAssumption(CertificateCall("DecidableEq", i), data)));
+        return CertificateAll("K", type, CertificateAll("I", type, CertificateAll("S", type, instances)));
     }
 }

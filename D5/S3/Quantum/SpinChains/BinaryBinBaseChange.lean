@@ -168,12 +168,4 @@ theorem two_bin_action (m n : ℕ) :
     LinearMap.rTensor_tmul, LinearMap.lTensor_tmul, hw, he, hf,
     TensorProduct.smul_tmul, TensorProduct.tmul_smul, add_smul, and_self]
 
-/-- The concrete triple together with its relation certificate. -/
-noncomputable def twoBinRepresentation (m n : ℕ) :
-    {a : Module.End K (((Fin m → Bool) → K) ⊗[K] ((Fin n → Bool) → K)) ×
-      Module.End K (((Fin m → Bool) → K) ⊗[K] ((Fin n → Bool) → K)) ×
-      Module.End K (((Fin m → Bool) → K) ⊗[K] ((Fin n → Bool) → K)) //
-      Sl2Relations a.1 a.2.1 a.2.2} :=
-  ⟨(twoWeight K m n, twoRaising K m n, twoLowering K m n), (two_bin_action K m n).1⟩
-
 end D5.S3.Quantum.SpinChains.BinaryBinBaseChange

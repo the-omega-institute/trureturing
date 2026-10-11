@@ -114,18 +114,6 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 Operators on different tensor factors commute. Expanding each commutator therefore leaves the sum of the two one-bin commutators. Delta tensors have total weight equal to the sum of the two bin weights; raising and lowering replace either delta factor by its coefficientwise extended image.
 
-**Definition 1.10 (The certified concrete triple).**
-
-$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; \operatorname{twoBinRepresentation}\left(K, m, n\right) = \operatorname{SubtypeMk}\left((\operatorname{twoWeight}\left(K, m, n\right), \operatorname{twoRaising}\left(K, m, n\right), \operatorname{twoLowering}\left(K, m, n\right)), \operatorname{first}\left(\operatorname{twoBinAction}\left(K, m, n\right)\right)\right)$$
-
-*Formalization.* `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.twoBinRepresentation` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-SubtypeMk constructs the triple with its relation certificate. The certificate is the first projection of the theorem two_bin_action, denoted twoBinAction in this defining expression. The three data components are the concrete weight, raising and lowering operators.
-
 ## References
 
 - Truth anchor: `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.binLowering`
@@ -133,9 +121,8 @@ SubtypeMk constructs the triple with its relation certificate. The certificate i
 - Truth anchor: `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.binWeight`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.bin_action`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.extend`
-- Truth anchor: `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.twoBinRepresentation`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.twoLowering`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.twoRaising`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.twoWeight`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BinaryBinBaseChange.two_bin_action`
-- Dependency: [D5/S3/Quantum/SpinChains/HypereclecticNonShortening](HypereclecticNonShortening.md)
+- Dependency: [D5/S3/Quantum/SpinChains/Sl2WeightFiltration](Sl2WeightFiltration.md)
