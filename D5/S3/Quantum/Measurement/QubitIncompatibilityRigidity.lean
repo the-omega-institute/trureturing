@@ -7,6 +7,7 @@
    digest: Restricted-state compatibility determines incompatible unbiased qubit pairs. -/
 
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
+import Mathlib.LinearAlgebra.CrossProduct
 noncomputable section
 open D5.S3.Quantum.FiniteDimensional
 open scoped ComplexOrder
@@ -379,5 +380,68 @@ private lemma incompatible_parameters (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ �
   refine ⟨hk, ?_, ?_⟩ <;> dsimp only [K] at hk
   · linarith
   · nlinarith [mul_nonneg (sub_nonneg.mpr hA) (sub_nonneg.mpr hB)]
+
+private abbrev cross (a b : V) : V :=
+  WithLp.toLp 2 (crossProduct (WithLp.ofLp a) (WithLp.ofLp b))
+
+private lemma cross_geometry (a b : V) :
+    ⟪a, cross a b⟫_ℝ = 0 ∧ ⟪b, cross a b⟫_ℝ = 0 ∧
+      ‖cross a b‖ ^ 2 = ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2 := by
+  have hd (v w : V) : ⟪v, w⟫_ℝ = WithLp.ofLp v ⬝ᵥ WithLp.ofLp w := by
+    simp [PiLp.inner_apply, dotProduct, mul_comm]
+  rw [← real_inner_self_eq_norm_sq]
+  simp only [hd, cross]
+  rw [dot_self_cross, dot_cross_self, cross_dot_cross]
+  simp only [← hd, real_inner_self_eq_norm_sq, real_inner_comm b a, pow_two]
+  trivial
+
+private lemma gram_complete (a b r : V) :
+    (‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) * ‖r‖ ^ 2 =
+      ‖b‖ ^ 2 * ⟪r, a⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪r, a⟫_ℝ * ⟪r, b⟫_ℝ +
+      ‖a‖ ^ 2 * ⟪r, b⟫_ℝ ^ 2 + ⟪r, cross a b⟫_ℝ ^ 2 := by
+  simp [EuclideanSpace.real_norm_sq_eq, PiLp.inner_apply, Fin.sum_univ_succ,
+    cross, cross_apply]
+  ring
+
+private lemma normal_exists (a b : V)
+    (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) :
+    ∃ m : V, ‖m‖ = 1 ∧ ⟪m, a⟫_ℝ = 0 ∧ ⟪m, b⟫_ℝ = 0 ∧
+      ∀ r : V, (‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) *
+        (‖r‖ ^ 2 - ⟪r, m⟫_ℝ ^ 2) =
+        ‖b‖ ^ 2 * ⟪r, a⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪r, a⟫_ℝ * ⟪r, b⟫_ℝ +
+        ‖a‖ ^ 2 * ⟪r, b⟫_ℝ ^ 2 := by
+  obtain ⟨ha, hb, hc⟩ := cross_geometry a b
+  have hn : ‖cross a b‖ ≠ 0 := by intro h; rw [h] at hc; nlinarith
+  refine ⟨‖cross a b‖⁻¹ • cross a b, ?_, ?_, ?_, ?_⟩
+  · rw [norm_smul, norm_inv, norm_norm, inv_mul_cancel₀ hn]
+  · rw [real_inner_smul_left, real_inner_comm, ha, mul_zero]
+  · rw [real_inner_smul_left, real_inner_comm, hb, mul_zero]
+  · intro r
+    simp only [inner_smul_right]
+    have hg := gram_complete a b r
+    rw [← hc]
+    field_simp
+    nlinarith [hg]
+
+private lemma radial_root (k M L : ℝ) (hk : k < 0) (hM : 0 < M) (hL : 0 ≤ L)
+    (h1 : 0 ≤ k + M + L) :
+    ∃ R : ℝ, R = -2 * k / (M + Real.sqrt (M ^ 2 - 4 * L * k)) ∧
+      0 < R ∧ R ≤ 1 ∧ k + M * R + L * R ^ 2 = 0 ∧
+      ∀ z : ℝ, 0 ≤ z → (0 ≤ k + M * z + L * z ^ 2 ↔ R ≤ z) := by
+  let s := Real.sqrt (M ^ 2 - 4 * L * k)
+  have hs : s ^ 2 = M ^ 2 - 4 * L * k := Real.sq_sqrt (by nlinarith)
+  have hd : 0 < M + s := by dsimp [s]; positivity
+  let R := -2 * k / (M + s)
+  have hR : 0 < R := div_pos (by linarith) hd
+  have he : k + M * R + L * R ^ 2 = 0 := by
+    dsimp [R]
+    field_simp
+    linear_combination k * hs
+  have ht (z : ℝ) (hz : 0 ≤ z) : 0 ≤ k + M * z + L * z ^ 2 ↔ R ≤ z := by
+    have hp : 0 < M + L * (z + R) := by positivity
+    have hf : k + M * z + L * z ^ 2 = (z - R) * (M + L * (z + R)) := by
+      linear_combination he
+    rw [hf, mul_nonneg_iff_of_pos_right hp, sub_nonneg]
+  exact ⟨R, rfl, hR, (ht 1 (by norm_num)).mp (by simpa using h1), he, ht⟩
 
 end D5.S3.Quantum.ToriiTakakuraImamuraRigidity
