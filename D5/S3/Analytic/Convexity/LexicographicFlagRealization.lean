@@ -15,7 +15,8 @@ import Mathlib.Tactic
 noncomputable section
 
 open scoped InnerProductSpace
-open Module Set
+open Module Set Filter
+open scoped Topology
 
 namespace D5.S3.Analytic.Convexity.LexicographicFlagRealization
 
@@ -29,6 +30,103 @@ def FiniteFeasible (a : I → V) : Prop :=
 /-- Every row has a positive first nonzero entry in the same ordered list. -/
 def LexWitness (a : I → V) {r : ℕ} (v : Fin r → V) : Prop :=
   ∀ i, ∃ k, 0 < ⟪a i, v k⟫_ℝ ∧ ∀ j < k, ⟪a i, v j⟫_ℝ = 0
+
+/-- The vector polynomial with the supplied positive-degree coefficients. -/
+def curve {r : ℕ} (v : Fin r → V) (t : ℝ) : V :=
+  ∑ k, t ^ (k.val + 1) • v k
+
+private theorem curve_zero {r : ℕ} (v : Fin r → V) : curve v 0 = 0 := by
+  simp [curve]
+
+private theorem curve_tendsto {r : ℕ} (v : Fin r → V) :
+    Tendsto (curve v) (𝓝 0) (𝓝 0) := by
+  have hc : Continuous (curve v) := by
+    unfold curve
+    exact continuous_finsetSum _ (fun i _ => (continuous_id.pow _).smul continuous_const)
+  simpa only [curve_zero] using hc.tendsto 0
+
+private theorem curve_cons {r : ℕ} (v : Fin (r + 1) → V) (t : ℝ) :
+    curve v t = t • (v 0 + curve (fun k : Fin r => v k.succ) t) := by
+  simp only [curve, Fin.sum_univ_succ, Fin.val_zero, zero_add, pow_one,
+    Fin.val_succ, smul_add, Finset.smul_sum, smul_smul]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro k _
+  rw [pow_succ, mul_comm]
+
+private theorem row_lex_cons (x : V) {r : ℕ} (v : Fin (r + 1) → V) :
+    (∃ k, 0 < ⟪x, v k⟫_ℝ ∧ ∀ j < k, ⟪x, v j⟫_ℝ = 0) ↔
+      0 < ⟪x, v 0⟫_ℝ ∨ (⟪x, v 0⟫_ℝ = 0 ∧
+        ∃ k : Fin r, 0 < ⟪x, v k.succ⟫_ℝ ∧ ∀ j < k, ⟪x, v j.succ⟫_ℝ = 0) := by
+  constructor
+  · rintro ⟨k, hk, hz⟩
+    refine Fin.cases (fun hk _ => Or.inl hk) (fun k hk hz => ?_) k hk hz
+    exact Or.inr ⟨hz 0 (Fin.succ_pos k), k, hk,
+      fun j hj => hz j.succ (Fin.succ_lt_succ_iff.mpr hj)⟩
+  · rintro (h | ⟨hz, k, hk, hj⟩)
+    · exact ⟨0, h, fun j h => (Fin.not_lt_zero j h).elim⟩
+    · refine ⟨k.succ, hk, ?_⟩
+      intro j hjk
+      exact Fin.cases (fun _ => hz) (fun j h => hj j (Fin.succ_lt_succ_iff.mp h)) j hjk
+
+private theorem row_lex_iff_eventually (x : V) {r : ℕ} (v : Fin r → V) :
+    (∃ k, 0 < ⟪x, v k⟫_ℝ ∧ ∀ j < k, ⟪x, v j⟫_ℝ = 0) ↔
+      ∀ᶠ t in 𝓝[>] (0 : ℝ), 0 < ⟪x, curve v t⟫_ℝ := by
+  induction r with
+  | zero =>
+    constructor
+    · rintro ⟨k, _⟩
+      exact Fin.elim0 k
+    · intro h
+      obtain ⟨t, ht⟩ := h.exists
+      simpa [curve] using ht
+  | succ r ih =>
+    rw [row_lex_cons]
+    have ht : ∀ᶠ t in 𝓝[>] (0 : ℝ), 0 < t := self_mem_nhdsWithin
+    have hlim : Tendsto (fun t : ℝ => ⟪x, v 0 + curve (fun k : Fin r => v k.succ) t⟫_ℝ)
+        (𝓝[>] 0) (𝓝 ⟪x, v 0⟫_ℝ) := by
+      simpa using (tendsto_const_nhds.inner
+        (tendsto_const_nhds.add (curve_tendsto (fun k : Fin r => v k.succ)))).mono_left
+          nhdsWithin_le_nhds
+    constructor
+    · rintro (hpos | ⟨hz, htail⟩)
+      · filter_upwards [ht, hlim.eventually (lt_mem_nhds hpos)] with t ht hp
+        rw [curve_cons, inner_smul_right]
+        exact mul_pos ht hp
+      · filter_upwards [ht, (ih _).mp htail] with t ht hp
+        rw [curve_cons, inner_smul_right, inner_add_right, hz, zero_add]
+        exact mul_pos ht hp
+    · intro hpos
+      have hbase : ∀ᶠ t in 𝓝[>] (0 : ℝ),
+          0 < ⟪x, v 0 + curve (fun k : Fin r => v k.succ) t⟫_ℝ := by
+        filter_upwards [ht, hpos] with t ht hp
+        rw [curve_cons, inner_smul_right] at hp
+        exact (mul_pos_iff_of_pos_left ht).mp hp
+      have hnonneg : 0 ≤ ⟪x, v 0⟫_ℝ := ge_of_tendsto hlim (hbase.mono fun _ h => h.le)
+      rcases lt_or_eq_of_le hnonneg with hlt | heq
+      · exact Or.inl hlt
+      · refine Or.inr ⟨heq.symm, (ih _).mpr ?_⟩
+        simpa only [inner_add_right, ← heq, zero_add] using hbase
+
+/-- Each constraint has its own positive right-neighborhood of feasibility. -/
+def EventuallyFeasible (a : I → V) {r : ℕ} (v : Fin r → V) : Prop :=
+  ∀ i, ∃ ε : ℝ, 0 < ε ∧ ∀ t, 0 < t → t < ε → 0 < ⟪a i, curve v t⟫_ℝ
+
+private theorem lex_iff_eventually (a : I → V) {r : ℕ} (v : Fin r → V) :
+    LexWitness a v ↔ EventuallyFeasible a v := by
+  unfold LexWitness EventuallyFeasible
+  apply forall_congr'
+  intro i
+  rw [row_lex_iff_eventually]
+  exact mem_nhdsGT_iff_exists_Ioo_subset.trans (by simp [Set.subset_def])
+
+private theorem lex_finite_feasible (a : I → V) {r : ℕ} (v : Fin r → V)
+    (h : LexWitness a v) : FiniteFeasible a := by
+  intro F
+  have he : ∀ᶠ t in 𝓝[>] (0 : ℝ), ∀ i ∈ F, 0 < ⟪a i, curve v t⟫_ℝ :=
+    (eventually_all_finset F).mpr fun i _ => (row_lex_iff_eventually (a i) v).mp (h i)
+  obtain ⟨t, ht⟩ := he.exists
+  exact ⟨curve v t, ht⟩
 
 variable [FiniteDimensional ℝ V]
 
@@ -128,5 +226,35 @@ theorem orthonormal_realization (a : I → V) (h : FiniteFeasible a) :
         · refine ⟨0, lt_of_le_of_ne (hupos j) (Ne.symm hj), ?_⟩
           intro k hk
           exact (Fin.not_lt_zero k hk).elim
+
+/-- Finite feasibility, a lexicographic list, and a constraintwise feasible curve are equivalent.
+The list furnished from finite feasibility is orthonormal in the row span. -/
+theorem realization_equivalences (a : I → V) :
+    (FiniteFeasible a ↔ ∃ (r : ℕ) (v : Fin r → V), LexWitness a v) ∧
+    ((∃ (r : ℕ) (v : Fin r → V), LexWitness a v) ↔
+      ∃ (r : ℕ) (v : Fin r → V), EventuallyFeasible a v) ∧
+    (FiniteFeasible a → ∃ (r : ℕ) (v : Fin r → V),
+      r ≤ finrank ℝ (Submodule.span ℝ (Set.range a)) ∧
+      finrank ℝ (Submodule.span ℝ (Set.range a)) ≤ finrank ℝ V ∧
+      Orthonormal ℝ v ∧ (∀ k, v k ∈ Submodule.span ℝ (Set.range a)) ∧
+      LexWitness a v ∧ EventuallyFeasible a v ∧
+      Tendsto (curve v) (𝓝 0) (𝓝 0) ∧ (Nonempty I → 1 ≤ r)) := by
+  refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_⟩
+  · intro h
+    obtain ⟨r, v, _, _, _, hv⟩ := orthonormal_realization a h
+    exact ⟨r, v, hv⟩
+  · rintro ⟨r, v, h⟩
+    exact lex_finite_feasible a v h
+  · rintro ⟨r, v, h⟩
+    exact ⟨r, v, (lex_iff_eventually a v).mp h⟩
+  · rintro ⟨r, v, h⟩
+    exact ⟨r, v, (lex_iff_eventually a v).mpr h⟩
+  · intro h
+    obtain ⟨r, v, hr, hv, hW, hlex⟩ := orthonormal_realization a h
+    refine ⟨r, v, hr, Submodule.finrank_le _, hv, hW, hlex,
+      (lex_iff_eventually a v).mp hlex, curve_tendsto v, ?_⟩
+    rintro ⟨i⟩
+    obtain ⟨k, _, _⟩ := hlex i
+    exact Nat.succ_le_of_lt (lt_of_le_of_lt (Nat.zero_le k.val) k.isLt)
 
 end D5.S3.Analytic.Convexity.LexicographicFlagRealization
