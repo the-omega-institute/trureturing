@@ -3,6 +3,7 @@ bibkey: stanley2011enumerative
 authors: Richard P. Stanley
 year: 2011
 title: Enumerative Combinatorics, Volume 1, second edition
+doi: null
 url: https://math.mit.edu/~rstan/ec/ec1.pdf
 claim: "Section 1.9 gives B3=5; Example 3.10.4 defines the partition lattice ordered by refinement and its meet by nonempty block intersections."
 strata_touched: []
