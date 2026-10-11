@@ -4,6 +4,7 @@ authors: trureturing research (derived proof; original supplier attributions in 
 year: 2026
 title: Ordinary supplier-relative forced-window, core and forward deductions
 doi: null
+url: https://github.com/the-omega-institute/trureturing/blob/dev/Library/ArithSums/trureturing2026extrawindowpairing.md
 claim: Ordinary supplier-relative forced-window, core and forward deductions under the hypotheses and scope stated in the body; no Lean verification, RH resolution, novelty or official acceptance is asserted.
 strata_touched: []
 license: Apache-2.0
