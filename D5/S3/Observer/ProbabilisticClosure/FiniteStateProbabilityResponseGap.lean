@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Fixed-degree globally probability-valued rational responses have a positive approximation gap. -/
+   digest: Probability-valued rational responses of fixed degree have a positive gap. -/
 
 import Mathlib.Algebra.Polynomial.OfFn
 import Mathlib.Algebra.Polynomial.Roots
@@ -18,6 +18,9 @@ import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+import Mathlib.LinearAlgebra.Matrix.Polynomial
+import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+import Mathlib.Topology.Instances.Matrix
 import Mathlib.Tactic
 
 open Set Filter Polynomial
@@ -182,7 +185,7 @@ private theorem coefficient_probability_gap {d : ℕ} {l a b r : ℝ} {f : ℝ �
       (∀ x ∈ Ioo l r, 0 ≤ ev v.1 x / ev v.2 x ∧ ev v.1 x / ev v.2 x ≤ 1) →
       ∃ x ∈ Ioo a b, ε ≤ |ev v.1 x / ev v.2 x - f x| := by
   obtain ⟨δ, hδ, hgap⟩ := normalized_gap (d := d) hla hab hbr hf hneg
-  have hc : Continuous (fun vx : Pair d × ℝ => ev vx.1.2 vx.2) := by
+  have hc : Continuous (fun vx : (Pair d) × ℝ => ev vx.1.2 vx.2) := by
     simp_rw [ev_sum]
     fun_prop
   obtain ⟨M, hM⟩ := ((isCompact_sphere (0 : Pair d) 1).prod
@@ -324,5 +327,366 @@ private theorem original_coin_response_gap (d : ℕ) (B C β : ℝ)
     (fun h hh => by simpa only [eval_comp, hT] using hprob _ (hmap h hh))
   exact ⟨h, hh, by simpa only [eval_comp, hT] using herr⟩
 
+
+
+open Matrix
+
+/-- Finite-horizon probability of absorption into one selected terminal event. -/
+noncomputable def absorptionApprox {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ)
+    (r : Fin n → ℝ) : ℕ → Fin n → ℝ
+  | 0 => 0
+  | k + 1 => r + Q *ᵥ absorptionApprox Q r k
+
+private lemma absorptionApprox_bounds {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ)
+    (r : Fin n → ℝ) (hQ : ∀ i j, 0 ≤ Q i j) (hr : ∀ i, 0 ≤ r i)
+    (hrow : ∀ i, r i + ∑ j, Q i j ≤ 1) :
+    ∀ k i, 0 ≤ absorptionApprox Q r k i ∧ absorptionApprox Q r k i ≤ 1 := by
+  intro k
+  induction k with
+  | zero => intro i; simp [absorptionApprox]
+  | succ k ih =>
+    intro i
+    change 0 ≤ r i + ∑ j, Q i j * absorptionApprox Q r k j ∧
+      r i + ∑ j, Q i j * absorptionApprox Q r k j ≤ 1
+    constructor
+    · exact add_nonneg (hr i) (Finset.sum_nonneg fun j _ => mul_nonneg (hQ i j) (ih j).1)
+    · apply le_trans _ (hrow i)
+      exact add_le_add (le_refl _) (Finset.sum_le_sum fun j _ =>
+        (mul_le_mul_of_nonneg_left (ih j).2 (hQ i j)).trans_eq (mul_one _))
+
+private lemma absorptionApprox_mono {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ)
+    (r : Fin n → ℝ) (hQ : ∀ i j, 0 ≤ Q i j) (hr : ∀ i, 0 ≤ r i) :
+    Monotone (absorptionApprox Q r) := by
+  apply monotone_nat_of_le_succ
+  intro k
+  induction k with
+  | zero => intro i; simpa [absorptionApprox] using hr i
+  | succ k ih =>
+    intro i
+    change r i + ∑ j, Q i j * absorptionApprox Q r k j ≤
+      r i + ∑ j, Q i j * absorptionApprox Q r (k + 1) j
+    exact add_le_add (le_refl _) (Finset.sum_le_sum fun j _ =>
+      mul_le_mul_of_nonneg_left (ih j) (hQ i j))
+
+/-- Increasing limit of the actual finite-horizon event probabilities. -/
+noncomputable def absorptionProbability {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ)
+    (r : Fin n → ℝ) (i : Fin n) : ℝ := ⨆ k, absorptionApprox Q r k i
+
+private lemma absorptionProbability_spec {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ)
+    (r : Fin n → ℝ) (hQ : ∀ i j, 0 ≤ Q i j) (hr : ∀ i, 0 ≤ r i)
+    (hrow : ∀ i, r i + ∑ j, Q i j ≤ 1) :
+    (∀ i, 0 ≤ absorptionProbability Q r i ∧ absorptionProbability Q r i ≤ 1) ∧
+    (1 - Q) *ᵥ absorptionProbability Q r = r := by
+  have hb (i : Fin n) : BddAbove (range (fun k => absorptionApprox Q r k i)) :=
+    ⟨1, by rintro _ ⟨k, rfl⟩; exact (absorptionApprox_bounds Q r hQ hr hrow k i).2⟩
+  have hlim : Tendsto (absorptionApprox Q r) atTop (𝓝 (absorptionProbability Q r)) := by
+    apply tendsto_pi_nhds.mpr
+    intro i
+    exact tendsto_atTop_ciSup (fun a b hab => absorptionApprox_mono Q r hQ hr hab i) (hb i)
+  constructor
+  · intro i
+    exact ⟨(absorptionApprox_bounds Q r hQ hr hrow 0 i).1.trans (le_ciSup (hb i) 0),
+      ciSup_le fun k => (absorptionApprox_bounds Q r hQ hr hrow k i).2⟩
+  · have hc : Continuous (fun v : Fin n → ℝ => r + Q *ᵥ v) :=
+      continuous_const.add (continuous_const.matrix_mulVec continuous_id)
+    have heq : absorptionProbability Q r = r + Q *ᵥ absorptionProbability Q r :=
+      tendsto_nhds_unique (hlim.comp (tendsto_add_atTop_nat 1))
+        (hc.continuousAt.tendsto.comp hlim)
+    rw [sub_mulVec, one_mulVec]
+    exact (sub_eq_iff_eq_add.mpr (by simpa only [add_comm] using heq))
+
+private lemma affine_system_rational {n : ℕ}
+    (A B : Matrix (Fin n) (Fin n) ℝ) (u v α : Fin n → ℝ) (γ : ℝ)
+    (y : ℝ → Fin n → ℝ)
+    (hsolve : ∀ t ∈ Ioo (0 : ℝ) 1, (t • A + B) *ᵥ y t = t • u + v)
+    (hdet : ∀ t ∈ Ioo (0 : ℝ) 1, (t • A + B).det ≠ 0) :
+    ∃ P D : ℝ[X], P.natDegree ≤ n ∧ D.natDegree ≤ n ∧
+      (∀ t ∈ Ioo (0 : ℝ) 1, D.eval t ≠ 0) ∧
+      ∀ t ∈ Ioo (0 : ℝ) 1, γ + α ⬝ᵥ y t = P.eval t / D.eval t := by
+  classical
+  let M : Matrix (Fin n) (Fin n) ℝ[X] := (X : ℝ[X]) • A.map Polynomial.C + B.map Polynomial.C
+  let D := M.det
+  let N (i : Fin n) : ℝ[X] :=
+    ((X : ℝ[X]) • (A.updateCol i u).map Polynomial.C + (B.updateCol i v).map Polynomial.C).det
+  let P : ℝ[X] := Polynomial.C γ * D + ∑ i, Polynomial.C (α i) * N i
+  have hD : D.natDegree ≤ n := by
+    simpa [D, M] using Polynomial.natDegree_det_X_add_C_le A B
+  have hN (i : Fin n) : (N i).natDegree ≤ n := by
+    simpa [N] using Polynomial.natDegree_det_X_add_C_le (A.updateCol i u) (B.updateCol i v)
+  have hP : P.natDegree ≤ n := by
+    apply (natDegree_add_le _ _).trans
+    apply max_le
+    · exact (natDegree_C_mul_le _ _).trans hD
+    · exact natDegree_sum_le_of_forall_le _ _ fun i _ => (natDegree_C_mul_le _ _).trans (hN i)
+  have heval (A B : Matrix (Fin n) (Fin n) ℝ) (t : ℝ) :
+      ((X : ℝ[X]) • A.map Polynomial.C + B.map Polynomial.C).det.eval t = (t • A + B).det := by
+    change (Polynomial.evalRingHom t) _ = _
+    rw [RingHom.map_det]
+    congr 1
+    ext i j
+    change ((X : ℝ[X]) * Polynomial.C (A i j) + Polynomial.C (B i j)).eval t =
+      t * A i j + B i j
+    simp only [eval_add, eval_mul, eval_X, eval_C]
+  have hDeval (t : ℝ) : D.eval t = (t • A + B).det := heval A B t
+  refine ⟨P, D, hP, hD, fun t ht => by rw [hDeval]; exact hdet t ht, ?_⟩
+  intro t ht
+  have hNi (i : Fin n) : (N i).eval t = (t • A + B).det * y t i := by
+    rw [show (N i).eval t = (t • A.updateCol i u + B.updateCol i v).det from
+      heval _ _ t]
+    have hcol : t • A.updateCol i u + B.updateCol i v =
+        (t • A + B).updateCol i (t • u + v) := by
+      ext j k
+      by_cases hki : k = i <;> simp [Matrix.updateCol, hki]
+    rw [hcol, ← cramer_apply, cramer_eq_adjugate_mulVec, ← hsolve t ht,
+      mulVec_mulVec, adjugate_mul, smul_mulVec, one_mulVec]
+    rfl
+  apply (eq_div_iff (by rw [hDeval]; exact hdet t ht)).mpr
+  simp only [P, eval_add, eval_mul, eval_C, eval_finsetSum, hNi, hDeval,
+    dotProduct]
+  rw [add_mul, Finset.sum_mul]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro i _
+  ring
+
+/-- A common-coin finite table for one terminal event.  The complementary
+terminal event receives the remaining row mass.  Entries and private weights
+are real and independent of the unknown coin rate. -/
+structure EventController (n : ℕ) where
+  Qzero : Matrix (Fin n) (Fin n) ℝ
+  Qone : Matrix (Fin n) (Fin n) ℝ
+  rzero : Fin n → ℝ
+  rone : Fin n → ℝ
+  initial : Fin n → ℝ
+  immediate : ℝ
+  Qzero_nonneg : ∀ i j, 0 ≤ Qzero i j
+  Qone_nonneg : ∀ i j, 0 ≤ Qone i j
+  rzero_nonneg : ∀ i, 0 ≤ rzero i
+  rone_nonneg : ∀ i, 0 ≤ rone i
+  row_zero : ∀ i, rzero i + ∑ j, Qzero i j ≤ 1
+  row_one : ∀ i, rone i + ∑ j, Qone i j ≤ 1
+  initial_nonneg : ∀ i, 0 ≤ initial i
+  immediate_nonneg : 0 ≤ immediate
+  initial_mass : immediate + ∑ i, initial i ≤ 1
+
+noncomputable def EventController.transition {n : ℕ} (A : EventController n) (t : ℝ) :
+    Matrix (Fin n) (Fin n) ℝ := (1 - t) • A.Qzero + t • A.Qone
+
+noncomputable def EventController.exit {n : ℕ} (A : EventController n) (t : ℝ) :
+    Fin n → ℝ := (1 - t) • A.rzero + t • A.rone
+
+noncomputable def EventController.response {n : ℕ} (A : EventController n) (t : ℝ) : ℝ :=
+  A.immediate + A.initial ⬝ᵥ absorptionProbability (A.transition t) (A.exit t)
+
+private lemma EventController.row_bounds {n : ℕ} (A : EventController n)
+    {t : ℝ} (ht : t ∈ Ioo (0 : ℝ) 1) :
+    (∀ i j, 0 ≤ A.transition t i j) ∧ (∀ i, 0 ≤ A.exit t i) ∧
+    (∀ i, A.exit t i + ∑ j, A.transition t i j ≤ 1) := by
+  have ht' : 0 ≤ 1 - t := by linarith [ht.2]
+  refine ⟨fun i j => add_nonneg (mul_nonneg ht' (A.Qzero_nonneg i j))
+    (mul_nonneg ht.1.le (A.Qone_nonneg i j)),
+    fun i => add_nonneg (mul_nonneg ht' (A.rzero_nonneg i))
+      (mul_nonneg ht.1.le (A.rone_nonneg i)), ?_⟩
+  intro i
+  have h0 := mul_le_mul_of_nonneg_left (A.row_zero i) ht'
+  have h1 := mul_le_mul_of_nonneg_left (A.row_one i) ht.1.le
+  dsimp [EventController.exit, EventController.transition]
+  simp only [Finset.sum_add_distrib, ← Finset.mul_sum]
+  nlinarith
+
+private lemma absorptionApprox_zero_iff {n : ℕ}
+    (Q Q' : Matrix (Fin n) (Fin n) ℝ) (r r' : Fin n → ℝ)
+    (hQ : ∀ i j, 0 ≤ Q i j) (hQ' : ∀ i j, 0 ≤ Q' i j)
+    (hr : ∀ i, 0 ≤ r i) (hr' : ∀ i, 0 ≤ r' i)
+    (hrow : ∀ i, r i + ∑ j, Q i j ≤ 1)
+    (hrow' : ∀ i, r' i + ∑ j, Q' i j ≤ 1)
+    (hQs : ∀ i j, Q i j = 0 ↔ Q' i j = 0)
+    (hrs : ∀ i, r i = 0 ↔ r' i = 0) :
+    ∀ k i, absorptionApprox Q r k i = 0 ↔ absorptionApprox Q' r' k i = 0 := by
+  intro k
+  induction k with
+  | zero => simp [absorptionApprox]
+  | succ k ih =>
+    intro i
+    have hnon (j : Fin n) :=
+      mul_nonneg (hQ i j) (absorptionApprox_bounds Q r hQ hr hrow k j).1
+    have hnon' (j : Fin n) :=
+      mul_nonneg (hQ' i j) (absorptionApprox_bounds Q' r' hQ' hr' hrow' k j).1
+    change (r i + ∑ j, Q i j * absorptionApprox Q r k j = 0) ↔
+      (r' i + ∑ j, Q' i j * absorptionApprox Q' r' k j = 0)
+    rw [add_eq_zero_iff_of_nonneg (hr i) (Finset.sum_nonneg fun j _ => hnon j),
+      add_eq_zero_iff_of_nonneg (hr' i) (Finset.sum_nonneg fun j _ => hnon' j),
+      Finset.sum_eq_zero_iff_of_nonneg (fun j _ => hnon j),
+      Finset.sum_eq_zero_iff_of_nonneg (fun j _ => hnon' j)]
+    simp only [mul_eq_zero, hQs, hrs, ih]
+
+private lemma total_absorptionApprox {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ) :
+    ∀ k, absorptionApprox Q (1 - Q *ᵥ 1) k = 1 - Q ^ k *ᵥ 1 := by
+  intro k
+  induction k with
+  | zero => simp [absorptionApprox]
+  | succ k ih =>
+    simp only [absorptionApprox, ih, mulVec_sub, pow_succ', ← mulVec_mulVec]
+    abel
+
+private lemma det_ne_zero_of_exit {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ)
+    (hQ : ∀ i j, 0 ≤ Q i j)
+    (hexit : ∀ i, ∃ k, 0 < absorptionApprox Q (1 - Q *ᵥ 1) k i) :
+    (1 - Q).det ≠ 0 := by
+  classical
+  intro hz
+  obtain ⟨v, hv, hker⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hz
+  obtain ⟨j, hj⟩ : ∃ j, v j ≠ 0 := Function.ne_iff.mp hv
+  obtain ⟨i, _, hmax⟩ := Finset.exists_max_image Finset.univ (fun i => |v i|)
+    ⟨j, Finset.mem_univ j⟩
+  have hM : 0 < |v i| := (abs_pos.mpr hj).trans_le (hmax j (Finset.mem_univ j))
+  have hfix : Q *ᵥ v = v := by
+    rw [sub_mulVec, one_mulVec, sub_eq_zero] at hker
+    exact hker.symm
+  have hpow (k : ℕ) : Q ^ k *ᵥ v = v := by
+    induction k with
+    | zero => simp
+    | succ k ih => rw [pow_succ', ← mulVec_mulVec, ih, hfix]
+  obtain ⟨k, hk⟩ := hexit i
+  rw [total_absorptionApprox] at hk
+  have hbound : |v i| ≤ (Q ^ k *ᵥ (1 : Fin n → ℝ)) i * |v i| := by
+    calc
+      |v i| = |∑ j, (Q ^ k) i j * v j| := (congrArg (fun w : Fin n → ℝ => |w i|) (hpow k)).symm
+      _ ≤ ∑ j, |(Q ^ k) i j * v j| := Finset.abs_sum_le_sum_abs _ _
+      _ = ∑ j, (Q ^ k) i j * |v j| := by
+        apply Finset.sum_congr rfl
+        intro j _
+        rw [abs_mul, abs_of_nonneg (Matrix.pow_apply_nonneg hQ k i j)]
+      _ ≤ ∑ j, (Q ^ k) i j * |v i| := Finset.sum_le_sum fun j _ =>
+        mul_le_mul_of_nonneg_left (hmax j (Finset.mem_univ j))
+          (Matrix.pow_apply_nonneg hQ k i j)
+      _ = (Q ^ k *ᵥ (1 : Fin n → ℝ)) i * |v i| := by
+        simp [mulVec, dotProduct, Finset.sum_mul]
+  change 0 < 1 - (Q ^ k *ᵥ (1 : Fin n → ℝ)) i at hk
+  nlinarith
+
+/-- Total one-step terminal mass, independently of the selected event. -/
+noncomputable def EventController.totalExit {n : ℕ} (A : EventController n) (t : ℝ) :
+    Fin n → ℝ := 1 - A.transition t *ᵥ 1
+
+/-- Almost-sure termination from every retained configuration at one interior rate. -/
+def EventController.Terminates {n : ℕ} (A : EventController n) : Prop :=
+  ∃ t ∈ Ioo (0 : ℝ) 1, ∀ i,
+    absorptionProbability (A.transition t) (A.totalExit t) i = 1
+
+private lemma EventController.total_bounds {n : ℕ} (A : EventController n)
+    {t : ℝ} (ht : t ∈ Ioo (0 : ℝ) 1) :
+    (∀ i, 0 ≤ A.totalExit t i) ∧
+    (∀ i, A.totalExit t i + ∑ j, A.transition t i j ≤ 1) := by
+  have hb := A.row_bounds ht
+  constructor
+  · intro i
+    have := hb.2.2 i
+    have := hb.2.1 i
+    simp only [EventController.totalExit, Pi.sub_apply, Pi.one_apply,
+      mulVec, dotProduct, mul_one]
+    linarith
+  · intro i
+    simp [EventController.totalExit, mulVec, dotProduct]
+
+private lemma EventController.common_support {n : ℕ} (A : EventController n)
+    {s t : ℝ} (hs : s ∈ Ioo (0 : ℝ) 1) (ht : t ∈ Ioo (0 : ℝ) 1) :
+    (∀ i j, A.transition s i j = 0 ↔ A.transition t i j = 0) ∧
+    (∀ i, A.totalExit s i = 0 ↔ A.totalExit t i = 0) := by
+  have hz (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (x : ℝ)
+      (hx : x ∈ Ioo (0 : ℝ) 1) :
+      (1 - x) * a + x * b = 0 ↔ a = 0 ∧ b = 0 := by
+    rw [add_eq_zero_iff_of_nonneg (mul_nonneg (by linarith [hx.2]) ha)
+      (mul_nonneg hx.1.le hb)]
+    simp only [mul_eq_zero, (by linarith [hx.2] : 1 - x ≠ 0), hx.1.ne', false_or]
+  constructor
+  · intro i j
+    exact (hz _ _ (A.Qzero_nonneg i j) (A.Qone_nonneg i j) s hs).trans
+      (hz _ _ (A.Qzero_nonneg i j) (A.Qone_nonneg i j) t ht).symm
+  · intro i
+    have he (x : ℝ) : A.totalExit x i =
+        (1 - x) * (1 - ∑ j, A.Qzero i j) + x * (1 - ∑ j, A.Qone i j) := by
+      simp [EventController.totalExit, EventController.transition, mulVec, dotProduct,
+        Finset.sum_add_distrib, ← Finset.mul_sum]
+      ring
+    have h0 : 0 ≤ 1 - ∑ j, A.Qzero i j := by
+      linarith [A.row_zero i, A.rzero_nonneg i]
+    have h1 : 0 ≤ 1 - ∑ j, A.Qone i j := by
+      linarith [A.row_one i, A.rone_nonneg i]
+    rw [he, he]
+    exact (hz _ _ h0 h1 s hs).trans (hz _ _ h0 h1 t ht).symm
+
+private lemma EventController.det_ne_zero {n : ℕ} (A : EventController n)
+    (hterm : A.Terminates) {t : ℝ} (ht : t ∈ Ioo (0 : ℝ) 1) :
+    (1 - A.transition t).det ≠ 0 := by
+  obtain ⟨s, hs, hterm⟩ := hterm
+  apply det_ne_zero_of_exit _ (A.row_bounds ht).1
+  intro i
+  have he : ∃ k, 0 < absorptionApprox (A.transition s) (A.totalExit s) k i := by
+    by_contra! h
+    have hle : absorptionProbability (A.transition s) (A.totalExit s) i ≤ 0 := ciSup_le h
+    rw [hterm i] at hle
+    linarith
+  obtain ⟨k, hk⟩ := he
+  have hzero := absorptionApprox_zero_iff (A.transition s) (A.transition t)
+    (A.totalExit s) (A.totalExit t) (A.row_bounds hs).1 (A.row_bounds ht).1
+    (A.total_bounds hs).1 (A.total_bounds ht).1
+    (A.total_bounds hs).2 (A.total_bounds ht).2
+    (A.common_support hs ht).1 (A.common_support hs ht).2 k i
+  exact ⟨k, lt_of_le_of_ne (absorptionApprox_bounds _ _ (A.row_bounds ht).1
+    (A.total_bounds ht).1 (A.total_bounds ht).2 k i).1
+      (fun hz => hk.ne' (hzero.mpr hz.symm))⟩
+
+private lemma EventController.rational_response {n : ℕ} (A : EventController n)
+    (htrans : A.Terminates) :
+    ∃ P D : ℝ[X], P.natDegree ≤ n ∧ D.natDegree ≤ n ∧
+      (∀ t ∈ Ioo (0 : ℝ) 1, D.eval t ≠ 0) ∧
+      (∀ t ∈ Ioo (0 : ℝ) 1, A.response t = P.eval t / D.eval t) ∧
+      (∀ t ∈ Ioo (0 : ℝ) 1, 0 ≤ A.response t ∧ A.response t ≤ 1) := by
+  have heq (t : ℝ) : t • (A.Qzero - A.Qone) + (1 - A.Qzero) = 1 - A.transition t := by
+    ext i j
+    simp [EventController.transition]
+    ring
+  have hexit (t : ℝ) : t • (A.rone - A.rzero) + A.rzero = A.exit t := by
+    ext i
+    simp [EventController.exit]
+    ring
+  have hspec (t : ℝ) (ht : t ∈ Ioo (0 : ℝ) 1) :=
+    absorptionProbability_spec (A.transition t) (A.exit t) (A.row_bounds ht).1
+      (A.row_bounds ht).2.1 (A.row_bounds ht).2.2
+  obtain ⟨P, D, hP, hD, hden, hrat⟩ := affine_system_rational
+    (A.Qzero - A.Qone) (1 - A.Qzero) (A.rone - A.rzero) A.rzero
+    A.initial A.immediate (fun t => absorptionProbability (A.transition t) (A.exit t))
+    (fun t ht => by rw [heq, hexit]; exact (hspec t ht).2)
+    (fun t ht => by rw [heq]; exact A.det_ne_zero htrans ht)
+  refine ⟨P, D, hP, hD, hden, hrat, ?_⟩
+  intro t ht
+  constructor
+  · exact add_nonneg A.immediate_nonneg (Finset.sum_nonneg fun i _ =>
+      mul_nonneg (A.initial_nonneg i) ((hspec t ht).1 i).1)
+  · apply le_trans _ A.initial_mass
+    exact add_le_add (le_refl _) (Finset.sum_le_sum fun i _ =>
+      (mul_le_mul_of_nonneg_left ((hspec t ht).1 i).2 (A.initial_nonneg i)).trans_eq (mul_one _))
+
+/-- Uniform event-error obstruction for actual finite-horizon absorption limits,
+assuming almost-sure termination at one interior common-coin rate. -/
+theorem transient_event_response_gap (d : ℕ) (B C β : ℝ)
+    (hB : 1 < B) (hC : 1 ≤ C) (hβ : 0 < β) :
+    ∃ ε : ℝ, 0 < ε ∧ ∀ n ≤ d, ∀ A : EventController n, A.Terminates →
+      ∃ h ∈ Ioo (0 : ℝ) (1 / 4),
+        ε ≤ |A.response ((1 - h / C) / B) - sourceTarget B C β h| := by
+  obtain ⟨ε, hε, hgap⟩ := original_coin_response_gap d B C β hB hC hβ
+  refine ⟨ε, hε, ?_⟩
+  intro n hn A htrans
+  obtain ⟨P, D, hP, hD, hden, hrat, hprob⟩ := A.rational_response htrans
+  obtain ⟨h, hh, herr⟩ := hgap P D (hP.trans hn) (hD.trans hn) hden
+    (fun t ht => by rw [← hrat t ht]; exact hprob t ht)
+  have ht : (1 - h / C) / B ∈ Ioo (0 : ℝ) 1 := by
+    have hC0 : 0 < C := by linarith
+    have hB0 : 0 < B := by linarith
+    have hp : 0 < h / C := div_pos hh.1 hC0
+    have hlt : h / C < 1 := (div_lt_one hC0).mpr (by linarith [hh.2])
+    exact ⟨div_pos (by linarith) hB0, (div_lt_one hB0).mpr (by linarith)⟩
+  exact ⟨h, hh, by rw [hrat _ ht]; exact herr⟩
 
 end D5.S3.Observer.ProbabilisticClosure.FiniteStateProbabilityResponseGap
