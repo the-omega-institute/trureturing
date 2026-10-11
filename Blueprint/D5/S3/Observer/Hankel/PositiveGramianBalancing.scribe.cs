@@ -37,7 +37,8 @@ internal sealed class PositiveGramianBalancingDocument : IScribeDocumentDefiniti
         []));
 
     private static Formula Parenthesized(Formula x) => Seq(Open,x,Close);
-    private static Formula Call(string name,params Formula[] args) => new Formula.Apply(Seq(Operatorname,Grp(F.Id(name))),[.. args]);
+    private static Formula Call(string name,params Formula[] args) => new Formula.Apply(Seq(Operatorname,Grp(name.Split('.').SelectMany((part,index) => index == 0
+        ? new Formula[]{F.Id(part)} : new Formula[]{Dot,F.Id(part)}).ToArray())),[.. args]);
     private static Formula All(Formula x,Formula type,Formula body) => Seq(Forall,Sp,Parenthesized(Seq(x,Colon,Sp,type)),Comma,Sp,body);
     private static Formula Eq(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.Equal,b);
     private static Formula And(Formula a,Formula b) => new Formula.Logic(Parenthesized(a),FormulaLogicOperator.And,Parenthesized(b));
