@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2112.04506v1
 claim: "We claim that the rank of A^(k) is always maximal: rank(A^(k)) = min(d_{S−k}, d_S)."
 strata_touched:
   - D5/S3/Quantum/SpinChains/HypereclecticNonShortening
+  - D5/S3/Quantum/SpinChains/TwoWallWords
 license: citation-only
 triage: anchor
 ---
@@ -38,9 +39,14 @@ C. Ahn and M. Staudacher, “Spectrum of the Hypereclectic Spin Chain and Pólya
 
 The K = 1 rank assertion is distinct from the multi-wall, cyclic and eclectic-universality questions.
 
+§2.1, printed p. 5: "The chiral permutation operators Hi : C3 ⊗ C3 → C3 ⊗ C3 act as follows: H1|32⟩ = |23⟩, H2|13⟩ = |31⟩, H3|21⟩ = |12⟩, (2.3) and annihilate all other states. Periodic boundary conditions are implemented H_i^{L,L+1} ≡ H_i^{L,1}." The eclectic Hamiltonian is H_ec = Σ_{i=1}^{L} (ξ1 H1^{i,i+1} + ξ2 H2^{i,i+1} + ξ3 H3^{i,i+1}) (2.2), and "Setting ξ1 = ξ2 = 0, ξ3 ≡ ξ we recover the hypereclectic model" (2.6). §2.2, printed p. 6: "U generates a shift along the chain U|j1 j2 ··· jL−1 jL⟩ = |jL j1 j2 ··· jL−1⟩." (2.9)
+
+§5, printed p. 19: "we claim a universality hypothesis: The Jordan block spectrum of the eclectic model for generic couplings ξ1, ξ2, ξ3 is identical to that of the hypereclectic model, provided L, M, K satisfy L1 = L−M ≥ K, M1 = M−K ≥ K. (5.1)" §5.3, printed p. 22: "While we have extensive numerical evidence for general universality, we are currently unable to provide a proof."
+
 ## Verified locator
 
 - URL: https://arxiv.org/abs/2112.04506v1, §3.2, printed p. 10, Eqs. (3.14)–(3.19), and Appendix A, printed p. 24, Eq. (A.4).
+- URL: https://arxiv.org/abs/2112.04506v1, §2.1, printed p. 5, Eqs. (2.2)–(2.7) (the chiral permutation operators and the sectors V^{L,M,K}), and §2.2, printed p. 6, Eqs. (2.8)–(2.10) (the shift U and the cyclicity classes); §5, printed p. 19, Eqs. (5.1)–(5.2) (the universality hypothesis).
 - DOI: https://doi.org/10.1007/JHEP03(2022)028.
 - Follow-up URL: https://arxiv.org/abs/2207.02885v1, introduction, printed p. 1.
 - Follow-up DOI: https://doi.org/10.1016/j.physletb.2022.137533.
