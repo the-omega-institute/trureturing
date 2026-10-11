@@ -12,7 +12,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.tetrahedral
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv.2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmGramProb
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
 *Commentary.*
 
@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmGramProb
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv:2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
 *Commentary.*
 
@@ -54,7 +54,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmFiniteLa
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv:2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
 *Commentary.*
 
@@ -68,7 +68,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.sourceNoise
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv:2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
 *Commentary.*
 
@@ -82,7 +82,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.independent
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv:2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
 *Commentary.*
 
@@ -96,7 +96,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.sourceNoise
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv/2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
 *Commentary.*
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.independent
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv/2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
 *Commentary.*
 
