@@ -1243,3 +1243,211 @@ uses the actual original window, not a synthetic spectrum, and reuses
 the existing coefficient, phase and zero-count suppliers. It asserts
 neither literature originality nor Lean verification. CR21/CR23,
 PG15/J and RH remain unproved.
+
+## A selected-height supplier pays the complete signed compensated suffix
+
+Keep every original source and maximizing tie from CR17--CR24,
+$A=B+t$, $B=\log u$, $t=\log p$, $s_B=\sqrt B\log B$, and the
+original full window with all positive $\delta_i$, $i<m$, and last
+boundary label $p_m$. Fix $0\le\kappa<1$. The [Cully-Hugill--Johnston
+selected-height supplier](../Analytic/cullyhugilljohnston2026truncation.md),
+Theorem 1.2 and Table 1 of arXiv:2402.04272v3, is applied directly.
+It uses weak $\psi$ and the actual zeros with their real parts and
+multiplicities; no new generic truncation theorem is asserted here.
+
+The row $\alpha=1/2$, $\omega=1$, $M=19.81$ requires
+$A\ge\exp(10^{13})$. For
+$Y_A=(\sqrt A-4)/4$, the strict supplier bounds
+$\max\{51,\log^2A\}<Y_A<(\sqrt A-2)/4$ hold on that domain.
+Thus each actual $A$ admits a cutoff
+
+$$
+\tau_A\in\left[\frac{\sqrt A-4}{4},
+\frac{\sqrt A-4}{2}\right],\qquad
+\psi(A)=A-2\operatorname{Re}\sum_{0<\operatorname{Im}\rho\le\tau_A}
+m_\rho\frac{A^\rho}{\rho}+e_A,
+\qquad |e_A|\le\frac{79.24A}{\sqrt A-4}.
+\tag{CR32}
+$$
+
+Uniform original-source escape supplies one common sufficiently large
+witness start after which every original label and tie meets this
+supplier threshold. No numeric witness start is supplied. The
+existence of $\tau_A$ cannot be strengthened to arbitrary prescribed
+heights or a common favorable height for different sources.
+
+### The degree-one endpoint is paid in the same real paired ordering
+
+Let $q(A)=\log(2\pi)+\tfrac12\log(1-A^{-2})$ and use CR29's
+$\Lambda_{\mathbb R}$. The real conjugate-pair tail is interpreted
+by the same symmetric-height limit as the complete explicit formula:
+
+$$
+H_A(\tau)=\lim_{T\to\infty}2\operatorname{Re}
+\sum_{\tau<\operatorname{Im}\rho\le T}
+m_\rho\frac{A^\rho}{\rho}.
+$$
+
+Comparing the complete weak-$\psi$ formula to CR32 gives exactly
+
+$$
+H_A(\tau_A)=-e_A-q(A)+\frac12\Lambda_{\mathbb R}(A),
+\qquad
+\left|H_A(\tau_A)+q(A)-\frac12\Lambda_{\mathbb R}(A)\right|
+\le\frac{79.24A}{\sqrt A-4}.
+\tag{CR33}
+$$
+
+The half-prime-power endpoint and elementary terms are retained.
+This is a paired real tail contract; it asserts no ordinary complex
+positive-ordinate half-sum convergence at prime powers. No estimate
+of the actual distance to the nearest other prime power is needed:
+the cited theorem pays the complete weak-$\psi$ error in its domain.
+
+### Combine both complete suffixes exactly once
+
+Reuse the [existing full signed suffix J4](../ArithSums/nicolas2025comparison.md#a-signed-infinite-height-allowance-from-the-existing-landau-formula)
+at the same actual $B$ and selected cutoff $\tau_A$. Write
+$\mathcal J(B)=\log(2B)\log\log(3B)$ and
+
+$$
+\begin{aligned}
+2s_B\operatorname{Re}\sum_{\operatorname{Im}\rho>\tau_A}
+m_\rho F_B(\rho)&=-\mu_B(\tau_A)+e_F(B,\tau_A),\\
+\mu_B(\tau)&=\frac{(1+1/\log B)\Lambda_{\mathbb R}(B)}
+{\pi\sqrt B\,\tau}\ge0,\\
+|e_F(B,\tau)|&\le\varepsilon_F(B,\tau),\\
+\varepsilon_F(B,\tau)&=C_F\left[
+\frac{\sqrt B[\mathcal J(B)+\log(2\tau)]}{\tau^2}
++\frac{\log B+1}{\sqrt B\,\tau}\right].
+\end{aligned}
+$$
+
+Here $C_F$ is the existing supplier's uniform constant, without a
+certified numerical value. Its full coefficient approximation and
+height-integration errors are already paid once in $e_F$.
+The favorable $-\mu_B$ retains its sign.
+
+For each allowed assignment choose the individual cutoffs $\tau_i$
+supplied by CR32 at the actual $A_i$. Define the actual compensated
+suffix, with no original label removed,
+
+$$
+\mathcal R_X(\boldsymbol\tau)=\sum_{i<m}\delta_i
+\left[
+2s_{B_i}\operatorname{Re}\sum_{\operatorname{Im}\rho>\tau_i}
+m_\rho F_{B_i}(\rho)
+-\frac{\kappa}{\sqrt{B_i}}H_{A_i}(\tau_i)\right].
+$$
+
+CR33 and the complete original J4 contract therefore give
+
+$$
+\boxed{
+\begin{aligned}
+\left|\mathcal R_X(\boldsymbol\tau)
+-\sum_{i<m}\delta_i\left[
+-\mu_{B_i}(\tau_i)
++\frac{\kappa}{\sqrt{B_i}}
+\left(q(A_i)-\frac12\Lambda_{\mathbb R}(A_i)\right)\right]\right|
+\le{}&\sum_{i<m}\delta_i\left[
+\varepsilon_F(B_i,\tau_i)
++\frac{79.24\kappa A_i}{\sqrt{B_i}(\sqrt{A_i}-4)}\right].
+\end{aligned}}
+\tag{CR34}
+$$
+
+All actual real parts and multiplicities are unchanged. No replacement
+of $1/\rho$ by $1/(i\operatorname{Im}\rho)$ is made, so no such
+approximation error is added. The two supplier errors occur exactly
+once. The primary pole-and-trivial-zero term $q(A)$ is distinct from
+the integrated response's $R_{\rm elem}(B)$.
+
+CR17 gives $\tau_i\asymp\sqrt{A_i}\asymp\sqrt{B_i}$ uniformly,
+$\varepsilon_F(B_i,\tau_i)=o_X(1)$,
+$\mu_{B_i}(\tau_i)=o_X(1)$, and
+$[|q(A_i)|+\Lambda_{\mathbb R}(A_i)]/\sqrt{B_i}=o_X(1)$.
+Also
+
+$$
+\frac{79.24\kappa A_i}{\sqrt{B_i}(\sqrt{A_i}-4)}
+=79.24\kappa\frac{\sqrt{A_i/B_i}}{1-4/\sqrt{A_i}}
+=79.24\kappa+o_X(1).
+$$
+
+Applying the original positive weights to these uniform pointwise
+allowances gives
+
+$$
+\boxed{|
+\mathcal R_X(\boldsymbol\tau)|
+\le[79.24\kappa+o_X(1)]L_X.}
+\tag{CR35}
+$$
+
+For each fixed $0\le\kappa<1$, beyond one common unknown source and
+analytic start, every qualifying original full window and every
+allowed tie assignment admit these individual cutoffs and complete
+contracts. The error is uniform in all original labels and ties, not
+merely for one fixed window. Its positive weighted sum needs no
+separate estimate for the number of labels. Eventually $80L_X$ pays
+this suffix alone; it is not the complete upper target's total budget.
+The supplied constant payment is $O(1)$ per unit original weight,
+not a vanishing bound. At $\kappa=0$, the degree-one term disappears
+and there is no need to raise the existing J6 cutoff for its sake.
+
+### The head and actual stock remain a joint obligation
+
+The selected cutoffs are of order $\sqrt B$, larger than the original
+degree-two cutoff $B^{1/4}\log B$. The classical actual zero count
+puts $\Theta(\sqrt B\log B)$ positive-ordinate terms in the new head,
+compared with $\Theta(B^{1/4}\log^2B)$ at the original cut. This
+states the item counts, not the cost of certifying their real parts,
+multiplicities or numerical enclosures.
+
+Define the actual compensated finite head at these same individual
+selected cutoffs by
+
+$$
+\mathcal H_{X,\kappa}(\boldsymbol\tau)
+=2\operatorname{Re}\sum_{i<m}\delta_i
+\sum_{0<\operatorname{Im}\rho\le\tau_i}m_\rho
+\left[s_{B_i}F_{B_i}(\rho)
+-\frac{\kappa A_i^\rho}{\sqrt{B_i}\rho}\right].
+$$
+
+Adding CR34's suffix to this head and CR29's actual deterministic
+terms gives the exact account
+
+$$
+\begin{aligned}
+\sum_{i<m}\delta_i\left[-s_{B_i}I_\psi(B_i)
+-\frac{\kappa t_i}{\sqrt{B_i}}\right]
+={}&\mathcal H_{X,\kappa}(\boldsymbol\tau)\\
+&+\sum_{i<m}\delta_i\left[
+r_{B_i}+\frac{\kappa Q(A_i)}{\sqrt{B_i}}
+-\mu_{B_i}(\tau_i)\right]+\mathfrak e_{X,\kappa},\\
+|\mathfrak e_{X,\kappa}|\le{}&
+\sum_{i<m}\delta_i\left[
+\varepsilon_F(B_i,\tau_i)
++\frac{79.24\kappa A_i}{\sqrt{B_i}(\sqrt{A_i}-4)}\right],
+\qquad r_B=s_BR_{\rm elem}(B).
+\end{aligned}
+\tag{CR36}
+$$
+
+The degree-one $q$ and half-prime-power terms cancel algebraically
+between the explicitly retained suffix center and CR29's conversion
+of $t_i=A_i-K(A_i)$; they are not omitted. The original integrated
+elementary correction $r_{B_i}$ and actual stock $Q(A_i)$ remain.
+CR36 pays no error from numerically enclosing the finite head: such
+errors still require their own complete contracts.
+
+Small suffix errors do not make this signed head-and-stock value
+favorable. One cannot choose a different favorable head cutoff and
+assume it is compatible with the supplier-selected heights. CR34--35
+pay no actual stock or complete-head sign, provide no common height
+for separate pointwise applications, and do not prove CR21/CR23,
+PG15/J or RH. This is a supplier-relative application of the cited
+truncation theorem and existing J4, without a literature-originality
+claim, a repeated generic tail theorem or Lean verification.
