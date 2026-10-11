@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/PauliRotationCriticalValues.claim; result=D5/S3/Quantum/Information/PauliRotationCriticalValues.result; claim=D5/S3/Quantum/Information/PauliRotationCriticalValues.claim
    digest: Two-qubit Pauli rotation circuits and their critical-value Hausdorff dimension. -/
 
-import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 set_option linter.style.longLine false
@@ -51,18 +50,13 @@ open Matrix
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (pauliMatrix tensorOp tensor_mul)
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
-open D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
-  (pauli_trace_pair)
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-  (wordUnit word_hermitian word_expansion letterProduct letterPhase letter_mul word_one tensor_one)
+  (wordUnit word_hermitian word_expansion letterProduct letterPhase letter_mul word_one tensor_one pauli_trace_pair tensor_trace)
 
 private theorem word_trace_mul (p q : Fin 2 → Pauli) :
     trace (wordOp p * wordOp q) = if p = q then (4 : ℂ) else 0 := by
   unfold wordOp
-  rw [tensor_mul]
-  change (∑ x : BasisState, ∏ i, (pauliMatrix (p i) * pauliMatrix (q i)) (x i) (x i)) = _
-  rw [← Fintype.prod_sum (fun i k => (pauliMatrix (p i) * pauliMatrix (q i)) k k)]
-  change (∏ i, trace (pauliMatrix (p i) * pauliMatrix (q i))) = _
+  rw [tensor_mul, tensor_trace]
   simp_rw [pauli_trace_pair]
   by_cases h : p = q
   · subst q; norm_num
@@ -96,8 +90,6 @@ private theorem rho_E (x : Param) : rho (E x) = x := by
   simp -implicitDefEqProofs only [Finset.mul_sum, Matrix.mul_smul, trace_sum, trace_smul]
   simp_rw [word_trace_mul, labels_injective.eq_iff]
   simp -implicitDefEqProofs
-private theorem E_injective : Function.Injective E :=
-  Function.LeftInverse.injective rho_E
 private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M) = M := by
   have hr (i : Fin 15) : ((trace (wordOp (labels i) * M)).re : ℂ) =
       trace (wordOp (labels i) * M) := by
@@ -244,7 +236,8 @@ private theorem J_H_unfold : J_H = fun P α => fun i j => rho (H P α j) i := rf
 
 private theorem H_star (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     star (H P α j) = H P α j := by
-  simp -implicitDefEqProofs only [H, star_mul, star_star, (fun p : Fin 2 → Pauli => (Matrix.star_eq_conjTranspose (wordOp p)).trans (word_hermitian p)), mul_assoc]
+  exact (show IsSelfAdjoint (wordOp (P j).val) from
+    (Matrix.star_eq_conjTranspose _).trans (word_hermitian _)).conjugate _
 
 private theorem H_trace (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     trace (H P α j) = 0 := by
@@ -285,7 +278,7 @@ private theorem circuit_ker (P : Fin 15 → NonIdentityPauli) (α : Param) :
       Unitary.mul_star_self_of_mem (circuit_unitary P α), mul_one, zero_mul] at hz
     have hc : (-Complex.I / 2 : ℂ) ≠ 0 :=
       div_ne_zero (neg_ne_zero.mpr Complex.I_ne_zero) (by norm_num)
-    exact E_injective (by simpa -implicitDefEqProofs using (smul_eq_zero.mp hz).resolve_left hc)
+    exact Function.LeftInverse.injective rho_E (by simpa -implicitDefEqProofs using (smul_eq_zero.mp hz).resolve_left hc)
   · intro hh; simp -implicitDefEqProofs [hh]
 
 private theorem derivative_rank (P : Fin 15 → NonIdentityPauli) (α : Param) :
