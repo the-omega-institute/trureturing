@@ -156,7 +156,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsAnAddedStatePinWithoutSidecarRead()
+    public void CheckAddedStatePinEnforcesUtilityWithoutSidecarRead()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -165,13 +165,15 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline["Meta/FILEMAP.toml"] = TestFileMap.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
+        const string registeredModule = "D5/S0/Carrier/BackfillTarget.lean";
         AddFrozenLedger(fixture);
-        var addedEventPath = fixture.Files.Keys.First(FrozenStatePath.IsUnderRoot);
-        fixture.Baseline.Remove(addedEventPath);
+        var addedStatePath = FrozenStatePath.FromModulePath(
+            RepoPath.CreateKnown(registeredModule)).Value;
+        fixture.Baseline.Remove(addedStatePath);
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.CreateWithKinds([(addedEventPath, RawChangeKind.Added)]),
+            RawChangeSet.CreateWithKinds([(addedStatePath, RawChangeKind.Added)]),
             currentRaw,
             baselineRaw);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
@@ -190,7 +192,10 @@ public sealed partial class ProductionEnvironmentTests
             "--candidate-lean-report", candidateReport,
         ]);
 
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        Assert.Contains(rejected.Diagnostics, static diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(31)
+            && diagnostic.Message.StartsWith("UTILITY-MISSING ", StringComparison.Ordinal));
         Assert.Equal(0, gateway.CurrentRevisionResolutionCount);
     }
 

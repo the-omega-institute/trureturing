@@ -141,8 +141,8 @@ public sealed partial class ProductionEnvironmentTests
         var moduleStatementId = FrozenContentAddress.ComputeModuleStatementId(
             RepoPath.CreateKnown(targetPath),
             targetReport);
-        AddFrozenTarget(fixture.Files, targetPath, moduleStatementId);
-        AddFrozenTarget(fixture.Baseline, targetPath, moduleStatementId);
+        AddFrozenTarget(fixture.Files, targetPath, moduleStatementId, targetReport);
+        AddFrozenTarget(fixture.Baseline, targetPath, moduleStatementId, targetReport);
         const string newScribePath = "Blueprint/D5/S0/Carrier/NewDeposit.scribe.cs";
         fixture.Files[newScribePath] = "// candidate-only Scribe definition\n";
         var current = Decode(Snapshot(fixture.Files));
@@ -334,7 +334,7 @@ public sealed partial class ProductionEnvironmentTests
             : DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(baselineEmission)).RawSha256;
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
-            AddFrozenTarget(files, targetPath, moduleStatementId);
+            AddFrozenTarget(files, targetPath, moduleStatementId, fixture.Reports[targetPath]);
             InstallLedger(files);
         }
 
@@ -385,17 +385,12 @@ public sealed partial class ProductionEnvironmentTests
     private static void AddFrozenTarget(
         IDictionary<string, string> files,
         string targetPath,
-        StatementId moduleStatementId) =>
-        FrozenStatementReceiptTestData.AddLedger(
-            files,
-            new FrozenStatementReceiptTestData.Module(
-                targetPath,
-                moduleStatementId.Value,
-                [
-                    new FrozenStatementReceiptTestData.Declaration(
-                        "protectedTargetFixture",
-                        FrozenStatementReceiptTestData.Id('b')),
-                ]));
+        StatementId moduleStatementId,
+        LeanFileReport report) =>
+        files[FrozenStatePath.FromModulePath(RepoPath.CreateKnown(targetPath)).Value] =
+            Encoding.UTF8.GetString(FrozenStateRecord.Encode(
+                moduleStatementId, FrozenStateRecord.Project(report)).AsSpan());
+
 }
 
 internal sealed class ProjectionReconciliationFailureVerifier : IScribeEmissionVerifier
