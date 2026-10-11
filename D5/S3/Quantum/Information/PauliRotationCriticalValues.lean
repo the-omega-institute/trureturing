@@ -14,6 +14,7 @@ import Mathlib.Analysis.Calculus.FDeriv.ContinuousAlternatingMap
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Topology.MetricSpace.HausdorffDimension
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
 
 set_option linter.style.longLine false
 set_option backward.isDefEq.respectTransparency false
@@ -766,4 +767,47 @@ private theorem Q_DF (x : Param) :
   ext i; simp [D_eq, mulVec_diagonal, Fin.removeNth, Fin.succAbove_ne]
 private theorem Q_kernel : Q (fderiv ℝ (circuit witnessP) point v) = 0 := by
   rw [← U_pivot, Q_DF]; ext i; simp [Fin.removeNth, Fin.succAbove_ne]
+
+private theorem critical_dim_lower :
+    (14 : ℝ≥0∞) ≤ dimH (circuit witnessP '' critical witnessP) := by
+  let L := Q.comp (fderiv ℝ (circuit witnessP) point)
+  let A := L.prod (gD point)
+  let T := fun α => (Q (circuit witnessP α), g α)
+  have hf : HasStrictFDerivAt (circuit witnessP)
+      (fderiv ℝ (circuit witnessP) point) point := by
+    have h := circuit_strict witnessP point
+    exact h.congr_fderiv h.hasFDerivAt.fderiv.symm
+  have hT : HasStrictFDerivAt T A point :=
+    (Q.hasStrictFDerivAt.comp point hf).prodMk (g_strict point)
+  have hA : A.range = ⊤ := by
+    apply LinearMap.range_eq_top.mpr
+    rintro ⟨y,t⟩
+    let x := U *ᵥ Fin.insertNth 12 0 y
+    refine ⟨x + (gD point x - t) • v, ?_⟩
+    apply Prod.ext
+    · change L (x + (gD point x - t) • v) = y
+      simp only [map_add, map_smul, L, ContinuousLinearMap.comp_apply, Q_kernel,
+        smul_zero, add_zero]
+      exact (Q_DF _).trans (Fin.removeNth_insertNth _ _ _)
+    · change gD point (x + (gD point x - t) • v) = t
+      rw [map_add, map_smul, gD_direction]; simp only [smul_eq_mul]; ring
+  have hr : Set.range T ∈ nhds (T point) := by
+    rw [← hT.map_nhds_eq_of_surj hA]
+    simpa only [Set.image_univ] using
+      (Filter.image_mem_map (m := T) (Filter.univ_mem (f := nhds point)))
+  have ho : {y : Fin 14 → ℝ | (y,0) ∈ Set.range T} ∈
+      nhds (Q (circuit witnessP point)) := by
+    have hc : Continuous (fun y : Fin 14 → ℝ => (y,(0 : ℝ))) :=
+      continuous_id.prodMk continuous_const
+    exact hc.continuousAt.preimage_mem_nhds (by simpa only [T, g_point] using hr)
+  have hs : {y : Fin 14 → ℝ | (y,0) ∈ Set.range T} ⊆
+      Q '' (circuit witnessP '' critical witnessP) := by
+    rintro y ⟨α,hα⟩
+    refine ⟨circuit witnessP α, ⟨α, ?_, rfl⟩, congrArg Prod.fst hα⟩
+    rw [critical_eq_det_zero]
+    exact (g_zero_iff α).mp (congrArg Prod.snd hα)
+  have hd := Real.dimH_of_mem_nhds ho
+  simp only [Module.finrank_pi, Fintype.card_fin,
+    Nat.cast_ofNat] at hd
+  exact hd.symm.le.trans ((dimH_mono hs).trans (Q.lipschitz.dimH_image_le _))
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
