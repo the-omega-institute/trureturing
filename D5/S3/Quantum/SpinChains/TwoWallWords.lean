@@ -7,13 +7,6 @@
    digest: Literal two-wall cyclic words carry the eclectic bond action and translation. -/
 
 import D5.S3.Quantum.SpinChains.BinaryBinBaseChange
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.ZMod.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Finsupp.VectorSpace
-import Mathlib.Algebra.BigOperators.Group.Finset.Pi
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Tactic.Abel
 
 open scoped BigOperators
 
