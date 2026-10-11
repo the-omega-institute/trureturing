@@ -69189,3 +69189,53 @@ $$
 \(N^-(t)\) 为 CA/SA，也没有控制 \(Z(N_g)=\sigma(N_g)/N_g\) 的点值尾项。
 它把下一步压缩为一个明确的联合问题：是否存在满足（450.4）的变化秩，
 同时保留 FIB 接缝、完整库存赋值和同一 CA 价格源。
+
+
+### 推论 450.4（变化秩的强整除粗糙性）
+
+定义
+
+$$
+D(t)=\max\{d\ge3:F_d\le t-1\}.
+$$
+
+则命题 450.1 的条件还蕴含
+
+$$
+\boxed{
+d\mid r,\quad 3\le d\le D(t)
+\quad\Longrightarrow\quad\text{矛盾}.
+}
+\tag{450.5}
+$$
+
+特别地，对 \(t\ge4\)，有
+
+$$
+\boxed{
+4\nmid r,\qquad
+q\mid r,\ q\text{ 为奇素数}
+\quad\Longrightarrow\quad
+q>D(t).
+}
+\tag{450.6}
+$$
+
+并且由 Binet 公式
+
+$$
+D(t)=\log_\varphi t+O(1).
+\tag{450.7}
+$$
+
+**证明。** 若 \(d\mid r\)，强整除律给 \(F_d\mid F_r\)。当
+\(3\le d\le D(t)\) 时，\(F_d\le t-1\)，故 \(F_d\) 的任一素因子
+\(p\) 满足 \(p\le t-1\)；但 \(p\mid F_r\) 与（450.1）矛盾。这证明（450.5）。
+取 \(d=4\) 得 \(4\nmid r\)；取 \(d=q\) 得（450.6）。最后由
+\(F_d=\varphi^d/\sqrt5+O(\varphi^{-d})\) 得（450.7）。\(\square\)
+
+这把无界仿射来源的秩压到
+\(r=2^\varepsilon m\)（\(\varepsilon\in\{0,1\}\)）且 \(m\) 的所有奇素因子
+大于 \(D(t)\) 的候选集合。候选集合仍然无穷，因而（450.5）--（450.7）
+不能单独推出 Robin 不等式；它们提供的是把完整库存赋值继续反推到 FIB
+地址的联合筛选。
