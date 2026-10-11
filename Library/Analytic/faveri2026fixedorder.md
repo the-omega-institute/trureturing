@@ -248,6 +248,88 @@ uniformly on the original coefficients, masks, profiles, and presentations. This
 
 The full transported signed packet below remains a different application. None of these nonnegative moment bounds restores its root numbers and signed parent columns or supplies the original fixed-index Robin target $[-I_\psi(A)]_+=o(A^{-\eta_{\rm R}})$ with $0<\eta_{\rm R}<1/2$. The actual CA/GA1 source, zeros, phases, prime powers, atoms, endpoints, and collisions still have to be retained there.
 
+## Known estimates for the squarefree Gauss pairing
+
+A restricted pairing of the actual convolution coefficients can be matched to existing cubic estimates. This does not yet identify it as the complete resonant projection of the sixth-order sieve. Use the original primary generators and good-prime exclusions, fix bounded annular profiles and the finite ray twist $\nu$, and restrict both factors to squarefree indices. Define
+
+$$
+Q_{\rm sf}(D,N)=
+\sum_{\substack{d,n\ {\rm good\ primary\ sf}\\(d,n)=1}}
+\mu(d)\nu(dn)W_M(q_d/D)W_S(q_n/N)\gamma_1(dn).
+$$
+
+The pinned detector manuscript's `lem:fixed-gauss-phase` already supplies, for coprime squarefree indices,
+
+$$
+\gamma_j(dn)=\chi_d(n)^j\chi_n(d)^j\gamma_j(d)\gamma_j(n),
+\qquad
+\chi_n(d)=\mathcal R(d,n)\chi_d(n).
+$$
+
+Its `eq:signal`, also used explicitly in the second Poisson calculation, already gives
+
+$$
+\mu(d)\gamma_1(d)
+=\alpha(d)G(d)\overline{\gamma_2(d)},
+\qquad \alpha(d)=d/|d|.
+$$
+
+These are reused source formulas, not new bridge theorems. Put $\kappa_d(n)=\chi_d(n)^2$. On each fixed pair of ray classes, $\mathcal R(d,n)$ is constant, and the pairing, up to this constant, is
+
+$$
+\sum_{d,n}a_d b_n\kappa_d(n),
+\qquad
+ a_d=\mu(d)\nu(d)W_M(q_d/D)\gamma_1(d),
+\qquad
+ b_n=\nu(n)W_S(q_n/N)\gamma_1(n).
+$$
+
+The cubic symbol's zero extension retains $(d,n)=1$; no ordinary $\mu*1$ cancellation has occurred. The coefficients are fixed in each sieve application, and $\|a\|_2^2\ll D$, $\|b\|_2^2\ll N$ for these bounded profiles. Heath-Brown's cubic large sieve, as stated in Theorem 3.12 of [David–de Faveri–Dunn–Stucky, *Non-vanishing for cubic Hecke L-functions*, arXiv:2410.03048v2](https://arxiv.org/html/2410.03048v2#S3.SS6), directly yields
+
+$$
+|Q_{\rm sf}(D,N)|
+\ll_{\mathcal A,\varepsilon}
+(DN)^{1/2+\varepsilon}
+\left(D+N+(DN)^{2/3}\right)^{1/2}.
+$$
+
+At $D\asymp N$ with $K=DN$, this is $K^{5/6+\varepsilon}$ for the unnormalized pairing. This is an application of the known cubic operator bound; it is neither a new sieve nor a bound for the full mixed moment. In particular no normalized resonant vector or complete residual kernel has been identified by this calculation.
+
+### Exact additive-character transport
+
+The two manuscripts use different additive characters. The pinned detector uses $e(z)=\exp(2\pi i\operatorname{Tr}(z/\lambda))$, whereas David–de Faveri–Dunn–Stucky use $\check e(z)=\exp(2\pi i\operatorname{Tr}(z))$, with $\lambda=\sqrt{-3}$. Write $\widetilde g_3(r,d)=q_d^{-1/2}g_3(r,d)$ in the latter convention. On the retained coprime locus, their Lemma 3.1(a) gives the exact transport
+
+$$
+\gamma_2(d)=\kappa_d(\lambda)\widetilde g_3(1,d),
+\qquad
+\overline{\gamma_2(d)}\kappa_d(n)
+=\overline{\widetilde g_3(\lambda^2n,d)}.
+$$
+
+Thus the moving shift is $\lambda^2n=-3n$. After a finite ray decomposition, the inner sum in $Q_{\rm sf}$ has the form
+
+$$
+T_{n,\xi}(D)=
+\sum_{\substack{d\ {\rm good\ primary\ sf}\\(d,n)=1}}
+\xi(d)\alpha(d)W_M(q_d/D)
+\overline{\widetilde g_3(-3n,d)}.
+$$
+
+Here $\xi$ is the fixed ray weight produced by $\nu(d)$, $G(d)$ and the chosen ray filter; the outer coefficient remains $\nu(n)W_S(q_n/N)\gamma_1(n)$. One may expand the finite filter into ray characters, but that does not remove the angular factor $\alpha(d)$ or prove a twisted analytic estimate.
+
+Their Lemma 6.6 supplies precisely
+
+$$
+\sum_{0<q_m\le M}|\psi(hm,\sigma+it)|^2
+\ll_{\sigma,\varepsilon}
+q_h^{1/2}M^{1+\varepsilon}(1+|t|)^2,
+\qquad 1<\sigma\le5/4,
+$$
+
+where $\psi$ is the cubic Gauss series defined in their (6.1)–(6.2), not an arbitrary coefficient polynomial. It allows nonsquarefree and ramified shifts, so $h=-3$ itself is admissible. It does not by its stated conclusion supply the extra angular/ray-weighted series in $T_{n,\xi}$. Their Lemma 6.1 already provides removal of specified coprimality filters; those identities should be reused where their hypotheses match. The remaining task is a faithful angular/ray-twisted truncation and mean-square interface, with its costs, rather than another proof of Gauss CRT or of filter removal. Lemma 6.7 supplies a truncation formula for its stated untwisted data and includes a possible $4/3$ pole. Its residue cannot be declared zero for the original weighted pairing without a corresponding argument.
+
+The original convolution also contains nonsquarefree $n$, common prime factors of $d,n$, sixth powers, and columns whose valuations lie in $2,\ldots,5$. The original $\gamma_j(c)$ is defined only for squarefree $c$. Those other character columns cannot be discarded because a different full-modulus Gauss sum vanishes on them; permitting nonsquarefree shifts in Lemma 6.6 does not supply their conversion formulas. Negative orientation still requires conjugating the entire original product with its coefficients and ray factors. The full coefficient-sensitive off-block contraction, coverage of the actual witness lengths, and signed Robin restoration remain open. All estimates in this subsection are conditional on the cited analytical suppliers and have no complete local Lean certification.
+
 ## The possible FIB interface
 
 The active carrier expression in the current native packet is
