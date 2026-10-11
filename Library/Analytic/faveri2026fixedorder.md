@@ -573,6 +573,59 @@ The bound is uniform in $L$. At $D\asymp N\asymp K^{1/2}$ it is $K^{7/6+\varepsi
 
 This is an application of the source Gauss/Poisson identities and the known cubic sieve to the actual convolution. The new positive-moment partition avoids needing cross-class terms in that majorant; it does not estimate the earlier cross-class signed contraction. The nonsquarefree and mixed column sectors, shifted integral, other dual terms and full signed Robin restoration remain open. There is no complete analytic Lean certification or new sieve claim.
 
+#### Why the remaining pole estimate must use the actual convolution
+
+The proposed $U_j^{1/6}K$ pole scale cannot hold uniformly for arbitrary bounded coefficient vectors. The source pair-Gauss formula supplies an obstruction that retains nonsquarefree columns, a shared prime and every natural mask. This concerns the isolated pole contraction; it is not a counterexample to the original mixed moment or Robin inequality.
+
+Fix a good prime ideal $\mathfrak t$, put $a_0=\mathfrak t^2$, $Q=K/q_{a_0}$ and $P_0=\operatorname{rad}(a_0S)$. Use good primes $p$ in the identity primary class modulo $36\mathcal O$ with $Q/2<q_p\le Q$. Their number is $\gg Q/\log Q$. For this input reuse Wataru Kai, [*Notes on Mitsui's Prime Number Theorem with Siegel zeros*, arXiv:2209.11816v3, Theorem 3.1.1](https://arxiv.org/html/2209.11816v3#S3.SS1.SSS1): take a fixed positive-area convex rectangle inside the norm annulus and scale it by $\sqrt Q$, with fixed modulus $36\mathcal O$ and identity residue. The fixed-modulus exceptional-zero integral is $O(Q^\beta)=o(Q)$ with $\beta<1$. Passing from prime elements to primary prime ideals loses at most the six units.
+
+Partition these primes by the finite tuple of values $\chi_p(r)$ for primes $r\mid P_0$ and by the original physical row-label values. One cell $\mathscr P$ still has $M=|\mathscr P|\gg Q/\log Q$. For distinct $p,q\in\mathscr P$, take $h=a_0p,k=a_0q$. The common $a_0$ cancels in the primitive ratio, while its original zeros remain. The exact data are
+
+$$
+\mathfrak f_{h,k}=pq,\quad R_{h,k}=P_0,\quad
+\xi_{h,k}(r)=1\ (r\mid P_0),\quad
+\epsilon(\xi_{h,k})=\gamma_1(p)\overline{\gamma_1(q)}.
+$$
+
+Indeed the identity class makes the pair reciprocity factor and $\chi_q(-1)$ equal to one. Every distinct supported pair has actual order six. For any $1\le L<Q/2$, the finite cutoff also gives the exact equality $M_{P_0pq,L}(5)=M_{P_0,L}(5)$.
+
+Choose $c(a_0p)=\overline{\gamma_1(p)}$ for $p\in\mathscr P$ and zero elsewhere. Thus $|c(h)|\le1$, all supported columns are nonsquarefree, and all off-diagonal phases in the complete pole summand align. Put
+
+$$
+w_p=q_p^{-1/3}(1-q_p^{-1}),\qquad
+A_{P_0,L}=M_{P_0,L}(5)\prod_{r\mid P_0}(1-q_r^{-5/6}).
+$$
+
+The complete specified contraction is exactly
+
+$$
+\mathcal C_{6,L}[c]
+=A_{P_0,L}\left\{\left(\sum_{p\in\mathscr P}w_p\right)^2
+-\sum_{p\in\mathscr P}w_p^2\right\}.
+$$
+
+The truncated Möbius factor is uniformly positive:
+
+$$
+M_{P_0,L}(5)\ge2-\zeta_F(5)
+\ge2-\zeta(5)^2>7/16,
+$$
+
+where $\zeta(5)<1+\int_1^\infty x^{-5}dx=5/4$. Therefore
+
+$$
+\mathcal C_{6,L}[c]\gg_{a_0,S}Q^{-2/3}M(M-1)
+\gg_{a_0,S}\frac{K^{4/3}}{(\log K)^2}.
+$$
+
+The fixed physical labels multiply the chosen vector by one common unit, leaving its contraction unchanged. Negative orientation uses the conjugated family and vector. At $U_j\asymp K$ the prescribed $L=(b_WU_j)^{1/6}$ obeys the cutoff condition for large $K$, and this excludes a uniform arbitrary-vector $K^{7/6+\varepsilon}$ bound for $0<\varepsilon<1/6$. With the original $(U_jK)^\varepsilon$ notation, $U_j=K^\theta$, $0<\theta<2$, contradicts that bound whenever
+
+$$
+0<\varepsilon<\frac{2-\theta}{6(1+\theta)}.
+$$
+
+These vectors are not the actual annular convolution. In every factorization $dn=a_0p$, one factor contains $p$ and the other divides fixed $a_0$. When both actual annular lengths $D,N$ tend to infinity, $B_{D,N}(a_0p)$ is consequently zero for every such prime, once both lower support endpoints exceed $q_{a_0}$. If one length stays bounded, its coefficients are still prescribed by the Möbius and profile factors; the aligned vector above has not been realized by that convolution. Thus a remaining pole estimate must use its coefficient structure, or combine the pole with the other dual terms. Divisor bounds alone cannot supply it. This obstruction and the preceding consumer are applications of the cited sources, without complete analytic Lean certification or an originality claim.
+
 ## Known estimates for the squarefree Gauss pairing
 
 A restricted pairing of the actual convolution coefficients can be matched to existing cubic estimates. This does not yet identify it as the complete resonant projection of the sixth-order sieve. Use the original primary generators and good-prime exclusions, fix bounded annular profiles and the finite ray twist $\nu$, and restrict both factors to squarefree indices. Define
