@@ -132,6 +132,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PauliRotationCriticalValues.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wierichs-kottmann-killoran-2025-critical-values` (refuted) by `D5/S3/Quantum/Information/PauliRotationCriticalValues.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wierichs-kottmann-killoran-2025-critical-values","declaration_gid":"D5/S3/Quantum/Information/PauliRotationCriticalValues.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. Wierichs; K. Kottmann; N. Killoran (2025). *Unitary synthesis with optimal brick wall circuits*. DOI: [10.48550/arXiv.2511.16736](https://doi.org/10.48550/arXiv.2511.16736). URL: <https://arxiv.org/abs/2511.16736v1>.
