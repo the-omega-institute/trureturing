@@ -29,8 +29,6 @@ def confirm(root, remote, branch, commit, endpoint=None):
 
 def commit_snapshot(path, metadata, branch, message):
     """Consume the ordinary index under the caller's Git operation scope."""
-    if not branch.startswith("refs/heads/"):
-        raise Refused("checkpoint_current_branch_required")
     if git(path, "ls-files", "--unmerged").stdout:
         raise Refused("unmerged_index")
     for marker in ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer"):
@@ -53,6 +51,8 @@ def checkpoint(options):
         path = tree_scope(stack, options.source, options.path)
         _, metadata = identity(options.source, path)
         branch = git_scope(stack, options.source, path)
+        if not branch.startswith("refs/heads/"):
+            raise Refused("checkpoint_current_branch_required")
         message = (read_input(options.source, options.message_file) if options.message_file
                    else b"Checkpoint working tree before publication\n")
         return commit_snapshot(path, metadata, branch, message)

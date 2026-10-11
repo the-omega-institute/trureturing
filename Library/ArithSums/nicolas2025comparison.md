@@ -10102,3 +10102,997 @@ For this fixed law \(V_*>0\) and \(q^{21}>0\). Its positive
 transport and unverified-tail allowances still grow with \(\sqrt A\).
 Thus (GAK51) supplies a finite interval improvement only. The original
 unbounded same-source signed-tail estimate and RH remain open.
+
+## Project application: terminal values and all-branch actual-source error budgets
+
+This section uses the actual objective and the unrestricted pressure of
+[FIB §§85, 87 and 98](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+the finite-tail formula in [ZE, “定理 1.1：尾积分的有限算式” and
+“定理 1.2：压力余量的精确二分解”](../../docs/develop/theory/ZECKENDORF_EULER_5040.md),
+and the complete shorter-successor result (QH13), (QQE), (QQD) and
+(QG1)–(QG8) above. In particular, the proof of the full signed shorter
+$Q$ drift is reused. The additional estimate is a uniform all-branch
+quadrature and literal-competitor error budget at the last prime label of
+the same actual integer. Its consumers below are an exact terminal
+$\Xi$ identity and a finite comparison with a legal integer competitor.
+
+All arithmetic values $G(n)$ and $F(n)$ below have $n\ge3$; every use
+of $f(x)$, $\lambda(x)$ or $w(x)$ has $x>1$. Write
+\[
+Z(n)=\frac{\sigma(n)}n,\qquad W(n)=\log Z(n),\qquad
+G(n)=\frac{Z(n)}{\log\log n},\qquad
+F(n)=\log G(n)=W(n)-f(\log n),
+\]
+\[
+f(x)=\log\log x,\qquad \lambda(x)=\frac1{x\log x},\qquad
+w(x)=-\lambda'(x)=\frac{\log x+1}{x^2(\log x)^2}.
+\tag{AVB01}
+\]
+Thus $f(\log n)=\log\log\log n$. Direct differentiation gives
+$f''=-w<0$ and
+\[
+w'(x)=-x^{-3}\left(\frac2{\log x}+
+ \frac3{(\log x)^2}+\frac2{(\log x)^3}\right)<0.
+\]
+The constant $\gamma$ throughout is the original Euler constant. The full
+signed target remains
+\[
+\boxed{\quad
+\forall n\in\mathbb N,\quad n>5040\Longrightarrow
+ I_\psi(\log n)+R(\log n)+d_{\log n}(n)>0.
+\quad}
+\tag{AVB02}
+\]
+It is active and unproved. This section proves ordinary mathematical
+estimates relative to the stated analytic source inputs.
+
+### Actual attainment, strict inventories and the terminal value
+
+For a prime $p$ and $k\ge1$, retain the Euler layer notation
+\[
+h_p=\log p,\qquad
+\ell_{p,k}=\log\left(1+\frac1{p+\cdots+p^k}\right),\qquad
+r_{p,k}=\frac{\ell_{p,k}}{h_p},\qquad c_p=\ell_{p,1}.
+\]
+Finite Euler telescoping gives $W(n)=\sum_{(p,k)\text{ occupied}}\ell_{p,k}$.
+The prices decrease strictly with $k$, first prices decrease strictly
+with $p$, and $0<r_{p,k}<1/(p^k\log p)$. Use the strict inventory
+\[
+N_x=\prod_p p^{\#\{k\ge1:r_{p,k}>\lambda(x)\}},\qquad
+K(x)=\log N_x,\qquad
+\psi(x)=\sum_{p^k\le x}\log p,\qquad Q(x)=K(x)-\psi(x).
+\tag{AVB03}
+\]
+The actual inventory is strict, whereas $\psi$ is weak and
+right-continuous. For each $x>1$ the inventory is finite, and $N_x$
+increases by divisibility. These are the existing FIB §98.1–98.2 and
+(QG1) conventions, with the actual layer cutoffs of ZE Definition 7.1,
+equation (20), and the [existing actual-state definition](#same-actual-state-finite-support-and-endpoint-correction)
+above.
+
+An actual GA2 integer $q\ge3$ satisfies $G(qm)\le G(q)$ for every positive
+integer $m$. Let $\mathcal D_m$ be all positive multiples of $m\ge3$.
+The ordinary source input used to supply actual attainment is
+\[
+(U)\qquad \forall X>0\ \exists q\ge3\text{ actual GA2},\quad \log q\ge X.
+\tag{AVB04}
+\]
+Caveney–Nicolas–Sondow, *On SA, CA, and GA numbers*,
+[arXiv:1112.6010v2, Theorem 5(iii)](https://arxiv.org/abs/1112.6010v2),
+supplies this input under RH failure. The family used here is conditional
+on that source supply.
+
+For clarity, the reused attainment argument concerns actual $G$, rather
+than the fixed-price objective. If $m\mid q$ and $q$ is actual GA2, then
+for any $n\ge3$, the legal multiple $L=\operatorname{lcm}(q,n)$ satisfies
+$Z(n)\le Z(L)$ and $L\le qn$. Since all log-log denominators are positive,
+\[
+G(n)\le G(q)\frac{\log\log(qn)}{\log\log n}
+ \le G(q)\left(1+\frac{\log q}{\log n\,\log\log n}\right).
+\tag{AVB05}
+\]
+If some member of $\mathcal D_m$ has value strictly above $G(q)$, this
+vanishing tail bound puts all sufficiently late class members strictly
+below that value, and a nonempty finite initial piece attains the full
+class maximum. Otherwise $q$ already attains it. Input $U$ supplies a
+divisible witness for each $m$: choose a price below every occupied price
+of $m$ and use GA2 insertion at a sufficiently large $q$.
+Indeed insertion implies
+\[
+r_{p,v_p(q)+1}h_p
+ \le f(\log q+h_p)-f(\log q)<\lambda(\log q)h_p,
+\]
+so every layer with $r_{p,k}\ge\lambda(\log q)$ is occupied.
+
+For every attaining $N\in\mathcal D_m$, including all ties, insertion
+and deletion above a forced exponent give, at $A=\log N$,
+\[
+r_{p,v_p(N)+1}<\lambda(A),\qquad
+v_p(N)>v_p(m)\Longrightarrow r_{p,v_p(N)}>\lambda(A).
+\]
+Deletion is legal because $m\mid N/p$ and $N/p\ge m\ge3$. Its clock
+$A-h_p$ is consequently greater than $1$, and strict concavity gives the
+second strict inequality. Stack monotonicity yields the characterization
+\[
+N=\operatorname{lcm}(m,N_A).
+\tag{AVB06}
+\]
+Every such attaining integer is actual GA2.
+
+For prime $p\ge29$, define $N_p$ as the least attaining natural number
+on $\mathcal D_{5040p}$, and put $A_p=\log N_p$, $v(p)=F(N_p)$.
+Here $N_p\ge5040p$ gives $A_p>11$. The forced 5040 core is strictly
+active at every $x>11$: its terminal prices satisfy
+$r_{2,4}>1/22$, $r_{3,2}>2/39$, $r_{5,1}>1/12$ and
+$r_{7,1}>1/16$, while $\lambda(x)<1/22$.
+These inequalities follow respectively from
+$(31/30)^{22}>1+22/30+231/900+1540/27000>2$,
+$\log(13/12)>1/13$, $\log3<3/2$, and
+$\log5,\log7<2$. Earlier layers have larger prices. Thus (AVB06)
+at $m=5040p$ becomes, for every maximizer in that class,
+\[
+N=\operatorname{lcm}(p,N_A),\qquad
+E_N:=\{(q,k)\text{ occupied in }N:r_{q,k}\le\lambda(A)\}
+ \subseteq\{(p,1)\}.
+\tag{AVB07}
+\]
+The extra is either empty or precisely the forced first $p$-layer.
+The lower bound $A_p>11$ follows, for example, from
+$5040>2^{12}$, $\log2>2/3$, $p\ge29>3^3$ and $\log3>1$.
+
+Use Gronwall in its original normalization: the limiting upper and
+lower envelopes concern $G(n)/e^\gamma$. This is the
+$\mathrm{robinRatio}$ normalization in
+[PaddingRatio](../../D5/S3/Arith/Robin/PaddingRatio.lean);
+the interfaces are
+[gronwall_lower_envelope](../../D5/S3/Weil/GronwallLowerEnvelope.lean)
+and [gronwall_upper_envelope](../../D5/S3/Weil/GronwallUpperEnvelope.lean).
+The ordinary lower envelope at arbitrarily large $n$, combined with
+(AVB05), gives $G(q)\ge e^\gamma$ for every actual GA2 $q\ge3$.
+Since $N_p\ge5040p\to\infty$, the upper envelope now implies
+\[
+G(N_p)\longrightarrow e^\gamma,\qquad
+v(p)\ge\gamma,\qquad v(p)\longrightarrow\gamma.
+\tag{AVB08}
+\]
+The final limit uses positivity and continuity of the real logarithm.
+Neither zero nor $1$ is the terminal $F$ value.
+
+Strict excess uses the additional ordinary input
+\[
+(U^+)\qquad
+\forall X>0\ \exists q\ge3\text{ actual GA2},\quad
+ \log q\ge X,\quad G(q)>e^\gamma.
+\tag{AVB09}
+\]
+It follows under RH failure from the positive oscillation on CA integers
+and tail-maximizer construction in CNS, pp.15–16: for every integer
+$T\ge5041$, choose $n_0\ge T$ with $G(n_0)>e^\gamma$.
+Gronwall's upper envelope makes all sufficiently late values strictly
+smaller than $G(n_0)$, so the full tail $n\ge T$ attains a maximum
+strictly above $e^\gamma$ in a finite initial piece. Its maximizer is
+GA2 because every positive multiple stays in that tail.
+Taking $T\ge e^X$ proves $U^+$.
+
+For fixed $p\ge29$, use $U^+$ with $\log q\ge p+1$ and
+\[
+r_{p,1}>\frac1{(p+1)\log p}>\lambda(p+1).
+\]
+GA2 insertion and the active 5040 core give $5040p\mid q$.
+Actual maximality in $\mathcal D_{5040p}$ then gives $v(p)>\gamma$.
+This is the only use of $U^+$ here. The error budgets below need
+$v(p)-\gamma\ge0$ and the terminal limit in (AVB08), and do not use
+strict excess or transport a signed estimate from this witness $q$.
+
+### Canonical order and legal brackets on every branch
+
+The finite Euler identity for $g=\gcd(X,Y)\ge3$ and
+$l=\operatorname{lcm}(X,Y)$ is $W(g)+W(l)=W(X)+W(Y)$.
+With $z=\log g>1$, $u=\log(X/g)$ and $v=\log(Y/g)$,
+\[
+F(g)+F(l)-F(X)-F(Y)
+ =\int_0^u\int_0^v w(z+s+t)\,dt\,ds\ge0.
+\tag{AVB10}
+\]
+Equality holds exactly when $u=0$ or $v=0$, that is, when the integers
+are nested by divisibility. This is finite Euler min/max modularity and
+strict concavity on the displayed positive-log rectangle.
+
+For nested imposed classes $m\mid d$, the meet of an $m$-maximizer
+and a $d$-maximizer is a legal $m$-competitor, and their join a legal
+$d$-competitor. Summed maximality and (AVB10) force nesting and equality
+of both value comparisons. If the $m$-maximizer is least, its meet is
+itself. Hence it divides every attaining $d$-maximizer. Least attainment
+is essential for this canonical conclusion.
+
+Fix primes $29\le p<r$, set $\delta=\log(r/p)>0$,
+$A=A_p$ and $C=A_r$. If $p\mid N_r$, their meet is a legal
+$\mathcal D_{5040p}$ competitor and their join a legal
+$\mathcal D_{5040r}$ competitor. Applying the same argument gives
+$N_p\mid N_r$, $A\le C$ and $v(p)\ge v(r)$.
+The fact that a meet contains 5040 alone would not justify the
+$p$-class comparison.
+
+If $p\nmid N_r$, (AVB07) and first-price antitonicity give
+$N_r=rV$, $V=N_C$, with $p,r$ absent from $V$ and $5040\mid V$.
+The completed integer $pV$ is legal in $\mathcal D_{5040p}$, and
+\[
+F(pV)-F(rV)=c_p-c_r+f(C)-f(C-\delta)>0.
+\]
+Thus $v(p)>v(r)$, and $r\nmid N_p$, since otherwise $N_p$ would be
+a legal $r$-class competitor. Put $k=v_p(N_p)\ge1$. The two completed
+replacements $rN_p/p$ and $pN_r/r$ are legal in their opposite classes;
+both retain the full 5040 core, and their clocks $A+\delta,C-\delta$
+exceed $1$. Their combined Euler increment is exactly
+$c_p-\ell_{p,k}\ge0$, not a first-layer removal when $k>1$.
+If $A+\delta>C$, these two replacement clocks are strictly more
+spread with the same sum than $A,C$. Strict concavity decreases the
+summed $f$ values, so the summed $F$ values strictly increase, contradicting
+the two actual maximality comparisons. Consequently $C-A\ge\delta$.
+Only now can one deduce $N_A\mid N_C$, $p\nmid N_A$, and $k=1$.
+Thus on this nonnested branch
+\[
+N_p=pU,\quad N_r=rV,\quad U=N_A\mid V=N_C,\quad
+p,r\nmid V,\quad D=\log(V/U)=C-A-\delta\ge0.
+\tag{AVB11}
+\]
+The literal legal competitors $pV$ and $rU$ give
+\[
+c_p-c_r+f(C)-f(C-\delta)
+ \le v(p)-v(r)
+ \le c_p-c_r+f(A+\delta)-f(A).
+\tag{AVB12}
+\]
+The lower bracket is used only on this branch.
+
+The upper bracket holds on every branch. When $r\nmid N_p$, comparison
+with $rN_p/p$ gives
+\[
+v(p)-v(r)
+ \le\ell_{p,k}-c_r+f(A+\delta)-f(A)
+ \le c_p-c_r+f(A+\delta)-f(A).
+\tag{AVB13}
+\]
+When $r\mid N_p$, value order and feasibility give equality of values.
+The preceding nonnested argument excludes $p\nmid N_r$, so
+$N_p\mid N_r$. Least attainment in the $r$-class gives $N_r\le N_p$,
+and therefore $N_r=N_p$. The zero drop obeys (AVB13).
+This proves both canonical clock order and
+\[
+A_p\le A_r,\quad v(p)\ge v(r),\qquad
+N_p=N_r\ \Longleftrightarrow\ r\mid N_p.
+\tag{AVB14}
+\]
+
+A repeated-source plateau has $E_N=\varnothing$, since (AVB07)
+puts that same extra set in each of two distinct singleton labels.
+A distinct-clock equal-value transition is nested, but is retained.
+Its arriving source also has empty extra: otherwise $N_r=rV$ with
+$p\mid V$, $5040p\mid V$, and $c_r\le\lambda(C)\log r$.
+The legal $p$-competitor $V$ has clock $C-\log r>1$, and strict
+concavity gives
+\[
+F(V)-F(N_r)=f(C)-f(C-\log r)-c_r>0,
+\]
+contradicting $F(N_r)=v(p)$. No existence of such transitions is assumed.
+
+On every nested edge $p\mid N_r$, the distinct labels and (AVB07)
+put $p$ in $N_C$. Thus
+$\lambda(C)<r_{p,1}<\lambda(p)$, whence
+\[
+C>p.
+\tag{AVB15}
+\]
+In particular the active price at a nested arrival is
+$\lambda(C)<\lambda(p)$. This includes plateaus and will pay their
+toll without applying the nonnested lower bracket.
+
+### Convergence before subtraction and the actual competitor deficiencies
+
+Let $p_0=29<p_1<\cdots$ be consecutive ordinary primes.
+Write $N_i=N_{p_i}$, $A_i=\log N_i$, $v_i=v(p_i)$,
+$c_i=c_{p_i}$, $\delta_i=\log(p_{i+1}/p_i)$ and
+$\Delta v_i=v_i-v_{i+1}\ge0$.
+For a starting index $j$ set $e_j=v_j-\gamma\ge0$.
+By (AVB08), $\sum_{i\ge j}\Delta v_i=e_j$.
+Initially define the nonnegative extended sum
+\[
+L_j=\sum_{i\ge j}\delta_i\lambda(A_{i+1}).
+\tag{AVB16}
+\]
+On nonnested edges, the lower bracket (AVB12) implies
+$\delta_i\lambda(A_{i+1})\le\Delta v_i$.
+On every other edge (AVB15) bounds the summand by
+$\delta_i\lambda(p_i)$.
+
+Bertrand gives $p_{i+1}<2p_i$ and $\delta_i\le\log2$.
+On $u\in[\log p_i,\log p_{i+1}]$,
+\[
+\frac{e^{-\log p_i}/\log p_i}{e^{-u}/u}
+ \le2\left(1+\frac{\log2}{\log29}\right)<3.
+\]
+These consecutive intervals cover the entire logarithmic prime tail.
+Therefore
+\[
+\sum_{i\ge j}\delta_i\lambda(p_i)
+ \le3\int_{\log p_j}^\infty\frac{e^{-u}}u\,du
+ \le\frac3{p_j\log p_j}.
+\tag{AVB17}
+\]
+It follows first that $L_j\le e_j+3/(p_j\log p_j)<\infty$.
+Monotonicity and cofinality of $A_i$ then give
+\[
+0\le\sum_{i\ge j}\delta_i
+ [\lambda(A_i)-\lambda(A_{i+1})]
+ \le(\log2)\lambda(A_j).
+\tag{AVB18}
+\]
+This is a full nonnegative telescope, including zero plateau increments.
+In particular $\sum_{i\ge j}\delta_i\lambda(A_i)$ is finite.
+Only with these convergences established do we sum (AVB13), using
+$c_i\to0$ and $v_i\to\gamma$, to obtain
+\[
+-\frac3{p_j\log p_j}\le e_j-L_j
+ \le c_j+(\log2)\lambda(A_j).
+\tag{AVB19}
+\]
+
+Define the actual upper-bracket allowance and slack by
+\[
+b_i=f(A_i+\delta_i)-f(A_i)
+ =\int_0^{\delta_i}\lambda(A_i+t)\,dt,\qquad
+\tau_i=c_i-c_{i+1}+b_i-\Delta v_i\ge0.
+\tag{AVB20}
+\]
+Here $0\le b_i\le\delta_i\lambda(A_i)$, so its sum converges.
+At a finite endpoint $m$ the exact identity is
+\[
+\sum_{i=j}^m\tau_i
+ =c_j-c_{m+1}+\sum_{i=j}^m b_i-e_j+e_{m+1}.
+\]
+Passing to infinity in these convergent terms gives
+\[
+e_j=c_j+\sum_{i\ge j}b_i-\sum_{i\ge j}\tau_i,\qquad
+0\le\sum_{i\ge j}\tau_i
+ \le c_j+\frac3{p_j\log p_j}+(\log2)\lambda(A_j).
+\tag{AVB21}
+\]
+For the inequality, use $\sum b_i\le L_j+(\log2)\lambda(A_j)$ and
+$L_j-e_j\le3/(p_j\log p_j)$. There is no subtraction of divergent
+positive series.
+
+Choose a literal legal successor-class competitor on every edge:
+\[
+X_i=
+ \begin{cases}
+ N_i,&p_{i+1}\mid N_i,\\
+ p_{i+1}N_i/p_i,&p_{i+1}\nmid N_i,
+ \end{cases}
+\qquad
+\eta_i=v_{i+1}-F(X_i)\ge0.
+\tag{AVB22}
+\]
+The first case is precisely a plateau by (AVB14), with $\eta_i=0$
+and $\tau_i=c_i-c_{i+1}+b_i$.
+In the second case let $k_i=v_{p_i}(N_i)$.
+Finite Euler subtraction, removing the actual terminal $k_i$-layer,
+gives exactly
+\[
+\tau_i=\eta_i+c_i-\ell_{p_i,k_i}.
+\tag{AVB23}
+\]
+Thus $0\le\eta_i\le\tau_i$ on every edge, including distinct nested
+arrivals. The kth-layer correction and the plateau allowance are
+retained; $\eta_i$ is a deficiency of a legal completed integer.
+
+### Last label, uniform constants and the actual Stieltjes representation
+
+Fix a source $N=N_p$, put $A=\log N$ and $s=P^+(N)$.
+Since $s\ge p\ge29$ and $5040s\mid N$, feasibility gives
+$v(s)\ge F(N)=v(p)$; value order gives equality.
+Least attainment gives $N_s\le N$, while canonical clock order gives
+$A_s\ge A_p$. Hence $N_s=N$.
+More generally, the labels whose clocks are at most $A$ are exactly
+the primes $29\le r\le s$. For $r\le p$ use clock order.
+For $p<r\le s$, either this case is empty because the extra is nonempty
+and $s=p$, or $N=N_A$ and the first-layer prime prefix gives $r\mid N$.
+The legal meet comparison gives $N_r\mid N$, hence $A_r\le A$.
+If $r>s$, clock order gives $A_r\ge A$, and equality would give
+$N_r=N$, contradicting $r\mid N_r$ and $r\nmid N$.
+Thus $s$ is the last label producing this integer. Plateau labels form
+a consecutive finite block, whose last label is $s$; a nonempty extra
+has only its own label.
+
+The real first-layer cutoff $q_1(A)$ solves
+$r_{q_1(A),1}=\lambda(A)$ as in ZE Definition 7.1.
+The elementary strict bounds
+$r_{A-1,1}>1/[A\log(A-1)]>\lambda(A)$ and
+$r_{A,1}<\lambda(A)$ give
+\[
+A-1<q_1(A)<A.
+\]
+If the extra is nonempty, $s=p$ and $r_{p,1}\le\lambda(A)$.
+The inequality $r_{p,1}>1/[(p+1)\log p]$ excludes $p\le A-1$,
+so $s>A-1$.
+If it is empty, $N=N_A$. Put $m=\lfloor(A-1)/2\rfloor\ge5$.
+Bertrand gives a prime $m<q<2m\le A-1<q_1(A)$, so $q\mid N_A$.
+In both cases,
+\[
+s>\frac A3;
+\qquad
+\text{in the empty-extra case }
+s\ge q>m\ge\frac{A-3}2>\frac A3,\quad s<A.
+\tag{AVB24}
+\]
+The comparison $(A-3)/2>A/3$ uses $A>11$, and $s<A$ uses
+$\lambda(A)<r_{s,1}<\lambda(s)$.
+An extra prime is not bounded above by $A$.
+
+Relabel the same tail by choosing $j$ with $p_j=s$ and write
+$e_s=e_j$, $L_s=L_j$, $u_s=e_s-L_s$.
+Since $c_s<1/s<3/A$, $3/(s\log s)\le9/A$, and
+$(\log2)\lambda(A)<1/A$, (AVB19)–(AVB23) imply
+\[
+\boxed{\quad |v(s)-\gamma-L_s|=|u_s|\le\frac9A,\qquad
+ \sum_{i\ge j}\eta_i\le\sum_{i\ge j}\tau_i\le\frac{13}A.\quad}
+\tag{AVB25}
+\]
+The upper side of (AVB19) is already less than $4/A$.
+With $S_A=A^{11/10}$,
+\[
+\frac{1/A}{w(A)S_A}
+ =A^{-1/10}\frac{(\log A)^2}{1+\log A}\longrightarrow0.
+\tag{AVB26}
+\]
+The bound depends only on $A$, so its supremum over all actual sources
+with clocks at least a real $T$ tends to zero as $T\to\infty$.
+These are paid errors at the consumed scale. Neither $e_s$ nor $L_s$
+is asserted individually small at that scale.
+
+For this terminal tail, denote its cumulative logarithmic label mass by
+\[
+J_s(t)=\sum_{\substack{i\ge j\\A_{i+1}\le t}}\delta_i
+ \quad(t\ge A).
+\tag{AVB27}
+\]
+This local $J_s(t)$ has a real clock argument; the divisor deficit
+$J_s(d)$ near the beginning of this note is a different function.
+Last-label characterization proves $A_{i+1}>A$ for every $i\ge j$,
+so $J_s(A)=0$. The function is right-continuous and locally finite:
+$A_{i+1}\le t$ implies $p_{i+1}\le e^t/5040$, leaving only finitely
+many labels on every compact interval. Simultaneous future clocks,
+including repeated future plateaus, have one aggregated atom of mass
+$\sum_{A_{i+1}=t}\delta_i$.
+
+If $p_k$ is the last included successor label, telescoping gives
+$J_s(t)=\log(p_k/s)$; if there are no included labels the mass is zero.
+Since $5040p_k\le e^t$ and $5040s\le e^A$,
+\[
+0\le J_s(t)\le t-\log5040-\log s,\qquad
+\lambda(t)J_s(t)\longrightarrow0.
+\tag{AVB28}
+\]
+Finite Stieltjes integration by parts, with atoms in $(A,T]$, gives
+\[
+\int_{(A,T]}\lambda(t)\,dJ_s(t)
+ =\lambda(T)J_s(T)+\int_A^T J_s(t)w(t)\,dt.
+\]
+The left side increases to the already proved convergent $L_s$ in
+(AVB16)–(AVB18). Equation (AVB28) removes the boundary at infinity.
+Consequently the actual representation is
+\[
+\boxed{\quad
+L_s=\int_{(A,\infty)}\lambda(t)\,dJ_s(t)
+    =\int_A^\infty J_s(t)w(t)\,dt<\infty.
+\quad}
+\tag{AVB29}
+\]
+This convergence follows from the all-branch value bound before the
+integration-by-parts limit. The crude estimate $J_s(t)\le t$ would
+not establish it, since $\int^\infty t\,w(t)\,dt$ diverges.
+
+### Weighted nonnested jump width and its limitation
+
+On a nonnested consecutive edge retain (AVB11), with
+$N_i=p_iU_i$, $N_{i+1}=p_{i+1}V_i$,
+$D_i=\log(V_i/U_i)$, $A=A_i$, $\delta=\delta_i$ and
+$C=A_{i+1}=A+D_i+\delta$.
+The two literal competitors define distinct nonnegative deficiencies
+\[
+\alpha_i=v_i-F(p_iV_i),\qquad
+\beta_i=v_{i+1}-F(p_{i+1}U_i)=\eta_i.
+\]
+The equality with $\eta_i$ uses $k_i=1$ on this branch.
+The exact comparisons are
+\[
+\begin{aligned}
+\Delta v_i&=c_i-c_{i+1}+f(C)-f(C-\delta)+\alpha_i,\\
+\Delta v_i&=c_i-c_{i+1}+f(A+\delta)-f(A)-\beta_i.
+\end{aligned}
+\]
+Subtracting gives the complete bracket width
+\[
+\alpha_i+\beta_i
+ =\int_0^\delta\int_0^{D_i}w(A+x+t)\,dt\,dx
+ =\int_0^\delta[\lambda(A+x)-\lambda(A+D_i+x)]\,dx.
+\tag{AVB30}
+\]
+Decrease of $w$ yields the lower bound $w(C)\delta D_i$.
+Also $f(C)-f(C-\delta)\ge\delta\lambda(C)$ and
+$f(A+\delta)-f(A)\le\delta\lambda(A)$, so the width is at most
+$\delta[\lambda(A)-\lambda(C)]$. Enlarging the nonnegative subset sum
+to the full telescope (AVB18) proves
+\[
+\sum_{\substack{i\ge j\\\text{nonnested}}}
+ w(A_{i+1})\delta_iD_i
+ \le\sum_{\substack{i\ge j\\\text{nonnested}}}(\alpha_i+\beta_i)
+ \le(\log2)\lambda(A_j).
+\tag{AVB31}
+\]
+This does not telescope over only the selected edges.
+
+If $D_i=0$, the width forces $\alpha_i=\beta_i=0$.
+If $D_i>0$, the legal integer $p_{i+1}U_i$ is strictly smaller than
+the least attaining $N_{i+1}$, so $\beta_i>0$.
+Least attainment provides no quantitative lower separation of their
+real values. The distinction between $\alpha_i$, $\beta_i$ and the
+all-branch $\eta_i$ matters: the $13/A$ budget controls replacement
+deficiencies $\eta_i$, whereas $\alpha_i$ is controlled here by the
+width, and is not that replacement deficiency.
+
+For fixed $A,\delta$, the width in (AVB30) increases with $D$ to the
+finite value $f(A+\delta)-f(A)$ as $D\to\infty$, whereas
+$w(A+D+\delta)\delta D\to0$.
+Thus (AVB31) weights remote jumps weakly and provides no clock mesh.
+Nested branches, including distinct equal-value arrivals, remain outside
+the nonnested width identity and are still included in (AVB25).
+
+### Correct centered coupling with the original complement
+
+Retain every prime-power reference weight and the unrestricted pressure:
+\[
+P(x)=\sum_{q^k\le x}\frac1{kq^k},\qquad
+\mathscr S(c)=\sum_{q,k}(r_{q,k}-c)_+\log q,\qquad
+R(x)=P(x)-\lambda(x)\psi(x)-\mathscr S(\lambda(x)).
+\tag{AVB32}
+\]
+The pressure argument has $c>0$. Here $(z)_+=\max(z,0)$; a positive
+part is multiplied by $\log q$.
+The sums defining $P$ and the positive pressure are finite at each
+admitted point. This is FIB §87.3 and §98.1, with the same pressure
+as (QG4) and the original $R$ in (GAK39). The reference coefficient is
+$1/(kq^k)$, whereas a $\psi$ or $\Lambda$ atom has mass $\log q$.
+They have different roles.
+
+On every compact interval $[a_0,b_0]\subset(1,\infty)$, a positive
+minimum price and $r_{q,k}<1/(q^k\log q)$ give one common finite support
+for all possible pressure terms and activation ties. There are also
+only finitely many reference prime-power atoms.
+At $x=q^k$ the jump of $P$ is exactly
+$1/(kq^k)=\lambda(q^k)\log q$, so the jump of $\lambda\psi$
+cancels it. Between atoms $(P-\lambda\psi)'=\psi w$.
+The finite positive-part pressure is continuous at activation ties,
+locally absolutely continuous, and has derivative $Kw$ almost
+everywhere. Strict choices at the events do not change that derivative.
+Thus $R$ is locally absolutely continuous and, for arbitrary endpoint
+events and $B>A>1$,
+\[
+R(B)-R(A)=-\int_A^B Q(t)w(t)\,dt.
+\tag{AVB33}
+\]
+No differentiation of an untruncated infinite pressure series is involved.
+
+Let $H=B-A$, $a=\lambda(A)$, $b=\lambda(B)$ and
+$\rho_A(u)=w(A+u)/w(A)$. Keep the original centered definitions
+\[
+T_\psi(A,H)=\int_0^H[\psi(A+u)-\psi(A)-u]\rho_A(u)\,du,
+\quad
+S_Q(A,H)=\int_0^H[Q(A+u)-Q(A)]\rho_A(u)\,du.
+\]
+The original effective-PNT/Mertens normalization of (GAK38) and FIB
+§87.3 gives
+\[
+I_\psi(x)=\int_x^\infty(\psi(t)-t)w(t)\,dt
+ =\gamma+f(x)-P(x)+\lambda(x)(\psi(x)-x).
+\tag{AVB34}
+\]
+The convergent tail and its original Euler constant are retained.
+Subtracting its tails over $[A,B]$ and then its initial centered value
+gives the required identity with the full price-drop factor:
+\[
+\boxed{\quad
+w(A)T_\psi(A,H)
+ =I_\psi(A)-I_\psi(B)-(\psi(A)-A)(a-b).
+\quad}
+\tag{AVB35}
+\]
+Indeed the centered integrand is
+$(\psi(t)-t)-(\psi(A)-A)$ and $\int_A^B w=a-b$.
+Similarly (AVB33) yields
+\[
+w(A)S_Q(A,H)=R(A)-R(B)-Q(A)(a-b).
+\tag{AVB36}
+\]
+These finite centered subtractions preserve the weak-reference initial
+atom convention and do not assume an additional infinite-tail limit.
+
+For the same actual source $N=N_s$ at $A=\log N$, write
+\[
+\delta_N=A-K(A)=\sum_{e\in E_N}h_e,\qquad
+d_A(N)=\mathscr S(a)-W(N)+aA
+       =\sum_{e\in E_N}(a-r_e)h_e.
+\]
+Use exactly the (QG1), (QG5) preoccupied inventory and loss:
+\[
+P_N(x)=\sum_{\substack{e\in E_N\\r_e>\lambda(x)}}h_e,\qquad
+V_N(A,H)=\int_0^H P_N(A+u)\rho_A(u)\,du,
+\]
+\[
+w(A)V_N=\sum_{e\in E_N}(r_e-b)_+h_e,\qquad
+R_{\rm term}(N,B)=\sum_{e\in E_N}(b-r_e)_+h_e.
+\tag{AVB37}
+\]
+Since every $r_e\le a$, scalar positive-part algebra gives, including
+own-price and terminal ties,
+\[
+d_A(N)+w(A)V_N=(a-b)\delta_N+R_{\rm term}(N,B).
+\tag{AVB38}
+\]
+This is exactly (QG6); the terminal residual is retained.
+
+At its own clock, the unrestricted finite identity (GAK39), also
+(OCQ13), gives
+\[
+I_\psi(A)+R(A)+d_A(N)=\gamma-F(N)=-e_s.
+\tag{AVB39}
+\]
+It concerns this actual integer $N$, not just its subinventory $N_A$.
+Adding (AVB35) and (AVB36), using
+$\psi(A)-A+Q(A)=K(A)-A=-\delta_N$, and subtracting $w(A)V_N$,
+then gives
+\[
+\begin{aligned}
+w(A)(T_\psi+S_Q-V_N)
+ &=I_\psi(A)+R(A)-I_\psi(B)-R(B)+(a-b)\delta_N-w(A)V_N\\
+ &=-e_s-I_\psi(B)-R(B)-R_{\rm term}(N,B).
+\end{aligned}
+\tag{AVB40}
+\]
+Immediately consume (AVB25) and (AVB29), at the same last label
+$s=P^+(N)$, by defining
+\[
+\Xi_s(B)=L_s+I_\psi(B)+R(B)+R_{\rm term}(N,B).
+\]
+The exact result is
+\[
+\boxed{\quad w(A)(T_\psi+S_Q-V_N)=-\Xi_s(B)-u_s,\qquad
+ |u_s|\le9/A,\quad u_s=o(w(A)S_A)\text{ uniformly}.\quad}
+\tag{AVB41}
+\]
+This pays the replacement of the actual terminal excess by its
+actual Stieltjes integral. It does not pay $L_s$, $e_s$, the original
+tail, $R(B)$ or the terminal residual separately.
+
+For explicit singleton bookkeeping let $r=r_{s,1}$ and $h=\log s$.
+The literal strict successor and clock are
+$M_B=\operatorname{lcm}(N,N_B)$ and $Y=Y_N(B)=\log M_B$.
+In both extra branches the exact formulas are
+\[
+\begin{aligned}
+Y&=K(B)+\mathbf1_{r\le b}h, &
+d_A(N)&=(a-r)_+h,\\
+w(A)V_N&=\mathbf1_{r\le a}(r-b)_+h,&
+R_{\rm term}(N,B)&=(b-r)_+h.
+\end{aligned}
+\tag{AVB42}
+\]
+The indicator in $V_N$ excludes an already active first layer.
+When the extra is empty $r>a$ and all the displayed extra terms vanish.
+At $r=a$ the forced extra has zero own-price defect but its full
+$w(A)V_N=(a-b)h$. At $r=b$ it remains in $Y$ although both its
+$V_N$ contribution and terminal residual vanish. At $r<b$ it remains
+in $Y$ and has positive terminal residual. Missing neutral terminal
+layers are excluded by $N_B$; deliberately adding them would change
+the literal $Y$ and its terminal cost.
+
+### A finite actual competitor consumes the jump budget at the same cost
+
+Reuse the exact (QG3) finite identity for the same $N$:
+\[
+F(M_B)-F(N)=w(A)(T_\psi+S_Q-V_N)+C_B(Y),\qquad
+C_B(y)=f(B)+b(y-B)-f(y)\ge0\quad(y>1).
+\tag{AVB43}
+\]
+Here $Y=\log\operatorname{lcm}(N,N_B)$ is literal and need not equal $B$;
+strict concavity gives $C_B(y)=0$ exactly when $y=B$.
+The existing maximizing-multiple construction
+[GoldenFutureExtensionMaximum](../../D5/S3/Arith/GoldenFutureExtensionMaximum.lean),
+in particular golden_future_extension_maximum_attained, and
+[GoldenColossalClosure](../../D5/S3/Arith/GoldenResource/GoldenColossalClosure.lean),
+maximizes $W-b\log n$ over multiples of $N$ by installing all missing
+positive-price layers. It is the fixed-price construction used in
+(QG1)–(QG3), not an actual-$G$ optimization assertion.
+
+Take a nonnested consecutive edge starting at $N=N_i=p_iU_i$.
+Here the departing extra is nonempty, so its last label is $s=p_i$.
+Let the literal integer $Z=p_iV_i$ have clock $z=A+D_i$.
+Since $U_i\mid V_i$, $Z$ is a multiple of the same $N$, and
+$F(Z)=F(N)-\alpha_i$. Fixed-price maximality gives
+$W(M_B)-bY\ge W(Z)-bz$.
+The identity
+$W(X)-b\log X=F(X)+f(B)-bB-C_B(\log X)$
+then gives
+\[
+F(M_B)-F(N)\ge-\alpha_i+C_B(Y)-C_B(A+D_i).
+\tag{AVB44}
+\]
+The $C_B(Y)$ here is exactly the one in (AVB43). Cancelling that
+same cost yields the finite, original-objective comparison
+\[
+T_\psi(A,H)\ge-S_Q(A,H)+V_N(A,H)
+ -\frac{\alpha_i+C_B(A+D_i)}{w(A)}.
+\tag{AVB45}
+\]
+From (AVB31) at $j=i$, $\alpha_i\le(\log2)\lambda(A)$, and
+$\lambda(A)/w(A)=A\log A/(1+\log A)<A$. Therefore
+\[
+\boxed{\quad
+T_\psi(A,H)\ge-S_Q(A,H)+V_N(A,H)
+ -(\log2)A-\frac{C_B(A+D_i)}{w(A)}.
+\quad}
+\tag{AVB46}
+\]
+This is a real finite consumer of the weighted nonnested jump estimate.
+To consume the actual competitor budget as well, let $\Omega_i$ denote
+the width in (AVB30). On this edge $\alpha_i=\Omega_i-\eta_i$, so
+(AVB45) is equivalently the bound
+\[
+T_\psi\ge-S_Q+V_N-\frac{\Omega_i+C_B(A+D_i)}{w(A)}
+ +\frac{\eta_i}{w(A)},\qquad
+0\le\frac{\eta_i}{w(A)}\le\frac{13}{A\,w(A)}=o(S_A).
+\tag{AVB46C}
+\]
+The last estimate is uniform by (AVB25)–(AVB26). Thus the finite
+comparison retains the actual replacement correction, and its omission
+costs at most the paid $13/[A\,w(A)]$ allowance.
+This uses $\beta_i=\eta_i$ only on the nonnested branch, and does not
+replace $\alpha_i$ by $\eta_i$.
+The nonnegative cost $C_B(A+D_i)/w(A)$ is still unpaid, and cofinality
+does not provide nonnested departures beyond every required common
+start. Even if that source supply and an $o(w(A)S_A)$ cost were supplied,
+the $O(A)=o(S_A)$ error in (AVB46) would leave only the critical
+coefficient $c_Q$, not any fixed $\kappa<c_Q$.
+The strict $\beta_i>0$ at $D_i>0$ supplies no such uniform margin.
+
+### Full shorter-Q quantifiers and the unpaid actual-source sign
+
+For the remaining comparison specialize to the existing shorter scale
+$H=A^{4/5}$, $B=A+H$ and $S_A=A^{11/10}=H^2/\sqrt A$.
+Retain the ordinary GM input exactly as in (QGM): fixed
+$\epsilon_{\rm GM}=1/60$, $\beta_{\rm GM}=7/12$, and constants
+$C_{\rm GM},Y_0$ for which
+\[
+|\pi(y+v)-\pi(y)-v/\log y|
+ \le C_{\rm GM}v e^{-(\log y)^{1/4}},\qquad
+y\ge Y_0,\quad y^{7/12}\le v\le y^{99/100}.
+\]
+It is an absolute prime-counting error uniform in that range.
+The conversion to $\theta$ retains
+$O(v\log y\,e^{-(\log y)^{1/4}}+v^2/(y\log y))$, including its logarithmic
+factor. The common finite support and growing-index derivative controls
+of (QH1)–(QH10), the strict atom correction
+$+\operatorname{atom}(y)-\operatorname{atom}(y+v)$, all higher actual
+and reference layers, and the actual/reference square coefficients
+$\sqrt2/4$ and $1/4$ are those already paid in (QH11)–(QH13).
+They give (QQE), with one unknown common all-real start $A_*$:
+\[
+\left|\frac{S_Q(A,A^{4/5})}{S_A}-c_Q\right|
+ \le C\mathcal F_Q(A),\qquad c_Q=\frac{\sqrt2-1}{4},
+ \qquad A\ge A_*,
+\]
+\[
+\begin{aligned}
+\mathcal F_Q(A)={}&\frac1{\log A}+A^{-1/5}
+ +\log A\,e^{-((\log A)/3)^{1/4}}+A^{-1/120}\\
+ &+A^{-3/10}\log A+A^{-1/6}(\log A)^{4/3}
+ +A^{-19/180}(\log A)^{43/36}.
+\end{aligned}
+\tag{AVB47}
+\]
+All seven terms tend to zero. One common start pays the GM threshold,
+both square cutoffs, support, all growing-index length tests and the
+error tolerance for every sufficiently large real $A$.
+No numerical common start is supplied by this estimate.
+Its control of $S_Q$ does not supply the main-scale signed $T_\psi$ input:
+an absolute GM allowance there, divided by $S_A$, has size
+$\sqrt A\log A\,e^{-c(\log A)^{1/4}}$ for a fixed $c>0$,
+which is not $o(1)$. The exponent
+$(\log A)/2-c(\log A)^{1/4}+\log\log A$ tends to $+\infty$.
+This diagnoses an unpaid allowance, not the size or sign of the true
+arithmetic error.
+
+The singleton loss is uniform even when the forced prime is much larger
+than $A$. If $V_N>0$, its sole extra has $b<r_{s,1}\le a$.
+Since $r_{s,1}<\lambda(s)$ and $\lambda$ decreases, $s<B$.
+Equation (AVB37) gives
+$w(A)V_N\le(a-b)\log s<(a-b)\log B$.
+Also $(a-b)/w(A)=\int_0^H\rho_A(u)\,du<H$, since $w$ decreases.
+The zero-loss case is immediate. Thus, without a bound $\log s\le\log A$,
+\[
+0\le V_N(A,A^{4/5})<A^{4/5}\log(2A)
+ =g(A)S_A,\qquad
+g(A)=A^{-3/10}\log(2A)\longrightarrow0.
+\tag{AVB48}
+\]
+This pays a uniform preoccupied loss. It does not pay a signed
+$T_\psi$ allowance.
+
+Combining (AVB41) and (AVB43) exposes the exact GA2 orientation:
+\[
+\boxed{\quad
+\Xi_s(B)+u_s=F(N)-F(M_B)+C_B(Y)
+ \ge C_B(Y)\ge0.
+\quad}
+\tag{AVB49}
+\]
+The inequality is actual GA2 at the same literal multiple $M_B$.
+Reversing it would introduce the missing favorable sign.
+In particular the paid $9/A$ and $13/A$ errors do not make
+$\Xi_s(B)$ favorably negative.
+
+The exact (QG7) finite Lambda kernel, at that same real $A$, is
+\[
+k_A(n)=\mathbf1_{A<n\le B}
+       \frac{\lambda(n)-\lambda(B)}{w(A)},\qquad
+D_0(A)=\frac{f(B)-f(A)-H\lambda(B)}{w(A)},\qquad
+T_\psi=\sum_{n\ge1}\Lambda(n)k_A(n)-D_0(A).
+\tag{AVB50}
+\]
+Its initial atom is excluded and its terminal atom has zero weight.
+Every prime power $n=q^k$ has its full $\Lambda(n)=\log q$ mass.
+Finite integration of
+$\psi(t)-\psi(A)=\sum_{A<n\le t}\Lambda(n)$ proves the displayed
+formula, including
+$D_0(A)=\int_0^H u\rho_A(u)\,du$.
+For any real $\kappa$ the exact same-source equivalence is
+\[
+T_\psi(A,A^{4/5})\ge-\kappa S_A
+\ \Longleftrightarrow\
+\Xi_s(B)+u_s\le w(A)[\kappa S_A-S_Q(A,H)+V_N(A,H)].
+\tag{AVB51}
+\]
+When $\kappa<c_Q$ is fixed, the right side is
+$-(c_Q-\kappa+o(1))w(A)S_A$, a strictly negative margin eventually.
+Equation (AVB49) exhibits the opposite GA2 orientation. The desired
+contradiction therefore still requires the following actual arithmetic
+source-and-sign input:
+\[
+\boxed{\quad
+\exists\text{ fixed }\kappa<c_Q\ \forall\text{ required real }T_0\
+ \exists p\ge29\text{ prime}:\quad
+ A_p\ge T_0,\qquad
+ \sum_{n\ge1}\Lambda(n)k_{A_p}(n)
+ \ge D_0(A_p)-\kappa A_p^{11/10}.
+\quad}
+\tag{AVB52}
+\]
+This input is unproved. The required start includes a common (QQD)
+tolerance start, the uniform (AVB48) tolerance start and every additional
+analytic transfer start. Clock cofinality from $N_p\ge5040p$ can pass
+each unknown finite start, but it does not supply the favorable sign
+in (AVB52).
+
+For its precise consumer let $\varepsilon=(c_Q-\kappa)/4$.
+Beyond the common starts, (AVB47)–(AVB48) give
+$S_Q\ge(c_Q-\varepsilon)S_A$ and $V_N\le\varepsilon S_A$.
+If (AVB52) supplied the additional $T_\psi\ge-\kappa S_A$ there,
+then
+\[
+T_\psi+S_Q-V_N\ge\frac{c_Q-\kappa}{2}S_A,\qquad
+F(M_B)-F(N)\ge\frac{c_Q-\kappa}{2}w(A)S_A+C_B(Y)>0.
+\tag{AVB53}
+\]
+The contradiction is at a literal integer multiple of the selected
+actual $N$; it uses no standalone theorem with the missing sign
+silently assumed as a proved conclusion.
+
+A finite positive average is an equivalent selection interface only
+with the same source coverage. Precisely, for every required $T_0$,
+take a finite set of actual labels with $A_p\ge T_0$ and nonnegative
+weights $a_p$ of positive total weight. A proved inequality
+\[
+\sum_p a_p\sum_n\Lambda(n)k_{A_p}(n)
+ \ge\sum_p a_p[D_0(A_p)-\kappa A_p^{11/10}]
+\tag{AVB54}
+\]
+forces at least one positive-weight label to satisfy (AVB52), since
+otherwise the finite sum of its strict failures is negative.
+Conversely a single qualifying source gives this finite interface.
+Neither inequality is supplied by cofinality or scalar means.
+Duplicate plateau labels aggregate weight at one integer and create
+no independent samples.
+
+For clarity about an alternative transfer route, the actual weak-$\psi$
+stability estimate for $X\ge1024$, $A,C\in[X,2X]$ and
+$d=|C-A|\le X^{4/5}/2$ is
+\[
+|T_\psi(A,A^{4/5})-T_\psi(C,C^{4/5})|
+ \le120X^{4/5}(d+1)\log X.
+\tag{AVB55}
+\]
+One direct derivation writes
+$Q_a(t)=\psi(t)-\psi(a)-(t-a)$ and $R_a(t)=w(t)/w(a)$ on
+$I_a=[a,a+a^{4/5}]$. Put $L=X^{4/5}$ and $\ell_0=\log(3X)$.
+The full prime-power count gives
+$0\le\psi(v)-\psi(u)\le(v-u+1)\ell_0$ for $X\le u\le v\le3X$,
+so $|Q_a(t)|\le5L\ell_0$.
+For $C\ge A$, the symmetric-difference length of $I_A,I_C$ is at most
+$3d$, including the full upper-endpoint motion. Its cost is at most
+$15Ld\ell_0$. On their intersection,
+$Q_C-Q_A=d-[\psi(C)-\psi(A)]$, costing at most $4L(d+1)\ell_0$.
+Finally $|w'/w|\le4/X$ gives
+$0\le R_C-R_A\le4d/X$, costing at most
+$40dL^2\ell_0/X\le40dL\ell_0$.
+Adding and using $\ell_0\le2\log X$ proves (AVB55).
+The $+1$ retains an initial prime-power jump and cannot be removed
+merely by continuity of the remaining weights.
+
+Dividing (AVB55) by $X^{11/10}$ shows that
+$d=o(X^{3/10}/\log X)$ would suffice for vanishing normalized transfer
+error. A fixed-margin favorable center at cofinally many scales together
+with paired actual clocks at that distance and all common starts would
+therefore suffice. The favorable centers and their paired actual-source
+coverage are both unpaid. This sufficient pairing is not inserted as a
+premise of (AVB25), (AVB41), (AVB46) or (AVB52).
+Bertrand label gaps, the weighted width and monotone cofinal clocks give
+no such mesh; no stronger uniform mesh is asserted or required here.
+
+### Source scope and the remaining full target
+
+Euler factorization, positive-price prefix optimization, scalar strict
+concavity, Bertrand, Gronwall and finite Stieltjes integration by parts
+are standard inputs. The original pressure, $I_\psi$, $R$, same-integer
+defect and finite lcm consumer are the existing FIB/ZE/NC interfaces
+cited above. The project-derived addition is (AVB19)–(AVB25), the
+all-branch actual-value and accumulated literal-competitor error package,
+with (AVB29) and (AVB31) making its actual measure and weighted jump
+content explicit. Its immediate substantive uses are (AVB41) and
+(AVB45)–(AVB46). No global novelty or primary-proof claim is made.
+
+The own-clock event sampling (OCQ1)–(OCQ14) above retains its own
+post-event source $N_p=C_{b_p}$ and its separate unproved continuous
+signed-head condition (OCQ10). Its (OCQ13) all-integer defect identity
+is reused in (AVB39); its sample choice, seven-eighths zero ceiling
+and conditional (OCQ14) consumer do not supply (AVB52).
+The $N_p$ of this section instead denotes the least actual maximizer
+on $\mathcal D_{5040p}$, as explicitly defined above.
+No identification of those two source families is used.
+Seven-eighths nonvanishing, almost-all centers and bounded multiplicative
+correlations likewise supply no stated same-actual-source Lambda sign.
+
+The conditional finite real-clock interval (GAK40)–(GAK51), through
+$A=8\cdot10^{46}$, retains its original source/material premises and
+each integer's defect in (GAK39). It is a finite interval and source
+corollary. Neither it nor the earlier $7.2\cdot10^{46}$ interval is an
+unbounded family start, a least-counterexample bound, or payment of
+the unknown GM/QQE starts. A separately selected least global maximizer,
+a least counterexample, and the cofinal forced-prime family are not
+interchangeable sources.
+
+All separate deletion comparisons here occur above the forced exponent
+and stay in their stated multiple class with integer at least $3$.
+Completed prime replacements are compared only after insertion and
+in their legal opposite forced class; no bare forced-prime deletion
+comparison is used. The proper-deletion bridge used for a global $n>5040$ source has its own full hypotheses:
+a deletion that merely remains above $e$ need not remain above $5040$.
+Restricted comparisons cannot replace that bridge, and no integer
+replacement is imported from the wrong domain.
+
+The paid errors are $u_s$ and the sum of actual $\eta_i$, at uniform
+$o(w(A)S_A)$ precision. The unpaid estimates are the signed cancellation
+in (AVB51)–(AVB52), its every-start source coverage, and, for the
+nonnested finite-competitor route, source supply, the literal cost
+$C_B(A+D_i)$ and a strict coefficient gain beyond the critical $c_Q$.
+Formal analytic suppliers and their dependency verification are separate
+from this ordinary exposition. No estimate here proves the full
+every-$n>5040$ signed target (AVB02), which remains active and unproved.

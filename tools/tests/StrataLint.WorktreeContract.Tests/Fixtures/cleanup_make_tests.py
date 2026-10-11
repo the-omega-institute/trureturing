@@ -101,6 +101,12 @@ class CleanupMakeTests(NativeFixture):
         (self.cache / ".lake").mkdir()
         (self.cache / ".lake/unknown").write_text("uncertified cache\n")
         self.busy = self.add_lane("busy")
+        self.detached_clean = self.add_lane("detached-clean")
+        self.detached_dirty = self.add_lane("detached-dirty")
+        for tree in (self.detached_clean, self.detached_dirty):
+            self.git("checkout", "--detach", cwd=tree)
+        (self.detached_dirty / "owned").write_text("detached tracked\n")
+        (self.detached_dirty / "untracked").write_text("detached untracked\n")
         # A current Git lock keeps the separate orphan/snapshot sweep out of
         # host-wide temporary roots while exercising the real canonical door.
         self.current = self.add_lane("current-lock")
@@ -188,7 +194,7 @@ class CleanupMakeTests(NativeFixture):
 
     def assert_recoverable(self, events, preview=False):
         items = {item["path"]: item for item in events if item["event"] == "clean_lanes_item"}
-        for tree in (self.dirty, self.local, self.cache, self.busy):
+        for tree in (self.dirty, self.local, self.cache, self.busy, self.detached_clean, self.detached_dirty):
             self.assertEqual(preview, tree.exists(), str(tree))
             expected = "would_remove" if preview else "removed"
             self.assertEqual(expected, items[str(tree)]["action"], items[str(tree)])
@@ -201,6 +207,17 @@ class CleanupMakeTests(NativeFixture):
             self.assertEqual("unpublished dirty\n", (recovery / "owned").read_text())
             self.assertEqual("unpublished untracked\n", (recovery / "untracked").read_text())
             self.assertEqual(self.local_head, self.git("rev-parse", "refs/heads/lane/governance/local"))
+            for tree in (self.detached_clean, self.detached_dirty):
+                reference = items[str(tree)]["recovery_branch"]
+                self.assertTrue(reference.startswith("refs/heads/lane/governance/recovery-"))
+                recovery = self.root / (tree.name + "-recovered")
+                self.git("worktree", "add", recovery, reference.removeprefix("refs/heads/"))
+                if tree == self.detached_clean:
+                    self.assertEqual(self.baseline, self.git("rev-parse", "HEAD", cwd=recovery))
+                else:
+                    self.assertEqual(self.baseline, self.git("rev-parse", "HEAD^", cwd=recovery))
+                    self.assertEqual("detached tracked\n", (recovery / "owned").read_text())
+                    self.assertEqual("detached untracked\n", (recovery / "untracked").read_text())
         self.assertIsNone(self.job.poll(), "independent participant must survive cleanup")
 
     def test_aggregate_survives_repository_removal(self):
