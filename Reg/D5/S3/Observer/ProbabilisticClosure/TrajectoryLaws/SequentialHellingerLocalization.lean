@@ -138,9 +138,9 @@ namespace Product
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature.{u} (fun _ p n => ∏ i ∈ range n, p.2.1 i p.2.2) (fun e => nomatch e)
+  realize signature.{u} (fun _ p n => ∏ i ∈ range n, p.2.1 i p.2.2) (fun e => Empty.elim e)
 def rejected : Realization signature.{u} :=
-  realize signature.{u} (fun _ _ _ => 0) (fun e => nomatch e)
+  realize signature.{u} (fun _ _ _ => 0) (fun e => Empty.elim e)
 
 @[reducible] def arena : Arena where
   signature := signature.{u}
@@ -196,7 +196,7 @@ def family : Registration arena.{u} (arena.{u}.Law actual) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SequentialHellingerLocalization.finite_energy_positive_product.{u})
-    (type_of% (realize signature.{u} (fun _ p n => ∏ i ∈ range n, p.2.1 i p.2.2) (fun e => nomatch e))) Unit Unit where
+    (type_of% (realize signature.{u} actual.readout actual.anchor)) Unit Unit where
   unitName := `SequentialHellingerLocalization.finite_energy_positive_product.__information_unit
   realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SequentialHellingerLocalization.Product.family
   realizationSource := none
@@ -208,7 +208,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ p n => ∏ i ∈ range n, p.2.1 i p.2.2) (fun e => nomatch e))
+  readout := some (realize signature.{u} actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -242,9 +242,9 @@ namespace Likelihood
 def actual : Realization signature.{u} :=
   realize signature.{u} (fun _ p n => ∏ i ∈ range n,
     p.2.2.1 (List.ofFn (fun j : Fin i => p.2.2.2 j)) (p.2.2.2 i) /
-    p.2.1 (List.ofFn (fun j : Fin i => p.2.2.2 j)) (p.2.2.2 i)) (fun e => nomatch e)
+    p.2.1 (List.ofFn (fun j : Fin i => p.2.2.2 j)) (p.2.2.2 i)) (fun e => Empty.elim e)
 def rejected : Realization signature.{u} :=
-  realize signature.{u} (fun _ _ _ => 0) (fun e => nomatch e)
+  realize signature.{u} (fun _ _ _ => 0) (fun e => Empty.elim e)
 
 @[reducible] def arena : Arena where
   signature := signature.{u}
@@ -293,9 +293,7 @@ def family : Registration arena.{u} (arena.{u}.Law actual) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SequentialHellingerLocalization.trajectory_hellinger_likelihood_limits.{u})
-    (type_of% (realize signature.{u} (fun _ p n => ∏ i ∈ range n,
-    p.2.2.1 (List.ofFn (fun j : Fin i => p.2.2.2 j)) (p.2.2.2 i) /
-    p.2.1 (List.ofFn (fun j : Fin i => p.2.2.2 j)) (p.2.2.2 i)) (fun e => nomatch e))) Unit Unit where
+    (type_of% (realize signature.{u} actual.readout actual.anchor)) Unit Unit where
   unitName := `SequentialHellingerLocalization.trajectory_hellinger_likelihood_limits.__information_unit
   realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SequentialHellingerLocalization.Likelihood.family
   realizationSource := none
@@ -307,9 +305,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ p n => ∏ i ∈ range n,
-    p.2.2.1 (List.ofFn (fun j : Fin i => p.2.2.2 j)) (p.2.2.2 i) /
-    p.2.1 (List.ofFn (fun j : Fin i => p.2.2.2 j)) (p.2.2.2 i)) (fun e => nomatch e))
+  readout := some (realize signature.{u} actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
