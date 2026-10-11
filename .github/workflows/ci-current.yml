@@ -925,6 +925,9 @@ jobs:
             [tests-integration-mirror]
             tools/scripts/agent/integration-mirror-test.sh
             tools/scripts/agent/integration-mirror.sh
+            tools/scripts/worktree/worktree_protocol.py
+            tools/scripts/worktree/worktree_publication.py
+            tools/scripts/worktree/worktree_preservation.py
             [tests-lean]
             # NativeTestSupport stages the real compiler and package configuration;
             Makefile
