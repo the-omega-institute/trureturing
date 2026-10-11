@@ -70027,3 +70027,139 @@ $$
 
 所以，严格自匹配根的 CA 识别已经完成，但“FIB 同余 \(\Rightarrow\) Robin
 符号”仍然没有成立；本节把缺口收缩为同一 CA 胞腔内的实参数 residual 控制。
+
+## 457. 自匹配点的连续包络与 floor 损失分解
+
+§456 的 residual 还可以沿另一个切面拆开。这个拆分不引入新的价格源：它把
+同一 CA 指数剖面的整数约数和，与允许指数取实数的连续 Euler 包络逐素数比较。
+
+固定一个非事件稳定胞腔，记其支撑上界为 \(P\)，并置
+
+$$
+m_p(\varepsilon)=\lfloor Y_p(\varepsilon)\rfloor
+=a_p^-(\varepsilon)+1.
+$$
+
+定义连续包络和取整损失
+
+$$
+\mathcal C_P(\varepsilon)
+=\prod_{p\le P}\left(1-p^{-1-\varepsilon}\right)^{-1},
+$$
+
+$$
+\mathcal L_P(\varepsilon)
+=\sum_{p\le P}
+\log\frac{1-p^{-Y_p(\varepsilon)}}
+{1-p^{-m_p(\varepsilon)}}.
+$$
+
+由于 \(m_p\le Y_p\)，每一项损失非负：
+
+$$
+\boxed{\mathcal L_P(\varepsilon)\ge0.}
+\tag{457.1}
+$$
+
+### 命题 457.1（连续 Euler 包络的精确拆分）
+
+在该稳定胞腔内，令 \(N=N^-(\varepsilon)\)。则
+
+$$
+\boxed{
+\log\frac{\sigma(N)}N
+=\log\mathcal C_P(\varepsilon)-\mathcal L_P(\varepsilon).
+}
+\tag{457.2}
+$$
+
+**证明。** 对每个支撑素数，式（456.4）给出
+\(a_p+1=m_p\)，因而
+
+$$
+\log\frac{\sigma(N)}N
+=\sum_{p\le P}
+\log\frac{1-p^{-m_p}}{1-p^{-1}}.
+$$
+
+另一方面，由（456.1），
+
+$$
+p^{-Y_p(\varepsilon)}
+=\frac{p^\varepsilon-1}{p^{1+\varepsilon}-1},
+$$
+
+所以
+
+$$
+\frac{1-p^{-Y_p(\varepsilon)}}{1-p^{-1}}
+=\frac{p^{1+\varepsilon}}{p^{1+\varepsilon}-1}
+=\left(1-p^{-1-\varepsilon}\right)^{-1}.
+$$
+
+逐素数相减即得（457.2）。\(m_p\le Y_p\) 又给出（457.1）。\(\square\)
+
+### 推论 457.2（自匹配点的两份 Robin 预算）
+
+若 \(t>1\) 是严格自匹配根，满足
+
+$$
+N^-(t)=e^t,
+\qquad
+\varepsilon_*={1\over t\log t},
+$$
+
+则其对数 Robin 裕度有精确分解
+
+$$
+\boxed{
+\log\frac{e^\gamma\log\log N^-(t)}
+{\sigma(N^-(t))/N^-(t)}
+=\underbrace{\gamma+\log(\log t)-\log\mathcal C_P(\varepsilon_*)}
+_{\text{连续包络差}}
++\underbrace{\mathcal L_P(\varepsilon_*)}
+_{\text{floor 取整损失}}.
+}
+\tag{457.3}
+$$
+
+因此，连续包络差可以为负；要得到 Robin 正性，必须证明它的负部由同一
+指数剖面的取整损失支付。FIB 同余、支撑和指数向量本身不提供这两项的独立
+符号界；它们至多通过（457.2）确定两项之差的实际总和。
+
+### 命题 457.3（取整损失的逐素数界）
+
+令 \(u_p=\{Y_p(\varepsilon)\}\)，并令 \(x_p=p^{-Y_p(\varepsilon)}\)。则
+
+$$
+\boxed{
+\frac{x_p}{1-x_p}\,u_p\log p
+\le
+\log\frac{1-x_p}{1-x_pp^{u_p}}
+\le
+\frac{x_pp^{u_p}}{1-x_pp^{u_p}}\,u_p\log p.
+}
+\tag{457.4}
+$$
+
+求和后，左、右两侧分别给出 \(\mathcal L_P(\varepsilon)\) 的下界和上界。
+
+**证明。** 对 \(0\le s\le u_p\log p\) 积分：
+
+$$
+\log\frac{1-x_p}{1-x_pp^{u_p}}
+=\int_0^{u_p\log p}
+\frac{x_pe^s}{1-x_pe^s}\,ds.
+$$
+
+被积函数严格递增，分别用其在区间左、右端点的值估计，即得（457.4）。
+\(\square\)
+
+式（457.4）给出当前 FIB 观察的一个具体缺口：§456 中的无权 residual
+\(\sum u_p\log p\) 不是取整损失本身；后者还带有随 \(p\) 变化且随素数衰减的
+Euler 权重。要把 FIB 地址用于（457.3），必须增加能恢复这些
+加权分数部，或直接恢复同一素数幂层的取整损失的观察器。继续增加只记录
+\(N\equiv1\pmod {F_r}\) 的状态不会支付这个新义务。
+
+本节是 §456 的同一 CA 胞腔内代数分解；它没有给出连续包络差的全局符号，
+没有证明 Robin 不等式或 RH，也没有把有限自匹配点的正裕度提升为无穷全称结论。
