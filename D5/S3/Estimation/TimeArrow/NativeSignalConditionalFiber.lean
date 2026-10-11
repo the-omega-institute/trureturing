@@ -659,5 +659,30 @@ theorem native_joint_row_histogram_law {M q s : ℕ} (S : Support M q)
   rw [he]
   exact native_signed_departure_occupation_law S r e o hq hqm hr hr1 ha ha1 ap am hap ham
 
+/-- Every background row retains both original departure counts on a
+complete collapsed history fiber. -/
+theorem native_background_row_counts {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (y : Fiber S e o) (i : Fin M) (hi : i ∉ S.val) (z : ℝ) :
+    count e y.val i z = count e o i z := by
+  classical
+  rw [native_fiber_departure_counts S e o y i z,
+    native_fiber_departure_counts S e o (⟨o, rfl⟩ : Fiber S e o) i z]
+  apply congrArg Finset.card
+  ext j
+  simp only [mem_filter, mem_univ, true_and]
+  have hcollapse := congrFun y.property (departureSite s e j)
+  have he : siteEquiv M s e y.val (departureSite s e j) = Sum.inl i ↔
+      siteEquiv M s e o (departureSite s e j) = Sum.inl i := by
+    constructor
+    · intro h
+      have hc : collapseVertex S (siteEquiv M s e o (departureSite s e j)) =
+          collapseVertex S (Sum.inl i) := hcollapse.symm.trans (congrArg (collapseVertex S) h)
+      exact collapseVertex_injective_off_signal S (by simp [collapseVertex, hi]) hc
+    · intro h
+      have hc : collapseVertex S (siteEquiv M s e y.val (departureSite s e j)) =
+          collapseVertex S (Sum.inl i) := hcollapse.trans (congrArg (collapseVertex S) h)
+      exact collapseVertex_injective_off_signal S (by simp [collapseVertex, hi]) hc
+  rw [he]
+
 end
 end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber

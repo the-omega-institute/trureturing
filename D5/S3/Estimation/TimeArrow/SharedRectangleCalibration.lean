@@ -6,7 +6,7 @@
    utility: none
    digest: Four adjacent score cells share one moving logistic calibration. -/
 
-import Mathlib
+import D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 
 open scoped BigOperators Topology
 open Finset Filter
@@ -390,6 +390,199 @@ theorem positive_feedback_germ {ι : Type*} [Fintype ι] (outside : ι → ℝ)
   exact ⟨(hθ u hu).1, by linarith, B u, hlo.le, hhi.le,
     compensated_group_deriv outside r 0 N R U q bg u (θ u) _ θ (hθ u hu).2.1 rfl
       hcal (ne_of_gt (hθ u hu).2.2)⟩
+
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+
+/-- Only true signal rows in the four adjacent count cells receive an
+interior cell index. All background rows remain in the full outside sum. -/
+def nativeRowCell {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e)
+    (k l : ℕ) (i : Fin M) : Option (Fin 4) := by
+  classical
+  exact if i ∈ S.val then
+    if count e o i 1 = k ∧ count e o i (-1) = l then some 0 else
+    if count e o i 1 = k + 1 ∧ count e o i (-1) = l then some 1 else
+    if count e o i 1 = k ∧ count e o i (-1) = l + 1 then some 2 else
+    if count e o i 1 = k + 1 ∧ count e o i (-1) = l + 1 then some 3 else none
+  else none
+
+private theorem native_row_cell_iff {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (k l : ℕ) (i : Fin M) (j : Fin 4) :
+    nativeRowCell S e o k l i = some j ↔ i ∈ S.val ∧
+      count e o i 1 = k + ![0, 1, 0, 1] j ∧
+      count e o i (-1) = l + ![0, 0, 1, 1] j := by
+  classical
+  by_cases hs : i ∈ S.val
+  · by_cases hA : count e o i 1 = k ∧ count e o i (-1) = l
+    · fin_cases j <;> simp [nativeRowCell, hs, hA, hA.1, hA.2]
+    · by_cases hB : count e o i 1 = k + 1 ∧ count e o i (-1) = l
+      · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hB.1, hB.2]
+      · by_cases hC : count e o i 1 = k ∧ count e o i (-1) = l + 1
+        · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hC, hC.1, hC.2]
+        · by_cases hD : count e o i 1 = k + 1 ∧ count e o i (-1) = l + 1
+          · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hC, hD, hD.1, hD.2]
+          · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hC, hD]
+  · simp [nativeRowCell, hs]
+
+/-- The exact labelled row subsets supplying the four calibration counts. -/
+def nativeCalibrationCells {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (k l : ℕ) (j : Fin 4) : Finset (Fin M) := by
+  classical
+  exact univ.filter fun i => nativeRowCell S e o k l i = some j
+
+private theorem native_row_score_offset {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (o : Obs M s e) (k l : ℕ) (i : Fin M) (j : Fin 4)
+    (hij : nativeRowCell S e o k l i = some j) :
+    score q r e o i -
+      ((k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+        (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))) =
+      offsets r (compensation M q r) j := by
+  have hi := (native_row_cell_iff S e o k l i j).mp hij
+  unfold score
+  rw [hi.2.1, hi.2.2]
+  fin_cases j <;> simp [offsets] <;> ring
+
+/-- The full original row calibration is the same one shared by the four
+cells. The outside index contains every background row and every signal row
+outside the rectangle; no row is discarded. -/
+theorem native_full_calibration_sum {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (o : Obs M s e) (k l : ℕ) (x : ℝ) :
+    let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+      (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+    let C : Fin 4 → ℝ := fun j => (nativeCalibrationCells S e o k l j).card
+    let outside : {i : Fin M // nativeRowCell S e o k l i = none} → ℝ :=
+      fun i => score q r e o i.val - z0
+    (∑ i : Fin M, Real.sigmoid (x + (score q r e o i - z0))) =
+      calibratedMean outside r (compensation M q r)
+        (C 0 + C 1 + C 2 + C 3) (C 0 + C 2) (C 0 + C 1) (C 0) x := by
+  classical
+  dsimp only
+  let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+      (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+  let C : Fin 4 → ℝ := fun j => (nativeCalibrationCells S e o k l j).card
+  let f : Fin M → ℝ := fun i => Real.sigmoid (x + (score q r e o i - z0))
+  have hf (j : Fin 4) :
+      (∑ i ∈ univ.filter (fun i => nativeRowCell S e o k l i = some j), f i) =
+        C j * Real.sigmoid (x + offsets r (compensation M q r) j) := by
+    calc
+      _ = ∑ _i ∈ nativeCalibrationCells S e o k l j,
+          Real.sigmoid (x + offsets r (compensation M q r) j) := by
+        apply sum_congr rfl
+        intro i hi
+        dsimp only [f]
+        rw [native_row_score_offset S r e o k l i j (mem_filter.mp hi).2]
+      _ = _ := by simp only [sum_const, nsmul_eq_mul]; rfl
+  have hcounts (j : Fin 4) :
+      cellCounts (C 0 + C 1 + C 2 + C 3) (C 0 + C 2) (C 0 + C 1) (C 0) j = C j := by
+    fin_cases j <;> dsimp [cellCounts] <;> ring
+  have hsum := (sum_fiberwise univ (nativeRowCell S e o k l) f).symm
+  rw [Fintype.sum_option] at hsum
+  rw [hsum]
+  unfold calibratedMean
+  change (∑ i with nativeRowCell S e o k l i = none, f i) +
+      (∑ j, ∑ i with nativeRowCell S e o k l i = some j, f i) =
+    (∑ i : {i : Fin M // nativeRowCell S e o k l i = none}, f i.val) +
+      ∑ j, cellCounts (C 0 + C 1 + C 2 + C 3) (C 0 + C 2) (C 0 + C 1) (C 0) j *
+        Real.sigmoid (x + offsets r (compensation M q r) j)
+  simp only [hcounts]
+  congr 1
+  · exact (sum_subtype (univ.filter fun i => nativeRowCell S e o k l i = none)
+      (fun i => by simp) f)
+  · exact sum_congr rfl (fun j _ => hf j)
+
+private theorem native_calibrated_row_parameter {M q s : ℕ} (r : ℝ)
+    (e : Experiment) (o : Obs M s e)
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (t : ℝ) (ht : 0 < t) (i : Fin M) :
+    let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+    Real.sigmoid (score q r e o i - Real.log B0 + Real.log t) =
+      t * weight q r e o i / (B0 + t * weight q r e o i) := by
+  let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+  have hB0 : 0 < B0 := by
+    apply div_pos <;> exact_mod_cast (by omega : 0 < _)
+  have hw := ((finite_support_bayes (s := s) hq hqm hr hr1 ha ha1 e).2.2.2.1 o).2.1 i
+  have hexp : Real.exp (score q r e o i - Real.log B0 + Real.log t) =
+      t * weight q r e o i / B0 := by
+    rw [Real.exp_add, Real.exp_sub, Real.exp_log hB0, Real.exp_log ht, ← hw.2]
+    ring
+  dsimp only
+  rw [Real.sigmoid_def, Real.exp_neg, hexp]
+  change (1 + (t * weight q r e o i / B0)⁻¹)⁻¹ =
+    t * weight q r e o i / (B0 + t * weight q r e o i)
+  have hden : B0 + t * weight q r e o i ≠ 0 := ne_of_gt (add_pos hB0 (mul_pos ht hw.1))
+  field_simp [ne_of_gt ht, ne_of_gt hw.1, ne_of_gt hB0, hden]
+  <;> ring
+
+/-- The original calibrated Bernoulli parameters, with their original common
+multiplicative parameter, use exactly the same full-row four-cell equation. -/
+theorem native_original_calibration_identification {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (o : Obs M s e) (k l : ℕ)
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (t : ℝ) (ht : 0 < t) :
+    let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+    let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+      (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+    let x := z0 - Real.log B0 + Real.log t
+    let C : Fin 4 → ℝ := fun j => (nativeCalibrationCells S e o k l j).card
+    let outside : {i : Fin M // nativeRowCell S e o k l i = none} → ℝ :=
+      fun i => score q r e o i.val - z0
+    (∑ i : Fin M, t * weight q r e o i / (B0 + t * weight q r e o i)) =
+      calibratedMean outside r (compensation M q r)
+        (C 0 + C 1 + C 2 + C 3) (C 0 + C 2) (C 0 + C 1) (C 0) x := by
+  dsimp only
+  rw [← native_full_calibration_sum]
+  apply sum_congr rfl
+  intro i _
+  rw [← native_calibrated_row_parameter r e o hq hqm hr hr1 ha ha1 t ht i]
+  congr 1
+  ring
+
+/-- The original group-zero posterior center and auxiliary Bernoulli center
+both use all rows of the same count cell, including background rows. -/
+theorem native_group_zero_centers {M q s : ℕ} (r : ℝ)
+    (e : Experiment) (o : Obs M s e) (k l : ℕ)
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (t : ℝ) (ht : 0 < t) (i0 : Fin M)
+    (hi0 : count e o i0 1 = k ∧ count e o i0 (-1) = l) :
+    let All : Support M M := ⟨univ, by simp⟩
+    let G := nativeCalibrationCells All e o k l 0
+    let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+    let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+      (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+    (∑ i ∈ G, inclusion q r e o i) = (G.card : ℝ) * inclusion q r e o i0 ∧
+    (∑ i ∈ G, t * weight q r e o i / (B0 + t * weight q r e o i)) =
+      (G.card : ℝ) * Real.sigmoid (z0 - Real.log B0 + Real.log t) := by
+  classical
+  dsimp only
+  let All : Support M M := ⟨univ, by simp⟩
+  let G := nativeCalibrationCells All e o k l 0
+  have hc (i : Fin M) (hi : i ∈ G) :
+      count e o i 1 = k ∧ count e o i (-1) = l := by
+    have h := (native_row_cell_iff All e o k l i 0).mp (mem_filter.mp hi).2
+    simpa using h.2
+  have hw (i : Fin M) (hi : i ∈ G) : weight q r e o i = weight q r e o i0 := by
+    simp only [weight, (hc i hi).1, (hc i hi).2, hi0.1, hi0.2]
+  have ho := ((finite_support_bayes (s := s) hq hqm hr hr1 ha ha1 e).2.2.2.1 o).2.2.2.2
+  constructor
+  · calc
+      _ = ∑ _i ∈ G, inclusion q r e o i0 := by
+        apply sum_congr rfl
+        intro i hi
+        exact le_antisymm ((ho i i0).mpr (le_of_eq (hw i hi)))
+          ((ho i0 i).mpr (le_of_eq (hw i hi).symm))
+      _ = _ := by simp only [sum_const, nsmul_eq_mul]
+  · calc
+      _ = ∑ _i ∈ G, Real.sigmoid
+          ((k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+            (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r)) -
+              Real.log (((M - q : ℕ) : ℝ) / (q : ℝ)) + Real.log t) := by
+        apply sum_congr rfl
+        intro i hi
+        rw [← native_calibrated_row_parameter r e o hq hqm hr hr1 ha ha1 t ht i]
+        simp only [score, (hc i hi).1, (hc i hi).2]
+      _ = _ := by simp only [sum_const, nsmul_eq_mul]
 
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
