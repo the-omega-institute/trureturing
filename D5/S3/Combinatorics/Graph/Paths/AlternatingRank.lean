@@ -6,6 +6,17 @@
    utility: none
    digest: Alternating edge-subgraph ranks of paths over the binary field. -/
 
+/-
+The path difference and its partition separator have proof_shape: content and
+admission_basis: escape-witness. The live relation is the alternating rank sum
+of all edge subgraphs of one path, used by path_separator and then by
+partition_rank_independent. The separator uses the same colour word for every
+test partition. All purely algebraic and finite-coordinate helpers are consumed
+on this chain; they supply no independent admission basis.
+The real coefficient argument does not assert a graph-state realization or an
+entropy-weight identity.
+-/
+
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Combinatorics.SimpleGraph.Walk.Operations
 import Mathlib.Data.Setoid.Basic
@@ -251,12 +262,13 @@ private theorem masked_alternating_rank {n : ℕ} (hn : 0 < n) (mask : Fin n →
     obtain ⟨i, hi⟩ := h
     exact masked_sum_zero mask i (Bool.eq_false_iff.mpr hi) (fun w => (adjacency w).rank)
 
-private theorem exists_color_word {α : Type*} [Fintype α] (π : Setoid α) (hπ : π ≠ ⊤) :
+private theorem exists_color_word {α : Type*} [Finite α] (π : Setoid α) (hπ : π ≠ ⊤) :
     ∃ (n : ℕ) (_ : 0 < n) (c : Fin (n + 1) → α),
       (∀ k : Fin n, ¬ π (c k.castSucc) (c k.succ)) ∧
       ∀ x y, ¬ π x y → ∃ k : Fin n,
         (c k.castSucc = x ∧ c k.succ = y) ∨ (c k.castSucc = y ∧ c k.succ = x) := by
   classical
+  let := Fintype.ofFinite α
   have hab : ∃ a b, ¬ π a b := by
     by_contra h
     apply hπ
@@ -367,7 +379,7 @@ private theorem masked_path {α : Type*} {n : ℕ} (σ : Setoid α)
 
 /-- A single coloured path separates a partition from every partition not refining it.
 The same path and colour word are used for all test partitions. -/
-theorem path_separator {α : Type*} [Fintype α] (π : Setoid α) (hπ : π ≠ ⊤) :
+theorem path_separator {α : Type*} [Finite α] (π : Setoid α) (hπ : π ≠ ⊤) :
     ∃ (n : ℕ) (_ : 0 < n) (c : Fin (n + 1) → α), ∀ σ : Setoid α,
       (∑ w : Fin n → Bool,
         (-1 : ℤ) ^ (Finset.univ.filter (fun j => w j = true)).card *
@@ -379,6 +391,7 @@ theorem path_separator {α : Type*} [Fintype α] (π : Setoid α) (hπ : π ≠ 
   rw [masked_alternating_rank hn]
   congr 1
   simp only [decide_eq_true_eq]
+  apply propext
   constructor
   · intro h x y hσ
     by_contra hπxy
@@ -388,7 +401,7 @@ theorem path_separator {α : Type*} [Fintype α] (π : Setoid α) (hπ : π ≠ 
   · intro h k hσ
     exact hc k (h hσ)
 
-private theorem independent_setoids {α ι : Type*} [Fintype α] [Fintype ι]
+private theorem independent_setoids {α ι : Type*} [Finite α] [Fintype ι]
     (p : ι → Setoid α) (hp : Function.Injective p) (hproper : ∀ i, p i ≠ ⊤)
     (a : ι → ℝ)
     (h : ∀ (N : ℕ) (A : Matrix (Fin N) (Fin N) (ZMod 2)),
@@ -470,20 +483,25 @@ private theorem partition_kernel_ne_top {α : Type*} [Fintype α] [DecidableEq �
     simpa [hx, hy] using he)
   omega
 
+set_option maxHeartbeats 600000 in
+-- Elaborating the finite partition subtype requires its nested finite-set instances.
 /-- The two- and three-block partition rank functions are linearly independent.
 Every number of vertices, symmetric zero-diagonal binary matrix, and colouring is quantified. -/
-theorem partition_rank_independent (q : ℕ) (hq : 2 ≤ q)
+theorem partition_rank_independent (q : ℕ) (_hq : 2 ≤ q)
     (a : {P : Finpartition (Finset.univ : Finset (Fin q)) //
       P.parts.card = 2 ∨ P.parts.card = 3} → ℝ)
     (h : ∀ (N : ℕ) (A : Matrix (Fin N) (Fin N) (ZMod 2)),
       A.IsSymm → (∀ j, A j j = 0) → ∀ c : Fin N → Fin q,
         ∑ P, a P * ((maskedAdjacency (Setoid.ker P.val.part) c A).rank : ℝ) = 0) :
     ∀ P, a P = 0 := by
-  apply independent_setoids (fun P => Setoid.ker P.val.part) _ _ a h
+  refine independent_setoids
+    (fun P : {P : Finpartition (Finset.univ : Finset (Fin q)) //
+      P.parts.card = 2 ∨ P.parts.card = 3} => Setoid.ker P.val.part) ?_ ?_ a h
   · intro P Q he
     exact Subtype.ext (partition_kernel_injective he)
   · intro P
     apply partition_kernel_ne_top
     rcases P.property with hp | hp <;> omega
+
 
 end D5.S3.Combinatorics.Graph.Paths.AlternatingRank
