@@ -1456,32 +1456,59 @@ r_{j+1,j}z
 =\left\{(c_j)_j:
 c_j\in C_j,\ q_{j+1,j}(c_{j+1})=c_j\right\}.
 \]
-其元素只是所有有限层记录的相容族，不携带先验时间参数、惯性参数或连续空间。逆极限非空性不是集合论自动事实，必须由这些压缩映射的相容性与有限层一致性另行证明。称 \(c=(c_j)_j\) 为熵稳定静态场，若每个 \(p_j\) 位于 \(\Delta_j^\circ\)，并且对所有允许切向量 \(u\in T_{p_j}\Delta_j\)
+其元素只是所有有限层记录的相容族，不携带先验时间参数、惯性参数或连续空间。逆极限非空性不是集合论自动事实，必须由压缩映射的相容性与有限层一致性另行证明。
+
+定义第 \(j\) 层概率场的 canonical 负熵为
 \[
-D^2\mathcal V_{\mathrm{ent}}(p_j)[u,u]
-=\sum_{v\in V_j}\frac{u_v^2}{p_{j,v}}\ge0.
+\mathcal V_{\mathrm{ent},j}(p)
+=\sum_{v\in V_j}\sum_{s\in\Sigma}
+p_{v,s}\log p_{v,s},
+\qquad p\in\Pi_j^\circ.
 \]
-若存在 \(\mu_j>0\) 使左端至少为 \(\mu_j\|u\|^2\)，称其在第 \(j\) 层严格熵稳定。这里的稳定性是由概率单纯形的负熵凸性导出的数学性质，不等于尚未定义的物理能量稳定性。
+称 \(c=(c_j)_j\) 为熵稳定静态场，若每个 \(p_j\) 位于
+\(\Pi_j^\circ=(\Delta(\Sigma)^\circ)^{V_j}\)，并且对所有
+\(u\in T_{p_j}\Pi_j\)
+\[
+D^2\mathcal V_{\mathrm{ent},j}(p_j)[u,u]
+=\sum_{v\in V_j}\sum_{s\in\Sigma}
+\frac{u_{v,s}^2}{p_{j,v,s}}\ge0.
+\]
+若存在 \(\mu_j>0\) 使左端至少为
+\(\mu_j\|u\|^2\)，称其在第 \(j\) 层严格熵稳定。这里的稳定性是由逐节点概率单纯形的负熵凸性导出的数学性质，不等于尚未定义的物理能量稳定性。若同时要求 graph sector 稳定，则另以
+\[
+Q_j(\phi)=\|B_j^*\phi\|^2\ge0
+\]
+作为图场的 canonical 非负二次型；这仍不引入物理惯性或时间演化。
 
 ### 定理 16.4（熵势的 canonical Hessian）
 
-在每个内部有限单纯形 \(\Delta_j^\circ\) 上，负熵
+在每个内部局部概率场 \(\Pi_j^\circ\) 上，负熵的 Hessian 满足
 \[
-\mathcal V_{\mathrm{ent}}(p)=\sum_vp_v\log p_v
+D^2\mathcal V_{\mathrm{ent},j}(p)[u,u]
+=\sum_{v\in V_j}\sum_{s\in\Sigma}
+\frac{u_{v,s}^2}{p_{v,s}}
+=:g_{F,j,p}(u,u)>0
 \]
-的 Hessian 满足
+对任意非零 \(u\in T_p\Pi_j\)。因此 Fisher 纤维度量不是额外物理能量，而是负熵势的 canonical 二阶型。若在每个节点取 seam 方向
 \[
-D^2\mathcal V_{\mathrm{ent}}(p)[u,u]
-=\sum_v\frac{u_v^2}{p_v}
-=g_{F,p}(u,u)>0
+u_{v,\cdot}=a_vd,
 \]
-对任意非零 \(u\in T_p\Delta_j\)。因此 Fisher 纤维度量不是额外物理能量，而是负熵势的 canonical 二阶型；沿五态 seam \(u=d\) 时它恰为
+则
+\[
+g_{F,j,p}(u,u)
+=\sum_{v\in V_j}a_v^2
+\left(
+p_{v,0}^{-1}+p_{v,2}^{-1}
++p_{v,5}^{-1}+p_{v,25}^{-1}
+\right).
+\]
+当 \(V_j=\{*\}\) 且 \(a_*=1\) 时，这正是五态纤维的
 \[
 \mathcal I(\kappa)
 =p_0^{-1}+p_2^{-1}+p_5^{-1}+p_{25}^{-1}.
 \]
 
-证明：逐项微分 \(p_v\log p_v\) 两次得到 \(1/p_v\)，再限制到质量零切空间即可。正性来自所有 \(p_v>0\)。沿 \(d\) 的分量平方均为一，代入得到最后式。证毕。
+证明：逐项微分 \(p_{v,s}\log p_{v,s}\) 两次得到 \(1/p_{v,s}\)，再限制到逐节点质量零切空间即可。正性来自所有 \(p_{v,s}>0\)。代入 \(u_{v,\cdot}=a_vd\) 并使用 \(d_s^2=1\) 得到 seam 公式。证毕。
 
 ### 定理 16.5（保守扩展定理）
 
