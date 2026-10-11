@@ -9,7 +9,7 @@
 /-
 result:
   proof_shape: content
-  escape_witness: sharp weight-space injectivity from Sl2WeightInjectivity,
+  escape_witness: sharp weight-space injectivity from Sl2WeightFiltration,
     with the dual giving surjectivity.
   admission_basis: open-problem-resolution (#12310; Proved)
 Direct frozen dependencies:
