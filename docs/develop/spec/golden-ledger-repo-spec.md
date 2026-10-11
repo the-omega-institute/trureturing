@@ -457,40 +457,38 @@ project 恢复在 current 与 Lean build 单元中优先请求读者基线分支
 
 **A23 Lean 本地共享 artifact cache**
 
-本节规定同一主机上各检出共享 Lake 原生 artifact cache 的契约。
+本节规定主检出 donor 的 clonefile、Lake 共享 artifact cache、每个 worktree 自身的 `.lake`、报告种子和跨会话复用之间的关系。Lake 的共享缓存仍是 `~/.elan/toolchains/<lean-toolchain>/lake/cache`；入口不设置 `LAKE_CACHE_DIR`。目录按工具链分区并可被同一工具链的多个项目使用。缓存与检出同一文件系统时，Lake 以硬链接恢复和写入；跨文件系统时退化为复制，语义不变。
 
-**位置。** 共享缓存是 Lake 默认缓存目录 `~/.elan/toolchains/<lean-toolchain>/lake/cache`，入口不设置 `LAKE_CACHE_DIR`。目录随工具链分区，工具链变更即换用新目录。该目录属于整个工具链，不限于本仓库。缓存与各检出位于同一文件系统时，Lake 以硬链接写入和恢复产物；跨文件系统时退化为复制，语义不变。
+**入口矩阵。** 所有入口默认不使用 donor clonefile。全量入口是不带 `LEAN_TARGETS` 的 `make lean`、`make lean-report`、`make test` 和 `make gate`；定向入口是 `make lean LEAN_TARGETS=…`、`make lean-report-scoped`、`deposit`、`deposit-uncovered`、`cover`、`cover-batch` 和 `emit`。两类入口都按「worktree 本地有效产物 → Lake 共享缓存 → 本地编译」取得所需产物；全量与定向只改变请求的目标范围。定向范围包括所选目标、准入检查点名的 utility 输入及它们的 import 闭包，并不声称只编译命令中列出的模块。`make test`、`make gate` 调用的全量报告也遵守全量入口规则。
 
-**读者。** 所有 linked worktree 与 CI 都是读者。入口与各 lakefile 均不设置 `LAKE_ARTIFACT_CACHE`、`LAKE_RESTORE_ARTIFACTS` 或 `enableArtifactCache`；在此缺省下 Lake 读取缓存、不写入缓存。`LAKE_ARTIFACT_CACHE=false` 同时关闭读取，不用于表达只读。读者的某个模块在本地不是最新时，Lake 以该模块的输入哈希查找缓存：命中则把该模块的全部产物恢复到读者的 build 目录，lean-inspector 照旧从 build 目录读取；未命中则在本地编译，产物不进入共享缓存。读者只读指本仓库入口不向该目录发布本地构建产物；以 Lake 远端缓存服务映射导入的条目在读取时可能把远端产物下载进该目录，这类映射不在本节规则之内。CI 不运行 warm，不写入共享缓存；runner 上该目录随 `~/.elan` 的 Actions 缓存恢复时，其中的条目按同一读者规则使用。
+入口不把 `.lake` 的存在、warm/cold 标签或报告种子缺失称为缓存不足。Lake 先按本次请求解析真实任务，并尝试本地有效产物和共享缓存；只有仍有必需任务需要构建，且 Lake 原生不编译探测给出 needs-build，才是本次请求意义下的「缓存不足」。探测可能恢复文件或物化依赖，不能视为只读扫描。配置错误、依赖取包失败、文件系统错误以及报告 bundle 不兼容分别报告为各自错误；新改动产生的正常增量编译也不证明 donor 能补。定向入口的未命中直接交给 Lake 本地构建，不提示重播。
 
-**写者。** 本仓库各入口中唯一的写者是主检出上的 `make warm-donor`；同一工具链的其他项目也可能写入该目录。本仓库只在「清理」一段规定的维护操作中整体清空该目录，此外不删除任何条目。warm-donor 的前置条件不变（干净的 dev 检出）。warm 以 `LAKE_ARTIFACT_CACHE=true LAKE_RESTORE_ARTIFACTS=true` 运行 `make lean` 与 `make lean-report REBUILD_REPORT_CACHE=1`。后者跳过整份报告收据复用，使 Lake 遍历全部逐模块报告 facet；已是最新的产物直接写入缓存，不重新编译。warm 遍历到的每个模块编译产物与逐模块报告 artifact 都写入缓存；`LAKE_RESTORE_ARTIFACTS=true` 使主检出 build 目录保留全部产物，供 clonefile 播种与 inspector 读取。Lake 把写入缓存的本地文件设为只读；写 `.lake/build` 的程序先删除目标再写入，不原地改写已有文件。
+**位置、读者与写者。** 所有 linked worktree 与 CI 都是读者。入口与各 lakefile 均不设置 `LAKE_ARTIFACT_CACHE`、`LAKE_RESTORE_ARTIFACTS` 或 `enableArtifactCache`；在此缺省下 Lake 读取共享缓存、不向其发布本地构建产物。`LAKE_ARTIFACT_CACHE=false` 同时关闭读取，不用于表达只读。命中时，Lake 将模块的全部产物恢复到读者的 build 目录，lean-inspector 照旧从该目录读取；未命中时在本地编译，产物不进入共享缓存。以 Lake 远端缓存服务映射导入的条目在读取时可能下载到该目录，这类映射不在本节规则内。CI 不运行 warm，不写入共享缓存；runner 随 `~/.elan` 恢复的目录按同一读者规则使用。
 
-**清理。** warm 不清理缓存。本仓库写入缓存的内容是自上次清理以来各次 warm 写入的产物之并。`lake cache clean` 删除整个工具链缓存目录，是单独的维护操作，只在主机上没有使用该工具链的 Lean 构建或报告时运行。清理若与读者并发：读者查找时产物文件已缺失、且映射中也没有可用的存档，Lake 记录警告并按未命中在本地编译；读者已解析出产物路径、在恢复前文件被删除，则恢复以构建错误终止，重跑即按未命中处理。两种情况都不使读者得到与其输入哈希不符的产物：缓存产物按内容哈希寻址，前提是内容哈希在实际出现的产物之间没有碰撞。
+本仓库唯一的写者是主检出上的 `make warm-donor`；同一工具链的其他项目也可能写入该目录。本仓库只在「清理」一段规定的维护操作中整体清空该目录，此外不删除条目。warm-donor 要求干净的 dev 检出，以 `LAKE_ARTIFACT_CACHE=true LAKE_RESTORE_ARTIFACTS=true` 运行 `make lean` 与 `make lean-report REBUILD_REPORT_CACHE=1`。后者遍历逐模块报告 facet；已是最新的产物直接写入缓存，不重新编译。warm 遍历到的模块产物和逐模块报告 artifact 都写入缓存；主检出的 build 目录保留这些产物。Lake 把写入缓存的文件设为只读；写 `.lake/build` 的程序先删除目标再写入，不原地改写已有文件。
 
-**按用途播种。** worktree 的首个 Lean 命令前，`lean-cache-ensure` 按入口用途准备 `.lake`：
+**依赖源码。** `.lake/packages` 缺少依赖源码时，由 canonical ensure 所属的启动流程按 manifest 调用 Lake 依赖物化，取得指定 revision。这是 Git 取得源码，不是 donor clonefile；调用者不得在冷树先裸跑 `lake`。依赖包自己的产物仍按「本地有效产物 → 共享缓存 → 本地编译」处理。网络、Git 或指定 revision 取得失败如实失败，不静默改成整树复制。
 
-- 全量用途——不带 `LEAN_TARGETS` 的 `make lean`、`make lean-report`，以及调用它们的入口——由主检出 clonefile 整个 `.lake`。
-- 定向用途——带 `LEAN_TARGETS` 的 `make lean`——只 clonefile `.lake/packages`；项目 build 目录不复制，所需模块由 Lake 从共享缓存恢复。
-- `.lake` 已存在时不再 clonefile；缺失或过期的模块由共享缓存恢复，未命中才在本地编译。
+**跨会话复用。** 被复用的 worktree 保留既有 `.lake`，它是下一次 canonical 入口的增量起点；会话切换不是失效原因。复用键不含会话号、HEAD、BASE 或 donor 身份，也不把程序字节、全局摘要、会话号或提交号加入 §10.4 的键。pin 不兼容由现役门明确拒绝并给出恢复路径。`make worktree` 复用只执行既有分支、祖先、pin 和非 symlink 校验，不物化、修复或替换缓存。
 
-**报告种子。** linked worktree 的 `make lean-report` 在检查种子之前，若本地规范种子缺失、不完整、损坏或报告格式不符，先从主检出复制规范报告种子（报告、四个 sidecar 与成功收据）；复制所得种子须满足同样的完整性与格式要求，满足后作为增量起点经 Lake `:report` 补齐，逐模块报告 artifact 由共享缓存恢复。复制所得种子仍不满足时，按 §8.3 的既有规则拒绝。`judgeInputs` 与 utility 输入不进入共享缓存，由各 worktree 自行生成。
+**显式 clonefile 补救。** 全量入口在完成本地和共享恢复后得到 Lake needs-build，才提示 AI 选择补救。补救须在本 worktree 的缓存任务结束后，只删除该 worktree 的 `.lake`，核对 donor 有实际预热完成的收据，再以一次性显式 clonefile 选择运行 `lean-cache-ensure` 从主检出播种；参数名由 #15158 实施确定，本规范不把它写成现有可运行命令。`warm-donor` 退出 0 且收据为 `skipped` 不算预热。补救不清共享缓存、不碰其他 worktree、不运行 `clean-all`；clonefile 后仍由 Lake 补差，不承诺零编译或更快。默认不 clonefile，因此删除 `.lake` 后再运行默认 ensure 不会隐式恢复 clonefile。
 
-**正确性。** 下列性质由 `D5/S3/ConceptDynamics/Governance/TraceKeyedArtifactCacheSoundness` 中经 Lean kernel 验证的定理承担：
+**清理。** warm 不清理缓存。本仓库写入缓存的内容是自上次清理以来各次 warm 写入的产物之并。`lake cache clean` 删除整个工具链缓存目录，是单独的维护操作，只在主机上没有使用该工具链的 Lean 构建或报告时运行。清理若与读者并发：读者查找时产物文件已缺失且无可用存档，Lake 记录警告并按未命中在本地编译；读者已解析路径而文件在恢复前被删除，则恢复以构建错误终止，重跑按未命中处理。两种情况都不使读者得到与输入哈希不符的产物，前提是实际出现的产物之间没有内容哈希碰撞。
 
-- `cachedBuild_eq_build`：缓存状态只由写者从零构建的产物经 store 写入，并可被任意次 clean 清空；这些操作与读者查找无论如何交错，读者每个模块得到的产物都等于从零构建的产物。
-- `cachedBuild_restores_unaffected`：模块在写者快照与读者快照中源码相同、依赖集相同且依赖递归地满足同一条件，并且读者查找时缓存在该模块写者快照的键下存有产物，则读者对该模块得到的就是这个缓存产物。读者在本地编译的模块因此都在改动的依赖闭包之内，或在查找时缓存缺少对应的键。
+**报告种子。** 整库报告种子由报告、四个 sidecar 和成功收据组成，只服务 `make lean-report` 以及调用它的 `make test`、`make gate`。`make lean` 本身不需要它。`make lean-report-scoped` 及其调用者不读取也不覆盖整库种子；逐模块 `:report` 产物与聚合报告种子是不同对象。linked worktree 缺少有效整库种子时，拟议规则是从主检出复制这五件工件，沿用既有完整性和格式检查，再由 Lake `:report` 增量补齐；当前入口仍以 `reason=linked-worktree` 拒绝，此复制规则和其余 A23 写者调整由 #15158 跟踪。`judgeInputs` 与 utility 输入不进入共享缓存，由各 worktree 自行生成。
 
-定理的适用边界：
+**弱参数与键。** 已核对 Lake 行为：`weakLeanArgs = ["-j1"]` 不进入 Lake trace。成功产物在 `-j1` 下不变是本节的建模前提；不由此推导并发、耗时或内存收益。继续遵守 §10.4 的程序字节禁令，不新增全局摘要、会话号或提交号作为复用键。
 
-- 模型把每次查找视为一次原子读取，直接返回产物值；Lake 先解析产物路径、再硬链接或复制，其间的文件系统失败不在模型之内，按「清理」一段处理。
-- "恢复而不编译"是模型求值器命中分支的结论；模型不计编译次数。
-- 模型与 Lake 的对应是建模前提，未经机器验证：快照的 `src` 是模块除依赖产物外的全部构建输入（源码、选项、模块名、平台与工具链），Lake 输入哈希中混入的有序 import trace、传递 trace、额外目标与插件计入 `src` 或依赖产物；`deps` 是其构建读取产物的模块集合；`BuildSystem` 的 `compile` 是确定性编译，`hash` 与 `digest` 合成的 `traceKey` 对应 Lake 的输入哈希。
-- 前提 `NoCollision` 要求实际出现的构建输入之间没有键碰撞；该前提不由机器验证，Lake 的哈希不是密码学哈希。
-- 模型中写者存入的是从零构建的产物；主检出实际存入的是其当前 build 目录中的产物，二者相等依赖 Lake 增量构建的正确性，该前提同样不由本节的定理证明。
+**正确性与验证边界。** 以下断言只在列明的模型和前提下成立；旧定理的边界保留。
 
-定理不要求读者只读：写入者只要写入其从零构建的产物，读者结果仍正确。读者只读的作用是使本仓库的写入与清理由主检出独占。
+- 对共享缓存的正确性，已冻结 `D5/S3/ConceptDynamics/Governance/TraceKeyedArtifactCacheSoundness.cachedBuild_eq_build` 承担「写者存入从零构建产物、任意 clean/读者查找交错仍得到从零构建结果」；`cachedBuild_restores_unaffected` 承担「写者与读者快照在模块源码和递归依赖上不变且键命中时恢复该缓存产物」。模型把每次查找视为原子读取，命中分支的“恢复而不编译”是模型求值结论，模型不计编译次数；Lake 路径解析、硬链接/复制和其中的文件系统失败仍由清理段说明，不由定理覆盖。
+- 对任意可达本地层（空层、跨会话保留层或 donor 拷贝层），已冻结 `D5/S3/ConceptDynamics/Governance/LayeredLocalCacheSoundness.layered_cache_contract` 的 `Reachable` 前提与 `Guarantees.reusable`、`Guarantees.locality` 承担 K1：产物可复用，需求层结果独立于需求外记录，且每个 worktree 保留自己的需求外记录；`Guarantees.roots` 与 `planFor` 的根集等式承担请求根不被改变。
+- 对 K2，`layered_cache_contract` 的 `Guarantees.visits` 承担计划访问集，`Guarantees.reads` 承担读集合恰为依赖闭包，`Guarantees.outside` 承担闭包外记录既不影响执行也不被修改，`Guarantees.workload` 承担编译集恰为需求内本地命中缺失且共享命中缺失的双未命中。故定向操作不需要整份 clonefile；其访问范围是目标、utility 输入及 import 闭包。
+- 对 K3，`layered_cache_contract` 的 `Guarantees.ready` 承担「探测成功当且仅当执行轨迹没有编译事件」，即就绪当且仅当零编译；`Guarantees.needs` 承担探测报错节点必是需求内双未命中。该模型结论对应 Lake 原生不编译探测，但 Lake 的失败不都属于双未命中，映射本身是未经机器验证的前提。
 
-**现行入口。** worktree 缓存入口现行执行 CLAUDE.md §8.3 与 A20 的 clonefile 流程（#15158）。
+上述模型与 Lake 的对应还要求以下未经机器验证的前提：Lake 输入哈希与模型 `src`/`deps` 对应（源码、选项、模块名、平台、工具链、import/传递 trace、额外目标和插件均已计入）；Lake 的 mtime 判定以及缺产物或归档修复分支不在模型内；记录级写入具有原子性；模块之间被中断的构建按依赖闭合前缀的完整执行解释，这只是解释，不是另一条定理；Lake 调度对应按依赖顺序、每模块一次的执行器；模型探测器对应 Lake 原生不编译探测；`NoCollision` 覆盖共享同一工具链缓存的所有项目；donor 与旧本地层确实由模型允许的快照、执行、删除、清空或拷贝来源生成；写者增量构建等于从零构建。模型不证明报告 bundle、依赖物化、pin 检查或文件系统恢复策略。
+
+**现行入口。** `tools/StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs` 第 283–405 行及 `LeanCacheProvisioner.cs` 是现行 ensure：worktree 无 `.lake` 时不分目标从主检出整份 clonefile；linked worktree 的 stamp 不匹配时整份重播并替换，stamp 缺失时若项目层冷且 build 目录为空只从主检出播种 build 层，否则整份重播，stamp 匹配但项目层冷时拒绝并要求重播；主检出 stamp 缺失时原地重产，不 clonefile。定向报告入口已上线。默认不 clonefile、显式 clonefile 选择、linked 种子复制和 A23 写者调整均由 #15158 跟踪。A20 只在 worktree 复用边界处引用，本节不再把入口归于 A20 的 clonefile 流程。
 
 ---
 
