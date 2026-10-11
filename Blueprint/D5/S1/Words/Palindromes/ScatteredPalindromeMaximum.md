@@ -132,6 +132,10 @@ $$\operatorname{claim}\left(\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Palindromes/ScatteredPalindromeMaximum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mahalingam-pandoh-2021-scattered-palindrome-maximum` (proved) by `D5/S1/Words/Palindromes/ScatteredPalindromeMaximum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mahalingam-pandoh-2021-scattered-palindrome-maximum","declaration_gid":"D5/S1/Words/Palindromes/ScatteredPalindromeMaximum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. Mahalingam, P. Pandoh (2021). *Counting scattered palindromes in a finite word*. URL: <https://arxiv.org/abs/2108.02729v1>.

@@ -89,7 +89,10 @@ internal sealed class ScatteredPalindromeMaximumDocument : IScribeDocumentDefini
                         + "has length 2r+k, alphabet size r+k and count maxSP(2r+k). "
                         + "This constructs extremizers and restricts their alphabet sizes; it "
                         + "does not classify all extremal words or determine the maximum "
-                        + "at every fixed alphabet size below half the length."))), DescribeRole.Theorem))));
+                        + "at every fixed alphabet size below half the length."))), DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("mahalingam-pandoh-2021-scattered-palindrome-maximum"),
+                        ResolutionKind.Proved)))));
     }
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose, AssessedProvenance provenance,
