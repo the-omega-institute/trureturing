@@ -1,0 +1,39 @@
+**Mathematical citation 18.3 (coverage and applicability).** PAID Lemma
+14.1 already supplies original-law support-closed extraction; PAIRED
+Section 6 supplies bounded-statistic transport and same-row clipping;
+PAIRED (11.24) supplies the compatible-flow pushforward. Corollary 16.3
+supplies the symbolic positive deterministic-domain minimum, and Theorem
+17.2 and Corollary 17.3 supply the regular-domain deterministic comparison
+and branching floor. None is reproved here. The additional consumer is
+(18.5), (18.7)--(18.11) and their composition (18.12), which makes the
+floor a necessity for the original paired-history quantity (18.2).
+Theorem 16.4 already covers deterministic acquired updates. PAID Theorem
+13.1 controls variation of row barycentres across inputs, and its Theorem
+14.2 controls a whole reachable-law diameter. PAIRED's event-readout,
+mismatch and complete-marginal results use different statistics;
+[return-survival dispersion, Definition 2.3 and Section 6](RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md)
+uses a return-weight dispersion and an explicitly clipped edge span.
+Those statements do not already give (18.3) on arbitrary original laws.
+
+The bounded primary comparison is Abate, Redig and Tkachev,
+[*On the effect of perturbation of conditional probabilities in total
+variation*, Proposition 2, Theorems 1--2 and Section 3](https://arxiv.org/html/1311.3066v1).
+Its kernel extension and coupling methods are suppliers already used by
+CLIP and Section 17. Its perturbation constants are uniform kernel-TV
+errors, with TV norm twice the convention here; they are not the
+acquired-row complete-output-law dispersions in (18.2). The elementary
+mixture estimate (18.7) is not claimed as a new general TV theorem, and
+no global priority assertion is made.
+
+This is an ordinary mathematical result with a source-specific necessary
+relation. It does not evaluate $j_{\rm det}$ or unrestricted $j_c$, assert
+sharp constants, construct a vanishing sequence or a common zero pair,
+produce an original155 certificate, or prove an unrestricted risk-only
+positive gap. A supremum bound on paired histories is not a lower bound
+at every history or at each interface separately. The comparison can
+change laws, marginals and losses at the later deterministic-comparison
+stage; it preserves no prescribed actual return triple, hard defect or
+COMPLETE/resource budget. No finite exact or effective attainment,
+executable sampler, native Gram/dynamic/physical bridge, or termination
+of the sustained research objective follows.
+
