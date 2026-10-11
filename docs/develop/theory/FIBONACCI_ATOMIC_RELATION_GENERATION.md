@@ -68758,3 +68758,69 @@ Fibonacci 数，必须解释一个长度约 \(t^{3/10}\) 的平方层短区间�
 不可能。仓内的 Wall--Sun--Sun 文献与赋值公式只提供逐素数条件和开放问题背景，
 没有给出这里所需的短区间加权上界。因此（446.7）仍是条件性来源障碍，不是
 Robin/RH 的反例，也不是对 WSS 开放问题的解决。
+
+### 命题 446.4（全部库存层的 Fibonacci 索引影子）
+
+把严格库存的实际层数记为
+
+$$
+ a_q(t)=U.\operatorname{factorization}(q)
+ =\operatorname{optimalLayerCount}\!\left(\frac1{t\log t},q\right).
+$$
+
+若 \(U=F_m>0\)，则对每个素数 \(q\ge7\) 都有以下精确三分：
+
+$$
+ \boxed{
+ \begin{array}{ll}
+ a_q(t)=0 &\Longrightarrow\ q\nmid F_m,\ z(q)\nmid m,\\[2mm]
+ a_q(t)>0,\ e_q>a_q(t)&\Longrightarrow\ \text{不存在这样的 }U=F_m,\\[2mm]
+ a_q(t)>0,\ e_q\le a_q(t)&\Longrightarrow\
+ v_q(m)=a_q(t)-e_q.
+ \end{array}
+ }
+ \tag{446.10}
+$$
+
+特别地，定义
+
+$$
+ M_{\rm sh}(t)=
+ \prod_{\substack{q\ge7\\a_q(t)>0}}
+ q^{\,a_q(t)-e_q}
+ \quad\text{（仅在所有指数非负时定义）},
+$$
+
+则任何满足条件的 Fibonacci 库存都满足
+
+$$
+ \boxed{M_{\rm sh}(t)\mid m.}
+ \tag{446.11}
+$$
+
+**证明。** 若 \(a_q(t)=0\)，严格库存给 \(q\nmid U=F_m\)，再用入口秩判据
+得到 \(z(q)\nmid m\)。若 \(a_q(t)>0\)，则 \(q\mid F_m\)，所以 \(z(q)\mid m\)。
+对 \(q\ge7\)，已有赋值提升公式给
+
+$$
+ v_q(F_m)=e_q+v_q\!\left(m/z(q)\right).
+$$
+
+秩界 \(z(q)\mid q\pm1\) 保证 \(q\nmid z(q)\)，故
+\(v_q(m/z(q))=v_q(m)\)。但严格库存又给
+\(v_q(F_m)=a_q(t)\)。若 \(e_q>a_q(t)\)，两式矛盾；否则相减得到
+\(v_q(m)=a_q(t)-e_q\)。对所有 \(q\ge7\) 取乘积即得（446.11）。\(\square\)
+
+命题 446.4 把 §445 的“秩整除账本”升级为逐素数赋值账本。它同时记录：
+
+$$
+\text{首层缺失}\ \Longleftrightarrow\ z(q)\nmid m,
+\qquad
+\text{已占用层}\ \Longleftrightarrow\
+v_q(m)=a_q(t)-e_q.
+$$
+
+因此，未来若能从 Fibonacci 赋值理论或独立的 WSS 结果给出
+\(e_q\) 的上界，便可直接估计 \(M_{\rm sh}(t)\)，无需重新分析 Euler
+约数和。当前没有这样的统一上界；命题 446.4 仍是联合必要条件，不改变
+Robin/RH 的开放状态。
