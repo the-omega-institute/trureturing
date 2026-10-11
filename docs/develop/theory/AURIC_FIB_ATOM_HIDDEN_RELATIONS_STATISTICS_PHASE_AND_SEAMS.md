@@ -4064,3 +4064,147 @@ N≥1 的完整共同记录条件，在此指定支撑与单位对角下，恰�
 [C28-L3]: https://arxiv.org/abs/2111.12759v1
 
 ## 追加锚（本行以下为增补区）
+
+## 29. 法定优先教师的共同系数核
+
+### 29.1 共同实际来源与坐标
+
+**定义 C-29.1.1（实际字母、合法词与端点）。** 令
+$\mathcal W=\{000,100,010,101,001\}$，字母按低到高书写；特别地，
+同一窗的两端同时为一的 $101$ 属于 $\mathcal W$。对
+$w=(w_0,\ldots,w_{n-1})\in\mathcal W^n$，写 $\ell_i(w)$ 与
+$h_i(w)$ 为 $w_i$ 的最低位与最高位。令 $\operatorname{Legal}_0(w)$
+表示把这些三位字母首尾相接所得的完整位词，以初始前位 0 执行相邻一位禁止规则
+而不进入错误态。于是
+$$
+ \operatorname{Legal}_0(w)\;\Longleftrightarrow\;
+ h_i(w)\ell_{i+1}(w)=0\;(0\leq i<n-1).
+ \tag{C29.1}
+$$
+定义
+$$
+ L_n^+=\{w\in\mathcal W^n:\operatorname{Legal}_0(w),\ w_{n-1}\ne000\}.
+ \tag{C29.2}
+$$
+
+**假设 C-29.1.2（一个固定归一化律）。** 固定 $n\ge4$，并固定一个且仅一个
+$\lambda:L_n^+\to\mathbb R$ 满足
+$$
+ \lambda(w)>0\ (w\in L_n^+),\; \sum_{w\in L_n^+}\lambda(w)=1.
+ \tag{C29.3}
+$$
+该律在下文对所有角色、所有系数向量和所有矩阵条目保持不变。
+
+**定义 C-29.1.3（角色、优先数值与 Gram 矩阵）。** 令
+$$
+ T_n=\{(p,q,r):0\le p<q<r<n\},
+$$
+并令 $e_\tau$ 表示 $\mathbb R^{T_n}$ 中在角色 $\tau$ 处为一的标准坐标向量；
+并对 $\tau=(p,q,r)$ 定义
+$$
+ C_{pqr}(w)=h_p\ell_q+2h_q\ell_r-2h_p\ell_qh_q\ell_r.
+ \tag{C29.4}
+$$
+这保留原优先教师的标签 $0,1,2$。对 $a=(a_\tau)_{\tau\in T_n}\in\mathbb R^{T_n}$，置
+$$
+ \Phi(a)(w)=\sum_{\tau\in T_n}a_\tau C_\tau(w),
+ G_\lambda(\tau,\sigma)=\sum_{w\in L_n^+}\lambda(w)C_\tau(w)C_\sigma(w).
+ \tag{C29.5}
+$$
+
+### 29.2 系数核的精确形式
+
+**定理 C-29.2.1（共同实际律下的完整核与秩）。** 对每个 $n\ge4$，在
+定义 C-29.1.1–C-29.1.3 的同一固定律下，
+$$
+ \ker G_\lambda=\ker\Phi
+ =\operatorname{span}\mathcal B_n,
+ \tag{C29.6}
+$$
+其中
+$$
+ \mathcal B_n=\{e_{(p,p+1,p+2)}:0\le p\le n-3\}
+ \;\cup\;
+ \{e_{(s-1,s,t)}-2e_{(s,t,t+1)}:
+       1\le s,\ s+2\le t\le n-2\}.
+ \tag{C29.7}
+$$
+等价地，系数向量 $a$ 属于该核，当且仅当全部下列条件同时成立：
+$$
+\begin{aligned}
+& a_{pqr}=0 &&(p+1<q,\ q+1<r),\\
+& a_{0,t,t+1}=0 &&(2\le t\le n-2),\\
+& a_{s-1,s,n-1}=0 && (1\le s\le n-3),\\
+& a_{s,t,t+1}=-2a_{s-1,s,t} && (1\le s,\ s+2\le t\le n-2),
+\end{aligned}
+\tag{C29.8}
+$$
+而 $a_{p,p+1,p+2}$ 任意。因而
+$$
+ \dim\ker G_\lambda=\binom{n-2}{2}+1=(n-2)+\binom{n-3}{2},
+ \operatorname{rank}G_\lambda=\binom{n-2}{3}+\binom{n-1}{2}-1.
+ \tag{C29.9}
+$$
+
+**证明。** 先把端点投影写成有限坐标。令
+$U_n=\{L_i,H_i:0\le i<n\}$，令 $\Sigma_n$ 为不含任何禁配对
+$\{H_i,L_{i+1}\}$ 的 $U_n$ 子集。由 (C29.1)，每个 $w\in L_n^+$ 给出
+$S(w)=\{L_i:\ell_i=1\}\cup\{H_i:h_i=1\}\in\Sigma_n$。反之每个
+$S\in\Sigma_n$ 都有一个原像：逐位取 $101,100,001,000$ 分别对应
+$(L_i,H_i)=(1,1),(1,0),(0,1),(0,0)$，并在最后一个端点对为 $(0,0)$ 时取
+$010$；故末窗非零且端点投影仍为 $S$。这是正值 End 的端点保持$000\mapsto010$ 修复；这里使用了实际字母的五元支持，未作独立边缘重组[^C29-source]。
+
+对任意下闭的有限集合族，包含矩阵
+$E[I,A]=1_{A\subseteq I}$ 按基数排序是单位下三角矩阵；其逆是有限包含反演。
+将 C-28.2.2–C-28.2.3 的同一反演应用于下闭族 $\Sigma_n$，得到所有合法方形自由
+单项式 $m_A(S)=1_{A\subseteq S}$ 线性无关。于是下列单项式族也线性无关：
+$$
+ X_{ij}=h_i\ell_j\;(i+1<j),
+ Y_{pqr}=h_p\ell_qh_q\ell_r\;(p+1<q,\ q+1<r).
+ \tag{C29.10}
+$$
+这是 Rota 的有限关联反演在本坐标族上的直接使用[^C29-incidence]。
+
+令 $F_a=\Phi(a)$。将 (C29.4) 按 (C29.10) 收集，得
+$$
+ F_a=\sum_{i+1<j}A_{ij}X_{ij}
+      -2\sum_{p+1<q,\ q+1<r}a_{pqr}Y_{pqr},
+ A_{ij}=\sum_{r>j}a_{ijr}+2\sum_{p<i}a_{pij}.
+ \tag{C29.11}
+$$
+单项式线性无关，所以 $F_a=0$ 当且仅当所有全间隔系数
+$a_{pqr}$ 为零且所有 $A_{ij}=0$（$i+1<j$）。在全间隔系数为零后，(C29.11)
+化为
+$$
+ 0=A_{ij}=a_{i,j,j+1}+2a_{i-1,i,j},
+ \tag{C29.12}
+$$
+其中不存在的第一项（当 $j=n-1$）或第二项（当 $i=0$）必须单独为零。
+因此 (C29.12) 的内部情形正是 (C29.8) 的最后一行，两个边界情形正是其中第二、三行；
+两次相邻的三元角色从未出现于 (C29.11)，故其系数完全自由。这证明了 (C29.8)。
+
+为得到显式基，若 $p,p+1,p+2$ 连续，则两个门均被 (C29.1) 杀死，故
+$C_{p,p+1,p+2}=0$。若 $s+2\le t$，则
+$$
+ C_{s-1,s,t}=2h_s\ell_t, C_{s,t,t+1}=h_s\ell_t,
+ \tag{C29.13}
+$$
+故每个向量 $e_{(s-1,s,t)}-2e_{(s,t,t+1)}$ 也在核中。条件 (C29.8) 表明任意核向量唯一地
+由这些向量及连续三元向量线性组合而成；它们的自由坐标互异，故构成基，得到 (C29.6)–(C29.7)。
+
+最后，对任意 $a$，有限求和给出
+$$
+ a^{\mathsf T}G_\lambda a=\sum_{w\in L_n^+}\lambda(w)F_a(w)^2.
+ \tag{C29.14}
+$$
+若 $F_a=0$，则 $G_\lambda a=0$。反之若 $G_\lambda a=0$，则左端为零；(C29.3) 的严格正性和每项平方的非负性迫使
+所有 $F_a(w)=0$，故两核相等。这也是固定实 Gram 矩阵的转置乘积核恒等式[^C29-matrix]；
+以秩零度公式并计数 (C29.7)，得到 (C29.9)。当 $n=4$ 时基有两个元素、秩为 2；当 $n=5$ 时基有四个元素、秩为 6，边界项仍由 (C29.8) 保留。证毕。
+
+[^C29-source]: 固定源的直接接口为 [LegalPriorityTeacher](https://raw.githubusercontent.com/the-omega-institute/trureturing/94647efea2eb870ea8fc8e0274361951228ec36e/D5/S3/Arith/FibonacciAtomic/LegalPriorityTeacher.lean) 的 `legal_iff`、`result`，以及 [LegalResamplingSupportSignal](https://raw.githubusercontent.com/the-omega-institute/trureturing/94647efea2eb870ea8fc8e0274361951228ec36e/D5/S3/Arith/FibonacciAtomic/LegalResamplingSupportSignal.lean) 的 `Positive`、`source`；五字母、端点、`nonzero` 和完整展开由 [LiteralWindowEnd](https://raw.githubusercontent.com/the-omega-institute/trureturing/94647efea2eb870ea8fc8e0274361951228ec36e/D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.lean) 给出；正值 End 的同域恒等商与末端 $000\mapsto010$ 修复见白盒源 [FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md §63.1–63.2](https://raw.githubusercontent.com/the-omega-institute/trureturing/94647efea2eb870ea8fc8e0274361951228ec36e/docs/develop/theory/FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md)。
+
+[^C29-incidence]: 合法方形自由坐标的三角反演沿用本卷 C-28.2.2–C-28.2.3；其一般关联反演先例是 G.-C. Rota, “On the foundations of combinatorial theory I. Theory of Möbius functions”, *Z. Wahrscheinlichkeitstheorie* 2 (1964), §3, [doi:10.1007/BF00531932](https://doi.org/10.1007/BF00531932)。
+
+[^C29-matrix]: Gram 核与秩的矩阵形式对应固定 pin `db584cd6d46c92f209a44c0f1c829460d327499d` 的 Mathlib [Matrix/Rank.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/Rank.lean)，特别是 `ker_mulVecLin_transpose_mul_self`、`rank_transpose_mul_self` 与 `rank_transpose`；本节的 (C29.14) 直接给出其实数有限和证明。
+
+## 追加锚（本行以下为增补区）
