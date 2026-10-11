@@ -19,11 +19,6 @@ set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 noncomputable section
 
-/-- The score of a native count cell, with the compensation retained. -/
-def cellScore (r ε : ℝ) (k l : ℕ) : ℝ :=
-  (k : ℝ) * Real.log ((1 + r) / (1 - ε)) +
-    (l : ℝ) * Real.log ((1 - r) / (1 + ε))
-
 /-- The four score increments relative to the lower-left count cell. -/
 def offsets (r ε : ℝ) : Fin 4 → ℝ :=
   ![0, Real.log ((1 + r) / (1 - ε)), Real.log ((1 - r) / (1 + ε)),
@@ -101,9 +96,11 @@ theorem moving_calibration_deriv {ι : Type*} [Fintype ι] (outside : ι → ℝ
   classical
   have ho : HasDerivAt (fun t => ∑ i, Real.sigmoid (θ t + outside i))
       ((∑ i, Real.sigmoid (x + outside i) * (1 - Real.sigmoid (x + outside i))) * v) t := by
-    simpa only [Function.comp_def, hx, sum_mul] using!
-      HasDerivAt.sum (fun i (_ : i ∈ (univ : Finset ι)) =>
-        (sigmoid_shift_deriv (outside i) (θ t)).comp t hθ)
+    convert! HasDerivAt.sum (fun i (_ : i ∈ (univ : Finset ι)) =>
+      (sigmoid_shift_deriv (outside i) (θ t)).comp t hθ) using 1
+    · ext a
+      simp
+    · simp only [hx, sum_mul]
   have hc (j : Fin 4) : HasDerivAt (fun t => cellCounts N R U t j)
       (![1, -1, -1, 1] j) t := by
     fin_cases j
@@ -144,11 +141,9 @@ private theorem calibration_root_deriv {ι : Type*} [Fintype ι] (outside : ι �
   have hi := HasDerivAt.sum (fun j (_ : j ∈ (univ : Finset (Fin 4))) =>
     (sigmoid_shift_deriv (offsets r ε j) x).const_mul (cellCounts N R U t j))
   convert! ho.add hi using 1
-  simp only [calibratedVariance]
-  congr 1
-  apply sum_congr rfl
-  intro j _
-  ring
+  · funext y
+    simp only [calibratedMean, Pi.add_apply, Finset.sum_apply]
+  · simp only [calibratedVariance, mul_assoc]
 
 /-- A locally defined shared calibration root exists whenever its actual full
 variance is nonzero. Its derivative is computed from the same histogram. -/
@@ -198,7 +193,7 @@ theorem exists_shared_calibration_root {ι : Type*} [Fintype ι] (outside : ι �
     (eventually_apply_eq_iff_implicitFunctionOfBivariate df₁ df₂ cf₁ cf₂ iv).self_of_nhds.mp rfl
   have hθ := (hasStrictFDerivAt_implicitFunctionOfBivariate df₁ df₂ cf₁ cf₂ iv).hasFDerivAt.hasDerivAt
   have he : ∀ᶠ a in 𝓝 t, calibratedMean outside r ε N R U a (θ a) = q := by
-    simpa only [hcal] using eventually_apply_implicitFunctionOfBivariate df₁ df₂ cf₁ cf₂ iv
+    simpa only [f, θ, hcal] using eventually_apply_implicitFunctionOfBivariate df₁ df₂ cf₁ cf₂ iv
   refine ⟨θ, hx, he, ?_⟩
   rwa [shared_root_response outside r ε N R U q t x _ θ hθ hx he hv] at hθ
 
@@ -218,14 +213,137 @@ theorem calibrated_group_center_response {ι : Type*} [Fintype ι] (outside : ι
   have hm := ((hasDerivAt_id t).const_add bg).mul ((Real.hasDerivAt_sigmoid (θ t)).comp t hθ)
   constructor
   · convert! hm using 1
-    · rfl
-    · rw [hx, Real.sigmoid_zero, he]
-      ring
+    simp only [Function.comp_apply, id_eq, hx, Real.sigmoid_zero, he]
+    ring
   · have hn := checkerboard_center_neg hr hr1
     have hneg : (bg + t) * (1 / 4) * checkerboard r 0 0 /
         calibratedVariance outside r 0 N R U t 0 < 0 :=
       div_neg_of_neg_of_pos (mul_neg_of_pos_of_neg (mul_pos hc (by norm_num)) hn) hv
     linarith
+
+private theorem continuous_checkerboard_parameters {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+    ContinuousAt (fun a : ℝ × ℝ => checkerboard r a.1 a.2) (0, 0) := by
+  have hp : (1 + r) / (1 - (0 : ℝ)) ≠ 0 := by simp; linarith
+  have hm : (1 - r) / (1 + (0 : ℝ)) ≠ 0 := by simp; linarith
+  have hpden : (1 : ℝ) - ((0, 0) : ℝ × ℝ).1 ≠ 0 := by norm_num
+  have hmden : (1 : ℝ) + ((0, 0) : ℝ × ℝ).1 ≠ 0 := by norm_num
+  have cp : ContinuousAt (fun a : ℝ × ℝ => Real.log ((1 + r) / (1 - a.1))) (0, 0) :=
+    (continuousAt_const.div (continuousAt_const.sub continuous_fst.continuousAt) hpden).log hp
+  have cm : ContinuousAt (fun a : ℝ × ℝ => Real.log ((1 - r) / (1 + a.1))) (0, 0) :=
+    (continuousAt_const.div (continuousAt_const.add continuous_fst.continuousAt) hmden).log hm
+  change ContinuousAt (fun a : ℝ × ℝ =>
+    Real.sigmoid a.2 + Real.sigmoid (a.2 + (Real.log ((1 + r) / (1 - a.1)) +
+      Real.log ((1 - r) / (1 + a.1)))) -
+    Real.sigmoid (a.2 + Real.log ((1 + r) / (1 - a.1))) -
+    Real.sigmoid (a.2 + Real.log ((1 - r) / (1 + a.1)))) (0, 0)
+  exact (((continuous_sigmoid.continuousAt.comp continuous_snd.continuousAt).add
+    (continuous_sigmoid.continuousAt.comp (continuous_snd.continuousAt.add (cp.add cm)))).sub
+    (continuous_sigmoid.continuousAt.comp (continuous_snd.continuousAt.add cp))).sub
+    (continuous_sigmoid.continuousAt.comp (continuous_snd.continuousAt.add cm))
+
+/-- Strictly negative checkerboard response persists in a full neighborhood
+of the compensated symmetric center, with one constant for all outside rows. -/
+theorem checkerboard_negative_neighborhood {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+    ∃ d : ℝ, 0 < d ∧ ∀ᶠ a : ℝ × ℝ in 𝓝 (0, 0), checkerboard r a.1 a.2 < -d := by
+  let d := -checkerboard r 0 0 / 2
+  have hd : 0 < d := by dsimp [d]; linarith [checkerboard_center_neg hr hr1]
+  refine ⟨d, hd, ?_⟩
+  exact (continuous_checkerboard_parameters hr hr1).eventually_lt_const (by dsimp [d]; linarith [checkerboard_center_neg hr hr1])
+
+
+private theorem cellCounts_sum (N R U t : ℝ) : (∑ j, cellCounts N R U t j) = N := by
+  simp [Fin.sum_univ_four, cellCounts]
+  ring
+
+private theorem calibratedVariance_pos {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r ε N R U t x : ℝ) (hN : 0 < N)
+    (hc : ∀ j, 0 ≤ cellCounts N R U t j) :
+    0 < calibratedVariance outside r ε N R U t x := by
+  classical
+  have hp (a : ℝ) : 0 < Real.sigmoid a * (1 - Real.sigmoid a) :=
+    mul_pos (Real.sigmoid_pos a) (sub_pos.mpr (Real.sigmoid_lt_one a))
+  have hj : ∃ j, 0 < cellCounts N R U t j := by
+    by_contra hn
+    push_neg at hn
+    have hs := sum_nonpos (fun j (_ : j ∈ (univ : Finset (Fin 4))) => hn j)
+    rw [cellCounts_sum] at hs
+    linarith
+  rcases hj with ⟨j, hj⟩
+  have ho : 0 ≤ ∑ i, Real.sigmoid (x + outside i) * (1 - Real.sigmoid (x + outside i)) :=
+    sum_nonneg fun i _ => (hp _).le
+  have hi : 0 < ∑ j, cellCounts N R U t j * Real.sigmoid (x + offsets r ε j) *
+      (1 - Real.sigmoid (x + offsets r ε j)) := by
+    have he := single_le_sum (s := univ) (f := fun j => cellCounts N R U t j *
+      Real.sigmoid (x + offsets r ε j) * (1 - Real.sigmoid (x + offsets r ε j)))
+      (fun k _ => by rw [mul_assoc]; exact mul_nonneg (hc k) (hp _).le) (mem_univ j)
+    have hjp : 0 < cellCounts N R U t j * Real.sigmoid (x + offsets r ε j) *
+        (1 - Real.sigmoid (x + offsets r ε j)) := by
+      rw [mul_assoc]
+      exact mul_pos hj (hp _)
+    exact hjp.trans_le he
+  exact add_pos_of_nonneg_of_pos ho hi
+
+private theorem unique_shared_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r ε N R U q t : ℝ) (hN : 0 < N) (hq : 0 < q)
+    (hqM : q < (Fintype.card ι : ℝ) + N)
+    (hc : ∀ j, 0 ≤ cellCounts N R U t j) :
+    ∃! x, calibratedMean outside r ε N R U t x = q := by
+  classical
+  have hbot (a : ℝ) : Tendsto (fun x : ℝ => Real.sigmoid (x + a)) atBot (𝓝 0) :=
+    Real.tendsto_sigmoid_atBot.comp (tendsto_atBot_add_const_right _ a tendsto_id)
+  have htop (a : ℝ) : Tendsto (fun x : ℝ => Real.sigmoid (x + a)) atTop (𝓝 1) :=
+    Real.tendsto_sigmoid_atTop.comp (tendsto_atTop_add_const_right _ a tendsto_id)
+  have hb : Tendsto (calibratedMean outside r ε N R U t) atBot (𝓝 0) := by
+    simpa [calibratedMean] using!
+      (tendsto_finsetSum univ (fun i _ => hbot (outside i))).add
+        (tendsto_finsetSum univ (fun j _ => (hbot (offsets r ε j)).const_mul
+          (cellCounts N R U t j)))
+  have ht : Tendsto (calibratedMean outside r ε N R U t) atTop
+      (𝓝 ((Fintype.card ι : ℝ) + N)) := by
+    simpa [calibratedMean, cellCounts_sum] using!
+      (tendsto_finsetSum univ (fun i _ => htop (outside i))).add
+        (tendsto_finsetSum univ (fun j _ => (htop (offsets r ε j)).const_mul
+          (cellCounts N R U t j)))
+  have hcont : Continuous (calibratedMean outside r ε N R U t) := by
+    unfold calibratedMean
+    fun_prop
+  obtain ⟨x, hx⟩ := intermediate_value_univ₂_eventually₂ hcont continuous_const
+    (hb.eventually_le_const hq) (ht.eventually_const_le hqM)
+  have hm : StrictMono (calibratedMean outside r ε N R U t) :=
+    strictMono_of_deriv_pos fun x => by
+      rw [(calibration_root_deriv outside r ε N R U t x).deriv]
+      exact calibratedVariance_pos outside r ε N R U t x hN hc
+  exact ⟨x, hx, fun y hy => hm.injective (hy.trans hx.symm)⟩
+
+/-- One shared root is defined on the entire feasible open interval. Local
+implicit roots agree with it by uniqueness, so their responses belong to one
+curve rather than separately selected roots. This does not assert a uniform
+lower bound on the variance. -/
+theorem shared_calibration_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r ε N R U q a b : ℝ) (hN : 0 < N) (hq : 0 < q)
+    (hqM : q < (Fintype.card ι : ℝ) + N)
+    (hc : ∀ t ∈ Set.Ioo a b, ∀ j, 0 ≤ cellCounts N R U t j) :
+    ∃ θ : ℝ → ℝ, ∀ t ∈ Set.Ioo a b,
+      calibratedMean outside r ε N R U t (θ t) = q ∧
+      HasDerivAt θ
+        (-checkerboard r ε (θ t) / calibratedVariance outside r ε N R U t (θ t)) t ∧
+      0 < calibratedVariance outside r ε N R U t (θ t) := by
+  classical
+  have hex (t : ℝ) (ht : t ∈ Set.Ioo a b) :=
+    unique_shared_root outside r ε N R U q t hN hq hqM (hc t ht)
+  let θ : ℝ → ℝ := fun t => if ht : t ∈ Set.Ioo a b then (hex t ht).exists.choose else 0
+  have heq (t : ℝ) (ht : t ∈ Set.Ioo a b) :
+      calibratedMean outside r ε N R U t (θ t) = q := by
+    simp only [θ, dif_pos ht]
+    exact (hex t ht).exists.choose_spec
+  refine ⟨θ, fun t ht => ?_⟩
+  have hv := calibratedVariance_pos outside r ε N R U t (θ t) hN (hc t ht)
+  obtain ⟨φ, hφt, hφeq, hφder⟩ := exists_shared_calibration_root outside r ε N R U q
+    t (θ t) (heq t ht) (ne_of_gt hv)
+  have hagree : θ =ᶠ[𝓝 t] φ := by
+    filter_upwards [hφeq, isOpen_Ioo.mem_nhds ht] with u hu hui
+    exact (hex u hui).unique (heq u hui) hu
+  exact ⟨heq t ht, hφt ▸ hφder.congr_of_eventuallyEq hagree, hv⟩
 
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
