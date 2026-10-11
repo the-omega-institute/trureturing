@@ -38,5 +38,29 @@ internal sealed class SequentialHellingerLocalizationDocument : IScribeDocumentD
                         + "The argument first applies martingale convergence to each retained process, "
                         + "then intersects the countably many full-measure sets. A path with finite "
                         + "energy admits an integer level at which every original increment is retained."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-energy-positive-product"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.finite_energy_positive_product"),
+                H("Strictly positive product limits"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "Let r(n) be strictly positive, square integrable and measurable at time n+1. "
+                        + "Suppose its conditional mean is 1-e(n), and the conditional mean of "
+                        + "(r(n)-1) squared is at most 2e(n), with predictable e(n) in [0,1]. "
+                        + "Almost every path with summable energy has a strictly positive finite "
+                        + "limit of the products of r(i) for i less than n.")),
+                    Paragraph(Text(
+                        "Conditional variance bounds the squared centered increment by the same "
+                        + "conditional error moment. Common energy localization therefore gives "
+                        + "convergence of the centered sums and summability of (r(n)-1) squared. "
+                        + "Subtracting the finite energy drift gives convergence of the sums of "
+                        + "r(n)-1. The logarithmic remainder is eventually bounded by twice its "
+                        + "square. Hence the natural-order logarithmic sums converge to a finite "
+                        + "real number, whose exponential is the positive product limit. No "
+                        + "uniform positive lower bound on the individual r(n) is imposed."))),
                 DescribeRole.Theorem))));
 }

@@ -9,6 +9,8 @@
 import Mathlib.Probability.Martingale.Convergence
 import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.MeasureTheory.Function.LpSeminorm.Indicator
+import Mathlib.Probability.CondVar
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Tactic
 
 noncomputable section
@@ -72,8 +74,8 @@ private lemma partial_martingale {d : ℕ → Ω → ℝ}
 private lemma partial_square_integral {d : ℕ → Ω → ℝ}
     (hd : ∀ n, StronglyMeasurable[ℱ (n + 1)] (d n))
     (hi : ∀ n, MemLp (d n) 2 μ) (hc : ∀ n, μ[d n | ℱ n] =ᵐ[μ] 0) (n : ℕ) :
-    (∫ ω, (∑ i ∈ range n, d i ω)^2 ∂μ) =
-      ∑ i ∈ range n, ∫ ω, (d i ω)^2 ∂μ := by
+    (∫ ω, (∑ i ∈ range n, d i ω) ^ 2 ∂μ) =
+      ∑ i ∈ range n, ∫ ω, (d i ω) ^ 2 ∂μ := by
   have hs n : MemLp (fun ω => ∑ i ∈ range n, d i ω) 2 μ :=
     memLp_finsetSum _ fun i _ => hi i
   induction n with
@@ -92,14 +94,14 @@ private lemma partial_square_integral {d : ℕ → Ω → ℝ}
           simpa only [Pi.mul_def, h2, Pi.zero_apply, mul_zero] using h1
         _ = 0 := by simp
     simp only [sum_range_succ]
-    have heq : (fun ω => ((∑ i ∈ range n, d i ω) + d n ω)^2) =
-        (fun ω => (∑ i ∈ range n, d i ω)^2) +
+    have heq : (fun ω => ((∑ i ∈ range n, d i ω) + d n ω) ^ 2) =
+        (fun ω => (∑ i ∈ range n, d i ω) ^ 2) +
         (fun ω => 2 * ((∑ i ∈ range n, d i ω) * d n ω)) +
-        (fun ω => (d n ω)^2) := by ext ω; simp only [Pi.add_apply]; ring
+        (fun ω => (d n ω) ^ 2) := by ext ω; simp only [Pi.add_apply]; ring
     simp only [Pi.mul_def] at hprod
     rw [heq]
     simp only [Pi.add_def]
-    have hplus : Integrable (fun ω => (∑ i ∈ range n, d i ω)^2 +
+    have hplus : Integrable (fun ω => (∑ i ∈ range n, d i ω) ^ 2 +
         2 * ((∑ i ∈ range n, d i ω) * d n ω)) μ :=
       (hs n).integrable_sq.add (hprod.const_mul 2)
     rw [integral_add hplus (hi n).integrable_sq,
@@ -130,13 +132,13 @@ theorem common_energy_localization
     (hd : ∀ n, StronglyMeasurable[ℱ (n + 1)] (d n))
     (hd2 : ∀ n, MemLp (d n) 2 μ)
     (hd0 : ∀ n, μ[d n | ℱ n] =ᵐ[μ] 0)
-    (hdv : ∀ n, μ[fun ω => (d n ω)^2 | ℱ n] ≤ᵐ[μ] fun ω => 2 * e n ω)
+    (hdv : ∀ n, μ[fun ω => (d n ω) ^ 2 | ℱ n] ≤ᵐ[μ] fun ω => 2 * e n ω)
     (hy : ∀ n, StronglyMeasurable[ℱ (n + 1)] (y n))
     (hyi : ∀ n, Integrable (y n) μ)
     (hy0 : ∀ n ω, 0 ≤ y n ω)
     (hyc : ∀ n, μ[y n | ℱ n] ≤ᵐ[μ] fun ω => 2 * e n ω) :
     (∀ K : ℕ, ∀ n : ℕ,
-      (∫ ω, (∑ i ∈ range n, (energyCut e K i).indicator (d i) ω)^2 ∂μ)
+      (∫ ω, (∑ i ∈ range n, (energyCut e K i).indicator (d i) ω) ^ 2 ∂μ)
           ≤ 2 * (K + 1) ∧
       (∫ ω, (∑ i ∈ range n, (energyCut e K i).indicator (y i) ω) ∂μ)
           ≤ 2 * (K + 1)) ∧
@@ -173,7 +175,7 @@ theorem common_energy_localization
       _ ≤ ∫ _ : Ω, (K : ℝ) + 1 ∂μ := integral_mono
         (integrable_finsetSum _ (fun i _ => hEi K i)) (integrable_const _) (hEb K n)
       _ = (K : ℝ) + 1 := by simp
-  have hDv K n : (∫ ω, (D K n ω)^2 ∂μ) ≤ 2 * ∫ ω, E K n ω ∂μ := by
+  have hDv K n : (∫ ω, (D K n ω) ^ 2 ∂μ) ≤ 2 * ∫ ω, E K n ω ∂μ := by
     have hi := cut_integral_bound he hei (fun n => (hd2 n).integrable_sq) hdv (K : ℝ) n
     convert hi using 1
     apply integral_congr_ae
@@ -183,7 +185,7 @@ theorem common_energy_localization
   have hYv K n : (∫ ω, Y K n ω ∂μ) ≤ 2 * ∫ ω, E K n ω ∂μ :=
     cut_integral_bound he hei hyi hyc (K : ℝ) n
   have hjoint K n :
-      (∫ ω, (∑ i ∈ range n, D K i ω)^2 ∂μ) ≤ 2 * ((K : ℝ) + 1) ∧
+      (∫ ω, (∑ i ∈ range n, D K i ω) ^ 2 ∂μ) ≤ 2 * ((K : ℝ) + 1) ∧
       (∫ ω, (∑ i ∈ range n, Y K i ω) ∂μ) ≤ 2 * ((K : ℝ) + 1) := by
     constructor
     · rw [partial_square_integral (hDa K) (hD2 K) (hD0 K)]
@@ -222,14 +224,14 @@ theorem common_energy_localization
       apply ENNReal.ofReal_le_ofReal
       have hs2 := (memLp_finsetSum (range n) (fun i _ => hD2 K i)).integrable_sq
       calc
-        _ ≤ ∫ ω, (∑ i ∈ range n, D K i ω)^2 + 1 ∂μ :=
+        _ ≤ ∫ ω, (∑ i ∈ range n, D K i ω) ^ 2 + 1 ∂μ :=
           integral_mono (hmi.integrable n).norm (hs2.add (integrable_const 1))
             (fun ω => by
               rw [Real.norm_eq_abs]
               have h := sq_nonneg (|∑ i ∈ range n, D K i ω| - 1)
               nlinarith [abs_nonneg (∑ i ∈ range n, D K i ω),
                 sq_abs (∑ i ∈ range n, D K i ω)])
-        _ = (∫ ω, (∑ i ∈ range n, D K i ω)^2 ∂μ) + 1 := by
+        _ = (∫ ω, (∑ i ∈ range n, D K i ω) ^ 2 ∂μ) + 1 := by
           rw [integral_add hs2 (integrable_const 1)]; simp
         _ ≤ _ := by linarith [(hjoint K n).1]
     have hbY n : eLpNorm (fun ω => ∑ i ∈ range n, Y K i ω) 1 μ ≤
@@ -257,5 +259,99 @@ theorem common_energy_localization
   have hDeq n : D K n ω = d n ω := Set.indicator_of_mem (hmem n) _
   have hYeq n : Y K n ω = y n ω := Set.indicator_of_mem (hmem n) _
   simpa only [hDeq, hYeq] using hω K
+
+private lemma positive_product_of_centered_convergence (r : ℕ → ℝ)
+    (hr : ∀ n, 0 < r n) (hsq : Summable (fun n => (r n - 1) ^ 2))
+    (hc : ∃ a : ℝ, Tendsto (fun n => ∑ i ∈ range n, (r i - 1)) atTop (𝓝 a)) :
+    ∃ l : ℝ, 0 < l ∧ Tendsto (fun n => ∏ i ∈ range n, r i) atTop (𝓝 l) := by
+  have habs : Tendsto (fun n => |r n - 1|) atTop (𝓝 0) := by
+    simpa only [Real.sqrt_sq_eq_abs, Real.sqrt_zero] using hsq.tendsto_atTop_zero.sqrt
+  have hsmall : ∀ᶠ n in atTop, |r n - 1| < (1 / 2 : ℝ) :=
+    habs.eventually (gt_mem_nhds (by norm_num))
+  have hrem : Summable (fun n => Real.log (r n) - (r n - 1)) := by
+    apply (hsq.mul_left 2).of_norm_bounded_eventually_nat
+    filter_upwards [hsmall] with n hn
+    have h := Real.abs_log_sub_add_sum_range_le
+      (x := -(r n - 1)) (by rw [abs_neg]; exact hn.trans (by norm_num : (1 / 2 : ℝ) < 1)) 1
+    have hlog : (1 : ℝ) - -(r n - 1) = r n := by ring
+    simp only [sum_range_one, zero_add, pow_one, hlog,
+      abs_neg, Nat.reduceAdd, Nat.cast_zero, zero_add, div_one] at h
+    rw [Real.norm_eq_abs]
+    calc
+      |Real.log (r n) - (r n - 1)| = |-(r n - 1) + Real.log (r n)| := by congr 1; ring
+      _ ≤ |r n - 1| ^ 2 / (1 - |r n - 1|) := h
+      _ ≤ 2 * (r n - 1) ^ 2 := by
+        rw [sq_abs, div_le_iff₀ (by linarith : 0 < 1 - |r n - 1|)]
+        nlinarith [sq_nonneg (r n - 1), abs_nonneg (r n - 1)]
+  obtain ⟨a, ha⟩ := hc
+  have hlogs : Tendsto (fun n => ∑ i ∈ range n, Real.log (r i)) atTop
+      (𝓝 (a + ∑' i, (Real.log (r i) - (r i - 1)))) := by
+    convert ha.add hrem.hasSum.tendsto_sum_nat using 1
+    ext n
+    rw [← sum_add_distrib]
+    congr 1
+    ext i
+    ring
+  refine ⟨Real.exp (a + ∑' i, (Real.log (r i) - (r i - 1))), Real.exp_pos _, ?_⟩
+  have hprod n : Real.exp (∑ i ∈ range n, Real.log (r i)) = ∏ i ∈ range n, r i := by
+    rw [Real.exp_sum]
+    exact prod_congr rfl fun i _ => Real.exp_log (hr i)
+  simpa only [hprod] using hlogs.rexp
+
+/-- Positive root-likelihood increments have a strictly positive finite product limit
+on the finite conditional-energy event. The conclusion uses natural-order products. -/
+theorem finite_energy_positive_product
+    (e r : ℕ → Ω → ℝ)
+    (he : StronglyAdapted ℱ e)
+    (he0 : ∀ n ω, 0 ≤ e n ω) (he1 : ∀ n ω, e n ω ≤ 1)
+    (hr : ∀ n, StronglyMeasurable[ℱ (n + 1)] (r n))
+    (hr2 : ∀ n, MemLp (r n) 2 μ)
+    (hr0 : ∀ n ω, 0 < r n ω)
+    (hrmean : ∀ n, μ[r n | ℱ n] =ᵐ[μ] fun ω => 1 - e n ω)
+    (hrsq : ∀ n, μ[fun ω => (r n ω - 1) ^ 2 | ℱ n] ≤ᵐ[μ] fun ω => 2 * e n ω) :
+    ∀ᵐ ω ∂μ, Summable (fun n => e n ω) →
+      ∃ l : ℝ, 0 < l ∧ Tendsto (fun n => ∏ i ∈ range n, r i ω) atTop (𝓝 l) := by
+  let X n ω := r n ω - 1
+  let d n ω := X n ω - (μ[X n | ℱ n]) ω
+  have hX2 n : MemLp (X n) 2 μ := (hr2 n).sub (memLp_const 1)
+  have hei n : Integrable (e n) μ :=
+    Integrable.of_bound ((he n).mono (ℱ.le n)).aestronglyMeasurable 1
+      (ae_of_all _ fun ω => by simpa [Real.norm_eq_abs, abs_of_nonneg (he0 n ω)] using he1 n ω)
+  have hd n : StronglyMeasurable[ℱ (n + 1)] (d n) :=
+    ((hr n).sub stronglyMeasurable_const).sub
+      (stronglyMeasurable_condExp.mono (ℱ.mono (Nat.le_succ n)))
+  have hd2 n : MemLp (d n) 2 μ := (hX2 n).sub ((hX2 n).condExp (by norm_num))
+  have hd0 n : μ[d n | ℱ n] =ᵐ[μ] 0 := by
+    filter_upwards [condExp_sub ((hX2 n).integrable (by norm_num))
+      (integrable_condExp (f := X n) (m := ℱ n)) (ℱ n)] with ω hω
+    simpa only [d, Pi.sub_def, Pi.sub_apply, Pi.zero_apply,
+      condExp_of_stronglyMeasurable (ℱ.le n) stronglyMeasurable_condExp integrable_condExp,
+      sub_self] using hω
+  have hdv n : μ[fun ω => (d n ω) ^ 2 | ℱ n] ≤ᵐ[μ] fun ω => 2 * e n ω := by
+    have h := ProbabilityTheory.condVar_ae_le_condExp_sq (ℱ.le n) (hX2 n)
+    exact h.trans (hrsq n)
+  have hy n : StronglyMeasurable[ℱ (n + 1)] (fun ω => (r n ω - 1) ^ 2) :=
+    ((hr n).sub stronglyMeasurable_const).pow 2
+  have hloc := (common_energy_localization e d (fun n ω => (r n ω - 1) ^ 2)
+    he hei he0 he1 hd hd2 hd0 hdv hy (fun n => (hX2 n).integrable_sq)
+    (fun n ω => sq_nonneg _) hrsq).2
+  have hmean n : μ[X n | ℱ n] =ᵐ[μ] fun ω => -e n ω := by
+    filter_upwards [condExp_sub ((hr2 n).integrable (by norm_num)) (integrable_const 1) (ℱ n),
+      hrmean n] with ω h1 h2
+    simpa only [X, Pi.sub_def, Pi.sub_apply, condExp_const (ℱ.le n), h2,
+      sub_sub_cancel_left] using h1
+  have hall : ∀ᵐ ω ∂μ, ∀ n, (μ[X n | ℱ n]) ω = -e n ω := ae_all_iff.mpr hmean
+  filter_upwards [hloc, hall] with ω hω hm hefin
+  obtain ⟨⟨a, ha⟩, hs⟩ := hω hefin
+  apply positive_product_of_centered_convergence (fun n => r n ω) (fun n => hr0 n ω) hs
+  refine ⟨a - ∑' n, e n ω, ?_⟩
+  convert ha.sub hefin.hasSum.tendsto_sum_nat using 1
+  ext n
+  rw [← sum_sub_distrib]
+  apply sum_congr rfl
+  intro i _
+  dsimp [d, X]
+  rw [hm i]
+  ring
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SequentialHellingerLocalization
