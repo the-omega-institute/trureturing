@@ -112,4 +112,4 @@ The full B completion equation gives g >= (1-u)*(3/5), while v <= 2/5 bounds the
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelSuperharmonic.h_global_bound`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelSuperharmonic.sixth_le_h`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelSuperharmonic.sixth_measurable`
-- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelInputTests](NativeBorelInputTests.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelTVTopology](NativeBorelTVTopology.md)

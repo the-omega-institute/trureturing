@@ -7,7 +7,7 @@ noncomputable section
 namespace Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelKilledPaths
 open _root_.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws
 open NativeBorelCommonFlow NativeBorelSuperharmonic NativeBorelEndpointIdentification NativeBorelKilledPaths
-open NativeBorelRepresentation NativeBorelNativeLaws
+open NativeBorelTVTopology NativeBorelEndpointIdentification
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open MeasureTheory ProbabilityTheory Filter
 open scoped ENNReal Topology

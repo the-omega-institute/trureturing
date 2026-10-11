@@ -20,7 +20,7 @@ open MeasureTheory ProbabilityTheory Filter Preorder
 open scoped ENNReal Topology
 attribute [local instance] Classical.propDecidable
 open NativeBorelCommonFlow NativeBorelSuperharmonic NativeBorelEndpointIdentification
-open NativeBorelRepresentation NativeBorelNativeLaws NativeBorelStationaryLocalization
+open NativeBorelTVTopology NativeBorelEndpointIdentification NativeBorelStationaryLocalization
 
 /-- The same Doob row on the conull carrier, killed immediately off that carrier. -/
 def doob (F : CommonFlow) (G : Set PDescriptor) : Kernel PDescriptor PDescriptor :=
@@ -272,7 +272,7 @@ def homogeneousStep {S : Type*} [MeasurableSpace S] (K : Kernel S S) (n : ℕ) :
     Kernel ((i : Finset.Iic n) → S) S :=
   K.comap (fun x => x ⟨n, Finset.mem_Iic.mpr le_rfl⟩) (measurable_pi_apply _)
 
-private instance homogeneousStep_markov {S : Type*} [MeasurableSpace S]
+instance homogeneousStep_markov {S : Type*} [MeasurableSpace S]
     (K : Kernel S S) [IsMarkovKernel K] (n : ℕ) : IsMarkovKernel (homogeneousStep K n) := by
   unfold homogeneousStep
   infer_instance
@@ -281,7 +281,7 @@ def homogeneousLaw {S : Type*} [MeasurableSpace S] (μ : Measure S)
     (K : Kernel S S) [IsMarkovKernel K] : Measure (ℕ → S) :=
   Kernel.trajMeasure μ (homogeneousStep K)
 
-private instance homogeneousLaw_probability {S : Type*} [MeasurableSpace S]
+instance homogeneousLaw_probability {S : Type*} [MeasurableSpace S]
     (μ : Measure S) [IsProbabilityMeasure μ] (K : Kernel S S) [IsMarkovKernel K] :
     IsProbabilityMeasure (homogeneousLaw μ K) := by
   unfold homogeneousLaw

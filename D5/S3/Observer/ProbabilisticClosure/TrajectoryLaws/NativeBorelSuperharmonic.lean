@@ -6,7 +6,7 @@
    utility: none
    digest: Signed three-step defect and decreasing normalized iterates on the acquired flow. -/
 
-import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelInputTests
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelTVTopology
 import Mathlib.MeasureTheory.Integral.Lebesgue.Sub
 import Mathlib.Topology.Order.MonotoneConvergence
 import Mathlib.MeasureTheory.Integral.MeanInequalities
@@ -19,7 +19,7 @@ noncomputable section
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelSuperharmonic
 open MeasureTheory ProbabilityTheory Filter Topology
 open scoped ENNReal NNReal
-open NativeFullResidual NativeBorelCommonFlow NativeBorelRepresentation NativeBorelTVTopology
+open NativeFullResidual NativeBorelCommonFlow NativeBorelTVTopology NativeBorelTVTopology
 open NativeConditionalControl.Tail
 
 private theorem iterate_g_bound (F : CommonFlow) (n : ℕ) (Q : PDescriptor) :

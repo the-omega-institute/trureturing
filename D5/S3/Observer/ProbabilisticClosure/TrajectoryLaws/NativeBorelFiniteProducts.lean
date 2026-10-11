@@ -18,7 +18,7 @@ open MeasureTheory ProbabilityTheory Filter Preorder
 open scoped ENNReal Topology
 attribute [local instance] Classical.propDecidable
 open NativeBorelCommonFlow NativeBorelSuperharmonic NativeBorelEndpointIdentification
-open NativeBorelRepresentation NativeBorelNativeLaws NativeBorelStationaryLocalization NativeBorelKilledPaths
+open NativeBorelTVTopology NativeBorelEndpointIdentification NativeBorelStationaryLocalization NativeBorelKilledPaths
 
 /-- The actual unnormalized iterated kernel product through time n. -/
 def finiteProduct {S : Type*} [MeasurableSpace S] (μ : Measure S) (K : Kernel S S) :
@@ -28,7 +28,7 @@ def finiteProduct {S : Type*} [MeasurableSpace S] (μ : Measure S) (K : Kernel S
       K.comap (fun w => w (Fin.last n)) (measurable_pi_apply _)).map
         (fun p => Fin.snoc p.1 p.2)
 
-private theorem snoc_measurable {S : Type*} [MeasurableSpace S] (n : ℕ) :
+theorem snoc_measurable {S : Type*} [MeasurableSpace S] (n : ℕ) :
     Measurable (fun p : (Fin (n + 1) → S) × S =>
       (Fin.snoc p.1 p.2 : Fin (n + 2) → S)) := by
   apply measurable_pi_lambda
@@ -40,7 +40,7 @@ private theorem snoc_measurable {S : Type*} [MeasurableSpace S] (n : ℕ) :
       (measurable_pi_apply j (X := fun _ : Fin (n + 1) => S)).comp
         (measurable_fst : Measurable (Prod.fst : (Fin (n + 1) → S) × S → (Fin (n + 1) → S)))
 
-private instance finiteProduct_finite {S : Type*} [MeasurableSpace S]
+instance finiteProduct_finite {S : Type*} [MeasurableSpace S]
     (μ : Measure S) [IsFiniteMeasure μ] (K : Kernel S S) [IsFiniteKernel K] (n : ℕ) :
     IsFiniteMeasure (finiteProduct μ K n) := by
   induction n with
@@ -74,6 +74,263 @@ private theorem finiteDensity_snoc (F : CommonFlow) (M : Kernel PDescriptor PDes
     intro i hi
     simp only [show i.castSucc.succ = i.succ.castSucc from rfl, Fin.snoc_castSucc]
   · simp
+
+private theorem finiteProduct_terminal {X : Type*} [MeasurableSpace X]
+    (μ : Measure X) [IsProbabilityMeasure μ] (K : Kernel X X) [IsMarkovKernel K]
+    (hstat : K ∘ₘ μ = μ) (n : ℕ) :
+    (finiteProduct μ K n).map (fun w => w (Fin.last n)) = μ := by
+  induction n with
+  | zero =>
+    rw [finiteProduct, Measure.map_map (by fun_prop) (by fun_prop)]
+    simp only [Function.comp_def]
+    exact Measure.map_id
+  | succ n ih =>
+    let K' := K.comap (fun w : Fin (n + 1) → X => w (Fin.last n))
+      (measurable_pi_apply _)
+    have hmap : (finiteProduct μ K n ⊗ₘ K').map Prod.snd = K ∘ₘ μ := by
+      change (finiteProduct μ K n ⊗ₘ K').snd = K ∘ₘ μ
+      rw [Measure.snd_compProd]
+      have hcomp : (⇑K') ∘ₘ finiteProduct μ K n =
+          (⇑K) ∘ₘ Measure.map (fun w : Fin (n + 1) → X => w (Fin.last n))
+            (finiteProduct μ K n) := by
+        ext s hs
+        rw [Measure.bind_apply hs (Kernel.aemeasurable _),
+          Measure.bind_apply hs (Kernel.aemeasurable _),
+          lintegral_map (K.measurable_coe hs) (measurable_pi_apply _)]
+        apply lintegral_congr
+        intro w
+        simp [K', Kernel.comap_apply]
+      rw [hcomp, ih]
+    rw [finiteProduct, Measure.map_map (by fun_prop) (snoc_measurable n)]
+    have hsnoc : (fun w : Fin (n + 2) → X => w (Fin.last (n + 1))) ∘
+        (fun p : (Fin (n + 1) → X) × X => Fin.snoc p.1 p.2) = Prod.snd := by
+      funext p
+      simp
+    rw [hsnoc, hmap, hstat]
+
+private theorem finiteProduct_pair_last {X : Type*} [MeasurableSpace X]
+    (μ : Measure X) [IsProbabilityMeasure μ] (K : Kernel X X) [IsMarkovKernel K]
+    (hstat : K ∘ₘ μ = μ) (n : ℕ) :
+    (finiteProduct μ K n ⊗ₘ
+      K.comap (fun w : Fin (n + 1) → X => w (Fin.last n)) (measurable_pi_apply _)).map
+        (fun p => (p.1 (Fin.last n), p.2)) = μ ⊗ₘ K := by
+  let P := finiteProduct μ K n
+  let K' := K.comap (fun w : Fin (n + 1) → X => w (Fin.last n))
+    (measurable_pi_apply _)
+  have hterm := finiteProduct_terminal μ K hstat n
+  ext E hE
+  rw [Measure.map_apply (by fun_prop) hE,
+    Measure.compProd_apply (hE.preimage (by fun_prop)),
+    Measure.compProd_apply hE]
+  have hfun : Measurable (fun Q : X =>
+      K Q ((fun r => (Q, r)) ⁻¹' E)) := by
+    change Measurable (fun Q : X => K Q (Prod.mk Q ⁻¹' E))
+    exact K.measurable_kernel_prodMk_left hE
+  have hR : (∫⁻ Q, K Q ((fun r => (Q, r)) ⁻¹' E) ∂μ) =
+      ∫⁻ w, K (w (Fin.last n)) ((fun r => (w (Fin.last n), r)) ⁻¹' E)
+        ∂finiteProduct μ K n := by
+    have hm := (lintegral_map (μ := finiteProduct μ K n) hfun
+      (measurable_pi_apply (X := fun _ : Fin (n + 1) => X) (Fin.last n))).symm
+    simpa only [hterm] using hm.symm
+  rw [hR]
+  apply lintegral_congr
+  intro w
+  congr 1
+
+private def rowBound (F : CommonFlow) (M : Kernel PDescriptor PDescriptor)
+    (Q R : PDescriptor) : Prop :=
+  M.rnDeriv F.C Q R ≤
+    (threeStepAverage F Q)⁻¹ * threeStepAverage F R *
+      ENNReal.ofReal (1 + 25 * excess Q / 9)
+
+/- The exact h-ratio and original excess product on a finite C history. -/
+private def finiteDistortion (F : CommonFlow) (n : ℕ)
+    (w : Fin (n + 1) → PDescriptor) : ℝ≥0∞ :=
+  (threeStepAverage F (w 0))⁻¹ * threeStepAverage F (w (Fin.last n)) *
+    ∏ i : Fin n, ENNReal.ofReal (1 + 25 * excess (w i.castSucc) / 9)
+
+private theorem rowBound_measurable (F : CommonFlow)
+    (M : Kernel PDescriptor PDescriptor) :
+    MeasurableSet {p : PDescriptor × PDescriptor | rowBound F M p.1 p.2} := by
+  have hm : Measurable (fun p : PDescriptor × PDescriptor =>
+      M.rnDeriv F.C p.1 p.2) := by
+    exact (Kernel.measurable_rnDeriv M F.C).comp (by fun_prop)
+  have he : Measurable excess := measurable_g.ennreal_toReal.sub measurable_const
+  have hfactor : Measurable (fun p : PDescriptor × PDescriptor =>
+      ENNReal.ofReal ((1 : ℝ) + 25 * excess p.1 / 9)) := by
+    exact ((measurable_const.add
+      ((measurable_const.mul (he.comp measurable_fst)).div measurable_const)).ennreal_ofReal)
+  have hf : Measurable (fun p : PDescriptor × PDescriptor =>
+      (threeStepAverage F p.1)⁻¹ * threeStepAverage F p.2 *
+        ENNReal.ofReal (1 + 25 * excess p.1 / 9)) := by
+    exact ((h_measurable F).comp measurable_fst).inv.mul
+      ((h_measurable F).comp measurable_snd) |>.mul
+        hfactor
+  exact measurableSet_le hm hf
+
+private theorem finiteDistortion_measurable (F : CommonFlow) (n : ℕ) :
+    Measurable (finiteDistortion F n) := by
+  unfold finiteDistortion
+  have he : Measurable excess := measurable_g.ennreal_toReal.sub measurable_const
+  have hfactor (i : Fin n) : Measurable (fun w : Fin (n + 1) → PDescriptor =>
+      ENNReal.ofReal ((1 : ℝ) + 25 * excess (w i.castSucc) / 9)) := by
+    exact ((measurable_const.add
+      ((measurable_const.mul (he.comp (measurable_pi_apply i.castSucc))).div
+        measurable_const)).ennreal_ofReal)
+  apply ((h_measurable F).comp (measurable_pi_apply 0)).inv.mul
+    ((h_measurable F).comp (measurable_pi_apply (Fin.last n))) |>.mul
+  apply Finset.measurable_prod
+  intro i hi
+  exact hfactor i
+
+private theorem finiteProduct_ae_terminal_positive (F : CommonFlow) (n : ℕ) :
+    ∀ᵐ w ∂finiteProduct F.nuP F.C n,
+      threeStepAverage F (w (Fin.last n)) ≠ 0 := by
+  have hposNu : ∀ᵐ Q ∂F.nuP, threeStepAverage F Q ≠ 0 := by
+    filter_upwards [(common_flow_signed_h F).2] with Q hQ
+    intro hz
+    have hh := hQ.1
+    simp only [h, hz, ENNReal.toReal_zero] at hh
+    norm_num at hh
+  have hterm := finiteProduct_terminal F.nuP F.C
+    (common_flow_word_iteration F).1 n
+  have hs : MeasurableSet {Q : PDescriptor | threeStepAverage F Q ≠ 0} :=
+    (measurableSet_singleton (0 : ℝ≥0∞)).preimage (h_measurable F) |>.compl
+  have hmap : ∀ᵐ Q ∂(finiteProduct F.nuP F.C n).map
+      (fun w => w (Fin.last n)), threeStepAverage F Q ≠ 0 := by
+    simpa only [hterm] using hposNu
+  exact ae_of_ae_map (measurable_pi_apply _).aemeasurable hmap
+
+private theorem finiteDistortion_snoc (F : CommonFlow) (n : ℕ)
+    (w : Fin (n + 1) → PDescriptor) (R : PDescriptor)
+    (hh : threeStepAverage F (w (Fin.last n)) ≠ 0)
+    (ht : threeStepAverage F (w (Fin.last n)) ≠ ∞) :
+    finiteDistortion F (n + 1) (Fin.snoc w R) =
+      finiteDistortion F n w *
+        (threeStepAverage F (w (Fin.last n)))⁻¹ * threeStepAverage F R *
+          ENNReal.ofReal (1 + 25 * excess (w (Fin.last n)) / 9) := by
+  unfold finiteDistortion
+  rw [Fin.prod_univ_castSucc]
+  simp only [Fin.snoc_last, Fin.snoc_castSucc]
+  have h0 : (Fin.snoc w R : Fin (n + 2) → PDescriptor) (0 : Fin (n + 2)) = w 0 := by
+    simpa only [show (0 : Fin (n + 2)) = (0 : Fin (n + 1)).castSucc by rfl] using
+      (@Fin.snoc_castSucc (n + 1) (fun _ : Fin (n + 2) => PDescriptor)
+        R (fun i => w i) (0 : Fin (n + 1)))
+  rw [h0]
+  have hc := ENNReal.mul_inv_cancel hh ht
+  symm
+  calc
+    ((threeStepAverage F (w 0))⁻¹ * threeStepAverage F (w (Fin.last n)) *
+        ∏ x : Fin n, ENNReal.ofReal (1 + 25 * excess (w x.castSucc) / 9)) *
+        (threeStepAverage F (w (Fin.last n)))⁻¹ * threeStepAverage F R *
+          ENNReal.ofReal (1 + 25 * excess (w (Fin.last n)) / 9) =
+      (threeStepAverage F (w 0))⁻¹ *
+        (threeStepAverage F (w (Fin.last n)) *
+          (threeStepAverage F (w (Fin.last n)))⁻¹) *
+          (∏ x : Fin n, ENNReal.ofReal (1 + 25 * excess (w x.castSucc) / 9)) *
+            threeStepAverage F R *
+              ENNReal.ofReal (1 + 25 * excess (w (Fin.last n)) / 9) := by
+                ac_rfl
+    _ = (threeStepAverage F (w 0))⁻¹ * threeStepAverage F R *
+        (∏ x : Fin n, ENNReal.ofReal (1 + 25 * excess (w x.castSucc) / 9)) *
+          ENNReal.ofReal (1 + 25 * excess (w (Fin.last n)) / 9) := by
+      rw [hc]
+      ac_rfl
+    _ = (threeStepAverage F (w 0))⁻¹ * threeStepAverage F R *
+        ((∏ x : Fin n, ENNReal.ofReal (1 + 25 * excess (w x.castSucc) / 9)) *
+          ENNReal.ofReal (1 + 25 * excess (w (Fin.last n)) / 9)) := by
+      ac_rfl
+
+set_option maxHeartbeats 800000 in
+private theorem finiteDensity_le_distortion (F : CommonFlow)
+    (M : Kernel PDescriptor PDescriptor)
+    (hrow : ∀ᵐ Q ∂F.nuP, ∀ᵐ R ∂F.C Q, rowBound F M Q R) :
+    ∀ n, ∀ᵐ w ∂finiteProduct F.nuP F.C n,
+      finiteDensity F M n w ≤ finiteDistortion F n w := by
+  have hrowc : ∀ᵐ p ∂(F.nuP ⊗ₘ F.C), rowBound F M p.1 p.2 :=
+    Measure.ae_compProd_of_ae_ae (rowBound_measurable F M) hrow
+  intro n
+  induction n with
+  | zero =>
+      filter_upwards [finiteProduct_ae_terminal_positive F 0] with w hw
+      have hw0 : threeStepAverage F (w 0) ≠ 0 := by simpa using hw
+      have hone : (1 : ℝ≥0∞) ≤
+          (threeStepAverage F (w 0))⁻¹ * threeStepAverage F (w 0) := by
+        rw [ENNReal.inv_mul_cancel hw0 (h_finite F _)]
+      simpa [finiteDensity, finiteDistortion] using hone
+  | succ n ih =>
+      let K := F.C.comap (fun w : Fin (n + 1) → PDescriptor => w (Fin.last n))
+        (measurable_pi_apply _)
+      have hpair_last := finiteProduct_pair_last F.nuP F.C
+        (common_flow_word_iteration F).1 n
+      have hrow_pair : ∀ᵐ p ∂(finiteProduct F.nuP F.C n ⊗ₘ K),
+          rowBound F M (p.1 (Fin.last n)) p.2 := by
+        have hmaprow : ∀ᵐ z ∂Measure.map
+            (fun p : (Fin (n + 1) → PDescriptor) × PDescriptor =>
+              (p.1 (Fin.last n), p.2)) (finiteProduct F.nuP F.C n ⊗ₘ K),
+            rowBound F M z.1 z.2 := by
+          rw [show Measure.map
+              (fun p : (Fin (n + 1) → PDescriptor) × PDescriptor =>
+                (p.1 (Fin.last n), p.2)) (finiteProduct F.nuP F.C n ⊗ₘ K) =
+              F.nuP ⊗ₘ F.C by exact hpair_last]
+          exact hrowc
+        have hpair_meas : Measurable (fun p : (Fin (n + 1) → PDescriptor) × PDescriptor =>
+            (p.1 (Fin.last n), p.2)) := by fun_prop
+        exact (ae_map_iff hpair_meas.aemeasurable
+          (rowBound_measurable F M)).mp hmaprow
+      have hih_pair : ∀ᵐ p ∂(finiteProduct F.nuP F.C n ⊗ₘ K),
+          finiteDensity F M n p.1 ≤ finiteDistortion F n p.1 := by
+        apply Measure.ae_compProd_of_ae_fst K
+          (measurableSet_le (finiteDensity_measurable F M n)
+            (finiteDistortion_measurable F n))
+        exact ih
+      have hterm_pair : ∀ᵐ p ∂(finiteProduct F.nuP F.C n ⊗ₘ K),
+          threeStepAverage F (p.1 (Fin.last n)) ≠ 0 := by
+        have hterm_meas : MeasurableSet {w : Fin (n + 1) → PDescriptor |
+            threeStepAverage F (w (Fin.last n)) ≠ 0} :=
+          ((measurableSet_singleton (0 : ℝ≥0∞)).preimage
+            ((h_measurable F).comp
+              (measurable_pi_apply (X := fun _ : Fin (n + 1) => PDescriptor)
+                (Fin.last n)))).compl
+        apply Measure.ae_compProd_of_ae_fst K
+          hterm_meas
+        exact finiteProduct_ae_terminal_positive F n
+      rw [show finiteProduct F.nuP F.C (n + 1) =
+          (finiteProduct F.nuP F.C n ⊗ₘ K).map
+            (fun p => Fin.snoc p.1 p.2) by rfl]
+      apply (ae_map_iff (snoc_measurable n).aemeasurable
+        (measurableSet_le (finiteDensity_measurable F M (n + 1))
+          (finiteDistortion_measurable F (n + 1)))).mpr
+      filter_upwards [hih_pair, hrow_pair, hterm_pair] with p hi hr ht
+      rw [finiteDensity_snoc]
+      change M.rnDeriv F.C (p.1 (Fin.last n)) p.2 ≤
+        (threeStepAverage F (p.1 (Fin.last n)))⁻¹ * threeStepAverage F p.2 *
+          ENNReal.ofReal (1 + 25 * excess (p.1 (Fin.last n)) / 9) at hr
+      have hmul : finiteDensity F M n p.1 *
+          M.rnDeriv F.C (p.1 (Fin.last n)) p.2 ≤
+          finiteDistortion F n p.1 *
+            (threeStepAverage F (p.1 (Fin.last n)))⁻¹ *
+              threeStepAverage F p.2 *
+                ENNReal.ofReal (1 + 25 * excess (p.1 (Fin.last n)) / 9) := by
+        calc
+          finiteDensity F M n p.1 *
+              M.rnDeriv F.C (p.1 (Fin.last n)) p.2 ≤
+              finiteDistortion F n p.1 *
+                M.rnDeriv F.C (p.1 (Fin.last n)) p.2 :=
+            mul_le_mul_left hi _
+          _ ≤ finiteDistortion F n p.1 *
+              ((threeStepAverage F (p.1 (Fin.last n)))⁻¹ *
+                threeStepAverage F p.2 *
+                  ENNReal.ofReal (1 + 25 * excess (p.1 (Fin.last n)) / 9)) :=
+            mul_le_mul_right hr _
+          _ = finiteDistortion F n p.1 *
+              (threeStepAverage F (p.1 (Fin.last n)))⁻¹ *
+                threeStepAverage F p.2 *
+                  ENNReal.ofReal (1 + 25 * excess (p.1 (Fin.last n)) / 9) := by
+            ring
+      rw [finiteDistortion_snoc F n p.1 p.2 ht (h_finite F _)]
+      exact hmul
+
 
 private theorem compProd_density {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
     (μ : Measure X) [IsFiniteMeasure μ] (ν : Measure X) [IsFiniteMeasure ν]
@@ -136,6 +393,101 @@ private theorem finiteProduct_density (F : CommonFlow)
       (finiteDensity_measurable F M (n + 1))]
     rfl
 
+private theorem withDensity_mono_measure {X : Type*} [MeasurableSpace X]
+    {μ ν : Measure X} (hμν : μ ≤ ν) (f : X → ℝ≥0∞) :
+    μ.withDensity f ≤ ν.withDensity f := by
+  refine Measure.le_iff.mpr (fun s hs => ?_)
+  rw [withDensity_apply _ hs, withDensity_apply _ hs]
+  exact lintegral_mono' (Measure.restrict_mono_measure hμν s) le_rfl
+
+set_option maxHeartbeats 800000 in
+private theorem rnDeriv_le_of_density {X : Type*} [MeasurableSpace X]
+    {μ ν : Measure X} [IsFiniteMeasure μ] [IsFiniteMeasure ν] (hAC : μ ≪ ν)
+    (f : X → ℝ≥0∞) (hμ : μ ≤ ν.withDensity f) :
+    μ.rnDeriv ν ≤ᵐ[ν] f := by
+  apply ae_le_of_forall_setLIntegral_le_of_sigmaFinite (Measure.measurable_rnDeriv _ _)
+  intro s hs hst
+  calc
+    (∫⁻ x in s, (Measure.rnDeriv μ ν) x ∂ν) = μ s :=
+      Measure.setLIntegral_rnDeriv hAC s
+    _ ≤ (ν.withDensity f) s := hμ s
+    _ = ∫⁻ x in s, f x ∂ν := withDensity_apply (μ := ν) f hs
+
+set_option maxHeartbeats 800000 in
+private theorem doob_row_rn_bound (F : CommonFlow) (G : Set PDescriptor)
+    (hmG : MeasurableSet G) (haG : ∀ᵐ Q ∂F.nuP, Q ∈ G)
+    (hsub : ∀ Q, doob F G Q Set.univ ≤ 1)
+    (hc : ∀ Q, Q ∈ G → CoreAt F Q ∧ (∀ᵐ Q' ∂F.C Q, Q' ∈ G))
+    (hdist : ∀ᵐ Q ∂F.nuP, endpointRate⁻¹ • F.L Q ≤
+      ENNReal.ofReal (1 + 25 * excess Q / 9) • F.C Q) :
+    ∀ᵐ Q ∂F.nuP, ∀ᵐ R ∂F.C Q,
+      (doob F G).rnDeriv F.C Q R ≤
+        (threeStepAverage F Q)⁻¹ * threeStepAverage F R *
+          ENNReal.ofReal (1 + 25 * excess Q / 9) := by
+  filter_upwards [haG, hdist] with Q hQ hd
+  have hq : CoreAt F Q := (hc Q hQ).1
+  have hpos : threeStepAverage F Q ≠ 0 := by
+    intro hz
+    have hh := hq.2.1
+    simp only [h, hz, ENNReal.toReal_zero] at hh
+    norm_num at hh
+  have hM : doob F G Q =
+      (endpointRate⁻¹ • F.L Q).withDensity
+        (fun R => (threeStepAverage F Q)⁻¹ * threeStepAverage F R) := by
+    have hm : Measurable (Function.uncurry (fun Q R => if Q ∈ G then
+        endpointRate⁻¹ * (threeStepAverage F Q)⁻¹ * threeStepAverage F R else 0)) := by
+      exact ((measurable_const.mul ((h_measurable F).comp measurable_fst).inv).mul
+        ((h_measurable F).comp measurable_snd)).ite
+          (hmG.preimage measurable_fst) measurable_const
+    rw [doob, Kernel.withDensity_apply _ hm]
+    simp only [hQ, if_true]
+    ext E hE
+    rw [withDensity_apply _ hE, withDensity_apply _ hE, Measure.restrict_smul,
+      lintegral_smul_measure]
+    simp only [smul_eq_mul]
+    have hf : Measurable (fun R : PDescriptor =>
+        (threeStepAverage F Q)⁻¹ * threeStepAverage F R) :=
+      measurable_const.mul (h_measurable F)
+    rw [← lintegral_const_mul _ hf]
+    apply lintegral_congr
+    intro R
+    ring
+  have hscaled := withDensity_mono_measure hd
+      (fun R => (threeStepAverage F Q)⁻¹ * threeStepAverage F R)
+  have hright :
+      ((ENNReal.ofReal (1 + 25 * excess Q / 9) • F.C Q).withDensity
+        (fun R => (threeStepAverage F Q)⁻¹ * threeStepAverage F R)) =
+        (F.C Q).withDensity (fun R =>
+          (threeStepAverage F Q)⁻¹ * threeStepAverage F R *
+            ENNReal.ofReal (1 + 25 * excess Q / 9)) := by
+    ext E hE
+    rw [withDensity_apply _ hE, withDensity_apply _ hE, Measure.restrict_smul,
+      lintegral_smul_measure]
+    simp only [smul_eq_mul]
+    have hf : Measurable (fun R : PDescriptor =>
+        (threeStepAverage F Q)⁻¹ * threeStepAverage F R) :=
+      measurable_const.mul (h_measurable F)
+    rw [← lintegral_const_mul _ hf]
+    apply lintegral_congr
+    intro R
+    ring
+  have hle : doob F G Q ≤ (F.C Q).withDensity (fun R =>
+      (threeStepAverage F Q)⁻¹ * threeStepAverage F R *
+        ENNReal.ofReal (1 + 25 * excess Q / 9)) := by
+    rw [hM]
+    exact hscaled.trans_eq hright
+  letI : IsFiniteMeasure (doob F G Q) := ⟨lt_of_le_of_lt (hsub Q) ENNReal.one_lt_top⟩
+  letI : IsFiniteMeasure (F.C Q) := ⟨by finiteness⟩
+  letI : IsFiniteKernel (doob F G) := ⟨⟨1, by simp, hsub⟩⟩
+  have hacQ : doob F G Q ≪ F.C Q :=
+    (Kernel.withDensity_absolutelyContinuous (κ := F.L) _ Q).trans
+      (L_le_C F Q).absolutelyContinuous
+  have hbound := rnDeriv_le_of_density (μ := doob F G Q) (ν := F.C Q) hacQ _ hle
+  filter_upwards [(doob F G).rnDeriv_eq_rnDeriv_measure (η := F.C) (a := Q), hbound]
+    with R hR hRbound
+  rw [hR]
+  exact hRbound
+
 private theorem homogeneous_prefix_pair {S : Type*} [MeasurableSpace S]
     (μ : Measure S) [IsProbabilityMeasure μ] (K : Kernel S S) [IsMarkovKernel K] (n : ℕ) :
     (homogeneousLaw μ K).map (fun x => ((fun i : Fin (n + 1) => x i.1), x (n + 1))) =
@@ -165,7 +517,7 @@ private theorem homogeneous_prefix_pair {S : Type*} [MeasurableSpace S]
     homogeneousLaw, ← hk]
   exact hmap
 
-private theorem homogeneous_prefix_product {S : Type*} [MeasurableSpace S]
+theorem homogeneous_prefix_product {S : Type*} [MeasurableSpace S]
     (μ : Measure S) [IsProbabilityMeasure μ] (K : Kernel S S) [IsMarkovKernel K] (n : ℕ) :
     (homogeneousLaw μ K).map (fun x (i : Fin (n + 1)) => x i.1) = finiteProduct μ K n := by
   induction n with
@@ -315,6 +667,10 @@ same-row Radon-Nikodym derivatives. -/
 theorem common_flow_finite_product (F : CommonFlow) :
     ∃ (G : Set PDescriptor) (hsub : ∀ Q, doob F G Q Set.univ ≤ 1),
       MeasurableSet G ∧ (∀ᵐ Q ∂F.nuP, Q ∈ G) ∧
+      (∀ᵐ Q ∂F.nuP, ∀ᵐ R ∂F.C Q,
+        (doob F G).rnDeriv F.C Q R ≤
+          (threeStepAverage F Q)⁻¹ * threeStepAverage F R *
+            ENNReal.ofReal (1 + 25 * excess Q / 9)) ∧
       ∀ n : ℕ,
         ((killedTrajectory F (doob F G) hsub).map
           (fun x (i : Fin (n + 1)) => x i.1)).restrict (allLive n) =
@@ -330,7 +686,8 @@ theorem common_flow_finite_product (F : CommonFlow) :
   haveI : IsFiniteKernel (doob F G) := ⟨⟨1, by simp, hsub⟩⟩
   haveI : IsProbabilityMeasure (F.nuP.map (Sum.inl : PDescriptor → Cemetery)) :=
     Measure.isProbabilityMeasure_map measurable_inl.aemeasurable
-  refine ⟨G, hsub, hmG, haG, fun n => ⟨?_, ?_, ?_⟩⟩
+  refine ⟨G, hsub, hmG, haG, doob_row_rn_bound F G hmG haG hsub hc hdist,
+    fun n => ⟨?_, ?_, ?_⟩⟩
   · change ((homogeneousLaw (F.nuP.map Sum.inl) (cemetery (doob F G))).map _).restrict _ = _
     rw [homogeneous_prefix_product]
     ext E hE
@@ -359,5 +716,40 @@ theorem common_flow_finite_product (F : CommonFlow) :
   · rw [originalTrajectory, homogeneous_prefix_product,
       finiteProduct_density F (doob F G) hac n]
     exact withDensity_absolutelyContinuous _ _
+
+/-- The original finite C-history RN derivative obeys the h-ratio/excess bound. -/
+theorem common_flow_finite_history_rn_bound (F : CommonFlow) :
+    ∃ (G : Set PDescriptor) (hsub : ∀ Q, doob F G Q Set.univ ≤ 1),
+      MeasurableSet G ∧ (∀ᵐ Q ∂F.nuP, Q ∈ G) ∧
+      (∀ᵐ Q ∂F.nuP, ∀ᵐ R ∂F.C Q,
+        (doob F G).rnDeriv F.C Q R ≤
+          (threeStepAverage F Q)⁻¹ * threeStepAverage F R *
+            ENNReal.ofReal (1 + 25 * excess Q / 9)) ∧
+      ∀ n : ℕ, (finiteProduct F.nuP (doob F G) n).rnDeriv
+          (finiteProduct F.nuP F.C n) ≤ᵐ[finiteProduct F.nuP F.C n]
+        (fun w =>
+          (threeStepAverage F (w 0))⁻¹ *
+            threeStepAverage F (w (Fin.last n)) *
+              ∏ i : Fin n, ENNReal.ofReal
+                (1 + 25 * excess (w i.castSucc) / 9)) := by
+  obtain ⟨G, hsub, hmG, haG, _hmarkov, _hprob, hac, hc, _hconj, _hlim,
+      _hpos, _hk, hdist⟩ := common_flow_doob_survival F
+  letI := cemetery_markov (doob F G) hsub
+  haveI : IsFiniteKernel (doob F G) := ⟨⟨1, by simp, hsub⟩⟩
+  have hrow := doob_row_rn_bound F G hmG haG hsub hc hdist
+  have hdistortion : ∀ n, ∀ᵐ w ∂finiteProduct F.nuP F.C n,
+      finiteDensity F (doob F G) n w ≤ finiteDistortion F n w :=
+    finiteDensity_le_distortion F (doob F G) hrow
+  refine ⟨G, hsub, hmG, haG, hrow, ?_⟩
+  intro n
+  have hdensity := finiteProduct_density F (doob F G) hac n
+  have hrn : (finiteProduct F.nuP (doob F G) n).rnDeriv
+      (finiteProduct F.nuP F.C n) =ᵐ[finiteProduct F.nuP F.C n]
+        finiteDensity F (doob F G) n := by
+    rw [hdensity]
+    exact Measure.rnDeriv_withDensity _ (finiteDensity_measurable F (doob F G) n)
+  filter_upwards [hrn, hdistortion n] with w hw hd
+  rw [hw]
+  simpa [finiteDistortion] using hd
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelFiniteProducts
