@@ -334,6 +334,88 @@ $$
 
 uniformly on the original coefficients, masks and profiles. The finite physical labels then recover the original $UK$ scale. This residual still contains nonsquarefree columns, shared prime factors, all sixth-power tails and both character orientations. The natural masks cannot be dropped from $E_{6,j}$ by a positive-row comparison. The reduction pays only the lower-order parts; it does not prove the residual, improve the existing whole-bin detector by itself, or restore the signed Robin packet.
 
+### A source-conditional pure-dual-power contraction
+
+To use Poisson on a complete ideal family, choose a fixed nonnegative smooth annular majorant $W\ge1$ on the actual row norm support, and define
+
+$$
+\widetilde T_j=\sum_{v\ {\rm good\ sixth\ power\ free}}
+W(q_v/U_j)\left|\sum_hc_j(h)
+\chi_h^{\rm raw}(v)^{\varepsilon_\chi}\right|^2\ge T_j.
+$$
+
+Define $\widetilde H_{m,j}$ and $\widetilde E_{6,j}$ by expanding this new positive moment. The lower-order bounds apply to these new blocks with the fixed seminorms of $W$. This compares complete positive moments first; it does not compare $E_{6,j}$ to $\widetilde E_{6,j}$ or erase an arbitrary selector from a signed contraction.
+
+For each actual-order-six pair, let $\xi=\xi_{h,k}$ be the primitive character inducing $\chi_h^{\varepsilon_\chi}\overline{\chi_k^{\varepsilon_\chi}}$ on the coprime locus, with its full conductor $\mathfrak f=\mathfrak f_{h,k}$ and trivial infinite type. Put
+
+$$
+P=P_{h,k}=\operatorname{rad}\left(hk\prod_{\mathfrak p\in S}\mathfrak p\right),
+\qquad R=R_{h,k}=\prod_{\substack{\mathfrak p\mid P\\\mathfrak p\nmid\mathfrak f}}\mathfrak p.
+$$
+
+Extend the original good-row ratio by zero to all integral ideals. This extension is exactly $\xi(v)\mathbf1_{(v,R)=1}$: primes of $P$ lying in $\mathfrak f$ are already zeroed by $\xi$, and every remaining original column or $S$-row exclusion is enforced by $R$. This is not an identity for unsplit physical rows. Common prime factors and redundant zero-support primes absent from the primitive conductor belong to $R$. No artificial fractional-generator zeros are inserted.
+
+Let $b_W$ be the upper endpoint of the support of $W$, and define
+
+$$
+L_j=(b_WU_j)^{1/6},\qquad
+M_{P,L_j}(w)=\sum_{\substack{q_\ell\le L_j\\(\ell,P)=1}}\mu(\ell)q_\ell^{-w},
+\qquad
+\vartheta(\mathfrak f)=\prod_{\mathfrak p\mid\mathfrak f}(1-q_{\mathfrak p}^{-1}).
+$$
+
+The row sixth-power-free indicator is expanded by the finite sum $\sum_{\ell^6\mid v}\mu(\ell)$. Expanding $\mathbf1_{(v,R)=1}$ then uses $r\mid R$. De Faveri's Lemma 3.1 applies to the nontrivial primitive $\xi$ at scale $A_{\ell,r}=U_j/(q_\ell^6q_r)$. In its dual sum, restrict only this specified subterm to ideals $e^6$, where $\overline\xi(e^6)=\mathbf1_{(e,\mathfrak f)=1}$.
+
+For $F=\mathbb Q(\sqrt{-3})$, the source's Mellin factor is
+
+$$
+H_W(z)=\widehat W(1-z)\frac{\Gamma(z)}{\Gamma(1-z)}
+\left(\frac3{(2\pi)^2}\right)^{z-1/2}.
+$$
+
+On $1/6<\Re z<1$, the resulting pair contribution is exactly
+
+$$
+\frac{\epsilon(\xi)}{2\pi i}\int
+H_W(z)U_j^{1-z}q_{\mathfrak f}^{z-1/2}\zeta_F(6z)
+\prod_{\mathfrak p\mid\mathfrak f}(1-q_{\mathfrak p}^{-6z})
+\prod_{\mathfrak p\mid R}(1-\xi(\mathfrak p)q_{\mathfrak p}^{z-1})
+M_{P,L_j}(6-6z)\,dz.
+$$
+
+The root number and conductor are those of the actual primitive ratio, including its ramified part. The dual-power series converges absolutely on this initial line and the $\ell$-sum is finite. Shifting to $0<\Re z<1/6$ extracts the $\zeta_F(6z)$ pole. Thus this specified pure-dual-sixth-power contribution is
+
+$$
+\mathcal P_{6,j}=C_WU_j^{5/6}\mathcal C_{6,L_j}[c_j]
++\mathcal I_{6,j},\qquad
+C_W=\frac{\operatorname{Res}_{s=1}\zeta_F(s)}6H_W(1/6)>0,
+$$
+
+where $\mathcal I_{6,j}$ is the remaining shifted integral and
+
+$$
+\mathcal C_{6,L_j}[c_j]=
+\sum_{\substack{r_2(h)\ne r_2(k)\\r_3(h)\ne r_3(k)}}
+c_j(h)\overline{c_j(k)}\epsilon(\xi_{h,k})
+q_{\mathfrak f_{h,k}}^{-1/3}\vartheta(\mathfrak f_{h,k})
+\prod_{\mathfrak p\mid R_{h,k}}
+(1-\xi_{h,k}(\mathfrak p)q_{\mathfrak p}^{-5/6})
+M_{P_{h,k},L_j}(5).
+$$
+
+This is a substitution and residue calculation from the existing Poisson formula. It identifies a subterm, not the full contraction $\widetilde E_{6,j}$, a nonnegative resonance, or a certified spectral projection. A sufficient bound for its pole contribution is $\Re\mathcal C_{6,L_j}[c_j]\ll_\varepsilon(U_jK)^\varepsilon U_j^{1/6}K$; the shifted integral and all other dual ideals still require a joint upper bound at scale $U_jK$. Neither bound has been supplied here.
+
+For comparison, absolute values and divisor bounds give only $|\mathcal C_{6,L_j}[c_j]|\ll_\varepsilon K^{4/3+\varepsilon}$. Write $h=gx,k=gy$ with $(x,y)=1$. The good conductor weight is at most $w(x)w(y)$, where $w(x)=\prod_{6\nmid v_{\mathfrak p}(x)}q_{\mathfrak p}^{-1/3}$. Its Dirichlet series converges for $\Re s>2/3$, so $\sum_{q_x\le X}w(x)\ll_\varepsilon X^{2/3+\varepsilon}$. Summing the two cofactors and then $g$ gives $K^{4/3+\varepsilon}$; the finite local products and divisor-bounded coefficients cost only $K^\varepsilon$. At $K\asymp U_j$, the desired pole-contraction scale is instead $K^{7/6+\varepsilon}$, leaving a $K^{1/6}$ saving to obtain. The row Möbius factor $M_{P,L_j}(5)$ is distinct from the original column coefficient $\mu(d)$; it does not establish cancellation of that coefficient contraction.
+
+The actual-order restriction matters. For a ratio of order $o\in\{2,3\}$, all pure dual $o$-th powers have character value one. The portion of those powers outside the sixth powers has Dirichlet factor
+
+$$
+\zeta_F(oz)\prod_{\mathfrak p\mid\mathfrak f}(1-q_{\mathfrak p}^{-oz})
+-\zeta_F(6z)\prod_{\mathfrak p\mid\mathfrak f}(1-q_{\mathfrak p}^{-6z}).
+$$
+
+Its $z=1/6$ residue cancels the extracted sixth-power residue for that pair. This prevents treating a uniform sixth-power extraction over all nonprincipal pairs as an uncancellable contribution. Restricting to actual order six removes that specific lower-order cancellation; it does not exclude cancellation by other dual terms or solve the remaining estimate. De Faveri's Lemma 3.3 also retains coupled cross phases for nonsquarefree columns under its stated coprimality and finite-class hypotheses. It does not replace the general $\epsilon(\xi_{h,k})$ above by a separable squarefree Gauss vector. This application remains source-conditional and has no complete local Lean certification or signed Robin consequence.
+
 ## Known estimates for the squarefree Gauss pairing
 
 A restricted pairing of the actual convolution coefficients can be matched to existing cubic estimates. This does not yet identify it as the complete resonant projection of the sixth-order sieve. Use the original primary generators and good-prime exclusions, fix bounded annular profiles and the finite ray twist $\nu$, and restrict both factors to squarefree indices. Define
