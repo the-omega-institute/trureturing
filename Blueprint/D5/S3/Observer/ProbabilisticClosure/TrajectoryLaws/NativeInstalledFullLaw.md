@@ -12,7 +12,31 @@ operations(x,n) collects incoming marks at coordinates 1 through n; coordinate 0
 
 Coherent(M,x) means that every Edge(M,x(n),x(n+1)) holds. A some(op) edge projects to exactly finiteStep; a none edge starts at delivered and preserves the same private configuration. AlmostSureNative(M,e,z) means that for almost every x under markedLaw(M,e,(z,none)), markedTranscript(M,x)=fullTranscript(representative(project(M,z)),rawFrom(x)). The PMF support of every trajectory edge gives coherence simultaneously for all natural event indices. Full native execution retains paid seed rejection, both accepted seeds, every marker triple, arbitrary payload returns, current registers and the Stop transaction. The completion event list writes before latching and preserves the complete held records.
 
-**Theorem 1.1 (The marked decoder is the original native execution).**
+**Theorem 1.1 (The entire marked trajectory regenerates after one edge).**
+
+$$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, (\forall w:MarkedZ, (\operatorname{markedLaw}(M, e, w)=\operatorname{weightedPrependedLaws}(M, e, w))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_regenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every initial marked state w, weightedPrependedLaws(M,e,w) is the sum over all v in Marked(Z) of markedRow(M,e,w)(v) times the image of markedLaw(M,e,v) under x mapped to prepend(w,x). prepend(w,x)(0)=w and prepend(w,x)(n+1)=x(n). The equality is on the entire marked path space, without conditioning or a positive-edge assumption.
+
+**Theorem 1.2 (The initial marked state is retained almost surely).**
+
+$$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, (\forall w:MarkedZ, (\operatorname{AlmostEveryMarkedHead}(M, e, w))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_head` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+AlmostEveryMarkedHead(M,e,w) means that x(0)=w for almost every x under markedLaw(M,e,w). The statement quantifies over every finite measurable singleton COMPLETE carrier, its original observer, each lawful installed emitter and every marked initial state, including incoming Stop and padding marks.
+
+**Theorem 1.3 (The marked decoder is the original native execution).**
 
 $$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall x:MarkedPathZ, ((\operatorname{Coherent}(M, x))\Rightarrow(\forall c:AcquiredNativeState, ((\operatorname{fields}(c)=\operatorname{projectAtZero}(M, x))\Rightarrow(\operatorname{markedTranscript}(M, x)=\operatorname{fullTranscript}(c, \operatorname{rawFrom}(x)))))))))$$
 
@@ -28,7 +52,7 @@ fullLaw(M,e,z) is the pushforward of markedLaw(M,e,(z,none)) by markedTranscript
 
 For an active fourth phase s, tailValue(s,omega) is stoppedReadWord(s,omega) with its WordFamily validity proof. tailLaw(M,e,s,z) is its pushforward from the same marked trajectory via rawFrom. ValidTail(s) contains the legal finite fourth words and their unique infinite noncompletion word. This fourth-only none outcome does not collapse the complete seed parser. Both fullLaw and tailLaw are probability measures even at emission endpoints and when fourth noncompletion has mass one. For scalar return data A=B=1,u=0,v=1, the infinite trajectory is retained; no resolvent or eventual-completion hypothesis enters.
 
-**Theorem 1.2 (A configuration law renders the full fourth future).**
+**Theorem 1.4 (A configuration law renders the full fourth future).**
 
 $$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, (\forall s:ActivePhase, (\forall z:Z, (\forall c:AcquiredNativeState, (((\operatorname{project}(M, z)=\operatorname{fields}(c))\land(\operatorname{control}(\operatorname{fields}(c))=\operatorname{fourthActive}(s)))\Rightarrow(\operatorname{fullLaw}(M, e, z)=\operatorname{map}(\operatorname{tailLaw}(M, e, s, z), \operatorname{fullRenderer}(c, s))))))))))$$
 
@@ -42,7 +66,7 @@ Whenever project(M,z)=c.source.finiteFields and c is fourth-active(s), fullLaw(M
 
 blockEvent(f,fprime,op,E) is the measurable set of transcripts t satisfying t(0)=some([],f,[]), t(1)=some([op],fprime,[eventBlock(f,op)]), and deleteBlock(t) in E. DeleteBlock removes one operation and its entire original block. weightedSuccessorMass(M,e,z,op,E) denotes the finite sum over zprime in Z of M.update(op,z)(zprime) times fullLaw(M,e,zprime)(E). emissionMass(e,z,some(op)) is e.emit(z)(some(op)). These rows are bound before synthesis and remain the literal original rows at zero emission.
 
-**Theorem 1.3 (Exact first-block recursion).**
+**Theorem 1.5 (Exact first-block recursion).**
 
 $$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, (\forall z:Z, (\forall op:Operation, (\forall fprime:FiniteFields, ((\operatorname{finiteStep}(\operatorname{project}(M, z), op)=\operatorname{some}(fprime))\Rightarrow(\forall E:SetFullTranscript, ((\operatorname{MeasurableSet}(E))\Rightarrow(\operatorname{mass}(\operatorname{fullLaw}(M, e, z), \operatorname{blockEvent}(\operatorname{project}(M, z), fprime, op, E))=\operatorname{emissionMass}(e, z, \operatorname{some}(op))\cdot\operatorname{weightedSuccessorMass}(M, e, z, op, E)))))))))))$$
 
@@ -56,7 +80,7 @@ For every lawful finiteStep and every measurable full residual event, the block-
 
 terminalTranscript(f) has coordinate 0 equal to some([],f,[]) and every later coordinate none. pending(b) and delivered in the formulas mean the corresponding fourth controls. installedRisk(M,e,mu,s) is the supremum over every PhaseHistory(s) of the actual row-weighted measurable total variation between fullLaw(M,e,z) and fullTarget(M,mu,h,c). HistoryIndependentTailLaw denotes the family (H,z) mapped to tailLaw(M,e,s,z); AlmostSureNative is the path equality defined above. PMFDepth includes all finite or countable positive-integer priors. The source keeps one common latent K; no endpoint mass assumption is needed for this transport identity.
 
-**Theorem 1.4 (One installed law supplies generation and history risk transport).**
+**Theorem 1.6 (One installed law supplies generation and history risk transport).**
 
 $$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, ((\forall z:Z, (\operatorname{IsProbabilityMeasure}(\operatorname{fullLaw}(M, e, z))))\land((\forall z:Z, (\operatorname{AlmostSureNative}(M, e, z)))\land((\forall z:Z, (\forall op:Operation, (\forall fprime:FiniteFields, ((\operatorname{finiteStep}(\operatorname{project}(M, z), op)=\operatorname{some}(fprime))\Rightarrow(\forall E:SetFullTranscript, ((\operatorname{MeasurableSet}(E))\Rightarrow(\operatorname{mass}(\operatorname{fullLaw}(M, e, z), \operatorname{blockEvent}(\operatorname{project}(M, z), fprime, op, E))=\operatorname{emissionMass}(e, z, \operatorname{some}(op))\cdot\operatorname{weightedSuccessorMass}(M, e, z, op, E))))))))\land((\forall z:Z, (\forall b:Letter, ((\operatorname{control}(\operatorname{project}(M, z))=\operatorname{pending}(b))\Rightarrow(\operatorname{emit}(e, z)=\operatorname{pure}(\operatorname{some}(\operatorname{stop}(b)))))))\land((\forall z:Z, ((\operatorname{control}(\operatorname{project}(M, z))=\operatorname{delivered}())\Rightarrow(\operatorname{fullLaw}(M, e, z)=\operatorname{dirac}(\operatorname{terminalTranscript}(\operatorname{project}(M, z))))))\land(\forall mu:PMFDepth, (\forall s:ActivePhase, (\operatorname{installedRisk}(M, e, mu, s)=\operatorname{rawRisk}(M, mu, s, \operatorname{HistoryIndependentTailLaw}(M, e, s)))))))))))))$$
 
@@ -72,7 +96,7 @@ Definitions 1.1 and 1.2 supply the same-depth source, complete original fields a
 
 The original strict bound e(M)>1/195200 is not a conclusion of these statements. Its remaining connections are bounded ENNReal-to-real risk and excess conversion, extraction of common actual stationary rows for countable priors, normalized clipping with its distortion bound, and application of ConstantSuspensionSeparator on the resulting regular table. The constant-emission condition must be transported on the designated reachable fibre. No unrestricted-observer gap or free exact-real sampling assertion follows.
 
-**Theorem 1.5 (Prepending a marked head is measurable).**
+**Theorem 1.7 (Prepending a marked head is measurable).**
 
 $$\forall A:MeasurableType, (\forall a:A, (\operatorname{MeasurablePrepend}(a)))$$
 
@@ -84,19 +108,7 @@ $$\forall A:MeasurableType, (\forall a:A, (\operatorname{MeasurablePrepend}(a)))
 
 For every measurable carrier A and a in A, prepend(a) on infinite A paths is measurable. Its zero coordinate is constant and each successor coordinate is the corresponding original path coordinate.
 
-**Theorem 1.6 (The original complete marked regeneration law).**
-
-$$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, (\forall w:MarkedZ, (\operatorname{MarkedRegenerate}(M, e, w))))))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_regenerate` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every original finite measurable singleton carrier Z, observer M, lawful InstalledEmitter e and incoming marked state w, markedLaw(M,e,w) equals the finite sum over v of markedRow(M,e,w,v) times the pushforward of markedLaw(M,e,v) under prepend(w). This is an equality of complete infinite-path measures. The original singleton-prefix calculation and projective uniqueness provide it without completion or positive-emission assumptions.
-
-**Theorem 1.7 (The marked read projection is measurable).**
+**Theorem 1.8 (The marked read projection is measurable).**
 
 $$\forall Z:FiniteMeasurableSingletonType, (\operatorname{RawFromMeasurable}(Z))$$
 
@@ -107,18 +119,6 @@ $$\forall Z:FiniteMeasurableSingletonType, (\operatorname{RawFromMeasurable}(Z))
 *Commentary.*
 
 The map rawFrom from infinite marked Z paths to binary streams is measurable on the original finite measurable singleton carrier. Coordinate n reads the incoming mark at n+1 and uses zero for marks that are not Reads.
-
-**Theorem 1.8 (The marked initial head holds almost surely).**
-
-$$\forall Z:Type, ((\operatorname{FiniteMeasurableSingleton}(Z))\Rightarrow(\forall M:ObserverZ, (\forall e:InstalledEmitterM, (\forall w:MarkedZ, (\operatorname{MarkedHead}(M, e, w))))))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.marked_head` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every M, lawful e and marked initial state w, almost every path under markedLaw(M,e,w) has coordinate zero equal to w. Incoming-mark invariance and prefixed read pushforwards use this actual path identity.
 
 **Theorem 1.9 (The marked acquired operation uses the original kernel).**
 

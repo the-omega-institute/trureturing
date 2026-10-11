@@ -8480,3 +8480,1417 @@ the existing persistence count supply interfaces, not the missing
 continuous signed-head bound. No new generic theorem, repeated
 prime-count proof, parameter optimization or numerical replay is
 claimed as mathematical progress.
+
+
+## Project application: actual monotone layers at a shorter successor
+
+This is a **repo-derived ordinary derivation**, not a compiled result. Its
+substantive additional estimate is the whole weighted actual second-layer
+increment and its one-sided combination below (candidate M6–M7, labelled
+MS6–MS7 here to distinguish the earlier Mellin formulas). The unrestricted
+pressure, packet identity, first-cutoff location and second-cutoff scale are
+reused. The bounded source comparison does not certify literature priority.
+The prior independent ordinary audit used the same model family; it is
+design evidence, not a same-round peer review, diverse-model consensus,
+Pro review, official acceptance or Lean/kernel evidence.
+
+The original project sources are pinned at
+`7f52221f2e23da81475058d5b5b6620e68709401`: this note's G1–G9 and PH
+pressure section; [FIB §§85, 87, 98, 111, 247.4 and 249](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md);
+and [ZE/5040's unrestricted/restricted pressure Theorem 3.2, own-price
+Theorem 6.1 and equation (19), and actual-cutoff Definition 7.1/Theorem 8.1](../../docs/develop/theory/ZECKENDORF_EULER_5040.md).
+The [Mantovanelli workload note](../Analytic/mantovanelli2026primeworkload.md)
+identifies the primary Zenodo 22014299, version 1.0.0, manuscript SHA-256
+`8208445c84c6cafc971a6f2a0637b06715a783f680de80d2ed3bb4a3be503d65`:
+§4 `thm:direct-bridge`, Theorem 5.2 `thm:packet-identity`, and
+Proposition 7.6 `prop:moment-workload` are existing inputs. Its packet
+theorem has two regular selfmatching endpoints; the arbitrary endpoint
+used here requires the retained concavity correction.
+
+### Same actual state, finite support and endpoint correction
+
+For \(x>1\), put
+
+\[
+f(x)=\log\log x,\qquad \lambda(x)=\frac1{x\log x},\qquad
+w(x)=-\lambda'(x)=\frac{\log x+1}{x^2(\log x)^2}>0.
+\]
+
+For primes \(p\) and integers \(k\ge1\), define
+
+\[
+\beta_{p,k}=\log\left(1+\frac1{p+\cdots+p^k}\right),\quad
+r_{p,k}=\frac{\beta_{p,k}}{\log p},\quad
+a_p(x)=\#\{k\ge1:r_{p,k}>\lambda(x)\},
+\]
+
+\[
+N_x=\prod_p p^{a_p(x)},\qquad
+K_k(x)=\sum_{p:r_{p,k}>\lambda(x)}\log p,\qquad
+K(x)=\sum_{k\ge1}K_k(x)=\log N_x.
+\]
+
+Every equality layer is excluded. For \(1<a\le b\), the common support
+including possible ties is
+
+\[
+L_b=\{(p,k):r_{p,k}\ge\lambda(b)\}.
+\]
+
+Since \(0<r_{p,k}<1/(p^k\log p)\), membership implies
+
+\[
+p^k\log p<b\log b,\qquad p<b,\qquad 2^k\log2<b\log b.
+\]
+
+Thus \(L_b\) is finite. The decreasing price makes all actual layer sets
+increase: \(K_k\) and \(K\) are finite step functions on \([a,b]\), and
+
+\[
+N_a\mid N_b,\qquad
+\frac{N_b}{N_a}=\prod_p p^{a_p(b)-a_p(a)}\in\mathbb N.
+\]
+
+Finite sum/integral interchange holds on the whole interval with this
+common support. Simultaneous events retain each layer's full \(\log p\)
+weight; activation positions are the actual ones, not reference prime
+powers.
+
+Write \(W(n)=\log(\sigma(n)/n)\), \(G(n)=(\sigma(n)/n)/(\log\log n)\),
+so \(\log G(n)=W(n)-f(\log n)\) for \(n>e\). Reuse the unrestricted
+finite positive-part pressure
+
+\[
+S(\lambda)=\max_{n\ge1}(W(n)-\lambda\log n),\qquad
+D(x)=\gamma+f(x)-\lambda(x)x-S(\lambda(x)).
+\]
+
+On \([a,b]\), reuse the exact finite expression
+
+\[
+S(\lambda(x))=\sum_{(p,k)\in L_b}\log p\,(r_{p,k}-\lambda(x))_+.
+\]
+
+It is absolutely continuous and gives \(D'(x)=(x-K(x))w(x)\) off the
+finitely many events.
+At the strict optimizer, with \(Y=K(x)>1\),
+
+\[
+\log G(N_x)=\gamma-D(x)+C_x(Y),\qquad
+C_x(Y)=f(x)+\lambda(x)(Y-x)-f(Y)\ge0.
+\]
+
+Fix an actual **strict stable selfmatch** \(A>2\), meaning that \(A\) is
+event-free and \(K(A)=A\), and set
+
+\[
+B=A+H,\qquad H>0,\qquad X=K(B)\ge A.
+\]
+
+Concavity gives \(C_B(X)\ge0\), with equality exactly when \(X=B\).
+Integrating the existing pressure derivative yields
+
+\[
+\log\frac{G(N_B)}{G(N_A)}
+=\int_A^B[K(t)-t]w(t)\,dt+C_B(X). \tag{MS0}
+\]
+
+This holds even if \(B\) is an event. If all ties at \(B\) were included,
+write \(J_B=\sum_{r_{p,k}=\lambda(B)}\log p\) and \(X^+=X+J_B\).
+Their reward is exactly \(\lambda(B)J_B\), giving the same integral with
+
+\[
+\log G(N_B^+)-\log G(N_B)=C_B(X^+)-C_B(X).
+\]
+
+Below the endpoint is consistently the strict \(N_B\). Neither \(X=B\)
+nor zero own-price defect at the different clock \(X\) is assumed.
+
+For any real \(A>2,H>0\), put \(\rho_A(u)=w(A+u)/w(A)\), and define
+
+\[
+\begin{aligned}
+T_\theta(A,H)&=\int_0^H[\theta(A+u)-\theta(A)-u]\rho_A(u)\,du,\\
+U_2(A,H)&=\int_0^H[K_2(A+u)-K_2(A)]\rho_A(u)\,du,\\
+U_{\ge3}(A,H)&=\int_0^H\sum_{k\ge3}[K_k(A+u)-K_k(A)]\rho_A(u)\,du,\\
+E_1(A,H)&=\int_0^H[K_1(A+u)-K_1(A)-\theta(A+u)+\theta(A)]\rho_A(u)\,du.
+\end{aligned}
+\]
+
+Here \(\theta(t)=\sum_{p\le t}\log p\) uses the weak prime endpoint.
+Subtracting the complete initial state \(K(A)=A\) gives the exact identity
+
+\[
+\log\frac{G(N_B)}{G(N_A)}
+=w(A)[T_\theta+U_2+U_{\ge3}+E_1]+C_B(X). \tag{MS1}
+\]
+
+The literal finite \(U_{\ge3}\ge0\) follows pointwise from actual layer
+monotonicity. It remains in every comparison.
+
+The existing first cutoff solves
+
+\[
+\frac{\log(1+1/q_1(x))}{\log q_1(x)}=\lambda(x),\qquad x-1<q_1(x)<x
+\quad(x>2).
+\]
+
+The inequalities follow from \(\log(1+t)<t\) and
+
+\[
+\log(1+1/(x-1))>1/x,\qquad \log(x-1)<\log x.
+\]
+
+Consequently the exact first-layer endpoint correction is
+
+\[
+\delta_1(x)=\theta(x)-K_1(x)
+=\sum_{q_1(x)\le p\le x}\log p,\qquad 0\le\delta_1(x)\le\log x.
+\]
+
+The closed interval has length less than one and contains at most one
+integer. A prime at either \(q_1(x)\) or \(x\) is included in this
+correction. Direct differentiation gives
+
+\[
+\frac{w'(x)}{w(x)}=\frac1x\left[-2-\frac2{\log x}+\frac1{\log x+1}\right]<0,
+\qquad 0<\rho_A(u)\le1.
+\]
+
+The \(E_1\) integrand is \(\delta_1(A)-\delta_1(A+u)\); hence
+
+\[
+-H\log B\le E_1(A,H)\le H\log A. \tag{MS2}
+\]
+
+Its lower loss is paid; its sign is not assumed favorable.
+
+### Actual second cutoff and the uniform prime input
+
+Let \(q=q_2(x)>1\) be the unique solution
+
+\[
+r_2(q)=\frac{\ell(q)}{\log q}=\lambda(x),\qquad
+\ell(q)=\log\left(1+\frac1{q^2+q}\right).
+\]
+
+The smooth \(r_2\) decreases strictly from infinity to zero. Exact
+differentiation and ordinary expansions give
+
+\[
+\ell'(q)=-\frac{2q+1}{(q^2+q)(q^2+q+1)},\quad
+\ell(q)=q^{-2}-q^{-3}+O(q^{-4}),\quad
+\ell'(q)=-2q^{-3}+3q^{-4}+O(q^{-5}).
+\]
+
+Set \(a(q)=q^2\ell(q)-1=-q^{-1}+O(q^{-2})\) and
+
+\[
+b(q)=-q^3\ell'(q)-2=-3q^{-1}+O(q^{-2}),\qquad
+L=\log x,\quad l=\log q.
+\]
+
+The exact implicit equation and derivative are
+
+\[
+q^2l=(1+a(q))xL,\qquad
+r_2'(q)=-\frac{q^{-3}}l\left[2+b(q)+\frac{1+a(q)}l\right],
+\]
+
+\[
+q_2'(x)=\frac qx\,
+\frac{(1+a(q))(1+1/L)}{2+b(q)+(1+a(q))/l}.
+\]
+
+For sufficiently large \(x\), comparison at \(\sqrt x\) and \(2\sqrt x\)
+first bounds \(q\) between them. Thus \(l=L/2+O(1)\), and substitution
+into these exact formulas proves
+
+\[
+q_2(x)=\sqrt{2x}[1+O(1/\log x)],\qquad
+q_2'(x)=\frac1{\sqrt{2x}}[1+O(1/\log x+1/q_2(x))]. \tag{MS3}
+\]
+
+The \(1/q_2(x)\) term is smaller than \(1/\log x\). This derivative
+comes from the smooth actual equation, not differentiation of a
+pointwise prime-count asymptotic or an \(O(1)\) cutoff error. With common
+constants for large \(A\), \(0<H\le A/2\), \(0\le u\le H\), integration
+of the derivative gives
+
+\[
+v(u):=q_2(A+u)-q_2(A)
+=\frac u{\sqrt{2A}}
++O\left(\frac u{\sqrt A\log A}+\frac{uH}{A^{3/2}}\right). \tag{MS4}
+\]
+
+Use **Corollary 1.3**, not the almost-all Corollary 1.4, of
+[Guth–Maynard, arXiv:2405.20552v2](https://arxiv.org/html/2405.20552v2)
+and its §13.2 proof; the [existing GM note](../Analytic/guthmaynard2024largevalues.md)
+records this primary input. For each fixed \(\epsilon>0\) with a
+nonempty range there exist constants \(C_\epsilon,Y_\epsilon>0\) such
+that for **every real** \(y\ge Y_\epsilon\) and every real length
+
+\[
+y^{17/30+\epsilon}\le v\le y^{99/100},\qquad
+\left|\pi(y+v)-\pi(y)-\frac v{\log y}\right|
+\le C_\epsilon v e^{-(\log y)^{1/4}}.
+\]
+
+No numerical \(Y_\epsilon\) is supplied. Fix
+
+\[
+\epsilon=1/60,\quad H=A^{4/5},\quad y=q_2(A),\quad
+V=v(H),\quad h_0=(2\sqrt A)^{7/12}=2^{7/12}A^{7/24}.
+\]
+
+Eventually \(y\sim\sqrt{2A}\le2\sqrt A\),
+
+\[
+y^{7/12}\le h_0\le V\sim A^{3/10}/\sqrt2,
+\qquad h_0,V\le y^{99/100},\qquad y\ge Y_{1/60}.
+\]
+
+Indeed \(3/10-7/24=1/120>0\) and \(3/10<99/200\). All these
+requirements are paid by one common eventual, unquantified threshold.
+For \(h_0\le v\le V\), write \(n(v)=\pi(y+v)-\pi(y)\). Then
+
+\[
+0\le\theta(y+v)-\theta(y)-(\log y)n(v)
+\le\log(1+v/y)n(v),\qquad n(v)\le2v/\log y
+\]
+
+eventually, uniformly. Thus multiplication of the **absolute \(\pi\)
+error by \(\log y\)** gives
+
+\[
+\theta(y+v)-\theta(y)
+=v+O\left(v\log y\,e^{-(\log y)^{1/4}}+\frac{v^2}{y\log y}\right).
+\]
+
+For fixed constants \(C,c>0\), use
+
+\[
+\eta_A=C\left(\log A\,e^{-(c\log A)^{1/4}}+H/A\right)\longrightarrow0,
+\]
+
+since \(V/y=O(H/A)\) and \(\log y\asymp\log A\). For \(0\le v<h_0\),
+apply GM only at the enclosing length \(h_0\), then monotonicity:
+
+\[
+0\le\theta(y+v)-\theta(y)\le\theta(y+h_0)-\theta(y)\le2h_0.
+\]
+
+It follows, uniformly over **the whole** \(0\le v\le V\), that
+
+\[
+\theta(y+v)-\theta(y)=v+O(\eta_Av+h_0). \tag{MS5}
+\]
+
+GM has not been extended below its lower length. To retain both strict
+second-cutoff atoms, let \(e(z)=\log z\) when \(z\) is an integer prime,
+and \(e(z)=0\) otherwise. The exact formula is
+
+\[
+K_2(A+u)-K_2(A)=\theta(y+v(u))-\theta(y)+e(y)-e(y+v(u)).
+\]
+
+The initial atom has a plus sign and the final atom a minus sign. Their
+difference is \(O(\log A)\) uniformly, including events at \(u=0,H\).
+At a stable initial source \(e(y)=0\); the supplier does not need this.
+
+### Whole weighted increment and retained higher layers
+
+The exact logarithmic derivative of \(w\) gives
+
+\[
+\rho_A(u)=1+O(H/A)\quad(0\le u\le H\le A/2).
+\]
+
+Combining MS4–MS5 and the two atoms, with \(v(u)\le C u/\sqrt A\),
+gives throughout \([0,H]\)
+
+\[
+K_2(A+u)-K_2(A)=\frac u{\sqrt{2A}}
++O\left(\frac u{\sqrt A\log A}+\frac{uH}{A^{3/2}}
++\eta_A\frac u{\sqrt A}+h_0+\log A\right).
+\]
+
+Integrating the entire interval, including the initial short lengths,
+and paying the weight variation yields
+
+\[
+U_2(A,H)=\frac{\sqrt2}{4}\frac{H^2}{\sqrt A}
++O\left(\frac{H^2}{\sqrt A\log A}+\frac{H^3}{A^{3/2}}
++\eta_A\frac{H^2}{\sqrt A}+Hh_0+H\log A\right). \tag{MS6}
+\]
+
+In particular, put \(S_A=H^2/\sqrt A=A^{11/10}\). There exist constants
+\(A_0,C,c>0\) such that for **every real \(A\ge A_0\)**, with \(H=A^{4/5}\),
+
+\[
+\left|\frac{U_2(A,H)}{S_A}-\frac{\sqrt2}{4}\right|
+\le C\left(\frac1{\log A}+A^{-1/5}
++\log A\,e^{-(c\log A)^{1/4}}
++A^{-1/120}+A^{-3/10}\log A\right)=:\mathcal E(A).
+\]
+
+The constants depend on the fixed GM input and the ordinary calculus
+bounds, not on \(A\) or its selfmatching status; none is given a numerical
+value here. The short-range cost is exactly
+
+\[
+\frac{h_0\sqrt A}{H}=2^{7/12}A^{-1/120},\qquad
+\frac{\sqrt A\log A}{H}=A^{-3/10}\log A\longrightarrow0.
+\]
+
+The first-layer loss MS2 is also paid by the latter scale. After increasing
+\(C\), set \(\varepsilon_*(A)=\mathcal E(A)\ge0\), tending to zero.
+The same bound gives, for every such real \(A\),
+
+\[
+U_2+E_1\ge(\sqrt2/4-\varepsilon_*(A))S_A,
+\]
+
+\[
+U_2+U_{\ge3}+E_1
+\ge(\sqrt2/4-\varepsilon_*(A))S_A+U_{\ge3}. \tag{MS7}
+\]
+
+Equivalently, for every \(\delta>0\) there exists \(A_\delta\) such that
+
+\[
+U_2(A,A^{4/5})+E_1(A,A^{4/5})\ge(\sqrt2/4-\delta)A^{11/10}
+\quad\text{for every real }A\ge A_\delta.
+\]
+
+No actual higher layer is deleted. In contrast, integrating the old
+coarse difference \(Q=K-\psi\) error
+
+\[
+O(A^{1/3}(\log A)^{7/3})
+\]
+
+would cost \(O(H A^{1/3}(\log A)^{7/3})\), or
+
+\[
+O(A^{1/30}(\log A)^{7/3})
+\]
+
+relative to \(S_A\). This need not vanish. MS7 keeps the monotone actual
+higher layers instead; it does not assert a shorter-interval asymptotic
+for the old signed \(Q\) difference.
+
+For each fixed \(47/60<\alpha<199/200\), the same proof works with
+
+\[
+H=A^\alpha,\qquad 0<\epsilon<2\alpha-47/30,\qquad
+h_{0,\epsilon}=(2\sqrt A)^{17/30+\epsilon}.
+\]
+
+The short-range relative exponent is \(47/60+\epsilon/2-\alpha<0\),
+and the upper-range ratio is \(V/y^{99/100}=O(A^{\alpha-199/200})\to0\).
+This choice also ensures \(17/30+\epsilon<99/100\). All other costs
+vanish; constants and thresholds depend on the fixed \(\alpha,\epsilon\).
+These are sufficient exponents, with no optimality or uniform endpoint
+claim. The displayed \(4/5,1/60\) choice lies strictly inside this range.
+
+### Actual integer consumer and the unpaid prime sign
+
+Return to \(H=A^{4/5}\), \(B=A+H\), \(X=K(B)\). At a strict stable
+selfmatch \(A\ge A_0\), suppose the same \(N_A\)
+satisfies GA2 against all its multiples; in particular this holds if
+\(N_A>5040\) is a global maximizer of \(G\) over integers greater than \(5040\).
+Since \(N_A\mid N_B\), MS1 and MS7 imply the necessary condition
+
+\[
+T_\theta(A,H)\le-(\sqrt2/4-\varepsilon_*(A))S_A
+-U_{\ge3}(A,H)-\frac{C_B(X)}{w(A)}. \tag{MS8}
+\]
+
+The exact endpoint-preserving finite prime sum is
+
+\[
+w(A)T_\theta(A,H)
+=\sum_{A<p\le B}\log p\,[\lambda(p)-\lambda(B)]
+-[f(B)-f(A)-H\lambda(B)]. \tag{MS9}
+\]
+
+Indeed integrate the finite indicators \(\mathbf1_{p\le t}\) against
+
+\[
+w(t),\qquad \int_p^B w=\lambda(p)-\lambda(B),\qquad
+\int_A^B(t-A)w(t)\,dt=f(B)-f(A)-H\lambda(B).
+\]
+
+A prime at \(A\) is excluded; one at \(B\) has zero weight. This is the
+original same-state identity, not a new standalone prime theorem.
+
+For every fixed real \(\kappa<\sqrt2/4\), there exists a common
+\(A_\kappa\ge A_0\) such that \(\varepsilon_*(A)<(\sqrt2/4-\kappa)/2\) for all
+\(A\ge A_\kappa\).
+
+At any actual strict stable selfmatch above that start, the **unproved**
+condition
+
+\[
+T_\theta(A,A^{4/5})\ge-\kappa S_A \tag{MSP}
+\]
+
+would give the actual strict improvement
+
+\[
+\log\frac{G(N_B)}{G(N_A)}
+\ge w(A)[(\sqrt2/4-\kappa-\varepsilon_*(A))S_A+U_{\ge3}]
++C_B(X)>0.
+\]
+
+Independently, MS6 implies \(U_2>0\) eventually, so at least one new
+actual second layer is present before \(B\); thus \(N_B>N_A\). The
+successor is the defined integer multiple, not an unrelated scalar witness.
+
+MSP (candidate MP) is unpaid. GM at the \(A\)-centered first-layer scale
+only permits a relative error of order \(\eta_AH^2\); the required signed
+loss is of order \(H^2/\sqrt A\). The factor tending to zero in GM does
+not pay the missing \(A^{-1/2}\). A general-center average or rough-shift
+correlation does not establish MSP at these selected centers.
+
+The conditional selected-source statement retains the CNS and
+Mantovanelli premises in the existing notes: proper GA1/GA2 and the
+direct prime-local bridge give the **same** stable selfmatching integer.
+For that source one still needs MSP and \(A\ge A_\kappa\). The unbounded
+stable-root chain of FIB §111 is not an unbounded family of global Robin
+maxima; the separate unbounded GA2 family has no automatic stable-selfmatch
+premise. No unbounded covered source family is supplied here. The
+historical \(7.2\cdot10^{46}\) conclusion above remains only its existing,
+separately sourced conditional context; it pays neither \(Y_{1/60}\)
+nor \(A_0,A_\delta,A_\kappa\). No new finite interval, least-counterexample
+bound, RH proof or new unconditional formal supplier follows.
+
+### Reuse and formalization boundary
+
+At the original project pin, reuse
+`GoldenResourceOptimalLayerCount.positive_part_sum_finite_support`,
+`positive_layers_eq_count_interval`, `optimal_layer_count_spec`,
+`GoldenResourceSupremum.golden_resource_supremum_eq_positive_part_sum`,
+the actual sigma objective factorization and equality-layer neutrality.
+The searched D5/S3/Arith/Robin public and private declarations supply
+prefix, curvature and moment facts, but not the weighted short actual
+second-layer estimate MS6–MS7. This is a bounded search conclusion.
+
+Mathlib is pinned at `db584cd6d46c92f209a44c0f1c829460d327499d`:
+`Chebyshev.theta`, `theta_mono`, `theta_eq_sum_primesLE`, finite sums,
+sigma prime-power/multiplicativity, interval FTC, asymptotics and implicit
+function APIs are reusable. The bounded pinned NumberTheory search did not find a formal GM supplier.
+OpenAI/math at `adc7f1241b42e322a6451854ab7e4b4c146bf78a`,
+`preprints/Ordinary-two-point-correlations-of-multiplicative-functions-September-24-2026/build/qualitative/analytic-transfer.tex`,
+has rough-multiplier supremum/fourth-moment and averaged correlation
+statements with different variables and quantifiers. They are not
+premises of this derivation and do not prove MSP.
+
+MS6–MS7 remain ordinary, uncompiled estimates using the cited GM
+analytic input. Substantive formal adoption must connect the actual
+finite layer state, implicit cutoff derivative, endpoint atoms and whole
+weighted integration to MS1 and MS9, and discharge GM or explicitly
+retain its short-interval hypothesis. A scalar wrapper assuming the
+finished supplier would not implement the missing mathematics. No axiom,
+wrapper Lean declaration, current required check or kernel acceptance is
+produced here. MSP, the common start/source coverage, the analytic formal
+input and the substantive formal implementation remain open; the full
+RH/Robin/5040 goal remains **ACTIVE**.
+
+## Project application: full signed shorter Q drift and preloaded GA2 successors
+
+This is a complete **ordinary mathematical derivation relative to the
+published Guth–Maynard short-interval input**. Its additional analytic
+content is the integrated full signed difference of actual and reference
+layers at the fixed length \(H=A^{4/5}\), including a bound uniform in
+the growing layer index. It then applies the already audited finite lcm
+accounting to the same actual GA2 integer. No selfmatching hypothesis is
+needed for that application.
+
+The preceding MS0–MS9/MSP section is reused at the immutable project
+commit `963847e45dc06ddb633295b84b2bd36d4c231eae`, NC file blob
+`14f2f364318cf8f02e8b58d50ab9f61802f4764e`. In particular, MS3–MS6
+supply the smooth actual second-cutoff calculation and its whole weighted
+increment; MS0–MS2 and MS9 retain the actual integer, endpoint convention
+and signed first-layer accounting. The original
+[FIB §§85, 87, 98 and 111](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+[ZE/5040 actual layers and own-price defect](../../docs/develop/theory/ZECKENDORF_EULER_5040.md),
+and [Mantovanelli workload and proper prime-local bridge](../Analytic/mantovanelli2026primeworkload.md)
+remain the underlying project interfaces.
+
+The declared completed design inputs are
+`actual-higher-layer-gm-shorter-Q-candidate.md`, SHA-256
+`5a967ecdb296bf5c7c64413cf9c00ddc0f7ed3868c69a7ef8375386eef39ac6f`,
+and its complete ordinary proof `audit-proof.md`, SHA-256
+`9f18c0fe96eafb4fe61aa2da8b6370055912c961833fe5248ce4c191aec416a3`;
+and `ga2-preloaded-layer-successor-candidate.md`, SHA-256
+`f99946147a279237a5515659ce73334a3ccdadd7dab1be0297d8a2806314cdc5`,
+with `ordinary-audit.md`, SHA-256
+`307be4ca1430efc5843323b2189fcff07ad2f3ee669db59ed1f3faa0c81c4a41`.
+Their preserved results and collection receipts report ordinary approval
+within those stated scopes. Those prior audits are design evidence here,
+not independent current validation of this source draft. No complete
+independent audit of the primary GM theorem, new compilation, Lean/kernel
+verification, official acceptance or priority claim is made.
+
+### Actual and reference inventories on one common finite support
+
+All logarithms are natural. For real \(x>1\), set
+
+\[
+f(x)=\log\log x,\qquad
+\lambda(x)=f'(x)=\frac1{x\log x},\qquad
+w(x)=-\lambda'(x)=\frac{\log x+1}{x^2(\log x)^2}>0.
+\]
+
+For \(q>1\) and an integer \(k\ge1\), put
+
+\[
+S_k(q)=\sum_{j=1}^k q^j,\qquad
+\ell_k(q)=\log(1+1/S_k(q)),\qquad
+r_k(q)=\frac{\ell_k(q)}{\log q}.
+\]
+
+For a prime \(p\), write \(r_{p,k}=r_k(p)\) and
+\(h_p=\log p\). The existing Euler stack identity is
+
+\[
+\frac{\sum_{j=0}^k p^{-j}}{\sum_{j=0}^{k-1}p^{-j}}
+=1+\frac1{p+\cdots+p^k},\qquad
+W(n):=\log\frac{\sigma(n)}n
+=\sum_p\sum_{k=1}^{v_p(n)}r_{p,k}h_p.
+\]
+
+Each \(r_k\) is smooth and strictly decreasing from infinity to zero:
+\(\ell_k>0\) decreases strictly, \(\log q>0\) increases strictly,
+and their endpoint limits give the stated range. Thus there is a unique
+smooth increasing \(q_k(x)>1\) with
+\(r_k(q_k(x))=\lambda(x)\). Define the **strict actual** inventory by
+
+\[
+K_k(x)=\sum_{p<q_k(x)}\log p
+=\sum_{r_{p,k}>\lambda(x)}\log p,\qquad
+N_x=\prod_p p^{\#\{k:r_{p,k}>\lambda(x)\}},\qquad
+K(x)=\sum_{k\ge1}K_k(x)=\log N_x.
+\]
+
+The reference convention is weak:
+
+\[
+\theta(y)=\sum_{p\le y}\log p,\qquad
+\psi(x)=\sum_{p^k\le x}\log p
+=\sum_{k\ge1}\theta(x^{1/k}),\qquad Q(x)=K(x)-\psi(x).
+\]
+
+This \(Q\) is specifically the actual-minus-reference log inventory;
+it is not any other quantity called \(Q\) earlier in this source.
+All prime-power pairs are counted, with their individual \(\log p\)
+weights.
+
+The exact marginal bound
+
+\[
+0<r_{p,k}<\frac1{p^k\log p}
+\]
+
+shows that every possibly active or tied actual layer on \([A,B]\)
+lies in the finite set
+\(L_B=\{(p,k):r_{p,k}\ge\lambda(B)\}\), since membership implies
+\(p^k\log p<B\log B\) and \(p<B\). The reference support
+\(\{(p,k):p^k\le B\}\) is also finite. These two fixed sets give
+common support for every \(x\in[A,B]\), so all subsequent sum/integral
+interchanges are finite. Equal-price actual layers are excluded from
+\(N_x\). Different primes may activate simultaneously; every layer of
+such an event is retained separately in the accounting.
+
+### Exact derivative control uniform in the growing layer index
+
+The audited candidate's H1–H5 are written QH1–QH5 here to avoid the
+earlier H1–H7 labels in this file. These inequalities hold uniformly
+for **every** integer \(k\ge1\), rather than for each fixed \(k\)
+with unspecified dependent constants.
+
+Writing \(z=1/S_k(q)\), exact differentiation gives
+
+\[
+\ell_k'(q)=-\frac{S_k'(q)}{S_k(q)(S_k(q)+1)},\qquad
+-\frac{q\ell_k'(q)}{\ell_k(q)}
+=\frac{qS_k'(q)}{S_k(q)}
+\frac{z}{(1+z)\log(1+z)}. \tag{QH1}
+\]
+
+Let \(m=(k+1)/2\). Pair the terms \(j<m\) and \(k+1-j>m\)
+in \(\sum_{j=1}^k(j-m)q^j\). Each pair contributes
+
+\[
+(m-j)(q^{k+1-j}-q^j)\ge0;
+\]
+
+the middle term, when present, is zero. Thus
+\(qS_k'(q)/S_k(q)\ge(k+1)/2\). Also \(S_k(q)\ge k\),
+so \(z\le1/k\), and \(\log(1+z)\le z\) gives
+
+\[
+\frac{z}{(1+z)\log(1+z)}\ge\frac1{1+z}\ge\frac{k}{k+1}.
+\]
+
+Consequently
+
+\[
+-\frac{qr_k'(q)}{r_k(q)}
+=-\frac{q\ell_k'(q)}{\ell_k(q)}+\frac1{\log q}
+\ge\frac k2. \tag{QH2}
+\]
+
+Implicit logarithmic differentiation uses
+\(-\lambda'(x)/\lambda(x)=(1+1/\log x)/x\), and proves
+
+\[
+0<\frac{q_k'(x)}{q_k(x)}
+\le\frac{2(1+1/\log x)}{kx}\le\frac4{kx}
+\qquad(x\ge e). \tag{QH3}
+\]
+
+For \(A\ge e\), \(0\le u\le H\), \(H/A\le1/4\), integrate:
+
+\[
+0\le\log\frac{q_k(A+u)}{q_k(A)}
+\le\frac4k\log(1+u/A)\le\frac{4u}{kA}\le1.
+\]
+
+Using \(e^t-1\le2t\) on \([0,1]\) therefore gives
+
+\[
+0\le q_k(A+u)-q_k(A)\le\frac{8u\,q_k(A)}{kA}. \tag{QH4}
+\]
+
+At the cutoff, \(\log(1+1/S_k)<1/S_k\le q^{-k}\), hence
+\(q_k(A)^k\log q_k(A)<A\log A\). In particular, **provided
+\(q_k(A)\ge2\)**,
+
+\[
+q_k(A)<R_A^{1/k},\qquad R_A=\frac{A\log A}{\log2}. \tag{QH5}
+\]
+
+No large-\(q\) expansion uniform in growing \(k\) has been assumed.
+A nonempty actual layer at \(B\), or even a tie at \(B\), requires
+\(2^k<R_B\); a nonempty reference layer requires \(2^k\le B\).
+For sufficiently large \(A\) and \(B\le2A\), both families lie in
+
+\[
+1\le k\le D_A:=\left\lceil\frac{\log R_B}{\log2}\right\rceil
+\le7\log A.
+\]
+
+This is one common \(O(\log A)\) index support, including layers
+empty at \(A\) but active before \(B\). The actual layer with
+\(q_k(B)=2\) is empty under the strict convention and causes no
+omission. The same bounds cover all equality events in \(L_B\).
+
+### One GM threshold, length enclosure and the logarithmic weight
+
+Use the primary **uniform Corollary 1.3** of
+[Guth–Maynard, arXiv:2405.20552v2](https://arxiv.org/html/2405.20552v2),
+as recorded in the [project GM source](../Analytic/guthmaynard2024largevalues.md).
+Its entire primary theorem proof is not independently audited here.
+Fix, once and for all,
+
+\[
+\epsilon_{\rm GM}=1/60,\qquad
+\beta=17/30+\epsilon_{\rm GM}=7/12.
+\]
+
+The published input gives constants \(C_{\rm GM},Y_0>0\) such that
+for **every real** \(y\ge Y_0\) and every real length
+\(y^\beta\le v\le y^{99/100}\),
+
+\[
+\left|\pi(y+v)-\pi(y)-\frac v{\log y}\right|
+\le C_{\rm GM}v e^{-(\log y)^{1/4}}. \tag{QGM}
+\]
+
+Increase this single unknown start to \(Y\ge e\), so that
+\(C_{\rm GM}\log y\,e^{-(\log y)^{1/4}}\le1\) for every
+\(y\ge Y\). Neither \(Y_0\) nor \(Y\) is assigned a numerical
+value. For a permitted length, let \(P=\pi(y+v)-\pi(y)\). Then
+\(P\le2v/\log y\), and
+
+\[
+0\le\theta(y+v)-\theta(y)-(\log y)P
+\le\log(1+v/y)P\le\frac{2v^2}{y\log y}.
+\]
+
+Thus the required two-sided conversion is
+
+\[
+\theta(y+v)-\theta(y)
+=v+O\left(v\log y\,e^{-(\log y)^{1/4}}
++\frac{v^2}{y\log y}\right). \tag{QTC}
+\]
+
+The factor \(\log y\) multiplying the absolute \(\pi\) error
+is retained. Since \(v\le y^{99/100}\le y\), the same argument
+also gives \(\theta(y+v)-\theta(y)\le4v\). If
+\(0\le v<y^\beta\), use monotonicity and apply GM only to the
+enclosing length \(y^\beta\), which lies inside its allowed range.
+Consequently, with this same \(Y\),
+
+\[
+0\le\theta(y+v)-\theta(y)\le4(v+y^\beta)
+\quad(y\ge Y,\ 0\le v\le y^{99/100}). \tag{QH6}
+\]
+
+This enclosure does not extend GM below its minimum length. Small
+cutoffs \(y<Y\) will instead use the fixed finite bound
+\(\theta(2Y)\); they do not acquire a layer-dependent GM start.
+
+### All higher actual and reference increments, including endpoint atoms
+
+From now on fix exactly
+
+\[
+H=A^{4/5},\qquad B=A+H,\qquad
+\rho_A(u)=\frac{w(A+u)}{w(A)},\qquad
+S_A=\frac{H^2}{\sqrt A}=A^{11/10}.
+\]
+
+For \(k\ge3\), \(y=q_k(A)\ge Y\), and
+\(v=q_k(A+u)-q_k(A)\), QH4–QH5 give, uniformly in \(k,u\),
+
+\[
+v\le\frac{8Hy}{kA},\qquad
+\frac v{y^{99/100}}
+\le\frac83 A^{-1/5}R_A^{1/300}\longrightarrow0. \tag{QH7}
+\]
+
+The last power is \(A^{-59/300}\) times a fixed logarithmic
+factor. Thus one common eventual \(A\)-threshold verifies the GM
+**maximum** length for every such growing-index cutoff at once.
+
+Let \(a(z)=\log z\) if \(z\) itself is an integer prime, and zero
+otherwise. The exact strict-to-weak conversion, valid also at events, is
+
+\[
+K_k(A+u)-K_k(A)
+=\theta(y+v)-\theta(y)+a(y)-a(y+v).
+\]
+
+The initial strict atom has a plus sign; the final one has a minus sign.
+At \(u=0\) they cancel. Because \(\log y=O(y^\beta)\), QH6
+and monotonicity of the actual cutoff give
+
+\[
+0\le K_k(A+u)-K_k(A)\le C(v+y^\beta).
+\]
+
+If \(q_k(A)<Y\), QH4 instead gives \(q_k(B)\le2Y\) once
+\(A\) exceeds one common threshold. Its increment is then at most
+\(\theta(2Y)\), even when \(q_k(A)<2\) and the initial layer is
+empty. Simultaneous activations do not change these per-layer bounds.
+
+For the reference cutoff \(y=A^{1/k}\), exact differentiation gives
+\(y'(x)/y(x)=1/(kx)\). It satisfies QH4 with a smaller constant
+and \(y\le R_A^{1/k}\). Apply exactly the same large-/small-cutoff
+split, the same upper-length check and the same GM \(Y\). Its weak
+increment already excludes the initial prime and includes the terminal
+prime, and needs no strict-atom correction.
+
+For a large higher cutoff, \(v\le C(H/A)R_A^{1/3}\) and
+\(y^\beta\le R_A^{\beta/3}\). Sum both nonnegative inventories
+over their common support \(3\le k\le D_A\), absorbing
+\(\theta(2Y)\) into one constant. For every sufficiently large real
+\(A\), simultaneously for every \(0\le u\le H\),
+
+\[
+\begin{aligned}
+&\sum_{k\ge3}[K_k(A+u)-K_k(A)]\\
+&\quad+\sum_{k\ge3}
+ [\theta((A+u)^{1/k})-\theta(A^{1/k})]\\
+&\le C\log A\left[\frac HA R_A^{1/3}+R_A^{\beta/3}+1\right].
+\end{aligned} \tag{QH8}
+\]
+
+Both sums on the left are literally nonnegative. Their signed difference
+is therefore bounded in absolute value by this same right side.
+
+The exact derivative
+
+\[
+w'(x)=-x^{-3}\left(\frac2{\log x}
++\frac3{(\log x)^2}+\frac2{(\log x)^3}\right)<0
+\]
+
+gives \(0<\rho_A(u)\le1\). Integrating on the **entire** interval
+with common finite support proves
+
+\[
+\begin{aligned}
+&\left|\int_0^H\rho_A(u)\sum_{k\ge3}
+ \bigl[K_k(A+u)-K_k(A)
+ -\theta((A+u)^{1/k})+\theta(A^{1/k})\bigr]\,du\right|\\
+&\le CH\log A
+ \left[\frac HA R_A^{1/3}+R_A^{\beta/3}+1\right].
+\end{aligned} \tag{QH9}
+\]
+
+After division by \(S_A\), the three errors are bounded by
+
+\[
+C\left[A^{-1/6}(\log A)^{4/3}
++A^{-19/180}(\log A)^{43/36}
++A^{-3/10}\log A\right]\longrightarrow0. \tag{QH10}
+\]
+
+For example, \(1/2-4/5+\beta/3=-19/180\) and
+\(1+\beta/3=43/36\). This controls short **increments**, rather
+than subtracting two old pointwise
+\(O(A^{1/3}(\log A)^{7/3})\) errors. Integrating the latter would
+give the nonvanishing relative allowance
+\(O(A^{1/30}(\log A)^{7/3})\).
+
+### Whole second-layer integration and the reference square subtraction
+
+Reuse MS2's actual first-cutoff enclosure \(x-1<q_1(x)<x\).
+It gives
+
+\[
+0\le d_1(x):=\theta(x)-K_1(x)\le\log x,
+\]
+
+including a prime at either endpoint of \([q_1(x),x]\). The
+first-layer actual-minus-reference increment is
+\(d_1(A)-d_1(A+u)\), so its absolute weighted integral is at most
+\(H\log B\). Its normalized cost is
+\(O(A^{-3/10}\log A)\), with no assumed favorable sign.
+
+For the fixed actual second layer, MS3–MS4 derive from the **smooth
+implicit equation**, not from differentiating an asymptotic remainder,
+
+\[
+q_2(x)=\sqrt{2x}\,[1+O(1/\log x)],\qquad
+q_2'(x)=\frac1{\sqrt{2x}}[1+O(1/\log x)],
+\]
+
+\[
+v_2(u):=q_2(A+u)-q_2(A)
+=\frac{u}{\sqrt{2A}}
++O\left(\frac{u}{\sqrt A\log A}+\frac{uH}{A^{3/2}}\right).
+\]
+
+Here the fixed-layer calculation uses exactly
+\(\ell_2'(q)=-(2q+1)/[(q^2+q)(q^2+q+1)]\) and
+\(q^2\log q=x\log x[1+O(1/q)]\). Comparison at
+\(\sqrt x\) and \(2\sqrt x\) first traps the cutoff, and implicit
+differentiation then supplies the derivative. This fixed-layer expansion
+is not substituted for QH1–QH5 at growing \(k\).
+
+The reference square has the different exact derivative and increment
+
+\[
+(\sqrt x)'=\frac1{2\sqrt x},\qquad
+v_{\rm sq}(u):=\sqrt{A+u}-\sqrt A
+=\frac{u}{2\sqrt A}+O\left(\frac{uH}{A^{3/2}}\right).
+\]
+
+For both starts \(y=q_2(A)\) and \(y=\sqrt A\), use the same
+\(Y\) as above and the common enclosing length
+
+\[
+h_0=(2\sqrt A)^\beta=2^{7/12}A^{7/24}.
+\]
+
+Eventually \(\sqrt A\le q_2(A)\le2\sqrt A\), both starts
+exceed \(Y\), and
+
+\[
+y^\beta\le h_0\le y^{99/100},\qquad
+0\le v_2(u),v_{\rm sq}(u)\le CA^{3/10}
+\le y^{99/100}.
+\]
+
+Also \(h_0\le v_2(H),v_{\rm sq}(H)\) eventually, since
+\(3/10-7/24=1/120>0\). The maximum-length comparison has
+\(3/10<99/200\). Thus the enclosing interval itself respects both
+GM length restrictions, for both actual and reference starts.
+
+For \(v\ge h_0\), use QTC; for \(v<h_0\), use monotonicity
+and GM at the permitted length \(h_0\). Uniformly across the whole
+range of either increment this gives
+
+\[
+\theta(y+v)-\theta(y)=v+O(\eta_Av+h_0),\qquad
+\eta_A=C\left[\log A\,e^{-(c\log A)^{1/4}}+H/A\right]\to0,
+\]
+
+where a fixed \(c=1/3\) is admissible after increasing the common
+\(A\)-start. The \(\log A\) factor from QTC remains. For the
+actual second layer add the exact atoms \(a(y)-a(y+v)\), with
+absolute cost \(O(\log A)\). The reference square uses weak
+endpoints directly. Events at \(u=0,H\), and simultaneous events
+of other layers, require no exceptions.
+
+The exact logarithmic derivative
+
+\[
+\frac{w'(x)}{w(x)}
+=\frac1x\left[-2-\frac2{\log x}+\frac1{\log x+1}\right]
+\]
+
+has absolute value at most \(4/x\) for \(x\ge e\); hence
+\(\rho_A(u)=1+O(H/A)\) uniformly. Integrate from \(0\) to \(H\),
+paying the lower-length enclosure, atoms and weight variation:
+
+\[
+\begin{aligned}
+U_2&:=\int_0^H\rho_A(u)[K_2(A+u)-K_2(A)]\,du\\
+&=\frac{\sqrt2}{4}S_A
++O\left(\frac{H^2}{\sqrt A\log A}+\frac{H^3}{A^{3/2}}
++\eta_AS_A+Hh_0+H\log A\right).
+\end{aligned} \tag{QH11}
+\]
+
+This is MS6, with the same fixed \(4/5,1/60\) parameters. In contrast,
+
+\[
+\begin{aligned}
+U_{\rm sq}&:=\int_0^H\rho_A(u)
+ [\theta(\sqrt{A+u})-\theta(\sqrt A)]\,du\\
+&=\frac14S_A
++O\left(\frac{H^3}{A^{3/2}}+\eta_AS_A+Hh_0\right).
+\end{aligned} \tag{QH12}
+\]
+
+The factors come from \(\int_0^Hu\,du=H^2/2\): the actual
+derivative \(1/\sqrt{2A}\) yields \(\sqrt2/4\), whereas the
+reference derivative \(1/(2\sqrt A)\) yields \(1/4\).
+The enclosing and atom costs, paid before normalization, are
+
+\[
+\frac{Hh_0}{S_A}=2^{7/12}A^{-1/120},\qquad
+\frac{H\log A}{S_A}=A^{-3/10}\log A.
+\]
+
+### Precise full signed Q statement and quantified error
+
+Define the complete signed drift
+
+\[
+S_Q(A,H)=\int_0^H[Q(A+u)-Q(A)]\rho_A(u)\,du.
+\]
+
+Its finite exact decomposition is the first-layer correction, plus
+\(U_2-U_{\rm sq}\), plus the signed higher-layer integral in QH9.
+Combining the preceding estimates proves
+
+\[
+S_Q(A,A^{4/5})
+=\left(\frac{\sqrt2-1}{4}+o(1)\right)A^{11/10}. \tag{QH13}
+\]
+
+More precisely, there exist constants \(C>0\) and \(A_*>2\)
+such that **for every real \(A\ge A_*\)**, with exactly
+\(H=A^{4/5}\),
+
+\[
+\left|\frac{S_Q(A,H)}{S_A}-c_Q\right|
+\le\mathcal E_Q(A):=C\mathcal F_Q(A),\qquad
+c_Q=\frac{\sqrt2-1}{4}, \tag{QQE}
+\]
+
+\[
+\begin{aligned}
+\mathcal F_Q(A)={}&\frac1{\log A}+A^{-1/5}
++\log A\,e^{-((\log A)/3)^{1/4}}+A^{-1/120}\\
+&+A^{-3/10}\log A
++A^{-1/6}(\log A)^{4/3}
++A^{-19/180}(\log A)^{43/36}.
+\end{aligned}
+\]
+
+All seven terms tend to zero. Constants may depend on the fixed primary
+GM input and elementary estimates, but not on \(A,u,k\), selfmatching
+or GA2 status. The single \(A_*\) pays the GM \(Y\), both square
+cutoffs, all growing-index upper-length checks, the small-cutoff bound,
+finite support and derivative estimates simultaneously. It is unknown
+and no numerical start is supplied.
+
+Equivalently, the precise tolerance formulation is
+
+\[
+\forall\delta>0\ \exists A_\delta\ge A_*,
+\ \forall A\in\mathbb R,
+\quad A\ge A_\delta\Longrightarrow
+\left|S_Q(A,A^{4/5})-c_QA^{11/10}\right|
+\le\delta A^{11/10}. \tag{QQD}
+\]
+
+The GM epsilon stays fixed at \(1/60\); \(\delta\) is the final
+normalized-error tolerance. This is an ordinary GM-relative proof for
+all sufficiently large real centers, not a selected-subsequence estimate.
+This appended result makes no broader-\(\alpha\) assertion. It does
+not supply a numerical start, a finite Robin interval, a formal/kernel
+supplier, or an RH conclusion.
+
+### Exact connection at an arbitrary actual GA2 integer
+
+Let \(N>e^2\) be an integer, \(A=\log N\), \(a_p=v_p(N)\),
+and assume GA2 in its literal sense:
+
+\[
+G(Nm)\le G(N)\quad(m\in\mathbb N_{>0}),\qquad
+G(n)=\frac{\sigma(n)/n}{\log\log n}.
+\]
+
+No deletion comparison, global maximality or equation \(K(A)=A\)
+is assumed. The audited occupancy argument uses the actual next layer:
+
+\[
+r_{p,a_p+1}\log p=W(Np)-W(N)
+\le f(A+\log p)-f(A)<\lambda(A)\log p.
+\]
+
+The last inequality is strict concavity of \(f\). Stack monotonicity
+therefore puts **every** layer with \(r_{p,k}\ge\lambda(A)\)
+in \(N\), including equality layers. Thus \(N_A\mid N\), and
+the finite occupied extra inventory is
+
+\[
+E_N=\{(p,k):1\le k\le a_p,\ r_{p,k}\le\lambda(A)\},\qquad
+\delta_N=A-K(A)=\log(N/N_A)=\sum_{e\in E_N}h_e\ge0.
+\]
+
+For a layer \(e=(p,k)\), write \(r_e=r_{p,k}\) and \(h_e=h_p\).
+
+For \(x\in[A,B]\), take the literal integer and clock
+
+\[
+M_x=\operatorname{lcm}(N,N_x),\qquad Y_N(x)=\log M_x,
+\qquad P_N(x)=\sum_{e\in E_N:\ r_e>\lambda(x)}h_e.
+\]
+
+The generic maximizing-multiple construction already exists in
+[`GoldenFutureExtensionMaximum.lean`](../../D5/S3/Arith/GoldenFutureExtensionMaximum.lean),
+especially `golden_future_extension_maximum_attained`, with the
+max(base exponent, new prefix exponent) witness. The corresponding
+construction also appears in
+[`GoldenColossalClosure.lean`](../../D5/S3/Arith/GoldenResource/GoldenColossalClosure.lean).
+We reuse it; no new generic optimizer theorem or duplicate implementation
+is claimed. The relevant exact application of the audited finite layer
+inventory is
+
+\[
+Y_N(x)=A+K(x)-K(A)-P_N(x),\qquad
+0\le P_N(x)\le\delta_N,
+\quad M_A=N,\quad Y_N(A)=A. \tag{QG1}
+\]
+
+Indeed, an activated layer already in \(E_N\) must be subtracted
+from the unrestricted increment: it is not a new reward of \(M_x/N\).
+
+The audited finite lcm identity, valid for any \(H>0\), is
+
+\[
+\log\frac{G(M_B)}{G(N)}
+=\int_A^B[Y_N(t)-t]w(t)\,dt+C_B(Y_N(B)),\qquad
+C_B(y)=f(B)+\lambda(B)(y-B)-f(y)\ge0. \tag{QG2}
+\]
+
+Strict concavity gives \(C_B(y)=0\) exactly when \(y=B\).
+
+For completeness, its finite event accounting is as follows. Every
+genuinely missing layer has \(r_e<\lambda(A)\), a unique
+activation \(t_e>A\) with \(\lambda(t_e)=r_e\), and is added
+to \(M_B/N\) precisely when \(t_e<B\). If its total mass and
+Euler reward are \(L=Y_N(B)-A\) and
+\(R=W(M_B)-W(N)\), finite integration gives
+
+\[
+\int_A^B[Y_N(t)-t]w(t)\,dt
+=R-\lambda(B)L-[f(B)-f(A)-H\lambda(B)].
+\]
+
+Adding \(C_B(A+L)\) gives \(R+f(A)-f(A+L)\), exactly the
+left side of QG2. Strict terminal ties are excluded and contribute zero
+interval pressure. If a permitted subset of terminal tied layers of mass
+\(J\) is deliberately added, its reward is \(\lambda(B)J\);
+the integral is unchanged and the defect becomes \(C_B(Y_N(B)+J)\).
+Simultaneous events keep all their separate masses. The displayed
+successor is consistently the strict \(M_B\), with its **actual**
+terminal clock \(Y_N(B)\), which need not equal \(B\).
+
+Define at this same \(A\)
+
+\[
+T_\psi(A,H)=\int_0^H
+ [\psi(A+u)-\psi(A)-u]\rho_A(u)\,du,\qquad
+V_N(A,H)=\int_0^HP_N(A+u)\rho_A(u)\,du\ge0.
+\]
+
+Using QG1 and the exact identity \(K=\psi+Q\), the integrand is
+
+\[
+\begin{aligned}
+Y_N(A+u)-(A+u)
+={}&K(A+u)-K(A)-u-P_N(A+u)\\
+={}&\psi(A+u)-\psi(A)-u
++Q(A+u)-Q(A)-P_N(A+u).
+\end{aligned}
+\]
+
+The **complete initial \(K(A)\) cancels**. There is no selfmatch
+substitution. Thus the exact desired connection is
+
+\[
+\boxed{\displaystyle
+\log\frac{G(M_B)}{G(N)}
+=w(A)[T_\psi(A,H)+S_Q(A,H)-V_N(A,H)]
++C_B(Y_N(B)).} \tag{QG3}
+\]
+
+Neither the preoccupied loss nor the actual terminal concavity defect
+has been discarded. The identity is finite and exact independently of
+GM; only the subsequent estimate for \(S_Q\) requires \(H=A^{4/5}\)
+and the common sufficiently-large-real start.
+
+### Own-price defect and below-terminal-price extra layers
+
+Reuse the unrestricted finite pressure
+
+\[
+\mathscr S(\lambda)=\max_{n\ge1}[W(n)-\lambda\log n]
+=\sum_{p,k}(r_{p,k}-\lambda)_+h_p.
+\]
+
+Because all positive own-price layers are already in \(N\), its
+**own** price defect is exactly
+
+\[
+d_A(N)=\mathscr S(\lambda(A))-[W(N)-\lambda(A)A]
+=\sum_{e\in E_N}(\lambda(A)-r_e)h_e\ge0. \tag{QG4}
+\]
+
+Finite integration of the preoccupied indicators gives
+
+\[
+w(A)V_N=\sum_{e\in E_N}(r_e-\lambda(B))_+h_e,
+\qquad
+0\le V_N\le\delta_NJ_H,\qquad
+J_H=\frac{\lambda(A)-\lambda(B)}{w(A)}=\int_0^H\rho_A(u)\,du.
+\tag{QG5}
+\]
+
+Here \(0<J_H<H\), and \(J_H=H[1+O(H/A)]\) when \(H=o(A)\).
+An extra layer tied at \(A\) has zero initial defect but contributes
+its whole price drop to \(w(A)V_N\); a tie at \(B\) contributes
+zero to this latter sum.
+
+For \(a=\lambda(A)>b=\lambda(B)\) and \(r\le a\), the exact
+identity \((a-r)+(r-b)_+=(a-b)+(b-r)_+\), including equality
+cases, yields
+
+\[
+\boxed{\displaystyle
+d_A(N)+w(A)V_N
+=(\lambda(A)-\lambda(B))\delta_N
++\sum_{e\in E_N}(\lambda(B)-r_e)_+h_e.} \tag{QG6}
+\]
+
+The residual sum is the mass-weighted price defect of occupied extras
+that remain below the terminal price. It is required. Arbitrary GA2
+does not imply \(\delta_N=0\), \(V_N=0\), \(d_A(N)=0\), or
+vanishing of this residual. In particular the zero defect of \(N_A\)
+cannot be transported to the different actual integer \(N\).
+
+### The additional signed condition remains unproved
+
+The exact weak-reference Lambda form of the prime-power term is
+
+\[
+w(A)T_\psi(A,H)
+=\sum_{A<n\le B}\Lambda(n)[\lambda(n)-\lambda(B)]
+-[f(B)-f(A)-H\lambda(B)]. \tag{QG7}
+\]
+
+This follows by finite integration of
+\(\psi(t)-\psi(A)=\sum_{A<n\le t}\Lambda(n)\).
+A prime-power atom at \(A\) is excluded, one at \(B\) has zero
+weight, and every prime power in between has its full \(\Lambda\)
+weight. QG7 is the full signed prime-power budget, not a prime-only sum.
+
+Fix a real \(\kappa<c_Q=(\sqrt2-1)/4\). There is an unknown
+common \(A_\kappa\ge A_*\) for which
+\(\mathcal E_Q(A)\le(c_Q-\kappa)/2\) for all real
+\(A\ge A_\kappa\). The sufficient **additional unproved**
+condition, at the **same actual sources** and their same shorter interval,
+is
+
+\[
+T_\psi(A,A^{4/5})-V_N(A,A^{4/5})
+\ge-\kappa\frac{H^2}{\sqrt A}. \tag{QGP}
+\]
+
+If this condition held at such a source, QG3 and QQE would give
+
+\[
+\log\frac{G(M_B)}{G(N)}
+\ge\frac{c_Q-\kappa}{2}\,w(A)S_A+C_B(Y_N(B))>0,
+\]
+
+for the literal integer multiple \(M_B\) of this same \(N\).
+This would contradict GA2; it also forces \(M_B>N\), rather than
+merely producing a scalar witness. Equivalently GA2 and the proved
+supplier give only the necessary upper bound
+
+\[
+T_\psi-V_N
+\le-[c_Q-\mathcal E_Q(A)]S_A-\frac{C_B(Y_N(B))}{w(A)}
+\quad(A\ge A_*). \tag{QG8}
+\]
+
+This is an ordinary conditional deduction, **not** a new formal theorem
+assuming its desired conclusion. QGP is not proved here, in the prior
+ordinary audits, or by the imported GM estimate. At the main \(A\)
+scale, GM permits an integrated relative error allowance of order
+\(\eta_AH^2\); after division by \(S_A\) this is of order
+\(\eta_A\sqrt A\), which is not made small by the cited
+subexponential error. This diagnoses an unpaid estimate, not a failure
+of the proposed actual signed condition. Actual higher-layer positivity,
+almost-all centers or averaged correlations do not establish QGP or
+remove \(V_N\).
+
+### Selected global maximum, unknown start and the 5040 boundary
+
+There is a separate zero-extra case under the original **actual proper
+deletion plus insertion bridge**. The archived Mantovanelli
+`thm:direct-bridge` starts with the same integer \(N>e\) satisfying
+
+\[
+N/p>e,\quad G(N)\ge G(N/p)\ (p\mid N),\qquad
+G(N)\ge G(Np)\ (p\text{ prime}).
+\]
+
+It gives the strict, event-free own-price state
+\(N=N_A\), \(K(A)=A\) at \(A=\log N\). Under the full
+unchanged selection and properness premises in this source, it applies
+to the selected least global maximizer over \(n>5040\). Consequently,
+for that same properly bridged source,
+
+\[
+E_N=\varnothing,\quad\delta_N=V_N=d_A(N)=0,\quad
+M_B=N_B,\quad Y_N(B)=K(B),
+\]
+
+and QG3 reduces to
+
+\[
+\log\frac{G(N_B)}{G(N_A)}
+=w(A)[T_\psi+S_Q]+C_B(K(B)). \tag{QG9}
+\]
+
+Only in this separate case does QGP reduce to
+\(T_\psi\ge-\kappa S_A\). The terminal defect is still retained;
+neither \(K(B)=B\) nor a zero terminal own-price defect is assumed.
+GA2 alone supplies insertion comparisons and **does not** supply the
+proper deletion bridge or these zero-extra conclusions.
+
+The selected hypothetical global maximizer is a **single source**.
+Its existence does not ensure \(A\ge A_*\) or \(A_\kappa\).
+Unbounded stable roots are not an unbounded family of global maxima.
+The separately documented unbounded GA2 family does not automatically
+selfmatch, satisfy QGP, or eliminate its extra inventory. An eventual
+argument on that family would require QGP to cover its same members;
+no such coverage is established here.
+
+The earlier conditional \(\log N>7.2\cdot10^{46}\) concerns the
+same selected least **global maximizer**, under its full previously
+declared chain of suppliers. It is **not a least-counterexample bound**
+and cannot pay the unknown GM or shorter-drift starts. This appended
+argument neither extends that finite interval nor furnishes a numerical
+replacement for the common start.
+
+For a useful finite boundary illustration, the declared completed
+ordinary 5040 audit reproduced **26 rational/integer checks**: logarithm
+enclosures, strict power comparisons and exact Euler ratios. At the own
+clock \(A=\log5040\), it gives
+
+\[
+N_A=2^3 3^2 5\cdot7=2520,\qquad
+E_{5040}=\{(2,4)\},\qquad\delta_{5040}=\log2.
+\]
+
+One exact enclosure uses
+\(z_x=(x-1)/(x+1)\),
+\(L_x=2\sum_{j=0}^{23}z_x^{2j+1}/(2j+1)\) and
+\(U_x=L_x+2z_x^{49}/[49(1-z_x^2)]\), for
+\(x\in\{2,3,5,7\}\). The positive logarithm series gives
+\(L_x<\log x<U_x\). These rational endpoints establish
+\(8<A<9\), \(\log8>2\), \(\log9<20/9\), hence
+\(15<A\log A<20\) and \(1/20<\lambda(A)<1/15\).
+The included terminal layers and excluded next layers are certified by
+the following exact integer inequalities:
+
+| Layer | Strict power comparison | Consequence |
+|---|---|---|
+| \((2,3)\) | \(15^{15}>2\,14^{15}\) | \(r_{2,3}>1/15\) |
+| \((3,2)\) | \(13^{15}>3\,12^{15}\) | \(r_{3,2}>1/15\) |
+| \((5,1)\) | \(6^{15}>5\,5^{15}\) | \(r_{5,1}>1/15\) |
+| \((7,1)\) | \(8^{15}>7\,7^{15}\) | \(r_{7,1}>1/15\) |
+| \((2,4)\) | \(31^{20}<2\,30^{20}\) | \(r_{2,4}<1/20\) |
+| \((3,3)\) | \(40^{20}<3\,39^{20}\) | \(r_{3,3}<1/20\) |
+| \((5,2)\) | \(31^{20}<5\,30^{20}\) | \(r_{5,2}<1/20\) |
+| \((7,2)\) | \(57^{20}<7\,56^{20}\) | \(r_{7,2}<1/20\) |
+| \((11,1)\) | \(12^{20}<11\,11^{20}\) | \(r_{11,1}<1/20\) |
+
+Stack monotonicity covers preceding and later layers, and strict
+antitonicity of \(r_1(q)\) covers every prime \(p\ge11\).
+The exact Euler values are
+\(Z(2520)=26/7\), \(Z(5040)=403/105\), with ratio \(31/30\).
+Therefore, without requiring a GA2 classification of 5040,
+
+\[
+d_A(5040)=\lambda(A)\log2-\log(31/30)>0,\qquad
+w(A)V_{5040}=(r_{2,4}-\lambda(B))_+\log2,
+\]
+
+\[
+d_A(5040)+w(A)V_{5040}
+=(\lambda(A)-\lambda(B))\log2
++(\lambda(B)-r_{2,4})_+\log2.
+\]
+
+The existing
+[`GoldenResource5040PriceInterval.lean`](../../D5/S3/Arith/GoldenResource5040PriceInterval.lean)
+and
+[`GoldenResource5040EndpointComparison.lean`](../../D5/S3/Arith/GoldenResource/GoldenResource5040EndpointComparison.lean)
+already give supporting-price and single-layer comparisons. A supporting
+price for 5040 is different from its own clock price. This illustration
+explains why a preoccupied \((2,4)\) layer cannot be paid again in a
+successor; it is boundary bookkeeping, not a new prime-sign theorem,
+GA2 classification, kernel claim or use of the asymptotic GM supplier at
+5040.
+
+### Reuse and remaining mathematical work
+
+MS0–MS9/MSP are preserved. In particular their prime-only unpaid MSP
+condition is not retrospectively declared proved; QGP is the stated
+full-prime-power sufficient condition with the actual preoccupied loss.
+The additional ordinary analytic estimate here is QH13/QQE/QQD, obtained
+by controlling the signed higher increments and subtracting the paid
+reference square term. QG1–QG6 apply the completed finite accounting;
+the generic future optimizer, Euler layer factorization, pressure and
+proper prime-local bridge are existing mathematics.
+
+The prior pinned-library source observations identify reusable finite
+support, factorization, lcm, logarithm and integration interfaces. They
+do not certify a new build or a formal GM theorem. This source flight
+introduces no Lean wrapper, axiom, compilation, required-check result,
+formal or official acceptance. A substantive future formal implementation
+must consume the uniform actual cutoff derivative, common support,
+GM input or an explicitly retained analytic premise, all endpoint atoms,
+whole weighted errors and the same-source finite lcm identity.
+
+QGP, coverage of the unknown common start at the required actual sources,
+and the formal analytic implementation remain open. There is no numerical
+start, broader exponent claim, new finite interval, priority assertion or
+RH completion. The full RH/Robin/5040 research goal remains **ACTIVE**.

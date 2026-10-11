@@ -1,0 +1,270 @@
+**Proposition 16.5 (a nonreversible full-box member and the essential boundaries).**
+The exact-box domain of Theorem 16.2 contains a rational three-cycle with
+nonconstant successive rates, interior emissions, positive p-emission return
+motion and nonnative complete laws. Thus zero $d_A,d_B$ and full boxes alone
+do not force native endpoint laws. Conversely, dropping the boxes makes
+the sign assertion false, and dropping nonendpoint support makes the
+positive-minimum conclusion false.
+
+**Proof.** Index labels modulo 3, and take
+
+$$
+\begin{gathered}
+\pi=\tau=(1/3,1/3,1/3),\qquad A=I_3,\qquad
+B_{ij}=\mathbf1_{\{j=i+1\}},\qquad g=81/200,\\
+(x_0,x_1,x_2)=(229,230,231)/1000,\\
+v_i=\frac{x_i}{g+x_i},\qquad u_i=1-g-x_{i+1},\\
+v=(229/634,46/127,77/212),\qquad
+u=(73/200,91/250,183/500).
+\end{gathered}
+\tag{16.35}
+$$
+
+All emissions lie strictly in $(a,b)$. Direct identities give
+$(1-u_i)(1-v_{i+1})=g$ and $(1-u_i)v_{i+1}=x_{i+1}$.
+Consequently the own laws, for every $n\ge0$, are
+
+$$
+\begin{aligned}
+Q_i(w_{n,0})&=u_{i+n}\prod_{j=1}^n x_{i+j},&
+Q_i(w_{n,1})&=g\prod_{j=1}^n x_{i+j},\\
+W_i(\beta)&=1-v_i,& W_i(\alpha w_{n,c})&=v_iQ_i(w_{n,c}).
+\end{aligned}
+\tag{16.36}
+$$
+
+They obey $Q_i=u_i\delta_\alpha+(1-u_i)\beta W_{i+1}$ and
+$W_i=(1-v_i)\delta_\beta+v_i\alpha Q_i$.
+Survival per return is $x_{i+1}\le L<4/15$, so finite masses normalize
+and infinite masses are zero. Uniform rows satisfy both unweighted balances.
+Their complete-law flows therefore belong to $\mathfrak C_{\rm det}$.
+
+Here is an all-coordinate proof of the boxes. For marker 0,
+$u_i,v_i\in[a,b]$ and $x_i\in[\ell,L]$ directly give
+
+$$
+a\ell^n\le Q_i(w_{n,0})\le bL^n,\qquad
+a^2\ell^n\le W_i(\alpha w_{n,0})\le b^2L^n.
+$$
+
+These are the native endpoint bounds. The p marker-1 base values have the
+following exact ranges, each contained between its two native endpoints:
+
+$$
+\begin{array}{c|c|c|c|c}
+n&\min\{P_{p,a},P_{p,b}\}(w_{n,1})
+ &\min_iQ_i(w_{n,1})&\max_iQ_i(w_{n,1})
+ &\max\{P_{p,a},P_{p,b}\}(w_{n,1})\\\hline
+0&9/25&81/200&81/200&4/9\\
+1&54/625&18549/200000&18711/200000&8/81\\
+2&324/15625&426627/20000000&430353/20000000&16/729\\
+3&32/6561&98550837/20000000000&98550837/20000000000&1944/390625
+\end{array}
+\tag{16.37}
+$$
+
+For $n\ge3$ the p marker-1 endpoint ordering is fixed: the a endpoint is
+lower, since the b/a ratio is $(81/100)(27/25)^n>1$.
+Each step in (16.36) multiplies the actual mass by some $x_{i+n+1}$ in
+$[\ell,L]$, while the lower and upper endpoints multiply by $\ell,L$.
+Induction from $n=3$ proves every remaining p box.
+
+At suspension, set $m_i=v_ig$. Rational comparison gives
+
+$$
+\frac{18}{125}<\frac{73}{500}\le m_i\le\frac{37}{250}<\frac4{27},
+$$
+
+$$
+\frac8{243}<\frac{16717}{500000}
+ \le m_ix_{i+1}\le\frac{8547}{250000}<\frac{108}{3125}.
+\tag{16.38}
+$$
+
+These prove the marker-1 boxes for $n=0,1$. Their endpoint ordering is
+fixed for $n\ge1$, since the b/a ratio is $(243/250)(27/25)^n>1$.
+The same one-step induction proves all later suspended boxes. The completing
+beta box follows from $v_i\in[a,b]$; the infinite boxes hold by the proved
+normalization. Thus no finite-prefix substitute for (16.6) has been used.
+
+The return chain is the forward cycle, so it is nonreversible under the
+uniform row. All three $Q_i$ are distinct on alpha and all three $W_i$ are
+distinct on beta; this nonreversibility remains after passage to complete
+law descriptors. The two directional law flows are not reversals of one
+another. In particular this is outside Definition 15.1's swap-plus-singleton
+class. Its p-emission return motion and event defect are exactly
+
+$$
+\frac13\sum_i|u_{i+1}-u_i|=\frac1{750},\qquad
+D=-\frac{3310225965435679}{917929355400000000}<0.
+\tag{16.39}
+$$
+
+The latter follows by substituting (16.35) into
+$\frac13\sum_i[g(1+x_{i+1}+x_{i+1}x_{i+2})
+-\kappa g(1+x_i)/(g+x_i)-\zeta]$.
+A positive Borel native mixture has marker-1 masses
+$h_n=\int(1-r)^2[r(1-r)]^n\,d\xi(r)$; Cauchy--Schwarz gives
+$h_{n+1}^2\le h_nh_{n+2}$, so its positive consecutive mass ratios are
+nondecreasing. Each law in (16.36) has the nonconstant cyclic ratio sequence
+$x_{i+1},x_{i+2},x_i,\ldots$, with a strict descent. It is therefore not
+such a mixture, even allowing all $r\in[a,b]$. No midpoint equality or
+all-supported attainment is asserted for this witness. Its role is to
+separate the theorem's domain from native mixtures, reversible finite tables
+and zero return motion, and to show why the equality hypothesis matters.
+
+For necessity of the boxes, the deterministic singleton $A=B=I$ with
+$u=a$, $v=b$ belongs to $\mathfrak C_{\rm det}$, but has
+$g=2/5$, $x=4/15$ and
+
+$$
+D=g(1+x+x^2)-\kappa(1-v+vg)-\zeta
+ =\frac{924149}{20165625}>0.
+\tag{16.40}
+$$
+
+It is outside (16.6), as also follows from its rate exceeding $L$.
+The native deterministic singleton $u=v=3/8$ is another member of the
+minimum domain (16.8) outside the box domain: its p coordinate satisfies
+
+$$
+P_{p,3/8}(w_{3,1})-q
+ =\frac{344076471}{6553600000000}>0.
+\tag{16.41}
+$$
+
+Thus membership in $\mathfrak C_{\rm det}$ is not asserted to imply boxes.
+For a prior supported only at depths 1 and 2, the fair native pair (16.9)
+has $\mathcal J=0$. The supplied source-independent persistent endpoint tag
+of [Randomized stopped-tail minimax, Section 2.4](RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md)
+realizes it with deterministic acquired updates and finite rational
+sampling. Hence $j_{\rm det}=0$ in this endpoint-only case, and the
+nonendpoint hypothesis of Corollary 16.3 and Theorem 16.4 is essential.
+$\square$
+
+
+**Mathematical correspondence attached to Theorems 16.2--16.4.**
+PAIRED Lemmas 11.1 and 11.3 supply TV compactness, residual continuity and
+lower semicontinuity of the original objective. Its Section 11.8 supplies
+boxes and midpoint means only at zero level. Equations (15.10) and
+(15.13)--(15.20) supply the g-derivative bound and diagonal sign certificate;
+(15.25)--(15.26) supply the native complete-word gap. PAID Lemma 14.1 and
+PAIRED Section 6 supply the common-row extraction and same-kernel clipping
+comparison used with the original source. These results retain their stated
+ordinary mathematical hypotheses.
+
+The source-relative additional implication is the passage from both full
+residual graphs to an arbitrary stationary descriptor orbit, the
+four-successive-rate certificate (16.21)--(16.26), and its equality lift to
+matching complete endpoint flows. Corollary 16.3 consumes that equality in
+all supported losses and only then uses compactness. Theorem 16.4 verifies
+the deterministic-label-to-complete-law bridge for those same clipped kernels.
+Neither a generic compactness theorem nor the literature rearrangement
+inequality is a new standalone result here. The domain witness in
+Proposition 16.5 is outside the periodic, native-mixture and zero-motion
+restrictions; no theorem is promoted from a finite check to an unrestricted
+statement.
+
+For the external rearrangement step, Puccetti--Wang Theorem 2.1(d) requires
+fixed scalar marginals and a supermodular test dominated by a sum of
+integrable one-coordinate functions. Here the dimension is four, the
+marginals are those of the actual stationary $x_t$, and the clipped extension
+of $H$ is bounded continuous, so constants provide that domination.
+Côté--Wang Proposition 6 supplies the same comparison for bounded
+right-continuous supermodular tests. Its distinction from unrestricted tests
+with merely finite expectations causes no gap here: the test function
+itself is bounded. Both results supply only the expectation comparison,
+not the source-specific product identity, mixed derivatives, seam proof,
+equality-to-native inference or risk consumer. No equality characterization
+from a rearrangement theorem is used.
+
+[Leskelä and Vihola, *Conditional convex orders and measurable martingale
+couplings*, Theorems 1.2--1.4](https://arxiv.org/html/1404.0999v3),
+requires finite first moments and the appropriate finite-dimensional convex
+order, or its conditional/kernel version. Bounded finite-word and residual
+projections meet the integrability premise, but that coupling conclusion
+does not supply both original full-descriptor flows with their shared
+marginals. It also does not replace conditional barycentres by individual
+successor laws. Thus it is not a direct supplier for (16.13) or an evaluation
+of the common minimax face. These correspondences attribute the reused
+mature results and delimit the source-relative inference, without a global
+novelty or priority assertion.
+
+To distinguish nearby necessary conditions, write
+$\bar Q=\int Q\,d\nu_p$ and $\bar W=\int W\,d\nu_\beta$.
+The finite-table quantities of [PAID, Theorem 13.1] are
+
+$$
+b_p=\int\operatorname{TV}(\mathcal R_B(Q),\bar W)\,d\nu_p,
+\qquad
+b_\beta=\int\operatorname{TV}(\mathcal R_A(W),\bar Q)\,d\nu_\beta.
+$$
+
+They measure variation of conditional successor barycentres across inputs;
+$d_B,d_A$ instead measure dispersion of the individual successor laws about
+that input's residual. The former can be positive when the latter vanish.
+The native-acquired-residual restriction of
+[Native acquired residual obstruction, Definition 1.2 and Theorem 1.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_RESIDUAL_OBSTRUCTION.md)
+requires those A residuals to be native mixtures. The individual-law
+representation restriction of
+[Native mixture recurrence obstruction, Sections 3--5](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXTURE_RECURRENCE_OBSTRUCTION.md)
+is different again. Proposition 16.5's p laws and A residuals are outside
+these native families. No native representation is assumed in Theorem 16.2.
+
+The suspended statistic in
+[Suspended-emission heterogeneity, Definition 8.1 and Theorem 8.3](RECURSIVE_RELATIONAL_OBSERVATION_SUSPENDED_EMISSION_HETEROGENEITY.md)
+is the oscillation of the synthetic alpha probability over all reachable
+suspended configurations on the designated fibre. Its conditional supplier
+premises and its quantitative modulus remain unchanged. That scalar
+oscillation is neither $d_A+d_B$ nor return motion. Likewise PAIRED
+Chapters 12 and 14 use the distinct nonnegative defect
+$\Sigma=2J_p+2J_\beta+M_B+M_A$ in (15.27), with its original flow integrals.
+The witness (16.35) has positive emission tent terms, hence $\Sigma>0$,
+while $d_A=d_B=0$. The present proof does not replace the full compatible
+domain by synchronized four-moment endpoint chords.
+
+[RETURN, Chapters 12--14](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md)
+keeps an actual triple $(Q,W,Q')$, its incoming-pair full-law causality
+$\mathbb E[Q'\mid Q,W]=\mathcal R_A(W)$, and prescribed joint flows.
+In Chapter 14's SAME fibre, (14.2) gives
+$\mathcal R_B(Q_{\sigma,i})=W_\sigma$ and
+$\mathcal R_A(W_\sigma)=G_\sigma=\tfrac13\sum_iQ_{\sigma,i}$.
+The successor laws have different alpha coordinates, so these specific flows
+have $d_B=0$ and $d_A>0$. Their exact returned suspended-cut counts 2, 3 and 4
+and their optimized motion images concern that prescribed fibre. They do
+not supply an all-size deterministic-successor exclusion. The actual-return
+quantity $V_\pi$ in RETURN Theorem 10.2 remains free in
+$C_{\rm RETURN}\le5000V_\pi$; it is not replaced here by a risk-only bound.
+
+For [Return-survival dispersion, Definition 2.3, Theorem 4.1 and
+Corollary 5.2](RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md),
+use a distinct name for its statistic:
+
+$$
+Z(Q,W)=(1-u(Q))v(W),\qquad c_Z=\int Z\,d\Gamma_B,\qquad
+D_{\rm weight}=\int|Z-c_Z|\,d\Gamma_B.
+$$
+
+Its stated three-depth objective has
+$19\mathcal J+D_{\rm weight}>9/160000$, with the same inequality for the
+maximum of the four endpoint excesses. Its flat-weight subfamily has the
+evaluated gap $9/3040000$. Constancy there is on the entire positive edge
+support, not merely separately on recurrent components. Neither its
+$D_{\rm weight}$ nor the event-chord defect $D$ of (16.7) is one of
+$d_A,d_B$. For (16.35), $Z(Q_i,W_{i+1})=x_{i+1}$ is nonconstant despite
+$d_A=d_B=0$. Those supplied weight results do not give the graph rigidity
+proved here, and their supported-loss scope is not substituted for (16.8).
+
+PAIRED Chapter 15's event-feasible pair has complete endpoint boxes,
+midpoint means and all supported losses, but its beta residual differs by
+$-97339/246148875$. It fails (16.4), so it is not a counterexample to
+Theorem 16.2. The interface in
+[Acquired-kernel blind directions, Conventions 1.1--1.2 and Theorems 5.1,
+6.3](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md)
+omits the acquired B kernel and supplies configured finite transcript
+prefixes, emissions, A and paired event arrays. Its strictly positive
+full-rank kernels and interior emissions give finite-horizon invisible
+directions; its explicit risk comparison uses an endpoint-only prior.
+Those are identification statements on a different observation interface,
+not compatible common zero pairs or evaluations of (16.8).
+

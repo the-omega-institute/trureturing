@@ -491,7 +491,7 @@ private theorem fullLaw_native (M : Observer Z) (e : InstalledEmitter M) (z : Z)
   filter_upwards [marked_head M e (z,none),marked_edges M e (z,none)] with x h0 hx
   exact marked_native_realization M x hx _ (by simp [representative,h0])
 
-private def tailValue (s : ActivePhase) (ω : Stream) : ValidTail s :=
+def tailValue (s : ActivePhase) (ω : Stream) : ValidTail s :=
   ⟨stoppedReadWord s ω, by
     cases h : stoppedReadWord s ω with
     | none => trivial

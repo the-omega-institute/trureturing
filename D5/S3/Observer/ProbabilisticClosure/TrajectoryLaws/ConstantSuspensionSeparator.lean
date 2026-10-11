@@ -616,7 +616,7 @@ lemma endpoint_probability (phase : ActivePhase) (r : unitInterval) :
   exact Measure.isProbabilityMeasure_map
     (measurable_stopped_read_word phase).aemeasurable
 
-private lemma endpoint_p_word (r : unitInterval) (j : ℕ) :
+lemma endpoint_p_word (r : unitInterval) (j : ℕ) :
     (explicitStoppedWordLaw .p r).real {some (pWord j 1)} =
       (1-(r:ℝ))^2*((r:ℝ)*(1-r))^j := by
   rw [Measure.real, explicit_finite_mass, if_pos (show ∃ b, WordFamily .p b (pWord j 1) from ⟨1,j,rfl⟩), p_word_mass]
