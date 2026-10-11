@@ -920,3 +920,200 @@ $t\mapsto\widetilde C(0,0,t)$ 在 $[0,10\log2]$ 上，起点处递减、终点
 任意全整数 Robin 延拓、RH 或任何物理实现。
 
 ## 追加锚（本行以下为增补区）
+
+## 14. 二幂首次秩允许支撑上的尺度盒统一饱和
+
+**定义 14.1（允许支撑与实际轴）。** 取 $F_0=0,F_1=1$ 的 Fibonacci 数列，
+$L_0=2,L_1=1$ 的 Lucas 数列。对素数 $p$ 令
+
+$$
+r_p=\min\{r\ge1:p\mid F_r\},\qquad
+\mathcal B_d=\{p\text{ 素数}:r_p=d\},\qquad
+\mathcal P_{\rm sq}=\bigcup_{k\ge2}\mathcal B_{2^k}.
+$$
+
+正最小秩的存在由既有 [rankWitness][RankWitness14] 供应；给定正零点及其最小性后，
+[fibonacci_entry_point][RankEntry14] 供应 $p\mid F_n\iff r_p\mid n$，包括 $n=0$。
+经典出处为 [Lengyel，§3 Theorem A][Lengyel14]，亦见已有 [文献注释][LengyelNote14]。
+$F_1=F_2=1$ 给 $r_p\ge3$；每层是 $F_d$ 的有限素支撑子集，层间不交。
+
+本节的对象是定义 3.1 中所有满足 $\mathcal P(n)\subseteq\mathcal P_{\rm sq}$ 的有限盒
+$\mathcal Q_n$，其中 $n\ge1$，轴仍为同一个实际整数的 $(p,a_p)$，$a_p=v_p(n)$。
+对整数 $K\ge3$，保留其低秩轴所得整数为
+
+$$
+n_{<K}=\prod_{\substack{p\mid n\\r_p<2^K}}p^{a_p},\qquad
+T_K=6\,2^{1-K}\bigl(1+(K+1)\log2\bigr).
+$$
+
+空支撑沿用零维体积 $1$。秩只为已有素数轴分组，重复窗口中的同一个素数只计一次。
+
+**命题 14.2（轴数可增长的统一饱和与尾轴预算）。** 下列无序乘积存在且有限：
+
+$$
+C_{\rm sq}
+:=\sup_{\substack{P\subseteq\mathcal P_{\rm sq}\\P\text{ 有限}}}
+       \prod_{p\in P}\frac p{p-1}
+=\exp\!\left(\sum_{k=2}^{\infty}
+       \sum_{p\in\mathcal B_{2^k}}\log\frac p{p-1}\right)
+<\frac{17}{5}.
+$$
+
+对定义 14.1 的每一个实际盒，同时有
+
+$$
+1\le\operatorname{Vol}_{\omega(n)}(\mathcal Q_n)=Z(n)<C_{\rm sq},
+\qquad
+\sup_{\substack{n\ge1\\\mathcal P(n)\subseteq\mathcal P_{\rm sq}}}Z(n)=C_{\rm sq},
+$$
+
+$$
+0\le\log\frac{Z(n)}{Z(n_{<K})}
+=\sum_{\substack{p\mid n\\r_p\ge2^K}}\log S_p(a_p)
+\le T_K\longrightarrow0\quad(K\longrightarrow\infty).
+$$
+
+尾界对全部这些 $n$ 一致。其盒维数没有统一上界：令
+$S_0=3,S_{j+1}=S_j^2-2$，则 $n_h=\prod_{j=0}^hS_j$ 属于该族，且
+$\omega(n_h)\ge h+1$。因此命题 8.2 的固定有限支持饱和值在这一个允许支撑上
+有共同上界，同时命题 3.3 所需的实际方向增长仍然发生。
+
+证明。先把允许支撑接到平方分支。经典 Fibonacci–Lucas 倍增式
+$F_{2m}=F_mL_m$、$L_{2m}=L_m^2-2(-1)^m$ 在此只作中间供应：
+[Flórez–McAnally–Mukherjee，§2、命题 3(6),(10),(12)][Poly14] 中取
+$d=g=\alpha=1$、Lucas 初值 $2,1$，即得到这些式子。
+相邻 Fibonacci 项互素及 $L_m=F_m+2F_{m-1}$ 给 $\gcd(F_m,L_m)\mid2$。
+故对奇素数 $p$、$m\ge1$，
+
+$$
+p\mid L_m\iff r_p\mid2m\ \text{且}\ r_p\nmid m.
+$$
+
+这正是 [FIB 原卷 §168.1][FibRank14] 所消费的奇素数关系；素数 $2$ 不在该合同内。
+倍增式和初值 $L_2=3$ 给 $S_j=L_{2^{j+1}}$。
+递推使每个 $S_j$ 都是大于 $1$ 的奇数；因此全部素因子均可应用上述判据。
+对 $m=2^{j+1}$，$r_p\mid2^{j+2}$ 且 $r_p\nmid2^{j+1}$ 恰好强制
+$r_p=2^{j+2}$；反向由同一判据成立。于是是完整对应
+
+$$
+\{p\text{ 素数}:p\mid S_j\}=\mathcal B_{2^{j+2}},\qquad
+\mathcal P_{\rm sq}=\bigcup_{j\ge0}\{p\text{ 素数}:p\mid S_j\}.
+$$
+
+对固定 $i$，后项 $S_{i+1},S_{i+2},\ldots$ 模 $S_i$ 依次为 $-2,2,2,\ldots$。
+奇性给 $\gcd(S_i,S_j)=1$（$i<j$）。每项至少贡献一个不同素数，故上述
+$n_h$ 确有至少 $h+1$ 个实际轴；这不要求任何后续 $S_j$ 本身为素数。
+这里的 $r_2=3,r_5=5$ 均不属二幂秩族，也没有假定首次素数赋值为一。
+
+接着使用 [FIB 原卷引理 163.1][FibRank14] 的完整层界。其准确源接口
+[FibonacciRankEulerTail.result][RankEuler14] 对自然数 $d>5$ 给出
+
+$$
+0\le\sum_{p\in\mathcal B_d}\log\frac p{p-1}
+\le\frac{6H_d}{d}\le\frac{6(1+\log d)}d,
+\qquad H_d=\sum_{i=1}^d\frac1i.
+$$
+
+该接口的 `rankBucket d` 是 $F_d$ 的全部素因子中排除每个较早正零点所得的
+有限集合，因而恰为 $\mathcal B_d$；没有素数大小截断。非负性由 $p/(p-1)>1$ 得到。
+这是一层的有限和估计。令 $E_k=\sum_{p\in\mathcal B_{2^k}}\log(p/(p-1))$，
+则对 $N\ge K\ge3$，
+
+$$
+0\le\sum_{k=K}^N E_k
+\le6\sum_{k=K}^N\frac{1+k\log2}{2^k}
+\le6\,2^{1-K}\bigl(1+(K+1)\log2\bigr)=T_K.
+$$
+
+最后一步使用几何级数及其一次矩
+$\sum_{k\ge K}2^{-k}=2^{1-K}$、
+$\sum_{k\ge K}k2^{-k}=(K+1)2^{1-K}$。
+非负部分和递增有界，故收敛并保留此尾界；$T_K\to0$。
+$\mathcal B_4=\{3\}$ 给有限初项。不同层不交，每个有限素数子集包含于某个
+有限层并，反之有限层并本身也是有限素数子集，故层部分和与全部有限子集和
+有相同上确界。这说明无序素数和的意义，并由指数连续性得到所声明的乘积；
+任何不重复且穷尽该支撑的枚举顺序都有同一极限。
+
+严格常数使用完整的五项前缀：
+
+$$
+S_0=3,\quad S_1=7,\quad S_2=47,\quad S_3=2207,\quad
+S_4=4870847=1087\cdot4481.
+$$
+
+下表给出各因子的有限素性及秩证书。每行的 $b$ 满足
+$b^2\le p<(b+1)^2$ 且 $\gcd(p,b!)=1$，排除了全部可能的小素因子，故 $p$ 为素数。
+$F_r\equiv0$、$F_{r/2}\not\equiv0\pmod p$ 与首次秩整除律、二幂的因子链给出最小秩 $r$。
+
+| $p$ | $b$ | $\gcd(p,b!)$ | $r$ | $F_r\bmod p$ | $F_{r/2}\bmod p$ |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 3 | 1 | 1 | 4 | 0 | 1 |
+| 7 | 2 | 1 | 8 | 0 | 3 |
+| 47 | 6 | 1 | 16 | 0 | 21 |
+| 2207 | 46 | 1 | 32 | 0 | 987 |
+| 1087 | 32 | 1 | 64 | 0 | 1048 |
+| 4481 | 66 | 1 | 64 | 0 | 543 |
+
+精确乘积重建每个 $S_j$，结合完整支撑对应，表中素数恰好覆盖 $k=2,\ldots,6$，
+没有未付费的余因子。其饱和积为
+
+$$
+P_6=\frac{505248088463}{282119516160}<\frac95,
+\qquad
+9\cdot282119516160-5\cdot505248088463=12835203125>0.
+$$
+
+$K=7$ 的尾给 $T_7=3/32+(3/4)\log2$。
+指数正项级数逐项严格比较于几何级数，得到
+$e^{3/32}<1/(1-3/32)=32/29<10/9$；最后的有理差为 $2/261$。
+又 $(17/10)^4-8=3521/10000>0$，故 $2^{3/4}<17/10$。于是
+
+$$
+C_{\rm sq}=P_6\exp\!\left(\sum_{k=7}^\infty E_k\right)
+\le P_6e^{T_7}
+<\frac95\frac{10}{9}\frac{17}{10}=\frac{17}{5}.
+$$
+
+最后回到原盒而不更换轴。命题 3.2、4.2 对每个实际 $(p,a_p)$ 给
+
+$$
+\operatorname{Vol}(\mathcal Q_n)=Z(n)
+=\prod_{p\mid n}\frac{1-p^{-(a_p+1)}}{1-p^{-1}}.
+$$
+
+$n>1$ 时每个实际因子严格小于 $p/(p-1)$，故 $Z(n)<C_{\rm sq}$；
+$n=1$ 时由 $C_{\rm sq}\ge3/2$ 也有严格不等式。
+任给有限非空 $P\subseteq\mathcal P_{\rm sq}$，令 $n_a=\prod_{p\in P}p^a$、$a\to\infty$，
+则同一有限盒族的体积趋于命题 8.2 的 $C_P=\prod_{p\in P}p/(p-1)$。
+对有限 $P$ 再取上确界就得到 $\sup Z=C_{\rm sq}$。
+从 $n$ 到 $n_{<K}$ 只去掉高秩轴，低秩指数原样保留，因而
+
+$$
+0\le\log\frac{Z(n)}{Z(n_{<K})}
+\le\sum_{\substack{p\mid n\\r_p\ge2^K}}\log\frac p{p-1}
+\le\sum_{k\ge K}E_k\le T_K.
+$$
+
+这给同一个实际盒的可趋零尾轴预算；它同时控制高秩新方向及其任意有限指数深度。
+无限操作只用于对有限盒的数值上界和上确界，$C_{\rm sq}$ 不定义无限整数或
+无限维体积，更不赋予物理空间维数、时间或能量。
+
+作为适用范围比较，$r_2=3$ 使本族整数全部为奇数。
+[Choie–Lichiardopol–Moree–Solé，定理 1.2][OddRobin14] 已证明除 $1,3,5,9$ 外
+所有奇正整数满足 Robin；因此本族 $n>5040$ 的安全性已有该文献覆盖。
+本命题消费的是尺度盒的统一饱和及尾轴估计，不增加 Robin 覆盖域。
+所有秩层的包络 $\sum_{d>5}(1+\log d)/d$ 发散，不能由它取得全素数预算；
+[带秩权重的尾定理][Weighted14] 控制的是 $1/(p r_p)$，也不能删去权重替代这里的
+Euler 对数尾。故本允许支撑的结论不推出全整数 Robin 或 RH。证毕。
+
+[RankWitness14]: ../../../D5/S3/Arith/Primes/FiniteFibonacciRankClosure.lean
+[RankEntry14]: ../../../D5/S3/Arith/FibonacciRank.lean
+[RankEuler14]: ../../../D5/S3/Arith/Robin/FibonacciRankEulerTail.lean
+[Weighted14]: ../../../D5/S3/Arith/Robin/FibonacciRankWeightedPrimeTail.lean
+[FibRank14]: https://github.com/the-omega-institute/trureturing/blob/c4d6f165a9132b5c2e2cf76df9f00a6d848cac13/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md
+[Lengyel14]: https://fq.math.ca/Scanned/33-3/lengyel.pdf
+[LengyelNote14]: ../../../Library/Factorization/lengyel1995fibonacciorder.md
+[Poly14]: https://arxiv.org/abs/1702.01855v2
+[OddRobin14]: https://www.numdam.org/item/10.5802/jtnb.591.pdf
+
+## 追加锚（本行以下为增补区）

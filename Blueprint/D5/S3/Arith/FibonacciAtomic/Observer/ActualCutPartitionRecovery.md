@@ -376,6 +376,18 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery
 
 If x ++ s belongs to P and y ++ s does not, the two actual sources have equal complete P rows. Their Q subtrees at x and y were equal and become different. Native subtree leaf-count bounds prove z is fresh, without requiring all P addresses to be reached.
 
+**Theorem 1.32 (Actual present class value).**
+
+$$\forall P: CutSet, (\forall u: Source, (\forall p: Address, (\forall t: Source, (((\operatorname{CutPrefixFree}\left(P\right)) \land (p \in P) \land (\operatorname{subtree}\left(p, u\right) = \operatorname{some}\left(t\right))) \implies (\operatorname{classValue}\left(P, u, \operatorname{classOrdinal}\left(P, u, p\right)\right) = t)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.classValue_at` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At an originally reached cut, the canonical class valuation equals its actual native subtree. The prefix-free and original-presence premises are retained. The same supplier supports reconstruction and all-class injectivity.
+
 The source domain is every finite nonempty ordered Boolean-leaf tree, and the cuts have no depth or common-shape restriction. The later decoder and classification consume these actual source pairs. This mathematical record makes no physical acquisition or resource-cost assertion.
 
 ## References
@@ -390,6 +402,7 @@ The source domain is every finite nonempty ordered Boolean-leaf tree, and the cu
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.canonicalRow_partition`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.canonicalRow_reached`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.classOrdinal_eq_iff`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.classValue_at`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.commonSuffix_empty_right`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.commonSuffix_root_right`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery.coverage_failure_pair`

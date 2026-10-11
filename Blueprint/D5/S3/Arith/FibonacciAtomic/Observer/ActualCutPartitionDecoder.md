@@ -196,6 +196,18 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.
 
 Two sources have the same canonicalRow exactly when their independent exterior and complete partition records agree. The forward direction extracts the exterior and partition. The reverse direction fixes the same reached-hole ordering and first matching indices, then renames the same exterior. Consequently the canonical representation carries exactly the record information, including empty and root holes, without disclosing hidden values, sizes or acquisition traces.
 
+**Theorem 1.17 (Independent exterior hole support).**
+
+$$\forall P: CutSet, (\forall a: Address, (\forall t: Source, (\operatorname{exteriorHoles}\left(a, \operatorname{cutExterior}\left(P, a, t\right)\right) = \operatorname{reachedHoles}\left(P, a, t\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.exteriorHoles_cut` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Reading address-marked holes from the actual exterior recovers exactly the reached cuts. This independent support bridge retains original absent cuts and the empty/root cases.
+
 The decoder compares actual retained syntax, not independently renumbered local partitions. Arbitrary substitution injectivity is not used. Absence is determined by visible strict-prefix leaves. The finite decision procedure examines public words only; it does not inspect a source.
 
 ## References
@@ -213,6 +225,7 @@ The decoder compares actual retained syntax, not independently renumbered local 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.cutProduct`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.decoderClass`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.decoderHoles`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.exteriorHoles_cut`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.literalRecord`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.recutRow`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.rowDecoder`
