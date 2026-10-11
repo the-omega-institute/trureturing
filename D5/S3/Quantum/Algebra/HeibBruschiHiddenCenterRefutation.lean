@@ -168,13 +168,13 @@ private theorem hidden_basis_brackets :
     · change (hiddenToFun (hiddenBasis (K := K) 0)).1 ⨯₃
           (hiddenToFun (hiddenBasis (K := K) 1)).1 = (hiddenToFun (hiddenBasis (K := K) 2)).1
       rw [cross_apply]
-      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three, Matrix.cons_val] <;> ring
+      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, Matrix.cons_val]
     · change (hiddenToFun (hiddenBasis (K := K) 0)).2 *
           (hiddenToFun (hiddenBasis (K := K) 1)).2 -
           (hiddenToFun (hiddenBasis (K := K) 1)).2 *
             (hiddenToFun (hiddenBasis (K := K) 0)).2 =
         (hiddenToFun (hiddenBasis (K := K) 2)).2
-      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three, Matrix.cons_val]
+      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, Matrix.cons_val]
   constructor
   · apply (hiddenEquiv (K := K)).injective
     change hiddenEquiv (hiddenBracket (hiddenBasis (K := K) 1) (hiddenBasis (K := K) 2)) =
@@ -187,11 +187,11 @@ private theorem hidden_basis_brackets :
     · change (hiddenToFun (hiddenBasis (K := K) 1)).1 ⨯₃
           (hiddenToFun (hiddenBasis (K := K) 2)).1 = (hiddenToFun (hiddenBasis (K := K) 0)).1
       rw [cross_apply]
-      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three, Matrix.cons_val] <;> ring
+      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, Matrix.cons_val]
     · change (hiddenToFun (hiddenBasis (K := K) 1)).2 * (hiddenToFun (hiddenBasis (K := K) 2)).2 -
           (hiddenToFun (hiddenBasis (K := K) 2)).2 * (hiddenToFun (hiddenBasis (K := K) 1)).2 =
         (hiddenToFun (hiddenBasis (K := K) 0)).2
-      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three, Matrix.cons_val]
+      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, Matrix.cons_val]
   constructor
   · apply (hiddenEquiv (K := K)).injective
     change hiddenEquiv (hiddenBracket (hiddenBasis (K := K) 2) (hiddenBasis (K := K) 0)) =
@@ -204,11 +204,11 @@ private theorem hidden_basis_brackets :
     · change (hiddenToFun (hiddenBasis (K := K) 2)).1 ⨯₃
           (hiddenToFun (hiddenBasis (K := K) 0)).1 = (hiddenToFun (hiddenBasis (K := K) 1)).1
       rw [cross_apply]
-      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three, Matrix.cons_val] <;> ring
+      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, Matrix.cons_val]
     · change (hiddenToFun (hiddenBasis (K := K) 2)).2 * (hiddenToFun (hiddenBasis (K := K) 0)).2 -
           (hiddenToFun (hiddenBasis (K := K) 0)).2 * (hiddenToFun (hiddenBasis (K := K) 2)).2 =
         (hiddenToFun (hiddenBasis (K := K) 1)).2
-      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three]
+      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two]
   constructor
   · apply (hiddenEquiv (K := K)).injective
     change hiddenEquiv (hiddenBracket (hiddenBasis (K := K) 0) (hiddenBasis (K := K) 3)) =
@@ -226,7 +226,7 @@ private theorem hidden_basis_brackets :
       rw [show -(hiddenToFun (hiddenBasis (K := K) 1)).1 = ![(0 : K), -1, 0] by
         dsimp only [hiddenToFun]; simp [hiddenBasis_one, Matrix.cons_val]]
       rw [cross_apply]
-      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three, Matrix.cons_val] <;> ring
+      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_three, Matrix.cons_val]
     · change (hiddenToFun (hiddenBasis (K := K) 0)).2 * (hiddenToFun (hiddenBasis (K := K) 3)).2 -
           (hiddenToFun (hiddenBasis (K := K) 3)).2 * (hiddenToFun (hiddenBasis (K := K) 0)).2 =
         (hiddenToFun (-hiddenBasis (K := K) 1)).2
@@ -249,11 +249,11 @@ private theorem hidden_basis_brackets :
     · change (hiddenToFun (hiddenBasis (K := K) 1)).1 ⨯₃
           (hiddenToFun (hiddenBasis (K := K) 3)).1 = (hiddenToFun (hiddenBasis (K := K) 0)).1
       rw [cross_apply]
-      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three, Matrix.cons_val] <;> ring
+      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_three, Matrix.cons_val]
     · change (hiddenToFun (hiddenBasis (K := K) 1)).2 * (hiddenToFun (hiddenBasis (K := K) 3)).2 -
           (hiddenToFun (hiddenBasis (K := K) 3)).2 * (hiddenToFun (hiddenBasis (K := K) 1)).2 =
         (hiddenToFun (hiddenBasis (K := K) 0)).2
-      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three]
+      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_three]
   constructor
   · apply (hiddenEquiv (K := K)).injective
     change hiddenEquiv (hiddenBracket (hiddenBasis (K := K) 3) (hiddenBasis (K := K) 0)) =
@@ -266,11 +266,11 @@ private theorem hidden_basis_brackets :
     · change (hiddenToFun (hiddenBasis (K := K) 3)).1 ⨯₃
           (hiddenToFun (hiddenBasis (K := K) 0)).1 = (hiddenToFun (hiddenBasis (K := K) 1)).1
       rw [cross_apply]
-      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three, Matrix.cons_val] <;> ring
+      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_three, Matrix.cons_val]
     · change (hiddenToFun (hiddenBasis (K := K) 3)).2 * (hiddenToFun (hiddenBasis (K := K) 0)).2 -
           (hiddenToFun (hiddenBasis (K := K) 0)).2 * (hiddenToFun (hiddenBasis (K := K) 3)).2 =
         (hiddenToFun (hiddenBasis (K := K) 1)).2
-      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three]
+      dsimp only [hiddenToFun]; simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_three]
   · apply (hiddenEquiv (K := K)).injective
     change hiddenEquiv (hiddenBracket (hiddenBasis (K := K) 3) (hiddenBasis (K := K) 1)) =
       hiddenEquiv (-hiddenBasis (K := K) 0)
@@ -287,7 +287,7 @@ private theorem hidden_basis_brackets :
       rw [show -(hiddenToFun (hiddenBasis (K := K) 0)).1 = ![(-1 : K), 0, 0] by
         dsimp only [hiddenToFun]; simp [hiddenBasis_zero, Matrix.cons_val]]
       rw [cross_apply]
-      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two, hiddenBasis_three, Matrix.cons_val] <;> ring
+      apply Matrix.vec3_eq <;> dsimp only [hiddenToFun] <;> simp [hiddenBasis_one, hiddenBasis_three, Matrix.cons_val]
     · change (hiddenToFun (hiddenBasis (K := K) 3)).2 * (hiddenToFun (K := K) (hiddenBasis (K := K) 1)).2 -
           (hiddenToFun (hiddenBasis (K := K) 1)).2 * (hiddenToFun (hiddenBasis (K := K) 3)).2 =
         (hiddenToFun (-hiddenBasis (K := K) 0)).2
@@ -362,12 +362,12 @@ private theorem hiddenBasis_admissible : IsAdmissible (hiddenBasis (K := K)) := 
             -⁅hiddenBasis (K := K) 1, hiddenBasis (K := K) 2⁆ := (lie_skew _ _).symm
         _ = -hiddenBasis (K := K) 0 := by rw [h12]
     fin_cases j <;> fin_cases k
-    · simp [α, δ, Matrix.cons_val]
+    · simp [α, δ]
     · simpa [α, δ, Matrix.cons_val] using h01
     · simpa [α, δ, Matrix.cons_val] using h02
     · simpa [α, δ, Matrix.cons_val] using h03
     · simpa [α, δ, Matrix.cons_val] using h10
-    · simp [α, δ, Matrix.cons_val]
+    · simp [α, δ]
     · simpa [α, δ, Matrix.cons_val] using h12
     · simpa [α, δ, Matrix.cons_val] using h13
     · simpa [α, δ, Matrix.cons_val] using h20
@@ -394,7 +394,7 @@ private theorem hidden_center_nonzero : LieAlgebra.center K (HiddenCenter K) ≠
     · change (hiddenToFun x).1 ⨯₃ (hiddenToFun z).1 = 0
       rw [cross_apply]
       funext i
-      fin_cases i <;> dsimp only [hiddenToFun] <;> simp [z, Matrix.cons_val] <;> ring
+      fin_cases i <;> dsimp only [hiddenToFun] <;> simp [z, Matrix.cons_val]
     · change (hiddenToFun x).2 * (hiddenToFun z).2 -
           (hiddenToFun z).2 * (hiddenToFun x).2 = 0
       dsimp only [hiddenToFun]; simp [z, Matrix.cons_val]
@@ -405,7 +405,7 @@ private theorem hidden_center_nonzero : LieAlgebra.center K (HiddenCenter K) ≠
     exact hbotmem
   have hc := congrArg (fun x : HiddenCenter K => x 3) hbot
   change z 3 = 0 at hc
-  exact (one_ne_zero : (1 : K) ≠ 0) (by simpa [z, Matrix.cons_val] using hc)
+  simp [z, Matrix.cons_val] at hc
 
 private def hiddenIdeal : LieIdeal K (HiddenCenter K) :=
   { toSubmodule := Submodule.comap (LinearMap.proj (R := K) (φ := fun _ : Fin 4 => K) 3) (⊥ : Submodule K K)
@@ -445,22 +445,22 @@ private theorem hiddenIdeal_span :
         change x 0 = ((x 0 • (![1, 0, 0, 0] : Fin 4 → K)) +
           x 1 • (![0, 1, 0, 0] : Fin 4 → K) +
           x 2 • (![0, 0, 1, 0] : Fin 4 → K)) 0
-        simp [Pi.smul_apply, Pi.add_apply]
+        simp [Pi.add_apply]
       · rw [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two]
         change x 1 = ((x 0 • (![1, 0, 0, 0] : Fin 4 → K)) +
           x 1 • (![0, 1, 0, 0] : Fin 4 → K) +
           x 2 • (![0, 0, 1, 0] : Fin 4 → K)) 1
-        simp [Pi.smul_apply, Pi.add_apply]
+        simp [Pi.add_apply]
       · rw [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two]
         change x 2 = ((x 0 • (![1, 0, 0, 0] : Fin 4 → K)) +
           x 1 • (![0, 1, 0, 0] : Fin 4 → K) +
           x 2 • (![0, 0, 1, 0] : Fin 4 → K)) 2
-        simp [Pi.smul_apply, Pi.add_apply]
+        simp [Pi.add_apply]
       · rw [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two]
         change x 3 = ((x 0 • (![1, 0, 0, 0] : Fin 4 → K)) +
           x 1 • (![0, 1, 0, 0] : Fin 4 → K) +
           x 2 • (![0, 0, 1, 0] : Fin 4 → K)) 3
-        simp [Pi.smul_apply, Pi.add_apply, hx3]
+        simp [Pi.add_apply, hx3]
     rw [hdecomp]
     repeat' first | apply Submodule.add_mem | apply Submodule.smul_mem
     all_goals apply Submodule.subset_span; simp
@@ -570,25 +570,25 @@ private theorem hiddenIdeal_not_solvable :
           ((x : HiddenCenter K) 0 • (![1, 0, 0, 0] : Fin 4 → K) +
             (x : HiddenCenter K) 1 • (![0, 1, 0, 0] : Fin 4 → K) +
             (x : HiddenCenter K) 2 • (![0, 0, 1, 0] : Fin 4 → K)) 0
-        simp [Pi.smul_apply, Pi.add_apply]
+        simp [Pi.add_apply]
       · rw [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two]
         change (x : HiddenCenter K) 1 =
           ((x : HiddenCenter K) 0 • (![1, 0, 0, 0] : Fin 4 → K) +
             (x : HiddenCenter K) 1 • (![0, 1, 0, 0] : Fin 4 → K) +
             (x : HiddenCenter K) 2 • (![0, 0, 1, 0] : Fin 4 → K)) 1
-        simp [Pi.smul_apply, Pi.add_apply]
+        simp [Pi.add_apply]
       · rw [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two]
         change (x : HiddenCenter K) 2 =
           ((x : HiddenCenter K) 0 • (![1, 0, 0, 0] : Fin 4 → K) +
             (x : HiddenCenter K) 1 • (![0, 1, 0, 0] : Fin 4 → K) +
             (x : HiddenCenter K) 2 • (![0, 0, 1, 0] : Fin 4 → K)) 2
-        simp [Pi.smul_apply, Pi.add_apply]
+        simp [Pi.add_apply]
       · rw [hiddenBasis_zero, hiddenBasis_one, hiddenBasis_two]
         change (x : HiddenCenter K) 3 =
           ((x : HiddenCenter K) 0 • (![1, 0, 0, 0] : Fin 4 → K) +
             (x : HiddenCenter K) 1 • (![0, 1, 0, 0] : Fin 4 → K) +
             (x : HiddenCenter K) 2 • (![0, 0, 1, 0] : Fin 4 → K)) 3
-        simp [Pi.smul_apply, Pi.add_apply, hx3]
+        simp [Pi.add_apply, hx3]
     rw [show x = (x : HiddenCenter K) 0 • i0 +
         (x : HiddenCenter K) 1 • i1 + (x : HiddenCenter K) 2 • i2 by
       apply Subtype.ext
@@ -597,9 +597,7 @@ private theorem hiddenIdeal_not_solvable :
       (Submodule.smul_mem _ _ hi0) (Submodule.smul_mem _ _ hi1))
       (Submodule.smul_mem _ _ hi2)
   intro hsolv
-  haveI : LieAlgebra.IsSolvable (hiddenIdeal (K := K)) := hsolv
-  obtain ⟨n, hn⟩ := LieAlgebra.IsSolvable.solvable
-    (R := K) (L := hiddenIdeal (K := K))
+  obtain ⟨n, hn⟩ := (LieAlgebra.isSolvable_iff K (hiddenIdeal (K := K))).mp hsolv
   rw [LieIdeal.derivedSeries_eq_top n hperfect] at hn
   have htopbot : (⊤ : LieIdeal K (hiddenIdeal (K := K))) = ⊥ := by
     exact hn
