@@ -3247,10 +3247,637 @@ self-calibration programme and does not complete or replace it.
 [CE-TEMPLATE]: ../../../skills/theory-volume-template/SKILL.md
 
 ## 追加锚（本行以下为增补区）
+## 26. Reuse-only application: rigid feedback and exact literal histories
 
-## 26. An acquired local atomic cover
+This section is a reuse-only application of the classification and orbit
+calculations in Theorems 4.2, 5.2 and 6.1, with the source, row and service
+correspondences of §§1–2. Items
+26.1–26.9 spell out the parameter substitutions and resulting calculations;
+they are not new mathematical declarations or a new mathematical
+increment. In particular, feedback rigidity is an instance of Theorem
+4.2, and exchanging the two root branches gives the already classified
+atomic orbit. The whole-row consumer does not change that reuse status.
 
-**Definition 26.1 (local certificates on the complete old row).** Keep
+The application concerns one fixed acquired feedback equation. The source
+domain, literal replies, original rows and paid service contract are those
+of Definitions 1.1–1.2 and Assumption 1.3. Write $\mathsf{Pair}$ for the
+reply denoted $\mathsf{branch}$ there. Every tree below is finite. Fix
+
+$$
+\begin{gathered}
+P=\{L,RL,RR\},\qquad
+C=\langle\square_1,\langle\square_2,\square_3\rangle\rangle,
+\qquad \pi=\{\{1,2\},\{3\}\},\\
+H_{\rm rel}=\bigl((1,L,0,R,=)\bigr).
+\end{gathered}
+\tag{CS.26.1}
+$$
+
+The old row is exactly the presentation
+$u=\langle x,\langle x,z\rangle\rangle$ with $x\ne z$.
+Allow any finite list $H_0$ of certified literal records, preserving every
+occurrence, and any finite prefix-free original cut $Q$. No additional
+relation records are included. For service claims the complete retained
+fiber is nonempty, and the actual certified epoch $r$ is at least one and
+at least every epoch in $H_0$. Empty fibers will also be detected by the
+mathematical calculation.
+
+Put
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{j+2}=\langle T_{j+1},T_j\rangle,\qquad
+u_j=\langle T_{j+1},\langle T_{j+1},T_j\rangle\rangle
+    =\langle T_{j+1},T_{j+2}\rangle.
+\tag{CS.26.2}
+$$
+
+The existing classification and guarded orbit formulas give the exact fiber
+
+$$
+\mathcal U_R(H_0,H_{\rm rel})
+   =\{u_j:j\in S(H_0)\},
+\tag{CS.26.3}
+$$
+
+where $S(H_0)$ is effectively an empty set, a finite integer interval, or
+an integer tail $[A,\infty)\cap\mathbb N$. We compute the entire original
+$Q$-row at every index. On an infinite retained tail a finite original
+prefix determines that row exactly when $Q$ covers every infinite binary
+branch. Finite retained intervals admit effective exhaustive separation.
+
+**Application 26.1 (Theorem 4.2: finite feedback rigidity).** On all finite trees,
+
+$$
+\rho(x)=\langle x,z\rangle
+\quad\Longleftrightarrow\quad
+\exists j\ge0\ (x,z)=(T_{j+1},T_j).
+\tag{CS.26.4}
+$$
+
+The index is unique, and every displayed solution has $x\ne z$.
+
+Parameter substitution. If $\rho(x)=\langle x,z\rangle$, then $L$ is
+reached in $\rho(x)$ and $x=(\rho(x))|_L$. Apply Theorem 4.2 to the
+finite tree $x$ with $(n,m,p)=(0,1,L)$. It gives $x=T_k$ for $k\ge1$.
+Equation (ARH.4.2) gives
+$\rho(x)=T_{k+1}=\langle T_k,T_{k-1}\rangle$; ordered-pair cancellation
+therefore gives $z=T_{k-1}$. Set $j=k-1$. Conversely (ARH.4.2) supplies
+the displayed equation for every $j\ge0$. The index injectivity already
+supplied in Definition 4.1 gives uniqueness and $x\ne z$.
+
+Both endpoints in (CS.26.1) are reached for every source with that old row:
+the first is $\rho(x)$ and the second is $\langle x,z\rangle$.
+Consequently this application gives the two directions of (CS.26.3) before
+literal intersection. In the converse direction all three original old
+holes are reached, the first two values coincide, and the third differs;
+thus the *complete* old partition is exactly $\pi$. Also
+
+$$
+\rho^a(u_j)=u_{j+a}\qquad(a,j\ge0).
+\tag{CS.26.5}
+$$
+
+For the remaining reuse, let $\sigma$ exchange just the two root branches
+of a pair, and let $\sigma(\varepsilon)=\varepsilon$,
+$\sigma(Ls)=Rs$, $\sigma(Rs)=Ls$ on addresses. Then
+$u_j=\sigma(T_{j+3})$ and
+$\rho^a u_j=\sigma(T_{j+a+3})$. Nonroot reached subtrees and literal
+replies correspond at the exchanged addresses; both root replies are
+$\mathsf{Pair}$. A cut $Q$ corresponds to $\sigma(Q)$. To recover its
+entire original row, exchange the root branches of the concrete exterior,
+relabel every reached hole in the lexicographic order for $Q$, and carry
+the complete partition along that same bijection. For the root cut use
+the single-hole row. Empty cuts retain the entire exchanged tree.
+This is a mathematical coordinate correspondence, not a physical
+root-exchange operation. It preserves completeness of a cut, all literal
+occurrences and their epochs, and the whole exterior. The orbit-index,
+row and service calculations in the proofs of Theorems 5.2 and 6.1 apply
+under this correspondence and the exact fiber from Application 26.1.
+This reuse adds no acquired root-certificate record: the sole retained
+relation remains literally (CS.26.1).
+
+Neither $\rho$ nor its feedback equation is treated as a free constructor
+or subjected to a free-term occurs check.
+
+**Application 26.2 ((ARH.4.3): guarded addresses and replies).** Let
+$w(L)=1$, $w(R)=2$, and let $w$ add along a word, with $w(\varepsilon)=0$.
+For a nonempty address $p=\ell s$, $\ell\in\{L,R\}$, define
+
+$$
+\begin{aligned}
+h(Ls)&=1+w(s),& h(Rs)&=w(s),\\
+g(\ell s)&=\begin{cases}
+0,&s=\varepsilon,\\
+h(\ell s)-w(b),&s=t b\ne\varepsilon,
+\end{cases}
+\end{aligned}
+\tag{CS.26.6}
+$$
+
+where $b$ is the last letter of $s$. Then $0\le g(p)\le h(p)$, and
+
+$$
+\begin{aligned}
+p\in\operatorname{Pos}(\rho^a u_j)
+ &\Longleftrightarrow j+a\ge g(p),\\
+(\rho^a u_j)|_p&=T_{j+a+2-h(p)}
+                 \quad\text{when reached}.
+\end{aligned}
+\tag{CS.26.7}
+$$
+
+At the root the subtree is $u_{j+a}$, always reached with reply
+$\mathsf{Pair}$.
+
+Parameter substitution. Equation (ARH.4.3) already supplies, for nonempty
+$s$ with parent word $s^-$,
+
+$$
+s\in\operatorname{Pos}(T_n)
+ \Longleftrightarrow n\ge w(s^-)+2,
+\qquad T_n|_s=T_{n-w(s)}\quad\text{when reached}.
+\tag{CS.26.8}
+$$
+
+Apply it to $T_{j+a+1}$ on the left and $T_{j+a+2}$ on the right.
+For $s\ne\varepsilon$ the guards become respectively
+$j+a\ge1+w(s^-)$ and $j+a\ge w(s^-)$, precisely (CS.26.6).
+For $p=L,R$ both child roots always exist. Subtracting $w(s)$ gives
+(CS.26.7) in all reached cases; no nonnegative-index convention replaces
+the supplied reach guard.
+
+In particular, a nonnegative proposed subtree index is not by itself a
+reach test. For example $p=LL,j=a=0$ proposes index zero but is absent:
+$g(LL)=1$. The guard must be checked first.
+
+**Application 26.3 (Theorem 5.2: exact literal-history intersection).** For a
+literal record $e=(a,p,c)$ let $I_e$ be the set of indices giving its
+stated reply at its own certified epoch. At $p=\varepsilon$, $I_e$ is
+$\mathbb N$ for $c=\mathsf{Pair}$ and is empty otherwise. At a nonempty
+$p$, put $h=h(p)$ and $g=g(p)$. The exact sets are
+
+$$
+\begin{array}{c|l}
+c&I_{(a,p,c)}\\ \hline
+\mathsf{absent}&\{j\in\mathbb N:j\le g-a-1\}\\
+\alpha&\{h-a-2\}\cap\{j\in\mathbb N:j+a\ge g\}\\
+\beta&\{h-a-1\}\cap\{j\in\mathbb N:j+a\ge g\}\\
+\mathsf{Pair}&\{j\in\mathbb N:j\ge\max(0,h-a)\}.
+\end{array}
+\tag{CS.26.9}
+$$
+
+Define, as an intersection over the retained list with all occurrences,
+
+$$
+S(H_0)=\mathbb N\cap\bigcap_{e\text{ an occurrence in }H_0}I_e.
+\tag{CS.26.10}
+$$
+
+This proves (CS.26.3) exactly, including emptiness. Every $I_e$ is an
+integer interval or empty. Their finite intersection has exactly one of
+the three forms stated above; in particular it has no separated finite
+part preceding a disconnected tail.
+
+Proof. Absence is exactly failure of (CS.26.7). Under that guard the
+subtree index $n=j+a+2-h$ is nonnegative. Its root is $\alpha$ exactly
+when $n=0$, is $\beta$ exactly when $n=1$, and is a pair exactly when
+$n\ge2$. These facts give the two guarded singleton lines. For the last
+line $n\ge2$ is $j+a\ge h$, which implies the guard because $h\ge g$.
+These cases exhaust the replies, including endpoints born after epoch zero.
+
+For computation, start with lower bound zero and upper bound $+\infty$.
+An empty $I_e$ makes the result empty; otherwise intersect its lower and
+upper bounds with the running bounds. A finite singleton supplies both
+bounds. At the end lower bound above upper bound means empty, a finite
+upper bound gives a finite interval $[A,B]\cap\mathbb N$, and infinite
+upper bound gives $[A,\infty)\cap\mathbb N$. Maxima of lower bounds and
+minima of upper bounds prove this exhaustive classification.
+
+Every original source satisfying the retained input first has the form
+$u_j$ by Application 26.1 and then satisfies every set membership in
+(CS.26.10). Conversely a $j$ in that intersection produces a finite $u_j$
+with the complete old row, the guarded acquired equality, and every
+literal at its stated epoch. This proves both full-source inclusions;
+there is no additional promise that the source belongs to the family.
+$\square$
+
+Identical records may have identical effects on the intersection, but
+remain distinct acquired occurrences. Different epochs are never merged.
+For example $(0,LL,\mathsf{absent})$ and $(1,LL,\beta)$ both hold exactly
+at $j=0$; recording both, or repeating either, is legitimate. Treating
+the absent reply as an absence at every epoch would give a false result.
+
+For clarity about signs, the relation convention remains literally
+
+$$
+\operatorname{Rel}_{(a,p,b,q,\bowtie)}(u_j)
+\Longleftrightarrow
+G_{a,p}(j)\land G_{b,q}(j)\land
+\bigl(V_{a,p}(j)\bowtie V_{b,q}(j)\bigr),
+\tag{CS.26.11}
+$$
+
+where $G_{a,\varepsilon}$ is true, $G_{a,p}(j)$ for nonempty $p$ means
+$j+a\ge g(p)$, and $V$ is the entire subtree in (CS.26.7), or $u_{j+a}$
+at the root, defined only under its guard. For a disequality it is the
+last comparison alone that is negated; both guards stay conjoined.
+Here the sole retained relation is (CS.26.1), whose two guards were
+verified above. The old $x\ne z$ compares reached old holes and holds
+by index distinctness. Formula (CS.26.11) fixes the semantic convention;
+this application does not add arbitrary signed records to its input class.
+
+**Application 26.4 (Definition 1.1 and Theorem 5.2: the entire row).**
+Given $j\ge0$ and finite prefix-free $Q$, the following finite calculation
+returns the entire row, including all concrete exterior trees.
+
+If $Q=\{\varepsilon\}$, its reached list is $(\varepsilon)$, its exterior
+is $\square_1$, and its partition is $\{\{1\}\}$. Otherwise its reached
+list is the lexicographic ordering of
+
+$$
+J_j=\{q\in Q:j\ge g(q)\}.
+\tag{CS.26.12}
+$$
+
+Number this list $q_1,\ldots,q_m$. Starting at the root of the finite
+$u_j$, perform first-hit cutting: at $q_i$ return $\square_i$ without
+descending; at any other reached leaf return its concrete label; at any
+other reached pair return the ordered pair of the two recursive results.
+Denote the resulting concrete context by $E_j^Q$. The full partition is
+
+$$
+i\sim_j k\quad\Longleftrightarrow\quad h(q_i)=h(q_k).
+\tag{CS.26.13}
+$$
+
+Thus the actual row is the tuple $(J_j,E_j^Q,\pi_j)$, with the reached
+list made explicit in addition to the usual context/partition notation.
+For $Q=\varnothing$ this is
+$(\varnothing,u_j,\varnothing)$.
+
+Calculation. The recursion is exactly Definition 1.1's whole-context
+cutting on the known finite $u_j$; it leaves no unknown exterior variable.
+Equation (CS.26.7) at epoch zero gives the reached list and the whole
+value $T_{j+2-h(q_i)}$ at each reached nonroot hole. The supplied index
+injectivity in Definition 4.1 gives (CS.26.13), as in Theorem 5.2's
+whole-row calculation. A root cut is the sole cut by prefix freeness;
+an empty cut removes no node.
+
+**Application 26.5 (Theorems 5.2–6.1: the entire-exterior condition).** On the
+family $(u_j)_{j\ge0}$, or on any infinite retained tail of it, the entire
+exterior $E_j^Q$ is eventually constant if and only if $Q$ covers every
+infinite binary branch. Equivalently,
+
+$$
+\sum_{q\in Q}2^{-|q|}=1.
+\tag{CS.26.14}
+$$
+
+If this holds and $Q\ne\{\varepsilon\}$, define
+
+$$
+B_Q=\max\bigl(\{0\}\cup\{g(q):q\in Q\}\bigr).
+\tag{CS.26.15}
+$$
+
+For every $j\ge B_Q$ the *actual fixed row* is
+
+$$
+\left(Q,\operatorname{Trie}(Q),\pi_Q\right),\qquad
+q\sim_{\pi_Q}q'\Longleftrightarrow h(q)=h(q').
+\tag{CS.26.16}
+$$
+
+Here $Q$ is ordered lexicographically and $\operatorname{Trie}(Q)$ is the
+finite full binary trie with a pair at every proper prefix and its
+numbered holes at the cut addresses. It contains no $j$, no $T_j$ and no
+unfilled source variable. For the root cut set $B_Q=0$ and use its fixed
+one-hole row from Application 26.4.
+
+Calculation. This is Definition 5.1's completeness test and the constant
+trie case in Theorems 5.2–6.1, using the guards $g(q)$ and equality keys
+$h(q)$ from Application 26.4. Equivalently, at depth
+$M=\max(\{0\}\cup\{|q|:q\in Q\})$, the disjoint extensions of the cut
+words cover exactly $\sum_{q\in Q}2^{M-|q|}$ of the $2^M$ words. This
+gives (CS.26.14), including empty and root cuts. Above $B_Q$ all cuts
+are reached, so the complete-trie calculation gives (CS.26.16).
+
+For the converse it is useful to make all surviving exterior cones
+explicit. If $Q$ is nonempty and has no root cut, let $M_Q$ consist of
+the missing children of its trie: addresses $p a$ where $p$ is a proper
+prefix of a member of $Q$, $a\in\{L,R\}$, and $p a$ is a prefix of no
+member of $Q$. Set $M_\varnothing=\{\varepsilon\}$ and
+$M_{\{\varepsilon\}}=\varnothing$. Then
+
+$$
+F_Q=Q\cup M_Q
+\tag{CS.26.17}
+$$
+
+is a finite complete prefix-free frontier. Every member of $M_Q$ is
+incomparable with every member of $Q$. Indeed a branch in the finite trie
+either first hits a cut leaf or first takes a missing child; these are
+exactly its first hits in $F_Q$. This proves all the assertions, including
+that $M_Q$ is nonempty exactly when $Q$ is incomplete.
+
+For a sufficiently large explicit threshold, take
+$B_{F_Q}=\max(\{0\}\cup\{g(p):p\in F_Q,\ p\ne\varepsilon\})$.
+At every $j\ge B_{F_Q}$ the full exterior can equivalently be computed by
+the finite trie of $F_Q$: put the numbered $Q$ holes at $Q$ and put at each
+$m\in M_Q$ the *complete finite tree*
+
+$$
+\begin{cases}
+u_j,&m=\varepsilon,\\
+T_{j+2-h(m)},&m\ne\varepsilon.
+\end{cases}
+\tag{CS.26.18}
+$$
+
+Expand these finite trees when forming the actual row. Every exterior
+node is included by this construction. No $Q$ cut enters or removes an
+$M_Q$ cone, and all its ancestors are pairs. If $m\ne\varepsilon$, its
+surviving subtree changes at every distinct index by distinctness of
+the $T_n$. If $m=\varepsilon$, then $Q$ is empty and the whole $u_j$
+changes; its left subtree already distinguishes its index. Thus an
+incomplete $Q$ has different concrete exteriors at any two distinct
+indices beyond this threshold, including on every retained tail.
+It cannot have an eventually fixed row. $\square$
+
+Formula (CS.26.18) is an evaluation rule for a changing exterior, not a
+claim that a symbolic family is one row. In the complete case (CS.26.16)
+is literally a single finite tuple after its threshold. For finite
+retained $S$, eventual behavior along an infinite tail is not invoked.
+
+**Application 26.6 (Theorem 6.1: finite same-fiber bad pairs).**
+Suppose $S(H_0)=[A,\infty)\cap\mathbb N$ and $Q$ is incomplete. Then
+
+$$
+\begin{gathered}
+\forall D\in\mathbb N\ \exists u,v\in\mathcal U_R(H_0,H_{\rm rel}),
+\quad u\ne v,\\
+\bigl[\forall p\in\{L,R\}^*,\ |p|\le D
+       \Longrightarrow r_u(p)=r_v(p)\bigr],
+\qquad R_Q(u)\ne R_Q(v).
+\end{gathered}
+\tag{CS.26.19}
+$$
+
+Both sources can be constructed effectively as finite trees from $D$
+and the common retained data.
+
+Proof. Construct $M_Q,F_Q,B_{F_Q}$ as above and choose
+
+$$
+j=\max(A,B_{F_Q},2D+2),\qquad k=j+1,\qquad
+u=u_j,\quad v=u_k.
+\tag{CS.26.20}
+$$
+
+Both indices lie in the exact intersection (CS.26.10), so all old
+conditions and every acquired record hold in each source. Their left
+subtrees are distinct, so the sources are distinct. At a nonempty address
+$p$ of length at most $D$ we have $h(p)\le2D$; (CS.26.9) at epoch zero
+therefore makes both replies $\mathsf{Pair}$. The root reply is also a
+pair. For $D=0$ only this root assertion is needed. Hence they agree on
+the complete original $D$-prefix, including all addresses in its domain.
+
+Take any $m\in M_Q$. Equation (CS.26.18) gives different surviving whole
+subtrees there in the two exteriors, with the empty-cut case included.
+Thus their entire rows differ, irrespective of any equality of their
+hole partitions. All constructed trees are finite; the witnesses depend
+on $D$ and impose no size bound on the full source fiber. $\square$
+
+The quantifiers in (CS.26.19) refute one uniform finite original-prefix
+bound for this retained family. By the inherited implication (ARH.2.3)
+they also exclude a uniform finite new-read budget for a source-total
+service under Assumption 1.3, including permitted real serial updates.
+They do not state that all source-total procedures fail to terminate.
+A terminating procedure with an unbounded source-dependent read count
+is given below.
+
+**Application 26.7 ((ARH.4.3): original-prefix correspondence).** For
+every $j,r\ge0$ and every nonempty original address $p=a s$, define
+
+$$
+\iota_r(a s)=a L^r s.
+\tag{CS.26.21}
+$$
+
+Then
+
+$$
+\begin{aligned}
+r_{\rho^r u_j}(\iota_r(p))&=r_{u_j}(p),\\
+\iota_r(p)\in\operatorname{Pos}(\rho^r u_j)
+ &\Longleftrightarrow p\in\operatorname{Pos}(u_j),\\
+(\rho^r u_j)|_{\iota_r(p)}&=u_j|_p
+                \quad\text{when reached}.
+\end{aligned}
+\tag{CS.26.22}
+$$
+
+The original root reply is already known to be $\mathsf{Pair}$.
+
+Proof. At side $a=L$ put $b=1$, and at side $a=R$ put $b=2$.
+The current subtree there is $T_{j+r+b}$. If $r>0$, (CS.26.8) permits
+$r$ left steps because $j+r+b\ge r+1$, and yields exactly $T_{j+b}$.
+For $r=0$ this is immediate. Thus the current subtree at $aL^r$ is
+exactly the original subtree at $a$. Navigating any suffix $s$ in those
+equal finite trees gives all three statements, including absence below
+their leaves. $\square$
+
+Consequently a complete original prefix through inclusive depth $D$ can
+be recovered at the actual static epoch $r$ by at most
+$2^{D+1}-2$ paid reads, one at $\iota_r(p)$ for each nonempty $|p|\le D$.
+Their lengths are $r+|p|\le r+D$. This is a correspondence proved on the
+entire exact acquired fiber, rather than a reset to an old physical
+version. The raw evidence consists only of those actual epoch-$r$
+replies.
+
+**Application 26.8 (Theorem 6.1 and (ARH.2.3): complete-row consumers).**
+For the nonempty retained input (CS.26.1), arbitrary finite $H_0$, and
+arbitrary finite prefix-free original $Q$, the following are equivalent:
+
+1. A finite original prefix determines the entire $R_Q$ on the exact
+   retained finite-source fiber.
+2. At every permitted certified $r$, a deterministic source-total static
+   consumer has a uniform finite new-read bound for that entire row.
+3. Such a consumer exists at a permitted epoch with real paid serial
+   updates allowed.
+4. $S(H_0)$ is finite, or $Q$ covers every infinite binary branch.
+
+All parts of this restricted decision are effective. The positive
+consumers return the concrete exterior, reached original holes, and the
+complete partition; the negative answer supplies (CS.26.19).
+
+Proof. The history intersection and completeness test are finite integer
+and trie calculations. To separate known candidate indices, for $t\ge0$
+make one literal read at the physical address $L^{r+t+1}$. On every
+source $u_k$ in the entire family its exact reply is
+
+$$
+r_{\rho^r u_k}(L^{r+t+1})=
+\begin{cases}
+\mathsf{absent},&k<t,\\
+\beta,&k=t,\\
+\mathsf{Pair},&k>t.
+\end{cases}
+\tag{CS.26.23}
+$$
+
+To verify this, use (CS.26.21) on the original address $L^{t+1}$.
+For $t>0$ its guard is $k\ge t$ and its reached subtree is
+$T_{k+1-t}$. For $t=0$ its subtree is always $T_{k+1}$, and the same
+reply table holds. Thus $\beta$ tests exactly $k=t$ on this whole fiber.
+
+If $S$ is finite, generate every finite $u_j$ for $j\in S$ and compute
+its entire row by Application 26.4. Testing all but the last index in a
+fixed order, accepting exactly a $\beta$ reply, either identifies a
+matching candidate or leaves only the last. This gives exhaustive
+separation of the finite sources and returns their exact rows. A
+sufficient raw bound is $|S|-1$, zero for a singleton. Finiteness imposes
+no arbitrary cutoff: the finite set is exactly the history intersection.
+It also gives a finite original-prefix bound directly. For each pair of
+distinct finite candidates compute a differing original address and take
+the maximum of their finitely many lengths (zero for a singleton).
+Agreement at that depth identifies the candidate. Equivalently the
+original tests $L^{t+1}$ in (CS.26.23) give such a finite bound.
+
+If $S=[A,\infty)\cap\mathbb N$ and $Q$ is complete, compute $B_Q$ and
+the actual fixed tuple (CS.26.16), including its root-cut convention.
+The exceptional set
+
+$$
+E=S\cap\{0,\ldots,B_Q-1\}
+\tag{CS.26.24}
+$$
+
+is finite. Compute its individual whole rows by Application 26.4 and test
+each $t\in E$ by (CS.26.23). A match selects that candidate's row. If
+all tests reject, the exact interval description implies the actual
+index is at least $B_Q$, so return the fixed tuple (CS.26.16).
+This service is total with at most $|E|$ new reads; if $E$ is empty it
+uses none. Original addresses $L^{t+1}$ for $t\in E$ also show directly
+that one finite original prefix selects a row: equality of those
+replies either selects the same exceptional source or puts both sources
+in the constant-row tail. The root cut always needs zero reads.
+
+These constructions prove 4 implies 1 and 2. Statement 2 implies 3 by
+inclusion of service classes, and 3 implies 1 by (ARH.2.3), with exactly
+the complete-state and source-totality hypotheses of Assumption 1.3.
+If 4 fails, Application 26.6 refutes 1 at every requested depth.
+This proves the equivalence. $\square$
+
+For any nonempty $S$ and any $Q$, even in the negative boundedness case,
+one may test $t=0,1,2,\ldots$ in (CS.26.23) until $\beta$ occurs. On
+$u_k$ this takes exactly $k+1$ reads, terminates, and identifies the
+original finite tree; Application 26.4 then computes its row. Thus the
+negative conclusion is a failure of a *uniform* finite budget and a
+uniform finite prefix, not a universal nontermination theorem.
+
+**Application 26.9 (a one-read consumer of two complete rows).** Let
+$H_0=\varnothing$ and $Q=\{LL,LR,RL,RR\}$. The entire retained fiber is
+$\{u_j:j\ge0\}$. Its complete original rows are exactly
+
+$$
+\begin{array}{c|c|c|c}
+j&\text{reached cuts}&\text{entire exterior}&\text{complete partition}\\
+\hline
+0&(RL,RR)&\langle\beta,\langle\square_1,\square_2\rangle\rangle
+ &\{\{1\},\{2\}\}\\
+\ge1&(LL,LR,RL,RR)&
+\langle\langle\square_1,\square_2\rangle,
+        \langle\square_3,\square_4\rangle\rangle
+ &\{\{1,4\},\{2\},\{3\}\}.
+\end{array}
+\tag{CS.26.25}
+$$
+
+At every certified permitted epoch $r$, one paid read at $L^{r+1}$
+returns $\beta$ exactly when $j=0$ and $\mathsf{Pair}$ exactly when
+$j\ge1$, selecting these entire rows.
+
+Proof. The empty intersection leaves all $j\ge0$. At $j=0$ the original
+left child is $T_1=\beta$, so $LL,LR$ are absent, while $RL,RR$ contain
+$\beta,\alpha$. This gives the first row, including its concrete exterior
+leaf. At $j\ge1$ all four cuts are reached, and their whole values in
+lexicographic order are
+
+$$
+T_j,\quad T_{j-1},\quad T_{j+1},\quad T_j.
+$$
+
+Index distinctness gives exactly the second partition. All exterior
+nodes are the three displayed pairs. The read is (CS.26.23) with $t=0$;
+its whole reached subtree is $T_{j+1}$. Both rows occur at the same
+retained input, so zero reads cannot distinguish them under deterministic
+common control, even with unobserved real updates. Thus one is also the
+minimum new-read count for this particular example. $\square$
+
+**Acquisition and resource correspondence.** Proposition 2.1 supplies a
+compatible actual producer for this fixed schedule. Paid traversal at
+epoch zero computes the entire old row and acquires the complete subtree
+at $R$. After one real update, paid traversal at $L$ acquires its entire
+current subtree; finite comparison of the two paid descriptions supplies
+the sign in (CS.26.1). Every literal occurrence is actually read at its
+own epoch, including repeated requests and absent replies. The earlier
+description is kept until comparison is possible, and further stipulated
+updates reach the certified service epoch. No access to an old physical
+register is needed to compare already acquired descriptions.
+
+Under the complete access cut of Assumption 1.3 the accessible state is
+exactly the stated records, certified epoch and common parameters and
+control. Every finite source producing this retained state satisfies its
+old row and all records; conversely every finite source in (CS.26.3)
+produces that same successful retained state under the fixed schedule
+and cut. The original $R$ and the entire original source stay fixed
+throughout. Acquisition traversal lengths, source descriptions and any
+other source-bearing fields cannot remain as undeclared information.
+The complete cut is the same conditional access assumption as before,
+not a conclusion of the algebraic equation.
+
+All consumers operate on the same register at its certified epoch.
+A test (CS.26.23) has physical address length $r+t+1$; the example has
+length $r+1$. Requests and any repetitions are paid. Address formation
+and transmission, pre-cut acquisition, finite comparison, local tree
+construction and row computation, installation, entry, working memory,
+retention, epoch/version evidence, real updates, archives and complete
+output remain separate resource coordinates. Bounds above concern new
+raw calls only; no joint-resource optimum or general price formula is
+asserted. A finite pre-cut cost for each source need not have a uniform
+bound. There is no reset, reroot, clone, identity port, free subtree
+comparison, or observable source-dependent update timing. A later entry
+after an absorbing halt remains separately supplied and paid. Producing
+a row does not erase accessible old data or new replies; any subsequent
+cut owes its own complete-state correspondence.
+
+**Scope and reuse status.** This is ordinary application exposition of
+the existing `repo-derived` results, not an additional mathematical
+increment. Theorem 4.2 supplies the feedback classification; (ARH.4.2)–
+(ARH.4.3) supply transport, index injectivity and guarded addresses;
+Theorems 5.2 and 6.1 supply the orbit/history and complete-row machinery.
+The explicit root-exchange correspondence, finite interval intersection
+and prefix embedding only specialize those results. Definitions 1.1–1.2,
+Assumption 1.3, Proposition 2.1 and (ARH.2.3) retain their full source,
+acquisition and service conditions. No new lemma, invariant, complexity
+bound or non-bind-only theorem is asserted here. No general cyclic
+normalizer or automaton closure under constructor offsets is used.
+
+Arbitrary additional $H_{\rm rel}$, arbitrary guarded coupled cyclic
+interpreted equations, and unsupported target comparisons in the earlier
+recognizers remain outside this result. In particular the unrestricted
+decision of Definition 9.1 and §25 remains open. The present negative
+quantifiers concern the specified retained tail and specified whole-row
+task only. They prove neither general impossibility nor undecidability.
+General mixed-history minimum prices, joint resource optima and the
+stochastic targets listed in §25 are unchanged. No new formal or kernel
+result, implementation, independent approval or publication is claimed.
+## 27. An acquired local atomic cover
+
+**Definition 27.1 (local certificates on the complete old row).** Keep
 Definitions 1.1–1.2 and Assumption 1.3, with arbitrary finite prefix-free
 $P,Q$. In particular $U$ is the entire fiber (ARH.1.4), the target is the
 entire original $R_Q$, and the only source actions after the authentic
@@ -3266,7 +3893,7 @@ and a positive record actually present in $H_{\rm rel}$ of the form
 
 $$
 e_b=(n_b,a_b,m_b,a_bs_b,=),\qquad s_b\ne\varepsilon,
-\tag{LAC.26.1}
+\tag{LAC.27.1}
 $$
 
 allowing its two endpoints to be exchanged. Finding such a cover is a
@@ -3281,7 +3908,7 @@ a well-formed complete old row. Such an input has no actual acquired
 entry satisfying Assumption 1.3; it will be reported separately from a
 nonempty fiber with no uniform recovery service.
 
-**Proposition 26.2 (atomicity is forced at each original occurrence).**
+**Proposition 27.2 (atomicity is forced at each original occurrence).**
 If a covered input has a source, every designated record satisfies
 
 $$
@@ -3293,29 +3920,29 @@ m_b=n_b+w(s_b),\qquad
 1,&n_b=0\text{ and }s_b\text{ ends in }L,\\
 0,&\text{otherwise}.
 \end{cases}
-\tag{LAC.26.2}
+\tag{LAC.27.2}
 $$
 
 The index $k_b$ is unique and is shared by every occurrence of class $b$.
 Different old classes have different indices. If $\mathcal B$ is nonempty,
 every authentic entry has $N\ge1$. An incompatible epoch equation in
-(LAC.26.2) implies an empty fiber, not an additional source promise.
+(LAC.27.2) implies an empty fiber, not an additional source promise.
 
 Proof. Put $z=u|_{a_b}$. This original subtree exists by the complete
 old row. Original-address transport gives
 $(\rho^n u)|_{a_b}=\rho^n z$ for every $n\ge0$. In particular $a_b$
 persists at both recorded epochs, and the descendant endpoint exists
 exactly when $s_b$ exists in $\rho^{m_b}z$. The whole guarded predicate
-of (LAC.26.1) is therefore
+of (LAC.27.1) is therefore
 
 $$
 s_b\in\operatorname{Pos}(\rho^{m_b}z)\quad\land\quad
 \rho^{n_b}z=(\rho^{m_b}z)|_{s_b}.
-\tag{LAC.26.3}
+\tag{LAC.27.3}
 $$
 
 Apply Theorem 4.2 to this actual finite subtree. Its full classification,
-including its last-edge reach condition, is exactly (LAC.26.2).
+including its last-edge reach condition, is exactly (LAC.27.2).
 The old partition identifies the whole original subtrees at repeated
 occurrences; injectivity of $k\mapsto T_k$ transfers that identity to
 indices. The old different-class disequalities give $k_b\ne k_c$ for
@@ -3324,9 +3951,9 @@ $m_b=n_b+w(s_b)\ge1$, and the authentic $N$ dominates $m_b$.
 This is a mathematical application at an original subtree, not a physical
 reroot or an acquisition of its index. $\square$
 
-## 27. One joint arithmetic domain and the complete target
+## 28. One joint arithmetic domain and the complete target
 
-**Theorem 27.1 (whole-source and whole-row interpretation).** On a covered
+**Theorem 28.1 (whole-source and whole-row interpretation).** On a covered
 input one can construct Presburger predicates $\mathsf{Adm}(k)$ and
 $\mathsf{Same}_Q(k,l)$, for $k,l\in\mathbb N^{\mathcal B}$, such that
 
@@ -3337,7 +3964,7 @@ S=\{k\in\mathbb N^{\mathcal B}:\mathsf{Adm}(k)\},\\
 k\longmapsto U_k\text{ is a bijection }S\longrightarrow U,\\
 \mathsf{Same}_Q(k,l)\quad\Longleftrightarrow\quad
 R_Q(U_k)=R_Q(U_l).
-\tag{LAC.27.1}
+\tag{LAC.28.1}
 \end{gathered}
 $$
 
@@ -3413,7 +4040,7 @@ G_{n,p}(k)\land G_{m,q}(k)\land
 E_{n,p;m,q}(k),&\bowtie\text{ is }=,\\
 \neg E_{n,p;m,q}(k),&\bowtie\text{ is }\ne.
 \end{cases}
-\tag{LAC.27.2}
+\tag{LAC.28.2}
 $$
 
 The guards stay outside the negation. In particular neither missing
@@ -3423,9 +4050,9 @@ whole conjunction, rather than demanding both child disequalities.
 
 Define $\mathsf{Adm}$ as the conjunction of every $k_b\ne k_c$ for
 different old classes, every literal predicate $L_{n,p,c}$ in the retained
-list, and (LAC.27.2) for every retained signed record. One may also conjoin
-the designated compatibility equations and lower bounds (LAC.26.2):
-Proposition 26.2 proves them consequences of the predicates already
+list, and (LAC.28.2) for every retained signed record. One may also conjoin
+the designated compatibility equations and lower bounds (LAC.27.2):
+Proposition 27.2 proves them consequences of the predicates already
 included. An incompatible designated equation gives the constant false
 predicate. Repeated literals and records remain conjuncts.
 
@@ -3438,7 +4065,7 @@ not alter. Thus every filling has exactly the old reached set and exterior.
 Index injectivity makes all the stated $k_b\ne k_c$ exactly the remaining
 requirements for its complete old partition.
 
-Now take $u\in U$. Proposition 26.2 supplies its unique atomic old-class
+Now take $u\in U$. Proposition 27.2 supplies its unique atomic old-class
 values. The original old-row reconstruction (ARH.1.2) gives $u=U_k$.
 Its old inequalities and every actual guarded record give
 $\mathsf{Adm}(k)$ by the exact endpoint and literal computations.
@@ -3473,14 +4100,14 @@ $$
  \left(\nu_q(X(k))=\nu_r(X(k))\ \Longleftrightarrow\
        \nu_q(X(l))=\nu_r(X(l))\right).
 \end{aligned}
-\tag{LAC.27.3}
+\tag{LAC.28.3}
 $$
 
 Every displayed code equality is implemented by the finite normal-shape
 comparison, not ambient equality of unnormalized terms. The last line
 is a finite conjunction over $Q\times Q$ guarded by membership of both
 addresses; the first line then supplies the same guards on the other
-tuple. Consequently (LAC.27.3) is a Presburger formula.
+tuple. Consequently (LAC.28.3) is a Presburger formula.
 
 For a fixed reached set $I$, filling all numbered holes with $\alpha$
 is injective on contexts with holes at precisely $I$: replace the
@@ -3491,7 +4118,7 @@ exteriors, even when normalization of a mask collapsed a surrounding
 atomic block. The last line compares every pair of whole removed
 subtrees, so it is exactly equality of the complete partitions,
 including repeated target holes. This is precisely ABC's whole-row
-correspondence and proves (LAC.27.1).
+correspondence and proves (LAC.28.1).
 
 All recursions have finite inputs: the known $C$, the finitely many
 specified words and epochs, the $Q$ trie, and finite products of their
@@ -3500,16 +4127,16 @@ No step unfolds an unbounded unknown $T_k$ or enumerates unknown shapes.
 No general formula for normality on arbitrary ambient shapes is assumed.
 $\square$
 
-## 28. A cofinal cutoff and a terminating recovery decision
+## 29. A cofinal cutoff and a terminating recovery decision
 
-**Definition 28.1 (joint clipped-rank agreement).** For $K\in\mathbb N$ put
+**Definition 29.1 (joint clipped-rank agreement).** For $K\in\mathbb N$ put
 $\operatorname{clip}_K(k)_b=\min(k_b,K)$, and abbreviate its equality by
 
 $$
 \mathsf{Clip}_K(k,l):=
 \bigwedge_{b\in\mathcal B}
 \bigl[(k_b=l_b\land k_b<K)\ \lor\ (k_b\ge K\land l_b\ge K)\bigr].
-\tag{LAC.28.1}
+\tag{LAC.29.1}
 $$
 
 Let $A=\max(\{0\}\cup\{|a_b|:b\in\mathcal B\})$. Use the inclusive
@@ -3517,7 +4144,7 @@ original-prefix convention of Definition 2.2. Both empty tuples agree
 under every cutoff. The clipped tuples describe observation classes;
 they do not replace the unbounded jointly constrained set $S$.
 
-**Proposition 28.2 (two sufficient cofinal prefix bounds).** For all
+**Proposition 29.2 (two sufficient cofinal prefix bounds).** For all
 nonnegative rank tuples, all $h,K\ge0$, and the same fixed context,
 
 $$
@@ -3528,7 +4155,7 @@ $$
 \left[\forall |p|\le A+K,\quad r_{U_k}(p)=r_{U_l}(p)\right]
 &\Longrightarrow\mathsf{Clip}_K(k,l).
 \end{aligned}
-\tag{LAC.28.2}
+\tag{LAC.29.2}
 $$
 
 These are sufficient bounds in opposite directions, not assertions of
@@ -3556,10 +4183,10 @@ addresses. Matching all branch and leaf replies of a finite complete
 tree forces exactly that tree: recurse through its pairs, and at each
 leaf a matching leaf reply forbids any further child. Thus the other
 subtree is also $T_j$. Index injectivity gives equality of the ranks.
-For $K=0$ there are no small ranks and (LAC.28.1) is vacuous; for no
+For $K=0$ there are no small ranks and (LAC.29.1) is vacuous; for no
 old classes both conclusions are immediate. $\square$
 
-**Theorem 28.3 (uniform bounded recovery, decided in both directions).**
+**Theorem 29.3 (uniform bounded recovery, decided in both directions).**
 For a covered input, emptiness of its entire original fiber is decidable.
 On a nonempty input satisfying Assumption 1.3, the following are equivalent:
 
@@ -3574,7 +4201,7 @@ $$
 \bigl[\mathsf{Adm}(k)\land\mathsf{Adm}(l)\land
        \mathsf{Clip}_K(k,l)\bigr]
 \Longrightarrow\mathsf{Same}_Q(k,l).
-\tag{LAC.28.3}
+\tag{LAC.29.3}
 $$
 
 There is a terminating yes/no decision of these conditions. A positive
@@ -3584,11 +4211,11 @@ supplies, for every requested original depth $h$, two finite members of
 the original $U$ agreeing through that depth and having unequal complete
 $R_Q$ rows.
 
-Proof. Theorem 27.1 makes $\exists k\,\mathsf{Adm}(k)$ a sentence of
+Proof. Theorem 28.1 makes $\exists k\,\mathsf{Adm}(k)$ a sentence of
 Presburger arithmetic over nonnegative integers. Its truth is decidable
 by the classical result stated in Ginsburg–Spanier,
 [*Semigroups, Presburger Formulas, and Languages*, Theorem 1.2,
-printed p. 287][LAC-GS]. The same decision applies to (LAC.28.3), including
+printed p. 287][LAC-GS]. The same decision applies to (LAC.29.3), including
 its existential cutoff and both universal tuples. Their Theorem 1.3,
 printed p. 288, also gives effective semilinear descriptions of these
 definable sets; no independent semilinearity assumption on the acquired
@@ -3609,12 +4236,12 @@ supplier's reverse direction uses paid historical decoding on the same
 entry register. It applies to the entire $U$ because membership of a
 given concrete finite candidate is decidable with every retained guard.
 
-If condition 3 holds at $h$, the first line of (LAC.28.2) and exact
+If condition 3 holds at $h$, the first line of (LAC.29.2) and exact
 target correspondence give condition 4 with $K=2h+2$. Conversely a
-witness $K$ to condition 4 and the second line of (LAC.28.2) give condition
+witness $K$ to condition 4 and the second line of (LAC.29.2) give condition
 3 at depth $A+K$. This proves the four-way equivalence.
 
-After deciding (LAC.28.3) positively, test successive concrete $K$ using
+After deciding (LAC.29.3) positively, test successive concrete $K$ using
 the same arithmetic decision until one passes. The initial positive
 decision proves that this extraction terminates. This is not an
 algorithm that searches depths forever on negative inputs: those inputs
@@ -3630,7 +4257,7 @@ and each $r<K$ to be tested, put
 $$
 t_r=\left\lfloor\frac{N+r}{2}\right\rfloor,
 \qquad p_{b,r}=a_bR^{t_r}.
-\tag{LAC.28.4}
+\tag{LAC.29.4}
 $$
 
 At the actual epoch $N$, original-address transport gives the subtree
@@ -3652,7 +4279,7 @@ $c\in\{0,\ldots,K\}^{\mathcal B}$ consider the entire conditioned set
 
 $$
 S_c=\{k:\mathsf{Adm}(k)\land\operatorname{clip}_K(k)=c\}.
-\tag{LAC.28.5}
+\tag{LAC.29.5}
 $$
 
 Decide its emptiness. For every nonempty $S_c$, extract a member $v_c$,
@@ -3671,22 +4298,22 @@ assume independent coordinate feasibility, or replace actual reads by
 witness access. The witness is only a locally computed finite tree whose
 row has been proved common; it need not be the actual source. New raw
 receipts are precisely the actual epoch-$N$ address/reply events in
-(LAC.28.4), not the inferred rank inequalities or synthetic past events.
+(LAC.29.4), not the inferred rank inequalities or synthetic past events.
 
-If (LAC.28.3) is false, for every $K$ its negation gives a satisfiable
+If (LAC.29.3) is false, for every $K$ its negation gives a satisfiable
 predicate
 
 $$
 \mathsf{Adm}(k)\land\mathsf{Adm}(l)\land\mathsf{Clip}_K(k,l)
        \land\neg\mathsf{Same}_Q(k,l).
-\tag{LAC.28.6}
+\tag{LAC.29.6}
 $$
 
 For a requested $h$ use $K=2h+2$, extract such a pair and expand its
-two finite fillings. Theorem 27.1 places both in the entire original
+two finite fillings. Theorem 28.1 places both in the entire original
 $U$ with all old inequalities and both endpoints of every signed record
-intact. Proposition 28.2 gives equal original replies through $h$;
-(LAC.27.3) gives different complete rows. These are admitted original
+intact. Proposition 29.2 gives equal original replies through $h$;
+(LAC.28.3) gives different complete rows. These are admitted original
 finite sources, never ambient nonnormal descriptions or infinite limits.
 They exclude every uniformly bounded permitted serial service by
 (ARH.2.3). The witnesses may depend on $h$.
@@ -3702,10 +4329,10 @@ storage, retained receipts, output and physical time remain separately
 charged. Output and absorbing halt do not themselves erase accessible
 records or create a new free entry. $\square$
 
-**Proposition 28.4 (empty, no-hole and extreme-cut meanings).** The
+**Proposition 29.4 (empty, no-hole and extreme-cut meanings).** The
 interpretation and decision have the following boundary values.
 
-1. If $S=\varnothing$, (LAC.28.3) is vacuously true, but the reported
+1. If $S=\varnothing$, (LAC.29.3) is vacuously true, but the reported
    result is logical emptiness. There is no admitted input run and no
    negative witness or acquired positive example.
 2. If $\mathcal B=\varnothing$, the tuple space is the singleton
@@ -3722,7 +4349,7 @@ interpretation and decision have the following boundary values.
 Proof. The first two assertions follow from the quantified predicates
 over an empty set or zero coordinates and the exact source bijection.
 In the third, the root always exists, its exterior is one numbered hole
-and its partition is one class. For the fourth, Theorem 27.1 identifies
+and its partition is one class. For the fourth, Theorem 28.1 identifies
 target equality with $k=l$. If a cutoff works, each of the finitely many
 clipped tuples contains at most one admitted tuple, hence $S$ is finite.
 Conversely a finite $S$ admits a cutoff strictly above all its coordinates
@@ -3730,9 +4357,9 @@ Conversely a finite $S$ admits a cutoff strictly above all its coordinates
 tuples. The mask retains everything when no cut is reached, proving the
 last statement. $\square$
 
-## 29. A joint acquired consumer and deletion obstruction
+## 30. A joint acquired consumer and deletion obstruction
 
-**Proposition 29.1 (one actual read consumes two locally certified classes).**
+**Proposition 30.1 (one actual read consumes two locally certified classes).**
 Take the full original input
 
 $$
@@ -3745,14 +4372,14 @@ d_1=(0,L,1,R,\ne),\quad d_2=(0,L,2,R,\ne),\\
 H_{\rm rel}=(e_L,e_R,d_1,d_2),\quad N=2,\\
 Q=\{LLL,LLR,LR,RL,RR\}.
 \end{gathered}
-\tag{LAC.29.1}
+\tag{LAC.30.1}
 $$
 
 Its entire original fiber is
 
 $$
 U=\{\langle T_i,T_j\rangle:i,j\ge2,\ i-j\notin\{0,1,2\}\}.
-\tag{LAC.29.2}
+\tag{LAC.30.2}
 $$
 
 It has exactly the following two complete target rows. Number holes by
@@ -3770,7 +4397,7 @@ i\ge3&LLL,LLR,LR,RL,RR&
               \langle\square_4,\square_5\rangle\rangle&
  \{\{1,3\},\{2\},\{4\},\{5\}\}.
 \end{array}
-\tag{LAC.29.3}
+\tag{LAC.30.3}
 $$
 
 At actual entry epoch two, $\mathsf{Read}(LRR)$ selects the first row
@@ -3779,7 +4406,7 @@ outputs that whole row and halts, using one new read, zero new updates
 and one submitted address of length three.
 
 Proof. Both local certificates have suffix $L$, $n=0$ and $m=1$.
-Proposition 26.2 forces each original child to be atomic of index at
+Proposition 27.2 forces each original child to be atomic of index at
 least one. The two retained literals strengthen both bounds to two.
 The old partition imposes $i\ne j$. At the same source the two additional
 records compare $T_i$ with $T_{j+1}$ and $T_{j+2}$ respectively, giving
@@ -3792,7 +4419,7 @@ the two local positive predicates therefore hold with both endpoints
 present. The $R$ endpoint of each negative record is an originally
 reached child and persists at epochs one and two. The stipulated
 inequalities make both negative signs true. Thus every tree in
-(LAC.29.2), and no other finite source, satisfies the entire input.
+(LAC.30.2), and no other finite source, satisfies the entire input.
 No tree in this fiber is globally atomic: an atomic native pair with
 children $T_i,T_j$ would require $i=j+1$, which $d_1$ excludes.
 
@@ -3804,14 +4431,14 @@ When $i\ge3$ all five cuts are reached, with ordered values
 
 $$
 T_{i-2},\quad T_{i-3},\quad T_{i-2},\quad T_{j-1},\quad T_{j-2}.
-\tag{LAC.29.4}
+\tag{LAC.30.4}
 $$
 
 The first and third always agree. They differ from the second; the
 fourth differs from the fifth. A cross-equality between the left and
 right groups requires, respectively, $i-j=1$, $0$, $2$ or $1$.
-All are excluded in (LAC.29.2), so the second complete partition in
-(LAC.29.3) exhausts every pair comparison. The exterior is the fixed
+All are excluded in (LAC.30.2), so the second complete partition in
+(LAC.30.3) exhausts every pair comparison. The exterior is the fixed
 displayed trie. Both rows occur, for example at $(i,j)=(2,4)$ and
 $(3,4)$.
 
@@ -3826,7 +4453,7 @@ whole rows is the only remaining target distinction. This explicitly
 consumes the joint domain and complete-target interpretation.
 
 For acquisition, use Proposition 2.1 with precisely the public coordinate
-schedule in (LAC.29.1). At epoch zero acquire the old row, the stipulated
+schedule in (LAC.30.1). At epoch zero acquire the old row, the stipulated
 literals and the required original endpoint descriptions. After one
 actual update acquire the whole subtrees at $LL$, $RL$ and $R$ needed
 there; after the next update acquire the $R$ endpoint for $d_2$.
@@ -3836,20 +4463,20 @@ retained outcome. No description, rank or forgotten traversal field is
 available to the post-cut one-read service. Its acquisition and cut
 hypotheses are precisely Assumption 1.3. $\square$
 
-**Proposition 29.2 (deleting one acquired negative constraint destroys
-uniform bounded recovery).** Delete only $d_1$ from (LAC.29.1), retaining
+**Proposition 30.2 (deleting one acquired negative constraint destroys
+uniform bounded recovery).** Delete only $d_1$ from (LAC.30.1), retaining
 $P,R,H_0,e_L,e_R,d_2,N$ and the same entire target $Q$. The exact fiber is
 
 $$
 U^-=\{\langle T_i,T_j\rangle:i,j\ge2,\ i-j\notin\{0,2\}\}.
-\tag{LAC.29.5}
+\tag{LAC.30.5}
 $$
 
 It still has a local atomic cover. No source-total permitted serial or
 static service has a uniform finite new-read bound for its complete
 target, although a pointwise terminating actual static service exists.
 
-Proof. The two original-source directions in Proposition 29.1 apply with
+Proof. The two original-source directions in Proposition 30.1 apply with
 only the comparison to $T_{j+1}$ omitted. In particular the old
 $i\ne j$, both branch literals and both guards of $d_2$ remain. No new
 source promise or changed cut is involved.
@@ -3858,12 +4485,12 @@ For any cutoff $K$, choose $M\ge\max(K,3)$ and the two admitted tuples
 
 $$
 (i,j)=(M+1,M),\qquad (i',j')=(M+3,M).
-\tag{LAC.29.6}
+\tag{LAC.30.6}
 $$
 
 Their clipped tuples at $K$ both equal $(K,K)$. All five target cuts
 are reached in both sources, and their concrete exteriors coincide with
-the second exterior in (LAC.29.3). Formula (LAC.29.4) gives the first
+the second exterior in (LAC.30.3). Formula (LAC.30.4) gives the first
 source's partition as
 $\{\{1,3,4\},\{2,5\}\}$, since its rank difference is one. The second
 source has only the repeated class $\{1,3\}$, since its difference is
@@ -3872,11 +4499,11 @@ and satisfy every remaining original predicate. The first is itself the
 native atomic tree $T_{M+2}$; its alternative paired expression is not
 counted as a different source.
 
-Thus (LAC.28.3) is false for this full input. For an explicit negative
+Thus (LAC.29.3) is false for this full input. For an explicit negative
 witness at any inclusive original depth $h$, take
-$M=\max(2h+2,3)$ in (LAC.29.6) and apply Proposition 28.2. The resulting
+$M=\max(2h+2,3)$ in (LAC.30.6) and apply Proposition 29.2. The resulting
 admitted finite sources agree at every address of length at most $h$
-and disagree on the whole target. Theorem 28.3 excludes all permitted
+and disagree on the whole target. Theorem 29.3 excludes all permitted
 uniformly bounded comparators, including adaptive serial updates.
 
 For completeness, on any one source recover each finite atomic index
@@ -3890,23 +4517,23 @@ reads, and permit local computation of the complete original row.
 Their lengths have no common finite bound on $U^-$.
 
 The full target image here consists of three rows: the two in
-(LAC.29.3) and the same five-hole exterior with partition
+(LAC.30.3) and the same five-hole exterior with partition
 $\{\{1,3,4\},\{2,5\}\}$. Indeed, for $i\ge3$ the only newly permitted
-cross-equality condition in (LAC.29.4) is $i-j=1$; for $i=2$ the old
+cross-equality condition in (LAC.30.4) is $i-j=1$; for $i=2$ the old
 first row remains unchanged. The obstruction therefore comes from a
 source-sensitive constraint deletion in the joint interpretation, even
 when the complete target image is finite. $\square$
 
-## 30. Scope of the local-cover interpretation
+## 31. Scope of the local-cover interpretation
 
-**Definition 30.1 (supplier and unresolved boundaries).** The domain of
-Theorems 27.1 and 28.3 is the complete acquired input with the syntactically
-retained cover (LAC.26.1), including its logical empty and no-hole cases.
+**Definition 31.1 (supplier and unresolved boundaries).** The domain of
+Theorems 28.1 and 29.3 is the complete acquired input with the syntactically
+retained cover (LAC.27.1), including its logical empty and no-hole cases.
 The source-relative addition is the finite guarded arithmetic
 interpretation of the full jointly constrained old-class tuple, the
 complete-row predicate, and the cofinal cutoff deciding bounded recovery
-on that domain. Proposition 29.1 consumes all of these in an actual
-original-root protocol; Proposition 29.2 supplies native finite witnesses
+on that domain. Proposition 30.1 consumes all of these in an actual
+original-root protocol; Proposition 30.2 supplies native finite witnesses
 after deleting just one retained constraint.
 
 Theorem 4.2 supplies certificate-to-atomic classification, Proposition
@@ -3918,14 +4545,20 @@ local atomic subtrees; its single-global-orbit finite representative and
 exact-price theorems are not transferred to a joint rank domain.
 Ginsburg–Spanier's decidability and effective semilinear correspondence
 are literature-attested suppliers with the natural-number first-order
-arithmetic hypotheses stated in Theorem 28.3. The additional native
+arithmetic hypotheses stated in Theorem 29.3. The additional native
 source and service correspondences are repository-derived ordinary
 mathematics; no global originality or complexity claim is part of them.
 
-The finite guarded case families in Theorem 27.1 are generated from an
+The finite guarded case families in Theorem 28.1 are generated from an
 actually retained finite context and finitely many fixed words. They
 provide no arbitrary-shape normal-domain definition of the kind left
-open in ABC Assumption 7.3. Missing local certificates give no decision
+open in ABC Assumption 7.3. This is a scope boundary, not a native
+recovery undecidability or impossibility claim. The separate atomic
+term-power obstruction in [TPO][TPO] is stated in exactly the four-sort
+covariant $\{F\}$-term-power language; it concerns definability in that
+language and does not negate a fixed acquired finite-context compiler on
+a certified local domain. The compiler proof above remains ordinary theory
+subject to independent review. Missing local certificates give no decision
 on arbitrary unknown subtrees or unrestricted coupled interpreted
 histories. The theorem decides the existence of a finite completion
 budget under Assumption 1.3; it does not decide all specified raw or
@@ -3944,5 +4577,6 @@ obligations.
 [LAC-ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
 [LAC-AOF]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
 [LAC-GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+[TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
 
 ## 追加锚（本行以下为增补区）
