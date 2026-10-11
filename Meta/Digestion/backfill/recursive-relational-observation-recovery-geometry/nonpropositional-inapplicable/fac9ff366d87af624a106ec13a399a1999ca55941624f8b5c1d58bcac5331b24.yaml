@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fac9ff366d87af624a106ec13a399a1999ca55941624f8b5c1d58bcac5331b24
+  normalized_sha256: sha256:fac9ff366d87af624a106ec13a399a1999ca55941624f8b5c1d58bcac5331b24
+cas_ref: sha256:fac9ff366d87af624a106ec13a399a1999ca55941624f8b5c1d58bcac5331b24
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: All clauses of Theorem 26.2 are supplied by pinned Mathlib. Metric.totallyBounded_iff, Metric.isBounded_iff and Bornology.isBounded_biUnion give the same-realization pair of Lemma 26.1 at any delta and task gap A. Metric.uniformContinuous_iff at output tolerance 1, instantiated on range(q), and dist_triangle4 exclude a uniformly continuous decoder with error <= C by taking task gap 2*C+1. For arbitrary eta>0 and any decoder on the legal noisy-output subtype, dist_midpoint_left and dist_midpoint_right supply the shared legal midpoint for a pair with observation distance <2*eta and task gap >2*A; dist_triangle_left forces one reconstruction error >A. NormedSpace.restrictScalars specializes the same real-midpoint contract to arbitrary complex normed spaces. With e=z-q(x), dist_eq_norm and additive cancellation identify legal outputs exactly with q(x)+e, norm(e)<=eta. iSup₂_eq_top and ENNReal.lt_ofReal_iff_toReal_lt turn the all-A error statement into the displayed extended nonnegative-real double supremum = infinity. Real and complex instances, the exact noise-domain bridge, and the supremum equation are compiled. The decoder receives only the noisy observation, no exact side channel. No frozen project GID supplies this complete relation (仓内无 GID); zero new Lean is retained.
+    previous_atom_id: 757ddaf10b40294add9ba8b2b9ebc35ddeea8af3c301041aea86da9c21629c15
+    next_atom_id: d4efcc9952a56ac59d23a7a4be70f3bada0f7adf414c50d8fd280e97dbd112db
