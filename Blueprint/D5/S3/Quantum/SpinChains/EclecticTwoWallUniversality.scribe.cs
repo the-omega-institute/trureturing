@@ -66,7 +66,7 @@ internal sealed class EclecticTwoWallUniversalityDocument : IScribeDocumentDefin
     private static Formula Assumption(Formula x, Formula body) =>
         Seq(OpenBracket, x, CloseBracket, Sp, body);
     private static Formula At(Formula f, Formula x) => new Formula.Apply(f, [x]);
-    private static Formula Pair(Formula x, Formula y) => Seq(Langle, x, Comma, Sp, y, Rangle);
+    private static Formula Pair(Formula x, Formula y) => Seq(Langle, Sp, x, Comma, Sp, y, Rangle);
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name),

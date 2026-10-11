@@ -55,7 +55,7 @@ internal sealed class ActualTransferJordanChainsDocument : IScribeDocumentDefini
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
     private static Formula At(Formula f, Formula x) => new Formula.Apply(f, [x]);
-    private static Formula Pair(Formula x, Formula y) => Seq(Langle, x, Comma, Sp, y, Rangle);
+    private static Formula Pair(Formula x, Formula y) => Seq(Langle, Sp, x, Comma, Sp, y, Rangle);
     private static Formula Nats => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Complexes => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Power(Formula f, Formula m) => new Formula.Power(Parenthesized(f), m);

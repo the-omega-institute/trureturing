@@ -67,7 +67,7 @@ internal sealed class NilpotentJordanChainsDocument : IScribeDocumentDefinition
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
     private static Formula At(Formula f, Formula x) => new Formula.Apply(f, [x]);
     private static Formula Pair(Formula x, Formula y) =>
-        Seq(Langle, x, Comma, Sp, y, Rangle);
+        Seq(Langle, Sp, x, Comma, Sp, y, Rangle);
     private static Formula Nats => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Length(Formula i) => Call("val", At(F.Id("s"), i));
     private static Formula Positions => Parenthesized(Seq(Sigma, Sp,
