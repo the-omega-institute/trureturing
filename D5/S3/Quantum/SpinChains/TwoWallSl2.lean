@@ -345,7 +345,7 @@ private theorem conjugate_relations {V W : Type*}
       congrArg T.conjRingEquiv a.hf
 
 /-- The marked action satisfies the three sl₂ commutator relations. -/
-theorem marked_relations (a b : ℕ) :
+private theorem marked_relations (a b : ℕ) :
     Sl2Relations (markedH K a b) (markedE K a b) (markedF K a b) :=
   conjugate_relations K (coordinateLinear K a b) (coordinate_relations K a b)
 
@@ -443,7 +443,7 @@ private theorem conjugate_domain (a b : ℕ) (g : Coordinates a b → Coordinate
 
 omit [CharZero K] in
 /-- Mark exchange and every cyclic translation commute with the marked action. -/
-theorem marked_symmetries (a b : ℕ) :
+private theorem marked_symmetries (a b : ℕ) :
     Commute (Jstar K a b) (markedH K a b) ∧
     Commute (Jstar K a b) (markedE K a b) ∧
     Commute (Jstar K a b) (markedF K a b) ∧
@@ -478,7 +478,6 @@ theorem marked_symmetries (a b : ℕ) :
     simpa only [map_mul, hr, markedH, markedE, markedF] using
       congrArg (coordinateLinear K a b).conjRingEquiv (rotate_f K t).eq
 
-#print axioms marked_relations
 private noncomputable def descend (a b : ℕ) (A : Module.End K (MarkedSpace K a b)) :
     Module.End K (Space K a b) :=
   (2 : K)⁻¹ • (Q K a b).comp (A.comp (S K a b))
@@ -532,7 +531,7 @@ private theorem S_descend (a b : ℕ) (A : Module.End K (MarkedSpace K a b))
   rw [smul_smul, inv_mul_cancel₀ (by norm_num : (2 : K) ≠ 0), one_smul]
 
 /-- The descended endomorphisms satisfy the sl₂ relations on literal cyclic words. -/
-theorem literal_relations (a b : ℕ) : Sl2Relations (h K a b) (e K a b) (f K a b) := by
+private theorem literal_relations (a b : ℕ) : Sl2Relations (h K a b) (e K a b) (f K a b) := by
   have sy := marked_symmetries K a b
   have sh := S_descend K a b (markedH K a b) sy.1
   have se := S_descend K a b (markedE K a b) sy.2.1
@@ -572,7 +571,7 @@ private theorem descend_translation (a b : ℕ) (A : Module.End K (MarkedSpace K
   exact LinearMap.congr_fun ht.eq (S K a b x)
 
 /-- Every cyclic translation, and hence U, commutes with all three literal operators. -/
-theorem literal_translation (a b : ℕ) :
+private theorem literal_translation (a b : ℕ) :
     (∀ t : Pos a b, Commute (translation K t) (h K a b) ∧
       Commute (translation K t) (e K a b) ∧ Commute (translation K t) (f K a b)) ∧
     Commute (U K a b) (h K a b) ∧ Commute (U K a b) (e K a b) ∧
@@ -585,9 +584,6 @@ theorem literal_translation (a b : ℕ) :
       descend_translation K a b _ sy.2.2.1 t (sy.2.2.2 t).2.2⟩
   exact ⟨all, all 1⟩
 
-#print axioms marked_relations
-#print axioms marked_symmetries
-#print axioms literal_relations
 omit [CharZero K] in
 private theorem QJ (a b : ℕ) (x : MarkedSpace K a b) :
     Q K a b (Jstar K a b x) = Q K a b x := by
@@ -639,7 +635,7 @@ private theorem weight_cast {m : ℕ} (w : Fin m → Bool) :
   rfl
 
 /-- Literal basis actions in either ordered pair of arcs, with bond multiplicities retained. -/
-theorem basis_actions (a b : ℕ) (c : Coordinates a b) :
+private theorem basis_actions (a b : ℕ) (c : Coordinates a b) :
     h K a b (delta K (encode c).1.1) = (integerWeight c : K) • delta K (encode c).1.1 ∧
     e K a b (delta K (encode c).1.1) =
       (∑ j : Fin (c.m - 1), if c.u (leftSite j) = false ∧ c.u (rightSite j) = true then
@@ -664,10 +660,6 @@ theorem basis_actions (a b : ℕ) (c : Coordinates a b) :
     simp only [coordinateF, Finsupp.linearCombination_single, one_smul, map_add, map_sum,
       apply_ite, map_zero, forget_single]
 
-#print axioms marked_relations
-#print axioms marked_symmetries
-#print axioms literal_relations
-#print axioms literal_translation
 private def sites {a b : ℕ} (c : Coordinates a b) :
     Fin ((c.m + 1) + (c.n + 1)) ≃ Pos a b :=
   (finCongr (by have := c.length; omega)).trans
@@ -773,10 +765,6 @@ private theorem encode_rightMove {a b : ℕ} (c : Coordinates a b) (j : Fin (c.n
     omega
   simpa only [hp] using he
 
-#print axioms marked_relations
-#print axioms marked_symmetries
-#print axioms literal_relations
-#print axioms literal_translation
 omit [CharZero K] in
 private theorem bond_left {a b : ℕ} (c : Coordinates a b) (j : Fin (c.m - 1)) :
     bond K 2 (c.p + ((j.val + 1 : ℕ) : Pos a b)) (encode c).1.1 =
@@ -883,7 +871,7 @@ private theorem F3_encoded {a b : ℕ} (c : Coordinates a b) :
     simpa only [hp] using bond_right K c j
 
 /-- The lowering endomorphism is exactly the physical cyclic 21 to 12 bond sum. -/
-theorem f_eq_F3 (a b : ℕ) : f K a b = F3 K a b := by
+private theorem f_eq_F3 (a b : ℕ) : f K a b = F3 K a b := by
   apply (basis K a b).ext
   intro w
   have hw : ∃ p : Pos a b, w.1 p = wall := by
@@ -896,11 +884,48 @@ theorem f_eq_F3 (a b : ℕ) : f K a b = F3 K a b := by
   have hword : (encode c).1.1 = w := congrArg (fun x : MarkedWord a b => x.1.1) hc
   simpa only [hword, delta] using (F3_encoded K c).symm
 
-#print axioms marked_relations
-#print axioms marked_symmetries
-#print axioms literal_relations
-#print axioms literal_translation
-#print axioms basis_actions
-#print axioms f_eq_F3
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The two-wall sl₂ action, its symmetries, physical lowering, and closed basis formulas. -/
+theorem literal_action (a b : ℕ) :
+    Sl2Relations (markedH K a b) (markedE K a b) (markedF K a b) ∧
+    (Commute (Jstar K a b) (markedH K a b) ∧
+      Commute (Jstar K a b) (markedE K a b) ∧
+      Commute (Jstar K a b) (markedF K a b) ∧
+      ∀ t : Pos a b,
+        Commute (markedTranslation K t) (markedH K a b) ∧
+        Commute (markedTranslation K t) (markedE K a b) ∧
+        Commute (markedTranslation K t) (markedF K a b)) ∧
+    Sl2Relations (h K a b) (e K a b) (f K a b) ∧
+    f K a b = F3 K a b ∧
+    ((∀ t : Pos a b, Commute (translation K t) (h K a b) ∧
+      Commute (translation K t) (e K a b) ∧ Commute (translation K t) (f K a b)) ∧
+      Commute (U K a b) (h K a b) ∧ Commute (U K a b) (e K a b) ∧
+      Commute (U K a b) (f K a b)) ∧
+    ∀ c : Coordinates a b,
+    h K a b (delta K (encode c).1.1) = (integerWeight c : K) • delta K (encode c).1.1 ∧
+    e K a b (delta K (encode c).1.1) =
+      (∑ j : Fin (c.m - 1), if c.u (⟨j.val, by omega⟩ : Fin c.m) = false ∧
+        c.u (⟨j.val + 1, by omega⟩ : Fin c.m) = true then
+        (((j.val + 1 : ℕ) : K) * ((c.m : K) - ((j.val + 1 : ℕ) : K))) •
+          delta K (encode (leftMove c j)).1.1 else 0) +
+      (∑ j : Fin (c.n - 1), if c.v (⟨j.val, by omega⟩ : Fin c.n) = false ∧
+        c.v (⟨j.val + 1, by omega⟩ : Fin c.n) = true then
+        (((j.val + 1 : ℕ) : K) * ((c.n : K) - ((j.val + 1 : ℕ) : K))) •
+          delta K (encode (rightMove c j)).1.1 else 0) ∧
+    f K a b (delta K (encode c).1.1) =
+      (∑ j : Fin (c.m - 1), if c.u (⟨j.val, by omega⟩ : Fin c.m) = true ∧
+        c.u (⟨j.val + 1, by omega⟩ : Fin c.m) = false then
+        delta K (encode (leftMove c j)).1.1 else 0) +
+      (∑ j : Fin (c.n - 1), if c.v (⟨j.val, by omega⟩ : Fin c.n) = true ∧
+        c.v (⟨j.val + 1, by omega⟩ : Fin c.n) = false then
+        delta K (encode (rightMove c j)).1.1 else 0) := by
+  refine ⟨marked_relations K a b, marked_symmetries K a b, literal_relations K a b,
+    f_eq_F3 K a b, literal_translation K a b, ?_⟩
+  intro c
+  simpa only [raises, lowers, raisingCoefficient, Rat.cast_mul, Rat.cast_sub, Rat.cast_natCast,
+    leftSite, rightSite] using basis_actions K a b c
+
+#print axioms literal_action
 
 end D5.S3.Quantum.SpinChains.TwoWallSl2
