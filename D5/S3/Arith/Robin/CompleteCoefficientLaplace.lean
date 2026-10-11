@@ -88,8 +88,10 @@ private lemma numerator_complex_integrable {L : ℝ} (hL : 0 < L) :
 
 private lemma numerator_integrable {L : ℝ} (hL : 0 < L) :
     IntegrableOn (numerator L) (Ioi 0) := by
-  simpa only [RCLike.re_to_complex, Complex.ofReal_re] using
-    (numerator_complex_integrable hL).re
+  change Integrable (numerator L) (volume.restrict (Ioi (0 : ℝ)))
+  have h := (numerator_complex_integrable hL).re
+  change Integrable (fun t : ℝ => numerator L t) (volume.restrict (Ioi (0 : ℝ))) at h
+  exact h
 
 private lemma numerator_complex_integral {L : ℝ} (hL : 0 < L) :
     (∫ t in Ioi (0 : ℝ), (numerator L t : ℂ)) = (logWeight L : ℂ) := by
@@ -366,7 +368,7 @@ run_cmd do
   let env ← Lean.getEnv
   let some info := env.find?
       `D5.S3.Arith.Robin.CompleteCoefficientLaplace.complete_coefficient_laplace
-    | throwError "Complete coefficient declaration was not elaborated"
+    | Lean.throwError "Complete coefficient declaration was not elaborated"
   let mut pending : Array (Array String × Lean.Expr) := #[(#[], info.type)]
   while !pending.isEmpty do
     let (path, e) := pending.back!

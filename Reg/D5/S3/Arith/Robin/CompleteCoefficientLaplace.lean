@@ -116,7 +116,17 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.CompleteCoefficientLaplace
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[]
