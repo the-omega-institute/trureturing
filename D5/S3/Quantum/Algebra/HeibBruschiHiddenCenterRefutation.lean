@@ -144,12 +144,6 @@ private def hiddenModuleEquiv : (Fin 4 → K) ≃ₗ[K] HiddenCenter K where
   map_add' := by intro x y; rfl
   map_smul' := by intro t x; rfl
 
-private theorem hiddenModuleEquiv_apply (x : Fin 4 → K) :
-    hiddenModuleEquiv (K := K) x = x := rfl
-
-private theorem hiddenModuleEquiv_coord (x : Fin 4 → K) (i : Fin 4) :
-    hiddenModuleEquiv (K := K) x i = x i := rfl
-
 private def hiddenBasis : Basis (Fin 4) K (HiddenCenter K) :=
   Module.Basis.ofEquivFun (hiddenModuleEquiv (K := K)).symm
 
