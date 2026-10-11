@@ -6,7 +6,7 @@
    utility: none
    digest: Four adjacent score cells share one moving logistic calibration. -/
 
-import D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+import D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 
 open scoped BigOperators Topology
 open Finset Filter
@@ -584,6 +584,44 @@ theorem native_group_zero_centers {M q s : ℕ} (r : ℝ)
         rw [← native_calibrated_row_parameter r e o hq hqm hr hr1 ha ha1 t ht i]
         simp only [score, (hc i hi).1, (hc i hi).2]
       _ = _ := by simp only [sum_const, nsmul_eq_mul]; rfl
+
+/-- The full group-zero size is a fixed background count plus the native
+rectangle A count on the same complete collapsed-history fiber. -/
+theorem native_group_zero_count_bridge {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) (k l : ℕ) (y : NativeSignalConditionalFiber.Fiber S e o) :
+    let All : Support M M := ⟨univ, by simp⟩
+    let G := nativeCalibrationCells All e y.val k l 0
+    let BG := nativeCalibrationCells All e o k l 0 \ S.val
+    G.card = BG.card + RectangleHypergeometricKernel.nativeRectangleACount S e o k l y := by
+  classical
+  let All : Support M M := ⟨univ, by simp⟩
+  let G := nativeCalibrationCells All e y.val k l 0
+  let BG := nativeCalibrationCells All e o k l 0 \ S.val
+  have hG (v : Obs M s e) (i : Fin M) :
+      i ∈ nativeCalibrationCells All e v k l 0 ↔
+        count e v i 1 = k ∧ count e v i (-1) = l := by
+    simp [nativeCalibrationCells, native_row_cell_iff, All]
+  have hbg : G \ S.val = BG := by
+    ext i
+    change i ∈ nativeCalibrationCells All e y.val k l 0 \ S.val ↔
+      i ∈ nativeCalibrationCells All e o k l 0 \ S.val
+    simp only [Finset.mem_sdiff, hG]
+    by_cases hi : i ∈ S.val
+    · simp only [hi, not_true_eq_false, and_false]
+    · rw [NativeSignalConditionalFiber.native_background_row_counts S e o y i hi 1,
+        NativeSignalConditionalFiber.native_background_row_counts S e o y i hi (-1)]
+  have hsig : (G.subtype (fun i => i ∈ S.val)).card =
+      RectangleHypergeometricKernel.nativeRectangleACount S e o k l y := by
+    congr 1
+    ext i
+    simp only [mem_subtype, G, hG, RectangleHypergeometricKernel.nativeRectangleACount,
+      mem_filter, mem_univ, true_and]
+  have hc := card_sdiff_add_card_inter G S.val
+  rw [hbg] at hc
+  have hs := card_subtype (fun i => i ∈ S.val) G
+  simp only [filter_mem_eq_inter] at hs
+  rw [hs] at hsig
+  exact hc.symm.trans (congrArg (fun n => BG.card + n) hsig)
 
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
