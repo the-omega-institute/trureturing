@@ -8,20 +8,23 @@
 
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 import D5.S3.Arith.Lattices.Klartag.State.PaddingMap
+import D5.S3.Quantum.Foundation.FiniteStateChannel
 noncomputable section
 open D5.S3.Quantum.FiniteDimensional
+open D5.S3.Quantum.Foundation
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
-open scoped ComplexOrder
+open scoped ComplexOrder MatrixOrder CStarAlgebra
 namespace D5.S3.Quantum.Measurement.QubitIncompatibilityRigidity
-abbrev Density := {ρ : QubitMatrix // ρ.PosSemidef ∧ Matrix.trace ρ = 1}
 def effect (v : EuclideanSpace ℝ (Fin 3)) (s : Fin 2) : QubitMatrix :=
   (1 / 2 : ℂ) • ((1 : QubitMatrix) + (if s = 0 then (1 : ℂ) else -1) •
     D5.S3.Quantum.Measurement.FourQubitParentConstruction.B v)
 def marginal (G : Fin 2 × Fin 2 → QubitMatrix) (i s : Fin 2) : QubitMatrix :=
   if i = 0 then ∑ t : Fin 2, G (s, t) else ∑ t : Fin 2, G (t, s)
-def SCompatible (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop :=
+def SCompatible (S : Set (FiniteStateChannel.DensityState (Fin 2)))
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop :=
   ∃ G : Fin 2 × Fin 2 → QubitMatrix, IsPOVM G ∧ ∀ ρ ∈ S, ∀ i s : Fin 2,
-    bornProbability ρ.1 (marginal G i s) = bornProbability ρ.1 (effect (a i) s)
+    bornProbability (CStarMatrix.ofMatrix.symm ρ.1) (marginal G i s) =
+      bornProbability (CStarMatrix.ofMatrix.symm ρ.1) (effect (a i) s)
 def Incompatible (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop := ¬ SCompatible Set.univ a
 def SignedPermutation (a b : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop :=
   ∃ (π : Equiv.Perm (Fin 2)) (ε : Fin 2 → ℝ),
@@ -32,7 +35,7 @@ def claim : Prop :=
     (∀ i, ‖b i‖ ≤ 1) →
     Incompatible a →
     Incompatible b →
-    ((∀ S : Set Density, SCompatible S a ↔ SCompatible S b) ↔
+    ((∀ S : Set (FiniteStateChannel.DensityState (Fin 2)), SCompatible S a ↔ SCompatible S b) ↔
       SignedPermutation a b)
 
 
@@ -78,14 +81,18 @@ private lemma effect_B (v : EuclideanSpace ℝ (Fin 3)) (s : Fin 2) :
   rw [effect]
   fin_cases s <;> simp [B, D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB]
 
-private def state (r : EuclideanSpace ℝ (Fin 3)) (h : ‖r‖ ≤ 1) : Density :=
-  ⟨B 1 r, (B_psd 1 r).mpr h, B_trace 1 r⟩
+private def state (r : EuclideanSpace ℝ (Fin 3)) (h : ‖r‖ ≤ 1) :
+    FiniteStateChannel.DensityState (Fin 2) :=
+  ⟨CStarMatrix.ofMatrix (B 1 r),
+    map_nonneg CStarMatrix.ofMatrixStarAlgEquiv ((B_psd 1 r).mpr h).nonneg, B_trace 1 r⟩
 
 private lemma tomography (M N : QubitMatrix) (hM : M.IsHermitian)
     (hN : N.IsHermitian)
-    (h : ∀ ρ : Density, bornProbability ρ.1 M = bornProbability ρ.1 N) : M = N := by
+    (h : ∀ ρ : FiniteStateChannel.DensityState (Fin 2),
+      bornProbability (CStarMatrix.ofMatrix.symm ρ.1) M =
+        bornProbability (CStarMatrix.ofMatrix.symm ρ.1) N) : M = N := by
   have h0 := h (state 0 (by simp))
-  dsimp only [state] at h0
+  simp only [state, Equiv.symm_apply_apply] at h0
   rw [B_rep M hM, B_rep N hN, B_born, B_born] at h0
   have ht : (Matrix.trace M).re = (Matrix.trace N).re := by
     have hr := congrArg Complex.re h0
@@ -94,7 +101,7 @@ private lemma tomography (M N : QubitMatrix) (hM : M.IsHermitian)
   have hv : bloch M = bloch N := by
     ext i
     have he := h (state (EuclideanSpace.single i 1) (by simp))
-    dsimp only [state] at he
+    simp only [state, Equiv.symm_apply_apply] at he
     rw [B_rep M hM, B_rep N hN, B_born, B_born] at he
     have he' := congrArg Complex.re he
     simp [ht, PiLp.inner_apply] at he'
@@ -296,7 +303,8 @@ private lemma plane_separation (n u v : EuclideanSpace ℝ (Fin 3)) (hn : ‖n�
     conj_trivial, one_mul] at hi
   simpa [project, mul_comm] using hi
 
-private def central (n : EuclideanSpace ℝ (Fin 3)) : Set Density :=
+private def central (n : EuclideanSpace ℝ (Fin 3)) :
+    Set (FiniteStateChannel.DensityState (Fin 2)) :=
   {ρ | ∃ (r : EuclideanSpace ℝ (Fin 3)) (h : ‖r‖ ≤ 1), ⟪n, r⟫_ℝ = 0 ∧ ρ = state r h}
 
 private def quartic (a b n : EuclideanSpace ℝ (Fin 3)) : ℝ :=
@@ -318,7 +326,7 @@ private lemma central_criterion (n : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ =
     have he (i : Fin 2) (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) (hnr : ⟪n, r⟫_ℝ = 0) :
         (Matrix.trace (marginal G i 0)).re + ⟪r, u i⟫_ℝ = 1 + ⟪r, a i⟫_ℝ := by
       have hz := h (state r hr) ⟨r, hr, hnr, rfl⟩ i 0
-      dsimp only [state] at hz
+      simp only [state, Equiv.symm_apply_apply] at hz
       rw [B_rep _ (marginal_psd hG i 0).isHermitian, effect_B] at hz
       simp only [ite_true, one_smul] at hz
       rw [B_born, B_born] at hz
@@ -348,7 +356,7 @@ private lemma central_criterion (n : EuclideanSpace ℝ (Fin 3)) (hn : ‖n‖ =
     refine ⟨G, hG, fun ρ hρ i s => ?_⟩
     obtain ⟨r, hr, hnr, rfl⟩ := hρ
     rw [hm _ (Set.mem_univ _) i s]
-    dsimp only [state]
+    simp only [state, Equiv.symm_apply_apply]
     rw [effect_B, effect_B, B_born, B_born]
     fin_cases s <;>
       simp [project, inner_smul_right, inner_sub_right, real_inner_comm n r, hnr]
@@ -792,7 +800,8 @@ private lemma effect_neg (v : EuclideanSpace ℝ (Fin 3)) (s : Fin 2) :
     effect (-v) s = effect v (if s = 0 then 1 else 0) := by
   fin_cases s <;> simp [effect, neg_smul]
 private def flip (s : Fin 2) : Fin 2 := if s = 0 then 1 else 0
-private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
+private lemma compat_flip_first_mp (S : Set (FiniteStateChannel.DensityState (Fin 2)))
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a → SCompatible S (fun i => if i = 0 then -a i else a i) := by
   rintro ⟨G, hG, h⟩
   rw [IsPOVM] at hG
@@ -807,7 +816,8 @@ private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → EuclideanSpa
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 0
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 0
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 1
-private lemma compat_flip_first (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
+private lemma compat_flip_first (S : Set (FiniteStateChannel.DensityState (Fin 2)))
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a ↔ SCompatible S (fun i => if i = 0 then -a i else a i) := by
   constructor
   · exact compat_flip_first_mp S a
@@ -815,7 +825,8 @@ private lemma compat_flip_first (S : Set Density) (a : Fin 2 → EuclideanSpace 
     have h' := compat_flip_first_mp S (fun i => if i = 0 then -a i else a i) h
     convert h' using 1
     funext i; fin_cases i <;> simp
-private lemma compat_flip_second_mp (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
+private lemma compat_flip_second_mp (S : Set (FiniteStateChannel.DensityState (Fin 2)))
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a → SCompatible S (fun i => if i = 1 then -a i else a i) := by
   rintro ⟨G, hG, h⟩
   refine ⟨(fun q => G (q.1, flip q.2)), ?_, ?_⟩
@@ -828,7 +839,8 @@ private lemma compat_flip_second_mp (S : Set Density) (a : Fin 2 → EuclideanSp
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 1
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 1
     · simpa [marginal, flip, effect_neg] using h ρ hρ 1 0
-private lemma compat_flip_second (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
+private lemma compat_flip_second (S : Set (FiniteStateChannel.DensityState (Fin 2)))
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a ↔ SCompatible S (fun i => if i = 1 then -a i else a i) := by
   constructor
   · exact compat_flip_second_mp S a
@@ -836,7 +848,8 @@ private lemma compat_flip_second (S : Set Density) (a : Fin 2 → EuclideanSpace
     have h' := compat_flip_second_mp S (fun i => if i = 1 then -a i else a i) h
     convert h' using 1
     funext i; fin_cases i <;> simp
-private lemma compat_exchange_mp (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
+private lemma compat_exchange_mp (S : Set (FiniteStateChannel.DensityState (Fin 2)))
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a → SCompatible S (fun i => a (if i = 0 then 1 else 0)) := by
   rintro ⟨G, hG, h⟩
   refine ⟨(fun q => G (q.2, q.1)), ?_, ?_⟩
@@ -849,7 +862,8 @@ private lemma compat_exchange_mp (S : Set Density) (a : Fin 2 → EuclideanSpace
     · simpa [marginal] using h ρ hρ 1 1
     · simpa [marginal] using h ρ hρ 0 0
     · simpa [marginal] using h ρ hρ 0 1
-private lemma compat_exchange (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
+private lemma compat_exchange (S : Set (FiniteStateChannel.DensityState (Fin 2)))
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a ↔ SCompatible S (fun i => a (if i = 0 then 1 else 0)) := by
   constructor
   · exact compat_exchange_mp S a
@@ -857,7 +871,8 @@ private lemma compat_exchange (S : Set Density) (a : Fin 2 → EuclideanSpace �
     have h' := compat_exchange_mp S (fun i => a (if i = 0 then 1 else 0)) h
     convert h' using 1
     funext i; fin_cases i <;> simp
-private lemma compat_signs (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) (ε : Fin 2 → ℝ)
+private lemma compat_signs (S : Set (FiniteStateChannel.DensityState (Fin 2)))
+    (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) (ε : Fin 2 → ℝ)
     (hε : ∀ i, ε i = 1 ∨ ε i = -1) :
     SCompatible S a ↔ SCompatible S (fun i => ε i • a i) := by
   rcases hε 0 with h0 | h0 <;> rcases hε 1 with h1 | h1

@@ -13,11 +13,6 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Restricted-state compatibility determines incompatible unbiased qubit pairs.",
         H("Qubit Incompatibility Rigidity"), Blocks(
-            Node("Density", "Density matrices", "A density matrix is positive semidefinite and has complex trace one. The subtype projection val returns its matrix.",
-                DescribeRole.Definition, Equal(Typed(X("Density"), X("Type")),
-                    Seq(OpenBrace, Typed(X("rho"), X("QubitMatrix")), Sp, Bar, Sp,
-                        And(At(Qualified("Matrix", "PosSemidef"), X("rho")),
-                            Equal(At(Qualified("Matrix", "trace"), X("rho")), Typed(Num(1), Complexes()))), CloseBrace))),
             Node("effect", "Unbiased effects", "FourQubitParentConstruction.B expands a Bloch vector in the three Pauli matrices. Outcome zero uses that expansion and outcome one uses its negative. One half is a complex scalar.",
                 DescribeRole.Definition, All("v", BlochSpace(), All("s", Fin(2),
                     Equal(Call("effect", X("v"), X("s")),
@@ -32,14 +27,16 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
                         Call("ite", Equal(X("i"), Typed(Num(0), Fin(2))),
                             SumOver("t", Fin(2), At(X("G"), Pair(X("s"), X("t")))),
                             SumOver("t", Fin(2), At(X("G"), Pair(X("t"), X("s")))))))))),
-            Node("SCompatible", "Compatibility on a state set", "ConcealmentKernelNecessityRefutation.IsPOVM requires positive semidefinite effects summing to the identity. A joint POVM reproduces both observable distributions on every density matrix in the given state set. bornProbability is the complex trace of the matrix product.",
+            Node("SCompatible", "Compatibility on a state set", "ConcealmentKernelNecessityRefutation.IsPOVM requires positive semidefinite effects summing to the identity. States use FiniteStateChannel.DensityState on Fin 2, whose underlying matrices are positive semidefinite with trace one. A joint POVM reproduces both observable distributions on every state in the given set. CStarMatrix.ofMatrix.symm returns the underlying matrix, and bornProbability is the complex trace of the matrix product.",
                 DescribeRole.Definition, All("S", StateSets(), All("a", Vectors(),
                     Equivalence(Call("SCompatible", X("S"), X("a")), Ex("G", Parents(), And(
-                        At(Qualified("ConcealmentKernelNecessityRefutation", "IsPOVM"), X("G")), All("rho", X("Density"), Implication(
+                        At(Qualified("ConcealmentKernelNecessityRefutation", "IsPOVM"), X("G")), All("rho", At(Qualified("FiniteStateChannel", "DensityState"), Fin(2)), Implication(
                             Member(X("rho"), X("S")), All("i", Fin(2), All("s", Fin(2),
-                                Equal(Call("bornProbability", Call("val", X("rho")),
+                                Equal(Call("bornProbability", At(At(Qualified("Equiv", "symm"), Qualified("CStarMatrix", "ofMatrix")),
+                                        Call("val", X("rho"))),
                                     Call("marginal", X("G"), X("i"), X("s"))),
-                                    Call("bornProbability", Call("val", X("rho")),
+                                    Call("bornProbability", At(At(Qualified("Equiv", "symm"), Qualified("CStarMatrix", "ofMatrix")),
+                                        Call("val", X("rho"))),
                                         Call("effect", At(X("a"), X("i")), X("s")))))))))))))),
             Node("Incompatible", "Incompatibility", "No joint POVM reproduces both observables on the set of all density matrices.",
                 DescribeRole.Definition, All("a", Vectors(), Equivalence(Call("Incompatible", X("a")),
@@ -86,7 +83,7 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
     private static Formula Parents() => Arrow(Parenthesized(Outcomes()), X("QubitMatrix"));
     private static Formula BlochSpace() => Call("EuclideanSpace", Reals(), Fin(3));
     private static Formula Vectors() => Arrow(Fin(2), BlochSpace());
-    private static Formula StateSets() => Call("Set", X("Density"));
+    private static Formula StateSets() => Call("Set", At(Qualified("FiniteStateChannel", "DensityState"), Fin(2)));
     private static Formula At(Formula fn, params Formula[] args) => new Formula.Apply(fn, [.. args]);
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula All(string v, Formula domain, Formula body) =>
