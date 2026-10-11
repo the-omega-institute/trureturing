@@ -14,7 +14,7 @@ universe u
 namespace descent
 
 abbrev signature : Signature where
-  Params := ℕ × ℕ
+  Params := (_ : ℕ) × ℕ
   State p := MarkedWord p.1 p.2
   Role := Unit
   finiteRole := inferInstance
@@ -96,7 +96,7 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 
     definition := none
     coordinates := #[2,3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "fn", "arg", "body", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "arg", "fn", "arg", "body", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none
@@ -112,7 +112,7 @@ end descent
 namespace coordinates
 
 abbrev signature : Signature where
-  Params := ℕ × ℕ
+  Params := (_ : ℕ) × ℕ
   State p := Coordinates p.1 p.2
   Role := Unit
   finiteRole := inferInstance
@@ -199,7 +199,7 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 
     coordinates := #[0,1]
     readouts := #[{
       path := #["body", "body", "arg", "arg", "arg", "arg", "arg", "arg",
-        "fn", "arg", "body", "arg", "fn", "arg"]
+        "fn", "arg", "body", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
