@@ -232,4 +232,230 @@ theorem F3_weight_control (a b : ℕ) :
 
 #print axioms F3_weight_control
 
+private theorem weight_cons {m : ℕ} (u : Fin m → Bool) (d : Bool) :
+    HypereclecticNonShortening.weight (Fin.cons d u) =
+      HypereclecticNonShortening.weight u + (if d then (m : ℚ) else 0) - ones u := by
+  open HypereclecticNonShortening in
+    rw [weight, Fin.sum_univ_succ]
+  simp only [Fin.cons_zero, Fin.cons_succ, Fin.val_zero, Fin.val_succ]
+  have hs : (∑ i : Fin m, if u i then ((m + 1 : ℕ) : ℚ) - 1 -
+      2 * ((i.val + 1 : ℕ) : ℚ) else 0) =
+      HypereclecticNonShortening.weight u - ones u := by
+    rw [HypereclecticNonShortening.weight, ones, Nat.cast_sum, ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro i _
+    cases u i with
+    | false => simp
+    | true => simp; ring
+  rw [hs]
+  cases d with
+  | false => simp
+  | true => simp; ring
+
+private theorem weight_snoc {m : ℕ} (u : Fin m → Bool) (d : Bool) :
+    HypereclecticNonShortening.weight (Fin.snoc u d) =
+      HypereclecticNonShortening.weight u + ones u - (if d then (m : ℚ) else 0) := by
+  rw [HypereclecticNonShortening.weight, Fin.sum_univ_castSucc]
+  simp only [Fin.snoc_castSucc, Fin.snoc_last, Fin.val_castSucc, Fin.val_last]
+  have hs : (∑ i : Fin m, if u i then ((m + 1 : ℕ) : ℚ) - 1 -
+      2 * (i.val : ℚ) else 0) =
+      HypereclecticNonShortening.weight u + ones u := by
+    rw [HypereclecticNonShortening.weight, ones, Nat.cast_sum, ← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro i _
+    cases u i with
+    | false => simp
+    | true => simp; ring
+  rw [hs]
+  cases d with
+  | false => simp
+  | true => simp; ring
+
+private def chi {m : ℕ} (u : Fin m → Bool) : ℤ :=
+  2 * (level u : ℤ) - (ones u : ℤ) * ((m : ℤ) - ones u)
+
+private theorem chi_cast {m : ℕ} (u : Fin m → Bool) :
+    (chi u : ℚ) = HypereclecticNonShortening.weight u := by
+  rw [HypereclecticNonShortening.weight_eq_level]
+  simp only [chi, Int.cast_sub, Int.cast_mul, Int.cast_ofNat, Int.cast_natCast]
+
+private theorem chi_boundaries {m : ℕ} (u : Fin m → Bool) :
+    chi (Fin.cons true u) = chi u + ((m : ℤ) - ones u) ∧
+    chi (Fin.snoc u true) = chi u - ((m : ℤ) - ones u) ∧
+    chi (Fin.cons false u) = chi u - ones u ∧
+    chi (Fin.snoc u false) = chi u + ones u := by
+  have hc (d : Bool) : chi (Fin.cons d u) =
+      chi u + (if d then (m : ℤ) else 0) - ones u := by
+    have hh := weight_cons u d
+    rw [← chi_cast, ← chi_cast] at hh
+    exact_mod_cast hh
+  have hs (d : Bool) : chi (Fin.snoc u d) =
+      chi u + ones u - (if d then (m : ℤ) else 0) := by
+    have hh := weight_snoc u d
+    rw [← chi_cast, ← chi_cast] at hh
+    exact_mod_cast hh
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · have hh := hc true
+    simp only [if_true] at hh
+    linarith
+  · have hh := hs true
+    simp only [if_true] at hh
+    linarith
+  · simpa using hc false
+  · simpa using hs false
+
+private theorem ones_cons {m : ℕ} (u : Fin m → Bool) (d : Bool) :
+    ones (Fin.cons d u) = (if d then 1 else 0) + ones u := by
+  rw [ones, Fin.sum_univ_succ]
+  simp only [Fin.cons_zero, Fin.cons_succ]
+  rfl
+
+private theorem ones_snoc {m : ℕ} (u : Fin m → Bool) (d : Bool) :
+    ones (Fin.snoc u d) = ones u + (if d then 1 else 0) := by
+  rw [ones, Fin.sum_univ_castSucc]
+  simp only [Fin.snoc_castSucc, Fin.snoc_last]
+  rfl
+
+private def firstSource {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
+    (v : Fin n → Bool) (hl : m + 1 + n = a + b)
+    (hf : 1 + ones u + ones v = b) : Coordinates a b :=
+  ⟨p, m + 1, n, Fin.cons true u, v, hl, by simpa only [ones_cons, if_true] using hf⟩
+
+private def firstTarget {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
+    (v : Fin n → Bool) (hl : m + 1 + n = a + b)
+    (hf : 1 + ones u + ones v = b) : Coordinates a b :=
+  ⟨p + 1, m, n + 1, u, Fin.snoc v true, by omega,
+    by rw [ones_snoc]; simp only [if_true]; omega⟩
+
+private theorem first_weight {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
+    (v : Fin n → Bool) (hl : m + 1 + n = a + b)
+    (hf : 1 + ones u + ones v = b) :
+    integerWeight (firstTarget p u v hl hf) =
+      integerWeight (firstSource p u v hl hf) - a := by
+  change chi u + chi (Fin.snoc v true) = chi (Fin.cons true u) + chi v - a
+  rw [(chi_boundaries u).1, (chi_boundaries v).2.1]
+  have hli : (m : ℤ) + 1 + n = (a : ℤ) + b := by exact_mod_cast hl
+  have hfi : 1 + (ones u : ℤ) + ones v = (b : ℤ) := by exact_mod_cast hf
+  omega
+
+private theorem offset_injective {a b : ℕ} (p : Pos a b)
+    {i j : ℕ} (hi : i < a + b + 2) (hj : j < a + b + 2)
+    (he : p + (i : Pos a b) = p + (j : Pos a b)) : i = j := by
+  have hh := congrArg ZMod.val (add_left_cancel he)
+  simpa only [ZMod.val_natCast_of_lt hi, ZMod.val_natCast_of_lt hj] using hh
+
+private theorem first_encode {a b m n : ℕ} (p : Pos a b) (u : Fin m → Bool)
+    (v : Fin n → Bool) (hl : m + 1 + n = a + b)
+    (hf : 1 + ones u + ones v = b) :
+    (encode (firstTarget p u v hl hf)).1.1 =
+      swapWord p (encode (firstSource p u v hl hf)).1.1 := by
+  let c := firstSource p u v hl hf
+  let d := firstTarget p u v hl hf
+  have hc := (marked_coordinates a b).2.2.2.1 c
+  have hd := (marked_coordinates a b).2.2.2.1 d
+  dsimp only [c, d, firstSource, firstTarget] at hc hd
+  apply Subtype.ext
+  funext r
+  let i : ℕ := (r - p).val
+  have hi : i < a + b + 2 := ZMod.val_lt _
+  have hr : p + (i : Pos a b) = r := by
+    dsimp [i]
+    rw [ZMod.natCast_zmod_val]
+    abel
+  rw [← hr]
+  change (encode d).1.1.1 (p + (i : Pos a b)) =
+    (encode c).1.1.1 (Equiv.swap p (p + 1) (p + (i : Pos a b)))
+  by_cases h0 : i = 0
+  · rw [h0, Nat.cast_zero, add_zero, Equiv.swap_apply_left]
+    have ht := hd.2.2.2 (Fin.last n)
+    have hp : p + 1 + ((m + 2 + n : ℕ) : Pos a b) = p := by
+      rw [add_assoc, show (1 : Pos a b) = ((1 : ℕ) : Pos a b) from rfl,
+        ← Nat.cast_add, show 1 + (m + 2 + n) = a + b + 2 by omega,
+        ZMod.natCast_self, add_zero]
+    have hs := hc.2.2.1 (0 : Fin (m + 1))
+    simp only [Fin.val_last, Fin.snoc_last, if_true, hp] at ht
+    simp only [Fin.val_zero, zero_add, Nat.cast_one, Fin.cons_zero, if_true] at hs
+    exact ht.trans hs.symm
+  by_cases h1 : i = 1
+  · rw [h1, Nat.cast_one, Equiv.swap_apply_right]
+    exact hd.1.trans hc.1.symm
+  have hn0 : p + (i : Pos a b) ≠ p := by
+    intro he
+    apply h0
+    exact offset_injective p hi (by omega) (by simpa using he)
+  have hn1 : p + (i : Pos a b) ≠ p + 1 := by
+    intro he
+    apply h1
+    exact offset_injective p hi (by omega) (by simpa using he)
+  rw [Equiv.swap_apply_of_ne_of_ne hn0 hn1]
+  by_cases hm : i ≤ m + 1
+  · let j : Fin m := ⟨i - 2, by omega⟩
+    have ht := hd.2.2.1 j
+    have hs := hc.2.2.1 j.succ
+    have hp : p + 1 + ((j.val + 1 : ℕ) : Pos a b) = p + (i : Pos a b) := by
+      rw [add_assoc, show (1 : Pos a b) = ((1 : ℕ) : Pos a b) from rfl,
+        ← Nat.cast_add, show 1 + (j.val + 1) = i by dsimp [j]; omega]
+    have hq : j.succ.val + 1 = i := by change i - 2 + 1 + 1 = i; omega
+    rw [hp] at ht
+    rw [hq] at hs
+    simpa only [c, d, firstSource, firstTarget, Fin.cons_succ] using ht.trans hs.symm
+  by_cases he : i = m + 2
+  · rw [he]
+    have hp : p + 1 + ((m + 1 : ℕ) : Pos a b) = p + ((m + 2 : ℕ) : Pos a b) := by
+      rw [add_assoc, show (1 : Pos a b) = ((1 : ℕ) : Pos a b) from rfl,
+        ← Nat.cast_add, show 1 + (m + 1) = m + 2 by omega]
+    have ht := hd.2.1
+    have hs := hc.2.1
+    rw [hp] at ht
+    have hq : m + 1 + 1 = m + 2 := by omega
+    rw [hq] at hs
+    exact ht.trans hs.symm
+  · let j : Fin n := ⟨i - (m + 3), by omega⟩
+    have ht := hd.2.2.2 j.castSucc
+    have hs := hc.2.2.2 j
+    have hp : p + 1 + ((m + 2 + j.val : ℕ) : Pos a b) = p + (i : Pos a b) := by
+      rw [add_assoc, show (1 : Pos a b) = ((1 : ℕ) : Pos a b) from rfl,
+        ← Nat.cast_add, show 1 + (m + 2 + j.val) = i by dsimp [j]; omega]
+    have hq : m + 1 + 2 + j.val = i := by dsimp [j]; omega
+    simp only [Fin.val_castSucc, Fin.snoc_castSucc] at ht
+    rw [hp] at ht
+    rw [hq] at hs
+    exact ht.trans hs.symm
+
+private theorem F1_move {a b : ℕ} (w : Word a b) (p : Pos a b)
+    (hp : Allowed 0 w p) : wordWeight (swapWord p w) = wordWeight w - a := by
+  have hp0 : w.1 p = wall := hp.1
+  have hp1 : w.1 (p + 1) = two := hp.2
+  let x : MarkedWord a b := ⟨(w,p), hp0⟩
+  let c := decode x
+  have he : encode c = x := (marked_coordinates a b).2.1 x
+  have hw : (encode c).1.1 = w := congrArg (fun y : MarkedWord a b => y.1.1) he
+  have hc : c.p = p := congrArg (fun y : MarkedWord a b => y.1.2) he
+  have lay := (marked_coordinates a b).2.2.2.1 c
+  rcases c with ⟨q, m, n, u, v, hl, hf⟩
+  dsimp only at hc
+  subst q
+  cases m with
+  | zero =>
+    have hs := lay.2.1
+    simp only [Nat.zero_add, Nat.cast_one, hw] at hs
+    exact (by decide : wall ≠ two) (hs.symm.trans hp1) |>.elim
+  | succ m =>
+    have hs := lay.2.2.1 (0 : Fin (m + 1))
+    simp only [Fin.val_zero, zero_add, Nat.cast_one, hw] at hs
+    have hu : u 0 = true := by
+      cases hh : u 0
+      · simp only [hh, Bool.false_eq_true, if_false] at hs
+        exact (by decide : one ≠ two) (hs.symm.trans hp1) |>.elim
+      · rfl
+    have hu' : u = Fin.cons true (Fin.tail u) := by
+      rw [← hu, Fin.cons_self_tail]
+    have hf' : 1 + ones (Fin.tail u) + ones v = b := by
+      rw [hu', ones_cons] at hf
+      simpa only [if_true] using hf
+    have hw' : (encode (firstSource p (Fin.tail u) v hl hf')).1.1 = w := by
+      simpa only [firstSource, ← hu'] using hw
+    rw [← hw', ← first_encode p (Fin.tail u) v hl hf', weight_eq, weight_eq]
+    exact first_weight p (Fin.tail u) v hl hf'
+
 end D5.S3.Quantum.SpinChains.TwoWallWeights
