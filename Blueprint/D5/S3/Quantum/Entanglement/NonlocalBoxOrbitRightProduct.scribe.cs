@@ -63,14 +63,18 @@ internal sealed class NonlocalBoxOrbitRightProductDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Node("result", "The right product is maximal", Disp(Call("claim")),
                 "The whole-triangle bound implies Conjecture 15. The maximality statement of Theorem 13 extends to the full orbit without its distillation assumption. Maximality alone does not say that the right product improves on P or that communication complexity collapses. Other wirings, boxes outside the triangle and an explicit formula for the exact maximum as a function of k remain separate questions.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("botteron-et-al-2024-nonlocal-box-orbit-right-product"),
+                    ResolutionKind.Proved)))));
 
     private static AssessedProvenance Literature => AssessedProvenance.FromLiterature(Source);
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("nonlocal-box-" + name.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + (name == "Paren.size" ? "size" : name)), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Op(string name)

@@ -180,6 +180,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/NonlocalBoxOrbitRightProduct.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/botteron-et-al-2024-nonlocal-box-orbit-right-product` (proved) by `D5/S3/Quantum/Entanglement/NonlocalBoxOrbitRightProduct.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"botteron-et-al-2024-nonlocal-box-orbit-right-product","declaration_gid":"D5/S3/Quantum/Entanglement/NonlocalBoxOrbitRightProduct.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. Botteron; A. Broadbent; R. Chhaibi; I. Nechita; C. Pellegrini (2024). *Algebra of Nonlocal Boxes and the Collapse of Communication Complexity*. URL: <https://arxiv.org/abs/2312.00725v3>.
