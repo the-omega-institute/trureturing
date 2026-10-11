@@ -45,7 +45,7 @@ def advance (M : Observer Z) (η : PMF Z) : List Operation → PMF Z
 
 def row (M : Observer Z) (h : List Operation) : PMF Z := advance M M.init h
 
-private theorem advance_append (M : Observer Z) (η : PMF Z) (h v : List Operation) :
+theorem advance_append (M : Observer Z) (η : PMF Z) (h v : List Operation) :
     advance M η (h ++ v) = advance M (advance M η h) v := by
   induction h generalizing η with
   | nil => rfl
