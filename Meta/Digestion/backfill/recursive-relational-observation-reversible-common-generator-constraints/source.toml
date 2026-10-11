@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-reversible-common-generator-constraints"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
