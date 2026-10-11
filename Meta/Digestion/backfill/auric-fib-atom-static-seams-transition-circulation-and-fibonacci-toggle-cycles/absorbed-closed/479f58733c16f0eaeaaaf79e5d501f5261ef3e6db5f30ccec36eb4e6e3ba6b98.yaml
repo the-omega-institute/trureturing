@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:479f58733c16f0eaeaaaf79e5d501f5261ef3e6db5f30ccec36eb4e6e3ba6b98
+  normalized_sha256: sha256:479f58733c16f0eaeaaaf79e5d501f5261ef3e6db5f30ccec36eb4e6e3ba6b98
+cas_ref: sha256:479f58733c16f0eaeaaaf79e5d501f5261ef3e6db5f30ccec36eb4e6e3ba6b98
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/LegalWords/SignedBoundary.native_boundary_image_short_exact
+    target_statement_id: sha256:d7854a2d6691b0f23b1de1b08faa221532c0ea515d2f5f3c157552f3427571f0
+receipts:
+  unresolved_subitems: []

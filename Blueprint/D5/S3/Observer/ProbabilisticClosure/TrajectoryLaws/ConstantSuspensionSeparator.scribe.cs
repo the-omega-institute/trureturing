@@ -42,7 +42,17 @@ internal sealed class ConstantSuspensionSeparatorDocument : IScribeDocumentDefin
                         Paragraph(Text("Apply the full endpoint bounds to E_p={pWord(0,1),pWord(1,1),pWord(2,1)}, E_beta, and E_p union {pWord(3,1)}. Exact endpoint masses yield the two midpoint errors and Qbar(pWord(3,1))<=1944/390625+2 epsilon_p. The last bound follows by subtracting the E_p lower bound from the larger event's upper bound. It does not replace the full-law hypothesis by a finite-probe hypothesis.")),
                         Paragraph(Text("Set c=1489/6750. The same-law estimates imply Cp-F(s)<=epsilon_p+5 epsilon_beta and G(s)-1944/390625<=2 epsilon_p+epsilon_beta/5, where Cp=11758471/22781250, F(s)=(1-c/s)(1+19s/15+271s^2/225)-(2/5)s(1-s)(1+19s/15), and G(s)=(4/15)(31s^3/15+29s^4/15-4cs^2). Both functions increase on the regular interval. At s=3679/10000 their respective strict gaps exceed 1/4000 and 1/16000. The two exhaustive sides of this cut imply the displayed strict lower bound."))),
                     DescribeRole.Theorem),
-                Paragraph(Text("This theorem concerns the stated regular finite table and its complete laws. It does not establish extraction of such a table from every original history, an isomorphism with the full record and event transcript, or the clipping comparison for arbitrary original emissions. Those bridges are required before an original-observer lower bound of 1/195200 can be asserted. The reduction also makes no resource-preservation claim.")))));
+                Paragraph(Text("This theorem concerns the stated regular finite table and its complete laws. It does not establish extraction of such a table from every original history, an isomorphism with the full record and event transcript, or the clipping comparison for arbitrary original emissions. Those bridges are required before an original-observer lower bound of 1/195200 can be asserted. The reduction also makes no resource-preservation claim.")),
+                Describe.Lean(DescribeId.Create("endpoint-probability"),
+                    DeclarationHandle.Create(Prefix + "endpoint_probability"),
+                    H("Normalization of every complete stopped-word law"),
+                    StatementSource.FromAuthor(Disp(All("phase", Call("ActivePhase"),
+                        All("r", Call("unitInterval"),
+                            Call("IsProbabilityMeasure", Call("explicitStoppedWordLaw",
+                                F.Id("phase"), F.Id("r"))))))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("This is the probability normalization of the existing actual fourth-segment pushforward for either active phase and every unit-interval parameter. The infinite return outcome remains in the carrier. The absolute-risk estimates consume this original supplier directly."))),
+                    DescribeRole.Theorem))));
     }
 
     private static Formula Seq(params Formula[] parts) => F.Seq(parts);

@@ -24,7 +24,7 @@ namespace D5.S3.Arith.Robin.LogarithmicMellinReserve
 private noncomputable def lowPrimitive (b y : ℝ) : ℝ :=
   y ^ b / b ^ 2 - Real.log y * y ^ b / b
 
-private noncomputable def highPrimitive (a y : ℝ) : ℝ :=
+noncomputable def highPrimitive (a y : ℝ) : ℝ :=
   -(Real.log y * y ^ (-a)) / a - y ^ (-a) / a ^ 2
 
 private lemma hasDerivAt_lowPrimitive {b y : ℝ} (hb : 0 < b) (hy : 0 < y) :
@@ -87,7 +87,7 @@ private lemma integral_low_log {b : ℝ} (hb : 0 < b) :
     lowPrimitive_zero hb]
   simp [lowPrimitive]
 
-private lemma hasDerivAt_highPrimitive {a y : ℝ} (ha : 0 < a) (hy : 0 < y) :
+lemma hasDerivAt_highPrimitive {a y : ℝ} (ha : 0 < a) (hy : 0 < y) :
     HasDerivAt (highPrimitive a) (Real.log y * y ^ (-a - 1)) y := by
   have hp := Real.hasDerivAt_rpow_const (p := -a) (Or.inl hy.ne')
   have hdp : HasDerivAt (highPrimitive a)
@@ -104,7 +104,7 @@ private lemma hasDerivAt_highPrimitive {a y : ℝ} (ha : 0 < a) (hy : 0 < y) :
   field_simp [ha.ne', hy.ne']
   <;> ring
 
-private lemma tendsto_highPrimitive {a : ℝ} (ha : 0 < a) :
+lemma tendsto_highPrimitive {a : ℝ} (ha : 0 < a) :
     Tendsto (highPrimitive a) atTop (nhds 0) := by
   have hlog : Tendsto (fun y : ℝ => Real.log y * y ^ (-a)) atTop (nhds 0) := by
     apply ((isLittleO_log_rpow_atTop ha).tendsto_div_nhds_zero).congr'
