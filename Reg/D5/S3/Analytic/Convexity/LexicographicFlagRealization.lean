@@ -60,14 +60,19 @@ private theorem core_rejected : ¬ coreArena.{u,v}.Law rejected := by
     simpa [rejected, realize, E, a, e₁] using hW k
   obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.mp hmem
   have heq := congrArg (fun x : E => x (ULift.up 1)) hc
-  simp [E, e₀, e₁, EuclideanSpace.single, PiLp.smul_apply, PiLp.single_apply] at heq
+  simp [E, e₀, e₁, EuclideanSpace.single, PiLp.smul_apply] at heq
 
 private theorem actual_dependence : ObservationalDependence signature.{u} actual := by
-  intro i
-  refine ⟨⟨ULift.{u} Bool, 2, ![ULift.up false, ULift.up true]⟩, 0, 1, ?_⟩
+  classical
+  intro _i
+  let E := EuclideanSpace ℝ (ULift.{u} (Fin 2))
+  let e₀ : E := EuclideanSpace.single (ULift.up 0) 1
+  let e₁ : E := EuclideanSpace.single (ULift.up 1) 1
+  refine ⟨⟨E, 2, ![e₀, e₁]⟩, 0, 1, ?_⟩
   intro h
-  have : (false : Bool) = true := congrArg ULift.down h
-  exact Bool.noConfusion this
+  change e₀ = e₁ at h
+  have heq := congrArg (fun x : E => x (ULift.up 0)) h
+  simp [E, e₀, e₁, EuclideanSpace.single] at heq
 
 def coreRegistration : Registration coreArena.{u,v} (coreArena.{u,v}.Law actual) where
   actual := actual
