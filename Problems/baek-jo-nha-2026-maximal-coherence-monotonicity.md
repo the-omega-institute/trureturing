@@ -32,7 +32,9 @@ The claim is falsified by the instance $d=2$, $e=4$, $n=4$, $\alpha=1$, $q_x=1/4
 
 ## Evidence
 
-The $t=1$ SIC instance and `result` are kernel-checked in Lean with axiom closure contained in `{propext, Classical.choice, Quot.sound}`. The stabilization statement $C_D^{\max}(\mathsf P\otimes I_d)=S_D(\mathsf P)$ and the characterization for jointly convex distances are paper arguments from the preregistration's Consequences. The uniform $A_i(t)$ bounds and full-rank statement have the prose proof below; they are not Lean declarations in this module.
+The SIC upper bound `sic_cmax_upper`, SIC ancilla lower bound `sic_ancilla_cmax_lower`, and refutation `result` are kernel-checked in Lean; the axiom closure of every public declaration is contained in `{propext, Classical.choice, Quot.sound}`. The general ancilla mechanism is proved in prose below. The stabilization statement $C_D^{\max}(\mathsf P\otimes I_d)=S_D(\mathsf P)$ and the characterization for jointly convex distances are paper arguments from the preregistration's Consequences. The uniform $A_i(t)$ bounds and full-rank statement have the prose proof below; they are not Lean declarations in this module.
+
+The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
 
 Computed evidence: [`check.py`](https://github.com/the-omega-institute/trureturing-experiments/tree/e79e3f95fef7b48c4474dbaf42991a0601a8dd05/docs/reports/baek-jo-nha-2026-maximal-coherence-ancilla-nonmonotone), run as `python3 check.py`, exit 0, SHA-256 `b0d07f99a84ffde3e5a0285f79184a2e0dfe8cf0dcf4ad2c8c151bc7d971d96c`, reports `bad= 0`. Its family calculations evaluate only $t=1$: POVM and Kraus checks, the sharpness value $1/2$, 20,000 random qubit unitaries (sampled maximum dephasing distance $0.408247$, bound $0.408248$), and 20,000 random Bell-diagonal POVMs (sampled minimum distance $0.610942$, with the trivial POVM attaining $1/2$). Separately, it samples stabilization on 200 random qubit POVMs, using 3,000 trivial competitors and 300 Bell-diagonal competitors per POVM, with tolerance $10^{-3}$. These finite samples do not compute the uniform $0<t\le1$ family.
 
@@ -40,16 +42,52 @@ Computed evidence: [`check.py`](https://github.com/the-omega-institute/trureturi
 
 | item | status | evidence |
 |---|---|---|
-| Tensoring an ancilla and choosing the Bell basis forces normalized partial traces of incoherent competitors to be scalar, so the ancilla coherence is at least sharpness; the SIC gap is removed. | proved | Kernel-checked `result`, with the SIC upper and Bell lower bounds on its proof path; the mechanism is explained by the Rayleigh argument. |
-| For every unitarily invariant, CP-unital-contractive distance, $C_D^{\max}(\mathsf P\otimes I_d)=S_D(\mathsf P)$. | proved in prose | Preregistration Consequences derivation; the lower bound uses the Bell-basis normalized partial trace and the upper bound is the standard sharpness comparison. |
-| For jointly convex such $D$, monotonicity under all fuzzifying operations iff $C_D^{\max}=S_D$ on every POVM. | proved in prose | Preregistration Consequences derivation: the forward direction uses monotonicity of sharpness and the reverse direction applies the stabilization map to a coherence–sharpness gap. |
-| For $A_i(t)=(I+t\,\vec n_i\cdot\vec\sigma)/4$, $0<t\le1$, $C_{D_\infty}^{\max}(A(t))\le\frac t2\sqrt{2/3}$. | proved in prose | Upper-bound derivation below, scaling route step 1 of #15378 by $t$. |
-| For $0<t\le1$, $C_{D_\infty}^{\max}(J(A(t)))\ge\frac t2$. | proved in prose | Lower-bound derivation below, using both Rayleigh signs and the eigenvalues $(1\pm t)/4$. |
-| For $0<t\le1$, the increase is at least $\frac t2(1-\sqrt{2/3})>0$; every effect is full rank for $0<t<1$. | proved in prose | Subtraction of the bounds and positive eigenvalues, as derived below. |
+| For a POVM on $\mathbb C^d$, tensoring $I_d$ and choosing a maximally entangled Bell basis forces every incoherent competitor to a trivial POVM under normalized partial trace; the coherence in that basis is at least sharpness. | proved | Proved in prose: the general ancilla derivation below, assuming unitary invariance and CP-unital contractivity of $D$. |
+| For every unitarily invariant, CP-unital-contractive distance, $C_D^{\max}(\mathsf P\otimes I_d)=S_D(\mathsf P)$. | proved | Proved in prose: stabilization derivation below, with unitary invariance and CP-unital contractivity. |
+| For jointly convex such $D$, monotonicity under all fuzzifying operations iff $C_D^{\max}=S_D$ on every POVM. | proved | Proved in prose: characterization derivation below; sharpness monotonicity gives sufficiency, and stabilization gives necessity. |
+| For $A_i(t)=(I+t\,\vec n_i\cdot\vec\sigma)/4$, $0<t\le1$, $C_{D_\infty}^{\max}(A(t))\le\frac t2\sqrt{2/3}$. | proved | Proved in prose: the family upper-bound and attainment derivation below. |
+| For $0<t\le1$, $C_{D_\infty}^{\max}(J(A(t)))\ge\frac t2$. | proved | Proved in prose: the family lower-bound derivation below, using both Rayleigh signs and eigenvalues $(1\pm t)/4$. |
+| For $0<t\le1$, the increase equals $\frac t2(1-\sqrt{2/3})>0$; every effect is full rank for $0<t<1$. | proved | Proved in prose: attainment of both bounds and positive eigenvalues, as derived below. |
 | The family instance $t=1$ refutes general CP-unital monotonicity. | proved | Kernel-checked `result : ¬ claim`, with `sic_cmax_upper` and `sic_ancilla_cmax_lower` on its proof path. |
 | Numerical checks of the family instance $t=1$. | computed | The pinned experiment entry above: `python3 check.py`, exit 0, SHA-256 `b0d07f99a84ffde3e5a0285f79184a2e0dfe8cf0dcf4ad2c8c151bc7d971d96c`, `bad= 0`, over exactly the stated finite samples. |
 | Whether $C_\diamond^{\max}(\mathsf M_{\rm SIC})<S_\diamond(\mathsf M_{\rm SIC})$. | open | No Lean declaration or computation in this delivery addresses the diamond distance. |
-| Whether monotonicity also fails for dimension-preserving fuzzifying operations. | open | No Lean declaration or computation in this delivery changes the output dimension. |
+| Whether monotonicity also fails for dimension-preserving fuzzifying operations. | open | Unresolved: the counterexample changes dimension from $2$ to $4$; no dimension-preserving counterexample is established here. |
+
+### General ancilla mechanism, stabilization and characterization: prose proof
+
+Let $\mathsf P=\{P_x\}$ be a POVM on $\mathbb C^d$, $d\ge1$, and let $D$ be unitarily invariant and contractive under CP-unital maps. Set $J_d(X)=X\otimes I_d$ and $R_d(Y)=\operatorname{Tr}_2(Y)/d$. For the embeddings $V_j\psi=\psi\otimes|j\rangle$, $J_d(X)=\sum_jV_jXV_j^\dagger$ with $\sum_jV_jV_j^\dagger=I_{d^2}$, and $R_d(Y)=d^{-1}\sum_jV_j^\dagger YV_j$ with $d^{-1}\sum_jV_j^\dagger V_j=I_d$. These Kraus forms make both maps CP unital, and $R_dJ_d=\mathrm{id}$. For $a,b\in\{0,\ldots,d-1\}$, choose the Bell vectors
+
+$$|\Phi_{ab}\rangle=\frac1{\sqrt d}\sum_{k=0}^{d-1}e^{2\pi iak/d}|k\rangle\otimes|k+b\pmod d\rangle.$$
+
+Their inner products are $\delta_{b,b'}d^{-1}\sum_k e^{2\pi i(a'-a)k/d}=\delta_{b,b'}\delta_{a,a'}$, where primes distinguish the second vector, so the $d^2$ vectors form an orthonormal basis. Taking the partial trace kills the terms with different second coordinates, giving $\operatorname{Tr}_2(|\Phi_{ab}\rangle\langle\Phi_{ab}|)=d^{-1}\sum_k|k\rangle\langle k|=I_d/d$. If $U_B$ has these columns and $\mathsf B$ is any incoherent POVM on $\mathbb C^{d^2}$, write $Y_x=U_BB_xU_B^\dagger$. Each $Y_x$ is a nonnegative combination of Bell projectors, so
+
+$$R_d(Y_x)=q_xI_d,\qquad q_x=\frac{\operatorname{Tr}(B_x)}{d^2}\ge0,\qquad \sum_xq_x=1.$$
+
+Unitary invariance and contractivity therefore give, for every such competitor,
+
+$$D(U_B^\dagger J_d(\mathsf P)U_B,\mathsf B)
+=D(J_d(\mathsf P),\mathsf Y)
+\ge D(\mathsf P,\{q_xI_d\})\ge S_D(\mathsf P).$$
+
+Taking the incoherent infimum proves the general mechanism: Bell-basis coherence is at least sharpness. This is a prose proof for general $d$, $\mathsf P$ and $D$. Lean's `R_bell_diag` checks the scalar partial-trace identity only on $\mathbb C^4$; `sic_bell_distance_lower` and `sic_ancilla_cmax_lower` check the spectral-distance lower bound only for the SIC instance.
+
+For stabilization, trivial POVMs are incoherent in every basis, so unitary invariance gives $C_D^{\max}(\mathsf Q)\le S_D(\mathsf Q)$. For each probability vector $q$, contractivity of $J_d$ and $R_d$ in opposite directions gives
+
+$$D(J_d(\mathsf P),\{q_xI_{d^2}\})=D(\mathsf P,\{q_xI_d\}).$$
+
+Taking infima gives $S_D(J_d(\mathsf P))=S_D(\mathsf P)$. Combined with the Bell lower bound, this proves in prose
+
+$$C_D^{\max}(\mathsf P\otimes I_d)=S_D(\mathsf P).$$
+
+For characterization, assume additionally that $D$ is jointly convex. A fuzzifying operation $F(\mathsf P)_x=\alpha\Phi(P_x)+(1-\alpha)q_xI$ takes a trivial competitor $T_x=p_xI$ to the trivial POVM $F(\mathsf T)_x=(\alpha p_x+(1-\alpha)q_x)I$. Joint convexity, contractivity and $D(\{q_xI\},\{q_xI\})=0$ imply
+
+$$D(F(\mathsf P),F(\mathsf T))\le\alpha D(\Phi(\mathsf P),\Phi(\mathsf T))\le D(\mathsf P,\mathsf T).$$
+
+Taking infima proves sharpness monotonicity. Hence $C_D^{\max}=S_D$ on every POVM is sufficient for monotonicity under all fuzzifying operations. Conversely, monotonicity applied to $J_d$ and stabilization gives
+
+$$S_D(\mathsf P)=C_D^{\max}(J_d(\mathsf P))\le C_D^{\max}(\mathsf P)\le S_D(\mathsf P),$$
+
+which proves necessity. This equivalence is proved in prose with the stated distance hypotheses.
 
 ### The $t$-family: prose proof
 
@@ -87,10 +125,15 @@ $$\|U_B^\dagger J(A_i(t))U_B-B_i\|_\infty
 
 The last inequality follows because the two eigenvalues differ by $t/2$, and their distances to any real $q_i$ sum to at least $t/2$. Summing over all four effects with the factor $1/2$ in $D_\infty$ gives $D_\infty(U_B^\dagger J(A(t))U_B,B)\ge\frac12\cdot4\cdot\frac t4=\frac t2$. Taking the infimum over $B$ and then including $U_B$ in the unitary supremum gives $C_{D_\infty}^{\max}(J(A(t)))\ge\frac t2$.
 
-**Increase.** Subtracting the upper bound from the lower bound gives
+**Attainment and increase.** For a qubit basis with reference axis $x$, all four tetrahedral effects have off-diagonal modulus $t\sqrt{2/3}/4$. Every diagonal competitor leaves this entry unchanged, and the spectral norm of its difference from the effect is at least that modulus. The dephased competitor attains it for every effect, so the coherence in this basis is $t\sqrt{2/3}/2$. This attains the uniform upper bound. For $J(A(t))$, the trivial competitor $I_4/4$ has effectwise distance $\|J(A_i(t))-I_4/4\|_\infty=t/4$, giving $C_{D_\infty}^{\max}(J(A(t)))\le t/2$ in every basis. This attains the Bell lower bound. Thus
+
+$$C_{D_\infty}^{\max}(A(t))=\frac t2\sqrt{\frac23},\qquad
+C_{D_\infty}^{\max}(J(A(t)))=\frac t2.$$
+
+Subtracting gives
 
 $$C_{D_\infty}^{\max}(J(A(t)))-C_{D_\infty}^{\max}(A(t))
-\ge\frac t2\left(1-\sqrt{\frac23}\right)>0,$$
+=\frac t2\left(1-\sqrt{\frac23}\right)>0,$$
 
 because $t>0$ and $\sqrt{2/3}<1$. The operation $J(X)=X\otimes I_2$ is the same CP-unital dual as at $t=1$, so every member of the family violates monotonicity, including the full-rank members with $t<1$.
 

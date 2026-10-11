@@ -23,6 +23,8 @@ Direct frozen dependencies (GID, declaration statement_id):
     sha256:d28d3fee83d154e42cf2331eba2ffeb942edeed66e1ff8e9221f10b0b991ddc4
   D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2
     sha256:ef4ae1e2fc1bec9bf605d06598d58ce332db9ba1a90facd16a497c70ae0336f7
+  D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_kronecker
+    sha256:a0838f79000777eac14a35e86139cd9f264a8cd9569370843c5210242ee58673
   D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight
     sha256:8fd00cbe799f3e8a3163a296b2ad235e0a251e3e79b744b52197ba12d0343f77
   D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X
@@ -53,12 +55,14 @@ All helper theorems are consumed bind-only adapters of pinned Mathlib facts and 
   diag_incoherent: proof_shape: bind-only; consumer(s): sic_cmax_upper; escape_witness: none.
   conjugate_povm: proof_shape: bind-only; consumer(s): sic_cmax_upper; escape_witness: none.
   quadratic_le_norm: proof_shape: bind-only; consumer(s): expect_le_norm; escape_witness: none.
+    owner: Mathlib ContinuousLinearMap.rayleighQuotient_le_norm; normalization: unit norm, real-inner symmetry, Matrix.l2_opNorm_toEuclideanCLM.
   J_kraus: proof_shape: bind-only; consumer(s): J_cp_unital; escape_witness: none.
   J_cp_unital: proof_shape: bind-only; consumer(s): result; escape_witness: none.
   s2_square: proof_shape: bind-only; consumer(s): bell_unitary, R_bell_diag; escape_witness: none.
   bell_table: proof_shape: bind-only; consumer(s): bell_unitary, R_bell_diag; escape_witness: none.
   bell_unitary: proof_shape: bind-only; consumer(s): bell_effect_norm_lower, sic_ancilla_cmax_lower; escape_witness: none.
   R_J: proof_shape: bind-only; consumer(s): bell_effect_norm_lower; escape_witness: none.
+    owner: PartialTraceMutualInformation.partialTraceRight_kronecker; normalization: coordinate reindexing, trace of I_2, scalar factor.
   R_bell_diag: proof_shape: bind-only; consumer(s): bell_effect_norm_lower; escape_witness: none.
   tensorKet_norm: proof_shape: bind-only; consumer(s): partial_trace_expect_le_norm; escape_witness: none.
   expect_le_norm: proof_shape: bind-only; consumer(s): partial_trace_expect_le_norm; escape_witness: none.
@@ -68,6 +72,7 @@ All helper theorems are consumed bind-only adapters of pinned Mathlib facts and 
   R_neg: proof_shape: bind-only; consumer(s): bell_effect_norm_lower; escape_witness: none.
   expect_neg: proof_shape: bind-only; consumer(s): bell_effect_norm_lower; escape_witness: none.
   dot_self_eq_norm_sq: proof_shape: bind-only; consumer(s): expect_eigen, expect_shift; escape_witness: none.
+    owner: Mathlib inner_self_eq_norm_sq_to_K; normalization: EuclideanSpace.inner_eq_star_dotProduct.
   expect_eigen: proof_shape: bind-only; consumer(s): bell_effect_norm_lower; escape_witness: none.
   expect_shift: proof_shape: bind-only; consumer(s): bell_effect_norm_lower; escape_witness: none.
   bell_effect_norm_lower: proof_shape: bind-only; consumer(s): sic_bell_distance_lower; escape_witness: none.
@@ -121,7 +126,7 @@ Per-declaration Direct frozen dependencies (identities are given in the registry
   bell_table: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix.
   bell_unitary: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix.
   R: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight.
-  R_J: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight.
+  R_J: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_kronecker.
   R_bell_diag: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix.
   expect: none.
   tensorKet: none.
@@ -135,7 +140,7 @@ Per-declaration Direct frozen dependencies (identities are given in the registry
   dot_self_eq_norm_sq: none.
   expect_eigen: none.
   expect_shift: none.
-  bell_effect_norm_lower: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix.
+  bell_effect_norm_lower: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_kronecker, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix.
   signs: none.
   M_SIC: D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix.
   s3_square: none.
@@ -156,9 +161,9 @@ Per-declaration Direct frozen dependencies (identities are given in the registry
   sic_offdiag_sum_le: D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix.
   sic_cmax_upper: D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix, D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM.
   upper_strict: none.
-  sic_bell_distance_lower: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix, D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM.
-  sic_ancilla_cmax_lower: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix, D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM.
-  result: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix, D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM.
+  sic_bell_distance_lower: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_kronecker, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix, D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM.
+  sic_ancilla_cmax_lower: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_kronecker, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix, D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM.
+  result: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.controlled, D5/S3/Quantum/EnvironmentRecords.JointQubitEnvironmentMatrix, D5/S3/Quantum/FiniteDimensional.qubitX, D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard, D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight, D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_kronecker, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z, D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix, D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM.
 -/
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
@@ -302,12 +307,12 @@ private lemma conjugate_povm {d n : Nat} (A : Fin n → (Matrix (Fin d) (Fin d) 
 private lemma quadratic_le_norm {d : Nat} (Y : (Matrix (Fin d) (Fin d) Complex))
     (v : EuclideanSpace Complex (Fin d)) (hv : ‖v‖ = 1) :
     (inner Complex v (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := Complex) Y v)).re ≤ ‖Y‖ := by
-  calc
-    _ ≤ ‖inner Complex v (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := Complex) Y v)‖ := Complex.re_le_norm _
-    _ ≤ ‖v‖ * ‖Matrix.toEuclideanCLM (n := Fin d) (𝕜 := Complex) Y v‖ := norm_inner_le_norm _ _
-    _ ≤ ‖v‖ * (‖Matrix.toEuclideanCLM (n := Fin d) (𝕜 := Complex) Y‖ * ‖v‖) :=
-      mul_le_mul_of_nonneg_left ((Matrix.toEuclideanCLM (n := Fin d) (𝕜 := Complex) Y).le_opNorm v) (norm_nonneg _)
-    _ = ‖Y‖ := by rw [hv, Matrix.l2_opNorm_toEuclideanCLM]; ring
+  have h := (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := Complex) Y).rayleighQuotient_le_norm v
+  have h' : |(inner Complex v (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := Complex) Y v)).re| ≤ ‖Y‖ := by
+    simpa [ContinuousLinearMap.rayleighQuotient,
+      ContinuousLinearMap.reApplyInnerSelf_apply, hv, inner_re_symm,
+      Matrix.l2_opNorm_toEuclideanCLM] using h
+  exact (le_abs_self _).trans h'
 
 -- Fin 4 is ordered as |00>, |01>, |10>, |11>.
 private def K (j : Fin 2) : Matrix (Fin 2) (Fin 4) Complex :=
@@ -375,10 +380,12 @@ private def R (Y : Matrix (Fin 4) (Fin 4) Complex) : Matrix (Fin 2) (Fin 2) Comp
     (Y.submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4) finProdFinEquiv)
 
 private lemma R_J (X : (Matrix (Fin 2) (Fin 2) Complex)) : R (J X) = X := by
-  ext a b
-  fin_cases a <;> fin_cases b <;>
-    simp [R, partialTraceRight, Matrix.submatrix, finProdFinEquiv, Fin.divNat, Fin.modNat, J, Matrix.reindex, Matrix.kronecker, Matrix.kroneckerMap, Matrix.one_apply, K, Matrix.mul_apply, Matrix.vecMul, dotProduct, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,
-      Fin.sum_univ_two, Fin.sum_univ_succ] <;> ring
+  unfold R J
+  simp only [Matrix.reindex_apply, Matrix.submatrix_submatrix,
+    Equiv.symm_comp_self, Matrix.submatrix_id_id]
+  rw [D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight_kronecker,
+    Matrix.trace_one, smul_smul]
+  norm_num
 
 private lemma R_bell_diag (B : (Matrix (Fin 4) (Fin 4) Complex)) (hB : B.IsDiag) :
     R (U_B * B * star U_B) = (B.trace/4) • (1 : (Matrix (Fin 2) (Fin 2) Complex)) := by
@@ -440,12 +447,9 @@ private lemma expect_neg {d : Nat} (Y : (Matrix (Fin d) (Fin d) Complex)) (psi :
 
 private lemma dot_self_eq_norm_sq {d : Nat} (psi : Fin d → Complex) :
     star psi ⬝ᵥ psi = (‖WithLp.toLp 2 psi‖ : Complex)^2 := by
-  rw [← Complex.ofReal_pow, EuclideanSpace.norm_sq_eq]
-  simp only [dotProduct, Pi.star_apply, Complex.ofReal_sum]
-  apply Finset.sum_congr rfl
-  intro i hi
-  rw [Complex.sq_norm, Complex.normSq_eq_conj_mul_self]
-  rfl
+  simpa only [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm] using!
+    (inner_self_eq_norm_sq_to_K (𝕜 := Complex)
+      (E := EuclideanSpace Complex (Fin d)) (WithLp.toLp 2 psi))
 
 private lemma expect_eigen {d : Nat} (A : (Matrix (Fin d) (Fin d) Complex)) (psi : Fin d → Complex) (lam : Real)
     (hpsi : ‖WithLp.toLp 2 psi‖ = 1) (he : A *ᵥ psi = (lam : Complex) • psi) :
