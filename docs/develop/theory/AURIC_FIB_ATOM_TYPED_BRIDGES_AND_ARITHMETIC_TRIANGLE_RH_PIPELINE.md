@@ -5053,3 +5053,1150 @@ FIB 到 \(H\) 的构造、FIB 缺陷到 Cayley 缺陷的守恒、以及谱行列
 \]
 
 “镜像、三维视角、联合隐藏关系、无限轨迹和 Fibonacci”因此可以放进同一个有限到无限的组合场框架。把它们继续连接到 RH，需要完成算术编码、正定谱度量和完成 \(L\)-函数的 trace/determinant bridge。
+
+
+---
+
+## 28. 有限量子载体与 CPTP 组合子
+
+本节把量子网络限定为有限维线性代数。所有量子对象均可编码为有限复矩阵，因此这一层原则上可以进入 Lean、Isabelle 或其他证明助手。这里不把“量子”解释为额外物理本体，只使用正半定性、迹、张量积和线性映射。
+
+### 定义 28.1（有限量子状态）
+
+令 \(H\) 为有限维复 Hilbert 空间，令 \(\mathsf L(H)\) 为其线性算子空间，令
+
+\[
+\mathsf D(H)
+=
+\{\rho\in\mathsf L(H):
+\rho=\rho^\ast,\ \rho\succeq0,\ \operatorname{tr}\rho=1\}.
+\]
+
+若 \(\rho\in\mathsf D(H)\)，称 \(\rho\) 为量子状态。若 \(\sigma\succeq0\) 且 \(\operatorname{tr}\sigma=1\)，则 \(\sigma\) 也是量子状态。纯状态是秩一投影 \( |\psi\rangle\langle\psi| \)。
+
+### 定义 28.2（量子信道）
+
+有限维量子信道是线性映射
+
+\[
+\mathcal E:\mathsf L(H_A)\longrightarrow\mathsf L(H_B)
+\]
+
+满足：
+
+1. 完全正性：对每个有限维 \(K\)，
+   \[
+   \mathcal E\otimes\operatorname{id}_K
+   \]
+   把正半定算子送到正半定算子；
+
+2. 保迹性：
+   \[
+   \operatorname{tr}\mathcal E(X)=\operatorname{tr}X.
+   \]
+
+记所有这样的映射为 \(\operatorname{CPTP}(H_A,H_B)\)。
+
+### 命题 28.3（Kraus 表示与 Choi 判据）
+
+有限维线性映射 \(\mathcal E\) 是 CPTP，当且仅当存在有限个算子 \(K_i:H_A\to H_B\)，使
+
+\[
+\mathcal E(X)=\sum_iK_iXK_i^\ast,
+\qquad
+\sum_iK_i^\ast K_i=I_{H_A}.
+\]
+
+等价地，其 Choi 矩阵
+
+\[
+J(\mathcal E)
+=
+\sum_{i,j}|i\rangle\langle j|
+\otimes
+\mathcal E(|i\rangle\langle j|)
+\]
+
+满足
+
+\[
+J(\mathcal E)\succeq0,
+\qquad
+\operatorname{tr}_{H_B}J(\mathcal E)=I_{H_A}.
+\]
+
+#### 证明
+
+Kraus 表示给出完全正性，因为
+
+\[
+(\mathcal E\otimes\operatorname{id}_K)(X)
+=
+\sum_i(K_i\otimes I_K)X(K_i^\ast\otimes I_K)
+\]
+
+保持正半定性。且
+
+\[
+\operatorname{tr}\mathcal E(X)
+=
+\operatorname{tr}
+\left(
+\sum_iK_i^\ast K_iX
+\right)
+=
+\operatorname{tr}X.
+\]
+
+反向方向是有限维 Choi 定理。完全正性等价于 \(J(\mathcal E)\succeq0\)，保迹性等价于部分迹条件。证毕。
+
+### 定理 28.4（CPTP 组合子结构）
+
+有限维 Hilbert 空间和 CPTP 映射构成一个带张量积的对称幺半范畴：
+
+\[
+\mathbf{QFin}.
+\]
+
+具体地：
+
+\[
+\operatorname{id}_H\in\operatorname{CPTP}(H,H),
+\]
+
+若 \(\mathcal E\in\operatorname{CPTP}(H_A,H_B)\) 且
+
+\[
+\mathcal F\in\operatorname{CPTP}(H_B,H_C),
+\]
+
+则
+
+\[
+\mathcal F\circ\mathcal E
+\in\operatorname{CPTP}(H_A,H_C).
+\]
+
+若 \(\mathcal E_1,\mathcal E_2\) 是 CPTP，则
+
+\[
+\mathcal E_1\otimes\mathcal E_2
+\]
+
+也是 CPTP。
+
+#### 证明
+
+恒等映射显然完全正且保迹。复合的完全正性由
+
+\[
+(\mathcal F\circ\mathcal E)\otimes\operatorname{id}
+=
+(\mathcal F\otimes\operatorname{id})
+\circ
+(\mathcal E\otimes\operatorname{id})
+\]
+
+得到，保迹性由迹的逐次保持得到。张量积的 Kraus 算子为
+
+\[
+K_i\otimes L_j,
+\]
+
+并且
+
+\[
+\sum_{i,j}
+(K_i\otimes L_j)^\ast(K_i\otimes L_j)
+=
+\left(\sum_iK_i^\ast K_i\right)
+\otimes
+\left(\sum_jL_j^\ast L_j\right)
+=
+I\otimes I.
+\]
+
+结合有限维张量积的结合律、单位对象 \(\mathbb C\) 和交换对称子，得到对称幺半范畴结构。证毕。
+
+### 定义 28.5（伴随映射）
+
+相对于 Hilbert--Schmidt 内积
+
+\[
+\langle X,Y\rangle_{\mathrm{HS}}
+=
+\operatorname{tr}(X^\ast Y),
+\]
+
+定义 \(\mathcal E^\ast\) 为满足
+
+\[
+\operatorname{tr}(Y^\ast\mathcal E(X))
+=
+\operatorname{tr}((\mathcal E^\ast(Y))^\ast X)
+\]
+
+的唯一线性映射。若 \(\mathcal E\) 保迹，则
+
+\[
+\mathcal E^\ast(I)=I.
+\]
+
+因此 CPTP 映射的伴随是首一完全正映射。量子网络中的“局部观察”应使用 \(\mathcal E^\ast\) 作用在观察量上，而不是把观察量和状态混为同一类型。
+
+### 定义 28.6（POVM 输出映射）
+
+有限输出集 \(A\) 上的 POVM 是一族正半定算子
+
+\[
+(M_a)_{a\in A},
+\qquad
+M_a\succeq0,
+\qquad
+\sum_{a\in A}M_a=I_H.
+\]
+
+它定义概率映射
+
+\[
+\operatorname{out}_M:\mathsf D(H)\to\Delta(A),
+\qquad
+\operatorname{out}_M(\rho)(a)
+=
+\operatorname{tr}(M_a\rho).
+\]
+
+非负性来自 \(M_a,\rho\succeq0\)，归一化来自 \(\sum_aM_a=I_H\)。
+
+---
+
+## 29. FIB 五态概率律作为量子系统的可验证经典扇区
+
+### 定义 29.1（对角嵌入）
+
+令
+
+\[
+H_\Sigma=\mathbb C^\Sigma
+\]
+
+具有标准基 \((|s\rangle)_{s\in\Sigma}\)。定义
+
+\[
+\iota_\Sigma:\Delta(\Sigma)\to\mathsf D(H_\Sigma),
+\qquad
+\iota_\Sigma(p)
+=
+\sum_{s\in\Sigma}p_s|s\rangle\langle s|.
+\]
+
+该映射把 FIB 概率律嵌入量子状态空间的对角子集。
+
+定义退相干映射
+
+\[
+\mathsf{Dec}_\Sigma(X)
+=
+\sum_{s\in\Sigma}
+\langle s|X|s\rangle
+|s\rangle\langle s|.
+\]
+
+它是 CPTP，并满足
+
+\[
+\mathsf{Dec}_\Sigma\circ\iota_\Sigma
+=
+\iota_\Sigma.
+\]
+
+### 定义 29.2（随机核的量子提升）
+
+令 \(W(a\mid s)\) 是从 \(\Sigma\) 到有限集合 \(A\) 的随机核。定义
+
+\[
+\mathcal E_W(X)
+=
+\sum_{a\in A}\sum_{s\in\Sigma}
+W(a\mid s)
+\langle s|X|s\rangle
+|a\rangle\langle a|.
+\]
+
+其 Kraus 算子为
+
+\[
+K_{a,s}
+=
+\sqrt{W(a\mid s)}\,|a\rangle\langle s|.
+\]
+
+### 定理 29.3（FIB 粗粒化的 CPTP 实现）
+
+\(\mathcal E_W\) 是 CPTP，且对所有 \(p\in\Delta(\Sigma)\) 有
+
+\[
+\mathcal E_W(\iota_\Sigma(p))
+=
+\iota_A(Wp),
+\]
+
+其中
+
+\[
+(Wp)_a
+=
+\sum_{s\in\Sigma}W(a\mid s)p_s.
+\]
+
+#### 证明
+
+由随机核归一化，
+
+\[
+\sum_{a,s}K_{a,s}^\ast K_{a,s}
+=
+\sum_s
+\left(\sum_aW(a\mid s)\right)
+|s\rangle\langle s|
+=
+I_{H_\Sigma}.
+\]
+
+所以 \(\mathcal E_W\) 是 CPTP。对角状态代入定义：
+
+\[
+\begin{aligned}
+\mathcal E_W(\iota_\Sigma(p))
+&=
+\sum_{a,s}
+W(a\mid s)p_s|a\rangle\langle a|\\
+&=
+\sum_a(Wp)_a|a\rangle\langle a|\\
+&=
+\iota_A(Wp).
+\end{aligned}
+\]
+
+证毕。
+
+### 推论 29.4（FIB seam 的量子表示）
+
+令
+
+\[
+D=\operatorname{diag}(d_s)_{s\in\Sigma},
+\qquad
+d=(1,-1,0,-1,1).
+\]
+
+则
+
+\[
+D=D^\ast,
+\qquad
+\operatorname{tr}D=0.
+\]
+
+若 \(p_\kappa-p_{\kappa'}=(\kappa-\kappa')d\)，则
+
+\[
+\iota_\Sigma(p_\kappa)
+-
+\iota_\Sigma(p_{\kappa'})
+=
+(\kappa-\kappa')D.
+\]
+
+所以 \(\kappa\) 隐藏方向在量子载体中成为一个对角、迹为零的 Hermitian 扰动。它仍然是有限线性代数对象，并不需要把 \(\kappa\) 解释为物理叠加振幅。
+
+### 命题 29.5（经典随机读出的 Fisher 收缩可由 CPTP 读出实现）
+
+令 \(p_\theta\) 是 FIB 概率族，令 \(W\) 为随机核。对角提升满足
+
+\[
+\mathcal E_W(\iota_\Sigma(p_\theta))
+=
+\iota_A(Wp_\theta).
+\]
+
+因此输出 Fisher 信息正是前文定理 5.2 的 \(\mathcal I_{\mathrm{out}}\)，并满足
+
+\[
+\mathcal I_{\mathrm{out}}\le\mathcal I_{\mathrm{in}}.
+\]
+
+证明只使用定理 29.3 和定理 5.2。这里的结论是测量后经典 Fisher 信息的收缩，不等同于尚未定义的量子 Fisher 信息。
+
+---
+
+## 30. 有限 triangle quantum network
+
+### 定义 30.1（三角量子源）
+
+取三个有限维边 Hilbert 空间
+
+\[
+H_{AB},\qquad H_{BC},\qquad H_{CA},
+\]
+
+以及三个边源状态
+
+\[
+\omega_{AB}\in\mathsf D(H_{AB}^{A}\otimes H_{AB}^{B}),
+\]
+
+\[
+\omega_{BC}\in\mathsf D(H_{BC}^{B}\otimes H_{BC}^{C}),
+\]
+
+\[
+\omega_{CA}\in\mathsf D(H_{CA}^{C}\otimes H_{CA}^{A}).
+\]
+
+三角网络的独立源状态定义为
+
+\[
+\Omega
+=
+\omega_{AB}\otimes\omega_{BC}\otimes\omega_{CA}.
+\]
+
+这里“独立”只表示张量积结构。若边源本身是纠缠态，\(\Omega\) 仍是量子网络状态，但它不必具有经典隐变量分解。
+
+### 定义 30.2（局部节点信道）
+
+设
+
+\[
+\mathcal A:
+\mathsf L(H_{CA}^{A}\otimes H_{AB}^{A})
+\to
+\mathsf L(K_A),
+\]
+
+\[
+\mathcal B:
+\mathsf L(H_{AB}^{B}\otimes H_{BC}^{B})
+\to
+\mathsf L(K_B),
+\]
+
+\[
+\mathcal C:
+\mathsf L(H_{BC}^{C}\otimes H_{CA}^{C})
+\to
+\mathsf L(K_C)
+\]
+
+均为 CPTP。网络输出状态为
+
+\[
+\rho_{ABC}
+=
+(\mathcal A\otimes\mathcal B\otimes\mathcal C)(\Omega),
+\]
+
+其中输入张量因子按各节点收到的两条边重新排列。
+
+给定 POVM
+
+\[
+(M_a^A)_a,\qquad
+(M_b^B)_b,\qquad
+(M_c^C)_c,
+\]
+
+定义输出分布
+
+\[
+P(a,b,c)
+=
+\operatorname{tr}
+\left[
+(M_a^A\otimes M_b^B\otimes M_c^C)\rho_{ABC}
+\right].
+\]
+
+### 定理 30.3（有限量子三角分布的归一化）
+
+上式定义合法概率分布：
+
+\[
+P(a,b,c)\ge0,
+\qquad
+\sum_{a,b,c}P(a,b,c)=1.
+\]
+
+#### 证明
+
+所有 POVM 元素和输出状态均正半定，所以每个概率非负。对所有输出求和：
+
+\[
+\sum_{a,b,c}P(a,b,c)
+=
+\operatorname{tr}
+\left[
+(I_{K_A}\otimes I_{K_B}\otimes I_{K_C})\rho_{ABC}
+\right]
+=
+\operatorname{tr}\rho_{ABC}
+=
+1.
+\]
+
+证毕。
+
+### 定理 30.4（经典 triangle-local 是量子网络的对角子类）
+
+假设每个边源都是共享经典寄存器的对角状态，例如
+
+\[
+\omega_{AB}
+=
+\sum_{\alpha}\mu_{AB}(\alpha)
+|\alpha\rangle\langle\alpha|_A
+\otimes
+|\alpha\rangle\langle\alpha|_B,
+\]
+
+其余两条边类似。假设节点信道在这些对角输入上先进行经典读取，再输出对角状态。则存在随机核
+
+\[
+A(a\mid\beta,\gamma),\quad
+B(b\mid\gamma,\alpha),\quad
+C(c\mid\alpha,\beta)
+\]
+
+使
+
+\[
+P(a,b,c)
+=
+\sum_{\alpha,\beta,\gamma}
+\mu_{AB}(\alpha)
+\mu_{BC}(\beta)
+\mu_{CA}(\gamma)
+A(a\mid\beta,\gamma)
+B(b\mid\gamma,\alpha)
+C(c\mid\alpha,\beta).
+\]
+
+#### 证明
+
+把三个对角源状态代入张量积，得到
+
+\[
+\Omega
+=
+\sum_{\alpha,\beta,\gamma}
+\mu_{AB}(\alpha)\mu_{BC}(\beta)\mu_{CA}(\gamma)
+|\alpha,\beta,\gamma\rangle\langle\alpha,\beta,\gamma|.
+\]
+
+对角节点信道在每个输入三元组上给出一个合法输出分布。节点独立作用使输出条件概率分解为三个局部核的乘积。对 \(\alpha,\beta,\gamma\) 求和即可得到公式。证毕。
+
+该定理只证明经典 triangle-local 分布嵌入量子网络的一个对角子类。一般纠缠源的量子三角分布不能由这一定理自动降为经典 triangle-local 分布。
+
+---
+
+## 31. 量子信道的 Dirichlet 单调性
+
+前文的图 Dirichlet 形式使用向量差。量子网络中对应的有限维对象是状态之间的 trace-norm 差。
+
+### 定义 31.1（量子图场）
+
+令 \(G=(V,E,w)\) 为有限无向图，\(w_e\ge0\)。在每个节点 \(v\) 放置
+
+\[
+\rho_v\in\mathsf D(H).
+\]
+
+定义量子图场的 trace-norm Dirichlet 能量：
+
+\[
+\mathcal Q_G^{(1)}(\rho)
+=
+\sum_{e=(u,v)\in E}
+w_e\|\rho_u-\rho_v\|_1^2.
+\]
+
+这是一个非负函数。它只测量节点状态之间的可区分性，不假设连续空间或物理距离。
+
+### 定理 31.2（CPTP 分量作用的 Dirichlet 收缩）
+
+设 \(\mathcal E:\mathsf L(H)\to\mathsf L(K)\) 为 CPTP。定义
+
+\[
+(\mathcal E_\ast\rho)_v=\mathcal E(\rho_v).
+\]
+
+则
+
+\[
+\boxed{
+\mathcal Q_G^{(1)}(\mathcal E_\ast\rho)
+\le
+\mathcal Q_G^{(1)}(\rho).
+}
+\]
+
+#### 证明
+
+对 Hermitian \(X\)，trace norm 的对偶表达为
+
+\[
+\|X\|_1
+=
+\sup_{\|A\|_\infty\le1}
+\operatorname{tr}(AX).
+\]
+
+由于 \(\mathcal E^\ast\) 是首一正映射，Kadison 不等式给出
+
+\[
+\|\mathcal E^\ast(A)\|_\infty
+\le
+\|A\|_\infty.
+\]
+
+因此
+
+\[
+\begin{aligned}
+\|\mathcal E(X)\|_1
+&=
+\sup_{\|A\|_\infty\le1}
+\operatorname{tr}(A\mathcal E(X))\\
+&=
+\sup_{\|A\|_\infty\le1}
+\operatorname{tr}(\mathcal E^\ast(A)X)\\
+&\le
+\|X\|_1.
+\end{aligned}
+\]
+
+每个 \(\rho_u-\rho_v\) 都是 Hermitian，故
+
+\[
+\|\mathcal E(\rho_u)-\mathcal E(\rho_v)\|_1
+\le
+\|\rho_u-\rho_v\|_1.
+\]
+
+平方并乘以 \(w_e\)，对所有边求和即得结论。证毕。
+
+### 推论 31.3（与 FIB Dirichlet 形式的相容）
+
+若所有 \(\rho_v\) 都是对角 FIB 状态
+
+\[
+\rho_v=\iota_\Sigma(p_v),
+\]
+
+则
+
+\[
+\|\rho_u-\rho_v\|_1
+=
+\|p_u-p_v\|_1.
+\]
+
+若 \(\mathcal E=\mathcal E_W\) 来自随机核 \(W\)，则
+
+\[
+\mathcal Q_G^{(1)}(Wp)
+\le
+\mathcal Q_G^{(1)}(p).
+\]
+
+因此，FIB 概率场的粗粒化是量子 CPTP Dirichlet 收缩定理在对角扇区的限制。
+
+### 定义 31.4（相对熵与量子信息收缩接口）
+
+对 \(\rho,\sigma\in\mathsf D(H)\)，在
+
+\[
+\operatorname{supp}\rho\subseteq\operatorname{supp}\sigma
+\]
+
+时定义
+
+\[
+D(\rho\|\sigma)
+=
+\operatorname{tr}
+\bigl[
+\rho(\log\rho-\log\sigma)
+\bigr],
+\]
+
+否则定义 \(D(\rho\|\sigma)=+\infty\)。
+
+### 定理 31.5（CPTP 相对熵数据处理）
+
+对任意 CPTP 映射 \(\mathcal E\)，有
+
+\[
+\boxed{
+D(\mathcal E(\rho)\|\mathcal E(\sigma))
+\le
+D(\rho\|\sigma).
+}
+\]
+
+这是有限维量子相对熵的数据处理定理。其形式化证明可以沿以下闭合路径展开：先用 Stinespring 表示将 \(\mathcal E\) 写成等距嵌入后偏迹，再证明偏迹下相对熵单调，最后使用等距共轭下相对熵不变。当前文件把它登记为外部有限维定理输入。若将其纳入 Lean，必须分别形式化矩阵对数、支撑条件、偏迹和 Klein 不等式。
+
+该定理的语义边界是明确的：它证明量子信道不能增加相对熵区分度，不直接给出引力、时空或物理热力学定律。
+
+---
+
+## 32. 量子网络的逆极限静态场
+
+### 定义 32.1（量子层载体）
+
+对每个层级 \(j\)，取有限维 Hilbert 空间 \(H_j\)，并取非空紧凸子集
+
+\[
+K_j\subseteq\mathsf D(H_j).
+\]
+
+令
+
+\[
+q_{j+1,j}:K_{j+1}\to K_j
+\]
+
+是由 CPTP 映射限制得到的连续仿射映射。
+
+### 定理 32.2（量子 CPTP 逆极限的非空性）
+
+若每个
+
+\[
+q_{j+1,j}:K_{j+1}\to K_j
+\]
+
+都是满射，则
+
+\[
+\mathfrak Q
+=
+\varprojlim_j(K_j,q_{j+1,j})
+\]
+
+是非空紧凸集。
+
+#### 证明
+
+有限维状态空间中的闭有界集合是紧的，连续仿射像保持紧性和凸性。所有 \(K_j\) 的乘积
+
+\[
+\prod_jK_j
+\]
+
+由 Tychonoff 定理紧。相容条件
+
+\[
+q_{j+1,j}(\rho_{j+1})=\rho_j
+\]
+
+是闭条件，因此逆极限是紧闭子集。对任意有限层截断，由逐次满射可构造相容有限链。于是这些有限约束集合具有有限交性质。紧性给出全体约束的交非空。坐标逐点凸组合保持相容性，因此逆极限凸。证毕。
+
+这个定理把原来的静态场逆极限扩展到量子载体。它只说明存在一族层间相容的密度矩阵。它不说明存在连续时空，也不说明逆极限具有光滑结构。
+
+### 推论 32.3（量子层与 FIB 层的并行载体）
+
+若
+
+\[
+C_j^Q
+=
+\Phi_j
+\times
+\Pi_j
+\times
+N_j
+\times
+Z_j
+\times
+K_j
+\]
+
+且每一层的 bonding map 在各分量上连续仿射并满射，则
+
+\[
+\varprojlim_jC_j^Q
+\]
+
+非空紧凸。前四个分量来自 Auric FIB 图场，\(K_j\) 是量子状态分量。这个乘积构造是一个类型化统一载体，不等同于物理统一场方程。
+
+---
+
+## 33. 连接、holonomy 与引力候选几何
+
+若希望把“引力”放入数学骨架，最小的无物理定义是把网络边解释为状态空间之间的可组合传输，并测量闭环传输偏离恒等的程度。
+
+### 定义 33.1（量子连接）
+
+令 \(G=(V,E)\) 为有限有向图。为每条边 \(e:u\to v\) 指定一个 CPTP 映射
+
+\[
+\mathcal E_e:\mathsf L(H_u)\to\mathsf L(H_v).
+\]
+
+若路径
+
+\[
+\gamma=e_n\cdots e_1
+\]
+
+首尾 Hilbert 空间相同，则定义路径传输
+
+\[
+\mathcal E_\gamma
+=
+\mathcal E_{e_n}\circ\cdots\circ\mathcal E_{e_1}.
+\]
+
+### 定义 33.2（holonomy 与曲率缺陷）
+
+对首尾同为 \(H\) 的闭环 \(\gamma\)，定义
+
+\[
+\mathcal H_\gamma=\mathcal E_\gamma,
+\qquad
+\Omega_\gamma=\mathcal H_\gamma-\operatorname{id}_{\mathsf L(H)}.
+\]
+
+称
+
+\[
+\Omega_\gamma=0
+\]
+
+为该闭环的平坦条件。对 Hermitian 输入使用诱导范数
+
+\[
+\|T\|_{1\to1,\mathrm{Herm}}
+=
+\sup_{X=X^\ast,\ X\ne0}
+\frac{\|T(X)\|_1}{\|X\|_1}.
+\]
+
+定义曲率缺陷大小为
+
+\[
+\|\Omega_\gamma\|_{1\to1,\mathrm{Herm}}.
+\]
+
+这是网络传输的代数不一致量。它是候选几何量，不能直接宣称为 Einstein 曲率。
+
+### 定理 33.3（holonomy 缺陷的望远镜界）
+
+若每条 \(\mathcal E_{e_k}\) 都是 CPTP，则
+
+\[
+\|\mathcal E_{e_k}\|_{1\to1,\mathrm{Herm}}\le1.
+\]
+
+于是
+
+\[
+\boxed{
+\|\Omega_\gamma\|_{1\to1,\mathrm{Herm}}
+\le
+\sum_{k=1}^n
+\|\mathcal E_{e_k}-\operatorname{id}\|_{1\to1,\mathrm{Herm}}.
+}
+\]
+
+#### 证明
+
+令
+
+\[
+E_k=\mathcal E_{e_k}.
+\]
+
+代数恒等式给出
+
+\[
+E_n\cdots E_1-I
+=
+\sum_{k=1}^{n}
+E_n\cdots E_{k+1}
+(E_k-I)
+E_{k-1}\cdots E_1.
+\]
+
+CPTP 映射在 Hermitian trace norm 下是收缩，因此每个前后乘积的诱导范数不超过一。对上式取范数并使用三角不等式，得到
+
+\[
+\|E_n\cdots E_1-I\|
+\le
+\sum_{k=1}^n\|E_k-I\|.
+\]
+
+证毕。
+
+该定理给出三角网络闭环的严格误差预算。如果每条边都接近恒等传输，则整个闭环的非平坦缺陷至多线性累积。
+
+### 定义 33.4（图电阻度量）
+
+给有限连通无向图 \(G=(V,E,w)\) 赋予正边权 \(w_e>0\)。令 \(B\) 为任意定向边界矩阵，\(W=\operatorname{diag}(w_e)\)，定义
+
+\[
+L_w=BWB^{\mathsf T}.
+\]
+
+对 \(u,v\in V\)，定义有效电阻
+
+\[
+R_w(u,v)
+=
+(e_u-e_v)^{\mathsf T}
+L_w^\dagger
+(e_u-e_v),
+\]
+
+其中 \(L_w^\dagger\) 是 Moore--Penrose 伪逆。
+
+### 定理 33.5（有效电阻是度量）
+
+\(R_w\) 满足：
+
+\[
+R_w(u,v)\ge0,
+\qquad
+R_w(u,v)=R_w(v,u),
+\qquad
+R_w(u,v)=0\Longleftrightarrow u=v,
+\]
+
+并且
+
+\[
+\sqrt{R_w(u,v)}
+\]
+
+满足三角不等式。因此 \(R_w\) 是有效电阻平方，\(\sqrt{R_w}\) 是由 Dirichlet 形式诱导的度量。
+
+#### 证明
+
+令
+
+\[
+T=L_w^{\dagger/2}.
+\]
+
+则
+
+\[
+R_w(u,v)
+=
+\|T(e_u-e_v)\|_2^2.
+\]
+
+对称性和非负性直接成立。图连通性说明 \(L_w\) 的核恰为常数向量，因此 \(T(e_u-e_v)=0\) 当且仅当 \(e_u=e_v\)，即 \(u=v\)。最后，\(\sqrt{R_w(u,v)}\) 是 Euclidean 空间中向量 \(T(e_u-e_v)\) 的距离，故满足三角不等式。证毕。
+
+### 推论 33.6（边收缩与几何收缩）
+
+若 \(w'_e\ge w_e\) 对所有边成立，则
+
+\[
+R_{w'}(u,v)\le R_w(u,v).
+\]
+
+#### 证明
+
+有效电阻具有 Thomson 变分表达：
+
+\[
+R_w(u,v)
+=
+\min_{Bf=e_u-e_v}
+\sum_{e\in E}\frac{f_e^2}{w_e}.
+\]
+
+增大 \(w_e\) 会逐项减小每个可行流的成本，故最小值不增。证毕。
+
+如果给出一个具体的信道到边权函数
+
+\[
+\eta:\operatorname{CPTP}\to(0,\infty),
+\qquad
+w_e=\eta(\mathcal E_e),
+\]
+
+则 \(R_w\) 成为量子连接的候选可见几何。当前理论没有唯一指定 \(\eta\)，所以“信道产生引力度量”仍是桥接接口，而不是已证明的物理结论。
+
+---
+
+## 34. Hamiltonian、静态场与量子能级接口
+
+### 定义 34.1（有限 Hamiltonian 通道）
+
+令 \(H=H^\ast\) 是有限维 Hermitian 矩阵，定义
+
+\[
+\mathcal U_t(X)
+=
+e^{-itH}Xe^{itH}.
+\]
+
+则 \(\mathcal U_t\) 是 CPTP，且
+
+\[
+\mathcal U_{t+s}
+=
+\mathcal U_t\circ\mathcal U_s.
+\]
+
+### 定理 34.2（静态状态与能量守恒）
+
+若 \(\rho_\ast\in\mathsf D(H)\) 满足
+
+\[
+[H,\rho_\ast]=0,
+\]
+
+则
+
+\[
+\mathcal U_t(\rho_\ast)=\rho_\ast
+\]
+
+对所有 \(t\) 成立。并且任意 \(\rho\in\mathsf D(H)\) 的能量期望
+
+\[
+E_H(\rho)=\operatorname{tr}(H\rho)
+\]
+
+满足
+
+\[
+E_H(\mathcal U_t(\rho))=E_H(\rho).
+\]
+
+#### 证明
+
+交换关系给出
+
+\[
+e^{-itH}\rho_\ast e^{itH}=\rho_\ast.
+\]
+
+能量守恒由循环迹：
+
+\[
+\begin{aligned}
+E_H(\mathcal U_t(\rho))
+&=
+\operatorname{tr}
+\left(
+He^{-itH}\rho e^{itH}
+\right)\\
+&=
+\operatorname{tr}
+\left(
+e^{itH}He^{-itH}\rho
+\right)\\
+&=
+\operatorname{tr}(H\rho).
+\end{aligned}
+\]
+
+证毕。
+
+### 定义 34.3（能级）
+
+\(H\) 的谱
+
+\[
+\operatorname{Spec}(H)
+=
+\{E_1,\ldots,E_d\}
+\]
+
+定义为该有限量子模型的能级集合，按代数重数计数。
+
+如果 \(H\) 由图 Dirichlet 矩阵、量子连接的对称化生成元或某个 FIB 扩张构造，那么这些 \(E_i\) 是该构造的谱值。将它们解释为物理能量，或者进一步解释为 RH 零点虚部，均需要额外的谱识别定理。
+
+当前可严格写出的条件式桥接是：
+
+\[
+\begin{aligned}
+&\text{若存在自伴 }H\text{，使其正则化谱行列式等于完成的 }\Xi\text{ 函数，}\\
+&\text{则 }\Xi\text{ 的非平凡零点由 }H\text{ 的实谱参数化。}
+\end{aligned}
+\]
+
+FIB、triangle network 和量子连接目前只提供构造候选 \(H\) 所需的有限输入类型，不自动给出该行列式恒等式。
+
+---
+
+## 35. 量子、FIB 与引力桥的保守账本
+
+### Primitive
+
+以下对象属于原始有限数学：
+
+\[
+\Sigma,\quad
+\Delta(\Sigma),\quad
+H,\quad
+\mathsf D(H),\quad
+\operatorname{CPTP},\quad
+\otimes,\quad
+\operatorname{tr},\quad
+\text{POVM},\quad
+G=(V,E,w),\quad
+B,\quad
+L_w.
+\]
+
+### Derived
+
+以下结论由原始对象直接推出：
+
+1. CPTP 映射的复合和张量积闭包；
+2. FIB 概率律的对角量子嵌入；
+3. 随机核的 measure--dephase--prepare CPTP 提升；
+4. 有限 triangle quantum network 输出分布的归一化；
+5. 经典 triangle-local 分布作为对角量子网络子类；
+6. CPTP 对 trace-norm Dirichlet 能量的收缩；
+7. 量子层载体在满射 bonding 下的逆极限非空性；
+8. holonomy 缺陷的望远镜界；
+9. 有效电阻的度量结构；
+10. 有限 Hamiltonian 通道的静态性和能量守恒。
+
+### Bridge
+
+以下对象目前仍需要具体构造：
+
+1. 从 FIB seam \(d\) 到非对角量子相干算子的自然提升；
+2. 从有限 quantum triangle network 到完整 triangle-local inflation 证书的映射；
+3. 从 CPTP 连接到唯一边权 \(\eta(\mathcal E_e)\)；
+4. 从有效电阻或 holonomy 缺陷到 Einstein 曲率、引力势或时空度量；
+5. 从 FIB/图 Dirichlet 生成元到自伴 Hamiltonian；
+6. 从该 Hamiltonian 的正则化谱行列式到完成的 \(\Xi\) 函数；
+7. 从量子能级到 RH 零点的重数保持和谱完备性。
+
+因此当前“量子引力”在 Auric FIB 管线中的严格含义只能是：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{量子层：有限维 CPTP 组合子和密度矩阵；}\\
+&\text{网络层：独立源张量积与局部节点信道；}\\
+&\text{场层：相容量子状态的逆极限；}\\
+&\text{几何层：Dirichlet 形式、holonomy 缺陷和有效电阻；}\\
+&\text{能级层：有限自伴算子的谱；}\\
+&\text{物理解释：必须由独立桥接定理承担。}
+\end{aligned}
+}
+\]
+
+这套骨架把“引力”和“量子”都降为可检查的数学接口。它不从物理直觉反向定义数学对象，而是先在有限矩阵、凸集、图边界和谱理论中建立可形式化的闭环。
+
