@@ -236,7 +236,7 @@ theorem native_conditional_site_law {M q s : ℕ} (S : Support M q)
   swap
   · intro A
     exact ⟨fun ⟨B, _, hB⟩ => ⟨B, hB⟩,
-      fun ⟨B, hB⟩ => ⟨B, MeasurableSpace.measurableSet_top B, hB⟩⟩
+      fun ⟨B, hB⟩ => ⟨B, MeasurableSpace.measurableSet_top, hB⟩⟩
   letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
   letI (k : Sites s e) :
       Fintype {x : Vertex M // collapseVertex S x = collapsedObs S e o k} :=
