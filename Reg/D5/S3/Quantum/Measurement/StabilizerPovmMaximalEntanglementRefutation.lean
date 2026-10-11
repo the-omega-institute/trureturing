@@ -17,7 +17,7 @@ namespace Reg.D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutat
 namespace LetterMul
 
 abbrev signature : Signature where
-  Params := Pauli
+  Params := Unit
   State _ := Pauli
   Role := Unit
   finiteRole := inferInstance
@@ -34,7 +34,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ p q : Pauli, R.readout () q p * pauliMatrix q =
+  Law R := ∀ p q : Pauli, R.readout () () p * pauliMatrix q =
     letterPhase p q • pauliMatrix (letterProduct p q)
 
 theorem rejected_law : ¬ arena.Law rejected := by
@@ -60,7 +60,7 @@ def family : Registration arena (type_of% @letter_mul) where
       exact nomatch i
   dependence := by
     intro i
-    refine ⟨Pauli.I, Pauli.I, Pauli.X, ?_⟩
+    refine ⟨(), Pauli.I, Pauli.X, ?_⟩
     intro h
     have entry := congrFun (congrFun h 0) 0
     simp [actual, realize, pauliMatrix, qubitX] at entry
@@ -88,7 +88,7 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
     definition := none
-    coordinates := #[1]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 0
