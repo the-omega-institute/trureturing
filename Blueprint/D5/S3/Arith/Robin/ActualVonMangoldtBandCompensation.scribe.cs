@@ -49,7 +49,7 @@ internal sealed class ActualVonMangoldtBandCompensationDocument : IScribeDocumen
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For R>A and R>=c*A the literal finite response "
+                        "Assume A>=exp(78), 99/100<=c<=101/100, R>A and R>=c*A. The literal finite response "
                         + "T_R=sum(n<=R,Lambda(n)*B_c(n))-integral(0,R,B_c) equals "
                         + "(q-bar_b_c(A))*D(A)+bar_b_c(R)*D(R) "
                         + "-integral(A,R,D(t)*bar_b_c'(t))+V-Pi, with D=psi-id.")),
