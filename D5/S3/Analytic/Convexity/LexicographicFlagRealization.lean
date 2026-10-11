@@ -10,6 +10,7 @@ import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 import Mathlib.Analysis.InnerProductSpace.Orthonormal
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Mathlib.Analysis.Normed.Module.Normalize
+import Mathlib.Algebra.Polynomial.Module.Basic
 import Mathlib.Tactic
 
 noncomputable section
@@ -79,7 +80,7 @@ private theorem row_lex_iff_eventually (x : V) {r : ℕ} (v : Fin r → V) :
       exact Fin.elim0 k
     · intro h
       obtain ⟨t, ht⟩ := h.exists
-      simpa [curve] using ht
+      simp [curve] at ht
   | succ r ih =>
     rw [row_lex_cons]
     have ht : ∀ᶠ t in 𝓝[>] (0 : ℝ), 0 < t := self_mem_nhdsWithin
@@ -127,6 +128,81 @@ private theorem lex_finite_feasible (a : I → V) {r : ℕ} (v : Fin r → V)
     (eventually_all_finset F).mpr fun i _ => (row_lex_iff_eventually (a i) v).mp (h i)
   obtain ⟨t, ht⟩ := he.exists
   exact ⟨curve v t, ht⟩
+
+/-- Actual degree of a vector polynomial; the zero polynomial has natural degree zero. -/
+def polynomialDegree (p : PolynomialModule ℝ V) : ℕ := p.coeff.support.sup id
+
+/-- A vector polynomial has zero constant term and is eventually positive constraintwise. -/
+def PolynomialFeasible (a : I → V) (p : PolynomialModule ℝ V) : Prop :=
+  p.coeff 0 = 0 ∧ ∀ i, ∃ ε : ℝ, 0 < ε ∧
+    ∀ t, 0 < t → t < ε → 0 < ⟪a i, PolynomialModule.eval t p⟫_ℝ
+
+private theorem polynomial_as_curve (p : PolynomialModule ℝ V) (hp : p.coeff 0 = 0)
+    (t : ℝ) : PolynomialModule.eval t p =
+      curve (fun k : Fin (polynomialDegree p) => p.coeff (k.val + 1)) t := by
+  classical
+  have hs : p.coeff.support ⊆ Finset.range (polynomialDegree p + 1) := by
+    intro k hk
+    exact Finset.mem_range.mpr (Nat.lt_succ_of_le (Finset.le_sup (f := id) hk))
+  rw [PolynomialModule.eval_apply,
+    Finsupp.sum_of_support_subset _ hs _ (fun _ _ => smul_zero _),
+    ← Fin.sum_univ_eq_sum_range, Fin.sum_univ_succ]
+  simp [curve, hp]
+
+private theorem polynomial_of_list {r : ℕ} (v : Fin r → V) :
+    ∃ p : PolynomialModule ℝ V, p.coeff 0 = 0 ∧ polynomialDegree p ≤ r ∧
+      ∀ t, PolynomialModule.eval t p = curve v t := by
+  classical
+  let p : PolynomialModule ℝ V := ∑ k, PolynomialModule.single ℝ (k.val + 1) (v k)
+  refine ⟨p, ?_, ?_, ?_⟩
+  · simp [p, Finsupp.finsetSum_apply]
+  · apply Finset.sup_le
+    intro n hn
+    by_contra hnr
+    change ¬ n ≤ r at hnr
+    have hz : p.coeff n = 0 := by
+      simp only [p, PolynomialModule.coeff_sum, PolynomialModule.coeff_single,
+        Finsupp.finsetSum_apply]
+      apply Finset.sum_eq_zero
+      intro k _
+      apply Finsupp.single_eq_of_ne
+      omega
+    exact (Finsupp.mem_support_iff.mp hn) hz
+  · intro t
+    simp [p, curve]
+
+private theorem least_length_degree (a : I → V)
+    (hex : ∃ (r : ℕ) (v : Fin r → V), LexWitness a v) :
+    ∃ d : ℕ,
+      IsLeast {r | ∃ v : Fin r → V, LexWitness a v} d ∧
+      IsLeast {q | ∃ p : PolynomialModule ℝ V,
+        polynomialDegree p = q ∧ PolynomialFeasible a p} d := by
+  classical
+  let d := Nat.find hex
+  obtain ⟨v, hv⟩ := Nat.find_spec hex
+  have hmin : ∀ r, (∃ w : Fin r → V, LexWitness a w) → d ≤ r :=
+    fun _ hw => Nat.find_min' hex hw
+  have hpolymin : ∀ p : PolynomialModule ℝ V, PolynomialFeasible a p →
+      d ≤ polynomialDegree p := by
+    intro p hp
+    apply hmin
+    refine ⟨fun k => p.coeff (k.val + 1), (lex_iff_eventually a _).mpr ?_⟩
+    intro i
+    obtain ⟨ε, hε, hi⟩ := hp.2 i
+    refine ⟨ε, hε, ?_⟩
+    intro t ht hte
+    rw [← polynomial_as_curve p hp.1]
+    exact hi t ht hte
+  obtain ⟨p, hpzero, hpdegree, hpeval⟩ := polynomial_of_list v
+  have hp : PolynomialFeasible a p := by
+    refine ⟨hpzero, ?_⟩
+    intro i
+    obtain ⟨ε, hε, hi⟩ := (lex_iff_eventually a v).mp hv i
+    exact ⟨ε, hε, fun t ht hte => by rw [hpeval]; exact hi t ht hte⟩
+  refine ⟨d, ⟨⟨v, hv⟩, fun r hr => hmin r hr⟩,
+    ⟨⟨p, le_antisymm hpdegree (hpolymin p hp), hp⟩, ?_⟩⟩
+  rintro q ⟨p, rfl, hp⟩
+  exact hpolymin p hp
 
 variable [FiniteDimensional ℝ V]
 
@@ -197,7 +273,7 @@ theorem orthonormal_realization (a : I → V) (h : FiniteFeasible a) :
         intro hu'
         have hz := Submodule.mem_orthogonal_singleton_iff_inner_right.mp (horth hu')
         have : u = 0 := inner_self_eq_zero.mp hz
-        simpa [this] using hu
+        simp [this] at hu
       have hrank : finrank ℝ W' < n := by
         rw [← hn]
         exact Submodule.finrank_lt_finrank_of_lt (lt_of_le_of_ne hle (by
@@ -229,7 +305,7 @@ theorem orthonormal_realization (a : I → V) (h : FiniteFeasible a) :
 
 /-- Finite feasibility, a lexicographic list, and a constraintwise feasible curve are equivalent.
 The list furnished from finite feasibility is orthonormal in the row span. -/
-theorem realization_equivalences (a : I → V) :
+private theorem realization_equivalences (a : I → V) :
     (FiniteFeasible a ↔ ∃ (r : ℕ) (v : Fin r → V), LexWitness a v) ∧
     ((∃ (r : ℕ) (v : Fin r → V), LexWitness a v) ↔
       ∃ (r : ℕ) (v : Fin r → V), EventuallyFeasible a v) ∧
@@ -238,8 +314,12 @@ theorem realization_equivalences (a : I → V) :
       finrank ℝ (Submodule.span ℝ (Set.range a)) ≤ finrank ℝ V ∧
       Orthonormal ℝ v ∧ (∀ k, v k ∈ Submodule.span ℝ (Set.range a)) ∧
       LexWitness a v ∧ EventuallyFeasible a v ∧
-      Tendsto (curve v) (𝓝 0) (𝓝 0) ∧ (Nonempty I → 1 ≤ r)) := by
-  refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_⟩
+      Tendsto (curve v) (𝓝 0) (𝓝 0) ∧ (Nonempty I → 1 ≤ r)) ∧
+    (FiniteFeasible a → ∃ d : ℕ,
+      IsLeast {r | ∃ v : Fin r → V, LexWitness a v} d ∧
+      IsLeast {q | ∃ p : PolynomialModule ℝ V,
+        polynomialDegree p = q ∧ PolynomialFeasible a p} d) := by
+  refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_, ?_⟩
   · intro h
     obtain ⟨r, v, _, _, _, hv⟩ := orthonormal_realization a h
     exact ⟨r, v, hv⟩
@@ -256,5 +336,59 @@ theorem realization_equivalences (a : I → V) :
     rintro ⟨i⟩
     obtain ⟨k, _, _⟩ := hlex i
     exact Nat.succ_le_of_lt (lt_of_le_of_lt (Nat.zero_le k.val) k.isLt)
+  · intro h
+    obtain ⟨r, v, _, _, _, hv⟩ := orthonormal_realization a h
+    exact least_length_degree a ⟨r, v, hv⟩
+
+/-- Arbitrary algebraic linear forms admit bounded orthonormal lexicographic realization.
+The minimum list length is the minimum actual vector-polynomial degree, and the empty family
+has the empty list and zero polynomial. All eventual neighborhoods are constraintwise. -/
+theorem linear_form_realization (ℓ : I → V →ₗ[ℝ] ℝ) :
+    let a := fun i => (InnerProductSpace.toDual ℝ V).symm (ℓ i).toContinuousLinearMap
+    (∀ i x, ⟪a i, x⟫_ℝ = ℓ i x) ∧
+    ((∀ F : Finset I, ∃ x : V, ∀ i ∈ F, 0 < ℓ i x) ↔
+      ∃ (r : ℕ) (v : Fin r → V),
+        ∀ i, ∃ k, 0 < ℓ i (v k) ∧ ∀ j < k, ℓ i (v j) = 0) ∧
+    ((∃ (r : ℕ) (v : Fin r → V),
+        ∀ i, ∃ k, 0 < ℓ i (v k) ∧ ∀ j < k, ℓ i (v j) = 0) ↔
+      ∃ (q : ℕ) (v : Fin q → V), ∀ i, ∃ ε : ℝ, 0 < ε ∧
+        ∀ t, 0 < t → t < ε → 0 < ℓ i (curve v t)) ∧
+    ((∀ F : Finset I, ∃ x : V, ∀ i ∈ F, 0 < ℓ i x) →
+      ∃ (r : ℕ) (v : Fin r → V),
+        r ≤ finrank ℝ (Submodule.span ℝ (Set.range a)) ∧
+        finrank ℝ (Submodule.span ℝ (Set.range a)) ≤ finrank ℝ V ∧
+        Orthonormal ℝ v ∧ (∀ k, v k ∈ Submodule.span ℝ (Set.range a)) ∧
+        (∀ i, ∃ k, 0 < ℓ i (v k) ∧ ∀ j < k, ℓ i (v j) = 0) ∧
+        (∀ i, ∃ ε : ℝ, 0 < ε ∧ ∀ t, 0 < t → t < ε → 0 < ℓ i (curve v t)) ∧
+        Tendsto (curve v) (𝓝 0) (𝓝 0) ∧ (Nonempty I → 1 ≤ r)) ∧
+    ((∀ F : Finset I, ∃ x : V, ∀ i ∈ F, 0 < ℓ i x) →
+      ∃ d : ℕ,
+        IsLeast {r | ∃ v : Fin r → V,
+          ∀ i, ∃ k, 0 < ℓ i (v k) ∧ ∀ j < k, ℓ i (v j) = 0} d ∧
+        IsLeast {q | ∃ p : PolynomialModule ℝ V, polynomialDegree p = q ∧
+          p.coeff 0 = 0 ∧ ∀ i, ∃ ε : ℝ, 0 < ε ∧
+            ∀ t, 0 < t → t < ε → 0 < ℓ i (PolynomialModule.eval t p)} d) ∧
+    (IsEmpty I → finrank ℝ (Submodule.span ℝ (Set.range a)) = 0 ∧
+      FiniteFeasible a ∧ LexWitness a (Fin.elim0 : Fin 0 → V) ∧
+      (∀ t, curve (Fin.elim0 : Fin 0 → V) t = 0) ∧
+      PolynomialFeasible a 0 ∧ polynomialDegree (0 : PolynomialModule ℝ V) = 0) := by
+  classical
+  let a := fun i => (InnerProductSpace.toDual ℝ V).symm (ℓ i).toContinuousLinearMap
+  have ha (i : I) (x : V) : ⟪a i, x⟫_ℝ = ℓ i x := by
+    exact InnerProductSpace.toDual_symm_apply
+  refine ⟨ha, ?_⟩
+  have h := realization_equivalences a
+  simp only [FiniteFeasible, LexWitness, EventuallyFeasible, PolynomialFeasible, ha] at h
+  refine ⟨h.1, h.2.1, h.2.2.1, h.2.2.2, ?_⟩
+  intro hI
+  refine ⟨by simp, ?_, ?_, ?_, ?_, ?_⟩
+  · intro F
+    exact ⟨0, fun i => isEmptyElim i⟩
+  · intro i
+    exact isEmptyElim i
+  · intro t
+    simp [curve]
+  · exact ⟨by simp, fun i => isEmptyElim i⟩
+  · simp [polynomialDegree]
 
 end D5.S3.Analytic.Convexity.LexicographicFlagRealization
