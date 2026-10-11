@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Subcritical geometric control of the actual weighted mixed prime histories. -/
+   digest: Positive single-pole asymptotics for actual weighted mixed prime histories. -/
 
 import D5.S3.Factorization.Combinatorics.MixedPrimeHistoryGenerating
 import Mathlib.Analysis.SpecificLimits.Normed
@@ -25,15 +25,12 @@ namespace D5.S3.Factorization.Combinatorics.MixedPrimeHistoryAsymptotics
 open D5.S3.Factorization.Combinatorics.MixedPrimeHistoryCount
 open D5.S3.Factorization.Combinatorics.MixedPrimeHistoryGenerating
 open scoped BigOperators NNReal ENNReal
-
 /-- The prime-supported geometric series, on its disk of convergence. -/
 noncomputable def primeSeries {𝕜 : Type*} [NormedField 𝕜] (z : 𝕜) : 𝕜 :=
   ∑' q : ℕ, if q.Prime then z ^ q else 0
-
 /-- The ordinary generating series of all endpoint weights. -/
 noncomputable def generating (t : ℝ) (z : ℂ) : ℂ :=
   ∑' n : ℕ, (weightedCount t n : ℂ) * z ^ n
-
 /-- The numerator obtained from the multiplicative last letters. -/
 noncomputable def numerator (t : ℝ) (z : ℂ) : ℂ :=
   z + (t : ℂ) * ∑' q : ℕ, if q.Prime then generating t (z ^ q) else 0
@@ -66,8 +63,7 @@ private theorem weighted_length_sum (t : ℝ) (n N : ℕ) (hn : 0 < n) (hN : n �
     ∑ w ∈ s with w.length = k, t ^ w.length =
         ∑ w ∈ s with w.length = k, t ^ k := by
           apply Finset.sum_congr rfl
-          intro w hw
-          rw [(Finset.mem_filter.mp hw).2]
+          intro w hw; rw [(Finset.mem_filter.mp hw).2]
     _ = _ := by simp [hc]
 private theorem weighted_nonneg (t : ℝ) (ht : 0 ≤ t) (n : ℕ) :
     0 ≤ weightedCount t n := by
@@ -76,8 +72,7 @@ private theorem weighted_nonneg (t : ℝ) (ht : 0 ≤ t) (n : ℕ) :
   split_ifs
   · exact Finset.sum_nonneg (fun _ _ => pow_nonneg ht _)
   · exact le_rfl
-private theorem weighted_zero (t : ℝ) : weightedCount t 0 = 0 := by
-  simp [weightedCount]
+private theorem weighted_zero (t : ℝ) : weightedCount t 0 = 0 := by simp [weightedCount]
 private theorem weighted_one (t : ℝ) : weightedCount t 1 = 1 := by
   rw [weighted_length_sum t 1 1 (by omega) le_rfl]
   have h := mixed_coefficient 1 0 1 (by omega) le_rfl
@@ -130,15 +125,13 @@ private theorem prime_summable (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1) :
       · exact le_rfl
       · exact pow_nonneg hr q)
     (summable_geometric_of_lt_one hr hr1)
-
 /-- Below the prime-series threshold, one constant controls every actual endpoint. -/
 theorem subcritical_bound (t r : ℝ) (ht : 0 < t) (hr : 0 < r) (hr1 : r < 1)
     (hsub : t * primeSeries r < 1) :
     ∃ B : ℝ, 0 < B ∧ ∀ n : ℕ, weightedCount t n * r ^ n ≤ B := by
   classical
   have hs0 : 0 ≤ Real.sqrt r := Real.sqrt_nonneg r
-  have hs1 : Real.sqrt r < 1 := by
-    simpa using Real.sqrt_lt_sqrt hr.le hr1
+  have hs1 : Real.sqrt r < 1 := by simpa using Real.sqrt_lt_sqrt hr.le hr1
   have hlim : Filter.Tendsto
       (fun n : ℕ => t * (primeSeries r + (n : ℝ) * (Real.sqrt r) ^ n))
       Filter.atTop (nhds (t * primeSeries r)) := by
@@ -206,8 +199,7 @@ theorem subcritical_bound (t r : ℝ) (ht : 0 < t) (hr : 0 < r) (hr1 : r < 1)
             have hexp : n ≤ 2 * (n - n / q) := by omega
             have hp : r ^ (n - n / q) ≤ (Real.sqrt r) ^ n := by
               calc
-                _ = (Real.sqrt r) ^ (2 * (n - n / q)) := by
-                  rw [pow_mul, Real.sq_sqrt hr.le]
+                _ = (Real.sqrt r) ^ (2 * (n - n / q)) := by rw [pow_mul, Real.sq_sqrt hr.le]
                 _ ≤ _ := pow_le_pow_of_le_one hs0 hs1.le hexp
             calc
               weightedCount t (n / q) * r ^ n =
@@ -264,8 +256,7 @@ private theorem generating_analytic_of_bound (t r B : ℝ) (ht : 0 ≤ t) (hr : 
       simpa [p, FormalMultilinearSeries.ofScalars_norm, Complex.norm_real,
         Real.norm_eq_abs, abs_of_nonneg (weighted_nonneg t ht n)] using hB n)
   intro z hz
-  have hzr : (‖z‖₊ : ℝ≥0∞) < (rnn : ℝ≥0∞) := by
-    exact_mod_cast (show ‖z‖ < r by simpa using hz)
+  have hzr : (‖z‖₊ : ℝ≥0∞) < (rnn : ℝ≥0∞) := by exact_mod_cast (show ‖z‖ < r by simpa using hz)
   have ha := p.analyticOnNhd z (by simpa [enorm_eq_nnnorm] using hzr.trans_le hp)
   change AnalyticAt ℂ (FormalMultilinearSeries.ofScalarsSum
     (fun n => (weightedCount t n : ℂ))) z at ha
@@ -321,8 +312,7 @@ private theorem numerator_analytic_of_bound (t r B : ℝ) (ht : 0 ≤ t) (hr : 0
   obtain ⟨a, hza, har⟩ := exists_between hz'
   have ha : 0 ≤ a := (norm_nonneg z).trans hza.le
   have ha1 : a < 1 := har.trans (by simpa using Real.sqrt_lt_sqrt hr.le hr1)
-  have ha2 : a ^ 2 < r := by
-    nlinarith [Real.sq_sqrt hr.le, Real.sqrt_nonneg r]
+  have ha2 : a ^ 2 < r := by nlinarith [Real.sq_sqrt hr.le, Real.sqrt_nonneg r]
   have hs : Summable (fun q : ℕ => B * a ^ q / (r - a ^ 2)) :=
     ((summable_geometric_of_lt_one ha ha1).mul_left B).div_const _
   have hd : DifferentiableOn ℂ
@@ -346,9 +336,8 @@ private theorem numerator_analytic_of_bound (t r B : ℝ) (ht : 0 ≤ t) (hr : 0
         positivity
   exact analyticAt_id.add (analyticAt_const.mul
     (hd.analyticOnNhd Metric.isOpen_ball z (by simpa using hza)))
-
 /-- One endpoint bound also controls every prime composition on each smaller closed disk. -/
-theorem subcritical_analytic_control (t r : ℝ) (ht : 0 < t) (hr : 0 < r) (hr1 : r < 1)
+private theorem subcritical_analytic_control (t r : ℝ) (ht : 0 < t) (hr : 0 < r) (hr1 : r < 1)
     (hsub : t * primeSeries r < 1) :
     ∃ B : ℝ, 0 < B ∧ (∀ n : ℕ, weightedCount t n * r ^ n ≤ B) ∧
       AnalyticOnNhd ℂ (generating t) (Metric.ball 0 r) ∧
@@ -359,7 +348,6 @@ theorem subcritical_analytic_control (t r : ℝ) (ht : 0 < t) (hr : 0 < r) (hr1 
   exact ⟨B, hB0, hB, generating_analytic_of_bound t r B ht.le hr hB,
     fun a ha har q hq z hz => composition_norm_bound t r B a ht.le hr hr1 hB0.le hB ha har q hq z hz,
     numerator_analytic_of_bound t r B ht.le hr hr1 hB0.le hB⟩
-
 set_option maxHeartbeats 800000 in
 -- Reindexing both the complex series and its norm series elaborates the same infinite sum twice.
 private theorem multiplicative_series (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
@@ -416,12 +404,10 @@ private theorem multiplicative_series (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
       simp [D, weighted_zero]
     · rw [tsum_eq_sum (s := n.primeFactors) (fun q hq => by
         have hh : ¬ (q.Prime ∧ q ∣ n) := by
-          intro h
-          exact hq (Nat.mem_primeFactors.mpr ⟨h.1, h.2, hn⟩)
+          intro h; exact hq (Nat.mem_primeFactors.mpr ⟨h.1, h.2, hn⟩)
         simp [D, hh])]
       apply Finset.sum_congr rfl
-      intro q hq
-      simp [D, Nat.prime_of_mem_primeFactors hq, Nat.dvd_of_mem_primeFactors hq]
+      intro q hq; simp [D, Nat.prime_of_mem_primeFactors hq, Nat.dvd_of_mem_primeFactors hq]
   have hval : (∑' n : ℕ, ∑' q : ℕ, D q n) =
       ∑' q : ℕ, if q.Prime then generating t (z ^ q) else 0 :=
     hd.of_norm.tsum_comm.trans (tsum_congr (fun q => (rows q).2.1.tsum_eq))
@@ -457,9 +443,8 @@ private theorem additive_series (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
       rw [mul_left_comm, ← pow_add, Nat.add_sub_of_le (Finset.mem_range.mp hq).le]
     · simp [hp]
   simpa only [hc, primeSeries, generating] using h
-
 /-- Absolute convergence permits the actual last-letter recurrence to be summed. -/
-theorem subcritical_functional_equation (t r : ℝ) (ht : 0 < t) (hr : 0 < r)
+private theorem subcritical_functional_equation (t r : ℝ) (ht : 0 < t) (hr : 0 < r)
     (hr1 : r < 1) (hsub : t * primeSeries r < 1) (z : ℂ) (hz : ‖z‖ < r) :
     (1 - (t : ℂ) * primeSeries z) * generating t z = numerator t z := by
   classical
@@ -493,14 +478,9 @@ theorem subcritical_functional_equation (t r : ℝ) (ht : 0 < t) (hr : 0 < r)
   unfold numerator
   linear_combination hf
 private theorem prime_zero : primeSeries (0 : ℝ) = 0 := by
-  calc
-    _ = ∑' _q : ℕ, (0 : ℝ) := by
-      apply tsum_congr
-      intro q
-      by_cases hq : q.Prime
-      · simp [hq, zero_pow hq.ne_zero]
-      · simp [hq]
-    _ = 0 := tsum_zero
+  have h (q : ℕ) : (if q.Prime then (0 : ℝ) ^ q else 0) = 0 := by
+    split_ifs with hq <;> simp_all [Nat.Prime.ne_zero]
+  simp only [primeSeries, h, tsum_zero]
 private theorem prime_continuous (a : ℝ) (ha : 0 ≤ a) (ha1 : a < 1) :
     ContinuousOn (primeSeries (𝕜 := ℝ)) (Set.Icc 0 a) := by
   classical
@@ -552,8 +532,7 @@ private theorem prime_crosses (t : ℝ) (ht : 0 < t) :
     calc
       _ = ∑ q ∈ S, if q.Prime then (1 - ε) ^ q else 0 := by
         apply Finset.sum_congr rfl
-        intro q hq
-        rw [if_pos (show q.Prime from hS hq)]
+        intro q hq; rw [if_pos (show q.Prime from hS hq)]
       _ ≤ _ := Summable.sum_le_tsum S (fun q _ => by split_ifs <;> positivity)
         (prime_summable _ ha0.le ha1)
   exact hlarge.trans_le (mul_le_mul_of_nonneg_left hsum ht.le)
@@ -629,7 +608,6 @@ private theorem prime_derivative_positive (ρ : ℝ) (hρ0 : 0 < ρ) (hρ1 : ρ 
     apply Complex.ext <;> simp [hi]
   rw [he]
   exact hd.hasDerivAt
-
 set_option maxHeartbeats 800000 in
 -- Nonnegative prime deficits identify two separate complex powers before cancellation.
 private theorem critical_zero_unique (t ρ : ℝ) (ht : 0 < t) (hρ0 : 0 < ρ)
@@ -688,21 +666,15 @@ private theorem critical_zero_unique (t ρ : ℝ) (ht : 0 < t) (hρ0 : 0 < ρ)
       _ = z ^ 3 := (pow_succ z 2).symm
       _ = _ := h3.trans (pow_succ (ρ : ℂ) 2)
   exact mul_left_cancel₀ (pow_ne_zero 2 (by exact_mod_cast hρ0.ne')) hx
-
 /-- The unique critical radius supports the common endpoint and prime-composition bounds. -/
-theorem critical_control (t : ℝ) (ht : 0 < t) :
+private theorem critical_control (t : ℝ) (ht : 0 < t) :
     ∃ ρ : ℝ, (0 < ρ ∧ ρ < 1 ∧ t * primeSeries ρ = 1) ∧
       (∀ σ : ℝ, 0 < σ → σ < 1 → t * primeSeries σ = 1 → σ = ρ) ∧
       (∀ r : ℝ, 0 < r → r < ρ →
         ∃ B : ℝ, 0 < B ∧ ∀ n : ℕ, weightedCount t n * r ^ n ≤ B) ∧
-      AnalyticOnNhd ℂ (generating t) (Metric.ball 0 ρ) ∧
       AnalyticOnNhd ℂ (numerator t) (Metric.ball 0 (Real.sqrt ρ)) ∧
       (∀ z : ℂ, ‖z‖ < ρ →
         (1 - (t : ℂ) * primeSeries z) * generating t z = numerator t z) ∧
-      (∀ a : ℝ, 0 ≤ a → a ^ 2 < ρ → ∃ r : ℝ, a ^ 2 < r ∧ r < ρ ∧
-        ∃ B : ℝ, 0 < B ∧ (∀ n : ℕ, weightedCount t n * r ^ n ≤ B) ∧
-          ∀ q : ℕ, q.Prime → ∀ z : ℂ, ‖z‖ ≤ a →
-            ‖generating t (z ^ q)‖ ≤ B * a ^ q / (r - a ^ 2)) ∧
       (∃ d : ℝ, 0 < d ∧ HasDerivAt (primeSeries (𝕜 := ℂ)) (d : ℂ) (ρ : ℂ)) ∧
       (∀ z : ℂ, ‖z‖ ≤ ρ → 1 - (t : ℂ) * primeSeries z = 0 → z = (ρ : ℂ)) := by
   obtain ⟨ρ, hρ, huniq⟩ := unique_critical_root t ht
@@ -713,12 +685,8 @@ theorem critical_control (t : ℝ) (ht : 0 < t) :
     subcritical_analytic_control t r ht hr (hrρ.trans hρ.2.1) (hsub r hr hrρ)
   refine ⟨ρ, hρ, fun σ hσ0 hσ1 hσ => huniq σ ⟨hσ0, hσ1, hσ⟩,
     fun r hr hrρ => subcritical_bound t r ht hr (hrρ.trans hρ.2.1) (hsub r hr hrρ),
-    ?_, ?_, ?_, ?_, prime_derivative_positive ρ hρ.1 hρ.2.1,
+    ?_, ?_, prime_derivative_positive ρ hρ.1 hρ.2.1,
     critical_zero_unique t ρ ht hρ.1 hρ.2.1 hρ.2.2⟩
-  · intro z hz
-    obtain ⟨r, hzr, hrρ⟩ := exists_between (show ‖z‖ < ρ by simpa using hz)
-    obtain ⟨B, _, _, ha, _⟩ := control r ((norm_nonneg z).trans_lt hzr) hrρ
-    exact ha z (by simpa using hzr)
   · intro z hz
     have hz' : ‖z‖ < Real.sqrt ρ := by simpa using hz
     have hzsq : ‖z‖ ^ 2 < ρ := by
@@ -732,10 +700,6 @@ theorem critical_control (t : ℝ) (ht : 0 < t) :
     obtain ⟨r, hzr, hrρ⟩ := exists_between hz
     have hr := (norm_nonneg z).trans_lt hzr
     exact subcritical_functional_equation t r ht hr (hrρ.trans hρ.2.1) (hsub r hr hrρ) z hzr
-  · intro a ha haρ
-    obtain ⟨r, har, hrρ⟩ := exists_between haρ
-    obtain ⟨B, hB0, hB, _, hcomp, _⟩ := control r ((sq_nonneg _).trans_lt har) hrρ
-    exact ⟨r, har, hrρ, B, hB0, hB, hcomp a ha har⟩
 private theorem prime_analytic :
     AnalyticOnNhd ℂ (primeSeries (𝕜 := ℂ)) (Metric.ball 0 1) := by
   intro z hz
@@ -754,11 +718,8 @@ private theorem prime_analytic :
         exact pow_nonneg ((norm_nonneg z).trans hza.le) _
   exact hdiff.analyticAt (Metric.isOpen_ball.mem_nhds (by simpa using hza))
 private theorem prime_ofReal (x : ℝ) : primeSeries (x : ℂ) = ((primeSeries x : ℝ) : ℂ) := by
-  unfold primeSeries
-  rw [Complex.ofReal_tsum]
-  apply tsum_congr
-  intro q
-  split_ifs <;> simp
+  simp only [primeSeries, Complex.ofReal_tsum, apply_ite Complex.ofReal,
+    Complex.ofReal_pow, Complex.ofReal_zero]
 private theorem numerator_positive (t ρ : ℝ) (ht : 0 < t) (hρ : 0 < ρ) :
     ∃ b : ℝ, 0 < b ∧ numerator t (ρ : ℂ) = (b : ℂ) := by
   let f (x : ℝ) := ∑' n : ℕ, weightedCount t n * x ^ n
@@ -775,13 +736,12 @@ private theorem numerator_positive (t ρ : ℝ) (ht : 0 < t) (hρ : 0 < ρ) :
     apply tsum_congr
     intro q
     split_ifs <;> simp
-
 /-- Subtracting the positive principal part leaves an analytic function on a larger disk. -/
-theorem pole_decomposition (t : ℝ) (ht : 0 < t) :
+private theorem pole_decomposition (t : ℝ) (ht : 0 < t) :
     ∃ ρ C R : ℝ, 0 < ρ ∧ ρ < R ∧ R < 1 ∧ 0 < C ∧ t * primeSeries ρ = 1 ∧
       ∃ E : ℂ → ℂ, AnalyticOnNhd ℂ E (Metric.ball 0 R) ∧
         ∀ z : ℂ, ‖z‖ < ρ → generating t z = (C : ℂ) / (1 - z / ρ) + E z := by
-  obtain ⟨ρ, hρ, _, _, _, hN, hF, _, ⟨d, hd, hder⟩, hzero⟩ := critical_control t ht
+  obtain ⟨ρ, hρ, _, _, hN, hF, ⟨d, hd, hder⟩, hzero⟩ := critical_control t ht
   let D (z : ℂ) := 1 - (t : ℂ) * primeSeries z
   let g := dslope D (ρ : ℂ)
   have hD0 : D (ρ : ℂ) = 0 := by
@@ -790,8 +750,7 @@ theorem pole_decomposition (t : ℝ) (ht : 0 < t) :
     simp
   have hderD : HasDerivAt D (-(t : ℂ) * d) (ρ : ℂ) := by
     simpa only [neg_mul] using (hder.const_mul (t : ℂ)).const_sub 1
-  have hgρ : g (ρ : ℂ) = -(t : ℂ) * d := by
-    exact (dslope_same D (ρ : ℂ)).trans hderD.deriv
+  have hgρ : g (ρ : ℂ) = -(t : ℂ) * d := by exact (dslope_same D (ρ : ℂ)).trans hderD.deriv
   have hgρ0 : g (ρ : ℂ) ≠ 0 := by
     rw [hgρ]
     exact mul_ne_zero (neg_ne_zero.mpr (by exact_mod_cast ht.ne')) (by exact_mod_cast hd.ne')
@@ -854,8 +813,7 @@ theorem pole_decomposition (t : ℝ) (ht : 0 < t) :
   · intro z hz
     have hzR : z ∈ Metric.ball 0 R := by simpa using hz.trans hρR
     have hzρ : z ≠ (ρ : ℂ) := by
-      intro he
-      simpa [he, abs_of_pos hρ.1] using hz
+      intro he; simpa [he, abs_of_pos hρ.1] using hz
     have hs := sub_smul_dslope D (ρ : ℂ) z
     change (z - (ρ : ℂ)) * g z = D z - D (ρ : ℂ) at hs
     rw [hD0, sub_zero] at hs
@@ -875,9 +833,8 @@ theorem pole_decomposition (t : ℝ) (ht : 0 < t) :
     rw [mul_add, he, hfg]
     field_simp
     <;> ring
-
 /-- A single exponential error bound holds for every coefficient of the actual history series. -/
-theorem coefficient_asymptotics (t : ℝ) (ht : 0 < t) :
+private theorem coefficient_asymptotics (t : ℝ) (ht : 0 < t) :
     ∃ ρ C R K : ℝ, 0 < ρ ∧ ρ < R ∧ R < 1 ∧ 0 < C ∧ 0 < K ∧
       t * primeSeries ρ = 1 ∧ ∀ n : ℕ,
         |weightedCount t n - C / ρ ^ n| ≤ K / R ^ n := by
@@ -935,5 +892,59 @@ theorem coefficient_asymptotics (t : ℝ) (ht : 0 < t) :
   rw [FormalMultilinearSeries.norm_apply_eq_norm_coef, hcoeff,
     Complex.norm_real, Real.norm_eq_abs] at h
   exact h
-
+/-- The critical root, exponential asymptotic, and positive two-sided bounds for all endpoints. -/
+theorem result (t : ℝ) (ht : 0 < t) :
+    ∃ ρ C R K cLow cHigh : ℝ, 0 < ρ ∧ ρ < R ∧ R < 1 ∧ 0 < C ∧ 0 < K ∧
+      0 < cLow ∧ cLow ≤ cHigh ∧ t * primeSeries ρ = 1 ∧
+      (∀ σ : ℝ, 0 < σ → σ < 1 → t * primeSeries σ = 1 → σ = ρ) ∧
+      (∀ n : ℕ, |weightedCount t n - C / ρ ^ n| ≤ K / R ^ n) ∧
+      ∀ n : ℕ, 1 ≤ n → cLow / ρ ^ n ≤ weightedCount t n ∧
+        weightedCount t n ≤ cHigh / ρ ^ n := by
+  classical
+  obtain ⟨ρ, C, R, K, hρ, hρR, hR, hC, hK, hroot, he⟩ := coefficient_asymptotics t ht
+  have hR0 := hρ.trans hρR
+  have hw (n : ℕ) (hn : 0 < n) : 0 < weightedCount t n := by
+    rw [weightedCount, dif_pos hn]
+    obtain ⟨w, hw⟩ := (reachable_finite n hn).1
+    exact Finset.sum_pos (fun w _ => pow_pos ht w.length)
+      ⟨w, (reachable_finite n hn).2.mem_toFinset.mpr hw⟩
+  have herr (n : ℕ) : |weightedCount t n * ρ ^ n - C| ≤ K * (ρ / R) ^ n := by
+    have hmul : (weightedCount t n - C / ρ ^ n) * ρ ^ n =
+        weightedCount t n * ρ ^ n - C := by field_simp
+    rw [← hmul, abs_mul, abs_of_pos (pow_pos hρ n)]
+    calc
+      _ ≤ (K / R ^ n) * ρ ^ n := mul_le_mul_of_nonneg_right (he n) (pow_nonneg hρ.le n)
+      _ = _ := by rw [div_pow]; ring
+  have hlim : Filter.Tendsto (fun n : ℕ => weightedCount t n * ρ ^ n)
+      Filter.atTop (nhds C) := by
+    apply tendsto_iff_norm_sub_tendsto_zero.mpr
+    apply squeeze_zero (fun n => norm_nonneg _) (by simpa [Real.norm_eq_abs] using herr)
+    simpa using (tendsto_pow_atTop_nhds_zero_of_lt_one
+      (div_nonneg hρ.le hR0.le) ((div_lt_one hR0).mpr hρR)).const_mul K
+  let f (n : ℕ) := weightedCount t (n + 1) * ρ ^ (n + 1)
+  have hf := hlim.comp (Filter.tendsto_add_atTop_nat 1)
+  have hpos : ∀ x ∈ insert C (Set.range f), (0 : ℝ) < x := by
+    rintro x (rfl | ⟨n, rfl⟩)
+    · exact hC
+    · exact mul_pos (hw _ (by omega)) (pow_pos hρ _)
+  obtain ⟨c, hc, hcle⟩ := hf.isCompact_insert_range.exists_forall_le'
+    continuousOn_id hpos
+  have hu (n : ℕ) : weightedCount t n * ρ ^ n ≤ C + K := by
+    have hpow := pow_le_one₀ (n := n) (div_nonneg hρ.le hR0.le)
+      ((div_lt_one hR0).mpr hρR).le
+    have h := (abs_le.mp (herr n)).2
+    nlinarith [mul_le_mul_of_nonneg_left hpow hK.le]
+  obtain ⟨σ, _, huniq, _⟩ := critical_control t ht
+  have hσ : ρ = σ := huniq ρ hρ (hρR.trans hR) hroot
+  subst σ
+  refine ⟨ρ, C, R, K, c, C + K, hρ, hρR, hR, hC, hK, hc, ?_, hroot,
+    huniq, he, ?_⟩
+  · exact (hcle C (Set.mem_insert _ _)).trans (by change C ≤ C + K; linarith)
+  · intro n hn
+    have hn' : n = (n - 1) + 1 := by omega
+    have hl : c ≤ weightedCount t n * ρ ^ n := by
+      rw [hn']
+      exact hcle _ (Set.mem_insert_of_mem _ ⟨n - 1, rfl⟩)
+    exact ⟨(div_le_iff₀ (pow_pos hρ n)).mpr hl,
+      (le_div_iff₀ (pow_pos hρ n)).mpr (hu n)⟩
 end D5.S3.Factorization.Combinatorics.MixedPrimeHistoryAsymptotics
