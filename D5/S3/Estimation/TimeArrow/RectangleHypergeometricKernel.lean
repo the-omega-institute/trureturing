@@ -6,7 +6,7 @@
    utility: none
    digest: Uniform labelled four-cell tables have the exact hypergeometric intersection kernel. -/
 
-import D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+import Mathlib
 
 open scoped BigOperators
 open Finset
@@ -46,13 +46,10 @@ def intersectionSplit {α : Type*} [DecidableEq α] (V R : Finset α) (U t : ℕ
     · exact union_subset (hA.1.trans hR) (hD.1.trans sdiff_subset)
     · rw [card_union_of_disjoint hd, hA.2, hD.2, Nat.add_sub_of_le ht]
     · have hi : (P.1.val ∪ P.2.val) ∩ R = P.1.val := by
-        ext x
-        simp only [mem_inter, mem_union]
-        constructor
-        · rintro ⟨hx | hx, hr⟩
-          · exact hx
-          · exact False.elim ((mem_sdiff.mp (hD.1 hx)).2 hr)
-        · intro hx; exact ⟨Or.inl hx, hA.1 hx⟩
+        have hdR : Disjoint P.2.val R :=
+          disjoint_of_subset_left hD.1 disjoint_sdiff_self_left
+        rw [union_inter_distrib_right, Finset.inter_eq_left.mpr hA.1,
+          disjoint_iff_inter_eq_empty.mp hdR, union_empty]
       rw [hi, hA.2]
   left_inv B := by
     apply Subtype.ext
@@ -103,3 +100,10 @@ theorem rectangle_hypergeometric_mass {α : Type*} [DecidableEq α]
 
 end
 end D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
+
+-- Temporary closure probes.
+#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.intersectionEvent
+#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.intersectionSplit
+#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.rectangle_intersection_card
+#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.rectangleMass
+#print axioms D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.rectangle_hypergeometric_mass

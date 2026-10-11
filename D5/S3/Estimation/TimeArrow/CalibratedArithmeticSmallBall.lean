@@ -228,14 +228,9 @@ theorem shared_calibration_small_ball {ι : Type*} [Fintype ι] (outside : ι �
         (bg + x) * Real.sigmoid (θ x) * (1 - Real.sigmoid (θ x)) *
           SharedRectangleCalibration.checkerboard r ε (θ x) /
             SharedRectangleCalibration.calibratedVariance outside r ε N R U x (θ x)) x := by
-    have ht := (hcurve x hx).1.hasDerivAt
-    have hr := SharedRectangleCalibration.shared_root_response outside r ε N R U q x
-      (θ x) (deriv θ x) θ ht rfl (hcurve x hx).2.1 (ne_of_gt (hcurve x hx).2.2)
-    have hg := (((hasDerivAt_id x).const_add bg).mul
-      ((Real.hasDerivAt_sigmoid (θ x)).comp x ht)).sub ((hasDerivAt_id x).div_const 2)
-    convert! hg using 1
-    simp only [Function.comp_apply, id_eq, hr]
-    ring
+    exact SharedRectangleCalibration.compensated_group_deriv outside r ε N R U q bg
+      x (θ x) (deriv θ x) θ (hcurve x hx).1.hasDerivAt rfl (hcurve x hx).2.1
+        (ne_of_gt (hcurve x hx).2.2)
   have hcont : ContinuousOn G (Set.Icc (a : ℝ) (b : ℝ)) :=
     fun x hx => (hder x hx).continuousAt.continuousWithinAt
   have hdiff : DifferentiableOn ℝ G (interior (Set.Icc (a : ℝ) (b : ℝ))) :=
@@ -263,3 +258,12 @@ theorem shared_calibration_small_ball {ι : Type*} [Fintype ι] (outside : ι �
 
 end
 end D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
+
+-- Temporary closure probes.
+#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.eventMass
+#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.latticeBand
+#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.arithmeticEvent
+#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.arithmetic_central_mass_bound
+#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.integerTargets
+#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.moving_center_small_ball
+#print axioms D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall.shared_calibration_small_ball

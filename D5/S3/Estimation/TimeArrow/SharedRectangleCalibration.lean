@@ -4,13 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Four adjacent native score cells share one moving logistic calibration. -/
+   digest: Four adjacent score cells share one moving logistic calibration. -/
 
-import D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+import Mathlib
 
 open scoped BigOperators Topology
 open Finset Filter
-open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -197,29 +196,21 @@ theorem exists_shared_calibration_root {ι : Type*} [Fintype ι] (outside : ι �
   refine ⟨θ, hx, he, ?_⟩
   rwa [shared_root_response outside r ε N R U q t x _ θ hθ hx he hv] at hθ
 
-/-- The count-weighted A-cell response includes the feedback through the
-common calibration; its sign at the symmetric center is strictly positive. -/
-theorem calibrated_group_center_response {ι : Type*} [Fintype ι] (outside : ι → ℝ)
-    (r N R U q t bg : ℝ) (θ : ℝ → ℝ) (v : ℝ)
-    (hr : 0 < r) (hr1 : r < 1) (hθ : HasDerivAt θ v t) (hx : θ t = 0)
-    (hcal : ∀ᶠ a in 𝓝 t, calibratedMean outside r 0 N R U a (θ a) = q)
-    (hv : 0 < calibratedVariance outside r 0 N R U t 0) (hc : 0 < bg + t) :
-    HasDerivAt (fun a => (bg + a) * Real.sigmoid (θ a))
-      (1 / 2 - (bg + t) * (1 / 4) * checkerboard r 0 0 /
-        calibratedVariance outside r 0 N R U t 0) t ∧
-    1 / 2 < 1 / 2 - (bg + t) * (1 / 4) * checkerboard r 0 0 /
-      calibratedVariance outside r 0 N R U t 0 := by
-  have he := shared_root_response outside r 0 N R U q t 0 v θ hθ hx hcal (ne_of_gt hv)
-  have hm := ((hasDerivAt_id t).const_add bg).mul ((Real.hasDerivAt_sigmoid (θ t)).comp t hθ)
-  constructor
-  · convert! hm using 1
-    simp only [Function.comp_apply, id_eq, hx, Real.sigmoid_zero, he]
-    ring
-  · have hn := checkerboard_center_neg hr hr1
-    have hneg : (bg + t) * (1 / 4) * checkerboard r 0 0 /
-        calibratedVariance outside r 0 N R U t 0 < 0 :=
-      div_neg_of_neg_of_pos (mul_neg_of_pos_of_neg (mul_pos hc (by norm_num)) hn) hv
-    linarith
+/-- The compensated group response uses the same root and full variance. -/
+theorem compensated_group_deriv {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r ε N R U q bg t x v : ℝ) (θ : ℝ → ℝ) (hθ : HasDerivAt θ v t)
+    (hx : θ t = x)
+    (hcal : ∀ᶠ u in 𝓝 t, calibratedMean outside r ε N R U u (θ u) = q)
+    (hv : calibratedVariance outside r ε N R U t x ≠ 0) :
+    HasDerivAt (fun u => (bg + u) * Real.sigmoid (θ u) - u / 2)
+      (Real.sigmoid x - 1 / 2 - (bg + t) * Real.sigmoid x * (1 - Real.sigmoid x) *
+        checkerboard r ε x / calibratedVariance outside r ε N R U t x) t := by
+  have hr := shared_root_response outside r ε N R U q t x v θ hθ hx hcal hv
+  have hg := (((hasDerivAt_id t).const_add bg).mul
+    ((Real.hasDerivAt_sigmoid (θ t)).comp t hθ)).sub ((hasDerivAt_id t).div_const 2)
+  convert! hg using 1
+  simp only [Function.comp_apply, id_eq, hr, hx]
+  ring
 
 private theorem continuous_checkerboard_parameters {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     ContinuousAt (fun a : ℝ × ℝ => checkerboard r a.1 a.2) (0, 0) := by
@@ -345,5 +336,74 @@ theorem shared_calibration_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ
     exact (hex u hui).unique (heq u hui) hu
   exact ⟨heq t ht, hφt ▸ hφder.congr_of_eventuallyEq hagree, hv⟩
 
+
+/-- At a centered feasible histogram the compensated feedback is uniformly
+positive on one neighborhood of the same shared root curve. The neighborhood
+and constants may depend on the finite histogram; no asymptotic uniformity is
+asserted. -/
+theorem positive_feedback_germ {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r N R U q bg a b t : ℝ) (hr : 0 < r) (hr1 : r < 1) (hN : 0 < N) (hq : 0 < q)
+    (hqM : q < (Fintype.card ι : ℝ) + N) (ht : t ∈ Set.Ioo a b)
+    (hc : ∀ u ∈ Set.Ioo a b, ∀ j, 0 ≤ cellCounts N R U u j)
+    (hcenter : calibratedMean outside r 0 N R U t 0 = q) (hgroup : 0 < bg + t) :
+    ∃ θ : ℝ → ℝ, ∃ d D : ℝ, 0 < d ∧ 0 < D ∧ θ t = 0 ∧
+      ∀ᶠ u in 𝓝 t,
+        calibratedMean outside r 0 N R U u (θ u) = q ∧
+        checkerboard r 0 (θ u) < 0 ∧
+        ∃ v, d ≤ v ∧ v ≤ D ∧
+          HasDerivAt (fun x => (bg + x) * Real.sigmoid (θ x) - x / 2) v u := by
+  obtain ⟨θ, hθ⟩ := shared_calibration_curve outside r 0 N R U q a b hN hq hqM hc
+  have hzero : θ t = 0 :=
+    (unique_shared_root outside r 0 N R U q t hN hq hqM (hc t ht)).unique
+      (hθ t ht).1 hcenter
+  let B : ℝ → ℝ := fun u => Real.sigmoid (θ u) - 1 / 2 -
+    (bg + u) * Real.sigmoid (θ u) * (1 - Real.sigmoid (θ u)) * checkerboard r 0 (θ u) /
+      calibratedVariance outside r 0 N R U u (θ u)
+  have hv := (hθ t ht).2.2
+  have hB0 : 0 < B t := by
+    dsimp [B]
+    rw [hzero]
+    simp only [Real.sigmoid_zero]
+    have hn := checkerboard_center_neg hr hr1
+    have hp : 0 < (bg + t) * (2 : ℝ)⁻¹ * (1 - (2 : ℝ)⁻¹) := by
+      positivity
+    have hd := div_neg_of_neg_of_pos (mul_neg_of_pos_of_neg hp hn)
+      (calibratedVariance_pos outside r 0 N R U t 0 hN (hc t ht))
+    linarith
+  have hθcont : ContinuousAt θ t := (hθ t ht).2.1.continuousAt
+  have hBcont : ContinuousAt B t := by
+    dsimp [B, calibratedVariance, cellCounts, checkerboard]
+    fun_prop (disch := exact ne_of_gt hv)
+  obtain ⟨d0, hd0, hnegative⟩ := checkerboard_negative_neighborhood hr hr1
+  have hpair : Tendsto (fun u => ((0 : ℝ), θ u)) (𝓝 t) (𝓝 ((0 : ℝ), 0)) := by
+    have hp : ContinuousAt (fun u => ((0 : ℝ), θ u)) t := continuousAt_const.prodMk hθcont
+    change Tendsto (fun u => ((0 : ℝ), θ u)) (𝓝 t) (𝓝 ((0 : ℝ), θ t)) at hp
+    simpa only [hzero] using hp
+  have hn := hpair.eventually hnegative
+  refine ⟨θ, B t / 2, 2 * B t, by positivity, by positivity, hzero, ?_⟩
+  filter_upwards [isOpen_Ioo.mem_nhds ht, hn,
+    hBcont.eventually_const_lt (by linarith : B t / 2 < B t),
+    hBcont.eventually_lt_const (by linarith : B t < 2 * B t)] with u hu hn hlo hhi
+  have hcal : ∀ᶠ x in 𝓝 u, calibratedMean outside r 0 N R U x (θ x) = q := by
+    filter_upwards [isOpen_Ioo.mem_nhds hu] with x hx
+    exact (hθ x hx).1
+  exact ⟨(hθ u hu).1, by linarith, B u, hlo.le, hhi.le,
+    compensated_group_deriv outside r 0 N R U q bg u (θ u) _ θ (hθ u hu).2.1 rfl
+      hcal (ne_of_gt (hθ u hu).2.2)⟩
+
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+
+-- Temporary closure probes.
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.offsets
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.checkerboard
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.cellCounts
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedMean
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedVariance
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.moving_calibration_deriv
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.shared_root_response
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.exists_shared_calibration_root
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.compensated_group_deriv
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.checkerboard_negative_neighborhood
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.shared_calibration_curve
+#print axioms D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.positive_feedback_germ

@@ -7,6 +7,7 @@
    digest: Collapsing the signal identities preserves native pair and path masses on every complete observation fiber. -/
 
 import D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+import D5.S3.Quantum.Entanglement.OccupancyWordSectors
 
 open scoped BigOperators
 open Finset
@@ -14,6 +15,7 @@ open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 noncomputable section
@@ -163,19 +165,15 @@ private theorem same_fiber_probability {M q s : ℕ} (S : Support M q)
 No independence assumption is imposed on the path edges. -/
 def fiberSiteEquiv {M q s : ℕ} (S : Support M q) (e : Experiment)
     (o : Obs M s e) : Fiber S e o ≃
-      ((k : Sites s e) → {x : Vertex M // collapseVertex S x = collapsedObs S e o k}) where
-  toFun y k := ⟨siteEquiv M s e y.val k, congrFun y.property k⟩
-  invFun f := ⟨(siteEquiv M s e).symm (fun k => (f k).val), by
-    funext k
-    simp only [collapsedObs, Equiv.apply_symm_apply]
-    exact (f k).property⟩
-  left_inv y := by
-    apply Subtype.ext
-    exact (siteEquiv M s e).symm_apply_apply y.val
-  right_inv f := by
-    funext k
-    apply Subtype.ext
-    exact congrFun ((siteEquiv M s e).apply_symm_apply (fun k => (f k).val)) k
+      ((k : Sites s e) → {x : Vertex M // collapseVertex S x = collapsedObs S e o k}) :=
+  ((siteEquiv M s e).subtypeEquiv
+    (p := fun y : Obs M s e => collapsedObs S e y = collapsedObs S e o)
+    (q := fun f : Sites s e → Vertex M => ∀ k,
+      collapseVertex S (f k) = collapsedObs S e o k)
+    (fun y => ⟨fun h k => congrFun h k, fun h => funext h⟩)).trans
+      (Equiv.subtypePiEquivPi
+        (α := Sites s e) (β := fun _ => Vertex M)
+        (p := fun k x => collapseVertex S x = collapsedObs S e o k))
 
 /-- Finite conditional probability on a positive native history fiber. -/
 def conditionalFiberMass {M q s : ℕ} (S : Support M q) (r : ℝ)
@@ -284,5 +282,193 @@ theorem native_fiber_departure_counts {M q s : ℕ} (S : Support M q)
       k ∈ (univ.filter fun a : Fin s => y.val a.castSucc = Sum.inl i ∧ chi (o a.succ) = z)
     simp only [mem_filter, mem_univ, true_and, hchi]
 
+
+/-- Retain only the freely varying signal identities. Every other site is
+reconstructed from the same complete collapsed history. -/
+def fiberLabelEquiv {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) : Fiber S e o ≃ (SignalSites S e o → {i : Fin M // i ∈ S.val}) :=
+  (fiberSiteEquiv S e o).trans
+    { toFun := fun f k => signalVertexEquiv S
+        ⟨(f k.val).val, (f k.val).property.trans k.property⟩
+      invFun := fun f k => if hk : collapsedObs S e o k = none then
+        ⟨((signalVertexEquiv S).symm (f ⟨k, hk⟩)).val,
+          ((signalVertexEquiv S).symm (f ⟨k, hk⟩)).property.trans hk.symm⟩
+        else ⟨siteEquiv M s e o k, rfl⟩
+      left_inv := by
+        intro f
+        funext k
+        apply Subtype.ext
+        by_cases hk : collapsedObs S e o k = none
+        · simp only [dif_pos hk]
+          exact congrArg Subtype.val ((signalVertexEquiv S).symm_apply_apply
+            ⟨(f k).val, (f k).property.trans hk⟩)
+        · simp only [dif_neg hk]
+          exact (collapseVertex_injective_off_signal S hk (f k).property).symm
+      right_inv := by
+        intro f
+        funext k
+        simp only [dif_pos k.property]
+        exact (signalVertexEquiv S).apply_symm_apply (f k) }
+
+/-- The uniform conditional law holds for arbitrary events of the erased
+signal labels, not just rectangular site cylinders. -/
+theorem native_signal_assignment_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (A : Finset (SignalSites S e o → {i : Fin M // i ∈ S.val})) :
+    conditionalFiberMass S r e o (A.map (fiberLabelEquiv S e o).symm.toEmbedding) =
+      (A.card : ℝ) / (q : ℝ) ^ Nat.card (SignalSites S e o) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  letI : Fintype (SignalSites S e o) := by unfold SignalSites; infer_instance
+  have hp := ((finite_support_bayes (s := s) hq hqm hr hr1 ha ha1 e).2.2.1 S o).1
+  rw [conditionalFiberMass_eq_card S r e o hp, card_map]
+  have hc := Fintype.card_congr (fiberLabelEquiv S e o)
+  simp only [Fintype.card_fun, Fintype.card_coe, S.property] at hc
+  simp only [Nat.card_eq_fintype_card, hc, Nat.cast_pow]
+
+
+/-- An exact site enumeration gives two departure-label words and all
+remaining erased labels. In particular, terminal path labels belong in the
+remaining block, not in either departure word. -/
+def labelBlockEquiv {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e)
+    (kp km kr : ℕ) (J : SignalSites S e o ≃ ((Fin kp ⊕ Fin km) ⊕ Fin kr)) :
+    (SignalSites S e o → {i : Fin M // i ∈ S.val}) ≃
+      (((Fin kp → {i : Fin M // i ∈ S.val}) × (Fin km → {i : Fin M // i ∈ S.val})) ×
+        (Fin kr → {i : Fin M // i ∈ S.val})) :=
+  (Equiv.arrowCongr J (Equiv.refl _)).trans
+    ((Equiv.sumArrowEquivProdArrow (Fin kp ⊕ Fin km) (Fin kr) _).trans
+      (Equiv.prodCongr (Equiv.sumArrowEquivProdArrow (Fin kp) (Fin km) _) (Equiv.refl _)))
+
+/-- Exact joint occupation mass of two disjoint signal-site blocks, under the
+native history law. The enumeration is explicit; assigning its first two
+blocks to the positive and negative departure positions is a separate native
+readout obligation. Existing frozen word-sector counting supplies the
+multinomial factors. -/
+theorem native_multinomial_label_blocks {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (kp km kr : ℕ) (J : SignalSites S e o ≃ ((Fin kp ⊕ Fin km) ⊕ Fin kr))
+    (ap am : Multiset {i : Fin M // i ∈ S.val}) (hap : ap.card = kp) (ham : am.card = km) :
+    let A := ((D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords kp ap) ×ˢ
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords km am)) ×ˢ
+        (univ : Finset (Fin kr → {i : Fin M // i ∈ S.val}))
+    conditionalFiberMass S r e o
+      ((A.map (labelBlockEquiv S e o kp km kr J).symm.toEmbedding).map
+        (fiberLabelEquiv S e o).symm.toEmbedding) =
+      ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ am.count : ℝ)) /
+        (q : ℝ) ^ (kp + km) := by
+  classical
+  letI : Fintype (SignalSites S e o) := by unfold SignalSites; infer_instance
+  dsimp only
+  rw [native_signal_assignment_law S r e o hq hqm hr hr1 ha ha1]
+  have hc := Fintype.card_congr J
+  simp only [Fintype.card_sum, Fintype.card_fin] at hc
+  simp only [card_map, Finset.card_product,
+    D5.S3.Quantum.Entanglement.OccupancyWordSectors.sector_words_card_multinomial ap hap,
+    D5.S3.Quantum.Entanglement.OccupancyWordSectors.sector_words_card_multinomial am ham,
+    card_univ, Fintype.card_fun, Fintype.card_coe, Fintype.card_fin, S.property, Nat.cast_mul,
+    Nat.card_eq_fintype_card, hc, Nat.cast_pow, pow_add]
+  have hqR : (q : ℝ) ≠ 0 := by exact_mod_cast (by omega : q ≠ 0)
+  exact mul_div_mul_right _ _ (pow_ne_zero kr hqR)
+
+
+private theorem departureSite_injective (s : ℕ) (e : Experiment) :
+    Function.Injective (departureSite s e) := by
+  cases e with
+  | pair => intro j k h; exact congrArg Prod.fst h
+  | path => exact Fin.castSucc_injective s
+
+private theorem fiber_label_vertex {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (y : Fiber S e o) (k : SignalSites S e o) :
+    Sum.inl ((fiberLabelEquiv S e o y k).val) = siteEquiv M s e y.val k.val := by
+  exact congrArg Subtype.val ((signalVertexEquiv S).symm_apply_apply
+    ⟨siteEquiv M s e y.val k.val, (congrFun y.property k.val).trans k.property⟩)
+
+/-- Departure counts of a signal-label assignment use only erased departure
+coordinates and the successor signs of the same collapsed history. -/
+def departureLabelCount {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e)
+    [Fintype (Sites s e)] (g : SignalSites S e o → {i : Fin M // i ∈ S.val})
+    (i : Fin M) (z : ℝ) : ℕ := by
+  classical
+  letI : Fintype (SignalSites S e o) := by unfold SignalSites; infer_instance
+  exact (univ.filter fun k : SignalSites S e o => (g k).val = i ∧
+    ∃ j : Fin s, departureSite s e j = k.val ∧
+      chi (siteEquiv M s e o (successorSite s e j)) = z).card
+
+/-- Exact native count readout from the full signal-label assignment. This
+bijection excludes non-departure pair coordinates and the terminal path site. -/
+theorem native_departure_label_count {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) [Fintype (Sites s e)] (y : Fiber S e o) (i : Fin M) (hi : i ∈ S.val)
+    (z : ℝ) :
+    count e y.val i z = departureLabelCount S e o (fiberLabelEquiv S e o y) i z := by
+  classical
+  letI : Fintype (SignalSites S e o) := by unfold SignalSites; infer_instance
+  rw [native_fiber_departure_counts]
+  unfold departureLabelCount
+  let D := univ.filter fun j : Fin s =>
+    siteEquiv M s e y.val (departureSite s e j) = Sum.inl i ∧
+      chi (siteEquiv M s e o (successorSite s e j)) = z
+  let B := univ.filter fun k : SignalSites S e o => (fiberLabelEquiv S e o y k).val = i ∧
+    ∃ j : Fin s, departureSite s e j = k.val ∧
+      chi (siteEquiv M s e o (successorSite s e j)) = z
+  change D.card = B.card
+  have hsignal (j : Fin s) (hj : j ∈ D) : collapsedObs S e o (departureSite s e j) = none := by
+    have he := (mem_filter.mp hj).2.1
+    have hc := congrFun y.property (departureSite s e j)
+    have hn : collapseVertex S (siteEquiv M s e y.val (departureSite s e j)) = none := by
+      rw [he]
+      simp [collapseVertex, hi]
+    exact hc.symm.trans hn
+  let f : {j : Fin s // j ∈ D} → {k : SignalSites S e o // k ∈ B} := fun j =>
+    ⟨⟨departureSite s e j.val, hsignal j.val j.property⟩, mem_filter.mpr ⟨mem_univ _, by
+      constructor
+      · apply Sum.inl.inj
+        rw [fiber_label_vertex]
+        exact (mem_filter.mp j.property).2.1
+      · exact ⟨j.val, rfl, (mem_filter.mp j.property).2.2⟩⟩⟩
+  have hf : Function.Bijective f := by
+    constructor
+    · intro j k hjk
+      apply Subtype.ext
+      apply departureSite_injective s e
+      exact congrArg (fun x => x.val.val) hjk
+    · intro k
+      obtain ⟨hklabel, j, hjsite, hjchi⟩ := (mem_filter.mp k.property).2
+      have hj : j ∈ D := mem_filter.mpr ⟨mem_univ _, by
+        constructor
+        · rw [hjsite, ← fiber_label_vertex, hklabel]
+        · exact hjchi⟩
+      refine ⟨⟨j, hj⟩, ?_⟩
+      apply Subtype.ext
+      apply Subtype.ext
+      exact hjsite
+  simpa only [Fintype.card_coe] using Fintype.card_congr (Equiv.ofBijective f hf)
+
 end
 end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+
+-- Temporary closure probes.
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.collapseVertex
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.Sites
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.siteEquiv
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.collapsedObs
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.collapsedSigma
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.Fiber
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.SignalSites
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.signalVertexEquiv
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.fiberSiteEquiv
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.conditionalFiberMass
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.siteCylinder
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_conditional_site_law
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.departureSite
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.successorSite
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_fiber_departure_counts
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.fiberLabelEquiv
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_signal_assignment_law
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.labelBlockEquiv
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_multinomial_label_blocks
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.departureLabelCount
+#print axioms D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_departure_label_count
