@@ -24,6 +24,10 @@ $$\forall n : \mathbb{N}, ((3 \le n) \to (\forall x y : (\operatorname{Fin}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/AlphaGeometry/LogScalarCurvatureMonotone.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gibilisco-isola-2004-log-geometry-scalar-curvature` (proved) by `D5/S3/Geometry/AlphaGeometry/LogScalarCurvatureMonotone.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gibilisco-isola-2004-log-geometry-scalar-curvature","declaration_gid":"D5/S3/Geometry/AlphaGeometry/LogScalarCurvatureMonotone.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paolo Gibilisco; Tommaso Isola (2005). *On the monotonicity of scalar curvature in classical and quantum information geometry*. DOI: [10.1063/1.1834693](https://doi.org/10.1063/1.1834693). URL: <https://arxiv.org/abs/math-ph/0407007v2>.
