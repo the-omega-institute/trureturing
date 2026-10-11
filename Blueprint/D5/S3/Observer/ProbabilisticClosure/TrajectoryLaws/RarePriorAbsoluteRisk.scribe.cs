@@ -13,9 +13,20 @@ internal sealed class RarePriorAbsoluteRiskDocument : IScribeDocumentDefinition
             Paragraph(Text("Every actual fourth query has one retained row. Watching cannot persist into that phase; ordinary remains ordinary after every subsequent letter. The two recognized classes give the complete G and Gbeta laws, with ordinary iid probability 2/5 after their specified returns. The ordinary p comparison shares alpha mass 1/3 and beta-beta mass 9/25 with every zero-rare posterior mixture; beta shares beta mass 3/5. These masses give errors at most 23/75 and 2/5.")),
             Paragraph(Text("A recognized G history has at least 375 blocks. Its posterior mean exceeds 79/200. The two-atom reference G0 has total variation 9/10 minus that mean, since alpha is its sole positive discrepancy; the complete G law is exactly 1/1000 away from G0. Gbeta has error at most 2/5. Pending retains the unique matching Stop and delivered retains the empty future, with zero error. PhaseHistory queries only active fourth cuts, while the separate terminal identities preserve both original terminal compatibilities.")),
             Paragraph(Text("All-history zero-rare risk is at most 253/500 in p and 2/5 in beta. The rare-prior perturbation adds at most 1/1000 to each capped supremum. These statements concern absolute native risks; identifying the original minimax radii requires the full-depth sharp-radius theorem. Operational realization and charged COMPLETE membership are separate obligations.")),
+            Describe.Lean(DescribeId.Create("subtype-tv"), DeclarationHandle.Create(Prefix + "subtype_tv"),
+                H("The complete valid-tail inclusion preserves total variation"),
+                StatementSource.FromAuthor(Disp(All("s", Call("ActivePhase"),
+                    All("P", Call("Measure", Call("ValidTail", F.Id("s"))),
+                    All("Q", Call("Measure", Call("ValidTail", F.Id("s"))),
+                        Seq(Call("measurableTotalVariation", Call("mapSubtype", F.Id("P")),
+                            Call("mapSubtype", F.Id("Q"))), Eq,
+                            Call("measurableTotalVariation", F.Id("P"), F.Id("Q")))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For either active phase s and arbitrary measures P,Q on ValidTail(s), mapSubtype denotes pushforward by Subtype.val into RawTail. The inclusion preserves measurable total variation exactly, including the noncompletion outcome. Probability normalization is not a premise."))), DescribeRole.Theorem),
             Node("runtime-law-risk-bridge", "runtime_law_risk_bridge", "runtime law risk bridge"),
             Node("all-history-absolute-risks", "all_history_absolute_risks", "all history absolute risks"))));
 
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static DocumentBlock.Describe Node(string id, string name, string title) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(Statement(name))), AssessedProvenance.FromRepo(),
