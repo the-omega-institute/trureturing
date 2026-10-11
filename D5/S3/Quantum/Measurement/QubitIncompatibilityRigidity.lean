@@ -51,7 +51,7 @@ private lemma pauli_eq (v : V) :
     pauli v = D5.S3.Quantum.Measurement.FourQubitParentConstruction.B v := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [pauli, pauliY, qubitX, qubitZ,
+    simp [pauli.eq_1, pauliY.eq_1, qubitX, qubitZ,
       D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula] <;> ring
 
 private lemma B_formula (t : ℝ) (v : V) :
@@ -269,7 +269,7 @@ private lemma criterion_K (a b : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) :
 private def project (n v : V) : V := v - ⟪n, v⟫_ℝ • n
 
 private lemma project_add (n v w : V) : project n (v + w) = project n v + project n w := by
-  simp only [project, inner_add_right]
+  simp only [project.eq_1, inner_add_right]
   module
 
 private lemma project_sub (n v w : V) : project n (v - w) = project n v - project n w := by
@@ -315,7 +315,7 @@ private def quartic (a b n : V) : ℝ :=
 
 private lemma quartic_identity (a b n : V) (hn : ‖n‖ = 1) :
     K (project n a) (project n b) = quartic a b n := by
-  simp only [K, quartic, project_sq n a hn, project_sq n b hn, project_inner n a b hn]
+  simp only [K.eq_1, quartic.eq_1, project_sq n a hn, project_sq n b hn, project_inner n a b hn]
   ring
 
 private lemma central_criterion (n : V) (hn : ‖n‖ = 1) (a : Fin 2 → V) :
@@ -445,7 +445,7 @@ private lemma meridian_formula (a b m e : V) (hma : ⟪m, a⟫_ℝ = 0)
     (hmb : ⟪m, b⟫_ℝ = 0) (u v : ℝ) :
     quartic a b (u • m + v • e) = K a b + v ^ 2 * radialM a b e +
       v ^ 4 * radialL a b e := by
-  simp only [quartic, radialM, radialL, inner_add_left, real_inner_smul_left, hma, hmb]
+  simp only [quartic, radialM.eq_1, radialL.eq_1, inner_add_left, real_inner_smul_left, hma, hmb]
   ring
 private lemma meridian_positive (a b e : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)
     (hE : ‖b‖ ^ 2 * ⟪e, a⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪e, a⟫_ℝ * ⟪e, b⟫_ℝ +
@@ -641,7 +641,9 @@ private lemma boundary_branches (a b : V) (hk : K a b < 0) :
       curve (K a b) ⟪a, b⟫_ℝ x (branch a b x 1) = 0 ∧
       curve (K a b) ⟪a, b⟫_ℝ x (branch a b x (-1)) = 0 ∧
       branch a b x 1 ≠ branch a b x (-1) := by
-  have hc : Continuous (delta a b) := by unfold delta; fun_prop
+  have hc : Continuous (delta a b) := by
+    change Continuous (fun x => delta a b x)
+    simp only [delta.eq_1]; fun_prop
   have hp : 0 < delta a b 0 := by simpa [delta] using neg_pos.mpr hk
   obtain ⟨l, ε, ⟨hl, hε⟩, hI⟩ :=
     (continuousAt_const.eventually_lt hc.continuousAt hp).exists_Ioo_subset
@@ -654,8 +656,8 @@ private lemma boundary_branches (a b : V) (hk : K a b < 0) :
     unfold curve K; field_simp
     dsimp only [delta, K] at hs
     linear_combination (1 + x ^ 2) * hs
-  refine ⟨hd, (by simpa [branch] using hz _ hs),
-    (by simpa [branch] using hz _ (show (-Real.sqrt (delta a b x)) ^ 2 = _ by simpa using hs)), ?_⟩
+  refine ⟨hd, (by simpa [branch.eq_1] using hz _ hs),
+    (by simpa [branch.eq_1] using hz _ (show (-Real.sqrt (delta a b x)) ^ 2 = _ by simpa using hs)), ?_⟩
   intro he
   have he' := (div_left_inj' hH).mp he
   have hpos := Real.sqrt_pos.mpr hd
@@ -808,9 +810,10 @@ private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → V) :
   refine ⟨(fun q => G (flip q.1, q.2)), ?_, ?_⟩
   · constructor
     · intro q; exact hG.1 (flip q.1, q.2)
-    · simpa [IsPOVM, flip, Fin.sum_univ_two, add_comm, add_left_comm, add_assoc] using hG.2
+    · simpa [IsPOVM.eq_1, flip.eq_1, Fin.sum_univ_two, add_comm, add_left_comm, add_assoc]
+        using hG.2
   · intro ρ hρ i s; fin_cases i <;> fin_cases s
-    · simpa [marginal, flip, effect_neg] using h ρ hρ 0 1
+    · simpa [marginal.eq_1, flip.eq_1, effect_neg] using h ρ hρ 0 1
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 0
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 0
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 1
