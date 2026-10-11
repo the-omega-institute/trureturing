@@ -17,7 +17,6 @@ internal sealed class NativeBorelCommonFlowDocument : IScribeDocumentDefinition
         Formula c = Call("C", flow), l = Call("L", flow), mu = Call("nuP", flow);
         Formula g = F.Id("g"), cb = Fraction(Num(9), Num(25));
         Formula normalized = Call("normalizedIterate", flow, g, Num(3), q);
-        Formula defect = Call("threeStepDefect", flow, q);
         Formula f = F.Id("f"), f1 = F.Id("f1"), f2 = F.Id("f2");
         Formula zb = Fraction(Num(6), Num(25));
         Formula iteration = All(Equal(Call("coordinate", n, i, q),
@@ -84,9 +83,6 @@ internal sealed class NativeBorelCommonFlowDocument : IScribeDocumentDefinition
                 Node("common-flow-normalized-third-step", "common_flow_normalized_third_step",
                     "Normalized third return bound", All(Ae(mu, q, Le(normalized, cb)), ("F", "CommonFlow")),
                     "normalizedIterate(F,f,n,Q) is endpointRate⁻¹ raised to n times iterate(L,f,n,Q). The theorem transports the full p endpoint-box inequality at depth three through the exact scalar normalization endpointRate=6/25; it retains the original arbitrary Borel descriptor and acquired L operator."),
-                Node("common-flow-three-step-defect-nonneg", "common_flow_three_step_defect_nonneg",
-                    "Three-step defect is nonnegative", All(Ae(mu, q, Le(Num(0), defect)), ("F", "CommonFlow")),
-                    "threeStepDefect is the truncated ENNReal difference (g−normalizedIterate(L,g,3))/3. Its nonnegativity is recorded on the same full-measure endpoint-box core; it is the finite-block input for the later Jensen/localization construction. No harmonicity, survivor event, or limit is asserted here."),
                 Node("common-flow-normalized-iterate-succ", "normalizedIterate_succ",
                     "Normalized action advances one return", normalizedStep,
                     "The scalar endpoint normalization commutes with one L integration. The measurable iterate witness is discharged from the same Borel kernel, and no new state or transition is introduced."),

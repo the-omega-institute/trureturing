@@ -713,8 +713,6 @@ theorem normalizedAction_add (F : CommonFlow)
 def threeStepAverage (F : CommonFlow) (Q : PDescriptor) : ℝ≥0∞ :=
   (g Q + normalizedIterate F g 1 Q + normalizedIterate F g 2 Q) / 3
 
-def threeStepDefect (F : CommonFlow) (Q : PDescriptor) : ℝ≥0∞ :=
-  (g Q - normalizedIterate F g 3 Q) / 3
 
 theorem measurable_g : Measurable g := measurable_coordinate 0 1
 
@@ -779,14 +777,5 @@ theorem common_flow_normalized_third_step (F : CommonFlow) :
       simp only [ENNReal.toReal_inv, ENNReal.toReal_pow, ENNReal.toReal_mul,
         ENNReal.coe_toReal]
       norm_num [endpointRate, endpointCompletion]
-
-/-- The three-step block supplies a nonnegative defect on the same conull
-core as the endpoint box.  This is the finite block input for the later
-sixth-power localization argument. -/
-theorem common_flow_three_step_defect_nonneg (F : CommonFlow) :
-    ∀ᵐ Q ∂F.nuP, 0 ≤ threeStepDefect F Q := by
-  filter_upwards [common_flow_normalized_third_step F,
-    (common_flow_operator_bounds F).2] with Q _ _
-  exact bot_le
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelCommonFlow

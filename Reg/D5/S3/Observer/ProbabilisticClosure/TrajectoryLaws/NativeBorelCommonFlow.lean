@@ -95,32 +95,6 @@ theorem normalized_bridge : (type_of% (@common_flow_normalized_third_step)) ↔
 theorem normalized_positive : normalizedArena.Law normalizedActual :=
   common_flow_normalized_third_step
 
-abbrev defectSignature : Signature where
-  Params := CommonFlow
-  State _ := PDescriptor
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ≥0∞
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def defectArena : Arena where
-  signature := defectSignature
-  Law R := ∀ F : CommonFlow,
-    ∀ᵐ Q ∂F.nuP, 0 ≤ R.readout () F Q
-
-def defectActual : Realization defectSignature :=
-  realize defectSignature (fun _ F Q => threeStepDefect F Q) (fun e => nomatch e)
-def defectRejected : Realization defectSignature :=
-  realize defectSignature (fun _ _ _ => 0) (fun e => nomatch e)
-
-theorem defect_bridge : (type_of% (@common_flow_three_step_defect_nonneg)) ↔
-    defectArena.Law defectActual := Iff.rfl
-
-theorem defect_positive : defectArena.Law defectActual :=
-  common_flow_three_step_defect_nonneg
-
 abbrev coreSignature : Signature where
   Params := CommonFlow
   State _ := PDescriptor ⊕ BDescriptor
@@ -187,16 +161,6 @@ def normalizedRecord (hv : ∃ bad : Realization normalizedSignature, ¬ normali
   actual := normalizedActual
   bridge := normalized_bridge
   variation := ⟨normalized_positive, hv⟩
-  sensitivity := hs
-  dependence := hd
-
-def defectRecord (hv : ∃ bad : Realization defectSignature, ¬ defectArena.Law bad)
-    (hs : Sensitivity defectArena defectActual)
-    (hd : ObservationalDependence defectSignature defectActual) :
-    Registration defectArena (type_of% (@common_flow_three_step_defect_nonneg)) where
-  actual := defectActual
-  bridge := defect_bridge
-  variation := ⟨defect_positive, hv⟩
   sensitivity := hs
   dependence := hd
 

@@ -73,8 +73,40 @@ internal sealed class NativeBorelKilledPathsDocument : IScribeDocumentDefinition
                 Call("withDensity",Call("killedTrajectory",f,m,sub),Call("densityAt",f,n)),Eq,xi,
                 Land,Sp,Call("withDensity",Call("prefix",Call("killedTrajectory",f,m,sub),n),
                     Call("terminalDensity",f,n)),Eq,Call("prefix",xi,n),Close);
+        Formula ker=F.Id("K"), state=F.Id("S"), outState=F.Id("U"), initial=F.Id("mu"), map=F.Id("f"), weight=F.Id("w");
+        Formula cemeteryStatement=Seq(Forall,Sp,ker,Colon,Sp,Call("Kernel",F.Id("PDescriptor"),F.Id("PDescriptor")),Comma,Sp,
+            Call("Subprobability",ker),Rightarrow,Call("IsMarkovKernel",Call("cemetery",ker)));
+        Formula initialStatement=Seq(Forall,Sp,state,Colon,Sp,F.Id("Type"),Comma,Sp,
+            OpenBracket,Call("MeasurableSpace",state),CloseBracket,Sp,
+            Forall,Sp,initial,Colon,Sp,Call("Measure",state),Comma,Sp,
+            Forall,Sp,ker,Colon,Sp,Call("Kernel",state,state),Comma,Sp,
+            OpenBracket,Call("IsMarkovKernel",ker),CloseBracket,Sp,
+            Call("map",Call("homogeneousLaw",initial,ker),Call("eval",D(0))),Eq,initial);
+        Formula mapDensityStatement=Seq(Forall,Sp,state,Colon,Sp,F.Id("Type"),Comma,Sp,
+            Forall,Sp,outState,Colon,Sp,F.Id("Type"),Comma,Sp,
+            OpenBracket,Call("MeasurableSpace",state),CloseBracket,Sp,
+            OpenBracket,Call("MeasurableSpace",outState),CloseBracket,Sp,
+            Forall,Sp,initial,Colon,Sp,Call("Measure",state),Comma,Sp,
+            Forall,Sp,map,Colon,Sp,Call("Function",state,outState),Comma,Sp,Call("Measurable",map),Rightarrow,
+            Forall,Sp,weight,Colon,Sp,Call("Function",outState,F.Id("ENNReal")),Comma,Sp,
+            Call("Measurable",weight),Rightarrow,
+            Call("map",Call("withDensity",initial,Call("compose",weight,map)),map),Eq,
+            Call("withDensity",Call("map",initial,map),weight));
         return DocumentDefinition.Create(ScribeNode.Create("Killed Doob paths on the original flow",
             H("A Markov cemetery extension"),Blocks(
+                Describe.Lean(DescribeId.Create("cemetery-markov"),
+                    DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelKilledPaths.cemetery_markov"),
+                    H("The extension is Markov"),StatementSource.FromAuthor(Disp(cemeteryStatement)),
+                    AssessedProvenance.FromRepo(),Blocks(Paragraph(Text("Every substochastic row is extended by its missing mass at the absorbing cemetery point, so the extended row has mass one."))),DescribeRole.Theorem),
+                Describe.Lean(DescribeId.Create("homogeneous-initial"),
+                    DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelKilledPaths.homogeneous_initial"),
+                    H("The original initial law"),StatementSource.FromAuthor(Disp(initialStatement)),
+                    AssessedProvenance.FromRepo(),Blocks(Paragraph(Text("homogeneousStep(K,n) applies K to the last state of the complete history through n. homogeneousLaw(mu,K) is its Ionescu-Tulcea trajectory law; its time-zero marginal is exactly mu, including initial measures that are not probabilities."))),DescribeRole.Theorem),
+                Describe.Lean(DescribeId.Create("map-terminal-density"),
+                    DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelKilledPaths.map_terminal_density"),
+                    H("Mapping a density evaluated at the image"),StatementSource.FromAuthor(Disp(mapDensityStatement)),
+                    AssessedProvenance.FromRepo(),Blocks(Paragraph(Text("For arbitrary measurable spaces, measurable f and nonnegative measurable w, weighting mu by w(f(x)) and then mapping by f gives the image measure weighted by w. The finite product proof uses this identity for the complete prefix extension map."))),DescribeRole.Theorem),
+
                 Paragraph(Text("F is the original boxed Borel CommonFlow and G is an earned measurable conull absorbing carrier. Write h=threeStepAverage and T=L/(6/25). On G, doob(F,G) has density h(R)/(h(Q)*(6/25)) with respect to the actual L row; it is the zero row outside G. Subprobability(M) means every M row has mass at most one. Cemetery is the disjoint union of the original descriptor space and one absorbing state. The extension sends each live row through the inclusion and sends its missing mass to that state. killedTrajectory is its full Ionescu-Tulcea law with initial law nuP mapped through the inclusion. It is formed from the Markov extension, while M remains substochastic.")),
                 Describe.Lean(DescribeId.Create("common-flow-doob-survival"),
                     DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelKilledPaths.common_flow_doob_survival"),

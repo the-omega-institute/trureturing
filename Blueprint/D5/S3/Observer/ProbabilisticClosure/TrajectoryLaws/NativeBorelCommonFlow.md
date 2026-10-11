@@ -60,19 +60,7 @@ $$\forall F: CommonFlow, \operatorname{AE}\left(\operatorname{nuP}\left(F\right)
 
 normalizedIterate(F,f,n,Q) is endpointRate⁻¹ raised to n times iterate(L,f,n,Q). The theorem transports the full p endpoint-box inequality at depth three through the exact scalar normalization endpointRate=6/25; it retains the original arbitrary Borel descriptor and acquired L operator.
 
-**Theorem 1.5 (Three-step defect is nonnegative).**
-
-$$\forall F: CommonFlow, \operatorname{AE}\left(\operatorname{nuP}\left(F\right), Q, 0\leq\operatorname{threeStepDefect}\left(F, Q\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCommonFlow.common_flow_three_step_defect_nonneg` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-threeStepDefect is the truncated ENNReal difference (g−normalizedIterate(L,g,3))/3. Its nonnegativity is recorded on the same full-measure endpoint-box core; it is the finite-block input for the later Jensen/localization construction. No harmonicity, survivor event, or limit is asserted here.
-
-**Theorem 1.6 (Normalized action advances one return).**
+**Theorem 1.5 (Normalized action advances one return).**
 
 $$\forall F: CommonFlow, \forall f: PDescriptorFunction, \forall n: Nat, \forall Q: PDescriptor, (\operatorname{Measurable}\left(f\right))\Rightarrow(\operatorname{normalizedIterate}\left(F, f, n+1, Q\right)=\operatorname{normalizedAction}\left(F, \operatorname{normalizedIterate}\left(F, f, n\right), Q\right))$$
 
@@ -84,7 +72,7 @@ $$\forall F: CommonFlow, \forall f: PDescriptorFunction, \forall n: Nat, \forall
 
 The scalar endpoint normalization commutes with one L integration. The measurable iterate witness is discharged from the same Borel kernel, and no new state or transition is introduced.
 
-**Theorem 1.7 (Normalized action preserves nonnegative addition).**
+**Theorem 1.6 (Normalized action preserves nonnegative addition).**
 
 $$\forall F: CommonFlow, \forall f1: PDescriptorFunction, \forall f2: PDescriptorFunction, \forall Q: PDescriptor, (\operatorname{Measurable}\left(f1\right))\Rightarrow(\operatorname{normalizedAction}\left(F, f1+f2, Q\right)=\operatorname{normalizedAction}\left(F, f1, Q\right)+\operatorname{normalizedAction}\left(F, f2, Q\right))$$
 
@@ -96,7 +84,7 @@ $$\forall F: CommonFlow, \forall f1: PDescriptorFunction, \forall f2: PDescripto
 
 Kernel integration and endpoint scaling preserve addition for the measurable first summand. This is the linearity input needed when the finite-block average is expanded; it does not assert a Jensen or localization conclusion.
 
-**Theorem 1.8 (Normalized action of the finite-block average).**
+**Theorem 1.7 (Normalized action of the finite-block average).**
 
 $$\forall F: CommonFlow, \forall Q: PDescriptor, \operatorname{normalizedAction}\left(F, \operatorname{threeStepAverage}\left(F, Q\right), Q\right)=\frac{\operatorname{normalizedIterate}\left(F, g, 1, Q\right) + \operatorname{normalizedIterate}\left(F, g, 2, Q\right) + \operatorname{normalizedIterate}\left(F, g, 3, Q\right)}{3}$$
 
@@ -113,7 +101,6 @@ The acquired normalized action sends the three-step average to the corresponding
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCommonFlow.common_flow_conull_core`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCommonFlow.common_flow_normalized_third_step`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCommonFlow.common_flow_operator_bounds`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCommonFlow.common_flow_three_step_defect_nonneg`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCommonFlow.common_flow_word_iteration`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCommonFlow.normalizedAction_add`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCommonFlow.normalizedAction_threeStepAverage`

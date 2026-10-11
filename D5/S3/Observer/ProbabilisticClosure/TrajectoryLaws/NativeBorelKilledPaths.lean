@@ -137,7 +137,7 @@ def cemetery (M : Kernel PDescriptor PDescriptor) : Kernel Cemetery Cemetery :=
   ⟨Sum.elim live (fun _ => Measure.dirac (Sum.inr ())),
     live.measurable.sumElim measurable_const⟩
 
-private theorem cemetery_markov (M : Kernel PDescriptor PDescriptor)
+theorem cemetery_markov (M : Kernel PDescriptor PDescriptor)
     (hsub : ∀ Q, M Q Set.univ ≤ 1) : IsMarkovKernel (cemetery M) := by
   refine ⟨fun x => ⟨?_⟩⟩
   cases x with
@@ -268,7 +268,7 @@ theorem common_flow_doob_survival (F : CommonFlow) :
       (Or.inr (ENNReal.inv_ne_top.mpr (core_h_positive F Q (hc Q hQ).1)))
     simpa only [div_eq_mul_inv, mul_comm] using ht
 
-private def homogeneousStep {S : Type*} [MeasurableSpace S] (K : Kernel S S) (n : ℕ) :
+def homogeneousStep {S : Type*} [MeasurableSpace S] (K : Kernel S S) (n : ℕ) :
     Kernel ((i : Finset.Iic n) → S) S :=
   K.comap (fun x => x ⟨n, Finset.mem_Iic.mpr le_rfl⟩) (measurable_pi_apply _)
 
@@ -277,7 +277,7 @@ private instance homogeneousStep_markov {S : Type*} [MeasurableSpace S]
   unfold homogeneousStep
   infer_instance
 
-private def homogeneousLaw {S : Type*} [MeasurableSpace S] (μ : Measure S)
+def homogeneousLaw {S : Type*} [MeasurableSpace S] (μ : Measure S)
     (K : Kernel S S) [IsMarkovKernel K] : Measure (ℕ → S) :=
   Kernel.trajMeasure μ (homogeneousStep K)
 
@@ -312,7 +312,7 @@ private theorem actionIterate_commute {S : Type*} [MeasurableSpace S]
   | zero => rfl
   | succ n ih => simp only [actionIterate, ih]
 
-private theorem homogeneous_initial {S : Type*} [MeasurableSpace S]
+theorem homogeneous_initial {S : Type*} [MeasurableSpace S]
     (μ : Measure S) (K : Kernel S S) [IsMarkovKernel K] :
     (homogeneousLaw μ K).map (fun x => x 0) = μ := by
   have hp : (homogeneousLaw μ K).map (frestrictLe 0) =
@@ -767,7 +767,7 @@ private theorem terminal_survival_mass (F : CommonFlow) (G : Set PDescriptor)
     lintegral_indicator_const (μ := F.nuP)
       (measurableSet_singleton (nativeEndpoint .p true)) 1
 
-private theorem map_terminal_density {S U : Type*} [MeasurableSpace S]
+theorem map_terminal_density {S U : Type*} [MeasurableSpace S]
     [MeasurableSpace U] (μ : Measure S) (f : S → U) (hf : Measurable f)
     (w : U → ℝ≥0∞) (hw : Measurable w) :
     (μ.withDensity (fun x => w (f x))).map f = (μ.map f).withDensity w := by
@@ -944,5 +944,6 @@ theorem common_flow_immortal_identity (F : CommonFlow) :
         (x ⟨n, Finset.mem_Iic.mpr le_rfl⟩))
       ((hs.sumElim measurable_const).comp (measurable_pi_apply _))
     exact hm.symm.trans (congrArg (fun ν => ν.map (frestrictLe n)) (hterminal n))
+
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelKilledPaths

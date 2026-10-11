@@ -51,26 +51,6 @@ theorem native_coordinate (s : ActivePhase) (r : unitInterval) (t : ValidTail s)
   change (explicitStoppedWordLaw s r).comap (Subtype.val : ValidTail s → RawTail) {t} = _
   rw [(inclusion_embedding s).comap_apply, Set.image_singleton]
 
-/-- Mapping the transported probability law back recovers the actual native law. -/
-theorem native_map (s : ActivePhase) (r : unitInterval) :
-    (native s r : Measure (ValidTail s)).map (Subtype.val : ValidTail s → RawTail) = explicitStoppedWordLaw s r := by
-  apply Measure.ext_of_singleton
-  intro t
-  rw [(inclusion_embedding s).map_apply]
-  by_cases h : Valid s t
-  · have he : (Subtype.val : ValidTail s → RawTail) ⁻¹' {t} = {⟨t, h⟩} := by
-      ext x
-      simp [Subtype.ext_iff]
-    rw [he, native_coordinate]
-  · have he : (Subtype.val : ValidTail s → RawTail) ⁻¹' {t} = ∅ := by
-      ext x
-      simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_empty_iff_false, iff_false]
-      exact fun hx => h (hx ▸ x.property)
-    rw [he, measure_empty]
-    cases t with
-    | none => exact False.elim (h trivial)
-    | some w => simp only [explicit_finite_mass, Valid] at h ⊢; rw [if_neg h]
-
 theorem native_atoms (r : unitInterval) :
     (∀ n i, (native .p r : Measure _) {pAtom n i} =
       (if i = 0 then alphaMass r else betaMass r ^ 2) *

@@ -102,4 +102,94 @@ theorem immortal_identity_bridge : (type_of% (@common_flow_immortal_identity)) �
 theorem immortal_identity_actual_law : immortalIdentityArena.Law doobActual :=
   immortal_identity_bridge.mp common_flow_immortal_identity
 
+
+universe u v
+
+abbrev cemeteryMarkovSignature : Signature where
+  Params := Kernel PDescriptor PDescriptor
+  State _ := Unit
+  Role := Fin 1
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Kernel Cemetery Cemetery
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def cemeteryMarkovActual : Realization cemeteryMarkovSignature :=
+  realize _ (fun _ M _ => cemetery M) (fun e => nomatch e)
+
+def cemeteryMarkovArena : Arena where
+  signature := cemeteryMarkovSignature
+  Law R := ∀ (M : Kernel PDescriptor PDescriptor),
+    (∀ Q, M Q Set.univ ≤ 1) → IsMarkovKernel (R.readout 0 M ())
+
+theorem cemetery_markov_bridge : (type_of% (@cemetery_markov)) ↔
+    cemeteryMarkovArena.Law cemeteryMarkovActual := Iff.rfl
+
+theorem cemetery_markov_actual_law : cemeteryMarkovArena.Law cemeteryMarkovActual :=
+  cemetery_markov_bridge.mp cemetery_markov
+
+abbrev homogeneousInitialSignature : Signature where
+  Params := Σ S : Type u, MeasurableSpace S
+  State _ := Unit
+  Role := Fin 1
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := letI := p.2
+    Measure p.1 → (K : Kernel p.1 p.1) → [IsMarkovKernel K] → Measure (ℕ → p.1)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def homogeneousInitialActual : Realization homogeneousInitialSignature.{u} :=
+  realize _ (fun _ p _ => @homogeneousLaw p.1 p.2) (fun e => nomatch e)
+
+def homogeneousInitialArena : Arena where
+  signature := homogeneousInitialSignature.{u}
+  Law R := ∀ (S : Type u) (m : MeasurableSpace S), letI := m
+    ∀ (μ : Measure S) (K : Kernel S S) [IsMarkovKernel K],
+      (R.readout 0 ⟨S,m⟩ () μ K).map (fun x => x 0) = μ
+
+theorem homogeneous_initial_bridge : (type_of% (@homogeneous_initial.{u})) ↔
+    homogeneousInitialArena.{u}.Law homogeneousInitialActual.{u} := Iff.rfl
+
+theorem homogeneous_initial_actual_law :
+    homogeneousInitialArena.{u}.Law homogeneousInitialActual.{u} :=
+  homogeneous_initial_bridge.{u}.mp (@homogeneous_initial.{u})
+
+abbrev mapTerminalDensitySignature : Signature where
+  Params := (Σ S : Type u, MeasurableSpace S) × (Σ U : Type v, MeasurableSpace U)
+  State _ := Unit
+  Role := Fin 1
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := letI := p.1.2
+    letI := p.2.2
+    Measure p.1.1 → (p.1.1 → p.2.1) → Measure p.2.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def mapTerminalDensityActual : Realization mapTerminalDensitySignature.{u,v} :=
+  realize _ (fun _ p _ => by
+    letI := p.1.2
+    letI := p.2.2
+    exact fun μ f => μ.map f) (fun e => nomatch e)
+
+def mapTerminalDensityArena : Arena where
+  signature := mapTerminalDensitySignature.{u,v}
+  Law R := ∀ (S : Type u) (U : Type v) (mS : MeasurableSpace S) (mU : MeasurableSpace U),
+    letI := mS
+    letI := mU
+    ∀ (μ : Measure S) (f : S → U), Measurable f →
+      ∀ (w : U → ℝ≥0∞), Measurable w →
+        R.readout 0 (⟨S,mS⟩,⟨U,mU⟩) () (μ.withDensity (fun x => w (f x))) f =
+          (R.readout 0 (⟨S,mS⟩,⟨U,mU⟩) () μ f).withDensity w
+
+theorem map_terminal_density_bridge : (type_of% (@map_terminal_density.{u,v})) ↔
+    mapTerminalDensityArena.{u,v}.Law mapTerminalDensityActual.{u,v} := Iff.rfl
+
+theorem map_terminal_density_actual_law :
+    mapTerminalDensityArena.{u,v}.Law mapTerminalDensityActual.{u,v} :=
+  map_terminal_density_bridge.{u,v}.mp (@map_terminal_density.{u,v})
+
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelKilledPaths
