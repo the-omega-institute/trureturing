@@ -1823,3 +1823,299 @@ v_{\mathrm{ext}}^2+v_{\mathrm{int}}^2=c^2
 | 量子力学 | \(\rho\)、unitary、pinching、CPTP/GKSL | 指定载体、读出和通道；金字塔是 classical readout sector |
 | 热力学 | \(D_{\mathrm h}\)、Onsager mobility、free-energy decrease | 内部 κ-flow；Gibbs 识别要求匹配参考；环境热须另供协议 |
 | 电磁/规范 | horizontal connection、phase、boundary port | 仍是待构造的 field extension |
+
+## 追加锚（本行以下为增补区）
+
+## 14. 五态原流的 Fisher 水平截面与反应系数
+
+**定义 14.1（完整来源、坐标次序与水平约定）。** 本节的共同来源是完整五态概率律。记 [SPLIT《局部源分裂与读出几何》](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md) 定义 1.1–1.3、数学引文 2.1–2.2 的输入支持为 $s_0,s_1,s_2,s_3,s_{13}$。与本卷及 [FOUND《基础公式》](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) 定义 2.1 的逐标签双射为
+
+$$
+\begin{aligned}
+s_0=\varnothing&\longleftrightarrow 0, &
+s_1=\{1\}&\longleftrightarrow 2, &
+s_2=\{2\}&\longleftrightarrow 3,\\
+s_3=\{3\}&\longleftrightarrow 5, &
+s_{13}=\{1,3\}&\longleftrightarrow 25.
+\end{aligned}
+$$
+
+右侧的 $25$ 是联合输出标签 $[2,5]$，不是数值乘积。该双射的概率推前逐项保留全部五个概率，特别将 SPLIT 的 apex 质量 $p_{s_2}$ 保留为本卷 $p_3$。在右侧标签上，$x=\mathbf1_{\{2,25\}}$、$z=\mathbf1_{\{3\}}$、$y=\mathbf1_{\{5,25\}}$，且 $\kappa=p_{25}=\mathbb E_p[xy]$。以下对数为自然对数，一律按本卷次序 $(0,2,3,5,25)$ 写概率和切向量；写 $P$ 时则采用 SPLIT 的均值次序：
+
+$$
+\begin{aligned}
+\mathcal D^\circ&=\{p\in\mathbb R^5:p_i>0,\ \textstyle\sum_i p_i=1\},
+&T_p\mathcal D^\circ=T&=\{v:\textstyle\sum_i v_i=0\},\\
+P(p)&=(X,Z,Y)=(p_2+p_{25},p_3,p_5+p_{25}),
+&DP(v)&=(v_2+v_{25},v_3,v_5+v_{25}),\\
+\mathcal B&=\{(X,Z,Y):0<Z<1,\ 0<X,Y<1-Z\},
+&T_b\mathcal B&=\mathbb R^3.
+\end{aligned}
+$$
+
+本卷 §§1、8 的均值次序是 $\Pi P=(X,Y,Z)$，其中 $\Pi(X,Z,Y)=(X,Y,Z)$；在两种次序间同时置换基向量及导数，不置换或删除概率质量。复用 SPLIT 的 $\ker(DP)=\mathbb R\nu$，其中 $\nu=(1,-1,0,-1,1)$，以及固定线性右截面
+
+$$
+L(u_X,u_Z,u_Y)=(-u_X-u_Z-u_Y,u_X,u_Z,u_Y,0).
+$$
+
+本节明确选择全五态 Fisher 度量及其正交补：
+
+$$
+g_p(v,w)=\sum_{i\in\{0,2,3,5,25\}}\frac{v_iw_i}{p_i},
+\qquad \mathcal H_p=(\mathbb R\nu)^{\perp_{g_p}}\subset T.
+$$
+
+这给 §11.1 的「Fisher 水平」指定一个解释；SPLIT 定义 4.1 的固定截面没有预先选择此度量。记
+
+$$
+\theta_{\mathrm h}(p)=\log\frac{p_0p_{25}}{p_2p_5},\qquad
+S(p)=\frac1{p_0}+\frac1{p_2}+\frac1{p_5}+\frac1{p_{25}}>0.
+$$
+
+$\theta_{\mathrm h}$ 是 §§9、11.1 的 $A_q$，与 §10 的径向角 $2\arcsin\sqrt r$ 不同。复用 §8 的 $r=1-p_3$、$q=(p_0,p_2,p_5,p_{25})/r$ 及 $(\alpha,\beta,\eta)=(X,Y,\kappa)/r$；这里 $q$ 只是保留 $r$ 后的坐标，未将共同来源替换为四态条件律。其严格正域为
+
+$$
+0<r<1,\quad 0<\alpha,\beta<1,\quad
+\max(0,\alpha+\beta-1)<\eta<\min(\alpha,\beta).
+$$
+
+**定理 14.2（§11.1 的选定水平场在 §9 原流上的完整对应）。** 在定义 14.1 的全域，对每个 $p\in\mathcal D^\circ$ 和每个 $u=(u_X,u_Z,u_Y)\in\mathbb R^3$，令
+
+$$
+\ell_p(u)=\frac{(u_X+u_Z+u_Y)/p_0+u_X/p_2+u_Y/p_5}{S(p)},
+\qquad L_p^{F}u=Lu+\ell_p(u)\nu.
+\tag{14.1}
+$$
+
+这是像为 $\mathcal H_p$ 的唯一线性右截面。对任意 $v\in T$，其 Fisher 垂直系数为
+
+$$
+\begin{aligned}
+d\theta_{\mathrm h}|_p(v)&=g_p(\nu,v),\\
+v&=L_p^{F}(DP(v))+c_p(v)\nu,\\
+c_p(v)&=\frac{d\theta_{\mathrm h}|_p(v)}{S(p)}
+=v_{25}-\ell_p(DP(v)).
+\end{aligned}
+\tag{14.2}
+$$
+
+在 §8 坐标中，置
+
+$$
+s(q)=\frac1{q_0}+\frac1{q_2}+\frac1{q_5}+\frac1{q_{25}},\qquad
+a(q)=\frac{q_0^{-1}+q_2^{-1}}{s(q)},\qquad
+b(q)=\frac{q_0^{-1}+q_5^{-1}}{s(q)}.
+$$
+
+§11.1 的 $H_\alpha,H_\beta$ 及该节径向场的本节记号 $H_r$ 分别为
+
+$$
+H_\alpha=\partial_\alpha+a(q)\partial_\eta,\qquad
+H_\beta=\partial_\beta+b(q)\partial_\eta,\qquad
+H_r=\partial_r.
+\tag{14.3}
+$$
+
+三个坐标导数都在固定其余 $(r,\alpha,\beta,\eta)$ 坐标时作用于完整五态重构。在概率坐标中，特别有
+
+$$
+\begin{aligned}
+H_\alpha&=r(-1,1,0,0,0)+ra(q)\nu,\\
+H_\beta&=r(-1,0,0,1,0)+rb(q)\nu,\\
+H_r&=(q_0,q_2,-1,q_5,q_{25}),\qquad \partial_\eta=r\nu.
+\end{aligned}
+\tag{14.4}
+$$
+
+水平运输精确保留 $\theta_{\mathrm h}$。对任意有限闭区间 $[0,T]$ 上的绝对连续基路径 $b(t)\in\mathcal B$ 及任意 $p^{\mathrm{in}}\in\mathcal D^\circ$ 满足 $P(p^{\mathrm{in}})=b(0)$，存在唯一以 $p^{\mathrm{in}}$ 为初值、始终严格正的水平绝对连续提升。它的终点只依赖基路径终点和初始 $\theta_{\mathrm h}$。因而 $\mathcal H$ 是 $P:\mathcal D^\circ\to\mathcal B$ 的平坦 Ehresmann 连接；这只指该概率纤维投影的水平分布可积及其闭路运输为恒等。
+
+进一步，取 §9 原有任意非负 $\mu,\gamma\in L^1_{\mathrm{loc}}([0,\infty))$ 及严格正初值，沿用该节唯一的逐有限区间绝对连续解和几乎处处方程。每个有限区间上的解均与 $\mathcal D^\circ$ 的边界保持正距离，且几乎处处
+
+$$
+\begin{aligned}
+\dot p&=-\mu r H_r+J\nu,
+&J&=\gamma(p_2p_5-p_0p_{25}),\\
+L_p^{F}(DP(\dot p))&=-\mu r H_r,
+&c_p(\dot p)&=J,\\
+\dot\theta_{\mathrm h}&=S(p)J,
+&\dot\kappa&=J-\mu\kappa.
+\end{aligned}
+\tag{14.5}
+$$
+
+所以 SPLIT 固定截面的隐藏系数仍是实际 $\dot\kappa$；选定 Fisher 截面的隐藏系数是 $J$。等式 $\ell_p(DP(\dot p))=-\mu\kappa$ 精确给出两者之差，不改变原概率方程。
+
+**证明。** 先说明使用的既有几何。FOUND 数学引文 9.1 已给全部严格正五态律的唯一正权重表示；其正比坐标的文献前置为 Drton–Sullivant, *Algebraic Statistical Models*, v1，§2 Definition 3、Example 4（pp. 4–5，[原文](https://arxiv.org/pdf/math/0703609v1)），明确采用有限标签上的计数测度及严格正概率。把 FOUND 的优势比参数写成 $e^{\theta_{\mathrm h}}$，以免与本卷条件联合质量 $\eta$ 混淆，得到
+
+$$
+p=\exp\{\lambda_x x+\lambda_z z+\lambda_y y+
+\theta_{\mathrm h}xy-\psi\},\qquad
+\psi=\log(1+e^{\lambda_x}+e^{\lambda_z}+e^{\lambda_y}
++e^{\lambda_x+\lambda_y+\theta_{\mathrm h}}).
+\tag{14.6}
+$$
+
+通用指数族的对偶及混合坐标是既有信息几何背景，不是本定理的新一般结论。所需有限族前提可以直接核对：基测度是这五个标签上的计数测度，自然参数域为 $\mathbb R^4$；$1,x,z,y,xy$ 在五点上独立（FOUND 数学引文 2.2），故表示正则且极小。对数配分函数的 Hessian 为充分统计量的协方差、正则极小族的均值参数映射单射，采用 Wainwright–Jordan, *Graphical Models, Exponential Families, and Variational Inference*, §3.2、Propositions 3.1–3.2（pp. 40、62–64，[原文](https://www.cs.columbia.edu/~blei/fogm/2018F/materials/WainwrightJordan2008.pdf)，[DOI](https://doi.org/10.1561/2200000001)）的背景合同；该文明确允许有限计数基测度。本节不据未核对或比上述更强的测度假设援引一般混合参数定理。以下只是把既有正参数与 SPLIT 右截面接到指定的 §11.1、§9 消费者。
+
+对数的有限项微分直接给
+
+$$
+d\theta_{\mathrm h}(v)=\frac{v_0}{p_0}-\frac{v_2}{p_2}
+-\frac{v_5}{p_5}+\frac{v_{25}}{p_{25}}=g_p(\nu,v),
+\qquad d\theta_{\mathrm h}(\nu)=S(p).
+$$
+
+由 SPLIT 定理 4.3，每个线性右截面都形如 $L+\nu\ell$。令其与 $\nu$ 正交，所得唯一标量方程是
+
+$$
+0=g_p(\nu,Lu)+S(p)\ell(u)
+=-\frac{u_X+u_Z+u_Y}{p_0}-\frac{u_X}{p_2}-\frac{u_Y}{p_5}
++S(p)\ell(u).
+$$
+
+故得 (14.1)，并由 SPLIT 定理 4.2–4.3 的同一截面变换式得到 (14.2)。这里的唯一性相对于所选 Fisher 正交性，不给所有截面指定共同的隐藏系数。
+
+在归一化坐标中，$\theta_{\mathrm h}=\log(q_0q_{25}/q_2q_5)$ 不含 $r$，且
+
+$$
+\partial_\eta\theta_{\mathrm h}=s(q),\qquad
+\partial_\alpha\theta_{\mathrm h}=-q_0^{-1}-q_2^{-1},\qquad
+\partial_\beta\theta_{\mathrm h}=-q_0^{-1}-q_5^{-1}.
+$$
+
+于是 (14.3) 是相应三个基坐标向量的唯一水平提升；对 §8 的重构求导得到 (14.4)。它们在 SPLIT 次序下的投影分别为 $(r,0,0)$、$(0,0,r)$、$(\alpha,-1,\beta)$，三者独立。对一般切向量亦有
+
+$$
+c_p(v)=r\bigl(d\eta(v)-a(q)d\alpha(v)-b(q)d\beta(v)\bigr),
+\qquad S(p)=s(q)/r.
+\tag{14.7}
+$$
+
+为明确全域运输而不借用额外测度前提，使用 SPLIT 数学引文 2.1 的实际开纤维
+
+$$
+\max(0,X+Y-r)<\kappa<\min(X,Y).
+$$
+
+其上 $\partial_\kappa\theta_{\mathrm h}=S>0$。在下端，分子 $\kappa(r-X-Y+\kappa)$ 趋零，分母 $(X-\kappa)(Y-\kappa)$ 趋于严格正数；在上端，分母趋零，分子趋于严格正数。严格正性由 $0<X,Y<r$ 保证，即使两项同时趋零的下端或上端也分别只出现在分子或分母。因此 $\theta_{\mathrm h}$ 的值域为 $\mathbb R$。
+
+对每个 $\vartheta\in\mathbb R$，存在唯一开纤维点解
+
+$$
+\frac{\kappa(r-X-Y+\kappa)}{(X-\kappa)(Y-\kappa)}=e^\vartheta.
+\tag{14.8}
+$$
+
+以既有五态仿射重构记此点为 $\sigma_\vartheta(b)$。隐函数定理及 $S>0$ 给出它对 $(b,\vartheta)$ 光滑，且
+
+$$
+P\circ\sigma_\vartheta=\mathrm{id}_{\mathcal B},\qquad
+D\sigma_\vartheta|_b=L^F_{\sigma_\vartheta(b)}.
+$$
+
+故 $(P,\theta_{\mathrm h})$ 是到 $\mathcal B\times\mathbb R$ 的全局光滑坐标。这里 $L_p^F$ 是切空间右逆，$\sigma_\vartheta$ 是非线性概率截面，两者不同。对有限闭区间上的绝对连续 $b(t)$，其像紧含于 $\mathcal B$；光滑 $\sigma_\vartheta$ 在该紧像的邻域上有有界导数，故 $p(t)=\sigma_\vartheta(b(t))$ 绝对连续。反过来水平提升满足 $d\theta_{\mathrm h}(\dot p)=0$ 几乎处处，链式法则与绝对连续性使 $\theta_{\mathrm h}$ 为常数，因此提升唯一。
+
+叶 $\theta_{\mathrm h}=\vartheta$ 的切空间就是 $\mathcal H$；在 $(r,\alpha,\beta,\theta_{\mathrm h})$ 坐标中三个水平场是固定 $\theta_{\mathrm h}$ 的坐标向量场，故其括号为零。这证明所述 Ehresmann 平坦性。归一化一形式 $\omega=d\theta_{\mathrm h}/S$ 一般并不闭；平坦性只要求其外微分在两条水平向量上的值为零。它不宣告 Fisher 的 Levi-Civita 连接平坦，也不把水平曲线认作 Fisher 测地线；§10 的球面嵌入与径向作用极小问题仍是不同的既有几何。
+
+最后直接复用 §9 的解，而不另立初值求解。其记号 $M(t)=\int_0^t\mu$、$G(t)=\int_0^t\gamma r$ 和 $q_*$ 给
+
+$$
+r(t)=r_0e^{-M(t)},\qquad
+q(t)=e^{-G(t)}q(0)+(1-e^{-G(t)})q_*.
+$$
+
+对严格正初值和任意有限 $T$，四个底部概率及 apex 分别满足
+
+$$
+p_i(t)\ge r_0e^{-M(T)-G(T)}q_i(0)>0\quad(i\ne3),
+\qquad p_3(t)=1-r(t)\ge1-r_0>0.
+\tag{14.9}
+$$
+
+$M(T),G(T)$ 有限，所以这些下界同时适用于整个 $[0,T]$。所有所用光滑函数沿该解均可用绝对连续链式法则；特别 $S$ 有界，$J\in L^1([0,T])$，而不要求二者逐点连续。
+
+原捕获向量为 $-\mu r H_r=(-\mu p_0,-\mu p_2,\mu r,-\mu p_5,-\mu p_{25})$。它与 $\nu$ 的 Fisher 配对是 $-\mu+\mu+\mu-\mu=0$，故水平；原反应向量是 $J\nu$。用 (14.2) 得 (14.5)，第五分量给出实际 $\dot\kappa$。也可将 §11.1 的原反应项写为 $-\gamma r\Lambda_q A_q\partial_\eta=(J/r)\partial_\eta=J\nu$，其中 $\Lambda_q$ 是 §4 对数平均在 $(q_0q_{25},q_2q_5)$ 上的值。这只识别原有向量场。
+
+截面的状态依赖在同一纤维上已不可消去：取与 $p$ 同基点的任意严格正律，令 $u=(-X,r,-Y)$。上面的单位捕获计算给 $\ell_p(u)=-\kappa$。同一非退化纤维中 $u$ 不变而 $\kappa$ 可变，故没有一个固定 $L+\nu\ell$ 能在整条开纤维上等于 $L_p^F$。$\square$
+
+**定理 14.3（该运输的响应及作用、边界限制）。** 定理 14.2 只给几何分解。它在同一五态来源上的具体限制如下。
+
+对任意固定状态读出 $K$，§9 解的完整响应几乎处处为
+
+$$
+\frac{d}{dt}\sum_i p_iK_i
+=\mu r\left(K_3-\sum_{i\ne3}q_iK_i\right)
++J(K_0-K_2-K_5+K_{25}).
+\tag{14.10}
+$$
+
+若 $K=K(t)$ 在有限区间上绝对连续，则另加 $\sum_i p_i\dot K_i$。固定 $\theta_{\mathrm h}$ 的水平运输一般不保持条件协方差 $\eta-\alpha\beta$ 或条件互信息 $I(q)$。
+
+沿定理 14.2 的严格正原流，Fisher 扩展二次作用为
+
+$$
+\mathcal A_F[p;0,T]
+=\frac12\int_0^T g_p(\dot p,\dot p)\,dt
+=\frac12\int_0^T\left(\frac{\mu^2r}{1-r}+S(p)J^2\right)dt
+\in[0,+\infty].
+\tag{14.11}
+$$
+
+该式不替换 §7 固定纤维的 Euclidean $\kappa$ 作用，也不替换 §4 的 Onsager mobility。非负 $L^1_{\mathrm{loc}}$ 速率不足以保证 (14.11) 有限。即使速率有界，允许初值在概率边界时，原多项式流也可能具有无限 Fisher 作用；$\theta_{\mathrm h}$ 和 $L_p^F$ 不据此获得整个闭单纯形上的定义。
+
+**证明。** (14.10) 是 (14.5) 与 SPLIT 定理 5.2、定义 6.1 的同一固定读出配对。对移动读出用有限求和的绝对连续乘积法则。两个分量的响应可以相消，单一总响应不能自动识别 $J$；这正保留 SPLIT 定理 6.2–6.5 的基线和灵敏度条件。
+
+关于运输的关联含义，固定 $r\in(0,1)$、$\beta=1/2$ 及非零有限 $\vartheta$，让 $\alpha\in(0,1/2]$ 变化并使用 (14.8)。在 $\alpha=1/2$ 时，$\vartheta\ne0$ 使 $q_0q_{25}\ne q_2q_5$，所以条件协方差非零且 $I(q)>0$（FOUND §5、数学引文 9.1、定理 9.3）。当 $\alpha\downarrow0$ 时，$0<\eta<\alpha$ 强制协方差趋零；条件表趋于 $(1/2,0,1/2,0)$，按 FOUND 定义 9.2 的 $0\log0=0$ 及有限熵连续性，$I(q)\to0$。因此在同一固定优势比的水平叶内，这两种关联量均不恒定。运输保留的正是优势比。
+
+由 §8 的完整 Fisher 度量，或对 (14.4) 五项求和，
+
+$$
+g_p(H_r,H_r)=\frac1{r(1-r)},\qquad
+g_p(H_r,\nu)=0,\qquad g_p(\nu,\nu)=S(p).
+$$
+
+将 (14.5) 代入得 (14.11)，没有先假定积分有限。在固定基纤维上，Fisher 被积项为 $S(p)\dot\kappa^2/2$；§7 的被积项则是 $\dot\kappa^2/2$。对跨纤维原流，实际 $\dot\kappa=J-\mu\kappa$，亦不能把此值当作 (14.11) 的垂直系数。
+
+另按 §4，令 $a_0=p_0p_{25}$、$b_0=p_2p_5$，其对数平均 $\Lambda(a_0,b_0)$ 给出
+
+$$
+J=-\gamma\Lambda(a_0,b_0)\theta_{\mathrm h}.
+$$
+
+这个反应 mobility 是 $\gamma\Lambda$，而同一一维 Fisher 度量的逆系数是 $S^{-1}$；二者并非定义上的同一对象。相应反应熵耗散为 $\gamma\Lambda\theta_{\mathrm h}^2$，Fisher 垂直平方速度为 $S J^2$，也不是同一个量。
+
+为给出 $L^1$ 与二次作用的同域证据，任取严格正初值、固定 $r_0\in(0,1)$，并要求 $\delta_0=\eta_0-\alpha_0\beta_0\ne0$。取 $\mu=0$，在 $0<t\le1$ 取 $\gamma(t)=t^{-1/2}$，在 $t=0$ 及 $t>1$ 取零。这是 §9 允许的非负局部可积速率。复用该节解得
+
+$$
+\delta(t)=\delta_0 e^{-2r_0\sqrt t},\qquad
+J(t)=-r_0^2\delta_0t^{-1/2}e^{-2r_0\sqrt t}\quad(0<t\le1).
+$$
+
+由 (14.9)，$S(p(t))$ 在 $[0,1]$ 上有正的上下界；$\delta(t)$ 的绝对值也有正下界。因此 $S J^2$ 在零附近与 $1/t$ 相比有正的下界倍数，(14.11) 为 $+\infty$，尽管解绝对连续、全程严格正且 $\theta_{\mathrm h}$ 绝对连续。此例中 $\dot\kappa=J$，Euclidean $\kappa$ 作用也为无穷。有限区间上的 $L^2$ 速率是严格正原流有限 Fisher 作用的一个充分条件，由 (14.9)、$|J|\le\gamma$ 及 (14.11) 即得；不是所用原方程的必要假设。
+
+边界上仍用 §9 的概率多项式与其既有解。具体固定 $0<r_0<1$、$\alpha,\beta>0$、$\alpha+\beta<1$，初始 $\eta=0$，取 $\mu=0,\gamma=1$。初始仅 $p_{25}=0$，其余四格严格正。原解给
+
+$$
+p_{25}(t)=r_0\alpha\beta(1-e^{-r_0t}),\qquad
+J(t)=r_0^2\alpha\beta e^{-r_0t}.
+$$
+
+所以 $p_{25}(t)\sim Ct$、$J(t)\to C=r_0^2\alpha\beta>0$，其余四个概率在零附近保持严格正。对 $t>0$ 原流进入严格正域，但
+
+$$
+S(p(t))J(t)^2\ge\frac{J(t)^2}{p_{25}(t)}\sim\frac C t,
+\qquad \theta_{\mathrm h}(t)=\log t+O(1)\longrightarrow-\infty.
+$$
+
+任意 $[0,T]$ 上的内点 Fisher 积分均发散，且没有有限实值的 $\theta_{\mathrm h}(0)$；与此同时原概率速度在 $t=0$ 有限。这是同一方程的边界行为，不以对数式取代多项式。
+
+在 apex，§9 的原解是吸收态，条件律不定义。沿任意固定严格正四态 $q$ 令 $r\downarrow0$，完整 $p$ 都趋于同一 apex，但 $\theta_{\mathrm h}(p)=\log(q_0q_{25}/q_2q_5)$ 可取不同值，$H_r=(q_0,q_2,-1,q_5,q_{25})$ 也依赖所选射线，故两者均无与路径无关的该点延拓。其余零概率面亦不属于定义 14.1 的 Fisher 域；若要在相对面上另定义几何，须保留其较小切空间，不能援用本节整个 $T$ 上的右截面。单侧概率可行性仍由 SPLIT 定理 3.3–3.4 判定；其命题 4.5 已说明可行总源的代数分量不必分别可行。$\square$
+
+**定义 14.4（该对应未附加的操作与来源合同）。** $L_p^F$、$\sigma_\vartheta$ 和 $\theta_{\mathrm h}$ 是完整概率律上的数学映射。将它们作为操作族，另须给出实际可达域、制备与合法干预、共同输出核及完整记录；本节没有在这些定义中增加读取未知 $p$ 或优势比的操作。SPLIT §§7、9–10 及 [OBSERVER《观察者相对局部模型》](AURIC_FIB_ATOM_OBSERVER_RELATIVE_LOCAL_MODELS_AND_FUTURE_IDENTIFIABILITY.md) §§5–6 的精确律、有限样本及完整停止历史合同继续适用。绝对连续曲线的两个几何分量不构成两个可分别执行的干预，也不提供新硬币、后选择、条件重采样、重置、时钟或免费路径记录。
+
+这里的平坦性只属于 $P$ 的水平运输。[SEAM《静态 seam 与转移环流》](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md) 定理 2.2、2.4 区分状态导数与边流，并给出同一概率曲线的不同边记录；本节没有对其边环流施加消失条件。[SYMM《对称混合变化与路径缺陷》](AURIC_FIB_ATOM_SYMMETRIC_SEAM_PATH_DEFECT_AND_FIBONACCI_HIERARCHY.md) Q1–Q4 的实际算子次序合同也不由 (14.3) 的几何括号替代。
+
+完整五态律、确定性词来源、带边记录的动态模型、[SIGNED《带符号阶乘核》](AURIC_FIB_ATOM_SIGNED_FACTORIAL_KERNEL_AND_GOLDEN_COMPATIBILITY.md) 定义 1.1、3.1、5.1 的有符号核及谱密度、付费停止观察律分别保留其原定义域；没有给出保留全部质量、标签和记录的映射时，不因同名、均值、秩或黄金数值相等而识别这些来源。对 native/物理接口、概率与作用的资源取得、确定性因子化及付费停止历史、精确或有效可达性，仍需各自的完整假设和证明。本节没有给这些开放对应增加公理；严格正域只是上述对数与 Fisher 断言的定义域，不替代其他开放对应的原问题域。
+
+## 追加锚（本行以下为增补区）
