@@ -62,8 +62,23 @@ theorem finiteSlashSum_slash_of_perm
       simpa using (Equiv.sum_comp σ
         (fun i : I => SlashAction.map k (rep i) f))
 
+/-- The permutation interface in the form supplied by a double-coset
+decomposition.  A right translate of each representative differs from the
+permuted representative by a left element of the invariant subgroup. -/
+theorem finiteSlashSum_slash_of_subgroup_perm
+    (H : Submonoid G) (k : β) (f : α) (rep : I → G) (γ : G) (σ : Equiv.Perm I)
+    (hInv : ∀ h : G, h ∈ H → SlashAction.map k h f = f)
+    (hrep : ∀ i, ∃ h : H, rep i * γ = (h : G) * rep (σ i)) :
+    SlashAction.map k γ (finiteSlashSum k f rep) =
+      finiteSlashSum k f rep := by
+  apply finiteSlashSum_slash_of_perm k f rep γ σ
+  intro i
+  obtain ⟨h, hh⟩ := hrep i
+  rw [hh, SlashAction.slash_mul, hInv h h.property]
+
 end
 
 end D5.S1.NumberTheory.ModularForms
 
 #print axioms D5.S1.NumberTheory.ModularForms.finiteSlashSum_slash_of_perm
+#print axioms D5.S1.NumberTheory.ModularForms.finiteSlashSum_slash_of_subgroup_perm
