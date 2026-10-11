@@ -32,8 +32,7 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             Pow(Typed(Seq(Minus, D(1)), Complex), Property(V("a"), "val"))));
 
     private static Formula TensorOne() => All(V("N"), Nat,
-        Equal(Call("tensorOp", Seq(Operatorname, Grp(V("fun")), Sp,
-            Typed(Underscore, Fin(V("N"))), Sp, Mapsto, Sp,
+        Equal(Call("tensorOp", Qualified("Function", "const", Fin(V("N")),
             Typed(D(1), Matrix(Fin(D(2)), Complex)))),
             Typed(D(1), Matrix(Arrow(Fin(V("N")), Fin(D(2))), Complex))));
 
