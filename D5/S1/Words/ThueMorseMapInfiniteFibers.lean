@@ -23,8 +23,6 @@ namespace D5.S1.Words.ThueMorseMapInfiniteFibers
 open D5.S1.Words.Complexity
 open D5.S1.Words.ThueMorseDyadic
 open D5.S1.Words.ThueMorseMapFirstStart (MAP)
-open private thueMorse_zero thueMorse_two_mul thueMorse_two_mul_add_one
-  from D5.S1.Words.Complexity.ThueMorseReducedAbelianOdd
 
 /-- Attainment and universal maximality, over every start and both letters. -/
 def ExactMax (d n : Nat) : Prop :=

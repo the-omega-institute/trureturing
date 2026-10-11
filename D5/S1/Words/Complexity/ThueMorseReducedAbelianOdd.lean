@@ -6,6 +6,8 @@
    utility: kind=bounded-enumeration; basis=terminal=atom:33a0c49c89088efa8b9fcdd754c415e0d143feae6a059675163315c207b996f2; result=D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_two_pow_add_one
    digest: Odd Thue-Morse reduced abelian complexity reflects to half length. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15228. -/
+
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Data.Finset.Prod
 import Mathlib.Data.List.Destutter
@@ -28,9 +30,9 @@ def runCompress (w : List Bool) : List Bool :=
 def parikh (word : List Bool) : Nat × Nat :=
   (word.count false, word.count true)
 
-@[simp] private theorem thueMorse_zero : thueMorse 0 = false := rfl
+@[simp] theorem thueMorse_zero : thueMorse 0 = false := rfl
 
-@[simp] private theorem thueMorse_two_mul (n : Nat) :
+@[simp] theorem thueMorse_two_mul (n : Nat) :
     thueMorse (2 * n) = thueMorse n := by
   rw [show 2 * n = Nat.bit false n by simp [Nat.bit]]
   rw [thueMorse, Nat.binaryRec_eq]
@@ -38,7 +40,7 @@ def parikh (word : List Bool) : Nat × Nat :=
     cases thueMorse n <;> rfl
   · exact Or.inl rfl
 
-@[simp] private theorem thueMorse_two_mul_add_one (n : Nat) :
+@[simp] theorem thueMorse_two_mul_add_one (n : Nat) :
     thueMorse (2 * n + 1) = !thueMorse n := by
   rw [show 2 * n + 1 = Nat.bit true n by simp [Nat.bit]]
   rw [thueMorse, Nat.binaryRec_eq]
