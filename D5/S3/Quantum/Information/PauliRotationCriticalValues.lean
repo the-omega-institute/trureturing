@@ -539,4 +539,70 @@ private theorem coordinate_inverse :
   · simp only [U, mul_assoc, ← mul_assoc (ratReal certN) (ratReal certNi),
       ← map_mul, rational_certificate.2.2.2.1, map_one, one_mul, hS']
 
+private def pauliProd : Pauli → Pauli → Pauli
+  | .I, q => q | p, .I => p
+  | .X, .X => .I | .Y, .Y => .I | .Z, .Z => .I
+  | .X, .Y => .Z | .Y, .X => .Z
+  | .Y, .Z => .X | .Z, .Y => .X
+  | .Z, .X => .Y | .X, .Z => .Y
+private noncomputable def pauliPhase : Pauli → Pauli → ℂ
+  | .X, .Y | .Y, .Z | .Z, .X => Complex.I
+  | .Y, .X | .Z, .Y | .X, .Z => -Complex.I
+  | _, _ => 1
+private theorem pauli_product (p q : Pauli) :
+    pauliMatrix p * pauliMatrix q = pauliPhase p q • pauliMatrix (pauliProd p q) := by
+  cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+    simp [pauliMatrix, qubitX, qubitZ, pauliProd, pauliPhase, mul_apply, smul_eq_mul]
+private theorem word_product (p q : Fin 2 → Pauli) :
+    wordOp p * wordOp q = (∏ i, pauliPhase (p i) (q i)) •
+      wordOp ![pauliProd (p 0) (q 0), pauliProd (p 1) (q 1)] := by
+  unfold wordOp; rw [tensor_mul]
+  ext x y
+  simp [tensorOp, pauli_product, Fin.prod_univ_two, smul_eq_mul]; ring
+open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (sgn anticomm)
+private theorem pauli_commutation (p q : Pauli) :
+    pauliMatrix p * pauliMatrix q = (sgn p q : ℂ) • (pauliMatrix q * pauliMatrix p) := by
+  cases p <;> cases q <;> simp [pauli_product, sgn, anticomm,
+    pauliProd, pauliPhase, smul_smul, smul_neg, neg_smul]
+private theorem word_commutation (p q : Fin 2 → Pauli) :
+    wordOp p * wordOp q = (∏ i, (sgn (p i) (q i) : ℂ)) • (wordOp q * wordOp p) := by
+  unfold wordOp; rw [tensor_mul, tensor_mul]
+  calc tensorOp (fun i => pauliMatrix (p i) * pauliMatrix (q i)) =
+      tensorOp (fun i => (sgn (p i) (q i) : ℂ) • (pauliMatrix (q i) * pauliMatrix (p i))) :=
+        congrArg tensorOp (funext fun i => pauli_commutation (p i) (q i))
+       _ = _ := by ext x y; simp [tensorOp, Finset.prod_mul_distrib, smul_eq_mul]
+private theorem conjStep_word (p : NonIdentityPauli) (a : ℝ) (q : Fin 2 → Pauli) :
+    conjStep p a (wordOp q) =
+      if sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = -1 then
+        (Real.cos a : ℂ) • wordOp q - ((Real.sin a : ℂ) * Complex.I *
+          (∏ i, pauliPhase (p.val i) (q i))) • wordOp ![pauliProd (p.val 0) (q 0), pauliProd (p.val 1) (q 1)]
+      else wordOp q := by
+  have hh := word_commutation p.val q
+  simp only [Fin.prod_univ_two, ← Int.cast_mul] at hh
+  have hs : sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = 1 ∨
+      sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = -1 := by
+    unfold sgn; split_ifs <;> norm_num
+  split_ifs with h
+  · rw [h] at hh
+    simpa [word_product, smul_smul, mul_assoc] using
+      conjStep_anticomm p a (wordOp q) (by simpa using hh)
+  · rw [hs.resolve_right h] at hh
+    exact conjStep_comm p a (wordOp q) (by simpa using hh)
+private theorem conjStep_add (p : NonIdentityPauli) (a : ℝ) (M N : Mat) :
+    conjStep p a (M + N) = conjStep p a M + conjStep p a N := by
+  simp only [conjStep, mul_add, add_mul, smul_add]; module
+private theorem conjStep_sub (p : NonIdentityPauli) (a : ℝ) (M N : Mat) :
+    conjStep p a (M - N) = conjStep p a M - conjStep p a N := by
+  simp only [conjStep, mul_sub, sub_mul, smul_sub]; module
+private theorem conjStep_smul (p : NonIdentityPauli) (a : ℝ) (c : ℂ) (M : Mat) :
+    conjStep p a (c • M) = c • conjStep p a M := by
+  simp only [conjStep, Matrix.mul_smul, Matrix.smul_mul, smul_sub, smul_add, smul_smul]; module
+private theorem conjStep_zero (p : NonIdentityPauli) (M : Mat) : conjStep p 0 M = M := by
+  simp [conjStep]
+private def gateOrder : Fin 15 → Fin 15 := ![9,1,4,13,12,2,5,10,0,6,11,7,8,3,14]
+private def witnessP : Fin 15 → NonIdentityPauli := fun j =>
+  ⟨labels (gateOrder j), by fin_cases j <;> decide +kernel⟩
+private noncomputable def point : Param := fun i =>
+  if i ∈ ({5,6,7,10} : Finset (Fin 15)) then Real.pi / 4 else 0
+
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
