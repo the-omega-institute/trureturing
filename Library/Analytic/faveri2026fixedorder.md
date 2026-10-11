@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic estimates also pay a classwise squarefree-column pole sector with shared gcds at specified lengths, while the complete actual-order-six residual and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic estimates also pay its classwise all-column pure-sixth-power pole at specified lengths, while the complete actual-order-six residual and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -403,7 +403,7 @@ q_{\mathfrak f_{h,k}}^{-1/3}\vartheta(\mathfrak f_{h,k})
 M_{P_{h,k},L_j}(5).
 $$
 
-This is a substitution and residue calculation from the existing Poisson formula. It identifies a subterm, not the full contraction $\widetilde E_{6,j}$, a nonnegative resonance, or a certified spectral projection. A sufficient bound for its pole contribution is $\Re\mathcal C_{6,L_j}[c_j]\ll_\varepsilon(U_jK)^\varepsilon U_j^{1/6}K$; the shifted integral and all other dual ideals still require a joint upper bound at scale $U_jK$. Neither bound has been supplied here.
+This is a substitution and residue calculation from the existing Poisson formula. It identifies a subterm, not the full contraction $\widetilde E_{6,j}$, a nonnegative resonance, or a certified spectral projection. A sufficient bound for its pole contribution is $\Re\mathcal C_{6,L_j}[c_j]\ll_\varepsilon(U_jK)^\varepsilon U_j^{1/6}K$; the shifted integral and all other dual ideals still require a joint upper bound at scale $U_jK$. The classwise applications below control the pole under an additional length condition, after partitioning the complete positive moment. They do not estimate this earlier cross-class signed contraction.
 
 For comparison, absolute values and divisor bounds give only $|\mathcal C_{6,L_j}[c_j]|\ll_\varepsilon K^{4/3+\varepsilon}$. Write $h=gx,k=gy$ with $(x,y)=1$. The good conductor weight is at most $w(x)w(y)$, where $w(x)=\prod_{6\nmid v_{\mathfrak p}(x)}q_{\mathfrak p}^{-1/3}$. Its Dirichlet series converges for $\Re s>2/3$, so $\sum_{q_x\le X}w(x)\ll_\varepsilon X^{2/3+\varepsilon}$. Summing the two cofactors and then $g$ gives $K^{4/3+\varepsilon}$; the finite local products and divisor-bounded coefficients cost only $K^\varepsilon$. At $K\asymp U_j$, the desired pole-contraction scale is instead $K^{7/6+\varepsilon}$, leaving a $K^{1/6}$ saving to obtain. The row Möbius factor $M_{P,L_j}(5)$ is distinct from the original column coefficient $\mu(d)$; it does not establish cancellation of that coefficient contraction.
 
@@ -454,7 +454,7 @@ $$
 
 Then $1\le Y\le K^{1/2}$. Since $K^{4/3}Y^{-2/3}=U_j^{1/6}K$, the raw error $K^{2e+e'}Y^e$ is absorbed by choosing $e,e'$ small enough. This tail is consequently $\ll_\varepsilon(U_jK)^\varepsilon U_j^{1/6}K$, which pays its pole contribution at scale $U_jK$. At $U_j\asymp K$, the cutoff is $Y\asymp K^{1/4}$. If $U_j\ge K^2$, the already stated full absolute pole bound $K^{4/3+\varepsilon}$ suffices at that pole scale. These statements cover the specified pole subterm, not the other dual terms.
 
-The remaining pole head retains both $B(h/g),B(k/g)\le Y$ and all original coefficients, including the squarefree sector. Large original multiplicity alone does not force a pair into the tail: common powers cancel in $h/g,k/g$, and sixth powers do not enter $B$. The full signed goal still requires control of this head, the shifted integral, and the other dual terms on the actual detector lengths. This is an application of the supplied conductor weight and a standard Rankin estimate; no new general tail theorem or complete analytic Lean certification is claimed.
+The complementary pole head retains both $B(h/g),B(k/g)\le Y$ and all original coefficients, including the squarefree sector. Large original multiplicity alone does not force a pair into the tail: common powers cancel in $h/g,k/g$, and sixth powers do not enter $B$. This tail estimate alone does not control the head. The classwise convolution application below covers it under a specified length condition; the full signed goal still requires the other dual terms and coverage of the actual detector lengths. This is an application of the supplied conductor weight and a standard Rankin estimate; no new general tail theorem or complete analytic Lean certification is claimed.
 
 The actual-order restriction matters. For a ratio of order $o\in\{2,3\}$, all pure dual $o$-th powers have character value one. The portion of those powers outside the sixth powers has Dirichlet factor
 
@@ -571,7 +571,146 @@ $$
 
 The bound is uniform in $L$. At $D\asymp N\asymp K^{1/2}$ it is $K^{7/6+\varepsilon}$, which pays this classwise pole at scale $U_jK$ when $U_j\asymp K$. More generally, $U_j\ge1$ and $\max(D,N)^2\le U_j$ are sufficient. The same original shared-height accounting applies to the profile and transform costs; no extra independent height budget is introduced.
 
-This is an application of the source Gauss/Poisson identities and the known cubic sieve to the actual convolution. The new positive-moment partition avoids needing cross-class terms in that majorant; it does not estimate the earlier cross-class signed contraction. The nonsquarefree and mixed column sectors, shifted integral, other dual terms and full signed Robin restoration remain open. There is no complete analytic Lean certification or new sieve claim.
+This is an application of the source Gauss/Poisson identities and the known cubic sieve to the actual convolution. The positive-moment partition avoids needing cross-class terms in that majorant; it does not estimate the earlier cross-class signed contraction. The all-column application below includes nonsquarefree and mixed columns. Other dual terms, unrestricted actual witness lengths and full signed Robin restoration remain open. There is no complete analytic Lean certification or new sieve claim.
+
+#### Extending the classwise pole consumer to all convolution columns
+
+The same cubic supplier applies after fixing the repeated-prime cores. Its uniformity in the coefficient vectors is essential: opposite-core-dependent twists are allowed only inside separate fixed-core applications. This is an application of the existing finite Gauss CRT, cubic sieve and positive Rankin estimates. It is not a claim that de Faveri's general root-number phases separate without their cross terms.
+
+Partition the complete positive moment only by $t(h)$, without partitioning squarefree status. For $a\in\mathcal T$, put
+
+$$
+\widetilde T^{\rm all}_{j,a}=
+\sum_{v\ {\rm good\ sixth\ power\ free}}W(q_v/U_j)
+\left|\sum_{t(h)=a}c_j(h)\chi_h^{\rm raw}(v)\right|^2,
+\qquad
+T_j\le|\mathcal T|\sum_a\widetilde T^{\rm all}_{j,a}.
+$$
+
+Let $\mathcal C^{a,\rm all}_{6,L}$ denote the actual-order-six pole extraction within this classwise moment. It contains squarefree, nonsquarefree and mixed columns, every common gcd and every original sixth-power tail. The whole-family conjugation specified above handles negative orientation. No domination of the earlier cross-class signed pole is asserted.
+
+Write $h=gx,k=gy$, $(x,y)=1$, and decompose uniquely
+
+$$
+x=cs_0z,\qquad y=c't_0w.
+$$
+
+Here $c,c'$ are powerful ideals: each nonzero prime exponent is at least two. Precisely, $c=\prod_{v_{\mathfrak p}(x)\ge2}\mathfrak p^{v_{\mathfrak p}(x)}$ and $s_0z=\prod_{v_{\mathfrak p}(x)=1}\mathfrak p$, so $(c,s_0z)=1$; use the corresponding decomposition for $y$. The part of $s_0z$ supported on $g$ is $s_0$; the corresponding part for $y$ is $t_0$. Thus $s_0,t_0\mid\operatorname{rad}g$, while $z,w$ are squarefree and coprime to $gcc'S$. Retain the original coprimality constraints between the two cofactors, including the cross-core constraints. Fix $g,c,c',s_0,t_0$ and the two bulk classes $t(z),t(w)$.
+
+Set
+
+$$
+f_0=\operatorname{rad}(r_6(c))s_0
+\operatorname{rad}(r_6(c'))t_0,\qquad
+R=\operatorname{rad}(gcc'S)/f_0.
+$$
+
+The quotient is between squarefree ideals. Let $\rho$ be the primitive finite residue character on $f_0$ obtained from $\chi_{cs_0}^{\rm raw}\overline{\chi_{c't_0}^{\rm raw}}$ by omitting its inactive local sixth powers. Its normalized finite Gauss sum $\Gamma(\rho)$ has modulus one; use $\Gamma(1)=1$ if $f_0=1$. This is a primitive finite-modulus Gauss sum, not a full-modulus nonsquarefree Gauss sum. Primes omitted from $f_0$ remain in $R$ and retain their original zeros.
+
+On the original coprime nonprincipal locus, the finite CRT calculation underlying the pinned pair-Gauss formula gives exactly
+
+$$
+\begin{aligned}
+\epsilon(\xi_{h,k})={}&\Gamma(\rho)\gamma_1(z)\gamma_{-1}(w)\,
+[\rho(z)\chi_z(f_0)]
+[\rho(w)\overline{\chi_w(f_0)}]\\
+&\times[\chi_z(w)\overline{\chi_w(z)}],
+\qquad \mathfrak f_{h,k}=f_0zw.
+\end{aligned}
+$$
+
+Equal original classes imply $t(x)=t(y)$. The total raw ratio is therefore unit-trivial and has no additional ramified conductor; the radial Poisson normalization is the one checked above. The last bracket depends only on the fixed bulk classes by reciprocity. The other moving factors are multiplicative single-variable twists. Retain $\gamma_{-1}(w)=\chi_w(-1)\overline{\gamma_1(w)}$. The fixed phase $\Gamma(\rho)$ may couple the two cores, but its modulus is one.
+
+Any nonunit $z$ or $w$ forces actual ratio order six. Handle $z=w=1$ separately in absolute value before extending the actual-order selector. Expand the $R$-product and the finite $\ell$-sum as above; their costs remain $K^\varepsilon\zeta_F(5)$. All cross-core, row-Möbius and original zero masks stay in the separated bulk coefficients. Detect $(z,w)=1$ by $\sum_{e\mid z,w}\mu(e)$ only after using the root formula on its stated locus. The added noncoprime pairs are an algebraic extension, not new conductor identities.
+
+For $m=gcs_0$, distribute the fixed part of an actual factorization $dn=mz$ as
+
+$$
+m=ab,\qquad d=ad',\quad n=bn',\quad z=d'n',
+\qquad a\text{ squarefree}.
+$$
+
+The squarefreeness of $a$ follows from the original $\mu(d)$. The bulk factors are squarefree, mutually coprime and coprime to $m$. For $X=K/q_m$, the earlier cubic calculation, with all fixed twists retained, supplies uniformly
+
+$$
+\sum_e|H^{a,b}_{m,e}|^2
+\ll_{\mathcal A,\varepsilon}K^\varepsilon
+\left\{X+X^{1/3}(D/q_a+N/q_b)\right\}.
+$$
+
+For each fixed pair of cores and each $r,\ell$ and ray component, first apply Cauchy in $e$ to the two scalar sums. Then use this coefficient-uniform supplier for each of the resulting norms. Only afterwards take absolute values and sum the core pairs. In particular the argument never replaces different opposite-core-dependent vectors by one common vector or writes their coupled sum as a coherent squared sum.
+
+The conductor weight assigned to one powerful core is
+
+$$
+w(c)=\prod_{6\nmid v_{\mathfrak p}(c)}q_{\mathfrak p}^{-1/3}.
+$$
+
+Assign $a_g=(a,\operatorname{rad}g)$ and $a_c=a/a_g$. Then
+
+$$
+a=a_ga_c,\quad a_c\mid\operatorname{rad}c,\quad(a_c,g)=1,
+\quad b_g=g/a_g,\quad b_c=c/a_c,\quad b=b_gb_cs_0.
+$$
+
+This assignment remains exact when $g$ and $c$ share primes. Divisor Cauchy costs $K^\varepsilon$. The following positive core moments are sufficient:
+
+$$
+\begin{aligned}
+F_0&=\sum_{c\ {\rm powerful}}w(c)q_c^{-1/2}\tau(c)<\infty,\\
+F_D(V)&=\sum_{\substack{c\ {\rm powerful},\ a_c\mid\operatorname{rad}c\\
+b_c=c/a_c,\ q_{b_c}\le V}}
+w(c)q_c^{-1/6}q_{a_c}^{-1/2}
+\ll_\varepsilon V^{1/6+\varepsilon},\\
+F_N&=\sum_{\substack{c\ {\rm powerful}\\a_c\mid\operatorname{rad}c}}
+w(c)q_c^{-1/6}q_{b_c}^{-1/2}<\infty.
+\end{aligned}
+$$
+
+These are ordinary positive Euler-product estimates. For $F_D$, a prime exponent $r\ge2$ and a choice $\delta\in\{0,1\}$ have Rankin weight
+
+$$
+w_{\mathfrak p}(r)q_{\mathfrak p}^{-r/6-\delta/2-(r-\delta)s},
+\qquad
+w_{\mathfrak p}(r)=
+\begin{cases}1,&6\mid r,\\q_{\mathfrak p}^{-1/3},&6\nmid r.\end{cases}
+$$
+
+Every local exponent exceeds one for $s>1/6$. The smallest exponents for $F_0$ and $F_N$ are respectively $4/3$ and $7/6$. The same argument gives $\sum_{q_c\le V}w(c)\ll_\varepsilon V^{1/3+\varepsilon}$. Consequently the actual $z=w=1$ sector and its algebraically added counterpart cost at most
+
+$$
+K^\varepsilon\sum_{q_g\ll K}(K/q_g)^{2/3+\varepsilon}
+\ll_\varepsilon K^{1+\varepsilon}.
+$$
+
+Apply the three moments to the square roots of the cubic bounds. Dropping negative $s_0$-norm factors and cross-core constraints is used only in these positive upper bounds; the $s_0$ choices cost $q_g^\varepsilon$. The first term sums to $K^{1+\varepsilon}$. For the $D$ term, $q_b\ll N$ imposes $q_{b_c}\ll N/q_{b_g}$, so $F_D$ gives
+
+$$
+K^{1/3}DN^{1/3}
+\sum_{q_{a_g}\ll D}q_{a_g}^{-4/3}
+\sum_{q_{b_g}\ll N}q_{b_g}^{-2/3}
+\ll KD^{1/3}.
+$$
+
+The $N$ term uses $F_N$ and is
+
+$$
+K^{1/3}N
+\sum_{q_{a_g}\ll D}q_{a_g}^{-1/3}
+\sum_{b_g}q_{b_g}^{-4/3}
+\ll KN^{1/3}.
+$$
+
+Thus the complete classwise all-column pole extraction satisfies
+
+$$
+\boxed{|\mathcal C^{a,\rm all}_{6,L}[c_j]|
+\ll_{\mathcal A,\varepsilon}
+K^{1+\varepsilon}(1+D^{1/3}+N^{1/3})
+\|W_M\|_\infty^2\|W_S\|_\infty^2.}
+$$
+
+This is uniform in $L$ and includes mixed column statuses. The condition $U_j\ge1$, $\max(D,N)^2\le U_j$ pays this pole at scale $U_jK$, including $D\asymp N\asymp K^{1/2}$, $U_j\asymp K$. It is not promised by the original witness theorem. The shifted integral, other dual ideals, unrestricted actual witness lengths and signed Robin restoration remain separate obligations. This source-conditional application has no complete analytical Lean certification and makes no originality claim for its suppliers.
 
 #### Why the remaining pole estimate must use the actual convolution
 
