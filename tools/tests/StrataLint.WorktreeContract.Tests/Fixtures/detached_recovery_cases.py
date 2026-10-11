@@ -142,6 +142,16 @@ class DetachedRecoveryCases:
         self.g(self.main, "worktree", "add", self.tree, result["recovery_branch"].removeprefix("refs/heads/"))
         self.assertEqual("removed but recoverable\n", (self.tree / "owned").read_text())
 
+    def test_detached_interrupted_removal_resumes_with_recorded_recovery(self):
+        self.g(self.tree, "checkout", "--detach")
+        (self.tree / "owned").write_text("detached before removal\n")
+        reference = self.interrupted_removal()["recovery_branch"]
+        result = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual(("removed", reference), (result["outcome"], result["recovery_branch"]))
+        self.assertEqual(reference, self.g(self.main, "for-each-ref", "--format=%(refname)",
+                                           "refs/heads/lane/governance/recovery-*").strip())
+        self.assertEqual("detached before removal\n", self.g(self.main, "show", reference + ":owned"))
+
     def test_detached_unfinished_and_unmerged_retained_before_staging(self):
         import worktree_protocol as protocol
         self.g(self.tree, "checkout", "--detach")
