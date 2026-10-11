@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Clique]
    utility: none
-   digest: Parallel independent-set flips constrain positive stationary harmonic-dual masses. -/
+   digest: Parallel flips give unique positive harmonic-dual maxima for bounded base degree. -/
 
 import D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion
 
@@ -869,10 +869,5 @@ theorem unique_positive_maximum (hd : ∀ i : V, H.degree i ≤ 3) :
       ∀ μ ∈ probabilities H, IsMaxOn (harmonicDual H) (probabilities H) μ → μ = ν := by
   obtain ⟨ν, hν, hm, hp, hr⟩ := positive_maximum H hd
   exact ⟨ν, hν, hm, hp, hr, fun μ hμ hmax => maximum_unique H ν μ hν hμ hp hm hmax⟩
-
-#print axioms stationary_ratio_bounds
-#print axioms regularized_maximum
-#print axioms positive_maximum
-#print axioms unique_positive_maximum
 
 end D5.S3.Combinatorics.Graph.LegalWords.HarmonicDualMaximizer
