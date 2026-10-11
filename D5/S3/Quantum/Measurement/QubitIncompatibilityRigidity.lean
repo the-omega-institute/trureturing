@@ -6,7 +6,6 @@
    utility: none
    digest: Restricted-state compatibility determines incompatible unbiased qubit pairs. -/
 
-import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 noncomputable section
 open D5.S3.Quantum.FiniteDimensional
