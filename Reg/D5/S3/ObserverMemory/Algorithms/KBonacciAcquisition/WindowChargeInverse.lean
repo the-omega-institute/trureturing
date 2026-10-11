@@ -12,9 +12,9 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- The parameters retain both widths, the scalar and the modular phase. -/
+/-- The observed row-list length has no parameter coordinates. -/
 @[reducible] def archiveSignature : Signature where
-  Params := Σ k : ℕ, ℕ × ZMod 2 × ZMod (k + 1)
+  Params := Unit
   State _ := List (ℕ → ZMod 2)
   Role := Unit
   finiteRole := inferInstance
@@ -24,19 +24,18 @@ noncomputable section
   finiteAnchor := inferInstance
 
 def archiveActual : Realization archiveSignature :=
-  realize archiveSignature
-    (fun _ p rows => (chargeArchive p.1 p.2.1 rows p.2.2.1 p.2.2.2).length)
+  realize archiveSignature (fun _ _ rows => rows.length)
     (fun e => nomatch e)
 
 def archiveRejected : Realization archiveSignature :=
   realize archiveSignature (fun _ _ rows => rows.length + 1) (fun e => nomatch e)
 
-/-- Only the archive-length occurrence varies; the complete conjunction remains. -/
+/-- Only the right-hand row-list length varies; all binders and both clauses remain. -/
 @[reducible] def archiveArena : Arena where
   signature := archiveSignature
   Law R := ∀ (k m : ℕ) (rows : List (ℕ → ZMod 2))
     (v : ZMod 2) (j : ZMod (k + 1)),
-    R.readout () ⟨k, m, v, j⟩ rows = rows.length ∧
+    (chargeArchive k m rows v j).length = R.readout () () rows ∧
     none ∉ chargeArchive k m rows v j
 
 private theorem archivePositive : archiveArena.Law archiveActual := by
@@ -45,7 +44,7 @@ private theorem archivePositive : archiveArena.Law archiveActual := by
 
 private theorem archiveNegative : ¬ archiveArena.Law archiveRejected := by
   intro law
-  have impossible := (law 3 1 [] 0 0).1
+  have impossible : (0 : ℕ) = 1 := (law 3 1 [] 0 0).1
   cases impossible
 
 def archiveEvidence : Registration archiveArena
@@ -58,8 +57,8 @@ def archiveEvidence : Registration archiveArena
     fun i => nomatch i⟩
   dependence := by
     intro i
-    refine ⟨⟨3, 1, 0, 0⟩, [], [fun _ => 0], ?_⟩
-    simp [archiveActual, realize, chargeArchive]
+    refine ⟨(), [], [fun _ => 0], ?_⟩
+    simp [archiveActual, realize]
 
 noncomputable def archiveRegistration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse.charge_archive_live)
@@ -87,9 +86,9 @@ noncomputable def archiveRegistration : LeanInformationAudit.Contract.Registrati
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowChargeInverse,
     definition := none,
-    coordinates := #[0, 1, 3, 4],
+    coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"],
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"],
       stateBinder := 2, functionOperand := false, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown,
