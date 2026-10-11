@@ -3,8 +3,7 @@ bibkey: rasmussenwilliams2006gaussian
 authors: Carl Edward Rasmussen; Christopher K. I. Williams
 year: 2006
 title: Gaussian Processes for Machine Learning
-publisher: MIT Press
-isbn: 026218253X
+doi: null
 url: https://gaussianprocess.org/gpml/chapters/RWA.pdf
 claim: Appendix A gives the finite Gaussian density, conditioning, matrix determinant update, inverse derivative and log-determinant derivative under the stated positive-definite hypotheses.
 strata_touched: []
@@ -13,6 +12,8 @@ triage: anchor
 ---
 
 # Finite Gaussian and log-determinant identities
+
+The book was published by MIT Press in 2006 (ISBN 026218253X).
 
 Appendix A.2--A.3.1, printed pages 200--202, equations (A.4)--(A.15),
 states these identities for finite real Gaussian vectors with symmetric
