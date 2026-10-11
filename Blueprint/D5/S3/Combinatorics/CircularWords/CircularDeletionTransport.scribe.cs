@@ -18,6 +18,25 @@ internal sealed class CircularDeletionTransportDocument : IScribeDocumentDefinit
                 + "Deleting x is restriction to labels different from x. A deletion step between C and D requires that deleting x "
                 + "from both gives exactly the same oriented residual circle. DeleteWalk records a finite sequence of these steps "
                 + "and its omission word xs; repeated omissions and omissions outside the initial support are allowed.")),
+            Describe.Lean(DescribeId.Create("restriction-reversal"),
+                DeclarationHandle.Create(Prefix + "restrict_reverse"),
+                H("Restriction Commutes with Reversal"),
+                StatementSource.FromAuthor(ReverseFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every label type A, Boolean predicate p and oriented circle C, restricting reverse(C) "
+                    + "equals reversing restrict(p,C). Choose a list representative of C. Filtering its reversal equals "
+                    + "reversing its filtered list, and this equality descends to the rotation quotient. "
+                    + "The label type may be infinite; the theorem requires no equality decision on A."))), DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("restriction-composition"),
+                DeclarationHandle.Create(Prefix + "restrict_restrict"),
+                H("Successive Restrictions Compose"),
+                StatementSource.FromAuthor(CompositionFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every label type A, Boolean predicates p and q and oriented circle C, restriction by q "
+                    + "followed by p is restriction by the Boolean conjunction of their values. BoolAnd in the displayed "
+                    + "formula denotes Lean's Boolean conjunction, and the arrow expression denotes a function of y. "
+                    + "Choose a list representative of C. Filtering it twice equals filtering once by that Boolean "
+                    + "conjunction, and the equality descends to the rotation quotient."))), DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("untouched-restriction"),
                 DeclarationHandle.Create(Prefix + "restrict_walk"),
                 H("Untouched Circular Restrictions Are Preserved"),
@@ -43,6 +62,27 @@ internal sealed class CircularDeletionTransportDocument : IScribeDocumentDefinit
                 + "Its use for a whole-supplier incidence requires an actual equality of oriented deletion residuals at that incidence. "
                 + "Equality after also identifying reversal is insufficient. This result neither constructs a Hamilton cycle "
                 + "nor establishes a boundary-preserving supplier lift.")))));
+    private static Formula ReverseFormula()
+    {
+        Formula a = F.Id("A"), p = F.Id("p"), c = F.Id("C");
+        Formula equality = new Formula.Relation(Call("restrict", p, Call("reverse", c)),
+            FormulaRelationOperator.Equal, Call("reverse", Call("restrict", p, c)));
+        return Disp(All("A", Call("Type"), All("p", Seq(a, Sp, To, Sp, Call("Bool")),
+            All("C", Call("Cycle", a), equality))));
+    }
+
+    private static Formula CompositionFormula()
+    {
+        Formula a = F.Id("A"), p = F.Id("p"), q = F.Id("q"), c = F.Id("C"), y = F.Id("y");
+        Formula meet = Seq(Open, y, Sp, Mapsto, Sp,
+            Call("BoolAnd", new Formula.Apply(p, [y]), new Formula.Apply(q, [y])), Close);
+        Formula equality = new Formula.Relation(Call("restrict", p, Call("restrict", q, c)),
+            FormulaRelationOperator.Equal, Call("restrict", meet, c));
+        Formula predicate = Seq(a, Sp, To, Sp, Call("Bool"));
+        return Disp(All("A", Call("Type"), All("p", predicate, All("q", predicate,
+            All("C", Call("Cycle", a), equality)))));
+    }
+
     private static Formula RestrictionFormula()
     {
         Formula a = F.Id("A"), xs = F.Id("xs"), c = F.Id("C"), d = F.Id("D"), p = F.Id("p");
