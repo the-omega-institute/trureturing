@@ -26,7 +26,7 @@ private theorem agree_pow {n : ℕ} {f g : PowerSeries R}
   (agree_iff _ _ _).mpr ((agree_iff _ _ _).mp h |>.trans
     (sub_dvd_pow_sub_pow f g k))
 
-private theorem pow_low {f : PowerSeries R} (hf : constantCoeff f = 0)
+theorem pow_low {f : PowerSeries R} (hf : constantCoeff f = 0)
     {n k : ℕ} (h : n < k) : coeff n (f ^ k) = 0 :=
   X_pow_dvd_iff.mp (pow_dvd_pow_of_dvd (X_dvd_iff.mpr hf) k) n h
 
@@ -55,7 +55,7 @@ private theorem agree_subst {n : ℕ} {f g u v : PowerSeries R}
   · rw [pow_low hu (by omega : k < e), pow_low hv (by omega : k < e),
       smul_zero, smul_zero]
 
-private theorem subst_coeff (f u : PowerSeries R) (hu : constantCoeff u = 0) (n : ℕ) :
+theorem subst_coeff (f u : PowerSeries R) (hu : constantCoeff u = 0) (n : ℕ) :
     coeff n (f.subst u) = ∑ k ∈ Finset.range (n + 1), coeff k f * coeff n (u ^ k) := by
   rw [coeff_subst' (.of_constantCoeff_zero hu)]
   simp only [smul_eq_mul]

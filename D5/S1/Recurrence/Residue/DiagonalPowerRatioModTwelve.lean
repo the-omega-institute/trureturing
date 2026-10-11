@@ -44,7 +44,7 @@ namespace D5.S1.Recurrence.Residue.DiagonalPowerRatioModTwelve
 open D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd
 
 private noncomputable def geom {R : Type*} [CommRing R] : PowerSeries R := mk 1
-private noncomputable def den {R : Type*} [CommRing R] : PowerSeries R := 1 - X
+noncomputable def den {R : Type*} [CommRing R] : PowerSeries R := 1 - X
 private noncomputable def candidate {R : Type*} [CommRing R] : PowerSeries R :=
   (1 - 2 * X ^ 3) * geom
 private theorem geom_den {R : Type*} [CommRing R] :

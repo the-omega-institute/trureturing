@@ -44,7 +44,7 @@ theorem generating_equation : constantCoeff generatingSeries = 1 ∧
   refine ⟨?_, he⟩
   simpa using congrArg constantCoeff he
 
-private theorem quadratic_unique {R : Type*} [CommRing R]
+theorem quadratic_unique {R : Type*} [CommRing R]
     {y f g : PowerSeries R} (hy : constantCoeff y = 0)
     (hf : f = 1 + y * f ^ 2) (hg : g = 1 + y * g ^ 2) : f = g := by
   -- The difference is annihilated by a series with constant coefficient one.

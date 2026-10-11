@@ -388,7 +388,7 @@ private theorem rescale_inner (c : ℚ) (p q : PowerSeries ℚ)
     subst_comp_subst_apply (.of_constantCoeff_zero hq)
       (.of_constantCoeff_zero (by simp : constantCoeff (C c * X) = 0))]
 
-private theorem rescale_outer (c : ℚ) (p q : PowerSeries ℚ)
+theorem rescale_outer (c : ℚ) (p q : PowerSeries ℚ)
     (hq : constantCoeff q = 0) :
     (rescale c p).subst q = p.subst (C c * q) := by
   rw [rescale_as_subst,
