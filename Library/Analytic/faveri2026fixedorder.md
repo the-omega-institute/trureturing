@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector, with sixth-power convolution masks retained; its generic count budget is dominated by existing legal detector settings, while the transported signed packet still has separate restoration obligations.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic and quadratic suppliers pay its lower-order blocks, leaving an actual-order-six residual, while the generic count budget is dominated by existing legal detector settings and signed restoration remains open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the application have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the application have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -247,6 +247,174 @@ $$
 uniformly on the original coefficients, masks, profiles, and presentations. This is an open coefficient-sensitive off-block estimate. The generic sieve allows an extra $U^{1/6}$ at this scale. A result only at $DN\asymp U$ would still require coverage of the other actual witness lengths; the detector does not promise to return that scale. The trace identity is a way to state the missing input, not a new sieve theorem or a proved cancellation result.
 
 The full transported signed packet below remains a different application. None of these nonnegative moment bounds restores its root numbers and signed parent columns or supplies the original fixed-index Robin target $[-I_\psi(A)]_+=o(A^{-\eta_{\rm R}})$ with $0<\eta_{\rm R}<1/2$. The actual CA/GA1 source, zeros, phases, prime powers, atoms, endpoints, and collisions still have to be retained there.
+
+### Separating the lower-order character blocks
+
+The off-block above has nonprincipal ratios of actual order two, three, or six. The lower-order parts can be paid using existing suppliers, leaving a sufficient contract only for actual order six. This is a source-conditional application of known operator bounds, not a new sieve or a historical originality claim. The analytical application has no complete local Lean certification.
+
+First preserve the physical row domain. Write each retained sixth-power-free element as $u=\zeta\operatorname{gen}(s)v$, where $s$ is its ideal part supported on $S$ and $v$ is a good primary generator. The unit and $S$-part have finitely many possibilities. For a fixed label $j=(\zeta,s)$, use $U_j=U/q_s$ and
+
+$$
+c_j(h)=c(h)\chi_h^{\rm raw}(\zeta\operatorname{gen}(s))^{\varepsilon_\chi}.
+$$
+
+The actual good row set $\mathcal V_j$ retains the original nonprincipal-row selection and norm profile. On good columns the extra factor has modulus one, so $c_j$ remains divisor-bounded. A physical row divisible by a prime in $S$ has not been set to zero. Subsequent enlargement of $\mathcal V_j$ is used only to bound positive squared norms. The finite ray and source-family corrections are those already specified above; negative orientation conjugates the whole coefficient polynomial.
+
+For $m\in\{2,3,6\}$, let $r_m(h)$ be the ideal with valuations $v_{\mathfrak p}(h)\bmod m$. Define positive block energies on the actual rows by
+
+$$
+H_{m,j}=\sum_a\sum_{v\in\mathcal V_j}
+\left|\sum_{r_m(h)=a}c_j(h)
+\chi_h^{\rm raw}(v)^{\varepsilon_\chi}\right|^2.
+$$
+
+All columns are good and use the original multiplicative primary convention. Consequently equality of $r_2$ means the ratio character has order dividing three, equality of $r_3$ means order dividing two, and their intersection is equality of $r_6$. Here the ratio means its actual primitive inducing character on the coprime locus; its prescribed zeros are still retained in every polynomial. In particular a principal ratio is not the constant function one on rows meeting either column.
+
+The two operator suppliers are de Faveri's Theorem 1.1 with $n=3$ and [Goldmakher–Louvel, *A quadratic large sieve inequality over number fields*, Definition 1 and Theorem 1.1](https://arxiv.org/abs/1112.1642). They give respectively
+
+$$
+\Theta_3(A,B)\ll_\varepsilon(AB)^\varepsilon
+\bigl(A+B+(AB)^{2/3}\bigr),\qquad
+\Xi_2(A,B)\ll_\varepsilon(AB)^\varepsilon(A+B).
+$$
+
+The first has cubefree indices; the second has squarefree indices. The pinned detector's `eq:quadratic-large-sieve` already verifies the primary quadratic family, its ramified conductor and finite-ray transpose. Those family checks are reused.
+
+For a parity core $a$, write $h=ab^2$ with $a$ squarefree and $q_b\ll B_a=(K/q_a)^{1/2}$. No condition $(a,b)=1$ is imposed. Since
+
+$$
+\chi_{ab^2}^{\rm raw}(v)=\chi_a^{\rm raw}(v)
+\kappa_b(v),\qquad \kappa_b=\bigl(\chi_b^{\rm raw}\bigr)^2,
+$$
+
+the block is bounded by a cubic positive row norm after using $|\chi_a^{\rm raw}(v)|\le1$. De Faveri's Lemma 6.1 already removes cubes from unrestricted good rows. Applying it with Theorem 1.1 gives the all-row, cubefree-column supplier
+
+$$
+(U_jB)^\varepsilon
+\max_{1\le R\ll U_j^{1/3}}
+R\Theta_3(U_j/R^3,B)
+\ll_\varepsilon(U_jB)^\varepsilon
+\bigl(U_j+U_j^{1/3}B+(U_jB)^{2/3}\bigr).
+$$
+
+To retain arbitrary columns, write $b=b_0z^3$ with $b_0$ cubefree. The exact symbol is $\kappa_{b_0}(v)\mathbf1_{(z,v)=1}$, including overlaps between $b_0,z,a$. For each fixed $z$, the coefficient squared norm is $\ll_\varepsilon K^\varepsilon B_a/q_z^3$. The row mask is enlarged only inside that fixed positive norm. Minkowski sums the resulting norms with weight $q_z^{-3/2}$, whose ideal series converges. This gives the parity-block bound
+
+$$
+\ll_{\mathcal A,\varepsilon}(U_jK)^\varepsilon B_a
+\bigl(U_j+U_j^{1/3}B_a+U_j^{2/3}B_a^{2/3}\bigr).
+$$
+
+For a mod-three core $a$, write $h=ab^3$ with $a$ cubefree and $q_b\ll B_a=(K/q_a)^{1/3}$. The remaining symbol $\bigl(\chi_b^{\rm raw}\bigr)^3$ is quadratic. The same positive square decomposition uses $v=v_0t^2$, $b=b_0z^2$, with squarefree $v_0,b_0$. At fixed $t$, $\mathbf1_{(b,t)=1}$ stays in the coefficient vector; at fixed $z$, $\mathbf1_{(z,v_0)=1}$ restricts the positive outer sum. The $z$ norm weights are $q_z^{-1}$ and pay only a logarithm. The known quadratic supplier therefore gives the mod-three block bound
+
+$$
+\ll_{\mathcal A,\varepsilon}(U_jK)^\varepsilon B_a
+\bigl(U_j+U_j^{1/2}B_a\bigr).
+$$
+
+Ideal counting pays the core sums: for the parity blocks, $\sum_aB_a\ll K$, $\sum_aB_a^2\ll K\log(2K)$, and $\sum_aB_a^{5/3}\ll K$; for the mod-three blocks, $\sum_aB_a\ll K$ and $\sum_aB_a^2\ll K$. Together with the already bounded sixth-core block, this yields
+
+$$
+H_{2,j}+H_{3,j}+H_{6,j}
+\ll_{\mathcal A,\varepsilon}(U_jK)^\varepsilon U_jK.
+$$
+
+Fixed changes in annular scales are absorbed in the arithmetic datum. The bound holds for $U_j,K\ge1$, rather than just at $K\asymp U_j$. For rowwise original profile choices, use the previously specified finite smooth-calculus derivatives and the same cumulative height allowance; no fresh height allowance is supplied by a block.
+
+Let $T_j$ be the original unnormalized positive mixed moment on $\mathcal V_j$, and let $E_{6,j}$ be the full Hermitian contraction over pairs satisfying both $r_2(h)\ne r_2(k)$ and $r_3(h)\ne r_3(k)$. These pairs have actual ratio order six. Finite expansion gives
+
+$$
+T_j=H_{2,j}+H_{3,j}-H_{6,j}+E_{6,j}.
+$$
+
+The exact order-three and order-two contractions are $H_{2,j}-H_{6,j}$ and $H_{3,j}-H_{6,j}$ respectively. Each has a paid upper bound; neither must be nonnegative. Likewise $H_{2,j}+H_{3,j}-H_{6,j}$ is not asserted positive. A sufficient remaining input is now
+
+$$
+\Re E_{6,j}\ll_{\mathcal A,\varepsilon}(U_jK)^\varepsilon U_jK
+$$
+
+uniformly on the original coefficients, masks and profiles. The finite physical labels then recover the original $UK$ scale. This residual still contains nonsquarefree columns, shared prime factors, all sixth-power tails and both character orientations. The natural masks cannot be dropped from $E_{6,j}$ by a positive-row comparison. The reduction pays only the lower-order parts; it does not prove the residual, improve the existing whole-bin detector by itself, or restore the signed Robin packet.
+
+### A source-conditional pure-dual-power contraction
+
+To use Poisson on a complete ideal family, choose a fixed nonnegative smooth annular majorant $W\ge1$ on the actual row norm support, and define
+
+$$
+\widetilde T_j=\sum_{v\ {\rm good\ sixth\ power\ free}}
+W(q_v/U_j)\left|\sum_hc_j(h)
+\chi_h^{\rm raw}(v)^{\varepsilon_\chi}\right|^2\ge T_j.
+$$
+
+Define $\widetilde H_{m,j}$ and $\widetilde E_{6,j}$ by expanding this new positive moment. The lower-order bounds apply to these new blocks with the fixed seminorms of $W$. This compares complete positive moments first; it does not compare $E_{6,j}$ to $\widetilde E_{6,j}$ or erase an arbitrary selector from a signed contraction.
+
+For each actual-order-six pair, let $\xi=\xi_{h,k}$ be the primitive character inducing $\chi_h^{\varepsilon_\chi}\overline{\chi_k^{\varepsilon_\chi}}$ on the coprime locus, with its full conductor $\mathfrak f=\mathfrak f_{h,k}$ and trivial infinite type. Put
+
+$$
+P=P_{h,k}=\operatorname{rad}\left(hk\prod_{\mathfrak p\in S}\mathfrak p\right),
+\qquad R=R_{h,k}=\prod_{\substack{\mathfrak p\mid P\\\mathfrak p\nmid\mathfrak f}}\mathfrak p.
+$$
+
+Extend the original good-row ratio by zero to all integral ideals. This extension is exactly $\xi(v)\mathbf1_{(v,R)=1}$: primes of $P$ lying in $\mathfrak f$ are already zeroed by $\xi$, and every remaining original column or $S$-row exclusion is enforced by $R$. This is not an identity for unsplit physical rows. Common prime factors and redundant zero-support primes absent from the primitive conductor belong to $R$. No artificial fractional-generator zeros are inserted.
+
+Let $b_W$ be the upper endpoint of the support of $W$, and define
+
+$$
+L_j=(b_WU_j)^{1/6},\qquad
+M_{P,L_j}(w)=\sum_{\substack{q_\ell\le L_j\\(\ell,P)=1}}\mu(\ell)q_\ell^{-w},
+\qquad
+\vartheta(\mathfrak f)=\prod_{\mathfrak p\mid\mathfrak f}(1-q_{\mathfrak p}^{-1}).
+$$
+
+The row sixth-power-free indicator is expanded by the finite sum $\sum_{\ell^6\mid v}\mu(\ell)$. Expanding $\mathbf1_{(v,R)=1}$ then uses $r\mid R$. De Faveri's Lemma 3.1 applies to the nontrivial primitive $\xi$ at scale $A_{\ell,r}=U_j/(q_\ell^6q_r)$. In its dual sum, restrict only this specified subterm to ideals $e^6$, where $\overline\xi(e^6)=\mathbf1_{(e,\mathfrak f)=1}$.
+
+For $F=\mathbb Q(\sqrt{-3})$, the source's Mellin factor is
+
+$$
+H_W(z)=\widehat W(1-z)\frac{\Gamma(z)}{\Gamma(1-z)}
+\left(\frac3{(2\pi)^2}\right)^{z-1/2}.
+$$
+
+On $1/6<\Re z<1$, the resulting pair contribution is exactly
+
+$$
+\frac{\epsilon(\xi)}{2\pi i}\int
+H_W(z)U_j^{1-z}q_{\mathfrak f}^{z-1/2}\zeta_F(6z)
+\prod_{\mathfrak p\mid\mathfrak f}(1-q_{\mathfrak p}^{-6z})
+\prod_{\mathfrak p\mid R}(1-\xi(\mathfrak p)q_{\mathfrak p}^{z-1})
+M_{P,L_j}(6-6z)\,dz.
+$$
+
+The root number and conductor are those of the actual primitive ratio, including its ramified part. The dual-power series converges absolutely on this initial line and the $\ell$-sum is finite. Shifting to $0<\Re z<1/6$ extracts the $\zeta_F(6z)$ pole. Thus this specified pure-dual-sixth-power contribution is
+
+$$
+\mathcal P_{6,j}=C_WU_j^{5/6}\mathcal C_{6,L_j}[c_j]
++\mathcal I_{6,j},\qquad
+C_W=\frac{\operatorname{Res}_{s=1}\zeta_F(s)}6H_W(1/6)>0,
+$$
+
+where $\mathcal I_{6,j}$ is the remaining shifted integral and
+
+$$
+\mathcal C_{6,L_j}[c_j]=
+\sum_{\substack{r_2(h)\ne r_2(k)\\r_3(h)\ne r_3(k)}}
+c_j(h)\overline{c_j(k)}\epsilon(\xi_{h,k})
+q_{\mathfrak f_{h,k}}^{-1/3}\vartheta(\mathfrak f_{h,k})
+\prod_{\mathfrak p\mid R_{h,k}}
+(1-\xi_{h,k}(\mathfrak p)q_{\mathfrak p}^{-5/6})
+M_{P_{h,k},L_j}(5).
+$$
+
+This is a substitution and residue calculation from the existing Poisson formula. It identifies a subterm, not the full contraction $\widetilde E_{6,j}$, a nonnegative resonance, or a certified spectral projection. A sufficient bound for its pole contribution is $\Re\mathcal C_{6,L_j}[c_j]\ll_\varepsilon(U_jK)^\varepsilon U_j^{1/6}K$; the shifted integral and all other dual ideals still require a joint upper bound at scale $U_jK$. Neither bound has been supplied here.
+
+For comparison, absolute values and divisor bounds give only $|\mathcal C_{6,L_j}[c_j]|\ll_\varepsilon K^{4/3+\varepsilon}$. Write $h=gx,k=gy$ with $(x,y)=1$. The good conductor weight is at most $w(x)w(y)$, where $w(x)=\prod_{6\nmid v_{\mathfrak p}(x)}q_{\mathfrak p}^{-1/3}$. Its Dirichlet series converges for $\Re s>2/3$, so $\sum_{q_x\le X}w(x)\ll_\varepsilon X^{2/3+\varepsilon}$. Summing the two cofactors and then $g$ gives $K^{4/3+\varepsilon}$; the finite local products and divisor-bounded coefficients cost only $K^\varepsilon$. At $K\asymp U_j$, the desired pole-contraction scale is instead $K^{7/6+\varepsilon}$, leaving a $K^{1/6}$ saving to obtain. The row Möbius factor $M_{P,L_j}(5)$ is distinct from the original column coefficient $\mu(d)$; it does not establish cancellation of that coefficient contraction.
+
+The actual-order restriction matters. For a ratio of order $o\in\{2,3\}$, all pure dual $o$-th powers have character value one. The portion of those powers outside the sixth powers has Dirichlet factor
+
+$$
+\zeta_F(oz)\prod_{\mathfrak p\mid\mathfrak f}(1-q_{\mathfrak p}^{-oz})
+-\zeta_F(6z)\prod_{\mathfrak p\mid\mathfrak f}(1-q_{\mathfrak p}^{-6z}).
+$$
+
+Its $z=1/6$ residue cancels the extracted sixth-power residue for that pair. This prevents treating a uniform sixth-power extraction over all nonprincipal pairs as an uncancellable contribution. Restricting to actual order six removes that specific lower-order cancellation; it does not exclude cancellation by other dual terms or solve the remaining estimate. De Faveri's Lemma 3.3 also retains coupled cross phases for nonsquarefree columns under its stated coprimality and finite-class hypotheses. It does not replace the general $\epsilon(\xi_{h,k})$ above by a separable squarefree Gauss vector. This application remains source-conditional and has no complete local Lean certification or signed Robin consequence.
 
 ## Known estimates for the squarefree Gauss pairing
 
