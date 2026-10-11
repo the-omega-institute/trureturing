@@ -6305,3 +6305,536 @@ Arrighi、Durbec 和 Wilson 的 *Quantum networks theory*（Quantum 8, 1508, 202
 
 上定义 CPTP 映射。当前 PR 只处理固定图和固定层间 bonding，因此不包含量子叠加拓扑。该扩展必须先定义图标签的状态空间、重连信道和逆极限相容性，不能从现有 holonomy 定义直接推导。
 
+
+
+## 36. 有限图上的离散曲率证书
+
+本节把“引力”先改写成有限 Dirichlet 载体上的曲率稳定性证书。曲率在这里是由有限矩阵和有限求和定义的函数不等式。它不被解释为 Einstein 曲率，也不自动产生连续时空。
+
+### 定义 36.1（有限可逆图与 Markov 生成元）
+
+令 \(V\) 是有限集合，令 \(\mu_x>0\) 且 \(\sum_{x\in V}\mu_x=1\)。令 \(c_{xy}=c_{yx}\ge0\)，\(c_{xx}=0\)，并假设由 \(c_{xy}>0\) 生成的无向图连通。定义
+
+\[
+(Lf)(x)
+=
+\frac1{\mu_x}
+\sum_{y\in V}c_{xy}\bigl(f(y)-f(x)\bigr).
+\]
+
+在
+
+\[
+\langle f,g\rangle_\mu
+=
+\sum_{x\in V}\mu_x f(x)g(x)
+\]
+
+上，\(L\) 是自伴且非正。记 \(A=-L\)。定义 Dirichlet 双线性型
+
+\[
+\mathcal E(f,g)
+=
+-\langle f,Lg\rangle_\mu
+=
+\frac12\sum_{x,y\in V}
+c_{xy}\bigl(f(x)-f(y)\bigr)\bigl(g(x)-g(y)\bigr).
+\]
+
+于是 \(\mathcal E(f)=\mathcal E(f,f)\ge0\)，且连通性给出
+
+\[
+\ker A=\operatorname{span}\{\mathbf 1\}.
+\]
+
+### 定义 36.2（有限 carré du champ 与二阶型）
+
+对实函数 \(f,g:V\to\mathbb R\)，定义
+
+\[
+\Gamma(f,g)
+=
+\frac12\left(
+L(fg)-fLg-gLf
+\right),
+\qquad
+\Gamma(f)=\Gamma(f,f).
+\]
+
+直接展开得到
+
+\[
+\Gamma(f,g)(x)
+=
+\frac1{2\mu_x}
+\sum_yc_{xy}
+\bigl(f(y)-f(x)\bigr)
+\bigl(g(y)-g(x)\bigr),
+\]
+
+因此
+
+\[
+\sum_x\mu_x\Gamma(f)(x)=\mathcal E(f).
+\]
+
+定义二阶型
+
+\[
+\Gamma_2(f)
+=
+\frac12L\Gamma(f)-\Gamma(f,Lf).
+\]
+
+这里 \(\Gamma_2\) 是有限函数 \(V\to\mathbb R\)。所有量都是有限和与有限矩阵乘法，不需要先给出连续流形。
+
+### 定义 36.3（有限 \(CD_G(K,\infty)\) 证书）
+
+给定 \(K\in\mathbb R\)，称有限图满足 \(CD_G(K,\infty)\)，如果对任意 \(f:V\to\mathbb R\) 和任意 \(x\in V\)，有
+
+\[
+\Gamma_2(f)(x)\ge K\Gamma(f)(x).
+\]
+
+这一定义是一个可检查的有限二次型不等式。对于固定 \(G,\mu,c\)，最大的允许 \(K\) 是一个有限图证书，可通过有限维半正定条件或广义 Rayleigh 商验证。
+
+### 定理 36.4（离散曲率控制谱隙与 Dirichlet 衰减）
+
+设有限图满足 \(CD_G(K,\infty)\)，且 \(K>0\)。则：
+
+1. 对任意 \(f\)，
+   \[
+   \sum_x\mu_x\Gamma_2(f)(x)
+   =
+   \|Lf\|_\mu^2,
+   \qquad
+   \|Lf\|_\mu^2\ge K\mathcal E(f).
+   \]
+
+2. 令 \(\lambda_1>0\) 为 \(A=-L\) 在常数正交子空间上的最小特征值，则
+   \[
+   \lambda_1\ge K.
+   \]
+
+3. 令 \(P_t=e^{tL}\)。则
+   \[
+   \mathcal E(P_tf)
+   \le
+   e^{-2Kt}\mathcal E(f).
+   \]
+
+#### 证明
+
+由于 \(\sum_x\mu_xLh(x)=0\)，且
+
+\[
+\sum_x\mu_x\Gamma(f,Lf)(x)
+=
+-\langle f,L^2f\rangle_\mu,
+\]
+
+有
+
+\[
+\begin{aligned}
+\sum_x\mu_x\Gamma_2(f)(x)
+&=
+\frac12\sum_x\mu_xL\Gamma(f)(x)
+-
+\sum_x\mu_x\Gamma(f,Lf)(x)\\
+&=
+\langle f,L^2f\rangle_\mu\\
+&=
+\|Lf\|_\mu^2.
+\end{aligned}
+\]
+
+积分 \(CD_G(K,\infty)\) 即得第一项的不等式。
+
+若 \(Af=\lambda f\)，且 \(f\perp_\mu\mathbf1\)，则 \(Lf=-\lambda f\)，从而
+
+\[
+\|Lf\|_\mu^2
+=
+\lambda^2\|f\|_\mu^2,
+\qquad
+\mathcal E(f)
+=
+\lambda\|f\|_\mu^2.
+\]
+
+因此 \(\lambda^2\ge K\lambda\)。对 \(\lambda>0\) 消去一个 \(\lambda\)，得到 \(\lambda\ge K\)。这证明第二项。
+
+令 \(f_t=P_tf\)。由自伴性，
+
+\[
+\frac d{dt}\mathcal E(f_t)
+=
+2\langle Lf_t,-Lf_t\rangle_\mu
+=
+-2\|Lf_t\|_\mu^2
+\le
+-2K\mathcal E(f_t).
+\]
+
+Gronwall 不等式给出第三项。证毕。
+
+这个定理把“场的稳定性”变成了明确的谱估计：\(K\) 是有限图热流的能量衰减率下界。它没有把 \(K\) 解释成物理引力常数。
+
+### 定理 36.5（曲率证书对有效电阻的控制）
+
+沿用定义 36.1，令
+
+\[
+b_{uv}(x)
+=
+\frac{\mathbf1_{\{x=u\}}}{\mu_u}
+-
+\frac{\mathbf1_{\{x=v\}}}{\mu_v}.
+\]
+
+则 \(b_{uv}\perp_\mu\mathbf1\)，并满足
+
+\[
+\langle b_{uv},f\rangle_\mu=f(u)-f(v).
+\]
+
+定义加权有效电阻
+
+\[
+R_\mu(u,v)
+=
+\langle b_{uv},A^\dagger b_{uv}\rangle_\mu,
+\]
+
+其中 \(A^\dagger\) 是 Moore–Penrose 伪逆。若 \(CD_G(K,\infty)\) 且 \(K>0\)，则
+
+\[
+\boxed{
+R_\mu(u,v)
+\le
+\frac{\mu_u^{-1}+\mu_v^{-1}}{K}.
+}
+\]
+
+#### 证明
+
+定理 36.4 给出 \(A\ge K I\) 在常数正交子空间上的谱序。故
+
+\[
+A^\dagger\le K^{-1}I
+\]
+
+在该子空间上成立。于是
+
+\[
+R_\mu(u,v)
+\le
+K^{-1}\|b_{uv}\|_\mu^2
+=
+K^{-1}\left(\frac1{\mu_u}+\frac1{\mu_v}\right).
+\]
+
+证毕。
+
+如果令 \(\phi_{uv}=A^\dagger b_{uv}\)，则 \(A\phi_{uv}=b_{uv}\) 且
+
+\[
+R_\mu(u,v)
+=
+\mathcal E(\phi_{uv}).
+\]
+
+因此曲率下界控制有限场对点源差分的静态响应幅度。这个响应是离散 Poisson 方程的解。把它称作“引力势”需要额外的物理桥接，数学定理本身只给出有效电阻和 Dirichlet 能量界。
+
+### 定义 36.6（层级曲率数据）
+
+对第 \(j\) 层的 \((V_j,\mu_j,c_j)\)，定义
+
+\[
+K_j^{\mathrm{BE}}
+=
+\sup\{K:\ CD_{G_j}(K,\infty)\text{ 成立}\}.
+\]
+
+这给出一个完全由有限层矩阵确定的曲率序列
+
+\[
+(K_0^{\mathrm{BE}},K_1^{\mathrm{BE}},\ldots).
+\]
+
+若层间 bonding 还满足额外的 \(\Gamma\)-交换和 \(\Gamma_2\)-单调条件，才可以比较 \(K_j^{\mathrm{BE}}\) 与 \(K_{j+1}^{\mathrm{BE}}\)。Dirichlet 能量收缩本身并不自动推出曲率下界单调性。
+
+## 37. 有限量子网络的 detailed-balance Dirichlet 曲率
+
+本节使用有限维矩阵定义量子层。为了避免把经典 \(CD_G\) 不加证明地推广到非交换代数，量子曲率先定义为 detailed-balance 生成元上的二次型谱证书。
+
+### 定义 37.1（有限 detailed-balance 量子半群）
+
+令 \(H\) 是有限维复 Hilbert 空间，令 \(\sigma\in\mathsf D(H)\) 严格正定。对 \(A,B\in\mathsf L(H)\)，定义 GNS 内积
+
+\[
+\langle A,B\rangle_\sigma
+=
+\operatorname{tr}
+\left(
+\sigma^{1/2}A^\ast\sigma^{1/2}B
+\right).
+\]
+
+令 \(\mathcal L:\mathsf L(H)\to\mathsf L(H)\) 是有限维 CPTP 半群 \(T_t=e^{t\mathcal L}\) 的生成元，满足
+
+\[
+\mathcal L^\ast(\sigma)=0
+\]
+
+以及 GNS detailed balance
+
+\[
+\langle A,\mathcal L B\rangle_\sigma
+=
+\langle\mathcal L A,B\rangle_\sigma.
+\]
+
+定义量子 Dirichlet 型
+
+\[
+\mathcal E_\sigma(A)
+=
+\langle A,-\mathcal L A\rangle_\sigma.
+\]
+
+在 \(A\) 为常数方向之外，\(\mathcal E_\sigma(A)\ge0\)。
+
+### 定义 37.2（量子二阶型曲率证书）
+
+给定 \(K\in\mathbb R\)，称 \((\mathcal L,\sigma)\) 满足 \(QCD(K)\)，如果对所有满足
+
+\[
+\langle I,A\rangle_\sigma=0
+\]
+
+的 \(A\) 都有
+
+\[
+\langle\mathcal L A,\mathcal L A\rangle_\sigma
+\ge
+K\mathcal E_\sigma(A).
+\]
+
+左侧是生成元的二阶 Hilbert 型，右侧是一阶 Dirichlet 型。这个定义是有限矩阵不等式。它不宣称已经得到一般意义的非交换 Bakry–Émery \(\Gamma_2\)。
+
+### 定理 37.3（量子曲率控制谱隙和衰减）
+
+若 \(QCD(K)\) 且 \(K>0\)，则：
+
+1. \(-\mathcal L\) 在 \(I^\perp\) 上的每个非零特征值 \(\lambda\) 满足 \(\lambda\ge K\)；
+2. 对所有 \(A\)，
+   \[
+   \mathcal E_\sigma(T_tA)
+   \le
+   e^{-2Kt}\mathcal E_\sigma(A);
+   \]
+3. 记
+   \[
+   A_0=A-\langle I,A\rangle_\sigma I,
+   \]
+   则
+   \[
+   \|T_tA_0\|_\sigma
+   \le
+   e^{-Kt}\|A_0\|_\sigma.
+   \]
+
+#### 证明
+
+由于 detailed balance，\(-\mathcal L\) 是有限维 GNS Hilbert 空间上的自伴非负算子。若 \(-\mathcal L A=\lambda A\)，且 \(A\perp_\sigma I\)，则
+
+\[
+\|\mathcal L A\|_\sigma^2
+=
+\lambda^2\|A\|_\sigma^2,
+\qquad
+\mathcal E_\sigma(A)
+=
+\lambda\|A\|_\sigma^2.
+\]
+
+\(QCD(K)\) 给出 \(\lambda^2\ge K\lambda\)，所以 \(\lambda\ge K\)。这证明第一项。
+
+令 \(A_t=T_tA\)。由自伴性，
+
+\[
+\frac d{dt}\mathcal E_\sigma(A_t)
+=
+2\langle\mathcal L A_t,-\mathcal L A_t\rangle_\sigma
+=
+-2\|\mathcal L A_t\|_\sigma^2
+\le
+-2K\mathcal E_\sigma(A_t).
+\]
+
+Gronwall 不等式给出第二项。
+
+第一项的谱结论还给出 \(-\mathcal L\ge K I\) 在 \(I^\perp\) 上。于是
+
+\[
+\frac d{dt}\|T_tA_0\|_\sigma^2
+=
+-2\mathcal E_\sigma(T_tA_0)
+\le
+-2K\|T_tA_0\|_\sigma^2.
+\]
+
+再次应用 Gronwall 得到第三项。证毕。
+
+### 定理 37.4（独立量子边的张量化）
+
+对有限边指标集 \(E\)，令
+
+\[
+H=\bigotimes_{e\in E}H_e,
+\qquad
+\sigma=\bigotimes_{e\in E}\sigma_e.
+\]
+
+每个边生成元 \(\mathcal L_e\) 在 \((H_e,\sigma_e)\) 上满足 \(QCD(K_e)\)。将其提升为
+
+\[
+\widehat{\mathcal L}_e
+=
+I_{\bar e}\otimes\mathcal L_e,
+\qquad
+\mathcal L_{\mathrm{net}}
+=
+\sum_{e\in E}\widehat{\mathcal L}_e.
+\]
+
+则 \(\mathcal L_{\mathrm{net}}\) 满足
+
+\[
+QCD\left(\min_{e\in E}K_e\right).
+\]
+
+#### 证明
+
+不同边作用在不同张量因子上，因此 \(\widehat{\mathcal L}_e\) 两两交换，并且在乘积 GNS 内积下自伴。有限维谱定理给出共同特征基。共同特征向量的 \(-\mathcal L_{\mathrm{net}}\) 特征值为
+
+\[
+\lambda_{\mathrm{net}}
+=
+\sum_{e\in E}\lambda_e,
+\]
+
+其中每个 \(\lambda_e\) 非负。若共同特征向量不在常数方向，则至少一个 \(\lambda_e>0\)，故
+
+\[
+\lambda_{\mathrm{net}}
+\ge
+\min_{e\in E}K_e.
+\]
+
+对共同特征基逐项应用
+
+\[
+\lambda_{\mathrm{net}}^2
+\ge
+\left(\min_eK_e\right)\lambda_{\mathrm{net}}
+\]
+
+并线性延拓，得到 \(QCD(\min_eK_e)\)。证毕。
+
+这个张量化结果与 triangle quantum network 的源积结构相容。它只处理独立边生成元的乘积模型。一般节点 CPTP 信道会引入非交换耦合，除非额外证明 detailed balance、共同不变状态和相应二阶型不等式，否则不能使用该定理。
+
+## 38. 离散曲率、量子网络与“引力”之间的桥接账本
+
+当前可严格登记的对象是：
+
+\[
+\begin{array}{c|c}
+\text{数学层} & \text{可验证对象}\\
+\hline
+\text{静态场} & (\Phi_j,\Pi_j,N_j,Z_j)\\
+\text{经典几何} & \mathcal E_j,\Gamma_j,\Gamma_{2,j},K_j^{\mathrm{BE}}\\
+\text{有效距离} & R_{\mu_j}(u,v),\sqrt{R_{\mu_j}(u,v)}\\
+\text{量子网络} & (H_j,\sigma_j,\mathcal L_j,T_{j,t})\\
+\text{量子几何} & \mathcal E_{\sigma_j},QCD(K_j^Q)\\
+\text{逆极限} & \varprojlim_j C_j,\quad \varprojlim_jK_j
+\end{array}
+\]
+
+由这些定义已经证明：
+
+\[
+\begin{aligned}
+CD_G(K,\infty)
+&\Longrightarrow
+\lambda_1(A)\ge K
+\Longrightarrow
+\mathcal E(P_tf)\le e^{-2Kt}\mathcal E(f),\\
+CD_G(K,\infty)
+&\Longrightarrow
+R_\mu(u,v)\le
+(\mu_u^{-1}+\mu_v^{-1})/K,\\
+QCD(K)
+&\Longrightarrow
+\operatorname{Spec}(-\mathcal L|_{I^\perp})\subseteq[K,\infty),\\
+QCD(K)
+&\Longrightarrow
+\mathcal E_\sigma(T_tA)\le e^{-2Kt}\mathcal E_\sigma(A).
+\end{aligned}
+\]
+
+“场产生引力”的纯数学版本只能先写成：
+
+\[
+\text{静态 Dirichlet 场}
+\longrightarrow
+\text{有限曲率证书}
+\longrightarrow
+\text{谱隙与响应界}
+\longrightarrow
+\text{有效网络几何}.
+\]
+
+要把这条链升级为物理引力，还需独立证明至少一个具体桥接：
+
+1. 从 \(K_j^{\mathrm{BE}}\) 或 \(K_j^Q\) 到某个度量测度极限的 Ricci 型下界；
+2. 从该度量测度极限到光滑黎曼结构的维数、非塌缩、正则性和坐标重构；
+3. 从静态 Poisson 响应到一个具有明确单位和变分原理的物理势；
+4. 从曲率证书到 Einstein 型场方程，或证明该方程是某个有限能量泛函的 Euler–Lagrange 方程；
+5. 从量子网络生成元到同一极限几何中的量子 Hamiltonian 或谱三元组；
+6. 从此自伴谱数据到 RH 的完整零点空间和谱行列式恒等式。
+
+因此，当前理论只支持以下条件式陈述：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{若有限层曲率证书在 bonding 下具有统一下界，}\\
+&\text{且 Dirichlet 形式满足共同宿主空间中的 Mosco 条件，}\\
+&\text{则可以尝试构造带稳定谱隙和有限响应界的度量测度极限。}
+\end{aligned}
+}
+\]
+
+这仍是数学极限问题，不是已经证明的引力理论。尤其不能从 \(CD_G\)、\(QCD\)、有效电阻或 holonomy 单独推出 Ricci 张量、Einstein 张量、时空因果结构或物理能量。
+
+### 外部数学锚点
+
+离散熵曲率与 Markov 链的研究已经给出另一条成熟的几何路线：有限 Markov 链可用熵沿离散运输度量的凸性定义 Ricci 型下界，并证明曲率界的张量化。该路线可作为本节 \(CD_G\) 证书之后的后续桥接，但不能把两种曲率定义视为同一对象。参考 Erbar--Maas, *Ricci curvature of finite Markov chains via convexity of the entropy*, arXiv:1111.2687。genui{"citation":{"ref":"turn22academia0"}}
+
+因此，当前文件同时保留两条可检验路线：
+
+\[
+\begin{aligned}
+&\text{有限 }CD_G\text{ 二次型}
+\longrightarrow
+\text{谱隙、热流衰减、有效电阻界};\\
+&\text{离散熵凸性曲率}
+\longrightarrow
+\text{运输度量、熵梯度流、可能的 metric-measure 极限}.
+\end{aligned}
+\]
+
+两条路线的共同输入是有限 Markov/Dirichlet 数据。它们的极限识别、相互等价及其与物理引力的关系，都必须另行证明。
