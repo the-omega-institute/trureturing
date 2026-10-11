@@ -26,13 +26,17 @@ $$
 f_{\delta,n}(x)=\sum_{k\le n}\mu(k)k^{-\delta}\,\{1/(kx)\}
 $$
 
-and regularizes them by Mellin convolution. Its main equivalence says that RH
-holds exactly when a corresponding moderate Colombeau net is associated with
-the characteristic function of $(0,1)$ and is uniformly bounded in $L^2$.
-The converse is obtained through the classical Nyman--Beurling criterion and
-Mazur's theorem. A separate power-law estimate is conditional on simplicity
-and separation of the nontrivial zeros; the paper leaves stronger exponential
-damping as an open problem.
+and regularizes them by Mellin convolution. Theorem 8.1 fixes the polynomially
+damped net of Section 4, with
+$\delta(\varepsilon)=(\log(1/\varepsilon))^{-\alpha}$, $0<\alpha<1$,
+and $n(\varepsilon)=\lfloor\varepsilon^{-M}\rfloor$, $M>0$.
+It states that RH holds exactly when this net is moderate, associated with
+$-\iota(\mathbf1_{(0,1)})$, and uniformly bounded in $L^2(0,1)$.
+The minus sign belongs to this specified Möbius convention. The converse is
+obtained through the classical Nyman--Beurling criterion and Mazur's theorem.
+The separate power-law estimate in Theorem 9.1 assumes RH as well as simplicity
+and the stated separation condition for the nontrivial zeros; the paper leaves
+stronger exponential damping as an open problem.
 
 ## Boundary for the FIB route
 

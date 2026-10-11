@@ -30,8 +30,10 @@ $$
 
 The paper proves that the displayed partial sums are negative for $n\ge3$ and
 converge rapidly to a negative constant. More generally, for a positive weight
-sequence $(a_j)$, the same rank-one perturbation calculation gives a determinant
-factor containing $\sum_{k\le n}\mu(k)/a_k$.
+sequence $(a_j)$, Theorem 21 gives the determinant factor
+$1+\sum_{k=2}^{n}\mu(k)/a_k$. It equals
+$\sum_{k=1}^{n}\mu(k)/a_k$ when $a_1=1$, as in the Fibonacci
+specialization; the general statement does not assume that normalization.
 
 ## Boundary for the FIB--Robin route
 
