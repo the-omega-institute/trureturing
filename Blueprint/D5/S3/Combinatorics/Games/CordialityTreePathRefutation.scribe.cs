@@ -98,7 +98,10 @@ internal sealed class CordialityTreePathRefutationDocument : IScribeDocumentDefi
                     + "For the path on ten vertices, an explicit finite strategy table "
                     + "and its recursive soundness theorem bound the value above by one. "
                     + "The conjectured comparison would therefore imply three is at most one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("krop-mittal-wigal-2024-game-cordiality-tree-path"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula,
         string text, bool literature) => Describe.Lean(DescribeId.Create(name.ToLowerInvariant()),

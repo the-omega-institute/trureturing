@@ -94,6 +94,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CordialityTreePathRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/krop-mittal-wigal-2024-game-cordiality-tree-path` (refuted) by `D5/S3/Combinatorics/Games/CordialityTreePathRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"krop-mittal-wigal-2024-game-cordiality-tree-path","declaration_gid":"D5/S3/Combinatorics/Games/CordialityTreePathRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Elliot Krop; Aryan Mittal; Michael C. Wigal (2024). *The Cordiality Game and the Game Cordiality Number*. DOI: [10.1007/s00373-024-02798-1](https://doi.org/10.1007/s00373-024-02798-1). URL: <https://arxiv.org/abs/2403.18060v1>.
