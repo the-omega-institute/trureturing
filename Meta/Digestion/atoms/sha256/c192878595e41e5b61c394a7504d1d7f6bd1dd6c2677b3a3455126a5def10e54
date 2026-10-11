@@ -1,0 +1,38 @@
+## 14.7. Return to the original stopped source
+
+The rational table (14.9) is an effective stationary table.  Under [PAID,
+Lemma 2.1.1] it is realized on the original stopped source with one sampled
+positive integer K, \(m=2,d=1,\ell=2,n=4\), both seeds, every marker triple,
+all held registers, permissions, paid rejections, finite returns, the
+third-write-before-latch rule, the fourth completion, the unique Stop, and the
+supplied complete full-record renderer \(I_c\).  The fixed table and program
+are preinstalled.  The source-independent private label is sampled with row
+\(\pi\) after the third record write and latch, in that same original update,
+using the same fixed row on every seed and held-record fibre.
+The actual B update and suspended I update use the same acquired-letter kernels
+as synthetic generation.
+
+Induction on every positive paid history gives row \(\pi\) at each p and
+suspended cut because \(\pi B=\pi I=\pi\).  The actual letters are not weighted
+by u or v.  The [PAID, formula (2.3)] and [CLIP, Proposition 2.3] correspondence
+therefore identifies the phase suprema with the complete-law risks in
+(14.20)--(14.21), on the installed support \(\{1,2,3\}\) and its stated
+positive endpoint masses.  TV is taken separately for each complete
+configuration before the configuration average.  All partial parses, finite
+returns, held-record fibres, legal noncompletion words, and infinite tails
+remain in the domains.
+
+Every entry in (14.9) is rational.  A finite common denominator gives an exact
+sampler using fresh fair bits, rejection of out-of-range integers, and a finite
+category map; the fixed-width candidate integer, bit cursor, thresholds,
+program state, and workspace are charged to COMPLETE.  Rejected attempts reuse
+this finite storage without retaining an unbounded retry counter.  The
+rejection terminates almost surely and introduces
+no source read or auxiliary observation.  This establishes representability of
+R, whose p-a inequality nevertheless fails.  It does not provide an effective
+sampler for arbitrary real tables, nor does it turn a stationary table into a
+free runtime oracle.  The once-sampled K is not resampled, the source is not
+reset, and no count, clock, posterior, configuration distribution, or auxiliary
+measurement is supplied to the observer.  Persistent randomness and every
+sampler state are part of COMPLETE.
+
