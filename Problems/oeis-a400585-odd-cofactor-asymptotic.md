@@ -86,6 +86,31 @@ result is honestly classified `proof_shape: bind-only`, with
 `escape_witness: none`; its admission comes from settling the preregistered
 external conjecture. Utility is none.
 
+### What the settlement shows
+
+The decisive proved mechanism is an exact reindexing by the odd cofactor. The
+positive-prefix sum becomes a finite sum of
+`binomial(N / q + 1, 3)` over odd `q`; the identity
+`6 * binomial(m + 1, 3) = m^3 - m` gives the normalized pointwise limit
+`1/(6*q^3)`. A cubic reciprocal series supplies a summable dominator, and the
+even/odd split of that series gives `7*Z3/48`; its positivity then permits the
+final ratio normalization.
+
+The proved extent is the full ratio limit for every natural index sequence at
+`atTop`, with the source's unrestricted quantifiers and no parity, primality,
+or finite-range hypothesis. Computed evidence is limited to the finite source
+prefix check (all 54 published revision-22 terms matched) and the bounded
+source/object searches recorded for this delivery; these checks do not prove
+an asymptotic statement or publication priority. The generating-function
+comment, the separate sigma-function comment, effective error terms, secondary
+terms, and broader divisor-weight generalizations are open in this delivery:
+no Lean or independent evidence here settles them.
+
+The settlement resolves the FORMULA conjecture quoted from A400585 in the
+exact source statistic and records its source definition and coefficient. It
+does not settle the entry's other comments or imply a literature-novelty or
+first-publication claim; those questions remain outside this theorem.
+
 ## ASSUMED-UNVERIFIED
 
 No exhaustive literature search, publication-priority claim, or external
