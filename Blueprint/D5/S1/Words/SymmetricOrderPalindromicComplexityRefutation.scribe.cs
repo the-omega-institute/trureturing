@@ -128,7 +128,10 @@ internal sealed class SymmetricOrderPalindromicComplexityRefutationDocument : IS
                     + "The palindromes of length three are exactly [2,2,2], [0,3,0] and "
                     + "[3,0,3]. Thus palComplexity at three is three, while the conjecture "
                     + "requires four. The source vertices 1,2,3,4 correspond to 0,1,2,3."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ferenczi-zamboni-2025-palindromic-complexity-no-connection"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string text) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),

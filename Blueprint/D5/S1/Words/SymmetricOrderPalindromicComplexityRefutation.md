@@ -108,6 +108,10 @@ $$\neg (claim)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/SymmetricOrderPalindromicComplexityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ferenczi-zamboni-2025-palindromic-complexity-no-connection` (refuted) by `D5/S1/Words/SymmetricOrderPalindromicComplexityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ferenczi-zamboni-2025-palindromic-complexity-no-connection","declaration_gid":"D5/S1/Words/SymmetricOrderPalindromicComplexityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sébastien Ferenczi, Luca Q. Zamboni (2025). *Clustering, order conditions, and languages of interval exchanges*. URL: <https://arxiv.org/abs/2507.17370v2>.
