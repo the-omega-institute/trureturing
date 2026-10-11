@@ -1,3 +1,5 @@
+using F = StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
 internal sealed class ActualCutPartitionDecoderDocument : IScribeDocumentDefinition
@@ -39,6 +41,9 @@ internal sealed class ActualCutPartitionDecoderDocument : IScribeDocumentDefinit
                 "This pair computes the addressed exterior and the complete finite partition independently of the class-labelled row representation."),
             Theorem("canonicalRow_record_iff", "Faithful representation bridge",
                 "Two sources have the same canonicalRow exactly when their independent exterior and complete partition records agree. The forward direction extracts the exterior and partition. The reverse direction fixes the same reached-hole ordering and first matching indices, then renames the same exterior. Consequently the canonical representation carries exactly the record information, including empty and root holes, without disclosing hidden values, sizes or acquisition traces."),
+            Describe.Lean(DescribeId.Create("actualcutpartitiondecoder-exteriorholes-cut"),
+                DeclarationHandle.Create(Prefix + "exteriorHoles_cut"), H("Independent exterior hole support"), Statement("exteriorHoles_cut"),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Reading address-marked holes from the actual exterior recovers exactly the reached cuts. This independent support bridge retains original absent cuts and the empty/root cases."))), DescribeRole.Theorem),
             Paragraph(Text("The decoder compares actual retained syntax, not independently renumbered local partitions. Arbitrary substitution injectivity is not used. Absence is determined by visible strict-prefix leaves. The finite decision procedure examines public words only; it does not inspect a source."))
         )));
 
@@ -54,4 +59,15 @@ internal sealed class ActualCutPartitionDecoderDocument : IScribeDocumentDefinit
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))),
         DescribeRole.Theorem);
 
+    private static StatementSource Statement(string n) => n switch
+    {
+        "exteriorHoles_cut" => StatementSource.FromAuthor(Disp(All("P", V("CutSet"), All("a", V("Address"), All("t", V("Source"), EqOf(Call("exteriorHoles", V("a"), Call("cutExterior", V("P"), V("a"), V("t"))), Call("reachedHoles", V("P"), V("a"), V("t")))))))),
+        _ => StatementSource.WithoutFormula()
+    };
+    private static Formula V(string n) => F.Id(n);
+    private static Formula Par(Formula f) => Seq(Open, f, Close);
+    private static Formula Call(string n, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(n))), [.. args]);
+    private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula All(string ns, Formula t, Formula b) => Seq(Forall, Sp,
+        Seq(ns.Split(',').Select((n, i) => i == 0 ? V(n) : Seq(Comma, Sp, V(n))).ToArray()), Colon, Sp, t, Comma, Sp, Par(b));
 }

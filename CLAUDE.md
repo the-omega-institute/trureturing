@@ -36,6 +36,7 @@
 | 提取定理前的节级假设 | `bash tools/scripts/agent/section-context.sh <源文件.md> <定理号>` |
 | Nyx 提问(oracle broker 单次流式调用) | `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>` |
 | 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
+| 抓取访问受限的网页或 PDF(NyxID Firecrawl) | `nyxid proxy request api-firecrawl v1/scrape -m POST -H "Content-Type:application/json" -d '{"url":"<地址>","formats":["markdown"]}' --output json` |
 
 **Nyx 调用禁令**：禁止执行旧 `nyxid oracle` CLI 及其子命令，包括脚本封装、sshx 席位和失败回退中的间接调用。独立提问统一用上述 `nyx.py ask`，sshx 的 oracle 席统一用其 broker runner；具体契约见第 5.11 条。
 
@@ -398,6 +399,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 **生长自相似,裂由压力。**
 **不预建空壳**;抽象只在第二个实例或已证实的压力出现时才上收(通用证明成立才归 `Metallic/`,跨族定理出现才归 `Moduli/`,桶超限才 split)。目录随首个真实工件出生。
+**新增文献笔记上限**：`Library/**` 下新增 Markdown 文件全文不得超过 3,000 行，空行计入，末尾换行符不额外计一行；超出时拆为独立笔记并以引用衔接。SL-003 仅检查新增路径（包括改名、复制的目标路径），不追溯已有文件；目录容量规则照常执行。
 **数据文件豁免行数检查**:JSON(含 JSONL/NDJSON/JSON5/JSONC)、YAML/YML、TOML、CSV/TSV、XML/TRX、Base64(`.b64`) 均不受 SL-003 文件行数软硬上限约束,扩展名不区分大小写;目录容量仍按既有规则计算。
 *成熟锚*:YAGNI、演化式架构(evolutionary architecture)、比例约束(不把局部事实立成普遍法)。
 〔守护:**半硬**·SL-003 容量阈机器判;「不预建」靠自觉+评审〕
@@ -486,6 +488,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/设计/研究等推理任务均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
 - **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要交它推理的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。
 - **禁止旧 oracle CLI，统一走 broker**：禁止执行 `nyxid oracle` 及其任何子命令，不得通过脚本封装、sshx 席位或失败回退间接调用。独立提问统一执行 `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>`；sshx 的 `nyxid-oracle` 席统一使用其 broker runner。两者均通过 `nyxid proxy request oracle …` 访问 NyxID oracle broker——先读池列表，再发一次流式 `chat/completions` 并据流的终态判完成。池按列表现选在线 worker 最多的 active 池，用 `python3 tools/scripts/agent/nyx/nyx.py pools` 查看，`NYX_POOL` 可显式指定；不凭记忆写死 slug。broker 不可用或调用失败时显式报告失败，不得回退旧 CLI。
+- **访问受限的网页用 NyxID Firecrawl**：文献、学位论文、机构库或出版方页面因反爬挑战、机构拦截或直接请求失败而读不到时，通过 `nyxid proxy request api-firecrawl v1/scrape` 取正文(请求体 `{"url":"<地址>","formats":["markdown"]}`；PDF 同样返回 markdown)。把文献缺口标为 `ASSUMED-UNVERIFIED`、或因来源读不到而搁置候选之前，须先试这一路径；读数记录所取地址与正文字符数。Firecrawl 只解决访问限制，不绕过付费订阅；仍读不到的照实标注。它属于 `nyxid proxy request` 代理路径，不是被禁止的 `nyxid oracle` 命令。
 - **codex prompt 以文件 stdin 喂入**:`codex exec [flags] < promptfile`,不作位置参数,避免 shell 破坏美元号/反引号/尖括号/引号/换行后造成空 prompt 与无输入挂起。
 - **flight 在飞时 caller 对该 work_target 的读数不作数**:测试可能置树于瞬时变异态。要读须取 sha256 并交回后复读比对,或只读派发前 diff 快照;读数冲突先核自己的采集条件,再判对方。临时快照不按过程档案留存(第 2.10 条)。
 
@@ -696,9 +699,9 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 
 `make lean-report REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许完整报告构建路径；主检出的 ensure 仍可按现有主检出专用路径由归档补齐冷的项目层。`make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 显式替换已存在的私有 build。
 
-CI 和 Release publisher 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，跳过报告恢复。入口策略由参数选择，不由环境变量判断本地或 CI；直接 `inspect.sh` 默认 `reuse-or-build`，可用 `--cache-miss-policy fetch-or-fail` 选择本地守护。
+普通 required CI 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail`。独立手动/PR producer 和 Release publisher 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，该路径跳过报告恢复。入口策略由参数选择，不由环境变量判断本地或 CI；直接 `inspect.sh` 默认 `reuse-or-build`，可用 `--cache-miss-policy fetch-or-fail` 选择本地守护。
 
-**Start with compatible reuse**: follow section 6.1; validate an existing linked tree or create through `make worktree` with explicit DEST. Creation does not materialize Lean caches; existing cache doors remain required. **Lean 构建一律走本层门(`make lean` / `make lean-report-scoped` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:ensure 的 donor clonefile 播种只在 `.lake` **不存在**时可达(`LeanCacheEnsureCommand`;`.lake` 存在而 stamp 缺失时按「missing ≠ stale」保守原地重产,永不 clonefile——该 fail-safe 是对的,不改);故冷树上第一条裸 lake 命令会创建无 stamp 的 `.lake`,**当场作废 donor 资格**。裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
+**Start with compatible reuse**: follow section 6.1; validate an existing linked tree or create through `make worktree` with explicit DEST. Creation does not materialize Lean caches; existing cache doors remain required. **Lean 构建一律走本层门(`make lean` / `make lean-report-scoped` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:现行 ensure 行为以 `LeanCacheEnsureCommand` 及其测试为准。linked worktree 没有 `.lake` 时从主检出整份 clonefile;`.lake` 在位且 stamp 匹配时不再播种,项目层为冷则拒绝并给出补救;stamp 不匹配、缺失或损坏时从主检出重新播种(整份或 build 层),主检出不可用时失败并给出补救。主检出另有已登记 donor clonefile、Release 归档、`lake exe cache get` 与原地重产等路径。裸 `lake` 可能留下无 stamp 的 `.lake`,下一次 ensure 即按上述规则处理;裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
 
 ### 8.4 诊断信号与产生处的质量
 
@@ -766,7 +769,7 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 **重计依据**:调度重计/重新取得资格前,须有具体 workflow/程序/判据/执行行为变化,或原验收无效的具体证据。在既有 PR 证据中简记改变的行为/失败断言、不可变候选及 run/test 身份、哪些既有义务须重验及哪些证据失效、受影响复验范围与停止条件;不另建账本/模板/工具或过程记录。仅当合格行为版本实际改变,或证据失效覆盖整组资格时,才从该版本真绿起重计 **4/8**;失效仅限部分单位则仅撤销并补足那些单位,保留其余有效证据与计数。不得仅凭失败、状态或 SHA 推定失效。
 **失败处置**:非预期失败必须保留判词、诊断并修复实际问题,重跑成功不抹失败;失败的新 PR 不计数,required checks 未通过不得合入。正确拒绝新增非法内容、无关外部服务/传输故障、实测语义保持的表示修正或采集失败,均不自动抹去有效旧单位,依上述依据界定影响面。原因未明时阻断受影响验收直至诊断,不得据此盲目全量重验;真实候选缺陷不得改称格式/基础设施问题来规避已证影响面。
 **逐 run 事件/版本取源**:分列实际事件、入口 workflow 仓库/路径/不可变 SHA、PR base/head、实际 checkout 候选 SHA(PR 为 M)、protected base(PR 为 B=M^1)、reusable workflow 仓库/路径/解析后 SHA(若有)。同名 check 绿或 M/B 不能代替 workflow 版本;来源记录不扩张第 9.5 条语义检查/固定事件规划输入。
-`pull_request` 入口执行受审 PR merge tree 中的 workflow;`github.sha` 是该 merge commit M,受保护基线是 `M^1=B`,不是事件 payload 中可变分支状态。[GitHub 官方文档](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request)说明该事件按目标分支过滤,合并冲突会阻止 workflow 运行。project 种子只由 dev/integration push 在报告生产成功且本次构建工作已知为正时发布;PR 恢复 push 种子而不发布 project 种子。workflow 允许候选检查向自身 `refs/pull/<number>/merge` 写 dependency、elan 与 judge 隔离缓存,不向 dev、integration 或其它 PR 暴露;workflow/脚本接口同 PR 原子更新并核实际调用者/被调用者版本配对;`pull_request_target` 仍不作为候选 CI 入口,发布走独立的受信任入口。
+`pull_request` 入口执行受审 PR merge tree 中的 workflow;`github.sha` 是该 merge commit M,受保护基线是 `M^1=B`,不是事件 payload 中可变分支状态。[GitHub 官方文档](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request)说明该事件按目标分支过滤,合并冲突会阻止 workflow 运行。project 种子由 dev/integration push、已校验受保护 dev/integration ref 与固定可达 SHA 的独立 `workflow_dispatch` producer,或由 `lean-cache-produce` 标签触发的独立 `pull_request:labeled` producer 发布。手动 producer 的 source ref 须等于 dispatch ref;PR producer 使用 merge SHA,token 只读仓库和 Actions,种子只写该 PR 的 `refs/pull/<number>/merge` 私有空间,不供 dev、integration 或其它 PR 使用。发布均须报告生产成功且本次报告与程序目标的构建工作合计已知为正,未知工作不得视为零;独立 producer 零上传成功还须已恢复有效 project 种子并明确报告 `no-build-work`。普通 PR required job 只恢复、不发布 project 种子,恢复先查自身 merge ref,无合格种子再查 base 分支。workflow 允许候选检查向自身 `refs/pull/<number>/merge` 写 dependency、elan 与 judge 隔离缓存,不向 dev、integration 或其它 PR 暴露;workflow/脚本接口同 PR 原子更新并核实际调用者/被调用者版本配对;`pull_request_target` 仍不作为候选 CI 入口,Release 发布走独立的受信任入口。
 **安装后首个真实 run 立即核验**:integration 按实证可达触发方式,最终 dev 再核 dev 触发。未触发记缺口,dev 非预期红按第 7.14 条撤因。hotfix 合前完成可达验证,仅依赖默认分支更新的路径合后立即真跑补记;feature/重构不得借此延后集成。
 **取源差异下继续可达验证**:可用明确事件(如 pull_request 调钉版 reusable)验证候选程序/复用流程,只证明该事件/版本/权限;逐项披露相对拟上线原生事件的语义/权限/其他缺口。未证可达的原生路线不报已存在,旧绿不抵新资格,同 PR 另有旧 run 不使候选 wrapper 成为重复项可取消。继续可达的逐原 PR 覆盖,但 Ready/merge 仍须全部覆盖/性能/条数/真实事件资格;条数不抵原生缺口,不得先搬未达标 CI 到默认分支以使其可选。本款是事实校正,不创验证豁免。
 **清理与最终对应**:专用探针载荷放触发 PR,验后关闭不合;合法镜像改动/历史留 integration,不为整理交付 diff 撤镜像。清理只删已有实验载荷/临时 wrapper,独立 PR 全部 required checks正常合入并分析 push,保留新 CI;复验与重计统一依上述依据及范围。交付前钉原 lane head、已验 integration head/各自基线,列全层候选/修复/优化/安装映射;交付分支改动的每个文件须与已验 integration tip 逐字节相同,或差异仅来自 integration 起点之后的 dev 提交(逐个点名),否则回流补验。不能仅靠标题/数量/patch-id,不要求整树同一,不重放已验历史替代对应核对。基线差异/冲突适配须说明,遗漏或未经验证差异先回流修复并补验影响面,不因清理或对应核对本身重计。
@@ -901,7 +904,7 @@ current 只检查候选最终树,不读 base、不消费工程阶段证据。che
 
 ### 10.4 cache key 与权威增量补编
 
-本地报告种子的兼容性只由成功收据中的报告格式标识表达，没有判官语义版本。完整种子须保留报告、四个 sidecar 与成功收据；缺失或无法读取该标识须先恢复，恢复后仍无相符种子则拒绝隐式完整提取。格式相符不表示整份报告输入相同；收据输入差量仍交给 Lake 编译依赖 trace 和 utility 输入驱动增量，不另添程序字节或全局内容摘要作为兼容条件。显式完整构建与 CI/publisher 的 reuse-or-build 保留严格输入、编译和 publication 失败判词。
+本地报告种子的兼容性只由成功收据中的报告格式标识表达，没有判官语义版本。完整种子须保留报告、四个 sidecar 与成功收据；缺失或无法读取该标识须先恢复，恢复后仍无相符种子则拒绝隐式完整提取。格式相符不表示整份报告输入相同；收据输入差量仍交给 Lake 编译依赖 trace 和 utility 输入驱动增量，不另添程序字节或全局内容摘要作为兼容条件。显式完整构建、普通 required CI 的 `fetch-or-fail`、独立手动/PR producer 和 Release publisher 的 `reuse-or-build` 均保留严格输入、编译和 publication 失败判词。
 
 报告工件的复用由 Lake 编译依赖 trace、utility 输入与报告格式标识决定。模块 H(m) 当且仅当编译产物中自有 Registration、TemplateEnrollment、RootCatalog 或 Seal 输入，类型头与 owner 规则复用 Contract.Discovery；只 import 他人登记不取得 owner 身份，失败不得当空。小型输入事实只保存类型、owner 与名字投影，按编译闭包复用。每个模块报告 trace 包含自身编译闭包、utility 输入与报告格式标识；模块行与 origin 不含判官语义版本。origin 保存实际生成来源与输入投影，整份复用收据绑定报告格式、报告模块、配置和显式执行环境。接口契约源码登记在现有 `config_inputs`，使整份收据不能绕过接口变化；配置身份归聚合报告；enrollment 原始输入是其 owner 模块的编译产物；原始数学义务及其证明可由契约携带并在 Reg 编译期经内核检查；checked plan、join、assessment、判词与报告收据不得成为可导入的评定权威。判官从原始输入重建结构关系并消费契约中的数学字段；plan identity 不保存源文件字节摘要或 manifest 派生值；复用验证器只查结构与工件自身完整性，禁止重算当前仓库文件摘要与缓存内保存值比较来决定模块报告复用。判官实现或规则改动不使报告失效，不回溯重判未改动登记；需要重判历史登记时显式生成不带缓存的完整报告。新增或改动的登记经编译依赖变化交给当前判官评定。契约接口改动须同一次交付迁移全部用法、删除旧路径，由受影响 Reg 的编译闭包自动重编并重评，不做历史兼容。声明、公理闭包、statement identity 等提取语义或报告格式变化须更新报告格式标识；严格读取器拒读旧格式，全部模块重提取。
 
