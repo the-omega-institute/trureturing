@@ -590,6 +590,20 @@ $$\forall (\operatorname{n}: \operatorname{Nat}), \forall (\operatorname{w}: \op
 
 Moving the marked origin rotates the linear list by the corresponding bounded offset.
 
+**Lemma 1.43 (Cardinality of marked starts).**
+
+$$\forall (\operatorname{n}: \operatorname{Nat}), \forall (\operatorname{w}: \operatorname{Fin} \operatorname{n} \to \operatorname{Bool}), \operatorname{Fintype}.\operatorname{card} \{\operatorname{i} : \operatorname{Fin} \operatorname{n} | \operatorname{IsMarkedStart} \operatorname{w} \operatorname{i}\} = \operatorname{runCount} \operatorname{w}$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AssociatedMersenne/CircularWords.card_marks` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. Wei and Y. Yang (2024). *Associated Mersenne graphs*. DOI: [10.48550/arXiv.2407.08237](https://doi.org/10.48550/arXiv.2407.08237). URL: <https://arxiv.org/abs/2407.08237v1>.
+
+*Commentary.*
+
+The finite set of marked starts has cardinality equal to the run count.
+
 ## References
 
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/CircularWords.Admissible`
@@ -599,6 +613,7 @@ Moving the marked origin rotates the linear list by the corresponding bounded of
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/CircularWords.MarkedDegreeRunWords`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/CircularWords.N`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/CircularWords.admissible_nonzero_has_marked_start`
+- Truth anchor: `D5/S1/Words/AssociatedMersenne/CircularWords.card_marks`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/CircularWords.cycAdd`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/CircularWords.cycAdd_assoc`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/CircularWords.cycAdd_bijective`

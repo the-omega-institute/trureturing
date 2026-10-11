@@ -46,9 +46,69 @@ $$\forall (\operatorname{n}: \operatorname{Nat}), \forall (\operatorname{i}: \op
 
 The reconstructed word has its tuple encoding, so the pair-local formula gives its degree.
 
+**Theorem 1.4 (Raw coordinate sum).**
+
+$$\forall (\operatorname{M}: \operatorname{Type}), \forall (\operatorname{inst1}: \operatorname{AddCommMonoid} \operatorname{M}), \forall (\operatorname{t}: \operatorname{List} (\operatorname{Nat} \times \operatorname{Nat})), \forall (\operatorname{f}: \operatorname{Nat} \to \operatorname{M}), (\sum \operatorname{j} \in \operatorname{Finset}.\operatorname{range} (\operatorname{rawWord} \operatorname{t})  .  \operatorname{length} , \operatorname{f} \operatorname{j}) = \sum \operatorname{p} : \operatorname{Fin} \operatorname{t}.\operatorname{length} , \sum \operatorname{j} \in \operatorname{Finset}.\operatorname{range} (\operatorname{t} [\operatorname{p}.\operatorname{val}]  .  1 + \operatorname{t} [\operatorname{p}.\operatorname{val}]  .  2) , \operatorname{f} (\operatorname{pairPrefix} \operatorname{t} \operatorname{p}.\operatorname{val} + \operatorname{j})$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.raw_coordinate_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. Wei and Y. Yang (2024). *Associated Mersenne graphs*. DOI: [10.48550/arXiv.2407.08237](https://doi.org/10.48550/arXiv.2407.08237). URL: <https://arxiv.org/abs/2407.08237v1>.
+
+*Commentary.*
+
+Summing a function over the raw word length equals the sum over pair blocks and their coordinate prefixes.
+
+**Lemma 1.5 (Run endpoint sum).**
+
+$$\forall (\operatorname{r}: \operatorname{Nat}), \forall (\operatorname{hr}: 0 < \operatorname{r}), (\sum \operatorname{j} \in \operatorname{Finset}.\operatorname{range} \operatorname{r} , \operatorname{if} \operatorname{j} = 0 \lor \operatorname{j} + 1 = \operatorname{r} \operatorname{then} (1 : \operatorname{Nat}) \operatorname{else} 0) = \operatorname{min} \operatorname{r} 2$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.run_endpoint_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. Wei and Y. Yang (2024). *Associated Mersenne graphs*. DOI: [10.48550/arXiv.2407.08237](https://doi.org/10.48550/arXiv.2407.08237). URL: <https://arxiv.org/abs/2407.08237v1>.
+
+*Commentary.*
+
+The endpoint indicator sum of a positive run is the minimum of its length and two.
+
+**Theorem 1.6 (Linearization at a pair).**
+
+$$\forall (\operatorname{n}: \operatorname{Nat}), \forall (\operatorname{w}: \operatorname{Fin} \operatorname{n} \to \operatorname{Bool}), \forall (\operatorname{i}: \operatorname{Fin} \operatorname{n}), \forall (\operatorname{t}: \operatorname{List} (\operatorname{Nat} \times \operatorname{Nat})), \forall (\operatorname{he}: \operatorname{linearize} \operatorname{w} \operatorname{i} = \operatorname{rawWord} \operatorname{t}), \forall (\operatorname{p}: \operatorname{Fin} \operatorname{t}.\operatorname{length}), \operatorname{linearize} \operatorname{w} (\operatorname{cycAdd} \operatorname{i} (\operatorname{pairPrefix} \operatorname{t} \operatorname{p}.\operatorname{val})) = \operatorname{rawWord} (\operatorname{t}.\operatorname{rotate} \operatorname{p}.\operatorname{val})$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.linearize_at_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. Wei and Y. Yang (2024). *Associated Mersenne graphs*. DOI: [10.48550/arXiv.2407.08237](https://doi.org/10.48550/arXiv.2407.08237). URL: <https://arxiv.org/abs/2407.08237v1>.
+
+*Commentary.*
+
+Re-centering a linearized word at a pair prefix rotates the raw pair list by that prefix.
+
+**Theorem 1.7 (Raw one-delete characterization).**
+
+$$\forall (\operatorname{n}: \operatorname{Nat}), \forall (\operatorname{w}: \operatorname{Fin} \operatorname{n} \to \operatorname{Bool}), \forall (\operatorname{i}: \operatorname{Fin} \operatorname{n}), \forall (\operatorname{r}: \operatorname{Nat}), \forall (\operatorname{z}: \operatorname{Nat}), \forall (\operatorname{p}: \operatorname{Nat}), \forall (\operatorname{t}: \operatorname{List} (\operatorname{Nat} \times \operatorname{Nat})), \forall (\operatorname{hr}: 0 < \operatorname{r}), \forall (\operatorname{hz}: \operatorname{r} < \operatorname{z}), \forall (\operatorname{hp}: \operatorname{p} < \operatorname{r}), \forall (\operatorname{ht}: \forall \operatorname{b} \in \operatorname{t} , 0 < \operatorname{b}.1 \land \operatorname{b}.1 < \operatorname{b}.2), \forall (\operatorname{he}: \operatorname{linearize} \operatorname{w} \operatorname{i} = \operatorname{rawWord} ((\operatorname{r} , \operatorname{z}) : : \operatorname{t})), \operatorname{Admissible} (\operatorname{CircularWords}.\operatorname{flip} \operatorname{w} (\operatorname{cycAdd} \operatorname{i} \operatorname{p})) \iff \operatorname{p} = 0 \lor \operatorname{p} + 1 = \operatorname{r}$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.raw_one_delete_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. Wei and Y. Yang (2024). *Associated Mersenne graphs*. DOI: [10.48550/arXiv.2407.08237](https://doi.org/10.48550/arXiv.2407.08237). URL: <https://arxiv.org/abs/2407.08237v1>.
+
+*Commentary.*
+
+Within a valid first run, deleting a position preserves admissibility exactly at the two run endpoints.
+
 ## References
 
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.degree_raw_multi`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.degree_wordOfTuple`
+- Truth anchor: `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.linearize_at_pair`
+- Truth anchor: `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.raw_coordinate_sum`
+- Truth anchor: `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.raw_one_delete_iff`
+- Truth anchor: `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.run_endpoint_sum`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MultiRunDegrees.tupleDegree`
 - Dependency: [D5/S1/Words/AssociatedMersenne/SingleRunDegrees](SingleRunDegrees.md)
