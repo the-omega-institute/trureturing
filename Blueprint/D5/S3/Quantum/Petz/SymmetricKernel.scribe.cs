@@ -19,9 +19,7 @@ internal sealed class SymmetricKernelDocument : IScribeDocumentDefinition
         ("hs_symm_right", false),
         ("hs_homog", false),
         ("hs_self", false),
-        ("hs_perm", false),
         ("hs_continuousAt", false),
-        ("hs_continuousOn", false)
     };
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -48,9 +46,7 @@ internal sealed class SymmetricKernelDocument : IScribeDocumentDefinition
         "hs_symm_right" => "The stated exchange of variables leaves the named quantity unchanged.",
         "hs_homog" => "Positive simultaneous rescaling gives the stated homogeneity law.",
         "hs_self" => "At coincident arguments, the named quantity has the stated diagonal value.",
-        "hs_perm" => "The stated exchange of variables leaves the named quantity unchanged.",
         "hs_continuousAt" => "The named quantity has the stated regularity on the positive domain, including the indicated boundary or coincidence.",
-        "hs_continuousOn" => "The named quantity has the stated regularity on the positive domain, including the indicated boundary or coincidence.",
         _ => "The named analytic identity holds with exactly the hypotheses and conclusion displayed in the statement."
     };
 }

@@ -32,39 +32,40 @@ private lemma rawQ_continuous : Continuous (fun p : ℝ × ℝ × ℝ => rawQ p.
 private lemma inner_integral (a b c s : ℝ) (hbc : b ≠ c) :
     (∫ t in (0 : ℝ)..1, s * Real.exp (-((1 - s) * a + s * (1 - t) * b + s * t * c))) =
       (Real.exp (-((1 - s) * a + s * c)) - Real.exp (-((1 - s) * a + s * b))) / (b - c) := by
-  have hden : b - c ≠ 0 := sub_ne_zero.mpr hbc
-  have hd (t : ℝ) :
-      HasDerivAt (fun t : ℝ => Real.exp (-((1 - s) * a + s * (1 - t) * b + s * t * c)) / (b-c))
-        (s * Real.exp (-((1 - s) * a + s * (1 - t) * b + s * t * c))) t := by
-    apply (((((hasDerivAt_const t ((1-s)*a)).add
-      (((hasDerivAt_const t s).mul ((hasDerivAt_const t 1).sub (hasDerivAt_id t))).mul_const b)).add
-      (((hasDerivAt_const t s).mul (hasDerivAt_id t)).mul_const c)).neg.exp).div_const (b-c)).congr_deriv
-    dsimp only [Pi.add_apply, Pi.sub_apply, Pi.mul_apply, Pi.neg_apply, id_eq]
-    field_simp [hden]
+  by_cases hs : s = 0
+  · subst s
+    simp
+  have hsc : s * (b - c) ≠ 0 := mul_ne_zero hs (sub_ne_zero.mpr hbc)
+  have hcomp := intervalIntegral.integral_comp_add_mul Real.exp hsc
+      (-((1 - s) * a + s * b)) (a := (0 : ℝ)) (b := 1)
+  have hrewrite :
+      (fun t : ℝ => s * Real.exp (-((1 - s) * a + s * (1 - t) * b + s * t * c))) =
+        (fun t => s * Real.exp (-((1 - s) * a + s * b) + (s * (b - c)) * t)) := by
+    funext t
+    congr 2
     ring
-  have hi : IntervalIntegrable (fun t : ℝ =>
-      s * Real.exp (-((1 - s) * a + s * (1 - t) * b + s * t * c))) volume 0 1 := by
-    apply Continuous.intervalIntegrable
-    fun_prop
-  simpa only [mul_zero, mul_one, sub_zero, sub_self, zero_mul, add_zero, zero_add, one_mul, sub_div] using
-    integral_eq_sub_of_hasDerivAt (fun t _ => hd t) hi
+  rw [hrewrite]
+  rw [integral_const_mul, hcomp, integral_exp]
+  simp only [smul_eq_mul, mul_sub, mul_zero, add_zero, sub_zero, mul_one]
+  field_simp [hsc, sub_ne_zero.mpr hbc]
+  ring
 
 private lemma affine_exp_integral (a b : ℝ) (hab : a ≠ b) :
     (∫ s in (0 : ℝ)..1, Real.exp (-((1-s)*a+s*b))) =
       (Real.exp (-b) - Real.exp (-a)) / (a-b) := by
-  have hden : a - b ≠ 0 := sub_ne_zero.mpr hab
-  have hd (s : ℝ) : HasDerivAt (fun s : ℝ => Real.exp (-((1-s)*a+s*b)) / (a-b))
-      (Real.exp (-((1-s)*a+s*b))) s := by
-    apply (((((hasDerivAt_const s 1).sub (hasDerivAt_id s)).mul_const a).add
-      ((hasDerivAt_id s).mul_const b)).neg.exp).div_const (a-b) |>.congr_deriv
-    dsimp only [Pi.add_apply, Pi.sub_apply, Pi.mul_apply, Pi.neg_apply, id_eq]
-    field_simp [hden]
+  have hab' : a - b ≠ 0 := sub_ne_zero.mpr hab
+  have hcomp := intervalIntegral.integral_comp_add_mul Real.exp hab'
+      (-a) (a := (0 : ℝ)) (b := 1)
+  have hrewrite :
+      (fun s : ℝ => Real.exp (-((1-s)*a+s*b))) =
+        (fun s => Real.exp (-a + (a - b) * s)) := by
+    funext s
+    congr 1
     ring
-  have hi : IntervalIntegrable (fun s : ℝ => Real.exp (-((1-s)*a+s*b))) volume 0 1 := by
-    apply Continuous.intervalIntegrable
-    fun_prop
-  simpa only [mul_zero, mul_one, sub_zero, sub_self, zero_mul, add_zero, zero_add, one_mul, sub_div] using
-    integral_eq_sub_of_hasDerivAt (fun s _ => hd s) hi
+  rw [hrewrite, hcomp, integral_exp]
+  simp only [smul_eq_mul, mul_sub, mul_zero, add_zero, sub_zero, mul_one]
+  field_simp [hab']
+  ring
 
 private lemma rawQ_eq_of_ne (a b c : ℝ) (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
     rawQ a b c =

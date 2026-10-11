@@ -21,56 +21,137 @@ def H (s u : ℝ) : ℝ := (s + u) * E s u
 def k (s t : ℝ) : ℝ := 1 / Real.pi ^ 2 *
   ∫ θ in (0:ℝ)..1, Real.sin (Real.pi * θ) ^ 2 * s ^ (1 - θ) * t ^ θ
 
-private lemma exp_sin_primitive (v a q : ℝ) (hd : v ^ 2 + a ^ 2 ≠ 0) :
-    HasDerivAt (fun θ => Real.exp (v * θ) *
-      (v * Real.sin (a * θ) - a * Real.cos (a * θ)) / (v ^ 2 + a ^ 2))
-      (Real.exp (v * q) * Real.sin (a * q)) q := by
-  have h := (((Real.hasDerivAt_exp (v * q)).comp q
-    ((hasDerivAt_id q).const_mul v)).mul
-    ((((Real.hasDerivAt_sin (a * q)).comp q
-      ((hasDerivAt_id q).const_mul a)).const_mul v).sub
-      (((Real.hasDerivAt_cos (a * q)).comp q
-        ((hasDerivAt_id q).const_mul a)).const_mul a))).div_const (v ^ 2 + a ^ 2)
-  convert h using 1 <;> (first | rfl | (dsimp; field_simp [hd]; ring))
-
-private lemma exp_cos_primitive (v a q : ℝ) (hd : v ^ 2 + a ^ 2 ≠ 0) :
-    HasDerivAt (fun θ => Real.exp (v * θ) *
-      (v * Real.cos (a * θ) + a * Real.sin (a * θ)) / (v ^ 2 + a ^ 2))
-      (Real.exp (v * q) * Real.cos (a * q)) q := by
-  have h := (((Real.hasDerivAt_exp (v * q)).comp q
-    ((hasDerivAt_id q).const_mul v)).mul
-    ((((Real.hasDerivAt_cos (a * q)).comp q
-      ((hasDerivAt_id q).const_mul a)).const_mul v).add
-      (((Real.hasDerivAt_sin (a * q)).comp q
-        ((hasDerivAt_id q).const_mul a)).const_mul a))).div_const (v ^ 2 + a ^ 2)
-  convert h using 1 <;> (first | rfl | (dsimp; field_simp [hd]; ring))
-
 /-- Exponential-sine integral, including the zero exponential parameter. -/
 theorem integral_exp_sin (v : ℝ) :
     (∫ θ in (0:ℝ)..1, Real.exp (v * θ) * Real.sin (Real.pi * θ)) =
       Real.pi * (Real.exp v + 1) / (v ^ 2 + Real.pi ^ 2) := by
-  have hd : v ^ 2 + Real.pi ^ 2 ≠ 0 := by positivity
-  have h := intervalIntegral.integral_eq_sub_of_hasDerivAt
-    (fun θ _ => exp_sin_primitive v Real.pi θ hd)
-    (show IntervalIntegrable (fun θ => Real.exp (v * θ) * Real.sin (Real.pi * θ))
-      volume 0 1 from (by fun_prop : Continuous _).intervalIntegrable 0 1)
-  simp only [mul_one, mul_zero, Real.exp_zero, Real.sin_zero, Real.cos_zero,
-    Real.sin_pi, Real.cos_pi] at h
-  rw [h]
-  ring
+  have hc : (v : ℂ) + (Real.pi : ℂ) * Complex.I ≠ 0 := by
+    intro h
+    have hr := congrArg Complex.re h
+    have hi := congrArg Complex.im h
+    simp at hr hi
+  have h := integral_exp_mul_complex (a := (0 : ℝ)) (b := 1)
+    (c := (v : ℂ) + (Real.pi : ℂ) * Complex.I) hc
+  have hi : IntervalIntegrable
+      (fun θ : ℝ => Complex.exp (((v : ℂ) + (Real.pi : ℂ) * Complex.I) * (θ : ℂ)))
+      volume 0 1 := by
+    exact (by fun_prop : Continuous _).intervalIntegrable 0 1
+  have him := congrArg Complex.im h
+  rw [intervalIntegral.integral_of_le zero_le_one] at him
+  have him_im := integral_im hi.1
+  change RCLike.im (∫ x in Ioc (0 : ℝ) 1, Complex.exp (((v : ℂ) + (Real.pi : ℂ) * Complex.I) * (x : ℂ))) = _ at him
+  rw [← him_im] at him
+  simp_rw [show ∀ x : ℝ, ((v : ℂ) + (Real.pi : ℂ) * Complex.I) * (x : ℂ) =
+      (v * x : ℂ) + (Real.pi * x : ℂ) * Complex.I by
+    intro x; push_cast; ring] at him
+  simp_rw [Complex.exp_add] at him
+  have hreal_re (x : ℝ) : (Complex.exp ((v : ℂ) * (x : ℂ))).re = Real.exp (v * x) := by
+    rw [← Complex.ofReal_mul, Complex.exp_ofReal_re]
+  have hreal_im (x : ℝ) : (Complex.exp ((v : ℂ) * (x : ℂ))).im = 0 := by
+    rw [← Complex.ofReal_mul, Complex.exp_ofReal_im]
+  have htrig_re (x : ℝ) : (Complex.exp ((x : ℂ) * (Real.pi : ℂ) * Complex.I)).re =
+      Real.cos (x * Real.pi) := by
+    rw [← Complex.ofReal_mul, Complex.exp_ofReal_mul_I]
+    simp only [Complex.add_re, Complex.ofReal_re, Complex.ofReal_im, Complex.mul_re, Complex.I_re, Complex.I_im,
+      mul_zero, sub_zero, add_zero, zero_mul]
+  have htrig_im (x : ℝ) : (Complex.exp ((x : ℝ) * (Real.pi : ℂ) * Complex.I)).im =
+      Real.sin (x * Real.pi) := by
+    rw [← Complex.ofReal_mul, Complex.exp_ofReal_mul_I]
+    simp only [Complex.add_im, Complex.ofReal_re, Complex.ofReal_im, Complex.mul_im, Complex.I_re, Complex.I_im,
+      zero_add, mul_one, zero_mul, add_zero]
+  change (∫ x in Ioc (0 : ℝ) 1,
+      (Complex.exp ((v : ℂ) * (x : ℂ)) *
+        Complex.exp ((Real.pi : ℂ) * (x : ℂ) * Complex.I)).im) = _ at him
+  simp_rw [show ∀ x : ℝ, (Real.pi : ℂ) * (x : ℂ) * Complex.I =
+      (x : ℂ) * (Real.pi : ℂ) * Complex.I by intro x; push_cast; ring] at him
+  change (∫ x in Ioc (0 : ℝ) 1,
+      (Complex.exp ((v : ℂ) * (x : ℂ)) *
+        Complex.exp ((x : ℂ) * (Real.pi : ℂ) * Complex.I)).im) = _ at him
+  simp only [Complex.mul_im] at him
+  simp_rw [hreal_re, hreal_im, htrig_re, htrig_im] at him
+  simp only [Complex.sub_im, Complex.div_im, Complex.ofReal_re, Complex.ofReal_im,
+    Complex.I_re, Complex.I_im, Complex.normSq_apply,
+    mul_zero, zero_mul, sub_zero, add_zero, one_mul, zero_add, mul_one] at him
+  norm_num at him ⊢
+  rw [Complex.exp_ofReal_re] at him
+  rw [intervalIntegral.integral_of_le zero_le_one]
+  field_simp at him
+  have hswap :
+      (∫ x in Ioc (0 : ℝ) 1, Real.exp (v * x) * Real.sin (x * Real.pi)) =
+        ∫ x in Ioc (0 : ℝ) 1, Real.exp (v * x) * Real.sin (Real.pi * x) := by
+    apply MeasureTheory.integral_congr_ae
+    filter_upwards [] with x
+    rw [mul_comm x Real.pi]
+  rw [hswap] at him
+  have hden : v ^ 2 + Real.pi ^ 2 ≠ 0 := by
+    nlinarith [sq_nonneg v, Real.pi_pos]
+  apply (eq_div_iff hden).2
+  convert him using 1 <;> ring
 
 private lemma integral_exp_cos_two_pi (v : ℝ) :
     (∫ θ in (0:ℝ)..1, Real.exp (v * θ) * Real.cos (2 * Real.pi * θ)) =
       v * (Real.exp v - 1) / (v ^ 2 + 4 * Real.pi ^ 2) := by
-  have hd : v ^ 2 + (2 * Real.pi) ^ 2 ≠ 0 := by positivity
-  have h := intervalIntegral.integral_eq_sub_of_hasDerivAt
-    (fun θ _ => exp_cos_primitive v (2 * Real.pi) θ hd)
-    (show IntervalIntegrable (fun θ => Real.exp (v * θ) * Real.cos (2 * Real.pi * θ))
-      volume 0 1 from (by fun_prop : Continuous _).intervalIntegrable 0 1)
-  simp only [mul_one, mul_zero, Real.exp_zero, Real.sin_zero, Real.cos_zero,
-    Real.sin_two_pi, Real.cos_two_pi] at h
-  rw [h]
-  ring
+  have hc : (v : ℂ) + ((2 * Real.pi : ℝ) : ℂ) * Complex.I ≠ 0 := by
+    intro h
+    have hr := congrArg Complex.re h
+    have hi := congrArg Complex.im h
+    simp at hr hi
+  have h := integral_exp_mul_complex (a := (0 : ℝ)) (b := 1)
+    (c := (v : ℂ) + ((2 * Real.pi : ℝ) : ℂ) * Complex.I) hc
+  have hi : IntervalIntegrable
+      (fun θ : ℝ => Complex.exp (((v : ℂ) + ((2 * Real.pi : ℝ) : ℂ) * Complex.I) * (θ : ℂ)))
+      volume 0 1 := by
+    exact (by fun_prop : Continuous _).intervalIntegrable 0 1
+  have hre := congrArg Complex.re h
+  rw [intervalIntegral.integral_of_le zero_le_one] at hre
+  have hre_re := integral_re hi.1
+  change RCLike.re (∫ x in Ioc (0 : ℝ) 1, Complex.exp (((v : ℂ) + ((2 * Real.pi : ℝ) : ℂ) * Complex.I) * (x : ℂ))) = _ at hre
+  rw [← hre_re] at hre
+  simp_rw [show ∀ x : ℝ, ((v : ℂ) + ((2 * Real.pi : ℝ) : ℂ) * Complex.I) * (x : ℂ) =
+      (v * x : ℂ) + ((2 * Real.pi * x : ℝ) : ℂ) * Complex.I by
+    intro x; push_cast; ring] at hre
+  simp_rw [Complex.exp_add] at hre
+  simp_rw [show ∀ x : ℝ, ((2 * Real.pi * x : ℝ) : ℂ) * Complex.I =
+      (x : ℂ) * ((2 * Real.pi : ℝ) : ℂ) * Complex.I by
+    intro x; push_cast; ring] at hre
+  have hreal_re (x : ℝ) : (Complex.exp ((v : ℂ) * (x : ℂ))).re = Real.exp (v * x) := by
+    rw [← Complex.ofReal_mul, Complex.exp_ofReal_re]
+  have hreal_im (x : ℝ) : (Complex.exp ((v : ℂ) * (x : ℂ))).im = 0 := by
+    rw [← Complex.ofReal_mul, Complex.exp_ofReal_im]
+  have htrig_re (x : ℝ) : (Complex.exp ((x : ℂ) * ((2 * Real.pi : ℝ) : ℂ) * Complex.I)).re =
+      Real.cos (x * (2 * Real.pi)) := by
+    rw [← Complex.ofReal_mul, Complex.exp_ofReal_mul_I]
+    simp only [Complex.add_re, Complex.ofReal_re, Complex.ofReal_im, Complex.mul_re, Complex.I_re, Complex.I_im,
+      mul_zero, sub_zero, add_zero, zero_mul]
+  have htrig_im (x : ℝ) : (Complex.exp ((x : ℝ) * ((2 * Real.pi : ℝ) : ℂ) * Complex.I)).im =
+      Real.sin (x * (2 * Real.pi)) := by
+    rw [← Complex.ofReal_mul, Complex.exp_ofReal_mul_I]
+    simp only [Complex.add_im, Complex.ofReal_re, Complex.ofReal_im, Complex.mul_im, Complex.I_re, Complex.I_im,
+      zero_add, mul_one, zero_mul, add_zero]
+  change (∫ x in Ioc (0 : ℝ) 1,
+      (Complex.exp ((v : ℂ) * (x : ℂ)) *
+        Complex.exp ((x : ℂ) * ((2 * Real.pi : ℝ) : ℂ) * Complex.I)).re) = _ at hre
+  simp only [Complex.mul_re] at hre
+  simp_rw [hreal_re, hreal_im, htrig_re, htrig_im] at hre
+  simp only [Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.ofReal_re, Complex.ofReal_im,
+    Complex.I_re, Complex.I_im, Complex.normSq_apply,
+    mul_zero, zero_mul, sub_zero, add_zero, one_mul, zero_add, mul_one] at hre
+  norm_num at hre ⊢
+  rw [Complex.exp_ofReal_re] at hre
+  rw [intervalIntegral.integral_of_le zero_le_one]
+  field_simp at hre
+  have hswap :
+      (∫ x in Ioc (0 : ℝ) 1, Real.exp (v * x) * Real.cos (x * 2 * Real.pi)) =
+        ∫ x in Ioc (0 : ℝ) 1, Real.exp (v * x) * Real.cos ((2 * Real.pi) * x) := by
+    apply MeasureTheory.integral_congr_ae
+    filter_upwards [] with x
+    congr 2
+    ring
+  rw [hswap] at hre
+  have hden : v ^ 2 + 4 * Real.pi ^ 2 ≠ 0 := by
+    nlinarith [sq_nonneg v, Real.pi_pos]
+  apply (eq_div_iff hden).2
+  convert hre using 1 <;> ring
 
 /-- The sine-square integral away from the zero exponential parameter. -/
 theorem integral_exp_sin_sq (v : ℝ) (hv : v ≠ 0) :
@@ -136,27 +217,6 @@ theorem H_eq_integral (s u : ℝ) (hs : 0 < s) (hu : 0 < u) :
   ring
 
 /-- Formula (4) away from the diagonal. -/
-theorem k_eq_closed (s t : ℝ) (hs : 0 < s) (ht : 0 < t) (hst : t ≠ s) :
-    k s t = 2 * (t - s) /
-      (Real.log (t / s) * (Real.log (t / s)^2 + 4 * Real.pi^2)) := by
-  have hl : Real.log (t / s) ≠ 0 := by
-    intro h
-    have := Real.log_eq_zero.mp h
-    rcases this with h | h | h
-    · exact (div_pos ht hs).ne' h
-    · exact hst ((div_eq_one_iff_eq hs.ne').mp h)
-    · linarith [div_pos ht hs]
-  unfold k
-  have heq : (fun θ : ℝ => Real.sin (Real.pi * θ)^2 * s ^ (1 - θ) * t ^ θ) =
-      fun θ => s * (Real.exp (Real.log (t / s) * θ) * Real.sin (Real.pi * θ)^2) := by
-    funext θ
-    rw [mul_assoc, powers_as_exp s t θ hs ht]
-    ring
-  rw [heq, intervalIntegral.integral_const_mul, integral_exp_sin_sq _ hl,
-    Real.exp_log (div_pos ht hs)]
-  field_simp
-
-/-- The continuous diagonal value in formula (4). -/
 theorem k_diag (s : ℝ) (hs : 0 < s) : k s s = s / (2 * Real.pi ^ 2) := by
   unfold k
   have heq : (fun θ : ℝ => Real.sin (Real.pi * θ)^2 * s ^ (1 - θ) * s ^ θ) =
@@ -370,46 +430,5 @@ theorem power_divdiff_resolvent (θ u v : ℝ) (hθ0 : 0 < θ) (hθ1 : θ < 1)
   rw [heq, show -(1-θ) = θ-1 by ring]
   field_simp [sub_ne_zero.mpr huv, hu.ne', hv.ne', Real.pi_ne_zero] at heu hev ⊢
   nlinarith
-
-/-- The confluent (equal-node) version of formula (2). -/
-theorem power_divdiff_resolvent_diag (θ u : ℝ) (hθ0 : 0 < θ) (hθ1 : θ < 1)
-    (hu : 0 < u) : θ * u ^ (θ-1) = Real.sin (Real.pi * θ) / Real.pi *
-      ∫ t in Ioi (0:ℝ), t ^ θ / (u+t)^2 := by
-  have hi : IntegrableOn (fun t => t^(θ-1)/(u+t)) (Ioi 0) := by
-    simpa only [show -(1-θ) = θ-1 by ring] using
-      euler_resolvent_integrable (1-θ) u (by linarith) (by linarith) hu
-  have hii : IntegrableOn (fun t => t^θ/(u+t)^2) (Ioi 0) := by
-    simpa only [pow_two] using power_divdiff_integrable θ u u hθ0 hθ1 hu hu
-  have hd (t : ℝ) (ht : t ∈ Ioi 0) :
-      HasDerivAt (fun t => t^θ/(u+t))
-        (θ * (t^(θ-1)/(u+t)) - t^θ/(u+t)^2) t := by
-    have ht : 0 < t := ht
-    have hh := (Real.hasDerivAt_rpow_const (Or.inl ht.ne') (p := θ)).div
-      ((hasDerivAt_const t u).add (hasDerivAt_id t)) (add_pos hu ht).ne'
-    convert hh using 1 <;> (first | rfl | (dsimp; field_simp [(add_pos hu ht).ne']; ring))
-  have hc : ContinuousWithinAt (fun t : ℝ => t^θ/(u+t)) (Ici 0) 0 := by
-    apply ContinuousAt.continuousWithinAt
-    fun_prop (disch := positivity)
-  have hz : Filter.Tendsto (fun t : ℝ => t^θ/(u+t)) Filter.atTop (nhds 0) := by
-    apply squeeze_zero' (g := fun t : ℝ => t^(θ-1))
-    · filter_upwards [Filter.eventually_gt_atTop (0:ℝ)] with t ht
-      positivity
-    · filter_upwards [Filter.eventually_gt_atTop (0:ℝ)] with t ht
-      rw [Real.rpow_sub_one ht.ne']
-      gcongr
-      linarith
-    · simpa only [show -(1-θ) = θ-1 by ring] using
-        tendsto_rpow_neg_atTop (by linarith : 0 < 1-θ)
-  have hFTC := integral_Ioi_of_hasDerivAt_of_tendsto hc hd ((hi.const_mul θ).sub hii) hz
-  rw [MeasureTheory.integral_sub (hi.const_mul θ) hii,
-    MeasureTheory.integral_const_mul, Real.zero_rpow hθ0.ne', zero_div, sub_zero] at hFTC
-  have he := euler_resolvent (1-θ) u (by linarith) (by linarith) hu
-  rw [show Real.pi*(1-θ) = Real.pi - Real.pi*θ by ring, Real.sin_pi_sub,
-    show -(1-θ) = θ-1 by ring] at he
-  rw [he]
-  have hftc : (∫ t in Ioi (0:ℝ), t^θ/(u+t)^2) =
-      θ * (∫ t in Ioi (0:ℝ), t^(θ-1)/(u+t)) := by linarith
-  rw [hftc]
-  ring
 
 end D5.S3.Quantum.PositiveResolvent.EulerResolvent

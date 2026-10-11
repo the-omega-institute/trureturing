@@ -19,7 +19,7 @@ internal sealed class SpectralPetzDocument : IScribeDocumentDefinition
                 H("claim"),
                 StatementSource.FromAuthor(Disp(F.Id("claim"))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("claim states that a faithful decreasing spectrum with smaller prefix sums has no larger ordered spectral curvature sum than the more mixed faithful spectrum."))),
+                Blocks(Paragraph(Text("For positive decreasing spectra lam and mu of the same dimension, each with sum one, prefixSum mu k ≤ prefixSum lam k for every k implies spectralS lam ≤ spectralS mu. Thus the more mixed spectrum mu has no smaller spectral curvature sum."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("petz-spectralpetz-result"),

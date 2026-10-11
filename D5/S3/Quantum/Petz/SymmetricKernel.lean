@@ -92,25 +92,6 @@ theorem hs_self {r : ℝ} (hr : 0 < r) : hs r r r = -1 / (8 * r) := by
   field_simp
   <;> ring
 
-/-- Invariance under every permutation, including coincident positive nodes. -/
-theorem hs_perm {x y z : ℝ} (hx : 0 < x) (hy : 0 < y) (hz : 0 < z)
-    (σ : Equiv.Perm (Fin 3)) :
-    hs (![x, y, z] (σ 0)) (![x, y, z] (σ 1)) (![x, y, z] (σ 2)) = hs x y z := by
-  have h01 : σ 0 ≠ σ 1 := σ.injective.ne (by decide)
-  have h02 : σ 0 ≠ σ 2 := σ.injective.ne (by decide)
-  have h12 : σ 1 ≠ σ 2 := σ.injective.ne (by decide)
-  generalize h0 : σ 0 = i0 at *
-  generalize h1 : σ 1 = i1 at *
-  generalize h2 : σ 2 = i2 at *
-  fin_cases i0 <;> fin_cases i1 <;> fin_cases i2 <;> simp_all
-  all_goals first
-    | exact (hs_symm hx hy hz).symm
-    | exact (hs_symm_right hx hy hz).symm
-    | exact (hs_symm_right hy hz hx).trans (hs_symm hx hy hz).symm
-    | exact (hs_symm hz hx hy).trans (hs_symm_right hx hy hz).symm
-    | exact (hs_symm hz hy hx).trans
-        ((hs_symm_right hy hz hx).trans (hs_symm hx hy hz).symm)
-
 /-- Joint continuity on the positive orthant includes every coincidence. -/
 theorem hs_continuousAt {x y z : ℝ} (hx : 0 < x) (hy : 0 < y) (hz : 0 < z) :
     ContinuousAt (fun p : ℝ × ℝ × ℝ => hs p.1 p.2.1 p.2.2) (x, y, z) := by
@@ -125,11 +106,5 @@ theorem hs_continuousAt {x y z : ℝ} (hx : 0 < x) (hy : 0 < y) (hz : 0 < z) :
     ((m_continuousAt hx hy hz).pow 2).div ((hxy.mul hxz).mul hyz)
       (mul_ne_zero (mul_ne_zero (L_pos hx hy).ne' (L_pos hx hz).ne') (L_pos hy hz).ne')
   exact (hP.sub ((Q_continuousAt hx hy hz).const_mul 2)).div_const 6
-
-theorem hs_continuousOn :
-    ContinuousOn (fun p : ℝ × ℝ × ℝ => hs p.1 p.2.1 p.2.2)
-      {p | 0 < p.1 ∧ 0 < p.2.1 ∧ 0 < p.2.2} := by
-  intro p hp
-  exact (hs_continuousAt hp.1 hp.2.1 hp.2.2).continuousWithinAt
 
 end D5.S3.Quantum.Petz.SymmetricKernel

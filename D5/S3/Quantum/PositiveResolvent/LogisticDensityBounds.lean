@@ -19,6 +19,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import D5.S3.Observer.Fluctuation.ThermalCoefficientFloor
 
 open scoped BigOperators Interval
 open Set MeasureTheory intervalIntegral
@@ -69,44 +70,6 @@ private lemma jfun_hasDerivAt (r : ℝ) :
           2 * (r ^ 2 + Real.pi ^ 2) * Real.exp r) /
           (1 + Real.exp r) ^ 3) :=
   (jfun_hasDerivAt r).deriv
-
-theorem ell_reflection (r : ℝ) : ell r + ell (-r) = r ^ 2 + Real.pi ^ 2 := by
-  unfold ell
-  have he : Real.exp r ≠ 0 := Real.exp_ne_zero r
-  rw [Real.exp_neg]
-  field_simp
-  ring
-
-theorem ell_deriv_neg (r : ℝ) : deriv ell r < 0 := by
-  rw [ell_deriv_formula]
-  have hden : 0 < (1 + Real.exp r) ^ 2 := by positivity
-  rw [div_neg_iff]
-  by_cases hr : r ≤ 0
-  · right
-    have he : 0 < Real.exp r := Real.exp_pos r
-    have hp : 0 < r ^ 2 + Real.pi ^ 2 := by positivity
-    have hleft : 2 * r * (1 + Real.exp r) ≤ 0 := by
-      exact mul_nonpos_of_nonpos_of_nonneg (mul_nonpos_of_nonneg_of_nonpos (by norm_num) hr)
-        (by positivity)
-    have hright : 0 < (r ^ 2 + Real.pi ^ 2) * Real.exp r := mul_pos hp he
-    exact ⟨by nlinarith, hden⟩
-  · right
-    have hr' : 0 < r := lt_of_not_ge hr
-    have he : 0 < Real.exp r := Real.exp_pos r
-    have hE : 1 ≤ Real.exp r := (Real.one_le_exp_iff.mpr hr'.le)
-    have hinv : (Real.exp r)⁻¹ ≤ 1 := by
-      exact (inv_le_one₀ (Real.exp_pos r)).2 hE
-    have hquad : 4 * r < r ^ 2 + Real.pi ^ 2 := by
-      nlinarith [sq_nonneg (r - 2), Real.pi_gt_three]
-    have hinner : 2 * r * (1 + (Real.exp r)⁻¹) < r ^ 2 + Real.pi ^ 2 := by
-      nlinarith [mul_nonneg (le_of_lt hr') (sub_nonneg.mpr hinv)]
-    have hprod := mul_lt_mul_of_pos_right hinner he
-    field_simp [ne_of_gt he] at hprod
-    exact ⟨by
-      calc
-        2 * r * (1 + Real.exp r) - (r ^ 2 + Real.pi ^ 2) * Real.exp r
-            = 2 * r * (Real.exp r + 1) - Real.exp r * (r ^ 2 + Real.pi ^ 2) := by ring
-        _ < 0 := sub_neg.mpr hprod, hden⟩
 
 private lemma jfun_gap_bracket_pos (r : ℝ) :
     0 < r ^ 2 + Real.pi ^ 2 - 3 * r - 5 * r * (Real.exp r)⁻¹ -
@@ -218,11 +181,8 @@ private lemma nonneg_from_deriv {f g : ℝ → ℝ}
 
 private lemma sinh_cosh_gap_nonneg {s : ℝ} (hs : 0 ≤ s) :
     0 ≤ s * Real.cosh s - Real.sinh s := by
-  apply nonneg_from_deriv (g := fun x => x * Real.sinh x) _ _ (by simp) hs
-  · intro x
-    exact (((hasDerivAt_id x).mul (Real.hasDerivAt_cosh x)).sub
-      (Real.hasDerivAt_sinh x)).congr_deriv (by dsimp; ring)
-  · intro x hx; exact mul_nonneg hx (Real.sinh_nonneg_iff.mpr hx)
+  exact sub_nonneg.mpr
+    (D5.S3.Observer.Fluctuation.ThermalCoefficientFloor.sinh_le_self_mul_cosh_of_nonneg hs)
 
 private lemma sinh_cosh_upper {s : ℝ} (hs : 0 ≤ s) :
     0 ≤ (1 + s ^ 2 / 3) * Real.sinh s - s * Real.cosh s := by
@@ -291,9 +251,6 @@ theorem ell_deriv2_pos (r : ℝ) : 0 < deriv (deriv ell) r := by
   · exact (ell_deriv2_bounds_nonneg hr).1
   · have h := (ell_deriv2_bounds_nonneg (show 0 ≤ -r by linarith)).2
     linarith [ell_deriv2_reflection r]
-
-theorem ell_deriv2_lt_two (r : ℝ) : deriv (deriv ell) r < 2 := by
-  linarith [ell_deriv2_pos (-r), ell_deriv2_reflection r]
 
 theorem density_bracket_pos_confluent (a : ℝ) :
     0 < 2 * (-deriv ell a) - Real.exp (-a) * deriv jfun a := by

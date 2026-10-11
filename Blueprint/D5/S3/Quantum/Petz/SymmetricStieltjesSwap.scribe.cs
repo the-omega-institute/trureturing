@@ -12,7 +12,6 @@ internal sealed class SymmetricStieltjesSwapDocument : IScribeDocumentDefinition
     private static readonly (string Name, bool IsDefinition)[] Items =
     {
         ("symmetric_stieltjes_swap", false),
-        ("symmetric_double_swap_hasDerivAt", false)
     };
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -31,8 +30,7 @@ internal sealed class SymmetricStieltjesSwapDocument : IScribeDocumentDefinition
 
     private static string ResultText(string name, bool isDefinition) => name switch
     {
-        "symmetric_stieltjes_swap" => "The stated exchange of variables leaves the named quantity unchanged.",
-        "symmetric_double_swap_hasDerivAt" => "The stated exchange of variables leaves the named quantity unchanged.",
+        "symmetric_stieltjes_swap" => "For a measurable nonnegative symmetric kernel K and positive x,y, integrability of its double resolvent integral implies integrability of the swap representation and equality with the single integral of (1/(x+s)+1/(y+s)) times the inner integral of K(s,t)/(x+y+s+t).",
         _ => "The named analytic identity holds with exactly the hypotheses and conclusion displayed in the statement."
     };
 }

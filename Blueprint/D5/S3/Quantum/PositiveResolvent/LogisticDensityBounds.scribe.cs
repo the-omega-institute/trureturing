@@ -13,11 +13,8 @@ internal sealed class LogisticDensityBoundsDocument : IScribeDocumentDefinition
     {
         ("ell", true),
         ("jfun", true),
-        ("ell_reflection", false),
-        ("ell_deriv_neg", false),
         ("jfun_deriv_lt", false),
         ("ell_deriv2_pos", false),
-        ("ell_deriv2_lt_two", false),
         ("density_bracket_pos_confluent", false),
         ("density_bracket_pos", false)
     };
@@ -40,11 +37,8 @@ internal sealed class LogisticDensityBoundsDocument : IScribeDocumentDefinition
     {
         "ell" => "ell is the logistic quadratic-over-denominator auxiliary function.",
         "jfun" => "jfun is the exponential-square logistic auxiliary function.",
-        "ell_reflection" => "The stated inequality or reflection identity holds for the auxiliary functions in its displayed domain.",
-        "ell_deriv_neg" => "The stated derivative or principal-part identity holds under exactly the displayed hypotheses.",
         "jfun_deriv_lt" => "The stated derivative or principal-part identity holds under exactly the displayed hypotheses.",
         "ell_deriv2_pos" => "Under its positive hypotheses, the named quantity is strictly positive.",
-        "ell_deriv2_lt_two" => "The stated derivative or principal-part identity holds under exactly the displayed hypotheses.",
         "density_bracket_pos_confluent" => "Under its positive hypotheses, the named quantity is strictly positive.",
         "density_bracket_pos" => "Under its positive hypotheses, the named quantity is strictly positive.",
         _ => "The named analytic identity holds with exactly the hypotheses and conclusion displayed in the statement."

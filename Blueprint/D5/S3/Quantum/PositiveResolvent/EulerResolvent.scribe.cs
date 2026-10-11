@@ -18,7 +18,6 @@ internal sealed class EulerResolventDocument : IScribeDocumentDefinition
         ("integral_exp_sin_sq", false),
         ("integral_sin_sq_pi", false),
         ("H_eq_integral", false),
-        ("k_eq_closed", false),
         ("k_diag", false),
         ("euler_resolvent_integrable", false),
         ("euler_resolvent", false),
@@ -26,7 +25,6 @@ internal sealed class EulerResolventDocument : IScribeDocumentDefinition
         ("k_pos", false),
         ("power_divdiff_integrable", false),
         ("power_divdiff_resolvent", false),
-        ("power_divdiff_resolvent_diag", false)
     };
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -52,7 +50,6 @@ internal sealed class EulerResolventDocument : IScribeDocumentDefinition
         "integral_exp_sin_sq" => "The named quantity satisfies the stated integral or closed-form identity under exactly the displayed hypotheses.",
         "integral_sin_sq_pi" => "The named quantity satisfies the stated integral or closed-form identity under exactly the displayed hypotheses.",
         "H_eq_integral" => "The named quantity satisfies the stated integral or closed-form identity under exactly the displayed hypotheses.",
-        "k_eq_closed" => "The named quantity satisfies the stated integral or closed-form identity under exactly the displayed hypotheses.",
         "k_diag" => "At coincident arguments, the named quantity has the stated diagonal value.",
         "euler_resolvent_integrable" => "The displayed integrand is integrable on the positive half-line under the stated hypotheses.",
         "euler_resolvent" => "The named quantity satisfies the stated integral or closed-form identity under exactly the displayed hypotheses.",
@@ -60,7 +57,6 @@ internal sealed class EulerResolventDocument : IScribeDocumentDefinition
         "k_pos" => "Under its positive hypotheses, the named quantity is strictly positive.",
         "power_divdiff_integrable" => "The displayed integrand is integrable on the positive half-line under the stated hypotheses.",
         "power_divdiff_resolvent" => "The named quantity satisfies the stated integral or closed-form identity under exactly the displayed hypotheses.",
-        "power_divdiff_resolvent_diag" => "At coincident arguments, the named quantity has the stated diagonal value.",
         _ => "The named analytic identity holds with exactly the hypotheses and conclusion displayed in the statement."
     };
 }

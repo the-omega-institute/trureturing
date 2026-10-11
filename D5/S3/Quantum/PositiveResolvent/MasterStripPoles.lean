@@ -7,6 +7,7 @@
    digest: Classify and remove the two simple poles of the logarithmic master strip kernel. -/
 
 import D5.S3.Weil.ZetaPntBase.ResidueRectangles
+import D5.S3.Weil.ZetaAnalytic.RectangleLogDeriv
 import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic
@@ -169,83 +170,32 @@ private lemma rectangle_two_poles {f : ℂ → ℂ} {z w p q A B : ℂ}
     (hbq : (f - fun s => B / (s - q)) =O[𝓝[≠] q] (1 : ℂ → ℂ)) :
     RectangleIntegral f z w = 2 * (Real.pi : ℂ) * I * (A + B) := by
   classical
-  let f0 : ℂ → ℂ := f - fun s => A / (s - p)
-  let g : ℂ → ℂ := Function.update f0 p (limUnder (𝓝[≠] p) f0)
-  obtain ⟨U, hU, hUb⟩ := IsBigO_to_BddAbove hbp
-  let V := (U ∩ Rectangle z w) ∩ {q}ᶜ
-  have hV : V ∈ 𝓝 p := inter_mem (inter_mem hU hp) (isOpen_ne.mem_nhds hpq)
-  have hdV : HolomorphicOn f0 (V \ {p}) := by
-    intro s hs
-    have hsp : s ≠ p := hs.2
-    have hsq : s ≠ q := hs.1.2
-    refine ((hd s ?_).mono ?_).sub ?_
-    · exact ⟨hs.1.1.2, by simp [hsp, hsq]⟩
-    · intro r hr
-      exact ⟨hr.1.1.2, by simpa only [mem_insert_iff, mem_singleton_iff, not_or]
-        using (And.intro hr.2 (show r ≠ q from hr.1.2))⟩
-    · exact (differentiableWithinAt_const _).div
-        ((differentiableWithinAt_id).sub (differentiableWithinAt_const _))
-        (sub_ne_zero.mpr hsp)
-  have hsub : V \ {p} ⊆ U \ {p} := fun s hs => ⟨hs.1.1.1, hs.2⟩
-  have hbV : BddAbove (norm ∘ f0 '' (V \ {p})) := hUb.mono (image_mono hsub)
-  have hgV : HolomorphicOn g V :=
-    Complex.differentiableOn_update_limUnder_of_bddAbove hV hdV hbV
-  have hge {s : ℂ} (hs : s ≠ p) : g =ᶠ[𝓝 s] f0 := by
-    filter_upwards [isOpen_ne.mem_nhds hs] with r hr
-    exact Function.update_of_ne hr _ _
-  have hg : HolomorphicOn g (Rectangle z w \ {q}) := by
-    intro s hs
-    by_cases hsp : s = p
-    · subst s
-      exact (hgV.differentiableAt hV).differentiableWithinAt
-    · have hh : HolomorphicOn f0 (Rectangle z w \ {p, q}) := by
-        refine hd.sub ?_
-        intro r hr
-        have hrp : r ≠ p := by
-          intro he
-          exact hr.2 (by simp [he])
-        exact (differentiableWithinAt_const _).div
-          ((differentiableWithinAt_id).sub (differentiableWithinAt_const _))
-          (sub_ne_zero.mpr hrp)
-      have hh1 := hh s ⟨hs.1, by simp [hsp, hs.2]⟩
-      exact (hh1.mono_of_mem_nhdsWithin (by
-        filter_upwards [self_mem_nhdsWithin, mem_nhdsWithin_of_mem_nhds
-          (isOpen_ne.mem_nhds hsp)] with r hr hrp
-        exact ⟨hr.1, by simp [hrp, hr.2]⟩)).congr_of_eventuallyEq
-          ((hge hsp).filter_mono nhdsWithin_le_nhds) (Function.update_of_ne hsp _ _)
-  have ha : (fun s : ℂ => A / (s - p)) =O[𝓝[≠] q] (1 : ℂ → ℂ) :=
-    (((continuousAt_const.div (continuousAt_id.sub continuousAt_const)
-      (sub_ne_zero.mpr hpq.symm)).tendsto.mono_left nhdsWithin_le_nhds).isBigO_one ℂ)
-  have hb : (g - fun s => B / (s - q)) =O[𝓝[≠] q] (1 : ℂ → ℂ) := by
-    refine (hbq.sub ha).congr' ?_ Filter.EventuallyEq.rfl
-    filter_upwards [(hge hpq.symm).filter_mono nhdsWithin_le_nhds] with s hs
-    simp only [Pi.sub_apply, hs, f0]
-    ring
-  have hgI := ResidueTheoremOnRectangleWithSimplePole' hre him hq hg hb
-  have hpB := not_mem_rectangleBorder_of_rectangle_mem_nhds hp
-  have hfEq : EqOn f (g + fun s => A / (s - p)) (RectangleBorder z w) := by
-    intro s hs
-    have hsp : s ≠ p := fun he => hpB (he ▸ hs)
-    simp [g, Function.update_of_ne hsp, f0]
-  have hAg : HolomorphicOn (fun s : ℂ => A / (s - p)) (Rectangle z w \ {p}) := by
-    intro s hs
-    exact (differentiableWithinAt_const _).div
-      ((differentiableWithinAt_id).sub (differentiableWithinAt_const _))
-      (sub_ne_zero.mpr hs.2)
-  have hadd := RectangleBorderIntegrable.add
-    (hg.rectangleBorderIntegrable' hq) (hAg.rectangleBorderIntegrable' hp)
-  have hAi := ResidueTheoremInRectangle (c := A) hre him hp
-  have hsum : RectangleIntegral' f z w = A + B := by
-    rw [RectangleIntegral'_congr hfEq, RectangleIntegral', hadd, smul_add]
-    change RectangleIntegral' g z w + RectangleIntegral' (fun s => A / (s - p)) z w = _
-    rw [hgI, hAi, add_comm]
-  change (1 / (2 * (Real.pi : ℂ) * I)) * RectangleIntegral f z w = A + B at hsum
-  have hc : 2 * (Real.pi : ℂ) * I ≠ 0 := by
-    exact mul_ne_zero (mul_ne_zero (by norm_num) (by exact_mod_cast Real.pi_ne_zero)) I_ne_zero
-  have hv := (div_eq_iff hc).mp (by simpa [div_eq_mul_inv, mul_comm] using hsum)
-  simpa [mul_comm] using hv
-
-
+  let S : Finset ℂ := {p, q}
+  let C : ℂ → ℂ := fun r => if r = p then A else B
+  have hS : ∀ r ∈ S, Rectangle z w ∈ 𝓝 r := by
+    intro r hr
+    simp only [S, Finset.mem_insert, Finset.mem_singleton] at hr
+    rcases hr with rfl | rfl
+    · exact hp
+    · exact hq
+  have hnear : ∀ r ∈ S, (f - fun s => C r / (s - r)) =O[𝓝[≠] r] (1 : ℂ → ℂ) := by
+    intro r hr
+    simp only [S, Finset.mem_insert, Finset.mem_singleton] at hr
+    rcases hr with rfl | rfl
+    · simpa [C] using hbp
+    · simpa [C, hpq.symm] using hbq
+  have hd' : HolomorphicOn f (Rectangle z w \ (S : Set ℂ)) := by
+    simpa [S] using hd
+  have hres := Zeta23.Analytic.residueTheorem_finset
+    (f := f) (z := z) (w := w) hre him S C hS hd' hnear
+  simp [S, C, hpq, hpq.symm] at hres
+  calc
+    RectangleIntegral f z w = 2 * (Real.pi : ℂ) * I *
+        (-(I * ((Real.pi : ℂ)⁻¹ * (2 : ℂ)⁻¹) * RectangleIntegral f z w)) := by
+          field_simp [Real.pi_ne_zero]
+          rw [Complex.I_sq]
+          ring
+    _ = 2 * (Real.pi : ℂ) * I * (A + B) := by rw [hres]
 
 theorem stripPoleKernel_rectangle {x T : ℝ} (hx : 0 < x) (hne : x ≠ 1)
     (hT : 0 < T) (hlog : |Real.log x| < T) :

@@ -46,24 +46,22 @@ theorem L_self (x : ℝ) : L x x = 1 / x := by
 
 theorem L_eq_of_ne {x y : ℝ} (hx : 0 < x) (hy : 0 < y) (hne : x ≠ y) :
     L x y = (Real.log x - Real.log y) / (x - y) := by
-  have hd : ∀ s ∈ uIcc (0 : ℝ) 1,
-      HasDerivAt (fun s : ℝ => Real.log ((1 - s) * x + s * y) / (y - x))
-        (1 / ((1 - s) * x + s * y)) s := by
-    intro s hs
-    rw [uIcc_of_le zero_le_one] at hs
-    have hn := (affine_pos hx hy hs).ne'
-    have h := ((((hasDerivAt_const s (1 : ℝ)).sub (hasDerivAt_id s)).mul_const x).add
-      ((hasDerivAt_id s).mul_const y)).log hn |>.div_const (y - x)
-    convert! h using 1 <;> (try dsimp) <;> (try rfl) <;> field_simp [hn, sub_ne_zero.mpr (Ne.symm hne)] <;> ring
-  have hcont : ContinuousOn (fun s : ℝ => 1 / ((1 - s) * x + s * y)) (uIcc 0 1) := by
-    simpa only [uIcc_of_le zero_le_one] using L_continuous_integrand hx hy
-  have hint : IntervalIntegrable (fun s : ℝ => 1 / ((1 - s) * x + s * y)) volume 0 1 := hcont.intervalIntegrable
-  have hi := intervalIntegral.integral_eq_sub_of_hasDerivAt hd hint
-  try dsimp at hi
-  simp only [sub_zero, mul_one, zero_mul, mul_zero, zero_add, add_zero, sub_self] at hi
-  rw [L, hi]
-  field_simp [sub_ne_zero.mpr hne, sub_ne_zero.mpr (Ne.symm hne)]
-  <;> ring
+  unfold L
+  have hsub := intervalIntegral.integral_comp_add_mul
+    (fun u : ℝ => 1 / u) (sub_ne_zero.mpr (Ne.symm hne)) x
+    (a := (0 : ℝ)) (b := 1) (c := y - x)
+  have hxy : (∫ u in x..y, 1 / u) = Real.log (y / x) :=
+    integral_one_div_of_pos hx hy
+  rw [show (fun s : ℝ => 1 / ((1 - s) * x + s * y)) =
+      (fun s => 1 / (x + (y - x) * s)) by funext s; congr 1; ring]
+  have hsub' : (∫ s in (0 : ℝ)..1, 1 / (x + (y - x) * s)) =
+      (y - x)⁻¹ * ∫ u in x..y, 1 / u := by
+    simpa only [smul_eq_mul, mul_zero, add_zero, mul_one,
+      show x + (y - x) = y by ring] using hsub
+  rw [hsub', hxy]
+  field_simp [sub_ne_zero.mpr hne, sub_ne_zero.mpr (Ne.symm hne), hx.ne', hy.ne']
+  rw [Real.log_div hy.ne' hx.ne']
+  ring
 
 theorem L_symm (x y : ℝ) : L x y = L y x := by
   unfold L
@@ -170,24 +168,6 @@ theorem m_integrable {x y z : ℝ} (hx : 0 < x) (hy : 0 < y) (hz : 0 < z) :
       _ ≤ (x + t) * (y + t) * (z + t) :=
         mul_le_mul (mul_le_mul h1 h2 hp.le (by linarith)) h3 hp.le
           (mul_nonneg (by linarith) (by linarith))
-
-theorem m_pos {x y z : ℝ} (hx : 0 < x) (hy : 0 < y) (hz : 0 < z) : 0 < m x y z := by
-  have hp : ∀ t ∈ Ioi (0 : ℝ), 0 < 1 / ((x + t) * (y + t) * (z + t)) := by
-    intro t ht
-    simp only [mem_Ioi, mem_Ici] at ht
-    have h1 : 0 < x + t := by linarith [ht]
-    have h2 : 0 < y + t := by linarith [ht]
-    have h3 : 0 < z + t := by linarith [ht]
-    positivity
-  apply (setIntegral_pos_iff_support_of_nonneg_ae
-    ((ae_restrict_iff' measurableSet_Ioi).mpr (ae_of_all _ (fun t ht => (hp t ht).le)))
-    (m_integrable hx hy hz)).mpr
-  have he : Function.support (fun t : ℝ => 1 / ((x + t) * (y + t) * (z + t))) ∩ Ioi 0 = Ioi 0 := by
-    ext t
-    simp only [mem_inter_iff, Function.mem_support]
-    exact ⟨fun h => h.2, fun h => ⟨(hp t h).ne', h⟩⟩
-  rw [he]
-  simp
 
 theorem L_sub_L_eq_m {x y z : ℝ} (hx : 0 < x) (hy : 0 < y) (hz : 0 < z) :
     L x z - L x y = (y - z) * m x y z := by
