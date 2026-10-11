@@ -705,7 +705,92 @@ private lemma two_root_elimination (a b : V) (hk : K a b < 0) (u v w z d l : ℝ
   have hc : N.coeff 12 = (u * w) ^ 2 := by
     dsimp [N, R, T, P, Q, H, D]
     compute_degree!
-    <;> ring
   rw [hN, coeff_zero] at hc
   nlinarith only [hc]
+private lemma quadratic_residue (a b : V) (hk : K a b < 0) (U V W : ℝ)
+    (hg : ∀ x y, curve (K a b) ⟪a, b⟫_ℝ x y = 0 → U * x ^ 2 + V * y ^ 2 + W = 0) :
+    U = 0 ∧ V = 0 ∧ W = 0 := by
+  let J : ℝ[X] := C U * X ^ 6 + C (2 * U + W - V) * X ^ 4 +
+    C (U + 2 * W + V * (2 * ⟪a, b⟫_ℝ ^ 2 - 1 - K a b)) * X ^ 2 + C (W - V * K a b)
+  obtain ⟨ε, hε, hbr⟩ := boundary_branches a b hk
+  have hJ : J = 0 := by
+    apply eq_zero_of_infinite_isRoot
+    apply (Set.Ioo_infinite hε).mono
+    intro x hx
+    obtain ⟨hd, hp, hn, _⟩ := hbr x hx
+    have hp := hg x _ hp
+    have hn := hg x _ hn
+    have hs := Real.sq_sqrt hd.le
+    change Real.sqrt (delta a b x) ^ 2 =
+      -x ^ 4 + (‖a‖ ^ 2 + ‖b‖ ^ 2 - 2) * x ^ 2 - K a b at hs
+    have hH : (1 + x ^ 2 : ℝ) ≠ 0 := by positivity
+    dsimp only [branch] at hp hn
+    field_simp at hp hn
+    change J.eval x = 0
+    simp only [J, eval_add, eval_mul, eval_pow, eval_C, eval_X]
+    dsimp only [K] at hp hn hs ⊢
+    linear_combination (1 / 2 : ℝ) * hp + (1 / 2 : ℝ) * hn - V * hs
+  have h6 := congrArg (fun p : ℝ[X] => p.coeff 6) hJ
+  have h4 := congrArg (fun p : ℝ[X] => p.coeff 4) hJ
+  have h0 := congrArg (fun p : ℝ[X] => p.coeff 0) hJ
+  simp only [J, coeff_add, coeff_C_mul, coeff_X_pow, coeff_C, coeff_zero] at h6 h4 h0
+  norm_num at h6 h4 h0
+  have hv : V * (1 - K a b) = 0 := by linarith only [h6, h4, h0]
+  have hV := (mul_eq_zero.mp hv).resolve_right (by linarith : 1 - K a b ≠ 0)
+  exact ⟨h6, hV, by linarith only [h6, h4, hV]⟩
+private lemma scale_signs (a b : V) (hk : K a b < 0) (p q : ℝ) (hp : p ≠ 0) (hq : q ≠ 0)
+    (hg : ∀ x y, curve (K a b) ⟪a, b⟫_ℝ x y = 0 →
+      curve (K (p • a) (q • b)) ⟪p • a, q • b⟫_ℝ (p * x) (q * y) = 0) :
+    (p = 1 ∨ p = -1) ∧ (q = 1 ∨ q = -1) := by
+  obtain ⟨hU, hV, _⟩ := quadratic_residue a b hk (p ^ 2 * (1 - q ^ 2))
+    (q ^ 2 * (1 - p ^ 2)) (K (p • a) (q • b) - p ^ 2 * q ^ 2 * K a b) (by
+      intro x y hz
+      have hg := hg x y hz
+      dsimp only [curve] at hg hz ⊢
+      simp only [real_inner_smul_left, inner_smul_right] at hg
+      linear_combination hg - p ^ 2 * q ^ 2 * hz)
+  constructor <;> apply sq_eq_one_iff.mp
+  · have h := (mul_eq_zero.mp hV).resolve_left (pow_ne_zero 2 hq); linarith
+  · have h := (mul_eq_zero.mp hU).resolve_left (pow_ne_zero 2 hp); linarith
+private lemma plane_coordinates (a b m c : V) (hm : ‖m‖ = 1)
+    (hma : ⟪m, a⟫_ℝ = 0) (hmb : ⟪m, b⟫_ℝ = 0) (hmc : ⟪m, c⟫_ℝ = 0)
+    (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) : ∃ u v : ℝ, c = u • a + v • b := by
+  let D := ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2
+  let u := (‖b‖ ^ 2 * ⟪c, a⟫_ℝ - ⟪a, b⟫_ℝ * ⟪c, b⟫_ℝ) / D
+  let v := (‖a‖ ^ 2 * ⟪c, b⟫_ℝ - ⟪a, b⟫_ℝ * ⟪c, a⟫_ℝ) / D
+  let r := c - (u • a + v • b)
+  have hD' : D ≠ 0 := by dsimp [D]; linarith
+  have hDexp : ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2 ≠ 0 := by linarith
+  have hDexp2 : ‖b‖ ^ 2 * ‖a‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2 ≠ 0 := by nlinarith
+  have hr : ⟪r, a⟫_ℝ = 0 ∧ ⟪r, b⟫_ℝ = 0 := by
+    constructor <;> dsimp only [r, u, v, D] <;>
+      simp only [inner_sub_left, inner_add_left, real_inner_smul_left,
+        real_inner_self_eq_norm_sq, real_inner_comm a b] <;> field_simp [hDexp, hDexp2] <;> ring
+  have hrm : ⟪r, m⟫_ℝ = 0 := by
+    simp [r, inner_sub_left, inner_add_left, real_inner_smul_left, real_inner_comm m a, real_inner_comm m b, real_inner_comm m c, hma, hmb, hmc]
+  have hgm := gram_complete a b m
+  simp only [hm, hma, hmb] at hgm
+  obtain ⟨_, _, hc⟩ := cross_geometry a b
+  have hproj := project_sq m (cross a b) hm
+  have hinner : ⟪m, cross a b⟫_ℝ ^ 2 = D := by
+    nlinarith only [hgm, hm]
+  have hnorm : ‖cross a b‖ ^ 2 = D := by
+    simpa [D] using hc
+  have hpc : project m (cross a b) = 0 := by
+    have hz : ‖project m (cross a b)‖ ^ 2 = 0 := by
+      nlinarith only [hproj, hinner, hnorm]
+    have hz' : ‖project m (cross a b)‖ = 0 := by
+      nlinarith [norm_nonneg (project m (cross a b))]
+    exact norm_eq_zero.mp hz'
+  have hrc : ⟪r, cross a b⟫_ℝ = 0 := by
+    rw [show cross a b = ⟪m, cross a b⟫_ℝ • m from sub_eq_zero.mp hpc]
+    simp [inner_smul_right, hrm]
+  have hgr := gram_complete a b r
+  rw [hr.1, hr.2, hrc] at hgr
+  have hrnorm : ‖r‖ ^ 2 = 0 := by
+    have hnormeq := real_inner_self_eq_norm_sq r
+    nlinarith [hgr, hD, hnormeq]
+  have hz' : ‖r‖ = 0 := by nlinarith [hrnorm, norm_nonneg r]
+  have hz : r = 0 := norm_eq_zero.mp hz'
+  exact ⟨u, v, sub_eq_zero.mp hz⟩
 end D5.S3.Quantum.ToriiTakakuraImamuraRigidity
