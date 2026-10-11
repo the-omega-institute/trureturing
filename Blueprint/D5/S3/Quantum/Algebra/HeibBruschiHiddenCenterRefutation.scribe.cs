@@ -17,13 +17,13 @@ internal sealed class HeibBruschiHiddenCenterRefutationDocument : IScribeDocumen
         Blocks(
             Node("conjecture-over", "Conjecture 80 over a field", "conjecture80Over", ConjectureFormula(),
                 "For each Lie algebra over K and each admissible finite basis b, a nonzero center is required to imply that a proper nonempty subset W of the basis indices has the ideal-graph-property and that the span of b(W) is a solvable Lie ideal. The graph belongs to the given basis: the assertion quantifies over every admissible basis.",
-                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Conjecture 80", "claim", ClaimFormula(),
                 "Conjecture 80 of Heib and Bruschi, arXiv:2601.16161v1, §IV.D, p. 47: \"Let g be a finite-dimensional minimal-graph-admissible Lie algebra associated with the minimal graph G(V,E). If g has a non-zero center Z(g), then there exists a proper non-empty subset W⊊V that satisfies the ideal-graph-property and spans a solvable ideal of g.\" The paper's convention \"We denote any field with the symbol 𝔽\" makes this an assertion over every field K.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Conjecture 80 is refuted", "result", ResultFormula(),
                 "For any field K, give K⁴ the bracket [u,v]=(b(r+s)−(c+d)q, (c+d)p−a(r+s), aq−bp, 0), where u=(a,b,c,d) and v=(p,q,r,s). The map u↦((a,b,c+d),d) identifies this with the cross-product Lie algebra K³ together with a central copy of K. Its standard basis satisfies [e₁,e₂]=e₃, [e₂,e₃]=e₁, [e₃,e₁]=e₂, [e₁,e₄]=−e₂, [e₂,e₄]=e₁ and [e₃,e₄]=0, so it is admissible, while e₄−e₃ is central and nonzero. Every nonempty vertex subset with the ideal-graph-property contains e₁,e₂,e₃; the only proper one is {e₁,e₂,e₃}. Its span I satisfies [I,I]=I≠0 and is therefore not solvable. These identities hold in every characteristic. Taking K to be the rational numbers contradicts the assertion over every field.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo())
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
         )));
 
     private static DocumentBlock Node(
