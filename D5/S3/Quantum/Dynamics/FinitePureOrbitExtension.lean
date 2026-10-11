@@ -11,6 +11,7 @@ import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.DirectSum.Finite
 import Mathlib.LinearAlgebra.DFinsupp
 import Mathlib.Order.CompactlyGenerated.Basic
+import Mathlib.Order.Interval.Set.Monotone
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic
@@ -52,12 +53,8 @@ private theorem sum_finrank_le (P : Submodule K V) (Q : ι → Submodule K V)
 omit [Fintype ι] in
 private theorem sum_weight_le (s : Finset ι) (a : ι → ℕ) :
     (∑ i ∈ s, (2 * a i - 1)) ≤ 2 * (∑ i ∈ s, a i) - 1 := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | @insert i s hi ih =>
-    simp only [sum_insert hi]
-    omega
+  exact Finset.le_sum_of_subadditive (N := OrderDual ℕ) (fun n : ℕ => (2 * n - 1 : ℕ))
+    (by decide) (by intro a b; change 2 * a - 1 + (2 * b - 1) ≤ 2 * (a + b) - 1; omega) s a
 
 omit [Fintype ι] in
 private theorem sum_weight_lt (s : Finset ι) (a : ι → ℕ) (q : ℕ)
@@ -166,9 +163,7 @@ private theorem stable_word_forward (A : V ≃ₗ[K] V) (S : ι → Submodule K 
     {x : V} (hx : x ≠ 0) (hw : ∃ w : Fin n → ι, x ∈ wordSpace A S w) :
     ∃ w : Fin n → ι, A x ∈ wordSpace A S w := by
   obtain ⟨w, hw⟩ := hw
-  have hne : wordSpace A S w ≠ ⊥ := by
-    intro hz
-    exact hx (by simpa [hz] using hw)
+  have hne : wordSpace A S w ≠ ⊥ := (wordSpace A S w).ne_bot_iff.mpr ⟨x, hw, hx⟩
   obtain ⟨i, hi⟩ := unchanged_extension A S hS heq w hne
   have hext : x ∈ wordSpace A S (Fin.snoc w i) := hi.symm ▸ hw
   let wext : Fin (n + 1) → ι := Fin.snoc w i
@@ -188,10 +183,7 @@ private theorem stable_word_orbit (A : V ≃ₗ[K] V) (S : ι → Submodule K V)
     induction k with
     | zero => simpa using hw
     | succ k ih =>
-      have hne : (A ^ k) x ≠ 0 := by
-        intro hz
-        apply hx
-        exact (A ^ k).injective (by simpa using hz)
+      have hne : (A ^ k) x ≠ 0 := (A ^ k).map_ne_zero_iff.mpr hx
       simpa [pow_succ', LinearEquiv.mul_apply] using
         stable_word_forward A S hS heq hne ih
   intro k
@@ -215,9 +207,7 @@ private theorem positive_wordPotential (A : V ≃ₗ[K] V) (S : ι → Submodule
     {x : V} (hx : x ≠ 0) {n : ℕ} (hw : ∃ w : Fin n → ι, x ∈ wordSpace A S w) :
     0 < wordPotential A S n := by
   obtain ⟨w, hw⟩ := hw
-  have hne : wordSpace A S w ≠ ⊥ := by
-    intro hz
-    exact hx (by simpa [hz] using hw)
+  have hne : wordSpace A S w ≠ ⊥ := (wordSpace A S w).ne_bot_iff.mpr ⟨x, hw, hx⟩
   have hd : 0 < finrank K (wordSpace A S w) :=
     Nat.pos_of_ne_zero (fun hz => hne (Submodule.finrank_eq_zero.mp hz))
   have hle : spacePotential (wordSpace A S w) ≤ wordPotential A S n := by
@@ -270,17 +260,17 @@ theorem pure_prefix_potential_stabilizes (A : V ≃ₗ[K] V) (S : ι → Submodu
   have hstable : ∃ L, 1 ≤ L ∧ L < N ∧
       wordPotential A S (L + 1) = wordPotential A S L := by
     by_contra! h
-    have hdrop : ∀ k, k < N → wordPotential A S (k + 1) + k ≤ wordPotential A S 1 := by
-      intro k hk
-      induction k with
-      | zero => simp
-      | succ k ih =>
-        have hkN : k < N := by omega
-        have hi := ih hkN
-        have hle := wordPotential_le A S hS (k + 1)
-        have hne' := h (k + 1) (by omega) (by omega)
-        omega
-    have hfinal := hdrop (N - 1) (by omega)
+    have hdrop : AntitoneOn (fun k => wordPotential A S (k + 1) + k) (Set.Iio N) := by
+      apply antitoneOn_of_succ_le Set.ordConnected_Iio
+      intro k _ _ hk
+      change k + 1 < N at hk
+      change wordPotential A S (k + 1 + 1) + (k + 1) ≤ wordPotential A S (k + 1) + k
+      have hle := wordPotential_le A S hS (k + 1)
+      have hne' := h (k + 1) (by omega) hk
+      omega
+    have hfinal := hdrop (show 0 ∈ Set.Iio N from hNpos)
+      (show N - 1 ∈ Set.Iio N by change N - 1 < N; omega) (Nat.zero_le _)
+    simp only [zero_add, add_zero] at hfinal
     have hindex : N - 1 + 1 = N := by omega
     rw [hindex] at hfinal
     dsimp [N] at *
