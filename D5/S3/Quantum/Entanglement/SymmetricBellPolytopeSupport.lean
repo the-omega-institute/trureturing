@@ -15,9 +15,6 @@ escape_witness: threshold_of_no_alternation = own construction/computation: firs
 import D5.S3.QuantumBounds.PeritoUnitCircleSum
 import D5.S3.Quantum.Magic.ErewGoldsteinSICStabilizerRefutation
 import Mathlib.Analysis.Convex.KreinMilman
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
-import Mathlib.Data.Real.Sign
 noncomputable section
 open scoped BigOperators ComplexConjugate RealInnerProductSpace InnerProductSpace
 open Set

@@ -18,6 +18,8 @@ import D5.S3.Quantum.Entanglement.SymmetricBellPolytopeSupport
 import D5.S3.Combinatorics.Geometry.CrossPolytopeFaceCounts
 import D5.S0.Asymptotics.Interference.FiniteAutocorrelation
 import D5.S3.Quantum.FermionicCorrelationalBound.CompletedTensorSlaterGeometry
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Data.Real.Sign
 noncomputable section
 open scoped BigOperators ComplexConjugate RealInnerProductSpace InnerProductSpace
 open Set
