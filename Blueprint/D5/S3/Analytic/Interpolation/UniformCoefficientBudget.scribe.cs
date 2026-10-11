@@ -64,7 +64,7 @@ internal sealed class UniformCoefficientBudgetDocument : IScribeDocumentDefiniti
                 H("A common polynomial separates two atomic laws"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/deboor2005divideddifferences")),
-                Blocks(Paragraph(Text("Let alpha and beta be nonnegative finitely supported real weights, beta have total mass 1, eta > 0, b < y <= 1, supp(alpha) be contained in [0,y], supp(beta) in [0,b], and alpha(y) >= eta. There exists a real polynomial P of degree strictly below N=card(supp(alpha) union supp(beta)), with sum alpha(x)P(x)-sum beta(x)P(x) >= 1 and coeffL1(P) <= (2/eta) sum_{j<N} [16/(eta(y-b))]^j/(2j)!. The same P interpolates the entire endpoint profile on both supports; coincident atoms have combined weight. Alpha need not have total mass 1."))),
+                Blocks(Paragraph(Text("Let alpha and beta be nonnegative finitely supported real weights, beta have total mass 1, eta > 0, b < y <= 1, supp(alpha) be contained in [0,y], supp(beta) in [0,b], and alpha(y) >= eta. There exists a real polynomial P of degree strictly below N=card(supp(alpha) union supp(beta)), with sum alpha(x)P(x)-sum beta(x)P(x) >= 1 and coeffL1(P) <= (2/eta) sum_{j<N} [16/(eta(y-b))]^j/(2j)!. Here P=C(2/eta)*I, where I interpolates x -> endpoint(eta,(y-x)/(y-b)) on the union of both supports; coincident atoms have combined weight. Alpha need not have total mass 1."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("interpolation-uniformcoefficientbudget-sparse-endpoint-coefficient-certificate"),
