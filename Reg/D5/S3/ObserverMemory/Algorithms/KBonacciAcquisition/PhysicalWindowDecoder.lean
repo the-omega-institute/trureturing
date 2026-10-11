@@ -404,6 +404,74 @@ noncomputable def finalScriptLengthRegistration :
 #print axioms finalScriptLengthEvidence
 #print axioms finalScriptLengthRegistration
 
+@[reducible] def scriptLengthSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature Nat NarrowWindowCost.Archive (fun _ => Nat)
+
+def scriptLengthActual : Realization scriptLengthSignature :=
+  realize scriptLengthSignature (fun _ _ issued => issued.length) (fun e => nomatch e)
+
+def scriptLengthRejected : Realization scriptLengthSignature :=
+  realize scriptLengthSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+/-- The original script-length Law retains every width, word list and live record. -/
+@[reducible] def scriptLengthArena : Arena.{0,0,0,0,0} where
+  signature := scriptLengthSignature
+  Law R := ∀ {k m : ℕ} (words : List (Fin m → Bool)) (q : Option (LiveRecord k)),
+    R.readout () m (scriptArchive words q) = words.length
+
+theorem scriptLengthPositive : scriptLengthArena.Law scriptLengthActual :=
+  @script_length
+
+theorem scriptLengthNegative : ¬ scriptLengthArena.Law scriptLengthRejected := by
+  intro law
+  have impossible := law (k := 0) (m := 0) [] none
+  change (1 : ℕ) = 0 at impossible
+  cases impossible
+
+theorem scriptLengthDependence :
+    ObservationalDependence scriptLengthSignature scriptLengthActual := by
+  intro i
+  refine ⟨1, [], [(fun (_ : Fin 1) => false, none)], ?_⟩
+  change (0 : ℕ) ≠ 1
+  decide
+
+def scriptLengthEvidence : Registration scriptLengthArena
+    (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.script_length)) where
+  actual := scriptLengthActual
+  bridge := Iff.rfl
+  variation := ⟨scriptLengthPositive, scriptLengthRejected, scriptLengthNegative⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    (P := Nat) (X := NarrowWindowCost.Archive) (Y := fun _ => Nat)
+    scriptLengthArena.Law scriptLengthActual scriptLengthRejected scriptLengthNegative
+  dependence := scriptLengthDependence
+
+noncomputable def scriptLengthRegistration :
+    LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.script_length)
+      (type_of% (realize scriptLengthSignature scriptLengthActual.readout scriptLengthActual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str
+    `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.script_length
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder/scriptLengthArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder.scriptLengthEvidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨scriptLengthArena⟩, objectArena := .source ⟨scriptLengthArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source scriptLengthArena ⟨scriptLengthEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize scriptLengthSignature scriptLengthActual.readout scriptLengthActual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PhysicalWindowDecoder,
+    definition := none, coordinates := #[1],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn"],
+      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+#print axioms scriptLengthEvidence
+#print axioms scriptLengthRegistration
+
 @[reducible] def endpointLengthSignature : Signature.{0,0,0,0,0} :=
   Reg.Support.SingleDependentReadout.signature Nat (fun m => List (Fin m → Bool)) (fun _ => Nat)
 

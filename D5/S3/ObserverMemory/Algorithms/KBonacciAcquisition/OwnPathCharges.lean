@@ -158,7 +158,7 @@ def phaseCharges {Y : Type u} {m : ℕ} (table : ZMod (2 * m - 2 + 1) → Y)
   classical
   exact if ∃ y, ∀ j, table j = y then 0 else ownCharge π d 0 (-j) 0 (some 0) [] t
 
-private theorem root_zero {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
+theorem root_zero {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
     (table : ZMod (k + 1) → Y) (π : NarrowWindowCost.Selector m Y) (d : ℕ)
     (native : ∀ j s, s < k → ∃ c,
       NativeExecute π d (some ⟨0, -j, s⟩) (some 0) [] = some (table j, c))
