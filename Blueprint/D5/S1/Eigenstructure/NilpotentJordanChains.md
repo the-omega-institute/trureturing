@@ -4,7 +4,19 @@
 
 Actual positive-length Jordan chains and all iterate ranks for a nilpotent operator.
 
-**Theorem 1.1 (A chain basis computes every iterate rank).**
+**Theorem 1.1 (Every chain basis computes the power ranks).**
+
+$$\forall K \in Type, V \in Type, I \in Type, f \in \operatorname{End}\left(K, V\right), s \in \operatorname{Function}\left(I, \operatorname{PNat}\left(\right)\right), b \in \operatorname{Basis}\left(\operatorname{Positions}\left(I, s\right), K, V\right),\; \left(\operatorname{Field}\left(K\right) \land \left(\operatorname{AddCommGroup}\left(V\right) \land \left(\operatorname{Module}\left(K, V\right) \land \left(\operatorname{Fintype}\left(I\right) \land \left(\forall m \in \operatorname{Nat}\left(\right), i \in I, j \in \operatorname{Fin}\left(\operatorname{s}\left(i\right)\right),\; \operatorname{apply}\left(\operatorname{pow}\left(f, m\right), \operatorname{b}\left(i, j\right)\right) = \operatorname{ite}\left(\operatorname{add}\left(j, m\right) < \operatorname{s}\left(i\right), \operatorname{b}\left(i, \operatorname{add}\left(j, m\right)\right), 0\right)\right)\right)\right)\right)\right) \Rightarrow \left(\forall m \in \operatorname{Nat}\left(\right),\; \operatorname{finrank}\left(K, \operatorname{range}\left(\operatorname{pow}\left(f, m\right)\right)\right) = \sum_{i \in I} \operatorname{natSub}\left(\operatorname{s}\left(i\right), m\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Eigenstructure/NilpotentJordanChains.chain_basis_rank` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite family of positive chain lengths and any basis with the displayed shift action, the range of the m-th power is spanned by the basis tails starting at position m. Their independence makes its dimension the sum of the remaining lengths. Positions(I,s) is the dependent sum of Fin(s(i)); natSub denotes truncated natural subtraction.
+
+**Theorem 1.2 (A chain basis computes every iterate rank).**
 
 $$\forall K \in Type, V \in Type, f \in \operatorname{End}\left(K, V\right),\; \left(\operatorname{Field}\left(K\right) \land \left(\operatorname{AddCommGroup}\left(V\right) \land \left(\operatorname{Module}\left(K, V\right) \land \left(\operatorname{FiniteDimensional}\left(K, V\right) \land \operatorname{IsNilpotent}\left(f\right)\right)\right)\right)\right) \Rightarrow \left(\exists I \in Type, hI \in \operatorname{Fintype}\left(I\right), s \in \operatorname{Function}\left(I, \operatorname{PNat}\left(\right)\right), b \in \operatorname{Basis}\left(\operatorname{Positions}\left(I, s\right), K, V\right),\; \left(\forall m \in \operatorname{Nat}\left(\right), i \in I, j \in \operatorname{Fin}\left(\operatorname{s}\left(i\right)\right),\; \operatorname{apply}\left(\operatorname{pow}\left(f, m\right), \operatorname{b}\left(i, j\right)\right) = \operatorname{ite}\left(\operatorname{add}\left(j, m\right) < \operatorname{s}\left(i\right), \operatorname{b}\left(i, \operatorname{add}\left(j, m\right)\right), 0\right)\right) \land \left(\forall m \in \operatorname{Nat}\left(\right),\; \operatorname{finrank}\left(K, \operatorname{range}\left(\operatorname{pow}\left(f, m\right)\right)\right) = \sum_{i \in I} \operatorname{natSub}\left(\operatorname{s}\left(i\right), m\right)\right)\right)$$
 
@@ -20,4 +32,5 @@ Mathlib's Module.torsion_by_prime_power_decomposition supplies the complete prim
 
 ## References
 
+- Truth anchor: `D5/S1/Eigenstructure/NilpotentJordanChains.chain_basis_rank`
 - Truth anchor: `D5/S1/Eigenstructure/NilpotentJordanChains.nilpotent_jordan_chains_rank`

@@ -10,6 +10,17 @@ internal sealed class NilpotentJordanChainsDocument : IScribeDocumentDefinition
         "Actual positive-length Jordan chains and all iterate ranks for a nilpotent operator.",
         H("Nilpotent Jordan Chains"),
         Blocks(Describe.Lean(
+            DescribeId.Create("chain-basis-rank"),
+            DeclarationHandle.Create("D5/S1/Eigenstructure/NilpotentJordanChains.chain_basis_rank"),
+            H("Every chain basis computes the power ranks"),
+            StatementSource.FromAuthor(ChainRankFormula()),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For any finite family of positive chain lengths and any basis "
+                + "with the displayed shift action, the range of the m-th power is spanned by "
+                + "the basis tails starting at position m. Their independence makes its dimension "
+                + "the sum of the remaining lengths. Positions(I,s) is the dependent sum of "
+                + "Fin(s(i)); natSub denotes truncated natural subtraction."))),
+            DescribeRole.Theorem), Describe.Lean(
             DescribeId.Create("nilpotent-jordan-chains-rank"),
             DeclarationHandle.Create("D5/S1/Eigenstructure/NilpotentJordanChains.nilpotent_jordan_chains_rank"),
             H("A chain basis computes every iterate rank"),
@@ -72,5 +83,28 @@ internal sealed class NilpotentJordanChainsDocument : IScribeDocumentDefinition
             new Formula.Logic(All(Call("Field", k), Call("AddCommGroup", v),
                 Call("Module", k, v), Call("FiniteDimensional", k, v), Call("IsNilpotent", f)),
                 FormulaLogicOperator.Implies, conclusion)));
+    }
+
+    private static Formula ChainRankFormula()
+    {
+        Formula k = F.Id("K"), v = F.Id("V"), index = F.Id("I"), f = F.Id("f");
+        Formula s = F.Id("s"), b = F.Id("b"), m = F.Id("m"), i = F.Id("i"), j = F.Id("j");
+        Formula size = Call("s", i), next = Call("add", j, m);
+        Formula action = new Formula.BindMany(FormulaQuantifier.ForAll,
+            [Bound("m", Call("Nat")), Bound("i", index), Bound("j", Call("Fin", size))],
+            Eqn(Call("apply", Call("pow", f, m), Call("b", i, j)),
+                Call("ite", new Formula.Relation(next, FormulaRelationOperator.LessThan, size),
+                    Call("b", i, next), D(0))));
+        Formula rank = new Formula.BindMany(FormulaQuantifier.ForAll,
+            [Bound("m", Call("Nat"))],
+            Eqn(Call("finrank", k, Call("range", Call("pow", f, m))),
+                Seq(Sum, Underscore, Grp(i, Sp, InMacro, Sp, index), Sp,
+                    Call("natSub", size, m))));
+        return Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
+            [Bound("K", F.Id("Type")), Bound("V", F.Id("Type")), Bound("I", F.Id("Type")),
+             Bound("f", Call("End", k, v)), Bound("s", Call("Function", index, Call("PNat"))),
+             Bound("b", Call("Basis", Call("Positions", index, s), k, v))],
+            new Formula.Logic(All(Call("Field", k), Call("AddCommGroup", v), Call("Module", k, v),
+                Call("Fintype", index), action), FormulaLogicOperator.Implies, rank)));
     }
 }

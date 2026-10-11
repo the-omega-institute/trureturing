@@ -115,7 +115,7 @@ private theorem nilpotent_has_jordan_chains {K V : Type*} [Field K] [AddCommGrou
   simp only [Basis.reindex_apply]
   exact hb m i.val j
 
-private theorem chain_basis_rank {K V ι : Type*} [Field K] [AddCommGroup V]
+theorem chain_basis_rank {K V ι : Type*} [Field K] [AddCommGroup V]
     [Module K V] [Fintype ι] (f : Module.End K V) (s : ι → ℕ+)
     (b : Basis (Σ i, Fin (s i)) K V)
     (hb : ∀ (m : ℕ) (i : ι) (j : Fin (s i)),
