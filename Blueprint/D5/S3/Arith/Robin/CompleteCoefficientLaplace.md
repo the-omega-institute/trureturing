@@ -1,105 +1,34 @@
 # Complete Robin Coefficient Laplace Representation
 
-SOURCE ONLY / UNCOMPILED. Every declaration in the accompanying D5 and Reg
-modules is uncompiled in this delivery. This document records the intended
-mathematics and the written proof route, not kernel verification or acceptance.
-The canonical narrative source is CompleteCoefficientLaplace.scribe.cs; this
-source-only Markdown companion was written without running an emitter.
+## Abstract
 
-For every real A>1, put L=log A>0. For every complex s with 0<Re(s)<1, the
-literal physical coefficient is
+The literal complete Robin coefficient has a Laplace resolvent and a factor-one modulus bound.
 
-\[
-F_A(s)=s^{-1}\int_A^\infty
- (u:\mathbb C)^{s-2}\frac{1+\log u}{(\log u)^2}\,du.
-\]
+The coefficient is defined by its complete physical integral. The theorem retains physical and product integrability, exact changes of variables, the full complex resolvent and factor one. This narrative supplies the proof and its scope; compiler-derived reports supply formal verification and registration assessment.
 
-The positive real base makes the complex power exp((s-2)log u).
-`coefficient` is defined by this physical integral. It is not defined by the
-resolvent. With g(x)=1/x+1/x², the intended complete theorem establishes
-physical integrability, the exact logarithmic substitution
+For every real A>1 set L=log(A)>0. For 0<Re(s)<1 define the literal physical coefficient F_A(s)=s^(-1)*integral over u>A of u^(s-2)*(1+log(u))/log(u)^2. Positive real bases use their real logarithm. The definition is the physical integral, not the resolvent.
 
-\[
-F_A(s)=s^{-1}\int_L^\infty e^{(s-1)x}g(x)\,dx,
-\]
+**Theorem 1.1 (The complete physical coefficient and its full resolvent).**
 
-integrability of the actual complex kernel
-K(x,t)=(1+t)exp(-((1-s)+t)x) under the product of the restricted Lebesgue
-measures on x>L and t>0, integrability of the resolvent, and
+Lean statement: `D5/S3/Arith/Robin/CompleteCoefficientLaplace.complete_coefficient_laplace`
 
-\[
-F_A(s)=\frac{A^{s-1}}s\int_0^\infty
- \frac{(1+t)e^{-Lt}}{1-s+t}\,dt,
-\qquad
-\|F_A(s)\|\le
- \frac{A^{\operatorname{Re}s-1}(1/L+1/L^2)}{\|s\|\|1-s\|}.
-\]
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/CompleteCoefficientLaplace.complete_coefficient_laplace` (`✓ std3`). ∎
 
-The target declaration is
-`D5.S3.Arith.Robin.CompleteCoefficientLaplace.complete_coefficient_laplace`.
-The open endpoints are Lebesgue conventions at regular finite endpoints;
-no subdomain of A>1 or of the open strip is substituted.
+*Source.* Repository-derived.
 
-The written proof reuses n=0 and n=1 of
-`D5.S3.Analytic.LiCausalTrichotomy.integrableOn_complex_laplace_moment` and
-`integral_complex_laplace_moment`. These give the exact numerator mass
-integral (1+t)exp(-Lt)=g(L), without a new generic moment proof.
-The logarithmic integrand is dominated by g(L)exp((Re(s)-1)x).
-`integrableOn_comp_exp_Ioi` transports this integrability back to the physical
-integral; `integral_comp_exp_Ioi` supplies the integral equality with the
-actual exponential Jacobian and the positive-base complex-power identity.
+*Commentary.*
 
-For x>L and t>0 the actual kernel norm satisfies
+The theorem proves physical integrability, the exact logarithmic substitution F_A=s^(-1)*integral over x>L of exp((s-1)*x)*(1/x+1/x^2), product integrability of the actual K(x,t)=(1+t)*exp(-((1-s)+t)*x) on x>L,t>0, and integrability of the complete resolvent. It then gives F_A=A^(s-1)/s*integral over t>0 of (1+t)*exp(-L*t)/(1-s+t), and ||F_A||<=A^(Re(s)-1)*(1/L+1/L^2)/(||s||*||1-s||).
 
-\[
-\|K(x,t)\|=(1+t)e^{-((1-\operatorname{Re}s)+t)x}
- \le e^{(\operatorname{Re}s-1)x}(1+t)e^{-Lt}.
-\]
+Reuse n=0,1 of LiCausalTrichotomy's complex Laplace moments for numerator mass and integrability. The actual norm bound ||K(x,t)||<=exp((Re(s)-1)*x)*(1+t)*exp(-L*t), together with Integrable.mul_prod, proves product integrability before integral_integral_swap. The x integral uses integral_exp_mul_complex_Ioi. integral_comp_exp_Ioi and its integrability equivalence bind the physical integral with the true Jacobian. The denominator norm-square difference 2*t*(1-Re(s))+t^2 is nonnegative; the norm-integral inequality and the two exact numerator moments give factor one.
 
-The right side is an integrable product by `Integrable.mul_prod`, the project
-moments and `integrableOn_exp_mul_Ioi`. `Integrable.mono'` proves integrability
-of K itself. Only then does `integral_integral_swap` exchange the integrals.
-Integrating t first uses the two project moments; integrating x first uses
-`integral_exp_mul_complex_Ioi`. The exponential factor is exactly A^(s-1).
-Finally, the norm-square difference
-||1-s+t||²-||1-s||²=2t(1-Re(s))+t² is nonnegative. The integrable positive
-numerator therefore dominates the resolvent norm, and
-`norm_integral_le_integral_norm` gives the factor-one estimate.
+The source APIs were inspected at Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, Lean v4.33.0. Literal M1, H1, H2, U2, GJ1, GJ2 and the signed consumer were read at project pin 7f52221f2e23da81475058d5b5b6620e68709401. The original signed formula is attributed there to Broadbent-Fiori-Kadiri-Ng-Wilk, Bounds for Mertens sums, Proposition 13(i), equation (55), proof (82)-(83). The ordinary audit is provenance and a plan, not this worker's independent verification. No priority is claimed.
 
-The source APIs were inspected at Mathlib
-db584cd6d46c92f209a44c0f1c829460d327499d (Lean v4.33.0), not at master.
-The existing MellinWeightedVariation module concerns a real clipped
-variation kernel; it supplies neither this physical coefficient nor the
-complex resolvent, and its unrelated theorems are not imported as decoration.
-The helpers in the new module are consumed by the complete proof route.
+The entire H1 remainder is retained. Finite-endpoint U2 is unchanged. Positivity of the numerator gives no real sign for F_A or for the signed actual-zero response. Gamma damping, both ordinate signs, all multiplicities and beta values, the full tail, elementary corrections, directed arithmetic comparisons and reserve/defect require their own consumers. Robin and RH are not accepted by this source implementation.
 
-The original source is M1 in Library/ArithSums/nicolas2025comparison.md at
-7f52221f2e23da81475058d5b5b6620e68709401. The literal signed explicit formula
-is attributed there to Broadbent–Fiori–Kadiri–Ng–Wilk, Bounds for Mertens sums,
-Proposition 13(i), equation (55), proof (82)–(83). The ordinary proof plan is
-full-proof.md in the caller's robin5040-complete-coefficient-laplace-audit
-directory, SHA256 785458a254b194c78d0850a6e140eb10dfb16e623c615586176cc9a6258e2b1e.
-This is a composition of classical integration results applied to the
-existing complete coefficient, with no literature priority claim.
+The matching Reg source uses the existing DependentFamily template on the full telescope, retaining the real physical axis, nonintegrable constant intervention, role sensitivity and actual observation dependence. Its sourceSelection selects the physicalIntegrand(s) function operand observed in the compiler's raw theorem type, with the complex s axis. The residual is unknown, escapeFrom and familyRecord are absent, and registration assessment belongs to the current compiler-derived report. The scoped assessment reports IE-C050, source.unlinked_operand, on an imported Real.wrapped operand, so the four-slot audit remains unresolved despite successful D5 and Reg compilation. The exact diagnostic and a native issue draft are preserved for the caller. No template defect or applicability of issue 5214 is assumed. No D5 conclusion is supplied as a hypothesis and no mathematical proof block is omitted.
 
-The identity keeps the entire H1 remainder within the complete integral.
-Finite-endpoint U2 retains its separate factor-two statement and is not
-replaced here. A positive numerator is not a positive real coefficient or
-a sign theorem for the actual-zero response. The Gamma response, both
-ordinate signs, multiplicities, actual beta values, infinite tail,
-elementary terms, directed comparisons, and arithmetic reserve/defect all
-require their own verified consumers. No RH or Robin acceptance follows.
+## References
 
-The matching Reg source attempts the existing DependentFamily template on
-the full theorem telescope, with the real physical-input axis, a nonintegrable
-constant intervention, role sensitivity and actual observational dependence.
-It is unvalidated: all proof terms await compilation, and compiler-derived
-sourceSelection and current binding evidence are absent. No concrete template
-defect or applicability of issue #5214 was established. No new judge, ledger,
-dataset, or recursive D5 audit template was introduced.
-
-There are no intentionally omitted mathematical proof blocks or added
-conclusion hypotheses in the written D5 route. Whether the tactic terms
-elaborate against the pinned APIs, whether the exact statement and axiom
-closure pass, and whether the Reg source binds lawfully remain unresolved.
-No builds, probes, reporters or official acceptance checks were run.
+- Truth anchor: `D5/S3/Arith/Robin/CompleteCoefficientLaplace.complete_coefficient_laplace`
+- Dependency: [D5/S3/Analytic/LiCausalTrichotomy](../../Analytic/LiCausalTrichotomy.md)

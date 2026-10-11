@@ -74,7 +74,12 @@ internal sealed class CompleteCoefficientLaplaceDocument : IScribeDocumentDefini
                         + "in the compiler's raw theorem type, with the complex s axis. "
                         + "The residual is unknown, escapeFrom and familyRecord are "
                         + "absent, and registration assessment belongs to the current "
-                        + "compiler-derived report. No template defect or applicability "
+                        + "compiler-derived report. The scoped assessment reports "
+                        + "IE-C050, source.unlinked_operand, on an imported Real.wrapped "
+                        + "operand, so the four-slot audit remains unresolved despite "
+                        + "successful D5 and Reg compilation. The exact diagnostic and "
+                        + "a native issue draft are preserved for the caller. "
+                        + "No template defect or applicability "
                         + "of issue 5214 is assumed. No D5 conclusion is supplied as a "
                         + "hypothesis and no mathematical proof block is omitted."))),
                 DescribeRole.Theorem))));
