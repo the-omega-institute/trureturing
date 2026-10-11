@@ -7,6 +7,8 @@
    digest: Two-qubit Pauli rotation circuits and their critical-value Hausdorff dimension. -/
 
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
+import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 
 set_option linter.style.longLine false
 set_option backward.isDefEq.respectTransparency false
@@ -49,52 +51,24 @@ def claim : Prop :=
 open Matrix
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (pauliMatrix tensorOp tensor_mul)
-open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ qubit_weyl_star)
+open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
+open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (tensor_one)
+open D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+  (pauli_square pauli_hermitian pauli_trace_pair)
 
 private theorem pauli_rec (p : Pauli) : pauliMatrix p = Pauli.rec (1 : Matrix (Fin 2) (Fin 2) ℂ) qubitX (Complex.I • (qubitX * qubitZ)) qubitZ p := by cases p <;> rfl
-private theorem pauli_square (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := by
-  simp -implicitDefEqProofs only [pauli_rec]
-  obtain ⟨_, _, _, hx, hz⟩ := qubit_weyl_star
-  cases p
-  · exact mul_one _
-  · exact (pow_two _).symm.trans hx
-  · ext i j
-    fin_cases i <;> fin_cases j <;> simp -implicitDefEqProofs [qubitX, qubitZ, mul_apply]
-  · exact (pow_two _).symm.trans hz
-private theorem pauli_star (p : Pauli) : star (pauliMatrix p) = pauliMatrix p := by
-  simp -implicitDefEqProofs only [pauli_rec]
-  obtain ⟨_, hx, hz, _, _⟩ := qubit_weyl_star
-  cases p
-  · exact star_one _
-  · exact hx
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp -implicitDefEqProofs [qubitX, qubitZ, star_apply]
-  · exact hz
-private theorem tensor_identity : tensorOp (fun _ : Fin 2 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by
-  ext x y
-  simp -implicitDefEqProofs only [tensorOp, of_apply, one_apply]
-  by_cases h : x = y
-  · subst y; simp -implicitDefEqProofs
-  · obtain ⟨i, hi⟩ : ∃ i, x i ≠ y i := Function.ne_iff.mp h
-    rw [if_neg h]
-    exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp -implicitDefEqProofs [hi])
 private theorem word_square (p : Fin 2 → Pauli) : wordOp p * wordOp p = (1 : Mat) := by
   unfold wordOp
   rw [tensor_mul]
   simp_rw [pauli_square]
-  exact tensor_identity
+  exact tensor_one
 private theorem word_star (p : Fin 2 → Pauli) : star (wordOp p) = wordOp p := by
   ext x y
   simp -implicitDefEqProofs only [wordOp, tensorOp, star_apply, of_apply, star_prod]
   apply Finset.prod_congr rfl
   intro i _
-  exact congrFun (congrFun (pauli_star (p i)) (x i)) (y i)
-private theorem pauli_trace_mul (p q : Pauli) :
-    trace (pauliMatrix p * pauliMatrix q) = if p = q then (2 : ℂ) else 0 := by
-  simp -implicitDefEqProofs only [pauli_rec]
-  cases p <;> cases q <;>
-    simp -implicitDefEqProofs [qubitX, qubitZ, trace, Fin.sum_univ_two] <;> norm_num
+  simpa -implicitDefEqProofs only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply] using
+    congrFun (congrFun (pauli_hermitian (p i)) (x i)) (y i)
 private theorem word_trace_mul (p q : Fin 2 → Pauli) :
     trace (wordOp p * wordOp q) = if p = q then (4 : ℂ) else 0 := by
   unfold wordOp
@@ -102,7 +76,7 @@ private theorem word_trace_mul (p q : Fin 2 → Pauli) :
   change (∑ x : BasisState, ∏ i, (pauliMatrix (p i) * pauliMatrix (q i)) (x i) (x i)) = _
   rw [← Fintype.prod_sum (fun i k => (pauliMatrix (p i) * pauliMatrix (q i)) k k)]
   change (∏ i, trace (pauliMatrix (p i) * pauliMatrix (q i))) = _
-  simp_rw [pauli_trace_mul]
+  simp_rw [pauli_trace_pair]
   by_cases h : p = q
   · subst q; norm_num
   · rw [if_neg h]
@@ -297,7 +271,7 @@ private theorem H_star (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 1
 
 private theorem H_trace (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     trace (H P α j) = 0 := by
-  have hI : wordOp (fun _ : Fin 2 => Pauli.I) = (1 : Mat) := tensor_identity
+  have hI : wordOp (fun _ : Fin 2 => Pauli.I) = (1 : Mat) := tensor_one
   have hz : trace (wordOp (P j).val) = 0 := by
     simpa -implicitDefEqProofs only [hI, mul_one, if_neg (P j).property] using
       word_trace_mul (P j).val (fun _ => Pauli.I)
