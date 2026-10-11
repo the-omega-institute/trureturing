@@ -1575,7 +1575,11 @@ M^+\models T.
    \limsup_{j\to\infty}\mathcal Q_j(u_j)\leq \mathcal Q(u).
    \]
 
-如果各 \(\mathcal Q_j\) 是闭、非负、二次型，则极限 \(\mathcal Q\) 可以成为闭 Dirichlet 形式。这里需要共同 Hilbert 空间、下半连续性、恢复序列和等度量紧性。有限层逆极限本身不提供这些条件。
+闭、非负二次型还必须满足 Markov 收缩性质，才能称为 Dirichlet 形式：对 \(C(t)=\min(1,\max(0,t))\)，要求
+\[
+\mathcal Q(C\circ u)\leq\mathcal Q(u).
+\]
+因此该桥需要同时验证极限定义域在 \(\mathcal H=L^2(X,\mu)\) 中稠密，以及 Markov 性在选定嵌入和收敛下传递。Mosco 的两条条件本身不要求等度量紧性；紧性用于从序列抽取极限或进一步证明离散谱收敛。有限层逆极限本身不提供这些分析条件。
 
 #### 17.1.2 Gigli–Mondino–Savaré
 
@@ -1759,25 +1763,35 @@ J D^2\mathcal V
 
 Maas 的 [Gradient flows of the entropy for finite Markov chains](https://arxiv.org/abs/1102.5238) 假设有限状态空间上的 Markov kernel 不可约且可逆。论文构造离散 Benamou–Brenier 型度量，使连续时间 Markov 链的概率律成为相对于平稳分布的相对熵梯度流。
 
-因此要把
-
+若采用这条路线，必须提供随机核
 \[
-\dot\kappa=-\gamma\Delta
-\]
-
-称为熵梯度流，必须提供：
-
-\[
-K_{st}\ge0,
-\qquad
-\sum_tK_{st}=1,
-\]
-
-\[
+K_{st}\ge0,\qquad \sum_tK_{st}=1,\qquad
 \pi_sK_{st}=\pi_tK_{ts},
 \]
+其连续时间生成元可取 \(Q=K-I\)。一般生成元满足的是 \(Q_{st}\ge0\)（\(s\ne t\)）和 \(\sum_tQ_{st}=0\)，不能与随机核的归一化混写。
 
-以及与 \(K\) 兼容的 mobility。仅仅写出一个衰减方程，不足以获得 Maas 意义下的梯度流结构。
+FIB 的四角质量作用流在完整单纯形上是非线性的，需要单独验证 Onsager 因子分解，不能直接套用有限线性 Markov 链定理。设
+\[
+a=p_2p_5,\quad b=p_0p_{25},\quad
+\Lambda(a,b)=
+\begin{cases}
+\dfrac{b-a}{\log b-\log a},&a\ne b,\\
+a,&a=b,
+\end{cases}
+\]
+并给定 \(\gamma>0\)，则
+\[
+\mathsf M_p=\gamma\Lambda(a,b)\,dd^{\mathsf T}
+\]
+是从余切空间到切空间的半正定 Onsager 算子。因为
+\[
+d^{\mathsf T}D\mathcal V(p)=\log(b/a),
+\]
+所以
+\[
+-\mathsf M_pD\mathcal V(p)=\gamma(a-b)d.
+\]
+这条有限代数恒等式证明所声明的 FIB 质量作用流确实是负熵的退化梯度流。其退化方向对应被保持的可见约束；参数 \(\gamma\) 仍是新增动力学数据。
 
 #### 17.2.3 Erbar–Maas 的离散 Ricci 曲率
 
@@ -1891,28 +1905,26 @@ Gitton 和 Renner 的 [The Elegant Joint Measurement is Non-Classical in the Tri
 - floating-point feasible inflation law，只能作为数值候选，不能证明兼容性；
 - inflation size 增大时外逼近收紧，但变量规模大约按 \(n_o^N\) 增长。
 
-这为本项目的 Lean 接口提供了一个清晰对象：
-
+这为本项目的 Lean 接口提供了一个清晰对象。将指定 inflation 的约束编码为
 \[
-\mathrm{TriangleInflationCertificate}
-=
-(p,N,q,\Lambda),
+A_Nq=b_N(p),\qquad q\ge0,
 \]
-
-其中 \(\Lambda\) 是精确有理分离超平面，并验证
-
+其中归一化已经包含在矩阵方程中。\(b_N(p)\) 可以包含独立可观测副本对应的乘积项，因而不必对 \(p\) 线性。一个精确 Farkas 证书是有理向量 \(y\)，满足
 \[
-\Lambda(q)\ge0
-\quad\text{对所有 inflation-feasible }q,
+A_N^{\mathsf T}y\ge0,\qquad
+y^{\mathsf T}b_N(p)<0.
 \]
-
+若可行 \(q\) 存在，则
 \[
-\Lambda(p)<0.
+0\le(A_N^{\mathsf T}y)^{\mathsf T}q
+=y^{\mathsf T}A_Nq
+=y^{\mathsf T}b_N(p)<0,
 \]
+矛盾。这样每个向量和矩阵都有固定维度，无须将原分布 \(p\) 和 inflated law \(q\) 当成同一空间中的对象。
 
 #### 17.3.4 Fully quantum inflation
 
-Smith、Wolfe 和 Spekkens 的 [Fully quantum inflation: quantum marginal problem constraints in the service of causal inference](https://arxiv.org/abs/2501.12320)，已在 2026 年发表为 PRX Quantum 相关成果。该方法把 inflation 推广到 quantum marginal problem，并对纯三量子比特态给出 triangle compatibility 的完整分类。
+Smith、Wolfe 和 Spekkens 的 [Fully quantum inflation: quantum marginal problem constraints in the service of causal inference](https://arxiv.org/abs/2501.12320)，已在 2026 年发表于 [PRX Quantum](https://journals.aps.org/prxquantum/abstract/10.1103/244y-nh5n)。该方法把 inflation 推广到 quantum marginal problem，并对纯三量子比特态给出 triangle compatibility 的完整分类。
 
 若要接入量子 triangle，trureturing 必须把 classical probability carrier 扩展为：
 
@@ -1988,34 +2000,23 @@ U\text{ unitary}.
 ### 18.1 GraphToDirichletLimit
 
 输入：
-
 \[
 (V_j,E_j,\mu_j,B_j,Q_j)_{j\ge0}.
 \]
-
 必需假设：
 
-1. 每个 \(Q_j\) 是闭、非负二次型；
-2. 存在共同 Hilbert 宿主空间 \(\mathcal H\) 及嵌入 \(\iota_j\)；
-3. 满足 Mosco liminf；
-4. 对每个候选 \(u\) 存在强恢复序列；
-5. 满足等度量紧性或等价的 compactness 条件；
-6. 若声称谱收敛，还需 compact resolvent、统一有界性或 RCD 正曲率等谱紧性条件。
+1. 每个 \(Q_j\) 是有限图上的非负二次型，并满足 Markov 收缩性质；
+2. 存在共同 Hilbert 宿主空间 \(\mathcal H=L^2(X,\mu)\) 及明确的比较映射；有限维像外可将能量延拓为 \(+\infty\)；
+3. 对候选极限 \(\mathcal Q\) 证明 Mosco liminf；
+4. 对每个 \(u\in D(\mathcal Q)\) 给出强恢复序列；
+5. 证明 \(\mathcal Q\) 闭、定义域稠密，并证明比较映射允许将 Markov 收缩性质传递到极限；
+6. 若需从给定能量序列抽取收敛子列，另给相应的紧性条件；若声称离散特征值收敛，另给统一紧嵌入或 compact spectral convergence 条件。单个极限算子具有 compact resolvent 不能代替整列的紧性证明。
 
 输出：
-
 \[
 \mathrm{DirichletFormLimit}(\mathcal Q,\mathcal H),
 \]
-
-并可进一步输出热半群或 resolvent 收敛。
-
-不能推出：
-
-- 不自动得到连续坐标；
-- 不自动得到黎曼流形；
-- 不自动得到物理时间；
-- 不自动得到量子 Hamiltonian。
+并可进一步输出热半群或 resolvent 收敛。连续坐标、黎曼流形、物理时间和量子 Hamiltonian 均不包含在此输出中。
 
 ### 18.2 DirichletToGeometry
 
@@ -2061,75 +2062,66 @@ U\text{ unitary}.
 
 ### 18.3 FIBEntropyFlow
 
-输入：
-
+输入是一个内部概率单纯形、可见约束、负熵 \(\mathcal V\) 和显式向量场 \(F\)。桥接结构必须给出余切到切空间的 Onsager 算子
 \[
-\Delta(\Sigma),\quad
-\mathcal V_{\mathrm{ent}},\quad
-K,\quad
-\pi,\quad
-\mathsf M.
+\mathsf M_p:T_p^*\Delta\to T_p\Delta
 \]
+并验证：
 
-必需假设：
+1. \(\mathsf M_p\) 对称半正定；
+2. \(F(p)=-\mathsf M_pD\mathcal V(p)\)；
+3. \(F\) 保持归一化和所声明的可见约束；
+4. 向量场正向保持概率单纯形；存在唯一性和边界延拓按所使用的 ODE 定理单独证明；
+5. 若引用 Maas 的线性 Markov 链定理，则另给 generator \(Q\)、正平稳分布 \(\pi\)、不可约性、detailed balance \(\pi_sQ_{st}=\pi_tQ_{ts}\) 及相应 transport metric。
 
-1. \(K\) 是有限状态 Markov generator；
-2. 存在严格正平稳分布 \(\pi\)；
-3. detailed balance：
-   \[
-   \pi_sK_{st}=\pi_tK_{ts};
-   \]
-4. mobility \(\mathsf M\) 非负，并与 generator 的边流一致；
-5. vector field 保持概率单纯形；
-6. 边界退化时，需单独证明解仍存在或将系统限制到内部。
-
-输出：
-
+输出是耗散恒等式
 \[
-\dot p=-\mathsf M(p)\nabla_{\mathrm{F}} \mathcal V(p),
+\frac{d}{dt}\mathcal V(p(t))
+=-D\mathcal V(p(t))[\mathsf M_{p(t)}D\mathcal V(p(t))]\le0.
 \]
+这里 \(D\mathcal V\) 是余切向量；没有在 Onsager 算子外再偷偷使用一套 Fisher gradient。
 
-或在 FIB 一维纤维上：
-
+对 FIB 四角反应，17.2.2 中的显式算子满足这些有限代数条件，给出
 \[
+\dot p=\gamma(p_2p_5-p_0p_{25})d,\qquad
 \dot\kappa=-\gamma\Delta.
 \]
+固定可见量时，\(r=1-Z>0\)，于是
+\[
+\kappa(t)=\kappa_*+e^{-\gamma rt}(\kappa(0)-\kappa_*).
+\]
+因为 \(\kappa_*\) 和初值都在合法闭纤维区间内，解是二者的凸组合，故对 \(t\ge0\) 保持合法性。这一证明不需要给五态完整空间伪造不可约线性 Markov generator。
 
-不能推出：
-
-- \(\gamma\) 的数值；
-- 物理质量；
-- Hamiltonian 频率；
-- 量子能级；
-- 真实时空。
+不能由此决定 \(\gamma\) 的数值、物理质量、Hamiltonian 频率、量子能级或真实时空。
 
 ### 18.4 TriangleInflationCertificate
 
 输入：
-
 \[
 p\in\Delta(\mathcal A\times\mathcal B\times\mathcal C),
 \]
-
-有限 inflation 图 \(N\)，以及源复制关系。
-
-必需假设：
-
-1. \(p\) 的坐标属于可验证的有理域，或误差界已显式给出；
-2. inflated law \(q\) 的坐标非负且归一化；
-3. all required marginals equal the target distribution；
-4. source-induced symmetries are satisfied；
-5. separating functional \(\Lambda\) 的所有系数属于可检查域。
-
-输出：
-
+有限 inflation 图 \(N\) 和精确约束矩阵。首先证明 soundness：
 \[
-\Lambda(p)<0
+p\text{ triangle-local}
 \Longrightarrow
+\exists q\ge0,\ A_Nq=b_N(p).
+\]
+归一化、复制源对称性、可注入边缘和独立副本乘积边缘均编码在 \(A_N,b_N\) 中。
+
+非相容性证书的字段为：
+\[
+(p,N,A_N,b_N,y).
+\]
+必需证明：
+\[
+A_N^{\mathsf T}y\ge0,\qquad
+y^{\mathsf T}b_N(p)<0.
+\]
+矩阵、目标特征和证书向量使用精确有理数，或使用已经证明的区间误差界。然后 Farkas 矛盾直接给出：
+\[
 p\text{ is not triangle-local}.
 \]
-
-通过某一级 inflation 只能输出有限级必要条件。真正 compatibility 需要 asymptotic hierarchy 或显式 local model。
+该证书不包含一个可行 \(q\)，因为其结论恰是可行 \(q\) 不存在。若另行找到可行 \(q\)，只能输出该级 inflation 必要条件；真正 compatibility 需要全层级完备性定理或显式独立源局部模型。
 
 ### 18.5 SpectralBridgeRH
 
@@ -2157,14 +2149,30 @@ D(H_{\mathrm{field}}),
 输出：
 
 \[
-H_{\mathrm{field}}\text{ self-adjoint}
-+
-\mathrm{Spec}(H_{\mathrm{field}})
-\cong
-\{\operatorname{Im}\rho\}
-\Longrightarrow
+H_{\mathrm{field}}=H_{\mathrm{field}}^*,
+\quad
+\forall\rho\in\mathcal Z,\ 
+-i(\rho-\tfrac12)\in\operatorname{Spec}(H_{\mathrm{field}})
+\quad\Longrightarrow\quad
 \mathrm{RH}.
 \]
+
+这里必须使用完整复零点的对应。对每个非平凡零点 \(\rho\)，例如构造非零
+\[
+\psi_\rho\in D(H_{\mathrm{field}}),\qquad
+H_{\mathrm{field}}\psi_\rho=-i(\rho-\tfrac12)\psi_\rho
+\]
+即可证明所需谱包含。自伴性给出 \(-i(\rho-\tfrac12)\in\mathbb R\)，故 \(\operatorname{Re}\rho=\tfrac12\)。覆盖全部非平凡零点的谱包含已经足以推出 RH；重数匹配和全谱等价是更强的识别目标。
+
+仅证明
+\[
+\operatorname{Spec}(H_{\mathrm{field}})\cong\{\operatorname{Im}\rho\}
+\]
+不能推出 RH，因为每个复数的虚部本来就是实数。若使用行列式版本，必须证明整个复变量恒等式
+\[
+\xi(\tfrac12+iz)=C(z)D_H(z),\qquad z\in\mathbb C,
+\]
+其中 \(C\) 无零，且 \(D_H\) 的全部零点来自自伴算子 \(H\) 的实谱。只在已知临界线零点上匹配数据不足以证明全局恒等式。
 
 不能推出：
 
