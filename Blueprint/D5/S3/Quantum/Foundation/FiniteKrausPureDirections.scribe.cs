@@ -59,15 +59,68 @@ internal sealed class FiniteKrausPureDirectionsDocument : IScribeDocumentDefinit
                         + "the invariant tail, coefficient blocks, and word-space potential argument."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Transition() => Disp(Seq(
-        Forall, Sp, F.Id("dCvwm"), Comma, Sp,
-        Call("CollinearKraus", F.Id("dCvwm")), Sp, Rightarrow, Sp,
-        Call("mapState", F.Id("C"), Call("directionState", F.Id("v"))),
-        Eq, Call("directionState", F.Id("w"))));
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, type, Comma, Sp, body);
 
-    private static Formula Lift() => Disp(Seq(
-        Forall, Sp, F.Id("dNCr"), Comma, Sp,
-        Call("PureHistory", F.Id("dNCr")), Sp, Rightarrow, Sp,
-        Exists, Sp, F.Id("Ax"), Comma, Sp,
-        Call("NonzeroKrausLift", F.Id("dNCrAx"))));
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, F.Id(name), Colon, type, Comma, Sp, body);
+
+    private static Formula NatType() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Vec() => Call("Vector", F.Id("d"));
+    private static Formula State() => Call("DensityState", F.Id("d"));
+    private static Formula Index() => Call("KrausIndex", F.Id("d"));
+    private static Formula Arrow(Formula a, Formula b) => Seq(a, To, b);
+    private static Formula P(Formula v) => Call("directionState", v);
+    private static Formula R(Formula n) => Seq(F.Id("r"), Open, n, Close);
+    private static Formula Orbit(Formula n) => Seq(F.Id("A"), Caret, Grp(n), F.Id("x"));
+    private static Formula Nonzero(Formula x) => Seq(x, Neq, Sp, D(0));
+    private static Formula And(params Formula[] items) => Join(Seq(Sp, Land, Sp), items);
+
+    private static Formula Join(Formula separator, params Formula[] items)
+    {
+        var result = new System.Collections.Generic.List<Formula>();
+        foreach (var item in items)
+        {
+            if (result.Count != 0) result.Add(separator);
+            result.Add(item);
+        }
+        return Seq([.. result]);
+    }
+
+    private static Formula Transition()
+    {
+        Formula u = F.Id("u"), v = F.Id("v"), w = F.Id("w");
+        return Disp(All("d", NatType(),
+            All("C", Call("QuantumChannel", F.Id("d")),
+            All("v", Vec(), All("w", Vec(),
+            All("m", Arrow(Index(), Seq(Mathbb, Grp(F.Id("C")))), Seq(
+                Open, And(Nonzero(v), Nonzero(w),
+                    All("u", Index(), Seq(Call("Kraus", F.Id("C"), u), v,
+                        Eq, F.Id("m"), Open, u, Close, w))), Close,
+                Sp, Rightarrow, Sp,
+                Call("mapState", F.Id("C"), P(v)), Eq, P(w))))))));
+    }
+
+    private static Formula Lift()
+    {
+        Formula n = F.Id("n"), u = F.Id("u"), x = F.Id("x");
+        Formula successor = Seq(n, Plus, D(1));
+        Formula nonzeroPrefix = All("n", NatType(), Seq(n, Le, F.Id("N"),
+            Sp, Rightarrow, Sp, Nonzero(Orbit(n))));
+        Formula collinearPrefix = All("n", NatType(), Seq(n, Lt, F.Id("N"),
+            Sp, Rightarrow, Sp, Ex("m", Arrow(Index(), Seq(Mathbb, Grp(F.Id("C")))),
+                All("u", Index(), Seq(Call("Kraus", F.Id("C"), u), Orbit(n),
+                    Eq, F.Id("m"), Open, u, Close, Orbit(successor))))));
+        return Disp(All("d", NatType(), All("N", NatType(),
+            All("C", Call("QuantumChannel", F.Id("d")),
+            All("r", Arrow(NatType(), State()), Seq(
+                Open, And(
+                    All("n", NatType(), Seq(n, Lt, F.Id("N"), Sp, Rightarrow, Sp,
+                        R(successor), Eq, Call("mapState", F.Id("C"), R(n)))),
+                    All("n", NatType(), Seq(n, Le, F.Id("N"), Sp, Rightarrow, Sp,
+                        Call("IsPure", R(n))))), Close,
+                Sp, Rightarrow, RowBreak, Grp(),
+                Ex("A", Call("End", Vec()), Ex("x", Vec(),
+                    And(Nonzero(x), Seq(P(x), Eq, R(D(0))), nonzeroPrefix, collinearPrefix))))))));
+    }
 }

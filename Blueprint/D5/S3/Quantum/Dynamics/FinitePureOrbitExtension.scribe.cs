@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Dynamics;
 internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite prefix in independent subspaces forces an invertible linear orbit to remain in their union.",
+        "Purity of the first twice-dimension channel iterates forces purity for every later iterate.",
         H("Finite pure-direction orbit extension"),
         Blocks(
             Paragraph(Text(
@@ -46,11 +46,57 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
                         + "has an extension equal to itself. Applying A shifts each extended "
                         + "word to its suffix, so the union at the stable length is forward invariant.")),
                     Paragraph(Text(
-                        "For a quantum channel, applying this result requires an invariant "
-                        + "cyclic tail with invertible induced motion and a decomposition whose "
-                        + "members are exactly its pure-input directions. The present theorem "
-                        + "establishes the word-space extension after those data are supplied."))),
+                        "The channel theorem below constructs the required invariant cyclic "
+                        + "tail and its independent coefficient blocks from the finite pure history."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-pure-prefix-extension"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Dynamics/FinitePureOrbitExtension.finite_pure_prefix_extension"),
+                H("Finite pure prefix forces an infinite pure orbit"),
+                StatementSource.FromAuthor(ChannelFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every natural dimension d, every CPTP channel C on complex d-space, "
+                        + "and every density state rho, suppose C iterated n times on rho is pure "
+                        + "for n less than 2d. Then every iterate is pure. This includes the pure "
+                        + "initial state and assumes neither unitality nor orthogonality nor periodicity. "
+                        + "The zero-dimensional case has no density state.")),
+                    Paragraph(Text(
+                        "The finite Kraus pure-direction lift supplies one endomorphism A whose "
+                        + "nonzero orbit represents the known history. The first dependence among "
+                        + "Krylov vectors selects a transient length t and an invariant tail R. "
+                        + "The first nonzero dependence coefficient gives an inverse on R, and "
+                        + "its consecutive orbit basis has size r with t+r at most d.")),
+                    Paragraph(Text(
+                        "Equal Kraus coefficient tuples group the tail basis into nonzero "
+                        + "independent subspaces. Coordinate uniqueness characterizes their union "
+                        + "by simultaneous collinearity of all Kraus images with the next orbit vector. "
+                        + "The singleton block case is immediate. Otherwise the known prefix supplies "
+                        + "2r-1 memberships, and the word-space potential theorem extends them forever.")),
+                    Paragraph(Text(
+                        "Finally, trace preservation makes the channel action on each normalized "
+                        + "orbit direction equal to the next normalized direction. Induction gives "
+                        + "equality with the actual mapState iterates of the original channel and "
+                        + "initial state. The finite-prefix lift and exact transition are imported "
+                        + "from FiniteKrausPureDirections."))),
                 DescribeRole.Theorem))));
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, type, Comma, Sp, body);
+
+    private static Formula ChannelFormula()
+    {
+        Formula nat = Seq(Mathbb, Grp(F.Id("N")));
+        Formula pure = Call("IsPure", Call("iterate", F.Id("C"), F.Id("n"), F.Id("r")));
+        return Disp(All("d", nat,
+            All("C", Call("QuantumChannel", F.Id("d")),
+            All("r", Call("DensityState", F.Id("d")), Seq(
+                Open, All("n", nat, Seq(F.Id("n"), Lt, D(2), F.Id("d"),
+                    Sp, Rightarrow, Sp, pure)), Close,
+                Sp, Rightarrow, Sp, All("n", nat, pure))))));
+    }
 
     private static Formula Formula()
     {
@@ -62,13 +108,25 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
         Formula length = F.Id("L");
         Formula j = F.Id("j");
         Formula k = F.Id("k");
-        return Disp(Seq(
+        Formula conclusion = Seq(
             Open, F.Id("x"), Neq, D(0), Sp, Land, Sp,
             Forall, Sp, j, Lt, bound, Comma, Sp, member(j), Close,
             Sp, Rightarrow, RowBreak, Grp(),
             Open, Exists, Sp, length, Comma, Sp, D(1), Le, length, Lt, bound, Sp, Land, Sp,
             phi(Seq(length, Plus, D(1))), Eq, phi(length), Close,
             Sp, Land, Sp, Forall, Sp, k, InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
-            member(k)));
+            member(k));
+        Formula assumptions = Seq(Call("Independent", F.Id("S")), Sp, Land, Sp,
+            Call("NonzeroMembers", F.Id("S")), Sp, Land, Sp,
+            Call("card", F.Id("I")), Ge, D(2), Sp, Land, Sp,
+            F.Id("r"), Eq, Call("dim", F.Id("K"), F.Id("V")));
+        return Disp(All("K", Call("Field"),
+            All("V", Call("FiniteDimensionalSpace", F.Id("K")),
+            All("A", Call("LinearAutomorphism", F.Id("K"), F.Id("V")),
+            All("I", Call("FiniteType"),
+            All("S", Seq(F.Id("I"), To, Call("Submodule", F.Id("K"), F.Id("V"))),
+            All("r", Seq(Mathbb, Grp(F.Id("N"))),
+            All("x", F.Id("V"), Seq(Open, assumptions, Close,
+                Sp, Rightarrow, Sp, conclusion)))))))));
     }
 }
