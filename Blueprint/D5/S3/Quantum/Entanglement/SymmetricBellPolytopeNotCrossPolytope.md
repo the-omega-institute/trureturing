@@ -219,3 +219,4 @@ At N = 3 and m = 17 the nine single-frequency strategies and their negatives are
 - Dependency: [D5/S0/Asymptotics/Interference/FiniteAutocorrelation](../../../S0/Asymptotics/Interference/FiniteAutocorrelation.md)
 - Dependency: [D5/S3/Combinatorics/Geometry/CrossPolytopeFaceCounts](../../Combinatorics/Geometry/CrossPolytopeFaceCounts.md)
 - Dependency: [D5/S3/Quantum/Entanglement/SymmetricBellPolytopeSupport](SymmetricBellPolytopeSupport.md)
+- Dependency: [D5/S3/Quantum/FermionicCorrelationalBound/CompletedTensorSlaterGeometry](../FermionicCorrelationalBound/CompletedTensorSlaterGeometry.md)
