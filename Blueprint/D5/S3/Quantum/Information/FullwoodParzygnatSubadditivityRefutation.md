@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fullwood-parzygnat-2025-states-over-time-subadditivity` (refuted) by `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fullwood-parzygnat-2025-states-over-time-subadditivity","declaration_gid":"D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* James Fullwood and Arthur J. Parzygnat (2025). *On Dynamical Measures of Quantum Information*. DOI: [10.3390/e27040331](https://doi.org/10.3390/e27040331). URL: <https://doi.org/10.3390/e27040331>.
