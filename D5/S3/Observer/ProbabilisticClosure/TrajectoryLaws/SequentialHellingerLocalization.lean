@@ -4,13 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Predictable energy truncations give a common almost-sure convergence set. -/
+   digest: Predictable energy localization gives the sequential Hellinger dichotomy. -/
 
 import Mathlib.Probability.Martingale.Convergence
 import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.MeasureTheory.Function.LpSeminorm.Indicator
 import Mathlib.Probability.CondVar
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Analysis.SpecialFunctions.Log.Summable
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HistoricalDepthBudgetJointExtremum
 import D5.S3.TotalVariation.Bhattacharyya
 import Mathlib.Probability.ProbabilityMassFunction.Integrals
@@ -359,14 +360,52 @@ theorem finite_energy_positive_product
   rw [hm i]
   ring
 
+private lemma normalized_product_zero
+    (r ρ : ℕ → Ω → ℝ) (hr : ∀ n ω, 0 < r n ω)
+    (hρ : ∀ n ω, 0 < ρ n ω) (hρ1 : ∀ n ω, ρ n ω ≤ 1)
+    (hm : Martingale (fun n ω => ∏ i ∈ range n, r i ω / ρ i ω) ℱ μ) :
+    ∀ᵐ ω ∂μ, ¬ Summable (fun n => 1 - ρ n ω) →
+      Tendsto (fun n => ∏ i ∈ range n, r i ω) atTop (𝓝 0) := by
+  have hnonneg n ω : 0 ≤ ∏ i ∈ range n, r i ω / ρ i ω :=
+    prod_nonneg (fun i _ => (div_pos (hr i ω) (hρ i ω)).le)
+  have hint n : (∫ ω, (∏ i ∈ range n, r i ω / ρ i ω) ∂μ) = 1 := by
+    have heq := hm.setIntegral_eq (i := 0) (j := n) (Nat.zero_le n) MeasurableSet.univ
+    simpa using heq.symm
+  have hb n : eLpNorm (fun ω => ∏ i ∈ range n, r i ω / ρ i ω) 1 μ ≤ (1 : ℝ≥0) := by
+    rw [eLpNorm_one_eq_lintegral_enorm,
+      ← ofReal_integral_norm_eq_lintegral_enorm (hm.integrable n)]
+    simp only [Real.norm_eq_abs, abs_of_nonneg (hnonneg n _), hint, ENNReal.ofReal_one]
+    exact le_rfl
+  filter_upwards [hm.submartingale.exists_ae_tendsto_of_bdd hb] with ω hω he
+  obtain ⟨l, hl⟩ := hω
+  have hs : Tendsto (fun n => ∑ i ∈ range n, (1 - ρ i ω)) atTop atTop :=
+    (not_summable_iff_tendsto_nat_atTop_of_nonneg (fun n => sub_nonneg.mpr (hρ1 n ω))).mp he
+  have hexp : Tendsto (fun n => Real.exp (-(∑ i ∈ range n, (1 - ρ i ω)))) atTop (𝓝 0) :=
+    Real.tendsto_exp_atBot.comp (tendsto_neg_atTop_atBot.comp hs)
+  have hdecay : Tendsto (fun n => ∏ i ∈ range n, ρ i ω) atTop (𝓝 0) := by
+    apply squeeze_zero (fun n => prod_nonneg (fun i _ => (hρ i ω).le)) _ hexp
+    intro n
+    calc
+      _ ≤ ∏ i ∈ range n, Real.exp (-(1 - ρ i ω)) := by
+        apply prod_le_prod (fun i _ => (hρ i ω).le)
+        intro i _
+        have h := Real.add_one_le_exp (ρ i ω - 1)
+        simpa only [sub_add_cancel, neg_sub] using h
+      _ = _ := by rw [← Real.exp_sum, sum_neg_distrib]
+  convert hl.mul hdecay using 1
+  · ext n
+    rw [← prod_mul_distrib]
+    exact prod_congr rfl fun i _ => (div_mul_cancel₀ _ (hρ i ω).ne').symm
+  · simp
+
 open Preorder ProbabilityTheory
 open HistoricalDepthBudgetJointExtremum
 open D5.S3.TotalVariation.Bhattacharyya
 
 private lemma finite_readout_memLp {B W : Type*} [Fintype B]
     [MeasurableSpace B] [MeasurableSingletonClass B] [MeasurableSpace W]
-    {ν : Measure W} [IsFiniteMeasure ν] (f : B → ℝ) (z : W → B)
-    (hz : Measurable z) : MemLp (fun ω => f (z ω)) 2 ν := by
+    {ν : Measure W} [IsFiniteMeasure ν] {s : ℝ≥0∞} (f : B → ℝ) (z : W → B)
+    (hz : Measurable z) : MemLp (fun ω => f (z ω)) s ν := by
   classical
   apply MemLp.of_bound ((measurable_of_countable f).comp hz).aestronglyMeasurable
     (∑ b, |f b|)
@@ -398,7 +437,7 @@ private lemma next_condexp {A : Type*} [Fintype A] [Nonempty A]
     (f := fun z => g z.1 z.2) (measurable_frestrictLe n)
     (measurable_pi_apply (n + 1)).aemeasurable
     (measurable_of_countable _).stronglyMeasurable
-    ((finite_readout_memLp (ν := P) (fun z : (Iic n → A) × A => g z.1 z.2)
+    ((finite_readout_memLp (ν := P) (s := 2) (fun z : (Iic n → A) × A => g z.1 z.2)
       (fun x => (frestrictLe n x, x (n + 1))) (by fun_prop)).integrable (by norm_num))
   have hk := Kernel.condDistrib_trajMeasure (X := fun _ => A) (μ₀ := (row []).toMeasure) (κ := κ) (a := n)
   have hk' : ∀ᵐ x ∂P, condDistrib (fun x : ℕ → A => x (n + 1)) (frestrictLe n) P
@@ -441,18 +480,20 @@ private lemma row_root_moments {A : Type*} [Fintype A] (p q : A → ℝ)
       nlinarith [hs a, hw a]
     _ = _ := by rw [sum_add_distrib, sum_sub_distrib, ← mul_sum, hps, hqs, bhattacharyya]; ring
 
-/-- For strictly positive full-history rows, the actual likelihood products have positive
-finite limits on the finite Hellinger-energy event under the first trajectory law. -/
-theorem trajectory_finite_energy_positive_likelihood
+/-- Actual full-history likelihoods have positive finite limits on finite energy and
+vanish on infinite energy, almost surely under the first trajectory law. -/
+theorem trajectory_hellinger_likelihood_limits
     {A : Type*} [Fintype A] [Nonempty A]
     [MeasurableSpace A] [MeasurableSingletonClass A]
     (p q : List A → A → ℝ) (hp : NormalizedRows p) (hq : NormalizedRows q)
     (hp0 : ∀ h a, 0 < p h a) (hq0 : ∀ h a, 0 < q h a) :
     let H := fun (n : ℕ) (x : ℕ → A) => List.ofFn (fun i : Fin n => x i)
     ∀ᵐ x ∂trajectoryLaw p hp,
-      Summable (fun n => 1 - bhattacharyya (p (H n x)) (q (H n x))) →
+      (Summable (fun n => 1 - bhattacharyya (p (H n x)) (q (H n x))) →
       ∃ l : ℝ, 0 < l ∧
-        Tendsto (fun n => ∏ i ∈ range n, q (H i x) (x i) / p (H i x) (x i)) atTop (𝓝 l) := by
+        Tendsto (fun n => ∏ i ∈ range n, q (H i x) (x i) / p (H i x) (x i)) atTop (𝓝 l)) ∧
+      (¬ Summable (fun n => 1 - bhattacharyya (p (H n x)) (q (H n x))) →
+        Tendsto (fun n => ∏ i ∈ range n, q (H i x) (x i) / p (H i x) (x i)) atTop (𝓝 0)) := by
   classical
   intro H
   let P := trajectoryLaw p hp
@@ -502,19 +543,88 @@ theorem trajectory_finite_energy_positive_likelihood
     exact (row_root_moments (p (H (n + 1) x)) (q (H (n + 1) x))
       (hp0 _) (hq0 _) (hp.2 _) (hq.2 _)).2.le
   have hlim := finite_energy_positive_product (μ := P) (ℱ := F) e r he he0 he1 hr hr2 hr0 hrmean hrsq
-  filter_upwards [hlim] with x hx hefin
-  have hefin' : Summable (fun n => e n x) := (summable_nat_add_iff 1).mpr hefin
-  obtain ⟨a, ha, hat⟩ := hx hefin'
-  have hR0 : 0 < R 0 x := Real.sqrt_pos.mpr (div_pos (hq0 _ _) (hp0 _ _))
-  have hprod : Tendsto (fun n => ∏ i ∈ range n, R i x) atTop (𝓝 (R 0 x * a)) := by
-    apply (tendsto_add_atTop_iff_nat 1).mp
-    simpa only [prod_range_succ', r, mul_comm] using hat.const_mul (R 0 x)
-  refine ⟨(R 0 x * a) ^ 2, sq_pos_of_pos (mul_pos hR0 ha), ?_⟩
-  convert hprod.pow 2 using 1
-  ext n
-  rw [← prod_pow]
-  exact prod_congr rfl fun i _ =>
-    (Real.sq_sqrt (div_pos (hq0 _ _) (hp0 _ _)).le).symm
+  let ρ n x := 1 - e n x
+  let W n x := r n x / ρ n x
+  let Z n x := ∏ i ∈ range n, W i x
+  have hρ n x : 0 < ρ n x := by
+    dsimp [ρ, e]
+    rw [sub_sub_cancel]
+    exact sum_pos (fun a _ => Real.sqrt_pos.mpr (mul_pos (hp0 _ _) (hq0 _ _))) univ_nonempty
+  have hWa n : StronglyMeasurable[F (n + 1)] (W n) :=
+    (hr n).div ((stronglyMeasurable_const.sub (he n)).mono (F.mono (Nat.le_succ n)))
+  have hWtop n : MemLp (W n) ∞ P := by
+    let g (u : Iic (n + 1) → A) := f n u /
+      bhattacharyya
+        (p (h n (fun i => u ⟨i, mem_Iic.mpr ((mem_Iic.mp i.2).trans (Nat.le_succ n))⟩)))
+        (q (h n (fun i => u ⟨i, mem_Iic.mpr ((mem_Iic.mp i.2).trans (Nat.le_succ n))⟩)))
+    simpa only [g, W, ρ, e, r, R, f, h, H, sub_sub_cancel, frestrictLe_apply] using
+      (finite_readout_memLp (ν := P) (s := ∞) g (frestrictLe (n + 1))
+        (measurable_frestrictLe (n + 1)))
+  have hZa : StronglyAdapted F Z := fun n => by
+    simpa only [Z, Finset.prod_apply] using
+      (Finset.stronglyMeasurable_fun_prod (range n) fun i hi =>
+        (hWa i).mono (F.mono (Nat.succ_le_of_lt (mem_range.mp hi))))
+  have hZtop n : MemLp (Z n) ∞ P := by
+    induction n with
+    | zero => simpa [Z] using (memLp_top_const (1 : ℝ) (μ := P))
+    | succ n ih =>
+      simpa only [Z, prod_range_succ, Pi.mul_def] using
+        ((hWtop n).mul ih : MemLp (Z n * W n) ∞ P)
+  have hWmean n : P[W n | F n] =ᵐ[P] 1 := by
+    have hwi : Integrable (r n * (fun x => (ρ n x)⁻¹)) P := by
+      simpa only [W, div_eq_mul_inv, Pi.mul_def] using (hWtop n).integrable le_top
+    have hinv : StronglyMeasurable[F n] (fun x => (ρ n x)⁻¹) :=
+      (stronglyMeasurable_const.sub (he n)).measurable.inv.stronglyMeasurable
+    have h := condExp_mul_of_stronglyMeasurable_right hinv hwi
+      ((hr2 n).integrable (by norm_num))
+    filter_upwards [h, hrmean n] with x hx hxmean
+    change P[fun x => r n x / ρ n x | F n] x = 1
+    simp only [div_eq_mul_inv]
+    change P[r n * (fun x => (ρ n x)⁻¹) | F n] x = 1
+    rw [hx]
+    change (P[r n | F n]) x * (ρ n x)⁻¹ = 1
+    rw [hxmean]
+    exact mul_inv_cancel₀ (hρ n x).ne'
+  have hm : Martingale Z F P := by
+    apply martingale_nat hZa (fun n => (hZtop n).integrable le_top)
+    intro n
+    have heq : Z (n + 1) = Z n * W n := by ext x; simp [Z, prod_range_succ]
+    rw [heq]
+    have h := condExp_mul_of_stronglyMeasurable_left (hZa n)
+      (by simpa only [← heq] using (hZtop (n + 1)).integrable le_top)
+      ((hWtop n).integrable le_top)
+    filter_upwards [h, hWmean n] with x hx hw
+    simpa only [Pi.mul_apply, hw, Pi.one_apply, mul_one] using hx.symm
+  have hzero := normalized_product_zero (μ := P) (ℱ := F) r ρ hr0 hρ
+    (fun n x => by dsimp [ρ]; linarith [he0 n x]) hm
+  filter_upwards [hlim, hzero] with x hx hz
+  constructor
+  · intro hefin
+    have hefin' : Summable (fun n => e n x) := (summable_nat_add_iff 1).mpr hefin
+    obtain ⟨a, ha, hat⟩ := hx hefin'
+    have hR0 : 0 < R 0 x := Real.sqrt_pos.mpr (div_pos (hq0 _ _) (hp0 _ _))
+    have hprod : Tendsto (fun n => ∏ i ∈ range n, R i x) atTop (𝓝 (R 0 x * a)) := by
+      apply (tendsto_add_atTop_iff_nat 1).mp
+      simpa only [prod_range_succ', r, mul_comm] using hat.const_mul (R 0 x)
+    refine ⟨(R 0 x * a) ^ 2, sq_pos_of_pos (mul_pos hR0 ha), ?_⟩
+    convert hprod.pow 2 using 1
+    ext n
+    rw [← prod_pow]
+    exact prod_congr rfl fun i _ =>
+      (Real.sq_sqrt (div_pos (hq0 _ _) (hp0 _ _)).le).symm
+  · intro heinf
+    have heinf' : ¬ Summable (fun n => e n x) := fun h =>
+      heinf ((summable_nat_add_iff 1).mp h)
+    have hzero' := hz (by simpa only [ρ, sub_sub_cancel] using heinf')
+    have hprod : Tendsto (fun n => ∏ i ∈ range n, R i x) atTop (𝓝 0) := by
+      apply (tendsto_add_atTop_iff_nat 1).mp
+      simpa only [prod_range_succ', r, mul_comm, mul_zero, zero_mul] using hzero'.const_mul (R 0 x)
+    convert hprod.pow 2 using 1
+    · ext n
+      rw [← prod_pow]
+      exact prod_congr rfl fun i _ =>
+        (Real.sq_sqrt (div_pos (hq0 _ _) (hp0 _ _)).le).symm
+    · norm_num
 
 private lemma trajectory_prefix_mass {A : Type*} [Fintype A] [Nonempty A]
     [MeasurableSpace A] [MeasurableSingletonClass A] (hd : 2 ≤ Fintype.card A)
@@ -672,9 +782,25 @@ private lemma trajectory_restrict_ac_of_positive_limit
   have : 0 < f x := heq ▸ div_pos hlpos (by linarith)
   linarith
 
-/-- On the finite Hellinger-energy event the two full-history trajectory laws are mutually
-absolutely continuous. Each direction uses its own almost-sure localization. -/
-theorem trajectory_finite_energy_equivalent
+private lemma singular_of_reciprocal_limits {W : Type*} [MeasurableSpace W]
+    (P Q : Measure W) (L : ℕ → W → ℝ) (hL : ∀ n x, L n x ≠ 0)
+    (hP : ∀ᵐ x ∂P, Tendsto (fun n => L n x) atTop (𝓝 0))
+    (hQ : ∀ᵐ x ∂Q, Tendsto (fun n => (L n x)⁻¹) atTop (𝓝 0)) : P ⟂ₘ Q := by
+  apply Measure.mutuallySingular_iff_disjoint_ae.mpr
+  apply Filter.disjoint_iff.mpr
+  refine ⟨{x | Tendsto (fun n => L n x) atTop (𝓝 0)}, hP,
+    {x | Tendsto (fun n => (L n x)⁻¹) atTop (𝓝 0)}, hQ, ?_⟩
+  apply Set.disjoint_left.mpr
+  intro x hx hy
+  have heq n : L n x * (L n x)⁻¹ = 1 := mul_inv_cancel₀ (hL n x)
+  have h : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 0) := by
+    simpa only [heq, mul_zero] using hx.mul hy
+  have h01 : (0 : ℝ) = 1 := tendsto_nhds_unique h tendsto_const_nhds
+  norm_num at h01
+
+/-- Finite Hellinger energy gives equivalent restrictions; infinite energy gives singular
+restrictions. Almost-sure log-affinity divergence under both laws gives global singularity. -/
+theorem trajectory_hellinger_dichotomy
     {A : Type*} [Fintype A] [Nonempty A]
     [MeasurableSpace A] [MeasurableSingletonClass A] (hd : 2 ≤ Fintype.card A)
     (p q : List A → A → ℝ) (hp : NormalizedRows p) (hq : NormalizedRows q)
@@ -682,10 +808,16 @@ theorem trajectory_finite_energy_equivalent
     let H := fun (n : ℕ) (x : ℕ → A) => List.ofFn (fun i : Fin n => x i)
     let C := {x : ℕ → A | (∑' n, ENNReal.ofReal
       (1 - bhattacharyya (p (H n x)) (q (H n x)))) < ∞}
-    (trajectoryLaw p hp).restrict C ≪ (trajectoryLaw q hq).restrict C ∧
-      (trajectoryLaw q hq).restrict C ≪ (trajectoryLaw p hp).restrict C := by
+    let J := fun (n : ℕ) (x : ℕ → A) => ∑ i ∈ range n,
+      -Real.log (bhattacharyya (p (H i x)) (q (H i x)))
+    ((trajectoryLaw p hp).restrict C ≪ (trajectoryLaw q hq).restrict C ∧
+      (trajectoryLaw q hq).restrict C ≪ (trajectoryLaw p hp).restrict C) ∧
+    ((trajectoryLaw p hp).restrict Cᶜ ⟂ₘ (trajectoryLaw q hq).restrict Cᶜ) ∧
+    ((∀ᵐ x ∂trajectoryLaw p hp, Tendsto (fun n => J n x) atTop atTop) →
+      (∀ᵐ x ∂trajectoryLaw q hq, Tendsto (fun n => J n x) atTop atTop) →
+      trajectoryLaw p hp ⟂ₘ trajectoryLaw q hq) := by
   classical
-  intro H C
+  intro H C J
   have hm n : Measurable (fun x : ℕ → A =>
       1 - bhattacharyya (p (H n x)) (q (H n x))) :=
     (measurable_of_countable (fun u : Fin n → A =>
@@ -698,13 +830,48 @@ theorem trajectory_finite_energy_equivalent
     have h := ENNReal.summable_toReal hx.ne
     simpa only [ENNReal.toReal_ofReal (sub_nonneg.mpr
       (bhattacharyya_le_one _ _ ⟨hp.1 _, hp.2 _⟩ ⟨hq.1 _, hq.2 _⟩))] using h
-  constructor
+  let P := trajectoryLaw p hp
+  let Q := trajectoryLaw q hq
+  let L (n : ℕ) (x : ℕ → A) := ∏ i ∈ range n, q (H i x) (x i) / p (H i x) (x i)
+  have hL n x : L n x ≠ 0 := (prod_pos (fun i _ => div_pos (hq0 _ _) (hp0 _ _))).ne'
+  have hinv n x : (L n x)⁻¹ = ∏ i ∈ range n, p (H i x) (x i) / q (H i x) (x i) := by
+    simp only [L, ← prod_inv_distrib, inv_div]
+  have hP := trajectory_hellinger_likelihood_limits p q hp hq hp0 hq0
+  have hQ := trajectory_hellinger_likelihood_limits q p hq hp hq0 hp0
+  have hinf x (hx : x ∈ Cᶜ) : ¬ Summable (fun n =>
+      1 - bhattacharyya (p (H n x)) (q (H n x))) := fun hs => hx hs.tsum_ofReal_lt_top
+  refine ⟨⟨?_, ?_⟩, ?_, ?_⟩
   · apply trajectory_restrict_ac_of_positive_limit hd p q hp hq hp0 hC
-    filter_upwards [trajectory_finite_energy_positive_likelihood p q hp hq hp0 hq0] with x hx hc
-    exact hx (hsum x hc)
+    filter_upwards [hP] with x hx hc
+    exact hx.1 (hsum x hc)
   · apply trajectory_restrict_ac_of_positive_limit hd q p hq hp hq0 hC
-    filter_upwards [trajectory_finite_energy_positive_likelihood q p hq hp hq0 hp0] with x hx hc
-    apply hx
+    filter_upwards [hQ] with x hx hc
+    apply hx.1
     simpa only [bhattacharyya, mul_comm] using hsum x hc
+  · apply singular_of_reciprocal_limits (P.restrict Cᶜ) (Q.restrict Cᶜ) L hL
+    · rw [ae_restrict_iff' hC.compl]
+      filter_upwards [hP] with x hx hc
+      exact hx.2 (hinf x hc)
+    · rw [ae_restrict_iff' hC.compl]
+      filter_upwards [hQ] with x hx hc
+      simpa only [hinv] using hx.2 (by
+        simpa only [bhattacharyya, mul_comm] using hinf x hc)
+  · intro hJP hJQ
+    have hlog x (hx : Tendsto (fun n => J n x) atTop atTop) :
+        ¬ Summable (fun n => 1 - bhattacharyya (p (H n x)) (q (H n x))) := by
+      intro hs
+      have hlogs : Summable (fun n => -Real.log (bhattacharyya (p (H n x)) (q (H n x)))) := by
+        have ht := (Real.summable_log_one_add_of_summable hs.neg).neg
+        apply ht.congr
+        intro n
+        congr 2
+        ring
+      exact not_tendsto_nhds_of_tendsto_atTop hx _ hlogs.hasSum.tendsto_sum_nat
+    apply singular_of_reciprocal_limits P Q L hL
+    · filter_upwards [hP, hJP] with x hx hdiv
+      exact hx.2 (hlog x hdiv)
+    · filter_upwards [hQ, hJQ] with x hx hdiv
+      simpa only [hinv] using hx.2 (by
+        simpa only [bhattacharyya, mul_comm] using hlog x hdiv)
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SequentialHellingerLocalization

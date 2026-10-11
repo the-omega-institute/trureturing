@@ -8,9 +8,21 @@ internal sealed class SequentialHellingerLocalizationDocument : IScribeDocumentD
         LibraryNoteRef.Create("D5/L/Observer/liptser2001sequential");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite predictable energy gives simultaneous convergence on one full-measure set.",
-        H("Common Predictable-Energy Localization"),
+        "Predictable energy separates equivalence and singularity for full-history trajectory laws.",
+        H("Sequential Hellinger Localization and Dichotomy"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("energy-cut"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.energyCut"),
+                H("Predictable energy cut"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For any state type, real-valued energy sequence e, real threshold K and "
+                    + "natural time n, energyCut(e,K,n) is the set of states at which the sum "
+                    + "of e(i) for i less than n is at most K."))),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("common-energy-localization"),
                 DeclarationHandle.Create(
@@ -64,9 +76,9 @@ internal sealed class SequentialHellingerLocalizationDocument : IScribeDocumentD
                         + "uniform positive lower bound on the individual r(n) is imposed."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("trajectory-finite-energy-positive-likelihood"),
+                DescribeId.Create("trajectory-hellinger-likelihood-limits"),
                 DeclarationHandle.Create(
-                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.trajectory_finite_energy_positive_likelihood"),
+                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.trajectory_hellinger_likelihood_limits"),
                 H("Actual full-history likelihoods"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -85,13 +97,21 @@ internal sealed class SequentialHellingerLocalizationDocument : IScribeDocumentD
                         + "square integrable even though no uniform bound across time is assumed. "
                         + "The initial-letter factor is included explicitly after applying the "
                         + "conditional argument to successor coordinates. Squaring the positive "
-                        + "root-product limit gives the stated likelihood limit."))),
+                        + "root-product limit gives the stated likelihood limit.")),
+                    Paragraph(Text(
+                        "On paths whose nonnegative Hellinger energy is not summable, the likelihood "
+                        + "converges to zero almost surely. Dividing each root increment by its "
+                        + "strictly positive conditional affinity gives a nonnegative martingale "
+                        + "with mean one. It has a finite limit almost surely. The product of the "
+                        + "affinities is bounded by the exponential of minus accumulated energy, "
+                        + "which tends to zero. Multiplying these two factors and restoring the "
+                        + "initial coordinate proves the zero limit."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("trajectory-finite-energy-equivalent"),
+                DescribeId.Create("trajectory-hellinger-dichotomy"),
                 DeclarationHandle.Create(
-                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.trajectory_finite_energy_equivalent"),
-                H("Equivalence on the finite-energy event"),
+                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.trajectory_hellinger_dichotomy"),
+                H("Sequential Hellinger dichotomy"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
@@ -112,8 +132,17 @@ internal sealed class SequentialHellingerLocalizationDocument : IScribeDocumentD
                         + "respect to Q restricted to C. Swapping the two rows repeats the argument "
                         + "under Q independently. No finite-prefix measurability is assumed of C.")),
                     Paragraph(Text(
-                        "This result establishes the finite-energy branch. The singularity of "
-                        + "the restrictions to the complement and the divergence criterion for "
-                        + "the sum of negative log affinities are not asserted here."))),
+                        "The restrictions to the complement of C are mutually singular. Under P "
+                        + "the likelihood tends to zero there; independently, under Q its reciprocal "
+                        + "tends to zero. These limit properties give disjoint almost-everywhere "
+                        + "filters and hence a common measurable separating set.")),
+                    Paragraph(Text(
+                        "In addition, if the natural partial sums of negative log affinities tend "
+                        + "to positive infinity almost surely under each of P and Q, the full laws "
+                        + "are mutually singular. The reverse energy comparison uses the pinned "
+                        + "summability theorem for log(1+u): summable 1-rho implies summable "
+                        + "negative log rho, contradicting the stipulated divergence. The theorem "
+                        + "does not assert a criterion for arbitrary regular kernels beyond these "
+                        + "strictly positive finite-alphabet history rows."))),
                 DescribeRole.Theorem))));
 }

@@ -28,6 +28,15 @@ centered partial sums, while conditional first-moment bounds control a
 nonnegative error sum. Countably many integer levels give one full-measure
 set on which both conclusions hold on every finite-energy path.
 
-This is a common-localization formulation of the classical argument. It does
-not identify trajectory densities or assert equivalence or singularity of
-path laws without the additional likelihood and measure-comparison bridges.
+For strictly positive normalized rows on a finite alphabet, the formalization
+connects this localization to the actual full-history trajectory laws. The
+finite-energy event carries mutually absolutely continuous restrictions;
+the complementary restrictions are mutually singular. Divergence of the
+negative-log-affinity partial sums under both laws implies global singularity.
+The measure bridge uses conditional expectations of global densities with
+respect to the sum of the two laws. This finite-alphabet scope does not supply
+the broader regular-kernel statement.
+
+## Verified locator
+
+- DOI and publisher locator: https://doi.org/10.1007/978-3-662-13043-8
