@@ -1858,3 +1858,62 @@ assume self-tangency of the cores. The named prime interval theorem,
 CHJ supplier and original J4 are directly reused. This is a
 supplier-relative paper application with no originality or Lean claim;
 the complete CR21/CR23 upper estimate, PG15/J and RH remain unproved.
+
+### A sharper zero-free strip still cannot pay the same-cutoff head
+
+The recent [Liu zero-free supplier](../Analytic/liu2026quasirh.md) reports
+the boundary
+
+$$
+\beta_0=\frac{1507-2\sqrt{921}}{1653}=0.874957\ldots
+$$
+
+for the real parts of the nontrivial zeros of the zeta function. Treat
+this as a supplier premise only; its external proof and reported Lean
+formalization have not been independently built here. Even granting this
+stronger boundary, a direct absolute estimate does not close CR47.
+
+Indeed, the existing coefficient estimate (U2) gives, for
+$\rho=\beta+i\gamma$ with $\gamma\ge4$,
+
+$$
+|F_B(\rho)|
+\le \frac{2w(B)B^{\beta-1}}{\gamma^2}
+\le \frac{2w(B)B^{\beta_0-1}}{\gamma^2}.
+$$
+
+The classical zero count makes
+$\sum_{4\le\gamma\le T}m_\rho/\gamma^2=O(1)$ uniformly in $T$;
+the finitely many zeros below $4$ obey the same $B^{\beta_0-1}$ scale
+with a supplier-dependent constant. Since
+$s_B=\sqrt B\log B$ and
+$w(B)=(1+\log B)/(\log B)^2$,
+
+$$
+s_B\sum_{0<\gamma\le T}m_\rho|F_B(\rho)|
+\ll B^{\beta_0-1/2}.
+$$
+
+For the comparison term in $H_{B,a}$, the zero-count estimate
+$\sum_{0<\gamma\le T}m_\rho/\gamma=O((\log T)^2)$ gives
+
+$$
+\frac{a}{\sqrt B}
+\sum_{0<\gamma\le T}m_\rho\left|\frac{B^\rho}{\rho}\right|
+\ll aB^{\beta_0-1/2}(\log T)^2.
+$$
+
+Thus at the actual $T=\tau_B\asymp\sqrt B$,
+
+$$
+|H_{B,a}(\tau_B)|
+\ll (1+a(\log B)^2)B^{\beta_0-1/2}
+=O\!\left(B^{0.374957\ldots}(\log B)^2\right).
+$$
+
+This is an upper envelope, not a claim that the signed head has this
+size. It proves only that a zero-free half-plane, even with the reported
+improvement, cannot replace the missing signed cancellation. The required
+input remains a same-height upper bound retaining the actual phases,
+real parts and multiplicities; improving a fixed strip exponent above
+$1/2$ does not supply that bound.
