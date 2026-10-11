@@ -727,3 +727,652 @@ Creation/annihilation relative bounds and Weyl displacement algebra are the matu
 The deductions specific to these carriers are the exact chamber-count covariance, corrected full spatial charge, common-ambient norm/half-number transfer, compact nonreal continuation, aligned full-joint dynamics and full-number obstruction proved above. Inverse perturbation, self-adjoint form theory, field algebra and the established source/particle limits are reused prior mathematics. Each external supplier is used only for its stated intermediate results.
 
 ## 78.99 追加锚（本行以下为增补区）
+
+## 79. Literal whole-rho copying and additive form-domain completions
+
+**Definition 79.1 (current renewal, full domains and the additive completion class).** Fix the authentic accepted current event at cap $H=2$
+
+$$
+\beta\longmapsto\langle\beta,\alpha\rangle,
+\qquad D_-=\{o\},\qquad D_+=\{o,L,R\},
+\tag{79.1}
+$$
+
+with commissioned $a,g>0$, $\nu\ge0$, $0<\delta\le1$ and finite $\Omega\ge1$. The word current is essential: INITIAL is the immutable source of55.1,60.1 and66.1, and need not be $\beta$. In particular an earlier accepted $\alpha\mapsto\beta$ can precede(79.1), with its label, epoch and record change retained. The current whole candidate has two leaves and passes the original cap guard at equality. No INITIAL promise, earlier history or source-independent initialization is replaced by this event specification.
+
+Use64.5's complete particle carriers and67.1's reference and field:
+
+$$
+\begin{aligned}
+\mathcal K_\pm
+ &=\mathbb Cr\oplus\mathcal K_{D_\pm,1}
+                      \oplus\mathcal K_{D_\pm,2}^{\rm hc},\\
+\mathcal E&=\mathcal F_2\otimes\mathcal A,
+&\mathcal F_2&=\Gamma_s(\ell^2(\{o,L,R\})),
+&\mathcal A&\ne\{0\},\\
+\mathcal H_\pm&=\mathcal K_\pm\otimes\mathcal E.
+\end{aligned}
+\tag{79.2}
+$$
+
+Here $\mathcal A$ is any nonzero Hilbert space. All three oscillator modes, both canonical quadratures, every excitation and every spectator are retained under either complete common or complete killed prescription, separately. The Hilbert spaces contain arbitrary unknown particle, reference, field and auxiliary correlations. The field vacuum used below is one test vector in these spaces, not an input promise.
+
+The particle domain is first specified on ordered two-position strata as in64.5, and only then restricted to exchange-symmetric functions. Keep every distinct atomic pair, both orientations of every atom/cable slice, every different-cable rectangle, and both triangles of every same-cable cell. The Hilbert weights are $1,\delta,\delta^2$; the kinetic form is exactly(64.7), with unit slice derivative coefficients and coefficient $\delta$ for cell derivatives. Rectangle boundaries match the corresponding slices; slice endpoints match the atomic pairs, with the missing $(p,p)$ coordinate assigned zero. Ground traces and both same-cable collision traces vanish. Shared-port collisions retain those slice endpoint conditions, without a corner trace for a general two-dimensional $H^1$ function. The one-position cable traces match the mass-one atomic ports. In particular $D_-$ still has its nonzero full two-position continuum carrier;66.3a supplies an admissible mixed vector even though its discrete two-occupation target is zero.
+
+Write $k_\pm$ for the sum of the two particle kinetic forms, zero on $r$, extended as closed Hilbert-valued forms to $\mathcal H_\pm$. Let
+
+$$
+b_\pm^0[\Psi]=\|\Psi\|^2+a k_\pm[\Psi]
+                 +\Omega\|(I\otimes\mathsf n^{1/2}\otimes I)\Psi\|^2,
+\qquad \mathcal D_\pm=\operatorname{Dom}b_\pm^0.
+\tag{79.3}
+$$
+
+Thus $\mathcal D_\pm$ is the complete field/auxiliary-valued particle form domain intersected with the number form domain, including the reference field. It is not the algebraic tensor product or a calibrated range. Closedness and density are the existing64.5a and67.3 assertions;67.3 and78.4 identify it also as the complete form domain of the unchanged coupled generator $\mathbb M_{D_\pm}$.
+
+Let $\mathcal R_\pm$ be arbitrary additional Hilbert spaces, possibly zero or infinite-dimensional, with densely defined closed nonnegative forms $r_\pm$. Define the orthogonal additive completion by
+
+$$
+\begin{aligned}
+\mathcal X_\pm&=\mathcal H_\pm\oplus\mathcal R_\pm,
+&\mathcal Q_\pm&=\mathcal D_\pm\oplus\operatorname{Dom}r_\pm,\\
+b_\pm[\Psi\oplus z]
+ &=b_\pm^0[\Psi]+\|z\|^2+r_\pm[z],
+&i_-\Psi&=\Psi\oplus0,\\
+P_-&=i_-i_-^*,
+&J\Psi&=((\mathsf T\otimes I_{\mathcal E})\Psi)\oplus0,\\
+\mathsf T&=I_r\oplus\mathsf T_{D_+D_-,1}
+                       \oplus\mathsf T_{D_+D_-,2}.
+\end{aligned}
+\tag{79.4}
+$$
+
+The maps $\mathsf T_{D_+D_-,N}$ are the literal66.2 maps, defined on all old Hilbert data before exchange restriction: they copy the two old open stubs as the seams $oL,oR$, copy every old stratum in each coordinate, and assign zero to every stratum involving a newborn atom or cable. The zero assigned at a new atom is independent of an $L^2$ representative's value at the old mass-zero ground tip. Theorem66.3 supplies their full isometry and one-way form inclusion, so $J$ is an isometry. Its adjoint is weighted Hilbert restriction to the copied old strata, and $P=JJ^*$ is the orthogonal projection onto precisely that range, with zero reserve component. Additivity gives $P_-\mathcal Q_-\subseteq\mathcal Q_-$ and $b_-[P_-u]\le b_-[u]$.
+
+A candidate completion is one fixed linear unitary $U:\mathcal X_-\to\mathcal X_+$, independent of the input vector, with both complete domain inclusions
+
+$$
+U\mathcal Q_-\subseteq\mathcal Q_+,
+\qquad U^*\mathcal Q_+\subseteq\mathcal Q_-;
+\quad\text{equivalently }U\mathcal Q_-=\mathcal Q_+.
+\tag{79.5}
+$$
+
+Its inverse is its actual Hilbert adjoint. These conditions permit joint action on the completed spaces; in particular they include particle/reserve maps tensored with field and auxiliary identities. Exact literal copying means $Ui_-=J$ on the entire $\mathcal H_-$, and therefore fixes the retained field and auxiliaries on every copied vector. The reserve coordinate zero in $i_-$ is an orthogonal-summand coordinate, not a vacuum or clean-state promise for an independently occupied tensor factor. The domain and energy conditions concern all reserve inputs as well.
+
+**Theorem 79.2 (no exact additive two-sided completion of this literal inclusion).** For every choice in79.1 there is no unitary satisfying both(79.5) and $Ui_-=J$. No bounded-energy constant, finite reserve dimension or field cutoff is needed for this impossibility. It excludes this two-sided additive upgrade of78.11's full one-way form inclusion, not that inclusion itself.
+
+**Proof.** Orient $oL,oR$ from $o$ to the respective child, and each newborn grounded stub from its child to ground. Define a scalar one-position outlet vector $F$ by
+
+$$
+\begin{gathered}
+F(o)=0,\qquad F(L)=1,\qquad F(R)=0,\\
+F_{oL}(x)=x,\qquad
+F_{L,\mathrm{ground},1}(x)=F_{L,\mathrm{ground},2}(x)=1-x,\\
+F_{oR}(x)=F_{R,\mathrm{ground},1}(x)
+                         =F_{R,\mathrm{ground},2}(x)=0.
+\end{gathered}
+\tag{79.6}
+$$
+
+There are exactly six outlet cables: two seams promoted from the old stubs and four newborn grounded stubs. The three displayed nonzero cable functions and the three zero functions exhaust them. Every cable endpoint equals its incident atomic value, and every outer grounded value is zero. Set the reference and entire two-position component to zero. Hence $F$ is in the full outlet particle form domain. Directly in64.5's norm and kinetic coefficients,
+
+$$
+\|F\|^2=1+\delta,
+\qquad a k_{\delta,D_+,1}[F]=3a.
+\tag{79.7}
+$$
+
+Choose a unit $\zeta\in\mathcal A$, let $\eta=|0\rangle_{\mathcal F_2}\otimes\zeta$, and put $f=(F\otimes\eta)\oplus0\in\mathcal Q_+$. Its field-number energy is zero and $b_+[f]=1+\delta+3a$. The nonzero auxiliary assumption ensures this is a nonzero vector.
+
+The copied-range projection $P$ keeps the seam function $x\eta$ on $oL$ and the old root value zero, while deleting the newborn $L$ atom and both its new grounded-stub functions. Thus the seam endpoint at $L$ is $\eta$ but the projected atomic value there is zero. Consequently $Pf\notin\mathcal Q_+$. This is a one-dimensional endpoint mismatch in the actual outlet domain; it uses no two-dimensional corner value and removes no two-position stratum from the quantified carrier.
+
+On the other hand exact copying and unitarity imply
+
+$$
+UP_-U^*=(Ui_-)(Ui_-)^*=JJ^*=P.
+\tag{79.8}
+$$
+
+For $f\in\mathcal Q_+$, the reverse inclusion in(79.5) places $U^*f$ in $\mathcal Q_-$, the additive projection $P_-$ keeps it there, and the forward inclusion places $UP_-U^*f$ in $\mathcal Q_+$. This contradicts the preceding endpoint mismatch. The argument uses the standard conjugacy of range projections; the source-specific obstruction is that the projection onto66.2's copied strata fails64.5's newborn-port trace equality. The complete ordered trace conditions and their symmetric restrictions remain those supplied by66.3, not new collision assumptions. $\square$
+
+**Theorem 79.3 (necessary full-carrier defect and two-sided energy inequality).** Keep79.1 and(79.5), but allow $Ui_-\ne J$. Suppose finite positive constants $C_+,C_-$ satisfy, on the entire respective form domains,
+
+$$
+b_+[Uu]\le C_+b_-[u]\quad(u\in\mathcal Q_-),
+\qquad
+b_-[U^*v]\le C_-b_+[v]\quad(v\in\mathcal Q_+).
+\tag{79.9}
+$$
+
+Define the full old-carrier operator norm and the constants
+
+$$
+h=\|Ui_--J\|_{\mathcal B(\mathcal H_-,\mathcal X_+)},
+\qquad K=C_+C_-,
+\qquad B=1+\delta+3a,
+\qquad e=2h\sqrt{1+\delta}.
+\tag{79.10}
+$$
+
+Whenever $e<1$ it is necessary that
+
+$$
+(1-e)^2\le\frac{e^2}{\delta}
+ +\frac{2e}{\sqrt\delta}
+             \left(\sqrt{\frac{KB}{a}}+1\right).
+\tag{79.11}
+$$
+
+If $e\ge1$, then already $h\ge1/(2\sqrt{1+\delta})$ and this small-defect regime is absent. The inequality is necessary, with no assertion of sufficiency or sharpness. The norm $h$ ranges over every normalized old Hilbert input, including vectors outside the energy form domain. The energy inequalities hold for every vector in their complete form domains, without a common input-energy ceiling. All retained modes and arbitrary correlations are included.
+
+**Proof.** Set $V=Ui_-$ and $P_U=VV^*=UP_-U^*$. Both $V$ and $J$ are isometries. The standard range-projection estimate gives
+
+$$
+\|P_U-P\|
+\le\|(V-J)V^*\|+\|J(V^*-J^*)\|\le2h.
+\tag{79.12}
+$$
+
+Use exactly the vector $f$ from79.2 and let $w=P_Uf$. Both directions of(79.5) give $w\in\mathcal Q_+$; both inequalities in(79.9) and the additive form contraction give
+
+$$
+b_+[w]\le C_+b_-[P_-U^*f]
+          \le C_+b_-[U^*f]\le Kb_+[f]=KB,
+\qquad \|w-Pf\|\le e.
+\tag{79.13}
+$$
+
+Let $g$ be the entire $\mathcal E$-valued one-position component of $w$. It belongs to the actual one-position form domain, so $g_{oL}(1)=g_L$. The mass-one $L$ atom, cable density $\delta$ and unweighted derivative coefficient $a$ imply
+
+$$
+\|g_L\|_{\mathcal E}\le e,
+\qquad \|g_{oL}-x\eta\|_{L^2(0,1;\mathcal E)}
+                        \le\frac e{\sqrt\delta},
+\qquad \|g_{oL}'\|_{L^2(0,1;\mathcal E)}
+                        \le\sqrt{\frac{KB}{a}}.
+\tag{79.14}
+$$
+
+The other particle components and the reserve contribute nonnegative terms to(79.13); extracting this component does not assume $U$ preserves particle sectors or product states. For $v(x)=g_{oL}(x)-x\eta$, the standard Hilbert-valued $H^1$ endpoint estimate on the unit interval is
+
+$$
+\|v(1)\|^2\le\|v\|_{L^2}^2
+                         +2\|v\|_{L^2}\|v'\|_{L^2}.
+\tag{79.15}
+$$
+
+This is the usual one-dimensional Sobolev estimate obtained by the fundamental theorem for $\|v(x)\|^2$ and Cauchy–Schwarz; it is used here as a mature trace inequality. Since $\|\eta\|=1$, the endpoint relation gives $\|v(1)\|=\|g_L-\eta\|\ge1-e$ when $e<1$. Formula(79.14) gives $\|v'\|_{L^2}\le\sqrt{KB/a}+1$. Substitution in(79.15) proves(79.11), with the cable density and the kinetic coefficient in their distinct places.
+
+The comparison class before imposing a small defect is nonempty. For example take $\mathcal R_-=\mathcal H_+$, $\mathcal R_+=\mathcal H_-$, with reserve forms $b_+^0-\|\cdot\|^2$ and $b_-^0-\|\cdot\|^2$, respectively. The exchange $U(\Psi\oplus\Phi)=\Phi\oplus\Psi$ is a unitary identifying both full form domains with $C_+=C_-=1$. Its defect is $h=\sqrt2$, since its old output is wholly in the outlet reserve and orthogonal to $J\Psi$. This example only shows consistency of the additive domain/energy hypotheses; it is no approximate literal transfer or physical renewal. $\square$
+
+**Corollary 79.4 (coupled-energy conversion and the current certificate consumer).** At this renewal suppose a proposed completion satisfying(79.9) has finite upper budgets $0\le h\le\bar h$, $0<K\le\bar K$, and set $\bar e=2\bar h\sqrt{1+\delta}$. If $\bar e<1$ and
+
+$$
+(1-\bar e)^2>\frac{\bar e^2}{\delta}
+ +\frac{2\bar e}{\sqrt\delta}
+             \left(\sqrt{\frac{\bar K(1+\delta+3a)}a}+1\right),
+\tag{79.16}
+$$
+
+these budgets are incompatible with the additive two-sided class. For any sequence satisfying(79.9) at fixed $a>0$ and fixed $\delta>0$, $h_j\to0$ forces $K_j\to\infty$; in particular bounded amplification in both directions cannot accompany vanishing full-carrier defect.
+
+If energy bounds are supplied in other positive closed forms $E_\pm$ on exactly $\mathcal Q_\pm$, require explicit constants
+
+$$
+0<\ell_\pm\le u_\pm<\infty,
+\qquad \ell_\pm b_\pm\le E_\pm\le u_\pm b_\pm.
+\tag{79.17}
+$$
+
+Bounds $E_+[Uu]\le D_+E_-[u]$ and $E_-[U^*v]\le D_-E_+[v]$, with finite $D_+,D_->0$ on the entire respective domains, then permit the explicit choices
+
+$$
+C_+=\frac{D_+u_-}{\ell_+},\qquad
+C_-=\frac{D_-u_+}{\ell_-},\qquad
+K=\frac{D_+D_-u_-u_+}{\ell_-\ell_+}.
+\tag{79.18}
+$$
+
+For the unchanged coupled source forms $\mathfrak m_{D_\pm}$ of(67.5), one concrete conversion uses78.4's constants
+
+$$
+\begin{gathered}
+\lambda=3-2\sqrt2,\quad c=\Omega\lambda,\quad
+k_f=\sqrt{\nu\Omega},\quad M_0=2g+\nu/\lambda,\\
+L_0=M_0+c/2+4k_f^2/c,\qquad \sigma_0=2L_0+1>L_0,\\
+E_\pm[\Psi\oplus z]
+ =\mathfrak m_{D_\pm}[\Psi]+\sigma_0\|\Psi\|^2
+                              +\|z\|^2+r_\pm[z],\\
+\ell_-=\ell_+=\lambda/2,\qquad
+u_-=u_+=u_0:=\max\{9,3L_0+1\},
+\qquad K=(2u_0/\lambda)^2D_+D_-.
+\end{gathered}
+\tag{79.19}
+$$
+
+The positive reference energy forms in(79.19) include a strictly positive shift; they are not unshifted physical-energy prices. A different reserve energy or a coupled inlet form must establish its own domain and every constant in(79.17);(79.19) assigns none to it.
+
+The consumer is a proposed stronger renewal implementation for78.11: when its ideal complete output is $J$, its actual old-input map $Ui_-$ can provide a66.7 full-map certificate only with a valid bound on the norm $h$ above, including any reserve output. Formula(79.16) rejects incompatible defect/amplification budgets for that class. The original66.7 admissible one-way isometries or unconditioned contractions do not require(79.5). Theorem67.7's moment-dependent retained-field/history estimate continues to use the one-way66.2 inclusion and is unaffected. No lower bound on the accumulated history error follows by reversing its upper error estimate or by treating $\sum_k h_k$ as a lower bound; possible cancellations are not excluded.
+
+**Proof.** On $0\le e\le\bar e<1$, the left side of(79.11) decreases and its right side increases with $e$ and $K$. Thus(79.16) contradicts the necessary inequality. If $h_j\to0$ and some subsequence of $K_j$ stayed bounded, its left side would tend to one and its right side to zero. This proves the stated fixed-$a,\delta$ limit, including $K_j\to\infty$ rather than merely failure of a common bound.
+
+Apply(79.17) on the two sides of each supplied energy inequality to obtain(79.18). For(79.19), reuse(78.16) on the target free form $t_\pm=a k_\pm+\Omega\langle h_{D_\pm}\rangle$. It gives
+
+$$
+\tfrac12t_\pm+(L_0+1)\|\Psi\|^2
+\le \mathfrak m_{D_\pm}[\Psi]+\sigma_0\|\Psi\|^2
+\le\tfrac32t_\pm+(3L_0+1)\|\Psi\|^2.
+\tag{79.20}
+$$
+
+The same-field inequalities $\lambda\mathsf n\le h_{D_\pm}\le6\mathsf n$ give exactly $\ell_\pm=\lambda/2$ and $u_\pm=u_0$ against(79.3). The additive reserve norm obeys the same bounds because $\lambda/2<1\le u_0$. This uses the established form perturbation estimate, without asserting that atomic counts preserve kinetic domains or reproving fixed-commission78. Finally66.7's full-space norm hypothesis and67.7's isometric telescoping have no surjectivity requirement, which establishes the stated scope of the consumer. The argument supplies no $\delta$-uniform defect floor, joint thinning exclusion, field-scaling exclusion, work or clock lower bound, or monetary price. $\square$
+
+**Definition 79.5 (inlet correspondence, surviving alternatives and literature scope).** The additive class is a mathematical comparison of the complete64.5/67 carriers at one authentic current event. It has no premise identifying an original physical source-times-reserve inlet with $\mathcal X_-$. In particular an independently occupied tensor inlet $\mathcal H_{\rm source}\otimes\mathcal H_{\rm reserve}$, with its joint collision and transmission domain, is not an orthogonal reserve summand by definition. To apply79.2 or79.3 to it requires an explicit faithful identification retaining every permitted source/reserve configuration, every sector, all field/reference/auxiliary correlations, the literal old-input comparison, both domain directions and the claimed energy constants. An abstract Hilbert isomorphism alone supplies none of those domain relations. Replacing that tensor promise by global total position number at most two, deleting occupied-reserve configurations, or installing a new collision wall after INITIAL is not such an identification. A newly prepared clean reserve would be a separate preparation/ingress premise, not a consequence of source-independent actor initialization. The direct-sum graft accounts of68 are different objects and are not a physical reserve contract for this whole-rho.
+
+At finite spatial width retain72–75's actual old ground half-chambers $H_g^\varepsilon$ and their full function spaces, with the independently prescribed positive ground reference volumes $m_g$; they are not identified with $1/\delta$. The cylinder/ground contact plates are distinct from the grounded equators. The newborn source chambers $Z_L^\varepsilon,Z_R^\varepsilon$ have volumes $\varepsilon^{s-1}/\delta$ and hence effective atomic mass one, and each newborn child has two distinct new grounded unit stubs. Thus both old ground pieces and all four new grounded stubs need a declared correspondence; neither the old ground functions nor their plate traces may be discarded. A physical renewal still requires a source-compatible INITIAL ingress for every promised occupied configuration and a full ordered collision/transmission correspondence, before symmetry, in both directions with its actual inverse. The projection witness in79.2 is on the literal limiting carrier and does not furnish this finite-width construction or infer its impossibility.
+
+The original source of55.1,60.1 and66.1, with78.12's complete obligations, remains the source of any application. In particular keep immutable INITIAL, source-independent actor initialization, fixed cap, labels, brackets, left/right order, equal-valued distinct occurrences, actual versions, complete supplied contexts, whole-candidate guards, original Read, every acceptance and paid refusal, beta-empty label/epoch updates and absorbing Stop. A refusal supplies no candidate Read; separate Left/Right grafts are not whole-rho. Keep actual chronological records and permissions, paid write/protect/retain/query and copy rights, write-before-latch release of complete records and responses, and each applicable COMPLETE condition. Partial paid histories, full tails and noncompletion remain possible under their original contracts; there is no event or observation after an infinite prefix, and Stop allows no new source service or quantum interaction. Its already prescribed finite record-delivery and consumer-output routines retain60.3's separate allowance.
+
+An admissible positive route must still supply actual source-owned control authority, unknown-state ingress/recovery, unchanged Read/Stop behavior, the original operation and metric correspondence, finite duration and precision, and complete errors on its declared carrier. Compensation uses the diagonal of the same actual common or killed Green inverse as every pair coefficient; neither this inverse nor the control's actual inverse can be replaced by a fitted surrogate. Keep both field quadratures, every excitation and spectator and the full reference evolution on a single declared common comparison clock, with separately supplied conversion to source events, apparatus ticks and physical time. No partial trace, reset, vacuum replacement, independent resampling, postselection, normalization after a restricted contraction, input-dependent choice of a controller, or unpaid perfect hold is provided by the comparison. Construction, preparation, storage, retention, hold, acquisition, source service, control, stiffness/coupling/compensation, collision/exterior/leakage control and precision costs remain separate from reference-form energy and error amplification; all actual resource accounts and lifetime charges remain due.
+
+The one-way inclusion and unconditioned-contraction route, nonadditive or coupled-reserve domains, controlled nonzero full-map defect, fixed-vector or energy-limited comparisons, growing amplification, and genuinely geometric or varying-domain transport are not excluded by79.2–79.4. Each needs its own original-input inclusion and operational certificate. The separately quantified finite-height alternative remains precisely75.13's full mixed-ground product domain, fixed $\kappa>0$, $R_\varepsilon=\kappa\varepsilon^{(s-1)/s}$ and finite $\Lambda_\varepsilon\ge0$ with $\Lambda_\varepsilon R_\varepsilon\to\infty$, under78.1's fixed commission. It is not an executed switching law or a theorem for a different joint schedule. The limit restriction in79.4 fixes $a,\delta$; it neither rules out $\delta\downarrow0$ jointly with other changes nor supplies a uniform input-energy promise. The spatial comparisons of78 remain conditional for every fixed $s\ge3$, with77's planar result only in its prescribed-metric scope. The present trace obstruction selects no physical space dimension, gives no universal actuator no-go and supplies no physical renewal or full-history realization.
+
+The exact source prerequisites are60.1–60.3,64.5–64.5a,66.1–66.3a,66.7 and67.1–67.7 in the [first continuation at its fixed source version](https://github.com/the-omega-institute/trureturing/blob/f022384d6e4a8b9e457f646f377ac2f0398b0c6f/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md),72–75 in the [second continuation at that version](https://github.com/the-omega-institute/trureturing/blob/f022384d6e4a8b9e457f646f377ac2f0398b0c6f/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_II.md), and78.4,78.11–78.13 above. The source-owned finite compiler of60 supplies its stated ideal packet, guard, record and finite-gate correspondence, not a continuum domain actuator. Closed-form theory, orthogonal range projections and the unit-interval Sobolev endpoint inequality are mature tools used inside79.2–79.4. The additional deduction concerns their interaction with the literal copied range at(79.1) and its current full-map consumer; it carries no global literature-priority claim.
+
+Balmaseda–Lonigro–Pérez-Pardo, [*Stability of non-autonomous Schrödinger equations*, arXiv:2306.10203v2](https://arxiv.org/html/2306.10203v2), Assumption3.4 and Theorems3.9–3.10, provides a stability framework with one common form domain and lower bound, uniform equivalence of the associated Hilbert-scale norms, $C^2$ form regularity for3.9 and the stated piecewise-$C^2$/integrable derivative control for3.10. Its stability norm is $\mathcal B(\mathcal H^+,\mathcal H^-)$, not the unrestricted Hilbert operator norm $h$ in(79.10). That result is not an identification of the two domains here and cannot supply the missing inlet or an automatic66.7 full-map bound.
+
+Duca–Joly, [*Schrödinger equation in moving domains*, arXiv:2006.02082v3](https://arxiv.org/html/2006.02082v3), Theorem1.1, assumes a bounded reference domain and a supplied $C^2$ family of space/time diffeomorphisms onto the moving domains for its Dirichlet unitary-flow assertion; its additional $C^3$ hypothesis yields the stated strong-solution regularity. It supplies neither the source's mixed-ground transmission/collision identification nor a physical INITIAL reserve inclusion. Ren, [*Persistent bundles over configuration spaces and obstructions for regular embeddings*, arXiv:2502.07476v2](https://arxiv.org/html/2502.07476v2), Theorem1.1, bounds real or complex target dimension for $(k,r)$-regular maps using inverse Stiefel–Whitney or Chern classes of the specified configuration-space bundles. Those embedding bounds do not establish a Sobolev-domain transport, a source-control history or a physical dimension choice. These literature results retain their own hypotheses and are not alternative proofs of the source-specific obstruction.
+
+## 78.99 追加锚（本行以下为增补区）
+
+## 80. A full-carrier bound for the form-adapted polar renewal
+
+**Definition 80.1 (the fixed additive completion and its trace shear).** Use exactly79.1–79.5, with current event $\beta\mapsto\langle\beta,\alpha\rangle$ at $H=2$, fixed $a,g>0$, $\nu\ge0$, finite $\Omega\ge1$, and $0<\delta\le1$. Write $T=\mathsf T\otimes I_{\mathcal E}$ and $Z=\operatorname{Ran}(T)^\perp\subset\mathcal H_+$. Thus $C(x,z)=Tx+z$ is a Hilbert unitary from $\mathcal H_-\oplus Z$ onto $\mathcal H_+$. Before exchange restriction, the one-position atomic/cable counts are $(1,2)$ and $(3,6)$, and the two-position atomic-pair/slice/cell counts are $(0,4,4)$ and $(6,36,36)$. In $Z$ these counts are $(2,4)$ and $(6,32,32)$. Every same-cable cell still consists of both triangles. No old continuum component is removed.
+
+Let $\mathcal D_Z$ impose all64.5 trace conditions internal to these new strata, together with the number form domain. A retained boundary of a new stratum remains new: a new cable ends at a newborn atom or ground, and fixing a newborn atom keeps the other-coordinate boundaries in $Z$. Let $k_Z$ contain exactly the kinetic terms on these strata, with coefficients one on intervals and $\delta$ on cells. Set
+
+$$
+\begin{gathered}
+\mathcal R_-=Z,\quad\mathcal R_+=0,\quad\operatorname{Dom}r_-=\mathcal D_Z,\qquad
+r_-[z]=a k_Z[z]+\Omega\|\mathsf n^{1/2}z\|^2,\quad
+b_Z[z]=\|z\|^2+r_-[z],\\
+\mathcal Q=\mathcal D_-\oplus\mathcal D_Z,\qquad
+b_{\rm in}=b_-^0\oplus b_Z,\qquad b_{\rm out}=b_+^0.
+\end{gathered}
+\tag{80.1}
+$$
+
+The reserve is an orthogonal comparison summand, with no physical INITIAL ingress or independently prepared tensor-factor assertion.
+
+Name the copied old cables $e_\ell=o\ell$, $\ell\in\{L,R\}$, oriented from $o$ to $\ell$. For ordered two-position data put
+
+$$
+v_\ell=z_1(\ell),\quad d_{\ell m}=z_2(\ell,m),\quad
+b_{\ell m}(y)=z_2(\ell;e_m,y),\quad
+ t_{\ell m}(x)=z_2(e_\ell,x;m).
+\tag{80.2}
+$$
+
+Missing atomic collision values are zero. Define $E:Z\to\mathcal H_-$ by zero reference and old-root components, and by
+
+$$
+\begin{aligned}
+(Ez)_{1,e_\ell}(x)&=xv_\ell,\\
+(Ez)_2(o;e_\ell,x)&=x z_2(o,\ell),&
+(Ez)_2(e_\ell,x;o)&=x z_2(\ell,o),\\
+(Ez)_{2,e_\ell,e_m}(x,y)
+ &=x b_{\ell m}(y)+y t_{\ell m}(x)-xy d_{\ell m}\quad(\ell\ne m),\\
+(Ez)_{2,e_\ell,e_\ell}(x,y)
+ &=\begin{cases}
+y t_{\ell\ell}(x)-x t_{\ell\ell}(y),&x<y,\\
+x b_{\ell\ell}(y)-y b_{\ell\ell}(x),&x>y.
+\end{cases}
+\end{aligned}
+\tag{80.3}
+$$
+
+These are maps of entire $L^2$ components, not evaluations of cell functions at corners. They act by identity on field and auxiliary coefficients. With
+
+$$
+N=\begin{pmatrix}0&E\\0&0\end{pmatrix},\qquad
+L=I+N,\qquad S=CL,
+\tag{80.4}
+$$
+
+one has $N^2=0$. All subsequent adjoints use the actual weighted Hilbert spaces. In particular
+
+$$
+S^*=\begin{pmatrix}I&0\\E^*&I\end{pmatrix}C^*,\qquad
+S^*S=\begin{pmatrix}I&E\\E^*&I+E^*E\end{pmatrix}.
+\tag{80.5}
+$$
+
+**Lemma 80.2 (complete source domains and shear energies).** The reserve form in(80.1) is densely defined, closed and nonnegative. The shear satisfies
+
+$$
+\begin{gathered}
+S\mathcal Q=\mathcal D_+,\qquad Si_-=T,\qquad
+\|N\|\le\sqrt\delta,\qquad
+\|S\|,\|S^{-1}\|\le1+\sqrt\delta,\\
+b_{\rm out}[Su]\le M b_{\rm in}[u],\qquad
+b_{\rm in}[S^{-1}v]\le M b_{\rm out}[v],\qquad M=6a+3,
+\end{gathered}
+\tag{80.6}
+$$
+
+for every $u\in\mathcal Q$ and $v\in\mathcal D_+$. All statements hold on ordered strata and pass to exchange symmetry and complete Hilbert-valued domains.
+
+Proof. A useful explicit description of the trace domains will also be used below. On either boundary-closed collection of strata, old or new, start with independent atomic data, independent interval functions in $H^1_0(0,1)$, and independent cell functions in $H^1_0$ of each rectangle or triangle. Reference data is unrestricted. Write $\theta_0(x)=1-x$, $\theta_1(x)=x$. Add $\theta_i$ times each available endpoint atomic value to its interval. On a rectangle add
+
+$$
+\sum_{i=0}^1\theta_i(x)g_{p_i,f}(y)
++\sum_{j=0}^1\theta_j(y)g_{e,q_j}(x)
++\sum_{i,j=0}^1\theta_i(x)\theta_j(y)c_{p_iq_j}
+\tag{80.7}
+$$
+
+to its independent cell function. Here the $g$'s are the independent zero-endpoint slices; missing ground or collision data is zero. On a same-cable triangle $x<y$, with cable endpoints $p_0,p_1$, add
+
+$$
+\begin{aligned}
+&\theta_0(x)g_{p_0,e}(y)-\theta_0(y)g_{p_0,e}(x)\\
+&\quad+\theta_1(y)g_{e,p_1}(x)-\theta_1(x)g_{e,p_1}(y)
+ +(y-x)c_{p_0p_1}.
+\end{aligned}
+\tag{80.8}
+$$
+
+The other triangle uses the exchanged ordered data. The atomic term is the restriction of $\theta_0(x)\theta_1(y)-\theta_1(x)\theta_0(y)$. Formula(80.8) has zero diagonal trace, and its two exterior edges give precisely the lifted slices. Formula(80.7) gives all four matching boundaries. No corner trace of an arbitrary cell function is used.
+
+This triangular lifting, denoted $\mathcal T$, is $I+R$, where $R$ strictly raises stratum dimension and $R^3=0$; hence its Hilbert inverse is $I-R+R^2$. Both are bounded on the finite direct sum of $L^2$ strata and on the raw direct sum of $H^1$ strata, for each fixed positive $\delta$. Subtracting its lifts leaves exactly zero boundary traces on every interval and cell. Thus $\mathcal T$ maps the independent Dirichlet form domain bijectively onto the required trace domain. The raw norm plus derivative norm is equivalent to the transported Dirichlet form norm. This proves density and closedness, in particular for $\mathcal D_Z$. The formulas commute with exchange; Hilbert-valued versions and the complete number-form intersection follow by direct sums over field number, with no surviving truncation.
+
+For the shear, the one-position correction has old-root trace zero and newborn trace $v_\ell$. Each old slice obtains its required newborn pair endpoint and retains its zero collision endpoint. On a different-cable square, $t_{\ell m}(1)=b_{\ell m}(1)=d_{\ell m}$ makes the $x=1$ and $y=1$ boundaries in(80.3) equal to $b_{\ell m}$ and $t_{\ell m}$. Its remaining boundaries are the corrected old slices. On $x<y$ in a same-cable cell, $t_{\ell\ell}(1)=0$ gives the $y=1$ boundary $t_{\ell\ell}$, the $x=0$ boundary is $y z_2(o,\ell)$, and the diagonal is zero. The other triangle gives the exchanged ordered assertion. New strata are unchanged. Conversely restrict an outlet form vector to $Z$ and subtract $Ez$ on the old strata. Every old grounded and transmission condition is restored. This proves both domain directions.
+
+For the estimates let $C_{\rm at}$ sum the squared norms of $z_2(o,\ell),z_2(\ell,o)$, let $D_{\rm at}$ sum those of $d_{\ell m}$ for $\ell\ne m$, and let $B_{\rm sl},B'_{\rm sl}$ sum the squared $L^2$ norms of the $b,t$ slices and their derivatives. Direct integration and the two- and three-term Cauchy–Schwarz inequalities give
+
+$$
+\begin{aligned}
+\|E z_2\|^2&\le\delta C_{\rm at}/3+
+               \delta^2(B_{\rm sl}+D_{\rm at}/3),\\
+k_{-,\rm raw}[E z_2]&\le C_{\rm at}+
+               \delta(B'_{\rm sl}+3B_{\rm sl}+2D_{\rm at}),\\
+\|z_2\|^2&\ge C_{\rm at}+D_{\rm at}+\delta B_{\rm sl},\qquad
+k_Z[z_2]\ge B'_{\rm sl}.
+\end{aligned}
+\tag{80.9}
+$$
+
+For example the two squared terms on $x<y$ give
+$\int_{x<y}|y t(x)-x t(y)|^2\le(2/3)\|t\|^2$; the corresponding derivative bound is $(2/3)\|t'\|^2+2\|t\|^2$. The one-position contributions are exactly $\delta\sum_\ell\|v_\ell\|^2/3$ and $\sum_\ell\|v_\ell\|^2$. Consequently
+
+$$
+\|Ez\|^2\le\delta\|z\|^2,\quad
+k_{-,\rm raw}[Ez]\le3\|z\|^2+\delta k_Z[z],\quad
+\|\mathsf n^{1/2}Ez\|^2\le\delta\|\mathsf n^{1/2}z\|^2.
+\tag{80.10}
+$$
+
+The raw old positive energy of $Ez$ is at most $(3a+1)b_Z[z]$; $Ez$ itself need not be in $\mathcal D_-$. Applying the squared triangle inequality to $x+Ez$, and then to $f_{\rm old}-Ez$, gives(80.6). Finally $L^{-1}=I-N$ and $C$ is unitary. $\square$
+
+**Lemma 80.3 (a fractional estimate for this entire source shear).** Let $B\ge I$ represent $b_{\rm in}$, and put
+
+$$
+\vartheta=\tfrac18,\qquad
+H_a=1+10^4(1+a),\qquad d_\delta=H_a^7\delta^{3/8}.
+\tag{80.11}
+$$
+
+The following compositions have bounded extensions on the entire completed input space:
+
+$$
+\|B^\vartheta N B^{-\vartheta}\|\le d_\delta,\qquad
+\|B^\vartheta N^* B^{-\vartheta}\|\le d_\delta.
+\tag{80.12}
+$$
+
+The constants are uniform over every field-number block and every auxiliary Hilbert space.
+
+Proof. This is a source estimate on the displayed intervals, rectangles and triangles. Normalize the Hilbert measure on a stratum of dimension $q$ by multiplying its function by $\delta^{q/2}$. Atomic components, including the reference, have $q=0$. The kinetic-to-Hilbert weight ratio on every positive-dimensional stratum is then $1/\delta$, not one. In a total-field-number block $j\ge0$, write $\tau=1+\Omega j$ and let $\Lambda$ be the direct sum of Dirichlet Laplacians on the independent intervals and cells, zero on atomic and reference components. Define
+
+$$
+D_j=\tau I+(a/\delta)\Lambda.
+\tag{80.13}
+$$
+
+This is a comparison operator on all independent strata, not a replacement for $B_j=\tau I+aK_j$, where $K_j$ represents the actual $k_-\oplus k_Z$ in this block and these normalized coordinates. The triangular lifting $\mathcal T=I+R$ of(80.7)–(80.8) maps the complete form domain of $D_j$ onto that of $B_j$.
+
+Here are uniform quantitative bounds for that lifting and for $N$. In normalized coordinates each dimension-raising term has coefficient $\delta^{(q-p)/2}$, $q>p$. Its underlying map is multiplication of a scalar by $\theta_i$ or by a product of two $\theta_i$'s, the lift $g\mapsto\theta_i\otimes g$ or its coordinate exchange, or the restriction of an antisymmetric pair of these lifts to one triangle. Triangle atomic lifts are antisymmetric products. These descriptions apply to(80.3) as well. Their Hilbert adjoints are the corresponding integral contractions. There are at most $512$ such terms in $R$, and fewer in $N$: the full ordered collection has $42$ intervals, $30$ different-cable rectangles and $12$ triangles, besides $9$ atomic coordinates and the reference. The old-plus-new partition only removes boundary terms. Even counting the two terms of each antisymmetric expression separately gives at most $84+120+120+48+24=396$ terms in $R$.
+
+For completeness, the bounds on these particular elementary maps can be checked directly in sine series. The normalized interval functions $s_n(x)=\sqrt2\sin(n\pi x)$ diagonalize $\Lambda$; both $\theta_i$ have coefficients of absolute value $\sqrt2/(\pi n)$. At $\vartheta=1/8$,
+
+$$
+\sum_{n\ge1}\frac{2(1+n^2)^{1/4}}{\pi^2 n^2}<4,
+\qquad
+\sum_{n\ge1}\frac{2(\pi^2 n^2)^{1/4}}{\pi^2 n^2}<4,
+\tag{80.14}
+$$
+
+using $\sum n^{-3/2}\le3$. On a square, for a slice frequency $m\ge1$ and $c=a/\delta$,
+
+$$
+\frac{(\tau+c\pi^2(n^2+m^2))^\vartheta}
+     {(\tau+c\pi^2m^2)^\vartheta}
+\le(1+n^2)^\vartheta.
+\tag{80.15}
+$$
+
+Equations(80.14)–(80.15) bound the conjugated tensor lift by two. For its adjoint contraction the reversed spectral ratio is at most one, so Cauchy–Schwarz bounds it by $\|\theta_i\|$. The Dirichlet Laplacian on a right triangle is unitarily equivalent, by antisymmetric reflection and normalization, to the antisymmetric part of the square Dirichlet Laplacian. Its eigenfunctions are the antisymmetric pairs $s_n(x)s_m(y)-s_m(x)s_n(y)$, $n\ne m$. Thus the same bounds apply to the antisymmetric lifts and their actual adjoints, with an additional factor at most two.
+
+For an atomic-to-interval term use $(\tau+c\lambda)^\vartheta\le\tau^\vartheta+c^\vartheta\lambda^\vartheta$ and(80.14). Its conjugated norm, including its $\sqrt\delta$ coefficient, is at most $3(1+a)\delta^{1/2-\vartheta}$. Atomic-to-square or triangle terms have coefficient $\delta$; splitting $(\lambda_n+\lambda_m)^\vartheta\le\lambda_n^\vartheta+\lambda_m^\vartheta$ gives the same upper bound with constant $16$ and the weaker exponent $1/2-\vartheta$. The reverse atomic contractions have spectral ratio at most one. It follows that every elementary term, or antisymmetric pair treated together, has conjugated norm at most $16(1+a)\delta^{3/8}$. This includes both directions needed for $N^*$; no assertion that $N^*$ preserves a full trace domain is made. Summing at most $512$ terms yields
+
+$$
+\begin{aligned}
+\|D_j^\vartheta R D_j^{-\vartheta}\|&\le(H_a-1)\delta^{3/8},\\
+\max\{\|D_j^\vartheta N D_j^{-\vartheta}\|,
+       \|D_j^\vartheta N^* D_j^{-\vartheta}\|\}
+ &\le(H_a-1)\delta^{3/8}.
+\end{aligned}
+\tag{80.16}
+$$
+
+The same elementary formulas have Hilbert norm at most $16(1+a)$ and raw form-norm bound at most $16(1+a)$. For example, for a normalized slice lift $\sqrt\delta\,\theta_i\otimes g$, its squared raw $\tau+c|\nabla|^2$ norm is at most $\delta\|g\|_{D_j^{1/2}}^2+a\|g\|^2\le(1+a)\|g\|_{D_j^{1/2}}^2$. Atomic lifts and antisymmetric pairs obey the stated larger bound by differentiation of their displayed polynomials. Therefore $\mathcal T$ has Hilbert and form-map norms at most $H_a$, and $\mathcal T^{-1}=I-R+R^2$ has the corresponding norms at most $H_a^2$. Interpolation of these Hilbert and form bounds gives
+
+$$
+\|B_j^\vartheta\mathcal T D_j^{-\vartheta}\|\le H_a,
+\qquad
+\|D_j^\vartheta\mathcal T^{-1}B_j^{-\vartheta}\|\le H_a^2.
+\tag{80.17}
+$$
+
+This use of Hilbert-scale interpolation follows by applying the three-lines theorem to the matrix elements of $B_j^{z/2}\mathcal T D_j^{-z/2}$ and its inverse map, initially with spectral cutoffs and then by closure. The endpoint at $\operatorname{Re}z=1$ is exactly the proved complete form-map bound; it is not an assumed domain identification.
+
+Equation(80.16) and $R^3=0$ also give
+$\|D_j^\vartheta\mathcal T D_j^{-\vartheta}\|\le H_a$ and
+$\|D_j^\vartheta\mathcal T^{-1}D_j^{-\vartheta}\|\le H_a^2$.
+Combining with(80.17) proves
+
+$$
+\|B_j^\vartheta D_j^{-\vartheta}\|\le H_a^3,
+\qquad \|D_j^\vartheta B_j^{-\vartheta}\|\le H_a^3.
+\tag{80.18}
+$$
+
+Sandwich(80.16) between these two bounded maps to obtain(80.12). These estimates hold for every $\tau\ge1$, independently of its size. Finite sine sums are used only to establish bounded operators by density; all sine frequencies remain. Taking the orthogonal sum over all $j$, and tensoring each block with its full multiplicity and auxiliary space, gives the asserted complete operators. Exchange symmetry is a reducing subspace of the source forms and maps, so restriction preserves the bounds. $\square$
+
+**Theorem 80.4 (one unitary with both domains, both energies and vanishing full copying norm).** For the completion(80.1) and the fixed shear(80.3), let
+
+$$
+A=B^{-1/2},\quad F=SA,\quad P=(A S^*S A)^{1/2},
+\qquad V=\operatorname{polar}(F).
+\tag{80.19}
+$$
+
+Then $V:\mathcal H_-\oplus Z\to\mathcal H_+$ is one input-independent onto linear unitary, with actual adjoint and exact domains
+
+$$
+V=F P^{-1}\text{ on }\mathcal Q,\qquad
+V^*=P^{-1}A S^*,\qquad
+V\mathcal Q=\mathcal D_+,\qquad V^*\mathcal D_+=\mathcal Q.
+\tag{80.20}
+$$
+
+The adjoint composition is everywhere defined; neither $P^{-1}$ nor $A^{-1}$ is asserted bounded on the whole Hilbert space. On the entire respective form domains the constants
+
+$$
+C_{+,\delta}=C_{-,\delta}=(6a+3)(1+\sqrt\delta)^2,
+\qquad K_\delta\le16(6a+3)^2
+\tag{80.21}
+$$
+
+satisfy(79.9). Moreover, on all completed inputs, and consequently on the entire old carrier,
+
+$$
+\begin{gathered}
+\|C^*V-I\|\le\eta_a(\delta),\qquad
+h_\delta=\|Vi_--J\|\le\eta_a(\delta),\\
+\eta_a(\delta)=\min\{2,\ 1024[1+10^4(1+a)]^7\delta^{3/8}\}
+\longrightarrow0\quad(\delta\downarrow0).
+\end{gathered}
+\tag{80.22}
+$$
+
+Here $J=T$ because the outlet reserve is zero. The norm includes every output coordinate, all continuum frequencies, every field excitation, reference superpositions and arbitrary auxiliary correlations, including old inputs outside every energy ceiling.
+
+Proof. First establish the domains and energies for this very $V$. The bounded operator $F$ is injective and has dense range $S\mathcal Q=\mathcal D_+$. Its polar partial isometry is therefore an onto unitary. Polar decomposition gives $F=VP$ and $F^*=PV^*=A S^*$. Since $S^*$ is onto,
+
+$$
+\operatorname{Ran}P=\operatorname{Ran}F^*
+ =\operatorname{Ran}A=\mathcal Q,\qquad
+V\operatorname{Ran}P=\operatorname{Ran}F=\mathcal D_+.
+\tag{80.23}
+$$
+
+This proves(80.20), including the types and the domain of the adjoint composition. The forms and shear reduce particle sector and total field number, so their polar construction does too; no particle-only tensor factorization of $V$ is assumed. On the reference $A$ is positive and $N=0$, so $V=C$ there for every reference-field excitation. Put $s=\|S\|$, $q=\|S^{-1}\|$. For $u=F^*y\in\mathcal Q$ one has $B^{1/2}u=S^*y$ and $Vu=F V^*y$. For $v=Fx\in\mathcal D_+$ one has $V^*v=Px=F^*Vx$. Hence(80.6) gives
+
+$$
+\begin{aligned}
+b_{\rm out}[Vu]&\le M\|y\|^2\le Mq^2 b_{\rm in}[u],\\
+b_{\rm in}[V^*v]&=\|S^*Vx\|^2\le s^2\|x\|^2
+ =s^2 b_{\rm in}[S^{-1}v]\le Ms^2 b_{\rm out}[v].
+\end{aligned}
+\tag{80.24}
+$$
+
+This proves(80.21) on all domain vectors, including reserve inputs.
+
+It remains to prove the unrestricted norm, rather than infer it from $\|N\|$. Work in $C$ coordinates and put $\gamma=1/4$, $d=d_\delta$. Equation(80.12), its adjoint, and $A=B^{-1/2}$ imply
+
+$$
+\|N\|\le d,\qquad
+\|A^{-\gamma}NA^\gamma\|\le d,\qquad
+\|A^\gamma N A^{-\gamma}\|\le d.
+\tag{80.25}
+$$
+
+For $d>1/4$ the bound by two already proves(80.22), so assume $d\le1/4$. Regularize only inside this proof: $A_\epsilon=A+\epsilon I$, $\epsilon>0$. Functional calculus and $0<\gamma<1$ give
+
+$$
+\|A_\epsilon^{-\gamma}N A_\epsilon^\gamma\|\le2d,
+\qquad \|A_\epsilon^\gamma N A_\epsilon^{-\gamma}\|\le2d.
+\tag{80.26}
+$$
+
+Indeed $A_\epsilon^\gamma=(A^\gamma+\epsilon^\gamma I)Z_\epsilon$ with a commuting contraction $Z_\epsilon$; both $A_\epsilon^{-\gamma}A^\gamma$ and $\epsilon^\gamma A_\epsilon^{-\gamma}$ are contractions. Expanding proves the first estimate. Apply it to $N^*$ and take adjoints for the second.
+
+For $0\le t\le1$ define the bounded invertible operators
+
+$$
+L_t=I+tN,\quad F_t=L_tA_\epsilon=Q_tU_t,
+\qquad Q_t=|F_t^*|>0,
+\tag{80.27}
+$$
+
+where $U_t$ is unitary. This path is an auxiliary operator estimate, not a time-dependent source or physical control. Nilpotence gives $L_t^{-1}=I-tN$. The identities
+$A_\epsilon^{-1}L_t^{-1}Q_t=U_t^*$ and
+$Q_t^{-1}L_t A_\epsilon=U_t$, followed by Hilbert-scale interpolation, imply
+
+$$
+\begin{aligned}
+\|A_\epsilon^{-\gamma}L_t^{-1}Q_t^\gamma\|
+ &\le(1+d)^{1-\gamma},\\
+\|Q_t^{-\gamma}L_t A_\epsilon^\gamma\|
+ &\le(1+d)^{1-\gamma}.
+\end{aligned}
+\tag{80.28}
+$$
+
+Using(80.26) to insert or remove $L_t$ in these equations shows
+$\|A_\epsilon^{-\gamma}Q_t^\gamma\|,
+\|Q_t^{-\gamma}A_\epsilon^\gamma\|
+\le(1+2d)(1+d)^{1-\gamma}<2$.
+Taking adjoints and sandwiching(80.26) therefore yields
+
+$$
+\|Q_t^\gamma NQ_t^{-\gamma}\|\le8d,
+\qquad\|Q_t^{-\gamma}NQ_t^\gamma\|\le8d.
+\tag{80.29}
+$$
+
+We give the operator-norm summation that makes these fractional estimates useful. Let $P_k=\mathbf1_{[2^k,2^{k+1})}(Q_t)$, and solve
+$Q_t X+XQ_t=NQ_t$. On the $(k,l)$ block the convergent semigroup integral gives
+
+$$
+X_{kl}=\int_0^\infty e^{-uQ_k}N_{kl}Q_l e^{-uQ_l}\,du,
+\qquad \|X_{kl}\|\le2\|N_{kl}\|,
+\tag{80.30}
+$$
+
+where $Q_k$ is the restriction to $P_k$. Equation(80.29), with $c_*=8d$, bounds the blocks with $k-l=m\ne0$ by
+$c_*2^{-\gamma(|m|-1)}$, and diagonal blocks by $c_*$. Each fixed block diagonal maps mutually orthogonal input blocks to mutually orthogonal output blocks, so its norm is the supremum of its block norms. Summing the geometric series in block-diagonal operator norm proves
+
+$$
+\|X-X^*\|
+ \le4c_*\left(1+\frac2{1-2^{-\gamma}}\right)<1024d.
+\tag{80.31}
+$$
+
+No dimension or spectral condition number occurs in this bound.
+
+The invertible polar factors in(80.27) are norm differentiable. Since $F_t'=NF_t$, differentiating $F_t=Q_tU_t$ and its adjoint gives, for the skew-adjoint $Y_t=U_t'U_t^*$,
+
+$$
+Q_tY_t+Y_tQ_t=NQ_t-Q_tN^*,\qquad Y_t=X-X^*.
+\tag{80.32}
+$$
+
+Uniqueness follows from $Q_t>0$. Equations(80.31)–(80.32) and $U_0=I$ imply
+$\|U_1-I\|\le1024d$, uniformly in $\epsilon>0$.
+
+Finally $L A_\epsilon\to L A$ in norm, and their positive polar moduli converge in norm by continuous functional calculus. If $W=\operatorname{polar}(LA)$ and $P_0=|LA|$, then
+
+$$
+\|(U_1-W)P_0x\|
+\le\|(P_0-|L A_\epsilon|)x\|
+       +\|(L A_\epsilon-LA)x\|\longrightarrow0.
+\tag{80.33}
+$$
+
+The range of $P_0$ is dense and all these factors are unitary, so $U_1\to W$ strongly. The uniform bound $\|(U_1-I)x\|\le1024d\|x\|$ now passes to every $x$, proving the operator-norm bound $\|W-I\|\le1024d$. This is a uniform bounded-operator estimate followed by a limit, not an inference of operator-norm convergence from fixed-vector convergence. Since $W=C^*V$, it proves(80.22). $\square$
+
+**Corollary 80.5 (scope of the additive mathematical certificate).** For each separate complete common or killed commission, use the unchanged coupled forms and the constants $\lambda,u_0,\sigma_0$ of(79.19), with the reserve(80.1). The same $V$ obeys both complete shifted-energy inequalities with
+
+$$
+D_{+,\delta}=D_{-,\delta}
+ =\frac{2u_0}{\lambda}(6a+3)(1+\sqrt\delta)^2.
+\tag{80.34}
+$$
+
+Together with(80.22) this supplies an existential joint-thinning family in the additive class(79.3)–(79.5) for this current renewal. It supplies the full-map norm required by the79.4 to stronger78.11 to66.7 mathematical consumer, with every reserve output included. It is not an executed ingress, renewal actuator, clock or finite-price certificate.
+
+Proof. Apply $\lambda b/2\le E\le u_0b$ from(79.19) on the two sides of each inequality(80.24). These are positive shifted-form amplification constants, not physical energy prices. Theorem80.4 supplies one map and its actual adjoint for all three requirements. The fixed-$\delta$ obstruction79.2 and necessary inequality79.11 are reused without change. In particular exact copying at positive $\delta$ remains impossible; under bounded $K$,79.11 excludes $h=o(\sqrt\delta)$ if $h\to0$. The slower sufficient upper bound(80.22) does not assert an optimal rate. $\square$
+
+**Definition 80.6 (mathematical attribution and retained boundaries).** Polar decomposition, exact polar/adjoint identities, Hilbert-scale interpolation, Dirichlet sine series, reflection on a right triangle and Sylvester equations are mature mathematics used inside this source certificate. Gesztesy–Malamud–Mitrea–Naboko, [*Generalized Polar Decompositions for Closed Operators in Hilbert Spaces and Some Applications*, arXiv:0808.1731v2](https://arxiv.org/html/0808.1731v2), Theorems2.6–2.7, supplies the closed-operator polar identities: here $F$ is bounded, injective and dense-range, so both support projections are identities. The exact range deductions in(80.23) use these identities. The source-specific content is the bound(80.12) for the entire weighted ordered carrier and its use in(80.22) for the fixed form-adapted polar candidate, together with the same candidate's source domains and energies. No generic polar or interpolation theorem is claimed as new.
+
+Duong–Philipp, [*The effect of perturbations of linear operators on their polar decomposition*, arXiv:1602.05304v2](https://arxiv.org/html/1602.05304v2), Theorems1.1–1.2, assumes semi-Fredholm or closed-range operators and bounds involving positive reduced minimum moduli. The present inverse square root has no such lower bound. Liu–Luo–Xu, [*New multiplicative perturbation bounds for the generalized polar decomposition*, arXiv:1807.03298v1](https://arxiv.org/html/1807.03298v1), Theorem3.1, gives a finite-matrix Frobenius-norm bound. Neither result is used as an unrestricted infinite-carrier norm estimate;(80.25)–(80.33) prove the required estimate with its source-specific fractional hypotheses.
+
+Post–Zimmer, [arXiv:2202.03234v1](https://arxiv.org/html/2202.03234v1), Definition1.4, imposes resolvent-weighted defects at a common resolvent point, with conjugate-resolvent conditions when that point is nonreal. Zahn, [arXiv:1512.05512v3](https://arxiv.org/html/1512.05512v3), Section2 and Proposition1, retains positive boundary mass and matching bulk/boundary traces in its half-space model. Cherednichenko–Ershova–Kiselev, [arXiv:2205.04397v4](https://arxiv.org/html/2205.04397v4), Theorem4.5, compares resolvents for its thin-domain geometry and massive-vertex limit through its stated partial isometry. These are related domain and singular-mass settings; none is a theorem supplying(80.22) for the present ordered hard-core carrier. No global priority or literature-exhaustion assertion is made.
+
+Every original label, order, occurrence, optional earlier history and immutable INITIAL, cap equality, source-independent actor initialization, source/control right, Read, refusal, Stop, chronological record, copy and COMPLETE condition remains that of55.1,60.1–60.3 and66.1. The complete common and killed inverses and their actual diagonal compensation remain separate, with both quadratures, all three modes, the reference and every auxiliary correlation. The parameter $\delta$ indexes mathematical commissions; neither it nor the auxiliary $t$ in(80.27) is an executed switching law. Source-compatible physical ingress, full operational implementation, metric and clock conversion, finite precision and finite execution, acquisition and lifetime-resource accounting remain unpaid. The original nonrecurrent common-zero, $j_c$,155, attainment and sustained programme are not settled. The finite-tree retained-record developments supply no automatic interface, domain, norm, operation or resource identification here. The one-way, nonadditive/coupled-reserve and geometric alternatives keep their own evidence requirements.
+
+## 78.99 追加锚（本行以下为增补区）

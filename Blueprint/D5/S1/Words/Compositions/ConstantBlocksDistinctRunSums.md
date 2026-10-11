@@ -62,7 +62,21 @@ $$\forall n: \mathbb{N}, \forall p: \operatorname{Partition}\left(n\right), \ope
 
 Choose a valid decomposition with the fewest blocks. If k blocks share a value and there are o other blocks, k > o+1 supplies k-1 different candidate sums by adding the largest same-value sum to each remaining one. Each candidate exceeds every old same-value sum, so one avoids all o other sums. Merging that pair contradicts minimality. Thus every color count obeys 2k <= total+1. A greedy induction, retaining a forbidden first color, orders the blocks with adjacent values different. Mathlib splitBy_flatten then certifies that these blocks are exactly the maximal runs. Conversely, the maximal runs themselves provide the constant-block decomposition.
 
-**Theorem 1.5 (The A382427 counting identity).**
+**Theorem 1.5 (Splitting positive alternating constant blocks).**
+
+$$\forall \operatorname{l}: \operatorname{List} (\operatorname{Nat} \times \operatorname{Nat}), (\forall \operatorname{b} \in \operatorname{l} , 0 < \operatorname{b}.2) \to ((\operatorname{l}.\operatorname{map} \operatorname{Prod}.\operatorname{fst}) . \operatorname{IsChain} (\operatorname{fun} \operatorname{a} \operatorname{b} \mapsto \operatorname{a} \neq \operatorname{b})) \to (((\operatorname{l}.\operatorname{map} (\operatorname{fun} \operatorname{b} \mapsto \operatorname{List}.\operatorname{replicate} \operatorname{b}.2 \operatorname{b}.1)) . \operatorname{flatten}) . \operatorname{splitBy} (\operatorname{fun} \operatorname{a} \operatorname{b} \mapsto \operatorname{BEq.beq}\left(\operatorname{a}, \operatorname{b}\right)) = \operatorname{l}.\operatorname{map} (\operatorname{fun} \operatorname{b} \mapsto \operatorname{List}.\operatorname{replicate} \operatorname{b}.2 \operatorname{b}.1))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/ConstantBlocksDistinctRunSums.split_replicates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* OEIS Foundation Inc. (2025). *OEIS A382427*. URL: <https://oeis.org/A382427>.
+
+*Commentary.*
+
+Positive block multiplicities and different consecutive values make the displayed blocks exactly the maximal runs returned by List.splitBy.
+
+**Theorem 1.6 (The A382427 counting identity).**
 
 $$\forall n: \mathbb{N}, \operatorname{card}\left(\operatorname{filter}\left((p \mapsto \operatorname{HasConstantBlocks}\left(\operatorname{parts}\left(p\right)\right)), (\operatorname{univ}\left(\right): \operatorname{Finset}\left(\operatorname{Partition}\left(n\right)\right))\right)\right) = \operatorname{card}\left(\operatorname{filter}\left((p \mapsto \operatorname{HasDistinctRunSums}\left(\operatorname{parts}\left(p\right)\right)), (\operatorname{univ}\left(\right): \operatorname{Finset}\left(\operatorname{Partition}\left(n\right)\right))\right)\right)$$
 
@@ -87,3 +101,4 @@ The pointwise equivalence identifies two filters of the same finite type Nat.Par
 - Truth anchor: `D5/S1/Words/Compositions/ConstantBlocksDistinctRunSums.card_constantBlocks_eq_distinctRunSums`
 - Truth anchor: `D5/S1/Words/Compositions/ConstantBlocksDistinctRunSums.constantBlocks_iff_distinctRunSums`
 - Truth anchor: `D5/S1/Words/Compositions/ConstantBlocksDistinctRunSums.runSums`
+- Truth anchor: `D5/S1/Words/Compositions/ConstantBlocksDistinctRunSums.split_replicates`

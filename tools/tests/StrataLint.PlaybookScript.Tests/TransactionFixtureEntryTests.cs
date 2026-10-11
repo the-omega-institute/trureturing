@@ -37,7 +37,7 @@ public sealed class TransactionFixtureEntryTests
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("LEDGER_FROZEN_INVALID explicit apphost query", Diagnostics(result), StringComparison.Ordinal);
-        Assert.Equal(new[] { "make:lean-report", "dotnet:deposit-header-check", "make:emit", "dotnet:ledger-frozen" },
+        Assert.Equal(new[] { "make:lean-report-scoped", "dotnet:deposit-header-check", "make:emit", "dotnet:ledger-frozen" },
             fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
