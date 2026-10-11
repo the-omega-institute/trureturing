@@ -10,6 +10,7 @@ import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SharpChallengeInstrume
 import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Probability.ProbabilityMassFunction.Integrals
+import Mathlib.Probability.Moments.Basic
 
 noncomputable section
 
@@ -86,6 +87,16 @@ private theorem row_laplace {Z : Type*} [Fintype Z] (p : PMF Z)
     _ ≤ 1 - (1 - Real.exp (-1)) / C * μ := by gcongr
     _ = rate μ C := by unfold rate; ring
 
+private theorem rate_bounds {μ C : ℝ} (hμ : 0 < μ) (hμC : μ ≤ C) :
+    0 < rate μ C ∧ rate μ C < 1 := by
+  have hC := lt_of_lt_of_le hμ hμC
+  have he := Real.exp_pos (-1)
+  have he1 := Real.exp_lt_one_iff.mpr (by norm_num : (-1 : ℝ) < 0)
+  have hm : μ / C ≤ 1 := (div_le_one hC).mpr hμC
+  have hm0 : 0 < μ / C := div_pos hμ hC
+  dsimp [rate]
+  constructor <;> nlinarith
+
 /-- Every forced adaptive query table has geometric Laplace decay under a
 uniform conditional drift bound at every full history and source action. -/
 theorem adaptive_laplace_decay
@@ -98,13 +109,7 @@ theorem adaptive_laplace_decay
     ∑ h, (historyLaw κ π n h).toReal * Real.exp (-clock c n h / C) ≤ rate μ C ^ n := by
   classical
   have hC : 0 < C := lt_of_lt_of_le hμ hμC
-  have hr : 0 ≤ rate μ C := by
-    have he := Real.exp_pos (-1)
-    have he1 := Real.exp_le_one_iff.mpr (by norm_num : (-1 : ℝ) ≤ 0)
-    have hm : μ / C ≤ 1 := (div_le_one hC).mpr hμC
-    have hm0 : 0 ≤ μ / C := div_nonneg hμ.le hC.le
-    dsimp [rate]
-    nlinarith
+  have hr : 0 ≤ rate μ C := (rate_bounds hμ hμC).1.le
   induction n with
   | zero => simp [historyLaw, clock, PMF.pure_apply]
   | succ n ih =>
@@ -137,5 +142,135 @@ theorem adaptive_laplace_decay
             rate μ C := (Finset.sum_mul ..).symm
         _ ≤ rate μ C ^ n * rate μ C := mul_le_mul_of_nonneg_right ih hr
         _ = rate μ C ^ (n + 1) := (pow_succ ..).symm
+
+private theorem low_clock_tail
+    (κ : ∀ n, Record A Y n → A → PMF Y) (π : Policy A Y)
+    (c : ∀ n, Record A Y n → A → Y → ℝ)
+    {μ C : ℝ} (hμ : 0 < μ) (hμC : μ ≤ C)
+    (hc : ∀ n h a y, 0 ≤ c n h a y ∧ c n h a y ≤ C)
+    (hd : ∀ n h a, μ ≤ ∑ y, (κ n h a y).toReal * c n h a y)
+    (n : ℕ) (b : ℝ) :
+    ((historyLaw κ π n).toOuterMeasure {h | clock c n h ≤ b}).toReal ≤
+      Real.exp (b / C) * rate μ C ^ n := by
+  let : MeasurableSpace (Record A Y n) := ⊤
+  let : MeasurableSingletonClass (Record A Y n) := ⟨fun _ => trivial⟩
+  have hC := lt_of_lt_of_le hμ hμC
+  have h := measure_le_le_exp_mul_mgf (μ := (historyLaw κ π n).toMeasure)
+    (X := clock c n) b (show -(1 / C) ≤ 0 from neg_nonpos.mpr (div_nonneg zero_le_one hC.le))
+    (Integrable.of_finite (f := fun h => Real.exp (-(1 / C) * clock c n h)))
+  rw [Measure.real, PMF.toMeasure_apply_eq_toOuterMeasure] at h
+  simp only [mgf, PMF.integral_eq_sum, smul_eq_mul] at h
+  have he (h : Record A Y n) : Real.exp (-(1 / C) * clock c n h) =
+      Real.exp (-clock c n h / C) := by congr 1; ring
+  simp_rw [he] at h
+  convert h.trans (mul_le_mul_of_nonneg_left
+    (adaptive_laplace_decay κ π c hμ hμC hc hd n) (Real.exp_pos _).le) using 1 <;>
+    (congr 2; ring)
+
+/-- Uniform geometric low-clock tails for arbitrary history-dependent source
+laws and arbitrary randomized forced query tables. No topology on worlds is used. -/
+theorem adaptive_clock_tail
+    (κ : ∀ n, Record A Y n → A → PMF Y) (π : Policy A Y)
+    (c : ∀ n, Record A Y n → A → Y → ℝ)
+    {μ C : ℝ} (hμ : 0 < μ) (hμC : μ ≤ C)
+    (hc : ∀ n h a y, 0 ≤ c n h a y ∧ c n h a y ≤ C)
+    (hd : ∀ n h a, μ ≤ ∑ y, (κ n h a y).toReal * c n h a y) :
+    0 < rate μ C ∧ rate μ C < 1 ∧ 0 < slope μ C ∧
+      0 < tailRate μ C ∧ tailRate μ C < 1 ∧
+      ∀ n : ℕ, ((historyLaw κ π n).toOuterMeasure
+        {h | clock c n h ≤ slope μ C * n}).toReal ≤ tailRate μ C ^ n := by
+  have hC := lt_of_lt_of_le hμ hμC
+  obtain ⟨hr0, hr1⟩ := rate_bounds hμ hμC
+  have hs : 0 < slope μ C := by
+    dsimp [slope]
+    exact mul_pos_of_neg_of_neg (by linarith) (Real.log_neg hr0 hr1)
+  have ht0 : 0 < tailRate μ C := Real.sqrt_pos.mpr hr0
+  have ht1 : tailRate μ C < 1 := by
+    simpa [tailRate] using (Real.sqrt_lt_sqrt hr0.le hr1)
+  refine ⟨hr0, hr1, hs, ht0, ht1, fun n => ?_⟩
+  have he : Real.exp (slope μ C * n / C) * rate μ C ^ n = tailRate μ C ^ n := by
+    rw [show slope μ C * n / C = (n : ℝ) * (-(Real.log (rate μ C) / 2)) by
+      dsimp [slope]; field_simp]
+    rw [Real.exp_nat_mul, ← mul_pow]
+    congr 1
+    rw [← Real.exp_log hr0, ← Real.exp_add]
+    convert Real.exp_half (Real.log (rate μ C)) using 1 <;>
+      (simp [tailRate, Real.exp_log hr0]; ring)
+  exact he ▸ low_clock_tail κ π c hμ hμC hc hd n (slope μ C * n)
+
+/-- Replace the return decision by a fixed next query, preserving all query mass. -/
+def forceQueries (a₀ : A) (σ : ∀ n, Record A Y n → PMF (Option A)) : Policy A Y :=
+  fun n h => (σ n h).map (fun a => a.getD a₀)
+
+/-- Probability of actually acquiring a specified n-query history before returning.
+The decision to return is `none`; the next query is `some a`. -/
+def acquiredMass (κ : ∀ n, Record A Y n → A → PMF Y)
+    (σ : ∀ n, Record A Y n → PMF (Option A)) : (n : ℕ) → Record A Y n → ℝ
+  | 0, _ => 1
+  | n + 1, h => acquiredMass κ σ n h.1 *
+      (σ n h.1 (some h.2.1)).toReal * (κ n h.1 h.2.1 h.2.2).toReal
+
+private theorem acquired_mass_bounds (κ : ∀ n, Record A Y n → A → PMF Y)
+    (σ : ∀ n, Record A Y n → PMF (Option A)) (a₀ : A) (n : ℕ)
+    (h : Record A Y n) :
+    0 ≤ acquiredMass κ σ n h ∧
+      acquiredMass κ σ n h ≤ (historyLaw κ (forceQueries a₀ σ) n h).toReal := by
+  classical
+  induction n with
+  | zero => cases h; simp [acquiredMass, historyLaw, PMF.pure_apply]
+  | succ n ih =>
+      rcases h with ⟨h, a, y⟩
+      have ha : (σ n h (some a)).toReal ≤ (forceQueries a₀ σ n h a).toReal := by
+        apply ENNReal.toReal_mono (PMF.apply_ne_top _ _)
+        dsimp [forceQueries]
+        rw [PMF.map_apply, tsum_fintype]
+        simpa using (Finset.single_le_sum (f := fun z : Option A =>
+          if a = z.getD a₀ then σ n h z else 0)
+          (fun z _ => bot_le) (Finset.mem_univ (some a)))
+      dsimp [acquiredMass]
+      refine ⟨mul_nonneg (mul_nonneg (ih h).1 ENNReal.toReal_nonneg) ENNReal.toReal_nonneg, ?_⟩
+      rw [history_law_succ, ENNReal.toReal_mul, ENNReal.toReal_mul, ← mul_assoc]
+      exact mul_le_mul_of_nonneg_right
+        (mul_le_mul (ih h).2 ha ENNReal.toReal_nonneg
+          ENNReal.toReal_nonneg) ENNReal.toReal_nonneg
+
+/-- A stopping policy's acquired low-clock prefixes obey the same geometric bound.
+The second inequality splits its call-depth tail using the clock already acquired at that depth. -/
+theorem stopping_prefix_clock_tail
+    (κ : ∀ n, Record A Y n → A → PMF Y)
+    (σ : ∀ n, Record A Y n → PMF (Option A)) (a₀ : A)
+    (c : ∀ n, Record A Y n → A → Y → ℝ)
+    {μ C : ℝ} (hμ : 0 < μ) (hμC : μ ≤ C)
+    (hc : ∀ n h a y, 0 ≤ c n h a y ∧ c n h a y ≤ C)
+    (hd : ∀ n h a, μ ≤ ∑ y, (κ n h a y).toReal * c n h a y)
+    (n : ℕ) :
+    (∑ h, if clock c n h ≤ slope μ C * n then acquiredMass κ σ n h else 0) ≤
+        tailRate μ C ^ n ∧
+    (∑ h, acquiredMass κ σ n h) ≤
+      (∑ h, if slope μ C * n ≤ clock c n h then acquiredMass κ σ n h else 0) +
+        tailRate μ C ^ n := by
+  classical
+  have htail := (adaptive_clock_tail κ (forceQueries a₀ σ) c hμ hμC hc hd).2.2.2.2.2 n
+  have hm : ∀ h, (if clock c n h ≤ slope μ C * n then historyLaw κ (forceQueries a₀ σ) n h
+      else 0) ≠ ⊤ := by intro h; split_ifs <;> simp [PMF.apply_ne_top]
+  rw [PMF.toOuterMeasure_apply_fintype] at htail
+  simp only [Set.indicator_apply, Set.mem_ofPred_eq] at htail
+  rw [ENNReal.toReal_sum (fun h _ => hm h)] at htail
+  simp only [apply_ite ENNReal.toReal, ENNReal.toReal_zero] at htail
+  have hlo : (∑ h, if clock c n h ≤ slope μ C * n then acquiredMass κ σ n h else 0) ≤
+      tailRate μ C ^ n := by
+    refine le_trans (Finset.sum_le_sum fun h _ => ?_) htail
+    split_ifs
+    · exact (acquired_mass_bounds κ σ a₀ n h).2
+    · exact le_rfl
+  refine ⟨hlo, ?_⟩
+  calc
+    _ ≤ (∑ h, if slope μ C * n ≤ clock c n h then acquiredMass κ σ n h else 0) +
+        (∑ h, if clock c n h ≤ slope μ C * n then acquiredMass κ σ n h else 0) := by
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_le_sum
+      intro h _
+      split_ifs <;> have hp := (acquired_mass_bounds κ σ a₀ n h).1 <;> linarith
+    _ ≤ _ := by gcongr
 
 end D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison
