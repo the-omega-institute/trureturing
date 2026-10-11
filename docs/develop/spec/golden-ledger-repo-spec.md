@@ -282,7 +282,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 writer 不提供事件追加、事件替换、`Reattest`、`Revoke`、`Supersede`、`EnvironmentRecoordinate` 动作,不提供 `ledger-append` 别名或 `--from-accepted` 物化入口。
 
-**A14.4 依赖与读取。** 模块依赖由 Lean 源码 import 关系承担,通过 `LeanImportAdjacency.BuildFromSources` 一类源码读取现算,不在冻结记录中持久化。deposit、重新钉定、cover/消化评估、冻结声明索引、mathlib 升级授权、SL-008、truth-export 与 truth-graph 只读取状态表及所需的当前 report/源码,不读取事件身份或事件图。cover 核对既有覆盖目标时,要求其模块 pin 等于当前 report 重算的模块陈述摘要;声明解析仍使用当前 report。mathlib 升级授权的旧侧声明根取自受保护基线的状态片声明清单,新侧取自候选范围报告,不重建或重验旧 Lean 环境。
+**A14.4 依赖与读取。** 模块依赖由 Lean 源码 import 关系承担,通过 `LeanImportAdjacency.BuildFromSources` 一类源码读取现算,不在冻结记录中持久化。deposit、重新钉定、cover/消化评估、冻结声明索引、mathlib 升级授权、SL-008、truth-export 与 truth-graph 只读取状态表及所需的当前 report/源码,不读取事件身份或事件图。cover 核对既有覆盖目标时,要求其模块 pin 等于当前 report 重算的模块陈述摘要;声明解析仍使用当前 report。mathlib 升级授权的旧侧声明根取自受保护基线的状态片声明清单,新侧取自候选范围报告,不重建或重验旧 Lean 环境。该源码比较的保证限于可解析的仓内命题及其定义依赖;真实 toolchain/mathlib pin bump 后仓外同名常量、定义体、实例或名称解析变化的一般逻辑等价仍未验证,不能以源码指纹相同或新环境 kernel 通过冒领该保证,保留 `open(EXTERNAL-PIN-BUMP-SEMANTIC-EQUIVALENCE)`。外部模块归属、外部 rev 是否不可变地指向所声称 source、未知 library root alias 及非 git/path/浮动依赖的语义稳定性仍属 `open(EXTERNAL-IMPORT-SEMANTICS)`。
 
 **A14.5 准入。** `Golden/Frozen/accepted/` 不是 FILEMAP 登记路径;任何被跟踪文件出现在该目录下,均由 required 检查中的现有 FILEMAP 未分类路径判词拒绝,不另设路径禁令规则。严格状态 loader 只接受 A14.2 的闭键形,拒绝只含 `statement_id` 的记录及其他非闭键形;旧工具写出的不合规形不得与当前状态片并存。事件与状态片配对、改动事件 pin 核对两项过渡检查不存在。
 
