@@ -647,10 +647,10 @@ theorem native_joint_row_histogram_law {M q s : ℕ} (S : Support M q)
     constructor
     · intro hy
       refine ⟨⟨?_, ?_⟩, trivial⟩
-      · apply Multiset.ext
+      · apply Multiset.ext.mpr
         intro i
         exact (native_departure_word_counts S e o y i).1.symm.trans (hy i).1
-      · apply Multiset.ext
+      · apply Multiset.ext.mpr
         intro i
         exact (native_departure_word_counts S e o y i).2.symm.trans (hy i).2
     · rintro ⟨⟨hp, hm⟩, _⟩ i
