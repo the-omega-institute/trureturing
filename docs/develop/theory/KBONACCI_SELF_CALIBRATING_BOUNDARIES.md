@@ -4055,3 +4055,220 @@ The broader identification and parity-query comparisons remain those credited in
 **Scope 33.5 (Remaining targets and resource boundary).** The exact adaptive fee for the general family (33.1)–(33.3) remains a separate target. Arbitrary label layouts without this delayed constant-exterior structure, other widths and phase orbits, differing free-value tables beyond a joined constant exterior, and tail-sensitive labels retain their unresolved cases. The original all-parameter objective remains exact adaptive and GLOBAL worst complete-block fees for every attainable immutable INITIAL target, under both original alphabets and all $k\ge2,m\ge1$. The present deterministic endpoint theorem makes no stochastic or full-law inference and supplies no memory, offline-computation, physical-resource or cross-reader cost law. Selecting the finite injection is semantic; no complexity bound for presenting or searching the table is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 34. Exact adaptive fees for delayed interior scalar labels
+
+**Definition 34.1 (Scalar images of the delayed-interior family).** Retain the complete source, observations, literal actions, inherited tails, absorbing rejection, complete-block fee and GLOBAL contract of Definition 33.1. Thus
+
+$$
+ m\ge5,\qquad 3\le d\le m-2,
+ \qquad k=2m-2,\qquad T=2m-1,
+ \qquad J=\{d,\ldots,m-1\},
+$$
+
+and the joined interior image satisfies
+
+$$
+2^{d-1}<|\Lambda[J]|\le2^d.
+$$
+
+For each freely observed initial value $v\in\mathbb F_2$, write
+
+$$
+ a_v=\lambda_v(j)\quad(j\in O=P\setminus J),
+ \qquad r_v=|\lambda_v[J]|,
+ \qquad n_v=|\lambda_v[J]\cup\{a_v\}|.
+\tag{34.1}
+$$
+
+Thus $r_v\le n_v\le r_v+1$, and consequently $M\le N\le M+1$.
+
+Put
+
+$$
+ H=2^{d-1},\qquad M=\max(r_0,r_1),\qquad N=\max(n_0,n_1).
+\tag{34.2}
+$$
+
+The quantities $r_v$ and $n_v$ count scalar labels in one free-value fibre. They do not count ordered joined pairs, and they do not identify the two fibres. Since
+
+$$
+|\Lambda[J]|\le r_0r_1\le n_0n_1,
+$$
+
+while $|\Lambda[J]|>H\ge4$, the present full contract implies
+
+$$
+N\ge3.
+\tag{34.3}
+$$
+
+This last fact is needed below: the small-image formula is a statement about the full two-fibre family, not an unconditional formula for an isolated fibre with only one or two scalar labels.
+
+**Theorem 34.2 (Exact adaptive law and unchanged GLOBAL law).** Under Definition 34.1, for either original alphabet,
+
+$$
+\boxed{
+C_{\rm ad}(f_\lambda)=
+\begin{cases}
+2d-1,&M>H,\\[2pt]
+2d-2,&M\le H<N,\\[2pt]
+2\lceil\log_2N\rceil-1,&N\le H,
+\end{cases}}
+\tag{34.4}
+$$
+
+and
+
+$$
+\boxed{C_{\rm pre}(f_\lambda)=2d-1.}
+\tag{34.5}
+$$
+
+The middle case is equivalently $M=H$ and $N=H+1$. In the last case, the integer
+
+$$
+ h=\lceil\log_2N\rceil
+$$
+
+satisfies $2\le h\le d-1$.
+
+**Proof (free-value separation).** The initial scalar value is freely observed. An adaptive controller may therefore choose its first literal action as a function of $v$, while the worst fee is the maximum of the two resulting fixed-value costs. A lower bound on one fibre is a lower bound for the full target. Conversely, constructions below are chosen separately for the two observed values and are run with the same original source and endpoint rules; their maximum fee is a valid adaptive protocol. No hidden phase or archive selects a stream.
+
+**Proof (the common-archive leaf lemma).** Fix one value $v$ and a finite set $S$ of tail-zero INITIAL phases whose target labels are pairwise distinct. Use the actual witnesses supplied by (33.4), one for each retained phase. Within any reached archive containing some of these witnesses, all retained sources have undergone the same literal actions and hence have the same current tail. A next complete word therefore either succeeds on every member of that archive or rejects every member. Uniform rejection produces one absorbing child and cannot separate two unequal immutable labels; a correct controller may therefore reject a non-singleton archive only when that archive is already homogeneous. A correct early stop is also one homogeneous leaf. If a successful action is issued, its endpoint difference has at most two scalar values.
+
+At emitted index $t$, the full-path charge support is contained in
+
+$$
+W_t=tm+\{0,\ldots,m\}\pmod T,
+$$
+
+and the path schedule through the horizons used here is (33.9):
+
+$$
+W_{2q}=[q,q+m],qquad
+W_{2q+1}=[m+q,\ldots,T-1,0,\ldots,q+1].
+\tag{34.6}
+$$
+
+The displayed odd paths miss $J$. More generally, the odd path with index $2q+1$ misses $J\cup\{d-1\}$ whenever $q+1\le d-2$. This is a statement about the actual emitted index, so it remains true at every adaptive node; changing the word does not change the phase path. Induction down the adaptive archive tree now gives
+
+$$
+\#\{\text{homogeneous leaves on }S\}
+\le2^{\lfloor(c+1)/2\rfloor}
+\tag{34.7}
+$$
+
+for a controller of fee at most $c$, whenever all odd indices before that horizon miss $S$. Even levels can at most double the number of nonempty archives, odd levels are unary on $S$, and rejection or early stopping never adds a label-dependent branch. This induction allows arbitrary literal words, archive-dependent feedback, waits, rejection attempts and source-local stopping.
+
+**Proof (the three lower bounds).** First suppose $M>H$. Choose a value $v$ with $r_v=M$ and retain one tail-zero witness in $J$ for each distinct scalar label in $\lambda_v[J]$. A correct controller cannot stop for free on this fibre. If its first bit were one, all actual terminal-tail sources would reject into the same absorbing archive, although the retained fibre has different target labels; hence the root starts with zero. Through fee $2d-2$, the only possible splitting levels on this witness set are the $d-1$ even indices $0,2,\ldots,2d-4$. By (34.7) there are at most $2^{d-1}=H$ homogeneous leaves, fewer than $M$. Thus $C_{\rm ad}\ge2d-1$. The fixed GLOBAL protocol of Theorem 33.2 is also an adaptive protocol, so $C_{\rm ad}\le2d-1$.
+
+Now suppose $M\le H<N$. Since $N\le M+1$, necessarily $M=H$ and $N=H+1$. Choose a value $v$ with $n_v=N$. The exterior label is then absent from $\lambda_v[J]$; retain witnesses in $J$ for its $H$ internal labels and one witness at phase $d-1$ for $a_v$. Through fee $2d-3$, every odd path still ends below phase $d-1$, so (34.7) gives at most $2^{d-1}=H$ leaves for $H+1$ distinct required labels. Therefore $C_{\rm ad}\ge2d-2$.
+
+Finally suppose $N\le H$, and set $h=\lceil\log_2N\rceil$. Choose a value $v$ with $n_v=N$. Retain one witness for each label in $\lambda_v[J]\cup\{a_v\}$, taking the exterior representative $d-1$ when $a_v$ is absent from the interior image. The odd paths before fee $2h-1$ miss all these representatives, because $h\le d-1$. If the fee were at most $2h-2$, only $h-1$ even levels could split, so (34.7) gives at most $2^{h-1}<N$ homogeneous leaves. Thus
+
+$$
+C_{\rm ad}\ge2h-1.
+\tag{34.8}
+$$
+
+These lower bounds use fixed actual witnesses and do not choose a new tail after an adaptive query. They also remain valid if a live label happens to equal the bottom label or if labels coincide across the two free-value fibres.
+
+**Proof (the high-image upper bound).** If $M>H$, use the $2d-1$-block literal GLOBAL construction of Theorem 33.2. It is selected without knowledge of $v$ and therefore is admissible for the adaptive contract. This gives the first upper bound.
+
+**Proof (literal small-image construction).** Assume $N\le H$ and let $h=\lceil\log_2N\rceil$. For each value $v$ with $n_v\ge3$, choose an injection
+
+$$
+\gamma_v:\lambda_v[J]\cup\{a_v\}\hookrightarrow\mathbb F_2^h,
+\qquad \gamma_v(a_v)=0.
+\tag{34.9}
+$$
+
+For each coordinate $b<h$, let
+
+$$
+S_{v,b}=\{j\in J:\gamma_v(\lambda_v(j))_b=1\}
+$$
+
+and correct its parity at the actual exterior phase $m$:
+
+$$
+E_{2b}=S_{v,b}\cup
+\begin{cases}
+\{m\},&|S_{v,b}|\text{ odd},\\
+\varnothing,&|S_{v,b}|\text{ even}.
+\end{cases}
+\tag{34.10}
+$$
+
+Every $E_{2b}$ is even and lies on $W_{2b}$. Use the one flag
+
+$$
+E_1=\{m,m+1\},
+\tag{34.11}
+$$
+
+and take all other odd supports below index $2h-2$ to be empty. For each support use the ordered-path inverse (33.16), so the supports are actual endpoint charge rows of literal blocks, not abstract responses. The coding blocks start with zero because their left endpoints are uncharged; every nonroot coding block ends with zero because its right endpoint is uncharged. The flag block has literal word $10^{m-1}$. The root may end in a run of at most $m-1$ ones, and the flag begins with one, so their seam has length at most $m<k$. The flag ends in zero, and every later coding block starts in zero. Internal runs are below $k$. Thus the whole prefix is safe for every inherited legal tail, in both alphabets, including the terminal tail $k-1$.
+
+For a source in $J$, the flag difference is zero and the even differences recover $\gamma_v(\lambda_v(j))$. For a source outside $J$, the two flag phases are the only phases with a nonzero flag difference; their OR is one, while all other exterior phases have the zero code $\gamma_v(a_v)=0$. The decoder therefore returns $a_v$ on every exterior source and inverts $\gamma_v$ on the interior sources. It uses only the source's own endpoint archive and the freely remembered value $v$. The last displayed index is $2h-2$, so the fee is $2h-1$.
+
+If a fibre has $n_v=1$, its target is constant on that fibre and it stops at the free observation. If it has $n_v=2$, use the two-block fallback of Proposition 34.3 below. Under (34.3) this is no larger than the global bound $2h-1$ because the other fibre realizes $N\ge3$ and hence $2h-1\ge3$. Therefore
+
+$$
+C_{\rm ad}\le2h-1.
+\tag{34.12}
+$$
+
+**Proof (literal middle-image construction).** Assume $M\le H<N$, so $M=H$ and $N=H+1$. For each $v$, choose an injection
+
+$$
+\eta_v:\lambda_v[J]\hookrightarrow\mathbb F_2^{d-1}.
+\tag{34.13}
+$$
+
+Use the parity-donor supports (34.10) with $\eta_v$ in place of $\gamma_v$, at the even indices $0,2,\ldots,2d-4$. Use the two already legal exterior flags from (33.12)–(33.15):
+
+$$
+E_1=A,qquad E_{2d-3}=B,
+$$
+
+where $A\cup B=O$, both supports are even, $A\subseteq W_1$ and $B\subseteq W_{2d-3}$. All other odd supports are empty. The same ordered-path inverse realizes every support as a literal block. The first flag has leading run one, the root has at most $m-1$ terminal ones, and their seam is below $k$; every later coding block starts with zero, and the last flag starts with zero. Hence the complete $2d-2$-block prefix is safe on every actual source and inherited tail.
+
+On an interior phase both flags vanish, and the even differences recover $\eta_v(\lambda_v(j))$. On an exterior phase one of the two flag differences is one, so their OR is one; the decoder returns $a_v$. This construction is selected after reading $v$ and uses no hidden phase or unexecuted branch. It proves $C_{\rm ad}\le2d-2$, completing (34.4). Theorem 33.2 supplies (34.5).
+
+**Proposition 34.3 (The omitted two-label fibre boundary).** Fix one free-value fibre under the geometry of Definition 34.1 and suppose its scalar image has exactly two labels. Let $b=a_v$ be the exterior label and let
+
+$$
+S=\{j\in J:\lambda_v(j)\ne b\}.
+$$
+
+Then the exact adaptive fee restricted to this fibre is
+
+$$
+\boxed{
+C_{\rm ad}^{v}=\begin{cases}
+1,&|S|\text{ even},\\
+2,&|S|\text{ odd}.
+\end{cases}}
+\tag{34.14}
+$$
+
+**Proof.** A one-block successful root must start with zero: a leading one rejects every terminal-tail source, and the fibre has two target labels. A one-block endpoint charge is supported on $W_0$ and has even cardinality. Every exterior phase outside $W_0$ has zero charge, so the exterior label must decode as zero. Consequently the only possible one-bit support is exactly $S$. If $|S|$ is even, the ordered-path inverse realizes it and separates the two labels in one block. If $|S|$ is odd, no one-block support can do so.
+
+For the two-block upper bound, use
+
+$$
+E_0=S\cup\{m\},qquad E_1=\{m,m+1\}.
+$$
+
+Both supports are even and lie on their paths. The first block starts zero; its possible donor charge at $m$ is identified by the second flag, whose literal word is $10^{m-1}$. Interior nonexterior phases have code $(1,0)$, while the exterior phases have codes $(1,1)$ at $m$, $(0,1)$ at $m+1$, and $(0,0)$ elsewhere. Mapping all three exterior codes to $b$ separates the two labels. The seam and inherited-tail safety are exactly the root-to-flag check in the proof above. This proves (34.14).
+
+This boundary explains why the full theorem records $N\ge3$ rather than claiming that $2\lceil\log_2n_v\rceil-1$ holds for every isolated fibre: a scalar image of size two can require two blocks because of the even full-path charge constraint, even though its binary information content is one bit.
+
+**Proposition 34.4 (Exterior membership is part of the calibration data).** The two numbers $r_v$ and $n_v$ are not interchangeable. If $a_v\in\lambda_v[J]$, then $n_v=r_v$ and the exterior class shares an interior scalar label; if $a_v\notin\lambda_v[J]$, then $n_v=r_v+1$ and the exterior class is new. The middle construction and the small-image construction treat these cases differently at decoding time: the former uses two explicit exterior flags, while the latter assigns $a_v$ the zero code and flags only the two actual donor phases.
+
+Thus a claimed adaptive formula that counts only internal labels, or only joined pairs, discards a source distinction that can change the fee. The relevant full-family invariant is the maximum scalar image $N$ together with the actual exterior-membership relation, while the strict joined-image condition is retained only to guarantee the global boundary $N\ge3$.
+
+**Scope 34.5 (What this closes and what remains open).** The separate adaptive target left open in Scope 33.5 is settled here for the exact family of Definition 33.1. Theorem 34.2 settles the adaptive fee for the entire delayed-interior family of Definition 33.1 and retains the exact GLOBAL fee from Theorem 33.2. It does not price arbitrary tail-dependent tables, arbitrary exterior layouts, different phase intervals, other $(k,m)$ geometries, memory or offline computation, physical-resource costs, stochastic laws, or the all-parameter exact-fee problem. Proposition 34.3 is a fixed-fibre boundary result and does not replace the two-fibre theorem. The arguments are ordinary mathematical proofs using the supplied KBonacci interfaces; they are not Lean/kernel verification, axiom auditing, coverage certification or a literature-priority claim.
+
+**Mathematical citation 34.6 (Supplied machinery and new content).** The complete source and endpoint contract, actual witnesses, matched coefficient paths, ordered-path literal inverse, common-tail adaptive leaf induction, and the $2d-1$ GLOBAL construction are supplied by Definitions 15.1, 18.1, 29.1, 31.1 and Theorem 33.2. The new content is the scalar-fibre exact classification (34.4), its observation-tree lower bounds at three horizons, the literal $2h-1$ and $2d-2$ adaptive constructions, and the two-label parity boundary (34.14). The free-value split is an explicit use of the free initial observation, not a hidden selection by phase or archive.
