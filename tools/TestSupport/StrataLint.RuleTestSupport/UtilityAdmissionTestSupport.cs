@@ -81,7 +81,7 @@ internal static partial class UtilityAdmissionTestSupport
         var statePath = FrozenStatePath.FromModulePath(
             RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
         const string state =
-            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\",\"declarations\":[]}\n";
         fixture.Files[statePath] = state;
         fixture.Baseline[statePath] = state;
         return statePath;
@@ -94,7 +94,7 @@ internal static partial class UtilityAdmissionTestSupport
         var statePath = FrozenStatePath.FromModulePath(
             RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
         fixture.Files[statePath] =
-            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\",\"declarations\":[]}\n";
         var changes = RawChangeSet.CreateWithKinds([(statePath, RawChangeKind.Added)]);
         var context = validateLean
             ? fixture.Build(changes)

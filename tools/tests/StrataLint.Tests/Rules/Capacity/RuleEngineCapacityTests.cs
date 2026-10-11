@@ -237,7 +237,7 @@ public sealed class RuleEngineCapacityTests
         for (var index = 0; index < 25; index++)
         {
             var path = $"{directory}/Module{index:00}.lean.json";
-            fixture.Files[path] = $"{{\"statement_id\":\"sha256:{index:x64}\"}}\n";
+            fixture.Files[path] = $"{{\"statement_id\":\"sha256:{index:x64}\",\"declarations\":[]}}\n";
             fixture.Changes.Add(path);
         }
 
