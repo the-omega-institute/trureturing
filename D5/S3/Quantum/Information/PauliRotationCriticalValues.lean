@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/PauliRotationCriticalValues.claim; result=D5/S3/Quantum/Information/PauliRotationCriticalValues.result; claim=D5/S3/Quantum/Information/PauliRotationCriticalValues.claim
    digest: Two-qubit Pauli rotation circuits and their critical-value Hausdorff dimension. -/
 
-import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 
