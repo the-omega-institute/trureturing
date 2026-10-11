@@ -11,6 +11,8 @@ import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Probability.ProbabilityMassFunction.Integrals
 import Mathlib.Probability.Moments.Basic
+import Mathlib.Analysis.SpecificLimits.Normed
+import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 
 noncomputable section
 
@@ -272,5 +274,13 @@ theorem stopping_prefix_clock_tail
       intro h _
       split_ifs <;> have hp := (acquired_mass_bounds κ σ a₀ n h).1 <;> linarith
     _ ≤ _ := by gcongr
+
+/-- The positive increments of the real-order call-count power. -/
+def momentWeight (s : ℝ) (n : ℕ) : ℝ≥0∞ :=
+  (n + 1 : ℝ≥0∞) ^ s - (n : ℝ≥0∞) ^ s
+
+/-- The geometric correction in the call-clock moment comparison. -/
+def momentError (s ρ : ℝ) : ℝ≥0∞ :=
+  ∑' n : ℕ, momentWeight s n * ENNReal.ofReal ρ ^ (n + 1)
 
 end D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison
