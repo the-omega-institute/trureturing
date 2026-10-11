@@ -1376,3 +1376,308 @@ Post–Zimmer, [arXiv:2202.03234v1](https://arxiv.org/html/2202.03234v1), Defini
 Every original label, order, occurrence, optional earlier history and immutable INITIAL, cap equality, source-independent actor initialization, source/control right, Read, refusal, Stop, chronological record, copy and COMPLETE condition remains that of55.1,60.1–60.3 and66.1. The complete common and killed inverses and their actual diagonal compensation remain separate, with both quadratures, all three modes, the reference and every auxiliary correlation. The parameter $\delta$ indexes mathematical commissions; neither it nor the auxiliary $t$ in(80.27) is an executed switching law. Source-compatible physical ingress, full operational implementation, metric and clock conversion, finite precision and finite execution, acquisition and lifetime-resource accounting remain unpaid. The original nonrecurrent common-zero, $j_c$,155, attainment and sustained programme are not settled. The finite-tree retained-record developments supply no automatic interface, domain, norm, operation or resource identification here. The one-way, nonadditive/coupled-reserve and geometric alternatives keep their own evidence requirements.
 
 ## 78.99 追加锚（本行以下为增补区）
+
+## 81. Source-matched coarse growth and exact Markov-factor obstructions
+
+**Definition 81.1 (the whole-rho occurrence metric).** Use the whole-rho contract of §55.1–§55.2, and write
+
+$$
+\mathcal P=\{L,R\}^{*},\qquad
+p\sim pL,\quad p\sim pR,
+$$
+
+with one unit-length, unit-conductance seam for each displayed parent–child pair, counting measure $\mu(\{p\})=1$, and graph distance $d_{\mathcal P}$. The root is $o=\varepsilon$. Throughout the packing argument, $R\in\mathbb N_0=\{0,1,2,\ldots\}$ is a nonnegative integer graph radius. Thus
+
+$$
+B_{\mathcal P}(o,R)=\{p:|p|\le R\},\qquad
+|B_{\mathcal P}(o,R)|=\sum_{k=0}^{R}2^k=2^{R+1}-1.
+\tag{81.1}
+$$
+
+This is the complete occurrence graph in the explicit §55 realization. It is not the one-spine direct-limit graph used by §52.1–§52.4, and neither graph distance nor the cardinality in (81.1) is a physical spatial radius or a dimension assignment.
+
+**Proposition 81.2 (bounded-density coarse-Euclidean obstruction).** There is no map $F:\mathcal P\to\mathbb R^3$ and real constants $A\ge1$, $B\ge0$, $0\le M<\infty$ such that
+
+$$
+\|F(p)-F(q)\|_2\le A d_{\mathcal P}(p,q)+B
+\tag{81.2}
+$$
+
+for all $p,q$, and, for the one fixed standard tiling $Q_z=z+[0,1)^3$, $z\in\mathbb Z^3$, every tile contains at most $M$ image points counted with their occurrence multiplicity:
+
+$$
+\#\{p\in\mathcal P:F(p)\in Q_z\}\le M\qquad(z\in\mathbb Z^3).
+\tag{81.3}
+$$
+
+Proof. By (81.2), $F(B_{\mathcal P}(o,R))$ lies in the Euclidean ball of radius $AR+B$ about $F(o)$. Each coordinate projection of this ball has length $2(AR+B)$ and meets at most $2AR+2B+3$ intervals of the fixed tiling by $[m,m+1)$, $m\in\mathbb Z$. Thus the ball meets at most $(2AR+2B+5)^3$ tiles $Q_z$. Hence (81.1) and (81.3) would give
+
+$$
+2^{R+1}-1\le M(2AR+2B+5)^3
+\tag{81.4}
+$$
+
+for every $R\in\mathbb N_0$. The left side eventually exceeds every cubic polynomial, which is a contradiction. $\square$
+
+The proposition rules out the stated globally bounded-density, coarse-Lipschitz realization of the §55 unit-seam occurrence metric. The same packing argument applies to every fixed finite-dimensional Euclidean target $\mathbb R^d$, $d\ge1$: replace the fixed tiles by $z+[0,1)^d$, $z\in\mathbb Z^d$, and the exponent $3$ in (81.4) by $d$. The zero-dimensional target has one tile and already violates (81.3). Changing conductances alone leaves this metric/counting obstruction intact. A finite cutoff, unbounded tile occupancy, failure of (81.2), a changed metric or counting convention, or a target with different volume growth changes a stated hypothesis; none of these changes by itself supplies an escape construction. A quotient followed by a map still satisfies the obstruction if occupancy counts all original occurrences as in (81.3); counting quotient classes instead changes the measure. No physical impossibility theorem or dimension inference from vertex degree follows.
+
+**Definition 81.3 (the §52 exact Markov-factor contract).** Now use the distinct §52.1–§52.4 graph $\Gamma_{52}$: its direct limit retains the finite INITIAL tree $t$, one infinite spine $r_0,r_1,\ldots$, and the finite $T_j$ branches attached along that spine. Use its common infinite operator without finite-domain killing, its unit seam conductances and counting measure. Let
+
+$$
+L_{52}=L_\infty,\qquad P_{52}=I-L_{52}/3,
+\tag{81.5}
+$$
+
+as in (52.3)–(52.4). An exact representative-independent factor consists of a surjection $\pi:\Gamma_{52}\to\mathcal B$ onto a nonempty countable state space and a stochastic kernel $\overline P$ satisfying
+
+$$
+\sum_{\pi(z)=b}P_{52}(x,z)
+ =\overline P(\pi(x),b)
+\qquad(x\in\Gamma_{52},\ b\in\mathcal B),
+\tag{81.6}
+$$
+
+where the right side is independent of the representative $x$ in its fibre. Under (81.6), $Y_n=\pi(X_n)$ is a Markov chain in the same discrete step clock whenever $X_n$ has transition kernel $P_{52}$.
+
+**Theorem 81.4 (the §52 same-clock Markov-factor obstruction).** Under (81.6), every factor state is recurrent. In particular its return probabilities cannot satisfy a summable $O((n+1)^{-3/2})$ bound in the same discrete clock.
+
+Proof. First establish recurrence of the source chain, as an intermediate step. Each spine edge $\{r_k,r_{k+1}\}$ is a one-edge cutset separating $r_0$ from infinity: the component containing $r_0$ consists of the finite INITIAL tree and finitely many finite attached branches. These cutsets are pairwise edge-disjoint. With counting reversible measure, each nonloop edge has conductance $1/3$ for $P_{52}$, so each cutset has reciprocal total conductance $3$. Apply the classical [Nash–Williams Criterion (2.14), Lyons–Peres, *Probability on Trees and Networks*, Chapter 2, §5](https://rdlyons.pages.iu.edu/prbtree/book_online.pdf): the divergent sum of reciprocal cutset conductances implies recurrence. Holding does not affect escape or return recurrence here: the embedded jump chain uses the same nonloop conductances, and at each vertex the probability of a jump is $\deg(x)/3>0$. Connectedness makes $P_{52}$ irreducible, so recurrence holds at every vertex, equivalently
+
+$$
+\sum_{n\ge0}P_{52}^{\,n}(x,x)=\infty.
+\tag{81.7}
+$$
+
+This use of the classical recurrence criterion is an intermediate deduction for the particular §52 source, not a new general recurrence theorem. Exact lumpability (81.6), iterated in the same step clock, now gives, for $b=\pi(x)$,
+
+$$
+\overline P^{\,n}(b,b)
+ =\mathbb P_x(\pi(X_n)=b)
+ =\sum_{\pi(y)=b}P_{52}^{\,n}(x,y)
+ \ge P_{52}^{\,n}(x,x).
+\tag{81.8}
+$$
+
+Summing proves recurrence at $b$; surjectivity covers every factor state. If a finite constant $C\ge0$ satisfied
+
+$$
+\overline P^{\,n}(b,b)\le C(n+1)^{-3/2},
+\tag{81.9}
+$$
+
+for all sufficiently large integers $n$, its summable right side and the finitely many earlier probabilities would contradict (81.8). $\square$
+
+This conclusion uses the exact factor law and the §52 chain and clock. It does not apply the one-spine proof to the whole-rho graph of §55. A non-Markov projection, representative-dependent transition data, changed rates, or a clock conversion would require a separately stated model and analysis; naming such a change proves neither transience nor (81.9). In particular any changed chain that remains recurrent has the same obstruction for its exact same-clock factors.
+
+**Specification 81.5 (a conditional source-to-spatial bridge).** The native ordered source supplies its binary parent–child relation. Separately, [Process44, Definition 44.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) stipulates an oriented three-component Euclidean cross-product interface: $q(\alpha)=a$, $q(\beta)=b$, $q(\langle s,t\rangle)=q(s)\times q(t)$, with $a=e_1$, $b=e_2$, $k=b\times a=-e_3$ and readout in $\{0,\pm a,\pm b,\pm k\}$. Zero is an allowed reply and is not a direction of unit length. This interface does not derive the dimension of an ambient propagation space.
+
+A proposed spatial interpretation must declare which source carrier, actual version and boundary convention it uses. The common whole-rho carrier $\mathcal P$, its actual finite domains $D_j(t)$ with the §55 missing-child killing, and the §52 common graph or its finite N/D conventions are different choices. A mathematical infinite carrier does not add an event or a Read after an infinite prefix or after Stop. The joint object's source projection must retain immutable INITIAL, source-independent initialization, labels, brackets, left/right order and distinct occurrences, actual versions, legal operations and whole-candidate guards, each acceptance and refusal, original Reads, chronological history, Stop, and the original acquisition, record and copy permissions and charges. A geometric quotient does not erase those coordinates from that projection or grant access to them.
+
+For the chosen carrier $X$, supply an actual map $F:X\to M$, or a declared quotient and placement $X\xrightarrow{\pi}\mathcal B\xrightarrow{\iota}M$ with $F=\iota\circ\pi$, its fibres and legal identifications, and the target metric and measure. State how occurrence lengths, counting weights, adjacency and conductances correspond, including boundary or killing terms. The operator correspondence must be induced by this same map and these choices, with its function spaces, measure convention, variance and domains specified; an unrelated operator, in particular a zero intertwiner, is not a realization.
+
+For example, in precisely the exact §52 quotient of (81.6), use complex bounded functions with supremum norm on the two countable state spaces, counting measure on each, and kernels acting on observables by $(Pf)(x)=\sum_yP(x,y)f(y)$. The actual map induces the pullback
+
+$$
+\begin{aligned}
+U_\pi &: \ell^\infty(\mathcal B)\longrightarrow\ell^\infty(\Gamma_{52}),
+& (U_\pi f)(x)&=f(\pi(x)),\\
+P_{52}U_\pi&=U_\pi\overline P,
+& L_{52}U_\pi&=U_\pi\overline L,
+\qquad \overline L=3(I-\overline P).
+\end{aligned}
+\tag{81.10}
+$$
+
+All operators here are bounded on their displayed spaces; the identities hold on all of $\ell^\infty(\mathcal B)$ and use the same clock. The first identity is exactly (81.6), tested on state indicators and extended by absolutely convergent stochastic sums; the second follows from (81.5). Surjectivity makes $U_\pi$ an isometry and $U_\pi1=1$, excluding the zero map. This is pullback of observables, not pushforward of states. It makes no counting-measure $\ell^2$ assertion: if a fibre is infinite, the indicator of its target state has finite $\ell^2(\mathcal B)$ norm but its pullback has infinite $\ell^2(\Gamma_{52})$ norm. A Hilbert-space correspondence therefore needs its own measures, domain and boundedness proof. A continuous target operator likewise needs its own domain and boundary correspondence; (81.10) supplies none by itself.
+
+The field and potential must correspond under the same map and boundary convention as the kinetic law. In an exact scalar quotient, descent of a source field means equality to a target field composed with $\pi$, and thus requires constancy on each fibre; the source term, exterior data and potential multiplier must also be matched. Choosing the §52 screened distributed field or the §55 isolated unscreened field is part of the model, not an implicit substitution. Supply any claimed conversion among propagation, source-event, apparatus and physical clocks, and any causal or finite-speed condition separately.
+
+If the particular claimed Euclidean model requires cubic volume growth or a three-dimensional resistance/return estimate, specify its metric balls, measure, scales, constants, clock and return normalization and establish those controls for that model. They are not automatic properties of an arbitrary three-dimensional manifold, nor do those controls together constitute a sufficient dimension theorem. The foregoing items specify conditional correspondence obligations; neither their minimality nor their sufficiency for a spatial realization is proved here.
+
+The resulting source-matched exclusions are precisely (81.4) for the §55 unit-seam metric with bounded occurrence occupancy, and (81.8)–(81.9) for the §52 exact same-clock factor. The source-to-spatial construction remains open. The proofs are mathematical deductions under the displayed contracts, with no claim of literature novelty; Lean formalization remains open. The stipulated local three-component readout supplies no physical dimension theorem.
+
+## 78.99 追加锚（本行以下为增补区）
+## 82. Rank-three transport carrier: point-source stability and target-fibre defect
+
+**Definition 82.1 (rank-three stratified point-source contract).** Let $G$ be a connected, simply connected stratified nilpotent Lie group,
+$$
+\mathfrak g=V_1\oplus\cdots\oplus V_s,\qquad [V_1,V_j]=V_{j+1},\qquad \dim V_1=3,
+$$
+and let $V_1$ generate the whole Lie algebra. Left translation of $V_1$ is the horizontal bundle. Fix a positive horizontal inner product, an orthonormal left-invariant frame $X_1,X_2,X_3$, and one Haar measure $\mu$, and put
+$$
+L=-\sum_{i=1}^3X_i^2,\qquad H_t=e^{-tL}=e^{t\sum_iX_i^2}.
+$$
+The field and kinetic form use this same $L$, this same $\mu$ and this same clock. The homogeneous dimension is
+$$
+Q=\sum_{j=1}^s j\,\dim V_j,\qquad \mu(\delta_rA)=r^Q\mu(A).
+$$
+Assume that the positive point-source kernel $\Gamma$ satisfies $L\Gamma=\delta_e$, $\Gamma(\delta_rp)=r^{2-Q}\Gamma(p)$, and is positive and smooth on $G\setminus\{e\}$. Define
+$$
+\mathcal D_0=C_c^\infty(G\setminus\{e\}),\qquad
+T[\psi]=\sum_i\|X_i\psi\|_{L^2(\mu)}^2,\qquad
+V[\psi]=\int_G\Gamma|\psi|^2\,d\mu,
+$$
+and
+$$
+q_0[\psi]=aT[\psi]-gV[\psi],\qquad a,g>0.
+\tag{82.1}
+$$
+The stability contract requires a finite lower bound on all point-source scales in $\mathcal D_0$, with any closed form agreeing with $q_0$ on this core. Rank three is an input assumption; it is not a physical dimension derived from the stability conclusion.
+
+**Proposition 82.2 (semibounded point-source stability forces zero Levi leakage).** Under the positive-Green contract, semiboundedness of $q_0$ forces the Levi image $[V_1,V_1]=V_2$ to vanish. In this stratified class, a nonabelian group has $V_2\ne0$ and hence $Q\ge3+2=5$. Choose a nonzero normalized $\psi\in\mathcal D_0$ supported in a compact homogeneous annulus away from $e$, and set
+$$
+\psi_r(p)=r^{-Q/2}\psi(\delta_{1/r}p),\qquad 0<r<1.
+$$
+Then
+$$
+\|\psi_r\|_2=1,\qquad T[\psi_r]=r^{-2}T[\psi],\qquad
+V[\psi_r]=r^{2-Q}V[\psi].
+\tag{82.2}
+$$
+Since $V[\psi]>0$, for $Q\ge5$,
+$$
+q_0[\psi_r]=aT[\psi]r^{-2}-gV[\psi]r^{2-Q}\longrightarrow-\infty.
+\tag{82.3}
+$$
+Thus no semibounded closed extension agreeing with $q_0$ on this core exists. Conversely, if the Levi image vanishes, the stratification relations force all higher layers to vanish, so $G$ is abelian; in the rank-three simply connected case it is $\mathbb R^3$. This conclusion excludes transverse brackets inside the declared contract and does not turn a local three-dimensional leaf into an ambient space. In the existing §22.3 scope, the zero-Levi case supplies only the corresponding local Frobenius leaves; it supplies neither unrestricted flow execution nor a spatial realization.
+
+Proof. The stratification gives $V_j=[V_1,V_{j-1}]=0$ for $j\ge2$ once $V_2=0$. Under dilation, $X_i$ has degree one and $\Gamma$ degree $2-Q$, so the displayed identities follow by change of variables. If $V_2\ne0$, at least one second-layer direction contributes weight two and $Q\ge5$; the negative term in (82.3) has strictly larger order than $r^{-2}$. The core values are therefore unbounded below, which rules out every semibounded closed form agreeing on that core. $\square$
+
+The abelian intermediate is the classical Coulomb form, not a new theorem of this appendix. For this intermediate choose coordinates orthonormal for the horizontal inner product and Lebesgue Haar normalization $d\mu=dx$, so $L=-\Delta$. Put $\Gamma_3(x)=(4\pi|x|)^{-1}$, $b=g/(4\pi)$ and $\kappa=b/(2a)=g/(8\pi a)$. On $H^1(\mathbb R^3)$, Hardy/KLMN form theory and integration by parts give
+$$
+q_0[u]+a\kappa^2\|u\|_2^2
+ =a\left\|\nabla u+\kappa\frac{x}{|x|}u\right\|_2^2.
+\tag{82.4}
+$$
+The form bound is $q_0[u]\ge -a\kappa^2\|u\|_2^2$; for normalized states the lower energy is $-a\kappa^2=-b^2/(4a)$, attained in the full $H^1$ form domain by
+$$
+ u_0(x)=\left(\frac{\kappa^3}{\pi}\right)^{1/2}e^{-\kappa|x|}.
+$$
+For another fixed Haar normalization $d\mu=c\,dx$, $c>0$, the same unit point source requires $\Gamma_3(x)=(4\pi c|x|)^{-1}$; the finite attained negative ground-state conclusion holds with $b=g/(4\pi c)$, $\kappa=b/(2a)$ and $u_0(x)=(\kappa^3/(c\pi))^{1/2}e^{-\kappa|x|}$. This minimizer is not in the punctured compactly supported core; (82.4) is used only as a mature intermediate in excluding the nonabelian branch. The critical Hardy weight and $\Gamma$ itself are different objects; see Kombe, *Sharp Hardy type inequalities on the Carnot Group*, [arXiv:math/0501522](https://arxiv.org/abs/math/0501522), §2 and Theorem 4.1. Bureš--Siegl, *Hydrogen atom in space with a compactified extra dimension and potential defined by Gauss' law*, [arXiv:1409.8530](https://arxiv.org/abs/1409.8530), §2 treats a Euclidean four-dimensional inverse-square threshold and a different compactified domain; it does not identify topological dimension four or $Q=5$ with (82.4).
+
+The exterior gradient integral does not discriminate this class. On a fixed homogeneous annulus $A$ away from $e$, $\nabla_H\Gamma$ has degree $1-Q$, so
+$$
+\int_{\delta_R A}|\nabla_H\Gamma|^2d\mu
+ =R^{2-Q}\int_A|\nabla_H\Gamma|^2d\mu.
+$$
+The dyadic sum over exterior annuli is finite for $Q>2$. This concerns only the exterior of the identity, not point-source self-energy, and it does not alter (82.3).
+
+**Proposition 82.3 (literal §22.2 carrier and bounded-Borel heat factor).** On the §22.2 coordinates $p=(x,y,z,w)$ take
+$$
+ p\,p'=(x+x',y+y',z+z',w+w'+xy'),
+$$
+$$
+X_1=\partial_x,\qquad X_2=\partial_y+x\partial_w,\qquad X_3=\partial_z,
+$$
+$$
+ d\mu=dx\,dy\,dz\,dw,\qquad
+\delta_r(x,y,z,w)=(rx,ry,rz,r^2w),\qquad \pi(p)=(x,y,z).
+\tag{82.5}
+$$
+This is the rank-three carrier $H^1\times\mathbb R$, with topological dimension four, homogeneous dimension $Q=5$, and $[X_1,X_2]=\partial_w$. For a bounded Borel function $f$, let $U_\pi f=f\circ\pi$. The diffusion from $p_0$ can be written
+$$
+\begin{aligned}
+X_t&=x_0+\sqrt2B_t^1,&Y_t&=y_0+\sqrt2B_t^2,&Z_t&=z_0+\sqrt2B_t^3,\\
+W_t&=w_0+\sqrt2\int_0^tX_s\,dB_s^2,
+\end{aligned}
+\tag{82.6}
+$$
+where the $B^i$ are independent standard Brownian motions. Its generator is $\sum_iX_i^2$, and its projection is three-dimensional Brownian motion with generator $\Delta_3$. Thus, in the same $t$ clock,
+$$
+H_tU_\pi f=U_\pi e^{t\Delta_3}f
+\qquad(t\ge0)
+\tag{82.7}
+$$
+for every bounded Borel $f$. This is a bounded-observable Markov-semigroup identity, not only a smooth-generator computation. Since the $w$ fibres have infinite Haar measure, a nonzero $L^2(\mathbb R^3)$ function generally has no $L^2(G,d\mu)$ pullback; (82.7) makes no Hilbert-space assertion.
+
+Proof. Itô's formula applied to (82.6) gives the generator $\sum_iX_i^2$; the first three components have the three-dimensional Brownian law with variance $2t$. The Markov-semigroup identity follows for bounded Borel observables and hence gives (82.7). $\square$
+
+**Proposition 82.4 (Folland kernel and its actual three-dimensional marginal).** For (82.5), Folland, *Subelliptic estimates and function spaces on nilpotent Lie groups*, Arkiv för Matematik 13 (1975), 161–207, [doi:10.1007/BF02386204](https://doi.org/10.1007/BF02386204), Theorem 2.1 and Example 2.10 give the homogeneous fundamental kernel for $Q>2$; Theorem 3.1 and (3.2) give smooth nonnegative mass-one symmetric heat densities $h_t$ and their scaling; Corollaries 3.4–3.6 give smoothness off the identity and decay; Proposition 3.17 at $\alpha=2$ and the paragraph following Proposition 3.18 identify
+$$
+\Gamma(p)=\int_0^\infty h_t(p)\,dt
+\tag{82.8}
+$$
+with that fundamental kernel. Theorem 3.1 supplies nonnegativity, not a silent claim of strict pointwise positivity. Symmetry and the semigroup law give
+$$
+ h_1(e)=\int_G h_{1/2}(q)^2d\mu(q)>0,
+$$
+so continuity gives a positive neighbourhood of $e$ for $h_1$. By (3.2), for every fixed $p$, sufficiently large $t$ satisfy $h_t(p)=t^{-Q/2}h_1(\delta_{1/\sqrt t}p)>0$. Thus (82.8) is finite and strictly positive for $p\ne e$.
+
+The heat factor also gives the actual marginal. For every compactly supported continuous $f(\xi)$, the diffusion started at $e$ satisfies
+$$
+\int_{\mathbb R^3}f(\xi)\left(\int_{\mathbb R}h_t(\xi,w)\,dw\right)d\xi
+ =\int_{\mathbb R^3}f(\xi)(4\pi t)^{-3/2}e^{-|\xi|^2/(4t)}d\xi.
+$$
+The decay in Corollaries 3.5–3.6 makes the fibre integral continuous and upgrades this almost-everywhere identity to
+$$
+\int_{\mathbb R}h_t(\xi,w)\,dw
+ =(4\pi t)^{-3/2}e^{-|\xi|^2/(4t)}.
+\tag{82.9}
+$$
+Tonelli and (82.8) then give, for $\xi\ne0$,
+$$
+\int_{\mathbb R}\Gamma(\xi,w)\,dw
+ =\int_0^\infty(4\pi t)^{-3/2}e^{-|\xi|^2/(4t)}dt
+ =\frac1{4\pi|\xi|}.
+\tag{82.10}
+$$
+This is the marginal for the $e^{t\Delta_3}$ clock, not $e^{t\Delta_3/2}$, and it is neither scalar-field descent nor equality of potential multipliers. The right side diverges at $\xi=0$.
+
+**Theorem 82.5 (point-source energy separation in one reader fibre).** Take a normalized nonzero $\psi\in\mathcal D_0$ supported in a compact homogeneous annulus. Fix $c=(0,0,0,w_0)$ with $w_0\ne0$, and set
+$$
+\psi_r(p)=r^{-5/2}\psi(\delta_{1/r}p),\qquad
+\psi_r^c(p)=\psi_r(c^{-1}p).
+\tag{82.11}
+$$
+For sufficiently small $r$, both supports avoid $e$. Write
+$$
+ m_\psi(\xi)=\int_{\mathbb R}|\psi(\xi,w)|^2dw,
+$$
+and let $\mathscr R(\psi)$ consist of the full projected initial probability density $m_\psi$, all source-free projected heat laws $\{e^{t\Delta_3}m_\psi:t\ge0\}$, and the full horizontal kinetic value $T[\psi]$. Then
+$$
+ m_{\psi_r}(\xi)=m_{\psi_r^c}(\xi)=r^{-3}m_\psi(\xi/r),
+\qquad T[\psi_r]=T[\psi_r^c]=r^{-2}T[\psi],
+\tag{82.12}
+$$
+and $T[\psi]>0$. Thus the two states have identical full three-coordinate probability data and all source-free projected heat observations in the same clock, and identical full kinetic value; the reader is a probability density and an observation family, not three real numbers.
+
+By the homogeneity in (82.8),
+$$
+V[\psi_r]=r^{-3}V[\psi],\qquad V[\psi]>0.
+\tag{82.13}
+$$
+Central translation preserves Haar measure, all three $X_i$ and $\pi$. Substituting $p=cq$, the support contracts to $e$ as $r\downarrow0$, while $\Gamma$ is continuous at $c\ne e$, so
+$$
+V[\psi_r^c]=\int_G\Gamma(cq)|\psi_r(q)|^2d\mu(q)\longrightarrow\Gamma(c).
+\tag{82.14}
+$$
+Both states use the same fixed field $\Gamma$ centred at $e$. Consequently
+$$
+q_0[\psi_r]=aT[\psi]r^{-2}-gV[\psi]r^{-3}\longrightarrow-\infty,
+\qquad
+q_0[\psi_r^c]=aT[\psi]r^{-2}-g\Gamma(c)+o(1)\longrightarrow+\infty.
+\tag{82.15}
+$$
+This is the §25 target-fibre escape: two states in one $\mathscr R$ fibre have different, oppositely diverging point-source energies. It does not assert equal interacting Schrödinger futures; only the source-free heat reader agrees, and the point-source interaction is precisely what separates the states.
+
+Proof. Homogeneous change of variables gives the norm, kinetic and projected-density identities in (82.12); central left-translation gives the second kinetic equality. If $T[\psi]=0$, then $\partial_x\psi=0$, and compact support forces $\psi=0$, a contradiction. Equation (82.13) follows from $\Gamma(\delta_rq)=r^{-3}\Gamma(q)$. Uniform continuity on a compact neighbourhood of $c$ and normalization give (82.14), hence (82.15). $\square$
+
+**Corollary 82.6 (lost relation and the actual §81.5 gap).** For $m_\psi(\xi)>0$, define
+$$
+\rho_\psi(w\mid\xi)=\frac{|\psi(\xi,w)|^2}{m_\psi(\xi)},
+$$
+and choose any probability density on fibres where $m_\psi=0$. Then
+$$
+V[\psi]=\int_{\mathbb R^3}m_\psi(\xi)
+ \left(\int_{\mathbb R}\Gamma(\xi,w)\rho_\psi(w\mid\xi)dw\right)d\xi.
+\tag{82.16}
+$$
+The marginal (82.10) integrates against the unweighted Haar fibre measure $dw$; it is not this state-dependent conditional expectation and cannot replace it. In particular $\Gamma$ cannot be $\Gamma_3\circ\pi$: at $c=(0,0,0,w_0)$, $\Gamma(c)$ is finite while $\Gamma_3(\pi(c))=\Gamma_3(0)$ is singular. Equivalently, $\pi(c)=\pi(\delta_2c)=0$ but $\Gamma(\delta_2c)=2^{-3}\Gamma(c)\ne\Gamma(c)$, so the field is not constant on fibres.
+
+This is the missing “same map for field, potential and kinetic law” relation required by §81.5: projected heat data and one kinetic scalar do not recover the interaction expectation. It does not imply that every restricted state class needs global scalar-field descent. A separately declared sufficient conditional statistic, or a restriction making that statistic fixed, could close a different contract, but native admissibility of the states, the legal state class and the source-map are still unproved.
+
+**Specification 82.7 (conditional scope, mature attribution and remaining correspondence).** Propositions 82.2–82.6 are a repository-derived conditional application joining the literal §22.2 transport carrier to the §81.5 point-source/kinetic contract. They are not new global Carnot, Hardy or Coulomb theorems and make no Lean-verification or literature-novelty claim. Folland supplies the fundamental kernel, heat mass/symmetry/scaling, decay and heat representation; the SDE/Lévy-area construction can be compared with Bonnefont--Juillet, [arXiv:1801.04109](https://arxiv.org/abs/1801.04109), §2.1. Kombe's Hardy results and Bureš--Siegl's Euclidean inverse-square threshold mark applicability boundaries only.
+
+The concentrating tests in (82.3) remain in the original punctured core $\mathcal D_0$; removing only $e$ or a fixed annulus away from $e$ does not exclude all such tests. A fixed ultraviolet cutoff such as replacing $\Gamma$ by $\Gamma_M=\min(\Gamma,M)$, $M>0$, changes the source/potential contract and gives $q_M[\psi]=aT[\psi]-g\int_G\Gamma_M|\psi|^2\,d\mu\ge-gM\|\psi\|_2^2$ because $T\ge0$. This lower bound alone makes no ground-state attainment claim. This carrier is not the recurrent §52 one-spine occurrence chain, so its Brownian factor does not contradict §81.4. The native source/INITIAL, chronological legal actions, Reads/refusals/Stop, acquisition/copy permissions, clock and resource contracts remain unchanged. Equation (82.5) supplies no occurrence-to-group map, physical displacement, spatial meaning for the central coordinate, native-history access, causal implementation or resource execution. The source-to-space correspondence therefore remains open; the next substantive gap is to prove native admissibility of a state class and a sufficient conditional statistic recovering (82.16), or to prove an admissible restriction under the same source/metric/operator/clock contract.
+
+## 78.99 追加锚（本行以下为增补区）
