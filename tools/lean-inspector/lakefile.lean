@@ -7,6 +7,7 @@ open Lean (Json)
 package leanInspector where
   packagesDir := "../../.lake/packages"
   buildDir := "../../.lake/build/lean-inspector/producer"
+  weakLeanArgs := #["-j1"]
   leanOptions := #[⟨`pp.unicode.fun, true⟩, ⟨`relaxedAutoImplicit, false⟩,
     ⟨`weak.linter.mathlibStandardSet, true⟩, ⟨`maxSynthPendingDepth, 3⟩]
 

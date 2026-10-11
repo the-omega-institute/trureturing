@@ -277,7 +277,7 @@ open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeConditionalControl
 
 def xi (k : Depth) : ℝ := (rate k : ℝ)*(1-(rate k : ℝ))
 
-private theorem rate_bounds (k : Depth) : (1/3:ℝ) ≤ (rate k : ℝ) ∧ (rate k : ℝ) ≤ 2/5 := by
+theorem rate_bounds (k : Depth) : (1/3:ℝ) ≤ (rate k : ℝ) ∧ (rate k : ℝ) ≤ 2/5 := by
   have hb : (Nat.fib k.val : ℝ) ≤ Nat.fib (k.val+1) := by
     exact_mod_cast Nat.fib_mono (show k.val ≤ k.val+1 by omega)
   have ha : (Nat.fib (k.val+1) : ℝ) ≤ 2*Nat.fib k.val := by
@@ -304,7 +304,7 @@ private theorem fib_gap_coprime (k : Depth) :
   rw [show k.val+3 = (k.val+1)+2 by omega,Nat.fib_add_two,Nat.coprime_self_add_right]
   exact h
 
-private theorem rate_injective : Function.Injective (fun k : Depth => (rate k : ℝ)) := by
+theorem rate_injective : Function.Injective (fun k : Depth => (rate k : ℝ)) := by
   intro k l he
   have hd (i : Depth) : 0 < (Nat.fib (i.val+3) : ℤ) := by
     exact_mod_cast Nat.fib_pos.mpr (by omega : 0 < i.val+3)
@@ -322,7 +322,7 @@ private theorem rate_injective : Function.Injective (fun k : Depth => (rate k : 
   apply Subtype.ext
   exact Nat.add_right_cancel hi
 
-private theorem xi_bounds (k : Depth) : (2/9:ℝ) ≤ xi k ∧ xi k ≤ 6/25 := by
+theorem xi_bounds (k : Depth) : (2/9:ℝ) ≤ xi k ∧ xi k ≤ 6/25 := by
   obtain ⟨hl,hu⟩ := rate_bounds k
   have hlp : 0 ≤ ((rate k:ℝ)-1/3)*(2/3-(rate k:ℝ)) :=
     mul_nonneg (by linarith) (by linarith)
@@ -449,7 +449,7 @@ private theorem mass_finite (k : Depth) : alphaMass (rate k) ≠ ∞ ∧ betaMas
   simp [alphaMass,betaMass]
 private theorem pmf_real_sum (ν : PMF Depth) : (∑' k,(ν k).toReal) = 1 := by
   rw [← ENNReal.tsum_toReal_eq (ν.apply_ne_top),ν.tsum_coe,ENNReal.toReal_one]
-private theorem pmf_real_summable (ν : PMF Depth) : Summable (fun k => (ν k).toReal) :=
+theorem pmf_real_summable (ν : PMF Depth) : Summable (fun k => (ν k).toReal) :=
   ENNReal.summable_toReal (by rw [ν.tsum_coe]; exact ENNReal.one_ne_top)
 
 def mean (ν : PMF Depth) : ℝ := ∑' k,(ν k).toReal*(rate k:ℝ)

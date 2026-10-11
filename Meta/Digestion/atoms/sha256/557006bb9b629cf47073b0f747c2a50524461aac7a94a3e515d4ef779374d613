@@ -1,0 +1,61 @@
+**Theorem 16.2 (stationary four-rate inequality and exact equality).**
+Every pair in $\mathfrak C_{\rm det}$ satisfying (16.6) has $D\le0$.
+Equality holds exactly for
+
+$$
+\begin{aligned}
+\Gamma_B&=(1-\theta)\delta_{(P_{p,a},P_{\beta,a})}
+             +\theta\delta_{(P_{p,b},P_{\beta,b})},\\
+\Gamma_A&=(1-\theta)\delta_{(P_{\beta,a},P_{p,a})}
+             +\theta\delta_{(P_{\beta,b},P_{p,b})},
+\qquad 0\le\theta\le1.
+\end{aligned}
+\tag{16.9}
+$$
+
+Either original endpoint-event midpoint mean, in addition to $D=0$, forces
+$\theta=1/2$. The sign and equality classification do not require a
+supported nonendpoint.
+
+More precisely, there is a stationary forward orbit of these same full laws
+$W_t,Q_t$, $t\ge0$, with
+
+$$
+Q_t=\mathcal R_A(W_t),\quad W_{t+1}=\mathcal R_B(Q_t),\quad
+u_t=u(Q_t),\quad v_t=v(W_t),\quad
+g_t=Q_t(w_{0,1}),\quad x_t=\frac{v_tg_t}{1-v_t}.
+\tag{16.10}
+$$
+
+Here $u_t$ denotes the emission; $\nu_p,\nu_\beta$ remain probability
+measures. Put
+
+$$
+\ell=\frac29,\quad L=\frac6{25},\quad G=\frac9{25},\quad
+T=\frac{16}{729},\quad q=\frac{1944}{390625},\quad
+h=\frac qT=\frac{177147}{781250},\quad
+d_0=\frac{2341664383}{41527474875}.
+\tag{16.11}
+$$
+
+For $X=(x_0,x_1,x_2,x_3)\in[\ell,L]^4$ define
+
+$$
+\begin{aligned}
+\overline G(X)&=\min\left\{\frac T{x_1x_2},\frac q{x_1x_2x_3}\right\},\\
+F(X)&=\overline G(X)(1+x_1+x_1x_2)
+ -\kappa\frac{\overline G(X)(1+x_0)}{\overline G(X)+x_0}-\zeta,\\
+\psi(t)&=F(t,t,t,t).
+\end{aligned}
+\tag{16.12}
+$$
+
+On the orbit (16.10), $X\in[\ell,L]^4$ almost surely and
+
+$$
+D\le\mathbb E\psi(x_0)
+ -\frac12\mathbb E[(x_1-x_0)^2]
+ -d_0\mathbb E[\overline G(X)-g_0]\le0.
+\tag{16.13}
+$$
+

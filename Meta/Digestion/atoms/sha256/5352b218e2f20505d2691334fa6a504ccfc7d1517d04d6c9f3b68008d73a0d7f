@@ -1,0 +1,43 @@
+**接口 3.3（精确去权重与可逆重构）。** 对指定的有限 $J$，一组 $H,d,v$ 来自定义3.1，当且仅当
+
+$$
+H\ge0,\qquad d\in[3/5,2/3]^J,\qquad v\in[a,b]^J,
+\qquad H(v^{-1})=d,
+\tag{3.5}
+$$
+
+并存在严格正向量 $m$ 满足
+
+$$
+m_iH_{ij}=m_jH_{ji}.
+\tag{3.6}
+$$
+
+这里 $v^{-1}$ 逐项取倒数；若另给输入列 $u,g$，还必须要求 $u=\mathbf1-d$、$g=d-H\mathbf1$。共同核的可对称化本身不能代替去权重式（3.5）。
+
+证明如下。正向由 $B\mathbf1=\mathbf1$ 得 $H(v^{-1})=d$，且
+
+$$
+g=d-H\mathbf1,\qquad m_i=\frac{\pi_iv_i}{d_i},\qquad
+m_iH_{ij}=\pi_iv_iB_{ij}v_j=m_jH_{ji}.
+\tag{3.7}
+$$
+
+反向设
+
+$$
+B=D^{-1}HV^{-1},\qquad
+Z=\sum_i\frac{m_id_i}{v_i}>0,\qquad
+\pi_i=\frac{m_id_i}{v_iZ}.
+\tag{3.8}
+$$
+
+式（3.5）使 $B$ 非负且 $B\mathbf1=\mathbf1$；$\pi$ 是正概率行，并且
+
+$$
+\pi_iB_{ij}=\frac{m_iH_{ij}}{v_iv_jZ}=\pi_jB_{ji}.
+\tag{3.9}
+$$
+
+故取得原无权可逆流。重构后的对称化测度为 $m/Z$；$m$ 的总尺度不影响结果。定义 $u=\mathbf1-d$ 及 $g=d-H\mathbf1$ 就恢复式（3.2）–（3.3）。可约矩阵也直接适用，不需要用不可约 Perron 向量补一个隐藏前提。这是详细平衡的源特定代数接口，不是新的普遍正实现定理。
+
