@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -39,6 +40,40 @@ public sealed partial class LedgerWriterProductionPathTests
         AssertCanonicalGidBytes(ReadAtomBytes(repository, inputs.AtomId));
     }
 
+    [Theory]
+    [InlineData("missing-freeze")]
+    [InlineData("state-mismatch")]
+    [InlineData("missing-declaration")]
+    public void ScopedCoverRejectsUnverifiableExistingCoverageWithoutWriting(string defect)
+    {
+        var spec = MaterializeSpec() with
+        {
+            InitialCoverage = [ZetaGid], Migration = "absorbed", Truth = "closed",
+            BaselineTargetIdentical = true,
+        };
+        var world = spec.Materialize();
+        var frozen = world.Files.Keys.Single(path => path.StartsWith("Golden/Frozen/accepted/", StringComparison.Ordinal)
+            && world.Files[path].Contains("D5/S0/Carrier/Zeta.lean", StringComparison.Ordinal));
+        if (defect == "missing-freeze") world.Files.Remove(frozen);
+        else if (defect == "state-mismatch")
+            world.Files["Golden/Frozen/state/D5/S0/Carrier/Zeta.lean.json"] =
+                "{\"statement_id\":\"sha256:" + new string('d', 64) + "\"}\n";
+        else
+        {
+            var value = System.Text.Json.Nodes.JsonNode.Parse(world.Files[frozen])!;
+            value["payload"]!["declaration_statement_ids"] = new System.Text.Json.Nodes.JsonArray();
+            world.Files[frozen] = value.ToJsonString();
+        }
+        using var repository = new TemporaryDirectory();
+        var environment = Environment(repository, world, world.Document, world.Document);
+        var before = ReadAtomBytes(repository, spec.AtomId);
+
+        var result = environment.CoverAtom(["--cover-atom", spec.AtomId, "--gid", AlphaGid]);
+
+        Assert.False(result.Success);
+        Assert.Equal(before, ReadAtomBytes(repository, spec.AtomId));
+    }
+
     [Fact]
     public async Task DepositDelegatedMultiGidCover_WritesLedgerBytesInOrdinalOrder()
     {
@@ -72,7 +107,7 @@ public sealed partial class LedgerWriterProductionPathTests
             while [[ $# -gt 0 && $1 != -- ]]; do shift; done
             [[ $# -gt 0 ]] || exit 96
             shift
-            if [[ ${1:-} != cover-atom ]]; then
+            if [[ ${1:-} != cover-atom || ${2:-} == --lean-inputs ]]; then
               exec "$(dirname "$0")/dotnet-stub" "${original[@]}"
             fi
             printf 'dotnet:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
@@ -89,7 +124,7 @@ public sealed partial class LedgerWriterProductionPathTests
 
         Assert.Equal(
             [TransactionFixture.SecondaryGid, TransactionFixture.Gid],
-            fixture.Calls().Where(static call => call.StartsWith("dotnet:cover-atom ", StringComparison.Ordinal))
+            fixture.Calls().Where(static call => call.StartsWith("dotnet:cover-atom --cover-atom ", StringComparison.Ordinal))
                 .Select(static call => call.Split(' ')[4]));
         var atomPath = Assert.Single(TemporaryFileSystem.Directory.EnumerateFiles(
             Path.Combine(fixture.Root, BackfillInventoryLoader.RootPath),
@@ -127,6 +162,81 @@ public sealed partial class LedgerWriterProductionPathTests
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Contains($"COVER atom_id={atomId} gid={gid} ledger_changed=true",
             Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ExistingCoverageIdentityDriftHasSameScopedAndFullVerdict(bool changeIdentity)
+    {
+        var spec = MaterializeSpec() with
+        {
+            InitialCoverage = [ZetaGid], Migration = "absorbed", Truth = "closed",
+            BaselineTargetIdentical = true,
+        };
+        var world = spec.Materialize();
+        const string zeta = "D5/S0/Carrier/Zeta.lean";
+        var reports = world.Report.Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value);
+        if (changeIdentity)
+        {
+            world.Files[zeta] += "\ntheorem zeta : True ∧ True := ⟨True.intro, True.intro⟩\n";
+            reports[zeta] = reports[zeta] with
+            {
+                Declarations = reports[zeta].Declarations.Select(declaration => declaration with
+                {
+                    Axioms = [], TypeRepresentation = "True ∧ True", PrecomputedStatementId = null,
+                }).ToImmutableArray(),
+            };
+        }
+        world = world with { Report = LeanAxiomReport.Create(reports) };
+        using var scopedRoot = new TemporaryDirectory();
+        using var fullRoot = new TemporaryDirectory();
+        var scoped = Environment(scopedRoot, world, world.Document, world.Document);
+        DirectoryLedgerTestSupport.Write(fullRoot.Path, world.Files);
+        var full = new ProductionCliEnvironment(fullRoot.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create([]), CoverWorld.Raw(world.Files), CoverWorld.Raw(world.Baseline)),
+            new FullCurrentReport(world.Report), new FakeScribeEmissionVerifier(world.VerifiedEmissions),
+            CoverWorld.TimeProvider);
+        var before = ReadAtomBytes(scopedRoot, spec.AtomId);
+
+        var narrow = scoped.CoverAtom(["--cover-atom", spec.AtomId, "--gid", AlphaGid]);
+        var broad = full.CoverAtom(["--cover-atom", spec.AtomId, "--gid", AlphaGid]);
+
+        Assert.Equal(!changeIdentity, broad.Success);
+        Assert.True(narrow.Success == broad.Success,
+            $"scoped success={narrow.Success} error={narrow.Error}; full success={broad.Success} error={broad.Error}");
+        Assert.Equal(ReadAtomBytes(fullRoot, spec.AtomId), ReadAtomBytes(scopedRoot, spec.AtomId));
+        if (changeIdentity)
+        {
+            Assert.Contains("coverage-target-mismatch", narrow.Error, StringComparison.Ordinal);
+            Assert.Equal(before, ReadAtomBytes(scopedRoot, spec.AtomId));
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ScopedCurrentEdgeRejectsHistoryWithoutCurrentReport(bool moduleTarget)
+    {
+        var world = MaterializeSpec().Materialize();
+        world.Files["D5/S0/Carrier/Zeta.lean"] += "\ntheorem zeta : True ∧ True := ⟨True.intro, True.intro⟩\n";
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(CoverWorld.Raw(world.Files))).Snapshot;
+        var report = LeanAxiomReport.CreateScoped(world.Report.Files
+            .Where(pair => pair.Key.Value == "D5/S0/Carrier/Alpha.lean")
+            .ToDictionary(pair => pair.Key.Value, pair => pair.Value));
+        var index = FrozenStatementIndex.Create(FrozenStateCatalog.Load(snapshot), report);
+
+        var edge = CurrentEdgeValidator.Validate(moduleTarget ? "D5/S0/Carrier/Zeta" : ZetaGid,
+            snapshot, report, new Dictionary<RepoPath, TruthState>(), index);
+
+        Assert.False(edge.IsClosed);
+        Assert.False(edge.IsResolved);
+    }
+
+    private sealed class FullCurrentReport(LeanAxiomReport report) : ILeanReportSource
+    {
+        public LeanAxiomReport Load(RepositorySnapshot snapshot) => report;
+        public LeanAxiomReport Load(LeanReportScope scope) => report;
     }
 
     private static CoverSpec MaterializeSpec() => new()

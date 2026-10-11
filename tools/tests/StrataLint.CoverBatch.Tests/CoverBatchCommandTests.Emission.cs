@@ -137,7 +137,7 @@ public sealed partial class CoverBatchCommandTests
     [InlineData(".provenance.json")]
     [InlineData(".input.attestation")]
     [InlineData("sha-drift")]
-    [InlineData("producer-drift")]
+    [InlineData("input-drift")]
     public void RealFinalEmissionRejectsBadBundlesAfterKeepingSuccessfulCoverage(string failure)
     {
         using var world = new BatchWorld { UseGitReader = true };
@@ -151,7 +151,7 @@ public sealed partial class CoverBatchCommandTests
         {
             var path = report + ".input.attestation";
             var lines = TemporaryFileSystem.File.ReadAllText(path).Split('\n');
-            lines[2] = "producer_sha256=" + new string('0', 64);
+            lines[1] = "input_sha256=" + new string('0', 64);
             TemporaryFileSystem.File.WriteAllText(path, string.Join('\n', lines));
         }
 
@@ -161,7 +161,8 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(1, result.ExitCode);
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Contains("COVER_BATCH_EMIT_FAILED", result.Error, StringComparison.Ordinal);
-        Assert.Contains(failure.StartsWith(".", StringComparison.Ordinal) ? "incomplete" : "stale",
+        Assert.Contains(failure.StartsWith(".", StringComparison.Ordinal) ? "incomplete"
+                : failure == "sha-drift" ? "SHA mismatch" : "input attestation",
             result.Error, StringComparison.Ordinal);
         Assert.Single(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);

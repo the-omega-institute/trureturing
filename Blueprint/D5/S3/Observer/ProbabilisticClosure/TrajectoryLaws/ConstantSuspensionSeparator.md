@@ -34,8 +34,21 @@ Set c=1489/6750. The same-law estimates imply Cp-F(s)<=epsilon_p+5 epsilon_beta 
 
 This theorem concerns the stated regular finite table and its complete laws. It does not establish extraction of such a table from every original history, an isomorphism with the full record and event transcript, or the clipping comparison for arbitrary original emissions. Those bridges are required before an original-observer lower bound of 1/195200 can be asserted. The reduction also makes no resource-preservation claim.
 
+**Theorem 1.2 (Normalization of every complete stopped-word law).**
+
+$$\forall phase \in \operatorname{ActivePhase}\left(\right),\; \forall r \in \operatorname{unitInterval}\left(\right),\; \operatorname{IsProbabilityMeasure}\left(\operatorname{explicitStoppedWordLaw}\left(phase, r\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.endpoint_probability` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This is the probability normalization of the existing actual fourth-segment pushforward for either active phase and every unit-interval parameter. The infinite return outcome remains in the carrier. The absolute-risk estimates consume this original supplier directly.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.constant_suspension_separator`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.endpoint_probability`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw](FourthSegmentStoppedLaw.md)
 - Narrative reference: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw](FourthSegmentStoppedLaw.md)

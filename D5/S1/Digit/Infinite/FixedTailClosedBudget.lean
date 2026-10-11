@@ -25,7 +25,7 @@ namespace D5.S1.Digit.Infinite.FixedTailClosedBudget
 
 open D5.S1.Words.Powers (wordPower)
 
-private def intervalDistance (x l u : ℝ) : ℝ := max (l - x) (max 0 (x - u))
+def intervalDistance (x l u : ℝ) : ℝ := max (l - x) (max 0 (x - u))
 
 private theorem intervalDistance_nonneg (x l u : ℝ) : 0 ≤ intervalDistance x l u := by
   unfold intervalDistance
@@ -223,12 +223,12 @@ structure FixedTailData where
   block_path : ∀ j i, SourcePath (guard j) (blocks j i) (guard j)
   first_distinct : blocks 0 0 ≠ blocks 0 1
 
-private noncomputable def wordScalar (w : List Label) (x : ℝ) : ℝ :=
+noncomputable def wordScalar (w : List Label) (x : ℝ) : ℝ :=
   w.foldr branch x
 
 /-- Maximum departure-coordinate cost over all nonempty source suffixes.
 The terminal coordinate is omitted, and the empty source contributes zero. -/
-private noncomputable def wordCost : List Label → List (Fin 6) → ℝ → ℝ
+noncomputable def wordCost : List Label → List (Fin 6) → ℝ → ℝ
   | [], _, _ => 0
   | l :: w, i :: r, x => max
       (intervalDistance (wordScalar (l :: w) x) (cellLower i) (cellUpper i))
@@ -281,11 +281,11 @@ def allHistories (d : FixedTailData) (c : ℝ) (tails : Fin 2 → LegalDigits) :
     addressPrefix (d.stem j ++ z.flatMap (d.blocks j)) source (tails j) ∧
     addressObserved c (d.stemColor ++ z.flatMap d.blockColor) source
 
-private theorem wordScalar_append (u v : List Label) (x : ℝ) :
+theorem wordScalar_append (u v : List Label) (x : ℝ) :
     wordScalar (u ++ v) x = wordScalar u (wordScalar v x) := by
   exact List.foldr_append
 
-private theorem wordScalar_affine (w : List Label) (x : ℝ) :
+theorem wordScalar_affine (w : List Label) (x : ℝ) :
     wordScalar w x = wordScalar w 0 + (-g) ^ w.length * x := by
   induction w with
   | nil => simp [wordScalar]
@@ -301,7 +301,7 @@ private theorem wordScalar_continuous (w : List Label) : Continuous (wordScalar 
   rw [he]
   fun_prop
 
-private theorem prefix_scalar (w : List Label) (x y : LegalDigits)
+theorem prefix_scalar (w : List Label) (x y : LegalDigits)
     (h : addressPrefix w x y) : kappa x = wordScalar w (kappa y) := by
   induction w generalizing x with
   | nil => simpa [addressPrefix, wordScalar] using congrArg kappa h
@@ -353,7 +353,7 @@ private theorem hull_in_state (d : FixedTailData) (j : Fin 2) :
     rwa [block_scalar] at hm
 
 
-private theorem path_append {s s' s'' : Bool} {u v : List Label}
+theorem path_append {s s' s'' : Bool} {u v : List Label}
     (hu : SourcePath s u s') (hv : SourcePath s' v s'') : SourcePath s (u ++ v) s'' := by
   induction hu with
   | nil => exact hv
@@ -417,7 +417,7 @@ private theorem cost_observed {s s' : Bool} {w : List Label} (hw : SourcePath s 
       change max _ _ ≤ c ↔ _ ∧ _
       rw [max_le_iff, distance_observation c _ i hs hc, ih r hr' hx]
 
-private theorem cost_append (u v : List Label) (r t' : List (Fin 6))
+theorem cost_append (u v : List Label) (r t' : List (Fin 6))
     (hr : u.length = r.length) (x : ℝ) :
     wordCost (u ++ v) (r ++ t') x =
       max (wordCost u r (wordScalar v x)) (wordCost v t' x) := by
@@ -436,7 +436,7 @@ private theorem cost_append (u v : List Label) (r t' : List (Fin 6))
         wordScalar (l :: u) (wordScalar v x) from wordScalar_append (l :: u) v x,
         ih r (by simpa using hr), max_assoc]
 
-private theorem cost_endpoint_bound (w : List Label) (r : List (Fin 6))
+theorem cost_endpoint_bound (w : List Label) (r : List (Fin 6))
     (lo hi x : ℝ) (hx : x ∈ Set.Icc lo hi) :
     wordCost w r x ≤ max (wordCost w r lo) (wordCost w r hi) := by
   induction w generalizing r with

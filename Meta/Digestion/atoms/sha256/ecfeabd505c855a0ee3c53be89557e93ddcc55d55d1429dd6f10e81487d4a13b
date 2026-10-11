@@ -1,0 +1,11 @@
+**数学引文 3.4（有符号图上同调的适用对象）。** 将五边图视为没有二维胞腔的一维图，一条实边余链 $\alpha\in\mathbb R^E$ 在形式反向上取负号。其恰当性指存在状态势 $\phi$ 使 $\alpha=B^{\mathsf T}\phi$。由[《观察者相对局部模型与未来可识别性》命题 10.2、10.4](AURIC_FIB_ATOM_OBSERVER_RELATIVE_LOCAL_MODELS_AND_FUTURE_IDENTIFIABILITY.md)的有符号闭走法判据，等价条件为 $\alpha$ 湮灭 $\ker B$。本图因此只需
+
+$$
+\alpha_1+\alpha_2+\alpha_3+\alpha_4=0,
+\qquad H^1(G;\mathbb R)=\mathbb R^E/\operatorname{im}B^{\mathsf T}.
+$$
+
+在本图也可直接读出这个条件：取 $\phi_0=0$、$\phi_1=\alpha_1$、$\phi_{13}=\alpha_1+\alpha_2$、$\phi_3=\alpha_1+\alpha_2+\alpha_3$、$\phi_2=\alpha_5$，前三条循环边和叶边均满足势增量式，第四条恰要求上述零和。于是定理 3.2 的 $L_C>0$ 排除以状态势表示这些指定成本；它不排除全局图、定义于全图的边函数，或额外给定的全局参数 $t$。
+
+若将 $\ell$ 视作这个有符号余链，形式反向的值为 $-\ell$。若另外允许实际反向跳跃，其非负成本须另行指定，不能同时默认等于这个负值。填入方形二维胞腔会改变链复形，故不沿用此处一维图的 $H^1$。
+
