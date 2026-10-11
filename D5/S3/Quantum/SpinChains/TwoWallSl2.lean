@@ -57,12 +57,14 @@ private def rightSite {m : ℕ} (j : Fin (m - 1)) : Fin m := ⟨j.val + 1, by om
 private def swapBin {m : ℕ} (j : Fin (m - 1)) (w : Fin m → Bool) : Fin m → Bool :=
   bitsSwap (leftSite j) (rightSite j) w
 
-private def leftMove {a b : ℕ} (c : Coordinates a b) (j : Fin (c.m - 1)) :
+/-- Swap one inner bond of the first binary arc. -/
+def leftMove {a b : ℕ} (c : Coordinates a b) (j : Fin (c.m - 1)) :
     Coordinates a b :=
   { c with u := swapBin j c.u
            filling := by rw [swapBin, bitsSwap_ones]; exact c.filling }
 
-private def rightMove {a b : ℕ} (c : Coordinates a b) (j : Fin (c.n - 1)) :
+/-- Swap one inner bond of the second binary arc. -/
+def rightMove {a b : ℕ} (c : Coordinates a b) (j : Fin (c.n - 1)) :
     Coordinates a b :=
   { c with v := swapBin j c.v
            filling := by rw [swapBin, bitsSwap_ones]; exact c.filling }
@@ -586,6 +588,319 @@ theorem literal_translation (a b : ℕ) :
 #print axioms marked_relations
 #print axioms marked_symmetries
 #print axioms literal_relations
+omit [CharZero K] in
+private theorem QJ (a b : ℕ) (x : MarkedSpace K a b) :
+    Q K a b (Jstar K a b x) = Q K a b x := by
+  have he : (Q K a b).comp (Jstar K a b) = Q K a b := by
+    apply Finsupp.lhom_ext
+    intro y z
+    simp [Q, Jstar, J]
+  exact LinearMap.congr_fun he x
+
+private theorem descend_delta {a b : ℕ} (A : Module.End K (MarkedSpace K a b))
+    (hj : Commute (Jstar K a b) A) (x : MarkedWord a b) :
+    descend K a b A (delta K x.1.1) = Q K a b (A (markedDelta K x)) := by
+  have sq := LinearMap.congr_fun (marked_descent K a b).2.2.2.2.1 (markedDelta K x)
+  have hq : Q K a b (markedDelta K x) = delta K x.1.1 := by
+    simp [Q, markedDelta, delta, basis, Finsupp.coe_basisSingleOne]
+  simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.id_apply] at sq
+  rw [hq] at sq
+  have hj' := LinearMap.congr_fun hj.eq (markedDelta K x)
+  change Jstar K a b (A (markedDelta K x)) = A (Jstar K a b (markedDelta K x)) at hj'
+  simp only [descend, LinearMap.smul_apply, LinearMap.comp_apply]
+  rw [sq, map_add, map_add, ← hj', QJ, ← two_smul K, smul_smul,
+    inv_mul_cancel₀ (by norm_num : (2 : K) ≠ 0), one_smul]
+
+omit [CharZero K] in
+private theorem conjugate_delta {a b : ℕ} (A : Module.End K (CoordinateSpace K a b))
+    (c : Coordinates a b) :
+    (coordinateLinear K a b).conjRingEquiv A (markedDelta K (encode c)) =
+      coordinateLinear K a b (A (Finsupp.single c 1)) := by
+  rw [← coordinateLinear_single]
+  change coordinateLinear K a b (A ((coordinateLinear K a b).symm
+    (coordinateLinear K a b (Finsupp.single c 1)))) = _
+  rw [LinearEquiv.symm_apply_apply]
+
+omit [CharZero K] in
+private theorem forget_single {a b : ℕ} (c : Coordinates a b) :
+    Q K a b (coordinateLinear K a b (Finsupp.single c 1)) = delta K (encode c).1.1 := by
+  rw [coordinateLinear_single]
+  simp [Q, markedDelta, delta, basis, Finsupp.coe_basisSingleOne]
+
+/-- The integral sum of the two inversion weights. -/
+def integerWeight {a b : ℕ} (c : Coordinates a b) : ℤ :=
+  (2 * (level c.u : ℤ) - (ones c.u : ℤ) * ((c.m : ℤ) - ones c.u)) +
+    (2 * (level c.v : ℤ) - (ones c.v : ℤ) * ((c.n : ℤ) - ones c.v))
+
+private theorem weight_cast {m : ℕ} (w : Fin m → Bool) :
+    (weight w : K) = ((2 * (level w : ℤ) - (ones w : ℤ) * ((m : ℤ) - ones w) : ℤ) : K) := by
+  rw [weight_eq_level]
+  push_cast
+  rfl
+
+/-- Literal basis actions in either ordered pair of arcs, with bond multiplicities retained. -/
+theorem basis_actions (a b : ℕ) (c : Coordinates a b) :
+    h K a b (delta K (encode c).1.1) = (integerWeight c : K) • delta K (encode c).1.1 ∧
+    e K a b (delta K (encode c).1.1) =
+      (∑ j : Fin (c.m - 1), if c.u (leftSite j) = false ∧ c.u (rightSite j) = true then
+        (raisingCoefficient c.m j : K) • delta K (encode (leftMove c j)).1.1 else 0) +
+      (∑ j : Fin (c.n - 1), if c.v (leftSite j) = false ∧ c.v (rightSite j) = true then
+        (raisingCoefficient c.n j : K) • delta K (encode (rightMove c j)).1.1 else 0) ∧
+    f K a b (delta K (encode c).1.1) =
+      (∑ j : Fin (c.m - 1), if c.u (leftSite j) = true ∧ c.u (rightSite j) = false then
+        delta K (encode (leftMove c j)).1.1 else 0) +
+      (∑ j : Fin (c.n - 1), if c.v (leftSite j) = true ∧ c.v (rightSite j) = false then
+        delta K (encode (rightMove c j)).1.1 else 0) := by
+  classical
+  have sy := marked_symmetries K a b
+  refine ⟨?_, ?_, ?_⟩
+  · rw [h, descend_delta K _ sy.1, markedH, conjugate_delta]
+    simp only [coordinateH, Finsupp.linearCombination_single, one_smul, map_smul,
+      forget_single, weight_cast, integerWeight, Int.cast_add]
+  · rw [e, descend_delta K _ sy.2.1, markedE, conjugate_delta]
+    simp only [coordinateE, Finsupp.linearCombination_single, one_smul, map_add, map_sum]
+    simp only [apply_ite, map_zero, map_smul, forget_single]
+  · rw [f, descend_delta K _ sy.2.2.1, markedF, conjugate_delta]
+    simp only [coordinateF, Finsupp.linearCombination_single, one_smul, map_add, map_sum,
+      apply_ite, map_zero, forget_single]
+
+#print axioms marked_relations
+#print axioms marked_symmetries
+#print axioms literal_relations
 #print axioms literal_translation
+private def sites {a b : ℕ} (c : Coordinates a b) :
+    Fin ((c.m + 1) + (c.n + 1)) ≃ Pos a b :=
+  (finCongr (by have := c.length; omega)).trans
+    ((ZMod.finEquiv (a + b + 2)).toEquiv.trans (Equiv.addRight c.p))
+
+private theorem sites_apply {a b : ℕ} (c : Coordinates a b)
+    (i : Fin ((c.m + 1) + (c.n + 1))) :
+    sites c i = c.p + (i.val : Pos a b) := by
+  change (ZMod.finEquiv (a + b + 2)) (Fin.cast (by have := c.length; omega) i) + c.p = _
+  have hh : (ZMod.finEquiv (a + b + 2))
+      (Fin.cast (by have := c.length; omega) i) = (i.val : Pos a b) := by
+    apply ZMod.val_injective
+    rw [ZMod.val_natCast_of_lt (by have := c.length; omega)]
+    rfl
+  exact hh ▸ add_comm _ _
+
+private def vector {a b : ℕ} (c : Coordinates a b) :
+    Fin ((c.m + 1) + (c.n + 1)) → Letter :=
+  Fin.append (Fin.cons wall (fun i => if c.u i then two else one))
+    (Fin.cons wall (fun i => if c.v i then two else one))
+
+private theorem encoded_read {a b : ℕ} (c : Coordinates a b)
+    (i : Fin ((c.m + 1) + (c.n + 1))) :
+    (encode c).1.1.1 (sites c i) = vector c i := by
+  have lay := (marked_coordinates a b).2.2.2.1 c
+  rw [sites_apply]
+  cases i using Fin.addCases with
+  | left i =>
+    cases i using Fin.cases with
+    | zero => simpa [vector] using lay.1
+    | succ i => simpa [vector] using lay.2.2.1 i
+  | right i =>
+    cases i using Fin.cases with
+    | zero => simpa [vector] using lay.2.1
+    | succ i =>
+      have hh : c.m + 1 + (i.val + 1) = c.m + 2 + i.val := by omega
+      simpa [vector, hh] using lay.2.2.2 i
+
+private theorem vector_leftMove {a b : ℕ} (c : Coordinates a b) (j : Fin (c.m - 1))
+    (i : Fin ((c.m + 1) + (c.n + 1))) :
+    vector (leftMove c j) i = vector c
+      (Equiv.swap ((leftSite j).succ.castAdd (c.n + 1))
+        ((rightSite j).succ.castAdd (c.n + 1)) i) := by
+  classical
+  let x := (leftSite j).succ.castAdd (c.n + 1)
+  let y := (rightSite j).succ.castAdd (c.n + 1)
+  change vector (leftMove c j) i = vector c (Equiv.swap x y i)
+  by_cases hx : i = x
+  · subst i
+    simp [x, y, vector, leftMove, swapBin, bitsSwap]
+  by_cases hy : i = y
+  · subst i
+    simp [x, y, vector, leftMove, swapBin, bitsSwap]
+  rw [Equiv.swap_apply_of_ne_of_ne hx hy]
+  cases i using Fin.addCases with
+  | left i =>
+    cases i using Fin.cases with
+    | zero => rfl
+    | succ i =>
+      have hi : i ≠ leftSite j := by intro hh; apply hx; simp [x, hh]
+      have hj : i ≠ rightSite j := by intro hh; apply hy; simp [y, hh]
+      simp [vector, leftMove, swapBin, bitsSwap, Equiv.swap_apply_of_ne_of_ne hi hj]
+  | right i => simp only [vector, leftMove, Fin.append_right]; rfl
+
+private theorem encode_leftMove {a b : ℕ} (c : Coordinates a b) (j : Fin (c.m - 1)) :
+    (encode (leftMove c j)).1.1 =
+      swapWord (c.p + ((j.val + 1 : ℕ) : Pos a b)) (encode c).1.1 := by
+  apply Subtype.ext
+  funext r
+  obtain ⟨i,rfl⟩ := (sites c).surjective r
+  have he : sites (leftMove c j) = sites c := rfl
+  change (encode (leftMove c j)).1.1.1 (sites c i) =
+    (encode c).1.1.1 (Equiv.swap (c.p + ((j.val + 1 : ℕ) : Pos a b))
+      (c.p + ((j.val + 1 : ℕ) : Pos a b) + 1) (sites c i))
+  have hr := encoded_read (leftMove c j) i
+  change (encode (leftMove c j)).1.1.1 (sites c i) = vector (leftMove c j) i at hr
+  rw [hr, vector_leftMove]
+  have hx : sites c ((leftSite j).succ.castAdd (c.n + 1)) =
+      c.p + ((j.val + 1 : ℕ) : Pos a b) := by simp [sites_apply, leftSite]
+  have hy : sites c ((rightSite j).succ.castAdd (c.n + 1)) =
+      c.p + ((j.val + 1 : ℕ) : Pos a b) + 1 := by
+    simp [sites_apply, rightSite, Nat.cast_add, add_assoc]; norm_num
+  rw [← hy, ← hx, (sites c).injective.swap_apply]
+  exact (encoded_read c _).symm
+
+private theorem swap_word {a b : ℕ} (c : Coordinates a b) :
+    (encode (coordinateSwap c)).1.1 = (encode c).1.1 := by
+  have hh := congrArg (fun x : MarkedWord a b => x.1.1)
+    ((marked_coordinates a b).2.2.2.2.1 c)
+  exact hh
+
+private theorem encode_rightMove {a b : ℕ} (c : Coordinates a b) (j : Fin (c.n - 1)) :
+    (encode (rightMove c j)).1.1 =
+      swapWord (c.p + ((c.m + 2 + j.val : ℕ) : Pos a b)) (encode c).1.1 := by
+  have he := encode_leftMove (coordinateSwap c) j
+  have hh : leftMove (coordinateSwap c) j = coordinateSwap (rightMove c j) := rfl
+  rw [hh, swap_word, swap_word] at he
+  have hp : (coordinateSwap c).p + ((j.val + 1 : ℕ) : Pos a b) =
+      c.p + ((c.m + 2 + j.val : ℕ) : Pos a b) := by
+    change c.p + ((c.m + 1 : ℕ) : Pos a b) + ((j.val + 1 : ℕ) : Pos a b) = _
+    rw [add_assoc, ← Nat.cast_add]
+    congr 2
+    omega
+  simpa only [hp] using he
+
+#print axioms marked_relations
+#print axioms marked_symmetries
+#print axioms literal_relations
+#print axioms literal_translation
+omit [CharZero K] in
+private theorem bond_left {a b : ℕ} (c : Coordinates a b) (j : Fin (c.m - 1)) :
+    bond K 2 (c.p + ((j.val + 1 : ℕ) : Pos a b)) (encode c).1.1 =
+      if lowers c.u j then delta K (encode (leftMove c j)).1.1 else 0 := by
+  classical
+  have lay := (marked_coordinates a b).2.2.2.1 c
+  have hl := lay.2.2.1 (leftSite j)
+  have hr := lay.2.2.1 (rightSite j)
+  have hp : c.p + ((j.val + 1 : ℕ) : Pos a b) + 1 =
+      c.p + (((rightSite j).val + 1 : ℕ) : Pos a b) := by
+    simp [rightSite, Nat.cast_add, add_assoc]; norm_num
+  have ha : Allowed 2 (encode c).1.1 (c.p + ((j.val + 1 : ℕ) : Pos a b)) ↔
+      lowers c.u j := by
+    change ((encode c).1.1.1 _ = two ∧ (encode c).1.1.1 _ = one) ↔ _
+    rw [hp, hr, ← show (leftSite j).val = j.val from rfl, hl]
+    dsimp only [lowers]
+    cases c.u (leftSite j) <;> cases c.u (rightSite j) <;> decide
+  simp only [bond, ha]
+  split_ifs
+  · exact congrArg (delta K) (encode_leftMove c j).symm
+  · rfl
+
+omit [CharZero K] in
+private theorem bond_right {a b : ℕ} (c : Coordinates a b) (j : Fin (c.n - 1)) :
+    bond K 2 (c.p + ((c.m + 2 + j.val : ℕ) : Pos a b)) (encode c).1.1 =
+      if lowers c.v j then delta K (encode (rightMove c j)).1.1 else 0 := by
+  have he := bond_left K (coordinateSwap c) j
+  have hh : leftMove (coordinateSwap c) j = coordinateSwap (rightMove c j) := rfl
+  rw [hh, swap_word, swap_word] at he
+  have hp : (coordinateSwap c).p + ((j.val + 1 : ℕ) : Pos a b) =
+      c.p + ((c.m + 2 + j.val : ℕ) : Pos a b) := by
+    change c.p + ((c.m + 1 : ℕ) : Pos a b) + ((j.val + 1 : ℕ) : Pos a b) = _
+    rw [add_assoc, ← Nat.cast_add]
+    congr 2
+    omega
+  rw [hp] at he
+  exact he
+
+omit [CharZero K] in
+private theorem bond_wall_left {a b : ℕ} (w : Word a b) (p : Pos a b)
+    (hw : w.1 p = wall) : bond K 2 p w = 0 := by
+  have hn : ¬ Allowed 2 w p := by
+    intro hh
+    have ht : w.1 p = two := hh.1
+    rw [hw] at ht
+    exact (by decide : wall ≠ two) ht
+  simp [bond, hn]
+
+omit [CharZero K] in
+private theorem bond_wall_right {a b : ℕ} (w : Word a b) (p : Pos a b)
+    (hw : w.1 (p + 1) = wall) : bond K 2 p w = 0 := by
+  have hn : ¬ Allowed 2 w p := by
+    intro hh
+    have ht : w.1 (p + 1) = one := hh.2
+    rw [hw] at ht
+    exact (by decide : wall ≠ one) ht
+  simp [bond, hn]
+
+private theorem sum_inner {V : Type*} [AddCommMonoid V]
+    (m : ℕ) (g : ℕ → V) (h0 : g 0 = 0) (hm : g m = 0) :
+    (∑ i : Fin (m + 1), g i.val) = ∑ j : Fin (m - 1), g (j.val + 1) := by
+  cases m with
+  | zero => simp [h0]
+  | succ m =>
+    rw [Fin.sum_univ_succ]
+    simp only [Fin.val_zero, h0, zero_add, Fin.val_succ, Nat.succ_sub_one]
+    rw [Fin.sum_univ_castSucc]
+    simp only [Fin.val_castSucc, Fin.val_last, hm, add_zero]
+
+private theorem F3_encoded {a b : ℕ} (c : Coordinates a b) :
+    F3 K a b (delta K (encode c).1.1) = f K a b (delta K (encode c).1.1) := by
+  have lay := (marked_coordinates a b).2.2.2.1 c
+  have hl0 : bond K 2 c.p (encode c).1.1 = 0 := bond_wall_left K _ _ lay.1
+  have hlm : bond K 2 (c.p + (c.m : Pos a b)) (encode c).1.1 = 0 := by
+    apply bond_wall_right
+    simpa [Nat.cast_add, add_assoc] using lay.2.1
+  have hr0 : bond K 2 (c.p + ((c.m + 1 : ℕ) : Pos a b)) (encode c).1.1 = 0 :=
+    bond_wall_left K _ _ lay.2.1
+  have hrn : bond K 2 (c.p + ((c.m + 1 + c.n : ℕ) : Pos a b)) (encode c).1.1 = 0 := by
+    apply bond_wall_right
+    have hp : c.p + ((c.m + 1 + c.n : ℕ) : Pos a b) + 1 = c.p := by
+      rw [add_assoc, show (1 : Pos a b) = ((1 : ℕ) : Pos a b) from rfl, ← Nat.cast_add,
+        show c.m + 1 + c.n + 1 = a + b + 2 by have := c.length; omega,
+        ZMod.natCast_self, add_zero]
+    rw [hp]
+    exact lay.1
+  rw [F3, (cyclic_action K a b).2.2.2.1]
+  rw [← Equiv.sum_comp (sites c) (fun p => bond K 2 p (encode c).1.1)]
+  simp only [sites_apply]
+  rw [Fin.sum_univ_add]
+  simp only [Fin.val_castAdd, Fin.val_natAdd]
+  rw [sum_inner c.m (fun i => bond K 2 (c.p + (i : Pos a b)) (encode c).1.1)
+      (by simpa using hl0) hlm,
+    sum_inner c.n (fun i => bond K 2 (c.p + ((c.m + 1 + i : ℕ) : Pos a b))
+      (encode c).1.1) (by simpa using hr0) hrn]
+  rw [(basis_actions K a b c).2.2]
+  congr 1
+  · apply Finset.sum_congr rfl
+    intro j _
+    exact bond_left K c j
+  · apply Finset.sum_congr rfl
+    intro j _
+    have hp : c.m + 1 + (j.val + 1) = c.m + 2 + j.val := by omega
+    simpa only [hp] using bond_right K c j
+
+/-- The lowering endomorphism is exactly the physical cyclic 21 to 12 bond sum. -/
+theorem f_eq_F3 (a b : ℕ) : f K a b = F3 K a b := by
+  apply (basis K a b).ext
+  intro w
+  have hw : ∃ p : Pos a b, w.1 p = wall := by
+    by_contra hn
+    push Not at hn
+    have hc := w.2.2.2
+    simp [count, hn] at hc
+  obtain ⟨p,hp⟩ := hw
+  obtain ⟨c,hc⟩ := (coordinateEquiv a b).surjective (⟨(w,p),hp⟩ : MarkedWord a b)
+  have hword : (encode c).1.1 = w := congrArg (fun x : MarkedWord a b => x.1.1) hc
+  simpa only [hword, delta] using (F3_encoded K c).symm
+
+#print axioms marked_relations
+#print axioms marked_symmetries
+#print axioms literal_relations
+#print axioms literal_translation
+#print axioms basis_actions
+#print axioms f_eq_F3
 
 end D5.S3.Quantum.SpinChains.TwoWallSl2
