@@ -298,6 +298,206 @@ def encode {a b : ℕ} (c : Coordinates a b) : MarkedWord a b :=
       ((0 : Fin (c.m + 1)).castAdd (c.n + 1))
     simpa [arcVector] using h⟩
 
+
+private theorem arcLetter_read (c : Letter) (h : c ≠ wall) :
+    arcLetter (decide (c = two)) = c := by
+  fin_cases c <;> simp_all [arcLetter, one, two, wall]
+
+private theorem offset_injective {a b : ℕ} {i j : ℕ}
+    (hi : i < a + b + 2) (hj : j < a + b + 2)
+    (h : (i : Pos a b) = (j : Pos a b)) : i = j := by
+  have := congrArg ZMod.val h
+  simpa only [ZMod.val_natCast_of_lt hi, ZMod.val_natCast_of_lt hj] using this
+
+private theorem arcVector_walls (m n : ℕ) (u : Fin m → Bool) (v : Fin n → Bool)
+    (i : Fin ((m + 1) + (n + 1))) :
+    arcVector m n u v i = wall ↔ i.val = 0 ∨ i.val = m + 1 := by
+  cases i using Fin.addCases with
+  | left i =>
+    cases i using Fin.cases with
+    | zero => simp [arcVector]
+    | succ i =>
+      have hn : arcLetter (u i) ≠ wall := by cases u i <;> decide
+      simp only [arcVector, Fin.append_left, Fin.cons_succ, Fin.val_castAdd, Fin.val_succ]
+      simp only [hn, false_iff]
+      omega
+  | right i =>
+    cases i using Fin.cases with
+    | zero => simp [arcVector]
+    | succ i =>
+      have hn : arcLetter (v i) ≠ wall := by cases v i <;> decide
+      simp only [arcVector, Fin.append_right, Fin.cons_succ, Fin.val_natAdd, Fin.val_succ]
+      simp only [hn, false_iff]
+      omega
+
+private theorem raw_walls {a b : ℕ} (p : Pos a b) (m n : ℕ) (h : m + n = a + b)
+    (u : Fin m → Bool) (v : Fin n → Bool) (r : Pos a b) :
+    rawEncode p m n h u v r = wall ↔ r = p ∨ r = p + ((m + 1 : ℕ) : Pos a b) := by
+  obtain ⟨i, rfl⟩ := (siteEquiv p m n h).surjective r
+  rw [siteEquiv_apply, raw_at, arcVector_walls]
+  constructor
+  · rintro (hi | hi) <;> simp [hi]
+  · rintro (hr | hr)
+    · left
+      have hz : (i.val : Pos a b) = (0 : ℕ) := by simpa only [add_eq_left, Nat.cast_zero] using hr
+      exact offset_injective (by omega) (by omega) hz
+    · right
+      exact offset_injective (by omega) (by omega) (add_left_cancel hr)
+
+private theorem encode_other {a b : ℕ} (c : Coordinates a b) :
+    otherWall (encode c) = c.p + ((c.m + 1 : ℕ) : Pos a b) := by
+  have hw := (other_spec (encode c)).2.1
+  rcases (raw_walls c.p c.m c.n c.length c.u c.v _).mp hw with h | h
+  · exact ((other_spec (encode c)).1 h).elim
+  · exact h
+
+private theorem raw_reconstruction {a b : ℕ} (w : Word a b) (p : Pos a b)
+    (m n : ℕ) (hlen : m + n = a + b) (hp : w.1 p = wall)
+    (hq : w.1 (p + ((m + 1 : ℕ) : Pos a b)) = wall)
+    (hw : ∀ r, w.1 r = wall → r = p ∨ r = p + ((m + 1 : ℕ) : Pos a b)) :
+    rawEncode p m n hlen
+      (fun i => decide (w.1 (p + ((i.val + 1 : ℕ) : Pos a b)) = two))
+      (fun i => decide (w.1 (p + ((m + 2 + i.val : ℕ) : Pos a b)) = two)) = w.1 := by
+  funext r
+  obtain ⟨i, rfl⟩ := (siteEquiv p m n hlen).surjective r
+  rw [siteEquiv_apply, raw_at]
+  cases i using Fin.addCases with
+  | left i =>
+    cases i using Fin.cases with
+    | zero => simpa [arcVector] using hp.symm
+    | succ i =>
+      simp only [arcVector, Fin.append_left, Fin.cons_succ, Fin.val_castAdd, Fin.val_succ]
+      apply arcLetter_read
+      intro h
+      rcases hw _ h with h | h
+      · have he := offset_injective (a := a) (b := b) (i := i.val + 1) (j := 0)
+          (by omega) (by omega) (by simpa only [add_eq_left, Nat.cast_zero] using h)
+        omega
+      · have he := offset_injective (a := a) (b := b) (i := i.val + 1) (j := m + 1)
+          (by omega) (by omega) (add_left_cancel h)
+        omega
+  | right i =>
+    cases i using Fin.cases with
+    | zero => simpa [arcVector] using hq.symm
+    | succ i =>
+      simp only [arcVector, Fin.append_right, Fin.cons_succ, Fin.val_natAdd, Fin.val_succ]
+      have he : m + 1 + (i.val + 1) = m + 2 + i.val := by omega
+      rw [he]
+      apply arcLetter_read
+      intro h
+      rcases hw _ h with h | h
+      · have he := offset_injective (a := a) (b := b) (i := m + 2 + i.val) (j := 0)
+          (by omega) (by omega) (by simpa only [add_eq_left, Nat.cast_zero] using h)
+        omega
+      · have he := offset_injective (a := a) (b := b) (i := m + 2 + i.val) (j := m + 1)
+          (by omega) (by omega) (add_left_cancel h)
+        omega
+
+private noncomputable def distance {a b : ℕ} (x : MarkedWord a b) : ℕ :=
+  (otherWall x - x.1.2).val
+
+private theorem distance_bounds {a b : ℕ} (x : MarkedWord a b) :
+    1 ≤ distance x ∧ distance x ≤ a + b + 1 := by
+  have hlt := ZMod.val_lt (otherWall x - x.1.2)
+  have hn : (otherWall x - x.1.2).val ≠ 0 := by
+    intro h
+    exact (other_spec x).1 (sub_eq_zero.mp ((ZMod.val_eq_zero _).mp h))
+  dsimp [distance]
+  omega
+
+private theorem distance_wall {a b : ℕ} (x : MarkedWord a b) :
+    x.1.2 + ((distance x : ℕ) : Pos a b) = otherWall x := by
+  simp only [distance, ZMod.natCast_zmod_val]
+  abel
+
+/-- Read the arcs between the marked wall and the unique other wall. -/
+noncomputable def decode {a b : ℕ} (x : MarkedWord a b) : Coordinates a b := by
+  let m := distance x - 1
+  let n := a + b - m
+  have hlen : m + n = a + b := by have := distance_bounds x; dsimp [m, n]; omega
+  let u : Fin m → Bool := fun i => decide (x.1.1.1 (x.1.2 + ((i.val + 1 : ℕ) : Pos a b)) = two)
+  let v : Fin n → Bool := fun i => decide (x.1.1.1 (x.1.2 + ((m + 2 + i.val : ℕ) : Pos a b)) = two)
+  have hm : m + 1 = distance x := by have := distance_bounds x; dsimp [m]; omega
+  have hq : x.1.2 + ((m + 1 : ℕ) : Pos a b) = otherWall x := by rw [hm]; exact distance_wall x
+  have hr : rawEncode x.1.2 m n hlen u v = x.1.1.1 :=
+    raw_reconstruction x.1.1 x.1.2 m n hlen x.2 (by rw [hq]; exact (other_spec x).2.1)
+      (by simpa only [hq] using (other_spec x).2.2)
+  refine ⟨x.1.2, m, n, u, v, hlen, ?_⟩
+  have hc := (raw_counts x.1.2 m n hlen u v).2.1
+  rw [hr, x.1.1.2.2.1] at hc
+  exact hc.symm
+
+private theorem encode_decode {a b : ℕ} (x : MarkedWord a b) : encode (decode x) = x := by
+  apply Subtype.ext
+  refine Prod.ext ?_ rfl
+  apply Subtype.ext
+  change rawEncode x.1.2 (distance x - 1) (a + b - (distance x - 1)) _ _ _ = x.1.1.1
+  apply raw_reconstruction
+  · exact x.2
+  · have hm : distance x - 1 + 1 = distance x := by have := distance_bounds x; omega
+    rw [hm, distance_wall]
+    exact (other_spec x).2.1
+  · have hm : distance x - 1 + 1 = distance x := by have := distance_bounds x; omega
+    simpa only [hm, distance_wall] using (other_spec x).2.2
+
+private theorem decode_encode {a b : ℕ} (c : Coordinates a b) : decode (encode c) = c := by
+  have hd : distance (encode c) = c.m + 1 := by
+    dsimp [distance]
+    rw [encode_other]
+    change (c.p + ((c.m + 1 : ℕ) : Pos a b) - c.p).val = c.m + 1
+    rw [add_sub_cancel_left, ZMod.val_natCast_of_lt (by have := c.length; omega)]
+  have hm : (decode (encode c)).m = c.m := by change distance (encode c) - 1 = _; omega
+  have hn : (decode (encode c)).n = c.n := by
+    change a + b - (distance (encode c) - 1) = _
+    have := c.length
+    omega
+  have hu : ∀ i : Fin c.m,
+      (decode (encode c)).u (Fin.cast hm.symm i) = c.u i := by
+    intro i
+    change decide (rawEncode c.p c.m c.n c.length c.u c.v
+      (c.p + ((i.val + 1 : ℕ) : Pos a b)) = two) = c.u i
+    have ht := raw_at c.p c.m c.n c.length c.u c.v (i.succ.castAdd (c.n + 1))
+    simp only [Fin.val_castAdd, Fin.val_succ, arcVector, Fin.append_left, Fin.cons_succ] at ht
+    rw [ht]
+    cases c.u i <;> decide
+  have hv : ∀ i : Fin c.n,
+      (decode (encode c)).v (Fin.cast hn.symm i) = c.v i := by
+    intro i
+    change decide (rawEncode c.p c.m c.n c.length c.u c.v
+      (c.p + (((decode (encode c)).m + 2 + i.val : ℕ) : Pos a b)) = two) = c.v i
+    rw [hm]
+    have ht := raw_at c.p c.m c.n c.length c.u c.v (i.succ.natAdd (c.m + 1))
+    simp only [Fin.val_natAdd, Fin.val_succ, arcVector, Fin.append_right, Fin.cons_succ] at ht
+    have he : c.m + 1 + (i.val + 1) = c.m + 2 + i.val := by omega
+    rw [he] at ht
+    rw [ht]
+    cases c.v i <;> decide
+  cases c with
+  | mk p m n u v hlen hfill =>
+    generalize hz : decode (encode ⟨p,m,n,u,v,hlen,hfill⟩) = z at *
+    cases z with
+    | mk p' m' n' u' v' hlen' hfill' =>
+      dsimp at hm hn hu hv
+      subst m'
+      subst n'
+      have hp : p' = p := by
+        have := congrArg Coordinates.p hz
+        exact this.symm
+      subst p'
+      have huu : u' = u := funext hu
+      have hvv : v' = v := funext hv
+      subst u'
+      subst v'
+      rfl
+
+/-- The literal marked words and their ordered binary-arc coordinates. -/
+noncomputable def coordinateEquiv (a b : ℕ) : Coordinates a b ≃ MarkedWord a b where
+  toFun := encode
+  invFun := decode
+  left_inv := decode_encode
+  right_inv := encode_decode
+
+#print axioms coordinateEquiv
 #print axioms marked_descent
 
 end D5.S3.Quantum.SpinChains.TwoWallMarked
