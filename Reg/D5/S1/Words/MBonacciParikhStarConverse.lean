@@ -432,7 +432,7 @@ def family : Registration arena.{u} (type_of% (conversePrivate% clip_permutation
       exact actual_law (ULift.up 0 : ULift.{u} ℕ) [] [ULift.up 1]))
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (conversePrivate% clip_permutation) (type_of% actual) (type_of% (@List.Perm)) Unit := {
+    (conversePrivate% clip_permutation) (type_of% actual.{u}) (type_of% (@List.Perm.{u})) Unit := {
   unitName := `D5.S1.Words.MBonacciParikhStarConverse.clip_permutation.__information_unit,
   realizationName := `Reg.D5.S1.Words.MBonacciParikhStarConverse.clip_permutation.family,
   realizationSource := none,
@@ -441,7 +441,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   objectArena := .source ⟨arena⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source arena ⟨family⟩,
+  realization := .source arena.{u} ⟨family⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize signature actual.readout actual.anchor),
