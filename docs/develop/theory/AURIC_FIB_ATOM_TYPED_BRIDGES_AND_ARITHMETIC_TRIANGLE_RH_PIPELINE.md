@@ -1326,50 +1326,126 @@ Q_j(v)=\langle v,L_jv\rangle=\|B_j^*v\|^2.
 \]
 树场与 FIB 的耦合 \(V_{\mathrm{bridge}}\)，三角网络的独立源提升，以及到 zeta 零点空间的酉映射或正则化行列式。特别地，\(\gamma r\) 只有在声明一个耗散迁移率后才是时间衰减率；\(\hbar\omega\) 只有在声明 cotangent 提升和量子化规则后才是能级。
 
-### 定义 16.2（由现有对象构成的有限载体）
+### 定义 16.2（双层有限载体：图场与局部 FIB 概率场）
 
-令 \(V_0=\Sigma\)，\(\mathcal A_j=\mathbb R^{V_j}\)，令
+令 \(V_j\) 为第 \(j\) 层的有限图节点集，令
 \[
-\Delta_j=\{p\in\mathcal A_j:p_v\ge0,\ \sum_{v\in V_j}p_v=1\}.
+\Phi_j=\mathbb R^{V_j}
 \]
-给定有限可见读出 \(P_j:\Delta_j\to\mathbb R^{m_j}\)，其 \(j=0\) 实例为 \(P_0\)。令
+为图场空间。每个图节点承载一个五态 FIB 概率律，因此定义
 \[
-N_j=\ker(DP_j|_{T\Delta_j}),\qquad
+\Pi_j=\bigl(\Delta(\Sigma)\bigr)^{V_j},
+\qquad
+T\Pi_j=\bigl(T\Delta(\Sigma)\bigr)^{V_j}.
+\]
+这里的 \(\Pi_j\) 要求每个节点逐点满足
+\[
+p_{j,v,s}\ge0,\qquad
+\sum_{s\in\Sigma}p_{j,v,s}=1
+\quad (v\in V_j),
+\]
+而不是只要求所有节点和状态的总和为一。
+
+在一个局部可见读出模型中，定义
+\[
+P_j^{\mathrm{loc}}:\Pi_j\to(\mathbb R^3)^{V_j},
+\qquad
+(P_j^{\mathrm{loc}}p)_v=P_0(p_v).
+\]
+若需要全局读出，必须另给显式线性映射
+\[
+G_j:(\mathbb R^3)^{V_j}\to\mathbb R^{m_j},
+\qquad
+P_j=G_j\circ P_j^{\mathrm{loc}}.
+\]
+相应的可见读出核为
+\[
+N_j=\ker\bigl(DP_j|_{T\Pi_j}\bigr).
+\]
+在纯局部读出情形，
+\[
+N_j=\bigl(\ker DP_0\bigr)^{V_j}
+=(\mathbb Rd)^{V_j}.
+\]
+若一个层级只保留单个局部 FIB 单元，取 \(V_0=\{*\}\)，则
+\[
+\Phi_0=\mathbb R,\qquad
+\Pi_0=(\Delta(\Sigma))^{\{*\}}\cong\Delta(\Sigma),
+\qquad
+N_0\cong\mathbb Rd.
+\]
+这就是“五态局部载体退化为 \(\Delta(\Sigma)\)”的精确定义。若把五态状态转移图本身作为图空间，则其顶点集是 \(\Sigma\)，属于另一个 graph/edge sector，不能与上述单局部单元的 \(V_0=\{*\}\) 记号混用。
+
+令已有图边空间为 \(\mathbb R^{E_j}\)，边界映射为
+\[
+B_j:\mathbb R^{E_j}\to\mathbb R^{V_j},
+\]
+并定义循环核
+\[
 Z_j=\ker B_j.
 \]
-定义有限载体
+\(Z_j\) 只属于图边流或 graph field sector，不是局部 FIB 概率的隐藏坐标。由此得到双层有限载体
 \[
-C_j=\Delta_j\times N_j\times Z_j.
+C_j=\Phi_j\times\Pi_j\times N_j\times Z_j.
 \]
-因此
+若研究概率场而不记录独立图场，可取投影载体
 \[
-C_0=\Delta(\Sigma)\times\mathbb Rd\times\ker B_0,
+C_j^{\mathrm{prob}}=\Pi_j\times N_j.
 \]
-其中 \(\mathbb Rd\) 是已证明的一维 seam 方向，\(\ker B_0\) 是已证明的静态边流环流空间。若只研究五态静态概率而不研究边流，可取其投影载体 \(\Delta_0\)；保留 \(N_j\) 和 \(Z_j\) 则同时记录读出隐藏方向与动态循环方向。
 
-为了构造投影系统，必须显式给出有限状态压缩
+全局单纯形
 \[
-\pi_{j+1,j}:V_{j+1}\to V_j
+\widetilde\Delta_j
+=\left\{q\in\mathbb R^{V_j\times\Sigma}:
+q_{v,s}\ge0,\ \sum_{v,s}q_{v,s}=1\right\}
 \]
-和边压缩
+是另一种模型。它只规定跨节点总质量为一，不能与逐节点归一化的 \(\Pi_j=(\Delta(\Sigma))^{V_j}\) 同时使用，除非另加明确的归一化或条件概率解释。
+
+为了构造投影系统，给出节点压缩 \(\pi_{j+1,j}:V_{j+1}\to V_j\)，其图场推前
 \[
-r_{j+1,j}:E_{j+1}\to E_j
+\pi^\Phi_{\#}:\Phi_{j+1}\to\Phi_j
 \]
-或相应线性映射，使得其推前满足
+必须是显式线性映射。对概率场，给定权重
 \[
-\pi_{\#}\Delta_{j+1}\subseteq\Delta_j,\qquad
-\exists\,\rho_{j+1,j}:\mathbb R^{m_{j+1}}\to\mathbb R^{m_j},\qquad
-\rho_{j+1,j}P_{j+1}=P_j\pi_{\#},
+a_{w|v}\ge0,\qquad
+\sum_{w:\pi_{j+1,j}(w)=v}a_{w|v}=1,
 \]
+定义
 \[
-B_jr_{\#}=\pi_{\#}B_{j+1}.
+(\pi^\Pi_{\#}p)_v
+=\sum_{w:\pi_{j+1,j}(w)=v}a_{w|v}p_w.
 \]
-在这些显式兼容条件下定义
+这是五态概率律的凸组合，因而逐节点保持 \(\Delta(\Sigma)\)，其导数也把 \(T\Pi_{j+1}\) 映到 \(T\Pi_j\)。
+
+若存在读出压缩
 \[
-q_{j+1,j}(p,v,z)
-=\bigl(\pi_{\#}p,\ D\pi_{\#}v,\ r_{\#}z\bigr):C_{j+1}\to C_j.
+\rho_{j+1,j}:\mathbb R^{m_{j+1}}\to\mathbb R^{m_j}
 \]
-若某一级不存在这样的压缩映射，则不能把各级有限对象声称为同一个静态场的层级。
+满足
+\[
+\rho_{j+1,j}P_{j+1}
+=P_j\pi^\Pi_{\#},
+\]
+则 \(D\pi^\Pi_{\#}\) 把 \(N_{j+1}\) 映到 \(N_j\)。再给出边推前
+\[
+r_{j+1,j}:\mathbb R^{E_{j+1}}\to\mathbb R^{E_j}
+\]
+并要求
+\[
+B_jr_{j+1,j}
+=\pi^\Phi_{\#}B_{j+1},
+\]
+即可保证 \(r_{j+1,j}(Z_{j+1})\subseteq Z_j\)。于是
+\[
+q_{j+1,j}(\phi,p,v,z)
+=\bigl(
+\pi^\Phi_{\#}\phi,\,
+\pi^\Pi_{\#}p,\,
+D\pi^\Pi_{\#}v,\,
+r_{j+1,j}z
+\bigr):C_{j+1}\to C_j
+\]
+是类型正确的有限投影。
 
 ### 定义 16.3（保守静态场）
 
