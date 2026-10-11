@@ -11,6 +11,9 @@ import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.MeasureTheory.Function.LpSeminorm.Indicator
 import Mathlib.Probability.CondVar
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HistoricalDepthBudgetJointExtremum
+import D5.S3.TotalVariation.Bhattacharyya
+import Mathlib.Probability.ProbabilityMassFunction.Integrals
 import Mathlib.Tactic
 
 noncomputable section
@@ -353,5 +356,162 @@ theorem finite_energy_positive_product
   dsimp [d, X]
   rw [hm i]
   ring
+
+open Preorder ProbabilityTheory
+open HistoricalDepthBudgetJointExtremum
+open D5.S3.TotalVariation.Bhattacharyya
+
+private lemma finite_readout_memLp {B W : Type*} [Fintype B]
+    [MeasurableSpace B] [MeasurableSingletonClass B] [MeasurableSpace W]
+    {ν : Measure W} [IsFiniteMeasure ν] (f : B → ℝ) (z : W → B)
+    (hz : Measurable z) : MemLp (fun ω => f (z ω)) 2 ν := by
+  classical
+  apply MemLp.of_bound ((measurable_of_countable f).comp hz).aestronglyMeasurable
+    (∑ b, |f b|)
+  exact ae_of_all _ fun ω => by
+    rw [Real.norm_eq_abs]
+    exact single_le_sum (fun b _ => abs_nonneg (f b)) (mem_univ (z ω))
+
+private lemma next_condexp {A : Type*} [Fintype A] [Nonempty A]
+    [MeasurableSpace A] [MeasurableSingletonClass A]
+    (p : List A → A → ℝ) (hp : NormalizedRows p) (n : ℕ)
+    (g : (Iic n → A) → A → ℝ) :
+    (trajectoryLaw p hp)[fun x => g (frestrictLe n x) (x (n + 1)) | Filtration.piLE n]
+      =ᵐ[trajectoryLaw p hp] fun x => ∑ a,
+        p (List.ofFn (fun i : Fin (n + 1) => x i)) a * g (frestrictLe n x) a := by
+  classical
+  let row (v : List A) : PMF A := PMF.ofFintype (fun a => ENNReal.ofReal (p v a)) (by
+    rw [← ENNReal.ofReal_sum_of_nonneg (fun a _ => hp.1 v a), hp.2 v]; simp)
+  let κ (k : ℕ) : Kernel (Iic k → A) A := Kernel.ofFunOfCountable
+    (fun u => (row (List.ofFn (fun i : Fin (k + 1) =>
+      u ⟨i, mem_Iic.mpr (Nat.le_of_lt_succ i.2)⟩))).toMeasure)
+  letI : ∀ k, IsMarkovKernel (κ k) := fun k =>
+    ⟨fun _ => inferInstanceAs (IsProbabilityMeasure (row _).toMeasure)⟩
+  let P := Kernel.trajMeasure (X := fun _ => A) (row []).toMeasure κ
+  letI : IsProbabilityMeasure P := inferInstanceAs (IsProbabilityMeasure (Kernel.trajMeasure _ _))
+  change P[fun x => g (frestrictLe n x) (x (n + 1)) | Filtration.piLE n] =ᵐ[P] _
+  rw [Filtration.piLE_eq_comap_frestrictLe]
+  have hcond := condExp_prod_ae_eq_integral_condDistrib
+    (μ := P) (X := frestrictLe n) (Y := fun x : ℕ → A => x (n + 1))
+    (f := fun z => g z.1 z.2) (measurable_frestrictLe n)
+    (measurable_pi_apply (n + 1)).aemeasurable
+    (measurable_of_countable _).stronglyMeasurable
+    ((finite_readout_memLp (ν := P) (fun z : (Iic n → A) × A => g z.1 z.2)
+      (fun x => (frestrictLe n x, x (n + 1))) (by fun_prop)).integrable (by norm_num))
+  have hk := Kernel.condDistrib_trajMeasure (X := fun _ => A) (μ₀ := (row []).toMeasure) (κ := κ) (a := n)
+  have hk' : ∀ᵐ x ∂P, condDistrib (fun x : ℕ → A => x (n + 1)) (frestrictLe n) P
+      (frestrictLe n x) = κ n (frestrictLe n x) :=
+    ae_of_ae_map (measurable_frestrictLe n).aemeasurable hk
+  filter_upwards [hcond, hk'] with x hx hkx
+  rw [hx, hkx]
+  change (∫ a, g (frestrictLe n x) a ∂(row _).toMeasure) = _
+  rw [PMF.integral_eq_sum]
+  apply sum_congr rfl
+  intro a _
+  simp [row, PMF.ofFintype_apply, ENNReal.toReal_ofReal (hp.1 _ _), smul_eq_mul]
+
+private lemma prefix_readout_stronglyMeasurable {A : Type*} [Fintype A]
+    [MeasurableSpace A] [MeasurableSingletonClass A] (n : ℕ) (g : (Iic n → A) → ℝ) :
+    StronglyMeasurable[Filtration.piLE n] (fun x : ℕ → A => g (frestrictLe n x)) := by
+  rw [Filtration.piLE_eq_comap_frestrictLe]
+  exact (measurable_of_countable g).stronglyMeasurable.comp_measurable (Measurable.of_comap_le le_rfl)
+
+private lemma row_root_moments {A : Type*} [Fintype A] (p q : A → ℝ)
+    (hp : ∀ a, 0 < p a) (hq : ∀ a, 0 < q a)
+    (hps : ∑ a, p a = 1) (hqs : ∑ a, q a = 1) :
+    (∑ a, p a * Real.sqrt (q a / p a)) = bhattacharyya p q ∧
+    (∑ a, p a * (Real.sqrt (q a / p a) - 1) ^ 2) = 2 * (1 - bhattacharyya p q) := by
+  have hs a : p a * Real.sqrt (q a / p a) ^ 2 = q a := by
+    rw [Real.sq_sqrt (div_pos (hq a) (hp a)).le]
+    exact mul_div_cancel₀ _ (hp a).ne'
+  have hw a : p a * Real.sqrt (q a / p a) = Real.sqrt (p a * q a) := by
+    symm
+    apply (Real.sqrt_eq_iff_eq_sq (mul_pos (hp a) (hq a)).le
+      (mul_nonneg (hp a).le (Real.sqrt_nonneg _))).2
+    calc
+      p a * q a = p a * (p a * Real.sqrt (q a / p a) ^ 2) := by rw [hs]
+      _ = _ := by ring
+  refine ⟨sum_congr rfl (fun a _ => hw a), ?_⟩
+  calc
+    _ = ∑ a, (q a - 2 * Real.sqrt (p a * q a) + p a) := by
+      apply sum_congr rfl
+      intro a _
+      nlinarith [hs a, hw a]
+    _ = _ := by rw [sum_add_distrib, sum_sub_distrib, ← mul_sum, hps, hqs, bhattacharyya]; ring
+
+/-- For strictly positive full-history rows, the actual likelihood products have positive
+finite limits on the finite Hellinger-energy event under the first trajectory law. -/
+theorem trajectory_finite_energy_positive_likelihood
+    {A : Type*} [Fintype A] [Nonempty A]
+    [MeasurableSpace A] [MeasurableSingletonClass A]
+    (p q : List A → A → ℝ) (hp : NormalizedRows p) (hq : NormalizedRows q)
+    (hp0 : ∀ h a, 0 < p h a) (hq0 : ∀ h a, 0 < q h a) :
+    let H := fun (n : ℕ) (x : ℕ → A) => List.ofFn (fun i : Fin n => x i)
+    ∀ᵐ x ∂trajectoryLaw p hp,
+      Summable (fun n => 1 - bhattacharyya (p (H n x)) (q (H n x))) →
+      ∃ l : ℝ, 0 < l ∧
+        Tendsto (fun n => ∏ i ∈ range n, q (H i x) (x i) / p (H i x) (x i)) atTop (𝓝 l) := by
+  classical
+  intro H
+  let P := trajectoryLaw p hp
+  letI : IsProbabilityMeasure P := by
+    dsimp [P, trajectoryLaw]
+    infer_instance
+  let F : Filtration ℕ (inferInstance : MeasurableSpace (ℕ → A)) := Filtration.piLE
+  let h n (u : Iic n → A) := List.ofFn (fun i : Fin (n + 1) =>
+    u ⟨i, mem_Iic.mpr (Nat.le_of_lt_succ i.2)⟩)
+  let R (n : ℕ) (x : ℕ → A) := Real.sqrt (q (H n x) (x n) / p (H n x) (x n))
+  let e (n : ℕ) (x : ℕ → A) := 1 - bhattacharyya (p (H (n + 1) x)) (q (H (n + 1) x))
+  let r (n : ℕ) := R (n + 1)
+  have he : StronglyAdapted F e := fun n =>
+    prefix_readout_stronglyMeasurable n (fun u => 1 - bhattacharyya (p (h n u)) (q (h n u)))
+  have he0 n x : 0 ≤ e n x := sub_nonneg.mpr <|
+    bhattacharyya_le_one _ _ ⟨hp.1 _, hp.2 _⟩ ⟨hq.1 _, hq.2 _⟩
+  have he1 n x : e n x ≤ 1 := by
+    have ha : 0 ≤ bhattacharyya (p (H (n + 1) x)) (q (H (n + 1) x)) :=
+      sum_nonneg fun a _ => Real.sqrt_nonneg _
+    dsimp [e]; linarith
+  let f (n : ℕ) (u : Iic (n + 1) → A) :=
+    Real.sqrt (q (h n (fun i => u ⟨i, mem_Iic.mpr ((mem_Iic.mp i.2).trans (Nat.le_succ n))⟩))
+      (u ⟨n + 1, mem_Iic.mpr le_rfl⟩) /
+      p (h n (fun i => u ⟨i, mem_Iic.mpr ((mem_Iic.mp i.2).trans (Nat.le_succ n))⟩))
+      (u ⟨n + 1, mem_Iic.mpr le_rfl⟩))
+  have hr n : StronglyMeasurable[F (n + 1)] (r n) :=
+    prefix_readout_stronglyMeasurable (n + 1) (f n)
+  have hr2 n : MemLp (r n) 2 P :=
+    finite_readout_memLp (ν := P) (f n) (frestrictLe (n + 1))
+      (measurable_frestrictLe (n + 1))
+  have hr0 n x : 0 < r n x := Real.sqrt_pos.mpr (div_pos (hq0 _ _) (hp0 _ _))
+  have hrmean n : P[r n | F n] =ᵐ[P] fun x => 1 - e n x := by
+    have hc := next_condexp p hp n (fun u a => Real.sqrt (q (h n u) a / p (h n u) a))
+    filter_upwards [hc] with x hx
+    change (P[r n | F n]) x = _ at hx ⊢
+    rw [hx]
+    have hm := (row_root_moments (p (H (n + 1) x)) (q (H (n + 1) x))
+      (hp0 _) (hq0 _) (hp.2 _) (hq.2 _)).1
+    rw [show h n (frestrictLe n x) = H (n + 1) x from rfl]
+    simpa only [e, sub_sub_cancel] using hm
+  have hrsq n : P[fun x => (r n x - 1) ^ 2 | F n] ≤ᵐ[P] fun x => 2 * e n x := by
+    have hc := next_condexp p hp n
+      (fun u a => (Real.sqrt (q (h n u) a / p (h n u) a) - 1) ^ 2)
+    filter_upwards [hc] with x hx
+    change (P[fun x => (r n x - 1) ^ 2 | F n]) x = _ at hx
+    rw [hx]
+    exact (row_root_moments (p (H (n + 1) x)) (q (H (n + 1) x))
+      (hp0 _) (hq0 _) (hp.2 _) (hq.2 _)).2.le
+  have hlim := finite_energy_positive_product (μ := P) (ℱ := F) e r he he0 he1 hr hr2 hr0 hrmean hrsq
+  filter_upwards [hlim] with x hx hefin
+  have hefin' : Summable (fun n => e n x) := (summable_nat_add_iff 1).mpr hefin
+  obtain ⟨a, ha, hat⟩ := hx hefin'
+  have hR0 : 0 < R 0 x := Real.sqrt_pos.mpr (div_pos (hq0 _ _) (hp0 _ _))
+  have hprod : Tendsto (fun n => ∏ i ∈ range n, R i x) atTop (𝓝 (R 0 x * a)) := by
+    apply (tendsto_add_atTop_iff_nat 1).mp
+    simpa only [prod_range_succ', r, mul_comm] using hat.const_mul (R 0 x)
+  refine ⟨(R 0 x * a) ^ 2, sq_pos_of_pos (mul_pos hR0 ha), ?_⟩
+  convert hprod.pow 2 using 1
+  ext n
+  rw [← prod_pow]
+  exact prod_congr rfl fun i _ =>
+    (Real.sq_sqrt (div_pos (hq0 _ _) (hp0 _ _)).le).symm
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SequentialHellingerLocalization

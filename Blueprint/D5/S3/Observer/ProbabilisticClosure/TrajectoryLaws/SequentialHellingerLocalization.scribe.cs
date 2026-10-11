@@ -62,5 +62,29 @@ internal sealed class SequentialHellingerLocalizationDocument : IScribeDocumentD
                         + "square. Hence the natural-order logarithmic sums converge to a finite "
                         + "real number, whose exponential is the positive product limit. No "
                         + "uniform positive lower bound on the individual r(n) is imposed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("trajectory-finite-energy-positive-likelihood"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.trajectory_finite_energy_positive_likelihood"),
+                H("Actual full-history likelihoods"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "For a nonempty finite discrete alphabet, let p and q be strictly positive "
+                        + "normalized rows indexed by finite histories. Let H(n,x) be the first n "
+                        + "letters of x and let rho(h) be the sum over letters of the square root "
+                        + "of p(h,a)q(h,a). Under trajectoryLaw(p), almost every path with summable "
+                        + "1-rho(H(n,x)) has a positive finite limit of the products of "
+                        + "q(H(i,x),x(i))/p(H(i,x),x(i)) over i less than n.")),
+                    Paragraph(Text(
+                        "The conditional distribution of the next letter is the row at the actual "
+                        + "observed history. This identifies the two conditional root-likelihood "
+                        + "moments used above. Each fixed-time increment has finite range, so it is "
+                        + "square integrable even though no uniform bound across time is assumed. "
+                        + "The initial-letter factor is included explicitly after applying the "
+                        + "conditional argument to successor coordinates. Squaring the positive "
+                        + "root-product limit gives the stated likelihood limit."))),
                 DescribeRole.Theorem))));
 }
