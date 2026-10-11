@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Common-record likelihood ratios transport moving-support posterior KL losses to uniform integrability and L1 convergence. -/
+   digest: Common-record likelihood ratios give moving-support KL tail bounds and L1 limits. -/
 
 import D5.S3.DivergenceSupport.Garbling.DeterministicGarbling
 import Mathlib.MeasureTheory.Function.UniformIntegrable
@@ -148,7 +148,7 @@ private lemma likelihood_weighted_tail {D Q M f R : ℝ}
       calc
         _ ≤ ((R + 1) * Real.exp (u - R)) * Real.exp (-u) :=
           mul_le_mul_of_nonneg_right hscalar (Real.exp_pos _).le
-        _ = _ := by rw [mul_assoc, ← Real.exp_add]; congr 2 <;> ring
+        _ = _ := by rw [mul_assoc, ← Real.exp_add]; congr 2; ring
     _ = _ := by ring
 
 private lemma finite_record_integral {Ω H : Type*} [MeasurableSpace Ω]
@@ -335,7 +335,7 @@ theorem posterior_defect_l1_of_ae_tendsto
     (hQnn n) (hQsum n) (fun h hh => (hb n h hh).1) hM hv
 
 private lemma tendsto_mul_log_ratio {a b : ℕ → ℝ} {A B C : ℝ}
-    (ha : ∀ n, 0 ≤ a n) (hb : ∀ n, 0 ≤ b n) (hC : 0 ≤ C)
+    (ha : ∀ n, 0 ≤ a n) (hb : ∀ n, 0 ≤ b n)
     (hbound : ∀ᶠ n in atTop, a n ≤ C * b n)
     (hta : Tendsto a atTop (𝓝 A)) (htb : Tendsto b atTop (𝓝 B)) :
     Tendsto (fun n => a n * Real.log (a n / b n)) atTop
@@ -380,14 +380,14 @@ private lemma tendsto_mul_log_ratio {a b : ℕ → ℝ} {A B C : ℝ}
 
 private lemma kl_tendsto_of_dominated {J : Type*} [Fintype J]
     {a b : ℕ → J → ℝ} {A B : J → ℝ} {C : ℝ}
-    (ha : ∀ n j, 0 ≤ a n j) (hb : ∀ n j, 0 ≤ b n j) (hC : 0 ≤ C)
+    (ha : ∀ n j, 0 ≤ a n j) (hb : ∀ n j, 0 ≤ b n j)
     (hbound : ∀ᶠ n in atTop, ∀ j, a n j ≤ C * b n j)
     (hta : ∀ j, Tendsto (fun n => a n j) atTop (𝓝 (A j)))
     (htb : ∀ j, Tendsto (fun n => b n j) atTop (𝓝 (B j))) :
     Tendsto (fun n => klDivergence (a n) (b n)) atTop (𝓝 (klDivergence A B)) := by
-  apply tendsto_finset_sum
+  apply tendsto_finsetSum
   intro j _
-  exact tendsto_mul_log_ratio (fun n => ha n j) (fun n => hb n j) hC
+  exact tendsto_mul_log_ratio (fun n => ha n j) (fun n => hb n j)
     (hbound.mono fun _ hn => hn j) (hta j) (htb j)
 
 /-- Coordinate limits of both posteriors and a positive limiting evidence ratio suffice
@@ -407,7 +407,7 @@ theorem moving_support_posterior_limit
     {M : ℝ} (hM : 0 < M) (hdom : ∀ j, d j ≤ M * q j)
     (a b : Ω → J → ℝ) (t : Ω → ℝ)
     (hpath : ∀ᵐ ω ∂μ,
-      (∀ n, 0 < channelOutput (W n) d (record n ω)) ∧ 0 < t ω ∧
+      0 < t ω ∧
       Tendsto (fun n => channelOutput (W n) d (record n ω) /
         channelOutput (W n) q (record n ω)) atTop (𝓝 (t ω)) ∧
       (∀ j, Tendsto (fun n => posterior (W n) d (record n ω) j) atTop (𝓝 (a ω j))) ∧
@@ -423,9 +423,18 @@ theorem moving_support_posterior_limit
   let f := fun n ω => posteriorDefect d q (W n) r (record n ω)
   let g := fun ω => klDivergence (a ω) (b ω) -
     klDivergence (pushforward r (a ω)) (pushforward r (b ω))
+  have hpositive : ∀ᵐ ω ∂μ, ∀ n, 0 < channelOutput (W n) d (record n ω) := by
+    rw [ae_all_iff]
+    intro n
+    refine ae_of_ae_map (μ := μ) (p := fun h => 0 < channelOutput (W n) d h)
+      (hr n).aemeasurable ?_
+    apply ae_iff_of_countable.mpr
+    intro h hh
+    rw [← hmass n h, ← map_measureReal_apply (hr n) (measurableSet_singleton h)]
+    exact ENNReal.toReal_pos hh (by finiteness)
   have hae : ∀ᵐ ω ∂μ, Tendsto (fun n => f n ω) atTop (𝓝 (g ω)) := by
-    filter_upwards [hpath] with ω hω
-    obtain ⟨hD, ht, hT, ha, hb⟩ := hω
+    filter_upwards [hpath, hpositive] with ω hω hD
+    obtain ⟨ht, hT, ha, hb⟩ := hω
     let p := fun n => posterior (W n) d (record n ω)
     let s := fun n => posterior (W n) q (record n ω)
     have hQ n : 0 < channelOutput (W n) q (record n ω) :=
@@ -435,7 +444,6 @@ theorem moving_support_posterior_limit
     have hs n j : 0 ≤ s n j :=
       div_nonneg (mul_nonneg (hq.1 j).le ((hW n).1 j _)) (hQ n).le
     let C := 2 * M / t ω
-    have hC : 0 ≤ C := by positivity
     have hbound : ∀ᶠ n in atTop, ∀ j, p n j ≤ C * s n j := by
       filter_upwards [hT.eventually (Ioi_mem_nhds (half_lt_self ht))] with n hn
       intro j
@@ -450,7 +458,7 @@ theorem moving_support_posterior_limit
     have hpushlim (v : ℕ → J → ℝ) (V : J → ℝ)
         (hv : ∀ j, Tendsto (fun n => v n j) atTop (𝓝 (V j))) i :
         Tendsto (fun n => pushforward r (v n) i) atTop (𝓝 (pushforward r V i)) := by
-      apply tendsto_finset_sum
+      apply tendsto_finsetSum
       intro j _
       by_cases hj : r j = i
       · simpa only [if_pos hj] using hv j
@@ -466,12 +474,12 @@ theorem moving_support_posterior_limit
       split_ifs with hj
       · exact hn j
       · simp
-    have hk := kl_tendsto_of_dominated hp hs hC hbound ha hb
+    have hk := kl_tendsto_of_dominated hp hs hbound ha hb
     have hc := kl_tendsto_of_dominated
-      (fun n => hpushnn _ (hp n)) (fun n => hpushnn _ (hs n)) hC hpushbound
+      (fun n => hpushnn _ (hp n)) (fun n => hpushnn _ (hs n)) hpushbound
       (hpushlim p (a ω) ha) (hpushlim s (b ω) hb)
     apply (hk.sub hc).congr'
-    exact Eventually.of_forall fun n => by simp only [f, g, posteriorDefect, if_pos (hD n), p, s]
+    exact Eventually.of_forall fun n => by simp only [f, posteriorDefect, if_pos (hD n), p, s]
   have h := posterior_defect_l1_of_ae_tendsto μ record hr d q W r hd hq hW hmass
     hM hdom g hae
   exact ⟨hae, h.2.2⟩

@@ -78,10 +78,10 @@ internal sealed class MovingSupportKLTransportDocument : IScribeDocumentDefiniti
                         "Keep the common finite-record model and prior density bound of the " +
                         "preceding theorem. Let a and b be real coordinate families on Omega " +
                         "times J, and let t be a real function on Omega. Almost everywhere, " +
-                        "assume that all actual finite records have positive mass, that " +
-                        "D(n)/Q(n) tends to the positive number t, and that the actual and " +
+                        "assume that D(n)/Q(n) tends to the positive number t and that the actual and " +
                         "reference posterior coordinates tend respectively to a and b, " +
-                        "simultaneously for every hidden state.")),
+                        "simultaneously for every hidden state. Positivity of every actual " +
+                        "finite-record mass holds almost everywhere by its prescribed law.")),
                     Paragraph(Text(
                         "The posterior loss then tends almost everywhere to " +
                         "KL(a,b)-KL(r_*a,r_*b). The losses are uniformly integrable; " +
