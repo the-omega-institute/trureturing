@@ -125,8 +125,19 @@ W_\eta=C[(t_{[i]})_i],
 \tag{RNL.6}
 $$
 
-The variables in all $t_b$ form $X_\eta$. A valuation $v:X_\eta\to\mathcal T$
-is allowed only when every old inequality in $\Delta_\eta$, every literal
+The variables in all $t_b$ form $X_\eta$. If $x$ is the frontier variable
+at relative address $s_x$ in $t_b$, fix its full original representative
+position
+
+$$
+p_x=a_b s_x,\qquad |s_x|=d,\qquad
+(W_\eta[v])|_{p_x}=v(x).
+\tag{RNL.6a}
+$$
+
+Thus $a_b$ represents the old hole, whereas $p_x$ recovers the residual
+coordinate. A valuation $v:X_\eta\to\mathcal T$ is allowed only when every
+old inequality in $\Delta_\eta$, every literal
 condition and every old existence guard is true. These literal and guard
 conditions are structurally fixed by the selected prefix cell.
 
@@ -157,8 +168,8 @@ D^{-}=\coprod_{\eta}\{W_\eta[v]:v\in\Omega^-_\eta\}.
 $$
 
 For each source, its unique cell is recovered by the depth-$d$ masks of its old
-class trees and each frontier variable is recovered at its fixed original
-address. Conversely, every $v\in\Omega^-_\eta$ fills a genuine finite source
+class trees and each frontier variable $x$ is recovered at its fixed original
+address $p_x$ in (RNL.6a). Conversely, every $v\in\Omega^-_\eta$ fills a genuine finite source
 in $D^{-}$. Along every cell there are a fixed reached set $J_\eta\subseteq Q$,
 a concrete exterior context $E_\eta$ and one term $T_{\eta,q}$ for each reached
 $q$ such that
@@ -185,12 +196,27 @@ source directions and both target directions hold. A finite list of cells is
 not a replacement source domain: (RNL.8) quantifies over every valuation in
 every cell. $\square$
 
-**Convention 2.3 (ordinary residual domain).** Any ordinary constructor
- equations introduced while presenting a cell are fully composed with a
-standard occurs-check most-general unifier. All remaining cell restrictions
-are the original old/literal/guard conditions and a finite conjunction of
-negative records of the form (RNL.7). No target equality is added to the
-retained negative domain; target equations are diagnostic queries only.
+**Convention 2.3 (ordinary residual domain).** The mask presentation
+(RNL.6) requires no preliminary equations. If an equivalent presentation uses
+ordinary constructor equations, take a fully composed idempotent
+occurs-check most-general unifier $\tau$ with no fresh variables. Its remaining
+coordinates are $Z_\eta=X_\eta\setminus\operatorname{dom}\tau$. For
+$z\in Z_\eta$, $\tau(z)=z$, so the same fixed original address still recovers
+the coordinate:
+
+$$
+(W_\eta[\tau(v)])|_{p_z}=v(z),\qquad p_z=a_b s_z,\qquad |s_z|=d.
+\tag{RNL.9a}
+$$
+
+Here $\tau(v)(x)=\tau(x)[v]$ reconstructs every eliminated coordinate.
+Subsequent target unification is over $Z_\eta$ and retains these full original
+recovery addresses; a substitution never resets their depth to $|a_b|$.
+Such a presentation must preserve the exact retained cell in both directions.
+All remaining cell restrictions are the original old/literal/guard conditions
+and a finite conjunction of negative records of the form (RNL.7). No target
+equality is added to the retained negative domain; target equations are
+diagnostic queries only.
 
 The finite cell list is a selector only after its source correspondence is
 proved. If two original sources have the same depth-$d$ mask replies, they
@@ -229,7 +255,7 @@ matrix would make $t/r$ an eigenvalue of $M^{a-b}$ when $r,t>0$. The two
  eigenvalues of $M$ are
 
 $$
-\varphi=\frac{1+\sqrt5}{2},qquad
+\varphi=\frac{1+\sqrt5}{2},\qquad
 \psi=\frac{1-\sqrt5}{2};
 $$
 
@@ -261,12 +287,13 @@ is finite. There are arbitrarily large finite trees outside that union. If $z$
 appears at original addresses $p_i$, choose a replacement that agrees with the
 old value through local depth
 $\max_i\max(0,h-|p_i|)$; then every resulting source agrees at every
-original address of length at most $h$. Once the current $z$ has a branch below
+original address of length at most $h$. If the current $z$ has a branch at
 that local depth, the replacement can also be required to exceed any prescribed
 leaf-count threshold.
 
-Proof. Take the finite union. A replacement below one branch below the stated
-local depth leaves every global prefix of depth at most $h$ unchanged. The ordered full binary
+Proof. Take the finite union. Replace within one child cone of a branch at
+the stated local depth. This leaves replies through that depth, and hence
+every global prefix of depth at most $h$, unchanged. The ordered full binary
 trees obtained by filling that cone with increasingly many leaves are
 pairwise distinct, so one avoids the finite union and any prescribed finite
 set. Shared occurrences of $z$ are changed simultaneously, preserving every
@@ -323,9 +350,25 @@ q\le 2(2^{H+1}-1),\qquad
 \tag{RNL.13}
 $$
 
-In the positive branch $H$ is the maximum of the finite mask-selector depth
-and the representative-address plus ground-template heights. No optimality or
-execution-time claim is made.
+In the positive branch let $B$ be the old class set and $\mathcal E$ the
+finite set of feasible cells. For each feasible positive target-pair query,
+write $\theta_{\eta,qr}$ for its fully composed MGU, after any preliminary
+substitution of Convention 2.3; its nonidentity bindings are all ground.
+With leaf height zero, use the single original inclusive depth
+
+$$
+H=\max\left(
+ \{0\}\ \cup\ \{|a_b|+d-1:b\in B\}\ \cup\
+ \left\{|p_x|+\operatorname{height}(\theta_{\eta,qr}(x)):
+ \substack{\eta\in\mathcal E,\ q,r\in J_\eta,\ \text{query feasible}\\
+ x\in\operatorname{dom}\theta_{\eta,qr}}\right\}
+ \right).
+\tag{RNL.13a}
+$$
+
+Every $p_x$ is the full original coordinate address from (RNL.6a) or
+(RNL.9a). Empty binding sets contribute no template depths. The same $H$
+is used in (RNL.13); no optimality or execution-time claim is made.
 
 Proof. The negative infinite-mask branch is an explicit finite-source
 pigeonhole construction, not a successive-$h$ search. There are
@@ -366,15 +409,18 @@ into every retained negative record. Lemma 3.1 and Corollary 3.2 give only
 finitely many forbidden values for $y$; choose a value outside them with
 more than $2^h$ leaves. The extended valuation still satisfies every negative
 record and solves the target equation, so it is a finite source $u_h\in D^{-}$
-with the selected target bit true. The choice makes $x$ contain a branch below
-depth $h$.
+with the selected target bit true. Its value of $x$ has more than $2^h$
+leaves, hence height greater than $h$ and a branch at relative depth $h$.
+Replacing within one child cone of that branch preserves all replies through
+relative depth $h$.
 
 Return to the original residual domain, where the target equation is not a
 retained condition. Freeze all free variables and all residual coordinates
 other than this bound variable $x$. Apply Lemma 3.1 to every retained
 negative record with $x$ as the varying coordinate. Corollary 3.2 supplies a
-finite $x'_h$ that agrees with $x$ through the global depth-$h$ cone, avoids
-all finite forbidden values, has larger leaf count, and differs from
+finite $x'_h$ that agrees with $x$ through relative depth $h$, and therefore
+through every required original depth-$h$ cone, avoids all finite forbidden
+values, has larger leaf count, and differs from
 $\theta(x)(Y)$. Replace $x$ by $x'_h$ in every occurrence. The old row,
 literals, guards, all repeated classes and all negative records remain true;
 the two reconstructed sources are in the same exact cell and agree on every
@@ -389,19 +435,41 @@ Then all bindings are ground. The ordinary ground criterion of [SLH,
 Theorem 74.4][SLH] and its finite delayed-template tests decide each bit on
 the whole cell; an empty binding is identically true. There are finitely many
 cells and finitely many reached pairs, so this finite analysis terminates.
-Take $H$ to be the maximum, over the finitely many feasible cells, of the
-original address needed to select that cell from its representative masks and
-the representative-address plus ground-template height supplied by the SLH
-ground criterion. This is a single global selector depth, computed once; no
-prospective enumeration of $H$ is used. If two sources agree on all original replies through $H$, their exact masks
-select the same cell and every ground target test has the same outcome. Equation (RNL.9) then gives the same reached set, concrete
-exterior and complete partition, hence the same $R_Q$. Cross-cell coverage
-follows from both directions of (RNL.8), not from a finite row table.
+Use the single $H$ in (RNL.13a). Each representative-mask reply is at
+$a_b s$ with $|s|<d$, so $|a_b s|\le |a_b|+d-1\le H$. Therefore two sources
+with equal original $H$-prefixes select the same exact mask tuple, including
+all absent replies.
+
+For a ground binding $x=g=\theta_{\eta,qr}(x)$, (RNL.6a), or (RNL.9a) after
+preliminary substitution, recovers the coordinate at $p_x$. Its equality
+test is exactly
+
+$$
+v(x)=g\quad\Longleftrightarrow\quad
+\forall |s|\le\operatorname{height}(g),\
+r_u(p_x s)=r_g(s).
+\tag{RNL.15}
+$$
+
+Matching all these replies forces every constructor and terminating leaf of
+the finite ground tree $g$, so no extension or different tree passes. Every
+test address satisfies
+$|p_x s|\le |p_x|+\operatorname{height}(g)\le H$.
+This is the full original position $a_b s_x s$ used in [SLH,
+(SLH.74.14)][SLH]. Thus equal original $H$-prefixes give the same result for
+every ground binding, hence every target-pair bit; infeasible and identity
+queries are already constant. Equation (RNL.9) gives the same reached set,
+fixed concrete exterior and complete partition, hence the same $R_Q$.
+The finite maximum is computed once, without prospective depth enumeration.
+Cross-cell coverage follows from both directions of (RNL.8), not from a
+finite row table.
 
 For the positive consumer, use the paid historical decoder of [NSF, Theorem
 6.1][NSF] (equivalently [SLH, Theorem 2.2][SLH]) at the authentic current
-register. It recovers all original replies through $H$ with the bounds
-(RNL.13), selects the unique cell, performs the finite ground tests, and
+register. Using exactly $H$ from (RNL.13a), it recovers all
+$2^{H+1}-1$ original replies through $H$, with at most two current reads per
+reply and physical address length at most $H+\lceil N/2\rceil$. These are
+the bounds (RNL.13). It selects the unique cell, performs the finite ground tests, and
 installs the complete original row. The source used internally to compute a
 constant row is only an offline feasibility witness; the online service has
 no source selector or membership oracle. Therefore positive and negative
@@ -426,9 +494,10 @@ all boundary cases.
   mask branch uses the full exterior condition; the infinite-mask branch
   supplies pairs of finite sources agreeing to every requested depth and with
   different complete sources.
-- If $P=\varnothing$, the old exterior and partition are fixed by the empty
-  row convention; the fiber is either empty or the exact singleton/whole
-  source fiber dictated by the remaining records. No old hole is assumed.
+- If $P=\varnothing$, the fixed complete old row contains the entire
+  original tree as its concrete exterior. The remaining records either reject
+  that tree or retain it: the fiber is empty or that fixed singleton.
+  No old hole is assumed.
 - A ground cell has no frontier variables and is checked directly. An empty
   or unreachable cell contributes no service branch. A nonempty input always
   retains at least one feasible cell.
