@@ -15,6 +15,8 @@ import Mathlib.Order.Interval.Set.Monotone
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic
+import D5.S3.Quantum.Foundation.FiniteDiamondDistance
+import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -25,6 +27,9 @@ namespace D5.S3.Quantum.Dynamics.FinitePureOrbitExtension
 
 open Module Finset
 open scoped BigOperators
+open D5.S3.Quantum.Foundation.FiniteStateChannel
+open D5.S3.Quantum.Foundation.FiniteDiamondDistance
+open D5.S3.Quantum.Foundation.FiniteKrausChannel
 
 variable {K V ι : Type*} [Field K] [AddCommGroup V] [Module K V]
   [FiniteDimensional K V] [Fintype ι]
@@ -280,6 +285,99 @@ theorem pure_prefix_potential_stabilizes (A : V ≃ₗ[K] V) (S : ι → Submodu
   apply stable_word_orbit A S hS hL hLeq hx
   exact prefix_word A S x L (fun j hj => hprefix j (lt_trans hj hLN))
 
+/- A finite Kraus family whose action on one input direction is collinear with a
+   unit output direction sends the corresponding pure state to a pure state. -/
+theorem pure_output_of_kraus_collinear
+    {d : ℕ} (channel : QuantumChannel (Fin d) (Fin d))
+    (K : (Fin d × Fin d) → Matrix (Fin d) (Fin d) ℂ)
+    (hK : ∀ M : Matrix (Fin d) (Fin d) ℂ,
+      CStarMatrix.ofMatrix.symm
+          (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix M)) =
+        ∑ r, K r * M * (K r).conjTranspose)
+    (ψ φ : Fin d → ℂ) (hψ : star ψ ⬝ᵥ ψ = 1) (hφ : star φ ⬝ᵥ φ = 1)
+    (c : Fin d × Fin d → ℂ)
+    (hcol : ∀ r, Matrix.mulVec (K r) ψ = c r • φ)
+    (hweight : ∑ r, star (c r) * c r = 1) :
+    IsPure (channel.mapState (pureState ψ hψ)) := by
+  refine ⟨φ, ?_⟩
+  have houter (r : Fin d × Fin d) :
+      K r * Matrix.vecMulVec ψ (star ψ) * (K r).conjTranspose =
+        Matrix.vecMulVec (Matrix.mulVec (K r) ψ)
+          (star (Matrix.mulVec (K r) ψ)) := by
+    rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.star_mulVec]
+  have hsum :
+      (∑ r, K r * Matrix.vecMulVec ψ (star ψ) * (K r).conjTranspose) =
+        Matrix.vecMulVec φ (star φ) := by
+    simp_rw [houter, hcol]
+    ext i j
+    simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.smul_apply,
+      smul_eq_mul, Pi.star_apply, star_mul, starRingEnd_apply]
+    calc
+      (∑ x, c x * φ i * (star (φ j) * star (c x))) =
+          ∑ x, (star (c x) * c x) * (φ i * star (φ j)) := by
+            apply Finset.sum_congr rfl
+            intro x hx
+            ring
+      _ = (∑ x, star (c x) * c x) * (φ i * star (φ j)) := by
+            rw [Finset.sum_mul]
+      _ = φ i * star (φ j) := by rw [hweight, one_mul]
+  rw [QuantumChannel.mapState_value]
+  change channel.toCompletelyPositiveMap
+      (CStarMatrix.ofMatrix (Matrix.vecMulVec ψ (star ψ))) = _
+  have hmap := hK (Matrix.vecMulVec ψ (star ψ))
+  have hmap' := congrArg CStarMatrix.ofMatrix hmap
+  have hmap'' : channel.toCompletelyPositiveMap
+      (CStarMatrix.ofMatrix (Matrix.vecMulVec ψ (star ψ))) =
+      CStarMatrix.ofMatrix
+        (∑ r, K r * Matrix.vecMulVec ψ (star ψ) * (K r).conjTranspose) := by
+    change channel.toCompletelyPositiveMap
+        (CStarMatrix.ofMatrix (Matrix.vecMulVec ψ (star ψ))) = _ at hmap'
+    exact hmap'
+  rw [hmap'', hsum]
+
+/- The word-space descent now supplies the finite-prefix part of the channel
+   argument.  The remaining channel-specific input is exactly the Kraus
+   collinearity contract on each member of the supplied pure-direction family. -/
+theorem pure_prefix_channel_directions
+    {d : ℕ} {ι : Type*} [Fintype ι]
+    (channel : QuantumChannel (Fin d) (Fin d))
+    (A : (Fin d → ℂ) ≃ₗ[ℂ] (Fin d → ℂ))
+    (S : ι → Submodule ℂ (Fin d → ℂ))
+    (hS : iSupIndep S) (hne : ∀ i, S i ≠ ⊥)
+    (hcard : 2 ≤ Fintype.card ι)
+    (ψ : Fin d → ℂ) (hψ : ψ ≠ 0)
+    (hnorm : ∀ k : ℕ, star ((A ^ k) ψ) ⬝ᵥ ((A ^ k) ψ) = 1)
+    (hprefix : ∀ j < 2 * finrank ℂ (Fin d → ℂ) - 1,
+      ∃ i, (A ^ j) ψ ∈ S i)
+    (hcol : ∀ (i : ι) (v : Fin d → ℂ), v ∈ S i → v ≠ 0 →
+      ∃ (φ : Fin d → ℂ) (hφ : star φ ⬝ᵥ φ = 1)
+        (c : Fin d × Fin d → ℂ),
+        (∀ r, Matrix.mulVec
+            ((krausRepresentation
+              channel.toCompletelyPositiveMap).1 r) v = c r • φ) ∧
+          ∑ r, star (c r) * c r = 1) :
+    ∀ k : ℕ, ∃ i, (A ^ k) ψ ∈ S i ∧
+      IsPure (channel.mapState (pureState ((A ^ k) ψ) (hnorm k))) := by
+  let K := (krausRepresentation
+    channel.toCompletelyPositiveMap).1
+  have hK : ∀ M : Matrix (Fin d) (Fin d) ℂ,
+      CStarMatrix.ofMatrix.symm
+          (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix M)) =
+        ∑ r, K r * M * (K r).conjTranspose :=
+    (krausRepresentation
+      channel.toCompletelyPositiveMap).2
+  have hpotential := pure_prefix_potential_stabilizes
+    (K := ℂ) (V := Fin d → ℂ) A S hS hne hcard ψ hψ hprefix
+  intro k
+  obtain ⟨i, hi⟩ := hpotential.2 k
+  have hne_k : (A ^ k) ψ ≠ 0 := (A ^ k).map_ne_zero_iff.mpr hψ
+  obtain ⟨φ, hφ, c, hcol', hweight⟩ := hcol i ((A ^ k) ψ) hi hne_k
+  refine ⟨i, hi, ?_⟩
+  exact pure_output_of_kraus_collinear channel K hK ((A ^ k) ψ) φ
+    (hnorm k) hφ c hcol' hweight
+
 #print axioms pure_prefix_potential_stabilizes
+#print axioms pure_output_of_kraus_collinear
+#print axioms pure_prefix_channel_directions
 
 end D5.S3.Quantum.Dynamics.FinitePureOrbitExtension
