@@ -3377,3 +3377,9 @@ $$\chi(\partial N_n)=8n-36n+24n=-4n,\qquad
 原 §19 的平均残差构造因此有真实的普通覆盖族和精确的 $|E_n|=4n$ 输入。在已证明的基盒内部零曲率解及统一正 Hessian 常数条件下，提升该解并扰动一条八度提升边，仍使用已有 §19 的单坐标估计与至多四十八条受影响边的证明；本节不另包装这些分析推论为新 Lean 声明，也不将这些静态长度向量称为流轨道。
 
 原 §124 的中心提升改变边圈周期：六度变十二度，对应原角的 $4\pi$ 累积。本节四条整边圈电压均为零，局部星逐片覆盖，恰是排除该分歧缺陷所需的条件。对偶图的覆盖或边界圈的覆盖都不能替代 (28.8)。
+
+## Closed-simplex radial profile comparison
+
+[RadialProfileSimplexHomeomorph](../../D5/S3/Geometry/Gluing/RadialProfileSimplexHomeomorph.lean), with its [mathematical exposition](../../Blueprint/D5/S3/Geometry/Gluing/RadialProfileSimplexHomeomorph.md), constructs the nonlinear homeomorphism and explicit inverse on the standard real simplex with vertex set `Fin 4`. The parameters are \(q=1/4\), \(R=1/2\), and the profile range \([1/4,23/48]\). The maps fix the entire central region, preserve and reflect every zero-coordinate face, and are natural under vertex permutations. The concrete source profile uses the three opposite-face coordinates: if their maximum, middle value and minimum are \(M,w,m\), then \(a=1/(1+M+\max(2(M-w),\max(3(w-m),4m)))\). Its continuity, bounds and permutation covariance are derived in the same module.
+
+The same constructed source map preserves and reflects the original tagged face generator and its full `Relation.EqvGen` closure, including self-pairings and repeated occurrences, and induces the unmarked quotient homeomorphism. This supplies the closed-simplex radial comparison and original-relation interface from source §70.6–70.10 within that scope. It does not identify literal second-subdivision stars with radial sublevel sets, prove the deleted-piece restriction, or identify the retained quotient and cap marking with the specified \((N,\partial N)\). Those geometric and marked-source bridges remain separate inputs. No novelty or completion of §70 or of the full CFMP program is claimed.
