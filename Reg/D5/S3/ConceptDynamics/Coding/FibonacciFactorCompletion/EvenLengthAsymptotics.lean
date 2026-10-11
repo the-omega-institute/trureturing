@@ -247,5 +247,258 @@ def actual_observation_length_asymptotics_registration :
 
 #print axioms lengthRegistration
 
+abbrev weightSignature : Signature where
+  Params := Unit
+  State _ := List Return
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def weightActual : Realization weightSignature :=
+  realize.{0,0,0,0,0} weightSignature (fun _ _ xs => listWeight xs) (fun e => nomatch e)
+def weightRejected : Realization weightSignature := realize.{0,0,0,0,0} weightSignature
+  (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev weightArena : Arena where
+  signature := weightSignature
+  Law R := ∀ (xs : List Return), Even (R.readout () () xs)
+
+theorem weight_rejected_law : ¬ weightArena.Law weightRejected := by
+  intro h
+  exact (by decide : ¬ Even (1 : ℕ)) (h [])
+
+def weightRegistration : Registration weightArena
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.actual_list_weight_even)) where
+  actual := weightActual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.actual_list_weight_even,
+    weightRejected, weight_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨weightRejected, ?_, rfl, weight_rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), [], [⟨1, 1, Nat.zero_lt_one, Nat.zero_lt_one⟩], ?_⟩
+    change (0 : ℕ) ≠ 26
+    decide
+
+def actual_list_weight_even_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.actual_list_weight_even)
+      (type_of% (realize.{0,0,0,0,0} weightSignature (fun _ _ xs => listWeight xs) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.actual_list_weight_even_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.weightRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨weightArena⟩
+  objectArena := .source ⟨weightArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source weightArena ⟨weightRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} weightSignature (fun _ _ xs => listWeight xs) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms weightRegistration
+
+abbrev fillerSignature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def fillerActual : Realization fillerSignature :=
+  realize.{0,0,0,0,0} fillerSignature (fun _ _ F => fillerJ F) (fun e => nomatch e)
+def fillerRejected : Realization fillerSignature := realize.{0,0,0,0,0} fillerSignature
+  (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev fillerArena : Arena where
+  signature := fillerSignature
+  Law R := ∀ (F : ℕ) (even : Even F) (large : 78 ≤ F),
+    1 ≤ R.readout () () F ∧ fillerJ F ≤ 3 ∧
+    (∀ i : ℕ, 1 ≤ i → i ≤ 3 → F / 2 % 3 = i % 3 → i = fillerJ F) ∧
+    F / 2 % 3 = fillerJ F % 3 ∧ 13 * fillerJ F ≤ F / 2 ∧
+    3 ∣ F / 2 - 13 * fillerJ F ∧
+    26 * fillerJ F + 6 * fillerQ F = F ∧
+    listWeight (lowFiller F) = F ∧
+    (∀ a ∈ lowFiller F, a.r = 1) ∧
+    (∀ (K : ℕ), 2 ≤ K → ∀ (d : ℝ) (strict : Bool) (j : Side) (D : ℝ),
+      GuardTrace K d strict j (lowFiller F) D)
+
+theorem filler_rejected_law : ¬ fillerArena.Law fillerRejected := by
+  intro h
+  have impossible := (h 78 ⟨39, rfl⟩ le_rfl).1
+  change 1 ≤ (0 : ℕ) at impossible
+  omega
+
+def fillerRegistration : Registration fillerArena
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.low_filler_geometry)) where
+  actual := fillerActual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.low_filler_geometry,
+    fillerRejected, filler_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨fillerRejected, ?_, rfl, filler_rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 78, 80, ?_⟩
+    change fillerJ 78 ≠ fillerJ 80
+    decide
+
+def low_filler_geometry_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.low_filler_geometry)
+      (type_of% (realize.{0,0,0,0,0} fillerSignature (fun _ _ F => fillerJ F) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.low_filler_geometry_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.fillerRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨fillerArena⟩
+  objectArena := .source ⟨fillerArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source fillerArena ⟨fillerRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} fillerSignature (fun _ _ F => fillerJ F) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms fillerRegistration
+
+abbrev paddingSignature : Signature where
+  Params := ℕ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def paddingActual : Realization paddingSignature :=
+  realize.{0,0,0,0,0} paddingSignature (fun _ L T => paddingWeight L T) (fun e => nomatch e)
+def paddingRejected : Realization paddingSignature := realize.{0,0,0,0,0} paddingSignature
+  (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev paddingArena : Arena where
+  signature := paddingSignature
+  Law R := ∀ (L : ℕ) (positive : 0 < L) (evenL : Even L)
+    (T : ℕ) (large : 78 ≤ T) (evenT : Even T),
+    Even (R.readout () L T) ∧ 78 ≤ paddingWeight L T ∧
+    paddingWeight L T < 78 + L ∧
+    paddingCopies L T * L + paddingWeight L T = T
+
+theorem padding_rejected_law : ¬ paddingArena.Law paddingRejected := by
+  intro h
+  exact (by decide : ¬ Even (1 : ℕ))
+    (h 2 (Nat.zero_lt_succ 1) ⟨1, rfl⟩ 78 le_rfl ⟨39, rfl⟩).1
+
+def paddingRegistration : Registration paddingArena
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.even_padding_arithmetic)) where
+  actual := paddingActual
+  bridge := Iff.rfl
+  variation := ⟨_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.even_padding_arithmetic,
+    paddingRejected, padding_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨paddingRejected, ?_, rfl, padding_rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨4, 78, 80, ?_⟩
+    change paddingWeight 4 78 ≠ paddingWeight 4 80
+    decide
+
+def even_padding_arithmetic_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.even_padding_arithmetic)
+      (type_of% (realize.{0,0,0,0,0} paddingSignature (fun _ L T => paddingWeight L T) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.even_padding_arithmetic_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.paddingRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨paddingArena⟩
+  objectArena := .source ⟨paddingArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source paddingArena ⟨paddingRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} paddingSignature (fun _ L T => paddingWeight L T) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms paddingRegistration
+
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics
