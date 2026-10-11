@@ -234,10 +234,23 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 Restrict a power of T from weights at most r minus one to weights at most minus r minus one. Rank-nullity bounds its kernel from below. The exact lowering rank formula then gives the power-rank comparison for every natural exponent.
 
+**Theorem 1.20 (Power ranks on commuting eigenspaces).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)] \forall V \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(K, V\right)] [\operatorname{FiniteDimensional}\left(K, V\right)] \forall h \in \operatorname{End}\left(K, V\right),\; \forall e \in \operatorname{End}\left(K, V\right),\; \forall f \in \operatorname{End}\left(K, V\right),\; (\operatorname{Sl2Relations}\left(h, e, f\right)) \Rightarrow ((\operatorname{IntegralWeights}\left(h\right)) \Rightarrow (\forall U \in \operatorname{End}\left(K, V\right),\; \forall T \in \operatorname{End}\left(K, V\right),\; (\forall s \in \mathbb{Z},\; \operatorname{map}\left(\operatorname{weightLE}\left(h, s\right), T\right) \le \operatorname{weightLE}\left(h, s - 2\right)) \Rightarrow ((\operatorname{Commute}\left(U, h\right)) \Rightarrow ((\operatorname{Commute}\left(U, e\right)) \Rightarrow ((\operatorname{Commute}\left(U, f\right)) \Rightarrow ((\operatorname{Commute}\left(U, T\right)) \Rightarrow (\forall m \in K,\; \forall r \in \mathbb{N},\; \operatorname{finrank}\left(K, \operatorname{range}\left((\operatorname{restrict}\left(T, \operatorname{eigenspace}\left(U, m\right)\right))^{r}\right)\right) \le \operatorname{finrank}\left(K, \operatorname{range}\left((\operatorname{restrict}\left(f, \operatorname{eigenspace}\left(U, m\right)\right))^{r}\right)\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.eigenspace_rank_comparison` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a scalar m, write W for eigenspace(U,m) and restrict(A,W) for the endomorphism induced by A on W. Commutation with U makes h, e, f and T preserve W, and the restricted operators satisfy the same sl₂ relations. Decompose a vector of W into its integer weight components. The differences between U applied to each component and m times that component lie in independent weight spaces and sum to zero, so each difference vanishes. Every selected sum of weight spaces therefore restricts to its intersection with W. In particular, the finite integral weight decomposition and the lower weight filtration restrict to W. The restricted T lowers this filtration by two, and the maximal power-rank comparison applies on W. This holds for every scalar m, including when W is zero, without assuming diagonalizability of U.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.IntegralWeights`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.Sl2Relations`
+- Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.eigenspace_rank_comparison`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.filtration_pow_map_le`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.loweringMap`
 - Truth anchor: `D5/S3/Quantum/SpinChains/Sl2WeightFiltration.lowering_kernel_zero`

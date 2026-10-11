@@ -41,7 +41,9 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
             Node("filtration_pow_map_le", "Iterated filtration decrease", FiltrationPower(),
                 "Induction on the exponent adds the two-unit filtration decrease at each application. No exhaustiveness or boundedness assumption on the filtration is required."),
             Node("rank_comparison", "Maximal power ranks", Comparison(),
-                "Restrict a power of T from weights at most r minus one to weights at most minus r minus one. Rank-nullity bounds its kernel from below. The exact lowering rank formula then gives the power-rank comparison for every natural exponent.")),
+                "Restrict a power of T from weights at most r minus one to weights at most minus r minus one. Rank-nullity bounds its kernel from below. The exact lowering rank formula then gives the power-rank comparison for every natural exponent."),
+            Node("eigenspace_rank_comparison", "Power ranks on commuting eigenspaces", EigenspaceComparison(),
+                "For a scalar m, write W for eigenspace(U,m) and restrict(A,W) for the endomorphism induced by A on W. Commutation with U makes h, e, f and T preserve W, and the restricted operators satisfy the same sl₂ relations. Decompose a vector of W into its integer weight components. The differences between U applied to each component and m times that component lie in independent weight spaces and sum to zero, so each difference vanishes. Every selected sum of weight spaces therefore restricts to its intersection with W. In particular, the finite integral weight decomposition and the lower weight filtration restrict to W. The restricted T lowers this filtration by two, and the maximal power-rank comparison applies on W. This holds for every scalar m, including when W is zero, without assuming diagonalizability of U.")),
         []));
 
     private static DocumentBlock.Describe Node(string name, string title, Formula formula, string prose) =>
@@ -292,5 +294,22 @@ internal sealed class Sl2WeightFiltrationDocument : IScribeDocumentDefinition
         var hyp = All("s", Ints, Le(Call("map", LE(s), F.Id("T")), LE(Minus(s, D(2)))));
         var body = All("r", Nats, Le(Dim(Call("range", Pow("T", r))), Dim(Call("range", Pow("f", r)))));
         return Environment(All("T", End, Imp(hyp, body)), true, integral: true);
+    }
+
+    private static Formula EigenspaceComparison()
+    {
+        var s = F.Id("s"); var r = F.Id("r"); var m = F.Id("m"); var u = F.Id("U");
+        var w = Eigenspace(u, m);
+        var restrictedT = Call("restrict", F.Id("T"), w);
+        var restrictedF = Call("restrict", F.Id("f"), w);
+        Formula body = All("m", F.Id("K"), All("r", Nats,
+            Le(Dim(Call("range", new Formula.Power(Par(restrictedT), r))),
+                Dim(Call("range", new Formula.Power(Par(restrictedF), r))))));
+        body = Imp(Call("Commute", u, F.Id("T")), body);
+        body = Imp(Call("Commute", u, F.Id("f")), body);
+        body = Imp(Call("Commute", u, F.Id("e")), body);
+        body = Imp(Call("Commute", u, F.Id("h")), body);
+        var hyp = All("s", Ints, Le(Call("map", LE(s), F.Id("T")), LE(Minus(s, D(2)))));
+        return Environment(All("U", End, All("T", End, Imp(hyp, body))), true, integral: true);
     }
 }
