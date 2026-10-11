@@ -1,0 +1,131 @@
+**Theorem 34.2 (Exact adaptive law and unchanged GLOBAL law).** Under Definition 34.1, for either original alphabet,
+
+$$
+\boxed{
+C_{\rm ad}(f_\lambda)=
+\begin{cases}
+2d-1,&M>H,\\[2pt]
+2d-2,&M\le H<N,\\[2pt]
+2\lceil\log_2N\rceil-1,&N\le H,
+\end{cases}}
+\tag{34.4}
+$$
+
+and
+
+$$
+\boxed{C_{\rm pre}(f_\lambda)=2d-1.}
+\tag{34.5}
+$$
+
+The middle case is equivalently $M=H$ and $N=H+1$. In the last case, the integer
+
+$$
+ h=\lceil\log_2N\rceil
+$$
+
+satisfies $2\le h\le d-1$.
+
+**Proof (free-value separation).** The initial scalar value is freely observed. An adaptive controller may therefore choose its first literal action as a function of $v$, while the worst fee is the maximum of the two resulting fixed-value costs. A lower bound on one fibre is a lower bound for the full target. Conversely, constructions below are chosen separately for the two observed values and are run with the same original source and endpoint rules; their maximum fee is a valid adaptive protocol. No hidden phase or archive selects a stream.
+
+**Proof (the common-archive leaf lemma).** Fix one value $v$ and a finite set $S$ of tail-zero INITIAL phases whose target labels are pairwise distinct. Use the actual witnesses supplied by (33.4), one for each retained phase. Within any reached archive containing some of these witnesses, all retained sources have undergone the same literal actions and hence have the same current tail. A next complete word therefore either succeeds on every member of that archive or rejects every member. Uniform rejection produces one absorbing child and cannot separate two unequal immutable labels; a correct controller may therefore reject a non-singleton archive only when that archive is already homogeneous. A correct early stop is also one homogeneous leaf. If a successful action is issued, its endpoint difference has at most two scalar values.
+
+At emitted index $t$, the full-path charge support is contained in
+
+$$
+W_t=tm+\{0,\ldots,m\}\pmod T,
+$$
+
+and the path schedule through the horizons used here is (33.9):
+
+$$
+W_{2q}=[q,q+m],qquad
+W_{2q+1}=[m+q,\ldots,T-1,0,\ldots,q+1].
+\tag{34.6}
+$$
+
+The displayed odd paths miss $J$. More generally, the odd path with index $2q+1$ misses $J\cup\{d-1\}$ whenever $q+1\le d-2$. This is a statement about the actual emitted index, so it remains true at every adaptive node; changing the word does not change the phase path. Induction down the adaptive archive tree now gives
+
+$$
+\#\{\text{homogeneous leaves on }S\}
+\le2^{\lfloor(c+1)/2\rfloor}
+\tag{34.7}
+$$
+
+for a controller of fee at most $c$, whenever all odd indices before that horizon miss $S$. Even levels can at most double the number of nonempty archives, odd levels are unary on $S$, and rejection or early stopping never adds a label-dependent branch. This induction allows arbitrary literal words, archive-dependent feedback, waits, rejection attempts and source-local stopping.
+
+**Proof (the three lower bounds).** First suppose $M>H$. Choose a value $v$ with $r_v=M$ and retain one tail-zero witness in $J$ for each distinct scalar label in $\lambda_v[J]$. A correct controller cannot stop for free on this fibre. If its first bit were one, all actual terminal-tail sources would reject into the same absorbing archive, although the retained fibre has different target labels; hence the root starts with zero. Through fee $2d-2$, the only possible splitting levels on this witness set are the $d-1$ even indices $0,2,\ldots,2d-4$. By (34.7) there are at most $2^{d-1}=H$ homogeneous leaves, fewer than $M$. Thus $C_{\rm ad}\ge2d-1$. The fixed GLOBAL protocol of Theorem 33.2 is also an adaptive protocol, so $C_{\rm ad}\le2d-1$.
+
+Now suppose $M\le H<N$. Since $N\le M+1$, necessarily $M=H$ and $N=H+1$. Choose a value $v$ with $n_v=N$. The exterior label is then absent from $\lambda_v[J]$; retain witnesses in $J$ for its $H$ internal labels and one witness at phase $d-1$ for $a_v$. Through fee $2d-3$, every odd path still ends below phase $d-1$, so (34.7) gives at most $2^{d-1}=H$ leaves for $H+1$ distinct required labels. Therefore $C_{\rm ad}\ge2d-2$.
+
+Finally suppose $N\le H$, and set $h=\lceil\log_2N\rceil$. Choose a value $v$ with $n_v=N$. Retain one witness for each label in $\lambda_v[J]\cup\{a_v\}$, taking the exterior representative $d-1$ when $a_v$ is absent from the interior image. The odd paths before fee $2h-1$ miss all these representatives, because $h\le d-1$. If the fee were at most $2h-2$, only $h-1$ even levels could split, so (34.7) gives at most $2^{h-1}<N$ homogeneous leaves. Thus
+
+$$
+C_{\rm ad}\ge2h-1.
+\tag{34.8}
+$$
+
+These lower bounds use fixed actual witnesses and do not choose a new tail after an adaptive query. They also remain valid if a live label happens to equal the bottom label or if labels coincide across the two free-value fibres.
+
+**Proof (the high-image upper bound).** If $M>H$, use the $2d-1$-block literal GLOBAL construction of Theorem 33.2. It is selected without knowledge of $v$ and therefore is admissible for the adaptive contract. This gives the first upper bound.
+
+**Proof (literal small-image construction).** Assume $N\le H$ and let $h=\lceil\log_2N\rceil$. For each value $v$ with $n_v\ge3$, choose an injection
+
+$$
+\gamma_v:\lambda_v[J]\cup\{a_v\}\hookrightarrow\mathbb F_2^h,
+\qquad \gamma_v(a_v)=0.
+\tag{34.9}
+$$
+
+For each coordinate $b<h$, let
+
+$$
+S_{v,b}=\{j\in J:\gamma_v(\lambda_v(j))_b=1\}
+$$
+
+and correct its parity at the actual exterior phase $m$:
+
+$$
+E_{2b}=S_{v,b}\cup
+\begin{cases}
+\{m\},&|S_{v,b}|\text{ odd},\\
+\varnothing,&|S_{v,b}|\text{ even}.
+\end{cases}
+\tag{34.10}
+$$
+
+Every $E_{2b}$ is even and lies on $W_{2b}$. Use the one flag
+
+$$
+E_1=\{m,m+1\},
+\tag{34.11}
+$$
+
+and take all other odd supports below index $2h-2$ to be empty. For each support use the ordered-path inverse (33.16), so the supports are actual endpoint charge rows of literal blocks, not abstract responses. The coding blocks start with zero because their left endpoints are uncharged; every nonroot coding block ends with zero because its right endpoint is uncharged. The flag block has literal word $10^{m-1}$. The root may end in a run of at most $m-1$ ones, and the flag begins with one, so their seam has length at most $m<k$. The flag ends in zero, and every later coding block starts in zero. Internal runs are below $k$. Thus the whole prefix is safe for every inherited legal tail, in both alphabets, including the terminal tail $k-1$.
+
+For a source in $J$, the flag difference is zero and the even differences recover $\gamma_v(\lambda_v(j))$. For a source outside $J$, the two flag phases are the only phases with a nonzero flag difference; their OR is one, while all other exterior phases have the zero code $\gamma_v(a_v)=0$. The decoder therefore returns $a_v$ on every exterior source and inverts $\gamma_v$ on the interior sources. It uses only the source's own endpoint archive and the freely remembered value $v$. The last displayed index is $2h-2$, so the fee is $2h-1$.
+
+If a fibre has $n_v=1$, its target is constant on that fibre and it stops at the free observation. If it has $n_v=2$, use the two-block fallback of Proposition 34.3 below. Under (34.3) this is no larger than the global bound $2h-1$ because the other fibre realizes $N\ge3$ and hence $2h-1\ge3$. Therefore
+
+$$
+C_{\rm ad}\le2h-1.
+\tag{34.12}
+$$
+
+**Proof (literal middle-image construction).** Assume $M\le H<N$, so $M=H$ and $N=H+1$. For each $v$, choose an injection
+
+$$
+\eta_v:\lambda_v[J]\hookrightarrow\mathbb F_2^{d-1}.
+\tag{34.13}
+$$
+
+Use the parity-donor supports (34.10) with $\eta_v$ in place of $\gamma_v$, at the even indices $0,2,\ldots,2d-4$. Use the two already legal exterior flags from (33.12)–(33.15):
+
+$$
+E_1=A,qquad E_{2d-3}=B,
+$$
+
+where $A\cup B=O$, both supports are even, $A\subseteq W_1$ and $B\subseteq W_{2d-3}$. All other odd supports are empty. The same ordered-path inverse realizes every support as a literal block. The first flag has leading run one, the root has at most $m-1$ terminal ones, and their seam is below $k$; every later coding block starts with zero, and the last flag starts with zero. Hence the complete $2d-2$-block prefix is safe on every actual source and inherited tail.
+
+On an interior phase both flags vanish, and the even differences recover $\eta_v(\lambda_v(j))$. On an exterior phase one of the two flag differences is one, so their OR is one; the decoder returns $a_v$. This construction is selected after reading $v$ and uses no hidden phase or unexecuted branch. It proves $C_{\rm ad}\le2d-2$, completing (34.4). Theorem 33.2 supplies (34.5).
+

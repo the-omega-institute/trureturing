@@ -529,7 +529,13 @@ import json,subprocess,sys
 a=sys.argv[1:]
 if a[:2]==["auth","status"]: pass
 elif a[:2]==["repo","view"]: print("fixture/repo")
-elif a[0]=="api": print(json.dumps(dict(protected=True,protection=dict(required_status_checks=dict(contexts=["required"])))))
+elif a[0]=="api":
+    if "/branches/" in a[1]: print(json.dumps(dict(protected=True,protection=dict(required_status_checks=dict(contexts=["required"])))))
+    elif "/commits/" in a[1]: print(json.dumps([dict(number=11)]))
+    elif a[1].endswith("/pulls/11"):
+        landing=subprocess.check_output(["git","rev-parse","origin/dev"],text=True).strip()
+        print(json.dumps(dict(number=11,merged=True,base=dict(ref="dev",repo=dict(full_name="fixture/repo")),merge_commit_sha=landing)))
+    else: raise SystemExit("unexpected API call: "+repr(a))
 elif a[:2]==["pr","list"]: print("[]")
 elif a[:2]==["pr","create"]: print("https://example.invalid/fixture/repo/pull/17")
 elif a[:2]==["pr","checks"]:

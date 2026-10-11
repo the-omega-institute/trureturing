@@ -4,6 +4,7 @@ authors: trureturing research (derived proof; original supplier attributions in 
 year: 2026
 title: Ordinary supplier-relative forced-window, core and forward deductions
 doi: null
+url: https://raw.githubusercontent.com/the-omega-institute/trureturing/4a0698d331a1c734dbd978b52a833ce6116595bd/Library/ArithSums/trureturing2026extrawindowpairing.md
 claim: Ordinary supplier-relative forced-window, core and forward deductions under the hypotheses and scope stated in the body; no Lean verification, RH resolution, novelty or official acceptance is asserted.
 strata_touched: []
 license: Apache-2.0
@@ -718,3 +719,281 @@ subagent, live geometry82344, other review seat, actualW77605, or ongoing
 native job was inspected or operated. All foreign and own log_ref pointers
 remain opaque. This audit iteration preserves substantive ordinary proof
 progress while the full original RH research goal stays ACTIVE and unproved.
+
+## Project application: two legal directions at the same source
+
+This is a paper application of the full-domain sources in N1--N2 and the
+[complete Q increment suppliers](nicolas2025comparison.md#precise-full-signed-q-statement-and-quantified-error).
+It introduces no Lean declaration and no literature priority claim. The
+classical explicit formula and finite-envelope selector are reused. The
+new interface is the legal backward deletion comparison at the same
+original source, combined with its forward comparison; its favorable
+prime-error input remains unproved.
+
+Fix an original canonical source in a qualifying window,
+
+$$
+N=N_p^{\rm mult}=pN_A^{\rm str},\quad A=\log N,\quad
+h=A^{4/5},\quad a=A-h,\quad b=A+h.
+$$
+
+Keep $f(t)=\log\log t$, $\lambda=f'$, $w=-\lambda'$,
+$K(t)=\log N_t^{\rm str}$, and $Q(t)=K(t)-\psi(t)$ from the
+existing supplier. Require $a>11$, reusing the existing AVB07 activation calculation
+for $5040\mid N_a^{\rm str}$. This enlarges only the common unknown
+start by a fixed elementary activation threshold. N1 gives $A\le R$ and $p>2R$; thus $p$ is absent
+from both strict cores at $a,b$. The literal integers
+
+$$
+M_-=pN_a^{\rm str},\qquad M_+=pN_b^{\rm str},\qquad
+Y_\pm=\log M_\pm
+$$
+
+satisfy $5040p\mid M_\pm$ and $M_-\mid N\mid M_+$. Full-domain
+maximality gives $F(M_\pm)-F(N)\le0$, for
+$F(n)=W(n)-f(\log n)$ and $W(n)=\log(\sigma(n)/n)$.
+The backward comparison uses this complete domain; GA2 alone does not
+provide it. Neither competitor has to be a canonical maximizer.
+
+Set $m_- =\lambda(a)-\lambda(A)>0$ and
+$m_+=\lambda(A)-\lambda(b)>0$. Define the continuous price tent
+
+$$
+k_A(t)=
+\begin{cases}
+[\lambda(a)-\lambda(t)]/m_-,&a\le t\le A,\\
+[\lambda(t)-\lambda(b)]/m_+,&A\le t\le b,\\
+0,&\text{otherwise}.
+\end{cases} \tag{PT1}
+$$
+
+It is nonnegative, has height $k_A(A)=1$, vanishes at $a,b$, and has
+$\int|k_A'|=2$. Keep both actual terminal concavity costs,
+
+$$
+C_t(y)=f(t)+\lambda(t)(y-t)-f(y)\ge0,\qquad
+\mathcal C_A=C_a(Y_-)/m_-+C_b(Y_+)/m_+.
+$$
+
+Define the full prime-power and layer responses
+
+$$
+\mathcal B_\psi(A)=\sum_{n\ge1}\Lambda(n)k_A(n)-\int_a^b k_A(t)\,dt,
+\qquad \mathcal B_Q(A)=\int_a^b k_A(t)\,dQ(t).
+$$
+
+All Stieltjes terms are sums on the common finite activation/prime-power
+support. The exact same-source identity is
+
+$$
+\boxed{\mathcal B_\psi(A)+\mathcal B_Q(A)+\mathcal C_A
+ =\frac{F(M_-)-F(N)}{m_-}+\frac{F(M_+)-F(N)}{m_+}\le0.} \tag{PT2}
+$$
+
+To verify the equality, reuse the finite layer-pressure calculation
+$H(t)=W(N_t^{\rm str})-\lambda(t)K(t)$. Activation reward equals
+activation price times layer mass, so $H$ is continuous at each event and
+$H(t)-H(A)=\int_A^tK(v)w(v)\,dv$, including $t<A$.
+With $Y(t)=\log p+K(t)$ and $Y(A)=A$, this gives
+
+$$
+F(pN_t^{\rm str})-F(N)=\int_A^t[Y(v)-v]w(v)\,dv+C_t(Y(t)).
+$$
+
+The two oriented integrals are
+
+$$
+I_- =\int_a^A[K(A)-K(v)-(A-v)]w(v)\,dv,\qquad
+I_+=\int_A^b[K(v)-K(A)-(v-A)]w(v)\,dv.
+$$
+
+Finite event-by-event integration gives
+$I_-/m_-+I_+/m_+=\int_a^b k_A(t)[dK(t)-dt]$.
+Using $dK=d\psi+dQ$ proves PT2. Strict inventory conventions are
+unchanged. A layer exactly at $A$ is supplied by the forward integral
+with weight one; atoms at $a,b$ have zero tent weight. The reference
+prime-power atom at $A$, if present, also has its full $\Lambda$ weight.
+The forced $(p,1)$ reward cancels between the three literal integers.
+This cancellation does not assert zero own-price defect for $N$.
+
+### Reusing the full Q estimates on the new consumer
+
+Let $d_0=(\sqrt2-1)/2=2c_Q$ and let $\mathcal F_Q$ be the existing
+seven-term error function in QQE. The pointwise ingredients of that
+supplier, rather than its forward integrated conclusion alone, give
+
+$$
+Q(t)-Q(a)=\frac{d_0}{\sqrt A}(t-a)+E_A(t),\qquad
+\sup_{a\le t\le b}|E_A(t)|
+\le C\frac h{\sqrt A}\mathcal F_Q(A). \tag{PT3}
+$$
+
+Here is the parameter correspondence. Start with $c_0=a$, set
+$c_{j+1}=c_j+c_j^{4/5}$, and truncate the last interval at $b$.
+At most three such windows cover $[a,b]$ eventually, with all
+$c_j\asymp A$; telescope their pointwise increments.
+For partial windows, retain the supplier's common enclosing square
+length $O(A^{7/24})$, the actual square derivative
+$1/\sqrt{2A}$ and the reference derivative $1/(2\sqrt A)$.
+Their difference is $d_0/\sqrt A$; derivative variation costs
+$O(h^2/A^{3/2})$. The first-layer and strict endpoint atoms cost
+$O(\log A)$. QH8 bounds the absolute signed contribution of every
+higher layer by the sum of both nonnegative inventories. Relative to
+$h/\sqrt A$, these are exactly the retained QQE errors: square
+asymptotics $1/\log A$, weight/derivative variation $A^{-1/5}$,
+GM error, enclosing-length $A^{-1/120}$, atom
+$A^{-3/10}\log A$, and the two growing-layer errors. Fixed coverage
+changes only the constant and the common unknown start; no pointwise
+PNT remainder is subtracted and no layer is omitted.
+
+Integration by parts in PT3, with the two zero tent endpoints, and the
+existing $|w'/w|\le4/t$ give
+
+$$
+\int_a^b k_A(t)\,dt=h[1+O(h/A)],\qquad
+\mathcal B_Q(A)=[d_0+O(\mathcal F_Q(A))]A^{3/10}. \tag{PT4}
+$$
+
+Consequently every such original source satisfies the necessary upper
+comparison
+
+$$
+\frac{\mathcal B_\psi(A)}{A^{3/10}}
+\le-d_0+O(\mathcal F_Q(A))-\frac{\mathcal C_A}{A^{3/10}}. \tag{PT5}
+$$
+
+A fixed $\varepsilon>0$ and a source beyond every required common start
+with $\mathcal B_\psi(A)\ge-(d_0-\varepsilon)A^{3/10}$ would contradict
+PT5. That favorable lower estimate is not supplied here. In particular,
+PT5 is an upper comparison, with the same direction issue as SIGN.
+
+### The continuous kernel preserves the complete zero response
+
+For $\widehat k_A(s)=\int_a^b k_A(t)t^{s-1}\,dt$, two integrations by
+parts give
+
+$$
+\begin{aligned}
+s(s+1)\widehat k_A(s)={}&w(a)a^{s+1}/m_-+w(b)b^{s+1}/m_+\\
+&-w(A)A^{s+1}(1/m_-+1/m_+)\\
+&+m_-^{-1}\int_a^Aw'(t)t^{s+1}\,dt
+-m_+^{-1}\int_A^bw'(t)t^{s+1}\,dt.
+\end{aligned} \tag{PT6}
+$$
+
+Thus for an actual nontrivial zero $\rho=\sigma+i\gamma$,
+
+$$
+|\widehat k_A(\rho)|\ll
+\min\{hA^{\sigma-1},\ A^{\sigma+1}/[h(1+\gamma^2)]\}.
+$$
+
+The classical full-$\Lambda$ explicit formula therefore yields the
+absolutely convergent, multiplicity-preserving response
+
+$$
+\mathcal B_\psi(A)
+=-\sum_\rho m_\rho\widehat k_A(\rho)
+-\int_a^b\frac{k_A(t)}{t(t^2-1)}\,dt. \tag{PT7}
+$$
+
+The sum runs over distinct nontrivial zeros with their multiplicities $m_\rho$.
+The last term includes all trivial zeros and is $O(h/A^3)$.
+No real part is replaced by $1/2$, no simplicity or independence
+assumption is made, and no favorable sign follows from convergence.
+The analytic gain is elimination of the original $\psi(A)$ starting
+term and second-order frequency decay; it is not a new proof of the
+classical explicit formula.
+
+### A joint estimate on the original selector, with gaps retained
+
+Take all ordinary prime labels $p_0<\cdots<p_m$ in a qualifying
+window, with $m\ge1$, $t_i=\log p_i$, $\delta_i=t_{i+1}-t_i$, and the canonical
+$A_i=\log N_{p_i}^{\rm mult}$. Put
+
+$$
+\mathscr W_X(v)=\sum_{i=0}^{m-1}\delta_i A_i^{-3/10}k_{A_i}(v),
+\qquad L_X=\sum_{i=0}^{m-1}\delta_i>0.
+$$
+
+A sufficient, still unproved, joint estimate is: one fixed
+$\varepsilon>0$ has, beyond every common finite start, a qualifying
+original window for which
+
+$$
+\sum_{n\ge1}\Lambda(n)\mathscr W_X(n)-\int\mathscr W_X(v)\,dv
+\ge-(d_0-\varepsilon)L_X. \tag{PT8}
+$$
+
+Indeed the left side equals the nonnegative weighted sum of PT5's
+normalized responses. Its upper bound is
+$[-d_0+O(\sup_{\ell\le A\le R}\mathcal F_Q(A))]L_X
+-\sum_i\delta_i\mathcal C_{A_i}/A_i^{3/10}$, contradicting PT8 at
+sufficiently large $\ell$. The nonzero total weight and every same-source
+terminal cost remain. No marginal optimum is substituted for a joint one.
+
+The existing finite envelope and tie law in N2 determine the monotone
+selector $\mathcal A_X(t)=t+\log u_{\min}(t)$, where $u_{\min}$ is
+the least active core. In the interior it equals
+$\lambda^{-1}(-V'_{X,-}(t))$, and $\mathcal A_X(t_i)=A_i$.
+The direct core definition also fixes the outer endpoints. Monotonicity
+sandwiches its whole range between $A_0$ and $A_m$, inside $[\ell,R]$. Real intervening labels are used for integration
+only and are not new integer sources. On a fixed-core interval
+$\mathcal A_X(t)=t+\log u$. Set
+$g(A)=A^{-3/10}\mathcal B_\psi(A)$. Kernel continuity and the bound
+$|\partial_Ak_A(n)|\ll h^{-1}$ on its support, together with
+$\Lambda(n)\le\log n$, give the coarse sufficient variation bound
+$\operatorname{Var}_{[\ell,R]}g\ll R\log R$.
+Monotone selector composition cannot increase this variation. Reusing
+N1--N2 and GM label spacing, $\max\delta_i\le E=e^{-5\ell/12}$ and
+$\log R=o(\ell)$, the existing Dragomir Corollary 7, equations (5.16)--(5.17), with
+left tags $t_i$ and integrand $g\circ\mathcal A_X$, gives
+
+$$
+\sum_{i=0}^{m-1}\delta_i g(A_i)
+=\int_{t_0}^{t_m}g(\mathcal A_X(t))\,dt+O(ER\log R). \tag{PT9}
+$$
+
+The existing label-spacing supplier gives $L_X\sim\ell$ for the full
+window. Thus the necessary normalized condition
+$ER\log R=o(L_X)$ holds, and fixed slack can absorb this error.
+An arbitrary short subblock would require its own relative-error
+check. No prime-error independence or independent-sample model is used.
+The variation calculation differentiates the locally finite arithmetic
+sum, not the infinite zero series.
+
+At each envelope switch $s_j$, write $U_j,V_j$ for the smallest-clock
+left and largest-clock right cores. The skipped interval is
+$G_j=(s_j+\log U_j,s_j+\log V_j)$. Include a switch at $t_0$, if
+present, and exclude a switch at $t_m$, consistently with the canonical
+left derivative. Piecewise change of variables gives
+
+$$
+\int_{t_0}^{t_m}g(\mathcal A_X(t))\,dt
+=\int_{\mathcal A_X(t_0)}^{\mathcal A_X(t_m)}g(v)\,dv
+-\sum_j\int_{G_j}g(v)\,dv. \tag{PT10}
+$$
+
+The common envelope imposes the exact switch constraint
+
+$$
+W(V_j)-W(U_j)
+=f(s_j+\log V_j)-f(s_j+\log U_j). \tag{PT11}
+$$
+
+Retain, in addition to PT11, dominance over every core in $\mathcal C_X$
+at each actual switch. Pairwise equality alone does not identify an
+envelope switch. A normalization check is
+$A_m-A_0=L_X+\sum_j|G_j|$: dense prime labels do not imply dense source
+clocks. The first integral in PT10 has selected endpoints, and the
+second retains signed responses over the skipped intervals. A generic
+free-center mean does not control either selection issue automatically.
+Their joint estimate, with full envelope dominance, remains the route
+to the unproved PT8.
+The completed far tails, existing source construction, and FIB fiber
+transport are reused unchanged. Neither PT8 nor the original signed
+finite-head lower bound nor RH is proved by this application.
+
+The [actual price-gap application](../Estimation/trureturing2026pricegapconvexity.md)
+retains whole-switch moments, the original tent gap response and the exact
+exterior-flux debt, with both original terminal costs separate.

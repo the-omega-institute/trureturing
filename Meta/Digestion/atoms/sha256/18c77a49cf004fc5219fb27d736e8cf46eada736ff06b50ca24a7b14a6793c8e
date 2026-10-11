@@ -1,0 +1,15 @@
+**命题 27.4（An odd-support boundary with optimum two）。** If the evenness assumption is omitted while the full original source and other conventions remain, there is a target with
+
+$$
+m=5,\quad k=8,\quad T=9,\quad
+H_0=\{2\},\quad H_1=\{3,4\},\qquad
+C_{\rm ad}(f)=C_{\rm pre}(f)=2.
+\tag{27.16}
+$$
+
+Thus the absence of a GLOBAL optimum two in (27.6) does not extend to arbitrary internal supports.
+
+Proof. Use the one GLOBAL stream $01000\mid10101$, with a fixed zero extension. Its first charge support is $\{1,2\}$; its second is the entire even-sized path $W_1=\{5,6,7,8,0,1\}$. The full response codes are $(1,0)$ at phase two, $(0,0)$ at phases three and four, and $(a(j),1)$ at every outside phase. On its two observed differences a source returns the label specified by its remembered initial value and that membership pair. The root begins zero and ends zero; the second word has only isolated ones and starts after tail zero. Both are legal for every inherited tail, and all bits of both completed words are paid. Initial bottom stops freely.
+
+For the lower bound, value zero is exactly the supplied singleton target of [coprime phase-target costs, Theorem 6.1](KBONACCI_COPRIME_PHASE_TARGET_COST.md#6-proper-narrow-nonzero-singleton-targets), with $(k,m,j)=(8,5,2)$. Its fee $\max\{2,\lceil2/5\rceil\}=2$ is credited reuse. Thus $C_{\rm ad}(f)\ge2$, while the displayed common stream gives $C_{\rm pre}(f)\le2$, proving both equalities. Here the two internal class sizes one and two violate (27.9), and $|W_1|=6$ is even. The full-target common-stream connection only delimits the evenness hypothesis. $\square$
+

@@ -925,6 +925,9 @@ jobs:
             [tests-integration-mirror]
             tools/scripts/agent/integration-mirror-test.sh
             tools/scripts/agent/integration-mirror.sh
+            tools/scripts/worktree/worktree_protocol.py
+            tools/scripts/worktree/worktree_publication.py
+            tools/scripts/worktree/worktree_preservation.py
             [tests-lean]
             # NativeTestSupport stages the real compiler and package configuration;
             Makefile
@@ -1909,8 +1912,13 @@ jobs:
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
+          rc=0
+          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail || rc=$?
+          if [[ "$rc" != 0 ]]; then
+            echo "::error title=Lean cache seed required::Lean report preparation failed. For a missing native seed, apply the lean-cache-produce label to this PR, or dispatch lean-cache-publish.yml on the protected branch and exact SHA. Wait for the producer, then retry this check."
+            exit "$rc"
+          fi
           make compiled-judge-test
-          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
       - name: Verify production source binding artifacts
         env:
           FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules

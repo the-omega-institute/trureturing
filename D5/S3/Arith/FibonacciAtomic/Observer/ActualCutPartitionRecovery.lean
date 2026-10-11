@@ -274,7 +274,7 @@ def classValue (P : CutSet) (u : Source) (n : Nat) : Source :=
 def evaluateRow (values : Nat → Source) : LiteralRow → Source :=
   FreeMagma.lift (Sum.elim FreeMagma.of values)
 
-private theorem classValue_at (P : CutSet) (hP : CutPrefixFree P) (u : Source)
+theorem classValue_at (P : CutSet) (hP : CutPrefixFree P) (u : Source)
     (p : Address) (t : Source) (hp : p ∈ P) (ht : subtree p u = some t) :
     classValue P u (classOrdinal P u p) = t := by
   have mem : p ∈ orderedHoles P u :=

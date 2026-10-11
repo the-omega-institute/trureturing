@@ -167,7 +167,8 @@ private theorem table (a b c d e : Nat) (he1 : 1 ≤ e) (hn : 5040 < smooth a b 
   · exact table_5 ⟨a, ha⟩ ⟨b, hb⟩ ⟨c, hc⟩ ⟨d, hd⟩ hn ht
   · exact table_6 ⟨a, ha⟩ ⟨b, hb⟩ ⟨c, hc⟩ ⟨d, hd⟩ hn ht
 
-private theorem exp_gamma_lower : (89 / 50 : Real) < Real.exp Real.eulerMascheroniConstant := by
+/-- A rational lower bound for `e^γ`. -/
+theorem exp_gamma_lower : (89 / 50 : Real) < Real.exp Real.eulerMascheroniConstant := by
   have h := Real.sum_le_exp_of_nonneg (by norm_num : (0 : Real) <= 577 / 1000) 5
   norm_num [Finset.sum_range_succ] at h
   have he : Real.exp (577 / 1000) <= Real.exp Real.eulerMascheroniConstant :=
@@ -181,7 +182,8 @@ private theorem log_lower (x y l : Real) (k K : Nat)
   rw [hx]
   exact hc.trans (log_pow_two_mul_bounds y k K hk hy hy').1
 
-private theorem loglog_of (t mid lo y₁ y₂ : Real) (k₁ k₂ : Nat)
+/-- Two certified logarithm brackets give a rational lower bound for `log (log t)`. -/
+theorem loglog_of (t mid lo y₁ y₂ : Real) (k₁ k₂ : Nat)
     (h₁ : t = (2 : Real) ^ k₁ * y₁) (hk₁ : 1 <= k₁) (hy₁ : 1 <= y₁) (hy₁' : y₁ < 2)
     (hc₁ : mid < (k₁ : Real) * (6931471803 / 10000000000 : Real) +
       atanhPartial ((y₁ - 1) / (y₁ + 1)) 4)
@@ -193,7 +195,8 @@ private theorem loglog_of (t mid lo y₁ y₂ : Real) (k₁ k₂ : Nat)
   have hh := log_lower mid y₂ lo k₂ 4 h₂ hk₂ hy₂ hy₂' hc₂
   exact hh.trans (Real.log_lt_log hmid h)
 
-private theorem loglog_5040 : (1071 / 500 : Real) < Real.log (Real.log 5040) :=
+/-- A rational lower bound for `log (log 5040)`. -/
+theorem loglog_5040 : (1071 / 500 : Real) < Real.log (Real.log 5040) :=
   loglog_of 5040 (341 / 40) _ (315 / 256) (341 / 320) 12 3 (by norm_num) (by norm_num)
     (by norm_num) (by norm_num) (by norm_num [atanhPartial, Finset.sum_range_succ])
     (by norm_num) (by norm_num) (by norm_num) (by norm_num)
@@ -242,7 +245,7 @@ private theorem loglog_tail : (271 / 100 : Real) < Real.log (Real.log 4194304) :
     (by norm_num [atanhPartial, Finset.sum_range_succ]) (by norm_num)
 
 /-- One interval of the table: a ratio bound `K/100` paid by `89/50 · l < e^γ log log n`. -/
-private theorem finish {n t K : Nat} {l : Real} (ht : 1 < t) (htn : t ≤ n) (hl : 0 < l)
+theorem finish {n t K : Nat} {l : Real} (ht : 1 < t) (htn : t ≤ n) (hl : 0 < l)
     (hlog : l < Real.log (Real.log (t : Real))) (hK : (K : Real) / 100 ≤ 89 / 50 * l)
     (hv : 100 * ArithmeticFunction.sigma 1 n ≤ K * n) :
     (ArithmeticFunction.sigma 1 n : Real) / n <
