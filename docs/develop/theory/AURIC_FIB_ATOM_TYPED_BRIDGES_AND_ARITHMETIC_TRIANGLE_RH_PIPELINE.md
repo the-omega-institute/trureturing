@@ -942,3 +942,327 @@ structure ArithmeticEncoding (C : Type) where
 
 对素数驱动，直接使用上面的 ArithmeticEncoding。这样可以把“算术输入改变哪一个 FIB 模式质量”作为一个可计算函数，而不是用模式名称相似性代替编码定义。
 
+
+---
+
+## 15. 稳定静态场到能级的桥接
+
+前十四节只规定了五态概率载体和外部桥接接口。本节给出统一场论所需的最小静态场公理，并把三种不同的谱量严格区分：静态 Hessian 的曲率谱、耗散演化的衰减谱、辛提升后的振动能级。
+
+### 定义 15.1（稳定静态背景）
+
+令 \(\mathcal C\) 为带内积的配置 Hilbert 空间，\(\mathcal E:\mathcal C\to\mathbb R\) 为二阶 Fréchet 可微能量泛函，令 \(\Phi_*\in\mathcal C\) 满足
+
+\[
+D\mathcal E(\Phi_*)=0,\qquad
+K_*:=D^2\mathcal E(\Phi_*).
+\]
+
+先在规范固定后的切空间 \(T_*\subseteq T_{\Phi_*}\mathcal C\) 上工作。称 \(\Phi_*\) 半稳定，若 \(K_*\ge0\)；称其严格稳定，若存在 \(\mu>0\) 使
+
+\[
+\langle u,K_*u\rangle\ge\mu\|u\|^2,\qquad u\in T_*.
+\]
+
+规范方向应先商掉或固定，否则 \(K_*\) 的零空间可能只是规范冗余。观察核 \(\ker D(P\circ\Pi)_{\Phi_*}\) 与曲率核 \(\ker K_*\) 不是同一个对象：前者表示读出看不见的方向，后者表示能量二阶项不变的方向。
+
+### 定理 15.2（静态 Hessian、梯度流和辛谱）
+
+设 \(K_*=K_*^*>0\)，且 \(M=M^*>0\) 为有界迁移率。
+
+1. 梯度流
+   \[
+   \dot u=-MK_*u
+   \]
+   的衰减率由 \(\operatorname{Spec}(MK_*)\) 给出。由于
+   \[
+   MK_*=M^{1/2}\bigl(M^{1/2}K_*M^{1/2}\bigr)M^{-1/2},
+   \]
+   它与正自伴算子 \(M^{1/2}K_*M^{1/2}\) 相似，因而谱为正实数。严格稳定时
+   \[
+   \operatorname{Spec}(MK_*)\subseteq[\mu\,m_M,\infty)
+   \]
+   若 \(M\ge m_M I\)。
+
+2. 取 \(J^*=-J\) 为可逆辛结构，Hamilton 线性化为
+   \[
+   \dot u=JK_*u.
+   \]
+   有
+   \[
+   JK_*=K_*^{-1/2}
+   \bigl(K_*^{1/2}JK_*^{1/2}\bigr)K_*^{1/2},
+   \]
+   中间算子是斜自伴的，因此 \(JK_*\) 的谱在有限维情形为纯虚数成对 \(\{\pm i\omega_j\}\)。二次能量
+   \[
+   H_2(u)=\tfrac12\langle u,K_*u\rangle
+   \]
+   沿该流守恒。
+
+证明：第一项是相似变换。第二项由 \(J^*=-J\) 得 \(K_*^{1/2}JK_*^{1/2}\) 斜自伴；斜自伴矩阵的谱纯虚。能量导数为
+\[
+\frac{d}{dt}H_2
+=\langle K_*u,JK_*u\rangle=0
+\]
+，因为 \(J\) 斜自伴。证毕。
+
+因此 \(\operatorname{Spec}(K_*)\) 是静态曲率，\(\operatorname{Spec}(MK_*)\) 是耗散时间尺度，\(\omega_j\) 才是辛振动频率。只有在附加正则量子化公理后，\(\hbar\omega_j(n+\tfrac12)\) 才可称为量子能级。
+
+### 定义 15.3（静态场到 FIB 的推前）
+
+设 \((\Omega,\mu)\) 为有限或概率测度空间，场 \(\Phi\) 诱导密度 \(\rho_\Phi\)，并给出五个可测分区 \(e_s:\Omega\to[0,1]\)，满足 \(\sum_s e_s=1\)。定义
+
+\[
+\Pi(\Phi)_s=\int_\Omega e_s\,\rho_\Phi\,d\mu.
+\]
+
+当 \(\rho_\Phi\ge0\) 且归一化时，\(\Pi(\Phi)\in\Delta(\Sigma)\)。再定义
+
+\[
+P_{\mathrm{vis}}(\Phi)
+=\bigl(\mathbb E_{\Pi(\Phi)}x,\mathbb E_{\Pi(\Phi)}y,
+\mathbb E_{\Pi(\Phi)}z\bigr).
+\]
+
+若存在 \(v_\kappa\in T_*\) 使
+
+\[
+D\Pi_{\Phi_*}(v_\kappa)=d,\qquad
+D(P_{\mathrm{vis}})_{\Phi_*}(v_\kappa)=0,
+\]
+
+则称 \(v_\kappa\) 为 FIB 隐藏法向。它是场的隐藏读出方向；只有当 \(K_*v_\kappa=0\) 时才同时是静态零模。若 \(K_*v_\kappa=\eta_\kappa v_\kappa\) 且 \(\eta_\kappa>0\)，则 \(\eta_\kappa\) 是该方向的静态曲率，而不是自动的动力学能级。
+
+### 定理 15.4（FIB 纤维的自由能谱）
+
+固定 \((X,Y,Z)\)，令 \(r=1-Z\)，并假设纤维内部 \(p_s>0\)。给定状态能量 \(E_s\)，定义
+
+\[
+F_\beta(p)=\sum_sE_sp_s-\beta^{-1}
+\Bigl(-\sum_sp_s\log p_s\Bigr).
+\]
+
+沿 \(p_\kappa\) 有
+
+\[
+\frac{dF_\beta}{d\kappa}
+=\Delta E+\beta^{-1}\vartheta,\qquad
+\Delta E=E_0+E_{25}-E_2-E_5,
+\]
+
+\[
+\vartheta=\log\frac{p_0p_{25}}{p_2p_5},\qquad
+\frac{d^2F_\beta}{d\kappa^2}
+=\beta^{-1}\mathcal I(\kappa)>0,
+\]
+
+其中
+\[
+\mathcal I(\kappa)
+=p_0^{-1}+p_2^{-1}+p_5^{-1}+p_{25}^{-1}.
+\]
+
+所以自由能在每条合法纤维上严格凸，唯一平衡点满足
+
+\[
+\frac{p_0p_{25}}{p_2p_5}=e^{-\beta\Delta E}.
+\]
+
+在简并条件 \(\Delta E=0\) 下，平衡点正是最大熵点
+\[
+\kappa_*=\frac{XY}{r},
+\]
+并且 \(\Delta=r\kappa-XY=0\)。这里 \(\beta^{-1}\mathcal I_*\) 是 \(\kappa\) 方向的静态自由能曲率。
+
+证明：沿 seam 有 \(p_0'=p_{25}'=1\)、\(p_2'=p_5'=-1\)。对熵逐项微分得到 \(H'=-\vartheta\)，再次微分得到 \(\vartheta'=\mathcal I\)。代入自由能定义即得。证毕。
+
+### 定义 15.5（FIB 耗散谱与 FIB 振动能级）
+
+质量作用动力学取为
+
+\[
+\dot\kappa=-\gamma\Delta
+=-\gamma r(\kappa-\kappa_*)
+\]
+
+在 \(\Delta E=0\) 的平衡附近，其线性衰减率为
+
+\[
+\lambda_\kappa=\gamma r.
+\]
+
+该量是耗散谱，不是量子能量。若引入隐藏坐标的共轭动量 \(\pi_\kappa\)，定义局部 cotangent Hamiltonian
+
+\[
+H_\kappa
+=\frac{\pi_\kappa^2}{2m_\kappa}
++\frac12\bigl(\beta^{-1}\mathcal I_*\bigr)
+(\kappa-\kappa_*)^2,
+\]
+
+则辛线性化频率为
+
+\[
+\omega_\kappa
+=\sqrt{\frac{\beta^{-1}\mathcal I_*}{m_\kappa}},
+\]
+
+形式量子化后才得到
+
+\[
+E_n=\hbar\omega_\kappa\left(n+\tfrac12\right).
+\]
+
+因此，统一理论中必须同时记录 \(\eta_\kappa\)、\(\lambda_\kappa\)、\(\omega_\kappa\) 三个量，不能用 \(\gamma r\) 直接替代能级。
+
+### 定理 15.6（树场与 FIB 的乘积稳定性）
+
+令 \(\mathcal H_{\mathrm{tree}}=\ell^2(V_{\mathrm{FibTree}})\)，
+\[
+Lf(p)=\deg(p)f(p)-\sum_{q\sim p}f(q),\qquad
+\phi(p)=2^{-|p|},\qquad
+H_{\mathrm{tree}}=aL-gM_\phi.
+\]
+
+已有 Whole-rho 结果给出
+\[
+L\phi=\mathbf1_o,\quad \|\phi\|^2=2,\quad Q(\phi)=1,
+\quad H_{\mathrm{tree}}\ge
+\bigl(a(3-2\sqrt2)-g\bigr)I.
+\]
+
+在定义好的乘积空间
+\[
+\mathcal H_{\mathrm{tot}}
+=\mathcal H_{\mathrm{tree}}\otimes\mathcal H_{\mathrm{FIB}}
+\]
+上，令
+\[
+H_{\mathrm{tot}}
+=H_{\mathrm{tree}}\otimes I+
+I\otimes K_{\mathrm{FIB}}+V_{\mathrm{bridge}},
+\]
+其中 \(V_{\mathrm{bridge}}=V_{\mathrm{bridge}}^*\)。若
+\[
+H_{\mathrm{tree}}\ge\varepsilon_tI,\qquad
+K_{\mathrm{FIB}}\ge\varepsilon_fI,\qquad
+\|V_{\mathrm{bridge}}\|<\varepsilon_t+\varepsilon_f,
+\]
+则
+\[
+H_{\mathrm{tot}}\ge
+(\varepsilon_t+\varepsilon_f-\|V_{\mathrm{bridge}}\|)I>0.
+\]
+
+若 \(V_{\mathrm{bridge}}\) 为紧算子，连续谱的阈值保持不变，低于阈值的离散束缚态才可能由桥接产生。该乘积算子不是天然存在的统一场定理，而是需要明确给出张量积状态空间和耦合算子。
+
+### 命题 15.7（块 Hessian 与隐藏能级重整化）
+
+在静态二阶近似中，若树场变量为 \(u\)，FIB 隐藏变量为 \(q\)，总 Hessian 为
+
+\[
+K=
+\begin{pmatrix}
+A&B\\ B^*&C
+\end{pmatrix},
+\qquad A>0,
+\]
+
+则消去 \(u\) 后的有效 FIB 刚度为 Schur 补
+
+\[
+K_{\mathrm{eff}}=C-B^*A^{-1}B.
+\]
+
+在一维隐藏通道上，
+\[
+k_{\mathrm{eff}}=c-b^*A^{-1}b.
+\]
+严格稳定当且仅当 \(A>0\) 且 \(K_{\mathrm{eff}}>0\)。当 \(k_{\mathrm{eff}}=0\) 时出现真正的统一场零模；当 \(k_{\mathrm{eff}}<0\) 时静态背景失稳。由此可把树场与 FIB 的耦合效应精确定义为隐藏曲率的重整化，而不是把两个谱直接相加。
+
+### 定义 15.8（三角网络的静态源场）
+
+令三条源场的 Hilbert 空间为
+\(\mathcal H_\alpha,\mathcal H_\beta,\mathcal H_\gamma\)，各自静态 Hamiltonian 为 \(H_\alpha,H_\beta,H_\gamma\)。无源间相互作用时
+
+\[
+H_{\mathrm{src}}
+=H_\alpha\otimes I\otimes I+
+I\otimes H_\beta\otimes I+
+I\otimes I\otimes H_\gamma.
+\]
+
+若温度参数相同，则 Gibbs 态严格分解为
+
+\[
+\rho_{\mathrm{src}}
+=\rho_\alpha\otimes\rho_\beta\otimes\rho_\gamma,
+\qquad
+\rho_i=\frac{e^{-\beta H_i}}{\operatorname{Tr}(e^{-\beta H_i})}.
+\]
+
+局部响应核分别只读取相邻两源，并经有限事件分区推前到 \(\Sigma\)。所得 FIB 律是三角静态场的局部边缘。若出现 \(V_{\alpha\beta\gamma}\) 的非局部交叉项，则必须把它列为 triangle-locality defect；不能再自动使用独立源乘积。
+
+### 定义 15.9（RH 零空间的静态算子）
+
+设 \(\mathcal Z\) 为 zeta 非平凡零点的索引集合，\(\rho_v\) 为对应零点。令
+\[
+\mathcal H_Z=\ell^2(\mathcal Z),\qquad
+R e_v=\rho_v e_v,
+\]
+并定义
+\[
+H_Z=-i(R-\tfrac12 I),
+\]
+其自然定义域为
+\[
+D(H_Z)=
+\left\{\psi:
+\sum_v|\rho_v-\tfrac12|^2|\psi_v|^2<\infty
+\right\}.
+\]
+
+则 \(H_Z\) 自伴当且仅当全部 \(\operatorname{Re}\rho_v=\tfrac12\)。在 RH 条件下
+\[
+\rho_v=\tfrac12+i\gamma_v,\qquad
+H_Ze_v=\gamma_v e_v.
+\]
+Cayley 算子
+\[
+C_Z=(R-I)R^{-1}
+=(iH_Z-\tfrac12I)(iH_Z+\tfrac12I)^{-1}
+\]
+酉当且仅当 \(H_Z\) 自伴，等价于 RH（假设零点数据穷尽且按重数索引）。
+
+### 定理 15.10（统一场到 RH 的必要桥）
+
+若希望把统一场的静态能级识别为 RH 零点虚部，至少需要构造下列之一：
+
+1. 保持内积的酉映射
+   \[
+   U:\mathcal H_{\mathrm{field}}\to\mathcal H_Z,\qquad
+   UH_{\mathrm{field}}U^{-1}=H_Z;
+   \]
+2. 或者构造正则化特征行列式
+   \[
+   \xi(\tfrac12+iE)
+   =C(E)\det_{\mathrm{reg}}(E-H_{\mathrm{field}})
+   \]
+   并证明零点重数与谱重数一致。
+
+在没有 \(U\)、行列式恒等式或同等强度的谱对应定理前，FIB 的 \(\Delta=0\)、树场的束缚态和 RH 临界线只是具有共同形式的约束，不能互相推出。
+
+### 15.11 形式化义务清单
+
+为把本卷升级为可检查的统一场理论，需依次补齐：
+
+1. 选择配置空间 \(\mathcal C\)、规范群和规范固定切空间；
+2. 给出 \(\mathcal E\) 及其二阶 Hessian \(K_*\)，证明静态背景存在与稳定性；
+3. 构造五个事件分区 \(e_s\)，证明 \(\Pi\) 保持概率；
+4. 构造 \(v_\kappa\)，并区分 \(D(P\circ\Pi)\) 的读出核和 \(K_*\) 的曲率核；
+5. 为耗散迁移率 \(M\)、辛结构 \(J\)、FIB 质量 \(m_\kappa\) 给出公理；
+6. 明确定义树场与 FIB 的乘积空间、桥接算子以及 Schur 补；
+7. 在三角网络中证明独立源乘积和局部推前；
+8. 最后给出统一场到 RH 零空间的 \(U\) 或正则化行列式证明。
+
+目前 1 至 5 可在有限维近似中直接形式化，6 至 8 是真正的外部桥接目标。上述边界保证任何尚未实现的算术、三角或 RH 结论都不会被误写成已有定理。
