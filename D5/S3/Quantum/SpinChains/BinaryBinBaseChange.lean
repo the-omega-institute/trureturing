@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.SpinChains.Sl2WeightFiltration
 import Mathlib.LinearAlgebra.TensorProduct.Pi
-import Mathlib.LinearAlgebra.TensorProduct.Tower
 
 open scoped TensorProduct BigOperators
 open D5.S3.Quantum.SpinChains.Sl2WeightFiltration
