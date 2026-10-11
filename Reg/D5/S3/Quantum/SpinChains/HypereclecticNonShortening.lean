@@ -268,7 +268,9 @@ def family : Registration arena.{u_3, u_4} (type_of% @lowering_kernel_zero.{u_3,
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, u_4 + 1, u_4, 0, u_4, 0, 0}
     (@lowering_kernel_zero.{u_3, u_4}) (Realization signature.{u_4}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.SpinChains.HypereclecticNonShortening.lowering_kernel_zero.unit
-  realizationName := `Reg.D5.S3.Quantum.SpinChains.HypereclecticNonShortening.lowering_kernel_zero.family
+  realizationName := .str
+    `Reg.D5.S3.Quantum.SpinChains.HypereclecticNonShortening.lowering_kernel_zero
+    "family"
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u_3, u_4}⟩
