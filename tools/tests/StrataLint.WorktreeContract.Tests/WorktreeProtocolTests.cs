@@ -229,6 +229,12 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Theory]
+    [InlineData("mirror_operation_publishes_then_qualifies_removal")]
+    [InlineData("mirror_failure_retains_conflict_and_failed_publication")]
+    [InlineData("mirror_missing_endpoint_refused_before_creation")]
+    [InlineData("mirror_only_target_delta_with_missing_merge_and_squash")]
+    [InlineData("mirror_validator_rejects_wrong_delta_identity_parent_and_base")]
+    [InlineData("mirror_retained_commit_reused_on_descendant_integration_base")]
     [InlineData("consumer_mirror_uses_real_git_with_stubbed_github")]
     [InlineData("consumer_land_commits_snapshot_with_external_checks_stubbed")]
     [InlineData("consumer_land_cannot_build_during_exclusive_operation")]

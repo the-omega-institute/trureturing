@@ -841,3 +841,82 @@ $$
 [GammaNote]: https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/Library/Analytic/nist2026asymptotic.md
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Robin margin 坐标的开域与连续折返
+
+本节只给一个连续坐标图的严格接口。它不产生新的整数 Robin 反例，也不把
+零 Jacobian 单独解释成非单射。
+
+**定义 13.1（开扩展的 margin 图）。** 固定与三个互异选定素数
+$p_1,p_2,p_3$ 互素的 $m>5040$，令
+
+$$
+\ell(u)=\log m+u_1+u_2+u_3,
+$$
+
+$$
+\mathcal U=\{u\in\mathbb R^3:\ell(u)>1,\ p_i e^{u_i}>1\ (i=1,2,3)\}.
+$$
+
+$\mathcal U$ 是包含非负指数图内部的开域。在其上定义
+完整地址保留为 $(m;p_1,p_2,p_3;u_1,u_2,u_3)$，不把连续坐标折返压成一个
+无地址的标量声明。
+
+$$
+\widetilde C(u)=\gamma+\log\log\ell(u)-\log Z(m)
+-\sum_{i=1}^3\log\!\left(
+\frac{1-e^{-u_i}/p_i}{1-1/p_i}\right),
+$$
+
+其中 $Z(m)=\sigma(m)/m$ 使用本卷假设 2.2 的正约数比。固定 $u_1,u_2$ 时的坐标图为
+$F(u)=(u_1,u_2,\widetilde C(u))$。
+
+当 $u_i=a_i\log p_i$、$a_i\in\mathbb Z_{\ge0}$，令
+$n=m\prod_{i=1}^3p_i^{a_i}$。互素条件与命题 3.2 的约数乘积式给出
+$\ell(u)=\log n$ 及 $Z(n)=Z(m)\prod_{i=1}^3(1-p_i^{-(a_i+1)})/(1-p_i^{-1})$，
+故 $\widetilde C(u)=\gamma+\log\log\log n-\log Z(n)=-\log R(n)$，
+其中 $R$ 仍为定义 7.1 的归一化比值。因此该地址上的 $\widetilde C(u)>0$
+恰等价于 $Z(n)<e^\gamma\log\log n$。
+
+**命题 13.2（局部逆与严格转折）。** 在 $\mathcal U$ 上
+
+$$
+\det DF(u)=\frac{\partial\widetilde C}{\partial u_3}
+=\frac1{\ell(u)\log\ell(u)}-\frac1{p_3e^{u_3}-1}.
+$$
+
+只要 $p_3e^{u_3}\ne1+\ell(u)\log\ell(u)$，隐函数定理给出 $F$ 的局部
+$C^1$ 逆。为见到一个真实的连续折返，取
+
+$$
+m=3^6\cdot7=5103,\qquad (p_1,p_2,p_3)=(5,11,2),\qquad u_1=u_2=0.
+$$
+
+在 $u_3=0$ 处，$\ell\log\ell>1$，故导数严格小于零。取
+$u_3=10\log2$ 时，$p_3e^{u_3}-1=2047$；并且
+$5103\cdot2^{10}<e^{16}$、$e^3>16$ 给出 $\ell<16$、
+$\ell\log\ell<48<2047$，故导数严格大于零。
+
+上述两项指数不等式可由指数级数的正项截断得到；例如
+$e<11/4$ 由 $e=\sum_{k\ge0}1/k!$ 的尾项几何上界给出，从而
+$e^8<(11/4)^8<5103$，用于 $u_3=0$ 的第一项严格不等式；而
+
+$$
+e^{16}>\sum_{k=0}^{17}\frac{16^k}{k!}>5103\cdot2^{10},\qquad
+e^3>\sum_{k=0}^{4}\frac{3^k}{k!}>16
+$$
+
+直接给出第二端点的两个严格界。
+因此这里没有使用浮点曲率或脚本计数。
+
+导数在这条线段上连续，故两端符号相反时存在临界点。限制
+$t\mapsto\widetilde C(0,0,t)$ 在 $[0,10\log2]$ 上，起点处递减、终点
+邻域递增；连续性使其在内部取得严格低于两端的最小值，故该水平值上方的
+足够小水平线有两个原像。于是这是一个连续 margin 报告的非全局单射折返，
+而不是把 $\det DF=0$ 单独当作非单射证明。
+
+非负整数指数边界只在 $\mathcal U$ 的闭子域中使用；局部逆断言取开域中的点。
+换用其他 chart 必须重新检查其自身导数和同一完整纤维地址。上述折返不结算
+任意全整数 Robin 延拓、RH 或任何物理实现。
+
+## 追加锚（本行以下为增补区）
