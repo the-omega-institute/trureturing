@@ -69,7 +69,10 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
         Formula formula, AssessedProvenance? provenance = null) => Describe.Lean(
         DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromRepo(),
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role,
+        name == "result" ? new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("torii-takakura-imamura-2025-proposition-7-generalization"),
+            ResolutionKind.Proved) : null);
     private static Formula X(string name) => F.Id(name);
     private static Formula Qualified(string owner, string name) =>
         Seq(Operatorname, Grp(X(owner), Dot, X(name)));

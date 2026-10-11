@@ -94,6 +94,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/QubitIncompatibilityRigidity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/torii-takakura-imamura-2025-proposition-7-generalization` (proved) by `D5/S3/Quantum/Measurement/QubitIncompatibilityRigidity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"torii-takakura-imamura-2025-proposition-7-generalization","declaration_gid":"D5/S3/Quantum/Measurement/QubitIncompatibilityRigidity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. Torii; R. Takakura; R. Imamura (2025). *Comparing quantum incompatibility of device sets from an operational perspective*. DOI: [10.1103/s6mc-lnvl](https://doi.org/10.1103/s6mc-lnvl). URL: <https://arxiv.org/abs/2509.08284v2>.
