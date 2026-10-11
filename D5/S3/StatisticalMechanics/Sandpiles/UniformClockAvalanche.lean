@@ -1,7 +1,7 @@
 /- GID: D5/S3/StatisticalMechanics/Sandpiles/UniformClockAvalanche
    generality: G
    mirror-B: D5/B/S3/StatisticalMechanics/Sandpiles/UniformClockAvalanche
-   mirror-E: none
+   mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
    digest: The actual parallel clock avalanche for every natural time. -/
