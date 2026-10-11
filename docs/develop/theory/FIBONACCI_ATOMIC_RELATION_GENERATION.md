@@ -68468,3 +68468,98 @@ $$
 $\omega(R_k)$ 直接推出 $h_k\to\infty$。因此本节排除的是有界复杂度的 FIB 接触模型，
 不是变化秩接触族本身。它也没有提供 Robin 点值的有符号估计、同一 CA/SA 极值源的
 识别、接触族存在性或 RH 证明。
+
+## 445. 严格 Euler 库存与 Fibonacci 索引的条件相容性
+
+上一节的接触链与 Euler 库存是两条不同的来源假设。仓内冻结的
+`EulerLayerPhaseSeparation.strict_inventory_forward_window` 给出一个正整数
+$U$ 的严格库存结论，而 `FibonacciRank.fibonacci_entry_point` 给出
+
+$$
+q\mid F_m\quad\Longleftrightarrow\quad z(q)\mid m,
+$$
+
+其中 $q$ 为素数、$z(q)$ 是它的最小正 Fibonacci 零指标。把两者放在同一个
+$U=F_m$ 假设下，可以得到一个新的接口，但不能把它误读成无条件的 FIB 来源定理。
+
+### 命题 445.1（高阶库存给出 Fibonacci rank 分整除）
+
+令 $t\ge243$，$B=t+t^{4/5}$，并假设 $U=F_m>0$ 满足严格库存律。若 $q$ 为素数、
+$k\ge2$ 且
+
+$$
+t<q^k\le B,
+$$
+
+则
+
+$$
+q^k\mid U,
+\qquad q\mid F_m,
+\qquad z(q)\mid m.
+\tag{445.1}
+$$
+
+若 $q$ 为素数且
+
+$$
+t<q\le B,
+$$
+
+则
+
+$$
+q\nmid F_m,
+\qquad z(q)\nmid m.
+\tag{445.2}
+$$
+
+**证明。** 第一组结论直接取冻结库存定理的高阶分支；由 $q^k\mid U=F_m$
+得到 $q\mid F_m$，再用 Fibonacci 入口等价得到 $z(q)\mid m$。第二组由库存定理的
+首层分支给 $U$ 在 $q$ 处的赋值为零，因此 $q\nmid U=F_m$，再用同一入口等价的逆向得到
+$z(q)\nmid m$。这里的论证只运输同一个 $U$；没有把不同候选整数的局部极值拼在一起。
+\(\square\)
+
+### 命题 445.2（两个窗口严格分离）
+
+在命题 445.1 的范围内，高阶素幂窗口与首层素数窗口不会使用同一个素数。事实上，
+
+$$
+t<q^k\le B, k\ge2
+\quad\Longrightarrow\quad
+q\le\sqrt B\le\sqrt{4t/3}<t,
+\tag{445.3}
+$$
+
+而 $t<q$ 时
+
+$$
+q^k\ge q^2>t^2>B.
+\tag{445.4}
+$$
+
+因此（445.1）与（445.2）并不构成同一个 $q$ 的“既占用又缺失”矛盾；Euler
+分离定理正是把它们安排在两个不同的素数尺度上。
+
+对高阶窗口中的全部素数置
+
+$$
+\mathcal Q_t=\{q:\ q\text{ prime},\ \exists k\ge2,\ t<q^k\le B\},
+$$
+
+则在 $U=F_m$ 的附加假设下还有整除账本
+
+$$
+\operatorname{lcm}_{q\in\mathcal Q_t}z(q)\mid m.
+\tag{445.5}
+$$
+
+这份账本是一个可检验的 FIB—Robin 接口：它把 Euler 的实际库存转成 Fibonacci
+索引的共同约束，同时保留首层窗口的非整除约束。当前没有已支付的统一下界说明
+（445.5）会超过候选索引 $m$，也没有证明严格库存整数 $U$ 必须是 Fibonacci 数。
+所以它不能识别 CA/SA 来源，也不能给出 Robin 点值符号或 RH；真正未解决的是把
+实际候选的来源条件 $U=F_m$（或其仿射替代）与完整约数响应放到同一个可估计的联合
+模型中。
+
+本节是对两个已冻结接口的条件性组合，不重述其 Euler 价格估计、库存证明或
+Fibonacci 强整除证明；若删除任一来源假设，445.1--445.5 不再成立。
