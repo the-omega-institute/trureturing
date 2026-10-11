@@ -279,10 +279,10 @@ private theorem joint_idempotent (P Q : (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2
   simp only [smul_mul_smul, smul_smul, Matrix.add_mul, Matrix.mul_add,
     Matrix.one_mul, Matrix.mul_one, hP,hQ,← hc,hPPP,hPQQ,hQPQ,hPPQ,hPQPQ]
   module
-theorem pauli_square (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := by
+private theorem pauli_square (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := by
   cases p <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two]
-theorem pauli_hermitian (p : Pauli) : (pauliMatrix p)ᴴ=pauliMatrix p := by
+private theorem pauli_hermitian (p : Pauli) : (pauliMatrix p)ᴴ=pauliMatrix p := by
   cases p <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two]
 private theorem hermitianPauli_square {P : (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)} (h : IsHermitianPauli P) : P*P=1 := by
@@ -295,7 +295,7 @@ private theorem hermitianPauli_hermitian {P : (Matrix (Fin 2 × Fin 2) (Fin 2 ×
     simp [Matrix.conjTranspose_kronecker,pauli_hermitian]
 private theorem joint_hermitian (P Q : (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) (hP : Pᴴ=P) (hQ : Qᴴ=Q) (hc : P*Q=Q*P) : (jointProjector P Q)ᴴ=jointProjector P Q := by
   simp [jointProjector,Matrix.conjTranspose_add,Matrix.conjTranspose_mul,hP,hQ,hc]
-theorem pauli_trace_pair (p q : Pauli) : (pauliMatrix p * pauliMatrix q).trace = if p=q then 2 else 0 := by
+private theorem pauli_trace_pair (p q : Pauli) : (pauliMatrix p * pauliMatrix q).trace = if p=q then 2 else 0 := by
   cases p <;> cases q <;>
     simp [pauliMatrix, qubitX, qubitZ, Matrix.trace, Matrix.diag,
       Matrix.mul_apply, Fin.sum_univ_two] <;> norm_num

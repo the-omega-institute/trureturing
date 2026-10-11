@@ -19,17 +19,6 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
                 "A pure vector has squared norm one. star is componentwise complex conjugation and dotProduct sums over the finite index type n. The Fintype argument is an instance, rather than a named mathematical variable.", DescribeRole.Definition),
             Node("IsHermitianPauli", "Signed Hermitian two-qubit Paulis", PauliFormula(),
                 "The Pauli labels and literal matrices are those of StabilizerPairLocalUnitaryInequivalence: I, X, Y = i X Z, and Z. Only the real signs plus and minus are allowed, so these operators are Hermitian. The Kronecker product acts on the same two computational indices.", DescribeRole.Definition),
-            RepoNode("pauli_square", "Pauli matrices square to the identity",
-                Disp(All("p", Pauli, EqTo(Mul(PauliMatrix(F.Id("p")), PauliMatrix(F.Id("p"))), D(1)))),
-                "Each of the four single-qubit Pauli matrices is an involution."),
-            RepoNode("pauli_hermitian", "Pauli matrices are Hermitian",
-                Disp(All("p", Pauli, EqTo(Call("conjTranspose", PauliMatrix(F.Id("p"))), PauliMatrix(F.Id("p"))))),
-                "The adjoint of each single-qubit Pauli matrix is itself."),
-            RepoNode("pauli_trace_pair", "Pauli matrices are trace-orthogonal",
-                Disp(All("p", Pauli, All("q", Pauli,
-                    EqTo(Call("Matrix.trace", Mul(PauliMatrix(F.Id("p")), PauliMatrix(F.Id("q")))),
-                        Call("ite", EqTo(F.Id("p"), F.Id("q")), D(2), D(0)))))),
-                "The trace of the product is two for equal Pauli labels and zero for distinct labels."),
             Node("PureStabilizer", "Two independent commuting generators", PureFormula(),
                 "A two-qubit pure stabilizer vector is normalized and fixed by two commuting signed Hermitian Pauli matrices. Each generator differs from both signs of the identity, and the second differs from both signs of the first. These conditions express two independent nontrivial stabilizer generators.", DescribeRole.Definition),
             Node("STAB", "The full convex stabilizer hull", StabFormula(),
@@ -57,11 +46,6 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
                     ProblemSlugRef.Create("qian-wang-2025-separable-states-stab-local-unitaries"),
                     ResolutionKind.Proved))),
         []));
-
-    private static DocumentBlock RepoNode(string name, string title, Formula formula, string prose) => Describe.Lean(
-        DescribeId.Create("qw-" + name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
-        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool derived = false, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(

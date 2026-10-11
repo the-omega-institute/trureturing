@@ -461,7 +461,7 @@ private def wmat (a b : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
   Matrix.of fun t s =>
     if id (α := ZMod 2) s = id (α := ZMod 2) t + a then complexSign (b * id (α := ZMod 2) s) else 0
 
-lemma tensor_one {N : ℕ} :
+private lemma tensor_one {N : ℕ} :
     tensorOp (fun _ : Fin N => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by
   classical
   ext x y
