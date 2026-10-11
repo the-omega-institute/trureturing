@@ -198,4 +198,43 @@ def joinedDefinition : Application (@joinedTheorem.{0,0}) where
     acquisition := .unavailable "no finite presentation requested" }
 
 theorem absentContract : True := trivial
+
+/-- A bare proposition has a complete source binding without data observations. -/
+def dataFreeSource := Source.unobserved absentContract
+  (owner := `LeanInformationAuditRegTests.AuricFib.UniversalFixture)
+
+def dataFreeClient : Client.{0,0,0,0,0,0,0} absentContract where
+  source := dataFreeSource
+  plan := { task := (), initial := [], additions := [[], [()], []] }
+  acquisition := .unavailable "no finite presentation requested"
+
+/-- A complete terminal table still supplies no original source data domain. -/
+def terminalPresentation : FinitePresentation dataFreeClient.plan
+    (Domain.fiber dataFreeSource ()) where
+  stateFintype := inferInstanceAs (Fintype Unit)
+  stateDecidableEq := inferInstanceAs (DecidableEq Unit)
+  enumeration := {
+    states := [()]
+    nodup := List.nodup_singleton _
+    complete := by
+      change ([()] : List Unit).toFinset = (Finset.univ : Finset Unit)
+      decide }
+  values _ _ := .unit
+  decode _ _ := some ()
+  values_correct _ _ := rfl
+  kernel _ _ _ := true
+  kernel_correct _ _ _ := ⟨fun _ => rfl, fun _ => rfl⟩
+  taskValues _ := .unit
+  task_correct _ := rfl
+  layers _ _ _ := true
+  layers_correct _ _ _ := ⟨fun _ _ _ => rfl, fun _ => rfl⟩
+
+/-- Empty selection cannot smuggle a data-bearing model into source binding. -/
+def unobservedMismatch : Source absentContract where
+  signature := { LeanInformationAudit.Analysis.unobservedSignature with State := fun _ => Bool }
+  actual := { readout := fun _ _ _ => (), anchor := fun e => nomatch e }
+  rebuild _ := True
+  reconstruction := .exact
+  selection := dataFreeSource.selection
+
 end LeanInformationAuditRegTests.AuricFib.UniversalFixture

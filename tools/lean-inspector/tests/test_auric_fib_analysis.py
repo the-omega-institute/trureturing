@@ -110,6 +110,36 @@ class FiniteAnalysisContract(unittest.TestCase):
         self.assertIsNone(report["escape_rate"])
         return report
 
+    def test_raw_generic_evidence_boundary(self):
+        request = {
+            "arena": "typed-source", "binding": {},
+            "plan": {"roles": [{}], "available": True, "initial": [], "additions": [[0]], "task": 0},
+            "acquisition": {"kind": "finite", "reason": ""},
+            "finite": {"cardinality": 2, "states": [{}, {}], "outputs": [[{}, {}]],
+                       "task_outputs": [{}, {}], "kernels": [[[True, False], [False, True]]],
+                       "layers": [[[True, True], [True, True]], [[True, False], [False, True]]]}}
+        for binding in ({}, {"occurrence": {}}, {"source_correspondence": "compiled",
+                                               "accepted_axioms": [], "certificates": {}}):
+            request['binding'] = binding
+            report = self.execute(request, direct=True)
+            self.assertEqual(report['arena']['kind'], 'supplied-finite-table')
+            self.assertEqual(report['escape_rate'], {'numerator': 0, 'denominator': 2})
+            self.assertEqual(report['unique_capture'][0]['count'], 2)
+            self.assertEqual(report['disposition']['readings']['escape_pairs']['kind'], 'available')
+            self.assertIn('supplied table', report['disposition']['readings']['escape_pairs']['reason'])
+            self.assertEqual(report['disposition']['readings']['source_contract']['kind'], 'unavailable')
+            self.assertIsNone(report['source_contract']['binding'])
+            self.assertFalse(report['disposition']['is_lean_proof'])
+            self.assertIn('unverified', report['disposition']['reason'])
+        for kind in ('infinite', 'unavailable'):
+            request['acquisition'] = {'kind': kind, 'reason': 'claimed domain'}
+            request['finite'] = None
+            report = self.execute(request, direct=True)
+            self.assertEqual(report['arena']['kind'], 'unverified-input')
+            self.assertIsNone(report['escape_rate'])
+            for field in ('arena', 'source_contract', 'escape_pairs', 'escape_rate'):
+                self.assertEqual(report['disposition']['readings'][field]['kind'], 'unavailable')
+
     def test_source_validation(self):
         invalid = source_validation_requests()
         for report in self.batch(invalid, 2):

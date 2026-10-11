@@ -10,21 +10,22 @@ attribute [local instance] Arena.stateFintype Arena.stateDecidableEq
 private def explanation (kind reason : String) : Json :=
   Json.mkObj [("kind", toJson kind), ("reason", toJson reason)]
 
-private def dispositions (kind reason : String) (n : Option Nat) : Json :=
+private def dispositions (kind : String) (n : Option Nat) : Json :=
   let finite := kind == "finite"
-  let countKind := if finite then "available" else if kind == "infinite" then "not-applicable" else "unavailable"
-  let countReason := if finite then "complete certified domain and bidirectional table reflection" else reason
-  let rateKind := if n.any (· > 1) then "available" else if kind == "infinite" || n.isSome then "not-applicable" else "unavailable"
+  let countKind := if finite then "available" else "unavailable"
+  let reason := "supplied data only; compiled source correspondence and acquisition unverified"
+  let countReason := if finite then "arithmetic over supplied table rows; actual source domain and reflection unverified" else reason
+  let rateKind := if n.any (· > 1) then "available" else if n.isSome then "not-applicable" else "unavailable"
   Json.mkObj [
     ("status", toJson (if finite then "deferred" else "open")),
     ("reason",
-      toJson "source-bound downstream analysis; ordinary audit obligations remain independent"),
+      toJson "unverified source; supplied table arithmetic only; ordinary audit obligations remain independent"),
     ("is_lean_proof", toJson false), ("proof_escape", toJson "unchanged; downstream analysis only"),
     ("readings", Json.mkObj [
       ("arena",
-        explanation (if finite || kind == "infinite" then "available" else "unavailable") reason),
+        explanation (if finite then "available" else "unavailable") reason),
       ("source_contract",
-        explanation "available" "full compiled source correspondence; probability law unknown"),
+        explanation "unavailable" reason),
       ("source_law", explanation "unknown" "no source probability law supplied or certified"),
       ("atom_readout",
         explanation "not-applicable" "generic contract declares no FIB atom semantics"),
@@ -35,16 +36,16 @@ private def dispositions (kind reason : String) (n : Option Nat) : Json :=
       ("association_coordinate",
         explanation "not-applicable" "generic contract declares no FIB law semantics"),
       ("continuation_target",
-        explanation "available" "same-source total task; numerical outputs require acquired presentation"),
+        explanation (if finite then "available" else "unavailable") "supplied task outputs; source and decoding unverified"),
       ("kernel",
-        explanation "available" "structural equality kernels exist for the full actual family"),
+        explanation (if finite then "available" else "unavailable") "equivalence of supplied table rows; actual readouts unverified"),
       ("escape_pairs", explanation countKind countReason),
       ("escape_rate",
         explanation rateKind (if n.any (· > 1) then "N(N-1) ordered off-diagonal pairs"
-        else if kind == "infinite" || n.isSome then "finite pair rate requires complete finite N>1" else reason)),
+        else if n.isSome then "table pair rate requires N>1" else reason)),
       ("unique_capture", explanation countKind countReason),
       ("layered_spectrum",
-        explanation "available" "source-bound weak refinement; counts require finite acquisition"),
+        explanation (if finite then "available" else "unavailable") "supplied layer intersections; source correspondence unverified"),
       ("residuals", explanation "not-applicable" "no FIB law or response semantics declared")])]
 
 private def natural (object : Json) (field : String) : Except String Nat :=
@@ -89,8 +90,8 @@ private def validateMatrices (n : Nat) (tables : Array (Array (Array Bool))) : E
         unless (table[i]!)[j]! == (table[i]! == table[j]!) do
           throw "fib.table_kernel_reflection"
 
-/-- Canonical generic analysis consumes only compiler-acquired certified data.
-The input is not a new proof or ordinary registration status. -/
+/-- JSON decoding validates table arithmetic only. Compiler/source descriptions
+are attached by the existing compiler artifact producer after acquisition. -/
 def analyze (request : Json) : Except String Json := do
   requireKeys request ["arena", "binding", "plan", "acquisition", "finite"]
   let binding ← request.getObjVal? "binding"
@@ -105,17 +106,17 @@ def analyze (request : Json) : Except String Json := do
     throw "fib.plan_role_scope"
   let acquisition ← request.getObjVal? "acquisition"
   let kind ← acquisition.getObjValAs? String "kind"
-  let reason ← acquisition.getObjValAs? String "reason"
+  discard <| acquisition.getObjValAs? String "reason"
   unless #["finite", "infinite", "unavailable"].contains kind do throw "fib.acquisition_kind"
-  let source := Json.mkObj [("kind", toJson "typed-source"), ("binding", binding),
-    ("acquisition", acquisition), ("law", Json.null),
+  let source := Json.mkObj [("kind", toJson "unverified-input"), ("binding", Json.null),
+    ("supplied_binding", binding), ("supplied_acquisition", acquisition), ("law", Json.null),
     ("physical_law_certified",
       toJson false), ("source_law", explanation "unknown" "no probability law acquired")]
-  let emptyArena := Json.mkObj [("kind", toJson kind), ("cardinality", Json.null),
-    ("ordered_pair_denominator", Json.null), ("reason", toJson reason)]
+  let emptyArena := Json.mkObj [("kind", toJson "unverified-input"), ("cardinality", Json.null),
+    ("ordered_pair_denominator", Json.null), ("reason", toJson "no compiled domain evidence supplied")]
   let mut arena := emptyArena
   let mut continuation := Json.mkObj [("task", if available then toJson task else Json.null), ("outputs", Json.null),
-    ("scope", toJson "same actual source realization; total task"), ("plan", plan)]
+    ("scope", toJson "supplied task selection; actual source unverified"), ("plan", plan)]
   let mut kernel := Json.mkObj [("structural", plan), ("finite_tables", Json.null)]
   let mut spectrum := Json.mkObj [("structural", plan), ("layers", Json.null),
     ("unresolved", Json.null)]
@@ -180,21 +181,21 @@ def analyze (request : Json) : Except String Json := do
         (catalog.generatedKernel catalog.fullIndexSet).relationB a b)),
       ("complete_lattice_materialized", toJson false),
       ("scope",
-        toJson "certified readout kernels and supplied layers; no exponential lattice claimed")]
+        toJson "supplied table kernels and layers; actual readouts unverified")]
     continuation := Json.mkObj [("task", toJson task), ("outputs", toJson taskOutputs),
       ("scope",
-        toJson "same actual source realization; complete finite total task"), ("plan", plan)]
-    arena := Json.mkObj [("kind", toJson "certified-finite-presentation"),
+        toJson "supplied finite task outputs; decoding and source unverified"), ("plan", plan)]
+    arena := Json.mkObj [("kind", toJson "supplied-finite-table"),
       ("cardinality", toJson n), ("ordered_pair_denominator", toJson (n * (n - 1))),
       ("presentation", finite),
       ("scope_boundary",
-        toJson "counts refer only to the certified whole fiber, restriction or quotient; original theorem remains universal")]
+        toJson "counts refer only to supplied row indices; actual source domain and correspondence unverified")]
   return Json.mkObj [
     ("arena", arena), ("source_contract", source), ("atom_readout", Json.null),
     ("seam_readout", Json.null), ("pyramid_coordinates", Json.null),
     ("association_coordinate", Json.null), ("continuation_target", continuation),
     ("kernel", kernel), ("escape_pairs", pairs), ("escape_rate", rate),
     ("unique_capture", unique), ("layered_spectrum", spectrum), ("residuals", Json.null),
-    ("disposition", dispositions kind reason cardinality)]
+    ("disposition", dispositions kind cardinality)]
 
 end LeanInformationAudit.AuricFib.Generic

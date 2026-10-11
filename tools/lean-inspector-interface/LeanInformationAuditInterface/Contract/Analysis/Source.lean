@@ -23,6 +23,33 @@ structure Source {Statement : Sort u} (occurrence : Statement) where
   reconstruction : Reconstruction Statement (rebuild actual)
   selection : Contract.SourceSelection
 
+/-- The terminal observation model carries no source data. Its sole state,
+parameter and readout are unit values, so it asserts no domain measurement. -/
+def unobservedSignature : Signature where
+  Params := Unit
+  State _ := Unit
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Unit
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def unobservedActual : Realization unobservedSignature where
+  readout _ _ _ := ()
+  anchor e := nomatch e
+
+/-- Bind any complete original statement without selecting a data observation.
+The compiler still checks the owner, occurrence and complete reconstruction.
+The terminal model supplies no source data domain for numerical acquisition. -/
+def Source.unobserved {Statement : Sort u} (occurrence : Statement)
+    (owner : Lean.Name) : Source occurrence where
+  signature := unobservedSignature
+  actual := unobservedActual
+  rebuild _ := Statement
+  reconstruction := .exact
+  selection := { owner, definition := none, coordinates := #[], readouts := #[] }
+
 /-- Reuse ordinary registration operands and their full law, without changing
 any ordinary registration obligation or assigning an audit status. -/
 def Source.ofRegistration {P : Prop} (occurrence : P)

@@ -102,6 +102,7 @@ structure Bound where
   plan : Expr
   acquisition : Expr
   signature : Expr
+  unobserved : Bool
   roles : Array Expr
   task : Nat
   initial : Array Nat
@@ -155,12 +156,19 @@ def bind (original info : ConstantInfo) (occurrence client : Expr) : M Bound := 
       let .const _ levels := definitionOccurrence
         | fail "unclassified_form:source.definition_reference"
       pure levels
-  let scope ← resolve info selected definitionLevels
+  let unobserved := selected.readouts.isEmpty
+  let scope ← if unobserved then resolveOriginal info selected definitionLevels
+    else resolve info selected definitionLevels
   let actual ← projectField `LeanInformationAudit.Analysis.Source.actual source
   let signature ← projectField `LeanInformationAudit.Analysis.Source.signature source
   let law ← projectField `LeanInformationAudit.Analysis.Source.rebuild source #[actual]
   reconstruct scope.expanded law
-  validateFields scope signature actual
+  if unobserved then
+    unless selected.coordinates.isEmpty &&
+        (← sameShape signature (mkConst `LeanInformationAudit.Analysis.unobservedSignature)) &&
+        (← sameShape actual (mkConst `LeanInformationAudit.Analysis.unobservedActual)) do
+      fail "fib.unobserved_model_mismatch"
+  else validateFields scope signature actual
   let roles ← query <| Contract.CompiledExpressions.finiteIndices
     (← projectField `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.finiteRole signature)
   let plan ← projectField `LeanInformationAudit.Analysis.Client.plan client
@@ -198,10 +206,12 @@ def bind (original info : ConstantInfo) (occurrence client : Expr) : M Bound := 
       ("observation", describe (r.rawContext.foldr (fun b e =>
         if let some v := b.value then Expr.letE b.name b.domain v e b.nondep
         else Expr.lam b.name b.domain e b.info) r.rawObservation))])),
-    ("source_correspondence", toJson "compiled full reconstruction and actual readout correspondence"),
+    ("source_correspondence", toJson (if unobserved then
+      "compiled full reconstruction; terminal model with no source data observations"
+      else "compiled full reconstruction and actual readout correspondence")),
     ("ordinary_registration", toJson "independent; no audit status assigned")]
   return {
-    source := source, plan := plan, signature := signature, roles := roles,
+    source := source, plan := plan, signature := signature, unobserved := unobserved, roles := roles,
     task := task, initial := initial, additions := additions, planReason := planReason, binding := binding,
     acquisition := ← projectField `LeanInformationAudit.Analysis.Client.acquisition client }
 

@@ -199,11 +199,13 @@ def request (bound : Bound) : FibSource.M Json := do
       let fs ← fields (base ++ `unavailable) acquisition
       reason ← IO.ofExcept (Contract.Literal.string "fib.acquisition_reason" (← dataHead fs[0]!))
     else if head == base ++ `infinite then
+      if bound.unobserved then fail "fib.unobserved_source_domain_unacquired"
       let fs ← fields (base ++ `infinite) acquisition
       kind := "infinite"
       parameter := describe fs[0]!
       reason := "certified infinite selected parameter fiber; no finite pair denominator"
     else if head == base ++ `finite then
+      if bound.unobserved then fail "fib.unobserved_source_domain_unacquired"
       let fs ← fields (base ++ `finite) acquisition
       unless bound.planReason.isEmpty do fail bound.planReason
       finite ← acquire bound fs[0]! fs[1]!

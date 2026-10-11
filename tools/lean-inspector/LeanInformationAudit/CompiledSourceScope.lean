@@ -276,7 +276,8 @@ private partial def dictionary (type : Expr) : M Bool := do
     withLocalDecl n bi d fun x => dictionary (b.instantiate1 x)
   | _ => return (← read).provenance.view.isClass (type.getAppFn.constName?.getD .anonymous)
 
-def resolve (info : ConstantInfo) (selection : SourceSelection)
+/-- Resolve the original binding before optional observation selection. -/
+def resolveOriginal (info : ConstantInfo) (selection : SourceSelection)
     (universeArguments : List Level := info.levelParams.map Level.param) : M Scope := do
   unless info.isTheorem do fail "unclassified_form:source.theorem"
   let owner ← ownerOf info.name
@@ -332,6 +333,16 @@ def resolve (info : ConstantInfo) (selection : SourceSelection)
     if telescope.size ≥ 64 then fail "incomplete_closure:E8.source_binders"
     telescope := telescope.push { name := n, info := bi, domain := d : SourceBinder }
     e := b
+  return {
+    source := info.type, expanded := source, definition := definition,
+    levels := info.levelParams, selection := selection, telescope := telescope,
+    coordinates := #[], readouts := #[] }
+
+/-- Ordinary source audits require actual selected observations. -/
+def resolve (info : ConstantInfo) (selection : SourceSelection)
+    (universeArguments : List Level := info.levelParams.map Level.param) : M Scope := do
+  let scope ← resolveOriginal info selection universeArguments
+  let source := scope.expanded
   let slots := selection.coordinates
   if slots.size > 64 || selection.readouts.isEmpty || selection.readouts.size > 64 then
     fail "unclassified_form:source.selection_size"
@@ -433,10 +444,10 @@ def resolve (info : ConstantInfo) (selection : SourceSelection)
   return {
     source := info.type
     expanded := reconstructedSource
-    definition := definition
+    definition := scope.definition
     levels := info.levelParams
     selection := selection
-    telescope := telescope
+    telescope := scope.telescope
     coordinates := coordinates
     readouts := readouts }
 

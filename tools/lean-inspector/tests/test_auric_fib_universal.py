@@ -213,6 +213,80 @@ end AuricFibUniversalProduction
         return {row['application'].removeprefix(PREFIX): row for row in consumed['applications']
                 if row['application'].startswith(PREFIX)}
 
+    def test_data_free_ingress(self):
+        # Add a real author client for the existing bare proposition after the
+        # original missing-contract check. No replacement theorem is introduced.
+        before = self.build()
+        type(self).application += """
+namespace AuricFibUniversalProduction
+open LeanInformationAudit.Analysis LeanInformationAudit.AuricFib.Contract
+universe u
+def dataFree : Application absentContract where
+  evidence := .typed dataFreeClient
+def terminalCounts : Application absentContract where
+  evidence := .typed {
+    source := dataFreeSource, plan := dataFreeClient.plan,
+    acquisition := .finite (Domain.fiber dataFreeSource ()) terminalPresentation }
+def dataFreeBad : Application absentContract where
+  evidence := .typed {
+    source := unobservedMismatch
+    plan := { task := (), initial := [], additions := [] }
+    acquisition := .unavailable "no finite presentation requested" }
+def unobservedFamily : Application (@D5.S0.Diagonal.PigeonholeFiber.finite_reading_has_fiber.{u}) where
+  evidence := .typed {
+    source := Source.unobserved _ `D5.S0.Diagonal.PigeonholeFiber
+    plan := { task := (), initial := [], additions := [[], [()]] }
+    acquisition := .unavailable "no finite presentation requested" }
+end AuricFibUniversalProduction
+"""
+        self.sources[0].write_text(self.application)
+        current = self.build()
+        for name, target, telescope, levels in (
+                ('dataFree', PREFIX + 'absentContract', 0, 0),
+                ('unobservedFamily', 'D5.S0.Diagonal.PigeonholeFiber.finite_reading_has_fiber', 4, 1)):
+            row = current[name]
+            self.assertIsNotNone(row['request'], row)
+            reading = row['reading']
+            binding = reading['source_contract']['binding']
+            self.assertEqual(binding['occurrence']['source_name'], target)
+            self.assertEqual(binding['occurrence']['original_type']['identity'], row['target_type_identity'])
+            self.assertEqual(binding['telescope_size'], telescope)
+            self.assertEqual(binding['level_count'], levels)
+            self.assertEqual(binding['coordinates'], [])
+            self.assertEqual(binding['readouts'], [])
+            self.assertIn('terminal model', binding['source_correspondence'])
+            self.assertEqual(reading['disposition']['readings']['source_contract']['kind'], 'available')
+            self.assertEqual(reading['disposition']['readings']['escape_rate']['kind'], 'unavailable')
+            self.assertIsNone(reading['escape_rate'])
+            self.assertIsNone(reading['pyramid_coordinates'])
+            self.assertLessEqual(set(binding['accepted_axioms']), {'propext', 'Classical.choice', 'Quot.sound'})
+            selected = fib_analysis.consume(self.report, [target])
+            self.assertIn(row, selected['applications'])
+        terminal = current['terminalCounts']
+        self.assertIsNotNone(terminal['request'])
+        self.assertEqual(terminal['request']['acquisition']['kind'], 'unavailable')
+        self.assertIn('fib.unobserved_source_domain_unacquired', terminal['request']['acquisition']['reason'])
+        self.assertIsNone(terminal['reading']['escape_rate'])
+        self.assertIsNone(terminal['reading']['arena']['cardinality'])
+        self.assertEqual(terminal['reading']['disposition']['readings']['source_contract']['kind'], 'available')
+        self.assertEqual(current['dataFree']['request']['plan']['additions'], [[], [0], []])
+        self.assertEqual(current['dataFree']['request']['binding']['occurrence']['original_type']['head'], 'True')
+        self.assertIsNone(current['dataFreeBad']['request'])
+        self.assertEqual(current['dataFreeBad']['unavailable_reason'], 'fib.unobserved_model_mismatch')
+        self.assertEqual(before, {k: v for k, v in current.items()
+                                if k not in {'dataFree', 'dataFreeBad', 'terminalCounts', 'unobservedFamily'}})
+        self.assertEqual(current, self.build(full=True))
+        # Replaying genuine compiler JSON through the public entry retains
+        # arithmetic but cannot retain the producer's source evidence claim.
+        replay = subprocess.run(['bash', 'tools/scripts/auric-fib-analysis.sh', '--batch'],
+            cwd=ROOT, input=json.dumps([current[k]['request'] for k in ('dataFree', 'quotient')]),
+            text=True, capture_output=True, check=False)
+        self.assertEqual(replay.returncode, 0, replay.stderr + replay.stdout)
+        for raw, key in zip(json.loads(replay.stdout), ('dataFree', 'quotient')):
+            self.assertEqual(raw['disposition']['readings']['source_contract']['kind'], 'unavailable')
+            self.assertIsNone(raw['source_contract']['binding'])
+            self.assertEqual(raw['escape_rate'], current[key]['reading']['escape_rate'])
+
     def check_program_rebuilding(self, expected):
         # This test owns its temporary edit to the production compiler it tests.
         # Report artifacts and mathematical source are not replaced or patched.
