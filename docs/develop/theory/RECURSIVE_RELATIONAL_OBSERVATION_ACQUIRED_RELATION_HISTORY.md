@@ -4549,16 +4549,16 @@ arithmetic hypotheses stated in Theorem 29.3. The additional native
 source and service correspondences are repository-derived ordinary
 mathematics; no global originality or complexity claim is part of them.
 
-The finite guarded case families in Theorem 28.1 are generated from an
-actually retained finite context and finitely many fixed words. They
-provide no arbitrary-shape normal-domain definition of the kind left
-open in ABC Assumption 7.3. This is a scope boundary, not a native
-recovery undecidability or impossibility claim. The separate atomic
-term-power obstruction in [TPO][TPO] is stated in exactly the four-sort
-covariant $\{F\}$-term-power language; it concerns definability in that
-language and does not negate a fixed acquired finite-context compiler on
-a certified local domain. The compiler proof above remains ordinary theory
-subject to independent review. Missing local certificates give no decision
+The finite guarded case families in Theorem 28.1 are generated from the
+retained finite context and finitely many fixed words and epochs. Their
+construction requires no arbitrary-shape normal-domain formula. ABC
+Assumption 7.3 postulates such a formula; [TPO, Corollary 4.2][TPO] excludes
+it in exactly the four-sort covariant $\{F\}$-term-power language, even with
+fixed finite parameters. This language-specific exclusion leaves the
+finite-context arithmetic construction above intact and implies neither
+undecidability nor impossibility of unrestricted native recovery.
+
+Missing local certificates give no decision
 on arbitrary unknown subtrees or unrestricted coupled interpreted
 histories. The theorem decides the existence of a finite completion
 budget under Assumption 1.3; it does not decide all specified raw or
