@@ -94,10 +94,10 @@ internal sealed class BinaryBinBaseChangeDocument : IScribeDocumentDefinition
     private static Formula BinDefinition(string name, string source)
     {
         var m = F.Id("m"); var w = F.Id("w");
-        var rational = source == "weight"
-            ? Call("mulLeft", Rats, Lambda("w", Words(m), Weight(w)))
-            : Call(source, m);
-        return Bins(Eq(Op(name, m), Call("extend", Scalar, rational)), false);
+        var expression = source == "weight"
+            ? Call("mulLeft", Scalar, Lambda("w", Words(m), Cast(Weight(w))))
+            : Call("extend", Scalar, Call(source, m));
+        return Bins(Eq(Op(name, m), expression), false);
     }
 
     private static Formula TwoDefinition(string name, string source)

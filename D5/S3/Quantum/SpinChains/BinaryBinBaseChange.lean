@@ -37,7 +37,17 @@ private theorem extend_basis {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 /-- The weight multiplication after scalar extension. -/
 noncomputable def binWeight (m : ℕ) : Module.End K ((Fin m → Bool) → K) :=
-  extend K (LinearMap.mulLeft ℚ (fun w : Fin m → Bool => weight w))
+  LinearMap.mulLeft K (fun w : Fin m → Bool => (weight w : K))
+
+private theorem weight_extension (m : ℕ) :
+    extend K (LinearMap.mulLeft ℚ (fun w : Fin m → Bool => weight w)) =
+      binWeight K m := by
+  apply (Pi.basisFun K (Fin m → Bool)).ext
+  intro w
+  ext u
+  rw [Pi.basisFun_apply, extend_basis]
+  simp only [binWeight, LinearMap.mulLeft_apply, Pi.mul_apply, Rat.cast_mul]
+  by_cases hu : u = w <;> simp_all
 
 /-- The raising operator after scalar extension. -/
 noncomputable def binRaising (m : ℕ) : Module.End K ((Fin m → Bool) → K) :=
@@ -69,17 +79,15 @@ theorem bin_action (m : ℕ) :
   constructor
   · have a := rational_relations m
     constructor
-    · simpa [binWeight, binRaising, binLowering, map_sub, map_mul] using
+    · simpa [binRaising, binLowering, map_sub, map_mul, weight_extension] using
         congrArg (extend K) a.ef
     · have eq := congrArg (extend K) a.he
-      simpa [binWeight, binRaising, map_sub, map_mul, two_smul] using eq
+      simpa [binRaising, map_sub, map_mul, two_smul, weight_extension] using eq
     · have eq := congrArg (extend K) a.hf
-      simpa [binWeight, binLowering, map_sub, map_mul, two_smul, neg_smul] using eq
+      simpa [binLowering, map_sub, map_mul, two_smul, neg_smul, weight_extension] using eq
   · intro w u
     refine ⟨?_, extend_basis K (Rbin m) w u, extend_basis K (Hbin m) w u⟩
-    rw [binWeight, extend_basis]
-    simp only [LinearMap.mulLeft_apply, Pi.mul_apply, Rat.cast_mul]
-    by_cases hu : u = w <;> simp_all
+    rfl
 
 /-- The sum of the two weight actions on a tensor product. -/
 noncomputable def twoWeight (m n : ℕ) :
