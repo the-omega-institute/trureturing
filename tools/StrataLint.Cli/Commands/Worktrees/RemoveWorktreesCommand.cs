@@ -17,7 +17,7 @@ internal static class RemoveWorktreesCommand
         + "Removal checks target identity and lock age. Eligible trees commit ordinary outstanding changes before removal; checkpoint failure retains the tree. "
         + "The optional CLI --force disables the default 300-second removal timeout; inventory remains bounded. "
         + "It may appear before or after --names and does not override main checkout or lock protection. "
-        + "Branch refs are retained. Execution failures are reported and remaining resolved trees are attempted; no rollback.\n"
+        + "Branch refs are retained; detached trees create a recovery branch. Execution failures are reported and remaining resolved trees are attempted; no rollback.\n"
         + "CLI exits: 0 success; 64 usage; 65 not_found; 66 ambiguous; 67 main_worktree; 68 locked; "
         + "69 inventory unavailable or empty; 73 identity refusal; 74 execution failure. "
         + "GNU make returns its own 0/2; read the final WORKTREE_REMOVE_RESULT line for the classified exit.\n";
@@ -107,6 +107,11 @@ internal static class RemoveWorktreesCommand
             var resolved = items.Select(item =>
             {
                 var outcome = outcomes.Single(entry => entry.GetProperty("path").GetString() == item.Path);
+                item = item with
+                {
+                    RecoveryBranch = outcome.TryGetProperty("recovery_branch", out var recovery) ? recovery.GetString() : null,
+                    RecoveryBranchCandidate = outcome.TryGetProperty("recovery_branch_candidate", out var candidate) ? candidate.GetString() : null,
+                };
                 return outcome.GetProperty("outcome").GetString() == "removed"
                     ? item with { Outcome = "removed" }
                     : item with { Outcome = "failed", ExitCode = 74,
@@ -154,6 +159,8 @@ internal static class RemoveWorktreesCommand
                 path = item.Path,
                 outcome = item.Outcome,
                 error = item.Error,
+                recovery_branch = item.RecoveryBranch,
+                recovery_branch_candidate = item.RecoveryBranchCandidate,
             }));
         }
         var removed = items.Count(static item => item.Outcome == "removed");
@@ -162,5 +169,6 @@ internal static class RemoveWorktreesCommand
         return new CommandResult(exit == 0, output.ToString(), string.Empty, exit);
     }
 
-    private sealed record RemovalItem(string Name, string? Path, string Outcome, string? Error, int ExitCode);
+    private sealed record RemovalItem(string Name, string? Path, string Outcome, string? Error, int ExitCode,
+        string? RecoveryBranch = null, string? RecoveryBranchCandidate = null);
 }
