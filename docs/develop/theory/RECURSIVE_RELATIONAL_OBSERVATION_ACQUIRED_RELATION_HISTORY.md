@@ -1163,3 +1163,2087 @@ programme.
 [NULL]: RECURSIVE_RELATIONAL_OBSERVATION_FIXED_FULL_RESIDUAL_NULL.md
 
 ## 追加锚（本行以下为增补区）
+
+## 10. A decidable synchronous family of complete acquired inputs
+
+This extension decides the entire-row question of Definition 9.1 on a
+recognizable family of coupled histories. It keeps the original source,
+original cuts, full old row, endpoint guards and paid contract of §1.
+Sections 2–3 supply the original-prefix/service bridge and the guarded
+source representation. Sections 4–8 keep their own orbit and representation
+results; none is a new conclusion of this extension. The new decision
+uses a relation of **complete-row disagreement** on exact feasible tuples.
+It does not use finite source samples or assume independent coordinates.
+
+**Definition 10.1 (fixed normalization and comparison test).** Use exactly
+$d$, the depth-$d$ patterns, variables $X_\eta$, source terms $W_\eta$,
+old inequalities $\Delta_\eta$, and guarded endpoints of Definition 3.1
+and Proposition 3.2. In particular, patterns record replies at depths
+strictly less than $d$, and a reached depth-$d$ frontier is an arbitrary
+nonempty finite subtree. Different old classes have different variable
+names; every occurrence of one class uses the same names.
+
+For each guarded endpoint, distribute its interpreted iterate through
+all explicit pairing nodes and expand its concrete leaves. The result
+has syntax
+
+$$
+S::=\alpha\mid\beta\mid\langle S,S\rangle\mid[a,x],
+\qquad [a,x][v]:=\rho^a(v(x)),\quad a\in\mathbb N.
+\tag{ARH.10.1}
+$$
+
+The decoration is an interpreted function, not a free constructor.
+Ordinary variables are $[0,x]$. Expanding any ground part is effective
+and finite; no bound on the size of that expansion is asserted.
+
+Define a deterministic partial comparison compiler $\mathsf{Eq}(S,T)$.
+It returns a finite Boolean formula, or the token $\mathsf{unsupported}$.
+Use the following priority order, with the symmetric cases included.
+
+1. Syntactically identical expressions give true. If both expressions
+   are ground, evaluate them as finite trees and return their equality.
+2. Two decorated variables give the atom
+   $\rho^a(x)=\rho^b(y)$. A decorated variable and a ground expression
+   $g$ give the atom $\rho^a(x)=g$.
+3. Two explicit pairs give the conjunction of their child comparisons,
+   provided **both** child comparisons compile. Different explicit root
+   constructors give false. This includes a leaf against an explicit pair.
+4. A decorated variable against a nonground explicit pair is unsupported.
+
+These cases are exhaustive after symmetry. Ground against a nonground
+pair is handled by constructor comparison, not rejected. The recursion
+terminates by syntax size. A failed child is not suppressed because the
+other child returned false. A signed disequality is the negation of the
+**whole** compiled equality; it is not the conjunction of child
+disequalities. In particular, the test performs no ordinary unification
+and makes no assumption that an unsupported equality is false.
+
+**Definition 10.2 (eligibility order).** The family $\mathfrak S$ consists
+of the complete input presentations $(P,Q,R,H_0,H_{\rm rel})$ passing the
+following finite procedure. Its service theorem additionally requires
+the actual acquisition and nonempty-fiber hypotheses of Assumption 1.3.
+
+First enumerate the prefix cells of Proposition 3.2 and reject those
+violating any literal or either endpoint-existence guard. On **every**
+remaining cell require compilation of every old class inequality and
+every signed retained relation. If any compilation is unsupported, the
+input is outside $\mathfrak S$. Write $D_\eta$ for the conjunction of the
+compiled conditions, retaining all off-task old inequalities. Lemma 11.2
+below constructs its exact finite-tree automaton and decides emptiness.
+Discard exactly the cells with no satisfying assignment.
+
+Only then compute $J_\eta,E_\eta,A_{\eta,q}$ from (ARH.3.4) on each
+nonempty cell, and require compilation of every equality
+$A_{\eta,q}=A_{\eta,r}$ for distinct $q,r\in J_\eta$ at epoch zero.
+Denote the resulting formula by $e_{\eta,qr}$. A failure here also means
+outside $\mathfrak S$. No test is needed for the outside term itself:
+its complete variable values will be included in the disagreement relation.
+
+For $X_\eta=\varnothing$, evaluate all constraints directly on the single
+empty assignment. A surviving such cell is one ground source and needs
+no tuple automaton. Its target comparisons are ground and compile.
+Thus zero old holes, ground cells, empty cuts and root cuts are included.
+
+This definition chooses constraint eligibility **before** emptiness, and
+target eligibility **after** exact emptiness. Requiring target eligibility
+also on empty cells, or first solving contextual equations by substitution,
+would define different procedures. No equivalence of those families is
+claimed. The two algorithms in §11 have no dependence on this definition,
+so the eligibility procedure is terminating rather than circular.
+
+**Proposition 10.3 (the whole-source correspondence used by the compiler).**
+For an input passing the constraint stage, including all its empty cells,
+
+$$
+\coprod_\eta\{v:X_\eta\to\mathcal T:D_\eta(v)\}
+ \ \longrightarrow\ U,\qquad (\eta,v)\longmapsto W_\eta[v]
+\tag{ARH.10.2}
+$$
+
+is a bijection. Here $U$ is the entire fiber (ARH.1.4). The syntactic
+comparison test gives equivalent predicates and does not change that
+fiber. The feasible tuple set may be arbitrarily coupled.
+
+Proof. Proposition 3.2 already gives the guarded correspondence. To check
+its interface, take a source with old row $R$. Its old class values are
+unique, satisfy every distinct-class inequality, and have unique original
+prefix patterns and frontier subtrees. These recover $\eta,v$; repeated
+old occurrences recover the same subtrees. Conversely filling those
+patterns subject to all old inequalities gives exactly the old outside,
+reached holes and complete partition. Each variable has an occurrence
+at $a_bs$, where $a_b$ is a chosen reached old representative and $|s|=d$.
+Reading that mathematical subtree recovers its valuation, proving
+injectivity as well as surjectivity.
+
+Every variable occurrence is deeper than every literal, relation endpoint
+and new cut address. Navigation to a recorded endpoint either reaches an
+original symbolic subtree, or first encounters a known original leaf.
+In the latter case the remaining navigation takes place in the known
+finite image of that leaf. It decides existence at the recorded epoch;
+absence falsifies either signed record. In the former case the endpoint
+is the iterate of the whole original subtree. Thus normalization (ARH.10.1)
+evaluates to the actual entire endpoint, including born endpoints. Literal
+repetitions and absent replies remain their exact constant cell conditions.
+
+Each successful comparison step is an equivalence: identity, ground
+computation, an unchanged interpreted atom, free-pair cancellation, or
+a clash of explicit constructors. Boolean negation preserves that
+equivalence. Induction through the comparisons therefore replaces every
+predicate by an equivalent one on the same valuations. The conjunction
+includes every old inequality and every acquired record. This proves
+(ARH.10.2) in both directions. Empty-cell removal deletes no source.
+
+The representation consumes the producer/access-cut correspondence of
+Proposition 2.1. For a fixed record schedule, that producer actually pays
+for the old row and endpoint traversals at their epochs, keeps the acquired
+descriptions until comparison is possible, and then cuts access to all
+unstated source-bearing state. Every satisfying source produces the same
+retained input, and every source producing it satisfies these predicates.
+This supplies admissibility of the examples below, not a free endpoint
+comparison port. Acquisition costs can vary without bound across finite
+sources. An adaptive producer still owes the full-state correspondence
+of Assumption 1.3. $\square$
+
+## 11. Exact finite-tree automata for aligned morphic relations
+
+**Definition 11.1 (padded tuple representation).** For $k\ge1$, let the
+finite ranked alphabet $\Sigma_k$ consist of vectors in
+$\{\alpha,\beta,\mathsf{branch},\bot\}^k$ other than the all-$\bot$
+vector. A vector has rank two if some coordinate is branch, and rank
+zero otherwise. The symbol $\bot$ represents an absent coordinate.
+The convolution $\operatorname{conv}(t_1,\ldots,t_k)$ has domain the union
+of the finite coordinate domains and carries their reply vector at each
+node. This union is a finite full binary domain, so it is a
+$\Sigma_k$-term.
+
+A valid whole-tuple term has no $\bot$ at its root. At any binary node,
+a branch coordinate has nonabsent labels at both children; a leaf or
+absent coordinate has $\bot$ at both children. At a nullary node no
+coordinate is branch. These local rules imply that a coordinate never
+reappears below its leaf or absence. Denote the resulting language by
+$V_k$. Internal subterms may have absent root coordinates, even though
+roots of $V_k$ do not. No node with all coordinates absent is inserted.
+
+These rules are an effective finite-state check: a bottom-up state can
+store the root vector and a validity flag, check the two child vectors,
+and impose the nonabsent-root condition only at acceptance. Restricting
+a valid term to each coordinate recovers a nonempty finite tree. The
+rules and the exclusion of all-absent nodes show that its domain is
+exactly the union of those recovered domains. Consequently convolution
+and coordinate recovery are inverse bijections between $\mathcal T^k$
+and $V_k$. Padding is determined by the coordinate trees, not chosen
+auxiliary information. Zero-coordinate cells use the convention of
+Definition 10.2 instead of an empty convolution tree.
+
+**Lemma 11.2 (exact primitive relations, Boolean closure and witnesses).**
+On any fixed finite list of nonempty finite-tree coordinates, the
+relations
+
+$$
+\rho^a(x)=\rho^b(y),\qquad \rho^a(x)=g
+\tag{ARH.11.1}
+$$
+
+have effectively constructible finite bottom-up tree automata on valid
+convolutions, for fixed $a,b\ge0$ and ground $g$. Coordinates $x,y$ may
+be the same coordinate. Any finite Boolean combination of these atoms
+has an exact such automaton. Its emptiness is decidable, and a nonempty
+language has an effectively extractable finite tuple witness.
+
+Proof. Use the image parser and injectivity already used in (ARH.3.5).
+Their relevant algebra is short: no $\rho$-image has root $\alpha$;
+the images of $\alpha$, $\beta$ and a pair are respectively $\beta$,
+$\langle\beta,\alpha\rangle$ and a pair whose right child is itself an
+image, hence not $\alpha$. These cases are disjoint, and the last case
+recursively parses its children. This gives a unique partial inverse
+on each finite ground tree and injectivity of every iterate. Cancel
+$\min(a,b)$ in the first atom. It suffices to recognize
+$y=\rho^e(x)$ for fixed $e\ge0$.
+
+Here is a finite checking construction, including padding. Its main state
+checks two selected coordinates at the current common suffix. If the
+$x$ coordinate is branch, require branch in $y$ and the main state at
+both children. If $x$ is the leaf $\lambda$, check the selected pair of
+whole subtrees against the two fixed templates
+$(\lambda,\rho^e\lambda)$. Template states are pairs of subtrees of these
+fixed templates, also allowing an empty component. They check the current
+selected labels and pass their child templates to the children. Once
+both selected components are empty, a blank state requires both labels
+to be $\bot$ and propagates itself wherever other coordinates continue.
+If the selected components have ended but other coordinates give the
+current convolution node rank two, the child states are also blank.
+Thus all ranks and all deeper padding forced by other tracks are handled.
+
+There are finitely many main, template and blank states. These top-down
+rules can be read as a finite nondeterministic bottom-up transition
+relation, with the main state required at the root. Intersect with $V_k$.
+Induction on the finite $x$ tree proves that its successful run exists
+exactly when the selected $y$ tree is $\rho^e(x)$: pairs use the two
+induction hypotheses, and leaves use the complete fixed images. Blank
+states add no selected-coordinate nodes. Reading one physical coordinate
+for both selected tracks gives the same proof when $x=y$; it does not
+make two independent copies of that coordinate's value.
+
+For $\rho^a(x)=g$, apply the partial inverse $a$ times to $g$. If it
+fails, the atom is false; otherwise it is exactly equality of $x$ to
+one computed finite template. A template recognizer, with the same blank
+handling for other coordinates, recognizes that condition.
+
+For completeness, the finite automata operations used here are the
+standard finite ranked-tree ones. Intersection takes products of states;
+union takes disjoint runs; subset determinization assigns each subtree
+the set of its possible old states. Include the empty subset to make the
+transition function total. Complement swaps acceptance in that complete
+deterministic automaton and is then intersected with $V_k$. This is
+complement relative to valid **finite** tuples. Induction on a Boolean
+formula gives its exact language, including negated conjunctions and
+repeated coordinates.
+
+For emptiness, start with states reached by nullary transitions and
+repeatedly add targets of binary transitions whose children were already
+added. The finite state set makes this terminate. Structural induction
+shows that the final set consists exactly of states reached by finite
+terms. Store the first producing transition for each new state; its
+children were produced earlier, so this record unfolds into a finite
+witness. An accepting productive state is therefore equivalent to a
+nonempty language and supplies a genuine finite tuple by Definition 11.1.
+These are mature automata constructions [TATA, Theorems 1.1.9, 1.3.1
+and 1.7.4][TATA]; the argument specifies their exact hypotheses and
+padding interface here. $\square$
+
+Every compiled $D_\eta$ is consequently represented on the **joint**
+coordinate tuple. Arbitrary finite networks of these compiled atoms,
+including cycles, different epoch offsets and disequalities, require no
+factorization of that tuple language. This is why recognizing the graph
+of a fixed iterate is useful despite the ordinary-cell obstruction in §8.
+It does not imply that all contextual comparisons are recognizable; §17
+exhibits the precise missing closure.
+
+## 12. The exact kernel of the entire original row
+
+**Proposition 12.1 (one whole-row disagreement relation).** Let a nonempty
+cell of an input in $\mathfrak S$ have $k=|X_\eta|\ge1$. Let
+$O_\eta\subseteq X_\eta$ be the variables occurring in $E_\eta$ after
+the original $Q$ holes have been removed. For two valuations $v,w$ put
+
+$$
+\begin{aligned}
+\mathsf{Bad}_\eta(v,w):={}&D_\eta(v)\land D_\eta(w)\land\\
+ &\left[
+ \bigvee_{x\in O_\eta}v(x)\ne w(x)
+ \ \lor\!
+ \bigvee_{\{q,r\}\subseteq J_\eta}
+       \bigl(e_{\eta,qr}(v)\mathbin{\mathsf{xor}}e_{\eta,qr}(w)\bigr)
+ \right].
+\end{aligned}
+\tag{ARH.12.1}
+$$
+
+Empty disjunctions mean false. This relation has an effective finite
+bottom-up automaton over $\Sigma_{2k}$, whose accepted terms are exactly
+
+$$
+\left\{\operatorname{conv}(v,w):
+ W_\eta[v],W_\eta[w]\in U\text{ in cell }\eta,\quad
+ R_Q(W_\eta[v])\ne R_Q(W_\eta[w])\right\}.
+\tag{ARH.12.2}
+$$
+
+Here the two copies of $X_\eta$ are ordered alike. They are mathematical
+coordinates for comparing possible sources, not two physical registers.
+
+Proof. By Proposition 10.3 the first two conjuncts specify exactly both
+feasible assignments, keeping every old and acquired constraint on each.
+The reached set and numbering $J_\eta$ are fixed on this cell. Recutting
+commutes with filling, since all residual occurrences are below the cut
+addresses. Thus the concrete outside is exactly $E_\eta[v]$ or
+$E_\eta[w]$, with the same fixed, numbered hole markers.
+
+For a fixed free term with these hole markers, cancellation down to an
+occurrence of each variable gives
+
+$$
+E_\eta[v]=E_\eta[w]
+\quad\Longleftrightarrow\quad
+\forall x\in O_\eta,\ v(x)=w(x).
+\tag{ARH.12.3}
+$$
+
+The forward implication uses only variables that actually occur outside;
+the reverse follows by substitution. A variable occurring both outside
+and inside holes is still included once in $O_\eta$. Its repeated
+occurrences need not be independent.
+
+By (ARH.3.4) and compiler correctness, $e_{\eta,qr}(v)$ is exactly the
+truth of complete subtree equality at those two original holes. Two
+partitions of the same finite reached set coincide if and only if all
+unordered distinct-pair equality truths coincide. Combining this fact
+with (ARH.12.3) proves (ARH.12.1) equivalent to full-row disagreement.
+In particular an unbounded outside tree is part of the predicate, not
+replaced by the partition.
+
+Lemma 11.2 recognizes both copies of $D_\eta$, each target formula and
+cross-copy coordinate equality. Its blank-state construction permits the
+other $2k-1$ or $2k-2$ coordinates to extend further than selected ones.
+Boolean closure, intersected with $V_{2k}$, therefore constructs exactly
+(ARH.12.2). For a zero-variable cell the row is constant and its bad
+relation is empty, as already handled separately. $\square$
+
+## 13. A terminating finite-prefix test with finite negative witnesses
+
+**Theorem 13.1 (diagonal-prefix saturation).** Let $\mathcal A$ be any
+finite bottom-up automaton over $\Sigma_{2k}$, with finite state set $S$
+and final set $F$, accepting exactly a given relation of valid tuple pairs.
+A symbol is diagonal if each coordinate in the first half equals the
+corresponding coordinate in the second half, including $\bot$.
+Compute the productive states $Z_0$ as in Lemma 11.2, and define
+
+$$
+\begin{aligned}
+Z_{j+1}={}&\{s:\text{some diagonal nullary transition ends at }s\}\\
+ &\cup\{s:\text{some diagonal binary transition }
+                  a(s_L,s_R)\to s\text{ has }s_L,s_R\in Z_j\}.
+\end{aligned}
+\tag{ARH.13.1}
+$$
+
+This sequence decreases and reaches a fixed set $Z_\infty$ effectively.
+There is a finite number $j$ of initial tuple levels on which no accepted
+pair agrees if and only if $F\cap Z_\infty=\varnothing$.
+An empty intersection yields such a computable $j$. A nonempty
+intersection yields, for every requested $j$, an accepted pair of
+**finite** tuples agreeing at every coordinate address of length $<j$.
+
+Proof. For every $j\ge0$ and state $s$, the exact invariant is
+
+$$
+s\in Z_j\quad\Longleftrightarrow\quad
+\text{some finite term has a run to }s
+\text{ and every label at depth }<j\text{ is diagonal}.
+\tag{ARH.13.2}
+$$
+
+At $j=0$ there is no label restriction, so this is productivity, including
+its finite-witness direction. At $j+1$ a nullary root must be diagonal
+and then has no children. A binary root must be diagonal and each child
+must have the property at $j$. Both directions of the induction now
+follow exactly from (ARH.13.1): combine two finite child witnesses to
+obtain a finite parent, or decompose an existing run into its children.
+It is immaterial whether the automaton is deterministic.
+
+Any transition with productive children has a productive target, hence
+$Z_1\subseteq Z_0$. The operator in (ARH.13.1) is monotone in its child
+set, so induction gives $Z_{j+1}\subseteq Z_j$. There are at most $|S|$
+strict decreases. Once two consecutive sets are equal, every later set
+is equal; this gives a terminating test, with at most one additional
+comparison to detect stabilization. Stored productive witnesses and the
+induction also give an effective witness construction for any requested
+finite $j$ and any state in $Z_j$.
+
+For a valid tuple pair, diagonality through these $j$ levels is exactly
+agreement of all paired coordinate replies at addresses of length $<j$.
+Indeed every address present in either coordinate occurs in the union
+domain. Equality of its labels includes presence versus absence. Addresses
+outside the union have absence in both copies automatically. This proves
+both directions even when some coordinates terminate early.
+
+Consequently $F\cap Z_j$ is nonempty exactly when an accepted pair has
+that prefix agreement. If the stable intersection is empty, a computed
+stage has empty intersection and is a separating depth. If it is nonempty,
+a stable accepting state lies in every $Z_j$; (ARH.13.2) produces a finite
+accepted pair for each $j$. Witnesses may depend on $j$. No single infinite
+tree, infinite run, compactness argument or changed source domain is used.
+$\square$
+
+The condition is about the accepting **root** states of the same exact
+relation automaton. Productive internal states may encode partial padding
+or unfinished checks; every accepted completion still satisfies $V_{2k}$
+and all constraints. This avoids treating independently productive
+coordinate marginals as a jointly feasible source pair.
+
+## 14. Complete original-prefix decision and the paid row consumer
+
+**Theorem 14.1 (complete decision on $\mathfrak S$).** Under Assumption
+1.3, suppose the complete input is in $\mathfrak S$. On each nonempty
+cell with variables, construct the automaton of Proposition 12.1 and
+compute its $F_\eta\cap Z_{\eta,\infty}$. The following are equivalent:
+
+1. Every one of those intersections is empty.
+2. There exists one finite original depth $H$ satisfying
+   $\operatorname{PrefDet}(U,Q,H)$ on the entire $U$.
+3. At the certified $N$, a deterministic effective source-total static
+   service outputs the entire original $R_Q$ with a uniform finite
+   new-read budget.
+4. Such a service exists allowing paid real serial $\mathsf{ApplyRho}$
+   on the same register.
+
+The first condition is decidable. On a yes answer the procedure computes
+$H$ and a legal static consumer. On a no answer it computes, for any
+requested original depth $h$, two finite sources in the entire retained
+fiber agreeing through depth $h$ and having different complete original
+rows. No minimum-budget or uniform local-work bound is asserted.
+
+Proof. All pattern lists and comparison tests are finite. Lemma 11.2
+supplies exact feasibility and finite automata, and Theorem 13.1 supplies
+a terminating test on each. Thus condition 1 is effective. Nonempty $U$
+guarantees at least one nonempty cell; zero-variable cells always pass.
+
+Suppose condition 1 holds. For each cell with variables choose a computed
+$j_\eta\ge0$ with $F_\eta\cap Z_{\eta,j_\eta}=\varnothing$; choose
+$j_\eta=0$ for a ground cell. Let $a_b$ be the original representative
+of old class $b$ and put
+
+$$
+A=d+\max\bigl(\{0\}\cup\{|a_b|:b\in\mathcal B\}\bigr),
+\qquad H=A+\max_\eta j_\eta.
+\tag{ARH.14.1}
+$$
+
+This is a deliberately sufficient bound. If two sources in $U$ agree
+at all original addresses of length at most $H$, their old class replies
+at $a_bs$, $|s|<d$, give the same pattern tuple $\eta$. Every residual
+variable has an original representative occurrence $a_bs_x$, $|s_x|=d$,
+of length at most $A$. The two sources therefore agree on that variable's
+replies at all relative lengths $<j_\eta$. Theorem 13.1 excludes
+$\mathsf{Bad}_\eta$ for these two feasible tuples. Proposition 12.1
+says that their **entire** rows coincide. This proves condition 2 across
+all cells, not just separately inside a selected cell. Different cells
+are distinguished by the same bounded original prefix.
+
+If condition 1 fails, choose its failing nonempty cell. For any $h\ge0$,
+use Theorem 13.1 with $j=h+1$ to construct two finite feasible tuples
+$v,w$ agreeing at every relative address of length at most $h$ but
+satisfying $\mathsf{Bad}_\eta$. Filling the fixed $W_\eta$ preserves
+agreement through original depth $h$: an address either remains in its
+fixed constructors or enters a variable at some nonnegative prefix
+length and uses a relative suffix no longer than $h$. This includes
+absence below leaves. Proposition 10.3 places both filled sources in
+the entire actual $U$, and Proposition 12.1 gives their different full
+rows. They disprove condition 2 at that $h$. Witness extraction is a
+finite recursion of prescribed depth from stored productive completions;
+it is an algorithm on finite objects for each requested $h$.
+
+For $2\Rightarrow3$, use the already supplied decoder [SLH, Theorem
+2.2][SLH], exactly as in §2. At the actual static epoch $N$, acquire enough
+current raw replies to recover every original reply at $|s|\le H$.
+A sufficient uniform count and address-length bound are
+
+$$
+K=2(2^{H+1}-1),\qquad
+\max |p_{\rm physical}|\le H+\lceil N/2\rceil.
+\tag{ARH.14.2}
+$$
+
+Repeated physical calls may be made and paid; deduplication is optional.
+The finite recovered original prefix is a decoded mathematical value.
+The newly acquired raw evidence is only the actual $N$-epoch address/reply
+list, not invented epoch-zero acquisition events.
+
+Enumerate all finite original trees by size and encoding. For each,
+compute its old row, all stipulated literals, both endpoint guards and
+all complete signed comparisons, and test its agreement with the decoded
+prefix. These are decidable finite computations. The actual unknown
+source is one enumerated candidate satisfying all tests, so this local
+search terminates on every actual run. Compute the entire $R_Q$ of the
+first passing witness, including its concrete outside, reached original
+holes in order and full equality partition. Condition 2 proves this is
+the actual required row. The witness is used to compute a value already
+proved common to the conditioned fiber; it is not declared to be the
+actual source. An automaton witness after intersection with the decoded
+prefix gives another implementation, but is unnecessary for this consumer.
+
+The implication $3\Rightarrow4$ is service-class inclusion. For
+$4\Rightarrow2$, reuse the verified operational bridge (ARH.2.3), whose
+needed hypotheses do not concern the syntax of $D_\eta$. To make the
+interface explicit, a deterministic source-total $K$-read service has
+finitely many reachable four-valued reply prefixes. At each such prefix,
+its computation and real updates before its next read or output are
+fixed by common state and those replies, and are finite by source-totality.
+Therefore the addresses submitted anywhere in this finite reply tree
+have some finite maximum length $h$. The original-address locality
+(SLH.74.7) says that a physical reply at any epoch and address $p$ depends
+only on the original prefix through $|p|$. Equal original $h$-prefixes
+force identical serial replies, updates and output by induction along
+the service. Correctness gives condition 2. This uses no reset, reroot,
+clone, identity port or observable update timing; those are excluded by
+Assumption 1.3. It neither extracts $h$ from arbitrary code nor compares
+the minimum static and serial budgets.
+
+All computations described above terminate on their stated domains.
+The computed $H$ and sufficient raw bound are independent of the allowed
+$N$; decoder addresses depend on $N$. Historical acquisition, certification,
+entry, installation, automaton construction, finite-tree enumeration,
+address formation and lengths, working memory, retention, actual updates,
+archives and the complete output remain separately charged. The consumer
+makes no new update and no unknown-tree equality query. Outputting a new
+row does not remove any accessible history; a later cut needs its own
+complete-state correspondence. $\square$
+
+For a presentation outside $\mathfrak S$, the procedure returns
+$\mathsf{outside\ family}$ before applying this yes/no test. That result
+is neither a negative service decision nor an emptiness decision for
+arbitrary coupled morphic constraints. The unrestricted question in
+Definition 9.1 is preserved.
+
+## 15. A broad family included without a semantic eligibility oracle
+
+**Proposition 15.1 (equal-level cuts and within-record aligned endpoints).**
+Every admissible input with the following syntactic properties belongs
+to $\mathfrak S$: $P$ is any subset of one original address level,
+$Q$ is any subset of another original address level, and the two endpoint
+addresses of each relation record have equal lengths. The two levels
+may differ; different records may use different lengths and arbitrary,
+possibly unequal, certified epochs. Literal histories, repeated old
+classes, off-task classes, missing cuts, signs and coupling patterns are
+unrestricted. Empty subsets and the root level are included.
+
+Proof. Let the old cut level be $a$. All residual variable occurrences
+in $W_\eta$ have absolute depth $a+d$, even when an old class is repeated.
+A normalized endpoint at address length $s$ therefore has every nonground
+decorated variable at relative depth $a+d-s$. Expansion of a known
+original leaf contributes only ground subtrees; it does not shift a
+variable occurrence.
+
+In a comparison of endpoints of equal address length, both expressions
+have their nonground frontier atoms at this same relative depth. Above
+it a nonground expression has an explicit pair root. At it a nonground
+expression is a decorated variable. Hence a decorated variable can face
+only another decorated variable or a ground subtree, never a nonground
+pair. Ground comparisons and constructor clashes already compile. This
+proves compilation of every relation record after its guards, for all
+patterns, whether or not their constraints are feasible. Old class
+comparisons have common frontier depth $d$ and obey the same argument.
+For target holes on one level, the argument applies with epoch zero and
+common relative frontier depth $a+d-|q|$. Thus their comparisons also
+compile. If there are no reached old holes there are no variables and
+the assertion follows from the ground convention. The same reasoning
+covers empty $Q$, absent endpoints filtered by their guards, and root
+cuts. This proves the stated entire-input inclusion. $\square$
+
+No completeness of either cut is required. In particular, unknown
+concrete outside subtrees can remain; Theorem 14.1 decides their effect
+through (ARH.12.1). The proposition does not authorize moving an original
+cut to a convenient level. The larger tested family also includes the
+non-level positive recut in the next section.
+
+## 16. Coupled non-orbit examples with complete positive and negative outputs
+
+**Proposition 16.1 (an active one-read full-row consumer).** Take four
+original old holes and four distinct old classes:
+
+$$
+\begin{gathered}
+P=\{LL,LR,RL,RR\},\quad
+C=\langle\langle\square_1,\square_2\rangle,
+          \langle\square_3,\square_4\rangle\rangle,\quad
+\pi=\{\{1\},\{2\},\{3\},\{4\}\},\\
+H_0=\{(0,LRL,\mathsf{absent}),(0,RR,\mathsf{branch})\},\\
+H_{\rm rel}=\{(0,LL,1,LR,=),\ (0,RL,1,RR,=),\
+                       (2,LL,0,RL,\ne)\},\\
+Q=\{LLL,LLR,RL,RR\},\qquad N\ge2.
+\end{gathered}
+\tag{ARH.16.1}
+$$
+
+This input belongs to $\mathfrak S$ and has entire fiber
+
+$$
+\begin{aligned}
+\{u_{b,t}:={}&\langle\langle\rho(b),b\rangle,
+                       \langle\rho(t),t\rangle\rangle:\
+ &b\in\{\alpha,\beta\},\quad t\text{ is a finite branch tree},\\
+ &\rho(b),b,\rho(t),t\text{ are pairwise distinct},\quad
+                     t\ne\rho^2(b)\}.
+\end{aligned}
+\tag{ARH.16.2}
+$$
+
+Its whole original target has exactly the following two rows:
+
+$$
+\begin{array}{c|c|c|c}
+b&\text{reached cuts}&\text{outside context}&\text{partition}\\
+\hline
+\alpha&RL,RR&
+\langle\langle\beta,\alpha\rangle,
+                 \langle\square_1,\square_2\rangle\rangle&
+\{\{1\},\{2\}\}\\
+\beta&LLL,LLR,RL,RR&
+\langle\langle\langle\square_1,\square_2\rangle,\beta\rangle,
+                 \langle\square_3,\square_4\rangle\rangle&
+\{\{1\},\{2\},\{3\},\{4\}\}.
+\end{array}
+\tag{ARH.16.3}
+$$
+
+For each allowed $N$, the minimum new-read count in both service classes
+is one for this example.
+
+Proof. Write the old values at $LL,LR,RL,RR$ as $x,b,z,t$. All four
+positions are reached. The absent reply at $LRL$ makes $b$ a leaf; the
+reply at $RR$ makes $t$ a branch. The two positive records say exactly
+$x=\rho(b)$ and $z=\rho(t)$. The negative one says
+$\rho^2(x)\ne z$, equivalently $\rho^3(b)\ne\rho(t)$, and injectivity
+gives $t\ne\rho^2(b)$. Retain the six old inequalities explicitly.
+Every implication reverses, proving (ARH.16.2) on all finite sources.
+Taking $t=\langle\alpha,\alpha\rangle$ makes both leaf choices legal.
+For each choice infinitely many other branch trees remain legal.
+
+If $b=\alpha$, then $LL$ contains the original leaf $\beta$; neither
+$LLL$ nor $LLR$ is reached. The retained old inequality between $RL,RR$
+gives the first complete row. If $b=\beta$, then $LL$ contains
+$\langle\beta,\alpha\rangle$; its two new holes have those different
+leaf values. The other two holes contain $\rho(t),t$, both branch trees,
+which are distinct by the old row. They therefore differ from both leaf
+holes. This proves every entry of the second complete row, including all
+cross-parent comparisons and the concrete outside leaf $b$.
+
+For eligibility, $P$ is level two and every relation has level-two
+endpoints, so the constraint-stage part of Proposition 15.1 applies
+regardless of $Q$. Here $d=4$. In a nonempty cell, the literal forces the
+entire $b$ pattern to be a concrete leaf, and the first equality forces
+the entire $x$ pattern to be the corresponding ground tree $\rho(b)$.
+A pattern with a depth-four frontier cannot fill to such a small tree.
+Consequently any reached $LLL,LLR$ target is ground. The other two target
+terms have equal relative frontier depth $d$, so they compare successfully
+with each other; ground-versus-term comparisons also compile. Exact empty
+cell removal before target eligibility is used here. Thus the non-level
+$Q$ is admitted without changing it.
+
+Since $LR$ is a known reached original hole, its current subtree is
+$\rho^N(b)$. Apply the **root** case of [SLH, Theorem 2.2][SLH] under that
+physical prefix: read just
+
+$$
+LR\,R^{\lceil N/2\rceil}.
+\tag{ARH.16.4}
+$$
+
+For even $N$, the replies $\alpha,\beta$ select $b=\alpha,\beta$.
+For odd $N$, absent and $\alpha$ respectively select those two cases.
+This is the supplied leaf/root decoder; no new hole comparison is made.
+Return the entire corresponding row (ARH.16.3). The address length is
+$2+\lceil N/2\rceil$ and remains paid. Both rows occur at a common
+retained input, so a zero-read deterministic service, even with real
+unobserved updates, cannot choose correctly. This proves the
+example-specific minimum.
+
+The family is not a product: $t=T_3$ is legal for $b=\alpha$ and excluded
+by $t\ne\rho^2(b)$ for $b=\beta$, whereas
+$t=\langle\alpha,\alpha\rangle$ is legal for both. It is not restricted
+to one whole-source atomic orbit. For example, the latter $t$ gives a
+source not equal to any $T_j$: its left subtree is $T_2$ when $b=\alpha$
+and $T_3$ when $b=\beta$, which would force the right subtree to be $T_1$
+or $T_2$ respectively in an orbit source. The actual right subtree is
+$\langle\rho(t),t\rangle$ and fails either forced equality.
+
+Proposition 2.1 supplies a legal finite paid producer at epochs zero,
+one and two, retaining earlier endpoint descriptions until comparison
+and cutting all extra source-bearing fields afterwards. Thus the small
+retained record really has (ARH.16.2) as its whole fiber under the contract.
+The one-read claim concerns only subsequent new reads. $\square$
+
+**Proposition 16.2 (a coupled chain with no uniform full-row budget).**
+Keep $P,C,\pi$ from (ARH.16.1), but now take
+
+$$
+\begin{gathered}
+H_0=\{(0,LL,\mathsf{branch}),(0,RR,\alpha)\},\\
+H_{\rm rel}=\{(1,LL,0,LR,=),(1,LR,0,RL,=)\},\\
+Q=\{L,R\}^3,\qquad N\ge1.
+\end{gathered}
+\tag{ARH.16.5}
+$$
+
+This input is in $\mathfrak S$. Its entire source fiber is exactly
+
+$$
+\left\{\langle\langle t,\rho(t)\rangle,
+                  \langle\rho^2(t),\alpha\rangle\rangle:
+                 t\text{ any finite branch tree}\right\}.
+\tag{ARH.16.6}
+$$
+
+No deterministic source-total static or serial service has a uniform
+finite new-read budget for its entire original $Q$ row.
+
+Proof. The two equalities and two literals force (ARH.16.6), and conversely
+every displayed tree gives those records with both endpoints reached.
+The already supplied clock obeys $\kappa(\rho t)=\kappa(t)+1$, so
+$t,\rho(t),\rho^2(t)$ are pairwise distinct. They are all branch trees,
+hence each differs from the fourth old value $\alpha$. Thus all six old
+inequalities hold for **every** branch $t$; none narrows the displayed
+fiber further. Proposition 15.1 proves eligibility. The same paid
+producer as Proposition 2.1 realizes this record schedule.
+
+Fix $h\ge0$. Let $a$ be the complete binary tree of depth $h+1$ with
+all leaves $\alpha$, and let $a'$ change exactly one depth-$h+1$ leaf
+to $\beta$. They are finite, different, and agree through depth $h$.
+Put $t=\langle a,a\rangle$ and $t'=\langle a,a'\rangle$.
+Both are legal branch values in the entire fiber. Their original prefixes
+agree through depth $h$, and (SLH.74.7) gives the same for their first
+two iterates. Thus the two whole sources (ARH.16.6) agree through original
+depth $h$ and preserve all retained constraints.
+
+For both sources precisely the first six depth-three cuts are reached;
+$RRL,RRR$ lie below the original $\alpha$ and are absent. The outside
+context is the same, namely
+
+$$
+\langle\langle\langle\square_1,\square_2\rangle,
+                       \langle\square_3,\square_4\rangle\rangle,
+          \langle\langle\square_5,\square_6\rangle,\alpha\rangle\rangle.
+\tag{ARH.16.7}
+$$
+
+The complete partitions differ: at $LLL,LLR$ the values are $a,a$ for
+$t$ and $a,a'$ for $t'$. This differing entry witnesses inequality of
+the entire required row; it does not replace the target by that bit.
+As $h$ was arbitrary, these finite sources disprove every original
+prefix bound. Theorem 14.1, using the inherited operational bridge,
+excludes every uniform finite serial budget.
+
+The free branch parameter ranges over all finite branch shapes, not an
+orbit-index family. The target image here is nevertheless finite: the
+context and reached set are fixed and only a partition of six holes
+varies. Its obstruction is unbounded observation depth, not infinitely
+many target rows. $\square$
+
+## 17. The constructor-offset boundary of this representation
+
+**Theorem 17.1 (one shifted constructor graph is not synchronous).**
+The relation
+
+$$
+G=\{(x,z)\in\mathcal T^2:z=\langle x,\alpha\rangle\}
+\tag{ARH.17.1}
+$$
+
+is not recognized by any finite bottom-up tree automaton on the
+same-root convolution of Definition 11.1. This is a boundary of this
+coordinate representation, not of the decidability of Definition 9.1.
+
+Proof. Suppose such an automaton exists and determinize it by the finite
+subset construction. For every finite tree $b$ take
+
+$$
+x_b=\langle\alpha,b\rangle,\qquad
+z_b=\langle\langle\alpha,b\rangle,\alpha\rangle.
+\tag{ARH.17.2}
+$$
+
+Its convolution is accepted. The right child of its root is exactly
+$\operatorname{conv}(b,\alpha)$; the left child is the valid partial
+convolution of $\alpha$ and $\langle\alpha,b\rangle$ with the mandated
+padding. Infinitely many distinct $b$ and finitely many states give
+distinct $b,c$ having the same state on $\operatorname{conv}(b,\alpha)$
+and $\operatorname{conv}(c,\alpha)$.
+
+Replace only that right child in the accepted term for $b$. The left
+child and root label are unchanged, and the right state is unchanged,
+so the deterministic root state remains accepting. The result is still
+a valid convolution: its two whole coordinates are
+$\langle\alpha,c\rangle$ and
+$\langle\langle\alpha,b\rangle,\alpha\rangle$.
+They violate (ARH.17.1) since $b\ne c$. This contradiction uses only
+finite well-formed trees and proves the claim. $\square$
+
+**Proposition 17.2 (the obstruction is an acquired input, not a no-service certificate).** Take $P=\{L,RL\}$, outside
+$C=\langle\square_1,\langle\square_2,\alpha\rangle\rangle$, two distinct
+old classes $x,y$, no literals, and the equality record $(0,L,0,R,=)$.
+Its entire source fiber is
+
+$$
+\{\langle\langle y,\alpha\rangle,
+          \langle y,\alpha\rangle\rangle:y\in\mathcal T\}.
+\tag{ARH.17.3}
+$$
+
+The old-coordinate relation is exactly $x=\langle y,\alpha\rangle$.
+For $Q=\{L,R\}$ the complete target row is constant and needs zero new
+reads. This presentation is outside $\mathfrak S$ as defined above.
+
+Proof. Both compared epoch-zero endpoints are originally reached, so
+the equality is precisely $x=\langle y,\alpha\rangle$. Its old
+inequality $x\ne y$ holds automatically by finite node count. These
+implications reverse and give (ARH.17.3). Paid original traversal and
+comparison, followed by the complete access cut, realize the retained
+record. Both target holes are reached and equal, and the outside is
+$\langle\square_1,\square_2\rangle$. This is a complete zero-read output.
+
+To check failed eligibility of this actual presentation, consider the
+pattern cell in which both old class patterns are complete binary
+skeletons to relative frontier depth $d$. With no literal conditions
+and with both endpoints reached, this cell survives the initial checks.
+Its retained equality compares $t_x$ with
+$\langle t_y,\alpha\rangle$. Down the left side, some depth-$d$
+variable of $t_x$ faces a nonground pair in the corresponding depth-$(d-1)$
+part of $t_y$. That child comparison is unsupported. The false comparison
+on the right side is not a short circuit under Definition 10.1. Constraint
+eligibility precedes emptiness, so this cell makes the presentation fail.
+No conclusion about service impossibility follows from that failure.
+$\square$
+
+Theorem 17.1 and Theorem 8.2 concern different representation classes.
+The fixed-power graph of $\rho$ is synchronous by Lemma 11.2 although it
+has no finite ordinary-cell compilation in the sense of §8. Conversely,
+the ordinary equation (ARH.17.1) already fails same-root convolution
+recognizability. Finite constructor syntax and fixed-power synchronous
+graphs therefore cannot be combined by asserting an unproved closure
+under arbitrary subtree offsets. Replacing coordinates, solving a
+contextual equation first, or using richer automata may cover excluded
+presentations, but each such extension owes an exact source and target
+correspondence and a terminating finite-prefix test. No undecidability
+claim follows from either representation boundary.
+
+## 18. Suppliers, new scope and the remaining coupled problem
+
+The new source-relative result is the combination of a decidable
+presentation family, its exact whole-row disagreement language, and the
+finite descending test with a complete paid consumer. The family inclusion
+and the two active non-orbit examples show an infinite class of genuinely
+coupled inputs beyond the literal-history and whole-source orbit fragments.
+Theorem 17.1 locates a different precise representation obstruction.
+These are ordinary `repo-derived` deductions. Finite automata closure,
+productive-state calculations, syntactic cancellation, the image parser
+and the inherited read/service bridge are reused methods, not newly
+claimed general mathematics. There is no global-priority claim.
+
+The supplier correspondence is bounded and explicit.
+
+- [SLH, §§59–62 and 74.2–74.4][SLH] supplies the complete old-row and
+  prefix-pattern correspondence, original-coordinate locality, and the
+  literal-only entire-row criterion. Proposition 3.2 supplies the
+  guarded relation extension. Proposition 10.3 checks their exact
+  interfaces without dropping any old or endpoint condition.
+- [SLH, §69][SLH] already uses aligned suffix coordinates and finite-set
+  descriptions of whole trees and their iterates for finite historical
+  VALUE minimax. The shared-coordinate idea and its finite-tree semantics
+  are supply. The present full-row disagreement problem includes unknown
+  whole exterior trees and new complete equality partitions, so it is
+  not a renamed finite VALUE task. No extension of that minimax formula
+  to this task is claimed.
+- [SLH, §§70–73][SLH] retains its known-ancestor and joint-extension
+  results. Section 2 retains static/serial existence equivalence, and
+  §§4–8 retain their root-certificate classification and ordinary-cell
+  barriers. Theorem 14.1 supplies an effective family decision in addition
+  to those existence and special-fiber results.
+- [TATA][TATA], Theorems 1.1.9, 1.3.1 and 1.7.4, supplies determinization,
+  Boolean closure and productive-state emptiness for finite ranked-tree
+  automata. Here every alphabet, state set, template and formula is
+  finite, and padding validity is explicitly part of the language.
+  Lemma 11.2 states the concrete interpreted-graph construction;
+  Theorem 13.1 proves the exact finite-prefix recurrence. Neither a
+  general tree-homomorphism closure nor an emptiness theorem alone
+  supplies the whole-source/full-row bridges.
+- The weak-second-order finite-tree correspondence in [TATA, Lemma 3.3.4
+  and Theorem 3.3.8][TATA] is alternative background for the aligned
+  finite-set supplier in §69. It is not needed by the direct automata
+  construction here. No quantified support is silently restricted to a
+  visible finite window, and no MONA execution is asserted.
+- Pinned [mathlib DFA][ST-DFA] and [NFA][ST-NFA] provide word-automaton
+  closure and determinization results such as `DFA.accepts_compl`,
+  `DFA.accepts_inter` and `NFA.toDFA_correct`. Their word domains are not
+  the finite ranked-tree tuple domain here. They are not an exact Lean
+  supplier of this coupled criterion. The bounded inspected sources
+  supply no compiled application of Theorem 14.1.
+
+For raw-price scope, the [serial-price supplier (SCR)](https://github.com/the-omega-institute/trureturing/blob/4aa70704d18ea51257d443e0c58a4d5af0da90c7/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_COMPLETE_ROW_PRICE.md),
+Assumption 1.1 and Definition 1.2, has the exact specialization
+$H=H_0$, $H_{\rm rel}=\varnothing$. Its entire domain $D$ then equals
+$\mathcal U_R(H_0,\varnothing)$: the original free trees, arbitrary
+original cuts, concrete old context, repeated classes and every old
+cross-class disequality coincide. Its complete access cut includes every
+accessible source-bearing bit. The target is the same entire original
+$R_Q(u)$, and the two service classes have the same certified $N$,
+arbitrary finite physical addresses, deterministic source-total behavior,
+static restriction or real serial updates on one register. Actual new
+raw calls are counted with repetitions; acquisition, entry, addresses,
+local work, memory, certification, updates, archives and output remain
+separately paid. Empty relation history introduces no comparison port.
+SCR Theorems 4.2, 5.2 and 6.1 supply complete-row terminal predicates,
+the two-way strategy correspondence and effective exact prices for this
+literal-only domain, including zero, infinity and attaining services.
+These are reused ordinary supplier results; no extension of their
+minimax construction to arbitrary coupled relation constraints is made.
+
+SCR Theorem 7.2 supplies a strict separation within that specialization.
+It uses $P=\{\varepsilon\}$ with the single root-hole old row,
+$H_0=((0,RL,\mathsf{absent}))$, $H_{\rm rel}=\varnothing$ and $Q=\{L\}$.
+Its entire fiber is
+$\{\alpha,\beta\}\cup\{\langle x,b\rangle:x\in\mathcal T,
+\ b\in\{\alpha,\beta\}\}$.
+The four complete outputs are the two concrete leaf rows and the two
+one-hole rows $\langle\square_1,\alpha\rangle$ and
+$\langle\square_1,\beta\rangle$, each with its unique one-class partition.
+At the same initial $N=0$ or $N=2$, the static minimum is two new reads
+and the serial minimum is one. The serial upper bound uses one real
+paid update; its raw improvement does not make that update free.
+The supplier's lower bounds cover every finite physical address and
+all permitted deterministic services on this entire infinite fiber.
+Thus universal equality of the two minima is false already for
+$H_{\rm rel}=\varnothing$, hence also over the unrestricted class that
+contains it. This qualifies the price wording in Definition 9.1:
+literal-only exact prices are supplied, and blanket equality is refuted;
+computing the two prices for arbitrary coupled histories, and thereby
+deciding equality for each such input, remain outside these results.
+
+Source comparison starts with the immutable predecessor and this volume's
+existing results, then the named pinned library interfaces, then the
+cited author text. This is a bounded overlap and hypothesis check, not
+an exhaustive literature survey. The new decision is not attributed to
+[TABG][TABG] or [OSD][OSD]: no exact reduction of all the present interpreted
+constraints and prefix quantifiers to those theories is supplied. Related
+full-bispectrum and late-contact results have no established source map
+to this tree task and are not premises.
+
+**Provenance and evidence boundary.** This is a single-author ordinary
+mathematical synthesis under the formal-thinking-and-answer, sshx and
+theory-volume-template instructions, using supplied predecessor theory,
+completed advisory research conclusions, and the stated literature.
+Definitions and proofs here fix one formulation; advisory alternatives
+are not silently identified with it. There is no fresh Lean or kernel
+proof, no retained bind-only declaration, no solver implementation or
+complexity claim, and no independent approval asserted by this text.
+
+The unchanged general question is to decide
+$\exists h\,\operatorname{PrefDet}(U,Q,h)$ on **arbitrary** guarded coupled
+mixed-epoch relation inputs, with arbitrary original cuts and all the
+same paid/full-state conditions. Failed membership in $\mathfrak S$
+leaves that question unresolved. A future extension must handle genuinely
+shifted coupled terms with both directions of source correspondence,
+full-row disagreement correspondence and a terminating test for arbitrarily
+deep **finite admissible** counterpairs. Merely deciding satisfiability,
+constructing a witness, or listing prefix candidates is insufficient.
+
+Effective minimum raw budgets for arbitrary coupled relation histories,
+joint resource optima, the original stochastic $j_c$ alternative, common
+full-law calibration, exact finite stochastic optimum and effective
+charged attainment remain unresolved here. The literal-only SCR prices
+and the example-specific one-read minimum in Proposition 16.1 do not
+supply those general conclusions. This extension advances the persistent
+self-calibration programme without completing or replacing it.
+
+[ST-DFA]: https://cdn.jsdelivr.net/gh/leanprover-community/mathlib4@db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/DFA.lean
+[ST-NFA]: https://cdn.jsdelivr.net/gh/leanprover-community/mathlib4@db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/NFA.lean
+
+## 追加锚（本行以下为增补区）
+## 19. Constructor definitions with observable original coordinates
+
+The source and service contract is Definition 1.1, Definition 1.2 and
+Assumption 1.3: finite nonempty ordered trees, the interpreted substitution
+$\rho$, the entire acquired fiber $U=\mathcal U_R(H_0,H_{\rm rel})$, and
+the entire original row $R_Q$. The old row retains every repeated class and
+every different-class disequality. Both endpoints of each relation record
+must exist, including for a disequality. Literal repetitions and absent
+replies retain their force. The certified initial epoch is at least every
+recorded epoch. Arbitrary finite prefix-free original $P,Q$, including
+empty, root and absent cuts, remain allowed.
+
+The extension here eliminates constructor definitions while preserving
+coordinates that are actual original subtrees. It gives a decidable family
+of acquired inputs, an exact decision of finite original-prefix
+determination on that family, and a paid whole-row consumer. Constructor
+definitions may copy parameters and contain unequal fixed powers of
+$\rho$. Residual constraints may couple all remaining coordinates. This
+is a restricted extension of the synchronous residual method; it does not
+decide arbitrary cyclic interpreted equations.
+
+**Definition 19.1 (prefixes and normalized templates).** Write $s\equiv_h t$
+when $r_s(p)=r_t(p)$ for every $|p|<h$, including absent replies. For tuples,
+require this in each corresponding coordinate. Thus the inclusive depth
+$h$ convention of Definition 2.2 is $\equiv_{h+1}$ here.
+
+A normalized template over $X$ is generated by the two concrete leaves,
+pairing, and decorations $\rho^a(x)$, $x\in X$, $a\in\mathbb N$.
+A ground subtemplate denotes its complete finite tree. Every expression
+obtained by composition, pairing and fixed powers has this form: distribute
+a power over pairing, compose powers at variables, and evaluate concrete
+leaf images. This is an interpreted expression, never a free unary
+constructor. Normalization is a structural recursion on the finite input
+expression, with finite iteration on each explicitly given exponent.
+It terminates even though the resulting finite expression can be large.
+
+**Lemma 19.2 (the algebraic interfaces used in elimination).** The following
+operations and identities hold on finite trees.
+
+1. $\rho$ is injective and has an effective partial inverse on finite trees.
+2. Every normalized template preserves $\equiv_h$ in all its arguments.
+3. For a fixed template $A$ and two assignments $v,w$,
+   $A[v]=A[w]$ exactly when $v(x)=w(x)$ for all variables occurring in $A$.
+4. A bare-variable equation $x=A$ with $x$ occurring in $A$ is false unless
+   $A$ is syntactically $x$.
+
+Proof. No $\rho$-image is $\alpha$. The only leaf image is
+$\rho(\alpha)=\beta$. The tree $\langle\beta,\alpha\rangle$ has preimage
+$\beta$ and cannot have a paired preimage, since the right child of the
+image of a pair is itself an image and is not $\alpha$. Every other paired
+image has a paired preimage exactly when both children have preimages.
+Recursion on the strictly smaller children supplies the partial inverse
+and proves its uniqueness. Finite iteration handles any fixed power.
+
+For a physical address $p$ in $\rho^n(t)$, follow $p$ in the original $t$.
+Until the first original leaf, every encountered pair persists. After
+that leaf, the remaining reply is computed in its known finite
+$\rho^n$-image. If no leaf has been encountered by $p$, its reply is branch.
+Consequently the reply depends only on original replies at prefixes of
+$p$, never on a deeper original reply. This includes an address born
+inside an expanded leaf and an address still absent. Powers of $\rho$
+therefore preserve $\equiv_h$. Pairing and ground insertion do also;
+structural induction proves item 2.
+
+For item 3 compare the same normalized template under the two assignments.
+Cancel its identical pair skeleton. At every decorated occurrence the
+remaining equality is $\rho^a(v(x))=\rho^a(w(x))$, equivalent to
+$v(x)=w(x)$ by injectivity. Ground parts impose no condition. Repetition
+only repeats a condition. The same argument works for an outside context
+with fixed, distinct numbered hole symbols.
+
+For item 4, let $\ell$ count leaves. Induction gives
+$\ell(\rho(t))\ge\ell(t)$. If an occurrence of $x$ in $A$ lies below a pair,
+its decorated value contributes at least $\ell(x)$ leaves and a nonempty
+sibling contributes at least one more. Thus $\ell(A)>\ell(x)$. Otherwise
+$A=\rho^a(x)$. For
+
+$$
+\kappa(\alpha)=0,\qquad \kappa(\beta)=1,\qquad
+\kappa(\langle s,t\rangle)=2+\kappa(t),
+$$
+
+induction gives $\kappa(\rho(t))=\kappa(t)+1$. Hence $a>0$ makes equality
+impossible, and $a=0$ is the identity case. These are the elementary
+parser and clock interfaces already used in §§2–3 and [SLH, §§2, 55][SLH],
+with the bare-variable size consequence stated explicitly. Item 4 does
+not apply to $\rho^a(x)=A$: the finite solution $x=\beta$ of
+$\rho(x)=\langle x,\alpha\rangle$ prevents that inference. $\square$
+
+**Definition 19.3 (two finite original-prefix covers).** Let
+
+$$
+m=\max\bigl(\{0\}\cup\{|q|:q\in Q\}
+ \cup\{|p|:(n,p,c)\in H_0\}
+ \cup\{|p|,|q|:(n,p,n',q,\bowtie)\in H_{\rm rel}\}\bigr),
+\qquad d=m+1.
+\tag{CE.19.1}
+$$
+
+Start with $W=C[(z_{[i]})_i]$, one variable per old class, and all
+$z_b\ne z_c$ for different classes. Use either of the following two fixed
+finite covers. A successful cover is chosen as a whole; alternative
+constructions are not combined into overlapping semantic charts.
+
+The uniform cover is precisely the depth-$d$ old-class pattern cover of
+Proposition 3.2 and [SLH, Definition 74.2][SLH]. Each repeated class uses
+one shared pattern and shared frontier variables at all its occurrences.
+
+The second cover resolves only the prescribed navigation. Process literal
+requests in retained list order, then the two endpoints of each relation
+in retained list order, and then original $Q$ addresses in lexicographic order.
+To navigate a nonempty remaining suffix inside $\rho^n(x)$, split the
+original variable $x$, simultaneously at every occurrence, into the
+three disjoint cases $\alpha$, $\beta$, $\langle x_L,x_R\rangle$.
+In a leaf case navigate its concrete finite $\rho^n$-image. In a pair
+case distribute $\rho^n$ and consume the next address letter. A literal
+request additionally resolves the root reply at its endpoint, splitting
+there if needed. A relation endpoint or a reached cut endpoint can stop
+at a decorated variable; its full value remains a template. For $Q$ this
+navigation is at epoch zero. Recompute the affected expressions after a
+shared split. Stop a branch when a literal is wrong or a relation endpoint
+is absent. Otherwise stop when all requests have been resolved.
+
+Every split is indexed by an old class and an original relative address
+$s$ of length at most $m$. Once split, that variable is never split again.
+No branch has more than
+
+$$
+M_0=|\mathcal B|(2^d-1)
+\tag{CE.19.2}
+$$
+
+splits. Indeed a nonempty suffix can expose only an original strict
+ancestor of the requested address, and a literal root test only its
+endpoint; after a first original leaf there are no further original
+variables on that path. Sharing can require the same split at another
+occurrence, but creates no new relative address. Thus the three-way
+split tree is finite, including all early rejected branches. A concrete
+old context with no classes has an empty split tree.
+
+A surviving chart $\eta$ has a pure constructor source pattern
+$W_\eta(X_\eta)$; a fixed reached set $J_\eta\subseteq Q$ with its canonical
+numbering; an outside context $E_\eta$; and hole terms $T_{\eta,q}$.
+Every variable $x$ has a fixed reached original representative address
+$a_{\eta,x}$, obtained by following its relative address inside a
+representative old hole. At that occurrence the source term is literally
+$x$. Attach the conjunction $\Phi_\eta$ of **all** old class disequalities
+and every signed interpreted endpoint equality. Literal conditions and
+endpoint existence have already been checked in the chart. No general
+morphic feasibility test is used to discard a chart at this stage.
+
+**Proposition 19.4 (exact charts and paid observable identity).** For either
+cover there is a bijection
+
+$$
+\coprod_\eta\{v:X_\eta\to\mathcal T:\Phi_\eta(v)\}
+ \longrightarrow U,\qquad (\eta,v)\longmapsto W_\eta[v].
+\tag{CE.19.3}
+$$
+
+The chart is determined by a bounded finite original prefix. It can be
+selected by at most $2M_0$ actual current reads at any certified $N$.
+Within a chart, recutting and filling commute:
+
+$$
+I_Q(W_\eta[v])=J_\eta,\quad
+C_Q(W_\eta[v])=E_\eta[v],\quad
+(W_\eta[v])|_q=T_{\eta,q}[v].
+\tag{CE.19.4}
+$$
+
+Proof. Each shared split is the exhaustive, disjoint root classification
+of one finite original subtree. A paired split records its two unique
+finite children. Induction on the finite decision tree gives unique
+patterns and unique frontier assignments; the uniform construction is
+the same argument performed to a fixed depth. Recover each variable by
+its representative original subtree. By the old-row correspondence of
+[SLH, Theorems 59.4 and 60.2][SLH], all old inequalities together are
+exactly what makes the retained partition correct, including off-task
+classes and repeated occurrences.
+
+Induction along every endpoint navigation gives its exact value under
+that assignment. Expanding a known original leaf uses its actual finite
+image, so an originally absent endpoint may be reached at its recorded
+epoch, while an endpoint absent at that epoch rejects either relation
+sign. Repeated literal requests impose repeated, consistent conditions.
+Thus $\Phi_\eta$ imposes precisely the remaining retained predicates.
+Conversely every finite assignment satisfying it fills the old pattern,
+preserves every old inequality and satisfies every guarded record. This
+proves both directions of (CE.19.3), not just satisfiability preservation.
+Original absent $P$ addresses remain blocked by the old concrete context.
+
+The finite selector asks only original constructor questions at fixed
+representative addresses. Different charts first differ at one such
+question. Each can be recovered from the current register by [SLH,
+Theorem 2.2][SLH] in at most two actual reads, including absent relative
+replies. In the uniform cover, asking all relative $|s|<d$ questions per
+old class gives the same bound. The maximum address length in this finite
+selector is an effective original-prefix bound. These observations prove
+selection without an uncharged semantic test.
+
+No $Q$ navigation continues into an unresolved variable. Replacing that
+variable by any nonempty tree cannot change a reached endpoint, its
+numbering, or an absent endpoint already blocked by an original leaf.
+Recutting therefore commutes with filling, which proves (CE.19.4).
+For empty $Q$ the entire $W_\eta[v]$ is exterior; for $Q=\{\varepsilon\}$
+the exterior is one numbered hole and its partition is one class.
+These cases are included. $\square$
+
+## 20. A finite constructor-elimination recognizer
+
+**Definition 20.1 (sound comparison reduction and factoring).** Normalize
+terms as in Definition 19.1. To reduce an equality, delete syntactic
+identities, evaluate fully ground comparisons, cancel two pairing heads,
+and reject different concrete constructor heads. A ground tree facing a
+pair is opened at its root for this cancellation. A decorated variable
+facing a ground tree is tested by the partial inverse of Lemma 19.2.
+The result is false or a bare-variable equality with the unique inverse.
+Two decorations may cancel a common power. For a bare variable occurring
+in the other side use precisely item 4 of that lemma. All these rules
+preserve truth under every finite assignment.
+
+Apply these equality rules inside a disequality by negating the **entire**
+reduced equality formula. In particular
+$\langle A,B\rangle\ne\langle D,E\rangle$ becomes
+$\neg(A=D\land B=E)$, not the conjunction of two disequalities.
+Use ordinary Boolean constant simplification. A residual equality not
+covered by a rule is retained as an unsupported atom, not declared false.
+
+For a normalized term $T$, define a partial operation $L_a(T)$:
+
+- For ground $g$, return its unique $a$-fold inverse if it exists.
+- For $\rho^b(y)$ with $b\ge a$, return $\rho^{b-a}(y)$.
+- For a non-ground pair, recursively factor both children and pair the
+  results if both succeed.
+- Otherwise report failure.
+
+Ground processing has priority over the pair rule. Structural induction,
+using the actual leaf parser, proves
+
+$$
+L_a(T)=V\quad\Longrightarrow\quad
+T[v]=\rho^a(V[v])\quad\hbox{for every finite assignment }v.
+\tag{CE.20.1}
+$$
+
+This operation terminates by descent through $T$, together with finite
+partial inversions on ground pieces. Failure has no semantic implication.
+For example a non-ground pair can specialize to $\rho(\beta)$ without
+admitting a uniform childwise inverse. No leaf-image solution is removed.
+
+**Definition 20.2 (permitted elimination and eligibility).** Only an
+atomic equality known as a mandatory positive conjunct of $\Phi_\eta$
+may be used as a definition. Pair cancellation exposes both children of
+a mandatory positive equality as mandatory conjuncts. An atom under a
+disjunction or negation is not selected, and a task-hole equality is not
+assumed to hold.
+
+For either orientation $\rho^a(x)=T$, if $L_a(T)=V$ succeeds and $x$ does
+not occur in $V$, substitute $V$ for $x$ in every remaining constraint,
+the source pattern, the outside context and every hole term. Remove the
+now-true defining equation, normalize, and reduce comparisons again.
+Bare $x=T$ is included with $a=0$. Do not introduce new variables in this
+phase. Record the completely composed substitution
+
+$$
+\sigma:X_\eta\longrightarrow\operatorname{Templates}(Y_\eta),
+\qquad Y_\eta\subseteq X_\eta,\qquad \sigma(y)=y\ (y\in Y_\eta).
+\tag{CE.20.2}
+$$
+
+A formula is *synchronous residual* when reduction leaves a Boolean
+combination of constants and atoms
+
+$$
+\rho^a(y)=\rho^b(z),\qquad \rho^a(y)=g,
+\tag{CE.20.3}
+$$
+
+with $g$ a complete finite ground tree. These denote actual tree relations.
+For a chart search all permitted elimination schedules, including stopping
+immediately and stopping after any step. It is eligible if one schedule
+either yields a constant contradiction in its domain, or makes both its
+remaining domain $D_\eta=\Phi_\eta[\sigma]$ and every reached-hole equality
+
+$$
+e_{\eta,qr}(v):=
+[T_{\eta,q}[\sigma][v]=T_{\eta,r}[\sigma][v]],\qquad q<r\in J_\eta,
+\tag{CE.20.4}
+$$
+
+synchronous residual. A chart with a synchronous domain that is empty
+may also be discarded, using the finite automaton test of Lemma 21.1,
+without requiring its target comparisons to reduce.
+
+An input belongs to $\mathcal E_{\rm CE}$ if at least one of the two
+covers of Definition 19.3 has every surviving chart eligible. Choose one
+such cover and one witnessing schedule per chart, all from common input.
+There is no new branch choice depending on unknown parameter equality.
+An input failing this recognizer is **outside this theorem**. That result
+is never a certificate of service nonexistence.
+
+**Proposition 20.3 (termination and exact elimination).** Membership in
+$\mathcal E_{\rm CE}$ is decidable. On an accepted input, write
+
+$$
+F_\eta=W_\eta[\sigma],\qquad
+\bar E_\eta=E_\eta[\sigma],\qquad
+\bar T_{\eta,q}=T_{\eta,q}[\sigma].
+$$
+
+Then $v\mapsto F_\eta[v]$ is a bijection from the finite assignments
+satisfying $D_\eta$ to the entire original fiber in that chart. At every
+surviving representative $a_{\eta,y}$ its original subtree is exactly
+$v(y)$. No extra original sources are lost or gained by the presentation.
+
+Proof. Comparison reduction terminates by recursive descent through two
+pairing heads, finite ground evaluation, or a terminal identity, atom,
+clash or bare occurs case. Common-power cancellation is done once on a
+pair of decorations, and factoring is a terminating test. A local rule
+is not repeatedly reoriented. Ground inversion and Boolean simplification
+are finite. Between eliminations no rewrite feeds a larger term back into
+an unrestricted root-splitting procedure.
+
+Every elimination removes one active variable. At a fixed stage there
+are only finitely many mandatory equalities and two orientations of each;
+each factoring test has at most one result. Hence the search tree has
+finite branching and depth at most $|X_\eta|$, even if terms grow.
+The two covers and all their charts are finite. The residual syntax test
+is decidable; its optional emptiness check is the finite construction of
+Lemma 21.1. This proves recognition termination without assuming a
+complete interpreted unification algorithm.
+
+By (CE.20.1) and injectivity, the selected equation is exactly $x=V$.
+Since $x$ does not occur in $V$, restriction to the other coordinates is a
+bijection from its conjunction with the remaining constraints to those
+constraints after substitution. The inverse assigns the unique finite
+value $V[v]$ to $x$. Substitution commutes with interpreted evaluation
+by induction on terms and formulas. It therefore preserves all signed
+constraints jointly, even when a variable repeats or occurs in many old
+inequalities. Induction on the number of eliminations gives (CE.20.2)
+and the asserted finite-assignment bijection. A contradiction discards
+only a genuinely empty chart.
+
+Combine this with (CE.19.3). Each remaining $y$ was originally a leaf
+variable of the source pattern at $a_{\eta,y}$. No other variable can be
+an ancestor of that occurrence in the pattern. Substituting for other
+variables leaves that occurrence literally $y$. Consequently restriction
+back to those original subtrees is the inverse map. Reconstructed values
+of eliminated coordinates are finite templates of finite trees, so they
+cannot be rational or infinite-tree solutions. $\square$
+
+**Proposition 20.4 (the two original-prefix directions).** In each accepted
+chart,
+
+$$
+\begin{aligned}
+v\equiv_h w&\Longrightarrow F_\eta[v]\equiv_h F_\eta[w],\\
+F_\eta[v]\equiv_{A_\eta+h}F_\eta[w]
+ &\Longrightarrow v\equiv_h w,
+\qquad A_\eta=\max(\{0\}\cup\{|a_{\eta,y}|:y\in Y_\eta\}).
+\end{aligned}
+\tag{CE.20.5}
+$$
+
+Proof. The first line is Lemma 19.2 applied to the reconstructed source
+template, including all introduced offsets and copied occurrences.
+For the second, inspect each original representative followed by every
+suffix of length less than $h$, using Proposition 20.3. Empty parameter
+tuples satisfy both statements. The finite selector of Proposition 19.4
+additionally separates distinct charts. Thus later tests within charts
+omit no arbitrarily close cross-chart pair. $\square$
+
+## 21. The checked synchronous interface for complete-row disagreement
+
+This section records only the finite automaton interface needed by the
+constructor presentation. Its graph construction and productive-prefix
+method are reused synchronous methods. Automaticity is asserted in the
+surviving-coordinate presentation, not in the old tuple with constructor
+offsets still present.
+
+**Lemma 21.1 (finite residual automata).** Boolean combinations of
+(CE.20.3) have effectively constructible finite bottom-up automata on
+padded convolutions of their finite tree coordinates. Emptiness is
+decidable and a nonempty relation supplies a finite witness. The same
+holds after adjoining a finite list of coordinate-prefix conditions.
+
+Proof. The convolution has the union of the coordinate domains. A label
+lists their symbols in $\{\alpha,\beta,\mathsf{pair},\bot\}$, excluding
+the all-padding tuple; its arity is two if a coordinate is a pair and
+zero otherwise. Validity requires each root coordinate present; at a
+binary node a paired coordinate has two present children, while a leaf
+or padded coordinate has padded children. These are finite local checks.
+
+After cancelling common powers, a variable-variable atom is a graph
+$x=\rho^k(y)$ in one orientation. A finite grammar for that graph has
+one recursive production with pair/pair root and two graph children,
+and two complete ground productions
+
+$$
+\rho^k(\alpha)\otimes\alpha,
+\qquad \rho^k(\beta)\otimes\beta.
+\tag{CE.21.1}
+$$
+
+Induction on finite $y$ proves exactness in both directions. Expand the
+finite ground productions into finitely many ordinary automaton states.
+Ground atoms use the unique partial inverse, or are false, and ground
+equality has a finite automaton. Coincident variable names in an atom
+are handled by using the same coordinate twice, including possible
+self-power conditions; no independence is assumed.
+
+To lift an atomic automaton to a larger tuple, inspect its selected
+coordinates. Where all selected coordinates are padded, use a blank
+state. Where selected coordinates have already terminated but other
+coordinates continue, simulate their nullary transition and require
+selected blank states below. Otherwise simulate the selected transition.
+This deals explicitly with projection changing the union-domain arity.
+Intersect with tuple validity. Products, union and powerset
+complementation relative to valid tuples implement every Boolean formula.
+Coordinate-prefix restrictions use finite inspections of labels and
+padding and have finite automata too. Finally compute productive states
+from nullary transitions by repeated binary closure. Recording a first
+production for each new state constructs finite witnesses; intersection
+with final states decides emptiness. All steps terminate on finite state
+sets. These are the usual finite-tree automata constructions, specialized
+to the exact interpreted graphs (CE.21.1). $\square$
+
+**Definition 21.2 (the entire-row bad-pair relation).** Let $O_\eta$ be the
+set of surviving parameters occurring in $\bar E_\eta$, including decorated
+occurrences. On two copies of the surviving tuple define
+
+$$
+\begin{aligned}
+\operatorname{Bad}_\eta(v,w):={}&D_\eta(v)\land D_\eta(w)\land\\
+&\left(\bigvee_{y\in O_\eta}v(y)\ne w(y)
+ \ \lor\!\bigvee_{q<r\in J_\eta}
+       \bigl(e_{\eta,qr}(v)\mathbin{\mathsf{xor}}e_{\eta,qr}(w)\bigr)\right).
+\end{aligned}
+\tag{CE.21.2}
+$$
+
+Empty disjunctions mean false. Every condition in $D_\eta$ is retained in
+both copies. In particular this is not a product of marginal feasibility
+conditions. Lemma 21.1 constructs an automaton $\mathcal A_\eta$ for this
+relation. A zero-parameter chart has at most one source and empty Bad.
+
+**Proposition 21.3 (whole-row fidelity).** For finite assignments satisfying
+the domain, $\operatorname{Bad}_\eta(v,w)$ holds if and only if
+$R_Q(F_\eta[v])\ne R_Q(F_\eta[w])$.
+
+Proof. Equation (CE.19.4) remains true after exact substitution. The
+reached original addresses, order and numbered holes are fixed in the
+chart. Equality of its two concrete exteriors is exactly equality of
+all parameters visible in $\bar E_\eta$, by item 3 of Lemma 19.2.
+Parameters under removed holes impose no exterior requirement. The two
+complete partitions agree exactly when every unordered pair of reached
+holes has the same equality status; (CE.20.4) computes each status exactly.
+Negating these two necessary and sufficient agreements gives (CE.21.2).
+This covers the entire concrete exterior even when it can be very large.
+A common parameter canceled from a hole equality is not made relevant
+again merely because it occurs in the compared terms. $\square$
+
+**Lemma 21.4 (productive finite-prefix test).** Let $S_\eta,F^{\rm acc}_\eta$
+be the state and final-state sets of $\mathcal A_\eta$. A convolution label
+is diagonal when each corresponding $v,w$ symbol agrees, including
+padding. Put $Z_0$ equal to the productive states and set
+
+$$
+Z_{j+1}=\{s:\text{a diagonal nullary transition yields }s\}
+ \cup\{s:\text{a diagonal binary transition from }s_L,s_R\in Z_j
+                         \text{ yields }s\}.
+\tag{CE.21.3}
+$$
+
+The sequence decreases and stabilizes effectively. Its stable set is
+$Z_\infty$. There is a finite $h$ with no admissible bad pair
+$v\equiv_h w$ exactly when
+
+$$
+F^{\rm acc}_\eta\cap Z_\infty=\varnothing.
+\tag{CE.21.4}
+$$
+
+If (CE.21.4) fails, for each given $h$ one can construct a finite
+admissible bad pair satisfying $v\equiv_h w$.
+
+Proof. Induct on $j$: $s\in Z_j$ exactly when a finite convolution-shaped
+input has a run to $s$ and all its labels at depths less than $j$ are
+diagonal. At zero this is productivity. At the next level a diagonal
+nullary root terminates, or a diagonal binary root joins two finite
+witnesses from the preceding level. This proves both directions of the
+induction. Intermediate witnesses need not have valid coordinate roots;
+validity is enforced at acceptance by $\mathcal A_\eta$.
+
+In particular $Z_1\subseteq Z_0$. Monotonicity of the displayed operation
+then gives $Z_{j+1}\subseteq Z_j$. There are at most $|S_\eta|$ strict
+decreases; after equality, further iterations are equal. On a valid
+accepted convolution, diagonal labels through $j$ levels are exactly
+$v\equiv_j w$. Addresses outside the union domain are absent in both
+copies and cause no missing comparison. Hence a final state in $Z_j$
+is precisely a finite bad pair with that prefix agreement.
+
+If the stable intersection is empty, the finite stabilization computation
+finds such a $j$. If it is nonempty, for any requested $j$ retain transition
+witnesses for its $j$ recurrences and attach productive finite completions
+at level $j$. This is a finite construction even for a state participating
+in cycles. Acceptance supplies valid finite trees and the full Bad
+predicate. No infinite tree, arbitrary unproductive state or compactness
+limit substitutes for these witnesses. $\square$
+
+## 22. Exact determination and a paid original-row consumer
+
+**Theorem 22.1 (constructor-elimination full-row criterion).** For every
+nonempty acquired input in $\mathcal E_{\rm CE}$, the following are
+equivalent:
+
+1. Every nonempty selected chart satisfies (CE.21.4).
+2. Some finite original prefix determines the entire $R_Q$ on the entire
+   $U=\mathcal U_R(H_0,H_{\rm rel})$.
+3. For every permitted certified $N$, a deterministic effective static
+   service returns that entire row, is total on $U$, and has a uniform
+   finite bound on its new raw calls.
+4. Such a service exists at a permitted $N$ when real paid serial
+   $\mathsf{ApplyRho}$ is allowed.
+
+The criterion is effective. A negative answer constructs, for every
+requested inclusive original depth $b$, two finite sources in $U$ with
+identical replies at $|p|\le b$ and different entire $Q$-rows. The theorem
+does not equate general minimum static and serial prices.
+
+Proof. Construct the chosen finite cover, its elimination schedules and
+its residual automata. Emptiness removes exactly the empty domains.
+For each remaining chart satisfying (CE.21.4), find $h_\eta$ with
+$F^{\rm acc}_\eta\cap Z_{h_\eta}=\varnothing$. Let $s$ be a prefix length
+that contains all questions in the original chart selector, and take
+
+$$
+H=\max\bigl(\{s\}\cup\{A_\eta+h_\eta:\eta\text{ nonempty}\}\bigr).
+\tag{CE.22.1}
+$$
+
+Two sources in $U$ agreeing under $\equiv_H$ choose the same chart.
+By (CE.20.5) their remaining coordinate tuples agree under
+$\equiv_{h_\eta}$. Lemma 21.4 excludes Bad, and Proposition 21.3 gives
+equality of the entire rows. This proves 1 implies 2. There is no
+unobserved normalization branch whose selection is being assumed.
+
+Conversely, if a chart fails, use Lemma 21.4 at $h=b+1$. Its two finite
+assignments satisfy the complete joint domain and Bad. Proposition 20.3
+reconstructs two finite sources in the same original chart of $U$;
+(CE.20.5) gives their original agreement at all $|p|\le b$ and Proposition
+21.3 gives their different full rows. This disproves 2 and proves the
+claimed effective finite negative witnesses.
+
+For the operational implication, let $M$ be the maximum number of
+original literal questions in the chosen finite selector, so $M\le M_0$.
+At static epoch $N$ recover those replies with [SLH, Theorem 2.2][SLH],
+using at most $2M$ actual reads. This selects the actual chart, necessarily
+nonempty. For each surviving $y$, the original node $a_{\eta,y}$ is known
+to exist and its current subtree is $\rho^N(v(y))$. Recover every original
+relative reply with $|p|<h_\eta$ there using the same decoder, prefixing
+every actual query by $a_{\eta,y}$. Its absence guard applies to relative
+addresses as well. A sufficient uniform new raw bound is
+
+$$
+K=2M+\max_{\eta\text{ nonempty}}
+           2|Y_\eta|(2^{h_\eta}-1).
+\tag{CE.22.2}
+$$
+
+Only genuine $N$-epoch addresses and replies are raw events. Decoded
+original facts are logical consequences of those events, not fabricated
+historical acquisitions. The register remains at $N$ throughout.
+
+Intersect the domain automaton for $D_\eta$ with these finite coordinate
+prefix conditions and extract any accepted finite assignment $w$.
+The actual assignment proves nonemptiness. Thus this finite local
+computation terminates. Compute the entire finite
+$R_Q(F_\eta[w])$ and output it. The actual assignment and $w$ have equal
+observed prefixes, so Lemma 21.4 and Proposition 21.3 prove that their
+entire rows coincide. There is no assertion that $F_\eta[w]$ is the actual
+source. Its row is an evaluator of a value proved common to the whole
+conditioned domain. Extra decoder replies need not be matched by $w$:
+the proof already gives the same row on the larger domain selected by
+the decoded facts alone. They remain actual retained evidence if retained.
+This gives 1 implies 3, and 3 implies 4 by inclusion of service classes.
+
+For 4 implies 2 reuse the operational argument of §2 and [SLH, Theorem
+74.4, proof (iii)][SLH] at its exact interface. A source-total deterministic
+service with at most $K$ four-valued reads has finitely many reachable
+reply prefixes. Between successive reads, its deterministic computation,
+real updates and eventual next address or output are fixed by such a
+prefix and must terminate on every source reaching it. Therefore the
+submitted physical addresses on all reachable prefixes form a finite set.
+Let $B$ exceed all their lengths. Original $\equiv_B$ agreement forces the
+same reply at each submitted address at its actual, possibly adaptive,
+epoch, by Lemma 19.2's address locality. Induction gives the same complete
+serial transcript and output. Correctness forces equal entire rows.
+This argument assumes no extra source information from update timing,
+identity, hidden control or retained caches, exactly as Assumption 1.3
+requires. It does not assume a prior uniform work or update bound.
+Thus 4 implies 2 and all four statements are equivalent. $\square$
+
+**Proposition 22.2 (resources, acquisition and boundary cases).** Theorem
+22.1 preserves the actual acquisition/full-access-cut contract and all
+separately charged resource coordinates. Empty cuts, absent original
+endpoints and zero-parameter charts introduce no extra operation.
+
+Proof. If $Q$ is empty, Bad compares the entire exterior, which is the
+entire original tree. If $Q$ is the root cut, Bad is empty. An absent
+original $Q$ address is omitted only after its finite original guard has
+been resolved; a later birth does not create an original hole. If there
+are no old classes, the old context already fixes the source; all checks
+are ground. If elimination leaves no parameters, a consistent chart has
+one reconstructed finite source. The same proofs cover each case.
+
+The raw bound (CE.22.2) depends only on common retained input and the chosen
+finite calculation, not on the unknown source or on the allowed $N$.
+$N$ changes physical decoder addresses. The prefix phase has maximum
+address length at most
+
+$$
+\max\bigl(\{|p|:p\text{ a selector question}\}
+ \cup\{|a_{\eta,y}|+h_\eta-1:h_\eta>0,\ y\in Y_\eta\}\cup\{0\}\bigr)
+ +\lceil N/2\rceil.
+\tag{CE.22.3}
+$$
+
+Actual address construction and transmission, local computation, finite
+images and substitutions, automata determinization, witness construction,
+working memory, installation, entry, certification, versions, updates,
+archives and full output are separately charged. They may be large.
+No practical complexity or joint-resource optimum follows from finiteness.
+
+The formal constraints do not certify that any record was acquired.
+Assumption 1.3 remains necessary. Proposition 2.1 supplies a compatible
+producer: paid traversal of the original source computes its complete
+old row; paid traversals acquire each existing endpoint at its stipulated
+epoch; every requested literal, including repeats and absence, is actually
+read; real updates take place on the same register; comparisons use only
+those already paid finite descriptions. An absent relation endpoint gives
+a distinct invalid outcome. The producer is finite on each finite source.
+Under the stipulated complete cut it retains exactly the declared records,
+certified epoch and common control, making every other source-bearing
+value, count, timing field, handle and archive inaccessible. Its successful
+output fiber is exactly the conjunction used here, in both directions.
+This is a conditional mathematical access correspondence, not a physical
+erasure guarantee or a uniform acquisition-price claim. No consumer can
+recover forgotten trees for free from a retained comparison sign.
+
+The resulting output row does not automatically define a new complete
+access cut: all newly acquired replies and remaining old information
+must be accounted for by any subsequent forgetting contract. $\square$
+
+## 23. Family inclusion and coupled constructor-offset examples
+
+**Proposition 23.1 (a broad sufficient family and the synchronous inclusion).**
+The family $\mathcal E_{\rm CE}$ includes every input passing the supplied
+synchronous residual test on the uniform cover. More generally, in either
+cover suppose the mandatory equalities contain finitely many definitions
+
+$$
+\rho^{a_i}(x_i)=T_i,\qquad L_{a_i}(T_i)=V_i,
+\tag{CE.23.1}
+$$
+
+whose selected-variable dependency graph $x_i\to x_j$ for occurrences of
+$x_j$ in $V_i$ is acyclic. Suppose substituting these definitions in
+dependency order makes every remaining domain and target comparison
+synchronous residual, or proves the domain empty. If every chart has
+this property, the input belongs to $\mathcal E_{\rm CE}$.
+
+This admits arbitrary finite constructor templates and copying, for
+example
+
+$$
+x=\langle\rho(y),\rho^2(z)\rangle,
+\qquad
+\rho^2(w)=\langle\rho^3(y),\rho^4(z)\rangle,
+\tag{CE.23.2}
+$$
+
+followed by any jointly retained Boolean combination of supported
+residual comparisons. The second equation reconstructs
+$w=\langle\rho(y),\rho^2(z)\rangle$. The remaining domain is not required
+to be a product, and residual fixed-power cycles are allowed.
+
+Proof. The empty elimination schedule on the unchanged uniform cover
+witnesses the first inclusion; our reduction includes its constructor,
+ground and common-power rules. For the second claim, process definitions
+whose selected dependencies have already been eliminated. Acyclicity
+ensures that the right side of the resulting definition contains no
+occurrence of its selected variable. Every such step is permitted by
+Definition 20.2 and has the exact interpretation (CE.20.1). The resulting
+successful finite schedule appears in the exhaustive finite search.
+All charts, including infeasible charts not yet proved empty, are subject
+to the stated requirement. This is a syntactic sufficient inclusion,
+not a claim that every acyclic interpreted system can be normalized.
+The next examples prove that the first inclusion is strict at the
+specified synchronous-frontier interface. $\square$
+
+**Proposition 23.2 (an acquired coupled six-hole entire fiber).** Let
+
+$$
+P=\{LL,LR,R\},\qquad
+C=\langle\langle\square_1,\square_2\rangle,\square_3\rangle,
+\qquad \pi=\{\{1\},\{2\},\{3\}\}.
+\tag{CE.23.3}
+$$
+
+Retain literals $(0,RLR,\alpha)$ and $(0,RRR,\beta)$ and positive records
+
+$$
+(1,LL,0,RLL,=),\qquad(2,LR,0,RRL,=).
+\tag{CE.23.4}
+$$
+
+Also retain the three signed records
+
+$$
+(0,LL,2,LR,\ne),\qquad
+(0,LR,1,LL,\ne),\qquad
+(1,LL,2,LR,\ne).
+\tag{CE.23.5}
+$$
+
+For any certified $N\ge2$, the entire original fiber is exactly
+
+$$
+\begin{aligned}
+u(x,y)&=\langle\langle x,y\rangle,
+       \langle\langle\rho(x),\alpha\rangle,
+                    \langle\rho^2(y),\beta\rangle\rangle\rangle,\\
+D(x,y)&:\quad x\ne y\ \land\ x\ne\rho^2(y)
+        \ \land\ y\ne\rho(x)\ \land\rho(x)\ne\rho^2(y),
+\qquad x,y\in\mathcal T.
+\end{aligned}
+\tag{CE.23.6}
+$$
+
+Take the unchanged original cut
+
+$$
+Q=\{LL,LR,RLL,RLR,RRL,RRR\}.
+\tag{CE.23.7}
+$$
+
+This acquired input belongs to $\mathcal E_{\rm CE}$. It fails the
+unmodified synchronous test on its uniform old-class frontier cover.
+Its entire row has a static consumer using at most two new actual reads.
+
+Proof. Write the three old class values as $x,y,z$. The two literal
+leaves force
+$z=\langle\langle a,\alpha\rangle,\langle b,\beta\rangle\rangle$.
+Original-address transport in (CE.23.4) forces $a=\rho(x)$ and
+$b=\rho^2(y)$. The three negative records are precisely the final three
+conditions in $D$; their endpoints exist because $LL,LR$ are original
+holes. The old $x\ne y$ is still required. The remaining two old
+inequalities are automatic, since
+
+$$
+\ell(z)=\ell(\rho(x))+\ell(\rho^2(y))+2
+          >\ell(x),\ell(y).
+\tag{CE.23.8}
+$$
+
+Thus necessity gives (CE.23.6), and every finite $(x,y)$ satisfying $D$
+gives exactly all the retained data, including the complete three-class
+old partition. Both directions use the entire joint domain. Neither
+parameter has a size or shape bound.
+
+For all-chart eligibility use the navigation cover, with the literal
+requests first. To reach $RLR$ and $RRR$ it splits $z$, its left child
+and its right child. Every wrong ancestor-leaf case is rejected; the
+terminal literals fix the two displayed leaf values. No request needs
+the root label of $x,y,a,b$. Thus there is exactly one surviving chart
+before its joint constraints are imposed:
+
+$$
+W=\langle\langle x,y\rangle,
+           \langle\langle a,\alpha\rangle,\langle b,\beta\rangle\rangle\rangle.
+\tag{CE.23.9}
+$$
+
+Eliminate $a=\rho(x)$ and $b=\rho^2(y)$. The two old inequalities involving
+$z$ reduce by the bare-variable occurs rule (or (CE.23.8)); the old
+$x\ne y$ remains. The domain is exactly the synchronous conjunction
+$D$. The six complete hole values, in order, are
+
+$$
+x,\ y,\ \rho(x),\ \alpha,\ \rho^2(y),\ \beta.
+\tag{CE.23.10}
+$$
+
+Every comparison of these is between decorated variables or a decorated
+variable and a ground leaf. Hence all target comparisons pass too.
+Rejected navigation branches were rejected only by actual literals.
+This verifies eligibility for every chart, not just a selected source.
+
+For strictness, the uniform cover uses $d=4$. Let $B_j$ be the perfect
+height-$j$ tree with all leaves $\alpha$. Choose
+$x=B_{d+2}$ and $y=B_{d+4}$. They satisfy $D$: their clocks are $2d+4$
+and $2d+8$, and the four clocks of $x,y,\rho(x),\rho^2(y)$ are distinct.
+Consider their nonempty uniform chart. At original $RLL$ a full value
+$\rho(x)$ is nested two levels inside the old $z$ class. At its suffix
+$LL$, a $z$-frontier variable $c$ is compared with the known pairing
+$\rho(x|_{LL})$, whose non-ground descendants still contain $x$-frontier
+variables. Pair cancellation therefore leaves $c=T$ with $T$ a
+non-ground pairing of decorated $x$ variables. The supplied synchronous
+test stops at just this unsupported shape. The chart contains the finite
+source just displayed, so infeasibility cannot remove it. The same
+misalignment persists at any common deeper old-class frontier with
+sufficiently tall $x,y$. Elimination changes coordinates; it does not
+assert that the old constructor-offset graph was synchronous.
+
+All six holes are reached and their entire outside context is
+
+$$
+\langle\langle\square_1,\square_2\rangle,
+       \langle\langle\square_3,\square_4\rangle,
+                    \langle\square_5,\square_6\rangle\rangle\rangle.
+\tag{CE.23.11}
+$$
+
+The four values at holes $1,2,3,5$ are pairwise different: use $D$ and
+$\kappa(\rho^j(t))=\kappa(t)+j$. No positive image is $\alpha$, and no
+second image is $\beta$, by the partial inverse. Besides singleton
+identities, the complete partition is consequently generated by
+
+$$
+\begin{array}{c|c}
+\text{condition}&\text{hole equality}\ \hline
+x=\alpha&1=4,\quad 3=6\\
+x=\beta&1=6\\
+y=\alpha&2=4\\
+y=\beta&2=6.
+\end{array}
+\tag{CE.23.12}
+$$
+
+These exhaust all fifteen unordered comparisons; any transitive
+consequence is taken when canonicalizing the partition. Incompatible
+root combinations simply cannot occur under $D$.
+
+Use the known-existing-subtree root decoder [SLH, Definition 2.1][SLH]
+at actual addresses
+
+$$
+LLR^{\lceil N/2\rceil},\qquad LRR^{\lceil N/2\rceil}.
+\tag{CE.23.13}
+$$
+
+Here concatenation follows $LL$ or $LR$ by the displayed power of $R$.
+At positive even $N$, replies $\alpha,\beta,\mathsf{branch}$ give the
+three original root cases directly. At odd $N$, replies
+$\mathsf{absent},\alpha,\{\beta,\mathsf{branch}\}$ give respectively
+$\alpha,\beta,\mathsf{branch}$. Output (CE.23.11), all six original hole
+addresses and the complete partition (CE.23.12). These are two paid
+queries on the actual register and the whole original row is returned.
+The bound holds on every finite $(x,y)$ in $D$, independently of $N$.
+
+The consumer is active: set $y=\langle\alpha,\alpha\rangle$. Both
+$x=\alpha$ and $x=\beta$ satisfy $D$ (the potentially compared transformed
+values are branches with the indicated distinct clocks), and their
+partitions in (CE.23.12) differ. Hence zero calls cannot suffice, even
+with real updates. No claim of an exact two-call minimum is needed.
+
+For actual acquisition use Proposition 2.1 with this fixed schedule:
+paid original acquisition supplies the old row and all epoch-zero
+endpoints; the two specified literals are actually issued; one real
+update and paid $LL$ traversal supply its epoch-one value; a second real
+update and paid $LR$ traversal supply its epoch-two value. Compare only
+paid descriptions to obtain (CE.23.4)–(CE.23.5). After any additional real
+updates to the certified $N$, impose the complete cut. The producer's
+matching output has exactly (CE.23.6) as its fiber. $\square$
+
+**Proposition 23.3 (the same target with finite negative witnesses).** Delete
+only (CE.23.5), keeping $P,R,H_0$, (CE.23.4), $Q$ and $N$ as above.
+The entire fiber becomes
+
+$$
+U^- =\{u(x,y):x,y\in\mathcal T,\ x\ne y\}.
+\tag{CE.23.14}
+$$
+
+It still belongs to $\mathcal E_{\rm CE}$, but no permitted source-total
+serial or static service has a uniform finite new-read budget.
+
+Proof. The same two-direction derivation and (CE.23.8) leave exactly the
+old $x\ne y$. The same single navigation chart and two eliminations work;
+the domain and all comparisons of (CE.23.10) remain synchronous. This is
+an all-chart negative instance of Theorem 22.1.
+
+Explicitly fix an inclusive depth $b$. Let $x=B_{b+3}$ and $y=\rho(x)$.
+In $y$, change the leaf at address $L^{b+3}$ from $\beta$ to $\alpha$,
+obtaining $y'$. These are different finite trees with equal replies at
+all relative depths at most $b$. This leaf lies outside the right spine,
+so $\kappa(y')=\kappa(y)=\kappa(x)+1$. Consequently $x\ne y$ and
+$x\ne y'$, preserving the full old partition in both reconstructed
+sources. The changed third class is recomputed according to its retained
+definitions, rather than held as an independently chosen value.
+
+Lemma 19.2 gives $u(x,y)\equiv_{b+1}u(x,y')$. Both are finite members of
+the entire fiber (CE.23.14). All six original holes exist. Holes $2,3$
+are equal in the first and unequal in the second. Thus their entire
+rows differ. This exhibits finite bad pairs at every requested depth;
+the finite-reply-tree implication in Theorem 22.1 excludes every uniform
+finite raw budget, including all allowed adaptive serial updates.
+The source domain and the complete six-hole target have not been reduced
+to that one witnessing comparison. $\square$
+
+## 24. Canceled parameters and boundaries of the presentation
+
+**Proposition 24.1 (a common unbounded parameter can be irrelevant).** Let
+$g=B_3$, the perfect height-three all-$\alpha$ tree. Set
+
+$$
+P=\{LL,RL,RR\},\qquad
+C=\langle\langle\square_x,g\rangle,
+              \langle\square_x,\square_y\rangle\rangle,
+\qquad H_0=H_{\rm rel}=\varnothing,
+\tag{CE.24.1}
+$$
+
+with old classes $\{LL,RL\}$ and $\{RR\}$ distinct. Its entire fiber is
+$u(x,y)=\langle\langle x,g\rangle,\langle x,y\rangle\rangle$ with
+$x\ne y$. For $Q=\{L,R\}$ the complete original row is determined by
+the sole condition $y=g$: its outside is $\langle\square_1,\square_2\rangle$
+and the two holes are equal exactly under that condition. The input is
+in $\mathcal E_{\rm CE}$ and the criterion answers positively, although
+$x$ remains unbounded and appears in both compared trees.
+
+Proof. This is the exact old-row correspondence with a repeated class.
+Free constructor cancellation gives
+
+$$
+\langle x,g\rangle=\langle x,y\rangle
+                 \quad\Longleftrightarrow\quad y=g.
+\tag{CE.24.2}
+$$
+
+In the uniform depth-two cover, every old inequality reduces to ordinary
+synchronous equalities under negation: both patterns have the same
+frontier depth, and a shorter concrete leaf produces a ground test or
+constructor clash. Each target equality cancels the common $x$ pattern
+and compares the $y$ pattern with ground $g$, again yielding only ground
+tests. Thus every chart is eligible with no elimination. The outside
+has no surviving variable. In its Bad formula $x$ can affect feasibility
+via $x\ne y$ but has no independent output-disagreement term.
+
+Agreement through the four relative levels $|p|<4$ of $y$ decides whether
+$y=g$: the eight matching depth-three leaf replies force the entire
+finite tree, including its shape, by complete-leaf rigidity. Therefore
+Bad has no pair with that coordinate-prefix agreement, and Lemma 21.4
+answers positively. Alternatively, eight actual delayed-leaf probes
+below the originally reached $RR$ node, as in [SLH, Theorem 55.3][SLH],
+test $y=g$ at any certified $N$ and output the stated entire row.
+All costs other than these eight raw calls remain separate.
+
+The equality and inequality rows both occur while $x$ remains large:
+choose $x=B_4$ and take $y=g$ or $g$ with one deepest leaf changed to
+$\beta$. Thus requiring every parameter occurring in the two compared
+terms to become ground would be false. Only actual exterior dependence
+and the exact reduced equality status belong in (CE.21.2). This example
+checks fidelity to the already supplied literal-history result
+[SLH, Definitions 74.3–74.4][SLH]; it is not a new literal-price theorem.
+$\square$
+
+**Proposition 24.2 (what exact representation alone does not supply).**
+A finite source presentation with a synchronous domain and constant
+whole row in each chart does not by itself imply finite original-prefix
+determination. Bounded original-prefix chart selection, or an explicit
+decision of cross-chart Bad, is also necessary for the cellwise argument.
+
+Proof. For the old one-hole root row and no history, use charts
+$\alpha$, $\beta$, $\langle x,x\rangle$, and
+$\langle x,y\rangle$ with $x\ne y$. These are an exact finite disjoint
+presentation of all finite sources; their domains are synchronous and
+$Q=\{L,R\}$ has a constant entire row on each chart. Every within-chart
+Bad is empty. But finite $t,t'$ can agree arbitrarily deeply while being
+different. The sources $\langle t,t\rangle$ and $\langle t,t'\rangle$
+then have arbitrarily deep identical original prefixes and different
+full two-hole partitions. Equality-chart identity has no bounded-prefix
+selector. Definitions 19.3 and 20.2 avoid this error: all branch selection
+is an original constructor question, and elimination introduces no
+semantic branches. $\square$
+
+**Definition 24.3 (the remaining interpreted constraint obligation).**
+The recognizer supplies neither a complete normalizer for arbitrary
+$\rho^a(x)=T$ nor a decision for an unsupported chart. In particular
+failure of $L_a$, inability to eliminate a cyclic definition, or a
+remaining decorated-variable/non-ground-constructor target comparison
+is an eligibility failure only. The finite solution
+$(x,y,z)=(\beta,\beta,\alpha)$ of
+$\rho(x)=\langle y,z\rangle$ forbids a branch-only inverse rule that
+would replace $x$ by a pair. The solution $x=\beta$ of
+$\rho(x)=\langle x,\alpha\rangle$ likewise forbids an unqualified
+interpreted occurs check.
+
+The synchronous methods here do not make constructor-offset graphs
+synchronous in the original coordinates. For the particular graph
+$y=\langle x,\alpha\rangle$, the supplied convolution obstruction can
+be checked directly. Suppose a deterministic bottom-up automaton
+recognized it. In the accepted convolution for
+$x=\langle\alpha,t\rangle$ and
+$y=\langle\langle\alpha,t\rangle,\alpha\rangle$, the $LR$ cone is the
+one-sided padding of $t$ and the other occurrence of $t$ lies in the
+disjoint $R$ cone. Two different finite $t,t'$ give the same state on
+that one-sided cone. Replacing only the $LR$ cone preserves acceptance
+and valid convolution, but makes $y=\langle\langle\alpha,t'\rangle,\alpha\rangle$
+while $x$ stays fixed. This contradicts the graph. Determinization covers
+nondeterministic recognizers. This is a representation obstruction, not
+an undecidability theorem. Theorem 22.1 uses an exact change to recoverable
+original coordinates instead.
+
+Finite productivity must also remain part of the decision. Infinite
+pair trees can satisfy $\rho(\Omega)=\Omega$, whereas every finite $t$
+satisfies $t\ne\rho(t)$ by its clock. Passing to arbitrary infinite
+solutions can therefore change complete partitions. Neither infinite
+solutions, satisfiability alone, a finite output image, nor a sampled
+source family settles the finite original-prefix question.
+
+## 25. Supplier correspondence, new content and open targets
+
+The source-relative addition is the exact, terminating constructor-
+definition presentation with surviving original-subtree coordinates,
+its two prefix directions and bounded chart selector, and its application
+to the entire exterior/reached-hole/partition target and paid consumer.
+Propositions 23.2–23.3 exhibit acquired, non-product, constructor-offset
+fibers beyond the unchanged uniform synchronous frontier test. This is
+`repo-derived` ordinary mathematics. No global originality, priority,
+solver implementation, Lean compilation or kernel-validation claim is
+made. Standard substitution and finite automata are reused methods.
+
+The supplier correspondences are deliberately restricted:
+
+- [SLH, Theorem 69.4][SLH] supplies its finite historical VALUE minimax;
+  [SLH, §§70–73][SLH] supply their known-ancestor merging and joint
+  constraints. They are neither replaced nor redescribed as this
+  constructor extension. [SLH, Theorem 74.4][SLH] supplies the entire
+  arbitrary-recut literal-history criterion, the finite patterns and
+  operational finite-prefix argument used at the stated interfaces.
+- The published §§1–3 supply actually acquired signed histories, both
+  endpoint guards, complete old-row fibers and the general static/serial
+  existence bridge. The root-descendant orbit fragment and the ordinary
+  free-term cell compilation barrier retain their separate scopes.
+  Neither is needed as a new theorem here.
+- The fixed-power convolution construction, Boolean closure and
+  productive diagonal-prefix test are the synchronous supplier interface.
+  Lemmas 21.1 and 21.4 check exactly that interface for surviving finite
+  original coordinates. They supply no closure of constructor-offset
+  graphs on the old tuple. No statement from an unexamined continuation
+  is a premise of the constructor/prefix proof.
+- The separate ordinary literal-history complete-row price source
+  [SCR][CE-SCR] has domain $\mathcal U_R(H)$ without arbitrary relation
+  records. Its exact static/serial prices are not transferred to
+  $\mathcal U_R(H_0,H_{\rm rel})$. The bound (CE.22.2) is a constructive
+  upper bound, not a new general minimum-price formula.
+- At repository commit
+  `e7cb431501d5ebd423603bea476ebefcce3090af`,
+  [`ActualTreeReadoutAcquisition.source_foundation`][CE-ACQ] includes
+  complete-leaf rigidity on finite sources. Its original Boolean policy
+  and fixed-source execution are not the present serial entire-row
+  contract. [`adaptive_leaf_count_le_pow`][CE-COUNT] has an explicit
+  finite branch count and depth. The operational use here instantiates
+  four reply alternatives after source-total deterministic segments are
+  compressed; it does not import a hidden uniform work bound.
+- The pinned mathlib [`Term.realize_subst` and
+  `BoundedFormula.realize_subst`][CE-SEM] state that substitution commutes
+  with realization. Interpret the language's pairing and unary operation
+  on $\mathcal T$ by the actual pairing and $\rho$. These statements match
+  the semantic substitution step in Proposition 20.3; they do not supply
+  eligibility completeness, tree-automaton construction or a paid source
+  consumer. This correspondence is not a compiled application.
+- [Lin, *Accelerating tree-automatic relations*, §3 and Proposition 1][CE-LIN]
+  uses the union-domain padded convolution and gives effective logical
+  closure for a **given** tree-automatic presentation. The finite ranked
+  alphabet and graph grammars in Lemma 21.1 furnish that presentation.
+  No acceleration theorem or complexity bound from that paper is used.
+  This is `literature-attested` automata background, not an external
+  theorem about this acquired source fiber.
+
+The bounded supplier inspection is of those pinned declarations,
+published theory interfaces, and the primary convolution/closure result.
+It establishes no repository-wide or literature-wide absence theorem.
+The ordinary proofs provide the new source/application bridge themselves;
+no unverified solver, binding-only retained declaration or formal approval
+is supplied. The exposition uses the formal-thinking, SSHX and
+[theory-volume-template][CE-TEMPLATE] conventions as an independent
+ordinary author fragment; it is not independent review of itself.
+
+The unrestricted problem remains the effective decision, for arbitrary
+finite actually acquired guarded coupled $H_{\rm rel}$, whether a single
+finite original prefix determines the entire $R_Q$ on the entire nonempty
+finite-source fiber. Residual cyclic decorated-constructor constraints
+and unsupported target comparisons still require a richer exact
+representation or another complete bounded-disagreement method. Any such
+method must preserve all old inequalities, both finite-source directions,
+original-prefix observation and finite negative witnesses; failure of
+this recognizer gives no negative answer to that problem.
+
+General minimum raw budgets for arbitrary $H_{\rm rel}$, joint-resource
+optima and charged attainment remain open. The original stochastic
+$j_c$ alternatives, joint full-law calibration, finite exact stochastic
+optimum and effective charged stochastic attainment are unchanged.
+This deterministic constructor extension advances the persistent
+self-calibration programme and does not complete or replace it.
+
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[CE-SCR]: https://github.com/the-omega-institute/trureturing/pull/15374
+[CE-ACQ]: https://github.com/the-omega-institute/trureturing/blob/e7cb431501d5ebd423603bea476ebefcce3090af/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[CE-COUNT]: https://github.com/the-omega-institute/trureturing/blob/e7cb431501d5ebd423603bea476ebefcce3090af/D5/S3/Observer/Budget/WorstCaseDepthInformationLowerBound.lean
+[CE-SEM]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/ModelTheory/Semantics.lean
+[CE-LIN]: https://anthonywlin.github.io/papers/fsttcs12.pdf
+[CE-TEMPLATE]: ../../../skills/theory-volume-template/SKILL.md
+
+## 追加锚（本行以下为增补区）
