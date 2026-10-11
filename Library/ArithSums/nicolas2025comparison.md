@@ -9894,3 +9894,211 @@ QGP, coverage of the unknown common start at the required actual sources,
 and the formal analytic implementation remain open. There is no numerical
 start, broader exponent claim, new finite interval, priority assertion or
 RH completion. The full RH/Robin/5040 research goal remains **ACTIVE**.
+
+## Project application: a tighter sinc allowance reaches 8
+
+This `repo-derived` application retains the complete signed response,
+positive law, deterministic transport and unrestricted reserve of the
+GAK application above. Its additional estimate is a tighter sine cutoff,
+consumed with different law parameters. Under the same primary analytic
+premises stated in GAK section 1, it gives a strict Robin margin for
+**every** integer in the larger clock interval
+\[
+ \frac72 10^{46}<A=\log n\le8\cdot10^{46}.
+\tag{GAK40}
+\]
+The original margin \(3/1000\) on the original interval through
+\(7.2\cdot10^{46}\) remains valid; the margin for (GAK40) is
+\(2/1000\). No primary analytic proof audit, Lean/kernel certification,
+least-counterexample bound or unbounded RH estimate is asserted.
+
+### Tighter cutoff using the existing sine tools
+
+For all real \(v\) with \(|v|\ge51/20\),
+\[
+ \frac{|\sin v|}{|v|}\le\frac7{32}.
+\tag{GAK41}
+\]
+The monotonicity of sinc on \((0,\pi)\), the alternating sine remainder,
+the concavity tangent bound and \(|\sin v|\le1\) are standard tools.
+Here is their parameter-specific application, without a new general
+sinc theorem.
+
+Put \(b=51/20\), \(q_0=7/32\), and
+\[
+ P_{13}(b)=\sum_{j=0}^{6}\frac{(-1)^jb^{2j+1}}{(2j+1)!}.
+\]
+The omitted sine tail starts with the negative degree-fifteen term;
+successive omitted absolute terms decrease, since already
+\(b^2/(16\cdot17)<1\). Thus \(\sin b\le P_{13}(b)\).
+Exact rational comparison gives
+\[
+ q_0b-P_{13}(b)>\frac1{10000}.
+\tag{GAK42}
+\]
+Since sinc decreases on \([b,\pi]\), this pays the first band.
+
+On \([\pi,32/7]\), use the classical bound \(\pi>157/50\) and put
+\(t=v-\pi\). Then \(0\le t<501/350\) and \(v<2\pi\), so
+\(|\sin v|=\sin t\). The degree-five upper prefix
+\[
+ P_5(t)=t-t^3/6+t^5/120
+\]
+has a negative first omitted term and decreasing omitted terms on this
+band, and hence \(\sin t\le P_5(t)\). It is concave on
+\([0,501/350]\), because \(P_5''(t)=-t+t^3/6\le0\).
+With \(t_0=34/25\), exact comparisons give
+\[
+ \begin{split}
+ q_0-P_5'(t_0)&>\frac1{1000},\\
+ q_0\frac{157}{50}
+   -\bigl(P_5(t_0)-t_0P_5'(t_0)\bigr)&>\frac3{1000}.
+ \end{split}
+\tag{GAK43}
+\]
+The tangent upper bound therefore satisfies
+\[
+ \sin t\le P_5(t)
+ \le P_5(t_0)+(t-t_0)P_5'(t_0)
+ <q_0(t+157/50)<q_0v.
+\]
+For \(v\ge32/7\), use \(|\sin v|/v\le1/v\le7/32\).
+Reflection supplies the negative axis and proves (GAK41).
+
+### Change the law parameters and retain actual zero real parts
+
+Use the **same whole-law construction** (GAK3)–(GAK6), now with
+\[
+ H=3\cdot10^{12},\qquad k=21,\qquad
+ a=\frac{51}{20H},\qquad x=a^2,\qquad q=\frac{219}{1000}.
+\tag{GAK44}
+\]
+Its mean is exactly one. The parameter-dependent bounds are
+\[
+ M_*=\frac1{1-2kx},\qquad
+ V_*=\frac{kx}{3-(k+3)x},\qquad
+ \epsilon=ka+\frac{kx}{1-x}.
+\tag{GAK45}
+\]
+Both denominators are positive, and exact substitution gives
+\[
+ \epsilon<1/1000,\qquad
+ \frac{99}{100}<1-\epsilon\le C
+ \le(1-\epsilon)^{-1}<\frac{101}{100}.
+\tag{GAK46}
+\]
+These are full-support bounds, with no discarded scales or conditional
+mean. All moment and centered transport hypotheses in GAK therefore
+remain available.
+
+For an actual tail zero \(\rho=\beta+i\gamma\), put
+\(u=\beta-1\in(-1,0)\), retaining \(|\gamma|\ge H\).
+The complex normalization argument of (GAK8), using (GAK41), gives
+\[
+ |S(a(u+i\gamma))|
+ \le\frac7{32}+\frac{20}{51}\frac{a}{1-x},
+\]
+and consequently
+\[
+ |H_C(\rho)|\le q_*^{21}<q^{21},\qquad
+ q_*:=\frac{7/32+(20/51)a/(1-x)}{1-x}
+       <\frac{219}{1000}.
+\tag{GAK47}
+\]
+In particular the normalization \((1-x)^{-1}\) is not omitted.
+This bounds **all actual** \(0<\beta<1\), both ordinate signs, and
+all tail heights. Critical-line verification is used only on the
+original finite head. The head estimate (GAK9) still uses \(M_*\).
+
+### Pay the complete response on the enlarged interval
+
+Retain \(L=\log A\), \(T=\sqrt A L\), the full coefficient
+\(F_A\) in (GAK10), all actual multiplicities and endpoint conventions.
+The parameter-dependent derivations (GAK18)–(GAK24) apply to the law
+(GAK44): replace their original tail damping by \(q^{21}\), and use
+the new \(M_*,V_*\). No leading-term replacement or new zero
+population is introduced. The signed elementary correction remains in
+the complete deterministic response and its allowance.
+
+The lower-clock bounds \(L>107\), \(\sqrt A>10^{23}\) and
+\(\eta_0(A)<10^{-6}\) in (GAK25)–(GAK26) are independent of the
+upper endpoint. Put
+\[
+ r=\frac{2829}{1000}10^{23},\qquad
+ r^2=8.003241\cdot10^{46}>8\cdot10^{46}.
+\tag{GAK48}
+\]
+Thus \(\sqrt A<r\) throughout (GAK40), including its upper endpoint.
+Define exact positive rational allowances
+\[
+ \begin{split}
+ U_h&=\frac{108}{107}\frac{527}{500}\frac1{20}M_*,\\
+ U_t&=2\frac{108}{107}\frac{10001}{10000}r
+        \frac{37}{25\cdot10^{12}}\left(\frac{219}{1000}\right)^{21},\\
+ U_v&=\frac{260001}{500000}rV_*,\qquad
+ U_e=\frac{5M_*}{10^{23}},\qquad U=U_h+U_t+U_v+U_e.
+ \end{split}
+\tag{GAK49}
+\]
+These increase each positive cost in (GAK23)–(GAK24). They pay the
+entire head, infinite tail, centered transport and elementary correction,
+respectively. In particular \(A^{\beta-1/2}\le\sqrt A\) is applied
+only after retaining the actual tail \(\beta\) in (GAK47).
+The reused estimates therefore give \(-T I_\psi(A)<U\).
+
+For the original reserve constant
+\[
+ Q_R=\frac{67838284064811}{83593750000000},
+\]
+exact rational substitution in (GAK49) yields
+\[
+ 0.002407<Q_R-U<0.002408,\qquad Q_R-U>\frac2{1000}.
+\tag{GAK50}
+\]
+For orientation only, the rounded contributions are
+\(U_h\approx0.0531925234\), \(U_t\approx0.0119215981\),
+\(U_v\approx0.7440015715\); the comparison (GAK50) uses the exact
+fractions, including \(U_e\).
+
+Reuse (GAK37) and **each integer's actual defect** in (GAK39), at
+\(A=\log n\) and \(\lambda=1/(AL)\). It follows that
+\[
+ \sqrt A\log A\,\Delta(n)
+ >\frac2{1000}+\frac{\log A}{(\log A+2)^3}
+   +\sqrt A\log A\,d_A(n)>0.
+\tag{GAK51}
+\]
+This proves the stated conditional Robin conclusion on (GAK40), with
+no CA hypothesis and without setting \(d_A(n)=0\).
+
+For the separate **same least global maximizer** corollary, retain every
+selection, own-price CA, properness, SevenSmooth, Kalyabin,
+Axler/Nicolas lower-clock and finite signed-response supplier listed in
+GAK section 10. That complete extra chain places the same selected
+\(A\) above \((7/2)10^{46}\); (GAK51) then excludes
+\(A\le8\cdot10^{46}\). Only under that unchanged extra chain does
+the same selected least global maximizer satisfy
+\(\log N>8\cdot10^{46}\). This is not a bound for the least Robin
+counterexample, or a transfer to an unbounded selected family.
+
+### Reuse, certificates and the remaining unbounded gap
+
+The positive law, full-response exchange, deterministic transport,
+reserve and integer-defect identity are reused from GAK. Standard sine
+tools supply the cutoff calculation; no new general theorem or global
+originality claim is made. The actual gain over the original GAK
+parameters is quantitative: at (GAK48), their same rational allowance
+exceeds \(Q_R\), while (GAK49) pays it with margin (GAK50).
+
+The parameter-specific
+[exact rational program and results](https://github.com/the-omega-institute/trureturing-experiments/tree/0f4e4f1e8c1f1923dfbccc1903257d698d6db49f/experiments/robin-sinc-clock-8e46)
+check the sine-prefix and tangent comparisons, denominator positivity,
+whole support, actual-real-part normalization, square-root endpoint and
+complete allowance. Their 20 comparisons use rational arithmetic;
+decimal displays are not evidence. They do not certify the named
+external analytic inputs or the full analytic inference in Lean.
+
+For this fixed law \(V_*>0\) and \(q^{21}>0\). Its positive
+transport and unverified-tail allowances still grow with \(\sqrt A\).
+Thus (GAK51) supplies a finite interval improvement only. The original
+unbounded same-source signed-tail estimate and RH remain open.
