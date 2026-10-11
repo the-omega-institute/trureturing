@@ -148,8 +148,8 @@ def prepare(root, scope="full"):
         modules = inputs.modules()
         scope_file = os.environ.get('STRATALINT_INSPECTOR_SCOPE_FILE')
         if scope_file:
-            scope = public.read_json(Path(scope_file).read_bytes())
-            selected = {row['module']: row['source_path'] for row in scope['modules']}
+            scope_data = public.read_json(Path(scope_file).read_bytes())
+            selected = {row['module']: row['source_path'] for row in scope_data['modules']}
             if not selected or any(modules.get(name) != path for name, path in selected.items()):
                 raise ValueError('invalid scoped report membership')
             modules = selected
