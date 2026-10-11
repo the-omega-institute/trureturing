@@ -2911,3 +2911,339 @@ u_j=Dq_j\,u_{j+1},
 
 该推论给出一个不依赖物理解释的稳定性判据。若图 sector 和 FIB sector 的有限层下界在相容细化中保持正，则其直和载体具有统一的正稳定下界。若某个 sector 的下界趋于零，必须记录为该 sector 的数学软化或退化，不能用另一个 sector 的正下界掩盖它。
 
+
+
+---
+
+## 21. Fibonacci 支持层的具体相容投影
+
+本节把第 20 节的抽象相容系统具体化到已有的 Fibonacci 独立支持层。这里的状态是支持集合，五态 FIB 是 \(n=3\) 的局部实例：
+
+\[
+\Sigma_3
+=
+\{\varnothing,\{1\},\{2\},\{3\},\{1,3\}\}
+\longleftrightarrow
+\{0,2,3,5,25\}.
+\]
+
+### 定义 21.1（删除投影）
+
+令
+
+\[
+\Sigma_n
+=
+\{I\subseteq[n]:
+i\in I\Longrightarrow i+1\notin I\}.
+\]
+
+定义
+
+\[
+\delta_n:\Sigma_{n+1}\longrightarrow\Sigma_n,
+\qquad
+\delta_n(I)=I\cap[n].
+\]
+
+对概率律定义线性推前
+
+\[
+D_n:\Delta(\Sigma_{n+1})\longrightarrow\Delta(\Sigma_n),
+\]
+
+\[
+(D_np)(J)
+=
+\sum_{\substack{I\in\Sigma_{n+1}\\\delta_n(I)=J}}p(I).
+\]
+
+对有符号质量和切向量使用同一个线性映射 \(D_n\)。
+
+### 定理 21.2（Fibonacci 删除投影的观察交换与隐藏核满射）
+
+令
+
+\[
+T_n
+=
+\left\{
+v\in\mathbb R^{\Sigma_n}:
+\sum_{I\in\Sigma_n}v_I=0
+\right\},
+\]
+
+\[
+(A_nv)_i
+=
+\sum_{I\ni i}v_I,
+\qquad
+i\in[n].
+\]
+
+令 \(\operatorname{pr}_n:\mathbb R^{n+1}\to\mathbb R^n\) 删除最后一个坐标。则：
+
+1. \(\delta_n\) 和 \(D_n\) 都是满射；
+2. 对所有 \(v\in\mathbb R^{\Sigma_{n+1}}\)，
+   \[
+   A_nD_nv
+   =
+   \operatorname{pr}_n A_{n+1}v;
+   \]
+3. \(D_n(T_{n+1})\subseteq T_n\)，并且限制映射
+   \[
+   D_n:
+   \ker(A_{n+1}|_{T_{n+1}})
+   \longrightarrow
+   \ker(A_n|_{T_n})
+   \]
+   是满射；
+4. 其核维数为
+   \[
+   \dim\ker\left(
+   D_n:
+   \ker(A_{n+1}|_{T_{n+1}})
+   \to
+   \ker(A_n|_{T_n})
+   \right)
+   =
+   F_{n+1}-1.
+   \]
+
+#### 证明
+
+对任意 \(J\in\Sigma_n\)，集合 \(J\) 本身看作 \([n+1]\) 的子集，满足
+
+\[
+\delta_n(J)=J.
+\]
+
+所以 \(\delta_n\) 满射，\(D_n\) 将对应的 Dirac 质量推到 \(J\)，因而也是概率单纯形的满射。
+
+对 \(i\le n\)，有
+
+\[
+\begin{aligned}
+(A_nD_nv)_i
+&=
+\sum_{\substack{J\in\Sigma_n\\i\in J}}
+\sum_{\delta_n(I)=J}v_I\\
+&=
+\sum_{\substack{I\in\Sigma_{n+1}\\i\in I}}v_I\\
+&=
+(A_{n+1}v)_i.
+\end{aligned}
+\]
+
+这正是
+
+\[
+A_nD_n=\operatorname{pr}_nA_{n+1}.
+\]
+
+由于 \(D_n\) 的各列和为一，质量零空间被保持。若
+
+\[
+w\in\ker(A_n|_{T_n}),
+\]
+
+定义 \(\widetilde w\in\mathbb R^{\Sigma_{n+1}}\) 为
+
+\[
+\widetilde w_J=w_J
+\quad(J\in\Sigma_n),
+\qquad
+\widetilde w_I=0
+\quad(I\ni n+1).
+\]
+
+则
+
+\[
+D_n\widetilde w=w,
+\qquad
+\sum_I\widetilde w_I=0.
+\]
+
+由观察交换式，
+
+\[
+A_{n+1}\widetilde w
+=
+\bigl(A_nw,0\bigr)
+=
+0.
+\]
+
+故限制映射满射。使用已有公式
+
+\[
+h_n
+=
+\dim\ker(A_n|_{T_n})
+=
+F_{n+2}-n-1,
+\]
+
+有
+
+\[
+\begin{aligned}
+\dim\ker D_n
+&=
+h_{n+1}-h_n\\
+&=
+(F_{n+3}-(n+1)-1)-(F_{n+2}-n-1)\\
+&=
+F_{n+1}-1.
+\end{aligned}
+\]
+
+证毕。
+
+这个结果把“新一层的隐藏信息”精确化为：
+
+\[
+\boxed{
+\text{每增加一个 Fibonacci 支持位，删除投影不可见的新方向数为 }F_{n+1}-1.
+}
+\]
+
+它是状态空间线性代数结论，不涉及信息论或物理解释。
+
+### 定义 21.3（Fibonacci 层 Fisher 曲率）
+
+在内部单纯形
+
+\[
+\Delta(\Sigma_n)^\circ
+=
+\{p_I>0:\sum_Ip_I=1\}
+\]
+
+上，对 \(u\in T_p\Delta(\Sigma_n)\) 定义
+
+\[
+\mathcal I_n(p;u)
+=
+\sum_{I\in\Sigma_n}\frac{u_I^2}{p_I}.
+\]
+
+### 定理 21.4（Fibonacci 删除投影的 Fisher 数据处理）
+
+对任意
+
+\[
+p\in\Delta(\Sigma_{n+1})^\circ,
+\qquad
+u\in T_p\Delta(\Sigma_{n+1}),
+\]
+
+有
+
+\[
+\boxed{
+\mathcal I_n(D_np;D_nu)
+\le
+\mathcal I_{n+1}(p;u).
+}
+\]
+
+等号当且仅当对每个 \(J\in\Sigma_n\)，以及所有满足 \(\delta_n(I)=J\) 且 \(p_I>0\) 的 \(I\)，比值
+
+\[
+\frac{u_I}{p_I}
+\]
+
+相同。
+
+#### 证明
+
+对每个 \(J\in\Sigma_n\)，记
+
+\[
+P_J=(D_np)(J)
+=
+\sum_{\delta_n(I)=J}p_I,
+\qquad
+U_J=(D_nu)(J)
+=
+\sum_{\delta_n(I)=J}u_I.
+\]
+
+由加权 Cauchy–Schwarz，
+
+\[
+\frac{U_J^2}{P_J}
+\le
+\sum_{\delta_n(I)=J}\frac{u_I^2}{p_I}.
+\]
+
+对 \(J\) 求和得到不等式。Cauchy–Schwarz 的等号条件正是 \(u_I/p_I\) 在每个纤维上为常数。证毕。
+
+### 推论 21.5（Fibonacci 隐藏层的曲率和维数分离）
+
+令
+
+\[
+K_n=\ker(A_n|_{T_n}).
+\]
+
+则
+
+\[
+D_nK_{n+1}=K_n,
+\qquad
+\dim K_{n+1}-\dim K_n=F_{n+1}-1.
+\]
+
+对每个 \(u_{n+1}\in K_{n+1}\) 定义 \(u_n=D_nu_{n+1}\)，则
+
+\[
+\mathcal I_n(p_n;u_n)
+\le
+\mathcal I_{n+1}(p_{n+1};u_{n+1}).
+\]
+
+若 \(u_{n+1}\in\ker D_n\)，则该新方向在第 \(n\) 层的观察和 Fisher 变化都为零：
+
+\[
+A_nD_nu_{n+1}=0,
+\qquad
+D_nu_{n+1}=0.
+\]
+
+因此每个新增维度 \(F_{n+1}-1\) 都是删除投影不可见的方向。它们是否在更细层有有限或发散 Fisher 曲率，取决于该方向对应的概率质量，不能由维数公式单独决定。
+
+### 21.1 与图 Dirichlet 形式的接口
+
+Fibonacci cube \(\Gamma_n\) 的顶点为 \(\Sigma_n\)。删除映射 \(\delta_n\) 是图的顶点映射，但它把多条细边压到同一个粗边或粗顶点。为了得到第 20 节的 Dirichlet 收缩定理，不能只使用顶点映射。必须显式构造边梯度压缩
+
+\[
+S_n:\mathcal E_{n+1}\to\mathcal E_n
+\]
+
+和加权顶点压缩
+
+\[
+R_n:\mathcal H_{n+1}\to\mathcal H_n
+\]
+
+使
+
+\[
+G_nR_n=S_nG_{n+1},
+\qquad
+\|S_n\|\le1.
+\]
+
+一旦这两个条件成立，定理 20.6 给出
+
+\[
+\mathcal Q_n(R_nf)
+\le
+\mathcal Q_{n+1}(f).
+\]
+
+因此 Fibonacci 删除投影目前已经完全解决概率观察和隐藏核层面的相容性，Dirichlet 层面还需要逐边定义 \(S_n\)。不能把 \(D_n\) 自动当作图 Dirichlet 商映射。
+
