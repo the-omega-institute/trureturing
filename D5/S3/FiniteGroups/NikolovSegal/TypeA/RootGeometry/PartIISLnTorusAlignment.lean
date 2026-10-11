@@ -58,9 +58,6 @@ def diagonalTorus (n : ℕ) (F : Type u) [Field F] :
     apply diagonal_of_eq _ _
     rw [hi, diagonal_eq g hg, Matrix.inv_diagonal]
 
-theorem mem_diagonalTorus_iff (g : G) :
-    g ∈ diagonalTorus n F ↔ ∀ i j : Fin n, i ≠ j → g.val i j = 0 := Iff.rfl
-
 theorem diagonalTorus_le_Borel : diagonalTorus n F ≤ Borel n F := by
   intro g hg i j hij
   exact hg i j (ne_of_gt (show j < i from hij))

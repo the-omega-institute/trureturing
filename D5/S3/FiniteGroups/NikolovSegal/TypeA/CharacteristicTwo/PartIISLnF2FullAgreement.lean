@@ -36,4 +36,3 @@ theorem U_agreement_inner_full (hF : Fintype.card F=2) (hn : 4<n)
   simpa only [map_mul,map_inv,MulEquiv.apply_symm_apply] using he
 
 end NikolovSegal.SLnF2Residual
-

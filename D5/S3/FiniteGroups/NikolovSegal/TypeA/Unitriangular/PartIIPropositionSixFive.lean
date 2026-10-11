@@ -1,6 +1,6 @@
 /- GID: D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIPropositionSixFive
    generality: G
-   mirror-B: D5/B/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIProposition6_5
+   mirror-B: D5/B/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIPropositionSixFive
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

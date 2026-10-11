@@ -78,4 +78,3 @@ theorem fixes_negative_simple [Fintype F] (p : ℕ) [Fact p.Prime] [CharP F p]
   simpa [hk1] using hgk
 
 end NikolovSegal.SLnSmallField
-

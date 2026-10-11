@@ -100,7 +100,7 @@ private theorem ordered_rect_row (col : Fin N → Fin B) (hmono : Monotone col)
   have hh' : (List.ofFn (fun s => 1+rect col r s v)).prod=
       1+(List.ofFn (fun s => rect col r s v)).sum := by
     simpa only [List.map_ofFn,Function.comp_def] using hh
-  exact hm'.trans hh' 
+  exact hm'.trans hh'
 
 private theorem row_sum_entry (col : Fin N → Fin B) (r : Fin B)
     (v : SpecialLinearGroup (Fin N) F) (i j : Fin N) :
@@ -192,7 +192,7 @@ theorem actual_strict_block_factorization
     have hp' : (List.ofFn (fun r => 1+X r)).prod=1+(List.ofFn X).sum := by
       simpa only [List.map_ofFn,Function.comp_def] using hp
     rw [hsum,add_comm (1:Matrix (Fin N) (Fin N) F) (v.val-1),sub_add_cancel] at hp'
-    exact hm.trans hp' 
+    exact hm.trans hp'
 private theorem depth_memU (a : SpecialLinearGroup (Fin N) F) :
     LayerDepth 1 (a.val-1) ↔ a∈SLnNormalizer.Uplus N F := by
   classical

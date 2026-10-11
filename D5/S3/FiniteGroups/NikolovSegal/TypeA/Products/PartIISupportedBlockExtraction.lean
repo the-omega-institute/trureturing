@@ -118,17 +118,4 @@ theorem pad_double_support_first (e : (Fin d ⊕ Fin d) ↪ Fin N)
       simp [padAlong,SLnUnipotentWidth.reindexSL,Matrix.reindex_apply,
         Matrix.one_apply,((supportKernel% padEquiv) e).injective.eq_iff]
 
-/-- Equality of supported matrices is determined by the ACTUAL principal
-entries; this includes empty coordinate supports. -/
-theorem supported_ext (e : Fin d ↪ Fin N) (a b : SpecialLinearGroup (Fin N) F)
-    (ha : Supported (Set.range e) a) (hb : Supported (Set.range e) b)
-    (h : ∀ i j, a (e i) (e j)=b (e i) (e j)) : a=b := by
-  apply SpecialLinearGroup.ext
-  intro i j
-  by_cases hi : i ∈ Set.range e
-  · by_cases hj : j ∈ Set.range e
-    · obtain ⟨i,rfl⟩ := hi; obtain ⟨j,rfl⟩ := hj; exact h i j
-    · rw [ha i j (Or.inr hj),hb i j (Or.inr hj)]
-  · rw [ha i j (Or.inl hi),hb i j (Or.inl hi)]
-
 end NikolovSegal.PartIISupportedClassTransport
