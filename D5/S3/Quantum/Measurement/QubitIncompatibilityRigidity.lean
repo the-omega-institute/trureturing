@@ -50,25 +50,19 @@ private lemma pauli_eq (v : V) :
     simp [pauli.eq_1, pauliY.eq_1, qubitX, qubitZ,
       D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula] <;> ring
 
-private lemma B_formula (t : ℝ) (v : V) :
-    B t v = D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix t v := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [B, D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
-      D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula,
-      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
 
 open D5.S3.Quantum.Measurement.FourQubitParentConstruction
   (scalarB_hermitian half_scalarB_posSemidef_iff
     hermitian_decomposition half_scalarB_double half_scalarB_complement trace_B_mul)
-open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch blochMatrix)
+open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch)
 
 private lemma B_hermitian (t : ℝ) (v : V) : (B t v).IsHermitian :=
   (scalarB_hermitian t v).smul (by simp [IsSelfAdjoint])
 
 private lemma B_trace (t : ℝ) (v : V) : Matrix.trace (B t v) = (t : ℂ) := by
-  rw [B_formula]
-  simp [blochMatrix, Matrix.trace, Fin.sum_univ_two]
+  simp [B, D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
+    D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula,
+    Matrix.trace, Fin.sum_univ_two]
   ring
 
 private lemma B_psd (t : ℝ) (v : V) : (B t v).PosSemidef ↔ ‖v‖ ≤ t :=
@@ -288,8 +282,12 @@ private lemma project_sq (n v : V) (hn : ‖n‖ = 1) :
   ring
 
 private lemma project_norm (n v : V) (hn : ‖n‖ = 1) : ‖project n v‖ ≤ ‖v‖ := by
-  nlinarith [project_sq n v hn, norm_nonneg (project n v), norm_nonneg v,
-    sq_nonneg ⟪n, v⟫_ℝ]
+  have he : project n v = (ℝ ∙ n)ᗮ.starProjection v := by
+    rw [Submodule.starProjection_orthogonal_val,
+      Submodule.starProjection_unit_singleton ℝ hn]
+    rfl
+  rw [he]
+  exact Submodule.norm_starProjection_apply_le _ _
 
 private lemma plane_separation (n u v : V) (hn : ‖n‖ = 1)
     (h : ∀ r : V, ‖r‖ ≤ 1 → ⟪n, r⟫_ℝ = 0 → ⟪r, u⟫_ℝ = ⟪r, v⟫_ℝ) :
