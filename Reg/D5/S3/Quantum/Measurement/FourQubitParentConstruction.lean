@@ -824,4 +824,183 @@ noncomputable def allRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_
 
 #print axioms allRegistration
 
+abbrev scalarSignature : Signature where
+  Params := ℝ
+  State _ := Vec
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Mat
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def scalarActual : Realization scalarSignature :=
+  realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e)
+def scalarRejected : Realization scalarSignature :=
+  realize scalarSignature (fun _ _ _ => Complex.I • (1 : Mat)) (fun e => nomatch e)
+theorem scalarDependence : ObservationalDependence scalarSignature scalarActual := by
+  intro i; refine ⟨0, 0, !₂[0,0,1], ?_⟩; intro h
+  have hh := congrArg (fun A : Mat => A 0 0) h
+  norm_num [scalarActual, realize, scalarB, B_formula, Matrix.cons_val_succ,
+    Matrix.cons_val_zero] at hh
+  change (0 : ℂ) = 1 at hh
+  norm_num at hh
+@[reducible] def hermitianArena : Arena where
+  signature := scalarSignature
+  Law R := ∀ (t : ℝ) (a : Vec), (R.readout () t a).IsHermitian
+theorem hermitianNegative : ¬ hermitianArena.Law scalarRejected := by
+  intro h; have hh := congrArg Complex.im ((h 0 0).apply 0 0)
+  norm_num [scalarRejected, realize] at hh
+@[reducible] def detArena : Arena where
+  signature := realVectorSignature
+  Law R := ∀ (t : ℝ) (a : Vec), Matrix.det (scalarB t a) = ((t^2 - (R.readout () () a)^2 : ℝ) : ℂ)
+theorem detNegative : ¬ detArena.Law normRejected := by
+  intro h; have hh := h 0 0
+  norm_num [normRejected, realize, scalarB, B_formula, Matrix.det_fin_two] at hh
+@[reducible] def decompositionArena : Arena where
+  signature := scalarSignature
+  Law R := ∀ (A : Mat), A.IsHermitian →
+    A = R.readout () ((Matrix.trace A).re / 2) ((1 / 2 : ℝ) • _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch A)
+theorem decompositionNegative : ¬ decompositionArena.Law scalarRejected := by
+  intro h; have hh := congrArg (fun A : Mat => (A 0 0).im) (h 0 (by simp))
+  norm_num [scalarRejected, realize] at hh
+@[reducible] def doubleArena : Arena where
+  signature := scalarSignature
+  Law R := ∀ (t : ℝ) (a : Vec), (1 / 2 : ℂ) • R.readout () (2*t) ((2 : ℝ) • a) = scalarB t a
+theorem doubleNegative : ¬ doubleArena.Law scalarRejected := by
+  intro h; have hh := congrArg (fun A : Mat => (A 0 0).im) (h 0 0)
+  norm_num [scalarRejected, realize, scalarB, B_formula] at hh
+  simp only [Pi.smul_apply, smul_eq_mul, Matrix.one_apply, Matrix.sub_apply] at hh
+  norm_num [Complex.div_re, Complex.div_im, Complex.mul_im, Complex.mul_re,
+    Matrix.cons_val_zero] at hh
+@[reducible] def complementArena : Arena where
+  signature := scalarSignature
+  Law R := ∀ (t : ℝ) (a : Vec), (1 / 2 : ℂ) • R.readout () (2-t) (-a) = 1 - (1 / 2 : ℂ) • scalarB t a
+theorem complementNegative : ¬ complementArena.Law scalarRejected := by
+  intro h; have hh := congrArg (fun A : Mat => (A 0 0).im) (h 0 0)
+  norm_num [scalarRejected, realize, scalarB, B_formula] at hh
+  simp only [Pi.smul_apply, smul_eq_mul, Matrix.one_apply, Matrix.sub_apply] at hh
+  norm_num [Complex.div_re, Complex.div_im, Complex.mul_im, Complex.mul_re,
+    Matrix.cons_val_zero] at hh
+  rw [Matrix.one_apply_eq] at hh
+  norm_num at hh
+def hermitianEvidence : Registration hermitianArena (type_of% (@scalarB_hermitian)) where
+  actual := scalarActual
+  bridge := Iff.rfl
+  variation := ⟨@scalarB_hermitian, scalarRejected, hermitianNegative⟩
+  sensitivity := ⟨fun i => ⟨scalarRejected, fun j h => (h (Subsingleton.elim j i)).elim, rfl, hermitianNegative⟩, fun i => nomatch i⟩
+  dependence := scalarDependence
+noncomputable def hermitianRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_hermitian)
+    (type_of% (realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_hermitian.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.hermitianEvidence
+  realizationSource := none, generated := false, arena := .source ⟨hermitianArena⟩
+  objectArena := .source ⟨hermitianArena⟩, catalog := Lean.Name.anonymous, localNames := false
+  realization := .source hermitianArena ⟨hermitianEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e)), variation := .absent, sensitivity := .absent
+  partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction
+    definition := none, coordinates := #[0], readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 1, functionOperand := false, stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown, familyRecord := none, options := #[] }
+def detEvidence : Registration detArena (type_of% (@scalarB_det)) where
+  actual := normActual
+  bridge := Iff.rfl
+  variation := ⟨@scalarB_det, normRejected, detNegative⟩
+  sensitivity := ⟨fun i => ⟨normRejected, fun j h => (h (Subsingleton.elim j i)).elim, rfl, detNegative⟩, fun i => nomatch i⟩
+  dependence := normDependence
+noncomputable def detRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_det)
+    (type_of% (realize realVectorSignature (fun _ _ a => ‖a‖) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_det.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.detEvidence
+  realizationSource := none, generated := false, arena := .source ⟨detArena⟩
+  objectArena := .source ⟨detArena⟩, catalog := Lean.Name.anonymous, localNames := false
+  realization := .source detArena ⟨detEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize realVectorSignature (fun _ _ a => ‖a‖) (fun e => nomatch e)), variation := .absent, sensitivity := .absent
+  partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction
+    definition := none, coordinates := #[0], readouts := #[{
+      path := #["body", "body", "arg", "arg", "arg"]
+      stateBinder := 1, functionOperand := false, stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown, familyRecord := none, options := #[] }
+def decompositionEvidence : Registration decompositionArena (type_of% (@hermitian_decomposition)) where
+  actual := scalarActual
+  bridge := Iff.rfl
+  variation := ⟨@hermitian_decomposition, scalarRejected, decompositionNegative⟩
+  sensitivity := ⟨fun i => ⟨scalarRejected, fun j h => (h (Subsingleton.elim j i)).elim, rfl, decompositionNegative⟩, fun i => nomatch i⟩
+  dependence := scalarDependence
+noncomputable def decompositionRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.hermitian_decomposition)
+    (type_of% (realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.hermitian_decomposition.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.decompositionEvidence
+  realizationSource := none, generated := false, arena := .source ⟨decompositionArena⟩
+  objectArena := .source ⟨decompositionArena⟩, catalog := Lean.Name.anonymous, localNames := false
+  realization := .source decompositionArena ⟨decompositionEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e)), variation := .absent, sensitivity := .absent
+  partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction
+    definition := none, coordinates := #[], readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 0, functionOperand := false, stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown, familyRecord := none, options := #[] }
+def doubleEvidence : Registration doubleArena (type_of% (@half_scalarB_double)) where
+  actual := scalarActual
+  bridge := Iff.rfl
+  variation := ⟨@half_scalarB_double, scalarRejected, doubleNegative⟩
+  sensitivity := ⟨fun i => ⟨scalarRejected, fun j h => (h (Subsingleton.elim j i)).elim, rfl, doubleNegative⟩, fun i => nomatch i⟩
+  dependence := scalarDependence
+noncomputable def doubleRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.half_scalarB_double)
+    (type_of% (realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.half_scalarB_double.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.doubleEvidence
+  realizationSource := none, generated := false, arena := .source ⟨doubleArena⟩
+  objectArena := .source ⟨doubleArena⟩, catalog := Lean.Name.anonymous, localNames := false
+  realization := .source doubleArena ⟨doubleEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e)), variation := .absent, sensitivity := .absent
+  partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction
+    definition := none, coordinates := #[0], readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg"]
+      stateBinder := 1, functionOperand := false, stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown, familyRecord := none, options := #[] }
+def complementEvidence : Registration complementArena (type_of% (@half_scalarB_complement)) where
+  actual := scalarActual
+  bridge := Iff.rfl
+  variation := ⟨@half_scalarB_complement, scalarRejected, complementNegative⟩
+  sensitivity := ⟨fun i => ⟨scalarRejected, fun j h => (h (Subsingleton.elim j i)).elim, rfl, complementNegative⟩, fun i => nomatch i⟩
+  dependence := scalarDependence
+noncomputable def complementRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.half_scalarB_complement)
+    (type_of% (realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.half_scalarB_complement.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.complementEvidence
+  realizationSource := none, generated := false, arena := .source ⟨complementArena⟩
+  objectArena := .source ⟨complementArena⟩, catalog := Lean.Name.anonymous, localNames := false
+  realization := .source complementArena ⟨complementEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e)), variation := .absent, sensitivity := .absent
+  partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction
+    definition := none, coordinates := #[0], readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg"]
+      stateBinder := 1, functionOperand := false, stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown, familyRecord := none, options := #[] }
 end Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction
