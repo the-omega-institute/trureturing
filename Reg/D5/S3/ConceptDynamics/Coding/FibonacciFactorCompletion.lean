@@ -90,3 +90,108 @@ def prefix_path_endpoint_registration :
 #print axioms prefix_path_endpoint_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal23
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal27
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ state => state) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀
+    (model : Model) (o : Ownership) (K : ℕ) (hK : 2 ≤ K)
+    (budget : ℝ) (hbudget : actualAutomaticCost K < budget)
+    (execution : List Return)
+    (hcap : ∀ a ∈ execution, a.r ≤ K)
+    (hhigh : ∀ (before : List Return) (a : Return) (after : List Return),
+      execution = before ++ a :: after → a.r = K →
+        lam - g ^ 2 * chi ^ K *
+          execute .high before (initial .high model) < budget),
+    ActualPairSupply model o (r.readout () () budget) .strict execution
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have bad := h .original (fun _ => false) 2 (by decide) (actualAutomaticCost 2 + 1)
+    (lt_add_one _) [] (by simp) (by
+      intro before a after hsplit
+      have hlen := congrArg List.length hsplit
+      simp at hlen)
+  obtain ⟨err, herr, _⟩ := bad .high
+  have hb := herr 0
+  change |err 0| < (-1 : ℝ) at hb
+  linarith [abs_nonneg (err 0)]
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_capped_strict_supply_of_high_costs) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_capped_strict_supply_of_high_costs, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def actual_capped_strict_supply_of_high_costs_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_capped_strict_supply_of_high_costs)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ state => state) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal27.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal27.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ state => state) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms actual_capped_strict_supply_of_high_costs_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal27

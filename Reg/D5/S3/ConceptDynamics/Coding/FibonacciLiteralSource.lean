@@ -117,3 +117,105 @@ def paired_source_reconstruction_registration :
 #print axioms paired_source_reconstruction_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal203
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal205
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ state => state) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (b : ℝ) (hb : lam - rho < b),
+    (∀ (j : Side) (D : ℝ), 0 < D → D ≤ eSide j →
+      (BlockSupply o b true (block j) colorsD (c0 + sign j * D) ↔
+        lam - g ^ 2 * D < b)) ∧
+    (∀ (j : Side) (D : ℝ), 0 < D → D ≤ eSide j →
+      (BlockSupply o b false (block j) colorsD (c0 + sign j * D) ↔
+        lam - g ^ 2 * D < b ∨
+          (lam - g ^ 2 * D = b ∧
+            (match j with | .high => o 0 = true | .low => o 1 = false)))) ∧
+    (∀ z : ℝ, 0 ≤ z → z ≤ T2 → BlockSupply o (r.readout () () b) true C colorsE z)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)
+  have hs0 := Real.sqrt_nonneg (5 : ℝ)
+  have hT : (0 : ℝ) ≤ T2 := by dsimp [T2, t]; nlinarith
+  have bad := (h (fun _ => false) (lam - rho + 1) (lt_add_one _)).2.2 0 le_rfl hT
+  obtain ⟨err, herr, _⟩ := bad 0 (by decide)
+  change |err| < (-1 : ℝ) at herr
+  linarith [abs_nonneg err]
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_full_slot_readout) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_full_slot_readout, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def literal_full_slot_readout_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_full_slot_readout)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ state => state) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal205.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal205.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ state => state) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "arg", "body", "body", "body", "fn", "fn", "fn", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms literal_full_slot_readout_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal205
