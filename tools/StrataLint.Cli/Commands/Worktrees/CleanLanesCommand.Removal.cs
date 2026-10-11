@@ -82,6 +82,8 @@ internal static partial class CleanLanesCommand
         var reason = LockAgeBlockReason(item, now) ?? ReclaimBlockReason(item, baseCommit, runner, now);
         if (reason is not null) return Refused(reason);
 
+        string? recoveryBranch = null;
+        string? recoveryBranchCandidate = null;
         try
         {
             var arguments = new List<string> { "remove", "--path", item.Path };
@@ -93,29 +95,39 @@ internal static partial class CleanLanesCommand
                 locked = item.Locked ? item.LockReason ?? "" : null,
             }));
             var removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
+            System.Text.Json.JsonElement? outcome = null;
+            if (removal.Output.Length > 0)
+            {
+                using var document = System.Text.Json.JsonDocument.Parse(removal.Output);
+                outcome = document.RootElement.GetProperty("items").EnumerateArray().Single().Clone();
+                if (outcome.Value.TryGetProperty("recovery_branch", out var recovery))
+                    recoveryBranch = recovery.GetString();
+                if (outcome.Value.TryGetProperty("recovery_branch_candidate", out var candidate))
+                    recoveryBranchCandidate = candidate.GetString();
+                if (recoveryBranch is not null)
+                    protectObservedWorktree?.Invoke(item with
+                    {
+                        Branch = recoveryBranch["refs/heads/".Length..],
+                    });
+            }
             if (!removal.Success)
             {
                 if (removal.ExitCode is 68 or 73) return Refused("identity_or_lock_refused");
-                if (removal.Output.Length > 0)
-                {
-                    using var document = System.Text.Json.JsonDocument.Parse(removal.Output);
-                    var outcome = document.RootElement.GetProperty("items").EnumerateArray().Single();
-                    if (outcome.GetProperty("outcome").GetString() == "checkpoint_failed")
-                        return new(LaneRemovalOutcome.CheckpointFailed,
-                            "checkpoint_failed:" + outcome.GetProperty("error").GetString());
-                }
-                return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate");
+                if (outcome?.GetProperty("outcome").GetString() == "checkpoint_failed")
+                    return new(LaneRemovalOutcome.CheckpointFailed,
+                        "checkpoint_failed:" + outcome.Value.GetProperty("error").GetString(), recoveryBranch, recoveryBranchCandidate);
+                return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate);
             }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             return new LaneRemovalResult(LaneRemovalOutcome.WorktreeRemoveFailed,
-                "worktree_remove_failed_state_indeterminate");
+                "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate);
         }
 
-        // Keep every removed tree's branch. The invocation's observed inventory
-        // also excludes these refs from its later orphan sweep.
-        return new(LaneRemovalOutcome.Removed, "stale_behind");
+        // Retain both observed branches and refs created for detached recovery
+        // through the invocation's later orphan sweep.
+        return new(LaneRemovalOutcome.Removed, "stale_behind", recoveryBranch);
     }
 
     private static string? LockAgeBlockReason(RegisteredWorktree item, DateTimeOffset now)
@@ -140,7 +152,7 @@ internal static partial class CleanLanesCommand
     private static CleanLaneEvent RemovalEvent(
         RegisteredWorktree item,
         LaneRemovalResult result) =>
-        result.Outcome switch
+        (result.Outcome switch
         {
             LaneRemovalOutcome.Refused =>
                 BlockedWorktree(item, result.Reason),
@@ -157,7 +169,7 @@ internal static partial class CleanLanesCommand
                     "partially_removed",
                     result.Reason),
             _ => throw new InvalidOperationException($"unknown lane removal outcome: {result.Outcome}"),
-        };
+        }) with { RecoveryBranch = result.RecoveryBranch, RecoveryBranchCandidate = result.RecoveryBranchCandidate };
 
     private enum LaneRemovalOutcome
     {
@@ -167,5 +179,6 @@ internal static partial class CleanLanesCommand
         CheckpointFailed,
     }
 
-    private sealed record LaneRemovalResult(LaneRemovalOutcome Outcome, string Reason);
+    private sealed record LaneRemovalResult(LaneRemovalOutcome Outcome, string Reason,
+        string? RecoveryBranch = null, string? RecoveryBranchCandidate = null);
 }
