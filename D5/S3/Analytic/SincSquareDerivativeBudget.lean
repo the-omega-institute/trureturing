@@ -6,6 +6,7 @@
    utility: none
    digest: Positive integral recurrences bound all derivatives of the entire cosine root. -/
 
+import D5.S3.Observer.AgencyHolonomy.OrderedTimeSimplexSecondMagnusAverage
 import Mathlib.Analysis.Analytic.OfScalars
 import Mathlib.Analysis.Analytic.ChangeOrigin
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
@@ -13,6 +14,21 @@ import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Tactic
+
+/-!
+# Entire square-sinc endpoint profile
+
+The cosine square-root series defines an entire real function, including at zero and on the
+negative half-line. A positive-kernel recurrence retains its oscillatory cancellation:
+`psi^(n+1)(t) = -(1/2) * integral (r^(2*n) * psi^n(r^2*t))`, for `t >= 0`.
+The kernel mass `1/(2*n+1)` yields the sharp bound `n!/(2*n)!`.
+
+The endpoint profile is defined by its entire power series. Its triangular cosine integral
+transfers that bound to `2*(8/eta)^n/(2*n+2)!` after division by `n!`. The public contract also
+supplies normalization, nonnegativity and suppression beyond unit distance.
+-/
+
+set_option autoImplicit false
 
 open MeasureTheory Set Filter
 open scoped Topology Nat
@@ -32,7 +48,7 @@ private theorem psi_radius :
   rw [FormalMultilinearSeries.ofScalars_norm]
   simp only [norm_div, norm_pow, norm_neg, norm_one, one_pow, Real.norm_natCast,
     one_div, mul_comm _ ((r : ℝ) ^ k)]
-  rw [show 2 * k = 2 * k from rfl, pow_mul, Real.sq_sqrt r.coe_nonneg]
+  rw [pow_mul, Real.sq_sqrt r.coe_nonneg]
   rfl
 
 private theorem psi_smooth : ContDiff ℝ ⊤ psi := by
@@ -90,7 +106,8 @@ private theorem integral_hasDerivAt {F F' : ℝ → ℝ → ℝ}
     (s := Ioo (x - 1) (x + 1)) (bound := fun _ => C)
     (Ioo_mem_nhds (by linarith) (by linarith)) ?_ ?_ ?_ ?_
     intervalIntegrable_const ?_).2
-  · exact Filter.Eventually.of_forall fun y => (hF.comp (continuous_const.prodMk continuous_id)).aestronglyMeasurable
+  · exact Filter.Eventually.of_forall fun y =>
+      (hF.comp (continuous_const.prodMk continuous_id)).aestronglyMeasurable
   · exact (hF.comp (continuous_const.prodMk continuous_id)).intervalIntegrable _ _
   · exact (hF'.comp (continuous_const.prodMk continuous_id)).aestronglyMeasurable
   · apply Filter.Eventually.of_forall
@@ -123,7 +140,8 @@ private theorem weighted_integral_iteratedDeriv (w a : ℝ → ℝ)
       have hd := ((psi_smooth.differentiable_iteratedDeriv n (by simp) (a r * x)).hasDerivAt.comp x
         ((hasDerivAt_id x).const_mul (a r))).const_mul (w r * (a r) ^ n)
       simp only [iteratedDeriv_succ, pow_succ] at hd ⊢
-      convert! hd using 1 <;> ring
+      convert! hd using 1
+      ring
 
 private theorem integral_iteratedDeriv (n : ℕ) :
     iteratedDeriv n (fun t => ∫ r in (0 : ℝ)..1, psi (r ^ 2 * t)) =
@@ -133,7 +151,7 @@ private theorem integral_iteratedDeriv (n : ℕ) :
   simpa only [one_mul, pow_mul] using h
 
 /-- A positive-kernel recurrence retaining cancellation at every derivative order. -/
-theorem psi_derivative_integral (n : ℕ) {t : ℝ} (ht : 0 ≤ t) :
+private theorem psi_derivative_integral (n : ℕ) {t : ℝ} (ht : 0 ≤ t) :
     iteratedDeriv (n + 1) psi t =
       -(1 / 2 : ℝ) * ∫ r in (0 : ℝ)..1, r ^ (2 * n) * iteratedDeriv n psi (r ^ 2 * t) := by
   have heq : EqOn (iteratedDeriv (n + 1) psi)
@@ -153,7 +171,7 @@ theorem psi_derivative_integral (n : ℕ) {t : ℝ} (ht : 0 ≤ t) :
   exact (continuous_snd.pow _).mul (hc.comp ((continuous_snd.pow 2).mul continuous_fst))
 
 /-- The cosine square-root extension has a factorial derivative budget on the whole half-line. -/
-theorem psi_derivative_bound (n : ℕ) {t : ℝ} (ht : 0 ≤ t) :
+private theorem psi_derivative_bound (n : ℕ) {t : ℝ} (ht : 0 ≤ t) :
     |iteratedDeriv n psi t| ≤ (n ! : ℝ) / (2 * n)! := by
   induction n generalizing t with
   | zero => simpa [psi_eq_cos ht] using Real.abs_cos_le_one (Real.sqrt t)
@@ -217,14 +235,14 @@ private theorem endpoint_radius (η : ℝ) :
       omega
 
 /-- The endpoint profile is smooth on all of `ℝ`, including the origin. -/
-theorem endpoint_smooth (η : ℝ) : ContDiff ℝ ⊤ (endpoint η) := by
+private theorem endpoint_smooth (η : ℝ) : ContDiff ℝ ⊤ (endpoint η) := by
   apply AnalyticOnNhd.contDiff
   intro t _
   apply (FormalMultilinearSeries.analyticOnNhd _)
   simp [endpoint_radius, Metric.eball_top]
 
 /-- The endpoint is normalized at zero. -/
-theorem endpoint_zero (η : ℝ) : endpoint η 0 = 1 := by
+private theorem endpoint_zero (η : ℝ) : endpoint η 0 = 1 := by
   norm_num [endpoint, FormalMultilinearSeries.ofScalarsSum_zero]
 
 private theorem endpoint_mul (η t : ℝ) :
@@ -256,7 +274,7 @@ private theorem endpoint_eq_cos {η t : ℝ} (hη : 0 < η) (ht : 0 < t) :
   rw [mul_comm, endpoint_mul, psi_eq_cos (by positivity)]
 
 /-- The endpoint profile is nonnegative on the nonnegative half-line. -/
-theorem endpoint_nonneg {η t : ℝ} (hη : 0 < η) (ht : 0 ≤ t) :
+private theorem endpoint_nonneg {η t : ℝ} (hη : 0 < η) (ht : 0 ≤ t) :
     0 ≤ endpoint η t := by
   rcases eq_or_lt_of_le ht with rfl | ht
   · rw [endpoint_zero]; norm_num
@@ -265,7 +283,7 @@ theorem endpoint_nonneg {η t : ℝ} (hη : 0 < η) (ht : 0 ≤ t) :
       (by positivity)
 
 /-- Beyond unit distance the endpoint profile is at most half the mass parameter. -/
-theorem endpoint_tail {η t : ℝ} (hη : 0 < η) (ht : 1 ≤ t) :
+private theorem endpoint_tail {η t : ℝ} (hη : 0 < η) (ht : 1 ≤ t) :
     endpoint η t ≤ η / 2 := by
   rw [endpoint_eq_cos hη (by linarith)]
   apply (div_le_iff₀ (by positivity : 0 < 8 / η * t)).2
@@ -275,22 +293,33 @@ theorem endpoint_tail {η t : ℝ} (hη : 0 < η) (ht : 1 ≤ t) :
   linarith
 
 
+open D5.S3.Observer.AgencyHolonomy.OrderedTimeSimplexSecondMagnusAverage in
 private theorem triangle_cos_integral {z : ℝ} (hz : z ≠ 0) :
     (∫ r in (0 : ℝ)..1, 2 * (1 - r) * Real.cos (r * z)) =
       2 * (1 - Real.cos z) / z ^ 2 := by
-  have hd (r : ℝ) : HasDerivAt
-      (fun r => 2 * ((1 - r) * Real.sin (r * z) / z - Real.cos (r * z) / z ^ 2))
-      (2 * (1 - r) * Real.cos (r * z)) r := by
-    have h := ((((hasDerivAt_const r 1).sub (hasDerivAt_id r)).mul
-      (((hasDerivAt_id r).mul_const z).sin)).div_const z).sub
-      ((((hasDerivAt_id r).mul_const z).cos).div_const (z ^ 2))
-    convert! h.const_mul 2 using 1 <;> dsimp <;> field_simp <;> ring
-  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun r _ => hd r)
-    (((continuous_const.sub continuous_id).const_mul 2 |>.mul
-      (Real.continuous_cos.comp (continuous_id.mul_const z))).intervalIntegrable 0 1)]
-  simp only [sub_self, zero_mul, zero_div, one_mul, Real.sin_zero, Real.cos_zero]
-  field_simp
-  ring
+  have h := ordered_time_simplex_kernel_average_formula z 1 hz
+  unfold orderedTimeSimplexKernelAverage at h
+  have he : (∫ r in (0 : ℝ)..1, (1 - r) * (4 * Real.sin (z * r / 2) ^ 2)) =
+      1 - ∫ r in (0 : ℝ)..1, 2 * (1 - r) * Real.cos (r * z) := by
+    calc
+      _ = ∫ r in (0 : ℝ)..1,
+          (2 * (1 - r) - 2 * (1 - r) * Real.cos (r * z)) := by
+        apply intervalIntegral.integral_congr
+        intro r _
+        dsimp only
+        rw [Real.sin_sq_eq_half_sub, show 2 * (z * r / 2) = r * z by ring]
+        ring
+      _ = _ := by
+        rw [intervalIntegral.integral_sub
+          (Continuous.intervalIntegrable (by fun_prop) _ _)
+          (Continuous.intervalIntegrable (by fun_prop) _ _),
+          intervalIntegral.integral_const_mul,
+          intervalIntegral.integral_sub (f := fun _ : ℝ => 1) (g := fun r : ℝ => r)
+            intervalIntegrable_const (continuous_id.intervalIntegrable _ _)]
+        norm_num [integral_id]
+  rw [he] at h
+  norm_num only [mul_one, one_pow] at h
+  linarith
 
 private theorem endpoint_integral {η t : ℝ} (hη : 0 < η) (ht : 0 ≤ t) :
     endpoint η t = ∫ r in (0 : ℝ)..1, 2 * (1 - r) * psi ((8 / η * r ^ 2) * t) := by
@@ -398,7 +427,7 @@ private theorem endpoint_derivative_bound_sharp {η : ℝ} (hη : 0 < η) (n : �
     _ = (2 * (8 / η) ^ n / ↑(2 * n + 2)!) * (n ! : ℝ) := by rw [hi]; ring
 
 /-- The normalized all-order derivative budget for the entire endpoint profile. -/
-theorem endpoint_derivative_bound {η : ℝ} (hη : 0 < η) (n : ℕ)
+private theorem endpoint_derivative_bound {η : ℝ} (hη : 0 < η) (n : ℕ)
     {t : ℝ} (ht : 0 ≤ t) :
     |iteratedDeriv n (endpoint η) t| / (n ! : ℝ) ≤ (8 / η) ^ n / (2 * n)! := by
   apply (endpoint_derivative_bound_sharp hη n ht).trans
@@ -425,8 +454,5 @@ theorem endpoint_budget {η : ℝ} (hη : 0 < η) :
     fun _ ht => endpoint_tail hη ht, fun n _ ht => endpoint_derivative_bound hη n ht⟩
 
 
-#print axioms psi_derivative_integral
-#print axioms psi_derivative_bound
-#print axioms endpoint_budget
 
 end SincSquareDerivativeBudget
