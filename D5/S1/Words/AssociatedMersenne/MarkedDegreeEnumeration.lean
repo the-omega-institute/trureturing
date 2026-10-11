@@ -123,7 +123,7 @@ private lemma degree_le {n : Nat} (w : Fin n → Bool) : degree w ≤ n := by
 lemma runCount_le {n : Nat} (w : Fin n → Bool) : runCount w ≤ n := by
   exact (Finset.card_filter_le _ _).trans_eq (Finset.card_fin n)
 
-private lemma runCount_zero_iff {n : Nat} (w : Fin n → Bool) (ha : Admissible w) :
+lemma runCount_zero_iff {n : Nat} (w : Fin n → Bool) (ha : Admissible w) :
     runCount w = 0 ↔ w = (fun _ => false) := by
   constructor
   · intro hz
