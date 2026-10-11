@@ -162,10 +162,10 @@ def operationCodec : Operation ≃ Fin 4 :=
 def bitCode {n : ℕ} (x : Fin n) : List Bool :=
   List.replicate x.val true ++ List.replicate (n-x.val) false
 
-private theorem bit_code_length {n : ℕ} (x : Fin n) : (bitCode x).length = n := by
+theorem bit_code_length {n : ℕ} (x : Fin n) : (bitCode x).length = n := by
   simp [bitCode]
 
-private theorem bit_code_injective {n : ℕ} : Function.Injective (@bitCode n) := by
+theorem bit_code_injective {n : ℕ} : Function.Injective (@bitCode n) := by
   intro x y h
   have hc := congrArg (List.count true) h
   simp [bitCode, List.count_replicate] at hc
