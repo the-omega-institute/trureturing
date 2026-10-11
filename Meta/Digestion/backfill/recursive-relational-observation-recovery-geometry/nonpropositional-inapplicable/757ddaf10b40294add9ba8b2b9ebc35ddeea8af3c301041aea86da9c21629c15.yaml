@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:757ddaf10b40294add9ba8b2b9ebc35ddeea8af3c301041aea86da9c21629c15
+  normalized_sha256: sha256:757ddaf10b40294add9ba8b2b9ebc35ddeea8af3c301041aea86da9c21629c15
+cas_ref: sha256:757ddaf10b40294add9ba8b2b9ebc35ddeea8af3c301041aea86da9c21629c15
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: All clauses of Lemma 26.1 follow from pinned Mathlib Metric.totallyBounded_iff, Metric.isBounded_iff, Bornology.isBounded_biUnion, Bornology.IsBounded.subset, dist_triangle_right and finite-union membership normalization. For arbitrary metric Z,Y and q:X->Z,h:X->Y with totally bounded range q and unbounded range h, instantiate the first contract at delta/3. If each ball preimage had bounded h-image, the finite union contract would bound range h. Thus some nonempty ball preimage has unbounded h-image; Metric.isBounded_iff gives a pair with task distance > A. The two q-values are in that same ball, so the triangle inequality gives distance < 2*delta/3 < delta. Equivalently a uniform pairwise task bound inside every delta-fiber would bound that finite union, a contradiction. The pair uses the same two realizations and all positive delta,A are quantified; arbitrary A is precisely unbounded supremum at every resolution. No exact equality of observations or noninjectivity is inferred. No usable frozen project GID supplies this complete relation (仓内无 GID); this is upstream reuse with no new Lean declaration.
+    previous_atom_id: 740eade5626fe8abbd70ed1c84ce21916c334b0a0ffbf0590d54440f9e670608
+    next_atom_id: fac9ff366d87af624a106ec13a399a1999ca55941624f8b5c1d58bcac5331b24

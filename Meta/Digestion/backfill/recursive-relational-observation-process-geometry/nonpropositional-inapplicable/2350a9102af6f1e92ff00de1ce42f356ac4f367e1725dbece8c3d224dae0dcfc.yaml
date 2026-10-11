@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2350a9102af6f1e92ff00de1ce42f356ac4f367e1725dbece8c3d224dae0dcfc
+  normalized_sha256: sha256:2350a9102af6f1e92ff00de1ce42f356ac4f367e1725dbece8c3d224dae0dcfc
+cas_ref: sha256:2350a9102af6f1e92ff00de1ce42f356ac4f367e1725dbece8c3d224dae0dcfc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 21.13 fixes A, R_lambda, v_lambda and E_lambda for a finite complex Hermitian positive semidefinite K, b and real c. These are stipulated expressions, not an additional theorem; the final sentence specifies that evaluation remains on the original A. The only implicit well-definedness premise, invertibility of K + lambda I for lambda > 0 (including dimension zero), is supplied by pinned Mathlib Matrix.PosDef.diagonal, Matrix.PosDef.posSemidef_add and Matrix.PosDef.isUnit. No frozen project GID states these four definitions, and SchurMinimum.schur_quadratic_is_least is not claimed as their coverage. This receipt does not settle 21.14 or 21.15.
+    previous_atom_id: 9ff23b95de7e7cad49d2fa3d3693bf6746e5d553385842acc4893d0ccd1053d0
+    next_atom_id: 573139b1943dda0a5a28b97e6527dc9a5703fc8bc7914ed40af7c766c3bdb252
