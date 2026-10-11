@@ -491,3 +491,91 @@ def tail_arithmetic_registration :
 #print axioms tail_arithmetic_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal156
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal161
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => Color
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ c => cut c.val) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (-2 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (c : Color),
+      -1 ≤ r.readout () () c ∧
+      cut c.val < cut (c.val + 1) ∧
+      cut (c.val + 1) ≤ phi
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := (h (0 : Color)).1
+  norm_num [rejected, realize] at impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.cut_bounds) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.cut_bounds, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), (0 : Color), (1 : Color), ?_⟩
+    exact ne_of_lt (cut_bounds (0 : Color)).2.1
+
+def cut_bounds_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.cut_bounds)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ c => cut c.val) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal161.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal161.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ c => cut c.val) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms cut_bounds_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal161

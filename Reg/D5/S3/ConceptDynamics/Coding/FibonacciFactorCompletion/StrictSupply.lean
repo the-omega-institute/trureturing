@@ -196,3 +196,106 @@ def exact_control_iff_split_registration :
 #print axioms exact_control_iff_split_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal154
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal149
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ execution : List Return, Σ j : Side, ℕ
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ q z => execute q.2.1 (q.1.take q.2.2) z) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ q _ => aSide q.2.1) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (model : Model) (execution : List Return),
+      (∀ (j : Side) (p : ℕ),
+        aSide j < r.readout () ⟨execution, ⟨j,p⟩⟩ (initial j model) ∧
+        execute j (execution.take p) (initial j model) < hSide j) ∧
+      (∀ p : ℕ, execute .high (execution.take p) (initial .high model) <
+        execute .low (execution.take p) (initial .low model)) ∧
+      (∀ (j : Side) (p n k : ℕ),
+        let D := execute j (execution.take p) (initial j model)
+        let z := hSide j - rho ^ k * (hSide j - chi ^ n * D)
+        0 < z ∧ z < hSide j ∧
+        0 ≤ c0 + sign j * z ∧ c0 + sign j * z ≤ T2) ∧
+      (∀ (p n k : ℕ),
+        hSide .high - rho ^ k * (hSide .high - chi ^ n *
+          execute .high (execution.take p) (initial .high model)) <
+        hSide .low - rho ^ k * (hSide .low - chi ^ n *
+          execute .low (execution.take p) (initial .low model))) ∧
+      (∀ (j : Side) (p : ℕ),
+        coordinate (sourcePrefix j model execution)
+          ((stem j).length + listWeight (execution.drop p)) =
+        c0 + sign j * execute j (execution.take p) (initial j model))
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  exact (lt_irrefl (aSide Side.high)) ((h .original []).1 .high 0).1
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.actual_complete_boundary_geometry) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.actual_complete_boundary_geometry, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨[], Side.high, 0⟩, 0, 1, ?_⟩
+    norm_num [actual, realize, execute]
+
+def actual_complete_boundary_geometry_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.actual_complete_boundary_geometry)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ q z => execute q.2.1 (q.1.take q.2.2) z) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal149.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal149.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ q z => execute q.2.1 (q.1.take q.2.2) z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
+    definition := none
+    coordinates := #[1, 2, 3]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "body", "body", "fn", "arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms actual_complete_boundary_geometry_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal149

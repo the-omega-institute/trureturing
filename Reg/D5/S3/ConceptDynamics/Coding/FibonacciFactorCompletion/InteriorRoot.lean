@@ -1195,3 +1195,93 @@ def original_memory_language_nesting_registration :
 #print axioms original_memory_language_nesting_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal88
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal87
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ ω : (ℤ → CuLetter), Σ i : ℤ, ℕ
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ q z => finitePast q.1 q.2.1 q.2.2 z) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (ω : ℤ → CuLetter) (i : ℤ) (n : ℕ),
+      r.readout () ⟨ω, ⟨i,n⟩⟩ 0 ≤ finitePast ω i (n+1) 0 ∧
+      finitePast ω i (n+1) (hSide .high) ≤ finitePast ω i n (hSide .high) ∧
+      finitePast ω i n 0 ≤ pastState ω i ∧
+      pastState ω i ≤ finitePast ω i n (hSide .high) ∧
+      finitePast ω i n (hSide .high)-finitePast ω i n 0 ≤ hSide .high*rho^n
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := (h (fun _ : ℤ => CuLetter.c) 0 0).1
+  norm_num [rejected, realize, finitePast, letterMap] at impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_memory_envelopes) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_memory_envelopes, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨(fun _ : ℤ => CuLetter.c), 0, 0⟩, 0, 1, ?_⟩
+    norm_num [actual, realize, finitePast]
+
+def original_memory_envelopes_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_memory_envelopes)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ q z => finitePast q.1 q.2.1 q.2.2 z) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal87.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal87.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ q z => finitePast q.1 q.2.1 q.2.2 z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot
+    definition := none
+    coordinates := #[0, 1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_memory_envelopes_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal87

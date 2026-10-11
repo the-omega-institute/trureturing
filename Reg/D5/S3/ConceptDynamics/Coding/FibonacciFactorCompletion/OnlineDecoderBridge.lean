@@ -246,3 +246,91 @@ def g1_edge_has_zero_first_registration :
 
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.ExactOriginal210
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := ℕ → CLabel
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ a j => rawDigits a j) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => true) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (a : ℕ → CLabel) (path : ℕ → CGuard)
+      (hedges : ∀ p, nextGuard (path p) (a p) = some (path (p+1))),
+      ∀ j, ¬ (r.readout () a j = true ∧ rawDigits a (j+1) = true)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := h (fun _ => Label.L3) (fun _ => Guard.G0) (fun _ => rfl) 0
+  exact impossible ⟨rfl, rfl⟩
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.rawDigits_legal_of_operation_edges) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.rawDigits_legal_of_operation_edges, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(fun _ => Label.L3), 0, 1, ?_⟩
+    change false ≠ true
+    decide
+
+def rawDigits_legal_of_operation_edges_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.rawDigits_legal_of_operation_edges)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ a j => rawDigits a j) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.ExactOriginal210.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.ExactOriginal210.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ a j => rawDigits a j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms rawDigits_legal_of_operation_edges_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.ExactOriginal210
