@@ -34,6 +34,7 @@ private theorem tail_eq_range (a : M) (hd : DenseRange fun n : ℕ => n • a) (
   rw [hd.closure_range, image_univ, ← Set.range_comp] at h
   simpa only [tail, Function.comp_def, add_nsmul] using h
 
+omit [ContinuousAdd M] [CompactSpace M] [T2Space M] in
 private theorem tail_succ_subset (a : M) (N : ℕ) : tail a (N + 1) ⊆ tail a N := by
   apply closure_mono
   rintro _ ⟨n, rfl⟩
@@ -47,6 +48,7 @@ private theorem core_nonempty (a : M) : (core a).Nonempty := by
   · exact isClosed_closure.isCompact
   · intro N; exact isClosed_closure
 
+omit [ContinuousAdd M] [CompactSpace M] [T2Space M] in
 private theorem core_closed (a : M) : IsClosed (core a) :=
   isClosed_iInter fun _ => isClosed_closure
 
@@ -126,5 +128,75 @@ private theorem core_has_identity (a : M) (hd : DenseRange fun n : ℕ => n • 
     e + z = e + (b + c) := congrArg (e + ·) hbc.symm
     _ = (b + e) + c := by ac_rfl
     _ = z := by rw [hbe, hbc]
+
+/-- The internal group has the inherited addition, a continuous inverse, and a dense
+orbit of the image of the original generator under an additive retraction. -/
+theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n • a) :
+    ∃ group : AddCommGroup (core a),
+      letI := group
+      (∀ x y : core a, ((x + y : core a) : M) = (x : M) + (y : M)) ∧
+      IsTopologicalAddGroup (core a) ∧
+      ∃ r : M →+ core a, Continuous r ∧
+        (∀ x : M, (r x : M) = x + ((0 : core a) : M)) ∧
+        (∀ x : core a, r (x : M) = x) ∧
+        DenseRange (fun n : ℕ => n • r a) := by
+  classical
+  obtain ⟨e, he, hid⟩ := core_has_identity a hd
+  let H := core a
+  letI : Add H := ⟨fun x y => ⟨x.1 + y.1, add_mem_core a hd x.1 y.2⟩⟩
+  letI : Zero H := ⟨⟨e, he⟩⟩
+  have hinv (x : H) : ∃ y : H, y + x = 0 := by
+    obtain ⟨y, hy, hxy⟩ := translation_surjective_on_core a hd x.1 he
+    exact ⟨⟨y, hy⟩, Subtype.ext (by change y + x.1 = e; rw [add_comm, hxy])⟩
+  letI : Neg H := ⟨fun x => Classical.choose (hinv x)⟩
+  letI : AddCommGroup H :=
+    { AddGroup.ofLeftAxioms
+        (fun x y z => Subtype.ext (add_assoc x.1 y.1 z.1))
+        (fun x => Subtype.ext (hid x.1 x.2))
+        (fun x => Classical.choose_spec (hinv x)) with
+      add_comm := fun x y => Subtype.ext (add_comm x.1 y.1) }
+  haveI : CompactSpace H := isCompact_iff_compactSpace.mp (core_closed a).isCompact
+  haveI : ContinuousAdd H := ⟨
+    ((continuous_subtype_val.comp continuous_fst).add
+      (continuous_subtype_val.comp continuous_snd)).subtype_mk _⟩
+  have hneg : Continuous (fun x : H => -x) := by
+    apply continuous_iff_isClosed.mpr
+    intro s hs
+    let F : Set (H × H) := {p | p.1 + p.2 = 0 ∧ p.2 ∈ s}
+    have hF : IsClosed F :=
+      (isClosed_eq (continuous_fst.add continuous_snd) continuous_const).inter
+        (hs.preimage continuous_snd)
+    have heq : (fun x : H => -x) ⁻¹' s = Prod.fst '' F := by
+      ext x
+      constructor
+      · intro hx
+        exact ⟨(x, -x), ⟨add_neg_cancel x, hx⟩, rfl⟩
+      · rintro ⟨⟨x, y⟩, ⟨hxy, hy⟩, rfl⟩
+        have hyx : y = -x := by
+          calc y = -x + (x + y) := by simp
+               _ = -x := by rw [hxy, add_zero]
+        change -x ∈ s
+        simpa only [hyx] using hy
+    rw [heq]
+    exact isClosedMap_fst_of_compactSpace F hF
+  haveI : IsTopologicalAddGroup H := { continuous_neg := hneg }
+  let r : M →+ H :=
+    { toFun := fun x => ⟨x + e, add_mem_core a hd x he⟩
+      map_zero' := Subtype.ext (zero_add e)
+      map_add' := fun x y => Subtype.ext (by
+        change x + y + e = (x + e) + (y + e)
+        calc x + y + e = x + y + (e + e) := by rw [hid e he]
+             _ = (x + e) + (y + e) := by ac_rfl) }
+  have hr : Continuous r := (continuous_id.add continuous_const).subtype_mk _
+  have hfix (x : H) : r x = x := Subtype.ext (by
+    change x.1 + e = x.1
+    rw [add_comm, hid x.1 x.2])
+  have hsurj : Function.Surjective r := fun x => ⟨x.1, hfix x⟩
+  refine ⟨inferInstance, (fun _ _ => rfl), inferInstance, r, hr,
+    (fun _ => rfl), hfix, ?_⟩
+  have hd' := hsurj.denseRange.comp hd hr
+  simpa only [Function.comp_def, map_nsmul] using hd'
+
+#print axioms core_group_retraction
 
 end D5.S3.Observer.Completion.MonotheticCompactMonoid
