@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/PauliRotationCriticalValues.claim; result=D5/S3/Quantum/Information/PauliRotationCriticalValues.result; claim=D5/S3/Quantum/Information/PauliRotationCriticalValues.claim
    digest: Two-qubit Pauli rotation circuits and their critical-value Hausdorff dimension. -/
 
-import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
@@ -52,11 +51,10 @@ open Matrix
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (pauliMatrix tensorOp tensor_mul)
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
-open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (tensor_one)
 open D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
   (pauli_trace_pair)
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-  (wordUnit word_hermitian word_expansion letterProduct letterPhase letter_mul word_one)
+  (wordUnit word_hermitian word_expansion letterProduct letterPhase letter_mul word_one tensor_one)
 
 private theorem word_trace_mul (p q : Fin 2 → Pauli) :
     trace (wordOp p * wordOp q) = if p = q then (4 : ℂ) else 0 := by
