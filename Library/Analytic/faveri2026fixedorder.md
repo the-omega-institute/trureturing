@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic and quadratic suppliers pay its lower-order blocks, leaving an actual-order-six residual, while the generic count budget is dominated by existing legal detector settings and signed restoration remains open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known suppliers pay its lower-order blocks and a fixed-ray angular theta transform improves an unbalanced coprime squarefree packet, while the actual-order-six residual and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the application have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, a complementary fixed-ray angular theta application on the coprime squarefree packet, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -494,9 +494,188 @@ q_h^{1/2}M^{1+\varepsilon}(1+|t|)^2,
 \qquad 1<\sigma\le5/4,
 $$
 
-where $\psi$ is the cubic Gauss series defined in their (6.1)–(6.2), not an arbitrary coefficient polynomial. It allows nonsquarefree and ramified shifts, so $h=-3$ itself is admissible. It does not by its stated conclusion supply the extra angular/ray-weighted series in $T_{n,\xi}$. Their Lemma 6.1 already provides removal of specified coprimality filters; those identities should be reused where their hypotheses match. The remaining task is a faithful angular/ray-twisted truncation and mean-square interface, with its costs, rather than another proof of Gauss CRT or of filter removal. Lemma 6.7 supplies a truncation formula for its stated untwisted data and includes a possible $4/3$ pole. Its residue cannot be declared zero for the original weighted pairing without a corresponding argument.
+where $\psi$ is the cubic Gauss series defined in their (6.1)–(6.2), not an arbitrary coefficient polynomial. It allows nonsquarefree and ramified shifts, so $h=-3$ itself is admissible. It does not by its stated conclusion supply the extra angular/ray-weighted series in $T_{n,\xi}$. Their Lemma 6.1 already provides removal of specified coprimality filters; those identities should be reused where their hypotheses match. The fixed-ray pointwise angular interface below uses a separate finite theta transform; it does not assert this mean-square theorem for the weighted series. Lemma 6.7 supplies a truncation formula for its stated untwisted data and includes a possible $4/3$ pole. Its residue cannot be declared zero for the original weighted pairing without a corresponding argument.
 
 The original convolution also contains nonsquarefree $n$, common prime factors of $d,n$, sixth powers, and columns whose valuations lie in $2,\ldots,5$. The original $\gamma_j(c)$ is defined only for squarefree $c$. Those other character columns cannot be discarded because a different full-modulus Gauss sum vanishes on them; permitting nonsquarefree shifts in Lemma 6.6 does not supply their conversion formulas. Negative orientation still requires conjugating the entire original product with its coefficients and ray factors. The full coefficient-sensitive off-block contraction, coverage of the actual witness lengths, and signed Robin restoration remain open. All estimates in this subsection are conditional on the cited analytical suppliers and have no complete local Lean certification.
+
+### A full fixed-ray angular supplier from the finite theta transform
+
+[Alexander Dunn, *Metaplectic cusp forms and the large sieve*, arXiv:2403.13151v2](https://arxiv.org/html/2403.13151v2#S8.SS4), supplies the finite transformation in (8.30), (8.37), and (8.44)–(8.48). Its stated Propositions 8.12 and 8.15 assume a cusp form with spectral parameter in $1+i\mathbb R$. The residual cubic theta function has parameter $4/3$. The application below reuses the transformation proof and separately verifies the theta constant terms, coefficient support, and Mellin decay; it is not a direct application of the stated cusp-form theorem. The theta input is [Dunn–Radziwiłł, arXiv:2109.07463v3](https://arxiv.org/html/2109.07463v3#S5), (5.7), (5.13)–(5.16), and Appendix A. Only their unconditional theta formulas are used.
+
+Take one multiplicative character in the fixed ray-filter expansion. All constants may depend on its complete original presentation and on $S$; no uniformity in a growing ray modulus is asserted. Write $\kappa_n(d)=(d/n)_3$. Primary cubic reciprocity and the Gauss shift identity, on the original coprime locus, give
+
+$$
+\overline{\widetilde g_3(-3n,d)}
+=\kappa_d(-3)\kappa_n(d)\overline{\widetilde g_3(1,d)}.
+$$
+
+Put $\eta(d)=\xi(d)\kappa_d(-3)$, retaining all fixed supplementary factors, and zero-extend it on the originally excluded classes. With $p_n(d)=\eta(d)\kappa_n(d)\mathbf1_{(d,nS)=1}$, define
+
+$$
+\begin{aligned}
+R_n(s,\ell)&=\sum_{d\equiv1\ (3)}
+p_n(d)\overline{\widetilde g_3(1,d)}\alpha(d)^\ell q_d^{-s},\\
+Z_n(w,\ell)&=\prod_{\substack{\mathfrak p\notin S\\\mathfrak p\nmid n}}
+\left(1-\eta(\pi)^3\alpha(\pi)^{3\ell}q_{\mathfrak p}^{-w}\right)^{-1},\\
+\mathcal C_n(s,\ell)&=Z_n(3s-\tfrac12,\ell)R_n(s,\ell).
+\end{aligned}
+$$
+
+Here $\pi$ is the primary generator, $\Re s>1$ initially, and $\ell=1$ for the actual inner sum. A finite ray function is handled by summing its original character expansion with its fixed coefficients. Every deleted Euler factor remains deleted even when an inducing primitive character has smaller conductor. The full conjugate column follows by conjugating the entire displayed Gauss/theta coefficient family, its multiplier, finite weights, and profile, with angular mode $\ell=-1$; changing only $\ell$ inside the fixed $\overline{\widetilde g_3}$ family would not give that conjugate.
+
+The theta formula at the primary-supported indices is
+
+$$
+\tau(\lambda^{-3}ch^3)
+=3^{5/2}\overline{\widetilde g_3(1,c)}|h|,
+\qquad c,h\equiv1\ (3),\quad c\text{ squarefree}.
+$$
+
+There is no extra condition $(c,h)=1$. Since $p_n(h)^3=\eta(h)^3\mathbf1_{(h,nS)=1}$ and $\alpha(\lambda^{-3})=i$, the corresponding weighted theta Dirichlet series satisfies
+
+$$
+\mathcal D_n(s,\ell)=3^{5/2+3s}i^\ell\mathcal C_n(s,\ell).
+$$
+
+This identifies the cube completion with the actual coefficients rather than with a replacement zero set.
+
+#### Full ramified and imprimitive finite weights
+
+Choose a fixed complete modulus $\lambda^a f_0$, with $(f_0,3)=1$ and $a\ge4$, that contains the primary filter, $\eta$, and every fixed exclusion. Let $m=a+2$ and $L=\lambda^{2m+4}$. If $\eta_\lambda$ is the desired local function modulo $\lambda^a$, including its zeros, set
+
+$$
+H(x)=\begin{cases}\eta_\lambda(x/\lambda),&x\in\lambda\mathcal O,\\0,&x\notin\lambda\mathcal O.\end{cases}
+$$
+
+Its period is $\lambda^{m-1}$. On Dunn's finite dual group choose the exact inverse Fourier transform $\psi'$ with $\widehat{\psi'}=H$. Then
+
+$$
+\widehat{\psi'}(\lambda^4\mu)=\eta_\lambda(\lambda^3\mu).
+$$
+
+No local character value at $\lambda$ is inverted. On a modulus prime to $\lambda$, write $v_0=\lambda^{3-(2m+4)}$; the original argument $\lambda^3\mu$ is $v_0(L\mu)$ there. All unit rescalings are retained.
+
+For the fixed prime-to-$3$ part, expand the function $B(x)=\eta_0(v_0x)$ in the trace-character convention:
+
+$$
+B(x)=q_{f_0}^{-1}\sum_{u\bmod f_0}A(u)\check e(ux/f_0).
+$$
+
+Group by $h=(u,f_0)$, put $b=f_0/h$, and write $u=hu'$. The branch inverse weight, supported on units modulo $b$, is exactly
+
+$$
+P_b(u')=\frac{q_b}{q_{f_0}}A((f_0/b)u'),\qquad (u',b)=1.
+$$
+
+The modulus-one branch includes the zero frequency. Summing these branches recovers $B$, including nonunit Fourier frequencies. For good squarefree $n$, let $g_n=\sum_{x\bmod n}\kappa_n(x)\check e(x/n)$, so $|g_n|=q_n^{1/2}$. The normalized inverse weight of $\kappa_n(x)$ is $g_n\overline{\kappa_n(d)}$. For $r=bn$, with $\bar n$ the inverse of $n$ modulo $b$ and $\bar b$ the inverse of $b$ modulo $n$, the complete CRT inverse weight for $B_b(x)\kappa_n(v_0x)$ is
+
+$$
+P_{b,n}(d)=P_b(\bar n d_b)\,
+\kappa_n(v_0)g_n\overline{\kappa_n(\bar b d_n)}.
+$$
+
+This fixes both the normalization and the CRT phases. Applying Dunn's exact finite kernel gives
+
+$$
+\mathcal K_{r,L}P(u)
+=\frac1{q_r}\sum_{L^2ad\equiv1\ (r)}
+P(-d)\left(\frac{Ld}{r}\right)_3\check e(au/r).
+$$
+
+In the $n$-part the inverse cubic character cancels the kernel's cubic character. More explicitly,
+
+$$
+\mathcal K_{bn,L}P_{b,n}(u)
+=\frac{\kappa_n(v_0bL)g_n}{q_n}c_n(u)\,
+\frac1{q_b}\sum_{L^2a_bd_b=1\ (b)}
+P_b(-\bar n d_b)\left(\frac{Ld_b}{b}\right)_3
+\check e(a_bu\bar n/b).
+$$
+
+Here $c_n$ is the Ramanujan sum in the same additive-character convention. Multiplication of its argument by $\bar b$ does not change it. The fixed $b$ sum is bounded in terms of the original ray data, hence
+
+$$
+|\mathcal K_{bn,L}P_{b,n}(u)|
+\ll_{\xi,S}q_n^{-1/2}|c_n(u)|.
+$$
+
+Dunn (8.44)–(8.46) makes the transformed cusp index and external unit root depend only on $m,j,r\bmod L$, not on the Fourier numerator $d$. This independence is essential: the finite sum remains a Ramanujan kernel after transformation. Taking absolute values of all original Fourier coefficients would lose this saving.
+
+#### Residual theta and nonzero angular Mellin transforms
+
+The fixed $\lambda$ twist is a finite combination of $\theta(T_tw)$ with $t\in\lambda^{4-m}\mathcal O$. For $\gamma\in\Gamma_1(L)$, $T_t\gamma T_t^{-1}\in\Gamma_1(9)$ and has the same multiplier $\chi(\gamma)$: its lower-left entry is unchanged, its upper-left entry changes by $t$ times that entry, and the cubic supplementary law retains the same ramified residue. Thus Dunn's translation and matrix calculation applies with the actual theta constants included.
+
+The reflected coordinates are
+
+$$
+z'=-\frac{\bar z}{r^2(|z|^2+v^2)},\qquad
+v'=\frac{v}{q_r(|z|^2+v^2)}.
+$$
+
+For $k\ge1$, the pure Wirtinger chain rule at $z=0$ is
+
+$$
+\left.\partial_z^kF(z',v')\right|_0
+=\frac{(-1)^k}{\bar r^{2k}v^{2k}}
+(\partial_{\bar z'}^kF)(0,1/(q_rv)).
+$$
+
+In particular, every cusp constant depending only on $v'$ has zero pure angular derivative there. The negative angular mode exchanges $z$ and $\bar z$. This pays the exponential Mellin decay at both ends for $\ell\ne0$; it does not assert that a horizontal derivative of theta is itself a scalar cusp form.
+
+With
+
+$$
+B_\ell(s)=\tfrac14(2\pi)^{-2s-|\ell|}
+\Gamma(s+|\ell|/2-1/6)\Gamma(s+|\ell|/2+1/6),
+\qquad \Lambda=B_\ell\mathcal D,
+$$
+
+the finite branch functional equation is
+
+$$
+\Lambda_j(s;\widehat P,\ell)
+=(-1)^\ell\Omega_{m,j}(r)q_r^{1-2s}
+\left(\frac{\bar r}{r}\right)^{-\ell}
+\Lambda_{j'}(1-s;\mathcal K_{r,L}P,-\ell).
+$$
+
+The nonzero angular completed numerator $\mathcal C_n$ is entire. The raw series $R_n=\mathcal C_n/Z_n$ is holomorphic for $\Re s>1/2$, where the inverse Euler product converges absolutely; the same quotient gives only meromorphic continuation in general. No absence of poles at zeros of $Z_n$ is asserted. The radial mode $\ell=0$ requires its actual weighted cusp constants to vanish separately.
+
+Every fixed higher-level theta component reduces, by an integral matrix and an upper-triangular matrix in $\mathrm{SL}_2(\mathcal O[1/\lambda])$, to finitely many fixed $\lambda$/unit scalings and translations of the original 27 cusp expansions. At good primes their nonzero support has the form $ch^3$, with $c$ squarefree, and coefficient size $\ll |h|$. The $\lambda$ tails in (5.7) have coefficient growth $3^{k/2}$ and norm growth $3^{3k}$, giving a convergent geometric series at $\Re s=1+\delta$. This keeps the fixed ramified tails rather than claiming only good-index support.
+
+For $\delta>0$, the good-prime absolute factor is
+
+$$
+L_q=\frac{1+q^{-1-\delta}}{1-q^{-5/2-3\delta}}.
+$$
+
+At $\mathfrak p\mid n$, inserting $N((n,\nu))$ changes it to $1+q(L_q-1)$. Since $n$ is squarefree and $|c_n(u)|\le N((n,u))$, the extra product costs $q_n^{\varepsilon'}$, for each fixed $\delta,\varepsilon'>0$. Fixed denominators are units modulo $n$. Thus the dual absolute series at $1+\delta$ is $\ll_{\xi,S,\delta,\varepsilon'}q_n^{\varepsilon'}$. Together with the kernel's $q_n^{-1/2}$, the functional equation and Stirling's formula give
+
+$$
+\mathcal C_n(-\delta+it,\pm1)
+\ll q_n^{1/2+2\delta+\varepsilon'}(1+|t|)^{2+4\delta}.
+$$
+
+The right boundary $1+\delta$ is uniformly absolutely convergent. Phragmén–Lindelöf between these boundaries, using the entire Mellin numerator's finite exponential growth, yields
+
+$$
+\mathcal C_n(\tfrac12+\delta+it,\pm1)
+\ll q_n^{1/4+(\delta+\varepsilon')/(2+4\delta)}(1+|t|).
+$$
+
+On this line $\Re(3s-1/2)=1+3\delta$, so $|Z_n^{-1}|\le\zeta_F(1+3\delta)$. Mellin inversion therefore supplies the actual restricted inner sum:
+
+$$
+|T_{n,\xi}(D)|
+\ll_{\xi,S,\delta,\varepsilon'}
+D^{1/2+\delta}q_n^{1/4+(\delta+\varepsilon')/(2+4\delta)}
+\mathcal N_\delta(W_M),
+\qquad
+\mathcal N_\delta(W)=\int_{\mathbb R}
+|\widehat W(\tfrac12+\delta+it)|(1+|t|)\,dt.
+$$
+
+For any prescribed $\varepsilon>0$, choose $\delta,\varepsilon'$ small enough to write this as $(Dq_n)^\varepsilon D^{1/2}q_n^{1/4}\mathcal N_\delta(W_M)$. For $W_t(x)=x^{it}W(x)$, $\mathcal N_\delta(W_t)\le(1+|t|)\mathcal N_\delta(W)$. Three logarithmic derivatives control this norm on a fixed compact annulus. The norm-height cost is explicit and uses the original cumulative height allowance. This is a source-conditional analytical application with separately paid theta hypotheses, not a complete local Lean certification, a new general large sieve, or a full sixth-order residual estimate.
 
 ## The possible FIB interface
 
