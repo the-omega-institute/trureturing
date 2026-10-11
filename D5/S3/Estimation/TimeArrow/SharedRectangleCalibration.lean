@@ -511,7 +511,8 @@ private theorem native_calibrated_row_parameter {M q s : ℕ} (r : ℝ)
     t * weight q r e o i / (B0 + t * weight q r e o i)
   have hden : B0 + t * weight q r e o i ≠ 0 := ne_of_gt (add_pos hB0 (mul_pos ht hw.1))
   field_simp [ne_of_gt ht, ne_of_gt hw.1, ne_of_gt hB0, hden]
-  <;> ring
+  <;> try ring
+  rw [← add_mul, mul_inv_cancel₀ hden]
 
 /-- The original calibrated Bernoulli parameters, with their original common
 multiplicative parameter, use exactly the same full-row four-cell equation. -/
@@ -572,7 +573,7 @@ theorem native_group_zero_centers {M q s : ℕ} (r : ℝ)
         intro i hi
         exact le_antisymm ((ho i i0).mpr (le_of_eq (hw i hi)))
           ((ho i0 i).mpr (le_of_eq (hw i hi).symm))
-      _ = _ := by simp only [sum_const, nsmul_eq_mul]
+      _ = _ := by simp only [sum_const, nsmul_eq_mul]; rfl
   · calc
       _ = ∑ _i ∈ G, Real.sigmoid
           ((k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
@@ -582,7 +583,7 @@ theorem native_group_zero_centers {M q s : ℕ} (r : ℝ)
         intro i hi
         rw [← native_calibrated_row_parameter r e o hq hqm hr hr1 ha ha1 t ht i]
         simp only [score, (hc i hi).1, (hc i hi).2]
-      _ = _ := by simp only [sum_const, nsmul_eq_mul]
+      _ = _ := by simp only [sum_const, nsmul_eq_mul]; rfl
 
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
