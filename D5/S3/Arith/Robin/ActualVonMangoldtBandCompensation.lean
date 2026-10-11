@@ -408,7 +408,7 @@ private theorem band_mass_reverse {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab :
   rw [show (fun t => bandDerivative c t * (Chebyshev.psi b - Chebyshev.psi t)) =
     (fun t => bandDerivative c t * Chebyshev.psi b - bandDerivative c t * Chebyshev.psi t) by funext t; ring,
     intervalIntegral.integral_sub (hi.mul_const _) hip, intervalIntegral.integral_mul_const,
-    reciprocalLog_FTC hc ha hab hz] 
+    reciprocalLog_FTC hc ha hab hz]
   rw [show (fun t => bandDerivative c t * (Chebyshev.psi t - Chebyshev.psi a)) =
     (fun t => bandDerivative c t * Chebyshev.psi t - bandDerivative c t * Chebyshev.psi a) by funext t; ring,
     intervalIntegral.integral_sub hip (hi.mul_const _), intervalIntegral.integral_mul_const,
