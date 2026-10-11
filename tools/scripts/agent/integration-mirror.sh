@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Mirror dev merges serially; GitHub checks supply every verdict.
-# Usage: integration-mirror.sh --integration BRANCH [--since DEV_MERGE_SHA]
+# Mirror dev PR landings serially; GitHub checks supply every verdict.
+# Usage: integration-mirror.sh --integration BRANCH [--since DEV_COMMIT_SHA]
 #          [--max N] [--state FILE] [--dry-run] [--required-checks-under-test REF]
 # The integration branch must require exactly dev's required checks. When the
 # integration branch is testing a change of the required checks themselves,
@@ -52,7 +52,7 @@ cleanup() {
     log "ERROR temporary worktree cleanup failed: $worktree" >&2
     rc=69
   elif [[ -n "$scratch" ]]; then
-    rm -f "$scratch/command.log" "$scratch/first-parent" "$scratch/merges" "$scratch/plan" || rc=69
+    rm -f "$scratch/command.log" "$scratch/first-parent" "$scratch/landings" "$scratch/plan" || rc=69
     rmdir "$scratch" 2>/dev/null || log "retained additional scratch material: $scratch"
   fi
   printf 'MIRROR_RESULT mirrored=%s pending=%s exit=%s\n' "$mirrored" "$pending" "$rc"
@@ -245,7 +245,7 @@ if [[ -z "$since" ]]; then
 fi
 since=$(git rev-parse --verify "$since^{commit}") || die 64 "unknown --since commit"
 grep -Fxq "$since" "$scratch/first-parent" || die 64 "--since is not on dev first-parent history"
-git rev-list --first-parent --reverse --merges "$since..$dev_tip" >"$scratch/merges"
+git rev-list --first-parent --reverse "$since..$dev_tip" >"$scratch/landings"
 completed=$(jq -c '[.[] | select(.merged_at != null) | .merge] | unique' <<<"$state_data")
 : >"$scratch/plan"
 while IFS= read -r merge; do
@@ -254,13 +254,36 @@ while IFS= read -r merge; do
     continue
   fi
   original_subject=$(git show -s --format=%s "$merge")
-  [[ "$original_subject" =~ ^Merge\ pull\ request\ \#([1-9][0-9]*)\  ]] \
-    || die 64 "merge subject does not identify an original PR: $original_subject"
-  original_pr=${BASH_REMATCH[1]}
+  # Association and subject numbers are candidates; only the PR record is
+  # authoritative about this repository's merged dev landing.
+  run associated-prs gh api "repos/$repo/commits/$merge/pulls" --paginate \
+    || die 64 "cannot discover original PR for commit $merge"
+  candidates=$(jq -sr --arg subject "$original_subject" '
+    if all(.[]; type == "array") then
+      ([.[][] | .number] + [$subject | scan("#([1-9][0-9]*)") | .[0] | tonumber]) | unique |
+      if all(.[]; type == "number" and . > 0 and floor == .) then .[]
+      else error("invalid PR candidates") end
+    else error("invalid PR association") end
+  ' <<<"$output") || die 64 "invalid PR association for commit $merge"
+  verified=()
+  while IFS= read -r candidate; do
+    [[ -n "$candidate" ]] || continue
+    run original-pr gh api "repos/$repo/pulls/$candidate" \
+      || die 64 "cannot verify PR #$candidate for commit $merge"
+    if jq -e --arg repo "$repo" --arg merge "$merge" --argjson number "$candidate" '
+      .number == $number and .merged == true and .base.ref == "dev" and
+      .base.repo.full_name == $repo and .merge_commit_sha == $merge
+    ' <<<"$output" >/dev/null; then
+      verified+=("$candidate")
+    fi
+  done <<<"$candidates"
+  (( ${#verified[@]} == 1 )) \
+    || die 64 "commit $merge must identify exactly one verified merged dev PR (found ${#verified[@]})"
+  original_pr=${verified[0]}
   git check-ref-format "refs/heads/mirror/$integration/$original_pr" || die 64 "invalid mirror branch"
   printf '%s %s\n' "$merge" "$original_pr" >>"$scratch/plan"
   pending=$((pending + 1))
-done <"$scratch/merges"
+done <"$scratch/landings"
 merge=''
 log "plan dev=$dev_tip since=$since integration=$integration count=$pending required=$required version=$VERSION"
 if (( dry_run )); then
@@ -337,7 +360,7 @@ while read -r merge original_pr; do
     body="Provenance: integration-mirror.sh v$VERSION; automated git/gh transport, no review seats or consensus; GitHub required checks supply verdicts.
 
 Original PR: $original_url
-Original dev merge: $merge
+Original dev landing: $merge
 Integration base: $base
 Mirror head: $head
 Script version: $VERSION"
