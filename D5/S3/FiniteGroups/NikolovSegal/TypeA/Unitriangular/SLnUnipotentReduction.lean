@@ -29,11 +29,6 @@ theorem mul_lowerRad_inr (g : BlockSL r F) (v : Fin r → F)
     (g * lowerRad v).val i (Sum.inr 0) = g.val i (Sum.inr 0) := by
   simp [SpecialLinearGroup.coe_mul,lowerRad,Matrix.mul_apply,Fintype.sum_sum_type,Matrix.one_apply]
 
-theorem mul_upperRad_inl (g : BlockSL r F) (v : Fin r → F)
-    (i : Fin r ⊕ Fin 1) (j : Fin r) :
-    (g * upperRad v).val i (Sum.inl j) = g.val i (Sum.inl j) := by
-  simp [SpecialLinearGroup.coe_mul,upperRad,Matrix.mul_apply,Fintype.sum_sum_type,Matrix.one_apply]
-
 theorem mul_upperRad_inr (g : BlockSL r F) (v : Fin r → F)
     (i : Fin r ⊕ Fin 1) :
     (g * upperRad v).val i (Sum.inr 0) =

@@ -195,9 +195,6 @@ theorem actual_radical_column (r c : Fin (k+2) → F) (hr : EndpointZero r)
     (hc : EndpointZero c) (z : F) (i : Fin (k+2)) (hi0 : i≠first) (hil : i≠last) :
     radical r c hr hc z i last=c i := by
   simp [radical,radicalN,Matrix.one_apply,hi0,hil]
-theorem actual_radical_corner (r c : Fin (k+2) → F) (hr : EndpointZero r)
-    (hc : EndpointZero c) (z : F) : radical r c hr hc z first last=z := by
-  simp [radical,radicalN,Matrix.one_apply,first_ne_last]
 /-- Closure is proved for the literal matrix support, not postulated. -/
 theorem actual_radical_product_mem (a b : Matrix.SpecialLinearGroup (Fin (k+2)) F)
     (ha : InRadical a) (hb : InRadical b) : InRadical (a*b) := by

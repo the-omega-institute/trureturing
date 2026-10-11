@@ -65,4 +65,3 @@ theorem sl_bare_full_group_diagonal_field_graph (p : ℕ) [Fact p.Prime] [CharP 
   exact ⟨c,a,phi,eps,U_T_agreement_full p hn hF _ _ hT
     (diagonalFieldGraph_map_torus a phi eps) hU⟩
 end NikolovSegal.SLnFullGroup
-

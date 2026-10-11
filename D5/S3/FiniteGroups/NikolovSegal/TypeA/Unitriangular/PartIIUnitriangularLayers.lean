@@ -228,7 +228,7 @@ private theorem actual_group_layer_identity (k : ℕ) (hk : 0 < k)
       dsimp only [W,u,stripUnit]
       noncomm_ring
     rw [hWval]
-  
+
 /-- Printed equation(13)'s ACTUAL group-commutator leading-layer
 surjectivity in arbitrary matrix rank. The witness lies in the true kth
 layer and is constructed, not assumed; the proper matrix is genuine SL.
