@@ -597,8 +597,6 @@ private theorem conjStep_sub (p : NonIdentityPauli) (a : ℝ) (M N : Mat) :
 private theorem conjStep_smul (p : NonIdentityPauli) (a : ℝ) (c : ℂ) (M : Mat) :
     conjStep p a (c • M) = c • conjStep p a M := by
   simp only [conjStep, Matrix.mul_smul, Matrix.smul_mul, smul_sub, smul_add, smul_smul]; module
-private theorem conjStep_zero (p : NonIdentityPauli) (M : Mat) : conjStep p 0 M = M := by
-  simp [conjStep]
 private def gateOrder : Fin 15 → Fin 15 := ![9,1,4,13,12,2,5,10,0,6,11,7,8,3,14]
 private def witnessP : Fin 15 → NonIdentityPauli := fun j =>
   ⟨labels (gateOrder j), by fin_cases j <;> decide +kernel⟩
@@ -613,22 +611,14 @@ private theorem witness_columns (j : Fin 15) :
   have hc : Real.sqrt 2 ^ 3 = 2 * Real.sqrt 2 := by simp [pow_succ, hs]
   rw [H, prefixOp, list_conjugation]
   fin_cases j <;>
-    simp only [colScale, Fin.isValue, Fin.zero_eta, Finset.mem_insert, zero_ne_one, Fin.reduceEq,
-      Finset.mem_singleton, or_self, or_false, ↓reduceIte, witnessP, ne_eq, labels, gateOrder,
-      point, cons_val_zero, cons_val, List.take, List.foldr_nil, E, Fin.sum_univ_succ,
-      cons_val_succ, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Fin.reduceSucc,
-      Finset.univ_unique, Fin.default_eq_zero, cons_val_fin_one, Finset.sum_singleton, rowScale,
-      certA, one_div, transpose_apply, cons_val', ite_mul, one_mul, _root_.add_apply,
-      ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply, Rat.cast_zero,
-      mul_zero, zero_smul, one_ne_zero, or_true, cons_val_one, Rat.cast_one, mul_one, add_zero,
-      zero_add, Fin.mk_one, List.finRange, List.ofFn_succ, List.ofFn_zero, List.take_succ_cons,
-      List.foldr_cons, List.foldr, conjStep_word, sgn, anticomm, Bool.false_eq_true,
-      bne_self_eq_false, Int.reduceNeg, reduceCtorEq, Fin.reduceFinMk, bne_iff_ne,
-      not_false_eq_true, mul_neg, Nat.succ_eq_add_one, Nat.reduceAdd, Real.cos_zero,
-      Complex.ofReal_one, one_smul, Real.sin_zero, Complex.ofReal_zero, zero_mul, pauliPhase,
-      Fin.prod_univ_two, neg_zero, pauliProd, sub_zero, neg_neg, Real.cos_pi_div_four,
-      Complex.ofReal_div, Complex.ofReal_ofNat, Real.sin_pi_div_four, neg_smul, sub_neg_eq_add,
-      conjStep_add, conjStep_smul, smul_add, Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat,
+    simp only [colScale, Fin.isValue, Fin.zero_eta, Finset.mem_insert, zero_ne_one, Fin.reduceEq, Finset.mem_singleton, or_self, or_false, ↓reduceIte, witnessP, ne_eq, labels,
+      gateOrder, point, cons_val_zero, cons_val, List.take, List.foldr_nil, E, Fin.sum_univ_succ, cons_val_succ, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Fin.reduceSucc,
+      Finset.univ_unique, Fin.default_eq_zero, cons_val_fin_one, Finset.sum_singleton, rowScale, certA, one_div, transpose_apply, cons_val', ite_mul, one_mul, _root_.add_apply,
+      ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply, Rat.cast_zero, mul_zero, zero_smul, one_ne_zero, or_true, cons_val_one, Rat.cast_one, mul_one, add_zero,
+      zero_add, Fin.mk_one, List.finRange, List.ofFn_succ, List.ofFn_zero, List.take_succ_cons, List.foldr_cons, List.foldr, conjStep_word, sgn, anticomm, Bool.false_eq_true,
+      bne_self_eq_false, Int.reduceNeg, reduceCtorEq, Fin.reduceFinMk, bne_iff_ne, not_false_eq_true, mul_neg, Nat.succ_eq_add_one, Nat.reduceAdd, Real.cos_zero,
+      Complex.ofReal_one, one_smul, Real.sin_zero, Complex.ofReal_zero, zero_mul, pauliPhase, Fin.prod_univ_two, neg_zero, pauliProd, sub_zero, neg_neg, Real.cos_pi_div_four,
+      Complex.ofReal_div, Complex.ofReal_ofNat, Real.sin_pi_div_four, neg_smul, sub_neg_eq_add, conjStep_add, conjStep_smul, smul_add, Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat,
       Rat.cast_inv, conjStep_sub] <;> match_scalars
   all_goals
     apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im, Complex.div_re,
@@ -652,5 +642,45 @@ private theorem normalized_witness : B * Matrix.of (J_H witnessP point) * U = D 
              simp only [B, U, mul_assoc]
        _ = D := by rw [scaling_inverse.1, scaling_inverse.2]
                    simp only [mul_one, ← map_mul, rational_certificate.2.2.2.2, D]
+
+private theorem sqrt_inverse : (Real.sqrt 2)⁻¹ = Real.sqrt 2 / 2 := by
+  have hs : Real.sqrt 2 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
+  field_simp; nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]
+private theorem H_witness (j : Fin 15) : H witnessP point j =
+    (colScale j)⁻¹ • E (fun i => rowScale i * (certA i j : ℝ)) := by
+  have hs : colScale j ≠ 0 := by simp only [colScale]; split_ifs <;> positivity
+  rw [← witness_columns, smul_smul, inv_mul_cancel₀ hs, one_smul]
+private theorem B_row (i : Fin 15) : B 12 i = (certz i : ℝ) / rowScale i := by
+  fin_cases i <;> simp [B, Ri, mul_diagonal, ratReal, certK, certL, certe, certz, div_eq_mul_inv,
+    rowScale, sqrt_inverse]
+set_option maxHeartbeats 2000000 in
+-- Only the four left-kernel coordinates contribute to this commutator contraction.
+private theorem contracted_derivative :
+    (B *ᵥ (Matrix.of (J_D witnessP point v) *ᵥ v)) 12 = -1 := by
+  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have h6 : Real.sqrt 2 ^ 6 = 8 := by
+    calc _ = (Real.sqrt 2 ^ 2) ^ 3 := by ring
+         _ = 8 := by rw [hs]; norm_num
+  simp only [mulVec, dotProduct, B_row, Matrix.of_apply, Fin.sum_univ_succ]
+  simp only [certz, cons_val_zero, cons_val_succ, cons_val_fin_one, Rat.cast_zero, Rat.cast_one,
+    Rat.cast_neg, Rat.cast_ofNat, zero_div, zero_mul, zero_add]
+  simp only [v, S, mulVec_diagonal, certu, colScale, rowScale, Finset.mem_insert, Finset.mem_singleton,
+    cons_val_zero, cons_val_succ, cons_val_fin_one, Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat,
+    Rat.cast_zero, Rat.cast_one, Fin.reduceEq, or_false, ↓reduceIte, mul_zero, zero_add]
+  simp only [J_D, H_D, H_witness, colScale, Fin.isValue, Finset.mem_insert, Finset.mem_singleton, E, Fin.sum_univ_succ, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Fin.reduceSucc, Finset.univ_unique, Fin.default_eq_zero,
+    Finset.sum_singleton, rowScale, certA, one_div, transpose_apply, cons_val', cons_val_fin_one, ite_mul, one_mul, _root_.add_apply, ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply, zero_ne_one, Fin.reduceEq, or_self,
+    or_false, ↓reduceIte, cons_val_zero, one_ne_zero, or_true, cons_val_one, cons_val, smul_add, map_add, map_smul, prefixG, Fin.mk_eq_zero, Fin.mk_eq_one, ContinuousLinearMap.add_comp, ContinuousLinearMap.smul_comp,
+    ContinuousLinearMap.coe_pi', sqrt_inverse, Rat.cast_zero, mul_zero, Fin.coe_ofNat_eq_mod, Nat.zero_mod, Finset.univ_eq_empty, Finset.sum_empty, ContinuousLinearMap.comp_zero, smul_zero, Rat.cast_one, mul_one, add_zero, sub_self,
+    _root_.zero_apply, zero_mul, Nat.reduceMod, Fin.val_eq_zero, Fin.zero_eta, zero_smul, zero_add, Finset.sum_const, Finset.card_singleton, one_smul, ContinuousLinearMap.comp_apply, _root_.smul_apply, _root_.sub_apply, mulVec_diagonal,
+    Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat, ContinuousLinearMap.flip_apply, ContinuousLinearMap.mul_apply', Fin.val_eq_zero_iff, Fin.val_succ, Fin.mk_one, Fin.succ_ne_zero, ContinuousLinearMap.comp_add, inv_one, Nat.add_eq_right,
+    false_or, cons_val_succ', Nat.reduceAdd, Fin.reduceFinMk, Rat.cast_inv, map_zero, Finset.sum_const_zero, ne_eq, not_false_eq_true, div_self]
+  simp only [mul_add, Matrix.mul_smul, word_product, Fin.prod_univ_two, pauliProd, pauliPhase,
+    labels, cons_val_zero, cons_val_one, smul_smul, mul_one, one_mul, mul_neg]
+  simp only [rho, labels, Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue, cons_val', cons_val_zero, cons_val_fin_one, cons_val, cons_val_one, mul_one, one_smul, sub_self, smul_zero, LinearMap.coe_toContinuousLinearMap', LinearMap.coe_mk,
+    AddHom.coe_mk, mul_zero, trace_zero, Complex.zero_re, zero_div, zero_mul, mul_neg, neg_mul, Complex.I_mul_I, neg_neg, neg_smul, smul_neg, one_mul, add_sub_add_left_eq_sub, Algebra.mul_smul_comm, mul_sub, trace_smul, trace_sub,
+    trace_neg, word_trace_mul, vecCons_inj, reduceCtorEq, and_true, and_self, ↓reduceIte, smul_eq_mul, neg_zero, mul_add, trace_add, Complex.real_smul, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_neg, Complex.ofReal_one,
+    Complex.ofReal_ofNat, add_zero, zero_add, sub_neg_eq_add, Complex.add_re, Complex.mul_re, Complex.div_ofNat_re, Complex.neg_re, Complex.I_re, Complex.ofReal_re, Complex.one_re, Complex.ofReal_im, Complex.div_ofNat_im, Complex.neg_im,
+    Complex.one_im, sub_zero, Complex.mul_im, Complex.re_ofNat, Complex.I_im, Complex.im_ofNat, zero_sub, and_false, smul_add, Complex.ofReal_inv, Complex.sub_re, Complex.inv_re, Complex.normSq_ofNat, div_self_mul_self', Complex.inv_im]
+  ring_nf <;> simp only [h6, sqrt_inverse] <;> nlinarith [hs]
 
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
