@@ -3247,3 +3247,536 @@ G_nR_n=S_nG_{n+1},
 
 因此 Fibonacci 删除投影目前已经完全解决概率观察和隐藏核层面的相容性，Dirichlet 层面还需要逐边定义 \(S_n\)。不能把 \(D_n\) 自动当作图 Dirichlet 商映射。
 
+---
+
+## 22. 边界到 seam 商、最小提升与循环可观测性
+
+本节把第 6 节的五边短正合列和第 7 节的 Fibonacci 维数公式提升为一个一般有限图命题。对象仍然是有限维实向量空间、概率质量零空间、图边界和线性读出。没有引入时间、物理能量或 Hamiltonian。
+
+### 定义 22.1（边界、可见读出与 seam 空间）
+
+令 \(\Gamma=(V,E)\) 是有限连通图。取一个参考定向，并令
+
+\[
+B:\mathbb R^E\longrightarrow H:=\mathbb R^V
+\]
+
+为有向边界算子，约定每条边列为终点单位向量减起点单位向量。令
+
+\[
+T=\left\{v\in H:\sum_{x\in V}v_x=0\right\}.
+\]
+
+令
+
+\[
+A:H\longrightarrow Y
+\]
+
+为任意有限维线性可见读出，并定义
+
+\[
+K=\ker B,\qquad
+S=\ker(A|_T),\qquad
+C=\ker(AB).
+\]
+
+其中 \(K\) 是纯循环空间，\(S\) 是状态边界在可见读出下的隐藏 seam 空间，\(C\) 是产生零一步可见边界的边链空间。
+
+### 定理 22.2（边界到 seam 的商同构）
+
+由于 \(\Gamma\) 连通，有
+
+\[
+\operatorname{im}B=T.
+\]
+
+边界算子在 \(C\) 上下降为一个规范同构
+
+\[
+\overline B:
+C/K
+\longrightarrow
+S,
+\qquad
+[f]\longmapsto Bf.
+\]
+
+因此存在短正合列
+
+\[
+\boxed{
+0\longrightarrow K
+\longrightarrow C
+\xrightarrow{\ B\ }
+S
+\longrightarrow0
+}
+\]
+
+以及自然维数公式
+
+\[
+\dim C=\dim K+\dim S.
+\]
+
+对于 Fibonacci cube \(\Gamma_n\)，这给出
+
+\[
+\dim C_n=c_n+h_n,
+\qquad
+\dim(C_n/K_n)=h_n.
+\]
+
+#### 证明
+
+有限连通图的 incidence 边界满足
+
+\[
+\operatorname{im}B=T.
+\]
+
+这是因为每条边界都具有总质量零，而从一个固定根到任意顶点的路径边界给出 \(\mathbf e_v-\mathbf e_{\mathrm{root}}\)，这些差向量生成 \(T\)。
+
+若 \(f\in C\)，则 \(ABf=0\)，且 \(Bf\in\operatorname{im}B=T\)，故
+
+\[
+Bf\in\ker(A|_T)=S.
+\]
+
+于是 \(B\) 从 \(C\) 映射到 \(S\)。若 \(f'=f+k\)，其中 \(k\in K\)，则 \(Bf'=Bf\)，所以该映射对商类 \([f]\) 良定义。
+
+给定 \(s\in S\)，由 \(\operatorname{im}B=T\) 可取 \(f\in\mathbb R^E\) 使 \(Bf=s\)。于是 \(ABf=As=0\)，所以 \(f\in C\)，说明 \(\overline B\) 满射。
+
+若 \(\overline B([f])=0\)，则 \(Bf=0\)，故 \(f\in K\)，即 \([f]=0\)。因此 \(\overline B\) 单射。短正合列及维数公式随即成立。证毕。
+
+### 推论 22.3（同一 seam 的全部边提升）
+
+给定 \(s\in S\)，所有满足
+
+\[
+Bf=s
+\]
+
+的边链恰为一个仿射空间
+
+\[
+B^{-1}(s)=f_0+K,
+\]
+
+其中 \(f_0\) 是任意一个满足 \(Bf_0=s\) 的提升。因此：
+
+\[
+\boxed{
+\text{同一个静态 seam 的边界表示，恰好相差一个纯循环。}
+}
+\]
+
+这一区分了两个隐藏来源：
+
+\[
+\text{静态 seam}
+\quad\leftrightarrow\quad
+C/K,
+\]
+
+\[
+\text{动态循环}
+\quad\leftrightarrow\quad
+K.
+\]
+
+在一般图上，\(C\) 同时包含两者；只有取商以后才得到与状态 seam 一一对应的边界类。
+
+### 定理 22.4（加权最小边界提升与诱导 seam 度量）
+
+令 \(W\in\mathbb R^{E\times E}\) 对称正定，并在边链上定义
+
+\[
+\langle f,g\rangle_{W^{-1}}
+=
+f^{\mathsf T}W^{-1}g.
+\]
+
+记
+
+\[
+L_W=BWB^{\mathsf T}.
+\]
+
+对每个 \(s\in S\)，定义
+
+\[
+\mathsf L_W(s)
+=
+WB^{\mathsf T}L_W^\dagger s,
+\]
+
+其中 \(L_W^\dagger\) 是 Moore–Penrose 伪逆。则：
+
+1. \(B\mathsf L_W(s)=s\)；
+2. \(\mathsf L_W(s)\) 是约束 \(Bf=s\) 下唯一最小化
+   \[
+   \|f\|_{W^{-1}}^2=f^{\mathsf T}W^{-1}f
+   \]
+   的边链；
+3. \(\mathsf L_W(s)\) 与 \(K\) 在 \(\langle\cdot,\cdot\rangle_{W^{-1}}\) 下正交；
+4. 任意边界提升唯一写成
+   \[
+   f=\mathsf L_W(s)+k,\qquad k\in K;
+   \]
+5. \(S\) 上的二次型
+   \[
+   g_W(s,t)
+   =
+   \left\langle
+   \mathsf L_W(s),\mathsf L_W(t)
+   \right\rangle_{W^{-1}}
+   =
+   s^{\mathsf T}L_W^\dagger t
+   \]
+   是正定的。
+
+#### 证明
+
+对于连通图，\(\ker B^{\mathsf T}\) 是常数向量空间，故
+
+\[
+\ker L_W=\ker B^{\mathsf T},
+\qquad
+\operatorname{im}L_W=\operatorname{im}B=T.
+\]
+
+由于 \(s\in S\subseteq T\)，有
+
+\[
+L_WL_W^\dagger s=s,
+\]
+
+从而
+
+\[
+B\mathsf L_W(s)
+=
+BWB^{\mathsf T}L_W^\dagger s
+=
+s.
+\]
+
+若 \(k\in K\)，则
+
+\[
+\left\langle
+\mathsf L_W(s),k
+\right\rangle_{W^{-1}}
+=
+s^{\mathsf T}(L_W^\dagger)^{\mathsf T}B k
+=
+0.
+\]
+
+每个满足 \(Bf=s\) 的 \(f\) 与 \(\mathsf L_W(s)\) 之差属于 \(K\)，故正交分解给出唯一最小范数提升。
+
+最后，
+
+\[
+\begin{aligned}
+\left\langle
+\mathsf L_W(s),\mathsf L_W(t)
+\right\rangle_{W^{-1}}
+&=
+s^{\mathsf T}L_W^\dagger
+BWB^{\mathsf T}
+L_W^\dagger t\\
+&=
+s^{\mathsf T}L_W^\dagger t,
+\end{aligned}
+\]
+
+因为 \(s,t\in\operatorname{im}L_W\)。若 \(s\neq0\)，则 \(\mathsf L_W(s)\neq0\)，故
+
+\[
+g_W(s,s)=\|\mathsf L_W(s)\|_{W^{-1}}^2>0.
+\]
+
+证毕。
+
+### 推论 22.5（循环规范的精确含义）
+
+\(\mathsf L_W\) 是商空间 \(C/K\cong S\) 的唯一 \(W^{-1}\)-正交代表。因而：
+
+\[
+\boxed{
+\text{最小提升规范只消除循环自由度，}
+\quad
+\text{它不消除 seam 自由度。}
+}
+\]
+
+如果在同一 \(s\) 上选取另一条边链 \(f=\mathsf L_W(s)+k\)，则
+
+\[
+\|f\|_{W^{-1}}^2
+=
+g_W(s,s)+\|k\|_{W^{-1}}^2.
+\]
+
+这给出一个完全有限维的“边界成本分解”：第一项是 seam 的规范代表成本，第二项是额外循环活动成本。
+
+### 定理 22.6（边读出何时只依赖 seam）
+
+令
+
+\[
+R:C\longrightarrow Z
+\]
+
+是任意线性边读出。则以下两项等价：
+
+1. 存在唯一线性映射
+   \[
+   \overline R:S\longrightarrow Z
+   \]
+   使
+   \[
+   R=\overline R\circ B;
+   \]
+2. \(R\) 湮灭所有循环：
+   \[
+   R|_K=0.
+   \]
+
+在此情况下，
+
+\[
+\overline R(s)=R(\mathsf L_W(s))
+\]
+
+与权重 \(W\) 无关。若 \(R|_K\neq0\)，则 \(R\) 可以区分同一 seam \(s\) 的不同边界提升。
+
+#### 证明
+
+若 \(R=\overline R\circ B\)，则对 \(k\in K\)
+
+\[
+R(k)=\overline R(Bk)=0.
+\]
+
+反过来，若 \(R|_K=0\)，对 \(s\in S\) 选取任意 \(f\in C\) 满足 \(Bf=s\)，定义
+
+\[
+\overline R(s)=R(f).
+\]
+
+若 \(f'\) 是另一个提升，则 \(f'-f\in K\)，所以
+
+\[
+R(f')-R(f)=R(f'-f)=0.
+\]
+
+故 \(\overline R\) 良定义、线性且满足 \(R=\overline R\circ B\)。唯一性由 \(B(C)=S\) 得到。特别地，最小提升可用于计算该映射，但结果不依赖所选 \(W\)。若 \(R|_K\neq0\)，取 \(k\in K\) 使 \(R(k)\neq0\)，则 \(f\) 与 \(f+k\) 具有相同 seam 而读出不同。证毕。
+
+### 定义 22.7（边链未来观测核与折扣 Gramian）
+
+给定任意有限维边更新
+
+\[
+U:\mathbb R^E\longrightarrow\mathbb R^E,
+\]
+
+令一步状态可见读出为
+
+\[
+O=AB.
+\]
+
+定义未来观测核
+
+\[
+\mathcal N_\infty^E
+=
+\bigcap_{m\ge0}\ker(OU^m).
+\]
+
+若 \(Y\) 带有 Euclidean 内积，并且 \(0<\beta<1\)，定义折扣 Gramian
+
+\[
+\mathcal G_\beta
+=
+\sum_{m=0}^{\infty}
+\beta^m
+(U^{\mathsf T})^mO^{\mathsf T}OU^m.
+\]
+
+有限维中该级数在 \(\|U\|\sqrt\beta<1\) 时按算子范数收敛；若 \(\beta\|U\|^2\ge1\)，可改用有限窗口 Gramian
+
+\[
+\mathcal G_{\beta,N}
+=
+\sum_{m=0}^{N}
+\beta^m
+(U^{\mathsf T})^mO^{\mathsf T}OU^m.
+\]
+
+### 定理 22.8（循环到 seam 的观测转化）
+
+令 \(K=\ker B\)。
+
+1. 若
+   \[
+   U(K)\subseteq K,
+   \]
+   则
+   \[
+   K\subseteq\mathcal N_\infty^E.
+   \]
+   所有纯循环在任意未来窗口都保持不可见。
+
+2. 若存在
+   \[
+   k\in K,\quad m\ge0
+   \]
+   使
+   \[
+   ABU^m k\neq0,
+   \]
+   则 \(k\notin\mathcal N_\infty^E\)，即该循环在第 \(m\) 个未来窗口被转化为可见边界。
+
+3. 对任意 \(f\in\mathbb R^E\)，在 Gramian 收敛条件下有
+   \[
+   f^{\mathsf T}\mathcal G_\beta f
+   =
+   \sum_{m\ge0}
+   \beta^m
+   \|ABU^m f\|^2.
+   \]
+   特别地，
+   \[
+   f\in\ker\mathcal G_\beta
+   \iff
+   f\in\mathcal N_\infty^E.
+   \]
+
+#### 证明
+
+若 \(U(K)\subseteq K\)，则 \(U^m k\in K=\ker B\) 对所有 \(m\) 成立，因此
+
+\[
+ABU^m k=0.
+\]
+
+故 \(k\in\mathcal N_\infty^E\)。
+
+第二项是定义的直接展开。
+
+对于第三项，逐项计算：
+
+\[
+\begin{aligned}
+f^{\mathsf T}\mathcal G_\beta f
+&=
+\sum_{m\ge0}
+\beta^m
+f^{\mathsf T}(U^{\mathsf T})^mO^{\mathsf T}OU^m f\\
+&=
+\sum_{m\ge0}
+\beta^m
+\|OU^m f\|^2.
+\end{aligned}
+\]
+
+每项非负，因此总和为零当且仅当每一项都为零，即
+
+\[
+OU^m f=0
+\]
+
+对所有 \(m\) 成立。证毕。
+
+### 推论 22.9（Fibonacci 图上的三种维数）
+
+对 Fibonacci cube \(\Gamma_n\)，令
+
+\[
+K_n=\ker B_n,\qquad
+S_n=\ker(A_n|_{T_n}),\qquad
+C_n=\ker(A_nB_n).
+\]
+
+则：
+
+\[
+\dim K_n=c_n
+=
+\sum_{k\ge2}(k-1)N_{n,k},
+\]
+
+\[
+\dim S_n=h_n
+=
+\sum_{k\ge2}N_{n,k},
+\]
+
+\[
+\dim C_n=c_n+h_n
+=
+\sum_{k\ge2}kN_{n,k}.
+\]
+
+因此：
+
+\[
+\boxed{
+\begin{aligned}
+\text{纯循环维数} &=\sum_{k\ge2}(k-1)N_{n,k},\\
+\text{静态 seam 维数} &=\sum_{k\ge2}N_{n,k},\\
+\text{零一步可见边链维数} &=\sum_{k\ge2}kN_{n,k}.
+\end{aligned}
+}
+\]
+
+当 \(n\ge5\) 时，
+
+\[
+\dim K_n-\dim S_n
+=
+\sum_{k\ge3}(k-2)N_{n,k}>0.
+\]
+
+所以从 \(n=5\) 开始，动态循环自由度严格多于静态 seam 自由度。即使静态观察核维数固定，边链仍然有额外循环活动无法由边界读出恢复。
+
+#### 证明
+
+前两项是既有 Fibonacci 计数公式。由定理 22.2，
+
+\[
+\dim C_n=\dim K_n+\dim S_n.
+\]
+
+将两项有限和相加，得到
+
+\[
+\dim C_n
+=
+\sum_{k\ge2}
+\bigl((k-1)+1\bigr)N_{n,k}
+=
+\sum_{k\ge2}kN_{n,k}.
+\]
+
+差值式和严格不等式由 \(N_{n,3}>0\) 在 \(n\ge5\) 时成立得到。证毕。
+
+### 22.1 结论边界
+
+定理 22.2 和定理 22.4 是有限维线性代数结论。定理 22.6 是商空间的因子化判据。定理 22.8 只使用给定的线性边更新 \(U\) 和读出 \(AB\)。这些结果没有定义：
+
+\[
+\text{物理时间},\quad
+\text{能量},\quad
+\text{概率转移率},\quad
+\text{连续流形},\quad
+\text{量子 Hamiltonian}.
+\]
+
+若要令 \(U\) 来自 Markov 流或边界输运，还要另给非负性、归一化、可达性和非爆炸条件。若要把 \(g_W\) 解释成物理能量，必须另给单位、动力学和作用量。若要从 \(\mathcal G_\beta\) 推出有限记忆或无限未来完备性，还需给出实际记录空间和相容的历史核。
+
