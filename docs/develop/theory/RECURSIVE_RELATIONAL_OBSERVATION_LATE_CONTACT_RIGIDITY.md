@@ -396,3 +396,441 @@ analysis kernels nor the sharpness singleton supply these bridges.
 [LV]: https://arxiv.org/html/1404.0999v3
 
 ## 追加锚（本行以下为增补区）
+
+## 6. A quantitative bound from one late mean
+
+**Theorem 6.1 (complete configuration-law stability).** Let
+$(\Gamma_B,\Gamma_A)$ be any boxed compatible pair of Definitions
+1.2--1.3, with its original common unweighted marginals and both full
+residual equations. Retain Assumption 1.1. For every integer $n\ge4$ put
+
+$$
+\begin{aligned}
+d_n&=\int Q(w_{n,1})\,d\nu_p(Q),\\
+e_{a,n}&=d_n-c_az_a^n,& e_{b,n}&=c_bz_b^n-d_n,\\
+\kappa&=\frac15,&
+M_r&=1+z_r+z_r^2+(1+z_r)\lambda+\lambda^2,\\
+C_{r,n}&=M_r\kappa^{-n}
+             \sum_{j=1}^{n-1}\left(\frac\lambda{z_r}\right)^j,
+&M_a&=\frac{3379}{2025},\qquad M_b=\frac{9559}{5625}.
+\end{aligned}
+\tag{6.1}
+$$
+
+Then $e_{r,n}\ge0$ and, for both $r\in\{a,b\}$,
+
+$$
+\max_{s\in\{p,\beta\}}
+  \int\operatorname{TV}(D,P_{s,r})\,d\nu_s(D)
+\le C_{r,n}e_{r,n}.
+\tag{6.2}
+$$
+
+Here $\operatorname{TV}(D,P)=\frac12\sum_{e\in\Omega_s}|D(e)-P(e)|$
+is evaluated on each normalized complete configuration law before
+integration, including the noncompletion coordinate. The marginal
+supports may be arbitrary Borel sets. There is no finite-support,
+recurrence, reversibility, deterministic-successor, irreducibility or
+ergodicity assumption. The index $n$ in (6.1) is the word-return index;
+the original source parameter $n=4$ in Assumption 1.1 is unchanged.
+
+**Proof.** Work throughout with the original disintegrations $B,A$.
+For bounded Borel functions on the respective phase spaces, marginal
+transport gives
+
+$$
+\int B|f|\,d\nu_p=\int|f|\,d\nu_\beta,\qquad
+\int A|h|\,d\nu_\beta=\int|h|\,d\nu_p.
+\tag{6.3}
+$$
+
+Thus a marginal-null exceptional set is assigned zero conditional mass
+at almost every input of the opposite phase. Both kernels act on the
+almost-sure quotients, and their positive weighted compositions do too.
+The countable complete carriers allow one null set per phase for all
+coordinate residual equations and boxes. Iterated identities below
+hold in these quotients; a countable union also makes all indices
+simultaneous. No conditional version at a null input is used. The
+tail bounds of (1.3) imply zero mass at both infinite outcomes by
+continuity from above, while retaining those outcomes in the laws.
+
+Reuse (2.2)--(2.4), writing $w=L\mathbf1$ and $q_j(Q)=Q(w_{j,1})$:
+
+$$
+\begin{gathered}
+P=BA,\qquad Lf=(1-u)B(vAf),\qquad g=(1-u)B(1-v),\\
+\nu_pP=\nu_p,\qquad q_j=L^jg,\qquad
+c_b\le g\le c_a,\qquad w=1-u-g,\\
+\kappa Pf\le Lf\le\lambda Pf\quad(f\ge0).
+\end{gathered}
+\tag{6.4}
+$$
+
+Positivity gives, for every nonnegative bounded $f$ and integer $m\ge0$,
+
+$$
+\kappa^mP^mf\le L^mf\le\lambda^mP^mf,
+\qquad
+\kappa^m\int f\,d\nu_p
+\le\int L^mf\,d\nu_p
+\le\lambda^m\int f\,d\nu_p.
+\tag{6.5}
+$$
+
+For the induction, apply $L$ to the preceding inequalities and then
+apply its one-step comparison to $P^mf$. Integration uses the original
+stationarity $\nu_pP=\nu_p$. No commutation of $L,P$, invariant law for
+$L$, or weighting of either marginal is asserted.
+
+Fix $r$, abbreviate $c=c_r,z=z_r,e=e_{r,n}$, and set $\sigma=1$ at
+$r=a$ and $\sigma=-1$ at $r=b$. Define
+
+$$
+F=\sigma(c-g),\qquad \Phi=\int F\,d\nu_p,\qquad
+h=\sigma(q_n-cz^n),\qquad V=\sigma(w-z).
+\tag{6.6}
+$$
+
+The ratio (2.5) is less than one for $j=0,1,2$ and greater than one
+for every $j\ge3$. Hence $F,h\ge0$ and $\int h\,d\nu_p=e$.
+Since $n-1\ge3$, the predecessor box and $q_n=Lq_{n-1}$ imply
+
+$$
+0\le\sigma(q_n-cz^{n-1}w)=h-cz^{n-1}V,
+\qquad V\le\frac{h}{cz^{n-1}}.
+\tag{6.7}
+$$
+
+Finite telescoping of $L^n\mathbf1-z^n\mathbf1$, followed by (6.7),
+now gives
+
+$$
+\begin{aligned}
+L^nF
+ &=c\sum_{j=0}^{n-1}z^{n-1-j}L^jV-h\\
+ &\le\sum_{j=1}^{n-1}z^{-j}L^jh.
+\end{aligned}
+\tag{6.8}
+$$
+
+Indeed the $j=0$ term minus $h$ is nonpositive, and positivity of
+$L^j$ applies (6.7) to each remaining term. The signed function $V$
+is used only in this order comparison. Apply (6.5) to the nonnegative
+functions $F,h$, obtaining the source-specific defect estimate
+
+$$
+\kappa^n\Phi\le\int L^nF\,d\nu_p
+\le\sum_{j=1}^{n-1}\left(\frac\lambda z\right)^j e.
+\tag{6.9}
+$$
+
+It remains to control TV on every complete coordinate. The endpoint
+b-to-a ratios at phase p are $(6/5)(27/25)^j$ on marker zero and
+$(81/100)(27/25)^j$ on marker one. At suspension they are $9/10$ on
+standalone beta, $(36/25)(27/25)^j$ on prefixed marker zero, and
+$(243/250)(27/25)^j$ on prefixed marker one. Thus the complete events
+where endpoint a exceeds endpoint b are exactly
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+\tag{6.10}
+$$
+
+Every other finite coordinate has the reverse sign, and both infinite
+coordinates have difference zero. Inside the boxes these signs also
+fix the signs of the difference from either endpoint. Normalization
+then identifies the half-$\ell^1$ distance with the signed event
+difference. This uses the whole carrier, not a finite truncation.
+
+Put $x=|u-r|=\sigma(u-r)$ and $y=|v-r|=\sigma(v-r)$. Directly from
+the endpoint product in (6.4), both decompositions hold:
+
+$$
+F=(1-r)x+(1-u)By
+  =(1-r)By+B(1-v)x.
+\tag{6.11}
+$$
+
+Consequently $F\ge(1-r)x$ and $F\ge(1-r)By$.
+For $j=0,1,2$ let $f_j=\sigma(cz^j-q_j)\ge0$, so $f_0=F$.
+The p sign computation and (6.4) give
+
+$$
+\operatorname{TV}(Q,P_{p,r})=f_0+f_1+f_2,\qquad
+f_{j+1}=Lf_j+cz^j(x-F)\quad(j=0,1).
+\tag{6.12}
+$$
+
+Since $c(x-F)\le zF$ by $F\ge(1-r)x$, it follows that
+$f_1\le LF+zF$ and
+$f_2\le L^2F+zLF+z^2F$. Integration using (6.5) yields
+
+$$
+\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p
+\le[1+z+z^2+(1+z)\lambda+\lambda^2]\Phi=M_r\Phi.
+\tag{6.13}
+$$
+
+At suspension the complete residual equation gives
+$W(E_\beta)=1-v+vAg$. By (6.10), its signed difference from
+$1-r+rc$ is precisely TV. Therefore
+
+$$
+\operatorname{TV}(W,P_{\beta,r})=(1-c)y+vAF.
+\tag{6.14}
+$$
+
+Transport (6.11) with the same B marginal to get
+$\Phi\ge(1-r)\int y\,d\nu_\beta$. The A marginal and $v\le b$ give
+
+$$
+\int\operatorname{TV}(W,P_{\beta,r})\,d\nu_\beta
+\le\left(\frac{1-c}{1-r}+b\right)\Phi\le M_r\Phi.
+\tag{6.15}
+$$
+
+The middle coefficient is $37/30$ for a and $22/15$ for b;
+$M_r$ minus that coefficient is respectively $1763/4050$ and
+$1309/5625$. Equations (6.9), (6.13) and (6.15) prove (6.2).
+All nonlinear TV expressions were reduced by their actual coordinate
+signs before any integration. In particular no sampled successor was
+replaced by a conditional barycentre inside TV, and neither
+$\operatorname{TV}(\nu_s,\delta_{P_{s,r}})$ nor TV of an averaged
+configuration law appears. $\square$
+
+## 7. The original configuration-risk consumer
+
+**Corollary 7.1 (risk, midpoint and necessary tail corrections).** Use
+exactly the functional $\mathcal J$ of [PAIR, (11.9)], equivalently
+(3.2), with its supremum over every $k$ with $\mu(k)>0$ and its
+configuration-before-integration losses. For every boxed compatible
+pair, every $n\ge4$ and $r\in\{a,b\}$,
+
+$$
+\mathcal J+C_{r,n}e_{r,n}\ge\rho_p,
+\qquad \rho_p=\frac{1116529}{22781250}.
+\tag{7.1}
+$$
+
+For a compatible pair with $\mathcal J=0$, or for a boxed compatible
+pair with the exact p midpoint $\int Q(E_p)\,d\nu_p=C$ of (3.1),
+
+$$
+e_{r,n}\ge\delta_{r,n}:=\frac{\rho_p}{C_{r,n}}>0,
+\qquad
+c_az_a^n+\delta_{a,n}\le d_n\le c_bz_b^n-\delta_{b,n}.
+\tag{7.2}
+$$
+
+Thus any genuinely compatible completion satisfying either of these
+face conditions must increase the retained NULL155 a-tail mean by at
+least $\delta_{a,n}$ at every $n\ge5$. This is a necessary minimum
+correction bound, with no assertion that the bound is sharp or attained.
+
+**Proof.** Let $r^{\mathrm{opp}}$ be the other endpoint. It is a
+supported target because $\mu(1),\mu(2)>0$. The exact definition
+[PAIR, (11.9)] and the integrated complete-law triangle inequality give
+
+$$
+\begin{aligned}
+\mathcal J
+ &\ge\int\operatorname{TV}(Q,P_{p,r^{\mathrm{opp}}})\,d\nu_p-\rho_p\\
+ &\ge\rho_p-\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p\\
+ &\ge\rho_p-C_{r,n}e_{r,n}.
+\end{aligned}
+\tag{7.3}
+$$
+
+Here $\operatorname{TV}(P_{p,a},P_{p,b})=2\rho_p$, as follows
+from (6.10) or [PAIR, Section 2]. The supremum in $\mathcal J$ was
+bounded below by one supported target, not replaced by the two-endpoint
+supremum. In particular every supported nonendpoint loss remains
+required in the zero-level assertion.
+
+At $\mathcal J=0$, [PAIR, (11.29)--(11.30)] supplies the full boxes
+and both midpoint means, so (7.1) applies. For the separate boxed
+p-midpoint hypothesis, the signs in (6.10) give directly
+
+$$
+\int\operatorname{TV}(Q,P_{p,a})\,d\nu_p=C+\rho_p-C=\rho_p,
+\qquad
+\int\operatorname{TV}(Q,P_{p,b})\,d\nu_p=C-(C-\rho_p)=\rho_p.
+\tag{7.4}
+$$
+
+Apply (6.2) to each equality and substitute the two definitions of
+$e_{r,n}$ to obtain (7.2). This second route requires neither the
+suspended midpoint nor the supported-target budgets; it does not
+assert them.
+
+Both p descriptors in [NULL155, Definition 2.1] have
+$Q(w_{n,1})=(4/9)(2/9)^n=c_az_a^n$ for $n\ge5$, so every mixture
+of them has that mean. Any proposed completion on the stated face,
+even with different support, weights, earlier coordinates and
+conditional branching, must instead satisfy
+$d_n-c_az_a^n\ge\delta_{a,n}$. The incompatible NULL155 object itself
+has unequal full marginals and nonzero omitted residuals
+[NULL155, Proposition 5.1]; it is not an input to (6.2) or (7.1).
+Changing its tail means by these amounts alone is not sufficient
+for compatibility or for any of the other face conditions. $\square$
+
+**Exact substitution 7.2 (word index five).** Ordinary rational
+substitution in (6.1) gives
+
+$$
+\begin{aligned}
+\sum_{j=1}^4(\lambda/z_a)^j&=\frac{4026}{625},&
+C_{a,5}&=\frac{4534618}{135},&
+\delta_{a,5}&=\frac{1116529}{765216787500},\\
+\sum_{j=1}^4(\lambda/z_b)^j&=\frac{34390}{6561},&
+C_{b,5}&=\frac{1643670050}{59049},&
+\delta_{b,5}&=\frac{90438849}{51364689062500}.
+\end{aligned}
+\tag{7.5}
+$$
+
+Under either face hypothesis of Corollary 7.1, its interval becomes
+
+$$
+\frac{128}{531441}+\frac{1116529}{765216787500}
+\le d_5\le
+\frac{69984}{244140625}-\frac{90438849}{51364689062500}.
+\tag{7.6}
+$$
+
+These are substitutions into the universal proof, not independent
+mathematical claims or evidence for its Borel quantifiers.
+
+## 8. Endpoint, mixture and depth-boundary controls
+
+**Proposition 8.1 (consistency with the supplied controls).** The
+native endpoint flows, their diagonal half-native mixture and the
+nonnative contact of Proposition 4.1 retain their stated scopes under
+Theorem 6.1. In particular the theorem cannot be extended to $n=3$
+for both endpoints with any finite coefficient multiplying $e_{r,3}$.
+
+**Proof.** At either native r Dirac pair, $g=c_r$, $L=z_rP$ and
+$e_{r,n}=0$; both r losses vanish. These are the complete native laws
+and original unit flows in Theorem 2.1, with tails $z_r^j,rz_r^j$.
+
+For the mixture, take the original flows
+
+$$
+\begin{aligned}
+\Gamma_B&=\tfrac12\delta_{(P_{p,a},P_{\beta,a})}
+          +\tfrac12\delta_{(P_{p,b},P_{\beta,b})},\\
+\Gamma_A&=\tfrac12\delta_{(P_{\beta,a},P_{p,a})}
+          +\tfrac12\delta_{(P_{\beta,b},P_{p,b})}.
+\end{aligned}
+\tag{8.1}
+$$
+
+Each conditional stays at its matching native endpoint, so both full
+residual equations and unweighted marginals hold. Its means are both
+midpoints, and for $n\ge4$
+
+$$
+e_{a,n}=e_{b,n}=\tfrac12(c_bz_b^n-c_az_a^n)>0,
+\qquad
+\int\operatorname{TV}(D,P_{s,r})\,d\nu_s=\rho_s.
+\tag{8.2}
+$$
+
+Thus (6.2) applies and (7.2) is consistent. This is a mixture of
+original native flows, not a singleton at the barycentric descriptor.
+As [PAIR, Corollary 12.3] shows, it has $\mathcal J=0$ when the
+supported depths are exactly 1 and 2, whereas any supported depth
+$k\ge3$ violates its p budget. The latter loss is still part of (11.9).
+
+For the nonnative singleton of Proposition 4.1, the complete-coordinate
+signs in (6.10) and its displayed rational parameters give
+
+$$
+e_{b,3}=0,\qquad
+\operatorname{TV}(Q,P_{p,b})=\frac{10951371}{190109375}>0,
+\qquad
+\operatorname{TV}(W,P_{\beta,b})=\frac{33663}{777505}>0.
+\tag{8.3}
+$$
+
+It is boxed and compatible, but has
+$e_{b,4}=486/9765625>0$ and fails both midpoint means. The proposed
+extension to index three would have a zero right side and a positive
+left side. In the proof of Theorem 6.1 the precise obstruction is the
+reversed predecessor order at $j=2$, so (6.7) is unavailable at $n=3$.
+The all-coordinate and complete-tail verification remains the one in
+Proposition 4.1. These supplied controls do not replace the universal
+proof over arbitrary Borel marginals. $\square$
+
+## 9. Quantitative correspondence and limits
+
+**Mathematical citation 9.1 (scope of reuse).** The source-specific
+addition is the positive-slack implication (6.9), followed on the same
+flows by the full-law estimates (6.13)--(6.15) and the consumer (7.1).
+Theorem 2.1 supplies only the zero-slack classification. [NATIVE,
+Theorem 3.1] supplies Borel rigidity under an exact eventual recurrence;
+[PAIR, Theorem 18.2] additionally assumes finite p support. Neither
+recurrence is assumed here. [PAIR, Theorem 20.2] characterizes existence
+of full compatible flows for prescribed entire marginals by all finite
+convex-order tests; it supplies no positive-slack modulus. The full-word
+recursion and stationary positive-kernel comparisons in Section 2 and
+[NATIVE, (2.3)--(2.5)] are reused directly. Endpoint TV decomposition,
+positivity, marginal transport and finite telescoping are mature tools,
+not separate new general theorems. Corollary 7.1 and substitution 7.2
+are applications of (6.2), not additional independent mathematical
+content.
+
+Proposition 8.1 reuses the supplied endpoint flows, endpoint-tag mixture
+and depth-three witness as controls; it introduces no new generator.
+
+The primary comparisons of Citation 5.1 retain their exact boundaries:
+[Li--Schneider, Theorem 2.1(a)][LS] assumes a finite irreducible
+nonnegative matrix, and its Theorem 2.3 assumes primitivity;
+[Leskelä--Vihola, Theorems 1.2(i) and 1.3(i)][LV] concerns
+finite-first-moment vectors and measurable families of martingale
+couplings. Bounded word projections satisfy the first-moment
+condition, but those results supply neither (6.9) on these two
+stationary full-law flows nor the all-coordinate TV conversion.
+This is a repo-derived ordinary deduction relative to the named
+suppliers, with no global originality claim or Lean certification.
+
+The deterministic whole-fiber read/update/address budget classification
+in [SERIAL-JOINT] has a different source and operation contract.
+The iid unused-suffix and adaptive serial execution results in
+[FreshServiceRestart][RESTART] and [RarePriorSerialExecution][SERIAL]
+likewise do not supply the boxed Borel positive-slack estimate or a
+global COMPLETE/full-transcript/minimax closure. Reusing their local
+results would require their own source and operation correspondence.
+
+**Convention 9.2 (unchanged source and unresolved obligations).** One
+depth $K$ is still sampled once from the original finite or countable
+prior before the first paid Read; no step resamples it. Both seeds,
+every supported depth, every positive finite paid rejection, partial
+parse and return history, all marker triples, held records, third
+write before latch, fourth completion and matching Stop remain in
+the source and risk domains. The original renderer of [PAIR, Section
+2] retains the complete records and operations and preserves TV.
+The operators here supply analytical identities, not a posterior port,
+new source operation, exact sampler or paid installation. Acquired
+and synthetic updates remain identical, and all original program,
+number, control, selector, workspace and persistent-randomness charges
+remain part of COMPLETE.
+
+The coefficient $C_{r,n}$ is not optimized. It is finite at each fixed
+index and grows with $n$: since $\lambda/z_a=6/5$ and
+$\lambda/z_b=10/9$, (6.1) gives $C_{r,n+1}>5C_{r,n}$.
+Thus the guaranteed lower corrections $\delta_{r,n}$ tend to zero.
+No uniform-depth positive gap follows. The bounds neither evaluate
+$j_c$ nor decide simultaneous zero-face feasibility for the original
+supported targets. They supply no new actual feasibility, attainment,
+finite representation, exact sampling, paid installation or COMPLETE
+optimality conclusion. The supported-depth budgets, both midpoint
+means, both full residual equations, common source and any operational
+realization must still be met together by any proposed solution.
+
+[SERIAL-JOINT]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[RESTART]: ../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FreshServiceRestart.lean
+[SERIAL]: ../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorSerialExecution.lean
+
+## 追加锚（本行以下为增补区）
