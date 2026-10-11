@@ -21,7 +21,7 @@ https://github.com/Jiyuan-Tan/CausalSmith/tree/e56c1daecf6fc95cad721ff71d188e8fc
 Causalean/Mathlib/Analysis/Approximation/Chebyshev/{TrigExtraction,PolynomialOneNorm}.lean.
 License and notice: docs/reports/interpolation-suppliers/Causalean-LICENSE.txt and
 Causalean-NOTICE.txt. Adaptations: local names; expose consumed addition/multiplication
-interfaces; share the addition helper; omit unrelated Chebyshev results.
+interfaces; share the addition helper; apply the monomial sum API; omit unrelated results.
 Retirement: replace these portions by direct calls when this repository's pinned
 Mathlib supplies equivalent coefficient one-norm declarations.
 
@@ -36,6 +36,7 @@ open Finset Set Polynomial
 
 namespace D5.S3.Analytic.Interpolation.UniformCoefficientBudget
 
+/-- Sum of absolute monomial coefficients of a real polynomial. -/
 noncomputable def coeffL1 (p : Polynomial ℝ) : ℝ :=
   ∑ n ∈ p.support, |p.coeff n|
 
@@ -45,6 +46,7 @@ private lemma coeffL1_eq_sum_range_of_natDegree_lt (p : Polynomial ℝ) {m : ℕ
   change p.sum (fun _ c => |c|) = _
   exact p.sum_over_range' (fun _ => abs_zero) m hp
 
+/-- The coefficient budget satisfies the triangle inequality. -/
 theorem coeffL1_add_le (p q : Polynomial ℝ) :
     coeffL1 (p + q) ≤ coeffL1 p + coeffL1 q := by
   -- Put all three coefficient sums over one range, then use the scalar triangle inequality.
@@ -59,7 +61,6 @@ theorem coeffL1_add_le (p q : Polynomial ℝ) :
   exact Finset.sum_le_sum fun i _ => by
     simpa only [Polynomial.coeff_add] using abs_add_le (p.coeff i) (q.coeff i)
 
-
 private theorem coeffL1_smul (c : ℝ) (p : Polynomial ℝ) :
     coeffL1 (c • p) = |c| * coeffL1 p := by
   rw [coeffL1_eq_sum_range_of_natDegree_lt (c • p)
@@ -67,13 +68,11 @@ private theorem coeffL1_smul (c : ℝ) (p : Polynomial ℝ) :
     coeffL1_eq_sum_range_of_natDegree_lt p (Nat.lt_succ_self _)]
   simp only [Polynomial.coeff_smul, smul_eq_mul, abs_mul, Finset.mul_sum]
 
-
+/-- The coefficient budget is submultiplicative. -/
 theorem coeffL1_mul_le (p q : Polynomial ℝ) :
     coeffL1 (p * q) ≤
       coeffL1 p * coeffL1 q := by
   classical
-  have hadd (r s : Polynomial ℝ) :
-      coeffL1 (r + s) ≤ coeffL1 r + coeffL1 s := coeffL1_add_le r s
   have hzero : coeffL1 (0 : Polynomial ℝ) = 0 := by
     simp [coeffL1]
   have hsum (s : Finset ℕ) (f : ℕ → Polynomial ℝ) :
@@ -83,12 +82,10 @@ theorem coeffL1_mul_le (p q : Polynomial ℝ) :
     | empty => simp [hzero]
     | @insert i s hi ih =>
         simp only [Finset.sum_insert hi]
-        exact (hadd _ _).trans (add_le_add_right ih _)
+        exact (coeffL1_add_le _ _).trans (add_le_add_right ih _)
   have hmono (n : ℕ) (a : ℝ) :
       coeffL1 (monomial n a) = |a| := by
-    by_cases ha : a = 0
-    · simp [ha, coeffL1]
-    · simp [coeffL1, support_monomial n ha]
+    exact Polynomial.sum_monomial_index a (fun _ c => |c|) (by simp)
   rw [Polynomial.mul_eq_sum_sum]
   calc
     coeffL1
@@ -112,7 +109,6 @@ theorem coeffL1_mul_le (p q : Polynomial ℝ) :
             (∑ j ∈ q.support, |q.coeff j|)
         rw [Finset.sum_mul]
         simp only [Finset.mul_sum]
-
 
 /-- Iterated Rolle on an ordered family of distinct zeros. -/
 private theorem rolle_nodes (n : ℕ) (f : ℝ → ℝ) (a b : ℝ)
