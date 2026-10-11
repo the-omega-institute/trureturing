@@ -15,11 +15,11 @@ result:
 Direct frozen dependencies:
   D5/S1/Words/ParityCode/OddTopWeight.ones
     (statement_id: sha256:1d9174a721063a3dbe5b6c8b0cb36c7298a9dd4e2f46f0071d686bd8eefff654)
-Private theorem classification:
+Theorem classification:
   weight_eq_level: content; inversion-count induction on the bin length.
-  localR_localH_commute, positional_telescope and wordSl2: bind-only;
-    inlined as local facts in their consuming proofs.
-Information-escape registration is paused under CLAUDE.md §3.9.
+  localR_localH_commute, positional_telescope and binSl2Triple: bind-only;
+    used in their consuming proofs.
+  binSl2Triple is consumed by result; its supporting facts remain local.
 -/
 
 import D5.S1.Words.ParityCode.OddTopWeight
@@ -46,7 +46,7 @@ def sector (L M : ℕ) : Set ((Fin (L - 1) → Bool)) := {w | ones w = M - 1}
 def W (L M S : ℕ) : Submodule ℚ (((Fin (L - 1) → Bool) → ℚ)) :=
   Submodule.span ℚ ((Pi.basisFun ℚ ((Fin (L - 1) → Bool))) '' {w | w ∈ sector L M ∧ level w = S})
 
-private def localH {N : ℕ} (a b : Fin N) : Module.End ℚ (((Fin N → Bool) → ℚ)) := by
+def localH {N : ℕ} (a b : Fin N) : Module.End ℚ (((Fin N → Bool) → ℚ)) := by
   exact {
     toFun v w := if w a = false ∧ w b = true then v (((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w) else 0
     map_add' v u := by
@@ -57,21 +57,21 @@ private def localH {N : ℕ} (a b : Fin N) : Module.End ℚ (((Fin N → Bool) �
       by_cases hc : w a = false ∧ w b = true <;> simp [hc]
   }
 
-private def localR {N : ℕ} (a b : Fin N) : Module.End ℚ (((Fin N → Bool) → ℚ)) := localH b a
+def localR {N : ℕ} (a b : Fin N) : Module.End ℚ (((Fin N → Bool) → ℚ)) := localH b a
 
-private def Hbin (N : ℕ) : Module.End ℚ (((Fin N → Bool) → ℚ)) :=
+def Hbin (N : ℕ) : Module.End ℚ (((Fin N → Bool) → ℚ)) :=
   ∑ p : Fin (N - 1), localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))
 
 def H (L _M : ℕ) : Module.End ℚ (((Fin (L - 1) → Bool) → ℚ)) := Hbin (L - 1)
 
-private def Rbin (N : ℕ) : Module.End ℚ (((Fin N → Bool) → ℚ)) :=
+def Rbin (N : ℕ) : Module.End ℚ (((Fin N → Bool) → ℚ)) :=
   ∑ p : Fin (N - 1), (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1))) •
     localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))
 
-private def weight {N : ℕ} (w : (Fin N → Bool)) : ℚ :=
+def weight {N : ℕ} (w : (Fin N → Bool)) : ℚ :=
   ∑ i : Fin N, if w i then (N : ℚ) - 1 - 2 * (i : ℕ) else 0
 
-private theorem weight_eq_level {N : ℕ} (w : (Fin N → Bool)) :
+theorem weight_eq_level {N : ℕ} (w : (Fin N → Bool)) :
     weight w = 2 * (level w : ℚ) - (ones w : ℚ) * ((N : ℚ) - ones w) := by
   induction N with
   | zero => simp [weight, level, ones]
@@ -225,292 +225,293 @@ private def projectToW (L M S : ℕ) : ((Fin (L - 1) → Bool) → ℚ) →ₗ[�
     ((LinearMap.mulLeft ℚ (fun w : Fin (L - 1) → Bool => if ones w = M - 1 ∧ level w = S then 1 else 0))).codRestrict (W L M S) (projectW_mem L M S)
 
 
-/-- Equation (A.4) for the rational K = 1 static sector. -/
-theorem result : claim := by
-  have wordSl2 (N : ℕ) (hN : 2 ≤ N) : IsSl2Triple ((LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w))) (Rbin N) (Hbin N) := by
+theorem binSl2Triple (N : ℕ) (hN : 2 ≤ N) : IsSl2Triple ((LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w))) (Rbin N) (Hbin N) := by
+  have localH_apply {N : ℕ} (a b : Fin N) (v : ((Fin N → Bool) → ℚ)) (w : (Fin N → Bool)) :
+      localH a b v w = if w a = false ∧ w b = true then v (((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w) else 0 := rfl
+  have weighted_swap {N : ℕ} (δ : Fin N → ℚ) (w : (Fin N → Bool))
+      (a b : Fin N) (hab : a ≠ b) :
+      (∑ i : Fin N, if ((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w i then δ i else 0) -
+        (∑ i : Fin N, if w i then δ i else 0) =
+        (δ a - δ b) * ((if w b then 1 else 0) - (if w a then 1 else 0)) := by
+    rw [← Finset.sum_sub_distrib]
+    let f (i : Fin N) : ℚ :=
+      (if ((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w i then δ i else 0) - (if w i then δ i else 0)
+    change ∑ i : Fin N, f i = _
+    rw [← Finset.sum_erase_add Finset.univ f (a := a) (Finset.mem_univ a)]
+    rw [← Finset.sum_erase_add (Finset.univ.erase a) f (a := b) (by simp [hab.symm])]
+    have hz : ∑ i ∈ (Finset.univ.erase a).erase b, f i = 0 := by
+      apply Finset.sum_eq_zero
+      intro i hi
+      have hia : i ≠ a := by simpa using (Finset.mem_erase.mp (Finset.mem_erase.mp hi).2).1
+      have hib : i ≠ b := (Finset.mem_erase.mp hi).1
+      simp [f, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_of_ne_of_ne hia hib]
+    rw [hz, zero_add]
+    cases hwa : w a <;> cases hwb : w b <;>
+      simp [f, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, hwa, hwb] <;> ring
+  have weight_swap_edge {N : ℕ} (p : Fin (N - 1)) (w : (Fin N → Bool))
+      (hleft : w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false) (hright : w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true) :
+      weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) = weight w + 2 := by
+    have hab : ((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p) ≠ ((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p) := by
+      intro he
+      have := congrArg Fin.val he
+      dsimp only at this
+      omega
+    have he := weighted_swap (fun i : Fin N => (N : ℚ) - 1 - 2 * (i : ℕ)) w
+      (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) hab
+    change weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) - weight w =
+      (((N : ℚ) - 1 - 2 * ((((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p) : Fin N) : ℕ)) -
+        ((N : ℚ) - 1 - 2 * ((((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p) : Fin N) : ℕ))) *
+        ((if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) then 1 else 0) - (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) then 1 else 0)) at he
+    simp only [hleft, hright, Bool.false_eq_true, if_false, if_true, sub_zero, mul_one] at he
+    have hc : (((N : ℚ) - 1 - 2 * ((((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p) : Fin N) : ℕ)) -
+        ((N : ℚ) - 1 - 2 * ((((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p) : Fin N) : ℕ))) = 2 := by
+      simp only [Nat.cast_add, Nat.cast_one]
+      ring
+    rw [hc] at he
+    linarith
+  have G_localH {N : ℕ} (p : Fin (N - 1)) :
+      ⁅(LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)), localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))⁆ =
+        (-2 : ℚ) • localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) := by
+    apply LinearMap.ext
+    intro v
+    funext w
+    simp only [Ring.lie_def, LinearMap.sub_apply, Pi.sub_apply, Module.End.mul_apply,
+      LinearMap.smul_apply, Pi.smul_apply, localH_apply]
+    change weight w * (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true then
+        v (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) else 0) -
+      (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true then
+        weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) *
+          v (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) else 0) = _
+    by_cases hw : w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true
+    · simp only [hw, and_self, if_true, smul_eq_mul]
+      rw [weight_swap_edge p w hw.1 hw.2]
+      ring
+    · simp [localH_apply, hw]
+  have G_H (N : ℕ) : ⁅(LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)), Hbin N⁆ = (-2 : ℚ) • Hbin N := by
+    unfold Hbin
+    rw [lie_sum, Finset.smul_sum]
+    apply Finset.sum_congr rfl
+    intro p hp
+    exact G_localH p
+  have swapWord_involutive {N : ℕ} (a b : Fin N) (w : (Fin N → Bool)) :
+      ((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) (((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w) = w := by
+    ext i
+    simp [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap]
+  have G_localR {N : ℕ} (p : Fin (N - 1)) :
+      ⁅(LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)), localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))⁆ =
+        (2 : ℚ) • localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) := by
+    apply LinearMap.ext
+    intro v
+    funext w
+    simp only [Ring.lie_def, LinearMap.sub_apply, Pi.sub_apply, Module.End.mul_apply,
+      LinearMap.smul_apply, Pi.smul_apply, localR, localH_apply]
+    change weight w * (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = true then
+        v (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) else 0) -
+      (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = true then
+        weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) *
+          v (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) else 0) = _
+    by_cases hw : w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = true
+    · have hs : ((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w =
+          ((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w := by simp [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_comm]
+      have hl : ((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false := by
+        simp [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, hw.1]
+      have hr : ((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true := by
+        simp [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, hw.2]
+      have hg := weight_swap_edge p (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) hl hr
+      rw [swapWord_involutive] at hg
+      have he : weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) = weight w - 2 := by
+        rw [hs]
+        linarith
+      simp only [hw, and_self, if_true, smul_eq_mul]
+      rw [he]
+      ring
+    · simp [hw]
+  have G_R (N : ℕ) : ⁅(LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)), Rbin N⁆ = (2 : ℚ) • Rbin N := by
+    unfold Rbin
+    rw [lie_sum, Finset.smul_sum]
+    apply Finset.sum_congr rfl
+    intro p hp
+    rw [Ring.lie_def, mul_smul_comm, smul_mul_assoc, ← smul_sub (A := Module.End ℚ (((Fin N → Bool) → ℚ))) (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1))),
+      ← Ring.lie_def, G_localR, smul_comm]
+  have local_commutator_apply {N : ℕ} (a b : Fin N)
+      (v : ((Fin N → Bool) → ℚ)) (w : (Fin N → Bool)) :
+      (localR a b * localH a b - localH a b * localR a b) v w =
+        ((if w a then 1 else 0) - (if w b then 1 else 0) : ℚ) * v w := by
+    simp only [LinearMap.sub_apply, Pi.sub_apply, Module.End.mul_apply, localR, localH_apply]
+    simp only [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Function.comp_apply, Equiv.swap_apply_left, Equiv.swap_apply_right]
+    have hii : (fun i => w (Equiv.swap a b (Equiv.swap b a i))) = w := by
+      ext i
+      simp [localH_apply, Equiv.swap_comm a b]
+    have hii' : (fun i => w (Equiv.swap b a (Equiv.swap a b i))) = w := by
+      ext i
+      simp [localH_apply, Equiv.swap_comm a b]
+    try simp only [hii, hii']
+    cases hwa : w a <;> cases hwb : w b <;> simp [localH_apply, hwa, hwb, Function.comp_def, hii, hii']
+  have localR_localH_commute {N : ℕ} (a b c d : Fin N)
+      (hab : a ≠ b) (hcd : c ≠ d) (hac : a ≠ c) (hbd : b ≠ d) :
+      localR a b * localH c d = localH c d * localR a b := by
     have localH_apply {N : ℕ} (a b : Fin N) (v : ((Fin N → Bool) → ℚ)) (w : (Fin N → Bool)) :
         localH a b v w = if w a = false ∧ w b = true then v (((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w) else 0 := rfl
-    have weighted_swap {N : ℕ} (δ : Fin N → ℚ) (w : (Fin N → Bool))
-        (a b : Fin N) (hab : a ≠ b) :
-        (∑ i : Fin N, if ((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w i then δ i else 0) -
-          (∑ i : Fin N, if w i then δ i else 0) =
-          (δ a - δ b) * ((if w b then 1 else 0) - (if w a then 1 else 0)) := by
-      rw [← Finset.sum_sub_distrib]
-      let f (i : Fin N) : ℚ :=
-        (if ((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w i then δ i else 0) - (if w i then δ i else 0)
-      change ∑ i : Fin N, f i = _
-      rw [← Finset.sum_erase_add Finset.univ f (a := a) (Finset.mem_univ a)]
-      rw [← Finset.sum_erase_add (Finset.univ.erase a) f (a := b) (by simp [hab.symm])]
-      have hz : ∑ i ∈ (Finset.univ.erase a).erase b, f i = 0 := by
-        apply Finset.sum_eq_zero
-        intro i hi
-        have hia : i ≠ a := by simpa using (Finset.mem_erase.mp (Finset.mem_erase.mp hi).2).1
-        have hib : i ≠ b := (Finset.mem_erase.mp hi).1
-        simp [f, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_of_ne_of_ne hia hib]
-      rw [hz, zero_add]
-      cases hwa : w a <;> cases hwb : w b <;>
-        simp [f, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, hwa, hwb] <;> ring
-    have weight_swap_edge {N : ℕ} (p : Fin (N - 1)) (w : (Fin N → Bool))
-        (hleft : w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false) (hright : w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true) :
-        weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) = weight w + 2 := by
-      have hab : ((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p) ≠ ((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p) := by
-        intro he
-        have := congrArg Fin.val he
-        dsimp only at this
-        omega
-      have he := weighted_swap (fun i : Fin N => (N : ℚ) - 1 - 2 * (i : ℕ)) w
-        (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) hab
-      change weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) - weight w =
-        (((N : ℚ) - 1 - 2 * ((((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p) : Fin N) : ℕ)) -
-          ((N : ℚ) - 1 - 2 * ((((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p) : Fin N) : ℕ))) *
-          ((if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) then 1 else 0) - (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) then 1 else 0)) at he
-      simp only [hleft, hright, Bool.false_eq_true, if_false, if_true, sub_zero, mul_one] at he
-      have hc : (((N : ℚ) - 1 - 2 * ((((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p) : Fin N) : ℕ)) -
-          ((N : ℚ) - 1 - 2 * ((((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p) : Fin N) : ℕ))) = 2 := by
-        simp only [Nat.cast_add, Nat.cast_one]
-        ring
-      rw [hc] at he
-      linarith
-    have G_localH {N : ℕ} (p : Fin (N - 1)) :
-        ⁅(LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)), localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))⁆ =
-          (-2 : ℚ) • localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) := by
-      apply LinearMap.ext
-      intro v
-      funext w
-      simp only [Ring.lie_def, LinearMap.sub_apply, Pi.sub_apply, Module.End.mul_apply,
-        LinearMap.smul_apply, Pi.smul_apply, localH_apply]
-      change weight w * (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true then
-          v (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) else 0) -
-        (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true then
-          weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) *
-            v (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) else 0) = _
-      by_cases hw : w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true
-      · simp only [hw, and_self, if_true, smul_eq_mul]
-        rw [weight_swap_edge p w hw.1 hw.2]
-        ring
-      · simp [localH_apply, hw]
-    have G_H (N : ℕ) : ⁅(LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)), Hbin N⁆ = (-2 : ℚ) • Hbin N := by
-      unfold Hbin
-      rw [lie_sum, Finset.smul_sum]
-      apply Finset.sum_congr rfl
-      intro p hp
-      exact G_localH p
-    have swapWord_involutive {N : ℕ} (a b : Fin N) (w : (Fin N → Bool)) :
-        ((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) (((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w) = w := by
-      ext i
-      simp [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap]
-    have G_localR {N : ℕ} (p : Fin (N - 1)) :
-        ⁅(LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)), localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))⁆ =
-          (2 : ℚ) • localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) := by
-      apply LinearMap.ext
-      intro v
-      funext w
-      simp only [Ring.lie_def, LinearMap.sub_apply, Pi.sub_apply, Module.End.mul_apply,
-        LinearMap.smul_apply, Pi.smul_apply, localR, localH_apply]
-      change weight w * (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = true then
-          v (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) else 0) -
-        (if w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = true then
-          weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) *
-            v (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) else 0) = _
-      by_cases hw : w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = false ∧ w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = true
-      · have hs : ((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w =
-            ((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w := by simp [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_comm]
-        have hl : ((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) = false := by
-          simp [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, hw.1]
-        have hr : ((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) = true := by
-          simp [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, hw.2]
-        have hg := weight_swap_edge p (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) hl hr
-        rw [swapWord_involutive] at hg
-        have he : weight (((Equiv.swap (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p))).arrowCongr (Equiv.refl Bool)) w) = weight w - 2 := by
-          rw [hs]
-          linarith
-        simp only [hw, and_self, if_true, smul_eq_mul]
-        rw [he]
-        ring
-      · simp [hw]
-    have G_R (N : ℕ) : ⁅(LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)), Rbin N⁆ = (2 : ℚ) • Rbin N := by
-      unfold Rbin
-      rw [lie_sum, Finset.smul_sum]
-      apply Finset.sum_congr rfl
-      intro p hp
-      rw [Ring.lie_def, mul_smul_comm, smul_mul_assoc, ← smul_sub (A := Module.End ℚ (((Fin N → Bool) → ℚ))) (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1))),
-        ← Ring.lie_def, G_localR, smul_comm]
-    have local_commutator_apply {N : ℕ} (a b : Fin N)
-        (v : ((Fin N → Bool) → ℚ)) (w : (Fin N → Bool)) :
-        (localR a b * localH a b - localH a b * localR a b) v w =
-          ((if w a then 1 else 0) - (if w b then 1 else 0) : ℚ) * v w := by
-      simp only [LinearMap.sub_apply, Pi.sub_apply, Module.End.mul_apply, localR, localH_apply]
-      simp only [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Function.comp_apply, Equiv.swap_apply_left, Equiv.swap_apply_right]
-      have hii : (fun i => w (Equiv.swap a b (Equiv.swap b a i))) = w := by
-        ext i
-        simp [localH_apply, Equiv.swap_comm a b]
-      have hii' : (fun i => w (Equiv.swap b a (Equiv.swap a b i))) = w := by
-        ext i
-        simp [localH_apply, Equiv.swap_comm a b]
-      try simp only [hii, hii']
-      cases hwa : w a <;> cases hwb : w b <;> simp [localH_apply, hwa, hwb, Function.comp_def, hii, hii']
-    have localR_localH_commute {N : ℕ} (a b c d : Fin N)
-        (hab : a ≠ b) (hcd : c ≠ d) (hac : a ≠ c) (hbd : b ≠ d) :
-        localR a b * localH c d = localH c d * localR a b := by
-      have localH_apply {N : ℕ} (a b : Fin N) (v : ((Fin N → Bool) → ℚ)) (w : (Fin N → Bool)) :
-          localH a b v w = if w a = false ∧ w b = true then v (((Equiv.swap a b).arrowCongr (Equiv.refl Bool)) w) else 0 := rfl
-      apply LinearMap.ext
-      intro v
-      funext w
-      by_cases had : a = d
-      · subst d
-        cases hwa : w a <;> cases hwb : w b <;> cases hwc : w c <;>
+    apply LinearMap.ext
+    intro v
+    funext w
+    by_cases had : a = d
+    · subst d
+      cases hwa : w a <;> cases hwb : w b <;> cases hwc : w c <;>
+        simp [localH_apply, Module.End.mul_apply, localR, localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Function.comp_apply,
+          Equiv.swap_apply_def, hab, hab.symm, hac, hac.symm, hbd, hbd.symm, hwa, hwb, hwc]
+    · by_cases hbc : b = c
+      · subst c
+        cases hwa : w a <;> cases hwb : w b <;> cases hwd : w d <;>
           simp [localH_apply, Module.End.mul_apply, localR, localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Function.comp_apply,
-            Equiv.swap_apply_def, hab, hab.symm, hac, hac.symm, hbd, hbd.symm, hwa, hwb, hwc]
-      · by_cases hbc : b = c
-        · subst c
-          cases hwa : w a <;> cases hwb : w b <;> cases hwd : w d <;>
-            simp [localH_apply, Module.End.mul_apply, localR, localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Function.comp_apply,
-              Equiv.swap_apply_def, hab, hab.symm, hac, hac.symm, hbd, hbd.symm, hwa, hwb, hwd]
-        · have hs : ((Equiv.swap c d).arrowCongr (Equiv.refl Bool)) (((Equiv.swap b a).arrowCongr (Equiv.refl Bool)) w) = ((Equiv.swap b a).arrowCongr (Equiv.refl Bool)) (((Equiv.swap c d).arrowCongr (Equiv.refl Bool)) w) := by
-            ext i
-            simp only [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Function.comp_apply, Equiv.swap_apply_def]
-            by_cases hib : i = b
+            Equiv.swap_apply_def, hab, hab.symm, hac, hac.symm, hbd, hbd.symm, hwa, hwb, hwd]
+      · have hs : ((Equiv.swap c d).arrowCongr (Equiv.refl Bool)) (((Equiv.swap b a).arrowCongr (Equiv.refl Bool)) w) = ((Equiv.swap b a).arrowCongr (Equiv.refl Bool)) (((Equiv.swap c d).arrowCongr (Equiv.refl Bool)) w) := by
+          ext i
+          simp only [Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Function.comp_apply, Equiv.swap_apply_def]
+          by_cases hib : i = b
+          · subst i
+            simp [Equiv.swap_apply_def, hab, hab.symm, hcd, hcd.symm,
+              hac, hac.symm, hbd, hbd.symm, had, (Ne.symm had), hbc, (Ne.symm hbc)]
+          · by_cases hia : i = a
             · subst i
               simp [Equiv.swap_apply_def, hab, hab.symm, hcd, hcd.symm,
                 hac, hac.symm, hbd, hbd.symm, had, (Ne.symm had), hbc, (Ne.symm hbc)]
-            · by_cases hia : i = a
+            · by_cases hic : i = c
               · subst i
                 simp [Equiv.swap_apply_def, hab, hab.symm, hcd, hcd.symm,
                   hac, hac.symm, hbd, hbd.symm, had, (Ne.symm had), hbc, (Ne.symm hbc)]
-              · by_cases hic : i = c
+              · by_cases hid : i = d
                 · subst i
                   simp [Equiv.swap_apply_def, hab, hab.symm, hcd, hcd.symm,
                     hac, hac.symm, hbd, hbd.symm, had, (Ne.symm had), hbc, (Ne.symm hbc)]
-                · by_cases hid : i = d
-                  · subst i
-                    simp [Equiv.swap_apply_def, hab, hab.symm, hcd, hcd.symm,
-                      hac, hac.symm, hbd, hbd.symm, had, (Ne.symm had), hbc, (Ne.symm hbc)]
-                  · simp [Equiv.swap_apply_def, hib, hia, hic, hid]
-          simp only [Module.End.mul_apply, localR, localH_apply]
-          have hca : ((Equiv.swap b a).arrowCongr (Equiv.refl Bool)) w c = w c := by
-            simp [localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_def, hac.symm, (Ne.symm hbc)]
-          have hda : ((Equiv.swap b a).arrowCongr (Equiv.refl Bool)) w d = w d := by
-            simp [localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_def, (Ne.symm had), hbd.symm]
-          have hbc' : ((Equiv.swap c d).arrowCongr (Equiv.refl Bool)) w b = w b := by
-            simp [localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_def, hbc, hbd]
-          have hac' : ((Equiv.swap c d).arrowCongr (Equiv.refl Bool)) w a = w a := by
-            simp [localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_def, hac, had]
-          simp only [hca, hda, hbc', hac']
-          split_ifs <;> simp only [hs]
-    have R_H (N : ℕ) : ⁅Rbin N, Hbin N⁆ = (LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)) := by
-      have ho (p q : Fin (N - 1)) (hpq : p ≠ q) :
-          ⁅localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)), localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) q)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) q))⁆ = 0 := by
-        rw [Ring.lie_def, sub_eq_zero]
-        apply localR_localH_commute
-        · intro he; have := congrArg Fin.val he; simp [localH_apply, ] at this
-        · intro he; have := congrArg Fin.val he; simp [localH_apply, ] at this
-        · intro he; apply hpq; apply Fin.ext
-          have hv := congrArg (Fin.val : Fin N → ℕ) he
-          exact hv
-        · intro he; apply hpq; apply Fin.ext
-          have hv := congrArg Fin.val he
-          dsimp only at hv
-          omega
-      have he : ⁅Rbin N, Hbin N⁆ =
-          ∑ p : Fin (N - 1), (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1))) •
-            ⁅localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)), localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))⁆ := by
-        unfold Rbin Hbin
-        rw [sum_lie]
-        apply Finset.sum_congr rfl
-        intro p hp
-        rw [Ring.lie_def, smul_mul_assoc, mul_smul_comm,
-          ← smul_sub (A := Module.End ℚ (((Fin N → Bool) → ℚ)))
-            (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1)))]
-        apply congrArg (fun z : Module.End ℚ (((Fin N → Bool) → ℚ)) =>
-          (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1))) • z)
-        rw [Finset.mul_sum, Finset.sum_mul, ← Finset.sum_sub_distrib]
-        change (∑ q : Fin (N - 1),
-          ⁅localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)), localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) q)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) q))⁆) = _
-        rw [Finset.sum_eq_single p]
-        · intro q hq hqp
-          rw [ho p q (Ne.symm hqp)]
-        · simp
-      rw [he]
-      apply LinearMap.ext
-      intro v
-      funext w
-      simp only [LinearMap.sum_apply, Finset.sum_apply, LinearMap.smul_apply,
-        Pi.smul_apply, smul_eq_mul, Ring.lie_def]
-      change (∑ p : Fin (N - 1), (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1))) *
-        (localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) * localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) -
-          localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) * localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))) v w) =
-        weight w * v w
-      have hd (p : Fin (N - 1)) := local_commutator_apply (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) v w
-      simp_rw [hd]
-      simp only [← mul_assoc, ← Finset.sum_mul]
-      congr 1
-      let x (i : ℕ) : ℚ := if hi : i < N then if w ⟨i, hi⟩ then 1 else 0 else 0
-      have positional_telescope (N : ℕ) (x : ℕ → ℚ) :
-          (∑ p ∈ Finset.range (N - 1), ((p + 1 : ℕ) : ℚ) * ((N : ℚ) - (p + 1)) *
-            (x p - x (p + 1))) =
-          ∑ i ∈ Finset.range N, ((N : ℚ) - 1 - 2 * i) * x i := by
-        cases N with
-        | zero => simp
-        | succ N =>
-          simp only [Nat.add_sub_cancel]
-          have he :
-              (∑ p ∈ Finset.range N, ((p + 1 : ℕ) : ℚ) *
-                ((N + 1 : ℕ) - (p + 1 : ℕ) : ℚ) * (x p - x (p + 1))) =
-              (∑ p ∈ Finset.range N, ((N + 1 : ℕ) - 1 - 2 * (p : ℚ)) * x p) +
-              ∑ p ∈ Finset.range N, ((p : ℚ) * ((N + 1 : ℕ) - p : ℚ) * x p -
-                ((p + 1 : ℕ) : ℚ) * ((N + 1 : ℕ) - (p + 1 : ℕ) : ℚ) * x (p + 1)) := by
-            rw [← Finset.sum_add_distrib]
-            apply Finset.sum_congr rfl
-            intro p hp
-            push_cast
-            ring
-          have ht := Finset.sum_range_sub'
-            (fun p : ℕ => (p : ℚ) * ((N + 1 : ℕ) - p : ℚ) * x p) N
-          simp only [Nat.cast_add, Nat.cast_one] at he ht ⊢
-          rw [he, ht, Finset.sum_range_succ]
+                · simp [Equiv.swap_apply_def, hib, hia, hic, hid]
+        simp only [Module.End.mul_apply, localR, localH_apply]
+        have hca : ((Equiv.swap b a).arrowCongr (Equiv.refl Bool)) w c = w c := by
+          simp [localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_def, hac.symm, (Ne.symm hbc)]
+        have hda : ((Equiv.swap b a).arrowCongr (Equiv.refl Bool)) w d = w d := by
+          simp [localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_def, (Ne.symm had), hbd.symm]
+        have hbc' : ((Equiv.swap c d).arrowCongr (Equiv.refl Bool)) w b = w b := by
+          simp [localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_def, hbc, hbd]
+        have hac' : ((Equiv.swap c d).arrowCongr (Equiv.refl Bool)) w a = w a := by
+          simp [localH_apply, Equiv.arrowCongr, Equiv.refl, Equiv.coe_fn_mk, Equiv.symm_swap, Equiv.swap_apply_def, hac, had]
+        simp only [hca, hda, hbc', hac']
+        split_ifs <;> simp only [hs]
+  have R_H (N : ℕ) : ⁅Rbin N, Hbin N⁆ = (LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)) := by
+    have ho (p q : Fin (N - 1)) (hpq : p ≠ q) :
+        ⁅localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)), localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) q)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) q))⁆ = 0 := by
+      rw [Ring.lie_def, sub_eq_zero]
+      apply localR_localH_commute
+      · intro he; have := congrArg Fin.val he; simp [localH_apply, ] at this
+      · intro he; have := congrArg Fin.val he; simp [localH_apply, ] at this
+      · intro he; apply hpq; apply Fin.ext
+        have hv := congrArg (Fin.val : Fin N → ℕ) he
+        exact hv
+      · intro he; apply hpq; apply Fin.ext
+        have hv := congrArg Fin.val he
+        dsimp only at hv
+        omega
+    have he : ⁅Rbin N, Hbin N⁆ =
+        ∑ p : Fin (N - 1), (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1))) •
+          ⁅localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)), localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))⁆ := by
+      unfold Rbin Hbin
+      rw [sum_lie]
+      apply Finset.sum_congr rfl
+      intro p hp
+      rw [Ring.lie_def, smul_mul_assoc, mul_smul_comm,
+        ← smul_sub (A := Module.End ℚ (((Fin N → Bool) → ℚ)))
+          (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1)))]
+      apply congrArg (fun z : Module.End ℚ (((Fin N → Bool) → ℚ)) =>
+        (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1))) • z)
+      rw [Finset.mul_sum, Finset.sum_mul, ← Finset.sum_sub_distrib]
+      change (∑ q : Fin (N - 1),
+        ⁅localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)), localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) q)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) q))⁆) = _
+      rw [Finset.sum_eq_single p]
+      · intro q hq hqp
+        rw [ho p q (Ne.symm hqp)]
+      · simp
+    rw [he]
+    apply LinearMap.ext
+    intro v
+    funext w
+    simp only [LinearMap.sum_apply, Finset.sum_apply, LinearMap.smul_apply,
+      Pi.smul_apply, smul_eq_mul, Ring.lie_def]
+    change (∑ p : Fin (N - 1), (((p : ℕ) + 1 : ℚ) * ((N : ℚ) - ((p : ℕ) + 1))) *
+      (localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) * localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) -
+        localH (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) * localR (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p))) v w) =
+      weight w * v w
+    have hd (p : Fin (N - 1)) := local_commutator_apply (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨i, by omega⟩ : Fin N)) p)) (((fun {N : ℕ} (i : Fin (N - 1)) => (⟨(i : ℕ) + 1, by omega⟩ : Fin N)) p)) v w
+    simp_rw [hd]
+    simp only [← mul_assoc, ← Finset.sum_mul]
+    congr 1
+    let x (i : ℕ) : ℚ := if hi : i < N then if w ⟨i, hi⟩ then 1 else 0 else 0
+    have positional_telescope (N : ℕ) (x : ℕ → ℚ) :
+        (∑ p ∈ Finset.range (N - 1), ((p + 1 : ℕ) : ℚ) * ((N : ℚ) - (p + 1)) *
+          (x p - x (p + 1))) =
+        ∑ i ∈ Finset.range N, ((N : ℚ) - 1 - 2 * i) * x i := by
+      cases N with
+      | zero => simp
+      | succ N =>
+        simp only [Nat.add_sub_cancel]
+        have he :
+            (∑ p ∈ Finset.range N, ((p + 1 : ℕ) : ℚ) *
+              ((N + 1 : ℕ) - (p + 1 : ℕ) : ℚ) * (x p - x (p + 1))) =
+            (∑ p ∈ Finset.range N, ((N + 1 : ℕ) - 1 - 2 * (p : ℚ)) * x p) +
+            ∑ p ∈ Finset.range N, ((p : ℚ) * ((N + 1 : ℕ) - p : ℚ) * x p -
+              ((p + 1 : ℕ) : ℚ) * ((N + 1 : ℕ) - (p + 1 : ℕ) : ℚ) * x (p + 1)) := by
+          rw [← Finset.sum_add_distrib]
+          apply Finset.sum_congr rfl
+          intro p hp
           push_cast
           ring
-      have ht := positional_telescope N x
-      rw [Finset.sum_fin_eq_sum_range]
+        have ht := Finset.sum_range_sub'
+          (fun p : ℕ => (p : ℚ) * ((N + 1 : ℕ) - p : ℚ) * x p) N
+        simp only [Nat.cast_add, Nat.cast_one] at he ht ⊢
+        rw [he, ht, Finset.sum_range_succ]
+        push_cast
+        ring
+    have ht := positional_telescope N x
+    rw [Finset.sum_fin_eq_sum_range]
+    unfold weight
+    rw [Finset.sum_fin_eq_sum_range]
+    convert ht using 1
+    · apply Finset.sum_congr rfl
+      intro i hi
+      have hi' := Finset.mem_range.mp hi
+      have hi0 : i < N := by omega
+      have hi1 : i + 1 < N := by omega
+      simp [localH_apply, x, hi', hi0, hi1, ]
+    · apply Finset.sum_congr rfl
+      intro i hi
+      have hi' := Finset.mem_range.mp hi
+      cases hw : w ⟨i, hi'⟩ <;> simp [localH_apply, x, hi', hw]
+  have Gbin_ne_zero (N : ℕ) (hN : 2 ≤ N) : (LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)) ≠ 0 := by
+    intro hz
+    let a : Fin N := ⟨0, by omega⟩
+    let w : (Fin N → Bool) := fun i => if i = a then true else false
+    have hw : weight w = (N : ℚ) - 1 := by
       unfold weight
-      rw [Finset.sum_fin_eq_sum_range]
-      convert ht using 1
-      · apply Finset.sum_congr rfl
-        intro i hi
-        have hi' := Finset.mem_range.mp hi
-        have hi0 : i < N := by omega
-        have hi1 : i + 1 < N := by omega
-        simp [localH_apply, x, hi', hi0, hi1, ]
-      · apply Finset.sum_congr rfl
-        intro i hi
-        have hi' := Finset.mem_range.mp hi
-        cases hw : w ⟨i, hi'⟩ <;> simp [localH_apply, x, hi', hw]
-    have Gbin_ne_zero (N : ℕ) (hN : 2 ≤ N) : (LinearMap.mulLeft ℚ (fun w : Fin N → Bool => weight w)) ≠ 0 := by
-      intro hz
-      let a : Fin N := ⟨0, by omega⟩
-      let w : (Fin N → Bool) := fun i => if i = a then true else false
-      have hw : weight w = (N : ℚ) - 1 := by
-        unfold weight
-        rw [Finset.sum_eq_single a]
-        · simp [w, a]
-        · intro i hi hia
-          simp [w, hia]
-        · simp
-      have he := congrFun (congrArg (fun f : Module.End ℚ (((Fin N → Bool) → ℚ)) => f (fun _ => 1)) hz) w
-      change weight w * 1 = 0 at he
-      rw [hw] at he
-      have hNq : (2 : ℚ) ≤ N := by exact_mod_cast hN
-      linarith
-    exact {
-      h_ne_zero := Gbin_ne_zero N hN
-      lie_e_f := R_H N
-      lie_h_e_nsmul := by simpa [two_smul] using G_R N
-      lie_h_f_nsmul := by
-        have z := G_H N
-        rw [show (-2 : ℚ) = -(2 : ℚ) by rfl, neg_smul (M := Module.End ℚ (((Fin N → Bool) → ℚ))), two_smul] at z
-        simpa only [two_smul] using z
-    }
+      rw [Finset.sum_eq_single a]
+      · simp [w, a]
+      · intro i hi hia
+        simp [w, hia]
+      · simp
+    have he := congrFun (congrArg (fun f : Module.End ℚ (((Fin N → Bool) → ℚ)) => f (fun _ => 1)) hz) w
+    change weight w * 1 = 0 at he
+    rw [hw] at he
+    have hNq : (2 : ℚ) ≤ N := by exact_mod_cast hN
+    linarith
+  exact {
+    h_ne_zero := Gbin_ne_zero N hN
+    lie_e_f := R_H N
+    lie_h_e_nsmul := by simpa [two_smul] using G_R N
+    lie_h_f_nsmul := by
+      have z := G_H N
+      rw [show (-2 : ℚ) = -(2 : ℚ) by rfl, neg_smul (M := Module.End ℚ (((Fin N → Bool) → ℚ))), two_smul] at z
+      simpa only [two_smul] using z
+  }
+
+/-- Equation (A.4) for the rational K = 1 static sector. -/
+theorem result : claim := by
   have mem_W_iff (L M S : ℕ) (v : ((Fin (L - 1) → Bool) → ℚ)) :
       v ∈ W L M S ↔ ∀ w, v w ≠ 0 → ones w = M - 1 ∧ level w = S := by
     rw [W, (Pi.basisFun ℚ ((Fin (L - 1) → Bool))).mem_span_image]
@@ -578,7 +579,7 @@ theorem result : claim := by
       change (H L M ^ k) (v : ((Fin (L - 1) → Bool) → ℚ)) = (H L M ^ k) (u : ((Fin (L - 1) → Bool) → ℚ)) at he'
       change (H L M ^ k) ((v : ((Fin (L - 1) → Bool) → ℚ)) - (u : ((Fin (L - 1) → Bool) → ℚ))) = 0
       rw [map_sub, he', sub_self]
-    have hz' := lowering_kernel_zero (wordSl2 (L - 1) hN) hw hq hz
+    have hz' := lowering_kernel_zero (binSl2Triple (L - 1) hN) hw hq hz
     exact sub_eq_zero.mp hz'
   have projectW_apply (L M S : ℕ) (v : ((Fin (L - 1) → Bool) → ℚ)) (w : (Fin (L - 1) → Bool)) :
       (LinearMap.mulLeft ℚ (fun w : Fin (L - 1) → Bool => if ones w = M - 1 ∧ level w = S then 1 else 0)) v w = if ones w = M - 1 ∧ level w = S then v w else 0 := by
@@ -791,7 +792,7 @@ theorem result : claim := by
         exact (H_pow_projectW L M S k hk v).symm
       change (-1 : ℚ) ^ k * φ (projectToW L M (S - k) ((H L M ^ k) v)) = 0
       rw [heq, he, mul_zero]
-    have hψ := lowering_kernel_zero (sl2Dual (wordSl2 (L - 1) hN)) hψweight hq hψzero
+    have hψ := lowering_kernel_zero (sl2Dual (binSl2Triple (L - 1) hN)) hψweight hq hψzero
     apply LinearMap.ext
     intro y
     have he := congrArg (fun f : Module.Dual ℚ (((Fin (L - 1) → Bool) → ℚ)) => f (y : ((Fin (L - 1) → Bool) → ℚ))) hψ
