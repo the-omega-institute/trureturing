@@ -1,3 +1,4 @@
+import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit
 import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
 import LeanInformationAuditInterface.Contract.Registration
@@ -130,3 +131,72 @@ def original_lower_rate_limit_registration :
 #print axioms rootRegistration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit.ExactOriginal105
+noncomputable section
+
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.RateReadout
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
+  (budget budget_interval)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (model : Model) (o : Ownership) (b : ℝ)
+    (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K * (aSide .high / (1 - rho * chi ^ K))) (strict : Bool),
+    (1:ℝ) / 58 ≤ r.readout () model K ((lam - b) / g ^ 2 / chi ^ K) strict
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have bound := h .original (fun _ => false) budget 2 le_rfl budget_interval.1 budget_interval.2 false
+  change (1 : ℝ) / 58 ≤ 0 at bound
+  norm_num at bound
+
+def evidence : Registration sourceArena (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit.actual_rate_positive) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit.actual_rate_positive, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  dependence := dependence
+
+def actual_rate_positive_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit.actual_rate_positive)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ model K => actualRate model K) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit.ExactOriginal105.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit.ExactOriginal105.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ model K => actualRate model K) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms actual_rate_positive_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit.ExactOriginal105
