@@ -3377,3 +3377,27 @@ $$\chi(\partial N_n)=8n-36n+24n=-4n,\qquad
 原 §19 的平均残差构造因此有真实的普通覆盖族和精确的 $|E_n|=4n$ 输入。在已证明的基盒内部零曲率解及统一正 Hessian 常数条件下，提升该解并扰动一条八度提升边，仍使用已有 §19 的单坐标估计与至多四十八条受影响边的证明；本节不另包装这些分析推论为新 Lean 声明，也不将这些静态长度向量称为流轨道。
 
 原 §124 的中心提升改变边圈周期：六度变十二度，对应原角的 $4\pi$ 累积。本节四条整边圈电压均为零，局部星逐片覆盖，恰是排除该分歧缺陷所需的条件。对偶图的覆盖或边界圈的覆盖都不能替代 (28.8)。
+
+### Cyclic triangle disk supplier
+
+The companion Lean unit D5/S3/Geometry/Gluing/CyclicTriangleDisk.lean supplies the closed cyclic triangle fan disk: it uses the original directed seam and EqvGen quotient, an explicit radial map, and proves normal-form exactness, exact fibers, continuity, surjectivity, and a homeomorphism for every positive n. For sector i, the auxiliary angle is (2*pi/n)*i at zero radius and (2*pi/n)*(i+a/(a+b)) at positive radius; the radial map itself is zero at every sector apex. This supplier is intentionally limited to the disk construction; the original link-3r orbit, saturated open chart, marked CFMP closure, and full geometric integration remain outside its scope.
+
+## Barycentric subdivision stars
+
+The [canonical literature note](../Geometry/delfsknebusch1984separation.md)
+records Lemma 2.6, pages 56–57, which supplies the star-coordinate
+characterization used in CFMP geometric realization Lemma 70.3.
+
+For the first barycentric subdivision of a simplex, the open star of an
+original vertex consists of the points whose coordinate at that vertex
+strictly exceeds every other parent coordinate. Its closure is described
+by the corresponding weak inequalities. For a finite simplex this closure
+is the union of all incident closed subdivision simplices: the finite
+union commutes with closure, and each simplex is the closure of its
+relative interior. The open star here includes the relative interiors of
+all incident faces, including the original singleton vertex. Restricting
+the union to interiors of maximal simplices would give a different set.
+The face-chain realization uses the actual averages of nonempty sets of
+parent vertices; no coordinate-maximum predicate is used to define the
+geometric star. This is an existing mathematical result, with no novelty
+claim for the coordinate characterization.
