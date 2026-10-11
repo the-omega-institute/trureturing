@@ -118,7 +118,6 @@ theorem dependence : ObservationalDependence signature actual := by
 def evidence : Registration arena.{u} (arena.{u}.Law actual) :=
   Registration.mk actual Iff.rfl ⟨positive, rejected, negative⟩ sensitivity dependence
 
-#print axioms evidence
 
 def core_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@core_structure.{u})
@@ -156,7 +155,6 @@ def core_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 
   familyRecord := none
   options := #[] }
 
-#print axioms core_registration
 
 abbrev ringSignature : Signature where
   Params := Σ S : Type u, Σ _x : S, S
@@ -233,7 +231,6 @@ def ringEvidence : Registration ringArena.{u} (ringArena.{u}.Law ringActual) :=
   Registration.mk ringActual Iff.rfl ⟨ring_positive, ringRejected, ring_negative⟩
     ring_sensitivity ring_dependence
 
-#print axioms ringEvidence
 
 
 def ring_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -241,7 +238,8 @@ def ring_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 
     (type_of% (realize ringSignature
       (fun _ p op => @HMul.hMul _ _ _ op p.2.1 p.2.2) (fun e => nomatch e)))
     (Unit) (Unit) := {
-  unitName := `D5.S3.Observer.Completion.MonotheticCompactMonoid.core_ring_retraction.__information_unit
+  unitName :=
+    `D5.S3.Observer.Completion.MonotheticCompactMonoid.core_ring_retraction.__information_unit
   realizationName := `Reg.D5.S3.Observer.Completion.MonotheticCompactMonoid.ringEvidence
   realizationSource := none
   generated := false
@@ -273,6 +271,5 @@ def ring_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 
   familyRecord := none
   options := #[] }
 
-#print axioms ring_registration
 
 end Reg.D5.S3.Observer.Completion.MonotheticCompactMonoid

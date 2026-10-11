@@ -175,9 +175,7 @@ private theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n 
       · intro hx
         exact ⟨(x, -x), ⟨add_neg_cancel x, hx⟩, rfl⟩
       · rintro ⟨⟨x, y⟩, ⟨hxy, hy⟩, rfl⟩
-        have hyx : y = -x := by
-          calc y = -x + (x + y) := by simp
-               _ = -x := by rw [hxy, add_zero]
+        have hyx : y = -x := eq_neg_of_add_eq_zero_right hxy
         change -x ∈ s
         simpa only [hyx] using hy
     rw [heq]
@@ -200,7 +198,6 @@ private theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n 
   have hd' := hsurj.denseRange.comp hd hr
   simpa only [Function.comp_def, map_nsmul] using hd'
 
-#print axioms core_group_retraction
 
 omit [ContinuousAdd M] [CompactSpace M] in
 private theorem prefix_or_tail (a : M) (hd : DenseRange fun n : ℕ => n • a)
@@ -241,14 +238,9 @@ private theorem collision_mem_core (a : M) {n m : ℕ}
     rw [show n + p = m by omega]
     exact heq.symm
   have hrep (k : ℕ) : (n + k * p) • a = n • a := by
-    induction k with
-    | zero => simp
-    | succ k ih =>
-      calc
-        (n + (k + 1) * p) • a = ((n + k * p) + p) • a := by congr 1; ring
-        _ = (n + k * p) • a + p • a := add_nsmul _ _ _
-        _ = (n + p) • a := by rw [ih, add_nsmul]
-        _ = n • a := hstep
+    have hfixed : n • a + p • a = n • a := by rwa [← add_nsmul]
+    simpa only [add_right_iterate, ← mul_nsmul, ← add_nsmul, Nat.mul_comm p k] using
+      Function.iterate_fixed (f := fun x : M => x + p • a) hfixed k
   apply mem_iInter.mpr
   intro N
   rw [← hrep N]
@@ -333,7 +325,6 @@ private theorem core_ideal_and_threshold (a : M) (hd : DenseRange fun n : ℕ =>
     · intro n hn
       exact (outside_isolated_orbit a hd ((ht n).mpr hn)).2
 
-#print axioms core_ideal_and_threshold
 
 /-- The complete tail structure: internal topological group, additive retraction,
 least nonempty ideal, and the unique finite or infinite isolated initial segment. -/
@@ -357,7 +348,6 @@ theorem core_structure (a : M) (hd : DenseRange fun n : ℕ => n • a) :
       (∀ n : ℕ, (n : ℕ∞) < t → IsOpen ({n • a} : Set M))) := by
   exact ⟨core_group_retraction a hd, core_ideal_and_threshold a hd⟩
 
-#print axioms core_structure
 
 section Semiring
 
@@ -468,7 +458,6 @@ theorem core_ring_retraction (hd : DenseRange fun n : ℕ => n • (1 : S)) :
     (fun x => ⟨x.1, hfix x⟩), hr, hfix, ?_⟩
   exact hdense
 
-#print axioms core_ring_retraction
 
 end Semiring
 
