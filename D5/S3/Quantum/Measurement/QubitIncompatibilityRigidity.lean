@@ -8,6 +8,9 @@
 
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 import Mathlib.LinearAlgebra.CrossProduct
+import Mathlib.Algebra.Polynomial.Roots
+import Mathlib.Order.Interval.Set.Infinite
+import Mathlib.Tactic.ComputeDegree
 import D5.S3.Arith.Lattices.Klartag.State.PaddingMap
 noncomputable section
 open D5.S3.Quantum.FiniteDimensional
@@ -662,4 +665,47 @@ private lemma boundary_branches (a b : V) (hk : K a b < 0) :
   have he' := (div_left_inj' hH).mp he
   have hpos := Real.sqrt_pos.mpr hd
   nlinarith
+open Polynomial
+private lemma two_root_elimination (a b : V) (hk : K a b < 0) (u v w z d l : ℝ)
+    (hg : ∀ x y, curve (K a b) ⟪a, b⟫_ℝ x y = 0 →
+      curve l d (u * x + v * y) (w * x + z * y) = 0) : u * w = 0 := by
+  let H : ℝ[X] := 1 + X ^ 2
+  let D : ℝ[X] := -X ^ 4 + C (‖a‖ ^ 2 + ‖b‖ ^ 2 - 2) * X ^ 2 - C (K a b)
+  let P : ℝ[X] := X * (C u * H + C (v * ⟪a, b⟫_ℝ))
+  let Q : ℝ[X] := X * (C w * H + C (z * ⟪a, b⟫_ℝ))
+  let R := P * Q + C (v * z) * D
+  let T := P * C z + Q * C v
+  let N := R ^ 2 + T ^ 2 * D + H ^ 2 *
+    (P ^ 2 + Q ^ 2 + C (v ^ 2 + z ^ 2) * D - C (2 * d) * R + C l * H ^ 2)
+  obtain ⟨ε, hε, hbr⟩ := boundary_branches a b hk
+  have hN : N = 0 := by
+    apply eq_zero_of_infinite_isRoot
+    apply (Set.Ioo_infinite hε).mono
+    intro x hx
+    obtain ⟨hd, hp, hn, _⟩ := hbr x hx
+    have hp := hg x _ hp
+    have hn := hg x _ hn
+    have hs := Real.sq_sqrt hd.le
+    have hH : (1 + x ^ 2 : ℝ) ≠ 0 := by positivity
+    dsimp only [curve, branch] at hp hn
+    field_simp at hp hn
+    change N.eval x = 0
+    simp only [N, R, T, P, Q, H, D, eval_add, eval_mul, eval_pow, eval_sub,
+      eval_neg, eval_C, eval_X, eval_one]
+    change Real.sqrt (delta a b x) ^ 2 =
+      -x ^ 4 + (‖a‖ ^ 2 + ‖b‖ ^ 2 - 2) * x ^ 2 - K a b at hs
+    linear_combination (1 / 2 : ℝ) * hp + (1 / 2 : ℝ) * hn -
+      ((v * z) ^ 2 * (Real.sqrt (delta a b x) ^ 2 +
+        (-x ^ 4 + (‖a‖ ^ 2 + ‖b‖ ^ 2 - 2) * x ^ 2 - K a b)) +
+        (x * (u * (1 + x ^ 2) + v * ⟪a, b⟫_ℝ) * z +
+          x * (w * (1 + x ^ 2) + z * ⟪a, b⟫_ℝ) * v) ^ 2 +
+        2 * x ^ 2 * (u * (1 + x ^ 2) + v * ⟪a, b⟫_ℝ) *
+          (w * (1 + x ^ 2) + z * ⟪a, b⟫_ℝ) * v * z +
+        (1 + x ^ 2) ^ 2 * (v ^ 2 + z ^ 2 - 2 * d * v * z)) * hs
+  have hc : N.coeff 12 = (u * w) ^ 2 := by
+    dsimp [N, R, T, P, Q, H, D]
+    compute_degree!
+    <;> ring
+  rw [hN, coeff_zero] at hc
+  nlinarith only [hc]
 end D5.S3.Quantum.ToriiTakakuraImamuraRigidity
