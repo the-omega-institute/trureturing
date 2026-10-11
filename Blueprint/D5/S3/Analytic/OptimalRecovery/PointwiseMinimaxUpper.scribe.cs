@@ -72,7 +72,7 @@ internal sealed class PointwiseMinimaxUpperDocument : IScribeDocumentDefinition
                 H("The midpoint of the compatible grounds"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/micchellirivlin1977optimalrecovery")),
-                Blocks(Paragraph(Text("The estimator assigns Y the midpoint of the infimum and supremum of compatibleGrounds, with value zero when that set is empty. For every feasible Y the set is nonempty and bounded by [Elo,Ehi]."))),
+                Blocks(Paragraph(Text("The estimator assigns Y the midpoint of the infimum and supremum of compatibleGrounds, with value Elo when that set is empty. For every feasible Y the set is nonempty and bounded by [Elo,Ehi]."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("optimalrecovery-pointwiseminimaxupper-exists-window-estimator"),
