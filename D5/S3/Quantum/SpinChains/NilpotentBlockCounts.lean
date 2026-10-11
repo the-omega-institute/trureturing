@@ -14,6 +14,25 @@ namespace D5.S3.Quantum.SpinChains.NilpotentBlockCounts
 
 open Module
 
+/-- A finite family of Jordan chains for an endomorphism.
+
+The basis is indexed by the positions in each chain.  The `shift` field gives
+the action at every nonterminal position, while `terminal` gives the zero
+action at the final position of each chain.
+-/
+structure ChainBasis {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+    (N : Module.End K V) where
+  ι : Type*
+  fintype : Fintype ι
+  len : ι → ℕ
+  len_pos : ∀ i, 1 ≤ len i
+  v : Basis (Σ i, Fin (len i)) K V
+  shift : ∀ (i : ι) (t : Fin (len i)) (h : t.val + 1 < len i),
+    N (v ⟨i, t⟩) = v ⟨i, ⟨t.val + 1, h⟩⟩
+  terminal : ∀ i,
+    N (v ⟨i, ⟨len i - 1,
+      Nat.sub_lt (lt_of_lt_of_le Nat.zero_lt_one (len_pos i)) Nat.zero_lt_one⟩⟩) = 0
+
 /-- The intrinsic subspace of vectors in the kernel of `N` that come from the
 range of the preceding power. -/
 def C {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
