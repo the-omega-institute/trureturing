@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic estimates pay its specified classwise all-column pure-dual-sixth-power subterm, including pole and shifted integral, when max(D,N)^2 is at most the row scale, while other dual terms and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; known cubic estimates pay its classwise all-column pure-sixth-power pole at specified lengths, and a standard absolute Rankin estimate pays the pure-power shifted integral at all lengths, while other dual terms and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -803,6 +803,49 @@ U_j^{1-\sigma}K^{1+\varepsilon}
 $$
 
 At $\sigma=1/12$, this is $U_j^{11/12}K^{1+\varepsilon}(1+D^{1/6}+N^{1/6})$. If $U_j\ge1$ and $\max(D,N)^2\le U_j$, then $1,D^{2\sigma},N^{2\sigma}\le U_j^\sigma$. Thus both this integral and the pole are $\ll_{\mathcal A,\varepsilon}(U_jK)^\varepsilon U_jK$. This pays the complete specified pure-dual-sixth-power subterm of the classwise all-column moment, with the original shared-height accounting and fixed transform seminorms. It does not pay the other dual ideals, guarantee the required length condition for the actual witnesses, bound the earlier cross-class signed contraction, or restore the original signed Robin target. The application remains source-conditional and has no complete analytical Lean certification.
+
+#### An absolute shifted-integral estimate without relative length restrictions
+
+The unrestricted shifted integral has a simpler sufficient bound from the absolute conductor-weight Rankin argument already used above. No cubic cancellation or actual convolution structure is needed for this part. Let $\mathcal C_{6,L}(z)$ be the same finite $z$-kernel as in the preceding subsection, summed over the original actual-order-six pairs without a primary-class condition. Retain the full primitive conductor, original zeros, physical labels and finite row-Möbius cutoff.
+
+Fix $0<\sigma<1/6$ and put $\tau=1/2-\sigma$. For an arbitrary good ideal $x$, define
+
+$$
+w_\tau(x)=\prod_{6\nmid v_{\mathfrak p}(x)}q_{\mathfrak p}^{-\tau}.
+$$
+
+Its Dirichlet series has local factor
+
+$$
+\frac{1+q_{\mathfrak p}^{-\tau}
+\sum_{r=1}^{5}q_{\mathfrak p}^{-rs}}
+{1-q_{\mathfrak p}^{-6s}},
+$$
+
+and converges for $s>1-\tau=1/2+\sigma$. Thus $\sum_{q_x\le X}w_\tau(x)\ll_{\sigma,\varepsilon}X^{1/2+\sigma+\varepsilon}$. In the exact gcd decomposition $h=gx,k=gy$, $(x,y)=1$, the full conductor weight satisfies $q_{\mathfrak f}^{-\tau}\le w_\tau(x)w_\tau(y)$; any ramified part only decreases this absolute upper bound. The other finite local products and the $\ell$-sum have the same $K^\varepsilon$ absolute cost as before. After taking absolute values, enlarge the coprimality and actual-order selectors only in this positive upper bound. Allocating the small error parameters gives, uniformly in $t,L$,
+
+$$
+\begin{aligned}
+|\mathcal C_{6,L}(\sigma+it)|
+&\ll_{\mathcal A,\sigma,\varepsilon}
+K^{\varepsilon/2}\sum_{q_g\ll K}(K/q_g)^{1+2\sigma+\varepsilon/2}\\
+&\ll_{\mathcal A,\sigma,\varepsilon}K^{1+2\sigma+\varepsilon}.
+\end{aligned}
+$$
+
+This holds for divisor-bounded coefficients supported on $q_h\asymp K$, including the actual convolution; fixed profile factors are absorbed in $\mathcal A$. It also applies to the classwise kernels. The coefficient-sensitive bound above remains stronger at a fixed line in its useful length ranges, but is not needed for the following shifted-integral payment.
+
+For a final $\varepsilon>0$, choose the fixed line $\sigma=\min(1/12,\varepsilon/8)$ and use $\varepsilon_0=\varepsilon/4$ in this absolute bound. The already checked Mellin integrability yields
+
+$$
+\boxed{|\mathcal I_{6,j}|
+\ll_{\mathcal A,\varepsilon}
+U_j^{1-\sigma}K^{1+2\sigma+\varepsilon_0}
+\ll_{\mathcal A,\varepsilon}(U_jK)^\varepsilon U_jK
+\qquad(U_j,K\ge1).}
+$$
+
+The line depends only on the final $\varepsilon$, not on the growing scales. The constants may deteriorate as $\sigma\to0$; no uniformity as $\varepsilon\to0$ is asserted. The original fixed profiles and shared-height budget are retained. This pays the specified pure-power shifted integral even before classwise splitting, at every original length with $U_j,K\ge1$. The original cross-class pole, the classwise pole outside its sufficient length range, the other dual ideals and signed Robin restoration remain unproved here. This is a direct application of the existing absolute Rankin method, without complete analytical Lean certification or an originality claim.
 
 #### Why the remaining pole estimate must use the actual convolution
 
