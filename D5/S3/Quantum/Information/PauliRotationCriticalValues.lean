@@ -613,11 +613,23 @@ private theorem witness_columns (j : Fin 15) :
   have hc : Real.sqrt 2 ^ 3 = 2 * Real.sqrt 2 := by simp [pow_succ, hs]
   rw [H, prefixOp, list_conjugation]
   fin_cases j <;>
-    simp [List.finRange, List.take, List.foldr, witnessP, gateOrder, point,
-      conjStep_add, conjStep_sub, conjStep_smul, conjStep_word,
-      sgn, anticomm, pauliProd, pauliPhase, labels, Fin.prod_univ_two,
-      Real.sin_pi_div_four, Real.cos_pi_div_four, E, rowScale, colScale, certA,
-      Fin.sum_univ_succ] <;> match_scalars
+    simp only [colScale, Fin.isValue, Fin.zero_eta, Finset.mem_insert, zero_ne_one, Fin.reduceEq,
+      Finset.mem_singleton, or_self, or_false, ↓reduceIte, witnessP, ne_eq, labels, gateOrder,
+      point, cons_val_zero, cons_val, List.take, List.foldr_nil, E, Fin.sum_univ_succ,
+      cons_val_succ, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Fin.reduceSucc,
+      Finset.univ_unique, Fin.default_eq_zero, cons_val_fin_one, Finset.sum_singleton, rowScale,
+      certA, one_div, transpose_apply, cons_val', ite_mul, one_mul, _root_.add_apply,
+      ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply, Rat.cast_zero,
+      mul_zero, zero_smul, one_ne_zero, or_true, cons_val_one, Rat.cast_one, mul_one, add_zero,
+      zero_add, Fin.mk_one, List.finRange, List.ofFn_succ, List.ofFn_zero, List.take_succ_cons,
+      List.foldr_cons, List.foldr, conjStep_word, sgn, anticomm, Bool.false_eq_true,
+      bne_self_eq_false, Int.reduceNeg, reduceCtorEq, Fin.reduceFinMk, bne_iff_ne,
+      not_false_eq_true, mul_neg, Nat.succ_eq_add_one, Nat.reduceAdd, Real.cos_zero,
+      Complex.ofReal_one, one_smul, Real.sin_zero, Complex.ofReal_zero, zero_mul, pauliPhase,
+      Fin.prod_univ_two, neg_zero, pauliProd, sub_zero, neg_neg, Real.cos_pi_div_four,
+      Complex.ofReal_div, Complex.ofReal_ofNat, Real.sin_pi_div_four, neg_smul, sub_neg_eq_add,
+      conjStep_add, conjStep_smul, smul_add, Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat,
+      Rat.cast_inv, conjStep_sub] <;> match_scalars
   all_goals
     apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im, Complex.div_re,
       Complex.div_im, Complex.normSq, Complex.inv_re, Complex.inv_im]
