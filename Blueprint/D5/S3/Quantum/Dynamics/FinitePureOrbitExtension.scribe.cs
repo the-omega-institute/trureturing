@@ -49,19 +49,7 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
                         "For a quantum channel, applying this result requires an invariant "
                         + "cyclic tail with invertible induced motion and a decomposition whose "
                         + "members are exactly its pure-input directions. The present theorem "
-                        + "establishes the word-space extension after those data are supplied.")),
-                    Paragraph(Text(
-                        "The companion channel bridge `pure_output_of_kraus_collinear` uses the "
-                        + "repository's finite Kraus representation: when every Kraus image of "
-                        + "a unit input vector is collinear with one unit output vector and the "
-                        + "coefficient weights sum to one, `QuantumChannel.mapState` is `IsPure`.")),
-                    Paragraph(Text(
-                        "The direction-level result `pure_prefix_channel_directions` applies the "
-                        + "potential stabilization to a finite family of such Kraus-pure directions. "
-                        + "It returns a pure channel output for every later linear-orbit direction; "
-                        + "an equality identifying these directions with the iterated channel states "
-                        + "is an additional bridge obligation and is not assumed by the abstract "
-                        + "word-space theorem."))),
+                        + "establishes the word-space extension after those data are supplied.")))),
                 DescribeRole.Theorem))));
 
     private static Formula Formula()
