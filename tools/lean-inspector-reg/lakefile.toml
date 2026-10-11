@@ -3,6 +3,7 @@ version = "0.1.0"
 defaultTargets = ["LeanInformationAuditRegTests"]
 packagesDir = "../../.lake/packages"
 buildDir = "../../.lake/build/lean-inspector/reg"
+weakLeanArgs = ["-j1"]
 
 [leanOptions]
 pp.unicode.fun = true
