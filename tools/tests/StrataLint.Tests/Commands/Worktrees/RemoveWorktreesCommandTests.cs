@@ -6,6 +6,38 @@ namespace StrataLint.Tests;
 public sealed partial class RemoveWorktreesCommandTests
 {
     [Fact]
+    public void NamedDetachedBatchReportsUsableRecoveryBranches()
+    {
+        using var fixture = new RemovalFixture();
+        var clean = fixture.Add("detached-clean");
+        var dirty = fixture.Add("detached-dirty");
+        foreach (var path in new[] { clean, dirty }) fixture.Git(path, "checkout", "--detach");
+        var cleanHead = fixture.Git(clean, "rev-parse", "HEAD").Trim();
+        var dirtyHead = fixture.CommitAndDirty(dirty);
+        fixture.Git(fixture.Main, "remote", "remove", "origin");
+        var result = fixture.Remove("detached-clean detached-dirty");
+        AssertResult(result, 0, 2, 0, 0);
+        var rows = result.Output.Split('\n').Where(line => line.StartsWith('{'))
+            .Select(line => JsonDocument.Parse(line).RootElement.Clone()).ToArray();
+        foreach (var row in rows)
+        {
+            var path = row.GetProperty("path").GetString()!;
+            var reference = row.GetProperty("recovery_branch").GetString()!;
+            Assert.False(Directory.Exists(path));
+            Assert.StartsWith("refs/heads/lane/governance/recovery-", reference);
+            fixture.Git(fixture.Main, "worktree", "add", path, reference["refs/heads/".Length..]);
+            if (path == clean) Assert.Equal(cleanHead, fixture.Git(path, "rev-parse", "HEAD").Trim());
+            else
+            {
+                Assert.Equal(dirtyHead, fixture.Git(path, "rev-parse", "HEAD^").Trim());
+                Assert.Equal("baseline\nunmerged commit\nuncommitted\n", File.ReadAllText(Path.Combine(path, "tracked.txt")));
+                Assert.Equal("untracked\n", File.ReadAllText(Path.Combine(path, "untracked.txt")));
+            }
+        }
+        Assert.NotEqual(rows[0].GetProperty("recovery_branch").GetString(), rows[1].GetProperty("recovery_branch").GetString());
+    }
+
+    [Fact]
     public void MissingNamesReturnsUsage64WithoutCallingGit()
     {
         var runner = new InventoryRunner();
