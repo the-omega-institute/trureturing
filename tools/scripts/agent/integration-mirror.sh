@@ -14,10 +14,10 @@
 # --max bounds successful merges; pending counts the remaining fetched plan.
 # Exit: 0 complete/bounded/dry-run; 64 invalid input/precondition; 65 conflict;
 # 66 red checks (PR left open); 69 transport/incomplete checks/unsafe recovery;
-# 130 interrupted; 143 terminated (69 also when the verdict set never settles).
-# The native watcher exits early before GitHub registers a new PR's check runs
-# ("no checks reported") and on transient API errors (HTTP 5xx); the follower
-# re-enters it, bounded by attempts, until any check is red or all passed.
+# 130 interrupted; 143 terminated.
+# Before required checks register, wait on pull_request runs for the exact head.
+# Native watchers own CI lifetimes; only discovery and transport retries are
+# bounded. A completed run without a terminal required verdict is incomplete.
 # Existing mirror PRs/branches are reused, never force-pushed or recreated.
 # One OS-held operation scope per integration follower; descendants inherit it.
 # Example: tools/scripts/agent/integration-mirror.sh \
@@ -26,10 +26,10 @@
 # a stability count; those analyses and delivery to dev belong to the caller.
 set -Eeuo pipefail
 
-VERSION=6
+VERSION=7
 PROTOCOL="$(cd "$(dirname "${BASH_SOURCE[0]}")/../worktree" && pwd -P)/worktree_protocol.py"
-# Watcher re-entry bound: GitHub registration latency and transient API errors.
-WATCH_ATTEMPTS=30 WATCH_INTERVAL=15
+# GitHub discovery/transport retries and merge-request retries.
+RETRY_ATTEMPTS=30 RETRY_INTERVAL=15
 original_arguments=("$@")
 integration='' since='' state='' max=0 dry_run=0 checks_under_test=''
 mirrored=0 pending=0 scratch='' worktree='' lock=''
@@ -88,32 +88,49 @@ record() {
       conflict_paths:$conflict_paths}' >>"$state" || die 69 "cannot append state: $state"
 }
 read_verdicts() {
-  local rc=0
+  local rc=0 parsed
+  verdicts='[]'
   run verdicts gh pr checks "$mirror_pr" --repo "$repo" --required \
     --json name,state,bucket,link,workflow,event,startedAt,completedAt || rc=$?
   # gh returns 1 for failed checks and 8 for pending checks even with --json.
   case $rc in 0|1|8) ;; *) return 1 ;; esac
-  verdicts=$(jq -ce 'select(type == "array")' <<<"$output" 2>/dev/null) || return 1
+  parsed=$(jq -ce 'select(type == "array")' <<<"$output" 2>/dev/null) || return 1
+  verdicts=$parsed
+}
+terminal_verdict() {
+  jq -e --argjson required "$integration_required" '
+    any(.[]; .bucket == "fail" or .bucket == "cancel") or
+    (([.[].name] | unique | sort) == ($required | sort) and all(.[]; .bucket == "pass"))
+  ' <<<"$verdicts" >/dev/null
 }
 watch_checks() {
-  # The native watcher is the only wait for verdicts, but it exits early when
-  # GitHub has not yet registered the PR's check runs ("no checks reported") or
-  # on a transient API error (observed: HTTP 503 from api.github.com/graphql).
-  # Re-enter it, bounded by attempts, until the verdict set is terminal.
-  local attempt=0 watch_rc
+  local attempt=0 runs active run_id failed
   while :; do
-    attempt=$((attempt + 1))
-    watch_rc=0
-    run watch gh pr checks "$mirror_pr" --repo "$repo" --required --watch --fail-fast || watch_rc=$?
-    if read_verdicts; then
-      log "watch mirror_pr=$mirror_pr attempt=$attempt exit=$watch_rc"
-      jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null && return 0
-      jq -e --argjson required "$integration_required" '
-        ([.[].name] | unique | sort) == ($required | sort) and all(.[]; .bucket == "pass")
-      ' <<<"$verdicts" >/dev/null && return 0
+    run watch gh pr checks "$mirror_pr" --repo "$repo" --required --watch --fail-fast || true
+    if read_verdicts && terminal_verdict; then return 0; fi
+    # The aggregate required job need not exist while its unit jobs are running.
+    # Run association uses the exact head and event, including runs whose PR list
+    # is empty. Workflow conclusions never authorize a merge.
+    if run discover-runs gh run list --repo "$repo" --commit "$head" --event pull_request \
+      --json databaseId,headSha,event,status --limit 100 &&
+      runs=$(jq -ce --arg head "$head" 'select(type == "array") |
+        map(select(.headSha == $head and .event == "pull_request")) | select(length > 0)
+      ' <<<"$output"); then
+      active=$(jq -r '.[] | select(.status != "completed") | .databaseId' <<<"$runs")
+      [[ -n "$active" ]] || return 1
+      failed=0
+      while IFS= read -r run_id; do
+        run watch-run gh run watch "$run_id" --repo "$repo" || failed=1
+        if read_verdicts && terminal_verdict; then return 0; fi
+      done <<<"$active"
+      if (( failed == 0 )); then
+        attempt=0
+        continue
+      fi
     fi
-    (( attempt < WATCH_ATTEMPTS )) || return 1
-    sleep "$WATCH_INTERVAL"
+    attempt=$((attempt + 1))
+    (( attempt < RETRY_ATTEMPTS )) || return 1
+    sleep "$RETRY_INTERVAL"
   done
 }
 validate_head() {
@@ -334,7 +351,7 @@ Script version: $VERSION"
     mirror_pr=${output##*/}
     [[ "$mirror_pr" =~ ^[1-9][0-9]*$ ]] || die 69 "gh returned no mirror PR number"
   fi
-  watch_checks || { record incomplete; die 69 "verdicts not settled for mirror_pr=$mirror_pr after $WATCH_ATTEMPTS watcher attempts; PR left open"; }
+  watch_checks || { record incomplete; die 69 "verdicts not settled for mirror_pr=$mirror_pr after native waits/discovery; PR left open"; }
   log "checks mirror_pr=$mirror_pr verdicts=$verdicts"
   if jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null; then
     record red
@@ -350,12 +367,12 @@ Script version: $VERSION"
   until run merge-pr gh pr merge "$mirror_pr" --repo "$repo" --merge --delete-branch \
     --match-head-commit "$head"; do
     merge_attempt=$((merge_attempt + 1))
-    (( merge_attempt < WATCH_ATTEMPTS )) || die 69 "merge request failed after $merge_attempt attempts; rerun to recover PR state"
+    (( merge_attempt < RETRY_ATTEMPTS )) || die 69 "merge request failed after $merge_attempt attempts; rerun to recover PR state"
     # A fresh check run registered after the last watch (e.g. on PR creation):
     # wait for the verdict set to settle again before retrying the merge.
     log "merge-pr retry=$merge_attempt: re-entering the watcher"
-    sleep "$WATCH_INTERVAL"
-    watch_checks || die 69 "verdicts not settled for mirror_pr=$mirror_pr after $WATCH_ATTEMPTS watcher attempts; PR left open"
+    sleep "$RETRY_INTERVAL"
+    watch_checks || { record incomplete; die 69 "verdicts not settled for mirror_pr=$mirror_pr after native waits/discovery; PR left open"; }
     if jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null; then
       record red
       die 66 "red mirror_pr=$mirror_pr left open"
