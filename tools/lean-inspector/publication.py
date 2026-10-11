@@ -22,6 +22,7 @@ import tempfile
 import zipfile
 
 import materials
+import fib_analysis
 
 _selection_spec = importlib.util.spec_from_file_location('report_selection',
     Path(__file__).resolve().parent.parent / 'scripts/report/lean-report-selection.py')
@@ -211,7 +212,8 @@ def validate_input_projection(projection, module):
     for entry in projection['inputs']:
         materials.require_keys(entry, {'type', 'owner', 'name'}, 'judge input projection entry')
         if (entry['type'] not in {'LeanInformationAudit.Contract.' + name for name in
-                ('Registration', 'TemplateEnrollment', 'RootCatalog', 'Seal')}
+                ('Registration', 'TemplateEnrollment', 'RootCatalog', 'Seal')} |
+                {'LeanInformationAudit.AuricFib.Contract.Application'}
                 or entry['owner'] != module or not isinstance(entry['name'], str)
                 or not entry['name'] or entry['name'] in names):
             raise ValueError('contract.discovery:invalid_projection_entry:' + module)
@@ -255,7 +257,7 @@ def _validate_row(row, archive, available, verified_materials, identities):
     """All certificate and declaration references die at this call boundary."""
     references = {}
     keys = {'module', 'source_path', 'source_sha256', 'imports', 'declarations'}
-    keys.update(key for key in ('information_registration_errors', 'information_templates', 'utility_refutation') if key in row)
+    keys.update(key for key in ('information_registration_errors', 'information_templates', 'fib_analysis', 'utility_refutation') if key in row)
     materials.require_keys(row, keys, 'module')
     name, path, sha = row['module'], row['source_path'], row['source_sha256']
     if (not isinstance(name, str) or not name
@@ -267,6 +269,10 @@ def _validate_row(row, archive, available, verified_materials, identities):
         materials.require_sorted_strings(row['information_registration_errors'], 'registration errors')
     if 'information_templates' in row:
         materials.validate_template_evidence(row['information_templates'])
+    if 'fib_analysis' in row:
+        value = fib_analysis.validate(row['fib_analysis'])
+        if any(x['owner'] != name for x in value['applications']):
+            raise ValueError('fib.application_owner_mismatch')
     if 'utility_refutation' in row:
         evidence = materials.require_keys(row['utility_refutation'], {'claim_gid', 'claim_source_path',
             'claim_source_sha256', 'result_gid', 'is_closed_negation'}, 'utility refutation')

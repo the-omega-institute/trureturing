@@ -74,6 +74,10 @@ public sealed record LeanFileReport(
     // selects registration owners before invoking the strict evidence reader.
     internal JsonElement? InformationTemplates { get; init; }
 
+    // Downstream analysis is retained for its dedicated consumer and has no
+    // proof, seal, freeze or admission authority.
+    internal JsonElement? FibAnalysis { get; init; }
+
     // Null means the producer does not supply registration evidence. It is only
     // admissible outside the protected-base candidate delta.
     internal ImmutableArray<string>? InformationRegistrationErrors { get; init; } = [];

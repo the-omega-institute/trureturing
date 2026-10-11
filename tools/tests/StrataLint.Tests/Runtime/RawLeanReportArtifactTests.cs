@@ -22,6 +22,24 @@ public sealed class RawLeanReportArtifactTests
         + "\"schema\": \"stratalint-raw-lean-report-v3\"}\n";
 
     [Fact]
+    public void DownstreamFibPartitionSurvivesWithoutChangingProofInputs()
+    {
+        const string partition = "{\"applications\": [], \"schema_version\": 1}";
+        var bytes = Encoding.UTF8.GetBytes(CanonicalReport.Replace("\"imports\": []",
+            "\"fib_analysis\": " + partition + ", \"imports\": []", StringComparison.Ordinal));
+        var read = RawLeanReportArtifact.Read(bytes, Snapshot());
+        var file = read.Files.Single().Value;
+        Assert.Equal(partition, file.FibAnalysis!.Value.GetRawText());
+        Assert.Null(file.InformationTemplates);
+        Assert.Empty(file.InformationRegistrationErrors!.Value);
+        Assert.Equal("probe", Assert.Single(file.Declarations).Name);
+        var rewritten = RawLeanReportArtifact.Write(Snapshot(), read);
+        var reread = RawLeanReportArtifact.Read(rewritten.AsSpan(), Snapshot());
+        Assert.Equal(file.FibAnalysis.Value.GetProperty("schema_version").GetInt32(),
+            reread.Files.Single().Value.FibAnalysis!.Value.GetProperty("schema_version").GetInt32());
+    }
+
+    [Fact]
     public void PreviousReportFormatIsRejected()
     {
         // The strict reader accepts only the current extraction format.

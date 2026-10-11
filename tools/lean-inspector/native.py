@@ -17,6 +17,7 @@ import time
 import zipfile
 
 import materials
+import fib_analysis
 import publication as public
 
 selection = public.selection
@@ -43,6 +44,12 @@ def module_work(operation, names):
         with Path(path).open('a', encoding='utf-8') as target:
             for name in names:
                 target.write(json.dumps({'operation': operation, 'module': name}) + '\n')
+
+
+def produce_fib(row, output, analyzer, previous=""):
+    stats = fib_analysis.produce(row, previous or output, analyzer)
+    for kind, count in (stats or {}).items():
+        activity('fib-' + kind, count)
 
 
 def diagnostic_failure(label, error):
@@ -131,16 +138,18 @@ def write_if_changed(path, data):
 
 
 @phase('native-inputs')
-def prepare(root):
+def prepare(root, scope="full"):
     root = Path(root).resolve()
+    if scope not in ("full", "module-records"):
+        raise ValueError('unknown native input preparation scope')
     with phase('native-input-selection'):
         inputs = selection.Selection(root)
         inputs.validate('lean-report')
         modules = inputs.modules()
         scope_file = os.environ.get('STRATALINT_INSPECTOR_SCOPE_FILE')
         if scope_file:
-            scope = public.read_json(Path(scope_file).read_bytes())
-            selected = {row['module']: row['source_path'] for row in scope['modules']}
+            scope_data = public.read_json(Path(scope_file).read_bytes())
+            selected = {row['module']: row['source_path'] for row in scope_data['modules']}
             if not selected or any(modules.get(name) != path for name, path in selected.items()):
                 raise ValueError('invalid scoped report membership')
             modules = selected
@@ -178,12 +187,24 @@ def prepare(root):
             if utility['claimSourceSha256'] != 'sha256:' + public.digest(claim):
                 raise ValueError('stale authoritative claim source')
             by_path[path] = utility
+        records = {}
         for name, path in sorted(modules.items()):
             utility = [by_path[path]] if path in by_path else []
-            write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
-                'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
+            records[name] = dict(utilities=utility,
+                claims=sorted({u['claimModule'] for u in utility}), source_path=path)
+            if scope == "full":
+                write_if_changed(state(root) / 'inputs' / (name + '.json'),
+                    materials.canonical_json(records[name]))
         write_if_changed(state(root) / 'report-format',
             (selection.REPORT_FORMAT + '\n').encode('ascii'))
+        if scope == "module-records":
+            # Lake writes only the records of modules whose facets it fetches.
+            # This invocation input is never an artifact reuse condition.
+            write_if_changed(state(root) / 'module-inputs.json', materials.canonical_json(dict(
+                modules=sorted(modules), configs=inputs.expand('config_inputs'),
+                records={name: materials.canonical_json(record).decode('ascii')
+                         for name, record in records.items()})))
+            return
     # Membership and full config identity affect aggregation only. Each module
     # traces compatibility, source, utility inputs and Lake's compiler dependencies.
     with phase('native-input-coordinates'):
@@ -191,6 +212,15 @@ def prepare(root):
             'modules': sorted(modules),
             'configs': inputs.expand('config_inputs'),
             'coordinates': None if scope_file else public.coordinates(root)}))
+
+
+def aggregate_inputs(root):
+    """Produce aggregate coordinates only for the package report consumer."""
+    root = Path(root)
+    config = public.read_json((state(root) / 'module-inputs.json').read_bytes())
+    with phase('native-input-coordinates'):
+        write_if_changed(state(root) / 'inputs.json', materials.canonical_json(dict(
+            modules=config['modules'], configs=config['configs'], coordinates=public.coordinates(root))))
 
 
 @lru_cache(maxsize=None)
@@ -215,10 +245,48 @@ def input_projection(root, name):
     return projection
 
 
+@contextmanager
+def inspector_child_output():
+    """Retain this native child's bytes while Lake buffers its process output."""
+    streams, options = [], {}
+    for channel, variable in [('stdout', 'STRATALINT_INSPECTOR_CHILD_STDOUT'),
+                              ('stderr', 'STRATALINT_INSPECTOR_CHILD_STDERR')]:
+        path = os.environ.get(variable)
+        if path:
+            try:
+                target = Path(path).open('a+b')
+                start = target.tell()
+                streams.append((channel, target, start))
+                options[channel] = target
+            except OSError as error:
+                diagnostic_failure('native child ' + channel, error)
+    try:
+        yield options
+    finally:
+        for channel, target, start in streams:
+            try:
+                target.seek(start)
+                output = getattr(sys, channel)
+                while data := target.read(65536):
+                    if hasattr(output, 'buffer'):
+                        output.buffer.write(data)
+                    else:
+                        output.write(data.decode('utf-8', 'replace'))
+                output.flush()
+            except (OSError, ValueError) as error:
+                diagnostic_failure('native child forwarding ' + channel, error)
+            finally:
+                try:
+                    target.close()
+                except OSError as error:
+                    diagnostic_failure('native child close ' + channel, error)
+
+
 def run_inspector(root, executable, arguments, request_file=None):
     try:
         command = ['--request-file', str(request_file)] if request_file else arguments
-        subprocess.run([str(executable), *command], cwd=root, check=True)
+        with inspector_child_output() as output:
+            subprocess.run([str(executable), *command], cwd=root, check=True, **output)
     except subprocess.CalledProcessError as error:
         raise ValueError(f'raw.reader_failed:exit={error.returncode}') from error
 
@@ -245,7 +313,7 @@ def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
                 raise ValueError('native utility binding mismatch')
 
 
-def module(root, name, source, utility_path, executable, output):
+def module(root, name, source, utility_path, executable, output, analyzer="", previous=""):
     root, source, output = Path(root), Path(source), Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.module.', dir=output.parent) as directory:
@@ -262,15 +330,24 @@ def module(root, name, source, utility_path, executable, output):
         capture = retain_request(root, executable, arguments, record['utilities'])
         with phase('native-inspect', request_capture=capture):
             run_inspector(root, executable, arguments)
-        materials.compact(directory / 'spool.json', spool, report)
-        public.write_origin(report, name, public.production_origin(root, executable), input_projection(root, name))
+        with phase('native-fib', module=name):
+            compiled = public.read_json((directory / 'spool.json').read_bytes())
+            for row in compiled['modules']:
+                produce_fib(row, output, analyzer, previous)
+        with phase('native-materials', module=name):
+            (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
+            materials.compact(directory / 'spool.json', spool, report)
+            public.write_origin(report, name, public.production_origin(root, executable), input_projection(root, name))
         # Like an olean, an artifact is validated once, when it is produced;
         # Lake's trace alone decides later reuse.
-        rows, _ = validate_module(report, root, name, utility_path)
-        artifact = directory / 'module.zip'
-        public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
-        os.replace(artifact, output)
-        if input_projection(root, name)['inputs']:
+        with phase('native-validation', module=name):
+            rows, _ = validate_module(report, root, name, utility_path)
+        with phase('native-package', module=name):
+            artifact = directory / 'module.zip'
+            public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
+            os.replace(artifact, output)
+        if any(x['type'] != 'LeanInformationAudit.AuricFib.Contract.Application'
+               for x in input_projection(root, name)['inputs']):
             print('LEAN_INSPECTOR_ASSESS module=' + name)
             module_work('assess', [name])
         module_work('extract', [name])
@@ -278,8 +355,9 @@ def module(root, name, source, utility_path, executable, output):
         print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
 
 
-def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs):
+def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer=""):
     """Keep spooled rows, compacted rows and validation certificates target-local."""
+    produce_fib(row, output, analyzer)
     name = row['module']
     row_dir = directory / name
     row_dir.mkdir()
@@ -314,14 +392,16 @@ def produce_batch_chunk(requests):
         utilities = []
         triples = []
         bindings = {}
-        for _, name, source, utility_path, _, output in requests:
+        for request in requests:
+            _, name, source, utility_path, _, output = request[:6]
+            analyzer = request[6] if len(request) > 6 else ""
             if name in bindings:
                 raise ValueError('duplicate native batch module')
             record = public.read_json(Path(utility_path).read_bytes())
             utilities.extend(record['utilities'])
             triples.extend([name, record['source_path'], 'sha256:' + public.digest(source)])
             validate_dependency_paths(root, utility_path)
-            bindings[name] = (utility_path, Path(output))
+            bindings[name] = (utility_path, Path(output), analyzer)
         utility_file = directory / 'utility.json'
         utility_file.write_bytes(materials.canonical_json(utilities))
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
@@ -338,8 +418,8 @@ def produce_batch_chunk(requests):
                 raise ValueError('incomplete native inspection batch')
             completed.append(row['module'])
             declarations += len(row['declarations'])
-            utility_path, output = bindings[row['module']]
-            produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs)
+            utility_path, output, analyzer = bindings[row['module']]
+            produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer)
             del row
         if completed != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
@@ -347,7 +427,8 @@ def produce_batch_chunk(requests):
             raise ValueError('unreferenced batch materials')
         for name in bindings:
             print('LEAN_INSPECTOR_EXTRACT module=' + name)
-            if input_projection(root, name)['inputs']:
+            if any(x['type'] != 'LeanInformationAudit.AuricFib.Contract.Application'
+               for x in input_projection(root, name)['inputs']):
                 print('LEAN_INSPECTOR_ASSESS module=' + name)
                 module_work('assess', [name])
         module_work('extract', list(bindings))
@@ -533,7 +614,8 @@ def _publish(root, destination):
 
 
 def main():
-    actions = {'prepare': prepare, 'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
+    actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
+               'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
     actions[sys.argv[1]](*sys.argv[2:])

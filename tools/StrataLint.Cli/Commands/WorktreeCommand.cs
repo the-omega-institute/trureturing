@@ -111,6 +111,8 @@ internal static class WorktreeCommand
         IDisposable? initializationScope = null;
         try
         {
+            if (runner is ProductionWorktreeProcessRunner production)
+                runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(repositoryRoot));
             options = ParseArguments(repositoryRoot, arguments);
             if (Directory.Exists(options.Path))
             {

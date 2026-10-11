@@ -6,6 +6,7 @@
    digest: The endomorphism space of complex-valued admissible words has squared Fibonacci dimension and golden-ratio-squared consecutive growth. -/
 
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
+import Mathlib
 import Mathlib.Analysis.SpecificLimits.Fibonacci
 import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
 
