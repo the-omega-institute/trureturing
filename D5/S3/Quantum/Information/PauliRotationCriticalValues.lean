@@ -10,6 +10,7 @@ import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Analysis.Calculus.FDeriv.Mul
 import Mathlib.Analysis.Calculus.FDeriv.Star
+import Mathlib.Analysis.Calculus.FDeriv.ContinuousAlternatingMap
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Topology.MetricSpace.HausdorffDimension
@@ -673,14 +674,78 @@ private theorem contracted_derivative :
     ContinuousLinearMap.coe_pi', sqrt_inverse, Rat.cast_zero, mul_zero, Fin.coe_ofNat_eq_mod, Nat.zero_mod, Finset.univ_eq_empty, Finset.sum_empty, ContinuousLinearMap.comp_zero, smul_zero, Rat.cast_one, mul_one, add_zero, sub_self,
     _root_.zero_apply, zero_mul, Nat.reduceMod, Fin.val_eq_zero, Fin.zero_eta, zero_smul, zero_add, Finset.sum_const, Finset.card_singleton, one_smul, ContinuousLinearMap.comp_apply, _root_.smul_apply, _root_.sub_apply, mulVec_diagonal,
     Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat, ContinuousLinearMap.flip_apply, ContinuousLinearMap.mul_apply', Fin.val_eq_zero_iff, Fin.val_succ, Fin.mk_one, Fin.succ_ne_zero, ContinuousLinearMap.comp_add, inv_one, Nat.add_eq_right,
-    false_or, cons_val_succ', Nat.reduceAdd, Fin.reduceFinMk, Rat.cast_inv, map_zero, Finset.sum_const_zero, ne_eq, not_false_eq_true, div_self]
-  simp only [mul_add, Matrix.mul_smul, word_product, Fin.prod_univ_two, pauliProd, pauliPhase,
+    false_or, cons_val_succ', Nat.reduceAdd, Fin.reduceFinMk, Rat.cast_inv, map_zero, ne_eq, not_false_eq_true, div_self]
+  simp only [mul_add, word_product, Fin.prod_univ_two, pauliProd, pauliPhase,
     labels, cons_val_zero, cons_val_one, smul_smul, mul_one, one_mul, mul_neg]
   simp only [rho, labels, Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue, cons_val', cons_val_zero, cons_val_fin_one, cons_val, cons_val_one, mul_one, one_smul, sub_self, smul_zero, LinearMap.coe_toContinuousLinearMap', LinearMap.coe_mk,
     AddHom.coe_mk, mul_zero, trace_zero, Complex.zero_re, zero_div, zero_mul, mul_neg, neg_mul, Complex.I_mul_I, neg_neg, neg_smul, smul_neg, one_mul, add_sub_add_left_eq_sub, Algebra.mul_smul_comm, mul_sub, trace_smul, trace_sub,
     trace_neg, word_trace_mul, vecCons_inj, reduceCtorEq, and_true, and_self, ↓reduceIte, smul_eq_mul, neg_zero, mul_add, trace_add, Complex.real_smul, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_neg, Complex.ofReal_one,
     Complex.ofReal_ofNat, add_zero, zero_add, sub_neg_eq_add, Complex.add_re, Complex.mul_re, Complex.div_ofNat_re, Complex.neg_re, Complex.I_re, Complex.ofReal_re, Complex.one_re, Complex.ofReal_im, Complex.div_ofNat_im, Complex.neg_im,
-    Complex.one_im, sub_zero, Complex.mul_im, Complex.re_ofNat, Complex.I_im, Complex.im_ofNat, zero_sub, and_false, smul_add, Complex.ofReal_inv, Complex.sub_re, Complex.inv_re, Complex.normSq_ofNat, div_self_mul_self', Complex.inv_im]
-  ring_nf <;> simp only [h6, sqrt_inverse] <;> nlinarith [hs]
+    Complex.one_im, sub_zero, Complex.mul_im, Complex.re_ofNat, Complex.I_im, Complex.im_ofNat, zero_sub, and_false, Complex.ofReal_inv, Complex.sub_re, Complex.inv_re, Complex.normSq_ofNat, div_self_mul_self', Complex.inv_im]
+  ring_nf; simp only [h6, sqrt_inverse]; nlinarith [hs]
+
+private theorem coordinate_det : det B ≠ 0 ∧ det U ≠ 0 := by
+  constructor
+  · intro h; have hh := congrArg det coordinate_inverse.1; simp [det_mul, h] at hh
+  · intro h; have hh := congrArg det coordinate_inverse.2; simp [det_mul, h] at hh
+private theorem D_eq : D = diagonal (fun i : Fin 15 => if i = 12 then (0 : ℝ) else 1) := by
+  ext i j; simp [D, certD, ratReal, diagonal]; split_ifs <;> simp
+private noncomputable def normalize : (Fin 15 → Fin 15 → ℝ) →L[ℝ] (Fin 15 → Fin 15 → ℝ) :=
+  LinearMap.toContinuousLinearMap {
+    toFun := fun M => B * Matrix.of M * U
+    map_add' := by intro M N; ext i j; simp [mul_apply, add_mul, mul_add, Finset.sum_add_distrib]
+    map_smul' := by
+      intro c M; change B * (c • Matrix.of M) * U = _
+      rw [Matrix.mul_smul, Matrix.smul_mul]; rfl }
+private noncomputable def detForm {n : Type*} [Fintype n] [DecidableEq n] :
+    (n → ℝ) [⋀^n]→L[ℝ] ℝ :=
+  { (detRowAlternating : (n → ℝ) [⋀^n]→ₗ[ℝ] ℝ) with cont := continuous_id.matrix_det }
+private theorem detForm_apply {n : Type*} [Fintype n] [DecidableEq n] (M : n → n → ℝ) :
+    (detForm (n := n)).1 M = det (Matrix.of M) := rfl
+private noncomputable def detDiff {n : Type*} [Fintype n] [DecidableEq n] (M : n → n → ℝ) :
+    (n → n → ℝ) →L[ℝ] ℝ := (detForm (n := n)).1.linearDeriv M
+private theorem detForm_deriv {n : Type*} [Fintype n] [DecidableEq n] (M T : n → n → ℝ) :
+    detDiff M T = ∑ i, det (Matrix.of (Function.update M i (T i))) := by
+  simp only [detDiff, ContinuousMultilinearMap.linearDeriv_apply, detForm_apply]
+private theorem det_comp_strict {n : Type*} [Fintype n] [DecidableEq n]
+    {f : Param → (n → n → ℝ)} {fD : Param →L[ℝ] (n → n → ℝ)} {a : Param}
+    (hf : HasStrictFDerivAt f fD a) :
+    HasStrictFDerivAt (fun x => det (Matrix.of (f x))) ((detDiff (f a)).comp fD) a := by
+  simpa only [detDiff, Function.comp_def, detForm_apply] using ((detForm (n := n)).1.hasStrictFDerivAt _).comp a hf
+private noncomputable def g (α : Param) : ℝ := det (Matrix.of (normalize (J_H witnessP α)))
+private noncomputable def gD (α : Param) : Param →L[ℝ] ℝ :=
+  (detDiff (normalize (J_H witnessP α))).comp (normalize.comp (J_D witnessP α))
+private theorem g_strict (α : Param) : HasStrictFDerivAt g (gD α) α :=
+  det_comp_strict (normalize.hasStrictFDerivAt.comp α (J_strict witnessP α))
+private theorem g_zero_iff (α : Param) : g α = 0 ↔ det (J_H witnessP α) = 0 := by
+  change det (B * Matrix.of (J_H witnessP α) * U) = 0 ↔ det (Matrix.of (J_H witnessP α)) = 0
+  simp [det_mul, coordinate_det.1, coordinate_det.2]
+private theorem g_point : g point = 0 := by
+  change det (B * Matrix.of (J_H witnessP point) * U) = 0
+  rw [normalized_witness]; exact det_eq_zero_of_row_eq_zero 12 (by intro j; simp [D_eq, diagonal])
+private theorem det_derivative_D (T : Fin 15 → Fin 15 → ℝ) : detDiff D T = T 12 12 := by
+  rw [detForm_deriv]
+  change (∑ i, det (D.updateRow i (T i))) = T 12 12
+  rw [Finset.sum_eq_single 12]
+  · have hh : D.updateRow 12 (T 12) = (1 : Matrix (Fin 15) (Fin 15) ℝ).updateRow 12 (T 12) := by
+      ext i j; by_cases h : i = 12 <;> simp [D_eq, updateRow_apply, diagonal, one_apply, h]
+    rw [hh, ← cramer_transpose_apply, transpose_one, cramer_one]; rfl
+  · intro i _ hi; exact det_eq_zero_of_row_eq_zero 12 (by intro j; simp [D_eq, updateRow_apply, Ne.symm hi, diagonal])
+  · intro h; simp at h
+private theorem U_pivot : U *ᵥ Pi.single 12 1 = v := by
+  unfold U v; rw [← mulVec_mulVec]; congr 1; ext i
+  rw [mulVec_single_one]
+  change (certN i 12 : ℝ) = (certu i : ℝ)
+  exact_mod_cast (show certN i 12 = certu i from
+    (show ∀ k, certN k 12 = certu k by decide +kernel) i)
+set_option maxRecDepth 2000 in
+private theorem gD_direction : gD point v = -1 := by
+  have hn : normalize (J_H witnessP point) = D := normalized_witness
+  simp only [gD, hn, ContinuousLinearMap.comp_apply, det_derivative_D]
+  change (B * Matrix.of (J_D witnessP point v) * U) 12 12 = -1
+  have hh := congrFun (mulVec_single_one (B * Matrix.of (J_D witnessP point v) * U) 12) 12
+  change ((B * Matrix.of (J_D witnessP point v) * U) *ᵥ Pi.single 12 1) 12 = (B * Matrix.of (J_D witnessP point v) * U) 12 12 at hh
+  rw [← hh, ← mulVec_mulVec, ← mulVec_mulVec, U_pivot]
+  exact contracted_derivative
 
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
