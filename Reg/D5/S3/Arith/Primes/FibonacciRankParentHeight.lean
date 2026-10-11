@@ -70,14 +70,14 @@ theorem parent_rejected_law : ¬ parentArena.Law parentRejected := by
   intro h
   have hbad := h (p := 11) (q := 5) (by norm_num) (by norm_num) (by norm_num)
     five_dvd_rank_eleven
-  change 13 ≤ 11 + 1 at hbad
+  change (13 : ℕ) ≤ 11 + 1 at hbad
   omega
 
 /-- At the root `p = 2` with the empty path, the constant `2` exceeds `p - 1 = 1`. -/
 theorem height_rejected_law : ¬ heightArena.Law heightRejected := by
   intro h
   have hbad := (h (p := 2) Nat.prime_two).2 2 0 (RankDescent.refl Nat.prime_two)
-  change 2 ≤ 2 - 1 at hbad
+  change (2 : ℕ) ≤ 2 - 1 at hbad
   omega
 
 private theorem parent_dependence : ObservationalDependence signature parentActual := by
