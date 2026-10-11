@@ -78,6 +78,28 @@ def output_archive_paths(layer, paths):
     print(key + "=" + json.dumps(paths, separators=(",", ":")))
 
 
+def manual_source_is_valid() -> bool:
+    """Accept cache writes from a workflow dispatch only after its source pin was checked.
+
+    The workflow performs the protected-branch/API check before setting the marker.  This
+    second, local check binds the writer to the exact workflow ref and checked-out SHA and
+    keeps an unvalidated dispatch from silently becoming a branch writer.
+    """
+    if os.environ.get("GITHUB_EVENT_NAME") != "workflow_dispatch":
+        return False
+    if os.environ.get("STRATALINT_CACHE_SOURCE_VALIDATED") != "true":
+        return False
+    source_ref = os.environ.get("STRATALINT_CACHE_SOURCE_REF", "")
+    source_commit = os.environ.get("STRATALINT_CACHE_SOURCE_COMMIT", "")
+    if not re.fullmatch(r"refs/heads/(?:dev|integration-[A-Za-z0-9._/-]+)", source_ref):
+        return False
+    if source_ref != os.environ.get("GITHUB_REF", ""):
+        return False
+    if not re.fullmatch(r"[0-9a-f]{40}", source_commit) or source_commit == "0" * 40:
+        return False
+    return source_commit == os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA", "")
+
+
 def actions_keys(root: pathlib.Path) -> dict:
     revision = resolved_mathlib(root)
     system, machine = binary_platform()
@@ -88,12 +110,13 @@ def actions_keys(root: pathlib.Path) -> dict:
     event, ref = os.environ.get("GITHUB_EVENT_NAME"), os.environ.get("GITHUB_REF", "")
     push_writer = event == "push" and (ref == "refs/heads/dev" or ref.startswith("refs/heads/integration-"))
     pr_writer = event == "pull_request" and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref) is not None
-    writer_allowed = (push_writer or pr_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+    dispatch_writer = manual_source_is_valid()
+    writer_allowed = (push_writer or pr_writer or dispatch_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
     result = {
         "mathlib_revision": revision, "os": system, "arch": machine,
         "partition": partition_path(root),
         "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
-        "project_save_allowed": push_writer and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+        "project_save_allowed": (push_writer or dispatch_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
         and os.environ.get("STRATALINT_REPORT_SUCCEEDED") == "true",
         "release_prefix": f"lean-cache-v2-{revision}-{system}-{machine}-",
     }

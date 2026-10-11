@@ -1882,8 +1882,13 @@ jobs:
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
+          rc=0
+          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail || rc=$?
+          if [[ "$rc" != 0 ]]; then
+            echo "::error title=Lean cache seed required::No compatible native seed was available. Run lean-cache-publish.yml manually on the protected source ref and exact SHA, then retry this check."
+            exit "$rc"
+          fi
           make compiled-judge-test
-          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
       - name: Verify production source binding artifacts
         env:
           FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
