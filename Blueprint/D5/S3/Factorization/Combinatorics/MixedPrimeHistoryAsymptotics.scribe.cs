@@ -47,5 +47,20 @@ internal sealed class MixedPrimeHistoryAsymptoticsDocument : IScribeDocumentDefi
                     + "divided by r minus a squared. The numerator z plus t times the sum "
                     + "of these prime compositions is analytic on the open disk of radius "
                     + "the square root of r. B is chosen before a, q, and z."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mixedprimehistoryasymptotics-functional-equation"),
+                DeclarationHandle.Create("D5/S3/Factorization/Combinatorics/MixedPrimeHistoryAsymptotics.subcritical_functional_equation"),
+                H("The last-letter functional equation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For positive t and zero less than r less than one with t P(r) less than "
+                    + "one, every complex z of modulus less than r satisfies "
+                    + "(1 - t P(z)) F(z) = z + t times the sum of F(z to the power q) over primes q. "
+                    + "F is the ordinary generating series of the actual weighted histories. "
+                    + "The initial coefficient at endpoint one contributes z; endpoint zero "
+                    + "contributes zero. Absolute convergence justifies the Cauchy product "
+                    + "for additive letters and the divisor reindexing for multiplicative letters."))),
                 DescribeRole.Theorem))));
 }

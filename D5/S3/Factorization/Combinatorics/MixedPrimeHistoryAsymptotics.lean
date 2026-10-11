@@ -12,6 +12,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.Analytic.OfScalars
 import Mathlib.Analysis.Analytic.ChangeOrigin
 import Mathlib.Analysis.Complex.LocallyUniformLimit
+import Mathlib.Analysis.Normed.Ring.InfiniteSum
 
 set_option autoImplicit false
 
@@ -369,5 +370,138 @@ theorem subcritical_analytic_control (t r : ℝ) (ht : 0 < t) (hr : 0 < r) (hr1 
   exact ⟨B, hB0, hB, generating_analytic_of_bound t r B ht.le hr hB,
     fun a ha har q hq z hz => composition_norm_bound t r B a ht.le hr hr1 hB0.le hB ha har q hq z hz,
     numerator_analytic_of_bound t r B ht.le hr hr1 hB0.le hB⟩
+
+set_option maxHeartbeats 800000 in
+-- Reindexing both the complex series and its norm series elaborates the same infinite sum twice.
+private theorem multiplicative_series (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
+    (hr1 : r < 1) (hB0 : 0 ≤ B) (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B)
+    (z : ℂ) (hz : ‖z‖ < r) :
+    HasSum (fun n : ℕ => ∑ q ∈ n.primeFactors, (weightedCount t (n / q) : ℂ) * z ^ n)
+      (∑' q : ℕ, if q.Prime then generating t (z ^ q) else 0) := by
+  classical
+  let D (q n : ℕ) : ℂ :=
+    if q.Prime ∧ q ∣ n then (weightedCount t (n / q) : ℂ) * z ^ n else 0
+  have hz1 : ‖z‖ < 1 := hz.trans hr1
+  have hz2 : ‖z‖ ^ 2 < r := by nlinarith [norm_nonneg z]
+  have rows (q : ℕ) : Summable (fun n => ‖D q n‖) ∧
+      HasSum (D q) (if q.Prime then generating t (z ^ q) else 0) ∧
+      (∑' n : ℕ, ‖D q n‖) ≤ B * ‖z‖ ^ q / (r - ‖z‖ ^ 2) := by
+    by_cases hq : q.Prime
+    · have hi : Function.Injective (fun m : ℕ => q * m) :=
+        fun _ _ h => Nat.eq_of_mul_eq_mul_left hq.pos h
+      have hzero (n : ℕ) (hn : n ∉ Set.range (fun m : ℕ => q * m)) : D q n = 0 := by
+        have hd : ¬ q ∣ n := by
+          rintro ⟨m, rfl⟩
+          exact hn ⟨m, rfl⟩
+        simp [D, hd]
+      have hcomp (m : ℕ) : D q (q * m) =
+          (weightedCount t m : ℂ) * (z ^ q) ^ m := by
+        simp [D, hq, Nat.mul_div_cancel_left _ hq.pos, pow_mul]
+      have hp := prime_power_norm r ‖z‖ hr1 (norm_nonneg z) hz2 q hq z le_rfl
+      have hs := norm_summable t r B ht hr hB (z ^ q) hp.2.2
+      have hn : HasSum (fun n => ‖D q n‖)
+          (∑' m : ℕ, ‖(weightedCount t m : ℂ) * (z ^ q) ^ m‖) :=
+        (hi.hasSum_iff (fun n hn => by rw [hzero n hn, norm_zero])).mp (by
+          simpa only [Function.comp_def, hcomp] using hs.hasSum)
+      refine ⟨hn.summable, ?_, ?_⟩
+      · rw [if_pos hq]
+        apply (hi.hasSum_iff hzero).mp
+        simpa only [Function.comp_def, hcomp, generating] using hs.of_norm.hasSum
+      · rw [hn.tsum_eq]
+        exact (norm_sum_le t r B ht hr hB _ hp.2.2).trans
+          (div_le_div₀ (mul_nonneg hB0 (pow_nonneg (norm_nonneg z) _))
+            (mul_le_mul_of_nonneg_left hp.1 hB0) (sub_pos.mpr hz2)
+            (by linarith [hp.1, hp.2.1]))
+    · simp only [D, hq, false_and, if_false, norm_zero, tsum_zero]
+      exact ⟨summable_zero, hasSum_zero, by positivity⟩
+  have hd : Summable (fun p : ℕ × ℕ => ‖D p.1 p.2‖) := by
+    apply (summable_prod_of_nonneg (fun _ => norm_nonneg _)).mpr
+    refine ⟨fun q => (rows q).1, ?_⟩
+    exact Summable.of_nonneg_of_le (fun _ => tsum_nonneg (fun _ => norm_nonneg _))
+      (fun q => (rows q).2.2)
+      (((summable_geometric_of_lt_one (norm_nonneg z) hz1).mul_left B).div_const _)
+  have hcoeff (n : ℕ) : (∑' q : ℕ, D q n) =
+      ∑ q ∈ n.primeFactors, (weightedCount t (n / q) : ℂ) * z ^ n := by
+    by_cases hn : n = 0
+    · subst n
+      simp [D, weighted_zero]
+    · rw [tsum_eq_sum (s := n.primeFactors) (fun q hq => by
+        have hh : ¬ (q.Prime ∧ q ∣ n) := by
+          intro h
+          exact hq (Nat.mem_primeFactors.mpr ⟨h.1, h.2, hn⟩)
+        simp [D, hh])]
+      apply Finset.sum_congr rfl
+      intro q hq
+      simp [D, Nat.prime_of_mem_primeFactors hq, Nat.dvd_of_mem_primeFactors hq]
+  have hval : (∑' n : ℕ, ∑' q : ℕ, D q n) =
+      ∑' q : ℕ, if q.Prime then generating t (z ^ q) else 0 :=
+    hd.of_norm.tsum_comm.trans (tsum_congr (fun q => (rows q).2.1.tsum_eq))
+  have hh := hd.of_norm.prod_symm.prod.hasSum
+  change HasSum (fun n : ℕ => ∑' q : ℕ, D q n) (∑' n : ℕ, ∑' q : ℕ, D q n) at hh
+  rw [hval] at hh
+  simpa only [hcoeff] using hh
+
+private theorem additive_series (t r B : ℝ) (ht : 0 ≤ t) (hr : 0 < r)
+    (hr1 : r < 1) (hB : ∀ n : ℕ, weightedCount t n * r ^ n ≤ B)
+    (z : ℂ) (hz : ‖z‖ < r) :
+    HasSum (fun n : ℕ => ∑ q ∈ (Finset.range n).filter Nat.Prime,
+      (weightedCount t (n - q) : ℂ) * z ^ n) (primeSeries z * generating t z) := by
+  classical
+  have hp : Summable (fun q : ℕ => ‖if q.Prime then z ^ q else 0‖) := by
+    apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _)
+      (f := fun q => ‖z‖ ^ q)
+    · intro q
+      split_ifs <;> simp [norm_pow]
+    · exact summable_geometric_of_lt_one (norm_nonneg _) (hz.trans hr1)
+  have h := hasSum_sum_range_mul_of_summable_norm hp (norm_summable t r B ht hr hB z hz)
+  have hc (n : ℕ) :
+      (∑ q ∈ Finset.range (n + 1), (if q.Prime then z ^ q else 0) *
+        ((weightedCount t (n - q) : ℂ) * z ^ (n - q))) =
+      ∑ q ∈ (Finset.range n).filter Nat.Prime, (weightedCount t (n - q) : ℂ) * z ^ n := by
+    rw [Finset.sum_range_succ]
+    simp only [Nat.sub_self, weighted_zero, Complex.ofReal_zero, zero_mul, mul_zero, add_zero]
+    rw [Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro q hq
+    by_cases hp : q.Prime
+    · simp only [if_pos hp]
+      rw [mul_left_comm, ← pow_add, Nat.add_sub_of_le (Finset.mem_range.mp hq).le]
+    · simp [hp]
+  simpa only [hc, primeSeries, generating] using h
+
+/-- Absolute convergence permits the actual last-letter recurrence to be summed. -/
+theorem subcritical_functional_equation (t r : ℝ) (ht : 0 < t) (hr : 0 < r)
+    (hr1 : r < 1) (hsub : t * primeSeries r < 1) (z : ℂ) (hz : ‖z‖ < r) :
+    (1 - (t : ℂ) * primeSeries z) * generating t z = numerator t z := by
+  classical
+  obtain ⟨B, hB0, hB⟩ := subcritical_bound t r ht hr hr1 hsub
+  have ha := additive_series t r B ht.le hr hr1 hB z hz
+  have hm := multiplicative_series t r B ht.le hr hr1 hB0.le hB z hz
+  have hbase : HasSum (fun n : ℕ => if n = 1 then z else 0) z :=
+    hasSum_ite_eq 1 z
+  have hrec := hbase.add ((ha.add hm).mul_left (t : ℂ))
+  have hcoeff (n : ℕ) :
+      (if n = 1 then z else 0) + (t : ℂ) *
+        ((∑ q ∈ (Finset.range n).filter Nat.Prime, (weightedCount t (n - q) : ℂ) * z ^ n) +
+         (∑ q ∈ n.primeFactors, (weightedCount t (n / q) : ℂ) * z ^ n)) =
+      (weightedCount t n : ℂ) * z ^ n := by
+    by_cases hn0 : n = 0
+    · subst n
+      simp [weighted_zero]
+    by_cases hn1 : n = 1
+    · subst n
+      simp [weighted_one, Finset.sum_filter, Nat.not_prime_zero]
+    · rw [if_neg hn1, zero_add, weighted_recurrence t n (by omega)]
+      push_cast
+      simp only [← Finset.sum_mul]
+      ring
+  have hrec' : HasSum (fun n : ℕ => (weightedCount t n : ℂ) * z ^ n)
+      (z + (t : ℂ) * (primeSeries z * generating t z +
+        ∑' q : ℕ, if q.Prime then generating t (z ^ q) else 0)) := by
+    simpa only [hcoeff] using hrec
+  have hf := hrec'.tsum_eq
+  change generating t z = _ at hf
+  unfold numerator
+  linear_combination hf
 
 end D5.S3.Factorization.Combinatorics.MixedPrimeHistoryAsymptotics
