@@ -280,7 +280,7 @@ internal static partial class CoverWorld
 
                 return new FrozenStatementReceiptTestData.Module(
                     file.Key.Value,
-                    FrozenStatementReceiptTestData.Id('b'),
+                    FrozenContentAddress.ComputeModuleStatementId(file.Key, file.Value).Value,
                     declarations.ToImmutableArray());
             })
             .ToArray();

@@ -84,16 +84,12 @@ internal static partial class CoverAtomCommand
 
         private void ValidateExistingCoveragePins()
         {
-            var recorded = FrozenLedgerBaseViewReader.Read(Current);
             foreach (var path in ReportTargets(Document, []))
             {
                 if (!FrozenState.Records.TryGetValue(path, out var pin)
-                    || !recorded.ActiveByPath.TryGetValue(path, out var active)
-                    || pin.StatementId != active.Material.StatementId)
+                    || !Report.Files.TryGetValue(path, out var module))
                     throw new InvalidOperationException($"existing coverage target has no consistent frozen pin: {path.Value}");
-                if (!Report.Files.TryGetValue(path, out var module)
-                    || !active.Material.DeclarationStatementIds.SequenceEqual(
-                        CanonicalStatementWriter.DeclarationStatementIds(path, module)))
+                if (pin.StatementId != FrozenContentAddress.ComputeModuleStatementId(path, module))
                     throw new InvalidOperationException($"coverage-target-mismatch: {path.Value}; current declarations differ from the frozen target");
             }
         }
@@ -139,7 +135,6 @@ internal static partial class CoverAtomCommand
             var paths = new[]
                 {
                     TheoryAtomizerDataLoader.DataPath, "D5", "Reg", "Trureturing.lean", "Golden/Frozen/state",
-                    FrozenLedgerChangeClassifier.AcceptedRoot,
                 }
                 .Concat(declared.Select(DigestionQuerySelection.Literal))
                 .Concat(casPaths.Select(DigestionQuerySelection.Literal))
