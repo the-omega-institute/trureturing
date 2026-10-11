@@ -219,15 +219,10 @@ theorem alternating_rank (n : ℕ) (hn : 0 < n) : alternatingRank n = -2 := by
 private theorem edgeSign_flip {n : ℕ} (w : Fin n → Bool) (i : Fin n) :
     edgeSign (Function.update w i (!w i)) = -edgeSign w := by
   unfold edgeSign
-  rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ i),
+  simp_rw [Function.apply_update (fun (_ : Fin n) (b : Bool) => if b then (-1 : ℤ) else 1)]
+  rw [Finset.prod_update_of_mem (Finset.mem_univ i),
     ← Finset.mul_prod_erase _ (fun j => if w j then (-1 : ℤ) else 1) (Finset.mem_univ i)]
-  have he : (∏ j ∈ Finset.univ.erase i,
-      if Function.update w i (!w i) j then (-1 : ℤ) else 1) =
-      ∏ j ∈ Finset.univ.erase i, if w j then (-1 : ℤ) else 1 := by
-    apply Finset.prod_congr rfl
-    intro j hj
-    rw [Function.update_of_ne (Finset.ne_of_mem_erase hj)]
-  rw [he, Function.update_self]
+  simp only [Finset.sdiff_singleton_eq_erase]
   cases w i <;> simp
 
 private theorem masked_sum_zero {n : ℕ} (mask : Fin n → Bool)
