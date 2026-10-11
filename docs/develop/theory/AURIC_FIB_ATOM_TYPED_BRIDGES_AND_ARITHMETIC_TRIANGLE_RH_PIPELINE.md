@@ -949,7 +949,9 @@ structure ArithmeticEncoding (C : Type) where
 
 前十四节只规定了五态概率载体和外部桥接接口。本节给出统一场论所需的最小静态场公理，并把三种不同的谱量严格区分：静态 Hessian 的曲率谱、耗散演化的衰减谱、辛提升后的振动能级。
 
-### 定义 15.1（稳定静态背景）
+### 定义 15.1（候选静态场接口，不是原生基础对象）
+
+本定义中的 \(\mathcal C,\mathcal E,K_*,M,J\) 是后续连续场或动力学实现的候选接口，不属于前十四节已经给出的原生对象。只有在第 16 节的桥接公理被明确加入后，才允许把它们解释为物理配置空间、能量泛函、迁移率或辛结构；第 15 节本身不从五态代数推出这些对象。
 
 令 \(\mathcal C\) 为带内积的配置 Hilbert 空间，\(\mathcal E:\mathcal C\to\mathbb R\) 为二阶 Fréchet 可微能量泛函，令 \(\Phi_*\in\mathcal C\) 满足
 
@@ -1266,3 +1268,177 @@ C_Z=(R-I)R^{-1}
 8. 最后给出统一场到 RH 零空间的 \(U\) 或正则化行列式证明。
 
 目前 1 至 5 可在有限维近似中直接形式化，6 至 8 是真正的外部桥接目标。上述边界保证任何尚未实现的算术、三角或 RH 结论都不会被误写成已有定理。
+
+---
+
+## 16. 数学来源分层与保守静态场定义
+
+本节规定所有对象的来源层级。目的不是增加一个未经检验的物理本体，而是保证每个后续命题都能追溯到已有有限数学对象，或明确标注所需的新公理。
+
+### 定义 16.1（三层来源系统）
+
+把本卷对象分为三层。
+
+**Primitive 层。** 原生给定的有限对象为
+\[
+\Sigma=\{0,2,3,5,25\},\qquad
+\mathcal A_0=\mathbb R^\Sigma,\qquad
+\Delta_0=\Delta(\Sigma),
+\]
+五态函数 \(x,y,z\)，可见投影
+\[
+P_0:\Delta_0\to\mathbb R^3,\qquad
+P_0(p)=(X,Y,Z),
+\]
+seam 向量
+\[
+d=(1,-1,0,-1,1),
+\]
+以及每个有限 Fibonacci 支持图的顶点集 \(V_j\)、边集 \(E_j\)、质量边界映射 \(B_j:\mathbb R^{E_j}\to\mathbb R^{V_j}\) 和边读出映射 \(A_j:\mathbb R^{E_j}\to\mathbb R^{m_j}\)。在 \(j=0\) 的五态图上，已有 \(Bf\) 和 \(Af\) 正是这些映射的实例。
+
+**Derived 层。** 只使用 Primitive 层的有限代数、线性代数、凸性和图论定义出的对象，包括
+\[
+p_\kappa,\quad
+\mathcal F_{X,Y,Z},\quad
+\Delta=r\kappa-XY,\quad
+\ker DP_0=\mathbb Rd,
+\]
+Shannon 熵、负熵势
+\[
+\mathcal V_{\mathrm{ent}}(p)=-H(p)=\sum_s p_s\log p_s,
+\]
+以及内部单纯形上的 Fisher 二次型
+\[
+g_{F,p}(u,v)=\sum_s\frac{u_sv_s}{p_s},
+\qquad
+T_p\Delta_0=\{u:\sum_su_s=0\}.
+\]
+图论方面，\(Z_j=\ker B_j\) 是循环载体，\(L_j=B_jB_j^*\) 给出由 incidence 映射导出的非负图二次型
+\[
+Q_j(v)=\langle v,L_jv\rangle=\|B_j^*v\|^2.
+\]
+这些定义不含时间、质量、能量级或量子化假设。
+
+**Bridge 层。** 下列对象不由上述有限结构自动产生，必须由明确桥接公理或构造加入：
+\[
+(M,g),\ E,\ \nabla^A,\ \Phi,\ \rho_\Phi,\ \mathcal E[\Phi],
+\quad E_s,\quad M_{\mathrm{mob}},\quad J,\quad m_\kappa,
+\]
+树场与 FIB 的耦合 \(V_{\mathrm{bridge}}\)，三角网络的独立源提升，以及到 zeta 零点空间的酉映射或正则化行列式。特别地，\(\gamma r\) 只有在声明一个耗散迁移率后才是时间衰减率；\(\hbar\omega\) 只有在声明 cotangent 提升和量子化规则后才是能级。
+
+### 定义 16.2（由现有对象构成的有限载体）
+
+令 \(V_0=\Sigma\)，\(\mathcal A_j=\mathbb R^{V_j}\)，令
+\[
+\Delta_j=\{p\in\mathcal A_j:p_v\ge0,\ \sum_{v\in V_j}p_v=1\}.
+\]
+给定有限可见读出 \(P_j:\Delta_j\to\mathbb R^{m_j}\)，其 \(j=0\) 实例为 \(P_0\)。令
+\[
+N_j=\ker(DP_j|_{T\Delta_j}),\qquad
+Z_j=\ker B_j.
+\]
+定义有限载体
+\[
+C_j=\Delta_j\times N_j\times Z_j.
+\]
+因此
+\[
+C_0=\Delta(\Sigma)\times\mathbb Rd\times\ker B_0,
+\]
+其中 \(\mathbb Rd\) 是已证明的一维 seam 方向，\(\ker B_0\) 是已证明的静态边流环流空间。若只研究五态静态概率而不研究边流，可取其投影载体 \(\Delta_0\)；保留 \(N_j\) 和 \(Z_j\) 则同时记录读出隐藏方向与动态循环方向。
+
+为了构造投影系统，必须显式给出有限状态压缩
+\[
+\pi_{j+1,j}:V_{j+1}\to V_j
+\]
+和边压缩
+\[
+r_{j+1,j}:E_{j+1}\to E_j
+\]
+或相应线性映射，使得其推前满足
+\[
+\pi_{\#}\Delta_{j+1}\subseteq\Delta_j,\qquad
+P_j\pi_{\#}=P_{j+1}\ \text{在指定读出上的交换关系},
+\]
+\[
+B_jr_{\#}=\pi_{\#}B_{j+1}.
+\]
+在这些显式兼容条件下定义
+\[
+q_{j+1,j}(p,v,z)
+=\bigl(\pi_{\#}p,\ D\pi_{\#}v,\ r_{\#}z\bigr):C_{j+1}\to C_j.
+\]
+若某一级不存在这样的压缩映射，则不能把各级有限对象声称为同一个静态场的层级。
+
+### 定义 16.3（保守静态场）
+
+给定上面的有限投影系统，定义抽象静态场为逆极限
+\[
+\mathfrak F
+=\varprojlim_j(C_j,q_{j+1,j})
+=\left\{(c_j)_j:
+c_j\in C_j,\ q_{j+1,j}(c_{j+1})=c_j\right\}.
+\]
+其元素只是所有有限层记录的相容族，不携带先验时间参数、惯性参数或连续空间。称 \(c=(c_j)_j\) 为熵稳定静态场，若每个 \(p_j\) 位于 \(\Delta_j^\circ\)，并且对所有允许切向量 \(u\in T_{p_j}\Delta_j\)
+\[
+D^2\mathcal V_{\mathrm{ent}}(p_j)[u,u]
+=\sum_{v\in V_j}\frac{u_v^2}{p_{j,v}}\ge0.
+\]
+若存在 \(\mu_j>0\) 使左端至少为 \(\mu_j\|u\|^2\)，称其在第 \(j\) 层严格熵稳定。这里的稳定性是由概率单纯形的负熵凸性导出的数学性质，不等于尚未定义的物理能量稳定性。
+
+### 定理 16.4（熵势的 canonical Hessian）
+
+在每个内部有限单纯形 \(\Delta_j^\circ\) 上，负熵
+\[
+\mathcal V_{\mathrm{ent}}(p)=\sum_vp_v\log p_v
+\]
+的 Hessian 满足
+\[
+D^2\mathcal V_{\mathrm{ent}}(p)[u,u]
+=\sum_v\frac{u_v^2}{p_v}
+=g_{F,p}(u,u)>0
+\]
+对任意非零 \(u\in T_p\Delta_j\)。因此 Fisher 纤维度量不是额外物理能量，而是负熵势的 canonical 二阶型；沿五态 seam \(u=d\) 时它恰为
+\[
+\mathcal I(\kappa)
+=p_0^{-1}+p_2^{-1}+p_5^{-1}+p_{25}^{-1}.
+\]
+
+证明：逐项微分 \(p_v\log p_v\) 两次得到 \(1/p_v\)，再限制到质量零切空间即可。正性来自所有 \(p_v>0\)。沿 \(d\) 的分量平方均为一，代入得到最后式。证毕。
+
+### 定理 16.5（保守扩展定理）
+
+令 \(\mathsf L_0\) 是由 Primitive 层和上述 Derived 定义组成的形式理论。令 \(\mathsf H\) 是一组明确写出的 Bridge 假设，例如连续场实现、迁移率正性、辛结构、树场耦合界或 RH 谱对应。若
+\[
+\mathsf L_0+\mathsf H\vdash T,
+\]
+则对于每个 \(\mathsf L_0\) 模型 \(M\) 和每个把 \(M\) 扩张为满足 \(\mathsf H\) 的模型 \(M^+\)，都有
+\[
+M^+\models T.
+\]
+若 \(T\) 只含 \(\mathsf L_0\) 语言且不使用 \(\mathsf H\)，则它对所有 \(\mathsf L_0\) 模型成立；Bridge 层不能把一个未证明的 Primitive 命题变成定理。反之，若 \(T\) 含 \(E_s,J,M_{\mathrm{mob}},V_{\mathrm{bridge}}\) 或 RH 映射，则必须在定理陈述中逐项列出相应 \(\mathsf H\)。
+
+证明：第一句是形式证明在模型解释下的保真性。第二句是定义扩张的保守性：Derived 符号可逐项展开回 \(\mathsf L_0\)，而未列入 \(\mathsf H\) 的 Bridge 符号不存在解释义务。故任何遗漏的物理或 RH 假设都不能由语法推导出来。证毕。
+
+### 16.6 形式化顺序与桥接义务
+
+建议把 Lean 形式化分成两层。
+
+**L0，原生有限数学：**
+
+1. 定义 Mode、\(\mathcal A_0=\mathbb R^\Sigma\)、概率单纯形和有限求和；
+2. 定义 visible、\(\kappa\)、seam，证明重构式、合法纤维和 \(\ker DP_0=\mathbb Rd\)；
+3. 定义 Shannon 熵、负熵 Hessian 和 Fisher 线元，证明定理 16.4；
+4. 定义有限图的边空间、\(B_j,A_j\)、循环核和 \(L_j=B_jB_j^*\)；
+5. 定义有限载体 \(C_j\)、兼容压缩 \(q_{j+1,j}\) 和逆极限 \(\mathfrak F\)。
+
+**L1+，外部桥接义务：**
+
+1. 连续黎曼场实现 \((M,g,E,\nabla^A,\Phi,\rho_\Phi,\Pi)\)；
+2. 物理静态能量、状态能量 \(E_s\)、迁移率 \(M_{\mathrm{mob}}\)、辛结构 \(J\) 和质量 \(m_\kappa\)；
+3. Whole-rho 树场与 FIB 的乘积空间及 \(V_{\mathrm{bridge}}\)；
+4. 三角网络独立源提升和局部推前；
+5. 从统一场谱到 RH 零空间的酉映射 \(U\) 或正则化行列式；
+6. 量子化规则与能级解释。
+
+在 L1+ 中任何一项尚未构造时，只能把相应结论写成条件命题，不能把它当作 L0 的推论。这个分层也规定了本卷“统一场”的严格含义：基础是相容有限静态记录的逆极限，连续物理场和 RH 谱识别是待证明的扩展。
