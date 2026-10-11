@@ -354,6 +354,12 @@ $$\neg claimSendov$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CStarSendov.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/krishna-2022-cstar-sendov` (refuted) by `D5/S3/Quantum/Algebra/CStarSendov.result` and `D5/S3/Quantum/Algebra/CStarSendovCommutative.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"krishna-2022-cstar-sendov","declaration_gid":"D5/S3/Quantum/Algebra/CStarSendov.result","resolution_kind":"refuted"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"krishna-2022-cstar-sendov","declaration_gid":"D5/S3/Quantum/Algebra/CStarSendovCommutative.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. Mahesh Krishna (2022). *C*-algebraic Gauss-Lucas Theorem and C*-algebraic Sendov's Conjecture*. DOI: [10.48550/arXiv.2203.06916](https://doi.org/10.48550/arXiv.2203.06916). URL: <https://arxiv.org/abs/2203.06916v1>.

@@ -62,7 +62,9 @@ internal sealed class CStarSendovDocument : IScribeDocumentDefinition
             Node("claimSendov", "Krishna's Conjecture 2.5", Iff(Sym("claimSendov"), Claim(false)),
                 SourceClaim(false) + " The encoding uses zero-based Fin indices, degrees 2≤n, and unital algebras in Type with PartialOrder and StarOrderedRing. The derivative is the existing orderedDeriv, omitting one factor at a time. The conclusion allows any zero, rather than only the listed b values.", DescribeRole.Definition, true),
             Node("result", "Conjecture 2.5 is false", new Formula.Not(Sym("claimSendov")),
-                "The cubic in C(Set.Icc 0 6,ℂ) satisfies all the disc and barycentric hypotheses. The two critical branches exchange between the endpoints, and neither is uniformly within one of the constant root 1/2.", DescribeRole.Theorem, false))));
+                "The cubic in C(Set.Icc 0 6,ℂ) satisfies all the disc and barycentric hypotheses. The two critical branches exchange between the endpoints, and neither is uniformly within one of the constant root 1/2.", DescribeRole.Theorem, false,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("krishna-2022-cstar-sendov"), ResolutionKind.Refuted,
+                    [DeclarationHandle.Create("D5/S3/Quantum/Algebra/CStarSendovCommutative.result")])))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool literature = false, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
