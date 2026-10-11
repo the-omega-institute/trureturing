@@ -408,3 +408,104 @@ def split_word_injective_registration :
 
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.Injection
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal173
+noncomputable section
+
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => Set (ℤ → CuLetter)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => Set (ℤ → CuLetter)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ _ X => X) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => ∅) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (occupied : X.Nonempty) (k : ℕ), Nonempty (LengthDictionary (r.readout () () X) k)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨w⟩ := h {fun _ => .u} ⟨(fun _ => .u), Set.mem_singleton _⟩ 0
+  obtain ⟨ω, hω, _⟩ := w.property.1
+  exact hω
+
+def evidence : Registration sourceArena (type_of% @length_dictionary_nonempty) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@length_dictionary_nonempty, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), {fun _ => .u}, {fun _ => .c}, ?_⟩
+    intro eq
+    change ({fun _ : ℤ => CuLetter.u} : Set (ℤ → CuLetter)) = {fun _ => .c} at eq
+    have member : (fun _ : ℤ => CuLetter.u) ∈ ({fun _ => CuLetter.c} : Set (ℤ → CuLetter)) := by
+      rw [← eq]
+      exact Set.mem_singleton _
+    have same := Set.mem_singleton_iff.mp member
+    have impossible := congrFun same 0
+    cases impossible
+
+def length_dictionary_nonempty_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.length_dictionary_nonempty)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ X => X) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal173.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal173.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ X => X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms length_dictionary_nonempty_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal173

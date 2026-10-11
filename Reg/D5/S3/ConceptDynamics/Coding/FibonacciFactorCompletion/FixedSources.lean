@@ -453,3 +453,183 @@ def synchronous_address_injective_registration :
 
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.Injection
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal74
+noncomputable section
+
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := List Label
+  State := fun _ => List Label
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => List Label
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ u v => u ++ v) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => [Label.L5]) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (s e q : Guard) (u v : List Label) (hu : LegalWord s e u) (hv : LegalWord e q v), LegalWord s q (r.readout () u v)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have bad := h .G0 .G0 .G0 [] [] rfl rfl
+  cases bad
+
+def evidence : Registration sourceArena (type_of% @legal_append) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@legal_append, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨[], [], [.L0], ?_⟩
+    simp [actual, realize]
+
+def legal_append_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.legal_append)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ u v => u ++ v) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal74.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal74.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ u v => u ++ v) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
+    definition := none
+    coordinates := #[3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms legal_append_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal74
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal75
+noncomputable section
+
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Bool → List Label
+  State := fun _ => List Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => List Label
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ R zs => choiceBlocks R zs) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => [Label.L5]) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (s : Guard) (R : Bool → List Label) (hR : ∀ i, LegalWord s s (R i)) (zs : List Bool), LegalWord s s (r.readout () R zs)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have bad := h .G0 (fun _ => []) (fun _ => rfl) []
+  cases bad
+
+def evidence : Registration sourceArena (type_of% @choices_legal) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@choices_legal, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(fun _ => [.L0]), [], [false], ?_⟩
+    simp [actual, realize, choiceBlocks]
+
+def choices_legal_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.choices_legal)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ R zs => choiceBlocks R zs) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal75.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal75.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ R zs => choiceBlocks R zs) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms choices_legal_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal75

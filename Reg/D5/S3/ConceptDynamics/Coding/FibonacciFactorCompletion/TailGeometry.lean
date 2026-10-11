@@ -400,3 +400,94 @@ def expanded_distance_formula_registration :
 
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal156
+noncomputable section
+
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ _ x => x^2) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := r.readout () () t = 1-t ∧ 0<t ∧ t<1 ∧ 0<g ∧ g<1 ∧ 1<phi
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have eq : (0 : ℝ) = 1-t := h.1
+  have lt := h.2.2.1
+  linarith
+
+def evidence : Registration sourceArena (type_of% @tail_arithmetic) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@tail_arithmetic, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def tail_arithmetic_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.tail_arithmetic)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ x => x^2) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal156.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal156.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ x => x^2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms tail_arithmetic_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal156

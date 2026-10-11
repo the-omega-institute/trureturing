@@ -1,3 +1,4 @@
+import Reg.Support.FibonacciFactorWitnesses
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
 import Reg.Support.DependentFamily
@@ -284,3 +285,417 @@ def path_memory_reconstruction_registration :
 
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal109
+noncomputable section
+
+open Reg.Support.FibonacciFactorWitnesses
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => ℤ → CuLetter
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℤ → CuLetter
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ _ ω => ω) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ _ => CuLetter.u) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (side : MemorySide) (n K : ℕ) (d : ℝ) (positive : 0 < K) (memory : K ≤ n) (ω : ℤ → CuLetter),
+    r.readout () () ω ∈ MemoryLanguage side n K d ↔
+      ∃! p : ℤ → MemoryVertex n, BilateralGraphPath side K d p ω
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have member : (fun _ : ℤ => CuLetter.u) ∈ MemoryLanguage .lower 1 1 0 :=
+    (original_memory_graph_correspondence .lower 1 1 0 (by decide) (by decide) _).mpr
+      ⟨(fun _ _ => .u), all_u_path 1 .lower 1 0, by
+        intro p hp
+        exact path_memory_reconstruction p _ (fun i => (hp i).1)⟩
+  have path := (h .lower 1 1 0 (by decide) (by decide) (fun _ => .c)).mp member
+  have bad := (original_memory_graph_correspondence .lower 1 1 0 (by decide) (by decide) _).mpr path
+  exact bad.1 0 (fun _ => rfl)
+
+def evidence : Registration sourceArena (type_of% @original_memory_graph_correspondence) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@original_memory_graph_correspondence, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), (fun _ => .u), (fun _ => .c), ?_⟩
+    intro eq
+    have bad := congrFun eq 0
+    cases bad
+
+def original_memory_graph_correspondence_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.original_memory_graph_correspondence)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ ω => ω) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal109.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal109.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ ω => ω) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_memory_graph_correspondence_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal109
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal111
+noncomputable section
+
+open Reg.Support.FibonacciFactorWitnesses
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := ℤ → CuLetter
+  State := fun _ => ℤ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => CuLetter
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ ω i => ω i) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => CuLetter.c) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ {n : ℕ} (side : MemorySide) (K : ℕ) (d : ℝ) (v : MemoryVertex n) (w : List CuLetter)
+    (walk : RetainedWalk side K d v w), ∃ p ω, BilateralGraphPath side K d p ω ∧ p 0 = v ∧
+      ∀ k : Fin w.length, r.readout () ω (k : ℕ) = w[k]
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have walk : RetainedWalk .lower 1 0 (fun _ : Fin 0 => CuLetter.u) [.u] := by
+    refine ⟨all_u_live 0 .lower 1 0, ?_, ?_⟩
+    · exact ⟨rfl, (by intro h; cases h.1), (by intro h; cases h.1)⟩
+    · have eq : memoryShift (fun _ : Fin 0 => CuLetter.u) .u = (fun _ : Fin 0 => CuLetter.u) := by
+        funext k; exact Fin.elim0 k
+      rw [eq]
+      exact all_u_live 0 .lower 1 0
+  obtain ⟨p, ω, path, start, letters⟩ := h .lower 1 0 (fun _ : Fin 0 => .u) [.u] walk
+  have bad := letters 0
+  cases bad
+
+def evidence : Registration sourceArena (type_of% @retained_walk_extension) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@retained_walk_extension, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(fun j : ℤ => if j = 0 then .u else .c), 0, 1, ?_⟩
+    simp [actual, realize]
+
+def retained_walk_extension_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.retained_walk_extension)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ ω i => ω i) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal111.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal111.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ ω i => ω i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+    definition := none
+    coordinates := #[8]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms retained_walk_extension_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal111
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal112
+noncomputable section
+
+open Reg.Support.FibonacciFactorWitnesses
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ n : ℕ, ℤ → MemoryVertex n
+  State := fun _ => ℤ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun q => MemoryVertex q.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ q i => q.2 i) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ q _ _ => CuLetter.c) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ {n : ℕ} (side : MemorySide) (K : ℕ) (d : ℝ) (p : ℤ → MemoryVertex n) (ω : ℤ → CuLetter)
+    (path : BilateralGraphPath side K d p ω) (w : List CuLetter) (i : ℤ)
+    (letters : ∀ k : Fin w.length, ω (i+(k : ℕ))=w[k]),
+    RetainedWalk side K d (r.readout () ⟨n,p⟩ i) w
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have live := h .lower 0 0 (fun (_ : ℤ) (_ : Fin 1) => CuLetter.u) (fun _ => CuLetter.u)
+    (all_u_path 1 .lower 0 0) [] 0 (by intro k; exact Fin.elim0 k)
+  obtain ⟨p, ω, path, start⟩ := live
+  have shift := congrFun (path (-1)).1 (0 : Fin 1)
+  have atzero : p 0 0 = CuLetter.c := congrFun start 0
+  have letter : ω (-1) = CuLetter.c := by simpa [memoryShift, atzero] using shift.symm
+  apply (path (-1)).2.1
+  refine ⟨letter, ?_⟩
+  intro k hk
+  omega
+
+def evidence : Registration sourceArena (type_of% @bilateral_path_segment) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@bilateral_path_segment, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨1, (fun j : ℤ => fun _ : Fin 1 => if j = 0 then .u else .c)⟩, 0, 1, ?_⟩
+    intro eq
+    have bad := congrFun eq (0 : Fin 1)
+    simpa [actual, realize] using bad
+
+def bilateral_path_segment_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.bilateral_path_segment)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ q i => q.2 i) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal112.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal112.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ q i => q.2 i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+    definition := none
+    coordinates := #[0, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 8
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms bilateral_path_segment_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal112
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal113
+noncomputable section
+
+open Reg.Support.FibonacciFactorWitnesses
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ _ n => 2^n) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (side : MemorySide) (n K : ℕ) (d : ℝ) (positive : 0 < K) (memory : K ≤ n) (T : ℕ),
+    Finite (RetainedPathDictionary side n K d T) ∧
+    factorCount (MemoryLanguage side n K d) T ≤ Nat.card (RetainedPathDictionary side n K d T) ∧
+    Nat.card (RetainedPathDictionary side n K d T) ≤ r.readout () () n * factorCount (MemoryLanguage side n K d) T
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have bound := h .lower 1 1 0 (by decide) (by decide) 0
+  letI : Finite (RetainedPathDictionary .lower 1 1 0 0) := bound.1
+  letI : Nonempty (RetainedPathDictionary .lower 1 1 0 0) := ⟨empty_retained⟩
+  have positive := Nat.card_pos (α := RetainedPathDictionary .lower 1 1 0 0)
+  have upper := bound.2.2
+  change Nat.card (RetainedPathDictionary .lower 1 1 0 0) ≤ 0 * _ at upper
+  simp only [Nat.zero_mul] at upper
+  omega
+
+def evidence : Registration sourceArena (type_of% @original_weighted_path_count) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@original_weighted_path_count, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 1, 2, ?_⟩
+    norm_num [actual, realize]
+
+def original_weighted_path_count_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.original_weighted_path_count)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ n => 2^n) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal113.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal113.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ n => 2^n) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_weighted_path_count_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal113
