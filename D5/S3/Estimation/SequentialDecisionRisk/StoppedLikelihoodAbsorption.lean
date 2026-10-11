@@ -9,7 +9,7 @@
 import Mathlib.Probability.Martingale.OptionalStopping
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.CondJensen
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Tactic
 
 noncomputable section
@@ -498,14 +498,21 @@ private lemma stopping_nat_measurable {τ : Ω → ℕ}
     (hτ : IsStoppingTime ℱ (fun ω => (τ ω : WithTop ℕ))) : Measurable τ := by
   apply measurable_to_countable'
   intro k
-  have h := (ℱ.le k) _ (hτ.measurableSet_eq k)
-  simpa only [WithTop.coe_eq_coe] using h
+  have h : MeasurableSet {ω | (τ ω : WithTop ℕ) = (k : WithTop ℕ)} :=
+    (ℱ.le k) _ (hτ.measurableSet_eq k)
+  have hs : {ω | (τ ω : WithTop ℕ) = (k : WithTop ℕ)} = τ ⁻¹' {k} := by
+    ext ω
+    simp
+  rw [hs] at h
+  exact h
 
 private lemma stopping_power_integrable {τ : Ω → ℕ} (hτ : Measurable τ)
     {n : ℕ} (hτn : ∀ ω, τ ω ≤ n) (m : ℕ) :
     Integrable (fun ω => (τ ω : ℝ) ^ m) μ := by
-  apply bounded_integrable ((hτ.cast_real).stronglyMeasurable.pow m)
+  apply bounded_integrable (R := (n : ℝ) ^ m)
+    (((measurable_from_nat (f := fun k : ℕ => (k : ℝ))).comp hτ).stronglyMeasurable.pow m)
   intro ω
+  change |(τ ω : ℝ) ^ m| ≤ (n : ℝ) ^ m
   rw [abs_of_nonneg (by positivity)]
   exact pow_le_pow_left₀ (by positivity) (by exact_mod_cast hτn ω) m
 
@@ -530,7 +537,7 @@ private lemma stopped_likelihood_absorption_aux {L : ℕ → Ω → ℝ}
     (abs_sub _ _).trans (by
       dsimp [R]
       rw [abs_one]
-      exact add_le_add_right (stopped_likelihood_uniform_bound L ξ τ lam n
+      simpa only [add_comm] using add_le_add_right (stopped_likelihood_uniform_bound L ξ τ lam n
         hinit hτn hξ hstep i ω) 1)
   have hR : 0 ≤ R := by dsimp [R]; positivity
   have hS0 : ∀ ω, 0 ≤ S ω := fun ω =>
@@ -543,10 +550,11 @@ private lemma stopped_likelihood_absorption_aux {L : ℕ → Ω → ℝ}
     bounded_integrable (hSstrong.pow _) (fun ω => by
       rw [abs_of_nonneg (pow_nonneg (hS0 ω) _)]
       exact pow_le_pow_left₀ (hS0 ω) (hSR ω) _)
-  have hUint := stopping_power_integrable hτ hτn m
+  have hUint := stopping_power_integrable (μ := μ) hτ hτn m
   have hpoint : ∀ ω, (Quad f n ω) ^ m ≤
       K * ((τ ω : ℝ) ^ m + (n : ℝ) ^ m * S ω ^ (2 * m)) := by
     intro ω
+    have hs0 : 0 ≤ S ω := hS0 ω
     have hQ0 : 0 ≤ Quad f n ω := sum_nonneg (fun i _ => sq_nonneg _)
     have hQ := likelihood_quad_bound L ξ τ lam n hτn hξ hstep ω
     have hp := pow_le_pow_left₀ hQ0 hQ m
@@ -567,8 +575,12 @@ private lemma stopped_likelihood_absorption_aux {L : ℕ → Ω → ℝ}
           ((2 : ℝ) ^ (2 * m) * (1 + S ω ^ (2 * m))) :=
         mul_le_mul_of_nonneg_left hplus (by positivity)
       _ ≤ K * ((τ ω : ℝ) ^ m + (n : ℝ) ^ m * S ω ^ (2 * m)) := by
-        dsimp [K]
-        nlinarith [mul_le_mul_of_nonneg_right ht (pow_nonneg (hS0 ω) (2 * m))]
+        calc
+          _ = K * ((τ ω : ℝ) ^ m + (τ ω : ℝ) ^ m * S ω ^ (2 * m)) := by
+            dsimp [K]; ring
+          _ ≤ _ := by
+            dsimp [K]
+            gcongr <;> positivity
   have hi := integral_mono_of_nonneg (ae_of_all μ (fun ω =>
     pow_nonneg (sum_nonneg (fun i _ => sq_nonneg _)) m))
     ((hUint.add (hTint.const_mul ((n : ℝ) ^ m))).const_mul K) (ae_of_all μ hpoint)
@@ -586,5 +598,187 @@ private lemma stopped_likelihood_absorption_aux {L : ℕ → Ω → ℝ}
   rw [← mul_assoc, hbK] at hfirst
   have hs := mul_le_mul_of_nonneg_right hsmall hT0
   nlinarith
+
+
+private lemma window_coefficient {m : ℕ} (hm : 0 < m) {lam : ℝ} {n : ℕ}
+    (hwindow : |lam| * Real.sqrt (n : ℝ) ≤ (2 * MomentConstant m + 1)⁻¹) :
+    2 * MomentConstant m * |lam| ^ (2 * m) * (n : ℝ) ^ m ≤ 1 := by
+  let A := MomentConstant m
+  let θ := (2 * A + 1)⁻¹
+  have hA : 0 ≤ A := by dsimp [A]; positivity
+  have hd : 0 < 2 * A + 1 := by positivity
+  have ht0 : 0 ≤ θ := by dsimp [θ]; positivity
+  have ht : (2 * A + 1) * θ = 1 := mul_inv_cancel₀ (ne_of_gt hd)
+  have ht1 : θ ≤ 1 := by nlinarith [mul_nonneg hA ht0]
+  have hp : (|lam| * Real.sqrt (n : ℝ)) ^ (2 * m) ≤ θ :=
+    (pow_le_pow_left₀ (by positivity) hwindow (2 * m)).trans
+      (pow_le_of_le_one ht0 ht1 (by omega))
+  have heq : (|lam| * Real.sqrt (n : ℝ)) ^ (2 * m) =
+      |lam| ^ (2 * m) * (n : ℝ) ^ m := by
+    rw [mul_pow, pow_mul (Real.sqrt (n : ℝ)) 2 m,
+      Real.sq_sqrt (Nat.cast_nonneg n)]
+  rw [heq] at hp
+  have hh := mul_le_mul_of_nonneg_left hp (show 0 ≤ 2 * A by positivity)
+  change 2 * A * |lam| ^ (2 * m) * (n : ℝ) ^ m ≤ 1
+  nlinarith
+
+/-- A stopped multiplicative martingale retains the random stopping-time moment
+in its maximal even-moment bound. The filtration may contain an independent seed. -/
+private theorem stopped_likelihood_absorption {L : ℕ → Ω → ℝ}
+    (hL : Martingale L ℱ μ) (ξ : ℕ → Ω → ℝ) (τ : Ω → ℕ)
+    (hτ : IsStoppingTime ℱ (fun ω => (τ ω : WithTop ℕ)))
+    (lam : ℝ) (n : ℕ) (hinit : ∀ ω, L 0 ω = 1) (hτn : ∀ ω, τ ω ≤ n)
+    (hξ : ∀ i ω, |ξ i ω| ≤ 1)
+    (hstep : ∀ i ω, L (i + 1) ω - L i ω =
+      if i < τ ω then lam * L i ω * ξ i ω else 0)
+    {m : ℕ} (hm : 0 < m)
+    (hwindow : |lam| * Real.sqrt (n : ℝ) ≤ (2 * MomentConstant m + 1)⁻¹) :
+    (∫ ω, (PMax (fun i => |L i ω - 1|) n) ^ (2 * m) ∂μ) ≤
+      2 * MomentConstant m * |lam| ^ (2 * m) * ∫ ω, (τ ω : ℝ) ^ m ∂μ :=
+  stopped_likelihood_absorption_aux hL ξ τ (stopping_nat_measurable hτ) lam n
+    hinit hτn hξ hstep hm (window_coefficient hm hwindow)
+
+/-- Tilting by the stopped terminal likelihood increases the same stopping-time
+moment by at most a factor of two within the local window. -/
+private theorem stopped_likelihood_change_of_measure {L : ℕ → Ω → ℝ}
+    (hL : Martingale L ℱ μ) (ξ : ℕ → Ω → ℝ) (τ : Ω → ℕ)
+    (hτ : IsStoppingTime ℱ (fun ω => (τ ω : WithTop ℕ)))
+    (lam : ℝ) (n : ℕ) (hinit : ∀ ω, L 0 ω = 1) (hτn : ∀ ω, τ ω ≤ n)
+    (hξ : ∀ i ω, |ξ i ω| ≤ 1) (hLn : ∀ ω, 0 ≤ L n ω)
+    (hstep : ∀ i ω, L (i + 1) ω - L i ω =
+      if i < τ ω then lam * L i ω * ξ i ω else 0)
+    {m : ℕ} (hm : 0 < m)
+    (hwindow : |lam| * Real.sqrt (n : ℝ) ≤ (2 * MomentConstant m + 1)⁻¹) :
+    (∫ ω, (τ ω : ℝ) ^ m ∂μ.withDensity (fun ω => ENNReal.ofReal (L n ω))) ≤
+      2 * ∫ ω, (τ ω : ℝ) ^ m ∂μ := by
+  let S : Ω → ℝ := fun ω => PMax (fun i => |L i ω - 1|) n
+  let R := (1 + |lam|) ^ n + 1
+  have hτm := stopping_nat_measurable hτ
+  have hUint := stopping_power_integrable (μ := μ) hτm hτn m
+  have hf : Martingale (fun i ω => L i ω - 1) ℱ μ :=
+    hL.sub (martingale_const ℱ μ (1 : ℝ))
+  have hSstrong : StronglyMeasurable S :=
+    (prefix_max_adapted (martingale_abs_submartingale hf).stronglyAdapted n).mono (ℱ.le n)
+  have hS0 : ∀ ω, 0 ≤ S ω := fun ω =>
+    (abs_nonneg (L 0 ω - 1)).trans
+      (le_sup' (fun i => |L i ω - 1|) (mem_range.mpr (show 0 < n + 1 by omega)))
+  have hSR : ∀ ω, S ω ≤ R := by
+    intro ω
+    apply sup'_le
+    intro i _
+    exact (abs_sub _ _).trans (by
+      dsimp [R]
+      rw [abs_one]
+      simpa only [add_comm] using add_le_add_right
+        (stopped_likelihood_uniform_bound L ξ τ lam n hinit hτn hξ hstep i ω) 1)
+  have hTint : Integrable (fun ω => S ω ^ (2 * m)) μ :=
+    bounded_integrable (hSstrong.pow _) (fun ω => by
+      rw [abs_of_nonneg (pow_nonneg (hS0 ω) _)]
+      exact pow_le_pow_left₀ (hS0 ω) (hSR ω) _)
+  have hUSint : Integrable (fun ω => (τ ω : ℝ) ^ m * S ω) μ := by
+    simpa only [mul_comm] using hUint.bdd_mul hSstrong.aestronglyMeasurable
+      (ae_of_all μ (fun ω => by
+        rw [Real.norm_eq_abs, abs_of_nonneg (hS0 ω)]
+        exact hSR ω))
+  have hpoint : ∀ ω, (2 * m : ℝ) * ((τ ω : ℝ) ^ m * S ω) ≤
+      ((2 * m : ℝ) - 1) * (τ ω : ℝ) ^ m + (n : ℝ) ^ m * S ω ^ (2 * m) := by
+    intro ω
+    have hs0 := hS0 ω
+    have hy := pow_add_mul_le_add_pow (show (0 : ℝ) ≤ 1 by norm_num)
+      (show 0 ≤ 2 * (1 : ℝ) + (S ω - 1) by linarith) (2 * m)
+    rw [show (1 : ℝ) + (S ω - 1) = S ω by ring] at hy
+    simp only [one_pow, Nat.cast_mul, Nat.cast_ofNat] at hy
+    have hy' : (2 * m : ℝ) * S ω ≤ (2 * m : ℝ) - 1 + S ω ^ (2 * m) := by
+      nlinarith
+    have hyτ := mul_le_mul_of_nonneg_left hy' (show 0 ≤ (τ ω : ℝ) ^ m by positivity)
+    have htn : (τ ω : ℝ) ^ m ≤ (n : ℝ) ^ m :=
+      pow_le_pow_left₀ (by positivity) (by exact_mod_cast hτn ω) m
+    have hs := mul_le_mul_of_nonneg_right htn (pow_nonneg hs0 (2 * m))
+    nlinarith
+  have hi := integral_mono (hUSint.const_mul (2 * m : ℝ))
+    ((hUint.const_mul ((2 * m : ℝ) - 1)).add (hTint.const_mul ((n : ℝ) ^ m))) hpoint
+  simp only [Pi.add_apply] at hi
+  rw [integral_add (hUint.const_mul _) (hTint.const_mul _), integral_const_mul,
+    integral_const_mul, integral_const_mul] at hi
+  have hT := stopped_likelihood_absorption hL ξ τ hτ lam n hinit hτn hξ hstep hm hwindow
+  have hsmall := window_coefficient hm hwindow
+  have hU0 : 0 ≤ ∫ ω, (τ ω : ℝ) ^ m ∂μ := integral_nonneg (fun ω => by positivity)
+  have hTU := (mul_le_mul_of_nonneg_left hT (show 0 ≤ (n : ℝ) ^ m by positivity)).trans
+    (show (n : ℝ) ^ m * (2 * MomentConstant m * |lam| ^ (2 * m) *
+        ∫ ω, (τ ω : ℝ) ^ m ∂μ) ≤ ∫ ω, (τ ω : ℝ) ^ m ∂μ by
+      nlinarith [mul_le_mul_of_nonneg_right hsmall hU0])
+  have hmpos : 0 < (2 * m : ℝ) := by positivity
+  have hUS : (∫ ω, (τ ω : ℝ) ^ m * S ω ∂μ) ≤ ∫ ω, (τ ω : ℝ) ^ m ∂μ := by
+    change (n : ℝ) ^ m * (∫ ω, S ω ^ (2 * m) ∂μ) ≤ _ at hTU
+    nlinarith
+  rw [integral_withDensity_eq_integral_toReal_smul
+    (((hL.stronglyMeasurable n).mono (ℱ.le n)).measurable.ennreal_ofReal)
+    (ae_of_all μ (fun ω => ENNReal.ofReal_lt_top))]
+  simp only [ENNReal.toReal_ofReal (hLn _), smul_eq_mul]
+  have hbound := integral_mono_of_nonneg
+    (f := fun ω => L n ω * (τ ω : ℝ) ^ m)
+    (g := fun ω => (τ ω : ℝ) ^ m + (τ ω : ℝ) ^ m * S ω)
+    (ae_of_all μ (fun ω => mul_nonneg (hLn ω) (by positivity)))
+    (hUint.add hUSint) (ae_of_all μ (fun ω => by
+      have hLnS : L n ω ≤ 1 + S ω := by
+        have hmax : |L n ω - 1| ≤ S ω :=
+          le_sup' (fun i => |L i ω - 1|) (mem_range.mpr (show n < n + 1 by omega))
+        linarith [le_abs_self (L n ω - 1)]
+      change L n ω * (τ ω : ℝ) ^ m ≤ (τ ω : ℝ) ^ m + (τ ω : ℝ) ^ m * S ω
+      nlinarith [mul_le_mul_of_nonneg_right hLnS (show 0 ≤ (τ ω : ℝ) ^ m by positivity)]))
+  rw [integral_add hUint hUSint] at hbound
+  linarith
+
+
+private lemma stopped_martingale {L : ℕ → Ω → ℝ} (hL : Martingale L ℱ μ)
+    {τ : Ω → ℕ} (hτ : IsStoppingTime ℱ (fun ω => (τ ω : WithTop ℕ))) :
+    Martingale (fun i ω => L (min i (τ ω)) ω) ℱ μ := by
+  have hp := hL.submartingale.stoppedProcess hτ
+  have hn := hL.neg.submartingale.stoppedProcess hτ
+  have hn' : Supermartingale (stoppedProcess L (fun ω => (τ ω : WithTop ℕ))) ℱ μ := by
+    simpa only [stoppedProcess_neg, neg_neg] using hn.neg
+  have h := martingale_iff.mpr ⟨hn', hp⟩
+  have heq : stoppedProcess L (fun ω => (τ ω : WithTop ℕ)) =
+      (fun i ω => L (min i (τ ω)) ω) := by
+    funext i ω
+    rfl
+  rw [heq] at h
+  exact h
+
+private lemma multiplicative_stopped_step (L ξ : ℕ → Ω → ℝ) (τ : Ω → ℕ) (lam : ℝ)
+    (hstep : ∀ i ω, L (i + 1) ω - L i ω = lam * L i ω * ξ i ω) :
+    ∀ i ω, L (min (i + 1) (τ ω)) ω - L (min i (τ ω)) ω =
+      if i < τ ω then lam * L (min i (τ ω)) ω * ξ i ω else 0 := by
+  intro i ω
+  by_cases hi : i < τ ω
+  · rw [if_pos hi, min_eq_left hi.le, min_eq_left (Nat.succ_le_of_lt hi)]
+    exact hstep i ω
+  · rw [if_neg hi, min_eq_right (show τ ω ≤ i by omega),
+      min_eq_right (show τ ω ≤ i + 1 by omega), sub_self]
+
+/-- Both estimates for the original multiplicative likelihood stopped at an
+arbitrary bounded stopping time, with no independence requirement between the
+stopping time and likelihood. -/
+theorem stopped_likelihood_bounds {L : ℕ → Ω → ℝ}
+    (hL : Martingale L ℱ μ) (ξ : ℕ → Ω → ℝ) (τ : Ω → ℕ)
+    (hτ : IsStoppingTime ℱ (fun ω => (τ ω : WithTop ℕ)))
+    (lam : ℝ) (n : ℕ) (hinit : ∀ ω, L 0 ω = 1) (hτn : ∀ ω, τ ω ≤ n)
+    (hξ : ∀ i ω, |ξ i ω| ≤ 1) (hLn : ∀ ω, 0 ≤ L (τ ω) ω)
+    (hstep : ∀ i ω, L (i + 1) ω - L i ω = lam * L i ω * ξ i ω)
+    {m : ℕ} (hm : 0 < m)
+    (hwindow : |lam| * Real.sqrt (n : ℝ) ≤ (2 * MomentConstant m + 1)⁻¹) :
+    ((∫ ω, (PMax (fun i => |L (min i (τ ω)) ω - 1|) n) ^ (2 * m) ∂μ) ≤
+      2 * MomentConstant m * |lam| ^ (2 * m) * ∫ ω, (τ ω : ℝ) ^ m ∂μ) ∧
+    ((∫ ω, (τ ω : ℝ) ^ m ∂μ.withDensity
+      (fun ω => ENNReal.ofReal (L (τ ω) ω))) ≤ 2 * ∫ ω, (τ ω : ℝ) ^ m ∂μ) := by
+  let Z : ℕ → Ω → ℝ := fun i ω => L (min i (τ ω)) ω
+  have hZ : Martingale Z ℱ μ := stopped_martingale hL hτ
+  have hZ0 : ∀ ω, Z 0 ω = 1 := fun ω => by simpa only [Z, Nat.zero_min] using hinit ω
+  have hZstep := multiplicative_stopped_step L ξ τ lam hstep
+  have hZn : ∀ ω, Z n ω = L (τ ω) ω := fun ω => by simp only [Z, min_eq_right (hτn ω)]
+  refine ⟨stopped_likelihood_absorption hZ ξ τ hτ lam n hZ0 hτn hξ hZstep hm hwindow, ?_⟩
+  have hchange := stopped_likelihood_change_of_measure hZ ξ τ hτ lam n hZ0 hτn hξ
+    (fun ω => by rw [hZn]; exact hLn ω) hZstep hm hwindow
+  simpa only [hZn] using hchange
 
 end D5.S3.Estimation.SequentialDecisionRisk.StoppedLikelihoodAbsorption
