@@ -43,7 +43,10 @@ internal sealed class AssociatedMersenneCubePolynomialDocument : IScribeDocument
                 DescribeRole.Definition, false),
             Node("result", "The cube polynomial formula", "result", Disp(Id("claim")),
                 "The endpoint-removal characterization, the marked double count, and the weighted block-series resolvent prove the claimed generating function for every natural length.",
-                DescribeRole.Theorem, false)),
+                DescribeRole.Theorem, false,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wei-yang-2024-associated-mersenne-cube-polynomial"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,

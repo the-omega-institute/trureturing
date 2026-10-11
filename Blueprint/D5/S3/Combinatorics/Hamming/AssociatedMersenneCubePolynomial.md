@@ -132,6 +132,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hamming/AssociatedMersenneCubePolynomial.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wei-yang-2024-associated-mersenne-cube-polynomial` (proved) by `D5/S3/Combinatorics/Hamming/AssociatedMersenneCubePolynomial.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wei-yang-2024-associated-mersenne-cube-polynomial","declaration_gid":"D5/S3/Combinatorics/Hamming/AssociatedMersenneCubePolynomial.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Wei and Y. Yang (2024). *Associated Mersenne graphs*. DOI: [10.48550/arXiv.2407.08237](https://doi.org/10.48550/arXiv.2407.08237). URL: <https://arxiv.org/abs/2407.08237v1>.
