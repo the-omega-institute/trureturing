@@ -10,6 +10,7 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.Algebra.BigOperators.Group.Finset.Pi
 import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.Abel
 
 open scoped BigOperators
 
@@ -91,7 +92,8 @@ noncomputable def F3 (K : Type*) [Field K] (a b : ℕ) := F K a b 2
 
 /-- The eclectic coupling operator. -/
 noncomputable def T (K : Type*) [Field K] (a b : ℕ) (ξ : Fin 3 → K) :
-    Module.End K (Space K a b) := ∑ i, ξ i • F K a b i
+    Module.End K (Space K a b) :=
+  ξ 0 • F1 K a b + ξ 1 • F2 K a b + ξ 2 • F3 K a b
 
 /-- Linear right translation by t sites. -/
 noncomputable def translation (K : Type*) [Field K] {a b : ℕ} (t : Pos a b) :
@@ -100,5 +102,93 @@ noncomputable def translation (K : Type*) [Field K] {a b : ℕ} (t : Pos a b) :
 /-- The source's one-site right shift. -/
 noncomputable def U (K : Type*) [Field K] (a b : ℕ) : Module.End K (Space K a b) :=
   translation K 1
+
+/-- Count preservation, delta action, periodicity and translation symmetry of the bond sums. -/
+theorem cyclic_action (K : Type*) [Field K] (a b : ℕ) :
+    (∀ (c : Letter) (p : Pos a b) (w : Pos a b → Letter),
+      count c (fun q => w (Equiv.swap p (p + 1) q)) = count c w) ∧
+    (∀ (t : Pos a b) (w : Word a b),
+      translation K t (delta K w) = delta K (rotate t w)) ∧
+    (∀ (i : Fin 3) (w : Word a b),
+      F K a b i (delta K w) = ∑ p, bond K i p w) ∧
+    U K a b ^ (a + b + 2) = 1 ∧
+    (∀ i : Fin 3, Commute (U K a b) (F K a b i)) ∧
+    (∀ ξ : Fin 3 → K, Commute (U K a b) (T K a b ξ)) := by
+  classical
+  have hcount (c : Letter) (p : Pos a b) (w : Pos a b → Letter) :
+      count c (fun q => w (Equiv.swap p (p + 1) q)) = count c w := by
+    exact Equiv.sum_comp (Equiv.swap p (p + 1))
+      (fun q => if w q = c then 1 else 0)
+  have ht (t : Pos a b) (w : Word a b) (z : K) :
+      translation K t (Finsupp.single w z) = Finsupp.single (rotate t w) z := by
+    simp [translation]
+  have hf (i : Fin 3) (w : Word a b) (z : K) :
+      F K a b i (Finsupp.single w z) = z • ∑ p, bond K i p w := by
+    simp [F]
+  have hr (t s : Pos a b) (w : Word a b) :
+      rotate t (rotate s w) = rotate (t + s) w := by
+    apply Subtype.ext
+    funext p
+    change w.1 ((p + -t) + -s) = w.1 (p + -(t + s))
+    abel_nf
+  have hz (w : Word a b) : rotate (0 : Pos a b) w = w := by
+    apply Subtype.ext
+    funext p
+    change w.1 (p + -0) = w.1 p
+    simp
+  have hmul (t s : Pos a b) :
+      translation K t * translation K s = translation K (t + s) := by
+    apply Finsupp.lhom_ext
+    intro w z
+    simp only [Module.End.mul_apply, ht, hr]
+  have hzero : translation K (0 : Pos a b) = 1 := by
+    apply Finsupp.lhom_ext
+    intro w z
+    simp [ht, hz]
+  have hpow (n : ℕ) : U K a b ^ n = translation K (n : Pos a b) := by
+    induction n with
+    | zero => simpa using hzero.symm
+    | succ n ih => rw [pow_succ, ih]; simpa [U] using hmul (n : Pos a b) 1
+  have hswap (t p : Pos a b) (w : Word a b) :
+      rotate t (swapWord p w) = swapWord (p + t) (rotate t w) := by
+    apply Subtype.ext
+    funext q
+    change w.1 (Equiv.swap p (p + 1) (q + -t)) =
+      w.1 (Equiv.swap (p + t) (p + t + 1) q + -t)
+    have h := (Equiv.addRight (-t)).injective.swap_apply (p + t) (p + t + 1) q
+    simp only [Equiv.coe_addRight, ← sub_eq_add_neg] at h
+    have hp : p + t + 1 - t = p + 1 := by abel_nf
+    simpa only [← sub_eq_add_neg, add_sub_cancel_right, hp] using congrArg w.1 h
+  have ha (i : Fin 3) (t p : Pos a b) (w : Word a b) :
+      Allowed i (rotate t w) (p + t) ↔ Allowed i w p := by
+    change (w.1 (p + t + -t) = (inputPair i).1 ∧
+      w.1 (p + t + 1 + -t) = (inputPair i).2) ↔ Allowed i w p
+    have hp : p + t + 1 + -t = p + 1 := by abel_nf
+    simp only [add_neg_cancel_right, hp, Allowed]
+  have hb (i : Fin 3) (t p : Pos a b) (w : Word a b) :
+      translation K t (bond K i p w) = bond K i (p + t) (rotate t w) := by
+    have hat : Allowed i (rotate t w) (p + t) ↔ Allowed i w p := ha i t p w
+    by_cases h : Allowed i w p
+    · simp [bond, h, hat.mpr h, delta, ht, hswap]
+    · have hn : ¬ Allowed i (rotate t w) (p + t) := fun h' => h (hat.mp h')
+      simp [bond, h, hn]
+  have hc (i : Fin 3) (t : Pos a b) :
+      Commute (translation K t) (F K a b i) := by
+    change translation K t * F K a b i = F K a b i * translation K t
+    apply Finsupp.lhom_ext
+    intro w z
+    simp only [Module.End.mul_apply, hf, ht, map_smul, map_sum, hb]
+    exact congrArg (fun v => z • v)
+      (Equiv.sum_comp (Equiv.addRight t) (fun p => bond K i p (rotate t w)))
+  refine ⟨hcount, ?_, ?_, ?_, (fun i => hc i 1), ?_⟩
+  · intro t w
+    exact ht t w 1
+  · intro i w
+    simpa [delta] using hf i w 1
+  · rw [hpow, ZMod.natCast_self, hzero]
+  · intro ξ
+    change U K a b * T K a b ξ = T K a b ξ * U K a b
+    simp only [T, F1, F2, F3, U, mul_add, add_mul, mul_smul_comm, smul_mul_assoc]
+    rw [(hc 0 1).eq, (hc 1 1).eq, (hc 2 1).eq]
 
 end D5.S3.Quantum.SpinChains.TwoWallWords
