@@ -53,18 +53,8 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (pauliMatrix tensorOp tensor_mul)
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-  (wordUnit word_hermitian word_expansion letterProduct letterPhase letter_mul word_one tensor_one pauli_trace_pair tensor_trace)
+  (wordUnit word_hermitian word_expansion letterProduct letterPhase letter_mul word_one tensor_one word_trace_pair word_mul word_comm_sign)
 
-private theorem word_trace_mul (p q : Fin 2 → Pauli) :
-    trace (wordOp p * wordOp q) = if p = q then (4 : ℂ) else 0 := by
-  unfold wordOp
-  rw [tensor_mul, tensor_trace]
-  simp_rw [pauli_trace_pair]
-  by_cases h : p = q
-  · subst q; norm_num
-  · rw [if_neg h]
-    obtain ⟨i, hi⟩ : ∃ i, p i ≠ q i := Function.ne_iff.mp h
-    exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp -implicitDefEqProofs [hi])
 private def labels : Fin 15 → Fin 2 → Pauli :=
   ![![.I,.X], ![.I,.Y], ![.I,.Z], ![.X,.I], ![.X,.X], ![.X,.Y], ![.X,.Z],
     ![.Y,.I], ![.Y,.X], ![.Y,.Y], ![.Y,.Z], ![.Z,.I], ![.Z,.X], ![.Z,.Y], ![.Z,.Z]]
@@ -90,8 +80,8 @@ private theorem rho_E (x : Param) : rho (E x) = x := by
   ext i
   change (trace (wordOp (labels i) * ∑ j, x j • wordOp (labels j))).re / 4 = x i
   simp -implicitDefEqProofs only [Finset.mul_sum, Matrix.mul_smul, trace_sum, trace_smul]
-  simp_rw [word_trace_mul, labels_injective.eq_iff]
-  simp -implicitDefEqProofs
+  simp_rw [word_trace_pair, labels_injective.eq_iff]
+  norm_num
 private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M) = M := by
   have hr (i : Fin 15) : ((trace (wordOp (labels i) * M)).re : ℂ) =
       trace (wordOp (labels i) * M) := by
@@ -246,7 +236,7 @@ private theorem H_trace (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 
   have hI : wordOp (fun _ : Fin 2 => Pauli.I) = (1 : Mat) := tensor_one
   have hz : trace (wordOp (P j).val) = 0 := by
     simpa -implicitDefEqProofs only [hI, mul_one, if_neg (P j).property] using
-      word_trace_mul (P j).val (fun _ => Pauli.I)
+      word_trace_pair (P j).val (fun _ => Pauli.I)
   rw [H, trace_mul_cycle, Unitary.star_mul_self_of_mem (prefix_unitary P α j.val), one_mul, hz]
 
 private theorem E_J_mulVec (P : Fin 15 → NonIdentityPauli) (α h : Param) :
@@ -479,11 +469,10 @@ private theorem certK_unfold : certK = certL + vecMulVec certe certz := rfl
 private def certKi : RatMat := certA * certD + vecMulVec certr certe
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 2000000 in
--- The kernel reduces five finite rational matrix identities.
+-- The kernel reduces three finite rational matrix identities.
 private theorem rational_certificate :
-    certA *ᵥ certu = 0 ∧ certz ᵥ* certA = 0 ∧
     certK * certKi = 1 ∧ certN * certNi = 1 ∧ certK * certA * certN = certD := by
-  refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> decide +kernel
+  refine ⟨?_, ?_, ?_⟩ <;> decide +kernel
 private noncomputable def ratReal : RatMat →+* Matrix (Fin 15) (Fin 15) ℝ :=
   (Rat.castHom ℝ).mapMatrix
 private theorem ratReal_unfold : ratReal = (Rat.castHom ℝ).mapMatrix := rfl
@@ -529,15 +518,9 @@ private theorem coordinate_inverse :
   have hS' : S * Si = 1 := mul_eq_one_comm.mp hS
   constructor
   · simp -implicitDefEqProofs only [B_unfold, mul_assoc, ← mul_assoc Ri R, hR, one_mul, ← map_mul,
-      rational_certificate.2.2.1, map_one]
+      rational_certificate.1, map_one]
   · simp -implicitDefEqProofs only [U_unfold, mul_assoc, ← mul_assoc (ratReal certN) (ratReal certNi),
-      ← map_mul, rational_certificate.2.2.2.1, map_one, one_mul, hS']
-private theorem word_product (p q : Fin 2 → Pauli) :
-    wordOp p * wordOp q = (∏ i, letterPhase (p i) (q i)) •
-      wordOp ![letterProduct (p 0) (q 0), letterProduct (p 1) (q 1)] := by
-  unfold wordOp; rw [tensor_mul]
-  ext x y
-  simp -implicitDefEqProofs [tensorOp, letter_mul, Fin.prod_univ_two, smul_eq_mul]; ring
+      ← map_mul, rational_certificate.2.1, map_one, one_mul, hS']
 private theorem letterProduct_rec (p q : Pauli) :
     letterProduct p q = Pauli.rec q (Pauli.rec .X .I .Z .Y q)
       (Pauli.rec .Y .Z .I .X q) (Pauli.rec .Z .Y .X .I q) p := by
@@ -548,31 +531,23 @@ private theorem letterPhase_rec (p q : Pauli) :
       (Pauli.rec 1 Complex.I (-Complex.I) 1 q) p := by
   cases p <;> cases q <;> rfl
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (sgn anticomm)
-private theorem pauli_commutation (p q : Pauli) :
-    pauliMatrix p * pauliMatrix q = (sgn p q : ℂ) • (pauliMatrix q * pauliMatrix p) := by
-  cases p <;> cases q <;> simp -implicitDefEqProofs [letter_mul, sgn, anticomm,
-    letterProduct_rec, letterPhase_rec, smul_smul, smul_neg, neg_smul]
-private theorem word_commutation (p q : Fin 2 → Pauli) :
-    wordOp p * wordOp q = (∏ i, (sgn (p i) (q i) : ℂ)) • (wordOp q * wordOp p) := by
-  unfold wordOp; rw [tensor_mul, tensor_mul]
-  calc tensorOp (fun i => pauliMatrix (p i) * pauliMatrix (q i)) =
-      tensorOp (fun i => (sgn (p i) (q i) : ℂ) • (pauliMatrix (q i) * pauliMatrix (p i))) :=
-        congrArg tensorOp (funext fun i => pauli_commutation (p i) (q i))
-       _ = _ := by ext x y; simp -implicitDefEqProofs [tensorOp, Finset.prod_mul_distrib, smul_eq_mul]
 private theorem conjStep_word (p : NonIdentityPauli) (a : ℝ) (q : Fin 2 → Pauli) :
     conjStep p a (wordOp q) =
       if sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = -1 then
         (Real.cos a : ℂ) • wordOp q - ((Real.sin a : ℂ) * Complex.I *
           (∏ i, letterPhase (p.val i) (q i))) • wordOp ![letterProduct (p.val 0) (q 0), letterProduct (p.val 1) (q 1)]
       else wordOp q := by
-  have hh := word_commutation p.val q
+  have hpq : (fun i : Fin 2 => letterProduct (p.val i) (q i)) =
+      ![letterProduct (p.val 0) (q 0), letterProduct (p.val 1) (q 1)] := by
+    ext i; fin_cases i <;> rfl
+  have hh := word_comm_sign p.val q
   simp -implicitDefEqProofs only [Fin.prod_univ_two, ← Int.cast_mul] at hh
   have hs : sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = 1 ∨
       sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = -1 := by
     unfold sgn; split_ifs <;> norm_num
   split_ifs with h
   · rw [h] at hh
-    simpa -implicitDefEqProofs [word_product, smul_smul, mul_assoc] using
+    simpa -implicitDefEqProofs [word_mul, hpq, smul_smul, mul_assoc] using
       conjStep_anticomm p a (wordOp q) (by simpa -implicitDefEqProofs using hh)
   · rw [hs.resolve_right h] at hh
     exact conjStep_comm p a (wordOp q) (by simpa -implicitDefEqProofs using hh)
@@ -643,7 +618,7 @@ private theorem normalized_witness : B * Matrix.of (J_H witnessP point) * U = D 
   calc _ = ratReal certK * (Ri * R) * ratReal certA * (Si * S) * ratReal certN := by
              simp -implicitDefEqProofs only [B_unfold, U_unfold, mul_assoc]
        _ = D := by rw [hR, hS]
-                   simp -implicitDefEqProofs only [mul_one, ← map_mul, rational_certificate.2.2.2.2, D_unfold]
+                   simp -implicitDefEqProofs only [mul_one, ← map_mul, rational_certificate.2.2, D_unfold]
 private theorem H_witness (j : Fin 15) : H witnessP point j =
     (colScale j)⁻¹ • E (fun i => rowScale i * (certA i j : ℝ)) := by
   have hs : colScale j ≠ 0 := by simp -implicitDefEqProofs only [colScale_unfold]; split_ifs <;> positivity
@@ -651,6 +626,7 @@ private theorem H_witness (j : Fin 15) : H witnessP point j =
 private theorem B_row (i : Fin 15) : B 12 i = (certz i : ℝ) / rowScale i := by
   fin_cases i <;> simp -implicitDefEqProofs [B_unfold, Ri, mul_diagonal, ratReal_unfold, certK_unfold, certL_unfold, certe_unfold, certz_unfold, div_eq_mul_inv,
     rowScale_unfold, ← Real.sqrt_div_self]
+set_option maxRecDepth 10000 in
 set_option maxHeartbeats 2000000 in
 -- Only the four left-kernel coordinates contribute to this commutator contraction.
 private theorem contracted_derivative :
@@ -672,10 +648,10 @@ private theorem contracted_derivative :
     _root_.zero_apply, zero_mul, Nat.reduceMod, Fin.val_eq_zero, Fin.zero_eta, zero_smul, zero_add, Finset.sum_const, Finset.card_singleton, one_smul, ContinuousLinearMap.comp_apply, _root_.smul_apply, _root_.sub_apply, mulVec_diagonal,
     Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat, ContinuousLinearMap.flip_apply, ContinuousLinearMap.mul_apply', Fin.val_eq_zero_iff, Fin.val_succ, Fin.mk_one, Fin.succ_ne_zero, ContinuousLinearMap.comp_add, inv_one, Nat.add_eq_right,
     false_or, cons_val_succ', Nat.reduceAdd, Fin.reduceFinMk, Rat.cast_inv, map_zero, ne_eq, not_false_eq_true, div_self]
-  simp -implicitDefEqProofs only [mul_add, word_product, Fin.prod_univ_two, letterProduct_rec, letterPhase_rec,
+  simp -implicitDefEqProofs only [mul_add, word_mul, Fin.prod_univ_two, letterProduct_rec, letterPhase_rec,
     labels_unfold, cons_val_zero, cons_val_one, smul_smul, mul_one, one_mul, mul_neg]
-  simp -implicitDefEqProofs only [rho_unfold, labels_unfold, Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue, cons_val', cons_val_zero, cons_val_fin_one, cons_val, cons_val_one, mul_one, one_smul, sub_self, smul_zero, mul_zero, trace_zero, Complex.zero_re, zero_div, zero_mul, mul_neg, neg_mul, Complex.I_mul_I, neg_neg, neg_smul, smul_neg, one_mul, add_sub_add_left_eq_sub, Algebra.mul_smul_comm, mul_sub, trace_smul, trace_sub,
-    trace_neg, word_trace_mul, vecCons_inj, reduceCtorEq, and_true, and_self, ↓reduceIte, smul_eq_mul, neg_zero, mul_add, trace_add, Complex.real_smul, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_neg, Complex.ofReal_one,
+  simp -implicitDefEqProofs only [rho_unfold, labels_unfold, Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue, cons_val', cons_val_zero, cons_val_fin_one, cons_val, cons_val_one, mul_one, one_smul, sub_self, smul_zero, mul_zero, Complex.zero_re, zero_div, zero_mul, mul_neg, neg_mul, Complex.I_mul_I, neg_neg, neg_smul, smul_neg, one_mul, Algebra.mul_smul_comm, mul_sub, trace_smul, trace_sub,
+    trace_neg, word_trace_pair, funext_iff, Fin.forall_fin_two, pow_two, reduceCtorEq, and_true, and_self, ↓reduceIte, smul_eq_mul, neg_zero, mul_add, trace_add, Complex.real_smul, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_neg, Complex.ofReal_one,
     Complex.ofReal_ofNat, add_zero, zero_add, sub_neg_eq_add, Complex.add_re, Complex.mul_re, Complex.div_ofNat_re, Complex.neg_re, Complex.I_re, Complex.ofReal_re, Complex.one_re, Complex.ofReal_im, Complex.div_ofNat_im, Complex.neg_im,
     Complex.one_im, sub_zero, Complex.mul_im, Complex.re_ofNat, Complex.I_im, Complex.im_ofNat, zero_sub, and_false, Complex.ofReal_inv, Complex.sub_re, Complex.inv_re, Complex.normSq_ofNat, div_self_mul_self', Complex.inv_im]
   ring_nf; simp -implicitDefEqProofs only [h6, ← Real.sqrt_div_self]; nlinarith [hs]

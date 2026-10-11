@@ -46,9 +46,13 @@ internal sealed class PauliRotationCriticalValuesDocument : IScribeDocumentDefin
             Node("claim", "Conjecture 3 in the two-qubit case", ClaimFormula(),
                 "Wierichs, Kottmann and Killoran, Conjecture 3, §V, p. 9: \"The critical values F(C) of a PQC that has full rank almost everywhere in T^d form an at most (d−2)-dimensional subset of G.\" Here d = 15 and G is SU(4), represented by its complex matrices. The displayed proposition quantifies over every sequence of fifteen nonidentity two-qubit Pauli words. Its premise uses Lebesgue volume on Param, and its conclusion uses the Hausdorff dimension dimH of the actual matrix image. The measure beneath the almost-everywhere quantifier is explicit; this is Lean's notation ∀ᵐ with volume. Real angles give the periodic lift of the circuit parameters. Each Pauli-word rotation is a Clifford conjugate of a single-qubit Pauli rotation, so the ordered product is a parametrized quantum circuit with fifteen independent inputs.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Describe.Remark(DescribeId.Create("paulicritical-analytic-zero-set"),
+                H("A nonzero real-analytic function has a null zero set"),
+                Disp(AnalyticZeroSetFormula()), AssessedProvenance.FromLiterature(AnalyticZeros),
+                Blocks(Paragraph(Text("Mityagin, Proposition 0, p. 1: the zero set of a real-analytic function that is not identically zero on a connected open real domain has Lebesgue measure zero. Here the domain is the whole finite-dimensional real coordinate space. AnalyticOnNhd supplies real analyticity everywhere, and a point a with f(a) nonzero supplies nontriviality. The conclusion says f(x) is nonzero for volume-almost every x. It holds also in dimension zero.")))),
             Node("result", "The critical-value bound fails", Disp(new Formula.Not(Named("claim"))),
                 "In increasing input order choose the words YY, IY, XX, ZY, ZX, IZ, XY, YZ, IX, XZ, ZI, YI, YX, XI, ZZ, where AB means the tensor product of the Pauli matrices A and B. Set inputs 5, 6, 7 and 10 to π/4 and all other inputs to zero; indices start at zero. At this parameter the derivative has rank fourteen. In invertible real coordinates its Pauli-coordinate matrix is diagonal with fourteen ones and one zero. The derivative of its determinant along a nonzero kernel direction is nonzero. This is the fold condition: the kernel is transverse to the critical hypersurface. A linear projection of the critical values contains a nonempty open subset of the fourteen-dimensional real space. Lipschitz monotonicity of dimH therefore gives Hausdorff dimension at least fourteen, contradicting the bound thirteen. The almost-everywhere full-rank step uses the zero set of a nonzero real-analytic function: the determinant is real analytic and its nonzero directional derivative prevents it from vanishing identically. Mityagin, Proposition 0, p. 1, states that such a zero set on a connected open real domain has Lebesgue measure zero. Thus the same sequence has full derivative rank almost everywhere and violates the proposed critical-value dimension bound.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, AnalyticZeros))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
@@ -58,6 +62,20 @@ internal sealed class PauliRotationCriticalValuesDocument : IScribeDocumentDefin
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
+    private static Formula AnalyticZeroSetFormula()
+    {
+        Formula n=F.Id("n"),f=F.Id("f"),a=F.Id("a"),x=F.Id("x");
+        Formula space=Arrow(Fin(n),Reals());
+        Formula nonzero=new Formula.Relation(At(f,a),FormulaRelationOperator.NotEqual,D(0));
+        Formula premise=new Formula.Logic(Call("AnalyticOnNhd",Reals(),f,Named("Set.univ")),
+            FormulaLogicOperator.And,nonzero);
+        Formula volume=Typed(Named("volume"),Call("Measure",space));
+        Formula conclusion=Seq(new Formula.Subscript(
+            new Formula.Power(Forall,Seq(Mathrm,Grp(F.Id("m")))),volume),Sp,
+            Typed(x,space),Comma,Sp,new Formula.Relation(At(f,x),FormulaRelationOperator.NotEqual,D(0)));
+        return All(n,Seq(Mathbb,Grp(F.Id("N"))),All(f,Arrow(space,Reals()),All(a,space,
+            new Formula.Logic(Parenthesized(premise),FormulaLogicOperator.Implies,conclusion))));
+    }
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Named(string name) => Seq(Operatorname,
         Grp(name.Split('.').SelectMany((part, index) => index == 0
