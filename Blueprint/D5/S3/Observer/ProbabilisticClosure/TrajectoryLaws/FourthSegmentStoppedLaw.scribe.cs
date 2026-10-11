@@ -45,10 +45,35 @@ internal sealed class FourthSegmentStoppedLawDocument : IScribeDocumentDefinitio
                     Seq(OpenBrace, omega, Colon, F.Id("Stream"), Vert, Sp,
                         value, Eq, F.Id("none"), CloseBrace)), Eq, D(0)))));
 
+        Formula prefixStep = Disp(All(omega, F.Id("Stream"), All(n, F.Id("Nat"),
+            Seq(Call("readPrefix", omega, Seq(n, Plus, D(1))), Eq,
+                Call("cons", Call("head", omega), Call("readPrefix", Call("shift", omega), n))))));
+        Formula nonstopp = Call("Nonstop", F.Id("totalRead"), F.Id("pendingColor"),
+            Call("active", F.Id("p")), omega);
+        Formula nonstopb = Call("Nonstop", F.Id("totalRead"), F.Id("pendingColor"),
+            Call("active", F.Id("beta")), omega);
+        Formula loopPrefix = Disp(All(omega, F.Id("Stream"), Seq(nonstopp, Rightarrow,
+            All(n, F.Id("Nat"), Call("Prefix", omega, Call("loopWord", n))))));
+        Formula betaReturn = Disp(All(omega, F.Id("Stream"), Seq(nonstopb, Rightarrow,
+            Open, Call("head", omega), Eq, D(0), Land,
+                Call("Nonstop", F.Id("totalRead"), F.Id("pendingColor"),
+                    Call("active", F.Id("p")), Call("shift", omega)), Close)));
+        Formula infiniteNonstop = Disp(All(s, phase,
+            Call("Nonstop", F.Id("totalRead"), F.Id("pendingColor"),
+                Call("active", s), Call("infiniteTail", s))));
+
         return DocumentDefinition.Create(ScribeNode.Create(
             "Complete stopped Read words from the fourth payload segment.",
             H("First completion and the full stopped-word law"),
             Blocks(
+                Node("fourth-prefix-successor", "prefix_succ", "A prefix separates its head",
+                    prefixStep, "head(x)=x(0) and shift(x)(i)=x(i+1). For every infinite Read stream and natural n, its n+1 prefix is the head consed onto the n prefix of the shifted stream."),
+                Node("fourth-nonstop-loop-prefix", "nonstop_p_prefix", "Every nonstopping p stream contains every loop prefix",
+                    loopPrefix, "Nonstop means that no finite trace has a pending completion. loopWord(n)=(beta alpha)^n. This implication retains every natural n and applies to the original totalized Read table."),
+                Node("fourth-nonstop-beta-return", "nonstop_beta_return", "A nonstopping suspended stream begins with alpha",
+                    betaReturn, "Its head must be alpha=0, and its shifted tail is nonstopping from p under the same totalRead and pendingColor. The two conclusions refer to one stream."),
+                Node("fourth-infinite-tail-nonstop", "infinite_tail_nonstop", "Both original alternating infinite tails do not complete",
+                    infiniteNonstop, "infiniteTail(p) alternates beta,alpha and infiniteTail(beta) alternates alpha,beta. Every finite trace remains active in the appropriate alternating phase; the original noncompletion outcomes remain in scope."),
                 Paragraph(Text("Letters 0 and 1 represent alpha and beta. The two active phases are p and beta. At p, alpha completes bit 0 and beta suspends the parser; at beta, alpha returns to p and beta completes bit 1. Completion reaches pending b. Its sole legal operation is Stop b, leading to delivered. Neither terminal phase permits Read. A state-preserving totalization is used only to evaluate mathematical traces beyond a terminal prefix.")),
                 Paragraph(Text("The output is the entire prefix consumed through the least trace index reaching pending. It is some word for finite first completion and none for infinite noncompletion. The alphabet stream has a product measurable structure; the ambient output carrier Option (List (Fin 2)) has the discrete measurable structure. The output definition uses the execution trace, independently of the following word families.")),
                 Paragraph(Text("Write L(j) for j repetitions of beta-alpha. At p, the complete words are L(j)-alpha for bit 0 and L(j)-beta-beta for bit 1, for every natural j. At beta, they are the one-letter beta for bit 1, or alpha prepended to a p word. The beta already acquired before the beta-phase cut is absent from the future word.")),

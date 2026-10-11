@@ -210,8 +210,8 @@ public sealed partial class CleanLanesCommandTests
         var production = new ProductionWorktreeProcessRunner();
         var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
         {
-            if (fileName != "git"
-                || !arguments.SequenceEqual(["worktree", "remove", "--force", "--", damaged]))
+            if (fileName != "python3" || !IsProtocol(arguments, "remove")
+                || ProtocolValue(arguments, "--path") != damaged)
             {
                 return null;
             }
@@ -244,7 +244,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(File.Exists(deletedTrackedFile));
         Assert.True(fixture.BranchExists(damagedBranch));
         Assert.False(Directory.Exists(removed));
-        Assert.False(fixture.BranchExists(removedBranch));
+        Assert.True(fixture.BranchExists(removedBranch));
         var items = ReadItems(result.Output);
         AssertPartialItem(
             items,
@@ -261,82 +261,24 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void ForceReportsPartialRemovalAndReclaimsHealthyLaneWhenBranchDeletionFails()
+    public void RecycledBranchesSurviveSamePassOrphanSweep()
     {
         using var fixture = new CleanLanesFixture();
-        const string retainedBranch = "harness/ref-delete-a-partial";
-        const string removedBranch = "harness/ref-delete-z-control";
-        var partial = fixture.AddLandedLane(retainedBranch);
-        var removed = fixture.AddLandedLane(removedBranch);
-        var retainedHead = fixture.Head(partial);
-        var runner = fixture.CreateRunner((fileName, arguments, _) =>
-            fileName == "git"
-            && arguments.Count > 2
-            && arguments[0] == "update-ref"
-            && arguments[1] == "-d"
-            && arguments[2] == $"refs/heads/{retainedBranch}"
-                ? GitFailure("synthetic branch deletion failure")
-                : null);
-
-        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
-
-        Assert.False(result.Success);
-        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=1\n", result.Error);
-        Assert.False(Directory.Exists(partial));
-        Assert.True(fixture.BranchExists(retainedBranch));
-        Assert.False(Directory.Exists(removed));
-        Assert.False(fixture.BranchExists(removedBranch));
-        var items = ReadItems(result.Output);
-        AssertPartialItem(items, partial, retainedBranch, retainedHead, "branch_ref_retained");
-        Assert.Contains(items, item =>
-            ItemMatches(item, removed, "removed", "stale_behind"));
-        Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
-        var summary = ReadSummary(result.Output);
-        Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
-        Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
-        Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
-    }
-
-    [Fact]
-    public void ForceReportsExactCountForTwoRetainedBranchRefsAndReclaimsHealthyControl()
-    {
-        using var fixture = new CleanLanesFixture();
-        string[] partialBranches =
-        [
-            "harness/ref-delete-a-partial",
-            "harness/ref-delete-b-partial",
-        ];
-        var partials = partialBranches.Select(branch => fixture.AddLandedLane(branch)).ToArray();
-        const string removedBranch = "harness/ref-delete-z-control";
-        var removed = fixture.AddLandedLane(removedBranch);
-        var runner = fixture.CreateRunner((fileName, arguments, _) =>
-            fileName == "git"
-            && arguments.Count > 2
-            && arguments[0] == "update-ref"
-            && arguments[1] == "-d"
-            && partialBranches.Contains(
-                arguments[2]["refs/heads/".Length..],
-                StringComparer.Ordinal)
-                ? GitFailure("synthetic branch deletion failure")
-                : null);
-
-        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
-
-        Assert.False(result.Success);
-        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=2\n", result.Error);
-        Assert.All(partials, path => Assert.False(Directory.Exists(path)));
-        Assert.All(partialBranches, branch => Assert.True(fixture.BranchExists(branch)));
-        Assert.False(Directory.Exists(removed));
-        Assert.False(fixture.BranchExists(removedBranch));
-        var items = ReadItems(result.Output);
-        Assert.All(partials, path => Assert.Contains(items, item =>
-            ItemMatches(item, path, "partially_removed", "branch_ref_retained")));
-        Assert.Contains(items, item =>
-            ItemMatches(item, removed, "removed", "stale_behind"));
-        var summary = ReadSummary(result.Output);
-        Assert.Equal(2, summary.GetProperty("partial_count").GetInt32());
-        Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
-        Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
+        const string branch = "harness/recycle-recovery";
+        var lane = fixture.AddLandedLane(branch);
+        var head = fixture.Head(lane);
+        var runner = fixture.CreateRunner((file, args, _) =>
+        {
+            if (IsProtocol(args, "retire-branch") && ProtocolValue(args, "--branch") == branch)
+                throw new InvalidOperationException("recovery branch must not enter orphan retirement");
+            return null;
+        });
+        var result = fixture.RunWithRaw(runner, "--force");
+        Assert.True(result.Success, result.Error);
+        Assert.False(Directory.Exists(lane));
+        Assert.True(fixture.BranchExists(branch));
+        CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "worktree", "add", lane, branch);
+        Assert.Equal(head, fixture.Head(lane));
     }
 
     [Fact]
@@ -356,11 +298,8 @@ public sealed partial class CleanLanesCommandTests
         var production = new ProductionWorktreeProcessRunner();
         var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
         {
-            if (fileName != "git"
-                || arguments.Count != 5
-                || arguments[0] != "worktree"
-                || arguments[1] != "remove"
-                || !partials.Contains(arguments[^1], StringComparer.Ordinal))
+            if (fileName != "python3" || !IsProtocol(arguments, "remove")
+                || !partials.Contains(ProtocolValue(arguments, "--path"), StringComparer.Ordinal))
             {
                 return null;
             }
@@ -371,7 +310,7 @@ public sealed partial class CleanLanesCommandTests
                 workingDirectory,
                 BoundedProcessRunner.HangDetectionBudget);
             Assert.Equal(0, removal.ExitCode);
-            Assert.False(fixture.WorktreeRegistered(arguments[^1]));
+            Assert.False(fixture.WorktreeRegistered(ProtocolValue(arguments, "--path")));
             return new ProcessOutput(
                 255,
                 removal.StandardOutput,
@@ -385,7 +324,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.All(partials, path => Assert.False(Directory.Exists(path)));
         Assert.All(partialBranches, branch => Assert.True(fixture.BranchExists(branch)));
         Assert.False(Directory.Exists(removed));
-        Assert.False(fixture.BranchExists(removedBranch));
+        Assert.True(fixture.BranchExists(removedBranch));
         var items = ReadItems(result.Output);
         for (var index = 0; index < partials.Length; index++)
         {
