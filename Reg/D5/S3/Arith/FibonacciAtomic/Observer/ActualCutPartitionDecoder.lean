@@ -10,6 +10,8 @@ open D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder
 open D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source)
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
+open D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address)
+
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder
 
 abbrev decoderSignature : Signature where
@@ -101,5 +103,73 @@ def commonSuffix_decoder_correct_registration :
 
 #print axioms decoderProof
 #print axioms commonSuffix_decoder_correct_registration
+
+abbrev supportSignature : Signature where
+  Params := CutSet × Address
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Address
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def supportActual : Realization supportSignature := realize supportSignature
+  (fun _ p u => exteriorHoles p.2 (cutExterior p.1 p.2 u)) (fun e => nomatch e)
+def supportBad : Realization supportSignature := realize supportSignature
+  (fun _ _ _ => []) (fun e => nomatch e)
+abbrev supportArena : Arena where
+  signature := supportSignature
+  Law R := ∀ (P : CutSet) (a : Address) (t : Source), R.readout () (P,a) t = reachedHoles P a t
+
+private theorem support_bad : ¬ supportArena.Law supportBad := by
+  intro h
+  have eq := h {[]} [] (.of true)
+  simpa [supportBad,realize,reachedHoles] using eq
+
+def supportProof : Registration supportArena (type_of% (@exteriorHoles_cut)) where
+  actual := supportActual
+  bridge := Iff.rfl
+  variation := ⟨exteriorHoles_cut,supportBad,support_bad⟩
+  sensitivity := ⟨fun i => ⟨supportBad,fun j h => (h (Subsingleton.elim j i)).elim,rfl,support_bad⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨({[false]},[]),.of true,.mul (.of true) (.of true),?_⟩
+    change exteriorHoles [] (cutExterior {[false]} [] (.of true)) ≠
+      exteriorHoles [] (cutExterior {[false]} [] (.mul (.of true) (.of true)))
+    rw [exteriorHoles_cut,exteriorHoles_cut]
+    simp [reachedHoles]
+
+noncomputable def exteriorHoles_cut_registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder.exteriorHoles_cut)
+    (Realization supportSignature) (Type) Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder.exteriorHoles_cut
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder.supportProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨supportArena⟩
+  objectArena := .source ⟨supportArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source supportArena ⟨supportProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize supportSignature (fun _ p u => exteriorHoles p.2 (cutExterior p.1 p.2 u)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some Source
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{ path := #["body", "body", "body", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms supportProof
+#print axioms exteriorHoles_cut_registration
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder
