@@ -40,6 +40,7 @@ private theorem tail_succ_subset (a : M) (N : ℕ) : tail a (N + 1) ⊆ tail a N
   rintro _ ⟨n, rfl⟩
   exact ⟨n + 1, by dsimp; congr 1; omega⟩
 
+omit [ContinuousAdd M] [T2Space M] in
 private theorem core_nonempty (a : M) : (core a).Nonempty := by
   apply IsCompact.nonempty_iInter_of_sequence_nonempty_isCompact_isClosed
     (tail a) (tail_succ_subset a)
@@ -133,7 +134,7 @@ private theorem core_has_identity (a : M) (hd : DenseRange fun n : ℕ => n • 
 orbit of the image of the original generator under an additive retraction. -/
 theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n • a) :
     ∃ group : AddCommGroup (core a),
-      letI := group
+      let := group
       (∀ x y : core a, ((x + y : core a) : M) = (x : M) + (y : M)) ∧
       IsTopologicalAddGroup (core a) ∧
       ∃ r : M →+ core a, Continuous r ∧
@@ -143,20 +144,20 @@ theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n • a) :
   classical
   obtain ⟨e, he, hid⟩ := core_has_identity a hd
   let H := core a
-  letI : Add H := ⟨fun x y => ⟨x.1 + y.1, add_mem_core a hd x.1 y.2⟩⟩
-  letI : Zero H := ⟨⟨e, he⟩⟩
+  let : Add H := ⟨fun x y => ⟨x.1 + y.1, add_mem_core a hd x.1 y.2⟩⟩
+  let : Zero H := ⟨⟨e, he⟩⟩
   have hinv (x : H) : ∃ y : H, y + x = 0 := by
     obtain ⟨y, hy, hxy⟩ := translation_surjective_on_core a hd x.1 he
     exact ⟨⟨y, hy⟩, Subtype.ext (by change y + x.1 = e; rw [add_comm, hxy])⟩
-  letI : Neg H := ⟨fun x => Classical.choose (hinv x)⟩
-  letI : AddCommGroup H :=
+  let : Neg H := ⟨fun x => Classical.choose (hinv x)⟩
+  let : AddCommGroup H :=
     { AddGroup.ofLeftAxioms
         (fun x y z => Subtype.ext (add_assoc x.1 y.1 z.1))
         (fun x => Subtype.ext (hid x.1 x.2))
         (fun x => Classical.choose_spec (hinv x)) with
       add_comm := fun x y => Subtype.ext (add_comm x.1 y.1) }
-  haveI : CompactSpace H := isCompact_iff_compactSpace.mp (core_closed a).isCompact
-  haveI : ContinuousAdd H := ⟨
+  have : CompactSpace H := isCompact_iff_compactSpace.mp (core_closed a).isCompact
+  have : ContinuousAdd H := ⟨
     ((continuous_subtype_val.comp continuous_fst).add
       (continuous_subtype_val.comp continuous_snd)).subtype_mk _⟩
   have hneg : Continuous (fun x : H => -x) := by
@@ -179,7 +180,7 @@ theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n • a) :
         simpa only [hyx] using hy
     rw [heq]
     exact isClosedMap_fst_of_compactSpace F hF
-  haveI : IsTopologicalAddGroup H := { continuous_neg := hneg }
+  have : IsTopologicalAddGroup H := { continuous_neg := hneg }
   let r : M →+ H :=
     { toFun := fun x => ⟨x + e, add_mem_core a hd x he⟩
       map_zero' := Subtype.ext (zero_add e)
@@ -198,5 +199,143 @@ theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n • a) :
   simpa only [Function.comp_def, map_nsmul] using hd'
 
 #print axioms core_group_retraction
+
+private theorem prefix_or_tail (a : M) (hd : DenseRange fun n : ℕ => n • a)
+    (N : ℕ) (x : M) :
+    x ∈ (fun n : ℕ => n • a) '' Iio N ∪ tail a N := by
+  apply hd.induction_on (p := fun x => x ∈ (fun n : ℕ => n • a) '' Iio N ∪ tail a N) x
+  · exact ((finite_Iio N).image _).isClosed.union isClosed_closure
+  · intro n
+    by_cases hn : n < N
+    · exact Or.inl ⟨n, hn, rfl⟩
+    · right
+      exact subset_closure ⟨n - N, by dsimp; congr 1; omega⟩
+
+private theorem outside_isolated_orbit (a : M) (hd : DenseRange fun n : ℕ => n • a)
+    {x : M} (hx : x ∉ core a) :
+    (∃ n : ℕ, x = n • a) ∧ IsOpen ({x} : Set M) := by
+  classical
+  simp only [core, mem_iInter] at hx
+  push Not at hx
+  obtain ⟨N, hN⟩ := hx
+  let P : Set M := (fun n : ℕ => n • a) '' Iio N
+  have hP : P.Finite := (finite_Iio N).image _
+  have hxP : x ∈ P := (prefix_or_tail a hd N x).resolve_right hN
+  refine ⟨?_, ?_⟩
+  · obtain ⟨n, _, hn⟩ := hxP
+    exact ⟨n, hn.symm⟩
+  · have heq : ({x} : Set M) = (tail a N ∪ (P \ {x}))ᶜ := by
+      ext y
+      simp only [mem_singleton_iff, mem_compl_iff, mem_union, mem_sdiff,
+        not_or, not_and, not_not]
+      constructor
+      · rintro rfl
+        exact ⟨hN, fun _ => rfl⟩
+      · rintro ⟨hyN, hy⟩
+        exact hy ((prefix_or_tail a hd N y).resolve_right hyN)
+    rw [heq]
+    exact (isClosed_closure.union hP.sdiff.isClosed).isOpen_compl
+
+private theorem collision_mem_core (a : M) {n m : ℕ}
+    (hnm : n < m) (heq : n • a = m • a) : n • a ∈ core a := by
+  let p := m - n
+  have hp : 0 < p := Nat.sub_pos_of_lt hnm
+  have hstep : (n + p) • a = n • a := by
+    rw [show n + p = m by omega]
+    exact heq.symm
+  have hrep (k : ℕ) : (n + k * p) • a = n • a := by
+    induction k with
+    | zero => simp
+    | succ k ih =>
+      calc
+        (n + (k + 1) * p) • a = ((n + k * p) + p) • a := by congr 1; ring
+        _ = (n + k * p) • a + p • a := add_nsmul _ _ _
+        _ = (n + p) • a := by rw [ih, add_nsmul]
+        _ = n • a := hstep
+  apply mem_iInter.mpr
+  intro N
+  rw [← hrep N]
+  apply subset_closure
+  have hlarge : N ≤ n + N * p := by
+    have := Nat.le_mul_of_pos_right N hp
+    omega
+  exact ⟨n + N * p - N, by dsimp; congr 1; omega⟩
+
+private theorem core_nsmul_upward (a : M) (hd : DenseRange fun n : ℕ => n • a)
+    {n m : ℕ} (hn : n • a ∈ core a) (hnm : n ≤ m) : m • a ∈ core a := by
+  have := add_mem_core a hd ((m - n) • a) hn
+  rwa [← add_nsmul, Nat.sub_add_cancel hnm] at this
+
+private theorem core_threshold (a : M) (hd : DenseRange fun n : ℕ => n • a) :
+    ∃! t : ℕ∞, ∀ n : ℕ, n • a ∉ core a ↔ (n : ℕ∞) < t := by
+  classical
+  have hex : ∃ t : ℕ∞, ∀ n : ℕ, n • a ∉ core a ↔ (n : ℕ∞) < t := by
+    by_cases h : ∃ n : ℕ, n • a ∈ core a
+    · refine ⟨(Nat.find h : ℕ∞), ?_⟩
+      intro n
+      rw [ENat.natCast_lt_natCast]
+      constructor
+      · intro hn
+        by_contra hlt
+        exact hn (core_nsmul_upward a hd (Nat.find_spec h) (by omega))
+      · exact Nat.find_min h
+    · refine ⟨⊤, ?_⟩
+      intro n
+      simp only [ENat.natCast_lt_top, iff_true]
+      exact fun hn => h ⟨n, hn⟩
+  obtain ⟨t, ht⟩ := hex
+  refine ⟨t, ht, ?_⟩
+  intro u hu
+  apply eq_of_forall_lt_iff
+  intro k
+  induction k using ENat.recTopCoe with
+  | top => simp
+  | coe n => exact (hu n).symm.trans (ht n)
+
+/-- The tail is the least nonempty additive ideal. Its complement is a uniquely
+indexed finite or infinite initial segment of isolated, pairwise distinct orbit points. -/
+theorem core_ideal_and_threshold (a : M) (hd : DenseRange fun n : ℕ => n • a) :
+    (core a).Nonempty ∧ IsCompact (core a) ∧
+    (∀ x : M, (fun z => x + z) '' core a = core a) ∧
+    (∀ I : Set M, I.Nonempty → (∀ x : M, ∀ y ∈ I, x + y ∈ I) → core a ⊆ I) ∧
+    (0 ∈ core a ↔ core a = univ) ∧
+    ∃! t : ℕ∞,
+      (∀ n : ℕ, n • a ∉ core a ↔ (n : ℕ∞) < t) ∧
+      (core a)ᶜ = (fun n : ℕ => n • a) '' {n | (n : ℕ∞) < t} ∧
+      Set.InjOn (fun n : ℕ => n • a) {n | (n : ℕ∞) < t} ∧
+      (∀ n : ℕ, (n : ℕ∞) < t → IsOpen ({n • a} : Set M)) := by
+  refine ⟨core_nonempty a, (core_closed a).isCompact,
+    translation_image_core a hd, ?_, ?_, ?_⟩
+  · intro I hI hideal z hz
+    obtain ⟨x, hx⟩ := hI
+    obtain ⟨y, hy, hxy⟩ := translation_surjective_on_core a hd x hz
+    rw [← hxy, add_comm]
+    exact hideal y x hx
+  · constructor
+    · intro hzero
+      apply eq_univ_of_forall
+      intro x
+      simpa only [add_zero] using add_mem_core a hd x hzero
+    · intro h
+      rw [h]
+      trivial
+  · obtain ⟨t, ht, huniq⟩ := core_threshold a hd
+    refine ⟨t, ⟨ht, ?_, ?_, ?_⟩, fun u hu => huniq u hu.1⟩
+    · ext x
+      constructor
+      · intro hx
+        obtain ⟨n, rfl⟩ := (outside_isolated_orbit a hd hx).1
+        exact ⟨n, (ht n).mp hx, rfl⟩
+      · rintro ⟨n, hn, rfl⟩
+        exact (ht n).mpr hn
+    · intro n hn m hm heq
+      rcases lt_trichotomy n m with hlt | he | hgt
+      · exact ((ht n).mpr hn (collision_mem_core a hlt heq)).elim
+      · exact he
+      · exact ((ht m).mpr hm (collision_mem_core a hgt heq.symm)).elim
+    · intro n hn
+      exact (outside_isolated_orbit a hd ((ht n).mpr hn)).2
+
+#print axioms core_ideal_and_threshold
 
 end D5.S3.Observer.Completion.MonotheticCompactMonoid
